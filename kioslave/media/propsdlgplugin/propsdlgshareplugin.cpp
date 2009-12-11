@@ -1,21 +1,22 @@
 /*
-  Copyright (c) 2004 Jan Schaefer <j_schaef@informatik.uni-kl.de>
+    Copyright (c) 2004 Jan Schaefer <j_schaef@informatik.uni-kl.de>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
+    You should have received a copy of the GNU Library General Public License
+    along with this library; see the file COPYING.LIB.  If not, write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA 02110-1301, USA.
 */
+
 #include <qstring.h>
 #include <qvbox.h>
 #include <qlayout.h>
@@ -42,12 +43,12 @@ typedef KGenericFactory<PropsDlgSharePlugin, KPropertiesDialog> PropsDlgSharePlu
 K_EXPORT_COMPONENT_FACTORY( media_propsdlgplugin,
                             PropsDlgSharePluginFactory("media_propsdlgplugin") )
 
-class PropsDlgSharePlugin::Private                            
+class PropsDlgSharePlugin::Private
 {
   public:
-    PropertiesPage* page; 
+    PropertiesPage* page;
 };
-                            
+
 PropsDlgSharePlugin::PropsDlgSharePlugin( KPropertiesDialog *dlg,
 					  const char *, const QStringList & )
   : KPropsDlgPlugin(dlg), d(0)
@@ -60,21 +61,21 @@ PropsDlgSharePlugin::PropsDlgSharePlugin( KPropertiesDialog *dlg,
   DCOPRef mediamanager("kded", "mediamanager");
   kdDebug() << "properties " << item->url() << endl;
   DCOPReply reply = mediamanager.call( "properties", item->url().url() );
-  
+
   if ( !reply.isValid() )
     return;
-  
+
   QVBox* vbox = properties->addVBoxPage(i18n("&Mounting"));
-  
+
   d = new Private();
-  
+
   d->page = new PropertiesPage(vbox, Medium::create(reply).id());
   connect(d->page, SIGNAL(changed()),
 	  SLOT(slotChanged()));
 
   //  QTimer::singleShot(100, this, SLOT(slotChanged()));
-  
-}                            
+
+}
 
 void PropsDlgSharePlugin::slotChanged()
 {
@@ -87,7 +88,7 @@ PropsDlgSharePlugin::~PropsDlgSharePlugin()
   delete d;
 }
 
-void PropsDlgSharePlugin::applyChanges() 
+void PropsDlgSharePlugin::applyChanges()
 {
   kdDebug() << "applychanges\n";
   if (!d->page->save()) {

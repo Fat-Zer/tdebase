@@ -1,20 +1,20 @@
 /*
-  Copyright (c) 2004 Jan Schaefer <j_schaef@informatik.uni-kl.de>
+    Copyright (c) 2004 Jan Schaefer <j_schaef@informatik.uni-kl.de>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
+    You should have received a copy of the GNU Library General Public License
+    along with this library; see the file COPYING.LIB.  If not, write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA 02110-1301, USA.
 */
 
 #include <qcheckbox.h>
@@ -51,7 +51,7 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
 
   if (list.size()) {
     kdDebug() << "list " << list << endl;
-    
+
     for (QStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
       {
 	QString key = (*it).left((*it).find('='));
@@ -60,57 +60,57 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
 	options[key] = value;
       }
 
-    if (!options.contains("ro")) 
+    if (!options.contains("ro"))
       option_ro->hide();
     else
       option_ro->setChecked(options["ro"] == "true");
     connect( option_ro, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
 
-    if (!options.contains("quiet")) 
+    if (!options.contains("quiet"))
       option_quiet->hide();
     else
       option_quiet->setChecked(options["quiet"] == "true");
     connect( option_quiet, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
 
-    if (!options.contains("sync")) 
+    if (!options.contains("sync"))
       option_sync->hide();
     else
       option_sync->setChecked(options["sync"] == "true");
     connect( option_sync, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
 
-    if (!options.contains("atime")) 
+    if (!options.contains("atime"))
       option_atime->hide();
     else
       option_atime->setChecked(options["atime"] == "true");
     connect( option_atime, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
 
-    if (!options.contains("flush")) 
+    if (!options.contains("flush"))
       option_flush->hide();
     else
       option_flush->setChecked(options["flush"] == "true");
     connect( option_flush, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
 
-    if (!options.contains("utf8")) 
+    if (!options.contains("utf8"))
       option_utf8->hide();
     else
       option_utf8->setChecked(options["utf8"] == "true");
     connect( option_utf8, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
 
-    if (!options.contains("uid")) 
+    if (!options.contains("uid"))
       option_uid->hide();
     else
       option_uid->setChecked(options["uid"] == "true");
     connect( option_uid, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
 
-    if (!options.contains("shortname")) 
+    if (!options.contains("shortname"))
       {
 	option_shortname->hide();
 	text_shortname->hide();
       }
-    else 
+    else
       {
 	for (int index = 0; short_names[index]; ++index)
-	  if (options["shortname"] == short_names[index]) 
+	  if (options["shortname"] == short_names[index])
 	    {
 	      option_shortname->setCurrentItem(index);
 	      break;
@@ -118,15 +118,15 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
 	connect( option_shortname, SIGNAL( activated(int) ), SIGNAL( changed() ) );
       }
 
-    if (!options.contains("journaling")) 
+    if (!options.contains("journaling"))
       {
 	text_journaling->hide();
 	option_journaling->hide();
-      } 
+      }
     else
       {
 	for (int index = 0; journales[index]; ++index)
-	  if (options["journaling"] == journales[index]) 
+	  if (options["journaling"] == journales[index])
 	    {
 	      option_journaling->setCurrentItem(index);
 	      break;
@@ -148,25 +148,25 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
       groupbox_specific->hide();
 
   } else {
-    
+
     groupbox_generic->setEnabled(false);
     groupbox_specific->setEnabled(false);
     label_filesystem->hide();
   }
 }
 
-PropertiesPage::~PropertiesPage() 
+PropertiesPage::~PropertiesPage()
 {
 }
 
-bool PropertiesPage::save() 
+bool PropertiesPage::save()
 {
   QStringList result;
 
-  if (options.contains("ro")) 
+  if (options.contains("ro"))
     result << QString("ro=%1").arg(option_ro->isChecked() ? "true" : "false");
 
-  if (options.contains("quiet")) 
+  if (options.contains("quiet"))
     result << QString("quiet=%1").arg(option_quiet->isChecked() ? "true" : "false");
 
   if (options.contains("sync"))
@@ -184,10 +184,10 @@ bool PropertiesPage::save()
   if (options.contains("uid"))
     result << QString("uid=%1").arg(option_uid->isChecked() ? "true" : "false");
 
-  if (options.contains("shortname")) 
+  if (options.contains("shortname"))
     result << QString("shortname=%1").arg(short_names[option_shortname->currentItem()]);
 
-  if (options.contains("journaling")) 
+  if (options.contains("journaling"))
     result << QString("journaling=%1").arg(journales[option_journaling->currentItem()]);
 
   QString mp = option_mountpoint->text();
@@ -203,15 +203,15 @@ bool PropertiesPage::save()
 
   DCOPRef mediamanager("kded", "mediamanager");
   DCOPReply reply = mediamanager.call( "setMountoptions", id, result);
-  
+
   if (reply.isValid())
     return (bool)reply;
   else {
     KMessageBox::sorry(this,
 		       i18n("Saving the changes failed"));
-    
+
     return false;
   }
-}  
+}
 
 #include "propertiespage.moc"
