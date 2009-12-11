@@ -43,6 +43,7 @@ public:
 
     QString configName();
     void notifyKicker();
+    void restartKicker();
 
     QString quickHelp() const;
     KAboutData *aboutData();

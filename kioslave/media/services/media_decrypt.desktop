@@ -1,0 +1,9 @@
+[Desktop Action Decrypt]
+Exec=kio_media_mounthelper -d %u
+Icon=decrypted
+Name=Decrypt
+Name[de]=Entschlüsseln
+
+[Desktop Entry]
+Actions=Decrypt
+ServiceTypes=media/removable_unmounted_encrypted,media/hdd_unmounted_encrypted,media/cdrom_unmounted_encrypted,media/cdwriter_unmounted_encrypted,media/dvd_unmounted_encrypted

@@ -18,4 +18,11 @@
   background-repeat: no-repeat;
 }
 
+#searchbarlabel {
+  font-size: 10pt;
+  font-style: italic;
+}
 
+#searchbarinput {
+  width: 100%;
+}

@@ -190,6 +190,8 @@ signals:
     int         n_encoding;
 
 public:
+      virtual bool setPtyFd(int);
+
     // these are the implementations for the TermEmuInterface
     // functions...
     void startProgram( const QString& program,

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=XSession
-Exec=
-TryExec=
+Exec=olvwm-x-window-manager
+TryExec=olvwm-x-window-manager
 Name=OLVWM
 Name[br]=OVLWM
 Name[eo]=OLVFA

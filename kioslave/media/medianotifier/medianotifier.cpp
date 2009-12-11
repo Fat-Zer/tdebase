@@ -19,8 +19,12 @@
 
 #include "medianotifier.h"
 
+#include <sys/vfs.h>
+
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qdir.h>
+#include <qcheckbox.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -44,6 +48,11 @@ MediaNotifier::MediaNotifier(const QCString &name) : KDEDModule(name)
 	
 	connectDCOPSignal( "kded", "mediamanager", "mediumChanged(QString, bool)",
 	                   "onMediumChange(QString, bool)", true );
+
+    m_freeTimer = new QTimer( this );
+    connect( m_freeTimer, SIGNAL( timeout() ), SLOT( checkFreeDiskSpace() ) );
+    m_freeTimer->start( 1000*6*2 /* 20 minutes */ );
+    m_freeDialog = 0;
 }
 
 MediaNotifier::~MediaNotifier()
@@ -103,12 +112,12 @@ bool MediaNotifier::autostart( const KFileItem &medium )
 {
 	QString mimetype = medium.mimetype();
 
-	bool is_cdrom = mimetype.startsWith( "cd" ) || mimetype.startsWith( "dvd" );
-	bool is_mounted = mimetype.endsWith( "_mounted" );
+	bool is_cdrom = mimetype.startsWith( "media/cd" ) || mimetype.startsWith( "media/dvd" );
+	bool is_mounted = mimetype.contains( "_mounted" );
 	
 	// We autorun only on CD/DVD or removable disks (USB, Firewire)
 	if ( !( is_cdrom || is_mounted )
-	  && mimetype!="media/removable_mounted" )
+	  && !mimetype.startsWith("media/removable_mounted") )
 	{
 		return false;
 	}
@@ -307,6 +316,71 @@ extern "C"
 		KGlobal::locale()->insertCatalogue("kay");
 		return new MediaNotifier(name);
 	}
+}
+
+void MediaNotifier::checkFreeDiskSpace()
+{
+    struct statfs sfs;
+    long total, avail;
+    if ( m_freeDialog )
+        return;
+
+    if ( statfs( QFile::encodeName( QDir::homeDirPath() ), &sfs ) == 0 )
+    {
+        total = sfs.f_blocks;
+        avail = ( getuid() ? sfs.f_bavail : sfs.f_bfree );
+
+        if (avail < 0 || total <= 0)
+            return; // we better do not say anything about it
+
+        int freeperc = static_cast<int>(100 * double(avail) / total);
+
+        if ( freeperc < 5 && KMessageBox::shouldBeShownContinue( "dontagainfreespace" ) )    // free disk space dropped under a limit
+        {
+            m_freeDialog= new KDialogBase(
+                i18n( "Low Disk Space" ),
+                KDialogBase::Yes | KDialogBase::No,
+                KDialogBase::Yes, KDialogBase::No,
+                0, "warningYesNo", false, true,
+                i18n( "Start Konqueror" ), KStdGuiItem::cancel());
+
+            QString text = i18n( "You are running low on disk space on your home partition (currently %1% free), would you like to "
+                                 "run Konqueror to free some disk space and fix the problem?" ).arg( freeperc );
+            bool checkboxResult = false;
+            KMessageBox::createKMessageBox(m_freeDialog, QMessageBox::Warning, text, QStringList(),
+                                           i18n("Do not ask again"),
+                                           &checkboxResult, KMessageBox::Notify | KMessageBox::NoExec);
+            m_freeDialog->show();
+            connect( m_freeDialog, SIGNAL( yesClicked() ), SLOT( slotFreeContinue() ) );
+            connect( m_freeDialog, SIGNAL( noClicked() ), SLOT( slotFreeCancel() ) );
+        }
+    }
+}
+
+void MediaNotifier::slotFreeContinue()
+{
+    slotFreeFinished( KMessageBox::Continue );
+}
+
+void MediaNotifier::slotFreeCancel()
+{
+    slotFreeFinished( KMessageBox::Cancel );
+}
+
+void MediaNotifier::slotFreeFinished( KMessageBox::ButtonCode res )
+{
+    QCheckBox *checkbox = ::qt_cast<QCheckBox*>( m_freeDialog->child( 0, "QCheckBox" ) );
+    if ( checkbox && checkbox->isChecked() )
+        KMessageBox::saveDontShowAgainYesNo("dontagainfreespace", res);
+    m_freeDialog->delayedDestruct();
+    m_freeDialog = 0;
+
+    if ( res == KMessageBox::Continue ) // start Konqi
+    {
+        ( void ) new KRun( KURL::fromPathOrURL( QDir::homeDirPath() ) );
+    }
+    else                // people don't want to be bothered, at least stop the timer; there's no way to save the dontshowagain entry in this case
+        m_freeTimer->stop();
 }
 
 #include "medianotifier.moc"

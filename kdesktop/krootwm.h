@@ -66,6 +66,7 @@ public:
   KRootWm(KDesktop*);
   ~KRootWm();
 
+  bool startup;
   void mousePressed( const QPoint& _global, int _button );
   bool hasLeftButtonMenu() { return leftButtonChoice != NOTHING; }
 

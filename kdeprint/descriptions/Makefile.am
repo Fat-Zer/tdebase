@@ -18,7 +18,7 @@ printers.cpp: sortthem
 	./sortthem < printers.cpp | perl -n -e "print \"// xgettext: no-c-format\n\".\$$_;" > printers.new && mv printers.new $(srcdir)/printers.cpp
 
 messages:
-	$(XGETTEXT) printers.cpp -o $(podir)/../kdelibs/ppdtranslations.pot
+	$(XGETTEXT) printers.cpp -o $(podir)/ppdtranslations.pot
 
 .PHONY: printers.cpp
 

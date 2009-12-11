@@ -83,6 +83,10 @@ extern int loginsuccess( const char *User, const char *Host, const char *Tty, ch
 #endif
 #include <signal.h>
 
+#ifdef WITH_CONSOLE_KIT
+#include "consolekit.h"
+#endif
+
 /*
  * Session data, mostly what struct verify_info was for
  */
@@ -310,7 +314,7 @@ doPAMAuth( const char *psrv, struct pam_data *pdata )
 		V_RET_FAIL( 0 );
 	}
 	if ((td->displayType & d_location) == dForeign) {
-		char *cp = strchr( td->name, ':' );
+		char *cp = (char*)strchr( td->name, ':' );
 		*cp = 0;
 		pretc = pam_set_item( pamh, PAM_RHOST, td->name );
 		*cp = ':';
@@ -495,7 +499,7 @@ Verify( GConvFunc gconv, int rootok )
 		char *tmpch;
 		strncpy( hostname, td->name, sizeof(hostname) - 1 );
 		hostname[sizeof(hostname)-1] = '\0';
-		if ((tmpch = strchr( hostname, ':' )))
+		if ((tmpch = (char*)strchr( hostname, ':' )))
 			*tmpch = '\0';
 	} else
 		hostname[0] = '\0';
@@ -1121,8 +1125,13 @@ static int removeSession;
 static int removeCreds;
 #endif
 
+#ifdef WITH_CONSOLE_KIT
+int
+StartClient( const char *ck_session_cookie )
+#else
 int
 StartClient()
+#endif
 {
 	const char *home, *sessargs, *desksess;
 	char **env, *xma;
@@ -1217,6 +1226,11 @@ StartClient()
 #if !defined(USE_PAM) && !defined(_AIX) && defined(KERBEROS)
 	if (krbtkfile[0] != '\0')
 		env = setEnv( env, "KRBTKFILE", krbtkfile );
+#endif
+#ifdef WITH_CONSOLE_KIT
+	if (ck_session_cookie != NULL) {
+		env = setEnv ( env, "XDG_SESSION_COOKIE", ck_session_cookie );
+	}
 #endif
 	userEnviron = inheritEnv( env, envvars );
 	env = systemEnv( p->pw_name );

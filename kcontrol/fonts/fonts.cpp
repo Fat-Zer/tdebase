@@ -331,7 +331,7 @@ bool FontAASettings::load( bool useDefaults )
     kglobals.setReadDefaults( useDefaults );
 
     kglobals.setGroup("General");
-    hStyle=KXftConfig::Hint::Medium;
+    hStyle=KXftConfig::Hint::Full;
     xft.setHintStyle(hStyle);
     xft.apply();  // Save this setting
     kglobals.writeEntry("XftHintStyle", KXftConfig::toStr(hStyle));
@@ -449,7 +449,7 @@ KXftConfig::Hint::Style FontAASettings::getHintStyle()
     if(hintingStyle->currentText()==KXftConfig::description((KXftConfig::Hint::Style)s))
       return (KXftConfig::Hint::Style)s;
 
-  return KXftConfig::Hint::Medium;
+  return KXftConfig::Hint::Full;
 }
 #endif
 
@@ -527,13 +527,13 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
   QFont f0("Sans Serif", 10);
   QFont f1("Monospace", 10);
   QFont f2("Sans Serif", 10);
-  QFont f3("Sans Serif", 9, QFont::Bold);
+  QFont f3("Sans Serif", 10, QFont::Bold);
   QFont f4("Sans Serif", 10);
 
   f0.setPointSize(10);
   f1.setPointSize(10);
   f2.setPointSize(10);
-  f3.setPointSize(9);
+  f3.setPointSize(10);
   f4.setPointSize(10);
 
   defaultFontList << f0 << f1 << f2 << f0 << f3 << f4 << f0;

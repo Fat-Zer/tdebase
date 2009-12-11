@@ -485,7 +485,7 @@ void KDIconView::setAutoAlign( bool b )
 
     // Auto line-up icons
     if ( b ) {
-            lineupIcons();
+         if (!KRootWm::self()->startup) lineupIcons(); else KRootWm::self()->startup = false; 
         connect( this, SIGNAL( iconMoved() ),
                  this, SLOT( lineupIcons() ) );
     }
@@ -1440,7 +1440,7 @@ void KDIconView::updateWorkArea( const QRect &wr )
               << " " << oldArea.width() << "x" << oldArea.height() << endl;
 
     if ( m_autoAlign )
-        lineupIcons();
+        int dummy = 0; //lineupIcons();
     else {
         bool needRepaint = false;
         QIconViewItem* item;

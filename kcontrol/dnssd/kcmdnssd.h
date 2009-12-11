@@ -38,12 +38,14 @@ public:
 	virtual void load();
 private slots:
 	void wdchanged();
+	void enableZeroconfChanged(bool);
 private: 
 	void loadMdnsd();
 	bool saveMdnsd();
 	QMap<QString,QString> mdnsdLines;
 	bool m_wdchanged;
 	KSimpleConfig* domain;
+	bool m_enableZeroconfChanged;
 };
 
 #endif

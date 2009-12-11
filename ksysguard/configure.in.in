@@ -3,6 +3,7 @@ AC_MSG_CHECKING([if ksysguardd can be compiled])
 case "$host" in 
   *-*-linux*) ksysguardd_compile=yes; UNAME='Linux' ;;
   *-*-freebsd*) ksysguardd_compile=yes; UNAME='FreeBSD' ;;
+  *-*-kfreebsd*-gnu) ksysguardd_compile=yes; UNAME='Linux' ;;
   *-*-dragonfly*) ksysguardd_compile=yes; UNAME='FreeBSD' ;;
   *-*-netbsd*) ksysguardd_compile=yes; UNAME='NetBSD' ;;
   *-*-solaris*) ksysguardd_compile=yes; UNAME='Solaris' ;;

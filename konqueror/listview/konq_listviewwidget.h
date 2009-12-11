@@ -206,7 +206,7 @@ protected:
    virtual void viewportPaintEvent( QPaintEvent *e );
    virtual void viewportResizeEvent( QResizeEvent *e );
 
-   virtual void drawRubber();
+   virtual void drawRubber( QPainter * );
    virtual void contentsMousePressEvent( QMouseEvent *e );
    virtual void contentsMouseReleaseEvent( QMouseEvent *e );
    virtual void contentsMouseMoveEvent( QMouseEvent *e );
@@ -246,7 +246,8 @@ protected:
    QColor m_itemColor;
 
    QRect *m_rubber;
-
+   QPixmap *m_backrubber;
+   
    bool m_bTopLevelComplete:1;
    bool m_showIcons:1;
    bool m_bCaseInsensitive:1;

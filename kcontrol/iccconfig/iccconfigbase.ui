@@ -1,0 +1,102 @@
+<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<class>ICCConfigBase</class>
+<widget class="QWidget">
+    <property name="name">
+	    <cstring>ICCConfigBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>519</width>
+            <height>356</height>
+        </rect>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>TabWidget2</cstring>
+            </property>
+            <property name="enabled">
+                <bool>true</bool>
+            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>ICC Color Profile Configuration</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QCheckBox" row="0" column="0" colspan="2">
+                        <property name="name">
+                            <cstring>enableSupport</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Enable global ICC color profile support</string>
+                        </property>
+                    </widget>
+		    <widget class="KURLRequester" row="1" column="1">
+			    <property name="name">
+				    <cstring>iccFile</cstring>
+			    </property>
+			    <property name="filter">
+				    <string>*.icc</string>
+			    </property>
+		    </widget>
+		    <widget class="QLabel" row="1" column="0">
+			    <property name="name">
+				    <cstring>textLabel2_2</cstring>
+			    </property>
+			    <property name="text">
+				    <string>ICC File</string>
+			    </property>
+		    </widget>
+                    <spacer row="2" column="0">
+                        <property name="name" stdset="0">
+                            <cstring>Spacer4</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </grid>
+            </widget>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>enableSupport</sender>
+        <signal>toggled(bool)</signal>
+	<receiver>ICCConfigBase</receiver>
+        <slot>enableSupport_toggled(bool)</slot>
+    </connection>
+</connections>
+<includes>
+	<include location="local" impldecl="in implementation">ICCConfigBase.ui.h</include>
+</includes>
+<slots>
+    <slot>enableSupport_toggled(bool)</slot>
+</slots>
+<includes>
+    <include location="local" impldecl="in implementation">kdialog.h</include>
+</includes>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>

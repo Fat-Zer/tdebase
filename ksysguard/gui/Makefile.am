@@ -59,5 +59,5 @@ METASOURCES = AUTO
 
 messages: rc.cpp
 	$(EXTRACTRC) `find . -name "*.ui"` >> rc.cpp
-	$(EXTRACTATTR) --attr=display,title SystemLoad.sgrd KSysGuardApplet.xml >> rc.cpp
+	extractattr --attr=display,title SystemLoad.sgrd KSysGuardApplet.xml >> rc.cpp
 	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.cc"` -o $(podir)/ksysguard.pot

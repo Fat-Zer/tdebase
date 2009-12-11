@@ -366,12 +366,12 @@ Status SetAuthentication_local (int count, IceListenObj *listenObjs)
     for (i = 0; i < count; i ++) {
         char *prot = IceGetListenConnectionString(listenObjs[i]);
         if (!prot) continue;
-        char *host = strchr(prot, '/');
+        char *host = (char*)strchr(prot, '/');
         char *sock = 0;
         if (host) {
             *host=0;
             host++;
-            sock = strchr(host, ':');
+            sock = (char*)strchr(host, ':');
             if (sock) {
                 *sock = 0;
                 sock++;

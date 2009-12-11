@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=XSession
-Exec=matchbox
-TryExec=matchbox
+Exec=matchbox-window-manager
+TryExec=matchbox-window-manager
 Name=Matchbox
 Name[bn]=ম্যাচবক্স
 Name[eo]=Alumetujo

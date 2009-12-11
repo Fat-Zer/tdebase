@@ -241,9 +241,9 @@ void TaskBar::configure()
     m_showOnlyIconified = TaskBarSettings::showOnlyIconified();
 
     m_currentScreen = -1;    // Show all screens or re-get our screen
-    m_showOnlyCurrentScreen = TaskBarSettings::showCurrentScreenOnly() &&
+    m_showOnlyCurrentScreen = (TaskBarSettings::showCurrentScreenOnly() &&
                               QApplication::desktop()->isVirtualDesktop() &&
-                              QApplication::desktop()->numScreens() > 1;
+                              QApplication::desktop()->numScreens() > 1) || (QApplication::desktop()->numScreens() < 2);
 
     // we need to watch geometry issues if we aren't showing windows when we
     // are paying attention to the current Xinerama screen

@@ -47,6 +47,8 @@ k_dcop:
 
 	QString mount(const QString &uid);
 	QString unmount(const QString &uid);
+	QString decrypt(const QString &uid, const QString &password);
+	QString undecrypt(const QString &uid);
 
 	QString nameForLabel(const QString &label);
 	ASYNC setUserLabel(const QString &name, const QString &label);

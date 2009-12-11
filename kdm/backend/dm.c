@@ -39,6 +39,7 @@ from the copyright holder.
 #include "dm_error.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdarg.h>
@@ -122,7 +123,8 @@ main( int argc, char **argv )
 			StrApp( &progpath, directory, "/", argv[0], (char *)0 );
 		else {
 			int len;
-			char *path, *pathe, *name, *thenam, nambuf[PATH_MAX+1];
+			char *path, *name, *thenam, nambuf[PATH_MAX+1];
+			char *pathe;
 
 			if (!(path = getenv( "PATH" )))
 				Panic( "Can't find myself (no PATH)" );
@@ -131,7 +133,7 @@ main( int argc, char **argv )
 			memcpy( name, argv[0], len + 1 );
 			*--name = '/';
 			do {
-				if (!(pathe = strchr( path, ':' )))
+				if (!(pathe = (char*)strchr( path, ':' )))
 					pathe = path + strlen( path );
 				len = pathe - path;
 				if (!len || (len == 1 && *path == '.')) {
@@ -564,6 +566,21 @@ StartRemoteLogin( struct display *d )
 		Debug( "exec %\"[s\n", argv );
 		(void)execv( argv[0], argv );
 		LogError( "X server %\"s cannot be executed\n", argv[0] );
+		
+		/* Let's try again with some standard paths */
+		argv[0] = (char *)realloc(argv[0], strlen("/usr/X11R6/bin/X") + 1);
+		if (argv[0] != NULL) {
+			argv[0] = "/usr/X11R6/bin/X";
+			Debug( "exec %\"[s\n", argv );
+			(void)execv( argv[0], argv );
+			LogError( "X server %\"s cannot be executed\n", argv[0] );
+		
+			argv[0] = "/usr/bin/X"; /* Shorter than the previous file name */
+			Debug( "exec %\"[s\n", argv );
+			(void)execv( argv[0], argv );
+			LogError( "X server %\"s cannot be executed\n", argv[0] );
+		}
+		
 		exit( 1 );
 	case -1:
 		LogError( "Forking X server for remote login failed: %m" );

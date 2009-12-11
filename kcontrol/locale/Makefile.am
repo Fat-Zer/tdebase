@@ -26,7 +26,7 @@ timezones:
 
 messages:
 	$(XGETTEXT) -ktranslate $(kcm_locale_la_SOURCES) -o $(podir)/kcmlocale.pot
-	$(XGETTEXT) TIMEZONES -o $(podir)/../kdelibs/timezones.pot
+	$(XGETTEXT) TIMEZONES -o $(podir)/timezones.pot
 
 xdg_apps_DATA = language.desktop
 

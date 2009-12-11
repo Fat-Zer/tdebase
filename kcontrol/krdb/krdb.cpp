@@ -524,7 +524,7 @@ void runRdb( uint flags )
 
     if (kglobals.hasKey("XftHintStyle"))
     {
-      QString hintStyle = kglobals.readEntry("XftHintStyle", "hintmedium");
+      QString hintStyle = kglobals.readEntry("XftHintStyle", "hintfull");
       contents += "Xft.hinting: ";
       if(hintStyle.isEmpty())
         contents += "-1\n";
@@ -540,7 +540,7 @@ void runRdb( uint flags )
 
     if (kglobals.hasKey("XftSubPixel"))
     {
-      QString subPixel = kglobals.readEntry("XftSubPixel");
+      QString subPixel = kglobals.readEntry("XftSubPixel", "none");
       if(!subPixel.isEmpty())
         contents += "Xft.rgba: " + subPixel + '\n';
     }

@@ -62,7 +62,7 @@ KBackgroundManager::KBackgroundManager(QWidget *desktop, KWinModule* kwinModule)
 
     m_pDesktop = desktop;
     if (desktop == 0L)
-        desktop = QApplication::desktop()->screen();
+        desktop = KApplication::desktop()->screen();
 
     m_Renderer.resize( 1 );
     m_Cache.resize( 1 );
@@ -95,6 +95,9 @@ KBackgroundManager::KBackgroundManager(QWidget *desktop, KWinModule* kwinModule)
 	    SLOT(slotChangeDesktop(int)));
     connect(m_pKwinmodule, SIGNAL(numberOfDesktopsChanged(int)),
 	    SLOT(slotChangeNumberOfDesktops(int)));
+    connect(m_pKwinmodule, SIGNAL(currentDesktopViewportChanged(int, const QPoint&)),
+            SLOT(slotChangeViewport(int, const QPoint&)));
+    
 
 #if (QT_VERSION-0 >= 0x030200)
     connect( kapp->desktop(), SIGNAL( resized( int )), SLOT( desktopResized())); // RANDR support
@@ -227,7 +230,21 @@ int KBackgroundManager::realDesktop()
 
 int KBackgroundManager::effectiveDesktop()
 {
-    return m_bCommon ? 0 : realDesktop();
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+
+    if (m_numberOfViewports > 1) {
+        if (m_bCommon) {
+            return 0;
+        }
+        else {
+            QPoint vx(m_pKwinmodule->currentViewport(m_pKwinmodule->currentDesktop()));
+            return (realDesktop() * m_numberOfViewports) + ((vx.x() * vx.y()) - 1);
+        }
+    }
+    else {
+        return m_bCommon ? 0 : realDesktop();
+    }
 }
 
 
@@ -236,6 +253,13 @@ int KBackgroundManager::effectiveDesktop()
  */
 void KBackgroundManager::slotChangeNumberOfDesktops(int num)
 {
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+    if (m_numberOfViewports < 1) {
+        m_numberOfViewports = 1;
+    }
+    num = (num * m_numberOfViewports);
+
     if (m_Renderer.size() == (unsigned) num)
 	return;
 
@@ -278,20 +302,26 @@ void KBackgroundManager::slotChangeNumberOfDesktops(int num)
  */
 void KBackgroundManager::slotChangeDesktop(int desk)
 {
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+    if (m_numberOfViewports < 1) {
+        m_numberOfViewports = 1;
+    }
+    
     if (desk == 0)
 	desk = realDesktop();
     else
 	desk--;
 
     // Lazy initialisation of # of desktops
-    if ((unsigned) desk >= m_Renderer.size())
-	slotChangeNumberOfDesktops( m_pKwinmodule->numberOfDesktops() );
+    if ((m_pKwinmodule->numberOfDesktops() * m_numberOfViewports) >= m_Renderer.size())
+        slotChangeNumberOfDesktops( m_pKwinmodule->numberOfDesktops() * m_numberOfViewports);
 
     int edesk = effectiveDesktop();
     m_Serial++;
 
     // If the background is the same: do nothing
-    if (m_Hash == m_Renderer[edesk]->hash())
+    if ((m_Hash == m_Renderer[edesk]->hash()) && (desk != 0))
     {
 	exportBackground(m_Current, desk);
         return;
@@ -306,6 +336,8 @@ void KBackgroundManager::slotChangeDesktop(int desk)
 	    continue;
 	if (m_Cache[i]->hash != m_Renderer[edesk]->hash())
 	    continue;
+        if (desk == 0)
+            continue;
 //        kdDebug() << "slotChangeDesktop i=" << i << endl;
 	setPixmap(m_Cache[i]->pixmap, m_Cache[i]->hash, i);
 	m_Cache[i]->atime = m_Serial;
@@ -316,8 +348,72 @@ void KBackgroundManager::slotChangeDesktop(int desk)
     // Do we have this or an identical config already running?
     for (unsigned i=0; i<m_Renderer.size(); i++)
     {
-        if ((m_Renderer[i]->hash() == m_Renderer[edesk]->hash()) &&
-            (m_Renderer[i]->isActive()))
+        if (((m_Renderer[i]->hash() == m_Renderer[edesk]->hash()) && (m_Renderer[i]->isActive())) && (desk != 0))
+            return;
+    }
+
+    renderBackground(edesk);
+}
+
+/*
+ * Call this when the viewport has been changed.
+ * Desk is in KWin convention: [1..desks], instead of [0..desks-1].
+ * 0 repaints the current viewport.
+ */
+void KBackgroundManager::slotChangeViewport(int desk, const QPoint& viewport)
+{
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+    if (m_numberOfViewports < 1) {
+        m_numberOfViewports = 1;
+    }
+
+    if (desk == 0)
+        desk = realDesktop();
+    else
+        desk--;
+
+    // Lazy initialisation of # of desktops
+    if ((m_pKwinmodule->numberOfDesktops() * m_numberOfViewports) >= m_Renderer.size())
+        slotChangeNumberOfDesktops( m_pKwinmodule->numberOfDesktops() * m_numberOfViewports );
+
+    int edesk = effectiveDesktop();
+    m_Serial++;
+
+    // If the background is the same: do nothing
+    if ((m_Hash == m_Renderer[edesk]->hash()) && (desk != 0))
+    {
+        exportBackground(m_Current, desk);
+        return;
+    }
+    m_Renderer[edesk]->stop();
+    m_Renderer[edesk]->cleanup();
+
+    // If we have the background already rendered: set it
+    for (unsigned i=0; i<m_Cache.size(); i++)
+    {
+        if (!m_Cache[i]->pixmap)
+            continue;
+        if (m_Cache[i]->hash != m_Renderer[edesk]->hash())
+            continue;
+        if (desk == 0)
+            continue;
+//        kdDebug() << "slotChangeDesktop i=" << i << endl;
+        
+        //KPixmap * viewport_background = new KPixmap(QPixmap(m_Cache[i]->pixmap->width()*s.width(), m_Cache[i]->pixmap->height()*s.height()));
+        //setPixmap(viewport_background, m_Cache[i]->hash, i);
+        //delete viewport_background;
+        
+        setPixmap(m_Cache[i]->pixmap, m_Cache[i]->hash, i);
+        m_Cache[i]->atime = m_Serial;
+        exportBackground(i, desk);
+        return;
+    }
+
+    // Do we have this or an identical config already running?
+    for (unsigned i=0; i<m_Renderer.size(); i++)
+    {
+        if (((m_Renderer[i]->hash() == m_Renderer[edesk]->hash()) && (m_Renderer[i]->isActive())) && (desk != 0))
             return;
     }
 
@@ -360,14 +456,14 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
           root_cleared = true;
 	  QTimer::singleShot( 0, this, SLOT( clearRoot()));
           // but make the pixmap visible until m_pDesktop is visible
-          QApplication::desktop()->screen()->setErasePixmap(*pm);
-          QApplication::desktop()->screen()->erase();
+          KApplication::desktop()->screen()->setErasePixmap(*pm);
+          KApplication::desktop()->screen()->erase();
        }
     }
     else
     {
-       QApplication::desktop()->screen()->setErasePixmap(*pm);
-       QApplication::desktop()->screen()->erase();
+        KApplication::desktop()->screen()->setErasePixmap(*pm);
+        KApplication::desktop()->screen()->erase();
     }
 
      // and export it via Esetroot-style for gnome/GTK apps to share in the pretties
@@ -387,8 +483,8 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
 
 void KBackgroundManager::clearRoot()
 {
-   QApplication::desktop()->screen()->setErasePixmap( QPixmap());
-   QApplication::desktop()->screen()->erase();
+    KApplication::desktop()->screen()->setErasePixmap( QPixmap());
+    KApplication::desktop()->screen()->erase();
 }
 
 /*
@@ -412,6 +508,14 @@ void KBackgroundManager::renderBackground(int desk)
  */
 void KBackgroundManager::slotImageDone(int desk)
 {
+    bool t_useViewports = 1;
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+    if (m_numberOfViewports < 1) {
+        m_numberOfViewports = 1;
+        t_useViewports = 0;
+    }
+    
     KPixmap *pm = new KPixmap();
     KVirtualBGRenderer *r = m_Renderer[desk];
     bool do_cleanup = true;
@@ -421,6 +525,11 @@ void KBackgroundManager::slotImageDone(int desk)
     bool current = (r->hash() == m_Renderer[effectiveDesktop()]->hash());
     if (current)
     {
+        //KPixmap * viewport_background = new KPixmap(QPixmap(pm->width()*s.width(), pm->height()*s.height()));
+        //printf("slotImageDone(): x: %d y: %d\n\r", viewport_background->size().width(), viewport_background->size().height());
+        //setPixmap(viewport_background, r->hash(), desk);
+        //delete viewport_background;
+        
         setPixmap(pm, r->hash(), desk);
         if (!m_bBgInitDone)
         {
@@ -742,7 +851,7 @@ void KBackgroundManager::repaintBackground()
     if (m_pDesktop)
        m_pDesktop->repaint();
     else
-       QApplication::desktop()->screen()->erase();
+        KApplication::desktop()->screen()->erase();
 }
 
 void KBackgroundManager::desktopResized()
@@ -755,12 +864,19 @@ void KBackgroundManager::desktopResized()
         removeCache(i);
         // make the renderer update its desktop size
         r->desktopResized();
+        for (unsigned j=0; j<(r->numRenderers()); ++j) {
+            r->renderer(j)->desktopResized();
+        }
     }
     m_Hash = 0;
     if( m_pDesktop )
-        m_pDesktop->resize( kapp->desktop()->size());
+        m_pDesktop->resize( kapp->desktop()->geometry().size());
     // Repaint desktop
     slotChangeDesktop(0);
+    repaintBackground();
+
+    // Signal KWin that the usable desktop area has probably changed...
+    // Use the DCOP signal kDestopResized
 }
 
 // DCOP exported

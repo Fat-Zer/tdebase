@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=hdd_unmount_decrypt
+Type=MimeType
+MimeType=media/hdd_unmounted_decrypted
+Comment=Unmounted Decrypted Hard Disk Volume
+Comment[de]=Nicht eingebundene, entschlüsselte Festplattenpartition
+Patterns=
+
+X-KDE-AutoEmbed=true
+X-KDE-IsAlso=inode/directory

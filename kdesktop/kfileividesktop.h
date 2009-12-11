@@ -80,12 +80,7 @@ class KFileIVIDesktop : public KFileIVI
     virtual void paintItem(QPainter *p, const QColorGroup &cg);
 
     /**
-     * Reimplements QIconView::paintFocus() to take the shadow
-     * metrics into account();
-     */
-    virtual void paintFocus( QPainter *p, const QColorGroup &cg );
 
-    /**
      * Draws the shadow text.
      * @param p the painter for drawing the item
      * @param cg the base color group

@@ -164,6 +164,9 @@ void FilterOptions::load( bool useDefaults )
            this, SLOT(checkFavoritesChanged()));
     connect(m_dlg->lvSearchProviders, SIGNAL(pressed(QListViewItem *)),
            this, SLOT(checkFavoritesChanged()));
+    connect(m_dlg->lvSearchProviders, SIGNAL(clicked(QListViewItem *)),
+           this, SLOT(checkFavoritesChanged()));
+
 
     connect(m_dlg->cmbDefaultEngine, SIGNAL(activated(const QString &)), this,
             SLOT(configChanged()));

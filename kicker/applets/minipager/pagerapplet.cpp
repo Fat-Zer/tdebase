@@ -136,6 +136,7 @@ KMiniPager::KMiniPager(const QString& configFile, Type type, int actions,
     connect( m_kwin, SIGNAL( currentDesktopViewportChanged(int, const QPoint&)),
             SLOT(slotSetDesktopViewport(int, const QPoint&)));
     connect( m_kwin, SIGNAL( numberOfDesktopsChanged(int)), SLOT( slotSetDesktopCount(int) ) );
+    connect( m_kwin, SIGNAL( desktopGeometryChanged(int)), SLOT( slotRefreshViewportCount(int) ) );
     connect( m_kwin, SIGNAL( activeWindowChanged(WId)), SLOT( slotActiveWindowChanged(WId) ) );
     connect( m_kwin, SIGNAL( windowAdded(WId) ), this, SLOT( slotWindowAdded(WId) ) );
     connect( m_kwin, SIGNAL( windowRemoved(WId) ), this, SLOT( slotWindowRemoved(WId) ) );
@@ -513,6 +514,28 @@ void KMiniPager::slotSetDesktopCount( int )
     updateLayout();
 }
 
+void KMiniPager::slotRefreshViewportCount( int )
+{
+    QValueList<KMiniPagerButton*>::ConstIterator it;
+    QValueList<KMiniPagerButton*>::ConstIterator itEnd = m_desktops.end();
+    for( it = m_desktops.begin(); it != itEnd; ++it )
+    {
+        delete (*it);
+    }
+    m_desktops.clear();
+
+    drawButtons();
+
+    m_curDesk = m_kwin->currentDesktop();
+    if ( m_curDesk == 0 )
+    {
+        m_curDesk = 1;
+    }
+
+    resizeEvent(0);
+    updateLayout();
+}
+
 void KMiniPager::slotActiveWindowChanged( WId win )
 {
     if (desktopPreview())
@@ -715,8 +738,10 @@ void KMiniPager::aboutToShowContextMenu()
                          PagerSettings::EnumBackgroundType::BgPlain + bgOffset);
     showMenu->insertItem(i18n("&Transparent"),
                          PagerSettings::EnumBackgroundType::BgTransparent + bgOffset);
-    showMenu->insertItem(i18n("&Desktop Wallpaper"),
+    if (m_useViewports == false) {
+        showMenu->insertItem(i18n("&Desktop Wallpaper"),
                          PagerSettings::EnumBackgroundType::BgLive + bgOffset);
+    }
     connect(showMenu, SIGNAL(activated(int)), SLOT(contextMenuActivated(int)));
     m_contextMenu->insertItem(i18n("&Pager Options"),showMenu);
 
@@ -795,12 +820,17 @@ void KMiniPager::contextMenuActivated(int result)
             break;
         case PagerSettings::EnumBackgroundType::BgLive + bgOffset:
         {
-            m_settings->setBackgroundType(PagerSettings::EnumBackgroundType::BgLive);
-            QValueList<KMiniPagerButton*>::ConstIterator it;
-            QValueList<KMiniPagerButton*>::ConstIterator itEnd = m_desktops.end();
-            for( it = m_desktops.begin(); it != itEnd; ++it )
-            {
-                (*it)->backgroundChanged();
+            if (m_useViewports == true) {
+                m_settings->setBackgroundType(PagerSettings::EnumBackgroundType::BgLive);
+                QValueList<KMiniPagerButton*>::ConstIterator it;
+                QValueList<KMiniPagerButton*>::ConstIterator itEnd = m_desktops.end();
+                for( it = m_desktops.begin(); it != itEnd; ++it )
+                {
+                    (*it)->backgroundChanged();
+                }
+            }
+            else {
+                m_settings->setBackgroundType(PagerSettings::EnumBackgroundType::BgTransparent);
             }
             break;
         }

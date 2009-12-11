@@ -85,6 +85,5 @@ ServiceTypes=Browser/View
 X-KDE-Library=konq_listview
 X-KDE-BrowserView-Args=TextView
 X-KDE-BrowserView-HideFromMenus=true
-X-KDE-BrowserView-Built-Into=konqueror
 Icon=view_text
 InitialPreference=6

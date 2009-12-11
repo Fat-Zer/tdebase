@@ -292,7 +292,7 @@ static int updateProcess( int pid )
        strncmp( ps->cmdline, "kdeinit: ", KDEINITLEN ) == 0 &&
        strcmp( ps->cmdline + KDEINITLEN, "Running..." ) != 0 ) {
     size_t len;
-    char* end = strchr( ps->cmdline + KDEINITLEN, ' ' );
+    char* end = (char*)strchr( ps->cmdline + KDEINITLEN, ' ' );
     if ( end )
       len = ( end - ps->cmdline ) - KDEINITLEN;
     else

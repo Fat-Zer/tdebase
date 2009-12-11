@@ -53,6 +53,7 @@
 #include <kstringhandler.h>
 #include <kurlrequester.h>
 #include <kwin.h>
+#include <kwinmodule.h>
 #include <kimagefilepreview.h>
 #include <knewstuff/downloaddialog.h>
 
@@ -73,7 +74,14 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
    m_multidesktop = _multidesktop;
    m_previewUpdates = true;
    
+   KWinModule *m_kwin;
+   m_kwin = new KWinModule(this);
+   m_curDesk = m_kwin->currentDesktop();
+   QSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+   m_useViewports = s.width() * s.height() > 1;
+   
    m_numDesks = m_multidesktop ? KWin::numberOfDesktops() : 1;
+   m_numViewports = s.width() * s.height();
    m_numScreens = QApplication::desktop()->numScreens();
    
    QCString multiHead = getenv("KDE_MULTIHEAD");
@@ -81,8 +89,19 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
    {
       m_numScreens = 1;
    }
+   
+   QPoint vx(m_kwin->currentViewport(m_kwin->currentDesktop()));
+   int t_eViewport = (vx.x() * vx.y());
+   if (t_eViewport < 1) {
+      t_eViewport = 1;
+   }
+   delete m_kwin;
 
    m_desk = m_multidesktop ? KWin::currentDesktop() : 1;
+   //m_desk = m_multidesktop ? (m_useViewports ? (m_desk * m_numViewports) : m_desk) : m_desk;
+   m_desk = m_multidesktop ? (m_useViewports ? (((m_desk - 1) * m_numViewports) + t_eViewport) : m_desk) : m_desk;
+   m_numDesks = m_multidesktop ? (m_useViewports ? (m_numDesks * m_numViewports) : m_numDesks) : m_numDesks;
+   
    m_screen = QApplication::desktop()->screenNumber(this);
    if (m_screen >= (int)m_numScreens)
       m_screen = m_numScreens-1;
@@ -416,8 +435,18 @@ void BGDialog::slotIdentifyScreens()
 void BGDialog::initUI()
 {
    // Desktop names
-   for (unsigned i = 0; i < m_numDesks; ++i)
-      m_comboDesktop->insertItem(m_pGlobals->deskName(i));
+   if (m_useViewports == false) {
+      for (unsigned i = 0; i < m_numDesks; ++i) {
+         m_comboDesktop->insertItem(m_pGlobals->deskName(i));
+      }
+   }
+   else {
+      for (unsigned i = 0; i < (m_numDesks/m_numViewports); ++i) {
+         for (unsigned j = 0; j < m_numViewports; ++j) {
+            m_comboDesktop->insertItem(i18n("Desktop %1 Viewport %2").arg(i+1).arg(j+1));
+         }
+      }
+   }
    
    // Screens
    for (unsigned i = 0; i < m_numScreens; ++i)

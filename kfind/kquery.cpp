@@ -372,11 +372,16 @@ void KQuery::processQuery( KFileItem* file)
           }
           else
           {
-             if (str.find(m_context, 0, m_casesensitive) != -1)
-             {
-                matchingLine=QString::number(matchingLineNumber)+": "+str;
-                found = true;
-                break;
+             if ((!str.isNull()) && (!m_context.isNull())) {
+                 if (str.find(m_context, 0, m_casesensitive) != -1)
+                 {
+                    matchingLine=QString::number(matchingLineNumber)+": "+str;
+                    found = true;
+                    break;
+                 }
+             }
+             else {
+                 return;
              }
           }
           kapp->processEvents();

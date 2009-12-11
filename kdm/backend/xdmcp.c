@@ -386,7 +386,8 @@ NetworkAddressToName( CARD16 connectionType, ARRAY8Ptr connectionAddress,
 					ASPrintf( &name, "localhost:%d", displayNumber );
 				else {
 					if (removeDomainname) {
-						char *localDot, *remoteDot;
+						char *remoteDot;
+						char *localDot;
 
 						/* check for a common domain name.	This
 						 * could reduce names by recognising common
@@ -394,8 +395,8 @@ NetworkAddressToName( CARD16 connectionType, ARRAY8Ptr connectionAddress,
 						 * this is as useful, and will confuse more
 						 * people
 						 */
-						if ((localDot = strchr( localhost, '.' )) &&
-						    (remoteDot = strchr( hostname, '.' )))
+						if ((localDot = (char*)strchr( localhost, '.' )) &&
+						    (remoteDot = (char*)strchr( hostname, '.' )))
 						{
 							/* smash the name in place; it won't
 							 * be needed later.
@@ -924,6 +925,9 @@ manage( struct sockaddr *from, int fromlen, int length, int fd )
 			}
 			d->clientAddr = clientAddress;
 			d->connectionType = connectionType;
+			d->remoteHost = NetworkAddressToHostname (pdpy->connectionType,
+			                             &pdpy->connectionAddress);
+
 			XdmcpDisposeARRAY8( &clientPort );
 			if (pdpy->fileAuthorization) {
 				d->authorizations = (Xauth **)Malloc( sizeof(Xauth *) );
@@ -1048,7 +1052,8 @@ NetworkAddressToHostname( CARD16 connectionType, ARRAY8Ptr connectionAddress )
 #endif
 		{
 			struct hostent *he;
-			char *myDot, *name, *lname;
+			char *name, *lname;
+			char *myDot;
 			int af_type;
 #if defined(IPv6) && defined(AF_INET6)
 			char dotted[INET6_ADDRSTRLEN];
@@ -1094,7 +1099,7 @@ NetworkAddressToHostname( CARD16 connectionType, ARRAY8Ptr connectionAddress )
 			  oki:
 				if (StrDup( &name, he->h_name ) &&
 				    !strchr( name, '.' ) &&
-				    (myDot = strchr( localHostname(), '.' )))
+				    (myDot = (char*)strchr( localHostname(), '.' )))
 				{
 					if (ASPrintf( &lname, "%s%s", name, myDot )) {
 #if defined(IPv6) && defined(AF_INET6)

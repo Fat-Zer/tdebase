@@ -132,6 +132,18 @@ void KickerConfig::init()
     configFileWatch->startScan();
 }
 
+void KickerConfig::restartKicker()
+{
+    // Tell kicker to restart
+    if (!kapp->dcopClient()->isAttached())
+    {
+        kapp->dcopClient()->attach();
+    }
+    QCString appname;
+    appname = "kicker";
+    kapp->dcopClient()->send(appname, appname, "restart", "");
+}
+
 void KickerConfig::notifyKicker()
 {
     kdDebug() << "KickerConfig::notifyKicker()" << endl;

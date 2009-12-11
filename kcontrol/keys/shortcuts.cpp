@@ -24,9 +24,12 @@
 
 #include "shortcuts.h"
 
+#include <stdlib.h>
+
 #include <qdir.h>
 #include <qlayout.h>
 #include <qwhatsthis.h>
+#include <qcheckbox.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -101,6 +104,8 @@ QString ShortcutsModule::quickHelp() const
 
 void ShortcutsModule::initGUI()
 {
+	QString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
+
 	kdDebug(125) << "A-----------" << endl;
 	KAccelActions* keys = &m_actionsGeneral;
 // see also KShortcutsModule::init() below !!!
@@ -172,8 +177,27 @@ void ShortcutsModule::initGUI()
 	m_pTab->setMargin( KDialog::marginHint() );
 	pVLayout->addWidget( m_pTab );
 
+	// See if ~/.kde3/env/win-key.sh exists
+	QFile f( kde_winkeys_env_dir + "win-key.sh" );
+	if ( f.exists() == false ) {
+		// No, it does not, so Win is a modifier
+		m_bUseRmWinKeys = true;
+	}
+	else {
+		// Yes, it does, so Win is a key
+		m_bUseRmWinKeys = false;
+	}
 	m_pListGeneral = new KAccelShortcutList( m_actionsGeneral, true );
+
 	m_pkcGeneral = new KKeyChooser( m_pListGeneral, this, KKeyChooser::Global, false );
+	m_pkcGeneral->resize (m_pkcGeneral->sizeHint() );
+	if (system("xmodmap 1> /dev/null 2> /dev/null") == 0) {
+		m_useRmWinKeys = new QCheckBox( i18n("Use Win key as modifier (uncheck to bind Win key to Menu)"), this );
+		m_useRmWinKeys->resize( m_useRmWinKeys->sizeHint() );
+		m_useRmWinKeys->setChecked( m_bUseRmWinKeys );
+		pVLayout->addWidget( m_useRmWinKeys, 1, 0 );
+		connect( m_useRmWinKeys, SIGNAL(clicked()), SLOT(slotUseRmWinKeysClicked()) );
+	}
 	m_pTab->addTab( m_pkcGeneral, i18n("&Global Shortcuts") );
 	connect( m_pkcGeneral, SIGNAL(keyChange()), SLOT(slotKeyChange()) );
 
@@ -430,6 +454,39 @@ void ShortcutsModule::saveScheme()
 
 void ShortcutsModule::slotRemoveScheme()
 {
+}
+
+void ShortcutsModule::slotUseRmWinKeysClicked()
+{
+	QString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
+
+	// See if ~/.kde3/env/win-key.sh exists
+	QFile f( kde_winkeys_env_dir + "win-key.sh" );
+	if ( f.exists() == false ) {
+		// No, it does not, so Win is currently a modifier
+		if (m_useRmWinKeys->isChecked() == false) {
+			// Create the file
+			if ( f.open( IO_WriteOnly ) ) {
+				QTextStream stream( &f );
+				stream << "xmodmap -e 'keycode 133=Menu'" << "\n";
+				stream << "xmodmap -e 'keycode 134=Menu'" << "\n";
+				f.close();
+				system("xmodmap -e 'keycode 133=Menu'");
+				system("xmodmap -e 'keycode 134=Menu'");
+			}
+		}
+	}
+	else {
+		// Yes, it does, so Win is currently a key
+		m_bUseRmWinKeys = false;
+		if (m_useRmWinKeys->isChecked() == true) {
+			// Remove the file
+			f.remove();
+			// Update key mappings
+			system("xmodmap -e 'keycode 133=Super_L'");
+			system("xmodmap -e 'keycode 134=Super_R'");
+		}
+	}
 }
 
 #include "shortcuts.moc"

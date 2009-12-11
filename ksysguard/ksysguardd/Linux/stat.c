@@ -267,10 +267,10 @@ static int processDiskIO( const char* buf )
     }
     /* Move p after the sencond ')'. We can safely assume that
      * those two ')' exist. */
-    p = strchr( p, ')' ) + 1;
-    p = strchr( p, ')' ) + 1;
+    p = (char*)strchr( p, ')' ) + 1;
+    p = (char*)strchr( p, ')' ) + 1;
     if ( p && *p )
-      p = strchr( p, '(' );
+      p = (char*)strchr( p, '(' );
   }
 
   return 0;

@@ -41,6 +41,7 @@ from the copyright holder.
 #include <X11/Xlib.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 
 
@@ -94,6 +95,21 @@ StartServerOnce( void )
 		(void)Signal( SIGUSR1, SIG_IGN );
 		(void)execv( argv[0], argv );
 		LogError( "X server %\"s cannot be executed\n", argv[0] );
+		
+		/* Let's try again with some standard paths */
+		argv[0] = (char *)realloc(argv[0], strlen("/usr/X11R6/bin/X") + 1);
+		if (argv[0] != NULL) {
+			argv[0] = "/usr/X11R6/bin/X";
+			Debug( "exec %\"[s\n", argv );
+			(void)execv( argv[0], argv );
+			LogError( "X server %\"s cannot be executed\n", argv[0] );
+		
+			argv[0] = "/usr/bin/X"; /* Shorter than the previous file name */
+			Debug( "exec %\"[s\n", argv );
+			(void)execv( argv[0], argv );
+			LogError( "X server %\"s cannot be executed\n", argv[0] );
+		}
+		
 		exit( 47 );
 	case -1:
 		LogError( "X server fork failed\n" );

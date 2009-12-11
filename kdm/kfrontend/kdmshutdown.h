@@ -32,6 +32,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kpushbutton.h>
 
 #include <qradiobutton.h>
+#include <qtoolbutton.h>
+#include <qpixmap.h>
 
 class QLabel;
 class KPushButton;
@@ -191,6 +193,48 @@ class KDMCancelShutdown : public KDMShutdownBase {
   public:
 	KDMCancelShutdown( int how, int start, int timeout, int force, int uid,
 	                   const char *os, QWidget *_parent );
+};
+
+class KSMPushButton : public KPushButton
+{
+  Q_OBJECT
+
+public:
+
+  KSMPushButton( const KGuiItem &item, QWidget *parent, const char *name = 0 );
+
+protected:
+  virtual void keyPressEvent(QKeyEvent*e);
+  virtual void keyReleaseEvent(QKeyEvent*e);
+
+private:
+
+ bool m_pressed;
+
+};
+
+class FlatButton : public QToolButton
+{
+  Q_OBJECT
+
+ public:
+
+  FlatButton( QWidget *parent = 0, const char *name = 0 );
+  ~FlatButton();
+
+ protected:
+  virtual void keyPressEvent(QKeyEvent*e);
+  virtual void keyReleaseEvent(QKeyEvent*e);
+
+ private slots:
+  
+ private:
+  void init();
+  
+  bool m_pressed;
+  QString m_text;
+  QPixmap m_pixmap;
+ 
 };
 
 #endif /* KDMSHUTDOWN_H */

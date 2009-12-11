@@ -47,7 +47,7 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
   : QWidget (parent, name),
     m_locale(locale)
 {
-  QGridLayout *lay = new QGridLayout(this, 3, 3,
+  QGridLayout *lay = new QGridLayout(this, 4, 3,
                                      KDialog::marginHint(),
                                      KDialog::spacingHint());
 
@@ -99,6 +99,65 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
 
   lay->setColStretch(1, 1);
   lay->setColStretch(2, 1);
+
+  // Added jriddell 2007-01-08, for Kubuntu Language Selector spec
+  QHBoxLayout* languageSelectorLayout = new QHBoxLayout();
+  installLanguage = new QPushButton(i18n("Install New Language"), this);
+  languageSelectorLayout->addWidget(installLanguage);
+  uninstallLanguage = new QPushButton(i18n("Uninstall Language"), this);
+  languageSelectorLayout->addWidget(uninstallLanguage);
+  selectLanguage = new QPushButton(i18n("Select System Language"), this);
+  languageSelectorLayout->addWidget(selectLanguage);
+  languageSelectorLayout->addStretch();
+  lay->addMultiCellLayout(languageSelectorLayout, 3, 3, 0, 2);
+
+  connect( installLanguage, SIGNAL(clicked()), this, SLOT(slotInstallLanguage()) );
+  connect( uninstallLanguage, SIGNAL(clicked()), this, SLOT(slotUninstallLanguage()) );
+  connect( selectLanguage, SIGNAL(clicked()), this, SLOT(slotSelectLanguage()) );
+
+}
+
+void KLocaleConfig::slotInstallLanguage()
+{
+  KProcess *proc = new KProcess;
+
+  *proc << "kdesu";
+  *proc << "qt-language-selector --mode install";
+  QApplication::connect(proc, SIGNAL(processExited(KProcess *)),
+			this, SLOT(slotLanguageSelectorExited(KProcess *)));
+  setEnabled(false);
+  proc->start();
+}
+
+void KLocaleConfig::slotUninstallLanguage()
+{
+  KProcess *proc = new KProcess;
+
+  *proc << "kdesu";
+  *proc << "qt-language-selector --mode uninstall";
+  QApplication::connect(proc, SIGNAL(processExited(KProcess *)),
+			this, SLOT(slotLanguageSelectorExited(KProcess *)));
+  setEnabled(false);
+  proc->start();
+}
+
+void KLocaleConfig::slotSelectLanguage()
+{
+  KProcess *proc = new KProcess;
+
+  *proc << "kdesu";
+  *proc << "qt-language-selector --mode select";
+  QApplication::connect(proc, SIGNAL(processExited(KProcess *)),
+			this, SLOT(slotLanguageSelectorExited(KProcess *)));
+  setEnabled(false);
+  proc->start();
+}
+
+void KLocaleConfig::slotLanguageSelectorExited(KProcess *)
+{
+  //reload here
+  loadLanguageList();
+  setEnabled(true);
 }
 
 void KLocaleConfig::slotAddLanguage(const QString & code)

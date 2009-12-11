@@ -1,0 +1,21 @@
+[Desktop Entry]
+Exec=kcmshell iccconfig
+Icon=kcoloredit
+Type=Application
+DocPath=kcontrol/iccconfig/index.html
+
+X-KDE-Library=iccconfig
+X-KDE-ParentApp=kcontrol
+X-KDE-RootOnly=true
+X-KDE-SubstituteUID=true
+
+Categories=Qt;KDE;X-KDE-settings-peripherals;
+Comment=Configure display ICC profile
+Comment[en_US]=Configure display ICC profile
+DocPath=kcontrol/iccconfig.html
+GenericName=
+GenericName[en_US]=
+Keywords=ICC,display,color,profile
+MimeType=
+Name=ICC Color Profile
+Name[en_US]=ICC Color Profile

@@ -17,7 +17,7 @@
 
 SUBDIRS = .
 
-INCLUDES= -I$(top_srcdir)/kdmlib $(all_includes)
+INCLUDES= -I$(top_srcdir)/kdmlib $(all_includes) $(HAL_INCS) $(DBUS_INCS)
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
@@ -31,7 +31,7 @@ ksmserver_la_SOURCES = main.cpp server.cpp shutdowndlg.cpp \
 	KSMServerInterface.skel server.skel
 
 ksmserver_la_LDFLAGS = $(all_libraries) -avoid-version -module
-ksmserver_la_LIBADD = ../kdmlib/libdmctl.la $(LIB_KDEUI)
+ksmserver_la_LIBADD = ../kdmlib/libdmctl.la $(LIB_KDEUI) $(HAL_LIBS) $(DBUS_LIBS)
 
 picsdir = $(kde_datadir)/ksmserver/pics
 pics_DATA = shutdownkonq.png
@@ -44,7 +44,7 @@ updatedir = $(kde_datadir)/kconf_update
 EXTRA_PROGRAMS = testsh
 testsh_SOURCES = test.cpp
 testsh_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-testsh_LDADD = $(LIB_KDEUI) shutdowndlg.lo ../kdmlib/libdmctl.la
+testsh_LDADD = $(LIB_KDEUI) shutdowndlg.lo ../kdmlib/libdmctl.la $(HAL_LIBS) $(DBUS_LIBS)
 
 messages:
 	$(XGETTEXT) *.cpp -o $(podir)/ksmserver.pot

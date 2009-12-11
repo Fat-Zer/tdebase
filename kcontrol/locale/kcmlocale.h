@@ -75,6 +75,11 @@ private slots:
   void slotLanguageDown();
   void slotCheckButtons();
 
+  void slotInstallLanguage();
+  void slotUninstallLanguage();
+  void slotSelectLanguage();
+  void slotLanguageSelectorExited(KProcess *);
+
 private:
   QStringList languageList() const;
 
@@ -90,6 +95,10 @@ private:
   QPushButton * m_removeLanguage;
   QPushButton * m_upButton;
   QPushButton * m_downButton;
+
+  QPushButton* installLanguage;
+  QPushButton* uninstallLanguage;
+  QPushButton* selectLanguage;
 };
 
 #endif

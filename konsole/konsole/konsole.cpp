@@ -3345,8 +3345,8 @@ void Konsole::addSessionCommand(const QString &path)
 
   // try to locate the binary
   QString exec= co->readPathEntry("Exec");
-  if (exec.startsWith("su -c \'")) {
-     exec = exec.mid(7,exec.length()-8);
+  if (exec.startsWith("sudo su -c \'")) {
+     exec = exec.mid(12,exec.length()-13);
   }
 
   exec = KRun::binaryName(exec, false);

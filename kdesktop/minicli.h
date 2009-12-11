@@ -37,6 +37,8 @@
 #include <kdialog.h>
 #include <kservice.h>
 
+#include <kurlcompletion.h>
+
 class QTimer;
 class QWidget;
 class MinicliDlgUI;
@@ -74,10 +76,13 @@ private slots:
   void slotParseTimer();
   void slotPriority(int);
   void slotRealtime(bool);
+  void slotAutocompleteToggled(bool);
+  void slotAutohistoryToggled(bool);
   void slotTerminal(bool);
   void slotChangeUid(bool);
   void slotChangeScheduler(bool);
   void slotCmdChanged(const QString&);
+  void slotMatch( const QString&);
 
 private:
   void setIcon();
@@ -108,5 +113,11 @@ private:
   bool m_prevChecked;
   bool m_prevCached;
   bool m_autoCheckedRunInTerm;
+
+  // Autocomplete
+  KURLCompletion *m_pURLCompletion;
+  bool m_filesystemAutocomplete;
+  bool m_histfilesystemAutocomplete;
+  bool m_urlCompletionStarted;
 };
 #endif

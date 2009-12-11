@@ -32,7 +32,12 @@
 #include <knuminput.h>
 #include <kstandarddirs.h>
 
+#include <kicondialog.h>
+#include <kiconloader.h>
+
 #include "main.h"
+
+#include "kickerSettings.h"
 
 #include "menutab_impl.h"
 #include "menutab_impl.moc"
@@ -66,6 +71,25 @@ MenuTab::MenuTab( QWidget *parent, const char* name )
 {
     // connections
     connect(m_editKMenuButton, SIGNAL(clicked()), SLOT(launchMenuEditor()));
+    connect(btnCustomKMenuIcon, SIGNAL(clicked()), SLOT(launchIconEditor()));
+    connect(kcfg_KMenuText, SIGNAL(textChanged(QString)), SLOT(kmenuChanged()));
+    connect(kcfg_ShowKMenuText, SIGNAL(toggled(bool)), SLOT(kmenuChanged()));
+    //connect(kcfg_ButtonFont, SIGNAL(fontSelected(const QFont &)), SLOT(kmenuChanged()));
+    connect(maxrecentdocs, SIGNAL(valueChanged(int)), this, SLOT(changed()));
+
+    KIconLoader * ldr = KGlobal::iconLoader();
+    QPixmap kmenu_icon;
+    m_kmenu_icon = KickerSettings::customKMenuIcon();
+    if (m_kmenu_icon.isNull() == true) {
+        m_kmenu_icon = QString("kmenu");
+    }
+    kmenu_icon = ldr->loadIcon(m_kmenu_icon, KIcon::Small, KIcon::SizeSmall);
+    btnCustomKMenuIcon->setPixmap(kmenu_icon);
+
+    KConfig *config;
+    config = new KConfig(QString::fromLatin1("kdeglobals"), false, false);
+    config->setGroup(QString::fromLatin1("RecentDocuments"));
+    maxrecentdocs->setValue(config->readNumEntry(QString::fromLatin1("MaxEntries"), 10));
 
     m_browserGroupLayout->setColStretch( 1, 1 );
     m_pRecentOrderGroupLayout->setColStretch( 1, 1 );
@@ -156,6 +180,22 @@ void MenuTab::save()
     c->writeEntry("Extensions", ext);
 
     c->sync();
+
+    // Save KMenu settings
+    c->setGroup("KMenu");
+    c->writeEntry("CustomIcon", m_kmenu_icon);
+    c->sync();
+
+    // Save recent documents
+    KConfig *config;
+    config = new KConfig(QString::fromLatin1("kdeglobals"), false, false);
+    config->setGroup(QString::fromLatin1("RecentDocuments"));
+    config->writeEntry("MaxEntries", maxrecentdocs->value());
+    config->sync();
+
+    if (m_kmenu_button_changed == true) {
+        system("dcop kicker kicker restart &");
+    }
 }
 
 void MenuTab::defaults()
@@ -178,4 +218,26 @@ void MenuTab::launchMenuEditor()
                            "Perhaps it is not installed or not in your path."),
                            i18n("Application Missing"));
     }
+}
+
+void MenuTab::launchIconEditor()
+{
+    KIconDialog dlg(this);
+    QString newIcon = dlg.selectIcon(KIcon::Small, KIcon::Application);
+    if (newIcon.isEmpty())
+        return;
+
+    m_kmenu_icon = newIcon;
+    KIconLoader * ldr = KGlobal::iconLoader();
+    QPixmap kmenu_icon;
+    kmenu_icon = ldr->loadIcon(m_kmenu_icon, KIcon::Small, KIcon::SizeSmall);
+    btnCustomKMenuIcon->setPixmap(kmenu_icon);
+    m_kmenu_button_changed = true;
+
+    emit changed();
+}
+
+void MenuTab::kmenuChanged()
+{
+    m_kmenu_button_changed = true;
 }

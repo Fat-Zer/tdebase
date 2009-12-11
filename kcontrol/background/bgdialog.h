@@ -86,8 +86,10 @@ protected:
    KGlobalBackgroundSettings *m_pGlobals;
    KStandardDirs *m_pDirs;
    bool m_multidesktop;
-
+   bool m_useViewports;
+   int m_curDesk;
    unsigned m_numDesks;
+   unsigned m_numViewports;
    unsigned m_numScreens;
    int m_desk;
    int m_screen;

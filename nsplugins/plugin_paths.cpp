@@ -41,6 +41,8 @@ QStringList getSearchPaths()
         // keep sync with kdebase/kcontrol/konqhtml
         paths.append("$HOME/.mozilla/plugins");
         paths.append("$HOME/.netscape/plugins");
+	paths.append("/usr/lib/iceweasel/plugins");
+	paths.append("/usr/lib/iceape/plugins");
         paths.append("/usr/lib/firefox/plugins");
         paths.append("/usr/lib64/browser-plugins");
         paths.append("/usr/lib/browser-plugins");

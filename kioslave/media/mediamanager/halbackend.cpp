@@ -20,8 +20,10 @@
 #include "linuxcdpolling.h"
 
 #include <stdlib.h>
+#include <locale.h>
 
 #include <kapplication.h>
+#include <kmessagebox.h>
 #include <qeventloop.h>
 #include <qfile.h>
 #include <klocale.h>
@@ -33,9 +35,17 @@
 #include <kmountpoint.h>
 #include <kmessagebox.h>
 #include <kio/job.h>
+#include <kstandarddirs.h>
+#include <kprocess.h>
 
-#define MOUNT_SUFFIX	(libhal_volume_is_mounted(halVolume) ? QString("_mounted") : QString("_unmounted"))
-#define MOUNT_ICON_SUFFIX	(libhal_volume_is_mounted(halVolume) ? QString("_mount") : QString("_unmount"))
+#define MOUNT_SUFFIX    (                                                                       \
+    (medium->isMounted() ? QString("_mounted") : QString("_unmounted")) +   \
+    (medium->isEncrypted() ? (halClearVolume ? "_decrypted" : "_encrypted") : "" )          \
+    )
+#define MOUNT_ICON_SUFFIX   (                                                              \
+    (medium->isMounted() ? QString("_mount") : QString("_unmount")) +   \
+    (medium->isEncrypted() ? (halClearVolume ? "_decrypt" : "_encrypt") : "" )      \
+    )
 
 /* Static instance of this class, for static HAL callbacks */
 static HALBackend* s_HALBackend;
@@ -211,8 +221,15 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
     /* Add volume block devices */
     if (libhal_device_query_capability(m_halContext, udi, "volume", NULL))
     {
-        /* We only list volume that have a filesystem or volume that have an audio track*/
-        if ( libhal_device_get_property_QString(m_halContext, udi, "volume.fsusage") != "filesystem" &&
+        /* We only list volumes that...
+         *  - are encrypted with LUKS or
+         *  - have a filesystem or
+         *  - have an audio track
+         */
+        if ( ( libhal_device_get_property_QString(m_halContext, udi, "volume.fsusage") != "crypto" ||
+               libhal_device_get_property_QString(m_halContext, udi, "volume.fstype") != "crypto_LUKS"
+             ) &&
+             libhal_device_get_property_QString(m_halContext, udi, "volume.fsusage") != "filesystem" &&
              !libhal_device_get_property_bool(m_halContext, udi, "volume.disc.has_audio", NULL) &&
              !libhal_device_get_property_bool(m_halContext, udi, "volume.disc.is_blank", NULL) )
             return;
@@ -232,6 +249,21 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
 
         /** @todo check exclusion list **/
 
+        /* Special handling for clear crypto volumes */
+        LibHalVolume* halVolume = libhal_volume_from_udi(m_halContext, udi);
+        if (!halVolume)
+            return;
+        const char* backingVolumeUdi = libhal_volume_crypto_get_backing_volume_udi(halVolume);
+        if ( backingVolumeUdi != NULL )
+        {
+            /* The crypto drive was unlocked and may now be mounted... */
+            kdDebug(1219) << "HALBackend::AddDevice : ClearVolume appeared for " << backingVolumeUdi << endl;
+            ResetProperties(backingVolumeUdi, allowNotification);
+            libhal_volume_free(halVolume);
+            return;
+        }
+        libhal_volume_free(halVolume);
+
         /* Create medium */
         Medium* medium = new Medium(udi, "");
         setVolumeProperties(medium);
@@ -247,6 +279,11 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
                 return;
             }
         }
+        
+	// instert medium into list
+	m_mediaList.addMedium(medium, allowNotification);
+
+	// finally check for automount
         QMap<QString,QString> options = MediaManagerUtils::splitOptions(mountoptions(udi));
         kdDebug() << "automount " << options["automount"] << endl;
         if (options["automount"] == "true" && allowNotification ) {
@@ -254,7 +291,6 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
             if (!error.isEmpty())
                 kdDebug() << "error " << error << endl;
         }
-        m_mediaList.addMedium(medium, allowNotification);
 
         return;
     }
@@ -295,11 +331,18 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
 
 void HALBackend::RemoveDevice(const char *udi)
 {
-    m_mediaList.removeMedium(udi, true);
+    const Medium *medium = m_mediaList.findByClearUdi(udi);
+    if (medium) {
+        ResetProperties(medium->id().ascii());
+    } else {
+        m_mediaList.removeMedium(udi, true);
+    }
 }
 
 void HALBackend::ModifyDevice(const char *udi, const char* key)
 {
+    kdDebug(1219) << "HALBackend::ModifyDevice for '" << udi << "' on '" << key << "'\n";
+
     const char* mediumUdi = findMediumUdiFromUdi(udi);
     if (!mediumUdi)
         return;
@@ -381,6 +424,18 @@ const char* HALBackend::findMediumUdiFromUdi(const char* udi)
     if (libhal_device_property_exists(m_halContext, udi, "info.capabilities", NULL))
         if (libhal_device_query_capability(m_halContext, udi, "volume", NULL))
         {
+            /* check if this belongs to an encrypted volume */
+            LibHalVolume* halVolume = libhal_volume_from_udi(m_halContext, udi);
+            if (!halVolume) return NULL;
+            const char* backingUdi = libhal_volume_crypto_get_backing_volume_udi(halVolume);
+            if (backingUdi != NULL) {
+                const char* result = findMediumUdiFromUdi(backingUdi);
+                libhal_volume_free(halVolume);
+                return result;
+            }
+            libhal_volume_free(halVolume);
+
+            /* this is a volume whose drive is registered */
             QString driveUdi = libhal_device_get_property_QString(m_halContext, udi, "block.storage_device");
             return findMediumUdiFromUdi(driveUdi.ascii());
         }
@@ -445,11 +500,47 @@ void HALBackend::setVolumeProperties(Medium* medium)
     medium->setName(
         generateName(libhal_volume_get_device_file(halVolume)) );
 
-    medium->mountableState(
-        libhal_volume_get_device_file(halVolume),		/* Device node */
-        libhal_volume_get_mount_point(halVolume),		/* Mount point */
-        libhal_volume_get_fstype(halVolume),			/* Filesystem type */
-        libhal_volume_is_mounted(halVolume) );			/* Mounted ? */
+    LibHalVolume* halClearVolume = NULL;
+    if ( libhal_device_get_property_QString(m_halContext, udi, "volume.fsusage") == "crypto" )
+    {
+        kdDebug(1219) << "HALBackend::setVolumeProperties : crypto volume" << endl;
+
+        medium->setEncrypted(true);
+        char* clearUdi = libhal_volume_crypto_get_clear_volume_udi(m_halContext, halVolume);
+	QString clearUdiString;
+        if (clearUdi != NULL) {
+            kdDebug(1219) << "HALBackend::setVolumeProperties : crypto clear volume avail - " << clearUdi << endl;
+            halClearVolume = libhal_volume_from_udi(m_halContext, clearUdi);
+            // ignore if halClearVolume is NULL -> just not decrypted in this case
+	    clearUdiString = clearUdi;
+	    libhal_free_string(clearUdi);
+        }
+
+        if (halClearVolume)
+            medium->mountableState(
+                libhal_volume_get_device_file(halVolume),		/* Device node */
+                clearUdiString,
+                libhal_volume_get_mount_point(halClearVolume),		/* Mount point */
+                libhal_volume_get_fstype(halClearVolume),		/* Filesystem type */
+                libhal_volume_is_mounted(halClearVolume) );		/* Mounted ? */
+        else
+            medium->mountableState(
+                libhal_volume_get_device_file(halVolume),		/* Device node */
+                QString::null,
+                QString::null,		/* Mount point */
+                QString::null,		/* Filesystem type */
+                false );		/* Mounted ? */
+    }
+    else
+    {
+        kdDebug(1219) << "HALBackend::setVolumeProperties : normal volume" << endl;
+        medium->mountableState(
+            libhal_volume_get_device_file(halVolume),		/* Device node */
+            libhal_volume_get_mount_point(halVolume),		/* Mount point */
+            libhal_volume_get_fstype(halVolume),		/* Filesystem type */
+            libhal_volume_is_mounted(halVolume) );		/* Mounted ? */
+    }
+
 
     char* name = libhal_volume_policy_compute_display_name(halDrive, halVolume, m_halStoragePolicy);
     QString volume_name = QString::fromUtf8(name);
@@ -777,13 +868,35 @@ void HALBackend::hal_device_condition(LibHalContext *ctx, const char *udi,
 QStringList HALBackend::mountoptions(const QString &name)
 {
     const Medium* medium = m_mediaList.findById(name);
-    if (medium && !isInFstab(medium).isNull())
+    if (!medium)
+    	return QStringList(); // we don't know about that one
+    if (!isInFstab(medium).isNull())
         return QStringList(); // not handled by HAL - fstab entry
+
+    QString volume_udi = name;
+    if (medium->isEncrypted()) {
+        // see if we have a clear volume
+        LibHalVolume* halVolume = libhal_volume_from_udi(m_halContext, medium->id().latin1());
+        if (halVolume) {
+            char* clearUdi = libhal_volume_crypto_get_clear_volume_udi(m_halContext, halVolume);
+            if (clearUdi != NULL) {
+	        volume_udi = clearUdi;
+		libhal_free_string(clearUdi);
+	    } else {
+	        // if not decrypted yet then no mountoptions
+		return QStringList();
+	    }
+            libhal_volume_free(halVolume);
+        } else {
+	    // strange...
+	    return QStringList();
+	}
+    }
 
     KConfig config("mediamanagerrc");
     config.setGroup(name);
 
-    char ** array = libhal_device_get_property_strlist(m_halContext, name.latin1(), "volume.mount.valid_options", NULL);
+    char ** array = libhal_device_get_property_strlist(m_halContext, volume_udi.latin1(), "volume.mount.valid_options", NULL);
     QMap<QString,bool> valids;
 
     for (int index = 0; array && array[index]; ++index) {
@@ -797,11 +910,11 @@ QStringList HALBackend::mountoptions(const QString &name)
     QStringList result;
     QString tmp;
 
-    QString fstype = libhal_device_get_property_QString(m_halContext, name.latin1(), "volume.fstype");
+    QString fstype = libhal_device_get_property_QString(m_halContext, volume_udi.latin1(), "volume.fstype");
     if (fstype.isNull())
-        fstype = libhal_device_get_property_QString(m_halContext, name.latin1(), "volume.policy.mount_filesystem");
+        fstype = libhal_device_get_property_QString(m_halContext, volume_udi.latin1(), "volume.policy.mount_filesystem");
 
-    QString drive_udi = libhal_device_get_property_QString(m_halContext, name.latin1(), "block.storage_device");
+    QString drive_udi = libhal_device_get_property_QString(m_halContext, volume_udi.latin1(), "block.storage_device");
 
     bool removable = false;
     if ( !drive_udi.isNull() )
@@ -812,11 +925,11 @@ QStringList HALBackend::mountoptions(const QString &name)
     bool value = config.readBoolEntry("automount", false);
     config.setGroup(name);
 
-    if (libhal_device_get_property_bool(m_halContext, name.latin1(), "volume.disc.is_blank", NULL)
-        || libhal_device_get_property_bool(m_halContext, name.latin1(), "volume.disc.is_vcd", NULL)
-        || libhal_device_get_property_bool(m_halContext, name.latin1(), "volume.disc.is_svcd", NULL)
-        || libhal_device_get_property_bool(m_halContext, name.latin1(), "volume.disc.is_videodvd", NULL)
-        || libhal_device_get_property_bool(m_halContext, name.latin1(), "volume.disc.has_audio", NULL))
+    if (libhal_device_get_property_bool(m_halContext, volume_udi.latin1(), "volume.disc.is_blank", NULL)
+        || libhal_device_get_property_bool(m_halContext, volume_udi.latin1(), "volume.disc.is_vcd", NULL)
+        || libhal_device_get_property_bool(m_halContext, volume_udi.latin1(), "volume.disc.is_svcd", NULL)
+        || libhal_device_get_property_bool(m_halContext, volume_udi.latin1(), "volume.disc.is_videodvd", NULL)
+        || libhal_device_get_property_bool(m_halContext, volume_udi.latin1(), "volume.disc.has_audio", NULL))
         value = false;
 
     result << QString("automount=%1").arg(value ? "true" : "false");
@@ -898,9 +1011,9 @@ QStringList HALBackend::mountoptions(const QString &name)
             result << tmp;
     }
 
-    QString mount_point = libhal_device_get_property_QString(m_halContext, name.latin1(), "volume.mount_point");
+    QString mount_point = libhal_device_get_property_QString(m_halContext, volume_udi.latin1(), "volume.mount_point");
     if (mount_point.isEmpty())
-        mount_point = libhal_device_get_property_QString(m_halContext, name.latin1(), "volume.policy.desired_mount_point");
+        mount_point = libhal_device_get_property_QString(m_halContext, volume_udi.latin1(), "volume.policy.desired_mount_point");
 
     mount_point = config.readEntry("mountpoint", mount_point);
 
@@ -958,6 +1071,120 @@ bool HALBackend::setMountoptions(const QString &name, const QStringList &options
     return true;
 }
 
+QString startKdeSudoProcess(const QString& kdesudoPath, const QString& command,
+        const QString& dialogCaption, const QString& dialogComment)
+{
+    KProcess kdesudoProcess;
+
+    kdesudoProcess << kdesudoPath
+		<< "-d"
+		<< "--noignorebutton"
+		<< "--caption" << dialogCaption
+		<< "--comment" << dialogComment
+		<< "-c" << command;
+
+    // @todo handle kdesudo output
+    kdesudoProcess.start(KProcess::Block);
+
+    return QString();
+}
+
+QString startKdeSuProcess(const QString& kdesuPath, const QString& command,
+        const QString& dialogCaption)
+{
+    KProcess kdesuProcess;
+
+    kdesuProcess << kdesuPath
+		<< "-d"
+		<< "--noignorebutton"
+		<< "--caption" << dialogCaption
+		<< "-c" << command;
+
+    // @todo handle kdesu output
+    kdesuProcess.start(KProcess::Block);
+
+    return QString();
+}
+
+QString startPrivilegedProcess(const QString& command, const QString& dialogCaption, const QString& dialogComment)
+{
+    QString error;
+
+    QString kdesudoPath = KStandardDirs::findExe("kdesudo");
+
+    if (!kdesudoPath.isEmpty())
+        error = startKdeSudoProcess(kdesudoPath, command, dialogCaption, dialogComment);
+    else {
+        QString kdesuPath = KStandardDirs::findExe("kdesu");
+
+        if (!kdesuPath.isEmpty())
+            error = startKdeSuProcess(kdesuPath, command, dialogCaption);
+    }
+
+    return error;
+}
+
+QString privilegedMount(const char* udi, const char* mountPoint, const char** options, int numberOfOptions)
+{
+    QString error;
+ 
+    kdDebug() << "run privileged mount for " << udi << endl;
+
+    QString dbusSendPath = KStandardDirs::findExe("dbus-send");
+
+    // @todo return error message
+    if (dbusSendPath.isEmpty())
+        return QString();
+
+    QString mountOptions;
+    QTextOStream optionsStream(&mountOptions);
+    for (int optionIndex = 0; optionIndex < numberOfOptions; optionIndex++) {
+        optionsStream << options[optionIndex];
+        if (optionIndex < numberOfOptions - 1)
+            optionsStream << ",";
+    }
+
+    QString command;
+    QTextOStream(&command) << dbusSendPath
+            << " --system --print-reply --dest=org.freedesktop.Hal " << udi
+            << " org.freedesktop.Hal.Device.Volume.Mount string:" << mountPoint
+            << " string: array:string:" << mountOptions;
+
+    kdDebug() << "command: " << command << endl;
+
+    error = startPrivilegedProcess(command,
+            i18n("Authenticate"),
+            i18n("<big><b>System policy prevents mounting internal media</b></big><br/>Authentication is required to perform this action. Please enter your password to verify."));
+
+    return error;
+}
+
+QString privilegedUnmount(const char* udi)
+{
+    QString error;
+ 
+    kdDebug() << "run privileged unmount for " << udi << endl;
+
+    QString dbusSendPath = KStandardDirs::findExe("dbus-send");
+
+    // @todo return error message
+    if (dbusSendPath.isEmpty())
+        return QString();
+
+    QString command;
+    QTextOStream(&command) << dbusSendPath
+            << " --system --print-reply --dest=org.freedesktop.Hal " << udi
+            << " org.freedesktop.Hal.Device.Volume.Unmount array:string:force";
+
+    kdDebug() << "command: " << command << endl;
+
+    error = startPrivilegedProcess(command,
+            i18n("Authenticate"),
+            i18n("<big><b>System policy prevents unmounting media mounted by other users</b></big><br/>Authentication is required to perform this action. Please enter your password to verify."));
+
+    return error;
+}
+
 static QString mount_priv(const char *udi, const char *mount_point, const char **poptions, int noptions,
 			  DBusConnection *dbus_connection)
 {
@@ -992,6 +1219,8 @@ static QString mount_priv(const char *udi, const char *mount_point, const char *
             qerror = i18n("Invalid filesystem type");
         else if ( !strcmp(error.name, "org.freedesktop.Hal.Device.Volume.PermissionDenied"))
             qerror = i18n("Permissions denied");
+        else if ( !strcmp(error.name, "org.freedesktop.Hal.Device.PermissionDeniedByPolicy"))
+            qerror = privilegedMount(udi, mount_point, poptions, noptions);
         else if ( !strcmp(error.name, "org.freedesktop.Hal.Device.Volume.AlreadyMounted"))
             qerror = i18n("Device is already mounted.");
         else if ( !strcmp(error.name, "org.freedesktop.Hal.Device.Volume.InvalidMountpoint") && strlen(mount_point)) {
@@ -1043,6 +1272,41 @@ QString HALBackend::listUsingProcesses(const Medium* medium)
             "have been detected. They are listed below. You have to "
             "close them or change their working directory before "
             "attempting to unmount the device again.");
+        fullmsg += "<br>" + proclist;
+        return fullmsg;
+    } else {
+        return QString::null;
+    }
+}
+
+QString HALBackend::killUsingProcesses(const Medium* medium)
+{
+    QString proclist, fullmsg;
+    QString cmdline = QString("/usr/bin/env fuser -vmk %1 2>&1").arg(KProcess::quote(medium->mountPoint()));
+    FILE *fuser = popen(cmdline.latin1(), "r");
+
+    uint counter = 0;
+    if (fuser) {
+        proclist += "<pre>";
+        QTextIStream is(fuser);
+        QString tmp;
+        while (!is.atEnd()) {
+            tmp = is.readLine();
+            tmp = QStyleSheet::escape(tmp) + "\n";
+
+            proclist += tmp;
+            if (counter++ > 10)
+            {
+                proclist += "...";
+                break;
+            }
+        }
+        proclist += "</pre>";
+        (void)pclose( fuser );
+    }
+    if (counter) {
+        fullmsg = i18n("Programs that were still using the device "
+            "have been forcibly terminated. They are listed below.");
         fullmsg += "<br>" + proclist;
         return fullmsg;
     } else {
@@ -1148,7 +1412,7 @@ QString HALBackend::mount(const Medium *medium)
     if (valids["flush"] == "true")
         soptions << "flush";
 
-    if (valids["uid"] == "true")
+    if ((valids["uid"] == "true") && (medium->fsType() != "ntfs"))
     {
         soptions << QString("uid=%1").arg(getuid());
     }
@@ -1167,6 +1431,13 @@ QString HALBackend::mount(const Medium *medium)
 
     if (valids["sync"] == "true")
         soptions << "sync";
+
+    if (medium->fsType() == "ntfs") {
+        QString fsLocale("locale=");
+        fsLocale += setlocale(LC_ALL, "");
+
+        soptions << fsLocale;
+    }
 
     QString mount_point = valids["mountpoint"];
     if (mount_point.startsWith("/media/"))
@@ -1199,7 +1470,24 @@ QString HALBackend::mount(const Medium *medium)
         options[noptions] = (*it).latin1();
     options[noptions] = NULL;
 
-    QString qerror = mount_priv(medium->id().latin1(), mount_point.utf8(), options, noptions, dbus_connection);
+    QString qerror = i18n("Cannot mount encrypted drives!");
+
+    if (!medium->isEncrypted()) {
+        // normal volume
+    	qerror = mount_priv(medium->id().latin1(), mount_point.utf8(), options, noptions, dbus_connection);
+    } else {
+        // see if we have a clear volume
+        LibHalVolume* halVolume = libhal_volume_from_udi(m_halContext, medium->id().latin1());
+        if (halVolume) {
+            char* clearUdi = libhal_volume_crypto_get_clear_volume_udi(m_halContext, halVolume);
+            if (clearUdi != NULL) {
+                qerror = mount_priv(clearUdi, mount_point.utf8(), options, noptions, dbus_connection);
+                libhal_free_string(clearUdi);
+            }
+            libhal_volume_free(halVolume);
+        }
+    }
+
     if (!qerror.isEmpty()) {
         kdError() << "mounting " << medium->id() << " returned " << qerror << endl;
         return qerror;
@@ -1266,8 +1554,26 @@ QString HALBackend::unmount(const QString &_udi)
     DBusMessage *dmesg, *reply;
     DBusError error;
     const char *options[2];
+    QString udi = QString::null;
 
-    const char *udi = medium->id().latin1();
+    if (!medium->isEncrypted()) {
+        // normal volume
+        udi = medium->id();
+    } else {
+        // see if we have a clear volume
+        LibHalVolume* halVolume = libhal_volume_from_udi(m_halContext, medium->id().latin1());
+        if (halVolume) {
+            char *clearUdi = libhal_volume_crypto_get_clear_volume_udi(m_halContext, halVolume);
+	    udi = clearUdi;
+	    libhal_free_string(clearUdi);
+            libhal_volume_free(halVolume);
+        }
+    }
+    if (udi.isNull()) {
+        kdDebug() << "unmount failed: no udi" << endl;
+        return i18n("Internal Error");
+    }
+
     kdDebug() << "unmounting " << udi << "..." << endl;
 
     dbus_error_init(&error);
@@ -1278,7 +1584,7 @@ QString HALBackend::unmount(const QString &_udi)
         return false;
     }
 
-    if (!(dmesg = dbus_message_new_method_call ("org.freedesktop.Hal", udi,
+    if (!(dmesg = dbus_message_new_method_call ("org.freedesktop.Hal", udi.latin1(),
                                                 "org.freedesktop.Hal.Device.Volume",
                                                 "Unmount"))) {
         kdDebug() << "unmount failed for " << udi << ": could not create dbus message\n";
@@ -1296,11 +1602,25 @@ QString HALBackend::unmount(const QString &_udi)
         return i18n("Internal Error");
     }
 
+    char thisunmounthasfailed = 0;
     dbus_error_init (&error);
     if (!(reply = dbus_connection_send_with_reply_and_block (dbus_connection, dmesg, -1, &error)))
     {
-        QString qerror, reason;
+        thisunmounthasfailed = 1;
+        QString qerror, reason, origqerror;
 
+        if (!strcmp(error.name, "org.freedesktop.Hal.Device.PermissionDeniedByPolicy")) {
+            qerror = privilegedUnmount(udi.latin1());
+
+            if (qerror.isEmpty()) {
+                dbus_message_unref(dmesg);
+                dbus_error_free(&error);
+                return QString();
+            }
+
+            // @todo handle unmount error message
+        }
+        
         kdDebug() << "unmount failed for " << udi << ": " << error.name << " " << error.message << endl;
         qerror = "<qt>";
         qerror += "<p>" + i18n("Unfortunately, the device <b>%1</b> (%2) named <b>'%3'</b> and "
@@ -1312,6 +1632,7 @@ QString HALBackend::unmount(const QString &_udi)
         qerror += "<p>" + i18n("Unmounting failed due to the following error:") + "</p>";
         if (!strcmp(error.name, "org.freedesktop.Hal.Device.Volume.Busy")) {
             reason = i18n("Device is Busy:");
+            thisunmounthasfailed = 2;
         } else if (!strcmp(error.name, "org.freedesktop.Hal.Device.Volume.NotMounted")) {
             // this is faking. The error is that the device wasn't mounted by hal (but by the system)
             reason = i18n("Permissions denied");
@@ -1319,16 +1640,29 @@ QString HALBackend::unmount(const QString &_udi)
             reason = error.message;
         }
         qerror += "<p><b>" + reason + "</b></p>";
+        origqerror = qerror;
 
         // Include list of processes (if any) using the device in the error message
         reason = listUsingProcesses(medium);
         if (!reason.isEmpty()) {
             qerror += reason;
+            if (thisunmounthasfailed == 2) {	// Failed as BUSY
+                if (KMessageBox::warningYesNo(0, i18n("%1<p><b>Would you like to forcibly terminate these processes?</b><br><i>All unsaved data would be lost</i>").arg(qerror)) == KMessageBox::Yes) {
+                    qerror = origqerror;
+                    reason = killUsingProcesses(medium);
+                    qerror = HALBackend::unmount(udi);
+                    if (qerror.isNull()) {
+                        thisunmounthasfailed = 0;
+                    }
+                }
+            }
         }
 
-        dbus_message_unref (dmesg);
-        dbus_error_free (&error);
-        return qerror;
+        if (thisunmounthasfailed != 0) {
+            dbus_message_unref (dmesg);
+            dbus_error_free (&error);
+            return qerror;
+        }
     }
 
     kdDebug() << "unmount queued for " << udi << endl;
@@ -1337,7 +1671,116 @@ QString HALBackend::unmount(const QString &_udi)
     dbus_message_unref (reply);
 
     medium->setHalMounted(false);
+    ResetProperties(medium->id().latin1());
+
+    while (dbus_connection_dispatch(dbus_connection) == DBUS_DISPATCH_DATA_REMAINS) ;
+
+    return QString();
+}
+
+QString HALBackend::decrypt(const QString &_udi, const QString &password)
+{
+    const Medium* medium = m_mediaList.findById(_udi);
+    if (!medium)
+        return i18n("No such medium: %1").arg(_udi);
+
+    if (!medium->isEncrypted() || !medium->clearDeviceUdi().isNull())
+        return QString();
+
+    const char *udi = medium->id().latin1();
+    DBusMessage *msg = NULL;
+    DBusMessage *reply = NULL;
+    DBusError error;
+
+    kdDebug() << "Setting up " << udi << " for crypto\n" <<endl;
+	
+    msg = dbus_message_new_method_call ("org.freedesktop.Hal", udi,
+                                        "org.freedesktop.Hal.Device.Volume.Crypto",
+                                        "Setup");
+    if (msg == NULL) {
+        kdDebug() << "decrypt failed for " << udi << ": could not create dbus message\n";
+        return i18n("Internal Error");
+    }
+
+    QCString pwdUtf8 = password.utf8();
+    const char *pwd_utf8 = pwdUtf8;
+    if (!dbus_message_append_args (msg, DBUS_TYPE_STRING, &pwd_utf8, DBUS_TYPE_INVALID)) {
+        kdDebug() << "decrypt failed for " << udi << ": could not append args to dbus message\n";
+        dbus_message_unref (msg);
+        return i18n("Internal Error");
+    }
+
+    dbus_error_init (&error);
+    if (!(reply = dbus_connection_send_with_reply_and_block (dbus_connection, msg, -1, &error)) || 
+        dbus_error_is_set (&error))
+    {
+        QString qerror = i18n("Internal Error");
+        kdDebug() << "decrypt failed for " << udi << ": " << error.name << " " << error.message << endl;
+        if (strcmp (error.name, "org.freedesktop.Hal.Device.Volume.Crypto.SetupPasswordError") == 0) {
+            qerror = i18n("Wrong password");
+        }
+        dbus_error_free (&error);
+        dbus_message_unref (msg);
+        while (dbus_connection_dispatch(dbus_connection) == DBUS_DISPATCH_DATA_REMAINS) ;
+        return qerror;
+    }
+
+    dbus_message_unref (msg);
+    dbus_message_unref (reply);
+
+    while (dbus_connection_dispatch(dbus_connection) == DBUS_DISPATCH_DATA_REMAINS) ;
+
+    return QString();
+}
+
+QString HALBackend::undecrypt(const QString &_udi)
+{
+    const Medium* medium = m_mediaList.findById(_udi);
+    if (!medium)
+        return i18n("No such medium: %1").arg(_udi);
+
+    if (!medium->isEncrypted() || medium->clearDeviceUdi().isNull())
+        return QString();
+
+    const char *udi = medium->id().latin1();
+    DBusMessage *msg = NULL;
+    DBusMessage *reply = NULL;
+    DBusError error;
+
+    kdDebug() << "Tear down " << udi << "\n" <<endl;
+	
+    msg = dbus_message_new_method_call ("org.freedesktop.Hal", udi,
+                                        "org.freedesktop.Hal.Device.Volume.Crypto",
+                                        "Teardown");
+    if (msg == NULL) {
+        kdDebug() << "teardown failed for " << udi << ": could not create dbus message\n";
+        return i18n("Internal Error");
+    }
+
+    if (!dbus_message_append_args (msg, DBUS_TYPE_INVALID)) {
+        kdDebug() << "teardown failed for " << udi << ": could not append args to dbus message\n";
+        dbus_message_unref (msg);
+        return i18n("Internal Error");
+    }
+
+    dbus_error_init (&error);
+    if (!(reply = dbus_connection_send_with_reply_and_block (dbus_connection, msg, -1, &error)) || 
+        dbus_error_is_set (&error))
+    {
+        QString qerror = i18n("Internal Error");
+        kdDebug() << "teardown failed for " << udi << ": " << error.name << " " << error.message << endl;
+        dbus_error_free (&error);
+        dbus_message_unref (msg);
+        while (dbus_connection_dispatch(dbus_connection) == DBUS_DISPATCH_DATA_REMAINS) ;
+        return qerror;
+    }
+
+    dbus_message_unref (msg);
+    dbus_message_unref (reply);
+
     ResetProperties(udi);
+
+    while (dbus_connection_dispatch(dbus_connection) == DBUS_DISPATCH_DATA_REMAINS) ;
 
     return QString();
 }

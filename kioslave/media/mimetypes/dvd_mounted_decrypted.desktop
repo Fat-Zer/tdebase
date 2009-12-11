@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=dvd_mount_decrypt
+Type=MimeType
+MimeType=media/dvd_mounted_decrypted
+Comment=Mounted Decrypted DVD
+Comment[de]=Eingebundene, entschlüsselte DVD
+Patterns=
+
+X-KDE-AutoEmbed=true
+X-KDE-IsAlso=inode/directory

@@ -376,6 +376,8 @@ void KPluginOptions::dirLoad( KConfig *config, bool useDefault )
     else {//keep sync with kdebase/nsplugins
         paths.append("$HOME/.mozilla/plugins");
         paths.append("$HOME/.netscape/plugins");
+	paths.append("/usr/lib/iceweasel/plugins");
+        paths.append("/usr/lib/iceape/plugins");
         paths.append("/usr/lib/firefox/plugins");
         paths.append("/usr/lib64/browser-plugins");
         paths.append("/usr/lib/browser-plugins");

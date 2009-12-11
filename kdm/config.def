@@ -42,16 +42,16 @@
 # define HALT_CMD	"/usr/sbin/halt"
 # define REBOOT_CMD	"/usr/sbin/reboot"
 #else
-# define HALT_CMD	"/sbin/halt"
+# define HALT_CMD	"/sbin/poweroff"
 # define REBOOT_CMD	"/sbin/reboot"
 #endif
 
 #if defined(BSD) || defined(__linux__)
-# define DEF_USER_PATH "/usr/local/bin:/usr/bin:/bin:" XBINDIR ":/usr/games"
-# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:" XBINDIR
+# define DEF_USER_PATH "/usr/local/bin:/opt/kde3/bin:/usr/bin:/bin:/opt/kde3/games:/usr/games"
+# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/opt/kde3/sbin:/usr/sbin:/opt/kde3/bin:/usr/bin:/sbin:/bin"
 #else
-# define DEF_USER_PATH "/usr/local/bin:/usr/bin:/bin:" XBINDIR ":/usr/games:/usr/ucb"
-# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:" XBINDIR ":/etc:/usr/ucb"
+# define DEF_USER_PATH "/usr/local/bin:/opt/kde3/bin:/usr/bin:/bin:/opt/kde3/games:/usr/games:/usr/ucb"
+# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/opt/kde3/sbin:/usr/sbin:/opt/kde3/bin:/usr/bin:/sbin:/bin:/etc:/usr/ucb"
 #endif
 
 #if 0 /*def HASXDMAUTH*/
@@ -90,6 +90,12 @@
 # definitions below.
 <kdmrc>
  &kdm; master configuration file
+ _
+ Please note: Settings in this file are sometimes ignored (overridden).
+ The default KDM startup script /etc/init.d/kdm looks in /etc/default/kdm.d
+ for theme-related settings which, if found, take precedence. The possibly 
+ overridden settings are: UseBackground, BackgroundCfg, UseTheme, Theme.
+ See /usr/share/doc/kdm/README.Debian for details
  _
  Definition: the greeter is the login dialog, i.e., the part of &kdm;
  which the user sees.
@@ -1355,7 +1361,7 @@ Description:
  This string is subject to word splitting.
  </para><para>
  The default is something reasonable for the system on which &kdm; was built,
- like <command>/usr/X11R6/bin/X</command>.
+ like <command>/usr/bin/X</command>.
 
 Key: ServerArgsLocal
 Type: string
@@ -1921,10 +1927,10 @@ Description:
 
 Key: SessionsDirs
 Type: list
-Default: KDMDATA "/sessions"
+Default: "/usr/share/xsessions,/var/lib/menu-xdg/xsessions,/usr/share/apps/kdm/sessions"
 User: core
 User: greeter-c
-Instance: #*/"/etc/X11/sessions,/usr/share/xsessions"
+Instance: #*/"/usr/share/xsessions,/var/lib/menu-xdg/xsessions,/usr/share/apps/kdm/sessions"
 Comment:
  The directories containing session type definitions in .desktop format.
 Description:
@@ -1948,7 +1954,7 @@ Description:
 
 Key: UseSessReg
 Type: bool
-Default: true
+Default: false
 User: core
 Instance: #*/!
 Comment:
@@ -2044,9 +2050,9 @@ Description:
 
 Key: GreetString
 Type: string
-Default: "Welcome to %s at %n"
+Default: "Welcome to Kubuntu at %n"
 User: greeter
-Instance: #*/"K Desktop Environment (%n)"
+Instance: #*/"Welcome to Kubuntu at %n"
 Comment:
  The headline in the greeter. The following character pairs are replaced:
  - %d -> current display
@@ -2096,19 +2102,19 @@ Description:
 # This needs to come _in front_ of the font settings to be effective!
 Key: AntiAliasing
 Type: bool
-Default: false
+Default: true
 User: greeter
-Instance: #*/!
+Instance: */
 Comment: &
 Description:
  Whether the fonts used in the greeter should be antialiased.
 
 Key: GreetFont
 Type: string
-Default: "Serif,20,5,0,50,0"
+Default: "Sans Serif,22,5,0,50,0"
 CDefault: "Serif,20,bold"
 User: greeter:font
-Instance: #*/"Serif,20,5,0,50,0"
+Instance: #*/"Sans Serif,22,5,0,50,0"
 Comment: &
 Description:
  The font for the greeter headline.
@@ -2482,7 +2488,6 @@ Type: int
 Default: 0
 User: greeter
 Instance: #*/
-Update: upd_forgingseed
 Comment:
  Random seed for forging saved session types, etc. of unknown users.
  This value should be random but constant across the login domain.
@@ -2579,7 +2584,7 @@ Key: AllowClose
 Type: bool
 Default: true
 User: greeter
-Instance: :*/false
+Instance: :*/true
 Comment: &
 Description:
  Show the <guilabel>Restart X Server</guilabel>/<guilabel>Close Connection</guilabel> action in the greeter.
@@ -2608,7 +2613,7 @@ Key: Theme
 Type: string
 Default: ""
 User: greeter
-Instance: */KDMDATA "/themes/circles"
+Instance: */ "@@@ToBeReplacedByDesktopBase@@@"
 Comment: &
 Description:
  The theme to use for the greeter. Can point to either a directory or an XML

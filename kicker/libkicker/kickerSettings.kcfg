@@ -275,6 +275,11 @@
       <default code="true">i18n("Applications")</default>
    </entry>
 
+<entry name="CustomKMenuIcon" key="CustomIcon" type="Path" >
+      <label>Custom K Menu Button Icon</label>
+      <default code="true">QString("kmenu")</default>
+   </entry>
+
 </group>
 
 <group name="buttons" >

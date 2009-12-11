@@ -83,7 +83,7 @@ static void processCpuInfo( void )
       sscanf( value, "%f", &Clocks[ cpuId ] );
 
     /* Move cibp to begining of next line, if there is one. */
-    cibp = strchr( cibp, '\n' );
+    cibp = (char*)strchr( cibp, '\n' );
     if ( cibp )
       cibp++;
     else

@@ -61,6 +61,7 @@ public:
 
 private slots:
   void slotGetStdOutput(KProcess*, char*, int);
+  void slotGetStdOutputUtf8(KProcess*, char*, int);
     
 private:
     void checkManPaths();

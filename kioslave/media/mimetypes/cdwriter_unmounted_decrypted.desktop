@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=cdwriter_unmount_decrypt
+Type=MimeType
+MimeType=media/cdwriter_unmounted_decrypted
+Comment=Unmounted Decrypted CD Writer
+Comment[de]=Nicht eingebundener, entschlüsselter CD-Brenner
+Patterns=
+
+X-KDE-AutoEmbed=true
+X-KDE-IsAlso=inode/directory

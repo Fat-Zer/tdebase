@@ -356,8 +356,8 @@ static char * getItem(char **start, char **end, const char *key, unsigned int &s
 
                 if(s && *s=='\"' && s<*end)
                 {
-                    char *e=strchr(s+1, '\"'),
-                         *nl=strchr(s+1, '\n');
+                    char *e=(char*)strchr(s+1, '\"'),
+                         *nl=(char*)strchr(s+1, '\n');
 
                     if(e && e<*end && (!nl || nl>e) && e-s<=constMaxItemLen)
                     {

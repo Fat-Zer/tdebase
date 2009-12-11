@@ -234,4 +234,4 @@ X-KDE-Library=ioslaveinfo
 
 X-KDE-ParentApp=kinfocenter
 
-Categories=Qt;KDE;X-KDE-information;
+Categories=Qt;KDE;X-KDE-settings-network;

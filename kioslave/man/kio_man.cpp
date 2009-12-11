@@ -517,6 +517,11 @@ void MANProtocol::slotGetStdOutput(KProcess* /* p */, char *s, int len)
   myStdStream += QString::fromLocal8Bit(s, len);
 }
 
+void MANProtocol::slotGetStdOutputUtf8(KProcess* /* p */, char *s, int len)
+{
+  myStdStream += QString::fromUtf8(s, len);
+}
+
 char *MANProtocol::readManPage(const char *_filename)
 {
     QCString filename = _filename;
@@ -564,24 +569,20 @@ char *MANProtocol::readManPage(const char *_filename)
         }
         lastdir = filename.left(filename.findRev('/'));
     
-        QIODevice *fd= KFilterDev::deviceForFile(filename);
-    
-        if ( !fd || !fd->open(IO_ReadOnly))
-        {
-           delete fd;
-           return 0;
-        }
-        QByteArray array(fd->readAll());
-        kdDebug(7107) << "read " << array.size() << endl;
-        fd->close();
-        delete fd;
-        
-        if (array.isEmpty())
-            return 0;
-    
-        const int len = array.size();
+        myStdStream = QString::null;
+        KProcess proc;
+        /* TODO: detect availability of 'man --recode' so that this can go
+         * upstream */
+        proc << "man" << "--recode" << "UTF-8" << filename;
+
+        QApplication::connect(&proc, SIGNAL(receivedStdout (KProcess *, char *, int)),
+                              this, SLOT(slotGetStdOutputUtf8(KProcess *, char *, int)));
+        proc.start(KProcess::Block, KProcess::All);
+
+        const QCString cstr=myStdStream.utf8();
+        const int len = cstr.size()-1;
         buf = new char[len + 4];
-        qmemmove(buf + 1, array.data(), len);
+        qmemmove(buf + 1, cstr.data(), len);
         buf[0]=buf[len]='\n'; // Start and end with a end of line
         buf[len+1]=buf[len+2]='\0'; // Two NUL characters at end
     }

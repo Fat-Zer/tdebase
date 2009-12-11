@@ -60,6 +60,20 @@
         <div id="boxCenter">
 
 	<table border="0" align="center">
+<!--search bar argument replacement is performed between the "search bar splitter" lines-->
+<!--search bar splitter-->
+
+        <tr>
+        <form action="about:konqueror">
+        <td colspan="2" style="text-align:right;"><label id="searchbarlabel" for="searchbarinput">%2: </label></td>
+        <td colspan="2"><input id="searchbarinput" name="%3" type="text"></td>
+        </form>
+        </tr>
+        <tr>
+        <td colspan="4"><div style="width:%1px; height:%1px;"/></td>
+        </tr>
+
+<!--search bar splitter-->
 	  <tr>
 	      <td valign="bottom">
 		<a href="%1"><img src="%1" height="%1" width="%1" /></a>
@@ -96,10 +110,10 @@
 		       <a href="applications:/">%1</a><br><span id="subtext"><nobr>%1</span>
 		      </td>
 		      <td>
-			<a href="settings:/"><img src="%1" height="%1" width="%1" /></a>
+			<a href="help:/kubuntu/about-kubuntu/index.html"><img src="%1" height="%1" width="%1" /></a>
 		</td>
 	      <td valign="bottom">
-			<a href="settings:/">%1</a><br><span id="subtext"><nobr>%1</span>
+			<a href="help:/kubuntu/about-kubuntu/index.html">%1</a><br><span id="subtext"><nobr>%1</span>
 			</td>
 		      </tr>
 		    </table>

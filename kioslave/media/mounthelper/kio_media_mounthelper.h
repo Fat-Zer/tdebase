@@ -28,6 +28,8 @@
 
 #include "medium.h"
 
+class Dialog;
+
 class MountHelper : public KApplication
 {
         Q_OBJECT
@@ -38,12 +40,18 @@ private:
 	const Medium findMedium(const KURL &url);
 	void invokeEject(const QString &device, bool quiet=false);
 	QString m_errorStr;
-	QString m_device;
 	bool m_isCdrom;
+	QString m_mediumId;
+	Dialog *dialog;
 
 private slots:
+	void slotSendPassword();
+	void slotCancel();
 	void ejectFinished(KProcess* proc);
 	void error();
+
+signals:
+	void signalPasswordError(QString errorMsg);
 };
 
 #endif

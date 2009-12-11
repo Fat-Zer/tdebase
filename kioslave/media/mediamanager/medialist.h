@@ -34,6 +34,7 @@ public:
 	const QPtrList<Medium> list() const;
 	const Medium *findById(const QString &id) const;
 	const Medium *findByName(const QString &name) const;
+	const Medium *findByClearUdi(const QString &name);
 
 public:
 	QString addMedium(Medium *medium, bool allowNotification = true);

@@ -34,6 +34,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kdialog.h>
 #include <kstandarddirs.h>
 #include <kuser.h>
+#include <kconfig.h>
+#include <kiconloader.h>
 
 #include <qcombobox.h>
 #include <qvbuttongroup.h>
@@ -48,6 +50,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <qlistview.h>
 #include <qheader.h>
 #include <qdatetime.h>
+#include <qregexp.h>
 
 #define KDmh KDialog::marginHint()
 #define KDsh KDialog::spacingHint()
@@ -459,76 +462,152 @@ void KDMDelayedPushButton::slotTimeout()
 	setDown( false );
 }
 
-
 KDMSlimShutdown::KDMSlimShutdown( QWidget *_parent )
 	: inherited( _parent )
 	, targetList( 0 )
 {
+
+	bool doUbuntuLogout = KConfigGroup(KGlobal::config(), "Shutdown").readBoolEntry("doUbuntuLogout", false);
+
+	QVBoxLayout* vbox = new QVBoxLayout( this );
 	QHBoxLayout *hbox = new QHBoxLayout( this, KDmh, KDsh );
+	QFrame* lfrm = new QFrame( this );
+	QHBoxLayout* hbuttonbox;
 
-	QFrame *lfrm = new QFrame( this );
-	lfrm->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-	hbox->addWidget( lfrm, AlignCenter );
-	QLabel *icon = new QLabel( lfrm );
-	icon->setPixmap( QPixmap( locate( "data", "kdm/pics/shutdown.jpg" ) ) );
-	QVBoxLayout *iconlay = new QVBoxLayout( lfrm );
-	iconlay->addWidget( icon );
+	if(doUbuntuLogout)
+	{		
+		lfrm->setFrameStyle( QFrame::StyledPanel | QFrame::Raised );
+		lfrm->setLineWidth( style().pixelMetric( QStyle::PM_DefaultFrameWidth, lfrm ) );
+		// we need to set the minimum size for the logout box, since it
+		// gets too small if there isn't all options available
+		lfrm->setMinimumSize(300,120);
+		vbox->addWidget( lfrm );
+		vbox = new QVBoxLayout( lfrm, 2 * KDialog::marginHint(),
+								2 * KDialog::spacingHint() );
 
-	QVBoxLayout *buttonlay = new QVBoxLayout( hbox, KDsh );
+		// first line of buttons
+		hbuttonbox = new QHBoxLayout( vbox, 8 * KDialog::spacingHint() );
+		hbuttonbox->setAlignment( Qt::AlignHCenter );
 
-	buttonlay->addStretch( 1 );
-
-	KPushButton *btnHalt = new
-		KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit" ), this );
-	buttonlay->addWidget( btnHalt );
-	connect( btnHalt, SIGNAL(clicked()), SLOT(slotHalt()) );
-
-	buttonlay->addSpacing( KDialog::spacingHint() );
-
-	KDMDelayedPushButton *btnReboot = new
-		KDMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload" ), this );
-	buttonlay->addWidget( btnReboot );
-	connect( btnReboot, SIGNAL(clicked()), SLOT(slotReboot()) );
-
-	GSet( 1 );
-	GSendInt( G_ListBootOpts );
-	if (GRecvInt() == BO_OK) {
-		targetList = GRecvStrArr( 0 );
-		/*int def =*/ GRecvInt();
-		int cur = GRecvInt();
-		QPopupMenu *targets = new QPopupMenu( this );
-		for (int i = 0; targetList[i]; i++) {
-			QString t( QString::fromLocal8Bit( targetList[i] ) );
-			targets->insertItem( i == cur ?
-			                     i18n("current option in boot loader",
-			                          "%1 (current)").arg( t ) :
-			                     t, i );
+		// Reboot
+		FlatButton* btnReboot = new FlatButton( lfrm );
+		btnReboot->setTextLabel( i18n("&Restart"), false );
+		btnReboot->setPixmap( DesktopIcon( "reload") );
+                int i = btnReboot->textLabel().find( QRegExp("\\&"), 0 );    // i == 1
+                btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
+		hbuttonbox->addWidget ( btnReboot);
+		connect(btnReboot, SIGNAL(clicked()), SLOT(slotReboot()));
+		
+		// Copied completely from the standard restart/shutdown dialog
+		GSet( 1 );
+		GSendInt( G_ListBootOpts );
+		if (GRecvInt() == BO_OK) {
+			targetList = GRecvStrArr( 0 );
+			/*int def =*/ GRecvInt();
+			int cur = GRecvInt();
+			QPopupMenu *targets = new QPopupMenu( this );
+			btnReboot->setPopupDelay(300); // visually add dropdown
+			for (int i = 0; targetList[i]; i++) {
+				QString t( QString::fromLocal8Bit( targetList[i] ) );
+				targets->insertItem( i == cur ?
+									i18n("current option in boot loader",
+										"%1 (current)").arg( t ) :
+									t, i );
+			}
+			btnReboot->setPopup( targets );
+			connect( targets, SIGNAL(activated(int)), SLOT(slotReboot(int)) );
 		}
-		btnReboot->setPopup( targets );
-		connect( targets, SIGNAL(activated(int)), SLOT(slotReboot(int)) );
+		GSet( 0 );
+		// Copied completely from the standard restart/shutdown dialog
+
+		// Shutdown
+		FlatButton* btnHalt = new FlatButton( lfrm );
+		btnHalt->setTextLabel( i18n("&Turn Off"), false );
+		btnHalt->setPixmap( DesktopIcon( "exit") );
+                i = btnHalt->textLabel().find( QRegExp("\\&"), 0 );    // i == 1
+                btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
+		hbuttonbox->addWidget ( btnHalt );
+		connect(btnHalt, SIGNAL(clicked()), SLOT(slotHalt()));
+
+		// cancel buttonbox
+		QHBoxLayout* hbuttonbox2 = new QHBoxLayout( vbox, 8 * KDialog::spacingHint()  );
+		hbuttonbox2->setAlignment( Qt::AlignRight );
+
+		// Back to kdm
+		KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), lfrm );
+		hbuttonbox2->addWidget( btnBack );
+		connect(btnBack, SIGNAL(clicked()), SLOT(reject()));	
+	
+	
 	}
-	GSet( 0 );
-
-	buttonlay->addStretch( 1 );
-
-	if (_scheduledSd != SHUT_NEVER) {
-		KPushButton *btnSched = new
-			KPushButton( KGuiItem( i18n("&Schedule...") ), this );
-		buttonlay->addWidget( btnSched );
-		connect( btnSched, SIGNAL(clicked()), SLOT(slotSched()) );
-
+	else
+	{
+		lfrm->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+		hbox->addWidget( lfrm, AlignCenter );
+		QLabel *icon = new QLabel( lfrm );
+		icon->setPixmap( QPixmap( locate( "data", "kdm/pics/shutdown.jpg" ) ) );
+		QVBoxLayout *iconlay = new QVBoxLayout( lfrm );
+		iconlay->addWidget( icon );
+	
+		QVBoxLayout *buttonlay = new QVBoxLayout( hbox, KDsh );
+	
 		buttonlay->addStretch( 1 );
+	
+		KPushButton *btnHalt = new
+			KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit" ), this );
+		buttonlay->addWidget( btnHalt );
+		connect( btnHalt, SIGNAL(clicked()), SLOT(slotHalt()) );
+	
+		buttonlay->addSpacing( KDialog::spacingHint() );
+	
+		KDMDelayedPushButton *btnReboot = new
+			KDMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload" ), this );
+		buttonlay->addWidget( btnReboot );
+		connect( btnReboot, SIGNAL(clicked()), SLOT(slotReboot()) );
+	
+		GSet( 1 );
+		GSendInt( G_ListBootOpts );
+		if (GRecvInt() == BO_OK) {
+			targetList = GRecvStrArr( 0 );
+			/*int def =*/ GRecvInt();
+			int cur = GRecvInt();
+			QPopupMenu *targets = new QPopupMenu( this );
+			for (int i = 0; targetList[i]; i++) {
+				QString t( QString::fromLocal8Bit( targetList[i] ) );
+				targets->insertItem( i == cur ?
+									i18n("current option in boot loader",
+										"%1 (current)").arg( t ) :
+									t, i );
+			}
+			btnReboot->setPopup( targets );
+			connect( targets, SIGNAL(activated(int)), SLOT(slotReboot(int)) );
+		}
+		GSet( 0 );
+	
+		buttonlay->addStretch( 1 );
+	
+		if (_scheduledSd != SHUT_NEVER) {
+			KPushButton *btnSched = new
+				KPushButton( KGuiItem( i18n("&Schedule...") ), this );
+			buttonlay->addWidget( btnSched );
+			connect( btnSched, SIGNAL(clicked()), SLOT(slotSched()) );
+	
+			buttonlay->addStretch( 1 );
+		}
+	
+		buttonlay->addWidget( new KSeparator( this ) );
+	
+		buttonlay->addSpacing( 0 );
+	
+		KPushButton *btnBack = new KPushButton( KStdGuiItem::cancel(), this );
+		buttonlay->addWidget( btnBack );
+		connect( btnBack, SIGNAL(clicked()), SLOT(reject()) );
+	
+		buttonlay->addSpacing( KDialog::spacingHint() );
+	
+	
 	}
 
-	buttonlay->addWidget( new KSeparator( this ) );
-
-	buttonlay->addSpacing( 0 );
-
-	KPushButton *btnBack = new KPushButton( KStdGuiItem::cancel(), this );
-	buttonlay->addWidget( btnBack );
-	connect( btnBack, SIGNAL(clicked()), SLOT(reject()) );
-
-	buttonlay->addSpacing( KDialog::spacingHint() );
 }
 
 KDMSlimShutdown::~KDMSlimShutdown()
@@ -591,6 +670,129 @@ KDMSlimShutdown::externShutdown( int type, const char *os, int uid )
 	else if (ret)
 		doShutdown( type, os );
 }
+
+
+KSMPushButton::KSMPushButton( const KGuiItem &item,
+					    QWidget *parent,
+					    const char *name)
+  : KPushButton( item, parent, name),
+    m_pressed(false)
+{
+	setDefault( false );
+	setAutoDefault ( false );	
+}
+
+void KSMPushButton::keyPressEvent( QKeyEvent* e )
+{
+	switch ( e->key() ) 
+	{
+		case Key_Enter:
+		case Key_Return:
+		case Key_Space:
+			m_pressed = TRUE;
+			setDown(true);
+			emit pressed();
+		break;
+		case Key_Escape:
+			e->ignore();
+		break;
+		default:
+			e->ignore();
+	}
+
+	QPushButton::keyPressEvent(e);
+}
+
+
+void KSMPushButton::keyReleaseEvent( QKeyEvent* e )
+{
+  switch ( e->key() ) 
+  {
+		case Key_Space:
+		case Key_Enter:
+		case Key_Return:
+			if ( m_pressed ) 
+			{
+			setDown(false);
+			m_pressed = FALSE;
+			emit released();
+			emit clicked();
+			}
+		break;
+		case Key_Escape:
+			e->ignore();
+		break;
+		default:
+			e->ignore();
+			
+	}
+}
+
+FlatButton::FlatButton( QWidget *parent, const char *name )
+  : QToolButton( parent, name/*, WNoAutoErase*/ ),
+    m_pressed(false)
+{
+  init();
+}
+
+
+FlatButton::~FlatButton() {}
+
+void FlatButton::init()
+{
+	setUsesTextLabel(true);
+	setUsesBigPixmap(true);
+	setAutoRaise(true);
+	setTextPosition( QToolButton::Under );
+	setFocusPolicy(QWidget::StrongFocus);	
+ }
+
+
+void FlatButton::keyPressEvent( QKeyEvent* e )
+{
+	switch ( e->key() ) 
+	{
+		case Key_Enter:
+		case Key_Return:
+		case Key_Space:
+			m_pressed = TRUE;
+			setDown(true);
+			emit pressed();
+		break;
+		case Key_Escape:
+			e->ignore();
+		break;
+		default:
+			e->ignore();
+	}
+
+	QToolButton::keyPressEvent(e);
+}
+
+void FlatButton::keyReleaseEvent( QKeyEvent* e )
+{
+	switch ( e->key() ) 
+	{
+		case Key_Space:
+		case Key_Enter:
+		case Key_Return:
+			if ( m_pressed ) 
+			{
+			setDown(false);
+			m_pressed = FALSE;
+			emit released();
+			emit clicked();
+			}
+		break;
+		case Key_Escape:
+			e->ignore();
+		break;
+		default:
+			e->ignore();
+	}
+
+}
+
 
 
 KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char *os,

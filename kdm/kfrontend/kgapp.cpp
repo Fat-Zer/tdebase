@@ -38,6 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <ksimpleconfig.h>
 
 #include <qtimer.h>
+#include <qstring.h>
 #include <qcursor.h>
 #include <qpalette.h>
 
@@ -124,6 +125,8 @@ xIOErr( Display * )
 	exit( EX_RESERVER_DPY );
 }
 
+//KSimpleConfig *iccconfig;
+
 void
 kg_main( const char *argv0 )
 {
@@ -140,6 +143,17 @@ kg_main( const char *argv0 )
 
 	if (!_GUIStyle.isEmpty())
 		app.setStyle( _GUIStyle );
+
+	// Load up the systemwide ICC profile
+	QString iccConfigFile = QString(KDE_CONFDIR);
+	iccConfigFile += "/kicc/kiccconfigrc";
+	KSimpleConfig iccconfig(iccConfigFile, true);
+	if (iccconfig.readBoolEntry("EnableICC", false) == true) {
+		QString iccCommand = QString("/usr/bin/xcalib ");
+		iccCommand += iccconfig.readEntry("ICCFile");
+		iccCommand += QString(" &");
+		system(iccCommand.ascii());
+	}
 
 	_colorScheme = locate( "data", "kdisplay/color-schemes/" + _colorScheme + ".kcsrc" );
 	if (!_colorScheme.isEmpty()) {

@@ -32,7 +32,9 @@
 #include <kglobal.h>
 #include <kprocess.h>
 #include <kstartupinfo.h>
+#include <kmimetype.h>
 
+#include "dialog.h"
 #include "kio_media_mounthelper.h"
 
 const Medium MountHelper::findMedium(const KURL &url)
@@ -63,7 +65,7 @@ MountHelper::MountHelper() : KApplication()
 {
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-	m_errorStr = "";
+	m_errorStr = QString::null;
 
 	KURL url(args->url(0));
 	const Medium medium = findMedium(url);
@@ -89,7 +91,37 @@ MountHelper::MountHelper() : KApplication()
 	m_isCdrom = medium.mimeType().find("dvd")!=-1
 	         || medium.mimeType().find("cd")!=-1;
 
-	if (args->isSet("u"))
+	if (args->isSet("d"))
+	{
+		if (!medium.isEncrypted())
+		{
+			m_errorStr = i18n("%1 is not an encrypted media.").arg(url.prettyURL());
+			QTimer::singleShot(0, this, SLOT(error()) );
+			return;
+		}
+		if (!medium.needDecryption())
+		{
+			m_errorStr = i18n("%1 is already decrypted.").arg(url.prettyURL());
+			QTimer::singleShot(0, this, SLOT(error()) );
+			return;
+		}
+
+		QString iconName = medium.iconName();
+		if (iconName.isEmpty())
+		{
+			QString mime = medium.mimeType();
+			iconName = KMimeType::mimeType(mime)->icon(mime, false);
+		}
+
+		m_mediumId = medium.id();
+		dialog = new Dialog(url.prettyURL(), iconName);
+		dialog->show();
+
+		connect(dialog, SIGNAL (user1Clicked()), this, SLOT (slotSendPassword()));
+		connect(dialog, SIGNAL (cancelClicked()), this, SLOT (slotCancel()));
+		connect(this, SIGNAL (signalPasswordError(QString)), dialog, SLOT (slotDialogError(QString)));
+	}
+	else if (args->isSet("u"))
 	{
 	  DCOPRef mediamanager("kded", "mediamanager");
 	  DCOPReply reply = mediamanager.call( "unmount", medium.id());
@@ -103,6 +135,8 @@ MountHelper::MountHelper() : KApplication()
 	}
 	else if (args->isSet("s") || args->isSet("e"))
 	{
+		DCOPRef mediamanager("kded", "mediamanager");
+
 		/*
 		* We want to call mediamanager unmount before invoking eject. That's
 		* because unmount would provide an informative error message in case of
@@ -114,17 +148,24 @@ MountHelper::MountHelper() : KApplication()
 		*/
 		if (medium.isMounted())
 		{
-			DCOPRef mediamanager("kded", "mediamanager");
 			DCOPReply reply = mediamanager.call( "unmount", medium.id());
 			if (reply.isValid())
                             reply.get(m_errorStr);
-                        if (m_errorStr.isNull())
-                            invokeEject(device, true);
-                        else
-                            error();
-			m_device = device;
-		} else
-                    invokeEject(device, true);
+		}
+
+		/* If this is a decrypted volume and there is no error yet
+		 * we try to teardown the decryption */
+		if (m_errorStr.isNull() && medium.isEncrypted() && !medium.clearDeviceUdi().isNull())
+		{
+			DCOPReply reply = mediamanager.call( "undecrypt", medium.id());
+			if (reply.isValid())
+				reply.get(m_errorStr);
+		}
+
+		if (m_errorStr.isNull())
+			invokeEject(device, true);
+		else
+			error();
 	}
 	else
 	{
@@ -167,7 +208,9 @@ void MountHelper::ejectFinished(KProcess* proc)
 			else
 				m_errorStr = i18n("The device was successfully unmounted, but could not be ejected");
 		}
-		QTimer::singleShot(0, this, SLOT(error()));
+//X Comment this because the error is useless as long as the unmount is successfull. 
+//X 		QTimer::singleShot(0, this, SLOT(error()));
+      ::exit(0);
 	}
 }
 
@@ -177,8 +220,32 @@ void MountHelper::error()
 	::exit(1);
 }
 
+void MountHelper::slotSendPassword()
+{
+	DCOPRef mediamanager("kded", "mediamanager");
+
+	DCOPReply reply = mediamanager.call( "decrypt", m_mediumId, dialog->getPassword() );
+	if (!reply.isValid()) {
+		m_errorStr = i18n("The KDE mediamanager is not running.");
+		error();
+	} else {
+		QString errorMsg = reply;
+		if (errorMsg.isNull()) {
+			exit(0);
+		} else {
+			emit signalPasswordError(errorMsg);
+		}
+	}
+}
+
+void MountHelper::slotCancel()
+{
+	exit(0);
+}
+
 static KCmdLineOptions options[] =
 {
+	{ "d", I18N_NOOP("Decrypt given URL"), 0 },
 	{ "u", I18N_NOOP("Unmount given URL"), 0 },
 	{ "m", I18N_NOOP("Mount given URL (default)"), 0 },
 	{ "e", I18N_NOOP("Eject given URL via kdeeject"), 0},

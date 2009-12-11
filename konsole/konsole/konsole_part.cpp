@@ -1064,6 +1064,16 @@ void konsolePart::startProgram( const QString& program,
     se->run();
 }
 
+bool konsolePart::setPtyFd( int master_pty )
+{
+   kdDebug(1211) << "konsolePart::setPtyFd " << master_pty << endl;
+   TEPty *pty = new TEPty();
+   pty->setPtyFd(master_pty);
+   if ( !se )
+      newSession();
+   se->setPty(pty);
+}
+
 void konsolePart::newSession()
 {
   if ( se ) delete se;

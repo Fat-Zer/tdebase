@@ -274,7 +274,7 @@ static int startApp()
 
     // Try to exec the command with kdesud.
     bool keep = !args->isSet("n") && have_daemon;
-    bool terminal = args->isSet("t");
+    bool terminal = true;
     bool new_dcop = args->isSet("newdcop");
     bool withIgnoreButton = args->isSet("ignorebutton");
     

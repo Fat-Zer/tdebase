@@ -123,7 +123,7 @@ void MediumButton::refreshType()
 {
     KMimeType::Ptr mime = mFileItem.determineMimeType();
     QToolTip::add(this, mime->comment());
-    setIcon(mime->icon(QString::null, false));
+    setIcon(mFileItem.iconName());
 }
 
 // Activate this code only if we find a way to have both an

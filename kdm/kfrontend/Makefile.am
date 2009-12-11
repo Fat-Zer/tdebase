@@ -1,5 +1,5 @@
 # use 'make GENKDMCONF_FLAGS=... install' to override
-GENKDMCONF_FLAGS =
+GENKDMCONF_FLAGS = --no-old
 
 SUBDIRS = themer themes pics sessions
 

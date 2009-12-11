@@ -85,6 +85,8 @@ public:
 	QString mount(const QString &id);
 	QString mount(const Medium *medium);
 	QString unmount(const QString &id);
+	QString decrypt(const QString &id, const QString &password);
+	QString undecrypt(const QString &id);
 
 private:
 	/**
@@ -143,6 +145,7 @@ private:
 	QString generateName(const QString &devNode);
 	static QString isInFstab(const Medium *medium);
 	static QString listUsingProcesses(const Medium *medium);
+	static QString killUsingProcesses(const Medium *medium);
 
 private slots:
 	void slotResult(KIO::Job *job);

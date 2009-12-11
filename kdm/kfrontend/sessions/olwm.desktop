@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=XSession
-Exec=olwm
-TryExec=olwm
+Exec=olwm-x-window-manager
+TryExec=olwm-x-window-manager
 Name=OLWM
 Name[eo]=OLFA
 Name[hi]=ओएलडबल्यूएम

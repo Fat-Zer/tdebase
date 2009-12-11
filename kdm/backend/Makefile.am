@@ -1,9 +1,9 @@
 # forcibly remove thread-related defines & flags
 AUTOMAKE_OPTIONS = foreign
-CPPFLAGS = $(USER_INCLUDES) $(X_INCLUDES) $(KRB4_INCS) $(KRB5_INCS) -I.. -I../..
+CPPFLAGS = $(USER_INCLUDES) $(X_INCLUDES) $(KRB4_INCS) $(KRB5_INCS) $(DBUS_INCS) -I.. -I../..
 LDFLAGS = $(USER_LDFLAGS) $(X_LDFLAGS) $(X_RPATH) $(KRB4_RPATH) $(KRB5_RPATH)
 LDADD = $(LIB_X11) -lXau $(LIBXDMCP) $(PASSWDLIBS) $(LIBSHADOW) $(LIBGEN) \
-    $(LIB_LIBS) $(KRB4_LIBS) $(KRB5_LIBS) $(LIBSOCKET) $(LIBRESOLV) \
+    $(LIB_LIBS) $(KRB4_LIBS) $(KRB5_LIBS) $(DBUS_LIBS) $(LIBSOCKET) $(LIBRESOLV) \
     $(LIBUCB) $(LIBUTIL) $(LIBPOSIX4)
 
 bin_PROGRAMS = kdm
@@ -13,6 +13,7 @@ kdm_SOURCES = \
     bootman.c \
     choose.c \
     client.c \
+    consolekit.c \
     ctrl.c \
     daemon.c \
     dm.c \

@@ -313,6 +313,8 @@ public:
   static bool isPreloaded() { return s_preloaded; }
   static void setPreloadedWindow( KonqMainWindow* );
   static KonqMainWindow* preloadedWindow() { return s_preloadedWindow; }
+  
+  void toggleReloadStopButton(bool isStop);
 
   QString currentTitle() const;
   QString currentURL() const;
@@ -375,6 +377,7 @@ public slots:
   void slotLinkView();
   void slotReload( KonqView* view = 0L );
   void slotStop();
+  void slotReloadStop();
 
   // Go menu
   void slotUp();
@@ -648,6 +651,8 @@ private:
   KAction *m_paPaste;
   KAction *m_paStop;
   KAction *m_paRename;
+
+  KAction *m_paReloadStop;
 
   KAction *m_paTrash;
   KAction *m_paDelete;

@@ -563,7 +563,7 @@ void KonqMainWindow::openURL( KonqView *_view, const KURL &_url,
 
   kdDebug(1202) << "trying openView for " << url << " (serviceType " << serviceType << ")" << endl;
   if ( ( !serviceType.isEmpty() && serviceType != "application/octet-stream") ||
-         url.url() == "about:konqueror" || url.url() == "about:plugins" )
+          url.url().startsWith("about:konqueror") || url.url() == "about:plugins" )
   {
     KService::Ptr offer = KServiceTypeProfile::preferredService(serviceType, "Application");
     // If the associated app is konqueror itself, then make sure we try to embed before bailing out.
@@ -731,7 +731,7 @@ bool KonqMainWindow::openView( QString serviceType, const KURL &_url, KonqView *
 
   QString serviceName; // default: none provided
 
-  if ( url.url() == "about:konqueror" || url.url() == "about:plugins" )
+  if ( url.url().startsWith("about:konqueror") || url.url() == "about:plugins" )
   {
       serviceType = "KonqAboutPage"; // not KParts/ReadOnlyPart, it fills the Location menu ! :)
       serviceName = "konq_aboutpage";
@@ -1772,6 +1772,34 @@ void KonqMainWindow::slotReload( KonqView* reloadView )
   }
 }
 
+void KonqMainWindow::slotReloadStop() {
+  if (m_paReloadStop->icon() == "reload") {
+    slotReload();
+    toggleReloadStopButton(true);
+  } else {
+    slotStop();
+    toggleReloadStopButton(false);
+  }
+}
+
+void KonqMainWindow::toggleReloadStopButton(bool isReload) {
+  //m_paStop = new KAction( i18n( "&Stop" ), "stop", Key_Escape, this, SLOT( slotStop() ), actionCollection(), "stop" );
+  if (isReload) {
+    m_paReloadStop->setIcon("stop");
+    m_paReloadStop->setWhatsThis( i18n( "Stop loading the document<p>"
+                                        "All network transfers will be stopped and Konqueror will display the content "
+                                        "that has been received so far." ) );
+    m_paReloadStop->setToolTip( i18n( "Stop loading the document" ) );
+  //m_paReloadStop = new KAction( i18n( "&Reload" ), "reload", reloadShortcut, this, SLOT( slotReloadStop() ), actionCollection(), "reload" );
+  } else {
+    m_paReloadStop->setIcon("reload");
+    m_paReloadStop->setWhatsThis( i18n( "Reload the currently displayed document<p>"
+                                        "This may, for example, be needed to refresh webpages that have been "
+                                        "modified since they were loaded, in order to make the changes visible." ) );
+    m_paReloadStop->setToolTip( i18n( "Reload the currently displayed document" ) );
+  }
+}
+
 void KonqMainWindow::slotReloadPopup()
 {
   if (m_pWorkingTab)
@@ -2196,7 +2224,7 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
           KService::Ptr serv = KService::serviceByDesktopName( ittb.current()->name() );
           if ( serv && viewModeActionKey( serv ) == currentServiceLibrary ) {
               KToggleAction* ta = static_cast<KToggleAction*>( ittb.current() );
-              ta->setChecked( true );
+              ta->setChecked( false );
 	      QString servicename = m_currentView->service()->genericName();
 	      if (servicename.isEmpty())
 	          servicename = m_currentView->service()->name();
@@ -3664,6 +3692,7 @@ void KonqMainWindow::startAnimation()
   //kdDebug(1202) << "KonqMainWindow::startAnimation" << endl;
   m_paAnimatedLogo->start();
   m_paStop->setEnabled( true );
+  toggleReloadStopButton( true );
 }
 
 void KonqMainWindow::stopAnimation()
@@ -3671,6 +3700,7 @@ void KonqMainWindow::stopAnimation()
   //kdDebug(1202) << "KonqMainWindow::stopAnimation" << endl;
   m_paAnimatedLogo->stop();
   m_paStop->setEnabled( false );
+  toggleReloadStopButton( false );
 }
 
 void KonqMainWindow::setUpEnabled( const KURL &url )
@@ -3833,6 +3863,8 @@ void KonqMainWindow::initActions()
   reloadShortcut.append(KKey(CTRL + Key_R));
   m_paReload = new KAction( i18n( "&Reload" ), "reload", reloadShortcut, this, SLOT( slotReload() ), actionCollection(), "reload" );
   m_paReloadAllTabs = new KAction( i18n( "&Reload All Tabs" ), "reload_all_tabs", SHIFT+Key_F5, this, SLOT( slotReloadAllTabs() ), actionCollection(), "reload_all_tabs" );
+  
+  m_paReloadStop = new KAction( i18n( "&Reload/Stop" ), "reload", 0, this, SLOT( slotReloadStop() ), actionCollection(), "reload_stop" );
 
   m_paUndo = KStdAction::undo( KonqUndoManager::self(), SLOT( undo() ), actionCollection(), "undo" );
   //m_paUndo->setEnabled( KonqUndoManager::self()->undoAvailable() );
@@ -4067,6 +4099,7 @@ void KonqMainWindow::updateToolBarActions( bool pendingAction /*=false*/)
   {
     m_paAnimatedLogo->stop();
     m_paStop->setEnabled( pendingAction );  //enable/disable based on any pending actions...
+    toggleReloadStopButton( pendingAction );
   }
 
   if ( m_currentView && m_currentView->url().isLocalFile() &&
@@ -4368,6 +4401,7 @@ void KonqMainWindow::enableAllActions( bool enable )
       updateViewActions(); // undo, lock, link and other view-dependent actions
 
       m_paStop->setEnabled( m_currentView && m_currentView->isLoading() );
+      toggleReloadStopButton( m_currentView && m_currentView->isLoading() );
 
       if (m_toggleViewGUIClient)
       {
@@ -5089,7 +5123,6 @@ void KonqMainWindow::updateViewModeActions()
       bool bIsCurrentView = (*it)->desktopEntryName() == m_currentView->service()->desktopEntryName();
       if ( bIsCurrentView )
       {
-          (*mapIt)->setChecked( true );
           action->setChecked( true );
       }
 

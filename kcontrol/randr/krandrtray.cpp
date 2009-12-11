@@ -29,10 +29,20 @@
 #include <kpopupmenu.h>
 #include <kstdaction.h>
 #include <kstdguiitem.h>
+#include <kglobal.h>
+#include <kmessagebox.h>
+
+#include "configdialog.h"
 
 #include "krandrtray.h"
 #include "krandrpassivepopup.h"
 #include "krandrtray.moc"
+
+#define OUTPUT_CONNECTED		(1 << 0)
+#define OUTPUT_UNKNOWN			(1 << 1)
+#define OUTPUT_DISCONNECTED		(1 << 2)
+#define OUTPUT_ON			(1 << 3)
+#define OUTPUT_ALL			(0xf)
 
 KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 	: KSystemTray(parent, name)
@@ -43,6 +53,20 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	connect(this, SIGNAL(quitSelected()), kapp, SLOT(quit()));
 	QToolTip::add(this, i18n("Screen resize & rotate"));
+	my_parent = parent;
+
+	printf("Reading configuration...\n\r");
+	globalKeys = new KGlobalAccel(this);
+	KGlobalAccel* keys = globalKeys;
+#include "krandrbindings.cpp"
+	// the keys need to be read from kdeglobals, not kickerrc
+	globalKeys->readSettings();
+	globalKeys->setEnabled(true);
+	globalKeys->updateConnections();
+
+	connect(kapp, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)));
+
+	randr_display = XOpenDisplay(NULL);
 }
 
 void KRandRSystemTray::mousePressEvent(QMouseEvent* e)
@@ -60,7 +84,51 @@ void KRandRSystemTray::mousePressEvent(QMouseEvent* e)
 
 void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 {
+	//int lastIndex = 0;
+
+	// Reload the randr configuration...
+	XRROutputInfo *output_info;
+	char *output_name;
+	RROutput output_id;
+	int i;
 	int lastIndex = 0;
+	int screenDeactivated = 0;
+
+	if (isValid() == true) {
+		randr_screen_info = read_screen_info(randr_display);
+
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			output_info = randr_screen_info->outputs[i]->info;
+			// Look for ON outputs
+			if (!randr_screen_info->outputs[i]->cur_crtc) {
+				continue;
+			}
+			if (RR_Disconnected != randr_screen_info->outputs[i]->info->connection) {
+				continue;
+			}
+			
+			output_name = output_info->name;
+			output_id = randr_screen_info->outputs[i]->id;
+	
+			// Deactivate this display to avoid a crash!
+			randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
+			randr_screen_info->cur_output = randr_screen_info->outputs[i];
+			randr_screen_info->cur_output->auto_set = 0;
+			randr_screen_info->cur_output->off_set = 1;
+			output_off(randr_screen_info, randr_screen_info->cur_output);
+			main_low_apply(randr_screen_info);
+	
+			screenDeactivated = 1;
+		}
+	
+		if (screenDeactivated == 1) {
+			findPrimaryDisplay();
+			refresh();
+	
+			currentScreen()->proposeSize(GetDefaultResolutionParameter());
+			currentScreen()->applyProposed();
+		}
+	}
 
 	menu->clear();
 	menu->setCheckable(true);
@@ -89,12 +157,19 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 		populateMenu(menu);
 	}
 
-	menu->insertSeparator();
+	addOutputMenu(menu);
 
-	KAction *actPrefs = new KAction( i18n( "Configure Display..." ),
-		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotPrefs() ),
+	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
+
+// 	KAction *actPrefs = new KAction( i18n( "Configure Display..." ),
+// 		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotPrefs() ),
+// 		actionCollection() );
+// 	actPrefs->plug( menu );
+
+	KAction *actSKeys = new KAction( i18n( "Configure Shortcut Keys..." ),
+		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotSKeys() ),
 		actionCollection() );
-	actPrefs->plug( menu );
+	actSKeys->plug( menu );
 
 	menu->insertItem(SmallIcon("help"),KStdGuiItem::help().text(), m_help->menu());
 	KAction *quitAction = actionCollection()->action(KStdAction::name(KStdAction::Quit));
@@ -119,6 +194,36 @@ void KRandRSystemTray::configChanged()
 		this, "ScreenChangeNotification");
 
 	first = false;
+}
+
+int KRandRSystemTray::GetDefaultResolutionParameter()
+{
+	int returnIndex = 0;
+
+	int numSizes = currentScreen()->numSizes();
+	int* sizeSort = new int[numSizes];
+
+	for (int i = 0; i < numSizes; i++) {
+		sizeSort[i] = currentScreen()->pixelCount(i);
+	}
+
+	int highest = -1, highestIndex = -1;
+
+	for (int i = 0; i < numSizes; i++) {
+		if (sizeSort[i] && sizeSort[i] > highest) {
+			highest = sizeSort[i];
+			highestIndex = i;
+		}
+	}
+	sizeSort[highestIndex] = -1;
+	Q_ASSERT(highestIndex != -1);
+
+	returnIndex = highestIndex;
+
+	delete [] sizeSort;
+	sizeSort = 0L;
+
+	return returnIndex;
 }
 
 void KRandRSystemTray::populateMenu(KPopupMenu* menu)
@@ -194,8 +299,15 @@ void KRandRSystemTray::populateMenu(KPopupMenu* menu)
 
 void KRandRSystemTray::slotResolutionChanged(int parameter)
 {
-	if (currentScreen()->currentSize() == parameter)
+// 	if (currentScreen()->currentSize() == parameter)
+// 		return;
+
+	if (currentScreen()->currentSize() == parameter) {
+		//printf("This resolution is already in use; applying again...\n\r");
+		currentScreen()->proposeSize(parameter);
+		currentScreen()->applyProposed();
 		return;
+	}
 
 	currentScreen()->proposeSize(parameter);
 
@@ -247,7 +359,347 @@ void KRandRSystemTray::slotPrefs()
 {
 	KCMultiDialog *kcm = new KCMultiDialog( KDialogBase::Plain, i18n( "Configure" ), this );
 
-	kcm->addModule( "display" );
+	kcm->addModule( "displayconfig" );
 	kcm->setPlainCaption( i18n( "Configure Display" ) );
 	kcm->exec();
+}
+
+void KRandRSystemTray::slotSettingsChanged(int category)
+{
+	if ( category == (int) KApplication::SETTINGS_SHORTCUTS ) {
+		globalKeys->readSettings();
+		globalKeys->updateConnections();
+	}
+}
+
+void KRandRSystemTray::slotSKeys()
+{
+	ConfigDialog *dlg = new ConfigDialog(globalKeys, true);
+
+	if ( dlg->exec() == QDialog::Accepted ) {
+		dlg->commitShortcuts();
+		globalKeys->writeSettings(0, true);
+		globalKeys->updateConnections();
+	}
+
+	delete dlg;
+}
+
+void KRandRSystemTray::slotCycleDisplays()
+{
+	XRROutputInfo *output_info;
+	char *output_name;
+	RROutput output_id;
+	int i;
+	int lastIndex = 0;
+	int current_on_index = -1;
+	int max_index = -1;
+	int prev_on_index;
+	Status s;
+
+	randr_screen_info = read_screen_info(randr_display);
+
+	for (i = 0; i < randr_screen_info->n_output; i++) {
+		output_info = randr_screen_info->outputs[i]->info;
+		// Look for ON outputs...
+		if (!randr_screen_info->outputs[i]->cur_crtc) {
+			continue;
+		}
+		// ...that are connected
+		if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+			continue;
+		}
+		
+		output_name = output_info->name;
+		output_id = randr_screen_info->outputs[i]->id;
+		current_on_index = i;
+		if (i > max_index) {
+			max_index = i;
+		}
+	}
+
+	for (i = 0; i < randr_screen_info->n_output; i++) {
+		output_info = randr_screen_info->outputs[i]->info;
+		// Look for CONNECTED outputs....
+		if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+			continue;
+		}
+		// ...that are not ON
+		if (randr_screen_info->outputs[i]->cur_crtc) {
+			continue;
+		}
+		
+		output_name = output_info->name;
+		output_id = randr_screen_info->outputs[i]->id;
+		if (i > max_index) {
+			max_index = i;
+		}
+	}
+
+	for (i = 0; i < randr_screen_info->n_output; i++) {
+		output_info = randr_screen_info->outputs[i]->info;
+		// Look for ALL outputs that are not connected....
+		if (RR_Disconnected != randr_screen_info->outputs[i]->info->connection) {
+			continue;
+		}
+		// ...or ON
+		if (randr_screen_info->outputs[i]->cur_crtc) {
+			continue;
+		}
+		
+		output_name = output_info->name;
+		output_id = randr_screen_info->outputs[i]->id;
+		if (i > max_index) {
+			max_index = i;
+		}
+	}
+
+	printf("Active: %d\n\r", current_on_index);
+	printf("Max: %d\n\r", max_index);
+
+	if ((current_on_index == -1) && (max_index == -1)) {
+		// There is no connected display available!  ABORT
+		return;
+	}
+
+	prev_on_index = current_on_index;
+	current_on_index = current_on_index + 1;
+	if (current_on_index > max_index) {
+		current_on_index = 0;
+	}
+	while (RR_Disconnected == randr_screen_info->outputs[current_on_index]->info->connection) {
+		current_on_index = current_on_index + 1;
+		if (current_on_index > max_index) {
+			current_on_index = 0;
+		}
+	}
+	if (prev_on_index != current_on_index) {
+		randr_screen_info->cur_crtc = randr_screen_info->outputs[current_on_index]->cur_crtc;
+		randr_screen_info->cur_output = randr_screen_info->outputs[current_on_index];
+		randr_screen_info->cur_output->auto_set = 1;
+ 		randr_screen_info->cur_output->off_set = 0;
+		output_auto (randr_screen_info, randr_screen_info->cur_output);
+		i=main_low_apply(randr_screen_info);
+
+		if (randr_screen_info->outputs[current_on_index]->cur_crtc) {
+			if (prev_on_index != -1) {
+				if (randr_screen_info->outputs[prev_on_index]->cur_crtc != NULL) {
+					if (RR_Disconnected != randr_screen_info->outputs[prev_on_index]->info->connection) {
+						randr_screen_info->cur_crtc = randr_screen_info->outputs[prev_on_index]->cur_crtc;
+						randr_screen_info->cur_output = randr_screen_info->outputs[prev_on_index];
+						randr_screen_info->cur_output->auto_set = 0;
+						randr_screen_info->cur_output->off_set = 1;
+						output_off(randr_screen_info, randr_screen_info->cur_output);
+						i=main_low_apply(randr_screen_info);
+					}
+				}
+			}
+
+			// Do something about the disconnected outputs
+			for (i = 0; i < randr_screen_info->n_output; i++) {
+				output_info = randr_screen_info->outputs[i]->info;
+				// Look for ON outputs
+				if (!randr_screen_info->outputs[i]->cur_crtc) {
+					continue;
+				}
+				if (RR_Disconnected != randr_screen_info->outputs[i]->info->connection) {
+					continue;
+				}
+				
+				output_name = output_info->name;
+				output_id = randr_screen_info->outputs[i]->id;
+		
+				// Deactivate this display to avoid a crash!
+				randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
+				randr_screen_info->cur_output = randr_screen_info->outputs[i];
+				randr_screen_info->cur_output->auto_set = 0;
+				randr_screen_info->cur_output->off_set = 1;
+				output_off(randr_screen_info, randr_screen_info->cur_output);
+				main_low_apply(randr_screen_info);
+			}
+
+			findPrimaryDisplay();
+			refresh();
+
+			currentScreen()->proposeSize(GetDefaultResolutionParameter());
+			currentScreen()->applyProposed();
+		}
+		else {
+			output_name = randr_screen_info->outputs[current_on_index]->info->name;
+ 			KMessageBox::sorry(my_parent, i18n("<b>Unable to activate output %1</b><p>Either the output is not connected to a display,<br>or the display configuration is not detectable").arg(output_name), i18n("Output Unavailable"));
+		}
+	}
+}
+
+void KRandRSystemTray::findPrimaryDisplay()
+{
+	XRROutputInfo *output_info;
+	char *output_name;
+	RROutput output_id;
+	int i;
+	int lastIndex = 0;
+
+	for (i = 0; i < randr_screen_info->n_output; i++) {
+		output_info = randr_screen_info->outputs[i]->info;
+		// Look for ON outputs...
+		if (!randr_screen_info->outputs[i]->cur_crtc) {
+			continue;
+		}
+
+		// ...that are connected
+		if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+			continue;
+		}
+		
+		output_name = output_info->name;
+		output_id = randr_screen_info->outputs[i]->id;
+		printf("ACTIVE CHECK: Found output %s\n\r", output_name);
+
+		randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
+		randr_screen_info->cur_output = randr_screen_info->outputs[i];
+	}
+}
+
+void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
+{
+	XRROutputInfo *output_info;
+	char *output_name;
+	RROutput output_id;
+	int i;
+	int lastIndex = 0;
+	int connected_displays = 0;
+
+	if (isValid() == true) {
+		menu->insertTitle(SmallIcon("kcmkwm"), i18n("Output Port"));
+	
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			output_info = randr_screen_info->outputs[i]->info;
+			// Look for ON outputs
+			if (!randr_screen_info->outputs[i]->cur_crtc) {
+				continue;
+			}
+			if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+				continue;
+			}
+			
+			output_name = output_info->name;
+			output_id = randr_screen_info->outputs[i]->id;
+			//printf("ON: Found output %s\n\r", output_name);
+	
+			lastIndex = menu->insertItem(i18n("%1 (Active)").arg(output_name));
+			menu->setItemChecked(lastIndex, true);
+			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
+			menu->setItemParameter(lastIndex, i);
+	
+			connected_displays++;
+		}
+	
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			output_info = randr_screen_info->outputs[i]->info;
+			// Look for CONNECTED outputs....
+			if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+				continue;
+			}
+			// ...that are not ON
+			if (randr_screen_info->outputs[i]->cur_crtc) {
+				continue;
+			}
+			
+			output_name = output_info->name;
+			output_id = randr_screen_info->outputs[i]->id;
+			//printf("CONNECTED, NOT ON: Found output %s\n\r", output_name);
+	
+			lastIndex = menu->insertItem(i18n("%1 (Connected, Inactive)").arg(output_name));
+			menu->setItemChecked(lastIndex, false);
+			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
+			menu->setItemParameter(lastIndex, i);
+	
+			connected_displays++;
+		}
+	
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			output_info = randr_screen_info->outputs[i]->info;
+			// Look for ALL outputs that are not connected....
+			if (RR_Disconnected != randr_screen_info->outputs[i]->info->connection) {
+				continue;
+			}
+			// ...or ON
+			if (randr_screen_info->outputs[i]->cur_crtc) {
+				continue;
+			}
+			
+			output_name = output_info->name;
+			output_id = randr_screen_info->outputs[i]->id;
+			//printf("DISCONNECTED, NOT ON: Found output %s\n\r", output_name);
+	
+			lastIndex = menu->insertItem(i18n("%1 (Disconnected, Inactive)").arg(output_name));
+			menu->setItemChecked(lastIndex, false);
+			menu->setItemEnabled(lastIndex, false);
+			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
+			menu->setItemParameter(lastIndex, i);
+		}
+	
+		lastIndex = menu->insertItem(SmallIcon("forward"), i18n("Next available output"));
+		if (connected_displays < 2) {
+			menu->setItemEnabled(lastIndex, false);
+		}
+		menu->connectItem(lastIndex, this, SLOT(slotCycleDisplays()));
+	}
+}
+
+void KRandRSystemTray::slotOutputChanged(int parameter)
+{
+	XRROutputInfo *output_info;
+	char *output_name;
+	RROutput output_id;
+	int i;
+	Status s;
+	int num_outputs_on;
+
+	num_outputs_on = 0;
+	for (i = 0; i < randr_screen_info->n_output; i++) {
+		output_info = randr_screen_info->outputs[i]->info;
+		// Look for ON outputs
+		if (!randr_screen_info->outputs[i]->cur_crtc) {
+			continue;
+		}
+		
+		num_outputs_on++;
+	}
+
+	if (!randr_screen_info->outputs[parameter]->cur_crtc) {
+		//printf("Screen was off, turning it on...\n\r");
+
+		randr_screen_info->cur_crtc = randr_screen_info->outputs[parameter]->cur_crtc;
+		randr_screen_info->cur_output = randr_screen_info->outputs[parameter];
+		randr_screen_info->cur_output->auto_set = 1;
+ 		randr_screen_info->cur_output->off_set = 0;
+		output_auto (randr_screen_info, randr_screen_info->cur_output);
+		i=main_low_apply(randr_screen_info);
+
+		if (!randr_screen_info->outputs[parameter]->cur_crtc) {
+			output_name = randr_screen_info->outputs[parameter]->info->name;
+ 			KMessageBox::sorry(my_parent, i18n("<b>Unable to activate output %1</b><p>Either the output is not connected to a display,<br>or the display configuration is not detectable").arg(output_name), i18n("Output Unavailable"));
+		}
+	}
+	else {
+		if (num_outputs_on > 1) {
+			//printf("Screen was on, turning it off...\n\r");
+			randr_screen_info->cur_crtc = randr_screen_info->outputs[parameter]->cur_crtc;
+			randr_screen_info->cur_output = randr_screen_info->outputs[parameter];
+			randr_screen_info->cur_output->auto_set = 0;
+			randr_screen_info->cur_output->off_set = 1;
+			output_off(randr_screen_info, randr_screen_info->cur_output);
+			i=main_low_apply(randr_screen_info);
+
+			findPrimaryDisplay();
+			refresh();
+
+			currentScreen()->proposeSize(GetDefaultResolutionParameter());
+			currentScreen()->applyProposed();
+		}
+		else {
+			KMessageBox::sorry(my_parent, i18n("<b>You are attempting to deactivate the only active output</b><p>You must keep at least one display output active at all times!"), i18n("Invalid Operation Requested"));
+		}
+	}
 }

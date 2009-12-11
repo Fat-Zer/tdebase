@@ -322,7 +322,8 @@ static char *
 locate( const char *exe )
 {
 	int len;
-	char *path, *pathe, *name, *thenam, nambuf[PATH_MAX+1];
+	char *path, *name, *thenam, nambuf[PATH_MAX+1];
+	char *pathe;
 
 	if (!(path = getenv( "PATH" )))
 		return 0;
@@ -331,7 +332,7 @@ locate( const char *exe )
 	memcpy( name, exe, len + 1 );
 	*--name = '/';
 	do {
-		if (!(pathe = strchr( path, ':' )))
+		if (!(pathe = (char*)strchr( path, ':' )))
 			pathe = path + strlen( path );
 		len = pathe - path;
 		if (len && !(len == 1 && *path == '.')) {
@@ -531,7 +532,7 @@ static const char def_xaccess[] =
 "# right hand sides can match.\n"
 "#\n"
 "\n"
-"*					#any host can get a login window\n"
+"#*					#any host can get a login window\n"
 "\n"
 "#\n"
 "# To hardwire a specific terminal to a specific host, you can\n"
@@ -549,7 +550,7 @@ static const char def_xaccess[] =
 "# so this may not work in all environments.\n"
 "#\n"
 "\n"
-"*		CHOOSER BROADCAST	#any indirect host can get a chooser\n"
+"#*		CHOOSER BROADCAST	#any indirect host can get a chooser\n"
 "\n"
 "#\n"
 "# If you'd prefer to configure the set of hosts each terminal sees,\n"
@@ -585,35 +586,25 @@ static const char def_startup[] =
 "#! /bin/sh\n"
 "# Xstartup - run as root before session starts\n"
 "\n"
-"# By convention, both xconsole and xterm -C check that the\n"
-"# console is owned by the invoking user and is readable before attaching\n"
-"# the console output.  This way a random user can invoke xterm -C without\n"
-"# causing serious grief; still, it can cause havoc, so xconsole is started\n"
-"# by Xsetup usually.\n"
-"# This is not required if you use PAM with the pam_console module.\n"
-"#\n"
-"#chown $USER /dev/console\n"
 "\n"
-#ifdef _AIX
-"# We create a pseudodevice for finger.  (host:0 becomes xdm/host_0)\n"
-"# Without it, finger errors out with \"Can't stat /dev/host:0\".\n"
-"#\n"
-"#devname=`echo $DISPLAY | cut -c1-8`\n"
-"#if [ ! -d /dev/xdm ]; then\n"
-"#  mkdir /dev/xdm\n"
-"#  chmod 755 /dev/xdm\n"
-"#fi\n"
-"#touch /dev/xdm/$devname\n"
-"#chmod 644 /dev/xdm/$devname\n"
-"#exec sessreg -a -l xdm/$devname -h \"`echo $DISPLAY | cut -d: -f1`\""
-#else
-"#exec sessreg -a -l $DISPLAY -h \"`echo $DISPLAY | cut -d: -f1`\""
-# ifdef BSD
-" -x " KDMCONF "/Xservers"
-# endif
-#endif /* _AIX */
-" $USER\n"
-"\n# NOTE: The session is aborted if the last command returns non-zero.\n";
+"\n"
+"if [ -e /etc/nologin ]; then\n"
+"  # always display the nologin message, if possible\n"
+"  if [ -s /etc/nologin ] && which xmessage > /dev/null 2>&1; then\n"
+"    xmessage -file /etc/nologin -geometry 640x480\n"
+"  fi\n"
+"  if [ \"$(id -u)\" != \"0\" ] && \\\n"
+"     ! grep -qs '^ignore-nologin' /etc/kde3/kdm/kdm.options; then\n"
+"    exit 1\n"
+"  fi\n"
+"fi\n"
+"\n"
+"if grep -qs '^use-sessreg' /etc/kde3/kdm/kdm.options && \\\n"
+"   which sessreg > /dev/null 2>&1; then\n"
+"      exec sessreg -a -l \"$DISPLAY\" -u /var/run/utmp \\\n"
+"                   -h \"`echo $DISPLAY | cut -d: -f1`\" \"$USER\"\n"
+"      # NOTREACHED\n"
+"fi\n";
 
 static const char def_reset[] =
 "#! /bin/sh\n"
@@ -629,12 +620,13 @@ static const char def_reset[] =
 "#devname=`echo $DISPLAY | cut -c1-8`\n"
 "#exec sessreg -d -l xdm/$devname -h \"`echo $DISPLAY | cut -d: -f1`\""
 #else
-"#exec sessreg -d -l $DISPLAY -h \"`echo $DISPLAY | cut -d: -f1`\""
-# ifdef BSD
-" -x " KDMCONF "/Xservers"
-# endif
+"if grep -qs '^use-sessreg' /etc/kde3/kdm/kdm.options && \\\n"
+"   which sessreg > /dev/null 2>&1; then\n"
+"      exec sessreg -d -l \"$DISPLAY\" -u /var/run/utmp \\\n"
+"                   -h \"`echo $DISPLAY | cut -d: -f1`\" \"$USER\"\n"
+"      # NOTREACHED\n"
+"fi\n";
 #endif /* _AIX */
-" $USER\n";
 
 static const char def_session1[] =
 "#! /bin/sh\n"
@@ -666,6 +658,7 @@ static const char def_session1[] =
 "    [ -f $zhome/.zprofile ] && . $zhome/.zprofile\n"
 "    [ -f $zdir/zlogin ] && . $zdir/zlogin\n"
 "    [ -f $zhome/.zlogin ] && . $zhome/.zlogin\n"
+"    setopt shwordsplit noextendedglob\n"
 "    ;;\n"
 "  */csh|*/tcsh)\n"
 "    # [t]cshrc is always sourced automatically.\n"
@@ -682,28 +675,8 @@ static const char def_session2[] =
 "    [ -f $HOME/.profile ] && . $HOME/.profile\n"
 "    ;;\n"
 "esac\n"
-"\n"
-"[ -f /etc/xprofile ] && . /etc/xprofile\n"
-"[ -f $HOME/.xprofile ] && . $HOME/.xprofile\n"
-"\n"
-"case $session in\n"
-"  \"\")\n"
-"    exec xmessage -center -buttons OK:0 -default OK \"Sorry, $DESKTOP_SESSION is no valid session.\"\n"
-"    ;;\n"
-"  failsafe)\n"
-"    exec xterm -geometry 80x24-0-0\n"
-"    ;;\n"
-"  custom)\n"
-"    exec $HOME/.xsession\n"
-"    ;;\n"
-"  default)\n"
-"    exec " KDE_BINDIR "/startkde\n"
-"    ;;\n"
-"  *)\n"
-"    eval exec \"$session\"\n"
-"    ;;\n"
-"esac\n"
-"exec xmessage -center -buttons OK:0 -default OK \"Sorry, cannot execute $session. Check $DESKTOP_SESSION.desktop.\"\n";
+"# invoke global X session script\n"
+". /etc/X11/Xsession\n";
 
 static const char def_background[] =
 "[Desktop0]\n"
@@ -978,29 +951,6 @@ getInitTab( void )
 
 	if (maxTTY)
 		return;
-	if (readFile( &it, "/etc/inittab" )) {
-		usedFile( "/etc/inittab" );
-		for (p = it.buf; p < it.eof; p = eol + 1) {
-			for (eol = p; eol < it.eof && *eol != '\n'; eol++);
-			if (*p != '#') {
-				if ((ep = mem_mem( p, eol - p, " tty", 4 )) &&
-				    ep < eol && isdigit( *ep ))
-				{
-					if (ep + 1 == eol || isspace( *(ep + 1) ))
-						tty = *ep - '0';
-					else if (isdigit( *(ep + 1) ) &&
-					         (ep + 2 == eol || isspace( *(ep + 2) )))
-						tty = (*ep - '0') * 10 + (*(ep + 1) - '0');
-					else
-						continue;
-					TTYmask |= 1 << (tty - 1);
-					if (tty > maxTTY)
-						maxTTY = tty;
-				}
-			}
-		}
-		freeBuf( &it );
-	}
 	if (!maxTTY) {
 		maxTTY = 6;
 		TTYmask = 0x3f;
@@ -1390,12 +1340,12 @@ mk_xaccess( Entry *ce, Section *cs ATTR_UNUSED )
 static void
 mk_willing( Entry *ce, Section *cs ATTR_UNUSED )
 {
-	const char *fname;
+	char *fname;
 
 	if (!ce->active) /* there is only the Global one */
 		goto dflt;
 	else {
-		if (!(fname = strchr( ce->value, '/' )))
+		if (!(fname = (char*)strchr( ce->value, '/' )))
 			return; /* obviously in-line (or empty) */
 		if (old_scripts || inNewDir( fname ))
 			dlinkfile( fname );

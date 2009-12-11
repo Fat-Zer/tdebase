@@ -22,6 +22,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <qdragobject.h>
+#include <qstring.h>
+#include <qstringlist.h>
 
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -50,8 +52,7 @@ RecentDocsMenu::~RecentDocsMenu()
 void RecentDocsMenu::initialize() {
 	if (initialized()) clear();
 
-	insertItem(SmallIconSet("history_clear"), i18n("Clear History"),
-	           this, SLOT(slotClearHistory()));
+	insertItem(SmallIconSet("history_clear"), i18n("Clear History"), this, SLOT(slotClearHistory()));
 	insertSeparator();
 
 	_fileList = KRecentDocument::recentDocuments();
@@ -60,17 +61,30 @@ void RecentDocsMenu::initialize() {
 		insertItem(i18n("No Entries"), 0);
 		setItemEnabled(0, false);
 		return;
-    }
+	}
 
 	int id = 0;
-
-	for (QStringList::ConstIterator it = _fileList.begin();
-	     it != _fileList.end();
-	     ++it)
-	{
+	char alreadyPresentInMenu;
+	QStringList previousEntries;
+	for (QStringList::ConstIterator it = _fileList.begin(); it != _fileList.end(); ++it) {
 		KDesktopFile f(*it, true /* read only */);
-		insertItem(SmallIconSet(f.readIcon()), f.readName().replace('&', QString::fromAscii("&&") ), id++);
-    }
+
+		// Make sure this entry is not already present in the menu
+		alreadyPresentInMenu = 0;
+		for ( QStringList::Iterator previt = previousEntries.begin(); previt != previousEntries.end(); ++previt ) {
+			if (QString::localeAwareCompare(*previt, f.readName().replace('&', QString::fromAscii("&&") )) == 0) {
+				alreadyPresentInMenu = 1;
+			}
+		}
+
+		if (alreadyPresentInMenu == 0) {
+			// Add item to menu
+			insertItem(SmallIconSet(f.readIcon()), f.readName().replace('&', QString::fromAscii("&&") ), id++);
+
+			// Append to duplicate checking list
+			previousEntries.append(f.readName().replace('&', QString::fromAscii("&&") ));
+		}
+	}
 
     setInitialized(true);
 }

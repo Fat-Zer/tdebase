@@ -358,7 +358,7 @@ QString KSMServer::windowWmClientMachine(WId w)
             hostnamebuf[sizeof(hostnamebuf)-1] = 0;
             if (result == hostnamebuf)
                 result = "localhost";
-            if(char *dot = strchr(hostnamebuf, '.')) {
+            if(char *dot = (char*)strchr(hostnamebuf, '.')) {
                 *dot = '\0';
                 if(result == hostnamebuf)
                     result = "localhost";

@@ -52,6 +52,18 @@ const Medium *MediaList::findByName(const QString &name) const
 	return m_nameMap[name];
 }
 
+const Medium *MediaList::findByClearUdi(const QString &name)
+{
+	kdDebug(1219) << "MediaList::findByClearUdi(" << name << ")" << endl;
+
+	Medium *medium;
+	for (medium = m_media.first(); medium; medium = m_media.next()) {
+		if (medium->clearDeviceUdi() == name) return medium;
+	}
+
+	return 0L;
+}
+
 
 QString MediaList::addMedium(Medium *medium, bool allowNotification)
 {
@@ -121,11 +133,12 @@ bool MediaList::changeMediumState(const Medium &medium, bool allowNotification)
 	if ( medium.isMountable() )
 	{
 		QString device_node = medium.deviceNode();
+		QString clear_device_udi = medium.clearDeviceUdi();
 		QString mount_point = medium.mountPoint();
 		QString fs_type = medium.fsType();
 		bool mounted = medium.isMounted();
 
-		m->mountableState( device_node, mount_point,
+		m->mountableState( device_node, clear_device_udi, mount_point,
 		                   fs_type, mounted );
 	}
 	else

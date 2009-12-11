@@ -219,7 +219,7 @@ main( int argc, char **argv )
 		fprintf( stderr, "Cannot create UNIX socket\n" );
 		return 1;
 	}
-	if (dpy && (ptr = strchr( dpy, ':' )) && (ptr = strchr( ptr, '.' )))
+	if (dpy && (ptr = (char*)strchr( dpy, ':' )) && (ptr = (char*)strchr( ptr, '.' )))
 		*ptr = 0;
 	if (ctl && *ctl) {
 		if (!openctl( fd, 1, ctl, dpy ))

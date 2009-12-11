@@ -123,7 +123,7 @@ Comment[vi]=Mở một Trình giao diện Gốc mới
 Comment[wa]=Novea shell root
 Comment[zh_CN]=新建 Root Shell
 Comment[zh_TW]=新增 Root Shell
-Exec=su -
+Exec=sudo su -
 Schema=BlackOnLightYellow.schema
 #Schema=Linux.schema
 #VGA

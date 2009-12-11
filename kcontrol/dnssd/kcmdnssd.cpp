@@ -27,6 +27,10 @@
 #include <qradiobutton.h>
 #include <qtimer.h>
 #include <qtabwidget.h>
+#include <qcheckbox.h>
+#include <qprocess.h>
+#include <qcursor.h>
+#include <qbuttongroup.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -35,6 +39,8 @@
 #include <klineedit.h>
 #include <kpassdlg.h>
 #include <ksimpleconfig.h>
+#include <kapplication.h>
+#include <kmessagebox.h>
 
 #include "kcmdnssd.h"
 #include <dnssd/settings.h>
@@ -65,7 +71,10 @@ KCMDnssd::KCMDnssd(QWidget *parent, const char *name, const QStringList&)
 	connect(hostedit,SIGNAL(textChanged(const QString&)),this,SLOT(wdchanged()));
 	connect(secretedit,SIGNAL(textChanged(const QString&)),this,SLOT(wdchanged()));
 	connect(domainedit,SIGNAL(textChanged(const QString&)),this,SLOT(wdchanged()));
+	connect(enableZeroconf,SIGNAL(toggled(bool)),this,SLOT(enableZeroconfChanged(bool)));
+	m_enableZeroconfChanged=false;
 	if (DNSSD::Configuration::self()->publishDomain().isEmpty()) WANButton->setEnabled(false);
+	kcfg_PublishType->hide(); //unused with Avahi
 }
 
 KCMDnssd::~KCMDnssd()
@@ -75,18 +84,55 @@ KCMDnssd::~KCMDnssd()
 
 void KCMDnssd::save()
 {
+	setCursor(QCursor(Qt::BusyCursor));
 	KCModule::save();
 	if (geteuid()==0 && m_wdchanged) saveMdnsd(); 
 	domain->setFileWriteMode(0644); // this should be readable for everyone
 	domain->writeEntry("PublishDomain",domainedit->text());
 	domain->sync();
 	KIPC::sendMessageAll((KIPC::Message)KIPCDomainsChanged);
+	if (m_enableZeroconfChanged) {
+
+	  QString scaryMessage = i18n("Enabling local network browsing will open a network port (5353) on your computer.  If security problems are discovered in the zeroconf server, remote attackers could access your computer as the \"avahi\" user.");
+
+	  KProcess *proc = new KProcess;
+
+	  *proc << "kdesu";
+
+	  if (enableZeroconf->isChecked()) {
+	    if (KMessageBox::warningYesNo( this, scaryMessage, i18n("Enable Zeroconf Network Browsing"), KGuiItem(i18n("Enable Browsing")), KGuiItem(i18n("Don't Enable Browsing")) ) == KMessageBox::Yes) {	    
+
+	      *proc << "/usr/share/avahi/enable_avahi 1";
+	      proc->start(KProcess::Block);
+	    } else {
+	      enableZeroconf->setChecked(false);
+	    }
+	  } else {
+	    *proc << "/usr/share/avahi/enable_avahi 0";
+	    proc->start(KProcess::Block);
+	  }
+	}
+	setCursor(QCursor(Qt::ArrowCursor));
 }
 
 void KCMDnssd::load()
 {
-	KCModule::load();
 	if (geteuid()==0) loadMdnsd();
+	enableZeroconf->setChecked(false);
+	QProcess avahiStatus(QString("/usr/share/avahi/avahi_status"), this, "avahiStatus");
+	avahiStatus.start();
+	while (avahiStatus.isRunning()) {
+	  kapp->processEvents();
+	}
+	int exitStatus = avahiStatus.exitStatus();
+	if (exitStatus == 0) { // disabled
+	  enableZeroconf->setChecked(false);
+	} else if (exitStatus == 1) { // enabled 
+	  enableZeroconf->setChecked(true);
+	} else if (exitStatus == 2) { // custom setup
+	  enableZeroconf->setEnabled(false);
+	}
+	KCModule::load();
 }
 
 // hack to work around not working isModified() for KPasswordEdit
@@ -95,6 +141,12 @@ void KCMDnssd::wdchanged()
 	WANButton->setEnabled(!domainedit->text().isEmpty() && !hostedit->text().isEmpty());
 	changed();
 	m_wdchanged=true;
+}
+
+void KCMDnssd::enableZeroconfChanged(bool)
+{
+	changed();
+	m_enableZeroconfChanged=true;
 }
 
 void KCMDnssd::loadMdnsd()

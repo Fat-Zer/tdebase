@@ -78,6 +78,7 @@ private slots:
     void slotTimeout();
     void slotImageDone(int desk);
     void slotChangeDesktop(int);
+    void slotChangeViewport(int, const QPoint&);
     void slotChangeNumberOfDesktops(int);
     void repaintBackground();
     void desktopResized();
@@ -92,6 +93,7 @@ private:
     int realDesktop();
     int effectiveDesktop();
     int validateDesk(int desk);
+    int m_numberOfViewports;
 
     void renderBackground(int desk);
     void exportBackground(int pixmap, int desk);

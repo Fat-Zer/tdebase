@@ -130,7 +130,7 @@ int updateAcpiBattery( void )
     p = AcpiBatInfoBuf;
     while ( ( p!= NULL ) && ( sscanf( p, "last full capacity: %d ",
                               &AcpiBatCapacity ) != 1 ) ) {
-      p = strchr( p, '\n' );
+      p = (char*)strchr( p, '\n' );
       if ( p )
         p++;
     }
@@ -152,7 +152,7 @@ int updateAcpiBattery( void )
     p = AcpiBatStateBuf;
     while ( ( p!= NULL ) && ( sscanf( p, "remaining capacity: %d ",
                               &AcpiBatRemainingCapacity ) != 1 ) ) {
-      p = strchr( p, '\n' );
+      p = (char*)strchr( p, '\n' );
       if ( p )
         p++;
     }
@@ -161,7 +161,7 @@ int updateAcpiBattery( void )
     p = AcpiBatStateBuf;
     while ( ( p!= NULL ) && ( sscanf( p, "present rate: %d ",
                               &AcpiBatteryUsage[i] ) != 1 ) ) {
-      p = strchr( p, '\n' );
+      p = (char*)strchr( p, '\n' );
       if ( p )
         p++;
     } 
@@ -229,12 +229,12 @@ void printAcpiBatUsageInfo( const char* cmd)
 static int extract_zone_name(char **startidx, const char *cmd)
 {
 	char *idx = NULL;
-	idx = strchr(cmd, '/');
+	idx = (char*)strchr(cmd, '/');
 	if (idx == NULL) return 0;
-	idx = strchr(idx+1, '/');
+	idx = (char*)strchr(idx+1, '/');
 	if (idx == NULL) return 0;
 	*startidx = idx+1;
-	idx = strchr(*startidx, '/');
+	idx = (char*)strchr(*startidx, '/');
 	if (idx == NULL) return 0;
 	return idx - *startidx;
 }

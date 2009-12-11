@@ -200,7 +200,7 @@ void KDMSessionsWidget::load()
 
   config->setGroup("Shutdown");
   restart_lined->setURL(config->readEntry("RebootCmd", "/sbin/reboot"));
-  shutdown_lined->setURL(config->readEntry("HaltCmd", "/sbin/halt"));
+  shutdown_lined->setURL(config->readEntry("HaltCmd", "/sbin/poweroff"));
 
   bm_combo->setCurrentId(config->readEntry("BootManager", "None"));
 }
@@ -210,7 +210,7 @@ void KDMSessionsWidget::load()
 void KDMSessionsWidget::defaults()
 {
   restart_lined->setURL("/sbin/reboot");
-  shutdown_lined->setURL("/sbin/halt");
+  shutdown_lined->setURL("/sbin/poweroff");
 
   sdlcombo->setCurrentItem(SdAll);
   sdrcombo->setCurrentItem(SdRoot);

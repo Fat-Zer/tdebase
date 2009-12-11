@@ -229,6 +229,14 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 	containerLayout->addWidget( lblTooltipEffect, 1, 0 );
 	containerLayout->addWidget( comboTooltipEffect, 1, 1 );
 
+	comboRubberbandEffect = new QComboBox( FALSE, containerFrame );
+	comboRubberbandEffect->insertItem( i18n("Disable") );
+	comboRubberbandEffect->insertItem( i18n("Make translucent") );
+	lblRubberbandEffect = new QLabel( i18n("&Rubberband effect:"), containerFrame );
+	lblRubberbandEffect->setBuddy( comboRubberbandEffect );
+	containerLayout->addWidget( lblRubberbandEffect, 2, 0 );
+	containerLayout->addWidget( comboRubberbandEffect, 2, 1 );
+	
 	comboMenuEffect = new QComboBox( FALSE, containerFrame );
 	comboMenuEffect->insertItem( i18n("Disable") );
 	comboMenuEffect->insertItem( i18n("Animate") );
@@ -236,8 +244,8 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 	comboMenuEffect->insertItem( i18n("Make Translucent") );
 	lblMenuEffect = new QLabel( i18n("&Menu effect:"), containerFrame );
 	lblMenuEffect->setBuddy( comboMenuEffect );
-	containerLayout->addWidget( lblMenuEffect, 2, 0 );
-	containerLayout->addWidget( comboMenuEffect, 2, 1 );
+	containerLayout->addWidget( lblMenuEffect, 3, 0 );
+	containerLayout->addWidget( comboMenuEffect, 3, 1 );
 
 	comboMenuHandle = new QComboBox( FALSE, containerFrame );
 	comboMenuHandle->insertItem( i18n("Disable") );
@@ -245,11 +253,11 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 //	comboMenuHandle->insertItem( i18n("Enable") );
 	lblMenuHandle = new QLabel( i18n("Me&nu tear-off handles:"), containerFrame );
 	lblMenuHandle->setBuddy( comboMenuHandle );
-	containerLayout->addWidget( lblMenuHandle, 3, 0 );
-	containerLayout->addWidget( comboMenuHandle, 3, 1 );
+	containerLayout->addWidget( lblMenuHandle, 4, 0 );
+	containerLayout->addWidget( comboMenuHandle, 4, 1 );
 
 	cbMenuShadow = new QCheckBox( i18n("Menu &drop shadow"), containerFrame );
-	containerLayout->addWidget( cbMenuShadow, 4, 0 );
+	containerLayout->addWidget( cbMenuShadow, 5, 0 );
 
 	// Push the [label combo] to the left.
 	comboSpacer = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
@@ -359,6 +367,7 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 	connect( cbEnableEffects,     SIGNAL(toggled(bool)),    this, SLOT(setEffectsDirty()));
 	connect( cbEnableEffects,     SIGNAL(toggled(bool)),    this, SLOT(setStyleDirty()));
 	connect( comboTooltipEffect,  SIGNAL(activated(int)), this, SLOT(setEffectsDirty()));
+	connect( comboRubberbandEffect, SIGNAL(activated(int)),   this, SLOT(setStyleDirty()));
 	connect( comboComboEffect,    SIGNAL(activated(int)), this, SLOT(setEffectsDirty()));
 	connect( comboMenuEffect,     SIGNAL(activated(int)), this, SLOT(setStyleDirty()));
 	connect( comboMenuHandle,     SIGNAL(activated(int)), this, SLOT(setStyleDirty()));
@@ -556,6 +565,11 @@ void KCMStyle::save()
 	item = comboTooltipEffect->currentItem();
 	config.writeEntry( "EffectAnimateTooltip", item == 1);
 	config.writeEntry( "EffectFadeTooltip", item == 2 );
+	item = comboRubberbandEffect->currentItem();
+	{
+		QSettings settings;	// Only for KStyle stuff
+		settings.writeEntry("/KStyle/Settings/SemiTransparentRubberband", item == 1);
+	}
 	item = comboMenuHandle->currentItem();
 	config.writeEntry( "InsertTearOffHandle", item );
 	item = comboMenuEffect->currentItem();
@@ -887,7 +901,11 @@ void KCMStyle::loadEffects( KConfig& config )
 		comboTooltipEffect->setCurrentItem( 2 );
 	else
 		comboTooltipEffect->setCurrentItem( 0 );
-
+		
+	QSettings settings;
+	bool semiTransparentRubberband = settings.readBoolEntry("/KStyle/Settings/SemiTransparentRubberband", false);
+	comboRubberbandEffect->setCurrentItem( semiTransparentRubberband ? 1 : 0 );
+	
 	if ( config.readBoolEntry( "EffectAnimateMenu", false) )
 		comboMenuEffect->setCurrentItem( 1 );
 	else if ( config.readBoolEntry( "EffectFadeMenu", false) )
@@ -898,7 +916,7 @@ void KCMStyle::loadEffects( KConfig& config )
 	comboMenuHandle->setCurrentItem(config.readNumEntry("InsertTearOffHandle", 0));
 
 	// KStyle Menu transparency and drop-shadow options...
-	QSettings settings;
+	
 	QString effectEngine = settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled");
 
 #ifdef HAVE_XRENDER
@@ -1027,6 +1045,8 @@ void KCMStyle::addWhatsThis()
 	QWhatsThis::add( comboTooltipEffect, i18n( "<p><b>Disable: </b>do not use any tooltip effects.</p>\n"
 							"<p><b>Animate: </b>Do some animation.</p>\n"
 							"<b>Fade: </b>Fade in tooltips using alpha-blending.") );
+	QWhatsThis::add( comboRubberbandEffect, i18n( "<p><b>Disable: </b>do not use any rubberband effects.</p>\n"
+							"<b>Make Translucent: </b>Draw a translucent rubberband.") );
 	QWhatsThis::add( comboMenuEffect, i18n( "<p><b>Disable: </b>do not use any menu effects.</p>\n"
 							"<p><b>Animate: </b>Do some animation.</p>\n"
 							"<p><b>Fade: </b>Fade in menus using alpha-blending.</p>\n"

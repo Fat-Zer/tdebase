@@ -41,7 +41,9 @@ public:
 	static const uint BASE_URL = 9;
 	static const uint MIME_TYPE = 10;
 	static const uint ICON_NAME = 11;
-	static const uint PROPERTIES_COUNT = 12;
+	static const uint ENCRYPTED = 12;
+	static const uint CLEAR_DEVICE_UDI = 13;
+	static const uint PROPERTIES_COUNT = 14;
 	static const QString SEPARATOR;
 
 	Medium(const QString &id, const QString &name);
@@ -62,19 +64,27 @@ public:
 	QString baseURL() const { return m_properties[BASE_URL]; }
 	QString mimeType() const { return m_properties[MIME_TYPE]; }
 	QString iconName() const { return m_properties[ICON_NAME]; }
+ 	bool isEncrypted() const { return m_properties[ENCRYPTED]=="true"; };
+ 	QString clearDeviceUdi() const { return m_properties[CLEAR_DEVICE_UDI]; };
 
 	bool needMounting() const;
+ 	bool needDecryption() const;
 	KURL prettyBaseURL() const;
 	QString prettyLabel() const;
 
 	void setName(const QString &name);
 	void setLabel(const QString &label);
 	void setUserLabel(const QString &label);
+ 	void setEncrypted(bool state);
 
 	bool mountableState(bool mounted);
 	void mountableState(const QString &deviceNode,
 	                    const QString &mountPoint,
 	                    const QString &fsType, bool mounted);
+ 	void mountableState(const QString &deviceNode,
+ 	                    const QString &clearDeviceUdi,
+ 	                    const QString &mountPoint,
+ 	                    const QString &fsType, bool mounted);
 	void unmountableState(const QString &baseURL = QString::null);
 
 	void setMimeType(const QString &mimeType);

@@ -11,6 +11,9 @@
 #include <kstandarddirs.h>
 #include <kaction.h>
 #include <kiconloader.h>
+#include <kurifilter.h>
+#include <ktrader.h>
+#include <kconfig.h>
 
 #include <assert.h>
 #include <qfile.h>
@@ -85,8 +88,11 @@ QString KonqAboutPageFactory::loadFile( const QString& file )
 
 QString KonqAboutPageFactory::launch()
 {
+  // FIXME: only regenerate launch page if kuriikwsfilterrc changed.
+	/*
   if ( s_launch_html )
     return *s_launch_html;
+	*/
 
   QString res = loadFile( locate( "data", "konqueror/about/launch.html" ));
   if ( res.isEmpty() )
@@ -100,6 +106,7 @@ QString KonqAboutPageFactory::launch()
   QString wastebin_icon_path = iconloader->iconPath("trashcan_full", KIcon::Desktop );
   QString applications_icon_path = iconloader->iconPath("kmenu", KIcon::Desktop );
   QString settings_icon_path = iconloader->iconPath("kcontrol", KIcon::Desktop );
+  QString help_icon_path = iconloader->iconPath("khelpcenter", KIcon::Desktop );
   QString home_folder = QDir::homeDirPath();
   QString continue_icon_path = QApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
 
@@ -108,6 +115,26 @@ QString KonqAboutPageFactory::launch()
     res = res.arg( "@import \"%1\";" ).arg( locate( "data", "kdeui/about/kde_infopage_rtl.css" ) );
   else
     res = res.arg( "" );
+
+  // Try to split page in three. If it succeeds, insert the default search into the middle part.
+  QStringList parts = QStringList::split( "<!--search bar splitter-->", res );
+  if ( parts.count() == 3 ) {
+    KConfig config( "kuriikwsfilterrc", true /*read-only*/, false /*no KDE globals*/ );
+    config.setGroup( "General" );
+    QString name = config.readEntry("DefaultSearchEngine");
+    KService::Ptr service =
+        KService::serviceByDesktopPath(QString("searchproviders/%1.desktop").arg(name));
+    if ( service ) {
+      QString searchBar = parts[1];
+      searchBar = searchBar
+          .arg( iconSize ).arg( iconSize )
+          .arg( service->name() )
+          .arg( service->property("Keys").toStringList()[0] )
+          ;
+      res = parts[0] + searchBar + parts[2];
+    }
+    else res = parts[0] + parts[2];
+  }
 
   res = res.arg( i18n("Conquer your Desktop!") )
       .arg( i18n( "Konqueror" ) )
@@ -139,10 +166,10 @@ QString KonqAboutPageFactory::launch()
       .arg(iconSize).arg(iconSize)
       .arg( i18n( "Applications" ) )
       .arg( i18n( "Installed programs" ) )
-      .arg( settings_icon_path )
+      .arg( help_icon_path )
       .arg(iconSize).arg(iconSize)
-      .arg( i18n( "Settings" ) )
-      .arg( i18n( "Desktop configuration" ) )
+      .arg( i18n( "About Kubuntu" ) )
+      .arg( i18n( "<a href=\"help:/kubuntu/\">Kubuntu Documentation</a>" ) )
       .arg( continue_icon_path )
       .arg( KIcon::SizeSmall ).arg( KIcon::SizeSmall )
       .arg( i18n( "Next: An Introduction to Konqueror" ) )
@@ -422,10 +449,23 @@ KonqAboutPage::~KonqAboutPage()
 
 bool KonqAboutPage::openURL( const KURL &u )
 {
-    if (u.url() == "about:plugins")
-       serve( KonqAboutPageFactory::plugins(), "plugins" );
-    else serve( KonqAboutPageFactory::launch(), "konqueror" );
-    return true;
+	kdDebug(1202) << "now in KonqAboutPage::openURL( \"" << u.url() << "\" )" << endl;
+	if ( u.url() == "about:plugins" )
+		serve( KonqAboutPageFactory::plugins(), "plugins" );
+	else if ( !u.query().isEmpty() ) {
+		QMap< QString, QString > queryItems = u.queryItems( 0 );
+		QMap< QString, QString >::ConstIterator query = queryItems.begin();
+		QString newUrl;
+		if (query.key() == "strigi") {
+		  newUrl = KURIFilter::self()->filteredURI( query.key() + ":?q=" + query.data() );
+		} else {
+		  newUrl = KURIFilter::self()->filteredURI( query.key() + ":" + query.data() );
+		}
+		kdDebug(1202) << "scheduleRedirection( 0, \"" << newUrl << "\" )" << endl;
+		scheduleRedirection( 0, newUrl );
+	}
+	else serve( KonqAboutPageFactory::launch(), "konqueror" );
+	return true;
 }
 
 bool KonqAboutPage::openFile()

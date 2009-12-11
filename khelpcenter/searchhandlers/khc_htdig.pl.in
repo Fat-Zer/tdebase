@@ -26,7 +26,7 @@ use strict;
 
 use Getopt::Long;
 
-my $htdigdata = "/srv/www/htdig/common/";
+my $htdigdata = "/etc/htdig";
 my $htdigbin = "/usr/bin";
 my $kdeprefix = "@prefix@";
 chomp $kdeprefix;

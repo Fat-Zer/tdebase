@@ -331,6 +331,27 @@
       <!-- minicli.cpp:192 -->
       <!--   int maxHistory = config->readNumEntry("HistoryLength", 50); -->
     </entry>
+    <entry key="MiniCLIAutocompletionLength" type="Int">
+      <default>10</default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <!-- minicli.cpp:651 -->
+      <!--   int maxAutocompletion = KDesktopSettings::MiniCLIAutocompletionLength(); -->
+    </entry>
+    <entry key="MiniCLIFilesystemAutoComplete" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <!-- minicli.cpp:216 -->
+      <!--   m_dlg->cbAutocomplete->setChecked( KDesktopSettings::miniCLIFilesystemAutoComplete() ); -->
+    </entry>
+    <entry key="MiniCLIHistoryAndFilesystemAutoComplete" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <!-- minicli.cpp:217 -->
+      <!--   m_dlg->cbAutohistory->setChecked( KDesktopSettings::miniCLIHistoryAndFilesystemAutoComplete() ); -->
+    </entry>
     <entry key="TerminalApps" type="PathList">
       <default></default>
       <label></label>

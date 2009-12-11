@@ -126,11 +126,13 @@ private:
 	QFrame* containerFrame;
 	QGridLayout* containerLayout;
 	QComboBox* comboTooltipEffect;
+	QComboBox* comboRubberbandEffect;
 	QComboBox* comboComboEffect;
 	QComboBox* comboMenuEffect;
 	QComboBox* comboMenuHandle;
 
 	QLabel* lblTooltipEffect;
+	QLabel* lblRubberbandEffect;
 	QLabel* lblComboEffect;
 	QLabel* lblMenuEffect;
 	QLabel* lblMenuHandle;

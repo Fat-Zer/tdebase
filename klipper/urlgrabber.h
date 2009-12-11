@@ -72,7 +72,8 @@ public:
     
 private:
   const ActionList& matchingActions( const QString& );
-  void execute( const struct ClipCommand *command ) const;
+  void execute( const struct ClipCommand *command, 
+                QStringList *backrefs ) const;
   void editData();
   bool isAvoidedWindow() const;
   void actionMenu( bool wm_class_check );
@@ -83,6 +84,7 @@ private:
   QString myClipData;
   ClipAction *myCurrentAction;
   QIntDict<ClipCommand> myCommandMapper;
+  QIntDict<QStringList> myGroupingMapper;
   KPopupMenu *myMenu;
   QTimer *myPopupKillTimer;
   int myPopupKillTimeout;
@@ -127,8 +129,13 @@ public:
 
   void  setRegExp( const QString& r) 	      { myRegExp = QRegExp( r ); }
   QString regExp() 			const { return myRegExp.pattern(); }
-  inline bool matches( const QString& string ) const {
-      return ( myRegExp.search( string ) != -1 );
+  inline bool matches( const QString& string ) {
+    int res = myRegExp.search( string ) ;
+    if ( res != -1 ) {
+      myCapturedTexts = myRegExp.capturedTexts();
+      return true;
+    } 
+    return false;
   }
 
   void 	setDescription( const QString& d)     { myDescription = d; }
@@ -147,9 +154,15 @@ public:
    */
   void save( KConfig * ) const;
 
+  /**
+   * Returns the most recent list of matched group backreferences.
+   * Note: you probably need to call matches() first.
+   */
+  inline const QStringList* capturedTexts() const { return &myCapturedTexts; }
 
 private:
   QRegExp 		myRegExp;
+  QStringList	myCapturedTexts;
   QString 		myDescription;
   QPtrList<ClipCommand> 	myCommands;
 

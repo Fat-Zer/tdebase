@@ -54,12 +54,6 @@ int main( int argc, char **argv )
   KCmdLineArgs::addCmdLineOptions(options);
   KCmdLineArgs *arg = KCmdLineArgs::parsedArgs();
 
-  if( arg->isSet( "fork" ) )
-  {
-    if (fork())
-      exit(0);
-  }
-
   if ( !( arg->isSet( "dcop" ) ) )
     KApplication::disableAutoDcopRegistration();
   else if ( KApplication::dcopClient()->attach() )
@@ -73,6 +67,18 @@ int main( int argc, char **argv )
     int steps = QMAX( arg->getOption( "steps" ).toInt(), 0 );
     if ( steps )
       wndMain.setStartupItemCount( steps );
+  }
+
+  // The position of this fork() matters, fork too early and you risk the
+  // calls to KSplash::programStarted being missed. Now that wndMain has
+  // been instantiated it is safe to do this. An earlier version of
+  // this program had this fork occuring before the instantiation,
+  // and this led to a race condition where if ksplash lost the race it would
+  // hang because it would wait for signals that had already been sent
+  if( arg->isSet( "fork" ) )
+  {
+    if (fork())
+      exit(0);
   }
 
   app.setMainWidget(&wndMain);

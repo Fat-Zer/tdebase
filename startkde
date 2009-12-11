@@ -19,11 +19,20 @@ fi
 # people's heads. We use colours from the standard KDE palette for those with
 # palettised displays.
 if test -z "$XDM_MANAGED" || echo "$XDM_MANAGED" | grep ",auto" > /dev/null; then
-  xsetroot -solid "#000000"
+  xsetroot -solid "#618DCC"
 fi
 
 # we have to unset this for Darwin since it will screw up KDE's dynamic-loading
 unset DYLD_FORCE_FLAT_NAMESPACE
+
+# Check if prelinking is enabled. If so, exporting KDE_IS_PRELINKED improves 
+# loading KDE.
+if test -f /etc/default/prelink; then
+	. /etc/default/prelink
+	if [ "$PRELINKING" == yes ]; then
+		export KDE_IS_PRELINKED=1
+	fi
+fi
 
 # in case we have been started with full pathname spec without being in PATH
 bindir=`echo "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
@@ -48,10 +57,10 @@ fi
 #
 # * Then ksmserver is started which takes control of the rest of the startup sequence
 
-# The user's personal KDE directory is usually ~/.kde, but this setting
+# The user's personal KDE directory is usually ~/.kde3, but this setting
 # may be overridden by setting KDEHOME.
 
-kdehome=$HOME/.kde
+export KDEHOME=$HOME/.kde3 && export PATH=/opt/kde3/bin:/opt/kde3/games:$PATH && export KDEDIRS=/usr/:/opt/kde3/ && export XDG_DATA_DIRS=/opt/kde3/share/:/usr/share/ && export XDG_CONFIG_DIRS=/opt/kde3/etc/xdg/:/etc/xdg/ && export MANPATH=/opt/kde3/share/man:$MANPATH && export DESKTOP_SESSION=kde3
 test -n "$KDEHOME" && kdehome=`echo "$KDEHOME"|sed "s,^~/,$HOME/,"`
 
 # see kstartupconfig source for usage
@@ -160,8 +169,22 @@ Xft.dpi: 96
 EOF
 fi
 
+# configuration of the gtk_qt_engine if not already set
+
+if [ ! -e $kdehome/env/gtk-qt-engine.rc.sh ] && [ -e /usr/share/kubuntu-default-settings/gtk-qt-engine.rc.sh ]
+then
+ mkdir -p $kdehome/env
+ cp -f /usr/share/kubuntu-default-settings/gtk-qt-engine.rc.sh $kdehome/env
+ chmod 755 $kdehome/env/gtk-qt-engine.rc.sh
+fi
+
+if [ ! -e $HOME/.gtkrc-2.0-kde ] && [ -e /usr/share/kubuntu-default-settings/.gtkrc-2.0-kde ]
+then
+ cp -f /usr/share/kubuntu-default-settings/.gtkrc-2.0-kde $HOME
+fi
+
 # Source scripts found in <localprefix>/env/*.sh and <prefixes>/env/*.sh
-# (where <localprefix> is $KDEHOME or ~/.kde, and <prefixes> is where KDE is installed)
+# (where <localprefix> is $KDEHOME or ~/.kde3, and <prefixes> is where KDE is installed)
 #
 # This is where you can define environment variables that will be available to
 # all KDE programs, so this is where you can run agents using e.g. eval `ssh-agent`
@@ -287,17 +310,26 @@ echo 'startkde: Starting up...'  1>&2
 
 # run KPersonalizer before the session, if this is the first login
 if test "$kpersonalizerrc_general_firstlogin" = "true"; then
-    # start only dcopserver, don't start whole kdeinit (takes too long)
-    echo 'startkde: Running kpersonalizer...'  1>&2
-    dcopserver
-    kwin --lock &
-    kpersonalizer --before-session
-    # handle kpersonalizer restarts (language change)
-    while test $? -eq 1; do
-        kpersonalizer --r --before-session
-    done
-    dcopquit kwin
-    dcopserver_shutdown --wait
+    if [ ! -x /opt/kde3/bin/kpersonalizer ]; then
+        echo 'startkde: kpersonalizer not found! Please install to properly configure your user.'  1>&2
+    else
+        # start only dcopserver, don't start whole kdeinit (takes too long)
+        echo 'startkde: Running kpersonalizer...'  1>&2
+        dcopserver
+        kwin --lock &
+        kpersonalizer --before-session
+        # handle kpersonalizer restarts (language change)
+        while test $? -eq 1; do
+            kpersonalizer --r --before-session
+        done
+        dcopquit kwin
+        dcopserver_shutdown --wait
+    fi
+fi
+
+#remove moodin cache if we have a new wallpaper installed, jriddell
+if [ /usr/share/wallpapers/kubuntu-wallpaper.png -nt $kdehome/share/apps/ksplash/cache/Moodin/kubuntu/ ]; then
+  rm -rf $kdehome/share/apps/ksplash/cache/Moodin/kubuntu/;
 fi
 
 if test -z "$dl"; then
@@ -357,6 +389,15 @@ if test -n "$dl"; then
   # notification would be better.
   sleep 1
 fi
+
+# configuration of kwalletmanager if not already set
+
+if [ ! -e $kdehome/share/config/kwalletrc ] && [ -e /usr/share/kubuntu-default-settings/kde-profile/default/share/config/kwalletrc ]
+then
+         mkdir -p "$kdehome/share/config/"
+         cp -f /usr/share/kubuntu-default-settings/kde-profile/default/share/config/kwalletrc $kdehome/share/config/
+fi
+
 
 # finally, give the session control to the session manager
 # see kdebase/ksmserver for the description of the rest of the startup sequence

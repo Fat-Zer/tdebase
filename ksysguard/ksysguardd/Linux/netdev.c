@@ -142,7 +142,7 @@ static int processNetDev_( void )
     netDevBufP += strlen( buf ) + 1;  /* move netDevBufP to next line */
 
     if ( sscanf( buf, devFormat, tag ) ) {
-      char* pos = strchr( tag, ':' );
+      char* pos = (char*)strchr( tag, ':' );
       if ( pos ) {
         FORALL( DEFVARS );
         *pos = '\0';
@@ -227,7 +227,7 @@ void initNetDev( struct SensorModul* sm )
     netDevBufP += strlen( buf ) + 1;  /* move netDevBufP to next line */
 
     if ( sscanf( buf, devFormat, tag ) ) {
-      char* pos = strchr( tag, ':' );
+      char* pos = (char*)strchr( tag, ':' );
       if ( pos ) {
         char mon[ MON_SIZE ];
         *pos = '\0';
@@ -339,9 +339,9 @@ void printNetDev##a( const char* cmd ) \
   char* end; \
   char dev[ 64 ]; \
  \
-  beg = strchr( cmd, '/' ); \
-  beg = strchr( beg + 1, '/' ); \
-  end = strchr( beg + 1, '/' ); \
+  beg = (char*)strchr( cmd, '/' ); \
+  beg = (char*)strchr( beg + 1, '/' ); \
+  end = (char*)strchr( beg + 1, '/' ); \
   strncpy( dev, beg + 1, end - beg - 1 ); \
   dev[ end - beg - 1 ] = '\0'; \
  \

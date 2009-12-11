@@ -155,13 +155,13 @@ PROCTITLE_DEFINES = -DHAS_SETPROCTITLE
 		 netaddr.c reset.c resource.c protodpy.c policy.c \
 		 session.c socket.c streams.c util.c xdmcp.c \
 		 process.c mitauth.c \
-		 genauth.c access.c choose.c \
+		 genauth.c access.c choose.c consolekit.c \
 		 $(XDMAUTHSRCS) $(RPCSRCS) $(KRB5SRCS)
       COMMOBJS = auth.o daemon.o server.o dpylist.o dm.o error.o \
 		 netaddr.o reset.o resource.o protodpy.o policy.o \
 		 session.o socket.o streams.o util.o xdmcp.o \
 		 process.o mitauth.o \
-		 genauth.o access.o choose.o \
+		 genauth.o access.o choose.o consolekit.o \
 		 $(XDMAUTHOBJS) $(RPCOBJS) $(KRB5OBJS)
 
          SRCS1 = $(COMMSRCS) client.c

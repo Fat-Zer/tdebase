@@ -92,7 +92,7 @@ void KDMFontWidget::set_def()
 {
   stdFontChooser->setFont(QFont("Sans Serif", 10));
   failFontChooser->setFont(QFont("Sans Serif", 10, QFont::Bold));
-  greetingFontChooser->setFont(QFont("Serif", 20));
+  greetingFontChooser->setFont(QFont("Sans Serif", 22));
 }
 
 void KDMFontWidget::save()
@@ -128,7 +128,7 @@ void KDMFontWidget::load()
 void KDMFontWidget::defaults()
 {
   set_def();
-  aacb->setChecked(false);
+  aacb->setChecked(true);
 }
 
 #include "kdm-font.moc"

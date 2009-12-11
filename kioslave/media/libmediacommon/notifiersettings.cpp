@@ -32,16 +32,28 @@
 NotifierSettings::NotifierSettings()
 {
 	m_supportedMimetypes.append( "media/removable_unmounted" );
+	m_supportedMimetypes.append( "media/removable_unmounted_encrypted" );
+	m_supportedMimetypes.append( "media/removable_unmounted_decrypted" );
 	m_supportedMimetypes.append( "media/removable_mounted" );
+	m_supportedMimetypes.append( "media/removable_mounted_decrypted" );
 	m_supportedMimetypes.append( "media/camera_unmounted" );
 	m_supportedMimetypes.append( "media/camera_mounted" );
 	m_supportedMimetypes.append( "media/gphoto2camera" );
 	m_supportedMimetypes.append( "media/cdrom_unmounted" );
+	m_supportedMimetypes.append( "media/cdrom_unmounted_encrypted" );
+	m_supportedMimetypes.append( "media/cdrom_unmounted_decrypted" );
 	m_supportedMimetypes.append( "media/cdrom_mounted" );
+	m_supportedMimetypes.append( "media/cdrom_mounted_decrypted" );
 	m_supportedMimetypes.append( "media/dvd_unmounted" );
+	m_supportedMimetypes.append( "media/dvd_unmounted_encrypted" );
+	m_supportedMimetypes.append( "media/dvd_unmounted_decrypted" );
 	m_supportedMimetypes.append( "media/dvd_mounted" );
+	m_supportedMimetypes.append( "media/dvd_mounted_decrypted" );
 	m_supportedMimetypes.append( "media/cdwriter_unmounted" );
+	m_supportedMimetypes.append( "media/cdwriter_unmounted_encrypted" );
+	m_supportedMimetypes.append( "media/cdwriter_unmounted_decrypted" );
 	m_supportedMimetypes.append( "media/cdwriter_mounted" );
+	m_supportedMimetypes.append( "media/cdwriter_mounted_decrypted" );
 	m_supportedMimetypes.append( "media/blankcd" );
 	m_supportedMimetypes.append( "media/blankdvd" );
 	m_supportedMimetypes.append( "media/audiocd" );

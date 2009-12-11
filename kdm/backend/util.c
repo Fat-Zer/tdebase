@@ -409,9 +409,10 @@ setEnv( char **e, const char *name, const char *value )
 char **
 putEnv( const char *string, char **env )
 {
-	char *b, *n;
+	char *n;
+	char *b;
 
-	if (!(b = strchr( string, '=' )))
+	if (!(b = (char*)strchr( string, '=' )))
 		return NULL;
 	if (!StrNDup( &n, string, b - string ))
 		return NULL;

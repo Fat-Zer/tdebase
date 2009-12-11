@@ -232,6 +232,28 @@ QString MediaManager::unmount(const QString &name)
 #endif
 }
 
+QString MediaManager::decrypt(const QString &name, const QString &password)
+{
+#ifdef COMPILE_HALBACKEND
+    if (!m_halbackend)
+        return i18n("Feature only available with HAL");
+    return m_halbackend->decrypt(name, password);
+#else
+    return i18n("Feature only available with HAL");
+#endif
+}
+
+QString MediaManager::undecrypt(const QString &name)
+{
+#ifdef COMPILE_HALBACKEND
+    if (!m_halbackend)
+        return i18n("Feature only available with HAL");
+    return m_halbackend->undecrypt(name);
+#else
+    return i18n("Feature only available with HAL");
+#endif
+}
+
 QString MediaManager::nameForLabel(const QString &label)
 {
     const QPtrList<Medium> media = m_mediaList.list();

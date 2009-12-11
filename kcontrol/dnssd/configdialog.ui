@@ -44,22 +44,108 @@
                 <attribute name="title">
                     <string>&amp;General</string>
                 </attribute>
-                <vbox>
+                <grid>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox">
+                    <widget class="QButtonGroup" row="3" column="0">
+                        <property name="name">
+                            <cstring>kcfg_PublishType</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>true</bool>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>5</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="title">
+                            <string>Publishing Mode</string>
+                        </property>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>WANButton</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>true</bool>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>11</x>
+                                    <y>51</y>
+                                    <width>618</width>
+                                    <height>22</height>
+                                </rect>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Wide area network</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+W</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>Advertise services on Internet domain using public IP. To have this option working you need to configure wide area operation in using administrator mode</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>LANButtor</cstring>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>11</x>
+                                    <y>23</y>
+                                    <width>618</width>
+                                    <height>22</height>
+                                </rect>
+                            </property>
+                            <property name="text">
+                                <string>Loc&amp;al network</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+A</string>
+                            </property>
+                            <property name="checked">
+                                <bool>false</bool>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>Advertise services on local network (in domain .local) using multicast DNS.</string>
+                            </property>
+                        </widget>
+                    </widget>
+                    <widget class="QCheckBox" row="1" column="0">
                         <property name="name">
                             <cstring>kcfg_BrowseLocal</cstring>
                         </property>
                         <property name="text">
                             <string>Browse local networ&amp;k</string>
                         </property>
+                        <property name="accel">
+                            <string>Alt+K</string>
+                        </property>
                         <property name="whatsThis" stdset="0">
                             <string>Browse local network (domain .local) using multicast DNS.</string>
                         </property>
                     </widget>
-                    <widget class="KEditListBox">
+                    <widget class="QCheckBox" row="0" column="0">
+                        <property name="name">
+                            <cstring>enableZeroconf</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Enable &amp;Zeroconf network browsing</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+Z</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Browse local network (domain .local) using multicast DNS.</string>
+                        </property>
+                    </widget>
+                    <widget class="KEditListBox" row="2" column="0">
                         <property name="name">
                             <cstring>kcfg_DomainList</cstring>
                         </property>
@@ -79,67 +165,7 @@
 is configured with 'Browse local network' option above.</string>
                         </property>
                     </widget>
-                    <widget class="QButtonGroup">
-                        <property name="name">
-                            <cstring>kcfg_PublishType</cstring>
-                        </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>5</hsizetype>
-                                <vsizetype>0</vsizetype>
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <property name="title">
-                            <string>Publishing Mode</string>
-                        </property>
-                        <widget class="QRadioButton">
-                            <property name="name">
-                                <cstring>LANButtor</cstring>
-                            </property>
-                            <property name="geometry">
-                                <rect>
-                                    <x>11</x>
-                                    <y>23</y>
-                                    <width>618</width>
-                                    <height>22</height>
-                                </rect>
-                            </property>
-                            <property name="text">
-                                <string>Loc&amp;al network</string>
-                            </property>
-                            <property name="checked">
-                                <bool>false</bool>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>Advertise services on local network (in domain .local) using multicast DNS.</string>
-                            </property>
-                        </widget>
-                        <widget class="QRadioButton">
-                            <property name="name">
-                                <cstring>WANButton</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="geometry">
-                                <rect>
-                                    <x>11</x>
-                                    <y>51</y>
-                                    <width>618</width>
-                                    <height>22</height>
-                                </rect>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Wide area network</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>Advertise services on Internet domain using public IP. To have this option working you need to configure wide area operation in using administrator mode</string>
-                            </property>
-                        </widget>
-                    </widget>
-                </vbox>
+                </grid>
             </widget>
             <widget class="QWidget">
                 <property name="name">

@@ -25,6 +25,7 @@
 #define __SHORTCUTS_MODULE_H
 
 #include <qbuttongroup.h>
+#include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qtabwidget.h>
@@ -61,6 +62,7 @@ class ShortcutsModule : public QWidget
 	void slotSelectScheme( int = 0 );
 	void slotSaveSchemeAs();
 	void slotRemoveScheme();
+	void slotUseRmWinKeysClicked();
 
  private:
 	QTabWidget* m_pTab;
@@ -72,6 +74,8 @@ class ShortcutsModule : public QWidget
 	KAccelActions m_actionsGeneral, m_actionsSequence;//, m_actionsApplication;
 	KShortcutList* m_pListGeneral, * m_pListSequence, * m_pListApplication;
 	KKeyChooser* m_pkcGeneral, * m_pkcSequence, * m_pkcApplication;
+	QCheckBox* m_useRmWinKeys;
+	bool m_bUseRmWinKeys;
 };
 
 #endif // __SHORTCUTS_MODULE_H

@@ -55,6 +55,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <qpushbutton.h>
 #include <qtooltip.h>
 #include <qaccel.h>
+#include <qstring.h>
 #include <qeventloop.h>
 
 #include <pwd.h>
@@ -173,6 +174,13 @@ void
 KGreeter::insertUser( const QImage &default_pix,
                       const QString &username, struct passwd *ps )
 {
+        if (setegid( ps->pw_gid ))
+                return;
+        if (seteuid( ps->pw_uid )) {
+                setegid(0);
+                return;
+        }
+
 	if (userList)
 		userList->append( username );
 	if (!userView)
@@ -236,6 +244,9 @@ KGreeter::insertUser( const QImage &default_pix,
 		realname.append( "\n" ).append( username );
 		new UserListViewItem( userView, realname, QPixmap( p ), username );
 	}
+
+        seteuid( 0 );
+        setegid( 0 );
 }
 
 class KCStringList : public QValueList<QCString> {
@@ -282,15 +293,8 @@ KGreeter::insertUsers()
 {
 	struct passwd *ps;
 
-	// XXX remove seteuid-voodoo when we run as nobody
 	if (!(ps = getpwnam( "nobody" )))
 		return;
-        if (setegid( ps->pw_gid )) 
-                return;
-        if (seteuid( ps->pw_uid )) {
-                setegid(0);
-                return;
-        }
 
 	QImage default_pix;
 	if (userView) {
@@ -354,17 +358,12 @@ KGreeter::insertUsers()
 		if (userList)
 			userList->sort();
 	}
-
-	// XXX remove seteuid-voodoo when we run as nobody
-	seteuid( 0 );
-        setegid( 0 );
 }
 
 void
 KGreeter::putSession( const QString &type, const QString &name, bool hid, const char *exe )
 {
 	int prio = exe ? (!strcmp( exe, "default" ) ? 0 :
-	                  !strcmp( exe, "custom" ) ? 1 :
 	                  !strcmp( exe, "failsafe" ) ? 3 : 2) : 2;
 	for (uint i = 0; i < sessionTypes.size(); i++)
 		if (sessionTypes[i].type == type) {
@@ -392,7 +391,6 @@ KGreeter::insertSessions()
 			}
 	}
 	putSession( "default", i18n("Default"), false, "default" );
-	putSession( "custom", i18n("Custom"), false, "custom" );
 	putSession( "failsafe", i18n("Failsafe"), false, "failsafe" );
 	qBubbleSort( sessionTypes );
 	for (uint i = 0; i < sessionTypes.size() && !sessionTypes[i].hid; i++) {
@@ -609,7 +607,6 @@ KGreeter::verifySetUser( const QString &user )
 	curUser = user;
 	slotUserEntered();
 }
-
 
 KStdGreeter::KStdGreeter()
   : KGreeter()

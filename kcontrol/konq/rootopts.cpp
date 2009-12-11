@@ -129,14 +129,16 @@ void DesktopPathConfig::load( bool useDefaults )
 {
     KConfig config("kdeglobals", true, false);
     // Desktop Paths
-	 config.setReadDefaults( useDefaults );
-
-	 config.setGroup("Paths");
-    urDesktop->setURL( config.readPathEntry( "Desktop" , KGlobalSettings::desktopPath() ));
+	config.setReadDefaults( useDefaults );
+    config.setGroup("Paths");
     urAutostart->setURL( config.readPathEntry( "Autostart" , KGlobalSettings::autostartPath() ));
-    urDocument->setURL( config.readPathEntry( "Documents", KGlobalSettings::documentPath() ));
 
-	 emit changed( useDefaults );
+    KConfig xdguserconfig( QDir::homeDirPath()+"/.config/user-dirs.dirs" );
+     
+    urDesktop->setURL( xdguserconfig.readPathEntry( "XDG_DESKTOP_DIR" , QDir::homeDirPath() + "/Desktop" ).remove(  "\"" ));
+    urDocument->setURL( xdguserconfig.readPathEntry( "XDG_DOCUMENTS_DIR", QDir::homeDirPath()).remove(  "\"" ));
+    
+    emit changed( useDefaults );
 }
 
 void DesktopPathConfig::defaults()
@@ -147,6 +149,7 @@ void DesktopPathConfig::defaults()
 void DesktopPathConfig::save()
 {
     KConfig *config = KGlobal::config();
+    KConfig *xdgconfig = new KConfig( QDir::homeDirPath()+"/.config/user-dirs.dirs" );
     KConfigGroupSaver cgs( config, "Paths" );
 
     bool pathChanged = false;
@@ -205,8 +208,7 @@ void DesktopPathConfig::save()
 
         if ( moveDir( KURL( KGlobalSettings::desktopPath() ), KURL( urlDesktop ), i18n("Desktop") ) )
         {
-//            config->writeEntry( "Desktop", urDesktop->url());
-            config->writePathEntry( "Desktop", urlDesktop, true, true );
+            xdgconfig->writePathEntry( "XDG_DESKTOP_DIR", '"'+ urlDesktop + '"', true, false );
             pathChanged = true;
         }
     }
@@ -217,7 +219,6 @@ void DesktopPathConfig::save()
             autostartMoved = moveDir( KURL( KGlobalSettings::autostartPath() ), KURL( urAutostart->url() ), i18n("Autostart") );
         if (autostartMoved)
         {
-//            config->writeEntry( "Autostart", Autostart->url());
             config->writePathEntry( "Autostart", urAutostart->url(), true, true );
             pathChanged = true;
         }
@@ -239,12 +240,13 @@ void DesktopPathConfig::save()
 
         if (pathOk)
         {
-            config->writePathEntry( "Documents", path, true, true );
+            xdgconfig->writePathEntry( "XDG_DOCUMENTS_DIR", '"' + path + '"', true, false );
             pathChanged = true;
         }
     }
 
     config->sync();
+    xdgconfig->sync();
 
     if (pathChanged)
     {

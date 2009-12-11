@@ -91,3 +91,5 @@ Name[zu]=Indawo Yokulawula
 
 X-DCOP-ServiceType=Unique
 Categories=Qt;KDE;Core;
+OnlyShowIn=KDE;
+NoDisplay=true

@@ -13,7 +13,7 @@ kcm_randr_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
 kcm_randr_la_LIBADD = librandrinternal.la $(LIB_KDEUI) $(LIB_XRANDR)
 
 noinst_HEADERS = randr.h krandrmodule.h krandrtray.h krandrapp.h ktimerdialog.h \
-    krandrpassivepopup.h
+    krandrpassivepopup.h lowlevel_randr.h configdialog.h
 
 xdg_apps_DATA = krandrtray.desktop
 
@@ -28,7 +28,7 @@ krandr_datadir = $(kde_appsdir)/.hidden
 
 bin_PROGRAMS = krandrtray
 
-krandrtray_SOURCES = main.cpp krandrtray.cpp krandrapp.cpp krandrpassivepopup.cpp
+krandrtray_SOURCES = main.cpp krandrtray.cpp krandrapp.cpp krandrpassivepopup.cpp configdialog.cpp lowlevel_randr.c
 krandrtray_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 krandrtray_LDADD = librandrinternal.la $(LIB_KFILE) $(LIB_KUTILS) $(LIB_XRANDR)
 

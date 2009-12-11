@@ -204,6 +204,7 @@ void KonqCombo::removeDuplicates( int index )
         if ( item == url )
             removeItem( i );
     }
+    lineEdit()->setCursorPosition( 0 );
 }
 
 // called via DCOP in all instances

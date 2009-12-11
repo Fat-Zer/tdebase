@@ -3,7 +3,7 @@ Exec=kcmshell ioports
 Icon=kcmmemory
 Type=Application
 DocPath=kinfocenter/ioports/index.html
-Categories=Qt;KDE;X-KDE-information;
+Categories=Qt;KDE;X-KDE-settings-hardware;
 
 
 X-KDE-Library=info

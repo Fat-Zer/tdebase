@@ -1669,7 +1669,7 @@ new menu format:
 </para>
 
 <informalexample>
-<para>Example from <filename>applications.menu</filename>:
+<para>Example from <filename>kde-applications.menu</filename>:
 <programlisting>
 <markup>
 	&lt;Menu&gt;
@@ -1743,7 +1743,7 @@ These are controlled by $<envar>XDG_DATA_HOME</envar>. For more
 information, see <ulink url="http://www.freedesktop.org/Standards/basedir-spec">http://www.freedesktop.org/Standards/basedir-spec</ulink></para>
 
 <informalexample>
-<para>Example from <filename>applications.menu</filename>:
+<para>Example from <filename>kde-applications.menu</filename>:
 <programlisting>
 <markup>
              &lt;Menu&gt;

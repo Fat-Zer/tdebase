@@ -85,6 +85,5 @@ X-KDE-Library=konq_listview
 X-KDE-BrowserView-Args=MixedTree
 X-KDE-BrowserView-HideFromMenus=true
 X-KDE-BrowserView-HierarchicalView=true
-X-KDE-BrowserView-Built-Into=konqueror
 Icon=view_tree
 InitialPreference=8

@@ -226,6 +226,13 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		m_lastErrorMessage = i18n("No such medium.");
 		return false;
 	}
+	
+	if ( medium.isEncrypted() && medium.clearDeviceUdi().isEmpty() )
+	{
+		m_lastErrorCode = KIO::ERR_COULD_NOT_MOUNT;
+		m_lastErrorMessage = i18n("The drive is encrypted.");
+		return false;
+	}
 
 	if ( medium.needMounting() )
 	{

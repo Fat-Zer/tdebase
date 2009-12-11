@@ -140,10 +140,10 @@ bool KeyTrans::findEntry(int key, int bits, int* cmd, const char** txt, int* len
       if ((*cmd==CMD_send) && it.current()->anymodspecified() && (*len < 16))
       {
         static char buf[16];
-        char *c, mask = '1' + BITS(0, bits&(1<<BITS_Shift)) +
-          BITS(1, bits&(1<<BITS_Alt)) + BITS(2, bits&(1<<BITS_Control));
+        char *c;
+	char mask = '1' + BITS(0, bits&(1<<BITS_Shift)) + BITS(1, bits&(1<<BITS_Alt)) + BITS(2, bits&(1<<BITS_Control));
         strcpy(buf, it.current()->txt.ascii());
-        c = strchr(buf, '*');
+        c = (char*)strchr(buf, '*');
         if (c) *c = mask;
         *txt = buf;
       }

@@ -134,40 +134,11 @@ bool KFileIVIDesktop::shouldUpdateShadow(bool selected)
   return false;
 }
 
-void KFileIVIDesktop::paintFocus( QPainter *p, const QColorGroup &cg )
-{
-    if ( !iconView() )
-        return;
-
-    if ( !m_shadow || !wordWrap() ||
-         !( static_cast<KDesktopShadowSettings *>
-             ( m_shadow->shadowSettings() ) )->isEnabled() ) {
-        QIconViewItem::paintFocus( p, cg );
-        return;
-    }
-
-    int spread = shadowThickness();
-
-    iconView()->style().drawPrimitive( QStyle::PE_FocusRect, p,
-        QRect( textRect( false ).x(), textRect( false ).y(),
-               textRect( false ).width() - spread,
-               textRect( false ).height() - spread + 1 ),
-        cg,
-        isSelected() ? QStyle::Style_FocusAtBorder : QStyle::Style_Default,
-        QStyleOption( isSelected() ? cg.highlight() : cg.base() ) );
-
-    if ( this != iconView()->currentItem() ) {
-        iconView()->style().drawPrimitive( QStyle::PE_FocusRect, p,
-            QRect( pixmapRect( false ).x(), pixmapRect( false ).y(),
-            pixmapRect( false ).width(), pixmapRect( false ).height() ),
-            cg, QStyle::Style_Default, QStyleOption( cg.base() ) );
-    }
-}
 
 
 void KFileIVIDesktop::drawShadowedText( QPainter *p, const QColorGroup &cg )
 {
-  int textX = textRect( FALSE ).x() + 2;
+  int textX = textRect( FALSE ).x() + 4;
   int textY = textRect( FALSE ).y();
   int align = ((KIconView *) iconView())->itemTextPos() == QIconView::Bottom
     ? AlignHCenter : AlignAuto;
@@ -184,12 +155,15 @@ void KFileIVIDesktop::drawShadowedText( QPainter *p, const QColorGroup &cg )
   int spread = shadowThickness();
 
   if ( isSelected() && settings->selectionType() != KShadowSettings::InverseVideoOnSelection ) {
-    // select using a filled rect
     text = cg.highlightedText();
     QRect rect = textRect( false );
     rect.setRight( rect.right() - spread );
     rect.setBottom( rect.bottom() - spread + 1 );
-    p->fillRect( rect, cg.highlight() );
+    p->setBrush( QBrush( cg.highlight() ) );
+    p->setPen( QPen( cg.highlight() ) );
+    p->drawRoundRect( rect,
+		      1000 / rect.width(),
+		      1000 / rect.height() );	
   }
   else {
     // use shadow

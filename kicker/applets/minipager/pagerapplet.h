@@ -84,6 +84,7 @@ public slots:
     void slotSetDesktop(int desktop);
     void slotSetDesktopViewport(int desktop, const QPoint& viewport);
     void slotSetDesktopCount(int count);
+    void slotRefreshViewportCount(int currentDesktop);
     void slotButtonSelected(int desk );
     void slotActiveWindowChanged( WId win );
     void slotWindowAdded( WId );

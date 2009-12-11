@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>325</width>
-            <height>370</height>
+            <height>390</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -179,6 +179,30 @@
 &lt;/ul&gt;
 &lt;/qt&gt;</string>
                             </property>
+                        </widget>
+			<widget class="QCheckBox" row="8" column="0" rowspan="1" colspan="4">
+				<property name="name">
+					<cstring>cbAutocomplete</cstring>
+				</property>
+				<property name="text">
+					<string>Autocomplete uses &amp;filesystem instead of history</string>
+				</property>
+				<property name="whatsThis" stdset="0">
+					<string>&lt;qt&gt;This selects whether the filesystem or the past command history will be used for autocompletion.
+						&lt;/qt&gt;</string>
+				</property>
+                        </widget>
+			<widget class="QCheckBox" row="9" column="0" rowspan="1" colspan="4">
+				<property name="name">
+					<cstring>cbAutohistory</cstring>
+				</property>
+				<property name="text">
+					<string>Autocomplete uses &amp;both history and filesystem</string>
+				</property>
+				<property name="whatsThis" stdset="0">
+					<string>&lt;qt&gt;This selects whether the filesystem and the past command history will be used for autocompletion.
+						&lt;/qt&gt;</string>
+				</property>
                         </widget>
                         <widget class="QLabel" row="3" column="1">
                             <property name="name">

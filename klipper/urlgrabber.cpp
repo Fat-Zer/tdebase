@@ -51,7 +51,6 @@ URLGrabber::URLGrabber( KConfig* config )
 {
     if( m_config == NULL )
         m_config = kapp->config();
-    myCurrentAction = 0L;
     myMenu = 0L;
     myPopupKillTimeout = 8;
     m_stripWhiteSpace = true;
@@ -160,6 +159,7 @@ void URLGrabber::actionMenu( bool wm_class_check )
 
         QString item;
         myCommandMapper.clear();
+        myGroupingMapper.clear();
 
         myPopupKillTimer->stop();
         delete myMenu;
@@ -184,6 +184,7 @@ void URLGrabber::actionMenu( bool wm_class_check )
                 else
                     id = myMenu->insertItem( SmallIcon(command->pixmap), item);
                 myCommandMapper.insert( id, command );
+                myGroupingMapper.insert( id, action->capturedTexts() );
             }
         }
 
@@ -224,19 +225,27 @@ void URLGrabber::slotItemSelected( int id )
 	break;
     default:
         ClipCommand *command = myCommandMapper.find( id );
-        if ( !command )
+        QStringList *backrefs = myGroupingMapper.find( id );
+        if ( !command || !backrefs )
             qWarning("Klipper: can't find associated action");
         else
-            execute( command );
+            execute( command, backrefs );
     }
 }
 
 
-void URLGrabber::execute( const struct ClipCommand *command ) const
+void URLGrabber::execute( const struct ClipCommand *command,
+                          QStringList *backrefs) const
 {
     if ( command->isEnabled ) {
         QMap<QChar,QString> map;
         map.insert( 's', myClipData );
+		int brCounter = -1;
+		QStringList::Iterator it = backrefs->begin();
+		while( it != backrefs->end() ) {
+			map.insert( char(++brCounter + '0') , *it );
+			++it;
+		}
         QString cmdLine = KMacroExpander::expandMacrosShellQuote( command->command, map );
 
         if ( cmdLine.isEmpty() )

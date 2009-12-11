@@ -29,6 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <qstyle.h>
 #include <qstylesheet.h>
 #include <qtooltip.h>
+#include <qpixmap.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -39,6 +40,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
+#include <kiconeffect.h>
 #include <kipc.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -289,10 +291,11 @@ int PanelButton::widthForHeight(int height) const
     if (orientation() == Horizontal && !m_buttonText.isEmpty())
     {
         QFont f(font());
-        f.setPixelSize(KMIN(height, KMAX(int(float(height) * m_fontPercent), 16)));
+        //f.setPixelSize(KMIN(height, KMAX(int(float(height) * m_fontPercent), 16)));
         QFontMetrics fm(f);
 
-        rc += fm.width(m_buttonText) + KMIN(25, KMAX(5, fm.width('m') / 2));
+        //rc += fm.width(m_buttonText) + KMIN(25, KMAX(5, fm.width('m') / 2));
+        rc += fm.width(m_buttonText);
     }
 
     return rc;
@@ -348,7 +351,7 @@ bool PanelButton::hasText() const
 
 void PanelButton::setButtonText(const QString& text)
 {
-    m_buttonText = text;
+    m_buttonText = " " + text;
     update();
 }
 
@@ -489,6 +492,9 @@ void PanelButton::mouseReleaseEvent(QMouseEvent *e)
     if (e->button() == LeftButton)
     {
         m_isLeftMouseButtonDown = false;
+	
+	QPixmap pix = labelIcon();
+	KIconEffect::visualActivate(this, this->geometry(), &pix);
     }
     QButton::mouseReleaseEvent(e);
 }
@@ -569,7 +575,7 @@ void PanelButton::drawButtonLabel(QPainter *p)
         {
             fontPercent *= .8;
         }
-        f.setPixelSize(KMIN(h, KMAX(int(float(h) * m_fontPercent), 16)));
+        //f.setPixelSize(KMIN(h, KMAX(int(float(h) * m_fontPercent), 16)));
         QFontMetrics fm(f);
         p->setFont(f);
 

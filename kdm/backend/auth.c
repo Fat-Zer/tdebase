@@ -942,7 +942,7 @@ setAuthNumber( Xauth *auth, const char *name )
 	colon = strrchr( name, ':' );
 	if (colon) {
 		++colon;
-		dot = strchr( colon, '.' );
+		dot = (char*)strchr( colon, '.' );
 		if (dot)
 			auth->number_length = dot - colon;
 		else

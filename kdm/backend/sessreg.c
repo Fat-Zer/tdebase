@@ -102,7 +102,7 @@ crc32s( const unsigned char *str )
 void
 sessreg( struct display *d, int pid, const char *user, int uid )
 {
-	const char *dot, *colon;
+	char *dot, *colon;
 	int left, clen;
 #ifdef BSD_UTMP
 	FILE *ttys;
@@ -134,7 +134,7 @@ sessreg( struct display *d, int pid, const char *user, int uid )
 	}
 	ut_ent.ut_time = time( 0 );
 
-	colon = strchr( d->name, ':' );
+	colon = (char*)strchr( d->name, ':' );
 	clen = strlen( colon );
 	if (clen > (int)(sizeof(ut_ent.ut_line) - UTL_OFF) - 2)
 		return; /* uhm, well ... */
@@ -175,7 +175,7 @@ sessreg( struct display *d, int pid, const char *user, int uid )
 			colon = d->name;
 			left = 0;
 		} else {
-			dot = strchr( d->name, '.' );
+			dot = (char*)strchr( d->name, '.' );
 			if (dot && dot - d->name < left) {
 				memcpy( ut_ent.ut_line + UTL_OFF, d->name, left - 1 );
 				ut_ent.ut_line[UTL_OFF + left - 1] = '~';

@@ -4,6 +4,7 @@
 #include <qstring.h>
 #include <qmap.h>
 #include <qfile.h>
+#include <qdir.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -176,12 +177,18 @@ bool XKBExtension::setLayoutInternal(const QString& model,
     if( !fullVariant.isNull() && !fullVariant.isEmpty() )
         p << "-variant" << fullVariant;
 
-    if (p.start(KProcess::Block) && p.normalExit() && (p.exitStatus() == 0)) {
-		return true; //setGroup( group );
-    }
-    else {
-        return false;
-    }
+    p.start(KProcess::Block); 
+
+    // reload ubuntu hotkey-setup keycode -> keysym maps
+    KProcess pXmodmap;
+    pXmodmap << "/usr/bin/xmodmap" << "/usr/share/apps/kxkb/ubuntu.xmodmap";
+    pXmodmap.start(KProcess::Block); 
+
+    KProcess pXmodmapHome;
+    pXmodmapHome << "/usr/bin/xmodmap" << QDir::home().path() + "/.Xmodmap";
+    pXmodmapHome.start(KProcess::Block); 
+
+    return p.normalExit() && (p.exitStatus() == 0);
 }
 
 bool XKBExtension::setGroup(unsigned int group)

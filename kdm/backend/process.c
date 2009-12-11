@@ -264,7 +264,8 @@ char *
 locate( const char *exe )
 {
 	int len;
-	char *path, *pathe, *name, *thenam, nambuf[PATH_MAX+1];
+	char *path, *name, *thenam, nambuf[PATH_MAX+1];
+	char *pathe;
 
 	if (!(path = getenv( "PATH" ))) {
 		LogError( "Can't execute %'s: $PATH not set.\n", exe );
@@ -275,7 +276,7 @@ locate( const char *exe )
 	memcpy( name, exe, len + 1 );
 	*--name = '/';
 	do {
-		if (!(pathe = strchr( path, ':' )))
+		if (!(pathe = (char*)strchr( path, ':' )))
 			pathe = path + strlen( path );
 		len = pathe - path;
 		if (len && !(len == 1 && *path == '.')) {

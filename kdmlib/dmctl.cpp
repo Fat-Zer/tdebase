@@ -42,7 +42,7 @@ static const char *ctl, *dpy;
 
 DM::DM() : fd( -1 )
 {
-	const char *ptr;
+	char *ptr;
 	struct sockaddr_un sa;
 
 	if (DMType == Dunno) {
@@ -77,8 +77,8 @@ DM::DM() : fd( -1 )
 			}
 			GDMAuthenticate();
 		} else {
-			if ((ptr = strchr( dpy, ':' )))
-				ptr = strchr( ptr, '.' );
+			if ((ptr = (char*)strchr( dpy, ':' )))
+				ptr = (char*)strchr( ptr, '.' );
 			snprintf( sa.sun_path, sizeof(sa.sun_path),
 			          "%s/dmctl-%.*s/socket",
 			          ctl, ptr ? int(ptr - dpy) : 512, dpy );
