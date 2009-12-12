@@ -79,8 +79,9 @@ int main(int argc, char ** argv)
 {
   KAboutData data( "kdebugdialog", I18N_NOOP( "KDebugDialog"),
     "1.0", I18N_NOOP("A dialog box for setting preferences for debug output"),
-    KAboutData::License_GPL, "(c) 1999-2000, David Faure <faure@kde.org>");
-  data.addAuthor("David Faure", I18N_NOOP("Maintainer"), "faure@kde.org");
+    KAboutData::License_GPL, "(c) 2009,2010, Timothy Pearson <kb9vqf@pearsoncomputing.net>");
+  data.addAuthor("Timothy Pearson", I18N_NOOP("Maintainer"), "kb9vqf@pearsoncomputing.net");
+  data.addAuthor("David Faure", I18N_NOOP("Original maintainer/developer"), "faure@kde.org");
   KCmdLineArgs::init( argc, argv, &data );
   KCmdLineArgs::addCmdLineOptions( options );
   KUniqueApplication::addCmdLineOptions();

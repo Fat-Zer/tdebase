@@ -358,9 +358,11 @@ KAboutData *KickerConfig::aboutData()
           = new KAboutData(I18N_NOOP("kcmkicker"),
                            I18N_NOOP("KDE Panel Control Module"),
                            0, 0, KAboutData::License_GPL,
-                           I18N_NOOP("(c) 1999 - 2001 Matthias Elter\n"
+                           I18N_NOOP("(c) 2009 - 2010 Timothy Pearson\n"
+                                     "(c) 1999 - 2001 Matthias Elter\n"
                                      "(c) 2002 - 2003 Aaron J. Seigo"));
 
+    about->addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");
     about->addAuthor("Aaron J. Seigo", 0, "aseigo@kde.org");
     about->addAuthor("Matthias Elter", 0, "elter@kde.org");
 

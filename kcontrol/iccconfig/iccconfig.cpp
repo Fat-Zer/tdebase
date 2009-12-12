@@ -68,7 +68,7 @@ KICCConfig::KICCConfig(QWidget *parent, const char *name, const QStringList &)
   KAboutData *about =
   new KAboutData(I18N_NOOP("kcmiccconfig"), I18N_NOOP("KDE ICC Profile Control Module"),
                 0, 0, KAboutData::License_GPL,
-                I18N_NOOP("(c) 2009 Timothy Pearson"));
+                I18N_NOOP("(c) 2009,2010 Timothy Pearson"));
 
   about->addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");
   setAboutData( about );

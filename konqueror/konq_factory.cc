@@ -219,9 +219,10 @@ const KAboutData *KonqFactory::aboutData()
                         KONQUEROR_VERSION,
                         I18N_NOOP("Web browser, file manager, ..."),
                         KAboutData::License_GPL,
-                        I18N_NOOP("(c) 1999-2005, The Konqueror developers"),
+                        I18N_NOOP("(c) 1999-2010, The Konqueror developers"),
                         0,
                         I18N_NOOP("http://konqueror.kde.org") );
+    s_aboutData->addAuthor( "Timothy Pearson", I18N_NOOP("Maintainer, Trinity bugfixes"), "kb9vqf@pearsoncomputing.net" );
     s_aboutData->addAuthor( "David Faure", I18N_NOOP("developer (framework, parts, JavaScript, I/O lib) and maintainer"), "faure@kde.org" );
     s_aboutData->addAuthor( "Simon Hausmann", I18N_NOOP("developer (framework, parts)"), "hausmann@kde.org" );
     s_aboutData->addAuthor( "Michael Reiher", I18N_NOOP("developer (framework)"), "michael.reiher@gmx.de" );

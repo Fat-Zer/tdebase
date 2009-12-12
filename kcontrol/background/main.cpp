@@ -70,8 +70,9 @@ KBackground::KBackground(QWidget *parent, const char *name, const QStringList &/
     KAboutData *about =
     new KAboutData(I18N_NOOP("kcmbackground"), I18N_NOOP("KDE Background Control Module"),
                   0, 0, KAboutData::License_GPL,
-                  I18N_NOOP("(c) 1997-2002 Martin R. Jones"));
+                  I18N_NOOP("(c) 2009,2010 Timothy Pearson"));
 
+    about->addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");
     about->addAuthor("Waldo Bastian", 0, "bastian@kde.org");
     about->addAuthor("George Staikos", 0, "staikos@kde.org");
     about->addAuthor("Martin R. Jones", 0, "jones@kde.org");
