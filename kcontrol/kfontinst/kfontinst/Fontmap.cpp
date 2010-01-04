@@ -66,11 +66,11 @@ static bool parseLine(const char *line, QString &ps, QString &fname, bool &isAli
          b[constFileMaxLen+1];
 
     char *slash1=(char*)strchr(line, '/'),
-         *space1=slash1 ? findSpace(slash1) : NULL, //strchr(slash1, ' ') : NULL,
+         *space1=slash1 ? (char*)findSpace(slash1) : NULL, //strchr(slash1, ' ') : NULL,
          *ob=slash1 ? (char*)strchr(slash1, '(') : NULL,
          *cb=ob ? (char*)strchr(ob, ')') : NULL,
          *slash2=space1 && !ob && !cb ? (char*)strchr(space1, '/') : NULL,
-         *space2=slash2 ? findSpace(slash2) : NULL, // strchr(slash2, ' ') : NULL,
+         *space2=slash2 ? (char*)findSpace(slash2) : NULL, // strchr(slash2, ' ') : NULL,
          *semic=cb || space2 ? (char*)strchr(cb ? cb : space2, ';') : NULL;
 
     if(semic && space1-slash1<constMaxLen)
