@@ -455,36 +455,6 @@ void free_screen_info (struct ScreenInfo *screen_info)
 
 
 
-static char * get_mode_name (struct ScreenInfo *screen_info, RRMode mode_id)
-{
-	XRRScreenResources *sr;
-	char *mode_name = NULL;
-	int i;
-	
-	sr = screen_info->res;
-	
-	for (i = 0; i < sr->nmode; i++) {
-		if (sr->modes[i].id == mode_id) {
-			break;
-		}
-	}
-	
-	if (i == sr->nmode) {
-		mode_name = g_strdup ("Unknown mode"); 
-	} else {
-		double rate;
-		if (sr->modes[i].hTotal && sr->modes[i].vTotal) {
-			rate = ((double) sr->modes[i].dotClock / 
-					 ((double) sr->modes[i].hTotal * (double) sr->modes[i].vTotal));
-		} else {
-			rate = 0;
-		}
-		mode_name = g_strdup_printf ("%s%6.1fHz", sr->modes[i].name, rate);
-	}
-	
-	return mode_name;
-}
-
 /*check if other outputs that connected to the same crtc support this mode*/
 static int check_mode (struct ScreenInfo *screen_info, struct OutputInfo *output, RRMode mode_id)
 {
