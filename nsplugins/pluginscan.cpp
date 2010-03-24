@@ -46,6 +46,7 @@
 #include <kstandarddirs.h>
 #include <klibloader.h>
 #include <kconfig.h>
+#include <kcrash.h>
 #include <kdesktopfile.h>
 #include <kservicetype.h>
 #include <kmimetype.h>
@@ -220,6 +221,11 @@ void registerPlugin( const QString &name, const QString &description,
     infoConfig->writeEntry( "description", description );
     infoConfig->writeEntry( "file", file );
     infoConfig->writeEntry( "mime", mimeInfo );
+}
+
+static void segv_handler(int)
+{
+	_exit(255);
 }
 
 int tryCheck(int write_fd, const QString &absFile)
