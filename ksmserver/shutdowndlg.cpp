@@ -312,10 +312,10 @@ KSMShutdownDlg::KSMShutdownDlg( QWidget* parent,
 		hbuttonbox = new QHBoxLayout( hbox, factor * KDialog::spacingHint() );
 		hbuttonbox->setAlignment( Qt::AlignHCenter );
 		// End session
-		FlatButton* btnLogout = new FlatButton( frame );		
-    	btnLogout->setTextLabel( i18n("&Log out"), false );
+		FlatButton* btnLogout = new FlatButton( frame );
+		btnLogout->setTextLabel( QString("&") + i18n("Log out"), false );
 		btnLogout->setPixmap( DesktopIcon( "back") );
-	    int i = btnLogout->textLabel().find( QRegExp("\\&"), 0 );    // i == 1
+		int i = btnLogout->textLabel().find( QRegExp("\\&"), 0 );    // i == 1
 		btnLogout->setAccel( "ALT+" + btnLogout->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnLogout );
 		connect(btnLogout, SIGNAL(clicked()), SLOT(slotLogout()));
