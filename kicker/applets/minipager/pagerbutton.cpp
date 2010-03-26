@@ -249,10 +249,6 @@ void KMiniPagerButton::loadBgPixmap()
         }
     }
 
-    QDataStream args( data, IO_WriteOnly );
-    args << 1;
-    client->send(kdesktop_name, "KBackgroundIface", "setExport(int)", data);
-
     if (m_isCommon)
     {
         if (!s_commonSharedPixmap)
