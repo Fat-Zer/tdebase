@@ -94,6 +94,7 @@ protected slots:
     void immutabilityChanged(bool);
     void slotBuildOpMenu();
     void showConfig();
+    void showProcessManager();
     virtual void populateContainerArea();
 
 private:

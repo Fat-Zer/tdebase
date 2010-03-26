@@ -380,7 +380,12 @@ void PanelExtension::slotBuildOpMenu()
                             this, SLOT(showConfig()));
         _opMnu->insertSeparator();
     }
-    
+
+    _opMnu->insertItem(SmallIconSet("fork"),
+                            i18n("&Launch Process Manager..."),
+                            this, SLOT(showProcessManager()));
+    _opMnu->insertSeparator();
+
     if (kapp->authorize("action/help"))
     {
         KHelpMenu* help = new KHelpMenu( this, KGlobal::instance()->aboutData(), false);
@@ -392,6 +397,11 @@ void PanelExtension::slotBuildOpMenu()
 void PanelExtension::showConfig()
 {
     Kicker::the()->showConfig(_configFile);
+}
+
+void PanelExtension::showProcessManager()
+{
+    system("ksysguard &");
 }
 
 MenubarExtension::MenubarExtension(const AppletInfo& info)
