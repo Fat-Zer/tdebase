@@ -358,6 +358,7 @@ void scanDirectory( QString dir, QStringList &mimeInfoList,
         } else if (loader_pid == 0) {
            // inside the child
            close(pipes[0]);
+           KCrash::setCrashHandler(segv_handler);
            _exit(tryCheck(pipes[1], absFile));
         } else {
            close(pipes[1]);
