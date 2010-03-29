@@ -206,6 +206,8 @@ void KMiniPagerButton::backgroundChanged()
 
 void KMiniPagerButton::loadBgPixmap()
 {
+    bool retval;
+
     if (m_pager->bgType() != PagerSettings::EnumBackgroundType::BgLive)
         return; // not needed
 
@@ -257,7 +259,13 @@ void KMiniPagerButton::loadBgPixmap()
             connect(s_commonSharedPixmap, SIGNAL(done(bool)),
                     SLOT(backgroundLoaded(bool)));
         }
-        s_commonSharedPixmap->loadFromShared(QString("DESKTOP1"));
+        retval = s_commonSharedPixmap->loadFromShared(QString("DESKTOP1"));
+        if (retval == false) {
+            QDataStream args( data, IO_WriteOnly );
+            args << 1;	// Argument is 1 (true)
+            client->send(kdesktop_name, "KBackgroundIface", "setExport(int)", data);
+            retval = s_commonSharedPixmap->loadFromShared(QString("DESKTOP1"));
+        }
     }
     else
     {
@@ -267,7 +275,13 @@ void KMiniPagerButton::loadBgPixmap()
             connect(m_sharedPixmap, SIGNAL(done(bool)),
                     SLOT(backgroundLoaded(bool)));
         }
-        m_sharedPixmap->loadFromShared(QString("DESKTOP%1").arg(m_desktop));
+        retval = m_sharedPixmap->loadFromShared(QString("DESKTOP%1").arg(m_desktop));
+        if (retval == false) {
+            QDataStream args( data, IO_WriteOnly );
+            args << 1;
+            client->send(kdesktop_name, "KBackgroundIface", "setExport(int)", data);
+            retval = m_sharedPixmap->loadFromShared(QString("DESKTOP%1").arg(m_desktop));
+        }
     }
 }
 

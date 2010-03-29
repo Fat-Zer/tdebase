@@ -97,11 +97,20 @@ KBackgroundManager::KBackgroundManager(QWidget *desktop, KWinModule* kwinModule)
 	    SLOT(slotChangeNumberOfDesktops(int)));
     connect(m_pKwinmodule, SIGNAL(currentDesktopViewportChanged(int, const QPoint&)),
             SLOT(slotChangeViewport(int, const QPoint&)));
-    
+
 
 #if (QT_VERSION-0 >= 0x030200)
     connect( kapp->desktop(), SIGNAL( resized( int )), SLOT( desktopResized())); // RANDR support
 #endif
+
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+    if (m_numberOfViewports < 1) {
+        m_numberOfViewports = 1;
+    }
+    for (unsigned j=0;j<(m_pKwinmodule->numberOfDesktops() * m_numberOfViewports);j++) {
+        renderBackground(j);
+    }
 }
 
 
@@ -307,7 +316,7 @@ void KBackgroundManager::slotChangeDesktop(int desk)
     if (m_numberOfViewports < 1) {
         m_numberOfViewports = 1;
     }
-    
+
     if (desk == 0)
 	desk = realDesktop();
     else
@@ -545,7 +554,8 @@ void KBackgroundManager::slotImageDone(int desk)
         delete pm;
 
     if (current)
-        exportBackground(desk, realDesktop());
+        //exportBackground(desk, realDesktop());
+        exportBackground(desk, desk);
 
     if( do_cleanup )
     {

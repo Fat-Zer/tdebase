@@ -198,6 +198,8 @@ QPixmap fastScalePixmap(const QPixmap &pixmap, int width, int height)
 
 void Desktop::loadBgPixmap(void)
 {
+  bool retval;
+
 //  if (!m_bgDirty) return;
   DCOPClient *client = kapp->dcopClient();
   if (!client->isAttached())
@@ -252,17 +254,19 @@ void Desktop::loadBgPixmap(void)
   kdDebug() << "getting whole bg through shpixmap\n";
  */
 
-  QDataStream args( data, IO_WriteOnly );
-  args << 1;
-  client->send( "kdesktop", "KBackgroundIface", "setExport(int)", data );
-
   if (!m_bgPixmap)
   {
      m_bgPixmap = new KSharedPixmap;
      connect(m_bgPixmap, SIGNAL(done(bool)), SLOT(backgroundLoaded(bool)));
   }
 
-  m_bgPixmap->loadFromShared(QString("DESKTOP%1").arg(m_isCommon?1:m_desk));
+  retval = m_bgPixmap->loadFromShared(QString("DESKTOP%1").arg(m_isCommon?1:m_desk));
+  if (retval == false) {
+    QDataStream args( data, IO_WriteOnly );
+    args << 1;	// Argument is 1 (true)
+    client->send("kdesktop", "KBackgroundIface", "setExport(int)", data);
+    retval = m_bgPixmap->loadFromShared(QString("DESKTOP%1").arg(m_isCommon?1:m_desk));
+  }
 
 }
 
