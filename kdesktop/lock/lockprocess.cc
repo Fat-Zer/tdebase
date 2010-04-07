@@ -239,6 +239,7 @@ void LockProcess::setupPipe()
 {
     /* Create the FIFO if it does not exist */
     umask(0);
+    unlink(FIFO_DIR);
     mkdir(FIFO_DIR,0600);
     mknod(FIFO_FILE, S_IFIFO|0600, 0);
 
