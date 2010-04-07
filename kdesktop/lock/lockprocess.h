@@ -29,6 +29,9 @@ struct GreeterPluginHandle {
     kgreeterplugin_info *info;
 };
 
+#define FIFO_DIR "/tmp/ksocket-global"
+#define FIFO_FILE "/tmp/ksocket-global/kdesktoplockcontrol"
+
 //===========================================================================
 //
 // Screen saver handling process.  Handles screensaver window,
@@ -53,11 +56,12 @@ public:
 
     void msgBox( QMessageBox::Icon type, const QString &txt );
     int execDialog( QDialog* dlg );
-    
+
 public slots:
     void quitSaver();
     void preparePopup();
     void cleanupPopup();
+    void checkPipe();
 
 protected:
     virtual bool x11Event(XEvent *);
@@ -89,6 +93,7 @@ private:
     bool startHack();
     void stopHack();
     void setupSignals();
+    void setupPipe();
     bool checkPass();
     void stayOnTop();
     void lockXF86();
@@ -125,6 +130,12 @@ private:
     int         mAutoLogoutTimerId;
     int         mAutoLogoutTimeout;
     bool        mAutoLogout;
+    bool        mInfoMessageDisplayed;
+    QDialog     *currentDialog;
+    bool        mForceReject;
+
+    bool        mPipeOpen;
+    int         mPipe_fd;
 };
 
 #endif

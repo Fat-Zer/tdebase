@@ -19,6 +19,7 @@
 
 #include "lockprocess.h"
 #include "lockdlg.h"
+#include "infodlg.h"
 #include "autologout.h"
 #include "kdesktopsettings.h"
 
@@ -56,6 +57,16 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #endif
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
+#include <ctype.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
+
+#include <linux/stat.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -108,9 +119,13 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       mVisibility(false),
       mRestoreXF86Lock(false),
       mForbidden(false),
-      mAutoLogout(false)
+      mAutoLogout(false),
+      mPipeOpen(false),
+      mInfoMessageDisplayed(false),
+      mForceReject(false)
 {
     setupSignals();
+    setupPipe();
 
     kapp->installX11EventFilter(this);
 
@@ -191,6 +206,9 @@ LockProcess::~LockProcess()
             greetPlugin.info->done();
         greetPlugin.library->unload();
     }
+
+    mPipeOpen = false;
+    //close(mPipe_fd);
 }
 
 static int signal_pipe[2];
@@ -215,6 +233,82 @@ void LockProcess::timerEvent(QTimerEvent *ev)
 		AutoLogout autologout(this);
 		execDialog(&autologout);
 	}
+}
+
+void LockProcess::setupPipe()
+{
+    /* Create the FIFO if it does not exist */
+    umask(0);
+    mkdir(FIFO_DIR,0600);
+    mknod(FIFO_FILE, S_IFIFO|0600, 0);
+
+    mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
+    if (mPipe_fd > -1) {
+        mPipeOpen = true;
+        QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+    }
+}
+
+void LockProcess::checkPipe()
+{
+    char readbuf[128];
+    int numread;
+    QString to_display;
+
+    if (mPipeOpen == true) {
+        readbuf[0]=' ';
+        numread = read(mPipe_fd, readbuf, 128);
+        readbuf[numread] = 0;
+        if (numread > 0) {
+            if (readbuf[0] == 'C') {
+                printf("Clearing info box!\n\r");
+                mInfoMessageDisplayed=false;
+                if (currentDialog != NULL) {
+                    mForceReject = true;
+                    currentDialog->close();
+                }
+            }
+            if (readbuf[0] == 'T') {
+                to_display = readbuf;
+                to_display = to_display.remove(0,1);
+                printf("Will display info message: %s\n", to_display.ascii());
+                // Lock out password dialogs and close any active dialog
+                mInfoMessageDisplayed=true;
+                if (currentDialog != NULL) {
+                    mForceReject = true;
+                    currentDialog->close();
+                }
+                // Display info message dialog
+                QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+                InfoDlg inDlg( this );
+                inDlg.updateLabel(to_display);
+                inDlg.setUnlockIcon();
+                int ret = execDialog( &inDlg );
+                mForceReject = false;
+                return;
+            }
+            if (readbuf[0] == 'E') {
+                to_display = readbuf;
+                to_display = to_display.remove(0,1);
+                printf("Will display error message: %s\n", to_display.ascii());
+                // Lock out password dialogs and close any active dialog
+                mInfoMessageDisplayed=true;
+                if (currentDialog != NULL) {
+                    mForceReject = true;
+                    currentDialog->close();
+                }
+                // Display info message dialog
+                QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+                InfoDlg inDlg( this );
+                inDlg.updateLabel(to_display);
+                inDlg.setWarningIcon();
+                int ret = execDialog( &inDlg );
+                mForceReject = false;
+                return;
+            }
+        }
+        QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+    }
 }
 
 void LockProcess::setupSignals()
@@ -907,24 +1001,33 @@ void LockProcess::resume( bool force )
 //
 bool LockProcess::checkPass()
 {
-    if (mAutoLogout)
-        killTimer(mAutoLogoutTimerId);
+    if (mInfoMessageDisplayed == false) {
+        if (mAutoLogout)
+            killTimer(mAutoLogoutTimerId);
 
-    PasswordDlg passDlg( this, &greetPlugin);
+        PasswordDlg passDlg( this, &greetPlugin);
 
-    int ret = execDialog( &passDlg );
+        int ret = execDialog( &passDlg );
+        if (mForceReject == true) {
+            ret = QDialog::Rejected;
+        }
+        mForceReject = false;
 
-    XWindowAttributes rootAttr;
-    XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(),
+        XWindowAttributes rootAttr;
+        XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(),
                         qt_xscreen()), &rootAttr);
-    if(( rootAttr.your_event_mask & SubstructureNotifyMask ) == 0 )
-    {
-        kdWarning() << "ERROR: Something removed SubstructureNotifyMask from the root window!!!" << endl;
-        XSelectInput( qt_xdisplay(), qt_xrootwin(),
-            SubstructureNotifyMask | rootAttr.your_event_mask );
-    }
+        if(( rootAttr.your_event_mask & SubstructureNotifyMask ) == 0 )
+        {
+            kdWarning() << "ERROR: Something removed SubstructureNotifyMask from the root window!!!" << endl;
+            XSelectInput( qt_xdisplay(), qt_xrootwin(),
+                SubstructureNotifyMask | rootAttr.your_event_mask );
+        }
 
-    return ret == QDialog::Accepted;
+        return ret == QDialog::Accepted;
+    }
+    else {
+        return 0;
+    }
 }
 
 static void fakeFocusIn( WId window )
@@ -945,6 +1048,7 @@ static void fakeFocusIn( WId window )
 
 int LockProcess::execDialog( QDialog *dlg )
 {
+    currentDialog=dlg;
     dlg->adjustSize();
 
     QRect rect = dlg->geometry();
@@ -967,6 +1071,7 @@ int LockProcess::execDialog( QDialog *dlg )
         resume( false );
     } else
         fakeFocusIn( mDialogs.first()->winId());
+    currentDialog = NULL;
     return rt;
 }
 
