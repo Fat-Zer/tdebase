@@ -20,6 +20,7 @@
 #include "lockprocess.h"
 #include "lockdlg.h"
 #include "infodlg.h"
+#include "querydlg.h"
 #include "autologout.h"
 #include "kdesktopsettings.h"
 
@@ -121,6 +122,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       mForbidden(false),
       mAutoLogout(false),
       mPipeOpen(false),
+      mPipeOpen_out(false),
       mInfoMessageDisplayed(false),
       mForceReject(false)
 {
@@ -208,7 +210,7 @@ LockProcess::~LockProcess()
     }
 
     mPipeOpen = false;
-    //close(mPipe_fd);
+    mPipeOpen_out = false;
 }
 
 static int signal_pipe[2];
@@ -237,16 +239,24 @@ void LockProcess::timerEvent(QTimerEvent *ev)
 
 void LockProcess::setupPipe()
 {
-    /* Create the FIFO if it does not exist */
+    /* Create the FIFOs if they do not exist */
     umask(0);
-    unlink(FIFO_DIR);
-    mkdir(FIFO_DIR,0600);
-    mknod(FIFO_FILE, S_IFIFO|0600, 0);
+    mkdir(FIFO_DIR,0644);
+    mknod(FIFO_FILE, S_IFIFO|0644, 0);
+    chmod(FIFO_FILE, 0644);
 
     mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
     if (mPipe_fd > -1) {
         mPipeOpen = true;
-        QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+        QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
+    }
+
+    mknod(FIFO_FILE_OUT, S_IFIFO|0600, 0);
+    chmod(FIFO_FILE_OUT, 0600);
+
+    mPipe_fd_out = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
+    if (mPipe_fd_out > -1) {
+        mPipeOpen_out = true;
     }
 }
 
@@ -255,6 +265,7 @@ void LockProcess::checkPipe()
     char readbuf[128];
     int numread;
     QString to_display;
+    const char * pin_entry;
 
     if (mPipeOpen == true) {
         readbuf[0]=' ';
@@ -262,7 +273,6 @@ void LockProcess::checkPipe()
         readbuf[numread] = 0;
         if (numread > 0) {
             if (readbuf[0] == 'C') {
-                printf("Clearing info box!\n\r");
                 mInfoMessageDisplayed=false;
                 if (currentDialog != NULL) {
                     mForceReject = true;
@@ -272,7 +282,6 @@ void LockProcess::checkPipe()
             if (readbuf[0] == 'T') {
                 to_display = readbuf;
                 to_display = to_display.remove(0,1);
-                printf("Will display info message: %s\n", to_display.ascii());
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
                 if (currentDialog != NULL) {
@@ -280,7 +289,7 @@ void LockProcess::checkPipe()
                     currentDialog->close();
                 }
                 // Display info message dialog
-                QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+                QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
                 inDlg.updateLabel(to_display);
                 inDlg.setUnlockIcon();
@@ -288,10 +297,9 @@ void LockProcess::checkPipe()
                 mForceReject = false;
                 return;
             }
-            if (readbuf[0] == 'E') {
+            if ((readbuf[0] == 'E') || (readbuf[0] == 'W') || (readbuf[0] == 'I') || (readbuf[0] == 'K')) {
                 to_display = readbuf;
                 to_display = to_display.remove(0,1);
-                printf("Will display error message: %s\n", to_display.ascii());
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
                 if (currentDialog != NULL) {
@@ -299,16 +307,46 @@ void LockProcess::checkPipe()
                     currentDialog->close();
                 }
                 // Display info message dialog
-                QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+                QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
                 inDlg.updateLabel(to_display);
-                inDlg.setWarningIcon();
+                if (readbuf[0] == 'K') inDlg.setKDEIcon();
+                if (readbuf[0] == 'I') inDlg.setInfoIcon();
+                if (readbuf[0] == 'W') inDlg.setWarningIcon();
+                if (readbuf[0] == 'E') inDlg.setErrorIcon();
                 int ret = execDialog( &inDlg );
                 mForceReject = false;
                 return;
             }
+            if (readbuf[0] == 'Q') {
+                to_display = readbuf;
+                to_display = to_display.remove(0,1);
+                // Lock out password dialogs and close any active dialog
+                mInfoMessageDisplayed=true;
+                if (currentDialog != NULL) {
+                    mForceReject = true;
+                    currentDialog->close();
+                }
+                // Display query dialog
+                QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
+                QueryDlg qryDlg( this );
+                qryDlg.updateLabel(to_display);
+                qryDlg.setUnlockIcon();
+                mForceReject = false;
+                int ret = execDialog( &qryDlg );
+                if (mForceReject == false) {
+                    pin_entry = qryDlg.getEntry();
+                    mInfoMessageDisplayed=false;
+                    if (mPipeOpen_out == true) {
+                        write(mPipe_fd_out, pin_entry, strlen(pin_entry)+1);
+                        write(mPipe_fd_out, "\n\r", 3);
+                    }
+                }
+                mForceReject = false;
+                return;
+            }
         }
-        QTimer::singleShot( 100, this, SLOT(checkPipe()) );
+        QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
     }
 }
 

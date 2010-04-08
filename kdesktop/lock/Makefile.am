@@ -8,9 +8,9 @@ kdesktop_lock_LDADD    = ../libkdesktopsettings.la ../../kdmlib/libdmctl.la $(LI
 
 bin_PROGRAMS = kdesktop_lock
 
-kdesktop_lock_SOURCES = lockprocess.cc lockdlg.cc infodlg.cc autologout.cc main.cc
+kdesktop_lock_SOURCES = lockprocess.cc lockdlg.cc infodlg.cc querydlg.cc autologout.cc main.cc
 
-noinst_HEADERS = lockprocess.h lockdlg.h infodlg.h autologout.h main.h
+noinst_HEADERS = lockprocess.h lockdlg.h infodlg.h querydlg.cc autologout.h main.h
 
 METASOURCES = AUTO
 

@@ -31,6 +31,8 @@ struct GreeterPluginHandle {
 
 #define FIFO_DIR "/tmp/ksocket-global"
 #define FIFO_FILE "/tmp/ksocket-global/kdesktoplockcontrol"
+#define FIFO_FILE_OUT "/tmp/ksocket-global/kdesktoplockcontrol_out"
+#define PIPE_CHECK_INTERVAL 50
 
 //===========================================================================
 //
@@ -136,6 +138,8 @@ private:
 
     bool        mPipeOpen;
     int         mPipe_fd;
+    bool        mPipeOpen_out;
+    int         mPipe_fd_out;
 };
 
 #endif

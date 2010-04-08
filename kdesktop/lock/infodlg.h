@@ -33,7 +33,10 @@ public:
 
     void updateLabel( QString &txt );
     void setUnlockIcon();
+    void setKDEIcon();
+    void setInfoIcon();
     void setWarningIcon();
+    void setErrorIcon();
 
 private:
     QFrame      *frame;

@@ -103,9 +103,24 @@ void InfoDlg::setUnlockIcon()
     mpixLabel->setPixmap(DesktopIcon("unlock"));
 }
 
+void InfoDlg::setKDEIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("about_kde"));
+}
+
+void InfoDlg::setInfoIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("messagebox_info"));
+}
+
 void InfoDlg::setWarningIcon()
 {
     mpixLabel->setPixmap(DesktopIcon("messagebox_warning"));
+}
+
+void InfoDlg::setErrorIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("messagebox_critical"));
 }
 
 void InfoDlg::show()
