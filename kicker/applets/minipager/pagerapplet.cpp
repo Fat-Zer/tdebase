@@ -819,7 +819,7 @@ void KMiniPager::contextMenuActivated(int result)
             break;
         case PagerSettings::EnumBackgroundType::BgLive + bgOffset:
         {
-//            if (m_useViewports == true) {
+           if (m_useViewports == true) {
                 m_settings->setBackgroundType(PagerSettings::EnumBackgroundType::BgLive);
                 QValueList<KMiniPagerButton*>::ConstIterator it;
                 QValueList<KMiniPagerButton*>::ConstIterator itEnd = m_desktops.end();
@@ -827,10 +827,10 @@ void KMiniPager::contextMenuActivated(int result)
                 {
                     (*it)->backgroundChanged();
                 }
-//            }
-//            else {
-//                m_settings->setBackgroundType(PagerSettings::EnumBackgroundType::BgTransparent);
-//            }
+           }
+           else {
+               m_settings->setBackgroundType(PagerSettings::EnumBackgroundType::BgTransparent);
+           }
             break;
         }
 

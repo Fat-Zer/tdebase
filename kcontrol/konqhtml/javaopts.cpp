@@ -198,7 +198,7 @@ void KJavaOptions::load(bool useDefaults)
 #if defined(PATH_JAVA)
     QString sJavaPath     = m_pConfig->readPathEntry( "JavaPath", PATH_JAVA );
 #else
-    QString sJavaPath     = m_pConfig->readPathEntry( "JavaPath", "java" );
+    QString sJavaPath     = m_pConfig->readPathEntry( "JavaPath", "/usr/bin/java" );
 #endif
 
     if( sJavaPath == "/usr/lib/jdk" )
