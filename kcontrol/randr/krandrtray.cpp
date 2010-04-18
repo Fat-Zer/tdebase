@@ -32,6 +32,8 @@
 #include <kglobal.h>
 #include <kmessagebox.h>
 
+#include <unistd.h>
+
 #include "configdialog.h"
 
 #include "krandrtray.h"
@@ -55,7 +57,7 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 	QToolTip::add(this, i18n("Screen resize & rotate"));
 	my_parent = parent;
 
-	printf("Reading configuration...\n\r");
+	//printf("Reading configuration...\n\r");
 	globalKeys = new KGlobalAccel(this);
 	KGlobalAccel* keys = globalKeys;
 #include "krandrbindings.cpp"
@@ -66,7 +68,14 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 
 	connect(kapp, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)));
 
+#if (QT_VERSION-0 >= 0x030200) // XRANDR support
+//	connect(this, SIGNAL(screenSizeChanged(int, int)), kapp->desktop(), SLOT( desktopResized()));
+#endif
+
 	randr_display = XOpenDisplay(NULL);
+
+	last_known_x = currentScreen()->currentPixelWidth();
+	last_known_y = currentScreen()->currentPixelHeight();
 }
 
 void KRandRSystemTray::mousePressEvent(QMouseEvent* e)
@@ -124,7 +133,13 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 		if (screenDeactivated == 1) {
 			findPrimaryDisplay();
 			refresh();
-	
+
+			// HACK
+			// This is needed because Qt does not properly generate screen
+			// resize events when switching screens, so KDE gets stuck in the old resolution
+			currentScreen()->proposeSize(GetHackResolutionParameter());
+			currentScreen()->applyProposed();
+
 			currentScreen()->proposeSize(GetDefaultResolutionParameter());
 			currentScreen()->applyProposed();
 		}
@@ -187,11 +202,22 @@ void KRandRSystemTray::configChanged()
 
 	static bool first = true;
 
-	if (!first)
+	if ((last_known_x == currentScreen()->currentPixelWidth()) && \
+		(last_known_y == currentScreen()->currentPixelHeight())) {
+		first = true;
+	}
+
+	last_known_x = currentScreen()->currentPixelWidth();
+	last_known_y = currentScreen()->currentPixelHeight();
+
+	if (!first) {
+		emit (screenSizeChanged(currentScreen()->currentPixelWidth(), currentScreen()->currentPixelHeight()));
+
 		KRandrPassivePopup::message(
 		i18n("Screen configuration has changed"),
 		currentScreen()->changedMessage(), SmallIcon("window_fullscreen"),
 		this, "ScreenChangeNotification");
+	}
 
 	first = false;
 }
@@ -224,6 +250,15 @@ int KRandRSystemTray::GetDefaultResolutionParameter()
 	sizeSort = 0L;
 
 	return returnIndex;
+}
+
+int KRandRSystemTray::GetHackResolutionParameter() {
+	int resparm;
+
+	resparm = GetDefaultResolutionParameter();
+	resparm++;
+
+	return resparm;
 }
 
 void KRandRSystemTray::populateMenu(KPopupMenu* menu)
@@ -299,9 +334,6 @@ void KRandRSystemTray::populateMenu(KPopupMenu* menu)
 
 void KRandRSystemTray::slotResolutionChanged(int parameter)
 {
-// 	if (currentScreen()->currentSize() == parameter)
-// 		return;
-
 	if (currentScreen()->currentSize() == parameter) {
 		//printf("This resolution is already in use; applying again...\n\r");
 		currentScreen()->proposeSize(parameter);
@@ -454,8 +486,8 @@ void KRandRSystemTray::slotCycleDisplays()
 		}
 	}
 
-	printf("Active: %d\n\r", current_on_index);
-	printf("Max: %d\n\r", max_index);
+	//printf("Active: %d\n\r", current_on_index);
+	//printf("Max: %d\n\r", max_index);
 
 	if ((current_on_index == -1) && (max_index == -1)) {
 		// There is no connected display available!  ABORT
@@ -521,6 +553,12 @@ void KRandRSystemTray::slotCycleDisplays()
 			findPrimaryDisplay();
 			refresh();
 
+			// HACK
+			// This is needed because Qt does not properly generate screen
+			// resize events when switching screens, so KDE gets stuck in the old resolution
+			currentScreen()->proposeSize(GetHackResolutionParameter());
+			currentScreen()->applyProposed();
+
 			currentScreen()->proposeSize(GetDefaultResolutionParameter());
 			currentScreen()->applyProposed();
 		}
@@ -553,7 +591,7 @@ void KRandRSystemTray::findPrimaryDisplay()
 		
 		output_name = output_info->name;
 		output_id = randr_screen_info->outputs[i]->id;
-		printf("ACTIVE CHECK: Found output %s\n\r", output_name);
+		//printf("ACTIVE CHECK: Found output %s\n\r", output_name);
 
 		randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
 		randr_screen_info->cur_output = randr_screen_info->outputs[i];
@@ -694,6 +732,12 @@ void KRandRSystemTray::slotOutputChanged(int parameter)
 
 			findPrimaryDisplay();
 			refresh();
+
+			// HACK
+			// This is needed because Qt does not properly generate screen
+			// resize events when switching screens, so KDE gets stuck in the old resolution
+			currentScreen()->proposeSize(GetHackResolutionParameter());
+			currentScreen()->applyProposed();
 
 			currentScreen()->proposeSize(GetDefaultResolutionParameter());
 			currentScreen()->applyProposed();

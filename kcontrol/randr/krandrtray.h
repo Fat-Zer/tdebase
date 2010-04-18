@@ -43,6 +43,9 @@ public:
 
 	void configChanged();
 
+signals:
+	void screenSizeChanged(int x, int y);
+
 protected slots:
 	void slotScreenActivated();
 	void slotResolutionChanged(int parameter);
@@ -61,6 +64,7 @@ private:
 	void populateMenu(KPopupMenu* menu);
 	void addOutputMenu(KPopupMenu* menu);
 	int GetDefaultResolutionParameter();
+	int GetHackResolutionParameter();
 	void findPrimaryDisplay();
 
 	bool m_popupUp;
@@ -70,6 +74,9 @@ private:
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
 	QWidget* my_parent;
+
+	int last_known_x;
+	int last_known_y;
 };
 
 #endif
