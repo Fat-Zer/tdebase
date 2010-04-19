@@ -64,6 +64,7 @@ public slots:
     void preparePopup();
     void cleanupPopup();
     void checkPipe();
+    void desktopResized();
 
 protected:
     virtual bool x11Event(XEvent *);

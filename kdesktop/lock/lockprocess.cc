@@ -25,6 +25,7 @@
 #include "kdesktopsettings.h"
 
 #include <dmctl.h>
+#include <dcopref.h>
 
 #include <kstandarddirs.h>
 #include <kapplication.h>
@@ -99,6 +100,12 @@ Status DPMSInfo ( Display *, CARD16 *, BOOL * );
 
 #define LOCK_GRACE_DEFAULT          5000
 #define AUTOLOGOUT_DEFAULT          600
+
+// These lines are taken on 10/2009 from X.org (X11/XF86keysym.h), defining some special multimedia keys
+#define XF86XK_AudioMute 0x1008FF12
+#define XF86XK_AudioRaiseVolume 0x1008FF13
+#define XF86XK_AudioLowerVolume 0x1008FF
+#define XF86XK_Display 0x1008FF59
 
 static Window gVRoot = 0;
 static Window gVRootData = 0;
@@ -192,6 +199,10 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
             mCheckDPMS.start(10000);
         }
     }
+#endif
+
+#if (QT_VERSION-0 >= 0x030200) // XRANDR support
+  connect( kapp->desktop(), SIGNAL( resized( int )), SLOT( desktopResized()));
 #endif
 
     greetPlugin.library = 0;
@@ -623,6 +634,27 @@ void LockProcess::createSaverWindow()
     setGeometry(0, 0, mRootWidth, mRootHeight);
 
     kdDebug(1204) << "Saver window Id: " << winId() << endl;
+}
+
+void LockProcess::desktopResized()
+{
+    // Get root window size
+    XWindowAttributes rootAttr;
+    XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(),
+                        qt_xscreen()), &rootAttr);
+    mRootWidth = rootAttr.width;
+    mRootHeight = rootAttr.height;
+
+    setGeometry(0, 0, mRootWidth, mRootHeight);
+
+    // Restart the hack as the window size is now different
+    stopHack();
+    startHack();
+
+    if (currentDialog != NULL) {
+        mForceReject = true;
+        currentDialog->close();
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -1134,6 +1166,26 @@ void LockProcess::cleanupPopup()
 //
 bool LockProcess::x11Event(XEvent *event)
 {
+    // Allow certain very specific keypresses through
+    // Key:			Reason:
+    // XF86Display		You need to be able to see the screen when unlocking your computer
+    // XF86AudioMute		Would be nice to be able to shut your computer up in an emergency while it is locked
+    // XF86AudioRaiseVolume	Ditto
+    // XF86AudioLowerVolume	Ditto
+    // 
+    //if ((event->type == KeyPress) || (event->type == KeyRelease)) {
+    if (event->type == KeyPress) {
+        if ((event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_Display)) || \
+        (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioMute)) || \
+        (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioRaiseVolume)) || \
+        (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioLowerVolume))) {
+            XEvent ev2 = *event;
+            DCOPRef ref( "*", "MainApplication-Interface");
+            ref.send("sendFakeKey", DCOPArg( ev2.xkey.keycode, "unsigned int"));
+            return true;
+        }
+    }
+
     switch (event->type)
     {
         case KeyPress:

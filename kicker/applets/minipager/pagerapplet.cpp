@@ -493,6 +493,9 @@ void KMiniPager::drawButtons()
 
 void KMiniPager::slotSetDesktopCount( int )
 {
+    QSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+    m_useViewports = s.width() * s.height() > 1;
+
     QValueList<KMiniPagerButton*>::ConstIterator it;
     QValueList<KMiniPagerButton*>::ConstIterator itEnd = m_desktops.end();
     for( it = m_desktops.begin(); it != itEnd; ++it )
@@ -515,6 +518,9 @@ void KMiniPager::slotSetDesktopCount( int )
 
 void KMiniPager::slotRefreshViewportCount( int )
 {
+    QSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+    m_useViewports = s.width() * s.height() > 1;
+
     QValueList<KMiniPagerButton*>::ConstIterator it;
     QValueList<KMiniPagerButton*>::ConstIterator itEnd = m_desktops.end();
     for( it = m_desktops.begin(); it != itEnd; ++it )
