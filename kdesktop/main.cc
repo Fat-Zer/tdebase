@@ -36,11 +36,23 @@
 #include "init.h"
 #include "krootwm.h"
 #include "kdesktopsettings.h"
+#include "kdesktopapp.h"
 
 #include <signal.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+
+#if defined(Q_WS_X11) && defined(HAVE_XRENDER) && QT_VERSION >= 0x030300
+#define COMPOSITE
+#endif
+
+#ifdef COMPOSITE
+# include <X11/Xlib.h>
+# include <X11/extensions/Xrender.h>
+# include <fixx11h.h>
+# include <dlfcn.h>
+#endif
 
 static const char description[] =
         I18N_NOOP("The KDE desktop");
@@ -52,8 +64,14 @@ static KCmdLineOptions options[] =
    { "x-root", I18N_NOOP("Use this if the desktop window appears as a real window"), 0 },
    { "noautostart", I18N_NOOP("Obsolete"), 0 },
    { "waitforkded", I18N_NOOP("Wait for kded to finish building database"), 0 },
+#ifdef COMPOSITE
+   { "bg-transparency",  I18N_NOOP("Enable background transparency"), 0 },
+#endif
    KCmdLineLastOption
 };
+
+bool argb_visual = false;
+KDesktopApp *myApp = NULL;
 
 // -----------------------------------------------------------------------------
 
@@ -176,11 +194,71 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     r.setDCOPClient( cl );
     r.send( "suspendStartup", QCString( "kdesktop" ));
     delete cl;
-    KUniqueApplication app;
-    app.disableSessionManagement(); // Do SM, but don't restart.
+
+    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+
+#ifdef COMPOSITE
+
+    KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+
+    if ( args->isSet("bg-transparency")) {
+        char *display = 0;
+        if ( qtargs->isSet("display"))
+            display = qtargs->getOption( "display" ).data();
+
+        Display *dpy = XOpenDisplay( display );
+        if ( !dpy ) {
+            kdError() << "cannot connect to X server " << display << endl;
+            exit( 1 );
+        }
+
+        int screen = DefaultScreen( dpy );
+
+        Visual *visual = 0;
+        int event_base, error_base;
+
+        if ( XRenderQueryExtension( dpy, &event_base, &error_base ) ) {
+            int nvi;
+            XVisualInfo templ;
+            templ.screen  = screen;
+            templ.depth   = 32;
+            templ.c_class = TrueColor;
+            XVisualInfo *xvi = XGetVisualInfo( dpy, VisualScreenMask
+                    | VisualDepthMask | VisualClassMask, &templ, &nvi );
+
+            for ( int i = 0; i < nvi; i++ ) {
+                XRenderPictFormat *format =
+                        XRenderFindVisualFormat( dpy, xvi[i].visual );
+                if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
+                    visual = xvi[i].visual;
+                    kdDebug() << "found visual with alpha support" << endl;
+                    argb_visual = true;
+                    break;
+                }
+            }
+        }
+        // The QApplication ctor used is normally intended for applications not using Qt
+        // as the primary toolkit (e.g. Motif apps also using Qt), with some slightly
+        // unpleasant side effects (e.g. #83974). This code checks if qt-copy patch #0078
+        // is applied, which allows turning this off.
+        bool* qt_no_foreign_hack =
+                static_cast< bool* >( dlsym( RTLD_DEFAULT, "qt_no_foreign_hack" ));
+        if( qt_no_foreign_hack )
+            *qt_no_foreign_hack = true;
+        // else argb_visual = false ... ? *shrug*
+        if( argb_visual )
+            myApp = new KDesktopApp( dpy, Qt::HANDLE( visual ), 0 );
+        else
+            XCloseDisplay( dpy );
+    }
+    if( myApp == NULL )
+        myApp = new KDesktopApp;
+#else
+    myApp = new KDesktopApp;
+#endif
+    myApp->disableSessionManagement(); // Do SM, but don't restart.
 
     KDesktopSettings::instance(kdesktop_name + "rc");
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
     bool x_root_hack = args->isSet("x-root");
     bool wait_for_kded = args->isSet("waitforkded");
@@ -194,11 +272,11 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     testLocalInstallation();
 
     // Mark kdeskop as immutable if all of its config modules have been disabled
-    if (!app.config()->isImmutable() && 
+    if (!myApp->config()->isImmutable() &&
         kapp->authorizeControlModules(KRootWm::configModules()).isEmpty())
     {
-       app.config()->setReadOnly(true);
-       app.config()->reparseConfiguration();
+       myApp->config()->setReadOnly(true);
+       myApp->config()->reparseConfiguration();
     }
 
     // for the KDE-already-running check in startkde
@@ -209,7 +287,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 
     args->clear();
 
-    app.dcopClient()->setDefaultObject( "KDesktopIface" );
+    myApp->dcopClient()->setDefaultObject( "KDesktopIface" );
 
-    return app.exec();
+	
+    return myApp->exec();
 }

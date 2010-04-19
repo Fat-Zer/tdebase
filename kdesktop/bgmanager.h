@@ -15,6 +15,10 @@
 
 #include <KBackgroundIface.h>
 
+#if defined(Q_WS_X11) && defined(HAVE_XRENDER) && QT_VERSION >= 0x030300
+#define COMPOSITE
+#endif
+
 class KConfig;
 class QTimer;
 class QPixmap;
@@ -84,6 +88,10 @@ private slots:
     void desktopResized();
     void clearRoot();
     void saveImages();
+
+#ifdef COMPOSITE
+    void slotCmBackgroundChanged(bool);
+#endif
     
 private:
     void applyCommon(bool common);
@@ -116,6 +124,10 @@ private:
     QWidget *m_pDesktop;
     QTimer *m_pTimer;
 
+#ifdef COMPOSITE
+	KPixmap *m_tPixmap;
+#endif
+	
     QPtrVector<KVirtualBGRenderer> m_Renderer;
     QPtrVector<KBackgroundCacheEntry> m_Cache;
 

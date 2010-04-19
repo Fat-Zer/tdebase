@@ -14,6 +14,7 @@
 #include "bgdefaults.h"
 #include "kdesktopsettings.h"
 #include "bgsettings.h"
+#include "kdesktopapp.h"
 
 #include <assert.h>
 
@@ -38,6 +39,12 @@
 #define None 0L
 #endif
 
+#ifdef COMPOSITE
+# include <X11/Xlib.h>
+# include <X11/extensions/Xrender.h>
+# include <fixx11h.h>
+#endif
+
 #include "pixmapserver.h"
 
 template class QPtrVector<KBackgroundRenderer>;
@@ -46,6 +53,9 @@ template class QMemArray<int>;
 
 static Atom prop_root;
 static bool properties_inited = false;
+
+extern bool argb_visual;
+extern KDesktopApp *myApp;
 
 /**** KBackgroundManager ****/
 
@@ -84,6 +94,13 @@ KBackgroundManager::KBackgroundManager(QWidget *desktop, KWinModule* kwinModule)
         connect(m_Renderer[i], SIGNAL(imageDone(int)), SLOT(slotImageDone(int)));
         m_Renderer[i]->enableTiling( true ); // optimize
     }
+
+#ifdef COMPOSITE
+    m_tPixmap = new KPixmap(kapp->desktop()->size());
+    m_tPixmap->fill(QColor(0, 0x0));
+    connect(myApp, SIGNAL(cmBackgroundChanged( bool )),
+            SLOT(slotCmBackgroundChanged( bool )));
+#endif
 
     configure();
 
@@ -450,6 +467,43 @@ void KBackgroundManager::exportBackground(int pixmap, int desk)
  */
 void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
 {
+    KPixmap *ep = pm;
+
+#ifdef COMPOSITE
+    if (argb_visual && (KDesktopSettings::backgroundOpacity() < 100
+        || myApp->cmBackground()))
+    {
+        ep = m_tPixmap;
+        if (KDesktopSettings::backgroundOpacity() > 0 && pm
+            && !myApp->cmBackground())
+        {
+            XRenderPictFormat *format;
+            format = XRenderFindStandardFormat (qt_xdisplay(), PictStandardARGB32);
+
+            XRenderColor fillColor;
+
+            int color = KDesktopSettings::backgroundOpacity() * 0xffff / 100;
+            fillColor.red = color;
+            fillColor.green = color;
+            fillColor.blue = color;
+            fillColor.alpha = color;
+
+            Picture fill = XRenderCreateSolidFill (qt_xdisplay(), &fillColor);
+            Picture src = XRenderCreatePicture(qt_xdisplay(), pm->handle(),
+                                               format, 0, NULL);
+            Picture dst = XRenderCreatePicture(qt_xdisplay(), ep->handle(),
+                                               format, 0, NULL);
+
+            XRenderComposite (qt_xdisplay(), PictOpSrc, src, fill, dst, 0, 0, 0,
+                              0, 0, 0, pm->width(), pm->height());
+
+            XRenderFreePicture (qt_xdisplay(), fill);
+            XRenderFreePicture (qt_xdisplay(), src);
+            XRenderFreePicture (qt_xdisplay(), dst);
+        }
+    }
+#endif
+
     if (m_pDesktop)
     {
        QScrollView* sv = dynamic_cast<QScrollView*>( m_pDesktop );
@@ -457,7 +511,7 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
          // Qt eats repaint events in this case :-((
          sv->viewport()->update();
        }
-       m_pDesktop->setErasePixmap(*pm);
+       m_pDesktop->setErasePixmap(*ep);
        m_pDesktop->repaint();
        static bool root_cleared = false;
        if( !root_cleared )
@@ -465,13 +519,13 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
           root_cleared = true;
 	  QTimer::singleShot( 0, this, SLOT( clearRoot()));
           // but make the pixmap visible until m_pDesktop is visible
-          KApplication::desktop()->screen()->setErasePixmap(*pm);
+          KApplication::desktop()->screen()->setErasePixmap(*ep);
           KApplication::desktop()->screen()->erase();
        }
     }
     else
     {
-        KApplication::desktop()->screen()->setErasePixmap(*pm);
+        KApplication::desktop()->screen()->setErasePixmap(*ep);
         KApplication::desktop()->screen()->erase();
     }
 
@@ -878,6 +932,14 @@ void KBackgroundManager::desktopResized()
             r->renderer(j)->desktopResized();
         }
     }
+
+#ifdef COMPOSITE
+    if (m_tPixmap)
+	delete m_tPixmap;
+    m_tPixmap = new KPixmap(kapp->desktop()->size());
+    m_tPixmap->fill(QColor(0, 0x0));
+#endif
+    
     m_Hash = 0;
     if( m_pDesktop )
         m_pDesktop->resize( kapp->desktop()->geometry().size());
@@ -933,5 +995,14 @@ void KBackgroundManager::setBackgroundEnabled( const bool enable )
     }
   slotChangeDesktop(0);
 }
+
+#ifdef COMPOSITE
+void KBackgroundManager::slotCmBackgroundChanged( bool )
+{
+    m_tPixmap->fill(QColor(0, 0x0));
+    m_Hash = 0;
+    slotChangeDesktop(0);
+}
+#endif
 
 #include "bgmanager.moc"

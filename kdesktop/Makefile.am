@@ -23,13 +23,15 @@ kdesktop_la_SOURCES = main.cc krootwm.cc xautolock.cc kdiconview.cc desktop.cc \
 	minicli.cpp KBackgroundIface.skel pixmapserver.cc kcustommenu.cc \
 	startupid.cpp minicli_ui.ui xautolock_diy.c xautolock_engine.c \
 	kshadowengine.cpp kshadowsettings.cpp \
-	kdesktopshadowsettings.cpp kfileividesktop.cpp
+	kdesktopshadowsettings.cpp kfileividesktop.cpp \
+	kdesktopapp.cpp
 
 include_HEADERS = KDesktopIface.h KScreensaverIface.h KBackgroundIface.h
 
 noinst_HEADERS = desktop.h bgmanager.h krootwm.h \
 	xautolock.h lockeng.h init.h minicli.h \
-	pixmapserver.h startupid.h xautolock_c.h
+	pixmapserver.h startupid.h xautolock_c.h \
+	kdesktopapp.h
 
 kcheckrunning_SOURCES = kcheckrunning.cpp
 kcheckrunning_LDFLAGS = $(all_libraries)

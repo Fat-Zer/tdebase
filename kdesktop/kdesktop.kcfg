@@ -31,6 +31,11 @@
       <label>Background cache size</label>
       <whatsthis>Here you can enter how much memory KDE should use for caching the background(s). If you have different backgrounds for the different desktops caching can make switching desktops smoother at the expense of higher memory use.</whatsthis>
     </entry>
+    <entry key="BackgroundOpacity" type="Int">
+      <default>100</default>
+      <label>Background Opacity</label>
+      <whatsthis>Here you can the opacity of the background (0-100). A composite manager can then render something behind it.</whatsthis>
+    </entry>
   </group>
   <group name="General"> 
     <entry name="DesktopEnabled" key="Enabled" type="Bool">
