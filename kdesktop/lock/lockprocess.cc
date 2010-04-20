@@ -67,6 +67,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
+#include <kcrash.h>
 
 #include <linux/stat.h>
 
@@ -104,13 +105,18 @@ Status DPMSInfo ( Display *, CARD16 *, BOOL * );
 // These lines are taken on 10/2009 from X.org (X11/XF86keysym.h), defining some special multimedia keys
 #define XF86XK_AudioMute 0x1008FF12
 #define XF86XK_AudioRaiseVolume 0x1008FF13
-#define XF86XK_AudioLowerVolume 0x1008FF
+#define XF86XK_AudioLowerVolume 0x1008FF11
 #define XF86XK_Display 0x1008FF59
 
 static Window gVRoot = 0;
 static Window gVRootData = 0;
 static Atom   gXA_VROOT;
 static Atom   gXA_SCREENSAVER_VERSION;
+
+static void segv_handler(int)
+{
+	printf("[kdesktop_lock] WARNING: A fatal exception was encountered.  Trapping and ignoring it so as not to compromise desktop security...\n\r");
+}
 
 //===========================================================================
 //
@@ -206,6 +212,8 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
 #endif
 
     greetPlugin.library = 0;
+
+    KCrash::setCrashHandler(segv_handler);
 }
 
 //---------------------------------------------------------------------------
@@ -638,10 +646,14 @@ void LockProcess::createSaverWindow()
 
 void LockProcess::desktopResized()
 {
+    if (currentDialog != NULL) {
+        mForceReject = true;
+        currentDialog->close();
+    }
+
     // Get root window size
     XWindowAttributes rootAttr;
-    XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(),
-                        qt_xscreen()), &rootAttr);
+    XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(), qt_xscreen()), &rootAttr);
     mRootWidth = rootAttr.width;
     mRootHeight = rootAttr.height;
 
@@ -650,11 +662,6 @@ void LockProcess::desktopResized()
     // Restart the hack as the window size is now different
     stopHack();
     startHack();
-
-    if (currentDialog != NULL) {
-        mForceReject = true;
-        currentDialog->close();
-    }
 }
 
 //---------------------------------------------------------------------------
