@@ -137,7 +137,8 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       mPipeOpen(false),
       mPipeOpen_out(false),
       mInfoMessageDisplayed(false),
-      mForceReject(false)
+      mForceReject(false),
+      mDialogControLock(false);
 {
     setupSignals();
     setupPipe();
@@ -293,20 +294,24 @@ void LockProcess::checkPipe()
         if (numread > 0) {
             if (readbuf[0] == 'C') {
                 mInfoMessageDisplayed=false;
+                mDialogControLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
+                mDialogControLock = false;
             }
             if (readbuf[0] == 'T') {
                 to_display = readbuf;
                 to_display = to_display.remove(0,1);
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
+                mDialogControLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
+                mDialogControLock = false;
                 // Display info message dialog
                 QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
@@ -321,10 +326,12 @@ void LockProcess::checkPipe()
                 to_display = to_display.remove(0,1);
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
+                mDialogControLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
+                mDialogControLock = false;
                 // Display info message dialog
                 QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
@@ -342,10 +349,12 @@ void LockProcess::checkPipe()
                 to_display = to_display.remove(0,1);
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
+                mDialogControLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
+                mDialogControLock = false;
                 // Display query dialog
                 QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 QueryDlg qryDlg( this );
@@ -646,10 +655,12 @@ void LockProcess::createSaverWindow()
 
 void LockProcess::desktopResized()
 {
+    mDialogControLock = true;
     if (currentDialog != NULL) {
         mForceReject = true;
         currentDialog->close();
     }
+    mDialogControLock = false;
 
     // Get root window size
     XWindowAttributes rootAttr;
@@ -1142,6 +1153,10 @@ int LockProcess::execDialog( QDialog *dlg )
     mDialogs.prepend( dlg );
     fakeFocusIn( dlg->winId());
     int rt = dlg->exec();
+    while (mDialogControLock == true) {
+        sleep(1);
+    }
+    currentDialog = NULL;
     mDialogs.remove( dlg );
     if( mDialogs.isEmpty() ) {
         XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS,
@@ -1149,7 +1164,6 @@ int LockProcess::execDialog( QDialog *dlg )
         resume( false );
     } else
         fakeFocusIn( mDialogs.first()->winId());
-    currentDialog = NULL;
     return rt;
 }
 

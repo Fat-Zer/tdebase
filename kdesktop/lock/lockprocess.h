@@ -135,6 +135,7 @@ private:
     bool        mAutoLogout;
     bool        mInfoMessageDisplayed;
     QDialog     *currentDialog;
+    bool        mDialogControLock;
     bool        mForceReject;
 
     bool        mPipeOpen;
