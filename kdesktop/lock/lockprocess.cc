@@ -138,7 +138,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       mPipeOpen_out(false),
       mInfoMessageDisplayed(false),
       mForceReject(false),
-      mDialogControLock(false);
+      mDialogControLock(false)
 {
     setupSignals();
     setupPipe();
