@@ -65,6 +65,8 @@ public slots:
     void cleanupPopup();
     void checkPipe();
     void desktopResized();
+    void doDesktopResizeFinish();
+    void doFunctionKeyBroadcast();
 
 protected:
     virtual bool x11Event(XEvent *);
@@ -135,13 +137,16 @@ private:
     bool        mAutoLogout;
     bool        mInfoMessageDisplayed;
     QDialog     *currentDialog;
-    bool        mDialogControLock;
+    bool        mDialogControlLock;
     bool        mForceReject;
 
     bool        mPipeOpen;
     int         mPipe_fd;
     bool        mPipeOpen_out;
     int         mPipe_fd_out;
+
+    QTimer      *resizeTimer;
+    unsigned int  mkeyCode;
 };
 
 #endif

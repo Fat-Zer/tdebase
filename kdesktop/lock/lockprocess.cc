@@ -116,6 +116,7 @@ static Atom   gXA_SCREENSAVER_VERSION;
 static void segv_handler(int)
 {
 	printf("[kdesktop_lock] WARNING: A fatal exception was encountered.  Trapping and ignoring it so as not to compromise desktop security...\n\r");
+	sleep(1);
 }
 
 //===========================================================================
@@ -138,7 +139,9 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       mPipeOpen_out(false),
       mInfoMessageDisplayed(false),
       mForceReject(false),
-      mDialogControLock(false)
+      mDialogControlLock(false),
+      currentDialog(NULL),
+      resizeTimer(NULL)
 {
     setupSignals();
     setupPipe();
@@ -294,24 +297,26 @@ void LockProcess::checkPipe()
         if (numread > 0) {
             if (readbuf[0] == 'C') {
                 mInfoMessageDisplayed=false;
-                mDialogControLock = true;
+                while (mDialogControlLock == true) sleep(1);
+                mDialogControlLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
-                mDialogControLock = false;
+                mDialogControlLock = false;
             }
             if (readbuf[0] == 'T') {
                 to_display = readbuf;
                 to_display = to_display.remove(0,1);
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
-                mDialogControLock = true;
+                while (mDialogControlLock == true) sleep(1);
+                mDialogControlLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
-                mDialogControLock = false;
+                mDialogControlLock = false;
                 // Display info message dialog
                 QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
@@ -326,12 +331,13 @@ void LockProcess::checkPipe()
                 to_display = to_display.remove(0,1);
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
-                mDialogControLock = true;
+                while (mDialogControlLock == true) sleep(1);
+                mDialogControlLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
-                mDialogControLock = false;
+                mDialogControlLock = false;
                 // Display info message dialog
                 QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
@@ -349,12 +355,13 @@ void LockProcess::checkPipe()
                 to_display = to_display.remove(0,1);
                 // Lock out password dialogs and close any active dialog
                 mInfoMessageDisplayed=true;
-                mDialogControLock = true;
+                while (mDialogControlLock == true) sleep(1);
+                mDialogControlLock = true;
                 if (currentDialog != NULL) {
                     mForceReject = true;
                     currentDialog->close();
                 }
-                mDialogControLock = false;
+                mDialogControlLock = false;
                 // Display query dialog
                 QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
                 QueryDlg qryDlg( this );
@@ -655,12 +662,9 @@ void LockProcess::createSaverWindow()
 
 void LockProcess::desktopResized()
 {
-    mDialogControLock = true;
-    if (currentDialog != NULL) {
-        mForceReject = true;
-        currentDialog->close();
-    }
-    mDialogControLock = false;
+    mBusy = true;
+    suspend();
+    setCursor( blankCursor );
 
     // Get root window size
     XWindowAttributes rootAttr;
@@ -670,9 +674,31 @@ void LockProcess::desktopResized()
 
     setGeometry(0, 0, mRootWidth, mRootHeight);
 
-    // Restart the hack as the window size is now different
+    // This slot needs to be able to execute very rapidly so as to prevent the user's desktop from ever
+    // being displayed, so we finish the hack restarting/display prettying operations in a separate timed slot
+    if (resizeTimer == NULL) {
+        resizeTimer = new QTimer( this );
+        connect( resizeTimer, SIGNAL(timeout()), this, SLOT(doDesktopResizeFinish()) );
+    }
+    resizeTimer->start( 100, TRUE ); // 100 millisecond single shot timer; should allow display switching operations to finish before hack is started
+}
+
+void LockProcess::doDesktopResizeFinish()
+{
     stopHack();
+
+    while (mDialogControlLock == true) sleep(1);
+    mDialogControlLock = true;
+    if (currentDialog != NULL) {
+        mForceReject = true;
+        currentDialog->close();
+    }
+    mDialogControlLock = false;
+
+    // Restart the hack as the window size is now different
     startHack();
+
+    mBusy = false;
 }
 
 //---------------------------------------------------------------------------
@@ -1153,9 +1179,7 @@ int LockProcess::execDialog( QDialog *dlg )
     mDialogs.prepend( dlg );
     fakeFocusIn( dlg->winId());
     int rt = dlg->exec();
-    while (mDialogControLock == true) {
-        sleep(1);
-    }
+    while (mDialogControlLock == true) sleep(1);
     currentDialog = NULL;
     mDialogs.remove( dlg );
     if( mDialogs.isEmpty() ) {
@@ -1181,6 +1205,25 @@ void LockProcess::cleanupPopup()
     fakeFocusIn( mDialogs.first()->winId() );
 }
 
+void LockProcess::doFunctionKeyBroadcast() {
+    // Provide a clean, pretty display switch by hiding the password dialog here
+    mBusy=true;
+    QTimer::singleShot(1000, this, SLOT(slotDeadTimePassed()));
+    if (mkeyCode == XKeysymToKeycode(qt_xdisplay(), XF86XK_Display)) {
+        while (mDialogControlLock == true) sleep(1);
+        mDialogControlLock = true;
+        if (currentDialog != NULL) {
+            mForceReject = true;
+            currentDialog->close();
+        }
+        mDialogControlLock = false;
+    }
+    setCursor( blankCursor );
+
+    DCOPRef ref( "*", "MainApplication-Interface");
+    ref.send("sendFakeKey", DCOPArg(mkeyCode , "unsigned int"));
+}
+
 //---------------------------------------------------------------------------
 //
 // X11 Event.
@@ -1193,16 +1236,15 @@ bool LockProcess::x11Event(XEvent *event)
     // XF86AudioMute		Would be nice to be able to shut your computer up in an emergency while it is locked
     // XF86AudioRaiseVolume	Ditto
     // XF86AudioLowerVolume	Ditto
-    // 
+
     //if ((event->type == KeyPress) || (event->type == KeyRelease)) {
     if (event->type == KeyPress) {
         if ((event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_Display)) || \
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioMute)) || \
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioRaiseVolume)) || \
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioLowerVolume))) {
-            XEvent ev2 = *event;
-            DCOPRef ref( "*", "MainApplication-Interface");
-            ref.send("sendFakeKey", DCOPArg( ev2.xkey.keycode, "unsigned int"));
+            mkeyCode = event->xkey.keycode;
+            QTimer::singleShot( 100, this, SLOT(doFunctionKeyBroadcast()) );
             return true;
         }
     }
