@@ -227,6 +227,21 @@ fdOpenW( int fd )
 	return 0;
 }
 
+static FILE *
+mkTempFile( char *nambuf, int namelen )
+{
+	FILE *f;
+	int r;
+
+	for (r = 0; r < 100; r++) {
+		randomStr( nambuf + namelen );
+		if ((f = fdOpenW( open( nambuf, O_WRONLY | O_CREAT | O_EXCL, 0600 ) )))
+			return f;
+		if (errno != EEXIST)
+			break;
+	}
+	return 0;
+}
 
 #define NAMELEN 255
 
@@ -234,9 +249,7 @@ static FILE *
 MakeServerAuthFile( struct display *d )
 {
 	FILE *f;
-#ifndef HAVE_MKSTEMP
-	int r;
-#endif
+	int i;
 	char cleanname[NAMELEN], nambuf[NAMELEN+128];
 
 	/*
@@ -248,22 +261,11 @@ MakeServerAuthFile( struct display *d )
 	if (mkdir( authDir, 0755 ) < 0  &&  errno != EEXIST)
 		return 0;
 	CleanUpFileName( d->name, cleanname, NAMELEN - 8 );
-#ifdef HAVE_MKSTEMP
-	sprintf( nambuf, "%s/A%s-XXXXXX", authDir, cleanname );
-	if ((f = fdOpenW( mkstemp( nambuf ) ))) {
+	i = sprintf( nambuf, "%s/A%s-", authDir, cleanname );
+	if ((f = mkTempFile( nambuf, i ))) {
 		StrDup( &d->authFile, nambuf );
 		return f;
 	}
-#else
-	for (r = 0; r < 100; r++) {
-		sprintf( nambuf, "%s/A%s-XXXXXX", authDir, cleanname );
-		(void)mktemp( nambuf );
-		if ((f = fdOpenW( open( nambuf, O_WRONLY | O_CREAT | O_EXCL, 0600 ) ))) {
-			StrDup( &d->authFile, nambuf );
-			return f;
-		}
-	}
-#endif
 	return 0;
 }
 
@@ -1131,19 +1133,8 @@ SetUserAuthorization( struct display *d )
 			 * temporary - we can assume, that we are the only ones
 			 * knowing about this file anyway.
 			 */
-#ifdef HAVE_MKSTEMP
-			sprintf( name_buf, "%s/.XauthXXXXXX", d->userAuthDir );
-			new = fdOpenW( mkstemp( name_buf ) );
-#else
-			for (i = 0; i < 100; i++) {
-				sprintf( name_buf, "%s/.XauthXXXXXX", d->userAuthDir );
-				(void)mktemp( name_buf );
-				if ((new =
-				     fdOpenW( open( name_buf, O_WRONLY | O_CREAT | O_EXCL,
-				                    0600 ) )))
-					break;
-			}
-#endif
+			i = sprintf( name_buf, "%s/.Xauth", d->userAuthDir );
+			new = mkTempFile( name_buf, i );
 			if (!new) {
 				LogError( "Can't create authorization file in %s\n",
 				          d->userAuthDir );

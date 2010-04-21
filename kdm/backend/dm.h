@@ -542,6 +542,7 @@ const char *localHostname( void );
 int Reader( int fd, void *buf, int len );
 int Writer( int fd, const void *buf, int len );
 int fGets( char *buf, int max, FILE *f );
+void randomStr( char *s );
 time_t mTime( const char *fn );
 void ListSessions( int flags, struct display *d, void *ctx,
                    void (*emitXSess)( struct display *, struct display *, void * ),

@@ -96,4 +96,10 @@ void AddOtherEntropy( void );
 void AddTimerEntropy( void );
 #endif
 
+#ifdef HAVE_ARC4RANDOM
+# define secureRandom() arc4random()
+#else
+int secureRandom( void );
+#endif
+
 #endif /* _DM_AUTH_H_ */

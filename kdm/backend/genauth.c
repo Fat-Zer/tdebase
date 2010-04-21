@@ -488,3 +488,13 @@ GenerateAuthData( char *auth, int len )
 # endif
 #endif
 }
+
+#ifndef HAVE_ARC4RANDOM
+int
+secureRandom( void )
+{
+	int rslt;
+	GenerateAuthData( (char *)&rslt, sizeof(int) );
+	return rslt & 0x7fffffff;
+}
+#endif

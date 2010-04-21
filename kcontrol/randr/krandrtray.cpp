@@ -74,8 +74,10 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 
 	randr_display = XOpenDisplay(NULL);
 
-	last_known_x = currentScreen()->currentPixelWidth();
-	last_known_y = currentScreen()->currentPixelHeight();
+	if (isValid() == true) {
+		last_known_x = currentScreen()->currentPixelWidth();
+		last_known_y = currentScreen()->currentPixelHeight();
+	}
 }
 
 void KRandRSystemTray::mousePressEvent(QMouseEvent* e)
