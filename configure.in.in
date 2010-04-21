@@ -266,6 +266,8 @@ if test -n "$LIBART_CONFIG"; then
   fi
 fi
 
+dnl See if the underlying system honors socket permissions for system security purposes
+KDE_CHECK_HONORS_SOCKET_PERMS
 
 AC_SUBST(LIBART_LIBS)
 AC_SUBST(LIBART_CFLAGS)

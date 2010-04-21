@@ -77,8 +77,25 @@ nukeSock( struct cmdsock *cs )
 	free( cs );
 }
 
-
+#ifdef HONORS_SOCKET_PERMS
 static CtrlRec ctrl = { 0, 0, -1, 0, 0, { -1, 0, 0 } };
+#else
+static CtrlRec ctrl = { 0, 0, 0, -1, 0, 0, { -1, 0, 0 } };
+
+static int mkTempDir( char *dir )
+{
+	int i, l = strlen( dir ) - 6;
+
+	for (i = 0; i < 100; i++) {
+		randomStr( dir + l );
+		if (!mkdir( dir, 0700 ))
+			return True;
+		if (errno != EEXIST)
+			break;
+	}
+	return False;
+}
+#endif
 
 void
 openCtrl( struct display *d )
@@ -140,22 +157,50 @@ openCtrl( struct display *d )
 				if (strlen( cr->path ) >= sizeof(sa.sun_path))
 					LogError( "path %\"s too long; no control sockets will be available\n",
 					          cr->path );
-				else if (mkdir( sockdir, 0755 ) && errno != EEXIST)
+#ifdef HONORS_SOCKET_PERMS
+				else if (mkdir( sockdir, 0700 ) && errno != EEXIST)
 					LogError( "mkdir %\"s failed; no control sockets will be available\n",
 					          sockdir );
+				else if (unlink( cr->path ) && errno != ENOENT)
+					LogError( "unlink %\"s failed: %m; control socket will not be available\n",
+					          cr->path );
 				else {
-					if (!d)
-						chown( sockdir, -1, fifoGroup );
+#else
+				else if (unlink( sockdir ) && errno != ENOENT)
+					LogError( "unlink %\"s failed: %m; control socket will not be available\n",
+					          sockdir );
+				else if (!strApp( &cr->realdir, sockdir, "-XXXXXX", (char *)0))
+					;
+				else if (!mkTempDir( cr->realdir )) {
+					LogError( "mkdir %\"s failed: %m; control socket will not be available\n",
+					          cr->realdir );
+					free( cr->realdir );
+					cr->realdir = 0;
+				} else if (symlink( cr->realdir, sockdir )) {
+					LogError( "symlink %\"s => %\"s failed: %m; control socket will not be available\n",
+					          sockdir, cr->realdir );
+					rmdir( cr->realdir );
+					free( cr->realdir );
+					cr->realdir = 0;
+				} else {
+					chown( sockdir, 0, d ? 0 : fifoGroup );
 					chmod( sockdir, 0750 );
+#endif
 					if ((cr->fd = socket( PF_UNIX, SOCK_STREAM, 0 )) < 0)
 						LogError( "Cannot create control socket\n" );
 					else {
-						unlink( cr->path );
 						sa.sun_family = AF_UNIX;
 						strcpy( sa.sun_path, cr->path );
 						if (!bind( cr->fd, (struct sockaddr *)&sa, sizeof(sa) )) {
 							if (!listen( cr->fd, 5 )) {
+#ifdef HONORS_SOCKET_PERMS
+								chmod( cr->path, 0660 );
+								if (!d)
+									chown( cr->path, -1, fifoGroup );
+								chmod( sockdir, 0755 );
+#else
 								chmod( cr->path, 0666 );
+#endif
 								RegisterCloseOnFork( cr->fd );
 								RegisterInput( cr->fd );
 								free( sockdir );
@@ -170,6 +215,14 @@ openCtrl( struct display *d )
 						close( cr->fd );
 						cr->fd = -1;
 					}
+#ifdef HONORS_SOCKET_PERMS
+					rmdir( sockdir );
+#else
+					unlink( sockdir );
+					rmdir( cr->realdir );
+					free( cr->realdir );
+					cr->realdir = 0;
+#endif
 				}
 				free( cr->path );
 				cr->path = 0;
@@ -190,7 +243,14 @@ closeCtrl( struct display *d )
 		cr->fd = -1;
 		unlink( cr->path );
 		*strrchr( cr->path, '/' ) = 0;
+#ifdef HONORS_SOCKET_PERMS
 		rmdir( cr->path );
+#else
+		unlink( cr->path );
+		rmdir( cr->realdir );
+		free( cr->realdir );
+		cr->realdir = 0;
+#endif
 		free( cr->path );
 		cr->path = 0;
 		while (cr->css) {
@@ -218,12 +278,12 @@ chownCtrl( CtrlRec *cr, int uid )
 {
 	if (cr->fpath)
 		chown( cr->fpath, uid, -1 );
-	if (cr->path) {
-		char *ptr = strrchr( cr->path, '/' );
-		*ptr = 0;
+	if (cr->path)
+#ifdef HONORS_SOCKET_PERMS
 		chown( cr->path, uid, -1 );
-		*ptr = '/';
-	}
+#else
+		chown( cr->realdir, uid, -1 );
+#endif
 }
 
 void
