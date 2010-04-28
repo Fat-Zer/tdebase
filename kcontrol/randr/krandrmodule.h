@@ -19,13 +19,13 @@
 #ifndef KRANDRMODULE_H
 #define KRANDRMODULE_H
 
-#include "randr.h"
+#include <libkrandr/libkrandr.h>
 
 class QButtonGroup;
 class KComboBox;
 class QCheckBox;
 
-class KRandRModule : public KCModule, public RandRDisplay
+class KRandRModule : public KCModule, public KRandrSimpleAPI
 {
 	Q_OBJECT
 

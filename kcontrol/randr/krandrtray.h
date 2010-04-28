@@ -24,14 +24,12 @@
 #include <ksystemtray.h>
 #include <kglobalaccel.h>
 
-#include "randr.h"
-
-#include "lowlevel_randr.h"
+#include <libkrandr/libkrandr.h>
 
 class KHelpMenu;
 class KPopupMenu;
 
-class KRandRSystemTray :  public KSystemTray, public RandRDisplay
+class KRandRSystemTray :  public KSystemTray, public KRandrSimpleAPI
 {
 	Q_OBJECT
 
