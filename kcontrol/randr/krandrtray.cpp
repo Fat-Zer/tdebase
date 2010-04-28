@@ -117,10 +117,10 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 			if (RR_Disconnected != randr_screen_info->outputs[i]->info->connection) {
 				continue;
 			}
-			
+
 			output_name = output_info->name;
 			output_id = randr_screen_info->outputs[i]->id;
-	
+
 			// Deactivate this display to avoid a crash!
 			randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
 			randr_screen_info->cur_output = randr_screen_info->outputs[i];
@@ -128,10 +128,10 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 			randr_screen_info->cur_output->off_set = 1;
 			output_off(randr_screen_info, randr_screen_info->cur_output);
 			main_low_apply(randr_screen_info);
-	
+
 			screenDeactivated = 1;
 		}
-	
+
 		if (screenDeactivated == 1) {
 			findPrimaryDisplay();
 			refresh();
@@ -139,8 +139,11 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 			// HACK
 			// This is needed because Qt does not properly generate screen
 			// resize events when switching screens, so KDE gets stuck in the old resolution
-			currentScreen()->proposeSize(GetHackResolutionParameter());
-			currentScreen()->applyProposed();
+			// This only seems to happen with more than one screen, so check for that condition...
+			if (kapp->desktop()->numScreens() > 1) {
+				currentScreen()->proposeSize(GetHackResolutionParameter());
+				currentScreen()->applyProposed();
+			}
 
 			currentScreen()->proposeSize(GetDefaultResolutionParameter());
 			currentScreen()->applyProposed();
@@ -443,7 +446,7 @@ void KRandRSystemTray::slotCycleDisplays()
 		if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
 			continue;
 		}
-		
+
 		output_name = output_info->name;
 		output_id = randr_screen_info->outputs[i]->id;
 		current_on_index = i;
@@ -462,7 +465,7 @@ void KRandRSystemTray::slotCycleDisplays()
 		if (randr_screen_info->outputs[i]->cur_crtc) {
 			continue;
 		}
-		
+
 		output_name = output_info->name;
 		output_id = randr_screen_info->outputs[i]->id;
 		if (i > max_index) {
@@ -480,7 +483,7 @@ void KRandRSystemTray::slotCycleDisplays()
 		if (randr_screen_info->outputs[i]->cur_crtc) {
 			continue;
 		}
-		
+
 		output_name = output_info->name;
 		output_id = randr_screen_info->outputs[i]->id;
 		if (i > max_index) {
@@ -539,10 +542,10 @@ void KRandRSystemTray::slotCycleDisplays()
 				if (RR_Disconnected != randr_screen_info->outputs[i]->info->connection) {
 					continue;
 				}
-				
+
 				output_name = output_info->name;
 				output_id = randr_screen_info->outputs[i]->id;
-		
+
 				// Deactivate this display to avoid a crash!
 				randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
 				randr_screen_info->cur_output = randr_screen_info->outputs[i];
@@ -558,8 +561,11 @@ void KRandRSystemTray::slotCycleDisplays()
 			// HACK
 			// This is needed because Qt does not properly generate screen
 			// resize events when switching screens, so KDE gets stuck in the old resolution
-			currentScreen()->proposeSize(GetHackResolutionParameter());
-			currentScreen()->applyProposed();
+			// This only seems to happen with more than one screen, so check for that condition...
+			if (kapp->desktop()->numScreens() > 1) {
+				currentScreen()->proposeSize(GetHackResolutionParameter());
+				currentScreen()->applyProposed();
+			}
 
 			currentScreen()->proposeSize(GetDefaultResolutionParameter());
 			currentScreen()->applyProposed();
@@ -590,7 +596,7 @@ void KRandRSystemTray::findPrimaryDisplay()
 		if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
 			continue;
 		}
-		
+
 		output_name = output_info->name;
 		output_id = randr_screen_info->outputs[i]->id;
 		//printf("ACTIVE CHECK: Found output %s\n\r", output_name);
@@ -611,7 +617,7 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 
 	if (isValid() == true) {
 		menu->insertTitle(SmallIcon("kcmkwm"), i18n("Output Port"));
-	
+
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			output_info = randr_screen_info->outputs[i]->info;
 			// Look for ON outputs
@@ -621,19 +627,19 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 			if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
 				continue;
 			}
-			
+
 			output_name = output_info->name;
 			output_id = randr_screen_info->outputs[i]->id;
 			//printf("ON: Found output %s\n\r", output_name);
-	
+
 			lastIndex = menu->insertItem(i18n("%1 (Active)").arg(output_name));
 			menu->setItemChecked(lastIndex, true);
 			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
 			menu->setItemParameter(lastIndex, i);
-	
+
 			connected_displays++;
 		}
-	
+
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			output_info = randr_screen_info->outputs[i]->info;
 			// Look for CONNECTED outputs....
@@ -644,19 +650,19 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 			if (randr_screen_info->outputs[i]->cur_crtc) {
 				continue;
 			}
-			
+
 			output_name = output_info->name;
 			output_id = randr_screen_info->outputs[i]->id;
 			//printf("CONNECTED, NOT ON: Found output %s\n\r", output_name);
-	
+
 			lastIndex = menu->insertItem(i18n("%1 (Connected, Inactive)").arg(output_name));
 			menu->setItemChecked(lastIndex, false);
 			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
 			menu->setItemParameter(lastIndex, i);
-	
+
 			connected_displays++;
 		}
-	
+
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			output_info = randr_screen_info->outputs[i]->info;
 			// Look for ALL outputs that are not connected....
@@ -667,18 +673,18 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 			if (randr_screen_info->outputs[i]->cur_crtc) {
 				continue;
 			}
-			
+
 			output_name = output_info->name;
 			output_id = randr_screen_info->outputs[i]->id;
 			//printf("DISCONNECTED, NOT ON: Found output %s\n\r", output_name);
-	
+
 			lastIndex = menu->insertItem(i18n("%1 (Disconnected, Inactive)").arg(output_name));
 			menu->setItemChecked(lastIndex, false);
 			menu->setItemEnabled(lastIndex, false);
 			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
 			menu->setItemParameter(lastIndex, i);
 		}
-	
+
 		lastIndex = menu->insertItem(SmallIcon("forward"), i18n("Next available output"));
 		if (connected_displays < 2) {
 			menu->setItemEnabled(lastIndex, false);
@@ -703,7 +709,7 @@ void KRandRSystemTray::slotOutputChanged(int parameter)
 		if (!randr_screen_info->outputs[i]->cur_crtc) {
 			continue;
 		}
-		
+
 		num_outputs_on++;
 	}
 
@@ -738,8 +744,11 @@ void KRandRSystemTray::slotOutputChanged(int parameter)
 			// HACK
 			// This is needed because Qt does not properly generate screen
 			// resize events when switching screens, so KDE gets stuck in the old resolution
-			currentScreen()->proposeSize(GetHackResolutionParameter());
-			currentScreen()->applyProposed();
+			// This only seems to happen with more than one screen, so check for that condition...
+			if (kapp->desktop()->numScreens() > 1) {
+				currentScreen()->proposeSize(GetHackResolutionParameter());
+				currentScreen()->applyProposed();
+			}
 
 			currentScreen()->proposeSize(GetDefaultResolutionParameter());
 			currentScreen()->applyProposed();

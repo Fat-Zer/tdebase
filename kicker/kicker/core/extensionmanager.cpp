@@ -673,7 +673,7 @@ QRect ExtensionManager::workArea(int XineramaScreen, const ExtensionContainer* e
     }
 
     QRect workArea;
-    if (XineramaScreen == XineramaAllScreens)
+    if ((XineramaScreen == XineramaAllScreens) || (kapp->desktop()->numScreens() < 2))
     {
          /* special value for all screens */
          workArea = Kicker::the()->kwinModule()->workArea(list);

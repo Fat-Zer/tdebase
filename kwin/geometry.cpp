@@ -43,7 +43,7 @@ namespace KWinInternal
  */
 void Workspace::desktopResized()
     {
-    printf("Workspace::desktopResized()\n\r");
+    //printf("Workspace::desktopResized()\n\r");
     QRect geom = KApplication::desktop()->geometry();
     NETSize desktop_geometry;
     desktop_geometry.width = geom.width();
@@ -59,7 +59,7 @@ void Workspace::desktopResized()
  */
 void Workspace::kDestopResized()
     {
-    printf("Workspace::kDesktopResized()\n\r");
+    //printf("Workspace::kDesktopResized()\n\r");
     QRect geom = KApplication::desktop()->geometry();
     NETSize desktop_geometry;
     desktop_geometry.width = geom.width();
@@ -232,38 +232,53 @@ QRect Workspace::clientArea( clientAreaOption opt, int screen, int desktop ) con
     {
     if( desktop == NETWinInfo::OnAllDesktops || desktop == 0 )
         desktop = currentDesktop();
-    QDesktopWidget *desktopwidget = KApplication::desktop();
+    QDesktopWidget *desktopwidget = kapp->desktop();
     QRect sarea = screenarea // may be NULL during KWin initialization
         ? screenarea[ desktop ][ screen ]
         : desktopwidget->screenGeometry( screen );
     QRect warea = workarea[ desktop ].isNull()
-        ? QApplication::desktop()->geometry()
+        ? kapp->desktop()->geometry()
         : workarea[ desktop ];
     switch (opt)
         {
         case MaximizeArea:
             if (options->xineramaMaximizeEnabled)
-                return sarea;
+                if (desktopwidget->numScreens() < 2)
+                    return warea;
+                else
+                    return sarea;
             else
                 return warea;
         case MaximizeFullArea:
             if (options->xineramaMaximizeEnabled)
-                return desktopwidget->screenGeometry( screen );
+                if (desktopwidget->numScreens() < 2)
+                    return desktopwidget->geometry();
+                else
+                    return desktopwidget->screenGeometry( screen );
             else
                 return desktopwidget->geometry();
         case FullScreenArea:
             if (options->xineramaFullscreenEnabled)
-                return desktopwidget->screenGeometry( screen );
+                if (desktopwidget->numScreens() < 2)
+                    return desktopwidget->geometry();
+                else
+                    return desktopwidget->screenGeometry( screen );
             else
                 return desktopwidget->geometry();
         case PlacementArea:
             if (options->xineramaPlacementEnabled)
-                return sarea;
+                if (desktopwidget->numScreens() < 2)
+                    return warea;
+                else
+                    return sarea;
             else
                 return warea;
         case MovementArea:
             if (options->xineramaMovementEnabled)
-                return desktopwidget->screenGeometry( screen );
+                if (desktopwidget->numScreens() < 2)
+                    return desktopwidget->geometry();
+                else
+                    return desktopwidget->screenGeometry( screen );
             else
                 return desktopwidget->geometry();
         case WorkArea:
@@ -271,7 +286,10 @@ QRect Workspace::clientArea( clientAreaOption opt, int screen, int desktop ) con
         case FullArea:
             return desktopwidget->geometry();
         case ScreenArea:
-            return desktopwidget->screenGeometry( screen );
+            if (desktopwidget->numScreens() < 2)
+                return desktopwidget->geometry();
+            else
+                return desktopwidget->screenGeometry( screen );
         }
     assert( false );
     return QRect();
