@@ -150,7 +150,11 @@ void MenuManager::kmenuAccelActivated()
         QPoint p;
         // Popup the K-menu at the center of the screen.
         QDesktopWidget* desktop = KApplication::desktop();
-        QRect r = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+        QRect r;
+        if (desktop->numScreens() < 2)
+            r = desktop->geometry();
+        else
+            r = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
         // kMenu->rect() is not valid before showing, use sizeHint()
         p = r.center() - QRect( QPoint( 0, 0 ), m_kmenu->sizeHint()).center();
         m_kmenu->popup(p);

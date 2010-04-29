@@ -600,7 +600,11 @@ void KRootWm::slotWindowList() {
 //  kdDebug() << "KRootWm::slotWindowList" << endl;
 // Popup at the center of the screen, this is from keyboard shortcut.
   QDesktopWidget* desktop = KApplication::desktop();
-  QRect r = desktop->screenGeometry( desktop->screenNumber(QCursor::pos()));
+  QRect r;
+  if (desktop->numScreens() < 2)
+      r = desktop->geometry();
+  else
+      r = desktop->screenGeometry( desktop->screenNumber(QCursor::pos()));
   windowListMenu->init();
   disconnect( windowListMenu, SIGNAL( aboutToShow() ),
            this, SLOT( slotWindowListAboutToShow() ) ); // avoid calling init() twice
@@ -616,7 +620,11 @@ void KRootWm::slotSwitchUser() {
   if (!sessionsMenu)
     return;
   QDesktopWidget* desktop = KApplication::desktop();
-  QRect r = desktop->screenGeometry( desktop->screenNumber(QCursor::pos()));
+  QRect r;
+  if (desktop->numScreens() < 2)
+      r = desktop->geometry();
+  else
+      r = desktop->screenGeometry( desktop->screenNumber(QCursor::pos()));
   slotPopulateSessions();
   disconnect( sessionsMenu, SIGNAL( aboutToShow() ),
            this, SLOT( slotPopulateSessions() ) ); // avoid calling init() twice

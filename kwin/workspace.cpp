@@ -1568,7 +1568,7 @@ void Workspace::setActiveScreenMouse( QPoint mousepos )
 
 QRect Workspace::screenGeometry( int screen ) const
     {
-    if( !options->xineramaEnabled )
+    if (( !options->xineramaEnabled ) || (kapp->desktop()->numScreens() < 2))
         return qApp->desktop()->geometry();
     return qApp->desktop()->screenGeometry( screen );
     }
