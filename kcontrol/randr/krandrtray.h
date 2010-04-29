@@ -21,7 +21,6 @@
 
 #include <qptrlist.h>
 
-#include <qapplication.h>
 #include <ksystemtray.h>
 #include <kglobalaccel.h>
 
@@ -63,9 +62,7 @@ private:
 	void populateMenu(KPopupMenu* menu);
 	void addOutputMenu(KPopupMenu* menu);
 	int GetDefaultResolutionParameter();
-#ifndef QT_XRANDR_FIXES_01
 	int GetHackResolutionParameter();
-#endif
 	void findPrimaryDisplay();
 
 	bool m_popupUp;
