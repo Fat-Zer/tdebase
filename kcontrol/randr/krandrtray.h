@@ -50,10 +50,12 @@ protected slots:
 	void slotOrientationChanged(int parameter);
 	void slotRefreshRateChanged(int parameter);
 	void slotPrefs();
+	void slotColorConfig();
 	void slotSKeys();
 	void slotSettingsChanged(int category);
 	void slotCycleDisplays();
 	void slotOutputChanged(int parameter);
+	void slotColorProfileChanged(int parameter);
 
 protected:
 	void mousePressEvent( QMouseEvent *e );
@@ -75,6 +77,9 @@ private:
 
 	int last_known_x;
 	int last_known_y;
+
+	KPopupMenu* m_menu;
+	KSimpleConfig *t_config;
 };
 
 #endif

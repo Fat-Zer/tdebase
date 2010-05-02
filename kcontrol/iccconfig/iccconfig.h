@@ -1,7 +1,7 @@
 /**
  * iccconfig.h
  *
- * Copyright (c) 2009 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+ * Copyright (c) 2009-2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 #include <dcopobject.h>
 
-#include <kcmodule.h>
+#include <libkrandr/libkrandr.h>
 
 #include "iccconfigbase.h"
 
@@ -62,9 +62,26 @@ private:
 
   KConfig *config;
   bool _ok;
-  KPopupMenu * _popUpKardChooser;
+  Display *randr_display;
+  ScreenInfo *randr_screen_info;
+  int numberOfProfiles;
+  int numberOfScreens;
+  QStringList cfgScreenInfo;
+  QStringList cfgProfiles;
+  void updateDisplayedInformation ();
+  QString extractFileName(QString displayName, QString profileName);
+  QString *iccFileArray;
+  int findProfileIndex(QString profileName);
+  int findScreenIndex(QString screenName);
+  QString m_defaultProfile;
 
-
+private slots:
+  void selectProfile (int slotNumber);
+  void selectScreen (int slotNumber);
+  void updateArray (void);
+  void addProfile (void);
+  void renameProfile (void);
+  void deleteProfile (void);
 };
 
 #endif

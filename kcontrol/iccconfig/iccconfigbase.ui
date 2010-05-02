@@ -34,31 +34,131 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox" row="0" column="0" colspan="2">
-                        <property name="name">
-                            <cstring>enableSupport</cstring>
-                        </property>
-                        <property name="text">
-                            <string>&amp;Enable global ICC color profile support</string>
-                        </property>
-                    </widget>
-		    <widget class="KURLRequester" row="1" column="1">
+		    <widget class="QGroupBox" row="0" column="0">
 			    <property name="name">
-				    <cstring>iccFile</cstring>
+				    <cstring>groupSystemSettings</cstring>
 			    </property>
-			    <property name="filter">
-				    <string>*.icc</string>
+			    <property name="title">
+				    <string>System Settings</string>
 			    </property>
+			    <grid>
+				<property name="name">
+					    <cstring>unnamed</cstring>
+				</property>
+				<widget class="QCheckBox" row="0" column="0" colspan="2">
+					<property name="name">
+						<cstring>systemEnableSupport</cstring>
+					</property>
+					<property name="text">
+						<string>&amp;Enable global ICC color profile support</string>
+					</property>
+                    		</widget>
+				<widget class="KURLRequester" row="1" column="1" colspan="4">
+					<property name="name">
+						<cstring>systemIccFile</cstring>
+					</property>
+					<property name="filter">
+						<string>*.icc</string>
+					</property>
+				</widget>
+				<widget class="QLabel" row="1" column="0">
+					<property name="name">
+						<cstring>textLabel4_2</cstring>
+					</property>
+					<property name="text">
+						<string>ICC File</string>
+					</property>
+				</widget>
+			    </grid>
 		    </widget>
-		    <widget class="QLabel" row="1" column="0">
+		    <widget class="QGroupBox" row="1" column="0">
 			    <property name="name">
-				    <cstring>textLabel2_2</cstring>
+				    <cstring>groupUserSettings</cstring>
 			    </property>
-			    <property name="text">
-				    <string>ICC File</string>
+			    <property name="title">
+				    <string>User Settings</string>
 			    </property>
-		    </widget>
-                    <spacer row="2" column="0">
+			    <grid>
+				<property name="name">
+					<cstring>unnamed</cstring>
+				</property>
+				<widget class="QCheckBox" row="0" column="0" colspan="2">
+					<property name="name">
+						<cstring>enableSupport</cstring>
+					</property>
+					<property name="text">
+						<string>&amp;Enable user ICC color profile support</string>
+					</property>
+                    		</widget>
+				<widget class="KComboBox" row="1" column="1">
+					<property name="name">
+						<cstring>iccProfileList</cstring>
+					</property>
+				</widget>
+				<widget class="QLabel" row="1" column="0">
+					<property name="name">
+						<cstring>textLabel2_9</cstring>
+					</property>
+					<property name="text">
+						<string>Current Profile</string>
+					</property>
+				</widget>
+				<widget class="KPushButton" row="1" column="2">
+					<property name="name">
+						<cstring>addProfileButton</cstring>
+					</property>
+					<property name="text">
+						<string>Create New</string>
+					</property>
+				</widget>
+				<widget class="KPushButton" row="1" column="3">
+					<property name="name">
+						<cstring>renameProfileButton</cstring>
+					</property>
+					<property name="text">
+						<string>Rename</string>
+					</property>
+				</widget>
+				<widget class="KPushButton" row="1" column="4">
+					<property name="name">
+						<cstring>deleteProfileButton</cstring>
+					</property>
+					<property name="text">
+						<string>Delete</string>
+					</property>
+				</widget>
+				<widget class="KComboBox" row="2" column="1" colspan="4">
+					<property name="name">
+						<cstring>randrScreenList</cstring>
+					</property>
+				</widget>
+				<widget class="QLabel" row="2" column="0">
+					<property name="name">
+						<cstring>textLabel2_8</cstring>
+					</property>
+					<property name="text">
+						<string>Settings for output</string>
+					</property>
+				</widget>
+				<widget class="KURLRequester" row="3" column="1" colspan="4">
+					<property name="name">
+						<cstring>iccFile</cstring>
+					</property>
+					<property name="filter">
+						<string>*.icc</string>
+					</property>
+				</widget>
+				<widget class="QLabel" row="3" column="0">
+					<property name="name">
+						<cstring>textLabel2_2</cstring>
+					</property>
+					<property name="text">
+						<string>ICC File</string>
+					</property>
+				</widget>
+			    </grid>
+			</widget>
+                    <spacer row="4" column="0">
                         <property name="name" stdset="0">
                             <cstring>Spacer4</cstring>
                         </property>

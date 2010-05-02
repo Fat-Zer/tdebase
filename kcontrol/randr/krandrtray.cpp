@@ -78,6 +78,14 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 		last_known_x = currentScreen()->currentPixelWidth();
 		last_known_y = currentScreen()->currentPixelHeight();
 	}
+
+	t_config = new KSimpleConfig("kiccconfigrc");
+
+	QString cur_profile;
+	cur_profile = getCurrentProfile();
+	if (cur_profile != "") {
+		applyIccConfiguration(cur_profile, NULL);
+	}
 }
 
 void KRandRSystemTray::mousePressEvent(QMouseEvent* e)
@@ -179,7 +187,25 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 
 	addOutputMenu(menu);
 
+	// Find any user ICC profiles
+	menu->insertTitle(SmallIcon("kcoloredit"), i18n("Color Profile"));
+	QStringList cfgProfiles;
+	cfgProfiles = t_config->groupList();
+	for (QStringList::Iterator t(cfgProfiles.begin()); t != cfgProfiles.end(); ++t) {
+		lastIndex = menu->insertItem(*t);
+		if (t_config->readEntry("CurrentProfile") == (*t)) {
+			menu->setItemChecked(lastIndex, true);
+		}
+		menu->setItemEnabled(lastIndex, t_config->readBoolEntry("EnableICC", false));
+		menu->connectItem(lastIndex, this, SLOT(slotColorProfileChanged(int)));
+	}
+
 	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
+
+	KAction *actColors = new KAction( i18n( "Configure Color Profiles..." ),
+		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotColorConfig() ),
+		actionCollection() );
+	actColors->plug( menu );
 
 // 	KAction *actPrefs = new KAction( i18n( "Configure Display..." ),
 // 		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotPrefs() ),
@@ -194,6 +220,8 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 	menu->insertItem(SmallIcon("help"),KStdGuiItem::help().text(), m_help->menu());
 	KAction *quitAction = actionCollection()->action(KStdAction::name(KStdAction::Quit));
 	quitAction->plug(menu);
+
+	m_menu = menu;
 }
 
 void KRandRSystemTray::slotScreenActivated()
@@ -225,6 +253,12 @@ void KRandRSystemTray::configChanged()
 	}
 
 	first = false;
+
+	QString cur_profile;
+	cur_profile = getCurrentProfile();
+	if (cur_profile != "") {
+		applyIccConfiguration(cur_profile, NULL);
+	}
 }
 
 int KRandRSystemTray::GetDefaultResolutionParameter()
@@ -398,6 +432,15 @@ void KRandRSystemTray::slotPrefs()
 
 	kcm->addModule( "displayconfig" );
 	kcm->setPlainCaption( i18n( "Configure Display" ) );
+	kcm->exec();
+}
+
+void KRandRSystemTray::slotColorConfig()
+{
+	KCMultiDialog *kcm = new KCMultiDialog( KDialogBase::Plain, i18n( "Configure" ), this );
+
+	kcm->addModule( "iccconfig" );
+	kcm->setPlainCaption( i18n( "Configure Display Color Profiles" ) );
 	kcm->exec();
 }
 
@@ -691,6 +734,12 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 		}
 		menu->connectItem(lastIndex, this, SLOT(slotCycleDisplays()));
 	}
+}
+
+void KRandRSystemTray::slotColorProfileChanged(int parameter)
+{
+	t_config->writeEntry("CurrentProfile", m_menu->text(parameter));
+	applyIccConfiguration(m_menu->text(parameter), NULL);
 }
 
 void KRandRSystemTray::slotOutputChanged(int parameter)
