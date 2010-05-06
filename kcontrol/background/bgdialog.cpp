@@ -98,7 +98,6 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
    delete m_kwin;
 
    m_desk = m_multidesktop ? KWin::currentDesktop() : 1;
-   //m_desk = m_multidesktop ? (m_useViewports ? (m_desk * m_numViewports) : m_desk) : m_desk;
    m_desk = m_multidesktop ? (m_useViewports ? (((m_desk - 1) * m_numViewports) + t_eViewport) : m_desk) : m_desk;
    m_numDesks = m_multidesktop ? (m_useViewports ? (m_numDesks * m_numViewports) : m_numDesks) : m_numDesks;
    
@@ -320,7 +319,6 @@ void BGDialog::load( bool useDefaults )
       for (unsigned screen = 0; screen < m_renderer[desk].size(); ++screen)
       {
          unsigned eScreen = screen>1 ? screen-2 : 0;
-//          m_renderer[desk][screen]->load( eDesk, eScreen, (screen>0) );
          m_renderer[desk][screen]->load( eDesk, eScreen, (screen>0), useDefaults );
       }
    }

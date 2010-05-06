@@ -35,7 +35,7 @@ KIconConfig::KIconConfig(QWidget *parent, const char *name)
     : KCModule(parent, name)
 {
 
-    QGridLayout *top = new QGridLayout(this, 2, 2,
+    QGridLayout *top = new QGridLayout(this, 4, 2,
                                        KDialog::marginHint(),
                                        KDialog::spacingHint());
     top->setColStretch(0, 1);
@@ -94,6 +94,36 @@ KIconConfig::KIconConfig(QWidget *parent, const char *name)
     grid->addMultiCellWidget(mpAnimatedCheck, 2, 2, 0, 1, Qt::AlignLeft);
 
     top->activate();
+
+    KSeparator *panelsep = new KSeparator( KSeparator::HLine, this );
+    top->addMultiCellWidget ( panelsep, 3, 3, 0, 1);
+
+    QGroupBox *gboxpnl = new QGroupBox(i18n("Panel Settings"), this);
+    //top->addMultiCellWidget(gboxpnl, 4, 4, 0, 1);
+    top->addMultiCellWidget(gboxpnl, 4, 4, 0, 0);
+    QGridLayout *gpnl_lay = new QGridLayout(gboxpnl, 3, 3, KDialog::marginHint(), KDialog::spacingHint());
+    gpnl_lay->addRowSpacing(0, fontMetrics().lineSpacing());
+
+    QLabel *lbl2 = new QLabel(i18n("System tray icon size:"), gboxpnl);
+    lbl2->setFixedSize(lbl2->sizeHint());
+    gpnl_lay->addWidget(lbl2, 1, 0, Qt::AlignLeft);
+    mpSysTraySizeBox = new QComboBox(gboxpnl);
+    connect(mpSysTraySizeBox, SIGNAL(activated(int)), SLOT(changed()));
+    lbl2->setBuddy(mpSysTraySizeBox);
+    gpnl_lay->addWidget(mpSysTraySizeBox, 1, 1, Qt::AlignCenter);
+
+    QLabel *lbl3 = new QLabel(i18n("Quick launch icon size:"), gboxpnl);
+    lbl3->setFixedSize(lbl3->sizeHint());
+    gpnl_lay->addWidget(lbl3, 2, 0, Qt::AlignLeft);
+    mpQuickLaunchSizeBox = new QComboBox(gboxpnl);
+    connect(mpQuickLaunchSizeBox, SIGNAL(activated(int)), SLOT(changed()));
+    lbl3->setBuddy(mpQuickLaunchSizeBox);
+    gpnl_lay->addWidget(mpQuickLaunchSizeBox, 2, 1, Qt::AlignCenter);
+
+    mQLSizeLocked = new QCheckBox(i18n("Lock to panel size"), gboxpnl);
+    mQLSizeLocked->setFixedSize(mQLSizeLocked->sizeHint());
+    connect(mQLSizeLocked, SIGNAL(toggled(bool)), SLOT(QLSizeLockedChanged(bool)));
+    gpnl_lay->addWidget(mQLSizeLocked, 2, 2, Qt::AlignRight);
 
     init();
     read();
@@ -265,6 +295,39 @@ void KIconConfig::read()
 	    mEffects[i][j].transparant = mpConfig->readBoolEntry(*it2 + "SemiTransparent");
 	}
     }
+
+    mpSysTraySizeBox->clear();
+    mpQuickLaunchSizeBox->clear();
+    mpSysTraySizeBox->insertItem(QString().setNum(16));
+    mpQuickLaunchSizeBox->insertItem(QString().setNum(16));
+    mpSysTraySizeBox->insertItem(QString().setNum(22));
+    mpQuickLaunchSizeBox->insertItem(QString().setNum(22));
+    mpSysTraySizeBox->insertItem(QString().setNum(32));
+    mpQuickLaunchSizeBox->insertItem(QString().setNum(32));
+    mpSysTraySizeBox->insertItem(QString().setNum(48));
+    mpQuickLaunchSizeBox->insertItem(QString().setNum(48));
+    mpSysTraySizeBox->insertItem(QString().setNum(64));
+    mpQuickLaunchSizeBox->insertItem(QString().setNum(64));
+
+    // FIXME
+    // For now, disable mpQuickLaunchSizeBox as the required backend code does not exist yet
+    // This will change in the near future however
+    mpQuickLaunchSizeBox->setEnabled(false);
+    mQLSizeLocked->setEnabled(false);
+    mQLSizeLocked->setChecked(true);
+
+    // FIXME
+    // Due to issues with the system tray handling code, mpSysTraySizeBox also needs to be disabled
+    // This should be fixed ASAP
+    mpSysTraySizeBox->setEnabled(false);
+
+    mpConfig->setGroup("System Tray");
+    mSysTraySize = mpConfig->readNumEntry("systrayIconWidth", 22);
+    for (i=0;i<(mpSysTraySizeBox->count());i++) {
+        if (mpSysTraySizeBox->text(i) == QString().setNum(mSysTraySize)) {
+            mpSysTraySizeBox->setCurrentItem(i);
+        }
+    }
 }
 
 void KIconConfig::apply()
@@ -387,6 +450,9 @@ void KIconConfig::save()
 	}
     }
 
+    mpConfig->setGroup("System Tray");
+    mpConfig->writeEntry("systrayIconWidth", mpSysTraySizeBox->currentText());
+
     mpConfig->sync();
 
     emit changed(false);
@@ -405,6 +471,10 @@ void KIconConfig::save()
 void KIconConfig::defaults()
 {
     load( true );
+}
+
+void KIconConfig::QLSizeLockedChanged(bool checked) {
+    emit changed();
 }
 
 void KIconConfig::slotUsage(int index)

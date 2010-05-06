@@ -75,6 +75,7 @@ private slots:
     void slotSize(int index);
     void slotDPCheck(bool check);
     void slotAnimatedCheck(bool check);
+    void QLSizeLockedChanged(bool checked);
 
 private:
     void preview(int i);
@@ -96,6 +97,8 @@ private:
     int mUsage;
     QString mTheme, mExample;
     QStringList mGroups, mStates;
+    int mSysTraySize;
+    int mQuickLaunchSize;
 
     KIconEffect *mpEffect;
     KIconTheme *mpTheme;
@@ -107,6 +110,9 @@ private:
 
     QListBox *mpUsageList;
     QComboBox *mpSizeBox;
+    QComboBox *mpSysTraySizeBox;
+    QComboBox *mpQuickLaunchSizeBox;
+    QCheckBox *mQLSizeLocked;
     QCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck;
     QTabWidget *m_pTabWidget;
     QWidget *m_pTab1;                                    

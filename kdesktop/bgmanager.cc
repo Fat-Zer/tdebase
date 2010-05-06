@@ -243,6 +243,16 @@ void KBackgroundManager::configure()
 
     // Repaint desktop
     slotChangeDesktop(0);
+
+    // Redraw all desktops so that applications relying on exported data, e.g. kpager, continue to work properly
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+    if (m_numberOfViewports < 1) {
+        m_numberOfViewports = 1;
+    }
+    for (unsigned j=0;j<(m_pKwinmodule->numberOfDesktops() * m_numberOfViewports);j++) {
+        renderBackground(j);
+    }
 }
 
 
@@ -947,8 +957,15 @@ void KBackgroundManager::desktopResized()
     slotChangeDesktop(0);
     repaintBackground();
 
-    // Signal KWin that the usable desktop area has probably changed...
-    // Use the DCOP signal kDestopResized
+    // Redraw all desktops so that applications relying on exported data, e.g. kpager, continue to work properly
+    QSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
+    m_numberOfViewports = s.width() * s.height();
+    if (m_numberOfViewports < 1) {
+        m_numberOfViewports = 1;
+    }
+    for (unsigned j=0;j<(m_pKwinmodule->numberOfDesktops() * m_numberOfViewports);j++) {
+        renderBackground(j);
+    }
 }
 
 // DCOP exported
