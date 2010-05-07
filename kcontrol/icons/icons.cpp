@@ -76,7 +76,6 @@ KIconConfig::KIconConfig(QWidget *parent, const char *name)
     grid->setColStretch(1, 1);
     grid->setColStretch(2, 1);
 
-
     // Size
     QLabel *lbl = new QLabel(i18n("Size:"), m_pTab1);
     lbl->setFixedSize(lbl->sizeHint());
@@ -95,34 +94,6 @@ KIconConfig::KIconConfig(QWidget *parent, const char *name)
     grid->addMultiCellWidget(mpAnimatedCheck, 2, 2, 0, 1, Qt::AlignLeft);
 
     top->activate();
-
-    KSeparator *panelsep = new KSeparator( KSeparator::HLine, this );
-    top->addMultiCellWidget ( panelsep, 3, 3, 0, 1);
-
-    QGroupBox *gboxpnl = new QGroupBox(i18n("Panel Settings"), this);
-    //top->addMultiCellWidget(gboxpnl, 4, 4, 0, 1);
-    top->addMultiCellWidget(gboxpnl, 4, 4, 0, 0);
-    QGridLayout *gpnl_lay = new QGridLayout(gboxpnl, 3, 2, KDialog::marginHint(), KDialog::spacingHint());
-    gpnl_lay->addRowSpacing(0, fontMetrics().lineSpacing());
-
-    QLabel *lbl3 = new QLabel(i18n("Maximum icon size:"), gboxpnl);
-    lbl3->setFixedSize(lbl3->sizeHint());
-    gpnl_lay->addWidget(lbl3, 1, 0, Qt::AlignLeft);
-    mpQuickLaunchSizeBox = new QComboBox(gboxpnl);
-    connect(mpQuickLaunchSizeBox, SIGNAL(activated(int)), SLOT(changed()));
-    lbl3->setBuddy(mpQuickLaunchSizeBox);
-    gpnl_lay->addWidget(mpQuickLaunchSizeBox, 1, 1, Qt::AlignCenter);
-
-    QLabel *lbl2 = new QLabel(i18n("System tray icon size:"), gboxpnl);
-    lbl2->setFixedSize(lbl2->sizeHint());
-    gpnl_lay->addWidget(lbl2, 2, 0, Qt::AlignLeft);
-    mpSysTraySizeBox = new QComboBox(gboxpnl);
-    connect(mpSysTraySizeBox, SIGNAL(activated(int)), SLOT(changed()));
-    lbl2->setBuddy(mpSysTraySizeBox);
-    gpnl_lay->addWidget(mpSysTraySizeBox, 2, 1, Qt::AlignCenter);
-
-    QSpacerItem *thisSpacer = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    top->addItem(thisSpacer, 5, 0);
 
     mpSystrayConfig = new KSimpleConfig( QString::fromLatin1( "systemtray_panelappletrc" ));
     mpKickerConfig = new KSimpleConfig( QString::fromLatin1( "kickerrc" ));
@@ -169,6 +140,8 @@ void KIconConfig::init()
     mpUsageList->insertItem(i18n("Small Icons"));
     mpUsageList->insertItem(i18n("Panel"));
     mpUsageList->insertItem(i18n("All Icons"));
+    mpUsageList->insertItem(i18n("Panel Buttons"));
+    mpUsageList->insertItem(i18n("System Tray Icons"));
 
     // For reading the configuration
     mGroups += "Desktop";
@@ -299,74 +272,78 @@ void KIconConfig::read()
 	}
     }
 
-    mpSysTraySizeBox->clear();
-    mpQuickLaunchSizeBox->clear();
-    mpSysTraySizeBox->insertItem(QString().setNum(16));
-    mpQuickLaunchSizeBox->insertItem(QString().setNum(16));
-    mpSysTraySizeBox->insertItem(QString().setNum(22));
-    mpQuickLaunchSizeBox->insertItem(QString().setNum(22));
-    mpSysTraySizeBox->insertItem(QString().setNum(32));
-    mpQuickLaunchSizeBox->insertItem(QString().setNum(32));
-    mpSysTraySizeBox->insertItem(QString().setNum(48));
-    mpQuickLaunchSizeBox->insertItem(QString().setNum(48));
-    mpSysTraySizeBox->insertItem(QString().setNum(64));
-    mpQuickLaunchSizeBox->insertItem(QString().setNum(64));
-    mpSysTraySizeBox->insertItem(QString().setNum(128));
-    mpQuickLaunchSizeBox->insertItem(QString().setNum(128));
-
-    mpConfig->setGroup("System Tray");
-    mSysTraySize = mpConfig->readNumEntry("systrayIconWidth", 22);
 
     mpSystrayConfig->setGroup("System Tray");
     mSysTraySize = mpSystrayConfig->readNumEntry("systrayIconWidth", 22);
-    for (i=0;i<(mpSysTraySizeBox->count());i++) {
-        if (mpSysTraySizeBox->text(i) == QString().setNum(mSysTraySize)) {
-            mpSysTraySizeBox->setCurrentItem(i);
-        }
-    }
 
     mpKickerConfig->setGroup("General");
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
-    for (i=0;i<(mpQuickLaunchSizeBox->count());i++) {
-        if (mpQuickLaunchSizeBox->text(i) == QString().setNum(mQuickLaunchSize)) {
-            mpQuickLaunchSizeBox->setCurrentItem(i);
-        }
-    }
 
     // FIXME
     // Due to issues with the system tray handling code, mpSysTraySizeBox should be be disabled
     // This should be fixed ASAP
     // Specifically, kicker does not automatically reconfigure the system tray icon sizes on its configure() DCOP call
-    mpSysTraySizeBox->setEnabled(false);
+    //mpSysTraySizeBox->setEnabled(false);
 }
 
 void KIconConfig::apply()
 {
+    int i;
+
     mpUsageList->setCurrentItem(mUsage);
 
-    int delta = 1000, dw, index = -1, size = 0, i;
-    QValueList<int>::Iterator it;
-    mpSizeBox->clear();
-    if (mUsage < KIcon::LastGroup) {
-        for (it=mAvSizes[mUsage].begin(), i=0; it!=mAvSizes[mUsage].end(); ++it, i++)
-        {
-            mpSizeBox->insertItem(QString().setNum(*it));
-            dw = abs(mSizes[mUsage] - *it);
-            if (dw < delta)
-            {
-                delta = dw;
-                index = i;
-                size = *it;
+    if (mpUsageList->currentText() == i18n("Panel Buttons")) {
+        mpSizeBox->clear();
+        mpSizeBox->insertItem(QString().setNum(16));
+        mpSizeBox->insertItem(QString().setNum(22));
+        mpSizeBox->insertItem(QString().setNum(32));
+        mpSizeBox->insertItem(QString().setNum(48));
+        mpSizeBox->insertItem(QString().setNum(64));
+        mpSizeBox->insertItem(QString().setNum(128));
+        for (i=0;i<(mpSizeBox->count());i++) {
+            if (mpSizeBox->text(i) == QString().setNum(mQuickLaunchSize)) {
+                mpSizeBox->setCurrentItem(i);
             }
-
         }
-        if (index != -1)
-        {
-            mpSizeBox->setCurrentItem(index);
-            mSizes[mUsage] = size; // best or exact match
+    }
+    else if (mpUsageList->currentText() == i18n("System Tray Icons")) {
+        mpSizeBox->clear();
+        mpSizeBox->insertItem(QString().setNum(16));
+        mpSizeBox->insertItem(QString().setNum(22));
+        mpSizeBox->insertItem(QString().setNum(32));
+        mpSizeBox->insertItem(QString().setNum(48));
+        mpSizeBox->insertItem(QString().setNum(64));
+        mpSizeBox->insertItem(QString().setNum(128));
+        for (i=0;i<(mpSizeBox->count());i++) {
+            if (mpSizeBox->text(i) == QString().setNum(mSysTraySize)) {
+                mpSizeBox->setCurrentItem(i);
+            }
         }
-        mpDPCheck->setChecked(mbDP[mUsage]);
-        mpAnimatedCheck->setChecked(mbAnimated[mUsage]);
+    }
+    else {
+        int delta = 1000, dw, index = -1, size = 0, i;
+        QValueList<int>::Iterator it;
+        mpSizeBox->clear();
+        if (mUsage < KIcon::LastGroup) {
+            for (it=mAvSizes[mUsage].begin(), i=0; it!=mAvSizes[mUsage].end(); ++it, i++)
+            {
+                mpSizeBox->insertItem(QString().setNum(*it));
+                dw = abs(mSizes[mUsage] - *it);
+                if (dw < delta)
+                {
+                    delta = dw;
+                    index = i;
+                    size = *it;
+                }
+            }
+            if (index != -1)
+            {
+                mpSizeBox->setCurrentItem(index);
+                mSizes[mUsage] = size; // best or exact match
+            }
+            mpDPCheck->setChecked(mbDP[mUsage]);
+            mpAnimatedCheck->setChecked(mbAnimated[mUsage]);
+        }
     }
 }
 
@@ -375,20 +352,38 @@ void KIconConfig::preview(int i)
     // Apply effects ourselves because we don't want to sync
     // the configuration every preview.
 
-    int viewedGroup = (mUsage == KIcon::LastGroup) ? KIcon::FirstGroup : mUsage;
+    int viewedGroup;
+    if (mpUsageList->text(mUsage) == i18n("Panel Buttons")) {
+        viewedGroup = KIcon::FirstGroup;
+    }
+    else if (mpUsageList->text(mUsage) == i18n("System Tray Icons")) {
+        viewedGroup = KIcon::FirstGroup;
+    }
+    else {
+        viewedGroup = (mUsage == KIcon::LastGroup) ? KIcon::FirstGroup : mUsage;
+    }
 
-    QPixmap pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mSizes[viewedGroup]);
+    QPixmap pm;
+    if (mpUsageList->text(mUsage) == i18n("Panel Buttons")) {
+        pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mQuickLaunchSize);
+    }
+    else if (mpUsageList->text(mUsage) == i18n("System Tray Icons")) {
+        pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mSysTraySize);
+    }
+    else {
+        pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mSizes[viewedGroup]);
+    }
     QImage img = pm.convertToImage();
     if (mbDP[viewedGroup])
     {
-	int w = img.width() * 2;
-	img = img.smoothScale(w, w);
+        int w = img.width() * 2;
+        img = img.smoothScale(w, w);
     }
 
     Effect &effect = mEffects[viewedGroup][i];
 
     img = mpEffect->apply(img, effect.type,
-	    effect.value, effect.color, effect.color2, effect.transparant);
+        effect.value, effect.color, effect.color2, effect.transparant);
     pm.convertFromImage(img);
     mpPreview[i]->setPixmap(pm);
 }
@@ -461,9 +456,9 @@ void KIconConfig::save()
     }
 
     mpSystrayConfig->setGroup("System Tray");
-    mpSystrayConfig->writeEntry("systrayIconWidth", mpSysTraySizeBox->currentText());
+    mpSystrayConfig->writeEntry("systrayIconWidth", mSysTraySize);
     mpKickerConfig->setGroup("General");
-    mpKickerConfig->writeEntry("panelIconWidth", mpQuickLaunchSizeBox->currentText());
+    mpKickerConfig->writeEntry("panelIconWidth", mQuickLaunchSize);
 
     mpConfig->sync();
     mpSystrayConfig->sync();
@@ -497,7 +492,21 @@ void KIconConfig::QLSizeLockedChanged(bool checked) {
 void KIconConfig::slotUsage(int index)
 {
     mUsage = index;
-    if ( mUsage == KIcon::Panel || mUsage == KIcon::LastGroup )
+    if (mpUsageList->text(index) == i18n("Panel Buttons")) {
+        mpSizeBox->setEnabled(true);
+        mpDPCheck->setEnabled(false);
+        mpAnimatedCheck->setEnabled(false);
+    }
+    else if (mpUsageList->text(index) == i18n("System Tray Icons")) {
+        // FIXME
+        // Due to issues with the system tray handling code, mpSysTraySizeBox should be be disabled
+        // This should be fixed ASAP
+        // Specifically, kicker does not automatically reconfigure the system tray icon sizes on its configure() DCOP call
+        mpSizeBox->setEnabled(false);
+        mpDPCheck->setEnabled(false);
+        mpAnimatedCheck->setEnabled(false);
+    }
+    else if ( mUsage == KIcon::Panel || mUsage == KIcon::LastGroup )
     {
         mpSizeBox->setEnabled(false);
         mpDPCheck->setEnabled(false);
@@ -517,6 +526,13 @@ void KIconConfig::slotUsage(int index)
 void KIconConfig::EffectSetup(int state)
 {
     int viewedGroup = (mUsage == KIcon::LastGroup) ? KIcon::FirstGroup : mUsage;
+
+    if (mpUsageList->currentText() == i18n("Panel Buttons")) {
+        return;
+    }
+    if (mpUsageList->currentText() == i18n("System Tray Icons")) {
+        return;
+    }
 
     QPixmap pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mSizes[viewedGroup]);
     QImage img = pm.convertToImage();
@@ -562,11 +578,23 @@ void KIconConfig::EffectSetup(int state)
 
 void KIconConfig::slotSize(int index)
 {
-    Q_ASSERT(mUsage < KIcon::LastGroup);
-    mSizes[mUsage] = mAvSizes[mUsage][index];
-    preview();
-    emit changed(true);
-    mbChanged[mUsage] = true;
+    if (mpUsageList->currentText() == i18n("Panel Buttons")) {
+        mQuickLaunchSize = mpSizeBox->currentText().toInt();
+        preview();
+        emit changed(true);
+    }
+    else if (mpUsageList->currentText() == i18n("System Tray Icons")) {
+        mSysTraySize = mpSizeBox->currentText().toInt();
+        preview();
+        emit changed(true);
+    }
+    else {
+        Q_ASSERT(mUsage < KIcon::LastGroup);
+        mSizes[mUsage] = mAvSizes[mUsage][index];
+        preview();
+        emit changed(true);
+        mbChanged[mUsage] = true;
+    }
 }
 
 void KIconConfig::slotDPCheck(bool check)

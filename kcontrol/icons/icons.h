@@ -112,11 +112,9 @@ private:
 
     QListBox *mpUsageList;
     QComboBox *mpSizeBox;
-    QComboBox *mpSysTraySizeBox;
-    QComboBox *mpQuickLaunchSizeBox;
     QCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck;
     QTabWidget *m_pTabWidget;
-    QWidget *m_pTab1;                                    
+    QWidget *m_pTab1;
 };
 
 class KIconEffectSetupDialog: public KDialogBase
