@@ -188,9 +188,11 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 	addOutputMenu(menu);
 
 	// Find any user ICC profiles
-	menu->insertTitle(SmallIcon("kcoloredit"), i18n("Color Profile"));
 	QStringList cfgProfiles;
 	cfgProfiles = t_config->groupList();
+	if (cfgProfiles.isEmpty() == false) {
+		menu->insertTitle(SmallIcon("kcoloredit"), i18n("Color Profile"));
+	}
 	for (QStringList::Iterator t(cfgProfiles.begin()); t != cfgProfiles.end(); ++t) {
 		lastIndex = menu->insertItem(*t);
 		if (t_config->readEntry("CurrentProfile") == (*t)) {
