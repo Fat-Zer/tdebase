@@ -33,6 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kio/netaccess.h>
 #include <kstandarddirs.h>
 #include <kservice.h>
+#include <ksimpleconfig.h>
 
 #include "global.h"
 #include "kickerSettings.h"
@@ -157,7 +158,14 @@ int sizeValue(KPanelExtension::Size s)
 
 int maxButtonDim()
 {
-    return (2 * KickerSettings::iconMargin()) + KIcon::SizeLarge;
+    int maxDim;
+    //return (2 * KickerSettings::iconMargin()) + KIcon::SizeLarge;
+
+    KSimpleConfig *kickerconfig = new KSimpleConfig( QString::fromLatin1( "kickerrc" ));
+    kickerconfig->setGroup("General");
+    maxDim = (2 * KickerSettings::iconMargin()) + kickerconfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);;
+    delete kickerconfig;
+    return maxDim;
 }
 
 QString newDesktopFile(const KURL& url)

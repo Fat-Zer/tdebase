@@ -26,6 +26,7 @@
 #include <kipc.h>
 #include <klocale.h>
 #include <kseparator.h>
+#include <dcopclient.h>
 
 #include "icons.h"
 
@@ -101,29 +102,30 @@ KIconConfig::KIconConfig(QWidget *parent, const char *name)
     QGroupBox *gboxpnl = new QGroupBox(i18n("Panel Settings"), this);
     //top->addMultiCellWidget(gboxpnl, 4, 4, 0, 1);
     top->addMultiCellWidget(gboxpnl, 4, 4, 0, 0);
-    QGridLayout *gpnl_lay = new QGridLayout(gboxpnl, 3, 3, KDialog::marginHint(), KDialog::spacingHint());
+    QGridLayout *gpnl_lay = new QGridLayout(gboxpnl, 3, 2, KDialog::marginHint(), KDialog::spacingHint());
     gpnl_lay->addRowSpacing(0, fontMetrics().lineSpacing());
 
-    QLabel *lbl2 = new QLabel(i18n("System tray icon size:"), gboxpnl);
-    lbl2->setFixedSize(lbl2->sizeHint());
-    gpnl_lay->addWidget(lbl2, 1, 0, Qt::AlignLeft);
-    mpSysTraySizeBox = new QComboBox(gboxpnl);
-    connect(mpSysTraySizeBox, SIGNAL(activated(int)), SLOT(changed()));
-    lbl2->setBuddy(mpSysTraySizeBox);
-    gpnl_lay->addWidget(mpSysTraySizeBox, 1, 1, Qt::AlignCenter);
-
-    QLabel *lbl3 = new QLabel(i18n("Quick launch icon size:"), gboxpnl);
+    QLabel *lbl3 = new QLabel(i18n("Maximum icon size:"), gboxpnl);
     lbl3->setFixedSize(lbl3->sizeHint());
-    gpnl_lay->addWidget(lbl3, 2, 0, Qt::AlignLeft);
+    gpnl_lay->addWidget(lbl3, 1, 0, Qt::AlignLeft);
     mpQuickLaunchSizeBox = new QComboBox(gboxpnl);
     connect(mpQuickLaunchSizeBox, SIGNAL(activated(int)), SLOT(changed()));
     lbl3->setBuddy(mpQuickLaunchSizeBox);
-    gpnl_lay->addWidget(mpQuickLaunchSizeBox, 2, 1, Qt::AlignCenter);
+    gpnl_lay->addWidget(mpQuickLaunchSizeBox, 1, 1, Qt::AlignCenter);
 
-    mQLSizeLocked = new QCheckBox(i18n("Lock to panel size"), gboxpnl);
-    mQLSizeLocked->setFixedSize(mQLSizeLocked->sizeHint());
-    connect(mQLSizeLocked, SIGNAL(toggled(bool)), SLOT(QLSizeLockedChanged(bool)));
-    gpnl_lay->addWidget(mQLSizeLocked, 2, 2, Qt::AlignRight);
+    QLabel *lbl2 = new QLabel(i18n("System tray icon size:"), gboxpnl);
+    lbl2->setFixedSize(lbl2->sizeHint());
+    gpnl_lay->addWidget(lbl2, 2, 0, Qt::AlignLeft);
+    mpSysTraySizeBox = new QComboBox(gboxpnl);
+    connect(mpSysTraySizeBox, SIGNAL(activated(int)), SLOT(changed()));
+    lbl2->setBuddy(mpSysTraySizeBox);
+    gpnl_lay->addWidget(mpSysTraySizeBox, 2, 1, Qt::AlignCenter);
+
+    QSpacerItem *thisSpacer = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    top->addItem(thisSpacer, 5, 0);
+
+    mpSystrayConfig = new KSimpleConfig( QString::fromLatin1( "systemtray_panelappletrc" ));
+    mpKickerConfig = new KSimpleConfig( QString::fromLatin1( "kickerrc" ));
 
     init();
     read();
@@ -133,6 +135,7 @@ KIconConfig::KIconConfig(QWidget *parent, const char *name)
 
 KIconConfig::~KIconConfig()
 {
+  delete mpSystrayConfig;
   delete mpEffect;
 }
 
@@ -308,26 +311,33 @@ void KIconConfig::read()
     mpQuickLaunchSizeBox->insertItem(QString().setNum(48));
     mpSysTraySizeBox->insertItem(QString().setNum(64));
     mpQuickLaunchSizeBox->insertItem(QString().setNum(64));
-
-    // FIXME
-    // For now, disable mpQuickLaunchSizeBox as the required backend code does not exist yet
-    // This will change in the near future however
-    mpQuickLaunchSizeBox->setEnabled(false);
-    mQLSizeLocked->setEnabled(false);
-    mQLSizeLocked->setChecked(true);
-
-    // FIXME
-    // Due to issues with the system tray handling code, mpSysTraySizeBox also needs to be disabled
-    // This should be fixed ASAP
-    mpSysTraySizeBox->setEnabled(false);
+    mpSysTraySizeBox->insertItem(QString().setNum(128));
+    mpQuickLaunchSizeBox->insertItem(QString().setNum(128));
 
     mpConfig->setGroup("System Tray");
     mSysTraySize = mpConfig->readNumEntry("systrayIconWidth", 22);
+
+    mpSystrayConfig->setGroup("System Tray");
+    mSysTraySize = mpSystrayConfig->readNumEntry("systrayIconWidth", 22);
     for (i=0;i<(mpSysTraySizeBox->count());i++) {
         if (mpSysTraySizeBox->text(i) == QString().setNum(mSysTraySize)) {
             mpSysTraySizeBox->setCurrentItem(i);
         }
     }
+
+    mpKickerConfig->setGroup("General");
+    mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
+    for (i=0;i<(mpQuickLaunchSizeBox->count());i++) {
+        if (mpQuickLaunchSizeBox->text(i) == QString().setNum(mQuickLaunchSize)) {
+            mpQuickLaunchSizeBox->setCurrentItem(i);
+        }
+    }
+
+    // FIXME
+    // Due to issues with the system tray handling code, mpSysTraySizeBox should be be disabled
+    // This should be fixed ASAP
+    // Specifically, kicker does not automatically reconfigure the system tray icon sizes on its configure() DCOP call
+    mpSysTraySizeBox->setEnabled(false);
 }
 
 void KIconConfig::apply()
@@ -450,10 +460,14 @@ void KIconConfig::save()
 	}
     }
 
-    mpConfig->setGroup("System Tray");
-    mpConfig->writeEntry("systrayIconWidth", mpSysTraySizeBox->currentText());
+    mpSystrayConfig->setGroup("System Tray");
+    mpSystrayConfig->writeEntry("systrayIconWidth", mpSysTraySizeBox->currentText());
+    mpKickerConfig->setGroup("General");
+    mpKickerConfig->writeEntry("panelIconWidth", mpQuickLaunchSizeBox->currentText());
 
     mpConfig->sync();
+    mpSystrayConfig->sync();
+    mpKickerConfig->sync();
 
     emit changed(false);
 
@@ -466,6 +480,9 @@ void KIconConfig::save()
 	    mbChanged[i] = false;
 	}
     }
+
+    // Signal kicker to reload icon configuration
+    kapp->dcopClient()->send("kicker", "kicker", "configure()", QByteArray());
 }
 
 void KIconConfig::defaults()

@@ -109,9 +109,10 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 
     KAboutData aboutData( appname.data(), I18N_NOOP("KDE Panel"),
                           version, description, KAboutData::License_BSD,
-                          I18N_NOOP("(c) 1999-2004, The KDE Team") );
+                          I18N_NOOP("(c) 1999-2010, The KDE Team") );
 
-    aboutData.addAuthor("Aaron J. Seigo", I18N_NOOP("Current maintainer"), "aseigo@kde.org");
+    aboutData.addAuthor("Timothy Pearson", I18N_NOOP("Current maintainer"), "kb9vqf@pearsoncomputing.net");
+    aboutData.addAuthor("Aaron J. Seigo",0, "aseigo@kde.org");
     aboutData.addAuthor("Matthias Elter",0, "elter@kde.org");
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
     aboutData.addAuthor("Wilco Greven",0, "greven@kde.org");

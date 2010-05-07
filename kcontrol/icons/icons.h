@@ -104,6 +104,8 @@ private:
     KIconTheme *mpTheme;
     KIconLoader *mpLoader;
     KConfig *mpConfig;
+    KSimpleConfig *mpSystrayConfig;
+    KSimpleConfig *mpKickerConfig;
 
     typedef QLabel *QLabelPtr;
     QLabelPtr mpPreview[3];
@@ -112,7 +114,6 @@ private:
     QComboBox *mpSizeBox;
     QComboBox *mpSysTraySizeBox;
     QComboBox *mpQuickLaunchSizeBox;
-    QCheckBox *mQLSizeLocked;
     QCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck;
     QTabWidget *m_pTabWidget;
     QWidget *m_pTab1;                                    
