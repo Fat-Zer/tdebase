@@ -196,7 +196,9 @@ KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
     connect( poll, SIGNAL( clipboardChanged( bool ) ),
              this, SLOT( newClipData( bool ) ) );
 
-    m_pixmap = KSystemTray::loadIcon( "klipper" );
+    m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
+    m_iconOrigWidth = width();
+    m_iconOrigHeight = height();
     adjustSize();
 
     globalKeys = new KGlobalAccel(this);
@@ -290,11 +292,19 @@ void KlipperWidget::mousePressEvent(QMouseEvent *e)
 void KlipperWidget::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
-    int x = (width() - m_pixmap.width()) / 2;
-    int y = (height() - m_pixmap.height()) / 2;
+    // Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
+    if ((m_iconOrigWidth != width()) || (m_iconOrigHeight != height())) {
+        QImage newIcon;
+        m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
+        newIcon = m_pixmap;
+        newIcon = newIcon.smoothScale(width(), height());
+        m_scaledpixmap = newIcon;
+    }
+    int x = (width() - m_scaledpixmap.width()) / 2;
+    int y = (height() - m_scaledpixmap.height()) / 2;
     if ( x < 0 ) x = 0;
     if ( y < 0 ) y = 0;
-    p.drawPixmap(x , y, m_pixmap);
+    p.drawPixmap(x, y, m_scaledpixmap);
     p.end();
 }
 

@@ -115,6 +115,7 @@ private:
     QCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck;
     QTabWidget *m_pTabWidget;
     QWidget *m_pTab1;
+    QPushButton *mPreviewButton1, *mPreviewButton2, *mPreviewButton3;
 };
 
 class KIconEffectSetupDialog: public KDialogBase
@@ -152,6 +153,6 @@ private:
     QImage mExample;
     QGroupBox *mpEffectGroup;
     QLabel *mpPreview, *mpEffectLabel, *mpEffectColor, *mpEffectColor2;
-};                      
-                      
+};
+
 #endif

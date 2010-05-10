@@ -173,6 +173,9 @@ private:
     KAction* configureAction;
     KAction* quitAction;
     QPixmap m_pixmap;
+    QPixmap m_scaledpixmap;
+    int m_iconOrigWidth;
+    int m_iconOrigHeight;
     bool bPopupAtMouse :1;
     bool bKeepContents :1;
     bool bURLGrabber   :1;

@@ -5,6 +5,7 @@ Copyright (c) 2000-2001 Matthias Ettrich <ettrich@kde.org>
               2001      Carsten Pfeiffer <pfeiffer@kde.org>
               2001      Martijn Klingens <mklingens@yahoo.com>
               2004      Aaron J. Seigo   <aseigo@kde.org>
+              2010      Timothy Pearson  <kb9vqf@pearsoncomputing.net>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -79,6 +80,7 @@ SystemTrayApplet::SystemTrayApplet(const QString& configFile, Type type, int act
     m_iconSize(24),
     m_layout(0)
 {
+    DCOPObject::setObjId("SystemTrayApplet");
     loadSettings();
 
     setBackgroundOrigin(AncestorOrigin);
@@ -399,6 +401,24 @@ void SystemTrayApplet::orientationChange( Orientation /*orientation*/ )
     refreshExpandButton();
 }
 
+void SystemTrayApplet::iconSizeChanged() {
+	loadSettings();
+	updateVisibleWins();
+	layoutTray();
+
+	TrayEmbedList::iterator emb = m_shownWins.begin();
+	while (emb != m_shownWins.end()) {
+		(*emb)->setFixedSize(m_iconSize, m_iconSize);
+		++emb;
+	}
+	
+	emb = m_hiddenWins.begin();
+	while (emb != m_hiddenWins.end()) {
+		(*emb)->setFixedSize(m_iconSize, m_iconSize);
+		++emb;
+	}
+}
+
 void SystemTrayApplet::loadSettings()
 {
     // set our defaults
@@ -406,6 +426,7 @@ void SystemTrayApplet::loadSettings()
     m_showFrame = false;
 
     KConfig *conf = config();
+    conf->reparseConfiguration();
     conf->setGroup("General");
 
     if (conf->readBoolEntry("ShowPanelFrame", false))
@@ -517,7 +538,6 @@ void SystemTrayApplet::updateVisibleWins()
     {
         for (; emb != lastEmb; ++emb)
         {
-            //(*emb)->hide();
             (*emb)->setBackground();
             (*emb)->show();
         }
@@ -841,7 +861,7 @@ void SystemTrayApplet::layoutTray()
         // to avoid nbrOfLines=0 we ensure heightWidth >= iconWidth!
         heightWidth = heightWidth < iconWidth ? iconWidth : heightWidth;
         nbrOfLines = heightWidth / iconWidth;
-        
+
         if (showExpandButton)
         {
             m_layout->addMultiCellWidget(m_expandButton,
@@ -858,9 +878,8 @@ void SystemTrayApplet::layoutTray()
                  emb != lastEmb; ++emb)
             {
                 line = i % nbrOfLines;
-                //(*emb)->hide();
                 (*emb)->show();
-                m_layout->addWidget(*emb, col, line,
+                m_layout->addWidget((*emb), col, line,
                                     Qt::AlignHCenter | Qt::AlignVCenter);
 
                 if ((line + 1) == nbrOfLines)
@@ -877,9 +896,8 @@ void SystemTrayApplet::layoutTray()
              emb != lastEmb; ++emb)
         {
             line = i % nbrOfLines;
-            //(*emb)->hide();
             (*emb)->show();
-            m_layout->addWidget(*emb, col, line,
+            m_layout->addWidget((*emb), col, line,
                                 Qt::AlignHCenter | Qt::AlignVCenter);
 
             if ((line + 1) == nbrOfLines)
@@ -912,9 +930,8 @@ void SystemTrayApplet::layoutTray()
             for (TrayEmbedList::const_iterator emb = m_hiddenWins.begin(); emb != lastEmb; ++emb)
             {
                 line = i % nbrOfLines;
-                //(*emb)->hide();
                 (*emb)->show();
-                m_layout->addWidget(*emb, line, col,
+                m_layout->addWidget((*emb), line, col,
                                     Qt::AlignHCenter | Qt::AlignVCenter);
 
                 if ((line + 1) == nbrOfLines)
@@ -931,9 +948,8 @@ void SystemTrayApplet::layoutTray()
              emb != lastEmb; ++emb)
         {
             line = i % nbrOfLines;
-            //(*emb)->hide();
             (*emb)->show();
-            m_layout->addWidget(*emb, line, col,
+            m_layout->addWidget((*emb), line, col,
                                 Qt::AlignHCenter | Qt::AlignVCenter);
 
             if ((line + 1) == nbrOfLines)
@@ -973,6 +989,8 @@ TrayEmbed::TrayEmbed( bool kdeTray, QWidget* parent )
     : QXEmbed( parent ), kde_tray( kdeTray )
 {
     hide();
+    m_scaledWidget = new QWidget(parent);
+    m_scaledWidget->hide();
 }
 
 void TrayEmbed::getIconSize(int defaultIconSize)

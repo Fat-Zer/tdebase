@@ -59,6 +59,7 @@ protected slots:
 
 protected:
 	void mousePressEvent( QMouseEvent *e );
+	void resizeEvent ( QResizeEvent * );
 
 private:
 	void populateMenu(KPopupMenu* menu);

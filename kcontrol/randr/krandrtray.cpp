@@ -51,7 +51,7 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 	, m_popupUp(false)
 	, m_help(new KHelpMenu(this, KGlobal::instance()->aboutData(), false, actionCollection()))
 {
-	setPixmap(KSystemTray::loadIcon("randr"));
+	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	connect(this, SIGNAL(quitSelected()), kapp, SLOT(quit()));
 	QToolTip::add(this, i18n("Screen resize & rotate"));
@@ -86,6 +86,19 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 	if (cur_profile != "") {
 		applyIccConfiguration(cur_profile, NULL);
 	}
+}
+
+void KRandRSystemTray::resizeEvent ( QResizeEvent * )
+{
+	// Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
+	QPixmap origpixmap;
+	QPixmap scaledpixmap;
+	QImage newIcon;
+	origpixmap = KSystemTray::loadSizedIcon( "randr", width() );
+	newIcon = origpixmap;
+	newIcon = newIcon.smoothScale(width(), height());
+	scaledpixmap = newIcon;
+	setPixmap(scaledpixmap);
 }
 
 void KRandRSystemTray::mousePressEvent(QMouseEvent* e)

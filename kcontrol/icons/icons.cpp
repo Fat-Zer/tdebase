@@ -62,12 +62,12 @@ KIconConfig::KIconConfig(QWidget *parent, const char *name)
 
     QPushButton *push;
 
-    push = addPreviewIcon(0, i18n("Default"), this, g_lay);
-    connect(push, SIGNAL(clicked()), SLOT(slotEffectSetup0()));
-    push = addPreviewIcon(1, i18n("Active"), this, g_lay);
-    connect(push, SIGNAL(clicked()), SLOT(slotEffectSetup1()));
-    push = addPreviewIcon(2, i18n("Disabled"), this, g_lay);
-    connect(push, SIGNAL(clicked()), SLOT(slotEffectSetup2()));
+    mPreviewButton1 = addPreviewIcon(0, i18n("Default"), this, g_lay);
+    connect(mPreviewButton1, SIGNAL(clicked()), SLOT(slotEffectSetup0()));
+    mPreviewButton2 = addPreviewIcon(1, i18n("Active"), this, g_lay);
+    connect(mPreviewButton2, SIGNAL(clicked()), SLOT(slotEffectSetup1()));
+    mPreviewButton3 = addPreviewIcon(2, i18n("Disabled"), this, g_lay);
+    connect(mPreviewButton3, SIGNAL(clicked()), SLOT(slotEffectSetup2()));
 
     m_pTab1 = new QWidget(this, "General Tab");
     top->addWidget(m_pTab1, 0, 1);
@@ -278,12 +278,6 @@ void KIconConfig::read()
 
     mpKickerConfig->setGroup("General");
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
-
-    // FIXME
-    // Due to issues with the system tray handling code, mpSysTraySizeBox should be be disabled
-    // This should be fixed ASAP
-    // Specifically, kicker does not automatically reconfigure the system tray icon sizes on its configure() DCOP call
-    //mpSysTraySizeBox->setEnabled(false);
 }
 
 void KIconConfig::apply()
@@ -455,6 +449,11 @@ void KIconConfig::save()
 	}
     }
 
+    // Reload kicker/systray configuration files; we have no way of knowing if any other parameters changed
+    // from initial read to this write request
+    mpSystrayConfig->reparseConfiguration();
+    mpKickerConfig->reparseConfiguration();
+
     mpSystrayConfig->setGroup("System Tray");
     mpSystrayConfig->writeEntry("systrayIconWidth", mSysTraySize);
     mpKickerConfig->setGroup("General");
@@ -478,6 +477,9 @@ void KIconConfig::save()
 
     // Signal kicker to reload icon configuration
     kapp->dcopClient()->send("kicker", "kicker", "configure()", QByteArray());
+
+    // Signal system tray to reload icon configuration
+    kapp->dcopClient()->send("kicker", "SystemTrayApplet", "iconSizeChanged()", QByteArray());
 }
 
 void KIconConfig::defaults()
@@ -496,27 +498,35 @@ void KIconConfig::slotUsage(int index)
         mpSizeBox->setEnabled(true);
         mpDPCheck->setEnabled(false);
         mpAnimatedCheck->setEnabled(false);
+        mPreviewButton1->setEnabled(false);
+        mPreviewButton2->setEnabled(false);
+        mPreviewButton3->setEnabled(false);
     }
     else if (mpUsageList->text(index) == i18n("System Tray Icons")) {
-        // FIXME
-        // Due to issues with the system tray handling code, mpSysTraySizeBox should be be disabled
-        // This should be fixed ASAP
-        // Specifically, kicker does not automatically reconfigure the system tray icon sizes on its configure() DCOP call
-        mpSizeBox->setEnabled(false);
+        mpSizeBox->setEnabled(true);
         mpDPCheck->setEnabled(false);
         mpAnimatedCheck->setEnabled(false);
+        mPreviewButton1->setEnabled(false);
+        mPreviewButton2->setEnabled(false);
+        mPreviewButton3->setEnabled(false);
     }
     else if ( mUsage == KIcon::Panel || mUsage == KIcon::LastGroup )
     {
         mpSizeBox->setEnabled(false);
         mpDPCheck->setEnabled(false);
 	mpAnimatedCheck->setEnabled( mUsage == KIcon::Panel );
+        mPreviewButton1->setEnabled(true);
+        mPreviewButton2->setEnabled(true);
+        mPreviewButton3->setEnabled(true);
     }
     else
     {
         mpSizeBox->setEnabled(true);
         mpDPCheck->setEnabled(true);
 	mpAnimatedCheck->setEnabled( mUsage == KIcon::Desktop );
+        mPreviewButton1->setEnabled(true);
+        mPreviewButton2->setEnabled(true);
+        mPreviewButton3->setEnabled(true);
     }
 
     apply();

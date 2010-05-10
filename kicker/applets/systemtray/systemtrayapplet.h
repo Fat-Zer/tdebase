@@ -63,6 +63,7 @@ public:
 
 k_dcop:
     void loadSettings();
+    void iconSizeChanged();
 
 protected:
     void resizeEvent(QResizeEvent*);
@@ -121,6 +122,7 @@ public:
     void getIconSize(int defaultIconSize);
 private:
     bool kde_tray;
+    QWidget *m_scaledWidget;
 };
 
 #endif
