@@ -60,7 +60,7 @@ fi
 # The user's personal KDE directory is usually ~/.kde3, but this setting
 # may be overridden by setting KDEHOME.
 
-export KDEHOME=$HOME/.kde3 && export PATH=/opt/kde3/bin:/opt/kde3/games:$PATH && export KDEDIRS=/opt/kde3/:/usr/ && export XDG_DATA_DIRS=/opt/kde3/share/:/usr/share/ && export XDG_CONFIG_DIRS=/opt/kde3/etc/xdg/:/etc/xdg/ && export MANPATH=/opt/kde3/share/man:$MANPATH && export DESKTOP_SESSION=kde3
+export KDEHOME=$HOME/.kde3 && export PATH=/opt/kde3/bin:/opt/kde3/games:$PATH && export KDEDIRS=$KDEDIRS:/opt/kde3/:/usr/ && export XDG_DATA_DIRS=$XDG_DATA_DIRS:/opt/kde3/share/:/usr/share/ && export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:/opt/kde3/etc/xdg/:/etc/xdg/ && export MANPATH=/opt/kde3/share/man:$MANPATH && export DESKTOP_SESSION=kde3
 test -n "$KDEHOME" && kdehome=`echo "$KDEHOME"|sed "s,^~/,$HOME/,"`
 
 # see kstartupconfig source for usage
