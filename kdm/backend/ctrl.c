@@ -169,7 +169,7 @@ openCtrl( struct display *d )
 				else if (unlink( sockdir ) && errno != ENOENT)
 					LogError( "unlink %\"s failed: %m; control socket will not be available\n",
 					          sockdir );
-				else if (!strApp( &cr->realdir, sockdir, "-XXXXXX", (char *)0))
+				else if (!StrApp( &cr->realdir, sockdir, "-XXXXXX", (char *)0))
 					;
 				else if (!mkTempDir( cr->realdir )) {
 					LogError( "mkdir %\"s failed: %m; control socket will not be available\n",

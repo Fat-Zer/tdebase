@@ -53,7 +53,7 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 {
 	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-	connect(this, SIGNAL(quitSelected()), kapp, SLOT(quit()));
+	connect(this, SIGNAL(quitSelected()), this, SLOT(_quit()));
 	QToolTip::add(this, i18n("Screen resize & rotate"));
 	my_parent = parent;
 
@@ -86,6 +86,23 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 	if (cur_profile != "") {
 		applyIccConfiguration(cur_profile, NULL);
 	}
+}
+
+/*!
+ * \b SLOT which called if krandrtray is exited by the user. In this case the user
+ * is asked through a yes/no box if "KRandRTray should start automatically on log in" and the
+ * result is written to the KDE configfile.
+ */
+void KRandRSystemTray::_quit (){
+	r_config = new KSimpleConfig("krandrtrayrc");
+
+	QString tmp1 = i18n ("Start KRandRTray automatically when you log in?");
+	int tmp2 = KMessageBox::questionYesNo ( 0, tmp1, i18n("Question"), i18n("Start Automatically"), i18n("Do Not Start"));
+	r_config->setGroup("General");
+	r_config->writeEntry ("Autostart", tmp2 == KMessageBox::Yes);
+	r_config->sync ();
+
+	exit(0);
 }
 
 void KRandRSystemTray::resizeEvent ( QResizeEvent * )

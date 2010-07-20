@@ -80,7 +80,11 @@ private:
 	int last_known_y;
 
 	KPopupMenu* m_menu;
+	KSimpleConfig *r_config;
 	KSimpleConfig *t_config;
+
+private slots:
+	void _quit();
 };
 
 #endif

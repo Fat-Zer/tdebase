@@ -25,6 +25,7 @@
 
 #include <kate/document.h>
 
+#include <qdatetime.h>
 #include <qguardedptr.h>
 #include <qptrlist.h>
 #include <qobject.h>

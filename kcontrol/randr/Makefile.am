@@ -17,6 +17,9 @@ xdg_apps_DATA = krandrtray.desktop
 krandr_data_DATA = randr.desktop
 krandr_datadir = $(kde_appsdir)/.hidden
 
+# Autostart
+autostartdir = $(prefix)/share/autostart
+autostart_DATA = krandrtray-autostart.desktop
 
 #install-data-local: uninstall.desktop
 #	$(mkinstalldirs) $(DESTDIR)$(kde_appsdir)/Settings/Desktop
