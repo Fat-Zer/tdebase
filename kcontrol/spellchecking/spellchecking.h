@@ -28,7 +28,7 @@ class KSpellCheckingConfig  : public KCModule
   Q_OBJECT
 
  public:
-  KSpellCheckingConfig(QWidget *parent, const char *name, const QStringList &);
+  KSpellCheckingConfig(TQWidget *parent, const char *name, const TQStringList &);
 
   void load();
   void save();

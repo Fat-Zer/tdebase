@@ -22,7 +22,7 @@
 #define __TOPLEVEL_H__
 
 #include <kmainwindow.h>
-#include <qlistview.h>
+#include <tqlistview.h>
 
 
 class QSplitter;
@@ -52,8 +52,8 @@ protected:
 
 protected slots:
   void activateModule(ConfigModule *);
-  void categorySelected(QListViewItem *category);
-  void newModule(const QString &name, const QString& docPath, const QString &quickhelp);
+  void categorySelected(TQListViewItem *category);
+  void newModule(const TQString &name, const TQString& docPath, const TQString &quickhelp);
   void activateIconView();
   void activateTreeView();
 
@@ -67,7 +67,7 @@ protected slots:
 
   void deleteDummyAbout();
 
-  void slotSearchChanged(const QString &);
+  void slotSearchChanged(const TQString &);
   void slotHandbookRequest();
   void slotHelpRequest();
 
@@ -77,10 +77,10 @@ protected slots:
 
 private:
 
-  QString handleAmpersand( QString ) const;
+  TQString handleAmpersand( TQString ) const;
 
-  QSplitter      *_splitter;
-  QWidgetStack   *_stack;
+  TQSplitter      *_splitter;
+  TQWidgetStack   *_stack;
   DockContainer  *_dock;
   ModuleTitle    *_title;
 

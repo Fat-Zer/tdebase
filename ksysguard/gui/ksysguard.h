@@ -24,7 +24,7 @@
 #ifndef KSG_KSYSGUARD_H
 #define KSG_KSYSGUARD_H
 
-#include <qevent.h>
+#include <tqevent.h>
 
 #include <dcopclient.h>
 #include <dcopobject.h>
@@ -52,7 +52,7 @@ class TopLevel : public KMainWindow, public KSGRD::SensorClient, public DCOPObje
   virtual void saveProperties( KConfig* );
   virtual void readProperties( KConfig* );
 
-  virtual void answerReceived( int id, const QString& );
+  virtual void answerReceived( int id, const TQString& );
 
   void beATaskManager();
   void showRequestedSheets();
@@ -62,20 +62,20 @@ class TopLevel : public KMainWindow, public KSGRD::SensorClient, public DCOPObje
     // calling ksysguard with kwin/kicker hot-key
     ASYNC showProcesses();
     ASYNC showOnCurrentDesktop();
-    ASYNC loadWorkSheet( const QString &fileName );
-    ASYNC removeWorkSheet( const QString &fileName );
-    QStringList listHosts();
-    QStringList listSensors( const QString &hostName );
-    QString readIntegerSensor( const QString &sensorLocator );
-    QStringList readListSensor( const QString &sensorLocator );
+    ASYNC loadWorkSheet( const TQString &fileName );
+    ASYNC removeWorkSheet( const TQString &fileName );
+    TQStringList listHosts();
+    TQStringList listSensors( const TQString &hostName );
+    TQString readIntegerSensor( const TQString &sensorLocator );
+    TQStringList readListSensor( const TQString &sensorLocator );
 
   public slots:
     void registerRecentURL( const KURL &url );
     void resetWorkSheets();
 
   protected:
-    virtual void customEvent( QCustomEvent* );
-    virtual void timerEvent( QTimerEvent* );
+    virtual void customEvent( TQCustomEvent* );
+    virtual void timerEvent( TQTimerEvent* );
     virtual bool queryClose();
 
   protected slots:
@@ -88,11 +88,11 @@ class TopLevel : public KMainWindow, public KSGRD::SensorClient, public DCOPObje
     void serviceAdded(DNSSD::RemoteService::Ptr srv);
 
   private:
-    void setSwapInfo( long, long, const QString& );
+    void setSwapInfo( long, long, const TQString& );
 
-    QPtrList<DCOPClientTransaction> mDCopFIFO;
+    TQPtrList<DCOPClientTransaction> mDCopFIFO;
 
-    QSplitter* mSplitter;
+    TQSplitter* mSplitter;
     KRecentFilesAction* mActionOpenRecent;
 
     SensorBrowser* mSensorBrowser;
@@ -118,7 +118,7 @@ class DCOPClientTransaction
   public:
     Q_INT32 id;
     CARD32 key;
-    QCString senderId;
+    TQCString senderId;
 };
 
 #endif

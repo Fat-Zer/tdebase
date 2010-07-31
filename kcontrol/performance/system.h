@@ -31,7 +31,7 @@ class SystemWidget
     {
     Q_OBJECT
     public:
-        SystemWidget( QWidget* parent_P = NULL );
+        SystemWidget( TQWidget* parent_P = NULL );
         void load( bool useDefaults );
         void save();
         void defaults();

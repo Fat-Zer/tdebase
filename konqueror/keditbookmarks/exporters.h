@@ -24,15 +24,15 @@
 class HTMLExporter : private KBookmarkGroupTraverser {
 public:
    HTMLExporter();
-   QString toString(const KBookmarkGroup &, bool showAddress = false);
-   void write(const KBookmarkGroup &, const QString &, bool showAddress = false);
+   TQString toString(const KBookmarkGroup &, bool showAddress = false);
+   void write(const KBookmarkGroup &, const TQString &, bool showAddress = false);
 private:
    virtual void visit(const KBookmark &);
    virtual void visitEnter(const KBookmarkGroup &);
    virtual void visitLeave(const KBookmarkGroup &);
 private:
-   QString m_string;
-   QTextStream m_out;
+   TQString m_string;
+   TQTextStream m_out;
    bool m_showAddress;
 };
 

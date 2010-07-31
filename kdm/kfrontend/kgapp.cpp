@@ -37,10 +37,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kstandarddirs.h>
 #include <ksimpleconfig.h>
 
-#include <qtimer.h>
-#include <qstring.h>
-#include <qcursor.h>
-#include <qpalette.h>
+#include <tqtimer.h>
+#include <tqstring.h>
+#include <tqcursor.h>
+#include <tqpalette.h>
 
 #include <stdlib.h> // free(), exit()
 #include <unistd.h> // alarm()
@@ -75,7 +75,7 @@ GreeterApp::GreeterApp()
 }
 
 void
-GreeterApp::timerEvent( QTimerEvent * )
+GreeterApp::timerEvent( TQTimerEvent * )
 {
 	alarm( 0 );
 	if (!PingServer( qt_xdisplay() ))
@@ -145,13 +145,13 @@ kg_main( const char *argv0 )
 		app.setStyle( _GUIStyle );
 
 	// Load up the systemwide ICC profile
-	QString iccConfigFile = QString(KDE_CONFDIR);
+	TQString iccConfigFile = TQString(KDE_CONFDIR);
 	iccConfigFile += "/kicc/kiccconfigrc";
 	KSimpleConfig iccconfig(iccConfigFile, true);
 	if (iccconfig.readBoolEntry("EnableICC", false) == true) {
-		QString iccCommand = QString("/usr/bin/xcalib ");
+		TQString iccCommand = TQString("/usr/bin/xcalib ");
 		iccCommand += iccconfig.readEntry("ICCFile");
-		iccCommand += QString(" &");
+		iccCommand += TQString(" &");
 		system(iccCommand.ascii());
 	}
 
@@ -170,7 +170,7 @@ kg_main( const char *argv0 )
 	if (!_grabServer) {
 		if (_useBackground) {
 			proc = new KProcess;
-			*proc << QCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "krootimage";
+			*proc << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "krootimage";
 			*proc << _backgroundCfg;
 			proc->start();
 		}

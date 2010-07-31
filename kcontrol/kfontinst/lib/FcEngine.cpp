@@ -1,8 +1,8 @@
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qfontmetrics.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqfontmetrics.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 #include <kurl.h>
 #include <kconfig.h>
 #include <kglobalsettings.h>
@@ -23,7 +23,7 @@
 #define KFI_PREVIEW_STRING_KEY "String"
 
 #ifdef HAVE_XFT
-#define KFI_DISPLAY(pix) (pix ? pix->x11Display() : QPaintDevice::x11AppDisplay())
+#define KFI_DISPLAY(pix) (pix ? pix->x11Display() : TQPaintDevice::x11AppDisplay())
 #endif
 
 namespace KFI
@@ -73,25 +73,25 @@ static int fcToQtWeight(int weight)
         case FC_WEIGHT_THIN:
             return 0;
         case FC_WEIGHT_ULTRALIGHT:
-            return QFont::Light>>1;
+            return TQFont::Light>>1;
         case FC_WEIGHT_LIGHT:
-            return QFont::Light;
+            return TQFont::Light;
         default:
         case FC_WEIGHT_NORMAL:
-            return QFont::Normal;
+            return TQFont::Normal;
         case FC_WEIGHT_MEDIUM:
 #ifdef KFI_HAVE_MEDIUM_WEIGHT
-            return (QFont::Normal+QFont::DemiBold)>>1;
+            return (TQFont::Normal+TQFont::DemiBold)>>1;
 #endif
-            return QFont::Normal;
+            return TQFont::Normal;
         case FC_WEIGHT_SEMIBOLD:
-            return QFont::DemiBold;
+            return TQFont::DemiBold;
         case FC_WEIGHT_BOLD:
-            return QFont::Bold;
+            return TQFont::Bold;
         case FC_WEIGHT_ULTRABOLD:
-            return (QFont::Bold+QFont::Black)>>1;
+            return (TQFont::Bold+TQFont::Black)>>1;
         case FC_WEIGHT_HEAVY:
-            return QFont::Black;
+            return TQFont::Black;
     }
 }
 
@@ -130,24 +130,24 @@ static int fcToQtWidth(int weight)
     switch(weight)
     {
         case FC_WIDTH_ULTRACONDENSED:
-            return QFont::UltraCondensed;
+            return TQFont::UltraCondensed;
         case FC_WIDTH_EXTRACONDENSED:
-            return QFont::ExtraCondensed;
+            return TQFont::ExtraCondensed;
         case FC_WIDTH_CONDENSED:
-            return QFont::Condensed;
+            return TQFont::Condensed;
         case FC_WIDTH_SEMICONDENSED:
-            return QFont::SemiCondensed;
+            return TQFont::SemiCondensed;
         default:
         case FC_WIDTH_NORMAL:
-            return QFont::Unstretched;
+            return TQFont::Unstretched;
         case FC_WIDTH_SEMIEXPANDED:
-            return QFont::SemiExpanded;
+            return TQFont::SemiExpanded;
         case FC_WIDTH_EXPANDED:
-            return QFont::Expanded;
+            return TQFont::Expanded;
         case FC_WIDTH_EXTRAEXPANDED:
-            return QFont::ExtraExpanded;
+            return TQFont::ExtraExpanded;
         case FC_WIDTH_ULTRAEXPANDED:
-            return QFont::UltraExpanded;
+            return TQFont::UltraExpanded;
     }
 }
 #endif
@@ -183,7 +183,7 @@ static int fcSpacing(int spacing)
     return FC_CHARCELL;
 }
 
-static int strToWeight(const QString &str, QString &newStr)
+static int strToWeight(const TQString &str, TQString &newStr)
 {
     if(0==str.find(i18n(KFI_WEIGHT_THIN), 0, false))
     {
@@ -261,7 +261,7 @@ static int strToWeight(const QString &str, QString &newStr)
 }
 
 #ifndef KFI_FC_NO_WIDTHS
-static int strToWidth(const QString &str, QString &newStr)
+static int strToWidth(const TQString &str, TQString &newStr)
 {
     if(0==str.find(i18n(KFI_WIDTH_ULTRACONDENSED), 0, false))
     {
@@ -314,7 +314,7 @@ static int strToWidth(const QString &str, QString &newStr)
 }
 #endif
 
-static int strToSlant(const QString &str)
+static int strToSlant(const TQString &str)
 {
     if(-1!=str.find(i18n(KFI_SLANT_ITALIC)))
         return FC_SLANT_ITALIC;
@@ -323,9 +323,9 @@ static int strToSlant(const QString &str)
     return FC_SLANT_ROMAN;
 }
 
-static void drawText(QPainter &painter, int x, int y, int width, const QString &str)
+static void drawText(TQPainter &painter, int x, int y, int width, const TQString &str)
 {
-    QString s(str);
+    TQString s(str);
     bool    addedElipses=false;
 
     width-=x*2;
@@ -366,7 +366,7 @@ inline bool equalSlant(int a, int b)
 }
 
 #ifdef HAVE_XFT
-static bool drawChar(QPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor *xftCol, const QString &text, int pos,
+static bool drawChar(TQPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor *xftCol, const TQString &text, int pos,
                      int &x, int &y, int w, int h, int fSize, int offset)
 {
     XGlyphInfo     extents;
@@ -389,7 +389,7 @@ static bool drawChar(QPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor 
     return false;
 }
 
-static bool drawString(QPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor *xftCol, const QString &text,
+static bool drawString(TQPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor *xftCol, const TQString &text,
                        int x, int &y, int h, int offset)
 {   
     XGlyphInfo     extents;
@@ -406,7 +406,7 @@ static bool drawString(QPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColo
     return false;
 }
 
-static bool drawGlyph(QPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor *xftCol, FT_UInt i,
+static bool drawGlyph(TQPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor *xftCol, FT_UInt i,
                       int &x, int &y, int &w, int &h, int fSize, int offset)
 {
     XGlyphInfo extents;
@@ -430,10 +430,10 @@ static bool drawGlyph(QPixmap &pix, XftDraw *xftDraw, XftFont *xftFont, XftColor
 
 inline int point2Pixel(int point)
 {
-    return (point*QPaintDevice::x11AppDpiX()+36)/72;
+    return (point*TQPaintDevice::x11AppDpiX()+36)/72;
 }
 
-static bool hasStr(XftFont *font, QString &str)
+static bool hasStr(XftFont *font, TQString &str)
 {
     unsigned int slen=str.length(),
                  ch;
@@ -457,7 +457,7 @@ CFcEngine::~CFcEngine()
     FcConfigAppFontClear(FcConfigGetCurrent());
 }
 
-QString CFcEngine::getName(const KURL &url, int faceNo)
+TQString CFcEngine::getName(const KURL &url, int faceNo)
 {
     if(url!=itsLastUrl || faceNo!=itsIndex)
         parseUrl(url, faceNo);
@@ -466,7 +466,7 @@ QString CFcEngine::getName(const KURL &url, int faceNo)
 }
 
 #ifdef HAVE_XFT
-bool CFcEngine::draw(const KURL &url, int w, int h, QPixmap &pix, int faceNo, bool thumb)
+bool CFcEngine::draw(const KURL &url, int w, int h, TQPixmap &pix, int faceNo, bool thumb)
 {
     bool rv=false;
 
@@ -493,7 +493,7 @@ bool CFcEngine::draw(const KURL &url, int w, int h, QPixmap &pix, int faceNo, bo
         pix.resize(w, h);
         pix.fill(Qt::white);
 
-        QPainter painter(&pix);
+        TQPainter painter(&pix);
 
         getSizes(&pix);
 
@@ -519,7 +519,7 @@ bool CFcEngine::draw(const KURL &url, int w, int h, QPixmap &pix, int faceNo, bo
 
                 if(thumb)
                 {
-                    QString text(i18n("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789"));
+                    TQString text(i18n("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789"));
 
                     //
                     // Calculate size of text...
@@ -569,7 +569,7 @@ bool CFcEngine::draw(const KURL &url, int w, int h, QPixmap &pix, int faceNo, bo
                 }
                 else
                 {
-                    QString lowercase(getLowercaseLetters()),
+                    TQString lowercase(getLowercaseLetters()),
                             uppercase(getUppercaseLetters()),
                             punctuation(getPunctuation()),
                             title(itsDescriptiveName.isEmpty()
@@ -614,7 +614,7 @@ bool CFcEngine::draw(const KURL &url, int w, int h, QPixmap &pix, int faceNo, bo
                             y+=8;
                         }
 
-                        QString previewString(getPreviewString());
+                        TQString previewString(getPreviewString());
                         bool    stop=false;
 
                         if(!drawGlyphs)
@@ -685,20 +685,20 @@ bool CFcEngine::draw(const KURL &url, int w, int h, QPixmap &pix, int faceNo, bo
 }
 #endif
 
-QString CFcEngine::getPreviewString()
+TQString CFcEngine::getPreviewString()
 {
     KConfig cfg(KFI_UI_CFG_FILE);
 
     cfg.setGroup(KFI_PREVIEW_GROUP);
 
-    QString str(cfg.readEntry(KFI_PREVIEW_STRING_KEY));
+    TQString str(cfg.readEntry(KFI_PREVIEW_STRING_KEY));
 
     return str.isEmpty() ? i18n("A sentence that uses all of the letters of the alphabet",
                                 "The quick brown fox jumps over the lazy dog")
                          : str;
 }
 
-void CFcEngine::setPreviewString(const QString &str)
+void CFcEngine::setPreviewString(const TQString &str)
 {
     KConfig cfg(KFI_UI_CFG_FILE);
 
@@ -706,36 +706,36 @@ void CFcEngine::setPreviewString(const QString &str)
     cfg.writeEntry(KFI_PREVIEW_STRING_KEY, str);
 }
 
-QString CFcEngine::getUppercaseLetters()
+TQString CFcEngine::getUppercaseLetters()
 {
     return i18n("All of the letters of the alphabet, uppercase", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 }
 
-QString CFcEngine::getLowercaseLetters()
+TQString CFcEngine::getLowercaseLetters()
 {
     return i18n("All of the letters of the alphabet, lowercase", "abcdefghijklmnopqrstuvwxyz");
 }
 
-QString CFcEngine::getPunctuation()
+TQString CFcEngine::getPunctuation()
 {
     return i18n("Numbers and characters", "0123456789.:,;(*!?'/\\\")£$€%^&-+@~#<>{}[]");
 }
 
-QString CFcEngine::getFcString(FcPattern *pat, const char *val, int faceNo)
+TQString CFcEngine::getFcString(FcPattern *pat, const char *val, int faceNo)
 {
-    QString rv;
+    TQString rv;
     FcChar8 *fcStr;
 
     if(FcResultMatch==FcPatternGetString(pat, val, faceNo, &fcStr))
-        rv=QString::fromUtf8((char *)fcStr);
+        rv=TQString::fromUtf8((char *)fcStr);
 
     return rv;
 }
 
-QString CFcEngine::createName(FcPattern *pat, int faceNo)
+TQString CFcEngine::createName(FcPattern *pat, int faceNo)
 {
 //CPD: TODO: the names *need* to match up with kfontchooser's...
-    QString name(getFcString(pat, FC_FAMILY, faceNo)),
+    TQString name(getFcString(pat, FC_FAMILY, faceNo)),
             str;
     int     intVal;
     bool    comma=false;
@@ -745,7 +745,7 @@ QString CFcEngine::createName(FcPattern *pat, int faceNo)
         str=weightStr(intVal);
         if(!str.isEmpty())
         {
-            name+=QString(", ")+str;
+            name+=TQString(", ")+str;
             comma=true;
         }
     }
@@ -757,10 +757,10 @@ QString CFcEngine::createName(FcPattern *pat, int faceNo)
         {
             if(!comma)
             {
-                name+=QChar(',');
+                name+=TQChar(',');
                 comma=true;
             }
-            name+=QChar(' ')+str;
+            name+=TQChar(' ')+str;
         }
     }
 
@@ -769,14 +769,14 @@ QString CFcEngine::createName(FcPattern *pat, int faceNo)
     {
         str=widthStr(intVal);
         if(!str.isEmpty())
-            name+=QChar(' ')+str;
+            name+=TQChar(' ')+str;
     }
 #endif
  
     return name;
 }
 
-QString CFcEngine::weightStr(int weight, bool emptyNormal)
+TQString CFcEngine::weightStr(int weight, bool emptyNormal)
 {
     switch(fcWeight(weight))
     {
@@ -787,7 +787,7 @@ QString CFcEngine::weightStr(int weight, bool emptyNormal)
         case FC_WEIGHT_LIGHT:
             return i18n(KFI_WEIGHT_LIGHT);
         case FC_WEIGHT_NORMAL:
-            return emptyNormal ? QString::null : i18n(KFI_WEIGHT_NORMAL);
+            return emptyNormal ? TQString::null : i18n(KFI_WEIGHT_NORMAL);
         case FC_WEIGHT_MEDIUM:
             return i18n(KFI_WEIGHT_MEDIUM);
         case FC_WEIGHT_DEMIBOLD:
@@ -802,7 +802,7 @@ QString CFcEngine::weightStr(int weight, bool emptyNormal)
 }
 
 #ifndef KFI_FC_NO_WIDTHS
-QString CFcEngine::widthStr(int width, bool emptyNormal)
+TQString CFcEngine::widthStr(int width, bool emptyNormal)
 {
     switch(fcWidth(width))
     {
@@ -815,7 +815,7 @@ QString CFcEngine::widthStr(int width, bool emptyNormal)
         case FC_WIDTH_SEMICONDENSED:
             return i18n(KFI_WIDTH_SEMICONDENSED);
         case FC_WIDTH_NORMAL:
-            return emptyNormal ? QString::null : i18n(KFI_WIDTH_NORMAL);
+            return emptyNormal ? TQString::null : i18n(KFI_WIDTH_NORMAL);
         case FC_WIDTH_SEMIEXPANDED:
             return i18n(KFI_WIDTH_SEMIEXPANDED);
         case FC_WIDTH_EXPANDED:
@@ -828,7 +828,7 @@ QString CFcEngine::widthStr(int width, bool emptyNormal)
 }
 #endif
 
-QString CFcEngine::slantStr(int slant, bool emptyNormal)
+TQString CFcEngine::slantStr(int slant, bool emptyNormal)
 {
     switch(fcSlant(slant))
     {
@@ -837,11 +837,11 @@ QString CFcEngine::slantStr(int slant, bool emptyNormal)
         case FC_SLANT_ITALIC:
             return i18n(KFI_SLANT_ITALIC);
         default:
-            return emptyNormal ? QString::null : i18n(KFI_SLANT_ROMAN);
+            return emptyNormal ? TQString::null : i18n(KFI_SLANT_ROMAN);
     }
 }
 
-QString CFcEngine::spacingStr(int spacing)
+TQString CFcEngine::spacingStr(int spacing)
 {
     switch(fcSpacing(spacing))
     {
@@ -854,11 +854,11 @@ QString CFcEngine::spacingStr(int spacing)
     }
 }
 
-bool CFcEngine::getInfo(const KURL &url, int faceNo, QString &full, QString &family, QString &foundry, QString &weight,
+bool CFcEngine::getInfo(const KURL &url, int faceNo, TQString &full, TQString &family, TQString &foundry, TQString &weight,
 #ifndef KFI_FC_NO_WIDTHS
-                        QString &width,
+                        TQString &width,
 #endif
-                        QString &spacing, QString &slant)
+                        TQString &spacing, TQString &slant)
 {
     if(parseUrl(url, faceNo, true))
     {
@@ -887,11 +887,11 @@ bool CFcEngine::getInfo(const KURL &url, int faceNo, QString &full, QString &fam
     return false;
 }
 
-QFont CFcEngine::getQFont(const QString &name, int size)
+TQFont CFcEngine::getQFont(const TQString &name, int size)
 {
     parseName(name, 0, false);
 
-    QFont font(itsName, size, fcToQtWeight(itsWeight), fcToQtSlant(itsSlant));
+    TQFont font(itsName, size, fcToQtWeight(itsWeight), fcToQtSlant(itsSlant));
 
 #ifndef KFI_FC_NO_WIDTHS
     font.setStretch(fcToQtWidth(itsWidth));
@@ -912,7 +912,7 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
     if(KFI_KIO_FONTS_PROTOCOL==url.protocol())
     {
         KIO::UDSEntry udsEntry;
-        QString       name;
+        TQString       name;
 
         FcInitReinitialize();
         if(KIO::NetAccess::stat(url, udsEntry, NULL))  // Need to stat the url to get its font name...
@@ -939,13 +939,13 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
     else if(url.isLocalFile())
     {
         // Now lets see if its from the thumbnail job! if so, then file will just contain the URL!
-        QFile file(url.path());
+        TQFile file(url.path());
         bool  isThumbnailUrl=false;
 
         if(file.size()<2048 && file.open(IO_ReadOnly)) // Urls should be less than 2k, and fonts usually above!
         {
-            QString     thumbUrl;
-            QTextStream stream(&file);
+            TQString     thumbUrl;
+            TQTextStream stream(&file);
 
             thumbUrl=stream.readLine();
             isThumbnailUrl=0==thumbUrl.find(KFI_KIO_FONTS_PROTOCOL) && parseUrl(KURL(thumbUrl), faceNo, all);
@@ -957,7 +957,7 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
             itsName=url.path();
 
             int       count;
-            FcPattern *pat=FcFreeTypeQuery((const FcChar8 *)(QFile::encodeName(itsName).data()), 0, NULL, &count);
+            FcPattern *pat=FcFreeTypeQuery((const FcChar8 *)(TQFile::encodeName(itsName).data()), 0, NULL, &count);
 
             itsWeight=FC_WEIGHT_NORMAL;
 #ifndef KFI_FC_NO_WIDTHS
@@ -984,7 +984,7 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
                 FcPatternDestroy(pat);
             }
             else
-                itsDescriptiveName=QString::null;
+                itsDescriptiveName=TQString::null;
 
             itsInstalled=false;
             itsIndex=faceNo;
@@ -997,7 +997,7 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
     return true;
 }
 
-void CFcEngine::parseName(const QString &name, int faceNo, bool all)
+void CFcEngine::parseName(const TQString &name, int faceNo, bool all)
 {
     int pos;
 
@@ -1014,7 +1014,7 @@ void CFcEngine::parseName(const QString &name, int faceNo, bool all)
     }
     else
     {
-        QString style(name.mid(pos+2));
+        TQString style(name.mid(pos+2));
 
         itsWeight=strToWeight(style, style);
 #ifndef KFI_FC_NO_WIDTHS
@@ -1052,7 +1052,7 @@ void CFcEngine::parseName(const QString &name, int faceNo, bool all)
 }
 
 #ifdef HAVE_XFT
-XftFont * CFcEngine::getFont(int size, QPixmap *pix)
+XftFont * CFcEngine::getFont(int size, TQPixmap *pix)
 {
     if(itsInstalled)
         return XftFontOpen(KFI_DISPLAY(pix), 0,
@@ -1067,7 +1067,7 @@ XftFont * CFcEngine::getFont(int size, QPixmap *pix)
     else
     {
         FcPattern *pattern = FcPatternBuild(NULL,
-                                            FC_FILE, FcTypeString, QFile::encodeName(itsName).data(),
+                                            FC_FILE, FcTypeString, TQFile::encodeName(itsName).data(),
                                             FC_INDEX, FcTypeInteger, itsIndex,
                                             FC_PIXEL_SIZE, FcTypeDouble, (double)size,
                                             NULL);
@@ -1075,7 +1075,7 @@ XftFont * CFcEngine::getFont(int size, QPixmap *pix)
     }
 }
 
-void CFcEngine::getSizes(QPixmap *pix)
+void CFcEngine::getSizes(TQPixmap *pix)
 {
     static const int constNumSizes=11;
     static const int constNumSizeRanges=2;
@@ -1152,7 +1152,7 @@ void CFcEngine::getSizes(QPixmap *pix)
                            FcResultMatch==FcPatternGetInteger(f->pattern, FC_WIDTH, 0, &iv) && equalWidth(iv, itsWidth) &&
 #endif
                            FcResultMatch==FcPatternGetString(f->pattern, FC_FAMILY, 0, &str) && str &&
-                           QString::fromUtf8((char *)str)==itsName)
+                           TQString::fromUtf8((char *)str)==itsName)
                         {
                             itsSizes.push_back(constSizes[l][i]);
                             gotSizes=true;

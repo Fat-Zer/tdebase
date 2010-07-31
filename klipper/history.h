@@ -21,8 +21,8 @@
 #ifndef _HISTORY_H_
 #define _HISTORY_H_
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 #include "historyitem.h"
 
 class KlipperPopup;
@@ -34,12 +34,12 @@ class History : public QObject
 {
     Q_OBJECT
 public:
-    History( QWidget* parent, const char* name );
+    History( TQWidget* parent, const char* name );
     ~History();
     /**
      * Iterator for history
      */
-    typedef QPtrListIterator<HistoryItem> iterator;
+    typedef TQPtrListIterator<HistoryItem> iterator;
 
     /**
      * Return (toplevel) popup menu (or default view, of you like)
@@ -135,7 +135,7 @@ private:
     /**
      * The history
      */
-    QPtrList<HistoryItem> itemList;
+    TQPtrList<HistoryItem> itemList;
 
     /**
      * ensure that the number of items does not exceed max_size()

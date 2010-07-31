@@ -37,18 +37,18 @@ PopupMenuGUIClient::PopupMenuGUIClient( KonqMainWindow *mainWindow,
 
     m_mainWindow = mainWindow;
 
-    m_doc = QDomDocument( "kpartgui" );
-    QDomElement root = m_doc.createElement( "kpartgui" );
+    m_doc = TQDomDocument( "kpartgui" );
+    TQDomElement root = m_doc.createElement( "kpartgui" );
     root.setAttribute( "name", "konqueror" );
     m_doc.appendChild( root );
 
-    QDomElement menu = m_doc.createElement( "Menu" );
+    TQDomElement menu = m_doc.createElement( "Menu" );
     root.appendChild( menu );
     menu.setAttribute( "name", "popupmenu" );
 
     if ( !mainWindow->menuBar()->isVisible() )
     {
-        QDomElement showMenuBarElement = m_doc.createElement( "action" );
+        TQDomElement showMenuBarElement = m_doc.createElement( "action" );
         showMenuBarElement.setAttribute( "name", "options_show_menubar" );
         menu.appendChild( showMenuBarElement );
 
@@ -57,7 +57,7 @@ PopupMenuGUIClient::PopupMenuGUIClient( KonqMainWindow *mainWindow,
 
     if ( mainWindow->fullScreenMode() )
     {
-        QDomElement stopFullScreenElement = m_doc.createElement( "action" );
+        TQDomElement stopFullScreenElement = m_doc.createElement( "action" );
         stopFullScreenElement.setAttribute( "name", "fullscreen" );
         menu.appendChild( stopFullScreenElement );
 
@@ -77,9 +77,9 @@ PopupMenuGUIClient::PopupMenuGUIClient( KonqMainWindow *mainWindow,
         else if ( embeddingServices.count() > 1 )
         {
             int idx = 0;
-            QDomElement subMenu = m_doc.createElement( "menu" );
+            TQDomElement subMenu = m_doc.createElement( "menu" );
             menu.appendChild( subMenu );
-            QDomElement text = m_doc.createElement( "text" );
+            TQDomElement text = m_doc.createElement( "text" );
             subMenu.appendChild( text );
             text.appendChild( m_doc.createTextNode( i18n( "Preview In" ) ) );
             subMenu.setAttribute( "group", "preview" );
@@ -100,22 +100,22 @@ PopupMenuGUIClient::PopupMenuGUIClient( KonqMainWindow *mainWindow,
 
     if ( doTabHandling )
     {
-        QDomElement openInSameWindow = m_doc.createElement( "action" );
+        TQDomElement openInSameWindow = m_doc.createElement( "action" );
         openInSameWindow.setAttribute( "name", "sameview" );
         openInSameWindow.setAttribute( "group", "tabhandling" );
         menu.appendChild( openInSameWindow );
         
-	QDomElement openInWindow = m_doc.createElement( "action" );
+	TQDomElement openInWindow = m_doc.createElement( "action" );
         openInWindow.setAttribute( "name", "newview" );
         openInWindow.setAttribute( "group", "tabhandling" );
         menu.appendChild( openInWindow );
 
-        QDomElement openInTabElement = m_doc.createElement( "action" );
+        TQDomElement openInTabElement = m_doc.createElement( "action" );
         openInTabElement.setAttribute( "name", "openintab" );
         openInTabElement.setAttribute( "group", "tabhandling" );
         menu.appendChild( openInTabElement );
 
-        QDomElement separatorElement = m_doc.createElement( "separator" );
+        TQDomElement separatorElement = m_doc.createElement( "separator" );
         separatorElement.setAttribute( "group", "tabhandling" );
         menu.appendChild( separatorElement );
     }
@@ -129,7 +129,7 @@ PopupMenuGUIClient::~PopupMenuGUIClient()
 {
 }
 
-KAction *PopupMenuGUIClient::action( const QDomElement &element ) const
+KAction *PopupMenuGUIClient::action( const TQDomElement &element ) const
 {
   KAction *res = KXMLGUIClient::action( element );
 
@@ -139,24 +139,24 @@ KAction *PopupMenuGUIClient::action( const QDomElement &element ) const
   return res;
 }
 
-void PopupMenuGUIClient::addEmbeddingService( QDomElement &menu, int idx, const QString &name, const KService::Ptr &service )
+void PopupMenuGUIClient::addEmbeddingService( TQDomElement &menu, int idx, const TQString &name, const KService::Ptr &service )
 {
-  QDomElement action = m_doc.createElement( "action" );
+  TQDomElement action = m_doc.createElement( "action" );
   menu.appendChild( action );
 
-  QCString actName;
+  TQCString actName;
   actName.setNum( idx );
 
-  action.setAttribute( "name", QString::number( idx ) );
+  action.setAttribute( "name", TQString::number( idx ) );
 
   action.setAttribute( "group", "preview" );
 
   (void)new KAction( name, service->pixmap( KIcon::Small ), 0,
-                     m_mainWindow, SLOT( slotOpenEmbedded() ), actionCollection(), actName );
+                     m_mainWindow, TQT_SLOT( slotOpenEmbedded() ), actionCollection(), actName );
 }
 
 ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
-: QObject( mainWindow )
+: TQObject( mainWindow )
 {
   m_mainWindow = mainWindow;
   m_actions.setAutoDelete( true );
@@ -165,8 +165,8 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
   KTrader::OfferList::Iterator it = offers.begin();
   while ( it != offers.end() )
   {
-    QVariant prop = (*it)->property( "X-KDE-BrowserView-Toggable" );
-    QVariant orientation = (*it)->property( "X-KDE-BrowserView-ToggableView-Orientation" );
+    TQVariant prop = (*it)->property( "X-KDE-BrowserView-Toggable" );
+    TQVariant orientation = (*it)->property( "X-KDE-BrowserView-ToggableView-Orientation" );
 
     if ( !prop.isValid() || !prop.toBool() ||
          !orientation.isValid() || orientation.toString().isEmpty() )
@@ -187,8 +187,8 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
   KTrader::OfferList::ConstIterator cEnd = offers.end();
   for (; cIt != cEnd; ++cIt )
   {
-    QString description = i18n( "Show %1" ).arg( (*cIt)->name() );
-    QString name = (*cIt)->desktopEntryName();
+    TQString description = i18n( "Show %1" ).arg( (*cIt)->name() );
+    TQString name = (*cIt)->desktopEntryName();
     //kdDebug(1202) << "ToggleViewGUIClient: name=" << name << endl;
     KToggleAction *action = new KToggleAction( description, 0, mainWindow->actionCollection(), name.latin1() );
     action->setCheckedState( i18n( "Hide %1" ).arg( (*cIt)->name() ) );
@@ -197,31 +197,31 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
     if ( (*cIt)->icon() != "unknown" )
       action->setIcon( (*cIt)->icon() );
 
-    connect( action, SIGNAL( toggled( bool ) ),
-             this, SLOT( slotToggleView( bool ) ) );
+    connect( action, TQT_SIGNAL( toggled( bool ) ),
+             this, TQT_SLOT( slotToggleView( bool ) ) );
 
     m_actions.insert( name, action );
 
-    QVariant orientation = (*cIt)->property( "X-KDE-BrowserView-ToggableView-Orientation" );
+    TQVariant orientation = (*cIt)->property( "X-KDE-BrowserView-ToggableView-Orientation" );
     bool horizontal = orientation.toString().lower() == "horizontal";
     m_mapOrientation.insert( name, horizontal );
   }
 
-  connect( m_mainWindow, SIGNAL( viewAdded( KonqView * ) ),
-           this, SLOT( slotViewAdded( KonqView * ) ) );
-  connect( m_mainWindow, SIGNAL( viewRemoved( KonqView * ) ),
-           this, SLOT( slotViewRemoved( KonqView * ) ) );
+  connect( m_mainWindow, TQT_SIGNAL( viewAdded( KonqView * ) ),
+           this, TQT_SLOT( slotViewAdded( KonqView * ) ) );
+  connect( m_mainWindow, TQT_SIGNAL( viewRemoved( KonqView * ) ),
+           this, TQT_SLOT( slotViewRemoved( KonqView * ) ) );
 }
 
 ToggleViewGUIClient::~ToggleViewGUIClient()
 {
 }
 
-QPtrList<KAction> ToggleViewGUIClient::actions() const
+TQPtrList<KAction> ToggleViewGUIClient::actions() const
 {
-  QPtrList<KAction> res;
+  TQPtrList<KAction> res;
 
-  QDictIterator<KAction> it( m_actions );
+  TQDictIterator<KAction> it( m_actions );
   for (; it.current(); ++it )
     res.append( it.current() );
 
@@ -230,7 +230,7 @@ QPtrList<KAction> ToggleViewGUIClient::actions() const
 
 void ToggleViewGUIClient::slotToggleView( bool toggle )
 {
-  QString serviceName = QString::fromLatin1( sender()->name() );
+  TQString serviceName = TQString::fromLatin1( sender()->name() );
 
   bool horizontal = m_mapOrientation[ serviceName ];
 
@@ -240,11 +240,11 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
   {
 
     KonqView *childView = viewManager->splitWindow( horizontal ? Qt::Vertical : Qt::Horizontal,
-                                                    QString::fromLatin1( "Browser/View" ),
+                                                    TQString::fromLatin1( "Browser/View" ),
                                                     serviceName,
                                                     !horizontal /* vertical = make it first */);
 
-    QValueList<int> newSplitterSizes;
+    TQValueList<int> newSplitterSizes;
 
     if ( horizontal )
       newSplitterSizes << 100 << 30;
@@ -265,7 +265,7 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
 #if 0 // already done by splitWindow
     if ( m_mainWindow->currentView() )
     {
-        QString locBarURL = m_mainWindow->currentView()->url().prettyURL(); // default one in case it doesn't set it
+        TQString locBarURL = m_mainWindow->currentView()->url().prettyURL(); // default one in case it doesn't set it
         childView->openURL( m_mainWindow->currentView()->url(), locBarURL );
     }
 #endif
@@ -282,11 +282,11 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
   }
   else
   {
-    QPtrList<KonqView> viewList;
+    TQPtrList<KonqView> viewList;
 
     m_mainWindow->listViews( &viewList );
 
-    QPtrListIterator<KonqView> it( viewList );
+    TQPtrListIterator<KonqView> it( viewList );
     for (; it.current(); ++it )
       if ( it.current()->service()->desktopEntryName() == serviceName )
         // takes care of choosing the new active view, and also calls slotViewRemoved
@@ -296,13 +296,13 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
 }
 
 
-void ToggleViewGUIClient::saveConfig( bool add, const QString &serviceName )
+void ToggleViewGUIClient::saveConfig( bool add, const TQString &serviceName )
 {
   // This is used on konqueror's startup....... so it's never used, since
   // the K menu only contains calls to kfmclient......
   // Well, it could be useful again in the future.
   // Currently, the profiles save this info.
-  QStringList toggableViewsShown = KonqSettings::toggableViewsShown();
+  TQStringList toggableViewsShown = KonqSettings::toggableViewsShown();
   if (add)
   {
       if ( !toggableViewsShown.contains( serviceName ) )
@@ -315,7 +315,7 @@ void ToggleViewGUIClient::saveConfig( bool add, const QString &serviceName )
 
 void ToggleViewGUIClient::slotViewAdded( KonqView *view )
 {
-  QString name = view->service()->desktopEntryName();
+  TQString name = view->service()->desktopEntryName();
 
   KAction *action = m_actions[ name ];
 
@@ -327,9 +327,9 @@ void ToggleViewGUIClient::slotViewAdded( KonqView *view )
     // KonqView::isToggleView() is not set yet.. so just check for the orientation
 
 #if 0
-    QVariant vert = view->service()->property( "X-KDE-BrowserView-ToggableView-Orientation");
+    TQVariant vert = view->service()->property( "X-KDE-BrowserView-ToggableView-Orientation");
     bool vertical = vert.toString().lower() == "vertical";
-    QVariant nohead = view->service()->property( "X-KDE-BrowserView-ToggableView-NoHeader");
+    TQVariant nohead = view->service()->property( "X-KDE-BrowserView-ToggableView-NoHeader");
     bool noheader = nohead.isValid() ? nohead.toBool() : false;
     // if it is a vertical toggle part, turn on the header.
     // this works even when konq loads the view from a profile.
@@ -344,7 +344,7 @@ void ToggleViewGUIClient::slotViewAdded( KonqView *view )
 
 void ToggleViewGUIClient::slotViewRemoved( KonqView *view )
 {
-  QString name = view->service()->desktopEntryName();
+  TQString name = view->service()->desktopEntryName();
 
   KAction *action = m_actions[ name ];
 

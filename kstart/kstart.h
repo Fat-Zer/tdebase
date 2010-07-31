@@ -11,11 +11,11 @@
 #define KSTART_H
 
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class KWinModule;
 
-class KStart: public QObject {
+class KStart: public TQObject {
   Q_OBJECT
 
 public:

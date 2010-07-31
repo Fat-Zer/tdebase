@@ -21,13 +21,13 @@
 #include "kio_about.h"
 
 #include <stdlib.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kinstance.h>
 #include <kurl.h>
 
 using namespace KIO;
 
-AboutProtocol::AboutProtocol(const QCString &pool_socket, const QCString &app_socket)
+AboutProtocol::AboutProtocol(const TQCString &pool_socket, const TQCString &app_socket)
     : SlaveBase("about", pool_socket, app_socket)
 {
 }
@@ -38,10 +38,10 @@ AboutProtocol::~AboutProtocol()
 
 void AboutProtocol::get( const KURL& )
 {
-    QByteArray output;
+    TQByteArray output;
     
-    QTextStream os( output, IO_WriteOnly );
-    os.setEncoding( QTextStream::Latin1 ); // In fast ASCII
+    TQTextStream os( output, IO_WriteOnly );
+    os.setEncoding( TQTextStream::Latin1 ); // In fast ASCII
 
     os << "<html><head><title>about:blank</title></head><body></body></html>";
     

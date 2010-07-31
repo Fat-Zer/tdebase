@@ -31,8 +31,8 @@ DEALINGS IN THE SOFTWARE.
 #include <klibloader.h>
 #include <assert.h>
 
-#include <qdir.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqfile.h>
 
 #include "kdecorationfactory.h"
 
@@ -65,7 +65,7 @@ KDecorationPlugins::~KDecorationPlugins()
 
 bool KDecorationPlugins::reset( unsigned long changed )
     {
-    QString oldPlugin = pluginStr;
+    TQString oldPlugin = pluginStr;
     config->reparseConfiguration();
     bool ret = false;
     if(( !loadPlugin( "" ) && library ) // "" = read the one in cfg file
@@ -91,7 +91,7 @@ KDecoration* KDecorationPlugins::createDecoration( KDecorationBridge* bridge )
     }
     
 // returns true if plugin was loaded successfully
-bool KDecorationPlugins::loadPlugin( QString nameStr )
+bool KDecorationPlugins::loadPlugin( TQString nameStr )
     {
     if( nameStr.isEmpty())
         {
@@ -105,13 +105,13 @@ bool KDecorationPlugins::loadPlugin( QString nameStr )
     KLibrary *oldLibrary = library;
     KDecorationFactory* oldFactory = fact;
 
-    QString path = KLibLoader::findLibrary(QFile::encodeName(nameStr));
+    TQString path = KLibLoader::findLibrary(TQFile::encodeName(nameStr));
 
     // If the plugin was not found, try to find the default
     if (path.isEmpty())
         {
         nameStr = defaultPlugin;
-        path = KLibLoader::findLibrary(QFile::encodeName(nameStr));
+        path = KLibLoader::findLibrary(TQFile::encodeName(nameStr));
         }
 
     // If no library was found, exit kwin with an error message
@@ -126,7 +126,7 @@ bool KDecorationPlugins::loadPlugin( QString nameStr )
 	return true;
 
     // Try loading the requested plugin
-    library = KLibLoader::self()->library(QFile::encodeName(path));
+    library = KLibLoader::self()->library(TQFile::encodeName(path));
 
     // If that fails, fall back to the default plugin
     if (!library)
@@ -135,9 +135,9 @@ bool KDecorationPlugins::loadPlugin( QString nameStr )
         nameStr = defaultPlugin;
 	if ( pluginStr == nameStr )
 	    return true;
-        path = KLibLoader::findLibrary(QFile::encodeName(nameStr));
+        path = KLibLoader::findLibrary(TQFile::encodeName(nameStr));
 	if (!path.isEmpty())
-            library = KLibLoader::self()->library(QFile::encodeName(path));
+            library = KLibLoader::self()->library(TQFile::encodeName(path));
         }
 
     if (!library)
@@ -166,7 +166,7 @@ bool KDecorationPlugins::loadPlugin( QString nameStr )
     pluginStr = nameStr;
 
     // For clients in kdeartwork    
-    QString catalogue = nameStr;
+    TQString catalogue = nameStr;
     catalogue.replace( "kwin3_", "kwin_" );
     KGlobal::locale()->insertCatalogue( catalogue );
     // For KCommonDecoration based clients
@@ -194,6 +194,6 @@ void KDecorationPlugins::destroyPreviousPlugin()
         }
 }
 
-void KDecorationPlugins::error( const QString& )
+void KDecorationPlugins::error( const TQString& )
     {
     }

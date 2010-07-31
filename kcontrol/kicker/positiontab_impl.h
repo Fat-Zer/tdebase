@@ -32,7 +32,7 @@ class PositionTab : public PositionTabBase
     Q_OBJECT
 
 public:
-    PositionTab(QWidget *parent, const char* name = 0);
+    PositionTab(TQWidget *parent, const char* name = 0);
     ~PositionTab();
 
     enum positions { PosLeft = 0, PosRight, PosTop, PosBottom };
@@ -56,15 +56,15 @@ protected slots:
     void showIdentify();
     void extensionAdded(ExtensionInfo*);
     void extensionRemoved(ExtensionInfo* info);
-    void extensionChanged(const QString&);
-    void extensionAboutToChange(const QString&);
+    void extensionChanged(const TQString&);
+    void extensionAboutToChange(const TQString&);
     void sizeChanged(int);
     void switchPanel(int);
     void jumpToPanel(int);
 
 private:
-    QFrame* m_pretendPanel;
-    QWidget* m_pretendDesktop;
+    TQFrame* m_pretendPanel;
+    TQWidget* m_pretendDesktop;
     KVirtualBGRenderer* m_desktopPreview;
     ExtensionInfo* m_panelInfo;
 

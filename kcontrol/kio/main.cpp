@@ -20,10 +20,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qfile.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtabwidget.h>
+#include <tqfile.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
 
 #include <kcmoduleloader.h>
 #include <klocale.h>
@@ -40,44 +40,44 @@
 extern "C"
 {
 
-  KDE_EXPORT KCModule *create_cookie(QWidget *parent, const char /**name*/)
+  KDE_EXPORT KCModule *create_cookie(TQWidget *parent, const char /**name*/)
   {
     return new KCookiesMain(parent);
   }
 
-  KDE_EXPORT KCModule *create_smb(QWidget *parent, const char /**name*/)
+  KDE_EXPORT KCModule *create_smb(TQWidget *parent, const char /**name*/)
   {
     return new SMBRoOptions(parent);
   }
 
-  KDE_EXPORT KCModule *create_useragent(QWidget *parent, const char /**name*/)
+  KDE_EXPORT KCModule *create_useragent(TQWidget *parent, const char /**name*/)
   {
     return new UserAgentDlg(parent);
   }
 
-  KDE_EXPORT KCModule *create_proxy(QWidget *parent, const char /**name*/)
+  KDE_EXPORT KCModule *create_proxy(TQWidget *parent, const char /**name*/)
   {
     return new KProxyOptions(parent);
   }
 
-  KDE_EXPORT KCModule *create_cache(QWidget *parent, const char /**name*/)
+  KDE_EXPORT KCModule *create_cache(TQWidget *parent, const char /**name*/)
   {
     return new KCacheConfigDialog( parent );
   }
 
-  KDE_EXPORT KCModule *create_netpref(QWidget *parent, const char /**name*/)
+  KDE_EXPORT KCModule *create_netpref(TQWidget *parent, const char /**name*/)
   {
     return new KIOPreferences(parent);
   }
 
-  KDE_EXPORT KCModule *create_lanbrowser(QWidget *parent, const char *)
+  KDE_EXPORT KCModule *create_lanbrowser(TQWidget *parent, const char *)
   {
     return new LanBrowser(parent);
   }
 
 }
 
-LanBrowser::LanBrowser(QWidget *parent)
+LanBrowser::LanBrowser(TQWidget *parent)
 :KCModule(parent,"kcmkio")
 ,layout(this)
 ,tabs(this)
@@ -103,27 +103,27 @@ LanBrowser::LanBrowser(QWidget *parent)
 
    smbPage = create_smb(&tabs, 0);
    tabs.addTab(smbPage, i18n("&Windows Shares"));
-   connect(smbPage,SIGNAL(changed(bool)), SLOT( changed() ));
+   connect(smbPage,TQT_SIGNAL(changed(bool)), TQT_SLOT( changed() ));
 
    lisaPage = KCModuleLoader::loadModule("kcmlisa", KCModuleLoader::None, &tabs);
    if (lisaPage)
    {
      tabs.addTab(lisaPage,i18n("&LISa Daemon"));
-     connect(lisaPage,SIGNAL(changed()), SLOT( changed() ));
+     connect(lisaPage,TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
    }
 
 //   resLisaPage = KCModuleLoader::loadModule("kcmreslisa", &tabs);
 //   if (resLisaPage)
 //   {
 //     tabs.addTab(resLisaPage,i18n("R&esLISa Daemon"));
-//     connect(resLisaPage,SIGNAL(changed()), SLOT( changed() ));
+//     connect(resLisaPage,TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
 //   }
 
    kioLanPage = KCModuleLoader::loadModule("kcmkiolan",  KCModuleLoader::None, &tabs);
    if (kioLanPage)
    {
      tabs.addTab(kioLanPage,i18n("lan:/ Iosla&ve"));
-     connect(kioLanPage,SIGNAL(changed()), SLOT( changed() ));
+     connect(kioLanPage,TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
    }
 
    setButtons(Apply|Help);

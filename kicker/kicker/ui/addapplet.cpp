@@ -22,17 +22,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qapplication.h>
-#include <qcombobox.h>
-#include <qdir.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpalette.h>
-#include <qscrollview.h>
-#include <qtimer.h>
-#include <qsizepolicy.h>
+#include <tqapplication.h>
+#include <tqcombobox.h>
+#include <tqdir.h>
+#include <tqframe.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqpalette.h>
+#include <tqscrollview.h>
+#include <tqtimer.h>
+#include <tqsizepolicy.h>
 
 #include <kiconloader.h>
 #include <kdebug.h>
@@ -55,13 +55,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "menuinfo.h"
 #include "pluginmanager.h"
 
-AppletWidget::AppletWidget(const AppletInfo& info, bool odd, QWidget *parent)
+AppletWidget::AppletWidget(const AppletInfo& info, bool odd, TQWidget *parent)
     : AppletItem(parent),
       m_appletInfo(info),
       m_odd(odd),
       m_selected(false)
 {
-    setFocusPolicy(QWidget::StrongFocus);
+    setFocusPolicy(TQWidget::StrongFocus);
     setSelected(m_selected);
     
     itemTitle->setText("<h3>" + info.name() + "</h3>");
@@ -75,16 +75,16 @@ AppletWidget::AppletWidget(const AppletInfo& info, bool odd, QWidget *parent)
     itemDescription->installEventFilter(this);
 
     KIconLoader * ldr = KGlobal::iconLoader();
-    QPixmap icon = ldr->loadIcon(info.icon(), KIcon::Panel, KIcon::SizeLarge);
+    TQPixmap icon = ldr->loadIcon(info.icon(), KIcon::Panel, KIcon::SizeLarge);
     itemPixmap->setPixmap(icon);
     itemPixmap->installEventFilter(this);
 }
 
-bool AppletWidget::eventFilter(QObject*, QEvent* e)
+bool AppletWidget::eventFilter(TQObject*, TQEvent* e)
 {
-    if (e->type() == QEvent::MouseButtonPress)
+    if (e->type() == TQEvent::MouseButtonPress)
     {
-        QMouseEvent* me = static_cast<QMouseEvent*>(e);
+        TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
         if (me->button() & LeftButton)
         {
             m_dragStart = me->pos();
@@ -95,9 +95,9 @@ bool AppletWidget::eventFilter(QObject*, QEvent* e)
         return false;
     }
 
-    if (e->type() == QEvent::MouseMove)
+    if (e->type() == TQEvent::MouseMove)
     {
-        QMouseEvent* me = static_cast<QMouseEvent*>(e);
+        TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
         if ((me->pos() - m_dragStart).manhattanLength() >
             KGlobalSettings::dndEventDelay())
         {
@@ -113,15 +113,15 @@ bool AppletWidget::eventFilter(QObject*, QEvent* e)
             return true;
         }
     }
-    else if (e->type() == QEvent::MouseButtonRelease)
+    else if (e->type() == TQEvent::MouseButtonRelease)
     {
-        m_dragStart = QPoint();
+        m_dragStart = TQPoint();
     }
 
     return false;
 }
 
-void AppletWidget::keyPressEvent(QKeyEvent *e)
+void AppletWidget::keyPressEvent(TQKeyEvent *e)
 {
     if (e->key() == Qt::Key_Enter ||
         e->key() == Qt::Key_Return)
@@ -130,17 +130,17 @@ void AppletWidget::keyPressEvent(QKeyEvent *e)
     }
     else if (e->key() == Qt::Key_Up)
     {
-        QKeyEvent fakedKeyPress(QEvent::KeyPress, Qt::Key_BackTab, 0, 0);
-        QKeyEvent fakedKeyRelease(QEvent::KeyRelease, Key_BackTab, 0, 0);
-        QApplication::sendEvent(this, &fakedKeyPress);
-        QApplication::sendEvent(this, &fakedKeyRelease);
+        TQKeyEvent fakedKeyPress(TQEvent::KeyPress, Qt::Key_BackTab, 0, 0);
+        TQKeyEvent fakedKeyRelease(TQEvent::KeyRelease, Key_BackTab, 0, 0);
+        TQApplication::sendEvent(this, &fakedKeyPress);
+        TQApplication::sendEvent(this, &fakedKeyRelease);
     }
     else if (e->key() == Qt::Key_Down)
     {
-        QKeyEvent fakedKeyPress(QEvent::KeyPress, Qt::Key_Tab, 0, 0);
-        QKeyEvent fakedKeyRelease(QEvent::KeyRelease, Key_Escape, 0, 0);
-        QApplication::sendEvent(this, &fakedKeyPress);
-        QApplication::sendEvent(this, &fakedKeyRelease);
+        TQKeyEvent fakedKeyPress(TQEvent::KeyPress, Qt::Key_Tab, 0, 0);
+        TQKeyEvent fakedKeyRelease(TQEvent::KeyRelease, Key_Escape, 0, 0);
+        TQApplication::sendEvent(this, &fakedKeyPress);
+        TQApplication::sendEvent(this, &fakedKeyRelease);
     }
     else
     {
@@ -148,21 +148,21 @@ void AppletWidget::keyPressEvent(QKeyEvent *e)
     }
 }
 
-void AppletWidget::mousePressEvent(QMouseEvent *e)
+void AppletWidget::mousePressEvent(TQMouseEvent *e)
 {
-    if (e->button() == QMouseEvent::LeftButton)
+    if (e->button() == TQMouseEvent::LeftButton)
     {
         emit clicked(this);
         m_dragStart = e->pos();
     }
 
     setFocus();
-    QWidget::mousePressEvent(e);
+    TQWidget::mousePressEvent(e);
 }
 
-void AppletWidget::mouseMoveEvent(QMouseEvent *e)
+void AppletWidget::mouseMoveEvent(TQMouseEvent *e)
 {
-    if (e->button() == QMouseEvent::LeftButton &&
+    if (e->button() == TQMouseEvent::LeftButton &&
         !m_dragStart.isNull() &&
         (e->pos() - m_dragStart).manhattanLength() >
          KGlobalSettings::dndEventDelay())
@@ -178,15 +178,15 @@ void AppletWidget::mouseMoveEvent(QMouseEvent *e)
     }
 }
 
-void AppletWidget::mouseReleaseEvent(QMouseEvent *e)
+void AppletWidget::mouseReleaseEvent(TQMouseEvent *e)
 {
-    m_dragStart = QPoint();
-    QWidget::mouseReleaseEvent(e);
+    m_dragStart = TQPoint();
+    TQWidget::mouseReleaseEvent(e);
 }
 
-void AppletWidget::mouseDoubleClickEvent(QMouseEvent *e)
+void AppletWidget::mouseDoubleClickEvent(TQMouseEvent *e)
 {
-    if (!e->button() == QMouseEvent::LeftButton)
+    if (!e->button() == TQMouseEvent::LeftButton)
     {
         AppletItem::mouseDoubleClickEvent(e);
         return;
@@ -223,24 +223,24 @@ void AppletWidget::setOdd(bool odd)
     setSelected(m_selected);
 }
 
-void AppletWidget::focusInEvent(QFocusEvent*)
+void AppletWidget::focusInEvent(TQFocusEvent*)
 {
     emit clicked(this);
 }
 
 AddAppletDialog::AddAppletDialog(ContainerArea* cArea,
-                                 QWidget* parent,
+                                 TQWidget* parent,
                                  const char* name)
     : KDialogBase(parent, name, false, i18n("Add Applet"), 0),
       m_selectedApplet(0),
       m_containerArea(cArea),
       m_insertionPoint(Kicker::the()->insertionPoint()),
       m_closing(false),
-      m_searchDelay(new QTimer(this))
+      m_searchDelay(new TQTimer(this))
 {
     m_mainWidget = new AppletView(this, "AddAppletDialog::m_mainWidget");
-    m_mainWidget->appletScrollView->setResizePolicy(QScrollView::Manual);
-    m_mainWidget->appletScrollView->setHScrollBarMode(QScrollView::AlwaysOff);
+    m_mainWidget->appletScrollView->setResizePolicy(TQScrollView::Manual);
+    m_mainWidget->appletScrollView->setHScrollBarMode(TQScrollView::AlwaysOff);
     m_mainWidget->appletScrollView->viewport()->setPaletteBackgroundColor(KGlobalSettings::baseColor());
 
     setMainWidget(m_mainWidget);
@@ -254,16 +254,16 @@ AddAppletDialog::AddAppletDialog(ContainerArea* cArea,
     m_mainWidget->appletInstall->setGuiItem(addGuiItem);
     m_mainWidget->closeButton->setGuiItem(KStdGuiItem::close());
 
-    connect(m_mainWidget->appletSearch, SIGNAL(textChanged(const QString&)), this, SLOT(delayedSearch()));
-    connect(m_searchDelay, SIGNAL(timeout()), this, SLOT(search()));
-    connect(m_mainWidget->appletFilter, SIGNAL(activated(int)), this, SLOT(filter(int)));
-    connect(m_mainWidget->appletInstall, SIGNAL(clicked()), this, SLOT(addCurrentApplet()));
-    connect(m_mainWidget->closeButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(m_mainWidget->appletSearch, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(delayedSearch()));
+    connect(m_searchDelay, TQT_SIGNAL(timeout()), this, TQT_SLOT(search()));
+    connect(m_mainWidget->appletFilter, TQT_SIGNAL(activated(int)), this, TQT_SLOT(filter(int)));
+    connect(m_mainWidget->appletInstall, TQT_SIGNAL(clicked()), this, TQT_SLOT(addCurrentApplet()));
+    connect(m_mainWidget->closeButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(close()));
 
     m_selectedType = AppletInfo::Undefined;
     m_appletBox = 0;
 
-    QTimer::singleShot(0, this, SLOT(populateApplets()));
+    TQTimer::singleShot(0, this, TQT_SLOT(populateApplets()));
 }
 
 void AddAppletDialog::updateInsertionPoint()
@@ -272,7 +272,7 @@ void AddAppletDialog::updateInsertionPoint()
 }
 
 
-void AddAppletDialog::closeEvent(QCloseEvent* e)
+void AddAppletDialog::closeEvent(TQCloseEvent* e)
 {
     m_closing = true;
     saveDialogSize("AddAppletDialog Settings");
@@ -282,7 +282,7 @@ void AddAppletDialog::closeEvent(QCloseEvent* e)
 void AddAppletDialog::resizeAppletView()
 {
     int w, h;
-    QScrollView *v = m_mainWidget->appletScrollView;
+    TQScrollView *v = m_mainWidget->appletScrollView;
     
     if (m_closing)
         return;
@@ -300,21 +300,21 @@ void AddAppletDialog::resizeAppletView()
     }
 }
 
-bool AddAppletDialog::eventFilter(QObject *o, QEvent *e)
+bool AddAppletDialog::eventFilter(TQObject *o, TQEvent *e)
 {
-    if (e->type() == QEvent::Resize)
-        QTimer::singleShot(0, this, SLOT(resizeAppletView()));
+    if (e->type() == TQEvent::Resize)
+        TQTimer::singleShot(0, this, TQT_SLOT(resizeAppletView()));
     
-    return QObject::eventFilter(o, e);
+    return TQObject::eventFilter(o, e);
 }
 
 void AddAppletDialog::populateApplets()
 {
-    m_appletBox = new QWidget(m_mainWidget->appletScrollView->viewport());
+    m_appletBox = new TQWidget(m_mainWidget->appletScrollView->viewport());
     m_appletBox->setPaletteBackgroundColor(KGlobalSettings::baseColor());
     m_mainWidget->appletScrollView->addChild(m_appletBox, 0, 0);
     m_appletBox->show();
-    QVBoxLayout* layout = new QVBoxLayout(m_appletBox);
+    TQVBoxLayout* layout = new TQVBoxLayout(m_appletBox);
     layout->setMargin(0);
     
     m_mainWidget->appletScrollView->installEventFilter(this);
@@ -339,7 +339,7 @@ void AddAppletDialog::populateApplets()
 
     int i = 0;
     bool odd = true;
-    QWidget* prevTabWidget = m_mainWidget->appletFilter;
+    TQWidget* prevTabWidget = m_mainWidget->appletFilter;
 
     for (AppletInfo::List::iterator it = appletInfoList.begin();
          !m_closing && it != appletInfoList.end();
@@ -372,10 +372,10 @@ void AddAppletDialog::populateApplets()
         setTabOrder(prevTabWidget, itemWidget);
         prevTabWidget = itemWidget;
 
-        connect(itemWidget, SIGNAL(clicked(AppletWidget*)),
-                this, SLOT(selectApplet(AppletWidget*)));
-        connect(itemWidget, SIGNAL(doubleClicked(AppletWidget*)),
-                this, SLOT(addApplet(AppletWidget*)));
+        connect(itemWidget, TQT_SIGNAL(clicked(AppletWidget*)),
+                this, TQT_SLOT(selectApplet(AppletWidget*)));
+        connect(itemWidget, TQT_SIGNAL(doubleClicked(AppletWidget*)),
+                this, TQT_SLOT(addApplet(AppletWidget*)));
 
         if (m_closing)
         {
@@ -419,10 +419,10 @@ void AddAppletDialog::addApplet(AppletWidget* applet)
         return;
     }
 
-    QPoint prevInsertionPoint = Kicker::the()->insertionPoint();
+    TQPoint prevInsertionPoint = Kicker::the()->insertionPoint();
     Kicker::the()->setInsertionPoint(m_insertionPoint);
 
-    const QWidget* appletContainer = 0;
+    const TQWidget* appletContainer = 0;
 
     if (applet->info().type() == AppletInfo::Applet)
     {
@@ -473,7 +473,7 @@ void AddAppletDialog::addApplet(AppletWidget* applet)
 }
 
 bool AddAppletDialog::appletMatchesSearch(const AppletWidget* w,
-                                          const QString& s)
+                                          const TQString& s)
 {
     if (w->info().type() == AppletInfo::Applet &&
         w->info().isUniqueApplet() &&
@@ -498,7 +498,7 @@ void AddAppletDialog::delayedSearch()
 
 void AddAppletDialog::search()
 {
-    QString s = m_mainWidget->appletSearch->text();
+    TQString s = m_mainWidget->appletSearch->text();
     bool odd = true;
     AppletWidget::List::const_iterator it = m_appletWidgetList.constBegin();
     AppletWidget::List::const_iterator itEnd = m_appletWidgetList.constEnd();
@@ -518,7 +518,7 @@ void AddAppletDialog::search()
         }
     }
     
-    QTimer::singleShot(0, this, SLOT(resizeAppletView()));
+    TQTimer::singleShot(0, this, TQT_SLOT(resizeAppletView()));
 }
 
 void AddAppletDialog::filter(int i)

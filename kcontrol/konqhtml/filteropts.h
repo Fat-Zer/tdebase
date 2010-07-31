@@ -32,14 +32,14 @@ class KCMFilter : public KCModule
 {
     Q_OBJECT
 public:
-    KCMFilter( KConfig* config, QString group, QWidget* parent = 0, const char* name = 0 );
+    KCMFilter( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
     ~KCMFilter();
     
     void load();
     void load( bool useDefaults );
     void save();
     void defaults();
-    QString quickHelp() const;
+    TQString quickHelp() const;
     
 public slots:
 
@@ -56,18 +56,18 @@ protected slots:
 
 private:
     void updateButton();
-    QListBox *mListBox;
-    QLineEdit *mString;
-    QCheckBox *mEnableCheck;
-    QCheckBox *mKillCheck;
-    QPushButton *mInsertButton;
-    QPushButton *mUpdateButton;
-    QPushButton *mRemoveButton;
-    QPushButton *mImportButton;
-    QPushButton *mExportButton;
+    TQListBox *mListBox;
+    TQLineEdit *mString;
+    TQCheckBox *mEnableCheck;
+    TQCheckBox *mKillCheck;
+    TQPushButton *mInsertButton;
+    TQPushButton *mUpdateButton;
+    TQPushButton *mRemoveButton;
+    TQPushButton *mImportButton;
+    TQPushButton *mExportButton;
 
     KConfig *mConfig;
-    QString mGroupname;
+    TQString mGroupname;
     int mSelCount;
 };
 

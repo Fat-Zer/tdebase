@@ -21,10 +21,10 @@
 #ifndef __searchwidget_h__
 #define __searchwidget_h__
 
-#include <qwidget.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include "modules.h"
 
@@ -35,16 +35,16 @@ class QListBoxItem;
 class KeywordListEntry
 {
  public:
-  KeywordListEntry(const QString& name, ConfigModule* module);
+  KeywordListEntry(const TQString& name, ConfigModule* module);
   
   void addModule(ConfigModule* module);
 
-  QString moduleName() { return _name; }
-  QPtrList<ConfigModule> modules() { return _modules; }
+  TQString moduleName() { return _name; }
+  TQPtrList<ConfigModule> modules() { return _modules; }
   
  private:
-  QString _name;
-  QPtrList<ConfigModule> _modules;
+  TQString _name;
+  TQPtrList<ConfigModule> _modules;
   
 };
 
@@ -53,26 +53,26 @@ class SearchWidget : public QWidget
   Q_OBJECT    
   
 public:   
-  SearchWidget(QWidget *parent, const char *name=0);
+  SearchWidget(TQWidget *parent, const char *name=0);
 
   void populateKeywordList(ConfigModuleList *list);
-  void searchTextChanged(const QString &);
+  void searchTextChanged(const TQString &);
 
 signals:
   void moduleSelected(ConfigModule *);
 
 protected:
-  void populateKeyListBox(const QString& regexp);
-  void populateResultListBox(const QString& keyword);
+  void populateKeyListBox(const TQString& regexp);
+  void populateResultListBox(const TQString& keyword);
 
 protected slots:
-  void slotKeywordSelected(const QString &);
-  void slotModuleSelected(QListBoxItem *item);
-  void slotModuleClicked(QListBoxItem *item);
+  void slotKeywordSelected(const TQString &);
+  void slotModuleSelected(TQListBoxItem *item);
+  void slotModuleClicked(TQListBoxItem *item);
 
 private:
   KListBox  *_keyList, *_resultList;
-  QPtrList<KeywordListEntry> _keywords;
+  TQPtrList<KeywordListEntry> _keywords;
 };
 
 #endif

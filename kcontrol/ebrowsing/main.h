@@ -33,7 +33,7 @@ class KURIFilterModule : public KCModule {
     Q_OBJECT
 
 public:
-    KURIFilterModule(QWidget *parent, const char *name, const QStringList &);
+    KURIFilterModule(TQWidget *parent, const char *name, const TQStringList &);
 
     void load();
     void load(bool useDefaults );
@@ -43,9 +43,9 @@ public:
 private:
     KURIFilter *filter;
 
-    QWidget *widget;
+    TQWidget *widget;
     FilterOptions *opts;
-    QPtrList<KCModule> modules;
+    TQPtrList<KCModule> modules;
 };
 
 #endif

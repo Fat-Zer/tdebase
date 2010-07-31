@@ -31,22 +31,22 @@
 #include <pwd.h>
 #include <unistd.h>
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qframe.h>
-#include <qhbuttongroup.h>
-#include <qhgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qregexp.h>
-#include <qvbox.h>
-#include <qvbuttongroup.h>
-#include <qvgroupbox.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqframe.h>
+#include <tqhbuttongroup.h>
+#include <tqhgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqregexp.h>
+#include <tqvbox.h>
+#include <tqvbuttongroup.h>
+#include <tqvgroupbox.h>
+#include <tqwhatsthis.h>
 
 #include <kaboutdata.h>
 #include <kcombobox.h>
@@ -93,18 +93,18 @@
 
 using namespace KNetwork;
 
-typedef KGenericFactory<KCryptoConfig, QWidget> KryptoFactory;
+typedef KGenericFactory<KCryptoConfig, TQWidget> KryptoFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_crypto, KryptoFactory("kcmcrypto") )
 
-CipherItem::CipherItem( QListView *view, const QString& cipher, int bits,
+CipherItem::CipherItem( TQListView *view, const TQString& cipher, int bits,
 			int maxBits, KCryptoConfig *module )
-    : QCheckListItem( view, QString::null, CheckBox )
+    : TQCheckListItem( view, TQString::null, CheckBox )
 {
     m_cipher = cipher;
     m_bits = bits;
     m_module = module;
 
-    QString tmp( i18n("%1 (%2 of %3 bits)") );
+    TQString tmp( i18n("%1 (%2 of %3 bits)") );
     setText( 0, tmp.arg( cipher ).arg( bits ).arg( maxBits ));
 }
 
@@ -113,16 +113,16 @@ void CipherItem::stateChange( bool )
     m_module->configChanged();
 }
 
-QString CipherItem::configName() const
+TQString CipherItem::configName() const
 {
-    QString cipherName("cipher_%1");
+    TQString cipherName("cipher_%1");
     return cipherName.arg( m_cipher );
 }
 
 
 
-OtherCertItem::OtherCertItem( QListView *view, const QString& sub, const QString& md5, bool perm, int policy, QDateTime exp, KCryptoConfig *module )
-    : QListViewItem( view, QString::null ), _sub(sub), _md5(md5), _exp(exp), _perm(perm), _policy(policy)
+OtherCertItem::OtherCertItem( TQListView *view, const TQString& sub, const TQString& md5, bool perm, int policy, TQDateTime exp, KCryptoConfig *module )
+    : TQListViewItem( view, TQString::null ), _sub(sub), _md5(md5), _exp(exp), _perm(perm), _policy(policy)
 
 {
     m_module = module;
@@ -131,7 +131,7 @@ KSSLX509Map cert(sub);
     setText(1, cert.getValue("CN").replace("\n", ", "));
 
     if (_exp.date().year() > 3000 || _exp.date().year() < 1900)
-       _exp.setDate(QDate(3000,1,1));
+       _exp.setDate(TQDate(3000,1,1));
 }
 
 void OtherCertItem::stateChange( bool )
@@ -139,19 +139,19 @@ void OtherCertItem::stateChange( bool )
     m_module->configChanged();
 }
 
-QString OtherCertItem::configName() const
+TQString OtherCertItem::configName() const
 {
     return _sub;
 }
 
 
-YourCertItem::YourCertItem( QListView *view, QString pkcs, QString pass, QString name, KCryptoConfig *module )
-    : QListViewItem( view, QString::null )
+YourCertItem::YourCertItem( TQListView *view, TQString pkcs, TQString pass, TQString name, KCryptoConfig *module )
+    : TQListViewItem( view, TQString::null )
 
 {
     m_module = module;
 KSSLX509Map cert(name);
-    QString tmp = cert.getValue("CN").replace("\n", ", ");
+    TQString tmp = cert.getValue("CN").replace("\n", ", ");
     setText(0, tmp);
     setText(1, cert.getValue("Email"));
     _pkcs = pkcs;
@@ -164,20 +164,20 @@ void YourCertItem::stateChange( bool )
     m_module->configChanged();
 }
 
-QString YourCertItem::configName() const
+TQString YourCertItem::configName() const
 {
     return _name;
 }
 
 
 
-CAItem::CAItem( QListView *view, QString name, QString cert, bool site, bool email, bool code, KCryptoConfig *module )
-    : QListViewItem( view, QString::null )
+CAItem::CAItem( TQListView *view, TQString name, TQString cert, bool site, bool email, bool code, KCryptoConfig *module )
+    : TQListViewItem( view, TQString::null )
 
 {
     m_module = module;
 KSSLX509Map mcert(name);
-QString tmp;
+TQString tmp;
     setText(0, mcert.getValue("O"));
     tmp = mcert.getValue("OU");
     tmp.replace("\n", ", ");
@@ -199,7 +199,7 @@ void CAItem::stateChange( bool )
     m_module->configChanged();
 }
 
-QString CAItem::configName() const
+TQString CAItem::configName() const
 {
     return _name;
 }
@@ -216,12 +216,12 @@ QString CAItem::configName() const
 
 
 
-KCryptoConfig::KCryptoConfig(QWidget *parent, const char *name, const QStringList &)
+KCryptoConfig::KCryptoConfig(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KryptoFactory::instance(), parent, name)
 {
-QGridLayout *grid;
-QBoxLayout *top = new QVBoxLayout(this);
-QString whatstr;
+TQGridLayout *grid;
+TQBoxLayout *top = new TQVBoxLayout(this);
+TQString whatstr;
 
   setQuickHelp( i18n("<h1>Crypto</h1> This module allows you to configure SSL for"
      " use with most KDE applications, as well as manage your personal"
@@ -255,51 +255,51 @@ QString whatstr;
   // The eighth is peer [email] certificate related (unimplemented)
   ///////////////////////////////////////////////////////////////////////////
 
-  tabs = new QTabWidget(this);
+  tabs = new TQTabWidget(this);
   top->addWidget(tabs);
 
   ///////////////////////////////////////////////////////////////////////////
   // FIRST TAB
   ///////////////////////////////////////////////////////////////////////////
-  tabSSL = new QFrame(this);
-  grid = new QGridLayout(tabSSL, 7, 2, KDialog::marginHint(),
+  tabSSL = new TQFrame(this);
+  grid = new TQGridLayout(tabSSL, 7, 2, KDialog::marginHint(),
                                        KDialog::spacingHint() );
-  mUseTLS = new QCheckBox(i18n("Enable &TLS support if supported by the server"), tabSSL);
-  connect(mUseTLS, SIGNAL(clicked()), SLOT(configChanged()));
+  mUseTLS = new TQCheckBox(i18n("Enable &TLS support if supported by the server"), tabSSL);
+  connect(mUseTLS, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addWidget(mUseTLS, 0, 0);
   whatstr = i18n("TLS is the newest revision of the SSL protocol."
                  " It integrates better with other protocols and has"
                  " replaced SSL in protocols such as POP3 and SMTP.");
-  QWhatsThis::add(mUseTLS, whatstr);
+  TQWhatsThis::add(mUseTLS, whatstr);
 
-  mUseSSLv2 = new QCheckBox(i18n("Enable SSLv&2"), tabSSL);
-  connect(mUseSSLv2, SIGNAL(clicked()), SLOT(configChanged()));
+  mUseSSLv2 = new TQCheckBox(i18n("Enable SSLv&2"), tabSSL);
+  connect(mUseSSLv2, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addWidget(mUseSSLv2, 1, 0);
   whatstr = i18n("SSL v2 is the second revision of the SSL protocol."
                 " It is most common to enable v2 and v3.");
-  QWhatsThis::add(mUseSSLv2, whatstr);
+  TQWhatsThis::add(mUseSSLv2, whatstr);
 
-  mUseSSLv3 = new QCheckBox(i18n("Enable SSLv&3"), tabSSL);
-  connect(mUseSSLv3, SIGNAL(clicked()), SLOT(configChanged()));
+  mUseSSLv3 = new TQCheckBox(i18n("Enable SSLv&3"), tabSSL);
+  connect(mUseSSLv3, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addWidget(mUseSSLv3, 1, 1);
   whatstr = i18n("SSL v3 is the third revision of the SSL protocol."
                 " It is most common to enable v2 and v3.");
-  QWhatsThis::add(mUseSSLv3, whatstr);
+  TQWhatsThis::add(mUseSSLv3, whatstr);
 
 #ifdef HAVE_SSL
-  SSLv2Box = new QListView(tabSSL, "v2ciphers");
+  SSLv2Box = new TQListView(tabSSL, "v2ciphers");
   (void) SSLv2Box->addColumn(i18n("SSLv2 Ciphers to Use"));
   whatstr = i18n("Select the ciphers you wish to enable when using the"
                 " SSL v2 protocol. The actual protocol used will be"
                 " negotiated with the server at connection time.");
-  QWhatsThis::add(SSLv2Box, whatstr);
-  SSLv2Box->setSelectionMode(QListView::NoSelection);
+  TQWhatsThis::add(SSLv2Box, whatstr);
+  SSLv2Box->setSelectionMode(TQListView::NoSelection);
 
   grid->addWidget( SSLv2Box, 2, 0 );
-  connect( mUseSSLv2, SIGNAL( toggled( bool ) ),
-	   SSLv2Box, SLOT( setEnabled( bool )));
+  connect( mUseSSLv2, TQT_SIGNAL( toggled( bool ) ),
+	   SSLv2Box, TQT_SLOT( setEnabled( bool )));
 #else
-  QLabel *nossllabel = new QLabel(i18n("SSL ciphers cannot be configured"
+  TQLabel *nossllabel = new TQLabel(i18n("SSL ciphers cannot be configured"
                                " because this module was not linked"
                                " with OpenSSL."), tabSSL);
   grid->addMultiCellWidget(nossllabel, 2, 2, 0, 1);
@@ -313,28 +313,28 @@ QString whatstr;
   authcfg = new KSimpleConfig("ksslauthmap", false);
 
 #ifdef HAVE_SSL
-  SSLv3Box = new QListView(tabSSL, "v3ciphers");
+  SSLv3Box = new TQListView(tabSSL, "v3ciphers");
   (void) SSLv3Box->addColumn(i18n("SSLv3 Ciphers to Use"));
   whatstr = i18n("Select the ciphers you wish to enable when using the"
                 " SSL v3 protocol. The actual protocol used will be"
                 " negotiated with the server at connection time.");
-  QWhatsThis::add(SSLv3Box, whatstr);
-  SSLv3Box->setSelectionMode(QListView::NoSelection);
+  TQWhatsThis::add(SSLv3Box, whatstr);
+  SSLv3Box->setSelectionMode(TQListView::NoSelection);
   grid->addWidget(SSLv3Box, 2, 1);
-  connect( mUseSSLv3, SIGNAL( toggled( bool ) ),
-	   SSLv3Box, SLOT( setEnabled( bool )));
+  connect( mUseSSLv3, TQT_SIGNAL( toggled( bool ) ),
+	   SSLv3Box, TQT_SLOT( setEnabled( bool )));
 
   loadCiphers();
 
   //
   //  CipherWizards
   //
-  QHGroupBox *cwbg = new QHGroupBox(i18n("Cipher Wizard"), tabSSL);
-  QComboBox *cwcb = new QComboBox(cwbg);
+  TQHGroupBox *cwbg = new TQHGroupBox(i18n("Cipher Wizard"), tabSSL);
+  TQComboBox *cwcb = new TQComboBox(cwbg);
   grid->addMultiCellWidget(cwbg, 3, 3, 0, 1);
-  QString whatStr = i18n("<qt>Use these preconfigurations to more easily configure the SSL encryption settings. You can choose among the following modes: <ul>");
+  TQString whatStr = i18n("<qt>Use these preconfigurations to more easily configure the SSL encryption settings. You can choose among the following modes: <ul>");
 
-  cwcb->insertItem(QString::null);
+  cwcb->insertItem(TQString::null);
   cwcb->insertItem(i18n("Most Compatible"));
   whatStr += i18n("<li><b>Most Compatible:</b> Select the settings found to be most compatible.</li>");
   cwcb->insertItem(i18n("US Ciphers Only"));
@@ -344,43 +344,43 @@ QString whatstr;
   cwcb->insertItem(i18n("Enable All"));
   whatStr += i18n("<li><b>Enable All:</b> Select all SSL ciphers and methods.</li></ul>");
 
-  QWhatsThis::add(cwcb, whatStr);
+  TQWhatsThis::add(cwcb, whatStr);
 
-  connect(cwcb, SIGNAL(activated(int)), SLOT(slotSelectCipher(int)));
+  connect(cwcb, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSelectCipher(int)));
 
 
 
 
 #endif
 
-  mWarnOnEnter = new QCheckBox(i18n("Warn on &entering SSL mode"), tabSSL);
-  connect(mWarnOnEnter, SIGNAL(clicked()), SLOT(configChanged()));
+  mWarnOnEnter = new TQCheckBox(i18n("Warn on &entering SSL mode"), tabSSL);
+  connect(mWarnOnEnter, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addWidget(mWarnOnEnter, 5, 0);
   whatstr = i18n("If selected, you will be notified when entering an SSL"
                 " enabled site");
-  QWhatsThis::add(mWarnOnEnter, whatstr);
+  TQWhatsThis::add(mWarnOnEnter, whatstr);
 
-  mWarnOnLeave = new QCheckBox(i18n("Warn on &leaving SSL mode"), tabSSL);
-  connect(mWarnOnLeave, SIGNAL(clicked()), SLOT(configChanged()));
+  mWarnOnLeave = new TQCheckBox(i18n("Warn on &leaving SSL mode"), tabSSL);
+  connect(mWarnOnLeave, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addWidget(mWarnOnLeave, 5, 1);
   whatstr = i18n("If selected, you will be notified when leaving an SSL"
                 " based site.");
-  QWhatsThis::add(mWarnOnLeave, whatstr);
+  TQWhatsThis::add(mWarnOnLeave, whatstr);
 
-  mWarnOnUnencrypted = new QCheckBox(i18n("Warn on sending &unencrypted data"), tabSSL);
-  connect(mWarnOnUnencrypted, SIGNAL(clicked()), SLOT(configChanged()));
+  mWarnOnUnencrypted = new TQCheckBox(i18n("Warn on sending &unencrypted data"), tabSSL);
+  connect(mWarnOnUnencrypted, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addWidget(mWarnOnUnencrypted, 6, 0);
   whatstr = i18n("If selected, you will be notified before sending"
                 " unencrypted data via a web browser.");
-  QWhatsThis::add(mWarnOnUnencrypted, whatstr);
+  TQWhatsThis::add(mWarnOnUnencrypted, whatstr);
 
 #if 0  // NOT IMPLEMENTED IN KDE 3.0
-  mWarnOnMixed = new QCheckBox(i18n("Warn on &mixed SSL/non-SSL pages"), tabSSL);
-  connect(mWarnOnMixed, SIGNAL(clicked()), SLOT(configChanged()));
+  mWarnOnMixed = new TQCheckBox(i18n("Warn on &mixed SSL/non-SSL pages"), tabSSL);
+  connect(mWarnOnMixed, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addWidget(mWarnOnMixed, 6, 1);
   whatstr = i18n("If selected, you will be notified if you view a page"
                 " that has both encrypted and non-encrypted parts.");
-  QWhatsThis::add(mWarnOnMixed, whatstr);
+  TQWhatsThis::add(mWarnOnMixed, whatstr);
 #endif
 
   ///////////////////////////////////////////////////////////////////////////
@@ -388,50 +388,50 @@ QString whatstr;
   ///////////////////////////////////////////////////////////////////////////
 
 #ifdef HAVE_SSL
-  tabOSSL = new QFrame(this);
-  QBoxLayout *vbox = new QVBoxLayout(tabOSSL, KDialog::marginHint(), KDialog::spacingHint());
+  tabOSSL = new TQFrame(this);
+  TQBoxLayout *vbox = new TQVBoxLayout(tabOSSL, KDialog::marginHint(), KDialog::spacingHint());
 
-  oInfo = new QVGroupBox(i18n("Path to OpenSSL Shared Libraries"), tabOSSL);
+  oInfo = new TQVGroupBox(i18n("Path to OpenSSL Shared Libraries"), tabOSSL);
   vbox->addWidget(oInfo);
   oPath = new KURLRequester(oInfo);
   oPath->setMode(KFile::Directory);
-  oTest = new QPushButton(i18n("&Test"), oInfo);
-  connect(oTest, SIGNAL(clicked()), SLOT(slotTestOSSL()));
+  oTest = new TQPushButton(i18n("&Test"), oInfo);
+  connect(oTest, TQT_SIGNAL(clicked()), TQT_SLOT(slotTestOSSL()));
 
-  connect(oPath, SIGNAL(textChanged(const QString&)), SLOT(configChanged()));
+  connect(oPath, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(configChanged()));
 
   //
   //  Settings for the EGD
   //
-  QFrame *eFrame = new QFrame(tabOSSL);
-  QVBoxLayout *egrid = new QVBoxLayout(eFrame);
-  mUseEGD = new QCheckBox(i18n("Use EGD"), eFrame);
-  connect(mUseEGD, SIGNAL(clicked()), SLOT(slotUseEGD()));
-  mUseEFile = new QCheckBox(i18n("Use entropy file"), eFrame);
-  connect(mUseEFile, SIGNAL(clicked()), SLOT(slotUseEFile()));
+  TQFrame *eFrame = new TQFrame(tabOSSL);
+  TQVBoxLayout *egrid = new TQVBoxLayout(eFrame);
+  mUseEGD = new TQCheckBox(i18n("Use EGD"), eFrame);
+  connect(mUseEGD, TQT_SIGNAL(clicked()), TQT_SLOT(slotUseEGD()));
+  mUseEFile = new TQCheckBox(i18n("Use entropy file"), eFrame);
+  connect(mUseEFile, TQT_SIGNAL(clicked()), TQT_SLOT(slotUseEFile()));
   vbox->addWidget(eFrame);
   egrid->addWidget(mUseEGD);
   egrid->addWidget(mUseEFile);
-  QFrame *egdframe = new QFrame(tabOSSL);
-  QGridLayout *grid2 = new QGridLayout(egdframe, 2, 2, KDialog::marginHint(),
+  TQFrame *egdframe = new TQFrame(tabOSSL);
+  TQGridLayout *grid2 = new TQGridLayout(egdframe, 2, 2, KDialog::marginHint(),
                                                        KDialog::spacingHint());
-  mEGDLabel = new QLabel(i18n("Path to EGD:"), egdframe);
+  mEGDLabel = new TQLabel(i18n("Path to EGD:"), egdframe);
   grid2->addWidget(mEGDLabel, 0, 0);
   mEGDPath = new KURLRequester(egdframe);
   grid2->addWidget(mEGDPath, 0, 1);
-  connect(mEGDPath, SIGNAL(textChanged(const QString&)), SLOT(configChanged()));
+  connect(mEGDPath, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(configChanged()));
   vbox->addWidget(egdframe);
   whatstr = i18n("If selected, OpenSSL will be asked to use the entropy gathering"
           " daemon (EGD) for initializing the pseudo-random number generator.");
-  QWhatsThis::add(mUseEGD, whatstr);
+  TQWhatsThis::add(mUseEGD, whatstr);
   whatstr = i18n("If selected, OpenSSL will be asked to use the given file"
           " as entropy for initializing the pseudo-random number generator.");
-  QWhatsThis::add(mUseEFile, whatstr);
+  TQWhatsThis::add(mUseEFile, whatstr);
   whatstr = i18n("Enter the path to the socket created by the entropy gathering"
                 " daemon (or the entropy file) here.");
-  QWhatsThis::add(mEGDPath, whatstr);
+  TQWhatsThis::add(mEGDPath, whatstr);
   whatstr = i18n("Click here to browse for the EGD socket file.");
-  QWhatsThis::add(mEGDPath, whatstr);
+  TQWhatsThis::add(mEGDPath, whatstr);
 
   vbox->addStretch();
 #endif
@@ -441,85 +441,85 @@ QString whatstr;
   ///////////////////////////////////////////////////////////////////////////
   // THIRD TAB
   ///////////////////////////////////////////////////////////////////////////
-  tabYourSSLCert = new QFrame(this);
+  tabYourSSLCert = new TQFrame(this);
 
 #ifdef HAVE_SSL
-  grid = new QGridLayout(tabYourSSLCert, 16, 6, KDialog::marginHint(), KDialog::spacingHint() );
+  grid = new TQGridLayout(tabYourSSLCert, 16, 6, KDialog::marginHint(), KDialog::spacingHint() );
 
-  yourSSLBox = new QListView(tabYourSSLCert);
+  yourSSLBox = new TQListView(tabYourSSLCert);
   yourSSLBox->setAllColumnsShowFocus(true);
   whatstr = i18n("This list box shows which certificates of yours KDE"
                 " knows about. You can easily manage them from here.");
-  QWhatsThis::add(yourSSLBox, whatstr);
+  TQWhatsThis::add(yourSSLBox, whatstr);
   grid->addMultiCellWidget(yourSSLBox, 0, 5, 0, 4);
   yourSSLBox->addColumn(i18n("Common Name"));
   yourSSLBox->addColumn(i18n("Email Address"));
-  connect(yourSSLBox, SIGNAL(selectionChanged()), SLOT(slotYourCertSelect()));
+  connect(yourSSLBox, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotYourCertSelect()));
 
-  yourSSLImport = new QPushButton(i18n("I&mport..."), tabYourSSLCert);
-  connect(yourSSLImport, SIGNAL(clicked()), SLOT(slotYourImport()));
+  yourSSLImport = new TQPushButton(i18n("I&mport..."), tabYourSSLCert);
+  connect(yourSSLImport, TQT_SIGNAL(clicked()), TQT_SLOT(slotYourImport()));
   grid->addWidget(yourSSLImport, 0, 5);
 
-  yourSSLExport = new QPushButton(i18n("&Export..."), tabYourSSLCert);
+  yourSSLExport = new TQPushButton(i18n("&Export..."), tabYourSSLCert);
   yourSSLExport->setEnabled(false);
-  connect(yourSSLExport, SIGNAL(clicked()), SLOT(slotYourExport()));
+  connect(yourSSLExport, TQT_SIGNAL(clicked()), TQT_SLOT(slotYourExport()));
   grid->addWidget(yourSSLExport, 1, 5);
 
-  yourSSLRemove = new QPushButton(i18n("Remo&ve"), tabYourSSLCert);
+  yourSSLRemove = new TQPushButton(i18n("Remo&ve"), tabYourSSLCert);
   yourSSLRemove->setEnabled(false);
-  connect(yourSSLRemove, SIGNAL(clicked()), SLOT(slotYourRemove()));
+  connect(yourSSLRemove, TQT_SIGNAL(clicked()), TQT_SLOT(slotYourRemove()));
   grid->addWidget(yourSSLRemove, 2, 5);
 
-  yourSSLUnlock = new QPushButton(i18n("&Unlock"), tabYourSSLCert);
+  yourSSLUnlock = new TQPushButton(i18n("&Unlock"), tabYourSSLCert);
   yourSSLUnlock->setEnabled(false);
-  connect(yourSSLUnlock, SIGNAL(clicked()), SLOT(slotYourUnlock()));
+  connect(yourSSLUnlock, TQT_SIGNAL(clicked()), TQT_SLOT(slotYourUnlock()));
   grid->addWidget(yourSSLUnlock, 3, 5);
 
-  yourSSLVerify = new QPushButton(i18n("Verif&y"), tabYourSSLCert);
+  yourSSLVerify = new TQPushButton(i18n("Verif&y"), tabYourSSLCert);
   yourSSLVerify->setEnabled(false);
-  connect(yourSSLVerify, SIGNAL(clicked()), SLOT(slotYourVerify()));
+  connect(yourSSLVerify, TQT_SIGNAL(clicked()), TQT_SLOT(slotYourVerify()));
   grid->addWidget(yourSSLVerify, 4, 5);
 
-  yourSSLPass = new QPushButton(i18n("Chan&ge Password..."), tabYourSSLCert);
+  yourSSLPass = new TQPushButton(i18n("Chan&ge Password..."), tabYourSSLCert);
   yourSSLPass->setEnabled(false);
-  connect(yourSSLPass, SIGNAL(clicked()), SLOT(slotYourPass()));
+  connect(yourSSLPass, TQT_SIGNAL(clicked()), TQT_SLOT(slotYourPass()));
   grid->addWidget(yourSSLPass, 5, 5);
 
   grid->addMultiCellWidget(new KSeparator(KSeparator::HLine, tabYourSSLCert), 6, 6, 0, 5);
-  ySubject = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, QString(QString::null));
-  yIssuer = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, QString(QString::null));
+  ySubject = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, TQString(TQString::null));
+  yIssuer = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, TQString(TQString::null));
   grid->addMultiCellWidget(ySubject, 7, 11, 0, 2);
   grid->addMultiCellWidget(yIssuer, 7, 11, 3, 5);
   whatstr = i18n("This is the information known about the owner of the certificate.");
-  QWhatsThis::add(ySubject, whatstr);
+  TQWhatsThis::add(ySubject, whatstr);
   whatstr = i18n("This is the information known about the issuer of the certificate.");
-  QWhatsThis::add(yIssuer, whatstr);
+  TQWhatsThis::add(yIssuer, whatstr);
 
-  grid->addWidget(new QLabel(i18n("Valid from:"), tabYourSSLCert), 12, 0);
-  grid->addWidget(new QLabel(i18n("Valid until:"), tabYourSSLCert), 13, 0);
-  yValidFrom = new QLabel(tabYourSSLCert);
+  grid->addWidget(new TQLabel(i18n("Valid from:"), tabYourSSLCert), 12, 0);
+  grid->addWidget(new TQLabel(i18n("Valid until:"), tabYourSSLCert), 13, 0);
+  yValidFrom = new TQLabel(tabYourSSLCert);
   grid->addWidget(yValidFrom, 12, 1);
-  yValidUntil = new QLabel(tabYourSSLCert);
+  yValidUntil = new TQLabel(tabYourSSLCert);
   grid->addWidget(yValidUntil, 13, 1);
   whatstr = i18n("The certificate is valid starting at this date.");
-  QWhatsThis::add(yValidFrom, whatstr);
+  TQWhatsThis::add(yValidFrom, whatstr);
   whatstr = i18n("The certificate is valid until this date.");
-  QWhatsThis::add(yValidUntil, whatstr);
-  grid->addWidget(new QLabel(i18n("MD5 digest:"), tabYourSSLCert), 14, 0);
-  yHash = new QLabel(tabYourSSLCert);
+  TQWhatsThis::add(yValidUntil, whatstr);
+  grid->addWidget(new TQLabel(i18n("MD5 digest:"), tabYourSSLCert), 14, 0);
+  yHash = new TQLabel(tabYourSSLCert);
   grid->addWidget(yHash, 14, 1);
   whatstr = i18n("A hash of the certificate used to identify it quickly.");
-  QWhatsThis::add(yHash, whatstr);
+  TQWhatsThis::add(yHash, whatstr);
 
 #if 0
-  QHButtonGroup *ocbg = new QHButtonGroup(i18n("On SSL Connection..."), tabYourSSLCert);
-  yourSSLUseDefault = new QRadioButton(i18n("&Use default certificate"), ocbg);
-  yourSSLList = new QRadioButton(i18n("&List upon connection"), ocbg);
-  yourSSLDont = new QRadioButton(i18n("&Do not use certificates"), ocbg);
+  TQHButtonGroup *ocbg = new TQHButtonGroup(i18n("On SSL Connection..."), tabYourSSLCert);
+  yourSSLUseDefault = new TQRadioButton(i18n("&Use default certificate"), ocbg);
+  yourSSLList = new TQRadioButton(i18n("&List upon connection"), ocbg);
+  yourSSLDont = new TQRadioButton(i18n("&Do not use certificates"), ocbg);
   grid->addMultiCellWidget(ocbg, 14, 14, 0, 5);
 #endif
 #else
-  nossllabel = new QLabel(i18n("SSL certificates cannot be managed"
+  nossllabel = new TQLabel(i18n("SSL certificates cannot be managed"
                                " because this module was not linked"
                                " with OpenSSL."), tabYourSSLCert);
   grid->addMultiCellWidget(nossllabel, 3, 3, 0, 5);
@@ -529,48 +529,48 @@ QString whatstr;
   ///////////////////////////////////////////////////////////////////////////
   // FOURTH TAB
   ///////////////////////////////////////////////////////////////////////////
-  tabAuth = new QFrame(this);
+  tabAuth = new TQFrame(this);
 
 #ifdef HAVE_SSL
-  grid = new QGridLayout(tabAuth, 20, 6, KDialog::marginHint(), KDialog::spacingHint());
+  grid = new TQGridLayout(tabAuth, 20, 6, KDialog::marginHint(), KDialog::spacingHint());
 
-  grid->addMultiCellWidget(new QLabel(i18n("Default Authentication Certificate"), tabAuth), 0, 0, 0, 2);
-  defCertBG = new QVButtonGroup(i18n("Default Action"), tabAuth);
-  defSend = new QRadioButton(i18n("&Send"), defCertBG);
-  defPrompt = new QRadioButton(i18n("&Prompt"), defCertBG);
-  defDont = new QRadioButton(i18n("Do &not send"), defCertBG);
+  grid->addMultiCellWidget(new TQLabel(i18n("Default Authentication Certificate"), tabAuth), 0, 0, 0, 2);
+  defCertBG = new TQVButtonGroup(i18n("Default Action"), tabAuth);
+  defSend = new TQRadioButton(i18n("&Send"), defCertBG);
+  defPrompt = new TQRadioButton(i18n("&Prompt"), defCertBG);
+  defDont = new TQRadioButton(i18n("Do &not send"), defCertBG);
   grid->addMultiCellWidget(defCertBG, 1, 3, 0, 2);
-  grid->addMultiCellWidget(new QLabel(i18n("Default certificate:"), tabAuth), 1, 1, 3, 5);
+  grid->addMultiCellWidget(new TQLabel(i18n("Default certificate:"), tabAuth), 1, 1, 3, 5);
   defCertBox = new KComboBox(false, tabAuth);
   grid->addMultiCellWidget(defCertBox, 2, 2, 3, 5);
 
   grid->addMultiCellWidget(new KSeparator(KSeparator::HLine, tabAuth), 4, 4, 0, 5);
 
 
-  grid->addMultiCellWidget(new QLabel(i18n("Host authentication:"), tabAuth), 5, 5, 0, 1);
-  hostAuthList = new QListView(tabAuth);
+  grid->addMultiCellWidget(new TQLabel(i18n("Host authentication:"), tabAuth), 5, 5, 0, 1);
+  hostAuthList = new TQListView(tabAuth);
   hostAuthList->setAllColumnsShowFocus(true);
   grid->addMultiCellWidget(hostAuthList, 6, 13, 0, 5);
   hostAuthList->addColumn(i18n("Host"));
   hostAuthList->addColumn(i18n("Certificate"));
   hostAuthList->addColumn(i18n("Policy"));
 
-  grid->addWidget(new QLabel(i18n("Host:"), tabAuth), 14, 0);
-  grid->addWidget(new QLabel(i18n("Certificate:"), tabAuth), 15, 0);
+  grid->addWidget(new TQLabel(i18n("Host:"), tabAuth), 14, 0);
+  grid->addWidget(new TQLabel(i18n("Certificate:"), tabAuth), 15, 0);
 
-  authHost = new QLineEdit(tabAuth);
+  authHost = new TQLineEdit(tabAuth);
   grid->addMultiCellWidget(authHost, 14, 14, 1, 4);
   hostCertBox = new KComboBox(false, tabAuth);
   grid->addMultiCellWidget(hostCertBox, 15, 15, 1, 4);
 
-  hostCertBG = new QHButtonGroup(i18n("Action"), tabAuth);
-  hostSend = new QRadioButton(i18n("Send"), hostCertBG);
-  hostPrompt = new QRadioButton(i18n("Prompt"), hostCertBG);
-  hostDont = new QRadioButton(i18n("Do not send"), hostCertBG);
+  hostCertBG = new TQHButtonGroup(i18n("Action"), tabAuth);
+  hostSend = new TQRadioButton(i18n("Send"), hostCertBG);
+  hostPrompt = new TQRadioButton(i18n("Prompt"), hostCertBG);
+  hostDont = new TQRadioButton(i18n("Do not send"), hostCertBG);
   grid->addMultiCellWidget(hostCertBG, 16, 16, 0, 5);
 
-  authAdd = new QPushButton(i18n("Ne&w"), tabAuth);
-  authRemove = new QPushButton(i18n("Remo&ve"), tabAuth);
+  authAdd = new TQPushButton(i18n("Ne&w"), tabAuth);
+  authRemove = new TQPushButton(i18n("Remo&ve"), tabAuth);
   grid->addWidget(authAdd, 17, 4);
   grid->addWidget(authRemove, 17, 5);
 
@@ -579,17 +579,17 @@ QString whatstr;
   hostCertBG->setEnabled(false);
   authRemove->setEnabled(false);
 
-  connect(defCertBox, SIGNAL(activated(int)), this, SLOT(configChanged()));
-  connect(defCertBG, SIGNAL(clicked(int)), this, SLOT(configChanged()));
-  connect(hostAuthList, SIGNAL(selectionChanged()), this, SLOT(slotAuthItemChanged()));
-  connect(authAdd, SIGNAL(clicked()), this, SLOT(slotNewHostAuth()));
-  connect(authRemove, SIGNAL(clicked()), this, SLOT(slotRemoveHostAuth()));
-  connect(authHost, SIGNAL(textChanged(const QString &)), this, SLOT(slotAuthText(const QString &)));
-  connect(hostCertBG, SIGNAL(clicked(int)), this, SLOT(slotAuthButtons()));
-  connect(hostCertBox, SIGNAL(activated(int)), this, SLOT(slotAuthCombo()));
+  connect(defCertBox, TQT_SIGNAL(activated(int)), this, TQT_SLOT(configChanged()));
+  connect(defCertBG, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(configChanged()));
+  connect(hostAuthList, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotAuthItemChanged()));
+  connect(authAdd, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotNewHostAuth()));
+  connect(authRemove, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotRemoveHostAuth()));
+  connect(authHost, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(slotAuthText(const TQString &)));
+  connect(hostCertBG, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(slotAuthButtons()));
+  connect(hostCertBox, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotAuthCombo()));
 
 #else
-  nossllabel = new QLabel(i18n("SSL certificates cannot be managed"
+  nossllabel = new TQLabel(i18n("SSL certificates cannot be managed"
                                " because this module was not linked"
                                " with OpenSSL."), tabAuth);
   grid->addMultiCellWidget(nossllabel, 3, 3, 0, 5);
@@ -600,112 +600,112 @@ QString whatstr;
   ///////////////////////////////////////////////////////////////////////////
   // FIFTH TAB
   ///////////////////////////////////////////////////////////////////////////
-  tabOtherSSLCert = new QFrame(this);
+  tabOtherSSLCert = new TQFrame(this);
 
 #ifdef HAVE_SSL
-  oGrid = grid = new QGridLayout(tabOtherSSLCert, 21, 6, KDialog::marginHint(), KDialog::spacingHint());
+  oGrid = grid = new TQGridLayout(tabOtherSSLCert, 21, 6, KDialog::marginHint(), KDialog::spacingHint());
 
-  otherSSLBox = new QListView(tabOtherSSLCert);
+  otherSSLBox = new TQListView(tabOtherSSLCert);
   otherSSLBox->setAllColumnsShowFocus(true);
-  connect(otherSSLBox, SIGNAL(selectionChanged()), SLOT(slotOtherCertSelect()));
+  connect(otherSSLBox, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotOtherCertSelect()));
   whatstr = i18n("This list box shows which site and person certificates KDE"
                 " knows about. You can easily manage them from here.");
-  QWhatsThis::add(otherSSLBox, whatstr);
+  TQWhatsThis::add(otherSSLBox, whatstr);
   otherSSLBox->addColumn(i18n("Organization"));
   otherSSLBox->addColumn(i18n("Common Name"));
   grid->addMultiCellWidget(otherSSLBox, 0, 7, 0, 4);
 
-  otherSSLExport = new QPushButton(i18n("&Export..."), tabOtherSSLCert);
-  connect(otherSSLExport, SIGNAL(clicked()), SLOT(slotExportCert()));
+  otherSSLExport = new TQPushButton(i18n("&Export..."), tabOtherSSLCert);
+  connect(otherSSLExport, TQT_SIGNAL(clicked()), TQT_SLOT(slotExportCert()));
   grid->addWidget(otherSSLExport, 0, 5);
   whatstr = i18n("This button allows you to export the selected certificate"
                 " to a file of various formats.");
-  QWhatsThis::add(otherSSLExport, whatstr);
+  TQWhatsThis::add(otherSSLExport, whatstr);
 
-  otherSSLRemove = new QPushButton(i18n("&Remove"), tabOtherSSLCert);
-  connect(otherSSLRemove, SIGNAL(clicked()), SLOT(slotRemoveCert()));
+  otherSSLRemove = new TQPushButton(i18n("&Remove"), tabOtherSSLCert);
+  connect(otherSSLRemove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveCert()));
   grid->addWidget(otherSSLRemove, 1, 5);
   whatstr = i18n("This button removes the selected certificate"
                 " from the certificate cache.");
-  QWhatsThis::add(otherSSLRemove, whatstr);
+  TQWhatsThis::add(otherSSLRemove, whatstr);
 
-  otherSSLVerify = new QPushButton(i18n("&Verify"), tabOtherSSLCert);
-  connect(otherSSLVerify, SIGNAL(clicked()), SLOT(slotVerifyCert()));
+  otherSSLVerify = new TQPushButton(i18n("&Verify"), tabOtherSSLCert);
+  connect(otherSSLVerify, TQT_SIGNAL(clicked()), TQT_SLOT(slotVerifyCert()));
   grid->addWidget(otherSSLVerify, 2, 5);
   whatstr = i18n("This button tests the selected certificate"
                 " for validity.");
-  QWhatsThis::add(otherSSLVerify, whatstr);
+  TQWhatsThis::add(otherSSLVerify, whatstr);
 
       otherSSLExport->setEnabled(false);
       otherSSLVerify->setEnabled(false);
       otherSSLRemove->setEnabled(false);
 
   grid->addMultiCellWidget(new KSeparator(KSeparator::HLine, tabOtherSSLCert), 8, 8, 0, 5);
-  oSubject = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, QString(QString::null));
-  oIssuer = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, QString(QString::null));
+  oSubject = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, TQString(TQString::null));
+  oIssuer = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, TQString(TQString::null));
   grid->addMultiCellWidget(oSubject, 9, 13, 0, 2);
   grid->addMultiCellWidget(oIssuer, 9, 13, 3, 5);
   whatstr = i18n("This is the information known about the owner of the certificate.");
-  QWhatsThis::add(oSubject, whatstr);
+  TQWhatsThis::add(oSubject, whatstr);
   whatstr = i18n("This is the information known about the issuer of the certificate.");
-  QWhatsThis::add(oIssuer, whatstr);
+  TQWhatsThis::add(oIssuer, whatstr);
 
-  fromLabel = new QLabel(i18n("Valid from:"), tabOtherSSLCert);
-  untilLabel = new QLabel(i18n("Valid until:"), tabOtherSSLCert);
+  fromLabel = new TQLabel(i18n("Valid from:"), tabOtherSSLCert);
+  untilLabel = new TQLabel(i18n("Valid until:"), tabOtherSSLCert);
   grid->addWidget(fromLabel, 14, 0);
   grid->addWidget(untilLabel, 15, 0);
   fromLabel->setEnabled(false);
   untilLabel->setEnabled(false);
-  validFrom = new QLabel(tabOtherSSLCert);
+  validFrom = new TQLabel(tabOtherSSLCert);
   grid->addWidget(validFrom, 14, 1);
-  validUntil = new QLabel(tabOtherSSLCert);
+  validUntil = new TQLabel(tabOtherSSLCert);
   grid->addWidget(validUntil, 15, 1);
   whatstr = i18n("The certificate is valid starting at this date.");
-  QWhatsThis::add(validFrom, whatstr);
+  TQWhatsThis::add(validFrom, whatstr);
   whatstr = i18n("The certificate is valid until this date.");
-  QWhatsThis::add(validUntil, whatstr);
+  TQWhatsThis::add(validUntil, whatstr);
 
-  cacheGroup = new QVButtonGroup(i18n("Cache"), tabOtherSSLCert);
-  cachePerm = new QRadioButton(i18n("Permanentl&y"), cacheGroup);
-  cacheUntil = new QRadioButton(i18n("&Until"), cacheGroup);
-  untilDate = new KURLLabel(QString::null, QString::null, cacheGroup);
+  cacheGroup = new TQVButtonGroup(i18n("Cache"), tabOtherSSLCert);
+  cachePerm = new TQRadioButton(i18n("Permanentl&y"), cacheGroup);
+  cacheUntil = new TQRadioButton(i18n("&Until"), cacheGroup);
+  untilDate = new KURLLabel(TQString::null, TQString::null, cacheGroup);
   cacheGroup->setEnabled(false);
   grid->addMultiCellWidget(cacheGroup, 16, 19, 0, 2);
 
   cachePerm->setEnabled(false);
   cacheUntil->setEnabled(false);
   untilDate->setEnabled(false);
-  connect(cachePerm, SIGNAL(clicked()), SLOT(slotPermanent()));
-  connect(cacheUntil, SIGNAL(clicked()), SLOT(slotUntil()));
-  connect(untilDate, SIGNAL(leftClickedURL()), SLOT(slotDatePick()));
+  connect(cachePerm, TQT_SIGNAL(clicked()), TQT_SLOT(slotPermanent()));
+  connect(cacheUntil, TQT_SIGNAL(clicked()), TQT_SLOT(slotUntil()));
+  connect(untilDate, TQT_SIGNAL(leftClickedURL()), TQT_SLOT(slotDatePick()));
   whatstr = i18n("Select here to make the cache entry permanent.");
-  QWhatsThis::add(cachePerm, whatstr);
+  TQWhatsThis::add(cachePerm, whatstr);
   whatstr = i18n("Select here to make the cache entry temporary.");
-  QWhatsThis::add(cacheUntil, whatstr);
+  TQWhatsThis::add(cacheUntil, whatstr);
   whatstr = i18n("The date and time until the certificate cache entry should expire.");
-  QWhatsThis::add(untilDate, whatstr);
+  TQWhatsThis::add(untilDate, whatstr);
 
-  policyGroup = new QVButtonGroup(i18n("Policy"), tabOtherSSLCert);
-  policyAccept = new QRadioButton(i18n("Accep&t"), policyGroup);
-  policyReject = new QRadioButton(i18n("Re&ject"), policyGroup);
-  policyPrompt = new QRadioButton(i18n("&Prompt"), policyGroup);
+  policyGroup = new TQVButtonGroup(i18n("Policy"), tabOtherSSLCert);
+  policyAccept = new TQRadioButton(i18n("Accep&t"), policyGroup);
+  policyReject = new TQRadioButton(i18n("Re&ject"), policyGroup);
+  policyPrompt = new TQRadioButton(i18n("&Prompt"), policyGroup);
   policyGroup->setEnabled(false);
   grid->addMultiCellWidget(policyGroup, 16, 19, 3, 5);
-  connect(policyGroup, SIGNAL(clicked(int)), SLOT(slotPolicyChanged(int)));
+  connect(policyGroup, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotPolicyChanged(int)));
   whatstr = i18n("Select this to always accept this certificate.");
-  QWhatsThis::add(policyAccept, whatstr);
+  TQWhatsThis::add(policyAccept, whatstr);
   whatstr = i18n("Select this to always reject this certificate.");
-  QWhatsThis::add(policyReject, whatstr);
+  TQWhatsThis::add(policyReject, whatstr);
   whatstr = i18n("Select this if you wish to be prompted for action when receiving this certificate.");
-  QWhatsThis::add(policyPrompt, whatstr);
-  grid->addWidget(new QLabel(i18n("MD5 digest:"), tabOtherSSLCert), 20, 0);
-  pHash = new QLabel(tabOtherSSLCert);
+  TQWhatsThis::add(policyPrompt, whatstr);
+  grid->addWidget(new TQLabel(i18n("MD5 digest:"), tabOtherSSLCert), 20, 0);
+  pHash = new TQLabel(tabOtherSSLCert);
   grid->addWidget(pHash, 20, 1);
   whatstr = i18n("A hash of the certificate used to identify it quickly.");
-  QWhatsThis::add(pHash, whatstr);
+  TQWhatsThis::add(pHash, whatstr);
 
 #else
-  nossllabel = new QLabel(i18n("SSL certificates cannot be managed"
+  nossllabel = new TQLabel(i18n("SSL certificates cannot be managed"
                                " because this module was not linked"
                                " with OpenSSL."), tabOtherSSLCert);
   grid->addMultiCellWidget(nossllabel, 1, 1, 0, 1);
@@ -715,61 +715,61 @@ QString whatstr;
   ///////////////////////////////////////////////////////////////////////////
   // SIXTH TAB
   ///////////////////////////////////////////////////////////////////////////
-  tabSSLCA = new QFrame(this);
+  tabSSLCA = new TQFrame(this);
 
 #ifdef HAVE_SSL
-  grid = new QGridLayout(tabSSLCA, 11, 8, KDialog::marginHint(), KDialog::spacingHint());
+  grid = new TQGridLayout(tabSSLCA, 11, 8, KDialog::marginHint(), KDialog::spacingHint());
 
-  caList = new QListView(tabSSLCA);
+  caList = new TQListView(tabSSLCA);
   caList->setAllColumnsShowFocus(true);
   whatstr = i18n("This list box shows which certificate authorities KDE"
                  " knows about. You can easily manage them from here.");
-  QWhatsThis::add(caList, whatstr);
+  TQWhatsThis::add(caList, whatstr);
   grid->addMultiCellWidget(caList, 0, 3, 0, 6);
   caList->addColumn(i18n("Organization"));
   caList->addColumn(i18n("Organizational Unit"));
   caList->addColumn(i18n("Common Name"));
-  connect(caList, SIGNAL(selectionChanged()), SLOT(slotCAItemChanged()));
+  connect(caList, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotCAItemChanged()));
 
-  caSSLImport = new QPushButton(i18n("I&mport..."), tabSSLCA);
-  connect(caSSLImport, SIGNAL(clicked()), SLOT(slotCAImport()));
+  caSSLImport = new TQPushButton(i18n("I&mport..."), tabSSLCA);
+  connect(caSSLImport, TQT_SIGNAL(clicked()), TQT_SLOT(slotCAImport()));
   grid->addWidget(caSSLImport, 0, 7);
 
-  caSSLRemove = new QPushButton(i18n("&Remove"), tabSSLCA);
-  connect(caSSLRemove, SIGNAL(clicked()), SLOT(slotCARemove()));
+  caSSLRemove = new TQPushButton(i18n("&Remove"), tabSSLCA);
+  connect(caSSLRemove, TQT_SIGNAL(clicked()), TQT_SLOT(slotCARemove()));
   grid->addWidget(caSSLRemove, 1, 7);
   caSSLRemove->setEnabled(false);
 
-  caSSLRestore = new QPushButton(i18n("Res&tore"), tabSSLCA);
-  connect(caSSLRestore, SIGNAL(clicked()), SLOT(slotCARestore()));
+  caSSLRestore = new TQPushButton(i18n("Res&tore"), tabSSLCA);
+  connect(caSSLRestore, TQT_SIGNAL(clicked()), TQT_SLOT(slotCARestore()));
   grid->addWidget(caSSLRestore, 2, 7);
 
-  caSubject = KSSLInfoDlg::certInfoWidget(tabSSLCA, QString(QString::null));
-  caIssuer = KSSLInfoDlg::certInfoWidget(tabSSLCA, QString(QString::null));
+  caSubject = KSSLInfoDlg::certInfoWidget(tabSSLCA, TQString(TQString::null));
+  caIssuer = KSSLInfoDlg::certInfoWidget(tabSSLCA, TQString(TQString::null));
   grid->addMultiCellWidget(caSubject, 4, 6, 0, 3);
   grid->addMultiCellWidget(caIssuer, 4, 6, 4, 7);
 
   // Accept for Web Site Signing, Email Signing, Code Signing
-  caSite = new QCheckBox(i18n("Accept for site signing"), tabSSLCA);
-  caEmail = new QCheckBox(i18n("Accept for email signing"), tabSSLCA);
-  caCode = new QCheckBox(i18n("Accept for code signing"), tabSSLCA);
+  caSite = new TQCheckBox(i18n("Accept for site signing"), tabSSLCA);
+  caEmail = new TQCheckBox(i18n("Accept for email signing"), tabSSLCA);
+  caCode = new TQCheckBox(i18n("Accept for code signing"), tabSSLCA);
   grid->addMultiCellWidget(caSite, 7, 7, 0, 3);
-  connect(caSite, SIGNAL(clicked()), SLOT(slotCAChecked()));
+  connect(caSite, TQT_SIGNAL(clicked()), TQT_SLOT(slotCAChecked()));
   grid->addMultiCellWidget(caEmail, 8, 8, 0, 3);
-  connect(caEmail, SIGNAL(clicked()), SLOT(slotCAChecked()));
+  connect(caEmail, TQT_SIGNAL(clicked()), TQT_SLOT(slotCAChecked()));
   grid->addMultiCellWidget(caCode, 9, 9, 0, 3);
-  connect(caCode, SIGNAL(clicked()), SLOT(slotCAChecked()));
+  connect(caCode, TQT_SIGNAL(clicked()), TQT_SLOT(slotCAChecked()));
   caSite->setEnabled(false);
   caEmail->setEnabled(false);
   caCode->setEnabled(false);
-  grid->addWidget(new QLabel(i18n("MD5 digest:"), tabSSLCA), 10, 0);
-  cHash = new QLabel(tabSSLCA);
+  grid->addWidget(new TQLabel(i18n("MD5 digest:"), tabSSLCA), 10, 0);
+  cHash = new TQLabel(tabSSLCA);
   grid->addWidget(cHash, 10, 1);
   whatstr = i18n("A hash of the certificate used to identify it quickly.");
-  QWhatsThis::add(cHash, whatstr);
+  TQWhatsThis::add(cHash, whatstr);
 
 #else
-  nossllabel = new QLabel(i18n("SSL certificates cannot be managed"
+  nossllabel = new TQLabel(i18n("SSL certificates cannot be managed"
                                " because this module was not linked"
                                " with OpenSSL."), tabSSLCA);
   grid->addMultiCellWidget(nossllabel, 1, 1, 0, 1);
@@ -780,46 +780,46 @@ QString whatstr;
   ///////////////////////////////////////////////////////////////////////////
   // SEVENTH TAB
   ///////////////////////////////////////////////////////////////////////////
-  tabSSLCOpts = new QFrame(this);
+  tabSSLCOpts = new TQFrame(this);
 
 #ifdef HAVE_SSL
-  grid = new QGridLayout(tabSSLCOpts, 9, 4, KDialog::marginHint(), KDialog::spacingHint());
-  mWarnSelfSigned = new QCheckBox(i18n("Warn on &self-signed certificates or unknown CA's"), tabSSLCOpts);
-  connect(mWarnSelfSigned, SIGNAL(clicked()), SLOT(configChanged()));
-  mWarnExpired = new QCheckBox(i18n("Warn on &expired certificates"), tabSSLCOpts);
-  connect(mWarnExpired, SIGNAL(clicked()), SLOT(configChanged()));
-  mWarnRevoked = new QCheckBox(i18n("Warn on re&voked certificates"), tabSSLCOpts);
-  connect(mWarnRevoked, SIGNAL(clicked()), SLOT(configChanged()));
+  grid = new TQGridLayout(tabSSLCOpts, 9, 4, KDialog::marginHint(), KDialog::spacingHint());
+  mWarnSelfSigned = new TQCheckBox(i18n("Warn on &self-signed certificates or unknown CA's"), tabSSLCOpts);
+  connect(mWarnSelfSigned, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
+  mWarnExpired = new TQCheckBox(i18n("Warn on &expired certificates"), tabSSLCOpts);
+  connect(mWarnExpired, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
+  mWarnRevoked = new TQCheckBox(i18n("Warn on re&voked certificates"), tabSSLCOpts);
+  connect(mWarnRevoked, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()));
   grid->addMultiCellWidget(mWarnSelfSigned, 0, 0, 0, 3);
   grid->addMultiCellWidget(mWarnExpired, 1, 1, 0, 3);
   grid->addMultiCellWidget(mWarnRevoked, 2, 2, 0, 3);
 
-  macCert = new QLineEdit(tabSSLCOpts);
+  macCert = new TQLineEdit(tabSSLCOpts);
   grid->addMultiCellWidget(macCert, 4, 4, 0, 2);
 
-  macBox = new QListBox(tabSSLCOpts);
+  macBox = new TQListBox(tabSSLCOpts);
   whatstr = i18n("This list box shows which sites you have decided to accept"
                 " a certificate from even though the certificate might fail"
                 " the validation procedure.");
-  QWhatsThis::add(macBox, whatstr);
-  caSSLBox->setSelectionMode(QListBox::Single);
-  caSSLBox->setColumnMode(QListBox::FixedNumber);
+  TQWhatsThis::add(macBox, whatstr);
+  caSSLBox->setSelectionMode(TQListBox::Single);
+  caSSLBox->setColumnMode(TQListBox::FixedNumber);
   grid->addMultiCellWidget(macBox, 5, 8, 0, 2);
 
-  macAdd = new QPushButton(i18n("&Add"), tabSSLCOpts);
-  //connect(macAdd, SIGNAL(), SLOT());
+  macAdd = new TQPushButton(i18n("&Add"), tabSSLCOpts);
+  //connect(macAdd, TQT_SIGNAL(), TQT_SLOT());
   grid->addWidget(macAdd, 4, 3);
 
-  macRemove = new QPushButton(i18n("&Remove"), tabSSLCOpts);
-  //connect(macRemove, SIGNAL(), SLOT());
+  macRemove = new TQPushButton(i18n("&Remove"), tabSSLCOpts);
+  //connect(macRemove, TQT_SIGNAL(), TQT_SLOT());
   grid->addWidget(macRemove, 5, 3);
 
   macClear = new KPushButton(KGuiItem::clear(), tabSSLCOpts);
-  //connect(macAdd, SIGNAL(), SLOT());
+  //connect(macAdd, TQT_SIGNAL(), TQT_SLOT());
   grid->addWidget(macClear, 6, 3);
 
 #else
-  nossllabel = new QLabel(i18n("These options are not configurable"
+  nossllabel = new TQLabel(i18n("These options are not configurable"
                                " because this module was not linked"
                                " with OpenSSL."), tabSSLCOpts);
   grid->addMultiCellWidget(nossllabel, 1, 1, 0, 1);
@@ -932,13 +932,13 @@ void KCryptoConfig::load( bool useDefaults )
   SSLv2Box->setEnabled( mUseSSLv2->isChecked() );
   SSLv3Box->setEnabled( mUseSSLv3->isChecked() );
 
-  QStringList groups = policies->groupList();
+  TQStringList groups = policies->groupList();
 
   otherSSLBox->clear();
-  for (QStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
+  for (TQStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
     if ((*i).isEmpty() || *i == "<default>" || *i == "General") continue;
     policies->setGroup(*i);
-    KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", QString::null).local8Bit());
+    KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
     if (cert) {
       new OtherCertItem(otherSSLBox, cert->getSubject(), *i,
                         policies->readBoolEntry("Permanent", true),
@@ -951,20 +951,20 @@ void KCryptoConfig::load( bool useDefaults )
   groups = pcerts->groupList();
 
   yourSSLBox->clear();
-  for (QStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
+  for (TQStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
     if ((*i).isEmpty() || *i == "<default>") continue;
     pcerts->setGroup(*i);
     YourCertItem *j = new YourCertItem(yourSSLBox,
                      pcerts->readEntry("PKCS12Base64"),
                      pcerts->readEntry("Password"),
                      *i, this );
-    j->setPassCache(QString::null);
+    j->setPassCache(TQString::null);
   }
 
   setAuthCertLists();
 
   config->setGroup("Auth");
-  QString whichAuth = config->readEntry("AuthMethod", "none");
+  TQString whichAuth = config->readEntry("AuthMethod", "none");
   if (whichAuth == "send")
     defCertBG->setButton(defCertBG->id(defSend));
   else if (whichAuth == "prompt")
@@ -972,7 +972,7 @@ void KCryptoConfig::load( bool useDefaults )
   else
     defCertBG->setButton(defCertBG->id(defDont));
 
-  QString whichCert = config->readEntry("DefaultCert");
+  TQString whichCert = config->readEntry("DefaultCert");
   defCertBox->setCurrentItem(0);
   for (int i = 0; i < defCertBox->count(); i++) {
      if (defCertBox->text(i) == whichCert) {
@@ -982,7 +982,7 @@ void KCryptoConfig::load( bool useDefaults )
   }
   hostAuthList->clear();
   groups = authcfg->groupList();
-  for (QStringList::Iterator i = groups.begin();
+  for (TQStringList::Iterator i = groups.begin();
                              i != groups.end();
                              ++i) {
     if ((*i).isEmpty() || *i == "<default>") continue;
@@ -1003,7 +1003,7 @@ void KCryptoConfig::load( bool useDefaults )
   groups = _signers->list();
   KConfig sigcfg("ksslcalist", true, false);
   caList->clear();
-  for (QStringList::Iterator i = groups.begin();
+  for (TQStringList::Iterator i = groups.begin();
                              i != groups.end();
                              ++i) {
     if ((*i).isEmpty() || *i == "<default>") continue;
@@ -1109,7 +1109,7 @@ void KCryptoConfig::save()
   // SSL Policies code
   for (OtherCertItem *x = otherCertDelList.first(); x != 0; x = otherCertDelList.next()) {
      KSSLX509Map cert(x->configName());
-     QString thisCN = cert.getValue("CN");
+     TQString thisCN = cert.getValue("CN");
      _cc.removeByCN(thisCN);
      otherCertDelList.remove(x);
   }
@@ -1119,8 +1119,8 @@ void KCryptoConfig::save()
                                                               x;
              x = static_cast<OtherCertItem *>(x->nextSibling())) {
      KSSLX509Map cert(x->configName());
-     QString thisCN = cert.getValue("CN");
-     QDateTime expires = x->getExpires();
+     TQString thisCN = cert.getValue("CN");
+     TQDateTime expires = x->getExpires();
      _cc.modifyByCN(thisCN, (KSSLCertificateCache::KSSLCertificatePolicy)x->getPolicy(), x->isPermanent(), expires);
   }
 
@@ -1172,7 +1172,7 @@ void KCryptoConfig::save()
 
 
   config->setGroup("Auth");
-  QString whichAuth = config->readEntry("AuthMethod", "none");
+  TQString whichAuth = config->readEntry("AuthMethod", "none");
   if (defCertBG->selected() == defSend)
     config->writeEntry("AuthMethod", "send");
   else if (defCertBG->selected() == defPrompt)
@@ -1181,7 +1181,7 @@ void KCryptoConfig::save()
     config->writeEntry("AuthMethod", "none");
 
   if (defCertBox->currentItem() == 0)
-     config->writeEntry("DefaultCert", QString::null);
+     config->writeEntry("DefaultCert", TQString::null);
   else config->writeEntry("DefaultCert", defCertBox->currentText());
 
   for (HostAuthItem *x = authDelList.first(); x != 0; x = authDelList.next()) {
@@ -1215,9 +1215,9 @@ void KCryptoConfig::save()
   authcfg->sync();
 
   // insure proper permissions -- contains sensitive data
-  QString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
+  TQString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
   if (!cfgName.isEmpty())
-    ::chmod(QFile::encodeName(cfgName), 0600);
+    ::chmod(TQFile::encodeName(cfgName), 0600);
 
   emit changed(false);
 }
@@ -1331,7 +1331,7 @@ void KCryptoConfig::slotExportCert() {
 OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
    if (x) {
      policies->setGroup(x->getMD5());
-     KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", QString::null).local8Bit());
+     KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
      if (cert) {
         KCertExport kce;
         kce.setCertificate(cert);
@@ -1345,10 +1345,10 @@ OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
 
 
 void KCryptoConfig::slotRemoveCert() {
-QListViewItem *act = otherSSLBox->selectedItem();
+TQListViewItem *act = otherSSLBox->selectedItem();
 OtherCertItem *x = static_cast<OtherCertItem *>(act);
    if (x) {
-      QListViewItem *next = act->itemBelow();
+      TQListViewItem *next = act->itemBelow();
       if (!next) next = act->itemAbove();
       otherSSLBox->takeItem(x);
       otherCertDelList.append(x);
@@ -1364,7 +1364,7 @@ OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
   if (!x) return;
 
   policies->setGroup(x->getMD5());
-  KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", QString::null).local8Bit());
+  KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
 
   if (!cert) {
     KMessageBox::error(this, i18n("Error obtaining the certificate."), i18n("SSL"));
@@ -1445,7 +1445,7 @@ OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
 
    if (!x || !untilDate->isEnabled()) return;
 
-QDateTime qdt = x->getExpires();
+TQDateTime qdt = x->getExpires();
 
    kdtd.setDateTime(qdt);
    int rc = kdtd.exec();
@@ -1460,7 +1460,7 @@ QDateTime qdt = x->getExpires();
 
 void KCryptoConfig::slotOtherCertSelect() {
 OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
-QString iss = QString::null;
+TQString iss = TQString::null;
    if (x) {
       otherSSLExport->setEnabled(true);
       otherSSLVerify->setEnabled(true);
@@ -1474,37 +1474,37 @@ QString iss = QString::null;
       cacheUntil->setEnabled(true);
       policies->setGroup(x->getMD5());
 
-      KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", QString::null).local8Bit());
+      KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
 
       if (cert) {
-         QPalette cspl;
+         TQPalette cspl;
          iss = cert->getIssuer();
          cspl = validFrom->palette();
-         if (QDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
-            cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
+         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+            cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
-            cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+            cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
          }
          validFrom->setPalette(cspl);
 
          cspl = validUntil->palette();
-         if (QDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
-            cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
+         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+            cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
-            cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+            cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
          }
          validUntil->setPalette(cspl);
 
          validFrom->setText(cert->getNotBefore());
          validUntil->setText(cert->getNotAfter());
          untilDate->setText(x ? KGlobal::locale()->formatDateTime(x->getExpires())
-                              : KGlobal::locale()->formatDateTime(QDateTime::currentDateTime(Qt::UTC)));
+                              : KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime(Qt::UTC)));
          untilDate->setEnabled(x && !x->isPermanent());
          pHash->setText(cert->getMD5DigestText());
          delete cert;
       } else {
-         validFrom->setText(QString::null);
-         validUntil->setText(QString::null);
+         validFrom->setText(TQString::null);
+         validUntil->setText(TQString::null);
          pHash->clear();
       }
 
@@ -1538,15 +1538,15 @@ QString iss = QString::null;
       policyPrompt->setChecked(false);
       cachePerm->setEnabled(false);
       cacheUntil->setEnabled(false);
-      validFrom->setText(QString::null);
-      validUntil->setText(QString::null);
-      untilDate->setText(QString::null);
+      validFrom->setText(TQString::null);
+      validUntil->setText(TQString::null);
+      untilDate->setText(TQString::null);
       untilDate->setEnabled(false);
       pHash->clear();
    }
 
 
-   oSubject->setValues(x ? x->getSub() : QString(QString::null));
+   oSubject->setValues(x ? x->getSub() : TQString(TQString::null));
    oIssuer->setValues(iss);
 
 }
@@ -1554,19 +1554,19 @@ QString iss = QString::null;
 
 void KCryptoConfig::slotYourImport() {
 
-   QString certFile = KFileDialog::getOpenFileName(QString::null, "application/x-pkcs12");
+   TQString certFile = KFileDialog::getOpenFileName(TQString::null, "application/x-pkcs12");
    if (certFile.isEmpty())
       return;
 
 #ifdef HAVE_SSL
 KSSLPKCS12 *cert = NULL;
-QCString pass;
+TQCString pass;
 
 TryImportPassAgain:
    int rc = KPasswordDialog::getPassword(pass, i18n("Certificate password"));
    if (rc != KPasswordDialog::Accepted) return;
 
-   cert = KSSLPKCS12::loadCertFile(certFile, QString(pass));
+   cert = KSSLPKCS12::loadCertFile(certFile, TQString(pass));
 
    if (!cert) {
       rc = KMessageBox::warningYesNo(this, i18n("The certificate file could not be loaded. Try a different password?"), i18n("SSL"),i18n("Try"),i18n("Do Not Try"));
@@ -1581,7 +1581,7 @@ TryImportPassAgain:
    // FIXME: prompt if the user wants the password stored along with the
    //        certificate
 
-   QString name = cert->getCertificate()->getSubject();
+   TQString name = cert->getCertificate()->getSubject();
    for (YourCertItem *i =
         static_cast<YourCertItem *>(yourSSLBox->firstChild());
                                                             i;
@@ -1599,7 +1599,7 @@ TryImportPassAgain:
 
    new YourCertItem(yourSSLBox,
                     cert->toString(),
-                    QString::null,  // the password - don't store it yet!
+                    TQString::null,  // the password - don't store it yet!
                     name,
                     this );
 
@@ -1620,8 +1620,8 @@ YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
    if (!pkcs)
       pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPassCache());
    if (!pkcs) {
-      QString pprompt = i18n("Enter the certificate password:");
-      QCString oldpass;
+      TQString pprompt = i18n("Enter the certificate password:");
+      TQCString oldpass;
       do {
          int i = KPasswordDialog::getPassword(oldpass, pprompt);
          if (i != KPasswordDialog::Accepted) return;
@@ -1633,7 +1633,7 @@ YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
    }
 
   // For now, we will only export to PKCS#12
-   QString certFile = KFileDialog::getSaveFileName(QString::null,
+   TQString certFile = KFileDialog::getSaveFileName(TQString::null,
 		                                   "application/x-pkcs12");
    if (certFile.isEmpty())
       return;
@@ -1645,15 +1645,15 @@ YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
 
 void KCryptoConfig::slotYourVerify() {
 YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
-QString iss;
+TQString iss;
    if (!x) return;
 
    KSSLPKCS12 *pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPass());
    if (!pkcs)
       pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPassCache());
    if (!pkcs) {
-      QString pprompt = i18n("Enter the certificate password:");
-      QCString oldpass;
+      TQString pprompt = i18n("Enter the certificate password:");
+      TQCString oldpass;
       do {
          int i = KPasswordDialog::getPassword(oldpass, pprompt);
          if (i != KPasswordDialog::Accepted) return;
@@ -1693,15 +1693,15 @@ YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
 
 void KCryptoConfig::slotYourUnlock() {
 YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
-QString iss;
+TQString iss;
    if (!x || !yourSSLUnlock->isEnabled()) return;
 
    KSSLPKCS12 *pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPass());
    if (!pkcs)
       pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPassCache());
    if (!pkcs) {
-      QString pprompt = i18n("Enter the certificate password:");
-      QCString oldpass;
+      TQString pprompt = i18n("Enter the certificate password:");
+      TQCString oldpass;
       do {
          int i = KPasswordDialog::getPassword(oldpass, pprompt);
          if (i != KPasswordDialog::Accepted) return;
@@ -1713,23 +1713,23 @@ QString iss;
 
    // update the info
    iss = pkcs->getCertificate()->getIssuer();
-   ySubject->setValues(x ? x->getName() : QString(QString::null));
+   ySubject->setValues(x ? x->getName() : TQString(TQString::null));
    yIssuer->setValues(iss);
-   QPalette cspl;
+   TQPalette cspl;
    KSSLCertificate *cert = pkcs->getCertificate();
    cspl = yValidFrom->palette();
-   if (QDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
-	   cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
+   if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
-	   cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
    }
    yValidFrom->setPalette(cspl);
 
    cspl = yValidUntil->palette();
-   if (QDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
-	   cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
+   if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
-	   cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
    }
    yValidUntil->setPalette(cspl);
 
@@ -1743,7 +1743,7 @@ QString iss;
 
 void KCryptoConfig::slotYourCertSelect() {
 YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
-QString iss;
+TQString iss;
 
    yourSSLExport->setEnabled(x != NULL);
    yourSSLPass->setEnabled(x != NULL);
@@ -1754,22 +1754,22 @@ QString iss;
    if (x) {
       KSSLPKCS12 *pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPass());
       if (pkcs) {
-         QPalette cspl;
+         TQPalette cspl;
          KSSLCertificate *cert = pkcs->getCertificate();
          iss = cert->getIssuer();
          cspl = yValidFrom->palette();
-         if (QDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
-            cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
+         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+            cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
-            cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+            cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
          }
          yValidFrom->setPalette(cspl);
 
          cspl = yValidUntil->palette();
-         if (QDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
-            cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
+         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+            cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
-            cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+            cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
          }
          yValidUntil->setPalette(cspl);
 
@@ -1785,21 +1785,21 @@ QString iss;
       yHash->clear();
    }
 
-   ySubject->setValues(x ? x->getName() : QString(QString::null));
+   ySubject->setValues(x ? x->getName() : TQString(TQString::null));
    yIssuer->setValues(iss);
 }
 
 
 void KCryptoConfig::slotYourPass() {
 YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
-QCString oldpass = "";
+TQCString oldpass = "";
    if (!x) return;
 
    KSSLPKCS12 *pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPass());
    if (!pkcs)
       pkcs = KSSLPKCS12::fromString(x->getPKCS(), x->getPassCache());
    if (!pkcs) {
-      QString pprompt = i18n("Enter the OLD password for the certificate:");
+      TQString pprompt = i18n("Enter the OLD password for the certificate:");
       do {
          int i = KPasswordDialog::getPassword(oldpass, pprompt);
          if (i != KPasswordDialog::Accepted) break;
@@ -1817,8 +1817,8 @@ QCString oldpass = "";
 
       int i = kpd->exec();
       if (i == KPasswordDialog::Accepted) {
-         QCString pass = kpd->password();
-         pkcs->changePassword(QString(oldpass), QString(pass));
+         TQCString pass = kpd->password();
+         pkcs->changePassword(TQString(oldpass), TQString(pass));
          x->setPKCS(pkcs->toString());
          x->setPassCache(pass);
          configChanged();
@@ -1830,7 +1830,7 @@ QCString oldpass = "";
 
 
 void KCryptoConfig::slotCAImport() {
-    QString certFile = KFileDialog::getOpenFileName(QString::null, "application/x-x509-ca-cert");
+    TQString certFile = KFileDialog::getOpenFileName(TQString::null, "application/x-x509-ca-cert");
 
     if (certFile.isEmpty())
         return;
@@ -1863,7 +1863,7 @@ void KCryptoConfig::slotCAImport() {
 			// Only import CA's
 			if (!x || !x->x509V3Extensions().certTypeCA()) {
 				if (x) {
-					QString emsg = x->getSubject() + ":\n" +
+					TQString emsg = x->getSubject() + ":\n" +
 					i18n("This is not a signer certificate.");
 				 	KMessageBox::error(this,
 							   emsg,
@@ -1873,7 +1873,7 @@ void KCryptoConfig::slotCAImport() {
 				continue;
 			}
 
-			QString name = x->getSubject();
+			TQString name = x->getSubject();
 
 			// search for dups
 			for (CAItem *m = static_cast<CAItem *>(caList->firstChild());
@@ -1883,7 +1883,7 @@ void KCryptoConfig::slotCAImport() {
 				    KSSLCertificate *y = KSSLCertificate::fromString(m->getCert().local8Bit());
 				    if (!y) continue;
 				    if (*x == *y) {
-					QString emsg = name + ":\n" +
+					TQString emsg = name + ":\n" +
 						i18n("You already have this signer certificate installed.");
 				 	KMessageBox::error(this,
 							   emsg,
@@ -1911,9 +1911,9 @@ void KCryptoConfig::slotCAImport() {
 		  // Can the PEM code be wiped out now?
 	} else {   // try to load it manually as a single X.509 DER encoded
 		// ASSUMPTION: we only read one certificate in this code
-		QFile qf(certFile);
-		QString name;
-		QString certtext;
+		TQFile qf(certFile);
+		TQString name;
+		TQString certtext;
 		KSSLCertificate *x;
 		qf.open(IO_ReadOnly);
 		qf.readLine(certtext, qf.size());
@@ -1923,16 +1923,16 @@ void KCryptoConfig::slotCAImport() {
 
 		if (certtext.contains("-----BEGIN CERTIFICATE-----")) {
 			qf.reset();
-			certtext = QString::null;
+			certtext = TQString::null;
 			while (!qf.atEnd()) {
-				QString xx;
+				TQString xx;
 				qf.readLine(xx, qf.size());
 				certtext += xx;
 			}
-			certtext = certtext.replace("-----BEGIN CERTIFICATE-----", QString::null);
-			certtext = certtext.replace("-----END CERTIFICATE-----", QString::null);
+			certtext = certtext.replace("-----BEGIN CERTIFICATE-----", TQString::null);
+			certtext = certtext.replace("-----END CERTIFICATE-----", TQString::null);
 			certtext = certtext.stripWhiteSpace();
-			certtext = certtext.replace("\n", QString::null);
+			certtext = certtext.replace("\n", TQString::null);
 		} else {
 			// Must [could?] be DER
 			qf.close();
@@ -1940,7 +1940,7 @@ void KCryptoConfig::slotCAImport() {
 			char *cr;
 			cr = new char[qf.size()+1];
 			qf.readBlock(cr, qf.size());
-			QByteArray qba;
+			TQByteArray qba;
 			qba.duplicate(cr, qf.size());
 			certtext = KCodecs::base64Encode(qba);
 			delete [] cr;
@@ -2001,9 +2001,9 @@ void KCryptoConfig::slotCAImport() {
         offerImportToKMail( certFile );
 }
 
-void KCryptoConfig::offerImportToKMail( const QString& certFile )
+void KCryptoConfig::offerImportToKMail( const TQString& certFile )
 {
-    if ( KMessageBox::questionYesNo( this, i18n( "Do you want to make this certificate available to KMail as well?" ), QString::null, i18n("Make Available"), i18n("Do Not Make Available") ) == KMessageBox::Yes ) {
+    if ( KMessageBox::questionYesNo( this, i18n( "Do you want to make this certificate available to KMail as well?" ), TQString::null, i18n("Make Available"), i18n("Do Not Make Available") ) == KMessageBox::Yes ) {
        KProcess proc;
        proc << "kleopatra";
        proc << "--import-certificate";
@@ -2034,21 +2034,21 @@ void KCryptoConfig::slotCARestore() {
 
 // For now, we just rm the existing file and rebuild
 
-   QString path = KGlobal::dirs()->saveLocation("config");
+   TQString path = KGlobal::dirs()->saveLocation("config");
 
    path += "/ksslcalist";
 
-   QFile::remove(path);
+   TQFile::remove(path);
 
    // Remove all our old work and rebuild the GUI/List
    caDelList.clear();
    caList->clear();
 
 
-  QStringList groups = _signers->list();
+  TQStringList groups = _signers->list();
   KConfig sigcfg("ksslcalist", true, false);
 
-  for (QStringList::Iterator i = groups.begin();
+  for (TQStringList::Iterator i = groups.begin();
                              i != groups.end();
                              ++i) {
     if ((*i).isEmpty() || *i == "<default>") continue;
@@ -2057,7 +2057,7 @@ void KCryptoConfig::slotCARestore() {
     if (!sigcfg.hasKey("x509")) continue;
                 new CAItem(caList,
                      (*i),
-                     sigcfg.readEntry("x509", QString::null),
+                     sigcfg.readEntry("x509", TQString::null),
                      sigcfg.readBoolEntry("site", false),
                      sigcfg.readBoolEntry("email", false),
                      sigcfg.readBoolEntry("code", false),
@@ -2073,10 +2073,10 @@ void KCryptoConfig::slotCAItemChanged() {
 CAItem *x = static_cast<CAItem *>(caList->selectedItem());
  if (x) {
     caSSLRemove->setEnabled(true);
-    caSubject->setValues(x ? x->getName() : QString(QString::null));
+    caSubject->setValues(x ? x->getName() : TQString(TQString::null));
     KSSLCertificate *cert = KSSLCertificate::fromString(x->getCert().local8Bit());
     if (!cert) {
-       caIssuer->setValues(QString(QString::null));
+       caIssuer->setValues(TQString(TQString::null));
        caSite->setEnabled(false);
        caEmail->setEnabled(false);
        caCode->setEnabled(false);
@@ -2100,8 +2100,8 @@ CAItem *x = static_cast<CAItem *>(caList->selectedItem());
     caSite->setEnabled(false);
     caEmail->setEnabled(false);
     caCode->setEnabled(false);
-    caSubject->setValues(QString(QString::null));
-    caIssuer->setValues(QString(QString::null));
+    caSubject->setValues(TQString(TQString::null));
+    caIssuer->setValues(TQString(TQString::null));
     cHash->clear();
  }
 }
@@ -2122,8 +2122,8 @@ CAItem *x = static_cast<CAItem *>(caList->selectedItem());
 
 void KCryptoConfig::slotNewHostAuth() {
     HostAuthItem *j = new HostAuthItem(hostAuthList,
-                                       QString::null,
-                                       QString::null,
+                                       TQString::null,
+                                       TQString::null,
                                        this );
     j->setAction(KSSLCertificateHome::AuthSend);
     hostAuthList->setSelected(j, true);
@@ -2140,11 +2140,11 @@ void KCryptoConfig::slotNewHostAuth() {
 
 
 void KCryptoConfig::slotRemoveHostAuth() {
-QListViewItem *act = hostAuthList->selectedItem();
+TQListViewItem *act = hostAuthList->selectedItem();
 HostAuthItem *x = static_cast<HostAuthItem *>(act);
 
   if (x) {
-      QListViewItem *next = act->itemBelow();
+      TQListViewItem *next = act->itemBelow();
       if (!next) next = act->itemAbove();
       hostAuthList->takeItem(x);
       authDelList.append(x);
@@ -2187,7 +2187,7 @@ if (x) {
   ___lehack = false;
   hostCertBox->setCurrentItem(0);
 
-  QString theCert = x->getCertName();
+  TQString theCert = x->getCertName();
   for (int i = 0; i < hostCertBox->count(); i++) {
     if (hostCertBox->text(i) == theCert) {
        hostCertBox->setCurrentItem(i);
@@ -2204,7 +2204,7 @@ if (x) {
 }
 
 
-void KCryptoConfig::slotAuthText(const QString &t) {
+void KCryptoConfig::slotAuthText(const TQString &t) {
 if (___lehack) return;
 HostAuthItem *x = static_cast<HostAuthItem *>(hostAuthList->selectedItem());
 
@@ -2241,7 +2241,7 @@ HostAuthItem *x = static_cast<HostAuthItem *>(hostAuthList->selectedItem());
 
   if (x) {
     if (hostCertBox->currentItem() == 0)
-      x->setCertName(QString::null);
+      x->setCertName(TQString::null);
     else x->setCertName(hostCertBox->currentText());
     configChanged();
   }
@@ -2297,7 +2297,7 @@ void KCryptoConfig::slotUseEFile() {
 // encompassed in a separate module quite nicely.
 void KCryptoConfig::slotGeneratePersonal() {
 #if 0
-  QStringList qslCertTypes;
+  TQStringList qslCertTypes;
 
   qslCertTypes << i18n("Personal SSL")
                << i18n("Server SSL")
@@ -2342,7 +2342,7 @@ SSL_METHOD *meth;
     if (!sc)
       break;
     // Leak of sc*?
-    QString scn(sc->name);
+    TQString scn(sc->name);
     if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
       continue;
     }
@@ -2370,7 +2370,7 @@ SSL_METHOD *meth;
     if (!sc)
       break;
     // Leak of sc*?
-    QString scn(sc->name);
+    TQString scn(sc->name);
     if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
       continue;
     }
@@ -2388,7 +2388,7 @@ return true;
 
 
 void KCryptoConfig::setAuthCertLists() {
-QString oldDef, oldHost;
+TQString oldDef, oldHost;
 bool noneDef, noneHost;
 
 // get the old setting
@@ -2400,7 +2400,7 @@ bool noneDef, noneHost;
 // repopulate
   defCertBox->clear();
   hostCertBox->clear();
-  QStringList defCertStrList; // = KSSLCertificateHome::getCertificateList();
+  TQStringList defCertStrList; // = KSSLCertificateHome::getCertificateList();
   defCertStrList.append(i18n("None"));
   for (YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->firstChild());
                                                                              x;
@@ -2441,7 +2441,7 @@ bool noneDef, noneHost;
         static_cast<HostAuthItem *>(hostAuthList->firstChild());
                                                               x;
              x = static_cast<HostAuthItem *>(x->nextSibling())) {
-     QString newValue = QString::null;
+     TQString newValue = TQString::null;
      for (int i = 1; i < hostCertBox->count(); i++) {
         if (hostCertBox->text(i) == x->getCertName()) {
            newValue = x->getCertName();

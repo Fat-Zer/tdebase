@@ -21,7 +21,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kgenericfactory.h>
 #include <kaboutdata.h>
@@ -31,25 +31,25 @@
 #include "main.h"
 
 /**** DLL Interface ****/
-typedef KGenericFactory<IconModule, QWidget> IconsFactory;
+typedef KGenericFactory<IconModule, TQWidget> IconsFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_icons, IconsFactory("kcmicons") )
 
 /**** IconModule ****/
 
-IconModule::IconModule(QWidget *parent, const char *name, const QStringList &)
+IconModule::IconModule(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(IconsFactory::instance(), parent, name)
 {
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  tab = new QTabWidget(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  tab = new TQTabWidget(this);
   layout->addWidget(tab);
 
   tab1 = new IconThemesConfig(this, "themes");
   tab->addTab(tab1, i18n("&Theme"));
-  connect(tab1, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(tab1, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   tab2 = new KIconConfig(this, "effects");
   tab->addTab(tab2, i18n("Ad&vanced"));
-  connect(tab2, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(tab2, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   KAboutData* about = new KAboutData("kcmicons", I18N_NOOP("Icons"), "3.0",
 	      I18N_NOOP("Icons Control Panel Module"),
@@ -88,7 +88,7 @@ void IconModule::moduleChanged(bool state)
   emit changed(state);
 }
 
-QString IconModule::quickHelp() const
+TQString IconModule::quickHelp() const
 {
   return i18n("<h1>Icons</h1>"
     "This module allows you to choose the icons for your desktop.<p>"

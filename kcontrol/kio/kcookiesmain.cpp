@@ -3,8 +3,8 @@
 // First version of cookies configuration by Waldo Bastian <bastian@kde.org>
 // This dialog box created by David Faure <faure@kde.org>
 
-#include <qlayout.h>
-#include <qtabwidget.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -16,14 +16,14 @@
 #include "kcookiespolicies.h"
 #include "kcookiesmanagement.h"
 
-KCookiesMain::KCookiesMain(QWidget *parent)
+KCookiesMain::KCookiesMain(TQWidget *parent)
   : KCModule(parent, "kcmkio")
 {
     management = 0;
     bool managerOK = true;
 
     DCOPReply reply = DCOPRef( "kded", "kded" ).call( "loadModule", 
-        QCString( "kcookiejar" ) );
+        TQCString( "kcookiejar" ) );
 
     if( !reply.isValid() )
     {
@@ -34,19 +34,19 @@ KCookiesMain::KCookiesMain(QWidget *parent)
                              "are stored on your computer."));
     }
     
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    tab = new QTabWidget(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(this);
+    tab = new TQTabWidget(this);
     layout->addWidget(tab);
 
     policies = new KCookiesPolicies(this);
     tab->addTab(policies, i18n("&Policy"));
-    connect(policies, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+    connect(policies, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
     if( managerOK )
     {
         management = new KCookiesManagement(this);
         tab->addTab(management, i18n("&Management"));
-        connect(management, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+        connect(management, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
     }
 }
 
@@ -78,7 +78,7 @@ void KCookiesMain::defaults()
     management->defaults();
 }
 
-QString KCookiesMain::quickHelp() const
+TQString KCookiesMain::quickHelp() const
 {
   return i18n("<h1>Cookies</h1> Cookies contain information that Konqueror"
     " (or other KDE applications using the HTTP protocol) stores on your"

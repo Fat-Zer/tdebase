@@ -21,7 +21,7 @@
 #define __kfm_run_h__
 
 #include <kparts/browserrun.h>
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 #include <kservice.h>
 #include "konq_openurlrequest.h"
 
@@ -49,12 +49,12 @@ public:
 
   KonqView *childView() const { return m_pView; }
 
-  const QString & typedURL() const { return m_req.typedURL; }
+  const TQString & typedURL() const { return m_req.typedURL; }
 
   KURL mailtoURL() const { return m_mailto; }
 
 protected:
-  virtual void foundMimeType( const QString & _type );
+  virtual void foundMimeType( const TQString & _type );
   virtual void handleError( KIO::Job * job );
   virtual void init();
   virtual void scanFile();
@@ -63,8 +63,8 @@ protected slots:
   void slotRedirection( KIO::Job *, const KURL& );
 
 protected:
-  QGuardedPtr<KonqMainWindow> m_pMainWindow;
-  QGuardedPtr<KonqView> m_pView;
+  TQGuardedPtr<KonqMainWindow> m_pMainWindow;
+  TQGuardedPtr<KonqView> m_pView;
   bool m_bFoundMimeType;
   KonqOpenURLRequest m_req;
   KURL m_mailto;

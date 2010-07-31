@@ -21,9 +21,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtimer.h>
-#include <qtooltip.h>
-#include <qdragobject.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
+#include <tqdragobject.h>
 
 #include <kconfig.h>
 #include <klocale.h>
@@ -38,14 +38,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "browserbutton.h"
 #include "browserbutton.moc"
 
-BrowserButton::BrowserButton( const QString& icon, const QString& startDir, QWidget* parent )
+BrowserButton::BrowserButton( const TQString& icon, const TQString& startDir, TQWidget* parent )
     : PanelPopupButton( parent, "BrowserButton" )
     , topMenu( 0 )
 {
     initialize( icon, startDir );
 }
 
-BrowserButton::BrowserButton( const KConfigGroup& config, QWidget* parent )
+BrowserButton::BrowserButton( const KConfigGroup& config, TQWidget* parent )
     : PanelPopupButton( parent, "BrowserButton" )
     , topMenu( 0 )
 {
@@ -57,7 +57,7 @@ BrowserButton::~BrowserButton()
     delete topMenu;
 }
 
-void BrowserButton::initialize( const QString& icon, const QString& path )
+void BrowserButton::initialize( const TQString& icon, const TQString& path )
 {
     _icon = icon;
 
@@ -65,10 +65,10 @@ void BrowserButton::initialize( const QString& icon, const QString& path )
     topMenu = new PanelBrowserMenu( path );
     setPopup(topMenu);
 
-    _menuTimer = new QTimer( this );
-    connect( _menuTimer, SIGNAL(timeout()), SLOT(slotDelayedPopup()) );
+    _menuTimer = new TQTimer( this );
+    connect( _menuTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotDelayedPopup()) );
 
-    QToolTip::add(this, i18n("Browse: %1").arg(path));
+    TQToolTip::add(this, i18n("Browse: %1").arg(path));
     setTitle( path );
     setIcon ( _icon );
 }
@@ -79,7 +79,7 @@ void BrowserButton::saveConfig( KConfigGroup& config ) const
     config.writePathEntry("Path", topMenu->path());
 }
 
-void BrowserButton::dragEnterEvent( QDragEnterEvent *ev )
+void BrowserButton::dragEnterEvent( TQDragEnterEvent *ev )
 {
     if ((ev->source() != this) && KURLDrag::canDecode(ev))
     {
@@ -93,17 +93,17 @@ void BrowserButton::dragEnterEvent( QDragEnterEvent *ev )
     PanelButton::dragEnterEvent(ev);
 }
 
-void BrowserButton::dragLeaveEvent( QDragLeaveEvent *ev )
+void BrowserButton::dragLeaveEvent( TQDragLeaveEvent *ev )
 {
    _menuTimer->stop();
    PanelButton::dragLeaveEvent(ev);
 }
 
-void BrowserButton::dropEvent( QDropEvent *ev )
+void BrowserButton::dropEvent( TQDropEvent *ev )
 {
     KURL path ( topMenu->path() );
     _menuTimer->stop();
-    KFileItem item( path, QString::fromLatin1( "inode/directory" ), KFileItem::Unknown );
+    KFileItem item( path, TQString::fromLatin1( "inode/directory" ), KFileItem::Unknown );
     KonqOperations::doDrop( &item, path, ev, this );
     PanelButton::dropEvent(ev);
 }
@@ -124,9 +124,9 @@ void BrowserButton::properties()
 {
     PanelBrowserDialog dlg( topMenu->path(), _icon, this );
 
-    if( dlg.exec() == QDialog::Accepted ){
+    if( dlg.exec() == TQDialog::Accepted ){
 	_icon = dlg.icon();
-	QString path = dlg.path();
+	TQString path = dlg.path();
 
 	if ( path != topMenu->path() ) {
 	    delete topMenu;

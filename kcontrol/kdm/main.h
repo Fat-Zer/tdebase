@@ -24,8 +24,8 @@
 #ifndef __kdm_main_h
 #define __kdm_main_h
 
-#include <qtabwidget.h>
-#include <qmap.h>
+#include <tqtabwidget.h>
+#include <tqmap.h>
 
 #include <kcmodule.h>
 
@@ -42,7 +42,7 @@ class KDModule : public KCModule
 
 public:
 
-  KDModule(QWidget *parent, const char *name, const QStringList &);
+  KDModule(TQWidget *parent, const char *name, const TQStringList &);
   ~KDModule();
 
   void load();
@@ -56,8 +56,8 @@ public slots:
 signals:
 
   void clearUsers();
-  void addUsers(const QMap<QString,int> &);
-  void delUsers(const QMap<QString,int> &);
+  void addUsers(const TQMap<TQString,int> &);
+  void delUsers(const TQMap<TQString,int> &);
 
 private:
 
@@ -70,8 +70,8 @@ private:
   KDMUsersWidget	*users;
   KDMConvenienceWidget	*convenience;
 
-  QMap<QString, QPair<int,QStringList> >	usermap;
-  QMap<QString,int>	groupmap;
+  TQMap<TQString, QPair<int,TQStringList> >	usermap;
+  TQMap<TQString,int>	groupmap;
   int			minshowuid, maxshowuid;
   bool			updateOK;
 

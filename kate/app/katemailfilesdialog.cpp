@@ -25,16 +25,16 @@
 #include <klocale.h>
 #include <kurl.h>
 
-#include <qevent.h>
-#include <qlabel.h>
-#include <qstringlist.h>
-#include <qvbox.h>
+#include <tqevent.h>
+#include <tqlabel.h>
+#include <tqstringlist.h>
+#include <tqvbox.h>
 
 /* a private check list item, that can store a Kate::Document*.  */
-class KateDocCheckItem : public QCheckListItem {
+class KateDocCheckItem : public TQCheckListItem {
   public:
-    KateDocCheckItem( QListView *parent, const QString& text, Kate::Document *d )
-      : QCheckListItem( parent, text, QCheckListItem::CheckBox ), mdoc(d) {};
+    KateDocCheckItem( TQListView *parent, const TQString& text, Kate::Document *d )
+      : TQCheckListItem( parent, text, TQCheckListItem::CheckBox ), mdoc(d) {};
     Kate::Document *doc() { return mdoc; };
   private:
     Kate::Document *mdoc;
@@ -43,7 +43,7 @@ class KateDocCheckItem : public QCheckListItem {
 ///////////////////////////////////////////////////////////////////////////
 // KateMailDialog implementation
 ///////////////////////////////////////////////////////////////////////////
-KateMailDialog::KateMailDialog( QWidget *parent, KateMainWindow  *mainwin )
+KateMailDialog::KateMailDialog( TQWidget *parent, KateMainWindow  *mainwin )
   : KDialogBase( parent, "kate mail dialog", true, i18n("Email Files"),
                 Ok|Cancel|User1, Ok, false,
                 KGuiItem( i18n("&Show All Documents >>") ) ),
@@ -53,7 +53,7 @@ KateMailDialog::KateMailDialog( QWidget *parent, KateMainWindow  *mainwin )
   mw = makeVBoxMainWidget();
   mw->installEventFilter( this );
 
-  lInfo = new QLabel( i18n(
+  lInfo = new TQLabel( i18n(
         "<p>Press <strong>Mail...</strong> to email the current document."
         "<p>To select more documents to send, press <strong>Show All Documents&nbsp;&gt;&gt;</strong>."), mw );
   // TODO avoid untill needed - later
@@ -63,7 +63,7 @@ KateMailDialog::KateMailDialog( QWidget *parent, KateMainWindow  *mainwin )
   Kate::Document *currentDoc = mainWindow->viewManager()->activeView()->getDoc();
   uint n = KateDocManager::self()->documents();
   uint i = 0;
-  QCheckListItem *item;
+  TQCheckListItem *item;
   while ( i < n ) {
     Kate::Document *doc = KateDocManager::self()->document( i );
     if ( doc ) {
@@ -77,14 +77,14 @@ KateMailDialog::KateMailDialog( QWidget *parent, KateMainWindow  *mainwin )
     i++;
   }
   list->hide();
-  connect( this, SIGNAL(user1Clicked()), this, SLOT(slotShowButton()) );
+  connect( this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(slotShowButton()) );
   mw->setMinimumSize( lInfo->sizeHint() );
 }
 
-QPtrList<Kate::Document> KateMailDialog::selectedDocs()
+TQPtrList<Kate::Document> KateMailDialog::selectedDocs()
 {
-  QPtrList<Kate::Document> l;
-  QListViewItem *item = list->firstChild();
+  TQPtrList<Kate::Document> l;
+  TQListViewItem *item = list->firstChild();
   while ( item ) {
     if ( ((KateDocCheckItem*)item)->isOn() )
       l.append( ((KateDocCheckItem*)item)->doc() );
@@ -105,7 +105,7 @@ void KateMailDialog::slotShowButton()
     lInfo->setText( i18n("Press <strong>Mail...</strong> to send selected documents") );
 
   }
-  mw->setMinimumSize( QSize( lInfo->sizeHint().width(), mw->sizeHint().height()) );
+  mw->setMinimumSize( TQSize( lInfo->sizeHint().width(), mw->sizeHint().height()) );
   setMinimumSize( calculateSize( mw->minimumSize().width(), mw->sizeHint().height() ) );
   resize( width(), minimumHeight() );
 }

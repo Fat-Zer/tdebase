@@ -79,7 +79,7 @@ static sasl_callback_t callbacks[] = {
     return r.isOk();
   }
 
-  void Command::ungetCommandLine( const QCString &, TransactionState * ) {
+  void Command::ungetCommandLine( const TQCString &, TransactionState * ) {
     mComplete = false;
   }
 
@@ -122,7 +122,7 @@ static sasl_callback_t callbacks[] = {
   // EHLO / HELO
   //
 
-  QCString EHLOCommand::nextCommandLine( TransactionState * ) {
+  TQCString EHLOCommand::nextCommandLine( TransactionState * ) {
     mNeedResponse = true;
     mComplete = mEHLONotSupported;
     const char * cmd = mEHLONotSupported ? "HELO " : "EHLO " ;
@@ -159,7 +159,7 @@ static sasl_callback_t callbacks[] = {
   // STARTTLS - rfc 3207
   //
 
-  QCString StartTLSCommand::nextCommandLine( TransactionState * ) {
+  TQCString StartTLSCommand::nextCommandLine( TransactionState * ) {
     mComplete = true;
     mNeedResponse = true;
     return "STARTTLS\r\n";
@@ -195,14 +195,14 @@ static sasl_callback_t callbacks[] = {
 
 #define SASLERROR mSMTP->error(KIO::ERR_COULD_NOT_AUTHENTICATE, \
   i18n("An error occured during authentication: %1").arg \
-  ( QString::fromUtf8( sasl_errdetail( conn ) )));
+  ( TQString::fromUtf8( sasl_errdetail( conn ) )));
 
   //
   // AUTH - rfc 2554
   //
   AuthCommand::AuthCommand( SMTPProtocol * smtp,
 			    const char *mechanisms,
-          const QString &aFQDN,
+          const TQString &aFQDN,
 			    KIO::AuthInfo &ai )
     : Command( smtp, CloseConnectionOnError|OnlyLastInPipeline ),
       mAi( &ai ),
@@ -306,29 +306,29 @@ static sasl_callback_t callbacks[] = {
     return !mMechusing;
   }
 
-  void AuthCommand::ungetCommandLine( const QCString & s, TransactionState * ) {
+  void AuthCommand::ungetCommandLine( const TQCString & s, TransactionState * ) {
     mUngetSASLResponse = s;
     mComplete = false;
   }
 
-  QCString AuthCommand::nextCommandLine( TransactionState * ) {
+  TQCString AuthCommand::nextCommandLine( TransactionState * ) {
     mNeedResponse = true;
-    QCString cmd;
+    TQCString cmd;
 #ifdef HAVE_LIBSASL2
-    QByteArray tmp, challenge;
+    TQByteArray tmp, challenge;
     if ( !mUngetSASLResponse.isNull() ) {
       // implement un-ungetCommandLine
       cmd = mUngetSASLResponse;
       mUngetSASLResponse = 0;
     } else if ( mFirstTime ) {
-      QString firstCommand = "AUTH " + QString::fromLatin1( mMechusing );
+      TQString firstCommand = "AUTH " + TQString::fromLatin1( mMechusing );
 
       tmp.setRawData( mOut, mOutlen );
       KCodecs::base64Encode( tmp, challenge );
       tmp.resetRawData( mOut, mOutlen );
       if ( !challenge.isEmpty() ) {
         firstCommand += " ";
-        firstCommand += QString::fromLatin1( challenge.data(), challenge.size() );
+        firstCommand += TQString::fromLatin1( challenge.data(), challenge.size() );
       }
       cmd = firstCommand.latin1();
 
@@ -394,14 +394,14 @@ static sasl_callback_t callbacks[] = {
   // MAIL FROM:
   //
 
-  QCString MailFromCommand::nextCommandLine( TransactionState * ) {
+  TQCString MailFromCommand::nextCommandLine( TransactionState * ) {
     mComplete = true;
     mNeedResponse = true;
-    QCString cmdLine = "MAIL FROM:<" + mAddr + '>';
+    TQCString cmdLine = "MAIL FROM:<" + mAddr + '>';
     if ( m8Bit && haveCapability("8BITMIME") )
       cmdLine += " BODY=8BITMIME";
     if ( mSize && haveCapability("SIZE") )
-      cmdLine += " SIZE=" + QCString().setNum( mSize );
+      cmdLine += " SIZE=" + TQCString().setNum( mSize );
     return cmdLine + "\r\n";
   }
 
@@ -420,7 +420,7 @@ static sasl_callback_t callbacks[] = {
   // RCPT TO:
   //
 
-  QCString RcptToCommand::nextCommandLine( TransactionState * ) {
+  TQCString RcptToCommand::nextCommandLine( TransactionState * ) {
     mComplete = true;
     mNeedResponse = true;
     return "RCPT TO:<" + mAddr + ">\r\n";
@@ -443,7 +443,7 @@ static sasl_callback_t callbacks[] = {
   // DATA (only initial processing!)
   //
 
-  QCString DataCommand::nextCommandLine( TransactionState * ts ) {
+  TQCString DataCommand::nextCommandLine( TransactionState * ts ) {
     assert( ts );
     mComplete = true;
     mNeedResponse = true;
@@ -451,7 +451,7 @@ static sasl_callback_t callbacks[] = {
     return "DATA\r\n";
   }
 
-  void DataCommand::ungetCommandLine( const QCString &, TransactionState * ts ) {
+  void DataCommand::ungetCommandLine( const TQCString &, TransactionState * ts ) {
     assert( ts );
     mComplete = false;
     ts->setDataCommandIssued( false );
@@ -473,7 +473,7 @@ static sasl_callback_t callbacks[] = {
   //
   // DATA (data transfer)
   //
-  void TransferCommand::ungetCommandLine( const QCString & cmd, TransactionState * ) {
+  void TransferCommand::ungetCommandLine( const TQCString & cmd, TransactionState * ) {
     if ( cmd.isEmpty() )
       return; // don't change state when we can't detect the unget in
 	      // the next nextCommandLine !!
@@ -488,16 +488,16 @@ static sasl_callback_t callbacks[] = {
     return ts->failed();
   }
 
-  QCString TransferCommand::nextCommandLine( TransactionState * ts ) {
+  TQCString TransferCommand::nextCommandLine( TransactionState * ts ) {
     assert( ts ); // let's rely on it ( at least for the moment )
     assert( !isComplete() );
     assert( !ts->failed() );
 
-    static const QCString dotCRLF = ".\r\n";
-    static const QCString CRLFdotCRLF = "\r\n.\r\n";
+    static const TQCString dotCRLF = ".\r\n";
+    static const TQCString CRLFdotCRLF = "\r\n.\r\n";
 
     if ( !mUngetBuffer.isEmpty() ) {
-      const QCString ret = mUngetBuffer;
+      const TQCString ret = mUngetBuffer;
       mUngetBuffer = 0;
       if ( mWasComplete ) {
 	mComplete = true;
@@ -510,7 +510,7 @@ static sasl_callback_t callbacks[] = {
 
     kdDebug(7112) << "requesting data" << endl;
     mSMTP->dataReq();
-    QByteArray ba;
+    TQByteArray ba;
     int result = mSMTP->readData( ba );
     kdDebug(7112) << "got " << result << " bytes" << endl;
     if ( result > 0 )
@@ -541,8 +541,8 @@ static sasl_callback_t callbacks[] = {
     return true;
   }
 
-  static QCString dotstuff_lf2crlf( const QByteArray & ba, char & last ) {
-    QCString result( ba.size() * 2 + 1 ); // worst case: repeated "[.]\n"
+  static TQCString dotstuff_lf2crlf( const TQByteArray & ba, char & last ) {
+    TQCString result( ba.size() * 2 + 1 ); // worst case: repeated "[.]\n"
     const char * s = ba.data();
     const char * const send = ba.data() + ba.size();
     char * d = result.data();
@@ -560,7 +560,7 @@ static sasl_callback_t callbacks[] = {
     return result;
   }
 
-  QCString TransferCommand::prepare( const QByteArray & ba ) {
+  TQCString TransferCommand::prepare( const TQByteArray & ba ) {
     if ( ba.isEmpty() )
       return 0;
     if ( mSMTP->metaData("lf2crlf+dotstuff") == "slave" ) {
@@ -568,7 +568,7 @@ static sasl_callback_t callbacks[] = {
       return dotstuff_lf2crlf( ba, mLastChar );
     } else {
       mLastChar = ba[ ba.size() - 1 ];
-      return QCString( ba.data(), ba.size() + 1 );
+      return TQCString( ba.data(), ba.size() + 1 );
     }
   }
 
@@ -576,7 +576,7 @@ static sasl_callback_t callbacks[] = {
   // NOOP
   //
 
-  QCString NoopCommand::nextCommandLine( TransactionState * ) {
+  TQCString NoopCommand::nextCommandLine( TransactionState * ) {
     mComplete = true;
     mNeedResponse = true;
     return "NOOP\r\n";
@@ -586,7 +586,7 @@ static sasl_callback_t callbacks[] = {
   // RSET
   //
 
-  QCString RsetCommand::nextCommandLine( TransactionState * ) {
+  TQCString RsetCommand::nextCommandLine( TransactionState * ) {
     mComplete = true;
     mNeedResponse = true;
     return "RSET\r\n";
@@ -596,7 +596,7 @@ static sasl_callback_t callbacks[] = {
   // QUIT
   //
 
-  QCString QuitCommand::nextCommandLine( TransactionState * ) {
+  TQCString QuitCommand::nextCommandLine( TransactionState * ) {
     mComplete = true;
     mNeedResponse = true;
     return "QUIT\r\n";

@@ -22,7 +22,7 @@
 
 #include "ruleslistbase.h"
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 #include "../../rules.h"
 
@@ -36,7 +36,7 @@ class KCMRulesList
     {
     Q_OBJECT
     public:
-        KCMRulesList( QWidget* parent = NULL, const char* name = NULL );
+        KCMRulesList( TQWidget* parent = NULL, const char* name = NULL );
         virtual ~KCMRulesList();
         void load();
         void save();
@@ -49,9 +49,9 @@ class KCMRulesList
         void deleteClicked();
         void moveupClicked();
         void movedownClicked();
-        void activeChanged( QListBoxItem* );
+        void activeChanged( TQListBoxItem* );
     private:
-        QValueVector< Rules* > rules;
+        TQValueVector< Rules* > rules;
     };
 
 } // namespace

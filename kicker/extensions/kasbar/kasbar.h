@@ -59,10 +59,10 @@
 #ifndef __KASBAR_H
 #define __KASBAR_H
 
-#include <qwidget.h>
-#include <qpoint.h>
-#include <qptrlist.h>
-#include <qlayout.h>
+#include <tqwidget.h>
+#include <tqpoint.h>
+#include <tqptrlist.h>
+#include <tqlayout.h>
 
 #include "kasresources.h"
 
@@ -71,7 +71,7 @@ class KRootPixmap;
 class KasItem;
 class KasResources;
 
-typedef QPtrList<KasItem> KasItemList;
+typedef TQPtrList<KasItem> KasItemList;
 
 
 /**
@@ -89,13 +89,13 @@ class KDE_EXPORT KasBar : public QWidget
 
    friend class KasItem;
 public:
-   KasBar( Orientation o, QWidget *parent=0, const char *name=0, WFlags f=0 );
+   KasBar( Orientation o, TQWidget *parent=0, const char *name=0, WFlags f=0 );
    KasBar( Orientation o, KasBar *master, 
-	   QWidget* parent=0, const char* name=0, WFlags f=0 );
+	   TQWidget* parent=0, const char* name=0, WFlags f=0 );
 
    virtual ~KasBar();
 
-   typedef QBoxLayout::Direction Direction;
+   typedef TQBoxLayout::Direction Direction;
 
    /** Returns true iff this is a top-level bar. This is unrelated to it being a top-level widget. */
    bool isTopLevel() const { return !master_; }
@@ -104,7 +104,7 @@ public:
    KasBar *master() const { return master_; }
 
    /** Creates a child bar of the kasbar. The child will inherit the appearance options. */
-   virtual KasBar *createChildBar( Orientation o, QWidget *parent, const char *name=0 );
+   virtual KasBar *createChildBar( Orientation o, TQWidget *parent, const char *name=0 );
 
    /** Factory method that returns the singleton resources object. */
    virtual KasResources *resources();
@@ -148,11 +148,11 @@ public:
    Direction direction() const { return direction_; }
 
    bool isDetached() const { return detached; }
-   QPoint detachedPosition() const { return detachedPos; }
+   TQPoint detachedPosition() const { return detachedPos; }
 
    bool isDrag() const { return inDrag; }
 
-   QSize sizeHint( Orientation,  QSize max );
+   TQSize sizeHint( Orientation,  TQSize max );
 
    //
    // Look and feel options
@@ -167,7 +167,7 @@ public:
    bool hasTint() const { return enableTint_; }
 
    /** Sets the amount and color of the tint. */
-   void setTint( double amount, QColor color );
+   void setTint( double amount, TQColor color );
 
    /** Sets the amount of tinting. */
    void setTintAmount( double amount ) { setTint( amount, tintColour_ ); }
@@ -176,7 +176,7 @@ public:
    double tintAmount() const { return tintAmount_; }
 
    /** Get the color of the tint. */
-   QColor tintColor() const { return tintColour_; }
+   TQColor tintColor() const { return tintColour_; }
 
    /** Returns true iff we will paint frames around inactive items. */
    bool paintInactiveFrames() const { return paintInactiveFrame_; }
@@ -191,10 +191,10 @@ public:
    void repaintItem(KasItem *i, bool erase = true );
 
    /** Returns the item at p or 0. */
-   KasItem* itemAt(const QPoint &p);
+   KasItem* itemAt(const TQPoint &p);
 
    /** Get the position of the specified item. */
-    QPoint itemPos( KasItem *i );
+    TQPoint itemPos( KasItem *i );
 
    /** The item under the mouse pointer (or 0). */
    KasItem *itemUnderMouse() const { return itemUnderMouse_; }
@@ -208,12 +208,12 @@ public slots:
 
    void setItemSize( int size );
    void setItemExtent( int size );
-   void setDetachedPosition( const QPoint &pos );
+   void setDetachedPosition( const TQPoint &pos );
 
    virtual void updateLayout();
 
    void updateMouseOver();
-   void updateMouseOver( QPoint pos );
+   void updateMouseOver( TQPoint pos );
 
    /** Enable or disable tinting. */
    void setTint( bool enable );
@@ -222,12 +222,12 @@ public slots:
    void setTransparent( bool enable );
 
    /** Set the color of the tint. */
-   void setTintColor( const QColor &c );
+   void setTintColor( const TQColor &c );
 
    /** Set the strength of the tint (as a percentage). */
    void setTintAmount( int percent );
 
-   void setBackground( const QPixmap &pix );
+   void setBackground( const TQPixmap &pix );
 
    void setMasked( bool mask );
 
@@ -245,7 +245,7 @@ public slots:
 signals:
 
    void detachedChanged( bool );
-   void detachedPositionChanged( const QPoint & );
+   void detachedPositionChanged( const TQPoint & );
    void dragStarted();
 
    void directionChanged();
@@ -262,42 +262,42 @@ protected:
     KRootPixmap *rootPixmap() const { return rootPix; }
 
    /** Displays the popup menus, hides/shows windows. */
-   void mousePressEvent(QMouseEvent *ev);
+   void mousePressEvent(TQMouseEvent *ev);
 
    /** Displays the popup menus, hides/shows windows. */
-   void mouseReleaseEvent(QMouseEvent *ev);
+   void mouseReleaseEvent(TQMouseEvent *ev);
 
    /** Overridden to implement the mouse-over highlight effect. */
-   void mouseMoveEvent(QMouseEvent *ev);
+   void mouseMoveEvent(TQMouseEvent *ev);
 
    /** Overridden to implement the drag-over task switching. */
-   void dragMoveEvent(QDragMoveEvent *ev);
+   void dragMoveEvent(TQDragMoveEvent *ev);
 
    /** Paints the background of the item to the painter. */
-   void paintBackground( QPainter *p, const QRect &r );
+   void paintBackground( TQPainter *p, const TQRect &r );
 
    /** Calls the paint methods for the items in the rectangle specified by the event. */
-   void paintEvent(QPaintEvent *ev);
+   void paintEvent(TQPaintEvent *ev);
 
    /** Forces the widget to re-layout it's contents. */
-   void resizeEvent(QResizeEvent *ev);
+   void resizeEvent(TQResizeEvent *ev);
 
 private:
    // Core data
-   QPixmap offscreen;
+   TQPixmap offscreen;
    KasBar *master_;
    KasItemList items;
    Orientation orient;
    Direction direction_;
    KasItem *itemUnderMouse_;
    uint boxesPerLine_;
-   QPoint pressPos;
+   TQPoint pressPos;
    bool inDrag;
    bool detached;
    int maxBoxes_;
    int itemSize_;
    int itemExtent_;
-   QPoint detachedPos;
+   TQPoint detachedPos;
    bool paintInactiveFrame_;
 
    // Implements pseudo-transparency
@@ -306,7 +306,7 @@ private:
    KRootPixmap *rootPix;
    bool enableTint_;
    double tintAmount_;
-   QColor tintColour_;
+   TQColor tintColour_;
    bool useMask_;
 
    // Look and feel resources

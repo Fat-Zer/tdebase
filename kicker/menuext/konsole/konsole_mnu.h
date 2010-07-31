@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _konsole_mnu_h_
 #define _konsole_mnu_h_
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 #include <kpanelmenu.h>
 #include <klibloader.h>
@@ -38,7 +38,7 @@ class KonsoleMenu : public KPanelMenu/*, public KPReloadObject*/
     Q_OBJECT
 
 public:
-    KonsoleMenu(QWidget *parent, const char *name, const QStringList& /* args */);
+    KonsoleMenu(TQWidget *parent, const char *name, const TQStringList& /* args */);
     ~KonsoleMenu();
     KURL baseURL() const;
 
@@ -47,13 +47,13 @@ protected slots:
     void slotExec(int id);
     void launchProfile(int id);
     void initialize();
-    void newSession(const QString& sURL, const QString& title);
+    void newSession(const TQString& sURL, const TQString& title);
 
 
 private:
-    QStringList sessionList;
-    QStringList screenList;
-    QValueVector<QString> m_profiles;
+    TQStringList sessionList;
+    TQStringList screenList;
+    TQValueVector<TQString> m_profiles;
     KPopupMenu* m_profileMenu;
     KPopupMenu* m_bookmarksSession;
 

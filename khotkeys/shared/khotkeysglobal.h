@@ -18,7 +18,7 @@
 //#define KHOTKEYS_DEBUG
 //#endif
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <klocale.h>
 
@@ -41,9 +41,9 @@ extern Windows* windows_handler;
 KDE_EXPORT bool khotkeys_active();
 KDE_EXPORT void khotkeys_set_active( bool active_P );
 
-QString get_menu_entry_from_path( const QString& path_P );
+TQString get_menu_entry_from_path( const TQString& path_P );
 
-KDE_EXPORT void init_global_data( bool active_P, QObject* owner_P );
+KDE_EXPORT void init_global_data( bool active_P, TQObject* owner_P );
 
 const char* const MENU_EDITOR_ENTRIES_GROUP_NAME = I18N_NOOP( "Menu Editor entries" );
 

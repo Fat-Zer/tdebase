@@ -24,40 +24,40 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _prefmenu_h_
 #define _prefmenu_h_
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #include <kpanelmenu.h>
 #include <ksycocaentry.h>
 
-typedef QMap<int, KSycocaEntry::Ptr> EntryMap;
-typedef QPtrList<QPopupMenu> PopupMenuList;
+typedef TQMap<int, KSycocaEntry::Ptr> EntryMap;
+typedef TQPtrList<TQPopupMenu> PopupMenuList;
 
 class PrefMenu : public KPanelMenu
 {
     Q_OBJECT
 
     public:
-        PrefMenu(QWidget *parent,
+        PrefMenu(TQWidget *parent,
                  const char *name,
-                 const QStringList & /*args*/);
-        PrefMenu(const QString& label,
-                 const QString& root,
-                 QWidget *parent);
+                 const TQStringList & /*args*/);
+        PrefMenu(const TQString& label,
+                 const TQString& root,
+                 TQWidget *parent);
         ~PrefMenu();
 
     protected:
         void insertMenuItem(KService::Ptr & s,
                             int nId,
                             int nIndex= -1,
-                            const QStringList *suppressGenericNames = 0);
-        virtual void mousePressEvent(QMouseEvent *);
-        virtual void mouseMoveEvent(QMouseEvent *);
-        virtual void dragEnterEvent(QDragEnterEvent *);
-        virtual void dragLeaveEvent(QDragLeaveEvent *);
+                            const TQStringList *suppressGenericNames = 0);
+        virtual void mousePressEvent(TQMouseEvent *);
+        virtual void mouseMoveEvent(TQMouseEvent *);
+        virtual void dragEnterEvent(TQDragEnterEvent *);
+        virtual void dragLeaveEvent(TQDragLeaveEvent *);
 
         bool m_clearOnClose;
-        QString m_root;
-        QPoint m_dragStartPos;
+        TQString m_root;
+        TQPoint m_dragStartPos;
         EntryMap m_entryMap;
         PopupMenuList m_subMenus;
 

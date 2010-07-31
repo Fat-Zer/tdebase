@@ -26,8 +26,8 @@
 
 using namespace KHC;
 
-NavigatorAppItem::NavigatorAppItem( DocEntry *entry, QListView *parent,
-                  const QString &relPath )
+NavigatorAppItem::NavigatorAppItem( DocEntry *entry, TQListView *parent,
+                  const TQString &relPath )
   : NavigatorItem( entry, parent ),
     mRelpath( relPath ),
     mPopulated( false )
@@ -35,8 +35,8 @@ NavigatorAppItem::NavigatorAppItem( DocEntry *entry, QListView *parent,
   setExpandable( true );
 }
 
-NavigatorAppItem::NavigatorAppItem( DocEntry *entry, QListViewItem *parent,
-                  const QString &relPath )
+NavigatorAppItem::NavigatorAppItem( DocEntry *entry, TQListViewItem *parent,
+                  const TQString &relPath )
   : NavigatorItem( entry, parent ),
     mRelpath( relPath ),
     mPopulated( false )
@@ -44,23 +44,23 @@ NavigatorAppItem::NavigatorAppItem( DocEntry *entry, QListViewItem *parent,
   setExpandable( true );
 }
 
-NavigatorAppItem::NavigatorAppItem( DocEntry *entry, QListView *parent,
-                  QListViewItem *after )
+NavigatorAppItem::NavigatorAppItem( DocEntry *entry, TQListView *parent,
+                  TQListViewItem *after )
   : NavigatorItem( entry, parent, after ),
     mPopulated( false )
 {
   setExpandable( true );
 }
 
-NavigatorAppItem::NavigatorAppItem( DocEntry *entry, QListViewItem *parent,
-                  QListViewItem *after )
+NavigatorAppItem::NavigatorAppItem( DocEntry *entry, TQListViewItem *parent,
+                  TQListViewItem *after )
   : NavigatorItem( entry, parent, after ),
     mPopulated( false )
 {
   setExpandable( true );
 }
 
-void NavigatorAppItem::setRelpath( const QString &relpath )
+void NavigatorAppItem::setRelpath( const TQString &relpath )
 {
   mRelpath = relpath;
 }
@@ -75,7 +75,7 @@ void NavigatorAppItem::setOpen(bool open)
                << mRelpath << ")" << endl;
      populate();
   }
-  QListViewItem::setOpen(open); 
+  TQListViewItem::setOpen(open); 
 }
 
 void NavigatorAppItem::populate( bool recursive )
@@ -97,7 +97,7 @@ void NavigatorAppItem::populate( bool recursive )
     KService::Ptr s;
     NavigatorItem *item;
     KServiceGroup::Ptr g;
-    QString url;
+    TQString url;
 
     switch ( e->sycocaType() ) {
       case KST_KService:
@@ -132,16 +132,16 @@ void NavigatorAppItem::populate( bool recursive )
   mPopulated = true;
 }
 
-QString NavigatorAppItem::documentationURL( KService *s )
+TQString NavigatorAppItem::documentationURL( KService *s )
 {
-  QString docPath = s->property( "DocPath" ).toString();
+  TQString docPath = s->property( "DocPath" ).toString();
   if ( docPath.isEmpty() )
-    return QString::null;
+    return TQString::null;
   
   if ( docPath.startsWith( "file:") || docPath.startsWith( "http:" ) )
     return docPath;
   
-  return QString( "help:/" ) + docPath;
+  return TQString( "help:/" ) + docPath;
 }
 
 // vim:ts=2:sw=2:et

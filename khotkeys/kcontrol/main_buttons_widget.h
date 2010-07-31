@@ -21,7 +21,7 @@ class Main_buttons_widget
     {
     Q_OBJECT
     public:
-        Main_buttons_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Main_buttons_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void enable_delete( bool enable_P );
     signals:
         void new_action_pressed();

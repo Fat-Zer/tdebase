@@ -25,11 +25,11 @@
 #ifndef _ProcessList_h_
 #define _ProcessList_h_
 
-#include <qdict.h>
-#include <qdom.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qwidget.h>
+#include <tqdict.h>
+#include <tqdom.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
+#include <tqwidget.h>
 
 #include <kiconloader.h>
 #include <klistview.h>
@@ -40,22 +40,22 @@ typedef const char* (*KeyFunc)(const char*);
 
 /**
  * To support bi-directional sorting, and sorting of text, integers etc. we
- * need a specialized version of QListViewItem.
+ * need a specialized version of TQListViewItem.
  */
 class ProcessLVI : public KListViewItem
 {
 public:
-	ProcessLVI(QListView* lv) : KListViewItem(lv) { }
-	ProcessLVI(QListViewItem* lvi) : KListViewItem(lvi) { }
+	ProcessLVI(TQListView* lv) : KListViewItem(lv) { }
+	ProcessLVI(TQListViewItem* lvi) : KListViewItem(lvi) { }
 
-	virtual int compare( QListViewItem *item, int column, bool ) const;
+	virtual int compare( TQListViewItem *item, int column, bool ) const;
 };
 
 class QPopupMenu;
 
 /**
  * This class implementes a table filled with information about the running
- * processes. The table is derived from QListView.
+ * processes. The table is derived from TQListView.
  */
 class ProcessList : public KListView
 {
@@ -74,14 +74,14 @@ public:
     enum ColumnType { Text, Int, Float, Time };
 
 	/// The constructor.
-	ProcessList(QWidget* parent = 0, const char* name = 0);
+	ProcessList(TQWidget* parent = 0, const char* name = 0);
 
 	/// The destructor.
 	~ProcessList();
 
 	void removeColumns();
 
-	void addColumn(const QString& header, const QString& type);
+	void addColumn(const TQString& header, const TQString& type);
 
 	void setSortColumn(uint col, bool inc)
 	{
@@ -100,8 +100,8 @@ public:
 		return increasing;
 	}
 
-	const QValueList<int>& getSelectedPIds();
-	const QStringList& getSelectedAsStrings();
+	const TQValueList<int>& getSelectedPIds();
+	const TQStringList& getSelectedAsStrings();
 
 	/**
 	 * The udpate function can be used to update the displayed process
@@ -109,7 +109,7 @@ public:
 	 * case the list contains invalid or corrupted info, FALSE is
 	 * returned.
 	 */
-	bool update(const QString& list);
+	bool update(const TQString& list);
 
 	int columnType( uint col ) const;
 
@@ -120,8 +120,8 @@ public:
 		killSupported = supported;
 	}
 
-	bool load(QDomElement& el);
-	bool save(QDomDocument& doc, QDomElement& display);
+	bool load(TQDomElement& el);
+	bool save(TQDomDocument& doc, TQDomElement& display);
 
 public slots:
 	void setTreeView(bool tv);
@@ -140,7 +140,7 @@ public slots:
 
 	void sortingChanged(int col);
 
-	void handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col);
+	void handleRMBPressed(TQListViewItem* lvi, const TQPoint& p, int col);
 
 	void sizeChanged(int, int, int)
 	{
@@ -166,7 +166,7 @@ signals:
 	void killProcess(int pid, int sig);
 
 	// This signal is emitted when process pid should be reniced.
-	void reniceProcess(const QValueList<int> &pids, int niceValue);
+	void reniceProcess(const TQValueList<int> &pids, int niceValue);
 
 	void listModified(bool);
 
@@ -195,7 +195,7 @@ private:
 	/**
 	 * This function constructs the list of processes for list
 	 * mode. It's a straightforward appending operation to the
-	 * QListView widget.
+	 * TQListView widget.
 	 */
 	void buildList();
 
@@ -224,7 +224,7 @@ private:
 	 * removing processes from the process list an inserting them into
 	 * the tree.
 	 */
-	void extendTree(QPtrList<KSGRD::SensorPSLine>* pl, ProcessLVI* parent, int ppid);
+	void extendTree(TQPtrList<KSGRD::SensorPSLine>* pl, ProcessLVI* parent, int ppid);
 
 	/**
 	 * This function adds a process to the list/tree.
@@ -247,24 +247,24 @@ private:
 
 	/* The following lists are primarily used to store table specs between
 	 * load() and the actual table creation in addColumn(). */
-	QValueList<int> savedWidth;
-	QValueList<int> currentWidth;
-	QValueList<int> index;
+	TQValueList<int> savedWidth;
+	TQValueList<int> currentWidth;
+	TQValueList<int> index;
 
-	QPtrList<KSGRD::SensorPSLine> pl;
+	TQPtrList<KSGRD::SensorPSLine> pl;
 
-	QStringList mColumnTypes;
-	QDict<QString> columnDict;
+	TQStringList mColumnTypes;
+	TQDict<TQString> columnDict;
 
-	QValueList<int> selectedPIds;
-	QValueList<int> closedSubTrees;
-	QStringList selectedAsStrings;
+	TQValueList<int> selectedPIds;
+	TQValueList<int> closedSubTrees;
+	TQStringList selectedAsStrings;
 
-	static QDict<QString> aliases;
+	static TQDict<TQString> aliases;
 
-	QDict<QPixmap> iconCache;
+	TQDict<TQPixmap> iconCache;
 
-	QPopupMenu* headerPM;
+	TQPopupMenu* headerPM;
 };
 
 #endif

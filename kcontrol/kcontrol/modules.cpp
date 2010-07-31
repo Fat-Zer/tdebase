@@ -21,9 +21,9 @@
 #include <sys/types.h>
 
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqvbox.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kservicegroup.h>
@@ -43,7 +43,7 @@
 #include <X11/Xlib.h>
 
 
-template class QPtrList<ConfigModule>;
+template class TQPtrList<ConfigModule>;
 
 
 ConfigModule::ConfigModule(const KService::Ptr &s)
@@ -75,11 +75,11 @@ ProxyWidget *ConfigModule::module()
     {
 
       _module = new ProxyWidget(modWidget, moduleName(), "", run_as_root);
-      connect(_module, SIGNAL(changed(bool)), this, SLOT(clientChanged(bool)));
-      connect(_module, SIGNAL(closed()), this, SLOT(clientClosed()));
-      connect(_module, SIGNAL(handbookRequest()), this, SIGNAL(handbookRequest()));
-      connect(_module, SIGNAL(helpRequest()), this, SIGNAL(helpRequest()));
-      connect(_module, SIGNAL(runAsRoot()), this, SLOT(runAsRoot()));
+      connect(_module, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(clientChanged(bool)));
+      connect(_module, TQT_SIGNAL(closed()), this, TQT_SLOT(clientClosed()));
+      connect(_module, TQT_SIGNAL(handbookRequest()), this, TQT_SIGNAL(handbookRequest()));
+      connect(_module, TQT_SIGNAL(helpRequest()), this, TQT_SIGNAL(helpRequest()));
+      connect(_module, TQT_SIGNAL(runAsRoot()), this, TQT_SLOT(runAsRoot()));
 
       return _module;
     }
@@ -142,31 +142,31 @@ void ConfigModule::runAsRoot()
 
   // create an embed widget that will embed the
   // kcmshell running as root
-  _embedLayout = new QVBoxLayout(_module->parentWidget());
-  _embedFrame = new QVBox( _module->parentWidget() );
-  _embedFrame->setFrameStyle( QFrame::Box | QFrame::Raised );
-  QPalette pal( red );
-  pal.setColor( QColorGroup::Background,
+  _embedLayout = new TQVBoxLayout(_module->parentWidget());
+  _embedFrame = new TQVBox( _module->parentWidget() );
+  _embedFrame->setFrameStyle( TQFrame::Box | TQFrame::Raised );
+  TQPalette pal( red );
+  pal.setColor( TQColorGroup::Background,
 		_module->parentWidget()->colorGroup().background() );
   _embedFrame->setPalette( pal );
   _embedFrame->setLineWidth( 2 );
   _embedFrame->setMidLineWidth( 2 );
   _embedLayout->addWidget(_embedFrame,1);
   // cannot reparent anything else inside QXEmbed, so put the busy label separately
-  _embedStack = new QWidgetStack(_embedFrame);
+  _embedStack = new TQWidgetStack(_embedFrame);
   _embedWidget = new KControlEmbed(_embedStack);
   _module->hide();
   _embedFrame->show();
-  QLabel *_busy = new QLabel(i18n("<big>Loading...</big>"), _embedStack);
+  TQLabel *_busy = new TQLabel(i18n("<big>Loading...</big>"), _embedStack);
   _busy->setAlignment(AlignCenter);
   _busy->setTextFormat(RichText);
   _busy->setGeometry(0,0, _module->width(), _module->height());
   _busy->show();
   _embedStack->raiseWidget(_busy);
-  connect(_embedWidget, SIGNAL( windowEmbedded(WId)), SLOT( embedded()));
+  connect(_embedWidget, TQT_SIGNAL( windowEmbedded(WId)), TQT_SLOT( embedded()));
 
   // prepare the process to run the kcmshell
-  QString cmd = service()->exec().stripWhiteSpace();
+  TQString cmd = service()->exec().stripWhiteSpace();
   bool kdeshell = false;
   if (cmd.left(5) == "kdesu")
     {
@@ -186,7 +186,7 @@ void ConfigModule::runAsRoot()
     }
 
   // run the process
-  QString kdesu = KStandardDirs::findExe("kdesu");
+  TQString kdesu = KStandardDirs::findExe("kdesu");
   if (!kdesu.isEmpty())
     {
       _rootProcess = new KProcess;
@@ -198,13 +198,13 @@ void ConfigModule::runAsRoot()
       // We also don't have a way to close the module in that case.
       *_rootProcess << "--n"; // Don't keep password.
       if (kdeshell) {
-         *_rootProcess << QString("%1 %2 --embed %3 --lang %4").arg(locate("exe", "kcmshell")).arg(cmd).arg(_embedWidget->winId()).arg(KGlobal::locale()->language());
+         *_rootProcess << TQString("%1 %2 --embed %3 --lang %4").arg(locate("exe", "kcmshell")).arg(cmd).arg(_embedWidget->winId()).arg(KGlobal::locale()->language());
       }
       else {
-         *_rootProcess << QString("%1 --embed %2 --lang %3").arg(cmd).arg(_embedWidget->winId()).arg( KGlobal::locale()->language() );
+         *_rootProcess << TQString("%1 --embed %2 --lang %3").arg(cmd).arg(_embedWidget->winId()).arg( KGlobal::locale()->language() );
       }
 
-      connect(_rootProcess, SIGNAL(processExited(KProcess*)), this, SLOT(rootExited(KProcess*)));
+      connect(_rootProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(rootExited(KProcess*)));
 
       if ( !_rootProcess->start(KProcess::NotifyOnExit) )
       {
@@ -271,7 +271,7 @@ void ConfigModuleList::readDesktopEntries()
   readDesktopEntriesRecursive( KCGlobal::baseGroup() );
 }
 
-bool ConfigModuleList::readDesktopEntriesRecursive(const QString &path)
+bool ConfigModuleList::readDesktopEntriesRecursive(const TQString &path)
 {
 
   KServiceGroup::Ptr group = KServiceGroup::group(path);
@@ -314,32 +314,32 @@ bool ConfigModuleList::readDesktopEntriesRecursive(const QString &path)
   return true;
 }
 
-QPtrList<ConfigModule> ConfigModuleList::modules(const QString &path)
+TQPtrList<ConfigModule> ConfigModuleList::modules(const TQString &path)
 {
   Menu *menu = subMenus.find(path);
   if (menu)
      return menu->modules;
 
-  return QPtrList<ConfigModule>();
+  return TQPtrList<ConfigModule>();
 }
 
-QStringList ConfigModuleList::submenus(const QString &path)
+TQStringList ConfigModuleList::submenus(const TQString &path)
 {
   Menu *menu = subMenus.find(path);
   if (menu)
      return menu->submenus;
 
-  return QStringList();
+  return TQStringList();
 }
 
-QString ConfigModuleList::findModule(ConfigModule *module)
+TQString ConfigModuleList::findModule(ConfigModule *module)
 {
-  QDictIterator<Menu> it(subMenus);
+  TQDictIterator<Menu> it(subMenus);
   Menu *menu;
   for(;(menu = it.current());++it)
   {
      if (menu->modules.containsRef(module))
         return it.currentKey();
   }
-  return QString::null;
+  return TQString::null;
 }

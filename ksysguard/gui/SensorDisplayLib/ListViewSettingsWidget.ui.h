@@ -8,49 +8,49 @@
 *****************************************************************************/
 
 
-QString ListViewSettingsWidget::title()
+TQString ListViewSettingsWidget::title()
 {
     return m_title->text();
 }
 
 
-QColor ListViewSettingsWidget::gridColor()
+TQColor ListViewSettingsWidget::gridColor()
 {
     return m_gridColor->color();
 }
 
 
-QColor ListViewSettingsWidget::backgroundColor()
+TQColor ListViewSettingsWidget::backgroundColor()
 {
     return m_backgroundColor->color();
 }
 
 
-QColor ListViewSettingsWidget::textColor()
+TQColor ListViewSettingsWidget::textColor()
 {
     return m_textColor->color();
 }
 
 
-void ListViewSettingsWidget::setTitle( const QString &t )
+void ListViewSettingsWidget::setTitle( const TQString &t )
 {
     m_title->setText(t);
 }
 
 
-void ListViewSettingsWidget::setBackgroundColor( const QColor &c )
+void ListViewSettingsWidget::setBackgroundColor( const TQColor &c )
 {
     m_backgroundColor->setColor(c);
 }
 
 
-void ListViewSettingsWidget::setTextColor( const QColor &c )
+void ListViewSettingsWidget::setTextColor( const TQColor &c )
 {
     m_textColor->setColor(c);
 }
 
 
-void ListViewSettingsWidget::setGridColor( const QColor &c )
+void ListViewSettingsWidget::setGridColor( const TQColor &c )
 {
     m_gridColor->setColor(c);
 }

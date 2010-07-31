@@ -3,7 +3,7 @@
 
 #include <kdecoration.h>
 #include <kdecorationfactory.h>
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 namespace KWinTest
 {
@@ -19,21 +19,21 @@ class Decoration
     public:
 	Decoration( KDecorationBridge* bridge, KDecorationFactory* factory );
         virtual void init();
-	virtual MousePosition mousePosition( const QPoint& p ) const;
+	virtual MousePosition mousePosition( const TQPoint& p ) const;
 	virtual void borders( int& left, int& right, int& top, int& bottom ) const;
-	virtual void resize( const QSize& s );
-	virtual QSize minimumSize() const;
+	virtual void resize( const TQSize& s );
+	virtual TQSize minimumSize() const;
         virtual void activeChange() {};
         virtual void captionChange() {};
         virtual void maximizeChange() {};
         virtual void desktopChange() {};
         virtual void shadeChange() {};
         virtual void iconChange() {};
-	virtual bool eventFilter( QObject* o, QEvent* e );
+	virtual bool eventFilter( TQObject* o, TQEvent* e );
         virtual void reset( unsigned long changed );
         virtual bool animateMinimize( bool minimize );
     private:
-	QPushButton* button;
+	TQPushButton* button;
     };
 
 class Factory

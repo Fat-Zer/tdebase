@@ -16,9 +16,9 @@
 
 #include "keyboard_input_widget.h"
 
-#include <qgroupbox.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
+#include <tqgroupbox.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
 
 #include <ktextedit.h>
 
@@ -31,21 +31,21 @@
 namespace KHotKeys
 {
 
-Keyboard_input_widget::Keyboard_input_widget( QWidget* parent_P, const char* name_P )
+Keyboard_input_widget::Keyboard_input_widget( TQWidget* parent_P, const char* name_P )
     : Keyboard_input_widget_ui( parent_P, name_P )
     {
     clear_data();
     // KHotKeys::Module::changed()
-    connect( action_window_radio, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( active_window_radio, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( specific_window_radio, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( keyboard_input_multilineedit, SIGNAL( textChanged()),
-        module, SLOT( changed()));
-    connect( modify_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
+    connect( action_window_radio, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( active_window_radio, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( specific_window_radio, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( keyboard_input_multilineedit, TQT_SIGNAL( textChanged()),
+        module, TQT_SLOT( changed()));
+    connect( modify_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
     }
 
 void Keyboard_input_widget::clear_data()

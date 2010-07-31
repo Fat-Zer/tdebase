@@ -11,7 +11,7 @@
 #ifndef VOICES_H_
 #define VOICES_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kshortcut.h>
 
 class Sound;
@@ -32,7 +32,7 @@ class KDE_EXPORT Voice  : public QObject
     {
     Q_OBJECT
     public:
-        Voice( bool enabled_P, QObject* parent_P );
+        Voice( bool enabled_P, TQObject* parent_P );
         virtual ~Voice();
         void enable( bool enable_P );
 
@@ -43,12 +43,12 @@ class KDE_EXPORT Voice  : public QObject
 		void set_shortcut( const KShortcut &k);
 		
 		/**
-		 * return QString::null is a new signature is far enough from others signature
+		 * return TQString::null is a new signature is far enough from others signature
 		 * otherwise, return the stringn which match.
 		 */
-		QString isNewSoundFarEnough(const VoiceSignature& s, const QString& currentTrigger);
+		TQString isNewSoundFarEnough(const VoiceSignature& s, const TQString& currentTrigger);
 		
-		bool doesVoiceCodeExists(const QString &s);
+		bool doesVoiceCodeExists(const TQString &s);
 
     public slots:
          void record_start();
@@ -60,19 +60,19 @@ class KDE_EXPORT Voice  : public QObject
 		void slot_timeout();
 
     signals:
-        void handle_voice( const QString &voice );
+        void handle_voice( const TQString &voice );
     private:
 
         bool _enabled;
         bool _recording;
 
-		QValueList<Voice_trigger *> _references;
+		TQValueList<Voice_trigger *> _references;
 		SoundRecorder *_recorder;
 		
 		KShortcut _shortcut;
 		KGlobalAccel *_kga;
 		
-		QTimer *_timer;
+		TQTimer *_timer;
     };
 
 	

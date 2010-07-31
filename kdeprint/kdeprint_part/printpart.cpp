@@ -28,14 +28,14 @@
 #include <kaboutdata.h>
 #include <kdebug.h>
 #include <kparts/genericfactory.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 
 typedef KParts::GenericFactory<PrintPart> PrintPartFactory;
 K_EXPORT_COMPONENT_FACTORY( libkdeprint_part, PrintPartFactory )
 
-PrintPart::PrintPart(QWidget *parentWidget, const char * /*widgetName*/ ,
-	             QObject *parent, const char *name,
-		     const QStringList & /*args*/ )
+PrintPart::PrintPart(TQWidget *parentWidget, const char * /*widgetName*/ ,
+	             TQObject *parent, const char *name,
+		     const TQStringList & /*args*/ )
 : KParts::ReadOnlyPart(parent, name)
 {
 	setInstance(PrintPartFactory::instance());
@@ -43,7 +43,7 @@ PrintPart::PrintPart(QWidget *parentWidget, const char * /*widgetName*/ ,
 	m_extension = new PrintPartExtension(this);
 
 	m_view = new KMMainView(parentWidget, "MainView", actionCollection());
-	m_view->setFocusPolicy(QWidget::ClickFocus);
+	m_view->setFocusPolicy(TQWidget::ClickFocus);
 	m_view->enableToolbar(false);
 	setWidget(m_view);
 

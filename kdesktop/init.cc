@@ -29,9 +29,9 @@
 #include <kdebug.h>
 #include <kdesktopsettings.h>
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -52,20 +52,20 @@ extern int kdesktop_screen_number;
  * @param _showMsg show a message box if we created the dir
  * @return true if the dir was just created (e.g. so that we can populate it)
  */
-static bool testDir( const QString &_name )
+static bool testDir( const TQString &_name )
 {
   DIR *dp;
-  dp = opendir( QFile::encodeName(_name) );
+  dp = opendir( TQFile::encodeName(_name) );
   if ( dp == NULL )
   {
-    QString m = _name;
+    TQString m = _name;
     if ( m.endsWith( "/" ) )
       m.truncate( m.length() - 1 );
-    QCString path = QFile::encodeName(m);
+    TQCString path = TQFile::encodeName(m);
 
     bool ok = ::mkdir( path, S_IRWXU ) == 0;
     if ( !ok && errno == EEXIST ) {
-        int ret = KMessageBox::warningYesNo( 0, i18n("%1 is a file, but KDE needs it to be a directory; move it to %2.orig and create directory?").arg(m).arg(m), QString::null, i18n("Move It"), i18n("Do Not Move") );
+        int ret = KMessageBox::warningYesNo( 0, i18n("%1 is a file, but KDE needs it to be a directory; move it to %2.orig and create directory?").arg(m).arg(m), TQString::null, i18n("Move It"), i18n("Do Not Move") );
         if ( ret == KMessageBox::Yes ) {
             if ( ::rename( path, path + ".orig" ) == 0 ) {
                 ok = ::mkdir( path, S_IRWXU ) == 0;
@@ -97,32 +97,32 @@ static bool testDir( const QString &_name )
  * @param dir destination directory
  * @param force if false, don't copy if destination file already exists
  */
-static void copyDirectoryFile(const QString &fileName, const QString& dir, bool force)
+static void copyDirectoryFile(const TQString &fileName, const TQString& dir, bool force)
 {
-  if (force || !QFile::exists(dir + "/.directory")) {
-    QString cmd = "cp ";
-    cmd += KProcess::quote(locate("data", QString("kdesktop/") + fileName));
+  if (force || !TQFile::exists(dir + "/.directory")) {
+    TQString cmd = "cp ";
+    cmd += KProcess::quote(locate("data", TQString("kdesktop/") + fileName));
     cmd += " ";
     cmd += KProcess::quote(dir+"/.directory");
-    system( QFile::encodeName(cmd) );
+    system( TQFile::encodeName(cmd) );
   }
 }
 
-static void copyFile( const QString& src, const QString& dest )
+static void copyFile( const TQString& src, const TQString& dest )
 {
-    QCString cmd = "cp ";
-    cmd += QFile::encodeName(KProcess::quote(src));
+    TQCString cmd = "cp ";
+    cmd += TQFile::encodeName(KProcess::quote(src));
     cmd += " ";
-    cmd += QFile::encodeName(KProcess::quote(dest));
+    cmd += TQFile::encodeName(KProcess::quote(dest));
     system( cmd );
 }
 
-static QString realDesktopPath()
+static TQString realDesktopPath()
 {
-    QString desktopPath = KGlobalSettings::desktopPath();
+    TQString desktopPath = KGlobalSettings::desktopPath();
     if (kdesktop_screen_number != 0) {
-	QString dn = "Desktop";
-	dn += QString::number(kdesktop_screen_number);
+	TQString dn = "Desktop";
+	dn += TQString::number(kdesktop_screen_number);
 	desktopPath.replace("Desktop", dn);
     }
     return desktopPath;
@@ -139,12 +139,12 @@ static void copyDesktopLinks()
     if (!config->readBoolEntry("CopyDesktopLinks", true))
        return;
 
-    QStringList list =
+    TQStringList list =
 	KGlobal::dirs()->findAllResources("appdata", "DesktopLinks/*", false, true);
 
-    QString desktopPath = realDesktopPath();
+    TQString desktopPath = realDesktopPath();
 
-    for (QStringList::ConstIterator it = list.begin(); it != list.end(); it++) {
+    for (TQStringList::ConstIterator it = list.begin(); it != list.end(); it++) {
         KDesktopFile desk( *it );
         if (desk.readBoolEntry("Hidden"))
            continue;
@@ -191,7 +191,7 @@ void testLocalInstallation()
 {
     const bool newRelease = isNewRelease();
 
-    const QString desktopPath = realDesktopPath();
+    const TQString desktopPath = realDesktopPath();
     const bool emptyDesktop = testDir( desktopPath );
 
     // Do not force copying that one (it would lose the icon positions)
@@ -205,13 +205,13 @@ void testLocalInstallation()
 	copyDesktopLinks();
 
     // Take care of creating or updating trash.desktop
-    const QString trashDir = KGlobal::dirs()->localxdgdatadir() + "Trash";
-    const bool firstTimeWithNewTrash = !QFile::exists( trashDir );
-    const QString trashDesktopPath = desktopPath + "/trash.desktop";
-    const bool trashDesktopExists = QFile::exists( trashDesktopPath );
+    const TQString trashDir = KGlobal::dirs()->localxdgdatadir() + "Trash";
+    const bool firstTimeWithNewTrash = !TQFile::exists( trashDir );
+    const TQString trashDesktopPath = desktopPath + "/trash.desktop";
+    const bool trashDesktopExists = TQFile::exists( trashDesktopPath );
     const bool installNewTrashi18n = newRelease && trashDesktopExists; // not if deleted by user
     if ( emptyDesktop || firstTimeWithNewTrash || installNewTrashi18n ) {
-        QString oldIcon, oldEmptyIcon;
+        TQString oldIcon, oldEmptyIcon;
         if ( trashDesktopExists ) {
             KDesktopFile trashDesktop( trashDesktopPath, true );
             oldIcon = trashDesktop.readIcon();
@@ -227,8 +227,8 @@ void testLocalInstallation()
     }
 
     if ( firstTimeWithNewTrash ) { // migrate pre-kde-3.4 trash contents
-        QByteArray packedArgs;
-        QDataStream stream( packedArgs, IO_WriteOnly );
+        TQByteArray packedArgs;
+        TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)2;
         KIO::Job* job = KIO::special( "trash:/", packedArgs );
         (void)KIO::NetAccess::synchronousRun( job, 0 );
@@ -236,9 +236,9 @@ void testLocalInstallation()
         // OK the only thing missing is to convert the icon position...
         KSimpleConfig cfg( locateLocal("appdata", "IconPositions") );
         if ( cfg.hasGroup( "IconPosition::Trash" ) && !cfg.hasGroup( "IconPosition::trash.desktop" ) ) {
-            const QMap<QString, QString> entries = cfg.entryMap( "IconPosition::Trash" );
+            const TQMap<TQString, TQString> entries = cfg.entryMap( "IconPosition::Trash" );
             cfg.setGroup( "IconPosition::trash.desktop" );
-            for( QMap<QString,QString>::ConstIterator it = entries.begin(); it != entries.end(); ++it ) {
+            for( TQMap<TQString,TQString>::ConstIterator it = entries.begin(); it != entries.end(); ++it ) {
                 cfg.writeEntry( it.key(), it.data() );
             }
         }

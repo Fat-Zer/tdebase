@@ -6,12 +6,12 @@
 #ifndef	_KONSOLE_WCWIDTH_H_
 #define	_KONSOLE_WCWIDTH_H_
 
-#include <qglobal.h>
-#include <qstring.h>
+#include <tqglobal.h>
+#include <tqstring.h>
 
 int konsole_wcwidth(Q_UINT16 ucs);
 //int konsole_wcwidth_cjk(Q_UINT16 ucs);
 
-int string_width( const QString &txt );
+int string_width( const TQString &txt );
 
 #endif

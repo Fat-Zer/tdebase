@@ -29,8 +29,8 @@
 // (C) Craig Drummond, 2003, 2004
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 namespace KFI
 {
@@ -45,33 +45,33 @@ namespace Fontmap
 
         struct TEntry
         {
-            TEntry(const QString &fname) : filename(fname) {}
+            TEntry(const TQString &fname) : filename(fname) {}
 
-            QString     filename,
+            TQString     filename,
                         psName;
-            QStringList entries;
+            TQStringList entries;
         };
 
         public:
 
-        CFile(const QString &dir);
+        CFile(const TQString &dir);
 
-        const QStringList * getEntries(const QString &fname);
+        const TQStringList * getEntries(const TQString &fname);
         unsigned int        getLineCount() { return itsLineCount; }
 
         private:
 
-        TEntry * findEntry(const QString &fname, bool isAlias=false);
-        TEntry * getEntry(TEntry **current, const QString &fname, bool isAlias=false);
+        TEntry * findEntry(const TQString &fname, bool isAlias=false);
+        TEntry * getEntry(TEntry **current, const TQString &fname, bool isAlias=false);
 
         private:
 
-        QString          itsDir;
-        QPtrList<TEntry> itsEntries;
+        TQString          itsDir;
+        TQPtrList<TEntry> itsEntries;
         unsigned int     itsLineCount;
     };
 
-    extern bool create(const QString &dir, CFontEngine &fe);
+    extern bool create(const TQString &dir, CFontEngine &fe);
 }
 
 }

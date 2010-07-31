@@ -17,10 +17,10 @@
 #include "windowdef_list_widget.h"
 
 #include <assert.h>
-#include <qpushbutton.h>
-#include <qheader.h>
-#include <qlineedit.h>
-#include <qpopupmenu.h>
+#include <tqpushbutton.h>
+#include <tqheader.h>
+#include <tqlineedit.h>
+#include <tqpopupmenu.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -37,16 +37,16 @@ namespace KHotKeys
 
 // Windowdef_list_widget
 
-Windowdef_list_widget::Windowdef_list_widget( QWidget* parent_P, const char* name_P )
+Windowdef_list_widget::Windowdef_list_widget( TQWidget* parent_P, const char* name_P )
     : Windowdef_list_widget_ui( parent_P, name_P ), autodetect_object( NULL ),
         autodetect_slot( NULL ), selected_item( NULL )
     {
-    QPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
+    TQPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
     popup->insertItem( i18n( "Simple Window..." ), TYPE_WINDOWDEF_SIMPLE );
-    connect( popup, SIGNAL( activated( int )), SLOT( new_selected( int )));
+    connect( popup, TQT_SIGNAL( activated( int )), TQT_SLOT( new_selected( int )));
 
-    connect( windows_listview, SIGNAL( doubleClicked ( QListViewItem *, const QPoint &, int ) ),
-             this, SLOT( modify_pressed() ) );
+    connect( windows_listview, TQT_SIGNAL( doubleClicked ( TQListViewItem *, const TQPoint &, int ) ),
+             this, TQT_SLOT( modify_pressed() ) );
     new_button->setPopup( popup );
     windows_listview->header()->hide();
     windows_listview->addColumn( "" );
@@ -57,16 +57,16 @@ Windowdef_list_widget::Windowdef_list_widget( QWidget* parent_P, const char* nam
     delete_button->setEnabled( false );
     clear_data();
     // KHotKeys::Module::changed()
-    connect( new_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( copy_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( modify_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( delete_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( comment_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( new_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( copy_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( modify_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( delete_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( comment_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
 
 Windowdef_list_widget::~Windowdef_list_widget()
@@ -100,7 +100,7 @@ Windowdef_list* Windowdef_list_widget::get_data() const
     {
 // CHECKME TODO hmm, tady to bude chtit asi i children :(
     Windowdef_list* list = new Windowdef_list( comment_lineedit->text());
-    for( QListViewItem* pos = windows_listview->firstChild();
+    for( TQListViewItem* pos = windows_listview->firstChild();
          pos != NULL;
          pos = pos->nextSibling())
         list->append( static_cast< Windowdef_list_item* >( pos )->window()->copy());
@@ -148,7 +148,7 @@ void Windowdef_list_widget::modify_pressed()
     edit_listview_item( selected_item );
     }
 
-void Windowdef_list_widget::current_changed( QListViewItem* item_P )
+void Windowdef_list_widget::current_changed( TQListViewItem* item_P )
     {
 //    if( item_P == selected_item )
 //        return;
@@ -160,7 +160,7 @@ void Windowdef_list_widget::current_changed( QListViewItem* item_P )
     }
 
 Windowdef_list_item* Windowdef_list_widget::create_listview_item( Windowdef* window_P,
-    QListView* parent1_P, QListViewItem* parent2_P, QListViewItem* after_P, bool copy_P )
+    TQListView* parent1_P, TQListViewItem* parent2_P, TQListViewItem* after_P, bool copy_P )
     {
     Windowdef* new_win = copy_P ? window_P->copy() : window_P;
 // CHECKME uz by nemelo byt treba
@@ -199,9 +199,9 @@ void Windowdef_list_widget::edit_listview_item( Windowdef_list_item* item_P )
 
 // Windowdef_list_item
 
-QString Windowdef_list_item::text( int column_P ) const
+TQString Windowdef_list_item::text( int column_P ) const
     {
-    return column_P == 0 ? window()->description() : QString::null;
+    return column_P == 0 ? window()->description() : TQString::null;
     }
 
 Windowdef_list_item::~Windowdef_list_item()
@@ -211,7 +211,7 @@ Windowdef_list_item::~Windowdef_list_item()
 
 // Windowdef_simple_dialog
 
-Windowdef_simple_dialog::Windowdef_simple_dialog( Windowdef_simple* window_P, QObject* obj_P,
+Windowdef_simple_dialog::Windowdef_simple_dialog( Windowdef_simple* window_P, TQObject* obj_P,
     const char* slot_P )
     : KDialogBase( NULL, NULL, true, i18n( "Window Details" ), Ok | Cancel ), window( NULL )
     {

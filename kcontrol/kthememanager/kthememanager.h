@@ -39,7 +39,7 @@ class KIconViewItem;
 class KThemeDetailsItem: public KIconViewItem
 {
 public:
-    KThemeDetailsItem( KIconView * parent, const QString & text, const QPixmap & icon, const QString & execString )
+    KThemeDetailsItem( KIconView * parent, const TQString & text, const TQPixmap & icon, const TQString & execString )
         : KIconViewItem( parent, text, icon ) { m_exec = execString; }
     virtual ~KThemeDetailsItem() { };
 
@@ -47,7 +47,7 @@ public:
         ( void ) new KRun( m_exec );
     }
 private:
-    QString m_exec;
+    TQString m_exec;
 };
 */
 
@@ -63,7 +63,7 @@ class kthememanager: public KCModule
 {
     Q_OBJECT
 public:
-    kthememanager( QWidget *parent=0, const char *name=0 );
+    kthememanager( TQWidget *parent=0, const char *name=0 );
     virtual ~kthememanager();
 
     /**
@@ -81,8 +81,8 @@ public:
     virtual void defaults();
 
 protected:
-    void dragEnterEvent ( QDragEnterEvent * ev );
-    void dropEvent ( QDropEvent * ev );
+    void dragEnterEvent ( TQDragEnterEvent * ev );
+    void dropEvent ( TQDropEvent * ev );
 
 signals:
     /**
@@ -109,7 +109,7 @@ private slots:
     /**
      * Update the theme's info and preview
      */
-    void slotThemeChanged( QListViewItem * item );
+    void slotThemeChanged( TQListViewItem * item );
 
     /**
      * Invoked when one drag and drops @p urls onto the kcm
@@ -139,15 +139,15 @@ private:
      * @param themeName The theme name
      * @return The theme's version number or -1 if not installed
      */
-    static float getThemeVersion( const QString & themeName );
+    static float getThemeVersion( const TQString & themeName );
 
     void queryLNFModules();
 
     /**
      * Updates the preview widget
      */
-    void updatePreview( const QString & pixFile );
-    bool themeExist(const QString &_themeName);
+    void updatePreview( const TQString & pixFile );
+    bool themeExist(const TQString &_themeName);
     KThemeDlg * dlg;
 
     KTheme * m_theme;

@@ -11,7 +11,7 @@
 #ifndef _WINDOWSELECTOR_H_
 #define _WINDOWSELECTOR_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 namespace KHotKeys
 {
@@ -21,7 +21,7 @@ class WindowSelector
     {
     Q_OBJECT
     public:
-        WindowSelector( QObject* receiver, const char* slot );
+        WindowSelector( TQObject* receiver, const char* slot );
         void select();
     protected:
         virtual bool x11Event( XEvent* e );

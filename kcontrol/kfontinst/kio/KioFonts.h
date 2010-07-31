@@ -34,10 +34,10 @@
 #include <kio/slavebase.h>
 #include <kurl.h>
 #include <klocale.h>
-#include <qstring.h>
-#include <qcstring.h>
-#include <qmap.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqmap.h>
+#include <tqvaluelist.h>
 #include "Misc.h"
 #include "KfiConstants.h"
 
@@ -80,24 +80,24 @@ class CKioFonts : public KIO::SlaveBase
         public:
 
         CDirList()                                      { }
-        CDirList(const QString &str) : QStringList(str) { }
+        CDirList(const TQString &str) : TQStringList(str) { }
 
-        void add(const QString &d)                      { if (!contains(d)) append(d); }
+        void add(const TQString &d)                      { if (!contains(d)) append(d); }
     };
 
     struct TFolder
     {
-        QString                                 location;
+        TQString                                 location;
         CDirList                                modified;
-        QMap<QString, QValueList<FcPattern *> > fontMap;   // Maps from "Times New Roman" -> $HOME/.fonts/times.ttf
+        TQMap<TQString, TQValueList<FcPattern *> > fontMap;   // Maps from "Times New Roman" -> $HOME/.fonts/times.ttf
     };
 
     public:
 
-    CKioFonts(const QCString &pool, const QCString &app);
+    CKioFonts(const TQCString &pool, const TQCString &app);
     virtual ~CKioFonts();
 
-    static QString getSect(const QString &f) { return f.section('/', 1, 1); }
+    static TQString getSect(const TQString &f) { return f.section('/', 1, 1); }
 
     void listDir(const KURL &url);
     void stat(const KURL &url);
@@ -110,30 +110,30 @@ class CKioFonts : public KIO::SlaveBase
 
     private:
 
-    bool     putReal(const QString &destOrig, const QCString &destOrigC, bool origExists, int mode, bool resume);
+    bool     putReal(const TQString &destOrig, const TQCString &destOrigC, bool origExists, int mode, bool resume);
     void     modified(EFolder folder, bool clearList=true, const CDirList &dirs=CDirList());
-    void     special(const QByteArray &a);
-    void     createRootRefreshCmd(QCString &cmd, const CDirList &dirs=CDirList(), bool reparseCfg=true);
+    void     special(const TQByteArray &a);
+    void     createRootRefreshCmd(TQCString &cmd, const CDirList &dirs=CDirList(), bool reparseCfg=true);
     void     doModified();
-    QString  getRootPasswd(bool askPasswd=true);
-    bool     doRootCmd(const char *cmd, const QString &passwd);
+    TQString  getRootPasswd(bool askPasswd=true);
+    bool     doRootCmd(const char *cmd, const TQString &passwd);
     bool     doRootCmd(const char *cmd, bool askPasswd=true) { return doRootCmd(cmd, getRootPasswd(askPasswd)); }
     bool     confirmUrl(KURL &url);
     void     clearFontList();
     bool     updateFontList();
     EFolder  getFolder(const KURL &url);
-    QMap<QString, QValueList<FcPattern *> >::Iterator getMap(const KURL &url);
-    QValueList<FcPattern *> * getEntries(const KURL &url);
-    FcPattern * getEntry(EFolder folder, const QString &file, bool full=false);
-    bool     checkFile(const QString &file);
-    bool     getSourceFiles(const KURL &src, QStringList &files);
+    TQMap<TQString, TQValueList<FcPattern *> >::Iterator getMap(const KURL &url);
+    TQValueList<FcPattern *> * getEntries(const KURL &url);
+    FcPattern * getEntry(EFolder folder, const TQString &file, bool full=false);
+    bool     checkFile(const TQString &file);
+    bool     getSourceFiles(const KURL &src, TQStringList &files);
     bool     checkDestFile(const KURL &src, const KURL &dest, EFolder destFolder, bool overwrite);
-    bool     checkDestFiles(const KURL &src, QMap<QString, QString> &map, const KURL &dest, EFolder destFolder, bool overwrite);
-    bool     confirmMultiple(const KURL &url, const QStringList &files, EFolder folder, EOp op);
-    bool     confirmMultiple(const KURL &url, QValueList<FcPattern *> *patterns, EFolder folder, EOp op);
+    bool     checkDestFiles(const KURL &src, TQMap<TQString, TQString> &map, const KURL &dest, EFolder destFolder, bool overwrite);
+    bool     confirmMultiple(const KURL &url, const TQStringList &files, EFolder folder, EOp op);
+    bool     confirmMultiple(const KURL &url, TQValueList<FcPattern *> *patterns, EFolder folder, EOp op);
     bool     checkUrl(const KURL &u, bool rootOk=false);
     bool     checkAllowed(const KURL &u);
-    void     createAfm(const QString &file, bool nrs=false, const QString &passwd=QString::null);
+    void     createAfm(const TQString &file, bool nrs=false, const TQString &passwd=TQString::null);
     void     reparseConfig();
 
     private:
@@ -144,7 +144,7 @@ class CKioFonts : public KIO::SlaveBase
                  itsUsingXfsFpe,
                  itsHasSys,
                  itsAddToSysFc;
-    QString      itsPasswd;
+    TQString      itsPasswd;
     unsigned int itsFontChanges;
     EDest        itsLastDest;
     time_t       itsLastDestTime,

@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __dockbarextension_h__
 #define __dockbarextension_h__
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 #include <kpanelextension.h>
 #include "dockcontainer.h"
 
@@ -35,12 +35,12 @@ class DockBarExtension : public KPanelExtension
     Q_OBJECT
 
 public:
-    DockBarExtension(const QString& configFile, Type t = Normal,
-		     int actions = 0, QWidget *parent = 0, const char *name = 0);
+    DockBarExtension(const TQString& configFile, Type t = Normal,
+		     int actions = 0, TQWidget *parent = 0, const char *name = 0);
 
     virtual ~DockBarExtension();
 
-    QSize sizeHint(Position, QSize maxSize) const;
+    TQSize sizeHint(Position, TQSize maxSize) const;
     Position preferedPosition() const { return Right; }
 
 protected slots:
@@ -49,24 +49,24 @@ protected slots:
     void settingsChanged(DockContainer*);
 
 protected:
-    void resizeEvent(QResizeEvent*);
-    void embedWindow(WId win, QString command, QString resName, QString resClass);
+    void resizeEvent(TQResizeEvent*);
+    void embedWindow(WId win, TQString command, TQString resName, TQString resClass);
     void addContainer(DockContainer*, int pos=-1);
     void removeContainer(DockContainer*);
     void saveContainerConfig();
     void loadContainerConfig();
     void layoutContainers();
-    int findContainerAtPoint(const QPoint&);
-    void mousePressEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
+    int findContainerAtPoint(const TQPoint&);
+    void mousePressEvent(TQMouseEvent *);
+    void mouseReleaseEvent(TQMouseEvent *);
+    void mouseMoveEvent(TQMouseEvent *);
 private:
     KWinModule* kwin_module;
     DockContainer::Vector containers;
 
     // handle the dragging of applets
     DockContainer *dragging_container, *original_container;
-    QPoint mclic_pos, mclic_dock_pos;
+    TQPoint mclic_pos, mclic_dock_pos;
     int dragged_container_original_pos;
 };
 

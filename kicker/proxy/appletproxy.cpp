@@ -23,9 +23,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <stdlib.h>
 
-#include <qstring.h>
-#include <qfile.h>
-#include <qobjectlist.h>
+#include <tqstring.h>
+#include <tqfile.h>
+#include <tqobjectlist.h>
 #include <qxembed.h>
 
 #include <kapplication.h>
@@ -38,7 +38,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kmessagebox.h>
 #include <kpanelapplet.h>
 #include <kaboutdata.h>
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 #include <dcopclient.h>
 #include <kwin.h>
 
@@ -97,20 +97,20 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
         KCmdLineArgs::usage(i18n("No desktop file specified") );
 
     // Perhaps we should use a konsole-like solution here (shell, list of args...)
-    QString desktopfile( args->arg(0) );
+    TQString desktopfile( args->arg(0) );
 
     // load applet DSO
-    if ( !QFile::exists( desktopfile ) &&
+    if ( !TQFile::exists( desktopfile ) &&
          !desktopfile.endsWith( ".desktop" ) )
         desktopfile.append( ".desktop" );
 
-    if ( !QFile::exists( desktopfile ) )
+    if ( !TQFile::exists( desktopfile ) )
         desktopfile = locate( "applets", desktopfile ).latin1();
 
     proxy.loadApplet( desktopfile, args->getOption("configfile"));
 
     // dock into our applet container
-    QCString callbackid = args->getOption( "callbackid");
+    TQCString callbackid = args->getOption( "callbackid");
     if ( callbackid.isEmpty() )
 	proxy.showStandalone();
     else
@@ -119,8 +119,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     return a.exec();
 }
 
-AppletProxy::AppletProxy(QObject* parent, const char* name)
-  : QObject(parent, name)
+AppletProxy::AppletProxy(TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , DCOPObject("AppletProxy")
   , _info(0)
   , _applet(0)
@@ -142,7 +142,7 @@ AppletProxy::AppletProxy(QObject* parent, const char* name)
 	exit(0);
     }
 
-    _bg = QPixmap();
+    _bg = TQPixmap();
 }
 
 AppletProxy::~AppletProxy()
@@ -152,12 +152,12 @@ AppletProxy::~AppletProxy()
     delete _applet;
 }
 
-void AppletProxy::loadApplet(const QString& desktopFile, const QString& configFile)
+void AppletProxy::loadApplet(const TQString& desktopFile, const TQString& configFile)
 {
-    QString df;
+    TQString df;
 
     // try simple path first
-    QFileInfo finfo( desktopFile );
+    TQFileInfo finfo( desktopFile );
     if ( finfo.exists() ) {
 	df = finfo.absFilePath();
     } else {
@@ -165,7 +165,7 @@ void AppletProxy::loadApplet(const QString& desktopFile, const QString& configFi
 	df = KGlobal::dirs()->findResource("applets", desktopFile);
     }
 
-    QFile file(df);
+    TQFile file(df);
     // does the config file exist?
     if (df.isNull() || !file.exists()) {
 	kdError() << "Failed to locate applet desktop file: " << desktopFile << endl;
@@ -197,15 +197,15 @@ void AppletProxy::loadApplet(const QString& desktopFile, const QString& configFi
     }
 
     // connect updateLayout signal
-    connect(_applet, SIGNAL(updateLayout()), SLOT(slotUpdateLayout()));
+    connect(_applet, TQT_SIGNAL(updateLayout()), TQT_SLOT(slotUpdateLayout()));
     // connect requestFocus signal
-    connect(_applet, SIGNAL(requestFocus()), SLOT(slotRequestFocus()));
+    connect(_applet, TQT_SIGNAL(requestFocus()), TQT_SLOT(slotRequestFocus()));
 }
 
 KPanelApplet* AppletProxy::loadApplet(const AppletInfo& info)
 {
     KLibLoader* loader = KLibLoader::self();
-    KLibrary* lib = loader->library(QFile::encodeName(info.library()));
+    KLibrary* lib = loader->library(TQFile::encodeName(info.library()));
 
     if (!lib)
     {
@@ -214,8 +214,8 @@ KPanelApplet* AppletProxy::loadApplet(const AppletInfo& info)
         return 0;
     }
 
-    KPanelApplet* (*init_ptr)(QWidget *, const QString&);
-    init_ptr = (KPanelApplet* (*)(QWidget *, const QString&))lib->symbol( "init" );
+    KPanelApplet* (*init_ptr)(TQWidget *, const TQString&);
+    init_ptr = (KPanelApplet* (*)(TQWidget *, const TQString&))lib->symbol( "init" );
 
     if (!init_ptr)
     {
@@ -226,21 +226,21 @@ KPanelApplet* AppletProxy::loadApplet(const AppletInfo& info)
     return init_ptr(0, info.configFile());
 }
 
-void AppletProxy::repaintApplet(QWidget* widget) 
+void AppletProxy::repaintApplet(TQWidget* widget) 
 {
     widget->repaint();
  
-    const QObjectList* children = widget->children();
+    const TQObjectList* children = widget->children();
 
     if (!children)
     {
         return;
     }
 
-    QObjectList::iterator it = children->begin();
+    TQObjectList::iterator it = children->begin();
     for (; it != children->end(); ++it)
     {
-        QWidget *w = dynamic_cast<QWidget*>(*it);
+        TQWidget *w = dynamic_cast<TQWidget*>(*it);
         if (w)
         {
             repaintApplet(w);
@@ -248,7 +248,7 @@ void AppletProxy::repaintApplet(QWidget* widget)
     }
 }
 
-void AppletProxy::dock(const QCString& callbackID)
+void AppletProxy::dock(const TQCString& callbackID)
 {
     kdDebug(1210) << "Callback ID: " << callbackID << endl;
 
@@ -258,16 +258,16 @@ void AppletProxy::dock(const QCString& callbackID)
     DCOPClient* dcop = kapp->dcopClient();
 
     dcop->setNotifications(true);
-    connect(dcop, SIGNAL(applicationRemoved(const QCString&)),
-	    SLOT(slotApplicationRemoved(const QCString&)));
+    connect(dcop, TQT_SIGNAL(applicationRemoved(const TQCString&)),
+	    TQT_SLOT(slotApplicationRemoved(const TQCString&)));
 
     WId win;
 
     // get docked
     {
-	QCString replyType;
-	QByteArray data, replyData;
-	QDataStream dataStream( data, IO_WriteOnly );
+	TQCString replyType;
+	TQByteArray data, replyData;
+	TQDataStream dataStream( data, IO_WriteOnly );
 
 	int actions = 0;
 	if (_applet) actions = _applet->actions();
@@ -282,7 +282,7 @@ void AppletProxy::dock(const QCString& callbackID)
 	int screen_number = 0;
 	if (qt_xdisplay())
 	    screen_number = DefaultScreen(qt_xdisplay());
-	QCString appname;
+	TQCString appname;
 	if (screen_number == 0)
 	    appname = "kicker";
 	else
@@ -298,7 +298,7 @@ void AppletProxy::dock(const QCString& callbackID)
             exit(0);
         }
 
-	QDataStream reply( replyData, IO_ReadOnly );
+	TQDataStream reply( replyData, IO_ReadOnly );
 	reply >> win;
 
         // request background
@@ -328,15 +328,15 @@ void AppletProxy::dock(const QCString& callbackID)
 
 }
 
-bool AppletProxy::process(const QCString &fun, const QByteArray &data,
-                          QCString& replyType, QByteArray &replyData)
+bool AppletProxy::process(const TQCString &fun, const TQByteArray &data,
+                          TQCString& replyType, TQByteArray &replyData)
 {
     if ( fun == "widthForHeight(int)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int height;
 	    dataStream >> height;
-	    QDataStream reply( replyData, IO_WriteOnly );
+	    TQDataStream reply( replyData, IO_WriteOnly );
 	    replyType = "int";
 
 	    if (!_applet)
@@ -348,10 +348,10 @@ bool AppletProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "heightForWidth(int)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int width;
 	    dataStream >> width;
-	    QDataStream reply( replyData, IO_WriteOnly );
+	    TQDataStream reply( replyData, IO_WriteOnly );
 	    replyType = "int";
 
 	    if(!_applet)
@@ -363,7 +363,7 @@ bool AppletProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "setDirection(int)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int dir;
 	    dataStream >> dir;
 
@@ -374,7 +374,7 @@ bool AppletProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "setAlignment(int)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int alignment;
 	    dataStream >> alignment;
 
@@ -412,7 +412,7 @@ bool AppletProxy::process(const QCString &fun, const QByteArray &data,
   }
     else if ( fun == "actions()" )
 	{
-	    QDataStream reply( replyData, IO_WriteOnly );
+	    TQDataStream reply( replyData, IO_WriteOnly );
 	    int actions = 0;
 	    if(_applet) actions = _applet->actions();
 	    reply << actions;
@@ -421,16 +421,16 @@ bool AppletProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "type()" )
 	{
-	    QDataStream reply( replyData, IO_WriteOnly );
+	    TQDataStream reply( replyData, IO_WriteOnly );
 	    int type = 0;
 	    if (_applet) type = static_cast<int>(_applet->type());
 	    reply << type;
 	    replyType = "int";
 	    return true;
 	}
-    else if ( fun == "setBackground(QPixmap)" )
+    else if ( fun == "setBackground(TQPixmap)" )
         {
-            QDataStream dataStream( data, IO_ReadOnly ); 
+            TQDataStream dataStream( data, IO_ReadOnly ); 
             dataStream >> _bg;
             if(_applet)
                 if ( _bg.isNull() ) { // no transparency
@@ -453,11 +453,11 @@ void AppletProxy::slotUpdateLayout()
 {
     if(_callbackID.isNull()) return;
 
-    QByteArray data;
+    TQByteArray data;
     int screen_number = 0;
     if (qt_xdisplay())
 	screen_number = DefaultScreen(qt_xdisplay());
-    QCString appname;
+    TQCString appname;
     if (screen_number == 0)
 	appname = "kicker";
     else
@@ -470,11 +470,11 @@ void AppletProxy::slotRequestFocus()
 {
     if(_callbackID.isNull()) return;
 
-    QByteArray data;
+    TQByteArray data;
     int screen_number = 0;
     if (qt_xdisplay())
 	screen_number = DefaultScreen(qt_xdisplay());
-    QCString appname;
+    TQCString appname;
     if (screen_number == 0)
 	appname = "kicker";
     else
@@ -483,12 +483,12 @@ void AppletProxy::slotRequestFocus()
     kapp->dcopClient()->send(appname, _callbackID, "requestFocus()", data);
 }
 
-void AppletProxy::slotApplicationRemoved(const QCString& appId)
+void AppletProxy::slotApplicationRemoved(const TQCString& appId)
 {
     int screen_number = 0;
     if (qt_xdisplay())
 	screen_number = DefaultScreen(qt_xdisplay());
-    QCString appname;
+    TQCString appname;
     if (screen_number == 0)
 	appname = "kicker";
     else

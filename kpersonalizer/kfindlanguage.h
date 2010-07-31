@@ -22,17 +22,17 @@ class KFindLanguage {
 public:
 	KFindLanguage();
 	~KFindLanguage();
-	QStringList getLangList() const;
-	QMap<QString,QString> getLangMap() const;
-	QString getBestLang() const;
-	QString getOldLang() const;
-	QString getCountry() const;
+	TQStringList getLangList() const;
+	TQMap<TQString,TQString> getLangMap() const;
+	TQString getBestLang() const;
+	TQString getOldLang() const;
+	TQString getCountry() const;
 private:
-	QStringList m_langlist;          // stores tags like "en_US"
-	QMap<QString,QString> m_langmap; // stores tag -> name pairs
-	QString m_country;
-	QString m_oldlang;
-	QString m_bestlang;
+	TQStringList m_langlist;          // stores tags like "en_US"
+	TQMap<TQString,TQString> m_langmap; // stores tag -> name pairs
+	TQString m_country;
+	TQString m_oldlang;
+	TQString m_bestlang;
 };
 
 #endif

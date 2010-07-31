@@ -21,11 +21,11 @@
 
 */
 
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qspinbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqspinbox.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -47,106 +47,106 @@ SensorManager::SensorManager()
   mDict.setAutoDelete( true );
 
   // Fill the sensor description dictionary.
-  mDict.insert( "cpu", new QString( i18n( "CPU Load" ) ) );
-  mDict.insert( "idle", new QString( i18n( "Idle Load" ) ) );
-  mDict.insert( "sys", new QString( i18n( "System Load" ) ) );
-  mDict.insert( "nice", new QString( i18n( "Nice Load" ) ) );
-  mDict.insert( "user", new QString( i18n( "User Load" ) ) );
-  mDict.insert( "mem", new QString( i18n( "Memory" ) ) );
-  mDict.insert( "physical", new QString( i18n( "Physical Memory" ) ) );
-  mDict.insert( "swap", new QString( i18n( "Swap Memory" ) ) );
-  mDict.insert( "cached", new QString( i18n( "Cached Memory" ) ) );
-  mDict.insert( "buf", new QString( i18n( "Buffered Memory" ) ) );
-  mDict.insert( "used", new QString( i18n( "Used Memory" ) ) );
-  mDict.insert( "application", new QString( i18n( "Application Memory" ) ) );
-  mDict.insert( "free", new QString( i18n( "Free Memory" ) ) );
-  mDict.insert( "pscount", new QString( i18n( "Process Count" ) ) );
-  mDict.insert( "ps", new QString( i18n( "Process Controller" ) ) );
-  mDict.insert( "disk", new QString( i18n( "Disk Throughput" ) ) );
-  mDict.insert( "load", new QString( i18n( "CPU Load", "Load" ) ) );
-  mDict.insert( "total", new QString( i18n( "Total Accesses" ) ) );
-  mDict.insert( "rio", new QString( i18n( "Read Accesses" ) ) );
-  mDict.insert( "wio", new QString( i18n( "Write Accesses" ) ) );
-  mDict.insert( "rblk", new QString( i18n( "Read Data" ) ) );
-  mDict.insert( "wblk", new QString( i18n( "Write Data" ) ) );
-  mDict.insert( "pageIn", new QString( i18n( "Pages In" ) ) );
-  mDict.insert( "pageOut", new QString( i18n( "Pages Out" ) ) );
-  mDict.insert( "context", new QString( i18n( "Context Switches" ) ) );
-  mDict.insert( "network", new QString( i18n( "Network" ) ) );
-  mDict.insert( "interfaces", new QString( i18n( "Interfaces" ) ) );
-  mDict.insert( "receiver", new QString( i18n( "Receiver" ) ) );
-  mDict.insert( "transmitter", new QString( i18n( "Transmitter" ) ) );
-  mDict.insert( "data", new QString( i18n( "Data" ) ) );
-  mDict.insert( "compressed", new QString( i18n( "Compressed Packets" ) ) );
-  mDict.insert( "drops", new QString( i18n( "Dropped Packets" ) ) );
-  mDict.insert( "errors", new QString( i18n( "Errors" ) ) );
-  mDict.insert( "fifo", new QString( i18n( "FIFO Overruns" ) ) );
-  mDict.insert( "frame", new QString( i18n( "Frame Errors" ) ) );
-  mDict.insert( "multicast", new QString( i18n( "Multicast" ) ) );
-  mDict.insert( "packets", new QString( i18n( "Packets" ) ) );
-  mDict.insert( "carrier", new QString( i18n( "Carrier" ) ) );
-  mDict.insert( "collisions", new QString( i18n( "Collisions" ) ) );
-  mDict.insert( "sockets", new QString( i18n( "Sockets" ) ) );
-  mDict.insert( "count", new QString( i18n( "Total Number" ) ) );
-  mDict.insert( "list", new QString( i18n( "Table" ) ) );
-  mDict.insert( "apm", new QString( i18n( "Advanced Power Management" ) ) );
-  mDict.insert( "acpi", new QString( i18n( "ACPI" ) ) );
-  mDict.insert( "thermal_zone", new QString( i18n( "Thermal Zone" ) ) );
-  mDict.insert( "temperature", new QString( i18n( "Temperature" ) ) );
-  mDict.insert( "fan", new QString( i18n( "Fan" ) ) );
-  mDict.insert( "state", new QString( i18n( "State" ) ) );
-  mDict.insert( "battery", new QString( i18n( "Battery" ) ) );
-  mDict.insert( "batterycharge", new QString( i18n( "Battery Charge" ) ) );
-  mDict.insert( "batteryusage", new QString( i18n( "Battery Usage" ) ) );
-  mDict.insert( "remainingtime", new QString( i18n( "Remaining Time" ) ) );
-  mDict.insert( "interrupts", new QString( i18n( "Interrupts" ) ) );
-  mDict.insert( "loadavg1", new QString( i18n( "Load Average (1 min)" ) ) );
-  mDict.insert( "loadavg5", new QString( i18n( "Load Average (5 min)" ) ) );
-  mDict.insert( "loadavg15", new QString( i18n( "Load Average (15 min)" ) ) );
-  mDict.insert( "clock", new QString( i18n( "Clock Frequency" ) ) );
-  mDict.insert( "lmsensors", new QString( i18n( "Hardware Sensors" ) ) );
-  mDict.insert( "partitions", new QString( i18n( "Partition Usage" ) ) );
-  mDict.insert( "usedspace", new QString( i18n( "Used Space" ) ) );
-  mDict.insert( "freespace", new QString( i18n( "Free Space" ) ) );
-  mDict.insert( "filllevel", new QString( i18n( "Fill Level" ) ) );
+  mDict.insert( "cpu", new TQString( i18n( "CPU Load" ) ) );
+  mDict.insert( "idle", new TQString( i18n( "Idle Load" ) ) );
+  mDict.insert( "sys", new TQString( i18n( "System Load" ) ) );
+  mDict.insert( "nice", new TQString( i18n( "Nice Load" ) ) );
+  mDict.insert( "user", new TQString( i18n( "User Load" ) ) );
+  mDict.insert( "mem", new TQString( i18n( "Memory" ) ) );
+  mDict.insert( "physical", new TQString( i18n( "Physical Memory" ) ) );
+  mDict.insert( "swap", new TQString( i18n( "Swap Memory" ) ) );
+  mDict.insert( "cached", new TQString( i18n( "Cached Memory" ) ) );
+  mDict.insert( "buf", new TQString( i18n( "Buffered Memory" ) ) );
+  mDict.insert( "used", new TQString( i18n( "Used Memory" ) ) );
+  mDict.insert( "application", new TQString( i18n( "Application Memory" ) ) );
+  mDict.insert( "free", new TQString( i18n( "Free Memory" ) ) );
+  mDict.insert( "pscount", new TQString( i18n( "Process Count" ) ) );
+  mDict.insert( "ps", new TQString( i18n( "Process Controller" ) ) );
+  mDict.insert( "disk", new TQString( i18n( "Disk Throughput" ) ) );
+  mDict.insert( "load", new TQString( i18n( "CPU Load", "Load" ) ) );
+  mDict.insert( "total", new TQString( i18n( "Total Accesses" ) ) );
+  mDict.insert( "rio", new TQString( i18n( "Read Accesses" ) ) );
+  mDict.insert( "wio", new TQString( i18n( "Write Accesses" ) ) );
+  mDict.insert( "rblk", new TQString( i18n( "Read Data" ) ) );
+  mDict.insert( "wblk", new TQString( i18n( "Write Data" ) ) );
+  mDict.insert( "pageIn", new TQString( i18n( "Pages In" ) ) );
+  mDict.insert( "pageOut", new TQString( i18n( "Pages Out" ) ) );
+  mDict.insert( "context", new TQString( i18n( "Context Switches" ) ) );
+  mDict.insert( "network", new TQString( i18n( "Network" ) ) );
+  mDict.insert( "interfaces", new TQString( i18n( "Interfaces" ) ) );
+  mDict.insert( "receiver", new TQString( i18n( "Receiver" ) ) );
+  mDict.insert( "transmitter", new TQString( i18n( "Transmitter" ) ) );
+  mDict.insert( "data", new TQString( i18n( "Data" ) ) );
+  mDict.insert( "compressed", new TQString( i18n( "Compressed Packets" ) ) );
+  mDict.insert( "drops", new TQString( i18n( "Dropped Packets" ) ) );
+  mDict.insert( "errors", new TQString( i18n( "Errors" ) ) );
+  mDict.insert( "fifo", new TQString( i18n( "FIFO Overruns" ) ) );
+  mDict.insert( "frame", new TQString( i18n( "Frame Errors" ) ) );
+  mDict.insert( "multicast", new TQString( i18n( "Multicast" ) ) );
+  mDict.insert( "packets", new TQString( i18n( "Packets" ) ) );
+  mDict.insert( "carrier", new TQString( i18n( "Carrier" ) ) );
+  mDict.insert( "collisions", new TQString( i18n( "Collisions" ) ) );
+  mDict.insert( "sockets", new TQString( i18n( "Sockets" ) ) );
+  mDict.insert( "count", new TQString( i18n( "Total Number" ) ) );
+  mDict.insert( "list", new TQString( i18n( "Table" ) ) );
+  mDict.insert( "apm", new TQString( i18n( "Advanced Power Management" ) ) );
+  mDict.insert( "acpi", new TQString( i18n( "ACPI" ) ) );
+  mDict.insert( "thermal_zone", new TQString( i18n( "Thermal Zone" ) ) );
+  mDict.insert( "temperature", new TQString( i18n( "Temperature" ) ) );
+  mDict.insert( "fan", new TQString( i18n( "Fan" ) ) );
+  mDict.insert( "state", new TQString( i18n( "State" ) ) );
+  mDict.insert( "battery", new TQString( i18n( "Battery" ) ) );
+  mDict.insert( "batterycharge", new TQString( i18n( "Battery Charge" ) ) );
+  mDict.insert( "batteryusage", new TQString( i18n( "Battery Usage" ) ) );
+  mDict.insert( "remainingtime", new TQString( i18n( "Remaining Time" ) ) );
+  mDict.insert( "interrupts", new TQString( i18n( "Interrupts" ) ) );
+  mDict.insert( "loadavg1", new TQString( i18n( "Load Average (1 min)" ) ) );
+  mDict.insert( "loadavg5", new TQString( i18n( "Load Average (5 min)" ) ) );
+  mDict.insert( "loadavg15", new TQString( i18n( "Load Average (15 min)" ) ) );
+  mDict.insert( "clock", new TQString( i18n( "Clock Frequency" ) ) );
+  mDict.insert( "lmsensors", new TQString( i18n( "Hardware Sensors" ) ) );
+  mDict.insert( "partitions", new TQString( i18n( "Partition Usage" ) ) );
+  mDict.insert( "usedspace", new TQString( i18n( "Used Space" ) ) );
+  mDict.insert( "freespace", new TQString( i18n( "Free Space" ) ) );
+  mDict.insert( "filllevel", new TQString( i18n( "Fill Level" ) ) );
 
   for ( int i = 0; i < 32; i++ ) {
-    mDict.insert( "cpu" + QString::number( i ),
-                 new QString( QString( i18n( "CPU%1" ) ).arg( i ) ) );
-    mDict.insert( "disk" + QString::number( i ),
-                 new QString( QString( i18n( "Disk%1" ) ).arg( i ) ) );
+    mDict.insert( "cpu" + TQString::number( i ),
+                 new TQString( TQString( i18n( "CPU%1" ) ).arg( i ) ) );
+    mDict.insert( "disk" + TQString::number( i ),
+                 new TQString( TQString( i18n( "Disk%1" ) ).arg( i ) ) );
   }
 
   for ( int i = 0; i < 6; i++) {
-    mDict.insert( "fan" + QString::number( i ),
-                 new QString( QString( i18n( "Fan%1" ) ).arg( i ) ) );
-    mDict.insert( "temp" + QString::number( i ),
-                 new QString( QString( i18n( "Temperature%1" ) ).arg( i ) ) );
+    mDict.insert( "fan" + TQString::number( i ),
+                 new TQString( TQString( i18n( "Fan%1" ) ).arg( i ) ) );
+    mDict.insert( "temp" + TQString::number( i ),
+                 new TQString( TQString( i18n( "Temperature%1" ) ).arg( i ) ) );
   }
 
-  mDict.insert( "int00", new QString( i18n( "Total" ) ) );
+  mDict.insert( "int00", new TQString( i18n( "Total" ) ) );
 
-  QString num;
+  TQString num;
   for ( int i = 1; i < 25; i++ ) {
     num.sprintf( "%.2d", i );
 		mDict.insert( "int" + num,
-                 new QString( QString( i18n( "Int%1" ) ).arg( i - 1, 3 ) ) );
+                 new TQString( TQString( i18n( "Int%1" ) ).arg( i - 1, 3 ) ) );
 	}
 
   mDescriptions.setAutoDelete( true );
   // TODO: translated descriptions not yet implemented.
 
   mUnits.setAutoDelete( true );
-  mUnits.insert( "1/s", new QString( i18n( "the unit 1 per second", "1/s" ) ) );
-  mUnits.insert( "kBytes", new QString( i18n( "kBytes" ) ) );
-  mUnits.insert( "min", new QString( i18n( "the unit minutes", "min" ) ) );
-  mUnits.insert( "MHz", new QString( i18n( "the frequency unit", "MHz" ) ) );
+  mUnits.insert( "1/s", new TQString( i18n( "the unit 1 per second", "1/s" ) ) );
+  mUnits.insert( "kBytes", new TQString( i18n( "kBytes" ) ) );
+  mUnits.insert( "min", new TQString( i18n( "the unit minutes", "min" ) ) );
+  mUnits.insert( "MHz", new TQString( i18n( "the frequency unit", "MHz" ) ) );
 
   mTypes.setAutoDelete( true );
-  mTypes.insert( "integer", new QString( i18n( "Integer Value" ) ) );
-  mTypes.insert( "float", new QString( i18n( "Floating Point Value" ) ) );
-  mTypes.insert( "table", new QString( i18n( "Process Controller" ) ) );
-  mTypes.insert( "listview", new QString( i18n( "Table" ) ) );
+  mTypes.insert( "integer", new TQString( i18n( "Integer Value" ) ) );
+  mTypes.insert( "float", new TQString( i18n( "Floating Point Value" ) ) );
+  mTypes.insert( "table", new TQString( i18n( "Process Controller" ) ) );
+  mTypes.insert( "listview", new TQString( i18n( "Table" ) ) );
 
   mBroadcaster = 0;
 
@@ -158,7 +158,7 @@ SensorManager::~SensorManager()
   delete mHostConnector;
 }
 
-bool SensorManager::engageHost( const QString &hostName )
+bool SensorManager::engageHost( const TQString &hostName )
 {
   bool retVal = true;
 
@@ -171,8 +171,8 @@ bool SensorManager::engageHost( const QString &hostName )
     mHostConnector->setCurrentHostName( hostName );
 
     if ( mHostConnector->exec() ) {
-      QString shell = "";
-      QString command = "";
+      TQString shell = "";
+      TQString command = "";
       int port = -1;
 
       /* Check which radio button is selected and set parameters
@@ -197,8 +197,8 @@ bool SensorManager::engageHost( const QString &hostName )
   return retVal;
 }
 
-bool SensorManager::engage( const QString &hostName, const QString &shell,
-                            const QString &command, int port )
+bool SensorManager::engage( const TQString &hostName, const TQString &shell,
+                            const TQString &command, int port )
 {
   SensorAgent *agent;
 
@@ -214,8 +214,8 @@ bool SensorManager::engage( const QString &hostName, const QString &shell,
     }
 
     mAgents.insert( hostName, agent );
-    connect( agent, SIGNAL( reconfigure( const SensorAgent* ) ),
-             SLOT( reconfigure( const SensorAgent* ) ) );
+    connect( agent, TQT_SIGNAL( reconfigure( const SensorAgent* ) ),
+             TQT_SLOT( reconfigure( const SensorAgent* ) ) );
 
 		emit update();
     return true;
@@ -232,13 +232,13 @@ void SensorManager::requestDisengage( const SensorAgent *agent )
 	 * while we are still in a SensorAgent member function.
 	 * So we have to post an event which is later caught by
 	 * SensorManger::customEvent(). */
-  QCustomEvent* event = new QCustomEvent( QEvent::User, (void*)agent );
+  TQCustomEvent* event = new TQCustomEvent( TQEvent::User, (void*)agent );
   kapp->postEvent( this, event );
 }
 
 bool SensorManager::disengage( const SensorAgent *agent )
 {
-  QDictIterator<SensorAgent> it( mAgents );
+  TQDictIterator<SensorAgent> it( mAgents );
 
   for ( ; it.current(); ++it )
     if ( it.current() == agent ) {
@@ -250,7 +250,7 @@ bool SensorManager::disengage( const SensorAgent *agent )
   return false;
 }
 
-bool SensorManager::disengage( const QString &hostName )
+bool SensorManager::disengage( const TQString &hostName )
 {
   SensorAgent *agent;
   if ( ( agent = mAgents.find( hostName ) ) != 0 ) {
@@ -262,14 +262,14 @@ bool SensorManager::disengage( const QString &hostName )
   return false;
 }
 
-bool SensorManager::resynchronize( const QString &hostName )
+bool SensorManager::resynchronize( const TQString &hostName )
 {
   SensorAgent *agent;
 
   if ( ( agent = mAgents.find( hostName ) ) == 0 )
     return false;
 
-  QString shell, command;
+  TQString shell, command;
   int port;
   hostInfo( hostName, shell, command, port );
 
@@ -285,26 +285,26 @@ void SensorManager::hostLost( const SensorAgent *agent )
   emit hostConnectionLost( agent->hostName() );
 
   if ( mBroadcaster ) {
-    QCustomEvent *event = new QCustomEvent( QEvent::User );
-    event->setData( new QString( i18n( "Connection to %1 has been lost." )
+    TQCustomEvent *event = new TQCustomEvent( TQEvent::User );
+    event->setData( new TQString( i18n( "Connection to %1 has been lost." )
                     .arg( agent->hostName() ) ) );
     kapp->postEvent( mBroadcaster, event );
   }
 }
 
-void SensorManager::notify( const QString &msg ) const
+void SensorManager::notify( const TQString &msg ) const
 {
   /* This function relays text messages to the toplevel widget that
    * displays the message in a pop-up box. It must be used for objects
    * that might have been deleted before the pop-up box is closed. */
   if ( mBroadcaster ) {
-    QCustomEvent *event = new QCustomEvent( QEvent::User );
-    event->setData( new QString( msg ) );
+    TQCustomEvent *event = new TQCustomEvent( TQEvent::User );
+    event->setData( new TQString( msg ) );
     kapp->postEvent( mBroadcaster, event );
   }
 }
 
-void SensorManager::setBroadcaster( QWidget *wdg )
+void SensorManager::setBroadcaster( TQWidget *wdg )
 {
   mBroadcaster = wdg;
 }
@@ -314,17 +314,17 @@ void SensorManager::reconfigure( const SensorAgent* )
   emit update();
 }
 
-bool SensorManager::event( QEvent *event )
+bool SensorManager::event( TQEvent *event )
 {
-  if ( event->type() == QEvent::User ) {
-    disengage( (const SensorAgent*)((QCustomEvent*)event)->data() );
+  if ( event->type() == TQEvent::User ) {
+    disengage( (const SensorAgent*)((TQCustomEvent*)event)->data() );
     return true;
   }
 
   return false;
 }
 
-bool SensorManager::sendRequest( const QString &hostName, const QString &req,
+bool SensorManager::sendRequest( const TQString &hostName, const TQString &req,
                                  SensorClient *client, int id )
 {
   SensorAgent *agent = mAgents.find( hostName );
@@ -341,9 +341,9 @@ bool SensorManager::sendRequest( const QString &hostName, const QString &req,
   return false;
 }
 
-const QString SensorManager::hostName( const SensorAgent *agent) const
+const TQString SensorManager::hostName( const SensorAgent *agent) const
 {
-  QDictIterator<SensorAgent> it( mAgents );
+  TQDictIterator<SensorAgent> it( mAgents );
 	
   while ( it.current() ) {
     if ( it.current() == agent )
@@ -351,11 +351,11 @@ const QString SensorManager::hostName( const SensorAgent *agent) const
     ++it;
   }
 
-  return QString::null;
+  return TQString::null;
 }
 
-bool SensorManager::hostInfo( const QString &hostName, QString &shell,
-                              QString &command, int &port )
+bool SensorManager::hostInfo( const TQString &hostName, TQString &shell,
+                              TQString &command, int &port )
 {
   SensorAgent *agent;
   if ( ( agent = mAgents.find( hostName ) ) != 0 ) {
@@ -366,7 +366,7 @@ bool SensorManager::hostInfo( const QString &hostName, QString &shell,
   return false;
 }
 
-const QString &SensorManager::translateUnit( const QString &unit ) const
+const TQString &SensorManager::translateUnit( const TQString &unit ) const
 {
   if ( !unit.isEmpty() && mUnits[ unit ] )
     return *mUnits[ unit ];
@@ -374,7 +374,7 @@ const QString &SensorManager::translateUnit( const QString &unit ) const
     return unit;
 }
 
-const QString &SensorManager::translateSensorPath( const QString &path ) const
+const TQString &SensorManager::translateSensorPath( const TQString &path ) const
 {
   if ( !path.isEmpty() && mDict[ path ] )
     return *mDict[ path ];
@@ -382,7 +382,7 @@ const QString &SensorManager::translateSensorPath( const QString &path ) const
     return path;
 }
 	
-const QString &SensorManager::translateSensorType( const QString &type ) const
+const TQString &SensorManager::translateSensorType( const TQString &type ) const
 {
   if ( !type.isEmpty() && mTypes[ type ] )
     return *mTypes[ type ];
@@ -390,9 +390,9 @@ const QString &SensorManager::translateSensorType( const QString &type ) const
     return type;
 }
 
-QString SensorManager::translateSensor( const QString &sensor ) const
+TQString SensorManager::translateSensor( const TQString &sensor ) const
 {
-  QString token, out;
+  TQString token, out;
   int start = 0, end = 0;
   for ( ; ; ) {
     end = sensor.find( '/', start );
@@ -423,7 +423,7 @@ SensorManager::saveProperties( KConfig *cfg )
 
 void SensorManager::disconnectClient( SensorClient *client )
 {
-  QDictIterator<SensorAgent> it( mAgents );
+  TQDictIterator<SensorAgent> it( mAgents );
 
   for ( ; it.current(); ++it)
     it.current()->disconnectClient( client );

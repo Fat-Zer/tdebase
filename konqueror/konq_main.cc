@@ -32,9 +32,9 @@
 #include <kcmdlineargs.h>
 #include <dcopclient.h>
 #include <kimageio.h>
-#include <qfile.h>
+#include <tqfile.h>
 
-#include <qwidgetlist.h>
+#include <tqwidgetlist.h>
 
 static const KCmdLineOptions options[] =
 {
@@ -75,8 +75,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     int n = 1;
     while ( KonqMainWindow::canBeRestored( n ) )
     {
-      QString className = KMainWindow::classNameOfToplevel( n );
-      if( className == QString::fromLatin1( "KonqMainWindow" ))
+      TQString className = KMainWindow::classNameOfToplevel( n );
+      if( className == TQString::fromLatin1( "KonqMainWindow" ))
           (new KonqMainWindow( KURL(), false ) )->restore( n );
       else
           kdWarning() << "Unknown class " << className << " in session saved data!" << endl;
@@ -87,34 +87,34 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   {
      if (args->isSet("profiles"))
      {
-       QStringList profiles = KGlobal::dirs()->findAllResources("data", "konqueror/profiles/*", false, true);
+       TQStringList profiles = KGlobal::dirs()->findAllResources("data", "konqueror/profiles/*", false, true);
        profiles.sort();
-       for(QStringList::ConstIterator it = profiles.begin();
+       for(TQStringList::ConstIterator it = profiles.begin();
            it != profiles.end(); ++it)
        {
-         QString file = *it;
+         TQString file = *it;
          file = file.mid(file.findRev('/')+1);
-         printf("%s\n", QFile::encodeName(file).data());
+         printf("%s\n", TQFile::encodeName(file).data());
        }
 
        return 0;
      }
      if (args->isSet("profile"))
      {
-       QString profile = QString::fromLocal8Bit(args->getOption("profile"));
-       QString profilePath = profile;
+       TQString profile = TQString::fromLocal8Bit(args->getOption("profile"));
+       TQString profilePath = profile;
        if (profile[0] != '/')
-           profilePath = locate( "data", QString::fromLatin1("konqueror/profiles/")+profile );
-       QString url;
-       QStringList filesToSelect;
+           profilePath = locate( "data", TQString::fromLatin1("konqueror/profiles/")+profile );
+       TQString url;
+       TQStringList filesToSelect;
        if (args->count() == 1)
-           url = QString::fromLocal8Bit(args->arg(0));
+           url = TQString::fromLocal8Bit(args->arg(0));
        KURL kurl(url);
        KParts::URLArgs urlargs;
        if (args->isSet("mimetype"))
-           urlargs.serviceType = QString::fromLocal8Bit(args->getOption("mimetype"));
+           urlargs.serviceType = TQString::fromLocal8Bit(args->getOption("mimetype"));
        if (args->isSet("select")) {
-           QString fn = kurl.fileName(false);
+           TQString fn = kurl.fileName(false);
            if( !fn.isEmpty() ){
               filesToSelect += fn;
               kurl.setFileName("");
@@ -149,8 +149,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
              else if (!args->isSet("silent"))
              {
                  // By default try to open in webbrowser mode. People can use "konqueror ." to get a filemanager.
-                 QString profile = "webbrowsing";
-                 QString profilePath = locate( "data", QString::fromLatin1("konqueror/profiles/")+profile );
+                 TQString profile = "webbrowsing";
+                 TQString profilePath = locate( "data", TQString::fromLatin1("konqueror/profiles/")+profile );
                  if ( !profilePath.isEmpty() ) {
                      KonqMisc::createBrowserWindowFromProfile( profilePath, profile );
                  } else {
@@ -169,23 +169,23 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
                  // KonqMisc::konqFilteredURL doesn't cope with local files... A bit of hackery below
                  KURL url = args->url(i);
                  KURL urlToOpen;
-                 QStringList filesToSelect;
+                 TQStringList filesToSelect;
 
-                 if (url.isLocalFile() && QFile::exists(url.path())) // "konqueror index.html"
+                 if (url.isLocalFile() && TQFile::exists(url.path())) // "konqueror index.html"
                      urlToOpen = url;
                  else
-                     urlToOpen = KURL( KonqMisc::konqFilteredURL(0L, QString::fromLocal8Bit(args->arg(i))) ); // "konqueror slashdot.org"
+                     urlToOpen = KURL( KonqMisc::konqFilteredURL(0L, TQString::fromLocal8Bit(args->arg(i))) ); // "konqueror slashdot.org"
 
                  if ( !mainwin ) {
                      KParts::URLArgs urlargs;
                      if (args->isSet("mimetype"))
                      {
-                         urlargs.serviceType = QString::fromLocal8Bit(args->getOption("mimetype"));
+                         urlargs.serviceType = TQString::fromLocal8Bit(args->getOption("mimetype"));
                          kdDebug(1202) << "main() : setting serviceType to " << urlargs.serviceType << endl;
                      }
                      if (args->isSet("select"))
                      {
-                        QString fn = urlToOpen.fileName(false);
+                        TQString fn = urlToOpen.fileName(false);
                         if( !fn.isEmpty() ){
                            filesToSelect += fn;
                            urlToOpen.setFileName("");

@@ -34,16 +34,16 @@ class FPSensorProperties : public KSGRD::SensorProperties
 {
   public:
     FPSensorProperties();
-    FPSensorProperties( const QString &hostName, const QString &name,
-                        const QString &type, const QString &description,
-                        const QColor &color );
+    FPSensorProperties( const TQString &hostName, const TQString &name,
+                        const TQString &type, const TQString &description,
+                        const TQColor &color );
     ~FPSensorProperties();
 
-    void setColor( const QColor &color );
-    QColor color() const;
+    void setColor( const TQColor &color );
+    TQColor color() const;
 
   private:
-    QColor mColor;
+    TQColor mColor;
 };
 
 class FancyPlotter : public KSGRD::SensorDisplay
@@ -51,27 +51,27 @@ class FancyPlotter : public KSGRD::SensorDisplay
   Q_OBJECT
 
   public:
-    FancyPlotter( QWidget* parent = 0, const char* name = 0,
-                  const QString& title = QString::null, double min = 0,
+    FancyPlotter( TQWidget* parent = 0, const char* name = 0,
+                  const TQString& title = TQString::null, double min = 0,
                   double max = 100, bool noFrame = false, bool isApplet = false );
     virtual ~FancyPlotter();
 
     void configureSettings();
 
-    bool addSensor( const QString &hostName, const QString &name,
-                    const QString &type, const QString &title );
-    bool addSensor( const QString &hostName, const QString &name,
-                    const QString &type, const QString &title,
-                    const QColor &color );
+    bool addSensor( const TQString &hostName, const TQString &name,
+                    const TQString &type, const TQString &title );
+    bool addSensor( const TQString &hostName, const TQString &name,
+                    const TQString &type, const TQString &title,
+                    const TQColor &color );
 
     bool removeSensor( uint pos );
 
-    virtual QSize sizeHint(void);
+    virtual TQSize sizeHint(void);
 
-    virtual void answerReceived( int id, const QString &answer );
+    virtual void answerReceived( int id, const TQString &answer );
 
-    virtual bool restoreSettings( QDomElement &element );
-    virtual bool saveSettings( QDomDocument &doc, QDomElement &element,
+    virtual bool restoreSettings( TQDomElement &element );
+    virtual bool saveSettings( TQDomDocument &doc, TQDomElement &element,
                                bool save = true );
 
     virtual bool hasSettingsDialog() const;
@@ -82,7 +82,7 @@ class FancyPlotter : public KSGRD::SensorDisplay
     void killDialog();
 
   protected:
-    virtual void resizeEvent( QResizeEvent* );
+    virtual void resizeEvent( TQResizeEvent* );
 
   private:
     uint mBeams;
@@ -97,7 +97,7 @@ class FancyPlotter : public KSGRD::SensorDisplay
       received. The flags variable is used to ensure that all samples have
       been received.
      */
-    QValueList<double> mSampleBuf;
+    TQValueList<double> mSampleBuf;
 };
 
 #endif

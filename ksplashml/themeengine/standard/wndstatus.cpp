@@ -18,11 +18,11 @@
 #include <kprogress.h>
 #include <kwin.h>
 
-#include <qdesktopwidget.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qpoint.h>
-#include <qrect.h>
+#include <tqdesktopwidget.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqpoint.h>
+#include <tqrect.h>
 
 #include "wndstatus.h"
 #include "wndstatus.moc"
@@ -30,38 +30,38 @@
 // WndStatus::WndStatus(): Display a nifty status bar at
 // the bottom of the screen, so the user always knows what's
 // happening to his system.
-WndStatus::WndStatus( QPalette /*pal*/,
+WndStatus::WndStatus( TQPalette /*pal*/,
                       int xineramaScreen,
                       bool atTop, bool pbVisible,
-                      const QFont& font,
-                      const QColor& fgc, const QColor & bgc,
-                      const QString& icon
+                      const TQFont& font,
+                      const TQColor& fgc, const TQColor & bgc,
+                      const TQString& icon
                     )
-    :QHBox( 0, "wndStatus", WStyle_Customize|WX11BypassWM )
+    :TQHBox( 0, "wndStatus", WStyle_Customize|WX11BypassWM )
 {
-  setFrameStyle( QFrame::NoFrame );
+  setFrameStyle( TQFrame::NoFrame );
   //setPalette( pal );
   setPaletteBackgroundColor( bgc );
   setPaletteForegroundColor( fgc );
   setCursor( KCursor::blankCursor() );
   setSpacing( 5 );
 
-  const QRect rect = kapp->desktop()->screenGeometry( xineramaScreen );
+  const TQRect rect = kapp->desktop()->screenGeometry( xineramaScreen );
   // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
 
-  QLabel *pix = new QLabel( this );
-  QPixmap _icon( SmallIcon(icon.isNull()||icon.isEmpty()?QString("run"):icon) );
+  TQLabel *pix = new TQLabel( this );
+  TQPixmap _icon( SmallIcon(icon.isNull()||icon.isEmpty()?TQString("run"):icon) );
   pix->setPixmap( _icon );
   setStretchFactor(pix,0);
   pix->setFixedWidth(16);
 
-  m_label = new QLabel( this );
+  m_label = new TQLabel( this );
   m_label->setFont( font );
   m_label->setPaletteBackgroundColor( bgc );
   m_label->setPaletteForegroundColor( fgc );
-  //QFontMetrics metrics( font );
+  //TQFontMetrics metrics( font );
   //m_label->setFixedHeight( metrics.height() );
-  m_label->setText(QString(""));
+  m_label->setText(TQString(""));
   m_label->setFixedWidth(rect.width()-105-16-10); // What's this magic number?
   m_label->show();
 
@@ -69,7 +69,7 @@ WndStatus::WndStatus( QPalette /*pal*/,
   setStretchFactor(m_progress,0);
   m_progress->setFixedWidth(100);
 
-  QWidget *widg = new QWidget( this );
+  TQWidget *widg = new TQWidget( this );
   setStretchFactor(widg,50);
 
   setFixedSize( rect.width(), QMAX(m_progress->height(),m_label->height()) );
@@ -83,7 +83,7 @@ WndStatus::WndStatus( QPalette /*pal*/,
     m_progress->hide();
 }
 
-void WndStatus::slotSetMessage( const QString& msg )
+void WndStatus::slotSetMessage( const TQString& msg )
 {
   raise();
   m_label->setText( msg );

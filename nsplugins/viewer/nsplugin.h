@@ -32,14 +32,14 @@
 #include "NSPluginCallbackIface_stub.h"
 
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qptrqueue.h>
-#include <qdict.h>
-#include <qmap.h>
-#include <qintdict.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqptrqueue.h>
+#include <tqdict.h>
+#include <tqmap.h>
+#include <tqintdict.h>
+#include <tqguardedptr.h>
 
 #include <kparts/browserextension.h>  // for URLArgs
 #include <kio/job.h>
@@ -82,8 +82,8 @@ protected:
   void finish( bool err );
   bool pump();
   bool error() { return _error; }
-  void queue( const QByteArray &data );
-  bool create( const QString& url, const QString& mimeType, void *notify, bool forceNotify = false );
+  void queue( const TQByteArray &data );
+  bool create( const TQString& url, const TQString& mimeType, void *notify, bool forceNotify = false );
   int tries() { return _tries; }
   void inform( );
   void updateURL( const KURL& newURL );
@@ -93,16 +93,16 @@ protected:
   NPStream *_stream;
   void *_notifyData;
   KURL _url;
-  QString _fileURL;
-  QString _mimeType;
-  QByteArray _data;
+  TQString _fileURL;
+  TQString _mimeType;
+  TQByteArray _data;
   class KTempFile *_tempFile;
 
 private:
-  int process( const QByteArray &data, int start );
+  int process( const TQByteArray &data, int start );
 
   unsigned int _pos;
-  QByteArray _queue;
+  TQByteArray _queue;
   unsigned int _queuePos;
   int _tries;
   bool _onlyAsFile;
@@ -120,20 +120,20 @@ public:
   NSPluginStream( class NSPluginInstance *instance );
   ~NSPluginStream();
 
-  bool get(const QString& url, const QString& mimeType, void *notifyData, bool reload = false);
-  bool post(const QString& url, const QByteArray& data, const QString& mimeType, void *notifyData, const KParts::URLArgs& args);
+  bool get(const TQString& url, const TQString& mimeType, void *notifyData, bool reload = false);
+  bool post(const TQString& url, const TQByteArray& data, const TQString& mimeType, void *notifyData, const KParts::URLArgs& args);
 
 protected slots:
-  void data(KIO::Job *job, const QByteArray &data);
+  void data(KIO::Job *job, const TQByteArray &data);
   void totalSize(KIO::Job *job, KIO::filesize_t size);
-  void mimetype(KIO::Job * job, const QString &mimeType);
+  void mimetype(KIO::Job * job, const TQString &mimeType);
   void result(KIO::Job *job);
   void redirection(KIO::Job *job, const KURL& url);
   void resume();
 
 protected:
-  QGuardedPtr<KIO::TransferJob> _job;
-  QTimer *_resumeTimer;
+  TQGuardedPtr<KIO::TransferJob> _job;
+  TQTimer *_resumeTimer;
 };
 
 
@@ -145,18 +145,18 @@ public:
   NSPluginBufStream( class NSPluginInstance *instance );
   ~NSPluginBufStream();
 
-  bool get( const QString& url, const QString& mimeType, const QByteArray &buf, void *notifyData, bool singleShot=false );
+  bool get( const TQString& url, const TQString& mimeType, const TQByteArray &buf, void *notifyData, bool singleShot=false );
 
 protected slots:
   void timer();
 
 protected:
-  QTimer *_timer;
+  TQTimer *_timer;
   bool _singleShot;
 };
 
 
-class NSPluginInstance : public QObject, public virtual NSPluginInstanceIface
+class NSPluginInstance : public TQObject, public virtual NSPluginInstanceIface
 {
   Q_OBJECT
 
@@ -164,9 +164,9 @@ public:
 
   // constructor, destructor
   NSPluginInstance( NPP privateData, NPPluginFuncs *pluginFuncs, KLibrary *handle,
-		    int width, int height, QString src, QString mime,
-                    QString appId, QString callbackId, bool embed, WId xembed,
-		    QObject *parent, const char* name=0 );
+		    int width, int height, TQString src, TQString mime,
+                    TQString appId, TQString callbackId, bool embed, WId xembed,
+		    TQObject *parent, const char* name=0 );
   ~NSPluginInstance();
 
   // DCOP functions
@@ -174,7 +174,7 @@ public:
   int winId() { return _form != 0 ? XtWindow(_form) : 0; }
   int setWindow(Q_INT8 remove=0);
   void resizePlugin(Q_INT32 w, Q_INT32 h);
-  void javascriptResult(Q_INT32 id, QString result);
+  void javascriptResult(Q_INT32 id, TQString result);
   void displayPlugin();
   void gotFocusIn();
   void gotFocusOut();
@@ -194,19 +194,19 @@ public:
   int32 NPWriteReady(NPStream *stream);
 
   // URL functions
-  void NPURLNotify(QString url, NPReason reason, void *notifyData);
+  void NPURLNotify(TQString url, NPReason reason, void *notifyData);
 
   // Event handling
   uint16 HandleEvent(void *event);
 
   // signal emitters
-  void emitStatus( const QString &message);
-  void requestURL( const QString &url, const QString &mime,
-		   const QString &target, void *notify, bool forceNotify = false, bool reload = false );
-  void postURL( const QString &url, const QByteArray& data, const QString &mime,
-             const QString &target, void *notify, const KParts::URLArgs& args, bool forceNotify = false );
+  void emitStatus( const TQString &message);
+  void requestURL( const TQString &url, const TQString &mime,
+		   const TQString &target, void *notify, bool forceNotify = false, bool reload = false );
+  void postURL( const TQString &url, const TQByteArray& data, const TQString &mime,
+             const TQString &target, void *notify, const KParts::URLArgs& args, bool forceNotify = false );
 
-  QString normalizedURL(const QString& url) const;
+  TQString normalizedURL(const TQString& url) const;
 
 public slots:
   void streamFinished( NSPluginStreamBase *strm );
@@ -224,40 +224,40 @@ private:
   bool _destroyed;
   bool _visible;
   void addTempFile(KTempFile *tmpFile);
-  QPtrList<KTempFile> _tempFiles;
+  TQPtrList<KTempFile> _tempFiles;
   NSPluginCallbackIface_stub *_callback;
-  QPtrList<NSPluginStreamBase> _streams;
+  TQPtrList<NSPluginStreamBase> _streams;
   KLibrary *_handle;
-  QTimer *_timer;
+  TQTimer *_timer;
 
   NPP      _npp;
   NPPluginFuncs _pluginFuncs;
 
   Widget _area, _form, _toplevel;
   WId _xembed_window;
-  QString _baseURL;
+  TQString _baseURL;
   int _width, _height;
 
   struct Request
   {
       // A GET request
-      Request( const QString &_url, const QString &_mime,
-	       const QString &_target, void *_notify, bool _forceNotify = false,
+      Request( const TQString &_url, const TQString &_mime,
+	       const TQString &_target, void *_notify, bool _forceNotify = false,
                bool _reload = false)
 	  { url=_url; mime=_mime; target=_target; notify=_notify; post=false; forceNotify = _forceNotify; reload = _reload; }
 
       // A POST request
-      Request( const QString &_url, const QByteArray& _data,
-               const QString &_mime, const QString &_target, void *_notify,
+      Request( const TQString &_url, const TQByteArray& _data,
+               const TQString &_mime, const TQString &_target, void *_notify,
                const KParts::URLArgs& _args, bool _forceNotify = false)
 	  { url=_url; mime=_mime; target=_target;
             notify=_notify; post=true; data=_data; args=_args;
             forceNotify = _forceNotify; }
 
-      QString url;
-      QString mime;
-      QString target;
-      QByteArray data;
+      TQString url;
+      TQString mime;
+      TQString target;
+      TQByteArray data;
       bool post;
       bool forceNotify;
       bool reload;
@@ -267,29 +267,29 @@ private:
 
   NPWindow _win;
   NPSetWindowCallbackStruct _win_info;
-  QPtrQueue<Request> _waitingRequests;
-  QMap<int, Request*> _jsrequests;
+  TQPtrQueue<Request> _waitingRequests;
+  TQMap<int, Request*> _jsrequests;
 };
 
 
-class NSPluginClass : public QObject, virtual public NSPluginClassIface
+class NSPluginClass : public TQObject, virtual public NSPluginClassIface
 {
   Q_OBJECT
 public:
 
-  NSPluginClass( const QString &library, QObject *parent, const char *name=0 );
+  NSPluginClass( const TQString &library, TQObject *parent, const char *name=0 );
   ~NSPluginClass();
 
-  QString getMIMEDescription();
-  DCOPRef newInstance(QString url, QString mimeType, Q_INT8 embed,
-                      QStringList argn, QStringList argv,
-                      QString appId, QString callbackId, Q_INT8 reload, Q_INT8 post,
-                      QByteArray postData, Q_UINT32 xembed );
+  TQString getMIMEDescription();
+  DCOPRef newInstance(TQString url, TQString mimeType, Q_INT8 embed,
+                      TQStringList argn, TQStringList argv,
+                      TQString appId, TQString callbackId, Q_INT8 reload, Q_INT8 post,
+                      TQByteArray postData, Q_UINT32 xembed );
   void destroyInstance( NSPluginInstance* inst );
   bool error() { return _error; }
 
-  void setApp(const QCString& app) { _app = app; }
-  const QCString& app() const { return _app; }
+  void setApp(const TQCString& app) { _app = app; }
+  const TQCString& app() const { return _app; }
 
 protected slots:
   void timer();
@@ -299,10 +299,10 @@ private:
   void shutdown();
 
   KLibrary *_handle;
-  QString  _libname;
+  TQString  _libname;
   bool _constructed;
   bool _error;
-  QTimer *_timer;
+  TQTimer *_timer;
 
   NP_GetMIMEDescriptionUPP *_NP_GetMIMEDescription;
   NP_InitializeUPP *_NP_Initialize;
@@ -311,28 +311,28 @@ private:
   NPPluginFuncs _pluginFuncs;
   NPNetscapeFuncs _nsFuncs;
 
-  QPtrList<NSPluginInstance> _instances;
-  QPtrList<NSPluginInstance> _trash;
+  TQPtrList<NSPluginInstance> _instances;
+  TQPtrList<NSPluginInstance> _trash;
 
-  QCString _app;
+  TQCString _app;
 };
 
 
-class NSPluginViewer : public QObject, virtual public NSPluginViewerIface
+class NSPluginViewer : public TQObject, virtual public NSPluginViewerIface
 {
     Q_OBJECT
 public:
-   NSPluginViewer( QCString dcopId, QObject *parent, const char *name=0 );
+   NSPluginViewer( TQCString dcopId, TQObject *parent, const char *name=0 );
    virtual ~NSPluginViewer();
 
    void shutdown();
-   DCOPRef newClass( QString plugin );
+   DCOPRef newClass( TQString plugin );
 
 private slots:
-   void appUnregistered(const QCString& id);
+   void appUnregistered(const TQCString& id);
 
 private:
-   QDict<NSPluginClass> _classes;
+   TQDict<NSPluginClass> _classes;
 };
 
 

@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef SERVICE_MENU_H
 #define SERVICE_MENU_H
 
-#include <qmap.h>
-#include <qvaluevector.h>
+#include <tqmap.h>
+#include <tqvaluevector.h>
 
 #include <ksycocaentry.h>
 #include <kservice.h>
@@ -41,32 +41,32 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @author Rik Hemsley <rik@kde.org>
  */
 
-typedef QMap<int, KSycocaEntry::Ptr> EntryMap;
-typedef QValueVector<QPopupMenu*> PopupMenuList;
+typedef TQMap<int, KSycocaEntry::Ptr> EntryMap;
+typedef TQValueVector<TQPopupMenu*> PopupMenuList;
 
 class KDE_EXPORT PanelServiceMenu : public KPanelMenu
 {
     Q_OBJECT
 
 public:
-    PanelServiceMenu(const QString & label, const QString & relPath,
-                     QWidget* parent  = 0, const char* name = 0,
+    PanelServiceMenu(const TQString & label, const TQString & relPath,
+                     TQWidget* parent  = 0, const char* name = 0,
                      bool addmenumode = false,
-                     const QString &insertInlineHeader = QString::null);
+                     const TQString &insertInlineHeader = TQString::null);
 
     virtual ~PanelServiceMenu();
 
-    QString relPath() { return relPath_; }
+    TQString relPath() { return relPath_; }
 
     void setExcludeNoDisplay( bool flag );
 
     virtual void showMenu();
-    bool highlightMenuItem( const QString &menuId );
+    bool highlightMenuItem( const TQString &menuId );
     void selectFirstItem();
 
 private:
     void fillMenu( KServiceGroup::Ptr &_root, KServiceGroup::List &_list,
-        const QString &_relPath, int & id );
+        const TQString &_relPath, int & id );
 
 protected slots:
     virtual void initialize();
@@ -82,37 +82,37 @@ protected slots:
 
 protected:
     void insertMenuItem(KService::Ptr & s, int nId, int nIndex = -1,
-                        const QStringList *suppressGenericNames=0,
-                        const QString &aliasname = QString::null);
-    virtual PanelServiceMenu * newSubMenu(const QString & label,
-                                          const QString & relPath,
-                                          QWidget * parent, const char * name,
-                                          const QString & _inlineHeader =
-                                                QString::null);
+                        const TQStringList *suppressGenericNames=0,
+                        const TQString &aliasname = TQString::null);
+    virtual PanelServiceMenu * newSubMenu(const TQString & label,
+                                          const TQString & relPath,
+                                          TQWidget * parent, const char * name,
+                                          const TQString & _inlineHeader =
+                                                TQString::null);
 
-    virtual void mousePressEvent(QMouseEvent *);
-    virtual void mouseReleaseEvent(QMouseEvent *);
-    virtual void mouseMoveEvent(QMouseEvent *);
-    virtual void dragEnterEvent(QDragEnterEvent *);
-    virtual void dragLeaveEvent(QDragLeaveEvent *);
+    virtual void mousePressEvent(TQMouseEvent *);
+    virtual void mouseReleaseEvent(TQMouseEvent *);
+    virtual void mouseMoveEvent(TQMouseEvent *);
+    virtual void dragEnterEvent(TQDragEnterEvent *);
+    virtual void dragLeaveEvent(TQDragLeaveEvent *);
     virtual void updateRecentlyUsedApps(KService::Ptr &s);
-    void activateParent(const QString &child);
+    void activateParent(const TQString &child);
     int serviceMenuStartId() { return 4242; }
     int serviceMenuEndId() { return 5242; }
     virtual void clearSubmenus();
     void doInitialize();
 
-    QString relPath_;
+    TQString relPath_;
 
     EntryMap entryMap_;
 
     bool loaded_;
     bool excludeNoDisplay_;
-    QString insertInlineHeader_;
-    QPopupMenu * opPopup_;
+    TQString insertInlineHeader_;
+    TQPopupMenu * opPopup_;
     bool clearOnClose_;
     bool addmenumode_;
-    QPoint startPos_;
+    TQPoint startPos_;
     PopupMenuList subMenus;
 
 private slots:

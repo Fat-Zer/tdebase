@@ -25,12 +25,12 @@
 #include "historystringitem.h"
 #include "klipperpopup.h"
 
-History::History( QWidget* parent, const char* name )
-    : QObject( parent,  name ),
+History::History( TQWidget* parent, const char* name )
+    : TQObject( parent,  name ),
       m_popup( new KlipperPopup( this, parent, "main_widget" ) ),
       m_topIsUserSelected( false )
 {
-    connect( this, SIGNAL( changed() ), m_popup,  SLOT( slotHistoryChanged() ) );
+    connect( this, TQT_SIGNAL( changed() ), m_popup,  TQT_SLOT( slotHistoryChanged() ) );
     itemList.setAutoDelete( true );
 
 }

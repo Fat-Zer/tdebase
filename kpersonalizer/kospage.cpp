@@ -15,11 +15,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qtextview.h>
-#include <qmap.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqtextview.h>
+#include <tqmap.h>
 
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
@@ -36,7 +36,7 @@
 
 #include "kospage.h"
 
-KOSPage::KOSPage(QWidget *parent, const char *name ) : KOSPageDlg(parent,name) {
+KOSPage::KOSPage(TQWidget *parent, const char *name ) : KOSPageDlg(parent,name) {
 	px_osSidebar->setPixmap(UserIcon("step2.png"));
 	// initialize the textview with the default description - KDE of course
 	slotKDEDescription();
@@ -87,10 +87,10 @@ void KOSPage::save(bool currSettings){
 	///////////////////////////////////////////
 	// kcmdisplay changes
 	KIPC::sendMessageAll(KIPC::SettingsChanged);
-	QApplication::syncX();
+	TQApplication::syncX();
 	// enable/disable the mac menu, call dcop
 	// Tell kdesktop about the new config file
-	kapp->dcopClient()->send("kdesktop", "KDesktopIface", "configure()", QByteArray());
+	kapp->dcopClient()->send("kdesktop", "KDesktopIface", "configure()", TQByteArray());
 	///////////////////////////////////////////
 	/// restart kwin  for window effects
 	kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
@@ -305,7 +305,7 @@ void KOSPage::writeMacOS(){
 
 
 	/** write Keyscheme to kdeglobals (called by saveCheckState) */
-void KOSPage::writeKeyEntrys(QString keyfile){
+void KOSPage::writeKeyEntrys(TQString keyfile){
 	kdDebug() << "KOSPage::writeKeyEntrys()" << endl;
 
 	// load the given .kksrc - file
@@ -314,13 +314,13 @@ void KOSPage::writeKeyEntrys(QString keyfile){
 	KSimpleConfig* defScheme = new KSimpleConfig(locate("keys", "kde3.kksrc"), true);
 
 	// we need the entries from the default - file, so we can compare with them
-	QMap<QString, QString> defMap = defScheme->entryMap("Global Shortcuts");
+	TQMap<TQString, TQString> defMap = defScheme->entryMap("Global Shortcuts");
 	// first delete the group in kdeglobals, then write the non-default entries from the global .kksrc - file
 	cglobal->deleteGroup("Global Shortcuts", true, true);
 	// get the Global - Shortcuts and write them to kdeglobals
 	cglobal->setGroup("Global Shortcuts");
-	QMap<QString, QString> givenMap = scheme->entryMap("Global Shortcuts");
-	for ( QMap<QString, QString>::Iterator it = givenMap.begin(); it != givenMap.end(); ++it ) {
+	TQMap<TQString, TQString> givenMap = scheme->entryMap("Global Shortcuts");
+	for ( TQMap<TQString, TQString>::Iterator it = givenMap.begin(); it != givenMap.end(); ++it ) {
 		if ( (defMap[it.key()] == it.data()) && (it.data() != "none") ) {
 			cglobal->writeEntry(it.key(), "default("+it.data()+")", true, true);
 		} else {
@@ -334,7 +334,7 @@ void KOSPage::writeKeyEntrys(QString keyfile){
 	cglobal->deleteGroup("Shortcuts", true, true);
 	cglobal->setGroup("Shortcuts");
 	givenMap = scheme->entryMap("Shortcuts");
-	for ( QMap<QString, QString>::Iterator it = givenMap.begin(); it != givenMap.end(); ++it ) {
+	for ( TQMap<TQString, TQString>::Iterator it = givenMap.begin(); it != givenMap.end(); ++it ) {
 		// only write the entry, if it defers from kde3.kksrc
 		if ( defMap[it.key()] != it.data() ) {
 			cglobal->writeEntry(it.key(), it.data(), true, true);
@@ -485,7 +485,7 @@ void KOSPage::writeUserKeys(){
 	kdDebug() << "KOSPage::writeUserKeys()" << endl;
 
 	cglobal->setGroup("Global Shortcuts");
-	QMap<QString, QString>::Iterator it;	
+	TQMap<TQString, TQString>::Iterator it;	
 	for ( it = map_GlobalUserKeys.begin(); it != map_GlobalUserKeys.end(); ++it ) {
 		cglobal->writeEntry(it.key(), it.data(), true, true);
 	}

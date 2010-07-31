@@ -31,13 +31,13 @@ class KCacheConfigDialog : public KCModule
   Q_OBJECT
   
 public:
-  KCacheConfigDialog( QWidget* parent = 0 );
+  KCacheConfigDialog( TQWidget* parent = 0 );
   ~KCacheConfigDialog() {};
   
   virtual void load();
   virtual void save();
   virtual void defaults();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 protected slots:
   void configChanged();

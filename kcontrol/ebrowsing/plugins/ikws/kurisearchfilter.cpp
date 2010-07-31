@@ -38,8 +38,8 @@
 typedef KGenericFactory<KURISearchFilter> KURISearchFilterFactory;
 K_EXPORT_COMPONENT_FACTORY(libkurisearchfilter, KURISearchFilterFactory("kcmkurifilt"))
 
-KURISearchFilter::KURISearchFilter(QObject *parent, const char *name,
-                                   const QStringList &)
+KURISearchFilter::KURISearchFilter(TQObject *parent, const char *name,
+                                   const TQStringList &)
                  :KURIFilterPlugin(parent, name ? name : "kurisearchfilter", 1.0),
                   DCOPObject("KURISearchFilterIface")
 {
@@ -62,7 +62,7 @@ bool KURISearchFilter::filterURI( KURIFilterData &data ) const
   if ( KURISearchFilterEngine::self()->verbose() )
     kdDebug() << "KURISearchFilter::filterURI: '" << data.typedString() << "'" << endl;
 
-  QString result = KURISearchFilterEngine::self()->webShortcutQuery( data.typedString() );
+  TQString result = KURISearchFilterEngine::self()->webShortcutQuery( data.typedString() );
 
   if ( !result.isEmpty() )
   {
@@ -77,12 +77,12 @@ bool KURISearchFilter::filterURI( KURIFilterData &data ) const
   return false;
 }
 
-KCModule *KURISearchFilter::configModule(QWidget *parent, const char *) const
+KCModule *KURISearchFilter::configModule(TQWidget *parent, const char *) const
 {
   return new FilterOptions( KURISearchFilterFactory::instance(), parent, "kcmkurifilt");
 }
 
-QString KURISearchFilter::configName() const
+TQString KURISearchFilter::configName() const
 {
   return i18n("Search F&ilters");
 }

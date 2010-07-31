@@ -24,8 +24,8 @@
 #include <konq_operations.h>
 #include <konq_dirpart.h>
 #include <kmimetyperesolver.h>
-#include <qptrdict.h>
-#include <qptrlist.h>
+#include <tqptrdict.h>
+#include <tqptrlist.h>
 #include <kfileivi.h>
 
 class KonqPropsView;
@@ -46,12 +46,12 @@ class KonqKfmIconView : public KonqDirPart
   friend class IconViewBrowserExtension; // to access m_pProps
   Q_OBJECT
   Q_PROPERTY( bool supportsUndo READ supportsUndo )
-  Q_PROPERTY( QString viewMode READ viewMode WRITE setViewMode )
+  Q_PROPERTY( TQString viewMode READ viewMode WRITE setViewMode )
 public:
 
   enum SortCriterion { NameCaseSensitive, NameCaseInsensitive, Size, Type, Date };
 
-  KonqKfmIconView( QWidget *parentWidget, QObject *parent, const char *name, const QString& mode );
+  KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode );
   virtual ~KonqKfmIconView();
 
   virtual const KFileItem * currentItem();
@@ -62,8 +62,8 @@ public:
 
   bool supportsUndo() const { return true; }
 
-  void setViewMode( const QString &mode );
-  QString viewMode() const { return m_mode; }
+  void setViewMode( const TQString &mode );
+  TQString viewMode() const { return m_mode; }
 
   // "Cut" icons : disable those whose URL is in lst, enable the rest
   virtual void disableIcons( const KURL::List & lst );
@@ -93,16 +93,16 @@ public slots:
 
 protected slots:
   // slots connected to QIconView
-  void slotReturnPressed( QIconViewItem *item );
-  void slotMouseButtonPressed(int, QIconViewItem*, const QPoint&);
-  void slotMouseButtonClicked(int, QIconViewItem*, const QPoint&);
-  void slotContextMenuRequested(QIconViewItem*, const QPoint&);
-  void slotOnItem( QIconViewItem *item );
+  void slotReturnPressed( TQIconViewItem *item );
+  void slotMouseButtonPressed(int, TQIconViewItem*, const TQPoint&);
+  void slotMouseButtonClicked(int, TQIconViewItem*, const TQPoint&);
+  void slotContextMenuRequested(TQIconViewItem*, const TQPoint&);
+  void slotOnItem( TQIconViewItem *item );
   void slotOnViewport();
   void slotSelectionChanged();
 
   // Slot used for spring loading folders
-  void slotDragHeld( QIconViewItem *item );
+  void slotDragHeld( TQIconViewItem *item );
   void slotDragMove( bool accepted );
   void slotDragEntered( bool accepted );
   void slotDragLeft();
@@ -146,7 +146,7 @@ protected:
   /** */
   void setupSortKeys();
 
-  QString makeSizeKey( KFileIVI *item );
+  TQString makeSizeKey( KFileIVI *item );
 
   /** The directory lister for this URL */
   KDirLister* m_dirLister;
@@ -190,20 +190,20 @@ protected:
   
   KFileIVI * m_pEnsureVisible;
   
-  QStringList m_itemsToSelect;
+  TQStringList m_itemsToSelect;
   
   SortCriterion m_eSortCriterion;
 
   KToggleAction *m_paDotFiles;
   KToggleAction *m_paDirectoryOverlays;
   KToggleAction *m_paEnablePreviews;
-  QPtrList<KFileIVI> m_paOutstandingOverlays;
-  QTimer *m_paOutstandingOverlaysTimer;
+  TQPtrList<KFileIVI> m_paOutstandingOverlays;
+  TQTimer *m_paOutstandingOverlaysTimer;
 /*  KToggleAction *m_paImagePreview;
   KToggleAction *m_paTextPreview;
   KToggleAction *m_paHTMLPreview;*/
   KActionMenu *m_pamPreview;
-  QPtrList<KToggleAction> m_paPreviewPlugins;
+  TQPtrList<KToggleAction> m_paPreviewPlugins;
   KActionMenu *m_pamSort;
 
   KAction *m_paSelect;
@@ -216,13 +216,13 @@ protected:
 
   KonqIconViewWidget *m_pIconView;
 
-  QTimer *m_pTimeoutRefreshTimer;
+  TQTimer *m_pTimeoutRefreshTimer;
 
-  QPtrDict<KFileIVI> m_itemDict; // maps KFileItem * -> KFileIVI *
+  TQPtrDict<KFileIVI> m_itemDict; // maps KFileItem * -> KFileIVI *
 
   KMimeTypeResolver<KFileIVI,KonqKfmIconView> * m_mimeTypeResolver;
 
-  QString m_mode;
+  TQString m_mode;
 
   private:
   void showDirectoryOverlay(KFileIVI*  item);
@@ -242,7 +242,7 @@ public slots:
   // Those slots are automatically connected by the shell
   void reparseConfiguration();
   void setSaveViewPropertiesLocally( bool value );
-  void setNameFilter( const QString &nameFilter );
+  void setNameFilter( const TQString &nameFilter );
 
   void refreshMimeTypes() { m_iconView->iconViewWidget()->refreshMimeTypes(); }
 
@@ -277,7 +277,7 @@ public:
     static bool exists();
 
     void springLoadTrigger(KonqKfmIconView *view, KFileItem *file,
-                           QIconViewItem *item);
+                           TQIconViewItem *item);
 
     void dragLeft(KonqKfmIconView *view);
     void dragEntered(KonqKfmIconView *view);
@@ -292,7 +292,7 @@ private:
 
     // Timer allowing to know the user wants to abort the spring loading
     // and go back to his start url (closing the opened window if needed)
-    QTimer m_endTimer;
+    TQTimer m_endTimer;
 };
 
 

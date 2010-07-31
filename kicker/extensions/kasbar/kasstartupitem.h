@@ -57,8 +57,8 @@
 #ifndef KASSTARTUPITEM_H
 #define KASSTARTUPITEM_H
 
-#include <qpixmap.h>
-#include <qstring.h>
+#include <tqpixmap.h>
+#include <tqstring.h>
 #include "kasitem.h"
 
 class Startup;
@@ -76,20 +76,20 @@ public:
     KasStartupItem( KasBar *parent, Startup::Ptr startup );
     virtual ~KasStartupItem();
 
-    QPixmap icon() const;
+    TQPixmap icon() const;
     Startup::Ptr startup() const { return startup_; }
 
     /**
      * Reimplemented to paint the item.
      */
-    virtual void paint( QPainter *p );
+    virtual void paint( TQPainter *p );
 
 protected slots:
     void aniTimerFired();
 
 private:
     Startup::Ptr startup_;
-    QTimer *aniTimer;
+    TQTimer *aniTimer;
     int frame;
 };
 

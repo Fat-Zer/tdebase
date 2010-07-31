@@ -24,7 +24,7 @@ class Menuentry_widget
     {
     Q_OBJECT
     public:
-        Menuentry_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Menuentry_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void set_data( const Menuentry_action* data_P );
         Menuentry_action* get_data( Action_data* data_P ) const;
     public slots:

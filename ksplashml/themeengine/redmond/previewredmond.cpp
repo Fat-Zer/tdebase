@@ -12,9 +12,9 @@
 
 #include <klocale.h>
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qwidget.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqwidget.h>
 
 #include "previewredmond.h"
 #include "previewredmond.moc"
@@ -22,16 +22,16 @@
  * PreviewRedmond::PreviewRedmond(): Constructor. Set up some basic
  * things.
  */
-PreviewRedmond::PreviewRedmond( QWidget* parent )
-    :QWidget( parent ),
+PreviewRedmond::PreviewRedmond( TQWidget* parent )
+    :TQWidget( parent ),
 
     /* Using direct constructors to prevent memory blit. */
     m_welcomeString (i18n("Welcome")),
     m_userString (i18n("(Your Name)")),
 
-    m_welcomeFont (QFont( "Arial", 16, QFont::Bold )),
-    m_userFont (QFont( "Arial", 16 )),
-    m_statusFont (QFont( "Arial", 12, QFont::Bold )),
+    m_welcomeFont (TQFont( "Arial", 16, TQFont::Bold )),
+    m_userFont (TQFont( "Arial", 16 )),
+    m_statusFont (TQFont( "Arial", 12, TQFont::Bold )),
 
     m_welcomeColor (Qt::white),
     m_welcomeShadowColor (Qt::darkGray),
@@ -48,17 +48,17 @@ PreviewRedmond::PreviewRedmond( QWidget* parent )
   _updateCache();
 }
 
-void PreviewRedmond::paintEvent( QPaintEvent* pe )
+void PreviewRedmond::paintEvent( TQPaintEvent* pe )
 {
-  QPainter p;
+  TQPainter p;
   p.begin( this );
   p.drawPixmap( pe->rect(), m_cache );
   p.end();
 }
 
-void PreviewRedmond::resizeEvent( QResizeEvent *re )
+void PreviewRedmond::resizeEvent( TQResizeEvent *re )
 {
-  QWidget::resizeEvent( re );
+  TQWidget::resizeEvent( re );
   _updateCache();
 }
 
@@ -67,8 +67,8 @@ void PreviewRedmond::resizeEvent( QResizeEvent *re )
 // from size(), just to be sure we're not missing anything.
 void PreviewRedmond::_updateCache()
 {
-  m_cache = QPixmap( size() );
-  QPainter p;
+  m_cache = TQPixmap( size() );
+  TQPainter p;
   p.begin( &m_cache );
 
   p.fillRect( rect(), Qt::gray );
@@ -76,7 +76,7 @@ void PreviewRedmond::_updateCache()
   m_welcomeFont.setItalic( true );
   p.setFont( m_welcomeFont );
 
-  QPoint welcomeTextPos( rect().width()/2 - p.fontMetrics().width( m_welcomeString ),
+  TQPoint welcomeTextPos( rect().width()/2 - p.fontMetrics().width( m_welcomeString ),
     rect().height()/2 + p.fontMetrics().height()/2 );
 
   if( m_showWelcomeString )
@@ -91,7 +91,7 @@ void PreviewRedmond::_updateCache()
   {
     p.setPen( m_userColor );
     p.setFont( m_userFont );
-    QPoint userTextPos( rect().width()/2 + m_icon.width() + 20,
+    TQPoint userTextPos( rect().width()/2 + m_icon.width() + 20,
       rect().height()/2 + p.fontMetrics().height()/2 );
     p.drawText( userTextPos, m_userString );
   }
@@ -101,7 +101,7 @@ void PreviewRedmond::_updateCache()
 
   if( m_showStatusString )
   {
-    QPoint statusTextPos( rect().width()/2 + m_icon.width() + 20,
+    TQPoint statusTextPos( rect().width()/2 + m_icon.width() + 20,
       rect().height()/2 + (int)(p.fontMetrics().height()*0.85) + 15 );
     p.setPen( m_statusColor );
     p.setFont( m_statusFont );

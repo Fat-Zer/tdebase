@@ -23,8 +23,8 @@
 
 #include <kdialogbase.h>
 
-#include <qstring.h>
-#include <qcolor.h>
+#include <tqstring.h>
+#include <tqcolor.h>
 
 class ListViewSettingsWidget;
 
@@ -34,17 +34,17 @@ class ListViewSettings : public KDialogBase
 
   public:
 
-    ListViewSettings( QWidget *parent=0, const char *name=0 );
+    ListViewSettings( TQWidget *parent=0, const char *name=0 );
 
-    QString title() const;
-    QColor textColor() const;
-    QColor backgroundColor() const;
-    QColor gridColor() const;
+    TQString title() const;
+    TQColor textColor() const;
+    TQColor backgroundColor() const;
+    TQColor gridColor() const;
 
-    void setTitle( const QString & );
-    void setTextColor( const QColor & );
-    void setBackgroundColor( const QColor & );
-    void setGridColor( const QColor & );
+    void setTitle( const TQString & );
+    void setTextColor( const TQColor & );
+    void setBackgroundColor( const TQColor & );
+    void setGridColor( const TQColor & );
 
   private:
 

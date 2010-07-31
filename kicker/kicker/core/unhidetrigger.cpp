@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtimer.h>
-#include <qcursor.h>
+#include <tqtimer.h>
+#include <tqcursor.h>
 #include <kdebug.h>
 
 #include "unhidetrigger.h"
@@ -39,8 +39,8 @@ UnhideTrigger::UnhideTrigger()
 	, _lastXineramaScreen( -1 )
 	, enabledCount( 0 )
 {
-	_timer = new QTimer( this );
-	connect( _timer, SIGNAL(timeout()), SLOT(pollMouse()) );
+	_timer = new TQTimer( this );
+	connect( _timer, TQT_SIGNAL(timeout()), TQT_SLOT(pollMouse()) );
 }
 
 void UnhideTrigger::setEnabled( bool enable )
@@ -65,10 +65,10 @@ bool UnhideTrigger::isEnabled() const
 
 void UnhideTrigger::pollMouse()
 {
-    QPoint pos = QCursor::pos();
-    for(int s = 0; s < QApplication::desktop()->numScreens(); s++)
+    TQPoint pos = TQCursor::pos();
+    for(int s = 0; s < TQApplication::desktop()->numScreens(); s++)
     {
-        QRect r = QApplication::desktop()->screenGeometry(s);
+        TQRect r = TQApplication::desktop()->screenGeometry(s);
         if (pos.x() == r.left())
         {
             if (pos.y() == r.top())

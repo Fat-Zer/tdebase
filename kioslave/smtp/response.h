@@ -32,9 +32,9 @@
 #ifndef __KIOSMTP_RESPONSE_H__
 #define __KIOSMTP_RESPONSE_H__
 
-#include <qcstring.h>
-#include <qvaluelist.h>
-typedef QValueList<QCString> QCStringList;
+#include <tqcstring.h>
+#include <tqvaluelist.h>
+typedef TQValueList<TQCString> QCStringList;
 
 class QString;
 
@@ -55,7 +55,7 @@ namespace KioSMTP {
 
     /** Return an internationalized error message according to the
 	response's code. */
-    QString errorMessage() const;
+    TQString errorMessage() const;
     /** Translate the SMTP error code into a KIO one */
     int errorCode() const;
 

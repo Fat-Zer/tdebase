@@ -34,12 +34,12 @@ class DesktopButton : public PanelButton
     Q_OBJECT
 
 public:
-    DesktopButton( QWidget* parent );
+    DesktopButton( TQWidget* parent );
 
 protected:
-    virtual QString tileName() { return "DesktopButton"; }
-    virtual void dragEnterEvent(QDragEnterEvent *ev);
-    virtual void dropEvent(QDropEvent *ev);
+    virtual TQString tileName() { return "DesktopButton"; }
+    virtual void dragEnterEvent(TQDragEnterEvent *ev);
+    virtual void dropEvent(TQDropEvent *ev);
 
 protected slots:
     void toggle(bool);

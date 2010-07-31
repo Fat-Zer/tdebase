@@ -19,10 +19,10 @@
 #ifndef __konqdrag_h__
 #define __konqdrag_h__
 
-#include <qdragobject.h>
-#include <qrect.h>
-#include <qstring.h>
-#include <qiconview.h>
+#include <tqdragobject.h>
+#include <tqrect.h>
+#include <tqstring.h>
+#include <tqiconview.h>
 
 #include <libkonq_export.h>
 
@@ -40,21 +40,21 @@ class LIBKONQ_EXPORT KonqIconDrag : public QIconDrag
     Q_OBJECT
 
 public:
-    KonqIconDrag( QWidget * dragSource, const char* name = 0 );
+    KonqIconDrag( TQWidget * dragSource, const char* name = 0 );
     virtual ~KonqIconDrag() {}
 
     const char* format( int i ) const;
-    QByteArray encodedData( const char* mime ) const;
+    TQByteArray encodedData( const char* mime ) const;
 
-    void append( const QIconDragItem &item, const QRect &pr,
-                 const QRect &tr, const QString &url );
+    void append( const TQIconDragItem &item, const TQRect &pr,
+                 const TQRect &tr, const TQString &url );
 
     void setMoveSelection( bool move ) { m_bCutSelection = move; }
 
-    static bool canDecode( const QMimeSource* e );
+    static bool canDecode( const TQMimeSource* e );
 
 protected: // KDE4: private. And d pointer...
-    QStringList urls;
+    TQStringList urls;
     bool m_bCutSelection;
 };
 
@@ -68,17 +68,17 @@ class LIBKONQ_EXPORT KonqIconDrag2 : public KonqIconDrag
     Q_OBJECT
 
 public:
-    KonqIconDrag2( QWidget * dragSource );
+    KonqIconDrag2( TQWidget * dragSource );
     virtual ~KonqIconDrag2() {}
 
     virtual const char* format( int i ) const;
-    virtual QByteArray encodedData( const char* mime ) const;
+    virtual TQByteArray encodedData( const char* mime ) const;
 
-    void append( const QIconDragItem &item, const QRect &pr,
-                 const QRect &tr, const QString &url, const KURL &mostLocalURL );
+    void append( const TQIconDragItem &item, const TQRect &pr,
+                 const TQRect &tr, const TQString &url, const KURL &mostLocalURL );
 
 private:
-    QStringList m_kdeURLs;
+    TQStringList m_kdeURLs;
 };
 
 // Clipboard/dnd data for: URLS + isCut
@@ -87,7 +87,7 @@ class LIBKONQ_EXPORT KonqDrag : public QUriDrag
 public:
     // KDE4: remove, use KonqDrag constructor instead
     static KonqDrag * newDrag( const KURL::List & urls,
-                               bool move, QWidget * dragSource = 0, const char* name = 0 );
+                               bool move, TQWidget * dragSource = 0, const char* name = 0 );
 
     /**
      * Create a KonqDrag object.
@@ -97,26 +97,26 @@ public:
      * @param dragSource parent object
      * @since 3.5
      */
-    KonqDrag( const KURL::List & urls, const KURL::List& mostLocalUrls, bool cut, QWidget * dragSource = 0 );
+    KonqDrag( const KURL::List & urls, const KURL::List& mostLocalUrls, bool cut, TQWidget * dragSource = 0 );
 
 protected:
     // KDE4: remove
-    KonqDrag( const QStrList & urls, bool cut, QWidget * dragSource, const char* name );
+    KonqDrag( const TQStrList & urls, bool cut, TQWidget * dragSource, const char* name );
 
 public:
     virtual ~KonqDrag() {}
 
     virtual const char* format( int i ) const;
-    virtual QByteArray encodedData( const char* mime ) const;
+    virtual TQByteArray encodedData( const char* mime ) const;
 
     void setMoveSelection( bool move ) { m_bCutSelection = move; }
 
     // Returns true if the data was cut (used for KonqIconDrag too)
-    static bool decodeIsCutSelection( const QMimeSource *e );
+    static bool decodeIsCutSelection( const TQMimeSource *e );
 
 protected: // KDE4: private. And d pointer...
     bool m_bCutSelection;
-    QStrList m_urls; // this is set to the "most local urls". KDE4: KURL::List
+    TQStrList m_urls; // this is set to the "most local urls". KDE4: KURL::List
 };
 
 #endif

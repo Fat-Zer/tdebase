@@ -20,7 +20,7 @@
 #ifndef KWINDECORATION_PREVIEW_H
 #define KWINDECORATION_PREVIEW_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdecoration_p.h>
 #include <kdecoration_plugins_p.h>
 
@@ -33,7 +33,7 @@ class KDecorationPreview
     : public QWidget
     {
     public:
-        KDecorationPreview( KDecorationPlugins* plugin, QWidget* parent = NULL, const char* name = NULL );
+        KDecorationPreview( KDecorationPlugins* plugin, TQWidget* parent = NULL, const char* name = NULL );
         virtual ~KDecorationPreview();
 
         void performRepaintTest(int n);
@@ -42,9 +42,9 @@ class KDecorationPreview
         void performRecreationTest(int n);
 
         bool recreateDecoration();
-        void setPreviewMask( const QRegion&, int );
-        QRegion unobscuredRegion( bool, const QRegion& ) const;
-        QRect windowGeometry( bool ) const;
+        void setPreviewMask( const TQRegion&, int );
+        TQRegion unobscuredRegion( bool, const TQRegion& ) const;
+        TQRect windowGeometry( bool ) const;
     private:
         void positionPreviews(int shrink = 0);
         KDecorationPreviewOptions* options;
@@ -57,9 +57,9 @@ class KDecorationPreviewBridge
     : public KDecorationBridge
     {
     public:
-        KDecorationPreviewBridge( KDecorationPreview* preview, bool active, const QString &caption );
+        KDecorationPreviewBridge( KDecorationPreview* preview, bool active, const TQString &caption );
 
-        void setCaption(const QString &caption);
+        void setCaption(const TQString &caption);
 
     	virtual bool isActive() const;
 	virtual bool isCloseable() const;
@@ -77,18 +77,18 @@ class KDecorationPreviewBridge
         virtual bool isMovable() const;
         virtual bool isResizable() const;
         virtual NET::WindowType windowType( unsigned long supported_types ) const;
-	virtual QIconSet icon() const;
-	virtual QString caption() const;
-	virtual void processMousePressEvent( QMouseEvent* );
-	virtual void showWindowMenu( const QRect &);
-	virtual void showWindowMenu( QPoint );
+	virtual TQIconSet icon() const;
+	virtual TQString caption() const;
+	virtual void processMousePressEvent( TQMouseEvent* );
+	virtual void showWindowMenu( const TQRect &);
+	virtual void showWindowMenu( TQPoint );
 	virtual void performWindowOperation( WindowOperation );
-        virtual void setMask( const QRegion&, int );
+        virtual void setMask( const TQRegion&, int );
         virtual bool isPreview() const;
-        virtual QRect geometry() const;
-        virtual QRect iconGeometry() const;
-        virtual QRegion unobscuredRegion( const QRegion& r ) const;
-        virtual QWidget* workspaceWidget() const;
+        virtual TQRect geometry() const;
+        virtual TQRect iconGeometry() const;
+        virtual TQRegion unobscuredRegion( const TQRegion& r ) const;
+        virtual TQWidget* workspaceWidget() const;
         virtual WId windowId() const;
 	virtual void closeWindow();
 	virtual void maximize( MaximizeMode mode );
@@ -100,14 +100,14 @@ class KDecorationPreviewBridge
         virtual void setKeepAbove( bool );
         virtual void setKeepBelow( bool );
         virtual int currentDesktop() const;
-        virtual QWidget* initialParentWidget() const;
+        virtual TQWidget* initialParentWidget() const;
         virtual Qt::WFlags initialWFlags() const;
         virtual void helperShowHide( bool show );
         virtual void grabXServer( bool grab );
     private:
         KDecorationPreview* preview;
         bool active;
-        QString m_caption;
+        TQString m_caption;
     };
 
 class KDecorationPreviewOptions

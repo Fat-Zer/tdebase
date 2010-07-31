@@ -36,23 +36,23 @@ int main(int argc, char **argv)
 	KCmdLineArgs::addCmdLineOptions(options);
 	KCmdLineArgs *args=KCmdLineArgs::parsedArgs();
 
-	QString group=QString::fromLocal8Bit(args->getOption("group"));
-	QString key=QString::fromLocal8Bit(args->getOption("key"));
-	QString file=QString::fromLocal8Bit(args->getOption("file"));
-	QCString type=args->getOption("type").lower();
+	TQString group=TQString::fromLocal8Bit(args->getOption("group"));
+	TQString key=TQString::fromLocal8Bit(args->getOption("key"));
+	TQString file=TQString::fromLocal8Bit(args->getOption("file"));
+	TQCString type=args->getOption("type").lower();
 
 
 	if (key.isNull() || !args->count()) {
 		KCmdLineArgs::usage();
 		return 1;
 	}
-	QCString value = args->arg( 0 );
+	TQCString value = args->arg( 0 );
 
 	KInstance inst(&aboutData);
 
 	KConfig *konfig;
 	if (file.isEmpty())
-	   konfig = new KConfig(QString::fromLatin1("kdeglobals"), false, false);
+	   konfig = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
 	else
 	   konfig = new KConfig(file, false, false);
 
@@ -64,9 +64,9 @@ int main(int argc, char **argv)
 		bool boolvalue=(value=="true" || value=="on" || value=="yes" || value=="1");
 		konfig->writeEntry( key, boolvalue );
 	} else if (type=="path") {
-		konfig->writePathEntry( key, QString::fromLocal8Bit( value ) );
+		konfig->writePathEntry( key, TQString::fromLocal8Bit( value ) );
 	} else {
-		konfig->writeEntry( key, QString::fromLocal8Bit( value ) );
+		konfig->writeEntry( key, TQString::fromLocal8Bit( value ) );
 	}
 	konfig->sync();
         delete konfig;

@@ -21,8 +21,8 @@
 #ifndef KSG_SENSORAGENT_H
 #define KSG_SENSORAGENT_H
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 
 class KProcess;
 class KShellProcess;
@@ -51,8 +51,8 @@ class KDE_EXPORT SensorAgent : public QObject
     SensorAgent( SensorManager *sm );
     virtual ~SensorAgent();
 
-    virtual bool start( const QString &host, const QString &shell,
-                        const QString &command = "", int port = -1 ) = 0;
+    virtual bool start( const TQString &host, const TQString &shell,
+                        const TQString &command = "", int port = -1 ) = 0;
 
     /**
       This function should only be used by the the SensorManager and
@@ -66,19 +66,19 @@ class KDE_EXPORT SensorAgent : public QObject
       used by the SensorAgent. So it can be any value the client suits to
       use.
      */
-    bool sendRequest( const QString &req, SensorClient *client, int id = 0 );
+    bool sendRequest( const TQString &req, SensorClient *client, int id = 0 );
 
-    virtual void hostInfo( QString &sh, QString &cmd, int &port ) const = 0;
+    virtual void hostInfo( TQString &sh, TQString &cmd, int &port ) const = 0;
 
     void disconnectClient( SensorClient *client );
 
-    const QString &hostName() const;
+    const TQString &hostName() const;
 	
   signals:
     void reconfigure( const SensorAgent* );
 
   protected:
-    void processAnswer( const QString &buffer );
+    void processAnswer( const TQString &buffer );
     void executeCommand();
 
     SensorManager *sensorManager();
@@ -89,23 +89,23 @@ class KDE_EXPORT SensorAgent : public QObject
     void setTransmitting( bool value );
     bool transmitting() const;
 
-    void setHostName( const QString &hostName );
+    void setHostName( const TQString &hostName );
 
   private:
     virtual bool writeMsg( const char *msg, int len ) = 0;
     virtual bool txReady() = 0;
 
     int mState;
-    QPtrList<SensorRequest> mInputFIFO;
-    QPtrList<SensorRequest> mProcessingFIFO;
-    QString mAnswerBuffer;
-    QString mErrorBuffer;
+    TQPtrList<SensorRequest> mInputFIFO;
+    TQPtrList<SensorRequest> mProcessingFIFO;
+    TQString mAnswerBuffer;
+    TQString mErrorBuffer;
 
     SensorManager *mSensorManager;
 
     bool mDaemonOnLine;
     bool mTransmitting;
-    QString mHostName;
+    TQString mHostName;
 };
 
 /**
@@ -114,11 +114,11 @@ class KDE_EXPORT SensorAgent : public QObject
 class SensorRequest
 {
   public:
-    SensorRequest( const QString &request, SensorClient *client, int id );
+    SensorRequest( const TQString &request, SensorClient *client, int id );
     ~SensorRequest();
 
-    void setRequest( const QString& );
-    QString request() const;
+    void setRequest( const TQString& );
+    TQString request() const;
 
     void setClient( SensorClient* );
     SensorClient *client();
@@ -127,7 +127,7 @@ class SensorRequest
     int id();
 
   private:
-    QString mRequest;
+    TQString mRequest;
     SensorClient *mClient;
     int mId;
 };

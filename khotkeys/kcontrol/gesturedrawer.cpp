@@ -9,19 +9,19 @@
  
 ****************************************************************************/
 
-#include <qcolor.h>
-#include <qpainter.h>
+#include <tqcolor.h>
+#include <tqpainter.h>
 
 #include "gesturedrawer.h"
 
 namespace KHotKeys
 {
 
-GestureDrawer::GestureDrawer(QWidget *parent, const char *name)
-  : QFrame(parent, name), _data(QString::null)
+GestureDrawer::GestureDrawer(TQWidget *parent, const char *name)
+  : TQFrame(parent, name), _data(TQString::null)
     {
     setBackgroundColor( colorGroup().base());
-    setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    setFrameStyle(TQFrame::Panel | TQFrame::Sunken);
     setMinimumSize(30, 30);
     }
 
@@ -29,31 +29,31 @@ GestureDrawer::~GestureDrawer()
     {
     }
 
-void GestureDrawer::setData(const QString &data)
+void GestureDrawer::setData(const TQString &data)
     {
     _data = data;
 
     repaint();
     }
 
-void GestureDrawer::paintEvent(QPaintEvent *ev)
+void GestureDrawer::paintEvent(TQPaintEvent *ev)
     {
   // Iterate through the data points and draw a line to each of them
     Q_UINT32 startCell = 0;
     Q_UINT32 endCell = 0;
-    QPoint startPoint;
-    QPoint endPoint;
+    TQPoint startPoint;
+    TQPoint endPoint;
 
-    QPainter p(this);
+    TQPainter p(this);
 
     if (_data.length() > 0)
         {
-        startCell = QString(_data[0]).toUInt();
+        startCell = TQString(_data[0]).toUInt();
         }
 
     for (Q_UINT32 index = 1; index < _data.length(); ++index)
         {
-        endCell = QString(_data[index]).toUInt();
+        endCell = TQString(_data[index]).toUInt();
 
         startPoint = lookupCellCoords(startCell);
         endPoint = lookupCellCoords(endCell);
@@ -63,7 +63,7 @@ void GestureDrawer::paintEvent(QPaintEvent *ev)
       // Draw something to show the starting point
             p.drawRect(startPoint.x()-2, startPoint.y()-2, 4, 4);
             p.fillRect(startPoint.x()-2, startPoint.y()-2, 4, 4,
-                       QBrush(black));
+                       TQBrush(black));
             }
 
         p.drawLine(startPoint, endPoint);
@@ -74,10 +74,10 @@ void GestureDrawer::paintEvent(QPaintEvent *ev)
 
     p.end();
 
-    QFrame::paintEvent(ev);
+    TQFrame::paintEvent(ev);
     }
 
-QPoint GestureDrawer::lookupCellCoords(Q_UINT32 cell)
+TQPoint GestureDrawer::lookupCellCoords(Q_UINT32 cell)
     {
   // First divide the widget into thirds, horizontally and vertically
     Q_UINT32 w = width();
@@ -89,38 +89,38 @@ QPoint GestureDrawer::lookupCellCoords(Q_UINT32 cell)
     switch(cell)
         {
         case 1:
-            return QPoint(wThird/2, 2*hThird+hThird/2);
+            return TQPoint(wThird/2, 2*hThird+hThird/2);
 
         case 2:
-            return QPoint(wThird+wThird/2, 2*hThird+hThird/2);
+            return TQPoint(wThird+wThird/2, 2*hThird+hThird/2);
 
         case 3:
-            return QPoint(2*wThird+wThird/2, 2*hThird+hThird/2);
+            return TQPoint(2*wThird+wThird/2, 2*hThird+hThird/2);
 
         case 4:
-            return QPoint(wThird/2, hThird+hThird/2);
+            return TQPoint(wThird/2, hThird+hThird/2);
 
         case 5:
-            return QPoint(wThird+wThird/2, hThird+hThird/2);
+            return TQPoint(wThird+wThird/2, hThird+hThird/2);
 
         case 6:
-            return QPoint(2*wThird+wThird/2, hThird+hThird/2);
+            return TQPoint(2*wThird+wThird/2, hThird+hThird/2);
 
         case 7:
-            return QPoint(wThird/2, hThird/2);
+            return TQPoint(wThird/2, hThird/2);
 
         case 8:
-            return QPoint(wThird+wThird/2, hThird/2);
+            return TQPoint(wThird+wThird/2, hThird/2);
 
         case 9:
-            return QPoint(2*wThird+wThird/2, hThird/2);
+            return TQPoint(2*wThird+wThird/2, hThird/2);
         }
 
-    return QPoint(0, 0);
+    return TQPoint(0, 0);
     }
 
-void GestureDrawer::drawArrowHead(QPoint &start, QPoint &end,
-                                  QPainter &p)
+void GestureDrawer::drawArrowHead(TQPoint &start, TQPoint &end,
+                                  TQPainter &p)
     {
     int deltaX = end.x() - start.x();
     int deltaY = end.y() - start.y();
@@ -134,8 +134,8 @@ void GestureDrawer::drawArrowHead(QPoint &start, QPoint &end,
         else
           offset = 3;
 
-        p.drawLine(QPoint(end.x()+offset, end.y()+2), end);
-        p.drawLine(QPoint(end.x()+offset, end.y()-2), end);
+        p.drawLine(TQPoint(end.x()+offset, end.y()+2), end);
+        p.drawLine(TQPoint(end.x()+offset, end.y()-2), end);
         }
     else if (deltaX == 0)
         {
@@ -146,8 +146,8 @@ void GestureDrawer::drawArrowHead(QPoint &start, QPoint &end,
         else
           offset = +3;
 
-        p.drawLine(QPoint(end.x()+2, end.y()+offset), end);
-        p.drawLine(QPoint(end.x()-2, end.y()+offset), end);
+        p.drawLine(TQPoint(end.x()+2, end.y()+offset), end);
+        p.drawLine(TQPoint(end.x()-2, end.y()+offset), end);
         }
     else
         {

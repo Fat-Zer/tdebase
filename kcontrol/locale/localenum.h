@@ -25,7 +25,7 @@
 #ifndef __KLOCALECONFIGNUM_H__
 #define __KLOCALECONFIGNUM_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QCheckBox;
 class QComboBox;
@@ -40,7 +40,7 @@ class KLocaleConfigNumber : public QWidget
 
 public:
   KLocaleConfigNumber( KLocale *_locale,
-		       QWidget *parent=0, const char *name=0);
+		       TQWidget *parent=0, const char *name=0);
   virtual ~KLocaleConfigNumber( );
 
   void save();
@@ -60,23 +60,23 @@ signals:
 
 private slots:
   // Numbers
-  void slotMonPosSignChanged(const QString &t);
-  void slotMonNegSignChanged(const QString &t);
-  void slotDecSymChanged(const QString &t);
-  void slotThoSepChanged(const QString &t);
+  void slotMonPosSignChanged(const TQString &t);
+  void slotMonNegSignChanged(const TQString &t);
+  void slotDecSymChanged(const TQString &t);
+  void slotThoSepChanged(const TQString &t);
 
 private:
   KLocale *m_locale;
 
   // Numbers
-  QLabel *m_labDecSym;
-  QLineEdit *m_edDecSym;
-  QLabel *m_labThoSep;
-  QLineEdit *m_edThoSep;
-  QLabel *m_labMonPosSign;
-  QLineEdit *m_edMonPosSign;
-  QLabel *m_labMonNegSign;
-  QLineEdit *m_edMonNegSign;
+  TQLabel *m_labDecSym;
+  TQLineEdit *m_edDecSym;
+  TQLabel *m_labThoSep;
+  TQLineEdit *m_edThoSep;
+  TQLabel *m_labMonPosSign;
+  TQLineEdit *m_edMonPosSign;
+  TQLabel *m_labMonNegSign;
+  TQLineEdit *m_edMonNegSign;
 };
 
 #endif

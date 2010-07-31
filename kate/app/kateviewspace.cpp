@@ -33,40 +33,40 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include <qwidgetstack.h>
-#include <qpainter.h>
-#include <qlabel.h>
-#include <qcursor.h>
-#include <qpopupmenu.h>
-#include <qpixmap.h>
+#include <tqwidgetstack.h>
+#include <tqpainter.h>
+#include <tqlabel.h>
+#include <tqcursor.h>
+#include <tqpopupmenu.h>
+#include <tqpixmap.h>
 
 //BEGIN KVSSBSep
 /*
    "KateViewSpaceStatusBarSeparator"
    A 2 px line to separate the statusbar from the view.
    It is here to compensate for the lack of a frame in the view,
-   I think Kate looks very nice this way, as QScrollView with frame
+   I think Kate looks very nice this way, as TQScrollView with frame
    looks slightly clumsy...
-   Slight 3D effect. I looked for suitable QStyle props or methods,
-   but found none, though maybe it should use QStyle::PM_DefaultFrameWidth
+   Slight 3D effect. I looked for suitable TQStyle props or methods,
+   but found none, though maybe it should use TQStyle::PM_DefaultFrameWidth
    for height (TRY!).
    It does look a bit funny with flat styles (Light, .Net) as is,
    but there are on methods to paint panel lines separately. And,
    those styles tends to look funny on their own, as a light line
    in a 3D frame next to a light contents widget is not functional.
-   Also, QStatusBar is up to now completely ignorant to style.
+   Also, TQStatusBar is up to now completely ignorant to style.
    -anders
 */
-class KVSSBSep : public QWidget {
+class KVSSBSep : public TQWidget {
 public:
-  KVSSBSep( KateViewSpace *parent=0) : QWidget(parent)
+  KVSSBSep( KateViewSpace *parent=0) : TQWidget(parent)
   {
     setFixedHeight( 2 );
   }
 protected:
-  void paintEvent( QPaintEvent *e )
+  void paintEvent( TQPaintEvent *e )
   {
-    QPainter p( this );
+    TQPainter p( this );
     p.setPen( colorGroup().shadow() );
     p.drawLine( e->rect().left(), 0, e->rect().right(), 0 );
     p.setPen( ((KateViewSpace*)parentWidget())->isActiveSpace() ? colorGroup().light() : colorGroup().midlight() );
@@ -77,13 +77,13 @@ protected:
 
 //BEGIN KateViewSpace
 KateViewSpace::KateViewSpace( KateViewSpaceContainer *viewManager,
-                              QWidget* parent, const char* name )
-  : QVBox(parent, name),
+                              TQWidget* parent, const char* name )
+  : TQVBox(parent, name),
     m_viewManager( viewManager )
 {
   mViewList.setAutoDelete(false);
 
-  stack = new QWidgetStack( this );
+  stack = new TQWidgetStack( this );
   setStretchFactor(stack, 1);
   stack->setFocus();
   //sep = new KVSSBSep( this );
@@ -92,7 +92,7 @@ KateViewSpace::KateViewSpace( KateViewSpaceContainer *viewManager,
   mViewCount = 0;
 
   setMinimumWidth (mStatusBar->minimumWidth());
-  m_group = QString::null;
+  m_group = TQString::null;
 }
 
 KateViewSpace::~KateViewSpace()
@@ -109,10 +109,10 @@ void KateViewSpace::addView(Kate::View* v, bool show)
   // restore the config of this view if possible
   if ( !m_group.isEmpty() )
   {
-    QString fn = v->getDoc()->url().prettyURL();
+    TQString fn = v->getDoc()->url().prettyURL();
     if ( ! fn.isEmpty() )
     {
-      QString vgroup = QString("%1 %2").arg(m_group).arg(fn);
+      TQString vgroup = TQString("%1 %2").arg(m_group).arg(fn);
 
       KateSession::Ptr as = KateSessionManager::self()->activeSession ();
       if ( as->configRead() && as->configRead()->hasGroup( vgroup ) )
@@ -138,8 +138,8 @@ void KateViewSpace::addView(Kate::View* v, bool show)
 
 void KateViewSpace::removeView(Kate::View* v)
 {
-  disconnect( v->getDoc(), SIGNAL(modifiedChanged()),
-              mStatusBar, SLOT(modifiedChanged()) );
+  disconnect( v->getDoc(), TQT_SIGNAL(modifiedChanged()),
+              mStatusBar, TQT_SLOT(modifiedChanged()) );
 
   bool active = ( v == currentView() );
 
@@ -162,17 +162,17 @@ bool KateViewSpace::showView(Kate::View* v)
 
 bool KateViewSpace::showView(uint documentNumber)
 {
-  QPtrListIterator<Kate::View> it (mViewList);
+  TQPtrListIterator<Kate::View> it (mViewList);
   it.toLast();
   for( ; it.current(); --it ) {
     if (((Kate::Document*)it.current()->getDoc())->documentNumber() == documentNumber) {
       if ( currentView() )
-        disconnect( currentView()->getDoc(), SIGNAL(modifiedChanged()),
-                    mStatusBar, SLOT(modifiedChanged()) );
+        disconnect( currentView()->getDoc(), TQT_SIGNAL(modifiedChanged()),
+                    mStatusBar, TQT_SLOT(modifiedChanged()) );
 
       Kate::View* kv = it.current();
-      connect( kv->getDoc(), SIGNAL(modifiedChanged()),
-               mStatusBar, SLOT(modifiedChanged()) );
+      connect( kv->getDoc(), TQT_SIGNAL(modifiedChanged()),
+               mStatusBar, TQT_SLOT(modifiedChanged()) );
 
       mViewList.removeRef( kv );
       mViewList.append( kv );
@@ -204,11 +204,11 @@ void KateViewSpace::setActive( bool active, bool )
   mIsActiveSpace = active;
 
   // change the statusbar palette and make sure it gets updated
-  QPalette pal( palette() );
+  TQPalette pal( palette() );
   if ( ! active )
   {
-    pal.setColor( QColorGroup::Background, pal.active().mid() );
-    pal.setColor( QColorGroup::Light, pal.active().midlight() );
+    pal.setColor( TQColorGroup::Background, pal.active().mid() );
+    pal.setColor( TQColorGroup::Light, pal.active().midlight() );
   }
 
   mStatusBar->setPalette( pal );
@@ -216,27 +216,27 @@ void KateViewSpace::setActive( bool active, bool )
   //sep->update();
 }
 
-bool KateViewSpace::event( QEvent *e )
+bool KateViewSpace::event( TQEvent *e )
 {
-  if ( e->type() == QEvent::PaletteChange )
+  if ( e->type() == TQEvent::PaletteChange )
   {
     setActive( mIsActiveSpace );
     return true;
   }
-  return QVBox::event( e );
+  return TQVBox::event( e );
 }
 
-void KateViewSpace::slotStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const QString &msg)
+void KateViewSpace::slotStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const TQString &msg)
 {
-  if ((QWidgetStack *)view->parentWidget() != stack)
+  if ((TQWidgetStack *)view->parentWidget() != stack)
     return;
   mStatusBar->setStatus( r, c, ovr, block, mod, msg );
 }
 
-void KateViewSpace::saveConfig ( KConfig* config, int myIndex ,const QString& viewConfGrp)
+void KateViewSpace::saveConfig ( KConfig* config, int myIndex ,const TQString& viewConfGrp)
 {
 //   kdDebug()<<"KateViewSpace::saveConfig("<<myIndex<<", "<<viewConfGrp<<") - currentView: "<<currentView()<<")"<<endl;
-  QString group = QString(viewConfGrp+"-ViewSpace %1").arg( myIndex );
+  TQString group = TQString(viewConfGrp+"-ViewSpace %1").arg( myIndex );
 
   config->setGroup (group);
   config->writeEntry ("Count", mViewList.count());
@@ -245,7 +245,7 @@ void KateViewSpace::saveConfig ( KConfig* config, int myIndex ,const QString& vi
     config->writeEntry( "Active View", currentView()->getDoc()->url().prettyURL() );
 
   // Save file list, includeing cursor position in this instance.
-  QPtrListIterator<Kate::View> it(mViewList);
+  TQPtrListIterator<Kate::View> it(mViewList);
 
   int idx = 0;
   for (; it.current(); ++it)
@@ -253,10 +253,10 @@ void KateViewSpace::saveConfig ( KConfig* config, int myIndex ,const QString& vi
     if ( !it.current()->getDoc()->url().isEmpty() )
     {
       config->setGroup( group );
-      config->writeEntry( QString("View %1").arg( idx ), it.current()->getDoc()->url().prettyURL() );
+      config->writeEntry( TQString("View %1").arg( idx ), it.current()->getDoc()->url().prettyURL() );
 
       // view config, group: "ViewSpace <n> url"
-      QString vgroup = QString("%1 %2").arg(group).arg(it.current()->getDoc()->url().prettyURL());
+      TQString vgroup = TQString("%1 %2").arg(group).arg(it.current()->getDoc()->url().prettyURL());
       config->setGroup( vgroup );
       it.current()->writeSessionConfig( config );
     }
@@ -271,10 +271,10 @@ void KateViewSpace::modifiedOnDisc(Kate::Document *, bool, unsigned char)
     mStatusBar->updateMod( currentView()->getDoc()->isModified() );
 }
 
-void KateViewSpace::restoreConfig ( KateViewSpaceContainer *viewMan, KConfig* config, const QString &group )
+void KateViewSpace::restoreConfig ( KateViewSpaceContainer *viewMan, KConfig* config, const TQString &group )
 {
   config->setGroup (group);
-  QString fn = config->readEntry( "Active View" );
+  TQString fn = config->readEntry( "Active View" );
 
   if ( !fn.isEmpty() )
   {
@@ -283,7 +283,7 @@ void KateViewSpace::restoreConfig ( KateViewSpaceContainer *viewMan, KConfig* co
     if (doc)
     {
       // view config, group: "ViewSpace <n> url"
-      QString vgroup = QString("%1 %2").arg(group).arg(fn);
+      TQString vgroup = TQString("%1 %2").arg(group).arg(fn);
       config->setGroup( vgroup );
 
       viewMan->createView (doc);
@@ -307,22 +307,22 @@ KateVSStatusBar::KateVSStatusBar ( KateViewSpace *parent, const char *name )
   : KStatusBar( parent, name ),
     m_viewSpace( parent )
 {
-  m_lineColLabel = new QLabel( this );
+  m_lineColLabel = new TQLabel( this );
   addWidget( m_lineColLabel, 0, false );
   m_lineColLabel->setAlignment( Qt::AlignCenter );
   m_lineColLabel->installEventFilter( this );
 
-  m_modifiedLabel = new QLabel( QString("   "), this );
+  m_modifiedLabel = new TQLabel( TQString("   "), this );
   addWidget( m_modifiedLabel, 0, false );
   m_modifiedLabel->setAlignment( Qt::AlignCenter );
   m_modifiedLabel->installEventFilter( this );
 
-  m_insertModeLabel = new QLabel( i18n(" INS "), this );
+  m_insertModeLabel = new TQLabel( i18n(" INS "), this );
   addWidget( m_insertModeLabel, 0, false );
   m_insertModeLabel->setAlignment( Qt::AlignCenter );
   m_insertModeLabel->installEventFilter( this );
 
-  m_selectModeLabel = new QLabel( i18n(" NORM "), this );
+  m_selectModeLabel = new TQLabel( i18n(" NORM "), this );
   addWidget( m_selectModeLabel, 0, false );
   m_selectModeLabel->setAlignment( Qt::AlignCenter );
   m_selectModeLabel->installEventFilter( this );
@@ -330,7 +330,7 @@ KateVSStatusBar::KateVSStatusBar ( KateViewSpace *parent, const char *name )
   m_fileNameLabel=new KSqueezedTextLabel( this );
   addWidget( m_fileNameLabel, 1, true );
   m_fileNameLabel->setMinimumSize( 0, 0 );
-  m_fileNameLabel->setSizePolicy(QSizePolicy( QSizePolicy::Ignored, QSizePolicy::Fixed ));
+  m_fileNameLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
   m_fileNameLabel->setAlignment( /*Qt::AlignRight*/Qt::AlignLeft );
   m_fileNameLabel->installEventFilter( this );
 
@@ -345,7 +345,7 @@ KateVSStatusBar::~KateVSStatusBar ()
 {
 }
 
-void KateVSStatusBar::setStatus( int r, int c, int ovr, bool block, int, const QString &msg )
+void KateVSStatusBar::setStatus( int r, int c, int ovr, bool block, int, const TQString &msg )
 {
   m_lineColLabel->setText(
     i18n(" Line: %1 Col: %2 ").arg(KGlobal::locale()->formatNumber(r+1, 0))
@@ -397,20 +397,20 @@ void KateVSStatusBar::modifiedChanged()
 void KateVSStatusBar::showMenu()
 {
    KMainWindow* mainWindow = static_cast<KMainWindow*>( topLevelWidget() );
-   QPopupMenu* menu = static_cast<QPopupMenu*>( mainWindow->factory()->container("viewspace_popup", mainWindow ) );
+   TQPopupMenu* menu = static_cast<TQPopupMenu*>( mainWindow->factory()->container("viewspace_popup", mainWindow ) );
 
    if (menu)
-     menu->exec(QCursor::pos());
+     menu->exec(TQCursor::pos());
 }
 
-bool KateVSStatusBar::eventFilter(QObject*,QEvent *e)
+bool KateVSStatusBar::eventFilter(TQObject*,TQEvent *e)
 {
-  if (e->type()==QEvent::MouseButtonPress)
+  if (e->type()==TQEvent::MouseButtonPress)
   {
     if ( m_viewSpace->currentView() )
       m_viewSpace->currentView()->setFocus();
 
-    if ( ((QMouseEvent*)e)->button()==RightButton)
+    if ( ((TQMouseEvent*)e)->button()==RightButton)
       showMenu();
 
     return true;

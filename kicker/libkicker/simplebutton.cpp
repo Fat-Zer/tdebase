@@ -20,8 +20,8 @@
 
 #include "simplebutton.h"
 
-#include <qpainter.h>
-#include <qstyle.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
 
 #include <kapplication.h>
 #include <kcursor.h>
@@ -34,17 +34,17 @@
 
 #define BUTTON_MARGIN KDialog::spacingHint()
 
-SimpleButton::SimpleButton(QWidget *parent, const char *name)
-    : QButton(parent, name),
+SimpleButton::SimpleButton(TQWidget *parent, const char *name)
+    : TQButton(parent, name),
       m_highlight(false),
       m_orientation(Qt::Horizontal)
 {
     setBackgroundOrigin( AncestorOrigin );
 
-    connect( kapp, SIGNAL( settingsChanged( int ) ),
-       SLOT( slotSettingsChanged( int ) ) );
-    connect( kapp, SIGNAL( iconChanged( int ) ),
-       SLOT( slotIconChanged( int ) ) );
+    connect( kapp, TQT_SIGNAL( settingsChanged( int ) ),
+       TQT_SLOT( slotSettingsChanged( int ) ) );
+    connect( kapp, TQT_SIGNAL( iconChanged( int ) ),
+       TQT_SLOT( slotIconChanged( int ) ) );
 
     kapp->addKipcEventMask( KIPC::SettingsChanged );
     kapp->addKipcEventMask( KIPC::IconChanged );
@@ -52,9 +52,9 @@ SimpleButton::SimpleButton(QWidget *parent, const char *name)
     slotSettingsChanged( KApplication::SETTINGS_MOUSE );
 }
 
-void SimpleButton::setPixmap(const QPixmap &pix)
+void SimpleButton::setPixmap(const TQPixmap &pix)
 {
-    QButton::setPixmap(pix);
+    TQButton::setPixmap(pix);
     generateIcons();
     update();
 }
@@ -65,39 +65,39 @@ void SimpleButton::setOrientation(Qt::Orientation orientation)
     update();
 }
 
-QSize SimpleButton::sizeHint() const
+TQSize SimpleButton::sizeHint() const
 {
-    const QPixmap* pm = pixmap();
+    const TQPixmap* pm = pixmap();
 
     if (!pm)
-        return QButton::sizeHint();
+        return TQButton::sizeHint();
     else
-        return QSize(pm->width() + BUTTON_MARGIN, pm->height() + BUTTON_MARGIN);
+        return TQSize(pm->width() + BUTTON_MARGIN, pm->height() + BUTTON_MARGIN);
 }
 
-QSize SimpleButton::minimumSizeHint() const
+TQSize SimpleButton::minimumSizeHint() const
 {
-    const QPixmap* pm = pixmap();
+    const TQPixmap* pm = pixmap();
 
     if (!pm)
-        return QButton::minimumSizeHint();
+        return TQButton::minimumSizeHint();
     else
-        return QSize(pm->width(), pm->height());
+        return TQSize(pm->width(), pm->height());
 }
 
-void SimpleButton::drawButton( QPainter *p )
+void SimpleButton::drawButton( TQPainter *p )
 {
     drawButtonLabel(p);
 }
 
-void SimpleButton::drawButtonLabel( QPainter *p )
+void SimpleButton::drawButtonLabel( TQPainter *p )
 {
     if (!pixmap())
     {
         return;
     }
 
-    QPixmap pix = isEnabled() ? (m_highlight? m_activeIcon : m_normalIcon) : m_disabledIcon;
+    TQPixmap pix = isEnabled() ? (m_highlight? m_activeIcon : m_normalIcon) : m_disabledIcon;
 
     if (isOn() || isDown())
     {
@@ -110,7 +110,7 @@ void SimpleButton::drawButtonLabel( QPainter *p )
     int ph = pix.height();
     int pw = pix.width();
     int margin = BUTTON_MARGIN;
-    QPoint origin(margin / 2, margin / 2);
+    TQPoint origin(margin / 2, margin / 2);
 
     if (ph < (h - margin))
     {
@@ -132,7 +132,7 @@ void SimpleButton::generateIcons()
         return;
     }
 
-    QImage image = pixmap()->convertToImage();
+    TQImage image = pixmap()->convertToImage();
     KIconEffect effect;
 
     m_normalIcon = effect.apply(image, KIcon::Panel, KIcon::DefaultState);
@@ -172,29 +172,29 @@ void SimpleButton::slotIconChanged( int group )
     update();
 }
 
-void SimpleButton::enterEvent( QEvent *e )
+void SimpleButton::enterEvent( TQEvent *e )
 {
     m_highlight = true;
 
     repaint( false );
-    QButton::enterEvent( e );
+    TQButton::enterEvent( e );
 }
 
-void SimpleButton::leaveEvent( QEvent *e )
+void SimpleButton::leaveEvent( TQEvent *e )
 {
     m_highlight = false;
 
     repaint( false );
-    QButton::enterEvent( e );
+    TQButton::enterEvent( e );
 }
 
-void SimpleButton::resizeEvent( QResizeEvent * )
+void SimpleButton::resizeEvent( TQResizeEvent * )
 {
     generateIcons();
 }
 
 
-SimpleArrowButton::SimpleArrowButton(QWidget *parent, Qt::ArrowType arrow, const char *name)
+SimpleArrowButton::SimpleArrowButton(TQWidget *parent, Qt::ArrowType arrow, const char *name)
     : SimpleButton(parent, name)
 {
     setBackgroundOrigin(AncestorOrigin);
@@ -202,9 +202,9 @@ SimpleArrowButton::SimpleArrowButton(QWidget *parent, Qt::ArrowType arrow, const
     _inside = false;
 }
 
-QSize SimpleArrowButton::sizeHint() const
+TQSize SimpleArrowButton::sizeHint() const
 {
-    return QSize( 12, 12 );
+    return TQSize( 12, 12 );
 }
 
 void SimpleArrowButton::setArrowType(Qt::ArrowType a)
@@ -221,32 +221,32 @@ Qt::ArrowType SimpleArrowButton::arrowType() const
     return _arrow;
 }
 
-void SimpleArrowButton::drawButton( QPainter *p )
+void SimpleArrowButton::drawButton( TQPainter *p )
 {
-    QRect r(1, 1, width() - 2, height() - 2);
+    TQRect r(1, 1, width() - 2, height() - 2);
     
-    QStyle::PrimitiveElement pe = QStyle::PE_ArrowLeft;
+    TQStyle::PrimitiveElement pe = TQStyle::PE_ArrowLeft;
     switch (_arrow)
     {
-        case Qt::LeftArrow: pe = QStyle::PE_ArrowLeft; break;
-        case Qt::RightArrow: pe = QStyle::PE_ArrowRight; break;
-        case Qt::UpArrow: pe = QStyle::PE_ArrowUp; break;
-        case Qt::DownArrow: pe = QStyle::PE_ArrowDown; break;
+        case Qt::LeftArrow: pe = TQStyle::PE_ArrowLeft; break;
+        case Qt::RightArrow: pe = TQStyle::PE_ArrowRight; break;
+        case Qt::UpArrow: pe = TQStyle::PE_ArrowUp; break;
+        case Qt::DownArrow: pe = TQStyle::PE_ArrowDown; break;
     }
     
-    int flags = QStyle::Style_Default | QStyle::Style_Enabled;
-    if (isDown() || isOn())	flags |= QStyle::Style_Down;
+    int flags = TQStyle::Style_Default | TQStyle::Style_Enabled;
+    if (isDown() || isOn())	flags |= TQStyle::Style_Down;
     style().drawPrimitive(pe, p, r, colorGroup(), flags);
 }
 
-void SimpleArrowButton::enterEvent( QEvent *e )
+void SimpleArrowButton::enterEvent( TQEvent *e )
 {
     _inside = true;
     SimpleButton::enterEvent( e );
     update();
 }
 
-void SimpleArrowButton::leaveEvent( QEvent *e )
+void SimpleArrowButton::leaveEvent( TQEvent *e )
 {
     _inside = false;
     SimpleButton::enterEvent( e );

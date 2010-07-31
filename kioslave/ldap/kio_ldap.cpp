@@ -54,8 +54,8 @@ int kdemain( int argc, char **argv )
 /**
  * Initialize the ldap slave
  */
-LDAPProtocol::LDAPProtocol( const QCString &protocol, const QCString &pool, 
-  const QCString &app ) : SlaveBase( protocol, pool, app )
+LDAPProtocol::LDAPProtocol( const TQCString &protocol, const TQCString &pool, 
+  const TQCString &app ) : SlaveBase( protocol, pool, app )
 {
   mLDAP = 0; mTLS = 0; mVer = 3; mAuthSASL = false;
   mRealm = ""; mBindName = "";
@@ -79,11 +79,11 @@ void LDAPProtocol::LDAPErr( const KURL &url, int err )
   if ( err == LDAP_SUCCESS ) return;
   kdDebug(7125) << "error code: " << err << " msg: " << ldap_err2string(err) <<
     " Additonal error message: '" << errmsg << "'" << endl;
-  QString msg;
-  QString extraMsg;
+  TQString msg;
+  TQString extraMsg;
   if ( errmsg ) {
     if ( errmsg[0] )
-      extraMsg = i18n("\nAdditional info: ") + QString::fromUtf8( errmsg );
+      extraMsg = i18n("\nAdditional info: ") + TQString::fromUtf8( errmsg );
     free( errmsg );
   }
   msg = url.prettyURL();
@@ -164,24 +164,24 @@ void LDAPProtocol::LDAPErr( const KURL &url, int err )
 void LDAPProtocol::controlsFromMetaData( LDAPControl ***serverctrls, 
   LDAPControl ***clientctrls )
 {
-  QString oid; bool critical; QByteArray value;
+  TQString oid; bool critical; TQByteArray value;
   int i = 0;
-  while ( hasMetaData( QString::fromLatin1("SERVER_CTRL%1").arg(i) ) ) {
-    QCString val = metaData( QString::fromLatin1("SERVER_CTRL%1").arg(i) ).utf8();
+  while ( hasMetaData( TQString::fromLatin1("SERVER_CTRL%1").arg(i) ) ) {
+    TQCString val = metaData( TQString::fromLatin1("SERVER_CTRL%1").arg(i) ).utf8();
     LDIF::splitControl( val, oid, critical, value );
     kdDebug(7125) << "server ctrl #" << i << " value: " << val << 
       " oid: " << oid << " critical: " << critical << " value: " << 
-      QString::fromUtf8( value, value.size() ) << endl;
+      TQString::fromUtf8( value, value.size() ) << endl;
     addControlOp( serverctrls, oid, value, critical );
     i++;
   }
   i = 0;
-  while ( hasMetaData( QString::fromLatin1("CLIENT_CTRL%1").arg(i) ) ) {
-    QCString val = metaData( QString::fromLatin1("CLIENT_CTRL%1").arg(i) ).utf8();
+  while ( hasMetaData( TQString::fromLatin1("CLIENT_CTRL%1").arg(i) ) ) {
+    TQCString val = metaData( TQString::fromLatin1("CLIENT_CTRL%1").arg(i) ).utf8();
     LDIF::splitControl( val, oid, critical, value );
     kdDebug(7125) << "client ctrl #" << i << " value: " << val << 
       " oid: " << oid << " critical: " << critical << " value: " << 
-      QString::fromUtf8( value, value.size() ) << endl;
+      TQString::fromUtf8( value, value.size() ) << endl;
     addControlOp( clientctrls, oid, value, critical );
     i++;
   }
@@ -220,7 +220,7 @@ int LDAPProtocol::asyncSearch( LDAPUrl &usrc )
     usrc.scope() << " filter=\"" << usrc.filter() << "\" attrs=" << usrc.attributes() << 
     endl;
   retval = ldap_search_ext( mLDAP, usrc.dn().utf8(), scope, 
-    usrc.filter().isEmpty() ? QCString() : usrc.filter().utf8(), attrs, 0, 
+    usrc.filter().isEmpty() ? TQCString() : usrc.filter().utf8(), attrs, 0, 
     serverctrls, clientctrls,
     0, mSizeLimit, &msgid );
 
@@ -237,16 +237,16 @@ int LDAPProtocol::asyncSearch( LDAPUrl &usrc )
   return retval;
 }
 
-QCString LDAPProtocol::LDAPEntryAsLDIF( LDAPMessage *message )
+TQCString LDAPProtocol::LDAPEntryAsLDIF( LDAPMessage *message )
 {
-  QCString result;
+  TQCString result;
   char *name;
   struct berval **bvals;
   BerElement     *entry;
-  QByteArray tmp;
+  TQByteArray tmp;
   
   char *dn = ldap_get_dn( mLDAP, message );
-  if ( dn == NULL ) return QCString( "" );
+  if ( dn == NULL ) return TQCString( "" );
   tmp.setRawData( dn, strlen( dn ) );
   result += LDIF::assembleLine( "dn", tmp ) + '\n';
   tmp.resetRawData( dn, strlen( dn ) );
@@ -264,7 +264,7 @@ QCString LDAPProtocol::LDAPEntryAsLDIF( LDAPMessage *message )
         char* val = bvals[i]->bv_val;
         unsigned long len = bvals[i]->bv_len;
         tmp.setRawData( val, len );
-        result += LDIF::assembleLine( QString::fromUtf8( name ), tmp, 76 ) + '\n';
+        result += LDIF::assembleLine( TQString::fromUtf8( name ), tmp, 76 ) + '\n';
         tmp.resetRawData( val, len );
       }
       ldap_value_free_len(bvals);
@@ -276,8 +276,8 @@ QCString LDAPProtocol::LDAPEntryAsLDIF( LDAPMessage *message )
   return result;
 }
 
-void LDAPProtocol::addControlOp( LDAPControl ***pctrls, const QString &oid,
-  const QByteArray &value, bool critical )
+void LDAPProtocol::addControlOp( LDAPControl ***pctrls, const TQString &oid,
+  const TQByteArray &value, bool critical )
 {
   LDAPControl **ctrls;
   LDAPControl *ctrl = (LDAPControl *) malloc( sizeof( LDAPControl ) );
@@ -285,7 +285,7 @@ void LDAPProtocol::addControlOp( LDAPControl ***pctrls, const QString &oid,
   ctrls = *pctrls;
 
   kdDebug(7125) << "addControlOp: oid:'" << oid << "' val: '" << 
-    QString::fromUtf8(value, value.size()) << "'" << endl;
+    TQString::fromUtf8(value, value.size()) << "'" << endl;
   int vallen = value.size();
   ctrl->ldctl_value.bv_len = vallen;
   if ( vallen ) {
@@ -313,11 +313,11 @@ void LDAPProtocol::addControlOp( LDAPControl ***pctrls, const QString &oid,
   *pctrls = ctrls;
 }
 
-void LDAPProtocol::addModOp( LDAPMod ***pmods, int mod_type, const QString &attr, 
-  const QByteArray &value )
+void LDAPProtocol::addModOp( LDAPMod ***pmods, int mod_type, const TQString &attr, 
+  const TQByteArray &value )
 {
 //  kdDebug(7125) << "type: " << mod_type << " attr: " << attr << 
-//    " value: " << QString::fromUtf8(value,value.size()) << 
+//    " value: " << TQString::fromUtf8(value,value.size()) << 
 //    " size: " << value.size() << endl;
   LDAPMod **mods;
 
@@ -380,7 +380,7 @@ void LDAPProtocol::addModOp( LDAPMod ***pmods, int mod_type, const QString &attr
   }
 }
 
-void LDAPProtocol::LDAPEntry2UDSEntry( const QString &dn, UDSEntry &entry, 
+void LDAPProtocol::LDAPEntry2UDSEntry( const TQString &dn, UDSEntry &entry, 
   const LDAPUrl &usrc, bool dir )
 {
   UDSAtom atom;
@@ -389,7 +389,7 @@ void LDAPProtocol::LDAPEntry2UDSEntry( const QString &dn, UDSEntry &entry,
   entry.clear();
   atom.m_uds = UDS_NAME;
   atom.m_long = 0;
-  QString name = dn;
+  TQString name = dn;
   if ( (pos = name.find(",")) > 0 )
     name = name.left( pos );
   if ( (pos = name.find("=")) > 0 )
@@ -437,13 +437,13 @@ void LDAPProtocol::changeCheck( LDAPUrl &url )
   if ( url.hasExtension( "x-ver" ) ) 
     ver = url.extension( "x-ver", critical).toInt();
   bool authSASL = url.hasExtension( "x-sasl" );
-  QString mech;
+  TQString mech;
   if ( url.hasExtension( "x-mech" ) ) 
     mech = url.extension( "x-mech", critical).upper();
-  QString realm;
+  TQString realm;
   if ( url.hasExtension( "x-realm" ) ) 
     mech = url.extension( "x-realm", critical).upper();
-  QString bindname;
+  TQString bindname;
   if ( url.hasExtension( "bindname" ) ) 
     bindname = url.extension( "bindname", critical).upper();
   int timelimit = 0;
@@ -480,8 +480,8 @@ void LDAPProtocol::changeCheck( LDAPUrl &url )
   }
 }
 
-void LDAPProtocol::setHost( const QString& host, int port,
-                            const QString& user, const QString& password )
+void LDAPProtocol::setHost( const TQString& host, int port,
+                            const TQString& user, const TQString& password )
 {
 
   if( mHost != host || mPort != port || mUser != user || mPassword != password )
@@ -519,8 +519,8 @@ void LDAPProtocol::fillAuthInfo( AuthInfo &info )
   info.url.setPort( mPort );
   info.url.setUser( mUser );
   info.caption = i18n("LDAP Login");
-  info.comment = QString::fromLatin1( mProtocol ) + "://" + mHost + ":" + 
-    QString::number( mPort );
+  info.comment = TQString::fromLatin1( mProtocol ) + "://" + mHost + ":" + 
+    TQString::number( mPort );
   info.commentLabel = i18n("site:");
   info.username = mAuthSASL ? mUser : mBindName;
   info.password = mPassword;
@@ -561,7 +561,7 @@ int LDAPProtocol::saslInteract( void *in )
   }
 
   interact = ( sasl_interact_t * ) in;
-  QString value;
+  TQString value;
 
   while( interact->id != SASL_CB_LIST_END ) {
     value = "";
@@ -668,7 +668,7 @@ void LDAPProtocol::openConnection()
 #endif
 
   bool auth = false;
-  QString mechanism = mMech.isEmpty() ? "DIGEST-MD5" : mMech;
+  TQString mechanism = mMech.isEmpty() ? "DIGEST-MD5" : mMech;
   mFirstAuth = true; mCancel = false;
 
   const bool cached = checkCachedAuthentication( info );
@@ -689,7 +689,7 @@ void LDAPProtocol::openConnection()
         mPassword = info.password;
       } else {
         kdDebug(7125) << "Dialog cancelled!" << endl;
-        error( ERR_USER_CANCELED, QString::null );
+        error( ERR_USER_CANCELED, TQString::null );
         closeConnection();
         return;
       }
@@ -711,7 +711,7 @@ void LDAPProtocol::openConnection()
       auth = true;
       if ( ret != LDAP_SUCCESS ) {
         if ( mCancel )
-          error( ERR_USER_CANCELED, QString::null );
+          error( ERR_USER_CANCELED, TQString::null );
         else
           LDAPErr( Url );
         closeConnection();
@@ -756,9 +756,9 @@ void LDAPProtocol::get( const KURL &_url )
   // tell the mimetype
   mimeType("text/plain");
   // collect the result
-  QCString result;
+  TQCString result;
   filesize_t processed_size = 0;
-  QByteArray array;
+  TQByteArray array;
   
   while( true ) {
     ret = ldap_result( mLDAP, id, 0, NULL, &msg );
@@ -806,7 +806,7 @@ void LDAPProtocol::stat( const KURL &_url )
 {
   kdDebug(7125) << "stat(" << _url << ")" << endl;
 
-  QStringList att,saveatt;
+  TQStringList att,saveatt;
   LDAPUrl usrc(_url);
   LDAPMessage *msg;
   int ret, id;
@@ -902,7 +902,7 @@ void LDAPProtocol::put( const KURL &_url, int, bool overwrite, bool )
 
   LDAPMod **lmod = 0;
   LDAPControl **serverctrls = 0, **clientctrls = 0;
-  QByteArray buffer;
+  TQByteArray buffer;
   int result = 0;
   LDIF::ParseVal ret;
   LDIF ldif;
@@ -956,7 +956,7 @@ void LDAPProtocol::put( const KURL &_url, int, bool overwrite, bool )
                 " deloldrdn: " << ldif.delOldRdn() << endl;
               controlsFromMetaData( &serverctrls, &clientctrls );
               ldaperr = ldap_rename_s( mLDAP, ldif.dn().utf8(), ldif.newRdn().utf8(), 
-                ldif.newSuperior().isEmpty() ? QCString() : ldif.newSuperior().utf8(), 
+                ldif.newSuperior().isEmpty() ? TQCString() : ldif.newSuperior().utf8(), 
                 ldif.delOldRdn(), serverctrls, clientctrls );
 
               FREELDAPMEM;
@@ -1049,7 +1049,7 @@ void LDAPProtocol::listDir( const KURL &_url )
   int ret, ret2, id, id2;
   unsigned long total=0;
   char *dn;
-  QStringList att,saveatt;
+  TQStringList att,saveatt;
   LDAPMessage *entry,*msg,*entry2,*msg2;
   LDAPUrl usrc(_url),usrc2;
   bool critical;
@@ -1100,17 +1100,17 @@ void LDAPProtocol::listDir( const KURL &_url )
     
       dn = ldap_get_dn( mLDAP, entry );
       kdDebug(7125) << "dn: " << dn  << endl;
-      LDAPEntry2UDSEntry( QString::fromUtf8(dn), uds, usrc );
+      LDAPEntry2UDSEntry( TQString::fromUtf8(dn), uds, usrc );
       listEntry( uds, false );
 //      processedSize( total );
       kdDebug(7125) << " total: " << total << " " << usrc.prettyURL() << endl;
     
     // publish the sub-directories (if dirmode==sub)
       if ( isSub ) {
-        usrc2.setDn( QString::fromUtf8( dn ) );
+        usrc2.setDn( TQString::fromUtf8( dn ) );
         usrc2.setScope( LDAPUrl::One );
         usrc2.setAttributes( att );
-        usrc2.setFilter( QString::null );
+        usrc2.setFilter( TQString::null );
         kdDebug(7125) << "search2 " << dn << endl;
         if ( (id2 = asyncSearch( usrc2 )) != -1 ) {
           while ( true ) {
@@ -1126,7 +1126,7 @@ void LDAPProtocol::listDir( const KURL &_url )
               if  ( entry2 ) {
                 usrc2.setAttributes( saveatt );
                 usrc2.setFilter( usrc.filter() );
-                LDAPEntry2UDSEntry( QString::fromUtf8( dn ), uds, usrc2, true );
+                LDAPEntry2UDSEntry( TQString::fromUtf8( dn ), uds, usrc2, true );
                 listEntry( uds, false );
                 total++;
               }

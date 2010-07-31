@@ -26,7 +26,7 @@
 class KateSessionMenu : public KPanelMenu {
   Q_OBJECT
   public:
-    KateSessionMenu( QWidget *parent=0, const char *name=0, const QStringList& /*args*/=QStringList() );
+    KateSessionMenu( TQWidget *parent=0, const char *name=0, const TQStringList& /*args*/=TQStringList() );
     ~KateSessionMenu();
 
   public slots:
@@ -36,8 +36,8 @@ class KateSessionMenu : public KPanelMenu {
     virtual void slotExec( int id );
 
   private:
-    QStringList m_sessions;
-    QWidget *m_parent;
+    TQStringList m_sessions;
+    TQWidget *m_parent;
 };
 
 #endif // _KateSessionMenu_h_

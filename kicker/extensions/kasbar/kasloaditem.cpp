@@ -6,11 +6,11 @@
 #include <sys/loadavg.h> // e.g. Solaris
 #endif
 
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qdatetime.h>
-#include <qdrawutil.h>
-#include <qtimer.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqdatetime.h>
+#include <tqdrawutil.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -33,12 +33,12 @@
 KasLoadItem::KasLoadItem( KasBar *parent )
     : KasItem( parent )
 {
-    QTimer *t = new QTimer( this );
-    connect( t, SIGNAL( timeout() ), SLOT( updateDisplay() ) );
+    TQTimer *t = new TQTimer( this );
+    connect( t, TQT_SIGNAL( timeout() ), TQT_SLOT( updateDisplay() ) );
     t->start( 1000 );
     updateDisplay();
 
-    connect( this, SIGNAL(rightButtonClicked(QMouseEvent *)), SLOT(showMenuAt(QMouseEvent *) ) );
+    connect( this, TQT_SIGNAL(rightButtonClicked(TQMouseEvent *)), TQT_SLOT(showMenuAt(TQMouseEvent *) ) );
 }
 
 KasLoadItem::~KasLoadItem()
@@ -63,10 +63,10 @@ void KasLoadItem::updateDisplay()
     valuesFifteen.pop_front();
   }
 
-  setText( QString("%1").arg( valuesOne.last(), 3, 'f', 2 ) );
+  setText( TQString("%1").arg( valuesOne.last(), 3, 'f', 2 ) );
 }
 
-void KasLoadItem::paint( QPainter *p )
+void KasLoadItem::paint( TQPainter *p )
 {
     double val = valuesOne.last();
     double maxValue = 1.0;
@@ -95,8 +95,8 @@ void KasLoadItem::paint( QPainter *p )
 
     KasItem::paint( p );
 
-    QColor light = kasbar()->colorGroup().highlight();
-    QColor dark = light.dark();
+    TQColor light = kasbar()->colorGroup().highlight();
+    TQColor dark = light.dark();
 
     KPixmap pix;
     pix.resize( w, h );
@@ -110,13 +110,13 @@ void KasLoadItem::paint( QPainter *p )
     }
 }
 
-void KasLoadItem::showMenuAt( QMouseEvent *ev )
+void KasLoadItem::showMenuAt( TQMouseEvent *ev )
 {
     hidePopup();
     showMenuAt( ev->globalPos() );
 }
 
-void KasLoadItem::showMenuAt( QPoint p )
+void KasLoadItem::showMenuAt( TQPoint p )
 {
     mouseLeave();
     kasbar()->updateMouseOver();

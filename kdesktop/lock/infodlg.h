@@ -8,8 +8,8 @@
 #ifndef __INFODLG_H__
 #define __INFODLG_H__
 
-#include <qdialog.h>
-#include <qstringlist.h>
+#include <tqdialog.h>
+#include <tqstringlist.h>
 
 class QFrame;
 class QGridLayout;
@@ -31,7 +31,7 @@ public:
     ~InfoDlg();
     virtual void show();
 
-    void updateLabel( QString &txt );
+    void updateLabel( TQString &txt );
     void setUnlockIcon();
     void setKDEIcon();
     void setInfoIcon();
@@ -39,14 +39,14 @@ public:
     void setErrorIcon();
 
 private:
-    QFrame      *frame;
-    QGridLayout *frameLayout;
-    QLabel      *mStatusLabel;
-    QLabel      *mpixLabel;
+    TQFrame      *frame;
+    TQGridLayout *frameLayout;
+    TQLabel      *mStatusLabel;
+    TQLabel      *mpixLabel;
     int         mCapsLocked;
     bool        mUnlockingFailed;
-    QStringList layoutsList;
-    QStringList::iterator currLayout;
+    TQStringList layoutsList;
+    TQStringList::iterator currLayout;
     int         sPid, sFd;
 };
 

@@ -25,11 +25,11 @@
 #include "katedocmanager.h"
 #include <kate/document.h>
 
-#include <qvbox.h>
+#include <tqvbox.h>
 #include <kfile.h>
 #include <kurl.h>
 #include <ktoolbar.h>
-#include <qframe.h>
+#include <tqframe.h>
 
 class KateMainWindow;
 class KateViewManager;
@@ -50,7 +50,7 @@ class KateFileSelectorToolBar: public KToolBar
 {
 	Q_OBJECT
 public:
-	KateFileSelectorToolBar(QWidget *parent);
+	KateFileSelectorToolBar(TQWidget *parent);
 	virtual ~KateFileSelectorToolBar();
 
 	 virtual void setMovingEnabled( bool b );
@@ -60,13 +60,13 @@ class KateFileSelectorToolBarParent: public QFrame
 {
 	Q_OBJECT
 public:
-	KateFileSelectorToolBarParent(QWidget *parent);
+	KateFileSelectorToolBarParent(TQWidget *parent);
 	~KateFileSelectorToolBarParent();
 	void setToolBar(KateFileSelectorToolBar *tb);
 private:
 	KateFileSelectorToolBar *m_tb;
 protected:
-	virtual void resizeEvent ( QResizeEvent * );
+	virtual void resizeEvent ( TQResizeEvent * );
 };
 
 class KateFileSelector : public QVBox
@@ -80,35 +80,35 @@ class KateFileSelector : public QVBox
     enum AutoSyncEvent { DocumentChanged=1, GotVisible=2 };
 
     KateFileSelector( KateMainWindow *mainWindow=0, KateViewManager *viewManager=0,
-                      QWidget * parent = 0, const char * name = 0 );
+                      TQWidget * parent = 0, const char * name = 0 );
     ~KateFileSelector();
 
-    void readConfig( KConfig *, const QString & );
-    void writeConfig( KConfig *, const QString & );
+    void readConfig( KConfig *, const TQString & );
+    void writeConfig( KConfig *, const TQString & );
     void setupToolbar( KConfig * );
     void setView( KFile::FileView );
     KDirOperator *dirOperator(){ return dir; }
     KActionCollection *actionCollection() { return mActionCollection; };
 
   public slots:
-    void slotFilterChange(const QString&);
+    void slotFilterChange(const TQString&);
     void setDir(KURL);
-    void setDir( const QString& url ) { setDir( KURL( url ) ); };
+    void setDir( const TQString& url ) { setDir( KURL( url ) ); };
     void kateViewChanged();
     void selectorViewChanged( KFileView * );
 
   private slots:
     void cmbPathActivated( const KURL& u );
-    void cmbPathReturnPressed( const QString& u );
+    void cmbPathReturnPressed( const TQString& u );
     void dirUrlEntered( const KURL& u );
     void dirFinishedLoading();
     void setActiveDocumentDir();
     void btnFilterClick();
 
   protected:
-    void focusInEvent( QFocusEvent * );
-    void showEvent( QShowEvent * );
-    bool eventFilter( QObject *, QEvent * );
+    void focusInEvent( TQFocusEvent * );
+    void showEvent( TQShowEvent * );
+    bool eventFilter( TQObject *, TQEvent * );
     void initialDirChangeHack();
 
   private:
@@ -119,15 +119,15 @@ class KateFileSelector : public QVBox
     KDirOperator * dir;
     class KAction *acSyncDir;
     KHistoryCombo * filter;
-    class QToolButton *btnFilter;
+    class TQToolButton *btnFilter;
 
     KateMainWindow *mainwin;
     KateViewManager *viewmanager;
 
-    QString lastFilter;
+    TQString lastFilter;
     int autoSyncEvents; // enabled autosync events
-    QString waitingUrl; // maybe display when we gets visible
-    QString waitingDir;
+    TQString waitingUrl; // maybe display when we gets visible
+    TQString waitingDir;
 };
 
 /*  TODO anders
@@ -146,7 +146,7 @@ class KateFileSelector : public QVBox
 class KFSConfigPage : public Kate::ConfigPage {
   Q_OBJECT
   public:
-    KFSConfigPage( QWidget* parent=0, const char *name=0, KateFileSelector *kfs=0);
+    KFSConfigPage( TQWidget* parent=0, const char *name=0, KateFileSelector *kfs=0);
     virtual ~KFSConfigPage() {};
 
     virtual void apply();
@@ -160,9 +160,9 @@ class KFSConfigPage : public Kate::ConfigPage {
 
     KateFileSelector *fileSelector;
     KActionSelector *acSel;
-    class QSpinBox *sbPathHistLength, *sbFilterHistLength;
-    class QCheckBox *cbSyncActive, *cbSyncShow;
-    class QCheckBox *cbSesLocation, *cbSesFilter;
+    class TQSpinBox *sbPathHistLength, *sbFilterHistLength;
+    class TQCheckBox *cbSyncActive, *cbSyncShow;
+    class TQCheckBox *cbSesLocation, *cbSesFilter;
 
     bool m_changed;
 };

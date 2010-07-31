@@ -26,7 +26,7 @@
 // (C) Craig Drummond, 2003, 2004
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <qevent.h>
+#include <tqevent.h>
 #include <kfileitem.h>
 #include <kurldrag.h>
 #include "KFileFontIconView.h"
@@ -35,7 +35,7 @@ namespace KFI
 {
 
 // CPD: KDE4 should make acceptDrag() virtual there fore can get rid of all these ::contentsX functions...
-void CKFileFontIconView::contentsDragEnterEvent(QDragEnterEvent *e)
+void CKFileFontIconView::contentsDragEnterEvent(TQDragEnterEvent *e)
 {
     if(acceptDrag(e))
         KFileIconView::contentsDragEnterEvent(e);
@@ -43,7 +43,7 @@ void CKFileFontIconView::contentsDragEnterEvent(QDragEnterEvent *e)
         e->ignore();
 }
 
-void CKFileFontIconView::contentsDragMoveEvent(QDragMoveEvent *e)
+void CKFileFontIconView::contentsDragMoveEvent(TQDragMoveEvent *e)
 {
     if(acceptDrag(e))
         KFileIconView::contentsDragMoveEvent(e);
@@ -51,7 +51,7 @@ void CKFileFontIconView::contentsDragMoveEvent(QDragMoveEvent *e)
         e->ignore();
 }
 
-void CKFileFontIconView::contentsDropEvent(QDropEvent *e)
+void CKFileFontIconView::contentsDropEvent(TQDropEvent *e)
 {
     contentsDragLeaveEvent(NULL);
 
@@ -61,28 +61,28 @@ void CKFileFontIconView::contentsDropEvent(QDropEvent *e)
         e->ignore();
 }
 
-bool CKFileFontIconView::acceptDrag(QDropEvent *e) const
+bool CKFileFontIconView::acceptDrag(TQDropEvent *e) const
 {
 #if 0 // Crashes - seems to be called to quick???
     bool       ok=false;
     KURL::List urls;
 
     if(KURLDrag::canDecode(e) && (e->source()!=const_cast<CKFileFontIconView *>(this)) &&
-       (QDropEvent::Copy==e->action() || QDropEvent::Move==e->action()) &&
+       (TQDropEvent::Copy==e->action() || TQDropEvent::Move==e->action()) &&
        KURLDrag::decode(e, urls) && !urls.isEmpty())
     {
         KURL::List::Iterator it;
 
         ok=true;
         for(it=urls.begin(); ok && it!=urls.end(); ++it)
-            if(!CFontEngine::isAFontOrAfm(QFile::encodeName((*it).path())))
+            if(!CFontEngine::isAFontOrAfm(TQFile::encodeName((*it).path())))
                 ok=false;
     }
 
     return ok;
 #endif
     return KURLDrag::canDecode(e) && (e->source()!= const_cast<CKFileFontIconView*>(this)) &&
-           (QDropEvent::Copy==e->action() || QDropEvent::Move==e->action());
+           (TQDropEvent::Copy==e->action() || TQDropEvent::Move==e->action());
 }
 
 }

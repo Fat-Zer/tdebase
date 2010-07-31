@@ -22,8 +22,8 @@
 
 #include <kurl.h>
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 
 class KActionCollection;
 class KMainWindow;
@@ -45,8 +45,8 @@ class History : public QObject
 
       View *view;
       KURL url;
-      QString title;
-      QByteArray buffer;
+      TQString title;
+      TQByteArray buffer;
       bool search;
     };
 
@@ -85,11 +85,11 @@ class History : public QObject
 
     bool canGoBack() const;
     bool canGoForward() const;
-    void fillHistoryPopup( QPopupMenu *, bool, bool, bool, uint = 0 );
+    void fillHistoryPopup( TQPopupMenu *, bool, bool, bool, uint = 0 );
 
     static History *m_instance;
 
-    QPtrList<Entry> m_entries;
+    TQPtrList<Entry> m_entries;
 
 
     int m_goBuffer;

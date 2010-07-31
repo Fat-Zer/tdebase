@@ -22,9 +22,9 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kwin.h>
-#include <qlabel.h>
-#include <qradiobutton.h>
-#include <qcheckbox.h>
+#include <tqlabel.h>
+#include <tqradiobutton.h>
+#include <tqcheckbox.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -34,12 +34,12 @@
 namespace KWinInternal
 {
 
-DetectWidget::DetectWidget( QWidget* parent, const char* name )
+DetectWidget::DetectWidget( TQWidget* parent, const char* name )
 : DetectWidgetBase( parent, name )
     {
     }
 
-DetectDialog::DetectDialog( QWidget* parent, const char* name )
+DetectDialog::DetectDialog( TQWidget* parent, const char* name )
 : KDialogBase( parent, name, true, "", Ok | Cancel )
 , grabber( NULL )
     {
@@ -109,10 +109,10 @@ void DetectDialog::executeDialog()
     widget->title_label->setText( title );
     widget->extrarole_label->setText( extrarole );
     widget->machine_label->setText( machine );
-    emit detectionDone( exec() == QDialog::Accepted );
+    emit detectionDone( exec() == TQDialog::Accepted );
     }
 
-QCString DetectDialog::selectedClass() const
+TQCString DetectDialog::selectedClass() const
     {
     if( widget->use_class->isChecked() || widget->use_role->isChecked())
         return wmclass_class;
@@ -124,14 +124,14 @@ bool DetectDialog::selectedWholeClass() const
     return widget->use_whole_class->isChecked();
     }
 
-QCString DetectDialog::selectedRole() const
+TQCString DetectDialog::selectedRole() const
     {
     if( widget->use_role->isChecked())
         return role;
     return "";
     }
 
-QString DetectDialog::selectedTitle() const
+TQString DetectDialog::selectedTitle() const
     {
     return title;
     }
@@ -151,7 +151,7 @@ NET::WindowType DetectDialog::selectedType() const
     return type;
     }
 
-QCString DetectDialog::selectedMachine() const
+TQCString DetectDialog::selectedMachine() const
     {
     return machine;
     }
@@ -161,22 +161,22 @@ void DetectDialog::selectWindow()
     // use a dialog, so that all user input is blocked
     // use WX11BypassWM and moving away so that it's not actually visible
     // grab only mouse, so that keyboard can be used e.g. for switching windows
-    grabber = new QDialog( NULL, NULL, true, WX11BypassWM );
+    grabber = new TQDialog( NULL, NULL, true, WX11BypassWM );
     grabber->move( -1000, -1000 );
     grabber->show();
     grabber->grabMouse( crossCursor );
     grabber->installEventFilter( this );
     }
 
-bool DetectDialog::eventFilter( QObject* o, QEvent* e )
+bool DetectDialog::eventFilter( TQObject* o, TQEvent* e )
     {
     if( o != grabber )
         return false;
-    if( e->type() != QEvent::MouseButtonRelease )
+    if( e->type() != TQEvent::MouseButtonRelease )
         return false;
     delete grabber;
     grabber = NULL;
-    if( static_cast< QMouseEvent* >( e )->button() != LeftButton )
+    if( static_cast< TQMouseEvent* >( e )->button() != LeftButton )
         {
         emit detectionDone( false );
         return true;

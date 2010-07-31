@@ -22,7 +22,7 @@
 
 #include <klocale.h>
 
-SensorLoggerSettings::SensorLoggerSettings( QWidget *parent, const char *name )
+SensorLoggerSettings::SensorLoggerSettings( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "Sensor Logger Settings" ),
       Ok|Apply|Cancel, Ok, true )
 {
@@ -30,42 +30,42 @@ SensorLoggerSettings::SensorLoggerSettings( QWidget *parent, const char *name )
   setMainWidget( m_settingsWidget );
 }
 
-QString SensorLoggerSettings::title()
+TQString SensorLoggerSettings::title()
 {
   return m_settingsWidget->title();
 }
 
-QColor SensorLoggerSettings::foregroundColor()
+TQColor SensorLoggerSettings::foregroundColor()
 {
   return m_settingsWidget->foregroundColor();
 }
 
-QColor SensorLoggerSettings::backgroundColor()
+TQColor SensorLoggerSettings::backgroundColor()
 {
   return m_settingsWidget->backgroundColor();
 }
 
-QColor SensorLoggerSettings::alarmColor()
+TQColor SensorLoggerSettings::alarmColor()
 {
   return m_settingsWidget->alarmColor();
 }
 
-void SensorLoggerSettings::setTitle( const QString &title )
+void SensorLoggerSettings::setTitle( const TQString &title )
 {
   m_settingsWidget->setTitle( title );
 }
 
-void SensorLoggerSettings::setBackgroundColor( const QColor &c )
+void SensorLoggerSettings::setBackgroundColor( const TQColor &c )
 {
   m_settingsWidget->setBackgroundColor( c );
 }
 
-void SensorLoggerSettings::setForegroundColor( const QColor &c )
+void SensorLoggerSettings::setForegroundColor( const TQColor &c )
 {
   m_settingsWidget->setForegroundColor( c );
 }
 
-void SensorLoggerSettings::setAlarmColor( const QColor &c )
+void SensorLoggerSettings::setAlarmColor( const TQColor &c )
 {
   m_settingsWidget->setAlarmColor( c );
 }

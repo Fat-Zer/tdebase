@@ -19,7 +19,7 @@
 #ifndef __tom_h_
 #define __tom_h_
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 #include <kpanelmenu.h>
 #include <klibloader.h>
@@ -27,20 +27,20 @@
 class KPopupMenu;
 class QPopupMenu;
 
-typedef QPtrList<QPopupMenu> PopupMenuList;
-typedef QMap<int, KService::Ptr> TaskMap;
+typedef TQPtrList<TQPopupMenu> PopupMenuList;
+typedef TQMap<int, KService::Ptr> TaskMap;
 
 class TOM : public KPanelMenu
 {
     Q_OBJECT
 
     public:
-        TOM(QWidget *parent = 0, const char *name = 0);
+        TOM(TQWidget *parent = 0, const char *name = 0);
         ~TOM();
 
         // for the side image
-        /*void setMinimumSize(const QSize &);
-        void setMaximumSize(const QSize &);
+        /*void setMinimumSize(const TQSize &);
+        void setMaximumSize(const TQSize &);
         void setMinimumSize(int, int);
         void setMaximumSize(int, int);  */
 
@@ -49,7 +49,7 @@ class TOM : public KPanelMenu
         void slotExec(int);
         //void configChanged();
         void initialize();
-        void contextualizeRMBmenu(KPopupMenu* menu, int menuItem, QPopupMenu* ctxMenu);
+        void contextualizeRMBmenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu);
         //void paletteChanged();
         void clearRecentDocHistory();
         void runCommand();
@@ -67,43 +67,43 @@ class TOM : public KPanelMenu
         void reload();
 
         int  appendTaskGroup(KConfig& config, bool inSubMenu = true );
-        void initializeRecentApps(QPopupMenu* menu);
-        //int  insertTOMTitle(QPopupMenu* menu, const QString &text, int id = -1, int index = -1);
+        void initializeRecentApps(TQPopupMenu* menu);
+        //int  insertTOMTitle(TQPopupMenu* menu, const TQString &text, int id = -1, int index = -1);
 
         /*
          * this stuff should be shared w/the kmenu
 
-        QRect sideImageRect();
-        QMouseEvent translateMouseEvent( QMouseEvent* e );
-        void resizeEvent(QResizeEvent *);
-        void paintEvent(QPaintEvent *);
-        void mousePressEvent(QMouseEvent *);
-        void mouseReleaseEvent(QMouseEvent *);
-        void mouseMoveEvent(QMouseEvent *);
+        TQRect sideImageRect();
+        TQMouseEvent translateMouseEvent( TQMouseEvent* e );
+        void resizeEvent(TQResizeEvent *);
+        void paintEvent(TQPaintEvent *);
+        void mousePressEvent(TQMouseEvent *);
+        void mouseReleaseEvent(TQMouseEvent *);
+        void mouseMoveEvent(TQMouseEvent *);
         bool loadSidePixmap();
 
-        QPixmap m_sidePixmap;
-        QPixmap m_sideTilePixmap;*/
+        TQPixmap m_sidePixmap;
+        TQPixmap m_sideTilePixmap;*/
         PopupMenuList m_submenus;
-        QFont m_largerFont;
+        TQFont m_largerFont;
         int m_maxIndex;
         bool m_isImmutable;
         bool m_detailedTaskEntries;
         bool m_detailedNamesFirst;
         TaskMap m_tasks;
         KPopupMenu* m_recentDocsMenu;
-        QStringList m_recentDocURLs;
+        TQStringList m_recentDocURLs;
 };
 
 class TOMFactory : public KLibFactory
 {
     public:
-        TOMFactory(QObject *parent = 0, const char *name = 0);
+        TOMFactory(TQObject *parent = 0, const char *name = 0);
 
     protected:
-        QObject* createObject(QObject *parent = 0, const char *name = 0,
-                              const char *classname = "QObject",
-                              const QStringList& args = QStringList());
+        TQObject* createObject(TQObject *parent = 0, const char *name = 0,
+                              const char *classname = "TQObject",
+                              const TQStringList& args = TQStringList());
 };
 
 

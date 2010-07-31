@@ -20,7 +20,7 @@
 #ifndef KONQ_COMBO_H
 #define KONQ_COMBO_H
 
-#include <qevent.h>
+#include <tqevent.h>
 
 #include <kcombobox.h>
 #include <konq_historymgr.h>
@@ -35,21 +35,21 @@ class KonqCombo : public KHistoryCombo
     Q_OBJECT
 
 public:
-    KonqCombo( QWidget *parent, const char *name );
+    KonqCombo( TQWidget *parent, const char *name );
     ~KonqCombo();
 
     // initializes with the completion object and calls loadItems()
     void init( KCompletion * );
 
     // determines internally if it's temporary or final
-    void setURL( const QString& url );
+    void setURL( const TQString& url );
 
-    void setTemporary( const QString& );
-    void setTemporary( const QString&, const QPixmap& );
+    void setTemporary( const TQString& );
+    void setTemporary( const TQString&, const TQPixmap& );
     void clearTemporary( bool makeCurrent = true );
-    void removeURL( const QString& url );
+    void removeURL( const TQString& url );
 
-    void insertPermanent( const QString& );
+    void insertPermanent( const TQString& );
 
     void updatePixmaps();
 
@@ -62,23 +62,23 @@ public:
 
     void setPageSecurity( int );
 
-    void insertItem( const QString &text, int index=-1, const QString& title=QString::null );
-    void insertItem( const QPixmap &pixmap, const QString &text, int index=-1, const QString& title=QString::null );
+    void insertItem( const TQString &text, int index=-1, const TQString& title=TQString::null );
+    void insertItem( const TQPixmap &pixmap, const TQString &text, int index=-1, const TQString& title=TQString::null );
 
 protected:
-    virtual void keyPressEvent( QKeyEvent * );
-    virtual bool eventFilter( QObject *, QEvent * );
-    virtual void mousePressEvent( QMouseEvent * );
-    virtual void mouseMoveEvent( QMouseEvent * );
-    void paintEvent( QPaintEvent * );
-    void selectWord(QKeyEvent *e);
+    virtual void keyPressEvent( TQKeyEvent * );
+    virtual bool eventFilter( TQObject *, TQEvent * );
+    virtual void mousePressEvent( TQMouseEvent * );
+    virtual void mouseMoveEvent( TQMouseEvent * );
+    void paintEvent( TQPaintEvent * );
+    void selectWord(TQKeyEvent *e);
 
 signals:
     /** 
       Specialized signal that emits the state of the modifier
       keys along with the actual activated text.
      */    
-    void activated( const QString &, int );
+    void activated( const TQString &, int );
 
     /**
       User has clicked on the security lock in the combobar
@@ -88,24 +88,24 @@ signals:
 private slots:
     void slotCleared();
     void slotSetIcon( int index );
-    void slotActivated( const QString& text );
+    void slotActivated( const TQString& text );
 
 private:
-    void updateItem( const QPixmap& pix, const QString&, int index, const QString& title );
+    void updateItem( const TQPixmap& pix, const TQString&, int index, const TQString& title );
     void saveState();
     void restoreState();
     void applyPermanent();
-    QString temporaryItem() const { return text( temporary ); }
+    TQString temporaryItem() const { return text( temporary ); }
     void removeDuplicates( int index );
-    bool hasSufficientContrast(const QColor &c1, const QColor &c2);
+    bool hasSufficientContrast(const TQColor &c1, const TQColor &c2);
 
     bool m_returnPressed;
     bool m_permanent;
     int m_cursorPos;
     int m_currentIndex;
     int m_modifier;
-    QString m_currentText;
-    QPoint m_dragStart;
+    TQString m_currentText;
+    TQPoint m_dragStart;
     int m_pageSecurity;
 
     static KConfig *s_config;

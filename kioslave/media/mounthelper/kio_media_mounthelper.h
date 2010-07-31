@@ -23,7 +23,7 @@
 #define _KIO_MEDIA_MOUNTHELPER_H_
 
 #include <kapplication.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kio/job.h>
 
 #include "medium.h"
@@ -38,10 +38,10 @@ public:
 
 private:
 	const Medium findMedium(const KURL &url);
-	void invokeEject(const QString &device, bool quiet=false);
-	QString m_errorStr;
+	void invokeEject(const TQString &device, bool quiet=false);
+	TQString m_errorStr;
 	bool m_isCdrom;
-	QString m_mediumId;
+	TQString m_mediumId;
 	Dialog *dialog;
 
 private slots:
@@ -51,7 +51,7 @@ private slots:
 	void error();
 
 signals:
-	void signalPasswordError(QString errorMsg);
+	void signalPasswordError(TQString errorMsg);
 };
 
 #endif

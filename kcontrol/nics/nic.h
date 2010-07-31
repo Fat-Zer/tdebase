@@ -31,14 +31,14 @@ class KCMNic:public KCModule
 {
    Q_OBJECT
    public:
-      KCMNic(QWidget *parent=0, const char * name=0, const QStringList &list = QStringList( ));
+      KCMNic(TQWidget *parent=0, const char * name=0, const TQStringList &list = TQStringList( ));
 
    protected slots:
       void update();
 
    protected:
-      QListView *m_list;
-      QPushButton *m_updateButton;
+      TQListView *m_list;
+      TQPushButton *m_updateButton;
 };
 
 #endif

@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __panner_h__
 #define __panner_h__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "simplebutton.h"
 
@@ -36,17 +36,17 @@ class KDE_EXPORT Panner : public QWidget
     Q_OBJECT
 
 public:
-    Panner( QWidget* parent, const char* name = 0 );
+    Panner( TQWidget* parent, const char* name = 0 );
     ~Panner();
 
-    QSize minimumSizeHint() const { return QWidget::minimumSizeHint(); }
+    TQSize minimumSizeHint() const { return TQWidget::minimumSizeHint(); }
 
     Qt::Orientation orientation() const { return _orient; }
     virtual void setOrientation(Orientation orientation);
     
-    QWidget *viewport() const { return _viewport; }
+    TQWidget *viewport() const { return _viewport; }
     
-    QRect contentsRect() const { return QRect(0, 0, width(), height()); }
+    TQRect contentsRect() const { return TQRect(0, 0, width(), height()); }
     
     int contentsX() const { return _viewport ? -_viewport->x() : 0; }
     int contentsY() const { return _viewport ? -_viewport->y() : 0; }
@@ -59,14 +59,14 @@ public:
     
     void	contentsToViewport( int x, int y, int& vx, int& vy ) const;
     void	viewportToContents( int vx, int vy, int& x, int& y ) const;
-    QPoint	contentsToViewport( const QPoint& ) const;
-    QPoint	viewportToContents( const QPoint& ) const;
+    QPoint	contentsToViewport( const TQPoint& ) const;
+    QPoint	viewportToContents( const TQPoint& ) const;
     
-    void addChild(QWidget *child) { child->show(); }
-    void removeChild(QWidget *child) { child->hide(); }
-    int childX(QWidget *child) const { return child->x(); }
-    int childY(QWidget *child) const { return child->y(); }
-    void moveChild(QWidget *child, int x, int y) { child->move(x, y); }
+    void addChild(TQWidget *child) { child->show(); }
+    void removeChild(TQWidget *child) { child->hide(); }
+    int childX(TQWidget *child) const { return child->x(); }
+    int childY(TQWidget *child) const { return child->y(); }
+    void moveChild(TQWidget *child, int x, int y) { child->move(x, y); }
 
     void ensureVisible( int x, int y );
     void ensureVisible( int x, int y, int xmargin, int ymargin );
@@ -85,13 +85,13 @@ signals:
     void contentsMoving(int x, int y);
 
 protected:
-    virtual bool eventFilter( QObject *obj, QEvent *e );
-    virtual void resizeEvent(QResizeEvent *ev);
-    virtual void viewportResizeEvent( QResizeEvent* );
-    virtual void viewportMousePressEvent( QMouseEvent* );
-    virtual void viewportMouseReleaseEvent( QMouseEvent* );
-    virtual void viewportMouseDoubleClickEvent( QMouseEvent* );
-    virtual void viewportMouseMoveEvent( QMouseEvent* );
+    virtual bool eventFilter( TQObject *obj, TQEvent *e );
+    virtual void resizeEvent(TQResizeEvent *ev);
+    virtual void viewportResizeEvent( TQResizeEvent* );
+    virtual void viewportMousePressEvent( TQMouseEvent* );
+    virtual void viewportMouseReleaseEvent( TQMouseEvent* );
+    virtual void viewportMouseDoubleClickEvent( TQMouseEvent* );
+    virtual void viewportMouseMoveEvent( TQMouseEvent* );
 
 private:
     void setupButtons();
@@ -99,14 +99,14 @@ private:
     void updateScrollButtons();
 
     Orientation       _orient;
-    QBoxLayout       *_layout;
+    TQBoxLayout       *_layout;
     SimpleArrowButton *_luSB; // Left Scroll Button
     SimpleArrowButton *_rdSB; // Right Scroll Button
-    QTimer *_updateScrollButtonsTimer;
-    QTimer *_scrollTimer;
+    TQTimer *_updateScrollButtonsTimer;
+    TQTimer *_scrollTimer;
     
-    QWidget *_clipper;
-    QWidget *_viewport;
+    TQWidget *_clipper;
+    TQWidget *_viewport;
     int _cwidth, _cheight;
     int _cx, _cy;
     int _step;

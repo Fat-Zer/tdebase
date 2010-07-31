@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qfile.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -54,33 +54,33 @@ PluginManager* PluginManager::the()
 
 AppletInfo::List PluginManager::applets(bool sort, AppletInfo::List* list)
 {
-    QStringList rel;
+    TQStringList rel;
     KGlobal::dirs()->findAllResources("applets", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::Applet, sort, list);
 }
 
 AppletInfo::List PluginManager::extensions(bool sort, AppletInfo::List* list)
 {
-    QStringList rel;
+    TQStringList rel;
     KGlobal::dirs()->findAllResources("extensions", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::Extension, sort, list);
 }
 
 AppletInfo::List PluginManager::builtinButtons(bool sort, AppletInfo::List* list)
 {
-    QStringList rel;
+    TQStringList rel;
     KGlobal::dirs()->findAllResources("builtinbuttons", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::BuiltinButton, sort, list);
 }
 
 AppletInfo::List PluginManager::specialButtons(bool sort, AppletInfo::List* list)
 {
-    QStringList rel;
+    TQStringList rel;
     KGlobal::dirs()->findAllResources("specialbuttons", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::SpecialButton, sort, list);
 }
 
-AppletInfo::List PluginManager::plugins(const QStringList& desktopFiles,
+AppletInfo::List PluginManager::plugins(const TQStringList& desktopFiles,
                                         AppletInfo::AppletType type,
                                         bool sort,
                                         AppletInfo::List* list)
@@ -92,10 +92,10 @@ AppletInfo::List PluginManager::plugins(const QStringList& desktopFiles,
         plugins = *list;
     }
 
-    for (QStringList::ConstIterator it = desktopFiles.constBegin();
+    for (TQStringList::ConstIterator it = desktopFiles.constBegin();
          it != desktopFiles.constEnd(); ++it)
     {
-        AppletInfo info(*it, QString::null, type);
+        AppletInfo info(*it, TQString::null, type);
 
         if (!info.isHidden())
         {
@@ -123,8 +123,8 @@ PluginManager::~PluginManager()
     AppletInfo::Dict::const_iterator it = _dict.constBegin();
     for (; it != _dict.constEnd(); ++it)
     {
-        disconnect(it.key(), SIGNAL(destroyed( QObject*)),
-                   this, SLOT(slotPluginDestroyed(QObject*)));
+        disconnect(it.key(), TQT_SIGNAL(destroyed( TQObject*)),
+                   this, TQT_SLOT(slotPluginDestroyed(TQObject*)));
         delete it.data();
     }
 
@@ -133,10 +133,10 @@ PluginManager::~PluginManager()
 }
 
 KPanelApplet* PluginManager::loadApplet(const AppletInfo& info,
-                                        QWidget* parent )
+                                        TQWidget* parent )
 {
     KLibLoader* loader = KLibLoader::self();
-    KLibrary* lib = loader->library( QFile::encodeName(info.library()) );
+    KLibrary* lib = loader->library( TQFile::encodeName(info.library()) );
 
     if (!lib)
     {
@@ -145,13 +145,13 @@ KPanelApplet* PluginManager::loadApplet(const AppletInfo& info,
         return 0;
     }
 
-    KPanelApplet* (*init_ptr)(QWidget *, const QString&);
-    init_ptr = (KPanelApplet* (*)(QWidget *, const QString&))lib->symbol( "init" );
+    KPanelApplet* (*init_ptr)(TQWidget *, const TQString&);
+    init_ptr = (KPanelApplet* (*)(TQWidget *, const TQString&))lib->symbol( "init" );
 
     if (!init_ptr)
     {
         kdWarning() << info.library() << " is not a kicker extension!" << endl;
-        loader->unloadLibrary( QFile::encodeName(info.library()) );
+        loader->unloadLibrary( TQFile::encodeName(info.library()) );
         return 0;
     }
 
@@ -160,15 +160,15 @@ KPanelApplet* PluginManager::loadApplet(const AppletInfo& info,
     if (applet)
     {
         _dict.insert( applet, new AppletInfo( info ) );
-        connect( applet, SIGNAL( destroyed( QObject* ) ),
-                 SLOT( slotPluginDestroyed( QObject* ) ) );
+        connect( applet, TQT_SIGNAL( destroyed( TQObject* ) ),
+                 TQT_SLOT( slotPluginDestroyed( TQObject* ) ) );
     }
 
     return applet;
 }
 
 KPanelExtension* PluginManager::loadExtension(
-    const AppletInfo& info, QWidget* parent )
+    const AppletInfo& info, TQWidget* parent )
 {
     if (info.library() == "childpanel_panelextension"
         /* KDE4? || info.library() == "panel" */)
@@ -177,7 +177,7 @@ KPanelExtension* PluginManager::loadExtension(
     }
 
     KLibLoader* loader = KLibLoader::self();
-    KLibrary* lib = loader->library( QFile::encodeName(info.library()) );
+    KLibrary* lib = loader->library( TQFile::encodeName(info.library()) );
 
     if( !lib ) {
         kdWarning() << "cannot open extension: " << info.library()
@@ -185,12 +185,12 @@ KPanelExtension* PluginManager::loadExtension(
         return 0;
     }
 
-    KPanelExtension* (*init_ptr)(QWidget *, const QString&);
-    init_ptr = (KPanelExtension* (*)(QWidget *, const QString&))lib->symbol( "init" );
+    KPanelExtension* (*init_ptr)(TQWidget *, const TQString&);
+    init_ptr = (KPanelExtension* (*)(TQWidget *, const TQString&))lib->symbol( "init" );
 
     if(!init_ptr){
         kdWarning() << info.library() << " is not a kicker extension!" << endl;
-        loader->unloadLibrary( QFile::encodeName(info.library()) );
+        loader->unloadLibrary( TQFile::encodeName(info.library()) );
         return 0;
     }
 
@@ -198,8 +198,8 @@ KPanelExtension* PluginManager::loadExtension(
 
     if( extension ) {
         _dict.insert( extension, new AppletInfo( info ) );
-        connect( extension, SIGNAL( destroyed( QObject* ) ),
-                 SLOT( slotPluginDestroyed( QObject* ) ) );
+        connect( extension, TQT_SIGNAL( destroyed( TQObject* ) ),
+                 TQT_SLOT( slotPluginDestroyed( TQObject* ) ) );
     }
 
     return extension;
@@ -219,7 +219,7 @@ bool PluginManager::hasInstance( const AppletInfo& info ) const
     return false;
 }
 
-void PluginManager::slotPluginDestroyed(QObject* object)
+void PluginManager::slotPluginDestroyed(TQObject* object)
 {
     AppletInfo* info = 0;
     AppletInfo::Dict::iterator it = _dict.begin();
@@ -243,14 +243,14 @@ void PluginManager::slotPluginDestroyed(QObject* object)
 }
 
 AppletContainer* PluginManager::createAppletContainer(
-        const QString& desktopFile,
+        const TQString& desktopFile,
         bool isStartup,
-        const QString& configFile,
-        QPopupMenu* opMenu,
-        QWidget* parent,
+        const TQString& configFile,
+        TQPopupMenu* opMenu,
+        TQWidget* parent,
         bool isImmutable)
 {
-    QString desktopPath = KGlobal::dirs()->findResource( "applets", desktopFile );
+    TQString desktopPath = KGlobal::dirs()->findResource( "applets", desktopFile );
 
     // KDE4: remove
     // support the old (KDE 2.2) nameing scheme
@@ -298,17 +298,17 @@ AppletContainer* PluginManager::createAppletContainer(
     return container;
 }
 
-ExtensionContainer* PluginManager::createExtensionContainer(const QString& desktopFile,
+ExtensionContainer* PluginManager::createExtensionContainer(const TQString& desktopFile,
                                                             bool isStartup,
-                                                            const QString& configFile,
-                                                            const QString& extensionId)
+                                                            const TQString& configFile,
+                                                            const TQString& extensionId)
 {
     if (desktopFile.isEmpty())
     {
         return 0;
     }
 
-    QString desktopPath = KGlobal::dirs()->findResource("extensions", desktopFile);
+    TQString desktopPath = KGlobal::dirs()->findResource("extensions", desktopFile);
     if (desktopPath.isEmpty())
     {
         return 0;
@@ -355,22 +355,22 @@ void PluginManager::clearUntrustedLists()
     generalGroup.sync();
 }
 
-LibUnloader::LibUnloader( const QString &libName, QObject *parent )
-    : QObject( parent ), _libName( libName )
+LibUnloader::LibUnloader( const TQString &libName, TQObject *parent )
+    : TQObject( parent ), _libName( libName )
 {
     // NOTE: this doesn't work on kicker shutdown because the timer never gets
     //       fired.
-    QTimer::singleShot( 0, this, SLOT( unload() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( unload() ) );
 }
 
-void LibUnloader::unload( const QString &libName )
+void LibUnloader::unload( const TQString &libName )
 {
     (void)new LibUnloader( libName, kapp );
 }
 
 void LibUnloader::unload()
 {
-    KLibLoader::self()->unloadLibrary( QFile::encodeName( _libName ) );
+    KLibLoader::self()->unloadLibrary( TQFile::encodeName( _libName ) );
     deleteLater();
 }
 

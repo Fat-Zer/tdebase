@@ -31,10 +31,10 @@ class ConfFilters;
 class ConfigDlg : public KDialogBase
 {
 public:
-	static bool configure(QWidget *parent = 0);
+	static bool configure(TQWidget *parent = 0);
 
 protected:
-	ConfigDlg(QWidget *parent = 0, const char *name = 0);
+	ConfigDlg(TQWidget *parent = 0, const char *name = 0);
 	void load();
 	void save();
 

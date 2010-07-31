@@ -25,14 +25,14 @@
 
 #include <kate/document.h>
 
-#include <qdatetime.h>
-#include <qguardedptr.h>
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qptrdict.h>
-#include <qintdict.h>
-#include <qmap.h>
-#include <qpair.h>
+#include <tqdatetime.h>
+#include <tqguardedptr.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqptrdict.h>
+#include <tqintdict.h>
+#include <tqmap.h>
+#include <tqpair.h>
 
 namespace KParts { class Factory; }
 
@@ -52,14 +52,14 @@ class KateDocumentInfo
     unsigned char modifiedOnDiscReason;
 };
 
-typedef QPair<KURL,QDateTime> TPair;
+typedef QPair<KURL,TQDateTime> TPair;
 
 class KateDocManager : public QObject
 {
   Q_OBJECT
 
   public:
-    KateDocManager (QObject *parent);
+    KateDocManager (TQObject *parent);
     ~KateDocManager ();
 
     static KateDocManager *self ();
@@ -92,16 +92,16 @@ class KateDocManager : public QObject
 
     uint documents ();
 
-    QPtrList<Kate::Document> &documentList () { return m_docList; };
+    TQPtrList<Kate::Document> &documentList () { return m_docList; };
 
-    Kate::Document *openURL(const KURL&,const QString &encoding=QString::null,uint *id =0,bool isTempFile=false);
+    Kate::Document *openURL(const KURL&,const TQString &encoding=TQString::null,uint *id =0,bool isTempFile=false);
 
     bool closeDocument(class Kate::Document *,bool closeURL=true);
     bool closeDocument(uint);
     bool closeDocumentWithID(uint);
     bool closeAllDocuments(bool closeURL=true);
 
-    QPtrList<Kate::Document> modifiedDocumentList();
+    TQPtrList<Kate::Document> modifiedDocumentList();
     bool queryCloseDocuments(KateMainWindow *w);
 
     void saveDocumentList (class KConfig *config);
@@ -135,14 +135,14 @@ class KateDocManager : public QObject
   private:
     bool loadMetaInfos(Kate::Document *doc, const KURL &url);
     void saveMetaInfos(Kate::Document *doc);
-    bool computeUrlMD5(const KURL &url, QCString &result);
+    bool computeUrlMD5(const KURL &url, TQCString &result);
 
     Kate::DocumentManager *m_documentManager;
-    QPtrList<Kate::Document> m_docList;
-    QIntDict<Kate::Document> m_docDict;
-    QPtrDict<KateDocumentInfo> m_docInfos;
-    QMap<uint,TPair> m_tempFiles;
-    QGuardedPtr<Kate::Document> m_currentDoc;
+    TQPtrList<Kate::Document> m_docList;
+    TQIntDict<Kate::Document> m_docDict;
+    TQPtrDict<KateDocumentInfo> m_docInfos;
+    TQMap<uint,TPair> m_tempFiles;
+    TQGuardedPtr<Kate::Document> m_currentDoc;
     KConfig *m_metaInfos;
     bool m_saveMetaInfos;
     int m_daysMetaInfos;

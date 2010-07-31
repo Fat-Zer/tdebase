@@ -19,8 +19,8 @@
 #ifndef __kate_pluginconfiginterfaceextension_h__
 #define __kate_pluginconfiginterfaceextension_h__
 
-#include <qwidget.h>
-#include <qpixmap.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
 #include <kicontheme.h>
 
 namespace Kate
@@ -31,7 +31,7 @@ class KDE_EXPORT PluginConfigPage : public QWidget
   Q_OBJECT
 
   public:
-    PluginConfigPage ( QWidget *parent=0, const char *name=0 );
+    PluginConfigPage ( TQWidget *parent=0, const char *name=0 );
     virtual ~PluginConfigPage ();
 
   //
@@ -84,11 +84,11 @@ class KDE_EXPORT PluginConfigInterfaceExtension
       config pages from 0 to configPages()-1 are available
       if configPages() > 0
     */ 
-    virtual PluginConfigPage *configPage (uint number = 0, QWidget *parent = 0, const char *name=0 ) = 0;
+    virtual PluginConfigPage *configPage (uint number = 0, TQWidget *parent = 0, const char *name=0 ) = 0;
   
-    virtual QString configPageName (uint number = 0) const = 0;
-    virtual QString configPageFullName (uint number = 0) const = 0;
-    virtual QPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const = 0;    
+    virtual TQString configPageName (uint number = 0) const = 0;
+    virtual TQString configPageFullName (uint number = 0) const = 0;
+    virtual TQPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const = 0;    
     
   private:
     class PrivatePluginConfigInterfaceExtension *d;

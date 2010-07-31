@@ -27,22 +27,22 @@
 
 #include "ReniceDlg.moc"
 
-ReniceDlg::ReniceDlg(QWidget* parent, const char* name, int currentPPrio,
+ReniceDlg::ReniceDlg(TQWidget* parent, const char* name, int currentPPrio,
 					 int pid)
 	: KDialogBase( parent, name, true, i18n("Renice Process"),
                        KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true )
 {
-	QWidget *page = new QWidget( this );
+	TQWidget *page = new TQWidget( this );
 	setMainWidget(page);
-	vLay = new QVBoxLayout(page, 20, -1, "ReniceLayout");
+	vLay = new TQVBoxLayout(page, 20, -1, "ReniceLayout");
 
-	QString msg;
+	TQString msg;
 	msg = i18n("You are about to change the scheduling priority of\n"
 			   "process %1. Be aware that only the Superuser (root)\n"
 			   "can decrease the nice level of a process. The lower\n"
 			   "the number is the higher the priority.\n\n"
 			   "Please enter the desired nice level:").arg(pid);
-	message = new QLabel(msg, page);
+	message = new TQLabel(msg, page);
 	message->setMinimumSize(message->sizeHint());
 	vLay->addWidget(message);
 

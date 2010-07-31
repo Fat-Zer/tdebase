@@ -27,13 +27,13 @@
     returning false indicates, that information was not available.
 */
 
-bool GetInfo_ReadfromFile( QListView *lBox, char *Name, char splitchar  )
+bool GetInfo_ReadfromFile( TQListView *lBox, char *Name, char splitchar  )
 {
-  QString str;
+  TQString str;
   char buf[512];
 
-  QFile *file = new QFile(Name);
-  QListViewItem* olditem = 0;
+  TQFile *file = new TQFile(Name);
+  TQListViewItem* olditem = 0;
 
   if(!file->open(IO_ReadOnly)) {
     delete file; 
@@ -54,12 +54,12 @@ bool GetInfo_ReadfromFile( QListView *lBox, char *Name, char splitchar  )
                   else ++p;
               }
           
-          QString s1 = QString::fromLocal8Bit(buf);
-          QString s2 = s1.mid(s1.find(splitchar)+1);
+          TQString s1 = TQString::fromLocal8Bit(buf);
+          TQString s2 = s1.mid(s1.find(splitchar)+1);
           
           s1.truncate(s1.find(splitchar));
           if(!(s1.isEmpty() || s2.isEmpty()))
-              olditem = new QListViewItem(lBox, olditem, s1, s2);
+              olditem = new TQListViewItem(lBox, olditem, s1, s2);
       }
   }
   file->close();
@@ -68,41 +68,41 @@ bool GetInfo_ReadfromFile( QListView *lBox, char *Name, char splitchar  )
   return true;
 }
 
-bool GetInfo_CPU( QListView *lBox )
+bool GetInfo_CPU( TQListView *lBox )
 {
       char buf[256];
 
       sysinfo(SI_ARCHITECTURE, buf, sizeof(buf));
-      new QListViewItem(lBox, QString::fromLocal8Bit(buf));
+      new TQListViewItem(lBox, TQString::fromLocal8Bit(buf));
       return true;
 }
 
 
-bool GetInfo_IRQ( QListView * )
+bool GetInfo_IRQ( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_DMA( QListView * )
+bool GetInfo_DMA( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_PCI( QListView *lBox )
+bool GetInfo_PCI( TQListView *lBox )
 {
       char buf[256];
 
       sysinfo(SI_BUSTYPES, buf, sizeof(buf));
-      new QListViewItem(lBox, QString::fromLocal8Bit(buf));
+      new TQListViewItem(lBox, TQString::fromLocal8Bit(buf));
       return true;
 }
 
-bool GetInfo_IO_Ports( QListView * )
+bool GetInfo_IO_Ports( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Sound( QListView *lBox )
+bool GetInfo_Sound( TQListView *lBox )
 {
   if ( GetInfo_ReadfromFile( lBox, INFO_DEV_SNDSTAT, 0 ))
     return true;
@@ -110,22 +110,22 @@ bool GetInfo_Sound( QListView *lBox )
     return false;
 }
 
-bool GetInfo_Devices( QListView * )
+bool GetInfo_Devices( TQListView * )
 {
     return false;
 }
 
-bool GetInfo_SCSI( QListView * )
+bool GetInfo_SCSI( TQListView * )
 {
     return false;
 }
 
-bool GetInfo_Partitions( QListView * )
+bool GetInfo_Partitions( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_XServer_and_Video( QListView *lBox )
+bool GetInfo_XServer_and_Video( TQListView *lBox )
 {
 	return GetInfo_XServer_Generic( lBox );
 }

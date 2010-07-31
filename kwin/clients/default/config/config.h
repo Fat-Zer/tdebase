@@ -10,19 +10,19 @@
 #ifndef _KDE_DEFAULT_CONFIG_H
 #define _KDE_DEFAULT_CONFIG_H
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
 #include <kconfig.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qvbox.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqvbox.h>
 
 class KDEDefaultConfig: public QObject
 {
 	Q_OBJECT
 
 	public:
-		KDEDefaultConfig( KConfig* conf, QWidget* parent );
+		KDEDefaultConfig( KConfig* conf, TQWidget* parent );
 		~KDEDefaultConfig();
 
 	// These public signals/slots work similar to KCM modules
@@ -38,10 +38,10 @@ class KDEDefaultConfig: public QObject
 		void slotSelectionChanged();	// Internal use
 
 	private:
-		QCheckBox* cbShowStipple;
-		QCheckBox* cbShowGrabBar;
-		QCheckBox* cbUseGradients;
-		QVBox* gb;
+		TQCheckBox* cbShowStipple;
+		TQCheckBox* cbShowGrabBar;
+		TQCheckBox* cbUseGradients;
+		TQVBox* gb;
 		bool 	   highcolor;
 };
 

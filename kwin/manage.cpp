@@ -87,8 +87,8 @@ bool Client::manage( Window w, bool isMapped )
         {
         // Qt3.2 and older had this all lowercase, Qt3.3 capitalized resource class
         // force lowercase, so that workarounds listing resource classes still work
-        resource_name = QCString( classHint.res_name ).lower();
-        resource_class = QCString( classHint.res_class ).lower();
+        resource_name = TQCString( classHint.res_name ).lower();
+        resource_class = TQCString( classHint.res_class ).lower();
         XFree( classHint.res_name );
         XFree( classHint.res_class );
         }
@@ -136,7 +136,7 @@ bool Client::manage( Window w, bool isMapped )
             setUserNoBorder( true );
         }
 
-    setShortcut( rules()->checkShortcut( session ? session->shortcut : QString::null, true ));
+    setShortcut( rules()->checkShortcut( session ? session->shortcut : TQString::null, true ));
 
     init_minimize = rules()->checkMinimize( init_minimize, !isMapped );
     if( rules()->checkNoBorder( false, !isMapped ))
@@ -191,13 +191,13 @@ bool Client::manage( Window w, bool isMapped )
     workspace()->updateOnAllDesktopsOfTransients( this ); // SELI
 //    onAllDesktopsChange(); decoration doesn't exist here yet
 
-    QRect geom( attr.x, attr.y, attr.width, attr.height );
+    TQRect geom( attr.x, attr.y, attr.width, attr.height );
     bool placementDone = FALSE;
 
     if ( session )
         geom = session->geometry;
 
-    QRect area;
+    TQRect area;
     bool partial_keep_in_area = isMapped || session;
     if( isMapped || session )
         area = workspace()->clientArea( FullArea, geom.center(), desktop());
@@ -209,7 +209,7 @@ bool Client::manage( Window w, bool isMapped )
         area = workspace()->clientArea( PlacementArea, workspace()->screenGeometry( screen ).center(), desktop());
         }
     else
-        area = workspace()->clientArea( PlacementArea, QCursor::pos(), desktop());
+        area = workspace()->clientArea( PlacementArea, TQCursor::pos(), desktop());
 
     if( int type = checkFullScreenHack( geom ))
         {
@@ -266,7 +266,7 @@ bool Client::manage( Window w, bool isMapped )
         usePosition = true;
     if( !rules()->checkIgnoreGeometry( !usePosition ))
         {
-        bool ignorePPosition = ( options->ignorePositionClasses.contains(QString::fromLatin1(resourceClass())));
+        bool ignorePPosition = ( options->ignorePositionClasses.contains(TQString::fromLatin1(resourceClass())));
 
         if ( ( (xSizeHint.flags & PPosition) && !ignorePPosition ) ||
              (xSizeHint.flags & USPosition) ) 
@@ -284,10 +284,10 @@ bool Client::manage( Window w, bool isMapped )
 
     if (xSizeHint.flags & PMaxSize)
         geom.setSize( geom.size().boundedTo(
-            rules()->checkMaxSize( QSize(xSizeHint.max_width, xSizeHint.max_height ) ) ) );
+            rules()->checkMaxSize( TQSize(xSizeHint.max_width, xSizeHint.max_height ) ) ) );
     if (xSizeHint.flags & PMinSize)
         geom.setSize( geom.size().expandedTo(
-            rules()->checkMinSize( QSize(xSizeHint.min_width, xSizeHint.min_height ) ) ) );
+            rules()->checkMinSize( TQSize(xSizeHint.min_width, xSizeHint.min_height ) ) ) );
 
     if( isMovable())
         {
@@ -302,7 +302,7 @@ bool Client::manage( Window w, bool isMapped )
     // TODO is CentralGravity right here, when resizing is done after gravitating?
     plainResize( rules()->checkSize( sizeForClientSize( geom.size()), !isMapped ));
 
-    QPoint forced_pos = rules()->checkPosition( invalidPoint, !isMapped );
+    TQPoint forced_pos = rules()->checkPosition( invalidPoint, !isMapped );
     if( forced_pos != invalidPoint )
         {
         move( forced_pos );
@@ -396,19 +396,19 @@ bool Client::manage( Window w, bool isMapped )
             if ( width() >= area.width() && height() >= area.height() ) 
                 {
                 maximize( Client::MaximizeFull );
-                geom_restore = QRect(); // use placement when unmaximizing
+                geom_restore = TQRect(); // use placement when unmaximizing
                 }
             else if ( width() >= area.width() ) 
                 {
                 maximize( Client::MaximizeHorizontal );
-                geom_restore = QRect(); // use placement when unmaximizing
+                geom_restore = TQRect(); // use placement when unmaximizing
                 geom_restore.setY( y()); // but only for horizontal direction
                 geom_restore.setHeight( height());
                 }
             else if ( height() >= area.height() ) 
                 {
                 maximize( Client::MaximizeVertical );
-                geom_restore = QRect(); // use placement when unmaximizing
+                geom_restore = TQRect(); // use placement when unmaximizing
                 geom_restore.setX( x()); // but only for vertical direction
                 geom_restore.setWidth( width());
                 }

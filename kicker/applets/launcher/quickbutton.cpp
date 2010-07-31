@@ -24,10 +24,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "quickbutton.h"
 #include "quickaddappsmenu.h"
 
-#include <qpainter.h>
-#include <qdrawutil.h>
-#include <qpopupmenu.h>
-#include <qtooltip.h>
+#include <tqpainter.h>
+#include <tqdrawutil.h>
+#include <tqpopupmenu.h>
+#include <tqtooltip.h>
 
 #include <kactionclasses.h>
 #include <kickertip.h>
@@ -52,7 +52,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    #define DEBUGSTR kndDebug()
 #endif
 
-QuickURL::QuickURL(const QString &u)
+QuickURL::QuickURL(const TQString &u)
 {  DEBUGSTR<<"QuickURL::QuickURL("<<u<<")"<<endl<<flush;
    KService::Ptr _service=0;
    _menuId = u;
@@ -66,7 +66,7 @@ QuickURL::QuickURL(const QString &u)
 
       if (_menuId.endsWith(".desktop")) {
          // Strip path
-         QString s = _menuId;
+         TQString s = _menuId;
          s = s.mid(s.findRev('/')+1);
          s = s.left(s.length()-8);
          _service = KService::serviceByStorageId(s);
@@ -116,18 +116,18 @@ void QuickURL::run() const
 }
 
 //similar to MimeType::pixmapForURL
-QPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
-                          int _force_size, int _state, QString *) const
+TQPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
+                          int _force_size, int _state, TQString *) const
 {  // Load icon
-   QPixmap pxmap = KMimeType::pixmapForURL(_kurl, _mode, _group, _force_size, _state);
+   TQPixmap pxmap = KMimeType::pixmapForURL(_kurl, _mode, _group, _force_size, _state);
    // Resize to fit button
-   pxmap.convertFromImage(pxmap.convertToImage().smoothScale(_force_size,_force_size, QImage::ScaleMin));
+   pxmap.convertFromImage(pxmap.convertToImage().smoothScale(_force_size,_force_size, TQImage::ScaleMin));
    return pxmap;
 }
 
 
-QuickButton::QuickButton(const QString &u, KAction* configAction, 
-                         QWidget *parent, const char *name) : 
+QuickButton::QuickButton(const TQString &u, KAction* configAction, 
+                         TQWidget *parent, const char *name) : 
      SimpleButton(parent, name),
      m_flashCounter(0),
      m_sticky(false)
@@ -138,29 +138,29 @@ QuickButton::QuickButton(const QString &u, KAction* configAction,
     _oldCursor = cursor();
     _qurl=new QuickURL(u);
     
-    QToolTip::add(this, _qurl->name());
+    TQToolTip::add(this, _qurl->name());
     resize(int(DEFAULT_ICON_DIM),int(DEFAULT_ICON_DIM));
-    QBrush bgbrush(colorGroup().brush(QColorGroup::Background));
+    TQBrush bgbrush(colorGroup().brush(TQColorGroup::Background));
     
     QuickAddAppsMenu *addAppsMenu = new QuickAddAppsMenu(
         parent, this, _qurl->url());
-    _popup = new QPopupMenu(this);
+    _popup = new TQPopupMenu(this);
     _popup->insertItem(i18n("Add Application"), addAppsMenu);
     configAction->plug(_popup);
         _popup->insertSeparator();
     _popup->insertItem(SmallIcon("remove"), i18n("Remove"), 
-            this, SLOT(removeApp()));
+            this, TQT_SLOT(removeApp()));
 
     m_stickyAction = new KToggleAction(i18n("Never Remove Automatically"),
         KShortcut(), this);
-    connect(m_stickyAction, SIGNAL(toggled(bool)), 
-        this, SLOT(slotStickyToggled(bool)));
+    connect(m_stickyAction, TQT_SIGNAL(toggled(bool)), 
+        this, TQT_SLOT(slotStickyToggled(bool)));
     m_stickyAction->plug(_popup, 2);
     m_stickyId = _popup->idAt(2);
 
-    connect(this, SIGNAL(clicked()), SLOT(launch()));
-    connect(this, SIGNAL(removeApp(QuickButton *)), parent,
-        SLOT(removeAppManually(QuickButton *)));
+    connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(launch()));
+    connect(this, TQT_SIGNAL(removeApp(QuickButton *)), parent,
+        TQT_SLOT(removeAppManually(QuickButton *)));
 }
 
 QuickButton::~QuickButton()
@@ -169,13 +169,13 @@ QuickButton::~QuickButton()
 }
 
 
-QString QuickButton::url() const
+TQString QuickButton::url() const
 {
     return _qurl->url();
 }
 
 
-QString QuickButton::menuId() const
+TQString QuickButton::menuId() const
 {  return _qurl->menuId();}
 
 
@@ -189,26 +189,26 @@ void QuickButton::loadIcon()
    setPixmap(_icon);
 }
 
-void QuickButton::resizeEvent(QResizeEvent *e)
+void QuickButton::resizeEvent(TQResizeEvent *e)
 {
    loadIcon();
    SimpleButton::resizeEvent(e);
 }
 
-void QuickButton::mousePressEvent(QMouseEvent *e)
+void QuickButton::mousePressEvent(TQMouseEvent *e)
 {
    if (e->button() == RightButton)
       _popup->popup(e->globalPos());
    else if (e->button() == LeftButton) {
       _dragPos = e->pos();
-      QButton::mousePressEvent(e);
+      TQButton::mousePressEvent(e);
    }
 }
 
-void QuickButton::mouseMoveEvent(QMouseEvent *e)
+void QuickButton::mouseMoveEvent(TQMouseEvent *e)
 {
    if ((e->state() & LeftButton) == 0) return;
-   QPoint p(e->pos() - _dragPos);
+   TQPoint p(e->pos() - _dragPos);
    if (p.manhattanLength() <= KGlobalSettings::dndEventDelay())
       return;
    DEBUGSTR<<"dragstart"<<endl<<flush;
@@ -264,7 +264,7 @@ void QuickButton::removeApp()
 void QuickButton::flash()
 {
    m_flashCounter = 2000;
-   QTimer::singleShot(0, this, SLOT(slotFlash()));
+   TQTimer::singleShot(0, this, TQT_SLOT(slotFlash()));
 }
 
 void QuickButton::slotFlash()
@@ -275,7 +275,7 @@ void QuickButton::slotFlash()
         m_flashCounter -= timeout;
         if (m_flashCounter < 0) m_flashCounter = 0;
         update();
-        QTimer::singleShot(timeout, this, SLOT(slotFlash()));
+        TQTimer::singleShot(timeout, this, TQT_SLOT(slotFlash()));
     }
 }
 
@@ -300,7 +300,7 @@ void QuickButton::updateKickerTip(KickerTip::Data &data)
     data.message = _qurl->name();
     data.direction = m_popupDirection;
     data.subtext = _qurl->genericName();
-    if (data.subtext == QString())
+    if (data.subtext == TQString())
     {
         data.subtext = data.message;
     }

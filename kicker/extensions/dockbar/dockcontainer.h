@@ -24,19 +24,19 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __dockcontainer_h__
 #define __dockcontainer_h__
 
-#include <qframe.h>
-#include <qvaluevector.h>
+#include <tqframe.h>
+#include <tqvaluevector.h>
 
 class DockContainer : public QFrame
 {
     Q_OBJECT
 
 public:
-    typedef QValueVector<DockContainer*> Vector;
+    typedef TQValueVector<DockContainer*> Vector;
 
-    DockContainer( QString command, QWidget *parent, 
-                   QString resname,
-                   QString resclass,
+    DockContainer( TQString command, TQWidget *parent, 
+                   TQString resname,
+                   TQString resclass,
                    bool undocked_style=false);
 
     void embed(WId);
@@ -44,11 +44,11 @@ public:
     void kill();
 
     WId embeddedWinId() const;
-    QString command() const;
-    QString resClass() const;
-    QString resName() const;
+    TQString command() const;
+    TQString resClass() const;
+    TQString resName() const;
     void askNewCommand(bool bad_command=true);
-    void popupMenu(QPoint p);
+    void popupMenu(TQPoint p);
     static int& sz();
     static int& border();
 signals:
@@ -60,8 +60,8 @@ protected:
 
 private:
     WId _embeddedWinId;
-    QString _command;
-    QString _resName, _resClass;
+    TQString _command;
+    TQString _resName, _resClass;
 };
 
 
@@ -70,17 +70,17 @@ inline WId DockContainer::embeddedWinId() const
     return _embeddedWinId;
 }
 
-inline QString DockContainer::command() const
+inline TQString DockContainer::command() const
 {
     return _command;
 }
 
-inline QString DockContainer::resClass() const
+inline TQString DockContainer::resClass() const
 {
     return _resClass;
 }
 
-inline QString DockContainer::resName() const
+inline TQString DockContainer::resName() const
 {
     return _resName;
 }

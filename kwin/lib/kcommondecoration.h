@@ -25,8 +25,8 @@
 #ifndef KCOMMONDECORATION_H
 #define KCOMMONDECORATION_H
 
-#include <qbutton.h>
-#include <qvaluevector.h>
+#include <tqbutton.h>
+#include <tqvaluevector.h>
 
 #include "kdecoration.h"
 
@@ -134,19 +134,19 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         /**
          * The name of the decoration used in the decoration preview.
          */
-        virtual QString visibleName() const = 0;
+        virtual TQString visibleName() const = 0;
         /**
          * The default title button order on the left.
          * @see KDecoration::titleButtonsLeft()
          * @see KDecoration::titleButtonsRight()
          */
-        virtual QString defaultButtonsLeft() const = 0;
+        virtual TQString defaultButtonsLeft() const = 0;
         /**
          * The default title button order on the left.
          * @see KDecoration::titleButtonsLeft()
          * @see KDecoration::titleButtonsRight()
          */
-        virtual QString defaultButtonsRight() const = 0;
+        virtual TQString defaultButtonsRight() const = 0;
 
         /**
          * This controls whether some specific behaviour should be enabled or not.
@@ -172,7 +172,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         /**
          * @return the mask for the specific window corner.
          */
-        virtual QRegion cornerShape(WindowCorner corner);
+        virtual TQRegion cornerShape(WindowCorner corner);
 
         /**
          * This updates the window mask using the information provided by
@@ -186,7 +186,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         /**
          * Draw the window decoration.
          */
-        virtual void paintEvent(QPaintEvent *e) = 0;
+        virtual void paintEvent(TQPaintEvent *e) = 0;
 
         /**
          * This is used to update the painting of the title bar after the caption has been changed.
@@ -219,7 +219,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
          * Convenience method.
          * @returns the title rect.
          */
-         QRect titleRect() const;
+         TQRect titleRect() const;
 
     public:
         /**
@@ -232,8 +232,8 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         virtual void reset( unsigned long changed );
         virtual void borders( int& left, int& right, int& top, int& bottom ) const;
         virtual void show();
-        virtual void resize(const QSize& s);
-        virtual QSize minimumSize() const;
+        virtual void resize(const TQSize& s);
+        virtual TQSize minimumSize() const;
         virtual void maximizeChange();
         virtual void desktopChange();
         virtual void shadeChange();
@@ -250,29 +250,29 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         void menuButtonPressed();
         void menuButtonReleased();
     public:
-        virtual Position mousePosition(const QPoint &point) const;
+        virtual Position mousePosition(const TQPoint &point) const;
 
-        virtual bool eventFilter( QObject* o, QEvent* e );
-        virtual void resizeEvent(QResizeEvent *e);
-        virtual void mouseDoubleClickEvent(QMouseEvent *e);
-        virtual void wheelEvent(QWheelEvent *e);
+        virtual bool eventFilter( TQObject* o, TQEvent* e );
+        virtual void resizeEvent(TQResizeEvent *e);
+        virtual void mouseDoubleClickEvent(TQMouseEvent *e);
+        virtual void wheelEvent(TQWheelEvent *e);
 
     private:
         void resetLayout();
 
-        void moveWidget(int x, int y, QWidget *widget) const;
-        void resizeWidget(int w, int h, QWidget *widget) const;
+        void moveWidget(int x, int y, TQWidget *widget) const;
+        void resizeWidget(int w, int h, TQWidget *widget) const;
 
-        typedef QValueVector <KCommonDecorationButton*> ButtonContainer; ///< If the entry is 0, it's a spacer.
+        typedef TQValueVector <KCommonDecorationButton*> ButtonContainer; ///< If the entry is 0, it's a spacer.
         int buttonContainerWidth(const ButtonContainer &btnContainer, bool countHidden = false) const;
-        void addButtons(ButtonContainer &btnContainer, const QString& buttons, bool isLeft);
+        void addButtons(ButtonContainer &btnContainer, const TQString& buttons, bool isLeft);
 
         KCommonDecorationButton *m_button[NumButtons];
 
         ButtonContainer m_buttonsLeft;
         ButtonContainer m_buttonsRight;
 
-        QWidget *m_previewWidget;
+        TQWidget *m_previewWidget;
 
         // button hiding for small windows
         void calcHiddenButtons();
@@ -333,30 +333,30 @@ class KWIN_EXPORT KCommonDecorationButton : public QButton
         /**
          * Set the button size.
          */
-        void setSize(const QSize &s);
+        void setSize(const TQSize &s);
         /**
          * Set/update the button's tool tip
          */
-        void setTipText(const QString &tip);
+        void setTipText(const TQString &tip);
         /**
          * The mouse button that has been clicked last time.
          */
         ButtonState lastMousePress() const { return m_lastMouse; }
 
-        QSize sizeHint() const;
+        TQSize sizeHint() const;
 
     protected:
         void setToggleButton(bool toggle);
         void setOn(bool on);
         void setLeft(bool left);
-        void mousePressEvent(QMouseEvent *e);
-        void mouseReleaseEvent(QMouseEvent *e);
+        void mousePressEvent(TQMouseEvent *e);
+        void mouseReleaseEvent(TQMouseEvent *e);
 
     private:
         KCommonDecoration *m_decoration;
         ButtonType m_type;
         int m_realizeButtons;
-        QSize m_size;
+        TQSize m_size;
         ButtonState m_lastMouse;
 
         bool m_isLeft;

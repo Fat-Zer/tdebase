@@ -21,13 +21,13 @@
 #ifndef _SensorLogger_h
 #define _SensorLogger_h
 
-#include <qdom.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qlistview.h>
-#include <qpopupmenu.h>
-#include <qspinbox.h>
-#include <qstring.h>
+#include <tqdom.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqlistview.h>
+#include <tqpopupmenu.h>
+#include <tqspinbox.h>
+#include <tqstring.h>
 
 #include <SensorDisplay.h>
 
@@ -40,35 +40,35 @@ class SensorLoggerSettings;
 class SLListViewItem : public QListViewItem
 {
 public:
-	SLListViewItem(QListView *parent = 0);
+	SLListViewItem(TQListView *parent = 0);
 
-	void setTextColor(const QColor& color) { textColor = color; }
+	void setTextColor(const TQColor& color) { textColor = color; }
 
-	void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment) {
-		QColorGroup cgroup(cg);
-		cgroup.setColor(QColorGroup::Text, textColor);
-		QListViewItem::paintCell(p, cgroup, column, width, alignment);
+	void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment) {
+		TQColorGroup cgroup(cg);
+		cgroup.setColor(TQColorGroup::Text, textColor);
+		TQListViewItem::paintCell(p, cgroup, column, width, alignment);
 	
 	}
 
-	void paintFocus(QPainter *, const QColorGroup, const QRect) {}
+	void paintFocus(TQPainter *, const TQColorGroup, const TQRect) {}
 
 private:
-	QColor textColor;
+	TQColor textColor;
 };	
 
-class LogSensor : public QObject, public KSGRD::SensorClient
+class LogSensor : public TQObject, public KSGRD::SensorClient
 {
 	Q_OBJECT
 public:
-	LogSensor(QListView *parent);
+	LogSensor(TQListView *parent);
 	~LogSensor(void);
 
-	void answerReceived(int id, const QString& answer);
+	void answerReceived(int id, const TQString& answer);
 
-	void setHostName(const QString& name) { hostName = name; lvi->setText(3, name); }
-	void setSensorName(const QString& name) { sensorName = name; lvi->setText(2, name); }
-	void setFileName(const QString& name)
+	void setHostName(const TQString& name) { hostName = name; lvi->setText(3, name); }
+	void setSensorName(const TQString& name) { sensorName = name; lvi->setText(2, name); }
+	void setFileName(const TQString& name)
 	{
 		fileName = name;
 		lvi->setText(4, name);
@@ -87,18 +87,18 @@ public:
 			timerOn();
 		}
 
-		lvi->setText(1, QString("%1").arg(interval));
+		lvi->setText(1, TQString("%1").arg(interval));
 	}
 
-	QString getSensorName(void) { return sensorName; }
-	QString getHostName(void) { return hostName; }
-	QString getFileName(void) { return fileName; }
+	TQString getSensorName(void) { return sensorName; }
+	TQString getHostName(void) { return hostName; }
+	TQString getFileName(void) { return fileName; }
 	int getTimerInterval(void) { return timerInterval; }
 	bool getUpperLimitActive(void) { return upperLimitActive; }
 	bool getLowerLimitActive(void) { return lowerLimitActive; }
 	double getUpperLimit(void) { return upperLimit; }
 	double getLowerLimit(void) { return lowerLimit; }
-	QListViewItem* getListViewItem(void) { return lvi; }
+	TQListViewItem* getListViewItem(void) { return lvi; }
 
 public slots:
 	void timerOff()
@@ -118,16 +118,16 @@ public slots:
 	void stopLogging(void);
 
 protected:
-	virtual void timerEvent(QTimerEvent*);
+	virtual void timerEvent(TQTimerEvent*);
 
 private:
-	QListView* monitor;
+	TQListView* monitor;
 	SLListViewItem* lvi;
-	QPixmap pixmap_running;
-	QPixmap pixmap_waiting;
-	QString sensorName;
-	QString hostName;
-	QString fileName;
+	TQPixmap pixmap_running;
+	TQPixmap pixmap_waiting;
+	TQString sensorName;
+	TQString hostName;
+	TQString fileName;
 
 	int timerInterval;
 	int timerID;
@@ -143,19 +143,19 @@ class SensorLogger : public KSGRD::SensorDisplay
 {
 	Q_OBJECT
 public:
-	SensorLogger(QWidget *parent = 0, const char *name = 0, const QString& title = 0);
+	SensorLogger(TQWidget *parent = 0, const char *name = 0, const TQString& title = 0);
 	~SensorLogger(void);
 
-	bool addSensor(const QString& hostName, const QString& sensorName, const QString& sensorType,
-				   const QString& sensorDescr);
+	bool addSensor(const TQString& hostName, const TQString& sensorName, const TQString& sensorType,
+				   const TQString& sensorDescr);
 
 	bool editSensor(LogSensor*);
 
-	void answerReceived(int id, const QString& answer);
-	void resizeEvent(QResizeEvent*);
+	void answerReceived(int id, const TQString& answer);
+	void resizeEvent(TQResizeEvent*);
 
-	bool restoreSettings(QDomElement& element);
-	bool saveSettings(QDomDocument& doc, QDomElement& element, bool save = true);
+	bool restoreSettings(TQDomElement& element);
+	bool saveSettings(TQDomDocument& doc, TQDomElement& element, bool save = true);
 
 	void configureSettings(void);
 
@@ -167,15 +167,15 @@ public:
 public slots:
 	void applySettings();
 	void applyStyle();
-	void RMBClicked(QListViewItem*, const QPoint&, int);
+	void RMBClicked(TQListViewItem*, const TQPoint&, int);
 
 protected:
-	LogSensor* getLogSensor(QListViewItem*);
+	LogSensor* getLogSensor(TQListViewItem*);
 
 private:
-	QListView* monitor;
+	TQListView* monitor;
 
-	QPtrList<LogSensor> logSensors;
+	TQPtrList<LogSensor> logSensors;
 
 	SensorLoggerDlg *sld;
 	SensorLoggerSettings *sls;

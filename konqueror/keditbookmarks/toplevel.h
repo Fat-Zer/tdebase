@@ -45,7 +45,7 @@ struct SelcAbilities {
     bool tbShowState:1;
 };
 
-class CmdHistory : public QObject {
+class CmdHistory : public TQObject {
     Q_OBJECT
 public:
     CmdHistory(KActionCollection *collection);
@@ -73,33 +73,33 @@ private:
 class KBookmark;
 class KBookmarkManager;
 
-class CurrentMgr : public QObject {
+class CurrentMgr : public TQObject {
     Q_OBJECT
 public:
     typedef enum {HTMLExport, OperaExport, IEExport, MozillaExport, NetscapeExport} ExportType;
 
     static CurrentMgr* self() { if (!s_mgr) { s_mgr = new CurrentMgr(); } return s_mgr; }
-    static KBookmark bookmarkAt(const QString & a);
+    static KBookmark bookmarkAt(const TQString & a);
 
     KBookmarkManager* mgr() const { return m_mgr; }
     bool showNSBookmarks() const;
-    QString path() const;
+    TQString path() const;
 
-    void createManager(const QString &filename);
+    void createManager(const TQString &filename);
     void notifyManagers(KBookmarkGroup grp);
     void notifyManagers();
     bool managerSave();
-    void saveAs(const QString &fileName);
-    void doExport(ExportType type, const QString & path = QString::null);
+    void saveAs(const TQString &fileName);
+    void doExport(ExportType type, const TQString & path = TQString::null);
     void setUpdate(bool update);
 
     void reloadConfig();
 
-    static QString makeTimeStr(const QString &);
-    static QString makeTimeStr(int);
+    static TQString makeTimeStr(const TQString &);
+    static TQString makeTimeStr(int);
 
 protected slots:
-    void slotBookmarksChanged(const QString &, const QString &);
+    void slotBookmarksChanged(const TQString &, const TQString &);
 
 private:
     CurrentMgr() : m_mgr(0), ignorenext(0) { ; }
@@ -113,25 +113,25 @@ class KEBApp : public KMainWindow {
 public:
     static KEBApp* self() { return s_topLevel; }
 
-    KEBApp(const QString & bookmarksFile, bool readonly, const QString &address, bool browser, const QString &caption);
+    KEBApp(const TQString & bookmarksFile, bool readonly, const TQString &address, bool browser, const TQString &caption);
     virtual ~KEBApp();
 
-    void updateStatus(QString url);
+    void updateStatus(TQString url);
     void setActionsEnabled(SelcAbilities);
 
     void setCancelFavIconUpdatesEnabled(bool);
     void setCancelTestsEnabled(bool);
 
     void notifyCommandExecuted();
-    void findURL(QString url);
+    void findURL(TQString url);
 
-    QWidget* popupMenuFactory(const char *type) { 
+    TQWidget* popupMenuFactory(const char *type) { 
         return factory()->container(type, this); 
     }
 
     KToggleAction* getToggleAction(const char *) const;
 
-    QString caption() const { return m_caption; }
+    TQString caption() const { return m_caption; }
     bool readonly() const { return m_readOnly; }
     bool browser() const { return m_browser; } 
     bool nsShown() const;
@@ -159,8 +159,8 @@ private:
 
 public: // only temporary
     CmdHistory *m_cmdHistory;
-    QString m_bookmarksFilename;
-    QString m_caption;
+    TQString m_bookmarksFilename;
+    TQString m_caption;
 
     void construct();
 

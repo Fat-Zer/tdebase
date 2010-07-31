@@ -21,7 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
  
-#include <qcolor.h>
+#include <tqcolor.h>
 #include <kdebug.h>
 #include "kdesktopshadowsettings.h"
 
@@ -30,7 +30,7 @@
 
 KDesktopShadowSettings::KDesktopShadowSettings(KConfig *cfg) : 
     KShadowSettings(),
-    m_textColor(QColor(255,255,255)),
+    m_textColor(TQColor(255,255,255)),
     _UID(0L)
 {
     setConfig(cfg);

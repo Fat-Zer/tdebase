@@ -56,7 +56,7 @@
 #ifndef KASBAREXTENSION_H
 #define KASBAREXTENSION_H
 
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 #include <kpanelextension.h>
 
 class KasTasker;
@@ -69,31 +69,31 @@ class KasBarExtension : public KPanelExtension
     Q_OBJECT
 
 public:
-    KasBarExtension( const QString& configFile,
+    KasBarExtension( const TQString& configFile,
                      Type t = Normal,
                      int actions = 0,
-                     QWidget *parent = 0, const char *name = 0 );
+                     TQWidget *parent = 0, const char *name = 0 );
 
     virtual ~KasBarExtension();
 
-    QSize sizeHint( Position, QSize maxSize ) const;
+    TQSize sizeHint( Position, TQSize maxSize ) const;
     Position preferedPosition() const { return Right; }
 
     virtual void positionChange( Position position );
 
     bool isDetached() const { return detached_; }
-    QSize detachedSize();
+    TQSize detachedSize();
 
 public slots:
     void setDetached( bool detach );
 
 protected:
-    void showEvent( QShowEvent *se );
+    void showEvent( TQShowEvent *se );
     virtual void about();
     virtual void preferences();
     
 private:
-    QGuardedPtr<KasTasker> kasbar;
+    TQGuardedPtr<KasTasker> kasbar;
     bool detached_;
 };
 

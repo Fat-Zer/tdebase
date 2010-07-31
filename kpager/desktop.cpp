@@ -39,17 +39,17 @@
 #include <kpixmapio.h>
 #include <kpopupmenu.h>
 #include <netwm.h>
-#include <qcstring.h>
-#include <qpixmap.h>
-#include <qpainter.h>
-#include <qdrawutil.h>
-#include <qpoint.h>
+#include <tqcstring.h>
+#include <tqpixmap.h>
+#include <tqpainter.h>
+#include <tqdrawutil.h>
+#include <tqpoint.h>
 
 #include "desktop.h"
 #include "config.h"
 #include "windowdrag.h"
 
-Desktop::Desktop( int desk, QString desktopName, QWidget *parent, const char *name): QWidget(parent,name)
+Desktop::Desktop( int desk, TQString desktopName, TQWidget *parent, const char *name): TQWidget(parent,name)
 {
   m_desk = desk;
   m_name = desktopName;
@@ -74,18 +74,18 @@ Desktop::~Desktop()
   delete m_bgSmallPixmap;
 }
 
-void Desktop::mouseMoveEvent( QMouseEvent *ev )
+void Desktop::mouseMoveEvent( TQMouseEvent *ev )
 {
     if ( !KPagerConfigDialog::m_windowDragging )
 	return;
     if ( (ev->state() & LeftButton) == 0 )
 	return;
-    QPoint p( ev->pos() - pressPos );
+    TQPoint p( ev->pos() - pressPos );
     if ( p.manhattanLength() >= qApp->startDragDistance() )
 	startDrag( pressPos );
 }
 
-void Desktop::mousePressEvent( QMouseEvent * ev)
+void Desktop::mousePressEvent( TQMouseEvent * ev)
 {
     bool showWindows= KPagerConfigDialog::m_showWindows;
     if (ev->button()==LeftButton){
@@ -94,7 +94,7 @@ void Desktop::mousePressEvent( QMouseEvent * ev)
     else if ((ev->button()==MidButton)&&(showWindows))
 	startDrag(ev->pos());
     else if (ev->button()==RightButton) {
-	QPoint pos;
+	TQPoint pos;
 	KWin::WindowInfo *info = windowAtPosition(ev->pos(), &pos);
 	if ( info && showWindows )
 	    pager()->showPopupMenu(info->win(), mapToGlobal(ev->pos()));
@@ -103,14 +103,14 @@ void Desktop::mousePressEvent( QMouseEvent * ev)
     }
 }
 
-void Desktop::mouseReleaseEvent( QMouseEvent *ev )
+void Desktop::mouseReleaseEvent( TQMouseEvent *ev )
 {
 /** Note that mouseReleaseEvent is not called when releasing the mouse
  to drop a window in this desktop */
   if (ev->button()==LeftButton)
   {
     bool showWindows= KPagerConfigDialog::m_showWindows;
-    QPoint pos;
+    TQPoint pos;
     KWin::setCurrentDesktop(m_desk);
     if (showWindows)
     {
@@ -126,14 +126,14 @@ void Desktop::mouseReleaseEvent( QMouseEvent *ev )
   }
 }
 
-KWin::WindowInfo *Desktop::windowAtPosition(const QPoint &p, QPoint *internalpos)
+KWin::WindowInfo *Desktop::windowAtPosition(const TQPoint &p, TQPoint *internalpos)
 {
-	QRect r;
-	const QValueList<WId> &list(pager()->kwin()->stackingOrder());
+	TQRect r;
+	const TQValueList<WId> &list(pager()->kwin()->stackingOrder());
 	if (list.count() <= 0)
 		return 0L;
 
-	for (QValueList<WId>::ConstIterator it = list.fromLast(); ; --it)
+	for (TQValueList<WId>::ConstIterator it = list.fromLast(); ; --it)
 	{
 		KWin::WindowInfo* info = pager()->info( *it );
 		if (shouldPaintWindow(info))
@@ -157,9 +157,9 @@ KWin::WindowInfo *Desktop::windowAtPosition(const QPoint &p, QPoint *internalpos
 	return 0L;
 }
 
-void Desktop::convertRectS2P(QRect &r)
+void Desktop::convertRectS2P(TQRect &r)
 {
-    QRect tmp(r);
+    TQRect tmp(r);
     r.setRect(deskX()+tmp.x()*deskWidth()/kapp->desktop()->width(),
 	      deskY()+tmp.y()*deskHeight()/kapp->desktop()->height(),
 	      tmp.width()*deskWidth()/kapp->desktop()->width(),
@@ -172,25 +172,25 @@ void Desktop::convertCoordP2S(int &x, int &y)
     y=(y-deskY())*(kapp->desktop()->height())/deskHeight();
 }
 
-QPixmap scalePixmap(const QPixmap &pixmap, int width, int height)
+TQPixmap scalePixmap(const TQPixmap &pixmap, int width, int height)
 {
   if (pixmap.width()>100)
   {
     KPixmapIO io;
-    QImage img(io.convertToImage(pixmap));
+    TQImage img(io.convertToImage(pixmap));
     return io.convertToPixmap(img.smoothScale(width,height));
   }
 
-  QImage img(pixmap.convertToImage().smoothScale(width,height));
-  QPixmap pix;
+  TQImage img(pixmap.convertToImage().smoothScale(width,height));
+  TQPixmap pix;
   pix.convertFromImage(img);
 
   return pix;
 }
 
-QPixmap fastScalePixmap(const QPixmap &pixmap, int width, int height)
+TQPixmap fastScalePixmap(const TQPixmap &pixmap, int width, int height)
 {
-  QWMatrix m;
+  TQWMatrix m;
   m.scale(width/(double)pixmap.width(),
       height/(double)pixmap.height());
   return pixmap.xForm(m);
@@ -204,12 +204,12 @@ void Desktop::loadBgPixmap(void)
   DCOPClient *client = kapp->dcopClient();
   if (!client->isAttached())
       client->attach();
-  QByteArray data, data2, replyData;
-  QCString replyType;
+  TQByteArray data, data2, replyData;
+  TQCString replyType;
   if (client->call("kdesktop", "KBackgroundIface", "isCommon()",
                   data, replyType, replyData))
   {
-    QDataStream reply(replyData, IO_ReadOnly);
+    TQDataStream reply(replyData, IO_ReadOnly);
     if (replyType == "bool") {
       reply >> m_isCommon;
     }
@@ -217,14 +217,14 @@ void Desktop::loadBgPixmap(void)
   if  ( m_isCommon && m_desk!=1 ) return;
 
 /*
-  QDataStream args2( data2, IO_WriteOnly );
+  TQDataStream args2( data2, IO_WriteOnly );
   args2 << m_desk-1 << 0 << 0 << -1 << -1 << 200 << 150 ;
   if (client->call("kdesktop", "KBackgroundIface",
 	"wallpaper(int,int,int,int,int,int,int)", data2, replyType, replyData))
   {
-    QDataStream reply(replyData, IO_ReadOnly);
-    if (replyType == "QPixmap") {
-      QPixmap pixmap;
+    TQDataStream reply(replyData, IO_ReadOnly);
+    if (replyType == "TQPixmap") {
+      TQPixmap pixmap;
       reply >> pixmap;
       if (!pixmap.isNull())
       {
@@ -233,7 +233,7 @@ void Desktop::loadBgPixmap(void)
 	{
 	  if (m_bgSmallPixmap) { delete m_bgSmallPixmap; m_bgSmallPixmap=0L; }
 
-	  if (!m_bgCommonSmallPixmap) m_bgCommonSmallPixmap=new QPixmap(pixmap);
+	  if (!m_bgCommonSmallPixmap) m_bgCommonSmallPixmap=new TQPixmap(pixmap);
 	  else *m_bgCommonSmallPixmap=pixmap;
 	}
 	else
@@ -244,7 +244,7 @@ void Desktop::loadBgPixmap(void)
 	    m_bgCommonSmallPixmap=0L;
 	  }
 
-	  if (!m_bgSmallPixmap) m_bgSmallPixmap=new QPixmap(pixmap);
+	  if (!m_bgSmallPixmap) m_bgSmallPixmap=new TQPixmap(pixmap);
 	  else *m_bgSmallPixmap=pixmap;
 	}
         return;
@@ -257,20 +257,20 @@ void Desktop::loadBgPixmap(void)
   if (!m_bgPixmap)
   {
      m_bgPixmap = new KSharedPixmap;
-     connect(m_bgPixmap, SIGNAL(done(bool)), SLOT(backgroundLoaded(bool)));
+     connect(m_bgPixmap, TQT_SIGNAL(done(bool)), TQT_SLOT(backgroundLoaded(bool)));
   }
 
-  retval = m_bgPixmap->loadFromShared(QString("DESKTOP%1").arg(m_isCommon?1:m_desk));
+  retval = m_bgPixmap->loadFromShared(TQString("DESKTOP%1").arg(m_isCommon?1:m_desk));
   if (retval == false) {
-    QDataStream args( data, IO_WriteOnly );
+    TQDataStream args( data, IO_WriteOnly );
     args << 1;	// Argument is 1 (true)
     client->send("kdesktop", "KBackgroundIface", "setExport(int)", data);
-    retval = m_bgPixmap->loadFromShared(QString("DESKTOP%1").arg(m_isCommon?1:m_desk));
+    retval = m_bgPixmap->loadFromShared(TQString("DESKTOP%1").arg(m_isCommon?1:m_desk));
   }
 
 }
 
-void Desktop::paintWindow(QPainter &p, const KWin::WindowInfo *info, bool onDesktop)
+void Desktop::paintWindow(TQPainter &p, const KWin::WindowInfo *info, bool onDesktop)
 {
     switch (static_cast<WindowDrawMode>(KPagerConfigDialog::m_windowDrawMode ) )
 	{
@@ -280,59 +280,59 @@ void Desktop::paintWindow(QPainter &p, const KWin::WindowInfo *info, bool onDesk
 	}
 }
 
-QPixmap *Desktop::paintNewWindow(const KWin::WindowInfo *info)
+TQPixmap *Desktop::paintNewWindow(const KWin::WindowInfo *info)
 {
-    QRect r = info->frameGeometry();
-    int dw = QApplication::desktop()->width();
-    int dh = QApplication::desktop()->height();
-    r = QRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
+    TQRect r = info->frameGeometry();
+    int dw = TQApplication::desktop()->width();
+    int dh = TQApplication::desktop()->height();
+    r = TQRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
 	       r.width() * width() / dw, r.height() * height() / dh );
-    r.moveTopLeft(QPoint(0,0));
+    r.moveTopLeft(TQPoint(0,0));
 
 
-    QPixmap *pixmap=new QPixmap(r.width(),r.height());
-    QPainter p;
+    TQPixmap *pixmap=new TQPixmap(r.width(),r.height());
+    TQPainter p;
 
     p.begin(pixmap);
     p.setFont(font());
-    p.fillRect( r, colorGroup().brush(QColorGroup::Dark));
+    p.fillRect( r, colorGroup().brush(TQColorGroup::Dark));
     paintWindow(p, info, false);
     p.end();
 
     return pixmap;
 }
 
-void Desktop::startDrag(const QPoint &p)
+void Desktop::startDrag(const TQPoint &p)
 {
-  QPoint dragpos;
+  TQPoint dragpos;
   KWin::WindowInfo *info=windowAtPosition(p,&dragpos);
   if ( (!info)/* || (info->state & NET::Max)*/ ) return;
 
-  QPixmap *pixmap=paintNewWindow(info);
+  TQPixmap *pixmap=paintNewWindow(info);
 
   int deltax=dragpos.x();
   int deltay=dragpos.y();
   PagerWindowDrag *wdrag= new PagerWindowDrag( info->win(), deltax, deltay,
 				m_desk, this);
-  wdrag->setPixmap( *pixmap, QPoint( deltax, deltay) );
+  wdrag->setPixmap( *pixmap, TQPoint( deltax, deltay) );
   delete pixmap;
   wdrag->dragCopy();
 
 }
 
-void Desktop::dragEnterEvent(QDragEnterEvent *ev)
+void Desktop::dragEnterEvent(TQDragEnterEvent *ev)
 {
     if (PagerWindowDrag::canDecode( ev )) ev->accept();
 }
 
-void Desktop::dragMoveEvent(QDragMoveEvent *)
+void Desktop::dragMoveEvent(TQDragMoveEvent *)
 {
     // TODO Moving the window while dragging would be cool, wouldn't it ?
     // Matthias: No, is way to slow on low end machines.
     // Antonio:Ok, I'll make it configurable after 2.0 (it would add a string)
 }
 
-void Desktop::dropEvent(QDropEvent *ev)
+void Desktop::dropEvent(TQDropEvent *ev)
 {
   WId win=0;
   int deltax,deltay;
@@ -408,24 +408,24 @@ bool Desktop::shouldPaintWindow( KWin::WindowInfo *info )
 
 void Desktop::paintFrame(bool active)
 {
-  QPainter p(this);
+  TQPainter p(this);
 
   if ( active )
      p.setPen(yellow);
   else
-     p.setPen(QColorGroup::Base);
+     p.setPen(TQColorGroup::Base);
   p.drawRect(rect());
   p.end();
 }
 
-void Desktop::paintEvent( QPaintEvent * )
+void Desktop::paintEvent( TQPaintEvent * )
 {
-  QPixmap pixmap(width(),height());
-  QPainter p;
+  TQPixmap pixmap(width(),height());
+  TQPainter p;
 
   p.begin(&pixmap);
 //  p.setFont(font());
-//  p.fillRect(rect(), colorGroup().brush(QColorGroup::Dark));
+//  p.fillRect(rect(), colorGroup().brush(TQColorGroup::Dark));
 //  p.setPen(Qt::black);
 //  p.drawRect(rect());
 
@@ -439,7 +439,7 @@ void Desktop::paintEvent( QPaintEvent * )
 	|| ( m_isCommon &&
 		m_bgCommonSmallPixmap && !m_bgCommonSmallPixmap->isNull() ) )
     {
-      QPixmap tmp;
+      TQPixmap tmp;
       if ( m_isCommon )
 	tmp=fastScalePixmap(*m_bgCommonSmallPixmap, width(),height());
       else
@@ -450,43 +450,43 @@ void Desktop::paintEvent( QPaintEvent * )
      else pixmap.fill(Qt::gray);
   }
   else
-    p.fillRect(rect(), colorGroup().brush(QColorGroup::Mid));
+    p.fillRect(rect(), colorGroup().brush(TQColorGroup::Mid));
 
     // set in/active pen
   if (isCurrent())
     p.setPen(yellow);
   else
-    p.setPen(QColorGroup::Base);
+    p.setPen(TQColorGroup::Base);
 
     // paint number & name
     bool sname=KPagerConfigDialog::m_showName;
     bool snumber=KPagerConfigDialog::m_showNumber;
     if ( sname || snumber ) {
-	QString txt;
+	TQString txt;
 
 	// set font
 	if (sname) {
-	    QFont f(KGlobalSettings::generalFont().family(), 10, QFont::Bold);
+	    TQFont f(KGlobalSettings::generalFont().family(), 10, TQFont::Bold);
 	    p.setFont(f);
 	}
 	else {
-	    QFont f(KGlobalSettings::generalFont().family(), 12, QFont::Bold);
+	    TQFont f(KGlobalSettings::generalFont().family(), 12, TQFont::Bold);
 	    p.setFont(f);
 	}
 
 	// draw text
 	if ( sname && snumber )
-	    txt=QString("%1. %2").arg(m_desk).arg(pager()->kwin()->desktopName( m_desk ));
+	    txt=TQString("%1. %2").arg(m_desk).arg(pager()->kwin()->desktopName( m_desk ));
 	else if ( sname )
 	    txt=pager()->kwin()->desktopName( m_desk );
 	else if ( snumber )
-	    txt=QString::number( m_desk );
+	    txt=TQString::number( m_desk );
 	p.drawText(2, 0, width()-4, height(), AlignCenter, txt );
     }
 
     // paint windows
     if ( KPagerConfigDialog::m_showWindows ) {
-	QValueList<WId>::ConstIterator it;
+	TQValueList<WId>::ConstIterator it;
 	for ( it = pager()->kwin()->stackingOrder().begin();
 	      it != pager()->kwin()->stackingOrder().end(); ++it ) {
 
@@ -509,26 +509,26 @@ void Desktop::paintEvent( QPaintEvent * )
     m_grabWindows=false;
 }
 
-void Desktop::paintWindowPlain(QPainter &p, const KWin::WindowInfo *info, bool onDesktop)
+void Desktop::paintWindowPlain(TQPainter &p, const KWin::WindowInfo *info, bool onDesktop)
 {
-    QRect r =  info->frameGeometry();
-    int dw = QApplication::desktop()->width();
-    int dh = QApplication::desktop()->height();
-    r = QRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
+    TQRect r =  info->frameGeometry();
+    int dw = TQApplication::desktop()->width();
+    int dh = TQApplication::desktop()->height();
+    r = TQRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
 	       r.width() * width() / dw, r.height() * height() / dh );
     if ( !onDesktop )
-	r.moveTopLeft(QPoint(0,0));
+	r.moveTopLeft(TQPoint(0,0));
 
   bool isActive=(pager()->kwin()->activeWindow() == info->win());
 
-  QBrush brush;
+  TQBrush brush;
 
-  if ( isActive ) brush=colorGroup().brush( QColorGroup::Highlight );
-  else brush=colorGroup().brush(  QColorGroup::Button );
+  if ( isActive ) brush=colorGroup().brush( TQColorGroup::Highlight );
+  else brush=colorGroup().brush(  TQColorGroup::Button );
 
   if ( m_transparentMode==AllWindows
       || (m_transparentMode==MaximizedWindows && ( info->state() & NET::Max )) )
-    brush.setStyle(QBrush::Dense4Pattern);
+    brush.setStyle(TQBrush::Dense4Pattern);
 
   if ( isActive )
   {
@@ -543,14 +543,14 @@ void Desktop::paintWindowPlain(QPainter &p, const KWin::WindowInfo *info, bool o
 }
 
 
-void Desktop::paintWindowIcon(QPainter &p, const KWin::WindowInfo *info, bool onDesktop)
+void Desktop::paintWindowIcon(TQPainter &p, const KWin::WindowInfo *info, bool onDesktop)
 {
-  QRect r =  info->frameGeometry();
-  int dw = QApplication::desktop()->width();
-  int dh = QApplication::desktop()->height();
-  r = QRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
+  TQRect r =  info->frameGeometry();
+  int dw = TQApplication::desktop()->width();
+  int dh = TQApplication::desktop()->height();
+  r = TQRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
       r.width() * width() / dw, r.height() * height() / dh );
-  QPixmap icon=KWin::icon( info->win(), int(r.width()*0.8),
+  TQPixmap icon=KWin::icon( info->win(), int(r.width()*0.8),
 			   int(r.height()*0.8), true);
 
   NET::WindowType type = info->windowType( NET::NormalMask | NET::DesktopMask
@@ -560,36 +560,36 @@ void Desktop::paintWindowIcon(QPainter &p, const KWin::WindowInfo *info, bool on
     paintWindowPlain(p,info,onDesktop);
 
   if ( !onDesktop )
-    r.moveTopLeft(QPoint(0,0));
+    r.moveTopLeft(TQPoint(0,0));
 
-  p.drawPixmap( r.topLeft()+ QPoint(int(r.width()*0.1),int(r.height()*0.1)),
+  p.drawPixmap( r.topLeft()+ TQPoint(int(r.width()*0.1),int(r.height()*0.1)),
 		icon );
 
 }
 
-void Desktop::paintWindowPixmap(QPainter &p, const KWin::WindowInfo *info,
+void Desktop::paintWindowPixmap(TQPainter &p, const KWin::WindowInfo *info,
 					bool onDesktop)
 {
 	const int knDefaultPixmapWd = 100;
 	const int knDefaultPixmapHg = 75;
-  QRect rSmall, r =  info->frameGeometry();
+  TQRect rSmall, r =  info->frameGeometry();
 
-  int dw = QApplication::desktop()->width();
-  int dh = QApplication::desktop()->height();
-  rSmall = QRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
+  int dw = TQApplication::desktop()->width();
+  int dh = TQApplication::desktop()->height();
+  rSmall = TQRect( r.x() * width() / dw, 2 + r.y() * height() / dh,
       r.width() * width() / dw, r.height() * height() / dh );
 
-  QPixmap *pixmap=m_windowPixmaps[info->win()];
+  TQPixmap *pixmap=m_windowPixmaps[info->win()];
   bool isDirty=m_windowPixmapsDirty[info->win()];
   if ( !pixmap || isDirty || m_grabWindows )
   {
     if ( isCurrent() )
     {
-      QPixmap tmp=QPixmap::grabWindow(info->win(),
+      TQPixmap tmp=TQPixmap::grabWindow(info->win(),
 			0,0,r.width(),r.height());
       if (!tmp.isNull() && tmp.width() > 0 && tmp.height() > 0)
       {
-	tmp.setOptimization(QPixmap::BestOptim);
+	tmp.setOptimization(TQPixmap::BestOptim);
 	int nWd, nHg;
 	if (rSmall.width() > knDefaultPixmapWd || rSmall.height() > knDefaultPixmapHg)
 	{
@@ -601,7 +601,7 @@ void Desktop::paintWindowPixmap(QPainter &p, const KWin::WindowInfo *info,
 		nWd = rSmall.width();
 		nHg = rSmall.height();
 	}
-	pixmap=new QPixmap(fastScalePixmap(tmp, nWd, nHg));
+	pixmap=new TQPixmap(fastScalePixmap(tmp, nWd, nHg));
 	m_windowPixmaps.replace(info->win(),pixmap);
 	m_windowPixmapsDirty.replace(info->win(),false);
       }
@@ -617,11 +617,11 @@ void Desktop::paintWindowPixmap(QPainter &p, const KWin::WindowInfo *info,
   }
 
   if ( !onDesktop )
-    rSmall.moveTopLeft(QPoint(0,0));
+    rSmall.moveTopLeft(TQPoint(0,0));
 
   if (rSmall.width() != pixmap->width() || rSmall.height() != pixmap->height())
 	{
-		QPixmap pixmapSmall(fastScalePixmap(*pixmap,rSmall.width(),rSmall.height()));
+		TQPixmap pixmapSmall(fastScalePixmap(*pixmap,rSmall.width(),rSmall.height()));
 		p.drawPixmap( rSmall.topLeft(), pixmapSmall );
 	}
 	else
@@ -669,15 +669,15 @@ void Desktop::backgroundLoaded(bool b)
   } else kdDebug() << "Error getting the background\n";
 }
 
-QSize Desktop::sizeHint() const
+TQSize Desktop::sizeHint() const
 {
-  return QSize(67,50);
+  return TQSize(67,50);
 }
 
-QPixmap *Desktop::m_bgCommonSmallPixmap=0L;
+TQPixmap *Desktop::m_bgCommonSmallPixmap=0L;
 bool Desktop::m_isCommon=false;
-QIntDict<QPixmap> Desktop::m_windowPixmaps;
-QMap<int,bool> Desktop::m_windowPixmapsDirty;
+TQIntDict<TQPixmap> Desktop::m_windowPixmaps;
+TQMap<int,bool> Desktop::m_windowPixmapsDirty;
 
 // Default Configuration -------------------------------------------------
 

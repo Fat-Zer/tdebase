@@ -35,7 +35,7 @@ class KDE_EXPORT TimerSettings : public KDialogBase
   Q_OBJECT
 
   public:
-    TimerSettings( QWidget *parent, const char *name = 0 );
+    TimerSettings( TQWidget *parent, const char *name = 0 );
     ~TimerSettings();
 
     void setUseGlobalUpdate( bool value );
@@ -48,9 +48,9 @@ class KDE_EXPORT TimerSettings : public KDialogBase
     void globalUpdateChanged( bool );
 
   private:
-    QCheckBox* mUseGlobalUpdate;
-    QLabel* mLabel;
-    QSpinBox* mInterval;
+    TQCheckBox* mUseGlobalUpdate;
+    TQLabel* mLabel;
+    TQSpinBox* mInterval;
 };
 
 #endif

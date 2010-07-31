@@ -12,8 +12,8 @@
 #ifndef GESTURE_RECORDER_H
 #define GESTURE_RECORDER_H
 
-#include <qframe.h>
-#include <qstring.h>
+#include <tqframe.h>
+#include <tqstring.h>
 
 #include <gestures.h>
 
@@ -27,16 +27,16 @@ class GestureRecorder : public QFrame
     Q_OBJECT
 
     public:
-        GestureRecorder(QWidget *parent, const char *name);
+        GestureRecorder(TQWidget *parent, const char *name);
         ~GestureRecorder();
 
     protected:
-        void mousePressEvent(QMouseEvent *);
-        void mouseReleaseEvent(QMouseEvent *);
-        void mouseMoveEvent(QMouseEvent *);
+        void mousePressEvent(TQMouseEvent *);
+        void mouseReleaseEvent(TQMouseEvent *);
+        void mouseMoveEvent(TQMouseEvent *);
 
     signals:
-        void recorded(const QString &data);
+        void recorded(const TQString &data);
 
     private:
         bool _mouseButtonDown;

@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __removeextension_mnu_h__
 #define __removeextension_mnu_h__
 
-#include <qptrlist.h>
-#include <qpopupmenu.h>
+#include <tqptrlist.h>
+#include <tqpopupmenu.h>
 
 #include "container_extension.h"
 
@@ -34,7 +34,7 @@ class PanelRemoveExtensionMenu : public QPopupMenu
     Q_OBJECT
 
 public:
-    PanelRemoveExtensionMenu( QWidget *parent=0, const char *name=0 );
+    PanelRemoveExtensionMenu( TQWidget *parent=0, const char *name=0 );
     PanelRemoveExtensionMenu();
 
 protected slots:

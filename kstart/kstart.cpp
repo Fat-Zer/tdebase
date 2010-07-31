@@ -13,8 +13,8 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-#include <qregexp.h>
-#include <qtimer.h>
+#include <tqregexp.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kprocess.h>
@@ -33,8 +33,8 @@
 // some globals
 
 static KProcess proc;
-static QCString windowtitle = 0;
-static QCString windowclass = 0;
+static TQCString windowtitle = 0;
+static TQCString windowclass = 0;
 static int desktop = 0;
 static bool activate = false;
 static bool iconify = false;
@@ -46,7 +46,7 @@ static NET::WindowType windowtype = NET::Unknown;
 static KWinModule* kwinmodule;
 
 KStart::KStart()
-    :QObject()
+    :TQObject()
 {
     NETRootInfo i( qt_xdisplay(), NET::Supported );
     bool useRule = !toSysTray && i.isSupported( NET::WM2KDETemporaryRules );
@@ -55,7 +55,7 @@ KStart::KStart()
         sendRule();
     else {
         // connect to window add to get the NEW windows
-        connect(kwinmodule, SIGNAL(windowAdded(WId)), SLOT(windowAdded(WId)));
+        connect(kwinmodule, TQT_SIGNAL(windowAdded(WId)), TQT_SLOT(windowAdded(WId)));
         if (windowtitle)
     	    kwinmodule->doNotManage( windowtitle );
     }
@@ -68,7 +68,7 @@ KStart::KStart()
     if( proc.start(KProcess::DontCare) ) {
         KStartupInfoData data;
         data.addPid( proc.pid() );
-        QCString bin = proc.args().first();
+        TQCString bin = proc.args().first();
         data.setName( bin );
         data.setBin( bin.mid( bin.findRev( '/' ) + 1 ));
         KStartupInfo::sendChange( id, data );
@@ -76,12 +76,12 @@ KStart::KStart()
     else
         KStartupInfo::sendFinish( id ); // failed to start
 
-  QTimer::singleShot( useRule ? 0 : 120 * 1000, kapp, SLOT( quit()));
+  TQTimer::singleShot( useRule ? 0 : 120 * 1000, kapp, TQT_SLOT( quit()));
 }
 
 void KStart::sendRule() {
     KXMessages msg;
-    QCString message;
+    TQCString message;
     if( windowtitle )
         message += "title=" + windowtitle + "\ntitlematch=3\n"; // 3 = regexp match
     if( windowclass )
@@ -91,22 +91,22 @@ void KStart::sendRule() {
             + ( windowclass.contains( ' ' ) ? "true" : "false" ) + "\n";
     if( windowtitle || windowclass ) {
         // always ignore these window types
-        message += "types=" + QCString().setNum( -1U &
+        message += "types=" + TQCString().setNum( -1U &
             ~( NET::TopMenuMask | NET::ToolbarMask | NET::DesktopMask | NET::SplashMask | NET::MenuMask )) + "\n";
     } else {
         // accept only "normal" windows
-        message += "types=" + QCString().setNum( NET::NormalMask | NET::DialogMask ) + "\n";
+        message += "types=" + TQCString().setNum( NET::NormalMask | NET::DialogMask ) + "\n";
     }
     if ( ( desktop > 0 && desktop <= kwinmodule->numberOfDesktops() )
          || desktop == NETWinInfo::OnAllDesktops ) {
-	message += "desktop=" + QCString().setNum( desktop ) + "\ndesktoprule=3\n";
+	message += "desktop=" + TQCString().setNum( desktop ) + "\ndesktoprule=3\n";
     }
     if (activate)
         message += "fsplevel=0\nfsplevelrule=2\n";
     if (iconify)
         message += "minimize=true\nminimizerule=3\n";
     if ( windowtype != NET::Unknown ) {
-        message += "type=" + QCString().setNum( windowtype ) + "\ntyperule=2";
+        message += "type=" + TQCString().setNum( windowtype ) + "\ntyperule=2";
     }
     if ( state ) {
         if( state & NET::KeepAbove )
@@ -144,8 +144,8 @@ void KStart::windowAdded(WId w){
         return;
 
     if ( windowtitle ) {
-	QString title = info.name().lower();
-	QRegExp r( windowtitle.lower());
+	TQString title = info.name().lower();
+	TQRegExp r( windowtitle.lower());
 	if (r.match(title) == -1)
 	    return; // no match
     }
@@ -153,8 +153,8 @@ void KStart::windowAdded(WId w){
         XClassHint hint;
         if( !XGetClassHint( qt_xdisplay(), w, &hint ))
             return;
-        QCString cls = windowclass.contains( ' ' )
-            ? QCString( hint.res_name ) + ' ' + hint.res_class : QCString( hint.res_class );
+        TQCString cls = windowclass.contains( ' ' )
+            ? TQCString( hint.res_name ) + ' ' + hint.res_class : TQCString( hint.res_class );
         cls = cls.lower();
         XFree( hint.res_name );
 	XFree( hint.res_class );
@@ -169,7 +169,7 @@ void KStart::windowAdded(WId w){
             return;
     }
     applyStyle( w );
-    QApplication::exit();
+    TQApplication::exit();
 }
 
 
@@ -198,7 +198,7 @@ void KStart::applyStyle(WId w ) {
     if ( toSysTray || state || iconify || windowtype != NET::Unknown || desktop >= 1 ) {
 
 	XWithdrawWindow(qt_xdisplay(), w, qt_xscreen());
-	QApplication::flushX();
+	TQApplication::flushX();
 
 	while ( !wstate_withdrawn(w) )
 	    ;
@@ -228,12 +228,12 @@ void KStart::applyStyle(WId w ) {
 	info.setState( state, mask );
 
     if ( toSysTray ) {
-	QApplication::beep();
+	TQApplication::beep();
 	KWin::setSystemTrayWindowFor( w,  qt_xrootwin() );
     }
 
     if ( fullscreen ) {
-	QRect r = QApplication::desktop()->geometry();
+	TQRect r = TQApplication::desktop()->geometry();
 	XMoveResizeWindow( qt_xdisplay(), w, r.x(), r.y(), r.width(), r.height() );
     }
 
@@ -246,7 +246,7 @@ void KStart::applyStyle(WId w ) {
     if (activate)
       KWin::forceActiveWindow( w );
 
-    QApplication::flushX();
+    TQApplication::flushX();
 }
 
 // David, 05/03/2000
@@ -328,7 +328,7 @@ int main( int argc, char *argv[] )
   if( windowtitle.isEmpty() && windowclass.isEmpty())
       kdWarning() << "Omitting both --window and --windowclass arguments is not recommended" << endl;
 
-  QCString s = args->getOption( "type" );
+  TQCString s = args->getOption( "type" );
   if ( !s.isEmpty() ) {
       s = s.lower();
       if ( s == "desktop" )

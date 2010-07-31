@@ -22,7 +22,7 @@
 
 #include <klocale.h>
 
-ListViewSettings::ListViewSettings( QWidget *parent, const char *name )
+ListViewSettings::ListViewSettings( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "List View Settings" ),
       Ok|Apply|Cancel, Ok, true )
 {
@@ -30,42 +30,42 @@ ListViewSettings::ListViewSettings( QWidget *parent, const char *name )
   setMainWidget( m_settingsWidget );
 }
 
-QString ListViewSettings::title() const
+TQString ListViewSettings::title() const
 {
   return m_settingsWidget->title();
 }
 
-QColor ListViewSettings::textColor() const
+TQColor ListViewSettings::textColor() const
 {
   return m_settingsWidget->textColor();
 }
 
-QColor ListViewSettings::backgroundColor() const
+TQColor ListViewSettings::backgroundColor() const
 {
   return m_settingsWidget->backgroundColor();
 }
 
-QColor ListViewSettings::gridColor() const
+TQColor ListViewSettings::gridColor() const
 {
   return m_settingsWidget->gridColor();
 }
 
-void ListViewSettings::setTitle( const QString &title )
+void ListViewSettings::setTitle( const TQString &title )
 {
   m_settingsWidget->setTitle( title );
 }
 
-void ListViewSettings::setBackgroundColor( const QColor &c )
+void ListViewSettings::setBackgroundColor( const TQColor &c )
 {
   m_settingsWidget->setBackgroundColor( c );
 }
 
-void ListViewSettings::setTextColor( const QColor &c )
+void ListViewSettings::setTextColor( const TQColor &c )
 {
   m_settingsWidget->setTextColor( c );
 }
 
-void ListViewSettings::setGridColor( const QColor &c )
+void ListViewSettings::setGridColor( const TQColor &c )
 {
   m_settingsWidget->setGridColor( c );
 }

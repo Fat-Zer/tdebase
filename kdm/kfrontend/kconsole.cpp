@@ -59,9 +59,9 @@ extern "C" {
 #include <klocale.h>
 #include <kpty.h>
 
-#include <qsocketnotifier.h>
+#include <tqsocketnotifier.h>
 
-KConsole::KConsole( QWidget *_parent )
+KConsole::KConsole( TQWidget *_parent )
 	: inherited( _parent )
 	, pty( 0 )
 	, notifier( 0 )
@@ -128,8 +128,8 @@ KConsole::OpenConsole()
 	fd = pty->masterFd();
 
   gotcon:
-	notifier = new QSocketNotifier( fd, QSocketNotifier::Read, this );
-	connect( notifier, SIGNAL(activated( int )), SLOT(slotData()) );
+	notifier = new TQSocketNotifier( fd, TQSocketNotifier::Read, this );
+	connect( notifier, TQT_SIGNAL(activated( int )), TQT_SLOT(slotData()) );
 	return 1;
 }
 
@@ -161,14 +161,14 @@ KConsole::slotData()
 		bool as = !verticalScrollBar()->isVisible() ||
 		          (verticalScrollBar()->value() ==
 		           verticalScrollBar()->maxValue());
-		QString str( QString::fromLocal8Bit( buffer, n ).remove( '\r' ) );
+		TQString str( TQString::fromLocal8Bit( buffer, n ).remove( '\r' ) );
 		int pos, opos;
 		for (opos = 0; (pos = str.find( '\n', opos )) >= 0; opos = pos + 1) {
 			if (paragraphs() == 100)
 				removeParagraph( 0 );
 			if (!leftover.isEmpty()) {
 				append( leftover + str.mid( opos, pos - opos ) );
-				leftover = QString::null;
+				leftover = TQString::null;
 			} else
 				append( str.mid( opos, pos - opos ) );
 		}

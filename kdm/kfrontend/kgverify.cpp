@@ -38,11 +38,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kstdguiitem.h>
 #include <kpushbutton.h>
 
-#include <qregexp.h>
-#include <qpopupmenu.h>
-#include <qlayout.h>
-#include <qfile.h>
-#include <qlabel.h>
+#include <tqregexp.h>
+#include <tqpopupmenu.h>
+#include <tqlayout.h>
+#include <tqfile.h>
+#include <tqlabel.h>
 
 #include <pwd.h>
 #include <sys/types.h>
@@ -67,8 +67,8 @@ void KGVerifyHandler::updateStatus( bool, bool, int )
 }
 
 KGVerify::KGVerify( KGVerifyHandler *_handler, KdmThemer *_themer,
-                    QWidget *_parent, QWidget *_predecessor,
-                    const QString &_fixedUser,
+                    TQWidget *_parent, TQWidget *_predecessor,
+                    const TQString &_fixedUser,
                     const PluginList &_pluginList,
                     KGreeterPlugin::Function _func,
                     KGreeterPlugin::Context _ctx )
@@ -91,8 +91,8 @@ KGVerify::KGVerify( KGVerifyHandler *_handler, KdmThemer *_themer,
 	, failed( false )
 	, isClear( true )
 {
-	connect( &timer, SIGNAL(timeout()), SLOT(slotTimeout()) );
-	connect( kapp, SIGNAL(activity()), SLOT(slotActivity()) );
+	connect( &timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
+	connect( kapp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()) );
 
 	_parent->installEventFilter( this );
 }
@@ -103,16 +103,16 @@ KGVerify::~KGVerify()
 	delete greet;
 }
 
-QPopupMenu *
+TQPopupMenu *
 KGVerify::getPlugMenu()
 {
 	// assert( !cont );
 	if (!plugMenu) {
 		uint np = pluginList.count();
 		if (np > 1) {
-			plugMenu = new QPopupMenu( parent );
-			connect( plugMenu, SIGNAL(activated( int )),
-			         SLOT(slotPluginSelected( int )) );
+			plugMenu = new TQPopupMenu( parent );
+			connect( plugMenu, TQT_SIGNAL(activated( int )),
+			         TQT_SLOT(slotPluginSelected( int )) );
 			for (uint i = 0; i < np; i++)
 				plugMenu->insertItem( i18n(greetPlugins[pluginList[i]].info->name), pluginList[i] );
 		}
@@ -144,28 +144,28 @@ KGVerify::isClassic() const
 	return !strcmp( greetPlugins[pluginList[curPlugin]].info->method, "classic" );
 }
 
-QString // public
+TQString // public
 KGVerify::pluginName() const
 {
-	QString name( greetPlugins[pluginList[curPlugin]].library->fileName() );
+	TQString name( greetPlugins[pluginList[curPlugin]].library->fileName() );
 	uint st = name.findRev( '/' ) + 1;
 	uint en = name.find( '.', st );
-	if (en - st > 7 && QConstString( name.unicode() + st, 7 ).string() == "kgreet_")
+	if (en - st > 7 && TQConstString( name.unicode() + st, 7 ).string() == "kgreet_")
 		st += 7;
 	return name.mid( st, en - st );
 }
 
 static void
-showWidgets( QLayoutItem *li )
+showWidgets( TQLayoutItem *li )
 {
-	QWidget *w;
-	QLayout *l;
+	TQWidget *w;
+	TQLayout *l;
 
 	if ((w = li->widget()))
 		w->show();
 	else if ((l = li->layout())) {
-		QLayoutIterator it = l->iterator();
-		for (QLayoutItem *itm = it.current(); itm; itm = ++it)
+		TQLayoutIterator it = l->iterator();
+		for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 			 showWidgets( itm );
 	}
 }
@@ -187,14 +187,14 @@ KGVerify::selectPlugin( int id )
 }
 
 void // public
-KGVerify::loadUsers( const QStringList &users )
+KGVerify::loadUsers( const TQStringList &users )
 {
 	Debug( "%s->loadUsers(...)\n", pName.data() );
 	greet->loadUsers( users );
 }
 
 void // public
-KGVerify::presetEntity( const QString &entity, int field )
+KGVerify::presetEntity( const TQString &entity, int field )
 {
 	presEnt = entity;
 	presFld = field;
@@ -249,17 +249,17 @@ KGVerify::performAutoLogin()
 	handleVerify();
 }
 
-QString // public
+TQString // public
 KGVerify::getEntity() const
 {
 	Debug( "%s->getEntity()\n", pName.data() );
-	QString ent = greet->getEntity();
+	TQString ent = greet->getEntity();
 	Debug( "  entity: %s\n", ent.latin1() );
 	return ent;
 }
 
 void
-KGVerify::setUser( const QString &user )
+KGVerify::setUser( const TQString &user )
 {
 	// assert( fixedEntity.isEmpty() );
 	curUser = user;
@@ -349,7 +349,7 @@ KGVerify::doReject( bool initial )
 	handler->verifyClear();
 	Debug( "%s->clear()\n", pName.data() );
 	greet->clear();
-	curUser = QString::null;
+	curUser = TQString::null;
 	if (!scheduleAutoLogin( initial )) {
 		isClear = !(isClear && applyPreset());
 		if (running) {
@@ -428,8 +428,8 @@ KGVerify::slotActivity()
 
 
 void // private static
-KGVerify::VMsgBox( QWidget *parent, const QString &user,
-                   QMessageBox::Icon type, const QString &mesg )
+KGVerify::VMsgBox( TQWidget *parent, const TQString &user,
+                   TQMessageBox::Icon type, const TQString &mesg )
 {
 	FDialog::box( parent, type, user.isEmpty() ?
 	              mesg : i18n("Authenticating %1...\n\n").arg( user ) + mesg );
@@ -447,10 +447,10 @@ static const char *msgs[]= {
 };
 
 void // private static
-KGVerify::VErrBox( QWidget *parent, const QString &user, const char *msg )
+KGVerify::VErrBox( TQWidget *parent, const TQString &user, const char *msg )
 {
-	QMessageBox::Icon icon;
-	QString mesg;
+	TQMessageBox::Icon icon;
+	TQString mesg;
 
 	if (!msg) {
 		mesg = i18n("A critical error occurred.\n"
@@ -458,8 +458,8 @@ KGVerify::VErrBox( QWidget *parent, const QString &user, const char *msg )
 		            "or contact your system administrator.");
 		icon = errorbox;
 	} else {
-		mesg = QString::fromLocal8Bit( msg );
-		QString mesg1 = mesg + '.';
+		mesg = TQString::fromLocal8Bit( msg );
+		TQString mesg1 = mesg + '.';
 		for (uint i = 0; i < as(msgs); i++)
 			if (mesg1 == msgs[i]) {
 				mesg = i18n(msgs[i]);
@@ -471,10 +471,10 @@ KGVerify::VErrBox( QWidget *parent, const QString &user, const char *msg )
 }
 
 void // private static
-KGVerify::VInfoBox( QWidget *parent, const QString &user, const char *msg )
+KGVerify::VInfoBox( TQWidget *parent, const TQString &user, const char *msg )
 {
-	QString mesg = QString::fromLocal8Bit( msg );
-	QRegExp rx( "^Warning: your account will expire in (\\d+) day" );
+	TQString mesg = TQString::fromLocal8Bit( msg );
+	TQRegExp rx( "^Warning: your account will expire in (\\d+) day" );
 	if (rx.search( mesg ) >= 0) {
 		int expire = rx.cap( 1 ).toInt();
 		mesg = expire ?
@@ -495,11 +495,11 @@ KGVerify::VInfoBox( QWidget *parent, const QString &user, const char *msg )
 }
 
 bool // public static
-KGVerify::handleFailVerify( QWidget *parent )
+KGVerify::handleFailVerify( TQWidget *parent )
 {
 	Debug( "handleFailVerify ...\n" );
 	char *msg = GRecvStr();
-	QString user = QString::fromLocal8Bit( msg );
+	TQString user = TQString::fromLocal8Bit( msg );
 	free( msg );
 
 	for (;;) {
@@ -513,9 +513,9 @@ KGVerify::handleFailVerify( QWidget *parent )
 		case V_CHTOK_AUTH:
 			Debug( " V_CHTOK_AUTH\n" );
 			{
-				QStringList pgs( _pluginsLogin );
+				TQStringList pgs( _pluginsLogin );
 				pgs += _pluginsShutdown;
-				QStringList::ConstIterator it;
+				TQStringList::ConstIterator it;
 				for (it = pgs.begin(); it != pgs.end(); ++it)
 					if (*it == "classic" || *it == "modern") {
 						pgs = *it;
@@ -569,7 +569,7 @@ KGVerify::handleFailVerify( QWidget *parent )
 void // private
 KGVerify::handleVerify()
 {
-	QString user;
+	TQString user;
 
 	Debug( "handleVerify ...\n" );
 	for (;;) {
@@ -612,7 +612,7 @@ KGVerify::handleVerify()
 		case V_PUT_USER:
 			Debug( " V_PUT_USER\n" );
 			msg = GRecvStr();
-			curUser = user = QString::fromLocal8Bit( msg );
+			curUser = user = TQString::fromLocal8Bit( msg );
 			// greet needs this to be able to return something useful from
 			// getEntity(). but the backend is still unable to tell a domain ...
 			Debug( "  %s->setUser(%\"s)\n", pName.data(), user.latin1() );
@@ -640,7 +640,7 @@ KGVerify::handleVerify()
 		case V_CHTOK:
 			Debug( " V_CHTOK\n" );
 			nfunc = KGreeterPlugin::ChAuthTok;
-			user = QString::null;
+			user = TQString::null;
 		  dchtok:
 			{
 				timer.stop();
@@ -686,7 +686,7 @@ KGVerify::handleVerify()
 			Debug( " V_OK\n" );
 			if (!fixedEntity.isEmpty()) {
 				Debug( "  %s->getEntity()\n", pName.data() );
-				QString ent = greet->getEntity();
+				TQString ent = greet->getEntity();
 				Debug( "  entity %\"s\n", ent.latin1() );
 				if (ent != fixedEntity) {
 					Debug( "%s->failed()\n", pName.data() );
@@ -725,7 +725,7 @@ KGVerify::handleVerify()
 		greet->start();
 		if (!cont)
 			return;
-		user = QString::null;
+		user = TQString::null;
 	}
 }
 
@@ -759,7 +759,7 @@ KGVerify::gplugReturnBinary( const char *data )
 }
 
 void
-KGVerify::gplugSetUser( const QString &user )
+KGVerify::gplugSetUser( const TQString &user )
 {
 	Debug( "%s: gplugSetUser(%\"s)\n", pName.data(), user.latin1() );
 	curUser = user;
@@ -790,19 +790,19 @@ KGVerify::gplugActivity()
 }
 
 void
-KGVerify::gplugMsgBox( QMessageBox::Icon type, const QString &text )
+KGVerify::gplugMsgBox( TQMessageBox::Icon type, const TQString &text )
 {
 	Debug( "%s: gplugMsgBox(%d, %\"s)\n", pName.data(), type, text.latin1() );
 	MsgBox( type, text );
 }
 
 bool
-KGVerify::eventFilter( QObject *o, QEvent *e )
+KGVerify::eventFilter( TQObject *o, TQEvent *e )
 {
 	switch (e->type()) {
-	case QEvent::KeyPress:
+	case TQEvent::KeyPress:
 		if (timedLeft) {
-			QKeyEvent *ke = (QKeyEvent *)e;
+			TQKeyEvent *ke = (TQKeyEvent *)e;
 			if (ke->key() == Key_Return || ke->key() == Key_Enter) {
 				if (deadTicks <= 0) {
 					timedLeft = 0;
@@ -812,7 +812,7 @@ KGVerify::eventFilter( QObject *o, QEvent *e )
 			}
 		}
 		/* fall through */
-	case QEvent::KeyRelease:
+	case TQEvent::KeyRelease:
 		updateLockStatus();
 		/* fall through */
 	default:
@@ -835,7 +835,7 @@ KGVerify::updateLockStatus()
 }
 
 void
-KGVerify::MsgBox( QMessageBox::Icon typ, const QString &msg )
+KGVerify::MsgBox( TQMessageBox::Icon typ, const TQString &msg )
 {
 	timer.suspend();
 	FDialog::box( parent, typ, msg );
@@ -843,14 +843,14 @@ KGVerify::MsgBox( QMessageBox::Icon typ, const QString &msg )
 }
 
 
-QVariant // public static
-KGVerify::getConf( void *, const char *key, const QVariant &dflt )
+TQVariant // public static
+KGVerify::getConf( void *, const char *key, const TQVariant &dflt )
 {
 	if (!qstrcmp( key, "EchoMode" ))
-		return QVariant( _echoMode );
+		return TQVariant( _echoMode );
 	else {
-		QString fkey = QString::fromLatin1( key ) + '=';
-		for (QStringList::ConstIterator it = _pluginOptions.begin();
+		TQString fkey = TQString::fromLatin1( key ) + '=';
+		for (TQStringList::ConstIterator it = _pluginOptions.begin();
 		     it != _pluginOptions.end(); ++it)
 			if ((*it).startsWith( fkey ))
 				return (*it).mid( fkey.length() );
@@ -858,16 +858,16 @@ KGVerify::getConf( void *, const char *key, const QVariant &dflt )
 	}
 }
 
-QValueVector<GreeterPluginHandle> KGVerify::greetPlugins;
+TQValueVector<GreeterPluginHandle> KGVerify::greetPlugins;
 
 PluginList
-KGVerify::init( const QStringList &plugins )
+KGVerify::init( const TQStringList &plugins )
 {
 	PluginList pluginList;
 
-	for (QStringList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it) {
+	for (TQStringList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it) {
 		GreeterPluginHandle plugin;
-		QString path = KLibLoader::self()->findLibrary(
+		TQString path = KLibLoader::self()->findLibrary(
 			((*it)[0] == '/' ? *it : "kgreet_" + *it ).latin1() );
 		if (path.isEmpty()) {
 			LogError( "GreeterPlugin %s does not exist\n", (*it).latin1() );
@@ -888,7 +888,7 @@ KGVerify::init( const QStringList &plugins )
 			continue;
 		}
 		plugin.info = (kgreeterplugin_info*)plugin.library->symbol( "kgreeterplugin_info" );
-		if (!plugin.info->init( QString::null, getConf, 0 )) {
+		if (!plugin.info->init( TQString::null, getConf, 0 )) {
 			LogError( "GreeterPlugin %s (%s) refuses to serve\n",
 			          (*it).latin1(), path.latin1() );
 			plugin.library->unload();
@@ -913,8 +913,8 @@ KGVerify::done()
 }
 
 
-KGStdVerify::KGStdVerify( KGVerifyHandler *_handler, QWidget *_parent,
-                          QWidget *_predecessor, const QString &_fixedUser,
+KGStdVerify::KGStdVerify( KGVerifyHandler *_handler, TQWidget *_parent,
+                          TQWidget *_predecessor, const TQString &_fixedUser,
                           const PluginList &_pluginList,
                           KGreeterPlugin::Function _func,
                           KGreeterPlugin::Context _ctx )
@@ -925,7 +925,7 @@ KGStdVerify::KGStdVerify( KGVerifyHandler *_handler, QWidget *_parent,
 	grid = new QGridLayout;
 	grid->setAlignment( AlignCenter );
 
-	failedLabel = new QLabel( parent );
+	failedLabel = new TQLabel( parent );
 	failedLabel->setFont( _failFont );
 	grid->addWidget( failedLabel, 1, 0, AlignCenter );
 
@@ -1011,8 +1011,8 @@ KGStdVerify::updateStatus()
 
 KGThemedVerify::KGThemedVerify( KGVerifyHandler *_handler,
                                 KdmThemer *_themer,
-                                QWidget *_parent, QWidget *_predecessor,
-                                const QString &_fixedUser,
+                                TQWidget *_parent, TQWidget *_predecessor,
+                                const TQString &_fixedUser,
                                 const PluginList &_pluginList,
                                 KGreeterPlugin::Function _func,
                                 KGreeterPlugin::Context _ctx )
@@ -1030,7 +1030,7 @@ void // public
 KGThemedVerify::selectPlugin( int id )
 {
 	inherited::selectPlugin( id );
-	QLayoutItem *l;
+	TQLayoutItem *l;
 	KdmItem *n;
 	if (themer && (l = greet->getLayoutItem())) {
 		if (!(n = themer->findNode( "talker" )))
@@ -1071,14 +1071,14 @@ KGThemedVerify::updateStatus()
 }
 
 
-KGChTok::KGChTok( QWidget *_parent, const QString &user,
+KGChTok::KGChTok( TQWidget *_parent, const TQString &user,
                   const PluginList &pluginList, int curPlugin,
                   KGreeterPlugin::Function func,
                   KGreeterPlugin::Context ctx )
 	: inherited( _parent )
 	, verify( 0 )
 {
-	QSizePolicy fp( QSizePolicy::Fixed, QSizePolicy::Fixed );
+	TQSizePolicy fp( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 	okButton = new KPushButton( KStdGuiItem::ok(), this );
 	okButton->setSizePolicy( fp );
 	okButton->setDefault( true );
@@ -1088,25 +1088,25 @@ KGChTok::KGChTok( QWidget *_parent, const QString &user,
 	verify = new KGStdVerify( this, this, cancelButton, user, pluginList, func, ctx );
 	verify->selectPlugin( curPlugin );
 
-	QVBoxLayout *box = new QVBoxLayout( this, 10 );
+	TQVBoxLayout *box = new TQVBoxLayout( this, 10 );
 
-	box->addWidget( new QLabel( i18n("Changing authentication token"), this ), 0, AlignHCenter );
+	box->addWidget( new TQLabel( i18n("Changing authentication token"), this ), 0, AlignHCenter );
 
 	box->addLayout( verify->getLayout() );
 
 	box->addWidget( new KSeparator( KSeparator::HLine, this ) );
 
-	QHBoxLayout *hlay = new QHBoxLayout( box );
+	TQHBoxLayout *hlay = new TQHBoxLayout( box );
 	hlay->addStretch( 1 );
 	hlay->addWidget( okButton );
 	hlay->addStretch( 1 );
 	hlay->addWidget( cancelButton );
 	hlay->addStretch( 1 );
 
-	connect( okButton, SIGNAL(clicked()), SLOT(accept()) );
-	connect( cancelButton, SIGNAL(clicked()), SLOT(reject()) );
+	connect( okButton, TQT_SIGNAL(clicked()), TQT_SLOT(accept()) );
+	connect( cancelButton, TQT_SIGNAL(clicked()), TQT_SLOT(reject()) );
 
-	QTimer::singleShot( 0, verify, SLOT(start()) );
+	TQTimer::singleShot( 0, verify, TQT_SLOT(start()) );
 }
 
 KGChTok::~KGChTok()
@@ -1148,7 +1148,7 @@ KGChTok::verifyRetry()
 }
 
 void
-KGChTok::verifySetUser( const QString & )
+KGChTok::verifySetUser( const TQString & )
 {
 	// cannot happen
 }
@@ -1160,7 +1160,7 @@ QXTimer::QXTimer()
 	: inherited( 0 )
 	, left( -1 )
 {
-	connect( &timer, SIGNAL(timeout()), SLOT(slotTimeout()) );
+	connect( &timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
 }
 
 void

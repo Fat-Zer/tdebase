@@ -33,11 +33,11 @@
 //                 2000, 2001 Carsten Pfeiffer <pfeiffer@kde.org>
 //
 
-#include <qevent.h>
-#include <qkeycode.h>
-#include <qheader.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <tqevent.h>
+#include <tqkeycode.h>
+#include <tqheader.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
 #include <kapplication.h>
 #include <kfileitem.h>
 #include <kglobal.h>
@@ -60,10 +60,10 @@ class CKFileFontView::CKFileFontViewPrivate
     CKFileFontViewPrivate() : itsDropItem(0) {}
 
     CFontListViewItem *itsDropItem;
-    QTimer            itsAutoOpenTimer;
+    TQTimer            itsAutoOpenTimer;
 };
 
-CKFileFontView::CKFileFontView(QWidget *parent, const char *name)
+CKFileFontView::CKFileFontView(TQWidget *parent, const char *name)
               : KListView(parent, name),
                 KFileView(),
                 d(new CKFileFontViewPrivate())
@@ -79,15 +79,15 @@ CKFileFontView::CKFileFontView(QWidget *parent, const char *name)
     setAllColumnsShowFocus(true);
     setDragEnabled(false);
 
-    connect(header(), SIGNAL(sectionClicked(int)), SLOT(slotSortingChanged(int)));
-    connect(this, SIGNAL(returnPressed(QListViewItem *)), SLOT(slotActivate(QListViewItem *)));
-    connect(this, SIGNAL(clicked(QListViewItem *, const QPoint&, int)), SLOT(selected( QListViewItem *)));
-    connect(this, SIGNAL(doubleClicked(QListViewItem *, const QPoint &, int)), SLOT(slotActivate(QListViewItem *)));
-    connect(this, SIGNAL(contextMenuRequested(QListViewItem *, const QPoint &, int)),
-	    this, SLOT(slotActivateMenu(QListViewItem *, const QPoint &)));
+    connect(header(), TQT_SIGNAL(sectionClicked(int)), TQT_SLOT(slotSortingChanged(int)));
+    connect(this, TQT_SIGNAL(returnPressed(TQListViewItem *)), TQT_SLOT(slotActivate(TQListViewItem *)));
+    connect(this, TQT_SIGNAL(clicked(TQListViewItem *, const TQPoint&, int)), TQT_SLOT(selected( TQListViewItem *)));
+    connect(this, TQT_SIGNAL(doubleClicked(TQListViewItem *, const TQPoint &, int)), TQT_SLOT(slotActivate(TQListViewItem *)));
+    connect(this, TQT_SIGNAL(contextMenuRequested(TQListViewItem *, const TQPoint &, int)),
+	    this, TQT_SLOT(slotActivateMenu(TQListViewItem *, const TQPoint &)));
 
     // DND
-    connect(&(d->itsAutoOpenTimer), SIGNAL(timeout()), this, SLOT(slotAutoOpen()));
+    connect(&(d->itsAutoOpenTimer), TQT_SIGNAL(timeout()), this, TQT_SLOT(slotAutoOpen()));
     setSelectionMode(KFileView::selectionMode());
     itsResolver = new KMimeTypeResolver<CFontListViewItem, CKFileFontView>(this);
 }
@@ -144,7 +144,7 @@ void CKFileFontView::invertSelection()
     KListView::invertSelection();
 }
 
-void CKFileFontView::slotActivateMenu(QListViewItem *item,const QPoint& pos)
+void CKFileFontView::slotActivateMenu(TQListViewItem *item,const TQPoint& pos)
 {
     if (!item)
         sig->activateMenu(0, pos);
@@ -165,7 +165,7 @@ void CKFileFontView::insertItem(KFileItem *i)
 {
     KFileView::insertItem(i);
 
-    CFontListViewItem *item = new CFontListViewItem((QListView*) this, i);
+    CFontListViewItem *item = new CFontListViewItem((TQListView*) this, i);
 
     setSortingKey(item, i);
 
@@ -175,7 +175,7 @@ void CKFileFontView::insertItem(KFileItem *i)
         itsResolver->m_lstPendingMimeIconItems.append(item);
 }
 
-void CKFileFontView::slotActivate(QListViewItem *item)
+void CKFileFontView::slotActivate(TQListViewItem *item)
 {
     if (item)
     {
@@ -186,7 +186,7 @@ void CKFileFontView::slotActivate(QListViewItem *item)
     }
 }
 
-void CKFileFontView::selected(QListViewItem *item)
+void CKFileFontView::selected(TQListViewItem *item)
 {
     if (item && !(KApplication::keyboardMouseState() & (ShiftButton|ControlButton)) &&
          KGlobalSettings::singleClick())
@@ -198,7 +198,7 @@ void CKFileFontView::selected(QListViewItem *item)
     }
 }
 
-void CKFileFontView::highlighted( QListViewItem *item )
+void CKFileFontView::highlighted( TQListViewItem *item )
 {
     if (item)
     {
@@ -211,31 +211,31 @@ void CKFileFontView::highlighted( QListViewItem *item )
 
 void CKFileFontView::setSelectionMode(KFile::SelectionMode sm)
 {
-    disconnect(SIGNAL(selectionChanged()), this);
-    disconnect(SIGNAL(selectionChanged(QListViewItem *)), this);
+    disconnect(TQT_SIGNAL(selectionChanged()), this);
+    disconnect(TQT_SIGNAL(selectionChanged(TQListViewItem *)), this);
 
     switch (sm)
     {
         case KFile::Multi:
-            QListView::setSelectionMode(QListView::Multi);
+            TQListView::setSelectionMode(TQListView::Multi);
             break;
         case KFile::Extended:
-            QListView::setSelectionMode(QListView::Extended);
+            TQListView::setSelectionMode(TQListView::Extended);
             break;
         case KFile::NoSelection:
-            QListView::setSelectionMode(QListView::NoSelection);
+            TQListView::setSelectionMode(TQListView::NoSelection);
             break;
         default: // fall through
         case KFile::Single:
-            QListView::setSelectionMode(QListView::Single);
+            TQListView::setSelectionMode(TQListView::Single);
             break;
     }
 
     // for highlighting
     if (KFile::Multi==sm || KFile::Extended==sm)
-        connect(this, SIGNAL(selectionChanged()), SLOT(slotSelectionChanged()));
+        connect(this, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotSelectionChanged()));
     else
-        connect(this, SIGNAL(selectionChanged(QListViewItem *)), SLOT(highlighted(QListViewItem * )));
+        connect(this, TQT_SIGNAL(selectionChanged(TQListViewItem *)), TQT_SLOT(highlighted(TQListViewItem * )));
 }
 
 bool CKFileFontView::isSelected(const KFileItem *i) const
@@ -254,7 +254,7 @@ void CKFileFontView::updateView(bool b)
 {
     if (b)
     {
-        QListViewItemIterator it((QListView*)this);
+        TQListViewItemIterator it((TQListView*)this);
 
         for (; it.current(); ++it)
         {
@@ -281,9 +281,9 @@ void CKFileFontView::updateView(const KFileItem *i)
 
 void CKFileFontView::setSortingKey(CFontListViewItem *item, const KFileItem *i)
 {
-    QDir::SortSpec spec = KFileView::sorting();
+    TQDir::SortSpec spec = KFileView::sorting();
 
-    if (spec&QDir::Size)
+    if (spec&TQDir::Size)
         item->setKey(sortingKey(i->size(), i->isDir(), spec));
     else
         item->setKey(sortingKey(i->text(), i->isDir(), spec));
@@ -304,44 +304,44 @@ void CKFileFontView::removeItem(const KFileItem *i)
 
 void CKFileFontView::slotSortingChanged(int col)
 {
-    QDir::SortSpec sort = sorting();
+    TQDir::SortSpec sort = sorting();
     int sortSpec = -1;
-    bool reversed = col == itsSortingCol && (sort & QDir::Reversed) == 0;
+    bool reversed = col == itsSortingCol && (sort & TQDir::Reversed) == 0;
     itsSortingCol = col;
 
     switch(col)
     {
         case COL_NAME:
-            sortSpec = (sort & ~QDir::SortByMask | QDir::Name);
+            sortSpec = (sort & ~TQDir::SortByMask | TQDir::Name);
             break;
         case COL_SIZE:
-            sortSpec = (sort & ~QDir::SortByMask | QDir::Size);
+            sortSpec = (sort & ~TQDir::SortByMask | TQDir::Size);
             break;
-        // the following columns have no equivalent in QDir, so we set it
-        // to QDir::Unsorted and remember the column (itsSortingCol)
+        // the following columns have no equivalent in TQDir, so we set it
+        // to TQDir::Unsorted and remember the column (itsSortingCol)
         case COL_TYPE:
-            sortSpec = (sort & ~QDir::SortByMask | QDir::Time);
+            sortSpec = (sort & ~TQDir::SortByMask | TQDir::Time);
             break;
         default:
             break;
     }
 
     if (reversed)
-        sortSpec|=QDir::Reversed;
+        sortSpec|=TQDir::Reversed;
     else
-        sortSpec&=~QDir::Reversed;
+        sortSpec&=~TQDir::Reversed;
 
-    if (sort & QDir::IgnoreCase)
-        sortSpec|=QDir::IgnoreCase;
+    if (sort & TQDir::IgnoreCase)
+        sortSpec|=TQDir::IgnoreCase;
     else
-        sortSpec&=~QDir::IgnoreCase;
+        sortSpec&=~TQDir::IgnoreCase;
 
-    KFileView::setSorting(static_cast<QDir::SortSpec>(sortSpec));
+    KFileView::setSorting(static_cast<TQDir::SortSpec>(sortSpec));
 
     KFileItem             *item;
     KFileItemListIterator it(*items());
 
-    if ( sortSpec & QDir::Size )
+    if ( sortSpec & TQDir::Size )
     {
         for (; (item = it.current()); ++it )
         {
@@ -361,23 +361,23 @@ void CKFileFontView::slotSortingChanged(int col)
     KListView::sort();
 
     if (!itsBlockSortingSignal)
-        sig->changeSorting( static_cast<QDir::SortSpec>( sortSpec ) );
+        sig->changeSorting( static_cast<TQDir::SortSpec>( sortSpec ) );
 }
 
-void CKFileFontView::setSorting(QDir::SortSpec spec)
+void CKFileFontView::setSorting(TQDir::SortSpec spec)
 {
-    if (spec & QDir::Size)
+    if (spec & TQDir::Size)
         itsSortingCol=COL_SIZE;
     else
         itsSortingCol=COL_NAME;
 
     // inversed, because slotSortingChanged will reverse it
-    if (spec & QDir::Reversed)
-        spec = (QDir::SortSpec) (spec & ~QDir::Reversed);
+    if (spec & TQDir::Reversed)
+        spec = (TQDir::SortSpec) (spec & ~TQDir::Reversed);
     else
-        spec = (QDir::SortSpec) (spec | QDir::Reversed);
+        spec = (TQDir::SortSpec) (spec | TQDir::Reversed);
 
-    KFileView::setSorting((QDir::SortSpec) spec);
+    KFileView::setSorting((TQDir::SortSpec) spec);
 
     // don't emit sortingChanged() when called via setSorting()
     itsBlockSortingSignal = true; // can't use blockSignals()
@@ -433,7 +433,7 @@ KFileItem * CKFileFontView::prevItem(const KFileItem *fileItem) const
     return firstFileItem();
 }
 
-void CKFileFontView::keyPressEvent(QKeyEvent *e)
+void CKFileFontView::keyPressEvent(TQKeyEvent *e)
 {
     KListView::keyPressEvent(e);
 
@@ -463,13 +463,13 @@ void CKFileFontView::listingCompleted()
     itsResolver->start();
 }
 
-QDragObject *CKFileFontView::dragObject()
+TQDragObject *CKFileFontView::dragObject()
 {
     // create a list of the URL:s that we want to drag
     KURL::List            urls;
     KFileItemListIterator it(* KFileView::selectedItems());
-    QPixmap               pixmap;
-    QPoint                hotspot;
+    TQPixmap               pixmap;
+    TQPoint                hotspot;
 
     for ( ; it.current(); ++it )
         urls.append( (*it)->url() );
@@ -482,7 +482,7 @@ QDragObject *CKFileFontView::dragObject()
     hotspot.setX(pixmap.width() / 2);
     hotspot.setY(pixmap.height() / 2);
 
-    QDragObject *dragObject=new KURLDrag(urls, widget());
+    TQDragObject *dragObject=new KURLDrag(urls, widget());
 
     if(dragObject)
         dragObject->setPixmap(pixmap, hotspot);
@@ -503,7 +503,7 @@ void CKFileFontView::slotAutoOpen()
     }
 }
 
-bool CKFileFontView::acceptDrag(QDropEvent *e) const
+bool CKFileFontView::acceptDrag(TQDropEvent *e) const
 {
 #if 0   // Following doesn't seem to work, why???
     bool       ok=false;
@@ -511,14 +511,14 @@ bool CKFileFontView::acceptDrag(QDropEvent *e) const
 
 
     if((e->source()!=const_cast<CKFileFontView *>(this)) &&
-       (QDropEvent::Copy==e->action() || QDropEvent::Move==e->action()) &&
+       (TQDropEvent::Copy==e->action() || TQDropEvent::Move==e->action()) &&
        KURLDrag::decode(e, urls) && !urls.isEmpty())
     {
         KURL::List::Iterator it;
 
         ok=true;
         for(it=urls.begin(); ok && it!=urls.end(); ++it)
-            if(!CFontEngine::isAFontOrAfm(QFile::encodeName((*it).path())))
+            if(!CFontEngine::isAFontOrAfm(TQFile::encodeName((*it).path())))
                 ok=false;
     }
 
@@ -526,10 +526,10 @@ bool CKFileFontView::acceptDrag(QDropEvent *e) const
 #endif
 
     return KURLDrag::canDecode(e) && (e->source()!= const_cast<CKFileFontView*>(this)) &&
-           (QDropEvent::Copy==e->action() || QDropEvent::Move==e->action());
+           (TQDropEvent::Copy==e->action() || TQDropEvent::Move==e->action());
 }
 
-void CKFileFontView::contentsDragEnterEvent(QDragEnterEvent *e)
+void CKFileFontView::contentsDragEnterEvent(TQDragEnterEvent *e)
 {
     if (!acceptDrag(e)) // can we decode this ?
         e->ignore();            // No
@@ -554,7 +554,7 @@ void CKFileFontView::contentsDragEnterEvent(QDragEnterEvent *e)
     }
 }
 
-void CKFileFontView::contentsDragMoveEvent(QDragMoveEvent *e)
+void CKFileFontView::contentsDragMoveEvent(TQDragMoveEvent *e)
 {
     if (!acceptDrag(e)) // can we decode this ?
         e->ignore();            // No
@@ -583,13 +583,13 @@ void CKFileFontView::contentsDragMoveEvent(QDragMoveEvent *e)
     }
 }
 
-void CKFileFontView::contentsDragLeaveEvent(QDragLeaveEvent *)
+void CKFileFontView::contentsDragLeaveEvent(TQDragLeaveEvent *)
 {
     d->itsDropItem = 0;
     d->itsAutoOpenTimer.stop();
 }
 
-void CKFileFontView::contentsDropEvent(QDropEvent *e)
+void CKFileFontView::contentsDropEvent(TQDropEvent *e)
 {
     d->itsDropItem = 0;
     d->itsAutoOpenTimer.stop();
@@ -614,15 +614,15 @@ void CKFileFontView::contentsDropEvent(QDropEvent *e)
     }
 }
 
-void CKFileFontView::readConfig(KConfig *kc, const QString &group)
+void CKFileFontView::readConfig(KConfig *kc, const TQString &group)
 {
-    restoreLayout(kc, group.isEmpty() ? QString("CFileFontView") : group);
+    restoreLayout(kc, group.isEmpty() ? TQString("CFileFontView") : group);
     slotSortingChanged(sortColumn());
 }
 
-void CKFileFontView::writeConfig(KConfig *kc, const QString &group)
+void CKFileFontView::writeConfig(KConfig *kc, const TQString &group)
 {
-    saveLayout(kc, group.isEmpty() ? QString("CFileFontView") : group);
+    saveLayout(kc, group.isEmpty() ? TQString("CFileFontView") : group);
 }
 
 /////////////////////////////////////////////////////////////////

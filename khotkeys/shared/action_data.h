@@ -12,8 +12,8 @@
 #define _ACTION_DATA_H_
 
 #include <assert.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include <kdebug.h>
 
@@ -34,8 +34,8 @@ class Action_data_group;
 class KDE_EXPORT Action_data_base
     {
     public:
-        Action_data_base( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, Condition_list* condition_P, bool enabled_P );
+        Action_data_base( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, Condition_list* condition_P, bool enabled_P );
         Action_data_base( KConfig& cfg_P, Action_data_group* parent_P );
         virtual ~Action_data_base();
         virtual void cfg_write( KConfig& cfg_P ) const = 0;
@@ -44,9 +44,9 @@ class KDE_EXPORT Action_data_base
         void reparent( Action_data_group* new_parent_P );
         virtual void update_triggers() = 0;
         bool conditions_match() const;
-        const QString& name() const;
-        void set_name( const QString& name_P );
-        const QString& comment() const;
+        const TQString& name() const;
+        void set_name( const TQString& name_P );
+        const TQString& comment() const;
         bool enabled( bool ignore_group_P ) const;
         static Action_data_base* create_cfg_read( KConfig& cfg_P, Action_data_group* parent_P );
         static bool cfg_is_enabled( KConfig& cfg_P );
@@ -55,8 +55,8 @@ class KDE_EXPORT Action_data_base
     private:
         Action_data_group* _parent;
         Condition_list* _conditions;
-        QString _name;
-        QString _comment;
+        TQString _name;
+        TQString _comment;
         bool _enabled; // is not really important, only used in conf. module and when reading cfg. file
     KHOTKEYS_DISABLE_COPY( Action_data_base );
     };
@@ -67,20 +67,20 @@ class KDE_EXPORT Action_data_group
     public:
         enum system_group_t { SYSTEM_NONE, SYSTEM_MENUENTRIES,
             SYSTEM_ROOT, /* last one*/ SYSTEM_MAX }; // don't remove entries
-        Action_data_group( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, Condition_list* conditions_P, system_group_t system_group_P,
+        Action_data_group( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, Condition_list* conditions_P, system_group_t system_group_P,
             bool enabled_P );
         Action_data_group( KConfig& cfg_P, Action_data_group* parent_P );
         virtual ~Action_data_group();
         virtual void update_triggers();
         virtual void cfg_write( KConfig& cfg_P ) const;
-        typedef QPtrListIterator< Action_data_base > Iterator; // CHECKME neni const :(
+        typedef TQPtrListIterator< Action_data_base > Iterator; // CHECKME neni const :(
         Iterator first_child() const;
         bool is_system_group() const;
         system_group_t system_group() const;
         using Action_data_base::set_conditions; // make public
     protected:
-        QPtrList< Action_data_base > list;
+        TQPtrList< Action_data_base > list;
         system_group_t _system_group; // e.g. menuedit entries, can't be deleted or renamed
         friend class Action_data_base; // CHECKME
         void add_child( Action_data_base* child_P );
@@ -93,8 +93,8 @@ class KDE_EXPORT Action_data
     {
         typedef Action_data_base base;
     public:
-        Action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
+        Action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
             Action_list* actions_P, bool enabled_P = true );
         Action_data( KConfig& cfg_P, Action_data_group* parent_P );
         virtual ~Action_data();
@@ -126,8 +126,8 @@ class KDE_EXPORT Generic_action_data
     {
         typedef Action_data base;
     public:
-        Generic_action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
+        Generic_action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
             Action_list* actions_P, bool enabled_P = true );
         Generic_action_data( KConfig& cfg_P, Action_data_group* parent_P );
         virtual void cfg_write( KConfig& cfg_P ) const;
@@ -146,8 +146,8 @@ class KDE_EXPORT Simple_action_data
     {
         typedef Action_data base;
     public:
-        Simple_action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, bool enabled_P = true );
+        Simple_action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, bool enabled_P = true );
         Simple_action_data( KConfig& cfg_P, Action_data_group* parent_P );
         const A* action() const;
         const T* trigger() const;
@@ -162,10 +162,10 @@ class KDE_EXPORT Command_url_shortcut_action_data
     {
         typedef Simple_action_data< Shortcut_trigger, Command_url_action > base;
     public:
-        Command_url_shortcut_action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, bool enabled_P = true );
-        Command_url_shortcut_action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, const KShortcut& shortcut_P, const QString& command_url_P,
+        Command_url_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, bool enabled_P = true );
+        Command_url_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, const KShortcut& shortcut_P, const TQString& command_url_P,
             bool enabled_P = true );    
         Command_url_shortcut_action_data( KConfig& cfg_P, Action_data_group* parent_P );
     };
@@ -175,10 +175,10 @@ class KDE_EXPORT Menuentry_shortcut_action_data
     {
         typedef Simple_action_data< Shortcut_trigger, Menuentry_action > base;
     public:
-        Menuentry_shortcut_action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, bool enabled_P = true );
-        Menuentry_shortcut_action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, const KShortcut& shortcut_P, const QString& command_url_P,
+        Menuentry_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, bool enabled_P = true );
+        Menuentry_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, const KShortcut& shortcut_P, const TQString& command_url_P,
             bool enabled_P = true );    
         Menuentry_shortcut_action_data( KConfig& cfg_P, Action_data_group* parent_P );
     };
@@ -194,8 +194,8 @@ class KDE_EXPORT Keyboard_input_gesture_action_data
     {
         typedef Action_data base;
     public:
-        Keyboard_input_gesture_action_data( Action_data_group* parent_P, const QString& name_P,
-            const QString& comment_P, bool enabled_P = true );
+        Keyboard_input_gesture_action_data( Action_data_group* parent_P, const TQString& name_P,
+            const TQString& comment_P, bool enabled_P = true );
         Keyboard_input_gesture_action_data( KConfig& cfg_P, Action_data_group* parent_P );
         const Keyboard_input_action* action() const;
         // CHECKME kontrola, ze se dava jen jedna akce ?
@@ -233,19 +233,19 @@ Action_data_group* Action_data_base::parent() const
     }
 
 inline
-void Action_data_base::set_name( const QString& name_P )
+void Action_data_base::set_name( const TQString& name_P )
     {
     _name = name_P;
     }
     
 inline
-const QString& Action_data_base::name() const
+const TQString& Action_data_base::name() const
     {
     return _name;
     }
 
 inline
-const QString& Action_data_base::comment() const
+const TQString& Action_data_base::comment() const
     {
     return _comment;
     }
@@ -253,8 +253,8 @@ const QString& Action_data_base::comment() const
 // Action_data_group
 
 inline
-Action_data_group::Action_data_group( Action_data_group* parent_P, const QString& name_P,
-    const QString& comment_P, Condition_list* conditions_P, system_group_t system_group_P,
+Action_data_group::Action_data_group( Action_data_group* parent_P, const TQString& name_P,
+    const TQString& comment_P, Condition_list* conditions_P, system_group_t system_group_P,
     bool enabled_P )
     : Action_data_base( parent_P, name_P, comment_P, conditions_P, enabled_P ),
         _system_group( system_group_P )
@@ -302,8 +302,8 @@ void Action_data_group::remove_child( Action_data_base* child_P )
 // Action_data
 
 inline
-Action_data::Action_data( Action_data_group* parent_P, const QString& name_P,
-    const QString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
+Action_data::Action_data( Action_data_group* parent_P, const TQString& name_P,
+    const TQString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
     Action_list* actions_P, bool enabled_P )
     : Action_data_base( parent_P, name_P, comment_P, conditions_P, enabled_P ),
     _triggers( triggers_P ), _actions( actions_P )
@@ -327,8 +327,8 @@ const Action_list* Action_data::actions() const
 // Generic_action_data
 
 inline
-Generic_action_data::Generic_action_data( Action_data_group* parent_P, const QString& name_P,
-    const QString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
+Generic_action_data::Generic_action_data( Action_data_group* parent_P, const TQString& name_P,
+    const TQString& comment_P, Trigger_list* triggers_P, Condition_list* conditions_P,
     Action_list* actions_P, bool enabled_P )
     : Action_data( parent_P, name_P, comment_P, triggers_P, conditions_P, actions_P, enabled_P )
     {
@@ -345,7 +345,7 @@ Generic_action_data::Generic_action_data( KConfig& cfg_P, Action_data_group* par
 template< typename T, typename A >
 inline
 Simple_action_data< T, A >::Simple_action_data( Action_data_group* parent_P,
-    const QString& name_P, const QString& comment_P, bool enabled_P )
+    const TQString& name_P, const TQString& comment_P, bool enabled_P )
     : Action_data( parent_P, name_P, comment_P, NULL,
         new Condition_list( "", this ), NULL, enabled_P )
     {
@@ -394,7 +394,7 @@ const T* Simple_action_data< T, A >::trigger() const
 
 inline
 Command_url_shortcut_action_data::Command_url_shortcut_action_data( Action_data_group* parent_P,
-    const QString& name_P, const QString& comment_P, bool enabled_P )
+    const TQString& name_P, const TQString& comment_P, bool enabled_P )
     : Simple_action_data< Shortcut_trigger, Command_url_action >( parent_P, name_P,
         comment_P, enabled_P )
     {
@@ -411,7 +411,7 @@ Command_url_shortcut_action_data::Command_url_shortcut_action_data( KConfig& cfg
 
 inline
 Menuentry_shortcut_action_data::Menuentry_shortcut_action_data( Action_data_group* parent_P,
-    const QString& name_P, const QString& comment_P, bool enabled_P )
+    const TQString& name_P, const TQString& comment_P, bool enabled_P )
     : Simple_action_data< Shortcut_trigger, Menuentry_action >( parent_P, name_P,
         comment_P, enabled_P )
     {
@@ -428,7 +428,7 @@ Menuentry_shortcut_action_data::Menuentry_shortcut_action_data( KConfig& cfg_P,
 
 inline
 Keyboard_input_gesture_action_data::Keyboard_input_gesture_action_data(
-    Action_data_group* parent_P, const QString& name_P, const QString& comment_P, bool enabled_P )
+    Action_data_group* parent_P, const TQString& name_P, const TQString& comment_P, bool enabled_P )
     : Action_data( parent_P, name_P, comment_P, NULL,
         new Condition_list( "", this ), NULL, enabled_P )
     {

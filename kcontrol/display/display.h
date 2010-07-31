@@ -29,7 +29,7 @@ class KCMDisplay : public KCModule
   Q_OBJECT
 
   public:
-    KCMDisplay( QWidget *parent, const char *name, const QStringList& );
+    KCMDisplay( TQWidget *parent, const char *name, const TQStringList& );
     void load();
     void save();
 
@@ -37,10 +37,10 @@ class KCMDisplay : public KCModule
     void moduleChanged(bool isChanged);
 
   private:
-    void addTab( const QString &name, const QString &label );
+    void addTab( const TQString &name, const TQString &label );
     
-    QTabWidget *m_tabs;
-    QMap<KCModule*, bool> m_modules;
+    TQTabWidget *m_tabs;
+    TQMap<KCModule*, bool> m_modules;
     bool m_changed;
 };
 

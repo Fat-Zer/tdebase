@@ -22,7 +22,7 @@
 #define __KonqViewIface_h__
 
 #include <dcopobject.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <dcopref.h>
 
 class KonqView;
@@ -35,7 +35,7 @@ class KonqViewIface : virtual public DCOPObject
   K_DCOP
 public:
 
-  KonqViewIface( KonqView * view, const QCString& name );
+  KonqViewIface( KonqView * view, const TQCString& name );
   ~KonqViewIface();
 
 k_dcop:
@@ -44,9 +44,9 @@ k_dcop:
    * Displays another URL, but without changing the view mode
    * (Make sure the part can display this URL)
    */
-  void openURL( QString url,
-                const QString & locationBarURL,
-                const QString & nameFilter );
+  void openURL( TQString url,
+                const TQString & locationBarURL,
+                const TQString & nameFilter );
 
   /** Reload */
   void reload();
@@ -57,8 +57,8 @@ k_dcop:
    * @param serviceName allows to enforce a particular service to be chosen,
    *        @see KonqFactory.
    */
-  bool changeViewMode( const QString &serviceType,
-                       const QString &serviceName );
+  bool changeViewMode( const TQString &serviceType,
+                       const TQString &serviceName );
 
   /**
    * Call this to prevent next openURL() call from changing history lists
@@ -74,23 +74,23 @@ k_dcop:
   /**
    * Retrieve view's URL
    */
-  QString url();
+  TQString url();
 
   /**
    * Get view's location bar URL, i.e. the one that the view signals
    * It can be different from url(), for instance if we display a index.html
    */
-  QString locationBarURL();
+  TQString locationBarURL();
 
   /**
    * @return the servicetype this view is currently displaying
    */
-  QString serviceType();
+  TQString serviceType();
 
   /**
    * @return the servicetypes this view is capable to display
    */
-  QStringList serviceTypes();
+  TQStringList serviceTypes();
 
   /**
    * @return the part embedded into this view

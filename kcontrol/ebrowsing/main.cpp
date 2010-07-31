@@ -23,9 +23,9 @@
 
 #include <unistd.h>
 
-#include <qlayout.h>
-#include <qmap.h>
-#include <qtabwidget.h>
+#include <tqlayout.h>
+#include <tqmap.h>
+#include <tqtabwidget.h>
 
 #include <dcopclient.h>
 #include <kdialog.h>
@@ -35,12 +35,12 @@
 #include "filteropts.h"
 #include "main.h"
 
-typedef KGenericFactory<KURIFilterModule, QWidget> KURIFactory;
+typedef KGenericFactory<KURIFilterModule, TQWidget> KURIFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_kurifilt, KURIFactory("kcmkurifilt") )
 
 class FilterOptions;
 
-KURIFilterModule::KURIFilterModule(QWidget *parent, const char *name, const QStringList &)
+KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQStringList &)
                  :KCModule(KURIFactory::instance(), parent, name)
 {
 
@@ -56,18 +56,18 @@ KURIFilterModule::KURIFilterModule(QWidget *parent, const char *name, const QStr
       " Even easier: just press Alt+F2 (if you have not"
       " changed this shortcut) and enter the shortcut in the KDE Run Command dialog."));
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(this);
 
 #if 0
     opts = new FilterOptions(this);
     tab->addTab(opts, i18n("&Filters"));
-    connect(opts, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+    connect(opts, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 #endif
 
     modules.setAutoDelete(true);
 
-    QMap<QString,KCModule*> helper;
-    QPtrListIterator<KURIFilterPlugin> it = filter->pluginsIterator();
+    TQMap<TQString,KCModule*> helper;
+    TQPtrListIterator<KURIFilterPlugin> it = filter->pluginsIterator();
     for (; it.current(); ++it)
     {
         KCModule *module = it.current()->configModule(this, 0);
@@ -75,15 +75,15 @@ KURIFilterModule::KURIFilterModule(QWidget *parent, const char *name, const QStr
         {
             modules.append(module);
             helper.insert(it.current()->configName(), module);
-            connect(module, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+            connect(module, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
         }
     }
 
     if (modules.count() > 1)
     {
-        QTabWidget *tab = new QTabWidget(this);
+        TQTabWidget *tab = new TQTabWidget(this);
 
-        QMapIterator<QString,KCModule*> it2;
+        TQMapIterator<TQString,KCModule*> it2;
         for (it2 = helper.begin(); it2 != helper.end(); ++it2)
         {
             tab->addTab(it2.data(), it2.key());
@@ -103,7 +103,7 @@ KURIFilterModule::KURIFilterModule(QWidget *parent, const char *name, const QStr
 
 void KURIFilterModule::load()
 {
-    QPtrListIterator<KCModule> it(modules);
+    TQPtrListIterator<KCModule> it(modules);
     for (; it.current(); ++it)
     {
 	  it.current()->load();
@@ -112,7 +112,7 @@ void KURIFilterModule::load()
 
 void KURIFilterModule::save()
 {
-    QPtrListIterator<KCModule> it(modules);
+    TQPtrListIterator<KCModule> it(modules);
     for (; it.current(); ++it)
     {
 	  it.current()->save();
@@ -121,7 +121,7 @@ void KURIFilterModule::save()
 
 void KURIFilterModule::defaults()
 {
-    QPtrListIterator<KCModule> it(modules);
+    TQPtrListIterator<KCModule> it(modules);
     for (; it.current(); ++it)
     {
 	  it.current()->defaults();

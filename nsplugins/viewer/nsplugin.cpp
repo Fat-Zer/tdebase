@@ -30,10 +30,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qdict.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qtimer.h>
+#include <tqdict.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqtimer.h>
 
 #include "kxt.h"
 #include "nsplugin.h"
@@ -252,8 +252,8 @@ NPError g_NPN_GetURL(NPP instance, const char *url, const char *target)
 
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
    if (inst) {
-      inst->requestURL( QString::fromLatin1(url), QString::null,
-                        QString::fromLatin1(target), 0 );
+      inst->requestURL( TQString::fromLatin1(url), TQString::null,
+                        TQString::fromLatin1(target), 0 );
    }
 
    return NPERR_NO_ERROR;
@@ -267,8 +267,8 @@ NPError g_NPN_GetURLNotify(NPP instance, const char *url, const char *target,
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
    if (inst) {
       kdDebug(1431) << "g_NPN_GetURLNotify: ndata=" << (void*)inst << endl;
-      inst->requestURL( QString::fromLatin1(url), QString::null,
-                        QString::fromLatin1(target), notifyData, true );
+      inst->requestURL( TQString::fromLatin1(url), TQString::null,
+                        TQString::fromLatin1(target), notifyData, true );
    }
 
    return NPERR_NO_ERROR;
@@ -281,7 +281,7 @@ NPError g_NPN_PostURLNotify(NPP instance, const char* url, const char* target,
 // http://devedge.netscape.com/library/manuals/2002/plugin/1.0/npn_api14.html
    kdDebug(1431) << "g_NPN_PostURLNotify() [incomplete]" << endl;
    kdDebug(1431) << "url=[" << url << "] target=[" << target << "]" << endl;
-   QByteArray postdata;
+   TQByteArray postdata;
    KParts::URLArgs args;
 
    if (len == 0) {
@@ -289,7 +289,7 @@ NPError g_NPN_PostURLNotify(NPP instance, const char* url, const char* target,
    }
 
    if (file) { // buf is a filename
-      QFile f(buf);
+      TQFile f(buf);
       if (!f.open(IO_ReadOnly)) {
          return NPERR_FILE_NOT_FOUND;
       }
@@ -318,7 +318,7 @@ NPError g_NPN_PostURLNotify(NPP instance, const char* url, const char* target,
                break;
             }
 
-            QString thisLine = QString::fromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
+            TQString thisLine = TQString::fromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
 
             previousStart = &buf[l];
             previousCR = true;
@@ -337,7 +337,7 @@ NPError g_NPN_PostURLNotify(NPP instance, const char* url, const char* target,
 
    kdDebug(1431) << "Post data: " << postdata.size() << " bytes" << endl;
 #if 0
-   QFile f("/tmp/nspostdata");
+   TQFile f("/tmp/nspostdata");
    f.open(IO_WriteOnly);
    f.writeBlock(postdata);
    f.close();
@@ -360,9 +360,9 @@ NPError g_NPN_PostURLNotify(NPP instance, const char* url, const char* target,
    }
 
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
-   if (inst && !inst->normalizedURL(QString::fromLatin1(url)).isNull()) {
-      inst->postURL( QString::fromLatin1(url), postdata, args.contentType(),
-                     QString::fromLatin1(target), notifyData, args, true );
+   if (inst && !inst->normalizedURL(TQString::fromLatin1(url)).isNull()) {
+      inst->postURL( TQString::fromLatin1(url), postdata, args.contentType(),
+                     TQString::fromLatin1(target), notifyData, args, true );
    } else {
       // Unsupported / insecure
       return NPERR_INVALID_URL;
@@ -378,7 +378,7 @@ NPError g_NPN_PostURL(NPP instance, const char* url, const char* target,
 // http://devedge.netscape.com/library/manuals/2002/plugin/1.0/npn_api13.html
    kdDebug(1431) << "g_NPN_PostURL()" << endl;
    kdDebug(1431) << "url=[" << url << "] target=[" << target << "]" << endl;
-   QByteArray postdata;
+   TQByteArray postdata;
    KParts::URLArgs args;
 
    if (len == 0) {
@@ -386,7 +386,7 @@ NPError g_NPN_PostURL(NPP instance, const char* url, const char* target,
    }
 
    if (file) { // buf is a filename
-      QFile f(buf);
+      TQFile f(buf);
       if (!f.open(IO_ReadOnly)) {
          return NPERR_FILE_NOT_FOUND;
       }
@@ -415,7 +415,7 @@ NPError g_NPN_PostURL(NPP instance, const char* url, const char* target,
                break;
             }
 
-            QString thisLine = QString::fromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
+            TQString thisLine = TQString::fromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
 
             previousStart = &buf[l];
             previousCR = true;
@@ -434,7 +434,7 @@ NPError g_NPN_PostURL(NPP instance, const char* url, const char* target,
 
    kdDebug(1431) << "Post data: " << postdata.size() << " bytes" << endl;
 #if 0
-   QFile f("/tmp/nspostdata");
+   TQFile f("/tmp/nspostdata");
    f.open(IO_WriteOnly);
    f.writeBlock(postdata);
    f.close();
@@ -457,9 +457,9 @@ NPError g_NPN_PostURL(NPP instance, const char* url, const char* target,
    }
 
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
-   if (inst && !inst->normalizedURL(QString::fromLatin1(url)).isNull()) {
-      inst->postURL( QString::fromLatin1(url), postdata, args.contentType(),
-                     QString::fromLatin1(target), 0L, args, false );
+   if (inst && !inst->normalizedURL(TQString::fromLatin1(url)).isNull()) {
+      inst->postURL( TQString::fromLatin1(url), postdata, args.contentType(),
+                     TQString::fromLatin1(target), 0L, args, false );
    } else {
       // Unsupported / insecure
       return NPERR_INVALID_URL;
@@ -488,7 +488,7 @@ void g_NPN_Status(NPP instance, const char *message)
 const char *g_NPN_UserAgent(NPP /*instance*/)
 {
     KProtocolManager kpm;
-    QString agent = kpm.userAgentForHost("nspluginviewer");
+    TQString agent = kpm.userAgentForHost("nspluginviewer");
     kdDebug(1431) << "g_NPN_UserAgent() = " << agent << endl;
     // flash crashes without Firefox UA
     agent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.10) Gecko/2007101500 Firefox/2.0.0.10";
@@ -589,11 +589,11 @@ NSPluginInstance::forwarder(Widget w, XtPointer cl_data, XEvent * event, Boolean
 
 NSPluginInstance::NSPluginInstance(NPP privateData, NPPluginFuncs *pluginFuncs,
                                    KLibrary *handle, int width, int height,
-                                   QString src, QString /*mime*/,
-                                   QString appId, QString callbackId,
+                                   TQString src, TQString /*mime*/,
+                                   TQString appId, TQString callbackId,
                                    bool embed, WId xembed,
-                                   QObject *parent, const char* name )
-   : DCOPObject(), QObject( parent, name ) 
+                                   TQObject *parent, const char* name )
+   : DCOPObject(), TQObject( parent, name ) 
 {
     Q_UNUSED(embed);
    _visible = false;
@@ -611,13 +611,13 @@ NSPluginInstance::NSPluginInstance(NPP privateData, NPPluginFuncs *pluginFuncs,
    _toplevel = _form = 0;
 
    KURL base(src);
-   base.setFileName( QString::null );
+   base.setFileName( TQString::null );
    _baseURL = base.url();
 
    memcpy(&_pluginFuncs, pluginFuncs, sizeof(_pluginFuncs));
 
-   _timer = new QTimer( this );
-   connect( _timer, SIGNAL(timeout()), SLOT(timer()) );
+   _timer = new TQTimer( this );
+   connect( _timer, TQT_SIGNAL(timeout()), TQT_SLOT(timer()) );
 
    kdDebug(1431) << "NSPluginInstance::NSPluginInstance" << endl;
    kdDebug(1431) << "pdata = " << _npp->pdata << endl;
@@ -651,9 +651,9 @@ NSPluginInstance::NSPluginInstance(NPP privateData, NPPluginFuncs *pluginFuncs,
 
       // Create form window that is searched for by flash plugin
       _form = XtVaCreateWidget("form", compositeWidgetClass, _toplevel, NULL);
-      XtSetArg(args[nargs], XtNvisual, QPaintDevice::x11AppVisual()); nargs++;
-      XtSetArg(args[nargs], XtNdepth, QPaintDevice::x11AppDepth()); nargs++;
-      XtSetArg(args[nargs], XtNcolormap, QPaintDevice::x11AppColormap()); nargs++;
+      XtSetArg(args[nargs], XtNvisual, TQPaintDevice::x11AppVisual()); nargs++;
+      XtSetArg(args[nargs], XtNdepth, TQPaintDevice::x11AppDepth()); nargs++;
+      XtSetArg(args[nargs], XtNcolormap, TQPaintDevice::x11AppColormap()); nargs++;
       XtSetValues(_form, args, nargs);
       XSync(qt_xdisplay(), false);
 
@@ -772,7 +772,7 @@ void NSPluginInstance::timer()
         Request req( *_waitingRequests.head() );
         _waitingRequests.remove();
 
-        QString url;
+        TQString url;
 
         // make absolute url
         if ( req.url.left(11).lower()=="javascript:" )
@@ -810,8 +810,8 @@ void NSPluginInstance::timer()
                 if (req.post) {
                     // create stream
                     NSPluginStream *s = new NSPluginStream( this );
-                    connect( s, SIGNAL(finished(NSPluginStreamBase*)),
-                             SLOT(streamFinished(NSPluginStreamBase*)) );
+                    connect( s, TQT_SIGNAL(finished(NSPluginStreamBase*)),
+                             TQT_SLOT(streamFinished(NSPluginStreamBase*)) );
                     _streams.append( s );
 
                     kdDebug() << "posting to " << url << endl;
@@ -829,8 +829,8 @@ void NSPluginInstance::timer()
                 } else {
                     // create stream
                     NSPluginStream *s = new NSPluginStream( this );
-                    connect( s, SIGNAL(finished(NSPluginStreamBase*)),
-                             SLOT(streamFinished(NSPluginStreamBase*)) );
+                    connect( s, TQT_SIGNAL(finished(NSPluginStreamBase*)),
+                             TQT_SLOT(streamFinished(NSPluginStreamBase*)) );
                     _streams.append( s );
 
                     kdDebug() << "getting " << url << endl;
@@ -846,7 +846,7 @@ void NSPluginInstance::timer()
 }
 
 
-QString NSPluginInstance::normalizedURL(const QString& url) const {
+TQString NSPluginInstance::normalizedURL(const TQString& url) const {
     KURL bu( _baseURL );
     KURL inURL(bu, url);
     KConfig cfg("kcmnspluginrc", true);
@@ -861,15 +861,15 @@ QString NSPluginInstance::normalizedURL(const QString& url) const {
 
     // Allow: javascript:, http, https, or no protocol (match loading)
     kdDebug(1431) << "NSPluginInstance::normalizedURL - I don't think so.  http or https only!" << endl;
-    return QString::null;
+    return TQString::null;
 }
 
 
-void NSPluginInstance::requestURL( const QString &url, const QString &mime,
-                                   const QString &target, void *notify, bool forceNotify, bool reload )
+void NSPluginInstance::requestURL( const TQString &url, const TQString &mime,
+                                   const TQString &target, void *notify, bool forceNotify, bool reload )
 {
     // Generally this should already be done, but let's be safe for now.
-    QString nurl = normalizedURL(url);
+    TQString nurl = normalizedURL(url);
     if (nurl.isNull()) {
         return;
     }
@@ -880,13 +880,13 @@ void NSPluginInstance::requestURL( const QString &url, const QString &mime,
 }
 
 
-void NSPluginInstance::postURL( const QString &url, const QByteArray& data,
-                                const QString &mime,
-                                const QString &target, void *notify,
+void NSPluginInstance::postURL( const TQString &url, const TQByteArray& data,
+                                const TQString &mime,
+                                const TQString &target, void *notify,
                                 const KParts::URLArgs& args, bool forceNotify )
 {
     // Generally this should already be done, but let's be safe for now.
-    QString nurl = normalizedURL(url);
+    TQString nurl = normalizedURL(url);
     if (nurl.isNull()) {
         return;
     }
@@ -897,7 +897,7 @@ void NSPluginInstance::postURL( const QString &url, const QByteArray& data,
 }
 
 
-void NSPluginInstance::emitStatus(const QString &message)
+void NSPluginInstance::emitStatus(const TQString &message)
 {
     if( _callback )
       _callback->statusMessage( message );
@@ -907,7 +907,7 @@ void NSPluginInstance::emitStatus(const QString &message)
 void NSPluginInstance::streamFinished( NSPluginStreamBase* strm )
 {
    kdDebug(1431) << "-> NSPluginInstance::streamFinished" << endl;
-   emitStatus( QString::null );
+   emitStatus( TQString::null );
    _streams.setAutoDelete(false); // Don't delete it yet!!  we get called from
                                   // its slot!
    _streams.remove(strm);
@@ -998,9 +998,9 @@ void NSPluginInstance::resizePlugin(Q_INT32 w, Q_INT32 h)
       Cardinal nargs = 0;
       XtSetArg(args[nargs], XtNwidth, _width); nargs++;
       XtSetArg(args[nargs], XtNheight, _height); nargs++;
-      XtSetArg(args[nargs], XtNvisual, QPaintDevice::x11AppVisual()); nargs++;
-      XtSetArg(args[nargs], XtNdepth, QPaintDevice::x11AppDepth()); nargs++;
-      XtSetArg(args[nargs], XtNcolormap, QPaintDevice::x11AppColormap()); nargs++;
+      XtSetArg(args[nargs], XtNvisual, TQPaintDevice::x11AppVisual()); nargs++;
+      XtSetArg(args[nargs], XtNdepth, TQPaintDevice::x11AppDepth()); nargs++;
+      XtSetArg(args[nargs], XtNcolormap, TQPaintDevice::x11AppColormap()); nargs++;
       XtSetArg(args[nargs], XtNborderWidth, 0); nargs++;
  
       XtSetValues(_toplevel, args, nargs);
@@ -1021,27 +1021,27 @@ void NSPluginInstance::resizePlugin(Q_INT32 w, Q_INT32 h)
 }
 
 
-void NSPluginInstance::javascriptResult(Q_INT32 id, QString result) {
-    QMap<int, Request*>::iterator i = _jsrequests.find( id );
+void NSPluginInstance::javascriptResult(Q_INT32 id, TQString result) {
+    TQMap<int, Request*>::iterator i = _jsrequests.find( id );
     if (i != _jsrequests.end()) {
         Request *req = i.data();
         _jsrequests.remove( i );
         NSPluginStream *s = new NSPluginStream( this );
-        connect( s, SIGNAL(finished(NSPluginStreamBase*)),
-                 SLOT(streamFinished(NSPluginStreamBase*)) );
+        connect( s, TQT_SIGNAL(finished(NSPluginStreamBase*)),
+                 TQT_SLOT(streamFinished(NSPluginStreamBase*)) );
         _streams.append( s );
 
         int len = result.length();
-        s->create( req->url, QString("text/plain"), req->notify, req->forceNotify );
+        s->create( req->url, TQString("text/plain"), req->notify, req->forceNotify );
         kdDebug(1431) << "javascriptResult has been called with: "<<result<<endl;
         if (len > 0) {
-            QByteArray data(len + 1);
+            TQByteArray data(len + 1);
             memcpy(data.data(), result.latin1(), len);
             data[len] = 0;
             s->process(data, 0);
         } else {
             len = 7; //  "unknown"
-            QByteArray data(len + 1);
+            TQByteArray data(len + 1);
             memcpy(data.data(), "unknown", len);
             data[len] = 0;
             s->process(data, 0);
@@ -1190,7 +1190,7 @@ int32 NSPluginInstance::NPWriteReady(NPStream *stream)
 }
 
 
-void NSPluginInstance::NPURLNotify(QString url, NPReason reason, void *notifyData)
+void NSPluginInstance::NPURLNotify(TQString url, NPReason reason, void *notifyData)
 {
    if (!_pluginFuncs.urlnotify)
       return;
@@ -1249,15 +1249,15 @@ int XQueryKeymap( Display* dpy, char k[32] )
 
 /***************************************************************************/
 
-NSPluginViewer::NSPluginViewer( QCString dcopId,
-                                QObject *parent, const char *name )
-   : DCOPObject(dcopId), QObject( parent, name ) 
+NSPluginViewer::NSPluginViewer( TQCString dcopId,
+                                TQObject *parent, const char *name )
+   : DCOPObject(dcopId), TQObject( parent, name ) 
 {
     _classes.setAutoDelete( true );
     connect(KApplication::dcopClient(),
-            SIGNAL(applicationRemoved(const QCString&)),
+            TQT_SIGNAL(applicationRemoved(const TQCString&)),
             this,
-            SLOT(appUnregistered(const QCString&)));
+            TQT_SLOT(appUnregistered(const TQCString&)));
 }
 
 
@@ -1267,15 +1267,15 @@ NSPluginViewer::~NSPluginViewer()
 }
 
 
-void NSPluginViewer::appUnregistered(const QCString& id) {
+void NSPluginViewer::appUnregistered(const TQCString& id) {
    if (id.isEmpty()) {
       return;
    }
 
-   QDictIterator<NSPluginClass> it(_classes);
+   TQDictIterator<NSPluginClass> it(_classes);
    NSPluginClass *c;
    while ( (c = it.current()) ) {
-      QString key = it.currentKey();
+      TQString key = it.currentKey();
       ++it;
       if (c->app() == id) {
          _classes.remove(key);
@@ -1300,7 +1300,7 @@ void NSPluginViewer::shutdown()
 }
 
 
-DCOPRef NSPluginViewer::newClass( QString plugin )
+DCOPRef NSPluginViewer::newClass( TQString plugin )
 {
    kdDebug(1431) << "NSPluginViewer::NewClass( " << plugin << ")" << endl;
 
@@ -1309,7 +1309,7 @@ DCOPRef NSPluginViewer::newClass( QString plugin )
    if ( !cls ) {
        // create new class
        cls = new NSPluginClass( plugin, this );
-       QCString id = "";
+       TQCString id = "";
        DCOPClient *dc = callingDcopClient();
        if (dc) {
           id = dc->senderId();
@@ -1331,12 +1331,12 @@ DCOPRef NSPluginViewer::newClass( QString plugin )
 /****************************************************************************/
 
 
-NSPluginClass::NSPluginClass( const QString &library,
-                              QObject *parent, const char *name )
-   : DCOPObject(), QObject( parent, name ) 
+NSPluginClass::NSPluginClass( const TQString &library,
+                              TQObject *parent, const char *name )
+   : DCOPObject(), TQObject( parent, name ) 
 {
     // initialize members
-    _handle = KLibLoader::self()->library(QFile::encodeName(library));
+    _handle = KLibLoader::self()->library(TQFile::encodeName(library));
     _libname = library;
     _constructed = false;
     _error = true;
@@ -1345,8 +1345,8 @@ NSPluginClass::NSPluginClass( const QString &library,
     _NP_Initialize = 0;
     _NP_Shutdown = 0;
 
-    _timer = new QTimer( this );
-    connect( _timer, SIGNAL(timeout()), SLOT(timer()) );
+    _timer = new TQTimer( this );
+    connect( _timer, TQT_SIGNAL(timeout()), TQT_SLOT(timer()) );
 
     // check lib handle
     if (!_handle) {
@@ -1444,7 +1444,7 @@ int NSPluginClass::initialize()
 }
 
 
-QString NSPluginClass::getMIMEDescription()
+TQString NSPluginClass::getMIMEDescription()
 {
    return _NP_GetMIMEDescription();
 }
@@ -1458,10 +1458,10 @@ void NSPluginClass::shutdown()
 }
 
 
-DCOPRef NSPluginClass::newInstance( QString url, QString mimeType, Q_INT8 embed,
-                                    QStringList argn, QStringList argv,
-                                    QString appId, QString callbackId,
-                                    Q_INT8 reload, Q_INT8 doPost, QByteArray postData, Q_UINT32 xembed )
+DCOPRef NSPluginClass::newInstance( TQString url, TQString mimeType, Q_INT8 embed,
+                                    TQStringList argn, TQStringList argv,
+                                    TQString appId, TQString callbackId,
+                                    Q_INT8 reload, Q_INT8 doPost, TQByteArray postData, Q_UINT32 xembed )
 {
    kdDebug(1431) << "-> NSPluginClass::NewInstance" << endl;
 
@@ -1472,15 +1472,15 @@ DCOPRef NSPluginClass::newInstance( QString url, QString mimeType, Q_INT8 embed,
    unsigned int argc = argn.count();
    char **_argn = new char*[argc];
    char **_argv = new char*[argc];
-   QString src = url;
+   TQString src = url;
    int width = 0;
    int height = 0;
-   QString baseURL = url;
+   TQString baseURL = url;
 
    for (unsigned int i=0; i<argc; i++)
    {
-      QCString encN = argn[i].utf8();
-      QCString encV = argv[i].utf8();
+      TQCString encN = argn[i].utf8();
+      TQCString encV = argv[i].utf8();
 
       const char *n = encN;
       const char *v = encV;
@@ -1540,9 +1540,9 @@ DCOPRef NSPluginClass::newInstance( QString url, QString mimeType, Q_INT8 embed,
    // create source stream
    if ( !src.isEmpty() ) {
        if (doPost) {
-           inst->postURL(src, postData, mimeType, QString::null, 0, KParts::URLArgs(), false);
+           inst->postURL(src, postData, mimeType, TQString::null, 0, KParts::URLArgs(), false);
        } else {
-           inst->requestURL( src, mimeType, QString::null, 0, false, reload );
+           inst->requestURL( src, mimeType, TQString::null, 0, false, reload );
        }
    }
 
@@ -1561,7 +1561,7 @@ void NSPluginClass::destroyInstance( NSPluginInstance* inst )
 /****************************************************************************/
 
 NSPluginStreamBase::NSPluginStreamBase( NSPluginInstance *instance )
-   : QObject( instance ), _instance(instance), _stream(0), _tempFile(0L),
+   : TQObject( instance ), _instance(instance), _stream(0), _tempFile(0L),
      _pos(0), _queue(0), _queuePos(0), _error(false)
 {
    _informed = false;
@@ -1632,7 +1632,7 @@ void NSPluginStreamBase::inform()
 
 }
 
-bool NSPluginStreamBase::create( const QString& url, const QString& mimeType, void *notify, bool forceNotify)
+bool NSPluginStreamBase::create( const TQString& url, const TQString& mimeType, void *notify, bool forceNotify)
 {
     if ( _stream )
         return false;
@@ -1667,7 +1667,7 @@ void NSPluginStreamBase::updateURL( const KURL& newURL )
     _stream->url = strdup(_url.url().ascii());
 }
 
-int NSPluginStreamBase::process( const QByteArray &data, int start )
+int NSPluginStreamBase::process( const TQByteArray &data, int start )
 {
    int32 max, sent, to_sent, len;
    char *d = data.data() + start;
@@ -1742,7 +1742,7 @@ bool NSPluginStreamBase::pump()
 }
 
 
-void NSPluginStreamBase::queue( const QByteArray &data )
+void NSPluginStreamBase::queue( const TQByteArray &data )
 {
     _queue = data;
     _queue.detach();
@@ -1811,8 +1811,8 @@ void NSPluginStreamBase::finish( bool err )
 NSPluginBufStream::NSPluginBufStream( class NSPluginInstance *instance )
     : NSPluginStreamBase( instance )
 {
-    _timer = new QTimer( this );
-    connect( _timer, SIGNAL(timeout()), this, SLOT(timer()) );
+    _timer = new TQTimer( this );
+    connect( _timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(timer()) );
 }
 
 
@@ -1822,8 +1822,8 @@ NSPluginBufStream::~NSPluginBufStream()
 }
 
 
-bool NSPluginBufStream::get( const QString& url, const QString& mimeType,
-                             const QByteArray &buf, void *notifyData,
+bool NSPluginBufStream::get( const TQString& url, const TQString& mimeType,
+                             const TQByteArray &buf, void *notifyData,
                              bool singleShot )
 {
     _singleShot = singleShot;
@@ -1857,8 +1857,8 @@ void NSPluginBufStream::timer()
 NSPluginStream::NSPluginStream( NSPluginInstance *instance )
     : NSPluginStreamBase( instance ), _job(0)
 {
-   _resumeTimer = new QTimer( this );
-   connect(_resumeTimer, SIGNAL(timeout()), this, SLOT(resume()));
+   _resumeTimer = new TQTimer( this );
+   connect(_resumeTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(resume()));
 }
 
 
@@ -1869,7 +1869,7 @@ NSPluginStream::~NSPluginStream()
 }
 
 
-bool NSPluginStream::get( const QString& url, const QString& mimeType,
+bool NSPluginStream::get( const TQString& url, const TQString& mimeType,
                           void *notify, bool reload )
 {
     // create new stream
@@ -1881,23 +1881,23 @@ bool NSPluginStream::get( const QString& url, const QString& mimeType,
         if (reload) {
             _job->addMetaData("cache", "reload");
         }
-        connect(_job, SIGNAL(data(KIO::Job *, const QByteArray &)),
-                SLOT(data(KIO::Job *, const QByteArray &)));
-        connect(_job, SIGNAL(result(KIO::Job *)), SLOT(result(KIO::Job *)));
-        connect(_job, SIGNAL(totalSize(KIO::Job *, KIO::filesize_t )),
-                SLOT(totalSize(KIO::Job *, KIO::filesize_t)));
-        connect(_job, SIGNAL(mimetype(KIO::Job *, const QString &)),
-                SLOT(mimetype(KIO::Job *, const QString &)));
-        connect(_job, SIGNAL(redirection(KIO::Job *, const KURL&)),
-                SLOT(redirection(KIO::Job *, const KURL&)));
+        connect(_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
+                TQT_SLOT(data(KIO::Job *, const TQByteArray &)));
+        connect(_job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(result(KIO::Job *)));
+        connect(_job, TQT_SIGNAL(totalSize(KIO::Job *, KIO::filesize_t )),
+                TQT_SLOT(totalSize(KIO::Job *, KIO::filesize_t)));
+        connect(_job, TQT_SIGNAL(mimetype(KIO::Job *, const TQString &)),
+                TQT_SLOT(mimetype(KIO::Job *, const TQString &)));
+        connect(_job, TQT_SIGNAL(redirection(KIO::Job *, const KURL&)),
+                TQT_SLOT(redirection(KIO::Job *, const KURL&)));
     }
 
     return false;
 }
 
 
-bool NSPluginStream::post( const QString& url, const QByteArray& data, 
-           const QString& mimeType, void *notify, const KParts::URLArgs& args )
+bool NSPluginStream::post( const TQString& url, const TQByteArray& data, 
+           const TQString& mimeType, void *notify, const KParts::URLArgs& args )
 {
     // create new stream
     if ( create( url, mimeType, notify ) ) {
@@ -1906,22 +1906,22 @@ bool NSPluginStream::post( const QString& url, const QByteArray& data,
         _job->addMetaData("content-type", args.contentType());
         _job->addMetaData("errorPage", "false");
         _job->addMetaData("AllowCompressedPage", "false");
-        connect(_job, SIGNAL(data(KIO::Job *, const QByteArray &)),
-                SLOT(data(KIO::Job *, const QByteArray &)));
-        connect(_job, SIGNAL(result(KIO::Job *)), SLOT(result(KIO::Job *)));
-        connect(_job, SIGNAL(totalSize(KIO::Job *, KIO::filesize_t )),
-                SLOT(totalSize(KIO::Job *, KIO::filesize_t)));
-        connect(_job, SIGNAL(mimetype(KIO::Job *, const QString &)),
-                SLOT(mimetype(KIO::Job *, const QString &)));
-        connect(_job, SIGNAL(redirection(KIO::Job *, const KURL&)),
-                SLOT(redirection(KIO::Job *, const KURL&)));
+        connect(_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
+                TQT_SLOT(data(KIO::Job *, const TQByteArray &)));
+        connect(_job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(result(KIO::Job *)));
+        connect(_job, TQT_SIGNAL(totalSize(KIO::Job *, KIO::filesize_t )),
+                TQT_SLOT(totalSize(KIO::Job *, KIO::filesize_t)));
+        connect(_job, TQT_SIGNAL(mimetype(KIO::Job *, const TQString &)),
+                TQT_SLOT(mimetype(KIO::Job *, const TQString &)));
+        connect(_job, TQT_SIGNAL(redirection(KIO::Job *, const KURL&)),
+                TQT_SLOT(redirection(KIO::Job *, const KURL&)));
     }
 
     return false;
 }
 
 
-void NSPluginStream::data(KIO::Job * job, const QByteArray &data)
+void NSPluginStream::data(KIO::Job * job, const TQByteArray &data)
 {
     //kdDebug(1431) << "NSPluginStream::data - job=" << (void*)job << " data size=" << data.size() << endl;
     queue( data );
@@ -1942,9 +1942,9 @@ void NSPluginStream::totalSize(KIO::Job * job, KIO::filesize_t size)
     _stream->end = size;
 }
 
-void NSPluginStream::mimetype(KIO::Job * job, const QString &mimeType)
+void NSPluginStream::mimetype(KIO::Job * job, const TQString &mimeType)
 {
-    kdDebug(1431) << "NSPluginStream::QByteArray - job=" << (void*)job << " mimeType=" << mimeType << endl;
+    kdDebug(1431) << "NSPluginStream::TQByteArray - job=" << (void*)job << " mimeType=" << mimeType << endl;
     _mimeType = mimeType;
 }
 

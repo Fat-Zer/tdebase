@@ -15,8 +15,8 @@
 
 #include <kprogress.h>
 
-#include <qlabel.h>
-#include <qwidget.h>
+#include <tqlabel.h>
+#include <tqwidget.h>
 
 #include "themeengine.h"
 class QPixmap;
@@ -28,10 +28,10 @@ class DefaultConfig: public ThemeEngineConfig
 {
   Q_OBJECT
 public:
-  DefaultConfig( QWidget *, KConfig * );
+  DefaultConfig( TQWidget *, KConfig * );
   void save();
 protected:
-  QCheckBox *mFlash, *mAlwaysShow;
+  TQCheckBox *mFlash, *mAlwaysShow;
 };
 
 /**
@@ -42,17 +42,17 @@ class KDE_EXPORT ThemeDefault : public ThemeEngine
 {
   Q_OBJECT
 public:
-  ThemeDefault( QWidget *, const char *, const QStringList& );
+  ThemeDefault( TQWidget *, const char *, const TQStringList& );
    virtual ~ThemeDefault();
 
-  inline const DefaultConfig *config( QWidget *p, KConfig *c )
+  inline const DefaultConfig *config( TQWidget *p, KConfig *c )
   {
     return new DefaultConfig( p, c );
   };
 
-  static QStringList names()
+  static TQStringList names()
   {
-    QStringList Names;
+    TQStringList Names;
     Names << "Default";
     Names << "Classic";
     Names << "Klassic";
@@ -60,7 +60,7 @@ public:
   }
 
 public slots:
-  inline void slotSetText( const QString& s )
+  inline void slotSetText( const TQString& s )
   {
     if( mLabel )
       mLabel->setText( s );
@@ -79,25 +79,25 @@ public slots:
 
 private slots:
   void slotUpdateState();
-  QPixmap updateBarPixmap( int );
+  TQPixmap updateBarPixmap( int );
   void flash();
 
 private:
   void _initUi();
   void _readSettings();
-  QString _findPicture( const QString &pic );
+  TQString _findPicture( const TQString &pic );
 
   // Configurable Options
   bool mIconsFlashing;
-  QColor mLabelForeground;
+  TQColor mLabelForeground;
 
   // Internals.
   KProgress *mProgressBar;
-  QLabel *mLabel, *mBarLabel;
-  QPixmap *mActivePixmap, *mInactivePixmap;
+  TQLabel *mLabel, *mBarLabel;
+  TQPixmap *mActivePixmap, *mInactivePixmap;
   int mState;
-  QTimer *mFlashTimer;
-  QPixmap *mFlashPixmap1, *mFlashPixmap2;
+  TQTimer *mFlashTimer;
+  TQPixmap *mFlashPixmap1, *mFlashPixmap2;
 };
 
 #endif

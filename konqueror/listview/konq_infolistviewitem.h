@@ -21,7 +21,7 @@
 #define __konq_infolistviewitems_h__
 
 #include "konq_listview.h"
-#include <qstring.h>
+#include <tqstring.h>
 #include <kicontheme.h>
 
 // for mode_t
@@ -55,15 +55,15 @@ class KonqInfoListViewItem : public KonqBaseListViewItem
 
       virtual ~KonqInfoListViewItem() { }
 
-      virtual void paintCell( QPainter *_painter, const QColorGroup & cg,
+      virtual void paintCell( TQPainter *_painter, const TQColorGroup & cg,
                               int column, int width, int alignment );
-      virtual void paintFocus( QPainter * _painter, const QColorGroup & cg, const QRect & r );
+      virtual void paintFocus( TQPainter * _painter, const TQColorGroup & cg, const TQRect & r );
       virtual void updateContents();
       virtual void setDisabled( bool disabled );
 
       virtual void gotMetaInfo();
 
-      virtual int compare(QListViewItem *item, int col, bool ascending) const;
+      virtual int compare(TQListViewItem *item, int col, bool ascending) const;
 
    protected:
       /**
@@ -72,8 +72,8 @@ class KonqInfoListViewItem : public KonqBaseListViewItem
       KonqInfoListViewWidget* m_ILVWidget;
 
    private:
-      QValueVector<QVariant::Type> m_columnTypes;
-      QValueVector<QVariant> m_columnValues;
+      TQValueVector<TQVariant::Type> m_columnTypes;
+      TQValueVector<TQVariant> m_columnValues;
 };
 
 #endif

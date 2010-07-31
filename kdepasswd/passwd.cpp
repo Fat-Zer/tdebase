@@ -23,7 +23,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -32,7 +32,7 @@
 #include "passwd.h"
 
 
-PasswdProcess::PasswdProcess(QCString user)
+PasswdProcess::PasswdProcess(TQCString user)
 {
     struct passwd *pw;
 
@@ -112,7 +112,7 @@ int PasswdProcess::exec(const char *oldpass, const char *newpass,
 int PasswdProcess::ConversePasswd(const char *oldpass, const char *newpass, 
 	int check)
 {
-    QCString line, errline;
+    TQCString line, errline;
     int state = 0;
 
     while (state != 7)
@@ -259,7 +259,7 @@ int PasswdProcess::ConversePasswd(const char *oldpass, const char *newpass,
 }
     
 
-bool PasswdProcess::isPrompt(QCString line, const char *word)
+bool PasswdProcess::isPrompt(TQCString line, const char *word)
 {
     unsigned i, j, colon;
     unsigned int lineLength(line.length());

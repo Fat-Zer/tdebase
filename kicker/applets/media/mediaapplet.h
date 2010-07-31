@@ -25,15 +25,15 @@
 #endif
 
 #include <kpanelapplet.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kconfig.h>
 #include <kurl.h>
 #include <kfileitem.h>
 #include <kdirlister.h>
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include "mediumbutton.h"
-typedef QValueList<MediumButton*> MediumButtonList;
+typedef TQValueList<MediumButton*> MediumButtonList;
 
 
 class MediaApplet : public KPanelApplet
@@ -41,8 +41,8 @@ class MediaApplet : public KPanelApplet
 Q_OBJECT
 
 public:
-	MediaApplet(const QString& configFile, Type t = Normal, int actions = 0,
-	              QWidget *parent = 0, const char *name = 0);
+	MediaApplet(const TQString& configFile, Type t = Normal, int actions = 0,
+	              TQWidget *parent = 0, const char *name = 0);
 	~MediaApplet();
 
 	int widthForHeight(int height) const;
@@ -52,12 +52,12 @@ public:
 
 protected:
 	void arrangeButtons();
-	void resizeEvent(QResizeEvent *e);
+	void resizeEvent(TQResizeEvent *e);
 	void positionChange(Position p);
 	void reloadList();
 	void loadConfig();
 	void saveConfig();
-	void mousePressEvent(QMouseEvent *e);
+	void mousePressEvent(TQMouseEvent *e);
 
 protected slots:
 	void slotClear();
@@ -70,8 +70,8 @@ protected slots:
 private:
 	KDirLister *mpDirLister;
 	MediumButtonList mButtonList;
-	QStringList mExcludedTypesList;
-	QStringList mExcludedList;
+	TQStringList mExcludedTypesList;
+	TQStringList mExcludedList;
 	KFileItemList mMedia;
         int mButtonSizeSum;
 };

@@ -21,7 +21,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qiconset.h>
+#include <tqiconset.h>
 
 #include <kstandarddirs.h>
 
@@ -32,21 +32,21 @@ KLanguageCombo::~KLanguageCombo ()
 {
 }
 
-KLanguageCombo::KLanguageCombo (QWidget * parent, const char *name)
+KLanguageCombo::KLanguageCombo (TQWidget * parent, const char *name)
   : KTagComboBox(parent, name)
 {
 }
 
-void KLanguageCombo::insertLanguage(const QString& path, const QString& name, const QString& sub, const QString &submenu, int index)
+void KLanguageCombo::insertLanguage(const TQString& path, const TQString& name, const TQString& sub, const TQString &submenu, int index)
 {
-  QString output = name + QString::fromLatin1(" (") + path + QString::fromLatin1(")");
-  QPixmap flag(locate("locale", sub + path + QString::fromLatin1("/flag.png")));
-  insertItem(QIconSet(flag), output, path, submenu, index);
+  TQString output = name + TQString::fromLatin1(" (") + path + TQString::fromLatin1(")");
+  TQPixmap flag(locate("locale", sub + path + TQString::fromLatin1("/flag.png")));
+  insertItem(TQIconSet(flag), output, path, submenu, index);
 }
 
-void KLanguageCombo::changeLanguage(const QString& name, int i)
+void KLanguageCombo::changeLanguage(const TQString& name, int i)
 {
   if (i < 0 || i >= count()) return;
-  QString output = name + QString::fromLatin1(" (") + tag(i) + QString::fromLatin1(")");
+  TQString output = name + TQString::fromLatin1(" (") + tag(i) + TQString::fromLatin1(")");
   changeItem(output, i);
 }

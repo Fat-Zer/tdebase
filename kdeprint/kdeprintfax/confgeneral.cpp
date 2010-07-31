@@ -20,10 +20,10 @@
 
 #include "confgeneral.h"
 
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
 
 #include <kglobal.h>
 #include <kconfig.h>
@@ -32,26 +32,26 @@
 
 #include <stdlib.h>
 
-ConfGeneral::ConfGeneral(QWidget *parent, const char *name)
-: QWidget(parent, name)
+ConfGeneral::ConfGeneral(TQWidget *parent, const char *name)
+: TQWidget(parent, name)
 {
-	m_name = new QLineEdit(this);
-	m_company = new QLineEdit(this);
-	m_number = new QLineEdit(this);
-	QLabel	*m_namelabel = new QLabel(i18n("&Name:"), this);
+	m_name = new TQLineEdit(this);
+	m_company = new TQLineEdit(this);
+	m_number = new TQLineEdit(this);
+	QLabel	*m_namelabel = new TQLabel(i18n("&Name:"), this);
 	m_namelabel->setBuddy(m_name);
-	QLabel	*m_companylabel = new QLabel(i18n("&Company:"), this);
+	QLabel	*m_companylabel = new TQLabel(i18n("&Company:"), this);
 	m_companylabel->setBuddy(m_company);
-	QLabel	*m_numberlabel = new QLabel(i18n("N&umber:"), this);
+	QLabel	*m_numberlabel = new TQLabel(i18n("N&umber:"), this);
         m_numberlabel->setBuddy(m_number);
 	KSeparator *sep = new KSeparator( this );
-	m_replace_int_char = new QCheckBox( i18n( "Replace international prefix '+' with:" ), this );
-	m_replace_int_char_val = new QLineEdit( this );
+	m_replace_int_char = new TQCheckBox( i18n( "Replace international prefix '+' with:" ), this );
+	m_replace_int_char_val = new TQLineEdit( this );
 	m_replace_int_char_val->setEnabled( false );
 
-	connect( m_replace_int_char, SIGNAL( toggled( bool ) ), m_replace_int_char_val, SLOT( setEnabled( bool ) ) );
+	connect( m_replace_int_char, TQT_SIGNAL( toggled( bool ) ), m_replace_int_char_val, TQT_SLOT( setEnabled( bool ) ) );
 
-	QGridLayout	*l0 = new QGridLayout(this, 6, 2, 10, 10);
+	QGridLayout	*l0 = new TQGridLayout(this, 6, 2, 10, 10);
 	l0->setColStretch(1, 1);
 	l0->setRowStretch(5, 1);
 	l0->addWidget(m_namelabel, 0, 0);
@@ -61,7 +61,7 @@ ConfGeneral::ConfGeneral(QWidget *parent, const char *name)
 	l0->addWidget(m_company, 1, 1);
 	l0->addWidget(m_number, 2, 1);
 	l0->addMultiCellWidget( sep, 3, 3, 0, 1 );
-	QHBoxLayout *l1 = new QHBoxLayout( this, 0, 10 );
+	TQHBoxLayout *l1 = new TQHBoxLayout( this, 0, 10 );
 	l0->addMultiCellLayout( l1, 4, 4, 0, 1 );
 	l1->addWidget( m_replace_int_char );
 	l1->addWidget( m_replace_int_char_val );

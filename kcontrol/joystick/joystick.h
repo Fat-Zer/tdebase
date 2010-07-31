@@ -30,7 +30,7 @@ class joystick: public KCModule
   Q_OBJECT
 
   public:
-    joystick(QWidget *parent = 0, const char *name = 0, const QStringList &list = QStringList());
+    joystick(TQWidget *parent = 0, const char *name = 0, const TQStringList &list = TQStringList());
 
     virtual void load();
     virtual void defaults();

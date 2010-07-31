@@ -37,10 +37,10 @@
 #include <stdlib.h>	/* for malloc(3) */
 #include <fstab.h>
 
-#include <qfile.h>
-#include <qfontmetrics.h>
-#include <qstrlist.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqfontmetrics.h>
+#include <tqstrlist.h>
+#include <tqtextstream.h>
 
 #include <kdebug.h>
 #include <kio/global.h> /* for KIO::convertSize() */
@@ -52,7 +52,7 @@ typedef struct
   const char	*title;
   } hw_info_mib_list_t;
 
-bool GetInfo_CPU(QListView *lBox)
+bool GetInfo_CPU(TQListView *lBox)
 {
   static hw_info_mib_list_t hw_info_mib_list[]= {
 	{ 1, HW_MODEL,		"Model" },
@@ -67,7 +67,7 @@ bool GetInfo_CPU(QListView *lBox)
   int mib[2], num;
   char *buf;
   size_t len;
-  QString value;
+  TQString value;
 
   lBox->addColumn(i18n("Information"));
   lBox->addColumn(i18n("Value"));
@@ -80,19 +80,19 @@ bool GetInfo_CPU(QListView *lBox)
 		sysctl(mib,2,NULL,&len,NULL,0);
 		if ( (buf = (char*)malloc(len)) ) {
 			sysctl(mib,2,buf,&len,NULL,0);
-			value = QString::fromLocal8Bit(buf);
+			value = TQString::fromLocal8Bit(buf);
 			free(buf);
 		}
 		else {
-			value = QString("Unknown");
+			value = TQString("Unknown");
 		}
 	}
 	else {
 		len = sizeof(num);
 		sysctl(mib,2,&num,&len,NULL,0);
-		value = QString::number(num);
+		value = TQString::number(num);
 	}
-	new QListViewItem(lBox, hw_info_mib->title, value);
+	new TQListViewItem(lBox, hw_info_mib->title, value);
    }
 
    return true;
@@ -100,29 +100,29 @@ bool GetInfo_CPU(QListView *lBox)
 
 // this is used to find out which devices are currently
 // on system
-static bool GetDmesgInfo(QListView *lBox, const char *filter,
-	void func(QListView *, QString s))
+static bool GetDmesgInfo(TQListView *lBox, const char *filter,
+	void func(TQListView *, TQString s))
 {
-        QFile *dmesg = new QFile("/var/run/dmesg.boot");
+        TQFile *dmesg = new TQFile("/var/run/dmesg.boot");
 	bool usepipe = false;
 	FILE *pipe = NULL;
-	QTextStream *t;
+	TQTextStream *t;
 	bool seencpu = false;
-	QString s;
+	TQString s;
 	bool found = false;
 
 	if (dmesg->exists() && dmesg->open(IO_ReadOnly)) {
-		t = new QTextStream(dmesg);
+		t = new TQTextStream(dmesg);
 	}
 	else {
 		delete dmesg;
 		pipe = popen("/sbin/dmesg", "r");
 		if (!pipe) return false;
 		usepipe = true;
-		t = new QTextStream(pipe, IO_ReadOnly);
+		t = new TQTextStream(pipe, IO_ReadOnly);
 	}
 
-	QListViewItem *olditem = NULL;
+	TQListViewItem *olditem = NULL;
 	while(!(s = t->readLine().local8Bit()).isEmpty()) {
 		if (!seencpu) {
 			if (s.contains("cpu"))
@@ -140,7 +140,7 @@ static bool GetDmesgInfo(QListView *lBox, const char *filter,
 			if (func)
 				func(lBox, s);
 			else
-				olditem = new QListViewItem(lBox, olditem, s);
+				olditem = new TQListViewItem(lBox, olditem, s);
 			found = true;
 		}
 	}
@@ -158,7 +158,7 @@ static bool GetDmesgInfo(QListView *lBox, const char *filter,
 
 
 void
-AddIRQLine(QListView *lBox, QString s)
+AddIRQLine(TQListView *lBox, TQString s)
 {
 	int pos, irqnum;
 	char numstr[3];
@@ -172,10 +172,10 @@ AddIRQLine(QListView *lBox, QString s)
 		strcpy(numstr, "??");
 	}
 
-	new QListViewItem(lBox, numstr, s);
+	new TQListViewItem(lBox, numstr, s);
 }
 
-bool GetInfo_IRQ (QListView *lBox)
+bool GetInfo_IRQ (TQListView *lBox)
 {
 	lBox->addColumn(i18n("IRQ"));
 	lBox->addColumn(i18n("Device"));
@@ -185,36 +185,36 @@ bool GetInfo_IRQ (QListView *lBox)
 	return true;
 }
 
-bool GetInfo_DMA (QListView *)
+bool GetInfo_DMA (TQListView *)
 {
 	return false;
 }
 
-bool GetInfo_PCI (QListView *lbox)
+bool GetInfo_PCI (TQListView *lbox)
 {
 	if (!GetDmesgInfo(lbox, "at pci", NULL))
-		new QListViewItem(lbox, i18n("No PCI devices found."));
+		new TQListViewItem(lbox, i18n("No PCI devices found."));
 	return true;
 }
 
-bool GetInfo_IO_Ports (QListView *lbox)
+bool GetInfo_IO_Ports (TQListView *lbox)
 {
 	if (!GetDmesgInfo(lbox, "port 0x", NULL))
-		new QListViewItem(lbox, i18n("No I/O port devices found."));
+		new TQListViewItem(lbox, i18n("No I/O port devices found."));
 	return true;
 }
 
-bool GetInfo_Sound (QListView *lbox)
+bool GetInfo_Sound (TQListView *lbox)
 {
 	lbox->setSorting(false);
 
 	if (!GetDmesgInfo(lbox, "audio", NULL))
-		new QListViewItem(lbox, i18n("No audio devices found."));
+		new TQListViewItem(lbox, i18n("No audio devices found."));
 
 	// append information for each audio devices found
-	QListViewItem *lvitem = lbox->firstChild();
+	TQListViewItem *lvitem = lbox->firstChild();
 	for(; lvitem; lvitem = lvitem->nextSibling()) {
-		QString s;
+		TQString s;
 		int pos, len;
 		const char *start;
 		char *dev;
@@ -237,21 +237,21 @@ bool GetInfo_Sound (QListView *lbox)
 	return true;
 }
 
-bool GetInfo_Devices (QListView *lBox)
+bool GetInfo_Devices (TQListView *lBox)
 {
 	(void) GetDmesgInfo(lBox, NULL, NULL);
 	return true;
 }
 
-bool GetInfo_SCSI (QListView *lbox)
+bool GetInfo_SCSI (TQListView *lbox)
 {
 	if (!GetDmesgInfo(lbox, "scsibus", NULL))
-		new QListViewItem(lbox, i18n("No SCSI devices found."));
+		new TQListViewItem(lbox, i18n("No SCSI devices found."));
 
 	// remove the 'waiting %d seconds for devices to settle' message
-	QListViewItem *lvitem = lbox->firstChild();
+	TQListViewItem *lvitem = lbox->firstChild();
 	for(; lvitem; lvitem = lvitem->nextSibling()) {
-		QString s = lvitem->text(0);
+		TQString s = lvitem->text(0);
 
 		if (s.contains("seconds for devices to settle")) {
 			lbox->removeItem(lvitem);
@@ -262,7 +262,7 @@ bool GetInfo_SCSI (QListView *lbox)
 	return true;
 }
 
-bool GetInfo_Partitions (QListView *lbox)
+bool GetInfo_Partitions (TQListView *lbox)
 {
 	int num; // number of mounts
 	// FIXME: older pkgsrc patches checked ST_RDONLY for this declaration
@@ -288,7 +288,7 @@ bool GetInfo_Partitions (QListView *lbox)
 	// mnt points into a static array (no need to free it)
 	for(; num--; ++mnt) {
 		unsigned long long big[2];
-		QString vv[5];
+		TQString vv[5];
 
 		big[0] = big[1] = mnt->f_bsize; // coerce the product
 		big[0] *= mnt->f_blocks;
@@ -296,18 +296,18 @@ bool GetInfo_Partitions (QListView *lbox)
 
 		// convert to strings
 		vv[0] = KIO::convertSize(big[0]);
-		vv[1] = QString::fromLatin1("%1 (%2%%)")
+		vv[1] = TQString::fromLatin1("%1 (%2%%)")
 				.arg(KIO::convertSize(big[1]))
 				.arg(mnt->f_blocks ? mnt->f_bavail*100/mnt->f_blocks : 0);
 
 		// FIXME: these two are large enough to punctuate
-		vv[2] = QString::number(mnt->f_files);
-		vv[3] = QString::fromLatin1("%1 (%2%%) ")
+		vv[2] = TQString::number(mnt->f_files);
+		vv[3] = TQString::fromLatin1("%1 (%2%%) ")
 				.arg(mnt->f_ffree)
 				.arg(mnt->f_files ? mnt->f_ffree*100/mnt->f_files : 0);
 
-		vv[4] = QString::null;
-#define MNTF(x) if (mnt->f_flags & MNT_##x) vv[4] += QString::fromLatin1(#x " ");
+		vv[4] = TQString::null;
+#define MNTF(x) if (mnt->f_flags & MNT_##x) vv[4] += TQString::fromLatin1(#x " ");
 		MNTF(ASYNC)
 		MNTF(DEFEXPORTED)
 		MNTF(EXKERB)
@@ -335,7 +335,7 @@ bool GetInfo_Partitions (QListView *lbox)
 
 		// put it in the table
 		// FIXME: there're more data but we have limited args (this is wrong! just add!)
-		new QListViewItem(lbox,
+		new TQListViewItem(lbox,
 			// FIXME: names need pad space
 			mnt->f_mntfromname,
 			mnt->f_mntonname,
@@ -347,7 +347,7 @@ bool GetInfo_Partitions (QListView *lbox)
 	return true;
 }
 
-bool GetInfo_XServer_and_Video (QListView *lBox)
+bool GetInfo_XServer_and_Video (TQListView *lBox)
 {
 	return GetInfo_XServer_Generic( lBox );
 }

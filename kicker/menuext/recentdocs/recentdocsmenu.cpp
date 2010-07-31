@@ -21,9 +21,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qdragobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqdragobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -39,8 +39,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 K_EXPORT_KICKER_MENUEXT(recentdocs, RecentDocsMenu)
 
-RecentDocsMenu::RecentDocsMenu(QWidget *parent, const char *name,
-                               const QStringList &/*args*/)
+RecentDocsMenu::RecentDocsMenu(TQWidget *parent, const char *name,
+                               const TQStringList &/*args*/)
     : KPanelMenu(KRecentDocument::recentDocumentDirectory(), parent, name)
 {
 }
@@ -52,7 +52,7 @@ RecentDocsMenu::~RecentDocsMenu()
 void RecentDocsMenu::initialize() {
 	if (initialized()) clear();
 
-	insertItem(SmallIconSet("history_clear"), i18n("Clear History"), this, SLOT(slotClearHistory()));
+	insertItem(SmallIconSet("history_clear"), i18n("Clear History"), this, TQT_SLOT(slotClearHistory()));
 	insertSeparator();
 
 	_fileList = KRecentDocument::recentDocuments();
@@ -65,24 +65,24 @@ void RecentDocsMenu::initialize() {
 
 	int id = 0;
 	char alreadyPresentInMenu;
-	QStringList previousEntries;
-	for (QStringList::ConstIterator it = _fileList.begin(); it != _fileList.end(); ++it) {
+	TQStringList previousEntries;
+	for (TQStringList::ConstIterator it = _fileList.begin(); it != _fileList.end(); ++it) {
 		KDesktopFile f(*it, true /* read only */);
 
 		// Make sure this entry is not already present in the menu
 		alreadyPresentInMenu = 0;
-		for ( QStringList::Iterator previt = previousEntries.begin(); previt != previousEntries.end(); ++previt ) {
-			if (QString::localeAwareCompare(*previt, f.readName().replace('&', QString::fromAscii("&&") )) == 0) {
+		for ( TQStringList::Iterator previt = previousEntries.begin(); previt != previousEntries.end(); ++previt ) {
+			if (TQString::localeAwareCompare(*previt, f.readName().replace('&', TQString::fromAscii("&&") )) == 0) {
 				alreadyPresentInMenu = 1;
 			}
 		}
 
 		if (alreadyPresentInMenu == 0) {
 			// Add item to menu
-			insertItem(SmallIconSet(f.readIcon()), f.readName().replace('&', QString::fromAscii("&&") ), id++);
+			insertItem(SmallIconSet(f.readIcon()), f.readName().replace('&', TQString::fromAscii("&&") ), id++);
 
 			// Append to duplicate checking list
-			previousEntries.append(f.readName().replace('&', QString::fromAscii("&&") ));
+			previousEntries.append(f.readName().replace('&', TQString::fromAscii("&&") ));
 		}
 	}
 
@@ -103,12 +103,12 @@ void RecentDocsMenu::slotExec(int id) {
 	}
 }
 
-void RecentDocsMenu::mousePressEvent(QMouseEvent* e) {
+void RecentDocsMenu::mousePressEvent(TQMouseEvent* e) {
 	_mouseDown = e->pos();
-	QPopupMenu::mousePressEvent(e);
+	TQPopupMenu::mousePressEvent(e);
 }
 
-void RecentDocsMenu::mouseMoveEvent(QMouseEvent* e) {
+void RecentDocsMenu::mouseMoveEvent(TQMouseEvent* e) {
 	KPanelMenu::mouseMoveEvent(e);
 
 	if (!(e->state() & LeftButton))

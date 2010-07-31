@@ -19,9 +19,9 @@
 #ifndef __konq_undo_h__
 #define __konq_undo_h__
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qvaluestack.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqvaluestack.h>
 
 #include <dcopobject.h>
 
@@ -37,7 +37,7 @@ class KonqUndoJob;
 
 struct KonqBasicOperation
 {
-  typedef QValueStack<KonqBasicOperation> Stack;
+  typedef TQValueStack<KonqBasicOperation> Stack;
 
   KonqBasicOperation()
   { m_valid = false; }
@@ -48,12 +48,12 @@ struct KonqBasicOperation
   bool m_link;
   KURL m_src;
   KURL m_dst;
-  QString m_target;
+  TQString m_target;
 };
 
 struct KonqCommand
 {
-  typedef QValueStack<KonqCommand> Stack;
+  typedef TQValueStack<KonqCommand> Stack;
 
   enum Type { COPY, MOVE, LINK, MKDIR, TRASH };
 
@@ -79,14 +79,14 @@ private slots:
   void slotResult( KIO::Job *job );
 
   void slotCopyingDone( KIO::Job *, const KURL &from, const KURL &to, bool directory, bool renamed );
-  void slotCopyingLinkDone( KIO::Job *, const KURL &from, const QString &target, const KURL &to );
+  void slotCopyingLinkDone( KIO::Job *, const KURL &from, const TQString &target, const KURL &to );
 
 private:
   class KonqCommandRecorderPrivate;
   KonqCommandRecorderPrivate *d;
 };
 
-class LIBKONQ_EXPORT KonqUndoManager : public QObject, public DCOPObject
+class LIBKONQ_EXPORT KonqUndoManager : public TQObject, public DCOPObject
 {
   Q_OBJECT
   K_DCOP
@@ -104,14 +104,14 @@ public:
   void addCommand( const KonqCommand &cmd );
 
   bool undoAvailable() const;
-  QString undoText() const;
+  TQString undoText() const;
 
 public slots:
   void undo();
 
 signals:
   void undoAvailable( bool avail );
-  void undoTextChanged( const QString &text );
+  void undoTextChanged( const TQString &text );
 
 protected:
   /**
@@ -153,10 +153,10 @@ private:
   static unsigned long s_refCnt;
 };
 
-QDataStream &operator<<( QDataStream &stream, const KonqBasicOperation &op );
-QDataStream &operator>>( QDataStream &stream, KonqBasicOperation &op );
+TQDataStream &operator<<( TQDataStream &stream, const KonqBasicOperation &op );
+TQDataStream &operator>>( TQDataStream &stream, KonqBasicOperation &op );
 
-QDataStream &operator<<( QDataStream &stream, const KonqCommand &cmd );
-QDataStream &operator>>( QDataStream &stream, KonqCommand &cmd );
+TQDataStream &operator<<( TQDataStream &stream, const KonqCommand &cmd );
+TQDataStream &operator>>( TQDataStream &stream, KonqCommand &cmd );
 
 #endif

@@ -48,10 +48,10 @@
 
 #include <fixx11h.h>
 
-#include <qclipboard.h>
-#include <qdir.h>
-#include <qevent.h>
-#include <qregexp.h>
+#include <tqclipboard.h>
+#include <tqdir.h>
+#include <tqevent.h>
+#include <tqregexp.h>
 
 #include <unistd.h>
 
@@ -64,11 +64,11 @@ extern int kdesktop_screen_number;
 
 // -----------------------------------------------------------------------------
 
-QRect KDIconView::desktopRect()
+TQRect KDIconView::desktopRect()
 {
     return ( kdesktop_screen_number == 0 )
-            ? QApplication::desktop()->geometry() // simple case, or xinerama
-            : QApplication::desktop()->screenGeometry( kdesktop_screen_number ); // multi-head
+            ? TQApplication::desktop()->geometry() // simple case, or xinerama
+            : TQApplication::desktop()->screenGeometry( kdesktop_screen_number ); // multi-head
 }
 
 // -----------------------------------------------------------------------------
@@ -80,8 +80,8 @@ void KDIconView::saveIconPosition(KSimpleConfig *config, int x, int y)
   config->writeEntry("Yabs", y);
 
   // save also mentioning desktop size
-  QRect desk = desktopRect();
-  QString sizeStr = QString( "_%1x%2" ).arg(desk.width()).arg(desk.height());
+  TQRect desk = desktopRect();
+  TQString sizeStr = TQString( "_%1x%2" ).arg(desk.width()).arg(desk.height());
 
   config->writeEntry("Xabs" + sizeStr, x);
   config->writeEntry("Yabs" + sizeStr, y);
@@ -92,8 +92,8 @@ void KDIconView::saveIconPosition(KSimpleConfig *config, int x, int y)
 void KDIconView::readIconPosition(KSimpleConfig *config, int &x, int &y)
 {
   // check if we have the position for the current desktop size
-  QRect desk = desktopRect();
-  QString sizeStr = QString( "_%1x%2" ).arg(desk.width()).arg(desk.height());
+  TQRect desk = desktopRect();
+  TQString sizeStr = TQString( "_%1x%2" ).arg(desk.width()).arg(desk.height());
 
   x = config->readNumEntry("Xabs" + sizeStr, -99999);
 
@@ -112,9 +112,9 @@ void KDIconView::readIconPosition(KSimpleConfig *config, int &x, int &y)
       // desktopIconsArea, the relative position do not make sense
       // workaround: use desktopRect() as the allowed size
 
-      QRect desk = desktopRect();
-      QString X_w = QString("X %1").arg(desk.width() );
-      QString Y_h = QString("Y %1").arg(desk.height());
+      TQRect desk = desktopRect();
+      TQString X_w = TQString("X %1").arg(desk.width() );
+      TQString Y_h = TQString("Y %1").arg(desk.height());
 
       x = config->readNumEntry(X_w, -99999);
       if ( x != -99999 ) x = config->readNumEntry("X");
@@ -129,7 +129,7 @@ void KDIconView::readIconPosition(KSimpleConfig *config, int &x, int &y)
 
 // -----------------------------------------------------------------------------
 
-KDIconView::KDIconView( QWidget *parent, const char* name )
+KDIconView::KDIconView( TQWidget *parent, const char* name )
     : KonqIconViewWidget( parent, name, WResizeNoErase, true ),
       m_actionCollection( this, "KDIconView::m_actionCollection" ),
       m_accel( 0L ),
@@ -155,33 +155,33 @@ KDIconView::KDIconView( QWidget *parent, const char* name )
     // Initialise the shadow data objects...
     m_shadowEngine = new KShadowEngine(new KDesktopShadowSettings(KGlobal::config()));
 
-    connect( QApplication::clipboard(), SIGNAL(dataChanged()),
-             this, SLOT(slotClipboardDataChanged()) );
+    connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()),
+             this, TQT_SLOT(slotClipboardDataChanged()) );
 
     setURL( desktopURL() ); // sets m_url
 
     m_desktopDirs = KGlobal::dirs()->findDirs( "appdata", "Desktop" );
     initDotDirectories();
 
-    connect( this, SIGNAL( executed( QIconViewItem * ) ),
-             SLOT( slotExecuted( QIconViewItem * ) ) );
-    connect( this, SIGNAL( returnPressed( QIconViewItem * ) ),
-             SLOT( slotReturnPressed( QIconViewItem * ) ) );
-    connect( this, SIGNAL( mouseButtonPressed(int, QIconViewItem*, const QPoint&)),
-             SLOT( slotMouseButtonPressed(int, QIconViewItem*, const QPoint&)) );
-    connect( this, SIGNAL( mouseButtonClicked(int, QIconViewItem*, const QPoint&)),
-             SLOT( slotMouseButtonClickedKDesktop(int, QIconViewItem*, const QPoint&)) );
-    connect( this, SIGNAL( contextMenuRequested(QIconViewItem*, const QPoint&)),
-             SLOT( slotContextMenuRequested(QIconViewItem*, const QPoint&)) );
+    connect( this, TQT_SIGNAL( executed( TQIconViewItem * ) ),
+             TQT_SLOT( slotExecuted( TQIconViewItem * ) ) );
+    connect( this, TQT_SIGNAL( returnPressed( TQIconViewItem * ) ),
+             TQT_SLOT( slotReturnPressed( TQIconViewItem * ) ) );
+    connect( this, TQT_SIGNAL( mouseButtonPressed(int, TQIconViewItem*, const TQPoint&)),
+             TQT_SLOT( slotMouseButtonPressed(int, TQIconViewItem*, const TQPoint&)) );
+    connect( this, TQT_SIGNAL( mouseButtonClicked(int, TQIconViewItem*, const TQPoint&)),
+             TQT_SLOT( slotMouseButtonClickedKDesktop(int, TQIconViewItem*, const TQPoint&)) );
+    connect( this, TQT_SIGNAL( contextMenuRequested(TQIconViewItem*, const TQPoint&)),
+             TQT_SLOT( slotContextMenuRequested(TQIconViewItem*, const TQPoint&)) );
 
-    connect( this, SIGNAL( enableAction( const char * , bool ) ),
-             SLOT( slotEnableAction( const char * , bool ) ) );
+    connect( this, TQT_SIGNAL( enableAction( const char * , bool ) ),
+             TQT_SLOT( slotEnableAction( const char * , bool ) ) );
 
     // Hack: KonqIconViewWidget::slotItemRenamed is not virtual :-(
-    disconnect( this, SIGNAL(itemRenamed(QIconViewItem *, const QString &)),
-             this, SLOT(slotItemRenamed(QIconViewItem *, const QString &)) );
-    connect( this, SIGNAL(itemRenamed(QIconViewItem *, const QString &)),
-             this, SLOT(slotItemRenamed(QIconViewItem *, const QString &)) );
+    disconnect( this, TQT_SIGNAL(itemRenamed(TQIconViewItem *, const TQString &)),
+             this, TQT_SLOT(slotItemRenamed(TQIconViewItem *, const TQString &)) );
+    connect( this, TQT_SIGNAL(itemRenamed(TQIconViewItem *, const TQString &)),
+             this, TQT_SLOT(slotItemRenamed(TQIconViewItem *, const TQString &)) );
 
     if (!m_bEditableDesktopIcons)
     {
@@ -203,15 +203,15 @@ KDIconView::~KDIconView()
 
 void KDIconView::initDotDirectories()
 {
-    QStringList dirs = m_desktopDirs;
+    TQStringList dirs = m_desktopDirs;
     KURL u = desktopURL();
     if (u.isLocalFile())
        dirs.prepend(u.path());
 
-    QString prefix = iconPositionGroupPrefix();
-    QString dotFileName = locateLocal("appdata", "IconPositions");
+    TQString prefix = iconPositionGroupPrefix();
+    TQString dotFileName = locateLocal("appdata", "IconPositions");
     if (kdesktop_screen_number != 0)
-       dotFileName += "_Desktop" + QString::number(kdesktop_screen_number);
+       dotFileName += "_Desktop" + TQString::number(kdesktop_screen_number);
 
     if (m_dotDirectory && !m_bEditableDesktopIcons)
       m_dotDirectory->rollback(false); // Don't save positions
@@ -222,29 +222,29 @@ void KDIconView::initDotDirectories()
     // If we don't allow editable desktop icons, empty m_dotDirectory
     if (!m_bEditableDesktopIcons)
     {
-        QStringList groups = m_dotDirectory->groupList();
-        QStringList::ConstIterator gIt = groups.begin();
-        QStringList::ConstIterator gEnd = groups.end();
+        TQStringList groups = m_dotDirectory->groupList();
+        TQStringList::ConstIterator gIt = groups.begin();
+        TQStringList::ConstIterator gEnd = groups.end();
         for (; gIt != gEnd; ++gIt )
         {
             m_dotDirectory->deleteGroup(*gIt, true);
         }
     }
-    QRect desk = desktopRect();
-    QString X_w = QString( "X %1" ).arg( desk.width() );
-    QString Y_h = QString( "Y %1" ).arg( desk.height() );
-    for ( QStringList::ConstIterator it = dirs.begin() ; it != dirs.end() ; ++it )
+    TQRect desk = desktopRect();
+    TQString X_w = TQString( "X %1" ).arg( desk.width() );
+    TQString Y_h = TQString( "Y %1" ).arg( desk.height() );
+    for ( TQStringList::ConstIterator it = dirs.begin() ; it != dirs.end() ; ++it )
     {
         kdDebug(1204) << "KDIconView::initDotDirectories found dir " << *it << endl;
-        QString dotFileName = *it + "/.directory";
+        TQString dotFileName = *it + "/.directory";
 
-        if (QFile::exists(dotFileName))
+        if (TQFile::exists(dotFileName))
         {
            KSimpleConfig dotDir(dotFileName, true); // Read only
 
-           QStringList groups = dotDir.groupList();
-           QStringList::ConstIterator gIt = groups.begin();
-           QStringList::ConstIterator gEnd = groups.end();
+           TQStringList groups = dotDir.groupList();
+           TQStringList::ConstIterator gIt = groups.begin();
+           TQStringList::ConstIterator gEnd = groups.end();
            for (; gIt != gEnd; ++gIt )
            {
               if ( (*gIt).startsWith(prefix) )
@@ -284,7 +284,7 @@ void KDIconView::initConfig( bool init )
     setMaySetWallpaper(!config->isImmutable() && !KGlobal::dirs()->isRestrictedResource("wallpaper"));
     m_bShowDot = KDesktopSettings::showHidden();
     m_bVertAlign = KDesktopSettings::vertAlign();
-    QStringList oldPreview = previewSettings();
+    TQStringList oldPreview = previewSettings();
     setPreviewSettings( KDesktopSettings::preview() );
 
     // read arrange configuration
@@ -292,13 +292,13 @@ void KDIconView::initConfig( bool init )
     m_bSortDirectoriesFirst = KDesktopSettings::directoriesFirst();
     m_itemsAlwaysFirst = KDesktopSettings::alwaysFirstItems(); // Distributor plug-in
 
-    if (KProtocolInfo::isKnownProtocol(QString::fromLatin1("media")))
+    if (KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media")))
         m_enableMedia=KDesktopSettings::mediaEnabled();
     else
         m_enableMedia=false;
-    QString tmpList=KDesktopSettings::exclude();
+    TQString tmpList=KDesktopSettings::exclude();
     kdDebug(1204)<<"m_excludeList"<<tmpList<<endl;
-    m_excludedMedia=QStringList::split(",",tmpList,false);
+    m_excludedMedia=TQStringList::split(",",tmpList,false);
     kdDebug(1204)<<" m_excludeList / item count:" <<m_excludedMedia.count()<<endl;
     if ( m_dirLister ) // only when called while running - not on first startup
     {
@@ -316,7 +316,7 @@ void KDIconView::initConfig( bool init )
 
     if ( previewSettings().count() )
     {
-        for ( QStringList::ConstIterator it = oldPreview.begin(); it != oldPreview.end(); ++it)
+        for ( TQStringList::ConstIterator it = oldPreview.begin(); it != oldPreview.end(); ++it)
             if ( !previewSettings().contains( *it ) ){
                 kdDebug(1204) << "Disabling preview for " << *it << endl;
                 if ( *it == "audio/" )
@@ -331,7 +331,7 @@ void KDIconView::initConfig( bool init )
                     }
                 }
             }
-        startImagePreview( QStringList(), true );
+        startImagePreview( TQStringList(), true );
     }
     else
     {
@@ -357,16 +357,16 @@ void KDIconView::start()
 
     m_bNeedSave = false;
 
-    connect( m_dirLister, SIGNAL( clear() ), this, SLOT( slotClear() ) );
-    connect( m_dirLister, SIGNAL( started(const KURL&) ),
-             this, SLOT( slotStarted(const KURL&) ) );
-    connect( m_dirLister, SIGNAL( completed() ), this, SLOT( slotCompleted() ) );
-    connect( m_dirLister, SIGNAL( newItems( const KFileItemList & ) ),
-             this, SLOT( slotNewItems( const KFileItemList & ) ) );
-    connect( m_dirLister, SIGNAL( deleteItem( KFileItem * ) ),
-             this, SLOT( slotDeleteItem( KFileItem * ) ) );
-    connect( m_dirLister, SIGNAL( refreshItems( const KFileItemList & ) ),
-             this, SLOT( slotRefreshItems( const KFileItemList & ) ) );
+    connect( m_dirLister, TQT_SIGNAL( clear() ), this, TQT_SLOT( slotClear() ) );
+    connect( m_dirLister, TQT_SIGNAL( started(const KURL&) ),
+             this, TQT_SLOT( slotStarted(const KURL&) ) );
+    connect( m_dirLister, TQT_SIGNAL( completed() ), this, TQT_SLOT( slotCompleted() ) );
+    connect( m_dirLister, TQT_SIGNAL( newItems( const KFileItemList & ) ),
+             this, TQT_SLOT( slotNewItems( const KFileItemList & ) ) );
+    connect( m_dirLister, TQT_SIGNAL( deleteItem( KFileItem * ) ),
+             this, TQT_SLOT( slotDeleteItem( KFileItem * ) ) );
+    connect( m_dirLister, TQT_SIGNAL( refreshItems( const KFileItemList & ) ),
+             this, TQT_SLOT( slotRefreshItems( const KFileItemList & ) ) );
 
     // Start the directory lister !
     m_dirLister->setShowingDotFiles( m_bShowDot );
@@ -414,35 +414,35 @@ void KDIconView::createActions()
 {
     if (m_bEditableDesktopIcons)
     {
-        KAction *undo = KStdAction::undo( KonqUndoManager::self(), SLOT( undo() ), &m_actionCollection, "undo" );
-        connect( KonqUndoManager::self(), SIGNAL( undoAvailable( bool ) ),
-             undo, SLOT( setEnabled( bool ) ) );
-        connect( KonqUndoManager::self(), SIGNAL( undoTextChanged( const QString & ) ),
-             undo, SLOT( setText( const QString & ) ) );
+        KAction *undo = KStdAction::undo( KonqUndoManager::self(), TQT_SLOT( undo() ), &m_actionCollection, "undo" );
+        connect( KonqUndoManager::self(), TQT_SIGNAL( undoAvailable( bool ) ),
+             undo, TQT_SLOT( setEnabled( bool ) ) );
+        connect( KonqUndoManager::self(), TQT_SIGNAL( undoTextChanged( const TQString & ) ),
+             undo, TQT_SLOT( setText( const TQString & ) ) );
         undo->setEnabled( KonqUndoManager::self()->undoAvailable() );
 
-        KAction* paCut = KStdAction::cut( this, SLOT( slotCut() ), &m_actionCollection, "cut" );
+        KAction* paCut = KStdAction::cut( this, TQT_SLOT( slotCut() ), &m_actionCollection, "cut" );
         KShortcut cutShortCut = paCut->shortcut();
         cutShortCut.remove( KKey( SHIFT + Key_Delete ) ); // used for deleting files
         paCut->setShortcut( cutShortCut );
 
-        KStdAction::copy( this, SLOT( slotCopy() ), &m_actionCollection, "copy" );
-        KStdAction::paste( this, SLOT( slotPaste() ), &m_actionCollection, "paste" );
-        KAction *pasteTo = KStdAction::paste( this, SLOT( slotPopupPasteTo() ), &m_actionCollection, "pasteto" );
+        KStdAction::copy( this, TQT_SLOT( slotCopy() ), &m_actionCollection, "copy" );
+        KStdAction::paste( this, TQT_SLOT( slotPaste() ), &m_actionCollection, "paste" );
+        KAction *pasteTo = KStdAction::paste( this, TQT_SLOT( slotPopupPasteTo() ), &m_actionCollection, "pasteto" );
         pasteTo->setEnabled( false ); // only enabled during popupMenu()
 
         KShortcut reloadShortcut = KStdAccel::shortcut(KStdAccel::Reload);
-        new KAction( i18n( "&Reload" ), "reload", reloadShortcut, this, SLOT( refreshIcons() ), &m_actionCollection, "reload" );
+        new KAction( i18n( "&Reload" ), "reload", reloadShortcut, this, TQT_SLOT( refreshIcons() ), &m_actionCollection, "reload" );
 
-        (void) new KAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, this, SLOT( renameSelectedItem() ), &m_actionCollection, "rename" );
-        (void) new KAction( i18n( "&Properties" ), ALT+Key_Return, this, SLOT( slotProperties() ), &m_actionCollection, "properties" );
+        (void) new KAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, this, TQT_SLOT( renameSelectedItem() ), &m_actionCollection, "rename" );
+        (void) new KAction( i18n( "&Properties" ), ALT+Key_Return, this, TQT_SLOT( slotProperties() ), &m_actionCollection, "properties" );
         KAction* trash = new KAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, &m_actionCollection, "trash" );
-        connect( trash, SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
-                 this, SLOT( slotTrashActivated( KAction::ActivationReason, Qt::ButtonState ) ) );
+        connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
+                 this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, Qt::ButtonState ) ) );
 
         KConfig config("kdeglobals", true, false);
         config.setGroup( "KDE" );
-        (void) new KAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, this, SLOT( slotDelete() ), &m_actionCollection, "del" );
+        (void) new KAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, this, TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
 
         // Initial state of the actions (cut/copy/paste/...)
         slotSelectionChanged();
@@ -464,10 +464,10 @@ void KDIconView::rearrangeIcons()
     sort();  // calls arrangeItemsInGrid() which does not honor iconArea()
 
     if ( m_autoAlign )
-        lineupIcons(  m_bVertAlign ? QIconView::TopToBottom : QIconView::LeftToRight );  // also saves position
+        lineupIcons(  m_bVertAlign ? TQIconView::TopToBottom : TQIconView::LeftToRight );  // also saves position
     else
     {
-        KonqIconViewWidget::lineupIcons(m_bVertAlign ? QIconView::TopToBottom : QIconView::LeftToRight);
+        KonqIconViewWidget::lineupIcons(m_bVertAlign ? TQIconView::TopToBottom : TQIconView::LeftToRight);
         saveIconPositions();
     }
 }
@@ -486,8 +486,8 @@ void KDIconView::setAutoAlign( bool b )
     // Auto line-up icons
     if ( b ) {
          if (!KRootWm::self()->startup) lineupIcons(); else KRootWm::self()->startup = false; 
-        connect( this, SIGNAL( iconMoved() ),
-                 this, SLOT( lineupIcons() ) );
+        connect( this, TQT_SIGNAL( iconMoved() ),
+                 this, TQT_SLOT( lineupIcons() ) );
     }
     else {
         // change maxItemWidth, because when grid-align was active, it changed this for the grid
@@ -495,8 +495,8 @@ void KDIconView::setAutoAlign( bool b )
         setMaxItemWidth( QMAX( QMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
         setFont( font() );  // Force calcRect()
 
-        disconnect( this, SIGNAL( iconMoved() ),
-                    this, SLOT( lineupIcons() ) );
+        disconnect( this, TQT_SIGNAL( iconMoved() ),
+                    this, TQT_SLOT( lineupIcons() ) );
     }
 }
 
@@ -510,7 +510,7 @@ void KDIconView::startDirLister()
     // Gather the list of directories to merge into the desktop
     // (the main URL is desktopURL(), no need for it in the m_mergeDirs list)
     m_mergeDirs.clear();
-    for ( QStringList::ConstIterator it = m_desktopDirs.begin() ; it != m_desktopDirs.end() ; ++it )
+    for ( TQStringList::ConstIterator it = m_desktopDirs.begin() ; it != m_desktopDirs.end() ; ++it )
     {
         kdDebug(1204) << "KDIconView::desktopResized found merge dir " << *it << endl;
         KURL u;
@@ -523,9 +523,9 @@ void KDIconView::startDirLister()
     configureMedia();
 }
 
-void KDIconView::lineupIcons(QIconView::Arrangement align)
+void KDIconView::lineupIcons(TQIconView::Arrangement align)
 {
-    m_bVertAlign = ( align == QIconView::TopToBottom );
+    m_bVertAlign = ( align == TQIconView::TopToBottom );
     setArrangement( m_bVertAlign ? TopToBottom : LeftToRight );
 
     if ( m_autoAlign )
@@ -541,11 +541,11 @@ void KDIconView::lineupIcons(QIconView::Arrangement align)
 }
 
 // Only used for DCOP
-QStringList KDIconView::selectedURLs()
+TQStringList KDIconView::selectedURLs()
 {
-    QStringList seq;
+    TQStringList seq;
 
-    QIconViewItem *it = firstItem();
+    TQIconViewItem *it = firstItem();
     for (; it; it = it->nextItem() )
         if ( it->isSelected() ) {
             KFileItem *fItem = ((KFileIVI *)it)->item();
@@ -573,10 +573,10 @@ void KDIconView::recheckDesktopURL()
 KURL KDIconView::desktopURL()
 {
     // Support both paths and URLs
-    QString desktopPath = KGlobalSettings::desktopPath();
+    TQString desktopPath = KGlobalSettings::desktopPath();
     if (kdesktop_screen_number != 0) {
-        QString dn = "Desktop";
-        dn += QString::number(kdesktop_screen_number);
+        TQString dn = "Desktop";
+        dn += TQString::number(kdesktop_screen_number);
         desktopPath.replace("Desktop", dn);
     }
 
@@ -589,21 +589,21 @@ KURL KDIconView::desktopURL()
     Q_ASSERT( desktopURL.isValid() );
     if ( !desktopURL.isValid() ) { // should never happen
         KURL u;
-        u.setPath(  QDir::homeDirPath() + "/" + "Desktop" + "/" );
+        u.setPath(  TQDir::homeDirPath() + "/" + "Desktop" + "/" );
         return u;
     }
 
     return desktopURL;
 }
 
-void KDIconView::contentsMousePressEvent( QMouseEvent *e )
+void KDIconView::contentsMousePressEvent( TQMouseEvent *e )
 {
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::contentsMousePressEvent" << endl;
-    // QIconView, as of Qt 2.2, doesn't emit mouseButtonPressed for LMB on background
+    // TQIconView, as of Qt 2.2, doesn't emit mouseButtonPressed for LMB on background
     if ( e->button() == LeftButton && KRootWm::self()->hasLeftButtonMenu() )
     {
-        QIconViewItem *item = findItem( e->pos() );
+        TQIconViewItem *item = findItem( e->pos() );
         if ( !item )
         {
             // Left click menu
@@ -614,17 +614,17 @@ void KDIconView::contentsMousePressEvent( QMouseEvent *e )
     KonqIconViewWidget::contentsMousePressEvent( e );
 }
 
-void KDIconView::mousePressEvent( QMouseEvent *e )
+void KDIconView::mousePressEvent( TQMouseEvent *e )
 {
     KRootWm::self()->mousePressed( e->globalPos(), e->button() );
 }
 
-void KDIconView::wheelEvent( QWheelEvent* e )
+void KDIconView::wheelEvent( TQWheelEvent* e )
 {
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::wheelEvent" << endl;
 
-    QIconViewItem *item = findItem( e->pos() );
+    TQIconViewItem *item = findItem( e->pos() );
     if ( !item )
     {
       emit wheelRolled( e->delta() );
@@ -644,7 +644,7 @@ void KDIconView::slotProperties()
     (void) new KPropertiesDialog( selectedFiles );
 }
 
-void KDIconView::slotContextMenuRequested(QIconViewItem *_item, const QPoint& _global)
+void KDIconView::slotContextMenuRequested(TQIconViewItem *_item, const TQPoint& _global)
 {
     if (_item)
     {
@@ -653,16 +653,16 @@ void KDIconView::slotContextMenuRequested(QIconViewItem *_item, const QPoint& _g
     }
 }
 
-void KDIconView::slotMouseButtonPressed(int _button, QIconViewItem* _item, const QPoint& _global)
+void KDIconView::slotMouseButtonPressed(int _button, TQIconViewItem* _item, const TQPoint& _global)
 {
     //kdDebug(1204) << "KDIconView::slotMouseButtonPressed" << endl;
     if (!m_dirLister) return;
-    m_lastDeletedIconPos = QPoint(); // user action -> not renaming an icon
+    m_lastDeletedIconPos = TQPoint(); // user action -> not renaming an icon
     if(!_item)
         KRootWm::self()->mousePressed( _global, _button );
 }
 
-void KDIconView::slotMouseButtonClickedKDesktop(int _button, QIconViewItem* _item, const QPoint&)
+void KDIconView::slotMouseButtonClickedKDesktop(int _button, TQIconViewItem* _item, const TQPoint&)
 {
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::slotMouseButtonClickedKDesktop" << endl;
@@ -672,7 +672,7 @@ void KDIconView::slotMouseButtonClickedKDesktop(int _button, QIconViewItem* _ite
 
 // -----------------------------------------------------------------------------
 
-void KDIconView::slotReturnPressed( QIconViewItem *item )
+void KDIconView::slotReturnPressed( TQIconViewItem *item )
 {
     if (item && item->isSelected())
         slotExecuted(item);
@@ -680,10 +680,10 @@ void KDIconView::slotReturnPressed( QIconViewItem *item )
 
 // -----------------------------------------------------------------------------
 
-void KDIconView::slotExecuted( QIconViewItem *item )
+void KDIconView::slotExecuted( TQIconViewItem *item )
 {
     kapp->propagateSessionManager();
-    m_lastDeletedIconPos = QPoint(); // user action -> not renaming an icon
+    m_lastDeletedIconPos = TQPoint(); // user action -> not renaming an icon
     if (item) {
         visualActivate(item);
         ((KFileIVI*)item)->returnPressed();
@@ -735,11 +735,11 @@ bool KDIconView::deleteGlobalDesktopFiles()
     if (!desktop_URL.isLocalFile())
         return false; // Dunno how to do this.
 
-    QString desktopPath = desktop_URL.path();
+    TQString desktopPath = desktop_URL.path();
 
     bool itemsLeft = false;
-    QIconViewItem *it = 0;
-    QIconViewItem *nextIt = firstItem();
+    TQIconViewItem *it = 0;
+    TQIconViewItem *nextIt = firstItem();
     for (; (it = nextIt); )
     {
         nextIt = it->nextItem();
@@ -790,7 +790,7 @@ void KDIconView::slotDelete()
 
 // This method is called when right-clicking over one or more items
 // Not to be confused with the global popup-menu, KRootWm, when doing RMB on the desktop
-void KDIconView::popupMenu( const QPoint &_global, const KFileItemList& _items )
+void KDIconView::popupMenu( const TQPoint &_global, const KFileItemList& _items )
 {
     if (!kapp->authorize("action/kdesktop_rmb")) return;
     if (!m_dirLister) return;
@@ -838,7 +838,7 @@ void KDIconView::slotNewMenuActivated()
 void KDIconView::slotEnableAction( const char * name, bool enabled )
 {
   //kdDebug(1204) << "slotEnableAction " << name << " enabled=" << enabled << endl;
-  QCString sName( name );
+  TQCString sName( name );
   // No such actions here... konqpopupmenu provides them.
   if ( sName == "properties" || sName == "editMimeType" )
     return;
@@ -861,21 +861,21 @@ bool KDIconView::isDesktopFile( KFileItem * _item ) const
   if ( !S_ISREG( _item->mode() ) )
     return false;
 
-  QString t( _item->url().path() );
+  TQString t( _item->url().path() );
 
   // only if readable
-  if ( access( QFile::encodeName(t), R_OK ) != 0 )
+  if ( access( TQFile::encodeName(t), R_OK ) != 0 )
     return false;
 
   // return true if desktop file
-  return ( _item->mimetype() == QString::fromLatin1("application/x-desktop") );
+  return ( _item->mimetype() == TQString::fromLatin1("application/x-desktop") );
 }
 
-QString KDIconView::stripDesktopExtension( const QString & text )
+TQString KDIconView::stripDesktopExtension( const TQString & text )
 {
-    if (text.right(7) == QString::fromLatin1(".kdelnk"))
+    if (text.right(7) == TQString::fromLatin1(".kdelnk"))
       return text.left(text.length() - 7);
-    else if (text.right(8) == QString::fromLatin1(".desktop"))
+    else if (text.right(8) == TQString::fromLatin1(".desktop"))
       return text.left(text.length() - 8);
     return text;
 }
@@ -883,7 +883,7 @@ QString KDIconView::stripDesktopExtension( const QString & text )
 bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
 {
     KFileItem *item = fileIVI->item();
-    QString desktopFile;
+    TQString desktopFile;
     if ( item->isDir() && item->isLocalFile() )
     {
         KURL u( item->url() );
@@ -908,7 +908,7 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
         if (cfg.readBoolEntry( "NoDisplay", false ))
             return false;
 
-        QStringList tmpList;
+        TQStringList tmpList;
         if (cfg.hasKey("OnlyShowIn"))
         {
             if (!cfg.readListEntry("OnlyShowIn", ';').contains("KDE"))
@@ -925,7 +925,7 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
                 return false;
         }
 
-        QString name = cfg.readEntry("Name");
+        TQString name = cfg.readEntry("Name");
         if ( !name.isEmpty() )
             fileIVI->setText( name );
         else
@@ -950,10 +950,10 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
 
   // delay updates until all new items have been created
   setUpdatesEnabled( false );
-  QRect area = iconArea();
-  setIconArea( QRect(  0, 0, -1, -1 ) );
+  TQRect area = iconArea();
+  setIconArea( TQRect(  0, 0, -1, -1 ) );
 
-  QString desktopPath;
+  TQString desktopPath;
   KURL desktop_URL = desktopURL();
   if (desktop_URL.isLocalFile())
     desktopPath = desktop_URL.path();
@@ -967,11 +967,11 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
     KURL url = it.current()->url();
     if (!desktopPath.isEmpty() && url.isLocalFile() && !url.path().startsWith(desktopPath))
     {
-      QString fileName = url.fileName();
-      if (QFile::exists(desktopPath + fileName))
+      TQString fileName = url.fileName();
+      if (TQFile::exists(desktopPath + fileName))
          continue; // Don't duplicate entry
 
-      QString mostLocal = locate("appdata", "Desktop/"+fileName);
+      TQString mostLocal = locate("appdata", "Desktop/"+fileName);
       if (!mostLocal.isEmpty() && (mostLocal != url.path()))
          continue; // Don't duplicate entry
     }
@@ -992,13 +992,13 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
     {
       kdDebug(1214) << "slotNewItems : using popupmenu position " << m_nextItemPos.x() << "," << m_nextItemPos.y() << endl;
       fileIVI->move( m_nextItemPos.x(), m_nextItemPos.y() );
-      m_nextItemPos = QPoint();
+      m_nextItemPos = TQPoint();
     }
     else
     {
       kdDebug(1214) << "slotNewItems : trying to read position from .directory file"<<endl;
-      QString group = iconPositionGroupPrefix();
-      QString filename = url.fileName();
+      TQString group = iconPositionGroupPrefix();
+      TQString filename = url.fileName();
       if ( filename.endsWith(".part") && !m_dotDirectory->hasGroup( group + filename ) )
           filename = filename.left( filename.length() - 5 );
       group.append( filename );
@@ -1012,9 +1012,9 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
 
         kdDebug(1214)<<"slotNewItems() x: "<<x<<" y: "<<y<<endl;
 
-        QRect oldPos = fileIVI->rect();
+        TQRect oldPos = fileIVI->rect();
         fileIVI->move( x, y );
-        if ( !firstRun && !isFreePosition( fileIVI ) ) // if we can't put it there, then let QIconView decide
+        if ( !firstRun && !isFreePosition( fileIVI ) ) // if we can't put it there, then let TQIconView decide
         {
             kdDebug(1214)<<"slotNewItems() pos was not free :-("<<endl;
             fileIVI->move( oldPos.x(), oldPos.y() );
@@ -1058,7 +1058,7 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
     for (; rit.current(); ++rit)
     {
         bool found = false;
-        QIconViewItem *it = firstItem();
+        TQIconViewItem *it = firstItem();
         for ( ; it ; it = it->nextItem() )
         {
             KFileIVI * fileIVI = static_cast<KFileIVI *>(it);
@@ -1088,7 +1088,7 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
     }
     if ( bNeedPreviewJob && previewSettings().count() )
     {
-        startImagePreview( QStringList(), false );
+        startImagePreview( TQStringList(), false );
     }
     else
     {
@@ -1102,7 +1102,7 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
 
 void KDIconView::refreshIcons()
 {
-    QIconViewItem *it = firstItem();
+    TQIconViewItem *it = firstItem();
     for ( ; it ; it = it->nextItem() )
     {
         KFileIVI * fileIVI = static_cast<KFileIVI *>(it);
@@ -1130,7 +1130,7 @@ void KDIconView::FilesRemoved( const KURL::List & fileList )
 
 void KDIconView::refreshTrashIcon()
 {
-    QIconViewItem *it = firstItem();
+    TQIconViewItem *it = firstItem();
     for ( ; it ; it = it->nextItem() )
     {
         KFileIVI * fileIVI = static_cast<KFileIVI *>(it);
@@ -1152,14 +1152,14 @@ void KDIconView::slotDeleteItem( KFileItem * _fileitem )
 {
     kdDebug(1204) << "KDIconView::slotDeleteItems" << endl;
     // we need to find out the KFileIVI containing the fileitem
-    QIconViewItem *it = firstItem();
+    TQIconViewItem *it = firstItem();
     while ( it ) {
       KFileIVI * fileIVI = static_cast<KFileIVI *>(it);
       if ( fileIVI->item() == _fileitem ) { // compare the pointers
         // Delete this item.
         //kdDebug(1204) << fileIVI->text() << endl;
 
-        QString group = iconPositionGroupPrefix();
+        TQString group = iconPositionGroupPrefix();
         group.append( fileIVI->item()->url().fileName() );
         if ( m_dotDirectory->hasGroup( group ) )
             m_dotDirectory->deleteGroup( group );
@@ -1187,7 +1187,7 @@ void KDIconView::slotCompleted()
       setRootItem( m_dirLister->rootItem() );
 
     if ( previewSettings().count() )
-        startImagePreview( QStringList(), true );
+        startImagePreview( TQStringList(), true );
     else
     {
         stopImagePreview();
@@ -1221,14 +1221,14 @@ void KDIconView::slotClipboardDataChanged()
     // This is very related to KonqDirPart::slotClipboardDataChanged
 
     KURL::List lst;
-    QMimeSource *data = QApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) && data->provides( "text/uri-list" ) )
         if ( KonqDrag::decodeIsCutSelection( data ) )
             (void) KURLDrag::decode( data, lst );
 
     disableIcons( lst );
 
-    QString actionText = KIO::pasteActionText();
+    TQString actionText = KIO::pasteActionText();
     bool paste = !actionText.isEmpty();
     if ( paste ) {
         KAction* pasteAction = m_actionCollection.action( "paste" );
@@ -1238,7 +1238,7 @@ void KDIconView::slotClipboardDataChanged()
     slotEnableAction( "paste", paste );
 }
 
-void KDIconView::renameDesktopFile(const QString &path, const QString &name)
+void KDIconView::renameDesktopFile(const TQString &path, const TQString &name)
 {
     KDesktopFile cfg( path, false );
 
@@ -1255,10 +1255,10 @@ void KDIconView::renameDesktopFile(const QString &path, const QString &name)
     cfg.sync();
 }
 
-void KDIconView::slotItemRenamed(QIconViewItem* _item, const QString &name)
+void KDIconView::slotItemRenamed(TQIconViewItem* _item, const TQString &name)
 {
     kdDebug(1204) << "KDIconView::slotItemRenamed(item, \"" << name << "\" )" << endl;
-    QString newName(name);
+    TQString newName(name);
     if ( _item)
     {
        KFileIVI *fileItem = static_cast< KFileIVI* >( _item );
@@ -1266,7 +1266,7 @@ void KDIconView::slotItemRenamed(QIconViewItem* _item, const QString &name)
        m_lastDeletedIconPos = fileItem->pos();
        if ( fileItem->item() && !fileItem->item()->isLink() )
        {
-          QString desktopFile( fileItem->item()->url().path() );
+          TQString desktopFile( fileItem->item()->url().path() );
           if (!desktopFile.isEmpty())
           {
              // first and foremost, we make sure that this is a .desktop file
@@ -1285,7 +1285,7 @@ void KDIconView::slotItemRenamed(QIconViewItem* _item, const QString &name)
                 bDesktopFile = true;
              }
 
-             if (QFile(desktopFile).exists() && bDesktopFile)
+             if (TQFile(desktopFile).exists() && bDesktopFile)
              {
                 renameDesktopFile(desktopFile, name);
                 return;
@@ -1296,7 +1296,7 @@ void KDIconView::slotItemRenamed(QIconViewItem* _item, const QString &name)
    KonqIconViewWidget::slotItemRenamed(_item, newName);
 }
 
-void KDIconView::slotAboutToCreate(const QPoint &pos, const QValueList<KIO::CopyInfo> &files)
+void KDIconView::slotAboutToCreate(const TQPoint &pos, const TQValueList<KIO::CopyInfo> &files)
 {
    if (pos.isNull())
       return;
@@ -1307,9 +1307,9 @@ void KDIconView::slotAboutToCreate(const QPoint &pos, const QValueList<KIO::Copy
        m_lastDropPos = pos;
     }
 
-    QString dir = url().path(-1); // Strip trailing /
+    TQString dir = url().path(-1); // Strip trailing /
 
-    QValueList<KIO::CopyInfo>::ConstIterator it = files.begin();
+    TQValueList<KIO::CopyInfo>::ConstIterator it = files.begin();
     int gridX = gridXValue();
     int gridY = 120; // 120 pixels should be enough for everyone (tm)
 
@@ -1323,9 +1323,9 @@ void KDIconView::slotAboutToCreate(const QPoint &pos, const QValueList<KIO::Copy
            int dX = m_lastDropPos.x() - m_dropPos.x();
            int dY = m_lastDropPos.y() - m_dropPos.y();
            if ((QABS(dX) > QABS(dY)) || (m_lastDropPos.x() + 2*gridX > width()))
-              m_lastDropPos = QPoint(m_dropPos.x(), m_lastDropPos.y() + gridY);
+              m_lastDropPos = TQPoint(m_dropPos.x(), m_lastDropPos.y() + gridY);
            else
-              m_lastDropPos = QPoint(m_lastDropPos.x() + gridX, m_lastDropPos.y());
+              m_lastDropPos = TQPoint(m_lastDropPos.x() + gridX, m_lastDropPos.y());
         }
     }
     m_dotDirectory->sync();
@@ -1333,27 +1333,27 @@ void KDIconView::slotAboutToCreate(const QPoint &pos, const QValueList<KIO::Copy
 
 // -----------------------------------------------------------------------------
 
-void KDIconView::showEvent( QShowEvent *e )
+void KDIconView::showEvent( TQShowEvent *e )
 {
-    //HACK to avoid QIconView calling arrangeItemsInGrid (Simon)
-    //EVEN MORE HACK: unfortunately, QScrollView has no concept of
+    //HACK to avoid TQIconView calling arrangeItemsInGrid (Simon)
+    //EVEN MORE HACK: unfortunately, TQScrollView has no concept of
     //TopToBottom, therefore, it always adds LeftToRight.  So, if any of
-    //the icons have a setting, we'll use QScrollView.. but otherwise,
+    //the icons have a setting, we'll use TQScrollView.. but otherwise,
     //we use the iconview
    //kdDebug(1204)<<"showEvent() m_hasExistingPos: "<<(m_hasExistingPos?(int)1:(int)0)<<endl;
     if (m_hasExistingPos)
-        QScrollView::showEvent( e );
+        TQScrollView::showEvent( e );
     else
         KIconView::showEvent( e );
 }
 
-void KDIconView::contentsDropEvent( QDropEvent * e )
+void KDIconView::contentsDropEvent( TQDropEvent * e )
 {
-    kdDebug(1204)<<"void KDIconView::contentsDropEvent( QDropEvent * e )\n";
+    kdDebug(1204)<<"void KDIconView::contentsDropEvent( TQDropEvent * e )\n";
     // mind: if it's a filedrag which itself is an image, libkonq is called. There's a popup for drops as well
     // that contains the same line "Set as Wallpaper" in void KonqOperations::asyncDrop
     bool isColorDrag = KColorDrag::canDecode(e);
-    bool isImageDrag = QImageDrag::canDecode(e);
+    bool isImageDrag = TQImageDrag::canDecode(e);
     bool isUrlDrag = KURLDrag::canDecode(e);
 
     bool isImmutable = KGlobal::config()->isImmutable();
@@ -1383,13 +1383,13 @@ void KDIconView::contentsDropEvent( QDropEvent * e )
 
     // Check if any items have been moved outside the desktop area.
     // If we find any, move them right back in there. (#40418)
-    QRect desk = desktopRect();
+    TQRect desk = desktopRect();
     bool adjustedAnyItems = false;
-    for( QIconViewItem *item = firstItem(); item; item = item->nextItem() )
+    for( TQIconViewItem *item = firstItem(); item; item = item->nextItem() )
     {
         if( !desk.contains( item->rect(), true ))
         {
-            QRect r = item->rect();
+            TQRect r = item->rect();
 
             if( r.top() < 0 )
                 r.moveTop( 0 );
@@ -1412,7 +1412,7 @@ void KDIconView::contentsDropEvent( QDropEvent * e )
         viewport()->update();
     }
 
-    if (QIconDrag::canDecode(e)) {
+    if (TQIconDrag::canDecode(e)) {
       emit iconMoved();
       if ( !m_autoAlign )    // if autoAlign, positions were saved in lineupIcons
         saveIconPositions();
@@ -1420,18 +1420,18 @@ void KDIconView::contentsDropEvent( QDropEvent * e )
 }
 
 // don't scroll when someone uses his nifty mouse wheel
-void KDIconView::viewportWheelEvent( QWheelEvent * e )
+void KDIconView::viewportWheelEvent( TQWheelEvent * e )
 {
     e->accept();
 }
 
-void KDIconView::updateWorkArea( const QRect &wr )
+void KDIconView::updateWorkArea( const TQRect &wr )
 {
     m_gotIconsArea = true;  // now we have it!
 
     if ( iconArea() == wr ) return;  // nothing changed; avoid repaint/saveIconPosition ...
 
-    QRect oldArea = iconArea();
+    TQRect oldArea = iconArea();
     setIconArea( wr );
 
     kdDebug(1204) << "KDIconView::updateWorkArea wr: " << wr.x() << "," << wr.y()
@@ -1443,7 +1443,7 @@ void KDIconView::updateWorkArea( const QRect &wr )
         int dummy = 0; //lineupIcons();
     else {
         bool needRepaint = false;
-        QIconViewItem* item;
+        TQIconViewItem* item;
         int dx, dy;
 
         dx = wr.left() - oldArea.left();
@@ -1469,7 +1469,7 @@ void KDIconView::updateWorkArea( const QRect &wr )
         }
 
         for ( item = firstItem(); item; item = item->nextItem() ) {
-            QRect r( item->rect() );
+            TQRect r( item->rect() );
             int dx = 0, dy = 0;
             if ( r.bottom() > wr.bottom() )
                 dy = wr.bottom() - r.bottom() - 1;
@@ -1491,18 +1491,18 @@ void KDIconView::updateWorkArea( const QRect &wr )
 void KDIconView::setupSortKeys()
 {
     // can't use sorting in KFileIVI::setKey()
-    setProperty("sortDirectoriesFirst", QVariant(false, 0));
+    setProperty("sortDirectoriesFirst", TQVariant(false, 0));
 
-    for (QIconViewItem *it = firstItem(); it; it = it->nextItem())
+    for (TQIconViewItem *it = firstItem(); it; it = it->nextItem())
     {
-        QString strKey;
+        TQString strKey;
 
         if (!m_itemsAlwaysFirst.isEmpty())
         {
-            QString strFileName = static_cast<KFileIVI *>( it )->item()->url().fileName();
+            TQString strFileName = static_cast<KFileIVI *>( it )->item()->url().fileName();
             int nFind = m_itemsAlwaysFirst.findIndex(strFileName);
             if (nFind >= 0)
-                strKey = "0" + QString::number(nFind);
+                strKey = "0" + TQString::number(nFind);
         }
 
         if (strKey.isEmpty())
@@ -1523,7 +1523,7 @@ void KDIconView::setupSortKeys()
                 strKey = static_cast<KFileIVI *>( it )->item()->mimetype() + '~' + it->text().lower();
                 break;
             case Date:
-                QDateTime dayt;
+                TQDateTime dayt;
                 dayt.setTime_t( static_cast<KFileIVI *>( it )->
                     item()->time( KIO::UDS_MODIFICATION_TIME ) );
                 strKey = dayt.toString( "yyyyMMddhhmmss" );
@@ -1545,10 +1545,10 @@ void KDIconView::setupSortKeys()
     }
 }
 
-bool KDIconView::isFreePosition( const QIconViewItem *item ) const
+bool KDIconView::isFreePosition( const TQIconViewItem *item ) const
 {
-    QRect r = item->rect();
-    QIconViewItem *it = firstItem();
+    TQRect r = item->rect();
+    TQIconViewItem *it = firstItem();
     for (; it; it = it->nextItem() )
     {
         if ( !it->rect().isValid() || it == item )
@@ -1561,9 +1561,9 @@ bool KDIconView::isFreePosition( const QIconViewItem *item ) const
     return true;
 }
 
-bool KDIconView::isFreePosition( const QIconViewItem *item ,const QRect& rect) const
+bool KDIconView::isFreePosition( const TQIconViewItem *item ,const TQRect& rect) const
 {
-    QIconViewItem *it = firstItem();
+    TQIconViewItem *it = firstItem();
     for (; it; it = it->nextItem() )
     {
         if ( !rect.isValid() || it == item )
@@ -1576,12 +1576,12 @@ bool KDIconView::isFreePosition( const QIconViewItem *item ,const QRect& rect) c
     return true;
 }
 
-void KDIconView::setLastIconPosition( const QPoint &_pos )
+void KDIconView::setLastIconPosition( const TQPoint &_pos )
 {
     m_lastDeletedIconPos = _pos;
 }
 
-void KDIconView::moveToFreePosition(QIconViewItem *item )
+void KDIconView::moveToFreePosition(TQIconViewItem *item )
 {
     bool success;
     // It may be that a file has been renamed. In this case,
@@ -1595,17 +1595,17 @@ void KDIconView::moveToFreePosition(QIconViewItem *item )
     {
         kdDebug(1214) << "Moving " << item->text() << " to position of last deleted icon." << endl;
         item->move( m_lastDeletedIconPos );
-        m_lastDeletedIconPos = QPoint();
+        m_lastDeletedIconPos = TQPoint();
         return;
     }
 
     //try to find a free place to put the item, honouring the m_bVertAlign property
-    QRect rect=item->rect();
+    TQRect rect=item->rect();
     if (m_bVertAlign)
     {
 	kdDebug(1214)<<"moveToFreePosition for vertical alignment"<<endl;
 
-	rect.moveTopLeft(QPoint(spacing(),spacing()));
+	rect.moveTopLeft(TQPoint(spacing(),spacing()));
       do
       {
           success=false;
@@ -1624,7 +1624,7 @@ void KDIconView::moveToFreePosition(QIconViewItem *item )
 
           if (!success)
           {
-		rect.moveTopLeft(QPoint(rect.right()+spacing(),spacing()));
+		rect.moveTopLeft(TQPoint(rect.right()+spacing(),spacing()));
           } else break;
       }
       while (item->rect().right()<width());
@@ -1645,8 +1645,8 @@ void KDIconView::saveIconPositions()
   if (!m_bEditableDesktopIcons)
     return; // Don't save position
 
-  QString prefix = iconPositionGroupPrefix();
-  QIconViewItem *it = firstItem();
+  TQString prefix = iconPositionGroupPrefix();
+  TQIconViewItem *it = firstItem();
   if ( !it )
     return; // No more icons. Maybe we're closing and they've been removed already
 

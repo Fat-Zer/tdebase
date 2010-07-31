@@ -28,8 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "kgreeterplugin.h"
 
-#include <qobject.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqtimer.h>
 
 class KComboBox;
 class KLineEdit;
@@ -40,20 +40,20 @@ class QLabel;
 class KdmThemer;
 class KProcIO;
 
-class KWinbindGreeter : public QObject, public KGreeterPlugin {
+class KWinbindGreeter : public TQObject, public KGreeterPlugin {
 	Q_OBJECT
 
   public:
 	KWinbindGreeter( KGreeterPluginHandler *handler,
 	                 KdmThemer *themer,
-	                 QWidget *parent, QWidget *predecessor,
-	                 const QString &fixedEntitiy,
+	                 TQWidget *parent, TQWidget *predecessor,
+	                 const TQString &fixedEntitiy,
 	                 Function func, Context ctx );
 	~KWinbindGreeter();
-	virtual void loadUsers( const QStringList &users );
-	virtual void presetEntity( const QString &entity, int field );
-	virtual QString getEntity() const;
-	virtual void setUser( const QString &user );
+	virtual void loadUsers( const TQStringList &users );
+	virtual void presetEntity( const TQString &entity, int field );
+	virtual TQString getEntity() const;
+	virtual void setUser( const TQString &user );
 	virtual void setEnabled( bool on );
 	virtual bool textMessage( const char *message, bool error );
 	virtual void textPrompt( const char *prompt, bool echo, bool nonBlocking );
@@ -70,7 +70,7 @@ class KWinbindGreeter : public QObject, public KGreeterPlugin {
 
   public slots:
 	void slotLoginLostFocus();
-	void slotChangedDomain( const QString &dom );
+	void slotChangedDomain( const TQString &dom );
 	void slotActivity();
         void slotStartDomainList();
         void slotReadDomainList();
@@ -81,15 +81,15 @@ class KWinbindGreeter : public QObject, public KGreeterPlugin {
 	void setActive2( bool enable );
 	void returnData();
 
-	QLabel *domainLabel, *loginLabel, *passwdLabel, *passwd1Label, *passwd2Label;
+	TQLabel *domainLabel, *loginLabel, *passwdLabel, *passwd1Label, *passwd2Label;
 	KComboBox *domainCombo;
 	KLineEdit *loginEdit;
 	KPasswordEdit *passwdEdit, *passwd1Edit, *passwd2Edit;
 	KSimpleConfig *stsFile;
-	QString fixedDomain, fixedUser, curUser;
-	QStringList allUsers, mDomainListing;
+	TQString fixedDomain, fixedUser, curUser;
+	TQStringList allUsers, mDomainListing;
 	KProcIO* m_domainLister;
-        QTimer mDomainListTimer;
+        TQTimer mDomainListTimer;
 
 	Function func;
 	Context ctx;

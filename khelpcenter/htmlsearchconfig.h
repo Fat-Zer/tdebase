@@ -21,7 +21,7 @@
 #ifndef KHC_HTMLSEARCHCONFIG_H
 #define KHC_HTMLSEARCHCONFIG_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KURLRequester;
 class KConfig;
@@ -32,7 +32,7 @@ class HtmlSearchConfig : public QWidget
 {
     Q_OBJECT
   public:
-    HtmlSearchConfig(QWidget *parent = 0L, const char *name = 0L);
+    HtmlSearchConfig(TQWidget *parent = 0L, const char *name = 0L);
     virtual ~HtmlSearchConfig();
 
     void load( KConfig * );
@@ -44,7 +44,7 @@ class HtmlSearchConfig : public QWidget
     void changed();
 
   protected slots:
-    void urlClicked(const QString&);
+    void urlClicked(const TQString&);
 
   private:
     KURLRequester *mHtsearchUrl;

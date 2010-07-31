@@ -21,7 +21,7 @@
 #ifndef __searchwidget_h__
 #define __searchwidget_h__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <dcopobject.h>
 
@@ -42,7 +42,7 @@ namespace KHC {
 class ScopeItem;
 class SearchEngine;
 
-class SearchWidget : public QWidget, public DCOPObject
+class SearchWidget : public TQWidget, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
@@ -51,18 +51,18 @@ class SearchWidget : public QWidget, public DCOPObject
     ASYNC searchIndexUpdated(); // called from kcmhelpcenter
 
   public:
-    SearchWidget ( SearchEngine *, QWidget *parent = 0 );
+    SearchWidget ( SearchEngine *, TQWidget *parent = 0 );
     ~SearchWidget();
 
-    QString method();
+    TQString method();
     int pages();
-    QString scope();
+    TQString scope();
 
-    QListView *listView() { return mScopeListView; }
+    TQListView *listView() { return mScopeListView; }
 
     enum { ScopeDefault, ScopeAll, ScopeNone, ScopeCustom, ScopeNum };
 
-    QString scopeSelectionLabel( int ) const;
+    TQString scopeSelectionLabel( int ) const;
 
     void readConfig( KConfig * );
     void writeConfig( KConfig * );
@@ -72,7 +72,7 @@ class SearchWidget : public QWidget, public DCOPObject
     SearchEngine *engine() const { return mEngine; }
 
   signals:
-    void searchResult( const QString &url );
+    void searchResult( const TQString &url );
     void scopeCountChanged( int );
     void showIndexDialog();
 
@@ -85,18 +85,18 @@ class SearchWidget : public QWidget, public DCOPObject
     void checkScope();
 
   protected slots:
-    void scopeDoubleClicked( QListViewItem * );
-    void scopeClicked( QListViewItem * );
+    void scopeDoubleClicked( TQListViewItem * );
+    void scopeClicked( TQListViewItem * );
 
   private:
     void loadLanguages();
 
     SearchEngine *mEngine;
 
-    QComboBox *mMethodCombo;
-    QComboBox *mPagesCombo;
-    QComboBox *mScopeCombo;
-    QListView *mScopeListView;
+    TQComboBox *mMethodCombo;
+    TQComboBox *mPagesCombo;
+    TQComboBox *mScopeCombo;
+    TQListView *mScopeListView;
 
     int mScopeCount;
 };

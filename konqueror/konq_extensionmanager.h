@@ -36,7 +36,7 @@ class KonqExtensionManager : public KDialogBase
 	Q_OBJECT
 
 	public:
-		KonqExtensionManager(QWidget *parent, KonqMainWindow *mainWindow, KParts::ReadOnlyPart* activePart);
+		KonqExtensionManager(TQWidget *parent, KonqMainWindow *mainWindow, KParts::ReadOnlyPart* activePart);
 		~KonqExtensionManager();
 
 		void apply();

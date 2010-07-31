@@ -18,7 +18,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -45,7 +45,7 @@ static KCmdLineOptions options[] =
 	{ 0, 0, 0 }
 };
 
-DecoBenchApplication::DecoBenchApplication(const QString &library, Tests tests, int count) :
+DecoBenchApplication::DecoBenchApplication(const TQString &library, Tests tests, int count) :
 		m_tests(tests),
 		m_count(count)
 {
@@ -99,7 +99,7 @@ void DecoBenchApplication::executeTest()
 
 int main(int argc, char** argv)
 {
-	QString style = "keramik";
+	TQString style = "keramik";
 	// KApplication app(argc, argv);
 	KAboutData about("decobenchmark", "DecoBenchmark", "0.1", "kwin decoration performance tester...", KAboutData::License_LGPL, "(C) 2005 Sandro Giessl");
 	KCmdLineArgs::init(argc, argv, &about);
@@ -110,9 +110,9 @@ int main(int argc, char** argv)
 	if (args->count() != 3)
 		KCmdLineArgs::usage("Wrong number of arguments!");
 
-	QString library = QString(args->arg(0) );
-	QString t = QString(args->arg(1) );
-	int count = QString(args->arg(2) ).toInt();
+	TQString library = TQString(args->arg(0) );
+	TQString t = TQString(args->arg(1) );
+	int count = TQString(args->arg(2) ).toInt();
 
 	Tests test;
 	if (t == "all")
@@ -130,7 +130,7 @@ int main(int argc, char** argv)
 
 	DecoBenchApplication app(library, test, count);
 
-	QTimer::singleShot(0, &app, SLOT(executeTest()));
+	TQTimer::singleShot(0, &app, TQT_SLOT(executeTest()));
 	app.exec();
 }
 #include "main.moc"

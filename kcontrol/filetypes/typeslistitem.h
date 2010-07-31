@@ -20,7 +20,7 @@
 #ifndef _TYPESLISTITEM_H
 #define _TYPESLISTITEM_H
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
 #include <kmimetype.h>
 #include <kuserprofile.h>
@@ -31,7 +31,7 @@ public:
   /**
    * Create a filetype group
    */
-  TypesListItem(QListView *parent, const QString & major );
+  TypesListItem(TQListView *parent, const TQString & major );
 
   /**
    * Create a filetype item inside a group
@@ -41,22 +41,22 @@ public:
   /**
    * Create a filetype item not inside a group (used by keditfiletype)
    */
-  TypesListItem(QListView *parent, KMimeType::Ptr mimetype);
+  TypesListItem(TQListView *parent, KMimeType::Ptr mimetype);
 
   /**
    * Create a filetype item not inside a group (used by keditfiletype)
    * KDE4: merge with previous
    */
-  TypesListItem(QListView *parent, KMimeType::Ptr mimetype, bool newItem);
+  TypesListItem(TQListView *parent, KMimeType::Ptr mimetype, bool newItem);
 
   ~TypesListItem();
 
-  QString name() const { return m_major + "/" + m_minor; }
-  QString majorType() const { return m_major; }
-  QString minorType() const { return m_minor; }
-  void setMinor(QString m) { m_minor = m; }
-  QString comment() const { return m_comment; }
-  void setComment(QString c) { m_comment = c; }
+  TQString name() const { return m_major + "/" + m_minor; }
+  TQString majorType() const { return m_major; }
+  TQString minorType() const { return m_minor; }
+  void setMinor(TQString m) { m_minor = m; }
+  TQString comment() const { return m_comment; }
+  void setComment(TQString c) { m_comment = c; }
   /**
    * Returns true if "this" is a group
    */
@@ -66,14 +66,14 @@ public:
    * (see KMimeType::checkEssentialMimeTypes)
    */
   bool isEssential() const;
-  QString icon() const { return m_icon; }
-  void setIcon(const QString& i);
-  QStringList patterns() const { return m_patterns; }
-  void setPatterns(const QStringList &p) { m_patterns = p; }
-  QStringList appServices() const;
-  void setAppServices(const QStringList &dsl) { m_appServices = dsl; }
-  QStringList embedServices() const;
-  void setEmbedServices(const QStringList &dsl) { m_embedServices = dsl; }
+  TQString icon() const { return m_icon; }
+  void setIcon(const TQString& i);
+  TQStringList patterns() const { return m_patterns; }
+  void setPatterns(const TQStringList &p) { m_patterns = p; }
+  TQStringList appServices() const;
+  void setAppServices(const TQStringList &dsl) { m_appServices = dsl; }
+  TQStringList embedServices() const;
+  void setEmbedServices(const TQStringList &dsl) { m_embedServices = dsl; }
   int autoEmbed() const { return m_autoEmbed; }
   void setAutoEmbed( int a ) { m_autoEmbed = a; }
   const KMimeType::Ptr& mimeType() const { return m_mimetype; }
@@ -83,7 +83,7 @@ public:
   void setAskSave(bool);
 
   // Whether the service s lists this mimetype explicitly
-  KMimeType::Ptr findImplicitAssociation(const QString &desktop);
+  KMimeType::Ptr findImplicitAssociation(const TQString &desktop);
 
   bool isMimeTypeDirty() const; // whether the mimetype .desktop file needs saving
   bool isDirty() const;
@@ -91,13 +91,13 @@ public:
   void setup();
   void refresh(); // update m_mimetype from ksycoca when Apply is pressed
 
-  static bool defaultEmbeddingSetting(  const QString& major );
+  static bool defaultEmbeddingSetting(  const TQString& major );
   static void reset();
 
 private:
-  void getServiceOffers( QStringList & appServices, QStringList & embedServices ) const;
-  void saveServices( KConfig & profile, QStringList services, const QString & servicetype2 );
-  void initMeta( const QString & major );
+  void getServiceOffers( TQStringList & appServices, TQStringList & embedServices ) const;
+  void saveServices( KConfig & profile, TQStringList services, const TQString & servicetype2 );
+  void initMeta( const TQString & major );
   void init(KMimeType::Ptr mimetype);
   static int readAutoEmbed( KMimeType::Ptr mimetype );
 
@@ -108,11 +108,11 @@ private:
   unsigned int m_bNewItem:1;
   unsigned int m_bFullInit:1;
   unsigned int m_askSave:2; // 0 yes, 1 no, 2 default
-  QString m_major, m_minor, m_comment, m_icon;
-  QStringList m_patterns;
-  QStringList m_appServices;
-  QStringList m_embedServices;
-  static QMap< QString, QStringList >* s_changedServices;
+  TQString m_major, m_minor, m_comment, m_icon;
+  TQStringList m_patterns;
+  TQStringList m_appServices;
+  TQStringList m_embedServices;
+  static TQMap< TQString, TQStringList >* s_changedServices;
 };
 
 #endif

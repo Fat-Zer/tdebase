@@ -10,8 +10,8 @@
 #ifndef __Bgnd_h_Included__
 #define __Bgnd_h_Included__
 
-#include <qobject.h>
-#include <qwidget.h>
+#include <tqobject.h>
+#include <tqwidget.h>
 
 
 class KSimpleConfig;
@@ -24,7 +24,7 @@ class KBackground: public QWidget
 {
     Q_OBJECT
 public:
-    KBackground(QWidget *parent=0, const char *name=0);
+    KBackground(TQWidget *parent=0, const char *name=0);
     ~KBackground();
 
     void load();
@@ -40,8 +40,8 @@ private:
     void init();
     void apply();
 
-    QCheckBox *m_pCBEnable;
-    QLabel *m_pMLabel;
+    TQCheckBox *m_pCBEnable;
+    TQLabel *m_pMLabel;
     KSimpleConfig *m_simpleConf;
     BGDialog *m_background;
 };

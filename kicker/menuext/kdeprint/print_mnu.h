@@ -32,7 +32,7 @@ class PrintMenu : public KPanelMenu, public KPReloadObject
     Q_OBJECT
 
 public:
-    PrintMenu(QWidget *parent, const char *name, const QStringList & /*args*/);
+    PrintMenu(TQWidget *parent, const char *name, const TQStringList & /*args*/);
     ~PrintMenu();
 
 protected slots:

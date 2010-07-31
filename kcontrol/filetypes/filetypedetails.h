@@ -1,7 +1,7 @@
 #ifndef _FILETYPEDETAILS_H
 #define _FILETYPEDETAILS_H
 
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 class TypesListItem;
 class KIconButton;
 class QLineEdit;
@@ -22,7 +22,7 @@ class FileTypeDetails : public QTabWidget
 {
   Q_OBJECT
 public:
-  FileTypeDetails(QWidget *parent = 0, const char *name = 0);
+  FileTypeDetails(TQWidget *parent = 0, const char *name = 0);
 
   void setTypeItem( TypesListItem * item );
 
@@ -31,12 +31,12 @@ protected:
   void updateAskSave();
 
 signals:
-  void embedMajor(const QString &major, bool &embed); // To adjust whether major type is being embedded
+  void embedMajor(const TQString &major, bool &embed); // To adjust whether major type is being embedded
   void changed(bool);
 
 protected slots:
-  void updateIcon(QString icon);
-  void updateDescription(const QString &desc);
+  void updateIcon(TQString icon);
+  void updateDescription(const TQString &desc);
   void addExtension();
   void removeExtension();
   void enableExtButtons(int index);
@@ -48,17 +48,17 @@ private:
 
   // First tab - General
   KIconButton *iconButton;
-  QListBox *extensionLB;
-  QPushButton *addExtButton, *removeExtButton;
-  QLineEdit *description;
+  TQListBox *extensionLB;
+  TQPushButton *addExtButton, *removeExtButton;
+  TQLineEdit *description;
   KServiceListWidget *serviceListWidget;
 
   // Second tab - Embedding
-  QButtonGroup *m_autoEmbed;
+  TQButtonGroup *m_autoEmbed;
   KServiceListWidget *embedServiceListWidget;
-  QRadioButton *m_rbOpenSeparate;
-  QCheckBox *m_chkAskSave;
-  QRadioButton *m_rbGroupSettings;
+  TQRadioButton *m_rbOpenSeparate;
+  TQCheckBox *m_chkAskSave;
+  TQRadioButton *m_rbGroupSettings;
 };
 
 #endif

@@ -17,13 +17,13 @@
 
 */
 
-#include <qlabel.h>
-#include <qvbox.h>
-#include <qpixmap.h>
-#include <qfont.h>
-#include <qwhatsthis.h>
-#include <qapplication.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqvbox.h>
+#include <tqpixmap.h>
+#include <tqfont.h>
+#include <tqwhatsthis.h>
+#include <tqapplication.h>
+#include <tqpushbutton.h>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -42,34 +42,34 @@
 class ModuleTitle : public QHBox
 {
   public:
-    ModuleTitle( QWidget *parent, const char *name=0 );
+    ModuleTitle( TQWidget *parent, const char *name=0 );
     ~ModuleTitle() {}
 
     void showTitleFor( ConfigModule *module );
     void clear();
 
   protected:
-    QLabel *m_icon;
-    QLabel *m_name;
+    TQLabel *m_icon;
+    TQLabel *m_name;
 };
 
-ModuleTitle::ModuleTitle( QWidget *parent, const char *name )
-    : QHBox( parent, name )
+ModuleTitle::ModuleTitle( TQWidget *parent, const char *name )
+    : TQHBox( parent, name )
 {
-  QWidget *spacer = new QWidget( this );
+  TQWidget *spacer = new TQWidget( this );
   spacer->setFixedWidth( KDialog::marginHint()-KDialog::spacingHint() );
-  m_icon = new QLabel( this );
-  m_name = new QLabel( this );
+  m_icon = new TQLabel( this );
+  m_name = new TQLabel( this );
 
-  QFont font = m_name->font();
+  TQFont font = m_name->font();
   font.setPointSize( font.pointSize()+1 );
   font.setBold( true );
   m_name->setFont( font );
 
   setSpacing( KDialog::spacingHint() );
-  if ( QApplication::reverseLayout() )
+  if ( TQApplication::reverseLayout() )
   {
-      spacer = new QWidget( this );
+      spacer = new TQWidget( this );
       setStretchFactor( spacer, 10 );
   }
   else
@@ -81,10 +81,10 @@ void ModuleTitle::showTitleFor( ConfigModule *config )
   if ( !config )
     return;
 
-  QWhatsThis::remove( this );
-  QWhatsThis::add( this, config->comment() );
+  TQWhatsThis::remove( this );
+  TQWhatsThis::add( this, config->comment() );
   KIconLoader *loader = KGlobal::instance()->iconLoader();
-  QPixmap icon = loader->loadIcon( config->icon(), KIcon::NoGroup, 22 );
+  TQPixmap icon = loader->loadIcon( config->icon(), KIcon::NoGroup, 22 );
   m_icon->setPixmap( icon );
   m_name->setText( config->moduleName() );
 
@@ -93,20 +93,20 @@ void ModuleTitle::showTitleFor( ConfigModule *config )
 
 void ModuleTitle::clear()
 {
-  m_icon->setPixmap( QPixmap() );
-  m_name->setText( QString::null );
+  m_icon->setPixmap( TQPixmap() );
+  m_name->setText( TQString::null );
   kapp->processEvents();
 }
 
-ModuleWidget::ModuleWidget( QWidget *parent, const char *name )
-    : QVBox( parent, name )
+ModuleWidget::ModuleWidget( TQWidget *parent, const char *name )
+    : TQVBox( parent, name )
 {
-  QHBox* titleLine = new QHBox( this, "titleLine");
+  TQHBox* titleLine = new TQHBox( this, "titleLine");
   m_title = new ModuleTitle( titleLine, "m_title" );
-  QPushButton *helpButton = new QPushButton( titleLine );
+  TQPushButton *helpButton = new TQPushButton( titleLine );
   helpButton->setIconSet( SmallIconSet("help") );
-  connect (helpButton, SIGNAL( clicked() ), this, SIGNAL( helpRequest() ) );
-  m_body = new QVBox( this, "m_body" );
+  connect (helpButton, TQT_SIGNAL( clicked() ), this, TQT_SIGNAL( helpRequest() ) );
+  m_body = new TQVBox( this, "m_body" );
   setStretchFactor( m_body, 10 );
 }
 
@@ -117,7 +117,7 @@ ProxyWidget *ModuleWidget::load( ConfigModule *module )
 
   if ( proxy )
   {
-    proxy->reparent(m_body, 0, QPoint(0,0), false);
+    proxy->reparent(m_body, 0, TQPoint(0,0), false);
     proxy->show();
     m_title->showTitleFor( module );
   }
@@ -125,19 +125,19 @@ ProxyWidget *ModuleWidget::load( ConfigModule *module )
   return proxy;
 }
 
-DockContainer::DockContainer(QWidget *parent)
-  : QWidgetStack(parent, "DockContainer")
+DockContainer::DockContainer(TQWidget *parent)
+  : TQWidgetStack(parent, "DockContainer")
   , _basew(0L)
   , _module(0L)
 {
-  _busyw = new QLabel(i18n("<big><b>Loading...</b></big>"), this);
+  _busyw = new TQLabel(i18n("<big><b>Loading...</b></big>"), this);
   _busyw->setAlignment(AlignCenter);
   _busyw->setTextFormat(RichText);
   _busyw->setGeometry(0,0, width(), height());
   addWidget( _busyw );
 
   _modulew = new ModuleWidget( this, "_modulew" );
-  connect (_modulew, SIGNAL( helpRequest() ), SLOT( slotHelpRequest() ) );
+  connect (_modulew, TQT_SIGNAL( helpRequest() ), TQT_SLOT( slotHelpRequest() ) );
   addWidget( _modulew );
 }
 
@@ -146,7 +146,7 @@ DockContainer::~DockContainer()
   deleteModule();
 }
 
-void DockContainer::setBaseWidget(QWidget *widget)
+void DockContainer::setBaseWidget(TQWidget *widget)
 {
   removeWidget( _basew );
   delete _basew;
@@ -163,17 +163,17 @@ void DockContainer::setBaseWidget(QWidget *widget)
 
 ProxyWidget* DockContainer::loadModule( ConfigModule *module )
 {
-  QApplication::setOverrideCursor( waitCursor );
+  TQApplication::setOverrideCursor( waitCursor );
 
   ProxyWidget *widget = _modulew->load( module );
 
   if (widget)
   {
     _module = module;
-    connect(_module, SIGNAL(childClosed()), SLOT(removeModule()));
-    connect(_module, SIGNAL(changed(ConfigModule *)),
-            SIGNAL(changedModule(ConfigModule *)));
-    connect(widget, SIGNAL(quickHelpChanged()), SLOT(quickHelpChanged()));
+    connect(_module, TQT_SIGNAL(childClosed()), TQT_SLOT(removeModule()));
+    connect(_module, TQT_SIGNAL(changed(ConfigModule *)),
+            TQT_SIGNAL(changedModule(ConfigModule *)));
+    connect(widget, TQT_SIGNAL(quickHelpChanged()), TQT_SLOT(quickHelpChanged()));
 
     raiseWidget( _modulew );
     emit newModule(widget->caption(), module->docPath(), widget->quickHelp());
@@ -184,7 +184,7 @@ ProxyWidget* DockContainer::loadModule( ConfigModule *module )
     emit newModule(_basew->caption(), "", "");
   }
 
-  QApplication::restoreOverrideCursor();
+  TQApplication::restoreOverrideCursor();
 
   return widget;
 }

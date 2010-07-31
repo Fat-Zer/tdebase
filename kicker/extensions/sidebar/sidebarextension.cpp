@@ -22,16 +22,16 @@
 #include <klocale.h>
 #include <kparts/part.h>
 #include <kparts/componentfactory.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <konq_historymgr.h>
 #include <krun.h>
 #include <kurl.h>
-#include <qvbox.h>
-#include <qcursor.h>
+#include <tqvbox.h>
+#include <tqcursor.h>
 
 extern "C"
 {
-   KDE_EXPORT KPanelExtension *init( QWidget *parent, const QString& configFile )
+   KDE_EXPORT KPanelExtension *init( TQWidget *parent, const TQString& configFile )
    {
       KGlobal::locale()->insertCatalogue("kickersidebarextension");
       KGlobal::locale()->insertCatalogue("konqueror");
@@ -42,17 +42,17 @@ extern "C"
    }
 }
 
-SidebarExtension::SidebarExtension( const QString& configFile,
+SidebarExtension::SidebarExtension( const TQString& configFile,
                                   Type type,
                                   int actions,
-                                  QWidget *parent, const char *name )
+                                  TQWidget *parent, const char *name )
    : KPanelExtension( configFile, type, actions, parent, name ),m_resizing(false),m_expandedSize(200)
 {
     kdDebug() << "SidebarExtension: Created '" << name << "', '" << configFile << "'" << endl;
     new KonqHistoryManager(0,"SidebarExtensionHistoryManager");
-    m_layout=new QHBoxLayout(this);
+    m_layout=new TQHBoxLayout(this);
     m_layout->activate();
-    m_sbWrapper=new QVBox(this);
+    m_sbWrapper=new TQVBox(this);
     KParts::ReadOnlyPart *p=KParts::ComponentFactory::createPartInstanceFromLibrary<KParts::ReadOnlyPart>(
 						"konq_sidebar",
                                                  m_sbWrapper,
@@ -62,19 +62,19 @@ SidebarExtension::SidebarExtension( const QString& configFile,
 
     KParts::BrowserExtension *be=KParts::BrowserExtension::childObject(p);
     if (be) {
-	connect(be,SIGNAL(openURLRequest( const KURL &, const KParts::URLArgs &)),
-                        this,SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
-	connect(be,SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)),
-                        this,SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
+	connect(be,TQT_SIGNAL(openURLRequest( const KURL &, const KParts::URLArgs &)),
+                        this,TQT_SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
+	connect(be,TQT_SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)),
+                        this,TQT_SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
 
     }
 
-    m_resizeHandle=new QFrame(this);
-    m_resizeHandle->setFrameShape(QFrame::Panel);
-    m_resizeHandle->setFrameShadow(QFrame::Raised);
+    m_resizeHandle=new TQFrame(this);
+    m_resizeHandle->setFrameShape(TQFrame::Panel);
+    m_resizeHandle->setFrameShadow(TQFrame::Raised);
     m_resizeHandle->setFixedWidth(6);
-    m_resizeHandle->setCursor(QCursor(Qt::SizeHorCursor));
-    connect(p->widget(),SIGNAL(panelHasBeenExpanded(bool)),this,SLOT(needLayoutUpdate(bool)));
+    m_resizeHandle->setCursor(TQCursor(Qt::SizeHorCursor));
+    connect(p->widget(),TQT_SIGNAL(panelHasBeenExpanded(bool)),this,TQT_SLOT(needLayoutUpdate(bool)));
     needLayoutUpdate(false);
     m_resizeHandle->installEventFilter(this);
     m_resizeHandle->setMouseTracking(true);
@@ -110,31 +110,31 @@ SidebarExtension::~SidebarExtension()
       KGlobal::locale()->removeCatalogue("konqueror");
 }
 
-bool SidebarExtension::eventFilter( QObject *, QEvent *e ) {
-	if (e->type()==QEvent::MouseButtonPress) {
+bool SidebarExtension::eventFilter( TQObject *, TQEvent *e ) {
+	if (e->type()==TQEvent::MouseButtonPress) {
 		m_resizing=true;
-		m_x=((QMouseEvent*)e)->globalX();
+		m_x=((TQMouseEvent*)e)->globalX();
 		return true;
-	} else if (e->type()==QEvent::MouseButtonRelease) {
+	} else if (e->type()==TQEvent::MouseButtonRelease) {
 		m_resizing=false;
 		m_expandedSize=topLevelWidget()->width();
 		needLayoutUpdate(true);
 		return true;
-	} else if (e->type()==QEvent::MouseMove) {
+	} else if (e->type()==TQEvent::MouseMove) {
 		if (m_resizing) {
 			Position p=position();
 			if (p==Left) {
-				int diff=((QMouseEvent*)e)->globalX()-m_x;
+				int diff=((TQMouseEvent*)e)->globalX()-m_x;
 					if (abs(diff)>3) {
 						topLevelWidget()->setFixedWidth(topLevelWidget()->width()+diff);
-						m_x=((QMouseEvent*)e)->globalX();
+						m_x=((TQMouseEvent*)e)->globalX();
 					}
 			} else if (p==Right) {
-				int diff=((QMouseEvent*)e)->globalX()-m_x;
+				int diff=((TQMouseEvent*)e)->globalX()-m_x;
 					if (abs(diff)>3) {
 						topLevelWidget()->setFixedWidth(topLevelWidget()->width()-diff);
 						topLevelWidget()->move(topLevelWidget()->x()+diff,topLevelWidget()->y());
-						m_x=((QMouseEvent*)e)->globalX();
+						m_x=((TQMouseEvent*)e)->globalX();
 					}
 			}
 			return true;
@@ -148,9 +148,9 @@ KPanelExtension::Position SidebarExtension::preferedPosition() const {
 	return KPanelExtension::Left;
 }
 
-QSize SidebarExtension::sizeHint(Position, QSize maxSize ) const
+TQSize SidebarExtension::sizeHint(Position, TQSize maxSize ) const
 {
-	return QSize(m_currentWidth,maxSize.height());
+	return TQSize(m_currentWidth,maxSize.height());
 }
 
 void SidebarExtension::positionChange( Position  position ) {

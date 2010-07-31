@@ -16,11 +16,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlistbox.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -32,7 +32,7 @@
 #include "uagentproviderdlg.h"
 #include "uagentproviderdlg_ui.h"
 
-UALineEdit::UALineEdit( QWidget *parent, const char *name )
+UALineEdit::UALineEdit( TQWidget *parent, const char *name )
            :KLineEdit( parent, name )
 {
   // For now do not accept any drops since they might contain
@@ -41,10 +41,10 @@ UALineEdit::UALineEdit( QWidget *parent, const char *name )
   setAcceptDrops( false );
 }
 
-void UALineEdit::keyPressEvent( QKeyEvent* e )
+void UALineEdit::keyPressEvent( TQKeyEvent* e )
 {
   int key = e->key();
-  QString keycode = e->text();
+  TQString keycode = e->text();
   if ( (key >= Qt::Key_Escape && key <= Qt::Key_Help) || key == Qt::Key_Period ||
        (cursorPosition() > 0 && key == Qt::Key_Minus) ||
        (!keycode.isEmpty() && keycode.unicode()->isLetterOrNumber()) )
@@ -55,13 +55,13 @@ void UALineEdit::keyPressEvent( QKeyEvent* e )
   e->accept();
 }
 
-UAProviderDlg::UAProviderDlg( const QString& caption, QWidget *parent,
+UAProviderDlg::UAProviderDlg( const TQString& caption, TQWidget *parent,
                               FakeUASProvider* provider, const char *name )
               :KDialog(parent, name, true), m_provider(provider)
 {
   setCaption ( caption );
 
-  QVBoxLayout* mainLayout = new QVBoxLayout(this, 0, 0);
+  TQVBoxLayout* mainLayout = new TQVBoxLayout(this, 0, 0);
 
   dlg = new UAProviderDlgUI (this);
   mainLayout->addWidget(dlg);
@@ -82,14 +82,14 @@ UAProviderDlg::~UAProviderDlg()
 
 void UAProviderDlg::init()
 {
-  connect( dlg->pbOk, SIGNAL(clicked()), SLOT(accept()) );
-  connect( dlg->pbCancel, SIGNAL(clicked()), SLOT(reject()) );
+  connect( dlg->pbOk, TQT_SIGNAL(clicked()), TQT_SLOT(accept()) );
+  connect( dlg->pbCancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()) );
 
-  connect( dlg->leSite, SIGNAL(textChanged(const QString&)),
-                SLOT(slotTextChanged( const QString&)) );
+  connect( dlg->leSite, TQT_SIGNAL(textChanged(const TQString&)),
+                TQT_SLOT(slotTextChanged( const TQString&)) );
 
-  connect( dlg->cbAlias, SIGNAL(activated(const QString&)),
-                SLOT(slotActivated(const QString&)) );
+  connect( dlg->cbAlias, TQT_SIGNAL(activated(const TQString&)),
+                TQT_SLOT(slotActivated(const TQString&)) );
 
   dlg->cbAlias->clear();
   dlg->cbAlias->insertStringList( m_provider->userAgentAliasList() );
@@ -99,7 +99,7 @@ void UAProviderDlg::init()
   dlg->leSite->setFocus();
 }
 
-void UAProviderDlg::slotActivated( const QString& text )
+void UAProviderDlg::slotActivated( const TQString& text )
 {
   if ( text.isEmpty() )
     dlg->leIdentity->setText( "" );
@@ -109,17 +109,17 @@ void UAProviderDlg::slotActivated( const QString& text )
   dlg->pbOk->setEnabled( (!dlg->leSite->text().isEmpty() && !text.isEmpty()) );
 }
 
-void UAProviderDlg::slotTextChanged( const QString& text )
+void UAProviderDlg::slotTextChanged( const TQString& text )
 {
   dlg->pbOk->setEnabled( (!text.isEmpty() && !dlg->cbAlias->currentText().isEmpty()) );
 }
 
-void UAProviderDlg::setSiteName( const QString& text )
+void UAProviderDlg::setSiteName( const TQString& text )
 {
   dlg->leSite->setText( text );
 }
 
-void UAProviderDlg::setIdentity( const QString& text )
+void UAProviderDlg::setIdentity( const TQString& text )
 {
   int id = dlg->cbAlias->listBox()->index( dlg->cbAlias->listBox()->findItem(text) );
   dlg->cbAlias->setCurrentItem( id );
@@ -128,20 +128,20 @@ void UAProviderDlg::setIdentity( const QString& text )
     dlg->cbAlias->setFocus();
 }
 
-QString UAProviderDlg::siteName()
+TQString UAProviderDlg::siteName()
 {
-  QString site_name=dlg->leSite->text().lower();
+  TQString site_name=dlg->leSite->text().lower();
   site_name = site_name.remove( "https://" );
   site_name = site_name.remove( "http://" );
   return site_name;
 }
 
-QString UAProviderDlg::identity()
+TQString UAProviderDlg::identity()
 {
   return dlg->cbAlias->currentText();
 }
 
-QString UAProviderDlg::alias()
+TQString UAProviderDlg::alias()
 {
   return dlg->leIdentity->text();
 }

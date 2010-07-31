@@ -56,8 +56,8 @@
 #ifndef KASPOPUP_H
 #define KASPOPUP_H
 
-#include <qguardedptr.h>
-#include <qhbox.h>
+#include <tqguardedptr.h>
+#include <tqhbox.h>
 #include <kpixmap.h>
 
 #include "kasitem.h"
@@ -81,7 +81,7 @@ public:
    KasItem *item() const { return item_; }
    KasBar *kasbar() const { return kasbar_; }
 
-   static QPoint calcPosition( KasItem *item, int w, int h );
+   static TQPoint calcPosition( KasItem *item, int w, int h );
 
 public slots:
    /**
@@ -98,7 +98,7 @@ signals:
    void shown();
 
 private:
-   QGuardedPtr<KasItem> item_;
+   TQGuardedPtr<KasItem> item_;
    KasBar *kasbar_;
 };
 

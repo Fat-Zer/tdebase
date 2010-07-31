@@ -17,15 +17,15 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qvbuttongroup.h>
-#include <qwhatsthis.h>
-#include <qradiobutton.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qvbox.h>
-#include <qfileinfo.h>
+#include <tqlayout.h>
+#include <tqgroupbox.h>
+#include <tqvbuttongroup.h>
+#include <tqwhatsthis.h>
+#include <tqradiobutton.h>
+#include <tqpushbutton.h>
+#include <tqtoolbutton.h>
+#include <tqvbox.h>
+#include <tqfileinfo.h>
 
 #include <kconfig.h>
 #include <kglobal.h>
@@ -38,25 +38,25 @@
 #include "applettab_impl.h"
 #include "applettab_impl.moc"
 
-AppletTab::AppletTab( QWidget *parent, const char* name )
+AppletTab::AppletTab( TQWidget *parent, const char* name )
   : AppletTabBase (parent, name)
 {
 
-  connect(level_group, SIGNAL(clicked(int)), SLOT(level_changed(int)));
+  connect(level_group, TQT_SIGNAL(clicked(int)), TQT_SLOT(level_changed(int)));
 
-  connect(lb_trusted, SIGNAL(selectionChanged(QListViewItem*)),
-          SLOT(trusted_selection_changed(QListViewItem*)));
+  connect(lb_trusted, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+          TQT_SLOT(trusted_selection_changed(TQListViewItem*)));
 
-  connect(pb_add, SIGNAL(clicked()), SLOT(add_clicked()));
-  connect(pb_remove, SIGNAL(clicked()), SLOT(remove_clicked()));
+  connect(pb_add, TQT_SIGNAL(clicked()), TQT_SLOT(add_clicked()));
+  connect(pb_remove, TQT_SIGNAL(clicked()), TQT_SLOT(remove_clicked()));
 
-  connect(lb_available, SIGNAL(selectionChanged(QListViewItem*)),
-          SLOT(available_selection_changed(QListViewItem*)));
+  connect(lb_available, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+          TQT_SLOT(available_selection_changed(TQListViewItem*)));
 
   pb_add->setEnabled(false);
   pb_remove->setEnabled(false);
 
-  QWhatsThis::add( level_group, i18n("Panel applets can be started in two different ways:"
+  TQWhatsThis::add( level_group, i18n("Panel applets can be started in two different ways:"
     " internally or externally. While 'internally' is the preferred way to load applets, this can"
     " raise stability or security problems when you are using poorly-programmed third-party applets."
     " To address these problems, applets can be marked 'trusted'. You might want to configure"
@@ -67,18 +67,18 @@ AppletTab::AppletTab( QWidget *parent, const char* name )
     " will be loaded internally, others will be loaded using an external wrapper application.</li>"
     " <li><em>Load all applets internally</em></li></ul>") );
 
-  QWhatsThis::add( lb_trusted, i18n("Here you can see a list of applets that are marked"
+  TQWhatsThis::add( lb_trusted, i18n("Here you can see a list of applets that are marked"
     " 'trusted', i.e. will be loaded internally by Kicker in any case. To move an applet"
     " from the list of available applets to the trusted ones, or vice versa, select it and"
     " press the left or right buttons.") );
 
-  QWhatsThis::add( pb_add, i18n("Click here to add the selected applet from the list of available,"
+  TQWhatsThis::add( pb_add, i18n("Click here to add the selected applet from the list of available,"
     " untrusted applets to the list of trusted applets.") );
 
-  QWhatsThis::add( pb_remove, i18n("Click here to remove the selected applet from the list of trusted"
+  TQWhatsThis::add( pb_remove, i18n("Click here to remove the selected applet from the list of trusted"
     " applets to the list of available, untrusted applets.") );
 
-  QWhatsThis::add( lb_available, i18n("Here you can see a list of available applets that you"
+  TQWhatsThis::add( lb_available, i18n("Here you can see a list of available applets that you"
     " currently do not trust. This does not mean you cannot use those applets, but rather that"
     " the panel's policy using them depends on your applet security level. To move an applet"
     " from the list of available applets to the trusted ones or vice versa, select it and"
@@ -120,17 +120,17 @@ void AppletTab::load( bool useDefaults )
 
   list_group->setEnabled(trusted_rb->isChecked());
 
-  QStringList list = KGlobal::dirs()->findAllResources("applets", "*.desktop");
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+  TQStringList list = KGlobal::dirs()->findAllResources("applets", "*.desktop");
+  for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
     {
-      QFileInfo fi(*it);
+      TQFileInfo fi(*it);
       available << fi.baseName();
     }
 
   if(c.hasKey("TrustedApplets"))
     {
-      QStringList list = c.readListEntry("TrustedApplets");
-      for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+      TQStringList list = c.readListEntry("TrustedApplets");
+      for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
         {
           if(available.contains(*it))
             l_trusted << (*it);
@@ -140,7 +140,7 @@ void AppletTab::load( bool useDefaults )
       l_trusted << "clockapplet" << "ksystemtrayapplet" << "krunapplet" << "quicklauncher"
                 << "kminipagerapplet" << "ktaskbarapplet" << "eyesapplet" << "kmixapplet";
 
-  for ( QStringList::Iterator it = available.begin(); it != available.end(); ++it )
+  for ( TQStringList::Iterator it = available.begin(); it != available.end(); ++it )
     {
       if(!l_trusted.contains(*it))
         l_available << (*it);
@@ -170,9 +170,9 @@ void AppletTab::defaults()
    load( true );
 }
 
-QString AppletTab::quickHelp() const
+TQString AppletTab::quickHelp() const
 {
-  return QString::null;
+  return TQString::null;
 }
 
 void AppletTab::level_changed(int)
@@ -184,24 +184,24 @@ void AppletTab::level_changed(int)
 void AppletTab::updateTrusted()
 {
   lb_trusted->clear();
-  for ( QStringList::Iterator it = l_trusted.begin(); it != l_trusted.end(); ++it )
-    (void) new QListViewItem(lb_trusted, (*it));
+  for ( TQStringList::Iterator it = l_trusted.begin(); it != l_trusted.end(); ++it )
+    (void) new TQListViewItem(lb_trusted, (*it));
 }
 
 void AppletTab::updateAvailable()
 {
   lb_available->clear();
-  for ( QStringList::Iterator it = l_available.begin(); it != l_available.end(); ++it )
-    (void) new QListViewItem(lb_available, (*it));
+  for ( TQStringList::Iterator it = l_available.begin(); it != l_available.end(); ++it )
+    (void) new TQListViewItem(lb_available, (*it));
 }
 
-void AppletTab::trusted_selection_changed(QListViewItem * item)
+void AppletTab::trusted_selection_changed(TQListViewItem * item)
 {
   pb_remove->setEnabled(item != 0);
   setChanged();
 }
 
-void AppletTab::available_selection_changed(QListViewItem * item)
+void AppletTab::available_selection_changed(TQListViewItem * item)
 {
   pb_add->setEnabled(item != 0);
   setChanged();
@@ -209,7 +209,7 @@ void AppletTab::available_selection_changed(QListViewItem * item)
 
 void AppletTab::add_clicked()
 {
-  QListViewItem *item = lb_available->selectedItem();
+  TQListViewItem *item = lb_available->selectedItem();
   if (!item) return;
   l_available.remove(item->text(0));
   l_trusted.append(item->text(0));
@@ -221,7 +221,7 @@ void AppletTab::add_clicked()
 
 void AppletTab::remove_clicked()
 {
-  QListViewItem *item = lb_trusted->selectedItem();
+  TQListViewItem *item = lb_trusted->selectedItem();
   if (!item) return;
   l_trusted.remove(item->text(0));
   l_available.append(item->text(0));

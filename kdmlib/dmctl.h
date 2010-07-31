@@ -24,12 +24,12 @@
 #include <kapplication.h>
 
 struct SessEnt {
-	QString display, from, user, session;
+	TQString display, from, user, session;
 	int vt;
 	bool self:1, tty:1;
 };
 
-typedef QValueList<SessEnt> SessList;
+typedef TQValueList<SessEnt> SessList;
 
 class DM {
 
@@ -42,7 +42,7 @@ public:
 	bool canShutdown();
 	void shutdown( KApplication::ShutdownType shutdownType,
 	               KApplication::ShutdownMode shutdownMode,
-	               const QString &bootOption = QString::null );
+	               const TQString &bootOption = TQString::null );
 
 	void setLock( bool on );
 
@@ -53,15 +53,15 @@ public:
 	bool switchVT( int vt );
 	void lockSwitchVT( int vt );
 
-	bool bootOptions( QStringList &opts, int &dflt, int &curr );
+	bool bootOptions( TQStringList &opts, int &dflt, int &curr );
 
-	static QString sess2Str( const SessEnt &se );
-	static void sess2Str2( const SessEnt &se, QString &user, QString &loc );
+	static TQString sess2Str( const SessEnt &se );
+	static void sess2Str2( const SessEnt &se, TQString &user, TQString &loc );
 
 private:
 	int fd;
 
-	bool exec( const char *cmd, QCString &ret );
+	bool exec( const char *cmd, TQCString &ret );
 	bool exec( const char *cmd );
 
 	void GDMAuthenticate();
@@ -74,7 +74,7 @@ public:
 	bool canShutdown() { return false; }
 	void shutdown( KApplication::ShutdownType shutdownType,
 	               KApplication::ShutdownMode shutdownMode,
-	               const QString &bootOption = QString::null ) {}
+	               const TQString &bootOption = TQString::null ) {}
 
 	void setLock( bool ) {}
 
@@ -84,7 +84,7 @@ public:
 	bool localSessions( SessList &list ) { return false; }
 	void switchVT( int vt ) {}
 
-	bool bootOptions( QStringList &opts, int &dflt, int &curr );
+	bool bootOptions( TQStringList &opts, int &dflt, int &curr );
 
 #endif // Q_WS_X11
 

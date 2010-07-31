@@ -22,8 +22,8 @@
 #define FAXAB_H
 
 #include <kdialog.h>
-#include <qmap.h>
-#include <qstringlist.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
 #include <kabc/phonenumber.h>
 
 class KListView;
@@ -34,12 +34,12 @@ class FaxAB : public KDialog
 {
 	Q_OBJECT
 public:
-	FaxAB(QWidget *parent = 0, const char *name = 0);
+	FaxAB(TQWidget *parent = 0, const char *name = 0);
 	~FaxAB();
 	bool isValid();
 
-	static bool getEntry(QStringList& number, QStringList& name, QStringList& enterprise, QWidget *parent = 0);
-	static bool getEntryByNumber(const QString& number, QString& name, QString& enterprise);
+	static bool getEntry(TQStringList& number, TQStringList& name, TQStringList& enterprise, TQWidget *parent = 0);
+	static bool getEntryByNumber(const TQString& number, TQString& name, TQString& enterprise);
 
 protected slots:
 	void slotEditAb();
@@ -51,14 +51,14 @@ protected:
 private:
 	struct FaxABEntry
 	{
-		QString           m_name;
+		TQString           m_name;
 		KABC::PhoneNumber m_number;
-		QString           m_enterprise;
+		TQString           m_enterprise;
 	};
 
 	KListView*                  m_list;
-	QMap<QString,FaxABEntry>    m_entries;
-	QPushButton*                m_ok;
+	TQMap<TQString,FaxABEntry>    m_entries;
+	TQPushButton*                m_ok;
 };
 
 #endif

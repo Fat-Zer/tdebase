@@ -23,11 +23,11 @@
 
 #include <stdio.h>
 
-#include <qcolor.h>
-#include <qpalette.h>
-#include <qstring.h>
-#include <qpainter.h>
-#include <qstyle.h>
+#include <tqcolor.h>
+#include <tqpalette.h>
+#include <tqstring.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
 #include <kwordwrap.h>
 #include <kiconview.h>
 #include <kdebug.h>
@@ -61,7 +61,7 @@ KFileIVIDesktop::~KFileIVIDesktop()
   delete m_normalImage;
 }
 
-void KFileIVIDesktop::calcRect( const QString& _text )
+void KFileIVIDesktop::calcRect( const TQString& _text )
 {
     KIconViewItem::calcRect( _text );
 
@@ -71,8 +71,8 @@ void KFileIVIDesktop::calcRect( const QString& _text )
         return;
 
     int spread = shadowThickness();
-    QRect itemTextRect = textRect();
-    QRect itemRect = rect();
+    TQRect itemTextRect = textRect();
+    TQRect itemRect = rect();
 
     itemTextRect.setBottom( itemTextRect.bottom() + spread );
     itemTextRect.setRight( itemTextRect.right() + spread );
@@ -83,11 +83,11 @@ void KFileIVIDesktop::calcRect( const QString& _text )
     setItemRect( itemRect );
 }
 
-void KFileIVIDesktop::paintItem( QPainter *p, const QColorGroup &cg)
+void KFileIVIDesktop::paintItem( TQPainter *p, const TQColorGroup &cg)
 {
-  QColorGroup colors = updateColors(cg);
+  TQColorGroup colors = updateColors(cg);
 
-  QIconView* view = iconView();
+  TQIconView* view = iconView();
   Q_ASSERT( view );
 
   if ( !view )
@@ -119,7 +119,7 @@ void KFileIVIDesktop::paintItem( QPainter *p, const QColorGroup &cg)
 bool KFileIVIDesktop::shouldUpdateShadow(bool selected)
 {
   unsigned long uid = (static_cast<KDesktopShadowSettings *> (m_shadow->shadowSettings()))->UID();
-  QString wrapped = wordWrap()->wrappedString();
+  TQString wrapped = wordWrap()->wrappedString();
 
   if (wrapped != oldText){
     oldText = wrapped;
@@ -136,11 +136,11 @@ bool KFileIVIDesktop::shouldUpdateShadow(bool selected)
 
 
 
-void KFileIVIDesktop::drawShadowedText( QPainter *p, const QColorGroup &cg )
+void KFileIVIDesktop::drawShadowedText( TQPainter *p, const TQColorGroup &cg )
 {
   int textX = textRect( FALSE ).x() + 4;
   int textY = textRect( FALSE ).y();
-  int align = ((KIconView *) iconView())->itemTextPos() == QIconView::Bottom
+  int align = ((KIconView *) iconView())->itemTextPos() == TQIconView::Bottom
     ? AlignHCenter : AlignAuto;
   bool rebuild = shouldUpdateShadow(isSelected());
 
@@ -150,17 +150,17 @@ void KFileIVIDesktop::drawShadowedText( QPainter *p, const QColorGroup &cg )
 
   p->setFont(iconView()->font());
   paintFontUpdate(p);
-  QColor shadow;
-  QColor text;
+  TQColor shadow;
+  TQColor text;
   int spread = shadowThickness();
 
   if ( isSelected() && settings->selectionType() != KShadowSettings::InverseVideoOnSelection ) {
     text = cg.highlightedText();
-    QRect rect = textRect( false );
+    TQRect rect = textRect( false );
     rect.setRight( rect.right() - spread );
     rect.setBottom( rect.bottom() - spread + 1 );
-    p->setBrush( QBrush( cg.highlight() ) );
-    p->setPen( QPen( cg.highlight() ) );
+    p->setBrush( TQBrush( cg.highlight() ) );
+    p->setPen( TQPen( cg.highlight() ) );
     p->drawRoundRect( rect,
 		      1000 / rect.width(),
 		      1000 / rect.height() );	
@@ -201,16 +201,16 @@ void KFileIVIDesktop::drawShadowedText( QPainter *p, const QColorGroup &cg )
 }
 
 
-QImage *KFileIVIDesktop::buildShadow( QPainter *p, const int align,
-                                      QColor &shadowColor )
+TQImage *KFileIVIDesktop::buildShadow( TQPainter *p, const int align,
+                                      TQColor &shadowColor )
 {
-  QPainter pixPainter;
+  TQPainter pixPainter;
   int spread = shadowThickness();
 
-  QPixmap textPixmap(textRect( FALSE ).width() + spread * 2 + 2,
+  TQPixmap textPixmap(textRect( FALSE ).width() + spread * 2 + 2,
     textRect( FALSE ).height() + spread * 2 + 2);
 
-  textPixmap.fill(QColor(0,0,0));
+  textPixmap.fill(TQColor(0,0,0));
   textPixmap.setMask( textPixmap.createHeuristicMask(TRUE) );
 
   pixPainter.begin(&textPixmap);
@@ -219,7 +219,7 @@ QImage *KFileIVIDesktop::buildShadow( QPainter *p, const int align,
   wordWrap()->drawText( &pixPainter, spread, spread, align | KWordWrap::Truncate );
   pixPainter.end();
 
-  return new QImage(m_shadow->makeShadow(textPixmap, shadowColor));
+  return new TQImage(m_shadow->makeShadow(textPixmap, shadowColor));
 }
 
 int KFileIVIDesktop::shadowThickness() const

@@ -51,11 +51,11 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <qcursor.h>
-#include <qpainter.h>
-#include <qdrawutil.h>
-#include <qregexp.h>
-#include <qtimer.h>
+#include <tqcursor.h>
+#include <tqpainter.h>
+#include <tqdrawutil.h>
+#include <tqregexp.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -86,7 +86,7 @@ static const char *tiny_arrow[]={
 static const int KASITEM_CHECK_POPUP_DELAY = 500;
 
 KasItem::KasItem( KasBar *parent )
-   : QObject( parent ),
+   : TQObject( parent ),
      kas( parent ), popupTimer( 0 ), dragTimer( 0 ),
      title( i18n( "Kasbar" ) ),
      mouseOver( false ), activated( false ),
@@ -94,8 +94,8 @@ KasItem::KasItem( KasBar *parent )
      frame(true), modified(false), attention_(false), prog( -1 ),
      anim(), aniFrame( 0 ), drawAnim( false )
 {
-    connect( parent, SIGNAL( dragStarted() ), SLOT( hidePopup() ) );
-    connect( this, SIGNAL( middleButtonClicked(QMouseEvent *) ), parent, SLOT( toggleOrientation() ) );
+    connect( parent, TQT_SIGNAL( dragStarted() ), TQT_SLOT( hidePopup() ) );
+    connect( this, TQT_SIGNAL( middleButtonClicked(TQMouseEvent *) ), parent, TQT_SLOT( toggleOrientation() ) );
 }
 
 KasItem::~KasItem()
@@ -112,7 +112,7 @@ void KasItem::setActive( bool yesno )
     update();
 }
 
-void KasItem::setText( const QString &text )
+void KasItem::setText( const TQString &text )
 {
     if ( title == text )
 	return;
@@ -121,7 +121,7 @@ void KasItem::setText( const QString &text )
     update();
 }
 
-void KasItem::setIcon( const QPixmap &p )
+void KasItem::setIcon( const TQPixmap &p )
 {
     pix = p;
     update();
@@ -168,8 +168,8 @@ void KasItem::mouseEnter()
    static const int POPUP_DELAY = 300;
 
    if ( (!customPopup) && (popupTimer == 0) ) {
-      popupTimer = new QTimer( this, "popupTimer" );
-      connect( popupTimer, SIGNAL( timeout() ), SLOT( showPopup() ) );
+      popupTimer = new TQTimer( this, "popupTimer" );
+      connect( popupTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( showPopup() ) );
       popupTimer->start( POPUP_DELAY, true );
    }
 
@@ -177,7 +177,7 @@ void KasItem::mouseEnter()
    update();
 }
 
-void KasItem::mouseReleaseEvent( QMouseEvent *ev )
+void KasItem::mouseReleaseEvent( TQMouseEvent *ev )
 {
     if ( ev->button() == LeftButton )
 	emit leftButtonClicked( ev );
@@ -195,7 +195,7 @@ void KasItem::checkPopup()
     if ( !pop->isVisible() )
 	return;
 
-    QWidget *w = QApplication::widgetAt( QCursor::pos() );
+    TQWidget *w = TQApplication::widgetAt( TQCursor::pos() );
     if ( !w ) {
 	if ( popupTimer ) {
 	    delete popupTimer;
@@ -205,7 +205,7 @@ void KasItem::checkPopup()
 	    hidePopup();
     }
     else {
-	QTimer::singleShot( KASITEM_CHECK_POPUP_DELAY, this, SLOT( checkPopup() ) );
+	TQTimer::singleShot( KASITEM_CHECK_POPUP_DELAY, this, TQT_SLOT( checkPopup() ) );
     }
 }
 
@@ -214,8 +214,8 @@ void KasItem::dragEnter()
    static const int DRAG_SWITCH_DELAY = 1000;
 
    if ( dragTimer == 0 ) {
-      dragTimer = new QTimer( this, "dragTimer" );
-      connect( dragTimer, SIGNAL( timeout() ), SLOT( dragOverAction() ) );
+      dragTimer = new TQTimer( this, "dragTimer" );
+      connect( dragTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( dragOverAction() ) );
       dragTimer->start( DRAG_SWITCH_DELAY, true );
    }
 
@@ -268,7 +268,7 @@ void KasItem::showPopup()
    pop->show();
    update();
 
-   QTimer::singleShot( KASITEM_CHECK_POPUP_DELAY, this, SLOT( checkPopup() ) );
+   TQTimer::singleShot( KASITEM_CHECK_POPUP_DELAY, this, TQT_SLOT( checkPopup() ) );
 }
 
 void KasItem::hidePopup()
@@ -296,23 +296,23 @@ void KasItem::setPopup( KasPopup *popup )
     pop = popup;
 }
 
-void KasItem::paintFrame( QPainter *p )
+void KasItem::paintFrame( TQPainter *p )
 {
    if ( !frame )
        return;
 
    qDrawShadePanel(p, 0, 0, extent(), extent(), colorGroup(), false, 2);
 
-   QPen pen;
+   TQPen pen;
    
    if ( mouseOver ) {
        if ( attention_ ) {
-	   pen = QPen( resources()->attentionColor(), 2 );
+	   pen = TQPen( resources()->attentionColor(), 2 );
 	   p->setPen( pen );
 	   p->drawRect( 0, 0, extent(), extent());
        }
        else {
-	   pen = QPen( Qt::white );
+	   pen = TQPen( Qt::white );
 	   p->setPen( pen );
 	   p->drawRect(0, 0, extent(), extent());
        }
@@ -323,15 +323,15 @@ void KasItem::paintFrame( QPainter *p )
    }
 }
 
-void KasItem::paintLabel( QPainter *p )
+void KasItem::paintLabel( TQPainter *p )
 {
-    QString text = title;
+    TQString text = title;
 
     if ( !groupItem ) {
-	p->fillRect( 2, 2, extent()-4, 13, QBrush( resources()->labelBgColor() ) );
+	p->fillRect( 2, 2, extent()-4, 13, TQBrush( resources()->labelBgColor() ) );
 
 	if ( isProgressItem() ) {
-	    QRegExp reg( "(1?[0-9]?[0-9])%" );
+	    TQRegExp reg( "(1?[0-9]?[0-9])%" );
 	    if ( -1 != reg.search( text ) ) {
 		prog = reg.cap(1).toInt();
 		paintProgress( p, prog );
@@ -352,11 +352,11 @@ void KasItem::paintLabel( QPainter *p )
 	return;
     }
     else {
-	QPixmap arrow( tiny_arrow );
+	TQPixmap arrow( tiny_arrow );
 
-	QPoint popupPos = KasPopup::calcPosition( this, 10, 10 );
-	QPoint iPos = kas->mapToGlobal( kas->itemPos( this ) );
-	QWMatrix turn;
+	TQPoint popupPos = KasPopup::calcPosition( this, 10, 10 );
+	TQPoint iPos = kas->mapToGlobal( kas->itemPos( this ) );
+	TQWMatrix turn;
 
 	if ( popupPos.x() < iPos.x() ) {
 	    paintArrowLabel( p, arrow.width(), true );
@@ -385,16 +385,16 @@ void KasItem::paintLabel( QPainter *p )
     }
 }
 
-void KasItem::paintArrowLabel( QPainter *p, int arrowSize, bool arrowOnLeft )
+void KasItem::paintArrowLabel( TQPainter *p, int arrowSize, bool arrowOnLeft )
 {
-    QString text = title;
+    TQString text = title;
     int lx = 2;
     int ly = 2;
     int w = extent()-4;
     int h = 13;
     arrowSize+=2; // Add a space
 
-    p->fillRect( lx, ly, w, h, QBrush( resources()->labelBgColor() ) );
+    p->fillRect( lx, ly, w, h, TQBrush( resources()->labelBgColor() ) );
 
     // Adjust for arrow
     if ( arrowOnLeft ) {
@@ -413,13 +413,13 @@ void KasItem::paintArrowLabel( QPainter *p, int arrowSize, bool arrowOnLeft )
 	p->drawText( lx, ly, w, h-1, AlignCenter, text );
 }
 
-void KasItem::paintModified( QPainter *p )
+void KasItem::paintModified( TQPainter *p )
 {
     if ( modified )
 	p->drawPixmap(extent()-12, extent()-22, resources()->modifiedIcon() );
 }
 
-void KasItem::paintBackground( QPainter *p )
+void KasItem::paintBackground( TQPainter *p )
 {
     if ( activated )
 	p->drawPixmap( 0, 0, resources()->activeBg() );
@@ -429,13 +429,13 @@ void KasItem::paintBackground( QPainter *p )
 	p->drawPixmap( 0, 0, resources()->inactiveBg() );
 }
 
-void KasItem::paintProgress( QPainter *p, int percent )
+void KasItem::paintProgress( TQPainter *p, int percent )
 {
     double amt = (extent()-4) * (percent / 100.0L);
-    p->fillRect( 2, 13, (int) amt, 2, QBrush( resources()->progressColor() ) );
+    p->fillRect( 2, 13, (int) amt, 2, TQBrush( resources()->progressColor() ) );
 }
 
-void KasItem::paintStateIcon( QPainter *p, uint state )
+void KasItem::paintStateIcon( TQPainter *p, uint state )
 {
     if ( kas->itemSize() != KasBar::Small ) {
 	switch(state) {
@@ -469,7 +469,7 @@ void KasItem::paintStateIcon( QPainter *p, uint state )
     }
 }
 
-void KasItem::paintAttention( QPainter *p )
+void KasItem::paintAttention( TQPainter *p )
 {
     p->setPen( resources()->attentionColor() );
     p->drawPixmap( 3, extent()-11, resources()->attentionIcon() );
@@ -500,12 +500,12 @@ void KasItem::setShowAnimation( bool yes )
     update();
 }
 
-void KasItem::paintAnimation( QPainter *p )
+void KasItem::paintAnimation( TQPainter *p )
 {
     if ( (aniFrame+1) > anim.count() )
 	return;
 
-    QPixmap pix = anim[ aniFrame ];
+    TQPixmap pix = anim[ aniFrame ];
     if ( pix.isNull() )
 	return;
 
@@ -515,7 +515,7 @@ void KasItem::paintAnimation( QPainter *p )
 	p->drawPixmap( extent()-18, 16, pix );
 }
 
-void KasItem::paintIcon( QPainter *p )
+void KasItem::paintIcon( TQPainter *p )
 {
     if ( pix.isNull() )
 	return;
@@ -525,7 +525,7 @@ void KasItem::paintIcon( QPainter *p )
     p->drawPixmap( x-4, y+15, pix );
 }
 
-void KasItem::paint( QPainter *p )
+void KasItem::paint( TQPainter *p )
 {
    paintBackground( p );
    paintFrame( p );
@@ -539,7 +539,7 @@ void KasItem::paint( QPainter *p )
        paintAttention( p );
 }
 
-void KasItem::paint( QPainter *p, int x, int y )
+void KasItem::paint( TQPainter *p, int x, int y )
 {
     p->save();
     p->translate( x, y );

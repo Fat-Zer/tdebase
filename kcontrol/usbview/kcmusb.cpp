@@ -8,13 +8,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qgroupbox.h>
-#include <qheader.h>
-#include <qlayout.h>
-#include <qlistview.h>
-#include <qsplitter.h>
-#include <qtextview.h>
-#include <qtimer.h>
+#include <tqgroupbox.h>
+#include <tqheader.h>
+#include <tqlayout.h>
+#include <tqlistview.h>
+#include <tqsplitter.h>
+#include <tqtextview.h>
+#include <tqtimer.h>
 
 #include <kaboutdata.h>
 #include <kdialog.h>
@@ -23,10 +23,10 @@
 #include "usbdevices.h"
 #include "kcmusb.moc"
 
-typedef KGenericFactory<USBViewer, QWidget > USBFactory;
+typedef KGenericFactory<USBViewer, TQWidget > USBFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_usb, USBFactory("kcmusb") )
 
-USBViewer::USBViewer(QWidget *parent, const char *name, const QStringList &)
+USBViewer::USBViewer(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(USBFactory::instance(), parent, name)
 {
   setButtons(Help);
@@ -34,38 +34,38 @@ USBViewer::USBViewer(QWidget *parent, const char *name, const QStringList &)
   setQuickHelp( i18n("<h1>USB Devices</h1> This module allows you to see"
      " the devices attached to your USB bus(es)."));
 
-  QVBoxLayout *vbox = new QVBoxLayout(this, 0, KDialog::spacingHint());
-  QGroupBox *gbox = new QGroupBox(i18n("USB Devices"), this);
+  TQVBoxLayout *vbox = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQGroupBox *gbox = new TQGroupBox(i18n("USB Devices"), this);
   gbox->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(gbox);
 
-  QVBoxLayout *vvbox = new QVBoxLayout(gbox->layout(), KDialog::spacingHint());
+  TQVBoxLayout *vvbox = new TQVBoxLayout(gbox->layout(), KDialog::spacingHint());
 
-  QSplitter *splitter = new QSplitter(gbox);
+  TQSplitter *splitter = new TQSplitter(gbox);
   vvbox->addWidget(splitter);
 
-  _devices = new QListView(splitter);
+  _devices = new TQListView(splitter);
   _devices->addColumn(i18n("Device"));
   _devices->setRootIsDecorated(true);
   _devices->header()->hide();
   _devices->setMinimumWidth(200);
-  _devices->setColumnWidthMode(0, QListView::Maximum);
+  _devices->setColumnWidthMode(0, TQListView::Maximum);
 
-  QValueList<int> sizes;
+  TQValueList<int> sizes;
   sizes.append(200);
   splitter->setSizes(sizes);
 
-  _details = new QTextView(splitter);
+  _details = new TQTextView(splitter);
 
-  splitter->setResizeMode(_devices, QSplitter::KeepSize);
+  splitter->setResizeMode(_devices, TQSplitter::KeepSize);
 
-  QTimer *refreshTimer = new QTimer(this);
+  TQTimer *refreshTimer = new TQTimer(this);
   // 1 sec seems to be a good compromise between latency and polling load.
   refreshTimer->start(1000);
 
-  connect(refreshTimer, SIGNAL(timeout()), SLOT(refresh()));
-  connect(_devices, SIGNAL(selectionChanged(QListViewItem*)),
-	  this, SLOT(selectionChanged(QListViewItem*)));
+  connect(refreshTimer, TQT_SIGNAL(timeout()), TQT_SLOT(refresh()));
+  connect(_devices, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+	  this, TQT_SLOT(selectionChanged(TQListViewItem*)));
 
   KAboutData *about =
   new KAboutData(I18N_NOOP("kcmusb"), I18N_NOOP("KDE USB Viewer"),
@@ -97,12 +97,12 @@ static Q_UINT32 key_parent( USBDevice &dev )
   return dev.bus()*256 + dev.parent();
 }
 
-static void delete_recursive( QListViewItem *item, const QIntDict<QListViewItem> &new_items )
+static void delete_recursive( TQListViewItem *item, const TQIntDict<TQListViewItem> &new_items )
 {
   if (!item)
 	return;
 
-  QListViewItemIterator it( item );
+  TQListViewItemIterator it( item );
   while ( it.current() ) {
         if (!new_items.find(it.current()->text(1).toUInt())) {
 		delete_recursive( it.current()->firstChild(), new_items);
@@ -114,7 +114,7 @@ static void delete_recursive( QListViewItem *item, const QIntDict<QListViewItem>
 
 void USBViewer::refresh()
 {
-  QIntDict<QListViewItem> new_items;
+  TQIntDict<TQListViewItem> new_items;
 
   if (!USBDevice::parse("/proc/bus/usb/devices"))
     USBDevice::parseSys("/sys/bus/usb/devices");
@@ -126,33 +126,33 @@ void USBViewer::refresh()
     {
       found = false;
 
-      QPtrListIterator<USBDevice> it(USBDevice::devices());
+      TQPtrListIterator<USBDevice> it(USBDevice::devices());
       for ( ; it.current(); ++it)
 	if (it.current()->level() == level)
 	  {
 	    Q_UINT32 k = key(*it.current());
 	    if (level == 0)
 	      {
-		QListViewItem *item = _items.find(k);
+		TQListViewItem *item = _items.find(k);
 		if (!item) {
-		    item = new QListViewItem(_devices,
+		    item = new TQListViewItem(_devices,
 				it.current()->product(),
-				QString::number(k));
+				TQString::number(k));
 		}
 		new_items.insert(k, item);
 		found = true;
 	      }
 	    else
 	      {
-		QListViewItem *parent = new_items.find(key_parent(*it.current()));
+		TQListViewItem *parent = new_items.find(key_parent(*it.current()));
 		if (parent)
 		  {
-		    QListViewItem *item = _items.find(k);
+		    TQListViewItem *item = _items.find(k);
 
 		    if (!item) {
-		        item = new QListViewItem(parent,
+		        item = new TQListViewItem(parent,
 				    it.current()->product(),
-				    QString::number(k) );
+				    TQString::number(k) );
 		    }
 		    new_items.insert(k, item);
 		    parent->setOpen(true);
@@ -174,7 +174,7 @@ void USBViewer::refresh()
 }
 
 
-void USBViewer::selectionChanged(QListViewItem *item)
+void USBViewer::selectionChanged(TQListViewItem *item)
 {
   if (item)
     {

@@ -124,7 +124,7 @@ static const char *micro_shade[]={
 };
 
 KasResources::KasResources( KasBar *parent, const char *name )
-    : QObject( parent, name ? name : "kasbar_resources" ),
+    : TQObject( parent, name ? name : "kasbar_resources" ),
       kasbar( parent ),
       labelPenColor_( Qt::white ), labelBgColor_( Qt::black ),
       activePenColor_( Qt::black ), activeBgColor_( Qt::white ),
@@ -138,85 +138,85 @@ KasResources::~KasResources()
 {
 }
 
-QBitmap KasResources::minIcon()
+TQBitmap KasResources::minIcon()
 {
    if ( minPix.isNull() ) {
-      minPix = QBitmap(8, 8, min_bits, true);
+      minPix = TQBitmap(8, 8, min_bits, true);
       minPix.setMask(minPix);
    }
 
    return minPix;
 }
 
-QBitmap KasResources::maxIcon()
+TQBitmap KasResources::maxIcon()
 {
    if ( maxPix.isNull() ) {
-      maxPix = QBitmap(8, 8, max_bits, true);
+      maxPix = TQBitmap(8, 8, max_bits, true);
       maxPix.setMask(maxPix);
    }
 
    return maxPix;
 }
 
-QBitmap KasResources::shadeIcon()
+TQBitmap KasResources::shadeIcon()
 {
    if ( shadePix.isNull() ) {
-      shadePix = QBitmap(8, 8, shade_bits, true);
+      shadePix = TQBitmap(8, 8, shade_bits, true);
       shadePix.setMask(shadePix);
    }
 
    return shadePix;
 }
 
-QBitmap KasResources::attentionIcon()
+TQBitmap KasResources::attentionIcon()
 {
    if ( attentionPix.isNull() ) {
-      attentionPix = QBitmap( 8, 8, attention_bits, true );
+      attentionPix = TQBitmap( 8, 8, attention_bits, true );
       attentionPix.setMask( attentionPix );
    }
 
    return attentionPix;
 }
 
-QPixmap KasResources::modifiedIcon()
+TQPixmap KasResources::modifiedIcon()
 {
    if ( modifiedPix.isNull() )
-      modifiedPix = QPixmap( tiny_floppy );
+      modifiedPix = TQPixmap( tiny_floppy );
 
    return modifiedPix;
 }
 
-QPixmap KasResources::microShadeIcon()
+TQPixmap KasResources::microShadeIcon()
 {
   if ( microShadePix.isNull() )
-    microShadePix = QPixmap( micro_shade );
+    microShadePix = TQPixmap( micro_shade );
 
   return microShadePix;
 }
 
-QPixmap KasResources::microMaxIcon()
+TQPixmap KasResources::microMaxIcon()
 {
   if ( microMaxPix.isNull() )
-    microMaxPix = QPixmap( micro_max );
+    microMaxPix = TQPixmap( micro_max );
 
   return microMaxPix;
 }
 
-QPixmap KasResources::microMinIcon()
+TQPixmap KasResources::microMinIcon()
 {
   if ( microMinPix.isNull() )
-    microMinPix = QPixmap( micro_min );
+    microMinPix = TQPixmap( micro_min );
 
   return microMinPix;
 }
 
 static const int MAX_ANIMATION_FRAME=10;
 
-QValueVector<QPixmap> KasResources::startupAnimation()
+TQValueVector<TQPixmap> KasResources::startupAnimation()
 {
     if ( startupFrames_.isEmpty() ) {
 	for ( int i = 1; i <= MAX_ANIMATION_FRAME; i++ ) {
-	    QPixmap p( locate("data", "kicker/pics/disk" + QString::number(i) + ".png") );
+	    TQPixmap p( locate("data", "kicker/pics/disk" + TQString::number(i) + ".png") );
 	    if ( !p.isNull() )
 		startupFrames_.append( p );
 	}
@@ -225,7 +225,7 @@ QValueVector<QPixmap> KasResources::startupAnimation()
     return startupFrames_;
 }
 
-void KasResources::setLabelPenColor( const QColor &color )
+void KasResources::setLabelPenColor( const TQColor &color )
 {
     if ( labelPenColor_ == color )
 	return;
@@ -234,7 +234,7 @@ void KasResources::setLabelPenColor( const QColor &color )
     emit changed();
 }
 
-void KasResources::setLabelBgColor( const QColor &color )
+void KasResources::setLabelBgColor( const TQColor &color )
 {
     if ( labelBgColor_ == color )
 	return;
@@ -243,7 +243,7 @@ void KasResources::setLabelBgColor( const QColor &color )
     emit changed();
 }
 
-void KasResources::setInactivePenColor( const QColor &color )
+void KasResources::setInactivePenColor( const TQColor &color )
 {
     if ( inactivePenColor_ == color )
 	return;
@@ -252,7 +252,7 @@ void KasResources::setInactivePenColor( const QColor &color )
     emit changed();
 }
 
-void KasResources::setInactiveBgColor( const QColor &color )
+void KasResources::setInactiveBgColor( const TQColor &color )
 {
     if ( inactiveBgColor_ == color )
 	return;
@@ -261,7 +261,7 @@ void KasResources::setInactiveBgColor( const QColor &color )
     emit changed();
 }
 
-void KasResources::setActivePenColor( const QColor &color )
+void KasResources::setActivePenColor( const TQColor &color )
 {
     if ( activePenColor_ == color )
 	return;
@@ -270,7 +270,7 @@ void KasResources::setActivePenColor( const QColor &color )
     emit changed();
 }
 
-void KasResources::setActiveBgColor( const QColor &color )
+void KasResources::setActiveBgColor( const TQColor &color )
 {
     if ( activeBgColor_ == color )
 	return;
@@ -279,7 +279,7 @@ void KasResources::setActiveBgColor( const QColor &color )
     emit changed();
 }
 
-void KasResources::setProgressColor( const QColor &color )
+void KasResources::setProgressColor( const TQColor &color )
 {
     if ( progressColor_ == color )
 	return;
@@ -288,7 +288,7 @@ void KasResources::setProgressColor( const QColor &color )
     emit changed();
 }
 
-void KasResources::setAttentionColor( const QColor &color )
+void KasResources::setAttentionColor( const TQColor &color )
 {
     if ( attentionColor_ == color )
 	return;

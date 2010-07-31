@@ -49,7 +49,7 @@ class CFontViewPart : public KParts::ReadOnlyPart
 
     public:
 
-    CFontViewPart(QWidget *parent=0, const char *name=0);
+    CFontViewPart(TQWidget *parent=0, const char *name=0);
     virtual ~CFontViewPart() {}
 
     bool openURL(const KURL &url);
@@ -69,10 +69,10 @@ class CFontViewPart : public KParts::ReadOnlyPart
     private:
 
     CFontPreview  *itsPreview;
-    QPushButton   *itsInstallButton;
-    QFrame        *itsFrame,
+    TQPushButton   *itsInstallButton;
+    TQFrame        *itsFrame,
                   *itsToolsFrame;
-    QLabel        *itsFaceLabel;
+    TQLabel        *itsFaceLabel;
     KIntNumInput  *itsFaceSelector;
     KAction       *itsChangeTextAction,
                   *itsPrintAction;

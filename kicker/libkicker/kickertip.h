@@ -26,10 +26,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef KICKER_TIP_H
 #define KICKER_TIP_H
 
-#include <qbitmap.h>
-#include <qpixmap.h>
-#include <qtimer.h>
-#include <qwidget.h>
+#include <tqbitmap.h>
+#include <tqpixmap.h>
+#include <tqtimer.h>
+#include <tqwidget.h>
 
 #include <kpanelapplet.h>
 
@@ -47,15 +47,15 @@ public:
 
     struct Data
     {
-            QString message;
-            QString subtext;
-            QPixmap icon;
+            TQString message;
+            TQString subtext;
+            TQPixmap icon;
             KickerTip::MaskEffect maskEffect;
             int duration;
             KPanelApplet::Direction direction;
 
             // do NOT delete this in the client!
-            QMimeSourceFactory* mimeFactory;
+            TQMimeSourceFactory* mimeFactory;
     };
 
     class KDE_EXPORT Client
@@ -69,15 +69,15 @@ public:
     static void enableTipping(bool tip);
     static bool tippingEnabled();
 
-    void untipFor(const QWidget* w);
-    bool eventFilter(QObject *o, QEvent *e);
+    void untipFor(const TQWidget* w);
+    bool eventFilter(TQObject *o, TQEvent *e);
 
 protected:
-    KickerTip(QWidget * parent);
+    KickerTip(TQWidget * parent);
     ~KickerTip();
 
-    void paintEvent(QPaintEvent * e);
-    void mousePressEvent(QMouseEvent * e);
+    void paintEvent(TQPaintEvent * e);
+    void mousePressEvent(TQMouseEvent * e);
 
     void plainMask();
     void dissolveMask();
@@ -85,32 +85,32 @@ protected:
     void displayInternal();
     void hide();
 
-    void tipFor(const QWidget* w);
-    bool isTippingFor(const QWidget* w) const;
+    void tipFor(const TQWidget* w);
+    bool isTippingFor(const TQWidget* w) const;
 
 protected slots:
-    void tipperDestroyed(QObject* o);
+    void tipperDestroyed(TQObject* o);
     void internalUpdate();
     void display();
 
 private:
-    QBitmap m_mask;
-    QPixmap m_pixmap;
-    QPixmap m_icon;
+    TQBitmap m_mask;
+    TQPixmap m_pixmap;
+    TQPixmap m_icon;
     MaskEffect m_maskEffect;
-    QSimpleRichText* m_richText;
-    QMimeSourceFactory* m_mimeFactory;
+    TQSimpleRichText* m_richText;
+    TQMimeSourceFactory* m_mimeFactory;
 
     int m_dissolveSize;
     int m_dissolveDelta;
     KPanelApplet::Direction m_direction;
 
-    QTimer m_timer;
-    QTimer m_frameTimer;
+    TQTimer m_timer;
+    TQTimer m_frameTimer;
     bool m_dirty;
     bool m_toolTipsEnabled;
 
-    const QWidget* m_tippingFor;
+    const TQWidget* m_tippingFor;
 
     static KickerTip* m_self;
     static int m_tippingEnabled;

@@ -33,7 +33,7 @@ class KManualProxyDlg : public KProxyDialogBase
   Q_OBJECT
   
 public:
-  KManualProxyDlg( QWidget* parent = 0, const char* name = 0 );
+  KManualProxyDlg( TQWidget* parent = 0, const char* name = 0 );
   ~KManualProxyDlg() {};
   
   virtual void setProxyData( const KProxyData &data );
@@ -49,7 +49,7 @@ protected slots:
   void copyDown();
   void sameProxy( bool );
   void valueChanged (int value);
-  void textChanged (const QString&);
+  void textChanged (const TQString&);
   
   void newPressed();
   void updateButtons();
@@ -58,20 +58,20 @@ protected slots:
   void deleteAllPressed();
   
 private:
-  QString urlFromInput( const KLineEdit* edit, const QSpinBox* spin ) const;
-  bool isValidURL( const QString&, KURL* = 0 ) const;
-  bool handleDuplicate( const QString& );
-  bool getException ( QString&, const QString&,
-                      const QString& value = QString::null );
-  void showErrorMsg( const QString& caption = QString::null,
-                     const QString& message = QString::null );
+  TQString urlFromInput( const KLineEdit* edit, const TQSpinBox* spin ) const;
+  bool isValidURL( const TQString&, KURL* = 0 ) const;
+  bool handleDuplicate( const TQString& );
+  bool getException ( TQString&, const TQString&,
+                      const TQString& value = TQString::null );
+  void showErrorMsg( const TQString& caption = TQString::null,
+                     const TQString& message = TQString::null );
   
 private:
   ManualProxyDlgUI* mDlg;
 
   int mOldFtpPort;
   int mOldHttpsPort;
-  QString mOldFtpText;
-  QString mOldHttpsText;
+  TQString mOldFtpText;
+  TQString mOldHttpsText;
 };
 #endif

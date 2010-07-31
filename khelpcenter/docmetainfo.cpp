@@ -1,4 +1,4 @@
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -48,14 +48,14 @@ DocMetaInfo::~DocMetaInfo()
   mSelf = 0;
 }
 
-DocEntry *DocMetaInfo::addDocEntry( const QString &fileName )
+DocEntry *DocMetaInfo::addDocEntry( const TQString &fileName )
 {
-  QFileInfo fi( fileName );
+  TQFileInfo fi( fileName );
   if ( !fi.exists() ) return 0;
   
-  QString extension = fi.extension();
-  QStringList extensions = QStringList::split( '.', extension );
-  QString lang;
+  TQString extension = fi.extension();
+  TQStringList extensions = TQStringList::split( '.', extension );
+  TQString lang;
   if ( extensions.count() >= 2 ) {
     lang = extensions[ extensions.count() - 2 ];
   }
@@ -76,7 +76,7 @@ DocEntry *DocMetaInfo::addDocEntry( const QString &fileName )
     if ( entry->searchMethod().lower() == "htdig" ) {
       mHtmlSearch->setupDocEntry( entry );
     }
-    QString indexer = entry->indexer();
+    TQString indexer = entry->indexer();
     indexer.replace( "%f", fileName );
     entry->setIndexer( indexer );
     addDocEntry( entry );
@@ -103,18 +103,18 @@ DocEntry::List DocMetaInfo::searchEntries()
   return mSearchEntries;
 }
 
-QString DocMetaInfo::languageName( const QString &langcode )
+TQString DocMetaInfo::languageName( const TQString &langcode )
 {
   if ( langcode == "en" ) return i18n("English");
 
-  QString cfgfile = locate( "locale",
-      QString::fromLatin1( "%1/entry.desktop" ).arg( langcode ) );
+  TQString cfgfile = locate( "locale",
+      TQString::fromLatin1( "%1/entry.desktop" ).arg( langcode ) );
 
   kdDebug() << "-- langcode: " << langcode << " cfgfile: " << cfgfile << endl;
   
   KSimpleConfig cfg( cfgfile );
   cfg.setGroup( "KCM Locale" );
-  QString name = cfg.readEntry( "Name", langcode );
+  TQString name = cfg.readEntry( "Name", langcode );
   
   return name;
 }
@@ -127,14 +127,14 @@ void DocMetaInfo::scanMetaInfo( bool force )
 
   kdDebug( 1400 ) << "LANGS: " << mLanguages.join( " " ) << endl;
 
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for( it = mLanguages.begin(); it != mLanguages.end(); ++it ) {
     mLanguageNames.insert( *it, languageName( *it ) );
   }
 
   KConfig config( "khelpcenterrc" );
   config.setGroup( "General" );
-  QStringList metaInfos = config.readListEntry( "MetaInfoDirs" );
+  TQStringList metaInfos = config.readListEntry( "MetaInfoDirs" );
 
   if ( metaInfos.isEmpty() ) {
     KStandardDirs* kstd = KGlobal::dirs();
@@ -149,19 +149,19 @@ void DocMetaInfo::scanMetaInfo( bool force )
   mLoaded = true;
 }
 
-DocEntry *DocMetaInfo::scanMetaInfoDir( const QString &dirName,
+DocEntry *DocMetaInfo::scanMetaInfoDir( const TQString &dirName,
                                         DocEntry *parent )
 {
-  QDir dir( dirName );
+  TQDir dir( dirName );
   if ( !dir.exists() ) return 0;
 
   const QFileInfoList *entryList = dir.entryInfoList();
   QFileInfoListIterator it( *entryList );
-  QFileInfo *fi;
+  TQFileInfo *fi;
   for( ; ( fi = it.current() ); ++it ) {
     DocEntry *entry = 0;
     if ( fi->isDir() && fi->fileName() != "." && fi->fileName() != ".." ) {
-      DocEntry *dirEntry = addDirEntry( QDir( fi->absFilePath() ), parent );
+      DocEntry *dirEntry = addDirEntry( TQDir( fi->absFilePath() ), parent );
       entry = scanMetaInfoDir( fi->absFilePath(), dirEntry );
     } else if ( fi->extension( false ) == "desktop" ) {
       entry = addDocEntry( fi->absFilePath() );
@@ -172,7 +172,7 @@ DocEntry *DocMetaInfo::scanMetaInfoDir( const QString &dirName,
   return 0;
 }
 
-DocEntry *DocMetaInfo::addDirEntry( const QDir &dir, DocEntry *parent )
+DocEntry *DocMetaInfo::addDirEntry( const TQDir &dir, DocEntry *parent )
 {
   DocEntry *dirEntry = addDocEntry( dir.absPath() + "/.directory" );
 

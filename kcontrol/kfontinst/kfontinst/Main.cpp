@@ -36,7 +36,7 @@
 #include "XConfig.h"
 #include "kxftconfig.h"
 #include <fontconfig/fontconfig.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <stdio.h>
 
 //
@@ -105,8 +105,8 @@ KFI::CXConfig * getXCfg(bool root)
         // ...note on some systems (Solaris and HP-UX) only the xfs file will be found
         bool          xfs=false;
         KFI::CXConfig *xcfg=NULL;
-        QString       xConfigFile=getFile(QFile::encodeName(constXConfigFiles[0]), constXConfigFiles),
-                      xfsConfigFile=getFile(QFile::encodeName(constXfsConfigFiles[0]), constXfsConfigFiles);
+        TQString       xConfigFile=getFile(TQFile::encodeName(constXConfigFiles[0]), constXConfigFiles),
+                      xfsConfigFile=getFile(TQFile::encodeName(constXfsConfigFiles[0]), constXfsConfigFiles);
             
         // If found xfs, but not X - then assume that xfs is being used...
         if(!xfsConfigFile.isEmpty() && xConfigFile.isEmpty())
@@ -253,7 +253,7 @@ int main(int argc, char *argv[])
         usage(argv[0]);
     else
     {
-        QString folder;
+        TQString folder;
 
         if(folderRequired)
         {
@@ -261,15 +261,15 @@ int main(int argc, char *argv[])
             unsigned int len=folder.length();
 
             // Remove quotes...
-            if( (folder[0]==QChar('\'') || folder[0]==QChar('\"')) &&
-                (folder[len-1]==QChar('\'') || folder[len-1]==QChar('\"')))
+            if( (folder[0]==TQChar('\'') || folder[0]==TQChar('\"')) &&
+                (folder[len-1]==TQChar('\'') || folder[len-1]==TQChar('\"')))
                 folder=folder.mid(1, len-2);
             folder=KFI::Misc::dirSyntax(folder);
         }
 
         if(folderRequired && !KFI::Misc::dExists(folder))
         {
-            std::cerr << "ERROR: " << QFile::encodeName(folder) << " does not exist!" << std::endl;
+            std::cerr << "ERROR: " << TQFile::encodeName(folder) << " does not exist!" << std::endl;
             rv=-2;
         }
         else
@@ -323,7 +323,7 @@ int main(int argc, char *argv[])
                 if(0==rv && doGs)
                 {
                     KFI::CFontEngine fe;
-                    rv=KFI::Fontmap::create(root ? QString::null : folder, fe) ? 0 : -6;
+                    rv=KFI::Fontmap::create(root ? TQString::null : folder, fe) ? 0 : -6;
                 }
             }
             else if(0==rv)

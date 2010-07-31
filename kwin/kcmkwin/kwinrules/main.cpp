@@ -32,7 +32,7 @@
 namespace KWinInternal
 {
 
-static void loadRules( QValueList< Rules* >& rules )
+static void loadRules( TQValueList< Rules* >& rules )
     {
     KConfig cfg( "kwinrulesrc", true );
     cfg.setGroup( "General" );
@@ -41,52 +41,52 @@ static void loadRules( QValueList< Rules* >& rules )
          i <= count;
          ++i )
         {
-        cfg.setGroup( QString::number( i ));
+        cfg.setGroup( TQString::number( i ));
         Rules* rule = new Rules( cfg );
         rules.append( rule );
         }
     }
 
-static void saveRules( const QValueList< Rules* >& rules )
+static void saveRules( const TQValueList< Rules* >& rules )
     {
     KConfig cfg( "kwinrulesrc" );
-    QStringList groups = cfg.groupList();
-    for( QStringList::ConstIterator it = groups.begin();
+    TQStringList groups = cfg.groupList();
+    for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();
          ++it )
         cfg.deleteGroup( *it );
     cfg.setGroup( "General" );
     cfg.writeEntry( "count", rules.count());
     int i = 1;
-    for( QValueList< Rules* >::ConstIterator it = rules.begin();
+    for( TQValueList< Rules* >::ConstIterator it = rules.begin();
          it != rules.end();
          ++it )
         {
-        cfg.setGroup( QString::number( i ));
+        cfg.setGroup( TQString::number( i ));
         (*it)->write( cfg );
         ++i;
         }
     }
 
-static Rules* findRule( const QValueList< Rules* >& rules, Window wid, bool whole_app )
+static Rules* findRule( const TQValueList< Rules* >& rules, Window wid, bool whole_app )
     {
     KWin::WindowInfo info = KWin::windowInfo( wid,
         NET::WMName | NET::WMWindowType,
         NET::WM2WindowClass | NET::WM2WindowRole | NET::WM2ClientMachine );
     if( !info.valid()) // shouldn't really happen
         return NULL;
-    QCString wmclass_class = info.windowClassClass().lower();
-    QCString wmclass_name = info.windowClassName().lower();
-    QCString role = info.windowRole().lower();
+    TQCString wmclass_class = info.windowClassClass().lower();
+    TQCString wmclass_name = info.windowClassName().lower();
+    TQCString role = info.windowRole().lower();
     NET::WindowType type = info.windowType( NET::NormalMask | NET::DesktopMask | NET::DockMask
         | NET::ToolbarMask | NET::MenuMask | NET::DialogMask | NET::OverrideMask | NET::TopMenuMask
         | NET::UtilityMask | NET::SplashMask );
-    QString title = info.name();
-//    QCString extrarole = ""; // TODO
-    QCString machine = info.clientMachine().lower();
+    TQString title = info.name();
+//    TQCString extrarole = ""; // TODO
+    TQCString machine = info.clientMachine().lower();
     Rules* best_match = NULL;
     int match_quality = 0;
-    for( QValueList< Rules* >::ConstIterator it = rules.begin();
+    for( TQValueList< Rules* >::ConstIterator it = rules.begin();
          it != rules.end();
          ++it )
         {
@@ -233,7 +233,7 @@ static Rules* findRule( const QValueList< Rules* >& rules, Window wid, bool whol
 
 static int edit( Window wid, bool whole_app )
     {
-    QValueList< Rules* > rules;
+    TQValueList< Rules* > rules;
     loadRules( rules );
     Rules* orig_rule = findRule( rules, wid, whole_app );
     RulesDialog dlg;
@@ -248,7 +248,7 @@ static int edit( Window wid, bool whole_app )
         }
     else if( edited_rule != orig_rule )
         {
-        QValueList< Rules* >::Iterator pos = rules.find( orig_rule );
+        TQValueList< Rules* >::Iterator pos = rules.find( orig_rule );
         if( pos != rules.end())
             *pos = edited_rule;
         else

@@ -20,7 +20,7 @@
 #ifndef _THUMBNAIL_H_
 #define _THUMBNAIL_H_
 
-#include <qdict.h>
+#include <tqdict.h>
 
 #include <kio/slavebase.h>
 
@@ -30,25 +30,25 @@ class QImage;
 class ThumbnailProtocol : public KIO::SlaveBase
 {
 public:
-    ThumbnailProtocol(const QCString &pool, const QCString &app);
+    ThumbnailProtocol(const TQCString &pool, const TQCString &app);
     virtual ~ThumbnailProtocol();
 
     virtual void get(const KURL &url);
 
 protected:
-    const QImage& getIcon();
+    const TQImage& getIcon();
     
 private:
-    QString m_mimeType;
+    TQString m_mimeType;
     int m_width;
     int m_height;
     bool m_keepAspectRatio;
     int m_iconSize;
     int m_iconAlpha;
     // Thumbnail creators
-    QDict<ThumbCreator> m_creators;
+    TQDict<ThumbCreator> m_creators;
     // transparent icon cache
-    QDict<QImage> m_iconDict;
+    TQDict<TQImage> m_iconDict;
 };
 
 #endif

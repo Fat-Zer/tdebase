@@ -35,22 +35,22 @@
 #include <kstdguiitem.h>
 #include <kstartupinfo.h>
 
-#include <qaccel.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqaccel.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 
 #include "toplevel.h"
 
-TopLevel::TopLevel( const QString &destDir, QWidget *parent, const char *name )
+TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name )
   : KDialog( parent, name, true )
 {
   setCaption( i18n( "KAppfinder" ) );
-  QVBoxLayout *layout = new QVBoxLayout( this, marginHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( this, marginHint() );
 
-  QLabel *label = new QLabel( i18n( "The application finder looks for non-KDE "
+  TQLabel *label = new TQLabel( i18n( "The application finder looks for non-KDE "
                                     "applications on your system and adds "
                                     "them to the KDE menu system. "
                                     "Click 'Scan' to begin, select the desired applications and then click 'Apply'."), this);
@@ -59,53 +59,53 @@ TopLevel::TopLevel( const QString &destDir, QWidget *parent, const char *name )
 
   layout->addSpacing( 5 );
 
-  mListView = new QListView( this );
+  mListView = new TQListView( this );
   mListView->addColumn( i18n( "Application" ) );
   mListView->addColumn( i18n( "Description" ) );
   mListView->addColumn( i18n( "Command" ) );
   mListView->setMinimumSize( 300, 300 );
   mListView->setRootIsDecorated( true );
   mListView->setAllColumnsShowFocus( true );
-  mListView->setSelectionMode(QListView::NoSelection);
+  mListView->setSelectionMode(TQListView::NoSelection);
   layout->addWidget( mListView );
 
   mProgress = new KProgress( this );
   mProgress->setPercentageVisible( false );
   layout->addWidget( mProgress );
 
-  mSummary = new QLabel( i18n( "Summary:" ), this );
+  mSummary = new TQLabel( i18n( "Summary:" ), this );
   layout->addWidget( mSummary );
 
   KButtonBox* bbox = new KButtonBox( this );
-  mScanButton = bbox->addButton( KGuiItem( i18n( "Scan" ), "find"), this, SLOT( slotScan() ) );
+  mScanButton = bbox->addButton( KGuiItem( i18n( "Scan" ), "find"), this, TQT_SLOT( slotScan() ) );
   bbox->addStretch( 5 );
   mSelectButton = bbox->addButton( i18n( "Select All" ), this,
-                                   SLOT( slotSelectAll() ) );
+                                   TQT_SLOT( slotSelectAll() ) );
   mSelectButton->setEnabled( false );
   mUnSelectButton = bbox->addButton( i18n( "Unselect All" ), this,
-                                     SLOT( slotUnselectAll() ) );
+                                     TQT_SLOT( slotUnselectAll() ) );
   mUnSelectButton->setEnabled( false );
   bbox->addStretch( 5 );
-  mApplyButton = bbox->addButton( KStdGuiItem::apply(), this, SLOT( slotCreate() ) );
+  mApplyButton = bbox->addButton( KStdGuiItem::apply(), this, TQT_SLOT( slotCreate() ) );
   mApplyButton->setEnabled( false );
-  bbox->addButton( KStdGuiItem::close(), kapp, SLOT( quit() ) );
+  bbox->addButton( KStdGuiItem::close(), kapp, TQT_SLOT( quit() ) );
   bbox->layout();
 
   layout->addWidget( bbox );
 
-	connect( kapp, SIGNAL( lastWindowClosed() ), kapp, SLOT( quit() ) );
+	connect( kapp, TQT_SIGNAL( lastWindowClosed() ), kapp, TQT_SLOT( quit() ) );
 
   mAppCache.setAutoDelete( true );
 
   adjustSize();
 
   mDestDir = destDir;
-  mDestDir = mDestDir.replace( QRegExp( "^~/" ), QDir::homeDirPath() + "/" );
+  mDestDir = mDestDir.replace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
 	
   KStartupInfo::appStarted();
 
-  QAccel *accel = new QAccel( this );
-  accel->connectItem( accel->insertItem( Key_Q + CTRL ), kapp, SLOT( quit() ) );
+  TQAccel *accel = new TQAccel( this );
+  accel->connectItem( accel->insertItem( Key_Q + CTRL ), kapp, TQT_SLOT( quit() ) );
 
   KAcceleratorManager::manage( this );
 }
@@ -116,8 +116,8 @@ TopLevel::~TopLevel()
   mAppCache.clear();
 }
 
-QListViewItem* TopLevel::addGroupItem( QListViewItem *parent, const QString &relPath,
-                                       const QString &name )
+TQListViewItem* TopLevel::addGroupItem( TQListViewItem *parent, const TQString &relPath,
+                                       const TQString &name )
 {
   KServiceGroup::Ptr root = KServiceGroup::group( relPath );
   if( !root )
@@ -129,8 +129,8 @@ QListViewItem* TopLevel::addGroupItem( QListViewItem *parent, const QString &rel
     KSycocaEntry *p = (*it);
     if ( p->isType( KST_KServiceGroup ) ) {
       KServiceGroup* serviceGroup = static_cast<KServiceGroup*>( p );
-      if ( QString( "%1%2/" ).arg( relPath ).arg( name ) == serviceGroup->relPath() ) {
-        QListViewItem* retval;
+      if ( TQString( "%1%2/" ).arg( relPath ).arg( name ) == serviceGroup->relPath() ) {
+        TQListViewItem* retval;
         if ( parent )
           retval = parent->firstChild();
         else
@@ -143,11 +143,11 @@ QListViewItem* TopLevel::addGroupItem( QListViewItem *parent, const QString &rel
           retval = retval->nextSibling();
         }
 
-        QListViewItem *item;
+        TQListViewItem *item;
         if ( parent )
-          item = new QListViewItem( parent, serviceGroup->caption() );
+          item = new TQListViewItem( parent, serviceGroup->caption() );
         else
-          item = new QListViewItem( mListView, serviceGroup->caption() );
+          item = new TQListViewItem( mListView, serviceGroup->caption() );
 
         item->setPixmap( 0, SmallIcon( serviceGroup->icon() ) );
         item->setOpen( true );
@@ -177,12 +177,12 @@ void TopLevel::slotScan()
 
   mListView->clear();
 
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   for ( it = mTemplates.begin(); it != mTemplates.end(); ++it ) {
     // eye candy
     mProgress->setProgress( mProgress->progress() + 1 );
 
-    QString desktopName = *it;
+    TQString desktopName = *it;
     int i = desktopName.findRev('/');
     desktopName = desktopName.mid(i+1);
     i = desktopName.findRev('.');
@@ -206,16 +206,16 @@ void TopLevel::slotScan()
 
     // copy over the desktop file, if exists
     if ( scanDesktopFile( mAppCache, *it, mDestDir ) ) {
-      QString relPath = *it;
+      TQString relPath = *it;
       int pos = relPath.find( "kappfinder/apps/" );
       relPath = relPath.mid( pos + strlen( "kappfinder/apps/" ) );
       relPath = relPath.left( relPath.findRev( '/' ) + 1 );
-      QStringList dirList = QStringList::split( '/', relPath );
+      TQStringList dirList = TQStringList::split( '/', relPath );
 
-      QListViewItem *dirItem = 0;
-      QString tmpRelPath = QString::null;
+      TQListViewItem *dirItem = 0;
+      TQString tmpRelPath = TQString::null;
 
-      QStringList::Iterator tmpIt;
+      TQStringList::Iterator tmpIt;
       for ( tmpIt = dirList.begin(); tmpIt != dirList.end(); ++tmpIt ) {
         dirItem = addGroupItem( dirItem, tmpRelPath, *tmpIt );
         tmpRelPath += *tmpIt + '/';
@@ -223,11 +223,11 @@ void TopLevel::slotScan()
 
       mFound++;
 
-      QCheckListItem *item;
+      TQCheckListItem *item;
       if ( dirItem )
-        item = new QCheckListItem( dirItem, desktop.readName(), QCheckListItem::CheckBox );
+        item = new TQCheckListItem( dirItem, desktop.readName(), TQCheckListItem::CheckBox );
       else
-        item = new QCheckListItem( mListView, desktop.readName(), QCheckListItem::CheckBox );
+        item = new TQCheckListItem( mListView, desktop.readName(), TQCheckListItem::CheckBox );
 
       item->setPixmap( 0, loader->loadIcon( desktop.readIcon(), KIcon::Small ) );
       item->setText( 1, desktop.readGenericName() );
@@ -241,7 +241,7 @@ void TopLevel::slotScan()
     }
 
     // update summary
-    QString sum( i18n( "Summary: found %n application",
+    TQString sum( i18n( "Summary: found %n application",
                        "Summary: found %n applications", mFound ) );
     mSummary->setText( sum );
   }
@@ -284,9 +284,9 @@ void TopLevel::slotCreate()
 
   KService::rebuildKSycoca(this);
 
-  QString message( i18n( "%n application was added to the KDE menu system.",
+  TQString message( i18n( "%n application was added to the KDE menu system.",
                          "%n applications were added to the KDE menu system.", mAdded ) );
-  KMessageBox::information( this, message, QString::null, "ShowInformation" );
+  KMessageBox::information( this, message, TQString::null, "ShowInformation" );
 }
 
 #include "toplevel.moc"

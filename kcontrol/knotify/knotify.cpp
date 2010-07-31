@@ -18,12 +18,12 @@
 
 */
 
-#include <qbuttongroup.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qslider.h>
-#include <qvbox.h>
+#include <tqbuttongroup.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqslider.h>
+#include <tqvbox.h>
 
 #include <dcopclient.h>
 
@@ -42,12 +42,12 @@
 
 static const int COL_FILENAME = 1;
 
-typedef KGenericFactory<KCMKNotify, QWidget> NotifyFactory;
+typedef KGenericFactory<KCMKNotify, TQWidget> NotifyFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_knotify, NotifyFactory("kcmnotify") )
 
 using namespace KNotify;
 
-KCMKNotify::KCMKNotify(QWidget *parent, const char *name, const QStringList & )
+KCMKNotify::KCMKNotify(TQWidget *parent, const char *name, const TQStringList & )
     : KCModule(NotifyFactory::instance(), parent, name),
       m_playerSettings( 0L )
 {
@@ -64,25 +64,25 @@ KCMKNotify::KCMKNotify(QWidget *parent, const char *name, const QStringList & )
                 "any additional visual or audible alert."
                 "</ul>"));
 
-    QVBoxLayout *layout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+    TQVBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 
-    QLabel *label = new QLabel( i18n( "Event source:" ), this );
+    TQLabel *label = new TQLabel( i18n( "Event source:" ), this );
     m_appCombo = new KComboBox( false, this, "app combo" );
 
-    QHBoxLayout *hbox = new QHBoxLayout( layout );
+    TQHBoxLayout *hbox = new TQHBoxLayout( layout );
     hbox->addWidget( label );
     hbox->addWidget( m_appCombo, 10 );
 
     m_notifyWidget = new KNotifyWidget( this, "knotify widget", true );
-    connect( m_notifyWidget, SIGNAL( changed( bool )), SIGNAL( changed(bool)));
+    connect( m_notifyWidget, TQT_SIGNAL( changed( bool )), TQT_SIGNAL( changed(bool)));
 
     layout->addWidget( m_notifyWidget );
 
-    connect( m_appCombo, SIGNAL( activated( const QString& ) ),
-             SLOT( slotAppActivated( const QString& )) );
+    connect( m_appCombo, TQT_SIGNAL( activated( const TQString& ) ),
+             TQT_SLOT( slotAppActivated( const TQString& )) );
 
-    connect( m_notifyWidget->m_playerButton, SIGNAL( clicked() ),
-             SLOT( slotPlayerSettings()));
+    connect( m_notifyWidget->m_playerButton, TQT_SIGNAL( clicked() ),
+             TQT_SLOT( slotPlayerSettings()));
 
     KAboutData* ab = new KAboutData(
         "kcmknotify", I18N_NOOP("KNotify"), "3.0",
@@ -109,7 +109,7 @@ KCMKNotify::~KCMKNotify()
     }
 }
 
-Application * KCMKNotify::applicationByDescription( const QString& text )
+Application * KCMKNotify::applicationByDescription( const TQString& text )
 {
     // not really efficient, but this is not really time-critical
     ApplicationList& allApps = m_notifyWidget->allApps();
@@ -123,7 +123,7 @@ Application * KCMKNotify::applicationByDescription( const QString& text )
     return 0L;
 }
 
-void KCMKNotify::slotAppActivated( const QString& text )
+void KCMKNotify::slotAppActivated( const TQString& text )
 {
     Application *app = applicationByDescription( text );
     if ( app )
@@ -162,10 +162,10 @@ void KCMKNotify::load( bool useDefaults )
     m_appCombo->clear();
     m_notifyWidget->clear();
 
-    QStringList fullpaths =
+    TQStringList fullpaths =
         KGlobal::dirs()->findAllResources("data", "*/eventsrc", false, true );
 
-    QStringList::ConstIterator it = fullpaths.begin();
+    TQStringList::ConstIterator it = fullpaths.begin();
     for ( ; it != fullpaths.end(); ++it)
         m_notifyWidget->addApplicationEvents( *it );
 
@@ -176,7 +176,7 @@ void KCMKNotify::load( bool useDefaults )
     KConfig config( "knotifyrc", true, false );
 	 config.setReadDefaults( useDefaults );
     config.setGroup( "Misc" );
-    QString select = config.readEntry( "LastConfiguredApp" );
+    TQString select = config.readEntry( "LastConfiguredApp" );
     if( select.isEmpty())
         select = "knotify"; // default to system notifications
     bool selected = false;
@@ -215,13 +215,13 @@ void KCMKNotify::save()
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-PlayerSettingsDialog::PlayerSettingsDialog( QWidget *parent, bool modal )
+PlayerSettingsDialog::PlayerSettingsDialog( TQWidget *parent, bool modal )
     : KDialogBase( parent, "player settings dialog", modal,
                    i18n("Player Settings"), Ok|Apply|Cancel, Ok, true )
 {
-    QFrame *frame = makeMainWidget();
+    TQFrame *frame = makeMainWidget();
 
-    QVBoxLayout *topLayout = new QVBoxLayout( frame, 0,
+    TQVBoxLayout *topLayout = new TQVBoxLayout( frame, 0,
         KDialog::spacingHint() );
 
     m_ui = new PlayerSettingsUI(frame);
@@ -231,10 +231,10 @@ PlayerSettingsDialog::PlayerSettingsDialog( QWidget *parent, bool modal )
     dataChanged = false;
     enableButton(Apply, false);
 
-    connect( m_ui->cbExternal, SIGNAL( toggled( bool ) ), this, SLOT( externalToggled( bool ) ) );
-    connect( m_ui->grpPlayers, SIGNAL( clicked( int ) ), this, SLOT( slotChanged() ) );
-    connect( m_ui->volumeSlider, SIGNAL( valueChanged ( int ) ), this, SLOT( slotChanged() ) );
-    connect( m_ui->reqExternal, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotChanged() ) );
+    connect( m_ui->cbExternal, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( externalToggled( bool ) ) );
+    connect( m_ui->grpPlayers, TQT_SIGNAL( clicked( int ) ), this, TQT_SLOT( slotChanged() ) );
+    connect( m_ui->volumeSlider, TQT_SIGNAL( valueChanged ( int ) ), this, TQT_SLOT( slotChanged() ) );
+    connect( m_ui->reqExternal, TQT_SIGNAL( textChanged( const TQString& ) ), this, TQT_SLOT( slotChanged() ) );
 }
 
 void PlayerSettingsDialog::load( bool useDefaults )

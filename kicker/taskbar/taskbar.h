@@ -44,11 +44,11 @@ class TaskBar : public Panner
     Q_OBJECT
 
 public:
-    TaskBar( QWidget *parent = 0, const char *name = 0 );
+    TaskBar( TQWidget *parent = 0, const char *name = 0 );
     ~TaskBar();
 
-    QSize sizeHint() const;
-    QSize sizeHint( KPanelExtension::Position, QSize maxSize ) const;
+    TQSize sizeHint() const;
+    TQSize sizeHint( KPanelExtension::Position, TQSize maxSize ) const;
 
     void setOrientation( Orientation );
     void setArrowType( Qt::ArrowType at );
@@ -61,7 +61,7 @@ public:
     bool sortByDesktop() const { return m_sortByDesktop; }
     bool showAllWindows() const { return m_showAllWindows; }
 
-    QImage* blendGradient(const QSize& size);
+    TQImage* blendGradient(const TQSize& size);
     
     KTextShadowEngine *textShadowEngine();
 
@@ -93,15 +93,15 @@ protected slots:
 
 protected:
     void reLayoutEventually();
-    void viewportMousePressEvent( QMouseEvent* );
-    void viewportMouseReleaseEvent( QMouseEvent* );
-    void viewportMouseDoubleClickEvent( QMouseEvent* );
-    void viewportMouseMoveEvent( QMouseEvent* );
-    void wheelEvent(QWheelEvent*);
-    void propagateMouseEvent( QMouseEvent* );
-    void resizeEvent( QResizeEvent* );
-    void moveEvent( QMoveEvent* );
-    bool idMatch( const QString& id1, const QString& id2 );
+    void viewportMousePressEvent( TQMouseEvent* );
+    void viewportMouseReleaseEvent( TQMouseEvent* );
+    void viewportMouseDoubleClickEvent( TQMouseEvent* );
+    void viewportMouseMoveEvent( TQMouseEvent* );
+    void wheelEvent(TQWheelEvent*);
+    void propagateMouseEvent( TQMouseEvent* );
+    void resizeEvent( TQResizeEvent* );
+    void moveEvent( TQMoveEvent* );
+    bool idMatch( const TQString& id1, const TQString& id2 );
     TaskContainer::List filteredContainers();
 
 private:
@@ -127,9 +127,9 @@ private:
     void                        reGroup();
     KGlobalAccel*               keys;
     KTextShadowEngine* m_textShadowEngine;
-    QTimer m_relayoutTimer;
+    TQTimer m_relayoutTimer;
     bool m_ignoreUpdates;
-    QImage m_blendGradient;
+    TQImage m_blendGradient;
 };
 
 #endif

@@ -31,13 +31,13 @@ public:
 	KonqSoundPlayerImpl();
 	virtual ~KonqSoundPlayerImpl();
 
-	virtual const QStringList &mimeTypes();
-	virtual void play(const QString &fileName);
+	virtual const TQStringList &mimeTypes();
+	virtual void play(const TQString &fileName);
 	virtual void stop();
 	virtual bool isPlaying();
 
 private:
-	QStringList m_mimeTypes;
+	TQStringList m_mimeTypes;
 
 	KArtsDispatcher     m_dispatcher;
 	Arts::SoundServerV2 m_soundServer;
@@ -58,7 +58,7 @@ KonqSoundPlayerImpl::~KonqSoundPlayerImpl()
 	delete m_factory;
 }
 
-const QStringList &KonqSoundPlayerImpl::mimeTypes()
+const TQStringList &KonqSoundPlayerImpl::mimeTypes()
 {
 	if (m_mimeTypes.isEmpty())
 	{
@@ -80,7 +80,7 @@ const QStringList &KonqSoundPlayerImpl::mimeTypes()
 	return m_mimeTypes;
 }
 
-void KonqSoundPlayerImpl::play(const QString &fileName)
+void KonqSoundPlayerImpl::play(const TQString &fileName)
 {
 	if (m_soundServer.isNull())
 		return;
@@ -109,17 +109,17 @@ bool KonqSoundPlayerImpl::isPlaying()
 class KonqSoundFactory : public KLibFactory
 {
 public:
-	KonqSoundFactory(QObject *parent = 0, const char *name = 0)
+	KonqSoundFactory(TQObject *parent = 0, const char *name = 0)
 		: KLibFactory(parent, name) {};
 	virtual ~KonqSoundFactory() {};
 
 protected:
-	virtual QObject *createObject(QObject * = 0, const char * = 0,
-		const char *className = "QObject", const QStringList &args = QStringList());
+	virtual TQObject *createObject(TQObject * = 0, const char * = 0,
+		const char *className = "TQObject", const TQStringList &args = TQStringList());
 };
 
-QObject *KonqSoundFactory::createObject(QObject *, const char *,
-	const char *className, const QStringList &)
+TQObject *KonqSoundFactory::createObject(TQObject *, const char *,
+	const char *className, const TQStringList &)
 {
 	if (qstrcmp(className, "KonqSoundPlayer") == 0)
 		return new KonqSoundPlayerImpl();

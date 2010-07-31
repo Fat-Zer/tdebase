@@ -27,8 +27,8 @@
 #ifndef __KCMSTYLE_H
 #define __KCMSTYLE_H
 
-#include <qstring.h>
-#include <qtimer.h>
+#include <tqstring.h>
+#include <tqtimer.h>
 
 #include <kcmodule.h>
 
@@ -53,9 +53,9 @@ class StyleConfigDialog;
 class WidgetPreview;
 
 struct StyleEntry {
-	QString name;
-	QString desc;
-	QString configPage;
+	TQString name;
+	TQString desc;
+	TQString configPage;
 	bool hidden;
 };
 
@@ -64,7 +64,7 @@ class KCMStyle : public KCModule
 	Q_OBJECT
 
 public:
-	KCMStyle( QWidget* parent = 0, const char* name = 0 );
+	KCMStyle( TQWidget* parent = 0, const char* name = 0 );
 	~KCMStyle();
 
 	virtual void load();
@@ -73,9 +73,9 @@ public:
 	virtual void defaults();
 
 protected:
-	bool findStyle( const QString& str, int& combobox_item );
-	void switchStyle(const QString& styleName, bool force = false);
-	void setStyleRecursive(QWidget* w, QStyle* s);
+	bool findStyle( const TQString& str, int& combobox_item );
+	void switchStyle(const TQString& styleName, bool force = false);
+	void setStyleRecursive(TQWidget* w, TQStyle* s);
 
 	void loadStyle( KConfig& config );
 	void loadEffects( KConfig& config );
@@ -96,68 +96,68 @@ protected slots:
 	void menuEffectTypeChanged();
 
 private:
-	QString currentStyle();
+	TQString currentStyle();
 
 	bool m_bEffectsDirty, m_bStyleDirty, m_bToolbarsDirty;
-	QDict<StyleEntry> styleEntries;
-	QMap <QString,QString> nameToStyleKey;
+	TQDict<StyleEntry> styleEntries;
+	TQMap <TQString,TQString> nameToStyleKey;
 
-	QVBoxLayout* mainLayout;
-	QTabWidget* tabWidget;
-	QWidget *page1, *page2, *page3;
-	QVBoxLayout* page1Layout;
-	QVBoxLayout* page2Layout;
-	QVBoxLayout* page3Layout;
+	TQVBoxLayout* mainLayout;
+	TQTabWidget* tabWidget;
+	TQWidget *page1, *page2, *page3;
+	TQVBoxLayout* page1Layout;
+	TQVBoxLayout* page2Layout;
+	TQVBoxLayout* page3Layout;
 
 	// Page1 widgets
-	QGroupBox* gbWidgetStyle;
-	QVBoxLayout* gbWidgetStyleLayout;
-	QHBoxLayout* hbLayout;
+	TQGroupBox* gbWidgetStyle;
+	TQVBoxLayout* gbWidgetStyleLayout;
+	TQHBoxLayout* hbLayout;
 	KComboBox* cbStyle;
-	QPushButton* pbConfigStyle;
-	QLabel* lblStyleDesc;
+	TQPushButton* pbConfigStyle;
+	TQLabel* lblStyleDesc;
 	StylePreview* stylePreview;
-	QStyle* appliedStyle;
-	QPalette palette;
+	TQStyle* appliedStyle;
+	TQPalette palette;
 
 	// Page2 widgets
-	QCheckBox* cbEnableEffects;
+	TQCheckBox* cbEnableEffects;
 
-	QFrame* containerFrame;
-	QGridLayout* containerLayout;
-	QComboBox* comboTooltipEffect;
-	QComboBox* comboRubberbandEffect;
-	QComboBox* comboComboEffect;
-	QComboBox* comboMenuEffect;
-	QComboBox* comboMenuHandle;
+	TQFrame* containerFrame;
+	TQGridLayout* containerLayout;
+	TQComboBox* comboTooltipEffect;
+	TQComboBox* comboRubberbandEffect;
+	TQComboBox* comboComboEffect;
+	TQComboBox* comboMenuEffect;
+	TQComboBox* comboMenuHandle;
 
-	QLabel* lblTooltipEffect;
-	QLabel* lblRubberbandEffect;
-	QLabel* lblComboEffect;
-	QLabel* lblMenuEffect;
-	QLabel* lblMenuHandle;
-	QSpacerItem* comboSpacer;
+	TQLabel* lblTooltipEffect;
+	TQLabel* lblRubberbandEffect;
+	TQLabel* lblComboEffect;
+	TQLabel* lblMenuEffect;
+	TQLabel* lblMenuHandle;
+	TQSpacerItem* comboSpacer;
 
-	QFrame* menuContainer;
-	QGridLayout* menuContainerLayout;
+	TQFrame* menuContainer;
+	TQGridLayout* menuContainerLayout;
 	MenuPreview* menuPreview;
-	QVBox* sliderBox;
-	QSlider* slOpacity;
-	QComboBox* comboMenuEffectType;
-	QLabel* lblMenuEffectType;
-	QLabel* lblMenuOpacity;
-	QCheckBox* cbMenuShadow;
+	TQVBox* sliderBox;
+	TQSlider* slOpacity;
+	TQComboBox* comboMenuEffectType;
+	TQLabel* lblMenuEffectType;
+	TQLabel* lblMenuOpacity;
+	TQCheckBox* cbMenuShadow;
 
 	// Page3 widgets
-	QGroupBox* gbVisualAppearance;
+	TQGroupBox* gbVisualAppearance;
 
-	QCheckBox* cbHoverButtons;
-	QCheckBox* cbTransparentToolbars;
-	QCheckBox* cbEnableTooltips;
-	QComboBox* comboToolbarIcons;
+	TQCheckBox* cbHoverButtons;
+	TQCheckBox* cbTransparentToolbars;
+	TQCheckBox* cbEnableTooltips;
+	TQComboBox* comboToolbarIcons;
 
-	QCheckBox* cbIconsOnButtons;
-	QCheckBox* cbTearOffHandles;
+	TQCheckBox* cbIconsOnButtons;
+	TQCheckBox* cbTearOffHandles;
 };
 
 #endif // __KCMSTYLE_H

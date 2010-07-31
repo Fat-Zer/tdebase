@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __appletproxy_h__
 #define __appletproxy_h__
 
-#include <qcstring.h>
-#include <qobject.h>
+#include <tqcstring.h>
+#include <tqobject.h>
 
 #include <dcopobject.h>
 
@@ -34,34 +34,34 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class KPanelApplet;
 class KickerPluginManager;
 
-class AppletProxy : public QObject, DCOPObject
+class AppletProxy : public TQObject, DCOPObject
 {
     Q_OBJECT
 
 public:
-    AppletProxy(QObject* parent, const char* name = 0);
+    AppletProxy(TQObject* parent, const char* name = 0);
     ~AppletProxy();
 
-    void loadApplet(const QString& desktopFile, const QString& configFile);
+    void loadApplet(const TQString& desktopFile, const TQString& configFile);
     KPanelApplet* loadApplet(const AppletInfo& info);
-    void dock(const QCString& callbackID);
+    void dock(const TQCString& callbackID);
     void showStandalone();
 
-    bool process(const QCString &fun, const QByteArray &data,
-		 QCString& replyType, QByteArray &replyData);
+    bool process(const TQCString &fun, const TQByteArray &data,
+		 TQCString& replyType, TQByteArray &replyData);
 
 protected slots:
     void slotUpdateLayout();
     void slotRequestFocus();
-    void slotApplicationRemoved(const QCString&);
+    void slotApplicationRemoved(const TQCString&);
 
 private:
-    void repaintApplet(QWidget* widget);
+    void repaintApplet(TQWidget* widget);
 
     AppletInfo          *_info;
     KPanelApplet        *_applet;
-    QCString             _callbackID;
-    QPixmap              _bg;
+    TQCString             _callbackID;
+    TQPixmap              _bg;
 };
 
 #endif

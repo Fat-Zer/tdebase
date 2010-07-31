@@ -11,8 +11,8 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include "sm.h"
 
-#include <qsocketnotifier.h>
-#include <qsessionmanager.h>
+#include <tqsocketnotifier.h>
+#include <tqsessionmanager.h>
 #include <kdebug.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -75,8 +75,8 @@ void Workspace::storeSession( KConfig* config, SMSavePhase phase )
     for (ClientList::Iterator it = clients.begin(); it != clients.end(); ++it) 
         {
         Client* c = (*it);
-        QCString sessionId = c->sessionId();
-        QCString wmCommand = c->wmCommand();
+        TQCString sessionId = c->sessionId();
+        TQCString wmCommand = c->wmCommand();
         if ( sessionId.isEmpty() )
 	    // remember also applications that are not XSMP capable
 	    // and use the obsolete WM_COMMAND / WM_SAVE_YOURSELF
@@ -85,35 +85,35 @@ void Workspace::storeSession( KConfig* config, SMSavePhase phase )
         count++;
         if( c->isActive())
             active_client = count;
-        QString n = QString::number(count);
+        TQString n = TQString::number(count);
         if( phase == SMSavePhase2 || phase == SMSavePhase2Full )
             {
-            config->writeEntry( QString("sessionId")+n, sessionId.data() );
-            config->writeEntry( QString("windowRole")+n, c->windowRole().data() );
-            config->writeEntry( QString("wmCommand")+n, wmCommand.data() );
-            config->writeEntry( QString("wmClientMachine")+n, c->wmClientMachine( true ).data() );
-            config->writeEntry( QString("resourceName")+n, c->resourceName().data() );
-            config->writeEntry( QString("resourceClass")+n, c->resourceClass().data() );
-            config->writeEntry( QString("geometry")+n,  QRect( c->calculateGravitation(TRUE), c->clientSize() ) ); // FRAME
-            config->writeEntry( QString("restore")+n, c->geometryRestore() );
-            config->writeEntry( QString("fsrestore")+n, c->geometryFSRestore() );
-            config->writeEntry( QString("maximize")+n, (int) c->maximizeMode() );
-            config->writeEntry( QString("fullscreen")+n, (int) c->fullScreenMode() );
-            config->writeEntry( QString("desktop")+n, c->desktop() );
+            config->writeEntry( TQString("sessionId")+n, sessionId.data() );
+            config->writeEntry( TQString("windowRole")+n, c->windowRole().data() );
+            config->writeEntry( TQString("wmCommand")+n, wmCommand.data() );
+            config->writeEntry( TQString("wmClientMachine")+n, c->wmClientMachine( true ).data() );
+            config->writeEntry( TQString("resourceName")+n, c->resourceName().data() );
+            config->writeEntry( TQString("resourceClass")+n, c->resourceClass().data() );
+            config->writeEntry( TQString("geometry")+n,  TQRect( c->calculateGravitation(TRUE), c->clientSize() ) ); // FRAME
+            config->writeEntry( TQString("restore")+n, c->geometryRestore() );
+            config->writeEntry( TQString("fsrestore")+n, c->geometryFSRestore() );
+            config->writeEntry( TQString("maximize")+n, (int) c->maximizeMode() );
+            config->writeEntry( TQString("fullscreen")+n, (int) c->fullScreenMode() );
+            config->writeEntry( TQString("desktop")+n, c->desktop() );
     	    // the config entry is called "iconified" for back. comp. reasons
             // (kconf_update script for updating session files would be too complicated)
-            config->writeEntry( QString("iconified")+n, c->isMinimized() );
+            config->writeEntry( TQString("iconified")+n, c->isMinimized() );
             // the config entry is called "sticky" for back. comp. reasons
-            config->writeEntry( QString("sticky")+n, c->isOnAllDesktops() );
-            config->writeEntry( QString("shaded")+n, c->isShade() );
+            config->writeEntry( TQString("sticky")+n, c->isOnAllDesktops() );
+            config->writeEntry( TQString("shaded")+n, c->isShade() );
             // the config entry is called "staysOnTop" for back. comp. reasons
-            config->writeEntry( QString("staysOnTop")+n, c->keepAbove() );
-            config->writeEntry( QString("keepBelow")+n, c->keepBelow() );
-            config->writeEntry( QString("skipTaskbar")+n, c->skipTaskbar( true ) );
-            config->writeEntry( QString("skipPager")+n, c->skipPager() );
-            config->writeEntry( QString("userNoBorder")+n, c->isUserNoBorder() );
-            config->writeEntry( QString("windowType")+n, windowTypeToTxt( c->windowType()));
-            config->writeEntry( QString("shortcut")+n, c->shortcut().toStringInternal());
+            config->writeEntry( TQString("staysOnTop")+n, c->keepAbove() );
+            config->writeEntry( TQString("keepBelow")+n, c->keepBelow() );
+            config->writeEntry( TQString("skipTaskbar")+n, c->skipTaskbar( true ) );
+            config->writeEntry( TQString("skipPager")+n, c->skipPager() );
+            config->writeEntry( TQString("userNoBorder")+n, c->isUserNoBorder() );
+            config->writeEntry( TQString("windowType")+n, windowTypeToTxt( c->windowType()));
+            config->writeEntry( TQString("shortcut")+n, c->shortcut().toStringInternal());
             }
         }
     // TODO store also stacking order
@@ -154,31 +154,31 @@ void Workspace::loadSessionInfo()
     int active_client = config->readNumEntry( "active" );
     for ( int i = 1; i <= count; i++ ) 
         {
-        QString n = QString::number(i);
+        TQString n = TQString::number(i);
         SessionInfo* info = new SessionInfo;
         session.append( info );
-        info->sessionId = config->readEntry( QString("sessionId")+n ).latin1();
-        info->windowRole = config->readEntry( QString("windowRole")+n ).latin1();
-        info->wmCommand = config->readEntry( QString("wmCommand")+n ).latin1();
-        info->wmClientMachine = config->readEntry( QString("wmClientMachine")+n ).latin1();
-        info->resourceName = config->readEntry( QString("resourceName")+n ).latin1();
-        info->resourceClass = config->readEntry( QString("resourceClass")+n ).lower().latin1();
-        info->geometry = config->readRectEntry( QString("geometry")+n );
-        info->restore = config->readRectEntry( QString("restore")+n );
-        info->fsrestore = config->readRectEntry( QString("fsrestore")+n );
-        info->maximized = config->readNumEntry( QString("maximize")+n, 0 );
-        info->fullscreen = config->readNumEntry( QString("fullscreen")+n, 0 );
-        info->desktop = config->readNumEntry( QString("desktop")+n, 0 );
-        info->minimized = config->readBoolEntry( QString("iconified")+n, FALSE );
-        info->onAllDesktops = config->readBoolEntry( QString("sticky")+n, FALSE );
-        info->shaded = config->readBoolEntry( QString("shaded")+n, FALSE );
-        info->keepAbove = config->readBoolEntry( QString("staysOnTop")+n, FALSE  );
-        info->keepBelow = config->readBoolEntry( QString("keepBelow")+n, FALSE  );
-        info->skipTaskbar = config->readBoolEntry( QString("skipTaskbar")+n, FALSE  );
-        info->skipPager = config->readBoolEntry( QString("skipPager")+n, FALSE  );
-        info->userNoBorder = config->readBoolEntry( QString("userNoBorder")+n, FALSE  );
-        info->windowType = txtToWindowType( config->readEntry( QString("windowType")+n ).latin1());
-        info->shortcut = config->readEntry( QString("shortcut")+n );
+        info->sessionId = config->readEntry( TQString("sessionId")+n ).latin1();
+        info->windowRole = config->readEntry( TQString("windowRole")+n ).latin1();
+        info->wmCommand = config->readEntry( TQString("wmCommand")+n ).latin1();
+        info->wmClientMachine = config->readEntry( TQString("wmClientMachine")+n ).latin1();
+        info->resourceName = config->readEntry( TQString("resourceName")+n ).latin1();
+        info->resourceClass = config->readEntry( TQString("resourceClass")+n ).lower().latin1();
+        info->geometry = config->readRectEntry( TQString("geometry")+n );
+        info->restore = config->readRectEntry( TQString("restore")+n );
+        info->fsrestore = config->readRectEntry( TQString("fsrestore")+n );
+        info->maximized = config->readNumEntry( TQString("maximize")+n, 0 );
+        info->fullscreen = config->readNumEntry( TQString("fullscreen")+n, 0 );
+        info->desktop = config->readNumEntry( TQString("desktop")+n, 0 );
+        info->minimized = config->readBoolEntry( TQString("iconified")+n, FALSE );
+        info->onAllDesktops = config->readBoolEntry( TQString("sticky")+n, FALSE );
+        info->shaded = config->readBoolEntry( TQString("shaded")+n, FALSE );
+        info->keepAbove = config->readBoolEntry( TQString("staysOnTop")+n, FALSE  );
+        info->keepBelow = config->readBoolEntry( TQString("keepBelow")+n, FALSE  );
+        info->skipTaskbar = config->readBoolEntry( TQString("skipTaskbar")+n, FALSE  );
+        info->skipPager = config->readBoolEntry( TQString("skipPager")+n, FALSE  );
+        info->userNoBorder = config->readBoolEntry( TQString("userNoBorder")+n, FALSE  );
+        info->windowType = txtToWindowType( config->readEntry( TQString("windowType")+n ).latin1());
+        info->shortcut = config->readEntry( TQString("shortcut")+n );
         info->active = ( active_client == i );
         }
     }
@@ -195,12 +195,12 @@ void Workspace::loadSessionInfo()
 SessionInfo* Workspace::takeSessionInfo( Client* c )
     {
     SessionInfo *realInfo = 0;
-    QCString sessionId = c->sessionId();
-    QCString windowRole = c->windowRole();
-    QCString wmCommand = c->wmCommand();
-    QCString wmClientMachine = c->wmClientMachine( true );
-    QCString resourceName = c->resourceName();
-    QCString resourceClass = c->resourceClass();
+    TQCString sessionId = c->sessionId();
+    TQCString windowRole = c->windowRole();
+    TQCString wmCommand = c->wmCommand();
+    TQCString wmClientMachine = c->wmClientMachine( true );
+    TQCString resourceName = c->resourceName();
+    TQCString resourceClass = c->resourceClass();
 
     // First search ``session''
     if (! sessionId.isEmpty() ) 
@@ -253,7 +253,7 @@ bool Workspace::sessionInfoWindowTypeMatch( Client* c, SessionInfo* info )
 // of <appname>-mainwindow#<number>
 // when comparing them for fake session info, it's probably better to check
 // them without the trailing number
-bool Workspace::windowRoleMatch( const QCString& role1, const QCString& role2 )
+bool Workspace::windowRoleMatch( const TQCString& role1, const TQCString& role2 )
     {
     if( role1.isEmpty() && role2.isEmpty())
         return true;
@@ -413,9 +413,9 @@ SessionSaveDoneHelper::SessionSaveDoneHelper()
     props[ 4 ].vals = &propvalue[ 4 ];
     SmProp* p[ 5 ] = { &props[ 0 ], &props[ 1 ], &props[ 2 ], &props[ 3 ], &props[ 4 ] };
     SmcSetProperties( conn, 5, p );
-    notifier = new QSocketNotifier( IceConnectionNumber( SmcGetIceConnection( conn )),
-        QSocketNotifier::Read, this );
-    connect( notifier, SIGNAL( activated( int )), SLOT( processData()));
+    notifier = new TQSocketNotifier( IceConnectionNumber( SmcGetIceConnection( conn )),
+        TQSocketNotifier::Read, this );
+    connect( notifier, TQT_SIGNAL( activated( int )), TQT_SLOT( processData()));
     }
 
 SessionSaveDoneHelper::~SessionSaveDoneHelper()

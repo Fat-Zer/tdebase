@@ -51,10 +51,10 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qdrawutil.h>
-#include <qtimer.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqdrawutil.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -79,8 +79,8 @@ KasStartupItem::KasStartupItem( KasBar *parent, Startup::Ptr startup )
     setShowFrame( false );
     setAnimation( resources()->startupAnimation() );
 
-    aniTimer = new QTimer( this );
-    connect( aniTimer, SIGNAL( timeout() ), SLOT( aniTimerFired() ) );
+    aniTimer = new TQTimer( this );
+    connect( aniTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( aniTimerFired() ) );
     aniTimer->start( 100 );
 }
 
@@ -88,12 +88,12 @@ KasStartupItem::~KasStartupItem()
 {
 }
 
-QPixmap KasStartupItem::icon() const
+TQPixmap KasStartupItem::icon() const
 {
    /**
     * This icon stuff should all be handled by the task manager api, but isn't yet.
     */
-   QPixmap pixmap;
+   TQPixmap pixmap;
 
    switch( kasbar()->itemSize() ) {
    case KasBar::Small:
@@ -143,11 +143,11 @@ void KasStartupItem::aniTimerFired()
     advanceAnimation();
 }
 
-void KasStartupItem::paint( QPainter *p )
+void KasStartupItem::paint( TQPainter *p )
 {
     p->save();
 
-    p->setClipRect( 0, 0, extent(), extent(), QPainter::CoordPainter );
+    p->setClipRect( 0, 0, extent(), extent(), TQPainter::CoordPainter );
     p->translate( extent()/2, extent()/2 );
     p->rotate( 9.0L * frame );
     p->scale( 0.7L, 0.7L );

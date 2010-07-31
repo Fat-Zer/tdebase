@@ -16,8 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlayout.h>
-#include <qtabwidget.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
 
 #include <kaboutdata.h>
 #include <kcmodule.h>
@@ -32,24 +32,24 @@
 class SambaContainer:public KCModule
 {
    public:
-      SambaContainer(QWidget *parent=0, const char * name=0, const QStringList &list = QStringList() );
+      SambaContainer(TQWidget *parent=0, const char * name=0, const TQStringList &list = TQStringList() );
       virtual ~SambaContainer();
       virtual void load();
       virtual void save();
 
    private:
       KConfig config;
-      QTabWidget tabs;
+      TQTabWidget tabs;
       NetMon status;
       ImportsView imports;
       LogView logView;
       StatisticsView statisticsView;
 };
 
-typedef KGenericFactory<SambaContainer, QWidget > SambaFactory;
+typedef KGenericFactory<SambaContainer, TQWidget > SambaFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_samba, SambaFactory("kcmsamba") )
 
-SambaContainer::SambaContainer(QWidget *parent, const char* name, const QStringList&)
+SambaContainer::SambaContainer(TQWidget *parent, const char* name, const TQStringList&)
 :KCModule(SambaFactory::instance(), parent,name)
 ,config("kcmsambarc",false,true)
 ,tabs(this)
@@ -58,13 +58,13 @@ SambaContainer::SambaContainer(QWidget *parent, const char* name, const QStringL
 ,logView(&tabs,&config)
 ,statisticsView(&tabs,&config)
 {
-   QVBoxLayout *layout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+   TQVBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
    layout->addWidget(&tabs);
    tabs.addTab(&status,i18n("&Exports"));
    tabs.addTab(&imports,i18n("&Imports"));
    tabs.addTab(&logView,i18n("&Log"));
    tabs.addTab(&statisticsView,i18n("&Statistics"));
-   connect(&logView,SIGNAL(contentsChanged(QListView* , int, int)),&statisticsView,SLOT(setListInfo(QListView *, int, int)));
+   connect(&logView,TQT_SIGNAL(contentsChanged(TQListView* , int, int)),&statisticsView,TQT_SLOT(setListInfo(TQListView *, int, int)));
    setButtons(Help);
    load();
 

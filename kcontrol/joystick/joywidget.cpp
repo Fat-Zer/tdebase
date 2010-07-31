@@ -23,16 +23,16 @@
 #include "poswidget.h"
 #include "caldialog.h"
 
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qtable.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qlistbox.h>
-#include <qcheckbox.h>
-#include <qtimer.h>
-#include <qfontmetrics.h>
-#include <qpushbutton.h>
+#include <tqhbox.h>
+#include <tqvbox.h>
+#include <tqtable.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqlistbox.h>
+#include <tqcheckbox.h>
+#include <tqtimer.h>
+#include <tqfontmetrics.h>
+#include <tqpushbutton.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -40,57 +40,57 @@
 #include <kiconloader.h>
 
 //--------------------------------------------------------------
-static QString PRESSED = I18N_NOOP("PRESSED");
+static TQString PRESSED = I18N_NOOP("PRESSED");
 //--------------------------------------------------------------
 
-JoyWidget::JoyWidget(QWidget *parent, const char *name)
- : QWidget(parent, name), idle(0), joydev(0)
+JoyWidget::JoyWidget(TQWidget *parent, const char *name)
+ : TQWidget(parent, name), idle(0), joydev(0)
 {
-  QVBox *mainVbox = new QVBox(parent);
+  TQVBox *mainVbox = new TQVBox(parent);
   mainVbox->setSpacing(KDialog::spacingHint());
 
   // create area to show an icon + message if no joystick was detected
   {
-    messageBox = new QHBox(mainVbox);
+    messageBox = new TQHBox(mainVbox);
     messageBox->setSpacing(KDialog::spacingHint());
-    QLabel *icon = new QLabel(messageBox);
+    TQLabel *icon = new TQLabel(messageBox);
     icon->setPixmap(KGlobal::iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup,
                                                     KIcon::SizeMedium, KIcon::DefaultState, 0, true));
     icon->setFixedSize(icon->sizeHint());
-    message = new QLabel(messageBox);
+    message = new TQLabel(messageBox);
     messageBox->hide();
   }
 
-  QHBox *devHbox = new QHBox(mainVbox);
-  new QLabel(i18n("Device:"), devHbox);
-  device = new QComboBox(true, devHbox);
-  device->setInsertionPolicy(QComboBox::NoInsertion);
-  connect(device, SIGNAL(activated(const QString &)), this, SLOT(deviceChanged(const QString &)));
+  TQHBox *devHbox = new TQHBox(mainVbox);
+  new TQLabel(i18n("Device:"), devHbox);
+  device = new TQComboBox(true, devHbox);
+  device->setInsertionPolicy(TQComboBox::NoInsertion);
+  connect(device, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(deviceChanged(const TQString &)));
   devHbox->setStretchFactor(device, 3);
 
-  QHBox *hbox = new QHBox(mainVbox);
+  TQHBox *hbox = new TQHBox(mainVbox);
   hbox->setSpacing(KDialog::spacingHint());
 
-  QVBox *vboxLeft = new QVBox(hbox);
+  TQVBox *vboxLeft = new TQVBox(hbox);
   vboxLeft->setSpacing(KDialog::spacingHint());
 
-  new QLabel(i18n("Position:"), vboxLeft);
+  new TQLabel(i18n("Position:"), vboxLeft);
   xyPos = new PosWidget(vboxLeft);
-  trace = new QCheckBox(i18n("Show trace"), mainVbox);
-  connect(trace, SIGNAL(toggled(bool)), this, SLOT(traceChanged(bool)));
+  trace = new TQCheckBox(i18n("Show trace"), mainVbox);
+  connect(trace, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(traceChanged(bool)));
 
-  QVBox *vboxMid = new QVBox(hbox);
+  TQVBox *vboxMid = new TQVBox(hbox);
   vboxMid->setSpacing(KDialog::spacingHint());
 
-  QVBox *vboxRight = new QVBox(hbox);
+  TQVBox *vboxRight = new TQVBox(hbox);
   vboxRight->setSpacing(KDialog::spacingHint());
 
   // calculate the column width we need
-  QFontMetrics fm(font());
+  TQFontMetrics fm(font());
   int colWidth = QMAX(fm.width(PRESSED), fm.width("-32767")) + 10;  // -32767 largest string
 
-  new QLabel(i18n("Buttons:"), vboxMid);
-  buttonTbl = new QTable(0, 1, vboxMid);
+  new TQLabel(i18n("Buttons:"), vboxMid);
+  buttonTbl = new TQTable(0, 1, vboxMid);
   buttonTbl->setReadOnly(true);
   buttonTbl->horizontalHeader()->setLabel(0, i18n("State"));
   buttonTbl->horizontalHeader()->setClickEnabled(false);
@@ -99,8 +99,8 @@ JoyWidget::JoyWidget(QWidget *parent, const char *name)
   buttonTbl->verticalHeader()->setResizeEnabled(false);
   buttonTbl->setColumnWidth(0, colWidth);
 
-  new QLabel(i18n("Axes:"), vboxRight);
-  axesTbl = new QTable(0, 1, vboxRight);
+  new TQLabel(i18n("Axes:"), vboxRight);
+  axesTbl = new TQTable(0, 1, vboxRight);
   axesTbl->setReadOnly(true);
   axesTbl->horizontalHeader()->setLabel(0, i18n("Value"));
   axesTbl->horizontalHeader()->setClickEnabled(false);
@@ -110,13 +110,13 @@ JoyWidget::JoyWidget(QWidget *parent, const char *name)
   axesTbl->setColumnWidth(0, colWidth);
 
   // calibrate button
-  calibrate = new QPushButton(i18n("Calibrate"), mainVbox);
-  connect(calibrate, SIGNAL(clicked()), this, SLOT(calibrateDevice()));
+  calibrate = new TQPushButton(i18n("Calibrate"), mainVbox);
+  connect(calibrate, TQT_SIGNAL(clicked()), this, TQT_SLOT(calibrateDevice()));
   calibrate->setEnabled(false);
 
   // set up a timer for idle processing of joystick events
-  idle = new QTimer(this);
-  connect(idle, SIGNAL(timeout()), this, SLOT(checkDevice()));
+  idle = new TQTimer(this);
+  connect(idle, TQT_SIGNAL(timeout()), this, TQT_SLOT(checkDevice()));
 
   // check which devicefiles we have
   init();
@@ -170,7 +170,7 @@ void JoyWidget::init()
 
     // we found one
 
-    device->insertItem(QString("%1 (%2)").arg(joy->text()).arg(joy->device()));
+    device->insertItem(TQString("%1 (%2)").arg(joy->text()).arg(joy->device()));
 
     // display values for first device
     if ( first )
@@ -186,7 +186,7 @@ void JoyWidget::init()
   if ( device->count() == 0 )
   {
     messageBox->show();
-    message->setText(QString("<qt><b>%1</b></qt>").arg(
+    message->setText(TQString("<qt><b>%1</b></qt>").arg(
       i18n("No joystick device automatically found on this computer.<br>"
            "Checks were done in /dev/js[0-4] and /dev/input/js[0-4]<br>"
            "If you know that there is one attached, please enter the correct device file.")));
@@ -212,7 +212,7 @@ void JoyWidget::restoreCurrDev()
   else
   {
     // try to find the current open device in the combobox list
-    QListBoxItem *item;
+    TQListBoxItem *item;
     item = device->listBox()->findItem(joydev->device(), Qt::Contains);
 
     if ( !item )  // the current open device is one the user entered (not in the list)
@@ -224,11 +224,11 @@ void JoyWidget::restoreCurrDev()
 
 //--------------------------------------------------------------
 
-void JoyWidget::deviceChanged(const QString &dev)
+void JoyWidget::deviceChanged(const TQString &dev)
 {
   // find "/dev" in given string
   int start, stop;
-  QString devName;
+  TQString devName;
 
   if ( (start = dev.find("/dev")) == -1 )
   {
@@ -315,7 +315,7 @@ void JoyWidget::checkDevice()
     if ( number == 1 ) // y-axis
       xyPos->changeY(value);
 
-    axesTbl->setText(number, 0, QString("%1").arg(int(value)));
+    axesTbl->setText(number, 0, TQString("%1").arg(int(value)));
   }
 }
 
@@ -348,7 +348,7 @@ void JoyWidget::calibrateDevice()
   dlg.calibrate();
 
   // user cancelled somewhere during calibration, therefore the device is in a bad state
-  if ( dlg.result() == QDialog::Rejected )
+  if ( dlg.result() == TQDialog::Rejected )
     joydev->restoreCorr();
 
   idle->start(0);  // continue with event getting

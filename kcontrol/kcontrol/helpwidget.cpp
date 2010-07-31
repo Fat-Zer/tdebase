@@ -17,7 +17,7 @@
 
 */
 
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -28,12 +28,12 @@
 #include "global.h"
 #include "helpwidget.h"
 
-HelpWidget::HelpWidget(QWidget *parent) : QWhatsThis(parent)
+HelpWidget::HelpWidget(TQWidget *parent) : TQWhatsThis(parent)
 {
   setBaseText();
 }
 
-void HelpWidget::setText(const QString& docPath, const QString& text)
+void HelpWidget::setText(const TQString& docPath, const TQString& text)
 {
   docpath = docPath;
   if (text.isEmpty() && docPath.isEmpty())
@@ -59,12 +59,12 @@ void HelpWidget::setBaseText()
 			 "Click <a href = \"kcontrol/index.html\">here</a> to read the general Control Center manual.") );
 }
 
-QString HelpWidget::text() const
+TQString HelpWidget::text() const
 {
     return helptext;
 }
 
-bool HelpWidget::clicked(const QString & _url)
+bool HelpWidget::clicked(const TQString & _url)
 {
     if ( _url.isNull() )
         return true;

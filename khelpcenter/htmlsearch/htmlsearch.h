@@ -2,8 +2,8 @@
 #define __HTMLSEARCH_H__
 
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 
 class QWidget;
@@ -24,10 +24,10 @@ public:
 
   HTMLSearch();
 
-  bool generateIndex(QString lang, QWidget *parent=0);
+  bool generateIndex(TQString lang, TQWidget *parent=0);
 
-  QString search(QString lang, QString words, QString method="and", int matches=10,
-		 QString format="builtin-long", QString sort="score");
+  TQString search(TQString lang, TQString words, TQString method="and", int matches=10,
+		 TQString format="builtin-long", TQString sort="score");
 
 
 protected slots:
@@ -41,21 +41,21 @@ protected slots:
 
 protected:
 
-  QString dataPath(const QString& lang);
+  TQString dataPath(const TQString& lang);
 
-  bool saveFilesList(const QString& lang);
-  void scanDir(const QString& dir);
+  bool saveFilesList(const TQString& lang);
+  void scanDir(const TQString& dir);
 
-  bool createConfig(const QString& lang);
+  bool createConfig(const TQString& lang);
 
 
 private:
 
-  QStringList   _files;
+  TQStringList   _files;
   KProcess      *_proc;
   int           _filesToDig, _filesDigged, _filesScanned;
   volatile bool _htdigRunning, _htmergeRunning, _htsearchRunning;
-  QString       _searchResult;
+  TQString       _searchResult;
   ProgressDialog *progress;
 
 };

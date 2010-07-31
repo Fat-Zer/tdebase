@@ -12,9 +12,9 @@
 #ifndef THEMEENGINE_H
 #define THEMEENGINE_H
 
-#include <qstringlist.h>
-#include <qvbox.h>
-#include <qwidget.h>
+#include <tqstringlist.h>
+#include <tqvbox.h>
+#include <tqwidget.h>
 
 #include <kdemacros.h>
 
@@ -30,8 +30,8 @@ class KDE_EXPORT ThemeEngineConfig: public QVBox
   Q_OBJECT
 public:
 
-  ThemeEngineConfig( QWidget *p, KConfig *c )
-      :QVBox( p ), mConfig( c )
+  ThemeEngineConfig( TQWidget *p, KConfig *c )
+      :TQVBox( p ), mConfig( c )
   {}
 
   KConfig* config()const { return mConfig; }
@@ -52,27 +52,27 @@ class KDE_EXPORT ThemeEngine: public QVBox
 {
   Q_OBJECT
 public:
-  ThemeEngine( QWidget *parent, const char *name, const QStringList &args );
+  ThemeEngine( TQWidget *parent, const char *name, const TQStringList &args );
   virtual ~ThemeEngine() = 0;
-  virtual const ThemeEngineConfig *config( QWidget *, KConfig * ) { return 0L; }
+  virtual const ThemeEngineConfig *config( TQWidget *, KConfig * ) { return 0L; }
   virtual ObjKsTheme *ksTheme() { return mTheme; }
-  virtual bool eventFilter( QObject* o, QEvent* e );
+  virtual bool eventFilter( TQObject* o, TQEvent* e );
 
 public slots:
   virtual void slotUpdateProgress( int ) {}
   virtual void slotUpdateSteps( int ) {}
-  virtual void slotSetText( const QString& ) {}
-  virtual void slotSetPixmap( const QString& ) {} // use DesktopIcon() to load this.
+  virtual void slotSetText( const TQString& ) {}
+  virtual void slotSetPixmap( const TQString& ) {} // use DesktopIcon() to load this.
 
 protected:
-  void addSplashWindow( QWidget* );
+  void addSplashWindow( TQWidget* );
 
 protected:
   ObjKsTheme *mTheme;
   virtual bool x11Event( XEvent* );
 
 private slots:
-  void splashWindowDestroyed( QObject* );
+  void splashWindowDestroyed( TQObject* );
 
 private:
   class ThemeEnginePrivate;

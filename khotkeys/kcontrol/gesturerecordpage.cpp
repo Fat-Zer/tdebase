@@ -9,9 +9,9 @@
  
 ****************************************************************************/
 
-#include <qwidget.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <tqwidget.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -23,14 +23,14 @@
 namespace KHotKeys
 {
 
-GestureRecordPage::GestureRecordPage(const QString &gesture,
-                                     QWidget *parent, const char *name)
-  : QVBox(parent, name),
+GestureRecordPage::GestureRecordPage(const TQString &gesture,
+                                     TQWidget *parent, const char *name)
+  : TQVBox(parent, name),
     _recorder(NULL), _resetButton(NULL),
-    _tryOne(NULL), _tryTwo(NULL), _tryThree(NULL), _gest(QString::null),
+    _tryOne(NULL), _tryTwo(NULL), _tryThree(NULL), _gest(TQString::null),
     _tryCount(1)
     {
-    QString message;
+    TQString message;
 
     message = i18n("Draw the gesture you would like to record below. Press "
                    "and hold the left mouse button while drawing, and release "
@@ -42,28 +42,28 @@ GestureRecordPage::GestureRecordPage(const QString &gesture,
                    "restart. If you want to force a restart, use the reset "
                    "button below.\n\nDraw here:");
 
-    QLabel *label = new QLabel(message, this, "label");
-    label->setAlignment(QLabel::AlignLeft | QLabel::WordBreak |
-                        QLabel::AlignVCenter);
+    TQLabel *label = new TQLabel(message, this, "label");
+    label->setAlignment(TQLabel::AlignLeft | TQLabel::WordBreak |
+                        TQLabel::AlignVCenter);
 
     _recorder = new GestureRecorder(this, "recorder");
     _recorder->setMinimumHeight(150);
     setStretchFactor(_recorder, 1);
-    connect(_recorder, SIGNAL(recorded(const QString &)),
-            this, SLOT(slotRecorded(const QString &)));
+    connect(_recorder, TQT_SIGNAL(recorded(const TQString &)),
+            this, TQT_SLOT(slotRecorded(const TQString &)));
 
-    QHBox *hBox = new QHBox(this, "hbox");
+    TQHBox *hBox = new TQHBox(this, "hbox");
 
     _tryOne = new GestureDrawer(hBox, "tryOne");
     _tryTwo = new GestureDrawer(hBox, "tryTwo");
     _tryThree = new GestureDrawer(hBox, "tryThree");
 
-    QWidget *spacer = new QWidget(hBox, "spacer");
+    TQWidget *spacer = new TQWidget(hBox, "spacer");
     hBox->setStretchFactor(spacer, 1);
 
-    _resetButton = new QPushButton(i18n("&Reset"), hBox, "resetButton");
-    connect(_resetButton, SIGNAL(clicked()),
-            this, SLOT(slotResetClicked()));
+    _resetButton = new TQPushButton(i18n("&Reset"), hBox, "resetButton");
+    connect(_resetButton, TQT_SIGNAL(clicked()),
+            this, TQT_SLOT(slotResetClicked()));
 
 
 
@@ -82,7 +82,7 @@ GestureRecordPage::~GestureRecordPage()
     {
     }
 
-void GestureRecordPage::slotRecorded(const QString &data)
+void GestureRecordPage::slotRecorded(const TQString &data)
     {
     switch (_tryCount)
         {
@@ -131,11 +131,11 @@ void GestureRecordPage::slotRecorded(const QString &data)
 
 void GestureRecordPage::slotResetClicked()
     {
-    _gest = QString::null;
+    _gest = TQString::null;
 
-    _tryOne->setData(QString::null);
-    _tryTwo->setData(QString::null);
-    _tryThree->setData(QString::null);
+    _tryOne->setData(TQString::null);
+    _tryTwo->setData(TQString::null);
+    _tryThree->setData(TQString::null);
 
     _tryCount = 1;
 

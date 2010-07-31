@@ -20,7 +20,7 @@
 #ifndef KHC_NAVIGATORITEM_H
 #define KHC_NAVIGATORITEM_H
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
 namespace KHC {
 
@@ -30,13 +30,13 @@ class DocEntry;
 class NavigatorItem : public QListViewItem
 {
   public:
-    NavigatorItem( DocEntry *entry, QListView *parent );
-    NavigatorItem( DocEntry *entry, QListViewItem *parent );
+    NavigatorItem( DocEntry *entry, TQListView *parent );
+    NavigatorItem( DocEntry *entry, TQListViewItem *parent );
 
-    NavigatorItem( DocEntry *entry, QListView *parent,
-                   QListViewItem *after );
-    NavigatorItem( DocEntry *entry, QListViewItem *parent,
-                   QListViewItem *after );
+    NavigatorItem( DocEntry *entry, TQListView *parent,
+                   TQListViewItem *after );
+    NavigatorItem( DocEntry *entry, TQListViewItem *parent,
+                   TQListViewItem *after );
 
     ~NavigatorItem();
 

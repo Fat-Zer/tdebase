@@ -22,23 +22,23 @@
 
 #include <dcopobject.h> 
 
-#include <qfont.h>
-#include <qpalette.h>
-#include <qwidget.h>
+#include <tqfont.h>
+#include <tqpalette.h>
+#include <tqwidget.h>
 
-class ModuleIface : public QObject, public DCOPObject {
+class ModuleIface : public TQObject, public DCOPObject {
 
 Q_OBJECT
 K_DCOP
 
 public:
-	ModuleIface(QObject *parent, const char *name);
+	ModuleIface(TQObject *parent, const char *name);
 	~ModuleIface();
 
 k_dcop:
-	QFont getFont();
-	QPalette getPalette();
-	QString getStyle();
+	TQFont getFont();
+	TQPalette getPalette();
+	TQString getStyle();
 	void invokeHandbook();
 	void invokeHelp();
 
@@ -47,7 +47,7 @@ signals:
 	void helpClicked();
 
 private:
-	QWidget *_parent;
+	TQWidget *_parent;
 
 };
 

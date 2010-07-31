@@ -19,19 +19,19 @@
 #include "kebsearchline.h"
 #include "kebsearchline.moc"
 
-KEBSearchLine::KEBSearchLine(QWidget *parent, KListView *listView, const char *name)
+KEBSearchLine::KEBSearchLine(TQWidget *parent, KListView *listView, const char *name)
     : KListViewSearchLine(parent, listView, name)
 {
     mmode = AND;
 }
 
-KEBSearchLine::KEBSearchLine(QWidget *parent, const char *name)
+KEBSearchLine::KEBSearchLine(TQWidget *parent, const char *name)
     :KListViewSearchLine(parent, name)
 {
     mmode = AND;
 }
 
-void KEBSearchLine::updateSearch(const QString &s)
+void KEBSearchLine::updateSearch(const TQString &s)
 {
     KListViewSearchLine::updateSearch(s);
     emit searchUpdated();
@@ -41,19 +41,19 @@ KEBSearchLine::~KEBSearchLine()
 {
 }
 
-bool KEBSearchLine::itemMatches(const QListViewItem *item, const QString &s) const
+bool KEBSearchLine::itemMatches(const TQListViewItem *item, const TQString &s) const
 {
     if(mmode == EXACTLY)
        return KListViewSearchLine::itemMatches(item, s);
 
     if(lastpattern != s)
     {
-       splitted = QStringList::split(QChar(' '), s);
+       splitted = TQStringList::split(TQChar(' '), s);
        lastpattern = s;
     }
 
-    QStringList::const_iterator it = splitted.begin();
-    QStringList::const_iterator end = splitted.end();
+    TQStringList::const_iterator it = splitted.begin();
+    TQStringList::const_iterator end = splitted.end();
 
     if(mmode == OR)
     {

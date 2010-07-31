@@ -19,8 +19,8 @@
 #ifndef bookmark_module_h
 #define bookmark_module_h
 
-#include <qmap.h>
-#include <qobject.h>
+#include <tqmap.h>
+#include <tqobject.h>
 #include <konq_sidebartreemodule.h>
 #include <kbookmark.h>
 #include <kdialogbase.h>
@@ -32,7 +32,7 @@ class KLineEdit;
 /**
  * This module displays bookmarks in the tree
  */
-class KonqSidebarBookmarkModule : public QObject, public KonqSidebarTreeModule
+class KonqSidebarBookmarkModule : public TQObject, public KonqSidebarTreeModule
 {
     Q_OBJECT
 public:
@@ -41,15 +41,15 @@ public:
 
     // Handle this new toplevel item [can only be called once currently]
     virtual void addTopLevelItem( KonqSidebarTreeTopLevelItem * item );
-    virtual bool handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *, const QPoint& );
+    virtual bool handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *, const TQPoint& );
 
     void showPopupMenu();
 
 
 protected slots:
-    void slotBookmarksChanged( const QString & );
-    void slotMoved(QListViewItem*,QListViewItem*,QListViewItem*);
-    void slotDropped(KListView*,QDropEvent*,QListViewItem*,QListViewItem*);
+    void slotBookmarksChanged( const TQString & );
+    void slotMoved(TQListViewItem*,TQListViewItem*,TQListViewItem*);
+    void slotDropped(KListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*);
     void slotCreateFolder();
     void slotDelete();
     void slotProperties(KonqSidebarBookmarkItem *bi = 0);
@@ -60,10 +60,10 @@ protected slots:
 protected:
     void fillListView();
     void fillGroup( KonqSidebarTreeItem * parentItem, KBookmarkGroup group );
-    KonqSidebarBookmarkItem * findByAddress( const QString & address ) const;
+    KonqSidebarBookmarkItem * findByAddress( const TQString & address ) const;
 
 private slots:
-    void slotOpenChange(QListViewItem*);
+    void slotOpenChange(TQListViewItem*);
 
 private:
     KonqSidebarTreeTopLevelItem * m_topLevelItem;
@@ -72,7 +72,7 @@ private:
     KActionCollection *m_collection;
 
     bool m_ignoreOpenChange;
-    QMap<QString, bool> m_folderOpenState;
+    TQMap<TQString, bool> m_folderOpenState;
 };
 
 class BookmarkEditDialog : public KDialogBase
@@ -80,12 +80,12 @@ class BookmarkEditDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    BookmarkEditDialog( const QString& title, const QString& url,
-                        QWidget * = 0, const char * = 0,
-                        const QString& caption = i18n( "Add Bookmark" ) );
+    BookmarkEditDialog( const TQString& title, const TQString& url,
+                        TQWidget * = 0, const char * = 0,
+                        const TQString& caption = i18n( "Add Bookmark" ) );
 
-    QString finalUrl() const;
-    QString finalTitle() const;
+    TQString finalUrl() const;
+    TQString finalTitle() const;
 
 protected slots:
     void slotOk();

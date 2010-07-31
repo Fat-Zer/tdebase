@@ -16,11 +16,11 @@
 
 #include "actions_listview_widget.h"
 
-#include <qheader.h>
+#include <tqheader.h>
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <qdragobject.h>
+#include <tqdragobject.h>
 
 #include <khlistview.h>
 #include <actions.h>
@@ -31,7 +31,7 @@
 namespace KHotKeys
 {
 
-Actions_listview_widget::Actions_listview_widget( QWidget* parent_P, const char* name_P )
+Actions_listview_widget::Actions_listview_widget( TQWidget* parent_P, const char* name_P )
     : Actions_listview_widget_ui( parent_P, name_P ), recent_item( NULL ),
         saved_current_item( NULL )
     {
@@ -39,14 +39,14 @@ Actions_listview_widget::Actions_listview_widget( QWidget* parent_P, const char*
     actions_listview->header()->hide();
     actions_listview->addColumn( "" );
     actions_listview->setRootIsDecorated( true ); // CHECKME
-    connect( actions_listview, SIGNAL( current_changed( QListViewItem* )),
-        SLOT( current_changed( QListViewItem* )));
-    connect( actions_listview, SIGNAL( moved( QListViewItem*, QListViewItem*, QListViewItem* )),
-        SLOT( item_moved( QListViewItem*, QListViewItem*, QListViewItem* )));
+    connect( actions_listview, TQT_SIGNAL( current_changed( TQListViewItem* )),
+        TQT_SLOT( current_changed( TQListViewItem* )));
+    connect( actions_listview, TQT_SIGNAL( moved( TQListViewItem*, TQListViewItem*, TQListViewItem* )),
+        TQT_SLOT( item_moved( TQListViewItem*, TQListViewItem*, TQListViewItem* )));
     // KHotKeys::Module::changed()
     }
 
-void Actions_listview_widget::action_name_changed( const QString& )
+void Actions_listview_widget::action_name_changed( const TQString& )
     {
     current_action()->widthChanged( 0 );
     actions_listview->repaintItem( current_action());
@@ -63,7 +63,7 @@ void Actions_listview_widget::set_action_data( Action_data_base* data_P, bool re
         saved_current_item->set_data( data_P );
     }
 
-void Actions_listview_widget::current_changed( QListViewItem* item_P )
+void Actions_listview_widget::current_changed( TQListViewItem* item_P )
     {
     kdDebug( 1217 ) << "current_changed:" << item_P << endl;
     set_current_action( static_cast< Action_listview_item* >( item_P ));
@@ -86,7 +86,7 @@ void Actions_listview_widget::set_current_action( Action_listview_item* item_P )
 
 void Actions_listview_widget::new_action( Action_data_base* data_P )
     {
-    QListViewItem* parent = NULL;
+    TQListViewItem* parent = NULL;
     if( current_action() != NULL )
         {
         if( dynamic_cast< Action_data_group* >( current_action()->data()) != NULL )
@@ -104,9 +104,9 @@ void Actions_listview_widget::new_action( Action_data_base* data_P )
 
 void Actions_listview_widget::delete_action()
     {
-//    while( QListViewItem* child = current_action()->firstChild())
+//    while( TQListViewItem* child = current_action()->firstChild())
 //        delete child;
-//    QListViewItem* nw = current_action()->itemAbove();
+//    TQListViewItem* nw = current_action()->itemAbove();
 //    if( nw == NULL )
 //        nw = current_action()->itemBelow();
     delete saved_current_item;
@@ -121,7 +121,7 @@ void Actions_listview_widget::delete_action()
 //        saved_current_item = NULL;
     }
 
-void Actions_listview_widget::item_moved( QListViewItem* item_P, QListViewItem*, QListViewItem* )
+void Actions_listview_widget::item_moved( TQListViewItem* item_P, TQListViewItem*, TQListViewItem* )
     {
     Action_listview_item* item = static_cast< Action_listview_item* >( item_P );
     Action_listview_item* parent = static_cast< Action_listview_item* >( item->parent());
@@ -154,8 +154,8 @@ void Actions_listview_widget::build_up_recursively( Action_data_group* parent_P,
         }
     }
     
-Action_listview_item* Actions_listview_widget::create_item( QListViewItem* parent_P,
-    QListViewItem* after_P, Action_data_base* data_P )
+Action_listview_item* Actions_listview_widget::create_item( TQListViewItem* parent_P,
+    TQListViewItem* after_P, Action_data_base* data_P )
     {
     if( parent_P != NULL )
         return new Action_listview_item( parent_P, after_P, data_P );
@@ -165,7 +165,7 @@ Action_listview_item* Actions_listview_widget::create_item( QListViewItem* paren
 
 // Actions_listview
 
-Actions_listview::Actions_listview( QWidget* parent_P, const char* name_P )
+Actions_listview::Actions_listview( TQWidget* parent_P, const char* name_P )
     : KHListView( parent_P, name_P ), _widget( static_cast< Actions_listview_widget* >( parent_P->parent()))
     {
     // this relies on the way designer creates the .cpp file from .ui (yes, I'm lazy)
@@ -177,9 +177,9 @@ Actions_listview::Actions_listview( QWidget* parent_P, const char* name_P )
 
 // Action_listview_item
 
-QString Action_listview_item::text( int column_P ) const
+TQString Action_listview_item::text( int column_P ) const
     {
-    return column_P == 0 ? data()->name() : QString::null;
+    return column_P == 0 ? data()->name() : TQString::null;
     }
 
 // CHECKME poradne tohle zkontrolovat po tom prekopani

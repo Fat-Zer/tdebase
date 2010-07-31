@@ -22,11 +22,11 @@
 
 #include <sys/types.h>
 
-#include <qwidget.h>
-#include <qpixmap.h>
-#include <qstring.h>
-#include <qtimer.h>
-#include <qmap.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
+#include <tqstring.h>
+#include <tqtimer.h>
+#include <tqmap.h>
 #include <kstartupinfo.h>
 
 class QStyle;
@@ -36,12 +36,12 @@ class StartupId
     {
     Q_OBJECT
     public:
-        StartupId( QWidget* parent = 0, const char* name = 0 );
+        StartupId( TQWidget* parent = 0, const char* name = 0 );
         virtual ~StartupId();
         void configure();
     protected:
         virtual bool x11Event( XEvent* e );
-        void start_startupid( const QString& icon );
+        void start_startupid( const TQString& icon );
         void stop_startupid();
     protected slots:
         void update_startupid();
@@ -51,16 +51,16 @@ class StartupId
         void finishKDEStartup();
     protected:
         KStartupInfo startup_info;
-        QWidget* startup_widget;
-        QTimer update_timer;
-        QMap< KStartupInfoId, QString > startups; // QString == pixmap
+        TQWidget* startup_widget;
+        TQTimer update_timer;
+        TQMap< KStartupInfoId, TQString > startups; // TQString == pixmap
         KStartupInfoId current_startup;
         bool blinking;
         bool bouncing;
         unsigned int color_index;
         unsigned int frame;
         enum { NUM_BLINKING_PIXMAPS = 5 };
-        QPixmap pixmaps[ NUM_BLINKING_PIXMAPS ];
+        TQPixmap pixmaps[ NUM_BLINKING_PIXMAPS ];
     };
 
 #endif

@@ -24,15 +24,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __CLOCK_H
 #define __CLOCK_H
 
-#include <qlcdnumber.h>
-#include <qlabel.h>
-#include <qtoolbutton.h>
-#include <qguardedptr.h>
-#include <qdatetime.h>
-#include <qvbox.h>
-#include <qstringlist.h>
-#include <qtooltip.h>
-#include <qevent.h>
+#include <tqlcdnumber.h>
+#include <tqlabel.h>
+#include <tqtoolbutton.h>
+#include <tqguardedptr.h>
+#include <tqdatetime.h>
+#include <tqvbox.h>
+#include <tqstringlist.h>
+#include <tqtooltip.h>
+#include <tqevent.h>
 
 #include <dcopobject.h>
 #include <kpanelapplet.h>
@@ -71,7 +71,7 @@ class SettingsWidgetImp : public SettingsWidget
     public:
         SettingsWidgetImp(Prefs *p=0,
                 Zone *z=0,
-                QWidget* parent=0,
+                TQWidget* parent=0,
                 const char* name=0,
                 WFlags fl=0);
     public slots:
@@ -88,7 +88,7 @@ class KConfigDialogSingle : public KConfigDialog
     
     public:
         KConfigDialogSingle(Zone *zone,
-                QWidget *parent=0,
+                TQWidget *parent=0,
                 const char *name=0,
                 Prefs *prefs=0,
                 KDialogBase::DialogType dialogType = KDialogBase::IconList,
@@ -120,7 +120,7 @@ class ClockWidget
         ClockWidget(ClockApplet *applet, Prefs *prefs);
         virtual ~ClockWidget();
         
-        virtual QWidget* widget()=0;
+        virtual TQWidget* widget()=0;
         virtual int preferedWidthForHeight(int h) const =0;
         virtual int preferedHeightForWidth(int w) const =0;
         virtual void updateClock()=0;
@@ -132,19 +132,19 @@ class ClockWidget
     protected:
         ClockApplet *_applet;
         Prefs *_prefs;
-        QTime _time;
+        TQTime _time;
         bool _force;
 };
 
 
-class PlainClock : public QLabel, public ClockWidget
+class PlainClock : public TQLabel, public ClockWidget
 {
     Q_OBJECT
 
     public:
-        PlainClock(ClockApplet *applet, Prefs *prefs, QWidget *parent=0, const char *name=0);
+        PlainClock(ClockApplet *applet, Prefs *prefs, TQWidget *parent=0, const char *name=0);
         
-        QWidget* widget()    { return this; }
+        TQWidget* widget()    { return this; }
         int preferedWidthForHeight(int h) const;
         int preferedHeightForWidth(int w) const;
         void updateClock();
@@ -153,22 +153,22 @@ class PlainClock : public QLabel, public ClockWidget
         bool showDayOfWeek();
     
     protected:
-        void paintEvent(QPaintEvent *e);
-        void drawContents(QPainter *p);
+        void paintEvent(TQPaintEvent *e);
+        void drawContents(TQPainter *p);
     
-        QString _timeStr;
+        TQString _timeStr;
 };
 
 
-class DigitalClock : public QLCDNumber, public ClockWidget
+class DigitalClock : public TQLCDNumber, public ClockWidget
 {
     Q_OBJECT
 
     public:
-        DigitalClock(ClockApplet *applet, Prefs *prefs, QWidget *parent=0, const char *name=0);
+        DigitalClock(ClockApplet *applet, Prefs *prefs, TQWidget *parent=0, const char *name=0);
         ~DigitalClock();
     
-        QWidget* widget()    { return this; }
+        TQWidget* widget()    { return this; }
         int preferedWidthForHeight(int h) const;
         int preferedHeightForWidth(int w) const;
         void updateClock();
@@ -177,25 +177,25 @@ class DigitalClock : public QLCDNumber, public ClockWidget
         bool showDayOfWeek();
     
     protected:
-        void paintEvent( QPaintEvent*);
-        void drawContents( QPainter * p);
-        void resizeEvent ( QResizeEvent *ev);
+        void paintEvent( TQPaintEvent*);
+        void drawContents( TQPainter * p);
+        void resizeEvent ( TQResizeEvent *ev);
         
-        QPixmap *_buffer;
-        QString _timeStr;
-        QPixmap lcdPattern;
+        TQPixmap *_buffer;
+        TQString _timeStr;
+        TQPixmap lcdPattern;
 };
 
 
-class AnalogClock : public QFrame, public ClockWidget
+class AnalogClock : public TQFrame, public ClockWidget
 {
     Q_OBJECT
 
     public:
-        AnalogClock(ClockApplet *applet, Prefs *prefs, QWidget *parent=0, const char *name=0);
+        AnalogClock(ClockApplet *applet, Prefs *prefs, TQWidget *parent=0, const char *name=0);
         ~AnalogClock();
     
-        QWidget* widget()                        { return this; }
+        TQWidget* widget()                        { return this; }
         int preferedWidthForHeight(int h) const  { return h; }
         int preferedHeightForWidth(int w) const  { return w; }
         void updateClock();
@@ -204,24 +204,24 @@ class AnalogClock : public QFrame, public ClockWidget
         bool showDayOfWeek();
     
     protected:
-        virtual void paintEvent(QPaintEvent *);
-        void styleChange(QStyle&);
+        virtual void paintEvent(TQPaintEvent *);
+        void styleChange(TQStyle&);
         void initBackgroundPixmap();
         
-        QPixmap *_spPx;
-        QPixmap lcdPattern;
+        TQPixmap *_spPx;
+        TQPixmap lcdPattern;
         int _bgScale;
 };
 
 
-class FuzzyClock : public QFrame, public ClockWidget
+class FuzzyClock : public TQFrame, public ClockWidget
 {
     Q_OBJECT
 
     public:
-        FuzzyClock(ClockApplet *applet, Prefs* prefs, QWidget *parent=0, const char *name=0);
+        FuzzyClock(ClockApplet *applet, Prefs* prefs, TQWidget *parent=0, const char *name=0);
         
-        QWidget* widget()    { return this; }
+        TQWidget* widget()    { return this; }
         int preferedWidthForHeight(int h) const;
         int preferedHeightForWidth(int w) const;
         void updateClock();
@@ -233,14 +233,14 @@ class FuzzyClock : public QFrame, public ClockWidget
         void deleteMyself();
 
     protected:
-        virtual void drawContents(QPainter *p);
+        virtual void drawContents(TQPainter *p);
         
-        QStringList hourNames;
-        QStringList normalFuzzy;
-        QStringList normalFuzzyOne;
-        QStringList dayTime;
+        TQStringList hourNames;
+        TQStringList normalFuzzy;
+        TQStringList normalFuzzyOne;
+        TQStringList dayTime;
         
-        QString _timeStr;
+        TQString _timeStr;
 
     private:
         bool alreadyDrawing;
@@ -252,7 +252,7 @@ class ClockAppletToolTip : public QToolTip
         ClockAppletToolTip( ClockApplet* clock );
 
     protected:
-        virtual void maybeTip( const QPoint & );
+        virtual void maybeTip( const TQPoint & );
 
     private:
         ClockApplet *m_clock;
@@ -266,8 +266,8 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
   friend class ClockAppletToolTip;
 
     public:
-        ClockApplet(const QString& configFile, Type t = Normal, int actions = 0,
-                    QWidget *parent = 0, const char *name = 0);
+        ClockApplet(const TQString& configFile, Type t = Normal, int actions = 0,
+                    TQWidget *parent = 0, const char *name = 0);
         ~ClockApplet();
         
         int widthForHeight(int h) const;
@@ -279,8 +279,8 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
         void resizeRequest()            { emit(updateLayout()); }
         const Zone* timezones()            { return zone; }
         
-        QTime clockGetTime();
-        QDate clockGetDate();
+        TQTime clockGetTime();
+        TQDate clockGetDate();
 
         virtual void updateKickerTip(KickerTip::Data&);
     
@@ -310,23 +310,23 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
         void prevZone();
         void updateFollowBackground();
         
-        void paletteChange(const QPalette &) { setBackground(); }
+        void paletteChange(const TQPalette &) { setBackground(); }
         void setBackground();
-        void mousePressEvent(QMouseEvent *ev);
-        void wheelEvent(QWheelEvent* e);
-        bool eventFilter(QObject *, QEvent *);
+        void mousePressEvent(TQMouseEvent *ev);
+        void wheelEvent(TQWheelEvent* e);
+        bool eventFilter(TQObject *, TQEvent *);
 
         virtual void positionChange(Position p);
 
-        QCString configFileName;
+        TQCString configFileName;
         DatePicker *_calendar;
         bool _disableCalendar;
         ClockWidget *_clock;
-        QLabel *_date;
-        QLabel *_dayOfWeek;
-        QDate _lastDate;
-        QTimer *_timer;
-        QTimer *m_layoutTimer;
+        TQLabel *_date;
+        TQLabel *_dayOfWeek;
+        TQDate _lastDate;
+        TQTimer *_timer;
+        TQTimer *m_layoutTimer;
         int m_layoutDelay;
         bool m_followBackgroundSetting;
         bool m_dateFollowBackgroundSetting;
@@ -338,7 +338,7 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
         bool showDate;
         bool showDayOfWeek;
         bool m_updateOnTheMinute;
-        QStringList _remotezonelist;
+        TQStringList _remotezonelist;
         KPopupMenu* menu;
         ClockAppletToolTip m_tooltip;
         KTextShadowEngine *m_shadowEngine;

@@ -21,7 +21,7 @@
 
 #include "konq_listviewwidget.h"
 #include "konq_treeviewitem.h"
-#include <qdict.h>
+#include <tqdict.h>
 #include <kurl.h>
 #include <klistview.h>
 
@@ -34,13 +34,13 @@ class KonqTreeViewWidget : public KonqBaseListViewWidget
 
    Q_OBJECT
 public:
-   KonqTreeViewWidget( KonqListView *parent, QWidget *parentWidget );
+   KonqTreeViewWidget( KonqListView *parent, TQWidget *parentWidget );
    virtual ~KonqTreeViewWidget();
 
    virtual bool openURL( const KURL &url );
 
-   virtual void saveState( QDataStream &stream );
-   virtual void restoreState( QDataStream &stream );
+   virtual void saveState( TQDataStream &stream );
+   virtual void restoreState( TQDataStream &stream );
 
 protected slots:
    // slots connected to the directory lister
@@ -53,15 +53,15 @@ protected slots:
    virtual void slotDeleteItem( KFileItem *_fileTtem );
 
 protected:
-   KonqListViewDir *findDir( const QString &_url );
+   KonqListViewDir *findDir( const TQString &_url );
 
    void openSubFolder( KonqListViewDir *_dir, bool _reload );
    void stopListingSubFolder( KonqListViewDir *_dir );
 
    // URL -> item (for directories only)
-   QDict<KonqListViewDir> m_dictSubDirs;
+   TQDict<KonqListViewDir> m_dictSubDirs;
 
-   QStringList m_urlsToOpen, m_urlsToReload;
+   TQStringList m_urlsToOpen, m_urlsToReload;
 };
 
 #endif

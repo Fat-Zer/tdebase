@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kapplication.h>
 #include <krun.h>
 #include <kdeprint/kmmanager.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
 K_EXPORT_KICKER_MENUEXT(kdeprint, PrintMenu)
 
@@ -40,7 +40,7 @@ K_EXPORT_KICKER_MENUEXT(kdeprint, PrintMenu)
 #define	KPRINTER_ID		5
 #define PRINTER_LIST_ID		10
 
-PrintMenu::PrintMenu(QWidget *parent, const char *name, const QStringList & /*args*/)
+PrintMenu::PrintMenu(TQWidget *parent, const char *name, const TQStringList & /*args*/)
 : KPanelMenu("", parent, name)
 {
     static bool kdeprintIconsInitialized = false;
@@ -75,11 +75,11 @@ void PrintMenu::initialize()
     insertItem(SmallIconSet("fileprint"), i18n("Print File..."), KPRINTER_ID);
 
     // printer list
-    QPtrList<KMPrinter>    *l = KMManager::self()->printerList();
+    TQPtrList<KMPrinter>    *l = KMManager::self()->printerList();
     if (l && !l->isEmpty())
     {
         bool separatorInserted = false;
-        QPtrListIterator<KMPrinter>    it(*l);
+        TQPtrListIterator<KMPrinter>    it(*l);
         for (; it.current(); ++it)
         {
             // no special, implicit or pure instances
@@ -106,10 +106,10 @@ void PrintMenu::slotExec(int ID)
             kapp->kdeinitExec("kaddprinterwizard");
             break;
         case KDEPRINT_SETTINGS_ID:
-	    kapp->kdeinitExec("kaddprinterwizard", QStringList("--kdeconfig"));
+	    kapp->kdeinitExec("kaddprinterwizard", TQStringList("--kdeconfig"));
             break;
 	case CONFIG_SERVER_ID:
-	    kapp->kdeinitExec("kaddprinterwizard", QStringList("--serverconfig"));
+	    kapp->kdeinitExec("kaddprinterwizard", TQStringList("--serverconfig"));
 	    break;
         case PRINT_MANAGER_ID:
             KRun::runCommand("kcmshell kde-printers.desktop");
@@ -123,7 +123,7 @@ void PrintMenu::slotExec(int ID)
         default:
             {
                 // start kjobviewer
-                QStringList args;
+                TQStringList args;
                 args << "--show" << "-d" << text(ID).remove('&');
                 kapp->kdeinitExec("kjobviewer", args);
             }

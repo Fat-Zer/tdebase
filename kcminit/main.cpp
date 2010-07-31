@@ -23,8 +23,8 @@
 
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -65,13 +65,13 @@ static void waitForReady()
   close( ready[ 0 ] );
 }
 
-bool KCMInit::runModule(const QString &libName, KService::Ptr service)
+bool KCMInit::runModule(const TQString &libName, KService::Ptr service)
 {
     KLibLoader *loader = KLibLoader::self();
-    KLibrary *lib = loader->library(QFile::encodeName(libName));
+    KLibrary *lib = loader->library(TQFile::encodeName(libName));
     if (lib) {
 	// get the init_ function
-	QString factory = QString("init_%1").arg(service->init());
+	TQString factory = TQString("init_%1").arg(service->init());
 	void *init = lib->symbol(factory.utf8());
 	if (init) {
 	    // initialize the module
@@ -81,7 +81,7 @@ bool KCMInit::runModule(const QString &libName, KService::Ptr service)
 	    func();
 	    return true;
 	}
-	loader->unloadLibrary(QFile::encodeName(libName));
+	loader->unloadLibrary(TQFile::encodeName(libName));
     }
     return false;
 }
@@ -94,7 +94,7 @@ void KCMInit::runModules( int phase )
       ++it) {
       KService::Ptr service = (*it);
       
-      QString library = service->property("X-KDE-Init-Library", QVariant::String).toString();
+      TQString library = service->property("X-KDE-Init-Library", TQVariant::String).toString();
       if (library.isEmpty())
         library = service->library();
       
@@ -102,7 +102,7 @@ void KCMInit::runModules( int phase )
 	continue; // Skip
 
       // see ksmserver's README for the description of the phases
-      QVariant vphase = service->property("X-KDE-Init-Phase", QVariant::Int );
+      TQVariant vphase = service->property("X-KDE-Init-Phase", TQVariant::Int );
       int libphase = 1;
       if( vphase.isValid() )
           libphase = vphase.toInt();
@@ -110,12 +110,12 @@ void KCMInit::runModules( int phase )
       if( phase != -1 && libphase != phase )
           continue;
 
-      QString libName = QString("kcm_%1").arg(library);
+      TQString libName = TQString("kcm_%1").arg(library);
 
       // try to load the library
       if (! alreadyInitialized.contains( libName.ascii() )) {
 	  if (!runModule(libName, service)) {
-	      libName = QString("libkcm_%1").arg(library);
+	      libName = TQString("libkcm_%1").arg(library);
 	      if (! alreadyInitialized.contains( libName.ascii() )) {
 		  runModule(libName, service);
 		  alreadyInitialized.append( libName.ascii() );
@@ -129,7 +129,7 @@ void KCMInit::runModules( int phase )
 KCMInit::KCMInit( KCmdLineArgs* args )
 : DCOPObject( "kcminit" )
 {
-  QCString arg;
+  TQCString arg;
   if (args->count() == 1) {
     arg = args->arg(0);
   }
@@ -145,14 +145,14 @@ KCMInit::KCMInit( KCmdLineArgs* args )
       KService::Ptr service = (*it);
       if (service->library().isEmpty() || service->init().isEmpty())
 	continue; // Skip
-      printf("%s\n", QFile::encodeName(service->desktopEntryName()).data());
+      printf("%s\n", TQFile::encodeName(service->desktopEntryName()).data());
     }
     return;
   }
 
   if (!arg.isEmpty()) {
 
-    QString module = QFile::decodeName(arg);
+    TQString module = TQFile::decodeName(arg);
     if (!module.endsWith(".desktop"))
        module += ".desktop";
 
@@ -180,20 +180,20 @@ KCMInit::KCMInit( KCmdLineArgs* args )
   bool multihead = !config.readBoolEntry( "disableMultihead", false) &&
                     (ScreenCount(qt_xdisplay()) > 1);
   // Pass env. var to kdeinit.
-  QCString name = "KDE_MULTIHEAD";
-  QCString value = multihead ? "true" : "false";
-  QByteArray params;
-  QDataStream stream(params, IO_WriteOnly);
+  TQCString name = "KDE_MULTIHEAD";
+  TQCString value = multihead ? "true" : "false";
+  TQByteArray params;
+  TQDataStream stream(params, IO_WriteOnly);
   stream << name << value;
-  kapp->dcopClient()->send("klauncher", "klauncher", "setLaunchEnv(QCString,QCString)", params);
+  kapp->dcopClient()->send("klauncher", "klauncher", "setLaunchEnv(TQCString,TQCString)", params);
   setenv( name, value, 1 ); // apply effect also to itself
 
   if( startup )
   {
      runModules( 0 );
-     kapp->dcopClient()->send( "ksplash", "", "upAndRunning(QString)",  QString("kcminit"));
+     kapp->dcopClient()->send( "ksplash", "", "upAndRunning(TQString)",  TQString("kcminit"));
      sendReady();
-     QTimer::singleShot( 300 * 1000, qApp, SLOT( quit())); // just in case
+     TQTimer::singleShot( 300 * 1000, qApp, TQT_SLOT( quit())); // just in case
      qApp->exec(); // wait for runPhase1() and runPhase2()
   }
   else
@@ -208,13 +208,13 @@ KCMInit::~KCMInit()
 void KCMInit::runPhase1()
 {
   runModules( 1 );
-  emitDCOPSignal( "phase1Done()", QByteArray());
+  emitDCOPSignal( "phase1Done()", TQByteArray());
 }
 
 void KCMInit::runPhase2()
 {
   runModules( 2 );
-  emitDCOPSignal( "phase2Done()", QByteArray());
+  emitDCOPSignal( "phase2Done()", TQByteArray());
   qApp->exit( 0 );
 }
 

@@ -26,38 +26,38 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef FDIALOG_H
 #define FDIALOG_H
 
-#include <qdialog.h>
-#include <qmessagebox.h>
+#include <tqdialog.h>
+#include <tqmessagebox.h>
 
 class QFrame;
 
-class FDialog : public QDialog {
-	typedef QDialog inherited;
+class FDialog : public TQDialog {
+	typedef TQDialog inherited;
 
   public:
-	FDialog( QWidget *parent = 0, bool framed = true );
+	FDialog( TQWidget *parent = 0, bool framed = true );
 	virtual int exec();
 
-	static void box( QWidget *parent, QMessageBox::Icon type,
-	                 const QString &text );
-#define errorbox QMessageBox::Critical
-#define sorrybox QMessageBox::Warning
-#define infobox QMessageBox::Information
-	void MsgBox( QMessageBox::Icon typ, const QString &msg ) { box( this, typ, msg ); }
+	static void box( TQWidget *parent, TQMessageBox::Icon type,
+	                 const TQString &text );
+#define errorbox TQMessageBox::Critical
+#define sorrybox TQMessageBox::Warning
+#define infobox TQMessageBox::Information
+	void MsgBox( TQMessageBox::Icon typ, const TQString &msg ) { box( this, typ, msg ); }
 
   protected:
-	virtual void resizeEvent( QResizeEvent *e );
+	virtual void resizeEvent( TQResizeEvent *e );
 	void adjustGeometry();
 
   private:
-	QFrame *winFrame;
+	TQFrame *winFrame;
 };
 
 class KFMsgBox : public FDialog {
 	typedef FDialog inherited;
 
   public:
-	KFMsgBox( QWidget *parent, QMessageBox::Icon type, const QString &text );
+	KFMsgBox( TQWidget *parent, TQMessageBox::Icon type, const TQString &text );
 };
 
 #endif /* FDIALOG_H */

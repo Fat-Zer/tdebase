@@ -11,11 +11,11 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
 
-#include <qobject.h>
-#include <qwindowdefs.h>
-#include <qmap.h>
-#include <qwidget.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqwindowdefs.h>
+#include <tqmap.h>
+#include <tqwidget.h>
+#include <tqvaluelist.h>
 #include <kshortcut.h>
 
 #include <X11/X.h>
@@ -37,7 +37,7 @@ class Kbd
     {
     Q_OBJECT
     public:
-	Kbd( bool grabbing_enabled_P, QObject* parent_P );
+	Kbd( bool grabbing_enabled_P, TQObject* parent_P );
         virtual ~Kbd();
 	void insert_item( const KShortcut& shortcut_P, Kbd_receiver* receiver_P );
         void remove_item( const KShortcut& shortcut_P, Kbd_receiver* receiver_P );
@@ -49,17 +49,17 @@ class Kbd
         void grab_shortcut( const KShortcut& shortcut_P );
         void ungrab_shortcut( const KShortcut& shortcut_P );
     private slots:
-        void key_slot( QString key_P );
+        void key_slot( TQString key_P );
         void update_connections();
     private:
         struct Receiver_data
             {
             Receiver_data();
-            QValueList< KShortcut > shortcuts;
+            TQValueList< KShortcut > shortcuts;
             bool active;
             };
-        QMap< Kbd_receiver*, Receiver_data > receivers;
-        QMap< KShortcut, int > grabs;
+        TQMap< Kbd_receiver*, Receiver_data > receivers;
+        TQMap< KShortcut, int > grabs;
         KGlobalAccel* kga;
     };
 

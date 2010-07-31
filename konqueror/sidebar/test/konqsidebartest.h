@@ -17,23 +17,23 @@
 #ifndef _konq_sidebar_test_h_
 #define _konq_sidebar_test_h_
 #include <konqsidebarplugin.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 class SidebarTest : public KonqSidebarPlugin
 	{
 		Q_OBJECT
 		public:
-		SidebarTest(KInstance *inst,QObject *parent,QWidget *widgetParent, QString &desktopName_, const char* name=0):
+		SidebarTest(KInstance *inst,TQObject *parent,TQWidget *widgetParent, TQString &desktopName_, const char* name=0):
                    KonqSidebarPlugin(inst,parent,widgetParent,desktopName_,name)
 		{
-			widget=new QLabel("Init Value",widgetParent);			
+			widget=new TQLabel("Init Value",widgetParent);			
 		}
 		~SidebarTest(){;}
-                virtual QWidget *getWidget(){return widget;}   
-		virtual void *provides(const QString &) {return 0;}  
+                virtual TQWidget *getWidget(){return widget;}   
+		virtual void *provides(const TQString &) {return 0;}  
 		protected:
-			QLabel *widget;
+			TQLabel *widget;
 			virtual void handleURL(const KURL &url)
 				{
 					widget->setText(url.url());

@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __popularity_h__
 #define __popularity_h__
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 class PopularityStatisticsImpl;
 class Prefs;
@@ -61,7 +61,7 @@ public:
      * counters for the given service and decrease the
      * counters for all the others.
      */
-    void useService(const QString& service);
+    void useService(const TQString& service);
     
     /**
      * Exchange all state variables of the most
@@ -71,18 +71,18 @@ public:
      * as before. Order of items in the string list
      * does *not* matter/
      */
-    void moveToTop(const QStringList& services);
+    void moveToTop(const TQStringList& services);
     
     /**
      * Sets all counters to zero for the given service
      */
-    void moveToBottom(const QString& service);
+    void moveToBottom(const TQString& service);
     
     /**
      * Retrieve the name of a service by its position
      * in the current popularity ranking
      */
-    QString serviceByRank(int n) const;
+    TQString serviceByRank(int n) const;
     
     /**
      * Retrieve the popularity (0-1) of a service by 
@@ -94,7 +94,7 @@ public:
      * Gets the rank of a given service. 
      * Returns -1 if the service is not in the ranking
      */
-    int rankByService(const QString service);
+    int rankByService(const TQString service);
  
     /** 
      * Writes the configuration.

@@ -23,16 +23,16 @@ namespace KWinInternal
 
 struct SessionInfo
     {
-    QCString sessionId;
-    QCString windowRole;
-    QCString wmCommand;
-    QCString wmClientMachine;
-    QCString resourceName;
-    QCString resourceClass;
+    TQCString sessionId;
+    TQCString windowRole;
+    TQCString wmCommand;
+    TQCString wmClientMachine;
+    TQCString resourceName;
+    TQCString resourceClass;
 
-    QRect geometry;
-    QRect restore;
-    QRect fsrestore;
+    TQRect geometry;
+    TQRect restore;
+    TQRect fsrestore;
     int maximized;
     int fullscreen;
     int desktop;
@@ -45,7 +45,7 @@ struct SessionInfo
     bool skipPager;
     bool userNoBorder;
     NET::WindowType windowType;
-    QString shortcut;
+    TQString shortcut;
     bool active; // means 'was active in the saved session'
     };
 
@@ -70,7 +70,7 @@ class SessionSaveDoneHelper
     private slots:
         void processData();
     private:
-        QSocketNotifier* notifier;
+        TQSocketNotifier* notifier;
         SmcConn conn;
     };
 

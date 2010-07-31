@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef PANEL_APPLET_OP_MENU_H
 #define PANEL_APPLET_OP_MENU_H
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 class AppletInfo;
 
@@ -40,15 +40,15 @@ public:
     //       they also are treated just like KPanelApplet::Preferences on selection
     //       KDE4: look at merging them there? perhaps under a generic "Editor" option?
     enum { KMenuEditor = 1048576, BookmarkEditor = 2097152 };
-    PanelAppletOpMenu(int actions, QPopupMenu *opMenu, const QPopupMenu* appletsMenu = 0, 
-                      const QString &title = 0, const QString &icon = 0,
-                      QWidget *parent=0, const char *name=0);
+    PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQPopupMenu* appletsMenu = 0, 
+                      const TQString &title = 0, const TQString &icon = 0,
+                      TQWidget *parent=0, const char *name=0);
 
 signals:
     void escapePressed();
 
 protected:
-    void keyPressEvent(QKeyEvent* e);
+    void keyPressEvent(TQKeyEvent* e);
 };
 
 

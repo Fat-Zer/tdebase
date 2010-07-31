@@ -24,10 +24,10 @@
 
 #include <sys/param.h>		/* for BSD */
 
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qdrawutil.h>
-#include <qtooltip.h>
+#include <tqlayout.h>
+#include <tqpainter.h>
+#include <tqdrawutil.h>
+#include <tqtooltip.h>
 
 #include <kglobal.h>
 #include <kdialog.h>
@@ -68,15 +68,15 @@ static t_memsize Memory_Info[MEM_LAST_ENTRY];
 /* Implementation */
 /******************/
 
-static QLabel *MemSizeLabel[MEM_LAST_ENTRY][2];
+static TQLabel *MemSizeLabel[MEM_LAST_ENTRY][2];
 
 enum { MEM_RAM_AND_HDD, MEM_RAM, MEM_HDD, MEM_LAST };
-static QWidget *Graph[MEM_LAST];
-static QLabel *GraphLabel[MEM_LAST];
+static TQWidget *Graph[MEM_LAST];
+static TQLabel *GraphLabel[MEM_LAST];
 
 #define SPACING 16
 
-static QString formatted_unit(t_memsize value)
+static TQString formatted_unit(t_memsize value)
 {
     if (value > (1024 * 1024))
         if (value > (1024 * 1024 * 1024))
@@ -87,7 +87,7 @@ static QString formatted_unit(t_memsize value)
         return i18n("%1 KB").arg(KGlobal::locale()->formatNumber(value / 1024.0, 2));
 }
 
-KMemoryWidget::KMemoryWidget(QWidget * parent, const char *name)
+KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 :  KCModule(parent, name)
 {
 
@@ -100,8 +100,8 @@ KMemoryWidget::KMemoryWidget(QWidget * parent, const char *name)
     about->addAuthor("Helge Deller", 0, "deller@gmx.de");
     setAboutData( about );
 
-    QString title, initial_str;
-    QLabel *Widget = 0;
+    TQString title, initial_str;
+    TQLabel *Widget = 0;
     int i, j;
 
     ram_colors_initialized =
@@ -113,16 +113,16 @@ KMemoryWidget::KMemoryWidget(QWidget * parent, const char *name)
     /* default string for no Information... */
     Not_Available_Text = i18n("Not available.");
 
-    QVBoxLayout *top = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *top = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
-    QHBoxLayout *hbox = new QHBoxLayout();
+    TQHBoxLayout *hbox = new TQHBoxLayout();
     top->addLayout(hbox);
 
     /* stretch the left side */
     hbox->addStretch();
 
     /* first create the Informationtext-Widget */
-    QVBoxLayout *vbox = new QVBoxLayout(hbox, 0);
+    TQVBoxLayout *vbox = new TQVBoxLayout(hbox, 0);
     for (i = TOTAL_MEM; i < MEM_LAST_ENTRY; ++i) {
 	switch (i) {
 	case TOTAL_MEM:
@@ -162,18 +162,18 @@ KMemoryWidget::KMemoryWidget(QWidget * parent, const char *name)
 	    title = "";
 	    break;
 	};
-	Widget = new QLabel(title, this);
+	Widget = new TQLabel(title, this);
 	Widget->setAlignment(AlignLeft);
 	vbox->addWidget(Widget, 1);
     }
 
     /* then the memory-content-widgets */
     for (j = 0; j < 2; j++) {
-	vbox = new QVBoxLayout(hbox, 0);
+	vbox = new TQVBoxLayout(hbox, 0);
 	for (i = TOTAL_MEM; i < MEM_LAST_ENTRY; ++i) {
 	    if (i == SWAP_MEM)
 		vbox->addSpacing(SPACING);
-	    Widget = new QLabel(this);
+	    Widget = new TQLabel(this);
 	    Widget->setAlignment(AlignRight);
 	    MemSizeLabel[i][j] = Widget;
 	    vbox->addWidget(Widget, 1);
@@ -187,11 +187,11 @@ KMemoryWidget::KMemoryWidget(QWidget * parent, const char *name)
     top->addWidget(line);
 
     /* now the Graphics */
-    QString hint;
-    hbox = new QHBoxLayout(top, 1);
+    TQString hint;
+    hbox = new TQHBoxLayout(top, 1);
     for (i = MEM_RAM_AND_HDD; i < MEM_LAST; i++) {
 	hbox->addSpacing(SPACING);
-	vbox = new QVBoxLayout(hbox);
+	vbox = new TQVBoxLayout(hbox);
 
 	switch (i) {
 	case MEM_RAM_AND_HDD:
@@ -221,40 +221,40 @@ KMemoryWidget::KMemoryWidget(QWidget * parent, const char *name)
 			"through one or more swap partitions and/or swap files.");
 	    break;
 	default:
-	    hint = title = QString::null; 
+	    hint = title = TQString::null; 
 	    break;
 	};
 
 	if (hint.length())
 	  hint = "<qt>" + hint + "</qt>";
 
-	Widget = new QLabel("<b>" + title + "</b>", this);
+	Widget = new TQLabel("<b>" + title + "</b>", this);
 	Widget->setAlignment(AlignCenter);
-	QToolTip::add(Widget, hint);
+	TQToolTip::add(Widget, hint);
 	vbox->addWidget(Widget);
 	vbox->addSpacing(SPACING / 2);
 
-	QWidget *g = new QWidget(this);
+	TQWidget *g = new TQWidget(this);
 	g->setMinimumWidth(2 * SPACING);
 	g->setMinimumHeight(3 * SPACING);
 	g->setBackgroundMode(NoBackground);
-	QToolTip::add(g, hint); // add the tooltip
+	TQToolTip::add(g, hint); // add the tooltip
 	Graph[i] = g;
 	vbox->addWidget(g, 2);
 	vbox->addSpacing(SPACING / 2);
 
-	Widget = new QLabel(this);	/* xx MB used. */
+	Widget = new TQLabel(this);	/* xx MB used. */
 	Widget->setAlignment(AlignCenter);
-	QToolTip::add(Widget, hint);
+	TQToolTip::add(Widget, hint);
 	GraphLabel[i] = Widget;
 	vbox->addWidget(Widget);
     }
     hbox->addSpacing(SPACING);
 
-    timer = new QTimer(this);
+    timer = new TQTimer(this);
     timer->start(100);
-    QObject::connect(timer, SIGNAL(timeout()), this,
-		     SLOT(update_Values()));
+    TQObject::connect(timer, TQT_SIGNAL(timeout()), this,
+		     TQT_SLOT(update_Values()));
 
     update();
 }
@@ -266,7 +266,7 @@ KMemoryWidget::~KMemoryWidget()
 }
 
 
-QString KMemoryWidget::quickHelp() const
+TQString KMemoryWidget::quickHelp() const
 {
   return i18n("<h1>Memory Information</h1>"
 	" This display shows you the current memory usage of your system."
@@ -280,22 +280,22 @@ bool KMemoryWidget::Display_Graph(int widgetindex,
 				int count,
 			      	t_memsize total,
 			      	t_memsize * used, 
-			      	QColor * color,
-				QString *text)
+			      	TQColor * color,
+				TQString *text)
 {
-    QWidget *graph = Graph[widgetindex];
+    TQWidget *graph = Graph[widgetindex];
     int width = graph->width();
     int height = graph->height();
-    QPixmap pm(width, height);
-    QPainter paint;
+    TQPixmap pm(width, height);
+    TQPainter paint;
 
     paint.begin(&pm, this);
 
-    QPen pen(QColor(0, 0, 0));
+    TQPen pen(TQColor(0, 0, 0));
 
     if (! ZERO_IF_NO_INFO(total)) {
 	paint.fillRect(1, 1, width - 2, height - 2,
-		       QBrush(QColor(128, 128, 128)));
+		       TQBrush(TQColor(128, 128, 128)));
 	paint.setPen(pen);
 	paint.drawRect(graph->rect());
 	GraphLabel[widgetindex]->setText(Not_Available_Text);
@@ -329,7 +329,7 @@ bool KMemoryWidget::Display_Graph(int widgetindex,
     		if (localheight >= SPACING) {
 			paint.drawText(0, startline-localheight, width, localheight,
 				AlignCenter | WordBreak, 
-				QString("%1 %2%").arg(*text).arg(percent));
+				TQString("%1 %2%").arg(*text).arg(percent));
 		}
     	}
 	
@@ -342,7 +342,7 @@ bool KMemoryWidget::Display_Graph(int widgetindex,
 	
     /* draw surrounding box */
     paint.setPen(pen);
-    QRect r = graph->rect();
+    TQRect r = graph->rect();
     qDrawShadePanel(&paint, r.x(), r.y(), r.width(), r.height(), palette().active(), true, 1);
     paint.end();
     bitBlt(graph, 0, 0, &pm);
@@ -357,7 +357,7 @@ void KMemoryWidget::update_Values()
 {
     int i;
     bool ok1;
-    QLabel *label;
+    TQLabel *label;
     t_memsize used[5];
 
     update();			/* get the Information from memory_linux, memory_fbsd */
@@ -402,9 +402,9 @@ void KMemoryWidget::update_Values()
 		ram_text[0] = i18n("Application Data");
 		ram_colors[0] = COLOR_USED_MEMORY; /* used+shared */
 		ram_text[1] = i18n("Disk Buffers");
-		ram_colors[1] = QColor(24,131,5); /* buffer */
+		ram_colors[1] = TQColor(24,131,5); /* buffer */
 		ram_text[2] = i18n("Disk Cache");
-		ram_colors[2] = QColor(33,180,7); /* cached */
+		ram_colors[2] = TQColor(33,180,7); /* cached */
 		ram_text[3] = i18n("Free Physical Memory");
 		ram_colors[3] = COLOR_FREE_MEMORY; /* free */
     }

@@ -25,10 +25,10 @@ DEALINGS IN THE SOFTWARE.
 #ifndef KDECORATION_H
 #define KDECORATION_H
 
-#include <qcolor.h>
-#include <qfont.h>
-#include <qobject.h>
-#include <qiconset.h>
+#include <tqcolor.h>
+#include <tqfont.h>
+#include <tqobject.h>
+#include <tqiconset.h>
 #include <netwm_def.h>
 #include <kdeversion.h>
 
@@ -196,7 +196,7 @@ public:
      * @param type   The requested color type.
      * @param active Whether the color should be for active or inactive windows.
      */
-    const QColor& color(ColorType type, bool active=true) const;
+    const TQColor& color(ColorType type, bool active=true) const;
     /**
      * Returns a colorgroup using the given decoration color as the background.
      * The changed flags for this setting is SettingColors.
@@ -204,7 +204,7 @@ public:
      * @param type   The requested color type.
      * @param active Whether to return the color for active or inactive windows.
      */
-    const QColorGroup& colorGroup(ColorType type, bool active=true) const;
+    const TQColorGroup& colorGroup(ColorType type, bool active=true) const;
     /**
      * Returns the active or inactive decoration font.
      * The changed flags for this setting is SettingFont.
@@ -212,7 +212,7 @@ public:
      * @param active Whether to return the color for active or inactive windows.
      * @param small  If @a true, returns a font that's suitable for tool windows.
      */
-    const QFont& font(bool active=true, bool small = false) const;
+    const TQFont& font(bool active=true, bool small = false) const;
     /**
     * Returns @a true if the style should use custom button positions
     * The changed flags for this setting is SettingButtons.
@@ -242,7 +242,7 @@ public:
     * Unknown buttons in the returned string must be ignored.
     * The changed flags for this setting is SettingButtons.
     */
-    QString titleButtonsLeft() const;
+    TQString titleButtonsLeft() const;
     /**
     * If customButtonPositions() returns true, titleButtonsRight
     * returns which buttons should be on the right side of the titlebar from left
@@ -254,7 +254,7 @@ public:
     * Unknown buttons in the returned string must be ignored.
     * The changed flags for this setting is SettingButtons.
     */
-    QString titleButtonsRight() const;
+    TQString titleButtonsRight() const;
 
     /**
     * @returns true if the style should use tooltips for window buttons
@@ -308,7 +308,7 @@ protected:
  * @since 3.2
  */
 class KWIN_EXPORT KDecoration
-    : public QObject, public KDecorationDefines
+    : public TQObject, public KDecorationDefines
     {
     Q_OBJECT
     public:
@@ -436,11 +436,11 @@ class KWIN_EXPORT KDecoration
 	/**
 	 * Returns an icon set with the decorated window's icon.
 	 */
-	QIconSet icon() const;
+	TQIconSet icon() const;
 	/**
 	 * Returns the decorated window's caption that should be shown in the titlebar.
 	 */
-	QString caption() const;
+	TQString caption() const;
 	/**
 	 * This function invokes the window operations menu. 
 	 * \param pos specifies the place on the screen where the menu should
@@ -467,12 +467,12 @@ class KWIN_EXPORT KDecoration
 	 * button[MenuButton]->setDown(false);
          * \endcode
 	 */
-	void showWindowMenu( const QRect &pos );
+	void showWindowMenu( const TQRect &pos );
 
 	/**
 	 * Overloaded version of the above. 
 	 */
-	void showWindowMenu( QPoint pos );
+	void showWindowMenu( TQPoint pos );
         /**
          * This function performs the given window operation. This function may destroy
          * the current decoration object, just like showWindowMenu().
@@ -486,7 +486,7 @@ class KWIN_EXPORT KDecoration
 	 * @param mode The X11 values Unsorted, YSorted, YXSorted and YXBanded that specify
 	 *             the sorting of the rectangles, default value is Unsorted.
 	 */
-        void setMask( const QRegion& reg, int mode = 0 );
+        void setMask( const TQRegion& reg, int mode = 0 );
 	/**
 	 * This convenience function resets the shape mask.
 	 */
@@ -500,13 +500,13 @@ class KWIN_EXPORT KDecoration
 	/**
 	 * Returns the geometry of the decoration.
 	 */
-        QRect geometry() const;
+        TQRect geometry() const;
 	/**
 	 * Returns the icon geometry for the window, i.e. the geometry of the taskbar
 	 * entry. This is used mainly for window minimize animations. Note that
 	 * the geometry may be null.
 	 */
-        QRect iconGeometry() const;
+        TQRect iconGeometry() const;
         /**
          * Returns the intersection of the given region with the region left
          * unobscured by the windows stacked above the current one. You can use
@@ -515,12 +515,12 @@ class KWIN_EXPORT KDecoration
          * space of the decoration.
          * @param r The region you want to check for holes
          */
-        QRegion unobscuredRegion( const QRegion& r ) const;
+        TQRegion unobscuredRegion( const TQRegion& r ) const;
 	/**
 	 * Returns the main workspace widget. The main purpose of this function is to
 	 * allow painting the minimize animation or the transparent move bound on it.
 	 */
-        QWidget* workspaceWidget() const;
+        TQWidget* workspaceWidget() const;
         /**
          * Returns the handle of the window that is being decorated. It is possible
          * the returned value will be 0.
@@ -548,7 +548,7 @@ class KWIN_EXPORT KDecoration
 	 * that are not handled by the decoration itself should be passed to it
 	 * in order to make work operations like window resizing by dragging borders etc.
 	 */
-	void processMousePressEvent( QMouseEvent* e );
+	void processMousePressEvent( TQMouseEvent* e );
 
 	// requests to decoration
 
@@ -564,7 +564,7 @@ class KWIN_EXPORT KDecoration
          * Positions at the edge will result in window resizing with mouse button
          * pressed, center position will result in moving.
          */
-	virtual Position mousePosition( const QPoint& p ) const = 0;
+	virtual Position mousePosition( const TQPoint& p ) const = 0;
 
 	/**
 	 * This function should return the distance from each window side to the inner
@@ -587,13 +587,13 @@ class KWIN_EXPORT KDecoration
 	 *
 	 * @param s Specifies the new size of the decoration window.
 	 */
-	virtual void resize( const QSize& s ) = 0;
+	virtual void resize( const TQSize& s ) = 0;
 	/**
 	 * This function should return the minimum required size for the decoration.
 	 * Note that the returned size shouldn't be too large, because it will be
 	 * used to keep the decorated window at least as large.
 	 */
-	virtual QSize minimumSize() const = 0;
+	virtual TQSize minimumSize() const = 0;
 	/**
 	 * This function is called whenever the window either becomes or stops being active.
 	 * Use isActive() to find out the current state.
@@ -651,7 +651,7 @@ class KWIN_EXPORT KDecoration
 	 *
 	 * @see workspaceWidget() and geometry().
 	 */
-        virtual bool drawbound( const QRect& geom, bool clear );
+        virtual bool drawbound( const TQRect& geom, bool clear );
 	/**
 	 * This function may be reimplemented to provide custom minimize/restore animations
 	 * The reimplementation is allowed to perform X server grabs if necessary
@@ -684,7 +684,7 @@ class KWIN_EXPORT KDecoration
 	 * with parent specified by initialParentWidget() and flags
 	 * specified by initialWFlags().
 	 */	
-        void setMainWidget( QWidget* );
+        void setMainWidget( TQWidget* );
 	/**
 	 * Convenience functions that creates and sets a main widget as necessary.
 	 * In such case, it's usually needed to install an event filter
@@ -698,7 +698,7 @@ class KWIN_EXPORT KDecoration
 	/**
 	 * The parent widget that should be used for the main widget.
 	 */
-        QWidget* initialParentWidget() const;
+        TQWidget* initialParentWidget() const;
 	/**
 	 * The flags that should be used when creating the main widget.
 	 * It is possible to add more flags when creating the main widget, but only flags
@@ -716,11 +716,11 @@ class KWIN_EXPORT KDecoration
 	/**
 	 * Returns the main widget for the decoration.
 	 */
-	QWidget* widget();
+	TQWidget* widget();
 	/**
 	 * Returns the main widget for the decoration.
 	 */
-	const QWidget* widget() const;
+	const TQWidget* widget() const;
 	/**
 	 * Returns the factory that created this decoration.
 	 */
@@ -829,7 +829,7 @@ class KWIN_EXPORT KDecoration
         void emitKeepBelowChanged( bool below ) { emit keepBelowChanged( below ); }
     private:
 	KDecorationBridge* bridge_;
-	QWidget* w_;
+	TQWidget* w_;
         KDecorationFactory* factory_;
         friend class KDecorationOptions; // for options_
         static KDecorationOptions* options_;
@@ -854,12 +854,12 @@ KDecorationDefines::MaximizeMode operator|( KDecorationDefines::MaximizeMode m1,
     return KDecorationDefines::MaximizeMode( int(m1) | int(m2) );
     }
 
-inline QWidget* KDecoration::widget()
+inline TQWidget* KDecoration::widget()
     {
     return w_;
     }
 
-inline const QWidget* KDecoration::widget() const
+inline const TQWidget* KDecoration::widget() const
     {
     return w_;
     }

@@ -43,12 +43,12 @@ class QPopupMenu;
 class QListViewItem;
 
 struct SessType {
-	QString name, type;
+	TQString name, type;
 	bool hid;
 	int prio;
 
 	SessType() {}
-	SessType( const QString &n, const QString &t, bool h, int p ) :
+	SessType( const TQString &n, const TQString &t, bool h, int p ) :
 		name( n ), type( t ), hid( h ), prio( p ) {}
 	bool operator<( const SessType &st ) {
 		return hid != st.hid ? hid < st.hid :
@@ -68,25 +68,25 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
   public slots:
 	void accept();
 	void reject();
-	void slotUserClicked( QListViewItem * );
+	void slotUserClicked( TQListViewItem * );
 	void slotSessionSelected( int );
 	void slotUserEntered();
 
   protected:
 	void installUserList();
-	void insertUser( const QImage &, const QString &, struct passwd * );
+	void insertUser( const TQImage &, const TQString &, struct passwd * );
 	void insertUsers();
-	void putSession( const QString &, const QString &, bool, const char * );
+	void putSession( const TQString &, const TQString &, bool, const char * );
 	void insertSessions();
 	virtual void pluginSetup();
 	void setPrevWM( int );
 
-	QString curUser, dName;
+	TQString curUser, dName;
 	KSimpleConfig *stsFile;
 	UserListView *userView;
-	QStringList *userList;
-	QPopupMenu *sessMenu;
-	QValueVector<SessType> sessionTypes;
+	TQStringList *userList;
+	TQPopupMenu *sessMenu;
+	TQValueVector<SessType> sessionTypes;
 	int nNormals, nSpecials;
 	int curPrev, curSel;
 	bool prevValid;
@@ -104,7 +104,7 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	virtual void verifyOk();
 	virtual void verifyFailed();
 //	virtual void verifyRetry();
-	virtual void verifySetUser( const QString &user );
+	virtual void verifySetUser( const TQString &user );
 };
 
 class KStdGreeter : public KGreeter {
@@ -119,9 +119,9 @@ class KStdGreeter : public KGreeter {
 
   private:
 	KdmClock *clock;
-	QLabel *pixLabel;
-	QPushButton *goButton;
-	QPushButton *menuButton;
+	TQLabel *pixLabel;
+	TQPushButton *goButton;
+	TQPushButton *menuButton;
 
   public: // from KGVerifyHandler
 	virtual void verifyFailed();
@@ -135,19 +135,19 @@ class KThemedGreeter : public KGreeter {
   public:
 	KThemedGreeter();
 	bool isOK() { return themer != 0; }
-	static QString timedUser;
+	static TQString timedUser;
 	static int timedDelay;
 
   public slots:
-	void slotThemeActivated( const QString &id );
+	void slotThemeActivated( const TQString &id );
 	void slotSessMenu();
 	void slotActionMenu();
 
   protected:
 	virtual void updateStatus( bool fail, bool caps, int timedleft );
 	virtual void pluginSetup();
-	virtual void keyPressEvent( QKeyEvent * );
-	virtual bool event( QEvent *e );
+	virtual void keyPressEvent( TQKeyEvent * );
+	virtual bool event( TQEvent *e );
 
   private:
 //	KdmClock *clock;

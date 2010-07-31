@@ -30,9 +30,9 @@
 #include <krecentdocument.h>
 #include <kstandarddirs.h>
 
-#include <qstringlist.h>
-#include <qfile.h>
-#include <qdir.h>
+#include <tqstringlist.h>
+#include <tqfile.h>
+#include <tqdir.h>
 
 KPrivacyManager::KPrivacyManager()
 {
@@ -52,22 +52,22 @@ bool KPrivacyManager::clearThumbnails()
   // http://freedesktop.org/Standards/Home
   // http://triq.net/~jens/thumbnail-spec/index.html
 
-  QDir thumbnailDir( QDir::homeDirPath() + "/.thumbnails/normal");
-  thumbnailDir.setFilter( QDir::Files );
-  QStringList entries = thumbnailDir.entryList();
-  for( QStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
+  TQDir thumbnailDir( TQDir::homeDirPath() + "/.thumbnails/normal");
+  thumbnailDir.setFilter( TQDir::Files );
+  TQStringList entries = thumbnailDir.entryList();
+  for( TQStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
     if(!thumbnailDir.remove(*it)) m_error = true;
   if(m_error) return m_error;
 
-  thumbnailDir.setPath(QDir::homeDirPath() + "/.thumbnails/large");
+  thumbnailDir.setPath(TQDir::homeDirPath() + "/.thumbnails/large");
   entries = thumbnailDir.entryList();
-  for( QStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
+  for( TQStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
     if(!thumbnailDir.remove(*it)) m_error = true;
   if(m_error) return m_error;
 
-  thumbnailDir.setPath(QDir::homeDirPath() + "/.thumbnails/fail");
+  thumbnailDir.setPath(TQDir::homeDirPath() + "/.thumbnails/fail");
   entries = thumbnailDir.entryList();
-  for( QStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
+  for( TQStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
     if(!thumbnailDir.remove(*it)) m_error = true;
   
   return m_error;
@@ -103,7 +103,7 @@ bool KPrivacyManager::clearSavedClipboardContents()
 
 bool KPrivacyManager::clearFormCompletion() const
 {
-  QFile completionFile(locateLocal("data", "khtml/formcompletions"));
+  TQFile completionFile(locateLocal("data", "khtml/formcompletions"));
 
   return completionFile.remove();
 }
@@ -128,7 +128,7 @@ bool KPrivacyManager::clearQuickStartMenu() const
 
 bool KPrivacyManager::clearWebHistory()
 {
-  QStringList args("--preload");
+  TQStringList args("--preload");
 
   // preload Konqueror if it is not running
   if(!isApplicationRegistered("konqueror"))
@@ -138,24 +138,24 @@ bool KPrivacyManager::clearWebHistory()
   }
 
   return kapp->dcopClient()->send( "konqueror*", "KonqHistoryManager",
-                                   "notifyClear(QCString)", "" );
+                                   "notifyClear(TQCString)", "" );
 }
 
 bool KPrivacyManager::clearFavIcons()
 {
-  QDir favIconDir(KGlobal::dirs()->saveLocation( "cache", "favicons/" ));
-  favIconDir.setFilter( QDir::Files );
+  TQDir favIconDir(KGlobal::dirs()->saveLocation( "cache", "favicons/" ));
+  favIconDir.setFilter( TQDir::Files );
   
-  QStringList entries = favIconDir.entryList();
+  TQStringList entries = favIconDir.entryList();
 
   // erase all files in favicon directory
-  for( QStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
+  for( TQStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
     if(!favIconDir.remove(*it)) m_error = true;
   return m_error;
 }
 
 
-bool KPrivacyManager::isApplicationRegistered(const QString &appName)
+bool KPrivacyManager::isApplicationRegistered(const TQString &appName)
 {
 
   QCStringList regApps = kapp->dcopClient()->registeredApplications();

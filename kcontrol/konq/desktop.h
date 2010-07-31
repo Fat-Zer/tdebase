@@ -35,7 +35,7 @@ class KDesktopConfig : public KCModule
   Q_OBJECT
 
  public:
-  KDesktopConfig(QWidget *parent = 0L, const char *name = 0L);
+  KDesktopConfig(TQWidget *parent = 0L, const char *name = 0L);
 
   void load();
   void load( bool useDefaults );
@@ -47,9 +47,9 @@ class KDesktopConfig : public KCModule
 
  private:
   KIntNumInput *_numInput;
-  QLabel       *_nameLabel[maxDesktops];
+  TQLabel       *_nameLabel[maxDesktops];
   KLineEdit    *_nameInput[maxDesktops];
-  QCheckBox    *_wheelOption;
+  TQCheckBox    *_wheelOption;
   bool         _wheelOptionImmutable;
   bool         _labelImmutable[maxDesktops];
 };

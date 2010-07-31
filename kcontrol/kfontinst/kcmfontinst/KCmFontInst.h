@@ -33,7 +33,7 @@
 #include "config.h"
 #endif
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <kcmodule.h>
 #include <kurl.h>
 #include <kconfig.h>
@@ -62,7 +62,7 @@ class CKCmFontInst : public KCModule
 
     public:
 
-    CKCmFontInst(QWidget *parent=NULL, const char *name=NULL, const QStringList &list=QStringList());
+    CKCmFontInst(TQWidget *parent=NULL, const char *name=NULL, const TQStringList &list=TQStringList());
     virtual ~CKCmFontInst();
 
     void    setMimeTypes(bool showBitmap);
@@ -70,7 +70,7 @@ class CKCmFontInst : public KCModule
     public slots:
 
     void    filterFonts();
-    QString quickHelp() const;
+    TQString quickHelp() const;
     void    listView();
     void    iconView();
     void    setupMenu();
@@ -81,8 +81,8 @@ class CKCmFontInst : public KCModule
     void    removeFonts();
     void    configure();
     void    print();
-    void    dropped(const KFileItem *i, QDropEvent *e, const KURL::List &urls);
-    void    infoMessage(const QString &msg);
+    void    dropped(const KFileItem *i, TQDropEvent *e, const KURL::List &urls);
+    void    infoMessage(const TQString &msg);
     void    updateInformation(int dirs, int fonts);
     void    delResult(KIO::Job *job);
     void    jobResult(KIO::Job *job);
@@ -105,10 +105,10 @@ class CKCmFontInst : public KCModule
 #ifdef HAVE_XFT
     KParts::ReadOnlyPart *itsPreview;
 #endif
-    QSplitter            *itsSplitter;
+    TQSplitter            *itsSplitter;
     KConfig              itsConfig;
     bool                 itsEmbeddedAdmin;
-    QLabel               *itsStatusLabel;
+    TQLabel               *itsStatusLabel;
 };
 
 }

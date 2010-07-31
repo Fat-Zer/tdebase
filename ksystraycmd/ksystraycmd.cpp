@@ -1,7 +1,7 @@
-#include <qtooltip.h>
-#include <qtextstream.h>
-#include <qimage.h>
-#include <qregexp.h>
+#include <tqtooltip.h>
+#include <tqtextstream.h>
+#include <tqimage.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -21,7 +21,7 @@
 
 
 KSysTrayCmd::KSysTrayCmd()
-  : QLabel( 0, "systray_cmd" ),
+  : TQLabel( 0, "systray_cmd" ),
     isVisible(true), lazyStart( false ), noquit( false ), quitOnHide( false ), onTop(false), ownIcon(false),
     win(0), client(0), kwinmodule(0), top(0), left(0)
 {
@@ -114,8 +114,8 @@ void KSysTrayCmd::setTargetWindow( WId w )
 
 void KSysTrayCmd::setTargetWindow( const KWin::WindowInfo &info )
 {
-  disconnect( kwinmodule, SIGNAL(windowAdded(WId)), this, SLOT(windowAdded(WId)) );
-  connect( kwinmodule, SIGNAL(windowChanged(WId)), SLOT(windowChanged(WId)) );
+  disconnect( kwinmodule, TQT_SIGNAL(windowAdded(WId)), this, TQT_SLOT(windowAdded(WId)) );
+  connect( kwinmodule, TQT_SIGNAL(windowChanged(WId)), TQT_SLOT(windowChanged(WId)) );
   win = info.win();
   KWin::setSystemTrayWindowFor( winId(), win );
   refresh();
@@ -141,7 +141,7 @@ void KSysTrayCmd::refresh()
 {
   KWin::setSystemTrayWindowFor( winId(), win ? win : winId() );
 
-  QToolTip::remove( this );
+  TQToolTip::remove( this );
   if ( win ) {
     KConfig *appCfg = kapp->config();
     KConfigGroupSaver configSaver(appCfg, "System Tray");
@@ -157,15 +157,15 @@ void KSysTrayCmd::refresh()
       setPixmap( KWin::icon( win, iconWidth, iconWidth, true ) );
     }
 
-    QToolTip::add( this, KWin::windowInfo( win ).name() );
+    TQToolTip::add( this, KWin::windowInfo( win ).name() );
   }
   else {
     if ( !tooltip.isEmpty() )
-      QToolTip::add( this, tooltip );
+      TQToolTip::add( this, tooltip );
     else if ( !command.isEmpty() )
-      QToolTip::add( this, command );
+      TQToolTip::add( this, command );
     else
-      QToolTip::add( this, window );
+      TQToolTip::add( this, window );
 
     setPixmap( KSystemTray::loadIcon( kapp->iconName() ) );
   }
@@ -179,9 +179,9 @@ bool KSysTrayCmd::startClient()
 {
   client = new KShellProcess();
   *client << command;
-  connect( kwinmodule, SIGNAL(windowAdded(WId)), SLOT(windowAdded(WId)) );
-  connect( client, SIGNAL( processExited(KProcess *) ),
-	   this, SLOT( clientExited() ) );
+  connect( kwinmodule, TQT_SIGNAL(windowAdded(WId)), TQT_SLOT(windowAdded(WId)) );
+  connect( client, TQT_SIGNAL( processExited(KProcess *) ),
+	   this, TQT_SLOT( clientExited() ) );
 
   return client->start();
 }
@@ -228,7 +228,7 @@ void KSysTrayCmd::quit()
     qApp->quit();
 }
 
-void KSysTrayCmd::execContextMenu( const QPoint &pos )
+void KSysTrayCmd::execContextMenu( const TQPoint &pos )
 {
     KPopupMenu *menu = new KPopupMenu();
     menu->insertTitle( *pixmap(), i18n( "KSysTrayCmd" ) );
@@ -264,7 +264,7 @@ void KSysTrayCmd::execContextMenu( const QPoint &pos )
 
 void KSysTrayCmd::checkExistingWindows()
 {
-  QValueList<WId>::ConstIterator it;
+  TQValueList<WId>::ConstIterator it;
   for ( it = kwinmodule->windows().begin(); it != kwinmodule->windows().end(); ++it ) {
     windowAdded( *it );
     if ( win )
@@ -274,7 +274,7 @@ void KSysTrayCmd::checkExistingWindows()
 
 void KSysTrayCmd::windowAdded(WId w)
 {
-  if ( !window.isEmpty() && ( QRegExp( window ).search( KWin::windowInfo(w).name() ) == -1 ) )
+  if ( !window.isEmpty() && ( TQRegExp( window ).search( KWin::windowInfo(w).name() ) == -1 ) )
     return; // no match
   setTargetWindow( w );
 }
@@ -290,7 +290,7 @@ void KSysTrayCmd::windowChanged( WId w )
 // Tray icon event handlers
 //
 
-void KSysTrayCmd::mousePressEvent( QMouseEvent *e )
+void KSysTrayCmd::mousePressEvent( TQMouseEvent *e )
 {
   if ( e->button() == RightButton )
     execContextMenu( e->globalPos() );

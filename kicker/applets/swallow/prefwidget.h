@@ -26,7 +26,7 @@ class PreferencesWidget : public PreferencesWidgetBase
 	Q_OBJECT
 
 public:
-	PreferencesWidget( SwallowCommandList* swc, QWidget* parent = 0 );
+	PreferencesWidget( SwallowCommandList* swc, TQWidget* parent = 0 );
 //	~PreferencesWidget();
 
 };

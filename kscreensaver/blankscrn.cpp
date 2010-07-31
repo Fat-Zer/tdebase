@@ -8,8 +8,8 @@
 // 2001/03/04 Converted to use libkscreensaver by Martin R. Jones
 
 #include <stdlib.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kconfig.h>
@@ -32,7 +32,7 @@ extern "C"
         return new KBlankSaver( id );
     }
 
-    KDE_EXPORT QDialog* kss_setup()
+    KDE_EXPORT TQDialog* kss_setup()
     {
         return new KBlankSetup();
     }
@@ -41,25 +41,25 @@ extern "C"
 //-----------------------------------------------------------------------------
 // dialog to setup screen saver parameters
 //
-KBlankSetup::KBlankSetup( QWidget *parent, const char *name )
+KBlankSetup::KBlankSetup( TQWidget *parent, const char *name )
 	: KDialogBase( parent, name, true, i18n( "Setup Blank Screen Saver" ),
 		Ok|Cancel, Ok, true )
 {
 	readSettings();
 
-	QFrame *main = makeMainWidget();
-	QGridLayout *grid = new QGridLayout(main, 4, 2, 0, spacingHint() );
+	TQFrame *main = makeMainWidget();
+	TQGridLayout *grid = new TQGridLayout(main, 4, 2, 0, spacingHint() );
 
-	QLabel *label = new QLabel( i18n("Color:"), main );
+	TQLabel *label = new TQLabel( i18n("Color:"), main );
 	grid->addWidget(label, 0, 0);
 
 	KColorButton *colorPush = new KColorButton( color, main );
 	colorPush->setMinimumWidth(80);
-	connect( colorPush, SIGNAL( changed(const QColor &) ),
-		SLOT( slotColor(const QColor &) ) );
+	connect( colorPush, TQT_SIGNAL( changed(const TQColor &) ),
+		TQT_SLOT( slotColor(const TQColor &) ) );
 	grid->addWidget(colorPush, 1, 0);
 
-	preview = new QWidget( main );
+	preview = new TQWidget( main );
 	preview->setFixedSize( 220, 165 );
 	preview->setBackgroundColor( black );
 	preview->show();    // otherwise saver does not get correct size
@@ -81,7 +81,7 @@ void KBlankSetup::readSettings()
 	color = config->readColorEntry( "Color", &black );
 }
 
-void KBlankSetup::slotColor( const QColor &col )
+void KBlankSetup::slotColor( const TQColor &col )
 {
     color = col;
     saver->setColor( color );
@@ -112,7 +112,7 @@ KBlankSaver::~KBlankSaver()
 }
 
 // set the color
-void KBlankSaver::setColor( const QColor &col )
+void KBlankSaver::setColor( const TQColor &col )
 {
 	color = col;
 	blank();

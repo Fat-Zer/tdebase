@@ -35,7 +35,7 @@ class FontDialog : public KDialogBase
 {
 	Q_OBJECT
 	public:
-		FontDialog( QWidget *parent, const char *name = 0 );
+		FontDialog( TQWidget *parent, const char *name = 0 );
 
 	protected slots:
 		virtual void slotOk();
@@ -57,7 +57,7 @@ class FontDialog : public KDialogBase
 		KFontCombo *m_italicFontCombo;
 		KFontCombo *m_fantasyFontCombo;
 		KComboBox *m_defaultEncoding;
-		QSpinBox *m_fontSizeAdjustement;
+		TQSpinBox *m_fontSizeAdjustement;
 };
 
 }

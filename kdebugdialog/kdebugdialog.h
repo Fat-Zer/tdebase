@@ -42,47 +42,47 @@ class KDebugDialog : public KAbstractDebugDialog
   Q_OBJECT
 
 public:
-  KDebugDialog( QStringList areaList, QWidget *parent=0, const char *name=0, bool modal=true );
+  KDebugDialog( TQStringList areaList, TQWidget *parent=0, const char *name=0, bool modal=true );
   virtual ~KDebugDialog();
 
   void save();
 
 protected slots:
-  void slotDebugAreaChanged( const QString & );
+  void slotDebugAreaChanged( const TQString & );
   void slotDestinationChanged(int);
 
 private:
-  QComboBox* pDebugAreas;
-  QGroupBox* pInfoGroup;
-  QLabel* pInfoLabel1;
-  QComboBox* pInfoCombo;
-  QLabel* pInfoLabel2;
-  QLineEdit* pInfoFile;
-  QLabel* pInfoLabel3;
-  QLineEdit* pInfoShow;
-  QGroupBox* pWarnGroup;
-  QLabel* pWarnLabel1;
-  QComboBox* pWarnCombo;
-  QLabel* pWarnLabel2;
-  QLineEdit* pWarnFile;
-  QLabel* pWarnLabel3;
-  QLineEdit* pWarnShow;
-  QGroupBox* pErrorGroup;
-  QLabel* pErrorLabel1;
-  QComboBox* pErrorCombo;
-  QLabel* pErrorLabel2;
-  QLineEdit* pErrorFile;
-  QLabel* pErrorLabel3;
-  QLineEdit* pErrorShow;
-  QGroupBox* pFatalGroup;
-  QLabel* pFatalLabel1;
-  QComboBox* pFatalCombo;
-  QLabel* pFatalLabel2;
-  QLineEdit* pFatalFile;
-  QLabel* pFatalLabel3;
-  QLineEdit* pFatalShow;
+  TQComboBox* pDebugAreas;
+  TQGroupBox* pInfoGroup;
+  TQLabel* pInfoLabel1;
+  TQComboBox* pInfoCombo;
+  TQLabel* pInfoLabel2;
+  TQLineEdit* pInfoFile;
+  TQLabel* pInfoLabel3;
+  TQLineEdit* pInfoShow;
+  TQGroupBox* pWarnGroup;
+  TQLabel* pWarnLabel1;
+  TQComboBox* pWarnCombo;
+  TQLabel* pWarnLabel2;
+  TQLineEdit* pWarnFile;
+  TQLabel* pWarnLabel3;
+  TQLineEdit* pWarnShow;
+  TQGroupBox* pErrorGroup;
+  TQLabel* pErrorLabel1;
+  TQComboBox* pErrorCombo;
+  TQLabel* pErrorLabel2;
+  TQLineEdit* pErrorFile;
+  TQLabel* pErrorLabel3;
+  TQLineEdit* pErrorShow;
+  TQGroupBox* pFatalGroup;
+  TQLabel* pFatalLabel1;
+  TQComboBox* pFatalCombo;
+  TQLabel* pFatalLabel2;
+  TQLineEdit* pFatalFile;
+  TQLabel* pFatalLabel3;
+  TQLineEdit* pFatalShow;
 
-  QCheckBox* pAbortFatal;
+  TQCheckBox* pAbortFatal;
 
 private:
   // Disallow assignment and copy-construction

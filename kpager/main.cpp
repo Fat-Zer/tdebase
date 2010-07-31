@@ -25,10 +25,10 @@
 #include <klocale.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
-#include <qcolor.h>
+#include <tqcolor.h>
 #include <kdebug.h>
 #include <stdlib.h>
-#include <qsessionmanager.h>
+#include <tqsessionmanager.h>
 
 #include "kpager.h"
 

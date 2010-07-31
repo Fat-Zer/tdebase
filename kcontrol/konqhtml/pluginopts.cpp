@@ -7,12 +7,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qlayout.h>
-#include <qprogressdialog.h>
-#include <qregexp.h>
-#include <qslider.h>
-#include <qvgroupbox.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqprogressdialog.h>
+#include <tqregexp.h>
+#include <tqslider.h>
+#include <tqvgroupbox.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -33,8 +33,8 @@
 
 // == class PluginPolicies =====
 
-PluginPolicies::PluginPolicies(KConfig* config, const QString &group, bool global,
-  		const QString &domain) :
+PluginPolicies::PluginPolicies(KConfig* config, const TQString &group, bool global,
+  		const TQString &domain) :
 	Policies(config,group,global,domain,"plugins.","EnablePlugins") {
 }
 
@@ -43,7 +43,7 @@ PluginPolicies::~PluginPolicies() {
 
 // == class KPluginOptions =====
 
-KPluginOptions::KPluginOptions( KConfig* config, QString group, QWidget *parent,
+KPluginOptions::KPluginOptions( KConfig* config, TQString group, TQWidget *parent,
                             const char *)
     : KCModule( parent, "kcmkonqhtml" ),
       m_pConfig( config ),
@@ -51,36 +51,36 @@ KPluginOptions::KPluginOptions( KConfig* config, QString group, QWidget *parent,
       m_nspluginscan (0),
       global_policies(config,group,true)
 {
-    QVBoxLayout* toplevel = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+    TQVBoxLayout* toplevel = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 
     /**************************************************************************
      ******************** Global Settings *************************************
      *************************************************************************/
-    QVGroupBox* globalGB = new QVGroupBox( i18n( "Global Settings" ), this );
+    TQVGroupBox* globalGB = new TQVGroupBox( i18n( "Global Settings" ), this );
     toplevel->addWidget( globalGB );
-    enablePluginsGloballyCB = new QCheckBox( i18n( "&Enable plugins globally" ), globalGB );
-    enableHTTPOnly = new QCheckBox( i18n( "Only allow &HTTP and HTTPS URLs for plugins" ), globalGB );
-    enableUserDemand = new QCheckBox( i18n( "&Load plugins on demand only" ), globalGB );
-    priorityLabel = new QLabel(i18n("CPU priority for plugins: %1").arg(QString::null), globalGB);
-    priority = new QSlider(5, 100, 5, 100, Horizontal, globalGB);
-    connect( enablePluginsGloballyCB, SIGNAL( clicked() ), this, SLOT( slotChanged() ) );
-    connect( enablePluginsGloballyCB, SIGNAL( clicked() ), this, SLOT( slotTogglePluginsEnabled() ) );
-    connect( enableHTTPOnly, SIGNAL( clicked() ), this, SLOT( slotChanged() ) );
-    connect( enableUserDemand, SIGNAL( clicked() ), this, SLOT( slotChanged() ) );
-    connect( priority, SIGNAL( valueChanged(int) ), this, SLOT( slotChanged() ) );
-    connect( priority, SIGNAL( valueChanged(int) ), this, SLOT( updatePLabel(int) ) );
+    enablePluginsGloballyCB = new TQCheckBox( i18n( "&Enable plugins globally" ), globalGB );
+    enableHTTPOnly = new TQCheckBox( i18n( "Only allow &HTTP and HTTPS URLs for plugins" ), globalGB );
+    enableUserDemand = new TQCheckBox( i18n( "&Load plugins on demand only" ), globalGB );
+    priorityLabel = new TQLabel(i18n("CPU priority for plugins: %1").arg(TQString::null), globalGB);
+    priority = new TQSlider(5, 100, 5, 100, Horizontal, globalGB);
+    connect( enablePluginsGloballyCB, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChanged() ) );
+    connect( enablePluginsGloballyCB, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotTogglePluginsEnabled() ) );
+    connect( enableHTTPOnly, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChanged() ) );
+    connect( enableUserDemand, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChanged() ) );
+    connect( priority, TQT_SIGNAL( valueChanged(int) ), this, TQT_SLOT( slotChanged() ) );
+    connect( priority, TQT_SIGNAL( valueChanged(int) ), this, TQT_SLOT( updatePLabel(int) ) );
 
-    QFrame *hrule = new QFrame(globalGB);
-    hrule->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-    hrule->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed);
+    TQFrame *hrule = new TQFrame(globalGB);
+    hrule->setFrameStyle(TQFrame::HLine | TQFrame::Sunken);
+    hrule->setSizePolicy(TQSizePolicy::MinimumExpanding,TQSizePolicy::Fixed);
 
     /**************************************************************************
      ********************* Domain-specific Settings ***************************
      *************************************************************************/
-    QPushButton *domainSpecPB = new QPushButton(i18n("Domain-Specific Settin&gs"),
+    TQPushButton *domainSpecPB = new TQPushButton(i18n("Domain-Specific Settin&gs"),
     						globalGB);
-    domainSpecPB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    connect(domainSpecPB,SIGNAL(clicked()),SLOT(slotShowDomainDlg()));
+    domainSpecPB->setSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
+    connect(domainSpecPB,TQT_SIGNAL(clicked()),TQT_SLOT(slotShowDomainDlg()));
 
     domainSpecificDlg = new KDialogBase(KDialogBase::Swallow,
     			i18n("Domain-Specific Policies"),KDialogBase::Close,
@@ -88,30 +88,30 @@ KPluginOptions::KPluginOptions( KConfig* config, QString group, QWidget *parent,
 
     domainSpecific = new PluginDomainListView(config,group,this,domainSpecificDlg);
     domainSpecific->setMinimumSize(320,200);
-    connect(domainSpecific,SIGNAL(changed(bool)),SLOT(slotChanged()));
+    connect(domainSpecific,TQT_SIGNAL(changed(bool)),TQT_SLOT(slotChanged()));
 
     domainSpecificDlg->setMainWidget(domainSpecific);
 
     /**************************************************************************
      ********************** WhatsThis? items **********************************
      *************************************************************************/
-    QWhatsThis::add( enablePluginsGloballyCB, i18n("Enables the execution of plugins "
+    TQWhatsThis::add( enablePluginsGloballyCB, i18n("Enables the execution of plugins "
           "that can be contained in HTML pages, e.g. Macromedia Flash. "
           "Note that, as with any browser, enabling active contents can be a security problem.") );
 
-    QString wtstr = i18n("This box contains the domains and hosts you have set "
+    TQString wtstr = i18n("This box contains the domains and hosts you have set "
                          "a specific plugin policy for. This policy will be used "
                          "instead of the default policy for enabling or disabling plugins on pages sent by these "
                          "domains or hosts. <p>Select a policy and use the controls on "
                          "the right to modify it.");
-    QWhatsThis::add( domainSpecific->listView(), wtstr );
-    QWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
+    TQWhatsThis::add( domainSpecific->listView(), wtstr );
+    TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
                                           "the plugin policies. These policies will be merged "
                                           "with the existing ones. Duplicate entries are ignored.") );
-    QWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the plugin policy to a zipped "
+    TQWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the plugin policy to a zipped "
                                           "file. The file, named <b>plugin_policy.tgz</b>, will be "
                                           "saved to a location of your choice." ) );
-    QWhatsThis::add( domainSpecific, i18n("Here you can set specific plugin policies for any particular "
+    TQWhatsThis::add( domainSpecific, i18n("Here you can set specific plugin policies for any particular "
                                             "host or domain. To add a new policy, simply click the <i>New...</i> "
                                             "button and supply the necessary information requested by the "
                                             "dialog box. To change an existing policy, click on the <i>Change...</i> "
@@ -126,7 +126,7 @@ KPluginOptions::KPluginOptions( KConfig* config, QString group, QWidget *parent,
 
 /*****************************************************************************/
 
-    QVGroupBox* netscapeGB = new QVGroupBox( i18n( "Netscape Plugins" ), this );
+    TQVGroupBox* netscapeGB = new TQVGroupBox( i18n( "Netscape Plugins" ), this );
     toplevel->addWidget( netscapeGB );
 
     // create Designer made widget
@@ -134,8 +134,8 @@ KPluginOptions::KPluginOptions( KConfig* config, QString group, QWidget *parent,
 	m_widget->dirEdit->setMode(KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
 
     // setup widgets
-    connect( m_widget->scanAtStartup, SIGNAL(clicked()), SLOT(change()) );
-    connect( m_widget->scanButton, SIGNAL(clicked()), SLOT(scan()) );
+    connect( m_widget->scanAtStartup, TQT_SIGNAL(clicked()), TQT_SLOT(change()) );
+    connect( m_widget->scanButton, TQT_SIGNAL(clicked()), TQT_SLOT(scan()) );
 
     m_changed = false;
 
@@ -153,7 +153,7 @@ KPluginOptions::~KPluginOptions()
 
 
 void KPluginOptions::updatePLabel(int p) {
-    QString level;
+    TQString level;
     p = (100 - p)/5;
     if (p > 15) {
             level = i18n("lowest priority", "lowest");
@@ -229,7 +229,7 @@ void KPluginOptions::save()
     m_pConfig->sync();	// I need a sync here, otherwise "apply" won't work
     			// instantly
 
-  QByteArray data;
+  TQByteArray data;
   if ( !kapp->dcopClient()->isAttached() )
     kapp->dcopClient()->attach();
   kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
@@ -252,7 +252,7 @@ void KPluginOptions::save()
     change( false );
 }
 
-QString KPluginOptions::quickHelp() const
+TQString KPluginOptions::quickHelp() const
 {
       return i18n("<h1>Konqueror Plugins</h1> The Konqueror web browser can use Netscape"
         " plugins to show special content, just like the Navigator does. Please note that"
@@ -282,7 +282,7 @@ void KPluginOptions::scan()
         int ret = KMessageBox::warningYesNoCancel( this,
                                                     i18n("Do you want to apply your changes "
                                                          "before the scan? Otherwise the "
-                                                         "changes will be lost."), QString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
+                                                         "changes will be lost."), TQString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
         if ( ret==KMessageBox::Cancel ) {
             m_widget->scanButton->setEnabled(true);
             return;
@@ -292,7 +292,7 @@ void KPluginOptions::scan()
     }
 
     m_nspluginscan = new KProcIO;
-    QString scanExe = KGlobal::dirs()->findExe("nspluginscan");
+    TQString scanExe = KGlobal::dirs()->findExe("nspluginscan");
     if (!scanExe) {
         kdDebug() << "can't find nspluginviewer" << endl;
         delete m_nspluginscan; 
@@ -306,24 +306,24 @@ void KPluginOptions::scan()
     }
 
     // find nspluginscan executable
-    m_progress = new QProgressDialog( i18n("Scanning for plugins"), i18n("Cancel"), 100, this );
+    m_progress = new TQProgressDialog( i18n("Scanning for plugins"), i18n("Cancel"), 100, this );
     m_progress->setProgress( 5 );
 
     // start nspluginscan
     *m_nspluginscan << scanExe << "--verbose";
     kdDebug() << "Running nspluginscan" << endl;
-    connect(m_nspluginscan, SIGNAL(readReady(KProcIO*)),
-            this, SLOT(progress(KProcIO*)));
-    connect(m_nspluginscan, SIGNAL(processExited(KProcess *)),
-            this, SLOT(scanDone()));
-    connect(m_progress, SIGNAL(cancelled()), this, SLOT(scanDone()));
+    connect(m_nspluginscan, TQT_SIGNAL(readReady(KProcIO*)),
+            this, TQT_SLOT(progress(KProcIO*)));
+    connect(m_nspluginscan, TQT_SIGNAL(processExited(KProcess *)),
+            this, TQT_SLOT(scanDone()));
+    connect(m_progress, TQT_SIGNAL(cancelled()), this, TQT_SLOT(scanDone()));
 
     m_nspluginscan->start();
 }
 
 void KPluginOptions::progress(KProcIO *proc)
 {
-    QString line;
+    TQString line;
     while(proc->readln(line) > 0)
         ;
     m_progress->setProgress(line.stripWhiteSpace().toInt());
@@ -345,28 +345,28 @@ void KPluginOptions::scanDone()
 void KPluginOptions::dirInit()
 {
     m_widget->dirEdit->setCaption(i18n("Select Plugin Scan Folder"));
-    connect( m_widget->dirNew, SIGNAL(clicked()), SLOT(dirNew()));
-    connect( m_widget->dirRemove, SIGNAL(clicked()), SLOT(dirRemove()));
-    connect( m_widget->dirUp, SIGNAL(clicked()), SLOT(dirUp()));
-    connect( m_widget->dirDown, SIGNAL(clicked()), SLOT(dirDown()) );
-    connect( m_widget->useArtsdsp, SIGNAL(clicked()),SLOT(change()));
+    connect( m_widget->dirNew, TQT_SIGNAL(clicked()), TQT_SLOT(dirNew()));
+    connect( m_widget->dirRemove, TQT_SIGNAL(clicked()), TQT_SLOT(dirRemove()));
+    connect( m_widget->dirUp, TQT_SIGNAL(clicked()), TQT_SLOT(dirUp()));
+    connect( m_widget->dirDown, TQT_SIGNAL(clicked()), TQT_SLOT(dirDown()) );
+    connect( m_widget->useArtsdsp, TQT_SIGNAL(clicked()),TQT_SLOT(change()));
     connect( m_widget->dirEdit,
-             SIGNAL(textChanged(const QString&)),
-             SLOT(dirEdited(const QString &)) );
+             TQT_SIGNAL(textChanged(const TQString&)),
+             TQT_SLOT(dirEdited(const TQString &)) );
 
     connect( m_widget->dirList,
-             SIGNAL(executed(QListBoxItem*)),
-             SLOT(dirSelect(QListBoxItem*)) );
+             TQT_SIGNAL(executed(TQListBoxItem*)),
+             TQT_SLOT(dirSelect(TQListBoxItem*)) );
 
     connect( m_widget->dirList,
-             SIGNAL(selectionChanged(QListBoxItem*)),
-             SLOT(dirSelect(QListBoxItem*)) );
+             TQT_SIGNAL(selectionChanged(TQListBoxItem*)),
+             TQT_SLOT(dirSelect(TQListBoxItem*)) );
 }
 
 
 void KPluginOptions::dirLoad( KConfig *config, bool useDefault )
 {
-    QStringList paths;
+    TQStringList paths;
 
     // read search paths
 
@@ -409,8 +409,8 @@ void KPluginOptions::dirLoad( KConfig *config, bool useDefault )
 void KPluginOptions::dirSave( KConfig *config )
 {
     // create stringlist
-    QStringList paths;
-    QListBoxItem *item = m_widget->dirList->firstItem();
+    TQStringList paths;
+    TQListBoxItem *item = m_widget->dirList->firstItem();
     for ( ; item!=0; item=item->next() )
         if ( !item->text().isEmpty() )
             paths << item->text();
@@ -422,7 +422,7 @@ void KPluginOptions::dirSave( KConfig *config )
 }
 
 
-void KPluginOptions::dirSelect( QListBoxItem *item )
+void KPluginOptions::dirSelect( TQListBoxItem *item )
 {
     m_widget->dirEdit->setEnabled( item!=0 );
     m_widget->dirRemove->setEnabled( item!=0 );
@@ -430,16 +430,16 @@ void KPluginOptions::dirSelect( QListBoxItem *item )
     unsigned cur = m_widget->dirList->index(m_widget->dirList->selectedItem());
     m_widget->dirDown->setEnabled( item!=0 && cur<m_widget->dirList->count()-1 );
     m_widget->dirUp->setEnabled( item!=0 && cur>0 );
-    m_widget->dirEdit->setURL( item!=0 ? item->text() : QString::null );
+    m_widget->dirEdit->setURL( item!=0 ? item->text() : TQString::null );
  }
 
 
 void KPluginOptions::dirNew()
 {
-    m_widget->dirList->insertItem( QString::null, 0 );
+    m_widget->dirList->insertItem( TQString::null, 0 );
     m_widget->dirList->setCurrentItem( 0 );
     dirSelect( m_widget->dirList->selectedItem() );
-    m_widget->dirEdit->setURL(QString::null);
+    m_widget->dirEdit->setURL(TQString::null);
     m_widget->dirEdit->setFocus();
     change();
 }
@@ -447,7 +447,7 @@ void KPluginOptions::dirNew()
 
 void KPluginOptions::dirRemove()
 {
-    m_widget->dirEdit->setURL(QString::null);
+    m_widget->dirEdit->setURL(TQString::null);
     delete m_widget->dirList->selectedItem();
     m_widget->dirRemove->setEnabled( false );
     m_widget->dirUp->setEnabled( false );
@@ -461,7 +461,7 @@ void KPluginOptions::dirUp()
 {
     unsigned cur = m_widget->dirList->index(m_widget->dirList->selectedItem());
     if ( cur>0 ) {
-        QString txt = m_widget->dirList->text(cur-1);
+        TQString txt = m_widget->dirList->text(cur-1);
         m_widget->dirList->removeItem( cur-1 );
         m_widget->dirList->insertItem( txt, cur );
 
@@ -476,7 +476,7 @@ void KPluginOptions::dirDown()
 {
     unsigned cur = m_widget->dirList->index(m_widget->dirList->selectedItem());
     if ( cur < m_widget->dirList->count()-1 ) {
-        QString txt = m_widget->dirList->text(cur+1);
+        TQString txt = m_widget->dirList->text(cur+1);
         m_widget->dirList->removeItem( cur+1 );
         m_widget->dirList->insertItem( txt, cur );
 
@@ -487,7 +487,7 @@ void KPluginOptions::dirDown()
 }
 
 
-void KPluginOptions::dirEdited(const QString &txt )
+void KPluginOptions::dirEdited(const TQString &txt )
 {
     if ( m_widget->dirList->currentText() != txt ) {
         m_widget->dirList->blockSignals(true);
@@ -510,28 +510,28 @@ void KPluginOptions::pluginLoad( KConfig* /*config*/ )
 {
     kdDebug() << "-> KPluginOptions::fillPluginList" << endl;
     m_widget->pluginList->clear();
-    QRegExp version(";version=[^:]*:");
+    TQRegExp version(";version=[^:]*:");
 
     // open the cache file
-    QFile cachef( locate("data", "nsplugins/cache") );
+    TQFile cachef( locate("data", "nsplugins/cache") );
     if ( !cachef.exists() || !cachef.open(IO_ReadOnly) ) {
         kdDebug() << "Could not load plugin cache file!" << endl;
         return;
     }
 
-    QTextStream cache(&cachef);
+    TQTextStream cache(&cachef);
 
     // root object
-    QListViewItem *root = new QListViewItem( m_widget->pluginList, i18n("Netscape Plugins") );
+    TQListViewItem *root = new TQListViewItem( m_widget->pluginList, i18n("Netscape Plugins") );
     root->setOpen( true );
     root->setSelectable( false );
     root->setExpandable( true );
     root->setPixmap(0, SmallIcon("netscape"));
 
     // read in cache
-    QString line, plugin;
-    QListViewItem *next = 0;
-    QListViewItem *lastMIME = 0;
+    TQString line, plugin;
+    TQListViewItem *next = 0;
+    TQListViewItem *lastMIME = 0;
     while ( !cache.atEnd() ) {
 
         line = cache.readLine();
@@ -545,7 +545,7 @@ void KPluginOptions::pluginLoad( KConfig* /*config*/ )
             //kdDebug() << "plugin=" << plugin << endl;
 
             // add plugin root item
-            next = new QListViewItem( root, i18n("Plugin"), plugin );
+            next = new TQListViewItem( root, i18n("Plugin"), plugin );
             next->setOpen( false );
             next->setSelectable( false );
             next->setExpandable( true );
@@ -555,24 +555,24 @@ void KPluginOptions::pluginLoad( KConfig* /*config*/ )
             continue;
         }
 
-        QStringList desc = QStringList::split(':', line, TRUE);
-        QString mime = desc[0].stripWhiteSpace();
-        QString name = desc[2];
-        QString suffixes = desc[1];
+        TQStringList desc = TQStringList::split(':', line, TRUE);
+        TQString mime = desc[0].stripWhiteSpace();
+        TQString name = desc[2];
+        TQString suffixes = desc[1];
 
         if (!mime.isEmpty()) {
             //kdDebug() << "mime=" << mime << " desc=" << name << " suffix=" << suffixes << endl;
-            lastMIME = new QListViewItem( next, lastMIME, i18n("MIME type"), mime );
+            lastMIME = new TQListViewItem( next, lastMIME, i18n("MIME type"), mime );
             lastMIME->setOpen( false );
             lastMIME->setSelectable( false );
             lastMIME->setExpandable( true );
 
-            QListViewItem *last = new QListViewItem( lastMIME, 0, i18n("Description"), name );
+            TQListViewItem *last = new TQListViewItem( lastMIME, 0, i18n("Description"), name );
             last->setOpen( false );
             last->setSelectable( false );
             last->setExpandable( false );
 
-            last = new QListViewItem( lastMIME, last, i18n("Suffixes"), suffixes );
+            last = new TQListViewItem( lastMIME, last, i18n("Suffixes"), suffixes );
             last->setOpen( false );
             last->setSelectable( false );
             last->setExpandable( false );
@@ -590,22 +590,22 @@ void KPluginOptions::pluginSave( KConfig* /*config*/ )
 
 // == class PluginDomainDialog =====
 
-PluginDomainDialog::PluginDomainDialog(QWidget *parent) :
-	QWidget(parent,"PluginDomainDialog") {
+PluginDomainDialog::PluginDomainDialog(TQWidget *parent) :
+	TQWidget(parent,"PluginDomainDialog") {
   setCaption(i18n("Domain-Specific Policies"));
 
-  thisLayout = new QVBoxLayout(this);
+  thisLayout = new TQVBoxLayout(this);
   thisLayout->addSpacing(6);
-  QFrame *hrule = new QFrame(this);
-  hrule->setFrameStyle(QFrame::HLine | QFrame::Sunken);
+  TQFrame *hrule = new TQFrame(this);
+  hrule->setFrameStyle(TQFrame::HLine | TQFrame::Sunken);
   thisLayout->addWidget(hrule);
   thisLayout->addSpacing(6);
 
-  QBoxLayout *hl = new QHBoxLayout(this,0,6);
+  TQBoxLayout *hl = new TQHBoxLayout(this,0,6);
   hl->addStretch(10);
 
-  QPushButton *closePB = new KPushButton(KStdGuiItem::close(),this);
-  connect(closePB,SIGNAL(clicked()),SLOT(slotClose()));
+  TQPushButton *closePB = new KPushButton(KStdGuiItem::close(),this);
+  connect(closePB,TQT_SIGNAL(clicked()),TQT_SLOT(slotClose()));
   hl->addWidget(closePB);
   thisLayout->addLayout(hl);
 }
@@ -613,7 +613,7 @@ PluginDomainDialog::PluginDomainDialog(QWidget *parent) :
 PluginDomainDialog::~PluginDomainDialog() {
 }
 
-void PluginDomainDialog::setMainWidget(QWidget *widget) {
+void PluginDomainDialog::setMainWidget(TQWidget *widget) {
   thisLayout->insertWidget(0,widget);
 }
 
@@ -623,8 +623,8 @@ void PluginDomainDialog::slotClose() {
 
 // == class PluginDomainListView =====
 
-PluginDomainListView::PluginDomainListView(KConfig *config,const QString &group,
-	KPluginOptions *options,QWidget *parent,const char *name)
+PluginDomainListView::PluginDomainListView(KConfig *config,const TQString &group,
+	KPluginOptions *options,TQWidget *parent,const char *name)
 	: DomainListView(config,i18n( "Doma&in-Specific" ), parent, name),
 	group(group), options(options) {
 }
@@ -634,7 +634,7 @@ PluginDomainListView::~PluginDomainListView() {
 
 void PluginDomainListView::setupPolicyDlg(PushButton trigger,PolicyDialog &pDlg,
 		Policies *pol) {
-  QString caption;
+  TQString caption;
   switch (trigger) {
     case AddButton:
       caption = i18n( "New Plugin Policy" );

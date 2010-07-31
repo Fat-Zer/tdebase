@@ -20,30 +20,30 @@
 #ifndef HIDEBUTTON_H
 #define HIDEBUTTON_H
 
-#include <qbutton.h>
-#include <qpixmap.h>
+#include <tqbutton.h>
+#include <tqpixmap.h>
 
 class HideButton : public QButton
 {
   Q_OBJECT
 
   public:
-    HideButton(QWidget *parent, const char *name = 0);
+    HideButton(TQWidget *parent, const char *name = 0);
     void setArrowType(Qt::ArrowType arrow);
-    void setPixmap(const QPixmap &pix);
+    void setPixmap(const TQPixmap &pix);
 
   protected:
-    void drawButton(QPainter *p);
-    void drawButtonLabel(QPainter *p);
+    void drawButton(TQPainter *p);
+    void drawButtonLabel(TQPainter *p);
     void generateIcons();
 
-    void enterEvent(QEvent *e);
-    void leaveEvent( QEvent *e );
-    void resizeEvent(QResizeEvent *e);
+    void enterEvent(TQEvent *e);
+    void leaveEvent( TQEvent *e );
+    void resizeEvent(TQResizeEvent *e);
 
     bool m_highlight;
-    QPixmap m_normalIcon;
-    QPixmap m_activeIcon;
+    TQPixmap m_normalIcon;
+    TQPixmap m_activeIcon;
     Qt::ArrowType m_arrow;
 
   protected slots:

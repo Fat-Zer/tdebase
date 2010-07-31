@@ -28,7 +28,7 @@
 class ArchiveProtocol : public KIO::SlaveBase
 {
 public:
-    ArchiveProtocol( const QCString &pool, const QCString &app );
+    ArchiveProtocol( const TQCString &pool, const TQCString &app );
     virtual ~ArchiveProtocol();
 
     virtual void listDir( const KURL & url );
@@ -45,10 +45,10 @@ protected:
      * \param errNum KIO error number (undefined if the function returns true)
      * \return true if file was found, false if there was an error
      */
-    bool checkNewFile( const KURL & url, QString & path, KIO::Error& errorNum );
+    bool checkNewFile( const KURL & url, TQString & path, KIO::Error& errorNum );
 
     KArchive * m_archiveFile;
-    QString m_archiveName;
+    TQString m_archiveName;
     time_t m_mtime;
 };
 

@@ -7,9 +7,9 @@
 #include <time.h>
 #include <assert.h>
 
-#include <qcstring.h>
-#include <qmap.h>
-#include <qvaluestack.h>
+#include <tqcstring.h>
+#include <tqmap.h>
+#include <tqvaluestack.h>
 #include <kdebug.h>
 
 #include "repo.h"
@@ -25,7 +25,7 @@ Repository::~Repository()
 {}
 
 
-void Repository::add(const QCString &key, Data_entry &data)
+void Repository::add(const TQCString &key, Data_entry &data)
 {
     RepoIterator it = repo.find(key);
     if (it != repo.end())
@@ -38,7 +38,7 @@ void Repository::add(const QCString &key, Data_entry &data)
     repo.insert(key, data);
 }
 
-int Repository::remove(const QCString &key)
+int Repository::remove(const TQCString &key)
 {
     if( key.isEmpty() )
         return -1;
@@ -52,12 +52,12 @@ int Repository::remove(const QCString &key)
      return 0;
 }
 
-int Repository::removeSpecialKey(const QCString &key)
+int Repository::removeSpecialKey(const TQCString &key)
 {
     int found = -1;
     if ( !key.isEmpty() )
     {
-        QValueStack<QCString> rm_keys;
+        TQValueStack<TQCString> rm_keys;
         for (RepoCIterator it=repo.begin(); it!=repo.end(); ++it)
         {
             if (  key.find( it.data().group ) == 0 &&
@@ -76,12 +76,12 @@ int Repository::removeSpecialKey(const QCString &key)
     return found;
 }
 
-int Repository::removeGroup(const QCString &group)
+int Repository::removeGroup(const TQCString &group)
 {
     int found = -1;
     if ( !group.isEmpty() )
     {
-        QValueStack<QCString> rm_keys;
+        TQValueStack<TQCString> rm_keys;
         for (RepoCIterator it=repo.begin(); it!=repo.end(); ++it)
         {
             if (it.data().group == group)
@@ -99,7 +99,7 @@ int Repository::removeGroup(const QCString &group)
     return found;
 }
 
-int Repository::hasGroup(const QCString &group) const
+int Repository::hasGroup(const TQCString &group) const
 {
     if ( !group.isEmpty() )
     {
@@ -113,14 +113,14 @@ int Repository::hasGroup(const QCString &group) const
     return -1;
 }
 
-QCString Repository::findKeys(const QCString &group, const char *sep ) const
+TQCString Repository::findKeys(const TQCString &group, const char *sep ) const
 {
-    QCString list="";
+    TQCString list="";
     if( !group.isEmpty() )
     {
         kdDebug(1205) << "Looking for matching key with group key: " << group << endl;
         int pos;
-        QCString key;
+        TQCString key;
         RepoCIterator it;
         for (it=repo.begin(); it!=repo.end(); ++it)
         {
@@ -149,7 +149,7 @@ QCString Repository::findKeys(const QCString &group, const char *sep ) const
     return list;
 }
 
-QCString Repository::find(const QCString &key) const
+TQCString Repository::find(const TQCString &key) const
 {
     if( key.isEmpty() )
         return 0;
@@ -168,7 +168,7 @@ int Repository::expire()
 	return 0;
 
     unsigned t;
-    QValueStack<QCString> keys;
+    TQValueStack<TQCString> keys;
     head_time = (unsigned) -1;
     RepoIterator it;
     for (it=repo.begin(); it!=repo.end(); ++it)

@@ -16,7 +16,7 @@
 #ifndef __KDEGALLIUM_QUARTZ_H
 #define __KDEGALLIUM_QUARTZ_H
 
-#include <qbitmap.h>
+#include <tqbitmap.h>
 #include <kpixmap.h>
 #include "../../lib/kcommondecoration.h"
 #include "../../lib/kdecorationfactory.h"
@@ -28,7 +28,7 @@ namespace Quartz {
 
 class QuartzClient;
 
-class QuartzHandler: public QObject, public KDecorationFactory
+class QuartzHandler: public TQObject, public KDecorationFactory
 {
 	Q_OBJECT
 	public:
@@ -38,13 +38,13 @@ class QuartzHandler: public QObject, public KDecorationFactory
 		virtual KDecoration* createDecoration( KDecorationBridge* );
 		virtual bool reset(unsigned long changed);
 		virtual bool supports( Ability ability );
-		virtual QValueList< BorderSize > borderSizes() const;
+		virtual TQValueList< BorderSize > borderSizes() const;
 
 	private:
 		void readConfig();
 		void createPixmaps();
 		void freePixmaps();
-		void drawBlocks(KPixmap* pi, KPixmap &p, const QColor &c1, const QColor &c2);
+		void drawBlocks(KPixmap* pi, KPixmap &p, const TQColor &c1, const TQColor &c2);
 };
 
 
@@ -58,9 +58,9 @@ class QuartzButton : public KCommonDecorationButton
 		void reset(unsigned long changed);
 
 	protected:
-		void drawButton(QPainter *p);
+		void drawButton(TQPainter *p);
 
-		QBitmap* deco;
+		TQBitmap* deco;
 };
 
 
@@ -70,9 +70,9 @@ class QuartzClient : public KCommonDecoration
 		QuartzClient(KDecorationBridge* bridge, KDecorationFactory* factory);
 		~QuartzClient() {;}
 
-		virtual QString visibleName() const;
-		virtual QString defaultButtonsLeft() const;
-		virtual QString defaultButtonsRight() const;
+		virtual TQString visibleName() const;
+		virtual TQString defaultButtonsLeft() const;
+		virtual TQString defaultButtonsRight() const;
 		virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
 		virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
 		virtual KCommonDecorationButton *createButton(ButtonType type);
@@ -81,7 +81,7 @@ class QuartzClient : public KCommonDecoration
 
 	protected:
 		virtual void reset( unsigned long changed );
-		void paintEvent( QPaintEvent* );
+		void paintEvent( TQPaintEvent* );
 
 	private:
 		int 		  titleHeight, borderSize;

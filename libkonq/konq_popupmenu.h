@@ -23,11 +23,11 @@
 
 #include <sys/types.h>
 
-#include <qpopupmenu.h>
-#include <qmap.h>
+#include <tqpopupmenu.h>
+#include <tqmap.h>
 #include <kaction.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kfileitem.h>
 #include <kmimetype.h> // for KDEDesktopMimeType
@@ -37,7 +37,7 @@
 
 #include "konq_xmlguiclient.h"
 
-typedef QValueList<KDEDesktopMimeType::Service> ServiceList;
+typedef TQValueList<KDEDesktopMimeType::Service> ServiceList;
 
 class KPropertiesDialog;
 class KNewMenu;
@@ -52,7 +52,7 @@ class KBookmarkManager;
  * with the correct arguments, then exec() to make it appear, then destroy it.
  *
  */
-class LIBKONQ_EXPORT KonqPopupMenu : public QPopupMenu, public KonqXMLGUIClient
+class LIBKONQ_EXPORT KonqPopupMenu : public TQPopupMenu, public KonqXMLGUIClient
 {
   Q_OBJECT
 public:
@@ -89,7 +89,7 @@ public:
                  KURL viewURL,
                  KActionCollection & actions,
                  KNewMenu * newMenu,
-		 QWidget * parentWidget,
+		 TQWidget * parentWidget,
 		 bool showPropertiesAndFileType = true ) KDE_DEPRECATED;
 
   /**
@@ -117,7 +117,7 @@ public:
                  const KURL& viewURL,
                  KActionCollection & actions,
                  KNewMenu * newMenu,
-                 QWidget * parentWidget,
+                 TQWidget * parentWidget,
                  KonqPopupFlags kpf,
                  KParts::BrowserExtension::PopupFlags f /*= KParts::BrowserExtension::DefaultPopupItems*/);
 
@@ -130,7 +130,7 @@ public:
    * Set the title of the URL, when the popupmenu is opened for a single URL.
    * This is used if the user chooses to add a bookmark for this URL.
    */
-  void setURLTitle( const QString& urlTitle );
+  void setURLTitle( const TQString& urlTitle );
 
   class LIBKONQ_EXPORT ProtocolInfo {
    public:
@@ -151,11 +151,11 @@ public:
   /**
    * Reimplemented for internal purpose
    */
-  virtual KAction *action( const QDomElement &element ) const;
+  virtual KAction *action( const TQDomElement &element ) const;
 
 
   virtual KActionCollection *actionCollection() const;
-  QString mimeType( ) const;
+  TQString mimeType( ) const;
   KURL url( ) const;
   KFileItemList fileItemList() const;
   KURL::List popupURLList( ) const;
@@ -177,11 +177,11 @@ protected:
   KActionCollection m_ownActions;
 
 private:
-  void init (QWidget * parentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags itemFlags);
+  void init (TQWidget * parentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags itemFlags);
   void setup(KonqPopupFlags kpf);
   void addPlugins( );
-  int  insertServicesSubmenus(const QMap<QString, ServiceList>& list, QDomElement& menu, bool isBuiltin);
-  int  insertServices(const ServiceList& list, QDomElement& menu, bool isBuiltin);
+  int  insertServicesSubmenus(const TQMap<TQString, ServiceList>& list, TQDomElement& menu, bool isBuiltin);
+  int  insertServices(const ServiceList& list, TQDomElement& menu, bool isBuiltin);
   bool KIOSKAuthorizedAction(KConfig& cfg);
   KPropertiesDialog* showPropertiesDialog();
 
@@ -189,21 +189,21 @@ private:
   KonqPopupMenuPrivate *d;
   KNewMenu *m_pMenuNew;
   KURL m_sViewURL;
-  QString m_sMimeType;
+  TQString m_sMimeType;
   KFileItemList m_lstItems;
   KURL::List m_lstPopupURLs;
-  QMap<int,KService::Ptr> m_mapPopup;
-  QMap<int,KDEDesktopMimeType::Service> m_mapPopupServices;
+  TQMap<int,KService::Ptr> m_mapPopup;
+  TQMap<int,KDEDesktopMimeType::Service> m_mapPopupServices;
   bool m_bHandleEditOperations;
   KXMLGUIFactory *m_factory;
   KXMLGUIBuilder *m_builder;
-  QString attrName;
+  TQString attrName;
   ProtocolInfo m_info;
-  QPtrList<KonqPopupMenuPlugin> m_pluginList;
+  TQPtrList<KonqPopupMenuPlugin> m_pluginList;
   KBookmarkManager* m_pManager;
 };
 
-class LIBKONQ_EXPORT KonqPopupMenuPlugin : public QObject, public KonqXMLGUIClient {
+class LIBKONQ_EXPORT KonqPopupMenuPlugin : public TQObject, public KonqXMLGUIClient {
 	Q_OBJECT
 public:
   /**

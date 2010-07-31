@@ -4,8 +4,8 @@
  *
  **********************************************************************/
 
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -23,14 +23,14 @@
 #include "kfinddlg.h"
 #include "kfinddlg.moc"
 
-KfindDlg::KfindDlg(const KURL & url, QWidget *parent, const char *name)
-  : KDialogBase( Plain, QString::null,
+KfindDlg::KfindDlg(const KURL & url, TQWidget *parent, const char *name)
+  : KDialogBase( Plain, TQString::null,
 	User1 | User2 | Apply | Close | Help, Apply,
         parent, name, true, false,
 	KGuiItem(i18n("Stop"), "stop"),
 	KStdGuiItem::saveAs())
 {
-  QWidget::setCaption( i18n("Find Files/Folders" ) );
+  TQWidget::setCaption( i18n("Find Files/Folders" ) );
   setButtonBoxOrientation(Vertical);
 
   enableButton(Apply, true); // Enable "Find"
@@ -41,7 +41,7 @@ KfindDlg::KfindDlg(const KURL & url, QWidget *parent, const char *name)
 
   isResultReported = false;
 
-  QFrame *frame = plainPage();
+  TQFrame *frame = plainPage();
 
   // create tabwidget
   tabWidget = new KfindTabWidget( frame, "dialog");
@@ -54,28 +54,28 @@ KfindDlg::KfindDlg(const KURL & url, QWidget *parent, const char *name)
   mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
   setStatusMsg(i18n("Ready."));
   mStatusBar->setItemAlignment(0, AlignLeft | AlignVCenter);
-  mStatusBar->insertItem(QString::null, 1, 1, true);
+  mStatusBar->insertItem(TQString::null, 1, 1, true);
   mStatusBar->setItemAlignment(1, AlignLeft | AlignVCenter);
 
-  QVBoxLayout *vBox = new QVBoxLayout(frame);
+  TQVBoxLayout *vBox = new TQVBoxLayout(frame);
   vBox->addWidget(tabWidget, 0);
   vBox->addWidget(win, 1);
   vBox->addWidget(mStatusBar, 0);
 
-  connect(this, SIGNAL(applyClicked()),
-	  this, SLOT(startSearch()));
-  connect(this, SIGNAL(user1Clicked()),
-	  this, SLOT(stopSearch()));
-  connect(this, SIGNAL(user2Clicked()),
-	  win, SLOT(saveResults()));
+  connect(this, TQT_SIGNAL(applyClicked()),
+	  this, TQT_SLOT(startSearch()));
+  connect(this, TQT_SIGNAL(user1Clicked()),
+	  this, TQT_SLOT(stopSearch()));
+  connect(this, TQT_SIGNAL(user2Clicked()),
+	  win, TQT_SLOT(saveResults()));
 
-  connect(win ,SIGNAL(resultSelected(bool)),
-	  this,SIGNAL(resultSelected(bool)));
+  connect(win ,TQT_SIGNAL(resultSelected(bool)),
+	  this,TQT_SIGNAL(resultSelected(bool)));
 
   query = new KQuery(frame);
-  connect(query, SIGNAL(addFile(const KFileItem*,const QString&)),
-	  SLOT(addFile(const KFileItem*,const QString&)));
-  connect(query, SIGNAL(result(int)), SLOT(slotResult(int)));
+  connect(query, TQT_SIGNAL(addFile(const KFileItem*,const TQString&)),
+	  TQT_SLOT(addFile(const KFileItem*,const TQString&)));
+  connect(query, TQT_SIGNAL(result(int)), TQT_SLOT(slotResult(int)));
 
   dirwatch=NULL;
 }
@@ -85,18 +85,18 @@ KfindDlg::~KfindDlg()
    stopSearch();
 }
 
-void KfindDlg::closeEvent(QCloseEvent *)
+void KfindDlg::closeEvent(TQCloseEvent *)
 {
    stopSearch();
    slotClose();
 }
 
-void KfindDlg::setProgressMsg(const QString &msg)
+void KfindDlg::setProgressMsg(const TQString &msg)
 {
    mStatusBar->changeItem(msg, 1);
 }
 
-void KfindDlg::setStatusMsg(const QString &msg)
+void KfindDlg::setStatusMsg(const TQString &msg)
 {
    mStatusBar->changeItem(msg, 0);
 }
@@ -121,8 +121,8 @@ void KfindDlg::startSearch()
   if(dirwatch!=NULL)
     delete dirwatch;
   dirwatch=new KDirWatch();
-  connect(dirwatch, SIGNAL(created(const QString&)), this, SLOT(slotNewItems(const QString&)));
-  connect(dirwatch, SIGNAL(deleted(const QString&)), this, SLOT(slotDeleteItem(const QString&)));
+  connect(dirwatch, TQT_SIGNAL(created(const TQString&)), this, TQT_SLOT(slotNewItems(const TQString&)));
+  connect(dirwatch, TQT_SIGNAL(deleted(const TQString&)), this, TQT_SLOT(slotDeleteItem(const TQString&)));
   dirwatch->addDir(query->url().path(),true);
 
 #if 0
@@ -140,8 +140,8 @@ void KfindDlg::startSearch()
   //Getting a list of all subdirs
   if(tabWidget->isSearchRecursive() && (dirwatch->internalMethod() == KDirWatch::FAM))
   {
-    QStringList subdirs=getAllSubdirs(query->url().path());
-    for(QStringList::Iterator it = subdirs.begin(); it != subdirs.end(); ++it)
+    TQStringList subdirs=getAllSubdirs(query->url().path());
+    for(TQStringList::Iterator it = subdirs.begin(); it != subdirs.end(); ++it)
       dirwatch->addDir(*it,true);
   }
 #endif
@@ -203,7 +203,7 @@ void KfindDlg::slotResult(int errorCode)
 
 }
 
-void KfindDlg::addFile(const KFileItem* item, const QString& matchingLine)
+void KfindDlg::addFile(const KFileItem* item, const TQString& matchingLine)
 {
   win->insertItem(*item,matchingLine);
 
@@ -214,7 +214,7 @@ void KfindDlg::addFile(const KFileItem* item, const QString& matchingLine)
   }
 
   int count = win->childCount();
-  QString str = i18n("one file found", "%n files found", count);
+  TQString str = i18n("one file found", "%n files found", count);
   setProgressMsg(str);
 }
 
@@ -234,11 +234,11 @@ void  KfindDlg::about ()
   dlg.exec ();
 }
 
-void KfindDlg::slotDeleteItem(const QString& file)
+void KfindDlg::slotDeleteItem(const TQString& file)
 {
-  kdDebug()<<QString("Will remove one item: %1").arg(file)<<endl;
-  QListViewItem *iter;
-  QString iterwithpath;
+  kdDebug()<<TQString("Will remove one item: %1").arg(file)<<endl;
+  TQListViewItem *iter;
+  TQString iterwithpath;
 
   iter=win->firstChild();
   while( iter ) {
@@ -253,16 +253,16 @@ void KfindDlg::slotDeleteItem(const QString& file)
   }
 }
 
-void KfindDlg::slotNewItems( const QString& file )
+void KfindDlg::slotNewItems( const TQString& file )
 {
-  kdDebug()<<QString("Will add this item")<<endl;
-  QStringList newfiles;
-  QListViewItem *checkiter;
-  QString checkiterwithpath;
+  kdDebug()<<TQString("Will add this item")<<endl;
+  TQStringList newfiles;
+  TQListViewItem *checkiter;
+  TQString checkiterwithpath;
 
   if(file.find(query->url().path(+1))==0)
   {
-    kdDebug()<<QString("Can be added, path OK")<<endl;
+    kdDebug()<<TQString("Can be added, path OK")<<endl;
     checkiter=win->firstChild();
     while( checkiter ) {
       checkiterwithpath=query->url().path(+1)+checkiter->text(1)+checkiter->text(0);
@@ -270,19 +270,19 @@ void KfindDlg::slotNewItems( const QString& file )
         return;
       checkiter = checkiter->nextSibling();
     }
-    query->slotListEntries(QStringList(file));
+    query->slotListEntries(TQStringList(file));
   }
 }
 
-QStringList KfindDlg::getAllSubdirs(QDir d)
+TQStringList KfindDlg::getAllSubdirs(TQDir d)
 {
-  QStringList dirs;
-  QStringList subdirs;
+  TQStringList dirs;
+  TQStringList subdirs;
 
-  d.setFilter( QDir::Dirs );
+  d.setFilter( TQDir::Dirs );
   dirs = d.entryList();
 
-  for(QStringList::Iterator it = dirs.begin(); it != dirs.end(); ++it)
+  for(TQStringList::Iterator it = dirs.begin(); it != dirs.end(); ++it)
   {
     if((*it==".")||(*it==".."))
       continue;

@@ -25,8 +25,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
 
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 
 #include <kprocess.h>
 #include <kdebug.h>
@@ -39,9 +39,9 @@
 #include "backtrace.h"
 #include "backtrace.moc"
 
-BackTrace::BackTrace(const KrashConfig *krashconf, QObject *parent,
+BackTrace::BackTrace(const KrashConfig *krashconf, TQObject *parent,
                      const char *name)
-  : QObject(parent, name),
+  : TQObject(parent, name),
     m_krashconf(krashconf), m_temp(0)
 {
   m_proc = new KProcess;
@@ -68,25 +68,25 @@ BackTrace::~BackTrace()
 
 void BackTrace::start()
 {
-  QString exec = m_krashconf->tryExec();
+  TQString exec = m_krashconf->tryExec();
   if ( !exec.isEmpty() && KStandardDirs::findExe(exec).isEmpty() )
   {
-    QObject * o = parent();
+    TQObject * o = parent();
 
-    if (o && !o->inherits("QWidget"))
+    if (o && !o->inherits("TQWidget"))
     {
       o = NULL;
     }
 
     KMessageBox::error(
-                        (QWidget *)o,
+                        (TQWidget *)o,
 			i18n("Could not generate a backtrace as the debugger '%1' was not found.").arg(exec));
     return;
   }
   m_temp = new KTempFile;
   m_temp->setAutoDelete(TRUE);
   int handle = m_temp->handle();
-  QString backtraceCommand = m_krashconf->backtraceCommand();
+  TQString backtraceCommand = m_krashconf->backtraceCommand();
   const char* bt = backtraceCommand.latin1();
   ::write(handle, bt, strlen(bt)); // the command for a backtrace
   ::write(handle, "\n", 1);
@@ -96,22 +96,22 @@ void BackTrace::start()
   m_proc = new KProcess;
   m_proc->setUseShell(true);
 
-  QString str = m_krashconf->debuggerBatch();
+  TQString str = m_krashconf->debuggerBatch();
   m_krashconf->expandString(str, true, m_temp->name());
 
   *m_proc << str;
 
-  connect(m_proc, SIGNAL(receivedStdout(KProcess*, char*, int)),
-          SLOT(slotReadInput(KProcess*, char*, int)));
-  connect(m_proc, SIGNAL(processExited(KProcess*)),
-          SLOT(slotProcessExited(KProcess*)));
+  connect(m_proc, TQT_SIGNAL(receivedStdout(KProcess*, char*, int)),
+          TQT_SLOT(slotReadInput(KProcess*, char*, int)));
+  connect(m_proc, TQT_SIGNAL(processExited(KProcess*)),
+          TQT_SLOT(slotProcessExited(KProcess*)));
 
   m_proc->start ( KProcess::NotifyOnExit, KProcess::All );
 }
 
 void BackTrace::slotReadInput(KProcess *, char* buf, int buflen)
 {
-  QString newstr = QString::fromLocal8Bit(buf, buflen);
+  TQString newstr = TQString::fromLocal8Bit(buf, buflen);
   m_strBt.append(newstr);
 
   emit append(newstr);
@@ -137,25 +137,25 @@ bool BackTrace::usefulBacktrace()
 {
   // remove crap
   if( !m_krashconf->removeFromBacktraceRegExp().isEmpty())
-    m_strBt.replace(QRegExp( m_krashconf->removeFromBacktraceRegExp()), QString::null);
+    m_strBt.replace(TQRegExp( m_krashconf->removeFromBacktraceRegExp()), TQString::null);
 
   if( m_krashconf->disableChecks())
       return true;
   // prepend and append newline, so that regexps like '\nwhatever\n' work on all lines
-  QString strBt = '\n' + m_strBt + '\n';
+  TQString strBt = '\n' + m_strBt + '\n';
   // how many " ?? " in the bt ?
   int unknown = 0;
   if( !m_krashconf->invalidStackFrameRegExp().isEmpty())
-    unknown = strBt.contains( QRegExp( m_krashconf->invalidStackFrameRegExp()));
+    unknown = strBt.contains( TQRegExp( m_krashconf->invalidStackFrameRegExp()));
   // how many stack frames in the bt ?
   int frames = 0;
   if( !m_krashconf->frameRegExp().isEmpty())
-    frames = strBt.contains( QRegExp( m_krashconf->frameRegExp()));
+    frames = strBt.contains( TQRegExp( m_krashconf->frameRegExp()));
   else
     frames = strBt.contains('\n');
   bool tooShort = false;
   if( !m_krashconf->neededInValidBacktraceRegExp().isEmpty())
-    tooShort = ( strBt.find( QRegExp( m_krashconf->neededInValidBacktraceRegExp())) == -1 );
+    tooShort = ( strBt.find( TQRegExp( m_krashconf->neededInValidBacktraceRegExp())) == -1 );
   return !m_strBt.isNull() && !tooShort && (unknown < frames);
 }
 
@@ -164,7 +164,7 @@ void BackTrace::processBacktrace()
 {
   if( !m_krashconf->kcrashRegExp().isEmpty())
     {
-    QRegExp kcrashregexp( m_krashconf->kcrashRegExp());
+    TQRegExp kcrashregexp( m_krashconf->kcrashRegExp());
     int pos = kcrashregexp.search( m_strBt );
     if( pos >= 0 )
       {
@@ -175,7 +175,7 @@ void BackTrace::processBacktrace()
         --len;
         }
       m_strBt.remove( pos, len );
-      m_strBt.insert( pos, QString::fromLatin1( "[KCrash handler]\n" ));
+      m_strBt.insert( pos, TQString::fromLatin1( "[KCrash handler]\n" ));
       }
     }
 }

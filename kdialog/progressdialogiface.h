@@ -14,7 +14,7 @@ class ProgressDialogIface : virtual public DCOPObject
     virtual void setProgress( int ) =0;
     virtual int progress() const =0;
     
-    virtual void setLabel( const QString& ) =0;
+    virtual void setLabel( const TQString& ) =0;
     
     virtual void showCancelButton ( bool ) =0;
     virtual bool wasCancelled() const =0;

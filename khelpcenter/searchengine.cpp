@@ -1,6 +1,6 @@
 #include "stdlib.h"
 
-#include <qstylesheet.h>
+#include <tqstylesheet.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -25,7 +25,7 @@ SearchTraverser::SearchTraverser( SearchEngine *engine, int level ) :
 {
 #if 0
   kdDebug() << "SearchTraverser(): " << mLevel
-    << "  0x" << QString::number( int( this ), 16 ) << endl;
+    << "  0x" << TQString::number( int( this ), 16 ) << endl;
 #endif
 }
 
@@ -33,10 +33,10 @@ SearchTraverser::~SearchTraverser()
 {
 #if 0
     kdDebug() << "~SearchTraverser(): " << mLevel
-      << "  0x" << QString::number( int( this ), 16 ) << endl;
+      << "  0x" << TQString::number( int( this ), 16 ) << endl;
 #endif
 
-  QString section;
+  TQString section;
   if ( parentEntry() ) {
     section = parentEntry()->name();
   } else {
@@ -71,7 +71,7 @@ void SearchTraverser::startProcess( DocEntry *entry )
   SearchHandler *handler = mEngine->handler( entry->documentType() );
 
   if ( !handler ) {
-    QString txt;
+    TQString txt;
     if ( entry->documentType().isEmpty() ) {
       txt = i18n("Error: No document type specified.");
     } else {
@@ -92,22 +92,22 @@ void SearchTraverser::startProcess( DocEntry *entry )
 
 void SearchTraverser::connectHandler( SearchHandler *handler )
 {
-  QMap<SearchHandler *,int>::Iterator it;
+  TQMap<SearchHandler *,int>::Iterator it;
   it = mConnectCount.find( handler );
   int count = 0;
   if ( it != mConnectCount.end() ) count = *it;
   if ( count == 0 ) {
-    connect( handler, SIGNAL( searchError( SearchHandler *, DocEntry *, const QString & ) ),
-      SLOT( showSearchError( SearchHandler *, DocEntry *, const QString & ) ) );
-    connect( handler, SIGNAL( searchFinished( SearchHandler *, DocEntry *, const QString & ) ),
-      SLOT( showSearchResult( SearchHandler *, DocEntry *, const QString & ) ) );
+    connect( handler, TQT_SIGNAL( searchError( SearchHandler *, DocEntry *, const TQString & ) ),
+      TQT_SLOT( showSearchError( SearchHandler *, DocEntry *, const TQString & ) ) );
+    connect( handler, TQT_SIGNAL( searchFinished( SearchHandler *, DocEntry *, const TQString & ) ),
+      TQT_SLOT( showSearchResult( SearchHandler *, DocEntry *, const TQString & ) ) );
   }
   mConnectCount[ handler ] = ++count;
 }
 
 void SearchTraverser::disconnectHandler( SearchHandler *handler )
 {
-  QMap<SearchHandler *,int>::Iterator it;
+  TQMap<SearchHandler *,int>::Iterator it;
   it = mConnectCount.find( handler );
   if ( it == mConnectCount.end() ) {
     kdError() << "SearchTraverser::disconnectHandler() handler not connected."
@@ -116,10 +116,10 @@ void SearchTraverser::disconnectHandler( SearchHandler *handler )
     int count = *it;
     --count;
     if ( count == 0 ) {
-      disconnect( handler, SIGNAL( searchError( SearchHandler *, DocEntry *, const QString & ) ),
-        this, SLOT( showSearchError( SearchHandler *, DocEntry *, const QString & ) ) );
-      disconnect( handler, SIGNAL( searchFinished( SearchHandler *, DocEntry *, const QString & ) ),
-        this, SLOT( showSearchResult( SearchHandler *, DocEntry *, const QString & ) ) );
+      disconnect( handler, TQT_SIGNAL( searchError( SearchHandler *, DocEntry *, const TQString & ) ),
+        this, TQT_SLOT( showSearchError( SearchHandler *, DocEntry *, const TQString & ) ) );
+      disconnect( handler, TQT_SIGNAL( searchFinished( SearchHandler *, DocEntry *, const TQString & ) ),
+        this, TQT_SLOT( showSearchResult( SearchHandler *, DocEntry *, const TQString & ) ) );
     }
     mConnectCount[ handler ] = count;
   }
@@ -161,7 +161,7 @@ void SearchTraverser::deleteTraverser()
   }
 }
 
-void SearchTraverser::showSearchError( SearchHandler *handler, DocEntry *entry, const QString &error )
+void SearchTraverser::showSearchError( SearchHandler *handler, DocEntry *entry, const TQString &error )
 {
 //  kdDebug() << "SearchTraverser::showSearchError(): " << entry->name()
 //    << endl;
@@ -176,7 +176,7 @@ void SearchTraverser::showSearchError( SearchHandler *handler, DocEntry *entry, 
   mNotifyee->endProcess( entry, this );
 }
 
-void SearchTraverser::showSearchResult( SearchHandler *handler, DocEntry *entry, const QString &result )
+void SearchTraverser::showSearchResult( SearchHandler *handler, DocEntry *entry, const TQString &result )
 {
 //  kdDebug() << "SearchTraverser::showSearchResult(): " << entry->name()
 //    << endl;
@@ -201,7 +201,7 @@ void SearchTraverser::finishTraversal()
 
 
 SearchEngine::SearchEngine( View *destination )
-  : QObject(),
+  : TQObject(),
     mProc( 0 ), mSearchRunning( false ), mView( destination ),
     mRootTraverser( 0 )
 {
@@ -215,21 +215,21 @@ SearchEngine::~SearchEngine()
 
 bool SearchEngine::initSearchHandlers()
 {
-  QStringList resources = KGlobal::dirs()->findAllResources(
+  TQStringList resources = KGlobal::dirs()->findAllResources(
     "appdata", "searchhandlers/*.desktop" );
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for( it = resources.begin(); it != resources.end(); ++it ) {
-    QString filename = *it;
+    TQString filename = *it;
     kdDebug() << "SearchEngine::initSearchHandlers(): " << filename << endl;
     SearchHandler *handler = SearchHandler::initFromFile( filename );
     if ( !handler || !handler->checkPaths() ) {
-      QString txt = i18n("Unable to initialize SearchHandler from file '%1'.")
+      TQString txt = i18n("Unable to initialize SearchHandler from file '%1'.")
         .arg( filename );
       kdWarning() << txt << endl;
 //      KMessageBox::sorry( mView->widget(), txt );
     } else {
-      QStringList documentTypes = handler->documentTypes();
-      QStringList::ConstIterator it;
+      TQStringList documentTypes = handler->documentTypes();
+      TQStringList::ConstIterator it;
       for( it = documentTypes.begin(); it != documentTypes.end(); ++it ) {
         mHandlers.insert( *it, handler );
       }
@@ -237,7 +237,7 @@ bool SearchEngine::initSearchHandlers()
   }
 
   if ( mHandlers.isEmpty() ) {
-    QString txt = i18n("No valid search handler found.");
+    TQString txt = i18n("No valid search handler found.");
     kdWarning() << txt << endl;
 //    KMessageBox::sorry( mView->widget(), txt );
     return false;
@@ -251,7 +251,7 @@ void SearchEngine::searchStdout(KProcess *, char *buffer, int len)
   if ( !buffer || len == 0 )
     return;
 
-  QString bufferStr;
+  TQString bufferStr;
   char *p;
   p = (char*) malloc( sizeof(char) * (len+1) );
   p = strncpy( p, buffer, len );
@@ -267,7 +267,7 @@ void SearchEngine::searchStderr(KProcess *, char *buffer, int len)
   if ( !buffer || len == 0 )
     return;
 
-  mStderr.append( QString::fromUtf8( buffer, len ) );
+  mStderr.append( TQString::fromUtf8( buffer, len ) );
 }
 
 void SearchEngine::searchExited(KProcess *)
@@ -276,8 +276,8 @@ void SearchEngine::searchExited(KProcess *)
   mSearchRunning = false;
 }
 
-bool SearchEngine::search( QString words, QString method, int matches,
-                           QString scope )
+bool SearchEngine::search( TQString words, TQString method, int matches,
+                           TQString scope )
 {
   if ( mSearchRunning ) return false;
 
@@ -288,14 +288,14 @@ bool SearchEngine::search( QString words, QString method, int matches,
   mScope = scope;
 
   // Saner variables to store search parameters:
-  mWordList = QStringList::split( " ", words );
+  mWordList = TQStringList::split( " ", words );
   mMaxResults = matches;
   if ( method == "or" ) mOperation = Or;
   else mOperation = And;
 
   KConfig *cfg = KGlobal::config();
   cfg->setGroup( "Search" );
-  QString commonSearchProgram = cfg->readPathEntry( "CommonProgram" );
+  TQString commonSearchProgram = cfg->readPathEntry( "CommonProgram" );
   bool useCommon = cfg->readBoolEntry( "UseCommonProgram", false );
 
   if ( commonSearchProgram.isEmpty() || !useCommon ) {
@@ -303,7 +303,7 @@ bool SearchEngine::search( QString words, QString method, int matches,
       return false;
     }
 
-    QString txt = i18n("Search Results for '%1':").arg( QStyleSheet::escape(words) );
+    TQString txt = i18n("Search Results for '%1':").arg( TQStyleSheet::escape(words) );
 
     mStderr = "<b>" + txt + "</b>\n";
 
@@ -320,7 +320,7 @@ bool SearchEngine::search( QString words, QString method, int matches,
 
     return true;
   } else {
-    QString lang = KGlobal::locale()->language().left(2);
+    TQString lang = KGlobal::locale()->language().left(2);
 
     if ( lang.lower() == "c" || lang.lower() == "posix" )
 	  lang = "en";
@@ -334,7 +334,7 @@ bool SearchEngine::search( QString words, QString method, int matches,
     // replace whitespace with a '+'
     mWords = mWords.stripWhiteSpace();
     mWords = mWords.simplifyWhiteSpace();
-    mWords.replace(QRegExp("\\s"), "+");
+    mWords.replace(TQRegExp("\\s"), "+");
 
     commonSearchProgram = substituteSearchQuery( commonSearchProgram );
 
@@ -342,22 +342,22 @@ bool SearchEngine::search( QString words, QString method, int matches,
 
     mProc = new KProcess();
 
-    QStringList cmd = QStringList::split( " ", commonSearchProgram );
-    QStringList::ConstIterator it;
+    TQStringList cmd = TQStringList::split( " ", commonSearchProgram );
+    TQStringList::ConstIterator it;
     for( it = cmd.begin(); it != cmd.end(); ++it ) {
-      QString arg = *it;
+      TQString arg = *it;
       if ( arg.left( 1 ) == "\"" && arg.right( 1 ) =="\"" ) {
         arg = arg.mid( 1, arg.length() - 2 );
       }
       *mProc << arg.utf8();
     }
 
-    connect( mProc, SIGNAL( receivedStdout( KProcess *, char *, int ) ),
-             SLOT( searchStdout( KProcess *, char *, int ) ) );
-    connect( mProc, SIGNAL( receivedStderr( KProcess *, char *, int ) ),
-             SLOT( searchStderr( KProcess *, char *, int ) ) );
-    connect( mProc, SIGNAL( processExited( KProcess * ) ),
-             SLOT( searchExited( KProcess * ) ) );
+    connect( mProc, TQT_SIGNAL( receivedStdout( KProcess *, char *, int ) ),
+             TQT_SLOT( searchStdout( KProcess *, char *, int ) ) );
+    connect( mProc, TQT_SIGNAL( receivedStderr( KProcess *, char *, int ) ),
+             TQT_SLOT( searchStderr( KProcess *, char *, int ) ) );
+    connect( mProc, TQT_SIGNAL( processExited( KProcess * ) ),
+             TQT_SLOT( searchExited( KProcess * ) ) );
 
     mSearchRunning = true;
     mSearchResult = "";
@@ -392,11 +392,11 @@ bool SearchEngine::search( QString words, QString method, int matches,
   return true;
 }
 
-QString SearchEngine::substituteSearchQuery( const QString &query )
+TQString SearchEngine::substituteSearchQuery( const TQString &query )
 {
-  QString result = query;
+  TQString result = query;
   result.replace( "%k", mWords );
-  result.replace( "%n", QString::number( mMatches ) );
+  result.replace( "%n", TQString::number( mMatches ) );
   result.replace( "%m", mMethod );
   result.replace( "%l", mLang );
   result.replace( "%s", mScope );
@@ -404,15 +404,15 @@ QString SearchEngine::substituteSearchQuery( const QString &query )
   return result;
 }
 
-QString SearchEngine::substituteSearchQuery( const QString &query,
-  const QString &identifier, const QStringList &words, int maxResults,
-  Operation operation, const QString &lang )
+TQString SearchEngine::substituteSearchQuery( const TQString &query,
+  const TQString &identifier, const TQStringList &words, int maxResults,
+  Operation operation, const TQString &lang )
 {
-  QString result = query;
+  TQString result = query;
   result.replace( "%i", identifier );
   result.replace( "%w", words.join( "+" ) );
-  result.replace( "%m", QString::number( maxResults ) );
-  QString o;
+  result.replace( "%m", TQString::number( maxResults ) );
+  TQString o;
   if ( operation == Or ) o = "or";
   else o = "and";
   result.replace( "%o", o );
@@ -440,12 +440,12 @@ void SearchEngine::finishSearch()
   emit searchFinished();
 }
 
-QString SearchEngine::errorLog() const
+TQString SearchEngine::errorLog() const
 {
   return mStderr;
 }
 
-void SearchEngine::logError( DocEntry *entry, const QString &msg )
+void SearchEngine::logError( DocEntry *entry, const TQString &msg )
 {
   mStderr += entry->identifier() + ": " + msg;
 }
@@ -455,16 +455,16 @@ bool SearchEngine::isRunning() const
   return mSearchRunning;
 }
 
-SearchHandler *SearchEngine::handler( const QString &documentType ) const
+SearchHandler *SearchEngine::handler( const TQString &documentType ) const
 {
-  QMap<QString,SearchHandler *>::ConstIterator it;
+  TQMap<TQString,SearchHandler *>::ConstIterator it;
   it = mHandlers.find( documentType );
 
   if ( it == mHandlers.end() ) return 0;
   else return *it;
 }
 
-QStringList SearchEngine::words() const
+TQStringList SearchEngine::words() const
 {
   return mWordList;
 }

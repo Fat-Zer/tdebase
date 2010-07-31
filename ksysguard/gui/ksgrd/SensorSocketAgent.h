@@ -21,7 +21,7 @@
 #ifndef KSG_SENSORSOCKETAGENT_H
 #define KSG_SENSORSOCKETAGENT_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kbufferedsocket.h>
 
 #include <SensorAgent.h>
@@ -47,10 +47,10 @@ class SensorSocketAgent : public SensorAgent
     SensorSocketAgent( SensorManager *sm );
     ~SensorSocketAgent();
 
-    bool start( const QString &host, const QString &shell,
-                const QString &command = "", int port = -1 );
+    bool start( const TQString &host, const TQString &shell,
+                const TQString &command = "", int port = -1 );
 
-    void hostInfo( QString &shell, QString &command, int &port ) const;
+    void hostInfo( TQString &shell, TQString &command, int &port ) const;
 
   private slots:
     void connectionClosed();

@@ -17,9 +17,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qapplication.h>
-#include <qlayout.h>
-#include <qtabwidget.h>
+#include <tqapplication.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
 
 #include <kcmoduleloader.h>
 #include <kdialog.h>
@@ -27,34 +27,34 @@
 
 #include "display.h"
 
-typedef KGenericFactory<KCMDisplay, QWidget> DisplayFactory;
+typedef KGenericFactory<KCMDisplay, TQWidget> DisplayFactory;
 K_EXPORT_COMPONENT_FACTORY ( kcm_display, DisplayFactory( "display" ) )
 
-KCMDisplay::KCMDisplay( QWidget *parent, const char *name, const QStringList& )
+KCMDisplay::KCMDisplay( TQWidget *parent, const char *name, const TQStringList& )
     : KCModule( parent, name )
     , m_changed(false)
 {
-  m_tabs = new QTabWidget( this );
+  m_tabs = new TQTabWidget( this );
 
   addTab( "randr", i18n( "Size && Orientation" ) );
   addTab( "nvidiadisplay", i18n( "Graphics Adaptor" ) );
   addTab( "nvidia3d", i18n( "3D Options" ) );
   addTab( "kgamma", i18n( "Monitor Gamma" ) );
-  if ( QApplication::desktop()->isVirtualDesktop() )
+  if ( TQApplication::desktop()->isVirtualDesktop() )
     addTab( "xinerama", i18n( "Multiple Monitors" ) );
   addTab( "energy", i18n( "Power Control" ) );
 
-  QVBoxLayout *top = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *top = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
   top->addWidget( m_tabs );
 
   setButtons( Apply|Help );
   load();
 }
 
-void KCMDisplay::addTab( const QString &name, const QString &label )
+void KCMDisplay::addTab( const TQString &name, const TQString &label )
 {
-  QWidget *page = new QWidget( m_tabs, name.latin1() );
-  QVBoxLayout *top = new QVBoxLayout( page, KDialog::marginHint() );
+  TQWidget *page = new TQWidget( m_tabs, name.latin1() );
+  TQVBoxLayout *top = new TQVBoxLayout( page, KDialog::marginHint() );
 
   KCModule *kcm = KCModuleLoader::loadModule( name, page );
 
@@ -63,7 +63,7 @@ void KCMDisplay::addTab( const QString &name, const QString &label )
     top->addWidget( kcm );
     m_tabs->addTab( page, label );
 
-    connect( kcm, SIGNAL( changed(bool) ), SLOT( moduleChanged(bool) ) );
+    connect( kcm, TQT_SIGNAL( changed(bool) ), TQT_SLOT( moduleChanged(bool) ) );
     m_modules.insert(kcm, false);
   }
   else
@@ -72,20 +72,20 @@ void KCMDisplay::addTab( const QString &name, const QString &label )
 
 void KCMDisplay::load()
 {
-  for (QMap<KCModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
+  for (TQMap<KCModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
     it.key()->load();
 }
 
 void KCMDisplay::save()
 {
-  for (QMap<KCModule*, bool>::Iterator it = m_modules.begin(); it != m_modules.end(); ++it)
+  for (TQMap<KCModule*, bool>::Iterator it = m_modules.begin(); it != m_modules.end(); ++it)
     if (it.data())
       it.key()->save();
 }
 
 void KCMDisplay::moduleChanged( bool isChanged )
 {
-  QMap<KCModule*, bool>::Iterator currentModule = m_modules.find(static_cast<KCModule*>(const_cast<QObject*>(sender())));
+  TQMap<KCModule*, bool>::Iterator currentModule = m_modules.find(static_cast<KCModule*>(const_cast<TQObject*>(sender())));
   Q_ASSERT(currentModule != m_modules.end());
   if (currentModule.data() == isChanged)
     return;
@@ -94,7 +94,7 @@ void KCMDisplay::moduleChanged( bool isChanged )
 
   bool c = false;
   
-  for (QMap<KCModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it) {
+  for (TQMap<KCModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it) {
     if (it.data()) {
       c = true;
       break;

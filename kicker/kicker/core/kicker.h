@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __kicker_h__
 #define __kicker_h__
 
-#include <qcolor.h>
+#include <tqcolor.h>
 
 #include <kuniqueapplication.h>
 #include <kicontheme.h>
@@ -49,22 +49,22 @@ k_dcop:
     void configure();
     void quit();
     void restart();
-    void addExtension( const QString &desktopFile );
-    void popupKMenu( const QPoint &globalPos );
+    void addExtension( const TQString &desktopFile );
+    void popupKMenu( const TQPoint &globalPos );
     void clearQuickStartMenu();
-    bool highlightMenuItem( const QString &menuId );
+    bool highlightMenuItem( const TQString &menuId );
     void showKMenu();
     void toggleShowDesktop();
     bool desktopShowing();
-    void showConfig(const QString& config, int page = -1);
+    void showConfig(const TQString& config, int page = -1);
     void showTaskBarConfig();
     void configureMenubar();
     // return the region on the desktop, which is not covered by panels
     // and therefore allowed to be used by icons placed on the desktop
-    QRect desktopIconsArea(int screen) const;
+    TQRect desktopIconsArea(int screen) const;
 
 k_dcop_signals:
-    void desktopIconsAreaChanged(QRect area, int screen);
+    void desktopIconsAreaChanged(TQRect area, int screen);
 
 public:
     static Kicker* the();
@@ -75,12 +75,12 @@ public:
     bool isKioskImmutable() const;
     bool canAddContainers() const { return m_canAddContainers && !isImmutable(); }
 
-    static QStringList configModules(bool controlCenter);
+    static TQStringList configModules(bool controlCenter);
 
     /**
      * Global position where to insert a new item
      */
-    QPoint insertionPoint();
+    TQPoint insertionPoint();
 
     /**
      * Set the global position where to insert a new item
@@ -90,14 +90,14 @@ public:
      *
      * Kicker::the()->setInsertionPoint(p);
      * ...
-     * QPoint where = Kicker::the()->insertionPoint();
+     * TQPoint where = Kicker::the()->insertionPoint();
      * ...
-     * Kicker::the()->setInsertionPoint(QPoint());
+     * Kicker::the()->setInsertionPoint(TQPoint());
      *
      * this is not pretty, but it's pragmatic and does everything
      * that is needed
      */
-    void setInsertionPoint(const QPoint &p);
+    void setInsertionPoint(const TQPoint &p);
 
 
 public slots:
@@ -116,7 +116,7 @@ private slots:
     void slotStyleChanged();
     void paletteChanged();
     void setCrashHandler();
-    void slotDesktopIconsAreaChanged(const QRect &area, int screen);
+    void slotDesktopIconsAreaChanged(const TQRect &area, int screen);
 
 private:
     static void crashHandler(int signal);
@@ -125,7 +125,7 @@ private:
     KWinModule*    m_kwinModule;
     KCMultiDialog* m_configDialog;
     bool           m_canAddContainers;
-    QPoint         m_insertionPoint;
+    TQPoint         m_insertionPoint;
 };
 
 #endif

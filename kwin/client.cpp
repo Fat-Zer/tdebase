@@ -11,13 +11,13 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include "client.h"
 
-#include <qapplication.h>
-#include <qpainter.h>
-#include <qdatetime.h>
+#include <tqapplication.h>
+#include <tqpainter.h>
+#include <tqdatetime.h>
 #include <kprocess.h>
 #include <unistd.h>
 #include <kstandarddirs.h>
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 #include <kwin.h>
 #include <kiconloader.h>
 #include <stdlib.h>
@@ -67,7 +67,7 @@ namespace KWinInternal
  is done in manage().
  */
 Client::Client( Workspace *ws )
-    :   QObject( NULL ),
+    :   TQObject( NULL ),
         client( None ),
         wrapper( None ),
         frame( None ),
@@ -146,8 +146,8 @@ Client::Client( Workspace *ws )
     
     cmap = None;
     
-    frame_geometry = QRect( 0, 0, 100, 100 ); // so that decorations don't start with size being (0,0)
-    client_size = QSize( 100, 100 );
+    frame_geometry = TQRect( 0, 0, 100, 100 ); // so that decorations don't start with size being (0,0)
+    client_size = TQSize( 100, 100 );
     custom_opacity = false;
     rule_opacity_active = 0;; //translucency rules
     rule_opacity_inactive = 0; //dito.
@@ -277,7 +277,7 @@ void Client::updateDecoration( bool check_workspace_pos, bool force )
         destroyDecoration();
     if( !noBorder())
         {
-        setMask( QRegion()); // reset shape mask
+        setMask( TQRegion()); // reset shape mask
         decoration = workspace()->createDecoration( bridge );
         // TODO check decoration's minimum size?
         decoration->init();
@@ -312,9 +312,9 @@ void Client::destroyDecoration()
         {
         delete decoration;
         decoration = NULL;
-        QPoint grav = calculateGravitation( true );
+        TQPoint grav = calculateGravitation( true );
         border_left = border_right = border_top = border_bottom = 0;
-        setMask( QRegion()); // reset shape mask
+        setMask( TQRegion()); // reset shape mask
         int save_workarea_diff_x = workarea_diff_x;
         int save_workarea_diff_y = workarea_diff_y;
         plainResize( sizeForClientSize( clientSize()), ForceGeometrySet );
@@ -423,16 +423,16 @@ void Client::updateFrameExtents()
 // re-layouts (e.g. when options()->moveResizeMaximizedWindows() changes,
 // the decoration may turn on/off some borders, but the actual size
 // of the decoration stays the same).
-void Client::resizeDecoration( const QSize& s )
+void Client::resizeDecoration( const TQSize& s )
     {
     if( decoration == NULL )
         return;
-    QSize oldsize = decoration->widget()->size();
+    TQSize oldsize = decoration->widget()->size();
     decoration->resize( s );
     if( oldsize == s )
         {
-        QResizeEvent e( s, oldsize );
-        QApplication::sendEvent( decoration->widget(), &e );
+        TQResizeEvent e( s, oldsize );
+        TQApplication::sendEvent( decoration->widget(), &e );
         }
     }
 
@@ -509,7 +509,7 @@ void Client::updateShape()
         }
     }
 
-void Client::setMask( const QRegion& reg, int mode )
+void Client::setMask( const TQRegion& reg, int mode )
     {
     _mask = reg;
     if( reg.isNull())
@@ -520,7 +520,7 @@ void Client::setMask( const QRegion& reg, int mode )
             reg.handle(), ShapeSet );
     else
         {
-        QMemArray< QRect > rects = reg.rects();
+        TQMemArray< TQRect > rects = reg.rects();
         XRectangle* xrects = new XRectangle[ rects.count() ];
         for( unsigned int i = 0;
              i < rects.count();
@@ -538,10 +538,10 @@ void Client::setMask( const QRegion& reg, int mode )
     updateShape();
     }
 
-QRegion Client::mask() const
+TQRegion Client::mask() const
     {
     if( _mask.isEmpty())
-        return QRegion( 0, 0, width(), height());
+        return TQRegion( 0, 0, width(), height());
     return _mask;
     }
     
@@ -658,22 +658,22 @@ void Client::animateMinimizeOrUnminimize( bool minimize )
     step = 40. * (11 - speed );
 
     NETRect r = info->iconGeometry();
-    QRect icongeom( r.pos.x, r.pos.y, r.size.width, r.size.height );
+    TQRect icongeom( r.pos.x, r.pos.y, r.size.width, r.size.height );
     if ( !icongeom.isValid() )
         return;
 
-    QPixmap pm = animationPixmap( minimize ? width() : icongeom.width() );
+    TQPixmap pm = animationPixmap( minimize ? width() : icongeom.width() );
 
-    QRect before, after;
+    TQRect before, after;
     if ( minimize ) 
         {
-        before = QRect( x(), y(), width(), pm.height() );
-        after = QRect( icongeom.x(), icongeom.y(), icongeom.width(), pm.height() );
+        before = TQRect( x(), y(), width(), pm.height() );
+        after = TQRect( icongeom.x(), icongeom.y(), icongeom.width(), pm.height() );
         }
     else 
         {
-        before = QRect( icongeom.x(), icongeom.y(), icongeom.width(), pm.height() );
-        after = QRect( x(), y(), width(), pm.height() );
+        before = TQRect( icongeom.x(), icongeom.y(), icongeom.width(), pm.height() );
+        after = TQRect( x(), y(), width(), pm.height() );
         }
 
     lf = (after.left() - before.left())/step;
@@ -683,23 +683,23 @@ void Client::animateMinimizeOrUnminimize( bool minimize )
 
     grabXServer();
 
-    QRect area = before;
-    QRect area2;
-    QPixmap pm2;
+    TQRect area = before;
+    TQRect area2;
+    TQPixmap pm2;
 
-    QTime t;
+    TQTime t;
     t.start();
     float diff;
 
-    QPainter p ( workspace()->desktopWidget() );
+    TQPainter p ( workspace()->desktopWidget() );
     bool need_to_clear = FALSE;
-    QPixmap pm3;
+    TQPixmap pm3;
     do 
         {
         if (area2 != area)
             {
             pm = animationPixmap( area.width() );
-            pm2 = QPixmap::grabWindow( qt_xrootwin(), area.x(), area.y(), area.width(), area.height() );
+            pm2 = TQPixmap::grabWindow( qt_xrootwin(), area.x(), area.y(), area.width(), area.height() );
             p.drawPixmap( area.x(), area.y(), pm );
             if ( need_to_clear ) 
                 {
@@ -739,13 +739,13 @@ void Client::animateMinimizeOrUnminimize( bool minimize )
 /*!
   The pixmap shown during (un)minimalization animation
  */
-QPixmap Client::animationPixmap( int w )
+TQPixmap Client::animationPixmap( int w )
     {
-    QFont font = options->font(isActive());
-    QFontMetrics fm( font );
-    QPixmap pm( w, fm.lineSpacing() );
+    TQFont font = options->font(isActive());
+    TQFontMetrics fm( font );
+    TQPixmap pm( w, fm.lineSpacing() );
     pm.fill( options->color(Options::ColorTitleBar, isActive() || isMinimized() ) );
-    QPainter p( &pm );
+    TQPainter p( &pm );
     p.setPen(options->color(Options::ColorFont, isActive() || isMinimized() ));
     p.setFont(options->font(isActive()));
     p.drawText( pm.rect(), AlignLeft|AlignVCenter|SingleLine, caption() );
@@ -801,7 +801,7 @@ void Client::setShade( ShadeMode mode )
         // shade
         int h = height();
         shade_geometry_change = true;
-        QSize s( sizeForClientSize( QSize( clientSize())));
+        TQSize s( sizeForClientSize( TQSize( clientSize())));
         s.setHeight( border_top + border_bottom );
         XSelectInput( qt_xdisplay(), wrapper, ClientWinMask ); // avoid getting UnmapNotify
         XUnmapWindow( qt_xdisplay(), wrapper );
@@ -817,8 +817,8 @@ void Client::setShade( ShadeMode mode )
             {
             h -= step;
             XResizeWindow( qt_xdisplay(), frameId(), s.width(), h );
-            resizeDecoration( QSize( s.width(), h ));
-            QApplication::syncX();
+            resizeDecoration( TQSize( s.width(), h ));
+            TQApplication::syncX();
             } while ( h > s.height() + step );
 //        if ( !wasStaticContents )
 //            clearWFlags( WStaticContents );
@@ -839,7 +839,7 @@ void Client::setShade( ShadeMode mode )
         {
         int h = height();
         shade_geometry_change = true;
-        QSize s( sizeForClientSize( clientSize()));
+        TQSize s( sizeForClientSize( clientSize()));
 // FRAME       bool wasStaticContents = testWFlags( WStaticContents );
 //        setWFlags( WStaticContents );
         int step = QMAX( 4, QABS( h - s.height() ) / as )+1;
@@ -847,11 +847,11 @@ void Client::setShade( ShadeMode mode )
             {
             h += step;
             XResizeWindow( qt_xdisplay(), frameId(), s.width(), h );
-            resizeDecoration( QSize( s.width(), h ));
+            resizeDecoration( TQSize( s.width(), h ));
             // assume a border
             // we do not have time to wait for X to send us paint events
 // FRAME           repaint( 0, h - step-5, width(), step+5, TRUE);
-            QApplication::syncX();
+            TQApplication::syncX();
             } while ( h < s.height() - step );
 //        if ( !wasStaticContents )
 //            clearWFlags( WStaticContents );
@@ -1099,8 +1099,8 @@ void Client::pingWindow()
         return; // turned off
     if( ping_timer != NULL )
         return; // pinging already
-    ping_timer = new QTimer( this );
-    connect( ping_timer, SIGNAL( timeout()), SLOT( pingTimeout()));
+    ping_timer = new TQTimer( this );
+    connect( ping_timer, TQT_SIGNAL( timeout()), TQT_SLOT( pingTimeout()));
     ping_timer->start( options->killPingTimeout, true );
     ping_timestamp = qt_x_time;
     workspace()->sendPingToWindow( window(), ping_timestamp );
@@ -1134,7 +1134,7 @@ void Client::killProcess( bool ask, Time timestamp )
     if( process_killer != NULL )
         return;
     Q_ASSERT( !ask || timestamp != CurrentTime );
-    QCString machine = wmClientMachine( true );
+    TQCString machine = wmClientMachine( true );
     pid_t pid = info->pid();
     if( pid <= 0 || machine.isEmpty()) // needed properties missing
         return;
@@ -1154,13 +1154,13 @@ void Client::killProcess( bool ask, Time timestamp )
         { // SELI TODO handle the window created by handler specially (on top,urgent?)
         process_killer = new KProcess( this );
         *process_killer << KStandardDirs::findExe( "kwin_killer_helper" )
-            << "--pid" << QCString().setNum( pid ) << "--hostname" << machine
+            << "--pid" << TQCString().setNum( pid ) << "--hostname" << machine
             << "--windowname" << caption().utf8()
             << "--applicationname" << resourceClass()
-            << "--wid" << QCString().setNum( window())
-            << "--timestamp" << QCString().setNum( timestamp );
-        connect( process_killer, SIGNAL( processExited( KProcess* )),
-            SLOT( processKillerExited()));
+            << "--wid" << TQCString().setNum( window())
+            << "--timestamp" << TQCString().setNum( timestamp );
+        connect( process_killer, TQT_SIGNAL( processExited( KProcess* )),
+            TQT_SLOT( processKillerExited()));
         if( !process_killer->start( KProcess::NotifyOnExit ))
             {
             delete process_killer;
@@ -1342,7 +1342,7 @@ void Client::showContextHelp()
     if ( Pcontexthelp ) 
         {
         sendClientMessage(window(), atoms->wm_protocols, atoms->net_wm_context_help);
-        QWhatsThis::enterWhatsThisMode(); // SELI?
+        TQWhatsThis::enterWhatsThisMode(); // SELI?
         }
     }
 
@@ -1356,17 +1356,17 @@ void Client::fetchName()
     setCaption( readName());
     }
 
-QString Client::readName() const
+TQString Client::readName() const
     {
     if ( info->name() && info->name()[ 0 ] != '\0' ) 
-        return QString::fromUtf8( info->name() );
+        return TQString::fromUtf8( info->name() );
     else 
         return KWin::readNameProperty( window(), XA_WM_NAME );
     }
     
 KWIN_COMPARE_PREDICATE( FetchNameInternalPredicate, const Client*, (!cl->isSpecialWindow() || cl->isToolbar()) && cl != value && cl->caption() == value->caption());
 
-void Client::setCaption( const QString& s, bool force )
+void Client::setCaption( const TQString& s, bool force )
     {
     if ( s != cap_normal || force ) 
         {
@@ -1378,17 +1378,17 @@ void Client::setCaption( const QString& s, bool force )
                 s[ i ] = ' ';
         cap_normal = s;
         bool was_suffix = ( !cap_suffix.isEmpty());
-        QString machine_suffix;
+        TQString machine_suffix;
         if( wmClientMachine( false ) != "localhost" && !isLocalMachine( wmClientMachine( false )))
             machine_suffix = " <@" + wmClientMachine( true ) + ">";
-        QString shortcut_suffix = !shortcut().isNull() ? ( " {" + shortcut().toString() + "}" ) : "";
+        TQString shortcut_suffix = !shortcut().isNull() ? ( " {" + shortcut().toString() + "}" ) : "";
         cap_suffix = machine_suffix + shortcut_suffix;
         if ( ( !isSpecialWindow() || isToolbar()) && workspace()->findClient( FetchNameInternalPredicate( this ))) 
             {
             int i = 2;
             do 
                 {
-                cap_suffix = machine_suffix + " <" + QString::number(i) + ">" + shortcut_suffix;
+                cap_suffix = machine_suffix + " <" + TQString::number(i) + ">" + shortcut_suffix;
                 i++;
                 } while ( workspace()->findClient( FetchNameInternalPredicate( this )));
             info->setVisibleName( caption().utf8() );
@@ -1415,9 +1415,9 @@ void Client::updateCaption()
 
 void Client::fetchIconicName()
     {
-    QString s;
+    TQString s;
     if ( info->iconName() && info->iconName()[ 0 ] != '\0' ) 
-        s = QString::fromUtf8( info->iconName() );
+        s = TQString::fromUtf8( info->iconName() );
     else 
         s = KWin::readNameProperty( window(), XA_WM_ICON_NAME );
     if ( s != cap_iconic ) 
@@ -1436,7 +1436,7 @@ void Client::fetchIconicName()
 
 /*!\reimp
  */
-QString Client::caption( bool full ) const
+TQString Client::caption( bool full ) const
     {
     return full ? cap_normal + cap_suffix : cap_normal;
     }
@@ -1480,7 +1480,7 @@ void Client::getMotifHints()
         updateDecoration( true ); // check if noborder state has changed
     }
 
-void Client::readIcons( Window win, QPixmap* icon, QPixmap* miniicon )
+void Client::readIcons( Window win, TQPixmap* icon, TQPixmap* miniicon )
     {    
     // get the icons, allow scaling
     if( icon != NULL )
@@ -1489,7 +1489,7 @@ void Client::readIcons( Window win, QPixmap* icon, QPixmap* miniicon )
         if( icon == NULL || !icon->isNull())
             *miniicon = KWin::icon( win, 16, 16, TRUE, KWin::NETWM | KWin::WMHints );
         else
-            *miniicon = QPixmap();
+            *miniicon = TQPixmap();
     }
 
 void Client::getIcons()
@@ -1558,7 +1558,7 @@ static int nullErrorHandler(Display *, XErrorEvent *)
 /*!
   Returns WM_WINDOW_ROLE property for a given window.
  */
-QCString Client::staticWindowRole(WId w)
+TQCString Client::staticWindowRole(WId w)
     {
     return getStringProperty(w, qt_window_role).lower();
     }
@@ -1566,7 +1566,7 @@ QCString Client::staticWindowRole(WId w)
 /*!
   Returns SM_CLIENT_ID property for a given window.
  */
-QCString Client::staticSessionId(WId w)
+TQCString Client::staticSessionId(WId w)
     {
     return getStringProperty(w, qt_sm_client_id);
     }
@@ -1574,7 +1574,7 @@ QCString Client::staticSessionId(WId w)
 /*!
   Returns WM_COMMAND property for a given window.
  */
-QCString Client::staticWmCommand(WId w)
+TQCString Client::staticWmCommand(WId w)
     {
     return getStringProperty(w, XA_WM_COMMAND, ' ');
     }
@@ -1614,9 +1614,9 @@ void Client::getWmClientLeader()
   Returns sessionId for this client,
   taken either from its window or from the leader window.
  */
-QCString Client::sessionId()
+TQCString Client::sessionId()
     {
-    QCString result = staticSessionId(window());
+    TQCString result = staticSessionId(window());
     if (result.isEmpty() && wmClientLeaderWin && wmClientLeaderWin!=window())
         result = staticSessionId(wmClientLeaderWin);
     return result;
@@ -1626,9 +1626,9 @@ QCString Client::sessionId()
   Returns command property for this client,
   taken either from its window or from the leader window.
  */
-QCString Client::wmCommand()
+TQCString Client::wmCommand()
     {
-    QCString result = staticWmCommand(window());
+    TQCString result = staticWmCommand(window());
     if (result.isEmpty() && wmClientLeaderWin && wmClientLeaderWin!=window())
         result = staticWmCommand(wmClientLeaderWin);
     return result;
@@ -1647,9 +1647,9 @@ void Client::getWmClientMachine()
   Returns client machine for this client,
   taken either from its window or from the leader window.
 */
-QCString Client::wmClientMachine( bool use_localhost ) const
+TQCString Client::wmClientMachine( bool use_localhost ) const
     {
-    QCString result = client_machine;
+    TQCString result = client_machine;
     if( use_localhost )
         { // special name for the local machine (localhost)
         if( result != "localhost" && isLocalMachine( result ))
@@ -1754,7 +1754,7 @@ NET::WindowType Client::windowType( bool direct, int supported_types ) const
             wt = NET::TopMenu;
         }
     // TODO change this to rule
-    const char* const oo_prefix = "openoffice.org"; // QCString has no startsWith()
+    const char* const oo_prefix = "openoffice.org"; // TQCString has no startsWith()
     // oo_prefix is lowercase, because resourceClass() is forced to be lowercase
     if( qstrncmp( resourceClass(), oo_prefix, strlen( oo_prefix )) == 0 && wt == NET::Dialog )
         wt = NET::Normal; // see bug #66065
@@ -1801,7 +1801,7 @@ void Client::setCursor( Position m )
     }
 
 // TODO mit nejake checkCursor(), ktere se zavola v manage() a pri vecech, kdy by se kurzor mohl zmenit?
-void Client::setCursor( const QCursor& c )
+void Client::setCursor( const TQCursor& c )
     {
     if( c.handle() == cursor.handle())
         return;
@@ -1811,7 +1811,7 @@ void Client::setCursor( const QCursor& c )
     XDefineCursor( qt_xdisplay(), frameId(), cursor.handle());
     }
 
-Client::Position Client::mousePosition( const QPoint& p ) const
+Client::Position Client::mousePosition( const TQPoint& p ) const
     {
     if( decoration != NULL )
         return decoration->mousePosition( p );
@@ -2166,9 +2166,9 @@ kdbgstream& operator<<( kdbgstream& stream, const ConstClientList& list )
     }
 #endif
 
-QPixmap * kwin_get_menu_pix_hack()
+TQPixmap * kwin_get_menu_pix_hack()
     {
-    static QPixmap p;
+    static TQPixmap p;
     if ( p.isNull() )
         p = SmallIcon( "bx2" );
     return &p;

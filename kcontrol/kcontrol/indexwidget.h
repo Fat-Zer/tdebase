@@ -20,7 +20,7 @@
 #ifndef __indexwidget_h__
 #define __indexwidget_h__
 
-#include <qwidgetstack.h>
+#include <tqwidgetstack.h>
 
 #include "global.h"
 
@@ -34,10 +34,10 @@ class IndexWidget : public QWidgetStack
   Q_OBJECT
   
 public:   
-  IndexWidget(ConfigModuleList *list, QWidget *parent, const char *name=0);
+  IndexWidget(ConfigModuleList *list, TQWidget *parent, const char *name=0);
   virtual ~IndexWidget();
 
-  QListViewItem *firstTreeViewItem();
+  TQListViewItem *firstTreeViewItem();
 public slots:
   void makeVisible(ConfigModule *module);
   void makeSelected(ConfigModule *module);
@@ -49,10 +49,10 @@ protected slots:
 
 signals:
   void moduleActivated(ConfigModule *module);
-  void categorySelected(QListViewItem *);
+  void categorySelected(TQListViewItem *);
 
 protected:
-  void resizeEvent(QResizeEvent *e);
+  void resizeEvent(TQResizeEvent *e);
 
 private:
   ModuleTreeView   *_tree;

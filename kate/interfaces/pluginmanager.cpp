@@ -43,7 +43,7 @@ class PrivatePluginManager
     KatePluginManager *pluginMan;
   };
 
-PluginManager::PluginManager (void *pluginManager) : QObject ((KatePluginManager*) pluginManager)
+PluginManager::PluginManager (void *pluginManager) : TQObject ((KatePluginManager*) pluginManager)
 {
   d = new PrivatePluginManager ();
   d->pluginMan = (KatePluginManager*) pluginManager;
@@ -54,22 +54,22 @@ PluginManager::~PluginManager ()
   delete d;
 }
 
-Plugin *PluginManager::plugin(const QString &name)
+Plugin *PluginManager::plugin(const TQString &name)
 {
 	return d->pluginMan->plugin(name);
 }
 
-bool PluginManager::pluginAvailable(const QString &name)
+bool PluginManager::pluginAvailable(const TQString &name)
 {
   return d->pluginMan->pluginAvailable (name);
 }
 
-Plugin *PluginManager::loadPlugin(const QString &name,bool permanent)
+Plugin *PluginManager::loadPlugin(const TQString &name,bool permanent)
 {
   return d->pluginMan->loadPlugin (name, permanent);
 }
 
-void PluginManager::unloadPlugin(const QString &name,bool permanent)
+void PluginManager::unloadPlugin(const TQString &name,bool permanent)
 {
   d->pluginMan->unloadPlugin (name, permanent);
 }

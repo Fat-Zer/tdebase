@@ -28,7 +28,7 @@ class SystemDirNotifyModule : public KDEDModule
 K_DCOP
 
 public:
-	SystemDirNotifyModule(const QCString &obj);
+	SystemDirNotifyModule(const TQCString &obj);
 private:
 	SystemDirNotify notifier;
 };

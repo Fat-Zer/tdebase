@@ -32,7 +32,7 @@
  * to newInstance().
  */
 
-#include <qpaintdevicemetrics.h>
+#include <tqpaintdevicemetrics.h>
 
 #include <kcmdlineargs.h>
 #include <dcopclient.h>
@@ -61,10 +61,10 @@ KControlApp::KControlApp()
   // KUniqueApplication does dcop regitration for us
   ModuleIface *modIface = new ModuleIface(toplevel, "moduleIface");
 
-  connect (modIface, SIGNAL(helpClicked()), toplevel, SLOT(slotHelpRequest()));
-  connect (modIface, SIGNAL(handbookClicked()), toplevel, SLOT(slotHandbookRequest()));
+  connect (modIface, TQT_SIGNAL(helpClicked()), toplevel, TQT_SLOT(slotHelpRequest()));
+  connect (modIface, TQT_SIGNAL(handbookClicked()), toplevel, TQT_SLOT(slotHandbookRequest()));
 
-  QRect desk = KGlobalSettings::desktopGeometry(toplevel);
+  TQRect desk = KGlobalSettings::desktopGeometry(toplevel);
   KConfig *config = KGlobal::config();
   config->setGroup("General");
   // Initial size is:
@@ -73,13 +73,13 @@ KControlApp::KControlApp()
   // 800x600 on 72 dpi, 12 pt font
   // --> 368 + 6 x dpiX, 312 + 4 x dpiY
   // Adjusted for font size
-  QPaintDeviceMetrics pdm(toplevel);
+  TQPaintDeviceMetrics pdm(toplevel);
   int fontSize = toplevel->fontInfo().pointSize();
   if (fontSize == 0)
     fontSize = (toplevel->fontInfo().pixelSize() * 72) / pdm.logicalDpiX();
-  int x = config->readNumEntry(QString::fromLatin1("InitialWidth %1").arg(desk.width()), 
+  int x = config->readNumEntry(TQString::fromLatin1("InitialWidth %1").arg(desk.width()), 
 			       QMIN( desk.width(), 368 + (6*pdm.logicalDpiX()*fontSize)/12 ) );
-  int y = config->readNumEntry(QString::fromLatin1("InitialHeight %1").arg(desk.height()), 
+  int y = config->readNumEntry(TQString::fromLatin1("InitialHeight %1").arg(desk.height()), 
 			       QMIN( desk.height(), 312 + (4*pdm.logicalDpiX()*fontSize)/12 ) );
   toplevel->resize(x,y);
 }
@@ -90,9 +90,9 @@ KControlApp::~KControlApp()
     {
       KConfig *config = KGlobal::config();
       config->setGroup("General");
-      QWidget *desk = QApplication::desktop();
-      config->writeEntry(QString::fromLatin1("InitialWidth %1").arg(desk->width()), toplevel->width());
-      config->writeEntry(QString::fromLatin1("InitialHeight %1").arg(desk->height()), toplevel->height());
+      TQWidget *desk = TQApplication::desktop();
+      config->writeEntry(TQString::fromLatin1("InitialWidth %1").arg(desk->width()), toplevel->width());
+      config->writeEntry(TQString::fromLatin1("InitialHeight %1").arg(desk->height()), toplevel->height());
       config->sync();
     }
   delete toplevel;
@@ -109,7 +109,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
     KCONTROL_VERSION, I18N_NOOP("The KDE Info Center"), KAboutData::License_GPL,
     I18N_NOOP("(c) 1998-2004, The KDE Control Center Developers"));
 
-  QCString argv_0 = argv[0];
+  TQCString argv_0 = argv[0];
   KAboutData *aboutData;
   if (argv_0.right(11) == "kinfocenter")
   {

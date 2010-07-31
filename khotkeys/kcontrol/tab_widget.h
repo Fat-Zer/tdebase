@@ -11,7 +11,7 @@
 #ifndef _TAB_WIDGET_H_
 #define _TAB_WIDGET_H_
 
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 
 #include <actions.h>
 
@@ -35,7 +35,7 @@ class Tab_widget
             TYPE_ACTIVATE_WINDOW_SHORTCUT,
             TYPE_END
             };
-        Tab_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Tab_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         virtual ~Tab_widget();
         void set_action_type( action_type_t type_P, bool force_P = false );
         void save_current_action_changes();
@@ -54,7 +54,7 @@ class Tab_widget
             TAB_GENERAL, TAB_GROUP_GENERAL,
             TAB_TRIGGERS, TAB_SHORTCUT_TRIGGER, TAB_GESTURE_TRIGGER, TAB_ACTIONS, TAB_COMMAND_URL,
             TAB_MENUENTRY, TAB_DCOP, TAB_KEYBOARD_INPUT, TAB_WINDOW, TAB_CONDITIONS, TAB_VOICE_SETTINGS, TAB_END };
-        QWidget* pages[ TAB_END ];
+        TQWidget* pages[ TAB_END ];
         enum tab_show_type_t { NONE, DATA, GROUP };
         tab_show_type_t current_type;
         action_type_t current_data_type;

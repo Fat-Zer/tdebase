@@ -18,10 +18,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  */
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
 
 #include <dcopclient.h>
 
@@ -33,10 +33,10 @@
 #include "kcmsmserver.h"
 #include "smserverconfigimpl.h"
 
-typedef KGenericFactory<SMServerConfig, QWidget > SMSFactory;
+typedef KGenericFactory<SMServerConfig, TQWidget > SMSFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_smserver, SMSFactory("kcmsmserver") )
 
-SMServerConfig::SMServerConfig( QWidget *parent, const char* name, const QStringList & )
+SMServerConfig::SMServerConfig( TQWidget *parent, const char* name, const TQStringList & )
   : KCModule (SMSFactory::instance(), parent, name)
 {
     setQuickHelp( i18n("<h1>Session Manager</h1>"
@@ -46,9 +46,9 @@ SMServerConfig::SMServerConfig( QWidget *parent, const char* name, const QString
     " and whether the computer should be automatically shut down after session"
     " exit by default."));
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    TQVBoxLayout *topLayout = new TQVBoxLayout(this);
     dialog = new SMServerConfigImpl(this);
-    connect(dialog, SIGNAL(changed()), SLOT(changed()));
+    connect(dialog, TQT_SIGNAL(changed()), TQT_SLOT(changed()));
 
     dialog->show();
     topLayout->add(dialog);
@@ -71,7 +71,7 @@ void SMServerConfig::load(bool useDefaults )
   dialog->offerShutdownCheck->setChecked(en);
   dialog->sdGroup->setEnabled(en);
 
-  QString s = c->readEntry( "loginMode" );
+  TQString s = c->readEntry( "loginMode" );
   if ( s == "default" )
       dialog->emptySessionRadio->setChecked(true);
   else if ( s == "restoreSavedSession" )
@@ -103,7 +103,7 @@ void SMServerConfig::save()
   c->setGroup("General");
   c->writeEntry( "confirmLogout", dialog->confirmLogoutCheck->isChecked());
   c->writeEntry( "offerShutdown", dialog->offerShutdownCheck->isChecked());
-  QString s = "restorePreviousLogout";
+  TQString s = "restorePreviousLogout";
   if ( dialog->emptySessionRadio->isChecked() )
       s = "default";
   else if ( dialog->savedSessionRadio->isChecked() )
@@ -121,7 +121,7 @@ void SMServerConfig::save()
   delete c;
 
   // update the k menu if necessary
-  QByteArray data;
+  TQByteArray data;
   kapp->dcopClient()->send( "kicker", "kicker", "configure()", data );
 }
 

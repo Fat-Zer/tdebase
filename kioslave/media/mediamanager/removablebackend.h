@@ -21,10 +21,10 @@
 
 #include "backendbase.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
-class RemovableBackend : public QObject, public BackendBase
+class RemovableBackend : public TQObject, public BackendBase
 {
 Q_OBJECT
 
@@ -32,21 +32,21 @@ public:
 	RemovableBackend(MediaList &list);
 	virtual ~RemovableBackend();
 
-	bool plug(const QString &devNode, const QString &label);
-	bool unplug(const QString &devNode);
-	bool camera(const QString &devNode);
+	bool plug(const TQString &devNode, const TQString &label);
+	bool unplug(const TQString &devNode);
+	bool camera(const TQString &devNode);
 
 private slots:
-	void slotDirty(const QString &path);
+	void slotDirty(const TQString &path);
 
 private:
 	void handleMtabChange();
 
-	static QString generateId(const QString &devNode);
-	static QString generateName(const QString &devNode);
+	static TQString generateId(const TQString &devNode);
+	static TQString generateName(const TQString &devNode);
 
-	QStringList m_removableIds;
-	QStringList m_mtabIds;
+	TQStringList m_removableIds;
+	TQStringList m_mtabIds;
 };
 
 #endif

@@ -19,7 +19,7 @@
 #include "kcm.h"
 
 #include <kglobal.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <dcopclient.h>
@@ -28,7 +28,7 @@
 #include "ruleslist.h"
 
 extern "C"
-    KDE_EXPORT KCModule *create_kwinrules( QWidget *parent, const char *name )
+    KDE_EXPORT KCModule *create_kwinrules( TQWidget *parent, const char *name )
     {
     //CT there's need for decision: kwm or kwin?
     KGlobal::locale()->insertCatalogue( "kcmkwinrules" );
@@ -38,14 +38,14 @@ extern "C"
 namespace KWinInternal
 {
 
-KCMRules::KCMRules( QWidget *parent, const char *name )
+KCMRules::KCMRules( TQWidget *parent, const char *name )
 : KCModule( parent, name )
 , config( "kwinrulesrc" )
     {
-    QVBoxLayout *layout = new QVBoxLayout( this );
+    TQVBoxLayout *layout = new TQVBoxLayout( this );
     widget = new KCMRulesList( this );
     layout->addWidget( widget );
-    connect( widget, SIGNAL( changed( bool )), SLOT( moduleChanged( bool )));
+    connect( widget, TQT_SIGNAL( changed( bool )), TQT_SLOT( moduleChanged( bool )));
     KAboutData *about = new KAboutData(I18N_NOOP( "kcmkwinrules" ),
         I18N_NOOP( "Window-Specific Settings Configuration Module" ),
         0, 0, KAboutData::License_GPL, I18N_NOOP( "(c) 2004 KWin and KControl Authors" ));
@@ -76,7 +76,7 @@ void KCMRules::defaults()
     widget->defaults();
     }
 
-QString KCMRules::quickHelp() const
+TQString KCMRules::quickHelp() const
     {
     return i18n("<h1>Window-specific Settings</h1> Here you can customize window settings specifically only"
         " for some windows."

@@ -20,8 +20,8 @@
 #ifndef _NOTIFIERSETTINGS_H_
 #define _NOTIFIERSETTINGS_H_
 
-#include <qvaluelist.h>
-#include <qmap.h>
+#include <tqvaluelist.h>
+#include <tqmap.h>
 
 #include "notifieraction.h"
 #include "notifierserviceaction.h"
@@ -33,31 +33,31 @@ public:
 	NotifierSettings();
 	~NotifierSettings();
 
-	QValueList<NotifierAction*> actions();
-	QValueList<NotifierAction*> actionsForMimetype( const QString &mimetype );
+	TQValueList<NotifierAction*> actions();
+	TQValueList<NotifierAction*> actionsForMimetype( const TQString &mimetype );
 	
 	bool addAction( NotifierServiceAction *action );
 	bool deleteAction( NotifierServiceAction *action );
 
-	void setAutoAction( const QString &mimetype, NotifierAction *action );
-	void resetAutoAction( const QString &mimetype );
+	void setAutoAction( const TQString &mimetype, NotifierAction *action );
+	void resetAutoAction( const TQString &mimetype );
 	void clearAutoActions();
-	NotifierAction *autoActionForMimetype( const QString &mimetype );
+	NotifierAction *autoActionForMimetype( const TQString &mimetype );
 
-	const QStringList &supportedMimetypes();
+	const TQStringList &supportedMimetypes();
 	
 	void reload();
 	void save();
 	
 private:
-	QValueList<NotifierServiceAction*> listServices( const QString &mimetype = QString() ) const;
-	bool shouldLoadActions( KDesktopFile &desktop, const QString &mimetype ) const;
-	QValueList<NotifierServiceAction*> loadActions( KDesktopFile &desktop ) const;
+	TQValueList<NotifierServiceAction*> listServices( const TQString &mimetype = TQString() ) const;
+	bool shouldLoadActions( KDesktopFile &desktop, const TQString &mimetype ) const;
+	TQValueList<NotifierServiceAction*> loadActions( KDesktopFile &desktop ) const;
 
-	QStringList m_supportedMimetypes;
-	QValueList<NotifierAction*> m_actions;
-	QValueList<NotifierServiceAction*> m_deletedActions;
-	QMap<QString,NotifierAction*> m_idMap;
-	QMap<QString,NotifierAction*> m_autoMimetypesMap;
+	TQStringList m_supportedMimetypes;
+	TQValueList<NotifierAction*> m_actions;
+	TQValueList<NotifierServiceAction*> m_deletedActions;
+	TQMap<TQString,NotifierAction*> m_idMap;
+	TQMap<TQString,NotifierAction*> m_autoMimetypesMap;
 };
 #endif

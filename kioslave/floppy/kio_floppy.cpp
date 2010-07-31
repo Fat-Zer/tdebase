@@ -36,9 +36,9 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-#include <qtextstream.h>
-#include <qcstring.h>
-#include <qfile.h>
+#include <tqtextstream.h>
+#include <tqcstring.h>
+#include <tqfile.h>
 
 #include "kio_floppy.h"
 
@@ -67,12 +67,12 @@ int kdemain( int argc, char **argv )
   return 0;
 }
 
-void getDriveAndPath(const QString& path, QString& drive, QString& rest)
+void getDriveAndPath(const TQString& path, TQString& drive, TQString& rest)
 {
-   drive=QString::null;
-   rest=QString::null;
-   QStringList list=QStringList::split("/",path);
-   for (QStringList::Iterator it=list.begin(); it!=list.end(); it++)
+   drive=TQString::null;
+   rest=TQString::null;
+   TQStringList list=TQStringList::split("/",path);
+   for (TQStringList::Iterator it=list.begin(); it!=list.end(); it++)
    {
       if (it==list.begin())
          drive=(*it)+":";
@@ -81,7 +81,7 @@ void getDriveAndPath(const QString& path, QString& drive, QString& rest)
    }
 }
 
-FloppyProtocol::FloppyProtocol (const QCString &pool, const QCString &app )
+FloppyProtocol::FloppyProtocol (const TQCString &pool, const TQCString &app )
 :SlaveBase( "floppy", pool, app )
 ,m_mtool(0)
 ,m_stdoutBuffer(0)
@@ -185,15 +185,15 @@ void FloppyProtocol::terminateBuffers()
    //kdDebug(7101)<<"Floppy::terminateBuffers() ends"<<endl;
 }
 
-bool FloppyProtocol::stopAfterError(const KURL& url, const QString& drive)
+bool FloppyProtocol::stopAfterError(const KURL& url, const TQString& drive)
 {
    if (m_stderrSize==0)
       return true;
    //m_stderrBuffer[m_stderrSize]='\0';
 
-   QString outputString(m_stderrBuffer);
-   QTextIStream output(&outputString);
-   QString line=output.readLine();
+   TQString outputString(m_stderrBuffer);
+   TQTextIStream output(&outputString);
+   TQString line=output.readLine();
    kdDebug(7101)<<"line: -"<<line<<"-"<<endl;
    if (line.find("resource busy") > -1)
    {
@@ -255,7 +255,7 @@ void FloppyProtocol::listDir( const KURL& _url)
 {
    kdDebug(7101)<<"Floppy::listDir() "<<_url.path()<<endl;
    KURL url(_url);
-   QString path(url.path());
+   TQString path(url.path());
 
    if ((path.isEmpty()) || (path=="/"))
    {
@@ -264,11 +264,11 @@ void FloppyProtocol::listDir( const KURL& _url)
       finished();
       return;
    }
-   QString drive;
-   QString floppyPath;
+   TQString drive;
+   TQString floppyPath;
    getDriveAndPath(path,drive,floppyPath);
 
-   QStringList args;
+   TQStringList args;
 
    args<<"mdir"<<"-a"<<(drive+floppyPath);
    if (m_mtool!=0)
@@ -318,9 +318,9 @@ void FloppyProtocol::listDir( const KURL& _url)
    if (errorOccured)
       return;
 
-   QString outputString(m_stdoutBuffer);
-   QTextIStream output(&outputString);
-   QString line;
+   TQString outputString(m_stdoutBuffer);
+   TQTextIStream output(&outputString);
+   TQString line;
 
    int totalNumber(0);
    int mode(0);
@@ -363,7 +363,7 @@ void FloppyProtocol::listDir( const KURL& _url)
    //kdDebug(7101)<<"Floppy::listDir() ends"<<endl;
 }
 
-void FloppyProtocol::errorMissingMToolsProgram(const QString& name)
+void FloppyProtocol::errorMissingMToolsProgram(const TQString& name)
 {
      error(KIO::ERR_SLAVE_DEFINED,i18n("Could not start program \"%1\".\nEnsure that the mtools package is installed correctly on your system.").arg(name));
  }
@@ -392,14 +392,14 @@ void FloppyProtocol::createUDSEntry(const StatInfo& info, UDSEntry& entry)
    entry.append( atom );
 }
 
-StatInfo FloppyProtocol::createStatInfo(const QString line, bool makeStat, const QString& dirName)
+StatInfo FloppyProtocol::createStatInfo(const TQString line, bool makeStat, const TQString& dirName)
 {
    //kdDebug(7101)<<"Floppy::createUDSEntry()"<<endl;
-   QString name;
-   QString size;
+   TQString name;
+   TQString size;
    bool isDir(false);
-   QString day,month, year;
-   QString hour, minute;
+   TQString day,month, year;
+   TQString hour, minute;
    StatInfo info;
 
    if (line.length()==41)
@@ -409,7 +409,7 @@ StatInfo FloppyProtocol::createStatInfo(const QString line, bool makeStat, const
       if (nameLength>0)
       {
          name=line.mid(0,nameLength);
-         QString ext=line.mid(9,3);
+         TQString ext=line.mid(9,3);
          ext=ext.stripWhiteSpace();
          if (!ext.isEmpty())
             name+="."+ext;
@@ -470,7 +470,7 @@ StatInfo FloppyProtocol::createStatInfo(const QString line, bool makeStat, const
    info.name=name;
    info.size=size.toInt();
 
-   QDateTime date(QDate(year.toInt(),month.toInt(),day.toInt()),QTime(hour.toInt(),minute.toInt()));
+   TQDateTime date(TQDate(year.toInt(),month.toInt(),day.toInt()),TQTime(hour.toInt(),minute.toInt()));
    info.time=date.toTime_t();
 
    if (isDir)
@@ -489,9 +489,9 @@ StatInfo FloppyProtocol::_stat(const KURL& url)
 {
    StatInfo info;
 
-   QString path(url.path());
-   QString drive;
-   QString floppyPath;
+   TQString path(url.path());
+   TQString drive;
+   TQString floppyPath;
    getDriveAndPath(path,drive,floppyPath);
 
    if (floppyPath.isEmpty())
@@ -511,7 +511,7 @@ StatInfo FloppyProtocol::_stat(const KURL& url)
    if (m_mtool!=0)
       delete m_mtool;
 
-   QStringList args;
+   TQStringList args;
    args<<"mdir"<<"-a"<<(drive+floppyPath);
 
    //kdDebug(7101)<<"Floppy::_stat(): create m_mtool"<<endl;
@@ -573,9 +573,9 @@ StatInfo FloppyProtocol::_stat(const KURL& url)
    }
 
    kdDebug(7101)<<"Floppy::_stat(): parse stuff"<<endl;
-   QString outputString(m_stdoutBuffer);
-   QTextIStream output(&outputString);
-   QString line;
+   TQString outputString(m_stdoutBuffer);
+   TQTextIStream output(&outputString);
+   TQString line;
    for (int lineNumber=0; !output.atEnd(); lineNumber++)
    {
       line=output.readLine();
@@ -593,16 +593,16 @@ StatInfo FloppyProtocol::_stat(const KURL& url)
 
 int FloppyProtocol::freeSpace(const KURL& url)
 {
-   QString path(url.path());
-   QString drive;
-   QString floppyPath;
+   TQString path(url.path());
+   TQString drive;
+   TQString floppyPath;
    getDriveAndPath(path,drive,floppyPath);
 
    //kdDebug(7101)<<"Floppy::freeSpace(): delete m_mtool"<<endl;
    if (m_mtool!=0)
       delete m_mtool;
 
-   QStringList args;
+   TQStringList args;
    args<<"mdir"<<"-a"<<drive;
 
    //kdDebug(7101)<<"Floppy::freeSpace(): create m_mtool"<<endl;
@@ -662,16 +662,16 @@ int FloppyProtocol::freeSpace(const KURL& url)
    }
 
    kdDebug(7101)<<"Floppy::freeSpace(): parse stuff"<<endl;
-   QString outputString(m_stdoutBuffer);
-   QTextIStream output(&outputString);
-   QString line;
+   TQString outputString(m_stdoutBuffer);
+   TQTextIStream output(&outputString);
+   TQString line;
    int lineNumber(0);
    while (!output.atEnd())
    {
       line=output.readLine();
       if (line.find("bytes free")==36)
       {
-         QString tmp=line.mid(24,3);
+         TQString tmp=line.mid(24,3);
          tmp=tmp.stripWhiteSpace();
          tmp+=line.mid(28,3);
          tmp=tmp.stripWhiteSpace();
@@ -689,7 +689,7 @@ void FloppyProtocol::stat( const KURL & _url)
 {
    kdDebug(7101)<<"Floppy::stat() "<<_url.path()<<endl;
    KURL url(_url);
-   QString path(url.path());
+   TQString path(url.path());
 
    if ((path.isEmpty()) || (path=="/"))
    {
@@ -714,7 +714,7 @@ void FloppyProtocol::stat( const KURL & _url)
 void FloppyProtocol::mkdir( const KURL& url, int)
 {
    kdDebug(7101)<<"FloppyProtocol::mkdir()"<<endl;
-   QString path(url.path());
+   TQString path(url.path());
 
    if ((path.isEmpty()) || (path=="/"))
    {
@@ -724,8 +724,8 @@ void FloppyProtocol::mkdir( const KURL& url, int)
       finished();
       return;
    }
-   QString drive;
-   QString floppyPath;
+   TQString drive;
+   TQString floppyPath;
    getDriveAndPath(path,drive,floppyPath);
    if (floppyPath.isEmpty())
    {
@@ -735,7 +735,7 @@ void FloppyProtocol::mkdir( const KURL& url, int)
    if (m_mtool!=0)
       delete m_mtool;
    //kdDebug(7101)<<"Floppy::stat(): create args"<<endl;
-   QStringList args;
+   TQStringList args;
 
    args<<"mmd"<<(drive+floppyPath);
    kdDebug(7101)<<"Floppy::mkdir(): executing: mmd -"<<(drive+floppyPath)<<"-"<<endl;
@@ -786,7 +786,7 @@ void FloppyProtocol::mkdir( const KURL& url, int)
 void FloppyProtocol::del( const KURL& url, bool isfile)
 {
    kdDebug(7101)<<"FloppyProtocol::del()"<<endl;
-   QString path(url.path());
+   TQString path(url.path());
 
    if ((path.isEmpty()) || (path=="/"))
    {
@@ -796,8 +796,8 @@ void FloppyProtocol::del( const KURL& url, bool isfile)
       finished();
       return;
    }
-   QString drive;
-   QString floppyPath;
+   TQString drive;
+   TQString floppyPath;
    getDriveAndPath(path,drive,floppyPath);
    if (floppyPath.isEmpty())
    {
@@ -808,7 +808,7 @@ void FloppyProtocol::del( const KURL& url, bool isfile)
    if (m_mtool!=0)
       delete m_mtool;
    //kdDebug(7101)<<"Floppy::stat(): create args"<<endl;
-   QStringList args;
+   TQStringList args;
    
    bool usingmdel;
 
@@ -823,14 +823,14 @@ void FloppyProtocol::del( const KURL& url, bool isfile)
       usingmdel=false;
    }
 
-   kdDebug(7101)<<"Floppy::del(): executing: " << (usingmdel ? QString("mdel") : QString("mrd") ) << "-"<<(drive+floppyPath)<<"-"<<endl;
+   kdDebug(7101)<<"Floppy::del(): executing: " << (usingmdel ? TQString("mdel") : TQString("mrd") ) << "-"<<(drive+floppyPath)<<"-"<<endl;
 
    m_mtool=new Program(args);
    if (!m_mtool->start())
    {
       delete m_mtool;
       m_mtool=0;
-      errorMissingMToolsProgram(usingmdel ? QString("mdel") : QString("mrd"));
+      errorMissingMToolsProgram(usingmdel ? TQString("mdel") : TQString("mrd"));
       return;
    }
 
@@ -870,8 +870,8 @@ void FloppyProtocol::del( const KURL& url, bool isfile)
 
 void FloppyProtocol::rename( const KURL &src, const KURL &dest, bool _overwrite )
 {
-   QString srcPath(src.path());
-   QString destPath(dest.path());
+   TQString srcPath(src.path());
+   TQString destPath(dest.path());
 
    kdDebug(7101)<<"Floppy::rename() -"<<srcPath<<"- to -"<<destPath<<"-"<<endl;
 
@@ -881,8 +881,8 @@ void FloppyProtocol::rename( const KURL &src, const KURL &dest, bool _overwrite 
    if ((destPath.isEmpty()) || (destPath=="/"))
       destPath="/a/";
 
-   QString srcDrive;
-   QString srcFloppyPath;
+   TQString srcDrive;
+   TQString srcFloppyPath;
    getDriveAndPath(srcPath,srcDrive,srcFloppyPath);
    if (srcFloppyPath.isEmpty())
    {
@@ -890,8 +890,8 @@ void FloppyProtocol::rename( const KURL &src, const KURL &dest, bool _overwrite 
       return;
    }
 
-   QString destDrive;
-   QString destFloppyPath;
+   TQString destDrive;
+   TQString destFloppyPath;
    getDriveAndPath(destPath,destDrive,destFloppyPath);
    if (destFloppyPath.isEmpty())
    {
@@ -902,7 +902,7 @@ void FloppyProtocol::rename( const KURL &src, const KURL &dest, bool _overwrite 
    if (m_mtool!=0)
       delete m_mtool;
    //kdDebug(7101)<<"Floppy::stat(): create args"<<endl;
-   QStringList args;
+   TQStringList args;
 
    if (_overwrite)
       args<<"mren"<<"-o"<<(srcDrive+srcFloppyPath)<<(destDrive+destFloppyPath);
@@ -956,7 +956,7 @@ void FloppyProtocol::rename( const KURL &src, const KURL &dest, bool _overwrite 
 
 void FloppyProtocol::get( const KURL& url )
 {
-   QString path(url.path());
+   TQString path(url.path());
    kdDebug(7101)<<"Floppy::get() -"<<path<<"-"<<endl;
 
    if ((path.isEmpty()) || (path=="/"))
@@ -974,8 +974,8 @@ void FloppyProtocol::get( const KURL& url )
 
    totalSize( info.size);
 
-   QString drive;
-   QString floppyPath;
+   TQString drive;
+   TQString floppyPath;
    getDriveAndPath(path,drive,floppyPath);
    if (floppyPath.isEmpty())
    {
@@ -986,7 +986,7 @@ void FloppyProtocol::get( const KURL& url )
    if (m_mtool!=0)
       delete m_mtool;
    //kdDebug(7101)<<"Floppy::stat(): create args"<<endl;
-   QStringList args;
+   TQStringList args;
    args<<"mcopy"<<(drive+floppyPath)<<"-";
 
    kdDebug(7101)<<"Floppy::get(): executing: mcopy -"<<(drive+floppyPath)<<"-"<<endl;
@@ -1003,7 +1003,7 @@ void FloppyProtocol::get( const KURL& url )
    clearBuffers();
    int result;
    int bytesRead(0);
-   QByteArray array;
+   TQByteArray array;
    bool loopFinished(false);
    bool errorOccured(false);
    do
@@ -1050,13 +1050,13 @@ void FloppyProtocol::get( const KURL& url )
       return;
 
    //kdDebug(7101)<<"Floppy::get(): finishing"<<endl;
-   data( QByteArray() );
+   data( TQByteArray() );
    finished();
 }
 
 void FloppyProtocol::put( const KURL& url, int , bool overwrite, bool )
 {
-   QString path(url.path());
+   TQString path(url.path());
    kdDebug(7101)<<"Floppy::put() -"<<path<<"-"<<endl;
 
    if ((path.isEmpty()) || (path=="/"))
@@ -1067,8 +1067,8 @@ void FloppyProtocol::put( const KURL& url, int , bool overwrite, bool )
       finished();
       return;
    }
-   QString drive;
-   QString floppyPath;
+   TQString drive;
+   TQString floppyPath;
    getDriveAndPath(path,drive,floppyPath);
    if (floppyPath.isEmpty())
    {
@@ -1082,7 +1082,7 @@ void FloppyProtocol::put( const KURL& url, int , bool overwrite, bool )
    if (m_mtool!=0)
       delete m_mtool;
    //kdDebug(7101)<<"Floppy::stat(): create args"<<endl;
-   QStringList args;
+   TQStringList args;
    if (overwrite)
       args<<"mcopy"<<"-o"<<"-"<<(drive+floppyPath);
    else
@@ -1103,7 +1103,7 @@ void FloppyProtocol::put( const KURL& url, int , bool overwrite, bool )
    clearBuffers();
    int result(0);
    int bytesRead(0);
-   QByteArray array;
+   TQByteArray array;
 
    //from file.cc
    // Loop until we got 0 (end of data)
@@ -1129,7 +1129,7 @@ void FloppyProtocol::put( const KURL& url, int , bool overwrite, bool )
       }
       else
       {
-         QByteArray buffer;
+         TQByteArray buffer;
          dataReq(); // Request for data
          //kdDebug(7101)<<"Floppy::put(): after dataReq()"<<endl;
          result = readData( buffer );

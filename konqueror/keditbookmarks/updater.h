@@ -35,7 +35,7 @@ public:
     ~FavIconWebGrabber() {}
 
 protected slots:
-    void slotMimetype(KIO::Job *job, const QString &_type);
+    void slotMimetype(KIO::Job *job, const TQString &_type);
     void slotFinished(KIO::Job *job);
 
 private:
@@ -50,13 +50,13 @@ class FavIconUpdater : public KonqFavIconMgr
     Q_OBJECT
 
 public:
-    FavIconUpdater(QObject *parent, const char *name);
+    FavIconUpdater(TQObject *parent, const char *name);
     ~FavIconUpdater();
     void downloadIcon(const KBookmark &bk);
     void downloadIconActual(const KBookmark &bk);
 
-    virtual void notifyChange(bool isHost, QString hostOrURL, 
-                              QString iconName);
+    virtual void notifyChange(bool isHost, TQString hostOrURL, 
+                              TQString iconName);
 
 protected slots:
     void setIconURL(const KURL &iconURL);
@@ -71,7 +71,7 @@ private:
     KParts::ReadOnlyPart *m_part;
     FavIconBrowserInterface *m_browserIface;
     FavIconWebGrabber *m_webGrabber;
-    QTimer *m_timer;
+    TQTimer *m_timer;
     KBookmark m_bk;
 };
 

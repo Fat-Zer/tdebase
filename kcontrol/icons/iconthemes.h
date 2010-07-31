@@ -20,7 +20,7 @@
 #define ICONTHEMES_H
 
 #include <kcmodule.h>
-#include <qmap.h>
+#include <tqmap.h>
 #include <klistview.h>
 
 class QPushButton;
@@ -34,12 +34,12 @@ class IconThemesConfig : public KCModule
   Q_OBJECT
 
 public:
-  IconThemesConfig(QWidget *parent = 0L, const char *name = 0L);
+  IconThemesConfig(TQWidget *parent = 0L, const char *name = 0L);
   virtual ~IconThemesConfig();
 
   void loadThemes();
-  bool installThemes(const QStringList &themes, const QString &archiveName);
-  QStringList findThemeDirs(const QString &archiveName);
+  bool installThemes(const TQStringList &themes, const TQString &archiveName);
+  TQStringList findThemeDirs(const TQString &archiveName);
 
   void updateRemoveButton();
 
@@ -50,21 +50,21 @@ public:
   int buttons();
 
 protected slots:
-  void themeSelected(QListViewItem *item);
+  void themeSelected(TQListViewItem *item);
   void installNewTheme();
   void removeSelectedTheme();
 
 private:
-  QListViewItem *iconThemeItem(const QString &name);
+  TQListViewItem *iconThemeItem(const TQString &name);
 
   KListView *m_iconThemes;
-  QPushButton *m_removeButton;
+  TQPushButton *m_removeButton;
 
-  QLabel *m_previewExec;
-  QLabel *m_previewFolder;
-  QLabel *m_previewDocument;
-  QListViewItem *m_defaultTheme;
-  QMap <QString, QString>m_themeNames;
+  TQLabel *m_previewExec;
+  TQLabel *m_previewFolder;
+  TQLabel *m_previewDocument;
+  TQListViewItem *m_defaultTheme;
+  TQMap <TQString, TQString>m_themeNames;
   bool m_bChanged;
 };
 

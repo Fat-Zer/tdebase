@@ -23,7 +23,7 @@
 #ifndef _KNOTIFY_H
 #define _KNOTIFY_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kcmodule.h>
 #include <kdialogbase.h>
@@ -49,7 +49,7 @@ class KCMKNotify : public KCModule
     Q_OBJECT
 
 public:
-    KCMKNotify(QWidget *parent, const char *name, const QStringList &);
+    KCMKNotify(TQWidget *parent, const char *name, const TQStringList &);
     virtual ~KCMKNotify();
 
     virtual void defaults();
@@ -60,11 +60,11 @@ public slots:
     virtual void load();
 
 private slots:
-    void slotAppActivated( const QString& app );
+    void slotAppActivated( const TQString& app );
     void slotPlayerSettings();
 
 private:
-    KNotify::Application *applicationByDescription( const QString& text );
+    KNotify::Application *applicationByDescription( const TQString& text );
 
     KComboBox *m_appCombo;
     KNotify::KNotifyWidget *m_notifyWidget;
@@ -77,7 +77,7 @@ class PlayerSettingsDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    PlayerSettingsDialog( QWidget *parent, bool modal );
+    PlayerSettingsDialog( TQWidget *parent, bool modal );
     void load( bool useDefaults );
     void save();
 

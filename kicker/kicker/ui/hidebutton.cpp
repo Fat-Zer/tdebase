@@ -20,7 +20,7 @@
 
 #include "hidebutton.h"
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #include <kapplication.h>
 #include <kcursor.h>
@@ -31,15 +31,15 @@
 #include <kipc.h>
 #include <kstandarddirs.h>
 
-HideButton::HideButton(QWidget *parent, const char *name)
-    : QButton(parent, name),
+HideButton::HideButton(TQWidget *parent, const char *name)
+    : TQButton(parent, name),
       m_highlight(false),
       m_arrow(Qt::LeftArrow)
 {
     setBackgroundOrigin(AncestorOrigin);
 
-    connect(kapp, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)));
-    connect(kapp, SIGNAL(iconChanged(int)), SLOT(slotIconChanged(int)));
+    connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
+    connect(kapp, TQT_SIGNAL(iconChanged(int)), TQT_SLOT(slotIconChanged(int)));
 
     kapp->addKipcEventMask(KIPC::SettingsChanged);
     kapp->addKipcEventMask(KIPC::IconChanged);
@@ -47,7 +47,7 @@ HideButton::HideButton(QWidget *parent, const char *name)
     slotSettingsChanged(KApplication::SETTINGS_MOUSE);
 }
 
-void HideButton::drawButton(QPainter *p)
+void HideButton::drawButton(TQPainter *p)
 {
     if (m_arrow == Qt::LeftArrow)
     {
@@ -73,18 +73,18 @@ void HideButton::drawButton(QPainter *p)
     drawButtonLabel(p);
 }
 
-void HideButton::drawButtonLabel(QPainter *p)
+void HideButton::drawButtonLabel(TQPainter *p)
 {
     if (pixmap())
     {
-        QPixmap pix = m_highlight? m_activeIcon : m_normalIcon;
+        TQPixmap pix = m_highlight? m_activeIcon : m_normalIcon;
 
         if (isOn() || isDown())
         {
             p->translate(2, 2);
         }
 
-        QPoint origin(2, 2);
+        TQPoint origin(2, 2);
 
         if (pix.height() < (height() - 4))
         {
@@ -100,9 +100,9 @@ void HideButton::drawButtonLabel(QPainter *p)
     }
 }
 
-void HideButton::setPixmap(const QPixmap &pix)
+void HideButton::setPixmap(const TQPixmap &pix)
 {
-    QButton::setPixmap(pix);
+    TQButton::setPixmap(pix);
     generateIcons();
 }
 
@@ -137,8 +137,8 @@ void HideButton::generateIcons()
         return;
     }
 
-    QImage image = pixmap()->convertToImage();
-    image = image.smoothScale(size() - QSize(4, 4), QImage::ScaleMin);
+    TQImage image = pixmap()->convertToImage();
+    image = image.smoothScale(size() - TQSize(4, 4), TQImage::ScaleMin);
 
     KIconEffect effect;
 
@@ -176,23 +176,23 @@ void HideButton::slotIconChanged(int group)
     repaint(false);
 }
 
-void HideButton::enterEvent(QEvent *e)
+void HideButton::enterEvent(TQEvent *e)
 {
     m_highlight = true;
 
     repaint(false);
-    QButton::enterEvent(e);
+    TQButton::enterEvent(e);
 }
 
-void HideButton::leaveEvent(QEvent *e)
+void HideButton::leaveEvent(TQEvent *e)
 {
     m_highlight = false;
 
     repaint(false);
-    QButton::enterEvent(e);
+    TQButton::enterEvent(e);
 }
 
-void HideButton::resizeEvent(QResizeEvent *)
+void HideButton::resizeEvent(TQResizeEvent *)
 {
     generateIcons();
 }

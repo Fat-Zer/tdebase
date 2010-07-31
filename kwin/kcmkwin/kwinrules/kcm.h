@@ -36,11 +36,11 @@ class KCMRules
     {
     Q_OBJECT
     public:
-        KCMRules( QWidget *parent, const char *name );
+        KCMRules( TQWidget *parent, const char *name );
         virtual void load();
         virtual void save();
         virtual void defaults();
-        virtual QString quickHelp() const;
+        virtual TQString quickHelp() const;
     protected slots:
         void moduleChanged( bool state );
     private:

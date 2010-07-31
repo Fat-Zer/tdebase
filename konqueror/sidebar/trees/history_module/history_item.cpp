@@ -19,7 +19,7 @@
 #include <kbookmarkdrag.h>
 #include <kprotocolinfo.h>
 #include <konq_faviconmgr.h>
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #include <assert.h>
 
@@ -53,12 +53,12 @@ void KonqSidebarHistoryItem::update( const KonqHistoryEntry *entry )
     if (!entry)
         return;
 
-    QString title( entry->title );
+    TQString title( entry->title );
     if ( !title.stripWhiteSpace().isEmpty() &&
 	 title != entry->url.url() )
 	setText( 0, title );
     else {
-	QString path( entry->url.path() );
+	TQString path( entry->url.path() );
 	if ( path.isEmpty() )
 	    path += '/';
 	setText( 0, path );
@@ -66,10 +66,10 @@ void KonqSidebarHistoryItem::update( const KonqHistoryEntry *entry )
 
     KonqSidebarHistoryGroupItem *group = MYGROUP;
     assert(group);
-    QString path = entry->url.path();
+    TQString path = entry->url.path();
     if ( group->hasFavIcon() && (path.isNull() || path == "/") )
     {
-        const QPixmap *pm = group->pixmap(0);
+        const TQPixmap *pm = group->pixmap(0);
         if (pm)
 	    setPixmap( 0, *pm );
     }
@@ -91,9 +91,9 @@ void KonqSidebarHistoryItem::rightButtonPressed()
     MYMODULE->showPopupMenu();
 }
 
-QDragObject * KonqSidebarHistoryItem::dragObject( QWidget * parent, bool /*move*/ )
+TQDragObject * KonqSidebarHistoryItem::dragObject( TQWidget * parent, bool /*move*/ )
 {
-    QString icon = KonqFavIconMgr::iconForURL( m_entry->url.url() );
+    TQString icon = KonqFavIconMgr::iconForURL( m_entry->url.url() );
     KBookmark bookmark = KBookmark::standaloneBookmark( m_entry->title,
                                                         m_entry->url, icon );
     KBookmarkDrag *drag = KBookmarkDrag::newDrag( bookmark, parent );
@@ -101,35 +101,35 @@ QDragObject * KonqSidebarHistoryItem::dragObject( QWidget * parent, bool /*move*
 }
 
 // new items go on top
-QString KonqSidebarHistoryItem::key( int column, bool ascending ) const
+TQString KonqSidebarHistoryItem::key( int column, bool ascending ) const
 {
     if ( MYMODULE->sortsByName() )
 	return KonqSidebarTreeItem::key( column, ascending );
 
-    QString tmp;
+    TQString tmp;
     tmp.sprintf( "%08x", m_entry->lastVisited.secsTo(MYMODULE->currentTime()));
     return tmp;
 }
 
-QString KonqSidebarHistoryItem::toolTipText() const
+TQString KonqSidebarHistoryItem::toolTipText() const
 {
     if ( s_settings->m_detailedTips ) {
         // this weird ordering of %4, %1, %2, %3 is due to the reason, that some
         // urls seem to contain %N, which would get substituted in the next
         // .arg() calls. So to fix this, we first substitute the last items
         // and then put in the url.
-	QString tip = i18n("<qt><center><b>%4</b></center><hr>Last visited: %1<br>First visited: %2<br>Number of times visited: %3</qt>");
+	TQString tip = i18n("<qt><center><b>%4</b></center><hr>Last visited: %1<br>First visited: %2<br>Number of times visited: %3</qt>");
 	return tip.arg( KGlobal::locale()->formatDateTime( m_entry->lastVisited ) ).arg( KGlobal::locale()->formatDateTime( m_entry->firstVisited ) ).arg( m_entry->numberOfTimesVisited ).arg( m_entry->url.url() );
     }
 
     return m_entry->url.url();
 }
 
-void KonqSidebarHistoryItem::paintCell( QPainter *p, const QColorGroup & cg,
+void KonqSidebarHistoryItem::paintCell( TQPainter *p, const TQColorGroup & cg,
 				 int column, int width, int alignment )
 {
-    QDateTime dt;
-    QDateTime current = QDateTime::currentDateTime();
+    TQDateTime dt;
+    TQDateTime current = TQDateTime::currentDateTime();
 
     if ( s_settings->m_metricYoungerThan == KonqSidebarHistorySettings::DAYS )
 	dt = current.addDays( - s_settings->m_valueYoungerThan );
@@ -164,7 +164,7 @@ KonqSidebarHistoryGroupItem::KonqSidebarHistoryGroupItem( const KURL& url,
 {
 }
 
-void KonqSidebarHistoryGroupItem::setFavIcon( const QPixmap& pix )
+void KonqSidebarHistoryGroupItem::setFavIcon( const TQPixmap& pix )
 {
     setPixmap( 0, pix );
     m_hasFavIcon = true;
@@ -187,7 +187,7 @@ void KonqSidebarHistoryGroupItem::remove()
 
 KonqSidebarHistoryItem * KonqSidebarHistoryGroupItem::findChild(const KonqHistoryEntry *entry) const
 {
-    QListViewItem *child = firstChild();
+    TQListViewItem *child = firstChild();
     KonqSidebarHistoryItem *item = 0L;
 
     while ( child ) {
@@ -220,12 +220,12 @@ void KonqSidebarHistoryGroupItem::setOpen( bool open )
 }
 
 // new items go on top
-QString KonqSidebarHistoryGroupItem::key( int column, bool ascending ) const
+TQString KonqSidebarHistoryGroupItem::key( int column, bool ascending ) const
 {
     if ( !m_lastVisited.isValid() || MYMODULE->sortsByName() )
 	return KonqSidebarTreeItem::key( column, ascending );
 
-    QString tmp;
+    TQString tmp;
     tmp.sprintf( "%08x", m_lastVisited.secsTo( MYMODULE->currentTime() ));
     return tmp;
 }
@@ -236,10 +236,10 @@ void KonqSidebarHistoryGroupItem::itemUpdated( KonqSidebarHistoryItem *item )
 	m_lastVisited = item->lastVisited();
 }
 
-QDragObject * KonqSidebarHistoryGroupItem::dragObject( QWidget *parent, bool /*move*/)
+TQDragObject * KonqSidebarHistoryGroupItem::dragObject( TQWidget *parent, bool /*move*/)
 {
-    QString icon = KonqFavIconMgr::iconForURL( m_url.url() );
-    KBookmark bookmark = KBookmark::standaloneBookmark( QString::null, m_url,
+    TQString icon = KonqFavIconMgr::iconForURL( m_url.url() );
+    KBookmark bookmark = KBookmark::standaloneBookmark( TQString::null, m_url,
 							icon );
     KBookmarkDrag *drag = KBookmarkDrag::newDrag( bookmark, parent );
     return drag;

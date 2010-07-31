@@ -18,54 +18,54 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqspinbox.h>
 
 #include <kaccelmanager.h>
 #include <klocale.h>
 
 #include "KSGAppletSettings.h"
 
-KSGAppletSettings::KSGAppletSettings( QWidget *parent, const char *name )
-    : KDialogBase( parent, name, false, QString::null, Ok|Apply|Cancel, 
+KSGAppletSettings::KSGAppletSettings( TQWidget *parent, const char *name )
+    : KDialogBase( parent, name, false, TQString::null, Ok|Apply|Cancel, 
       Ok, true )
 {
   setCaption( i18n( "System Guard Settings" ) );
 
-  QWidget *page = new QWidget( this );
+  TQWidget *page = new TQWidget( this );
   setMainWidget( page );
 
-  QGridLayout *topLayout = new QGridLayout( page, 3, 2, KDialog::marginHint(),
+  TQGridLayout *topLayout = new TQGridLayout( page, 3, 2, KDialog::marginHint(),
                                             KDialog::spacingHint() ); 
 
-  QLabel *label = new QLabel( i18n( "Number of displays:" ), page );
+  TQLabel *label = new TQLabel( i18n( "Number of displays:" ), page );
   topLayout->addWidget( label, 0, 0 );
 
-  mNumDisplay = new QSpinBox( 1, 32, 1, page );
+  mNumDisplay = new TQSpinBox( 1, 32, 1, page );
   mNumDisplay->setValue(2);
   topLayout->addWidget( mNumDisplay, 0, 1 );
   label->setBuddy( mNumDisplay );
 
-  label = new QLabel( i18n( "Size ratio:" ), page );
+  label = new TQLabel( i18n( "Size ratio:" ), page );
   topLayout->addWidget( label, 1, 0 );
 
-  mSizeRatio = new QSpinBox( 50, 500, 50, page );
+  mSizeRatio = new TQSpinBox( 50, 500, 50, page );
   mSizeRatio->setSuffix( i18n( "%" ) );
   mSizeRatio->setValue(100);
   topLayout->addWidget( mSizeRatio, 1, 1 );
   label->setBuddy( mSizeRatio );
 
-  label = new QLabel( i18n( "Update interval:" ), page );
+  label = new TQLabel( i18n( "Update interval:" ), page );
   topLayout->addWidget( label, 2, 0 );
 
-  mInterval = new QSpinBox( 1, 300, 1, page );
+  mInterval = new TQSpinBox( 1, 300, 1, page );
   mInterval->setValue(2);
   mInterval->setSuffix( i18n( " sec" ) );
   topLayout->addWidget( mInterval, 2, 1 );
   label->setBuddy( mInterval );
 
-  resize( QSize( 250, 130 ).expandedTo( minimumSizeHint() ) );
+  resize( TQSize( 250, 130 ).expandedTo( minimumSizeHint() ) );
 
   KAcceleratorManager::manage( page );
 }

@@ -16,7 +16,7 @@
 
 #include "window_trigger_widget.h"
 
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 
 #include <triggers.h>
 #include <actions.h> 
@@ -28,19 +28,19 @@
 namespace KHotKeys
 {
 
-Window_trigger_widget::Window_trigger_widget( QWidget* parent_P, const char* name_P )
+Window_trigger_widget::Window_trigger_widget( TQWidget* parent_P, const char* name_P )
     : Window_trigger_widget_ui( parent_P, name_P )
     {
     clear_data();
     // KHotKeys::Module::changed()
-    connect( window_appears_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( window_disappears_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( window_activates_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( window_deactivates_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
+    connect( window_appears_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( window_disappears_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( window_activates_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( window_deactivates_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
     } 
 
 void Window_trigger_widget::clear_data()

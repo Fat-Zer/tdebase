@@ -22,28 +22,28 @@
 #include <kmultipledrag.h>
 #include <kurldrag.h>
 
-HistoryURLItem::HistoryURLItem( const KURL::List &_urls, QMap<QString, QString> _metaData, bool _cut )
+HistoryURLItem::HistoryURLItem( const KURL::List &_urls, TQMap<TQString, TQString> _metaData, bool _cut )
     : urls( _urls ), metaData( _metaData ), cut( _cut )
 {
 }
 
 /* virtual */
-void HistoryURLItem::write( QDataStream& stream ) const
+void HistoryURLItem::write( TQDataStream& stream ) const
 {
-    stream << QString( "url" ) << urls << metaData << (int)cut;
+    stream << TQString( "url" ) << urls << metaData << (int)cut;
 }
 
-QString HistoryURLItem::text() const {
+TQString HistoryURLItem::text() const {
     return urls.toStringList().join( " " );
 }
 
-QMimeSource* HistoryURLItem::mimeSource() const {
+TQMimeSource* HistoryURLItem::mimeSource() const {
     KMultipleDrag* drag = new KMultipleDrag;
     drag->addDragObject( new KURLDrag( urls, metaData ));
     // from KonqDrag (libkonq)
-    QStoredDrag* cutdrag = new QStoredDrag( "application/x-kde-cutselection" );
-    QByteArray a;
-    QCString s ( cut ? "1" : "0" );
+    TQStoredDrag* cutdrag = new TQStoredDrag( "application/x-kde-cutselection" );
+    TQByteArray a;
+    TQCString s ( cut ? "1" : "0" );
     a.resize( s.length() + 1 ); // trailing zero
     memcpy( a.data(), s.data(), s.length() + 1 );
     cutdrag->setEncodedData( a );

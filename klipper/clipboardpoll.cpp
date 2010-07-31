@@ -23,7 +23,7 @@
 #include "clipboardpoll.h"
 
 #include <kapplication.h>
-#include <qclipboard.h>
+#include <tqclipboard.h>
 #include <kdebug.h>
 #include <X11/Xatom.h>
 #include <time.h>
@@ -60,8 +60,8 @@
 
 extern Time qt_x_time;
 
-ClipboardPoll::ClipboardPoll( QWidget* parent )
-    :   QWidget( parent )
+ClipboardPoll::ClipboardPoll( TQWidget* parent )
+    :   TQWidget( parent )
     , xfixes_event_base( -1 )
 {
     hide();
@@ -111,9 +111,9 @@ ClipboardPoll::ClipboardPoll( QWidget* parent )
     
 void ClipboardPoll::initPolling()
 {
-    connect( kapp->clipboard(), SIGNAL( selectionChanged() ), SLOT(qtSelectionChanged()));
-    connect( kapp->clipboard(), SIGNAL( dataChanged() ), SLOT( qtClipboardChanged() ));
-    connect( &timer, SIGNAL( timeout()), SLOT( timeout()));
+    connect( kapp->clipboard(), TQT_SIGNAL( selectionChanged() ), TQT_SLOT(qtSelectionChanged()));
+    connect( kapp->clipboard(), TQT_SIGNAL( dataChanged() ), TQT_SLOT( qtClipboardChanged() ));
+    connect( &timer, TQT_SIGNAL( timeout()), TQT_SLOT( timeout()));
     timer.start( 1000, false );
     selection.atom = XA_PRIMARY;
     clipboard.atom = xa_clipboard;

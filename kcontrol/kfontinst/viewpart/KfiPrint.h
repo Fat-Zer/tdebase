@@ -40,8 +40,8 @@ class CFcEngine;
 
 namespace Print
 {
-extern void printItems(const QStringList &items, int size, QWidget *parent, CFcEngine &engine);
-extern bool printable(const QString &mime);
+extern void printItems(const TQStringList &items, int size, TQWidget *parent, CFcEngine &engine);
+extern bool printable(const TQString &mime);
 }
 
 }

@@ -23,8 +23,8 @@
 
 #include <kconfig.h>
 
-#include <qdict.h>
-#include <qobject.h>
+#include <tqdict.h>
+#include <tqobject.h>
 
 #include <SensorAgent.h>
 
@@ -53,32 +53,32 @@ class KDE_EXPORT SensorManager : public QObject
     SensorManager();
     ~SensorManager();
 
-    bool engageHost( const QString &hostName );
-    bool engage( const QString &hostName, const QString &shell = "ssh",
-                 const QString &command = "", int port = -1 );
+    bool engageHost( const TQString &hostName );
+    bool engage( const TQString &hostName, const TQString &shell = "ssh",
+                 const TQString &command = "", int port = -1 );
 
     void requestDisengage( const SensorAgent *agent );
     bool disengage( const SensorAgent *agent );
-    bool disengage( const QString &hostName );
-    bool resynchronize( const QString &hostName );
+    bool disengage( const TQString &hostName );
+    bool resynchronize( const TQString &hostName );
     void hostLost( const SensorAgent *agent );
-    void notify( const QString &msg ) const;
+    void notify( const TQString &msg ) const;
 
-    void setBroadcaster( QWidget *wdg );
+    void setBroadcaster( TQWidget *wdg );
 
-    virtual bool event( QEvent *event );
+    virtual bool event( TQEvent *event );
 
-    bool sendRequest( const QString &hostName, const QString &request,
+    bool sendRequest( const TQString &hostName, const TQString &request,
                       SensorClient *client, int id = 0 );
 
-    const QString hostName( const SensorAgent *sensor ) const;
-    bool hostInfo( const QString &host, QString &shell,
-                   QString &command, int &port );
+    const TQString hostName( const SensorAgent *sensor ) const;
+    bool hostInfo( const TQString &host, TQString &shell,
+                   TQString &command, int &port );
 
-    const QString& translateUnit( const QString &unit ) const;
-    const QString& translateSensorPath( const QString &path ) const;
-    const QString& translateSensorType( const QString &type ) const;
-    QString translateSensor(const QString& u) const;
+    const TQString& translateUnit( const TQString &unit ) const;
+    const TQString& translateSensorPath( const TQString &path ) const;
+    const TQString& translateSensorType( const TQString &type ) const;
+    TQString translateSensor(const TQString& u) const;
 
     void readProperties( KConfig *cfg );
     void saveProperties( KConfig *cfg );
@@ -90,33 +90,33 @@ class KDE_EXPORT SensorManager : public QObject
 
   signals:
     void update();
-    void hostConnectionLost( const QString &hostName );
+    void hostConnectionLost( const TQString &hostName );
 
   protected:
-    QDict<SensorAgent> mAgents;
+    TQDict<SensorAgent> mAgents;
 
   private:
     /**
       These dictionary stores the localized versions of the sensor
       descriptions and units.
      */
-    QDict<QString> mDescriptions;
-    QDict<QString> mUnits;
-    QDict<QString> mDict;
-    QDict<QString> mTypes;
+    TQDict<TQString> mDescriptions;
+    TQDict<TQString> mUnits;
+    TQDict<TQString> mDict;
+    TQDict<TQString> mTypes;
 
-    QWidget* mBroadcaster;
+    TQWidget* mBroadcaster;
 
     HostConnector* mHostConnector;
 };
 
 KDE_EXPORT extern SensorManager* SensorMgr;
 
-class KDE_EXPORT SensorManagerIterator : public QDictIterator<SensorAgent>
+class KDE_EXPORT SensorManagerIterator : public TQDictIterator<SensorAgent>
 {
   public:
     SensorManagerIterator( const SensorManager *sm )
-      : QDictIterator<SensorAgent>( sm->mAgents ) { }
+      : TQDictIterator<SensorAgent>( sm->mAgents ) { }
 
     ~SensorManagerIterator() { }
 };

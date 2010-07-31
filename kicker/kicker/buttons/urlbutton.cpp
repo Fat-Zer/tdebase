@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
-#include <qfile.h>
+#include <tqtooltip.h>
+#include <tqfile.h>
 
 #include <kdesktopfile.h>
 #include <kfileitem.h>
@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "urlbutton.h"
 #include "urlbutton.moc"
 
-URLButton::URLButton( const QString& url, QWidget* parent )
+URLButton::URLButton( const TQString& url, TQWidget* parent )
   : PanelButton( parent, "URLButton" )
   , fileItem( 0 )
   , pDlg( 0 )
@@ -52,7 +52,7 @@ URLButton::URLButton( const QString& url, QWidget* parent )
     initialize( url );
 }
 
-URLButton::URLButton( const KConfigGroup& config, QWidget* parent )
+URLButton::URLButton( const KConfigGroup& config, TQWidget* parent )
   : PanelButton( parent, "URLButton" )
   , fileItem( 0 )
   , pDlg( 0 )
@@ -65,12 +65,12 @@ URLButton::~URLButton()
     delete fileItem;
 }
 
-void URLButton::initialize( const QString& _url )
+void URLButton::initialize( const TQString& _url )
 {
     KURL url(_url);
     if (!url.isLocalFile() || !url.path().endsWith(".desktop"))
     {
-       QString file = KickerLib::newDesktopFile(url);
+       TQString file = KickerLib::newDesktopFile(url);
        KDesktopFile df(file);
        df.writeEntry("Encoding", "UTF-8");
        df.writeEntry("Type","Link");
@@ -90,7 +90,7 @@ void URLButton::initialize( const QString& _url )
     }
     fileItem = new KFileItem( KFileItem::Unknown, KFileItem::Unknown, url );
     setIcon( fileItem->iconName() );
-    connect( this, SIGNAL(clicked()), SLOT(slotExec()) );
+    connect( this, TQT_SIGNAL(clicked()), TQT_SLOT(slotExec()) );
     setToolTip();
 
     if (url.isLocalFile())
@@ -113,23 +113,23 @@ void URLButton::setToolTip()
 
         if (df.readComment().isEmpty())
         {
-            QToolTip::add(this, df.readName());
+            TQToolTip::add(this, df.readName());
         }
         else
         {
-            QToolTip::add(this, df.readName() + " - " + df.readComment());
+            TQToolTip::add(this, df.readName() + " - " + df.readComment());
         }
 
         setTitle(df.readName());
     }
     else
     {
-        QToolTip::add(this, fileItem->url().prettyURL());
+        TQToolTip::add(this, fileItem->url().prettyURL());
         setTitle(fileItem->url().prettyURL());
     }
 }
 
-void URLButton::dragEnterEvent(QDragEnterEvent *ev)
+void URLButton::dragEnterEvent(TQDragEnterEvent *ev)
 {
     if ((ev->source() != this) && fileItem->acceptsDrops() && KURLDrag::canDecode(ev))
 	ev->accept(rect());
@@ -138,7 +138,7 @@ void URLButton::dragEnterEvent(QDragEnterEvent *ev)
     PanelButton::dragEnterEvent(ev);
 }
 
-void URLButton::dropEvent(QDropEvent *ev)
+void URLButton::dropEvent(TQDropEvent *ev)
 {
     kapp->propagateSessionManager();
     KURL::List execList;
@@ -186,7 +186,7 @@ void URLButton::updateURL()
 
 void URLButton::properties()
 {
-    if ( (fileItem->isLocalFile() && !QFile::exists(fileItem->url().path()) )
+    if ( (fileItem->isLocalFile() && !TQFile::exists(fileItem->url().path()) )
          || !fileItem->url().isValid())
     {
         KMessageBox::error( 0L, i18n("The file %1 does not exist")
@@ -196,6 +196,6 @@ void URLButton::properties()
 
     pDlg = new KPropertiesDialog(fileItem, 0L, 0L, false, false); // will delete itself
     pDlg->setFileNameReadOnly(true);
-    connect(pDlg, SIGNAL(applied()), SLOT(updateURL()));
+    connect(pDlg, TQT_SIGNAL(applied()), TQT_SLOT(updateURL()));
     pDlg->show();
 }

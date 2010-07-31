@@ -23,7 +23,7 @@
 #include <signal.h>
 #include <unistd.h>
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include <kdebug.h>
 
@@ -69,7 +69,7 @@
  *   }
  *
  *   int err;
- *   QString errMsg;
+ *   TQString errMsg;
  *   while( !ssh.connect() ) {
  *       err = ssh.error(errMsg);
  *       
@@ -117,7 +117,7 @@ public:
     class SshOpt {
     public:
         Q_UINT32 opt;
-        QString  str;
+        TQString  str;
         Q_INT32  num;
         bool     boolean;
     };
@@ -125,9 +125,9 @@ public:
     /**
      * List of SshOptions and associated iterators
      */
-    typedef QValueList<SshOpt> SshOptList;
-    typedef QValueListIterator<SshOpt> SshOptListIterator;
-    typedef QValueListConstIterator<SshOpt> SshOptListConstIterator;
+    typedef TQValueList<SshOpt> SshOptList;
+    typedef TQValueListIterator<SshOpt> SshOptListIterator;
+    typedef TQValueListConstIterator<SshOpt> SshOptListConstIterator;
 
     /**
      * Ssh versions supported by KSshProcess. Subject to change
@@ -320,7 +320,7 @@ public:
      * @param pathToSsh The fully qualified path name of the ssh binary
      *                  KSshProcess should use to setup a SSH connection.
      */
-    KSshProcess(QString pathToSsh);
+    KSshProcess(TQString pathToSsh);
     ~KSshProcess();
 
     /**
@@ -333,7 +333,7 @@ public:
      *         recognizes the version.
      *
      */
-     bool setSshPath(QString pathToSsh);
+     bool setSshPath(TQString pathToSsh);
 
     /**
      * Get the ssh version.
@@ -349,7 +349,7 @@ public:
      *
      * @return A string describing the ssh version recognized by KSshProcess
      */
-    //QString versionStr();
+    //TQString versionStr();
 
     /**
      * Get the last error encountered by KSshProcess.
@@ -358,7 +358,7 @@ public:
      *
      * @return The error number. See SshError for descriptions.
      */
-    int error(QString& msg);
+    int error(TQString& msg);
 
     /**
      * Get the last error encountered by KSshProcess.
@@ -366,7 +366,7 @@ public:
      */
     int error() { return mError; }
 
-    QString errorMsg() { return mErrorMsg; }
+    TQString errorMsg() { return mErrorMsg; }
 
     /**
      * Send a signal to the ssh process. Do not use this to end the
@@ -482,7 +482,7 @@ public:
      *
      * @param password The user password to give ssh.
      */
-    void setPassword(QString password);
+    void setPassword(TQString password);
      
     /**
      * Access to standard in and out of the ssh process.
@@ -508,7 +508,7 @@ private:
     /**
      * Path the the ssh binary.
      */
-    QString mSshPath;
+    TQString mSshPath;
     
     /**
      * SSH version.  This is an index into the supported SSH 
@@ -519,17 +519,17 @@ private:
     /**
      * User's password.  Zero this out when it is no longer needed.
      */
-    QString mPassword;
+    TQString mPassword;
     
     /**
      * User's username.
      */
-    QString mUsername;
+    TQString mUsername;
     
     /**
      * Name of host we are connecting to.
      */
-    QString mHost;
+    TQString mHost;
 
     /**
      * Accept new or changed host keys if true.
@@ -552,13 +552,13 @@ private:
      * Save any key fingerprint msg from ssh so we can present
      * it to the caller.
      */
-    QString mKeyFingerprint;
+    TQString mKeyFingerprint;
 
     /**
      * The location of the known host key file. We grab this from
      * any error messages ssh prints out.
      */
-    QString mKnownHostsFile;
+    TQString mKnownHostsFile;
 
     /**
      * The state of our connect state machine.
@@ -580,7 +580,7 @@ private:
      * An error message that corresponds to the error number set in
      * mError.  Optional.
      */
-    QString mErrorMsg;
+    TQString mErrorMsg;
     
     /**
      * Interface to the SSH process we ceate.  Handles communication
@@ -602,22 +602,22 @@ private:
     void installSignalHandlers();
     void removeSignalHandlers();
 
-    QString getLine();
+    TQString getLine();
     
-    static QRegExp versionStrs[];
+    static TQRegExp versionStrs[];
     static const char * const passwordPrompt[];
     static const char * const passphrasePrompt[];
     static const char * const authSuccessMsg[];
     static const char * const authFailedMsg[];
-    static QRegExp hostKeyMissingMsg[];
+    static TQRegExp hostKeyMissingMsg[];
     static const char * const hostKeyChangedMsg[];
     static const char * const continuePrompt[];
     static const char * const hostKeyAcceptedMsg[];
     static const char * const tryAgainMsg[];
-    static QRegExp hostKeyVerifyFailedMsg[];
+    static TQRegExp hostKeyVerifyFailedMsg[];
     static const char * const connectionClosedMsg[];
     static const char * const changeHostKeyOnDiskPrompt[];
-    static QRegExp keyFingerprintMsg[];
-    static QRegExp knownHostsFileMsg[];
+    static TQRegExp keyFingerprintMsg[];
+    static TQRegExp knownHostsFileMsg[];
 };
 #endif

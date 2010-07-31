@@ -33,7 +33,7 @@ class FindMenu : public KPanelMenu
 	Q_OBJECT
 
   public:
-    FindMenu( QWidget* parent, const char* name, const QStringList &/*args*/ );
+    FindMenu( TQWidget* parent, const char* name, const TQStringList &/*args*/ );
     ~FindMenu();
 
   protected slots:
@@ -41,7 +41,7 @@ class FindMenu : public KPanelMenu
     void slotExec( int );
 
   private:
-    QStringList mConfigList;
+    TQStringList mConfigList;
 };
 
 #endif

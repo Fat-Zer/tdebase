@@ -28,7 +28,7 @@ class StyleConfigDialog: public KDialogBase
 {
   Q_OBJECT
 public:
-  StyleConfigDialog(QWidget* parent, QString styleName);
+  StyleConfigDialog(TQWidget* parent, TQString styleName);
 
   bool isDirty() const;
 

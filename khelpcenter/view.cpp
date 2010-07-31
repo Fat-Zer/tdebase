@@ -15,13 +15,13 @@
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
-#include <qfileinfo.h>
-#include <qclipboard.h>
+#include <tqfileinfo.h>
+#include <tqclipboard.h>
 
 using namespace KHC;
 
-View::View( QWidget *parentWidget, const char *widgetName,
-                  QObject *parent, const char *name, KHTMLPart::GUIProfile prof, KActionCollection *col )
+View::View( TQWidget *parentWidget, const char *widgetName,
+                  TQObject *parent, const char *name, KHTMLPart::GUIProfile prof, KActionCollection *col )
     : KHTMLPart( parentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
 {
     setJScriptEnabled(false);
@@ -35,19 +35,19 @@ View::View( QWidget *parentWidget, const char *widgetName,
 
     m_zoomStepping = 10;
 
-    connect( this, SIGNAL( setWindowCaption( const QString & ) ),
-             this, SLOT( setTitle( const QString & ) ) );
-    connect( this, SIGNAL( popupMenu( const QString &, const QPoint& ) ),
-             this, SLOT( showMenu( const QString &, const QPoint& ) ) );
+    connect( this, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
+             this, TQT_SLOT( setTitle( const TQString & ) ) );
+    connect( this, TQT_SIGNAL( popupMenu( const TQString &, const TQPoint& ) ),
+             this, TQT_SLOT( showMenu( const TQString &, const TQPoint& ) ) );
              
-    QString css = langLookup("common/kde-default.css");
+    TQString css = langLookup("common/kde-default.css");
     if (!css.isEmpty())
     {
-       QFile css_file(css);
+       TQFile css_file(css);
        if (css_file.open(IO_ReadOnly))
        {
-          QTextStream s(&css_file);
-          QString stylesheet = s.read();
+          TQTextStream s(&css_file);
+          TQString stylesheet = s.read();
           preloadStyleSheet("help:/common/kde-default.css", stylesheet);
        }
     }
@@ -76,14 +76,14 @@ bool View::openURL( const KURL &url )
     return KHTMLPart::openURL( url );
 }
 
-void View::saveState( QDataStream &stream )
+void View::saveState( TQDataStream &stream )
 {
     stream << mState;
     if ( mState == Docu )
         KHTMLPart::saveState( stream );
 }
 
-void View::restoreState( QDataStream &stream )
+void View::restoreState( TQDataStream &stream )
 {
     stream >> mState;
     if ( mState == Docu )
@@ -94,11 +94,11 @@ void View::restoreState( QDataStream &stream )
 
 void View::showAboutPage()
 {
-    QString file = locate( "data", "khelpcenter/intro.html.in" );
+    TQString file = locate( "data", "khelpcenter/intro.html.in" );
     if ( file.isEmpty() )
         return;
 
-    QFile f( file );
+    TQFile f( file );
 
     if ( !f.open( IO_ReadOnly ) )
     return;
@@ -107,9 +107,9 @@ void View::showAboutPage()
 
     emit started( 0 );
 
-    QTextStream t( &f );
+    TQTextStream t( &f );
 
-    QString res = t.read();
+    TQString res = t.read();
 
     res = res.arg( i18n("Conquer your Desktop!") )
           .arg( langLookup( "khelpcenter/konq.css" ) )
@@ -143,29 +143,29 @@ void View::showAboutPage()
     emit completed();
 }
 
-QString View::langLookup( const QString &fname )
+TQString View::langLookup( const TQString &fname )
 {
-    QStringList search;
+    TQStringList search;
 
     // assemble the local search paths
-    const QStringList localDoc = KGlobal::dirs()->resourceDirs("html");
+    const TQStringList localDoc = KGlobal::dirs()->resourceDirs("html");
 
     // look up the different languages
     for (int id=localDoc.count()-1; id >= 0; --id)
     {
-        QStringList langs = KGlobal::locale()->languageList();
+        TQStringList langs = KGlobal::locale()->languageList();
         langs.append( "en" );
         langs.remove( "C" );
-        QStringList::ConstIterator lang;
+        TQStringList::ConstIterator lang;
         for (lang = langs.begin(); lang != langs.end(); ++lang)
-            search.append(QString("%1%2/%3").arg(localDoc[id]).arg(*lang).arg(fname));
+            search.append(TQString("%1%2/%3").arg(localDoc[id]).arg(*lang).arg(fname));
     }
 
     // try to locate the file
-    QStringList::Iterator it;
+    TQStringList::Iterator it;
     for (it = search.begin(); it != search.end(); ++it)
     {
-        QFileInfo info(*it);
+        TQFileInfo info(*it);
         if (info.exists() && info.isFile() && info.isReadable())
             return *it;
 
@@ -174,7 +174,7 @@ QString View::langLookup( const QString &fname )
         // css etc) then look in other languages first.
         if ( ( *it ).endsWith( "docbook" ) )
         {
-            QString file = (*it).left((*it).findRev('/')) + "/index.docbook";
+            TQString file = (*it).left((*it).findRev('/')) + "/index.docbook";
             info.setFile(file);
             if (info.exists() && info.isFile() && info.isReadable())
             {
@@ -183,10 +183,10 @@ QString View::langLookup( const QString &fname )
         }
     }
 
-    return QString::null;
+    return TQString::null;
 }
 
-void View::setTitle( const QString &title )
+void View::setTitle( const TQString &title )
 {
     mTitle = title;
 }
@@ -199,7 +199,7 @@ void View::beginSearchResult()
   mSearchResult = "";
 }
 
-void View::writeSearchResult( const QString &str )
+void View::writeSearchResult( const TQString &str )
 {
   write( str );
   mSearchResult += str;
@@ -243,7 +243,7 @@ void View::slotDecFontSizes()
   setZoomFactor( zoomFactor() - m_zoomStepping );
 }
 
-void View::showMenu( const QString& url, const QPoint& pos)
+void View::showMenu( const TQString& url, const TQPoint& pos)
 {
   KPopupMenu* pop = new KPopupMenu(view());
   if (url.isEmpty())
@@ -266,7 +266,7 @@ void View::showMenu( const QString& url, const QPoint& pos)
   }
   else
   {
-    pop->insertItem(i18n("Copy Link Address"), this, SLOT(slotCopyLink()));
+    pop->insertItem(i18n("Copy Link Address"), this, TQT_SLOT(slotCopyLink()));
     mCopyURL = completeURL(url).url();
   }
 	
@@ -276,7 +276,7 @@ void View::showMenu( const QString& url, const QPoint& pos)
 
 void View::slotCopyLink()
 {
-  QApplication::clipboard()->setText(mCopyURL);
+  TQApplication::clipboard()->setText(mCopyURL);
 }
 
 bool View::prevPage(bool checkOnly)
@@ -322,25 +322,25 @@ bool View::nextPage(bool checkOnly)
   return true;
 }
 
-bool View::eventFilter( QObject *o, QEvent *e )
+bool View::eventFilter( TQObject *o, TQEvent *e )
 {
-  if ( e->type() != QEvent::KeyPress ||
+  if ( e->type() != TQEvent::KeyPress ||
        htmlDocument().links().length() == 0 )
     return KHTMLPart::eventFilter( o, e );
 
-  QKeyEvent *ke = static_cast<QKeyEvent *>( e );
+  TQKeyEvent *ke = static_cast<TQKeyEvent *>( e );
   if ( ke->state() & Qt::ShiftButton && ke->key() == Key_Space ) {
     // If we're on the first page, it does not make sense to go back.
     if ( baseURL().path().endsWith( "/index.html" ) )
       return KHTMLPart::eventFilter( o, e );
 
-    const QScrollBar * const scrollBar = view()->verticalScrollBar();
+    const TQScrollBar * const scrollBar = view()->verticalScrollBar();
     if ( scrollBar->value() == scrollBar->minValue() ) {
       if (prevPage())
          return true;
     }
   } else if ( ke->key() == Key_Space ) {
-    const QScrollBar * const scrollBar = view()->verticalScrollBar();
+    const TQScrollBar * const scrollBar = view()->verticalScrollBar();
     if ( scrollBar->value() == scrollBar->maxValue() ) {
       if (nextPage())
         return true;
@@ -360,12 +360,12 @@ KURL View::urlFromLinkNode( const DOM::Node &n ) const
   if ( !href.protocol().isNull() )
     return href;
 
-  QString path = baseURL().path();
+  TQString path = baseURL().path();
   path.truncate( path.findRev( '/' ) + 1 );
   path += href.url();
 
   KURL url = baseURL();
-  url.setRef( QString::null );
+  url.setRef( TQString::null );
   url.setEncodedPathAndQuery( path );
 
   return url;

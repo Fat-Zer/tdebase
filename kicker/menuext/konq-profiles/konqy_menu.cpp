@@ -31,12 +31,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kio/global.h>
 #include <ksimpleconfig.h>
 
-#include <qregexp.h>
-#include <qfileinfo.h>
+#include <tqregexp.h>
+#include <tqfileinfo.h>
 
 K_EXPORT_KICKER_MENUEXT(konqueror, KonquerorProfilesMenu)
 
-KonquerorProfilesMenu::KonquerorProfilesMenu(QWidget *parent, const char *name, const QStringList & /*args*/)
+KonquerorProfilesMenu::KonquerorProfilesMenu(TQWidget *parent, const char *name, const TQStringList & /*args*/)
 : KPanelMenu("", parent, name)
 {
     static bool kdeprintIconsInitialized = false;
@@ -55,16 +55,16 @@ void KonquerorProfilesMenu::initialize()
    if (initialized()) clear();
    setInitialized(true);
 
-   QStringList profiles = KGlobal::dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
+   TQStringList profiles = KGlobal::dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
 
    m_profiles.resize(profiles.count());
    int id=1;
-   QStringList::ConstIterator pEnd = profiles.end();
-   for (QStringList::ConstIterator pIt = profiles.begin(); pIt != pEnd; ++pIt )
+   TQStringList::ConstIterator pEnd = profiles.end();
+   for (TQStringList::ConstIterator pIt = profiles.begin(); pIt != pEnd; ++pIt )
    {
-      QFileInfo info( *pIt );
-      QString profileName = KIO::decodeFileName( info.baseName() );
-      QString niceName=profileName;
+      TQFileInfo info( *pIt );
+      TQString profileName = KIO::decodeFileName( info.baseName() );
+      TQString niceName=profileName;
       KSimpleConfig cfg( *pIt, true );
       if ( cfg.hasGroup( "Profile" ) )
       {
@@ -81,7 +81,7 @@ void KonquerorProfilesMenu::initialize()
 
 void KonquerorProfilesMenu::slotExec(int id)
 {
-   QStringList args;
+   TQStringList args;
    args<<"--profile"<<m_profiles[id-1];
    kapp->kdeinitExec("konqueror", args);
 }

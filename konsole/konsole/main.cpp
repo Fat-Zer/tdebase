@@ -26,9 +26,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qdir.h>
-#include <qsessionmanager.h>
-#include <qwidgetlist.h>
+#include <tqdir.h>
+#include <tqsessionmanager.h>
+#include <tqwidgetlist.h>
 
 #include <dcopclient.h>
 
@@ -105,7 +105,7 @@ static bool fixed_size = false;
 
 bool argb_visual = false;
 
-const char *konsole_shell(QStrList &args)
+const char *konsole_shell(TQStrList &args)
 {
   const char* shell = getenv("SHELL");
   if (shell == NULL || *shell == '\0') shell = "/bin/sh";
@@ -134,7 +134,7 @@ const char *konsole_shell(QStrList &args)
 class KonsoleSessionManaged: public KSessionManaged {
 public:
     bool saveState( QSessionManager&sm) {
-        QStringList restartCommand = sm.restartCommand();
+        TQStringList restartCommand = sm.restartCommand();
         if (has_noxft)
             restartCommand.append("--noxft");
         if (login_shell)
@@ -288,7 +288,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
         }
       }
     }
-    // The QApplication ctor used is normally intended for applications not using Qt
+    // The TQApplication ctor used is normally intended for applications not using Qt
     // as the primary toolkit (e.g. Motif apps also using Qt), with some slightly
     // unpleasant side effects (e.g. #83974). This code checks if qt-copy patch #0078
     // is applied, which allows turning this off.
@@ -308,27 +308,27 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   KApplication* a = new KApplication;
 #endif
 
-  QString dataPathBase = KStandardDirs::kde_default("data").append("konsole/");
+  TQString dataPathBase = KStandardDirs::kde_default("data").append("konsole/");
   KGlobal::dirs()->addResourceType("wallpaper", dataPathBase + "wallpapers");
 
   KImageIO::registerFormats(); // add io for additional image formats
   //2.1 secs
 
-  QString title;
+  TQString title;
   if(args->isSet("T")) {
-    title = QFile::decodeName(args->getOption("T"));
+    title = TQFile::decodeName(args->getOption("T"));
   }
   if(qtargs->isSet("title")) {
-    title = QFile::decodeName(qtargs->getOption("title"));
+    title = TQFile::decodeName(qtargs->getOption("title"));
   }
 
-  QString term = "";
+  TQString term = "";
   if(args->isSet("tn")) {
-    term=QString::fromLatin1(args->getOption("tn"));
+    term=TQString::fromLatin1(args->getOption("tn"));
   }
   login_shell = args->isSet("ls");
 
-  QStrList eargs;
+  TQStrList eargs;
 
   const char* shell = 0;
   if (!args->getOption("e").isEmpty())
@@ -343,19 +343,19 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
      if (title.isEmpty() &&
          (kapp->caption() == kapp->aboutData()->programName()))
      {
-        title = QFile::decodeName(shell);  // program executed in the title bar
+        title = TQFile::decodeName(shell);  // program executed in the title bar
      }
      showtip = false;
   }
 
-  QCString sz = "";
+  TQCString sz = "";
   sz = args->getOption("vt_sz");
   histon = args->isSet("hist");
   menubaron = args->isSet("menubar");
   tabbaron = args->isSet("tabbar") && args->isSet("toolbar");
   frameon = args->isSet("frame");
   scrollbaron = args->isSet("scrollbar");
-  QCString wname = qtargs->getOption("name");
+  TQCString wname = qtargs->getOption("name");
   full_script = args->isSet("script");
   auto_close = args->isSet("close");
   fixed_size = !args->isSet("resize");
@@ -363,22 +363,22 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   if (!full_script)
 	a->dcopClient()->setQtBridgeEnabled(false);
 
-  QCString type = "";
+  TQCString type = "";
 
   if(args->isSet("type")) {
     type = args->getOption("type");
   }
   if(args->isSet("types")) {
-    QStringList types = KGlobal::dirs()->findAllResources("appdata", "*.desktop", false, true);
+    TQStringList types = KGlobal::dirs()->findAllResources("appdata", "*.desktop", false, true);
     types.sort();
-    for(QStringList::ConstIterator it = types.begin();
+    for(TQStringList::ConstIterator it = types.begin();
         it != types.end(); ++it)
     {
-       QString file = *it;
+       TQString file = *it;
        file = file.mid(file.findRev('/')+1);
        if (file.endsWith(".desktop"))
           file = file.left(file.length()-8);
-       printf("%s\n", QFile::encodeName(file).data());
+       printf("%s\n", TQFile::encodeName(file).data());
     }
     return 0;
   }
@@ -388,57 +388,57 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
     for(int i = 0; i < (int) colors.count(); i++)
     {
        ColorSchema *schema = colors.find(i);
-       QString relPath = schema->relPath();
+       TQString relPath = schema->relPath();
        if (!relPath.isEmpty())
-          printf("%s\n", QFile::encodeName(relPath).data());
+          printf("%s\n", TQFile::encodeName(relPath).data());
     }
     return 0;
   }
 
   if(args->isSet("keytabs")) {
-    QStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
+    TQStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
 
     printf("default\n");   // 'buildin' keytab
     lst.sort();
-    for(QStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
+    for(TQStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
     {
-      QFileInfo fi(*it);
-      QString file = fi.baseName();
-      printf("%s\n", QFile::encodeName(file).data());
+      TQFileInfo fi(*it);
+      TQString file = fi.baseName();
+      printf("%s\n", TQFile::encodeName(file).data());
     }
     return 0;
   }
 
-  QString workDir = QFile::decodeName( args->getOption("workdir") );
+  TQString workDir = TQFile::decodeName( args->getOption("workdir") );
 
-  QString keytab = "";
+  TQString keytab = "";
   if (args->isSet("keytab"))
-    keytab = QFile::decodeName(args->getOption("keytab"));
+    keytab = TQFile::decodeName(args->getOption("keytab"));
 
-  QString schema = "";
+  TQString schema = "";
   if (args->isSet("schema"))
     schema = args->getOption("schema");
 
   KConfig * sessionconfig = 0;
-  QString profile = "";
+  TQString profile = "";
   if (args->isSet("profile")) {
     profile = args->getOption("profile");
-    QString path = locate( "data", "konsole/profiles/" + profile );
-    if ( QFile::exists( path ) )
+    TQString path = locate( "data", "konsole/profiles/" + profile );
+    if ( TQFile::exists( path ) )
       sessionconfig=new KConfig( path, true );
     else
       profile = "";
   }
   if (args->isSet("profiles"))
   {
-     QStringList profiles = KGlobal::dirs()->findAllResources("data", "konsole/profiles/*", false, true);
+     TQStringList profiles = KGlobal::dirs()->findAllResources("data", "konsole/profiles/*", false, true);
      profiles.sort();
-     for(QStringList::ConstIterator it = profiles.begin();
+     for(TQStringList::ConstIterator it = profiles.begin();
          it != profiles.end(); ++it)
      {
-        QString file = *it;
+        TQString file = *it;
         file = file.mid(file.findRev('/')+1);
-        printf("%s\n", QFile::encodeName(file).data());
+        printf("%s\n", TQFile::encodeName(file).data());
      }
      return 0;
   }
@@ -487,19 +487,19 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
     sessionconfig->setDesktopGroup();
     int n = 1;
 
-    QString key;
-    QString sTitle;
-    QString sPgm;
-    QString sTerm;
-    QString sIcon;
-    QString sCwd;
+    TQString key;
+    TQString sTitle;
+    TQString sPgm;
+    TQString sTerm;
+    TQString sIcon;
+    TQString sCwd;
     int     n_tabbar;
 
     // TODO: Session management stores everything in same group,
     // should use one group / mainwindow
     while (KMainWindow::canBeRestored(n) || !profile.isEmpty())
     {
-        sessionconfig->setGroup(QString("%1").arg(n));
+        sessionconfig->setGroup(TQString("%1").arg(n));
         if (!sessionconfig->hasKey("Pgm0"))
             sessionconfig->setDesktopGroup(); // Backwards compatible
 
@@ -523,14 +523,14 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
         m->enableFullScripting(full_script);
         m->enableFixedSize(fixed_size);
 	m->restore(n);
-        sessionconfig->setGroup(QString("%1").arg(n));
+        sessionconfig->setGroup(TQString("%1").arg(n));
         if (!sessionconfig->hasKey("Pgm0"))
             sessionconfig->setDesktopGroup(); // Backwards compatible
         m->makeGUI();
         m->setEncoding(sessionconfig->readNumEntry("Encoding0"));
         m->setSchema(sessionconfig->readEntry("Schema0"));
         // Use konsolerc default as tmpFont instead?
-        QFont tmpFont = KGlobalSettings::fixedFont();
+        TQFont tmpFont = KGlobalSettings::fixedFont();
         m->initSessionFont(sessionconfig->readFontEntry("SessionFont0", &tmpFont));
         m->initSessionKeyTab(sessionconfig->readEntry("KeyTab0"));
         m->initMonitorActivity(sessionconfig->readBoolEntry("MonitorActivity0",false));
@@ -548,48 +548,48 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
 
         while (counter < session_count)
         {
-          key = QString("Title%1").arg(counter);
+          key = TQString("Title%1").arg(counter);
           sTitle = sessionconfig->readEntry(key, title);
-          key = QString("Args%1").arg(counter);
+          key = TQString("Args%1").arg(counter);
           sessionconfig->readListEntry(key, eargs);
 
-          key = QString("Pgm%1").arg(counter);
+          key = TQString("Pgm%1").arg(counter);
           
           // if the -e option is passed on the command line, this overrides the program specified 
           // in the profile file
           if ( args->isSet("e") )
-            sPgm = (shell ? QFile::decodeName(shell) : QString::null);
+            sPgm = (shell ? TQFile::decodeName(shell) : TQString::null);
           else
             sPgm = sessionconfig->readEntry(key, shell);
 
-          key = QString("Term%1").arg(counter);
+          key = TQString("Term%1").arg(counter);
           sTerm = sessionconfig->readEntry(key);
-          key = QString("Icon%1").arg(counter);
+          key = TQString("Icon%1").arg(counter);
           sIcon = sessionconfig->readEntry(key,"konsole");
-          key = QString("Cwd%1").arg(counter);
+          key = TQString("Cwd%1").arg(counter);
           sCwd = sessionconfig->readPathEntry(key);
           m->newSession(sPgm, eargs, sTerm, sIcon, sTitle, sCwd);
           m->setSessionTitle(sTitle);  // Use title as is
-          key = QString("Schema%1").arg(counter);
+          key = TQString("Schema%1").arg(counter);
           m->setSchema(sessionconfig->readEntry(key));
-          key = QString("Encoding%1").arg(counter);
+          key = TQString("Encoding%1").arg(counter);
           m->setEncoding(sessionconfig->readNumEntry(key));
-          key = QString("SessionFont%1").arg(counter);
-          QFont tmpFont = KGlobalSettings::fixedFont();
+          key = TQString("SessionFont%1").arg(counter);
+          TQFont tmpFont = KGlobalSettings::fixedFont();
           m->initSessionFont(sessionconfig->readFontEntry(key, &tmpFont));
-          key = QString("KeyTab%1").arg(counter);
+          key = TQString("KeyTab%1").arg(counter);
           m->initSessionKeyTab(sessionconfig->readEntry(key));
-          key = QString("MonitorActivity%1").arg(counter);
+          key = TQString("MonitorActivity%1").arg(counter);
           m->initMonitorActivity(sessionconfig->readBoolEntry(key,false));
-          key = QString("MonitorSilence%1").arg(counter);
+          key = TQString("MonitorSilence%1").arg(counter);
           m->initMonitorSilence(sessionconfig->readBoolEntry(key,false));
-          key = QString("MasterMode%1").arg(counter);
+          key = TQString("MasterMode%1").arg(counter);
           m->initMasterMode(sessionconfig->readBoolEntry(key,false));
-          key = QString("TabColor%1").arg(counter);
+          key = TQString("TabColor%1").arg(counter);
           m->initTabColor(sessionconfig->readColorEntry(key));
           // -1 will be changed to the default history in konsolerc
-          key = QString("History%1").arg(counter);
-          QString key2 = QString("HistoryEnabled%1").arg(counter);
+          key = TQString("History%1").arg(counter);
+          TQString key2 = TQString("HistoryEnabled%1").arg(counter);
           m->initHistory(sessionconfig->readNumEntry(key, -1), 
                          sessionconfig->readBoolEntry(key2, true));
           counter++;
@@ -614,7 +614,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   else
   {
     Konsole*  m = new Konsole(wname,histon,menubaron,tabbaron,frameon,scrollbaron,type, false, 0, workDir);
-    m->newSession((shell ? QFile::decodeName(shell) : QString::null), eargs, term, QString::null, title, workDir);
+    m->newSession((shell ? TQFile::decodeName(shell) : TQString::null), eargs, term, TQString::null, title, workDir);
     m->enableFullScripting(full_script);
     m->enableFixedSize(fixed_size);
     //3.8 :-(
@@ -644,7 +644,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
  //// Temporary code, waiting for Qt to do this properly
 
   // Delete all toplevel widgets that have WDestructiveClose
-  QWidgetList *list = QApplication::topLevelWidgets();
+  TQWidgetList *list = TQApplication::topLevelWidgets();
   // remove all toplevel widgets that have a parent (i.e. they
   // got WTopLevel explicitly), they'll be deleted by the parent
   list->first();
@@ -657,8 +657,8 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
     }
     list->next();
   }
-  QWidgetListIt it(*list);
-  QWidget * w;
+  TQWidgetListIt it(*list);
+  TQWidget * w;
   while( (w=it.current()) != 0 ) {
      ++it;
      delete w;

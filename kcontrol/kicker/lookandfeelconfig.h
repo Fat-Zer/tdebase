@@ -27,7 +27,7 @@ class LookAndFeelConfig : public KCModule
     Q_OBJECT
 
 public:
-    LookAndFeelConfig(QWidget *parent = 0, const char *name = 0);
+    LookAndFeelConfig(TQWidget *parent = 0, const char *name = 0);
 
     void load();
     void save();

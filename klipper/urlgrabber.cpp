@@ -18,8 +18,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qcursor.h>
-#include <qtimer.h>
+#include <tqcursor.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -61,9 +61,9 @@ URLGrabber::URLGrabber( KConfig* config )
 
     readConfiguration( m_config );
 
-    myPopupKillTimer = new QTimer( this );
-    connect( myPopupKillTimer, SIGNAL( timeout() ),
-             SLOT( slotKillPopupMenu() ));
+    myPopupKillTimer = new TQTimer( this );
+    connect( myPopupKillTimer, TQT_SIGNAL( timeout() ),
+             TQT_SLOT( slotKillPopupMenu() ));
 
     // testing
     /*
@@ -94,7 +94,7 @@ URLGrabber::~URLGrabber()
 // Called from Klipper::slotRepeatAction, i.e. by pressing Ctrl-Alt-R
 // shortcut. I.e. never from clipboard monitoring
 //
-void URLGrabber::invokeAction( const QString& clip )
+void URLGrabber::invokeAction( const TQString& clip )
 {
     if ( !clip.isEmpty() )
 	myClipData = clip;
@@ -112,7 +112,7 @@ void URLGrabber::setActionList( ActionList *list )
 }
 
 
-const ActionList& URLGrabber::matchingActions( const QString& clipData )
+const ActionList& URLGrabber::matchingActions( const TQString& clipData )
 {
     myMatches.clear();
     ClipAction *action = 0L;
@@ -126,7 +126,7 @@ const ActionList& URLGrabber::matchingActions( const QString& clipData )
 }
 
 
-bool URLGrabber::checkNewData( const QString& clipData )
+bool URLGrabber::checkNewData( const TQString& clipData )
 {
     // kdDebug() << "** checking new data: " << clipData << endl;
     myClipData = clipData;
@@ -157,18 +157,18 @@ void URLGrabber::actionMenu( bool wm_class_check )
         if ( wm_class_check && isAvoidedWindow() )
             return;
 
-        QString item;
+        TQString item;
         myCommandMapper.clear();
         myGroupingMapper.clear();
 
         myPopupKillTimer->stop();
         delete myMenu;
         myMenu = new KPopupMenu;
-        connect( myMenu, SIGNAL( activated( int )),
-                 SLOT( slotItemSelected( int )));
+        connect( myMenu, TQT_SIGNAL( activated( int )),
+                 TQT_SLOT( slotItemSelected( int )));
 
         for ( action = it.current(); action; action = ++it ) {
-            QPtrListIterator<ClipCommand> it2( action->commands() );
+            TQPtrListIterator<ClipCommand> it2( action->commands() );
             if ( it2.count() > 0 )
                 myMenu->insertTitle( SmallIcon( "klipper" ), action->description() +
 				     i18n(" - Actions For: ") +
@@ -225,7 +225,7 @@ void URLGrabber::slotItemSelected( int id )
 	break;
     default:
         ClipCommand *command = myCommandMapper.find( id );
-        QStringList *backrefs = myGroupingMapper.find( id );
+        TQStringList *backrefs = myGroupingMapper.find( id );
         if ( !command || !backrefs )
             qWarning("Klipper: can't find associated action");
         else
@@ -235,18 +235,18 @@ void URLGrabber::slotItemSelected( int id )
 
 
 void URLGrabber::execute( const struct ClipCommand *command,
-                          QStringList *backrefs) const
+                          TQStringList *backrefs) const
 {
     if ( command->isEnabled ) {
-        QMap<QChar,QString> map;
+        TQMap<TQChar,TQString> map;
         map.insert( 's', myClipData );
 		int brCounter = -1;
-		QStringList::Iterator it = backrefs->begin();
+		TQStringList::Iterator it = backrefs->begin();
 		while( it != backrefs->end() ) {
 			map.insert( char(++brCounter + '0') , *it );
 			++it;
 		}
-        QString cmdLine = KMacroExpander::expandMacrosShellQuote( command->command, map );
+        TQString cmdLine = KMacroExpander::expandMacrosShellQuote( command->command, map );
 
         if ( cmdLine.isEmpty() )
             return;
@@ -277,10 +277,10 @@ void URLGrabber::editData()
     dlg->setMainWidget( edit );
     dlg->adjustSize();
 
-    if ( dlg->exec() == QDialog::Accepted ) {
+    if ( dlg->exec() == TQDialog::Accepted ) {
         myClipData = edit->text();
         delete dlg;
-        QTimer::singleShot( 0, this, SLOT( slotActionMenu() ) );
+        TQTimer::singleShot( 0, this, TQT_SLOT( slotActionMenu() ) );
     }
     else
     {
@@ -299,9 +299,9 @@ void URLGrabber::readConfiguration( KConfig *kc )
     myAvoidWindows = kc->readListEntry("No Actions for WM_CLASS");
     myPopupKillTimeout = kc->readNumEntry( "Timeout for Action popups (seconds)", 8 );
     m_stripWhiteSpace = kc->readBoolEntry("Strip Whitespace before exec", true);
-    QString group;
+    TQString group;
     for ( int i = 0; i < num; i++ ) {
-        group = QString("Action_%1").arg( i );
+        group = TQString("Action_%1").arg( i );
         kc->setGroup( group );
         myActions->append( new ClipAction( kc ) );
     }
@@ -320,9 +320,9 @@ void URLGrabber::writeConfiguration( KConfig *kc )
     ClipAction *action;
 
     int i = 0;
-    QString group;
+    TQString group;
     while ( (action = it.current()) ) {
-        group = QString("Action_%1").arg( i );
+        group = TQString("Action_%1").arg( i );
         kc->setGroup( group );
         action->save( kc );
         ++i;
@@ -344,7 +344,7 @@ bool URLGrabber::isAvoidedWindow() const
     long BUFSIZE = 2048;
     bool ret = false;
     Window active = 0L;
-    QString wmClass;
+    TQString wmClass;
 
     // get the active window
     if (XGetWindowProperty(d, DefaultRootWindow( d ), active_window, 0l, 1l,
@@ -364,7 +364,7 @@ bool URLGrabber::isAvoidedWindow() const
                             &type_ret, &format_ret, &nitems_ret,
                             &unused, &data_ret ) == Success) {
         if ( type_ret == XA_STRING && format_ret == 8 && nitems_ret > 0 ) {
-            wmClass = QString::fromUtf8( (const char *) data_ret );
+            wmClass = TQString::fromUtf8( (const char *) data_ret );
             ret = (myAvoidWindows.find( wmClass ) != myAvoidWindows.end());
         }
 
@@ -379,7 +379,7 @@ void URLGrabber::slotKillPopupMenu()
 {
     if ( myMenu && myMenu->isVisible() )
     {
-        if ( myMenu->geometry().contains( QCursor::pos() ) &&
+        if ( myMenu->geometry().contains( TQCursor::pos() ) &&
              myPopupKillTimeout > 0 )
         {
             myPopupKillTimer->start( 1000 * myPopupKillTimeout, true );
@@ -394,8 +394,8 @@ void URLGrabber::slotKillPopupMenu()
 ///////////////////////////////////////////////////////////////////////////
 ////////
 
-ClipCommand::ClipCommand(const QString &_command, const QString &_description,
-                         bool _isEnabled, const QString &_icon)
+ClipCommand::ClipCommand(const TQString &_command, const TQString &_description,
+                         bool _isEnabled, const TQString &_icon)
     : command(_command),
       description(_description),
       isEnabled(_isEnabled)
@@ -412,12 +412,12 @@ ClipCommand::ClipCommand(const QString &_command, const QString &_description,
     if (service)
         pixmap = service->icon();
     else
-        pixmap = QString::null;
+        pixmap = TQString::null;
     }
 }
 
 
-ClipAction::ClipAction( const QString& regExp, const QString& description )
+ClipAction::ClipAction( const TQString& regExp, const TQString& description )
     : myRegExp( regExp ), myDescription( description )
 {
     myCommands.setAutoDelete( true );
@@ -431,7 +431,7 @@ ClipAction::ClipAction( const ClipAction& action )
     myDescription = action.myDescription;
 
     ClipCommand *command = 0L;
-    QPtrListIterator<ClipCommand> it( myCommands );
+    TQPtrListIterator<ClipCommand> it( myCommands );
     for ( ; it.current(); ++it ) {
         command = it.current();
         addCommand(command->command, command->description, command->isEnabled);
@@ -447,9 +447,9 @@ ClipAction::ClipAction( KConfig *kc )
     int num = kc->readNumEntry( "Number of commands" );
 
     // read the commands
-    QString actionGroup = kc->group();
+    TQString actionGroup = kc->group();
     for ( int i = 0; i < num; i++ ) {
-        QString group = actionGroup + "/Command_%1";
+        TQString group = actionGroup + "/Command_%1";
         kc->setGroup( group.arg( i ) );
 
         addCommand( kc->readPathEntry( "Commandline" ),
@@ -465,8 +465,8 @@ ClipAction::~ClipAction()
 }
 
 
-void ClipAction::addCommand( const QString& command,
-                             const QString& description, bool enabled, const QString& icon )
+void ClipAction::addCommand( const TQString& command,
+                             const TQString& description, bool enabled, const TQString& icon )
 {
     if ( command.isEmpty() )
         return;
@@ -484,14 +484,14 @@ void ClipAction::save( KConfig *kc ) const
     kc->writeEntry( "Regexp", regExp() );
     kc->writeEntry( "Number of commands", myCommands.count() );
 
-    QString actionGroup = kc->group();
+    TQString actionGroup = kc->group();
     struct ClipCommand *cmd;
-    QPtrListIterator<struct ClipCommand> it( myCommands );
+    TQPtrListIterator<struct ClipCommand> it( myCommands );
 
     // now iterate over all commands of this action
     int i = 0;
     while ( (cmd = it.current()) ) {
-        QString group = actionGroup + "/Command_%1";
+        TQString group = actionGroup + "/Command_%1";
         kc->setGroup( group.arg( i ) );
 
         kc->writePathEntry( "Commandline", cmd->command );

@@ -32,7 +32,7 @@ class FilterOptions : public KCModule
     Q_OBJECT
 
 public:
-    FilterOptions(QWidget *parent = 0, const char *name = 0);
+    FilterOptions(TQWidget *parent = 0, const char *name = 0);
 
     void load( bool useDefaults );
     void save();
@@ -42,7 +42,7 @@ protected slots:
     void moduleChanged(bool state);
 
 private:
-	QListBox* m_lbFilterList;
+	TQListBox* m_lbFilterList;
 };
 
 #endif

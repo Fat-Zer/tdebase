@@ -1,7 +1,7 @@
 #ifndef SCOPEITEM_H
 #define SCOPEITEM_H
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
 #include "docmetainfo.h"
 
@@ -10,12 +10,12 @@ namespace KHC {
 class ScopeItem : public QCheckListItem
 {
   public:
-    ScopeItem( QListView *parent, DocEntry *entry )
-      : QCheckListItem( parent, entry->name(), QCheckListItem::CheckBox ),
+    ScopeItem( TQListView *parent, DocEntry *entry )
+      : TQCheckListItem( parent, entry->name(), TQCheckListItem::CheckBox ),
         mEntry( entry ), mObserver( 0 ) {}
 
-    ScopeItem( QListViewItem *parent, DocEntry *entry )
-      : QCheckListItem( parent, entry->name(), QCheckListItem::CheckBox ),
+    ScopeItem( TQListViewItem *parent, DocEntry *entry )
+      : TQCheckListItem( parent, entry->name(), TQCheckListItem::CheckBox ),
         mEntry( entry ), mObserver( 0 ) {}
 
     DocEntry *entry()const { return mEntry; }

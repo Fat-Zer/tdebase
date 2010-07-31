@@ -25,9 +25,9 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
 
-#include <qlayout.h>
-#include <qhbox.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
 
 #include <kdialog.h>
 #include <klocale.h>
@@ -45,29 +45,29 @@
 #include "debugger.h"
 #include "debugger.moc"
 
-KrashDebugger :: KrashDebugger (const KrashConfig *krashconf, QWidget *parent, const char *name)
-  : QWidget( parent, name ),
+KrashDebugger :: KrashDebugger (const KrashConfig *krashconf, TQWidget *parent, const char *name)
+  : TQWidget( parent, name ),
     m_krashconf(krashconf),
     m_proctrace(0)
 {
-  QVBoxLayout *vbox = new QVBoxLayout( this, 0, KDialog::marginHint() );
+  TQVBoxLayout *vbox = new TQVBoxLayout( this, 0, KDialog::marginHint() );
   vbox->setAutoAdd(TRUE);
 
   m_backtrace = new KTextBrowser(this);
   m_backtrace->setTextFormat(Qt::PlainText);
   m_backtrace->setFont(KGlobalSettings::fixedFont());
 
-  QWidget *w = new QWidget( this );
-  ( new QHBoxLayout( w, 0, KDialog::marginHint() ) )->setAutoAdd( true );
-  m_status = new QLabel( w );
-  m_status->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred ) );
+  TQWidget *w = new TQWidget( this );
+  ( new TQHBoxLayout( w, 0, KDialog::marginHint() ) )->setAutoAdd( true );
+  m_status = new TQLabel( w );
+  m_status->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Preferred ) );
   //m_copyButton = new KPushButton( KStdGuiItem::copy(), w );
-  KGuiItem item( i18n( "C&opy" ), QString::fromLatin1( "editcopy" ) );
+  KGuiItem item( i18n( "C&opy" ), TQString::fromLatin1( "editcopy" ) );
   m_copyButton = new KPushButton( item, w );
-  connect( m_copyButton, SIGNAL( clicked() ), this, SLOT( slotCopy() ) );
+  connect( m_copyButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotCopy() ) );
   m_copyButton->setEnabled( false );
   m_saveButton = new KPushButton( m_krashconf->safeMode() ? KStdGuiItem::save() : KStdGuiItem::saveAs(), w );
-  connect( m_saveButton, SIGNAL( clicked() ), this, SLOT( slotSave() ) );
+  connect( m_saveButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotSave() ) );
   m_saveButton->setEnabled( false );
 }
 
@@ -77,7 +77,7 @@ KrashDebugger :: ~KrashDebugger()
   //  delete m_proctrace;
 }
 
-void KrashDebugger :: slotDone(const QString& str)
+void KrashDebugger :: slotDone(const TQString& str)
 {
   m_status->setText(i18n("Done."));
   m_copyButton->setEnabled( true );
@@ -95,7 +95,7 @@ void KrashDebugger :: slotSave()
 {
   if (m_krashconf->safeMode())
   {
-    KTempFile tf(QString::fromAscii("/tmp/"), QString::fromAscii(".kcrash"), 0600);
+    KTempFile tf(TQString::fromAscii("/tmp/"), TQString::fromAscii(".kcrash"), 0600);
     if (!tf.status())
     {
       *tf.textStream() << m_backtrace->text();
@@ -109,13 +109,13 @@ void KrashDebugger :: slotSave()
   }
   else
   {
-    QString defname = m_krashconf->execName() + QString::fromLatin1( ".kcrash" );
+    TQString defname = m_krashconf->execName() + TQString::fromLatin1( ".kcrash" );
     if( defname.contains( '/' ))
         defname = defname.mid( defname.findRev( '/' ) + 1 );
-    QString filename = KFileDialog::getSaveFileName(defname, QString::null, this, i18n("Select Filename"));
+    TQString filename = KFileDialog::getSaveFileName(defname, TQString::null, this, i18n("Select Filename"));
     if (!filename.isEmpty())
     {
-      QFile f(filename);
+      TQFile f(filename);
       
       if (f.exists()) {
         if (KMessageBox::Cancel == 
@@ -129,7 +129,7 @@ void KrashDebugger :: slotSave()
       
       if (f.open(IO_WriteOnly))
       {
-        QTextStream ts(&f);
+        TQTextStream ts(&f);
         ts << m_backtrace->text();
         f.close();
       }
@@ -151,7 +151,7 @@ void KrashDebugger :: slotSomeError()
       + m_backtrace->text());
 }
 
-void KrashDebugger :: slotAppend(const QString &str)
+void KrashDebugger :: slotAppend(const TQString &str)
 {
   m_status->setText(i18n("Loading backtrace..."));
 
@@ -159,9 +159,9 @@ void KrashDebugger :: slotAppend(const QString &str)
   m_backtrace->setText(m_backtrace->text() + str);
 }
 
-void KrashDebugger :: showEvent(QShowEvent *e)
+void KrashDebugger :: showEvent(TQShowEvent *e)
 {
-  QWidget::showEvent(e);
+  TQWidget::showEvent(e);
   startDebugger();
 }
 
@@ -171,7 +171,7 @@ void KrashDebugger :: startDebugger()
   if (m_proctrace || !m_backtrace->text().isEmpty())
     return;
 
-  QString msg;
+  TQString msg;
   bool checks = performChecks( &msg );
   if( !checks && !m_krashconf->disableChecks())
   {
@@ -195,20 +195,20 @@ void KrashDebugger :: startDebugger()
 
   m_proctrace = new BackTrace(m_krashconf, this);
 
-  connect(m_proctrace, SIGNAL(append(const QString &)),
-          SLOT(slotAppend(const QString &)));
-  connect(m_proctrace, SIGNAL(done(const QString&)), SLOT(slotDone(const QString&)));
-  connect(m_proctrace, SIGNAL(someError()), SLOT(slotSomeError()));
+  connect(m_proctrace, TQT_SIGNAL(append(const TQString &)),
+          TQT_SLOT(slotAppend(const TQString &)));
+  connect(m_proctrace, TQT_SIGNAL(done(const TQString&)), TQT_SLOT(slotDone(const TQString&)));
+  connect(m_proctrace, TQT_SIGNAL(someError()), TQT_SLOT(slotSomeError()));
 
   m_proctrace->start();
 }
 
 // this function check for "dangerous" settings, returns false
 // and message in case some of them are activated
-bool KrashDebugger::performChecks( QString* msg )
+bool KrashDebugger::performChecks( TQString* msg )
 {
   bool ret = true;
-  KConfig kdedcfg( QString::fromLatin1( "kdedrc" ), true );
+  KConfig kdedcfg( TQString::fromLatin1( "kdedrc" ), true );
   kdedcfg.setGroup( "General" );
   if( kdedcfg.readBoolEntry( "DelayedCheck", false ))
   {

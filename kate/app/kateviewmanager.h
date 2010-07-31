@@ -26,7 +26,7 @@
 
 #include <kate/view.h>
 #include <kate/document.h>
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 
 class KateMainWindow;
 class KateViewSpaceContainer;
@@ -48,7 +48,7 @@ class KateViewManager : public QObject
 
     KateViewSpaceContainer *activeContainer () { return m_currentContainer; }
 
-    QPtrList<KateViewSpaceContainer> *containers() { return &m_viewSpaceContainerList; }
+    TQPtrList<KateViewSpaceContainer> *containers() { return &m_viewSpaceContainerList; }
 
     void updateViewSpaceActions ();
 
@@ -60,12 +60,12 @@ class KateViewManager : public QObject
 
   public:
     /* This will save the splitter configuration */
-    void saveViewConfiguration(KConfig *config,const QString& group);
+    void saveViewConfiguration(KConfig *config,const TQString& group);
 
     /* restore it */
-    void restoreViewConfiguration (KConfig *config,const QString& group);
+    void restoreViewConfiguration (KConfig *config,const TQString& group);
 
-    uint openURL (const KURL &url, const QString& encoding, bool activate = true, bool isTempFile=false);
+    uint openURL (const KURL &url, const TQString& encoding, bool activate = true, bool isTempFile=false);
 
   public slots:
     void openURL (const KURL &url);
@@ -92,7 +92,7 @@ class KateViewManager : public QObject
     void activateView ( Kate::View *view );
     void activateSpace ( Kate::View* v );
 
-    void tabChanged(QWidget*);
+    void tabChanged(TQWidget*);
 
   public slots:
     bool getShowFullPath() const { return showFullPath; }
@@ -127,22 +127,22 @@ class KateViewManager : public QObject
   protected:
     friend class KateViewSpaceContainer;
 
-    QGuardedPtr<Kate::View> guiMergedView;
+    TQGuardedPtr<Kate::View> guiMergedView;
 
   signals:
-    void statusChanged (Kate::View *, int, int, int, bool, int, const QString &);
+    void statusChanged (Kate::View *, int, int, int, bool, int, const TQString &);
     void statChanged ();
     void viewChanged ();
 
   private:
     Kate::ViewManager *m_viewManager;
-    QPtrList<KateViewSpaceContainer> m_viewSpaceContainerList;
+    TQPtrList<KateViewSpaceContainer> m_viewSpaceContainerList;
     KateViewSpaceContainer *m_currentContainer;
 
     KateMainWindow *m_mainWindow;
     bool m_init;
 
-    QToolButton *m_closeTabButton;
+    TQToolButton *m_closeTabButton;
     KAction *m_closeView;
     KAction *m_closeTab;
     KAction *m_activateNextTab;

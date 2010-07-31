@@ -26,9 +26,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "menuapplet.h"
 
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qvariant.h> // avoid X11 #define's
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqvariant.h> // avoid X11 #define's
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -45,7 +45,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*
 
  KMenuBar from KDE3.1 and older won't work very well with this applet.
- This is because QMenuBar tries really hard to keep its preffered size,
+ This is because TQMenuBar tries really hard to keep its preffered size,
  se even if the X window for the menubar has the size enforced by this
  applet, Qt thinks it has the size Qt wants. This results in parts
  of the menubar not being repainted. Also, old KMenuBar always forced
@@ -61,7 +61,7 @@ extern Time qt_x_time;
 
 extern "C"
 {
-    KDE_EXPORT KPanelApplet* init( QWidget* parent_P, const QString& configFile_P )
+    KDE_EXPORT KPanelApplet* init( TQWidget* parent_P, const TQString& configFile_P )
     {
       KGlobal::locale()->insertCatalogue("kmenuapplet");
       return new KickerMenuApplet::Applet( configFile_P, parent_P );
@@ -78,7 +78,7 @@ const long SUPPORTED_WINDOW_TYPES = NET::NormalMask | NET::DesktopMask | NET::Do
                 | NET::ToolbarMask | NET::MenuMask | NET::DialogMask | NET::OverrideMask
                 | NET::TopMenuMask | NET::UtilityMask | NET::SplashMask;
 
-Applet::Applet( const QString& configFile_P, QWidget* parent_P )
+Applet::Applet( const TQString& configFile_P, TQWidget* parent_P )
     :   KPanelApplet( configFile_P, Normal, 0, parent_P, "menuapplet" ),
         DCOPObject( "menuapplet" ),
         module( NULL ),
@@ -91,8 +91,8 @@ Applet::Applet( const QString& configFile_P, QWidget* parent_P )
     setBackgroundOrigin(AncestorOrigin);
     dcopclient.registerAs( "menuapplet", false );
     // toolbarAppearanceChanged(int) is sent when changing macstyle
-    connect( kapp, SIGNAL( toolbarAppearanceChanged( int )),
-        this, SLOT( readSettings()));
+    connect( kapp, TQT_SIGNAL( toolbarAppearanceChanged( int )),
+        this, TQT_SLOT( readSettings()));
     claimSelection();
     readSettings();
     updateTopEdgeOffset();
@@ -152,7 +152,7 @@ void Applet::activeWindowChanged( WId w_P )
 	 window != None;
 	 window = tryTransientFor( window ))
 	{
-	for( QValueList< MenuEmbed* >::ConstIterator it = menus.begin();
+	for( TQValueList< MenuEmbed* >::ConstIterator it = menus.begin();
 	     it != menus.end();
 	     ++it )
 	    {
@@ -175,7 +175,7 @@ void Applet::activeWindowChanged( WId w_P )
         }
     if( try_desktop )
         {
-	for( QValueList< MenuEmbed* >::ConstIterator it = menus.begin();
+	for( TQValueList< MenuEmbed* >::ConstIterator it = menus.begin();
 	     it != menus.end();
 	     ++it )
 	    {
@@ -233,7 +233,7 @@ WId Applet::tryTransientFor( WId w_P )
 
 void Applet::menuLost( MenuEmbed* embed )
     {
-    for( QValueList< MenuEmbed* >::Iterator it = menus.begin();
+    for( TQValueList< MenuEmbed* >::Iterator it = menus.begin();
 	 it != menus.end();
 	 ++it )
 	{
@@ -266,21 +266,21 @@ void Applet::positionChange( Position )
 // Kicker's frame).
 void Applet::updateTopEdgeOffset()
     {
-    QPoint p = topLevelWidget()->mapToGlobal( QPoint( 0, 0 ));
+    TQPoint p = topLevelWidget()->mapToGlobal( TQPoint( 0, 0 ));
     if( p.y() <= 2 ) // 2 = work also when running in appletproxy
-        topEdgeOffset = mapToGlobal( QPoint( 0, 0 )).y() - p.y();
+        topEdgeOffset = mapToGlobal( TQPoint( 0, 0 )).y() - p.y();
     else
         topEdgeOffset = 0;
     if( active_menu != NULL )
         active_menu->move( active_menu->x(), -topEdgeOffset );
     }
 
-void Applet::paletteChange(const QPalette & /* oldPalette */)
+void Applet::paletteChange(const TQPalette & /* oldPalette */)
 {
     setBackground();
 }
 
-void Applet::moveEvent( QMoveEvent* )
+void Applet::moveEvent( TQMoveEvent* )
 {
     setBackground();
 }
@@ -300,13 +300,13 @@ void Applet::claimSelection()
 	{
         delete selection_watcher;
         selection_watcher = NULL;
-        connect( selection, SIGNAL( lostOwnership()), SLOT( lostSelection()));
+        connect( selection, TQT_SIGNAL( lostOwnership()), TQT_SLOT( lostSelection()));
         module = new KWinModule;
-	connect( module, SIGNAL( windowAdded( WId )), this, SLOT( windowAdded( WId )));
-	connect( module, SIGNAL( activeWindowChanged( WId )),
-	    this, SLOT( activeWindowChanged( WId )));
-	QValueList< WId > windows = module->windows();
-	for( QValueList< WId >::ConstIterator it = windows.begin();
+	connect( module, TQT_SIGNAL( windowAdded( WId )), this, TQT_SLOT( windowAdded( WId )));
+	connect( module, TQT_SIGNAL( activeWindowChanged( WId )),
+	    this, TQT_SLOT( activeWindowChanged( WId )));
+	TQValueList< WId > windows = module->windows();
+	for( TQValueList< WId >::ConstIterator it = windows.begin();
 	     it != windows.end();
 	     ++it )
 	    windowAdded( *it );
@@ -321,7 +321,7 @@ void Applet::lostSelection()
     if( selection == NULL )
         return;
 //    kdDebug() << "lost selection" << endl;
-    for( QValueList< MenuEmbed* >::ConstIterator it = menus.begin();
+    for( TQValueList< MenuEmbed* >::ConstIterator it = menus.begin();
 	 it != menus.end();
 	 ++it )
 	delete (*it); // delete all MenuEmbed's = release all menus
@@ -330,7 +330,7 @@ void Applet::lostSelection()
     if( selection_watcher == NULL )
         {
         selection_watcher = new KSelectionWatcher( makeSelectionAtom(), DefaultScreen( qt_xdisplay()));
-        connect( selection_watcher, SIGNAL( lostOwner()), this, SLOT( claimSelection()));
+        connect( selection_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( claimSelection()));
         }
     delete module;
     module = NULL;
@@ -346,9 +346,9 @@ void Applet::readSettings()
     desktop_menu = cfg.readBoolEntry( "ShowMenubar", false );
     cfg.setGroup( "KDE" );
     if( cfg.readBoolEntry( "macStyle", false ) || desktop_menu )
-        QToolTip::remove( this );
+        TQToolTip::remove( this );
     else
-        QToolTip::add( this, i18n(
+        TQToolTip::add( this, i18n(
             "You do not appear to have enabled the standalone menubar; "
             "enable it in the Behavior control module for desktop." ));
     if( !isDisabled() && active_menu == NULL )
@@ -397,7 +397,7 @@ Atom Applet::makeSelectionAtom()
     }
 
 MenuEmbed::MenuEmbed( WId mainwindow_P, bool desktop_P,
-    QWidget* parent_P, const char* name_P )
+    TQWidget* parent_P, const char* name_P )
     :   QXEmbed( parent_P, name_P ),
 	main_window( mainwindow_P ),
         desktop( desktop_P )
@@ -418,7 +418,7 @@ bool MenuEmbed::x11Event( XEvent* ev_P )
         && ev_P->xconfigurerequest.value_mask & ( CWWidth | CWHeight ))
         {
 	XConfigureRequestEvent& ev = ev_P->xconfigurerequest;
-        QSize new_size = size();
+        TQSize new_size = size();
         if( ev.value_mask & CWWidth )
             new_size.setWidth( ev.width );
         if( ev.value_mask & CWHeight )
@@ -443,7 +443,7 @@ bool MenuEmbed::x11Event( XEvent* ev_P )
 
 void MenuEmbed::sendSyntheticConfigureNotifyEvent()
 {
-    QPoint globalPos = mapToGlobal(QPoint(0,0));
+    TQPoint globalPos = mapToGlobal(TQPoint(0,0));
     if (embeddedWinId()) {
         XConfigureEvent c;
         memset(&c, 0, sizeof(c));
@@ -489,11 +489,11 @@ void MenuEmbed::setMinimumSize( int w, int h )
 
 void MenuEmbed::setBackground()
 {
-    const QPixmap *pbg = parentWidget()->backgroundPixmap();
+    const TQPixmap *pbg = parentWidget()->backgroundPixmap();
     
     if (pbg)
     {
-        QPixmap bg(width(), height());
+        TQPixmap bg(width(), height());
         bg.fill(parentWidget(), pos());
         setPaletteBackgroundPixmap(bg);
         setBackgroundOrigin(WidgetOrigin);

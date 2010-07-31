@@ -40,18 +40,18 @@ class KateViewSpaceContainer: public QVBox
   friend class KateVSStatusBar;
 
   public:
-    KateViewSpaceContainer (QWidget *parent, KateViewManager *viewManager);
+    KateViewSpaceContainer (TQWidget *parent, KateViewManager *viewManager);
 
     ~KateViewSpaceContainer ();
 
-    inline QPtrList<Kate::View> &viewList () { return m_viewList; };
+    inline TQPtrList<Kate::View> &viewList () { return m_viewList; };
 
   public:
     /* This will save the splitter configuration */
-    void saveViewConfiguration(KConfig *config,const QString& group);
+    void saveViewConfiguration(KConfig *config,const TQString& group);
 
     /* restore it */
-    void restoreViewConfiguration (KConfig *config,const QString& group);
+    void restoreViewConfiguration (KConfig *config,const TQString& group);
 
   private:
     /**
@@ -69,12 +69,12 @@ class KateViewSpaceContainer: public QVBox
      * If child splitters are found, it calls it self with those as the argument.
      * If a viewspace child is found, it is asked to save its filelist.
      */
-    void saveSplitterConfig(KateMDI::Splitter* s, int idx=0, KConfig* config=0L, const QString& viewConfGrp="");
+    void saveSplitterConfig(KateMDI::Splitter* s, int idx=0, KConfig* config=0L, const TQString& viewConfGrp="");
 
     /** Restore a single splitter.
      * This is all the work is done for @see saveSplitterConfig()
      */
-    void restoreSplitter ( KConfig* config, const QString &group, QWidget* parent , const QString& viewConfGrp);
+    void restoreSplitter ( KConfig* config, const TQString &group, TQWidget* parent , const TQString& viewConfGrp);
 
     void removeViewSpace (KateViewSpace *viewspace);
 
@@ -141,21 +141,21 @@ class KateViewSpaceContainer: public QVBox
     void activatePrevView();
 
   signals:
-    void statusChanged (Kate::View *, int, int, int, bool, int, const QString &);
+    void statusChanged (Kate::View *, int, int, int, bool, int, const TQString &);
     void statChanged ();
     void viewChanged ();
 
   private:
     KateViewManager *m_viewManager;
-    QPtrList<KateViewSpace> m_viewSpaceList;
-    QPtrList<Kate::View> m_viewList;
+    TQPtrList<KateViewSpace> m_viewSpaceList;
+    TQPtrList<Kate::View> m_viewList;
 
     bool m_blockViewCreationAndActivation;
 
     bool m_activeViewRunning;
 
     bool m_pendingViewCreation;
-    QGuardedPtr<Kate::Document> m_pendingDocument;
+    TQGuardedPtr<Kate::Document> m_pendingDocument;
 };
 
 #endif

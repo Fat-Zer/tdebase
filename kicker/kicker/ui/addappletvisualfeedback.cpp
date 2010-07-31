@@ -23,11 +23,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qapplication.h>
-#include <qlabel.h>
-#include <qpainter.h>
-#include <qsimplerichtext.h>
-#include <qtimer.h>
+#include <tqapplication.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
+#include <tqsimplerichtext.h>
+#include <tqtimer.h>
 
 #include <kdialog.h>
 #include <klocale.h>
@@ -42,9 +42,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define DEFAULT_FRAMES_PER_SECOND 30
 
 AddAppletVisualFeedback::AddAppletVisualFeedback(AppletWidget* widget,
-                                                 const QWidget* target,
+                                                 const TQWidget* target,
                                                  KPanelApplet::Direction direction)
-    : QWidget(0, "animtt", WX11BypassWM),
+    : TQWidget(0, "animtt", WX11BypassWM),
       m_target(target),
       m_direction(direction),
       m_icon(*widget->itemPixmap->pixmap()),
@@ -55,22 +55,22 @@ AddAppletVisualFeedback::AddAppletVisualFeedback(AppletWidget* widget,
 {
     setFocusPolicy(NoFocus);
     setBackgroundMode(NoBackground);
-    connect(&m_moveTimer, SIGNAL(timeout()), SLOT(swoopCloser()));
+    connect(&m_moveTimer, TQT_SIGNAL(timeout()), TQT_SLOT(swoopCloser()));
 
-    QString m = "<qt><h3>" + i18n("%1 Added").arg(widget->info().name());
+    TQString m = "<qt><h3>" + i18n("%1 Added").arg(widget->info().name());
 
     if (widget->info().name() != widget->info().comment())
     {
         m += "</h3><p>" + widget->info().comment() + "</p></qt>";
     }
 
-    m_richText = new QSimpleRichText(m, font());
+    m_richText = new TQSimpleRichText(m, font());
     m_richText->setWidth(400);
 
     displayInternal();
 
     m_destination = KickerLib::popupPosition(m_direction, this, m_target);
-    QPoint startAt = widget->itemPixmap->geometry().topLeft();
+    TQPoint startAt = widget->itemPixmap->geometry().topLeft();
     startAt = widget->itemPixmap->mapToGlobal(startAt);
     move(startAt);
 
@@ -85,7 +85,7 @@ AddAppletVisualFeedback::~AddAppletVisualFeedback()
     delete m_richText;
 }
 
-void AddAppletVisualFeedback::paintEvent(QPaintEvent * e)
+void AddAppletVisualFeedback::paintEvent(TQPaintEvent * e)
 {
     if (m_dirty)
     {
@@ -93,11 +93,11 @@ void AddAppletVisualFeedback::paintEvent(QPaintEvent * e)
         m_dirty = false;
     }
 
-    QPainter p(this);
+    TQPainter p(this);
     p.drawPixmap(e->rect().topLeft(), m_pixmap, e->rect());
 }
 
-void AddAppletVisualFeedback::mousePressEvent(QMouseEvent *)
+void AddAppletVisualFeedback::mousePressEvent(TQMouseEvent *)
 {
     m_moveTimer.stop();
     hide();
@@ -106,7 +106,7 @@ void AddAppletVisualFeedback::mousePressEvent(QMouseEvent *)
 
 void AddAppletVisualFeedback::makeMask()
 {
-    QPainter maskPainter(&m_mask);
+    TQPainter maskPainter(&m_mask);
 
     m_mask.fill(Qt::black);
 
@@ -120,7 +120,7 @@ void AddAppletVisualFeedback::makeMask()
 void AddAppletVisualFeedback::displayInternal()
 {
     // determine text rectangle
-    QRect textRect(0, 0, 0, 0);
+    TQRect textRect(0, 0, 0, 0);
 
     if (m_frames < 1)
     {
@@ -154,7 +154,7 @@ void AddAppletVisualFeedback::displayInternal()
     makeMask();
 
     // draw background
-    QPainter bufferPainter(&m_pixmap);
+    TQPainter bufferPainter(&m_pixmap);
     bufferPainter.setPen(Qt::black);
     bufferPainter.setBrush(colorGroup().background());
     bufferPainter.drawRoundRect(0, 0, width, height,
@@ -174,11 +174,11 @@ void AddAppletVisualFeedback::displayInternal()
         int textY = (height - textRect.height()) / 2;
 
         // draw text shadow
-        QColorGroup cg = colorGroup();
-        cg.setColor(QColorGroup::Text, cg.background().dark(115));
-        int shadowOffset = QApplication::reverseLayout() ? -1 : 1;
+        TQColorGroup cg = colorGroup();
+        cg.setColor(TQColorGroup::Text, cg.background().dark(115));
+        int shadowOffset = TQApplication::reverseLayout() ? -1 : 1;
         m_richText->draw(&bufferPainter, 5 + textX + shadowOffset,
-                         textY + 1, QRect(), cg);
+                         textY + 1, TQRect(), cg);
 
         // draw text
         cg = colorGroup();
@@ -193,7 +193,7 @@ void AddAppletVisualFeedback::swoopCloser()
         return;
     }
 
-    QPoint loc = geometry().topLeft();
+    TQPoint loc = geometry().topLeft();
     bool isLeft = m_destination.x() > loc.x();
     if (loc.x() != m_destination.x())
     {
@@ -217,7 +217,7 @@ void AddAppletVisualFeedback::swoopCloser()
     {
         m_moveTimer.stop();
         displayInternal();
-        QTimer::singleShot(2000, this, SLOT(deleteLater()));
+        TQTimer::singleShot(2000, this, TQT_SLOT(deleteLater()));
     }
 }
 

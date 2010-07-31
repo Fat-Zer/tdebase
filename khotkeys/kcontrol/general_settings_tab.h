@@ -21,7 +21,7 @@ class General_settings_tab
     {
     Q_OBJECT
     public:
-        General_settings_tab( QWidget* parent = NULL, const char* name = NULL );
+        General_settings_tab( TQWidget* parent = NULL, const char* name = NULL );
         void read_data();
         void write_data() const;
     public slots:

@@ -17,12 +17,12 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlabel.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
-#include <qslider.h>
+#include <tqlabel.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqslider.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -40,7 +40,7 @@
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_virtualdesktops(QWidget *parent, const char * /*name*/)
+  KDE_EXPORT KCModule *create_virtualdesktops(TQWidget *parent, const char * /*name*/)
   {
     return new KDesktopConfig(parent, "kcmkonq");
   }
@@ -51,7 +51,7 @@ extern "C"
 // be able to TAB through those line edits fast. So don't send me mails
 // asking why I did not implement a more intelligent/smaller GUI.
 
-KDesktopConfig::KDesktopConfig(QWidget *parent, const char * /*name*/)
+KDesktopConfig::KDesktopConfig(TQWidget *parent, const char * /*name*/)
   : KCModule(parent, "kcmkonq")
 {
 
@@ -59,24 +59,24 @@ KDesktopConfig::KDesktopConfig(QWidget *parent, const char * /*name*/)
 
   Q_ASSERT(maxDesktops % 2 == 0);
 
-  QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   // number group
-  QGroupBox *number_group = new QGroupBox(this);
+  TQGroupBox *number_group = new TQGroupBox(this);
 
-  QHBoxLayout *lay = new QHBoxLayout(number_group,
+  TQHBoxLayout *lay = new TQHBoxLayout(number_group,
                      KDialog::marginHint(),
                      KDialog::spacingHint());
 
-  QLabel *label = new QLabel(i18n("N&umber of desktops: "), number_group);
+  TQLabel *label = new TQLabel(i18n("N&umber of desktops: "), number_group);
   _numInput = new KIntNumInput(4, number_group);
   _numInput->setRange(1, maxDesktops, 1, true);
-  connect(_numInput, SIGNAL(valueChanged(int)), SLOT(slotValueChanged(int)));
-  connect(_numInput, SIGNAL(valueChanged(int)),  SLOT( changed() ));
+  connect(_numInput, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotValueChanged(int)));
+  connect(_numInput, TQT_SIGNAL(valueChanged(int)),  TQT_SLOT( changed() ));
   label->setBuddy( _numInput );
-  QString wtstr = i18n( "Here you can set how many virtual desktops you want on your KDE desktop. Move the slider to change the value." );
-  QWhatsThis::add( label, wtstr );
-  QWhatsThis::add( _numInput, wtstr );
+  TQString wtstr = i18n( "Here you can set how many virtual desktops you want on your KDE desktop. Move the slider to change the value." );
+  TQWhatsThis::add( label, wtstr );
+  TQWhatsThis::add( _numInput, wtstr );
 
   lay->addWidget(label);
   lay->addWidget(_numInput);
@@ -85,25 +85,25 @@ KDesktopConfig::KDesktopConfig(QWidget *parent, const char * /*name*/)
   layout->addWidget(number_group);
 
   // name group
-  QGroupBox *name_group = new QGroupBox(i18n("Desktop &Names"), this);
+  TQGroupBox *name_group = new TQGroupBox(i18n("Desktop &Names"), this);
 
   name_group->setColumnLayout(4, Horizontal);
 
   for(int i = 0; i < (maxDesktops/2); i++)
     {
-      _nameLabel[i] = new QLabel(i18n("Desktop %1:").arg(i+1), name_group);
+      _nameLabel[i] = new TQLabel(i18n("Desktop %1:").arg(i+1), name_group);
       _nameInput[i] = new KLineEdit(name_group);
-      _nameLabel[i+(maxDesktops/2)] = new QLabel(i18n("Desktop %1:").arg(i+(maxDesktops/2)+1), name_group);
+      _nameLabel[i+(maxDesktops/2)] = new TQLabel(i18n("Desktop %1:").arg(i+(maxDesktops/2)+1), name_group);
       _nameInput[i+(maxDesktops/2)] = new KLineEdit(name_group);
-      QWhatsThis::add( _nameLabel[i], i18n( "Here you can enter the name for desktop %1" ).arg( i+1 ) );
-      QWhatsThis::add( _nameInput[i], i18n( "Here you can enter the name for desktop %1" ).arg( i+1 ) );
-      QWhatsThis::add( _nameLabel[i+(maxDesktops/2)], i18n( "Here you can enter the name for desktop %1" ).arg( i+(maxDesktops/2)+1 ) );
-      QWhatsThis::add( _nameInput[i+(maxDesktops/2)], i18n( "Here you can enter the name for desktop %1" ).arg( i+(maxDesktops/2)+1 ) );
+      TQWhatsThis::add( _nameLabel[i], i18n( "Here you can enter the name for desktop %1" ).arg( i+1 ) );
+      TQWhatsThis::add( _nameInput[i], i18n( "Here you can enter the name for desktop %1" ).arg( i+1 ) );
+      TQWhatsThis::add( _nameLabel[i+(maxDesktops/2)], i18n( "Here you can enter the name for desktop %1" ).arg( i+(maxDesktops/2)+1 ) );
+      TQWhatsThis::add( _nameInput[i+(maxDesktops/2)], i18n( "Here you can enter the name for desktop %1" ).arg( i+(maxDesktops/2)+1 ) );
 
-      connect(_nameInput[i], SIGNAL(textChanged(const QString&)),
-           SLOT( changed() ));
-      connect(_nameInput[i+(maxDesktops/2)], SIGNAL(textChanged(const QString&)),
-           SLOT( changed() ));
+      connect(_nameInput[i], TQT_SIGNAL(textChanged(const TQString&)),
+           TQT_SLOT( changed() ));
+      connect(_nameInput[i+(maxDesktops/2)], TQT_SIGNAL(textChanged(const TQString&)),
+           TQT_SLOT( changed() ));
     }
 
   for(int i = 1; i < maxDesktops; i++)
@@ -111,8 +111,8 @@ KDesktopConfig::KDesktopConfig(QWidget *parent, const char * /*name*/)
 
   layout->addWidget(name_group);
 
-  _wheelOption = new QCheckBox(i18n("Mouse wheel over desktop background switches desktop"), this);
-  connect(_wheelOption,SIGNAL(toggled(bool)), SLOT( changed() ));
+  _wheelOption = new TQCheckBox(i18n("Mouse wheel over desktop background switches desktop"), this);
+  connect(_wheelOption,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
 
   layout->addWidget(_wheelOption);
   layout->addStretch(1);
@@ -135,7 +135,7 @@ void KDesktopConfig::load( bool useDefaults )
   if (qt_xdisplay())
      konq_screen_number = DefaultScreen(qt_xdisplay());
 
-  QCString groupname;
+  TQCString groupname;
   if (konq_screen_number == 0)
      groupname = "Desktops";
   else
@@ -148,8 +148,8 @@ void KDesktopConfig::load( bool useDefaults )
   kwinconfig->setGroup("Desktops");
   for(int i = 1; i <= maxDesktops; i++)
   {
-    QString key_name(QString("Name_") + QString::number(i));
-    QString name = QString::fromUtf8(info.desktopName(i));
+    TQString key_name(TQString("Name_") + TQString::number(i));
+    TQString name = TQString::fromUtf8(info.desktopName(i));
     if (name.isEmpty()) // Get name from configuration if none is set in the WM.
     {
         name = kwinconfig->readEntry(key_name, i18n("Desktop %1").arg(i));
@@ -166,7 +166,7 @@ void KDesktopConfig::load( bool useDefaults )
   delete kwinconfig;
   kwinconfig = 0;
 
-  QString configfile;
+  TQString configfile;
   if (konq_screen_number == 0)
       configfile = "kdesktoprc";
   else
@@ -210,7 +210,7 @@ void KDesktopConfig::save()
   if (qt_xdisplay())
      konq_screen_number = DefaultScreen(qt_xdisplay());
 
-  QCString appname;
+  TQCString appname;
   if (konq_screen_number == 0)
       appname = "kdesktop";
   else
@@ -224,7 +224,7 @@ void KDesktopConfig::save()
   // Tell kdesktop about the new config file
   if ( !kapp->dcopClient()->isAttached() )
      kapp->dcopClient()->attach();
-  QByteArray data;
+  TQByteArray data;
 
   kapp->dcopClient()->send( appname, "KDesktopIface", "configure()", data );
 

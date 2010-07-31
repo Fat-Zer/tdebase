@@ -57,14 +57,14 @@
 #ifndef KASRESOURCES_H
 #define KASRESOURCES_H
 
-#include <qbitmap.h>
-#include <qcolor.h>
-#include <qbrush.h>
-#include <qpen.h>
+#include <tqbitmap.h>
+#include <tqcolor.h>
+#include <tqbrush.h>
+#include <tqpen.h>
 #include <kpixmap.h>
 
-#include <qobject.h>
-#include <qvaluevector.h>
+#include <tqobject.h>
+#include <tqvaluevector.h>
 
 class KasBar;
 
@@ -81,39 +81,39 @@ public:
     KasResources( KasBar *parent, const char *name=0 );
     virtual ~KasResources();
 
-    QColor labelPenColor() const    { return labelPenColor_; }
-    QColor labelBgColor() const     { return labelBgColor_; }
-    QColor inactivePenColor() const { return inactivePenColor_; }
-    QColor inactiveBgColor() const  { return inactiveBgColor_; }
-    QColor activePenColor() const   { return activePenColor_; }
-    QColor activeBgColor() const    { return activeBgColor_; }
+    TQColor labelPenColor() const    { return labelPenColor_; }
+    TQColor labelBgColor() const     { return labelBgColor_; }
+    TQColor inactivePenColor() const { return inactivePenColor_; }
+    TQColor inactiveBgColor() const  { return inactiveBgColor_; }
+    TQColor activePenColor() const   { return activePenColor_; }
+    TQColor activeBgColor() const    { return activeBgColor_; }
 
-    QColor progressColor() const    { return progressColor_; }      
-    QColor attentionColor() const    { return attentionColor_; }      
+    TQColor progressColor() const    { return progressColor_; }      
+    TQColor attentionColor() const    { return attentionColor_; }      
 
     /** Accessor for the min icon (singleton). */
-    QBitmap minIcon();
+    TQBitmap minIcon();
 
     /** Accessor for the max icon (singleton). */
-    QBitmap maxIcon();
+    TQBitmap maxIcon();
 
     /** Accessor for the shade icon (singleton). */
-    QBitmap shadeIcon();
+    TQBitmap shadeIcon();
 
     /** Accessor for the attention icon (singleton). */
-    QBitmap attentionIcon();
+    TQBitmap attentionIcon();
 
     /** Accessor for the modified icon (singleton). */
-    QPixmap modifiedIcon();
+    TQPixmap modifiedIcon();
 
     /** Accessor for the micro min icon (singleton). */
-    QPixmap microMinIcon();
+    TQPixmap microMinIcon();
 
     /** Accessor for the micro max icon (singleton). */
-    QPixmap microMaxIcon();
+    TQPixmap microMaxIcon();
 
     /** Accessor for the micro shade icon (singleton). */
-    QPixmap microShadeIcon();
+    TQPixmap microShadeIcon();
 
     /** Accessor used by items to get the active bg fill. */
     KPixmap activeBg();
@@ -121,18 +121,18 @@ public:
     /** Accessor used by items to get the inactive bg fill. */
     KPixmap inactiveBg();
 
-    QValueVector<QPixmap> startupAnimation();
+    TQValueVector<TQPixmap> startupAnimation();
 
 public slots:
-    void setLabelPenColor( const QColor &color );
-    void setLabelBgColor( const QColor &color );
-    void setInactivePenColor( const QColor &color );
-    void setInactiveBgColor( const QColor &color );
-    void setActivePenColor( const QColor &color );
-    void setActiveBgColor( const QColor &color );
+    void setLabelPenColor( const TQColor &color );
+    void setLabelBgColor( const TQColor &color );
+    void setInactivePenColor( const TQColor &color );
+    void setInactiveBgColor( const TQColor &color );
+    void setActivePenColor( const TQColor &color );
+    void setActiveBgColor( const TQColor &color );
 
-    void setProgressColor( const QColor &color );
-    void setAttentionColor( const QColor &color );
+    void setProgressColor( const TQColor &color );
+    void setAttentionColor( const TQColor &color );
 
     void itemSizeChanged();
 
@@ -142,29 +142,29 @@ signals:
 private:
     KasBar *kasbar;
 
-    QBitmap minPix;
-    QBitmap maxPix;
-    QBitmap shadePix;
-    QBitmap attentionPix;
-    QPixmap modifiedPix;
-    QPixmap microShadePix;
-    QPixmap microMaxPix;
-    QPixmap microMinPix;
+    TQBitmap minPix;
+    TQBitmap maxPix;
+    TQBitmap shadePix;
+    TQBitmap attentionPix;
+    TQPixmap modifiedPix;
+    TQPixmap microShadePix;
+    TQPixmap microMaxPix;
+    TQPixmap microMinPix;
 
-    QColor labelPenColor_;
-    QColor labelBgColor_;
-    QColor activePenColor_;
-    QColor activeBgColor_;
-    QColor inactivePenColor_;
-    QColor inactiveBgColor_;
+    TQColor labelPenColor_;
+    TQColor labelBgColor_;
+    TQColor activePenColor_;
+    TQColor activeBgColor_;
+    TQColor inactivePenColor_;
+    TQColor inactiveBgColor_;
 
-    QColor progressColor_;
-    QColor attentionColor_;
+    TQColor progressColor_;
+    TQColor attentionColor_;
 
     KPixmap actBg;
     KPixmap inactBg;
 
-    QValueVector<QPixmap> startupFrames_;
+    TQValueVector<TQPixmap> startupFrames_;
 };
 
 #endif // KASRESOURCES_H

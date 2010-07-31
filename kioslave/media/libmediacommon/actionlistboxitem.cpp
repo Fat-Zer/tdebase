@@ -21,13 +21,13 @@
 
 #include <klocale.h>
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
-ActionListBoxItem::ActionListBoxItem(NotifierAction *action, QString mimetype, QListBox *parent)
-	: QListBoxPixmap(parent, action->pixmap()),
+ActionListBoxItem::ActionListBoxItem(NotifierAction *action, TQString mimetype, TQListBox *parent)
+	: TQListBoxPixmap(parent, action->pixmap()),
 	  m_action(action)
 {
-	QString text = m_action->label();
+	TQString text = m_action->label();
 	
 	if ( m_action->autoMimetypes().contains( mimetype ) )
 	{

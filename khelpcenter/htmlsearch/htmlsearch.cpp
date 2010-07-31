@@ -1,5 +1,5 @@
-#include <qregexp.h>
-#include <qdir.h>
+#include <tqregexp.h>
+#include <tqdir.h>
 #include <assert.h>
 
 #include <kapplication.h>
@@ -15,31 +15,31 @@
 
 
 HTMLSearch::HTMLSearch()
-  : QObject(), _proc(0)
+  : TQObject(), _proc(0)
 {
 }
 
 
-QString HTMLSearch::dataPath(const QString& _lang)
+TQString HTMLSearch::dataPath(const TQString& _lang)
 {
-    return kapp->dirs()->saveLocation("data", QString("khelpcenter/%1").arg(_lang));
+    return kapp->dirs()->saveLocation("data", TQString("khelpcenter/%1").arg(_lang));
 }
 
 
-void HTMLSearch::scanDir(const QString& dir)
+void HTMLSearch::scanDir(const TQString& dir)
 {
     assert( dir.at( dir.length() - 1 ) == '/' );
 
-    QStringList::ConstIterator it;
+    TQStringList::ConstIterator it;
 
     if ( KStandardDirs::exists( dir + "index.docbook" ) ) {
         _files.append(dir + "index.docbook");
         progress->setFilesScanned(++_filesScanned);
     } else {
-        QDir d(dir, "*.html", QDir::Name|QDir::IgnoreCase, QDir::Files | QDir::Readable);
-        QStringList const &list = d.entryList();
-        QString adir = d.canonicalPath () + "/";
-        QString file;
+        TQDir d(dir, "*.html", TQDir::Name|TQDir::IgnoreCase, TQDir::Files | TQDir::Readable);
+        TQStringList const &list = d.entryList();
+        TQString adir = d.canonicalPath () + "/";
+        TQString file;
         for (it=list.begin(); it != list.end(); ++it)
         {
             file = adir + *it;
@@ -50,8 +50,8 @@ void HTMLSearch::scanDir(const QString& dir)
         }
     }
 
-    QDir d2(dir, QString::null, QDir::Name|QDir::IgnoreCase, QDir::Dirs);
-    QStringList const &dlist = d2.entryList();
+    TQDir d2(dir, TQString::null, TQDir::Name|TQDir::IgnoreCase, TQDir::Dirs);
+    TQStringList const &dlist = d2.entryList();
     for (it=dlist.begin(); it != dlist.end(); ++it)
         if (*it != "." && *it != "..")
         {
@@ -61,9 +61,9 @@ void HTMLSearch::scanDir(const QString& dir)
 }
 
 
-bool HTMLSearch::saveFilesList(const QString& _lang)
+bool HTMLSearch::saveFilesList(const TQString& _lang)
 {
-    QStringList dirs;
+    TQStringList dirs;
 
     // throw away old files list
     _files.clear();
@@ -80,8 +80,8 @@ bool HTMLSearch::saveFilesList(const QString& _lang)
     // TODO: Man and Info!!
 
     // add local urls
-    QStringList add = config->readListEntry("Paths");
-    QStringList::Iterator it;
+    TQStringList add = config->readListEntry("Paths");
+    TQStringList::Iterator it;
     for (it = add.begin(); it != add.end(); ++it) {
         if ( ( *it ).at( ( *it ).length() - 1 ) != '/' )
             ( *it ) += '/';
@@ -99,20 +99,20 @@ bool HTMLSearch::saveFilesList(const QString& _lang)
 }
 
 
-bool HTMLSearch::createConfig(const QString& _lang)
+bool HTMLSearch::createConfig(const TQString& _lang)
 {
-    QString fname = dataPath(_lang) + "/htdig.conf";
+    TQString fname = dataPath(_lang) + "/htdig.conf";
 
     // locate the common dir
-    QString wrapper = locate("data", QString("khelpcenter/%1/wrapper.html").arg(_lang));
+    TQString wrapper = locate("data", TQString("khelpcenter/%1/wrapper.html").arg(_lang));
     if (wrapper.isEmpty())
-        wrapper = locate("data", QString("khelpcenter/en/wrapper.html"));
+        wrapper = locate("data", TQString("khelpcenter/en/wrapper.html"));
     if (wrapper.isEmpty())
         return false;
     wrapper = wrapper.left(wrapper.length() - 12);
 
     // locate the image dir
-    QString images = locate("data", "khelpcenter/pics/star.png");
+    TQString images = locate("data", "khelpcenter/pics/star.png");
     if (images.isEmpty())
         return false;
     images = images.left(images.length() - 8);
@@ -120,7 +120,7 @@ bool HTMLSearch::createConfig(const QString& _lang)
     // This is an example replacement for the default bad_words file
     // distributed with ht://Dig. It was compiled by Marjolein Katsma
     // <HSH@taxon.demon.nl>.
-    QString bad_words = i18n( "List of words to exclude from index",
+    TQString bad_words = i18n( "List of words to exclude from index",
                               "above:about:according:across:actually:\n"
                               "adj:after:afterwards:again:against:all:\n"
                               "almost:alone:along:already:also:although:\n"
@@ -175,14 +175,14 @@ bool HTMLSearch::createConfig(const QString& _lang)
                               "would:wouldnt:yes:yet:you:youd:youll:your:\n"
                               "youre:yours:yourself:yourselves:youve" );
 
-    QFile f;
+    TQFile f;
     f.setName( dataPath(_lang) + "/bad_words" );
     if (f.open(IO_WriteOnly))
     {
-        QTextStream ts( &f );
-        QStringList words = QStringList::split ( QRegExp ( "[\n:]" ),
+        TQTextStream ts( &f );
+        TQStringList words = TQStringList::split ( TQRegExp ( "[\n:]" ),
                                                  bad_words, false);
-        for ( QStringList::ConstIterator it = words.begin();
+        for ( TQStringList::ConstIterator it = words.begin();
               it != words.end(); ++it )
             ts << *it << endl;
         f.close();
@@ -193,7 +193,7 @@ bool HTMLSearch::createConfig(const QString& _lang)
     {
         kdDebug() << "Writing config for " << _lang << " to " << fname << endl;
 
-        QTextStream ts(&f);
+        TQTextStream ts(&f);
 
         ts << "database_dir:\t\t" << dataPath(_lang) << endl;
         ts << "start_url:\t\t`" << dataPath(_lang) << "/files`" << endl;
@@ -221,7 +221,7 @@ bool HTMLSearch::createConfig(const QString& _lang)
 
 #define CHUNK_SIZE 15
 
-bool HTMLSearch::generateIndex(QString _lang, QWidget *parent)
+bool HTMLSearch::generateIndex(TQString _lang, TQWidget *parent)
 {
     if (_lang == "C")
         _lang = "en";
@@ -243,7 +243,7 @@ bool HTMLSearch::generateIndex(QString _lang, QWidget *parent)
     // run htdig ------------------------------------------------------
     KConfig *config = new KConfig("khelpcenterrc", true);
     KConfigGroupSaver saver(config, "htdig");
-    QString exe = config->readPathEntry("htdig", kapp->dirs()->findExe("htdig"));
+    TQString exe = config->readPathEntry("htdig", kapp->dirs()->findExe("htdig"));
 
     if (exe.isEmpty())
     {
@@ -258,7 +258,7 @@ bool HTMLSearch::generateIndex(QString _lang, QWidget *parent)
     progress->setFilesToDig(_filesToDig);
     _filesDigged = 0;
 
-    QDir d; d.mkdir(dataPath(_lang));
+    TQDir d; d.mkdir(dataPath(_lang));
 
     while (!done)
     {
@@ -276,19 +276,19 @@ bool HTMLSearch::generateIndex(QString _lang, QWidget *parent)
 
         kdDebug() << "Running htdig" << endl;
 
-        connect(_proc, SIGNAL(receivedStdout(KProcess *,char*,int)),
-                this, SLOT(htdigStdout(KProcess *,char*,int)));
+        connect(_proc, TQT_SIGNAL(receivedStdout(KProcess *,char*,int)),
+                this, TQT_SLOT(htdigStdout(KProcess *,char*,int)));
 
-        connect(_proc, SIGNAL(processExited(KProcess *)),
-                this, SLOT(htdigExited(KProcess *)));
+        connect(_proc, TQT_SIGNAL(processExited(KProcess *)),
+                this, TQT_SLOT(htdigExited(KProcess *)));
 
         _htdigRunning = true;
 
         // write out file
-        QFile f(dataPath(_lang)+"/files");
+        TQFile f(dataPath(_lang)+"/files");
         if (f.open(IO_WriteOnly))
 	{
-            QTextStream ts(&f);
+            TQTextStream ts(&f);
 
             for (int i=0; i<CHUNK_SIZE; ++i, ++count)
                 if (count < _filesToDig) {
@@ -340,8 +340,8 @@ bool HTMLSearch::generateIndex(QString _lang, QWidget *parent)
 
     kdDebug() << "Running htmerge" << endl;
 
-    connect(_proc, SIGNAL(processExited(KProcess *)),
-            this, SLOT(htmergeExited(KProcess *)));
+    connect(_proc, TQT_SIGNAL(processExited(KProcess *)),
+            this, TQT_SLOT(htmergeExited(KProcess *)));
 
     _htmergeRunning = true;
 
@@ -372,7 +372,7 @@ bool HTMLSearch::generateIndex(QString _lang, QWidget *parent)
 
 void HTMLSearch::htdigStdout(KProcess *, char *buffer, int len)
 {
-    QString line = QString(buffer).left(len);
+    TQString line = TQString(buffer).left(len);
 
     int cnt=0, index=-1;
     while ( (index = line.find("file://", index+1)) > 0)
@@ -407,7 +407,7 @@ void HTMLSearch::htmergeExited(KProcess *)
 
 void HTMLSearch::htsearchStdout(KProcess *, char *buffer, int len)
 {
-  _searchResult += QString::fromLocal8Bit(buffer,len);
+  _searchResult += TQString::fromLocal8Bit(buffer,len);
 }
 
 
@@ -419,35 +419,35 @@ void HTMLSearch::htsearchExited(KProcess *)
 }
 
 
-QString HTMLSearch::search(QString _lang, QString words, QString method, int matches,
-			   QString format, QString sort)
+TQString HTMLSearch::search(TQString _lang, TQString words, TQString method, int matches,
+			   TQString format, TQString sort)
 {
   if (_lang == "C")
     _lang = "en";
 
   createConfig(_lang);
 
-  QString result = dataPath(_lang)+"/result.html";
+  TQString result = dataPath(_lang)+"/result.html";
 
   // run htsearch ----------------------------------------------------
   KConfig *config = new KConfig("khelpcenterrc", true);
   KConfigGroupSaver saver(config, "htdig");
-  QString exe = config->readPathEntry("htsearch", kapp->dirs()->findExe("htsearch"));
+  TQString exe = config->readPathEntry("htsearch", kapp->dirs()->findExe("htsearch"));
   if (exe.isEmpty())
   {
       delete config;
-    return QString::null;
+    return TQString::null;
   }
   _proc = new KProcess();
   *_proc << exe << "-c" << dataPath(_lang)+"/htdig.conf" <<
-    QString("words=%1;method=%2;matchesperpage=%3;format=%4;sort=%5").arg(words).arg(method).arg(matches).arg(format).arg(sort);
+    TQString("words=%1;method=%2;matchesperpage=%3;format=%4;sort=%5").arg(words).arg(method).arg(matches).arg(format).arg(sort);
 
   kdDebug() << "Running htsearch" << endl;
 
-  connect(_proc, SIGNAL(receivedStdout(KProcess *,char*,int)),
-	  this, SLOT(htsearchStdout(KProcess *,char*,int)));
-  connect(_proc, SIGNAL(processExited(KProcess *)),
-	  this, SLOT(htsearchExited(KProcess *)));
+  connect(_proc, TQT_SIGNAL(receivedStdout(KProcess *,char*,int)),
+	  this, TQT_SLOT(htsearchStdout(KProcess *,char*,int)));
+  connect(_proc, TQT_SIGNAL(processExited(KProcess *)),
+	  this, TQT_SLOT(htsearchExited(KProcess *)));
 
   _htsearchRunning = true;
   _searchResult = "";
@@ -461,20 +461,20 @@ QString HTMLSearch::search(QString _lang, QString words, QString method, int mat
       kdDebug() << "Error running htsearch... returning now" << endl;
       delete _proc;
       delete config;
-      return QString::null;
+      return TQString::null;
     }
 
   delete _proc;
 
   // modify the search result
   _searchResult = _searchResult.replace("http://localhost/", "file:/");
-  _searchResult = _searchResult.replace("Content-type: text/html", QString::null);
+  _searchResult = _searchResult.replace("Content-type: text/html", TQString::null);
 
   // dump the search result
-  QFile f(result);
+  TQFile f(result);
   if (f.open(IO_WriteOnly))
     {
-      QTextStream ts(&f);
+      TQTextStream ts(&f);
 
       ts << _searchResult << endl;
 
@@ -483,5 +483,5 @@ QString HTMLSearch::search(QString _lang, QString words, QString method, int mat
       return result;
     }
   delete config;
-  return QString::null;
+  return TQString::null;
 }

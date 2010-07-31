@@ -13,8 +13,8 @@
 #define __USB_DEVICES_H__
 
 
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #ifdef Q_OS_FREEBSD
 #include <dev/usb/usb.h>
@@ -29,45 +29,45 @@ public:
   
   USBDevice();
 
-  void parseLine(QString line);
-  void parseSysDir(int bus, int parent, int level, QString line);
+  void parseLine(TQString line);
+  void parseSysDir(int bus, int parent, int level, TQString line);
 
   int level() { return _level; };
   int device() { return _device; };
   int parent() { return _parent; };
   int bus() { return _bus; };
-  QString product();
+  TQString product();
 
-  QString dump();
+  TQString dump();
 
-  static QPtrList<USBDevice> &devices() { return _devices; };
+  static TQPtrList<USBDevice> &devices() { return _devices; };
   static USBDevice *find(int bus, int device);
-  static bool parse(QString fname);
-  static bool parseSys(QString fname);
+  static bool parse(TQString fname);
+  static bool parseSys(TQString fname);
 
 
 private:
 
-  static QPtrList<USBDevice> _devices;
+  static TQPtrList<USBDevice> _devices;
 
   static USBDB *_db;
 
   int _bus, _level, _parent, _port, _count, _device, _channels, _power;
   float _speed;
 
-  QString _manufacturer, _product, _serial;
+  TQString _manufacturer, _product, _serial;
 
   int _bwTotal, _bwUsed, _bwPercent, _bwIntr, _bwIso;
   bool _hasBW;
 
   unsigned int _verMajor, _verMinor, _class, _sub, _prot, _maxPacketSize, _configs;
-  QString _className;
+  TQString _className;
 
   unsigned int _vendorID, _prodID, _revMajor, _revMinor;
 
 #ifdef Q_OS_FREEBSD
   void collectData( int fd, int level, usb_device_info &di, int parent );
-  QStringList _devnodes;
+  TQStringList _devnodes;
 #endif
 };
 

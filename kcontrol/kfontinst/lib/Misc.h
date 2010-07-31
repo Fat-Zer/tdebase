@@ -33,8 +33,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <time.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <kurl.h>
 
 class QWidget;
@@ -50,25 +50,25 @@ namespace Misc
         DIR_PERMS    = 0755
     };
 
-    extern KDE_EXPORT bool    check(const QString &path, unsigned int fmt, bool checkW=false);
-    inline KDE_EXPORT bool    fExists(const QString &p)     { return check(p, S_IFREG, false); }
-    inline KDE_EXPORT bool    dExists(const QString &p)     { return check(p, S_IFDIR, false); }
-    inline KDE_EXPORT bool    fWritable(const QString &p)   { return check(p, S_IFREG, true); }
-    inline KDE_EXPORT bool    dWritable(const QString &p)   { return check(p, S_IFDIR, true); }
-    inline KDE_EXPORT bool    isLink(const QString &i)      { return check(i, S_IFLNK, false); }
-    extern KDE_EXPORT QString linkedTo(const QString &i);
-    extern KDE_EXPORT QString dirSyntax(const QString &d);  // Has trailing slash:  /file/path/
-    extern KDE_EXPORT QString xDirSyntax(const QString &d); // No trailing slash:   /file/path
-    inline KDE_EXPORT QString fileSyntax(const QString &f)  { return xDirSyntax(f); }
-    extern KDE_EXPORT QString getDir(const QString &f);
-    extern KDE_EXPORT QString getFile(const QString &f);
-    extern KDE_EXPORT bool    createDir(const QString &dir);
-    extern KDE_EXPORT QString changeExt(const QString &f, const QString &newExt);
-    extern KDE_EXPORT bool    doCmd(const QString &cmd, const QString &p1=QString::null, const QString &p2=QString::null, const QString &p3=QString::null);
+    extern KDE_EXPORT bool    check(const TQString &path, unsigned int fmt, bool checkW=false);
+    inline KDE_EXPORT bool    fExists(const TQString &p)     { return check(p, S_IFREG, false); }
+    inline KDE_EXPORT bool    dExists(const TQString &p)     { return check(p, S_IFDIR, false); }
+    inline KDE_EXPORT bool    fWritable(const TQString &p)   { return check(p, S_IFREG, true); }
+    inline KDE_EXPORT bool    dWritable(const TQString &p)   { return check(p, S_IFDIR, true); }
+    inline KDE_EXPORT bool    isLink(const TQString &i)      { return check(i, S_IFLNK, false); }
+    extern KDE_EXPORT TQString linkedTo(const TQString &i);
+    extern KDE_EXPORT TQString dirSyntax(const TQString &d);  // Has trailing slash:  /file/path/
+    extern KDE_EXPORT TQString xDirSyntax(const TQString &d); // No trailing slash:   /file/path
+    inline KDE_EXPORT TQString fileSyntax(const TQString &f)  { return xDirSyntax(f); }
+    extern KDE_EXPORT TQString getDir(const TQString &f);
+    extern KDE_EXPORT TQString getFile(const TQString &f);
+    extern KDE_EXPORT bool    createDir(const TQString &dir);
+    extern KDE_EXPORT TQString changeExt(const TQString &f, const TQString &newExt);
+    extern KDE_EXPORT bool    doCmd(const TQString &cmd, const TQString &p1=TQString::null, const TQString &p2=TQString::null, const TQString &p3=TQString::null);
     inline KDE_EXPORT bool    root() { return 0==getuid(); }
-    extern KDE_EXPORT void    getAssociatedUrls(const KURL &url, KURL::List &list, bool afmAndPfm=true, QWidget *widget=NULL);
-    extern KDE_EXPORT void    createBackup(const QString &f);
-    extern KDE_EXPORT time_t  getTimeStamp(const QString &item);
+    extern KDE_EXPORT void    getAssociatedUrls(const KURL &url, KURL::List &list, bool afmAndPfm=true, TQWidget *widget=NULL);
+    extern KDE_EXPORT void    createBackup(const TQString &f);
+    extern KDE_EXPORT time_t  getTimeStamp(const TQString &item);
 }
 
 }

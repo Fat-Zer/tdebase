@@ -25,7 +25,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <stdio.h>
 
@@ -42,14 +42,14 @@ int main( int argc, char *argv[] )
     return -1;
   }
 
-  QStringList templates = KGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.desktop", true );
+  TQStringList templates = KGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.desktop", true );
 
-  QString dir = QString( argv[ 1 ] ) + "/";
+  TQString dir = TQString( argv[ 1 ] ) + "/";
 
-  QPtrList<AppLnkCache> appCache;
+  TQPtrList<AppLnkCache> appCache;
   appCache.setAutoDelete( true );
 
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   for ( it = templates.begin(); it != templates.end(); ++it )
     scanDesktopFile( appCache, *it, dir );
 

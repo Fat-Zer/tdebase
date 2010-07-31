@@ -24,8 +24,8 @@
 
 #include "kdmitem.h"
 
-#include <qcolor.h>
-#include <qfont.h>
+#include <tqcolor.h>
+#include <tqfont.h>
 
 class QTimer;
 
@@ -37,45 +37,45 @@ class KdmLabel : public KdmItem {
 	Q_OBJECT
 
 public:
-	KdmLabel( KdmItem *parent, const QDomNode &node, const char *name = 0 );
-	void setText( const QString &txt );
+	KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name = 0 );
+	void setText( const TQString &txt );
 
 protected:
 	// reimplemented; returns the minimum size of rendered text
-	virtual QSize sizeHint();
+	virtual TQSize sizeHint();
 
 	// draw the label
-	virtual void drawContents( QPainter *p, const QRect &r );
+	virtual void drawContents( TQPainter *p, const TQRect &r );
 
 	// handle switching between normal / active / prelight configurations
 	virtual void statusChanged();
 
 	struct LabelStruct {
-		QString text;
+		TQString text;
 		bool isTimer;
 		bool hasId;
-		QString id;
+		TQString id;
 		struct LabelClass {
-			QColor color;
-			QFont font;
+			TQColor color;
+			TQFont font;
 			bool present;
 		} normal, active, prelight;
 		int maximumWidth;
 	} label;
 
-	QTimer *timer;
+	TQTimer *timer;
 
 public slots:
 	void update();
 
 private:
 	/* Method to lookup the caption associated with an item */
-	QString lookupStock( const QString &stock );
+	TQString lookupStock( const TQString &stock );
 
 	/* Lookup variables in the text */
-	QString lookupText( const QString &t );
+	TQString lookupText( const TQString &t );
 
-	QString cText;
+	TQString cText;
 };
 
 #endif

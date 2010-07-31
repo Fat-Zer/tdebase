@@ -64,19 +64,19 @@ class KateConfigDialog : public KDialogBase
     Kate::View* v;
     bool dataChanged;
 
-    QCheckBox *cb_fullPath;
-    QCheckBox *cb_syncKonsole;
-    QCheckBox *cb_modNotifications;
-    QCheckBox *cb_saveMetaInfos;
-    QSpinBox *sb_daysMetaInfos;
-    QCheckBox* cb_restoreVC;
-    QButtonGroup *sessions_start;
-    QButtonGroup *sessions_exit;
+    TQCheckBox *cb_fullPath;
+    TQCheckBox *cb_syncKonsole;
+    TQCheckBox *cb_modNotifications;
+    TQCheckBox *cb_saveMetaInfos;
+    TQSpinBox *sb_daysMetaInfos;
+    TQCheckBox* cb_restoreVC;
+    TQButtonGroup *sessions_start;
+    TQButtonGroup *sessions_exit;
     Kate::ConfigPage *fileSelConfigPage;
     Kate::ConfigPage *filelistConfigPage;
     Kate::ConfigPage *configExternalToolsPage;
-    QPtrList<PluginPageListItem> pluginPages;
-    QPtrList<KTextEditor::ConfigPage> editorPages;
+    TQPtrList<PluginPageListItem> pluginPages;
+    TQPtrList<KTextEditor::ConfigPage> editorPages;
 };
 
 #endif

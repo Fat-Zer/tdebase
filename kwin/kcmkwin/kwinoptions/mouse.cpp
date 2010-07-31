@@ -17,16 +17,16 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qwhatsthis.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qgrid.h>
-#include <qsizepolicy.h>
-#include <qbitmap.h>
-#include <qhgroupbox.h>
-#include <qtooltip.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqwhatsthis.h>
+#include <tqlayout.h>
+#include <tqvgroupbox.h>
+#include <tqgrid.h>
+#include <tqsizepolicy.h>
+#include <tqbitmap.h>
+#include <tqhgroupbox.h>
+#include <tqtooltip.h>
 
 #include <dcopclient.h>
 #include <klocale.h>
@@ -60,7 +60,7 @@ char const * const tbl_Max[] = {
   "Maximize (horizontal only)",
   "" };
 
-QPixmap maxButtonPixmaps[3];
+TQPixmap maxButtonPixmaps[3];
 
 void createMaxButtonPixmaps()
 {
@@ -109,14 +109,14 @@ void createMaxButtonPixmaps()
     "..............."},
   };
 
-  QString baseColor(". c " + KGlobalSettings::baseColor().name());
-  QString textColor("# c " + KGlobalSettings::textColor().name());
+  TQString baseColor(". c " + KGlobalSettings::baseColor().name());
+  TQString textColor("# c " + KGlobalSettings::textColor().name());
   for (int t = 0; t < 3; ++t)
   {
     maxButtonXpms[t][0] = "15 13 2 1";
     maxButtonXpms[t][1] = baseColor.ascii();
     maxButtonXpms[t][2] = textColor.ascii();
-    maxButtonPixmaps[t] = QPixmap(maxButtonXpms[t]);
+    maxButtonPixmaps[t] = TQPixmap(maxButtonXpms[t]);
     maxButtonPixmaps[t].setMask(maxButtonPixmaps[t].createHeuristicMask());
   }
 }
@@ -132,29 +132,29 @@ void KTitleBarActionsConfig::paletteChanged()
 
 }
 
-KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_config, QWidget * parent, const char *)
+KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_config, TQWidget * parent, const char *)
   : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
-  QString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3;
-  QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
-  QGrid *grid;
-  QGroupBox *box;
-  QLabel *label;
-  QString strMouseButton1, strMouseButton3, strMouseWheel;
-  QString txtButton1, txtButton3, txtButton4;
-  QStringList items;
+  TQString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3;
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQGrid *grid;
+  TQGroupBox *box;
+  TQLabel *label;
+  TQString strMouseButton1, strMouseButton3, strMouseWheel;
+  TQString txtButton1, txtButton3, txtButton4;
+  TQStringList items;
   bool leftHandedMouse = ( KGlobalSettings::mouseSettings().handed == KGlobalSettings::KMouseSettings::LeftHanded);
 
 /** Titlebar doubleclick ************/
 
-  QHBoxLayout *hlayout = new QHBoxLayout(layout);
+  TQHBoxLayout *hlayout = new TQHBoxLayout(layout);
 
-  label = new QLabel(i18n("&Titlebar double-click:"), this);
+  label = new TQLabel(i18n("&Titlebar double-click:"), this);
   hlayout->addWidget(label);
-  QWhatsThis::add( label, i18n("Here you can customize mouse click behavior when double clicking on the"
+  TQWhatsThis::add( label, i18n("Here you can customize mouse click behavior when double clicking on the"
     " titlebar of a window.") );
 
-  QComboBox* combo = new QComboBox(this);
+  TQComboBox* combo = new TQComboBox(this);
   combo->insertItem(i18n("Maximize"));
   combo->insertItem(i18n("Maximize (vertical only)"));
   combo->insertItem(i18n("Maximize (horizontal only)"));
@@ -163,24 +163,24 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   combo->insertItem(i18n("Lower"));
   combo->insertItem(i18n("On All Desktops"));
   combo->insertItem(i18n("Nothing"));
-  combo->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed));
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  combo->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   hlayout->addWidget(combo);
   coTiDbl = combo;
-  QWhatsThis::add(combo, i18n("Behavior on <em>double</em> click into the titlebar."));
+  TQWhatsThis::add(combo, i18n("Behavior on <em>double</em> click into the titlebar."));
 
   label->setBuddy(combo);
 
 /** Mouse Wheel Events  **************/
-  QHBoxLayout *hlayoutW = new QHBoxLayout(layout);
+  TQHBoxLayout *hlayoutW = new TQHBoxLayout(layout);
   strMouseWheel = i18n("Titlebar wheel event:");
-  label = new QLabel(strMouseWheel, this);
+  label = new TQLabel(strMouseWheel, this);
   hlayoutW->addWidget(label);
   txtButton4 = i18n("Handle mouse wheel events");
-  QWhatsThis::add( label, txtButton4);
+  TQWhatsThis::add( label, txtButton4);
   
   // Titlebar and frame mouse Wheel  
-  QComboBox* comboW = new QComboBox(this);
+  TQComboBox* comboW = new TQComboBox(this);
   comboW->insertItem(i18n("Raise/Lower"));
   comboW->insertItem(i18n("Shade/Unshade"));
   comboW->insertItem(i18n("Maximize/Restore"));
@@ -188,26 +188,26 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   comboW->insertItem(i18n("Move to Previous/Next Desktop"));  
   comboW->insertItem(i18n("Change Opacity"));  
   comboW->insertItem(i18n("Nothing"));  
-  comboW->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed));
-  connect(comboW, SIGNAL(activated(int)), SLOT(changed()));
+  comboW->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
+  connect(comboW, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   hlayoutW->addWidget(comboW);
   coTiAct4 = comboW;
-  QWhatsThis::add(comboW, txtButton4);
+  TQWhatsThis::add(comboW, txtButton4);
   label->setBuddy(comboW);
   
 /** Titlebar and frame  **************/
 
-  box = new QVGroupBox( i18n("Titlebar && Frame"), this, "Titlebar and Frame");
+  box = new TQVGroupBox( i18n("Titlebar && Frame"), this, "Titlebar and Frame");
   box->layout()->setMargin(KDialog::marginHint());
   box->layout()->setSpacing(KDialog::spacingHint());
   layout->addWidget(box);
-  QWhatsThis::add( box, i18n("Here you can customize mouse click behavior when clicking on the"
+  TQWhatsThis::add( box, i18n("Here you can customize mouse click behavior when clicking on the"
                              " titlebar or the frame of a window.") );
 
-  grid = new QGrid(4, Qt::Vertical, box);
+  grid = new TQGrid(4, Qt::Vertical, box);
 
 
-  new QLabel(grid); // dummy
+  new TQLabel(grid); // dummy
 
   strMouseButton1 = i18n("Left button:");
   txtButton1 = i18n("In this row you can customize left click behavior when clicking into"
@@ -223,30 +223,30 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
      qSwap(txtButton1, txtButton3);
   }
 
-  label = new QLabel(strMouseButton1, grid);
-  QWhatsThis::add( label, txtButton1);
+  label = new TQLabel(strMouseButton1, grid);
+  TQWhatsThis::add( label, txtButton1);
 
-  label = new QLabel(i18n("Middle button:"), grid);
-  QWhatsThis::add( label, i18n("In this row you can customize middle click behavior when clicking into"
+  label = new TQLabel(i18n("Middle button:"), grid);
+  TQWhatsThis::add( label, i18n("In this row you can customize middle click behavior when clicking into"
     " the titlebar or the frame.") );
 
-  label = new QLabel(strMouseButton3, grid);
-  QWhatsThis::add( label, txtButton3);
+  label = new TQLabel(strMouseButton3, grid);
+  TQWhatsThis::add( label, txtButton3);
 
 
-  label = new QLabel(i18n("Active"), grid);
+  label = new TQLabel(i18n("Active"), grid);
   label->setAlignment(AlignCenter);
-  QWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
+  TQWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
                                " or the frame of an active window.") );
 
   // Titlebar and frame, active, mouse button 1
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertItem(i18n("Raise"));
   combo->insertItem(i18n("Lower"));
   combo->insertItem(i18n("Operations Menu"));
   combo->insertItem(i18n("Toggle Raise & Lower"));
   combo->insertItem(i18n("Nothing"));
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coTiAct1 = combo;
 
   txtButton1 = i18n("Behavior on <em>left</em> click into the titlebar or frame of an "
@@ -258,7 +258,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   // Be nice to left handed users
   if ( leftHandedMouse ) qSwap(txtButton1, txtButton3);
 
-  QWhatsThis::add(combo, txtButton1);
+  TQWhatsThis::add(combo, txtButton1);
 
   // Titlebar and frame, active, mouse button 2
 
@@ -269,18 +269,18 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
         << i18n("Nothing")
         << i18n("Shade");
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coTiAct2 = combo;
-  QWhatsThis::add(combo, i18n("Behavior on <em>middle</em> click into the titlebar or frame of an <em>active</em> window."));
+  TQWhatsThis::add(combo, i18n("Behavior on <em>middle</em> click into the titlebar or frame of an <em>active</em> window."));
 
   // Titlebar and frame, active, mouse button 3
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coTiAct3 =  combo;
-  QWhatsThis::add(combo, txtButton3 );
+  TQWhatsThis::add(combo, txtButton3 );
 
   txtButton1 = i18n("Behavior on <em>left</em> click into the titlebar or frame of an "
      "<em>inactive</em> window.");
@@ -291,9 +291,9 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   // Be nice to left handed users
   if ( leftHandedMouse ) qSwap(txtButton1, txtButton3);
 
-  label = new QLabel(i18n("Inactive"), grid);
+  label = new TQLabel(i18n("Inactive"), grid);
   label->setAlignment(AlignCenter);
-  QWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
+  TQWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
                                " or the frame of an inactive window.") );
 
   items.clear();
@@ -306,39 +306,39 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
          << i18n("Lower")
          << i18n("Nothing");
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coTiInAct1 = combo;
-  QWhatsThis::add(combo, txtButton1);
+  TQWhatsThis::add(combo, txtButton1);
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coTiInAct2 = combo;
-  QWhatsThis::add(combo, i18n("Behavior on <em>middle</em> click into the titlebar or frame of an <em>inactive</em> window."));
+  TQWhatsThis::add(combo, i18n("Behavior on <em>middle</em> click into the titlebar or frame of an <em>inactive</em> window."));
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coTiInAct3 = combo;
-  QWhatsThis::add(combo, txtButton3);
+  TQWhatsThis::add(combo, txtButton3);
 
 /**  Maximize Button ******************/
 
-  box = new QHGroupBox(i18n("Maximize Button"), this, "Maximize Button");
+  box = new TQHGroupBox(i18n("Maximize Button"), this, "Maximize Button");
   box->layout()->setMargin(KDialog::marginHint());
   box->layout()->setSpacing(KDialog::spacingHint());
   layout->addWidget(box);
-  QWhatsThis::add( box,
+  TQWhatsThis::add( box,
     i18n("Here you can customize behavior when clicking on the maximize button.") );
 
-  QString strMouseButton[] = {
+  TQString strMouseButton[] = {
     i18n("Left button:"),
     i18n("Middle button:"),
     i18n("Right button:")};
 
-  QString txtButton[] = {
+  TQString txtButton[] = {
     i18n("Behavior on <em>left</em> click onto the maximize button." ),
     i18n("Behavior on <em>middle</em> click onto the maximize button." ),
     i18n("Behavior on <em>right</em> click onto the maximize button." )};
@@ -352,21 +352,21 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   createMaxButtonPixmaps();
   for (int b = 0; b < 3; ++b)
   {
-    if (b != 0) new QWidget(box); // Spacer
+    if (b != 0) new TQWidget(box); // Spacer
 
-    QLabel * label = new QLabel(strMouseButton[b], box);
-    QWhatsThis::add( label,    txtButton[b] );
-    label   ->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Minimum ));
+    TQLabel * label = new TQLabel(strMouseButton[b], box);
+    TQWhatsThis::add( label,    txtButton[b] );
+    label   ->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
 
     coMax[b] = new ToolTipComboBox(box, tbl_Max);
     for (int t = 0; t < 3; ++t) coMax[b]->insertItem(maxButtonPixmaps[t]);
-    connect(coMax[b], SIGNAL(activated(int)), SLOT(changed()));
-    connect(coMax[b], SIGNAL(activated(int)), coMax[b], SLOT(changed()));
-    QWhatsThis::add( coMax[b], txtButton[b] );
-    coMax[b]->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Minimum ));
+    connect(coMax[b], TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+    connect(coMax[b], TQT_SIGNAL(activated(int)), coMax[b], TQT_SLOT(changed()));
+    TQWhatsThis::add( coMax[b], txtButton[b] );
+    coMax[b]->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
   }
 
-  connect(kapp, SIGNAL(kdisplayPaletteChanged()), SLOT(paletteChanged()));
+  connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
 
   layout->addStretch();
 
@@ -483,7 +483,7 @@ static int tbl_txt_lookup( const char* const arr[], const char* txt )
     return 0;
 }
 
-void KTitleBarActionsConfig::setComboText( QComboBox* combo, const char*txt )
+void KTitleBarActionsConfig::setComboText( TQComboBox* combo, const char*txt )
 {
     if( combo == coTiDbl )
         combo->setCurrentItem( tbl_txt_lookup( tbl_TiDbl, txt ));
@@ -584,29 +584,29 @@ void KTitleBarActionsConfig::defaults()
 }
 
 
-KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, QWidget * parent, const char *)
+KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, TQWidget * parent, const char *)
   : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
-  QString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3, strAllW;
-  QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
-  QGrid *grid;
-  QGroupBox *box;
-  QLabel *label;
-  QString strMouseButton1, strMouseButton3;
-  QString txtButton1, txtButton3;
-  QStringList items;
+  TQString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3, strAllW;
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQGrid *grid;
+  TQGroupBox *box;
+  TQLabel *label;
+  TQString strMouseButton1, strMouseButton3;
+  TQString txtButton1, txtButton3;
+  TQStringList items;
   bool leftHandedMouse = ( KGlobalSettings::mouseSettings().handed == KGlobalSettings::KMouseSettings::LeftHanded);
 
 /**  Inactive inner window ******************/
 
-  box = new QVGroupBox(i18n("Inactive Inner Window"), this, "Inactive Inner Window");
+  box = new TQVGroupBox(i18n("Inactive Inner Window"), this, "Inactive Inner Window");
   box->layout()->setMargin(KDialog::marginHint());
   box->layout()->setSpacing(KDialog::spacingHint());
   layout->addWidget(box);
-  QWhatsThis::add( box, i18n("Here you can customize mouse click behavior when clicking on an inactive"
+  TQWhatsThis::add( box, i18n("Here you can customize mouse click behavior when clicking on an inactive"
                              " inner window ('inner' means: not titlebar, not frame).") );
 
-  grid = new QGrid(3, Qt::Vertical, box);
+  grid = new TQGrid(3, Qt::Vertical, box);
 
   strMouseButton1 = i18n("Left button:");
   txtButton1 = i18n("In this row you can customize left click behavior when clicking into"
@@ -631,16 +631,16 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   // Be nice to lefties
   if ( leftHandedMouse ) qSwap(strWin1, strWin3);
 
-  label = new QLabel(strMouseButton1, grid);
-  QWhatsThis::add( label, strWin1 );
+  label = new TQLabel(strMouseButton1, grid);
+  TQWhatsThis::add( label, strWin1 );
 
-  label = new QLabel(i18n("Middle button:"), grid);
+  label = new TQLabel(i18n("Middle button:"), grid);
   strWin2 = i18n("In this row you can customize middle click behavior when clicking into"
      " an inactive inner window ('inner' means: not titlebar, not frame).");
-  QWhatsThis::add( label, strWin2 );
+  TQWhatsThis::add( label, strWin2 );
 
-  label = new QLabel(strMouseButton3, grid);
-  QWhatsThis::add( label, strWin3 );
+  label = new TQLabel(strMouseButton3, grid);
+  TQWhatsThis::add( label, strWin3 );
 
   items.clear();
   items   << i18n("Activate, Raise & Pass Click")
@@ -648,42 +648,42 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
           << i18n("Activate")
           << i18n("Activate & Raise");
 
-  QComboBox* combo = new QComboBox(grid);
+  TQComboBox* combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coWin1 = combo;
-  QWhatsThis::add( combo, strWin1 );
+  TQWhatsThis::add( combo, strWin1 );
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coWin2 = combo;
-  QWhatsThis::add( combo, strWin2 );
+  TQWhatsThis::add( combo, strWin2 );
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coWin3 = combo;
-  QWhatsThis::add( combo, strWin3 );
+  TQWhatsThis::add( combo, strWin3 );
 
 
 /** Inner window, titlebar and frame **************/
 
-  box = new QVGroupBox(i18n("Inner Window, Titlebar && Frame"), this, "Inner Window, Titlebar and Frame");
+  box = new TQVGroupBox(i18n("Inner Window, Titlebar && Frame"), this, "Inner Window, Titlebar and Frame");
   box->layout()->setMargin(KDialog::marginHint());
   box->layout()->setSpacing(KDialog::spacingHint());
   layout->addWidget(box);
-  QWhatsThis::add( box, i18n("Here you can customize KDE's behavior when clicking somewhere into"
+  TQWhatsThis::add( box, i18n("Here you can customize KDE's behavior when clicking somewhere into"
                              " a window while pressing a modifier key."));
 
-  grid = new QGrid(5, Qt::Vertical, box);
+  grid = new TQGrid(5, Qt::Vertical, box);
 
   // Labels
-  label = new QLabel(i18n("Modifier key:"), grid);
+  label = new TQLabel(i18n("Modifier key:"), grid);
 
   strAllKey = i18n("Here you select whether holding the Meta key or Alt key "
     "will allow you to perform the following actions.");
-  QWhatsThis::add( label, strAllKey );
+  TQWhatsThis::add( label, strAllKey );
 
 
   strMouseButton1 = i18n("Modifier key + left button:");
@@ -700,29 +700,29 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
      qSwap(strAll1, strAll3);
   }
 
-  label = new QLabel(strMouseButton1, grid);
-  QWhatsThis::add( label, strAll1);
+  label = new TQLabel(strMouseButton1, grid);
+  TQWhatsThis::add( label, strAll1);
 
-  label = new QLabel(i18n("Modifier key + middle button:"), grid);
+  label = new TQLabel(i18n("Modifier key + middle button:"), grid);
   strAll2 = i18n("Here you can customize KDE's behavior when middle clicking into a window"
                  " while pressing the modifier key.");
-  QWhatsThis::add( label, strAll2 );
+  TQWhatsThis::add( label, strAll2 );
 
-  label = new QLabel(strMouseButton3, grid);
-  QWhatsThis::add( label, strAll3);
+  label = new TQLabel(strMouseButton3, grid);
+  TQWhatsThis::add( label, strAll3);
 
-  label = new QLabel(i18n("Modifier key + mouse wheel:"), grid);
+  label = new TQLabel(i18n("Modifier key + mouse wheel:"), grid);
   strAllW = i18n("Here you can customize KDE's behavior when scrolling with the mouse wheel"
       "  in a window while pressing the modifier key.");
-  QWhatsThis::add( label, strAllW);
+  TQWhatsThis::add( label, strAllW);
 
   // Combo's
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertItem(i18n("Meta"));
   combo->insertItem(i18n("Alt"));
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coAllKey = combo;
-  QWhatsThis::add( combo, strAllKey );
+  TQWhatsThis::add( combo, strAllKey );
 
   items.clear();
   items << i18n("Move")
@@ -734,25 +734,25 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
         << i18n("Minimize")
         << i18n("Nothing");
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coAll1 = combo;
-  QWhatsThis::add( combo, strAll1 );
+  TQWhatsThis::add( combo, strAll1 );
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coAll2 = combo;
-  QWhatsThis::add( combo, strAll2 );
+  TQWhatsThis::add( combo, strAll2 );
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertStringList(items);
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coAll3 =  combo;
-  QWhatsThis::add( combo, strAll3 );
+  TQWhatsThis::add( combo, strAll3 );
 
-  combo = new QComboBox(grid);
+  combo = new TQComboBox(grid);
   combo->insertItem(i18n("Raise/Lower"));
   combo->insertItem(i18n("Shade/Unshade"));
   combo->insertItem(i18n("Maximize/Restore"));
@@ -760,9 +760,9 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   combo->insertItem(i18n("Move to Previous/Next Desktop"));  
   combo->insertItem(i18n("Change Opacity"));  
   combo->insertItem(i18n("Nothing"));  
-  connect(combo, SIGNAL(activated(int)), SLOT(changed()));
+  connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   coAllW =  combo;
-  QWhatsThis::add( combo, strAllW );
+  TQWhatsThis::add( combo, strAllW );
 
   layout->addStretch();
 
@@ -775,7 +775,7 @@ KWindowActionsConfig::~KWindowActionsConfig()
     delete config;
 }
 
-void KWindowActionsConfig::setComboText( QComboBox* combo, const char*txt )
+void KWindowActionsConfig::setComboText( TQComboBox* combo, const char*txt )
 {
     if( combo == coWin1 || combo == coWin2 || combo == coWin3 )
         combo->setCurrentItem( tbl_txt_lookup( tbl_Win, txt ));

@@ -20,7 +20,7 @@
 #include "konq_listview.h"
 #include "konq_textviewitem.h"
 
-#include <qheader.h>
+#include <tqheader.h>
 
 #include <kdebug.h>
 #include <kdirlister.h>
@@ -29,7 +29,7 @@
 #include <assert.h>
 
 
-KonqTextViewWidget::KonqTextViewWidget( KonqListView *parent, QWidget *parentWidget )
+KonqTextViewWidget::KonqTextViewWidget( KonqListView *parent, TQWidget *parentWidget )
 :KonqBaseListViewWidget(parent,parentWidget)
 {
    kdDebug(1202) << "+KonqTextViewWidget" << endl;
@@ -44,7 +44,7 @@ KonqTextViewWidget::KonqTextViewWidget( KonqListView *parent, QWidget *parentWid
    setRootIsDecorated(false);
 
    colors[KTVI_REGULAR]=Qt::black;
-   colors[KTVI_EXEC]=QColor(0,170,0);
+   colors[KTVI_EXEC]=TQColor(0,170,0);
    colors[KTVI_REGULARLINK]=Qt::black;
    colors[KTVI_DIR]=Qt::black;
    colors[KTVI_DIRLINK]=Qt::black;
@@ -79,7 +79,7 @@ void KonqTextViewWidget::slotNewItems( const KFileItemList & entries )
 {
    //kdDebug(1202) << k_funcinfo << entries.count() << endl;
 
-   for ( QPtrListIterator<KFileItem> kit ( entries ); kit.current(); ++kit )
+   for ( TQPtrListIterator<KFileItem> kit ( entries ); kit.current(); ++kit )
    {
       KonqTextViewItem *tmp = new KonqTextViewItem( this, *kit );
       if ( !m_itemFound && tmp->text(0) == m_itemToGoTo )
@@ -88,7 +88,7 @@ void KonqTextViewWidget::slotNewItems( const KFileItemList & entries )
          m_itemFound = true;
       }
       if ( !m_itemsToSelect.isEmpty() ) {
-         QStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
+         TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
          if ( tsit != m_itemsToSelect.end() ) {
             m_itemsToSelect.remove( tsit );
             setSelected( tmp, true );
@@ -152,7 +152,7 @@ void KonqTextViewWidget::setComplete()
    }
 }
 
-bool KonqTextViewWidget::isExecuteArea( const QPoint& point )
+bool KonqTextViewWidget::isExecuteArea( const TQPoint& point )
 {
    if (!itemAt( point ) )
       return false;
@@ -168,7 +168,7 @@ bool KonqTextViewWidget::isExecuteArea( const QPoint& point )
    return ( x > offset && x < ( offset + width ) );
 }
 
-/*void KonqTextViewWidget::viewportDragMoveEvent( QDragMoveEvent *_ev )
+/*void KonqTextViewWidget::viewportDragMoveEvent( TQDragMoveEvent *_ev )
 {
    KonqBaseListViewItem *item =
        isNameColumn( _ev->pos() ) ? (KonqBaseListViewItem*)itemAt( _ev->pos() ) : 0L;
@@ -200,7 +200,7 @@ bool KonqTextViewWidget::isExecuteArea( const QPoint& point )
    }
 }
 
-void KonqTextViewWidget::viewportDropEvent( QDropEvent *ev  )
+void KonqTextViewWidget::viewportDropEvent( TQDropEvent *ev  )
 {
    if ( m_dirLister->url().isEmpty() )
       return;

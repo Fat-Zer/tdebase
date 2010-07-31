@@ -31,12 +31,12 @@
 #ifndef __MOUSECONFIG_H__
 #define __MOUSECONFIG_H__
 
-#include <qbuttongroup.h>
-#include <qdialog.h>
-#include <qlabel.h>
-#include <qlcdnumber.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
+#include <tqbuttongroup.h>
+#include <tqdialog.h>
+#include <tqlabel.h>
+#include <tqlcdnumber.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
 
 #include <kapplication.h>
 
@@ -85,7 +85,7 @@ public:
 
  #ifdef HAVE_LIBUSB
  // TODO: In Qt4, replace with a better container.
- QPtrList <LogitechMouse> logitechMouseList;
+ TQPtrList <LogitechMouse> logitechMouseList;
  #endif
 };
 
@@ -93,7 +93,7 @@ class MouseConfig : public KCModule
 {
   Q_OBJECT
 public:
-  MouseConfig(QWidget *parent=0, const char* name=0);
+  MouseConfig(TQWidget *parent=0, const char* name=0);
   ~MouseConfig();
 
   void save();
@@ -129,23 +129,23 @@ private:
   KIntNumInput *dragStartDist;
   KIntNumInput *wheelScrollLines;
 
-  QButtonGroup *handedBox;
-//  QRadioButton *leftHanded, *rightHanded;
-//  QCheckBox *doubleClick;
-//  QCheckBox *cbAutoSelect;
-  QLabel *lDelay;
-//  QSlider *slAutoSelect;
-//  QCheckBox *cbVisualActivate;
-//  QCheckBox *cbCursor;
-//  QCheckBox *cbLargeCursor;
+  TQButtonGroup *handedBox;
+//  TQRadioButton *leftHanded, *rightHanded;
+//  TQCheckBox *doubleClick;
+//  TQCheckBox *cbAutoSelect;
+  TQLabel *lDelay;
+//  TQSlider *slAutoSelect;
+//  TQCheckBox *cbVisualActivate;
+//  TQCheckBox *cbCursor;
+//  TQCheckBox *cbLargeCursor;
 
-  QTabWidget *tabwidget;
-  QWidget *tab2;
+  TQTabWidget *tabwidget;
+  TQWidget *tab2;
   KMouseDlg* tab1;
   ThemePage* themetab;
   MouseSettings *settings;
 
- QCheckBox *mouseKeys;
+ TQCheckBox *mouseKeys;
   KIntNumInput *mk_delay, *mk_interval, *mk_time_to_max, *mk_max_speed,
     *mk_curve;
 

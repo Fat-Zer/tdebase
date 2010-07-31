@@ -20,8 +20,8 @@
 #include "homeimpl.h"
 
 #include <kdebug.h>
-#include <qapplication.h>
-#include <qeventloop.h>
+#include <tqapplication.h>
+#include <tqeventloop.h>
 
 #include <sys/stat.h>
 
@@ -33,9 +33,9 @@ HomeImpl::HomeImpl()
 	m_effectiveUid = user.uid();
 }
 
-bool HomeImpl::parseURL(const KURL &url, QString &name, QString &path) const
+bool HomeImpl::parseURL(const KURL &url, TQString &name, TQString &path) const
 {
-	QString url_path = url.path();
+	TQString url_path = url.path();
 
 	int i = url_path.find('/', 1);
 	if (i > 0)
@@ -46,13 +46,13 @@ bool HomeImpl::parseURL(const KURL &url, QString &name, QString &path) const
 	else
 	{
 		name = url_path.mid(1);
-		path = QString::null;
+		path = TQString::null;
 	}
 
-	return name != QString::null;
+	return name != TQString::null;
 }
 
-bool HomeImpl::realURL(const QString &name, const QString &path, KURL &url)
+bool HomeImpl::realURL(const TQString &name, const TQString &path, KURL &url)
 {
 	KUser user(name);
 	
@@ -69,23 +69,23 @@ bool HomeImpl::realURL(const QString &name, const QString &path, KURL &url)
 }
 
 
-bool HomeImpl::listHomes(QValueList<KIO::UDSEntry> &list)
+bool HomeImpl::listHomes(TQValueList<KIO::UDSEntry> &list)
 {
 	kdDebug() << "HomeImpl::listHomes" << endl;
 
 	KUser current_user;
-	QValueList<KUserGroup> groups = current_user.groups();
-	QValueList<int> uid_list;
+	TQValueList<KUserGroup> groups = current_user.groups();
+	TQValueList<int> uid_list;
 	
-	QValueList<KUserGroup>::iterator groups_it = groups.begin();
-	QValueList<KUserGroup>::iterator groups_end = groups.end();
+	TQValueList<KUserGroup>::iterator groups_it = groups.begin();
+	TQValueList<KUserGroup>::iterator groups_end = groups.end();
 
 	for(; groups_it!=groups_end; ++groups_it)
 	{
-		QValueList<KUser> users = (*groups_it).users();
+		TQValueList<KUser> users = (*groups_it).users();
 
-		QValueList<KUser>::iterator it = users.begin();
-		QValueList<KUser>::iterator users_end = users.end();
+		TQValueList<KUser>::iterator it = users.begin();
+		TQValueList<KUser>::iterator users_end = users.end();
 		
 		for(; it!=users_end; ++it)
 		{
@@ -104,7 +104,7 @@ bool HomeImpl::listHomes(QValueList<KIO::UDSEntry> &list)
 }
 
 static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
-                    const QString &s = QString::null)
+                    const TQString &s = TQString::null)
 {
 	KIO::UDSAtom atom;
 	atom.m_uds = ID;
@@ -133,7 +133,7 @@ void HomeImpl::createHomeEntry(KIO::UDSEntry &entry,
 	
 	entry.clear();
 	
-	QString full_name = user.loginName();
+	TQString full_name = user.loginName();
 	
 	if (!user.fullName().isEmpty())
 	{
@@ -148,7 +148,7 @@ void HomeImpl::createHomeEntry(KIO::UDSEntry &entry,
 	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
 	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
 
-	QString icon_name = "folder_home2";
+	TQString icon_name = "folder_home2";
 
 	if (user.uid()==m_effectiveUid)
 	{
@@ -162,7 +162,7 @@ void HomeImpl::createHomeEntry(KIO::UDSEntry &entry,
 	entry += extractUrlInfos(url);
 }
 
-bool HomeImpl::statHome(const QString &name, KIO::UDSEntry &entry)
+bool HomeImpl::statHome(const TQString &name, KIO::UDSEntry &entry)
 {
 	kdDebug() << "HomeImpl::statHome: " << name << endl;
 
@@ -193,8 +193,8 @@ KIO::UDSEntry HomeImpl::extractUrlInfos(const KURL &url)
 	m_entryBuffer.clear();
 
 	KIO::StatJob *job = KIO::stat(url, false);
-	connect( job, SIGNAL( result(KIO::Job *) ),
-	         this, SLOT( slotStatResult(KIO::Job *) ) );
+	connect( job, TQT_SIGNAL( result(KIO::Job *) ),
+	         this, TQT_SLOT( slotStatResult(KIO::Job *) ) );
 	qApp->eventLoop()->enterLoop();
 
 	KIO::UDSEntry::iterator it = m_entryBuffer.begin();

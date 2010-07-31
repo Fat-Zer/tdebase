@@ -6,7 +6,7 @@
 
 class KCRootOnly: public KCModule {
 public:
-	KCRootOnly(QWidget *parent, const char *name);
+	KCRootOnly(TQWidget *parent, const char *name);
 };
 
 #endif

@@ -18,7 +18,7 @@
 #ifndef SMSERVERCONFIGIMPL_H
 #define SMSERVERCONFIGIMPL_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include "smserverconfigdlg.h"
 
 /**
@@ -28,7 +28,7 @@
 class SMServerConfigImpl : public SMServerConfigDlg  {
    Q_OBJECT
 public:
-	SMServerConfigImpl(QWidget *parent=0, const char *name=0);
+	SMServerConfigImpl(TQWidget *parent=0, const char *name=0);
 	~SMServerConfigImpl();
 public slots: // Public slots
   /** No descriptions */

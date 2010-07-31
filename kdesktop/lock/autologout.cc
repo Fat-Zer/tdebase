@@ -17,39 +17,39 @@
 #include <kmessagebox.h>
 #include <kdialog.h>
 
-#include <qlayout.h>
-#include <qmessagebox.h>
-#include <qlabel.h>
-#include <qstyle.h>
-#include <qapplication.h>
-#include <qdialog.h>
-#include <qprogressbar.h>
+#include <tqlayout.h>
+#include <tqmessagebox.h>
+#include <tqlabel.h>
+#include <tqstyle.h>
+#include <tqapplication.h>
+#include <tqdialog.h>
+#include <tqprogressbar.h>
 
 #define COUNTDOWN 30 
 
-AutoLogout::AutoLogout(LockProcess *parent) : QDialog(parent, "password dialog", true, WX11BypassWM)
+AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog", true, WX11BypassWM)
 {
-    frame = new QFrame(this);
-    frame->setFrameStyle(QFrame::Panel | QFrame::Raised);
+    frame = new TQFrame(this);
+    frame->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
     frame->setLineWidth(2);
 
-    QLabel *pixLabel = new QLabel( frame, "pixlabel" );
+    TQLabel *pixLabel = new TQLabel( frame, "pixlabel" );
     pixLabel->setPixmap(DesktopIcon("exit"));
 
-    QLabel *greetLabel = new QLabel(i18n("<nobr><qt><b>Automatic Log Out</b></qt><nobr>"), frame);
-    QLabel *infoLabel = new QLabel(i18n("<qt>To prevent being logged out, resume using this session by moving the mouse or pressing a key.</qt>"), frame);
+    TQLabel *greetLabel = new TQLabel(i18n("<nobr><qt><b>Automatic Log Out</b></qt><nobr>"), frame);
+    TQLabel *infoLabel = new TQLabel(i18n("<qt>To prevent being logged out, resume using this session by moving the mouse or pressing a key.</qt>"), frame);
 
-    mStatusLabel = new QLabel("<b> </b>", frame);
-    mStatusLabel->setAlignment(QLabel::AlignCenter);
+    mStatusLabel = new TQLabel("<b> </b>", frame);
+    mStatusLabel->setAlignment(TQLabel::AlignCenter);
 
-    QLabel *mProgressLabel = new QLabel("Time Remaining:", frame);
-    mProgressRemaining = new QProgressBar(frame);
+    TQLabel *mProgressLabel = new TQLabel("Time Remaining:", frame);
+    mProgressRemaining = new TQProgressBar(frame);
     mProgressRemaining->setPercentageVisible(false);
 
-    QVBoxLayout *unlockDialogLayout = new QVBoxLayout( this );
+    TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
 
-    frameLayout = new QGridLayout(frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint());
+    frameLayout = new TQGridLayout(frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint());
     frameLayout->addMultiCellWidget(pixLabel, 0, 2, 0, 0, Qt::AlignCenter | Qt::AlignTop);
     frameLayout->addWidget(greetLabel, 0, 1);
     frameLayout->addWidget(mStatusLabel, 1, 1);
@@ -66,7 +66,7 @@ AutoLogout::AutoLogout(LockProcess *parent) : QDialog(parent, "password dialog",
 
     mCountdownTimerId = startTimer(1000/25);
 
-    connect(qApp, SIGNAL(activity()), SLOT(slotActivity()));
+    connect(qApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()));
 }
 
 AutoLogout::~AutoLogout()
@@ -82,7 +82,7 @@ void AutoLogout::updateInfo(int timeout)
     mProgressRemaining->setProgress(timeout);
 }
 
-void AutoLogout::timerEvent(QTimerEvent *ev)
+void AutoLogout::timerEvent(TQTimerEvent *ev)
 {
     if (ev->timerId() == mCountdownTimerId)
     {
@@ -108,8 +108,8 @@ void AutoLogout::logout()
 
 void AutoLogout::show()
 {
-    QDialog::show();
-    QApplication::flushX();
+    TQDialog::show();
+    TQApplication::flushX();
 }
 
 #include "autologout.moc"

@@ -20,7 +20,7 @@
 #ifndef TESTTRASH_H
 #define TESTTRASH_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class TestTrash : public QObject
 {
@@ -91,28 +91,28 @@ private slots:
     void slotEntries( KIO::Job*, const KIO::UDSEntryList& );
 
 private:
-    void trashFile( const QString& origFilePath, const QString& fileId );
-    void trashSymlink( const QString& origFilePath, const QString& fileName, bool broken );
-    void trashDirectory( const QString& origPath, const QString& fileName );
-    void copyFromTrash( const QString& fileId, const QString& destPath, const QString& relativePath = QString::null );
-    void moveFromTrash( const QString& fileId, const QString& destPath, const QString& relativePath = QString::null );
+    void trashFile( const TQString& origFilePath, const TQString& fileId );
+    void trashSymlink( const TQString& origFilePath, const TQString& fileName, bool broken );
+    void trashDirectory( const TQString& origPath, const TQString& fileName );
+    void copyFromTrash( const TQString& fileId, const TQString& destPath, const TQString& relativePath = TQString::null );
+    void moveFromTrash( const TQString& fileId, const TQString& destPath, const TQString& relativePath = TQString::null );
 
-    QString homeTmpDir() const;
-    QString otherTmpDir() const;
-    QString utf8FileName() const;
-    QString umlautFileName() const;
-    QString readOnlyDirPath() const;
+    TQString homeTmpDir() const;
+    TQString otherTmpDir() const;
+    TQString utf8FileName() const;
+    TQString umlautFileName() const;
+    TQString readOnlyDirPath() const;
 
-    QString m_trashDir;
+    TQString m_trashDir;
 
-    QString m_otherPartitionTopDir;
-    QString m_otherPartitionTrashDir;
+    TQString m_otherPartitionTopDir;
+    TQString m_otherPartitionTrashDir;
     bool m_tmpIsWritablePartition;
     int m_tmpTrashId;
     int m_otherPartitionId;
 
     int m_entryCount;
-    QStringList m_listResult;
+    TQStringList m_listResult;
 };
 
 #endif

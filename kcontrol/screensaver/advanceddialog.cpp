@@ -1,10 +1,10 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <qcombobox.h>
+#include <tqcombobox.h>
 #include <kdebug.h>
 
-#include <qwhatsthis.h>
-#include <qstring.h>
+#include <tqwhatsthis.h>
+#include <tqstring.h>
 
 #include <config.h>
 
@@ -14,7 +14,7 @@
 
 #include "advanceddialog.moc"
 
-KScreenSaverAdvancedDialog::KScreenSaverAdvancedDialog(QWidget *parent, const char* name)
+KScreenSaverAdvancedDialog::KScreenSaverAdvancedDialog(TQWidget *parent, const char* name)
  : KDialogBase( parent, name, true, i18n( "Advanced Options" ),
                 Ok | Cancel, Ok, true )
 {
@@ -24,17 +24,17 @@ KScreenSaverAdvancedDialog::KScreenSaverAdvancedDialog(QWidget *parent, const ch
 
 	readSettings();
 
-	connect(dialog->qcbPriority, SIGNAL(activated(int)),
-		this, SLOT(slotPriorityChanged(int)));
+	connect(dialog->qcbPriority, TQT_SIGNAL(activated(int)),
+		this, TQT_SLOT(slotPriorityChanged(int)));
 
-	connect(dialog->qcbTopLeft, SIGNAL(activated(int)),
-		this, SLOT(slotChangeTopLeftCorner(int)));
-	connect(dialog->qcbTopRight, SIGNAL(activated(int)),
-		this, SLOT(slotChangeTopLeftCorner(int)));
-	connect(dialog->qcbBottomLeft, SIGNAL(activated(int)),
-		this, SLOT(slotChangeTopLeftCorner(int)));
-	connect(dialog->qcbBottomRight, SIGNAL(activated(int)),
-		this, SLOT(slotChangeTopLeftCorner(int)));
+	connect(dialog->qcbTopLeft, TQT_SIGNAL(activated(int)),
+		this, TQT_SLOT(slotChangeTopLeftCorner(int)));
+	connect(dialog->qcbTopRight, TQT_SIGNAL(activated(int)),
+		this, TQT_SLOT(slotChangeTopLeftCorner(int)));
+	connect(dialog->qcbBottomLeft, TQT_SIGNAL(activated(int)),
+		this, TQT_SLOT(slotChangeTopLeftCorner(int)));
+	connect(dialog->qcbBottomRight, TQT_SIGNAL(activated(int)),
+		this, TQT_SLOT(slotChangeTopLeftCorner(int)));
 
 #ifndef HAVE_SETPRIORITY
     dialog->qgbPriority->setEnabled(false);
@@ -140,22 +140,22 @@ void KScreenSaverAdvancedDialog::slotChangeTopLeftCorner(int)
 
 /* =================================================================================================== */
 
-AdvancedDialog::AdvancedDialog(QWidget *parent, const char *name) : AdvancedDialogImpl(parent, name)
+AdvancedDialog::AdvancedDialog(TQWidget *parent, const char *name) : AdvancedDialogImpl(parent, name)
 {
-	monitorLabel->setPixmap(QPixmap(locate("data", "kcontrol/pics/monitor.png")));
-	QWhatsThis::add(qcbPriority, "<qt>" + i18n("Specify the priority that the screensaver will run at. A higher priority may mean that the screensaver runs faster, though may reduce the speed that other programs run at while the screensaver is active.") + "</qt>");
-	QString qsTopLeft("<qt>" +  i18n("The action to take when the mouse cursor is located in the top left corner of the screen for 15 seconds.") + "</qt>");
-        QString qsTopRight("<qt>" +  i18n("The action to take when the mouse cursor is located in the top right corner of the screen for 15 seconds.") + "</qt>");
-        QString qsBottomLeft("<qt>" +  i18n("The action to take when the mouse cursor is located in the bottom left corner of the screen for 15 seconds.") + "</qt>");
-        QString qsBottomRight("<qt>" +  i18n("The action to take when the mouse cursor is located in the bottom right corner of the screen for 15 seconds.") + "</qt>");
-	QWhatsThis::add(qlTopLeft, qsTopLeft);
-	QWhatsThis::add(qcbTopLeft, qsTopLeft);
-	QWhatsThis::add(qlTopRight, qsTopRight);
-	QWhatsThis::add(qcbTopRight, qsTopRight);
-	QWhatsThis::add(qlBottomLeft, qsBottomLeft);
-	QWhatsThis::add(qcbBottomLeft, qsBottomLeft);
-	QWhatsThis::add(qlBottomRight, qsBottomRight);
-	QWhatsThis::add(qcbBottomRight, qsBottomRight);
+	monitorLabel->setPixmap(TQPixmap(locate("data", "kcontrol/pics/monitor.png")));
+	TQWhatsThis::add(qcbPriority, "<qt>" + i18n("Specify the priority that the screensaver will run at. A higher priority may mean that the screensaver runs faster, though may reduce the speed that other programs run at while the screensaver is active.") + "</qt>");
+	TQString qsTopLeft("<qt>" +  i18n("The action to take when the mouse cursor is located in the top left corner of the screen for 15 seconds.") + "</qt>");
+        TQString qsTopRight("<qt>" +  i18n("The action to take when the mouse cursor is located in the top right corner of the screen for 15 seconds.") + "</qt>");
+        TQString qsBottomLeft("<qt>" +  i18n("The action to take when the mouse cursor is located in the bottom left corner of the screen for 15 seconds.") + "</qt>");
+        TQString qsBottomRight("<qt>" +  i18n("The action to take when the mouse cursor is located in the bottom right corner of the screen for 15 seconds.") + "</qt>");
+	TQWhatsThis::add(qlTopLeft, qsTopLeft);
+	TQWhatsThis::add(qcbTopLeft, qsTopLeft);
+	TQWhatsThis::add(qlTopRight, qsTopRight);
+	TQWhatsThis::add(qcbTopRight, qsTopRight);
+	TQWhatsThis::add(qlBottomLeft, qsBottomLeft);
+	TQWhatsThis::add(qcbBottomLeft, qsBottomLeft);
+	TQWhatsThis::add(qlBottomRight, qsBottomRight);
+	TQWhatsThis::add(qcbBottomRight, qsBottomRight);
 }
 
 AdvancedDialog::~AdvancedDialog()
@@ -163,12 +163,12 @@ AdvancedDialog::~AdvancedDialog()
  
 }
 
-void AdvancedDialog::setMode(QComboBox *box, int i)
+void AdvancedDialog::setMode(TQComboBox *box, int i)
 {
 	box->setCurrentItem(i);
 }
 
-int AdvancedDialog::mode(QComboBox *box)
+int AdvancedDialog::mode(TQComboBox *box)
 {
 	return box->currentItem();
 }

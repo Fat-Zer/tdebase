@@ -14,17 +14,17 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "popupinfo.h"
 #include "workspace.h"
 #include "client.h"
-#include <qpainter.h>
-#include <qlabel.h>
-#include <qdrawutil.h>
-#include <qstyle.h>
+#include <tqpainter.h>
+#include <tqlabel.h>
+#include <tqdrawutil.h>
+#include <tqstyle.h>
 #include <kglobal.h>
 #include <fixx11h.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
+#include <tqapplication.h>
+#include <tqdesktopwidget.h>
 #include <kstringhandler.h>
 #include <kglobalsettings.h>
 
@@ -34,15 +34,15 @@ namespace KWinInternal
 {
 
 PopupInfo::PopupInfo( Workspace* ws, const char *name )
-    : QWidget( 0, name ), workspace( ws )
+    : TQWidget( 0, name ), workspace( ws )
     {
     m_infoString = "";
     m_shown = false;
     reset();
     reconfigure();
-    connect(&m_delayedHideTimer, SIGNAL(timeout()), this, SLOT(hide()));
+    connect(&m_delayedHideTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(hide()));
 
-    QFont f = font();
+    TQFont f = font();
     f.setBold( TRUE );
     f.setPointSize( 14 );
     setFont( f );
@@ -59,7 +59,7 @@ PopupInfo::~PopupInfo()
  */
 void PopupInfo::reset()
     {
-    QRect r = workspace->screenGeometry( workspace->activeScreen());
+    TQRect r = workspace->screenGeometry( workspace->activeScreen());
 
     int w = fontMetrics().width( m_infoString ) + 30;
 
@@ -72,11 +72,11 @@ void PopupInfo::reset()
 /*!
   Paints the popup info
  */
-void PopupInfo::paintEvent( QPaintEvent* )
+void PopupInfo::paintEvent( TQPaintEvent* )
     {
-    QPainter p( this );
-    style().drawPrimitive( QStyle::PE_Panel, &p, QRect( 0, 0, width(), height() ),
-          colorGroup(), QStyle::Style_Default );
+    TQPainter p( this );
+    style().drawPrimitive( TQStyle::PE_Panel, &p, TQRect( 0, 0, width(), height() ),
+          colorGroup(), TQStyle::Style_Default );
     paintContents();
     }
 
@@ -87,10 +87,10 @@ void PopupInfo::paintEvent( QPaintEvent* )
  */
 void PopupInfo::paintContents()
     {
-    QPainter p( this );
-    QRect r( 6, 6, width()-12, height()-12 );
+    TQPainter p( this );
+    TQRect r( 6, 6, width()-12, height()-12 );
 
-    p.fillRect( r, colorGroup().brush( QColorGroup::Background ) );
+    p.fillRect( r, colorGroup().brush( TQColorGroup::Background ) );
 
     /*
     p.setPen(Qt::white);
@@ -106,8 +106,8 @@ void PopupInfo::paintContents()
 void PopupInfo::hide()
     {
     m_delayedHideTimer.stop();
-    QWidget::hide();
-    QApplication::syncX();
+    TQWidget::hide();
+    TQApplication::syncX();
     XEvent otherEvent;
     while (XCheckTypedEvent (qt_xdisplay(), EnterNotify, &otherEvent ) )
         ;
@@ -122,7 +122,7 @@ void PopupInfo::reconfigure()
     m_delayTime = c->readNumEntry("PopupHideDelay", 350 );
     }
 
-void PopupInfo::showInfo(QString infoString)
+void PopupInfo::showInfo(TQString infoString)
     {
     if (m_show) 
         {

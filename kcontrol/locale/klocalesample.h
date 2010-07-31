@@ -25,7 +25,7 @@
 #ifndef __KLOCALESAMPLE_H__
 #define __KLOCALESAMPLE_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QLabel;
 class QResizeEvent;
@@ -37,7 +37,7 @@ class KLocaleSample : public QWidget
   Q_OBJECT
 public:
   KLocaleSample(KLocale *_locale,
-                QWidget *parent = 0, const char*name = 0);
+                TQWidget *parent = 0, const char*name = 0);
   virtual ~KLocaleSample();
 
 public slots:
@@ -48,11 +48,11 @@ protected slots:
 
 private:
   KLocale *m_locale;
-  QLabel *m_numberSample, *m_labNumber;
-  QLabel *m_moneySample, *m_labMoney;
-  QLabel *m_timeSample, *m_labTime;
-  QLabel *m_dateSample, *m_labDate;
-  QLabel *m_dateShortSample, *m_labDateShort;
+  TQLabel *m_numberSample, *m_labNumber;
+  TQLabel *m_moneySample, *m_labMoney;
+  TQLabel *m_timeSample, *m_labTime;
+  TQLabel *m_dateSample, *m_labDate;
+  TQLabel *m_dateShortSample, *m_labDateShort;
 };
 
 #endif

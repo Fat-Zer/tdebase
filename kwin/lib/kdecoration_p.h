@@ -30,8 +30,8 @@ DEALINGS IN THE SOFTWARE.
 // 
 
 #include "kdecoration.h"
-#include <qwidget.h>
-#include <qvaluelist.h>
+#include <tqwidget.h>
+#include <tqvaluelist.h>
 
 class KConfig;
 
@@ -42,13 +42,13 @@ class KWIN_EXPORT KDecorationOptionsPrivate : public KDecorationDefines
         virtual ~KDecorationOptionsPrivate();
         void defaultKWinSettings(); // shared implementation
         unsigned long updateKWinSettings( KConfig* ); // shared implementation
-        BorderSize findPreferredBorderSize( BorderSize size, QValueList< BorderSize > ) const; // shared implementation
+        BorderSize findPreferredBorderSize( BorderSize size, TQValueList< BorderSize > ) const; // shared implementation
 
-        QColor colors[NUM_COLORS*2];
-        QColorGroup *cg[NUM_COLORS*2];
-        QFont activeFont, inactiveFont, activeFontSmall, inactiveFontSmall;
-        QString title_buttons_left;
-        QString title_buttons_right;
+        TQColor colors[NUM_COLORS*2];
+        TQColorGroup *cg[NUM_COLORS*2];
+        TQFont activeFont, inactiveFont, activeFontSmall, inactiveFontSmall;
+        TQString title_buttons_left;
+        TQString title_buttons_right;
         bool custom_button_positions;
         bool show_tooltips;
         BorderSize border_size, cached_border_size;
@@ -77,18 +77,18 @@ class KDecorationBridge : public KDecorationDefines
         virtual bool isMovable() const = 0;
         virtual bool isResizable() const = 0;
         virtual NET::WindowType windowType( unsigned long supported_types ) const = 0;
-	virtual QIconSet icon() const = 0;
-	virtual QString caption() const = 0;
-	virtual void processMousePressEvent( QMouseEvent* ) = 0;
-	virtual void showWindowMenu( const QRect &) = 0;
-	virtual void showWindowMenu( QPoint ) = 0;
+	virtual TQIconSet icon() const = 0;
+	virtual TQString caption() const = 0;
+	virtual void processMousePressEvent( TQMouseEvent* ) = 0;
+	virtual void showWindowMenu( const TQRect &) = 0;
+	virtual void showWindowMenu( TQPoint ) = 0;
 	virtual void performWindowOperation( WindowOperation ) = 0;
-        virtual void setMask( const QRegion&, int ) = 0;
+        virtual void setMask( const TQRegion&, int ) = 0;
         virtual bool isPreview() const = 0;
-        virtual QRect geometry() const = 0;
-        virtual QRect iconGeometry() const = 0;
-        virtual QRegion unobscuredRegion( const QRegion& r ) const = 0;
-        virtual QWidget* workspaceWidget() const = 0;
+        virtual TQRect geometry() const = 0;
+        virtual TQRect iconGeometry() const = 0;
+        virtual TQRegion unobscuredRegion( const TQRegion& r ) const = 0;
+        virtual TQWidget* workspaceWidget() const = 0;
         virtual WId windowId() const = 0;
 	virtual void closeWindow() = 0;
 	virtual void maximize( MaximizeMode mode ) = 0;
@@ -102,7 +102,7 @@ class KDecorationBridge : public KDecorationDefines
         virtual void setKeepBelow( bool ) = 0;
         // not part of public API
         virtual int currentDesktop() const = 0;
-        virtual QWidget* initialParentWidget() const = 0;
+        virtual TQWidget* initialParentWidget() const = 0;
         virtual Qt::WFlags initialWFlags() const = 0;
         virtual void helperShowHide( bool ) = 0;
         virtual void grabXServer( bool grab ) = 0;

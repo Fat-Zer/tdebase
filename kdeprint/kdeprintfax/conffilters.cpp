@@ -21,13 +21,13 @@
 #include "conffilters.h"
 #include "filterdlg.h"
 
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qregexp.h>
-#include <qheader.h>
+#include <tqpushbutton.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
+#include <tqheader.h>
 
 #include <klocale.h>
 #include <klistview.h>
@@ -35,41 +35,41 @@
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
 
-ConfFilters::ConfFilters(QWidget *parent, const char *name)
-: QWidget(parent, name)
+ConfFilters::ConfFilters(TQWidget *parent, const char *name)
+: TQWidget(parent, name)
 {
 	m_filters = new KListView(this);
 	m_filters->addColumn(i18n("Mime Type"));
 	m_filters->addColumn(i18n("Command"));
-	m_filters->setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	m_filters->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_filters->setLineWidth(1);
 	m_filters->setSorting(-1);
 	m_filters->header()->setStretchEnabled(true, 1);
-	connect(m_filters, SIGNAL(doubleClicked(QListViewItem*)), SLOT(slotChange()));
+	connect(m_filters, TQT_SIGNAL(doubleClicked(TQListViewItem*)), TQT_SLOT(slotChange()));
 
-	m_add = new QPushButton(this);
+	m_add = new TQPushButton(this);
 	m_add->setPixmap(BarIcon("filenew"));
-	m_remove = new QPushButton(this);
+	m_remove = new TQPushButton(this);
 	m_remove->setIconSet(BarIconSet("remove"));
-	m_change = new QPushButton(this);
+	m_change = new TQPushButton(this);
 	m_change->setIconSet(BarIconSet("filter"));
-	m_up = new QPushButton(this);
+	m_up = new TQPushButton(this);
 	m_up->setIconSet(BarIconSet("up"));
-	m_down = new QPushButton(this);
+	m_down = new TQPushButton(this);
 	m_down->setIconSet(BarIconSet("down"));
-	connect(m_add, SIGNAL(clicked()), SLOT(slotAdd()));
-	connect(m_change, SIGNAL(clicked()), SLOT(slotChange()));
-	connect(m_remove, SIGNAL(clicked()), SLOT(slotRemove()));
-	connect(m_up, SIGNAL(clicked()), SLOT(slotUp()));
-	connect(m_down, SIGNAL(clicked()), SLOT(slotDown()));
-	QToolTip::add(m_add, i18n("Add filter"));
-	QToolTip::add(m_change, i18n("Modify filter"));
-	QToolTip::add(m_remove, i18n("Remove filter"));
-	QToolTip::add(m_up, i18n("Move filter up"));
-	QToolTip::add(m_down, i18n("Move filter down"));
+	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAdd()));
+	connect(m_change, TQT_SIGNAL(clicked()), TQT_SLOT(slotChange()));
+	connect(m_remove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemove()));
+	connect(m_up, TQT_SIGNAL(clicked()), TQT_SLOT(slotUp()));
+	connect(m_down, TQT_SIGNAL(clicked()), TQT_SLOT(slotDown()));
+	TQToolTip::add(m_add, i18n("Add filter"));
+	TQToolTip::add(m_change, i18n("Modify filter"));
+	TQToolTip::add(m_remove, i18n("Remove filter"));
+	TQToolTip::add(m_up, i18n("Move filter up"));
+	TQToolTip::add(m_down, i18n("Move filter down"));
 
-	QHBoxLayout	*l0 = new QHBoxLayout(this, 10, 10);
-	QVBoxLayout	*l1 = new QVBoxLayout(0, 0, 0);
+	QHBoxLayout	*l0 = new TQHBoxLayout(this, 10, 10);
+	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 0);
 	l0->addWidget(m_filters, 1);
 	l0->addLayout(l1, 0);
 	l1->addWidget(m_add);
@@ -80,7 +80,7 @@ ConfFilters::ConfFilters(QWidget *parent, const char *name)
 	l1->addWidget(m_down);
 	l1->addStretch(1);
 	updateButton();
-	connect(m_filters, SIGNAL(selectionChanged ()),SLOT(updateButton()));
+	connect(m_filters, TQT_SIGNAL(selectionChanged ()),TQT_SLOT(updateButton()));
 }
 
 void ConfFilters::load()
@@ -95,11 +95,11 @@ void ConfFilters::load()
 		while (!t.eof())
 		{
 			line = t.readLine().stripWhiteSpace();
-			if ((p=line.find(QRegExp("\\s"))) != -1)
+			if ((p=line.find(TQRegExp("\\s"))) != -1)
 			{
 				QString	mime(line.left(p)), cmd(line.right(line.length()-p-1).stripWhiteSpace());
 				if (!mime.isEmpty() && !cmd.isEmpty())
-					item = new QListViewItem(m_filters, item, mime, cmd);
+					item = new TQListViewItem(m_filters, item, mime, cmd);
 			}
 		}
 	}
@@ -126,7 +126,7 @@ void ConfFilters::slotAdd()
 	if (FilterDlg::doIt(this, &mime, &cmd))
 		if (!mime.isEmpty() && !cmd.isEmpty())
 		  {
-		    new QListViewItem(m_filters, m_filters->currentItem(), mime, cmd);
+		    new TQListViewItem(m_filters, m_filters->currentItem(), mime, cmd);
 		    updateButton();
 		  }
 		else

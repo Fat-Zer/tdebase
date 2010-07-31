@@ -25,15 +25,15 @@ class KDCOPWindow : public KMainWindow
 
   public:
 
-    KDCOPWindow( QWidget* parent = 0, const char* name = 0 );
+    KDCOPWindow( TQWidget* parent = 0, const char* name = 0 );
 
   protected slots:
 
-    void slotCurrentChanged( QListViewItem* item );
+    void slotCurrentChanged( TQListViewItem* item );
     void slotCallFunction();
-    void slotCallFunction( QListViewItem* item );
-    void slotApplicationRegistered(const QCString &);
-    void slotApplicationUnregistered(const QCString &);
+    void slotCallFunction( TQListViewItem* item );
+    void slotApplicationRegistered(const TQCString &);
+    void slotApplicationUnregistered(const TQCString &);
     void slotFillApplications();
     void slotCopy();
     void slotMode();
@@ -44,19 +44,19 @@ class KDCOPWindow : public KMainWindow
 
     bool getParameters
       (
-       const QString  & unNormalisedSignature,
-       QString        & normalisedSignature,
-       QStringList    & types,
-       QStringList    & names
+       const TQString  & unNormalisedSignature,
+       TQString        & normalisedSignature,
+       TQStringList    & types,
+       TQStringList    & names
       );
 
-    bool demarshal(QCString & replyType, QDataStream & reply, QListBox *theList);
+    bool demarshal(TQCString & replyType, TQDataStream & reply, TQListBox *theList);
 
     DCOPClient    * dcopClient;
     KAction       * exeaction;
     KSelectAction * langmode;
     kdcopview	  * mainView;
-    QVBoxLayout  * mainLayout;
+    TQVBoxLayout  * mainLayout;
 };
 
 

@@ -16,14 +16,14 @@
  ***************************************************************************/
 #include <stdlib.h>
 
-#include <qdir.h>
-#include <qlabel.h>
-#include <qlistview.h>
-#include <qcolor.h>
-#include <qstylefactory.h>
-#include <qpixmapcache.h>
-#include <qstyle.h>
-#include <qobjectlist.h>
+#include <tqdir.h>
+#include <tqlabel.h>
+#include <tqlistview.h>
+#include <tqcolor.h>
+#include <tqstylefactory.h>
+#include <tqpixmapcache.h>
+#include <tqstyle.h>
+#include <tqobjectlist.h>
 
 #include <kconfig.h>
 #include <kstandarddirs.h>
@@ -43,7 +43,7 @@
 #include "stylepreview.h"
 #include "kstylepage.h"
 
-KStylePage::KStylePage(QWidget *parent, const char *name ) : KStylePageDlg(parent,name) {
+KStylePage::KStylePage(TQWidget *parent, const char *name ) : KStylePageDlg(parent,name) {
 
 	px_stylesSidebar->setPixmap(UserIcon("step4.png"));
 
@@ -51,36 +51,36 @@ KStylePage::KStylePage(QWidget *parent, const char *name ) : KStylePageDlg(paren
 	klv_styles->addColumn( i18n( "Description" ) );
 	klv_styles->setAllColumnsShowFocus(true);
 
-	kde = new QListViewItem( klv_styles);
-	kde->setText( 0, QPixmap::defaultDepth() > 8 ? i18n( "Plastik" ) : i18n( "Light" ) );
+	kde = new TQListViewItem( klv_styles);
+	kde->setText( 0, TQPixmap::defaultDepth() > 8 ? i18n( "Plastik" ) : i18n( "Light" ) );
 	kde->setText( 1, i18n( "KDE default style" ) );
 
-	classic = new QListViewItem( klv_styles);
+	classic = new TQListViewItem( klv_styles);
 	classic->setText( 0, i18n( "KDE Classic" ) );
 	classic->setText( 1, i18n( "Classic KDE style" ) );
 
-	keramik = new QListViewItem( klv_styles );
+	keramik = new TQListViewItem( klv_styles );
 	keramik->setText( 0, i18n( "Keramik" ) );
 	keramik->setText( 1, i18n( "The previous default style" ) );
 
-	cde = new QListViewItem( klv_styles);
+	cde = new TQListViewItem( klv_styles);
 	cde->setText( 0, i18n( "Sunshine" ) );
 	cde->setText( 1, i18n( "A very common desktop" ) );
 
-	win = new QListViewItem( klv_styles );
+	win = new TQListViewItem( klv_styles );
 	win->setText( 0, i18n( "Redmond" ) );
 	win->setText( 1, i18n( "A style from the northwest of the USA" ) );
 
-	platinum = new QListViewItem( klv_styles );
+	platinum = new TQListViewItem( klv_styles );
 	platinum->setText( 0, i18n( "Platinum" ) );
 	platinum->setText( 1, i18n( "The platinum style" ) );
 
-	connect(klv_styles, SIGNAL(selectionChanged()),
-			this, SLOT(slotCurrentChanged()));
+	connect(klv_styles, TQT_SIGNAL(selectionChanged()),
+			this, TQT_SLOT(slotCurrentChanged()));
 
 	// Note: if the default is changed here it needs to be changed in kdebase/kwin/plugins.cpp
 	//       and kdebase/kwin/kcmkwin/kwindecoration/kwindecoration.cpp as well.
-	defaultKWinStyle = QPixmap::defaultDepth() > 8 ? "kwin_plastik" : "kwin_quartz";
+	defaultKWinStyle = TQPixmap::defaultDepth() > 8 ? "kwin_plastik" : "kwin_quartz";
 	appliedStyle = NULL;
 
 	getAvailability();
@@ -105,7 +105,7 @@ void KStylePage::save(bool curSettings){
 
 /** save the widget-style */
 void KStylePage::saveStyle(bool curSettings){
-	QString style = curSettings ? currentStyle : origStyle;
+	TQString style = curSettings ? currentStyle : origStyle;
 	KConfig cfg( "kdeglobals" );
 	cfg.setGroup("General");
 	cfg.writeEntry( "widgetStyle", style, true, true );
@@ -115,7 +115,7 @@ void KStylePage::saveStyle(bool curSettings){
 
 /** save the KWin-style*/
 void KStylePage::saveKWin(bool curSettings){
-	QString kwin = origKWinStyle;
+	TQString kwin = origKWinStyle;
 	if(curSettings) {
 		KDesktopFile* kdf = 0L;
 		KStandardDirs* kstd = KGlobal::dirs();
@@ -128,7 +128,7 @@ void KStylePage::saveKWin(bool curSettings){
 		else if (keramik->isSelected() && kwin_keramik_exist)
 			kdf = new KDesktopFile(kstd->findResource("data", "kwin/keramik.desktop"));
 		else if (kde->isSelected()) {
-			if (kwin_plastik_exist && (QColor::numBitPlanes() > 8))
+			if (kwin_plastik_exist && (TQColor::numBitPlanes() > 8))
 				kdf = new KDesktopFile(kstd->findResource("data", "kwin/plastik.desktop"));
 			else if (kwin_quartz_exist)
 				kdf = new KDesktopFile(kstd->findResource("data", "kwin/quartz.desktop"));
@@ -188,7 +188,7 @@ void KStylePage::saveColors(bool curSettings){
 	////////////////////////////////////////////////////
 	// KDE-1.x support
 	KSimpleConfig *kconfig =
-	new KSimpleConfig( QDir::homeDirPath() + "/.kderc" );
+	new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
 	kconfig->setGroup( "General" );
 	kconfig->writeEntry("background", toSave->background );
 	kconfig->writeEntry("selectBackground", toSave->selectBackground );
@@ -218,16 +218,16 @@ void KStylePage::saveColors(bool curSettings){
 
 /** save the icon-theme*/
 void KStylePage::saveIcons(bool curSettings) {
-	QString theme = origIcons;
+	TQString theme = origIcons;
 	if (curSettings) {
 		if ( (kde->isSelected() || platinum->isSelected() || keramik->isSelected())
 			&& icon_crystalsvg_exist)
 				theme = "crystalsvg";
 		else if ( (classic->isSelected() || cde->isSelected() || win->isSelected())
-			&& (QColor::numBitPlanes() > 8) && icon_kdeclassic_exist)
+			&& (TQColor::numBitPlanes() > 8) && icon_kdeclassic_exist)
 				theme = "kdeclassic";
 		else if ( (classic->isSelected() || cde->isSelected() || win->isSelected())
-			&& (QColor::numBitPlanes() <= 8) && icon_Locolor_exist)
+			&& (TQColor::numBitPlanes() <= 8) && icon_Locolor_exist)
 				theme = "Locolor";
 	}
 	// save, what we got
@@ -238,7 +238,7 @@ void KStylePage::saveIcons(bool curSettings) {
 	for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++) {
 		if (groups[i] == 0L)
 			break;
-		KGlobal::config()->setGroup(QString::fromLatin1(groups[i]) + "Icons");
+		KGlobal::config()->setGroup(TQString::fromLatin1(groups[i]) + "Icons");
 		KGlobal::config()->writeEntry("Size", icontheme.defaultSize(i));
 	}
 	KGlobal::config()->sync();
@@ -270,7 +270,7 @@ void KStylePage::changeCurrentStyle() {
 	}
 	else if (classic->isSelected()) {
 		// Use the highcolor style if the display supports it
-		if ( (QColor::numBitPlanes() > 8) && kde_hc_exist ) {
+		if ( (TQColor::numBitPlanes() > 8) && kde_hc_exist ) {
 			currentStyle="HighColor";
 		}
 		else if (kde_def_exist) {
@@ -279,7 +279,7 @@ void KStylePage::changeCurrentStyle() {
 	}
 	else if (kde->isSelected()) {
 		// Use the plastik style if the display supports it
-		if ( (QColor::numBitPlanes() > 8) && kde_plastik_exist ) {
+		if ( (TQColor::numBitPlanes() > 8) && kde_plastik_exist ) {
 			currentStyle="Plastik";
 		}
 		else if (kde_light_exist) {
@@ -297,7 +297,7 @@ void KStylePage::changeCurrentStyle() {
 /** to be connected to the OS page. Catches
  *  either KDE, CDE, win or mac and pre-sets the style.
  */
-void KStylePage::presetStyle(const QString& style){
+void KStylePage::presetStyle(const TQString& style){
 	kdDebug() << "KStylePage::presetStyle(): "<< style << endl;
 	if(style=="KDE") {
 		if (kde_plastik_exist)
@@ -373,8 +373,8 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 		kdesktop.setGroup("Desktop0");
 		// set Background (userSettings if available, else default)
 		set->bgMode=kdesktop.readEntry("BackgroundMode", "Flat");
-                QColor tmp1("#003082");
-		QColor tmp2("#C0C0C0");
+                TQColor tmp1("#003082");
+		TQColor tmp2("#C0C0C0");
 		set->usrCol1=kdesktop.readColorEntry("Color1", &tmp1);
 		set->usrCol2=kdesktop.readColorEntry("Color2", &tmp2);
 		// write the color scheme filename and the contrast, default 7, otherwise from file
@@ -416,8 +416,8 @@ void KStylePage::getAvailability() {
 	// test, wich styles are available
 	kde_keramik_exist = kde_hc_exist = kde_def_exist = cde_exist
 		= kde_plastik_exist = win_exist = platinum_exist = false;
-	QStringList styles = QStyleFactory::keys();
-	for (QStringList::iterator it = styles.begin(); it != styles.end(); it++) {
+	TQStringList styles = TQStyleFactory::keys();
+	for (TQStringList::iterator it = styles.begin(); it != styles.end(); it++) {
 		if (*it == "Keramik") kde_keramik_exist = true;
 		else if (*it == "HighColor") kde_hc_exist = true;
 		else if (*it == "Default") kde_def_exist = true;
@@ -430,7 +430,7 @@ void KStylePage::getAvailability() {
 	// and disable the ListItems, if they are not.
 	if ( !(kde_plastik_exist || kde_light_exist) ) kde->setVisible(false);
 	if ( !(kde_hc_exist || kde_def_exist) ) classic->setVisible(false);
-	if (!kde_keramik_exist || QPixmap::defaultDepth() <= 8) keramik->setVisible(false);
+	if (!kde_keramik_exist || TQPixmap::defaultDepth() <= 8) keramik->setVisible(false);
 	if (!cde_exist) cde->setVisible(false);
 	if (!win_exist) win->setVisible(false);
 	if (!platinum_exist) platinum->setVisible(false);
@@ -456,8 +456,8 @@ void KStylePage::getAvailability() {
 
 	// check, wich Icon-themes are available
 	icon_crystalsvg_exist = icon_kdeclassic_exist = icon_Locolor_exist = false;
-	QStringList icons(KIconTheme::list());
-	for (QStringList::iterator it=icons.begin(); it != icons.end(); it++) {
+	TQStringList icons(KIconTheme::list());
+	for (TQStringList::iterator it=icons.begin(); it != icons.end(); it++) {
 		KIconTheme icontheme(*it);
 		if (icontheme.isHidden() || !icontheme.isValid()) continue;
 		if (*it == "crystalsvg") icon_crystalsvg_exist = true;
@@ -502,7 +502,7 @@ void KStylePage::initColors() {
         inactiveTitleBtnBg.setRgb(167,181,199);
         alternateBackground.setRgb(237,244,249);
         
-	if (QPixmap::defaultDepth() > 8)
+	if (TQPixmap::defaultDepth() > 8)
 		button.setRgb(221, 223, 228);
 	else
 		button.setRgb(220, 220, 220);
@@ -529,16 +529,16 @@ void KStylePage::liveUpdate() {
 
 /** show the previewWidget styled with the selected one */
 void KStylePage::switchPrevStyle() {
-	QStyle* style = QStyleFactory::create(currentStyle);
+	TQStyle* style = TQStyleFactory::create(currentStyle);
 	if (!style) return;
 
 	stylePreview->unsetPalette();
-	QPalette palette = createPalette();
+	TQPalette palette = createPalette();
 	style->polish(palette);
 	stylePreview->setPalette(palette);
 
 	// Prevent Qt from wrongly caching radio button images
-	QPixmapCache::clear();
+	TQPixmapCache::clear();
 	// go ahead
 	setStyleRecursive( stylePreview, palette, style );
 	// this flickers, but reliably draws the widgets corretly.
@@ -548,37 +548,37 @@ void KStylePage::switchPrevStyle() {
 	appliedStyle = style;
 }
 
-void KStylePage::setStyleRecursive(QWidget* w, QPalette &palette, QStyle* s) {
+void KStylePage::setStyleRecursive(TQWidget* w, TQPalette &palette, TQStyle* s) {
 	// Apply the new style.
 	w->setStyle(s);
 	// Recursively update all children.
-	const QObjectList *children = w->children();
+	const TQObjectList *children = w->children();
 	if (!children)
 		return;
 	// Apply the style to each child widget.
-	QPtrListIterator<QObject> childit(*children);
-	QObject *child;
+	TQPtrListIterator<TQObject> childit(*children);
+	TQObject *child;
 	while ((child = childit.current()) != 0) {
 		++childit;
 		if (child->isWidgetType())
-			setStyleRecursive((QWidget *) child, palette, s);
+			setStyleRecursive((TQWidget *) child, palette, s);
 	}
 }
 
-/** create a QPalette of our current colorset */
-QPalette KStylePage::createPalette() {
+/** create a TQPalette of our current colorset */
+TQPalette KStylePage::createPalette() {
 	colorSet *cc = &currentColors;
-	QColorGroup disabledgrp(cc->windowForeground, cc->background, cc->background.light(150),
+	TQColorGroup disabledgrp(cc->windowForeground, cc->background, cc->background.light(150),
 		cc->background.dark(), cc->background.dark(120), cc->background.dark(120),
 		cc->windowBackground);
-	QColorGroup colgrp(cc->windowForeground, cc->background, cc->background.light(150),
+	TQColorGroup colgrp(cc->windowForeground, cc->background, cc->background.light(150),
 		cc->background.dark(), cc->background.dark(120), cc->foreground,
 		cc->windowBackground);
-	colgrp.setColor(QColorGroup::Highlight, cc->selectBackground);
-	colgrp.setColor(QColorGroup::HighlightedText, cc->selectForeground);
-	colgrp.setColor(QColorGroup::Button, cc->buttonBackground);
-	colgrp.setColor(QColorGroup::ButtonText, cc->buttonForeground);
-	return QPalette( colgrp, disabledgrp, colgrp);
+	colgrp.setColor(TQColorGroup::Highlight, cc->selectBackground);
+	colgrp.setColor(TQColorGroup::HighlightedText, cc->selectForeground);
+	colgrp.setColor(TQColorGroup::Button, cc->buttonBackground);
+	colgrp.setColor(TQColorGroup::ButtonText, cc->buttonForeground);
+	return TQPalette( colgrp, disabledgrp, colgrp);
 }
 
 #include "kstylepage.moc"

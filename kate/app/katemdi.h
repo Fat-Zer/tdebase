@@ -27,34 +27,34 @@
 #include <kxmlguiclient.h>
 #include <kaction.h>
 
-#include <qdict.h>
-#include <qintdict.h>
-#include <qmap.h>
-#include <qsplitter.h>
-#include <qpixmap.h>
-#include <qptrlist.h>
+#include <tqdict.h>
+#include <tqintdict.h>
+#include <tqmap.h>
+#include <tqsplitter.h>
+#include <tqpixmap.h>
+#include <tqptrlist.h>
 
 namespace KateMDI {
 
 
-/** This class is needed because QSplitter cant return an index for a widget. */
+/** This class is needed because TQSplitter cant return an index for a widget. */
 class Splitter : public QSplitter
 {
   Q_OBJECT
 
   public:
-    Splitter(Orientation o, QWidget* parent=0, const char* name=0);
+    Splitter(Orientation o, TQWidget* parent=0, const char* name=0);
     ~Splitter();
 
     /** Since there is supposed to be only 2 childs of a katesplitter,
      * any child other than the last is the first.
-     * This method uses QSplitter::idAfter(widget) which
+     * This method uses TQSplitter::idAfter(widget) which
      * returns 0 if there is no widget after this one.
      * This results in an error if widget is not a child
      * in this splitter */
-    bool isLastChild(QWidget* w) const;
+    bool isLastChild(TQWidget* w) const;
 
-    int idAfter ( QWidget * w ) const;
+    int idAfter ( TQWidget * w ) const;
 };
 
 class ToggleToolViewAction : public KToggleAction
@@ -62,8 +62,8 @@ class ToggleToolViewAction : public KToggleAction
   Q_OBJECT
 
   public:
-    ToggleToolViewAction ( const QString& text, const KShortcut& cut,
-                           class ToolView *tv, QObject* parent = 0, const char* name = 0 );
+    ToggleToolViewAction ( const TQString& text, const KShortcut& cut,
+                           class ToolView *tv, TQObject* parent = 0, const char* name = 0 );
 
     virtual ~ToggleToolViewAction();
 
@@ -75,7 +75,7 @@ class ToggleToolViewAction : public KToggleAction
     ToolView *m_tv;
 };
 
-class GUIClient : public QObject, public KXMLGUIClient
+class GUIClient : public TQObject, public KXMLGUIClient
 {
   Q_OBJECT
 
@@ -94,8 +94,8 @@ class GUIClient : public QObject, public KXMLGUIClient
   private:
     MainWindow *m_mw;
     KToggleAction *m_showSidebarsAction;
-    QPtrList<KAction> m_toolViewActions;
-    QMap<ToolView*, KAction*> m_toolToAction;
+    TQPtrList<KAction> m_toolViewActions;
+    TQMap<ToolView*, KAction*> m_toolToAction;
     KActionMenu *m_toolMenu;
 };
 
@@ -118,7 +118,7 @@ class ToolView : public QVBox
      * @param sidebar sidebar of this toolview
      * @param parent parent widget, e.g. the splitter of one of the sidebars
      */
-    ToolView (class MainWindow *mainwin, class Sidebar *sidebar, QWidget *parent);
+    ToolView (class MainWindow *mainwin, class Sidebar *sidebar, TQWidget *parent);
 
   public:
     /**
@@ -148,7 +148,7 @@ class ToolView : public QVBox
     bool visible () const;
 
   protected:
-    void childEvent ( QChildEvent *ev );
+    void childEvent ( TQChildEvent *ev );
 
   private:
     MainWindow *m_mainWin;
@@ -157,7 +157,7 @@ class ToolView : public QVBox
     /**
      * unique id
      */
-    QString id;
+    TQString id;
 
     /**
      * is visible in sidebar
@@ -169,8 +169,8 @@ class ToolView : public QVBox
      */
     bool persistent;
 
-    QPixmap icon;
-    QString text;
+    TQPixmap icon;
+    TQString text;
 };
 
 class Sidebar : public KMultiTabBar
@@ -178,13 +178,13 @@ class Sidebar : public KMultiTabBar
   Q_OBJECT
 
   public:
-    Sidebar (KMultiTabBar::KMultiTabBarPosition pos, class MainWindow *mainwin, QWidget *parent);
+    Sidebar (KMultiTabBar::KMultiTabBarPosition pos, class MainWindow *mainwin, TQWidget *parent);
     virtual ~Sidebar ();
 
     void setSplitter (Splitter *sp);
 
   public:
-    ToolView *addWidget (const QPixmap &icon, const QString &text, ToolView *widget);
+    ToolView *addWidget (const TQPixmap &icon, const TQString &text, ToolView *widget);
     bool removeWidget (ToolView *widget);
 
     bool showWidget (ToolView *widget);
@@ -219,7 +219,7 @@ class Sidebar : public KMultiTabBar
     void tabClicked(int);
 
   protected:
-    bool eventFilter(QObject *obj, QEvent *ev);
+    bool eventFilter(TQObject *obj, TQEvent *ev);
 
   private slots:
     void buttonPopupActivate (int id);
@@ -232,13 +232,13 @@ class Sidebar : public KMultiTabBar
     KMultiTabBar *m_tabBar;
     Splitter *m_ownSplit;
 
-    QIntDict<ToolView> m_idToWidget;
-    QMap<ToolView*, int> m_widgetToId;
+    TQIntDict<ToolView> m_idToWidget;
+    TQMap<ToolView*, int> m_widgetToId;
 
     /**
      * list of all toolviews around in this sidebar
      */
-    QValueList<ToolView*> m_toolviews;
+    TQValueList<ToolView*> m_toolviews;
 
     int m_lastSize;
 
@@ -258,7 +258,7 @@ class MainWindow : public KParts::MainWindow
     /**
      * Constructor
      */
-    MainWindow (QWidget* parentWidget = 0, const char* name = 0);
+    MainWindow (TQWidget* parentWidget = 0, const char* name = 0);
 
     /**
      * Destructor
@@ -275,7 +275,7 @@ class MainWindow : public KParts::MainWindow
      * this widget will get focus if a toolview is hidden
      * @return central widget
      */
-    QWidget *centralWidget () const;
+    TQWidget *centralWidget () const;
 
     /**
      * add a given widget to the given sidebar if possible, name is very important
@@ -285,14 +285,14 @@ class MainWindow : public KParts::MainWindow
      * @param text text to use in addition to icon
      * @return created toolview on success or 0
      */
-    ToolView *createToolView (const QString &identifier, KMultiTabBar::KMultiTabBarPosition pos, const QPixmap &icon, const QString &text);
+    ToolView *createToolView (const TQString &identifier, KMultiTabBar::KMultiTabBarPosition pos, const TQPixmap &icon, const TQString &text);
 
     /**
      * give you handle to toolview for the given name, 0 if no toolview around
      * @param identifier toolview name
      * @return toolview if existing, else 0
      */
-    ToolView *toolView (const QString &identifier) const;
+    ToolView *toolView (const TQString &identifier) const;
 
     /**
      * set the toolview's tabbar style.
@@ -364,7 +364,7 @@ class MainWindow : public KParts::MainWindow
      * @param config config object to use
      * @param group config group to use
      */
-    void startRestore (KConfig *config, const QString &group);
+    void startRestore (KConfig *config, const TQString &group);
 
     /**
      * finish the restore
@@ -376,7 +376,7 @@ class MainWindow : public KParts::MainWindow
      * @param config config object to use
      * @param group config group to use
      */
-    void saveSession (KConfig *config, const QString &group);
+    void saveSession (KConfig *config, const TQString &group);
 
   /**
    * internal data ;)
@@ -385,18 +385,18 @@ class MainWindow : public KParts::MainWindow
     /**
      * map identifiers to widgets
      */
-    QDict<ToolView> m_idToWidget;
+    TQDict<ToolView> m_idToWidget;
 
     /**
      * list of all toolviews around
      */
-    QValueList<ToolView*> m_toolviews;
+    TQValueList<ToolView*> m_toolviews;
 
     /**
      * widget, which is the central part of the
      * main window ;)
      */
-    QWidget *m_centralWidget;
+    TQWidget *m_centralWidget;
 
     /**
      * horizontal splitter
@@ -427,7 +427,7 @@ class MainWindow : public KParts::MainWindow
     /**
      * restore group
      */
-    QString m_restoreGroup;
+    TQString m_restoreGroup;
 
     /**
      * out guiclient

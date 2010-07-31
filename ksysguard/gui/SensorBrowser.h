@@ -24,7 +24,7 @@
 #ifndef KSG_SENSORBROWSER_H
 #define KSG_SENSORBROWSER_H
 
-#include <qdict.h>
+#include <tqdict.h>
 
 #include <klistview.h>
 #include <ksgrd/SensorClient.h>
@@ -48,28 +48,28 @@ class SensorBrowser : public KListView, public KSGRD::SensorClient
   Q_OBJECT
 
   public:
-    SensorBrowser( QWidget* parent, KSGRD::SensorManager* sm, const char* name = 0 );
+    SensorBrowser( TQWidget* parent, KSGRD::SensorManager* sm, const char* name = 0 );
     ~SensorBrowser();
 
-    QStringList listHosts();
-    QStringList listSensors( const QString &hostName );
+    TQStringList listHosts();
+    TQStringList listSensors( const TQString &hostName );
 
   public slots:
     void disconnect();
-    void hostReconfigured( const QString &hostName );
+    void hostReconfigured( const TQString &hostName );
     void update();
-    void newItemSelected( QListViewItem *item );
+    void newItemSelected( TQListViewItem *item );
 
   protected:
-    virtual void viewportMouseMoveEvent( QMouseEvent* );
+    virtual void viewportMouseMoveEvent( TQMouseEvent* );
 
   private:
-    void answerReceived( int id, const QString& );
+    void answerReceived( int id, const TQString& );
 
     KSGRD::SensorManager* mSensorManager;
 
-    QPtrList<HostInfo> mHostInfoList;
-    QString mDragText;
+    TQPtrList<HostInfo> mHostInfoList;
+    TQString mDragText;
 
 };
 
@@ -79,42 +79,42 @@ class SensorBrowser : public KListView, public KSGRD::SensorClient
 class SensorInfo
 {
   public:
-    SensorInfo( QListViewItem *lvi, const QString &name, const QString &desc,
-                const QString &type );
+    SensorInfo( TQListViewItem *lvi, const TQString &name, const TQString &desc,
+                const TQString &type );
     ~SensorInfo() {}
 
     /**
       Returns a pointer to the list view item of the sensor.
      */
-    QListViewItem* listViewItem() const;
+    TQListViewItem* listViewItem() const;
 
     /**
       Returns the name of the sensor.
      */
-    const QString& name() const;
+    const TQString& name() const;
 
     /**
       Returns the description of the sensor.
      */
-    const QString& description() const;
+    const TQString& description() const;
 
     /**
       Returns the type of the sensor.
      */
-    const QString& type() const;
+    const TQString& type() const;
 
   private:
-    QListViewItem* mLvi;
-    QString mName;
-    QString mDesc;
-    QString mType;
+    TQListViewItem* mLvi;
+    TQString mName;
+    TQString mDesc;
+    TQString mType;
 };
 
 class HostInfo
 {
   public:
-    HostInfo( int id, const KSGRD::SensorAgent *agent, const QString &name,
-              QListViewItem *lvi );
+    HostInfo( int id, const KSGRD::SensorAgent *agent, const TQString &name,
+              TQListViewItem *lvi );
     ~HostInfo() { }
 
     /**
@@ -130,32 +130,32 @@ class HostInfo
     /**
       Returns the name of the host.
      */
-    const QString& hostName() const;
+    const TQString& hostName() const;
 
     /**
       Returns the a pointer to the list view item of the host.
      */
-    QListViewItem* listViewItem() const;
+    TQListViewItem* listViewItem() const;
 
     /**
       Returns the sensor name of a special list view item.
      */
-    const QString& sensorName( const QListViewItem *lvi ) const;
+    const TQString& sensorName( const TQListViewItem *lvi ) const;
 
     /**
       Returns all sensor names of the host.
      */
-    QStringList allSensorNames() const;
+    TQStringList allSensorNames() const;
 
     /**
       Returns the type of a special list view item.
      */
-    const QString& sensorType( const QListViewItem *lvi ) const;
+    const TQString& sensorType( const TQListViewItem *lvi ) const;
 
     /**
       Returns the description of a special list view item.
      */
-    const QString& sensorDescription( const QListViewItem *lvi ) const;
+    const TQString& sensorDescription( const TQListViewItem *lvi ) const;
 
     /**
       Adds a new Sensor to the host.
@@ -165,29 +165,29 @@ class HostInfo
       @param desc A description.
       @param type The type of the sensor.
      */
-    void addSensor( QListViewItem *lvi, const QString& name,
-                    const QString& desc, const QString& type );
+    void addSensor( TQListViewItem *lvi, const TQString& name,
+                    const TQString& desc, const TQString& type );
 
     /**
       Returns whether the sensor with @ref name
       is registered at the host.
      */
-    bool isRegistered( const QString& name ) const;
+    bool isRegistered( const TQString& name ) const;
 
     /**
       Returns whether the sensor with @ref lvi
       is registered at the host.
      */
-    bool isRegistered( QListViewItem *lvi ) const;
+    bool isRegistered( TQListViewItem *lvi ) const;
 
   private:
     int mId;
 
     const KSGRD::SensorAgent* mSensorAgent;
-    const QString mHostName;
-    QListViewItem* mLvi;
+    const TQString mHostName;
+    TQListViewItem* mLvi;
 
-    QPtrList<SensorInfo> mSensorList;
+    TQPtrList<SensorInfo> mSensorList;
 };
 
 #endif

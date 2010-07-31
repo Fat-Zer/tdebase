@@ -33,7 +33,7 @@ KonqSidebarBookmarkItem::KonqSidebarBookmarkItem( KonqSidebarTreeItem *parentIte
     setPixmap( 0, SmallIcon(bk.icon()) );
 }
 
-QDragObject * KonqSidebarBookmarkItem::dragObject( QWidget * parent, bool )
+TQDragObject * KonqSidebarBookmarkItem::dragObject( TQWidget * parent, bool )
 {
     KBookmarkDrag * drag = KBookmarkDrag::newDrag( m_bk, parent );
     // TODO honour bool move ?
@@ -60,7 +60,7 @@ KURL KonqSidebarBookmarkItem::externalURL() const
     return m_bk.isGroup() ? KURL() : m_bk.url();
 }
 
-QString KonqSidebarBookmarkItem::toolTipText() const
+TQString KonqSidebarBookmarkItem::toolTipText() const
 {
     return m_bk.url().prettyURL();
 }
@@ -70,9 +70,9 @@ void KonqSidebarBookmarkItem::itemSelected()
     tree()->enableActions( false, false, false, false, false, false );
 }
 
-QString KonqSidebarBookmarkItem::key( int /*column*/, bool /*ascending*/ ) const
+TQString KonqSidebarBookmarkItem::key( int /*column*/, bool /*ascending*/ ) const
 {
-    return QString::number(m_key).rightJustify( 5, '0' );
+    return TQString::number(m_key).rightJustify( 5, '0' );
 }
 
 KBookmark &KonqSidebarBookmarkItem::bookmark()

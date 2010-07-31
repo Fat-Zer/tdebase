@@ -24,16 +24,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 #include <math.h>
 
-#include <qcursor.h>
-#include <qfile.h>
-#include <qlayout.h>
-#include <qmovie.h>
-#include <qpainter.h>
-#include <qtimer.h>
-#include <qtooltip.h>
-#include <qvbox.h>
+#include <tqcursor.h>
+#include <tqfile.h>
+#include <tqlayout.h>
+#include <tqmovie.h>
+#include <tqpainter.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
+#include <tqvbox.h>
 #include <qxembed.h>
-#include <qcolor.h>
+#include <tqcolor.h>
 
 #include <dcopclient.h>
 #include <kconfig.h>
@@ -66,9 +66,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define PANEL_SPEED(x, c) (int)((1.0-2.0*fabs((x)-(c)/2.0)/c)*m_settings.hideAnimationSpeed()+1.0)
 
 ExtensionContainer::ExtensionContainer(const AppletInfo& info,
-                                       const QString& extensionId,
-                                       QWidget *parent)
-  : QFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), WStyle_Customize | WStyle_NoBorder),
+                                       const TQString& extensionId,
+                                       TQWidget *parent)
+  : TQFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), WStyle_Customize | WStyle_NoBorder),
     m_settings(KSharedConfig::openConfig(info.configFile())),
     m_hideMode(ManualHide),
     m_unhideTriggeredAt(UnhideTrigger::None),
@@ -93,9 +93,9 @@ ExtensionContainer::ExtensionContainer(const AppletInfo& info,
 
 ExtensionContainer::ExtensionContainer(KPanelExtension* extension,
                                        const AppletInfo& info,
-                                       const QString& extensionId,
-                                       QWidget *parent)
-  : QFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), WStyle_Customize | WStyle_NoBorder),
+                                       const TQString& extensionId,
+                                       TQWidget *parent)
+  : TQFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), WStyle_Customize | WStyle_NoBorder),
     m_settings(KSharedConfig::openConfig(info.configFile())),
     _autoHidden(false),
     _userHidden(Unhidden),
@@ -111,7 +111,7 @@ ExtensionContainer::ExtensionContainer(KPanelExtension* extension,
     m_maintainFocus(0),
     m_panelOrder(ExtensionManager::the()->nextPanelOrder())
 {
-    m_extension->reparent(this, QPoint(0, 0));
+    m_extension->reparent(this, TQPoint(0, 0));
     init();
 }
 
@@ -122,38 +122,38 @@ void ExtensionContainer::init()
     KWin::setState(winId(), NET::Sticky);
     KWin::setOnAllDesktops(winId(), true);
 
-    connect(Kicker::the()->kwinModule(), SIGNAL(strutChanged()), this, SLOT(strutChanged()));
-    connect(Kicker::the()->kwinModule(), SIGNAL(currentDesktopChanged(int)),
-            this, SLOT( currentDesktopChanged(int)));
+    connect(Kicker::the()->kwinModule(), TQT_SIGNAL(strutChanged()), this, TQT_SLOT(strutChanged()));
+    connect(Kicker::the()->kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+            this, TQT_SLOT( currentDesktopChanged(int)));
 
     setBackgroundOrigin(AncestorOrigin);
     setFrameStyle(NoFrame);
     setLineWidth(0);
     setMargin(0);
 
-    connect(UnhideTrigger::the(), SIGNAL(triggerUnhide(UnhideTrigger::Trigger,int)),
-            this, SLOT(unhideTriggered(UnhideTrigger::Trigger,int)));
+    connect(UnhideTrigger::the(), TQT_SIGNAL(triggerUnhide(UnhideTrigger::Trigger,int)),
+            this, TQT_SLOT(unhideTriggered(UnhideTrigger::Trigger,int)));
 
     _popupWidgetFilter = new PopupWidgetFilter( this );
-    connect(_popupWidgetFilter, SIGNAL(popupWidgetHiding()), SLOT(maybeStartAutoHideTimer()));
+    connect(_popupWidgetFilter, TQT_SIGNAL(popupWidgetHiding()), TQT_SLOT(maybeStartAutoHideTimer()));
 
     // layout
-    _layout = new QGridLayout(this, 3, 3, 0, 0);
-    _layout->setResizeMode(QLayout::FreeResize);
+    _layout = new TQGridLayout(this, 3, 3, 0, 0);
+    _layout->setResizeMode(TQLayout::FreeResize);
     _layout->setRowStretch(1,10);
     _layout->setColStretch(1,10);
 
     // instantiate the autohide timer
-    _autohideTimer = new QTimer(this, "_autohideTimer");
-    connect(_autohideTimer, SIGNAL(timeout()), SLOT(autoHideTimeout()));
+    _autohideTimer = new TQTimer(this, "_autohideTimer");
+    connect(_autohideTimer, TQT_SIGNAL(timeout()), TQT_SLOT(autoHideTimeout()));
 
     // instantiate the updateLayout event compressor timer
-    _updateLayoutTimer = new QTimer(this, "_updateLayoutTimer");
-    connect(_updateLayoutTimer, SIGNAL(timeout()), SLOT(actuallyUpdateLayout()));
+    _updateLayoutTimer = new TQTimer(this, "_updateLayoutTimer");
+    connect(_updateLayoutTimer, TQT_SIGNAL(timeout()), TQT_SLOT(actuallyUpdateLayout()));
 
     installEventFilter(this); // for mouse event handling
 
-    connect(Kicker::the(), SIGNAL(kdisplayPaletteChanged()), this, SLOT(updateHighlightColor()));
+    connect(Kicker::the(), TQT_SIGNAL(kdisplayPaletteChanged()), this, TQT_SLOT(updateHighlightColor()));
     updateHighlightColor();
 
     // if we were hidden when kicker quit, let's start out hidden as well!
@@ -192,9 +192,9 @@ void ExtensionContainer::init()
             item->setDefaultValue(m_extension->customSize());
         }
 
-        connect(m_extension, SIGNAL(updateLayout()), SLOT(updateLayout()));
-        connect(m_extension, SIGNAL(maintainFocus(bool)),
-                SLOT(maintainFocus(bool)));
+        connect(m_extension, TQT_SIGNAL(updateLayout()), TQT_SLOT(updateLayout()));
+        connect(m_extension, TQT_SIGNAL(maintainFocus(bool)),
+                TQT_SLOT(maintainFocus(bool)));
 
         _layout->addWidget(m_extension, 1, 1);
     }
@@ -210,7 +210,7 @@ ExtensionContainer::~ExtensionContainer()
 {
 }
 
-QSize ExtensionContainer::sizeHint(KPanelExtension::Position p, const QSize &maxSize) const
+TQSize ExtensionContainer::sizeHint(KPanelExtension::Position p, const TQSize &maxSize) const
 {
     int width = 0;
     int height = 0;
@@ -255,7 +255,7 @@ QSize ExtensionContainer::sizeHint(KPanelExtension::Position p, const QSize &max
         height += _layout->rowSpacing(0) + _layout->rowSpacing(2);
     }
 
-    QSize size(width, height);
+    TQSize size(width, height);
     size = size.boundedTo(maxSize);
 
     if (m_extension)
@@ -342,7 +342,7 @@ void ExtensionContainer::writeConfig()
     m_settings.writeConfig();
 }
 
-void ExtensionContainer::showPanelMenu( const QPoint& globalPos )
+void ExtensionContainer::showPanelMenu( const TQPoint& globalPos )
 {
     if (!kapp->authorizeKAction("kicker_rmb"))
     {
@@ -354,7 +354,7 @@ void ExtensionContainer::showPanelMenu( const QPoint& globalPos )
         // use the extenion's own custom menu
         Kicker::the()->setInsertionPoint(globalPos);
         m_extension->customMenu()->exec(globalPos);
-        Kicker::the()->setInsertionPoint(QPoint());
+        Kicker::the()->setInsertionPoint(TQPoint());
         return;
     }
 
@@ -366,7 +366,7 @@ void ExtensionContainer::showPanelMenu( const QPoint& globalPos )
                                           this);
     }
 
-    QPopupMenu *menu = KickerLib::reduceMenu(_opMnu);
+    TQPopupMenu *menu = KickerLib::reduceMenu(_opMnu);
 
     Kicker::the()->setInsertionPoint(globalPos);
 
@@ -390,7 +390,7 @@ void ExtensionContainer::showPanelMenu( const QPoint& globalPos )
         default:
             break;
     }
-    Kicker::the()->setInsertionPoint(QPoint());
+    Kicker::the()->setInsertionPoint(TQPoint());
 }
 
 void ExtensionContainer::about()
@@ -440,9 +440,9 @@ void ExtensionContainer::removeSessionConfigFile()
         return;
     }
 
-    if (QFile::exists(locate("config", _info.configFile())))
+    if (TQFile::exists(locate("config", _info.configFile())))
     {
-        QFile::remove(locate("config", _info.configFile()));
+        TQFile::remove(locate("config", _info.configFile()));
     }
 }
 
@@ -462,7 +462,7 @@ void ExtensionContainer::moveMe()
 
     stopAutoHideTimer();
 
-    QApplication::syncX();
+    TQApplication::syncX();
     UserRectSel::RectList rects;
 
     KPanelExtension::Position  positions[]  = { KPanelExtension::Left,
@@ -473,7 +473,7 @@ void ExtensionContainer::moveMe()
                                                 KPanelExtension::Center,
                                                 KPanelExtension::RightBottom };
 
-    for (int s = 0; s < QApplication::desktop()->numScreens(); s++)
+    for (int s = 0; s < TQApplication::desktop()->numScreens(); s++)
     {
         for (int i = 0; i < 4; i++)
         {
@@ -552,13 +552,13 @@ void ExtensionContainer::actuallyUpdateLayout()
 void ExtensionContainer::enableMouseOverEffects()
 {
     KickerTip::enableTipping(true);
-    QPoint globalPos = QCursor::pos();
-    QPoint localPos = mapFromGlobal(globalPos);
-    QWidget* child = childAt(localPos);
+    TQPoint globalPos = TQCursor::pos();
+    TQPoint localPos = mapFromGlobal(globalPos);
+    TQWidget* child = childAt(localPos);
 
     if (child)
     {
-        QMouseEvent* e = new QMouseEvent(QEvent::Enter, localPos, globalPos, 0, 0);
+        TQMouseEvent* e = new TQMouseEvent(TQEvent::Enter, localPos, globalPos, 0, 0);
         qApp->sendEvent(child, e);
     }
 }
@@ -656,11 +656,11 @@ void ExtensionContainer::unhideTriggered(UnhideTrigger::Trigger tr, int Xinerama
     // Otherwise hide mode is automatic. The code below is slightly
     // complex so as to keep the same behavior as it has always had:
     // only unhide when the cursor position is within the widget geometry.
-    // We can't just do geometry().contains(QCursor::pos()) because
+    // We can't just do geometry().contains(TQCursor::pos()) because
     // now we hide the panel completely off screen.
 
-    int x = QCursor::pos().x();
-    int y = QCursor::pos().y();
+    int x = TQCursor::pos().x();
+    int y = TQCursor::pos().y();
     int t = geometry().top();
     int b = geometry().bottom();
     int r = geometry().right();
@@ -700,7 +700,7 @@ void ExtensionContainer::autoHideTimeout()
 {
 //    kdDebug(1210) << "PanelContainer::autoHideTimeout() " << name() << endl;
     // Hack: If there is a popup open, don't autohide until it closes.
-    QWidget* popup = QApplication::activePopupWidget();
+    TQWidget* popup = TQApplication::activePopupWidget();
     if (popup)
     {
 
@@ -728,8 +728,8 @@ void ExtensionContainer::autoHideTimeout()
         return;
     }
 
-    QRect r = geometry();
-    QPoint p = QCursor::pos();
+    TQRect r = geometry();
+    TQPoint p = TQCursor::pos();
     if (!r.contains(p) &&
         (m_settings.unhideLocation() == UnhideTrigger::None ||
          !shouldUnhideForTrigger(m_unhideTriggeredAt)))
@@ -763,21 +763,21 @@ void ExtensionContainer::autoHide(bool hide)
 
     blockUserInput(true);
 
-    QPoint oldpos = pos();
-    QRect newextent = initialGeometry( position(), alignment(), xineramaScreen(), hide, Unhidden );
-    QPoint newpos = newextent.topLeft();
+    TQPoint oldpos = pos();
+    TQRect newextent = initialGeometry( position(), alignment(), xineramaScreen(), hide, Unhidden );
+    TQPoint newpos = newextent.topLeft();
 
     if (hide)
     {
         /* bail out if we are unable to hide */
 
-        for (int s=0; s <  QApplication::desktop()->numScreens(); s++)
+        for (int s=0; s <  TQApplication::desktop()->numScreens(); s++)
         {
             /* don't let it intersect with any screen in the hidden position
              * that it doesn't intesect in the shown position. Should prevent
              * panels from hiding by sliding onto other screens, while still
              * letting them show reveal buttons onscreen */
-            QRect desktopGeom = QApplication::desktop()->screenGeometry(s);
+            TQRect desktopGeom = TQApplication::desktop()->screenGeometry(s);
             if (desktopGeom.intersects(newextent) &&
                 !desktopGeom.intersects(geometry()))
             {
@@ -848,11 +848,11 @@ void ExtensionContainer::autoHide(bool hide)
     updateLayout();
 
     // Sometimes tooltips don't get hidden
-    QToolTip::hide();
+    TQToolTip::hide();
 
     _in_autohide = false;
 
-    QTimer::singleShot(100, this, SLOT(enableMouseOverEffects()));
+    TQTimer::singleShot(100, this, TQT_SLOT(enableMouseOverEffects()));
 }
 
 void ExtensionContainer::animatedHide(bool left)
@@ -875,24 +875,24 @@ void ExtensionContainer::animatedHide(bool left)
         newState = RightBottom;
     }
 
-    QPoint oldpos = pos();
-    QRect newextent = initialGeometry(position(), alignment(), xineramaScreen(), false, newState);
-    QPoint newpos(newextent.topLeft());
+    TQPoint oldpos = pos();
+    TQRect newextent = initialGeometry(position(), alignment(), xineramaScreen(), false, newState);
+    TQPoint newpos(newextent.topLeft());
 
     if (newState != Unhidden)
     {
         /* bail out if we are unable to hide */
-        for(int s=0; s <  QApplication::desktop()->numScreens(); s++)
+        for(int s=0; s <  TQApplication::desktop()->numScreens(); s++)
         {
             /* don't let it intersect with any screen in the hidden position
              * that it doesn't intesect in the shown position. Should prevent
              * panels from hiding by sliding onto other screens, while still
             * letting them show reveal buttons onscreen */
-            if (QApplication::desktop()->screenGeometry(s).intersects(newextent) &&
-                !QApplication::desktop()->screenGeometry(s).intersects(geometry()))
+            if (TQApplication::desktop()->screenGeometry(s).intersects(newextent) &&
+                !TQApplication::desktop()->screenGeometry(s).intersects(geometry()))
             {
                 blockUserInput(false);
-                QTimer::singleShot(100, this, SLOT(enableMouseOverEffects()));
+                TQTimer::singleShot(100, this, TQT_SLOT(enableMouseOverEffects()));
                 return;
             }
         }
@@ -955,7 +955,7 @@ void ExtensionContainer::animatedHide(bool left)
     config->setGroup(extensionId());
     config->writeEntry("UserHidden", userHidden());
 
-    QTimer::singleShot(100, this, SLOT(enableMouseOverEffects()));
+    TQTimer::singleShot(100, this, TQT_SLOT(enableMouseOverEffects()));
 }
 
 bool ExtensionContainer::reserveStrut() const
@@ -981,9 +981,9 @@ void ExtensionContainer::updateWindowManager()
         int w = 0;
         int h = 0;
 
-        QRect geom = initialGeometry(position(), alignment(), xineramaScreen());
-        QRect virtRect(QApplication::desktop()->geometry());
-        QRect screenRect(QApplication::desktop()->screenGeometry(xineramaScreen()));
+        TQRect geom = initialGeometry(position(), alignment(), xineramaScreen());
+        TQRect virtRect(TQApplication::desktop()->geometry());
+        TQRect screenRect(TQApplication::desktop()->screenGeometry(xineramaScreen()));
 
         if (m_hideMode == ManualHide && !userHidden())
         {
@@ -1083,7 +1083,7 @@ void ExtensionContainer::currentDesktopChanged(int)
 void ExtensionContainer::strutChanged()
 {
     //kdDebug(1210) << "PanelContainer::strutChanged()" << endl;
-    QRect ig = currentGeometry();
+    TQRect ig = currentGeometry();
 
     if (ig != geometry())
     {
@@ -1265,8 +1265,8 @@ int ExtensionContainer::setupBorderSpace()
     }
 
     int layoutOffset = 0;
-    QRect r = QApplication::desktop()->screenGeometry(xineramaScreen());
-    QRect h = geometry();
+    TQRect r = TQApplication::desktop()->screenGeometry(xineramaScreen());
+    TQRect h = geometry();
 
     if (orientation() == Vertical)
     {
@@ -1340,28 +1340,28 @@ void ExtensionContainer::updateHighlightColor()
 {
     KConfig *config = KGlobal::config();
     config->setGroup("WM");
-    QColor color = QApplication::palette().active().highlight();
+    TQColor color = TQApplication::palette().active().highlight();
     m_highlightColor = config->readColorEntry("activeBackground", &color);
     update();
 }
 
-void ExtensionContainer::paintEvent(QPaintEvent *e)
+void ExtensionContainer::paintEvent(TQPaintEvent *e)
 {
-    QFrame::paintEvent(e);
+    TQFrame::paintEvent(e);
 
     if (needsBorder())
     {
         // draw border
-        QPainter p(this);
+        TQPainter p(this);
         if (KickerSettings::useBackgroundTheme() && KickerSettings::colorizeBackground())
             p.setPen(m_highlightColor);
         else
-            p.setPen(palette().color(QPalette::Active, QColorGroup::Mid));
+            p.setPen(palette().color(TQPalette::Active, TQColorGroup::Mid));
         p.drawRect(0, 0, width(), height());
     }
 }
 
-void ExtensionContainer::leaveEvent(QEvent*)
+void ExtensionContainer::leaveEvent(TQEvent*)
 {
     maybeStartAutoHideTimer();
 }
@@ -1405,8 +1405,8 @@ void ExtensionContainer::unhideIfHidden(int showForAtLeastHowManyMS)
     if (_autoHidden)
     {
         autoHide(false);
-        QTimer::singleShot(showForAtLeastHowManyMS,
-                           this, SLOT(maybeStartAutoHideTimer()));
+        TQTimer::singleShot(showForAtLeastHowManyMS,
+                           this, TQT_SLOT(maybeStartAutoHideTimer()));
         return;
     }
 
@@ -1433,19 +1433,19 @@ void ExtensionContainer::setHideButtons(bool showLeft, bool showRight)
     resetLayout();
 }
 
-bool ExtensionContainer::event(QEvent* e)
+bool ExtensionContainer::event(TQEvent* e)
 {
     // Update the layout when we receive a LayoutHint. This way we can adjust
     // to changes of the layout of the main widget.
-    if (e->type() == QEvent::LayoutHint)
+    if (e->type() == TQEvent::LayoutHint)
     {
         updateLayout();
     }
 
-    return QFrame::event(e);
+    return TQFrame::event(e);
 }
 
-void ExtensionContainer::closeEvent(QCloseEvent* e)
+void ExtensionContainer::closeEvent(TQCloseEvent* e)
 {
     // Prevent being closed via Alt-F4
     e->ignore();
@@ -1519,7 +1519,7 @@ KPanelExtension::Position ExtensionContainer::position() const
 
 void ExtensionContainer::resetLayout()
 {
-    QRect g = initialGeometry(position(), alignment(), xineramaScreen(),
+    TQRect g = initialGeometry(position(), alignment(), xineramaScreen(),
                               autoHidden(), userHidden());
 
     // Disable the layout while we rearrange the panel.
@@ -1547,7 +1547,7 @@ void ExtensionContainer::resetLayout()
             _ltHB = new HideButton(this);
             _ltHB->installEventFilter(this);
             _ltHB->setEnabled(true);
-            connect(_ltHB, SIGNAL(clicked()), this, SLOT(hideLeft()));
+            connect(_ltHB, TQT_SIGNAL(clicked()), this, TQT_SLOT(hideLeft()));
             haveToArrangeButtons = true;
         }
 
@@ -1578,7 +1578,7 @@ void ExtensionContainer::resetLayout()
             _rbHB = new HideButton(this);
             _rbHB->installEventFilter(this);
             _rbHB->setEnabled(true);
-            connect(_rbHB, SIGNAL(clicked()), this, SLOT(hideRight()));
+            connect(_rbHB, TQT_SIGNAL(clicked()), this, TQT_SLOT(hideRight()));
             haveToArrangeButtons = true;
         }
 
@@ -1602,27 +1602,27 @@ void ExtensionContainer::resetLayout()
 
     if (_ltHB)
     {
-        QToolTip::remove(_ltHB);
+        TQToolTip::remove(_ltHB);
         if (userHidden())
         {
-            QToolTip::add(_ltHB, i18n("Show panel"));
+            TQToolTip::add(_ltHB, i18n("Show panel"));
         }
         else
         {
-            QToolTip::add(_ltHB, i18n("Hide panel"));
+            TQToolTip::add(_ltHB, i18n("Hide panel"));
         }
     }
 
     if (_rbHB)
     {
-        QToolTip::remove( _rbHB );
+        TQToolTip::remove( _rbHB );
         if (userHidden())
         {
-            QToolTip::add(_rbHB, i18n("Show panel"));
+            TQToolTip::add(_rbHB, i18n("Show panel"));
         }
         else
         {
-            QToolTip::add(_rbHB, i18n("Hide panel"));
+            TQToolTip::add(_rbHB, i18n("Hide panel"));
         }
     }
 
@@ -1692,13 +1692,13 @@ bool ExtensionContainer::needsBorder() const
            //&& !KickerSettings::useBackgroundTheme();
 }
 
-QSize ExtensionContainer::initialSize(KPanelExtension::Position p, QRect workArea) const
+TQSize ExtensionContainer::initialSize(KPanelExtension::Position p, TQRect workArea) const
 {
     /*kdDebug(1210) << "initialSize() Work Area: (" << workArea.topLeft().x() <<
         ", " << workArea.topLeft().y() << ") to (" << workArea.bottomRight().x() <<
         ", " << workArea.bottomRight().y() << ")" << endl;*/
 
-    QSize hint = sizeHint(p, workArea.size()).boundedTo(workArea.size());
+    TQSize hint = sizeHint(p, workArea.size()).boundedTo(workArea.size());
     int width = 0;
     int height = 0;
 
@@ -1723,25 +1723,25 @@ QSize ExtensionContainer::initialSize(KPanelExtension::Position p, QRect workAre
         }
     }
 
-    return QSize(width, height);
+    return TQSize(width, height);
 }
 
-QPoint ExtensionContainer::initialLocation(KPanelExtension::Position p,
+TQPoint ExtensionContainer::initialLocation(KPanelExtension::Position p,
                                            KPanelExtension::Alignment a,
                                            int XineramaScreen,
-                                           const QSize &s,
-                                           QRect workArea,
+                                           const TQSize &s,
+                                           TQRect workArea,
                                            bool autohidden,
                                            UserHidden userHidden) const
 {
-    QRect wholeScreen;
+    TQRect wholeScreen;
     if (XineramaScreen == XineramaAllScreens)
     {
-        wholeScreen = QApplication::desktop()->geometry();
+        wholeScreen = TQApplication::desktop()->geometry();
     }
     else
     {
-        wholeScreen = QApplication::desktop()->screenGeometry(XineramaScreen);
+        wholeScreen = TQApplication::desktop()->screenGeometry(XineramaScreen);
     }
 
     /*kdDebug(1210) << "initialLocation() Work Area: (" <<
@@ -1890,7 +1890,7 @@ QPoint ExtensionContainer::initialLocation(KPanelExtension::Position p,
         }
     }
 
-    return QPoint( left, top );
+    return TQPoint( left, top );
 }
 
 int ExtensionContainer::xineramaScreen() const
@@ -1900,14 +1900,14 @@ int ExtensionContainer::xineramaScreen() const
 
     /* -2 means all screens, -1 primary screens, the rest are valid screen numbers */
     if (XineramaAllScreens <= m_settings.xineramaScreen() &&
-        m_settings.xineramaScreen() < QApplication::desktop()->numScreens())
+        m_settings.xineramaScreen() < TQApplication::desktop()->numScreens())
     {
         return m_settings.xineramaScreen();
     }
     else
     {
         /* force invalid screen locations onto the primary screen */
-        return QApplication::desktop()->primaryScreen();
+        return TQApplication::desktop()->primaryScreen();
     }
 }
 
@@ -1921,13 +1921,13 @@ void ExtensionContainer::setXineramaScreen(int screen)
     arrange(position(),alignment(), screen);
 }
 
-QRect ExtensionContainer::currentGeometry() const
+TQRect ExtensionContainer::currentGeometry() const
 {
     return initialGeometry(position(), alignment(), xineramaScreen(),
                            autoHidden(), userHidden());
 }
 
-QRect ExtensionContainer::initialGeometry(KPanelExtension::Position p,
+TQRect ExtensionContainer::initialGeometry(KPanelExtension::Position p,
                                           KPanelExtension::Alignment a,
                                           int XineramaScreen,
                                           bool autoHidden,
@@ -1937,54 +1937,54 @@ QRect ExtensionContainer::initialGeometry(KPanelExtension::Position p,
 
     /*kdDebug(1210) << "initialGeometry() Computing geometry for " << name() <<
         " on screen " << XineramaScreen << endl;*/
-    QRect workArea = ExtensionManager::the()->workArea(XineramaScreen, this);
-    QSize size = initialSize(p, workArea);
-    QPoint point = initialLocation(p, a, XineramaScreen,
+    TQRect workArea = ExtensionManager::the()->workArea(XineramaScreen, this);
+    TQSize size = initialSize(p, workArea);
+    TQPoint point = initialLocation(p, a, XineramaScreen,
                                    size, workArea,
                                    autoHidden, userHidden);
 
     //kdDebug(1210) << "Size: " << size.width() << " x " << size.height() << endl;
     //kdDebug(1210) << "Pos: (" << point.x() << ", " << point.y() << ")" << endl;
 
-    return QRect(point, size);
+    return TQRect(point, size);
 }
 
-bool ExtensionContainer::eventFilter( QObject*, QEvent * e)
+bool ExtensionContainer::eventFilter( TQObject*, TQEvent * e)
 {
     if (autoHidden())
     {
         switch ( e->type() )
         {
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonRelease:
-        case QEvent::MouseButtonDblClick:
-        case QEvent::MouseMove:
-        case QEvent::KeyPress:
-        case QEvent::KeyRelease:
+        case TQEvent::MouseButtonPress:
+        case TQEvent::MouseButtonRelease:
+        case TQEvent::MouseButtonDblClick:
+        case TQEvent::MouseMove:
+        case TQEvent::KeyPress:
+        case TQEvent::KeyRelease:
         return true; // ignore;
         default:
         break;
         }
     }
 
-    QEvent::Type eventType = e->type();
+    TQEvent::Type eventType = e->type();
     if (_block_user_input)
     {
-        return (eventType == QEvent::MouseButtonPress ||
-                eventType == QEvent::MouseButtonRelease ||
-                eventType == QEvent::MouseButtonDblClick ||
-                eventType == QEvent::MouseMove ||
-                eventType == QEvent::KeyPress ||
-                eventType == QEvent::KeyRelease ||
-                eventType == QEvent::Enter ||
-                eventType == QEvent::Leave);
+        return (eventType == TQEvent::MouseButtonPress ||
+                eventType == TQEvent::MouseButtonRelease ||
+                eventType == TQEvent::MouseButtonDblClick ||
+                eventType == TQEvent::MouseMove ||
+                eventType == TQEvent::KeyPress ||
+                eventType == TQEvent::KeyRelease ||
+                eventType == TQEvent::Enter ||
+                eventType == TQEvent::Leave);
     }
 
     switch (eventType)
     {
-        case QEvent::MouseButtonPress:
+        case TQEvent::MouseButtonPress:
         {
-            QMouseEvent* me = static_cast<QMouseEvent*>(e);
+            TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
             if ( me->button() == LeftButton )
             {
                 _last_lmb_press = me->globalPos();
@@ -1998,9 +1998,9 @@ bool ExtensionContainer::eventFilter( QObject*, QEvent * e)
         }
         break;
 
-        case QEvent::MouseButtonRelease:
+        case TQEvent::MouseButtonRelease:
         {
-            QMouseEvent* me = static_cast<QMouseEvent*>(e);
+            TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
             if ( me->button() == LeftButton )
             {
                 _is_lmb_down = false;
@@ -2008,16 +2008,16 @@ bool ExtensionContainer::eventFilter( QObject*, QEvent * e)
         }
         break;
 
-        case QEvent::MouseMove:
+        case TQEvent::MouseMove:
         {
-            QMouseEvent* me = (QMouseEvent*) e;
+            TQMouseEvent* me = (TQMouseEvent*) e;
             if (_is_lmb_down &&
                 ((me->state() & LeftButton) == LeftButton) &&
                 !Kicker::the()->isImmutable() &&
                 !m_settings.config()->isImmutable() &&
                 !ExtensionManager::the()->isMenuBar(this))
             {
-                QPoint p(me->globalPos() - _last_lmb_press);
+                TQPoint p(me->globalPos() - _last_lmb_press);
                 int x_threshold = width();
                 int y_threshold = height();
 
@@ -2049,14 +2049,14 @@ bool ExtensionContainer::eventFilter( QObject*, QEvent * e)
     return false;
 }
 
-PopupWidgetFilter::PopupWidgetFilter( QObject *parent )
-  : QObject( parent, "PopupWidgetFilter" )
+PopupWidgetFilter::PopupWidgetFilter( TQObject *parent )
+  : TQObject( parent, "PopupWidgetFilter" )
 {
 }
 
-bool PopupWidgetFilter::eventFilter( QObject*, QEvent* e )
+bool PopupWidgetFilter::eventFilter( TQObject*, TQEvent* e )
 {
-    if (e->type() == QEvent::Hide)
+    if (e->type() == TQEvent::Hide)
     {
         emit popupWidgetHiding();
     }

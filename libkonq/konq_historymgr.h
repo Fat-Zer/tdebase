@@ -20,12 +20,12 @@
 #ifndef KONQ_HISTORY_H
 #define KONQ_HISTORY_H
 
-#include <qdatastream.h>
-#include <qfile.h>
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qmap.h>
-#include <qtimer.h>
+#include <tqdatastream.h>
+#include <tqfile.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqmap.h>
+#include <tqtimer.h>
 
 #include <dcopobject.h>
 
@@ -40,8 +40,8 @@
 class KCompletion;
 
 
-typedef QPtrList<KonqHistoryEntry> KonqBaseHistoryList;
-typedef QPtrListIterator<KonqHistoryEntry> KonqHistoryIterator;
+typedef TQPtrList<KonqHistoryEntry> KonqBaseHistoryList;
+typedef TQPtrListIterator<KonqHistoryEntry> KonqHistoryIterator;
 
 class LIBKONQ_EXPORT KonqHistoryList : public KonqBaseHistoryList
 {
@@ -57,7 +57,7 @@ protected:
     /**
      * Ensures that the items are sorted by the lastVisited date
      */
-    virtual int compareItems( QPtrCollection::Item, QPtrCollection::Item );
+    virtual int compareItems( TQPtrCollection::Item, TQPtrCollection::Item );
 };
 
 
@@ -81,7 +81,7 @@ public:
 	return static_cast<KonqHistoryManager*>( KParts::HistoryProvider::self() );
     }
 
-    KonqHistoryManager( QObject *parent, const char *name );
+    KonqHistoryManager( TQObject *parent, const char *name );
     ~KonqHistoryManager();
 
     /**
@@ -147,15 +147,15 @@ public:
      * @param title The title of the URL. If you don't know it (yet), you may
                     specify it in @ref confirmPending().
      */
-    void addPending( const KURL& url, const QString& typedURL = QString::null,
-		     const QString& title = QString::null );
+    void addPending( const KURL& url, const TQString& typedURL = TQString::null,
+		     const TQString& title = TQString::null );
 
     /**
      * Confirms and updates the entry for @p url.
      */
     void confirmPending( const KURL& url,
-			 const QString& typedURL = QString::null,
-			 const QString& title = QString::null );
+			 const TQString& typedURL = TQString::null,
+			 const TQString& title = TQString::null );
 
     /**
      * Removes a pending url from the history, e.g. when the url does not
@@ -181,8 +181,8 @@ public:
      * By default, file:/ urls will be filtered out, but if they come thru
      * the HistoryProvider interface, they are added to the history.
      */
-    virtual void insert( const QString& );
-    virtual void remove( const QString& ) {}
+    virtual void insert( const TQString& );
+    virtual void remove( const TQString& ) {}
     virtual void clear() {}
 
 
@@ -236,7 +236,7 @@ protected:
      */
     inline bool isExpired( KonqHistoryEntry *entry ) {
 	return (entry && m_maxAgeDays > 0 && entry->lastVisited <
-		QDate::currentDate().addDays( -m_maxAgeDays ));
+		TQDate::currentDate().addDays( -m_maxAgeDays ));
     }
 
     /**
@@ -253,41 +253,41 @@ protected:
      * @param saveId is the DCOPObject::objId() of the sender so that
      * only the sender saves the new history.
      */
-    virtual void notifyHistoryEntry( KonqHistoryEntry e, QCString saveId );
+    virtual void notifyHistoryEntry( KonqHistoryEntry e, TQCString saveId );
 
     /**
      * Called when the configuration of the maximum count changed.
      * Called via DCOP by some config-module
      */
-    virtual void notifyMaxCount( Q_UINT32 count, QCString saveId );
+    virtual void notifyMaxCount( Q_UINT32 count, TQCString saveId );
 
     /**
      * Called when the configuration of the maximum age of history-entries
      * changed. Called via DCOP by some config-module
      */
-    virtual void notifyMaxAge( Q_UINT32 days, QCString saveId );
+    virtual void notifyMaxAge( Q_UINT32 days, TQCString saveId );
 
     /**
      * Clears the history completely. Called via DCOP by some config-module
      */
-    virtual void notifyClear( QCString saveId );
+    virtual void notifyClear( TQCString saveId );
 
     /**
      * Notifes about a url that has to be removed from the history.
      * The instance where saveId == objId() has to save the history.
      */
-    virtual void notifyRemove( KURL url, QCString saveId );
+    virtual void notifyRemove( KURL url, TQCString saveId );
 
     /**
      * Notifes about a list of urls that has to be removed from the history.
      * The instance where saveId == objId() has to save the history.
      */
-    virtual void notifyRemove( KURL::List urls, QCString saveId );
+    virtual void notifyRemove( KURL::List urls, TQCString saveId );
 
     /**
      * @returns a list of all urls in the history.
      */
-    virtual QStringList allURLs() const;
+    virtual TQStringList allURLs() const;
 
     /**
      * Does the work for @ref addPending() and @ref confirmPending().
@@ -301,8 +301,8 @@ protected:
      * (if available) and NOT be added again in that case.
      */
     void addToHistory( bool pending, const KURL& url,
-		       const QString& typedURL = QString::null,
-		       const QString& title = QString::null );
+		       const TQString& typedURL = TQString::null,
+		       const TQString& title = TQString::null );
 
 
     /**
@@ -312,7 +312,7 @@ protected:
      */
     virtual bool filterOut( const KURL& url );
 
-    void addToUpdateList( const QString& url ) {
+    void addToUpdateList( const TQString& url ) {
         m_updateURLs.append( url );
         m_updateTimer->start( 500, true );
     }
@@ -322,7 +322,7 @@ protected:
      * urls to it whenever you modify the list of history entries and start
      * m_updateTimer.
      */
-    QStringList m_updateURLs;
+    TQStringList m_updateURLs;
 
 private slots:
     /**
@@ -351,12 +351,12 @@ private:
      * completion.
      */
     bool loadFallback();
-    KonqHistoryEntry * createFallbackEntry( const QString& ) const;
+    KonqHistoryEntry * createFallbackEntry( const TQString& ) const;
 
-    void addToCompletion( const QString& url, const QString& typedURL, int numberOfTimesVisited = 1 );
-    void removeFromCompletion( const QString& url, const QString& typedURL );
+    void addToCompletion( const TQString& url, const TQString& typedURL, int numberOfTimesVisited = 1 );
+    void removeFromCompletion( const TQString& url, const TQString& typedURL );
 
-    QString m_filename;
+    TQString m_filename;
     KonqHistoryList m_history;
 
     /**
@@ -365,7 +365,7 @@ private:
      * Note: when removing an entry, you have to delete the KonqHistoryEntry
      * of the item you remove.
      */
-    QMap<QString,KonqHistoryEntry*> m_pending;
+    TQMap<TQString,KonqHistoryEntry*> m_pending;
 
     Q_UINT32 m_maxCount;   // maximum of history entries
     Q_UINT32 m_maxAgeDays; // maximum age of a history entry
@@ -376,7 +376,7 @@ private:
      * A timer that will emit the KParts::HistoryProvider::updated() signal
      * thru the slotEmitUpdated slot.
      */
-    QTimer *m_updateTimer;
+    TQTimer *m_updateTimer;
 
     static const Q_UINT32 s_historyVersion;
 };

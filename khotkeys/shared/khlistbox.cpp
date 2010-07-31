@@ -21,19 +21,19 @@
 namespace KHotKeys
 {
 
-KHListBox::KHListBox( QWidget* parent_P, const char* name_P )
-    : QListBox( parent_P, name_P ), saved_current_item( NULL ),
+KHListBox::KHListBox( TQWidget* parent_P, const char* name_P )
+    : TQListBox( parent_P, name_P ), saved_current_item( NULL ),
         in_clear( false ), force_select( false )
     {
-    connect( this, SIGNAL( selectionChanged( QListBoxItem* )),
-        SLOT( slot_selection_changed( QListBoxItem* )));
-    connect( this, SIGNAL( currentChanged( QListBoxItem* )),
-        SLOT( slot_current_changed( QListBoxItem* )));
+    connect( this, TQT_SIGNAL( selectionChanged( TQListBoxItem* )),
+        TQT_SLOT( slot_selection_changed( TQListBoxItem* )));
+    connect( this, TQT_SIGNAL( currentChanged( TQListBoxItem* )),
+        TQT_SLOT( slot_current_changed( TQListBoxItem* )));
     // CHECKME grrr
-    connect( this, SIGNAL( selectionChanged()),
-        SLOT( slot_selection_changed()));
-    connect( &insert_select_timer, SIGNAL( timeout()),
-        SLOT( slot_insert_select()));
+    connect( this, TQT_SIGNAL( selectionChanged()),
+        TQT_SLOT( slot_selection_changed()));
+    connect( &insert_select_timer, TQT_SIGNAL( timeout()),
+        TQT_SLOT( slot_insert_select()));
     }
 
 void KHListBox::slot_selection_changed()
@@ -44,7 +44,7 @@ void KHListBox::slot_selection_changed()
         setSelected( saved_current_item, true );
     }
     
-void KHListBox::slot_selection_changed( QListBoxItem* item_P )
+void KHListBox::slot_selection_changed( TQListBoxItem* item_P )
     {
     if( item_P == saved_current_item )
         return;
@@ -53,7 +53,7 @@ void KHListBox::slot_selection_changed( QListBoxItem* item_P )
     emit current_changed( saved_current_item );
     }
     
-void KHListBox::slot_current_changed( QListBoxItem* item_P )
+void KHListBox::slot_current_changed( TQListBoxItem* item_P )
     {
     insert_select_timer.stop();
     if( item_P == saved_current_item )
@@ -67,19 +67,19 @@ void KHListBox::slot_current_changed( QListBoxItem* item_P )
 void KHListBox::clear()
     {
     in_clear = true;
-    QListBox::clear();
+    TQListBox::clear();
     in_clear = false;
     slot_selection_changed( NULL );
     }
 
 
 // neni virtual :(( a vubec nefunguje
-void KHListBox::insertItem( QListBoxItem* item_P )
+void KHListBox::insertItem( TQListBoxItem* item_P )
     {
     bool set = false;
     if( !in_clear )
         set = count() == 0;
-    QListBox::insertItem( item_P );
+    TQListBox::insertItem( item_P );
     if( set && force_select )
         {
         bool block = signalsBlocked();
@@ -90,7 +90,7 @@ void KHListBox::insertItem( QListBoxItem* item_P )
         }
     }
 
-// items are often inserted using the QListBoxItem constructor,
+// items are often inserted using the TQListBoxItem constructor,
 // which means that a derived class are not yet fully created
 void KHListBox::slot_insert_select()
     {

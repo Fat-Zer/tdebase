@@ -26,9 +26,9 @@
 #include <kate/view.h>
 #include <kate/document.h>
 
-#include <qptrlist.h>
-#include <qwidget.h>
-#include <qvbox.h>
+#include <tqptrlist.h>
+#include <tqwidget.h>
+#include <tqvbox.h>
 #include <kstatusbar.h>
 
 class KVSSBSep;
@@ -46,7 +46,7 @@ class KateVSStatusBar : public KStatusBar
       virtual ~KateVSStatusBar ();
 
    public slots:
-      void setStatus( int r, int c, int ovr, bool block, int mod, const QString &msg );
+      void setStatus( int r, int c, int ovr, bool block, int mod, const TQString &msg );
       void updateMod( bool );
       /**
        * changed the modified icon according to document state.
@@ -55,16 +55,16 @@ class KateVSStatusBar : public KStatusBar
       void modifiedChanged();
 
    protected:
-      virtual bool eventFilter (QObject*,QEvent *);
+      virtual bool eventFilter (TQObject*,TQEvent *);
       virtual void showMenu ();
 
    private:
-      QLabel* m_lineColLabel;
-      QLabel* m_modifiedLabel;
-      QLabel* m_insertModeLabel;
-      QLabel* m_selectModeLabel;
+      TQLabel* m_lineColLabel;
+      TQLabel* m_modifiedLabel;
+      TQLabel* m_insertModeLabel;
+      TQLabel* m_selectModeLabel;
       KSqueezedTextLabel* m_fileNameLabel;
-      QPixmap m_modPm, m_modDiscPm, m_modmodPm, m_noPm;
+      TQPixmap m_modPm, m_modDiscPm, m_modmodPm, m_noPm;
       class KateViewSpace *m_viewSpace;
 };
 
@@ -76,11 +76,11 @@ class KateViewSpace : public QVBox
   Q_OBJECT
 
   public:
-    KateViewSpace(KateViewSpaceContainer *, QWidget* parent=0, const char* name=0);
+    KateViewSpace(KateViewSpaceContainer *, TQWidget* parent=0, const char* name=0);
     ~KateViewSpace();
     bool isActiveSpace();
     void setActive(bool b, bool showled=false);
-    QWidgetStack* stack;
+    TQWidgetStack* stack;
     void addView(Kate::View* v, bool show=true);
     void removeView(Kate::View* v);
     bool showView(Kate::View* v);
@@ -88,29 +88,29 @@ class KateViewSpace : public QVBox
     Kate::View* currentView();
     int viewCount() const { return mViewList.count(); }
 
-    void saveConfig (KConfig* config, int myIndex,const QString& viewConfGrp);
-    void restoreConfig ( class KateViewSpaceContainer *viewMan, KConfig* config, const QString &group );
+    void saveConfig (KConfig* config, int myIndex,const TQString& viewConfGrp);
+    void restoreConfig ( class KateViewSpaceContainer *viewMan, KConfig* config, const TQString &group );
 
 
   protected:
-    /** reimplemented to catch QEvent::PaletteChange,
+    /** reimplemented to catch TQEvent::PaletteChange,
     since we use a modified palette for the statusbar */
-    bool event( QEvent * );
+    bool event( TQEvent * );
 
   private:
     bool mIsActiveSpace;
     KateVSStatusBar* mStatusBar;
-    QLabel* l;
-    QPixmap i_active;
-    QPixmap i_empty;
-    QPtrList<Kate::View> mViewList;
+    TQLabel* l;
+    TQPixmap i_active;
+    TQPixmap i_empty;
+    TQPtrList<Kate::View> mViewList;
     int mViewCount;
     KVSSBSep *sep;
     KateViewSpaceContainer *m_viewManager;
-    QString m_group;
+    TQString m_group;
 
   private slots:
-    void slotStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const QString &msg);
+    void slotStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const TQString &msg);
 
   public slots:
     void polish();

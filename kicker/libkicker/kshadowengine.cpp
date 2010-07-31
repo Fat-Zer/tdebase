@@ -21,10 +21,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <qcolor.h>
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qpixmap.h>
+#include <tqcolor.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqpixmap.h>
 
 #include "kshadowsettings.h"
 #include "kshadowengine.h"
@@ -58,9 +58,9 @@ KShadowSettings *KShadowEngine::shadowSettings()
   return m_shadowSettings;
 }
 
-QImage KShadowEngine::makeShadow(const QPixmap& textPixmap, const QColor &bgColor)
+TQImage KShadowEngine::makeShadow(const TQPixmap& textPixmap, const TQColor &bgColor)
 {
-  QImage result;
+  TQImage result;
 
   // create a new image for for the shaddow
   int w = textPixmap.width();
@@ -78,7 +78,7 @@ QImage KShadowEngine::makeShadow(const QPixmap& textPixmap, const QColor &bgColo
   /*
    *	This is the source pixmap
    */
-  QImage img = textPixmap.convertToImage().convertDepth(32);
+  TQImage img = textPixmap.convertToImage().convertDepth(32);
 
   /*
    *	Resize the image if necessary
@@ -125,7 +125,7 @@ QImage KShadowEngine::makeShadow(const QPixmap& textPixmap, const QColor &bgColo
 // Multiplication factor for pixels diagonal to the text
 #define DIAGONAL_FACTOR 1.0
 
-double KShadowEngine::defaultDecay(QImage& source, int i, int j)
+double KShadowEngine::defaultDecay(TQImage& source, int i, int j)
 {
   if ((i < 1) || (j < 1) || (i > source.width() - 2) || (j > source.height() - 2))
     return 0;
@@ -144,19 +144,19 @@ double KShadowEngine::defaultDecay(QImage& source, int i, int j)
   return alphaShadow;
 }
 
-double KShadowEngine::doubleLinearDecay(QImage& source, int i, int j)
+double KShadowEngine::doubleLinearDecay(TQImage& source, int i, int j)
 {
   //printf("img: %p, %d %d\n", (char *) &source, i, j);
   return defaultDecay( source, i, j ); // for now
 }
 
-double KShadowEngine::radialDecay(QImage& source, int i, int j)
+double KShadowEngine::radialDecay(TQImage& source, int i, int j)
 {
   //printf("img: %p, %d %d\n", (char *) &source, i, j);
   return defaultDecay( source, i, j ); // for now
 }
 
-double KShadowEngine::noDecay(QImage& source, int i, int j)
+double KShadowEngine::noDecay(TQImage& source, int i, int j)
 {
   // create a new image for for the shaddow
   int w = source.width();
@@ -210,28 +210,28 @@ KTextShadowEngine::KTextShadowEngine() : KShadowEngine()
 }
 
 // taken from mtaskbar, by Sebastian Wolff
-void KTextShadowEngine::drawText(QPainter &p, const QRect &tr, int tf, const QString &str, const QSize &size)
+void KTextShadowEngine::drawText(TQPainter &p, const TQRect &tr, int tf, const TQString &str, const TQSize &size)
 {
     // get the color of the shadow: white for dark text, black for bright text
-    QPen textPen = p.pen();
-    QColor shadCol = textPen.color();
+    TQPen textPen = p.pen();
+    TQColor shadCol = textPen.color();
 
     if (shadCol.red() +
         shadCol.green() +
         shadCol.blue() <= 3*256/2-1)
     {
-        shadCol = QColor(255,255,255);
+        shadCol = TQColor(255,255,255);
     }
     else
     {
-        shadCol = QColor(0,0,0);
+        shadCol = TQColor(0,0,0);
     }
 
     // get a transparent pixmap
-    QPainter pixPainter;
-    QPixmap textPixmap(size);
+    TQPainter pixPainter;
+    TQPixmap textPixmap(size);
 
-    textPixmap.fill(QColor(0,0,0));
+    textPixmap.fill(TQColor(0,0,0));
     textPixmap.setMask(textPixmap.createHeuristicMask(true));
 
     // draw text
@@ -242,7 +242,7 @@ void KTextShadowEngine::drawText(QPainter &p, const QRect &tr, int tf, const QSt
     pixPainter.end();
 
     // draw shadow
-    QImage img = makeShadow(textPixmap, shadCol);
+    TQImage img = makeShadow(textPixmap, shadCol);
 
     // return
     p.drawImage(0, 0, img);

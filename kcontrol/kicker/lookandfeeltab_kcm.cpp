@@ -15,7 +15,7 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 
 #include <dcopclient.h>
@@ -28,7 +28,7 @@
 #include <kaboutdata.h>
 #include <kdialog.h>
 
-LookAndFeelConfig::LookAndFeelConfig(QWidget *parent, const char *name)
+LookAndFeelConfig::LookAndFeelConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
 
@@ -42,13 +42,13 @@ LookAndFeelConfig::LookAndFeelConfig(QWidget *parent, const char *name)
     setAboutData( about );
 
     KickerConfig::initScreenNumber();
-    QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
     lookandfeeltab = new LookAndFeelTab(this);
     layout->addWidget(lookandfeeltab);
     layout->addStretch();
 
-    connect(lookandfeeltab, SIGNAL(changed()), SLOT(configChanged()));
+    connect(lookandfeeltab, TQT_SIGNAL(changed()), TQT_SLOT(configChanged()));
 
     load();
 }
@@ -81,7 +81,7 @@ void LookAndFeelConfig::defaults()
     emit changed(true);
 }
 
-QString LookAndFeelConfig::quickHelp() const
+TQString LookAndFeelConfig::quickHelp() const
 {
     return i18n("<h1>Panel</h1> Here you can configure the KDE panel (also"
                 " referred to as 'kicker'). This includes options like the position and"

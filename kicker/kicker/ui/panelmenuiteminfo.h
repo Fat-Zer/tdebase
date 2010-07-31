@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef PANELMENUITEMINFO_H
 #define PANELMENUITEMINFO_H
 
-#include <qpopupmenu.h>
-#include <qstring.h>
+#include <tqpopupmenu.h>
+#include <tqstring.h>
 
 #include <kiconloader.h>
 
@@ -38,10 +38,10 @@ class PanelMenuItemInfo
         PanelMenuItemInfo()
             : m_recvr(0), m_id(-1) {}
 
-        PanelMenuItemInfo(const QString& iconName, const QString& visibleName, const QObject* recvr, const QCString& slot, int id = -1)
+        PanelMenuItemInfo(const TQString& iconName, const TQString& visibleName, const TQObject* recvr, const TQCString& slot, int id = -1)
             : m_icon(iconName), m_name(visibleName), m_slot_(slot), m_recvr(recvr), m_id(id) {}
 
-        PanelMenuItemInfo(const QString& iconName, const QString& visibleName, int id = -1)
+        PanelMenuItemInfo(const TQString& iconName, const TQString& visibleName, int id = -1)
             : m_icon(iconName), m_name(visibleName), m_recvr(0), m_id(id) {}
 
         PanelMenuItemInfo(const PanelMenuItemInfo& c)
@@ -72,7 +72,7 @@ class PanelMenuItemInfo
             return m_name.lower() > rh.m_name.lower();
         }
 
-        int plug(QPopupMenu* menu)
+        int plug(TQPopupMenu* menu)
         {
             if (!m_icon.isEmpty() && m_icon != "unknown")
             {
@@ -92,10 +92,10 @@ class PanelMenuItemInfo
         }
 
     private:
-        QString m_icon;
-        QString m_name;
-        QCString m_slot_; // HPUX namespace is polluted with m_slot
-        const QObject* m_recvr;
+        TQString m_icon;
+        TQString m_name;
+        TQCString m_slot_; // HPUX namespace is polluted with m_slot
+        const TQObject* m_recvr;
         int m_id;
 };
 

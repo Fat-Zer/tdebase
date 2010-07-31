@@ -25,7 +25,7 @@
 #include <klocale.h>
 #include <konqsidebarplugin.h>
 #include <kpopupmenu.h>
-#include <qobject.h>
+#include <tqobject.h>
 
 
 // A wrapper for KHTMLPart to make it behave the way we want it to.
@@ -41,9 +41,9 @@ class KHTMLSideBar : public KHTMLPart
 
 			setFormNotification(KHTMLPart::Only);
 			connect(this,
-				SIGNAL(formSubmitNotification(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&)),
+				TQT_SIGNAL(formSubmitNotification(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)),
 				this,
-				SLOT(formProxy(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&))
+				TQT_SLOT(formProxy(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&))
 				);
 
 
@@ -51,36 +51,36 @@ class KHTMLSideBar : public KHTMLPart
 					"link context menu");
 			if (!universal) {
 				_linkMenu->insertItem(i18n("&Open Link"),
-						this, SLOT(loadPage()));
+						this, TQT_SLOT(loadPage()));
 				_linkMenu->insertItem(i18n("Open in New &Window"),
-						this, SLOT(loadNewWindow()));
+						this, TQT_SLOT(loadNewWindow()));
 			} else {
 				_linkMenu->insertItem(i18n("Open in New &Window"),
-						this, SLOT(loadPage()));
+						this, TQT_SLOT(loadPage()));
 			}
 			_menu = new KPopupMenu(widget(), "context menu");
 			_menu->insertItem(SmallIcon("reload"), i18n("&Reload"),
-					this, SIGNAL(reload()));
-			_menu->insertItem(SmallIcon("reload"), i18n("Set &Automatic Reload"),                                                  this, SIGNAL(setAutoReload()));
+					this, TQT_SIGNAL(reload()));
+			_menu->insertItem(SmallIcon("reload"), i18n("Set &Automatic Reload"),                                                  this, TQT_SIGNAL(setAutoReload()));
 
 			connect(this,
-				SIGNAL(popupMenu(const QString&,const QPoint&)),
+				TQT_SIGNAL(popupMenu(const TQString&,const TQPoint&)),
 				this,
-				SLOT(showMenu(const QString&, const QPoint&)));
+				TQT_SLOT(showMenu(const TQString&, const TQPoint&)));
 
 		}
 		virtual ~KHTMLSideBar() {}
 
 	signals:
-		void submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&);
-		void openURLRequest(const QString& url, KParts::URLArgs args);
-		void openURLNewWindow(const QString& url, KParts::URLArgs args);
+		void submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&);
+		void openURLRequest(const TQString& url, KParts::URLArgs args);
+		void openURLNewWindow(const TQString& url, KParts::URLArgs args);
 		void reload();
 		void setAutoReload();
 
 	protected:
-		virtual void urlSelected( const QString &url, int button,
-				int state, const QString &_target,
+		virtual void urlSelected( const TQString &url, int button,
+				int state, const TQString &_target,
 				KParts::URLArgs args = KParts::URLArgs()) {
 			if (button == LeftButton ){
 				if (_target.lower() == "_self") {
@@ -116,7 +116,7 @@ class KHTMLSideBar : public KHTMLPart
 						KParts::URLArgs());
 		}
 
-		void showMenu(const QString& url, const QPoint& pos) {
+		void showMenu(const TQString& url, const TQPoint& pos) {
 			if (url.isEmpty()) {
 				_menu->popup(pos);
 			} else {
@@ -126,15 +126,15 @@ class KHTMLSideBar : public KHTMLPart
 		}
 
 		void formProxy(const char *action,
-				const QString& url,
-				const QByteArray& formData,
-				const QString& target,
-				const QString& contentType,
-				const QString& boundary) {
-			QString t = target.lower();
-			QString u;
+				const TQString& url,
+				const TQByteArray& formData,
+				const TQString& target,
+				const TQString& contentType,
+				const TQString& boundary) {
+			TQString t = target.lower();
+			TQString u;
 
-			if (QCString(action).lower() != "post") {
+			if (TQCString(action).lower() != "post") {
 				// GET
 				KURL kurl = completeURL(url);
 				kurl.setQuery(formData.data());
@@ -157,7 +157,7 @@ class KHTMLSideBar : public KHTMLPart
 		}
 	private:
 		KPopupMenu *_menu, *_linkMenu;
-		QString _lastUrl;
+		TQString _lastUrl;
 };
 
 
@@ -166,28 +166,28 @@ class KonqSideBarWebModule : public KonqSidebarPlugin
 {
 	Q_OBJECT
 	public:
-		KonqSideBarWebModule(KInstance *instance, QObject *parent,
-			       	QWidget *widgetParent, QString &desktopName,
+		KonqSideBarWebModule(KInstance *instance, TQObject *parent,
+			       	TQWidget *widgetParent, TQString &desktopName,
 			       	const char *name);
 		virtual ~KonqSideBarWebModule();
 
-		virtual QWidget *getWidget();
-		virtual void *provides(const QString &);
+		virtual TQWidget *getWidget();
+		virtual void *provides(const TQString &);
 
 	signals:
-		void submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&);
+		void submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&);
 		void openURLRequest(const KURL &url, const KParts::URLArgs &args);
 		void createNewWindow(const KURL &url, const KParts::URLArgs &args);
 	protected:
 		virtual void handleURL(const KURL &url);
 
 	private slots:
-		void urlClicked(const QString& url, KParts::URLArgs args);
+		void urlClicked(const TQString& url, KParts::URLArgs args);
 		void formClicked(const KURL& url, const KParts::URLArgs& args);
-		void urlNewWindow(const QString& url, KParts::URLArgs args);
+		void urlNewWindow(const TQString& url, KParts::URLArgs args);
 		void pageLoaded();
 		void loadFavicon();
-		void setTitle(const QString&);
+		void setTitle(const TQString&);
 		void setAutoReload();
 		void reload();
 
@@ -195,7 +195,7 @@ class KonqSideBarWebModule : public KonqSidebarPlugin
 		KHTMLSideBar *_htmlPart;
 		KURL _url;
 		int reloadTimeout;
-		QString _desktopName;
+		TQString _desktopName;
 };
 
 #endif

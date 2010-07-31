@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "kgreeterplugin.h"
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class KLineEdit;
 class KPasswordEdit;
@@ -36,20 +36,20 @@ class KSimpleConfig;
 class QGridLayout;
 class QLabel;
 
-class KClassicGreeter : public QObject, public KGreeterPlugin {
+class KClassicGreeter : public TQObject, public KGreeterPlugin {
 	Q_OBJECT
 
   public:
 	KClassicGreeter( KGreeterPluginHandler *handler,
 	                 KdmThemer *themer,
-	                 QWidget *parent, QWidget *predecessor,
-	                 const QString &fixedEntitiy,
+	                 TQWidget *parent, TQWidget *predecessor,
+	                 const TQString &fixedEntitiy,
 	                 Function func, Context ctx );
 	~KClassicGreeter();
-	virtual void loadUsers( const QStringList &users );
-	virtual void presetEntity( const QString &entity, int field );
-	virtual QString getEntity() const;
-	virtual void setUser( const QString &user );
+	virtual void loadUsers( const TQStringList &users );
+	virtual void presetEntity( const TQString &entity, int field );
+	virtual TQString getEntity() const;
+	virtual void setUser( const TQString &user );
 	virtual void setEnabled( bool on );
 	virtual bool textMessage( const char *message, bool error );
 	virtual void textPrompt( const char *prompt, bool echo, bool nonBlocking );
@@ -73,11 +73,11 @@ class KClassicGreeter : public QObject, public KGreeterPlugin {
 	void setActive2( bool enable );
 	void returnData();
 
-	QLabel *loginLabel, *passwdLabel, *passwd1Label, *passwd2Label;
+	TQLabel *loginLabel, *passwdLabel, *passwd1Label, *passwd2Label;
 	KLineEdit *loginEdit;
 	KPasswordEdit *passwdEdit, *passwd1Edit, *passwd2Edit;
 	KSimpleConfig *stsFile;
-	QString fixedUser, curUser;
+	TQString fixedUser, curUser;
 	Function func;
 	Context ctx;
 	int exp, pExp, has;

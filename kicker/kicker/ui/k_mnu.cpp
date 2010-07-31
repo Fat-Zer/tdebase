@@ -26,9 +26,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #include <dmctl.h>
 
-#include <qimage.h>
-#include <qpainter.h>
-#include <qstyle.h>
+#include <tqimage.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -62,11 +62,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "k_mnu.moc"
 
 PanelKMenu::PanelKMenu()
-  : PanelServiceMenu(QString::null, QString::null, 0, "KMenu")
+  : PanelServiceMenu(TQString::null, TQString::null, 0, "KMenu")
   , bookmarkMenu(0)
   , bookmarkOwner(0)
 {
-    static const QCString dcopObjId("KMenu");
+    static const TQCString dcopObjId("KMenu");
     DCOPObject::setObjId(dcopObjId);
     // set the first client id to some arbitrarily large value.
     client_id = 10000;
@@ -74,13 +74,13 @@ PanelKMenu::PanelKMenu()
     disableAutoClear();
     actionCollection = new KActionCollection(this);
     setCaption(i18n("K Menu"));
-    connect(Kicker::the(), SIGNAL(configurationChanged()),
-            this, SLOT(configChanged()));
+    connect(Kicker::the(), TQT_SIGNAL(configurationChanged()),
+            this, TQT_SLOT(configChanged()));
     DCOPClient *dcopClient = KApplication::dcopClient();
     dcopClient->connectDCOPSignal(0, "appLauncher",
-        "serviceStartedByStorageId(QString,QString)",
+        "serviceStartedByStorageId(TQString,TQString)",
         dcopObjId,
-        "slotServiceStartedByStorageId(QString,QString)",
+        "slotServiceStartedByStorageId(TQString,TQString)",
         false);
 }
 
@@ -91,8 +91,8 @@ PanelKMenu::~PanelKMenu()
     delete bookmarkOwner;
 }
 
-void PanelKMenu::slotServiceStartedByStorageId(QString starter,
-                                               QString storageId)
+void PanelKMenu::slotServiceStartedByStorageId(TQString starter,
+                                               TQString storageId)
 {
     if (starter != "kmenu")
     {
@@ -111,10 +111,10 @@ bool PanelKMenu::loadSidePixmap()
         return false;
     }
 
-    QString sideName = KickerSettings::sidePixmapName();
-    QString sideTileName = KickerSettings::sideTileName();
+    TQString sideName = KickerSettings::sidePixmapName();
+    TQString sideTileName = KickerSettings::sideTileName();
 
-    QImage image;
+    TQImage image;
     image.load(locate("data", "kicker/pics/" + sideName));
 
     if (image.isNull())
@@ -147,8 +147,8 @@ bool PanelKMenu::loadSidePixmap()
     if (sideTilePixmap.height() < 100)
     {
         int tiles = (int)(100 / sideTilePixmap.height()) + 1;
-        QPixmap preTiledPixmap(sideTilePixmap.width(), sideTilePixmap.height() * tiles);
-        QPainter p(&preTiledPixmap);
+        TQPixmap preTiledPixmap(sideTilePixmap.width(), sideTilePixmap.height() * tiles);
+        TQPainter p(&preTiledPixmap);
         p.drawTiledPixmap(preTiledPixmap.rect(), sideTilePixmap);
         sideTilePixmap = preTiledPixmap;
     }
@@ -160,7 +160,7 @@ void PanelKMenu::paletteChanged()
 {
     if (!loadSidePixmap())
     {
-        sidePixmap = sideTilePixmap = QPixmap();
+        sidePixmap = sideTilePixmap = TQPixmap();
         setMinimumSize( sizeHint() );
     }
 }
@@ -178,14 +178,14 @@ void PanelKMenu::initialize()
     if (loadSidePixmap())
     {
         // in case we've been through here before, let's disconnect
-        disconnect(kapp, SIGNAL(kdisplayPaletteChanged()),
-                   this, SLOT(paletteChanged()));
-        connect(kapp, SIGNAL(kdisplayPaletteChanged()),
-                this, SLOT(paletteChanged()));
+        disconnect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()),
+                   this, TQT_SLOT(paletteChanged()));
+        connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()),
+                this, TQT_SLOT(paletteChanged()));
     }
     else
     {
-        sidePixmap = sideTilePixmap = QPixmap();
+        sidePixmap = sideTilePixmap = TQPixmap();
     }
 
     // add services
@@ -235,10 +235,10 @@ void PanelKMenu::initialize()
     }
 
     // insert dynamic menus
-    QStringList menu_ext = KickerSettings::menuExtensions();
+    TQStringList menu_ext = KickerSettings::menuExtensions();
     if (!menu_ext.isEmpty())
     {
-        for (QStringList::ConstIterator it=menu_ext.begin(); it!=menu_ext.end(); ++it)
+        for (TQStringList::ConstIterator it=menu_ext.begin(); it!=menu_ext.end(); ++it)
         {
             MenuInfo info(*it);
             if (!info.isValid())
@@ -259,7 +259,7 @@ void PanelKMenu::initialize()
 
     // insert client menus, if any
     if (clients.count() > 0) {
-        QIntDictIterator<KickerClientMenu> it(clients);
+        TQIntDictIterator<KickerClientMenu> it(clients);
         while (it){
             if (it.current()->text.at(0) != '.')
                 insertItem(
@@ -279,16 +279,16 @@ void PanelKMenu::initialize()
         insertItem(KickerLib::menuIconSet("run"),
                    i18n("Run Command..."),
                    this,
-                   SLOT( slotRunCommand()));
+                   TQT_SLOT( slotRunCommand()));
         insertSeparator();
     }
 
     if (DM().isSwitchable() && kapp->authorize("switch_user"))
     {
-        sessionsMenu = new QPopupMenu( this );
+        sessionsMenu = new TQPopupMenu( this );
         insertItem(KickerLib::menuIconSet("switchuser"), i18n("Switch User"), sessionsMenu);
-        connect( sessionsMenu, SIGNAL(aboutToShow()), SLOT(slotPopulateSessions()) );
-        connect( sessionsMenu, SIGNAL(activated(int)), SLOT(slotSessionActivated(int)) );
+        connect( sessionsMenu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotPopulateSessions()) );
+        connect( sessionsMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSessionActivated(int)) );
     }
 
     /*
@@ -298,17 +298,17 @@ void PanelKMenu::initialize()
     ksmserver.setGroup("General");
     if (ksmserver.readEntry( "loginMode" ) == "restoreSavedSession")
     {
-        insertItem(KickerLib::menuIconSet("filesave"), i18n("Save Session"), this, SLOT(slotSaveSession()));
+        insertItem(KickerLib::menuIconSet("filesave"), i18n("Save Session"), this, TQT_SLOT(slotSaveSession()));
     }
 
     if (kapp->authorize("lock_screen"))
     {
-        insertItem(KickerLib::menuIconSet("lock"), i18n("Lock Session"), this, SLOT(slotLock()));
+        insertItem(KickerLib::menuIconSet("lock"), i18n("Lock Session"), this, TQT_SLOT(slotLock()));
     }
 
     if (kapp->authorize("logout"))
     {
-        insertItem(KickerLib::menuIconSet("exit"), i18n("Log Out..."), this, SLOT(slotLogout()));
+        insertItem(KickerLib::menuIconSet("exit"), i18n("Log Out..."), this, TQT_SLOT(slotLogout()));
     }
 
 #if 0
@@ -341,7 +341,7 @@ extern int kicker_screen_number;
 
 void PanelKMenu::slotLock()
 {
-    QCString appname( "kdesktop" );
+    TQCString appname( "kdesktop" );
     if ( kicker_screen_number )
         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
     kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", "");
@@ -421,15 +421,15 @@ void PanelKMenu::doNewSession( bool lock )
 
 void PanelKMenu::slotSaveSession()
 {
-    QByteArray data;
+    TQByteArray data;
     kapp->dcopClient()->send( "ksmserver", "default",
                               "saveCurrentSession()", data );
 }
 
 void PanelKMenu::slotRunCommand()
 {
-    QByteArray data;
-    QCString appname( "kdesktop" );
+    TQByteArray data;
+    TQCString appname( "kdesktop" );
     if ( kicker_screen_number )
         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
 
@@ -442,12 +442,12 @@ void PanelKMenu::slotEditUserContact()
 {
 }
 
-void PanelKMenu::setMinimumSize(const QSize & s)
+void PanelKMenu::setMinimumSize(const TQSize & s)
 {
     KPanelMenu::setMinimumSize(s.width() + sidePixmap.width(), s.height());
 }
 
-void PanelKMenu::setMaximumSize(const QSize & s)
+void PanelKMenu::setMaximumSize(const TQSize & s)
 {
     KPanelMenu::setMaximumSize(s.width() + sidePixmap.width(), s.height());
 }
@@ -477,20 +477,20 @@ void PanelKMenu::showMenu()
     }
 }
 
-QRect PanelKMenu::sideImageRect()
+TQRect PanelKMenu::sideImageRect()
 {
-    return QStyle::visualRect( QRect( frameWidth(), frameWidth(), sidePixmap.width(),
+    return TQStyle::visualRect( TQRect( frameWidth(), frameWidth(), sidePixmap.width(),
                                       height() - 2*frameWidth() ), this );
 }
 
-void PanelKMenu::resizeEvent(QResizeEvent * e)
+void PanelKMenu::resizeEvent(TQResizeEvent * e)
 {
 //    kdDebug(1210) << "PanelKMenu::resizeEvent():" << endl;
 //    kdDebug(1210) << geometry().width() << ", " << geometry().height() << endl;
 
     PanelServiceMenu::resizeEvent(e);
 
-    setFrameRect( QStyle::visualRect( QRect( sidePixmap.width(), 0,
+    setFrameRect( TQStyle::visualRect( TQRect( sidePixmap.width(), 0,
                                       width() - sidePixmap.width(), height() ), this ) );
 }
 
@@ -501,30 +501,30 @@ void PanelKMenu::resize(int width, int height)
     PanelServiceMenu::resize(width, height);
 }
 
-QSize PanelKMenu::sizeHint() const
+TQSize PanelKMenu::sizeHint() const
 {
-    QSize s = PanelServiceMenu::sizeHint();
+    TQSize s = PanelServiceMenu::sizeHint();
 //    kdDebug(1210) << "PanelKMenu::sizeHint()" << endl;
 //    kdDebug(1210) << s.width() << ", " << s.height() << endl;
     return s;
 }
 
-void PanelKMenu::paintEvent(QPaintEvent * e)
+void PanelKMenu::paintEvent(TQPaintEvent * e)
 {
     if (sidePixmap.isNull()) {
         PanelServiceMenu::paintEvent(e);
         return;
     }
 
-    QPainter p(this);
+    TQPainter p(this);
     p.setClipRegion(e->region());
 
-    style().drawPrimitive( QStyle::PE_PanelPopup, &p,
-                           QRect( 0, 0, width(), height() ),
-                           colorGroup(), QStyle::Style_Default,
-                           QStyleOption( frameWidth(), 0 ) );
+    style().drawPrimitive( TQStyle::PE_PanelPopup, &p,
+                           TQRect( 0, 0, width(), height() ),
+                           colorGroup(), TQStyle::Style_Default,
+                           TQStyleOption( frameWidth(), 0 ) );
 
-    QRect r = sideImageRect();
+    TQRect r = sideImageRect();
     r.setBottom( r.bottom() - sidePixmap.height() );
     if ( r.intersects( e->rect() ) )
     {
@@ -535,8 +535,8 @@ void PanelKMenu::paintEvent(QPaintEvent * e)
     r.setTop( r.bottom() - sidePixmap.height() );
     if ( r.intersects( e->rect() ) )
     {
-        QRect drawRect = r.intersect( e->rect() );
-        QRect pixRect = drawRect;
+        TQRect drawRect = r.intersect( e->rect() );
+        TQRect pixRect = drawRect;
         pixRect.moveBy( -r.left(), -r.top() );
         p.drawPixmap( drawRect.topLeft(), sidePixmap, pixRect );
     }
@@ -544,40 +544,40 @@ void PanelKMenu::paintEvent(QPaintEvent * e)
     drawContents( &p );
 }
 
-QMouseEvent PanelKMenu::translateMouseEvent( QMouseEvent* e )
+TQMouseEvent PanelKMenu::translateMouseEvent( TQMouseEvent* e )
 {
-    QRect side = sideImageRect();
+    TQRect side = sideImageRect();
 
     if ( !side.contains( e->pos() ) )
         return *e;
 
-    QPoint newpos( e->pos() );
-    QApplication::reverseLayout() ?
+    TQPoint newpos( e->pos() );
+    TQApplication::reverseLayout() ?
         newpos.setX( newpos.x() - side.width() ) :
         newpos.setX( newpos.x() + side.width() );
-    QPoint newglobal( e->globalPos() );
-    QApplication::reverseLayout() ?
+    TQPoint newglobal( e->globalPos() );
+    TQApplication::reverseLayout() ?
         newglobal.setX( newpos.x() - side.width() ) :
         newglobal.setX( newpos.x() + side.width() );
 
-    return QMouseEvent( e->type(), newpos, newglobal, e->button(), e->state() );
+    return TQMouseEvent( e->type(), newpos, newglobal, e->button(), e->state() );
 }
 
-void PanelKMenu::mousePressEvent(QMouseEvent * e)
+void PanelKMenu::mousePressEvent(TQMouseEvent * e)
 {
-    QMouseEvent newEvent = translateMouseEvent(e);
+    TQMouseEvent newEvent = translateMouseEvent(e);
     PanelServiceMenu::mousePressEvent( &newEvent );
 }
 
-void PanelKMenu::mouseReleaseEvent(QMouseEvent *e)
+void PanelKMenu::mouseReleaseEvent(TQMouseEvent *e)
 {
-    QMouseEvent newEvent = translateMouseEvent(e);
+    TQMouseEvent newEvent = translateMouseEvent(e);
     PanelServiceMenu::mouseReleaseEvent( &newEvent );
 }
 
-void PanelKMenu::mouseMoveEvent(QMouseEvent *e)
+void PanelKMenu::mouseMoveEvent(TQMouseEvent *e)
 {
-    QMouseEvent newEvent = translateMouseEvent(e);
+    TQMouseEvent newEvent = translateMouseEvent(e);
     PanelServiceMenu::mouseMoveEvent( &newEvent );
 }
 
@@ -593,7 +593,7 @@ void PanelKMenu::createRecentMenuItems()
 {
     RecentlyLaunchedApps::the().m_nNumMenuItems = 0;
 
-    QStringList RecentApps;
+    TQStringList RecentApps;
     RecentlyLaunchedApps::the().getRecentApps(RecentApps);
 
     if (RecentApps.count() > 0)
@@ -602,7 +602,7 @@ void PanelKMenu::createRecentMenuItems()
         int nId = serviceMenuEndId() + 1;
         int nIndex = KickerSettings::showMenuTitles() ? 1 : 0;
 
-        for (QValueList<QString>::ConstIterator it =
+        for (TQValueList<TQString>::ConstIterator it =
              RecentApps.fromLast(); /*nop*/; --it)
         {
             KService::Ptr s = KService::serviceByDesktopPath(*it);
@@ -642,7 +642,7 @@ void PanelKMenu::clearSubmenus()
 {
     // we don't need to delete these on the way out since the libloader
     // handles them for us
-    if (QApplication::closingDown())
+    if (TQApplication::closingDown())
     {
         return;
     }
@@ -688,13 +688,13 @@ void PanelKMenu::updateRecent()
     }
 
     // insert new items
-    QStringList RecentApps;
+    TQStringList RecentApps;
     RecentlyLaunchedApps::the().getRecentApps(RecentApps);
 
     if (RecentApps.count() > 0)
     {
         bool bNeedSeparator = KickerSettings::showMenuTitles();
-        for (QValueList<QString>::ConstIterator it = RecentApps.fromLast();
+        for (TQValueList<TQString>::ConstIterator it = RecentApps.fromLast();
              /*nop*/; --it)
         {
             KService::Ptr s = KService::serviceByDesktopPath(*it);

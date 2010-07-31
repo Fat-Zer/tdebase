@@ -23,8 +23,8 @@
 
 #include <kdialogbase.h>
 
-#include <qstring.h>
-#include <qcolor.h>
+#include <tqstring.h>
+#include <tqcolor.h>
 
 class MultiMeterSettingsWidget;
 
@@ -34,27 +34,27 @@ class MultiMeterSettings : public KDialogBase
 
   public:
 
-    MultiMeterSettings( QWidget *parent=0, const char *name=0 );
+    MultiMeterSettings( TQWidget *parent=0, const char *name=0 );
 
-    QString title();
+    TQString title();
     bool showUnit();
     bool lowerLimitActive();
     bool upperLimitActive();
     double lowerLimit();
     double upperLimit();
-    QColor normalDigitColor();
-    QColor alarmDigitColor();
-    QColor meterBackgroundColor();
+    TQColor normalDigitColor();
+    TQColor alarmDigitColor();
+    TQColor meterBackgroundColor();
 
-    void setTitle( const QString & );
+    void setTitle( const TQString & );
     void setShowUnit( bool );
     void setLowerLimitActive( bool );
     void setUpperLimitActive( bool );
     void setLowerLimit( double );
     void setUpperLimit( double );
-    void setNormalDigitColor( const QColor & );
-    void setAlarmDigitColor( const QColor & );
-    void setMeterBackgroundColor( const QColor & );
+    void setNormalDigitColor( const TQColor & );
+    void setAlarmDigitColor( const TQColor & );
+    void setMeterBackgroundColor( const TQColor & );
 
   private:
 

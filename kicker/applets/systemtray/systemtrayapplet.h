@@ -24,9 +24,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __systemtrayapplet_h__
 #define __systemtrayapplet_h__
 
-#include <qvaluevector.h>
-#include <qstringlist.h>
-#include <qevent.h>
+#include <tqvaluevector.h>
+#include <tqstringlist.h>
+#include <tqevent.h>
 #include <qxembed.h>
 
 #include <dcopobject.h>
@@ -46,12 +46,12 @@ class SystemTrayApplet : public KPanelApplet, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
-    typedef QValueVector<TrayEmbed*> TrayEmbedList;
+    typedef TQValueVector<TrayEmbed*> TrayEmbedList;
 
 public:
 
-    SystemTrayApplet(const QString& configFile, Type t = Normal, int actions = 0,
-                     QWidget *parent = 0, const char *name = 0);
+    SystemTrayApplet(const TQString& configFile, Type t = Normal, int actions = 0,
+                     TQWidget *parent = 0, const char *name = 0);
     ~SystemTrayApplet();
 
     int widthForHeight(int h) const;
@@ -59,15 +59,15 @@ public:
     int maxIconWidth() const;
     int maxIconHeight() const;
 
-    bool eventFilter(QObject* watched, QEvent* e);
+    bool eventFilter(TQObject* watched, TQEvent* e);
 
 k_dcop:
     void loadSettings();
     void iconSizeChanged();
 
 protected:
-    void resizeEvent(QResizeEvent*);
-    void moveEvent(QMoveEvent *);
+    void resizeEvent(TQResizeEvent*);
+    void moveEvent(TQMoveEvent *);
     bool x11Event( XEvent *e );
     void preferences();
     void orientationChange( Orientation );
@@ -77,7 +77,7 @@ protected slots:
     void systemTrayWindowAdded( WId );
     void updateTrayWindows();
     void layoutTray();
-    void paletteChange(const QPalette & /* oldPalette */);
+    void paletteChange(const TQPalette & /* oldPalette */);
     void toggleExpanded();
     void settingsDialogFinished();
     void applySettings();
@@ -97,7 +97,7 @@ private:
 
     TrayEmbedList m_shownWins;
     TrayEmbedList m_hiddenWins;
-    QStringList m_hiddenIconList;
+    TQStringList m_hiddenIconList;
     KWinModule *kwin_module;
     Atom net_system_tray_selection;
     Atom net_system_tray_opcode;
@@ -106,23 +106,23 @@ private:
     SimpleArrowButton *m_expandButton;
     KDialogBase* m_settingsDialog;
     KActionSelector* m_iconSelector;
-    QTimer* m_autoRetractTimer;
+    TQTimer* m_autoRetractTimer;
     bool m_autoRetract;
     int m_iconSize;
-    QGridLayout* m_layout;
+    TQGridLayout* m_layout;
 };
 
 class TrayEmbed : public QXEmbed
 {
     Q_OBJECT
 public:
-    TrayEmbed( bool kdeTray, QWidget* parent = NULL );
+    TrayEmbed( bool kdeTray, TQWidget* parent = NULL );
     bool kdeTray() const { return kde_tray; }
     void setBackground();
     void getIconSize(int defaultIconSize);
 private:
     bool kde_tray;
-    QWidget *m_scaledWidget;
+    TQWidget *m_scaledWidget;
 };
 
 #endif

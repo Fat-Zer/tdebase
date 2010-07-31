@@ -20,26 +20,26 @@ class View : public KHTMLPart
 {
     Q_OBJECT
   public:
-    View( QWidget *parentWidget, const char *widgetName,
-          QObject *parent, const char *name, KHTMLPart::GUIProfile prof,
+    View( TQWidget *parentWidget, const char *widgetName,
+          TQObject *parent, const char *name, KHTMLPart::GUIProfile prof,
           KActionCollection *col );
 
     ~View();
 
     virtual bool openURL( const KURL &url );
 
-    virtual void saveState( QDataStream &stream );
-    virtual void restoreState( QDataStream &stream );
+    virtual void saveState( TQDataStream &stream );
+    virtual void restoreState( TQDataStream &stream );
 
     enum State { Docu, About, Search };
 
     int state() const { return mState; }
-    QString title() const { return mTitle; }
+    TQString title() const { return mTitle; }
 
-    static QString langLookup( const QString &fname );
+    static TQString langLookup( const TQString &fname );
 
     void beginSearchResult();
-    void writeSearchResult( const QString & );
+    void writeSearchResult( const TQString & );
     void endSearchResult();
 
     void beginInternal( const KURL & );
@@ -64,27 +64,27 @@ class View : public KHTMLPart
     void searchResultCacheAvailable();
 
   protected:
-    bool eventFilter( QObject *o, QEvent *e );
+    bool eventFilter( TQObject *o, TQEvent *e );
 
   private slots:
-    void setTitle( const QString &title );
-    void showMenu( const QString& url, const QPoint& pos);
+    void setTitle( const TQString &title );
+    void showMenu( const TQString& url, const TQPoint& pos);
 
   private:
     void showAboutPage();
     KURL urlFromLinkNode( const DOM::Node &n ) const;
  
     int mState;
-    QString mTitle;
+    TQString mTitle;
 
-    QString mSearchResult;
+    TQString mSearchResult;
     KURL mInternalUrl;
 
     int m_zoomStepping;
 
     Formatter *mFormatter;
     KActionCollection *mActionCollection;
-    QString mCopyURL;
+    TQString mCopyURL;
 };
 
 }

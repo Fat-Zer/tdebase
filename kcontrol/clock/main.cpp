@@ -20,8 +20,8 @@
  */
 #include <unistd.h>
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 #include <dcopclient.h>
 
@@ -36,10 +36,10 @@
 #include "tzone.h"
 #include "dtime.h"
 
-typedef KGenericFactory<KclockModule, QWidget> KlockModuleFactory;
+typedef KGenericFactory<KclockModule, TQWidget> KlockModuleFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_clock, KlockModuleFactory("kcmkclock"))
 
-KclockModule::KclockModule(QWidget *parent, const char *name, const QStringList &)
+KclockModule::KclockModule(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KlockModuleFactory::instance(), parent, name)
 {
   KAboutData *about =
@@ -59,15 +59,15 @@ KclockModule::KclockModule(QWidget *parent, const char *name, const QStringList 
 
   KGlobal::locale()->insertCatalogue("timezones"); // For time zone translations
 
-  QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   dtime = new Dtime(this);
   layout->addWidget(dtime);
-  connect(dtime, SIGNAL(timeChanged(bool)), this, SIGNAL(changed(bool)));
+  connect(dtime, TQT_SIGNAL(timeChanged(bool)), this, TQT_SIGNAL(changed(bool)));
 
   tzone = new Tzone(this);
   layout->addWidget(tzone);
-  connect(tzone, SIGNAL(zoneChanged(bool)), this, SIGNAL(changed(bool)));
+  connect(tzone, TQT_SIGNAL(zoneChanged(bool)), this, TQT_SIGNAL(changed(bool)));
 
   layout->addStretch();
 
@@ -84,7 +84,7 @@ void KclockModule::save()
   tzone->save();
 
   // Tell the clock applet about the change so that it can update its timezone
-  kapp->dcopClient()->send( "kicker", "ClockApplet", "reconfigure()", QByteArray() );
+  kapp->dcopClient()->send( "kicker", "ClockApplet", "reconfigure()", TQByteArray() );
 }
 
 void KclockModule::load()

@@ -24,10 +24,10 @@
 
 class KConfig;
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kcmodule.h>
-#include <qcombobox.h>
-#include <qtooltip.h>
+#include <tqcombobox.h>
+#include <tqtooltip.h>
 
 
 class ToolTipComboBox: public QComboBox
@@ -35,12 +35,12 @@ class ToolTipComboBox: public QComboBox
   Q_OBJECT
     
 public:
-  ToolTipComboBox(QWidget * owner, char const * const * toolTips_)
-    : QComboBox(owner)
+  ToolTipComboBox(TQWidget * owner, char const * const * toolTips_)
+    : TQComboBox(owner)
     , toolTips(toolTips_) {}
 
 public slots:
-  void changed() {QToolTip::add( this, i18n(toolTips[currentItem()]) );}
+  void changed() {TQToolTip::add( this, i18n(toolTips[currentItem()]) );}
 
 protected:
   char const * const * toolTips;
@@ -54,7 +54,7 @@ class KTitleBarActionsConfig : public KCModule
 
 public:
 
-  KTitleBarActionsConfig( bool _standAlone, KConfig *_config, QWidget *parent=0, const char* name=0 );
+  KTitleBarActionsConfig( bool _standAlone, KConfig *_config, TQWidget *parent=0, const char* name=0 );
   ~KTitleBarActionsConfig( );
 
   void load();
@@ -65,15 +65,15 @@ public slots:
 	void changed() { emit KCModule::changed(true); }
 
 private:
-  QComboBox* coTiDbl;
+  TQComboBox* coTiDbl;
 
-  QComboBox* coTiAct1;
-  QComboBox* coTiAct2;
-  QComboBox* coTiAct3;
-  QComboBox* coTiAct4;  
-  QComboBox* coTiInAct1;
-  QComboBox* coTiInAct2;
-  QComboBox* coTiInAct3;
+  TQComboBox* coTiAct1;
+  TQComboBox* coTiAct2;
+  TQComboBox* coTiAct3;
+  TQComboBox* coTiAct4;  
+  TQComboBox* coTiInAct1;
+  TQComboBox* coTiInAct2;
+  TQComboBox* coTiInAct3;
 
   ToolTipComboBox * coMax[3];
 
@@ -86,7 +86,7 @@ private:
   const char* functionTiInAc(int);
   const char* functionMax(int);
 
-  void setComboText(QComboBox* combo, const char* text);
+  void setComboText(TQComboBox* combo, const char* text);
   const char* fixup( const char* s );
 
 private slots:
@@ -100,7 +100,7 @@ class KWindowActionsConfig : public KCModule
 
 public:
 
-  KWindowActionsConfig( bool _standAlone, KConfig *_config, QWidget *parent=0, const char* name=0 );
+  KWindowActionsConfig( bool _standAlone, KConfig *_config, TQWidget *parent=0, const char* name=0 );
   ~KWindowActionsConfig( );
 
   void load();
@@ -111,15 +111,15 @@ public slots:
 	void changed() { emit KCModule::changed(true); }
 
 private:
-  QComboBox* coWin1;
-  QComboBox* coWin2;
-  QComboBox* coWin3;
+  TQComboBox* coWin1;
+  TQComboBox* coWin2;
+  TQComboBox* coWin3;
 
-  QComboBox* coAllKey;
-  QComboBox* coAll1;
-  QComboBox* coAll2;
-  QComboBox* coAll3;
-  QComboBox* coAllW;
+  TQComboBox* coAllKey;
+  TQComboBox* coAll1;
+  TQComboBox* coAll2;
+  TQComboBox* coAll3;
+  TQComboBox* coAllW;
 
   KConfig *config;
   bool standAlone;
@@ -129,7 +129,7 @@ private:
   const char* functionAll(int);
   const char* functionAllW(int);
 
-  void setComboText(QComboBox* combo, const char* text);
+  void setComboText(TQComboBox* combo, const char* text);
   const char* fixup( const char* s );
 };
 

@@ -16,10 +16,10 @@
 
 #include "windowdef_simple_widget.h"
 
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
+#include <tqcheckbox.h>
+#include <tqpushbutton.h>
 #include <kdebug.h>
 
 #include <windows.h>
@@ -31,37 +31,37 @@
 namespace KHotKeys
 {
 
-Windowdef_simple_widget::Windowdef_simple_widget( QWidget* parent_P, const char* name_P )
+Windowdef_simple_widget::Windowdef_simple_widget( TQWidget* parent_P, const char* name_P )
     : Windowdef_simple_widget_ui( parent_P, name_P )
     {
     window_title_lineedit->setEnabled( false );
     window_class_lineedit->setEnabled( false );
     window_role_lineedit->setEnabled( false );
-    connect( autodetect_button, SIGNAL( clicked()), SLOT( autodetect_clicked()));
+    connect( autodetect_button, TQT_SIGNAL( clicked()), TQT_SLOT( autodetect_clicked()));
     clear_data();
     // KHotKeys::Module::changed()
-    connect( window_title_combo, SIGNAL( activated( int )),
-        module, SLOT( changed()));
-    connect( window_title_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( window_class_combo, SIGNAL( activated( int )),
-        module, SLOT( changed()));
-    connect( window_class_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( window_role_combo, SIGNAL( activated( int )),
-        module, SLOT( changed()));
-    connect( window_role_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( type_normal_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( type_dialog_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( type_dock_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( type_desktop_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( comment_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( window_title_combo, TQT_SIGNAL( activated( int )),
+        module, TQT_SLOT( changed()));
+    connect( window_title_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( window_class_combo, TQT_SIGNAL( activated( int )),
+        module, TQT_SLOT( changed()));
+    connect( window_class_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( window_role_combo, TQT_SIGNAL( activated( int )),
+        module, TQT_SLOT( changed()));
+    connect( window_role_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( type_normal_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( type_dialog_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( type_dock_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( type_desktop_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( comment_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
 
 void Windowdef_simple_widget::clear_data()
@@ -142,11 +142,11 @@ void Windowdef_simple_widget::window_title_combo_changed( int item_P )
     window_title_lineedit->setEnabled( item_P != 0 );
     }
     
-void Windowdef_simple_widget::set_autodetect( QObject* obj_P, const char* slot_P )
+void Windowdef_simple_widget::set_autodetect( TQObject* obj_P, const char* slot_P )
     {
-    disconnect( SIGNAL( autodetect_signal()));
+    disconnect( TQT_SIGNAL( autodetect_signal()));
     if( obj_P != NULL )
-        connect( this, SIGNAL( autodetect_signal()), obj_P, slot_P );
+        connect( this, TQT_SIGNAL( autodetect_signal()), obj_P, slot_P );
     }
     
 void Windowdef_simple_widget::autodetect_clicked()
@@ -157,7 +157,7 @@ void Windowdef_simple_widget::autodetect_clicked()
     
 void Windowdef_simple_widget::autodetect()
     {
-    WindowSelector* sel = new WindowSelector( this, SLOT( autodetect_window_selected( WId )));
+    WindowSelector* sel = new WindowSelector( this, TQT_SLOT( autodetect_window_selected( WId )));
     sel->select();
     }
 

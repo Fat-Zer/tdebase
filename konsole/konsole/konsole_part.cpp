@@ -23,9 +23,9 @@
 
 #include <assert.h>
 
-#include <qfile.h>
-#include <qlayout.h>
-#include <qwmatrix.h>
+#include <tqfile.h>
+#include <tqlayout.h>
+#include <tqwmatrix.h>
 
 #include <kaboutdata.h>
 #include <kcharsets.h>
@@ -38,12 +38,12 @@
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kstdaction.h>
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <kprocctrl.h>
 
-#include <qcheckbox.h>
-#include <qspinbox.h>
-#include <qpushbutton.h>
+#include <tqcheckbox.h>
+#include <tqspinbox.h>
+#include <tqpushbutton.h>
 #include <kpopupmenu.h>
 #include <krootpixmap.h>
 #include <kconfig.h>
@@ -76,9 +76,9 @@ konsoleFactory::~konsoleFactory()
   s_aboutData = 0;
 }
 
-KParts::Part *konsoleFactory::createPartObject(QWidget *parentWidget, const char *widgetName,
-                                         QObject *parent, const char *name, const char *classname,
-                                         const QStringList&)
+KParts::Part *konsoleFactory::createPartObject(TQWidget *parentWidget, const char *widgetName,
+                                         TQObject *parent, const char *name, const char *classname,
+                                         const TQStringList&)
 {
 //  kdDebug(1211) << "konsoleFactory::createPart parentWidget=" << parentWidget << " parent=" << parent << endl;
   KParts::Part *obj = new konsolePart(parentWidget, widgetName, parent, name, classname);
@@ -97,7 +97,7 @@ KInstance *konsoleFactory::instance()
 
 #define DEFAULT_HISTORY_SIZE 1000
 
-konsolePart::konsolePart(QWidget *_parentWidget, const char *widgetName, QObject *parent, const char *name, const char *classname)
+konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname)
   : KParts::ReadOnlyPart(parent, name)
 ,te(0)
 ,se(0)
@@ -131,7 +131,7 @@ konsolePart::konsolePart(QWidget *_parentWidget, const char *widgetName, QObject
 
   m_streamEnabled = ( classname && strcmp( classname, "TerminalEmulator" ) == 0 );
 
-  QStrList eargs;
+  TQStrList eargs;
 
 
   const char* shell = getenv("SHELL");
@@ -142,8 +142,8 @@ konsolePart::konsolePart(QWidget *_parentWidget, const char *widgetName, QObject
 
   setWidget(te);
   te->setFocus();
-  connect( te,SIGNAL(configureRequest(TEWidget*,int,int,int)),
-           this,SLOT(configureRequest(TEWidget*,int,int,int)) );
+  connect( te,TQT_SIGNAL(configureRequest(TEWidget*,int,int,int)),
+           this,TQT_SLOT(configureRequest(TEWidget*,int,int,int)) );
 
   colors = new ColorSchemaList();
   colors->checkSchemas();
@@ -180,30 +180,30 @@ konsolePart::konsolePart(QWidget *_parentWidget, const char *widgetName, QObject
   {
      m_keytab->clear();
 
-     QStringList kt_titles;
-     typedef QMap<QString,KeyTrans*> QStringKeyTransMap;
+     TQStringList kt_titles;
+     typedef TQMap<TQString,KeyTrans*> QStringKeyTransMap;
      QStringKeyTransMap kt_map;
 
      for (int i = 0; i < KeyTrans::count(); i++)
      {
         KeyTrans* ktr = KeyTrans::find(i);
         assert( ktr );
-        QString title=ktr->hdr().lower();
+        TQString title=ktr->hdr().lower();
         kt_titles << title;
         kt_map[title] = ktr;
      }
      kt_titles.sort();
-     for ( QStringList::Iterator it = kt_titles.begin(); it != kt_titles.end(); ++it ) {
+     for ( TQStringList::Iterator it = kt_titles.begin(); it != kt_titles.end(); ++it ) {
         KeyTrans* ktr = kt_map[*it];
         assert( ktr );
-        QString title=ktr->hdr();
+        TQString title=ktr->hdr();
         m_keytab->insertItem(title.replace('&',"&&"),ktr->numb());
      }
   }
 
   applySettingsToGUI();
 
-  QTimer::singleShot( 0, this, SLOT( autoShowShell() ) );
+  TQTimer::singleShot( 0, this, TQT_SLOT( autoShowShell() ) );
 }
 
 void konsolePart::autoShowShell()
@@ -229,10 +229,10 @@ void konsolePart::doneSession(TESession*)
   if (se && b_autoDestroy)
   {
 //    kdDebug(1211) << "doneSession - disconnecting done" << endl;
-    disconnect( se,SIGNAL(done(TESession*)),
-                this,SLOT(doneSession(TESession*)) );
+    disconnect( se,TQT_SIGNAL(done(TESession*)),
+                this,TQT_SLOT(doneSession(TESession*)) );
     se->setConnect(false);
-    //QTimer::singleShot(100,se,SLOT(terminate()));
+    //TQTimer::singleShot(100,se,TQT_SLOT(terminate()));
 //    kdDebug(1211) << "se->terminate()" << endl;
     se->terminate();
   }
@@ -241,7 +241,7 @@ void konsolePart::doneSession(TESession*)
 void konsolePart::sessionDestroyed()
 {
 //  kdDebug(1211) << "sessionDestroyed()" << endl;
-  disconnect( se, SIGNAL( destroyed() ), this, SLOT( sessionDestroyed() ) );
+  disconnect( se, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( sessionDestroyed() ) );
   se = 0;
   if (b_autoDestroy)
       delete this;
@@ -250,7 +250,7 @@ void konsolePart::sessionDestroyed()
 void konsolePart::configureRequest(TEWidget*_te,int,int x,int y)
 {
   if (m_popupMenu)
-     m_popupMenu->popup(_te->mapToGlobal(QPoint(x,y)));
+     m_popupMenu->popup(_te->mapToGlobal(TQPoint(x,y)));
 }
 
 konsolePart::~konsolePart()
@@ -264,7 +264,7 @@ konsolePart::~konsolePart()
     while(se && KProcessController::theKProcessController->waitForProcessExit(1))
         ;
 
-    disconnect( se, SIGNAL( destroyed() ), this, SLOT( sessionDestroyed() ) );
+    disconnect( se, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( sessionDestroyed() ) );
 //    kdDebug(1211) << "Deleting se session" << endl;
     delete se;
     se=0;
@@ -292,8 +292,8 @@ bool konsolePart::openURL( const KURL & url )
 
   if ( url.isLocalFile() ) {
       struct stat buff;
-      stat( QFile::encodeName( url.path() ), &buff );
-      QString text = ( S_ISDIR( buff.st_mode ) ? url.path() : url.directory() );
+      stat( TQFile::encodeName( url.path() ), &buff );
+      TQString text = ( S_ISDIR( buff.st_mode ) ? url.path() : url.directory() );
       showShellInDir( text );
   }
 
@@ -301,7 +301,7 @@ bool konsolePart::openURL( const KURL & url )
   return true;
 }
 
-void konsolePart::emitOpenURLRequest(const QString &cwd)
+void konsolePart::emitOpenURLRequest(const TQString &cwd)
 {
   KURL url;
   url.setPath(cwd);
@@ -332,7 +332,7 @@ void konsolePart::makeGUI()
      m_signals->insertItem( i18n( "&Kill Task" )      + " (KILL)",  SIGKILL);
      m_signals->insertItem( i18n( "User Signal &1")   + " (USR1)", SIGUSR1);
      m_signals->insertItem( i18n( "User Signal &2")   + " (USR2)", SIGUSR2);
-     connect(m_signals, SIGNAL(activated(int)), SLOT(sendSignal(int)));
+     connect(m_signals, TQT_SIGNAL(activated(int)), TQT_SLOT(sendSignal(int)));
   }
 
   // Settings Menu ----------------------------------------------------------------
@@ -342,9 +342,9 @@ void konsolePart::makeGUI()
 
      // Scrollbar
      selectScrollbar = new KSelectAction(i18n("Sc&rollbar"), 0, this,
-                                      SLOT(slotSelectScrollbar()), settingsActions);
+                                      TQT_SLOT(slotSelectScrollbar()), settingsActions);
 
-     QStringList scrollitems;
+     TQStringList scrollitems;
      scrollitems << i18n("&Hide") << i18n("&Left") << i18n("&Right");
      selectScrollbar->setItems(scrollitems);
      selectScrollbar->plug(m_options);
@@ -352,9 +352,9 @@ void konsolePart::makeGUI()
      // Select Bell
      m_options->insertSeparator();
      selectBell = new KSelectAction(i18n("&Bell"), SmallIconSet( "bell"), 0 , this,
-                                 SLOT(slotSelectBell()), settingsActions, "bell");
+                                 TQT_SLOT(slotSelectBell()), settingsActions, "bell");
 
-     QStringList bellitems;
+     TQStringList bellitems;
      bellitems << i18n("System &Bell")
             << i18n("System &Notification")
             << i18n("&Visible Bell")
@@ -363,14 +363,14 @@ void konsolePart::makeGUI()
      selectBell->plug(m_options);
 
       m_fontsizes = new KActionMenu( i18n( "Font" ), SmallIconSet( "text" ), settingsActions, 0L );
-      m_fontsizes->insert( new KAction( i18n( "&Enlarge Font" ), SmallIconSet( "viewmag+" ), 0, this, SLOT( biggerFont() ), settingsActions, "enlarge_font" ) );
-      m_fontsizes->insert( new KAction( i18n( "&Shrink Font" ), SmallIconSet( "viewmag-" ), 0, this, SLOT( smallerFont() ), settingsActions, "shrink_font" ) );
-      m_fontsizes->insert( new KAction( i18n( "Se&lect..." ), SmallIconSet( "font" ), 0, this, SLOT( slotSelectFont() ), settingsActions, "select_font" ) );
+      m_fontsizes->insert( new KAction( i18n( "&Enlarge Font" ), SmallIconSet( "viewmag+" ), 0, this, TQT_SLOT( biggerFont() ), settingsActions, "enlarge_font" ) );
+      m_fontsizes->insert( new KAction( i18n( "&Shrink Font" ), SmallIconSet( "viewmag-" ), 0, this, TQT_SLOT( smallerFont() ), settingsActions, "shrink_font" ) );
+      m_fontsizes->insert( new KAction( i18n( "Se&lect..." ), SmallIconSet( "font" ), 0, this, TQT_SLOT( slotSelectFont() ), settingsActions, "select_font" ) );
       m_fontsizes->plug(m_options);
 
       // encoding menu, start with default checked !
-      selectSetEncoding = new KSelectAction( i18n( "&Encoding" ), SmallIconSet("charset" ), 0, this, SLOT(slotSetEncoding()), settingsActions, "set_encoding" );
-      QStringList list = KGlobal::charsets()->descriptiveEncodingNames();
+      selectSetEncoding = new KSelectAction( i18n( "&Encoding" ), SmallIconSet("charset" ), 0, this, TQT_SLOT(slotSetEncoding()), settingsActions, "set_encoding" );
+      TQStringList list = KGlobal::charsets()->descriptiveEncodingNames();
       list.prepend( i18n( "Default" ) );
       selectSetEncoding->setItems(list);
       selectSetEncoding->setCurrentItem (0);
@@ -381,7 +381,7 @@ void konsolePart::makeGUI()
      {
         m_keytab = new KPopupMenu((KMainWindow*)parentWidget);
         m_keytab->setCheckable(true);
-        connect(m_keytab, SIGNAL(activated(int)), SLOT(keytab_menu_activated(int)));
+        connect(m_keytab, TQT_SIGNAL(activated(int)), TQT_SLOT(keytab_menu_activated(int)));
         m_options->insertItem( SmallIconSet( "key_bindings" ), i18n( "&Keyboard" ), m_keytab );
      }
 
@@ -390,23 +390,23 @@ void konsolePart::makeGUI()
      {
         m_schema = new KPopupMenu((KMainWindow*)parentWidget);
         m_schema->setCheckable(true);
-        connect(m_schema, SIGNAL(activated(int)), SLOT(schema_menu_activated(int)));
-        connect(m_schema, SIGNAL(aboutToShow()), SLOT(schema_menu_check()));
+        connect(m_schema, TQT_SIGNAL(activated(int)), TQT_SLOT(schema_menu_activated(int)));
+        connect(m_schema, TQT_SIGNAL(aboutToShow()), TQT_SLOT(schema_menu_check()));
         m_options->insertItem( SmallIconSet( "colorize" ), i18n( "Sch&ema" ), m_schema);
      }
 
 
      KAction *historyType = new KAction(i18n("&History..."), "history", 0, this,
-                                        SLOT(slotHistoryType()), settingsActions, "history");
+                                        TQT_SLOT(slotHistoryType()), settingsActions, "history");
      historyType->plug(m_options);
      m_options->insertSeparator();
 
      // Select line spacing
      selectLineSpacing = new KSelectAction(i18n("Li&ne Spacing"),
         SmallIconSet("leftjust"), 0, this,
-        SLOT(slotSelectLineSpacing()), settingsActions );
+        TQT_SLOT(slotSelectLineSpacing()), settingsActions );
 
-     QStringList lineSpacingList;
+     TQStringList lineSpacingList;
      lineSpacingList
        << i18n("&0")
        << i18n("&1")
@@ -422,30 +422,30 @@ void konsolePart::makeGUI()
 
      // Blinking Cursor
      blinkingCursor = new KToggleAction (i18n("Blinking &Cursor"),
-                                      0, this,SLOT(slotBlinkingCursor()), settingsActions);
+                                      0, this,TQT_SLOT(slotBlinkingCursor()), settingsActions);
      blinkingCursor->plug(m_options);
 
      // Frame on/off
      showFrame = new KToggleAction(i18n("Show Fr&ame"), 0,
-                                this, SLOT(slotToggleFrame()), settingsActions);
+                                this, TQT_SLOT(slotToggleFrame()), settingsActions);
      showFrame->setCheckedState(i18n("Hide Fr&ame"));
      showFrame->plug(m_options);
 
      // Word Connectors
      KAction *WordSeps = new KAction(i18n("Wor&d Connectors..."), 0, this,
-                                  SLOT(slotWordSeps()), settingsActions);
+                                  TQT_SLOT(slotWordSeps()), settingsActions);
      WordSeps->plug(m_options);
 
      // Use Konsole's Settings
      m_options->insertSeparator();
      m_useKonsoleSettings = new KToggleAction( i18n("&Use Konsole's Settings"),
-                          0, this, SLOT(slotUseKonsoleSettings()), 0, "use_konsole_settings" );
+                          0, this, TQT_SLOT(slotUseKonsoleSettings()), 0, "use_konsole_settings" );
      m_useKonsoleSettings->plug(m_options);
 
      // Save Settings
      m_options->insertSeparator();
      KAction *saveSettings = new KAction(i18n("&Save as Default"), "filesave", 0, this, 
-                    SLOT(saveProperties()), actions, "save_default");
+                    TQT_SLOT(saveProperties()), actions, "save_default");
      saveSettings->plug(m_options);
      if (KGlobalSettings::insertTearOffHandle())
         m_options->insertTearOffHandle();
@@ -454,15 +454,15 @@ void konsolePart::makeGUI()
   // Popup Menu -------------------------------------------------------------------
   m_popupMenu = new KPopupMenu((KMainWindow*)parentWidget);
   KAction* selectionEnd = new KAction(i18n("Set Selection End"), 0, te,
-                               SLOT(setSelectionEnd()), actions, "selection_end");
+                               TQT_SLOT(setSelectionEnd()), actions, "selection_end");
   selectionEnd->plug(m_popupMenu);
 
   KAction *copyClipboard = new KAction(i18n("&Copy"), "editcopy", 0,
-                                        te, SLOT(copyClipboard()), actions, "edit_copy");
+                                        te, TQT_SLOT(copyClipboard()), actions, "edit_copy");
   copyClipboard->plug(m_popupMenu);
 
   KAction *pasteClipboard = new KAction(i18n("&Paste"), "editpaste", 0,
-                                        te, SLOT(pasteClipboard()), actions, "edit_paste");
+                                        te, TQT_SLOT(pasteClipboard()), actions, "edit_paste");
   pasteClipboard->plug(m_popupMenu);
 
   if (m_signals)
@@ -478,7 +478,7 @@ void konsolePart::makeGUI()
   }
 
   KAction *closeSession = new KAction(i18n("&Close Terminal Emulator"), "fileclose", 0, this,
-                                      SLOT(closeCurrentSession()), actions, "close_session");
+                                      TQT_SLOT(closeCurrentSession()), actions, "close_session");
   closeSession->plug(m_popupMenu);
   if (KGlobalSettings::insertTearOffHandle())
     m_popupMenu->insertTearOffHandle();
@@ -569,10 +569,10 @@ void konsolePart::readProperties()
 
   n_encoding = config->readNumEntry("encoding",0);
 
-  QFont tmpFont = KGlobalSettings::fixedFont();
+  TQFont tmpFont = KGlobalSettings::fixedFont();
   defaultFont = config->readFontEntry("defaultfont", &tmpFont);
 
-  QString schema = config->readEntry("Schema");
+  TQString schema = config->readEntry("Schema");
 
   s_kconfigSchema=config->readEntry("schema");
   ColorSchema* sch = colors->find(schema.isEmpty() ? s_kconfigSchema : schema);
@@ -588,7 +588,7 @@ void konsolePart::readProperties()
   if (sch->useTransparency()) {
     if (!rootxpm)
       rootxpm = new KRootPixmap(te);
-    rootxpm->setFadeEffect(sch->tr_x(), QColor(sch->tr_r(), sch->tr_g(), sch->tr_b()));
+    rootxpm->setFadeEffect(sch->tr_x(), TQColor(sch->tr_r(), sch->tr_g(), sch->tr_b()));
     rootxpm->start();
     rootxpm->repaint(true);
   }
@@ -603,7 +603,7 @@ void konsolePart::readProperties()
 
   te->setBellMode(n_bell);
   te->setBlinkingCursor(config->readBoolEntry("BlinkingCursor",false));
-  te->setFrameStyle( b_framevis?(QFrame::WinPanel|QFrame::Sunken):QFrame::NoFrame );
+  te->setFrameStyle( b_framevis?(TQFrame::WinPanel|TQFrame::Sunken):TQFrame::NoFrame );
   te->setLineSpacing( config->readUnsignedNumEntry( "LineSpacing", 0 ) );
   te->setScrollbarLocation(n_scroll);
   te->setWordCharacters(s_word_seps);
@@ -656,7 +656,7 @@ void konsolePart::closeCurrentSession()
 void konsolePart::slotToggleFrame()
 {
   b_framevis = showFrame->isChecked();
-  te->setFrameStyle( b_framevis?(QFrame::WinPanel|QFrame::Sunken):QFrame::NoFrame);
+  te->setFrameStyle( b_framevis?(TQFrame::WinPanel|TQFrame::Sunken):TQFrame::NoFrame);
 }
 
 void konsolePart::slotSelectScrollbar()
@@ -669,8 +669,8 @@ void konsolePart::slotSelectScrollbar()
 void konsolePart::slotSelectFont() {
    if ( !se ) return;
 
-   QFont font = se->widget()->getVTFont();
-   if ( KFontDialog::getFont( font, true ) != QDialog::Accepted )
+   TQFont font = se->widget()->getVTFont();
+   if ( KFontDialog::getFont( font, true ) != TQDialog::Accepted )
       return;
 
    se->widget()->setVTFont( font );
@@ -679,7 +679,7 @@ void konsolePart::slotSelectFont() {
 void konsolePart::biggerFont(void) {
     if ( !se ) return;
 
-    QFont f = te->getVTFont();
+    TQFont f = te->getVTFont();
     f.setPointSize( f.pointSize() + 1 );
     te->setVTFont( f );
 }
@@ -687,7 +687,7 @@ void konsolePart::biggerFont(void) {
 void konsolePart::smallerFont(void) {
     if ( !se ) return;
 
-    QFont f = te->getVTFont();
+    TQFont f = te->getVTFont();
     if ( f.pointSize() < 6 ) return;      // A minimum size
     f.setPointSize( f.pointSize() - 1 );
     te->setVTFont( f );
@@ -732,7 +732,7 @@ void konsolePart::updateSchemaMenu()
   m_schema->clear();
   for (int i = 0; i < (int) colors->count(); i++)  {
     ColorSchema* s = (ColorSchema*)colors->at(i);
-    QString title=s->title();
+    TQString title=s->title();
     m_schema->insertItem(title.replace('&',"&&"),s->numb(),0);
   }
 
@@ -776,7 +776,7 @@ void konsolePart::setSchema(ColorSchema* s)
   if (s->useTransparency()) {
     if (!rootxpm)
       rootxpm = new KRootPixmap(te);
-    rootxpm->setFadeEffect(s->tr_x(), QColor(s->tr_r(), s->tr_g(), s->tr_b()));
+    rootxpm->setFadeEffect(s->tr_x(), TQColor(s->tr_r(), s->tr_g(), s->tr_b()));
     rootxpm->start();
     rootxpm->repaint(true);
   }
@@ -804,7 +804,7 @@ void konsolePart::notifySize(int /* columns */, int /* lines */)
 void konsolePart::pixmap_menu_activated(int item)
 {
   if (item <= 1) pmPath = "";
-  QPixmap pm(pmPath);
+  TQPixmap pm(pmPath);
   if (pm.isNull()) {
     pmPath = "";
     item = 1;
@@ -819,7 +819,7 @@ void konsolePart::pixmap_menu_activated(int item)
             te->setBackgroundPixmap(pm);
     break;
     case 3: // center
-            { QPixmap bgPixmap;
+            { TQPixmap bgPixmap;
               bgPixmap.resize(te->size());
               bgPixmap.fill(te->getDefaultBackColor());
               bitBlt( &bgPixmap, ( te->size().width() - pm.width() ) / 2,
@@ -834,7 +834,7 @@ void konsolePart::pixmap_menu_activated(int item)
             {
               float sx = (float)te->size().width() / pm.width();
               float sy = (float)te->size().height() / pm.height();
-              QWMatrix matrix;
+              TQWMatrix matrix;
               matrix.scale( sx, sy );
               te->setBackgroundPixmap(pm.xForm( matrix ));
             }
@@ -879,12 +879,12 @@ void konsolePart::slotSetEncoding()
   if (!se) return;
 
   bool found;
-  QString enc = KGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
-  QTextCodec * qtc = KGlobal::charsets()->codecForName(enc, found);
+  TQString enc = KGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
+  TQTextCodec * qtc = KGlobal::charsets()->codecForName(enc, found);
   if(!found)
   {
     kdDebug() << "Codec " << selectSetEncoding->currentText() << " not found!" << endl;
-    qtc = QTextCodec::codecForLocale();
+    qtc = TQTextCodec::codecForLocale();
   }
 
   n_encoding = selectSetEncoding->currentItem();
@@ -916,7 +916,7 @@ void konsolePart::slotUseKonsoleSettings()
 void konsolePart::slotWordSeps() {
   bool ok;
 
-  QString seps = KInputDialog::getText( i18n( "Word Connectors" ),
+  TQString seps = KInputDialog::getText( i18n( "Word Connectors" ),
       i18n( "Characters other than alphanumerics considered part of a word when double clicking:" ), s_word_seps, &ok, parentWidget );
   if ( ok )
   {
@@ -940,16 +940,16 @@ void konsolePart::guiActivateEvent( KParts::GUIActivateEvent * )
     // Don't let ReadOnlyPart::guiActivateEvent reset the window caption
 }
 
-bool konsolePart::doOpenStream( const QString& )
+bool konsolePart::doOpenStream( const TQString& )
 {
 	return m_streamEnabled;
 }
 
-bool konsolePart::doWriteStream( const QByteArray& data )
+bool konsolePart::doWriteStream( const TQByteArray& data )
 {
 	if ( m_streamEnabled )
 	{
-		QString cmd = QString::fromLocal8Bit( data.data(), data.size() );
+		TQString cmd = TQString::fromLocal8Bit( data.data(), data.size() );
 		se->sendSession( cmd );
 		return true;
 	}
@@ -965,30 +965,30 @@ bool konsolePart::doCloseStream()
 
 HistoryTypeDialog::HistoryTypeDialog(const HistoryType& histType,
                                      unsigned int histSize,
-                                     QWidget *parent)
+                                     TQWidget *parent)
   : KDialogBase(Plain, i18n("History Configuration"),
                 Help | Default | Ok | Cancel, Ok,
                 parent)
 {
-  QFrame *mainFrame = plainPage();
+  TQFrame *mainFrame = plainPage();
 
-  QHBoxLayout *hb = new QHBoxLayout(mainFrame);
+  TQHBoxLayout *hb = new TQHBoxLayout(mainFrame);
 
-  m_btnEnable    = new QCheckBox(i18n("&Enable"), mainFrame);
+  m_btnEnable    = new TQCheckBox(i18n("&Enable"), mainFrame);
 
-  QObject::connect(m_btnEnable, SIGNAL(toggled(bool)),
-                   this,      SLOT(slotHistEnable(bool)));
+  TQObject::connect(m_btnEnable, TQT_SIGNAL(toggled(bool)),
+                   this,      TQT_SLOT(slotHistEnable(bool)));
 
-  m_size = new QSpinBox(0, 10 * 1000 * 1000, 100, mainFrame);
+  m_size = new TQSpinBox(0, 10 * 1000 * 1000, 100, mainFrame);
   m_size->setValue(histSize);
   m_size->setSpecialValueText(i18n("Unlimited (number of lines)", "Unlimited"));
 
-  m_setUnlimited = new QPushButton(i18n("&Set Unlimited"), mainFrame);
-  connect( m_setUnlimited,SIGNAL(clicked()), this,SLOT(slotSetUnlimited()) );
+  m_setUnlimited = new TQPushButton(i18n("&Set Unlimited"), mainFrame);
+  connect( m_setUnlimited,TQT_SIGNAL(clicked()), this,TQT_SLOT(slotSetUnlimited()) );
 
   hb->addWidget(m_btnEnable);
   hb->addSpacing(10);
-  hb->addWidget(new QLabel(i18n("Number of lines:"), mainFrame));
+  hb->addWidget(new TQLabel(i18n("Number of lines:"), mainFrame));
   hb->addWidget(m_size);
   hb->addSpacing(10);
   hb->addWidget(m_setUnlimited);
@@ -1054,8 +1054,8 @@ const char* sensibleShell()
   return shell;
 }
 
-void konsolePart::startProgram( const QString& program,
-                                const QStrList& args )
+void konsolePart::startProgram( const TQString& program,
+                                const TQStrList& args )
 {
 //    kdDebug(1211) << "konsolePart::startProgram for " << program << endl;
     if ( !se )
@@ -1078,44 +1078,44 @@ void konsolePart::newSession()
 {
   if ( se ) delete se;
   se = new TESession(te, "xterm", parentWidget->winId());
-  connect( se,SIGNAL(done(TESession*)),
-           this,SLOT(doneSession(TESession*)) );
-  connect( se,SIGNAL(openURLRequest(const QString &)),
-           this,SLOT(emitOpenURLRequest(const QString &)) );
-  connect( se, SIGNAL( updateTitle(TESession*) ),
-           this, SLOT( updateTitle(TESession*) ) );
-  connect( se, SIGNAL(enableMasterModeConnections()),
-           this, SLOT(enableMasterModeConnections()) );
-  connect( se, SIGNAL( processExited(KProcess *) ),
-           this, SIGNAL( processExited(KProcess *) ) );
-  connect( se, SIGNAL( receivedData( const QString& ) ),
-           this, SIGNAL( receivedData( const QString& ) ) );
-  connect( se, SIGNAL( forkedChild() ),
-           this, SIGNAL( forkedChild() ));
+  connect( se,TQT_SIGNAL(done(TESession*)),
+           this,TQT_SLOT(doneSession(TESession*)) );
+  connect( se,TQT_SIGNAL(openURLRequest(const TQString &)),
+           this,TQT_SLOT(emitOpenURLRequest(const TQString &)) );
+  connect( se, TQT_SIGNAL( updateTitle(TESession*) ),
+           this, TQT_SLOT( updateTitle(TESession*) ) );
+  connect( se, TQT_SIGNAL(enableMasterModeConnections()),
+           this, TQT_SLOT(enableMasterModeConnections()) );
+  connect( se, TQT_SIGNAL( processExited(KProcess *) ),
+           this, TQT_SIGNAL( processExited(KProcess *) ) );
+  connect( se, TQT_SIGNAL( receivedData( const TQString& ) ),
+           this, TQT_SIGNAL( receivedData( const TQString& ) ) );
+  connect( se, TQT_SIGNAL( forkedChild() ),
+           this, TQT_SIGNAL( forkedChild() ));
 
   // We ignore the following signals
-  //connect( se, SIGNAL(renameSession(TESession*,const QString&)),
-  //         this, SLOT(slotRenameSession(TESession*, const QString&)) );
-  //connect( se->getEmulation(), SIGNAL(changeColumns(int)),
-  //         this, SLOT(changeColumns(int)) );
-  //connect( se, SIGNAL(disableMasterModeConnections()),
-  //        this, SLOT(disableMasterModeConnections()) );
+  //connect( se, TQT_SIGNAL(renameSession(TESession*,const TQString&)),
+  //         this, TQT_SLOT(slotRenameSession(TESession*, const TQString&)) );
+  //connect( se->getEmulation(), TQT_SIGNAL(changeColumns(int)),
+  //         this, TQT_SLOT(changeColumns(int)) );
+  //connect( se, TQT_SIGNAL(disableMasterModeConnections()),
+  //        this, TQT_SLOT(disableMasterModeConnections()) );
 
   applyProperties();
 
   se->setConnect(true);
   // se->run();
-  connect( se, SIGNAL( destroyed() ), this, SLOT( sessionDestroyed() ) );
+  connect( se, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( sessionDestroyed() ) );
 //  setFont( n_font ); // we do this here, to make TEWidget recalculate
                      // its geometry..
 }
 
-void konsolePart::showShellInDir( const QString& dir )
+void konsolePart::showShellInDir( const TQString& dir )
 {
   if ( ! m_runningShell )
   {
     const char* s = sensibleShell();
-    QStrList args;
+    TQStrList args;
     args.append( s );
     startProgram( s, args );
     m_runningShell = true;
@@ -1123,19 +1123,19 @@ void konsolePart::showShellInDir( const QString& dir )
 
   if ( ! dir.isNull() )
   {
-      QString text = dir;
+      TQString text = dir;
       KRun::shellQuote(text);
-      text = QString::fromLatin1("cd ") + text + '\n';
+      text = TQString::fromLatin1("cd ") + text + '\n';
       te->emitText( text );
   };
 }
 
 void konsolePart::showShell()
 {
-    if ( ! se ) showShellInDir( QString::null );
+    if ( ! se ) showShellInDir( TQString::null );
 }
 
-void konsolePart::sendInput( const QString& text )
+void konsolePart::sendInput( const TQString& text )
 {
     te->emitText( text );
 }

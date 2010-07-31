@@ -24,7 +24,7 @@
 #ifndef __keys_main_h
 #define __keys_main_h
 
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 #include <kcmodule.h>
 
 class CommandShortcutsModule;
@@ -35,7 +35,7 @@ class KeyModule : public KCModule
 {
 	Q_OBJECT
  public:
-	KeyModule( QWidget *parent, const char *name );
+	KeyModule( TQWidget *parent, const char *name );
         ~KeyModule();
 
 	void load();
@@ -45,10 +45,10 @@ class KeyModule : public KCModule
 
  protected:
 	void initGUI();
-	void resizeEvent( QResizeEvent* );
+	void resizeEvent( TQResizeEvent* );
 
  private:
-	QTabWidget* m_pTab;
+	TQTabWidget* m_pTab;
 	CommandShortcutsModule* m_pCommandShortcuts;
 	ShortcutsModule* m_pShortcuts;
 	ModifiersModule* m_pModifiers;

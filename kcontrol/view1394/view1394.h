@@ -23,11 +23,11 @@
 
 #include <kcmodule.h>
 
-#include <qmap.h>
-#include <qsocketnotifier.h>
-#include <qstring.h>
-#include <qtimer.h>
-#include <qvaluelist.h>
+#include <tqmap.h>
+#include <tqsocketnotifier.h>
+#include <tqstring.h>
+#include <tqtimer.h>
+#include <tqvaluelist.h>
 
 #include "view1394widget.h"
 
@@ -37,16 +37,16 @@ class OuiDb
 {
    public:
       OuiDb();
-      QString vendor(octlet_t guid);
+      TQString vendor(octlet_t guid);
    private:
-      QMap<QString, QString> m_vendorIds;
+      TQMap<TQString, TQString> m_vendorIds;
 };
 
 class View1394: public KCModule
 {
    Q_OBJECT
    public:
-      View1394(QWidget *parent = 0L, const char *name = 0L);
+      View1394(TQWidget *parent = 0L, const char *name = 0L);
       virtual ~View1394();
 
    public slots: // Public slots
@@ -55,11 +55,11 @@ class View1394: public KCModule
 
    private:
       View1394Widget *m_view;
-      QValueList<raw1394handle_t> m_handles;
-      QPtrList<QSocketNotifier> m_notifiers;
+      TQValueList<raw1394handle_t> m_handles;
+      TQPtrList<TQSocketNotifier> m_notifiers;
       bool readConfigRom(raw1394handle_t handle, nodeid_t nodeid, quadlet_t& firstQuad, quadlet_t& cap, octlet_t& guid);
       bool m_insideRescanBus;
-      QTimer m_rescanTimer;
+      TQTimer m_rescanTimer;
       OuiDb *m_ouiDb;
    private slots:
       void callRaw1394EventLoop(int fd);

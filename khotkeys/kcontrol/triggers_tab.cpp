@@ -17,12 +17,12 @@
 #include "triggers_tab.h"
 
 #include <assert.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
-#include <qpopupmenu.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qheader.h>
+#include <tqpushbutton.h>
+#include <tqlineedit.h>
+#include <tqpopupmenu.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqheader.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -44,10 +44,10 @@ namespace KHotKeys
 
 // Triggers_tab
 
-Triggers_tab::Triggers_tab( QWidget* parent_P, const char* name_P )
+Triggers_tab::Triggers_tab( TQWidget* parent_P, const char* name_P )
     : Triggers_tab_ui( parent_P, name_P ), selected_item( NULL )
     {
-    QPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
+    TQPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
     popup->insertItem( i18n( "Shortcut Trigger..." ), TYPE_SHORTCUT_TRIGGER );
     popup->insertItem( i18n( "Gesture Trigger..." ), TYPE_GESTURE_TRIGGER );
     popup->insertItem( i18n( "Window Trigger..." ), TYPE_WINDOW_TRIGGER );
@@ -55,9 +55,9 @@ Triggers_tab::Triggers_tab( QWidget* parent_P, const char* name_P )
     if( haveArts())
         popup->insertItem( i18n( "Voice Trigger..." ), TYPE_VOICE_TRIGGER );
 #endif
-    connect( popup, SIGNAL( activated( int )), SLOT( new_selected( int )));
-    connect( triggers_listview, SIGNAL( doubleClicked ( QListViewItem *, const QPoint &, int ) ),
-             this, SLOT( modify_pressed() ) );
+    connect( popup, TQT_SIGNAL( activated( int )), TQT_SLOT( new_selected( int )));
+    connect( triggers_listview, TQT_SIGNAL( doubleClicked ( TQListViewItem *, const TQPoint &, int ) ),
+             this, TQT_SLOT( modify_pressed() ) );
 
     new_button->setPopup( popup );
     copy_button->setEnabled( false );
@@ -69,16 +69,16 @@ Triggers_tab::Triggers_tab( QWidget* parent_P, const char* name_P )
     triggers_listview->setForceSelect( true );
     clear_data();
     // KHotKeys::Module::changed()
-    connect( new_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( copy_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( modify_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( delete_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( comment_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( new_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( copy_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( modify_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( delete_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( comment_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
 
 Triggers_tab::~Triggers_tab()
@@ -111,7 +111,7 @@ void Triggers_tab::set_data( const Trigger_list* data_P )
 Trigger_list* Triggers_tab::get_data( Action_data* data_P ) const
     {
     Trigger_list* list = new Trigger_list( comment_lineedit->text());
-    for( QListViewItem* pos = triggers_listview->firstChild();
+    for( TQListViewItem* pos = triggers_listview->firstChild();
          pos != NULL;
          pos = pos->nextSibling())
         list->append( static_cast< Trigger_list_item* >( pos )->trigger()->copy( data_P ));
@@ -129,14 +129,14 @@ void Triggers_tab::new_selected( int type_P )
           break;
         case TYPE_GESTURE_TRIGGER: // Gesture trigger
             dlg = new Gesture_trigger_dialog(
-                new Gesture_trigger( NULL, QString::null )); // CHECKME NULL ?
+                new Gesture_trigger( NULL, TQString::null )); // CHECKME NULL ?
           break;
         case TYPE_WINDOW_TRIGGER: // Window trigger
             dlg = new Window_trigger_dialog( new Window_trigger( NULL, new Windowdef_list( "" ),
                 0 )); // CHECKME NULL ?
           break;
         case TYPE_VOICE_TRIGGER: // Voice trigger
-			dlg = new Voice_trigger_dialog( new Voice_trigger(NULL,QString::null,VoiceSignature(),VoiceSignature())); // CHECKME NULL ?
+			dlg = new Voice_trigger_dialog( new Voice_trigger(NULL,TQString::null,VoiceSignature(),VoiceSignature())); // CHECKME NULL ?
 			break;
         }
     if( dlg != NULL )
@@ -169,7 +169,7 @@ void Triggers_tab::modify_pressed()
         edit_listview_item( selected_item );
 }
 
-void Triggers_tab::current_changed( QListViewItem* item_P )
+void Triggers_tab::current_changed( TQListViewItem* item_P )
     {
 //    if( item_P == selected_item )
 //        return;
@@ -181,7 +181,7 @@ void Triggers_tab::current_changed( QListViewItem* item_P )
     }
 
 Trigger_list_item* Triggers_tab::create_listview_item( Trigger* trigger_P,
-    QListView* parent_P, QListViewItem* after_P, bool copy_P )
+    TQListView* parent_P, TQListViewItem* after_P, bool copy_P )
     {
     Trigger* new_trg = copy_P ? trigger_P->copy( NULL ) : trigger_P; // CHECKME NULL ?
 // CHECKME uz by nemelo byt treba    if( after_P == NULL )
@@ -212,26 +212,26 @@ void Triggers_tab::edit_listview_item( Trigger_list_item* item_P )
 
 // Trigger_list_item
 
-QString Trigger_list_item::text( int column_P ) const
+TQString Trigger_list_item::text( int column_P ) const
     {
-    return column_P == 0 ? trigger()->description() : QString::null;
+    return column_P == 0 ? trigger()->description() : TQString::null;
     }
 
 // Shortcut_trigger_widget
 
-Shortcut_trigger_widget::Shortcut_trigger_widget( QWidget* parent_P, const char* )
-    : QWidget( parent_P )
+Shortcut_trigger_widget::Shortcut_trigger_widget( TQWidget* parent_P, const char* )
+    : TQWidget( parent_P )
     {
-    QVBoxLayout* lay = new QVBoxLayout( this, 11, 6 );
-    QLabel* lbl = new QLabel( i18n( "Select keyboard shortcut:" ), this );
+    TQVBoxLayout* lay = new TQVBoxLayout( this, 11, 6 );
+    TQLabel* lbl = new TQLabel( i18n( "Select keyboard shortcut:" ), this );
     lay->addWidget( lbl );
     lay->addSpacing( 10 );
     bt = new KKeyButton( this );
     lay->addWidget( bt, 0 , Qt::AlignHCenter );
     lay->addStretch();
     clear_data();
-    connect( bt, SIGNAL( capturedShortcut( const KShortcut& )),
-        this, SLOT( capturedShortcut( const KShortcut& )));
+    connect( bt, TQT_SIGNAL( capturedShortcut( const KShortcut& )),
+        this, TQT_SLOT( capturedShortcut( const KShortcut& )));
     }
 
 void Shortcut_trigger_widget::clear_data()
@@ -320,8 +320,8 @@ Gesture_trigger_dialog::Gesture_trigger_dialog( Gesture_trigger* trigger_P )
     _page = new GestureRecordPage( _trigger->gesturecode(),
                                   this, "GestureRecordPage");
 
-    connect(_page, SIGNAL(gestureRecorded(bool)),
-            this, SLOT(enableButtonOK(bool)));
+    connect(_page, TQT_SIGNAL(gestureRecorded(bool)),
+            this, TQT_SLOT(enableButtonOK(bool)));
 
     setMainWidget( _page );
     }
@@ -341,9 +341,9 @@ Voice_trigger_dialog::Voice_trigger_dialog( Voice_trigger* trigger_P )
 : KDialogBase( NULL, NULL, true, "", Ok | Cancel ), // CHECKME caption
 _trigger( trigger_P ), _page( NULL )
 {
-	_page = new VoiceRecordPage( _trigger ? _trigger->voicecode() : QString::null ,  this, "VoiceRecordPage");
+	_page = new VoiceRecordPage( _trigger ? _trigger->voicecode() : TQString::null ,  this, "VoiceRecordPage");
 
-	connect(_page, SIGNAL(voiceRecorded(bool)), this, SLOT(enableButtonOK(bool)));
+	connect(_page, TQT_SIGNAL(voiceRecorded(bool)), this, TQT_SLOT(enableButtonOK(bool)));
 
 	setMainWidget( _page );
 }

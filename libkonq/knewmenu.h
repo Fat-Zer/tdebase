@@ -20,8 +20,8 @@
 #ifndef __knewmenu_h
 #define __knewmenu_h
 
-#include <qintdict.h>
-#include <qstringlist.h>
+#include <tqintdict.h>
+#include <tqstringlist.h>
 
 #include <kaction.h>
 #include <kdialogbase.h>
@@ -58,7 +58,7 @@ public:
      * Constructor
      */
     KNewMenu( KActionCollection * _collec, const char *name=0L );
-    KNewMenu( KActionCollection * _collec, QWidget *parentWidget, const char *name=0L );
+    KNewMenu( KActionCollection * _collec, TQWidget *parentWidget, const char *name=0L );
     virtual ~KNewMenu();
 
     /**
@@ -128,12 +128,12 @@ private:
     enum { LINKTOTEMPLATE = 1, TEMPLATE, SEPARATOR };
 
     struct Entry {
-        QString text;
-        QString filePath; // empty for SEPARATOR
-        QString templatePath; // same as filePath for TEMPLATE
-        QString icon;
+        TQString text;
+        TQString filePath; // empty for SEPARATOR
+        TQString templatePath; // same as filePath for TEMPLATE
+        TQString icon;
         int entryType;
-        QString comment;
+        TQString comment;
     };
     // NOTE: only filePath is known before we call parseFiles
 
@@ -141,7 +141,7 @@ private:
      * List of all template files. It is important that they are in
      * the same order as the 'New' menu.
      */
-    static QValueList<Entry> * s_templatesList;
+    static TQValueList<Entry> * s_templatesList;
 
     class KNewMenuPrivate;
     KNewMenuPrivate* d;
@@ -171,7 +171,7 @@ private:
      * True when a desktop file with Type=URL is being copied
      */
     bool m_isURLDesktopFile;
-    QString m_linkURL; // the url to put in the file
+    TQString m_linkURL; // the url to put in the file
 
     static KDirWatch * s_pDirWatch;
 };
@@ -186,25 +186,25 @@ class KURLDesktopFileDlg : public KDialogBase
 {
     Q_OBJECT
 public:
-    KURLDesktopFileDlg( const QString& textFileName, const QString& textUrl );
-    KURLDesktopFileDlg( const QString& textFileName, const QString& textUrl, QWidget *parent );
+    KURLDesktopFileDlg( const TQString& textFileName, const TQString& textUrl );
+    KURLDesktopFileDlg( const TQString& textFileName, const TQString& textUrl, TQWidget *parent );
     virtual ~KURLDesktopFileDlg() {}
 
     /**
      * @return the filename the user entered (no path)
      */
-    QString fileName() const;
+    TQString fileName() const;
     /**
      * @return the URL the user entered
      */
-    QString url() const;
+    TQString url() const;
 
 protected slots:
     void slotClear();
-    void slotNameTextChanged( const QString& );
-    void slotURLTextChanged( const QString& );
+    void slotNameTextChanged( const TQString& );
+    void slotURLTextChanged( const TQString& );
 private:
-    void initDialog( const QString& textFileName, const QString& defaultName, const QString& textUrl, const QString& defaultUrl );
+    void initDialog( const TQString& textFileName, const TQString& defaultName, const TQString& textUrl, const TQString& defaultUrl );
 
     /**
      * The line edit widget for the fileName

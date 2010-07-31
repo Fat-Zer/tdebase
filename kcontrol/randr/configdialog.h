@@ -20,12 +20,12 @@
 #ifndef CONFIGDIALOG_H
 #define CONFIGDIALOG_H
 
-#include <qcheckbox.h>
-#include <qevent.h>
-#include <qgroupbox.h>
-#include <qheader.h>
-#include <qradiobutton.h>
-#include <qvbox.h>
+#include <tqcheckbox.h>
+#include <tqevent.h>
+#include <tqgroupbox.h>
+#include <tqheader.h>
+#include <tqradiobutton.h>
+#include <tqvbox.h>
 
 #include <kdialogbase.h>
 #include <keditlistbox.h>
@@ -59,30 +59,30 @@ private:
 class ListView : public KListView
 {
 public:
-    ListView( ConfigDialog* configWidget, QWidget *parent, const char *name )
+    ListView( ConfigDialog* configWidget, TQWidget *parent, const char *name )
 	: KListView( parent, name ), _configWidget( configWidget ),
           _regExpEditor(0L) {}
-    // QListView has a weird idea of a sizeHint...
-    virtual QSize sizeHint () const {
+    // TQListView has a weird idea of a sizeHint...
+    virtual TQSize sizeHint () const {
 	int w = minimumSizeHint().width();
 	int h = header()->height();
 	h += viewport()->sizeHint().height();
 	h += horizontalScrollBar()->height();
 	
-	QListViewItem *item = firstChild();
+	TQListViewItem *item = firstChild();
 	while ( item ) {
 	    h += item->totalHeight();
 	    item = item->nextSibling();
 	}
 
-	return QSize( w, h );
+	return TQSize( w, h );
     }
 
 protected:
-    virtual void rename( QListViewItem* item, int c );
+    virtual void rename( TQListViewItem* item, int c );
 private:
     ConfigDialog* _configWidget;
-    QDialog* _regExpEditor;
+    TQDialog* _regExpEditor;
 };
 
 #endif // CONFIGDIALOG_H

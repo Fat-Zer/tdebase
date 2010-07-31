@@ -20,13 +20,13 @@
 
   */
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qobjectlist.h>
-#include <qpushbutton.h>
-#include <qtabwidget.h>
-#include <qvgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqobjectlist.h>
+#include <tqpushbutton.h>
+#include <tqtabwidget.h>
+#include <tqvgroupbox.h>
 
 #include <kaboutdata.h>
 #include <kconfig.h>
@@ -45,8 +45,8 @@
 #include "kcmlocale.h"
 #include "toplevel.moc"
 
-KLocaleApplication::KLocaleApplication(QWidget *parent, const char* /*name*/, 
-                                       const QStringList &args)
+KLocaleApplication::KLocaleApplication(TQWidget *parent, const char* /*name*/, 
+                                       const TQStringList &args)
   : KCModule( KLocaleFactory::instance(), parent, args)
 {
   KAboutData* aboutData = new KAboutData("kcmlocale",
@@ -59,89 +59,89 @@ KLocaleApplication::KLocaleApplication(QWidget *parent, const char* /*name*/,
         0, 0, "bieker@kde.org");
   setAboutData( aboutData );
 
-  m_nullConfig = new KConfig(QString::null, false, false);
-  m_globalConfig = new KConfig(QString::null, false, true);
+  m_nullConfig = new KConfig(TQString::null, false, false);
+  m_globalConfig = new KConfig(TQString::null, false, true);
 
-  m_locale = new KLocale(QString::fromLatin1("kcmlocale"), m_nullConfig);
-  QVBoxLayout *l = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  m_locale = new KLocale(TQString::fromLatin1("kcmlocale"), m_nullConfig);
+  TQVBoxLayout *l = new TQVBoxLayout(this, 0, KDialog::spacingHint());
   l->setAutoAdd(TRUE);
 
-  m_tab = new QTabWidget(this);
+  m_tab = new TQTabWidget(this);
 
   m_localemain = new KLocaleConfig(m_locale, this);
-  m_tab->addTab( m_localemain, QString::null);
+  m_tab->addTab( m_localemain, TQString::null);
   m_localenum = new KLocaleConfigNumber(m_locale, this);
-  m_tab->addTab( m_localenum, QString::null );
+  m_tab->addTab( m_localenum, TQString::null );
   m_localemon = new KLocaleConfigMoney(m_locale, this);
-  m_tab->addTab( m_localemon, QString::null );
+  m_tab->addTab( m_localemon, TQString::null );
   m_localetime = new KLocaleConfigTime(m_locale, this);
-  m_tab->addTab( m_localetime, QString::null );
+  m_tab->addTab( m_localetime, TQString::null );
   m_localeother = new KLocaleConfigOther(m_locale, this);
-  m_tab->addTab( m_localeother, QString::null );
+  m_tab->addTab( m_localeother, TQString::null );
 
   // Examples
-  m_gbox = new QVGroupBox(this);
+  m_gbox = new TQVGroupBox(this);
   m_sample = new KLocaleSample(m_locale, m_gbox);
 
   // getting signals from childs
-  connect(m_localemain, SIGNAL(localeChanged()),
-          this, SIGNAL(localeChanged()));
-  connect(m_localemain, SIGNAL(languageChanged()),
-          this, SIGNAL(languageChanged()));
+  connect(m_localemain, TQT_SIGNAL(localeChanged()),
+          this, TQT_SIGNAL(localeChanged()));
+  connect(m_localemain, TQT_SIGNAL(languageChanged()),
+          this, TQT_SIGNAL(languageChanged()));
 
   // run the slots on the childs
-  connect(this, SIGNAL(localeChanged()),
-          m_localemain, SLOT(slotLocaleChanged()));
-  connect(this, SIGNAL(localeChanged()),
-          m_localenum, SLOT(slotLocaleChanged()));
-  connect(this, SIGNAL(localeChanged()),
-          m_localemon, SLOT(slotLocaleChanged()));
-  connect(this, SIGNAL(localeChanged()),
-          m_localetime, SLOT(slotLocaleChanged()));
-  connect(this, SIGNAL(localeChanged()),
-          m_localeother, SLOT(slotLocaleChanged()));
+  connect(this, TQT_SIGNAL(localeChanged()),
+          m_localemain, TQT_SLOT(slotLocaleChanged()));
+  connect(this, TQT_SIGNAL(localeChanged()),
+          m_localenum, TQT_SLOT(slotLocaleChanged()));
+  connect(this, TQT_SIGNAL(localeChanged()),
+          m_localemon, TQT_SLOT(slotLocaleChanged()));
+  connect(this, TQT_SIGNAL(localeChanged()),
+          m_localetime, TQT_SLOT(slotLocaleChanged()));
+  connect(this, TQT_SIGNAL(localeChanged()),
+          m_localeother, TQT_SLOT(slotLocaleChanged()));
 
   // keep the example up to date
   // NOTE: this will make the sample be updated 6 times the first time
   // because combo boxes++ emits the change signal not only when the user changes
   // it, but also when it's changed by the program.
-  connect(m_localenum, SIGNAL(localeChanged()),
-          m_sample, SLOT(slotLocaleChanged()));
-  connect(m_localemon, SIGNAL(localeChanged()),
-          m_sample, SLOT(slotLocaleChanged()));
-  connect(m_localetime, SIGNAL(localeChanged()),
-          m_sample, SLOT(slotLocaleChanged()));
+  connect(m_localenum, TQT_SIGNAL(localeChanged()),
+          m_sample, TQT_SLOT(slotLocaleChanged()));
+  connect(m_localemon, TQT_SIGNAL(localeChanged()),
+          m_sample, TQT_SLOT(slotLocaleChanged()));
+  connect(m_localetime, TQT_SIGNAL(localeChanged()),
+          m_sample, TQT_SLOT(slotLocaleChanged()));
   // No examples for this yet
-  //connect(m_localeother, SIGNAL(slotLocaleChanged()),
-  //m_sample, SLOT(slotLocaleChanged()));
-  connect(this, SIGNAL(localeChanged()),
-          m_sample, SLOT(slotLocaleChanged()));
+  //connect(m_localeother, TQT_SIGNAL(slotLocaleChanged()),
+  //m_sample, TQT_SLOT(slotLocaleChanged()));
+  connect(this, TQT_SIGNAL(localeChanged()),
+          m_sample, TQT_SLOT(slotLocaleChanged()));
 
   // make sure we always have translated interface
-  connect(this, SIGNAL(languageChanged()),
-          this, SLOT(slotTranslate()));
-  connect(this, SIGNAL(languageChanged()),
-          m_localemain, SLOT(slotTranslate()));
-  connect(this, SIGNAL(languageChanged()),
-          m_localenum, SLOT(slotTranslate()));
-  connect(this, SIGNAL(languageChanged()),
-          m_localemon, SLOT(slotTranslate()));
-  connect(this, SIGNAL(languageChanged()),
-          m_localetime, SLOT(slotTranslate()));
-  connect(this, SIGNAL(languageChanged()),
-          m_localeother, SLOT(slotTranslate()));
+  connect(this, TQT_SIGNAL(languageChanged()),
+          this, TQT_SLOT(slotTranslate()));
+  connect(this, TQT_SIGNAL(languageChanged()),
+          m_localemain, TQT_SLOT(slotTranslate()));
+  connect(this, TQT_SIGNAL(languageChanged()),
+          m_localenum, TQT_SLOT(slotTranslate()));
+  connect(this, TQT_SIGNAL(languageChanged()),
+          m_localemon, TQT_SLOT(slotTranslate()));
+  connect(this, TQT_SIGNAL(languageChanged()),
+          m_localetime, TQT_SLOT(slotTranslate()));
+  connect(this, TQT_SIGNAL(languageChanged()),
+          m_localeother, TQT_SLOT(slotTranslate()));
 
   // mark it as changed when we change it.
-  connect(m_localemain, SIGNAL(localeChanged()),
-          SLOT(slotChanged()));
-  connect(m_localenum, SIGNAL(localeChanged()),
-          SLOT(slotChanged()));
-  connect(m_localemon, SIGNAL(localeChanged()),
-          SLOT(slotChanged()));
-  connect(m_localetime, SIGNAL(localeChanged()),
-          SLOT(slotChanged()));
-  connect(m_localeother, SIGNAL(localeChanged()),
-          SLOT(slotChanged()));
+  connect(m_localemain, TQT_SIGNAL(localeChanged()),
+          TQT_SLOT(slotChanged()));
+  connect(m_localenum, TQT_SIGNAL(localeChanged()),
+          TQT_SLOT(slotChanged()));
+  connect(m_localemon, TQT_SIGNAL(localeChanged()),
+          TQT_SLOT(slotChanged()));
+  connect(m_localetime, TQT_SIGNAL(localeChanged()),
+          TQT_SLOT(slotChanged()));
+  connect(m_localeother, TQT_SIGNAL(localeChanged()),
+          TQT_SLOT(slotChanged()));
 
   load();
 }
@@ -162,7 +162,7 @@ void KLocaleApplication::load( bool useDefaults )
 {
 	m_globalConfig->setReadDefaults( useDefaults );
 	m_globalConfig->reparseConfiguration();
-	*m_locale = KLocale(QString::fromLatin1("kcmlocale"), m_globalConfig);
+	*m_locale = KLocale(TQString::fromLatin1("kcmlocale"), m_globalConfig);
 	
 	emit localeChanged();
 	emit languageChanged();
@@ -180,7 +180,7 @@ void KLocaleApplication::save()
                             "language of all programs, you will have to "
                             "logout first."),
                            m_locale->translate("Applying Language Settings"),
-                           QString::fromLatin1("LanguageChangesApplyOnlyToNewlyStartedPrograms"));
+                           TQString::fromLatin1("LanguageChangesApplyOnlyToNewlyStartedPrograms"));
   // restore the old global locale
   KGlobal::_locale = lsave;
 
@@ -211,7 +211,7 @@ void KLocaleApplication::defaults()
 	load( true );
 }
 
-QString KLocaleApplication::quickHelp() const
+TQString KLocaleApplication::quickHelp() const
 {
   return m_locale->translate("<h1>Country/Region & Language</h1>\n"
           "<p>From here you can configure language, numeric, and time \n"
@@ -224,11 +224,11 @@ QString KLocaleApplication::quickHelp() const
 
 void KLocaleApplication::slotTranslate()
 {
-  // The untranslated string for QLabel are stored in
+  // The untranslated string for TQLabel are stored in
   // the name() so we use that when retranslating
-  QObject *wc;
-  QObjectList *list = queryList("QWidget");
-  QObjectListIt it(*list);
+  TQObject *wc;
+  TQObjectList *list = queryList("TQWidget");
+  TQObjectListIt it(*list);
   while ( (wc = it.current()) != 0 )
   {
     ++it;
@@ -243,16 +243,16 @@ void KLocaleApplication::slotTranslate()
     if (::qstrcmp(wc->name(), "unnamed") == 0)
       continue;
 
-    if (::qstrcmp(wc->className(), "QLabel") == 0)
-      ((QLabel *)wc)->setText( m_locale->translate( wc->name() ) );
-    else if (::qstrcmp(wc->className(), "QGroupBox") == 0 ||
-             ::qstrcmp(wc->className(), "QVGroupBox") == 0)
-      ((QGroupBox *)wc)->setTitle( m_locale->translate( wc->name() ) );
-    else if (::qstrcmp(wc->className(), "QPushButton") == 0 ||
+    if (::qstrcmp(wc->className(), "TQLabel") == 0)
+      ((TQLabel *)wc)->setText( m_locale->translate( wc->name() ) );
+    else if (::qstrcmp(wc->className(), "TQGroupBox") == 0 ||
+             ::qstrcmp(wc->className(), "TQVGroupBox") == 0)
+      ((TQGroupBox *)wc)->setTitle( m_locale->translate( wc->name() ) );
+    else if (::qstrcmp(wc->className(), "TQPushButton") == 0 ||
              ::qstrcmp(wc->className(), "KMenuButton") == 0)
-      ((QPushButton *)wc)->setText( m_locale->translate( wc->name() ) );
-    else if (::qstrcmp(wc->className(), "QCheckBox") == 0)
-      ((QCheckBox *)wc)->setText( m_locale->translate( wc->name() ) );
+      ((TQPushButton *)wc)->setText( m_locale->translate( wc->name() ) );
+    else if (::qstrcmp(wc->className(), "TQCheckBox") == 0)
+      ((TQCheckBox *)wc)->setText( m_locale->translate( wc->name() ) );
   }
   delete list;
 

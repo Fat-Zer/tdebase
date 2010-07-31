@@ -1,14 +1,14 @@
 #ifndef SAVERLIST_H
 #define SAVERLIST_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include "saverconfig.h"
 
-class SaverList : public QPtrList<SaverConfig>
+class SaverList : public TQPtrList<SaverConfig>
 {
 protected:
-    virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+    virtual int compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2);
 };
 
 #endif

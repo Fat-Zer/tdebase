@@ -12,10 +12,10 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_OPTIONS_H
 #define KWIN_OPTIONS_H
 
-#include <qobject.h>
-#include <qfont.h>
-#include <qpalette.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqfont.h>
+#include <tqpalette.h>
+#include <tqstringlist.h>
 #include <kdecoration_p.h>
 
 #include "placement.h"
@@ -150,7 +150,7 @@ class Options : public KDecorationOptions
         MoveResizeMode resizeMode;
         MoveResizeMode moveMode;
         
-        static MoveResizeMode stringToMoveResizeMode( const QString& s );
+        static MoveResizeMode stringToMoveResizeMode( const TQString& s );
         static const char* moveResizeModeToString( MoveResizeMode mode );
 
         Placement::Policy placement;
@@ -204,7 +204,7 @@ class Options : public KDecorationOptions
         /**
          * List of window classes to ignore PPosition size hint
          */
-        QStringList ignorePositionClasses;
+        TQStringList ignorePositionClasses;
         
         bool checkIgnoreFocusStealing( const Client* c );
 
@@ -258,9 +258,9 @@ class Options : public KDecorationOptions
         uint keyCmdAllModKey() { return CmdAllModKey; }
 
 
-        static WindowOperation windowOperation(const QString &name, bool restricted );
-        static MouseCommand mouseCommand(const QString &name, bool restricted );
-        static MouseWheelCommand mouseWheelCommand(const QString &name);
+        static WindowOperation windowOperation(const TQString &name, bool restricted );
+        static MouseCommand mouseCommand(const TQString &name, bool restricted );
+        static MouseWheelCommand mouseWheelCommand(const TQString &name);
 
         /**
         * @returns true if the Geometry Tip should be shown during a window move/resize.
@@ -337,7 +337,7 @@ class Options : public KDecorationOptions
         bool topmenus;
         bool desktop_topmenu;
         // List of window classes for which not to use focus stealing prevention
-        QStringList ignoreFocusStealingClasses;
+        TQStringList ignoreFocusStealingClasses;
 
         MouseCommand wheelToMouseCommand( MouseWheelCommand com, int delta );
     };

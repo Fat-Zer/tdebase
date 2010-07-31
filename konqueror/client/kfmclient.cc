@@ -23,7 +23,7 @@
 #include <signal.h>
 #include <unistd.h>
 
-#include <qdir.h>
+#include <tqdir.h>
 
 #include <kio/job.h>
 #include <kcmdlineargs.h>
@@ -39,7 +39,7 @@
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <kservice.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include "kfmclient.h"
 #include "KonquerorIface_stub.h"
@@ -55,7 +55,7 @@ static const char description[] = I18N_NOOP("KDE tool for opening URLs from the 
 
 static const char version[] = "2.0";
 
-QCString clientApp::startup_id_str;
+TQCString clientApp::startup_id_str;
 bool clientApp::m_ok = true;
 bool s_interactive = true;
 
@@ -174,58 +174,58 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
  will be done (oh well), if there's no URL, no reusing will be done either (also
  because the webbrowsing profile doesn't have any URL listed).
 */
-static bool startNewKonqueror( QString url, QString mimetype, const QString& profile )
+static bool startNewKonqueror( TQString url, TQString mimetype, const TQString& profile )
 {
-    KConfig cfg( QString::fromLatin1( "konquerorrc" ), true );
+    KConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
     cfg.setGroup( "Reusing" );
-    QStringList allowed_parts;
+    TQStringList allowed_parts;
     // is duplicated in ../KonquerorIface.cc
-    allowed_parts << QString::fromLatin1( "konq_iconview.desktop" )
-                  << QString::fromLatin1( "konq_multicolumnview.desktop" )
-                  << QString::fromLatin1( "konq_sidebartng.desktop" )
-                  << QString::fromLatin1( "konq_infolistview.desktop" )
-                  << QString::fromLatin1( "konq_treeview.desktop" )
-                  << QString::fromLatin1( "konq_detailedlistview.desktop" );
+    allowed_parts << TQString::fromLatin1( "konq_iconview.desktop" )
+                  << TQString::fromLatin1( "konq_multicolumnview.desktop" )
+                  << TQString::fromLatin1( "konq_sidebartng.desktop" )
+                  << TQString::fromLatin1( "konq_infolistview.desktop" )
+                  << TQString::fromLatin1( "konq_treeview.desktop" )
+                  << TQString::fromLatin1( "konq_detailedlistview.desktop" );
     if( cfg.hasKey( "SafeParts" )
-        && cfg.readEntry( "SafeParts" ) != QString::fromLatin1( "SAFE" ))
+        && cfg.readEntry( "SafeParts" ) != TQString::fromLatin1( "SAFE" ))
         allowed_parts = cfg.readListEntry( "SafeParts" );
-    if( allowed_parts.count() == 1 && allowed_parts.first() == QString::fromLatin1( "ALL" ))
+    if( allowed_parts.count() == 1 && allowed_parts.first() == TQString::fromLatin1( "ALL" ))
 	return false; // all parts allowed
     if( url.isEmpty())
     {
         if( profile.isEmpty())
             return true;
-	QString profilepath = locate( "data", QString::fromLatin1("konqueror/profiles/") + profile );
+	TQString profilepath = locate( "data", TQString::fromLatin1("konqueror/profiles/") + profile );
 	if( profilepath.isEmpty())
 	    return true;
 	KConfig cfg( profilepath, true );
 	cfg.setDollarExpansion( true );
         cfg.setGroup( "Profile" );
-	QMap< QString, QString > entries = cfg.entryMap( QString::fromLatin1( "Profile" ));
-	QRegExp urlregexp( QString::fromLatin1( "^View[0-9]*_URL$" ));
-	QStringList urls;
-	for( QMap< QString, QString >::ConstIterator it = entries.begin();
+	TQMap< TQString, TQString > entries = cfg.entryMap( TQString::fromLatin1( "Profile" ));
+	TQRegExp urlregexp( TQString::fromLatin1( "^View[0-9]*_URL$" ));
+	TQStringList urls;
+	for( TQMap< TQString, TQString >::ConstIterator it = entries.begin();
 	     it != entries.end();
 	     ++it )
 	{
             // don't read value from map, dollar expansion is needed
-            QString value = cfg.readEntry( it.key());
+            TQString value = cfg.readEntry( it.key());
 	    if( urlregexp.search( it.key()) >= 0 && !value.isEmpty())
 		urls << value;
 	}
 	if( urls.count() != 1 )
 	    return true;
 	url = urls.first();
-	mimetype = QString::fromLatin1( "" );
+	mimetype = TQString::fromLatin1( "" );
     }
     if( mimetype.isEmpty())
 	mimetype = KMimeType::findByURL( KURL( url ) )->name();
-    KTrader::OfferList offers = KTrader::self()->query( mimetype, QString::fromLatin1( "KParts/ReadOnlyPart" ),
-	QString::null, QString::null );
+    KTrader::OfferList offers = KTrader::self()->query( mimetype, TQString::fromLatin1( "KParts/ReadOnlyPart" ),
+	TQString::null, TQString::null );
     KService::Ptr serv;
     if( offers.count() > 0 )
         serv = offers.first();
-    return serv == NULL || !allowed_parts.contains( serv->desktopEntryName() + QString::fromLatin1(".desktop") );
+    return serv == NULL || !allowed_parts.contains( serv->desktopEntryName() + TQString::fromLatin1(".desktop") );
 }
 
 static int currentScreen()
@@ -244,30 +244,30 @@ static int currentScreen()
 }
 
 // when reusing a preloaded konqy, make sure your always use a DCOP call which opens a profile !
-static QCString getPreloadedKonqy()
+static TQCString getPreloadedKonqy()
 {
-    KConfig cfg( QString::fromLatin1( "konquerorrc" ), true );
+    KConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
     cfg.setGroup( "Reusing" );
     if( cfg.readNumEntry( "MaxPreloadCount", 1 ) == 0 )
         return "";
     DCOPRef ref( "kded", "konqy_preloader" );
-    QCString ret;
+    TQCString ret;
     if( ref.callExt( "getPreloadedKonqy", DCOPRef::NoEventLoop, 3000, currentScreen()).get( ret ))
 	return ret;
-    return QCString();
+    return TQCString();
 }
 
 
-static QCString konqyToReuse( const QString& url, const QString& mimetype, const QString& profile )
+static TQCString konqyToReuse( const TQString& url, const TQString& mimetype, const TQString& profile )
 { // prefer(?) preloaded ones
-    QCString ret = getPreloadedKonqy();
+    TQCString ret = getPreloadedKonqy();
     if( !ret.isEmpty())
         return ret;
     if( startNewKonqueror( url, mimetype, profile ))
         return "";
-    QCString appObj;
-    QByteArray data;
-    QDataStream str( data, IO_WriteOnly );
+    TQCString appObj;
+    TQByteArray data;
+    TQDataStream str( data, IO_WriteOnly );
     str << currentScreen();
     if( !KApplication::dcopClient()->findObject( "konqueror*", "KonquerorIface",
              "processCanBeReused( int )", data, ret, appObj, false, 3000 ) )
@@ -285,7 +285,7 @@ void clientApp::sendASNChange()
     data.addPid( 0 );   // say there's another process for this ASN with unknown PID
     data.setHostname(); // ( no need to bother to get this konqy's PID )
     Display* dpy = qt_xdisplay();
-    if( dpy == NULL ) // we may be running without QApplication here
+    if( dpy == NULL ) // we may be running without TQApplication here
         dpy = XOpenDisplay( NULL );
     if( dpy != NULL )
         KStartupInfo::sendChangeX( dpy, id, data );
@@ -293,15 +293,15 @@ void clientApp::sendASNChange()
         XCloseDisplay( dpy );
 }
 
-bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, const QString & mimetype)
+bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, const TQString & mimetype)
 {
     kdDebug( 1202 ) << "clientApp::createNewWindow " << url.url() << " mimetype=" << mimetype << endl;
     // check if user wants to use external browser
     // ###### this option seems to have no GUI and to be redundant with BrowserApplication now.
     // ###### KDE4: remove
-    KConfig config( QString::fromLatin1("kfmclientrc"));
-    config.setGroup( QString::fromLatin1("Settings"));
-    QString strBrowser = config.readPathEntry("ExternalBrowser");
+    KConfig config( TQString::fromLatin1("kfmclientrc"));
+    config.setGroup( TQString::fromLatin1("Settings"));
+    TQString strBrowser = config.readPathEntry("ExternalBrowser");
     if (!strBrowser.isEmpty())
     {
         if ( tempFile )
@@ -312,7 +312,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
         return true;
     }
 
-    if (url.protocol().startsWith(QString::fromLatin1("http")))
+    if (url.protocol().startsWith(TQString::fromLatin1("http")))
     {
         config.setGroup("General");
         if (!config.readEntry("BrowserApplication").isEmpty())
@@ -321,20 +321,20 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
             KStartupInfo::appStarted();
 
             KRun * run = new KRun( url, 0, 0, false, false /* no progress window */ ); // TODO pass tempFile [needs support in the KRun ctor]
-            QObject::connect( run, SIGNAL( finished() ), &app, SLOT( delayedQuit() ));
-            QObject::connect( run, SIGNAL( error() ), &app, SLOT( delayedQuit() ));
+            TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( delayedQuit() ));
+            TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( delayedQuit() ));
             app.exec();
             return !krun_has_error;
         }
     }
 
-    KConfig cfg( QString::fromLatin1( "konquerorrc" ), true );
+    KConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
     cfg.setGroup( "FMSettings" );
     if ( newTab || cfg.readBoolEntry( "KonquerorTabforExternalURL", false ) )
     {
-        QCString foundApp, foundObj;
-        QByteArray data;
-        QDataStream str( data, IO_WriteOnly );
+        TQCString foundApp, foundObj;
+        TQByteArray data;
+        TQDataStream str( data, IO_WriteOnly );
         if( KApplication::dcopClient()->findObject( "konqueror*", "konqueror-mainwindow*",
             "windowCanBeUsedForTab()", data, foundApp, foundObj, false, 3000 ) )
         {
@@ -347,7 +347,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
       }
     }
 
-    QCString appId = konqyToReuse( url.url(), mimetype, QString::null );
+    TQCString appId = konqyToReuse( url.url(), mimetype, TQString::null );
     if( !appId.isEmpty())
     {
         kdDebug( 1202 ) << "clientApp::createNewWindow using existing konqueror" << endl;
@@ -357,9 +357,9 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
     }
     else
     {
-        QString error;
+        TQString error;
         /* Well, we can't pass a mimetype through startServiceByDesktopPath !
-        if ( KApplication::startServiceByDesktopPath( QString::fromLatin1("konqueror.desktop"),
+        if ( KApplication::startServiceByDesktopPath( TQString::fromLatin1("konqueror.desktop"),
                                                       url.url(), &error ) > 0 )
         {
             kdError() << "Couldn't start konqueror from konqueror.desktop: " << error << endl;
@@ -383,14 +383,14 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
     return true;
 }
 
-bool clientApp::openProfile( const QString & profileName, const QString & url, const QString & mimetype )
+bool clientApp::openProfile( const TQString & profileName, const TQString & url, const TQString & mimetype )
 {
-  QCString appId = konqyToReuse( url, mimetype, profileName );
+  TQCString appId = konqyToReuse( url, mimetype, profileName );
   if( appId.isEmpty())
   {
-    QString error;
-    if ( KApplication::startServiceByDesktopPath( QString::fromLatin1("konqueror.desktop"),
-        QString::fromLatin1("--silent"), &error, &appId, NULL, startup_id_str ) > 0 )
+    TQString error;
+    if ( KApplication::startServiceByDesktopPath( TQString::fromLatin1("konqueror.desktop"),
+        TQString::fromLatin1("--silent"), &error, &appId, NULL, startup_id_str ) > 0 )
     {
       kdError() << "Couldn't start konqueror from konqueror.desktop: " << error << endl;
       return false;
@@ -399,7 +399,7 @@ bool clientApp::openProfile( const QString & profileName, const QString & url, c
       // so when we arrive here, konq is up and running already, and appId contains the identification
   }
 
-  QString profile = locate( "data", QString::fromLatin1("konqueror/profiles/") + profileName );
+  TQString profile = locate( "data", TQString::fromLatin1("konqueror/profiles/") + profileName );
   if ( profile.isEmpty() )
   {
       fprintf( stderr, "%s", i18n("Profile %1 not found\n").arg(profileName).local8Bit().data() );
@@ -421,7 +421,7 @@ void clientApp::delayedQuit()
 {
     // Quit in 2 seconds. This leaves time for KRun to pop up
     // "app not found" in KProcessRunner, if that was the case.
-    QTimer::singleShot( 2000, this, SLOT(deref()) );
+    TQTimer::singleShot( 2000, this, TQT_SLOT(deref()) );
     // don't access the KRun instance later, it will be deleted after calling slots
     if( static_cast< const KRun* >( sender())->hasError())
         krun_has_error = true;
@@ -450,7 +450,7 @@ bool clientApp::doIt()
   if ( !args->isSet( "ninteractive" ) ) {
       s_interactive = false;
   }
-  QCString command = args->arg(0);
+  TQCString command = args->arg(0);
 
   // read ASN env. variable for non-KApp cases
   startup_id_str = KStartupInfo::currentStartupIdEnv().id();
@@ -468,7 +468,7 @@ bool clientApp::doIt()
     if ( argc == 1 )
     {
       KURL url;
-      url.setPath(QDir::homeDirPath());
+      url.setPath(TQDir::homeDirPath());
       return createNewWindow( url, command == "newTab", tempFile );
     }
     if ( argc == 2 )
@@ -477,7 +477,7 @@ bool clientApp::doIt()
     }
     if ( argc == 3 )
     {
-      return createNewWindow( args->url(1), command == "newTab", tempFile, QString::fromLatin1(args->arg(2)) );
+      return createNewWindow( args->url(1), command == "newTab", tempFile, TQString::fromLatin1(args->arg(2)) );
     }
   }
   else if ( command == "openProfile" )
@@ -489,10 +489,10 @@ bool clientApp::doIt()
 	KApplication::dcopClient()->attach();
     }
     checkArgumentCount(argc, 2, 3);
-    QString url;
+    TQString url;
     if ( argc == 3 )
       url = args->url(2).url();
-    return openProfile( QString::fromLocal8Bit(args->arg(1)), url );
+    return openProfile( TQString::fromLocal8Bit(args->arg(1)), url );
   }
 
   // the following commands need KApplication
@@ -502,8 +502,8 @@ bool clientApp::doIt()
   {
     checkArgumentCount(argc, 2, 2);
     KPropertiesDialog * p = new KPropertiesDialog( args->url(1) );
-    QObject::connect( p, SIGNAL( destroyed() ), &app, SLOT( quit() ));
-    QObject::connect( p, SIGNAL( canceled() ), &app, SLOT( slotDialogCanceled() ));
+    TQObject::connect( p, TQT_SIGNAL( destroyed() ), &app, TQT_SLOT( quit() ));
+    TQObject::connect( p, TQT_SIGNAL( canceled() ), &app, TQT_SLOT( slotDialogCanceled() ));
     app.exec();
     return m_ok;
   }
@@ -518,8 +518,8 @@ bool clientApp::doIt()
     else if ( argc == 2 )
     {
       KRun * run = new KRun( args->url(1), 0, 0, false, false /* no progress window */ );
-      QObject::connect( run, SIGNAL( finished() ), &app, SLOT( delayedQuit() ));
-      QObject::connect( run, SIGNAL( error() ), &app, SLOT( delayedQuit() ));
+      TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( delayedQuit() ));
+      TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( delayedQuit() ));
       app.exec();
       return !krun_has_error;
     }
@@ -527,7 +527,7 @@ bool clientApp::doIt()
     {
       KURL::List urls;
       urls.append( args->url(1) );
-      const KTrader::OfferList offers = KTrader::self()->query( QString::fromLocal8Bit( args->arg( 2 ) ), QString::fromLatin1( "Application" ), QString::null, QString::null );
+      const KTrader::OfferList offers = KTrader::self()->query( TQString::fromLocal8Bit( args->arg( 2 ) ), TQString::fromLatin1( "Application" ), TQString::null, TQString::null );
       if (offers.isEmpty()) return 1;
       KService::Ptr serv = offers.first();
       return KRun::run( *serv, urls );
@@ -543,7 +543,7 @@ bool clientApp::doIt()
     KIO::Job * job = KIO::move( srcLst, args->url(argc - 1) );
     if ( !s_interactive )
         job->setInteractive( false );
-    connect( job, SIGNAL( result( KIO::Job * ) ), &app, SLOT( slotResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job * ) ), &app, TQT_SLOT( slotResult( KIO::Job * ) ) );
     app.exec();
     return m_ok;
   }
@@ -569,8 +569,8 @@ bool clientApp::doIt()
     }
     if (srcLst.count() == 0)
        return m_ok;
-    QString dst =
-       KFileDialog::getSaveFileName( (argc<2) ? (QString::null) : (args->url(1).filename()) );
+    TQString dst =
+       KFileDialog::getSaveFileName( (argc<2) ? (TQString::null) : (args->url(1).filename()) );
     if (dst.isEmpty()) // cancelled
        return m_ok; // AK - really okay?
     KURL dsturl;
@@ -578,7 +578,7 @@ bool clientApp::doIt()
     KIO::Job * job = KIO::copy( srcLst, dsturl );
     if ( !s_interactive )
         job->setInteractive( false );
-    connect( job, SIGNAL( result( KIO::Job * ) ), &app, SLOT( slotResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job * ) ), &app, TQT_SLOT( slotResult( KIO::Job * ) ) );
     app.exec();
     return m_ok;
   }
@@ -592,7 +592,7 @@ bool clientApp::doIt()
     KIO::Job * job = KIO::copy( srcLst, args->url(argc - 1) );
     if ( !s_interactive )
         job->setInteractive( false );
-    connect( job, SIGNAL( result( KIO::Job * ) ), &app, SLOT( slotResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job * ) ), &app, TQT_SLOT( slotResult( KIO::Job * ) ) );
     app.exec();
     return m_ok;
   }
@@ -608,7 +608,7 @@ bool clientApp::doIt()
   else if ( command == "configure" )
   {
     checkArgumentCount(argc, 1, 1);
-    QByteArray data;
+    TQByteArray data;
     kapp->dcopClient()->send( "*", "KonqMainViewIface", "reparseConfiguration()", data );
     // Warning. In case something is added/changed here, keep kcontrol/konq/main.cpp in sync.
   }
@@ -620,7 +620,7 @@ bool clientApp::doIt()
   }
   else
   {
-    fprintf( stderr, "%s", i18n("Syntax Error: Unknown command '%1'\n").arg(QString::fromLocal8Bit(command)).local8Bit().data() );
+    fprintf( stderr, "%s", i18n("Syntax Error: Unknown command '%1'\n").arg(TQString::fromLocal8Bit(command)).local8Bit().data() );
     return false;
   }
   return true;

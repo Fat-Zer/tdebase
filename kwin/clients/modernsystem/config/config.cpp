@@ -5,14 +5,14 @@
 #include <kdialog.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 #include "config.h"
 
 
 extern "C"
 {
-	KDE_EXPORT QObject* allocate_config(KConfig* conf, QWidget* parent)
+	KDE_EXPORT TQObject* allocate_config(KConfig* conf, TQWidget* parent)
 	{
 		return(new ModernSysConfig(conf, parent));
 	}
@@ -22,54 +22,54 @@ extern "C"
 // 'conf'	is a pointer to the kwindecoration modules open kwin config,
 //		and is by default set to the "Style" group.
 //
-// 'parent'	is the parent of the QObject, which is a VBox inside the
+// 'parent'	is the parent of the TQObject, which is a VBox inside the
 //		Configure tab in kwindecoration
 
-ModernSysConfig::ModernSysConfig(KConfig* conf, QWidget* parent) : QObject(parent)
+ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(parent)
 {	
 	clientrc = new KConfig("kwinmodernsysrc");
 	KGlobal::locale()->insertCatalogue("kwin_clients");
-	mainw = new QWidget(parent);
-	vbox = new QVBoxLayout(mainw);
+	mainw = new TQWidget(parent);
+	vbox = new TQVBoxLayout(mainw);
 	vbox->setSpacing(6);
 	vbox->setMargin(0);
 
-	handleBox = new QWidget(mainw);
-        QGridLayout* layout = new QGridLayout(handleBox, 0, KDialog::spacingHint());
+	handleBox = new TQWidget(mainw);
+        TQGridLayout* layout = new TQGridLayout(handleBox, 0, KDialog::spacingHint());
 
-	cbShowHandle = new QCheckBox(i18n("&Show window resize handle"), handleBox);
-	QWhatsThis::add(cbShowHandle,
+	cbShowHandle = new TQCheckBox(i18n("&Show window resize handle"), handleBox);
+	TQWhatsThis::add(cbShowHandle,
 			i18n("When selected, all windows are drawn with a resize "
 			"handle at the lower right corner. This makes window resizing "
 			"easier, especially for trackballs and other mouse replacements "
 			"on laptops."));
         layout->addMultiCellWidget(cbShowHandle, 0, 0, 0, 1);
-	connect(cbShowHandle, SIGNAL(clicked()), this, SLOT(slotSelectionChanged()));
+	connect(cbShowHandle, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSelectionChanged()));
 
-	sliderBox = new QVBox(handleBox);
-	handleSizeSlider = new QSlider(0, 4, 1, 0, QSlider::Horizontal, sliderBox);
-	QWhatsThis::add(handleSizeSlider,
+	sliderBox = new TQVBox(handleBox);
+	handleSizeSlider = new TQSlider(0, 4, 1, 0, TQSlider::Horizontal, sliderBox);
+	TQWhatsThis::add(handleSizeSlider,
 			i18n("Here you can change the size of the resize handle."));
 	handleSizeSlider->setTickInterval(1);
-	handleSizeSlider->setTickmarks(QSlider::Below);
-	connect(handleSizeSlider, SIGNAL(valueChanged(int)), this, SLOT(slotSelectionChanged()));
+	handleSizeSlider->setTickmarks(TQSlider::Below);
+	connect(handleSizeSlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotSelectionChanged()));
 
-	hbox = new QHBox(sliderBox);
+	hbox = new TQHBox(sliderBox);
 	hbox->setSpacing(6);
 
 	bool rtl = kapp->reverseLayout();
-	label1 = new QLabel(i18n("Small"), hbox);
+	label1 = new TQLabel(i18n("Small"), hbox);
 	label1->setAlignment(rtl ? AlignRight : AlignLeft);
-	label2 = new QLabel(i18n("Medium"), hbox);
+	label2 = new TQLabel(i18n("Medium"), hbox);
 	label2->setAlignment(AlignHCenter);
-	label3 = new QLabel(i18n("Large"), hbox);
+	label3 = new TQLabel(i18n("Large"), hbox);
 	label3->setAlignment(rtl ? AlignLeft : AlignRight);
 	
 	vbox->addWidget(handleBox);
 	vbox->addStretch(1);
 
 //        layout->setColSpacing(0, 30);
-        layout->addItem(new QSpacerItem(30, 10, QSizePolicy::Fixed, QSizePolicy::Fixed), 1, 0);
+        layout->addItem(new TQSpacerItem(30, 10, TQSizePolicy::Fixed, TQSizePolicy::Fixed), 1, 0);
         layout->addWidget(sliderBox, 1, 1);
 	
 	load(conf);

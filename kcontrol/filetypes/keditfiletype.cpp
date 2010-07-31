@@ -19,7 +19,7 @@
 #include "typeslistitem.h"
 #include "keditfiletype.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -35,14 +35,14 @@
 #endif
 
 FileTypeDialog::FileTypeDialog( KMimeType::Ptr mime )
-  : KDialogBase( 0L, 0, false, QString::null, /* Help | */ Cancel | Apply | Ok,
+  : KDialogBase( 0L, 0, false, TQString::null, /* Help | */ Cancel | Apply | Ok,
                  Ok, false )
 {
   init( mime, false );
 }
 
 FileTypeDialog::FileTypeDialog( KMimeType::Ptr mime, bool newItem )
-  : KDialogBase( 0L, 0, false, QString::null, /* Help | */ Cancel | Apply | Ok,
+  : KDialogBase( 0L, 0, false, TQString::null, /* Help | */ Cancel | Apply | Ok,
                  Ok, false )
 {
   init( mime, newItem );
@@ -51,18 +51,18 @@ FileTypeDialog::FileTypeDialog( KMimeType::Ptr mime, bool newItem )
 void FileTypeDialog::init( KMimeType::Ptr mime, bool newItem )
 {
   m_details = new FileTypeDetails( this );
-  QListView * dummyListView = new QListView( m_details );
+  TQListView * dummyListView = new TQListView( m_details );
   dummyListView->hide();
   m_item = new TypesListItem( dummyListView, mime, newItem );
   m_details->setTypeItem( m_item );
 
   // This code is very similar to kcdialog.cpp
   setMainWidget( m_details );
-  connect(m_details, SIGNAL(changed(bool)), this, SLOT(clientChanged(bool)));
+  connect(m_details, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(clientChanged(bool)));
   // TODO setHelp()
   enableButton(Apply, false);
 
-  connect( KSycoca::self(), SIGNAL( databaseChanged() ), SLOT( slotDatabaseChanged() ) );
+  connect( KSycoca::self(), TQT_SIGNAL( databaseChanged() ), TQT_SLOT( slotDatabaseChanged() ) );
 }
 
 void FileTypeDialog::save()
@@ -126,31 +126,31 @@ int main(int argc, char ** argv)
   if (args->count() == 0)
     KCmdLineArgs::usage();
 
-  QString arg = args->arg(0);
+  TQString arg = args->arg(0);
 
   bool createType = arg.startsWith( "*" );
 
   KMimeType::Ptr mime;
   
   if ( createType ) {
-    QString mimeString = "application/x-kdeuser%1";
-    QString loc;
+    TQString mimeString = "application/x-kdeuser%1";
+    TQString loc;
     int inc = 0;
     do {
       ++inc;
       loc = locateLocal( "mime", mimeString.arg( inc ) + ".desktop" );
     }
-    while ( QFile::exists( loc ) );
+    while ( TQFile::exists( loc ) );
 
-    QStringList patterns;
+    TQStringList patterns;
     if ( arg.length() > 2 )
 	patterns << arg.lower() << arg.upper();
-    QString comment;
+    TQString comment;
     if ( arg.startsWith( "*." ) && arg.length() >= 3 ) {
-	QString type = arg.mid( 3 ).prepend( arg[2].upper() );
+	TQString type = arg.mid( 3 ).prepend( arg[2].upper() );
         comment = i18n( "%1 File" ).arg( type );
     }
-    mime = new KMimeType( loc, mimeString.arg( inc ), QString::null, comment, patterns );
+    mime = new KMimeType( loc, mimeString.arg( inc ), TQString::null, comment, patterns );
   }
   else { 
     mime = KMimeType::mimeType( arg );

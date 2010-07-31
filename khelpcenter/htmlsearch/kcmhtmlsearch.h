@@ -39,14 +39,14 @@ class KHTMLSearchConfig : public KCModule
 
 public:
 
-  KHTMLSearchConfig(QWidget *parent = 0L, const char *name = 0L);
+  KHTMLSearchConfig(TQWidget *parent = 0L, const char *name = 0L);
   virtual ~KHTMLSearchConfig();
   
   void load();
   void save();
   void defaults();
 
-  QString quickHelp() const;
+  TQString quickHelp() const;
   
   int buttons();
 
@@ -56,8 +56,8 @@ protected slots:
   void configChanged();
   void addClicked(); 
   void delClicked();
-  void pathSelected(const QString &);
-  void urlClicked(const QString&);
+  void pathSelected(const TQString &);
+  void urlClicked(const TQString&);
   void generateIndex();
 
   void indexTerminated(KProcess *proc);
@@ -69,8 +69,8 @@ private:
   void loadLanguages();
 
   KURLRequester *htdigBin, *htsearchBin, *htmergeBin;
-  QCheckBox *indexKDE, *indexMan, *indexInfo;
-  QPushButton *addButton, *delButton, *runButton;
+  TQCheckBox *indexKDE, *indexMan, *indexInfo;
+  TQPushButton *addButton, *delButton, *runButton;
   KListBox *searchPaths;
   KLanguageCombo *language;
 

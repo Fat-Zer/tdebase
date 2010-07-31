@@ -30,11 +30,11 @@
 #include "FontEngine.h"
 #include "kxftconfig.h"
 #include <ksavefile.h>
-#include <qtextstream.h>
+#include <tqtextstream.h>
 #include <fstream>
 #include <string.h>
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 #include <klocale.h>
 #include <sys/types.h>
 #include <signal.h>
@@ -50,7 +50,7 @@ extern "C" unsigned int kfi_getPid(const char *proc, unsigned int ppid);
 namespace KFI
 {
 
-CXConfig::CXConfig(EType type, const QString &file)
+CXConfig::CXConfig(EType type, const TQString &file)
         : itsType(type),
           itsFileName(file),
           itsOk(false),
@@ -60,13 +60,13 @@ CXConfig::CXConfig(EType type, const QString &file)
     readConfig();
 }
 
-bool CXConfig::configureDir(const QString &dir)
+bool CXConfig::configureDir(const TQString &dir)
 {
     //
     // On systems without mkfontscale, the following will fail, so cant base
     // return value upon that - hence only check return value of mkfontdir
-    Misc::doCmd("mkfontscale", QFile::encodeName(dir));
-    return Misc::doCmd("mkfontdir", QFile::encodeName(dir));
+    Misc::doCmd("mkfontscale", TQFile::encodeName(dir));
+    return Misc::doCmd("mkfontdir", TQFile::encodeName(dir));
 }
 
 bool CXConfig::readConfig()
@@ -144,11 +144,11 @@ bool CXConfig::madeChanges()
     return false;
 }
  
-void CXConfig::addPath(const QString &dir, bool unscaled)
+void CXConfig::addPath(const TQString &dir, bool unscaled)
 {
     if(itsWritable)
     {
-        QString ds(Misc::dirSyntax(dir));
+        TQString ds(Misc::dirSyntax(dir));
 
         if(Misc::dExists(dir))
         {
@@ -184,7 +184,7 @@ void CXConfig::refreshPaths(bool xfs)
 
             if(xfsPid)
             { 
-                QString pid;
+                TQString pid;
 
                 kill(xfsPid, SIGUSR1);
             }
@@ -194,10 +194,10 @@ void CXConfig::refreshPaths(bool xfs)
         Misc::doCmd("xset", "fp", "rehash");
 }
 
-CXConfig::TPath * CXConfig::findPath(const QString &dir)
+CXConfig::TPath * CXConfig::findPath(const TQString &dir)
 {
     TPath   *path=NULL;
-    QString ds(Misc::dirSyntax(dir));
+    TQString ds(Misc::dirSyntax(dir));
  
     for(path=itsPaths.first(); path; path=itsPaths.next())
         if(path->dir==ds)
@@ -206,7 +206,7 @@ CXConfig::TPath * CXConfig::findPath(const QString &dir)
     return NULL;
 }
 
-static void processPath(char *str, QString &path, bool &unscaled)
+static void processPath(char *str, TQString &path, bool &unscaled)
 {
     char *unsc=NULL;
 
@@ -396,7 +396,7 @@ static char * getItem(char **start, char **end, const char *key, unsigned int &s
 
 bool CXConfig::processX11(bool read)
 {
-    std::ifstream x11(QFile::encodeName(itsFileName));
+    std::ifstream x11(TQFile::encodeName(itsFileName));
     bool          ok=false;
 
     if(x11)
@@ -437,7 +437,7 @@ bool CXConfig::processX11(bool read)
                         while(NULL!=(item=getItem(&pos, &filesEnd, "FontPath", size, !read, buffer)))
                             if(read) // Then save paths...
                             {
-                                QString path;
+                                TQString path;
                                 bool    unscaled;
 
                                 processPath(item, path, unscaled);
@@ -487,7 +487,7 @@ bool CXConfig::processX11(bool read)
                                 for(path=itsPaths.first(); path; path=itsPaths.next())
                                     if(TPath::DIR!=path->type || Misc::dExists(path->dir))
                                     {
-                                        QCString cPath(QFile::encodeName(Misc::xDirSyntax(path->dir)));
+                                        TQCString cPath(TQFile::encodeName(Misc::xDirSyntax(path->dir)));
 
                                         fputs("    FontPath \t\"", fstream);
                                         fwrite(cPath.data(), 1, cPath.length(), fstream);
@@ -612,7 +612,7 @@ static char * getXfsPath(char *buffer, unsigned int &totalSize, unsigned int off
 
 bool CXConfig::processXfs(bool read)
 {
-    std::ifstream xfs(QFile::encodeName(itsFileName));
+    std::ifstream xfs(TQFile::encodeName(itsFileName));
     bool          ok=false;
  
     if(xfs)
@@ -681,7 +681,7 @@ bool CXConfig::processXfs(bool read)
                                                     while(NULL!=(path=getXfsPath(cat, size, size-(cat-buffer))))
                                                         if(read)
                                                         {
-                                                            QString str;
+                                                            TQString str;
                                                             bool    unscaled;
                                                             processPath(path, str, unscaled);
  
@@ -706,7 +706,7 @@ bool CXConfig::processXfs(bool read)
                                                             for(p=itsPaths.first(); p; p=itsPaths.next())
                                                                 if(Misc::dExists(p->dir))
                                                                 {
-                                                                    QCString cPath(QFile::encodeName(Misc::xDirSyntax(p->dir)));
+                                                                    TQCString cPath(TQFile::encodeName(Misc::xDirSyntax(p->dir)));
 
                                                                     if(!first)
                                                                     {
@@ -744,11 +744,11 @@ bool CXConfig::processXfs(bool read)
 }
 
 
-CXConfig::TPath::EType CXConfig::TPath::getType(const QString &d)
+CXConfig::TPath::EType CXConfig::TPath::getType(const TQString &d)
 {
-    QString str(d);
+    TQString str(d);
 
-    str.replace(QRegExp("\\s*"), "");
+    str.replace(TQRegExp("\\s*"), "");
 
     return 0==str.find("unix/:")
                ? FONT_SERVER

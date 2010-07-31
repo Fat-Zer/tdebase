@@ -15,8 +15,8 @@
 
 #include <assert.h>
 
-#include <qptrqueue.h>
-#include <qmap.h>
+#include <tqptrqueue.h>
+#include <tqmap.h>
 
 #include <kwinmodule.h>
 #include <kdebug.h>
@@ -40,9 +40,9 @@ struct LayoutState {
 
 // LayoutMap is used for per-window or per-application switching policy
 class LayoutMap {
-	typedef QPtrQueue<LayoutState> LayoutQueue;
-	typedef QMap<WId, LayoutQueue> WinLayoutMap;
-	typedef QMap<QString, LayoutQueue> WinClassLayoutMap;
+	typedef TQPtrQueue<LayoutState> LayoutQueue;
+	typedef TQMap<WId, LayoutQueue> WinLayoutMap;
+	typedef TQMap<TQString, LayoutQueue> WinClassLayoutMap;
 
 public:
 	LayoutMap(const KxkbConfig& kxkbConfig);
@@ -64,7 +64,7 @@ private:
 	
 	const KxkbConfig& m_kxkbConfig;
 	WId m_currentWinId;
-	QString m_currentWinClass; // only for SWITCH_POLICY_WIN_CLASS
+	TQString m_currentWinClass; // only for SWITCH_POLICY_WIN_CLASS
 	
 	void initLayoutQueue(LayoutQueue& layoutQueue);
 	LayoutQueue& getCurrentLayoutQueue(WId winId);

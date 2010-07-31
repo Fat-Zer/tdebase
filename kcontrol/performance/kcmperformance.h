@@ -32,7 +32,7 @@ class Config
     {
     Q_OBJECT
     public:
-        Config( QWidget* parent_P, const char* name_P );
+        Config( TQWidget* parent_P, const char* name_P );
         virtual void load();
         virtual void load( bool useDefaults );
         virtual void save();
@@ -47,7 +47,7 @@ class KonquerorConfig
     {
     Q_OBJECT
     public:
-        KonquerorConfig( QWidget* parent_P, const char* name_P );
+        KonquerorConfig( TQWidget* parent_P, const char* name_P );
         virtual void load();
         virtual void load( bool useDefaults );
         virtual void save();

@@ -34,8 +34,8 @@
 
 #include "response.h"
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 namespace KioSMTP {
 
@@ -63,18 +63,18 @@ namespace KioSMTP {
   class TransactionState {
   public:
     struct RecipientRejection {
-      RecipientRejection( const QString & who=QString::null,
-			  const QString & why=QString::null )
+      RecipientRejection( const TQString & who=TQString::null,
+			  const TQString & why=TQString::null )
 	: recipient( who ), reason( why ) {}
-      QString recipient;
-      QString reason;
+      TQString recipient;
+      TQString reason;
 #ifdef KIOSMTP_COMPARATORS
       bool operator==( const RecipientRejection & other ) const {
 	return recipient == other.recipient && reason == other.reason;
       }
 #endif
     };
-    typedef QValueList<RecipientRejection> RejectedRecipientList;
+    typedef TQValueList<RecipientRejection> RejectedRecipientList;
 
     TransactionState( bool rcptToDenyIsFailure=true )
       : mErrorCode( 0 ),
@@ -96,7 +96,7 @@ namespace KioSMTP {
 	untidy connection shutdown is in order (ie. @ref
 	smtp_close(false)). Fatal failure is handled immediately */
     bool failedFatally() const { return mFailedFatally; }
-    void setFailedFatally( int code=0, const QString & msg=QString::null );
+    void setFailedFatally( int code=0, const TQString & msg=TQString::null );
 
     /** @return whether the transaction was completed successfully */
     bool complete() const { return mComplete; }
@@ -106,10 +106,10 @@ namespace KioSMTP {
 	failed, or 0 otherwise */
     int errorCode() const;
     /** @return an appropriate error message in case the transaction
-	failed or QString::null otherwise */
-    QString errorMessage() const;
+	failed or TQString::null otherwise */
+    TQString errorMessage() const;
 
-    void setMailFromFailed( const QString & addr, const Response & r );
+    void setMailFromFailed( const TQString & addr, const Response & r );
 
     bool dataCommandIssued() const { return mDataCommandIssued; }
     void setDataCommandIssued( bool issued ) { mDataCommandIssued = issued; }
@@ -137,7 +137,7 @@ namespace KioSMTP {
       return mRejectedRecipients;
     }
     void addRejectedRecipient( const RecipientRejection & r );
-    void addRejectedRecipient( const QString & who, const QString & why ) {
+    void addRejectedRecipient( const TQString & who, const TQString & why ) {
       addRejectedRecipient( RecipientRejection( who, why ) );
     }
 
@@ -169,7 +169,7 @@ namespace KioSMTP {
   private:
     RejectedRecipientList mRejectedRecipients;
     Response mDataResponse;
-    QString mErrorMessage;
+    TQString mErrorMessage;
     int mErrorCode;
     bool mRcptToDenyIsFailure;
     bool mAtLeastOneRecipientWasAccepted;

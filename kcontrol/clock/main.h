@@ -33,13 +33,13 @@ class KclockModule : public KCModule
   Q_OBJECT
 
 public:
-  KclockModule(QWidget *parent, const char *name, const QStringList &);
+  KclockModule(TQWidget *parent, const char *name, const TQStringList &);
   
   void	save();
   void	load();
 
 private:
-  QTabWidget   *tab;
+  TQTabWidget   *tab;
   Tzone	*tzone;
   Dtime	*dtime;
 };

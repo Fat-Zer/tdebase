@@ -21,7 +21,7 @@
 #include "kdebug.h"
 #include "widgets.h"
 
-ProgressDialog::ProgressDialog(QWidget* parent, const QString& caption, const QString& text, int totalSteps)
+ProgressDialog::ProgressDialog(TQWidget* parent, const TQString& caption, const TQString& text, int totalSteps)
     : DCOPObject( "ProgressDialog" ), KProgressDialog(parent, 0, caption, text, false)
 {
     setAutoClose( false );
@@ -54,7 +54,7 @@ int ProgressDialog::progress() const
     return progressBar()->progress();
 }
 
-void ProgressDialog::setLabel(const QString& label)
+void ProgressDialog::setLabel(const TQString& label)
 {
     KProgressDialog::setLabel( label );
 }

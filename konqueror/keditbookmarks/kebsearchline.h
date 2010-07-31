@@ -20,33 +20,33 @@
 #define __kebsearchline_h
 
 #include <klistviewsearchline.h>
-#include <qobject.h>
+#include <tqobject.h>
 
 class KEBSearchLine : public KListViewSearchLine
 {
     Q_OBJECT
 public:
-    KEBSearchLine(QWidget *parent = 0, KListView *listView = 0, const char *name = 0);
+    KEBSearchLine(TQWidget *parent = 0, KListView *listView = 0, const char *name = 0);
 
-    KEBSearchLine(QWidget *parent, const char *name);
+    KEBSearchLine(TQWidget *parent, const char *name);
 
     virtual ~KEBSearchLine();
 
     enum modes { EXACTLY, AND, OR } mmode;
     modes mode();
     void setMode(modes m);
-    virtual void updateSearch(const QString &s = QString::null);
+    virtual void updateSearch(const TQString &s = TQString::null);
 
 signals:
     void searchUpdated();
 
 protected:
 
-    virtual bool itemMatches(const QListViewItem *item, const QString &s) const;
+    virtual bool itemMatches(const TQListViewItem *item, const TQString &s) const;
 
 private:
-    mutable QString lastpattern; // what was cached
-    mutable QStringList splitted; // cache of the splitted string
+    mutable TQString lastpattern; // what was cached
+    mutable TQStringList splitted; // cache of the splitted string
 };
 
 #endif

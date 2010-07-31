@@ -20,8 +20,8 @@
 #ifndef __IKWSOPTS_H___
 #define __IKWSOPTS_H___
 
-#include <qlayout.h>
-#include <qtabwidget.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
 
 #include <kcmodule.h>
 #include <kservice.h>
@@ -35,13 +35,13 @@ class FilterOptions : public KCModule
     Q_OBJECT
 
 public:
-    FilterOptions(KInstance *instance, QWidget *parent = 0, const char *name = 0);
+    FilterOptions(KInstance *instance, TQWidget *parent = 0, const char *name = 0);
 
     void load();
     void load( bool useDefaults );
     void save();
     void defaults();
-    QString quickHelp() const;
+    TQString quickHelp() const;
 
 protected slots:
     void configChanged();
@@ -63,9 +63,9 @@ private:
     // The names of the providers that the user deleted,
     // these are marked as deleted in the user's homedirectory
     // on save if a global service file exists for it.
-    QStringList m_deletedProviders;
-    QMap <QString, QString> m_defaultEngineMap;
-    QStringList m_favoriteEngines;
+    TQStringList m_deletedProviders;
+    TQMap <TQString, TQString> m_defaultEngineMap;
+    TQStringList m_favoriteEngines;
 
     FilterOptionsUI* m_dlg;
 };

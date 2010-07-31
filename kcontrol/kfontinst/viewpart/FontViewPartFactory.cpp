@@ -60,15 +60,15 @@ CFontViewPartFactory::~CFontViewPartFactory()
     theirInstance=0L;
 }
 
-QObject * CFontViewPartFactory::createObject(QObject *parent, const char *name, const char *, const QStringList &)
+TQObject * CFontViewPartFactory::createObject(TQObject *parent, const char *name, const char *, const TQStringList &)
 {
     if(parent && !parent->isWidgetType())
     {
-        kdDebug() << "CFontViewPartFactory: parent does not inherit QWidget" << endl;
+        kdDebug() << "CFontViewPartFactory: parent does not inherit TQWidget" << endl;
         return 0L;
     }
 
-    return new CFontViewPart((QWidget*) parent, name);
+    return new CFontViewPart((TQWidget*) parent, name);
 }
 
 KInstance* CFontViewPartFactory::instance()

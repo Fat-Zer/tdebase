@@ -26,7 +26,7 @@
 #define __MAIN_H__
 
 
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 #include <kcmodule.h>
 
 class IconModule : public KCModule
@@ -34,18 +34,18 @@ class IconModule : public KCModule
   Q_OBJECT
 
 public:
-  IconModule(QWidget *parent, const char *name, const QStringList &);
+  IconModule(TQWidget *parent, const char *name, const TQStringList &);
 
   void load();
   void save();
   void defaults();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 protected slots:
   void moduleChanged(bool state);
 
 private:
-  QTabWidget   *tab;
+  TQTabWidget   *tab;
 
   KCModule *tab1;
   KCModule *tab2;

@@ -28,26 +28,26 @@ public:
     SearchProvider() : m_dirty(false) {};
     SearchProvider(const KService::Ptr service);
 
-    const QString &desktopEntryName() const { return m_desktopEntryName; }
-    const QString &name() const { return m_name; }
-    const QString &query() const { return m_query; }
-    const QStringList &keys() const { return m_keys; }
-    const QString &charset() const { return m_charset; }
+    const TQString &desktopEntryName() const { return m_desktopEntryName; }
+    const TQString &name() const { return m_name; }
+    const TQString &query() const { return m_query; }
+    const TQStringList &keys() const { return m_keys; }
+    const TQString &charset() const { return m_charset; }
     bool isDirty() const { return m_dirty; }
 
-    void setName(const QString &);
-    void setQuery(const QString &);
-    void setKeys(const QStringList &);
-    void setCharset(const QString &);
+    void setName(const TQString &);
+    void setQuery(const TQString &);
+    void setKeys(const TQStringList &);
+    void setCharset(const TQString &);
 
-    static SearchProvider *findByDesktopName(const QString &);
-    static SearchProvider *findByKey(const QString &);
+    static SearchProvider *findByDesktopName(const TQString &);
+    static SearchProvider *findByKey(const TQString &);
 private:
-    QString m_desktopEntryName;
-    QString m_name;
-    QString m_query;
-    QStringList m_keys;
-    QString m_charset;
+    TQString m_desktopEntryName;
+    TQString m_name;
+    TQString m_query;
+    TQStringList m_keys;
+    TQString m_charset;
 
     bool m_dirty;
 };

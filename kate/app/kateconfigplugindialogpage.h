@@ -25,7 +25,7 @@
 
 #include <klistview.h>
 
-#include <qvbox.h>
+#include <tqvbox.h>
 
 class KatePluginListItem;
 
@@ -36,7 +36,7 @@ class KatePluginListView : public KListView
   friend class KatePluginListItem;
 
   public:
-    KatePluginListView (QWidget *parent = 0, const char *name = 0);
+    KatePluginListView (TQWidget *parent = 0, const char *name = 0);
 
   signals:
     void stateChange(KatePluginListItem *, bool);
@@ -50,7 +50,7 @@ class KateConfigPluginPage: public QVBox
   Q_OBJECT
 
   public:
-    KateConfigPluginPage(QWidget *parent, class KateConfigDialog *dialog);
+    KateConfigPluginPage(TQWidget *parent, class KateConfigDialog *dialog);
     ~KateConfigPluginPage(){;};
 
   private:

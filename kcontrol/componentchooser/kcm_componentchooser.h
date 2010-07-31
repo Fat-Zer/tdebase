@@ -26,7 +26,7 @@ class KCMComponentChooser : public KCModule
 {
     Q_OBJECT
 public:
-    KCMComponentChooser( QWidget *parent = 0, const char *name = 0 );
+    KCMComponentChooser( TQWidget *parent = 0, const char *name = 0 );
  
     void load();
     void save();

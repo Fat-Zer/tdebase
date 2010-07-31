@@ -33,7 +33,7 @@ class KPagerConfigDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    KPagerConfigDialog(QWidget *parent);
+    KPagerConfigDialog(TQWidget *parent);
 
 public slots:
     void setShowName(bool show);
@@ -59,13 +59,13 @@ public:
     static bool m_windowDragging;
 
 protected:
-    QCheckBox *m_chkShowName;
-    QCheckBox *m_chkShowNumber;
-    QCheckBox *m_chkShowBackground;
-    QCheckBox *m_chkShowWindows;
-    QButtonGroup *m_grpWindowDrawMode;
-    QButtonGroup *m_grpLayoutType;
-    QCheckBox* m_chkWindowDragging;
+    TQCheckBox *m_chkShowName;
+    TQCheckBox *m_chkShowNumber;
+    TQCheckBox *m_chkShowBackground;
+    TQCheckBox *m_chkShowWindows;
+    TQButtonGroup *m_grpWindowDrawMode;
+    TQButtonGroup *m_grpLayoutType;
+    TQCheckBox* m_chkWindowDragging;
     bool m_tmpShowName;
     bool m_tmpShowNumber;
     bool m_tmpShowBackground;

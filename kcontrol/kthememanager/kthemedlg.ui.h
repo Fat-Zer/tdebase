@@ -8,7 +8,7 @@
 *****************************************************************************/
 #include <krun.h>
 
-void KThemeDlg::startKonqui( const QString & url )
+void KThemeDlg::startKonqui( const TQString & url )
 {
     (void) new KRun(url);
 }

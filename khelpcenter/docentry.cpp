@@ -1,5 +1,5 @@
-#include <qregexp.h>
-#include <qfileinfo.h>
+#include <tqregexp.h>
+#include <tqfileinfo.h>
 
 #include <kdebug.h>
 #include <kdesktopfile.h>
@@ -18,8 +18,8 @@ DocEntry::DocEntry()
   init();
 }
 
-DocEntry::DocEntry( const QString &name, const QString &url,
-                    const QString &icon )
+DocEntry::DocEntry( const TQString &name, const TQString &url,
+                    const TQString &icon )
 {
   init();
 
@@ -37,32 +37,32 @@ void DocEntry::init()
   mNextSibling = 0;
 }
 
-void DocEntry::setName( const QString &name )
+void DocEntry::setName( const TQString &name )
 {
   mName = name;
 }
 
-QString DocEntry::name() const
+TQString DocEntry::name() const
 {
   return mName;
 }
 
-void DocEntry::setSearch( const QString &search )
+void DocEntry::setSearch( const TQString &search )
 {
   mSearch = search;
 }
 
-QString DocEntry::search() const
+TQString DocEntry::search() const
 {
   return mSearch;
 }
 
-void DocEntry::setIcon( const QString &icon )
+void DocEntry::setIcon( const TQString &icon )
 {
   mIcon = icon;
 }
 
-QString DocEntry::icon() const
+TQString DocEntry::icon() const
 {
   if ( !mIcon.isEmpty() ) return mIcon;
 
@@ -72,67 +72,67 @@ QString DocEntry::icon() const
   else return "document2";
 }
 
-void DocEntry::setUrl( const QString &url )
+void DocEntry::setUrl( const TQString &url )
 {
   mUrl = url;
 }
 
-QString DocEntry::url() const
+TQString DocEntry::url() const
 {
   if ( !mUrl.isEmpty() ) return mUrl;
 
-  if ( identifier().isEmpty() ) return QString::null;
+  if ( identifier().isEmpty() ) return TQString::null;
 
   return "khelpcenter:" + identifier();
 }
 
-void DocEntry::setInfo( const QString &info )
+void DocEntry::setInfo( const TQString &info )
 {
   mInfo = info;
 }
 
-QString DocEntry::info() const
+TQString DocEntry::info() const
 {
   return mInfo;
 }
 
-void DocEntry::setLang( const QString &lang )
+void DocEntry::setLang( const TQString &lang )
 {
   mLang = lang;
 }
 
-QString DocEntry::lang() const
+TQString DocEntry::lang() const
 {
   return mLang;
 }
 
-void DocEntry::setIdentifier( const QString &identifier )
+void DocEntry::setIdentifier( const TQString &identifier )
 {
   mIdentifier = identifier;
 }
 
-QString DocEntry::identifier() const
+TQString DocEntry::identifier() const
 {
   if ( mIdentifier.isEmpty() ) mIdentifier = KApplication::randomString( 15 );
   return mIdentifier;
 }
 
-void DocEntry::setIndexer( const QString &indexer )
+void DocEntry::setIndexer( const TQString &indexer )
 {
   mIndexer = indexer;
 }
 
-QString DocEntry::indexer() const
+TQString DocEntry::indexer() const
 {
   return mIndexer;
 }
 
-void DocEntry::setIndexTestFile( const QString &indexTestFile )
+void DocEntry::setIndexTestFile( const TQString &indexTestFile )
 {
   mIndexTestFile = indexTestFile;
 }
 
-QString DocEntry::indexTestFile() const
+TQString DocEntry::indexTestFile() const
 {
   return mIndexTestFile;
 }
@@ -147,27 +147,27 @@ int DocEntry::weight() const
   return mWeight;
 }
 
-void DocEntry::setSearchMethod( const QString &method )
+void DocEntry::setSearchMethod( const TQString &method )
 {
   mSearchMethod = method;
 }
 
-QString DocEntry::searchMethod() const
+TQString DocEntry::searchMethod() const
 {
   return mSearchMethod;
 }
 
-void DocEntry::setDocumentType( const QString &str )
+void DocEntry::setDocumentType( const TQString &str )
 {
   mDocumentType = str;
 }
 
-QString DocEntry::documentType() const
+TQString DocEntry::documentType() const
 {
   return mDocumentType;
 }
 
-QString DocEntry::khelpcenterSpecial() const
+TQString DocEntry::khelpcenterSpecial() const
 {
   return mKhelpcenterSpecial;
 }
@@ -202,7 +202,7 @@ bool DocEntry::isDirectory() const
   return mDirectory;
 }
 
-bool DocEntry::readFromFile( const QString &fileName )
+bool DocEntry::readFromFile( const TQString &fileName )
 {
   KDesktopFile file( fileName );
 
@@ -215,7 +215,7 @@ bool DocEntry::readFromFile( const QString &fileName )
   mLang = file.readEntry( "Lang", "en" );
   mIdentifier = file.readEntry( "X-DOC-Identifier" );
   if ( mIdentifier.isEmpty() ) {
-    QFileInfo fi( fileName );
+    TQFileInfo fi( fileName );
     mIdentifier = fi.baseName( true );
   }
   mIndexer = file.readEntry( "X-DOC-Indexer" );
@@ -233,9 +233,9 @@ bool DocEntry::readFromFile( const QString &fileName )
   return true;
 }
 
-bool DocEntry::indexExists( const QString &indexDir )
+bool DocEntry::indexExists( const TQString &indexDir )
 {
-  QString testFile;
+  TQString testFile;
   if ( mIndexTestFile.isEmpty() ) {
     testFile = identifier() + ".exists";
   } else {
@@ -244,7 +244,7 @@ bool DocEntry::indexExists( const QString &indexDir )
 
   if ( !testFile.startsWith( "/" ) ) testFile = indexDir + "/" + testFile;
 
-  return QFile::exists( testFile );
+  return TQFile::exists( testFile );
 }
 
 bool DocEntry::docExists() const

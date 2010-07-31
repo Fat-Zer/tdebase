@@ -21,9 +21,9 @@
 #ifndef KEYTRANS_H
 #define KEYTRANS_H
 
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qiodevice.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqiodevice.h>
 
 #define BITS_NewLine    0
 #define BITS_BsHack     1
@@ -53,27 +53,27 @@ class KeyTrans
    friend class KeytabReader;
    public:
       static KeyTrans* find(int numb);
-      static KeyTrans* find(const QString &id);
+      static KeyTrans* find(const TQString &id);
       static int count();
       static void loadAll();
 
-      KeyTrans(const QString& p);
+      KeyTrans(const TQString& p);
       ~KeyTrans();
       bool findEntry(int key, int bits, int* cmd, const char** txt, int* len,
                      bool* metaspecified);
-      const QString& hdr()         {if (!m_fileRead) readConfig(); return m_hdr;}
+      const TQString& hdr()         {if (!m_fileRead) readConfig(); return m_hdr;}
       int numb()                   {return m_numb;}
-      const QString& id() { return m_id;}
+      const TQString& id() { return m_id;}
 
       class KeyEntry
       {
          public:
-            KeyEntry(int ref, int key, int bits, int mask, int cmd, QString txt);
+            KeyEntry(int ref, int key, int bits, int mask, int cmd, TQString txt);
             ~KeyEntry();
             bool matches(int key, int bits, int mask);
             bool metaspecified(void);
             bool anymodspecified(void);
-            QString text();
+            TQString text();
             int ref;
          private:
             int     key;
@@ -81,17 +81,17 @@ class KeyTrans
             int     mask;
          public:
             int cmd;
-            QString txt;
+            TQString txt;
       };
 
    private:
-      KeyEntry* addEntry(int ref, int key, int bits, int mask, int cmd, QString txt);
+      KeyEntry* addEntry(int ref, int key, int bits, int mask, int cmd, TQString txt);
       void addKeyTrans();
       void readConfig();
-      QPtrList<KeyEntry> tableX;
-      QString m_hdr;
-      QString m_path;
-      QString m_id;
+      TQPtrList<KeyEntry> tableX;
+      TQString m_hdr;
+      TQString m_path;
+      TQString m_id;
       int m_numb;
       bool m_fileRead;
       KeyTrans();

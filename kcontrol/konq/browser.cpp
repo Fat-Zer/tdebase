@@ -16,9 +16,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
-#include <qtabwidget.h>
-#include <qfile.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
+#include <tqfile.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -30,11 +30,11 @@
 #include "previews.h"
 #include "browser.h"
 
-KBrowserOptions::KBrowserOptions(KConfig *config, QString group, QWidget *parent, const char *name)
+KBrowserOptions::KBrowserOptions(KConfig *config, TQString group, TQWidget *parent, const char *name)
     : KCModule( parent, "kcmkonq" ) 
 {
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  QTabWidget *tab = new QTabWidget(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  TQTabWidget *tab = new TQTabWidget(this);
   layout->addWidget(tab);
 
   appearance = new KonqFontOptions(config, group, false, tab, name);
@@ -57,14 +57,14 @@ KBrowserOptions::KBrowserOptions(KConfig *config, QString group, QWidget *parent
     tab->addTab(kuick, i18n("&Quick Copy && Move"));
   }
 
-  connect(appearance, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
-  connect(behavior, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
-  connect(previews, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
+  connect(appearance, TQT_SIGNAL(changed(bool)), this, TQT_SIGNAL(changed(bool)));
+  connect(behavior, TQT_SIGNAL(changed(bool)), this, TQT_SIGNAL(changed(bool)));
+  connect(previews, TQT_SIGNAL(changed(bool)), this, TQT_SIGNAL(changed(bool)));
   if (kuick)
-     connect(kuick, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
+     connect(kuick, TQT_SIGNAL(changed(bool)), this, TQT_SIGNAL(changed(bool)));
 
-  connect(tab, SIGNAL(currentChanged(QWidget *)), 
-          this, SIGNAL(quickHelpChanged()));
+  connect(tab, TQT_SIGNAL(currentChanged(TQWidget *)), 
+          this, TQT_SIGNAL(quickHelpChanged()));
   m_tab = tab;
 }
 
@@ -95,15 +95,15 @@ void KBrowserOptions::save()
      kuick->save();
 }
 
-QString KBrowserOptions::quickHelp() const
+TQString KBrowserOptions::quickHelp() const
 {
-  QWidget *w = m_tab->currentPage();
+  TQWidget *w = m_tab->currentPage();
   if (w->inherits("KCModule"))
   {
      KCModule *m = static_cast<KCModule *>(w);
      return m->quickHelp();
   }
-  return QString::null;
+  return TQString::null;
 }
 
 #include "browser.moc"

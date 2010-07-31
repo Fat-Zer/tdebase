@@ -31,14 +31,14 @@ class KlipperApplet : public KPanelApplet
 {
   Q_OBJECT
 public:
-    KlipperApplet(const QString& configFile, Type t = Normal, int actions = 0,
-                  QWidget *parent = 0, const char *name = 0);
+    KlipperApplet(const TQString& configFile, Type t = Normal, int actions = 0,
+                  TQWidget *parent = 0, const char *name = 0);
     ~KlipperApplet();
 
     int widthForHeight(int h) const;
     int heightForWidth(int w) const;
 protected:
-    void resizeEvent( QResizeEvent* );
+    void resizeEvent( TQResizeEvent* );
     void preferences();
     void help();
     void about();
@@ -55,7 +55,7 @@ class KlipperAppletWidget : public KlipperWidget
 k_dcop:
     int newInstance();
 public:
-    KlipperAppletWidget( QWidget* parent = NULL );
+    KlipperAppletWidget( TQWidget* parent = NULL );
     virtual ~KlipperAppletWidget();
 private:
     void init();

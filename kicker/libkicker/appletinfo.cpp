@@ -21,18 +21,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 #include <kdesktopfile.h>
 #include <kapplication.h>
 
 #include "appletinfo.h"
 
-AppletInfo::AppletInfo( const QString& deskFile, const QString& configFile, const AppletInfo::AppletType type)
+AppletInfo::AppletInfo( const TQString& deskFile, const TQString& configFile, const AppletInfo::AppletType type)
   : m_type (type),
     m_unique(true),
     m_hidden(false)
 {
-    QFileInfo fi(deskFile);
+    TQFileInfo fi(deskFile);
     m_desktopFile = fi.fileName();
 
     const char* resource = "applets";
@@ -98,15 +98,15 @@ bool AppletInfo::operator!=( const AppletInfo& rhs) const
 
 bool AppletInfo::operator<( const AppletInfo& rhs ) const
 {
-    return ( QString::localeAwareCompare( name(), rhs.name() ) < 0 );
+    return ( TQString::localeAwareCompare( name(), rhs.name() ) < 0 );
 }
 
 bool AppletInfo::operator> ( const AppletInfo& rhs ) const
 {
-    return ( QString::localeAwareCompare( name(), rhs.name() ) > 0 );
+    return ( TQString::localeAwareCompare( name(), rhs.name() ) > 0 );
 }
 
 bool AppletInfo::operator<= ( const AppletInfo& rhs ) const
 {
-    return ( QString::localeAwareCompare( name(), rhs.name() ) <= 0 );
+    return ( TQString::localeAwareCompare( name(), rhs.name() ) <= 0 );
 }

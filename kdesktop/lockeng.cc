@@ -15,7 +15,7 @@
 #include <kservicegroup.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <dcopclient.h>
 #include <assert.h>
 
@@ -35,7 +35,7 @@ extern xautolock_corner_t xautolock_corners[ 4 ];
 //
 SaverEngine::SaverEngine()
     : DCOPObject("KScreensaverIface"),
-      QWidget(),
+      TQWidget(),
       mBlankOnly(false)
 {
     // Save X screensaver parameters
@@ -46,8 +46,8 @@ SaverEngine::SaverEngine()
     mXAutoLock = 0;
     mEnabled = false;
 
-    connect(&mLockProcess, SIGNAL(processExited(KProcess *)),
-                        SLOT(lockProcessExited()));
+    connect(&mLockProcess, TQT_SIGNAL(processExited(KProcess *)),
+                        TQT_SLOT(lockProcessExited()));
 
     configure();
 }
@@ -92,12 +92,12 @@ void SaverEngine::lock()
 
 void SaverEngine::processLockTransactions()
 {
-    for( QValueVector< DCOPClientTransaction* >::ConstIterator it = mLockTransactions.begin();
+    for( TQValueVector< DCOPClientTransaction* >::ConstIterator it = mLockTransactions.begin();
          it != mLockTransactions.end();
          ++it )
     {
-        QCString replyType = "void";
-        QByteArray arr;
+        TQCString replyType = "void";
+        TQByteArray arr;
         kapp->dcopClient()->endTransaction( *it, replyType, arr );
     }
     mLockTransactions.clear();
@@ -153,7 +153,7 @@ bool SaverEngine::enable( bool e )
     {
 	if ( !mXAutoLock ) {
 	    mXAutoLock = new XAutoLock();
-	    connect(mXAutoLock, SIGNAL(timeout()), SLOT(idleTimeout()));
+	    connect(mXAutoLock, TQT_SIGNAL(timeout()), TQT_SLOT(idleTimeout()));
 	}
         mXAutoLock->setTimeout(mTimeout);
         mXAutoLock->setDPMS(true);
@@ -241,14 +241,14 @@ bool SaverEngine::startLockProcess( LockType lock_type )
         return true;
 
     kdDebug(1204) << "SaverEngine: starting saver" << endl;
-    emitDCOPSignal("KDE_start_screensaver()", QByteArray());
+    emitDCOPSignal("KDE_start_screensaver()", TQByteArray());
 
     if (mLockProcess.isRunning())
     {
         stopLockProcess();
     }
     mLockProcess.clearArguments();
-    QString path = KStandardDirs::findExe( "kdesktop_lock" );
+    TQString path = KStandardDirs::findExe( "kdesktop_lock" );
     if( path.isEmpty())
     {
 	kdDebug( 1204 ) << "Can't find kdesktop_lock!" << endl;
@@ -258,16 +258,16 @@ bool SaverEngine::startLockProcess( LockType lock_type )
     switch( lock_type )
     {
 	case ForceLock:
-    	    mLockProcess << QString( "--forcelock" );
+    	    mLockProcess << TQString( "--forcelock" );
 	  break;
 	case DontLock:
-	    mLockProcess << QString( "--dontlock" );
+	    mLockProcess << TQString( "--dontlock" );
 	  break;
 	default:
 	  break;
     }
     if (mBlankOnly)
-	    mLockProcess << QString( "--blank" );
+	    mLockProcess << TQString( "--blank" );
 
     if (mLockProcess.start() == false )
     {
@@ -296,7 +296,7 @@ void SaverEngine::stopLockProcess()
         return;
     }
     kdDebug(1204) << "SaverEngine: stopping lock" << endl;
-    emitDCOPSignal("KDE_stop_screensaver()", QByteArray());
+    emitDCOPSignal("KDE_stop_screensaver()", TQByteArray());
 
     mLockProcess.kill();
 
@@ -318,7 +318,7 @@ void SaverEngine::lockProcessExited()
     kdDebug(1204) << "SaverEngine: lock exited" << endl;
     if( mState == Waiting )
 	return;
-    emitDCOPSignal("KDE_stop_screensaver()", QByteArray());
+    emitDCOPSignal("KDE_stop_screensaver()", TQByteArray());
     if (mEnabled)
     {
         if (mXAutoLock)

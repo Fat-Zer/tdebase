@@ -17,23 +17,23 @@ class KIOPreferences : public KCModule
     Q_OBJECT
 
 public:
-    KIOPreferences( QWidget* parent = 0);
+    KIOPreferences( TQWidget* parent = 0);
     ~KIOPreferences();
 
     void load();
     void save();
     void defaults();
 
-    QString quickHelp() const;
+    TQString quickHelp() const;
 
 protected slots:
     void configChanged() { emit changed(true); }
 
 private:
-    QVGroupBox* gb_Ftp;
-    QVGroupBox* gb_Timeout;
-    QCheckBox* cb_ftpEnablePasv;
-    QCheckBox* cb_ftpMarkPartial;
+    TQVGroupBox* gb_Ftp;
+    TQVGroupBox* gb_Timeout;
+    TQCheckBox* cb_ftpEnablePasv;
+    TQCheckBox* cb_ftpMarkPartial;
 
     KIntNumInput* sb_socketRead;
     KIntNumInput* sb_proxyConnect;

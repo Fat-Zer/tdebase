@@ -22,7 +22,7 @@
 
 #include "historyitem.h"
 
-#include <qmap.h>
+#include <tqmap.h>
 #include <kurl.h>
 
 /**
@@ -31,18 +31,18 @@
 class HistoryURLItem : public HistoryItem
 {
 public:
-    HistoryURLItem( const KURL::List &urls, QMap<QString, QString> metaData, bool cut );
-    virtual QString text() const;
+    HistoryURLItem( const KURL::List &urls, TQMap<TQString, TQString> metaData, bool cut );
+    virtual TQString text() const;
     virtual bool operator==( const HistoryItem& rhs) const;
-    virtual QMimeSource* mimeSource() const;
+    virtual TQMimeSource* mimeSource() const;
 
     /**
      * Write object on datastream
      */
-    virtual void write( QDataStream& stream ) const;
+    virtual void write( TQDataStream& stream ) const;
 private:
     KURL::List urls;
-    QMap<QString, QString> metaData;
+    TQMap<TQString, TQString> metaData;
     bool cut;
 };
 

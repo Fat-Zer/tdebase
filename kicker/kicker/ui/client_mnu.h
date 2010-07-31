@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef PANEL_CLIENTMENU_H
 #define PANEL_CLIENTMENU_H
 
-#include <qstringlist.h>
-#include <qpopupmenu.h>
+#include <tqstringlist.h>
+#include <tqpopupmenu.h>
 
 #include <dcopobject.h>
 
@@ -36,46 +36,46 @@ class PanelKMenu;
 // also manages the toplevel K Button Menu.
 
 /**
- * Small additions to QPopupMenu to contain data we need for DCop handling
+ * Small additions to TQPopupMenu to contain data we need for DCop handling
  */
-class KickerClientMenu : public QPopupMenu, DCOPObject
+class KickerClientMenu : public TQPopupMenu, DCOPObject
 {
     Q_OBJECT
 public:
-    KickerClientMenu( QWidget *parent=0, const char *name=0);
+    KickerClientMenu( TQWidget *parent=0, const char *name=0);
     ~KickerClientMenu();
 
     // dcop exported
     void clear();
-    void insertItem( QPixmap icon, QString text, int id );
-    void insertItem( QString text, int id );
+    void insertItem( TQPixmap icon, TQString text, int id );
+    void insertItem( TQString text, int id );
 
-    QCString insertMenu( QPixmap icon, QString test, int id );	
+    TQCString insertMenu( TQPixmap icon, TQString test, int id );	
 
     // dcop signals:
     //     void activated(int)
 
-    void connectDCOPSignal( QCString signal, QCString appId, QCString objId );
+    void connectDCOPSignal( TQCString signal, TQCString appId, TQCString objId );
 
     // dcop internal
-    virtual bool process(const QCString &fun, const QByteArray &data,
-			 QCString &replyType, QByteArray &reply);
+    virtual bool process(const TQCString &fun, const TQByteArray &data,
+			 TQCString &replyType, TQByteArray &reply);
 
 protected slots:
     void slotActivated(int id);
 
 private:
-    QCString app, obj; // for the signal
+    TQCString app, obj; // for the signal
 
     // for the panel menu, internal
     friend class PanelKMenu;
-    QString text;
-    QPixmap icon;
+    TQString text;
+    TQPixmap icon;
 
     // for the KickerClientMenu, internal
     friend class MenuManager;
     int idInParentMenu;
-    QCString createdBy;
+    TQCString createdBy;
 };
 
 #endif

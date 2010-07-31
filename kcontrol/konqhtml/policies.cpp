@@ -26,14 +26,14 @@
 
 // == class Policies ==
 
-Policies::Policies(KConfig* config,const QString &group,
-		bool global,const QString &domain, const QString &prefix,
-		const QString &feature_key) :
+Policies::Policies(KConfig* config,const TQString &group,
+		bool global,const TQString &domain, const TQString &prefix,
+		const TQString &feature_key) :
 	is_global(global), config(config), groupname(group),
 	prefix(prefix), feature_key(feature_key) {
 
   if (is_global) {
-    this->prefix = QString::null;	// global keys have no prefix
+    this->prefix = TQString::null;	// global keys have no prefix
   }/*end if*/
   setDomain(domain);
 }
@@ -41,7 +41,7 @@ Policies::Policies(KConfig* config,const QString &group,
 Policies::~Policies() {
 }
 
-void Policies::setDomain(const QString &domain) {
+void Policies::setDomain(const TQString &domain) {
   if (is_global) return;
   this->domain = domain.lower();
   groupname = this->domain;	// group is domain in this case
@@ -50,7 +50,7 @@ void Policies::setDomain(const QString &domain) {
 void Policies::load() {
   config->setGroup(groupname);
 
-  QString key = prefix + feature_key;
+  TQString key = prefix + feature_key;
   if (config->hasKey(key))
     feature_enabled = config->readBoolEntry(key);
   else
@@ -64,7 +64,7 @@ void Policies::defaults() {
 void Policies::save() {
   config->setGroup(groupname);
 
-  QString key = prefix + feature_key;
+  TQString key = prefix + feature_key;
   if (feature_enabled != INHERIT_POLICY)
     config->writeEntry(key, (bool)feature_enabled);
   else

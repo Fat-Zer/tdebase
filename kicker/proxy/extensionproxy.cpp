@@ -23,8 +23,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <stdlib.h>
 
-#include <qstring.h>
-#include <qfile.h>
+#include <tqstring.h>
+#include <tqfile.h>
 #include <qxembed.h>
 
 #include <kapplication.h>
@@ -36,7 +36,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdebug.h>
 #include <kpanelextension.h>
 #include <kaboutdata.h>
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 #include <dcopclient.h>
 
 #include "appletinfo.h"
@@ -90,7 +90,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     }
 
     // Perhaps we should use a konsole-like solution here (shell, list of args...)
-    QCString desktopfile = QCString( args->arg(0) );
+    TQCString desktopfile = TQCString( args->arg(0) );
 
     // load extension DSO
     proxy.loadExtension( desktopfile, args->getOption("configfile"));
@@ -101,8 +101,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     return a.exec();
 }
 
-ExtensionProxy::ExtensionProxy(QObject* parent, const char* name)
-  : QObject(parent, name)
+ExtensionProxy::ExtensionProxy(TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , DCOPObject("ExtensionProxy")
   , _info(0)
   , _extension(0)
@@ -124,20 +124,20 @@ ExtensionProxy::~ExtensionProxy()
     kapp->dcopClient()->detach();
 }
 
-void ExtensionProxy::loadExtension(const QCString& desktopFile, const QCString& configFile)
+void ExtensionProxy::loadExtension(const TQCString& desktopFile, const TQCString& configFile)
 {
-    QString df;
+    TQString df;
 
     // try simple path first
-    QFileInfo finfo( desktopFile );
+    TQFileInfo finfo( desktopFile );
     if ( finfo.exists() ) {
 	df = finfo.absFilePath();
     } else {
 	// locate desktop file
-	df = KGlobal::dirs()->findResource("extensions", QString(desktopFile));
+	df = KGlobal::dirs()->findResource("extensions", TQString(desktopFile));
     }
 
-    QFile file(df);
+    TQFile file(df);
     // does the config file exist?
     if (df.isNull() || !file.exists()) {
 	kdError() << "Failed to locate extension desktop file: " << desktopFile << endl;
@@ -161,13 +161,13 @@ void ExtensionProxy::loadExtension(const QCString& desktopFile, const QCString& 
     }
 
     // connect updateLayout signal
-    connect(_extension, SIGNAL(updateLayout()), SLOT(slotUpdateLayout()));
+    connect(_extension, TQT_SIGNAL(updateLayout()), TQT_SLOT(slotUpdateLayout()));
 }
 
 KPanelExtension* ExtensionProxy::loadExtension(const AppletInfo& info)
 {
     KLibLoader* loader = KLibLoader::self();
-    KLibrary* lib = loader->library(QFile::encodeName(info.library()));
+    KLibrary* lib = loader->library(TQFile::encodeName(info.library()));
 
     if (!lib)
     {
@@ -176,8 +176,8 @@ KPanelExtension* ExtensionProxy::loadExtension(const AppletInfo& info)
         return 0;
     }
 
-    KPanelExtension* (*init_ptr)(QWidget *, const QString&);
-    init_ptr = (KPanelExtension* (*)(QWidget *, const QString&))lib->symbol( "init" );
+    KPanelExtension* (*init_ptr)(TQWidget *, const TQString&);
+    init_ptr = (KPanelExtension* (*)(TQWidget *, const TQString&))lib->symbol( "init" );
 
     if (!init_ptr)
     {
@@ -188,7 +188,7 @@ KPanelExtension* ExtensionProxy::loadExtension(const AppletInfo& info)
     return init_ptr(0, info.configFile());
 }
 
-void ExtensionProxy::dock(const QCString& callbackID)
+void ExtensionProxy::dock(const TQCString& callbackID)
 {
     kdDebug(1210) << "Callback ID: " << callbackID << endl;
 
@@ -198,16 +198,16 @@ void ExtensionProxy::dock(const QCString& callbackID)
     DCOPClient* dcop = kapp->dcopClient();
 
     dcop->setNotifications(true);
-    connect(dcop, SIGNAL(applicationRemoved(const QCString&)),
-	    SLOT(slotApplicationRemoved(const QCString&)));
+    connect(dcop, TQT_SIGNAL(applicationRemoved(const TQCString&)),
+	    TQT_SLOT(slotApplicationRemoved(const TQCString&)));
 
     WId win;
 
     // get docked
     {
-	QCString replyType;
-	QByteArray data, replyData;
-	QDataStream dataStream( data, IO_WriteOnly );
+	TQCString replyType;
+	TQByteArray data, replyData;
+	TQDataStream dataStream( data, IO_WriteOnly );
 
 	int actions = 0;
 	if(_extension) actions = _extension->actions();
@@ -222,7 +222,7 @@ void ExtensionProxy::dock(const QCString& callbackID)
 	int screen_number = 0;
 	if (qt_xdisplay())
 	    screen_number = DefaultScreen(qt_xdisplay());
-	QCString appname;
+	TQCString appname;
 	if (screen_number == 0)
 	    appname = "kicker";
 	else
@@ -235,7 +235,7 @@ void ExtensionProxy::dock(const QCString& callbackID)
             exit(0);
         }
 
-	QDataStream reply( replyData, IO_ReadOnly );
+	TQDataStream reply( replyData, IO_ReadOnly );
 	reply >> win;
 
     }
@@ -255,19 +255,19 @@ void ExtensionProxy::dock(const QCString& callbackID)
     }
 }
 
-bool ExtensionProxy::process(const QCString &fun, const QByteArray &data,
-                          QCString& replyType, QByteArray &replyData)
+bool ExtensionProxy::process(const TQCString &fun, const TQByteArray &data,
+                          TQCString& replyType, TQByteArray &replyData)
 {
-    if ( fun == "sizeHint(int,QSize)" )
+    if ( fun == "sizeHint(int,TQSize)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int pos;
-	    QSize maxSize;
+	    TQSize maxSize;
 	    dataStream >> pos;
 	    dataStream >> maxSize;
 
-	    QDataStream reply( replyData, IO_WriteOnly );
-	    replyType = "QSize";
+	    TQDataStream reply( replyData, IO_WriteOnly );
+	    replyType = "TQSize";
 
 	    if(!_extension)
 		reply << maxSize;
@@ -278,7 +278,7 @@ bool ExtensionProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "setPosition(int)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int pos;
 	    dataStream >> pos;
 
@@ -289,7 +289,7 @@ bool ExtensionProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "setAlignment(int)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int alignment;
 	    dataStream >> alignment;
 
@@ -300,7 +300,7 @@ bool ExtensionProxy::process(const QCString &fun, const QByteArray &data,
 	}
 	else if ( fun == "setSize(int,int)" )
 	{
-	    QDataStream dataStream( data, IO_ReadOnly );
+	    TQDataStream dataStream( data, IO_ReadOnly );
 		int serializedSize;
 		int custom;
 		dataStream >> serializedSize;
@@ -338,7 +338,7 @@ bool ExtensionProxy::process(const QCString &fun, const QByteArray &data,
     }
     else if ( fun == "actions()" )
 	{
-	    QDataStream reply( replyData, IO_WriteOnly );
+	    TQDataStream reply( replyData, IO_WriteOnly );
 	    int actions = 0;
 	    if(_extension) actions = _extension->actions();
 	    reply << actions;
@@ -347,7 +347,7 @@ bool ExtensionProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "preferedPosition()" )
 	{
-	    QDataStream reply( replyData, IO_WriteOnly );
+	    TQDataStream reply( replyData, IO_WriteOnly );
 	    int pos = static_cast<int>(KPanelExtension::Bottom);
 	    if(_extension) pos = static_cast<int>(_extension->preferedPosition());
 	    reply << pos;
@@ -356,7 +356,7 @@ bool ExtensionProxy::process(const QCString &fun, const QByteArray &data,
 	}
     else if ( fun == "type()" )
 	{
-	    QDataStream reply( replyData, IO_WriteOnly );
+	    TQDataStream reply( replyData, IO_WriteOnly );
 	    int type = 0;
 	    if (_extension) type = static_cast<int>(_extension->type());
 	    reply << type;
@@ -370,11 +370,11 @@ void ExtensionProxy::slotUpdateLayout()
 {
     if(_callbackID.isNull()) return;
 
-    QByteArray data;
+    TQByteArray data;
     int screen_number = 0;
     if (qt_xdisplay())
 	screen_number = DefaultScreen(qt_xdisplay());
-    QCString appname;
+    TQCString appname;
     if (screen_number == 0)
 	appname = "kicker";
     else
@@ -383,12 +383,12 @@ void ExtensionProxy::slotUpdateLayout()
     kapp->dcopClient()->send(appname, _callbackID, "updateLayout()", data);
 }
 
-void ExtensionProxy::slotApplicationRemoved(const QCString& appId)
+void ExtensionProxy::slotApplicationRemoved(const TQCString& appId)
 {
     int screen_number = 0;
     if (qt_xdisplay())
 	screen_number = DefaultScreen(qt_xdisplay());
-    QCString appname;
+    TQCString appname;
     if (screen_number == 0)
 	appname = "kicker";
     else

@@ -29,39 +29,39 @@
 namespace KWinInternal
 {
 
-KCMRulesList::KCMRulesList( QWidget* parent, const char* name )
+KCMRulesList::KCMRulesList( TQWidget* parent, const char* name )
 : KCMRulesListBase( parent, name )
     {
-    // connect both current/selected, so that current==selected (stupid QListBox :( )
-    connect( rules_listbox, SIGNAL( currentChanged( QListBoxItem* )),
-        SLOT( activeChanged( QListBoxItem*)));
-    connect( rules_listbox, SIGNAL( selectionChanged( QListBoxItem* )),
-        SLOT( activeChanged( QListBoxItem*)));
-    connect( new_button, SIGNAL( clicked()),
-        SLOT( newClicked()));
-    connect( modify_button, SIGNAL( clicked()),
-        SLOT( modifyClicked()));
-    connect( delete_button, SIGNAL( clicked()),
-        SLOT( deleteClicked()));
-    connect( moveup_button, SIGNAL( clicked()),
-        SLOT( moveupClicked()));
-    connect( movedown_button, SIGNAL( clicked()),
-        SLOT( movedownClicked()));
-    connect( rules_listbox, SIGNAL( doubleClicked ( QListBoxItem * ) ),
-            SLOT( modifyClicked()));
+    // connect both current/selected, so that current==selected (stupid TQListBox :( )
+    connect( rules_listbox, TQT_SIGNAL( currentChanged( TQListBoxItem* )),
+        TQT_SLOT( activeChanged( TQListBoxItem*)));
+    connect( rules_listbox, TQT_SIGNAL( selectionChanged( TQListBoxItem* )),
+        TQT_SLOT( activeChanged( TQListBoxItem*)));
+    connect( new_button, TQT_SIGNAL( clicked()),
+        TQT_SLOT( newClicked()));
+    connect( modify_button, TQT_SIGNAL( clicked()),
+        TQT_SLOT( modifyClicked()));
+    connect( delete_button, TQT_SIGNAL( clicked()),
+        TQT_SLOT( deleteClicked()));
+    connect( moveup_button, TQT_SIGNAL( clicked()),
+        TQT_SLOT( moveupClicked()));
+    connect( movedown_button, TQT_SIGNAL( clicked()),
+        TQT_SLOT( movedownClicked()));
+    connect( rules_listbox, TQT_SIGNAL( doubleClicked ( TQListBoxItem * ) ),
+            TQT_SLOT( modifyClicked()));
     load();
     }
 
 KCMRulesList::~KCMRulesList()
     {
-    for( QValueVector< Rules* >::Iterator it = rules.begin();
+    for( TQValueVector< Rules* >::Iterator it = rules.begin();
          it != rules.end();
          ++it )
         delete *it;
     rules.clear();
     }
 
-void KCMRulesList::activeChanged( QListBoxItem* item )
+void KCMRulesList::activeChanged( TQListBoxItem* item )
     {
     if( item != NULL )
         rules_listbox->setSelected( item, true ); // make current==selected
@@ -114,7 +114,7 @@ void KCMRulesList::moveupClicked()
     assert( pos != -1 );
     if( pos > 0 )
         {
-        QString txt = rules_listbox->text( pos );
+        TQString txt = rules_listbox->text( pos );
         rules_listbox->removeItem( pos );
         rules_listbox->insertItem( txt, pos - 1 );
         rules_listbox->setSelected( pos - 1, true );
@@ -131,7 +131,7 @@ void KCMRulesList::movedownClicked()
     assert( pos != -1 );
     if( pos < int( rules_listbox->count()) - 1 )
         {
-        QString txt = rules_listbox->text( pos );
+        TQString txt = rules_listbox->text( pos );
         rules_listbox->removeItem( pos );
         rules_listbox->insertItem( txt, pos + 1 );
         rules_listbox->setSelected( pos + 1, true );
@@ -145,7 +145,7 @@ void KCMRulesList::movedownClicked()
 void KCMRulesList::load()
     {
     rules_listbox->clear();
-    for( QValueVector< Rules* >::Iterator it = rules.begin();
+    for( TQValueVector< Rules* >::Iterator it = rules.begin();
          it != rules.end();
          ++it )
         delete *it;
@@ -158,7 +158,7 @@ void KCMRulesList::load()
          i <= count;
          ++i )
         {
-        cfg.setGroup( QString::number( i ));
+        cfg.setGroup( TQString::number( i ));
         Rules* rule = new Rules( cfg );
         rules.append( rule );
         rules_listbox->insertItem( rule->description );
@@ -172,19 +172,19 @@ void KCMRulesList::load()
 void KCMRulesList::save()
     {
     KConfig cfg( "kwinrulesrc" );
-    QStringList groups = cfg.groupList();
-    for( QStringList::ConstIterator it = groups.begin();
+    TQStringList groups = cfg.groupList();
+    for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();
          ++it )
         cfg.deleteGroup( *it );
     cfg.setGroup( "General" );
     cfg.writeEntry( "count", rules.count());
     int i = 1;
-    for( QValueVector< Rules* >::ConstIterator it = rules.begin();
+    for( TQValueVector< Rules* >::ConstIterator it = rules.begin();
          it != rules.end();
          ++it )
         {
-        cfg.setGroup( QString::number( i ));
+        cfg.setGroup( TQString::number( i ));
         (*it)->write( cfg );
         ++i;
         }

@@ -7,9 +7,9 @@
 #ifndef KDATECOMBO_H
 #define KDATECOMBO_H
 
-#include <qwidget.h>
-#include <qcombobox.h>
-#include <qdatetime.h>
+#include <tqwidget.h>
+#include <tqcombobox.h>
+#include <tqdatetime.h>
 
 /**
   *@author Beppe Grimaldi
@@ -18,32 +18,32 @@
 class KDatePicker;
 class KPopupFrame;
 
-class KDateCombo : public QComboBox  {
+class KDateCombo : public TQComboBox  {
    Q_OBJECT
 
 public:
-	KDateCombo(QWidget *parent=0, const char *name=0);
-	KDateCombo(const QDate & date, QWidget *parent=0, const char *name=0);
+	KDateCombo(TQWidget *parent=0, const char *name=0);
+	KDateCombo(const TQDate & date, TQWidget *parent=0, const char *name=0);
 	~KDateCombo();
 
-	QDate & getDate(QDate *currentDate);
-	bool setDate(const QDate & newDate);
+	TQDate & getDate(TQDate *currentDate);
+	bool setDate(const TQDate & newDate);
 
 private:
    KPopupFrame * popupFrame;
    KDatePicker * datePicker;
 
-   void initObject(const QDate & date, QWidget *parent, const char *name);
+   void initObject(const TQDate & date, TQWidget *parent, const char *name);
 
-   QString date2String(const QDate &);
-   QDate & string2Date(const QString &, QDate * );
+   TQString date2String(const TQDate &);
+   TQDate & string2Date(const TQString &, TQDate * );
 
 protected:
-  bool eventFilter (QObject*, QEvent*);
-  virtual void mousePressEvent (QMouseEvent * e);
+  bool eventFilter (TQObject*, TQEvent*);
+  virtual void mousePressEvent (TQMouseEvent * e);
    
 protected slots:
-   void dateEnteredEvent(QDate d=QDate());
+   void dateEnteredEvent(TQDate d=TQDate());
 };
 
 #endif

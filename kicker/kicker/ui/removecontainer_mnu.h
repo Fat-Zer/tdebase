@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __removecontainer_mnu_h__
 #define __removecontainer_mnu_h__
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 class ContainerArea;
 
@@ -33,7 +33,7 @@ class RemoveContainerMenu : public QPopupMenu
     Q_OBJECT
 
 public:
-    RemoveContainerMenu(ContainerArea* cArea, QWidget *parent=0, const char *name=0);
+    RemoveContainerMenu(ContainerArea* cArea, TQWidget *parent=0, const char *name=0);
     ~RemoveContainerMenu();
 
 protected slots:

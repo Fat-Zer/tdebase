@@ -22,31 +22,31 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <kstandarddirs.h>
-#include <qtextstream.h>
+#include <tqtextstream.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kuniqueapplication.h>
 #include <kconfig.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
-QStringList readAreaList()
+TQStringList readAreaList()
 {
-  QStringList lst;
+  TQStringList lst;
   lst.append( "0 (generic)" );
 
-  QString confAreasFile = locate( "config", "kdebug.areas" );
-  QFile file( confAreasFile );
+  TQString confAreasFile = locate( "config", "kdebug.areas" );
+  TQFile file( confAreasFile );
   if (!file.open(IO_ReadOnly)) {
     kdWarning() << "Couldn't open " << confAreasFile << endl;
     file.close();
   }
   else
   {
-    QString data;
+    TQString data;
 
-    QTextStream *ts = new QTextStream(&file);
-    ts->setEncoding( QTextStream::Latin1 );
+    TQTextStream *ts = new TQTextStream(&file);
+    ts->setEncoding( TQTextStream::Latin1 );
     while (!ts->eof()) {
       data = ts->readLine().simplifyWhiteSpace();
 
@@ -88,7 +88,7 @@ int main(int argc, char ** argv)
   KUniqueApplication app;
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-  QStringList areaList ( readAreaList() );
+  TQStringList areaList ( readAreaList() );
   KAbstractDebugDialog * dialog;
   if (args->isSet("fullmode"))
       dialog = new KDebugDialog(areaList, 0L);
@@ -113,7 +113,7 @@ int main(int argc, char ** argv)
 
   /* Show dialog */
   int nRet = dialog->exec();
-  if( nRet == QDialog::Accepted )
+  if( nRet == TQDialog::Accepted )
   {
       dialog->save();
       dialog->config()->sync();

@@ -19,7 +19,7 @@
 #ifndef KRANDRTRAY_H
 #define KRANDRTRAY_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include <ksystemtray.h>
 #include <kglobalaccel.h>
@@ -34,7 +34,7 @@ class KRandRSystemTray :  public KSystemTray, public KRandrSimpleAPI
 	Q_OBJECT
 
 public:
-	KRandRSystemTray(QWidget* parent = 0, const char *name = 0);
+	KRandRSystemTray(TQWidget* parent = 0, const char *name = 0);
 	KGlobalAccel *globalKeys;
 
 	virtual void contextMenuAboutToShow(KPopupMenu* menu);
@@ -58,8 +58,8 @@ protected slots:
 	void slotColorProfileChanged(int parameter);
 
 protected:
-	void mousePressEvent( QMouseEvent *e );
-	void resizeEvent ( QResizeEvent * );
+	void mousePressEvent( TQMouseEvent *e );
+	void resizeEvent ( TQResizeEvent * );
 
 private:
 	void populateMenu(KPopupMenu* menu);
@@ -70,11 +70,11 @@ private:
 
 	bool m_popupUp;
 	KHelpMenu* m_help;
-	QPtrList<KPopupMenu> m_screenPopups;
+	TQPtrList<KPopupMenu> m_screenPopups;
 
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
-	QWidget* my_parent;
+	TQWidget* my_parent;
 
 	int last_known_x;
 	int last_known_y;

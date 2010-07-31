@@ -19,8 +19,8 @@
  ***************************************************************************/
 
 #include "sound.h"
-#include <qfile.h>
-#include <qdatastream.h>
+#include <tqfile.h>
+#include <tqdatastream.h>
 #include <kdebug.h>
 
 
@@ -47,18 +47,18 @@ Sound::~Sound()
 
 #define ABS(X)  ( (X>0) ? X : -X )
 
-void Sound::load(const QString& filename)
+void Sound::load(const TQString& filename)
 {
 	kdDebug() << k_funcinfo << filename << endl;
-	data=QMemArray<Q_INT32>();
-	QFile file(filename);
+	data=TQMemArray<Q_INT32>();
+	TQFile file(filename);
 	if(!file.open(IO_ReadOnly))
 	{
 		kdWarning() << k_funcinfo <<"unable to open file" << endl;
 		return;
 	}
-	QDataStream stream(&file);
-	stream.setByteOrder( QDataStream::LittleEndian );
+	TQDataStream stream(&file);
+	stream.setByteOrder( TQDataStream::LittleEndian );
 	Q_INT32 magic;
 	
 	MAGIC("RIFF");
@@ -74,7 +74,7 @@ void Sound::load(const QString& filename)
 	READ_FROM_STREAM(Q_UINT16,BlockAlign);
 	READ_FROM_STREAM(Q_UINT16,BitsPerSample);
 	MAGIC("data");
-	READ_FROM_STREAM(QByteArray,SoundData);
+	READ_FROM_STREAM(TQByteArray,SoundData);
 	NumberOfChannels=1; //Wav i play are broken
 
 	file.close();
@@ -105,27 +105,27 @@ void Sound::load(const QString& filename)
 	}
 
 /*	static int q=0;
-	QString name="test" + QString::number(q++) + ".wav";
+	TQString name="test" + TQString::number(q++) + ".wav";
 	save(name);*/
 
 }
 
 #define SMAGIC(CH) { stream << ( Q_INT32) ( (CH)[0] | (CH)[1]<<8 | (CH)[2]<< 16 | (CH)[3] << 24 ) ; }
 
-void Sound::save(const QString& filename) const
+void Sound::save(const TQString& filename) const
 {
 	kdDebug( 1217 ) << k_funcinfo << filename << " - " << data.size() <<  endl;
-	QFile file(filename);
+	TQFile file(filename);
 	if(!file.open(IO_WriteOnly))
 	{
 		kdWarning() << k_funcinfo <<"unable to open file" << endl;
 		return;
 	}
-	QDataStream stream(&file);
-	stream.setByteOrder( QDataStream::LittleEndian );
+	TQDataStream stream(&file);
+	stream.setByteOrder( TQDataStream::LittleEndian );
 
 
-	QByteArray SoundData(data.size()*2);
+	TQByteArray SoundData(data.size()*2);
 	
 	for(unsigned long int f=0;f<data.size();f++)
 	{
@@ -159,7 +159,7 @@ void Sound::save(const QString& filename) const
 	//READ_FROM_STREAM(Q_UINT16,BitsPerSample);
 	stream <<  (Q_UINT16)(16);
 	SMAGIC("data");
-	//READ_FROM_STREAM(QByteArray,SoundData);
+	//READ_FROM_STREAM(TQByteArray,SoundData);
 	stream <<  SoundData;
 
 	file.close();
@@ -170,10 +170,10 @@ void Sound::save(const QString& filename) const
 
 
 #if 0
-void Sound::load(const QString& filename)
+void Sound::load(const TQString& filename)
 {
 	cout << "saout \n";
-	data=QMemArray<long unsigned int>();
+	data=TQMemArray<long unsigned int>();
 	static const int BUFFER_LEN = 4096;
 
 	//code from libtunepimp

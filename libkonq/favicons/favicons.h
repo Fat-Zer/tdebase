@@ -31,7 +31,7 @@ namespace KIO { class Job; }
  * place.
  *
  * After a successful download, the DCOP signal iconChanged() is emitted.
- * It has the signature void iconChanged(bool, QString, QString);
+ * It has the signature void iconChanged(bool, TQString, TQString);
  * The first parameter is true if the icon is a "host" icon, that is it is
  * the default icon for all URLs on the given host. In this case, the
  * second parameter is a host name, otherwise the second parameter is the
@@ -47,20 +47,20 @@ class FaviconsModule : public KDEDModule
     Q_OBJECT
     K_DCOP
 public:
-    FaviconsModule(const QCString &obj);
+    FaviconsModule(const TQCString &obj);
     virtual ~FaviconsModule();
 
 k_dcop:
     /**
      * Looks up an icon name for a given URL. This function does not
      * initiate any download. If no icon for the URL or its host has
-     * been downloaded yet, QString::null is returned.
+     * been downloaded yet, TQString::null is returned.
      *
      * @param url the URL for which the icon is queried
      * @return the icon name suitable to pass to @ref KIconLoader or
-     *         QString::null if no icon for this URL was found.
+     *         TQString::null if no icon for this URL was found.
      */
-    QString iconForURL(const KURL &url);
+    TQString iconForURL(const KURL &url);
     /**
      * Assiciates an icon with the given URL. If the icon was not
      * downloaded before or the downloaded was too long ago, a
@@ -81,19 +81,19 @@ k_dcop:
     ASYNC downloadHostIcon(const KURL &url);
 
 k_dcop_signals:
-    void iconChanged(bool isHost, QString hostOrURL, QString iconName);
-    void infoMessage(KURL iconURL, QString msg);
+    void iconChanged(bool isHost, TQString hostOrURL, TQString iconName);
+    void infoMessage(KURL iconURL, TQString msg);
 
 private:
-    void startDownload(const QString &, bool, const KURL &);
-    QString simplifyURL(const KURL &);
-    QString iconNameFromURL(const KURL &);
-    bool isIconOld(const QString &);
+    void startDownload(const TQString &, bool, const KURL &);
+    TQString simplifyURL(const KURL &);
+    TQString iconNameFromURL(const KURL &);
+    bool isIconOld(const TQString &);
 
 private slots:
-    void slotData(KIO::Job *, const QByteArray &);
+    void slotData(KIO::Job *, const TQByteArray &);
     void slotResult(KIO::Job *);
-    void slotInfoMessage(KIO::Job *, const QString &);
+    void slotInfoMessage(KIO::Job *, const TQString &);
     void slotKill();
 
 private:

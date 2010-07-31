@@ -32,7 +32,7 @@ class LaunchConfig : public KCModule
 
   public:
 
-    LaunchConfig(QWidget * parent = 0, const char * name = 0, const QStringList &list = QStringList() );
+    LaunchConfig(TQWidget * parent = 0, const char * name = 0, const TQStringList &list = TQStringList() );
 
     virtual ~LaunchConfig();
 
@@ -60,10 +60,10 @@ class LaunchConfig : public KCModule
 
   private:
 
-    QLabel    * lbl_cursorTimeout;
-    QLabel    * lbl_taskbarTimeout;
-    QComboBox * cb_busyCursor;
-    QCheckBox * cb_taskbarButton;
+    TQLabel    * lbl_cursorTimeout;
+    TQLabel    * lbl_taskbarTimeout;
+    TQComboBox * cb_busyCursor;
+    TQCheckBox * cb_taskbarButton;
     KIntNumInput * sb_cursorTimeout;
     KIntNumInput * sb_taskbarTimeout;
 

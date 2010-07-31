@@ -21,8 +21,8 @@
 #define _NOTIFIERACTION_H_
 
 #include <kfileitem.h>
-#include <qstring.h>
-#include <qpixmap.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
 
 class NotifierSettings;
 
@@ -32,27 +32,27 @@ public:
 	NotifierAction();
 	virtual ~NotifierAction();
 
-	virtual QString label() const;
-	virtual QString iconName() const;
-	virtual void setLabel( const QString &label );
-	virtual void setIconName( const QString &icon );
+	virtual TQString label() const;
+	virtual TQString iconName() const;
+	virtual void setLabel( const TQString &label );
+	virtual void setIconName( const TQString &icon );
 
-	QPixmap pixmap() const;
+	TQPixmap pixmap() const;
 	
-	QStringList autoMimetypes();
+	TQStringList autoMimetypes();
 
-	virtual QString id() const = 0;
+	virtual TQString id() const = 0;
 	virtual bool isWritable() const;
-	virtual bool supportsMimetype( const QString &mimetype ) const;
+	virtual bool supportsMimetype( const TQString &mimetype ) const;
 	virtual void execute( KFileItem &medium ) = 0;
 
 private:
-	void addAutoMimetype( const QString &mimetype );
-	void removeAutoMimetype( const QString &mimetype );
+	void addAutoMimetype( const TQString &mimetype );
+	void removeAutoMimetype( const TQString &mimetype );
 
-	QString m_label;
-	QString m_iconName;
-	QStringList m_autoMimetypes;
+	TQString m_label;
+	TQString m_iconName;
+	TQStringList m_autoMimetypes;
 
 	friend class NotifierSettings;
 };

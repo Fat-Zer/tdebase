@@ -21,7 +21,7 @@ int main( int argc, char* argv[] )
     if( argc != 2 )
         return 1;
     KInstance inst( "kwin_update_default_rules" );
-    QString file = locate( "data", QString( "kwin/default_rules/" ) + argv[ 1 ] );
+    TQString file = locate( "data", TQString( "kwin/default_rules/" ) + argv[ 1 ] );
     if( file.isEmpty())
         {
         kdWarning() << "File " << argv[ 1 ] << " not found!" << endl;
@@ -37,11 +37,11 @@ int main( int argc, char* argv[] )
          group <= count;
          ++group )
         {
-        QMap< QString, QString > entries = src_cfg.entryMap( QString::number( group ));
+        TQMap< TQString, TQString > entries = src_cfg.entryMap( TQString::number( group ));
         ++pos;
-        dest_cfg.deleteGroup( QString::number( pos ));
-        dest_cfg.setGroup( QString::number( pos ));
-        for( QMap< QString, QString >::ConstIterator it = entries.begin();
+        dest_cfg.deleteGroup( TQString::number( pos ));
+        dest_cfg.setGroup( TQString::number( pos ));
+        for( TQMap< TQString, TQString >::ConstIterator it = entries.begin();
              it != entries.end();
              ++it )
             dest_cfg.writeEntry( it.key(), *it );

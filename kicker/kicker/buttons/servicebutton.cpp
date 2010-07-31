@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qdragobject.h>
-#include <qtooltip.h>
+#include <tqdragobject.h>
+#include <tqtooltip.h>
 
 #include <kdesktopfile.h>
 #include <klocale.h>
@@ -39,7 +39,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "servicebutton.h"
 #include "servicebutton.moc"
 
-ServiceButton::ServiceButton(const QString& desktopFile, QWidget* parent)
+ServiceButton::ServiceButton(const TQString& desktopFile, TQWidget* parent)
   : PanelButton(parent, "ServiceButton"),
     _service(0)
 {
@@ -47,25 +47,25 @@ ServiceButton::ServiceButton(const QString& desktopFile, QWidget* parent)
     initialize();
 }
 
-ServiceButton::ServiceButton(const KService::Ptr &service, QWidget* parent)
+ServiceButton::ServiceButton(const KService::Ptr &service, TQWidget* parent)
   : PanelButton(parent, "ServiceButton"),
     _service(service),
     _id(service->storageId())
 {
     if (_id.startsWith("/"))
     {
-       QString tmp = KGlobal::dirs()->relativeLocation("appdata", _id);
+       TQString tmp = KGlobal::dirs()->relativeLocation("appdata", _id);
        if (!tmp.startsWith("/"))
           _id = ":"+tmp;
     }
     initialize();
 }
 
-ServiceButton::ServiceButton( const KConfigGroup& config, QWidget* parent )
+ServiceButton::ServiceButton( const KConfigGroup& config, TQWidget* parent )
   : PanelButton(parent, "ServiceButton"),
     _service(0)
 {
-    QString id;
+    TQString id;
     if (config.hasKey("StorageId"))
        id = config.readPathEntry("StorageId");
     else
@@ -78,7 +78,7 @@ ServiceButton::~ServiceButton()
 {
 }
 
-void ServiceButton::loadServiceFromId(const QString &id)
+void ServiceButton::loadServiceFromId(const TQString &id)
 {
     _id = id;
     /* this is a KService::Ptr
@@ -112,7 +112,7 @@ void ServiceButton::loadServiceFromId(const QString &id)
 
     if (_id.startsWith("/"))
     {
-       QString tmp = KGlobal::dirs()->relativeLocation("appdata", _id);
+       TQString tmp = KGlobal::dirs()->relativeLocation("appdata", _id);
        if (!tmp.startsWith("/"))
           _id = ":"+tmp;
     }
@@ -121,7 +121,7 @@ void ServiceButton::loadServiceFromId(const QString &id)
 void ServiceButton::initialize()
 {
     readDesktopFile();
-    connect(this, SIGNAL(clicked()), SLOT(slotExec()));
+    connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(slotExec()));
 }
 
 void ServiceButton::readDesktopFile()
@@ -134,15 +134,15 @@ void ServiceButton::readDesktopFile()
 
     if (!_service->genericName().isEmpty())
     {
-        QToolTip::add(this, _service->genericName());
+        TQToolTip::add(this, _service->genericName());
     }
     else if (_service->comment().isEmpty())
     {
-        QToolTip::add(this, _service->name());
+        TQToolTip::add(this, _service->name());
     }
     else
     {
-        QToolTip::add(this, _service->name() + " - " + _service->comment());
+        TQToolTip::add(this, _service->name() + " - " + _service->comment());
     }
 
     setTitle( _service->name() );
@@ -156,7 +156,7 @@ void ServiceButton::saveConfig( KConfigGroup& config ) const
        config.writePathEntry("DesktopFile", _service->desktopEntryPath());
 }
 
-void ServiceButton::dragEnterEvent(QDragEnterEvent *ev)
+void ServiceButton::dragEnterEvent(TQDragEnterEvent *ev)
 {
     if ((ev->source() != this) && KURLDrag::canDecode(ev))
         ev->accept(rect());
@@ -165,7 +165,7 @@ void ServiceButton::dragEnterEvent(QDragEnterEvent *ev)
     PanelButton::dragEnterEvent(ev);
 }
 
-void ServiceButton::dropEvent( QDropEvent* ev )
+void ServiceButton::dropEvent( TQDropEvent* ev )
 {
     KURL::List uriList;
     if( KURLDrag::decode( ev, uriList ) && _service ) {
@@ -177,7 +177,7 @@ void ServiceButton::dropEvent( QDropEvent* ev )
 
 void ServiceButton::startDrag()
 {
-    QString path = _service->desktopEntryPath();
+    TQString path = _service->desktopEntryPath();
 
     // If the path to the desktop file is relative, try to get the full
     // path from KStdDirs.
@@ -192,7 +192,7 @@ void ServiceButton::slotExec()
 {
     // this allows the button to return to a non-pressed state
     // before launching
-    QTimer::singleShot(0, this, SLOT(performExec()));
+    TQTimer::singleShot(0, this, TQT_SLOT(performExec()));
 }
 
 void ServiceButton::performExec()
@@ -211,7 +211,7 @@ void ServiceButton::properties()
         return;
     }
 
-    QString path = _service->desktopEntryPath();
+    TQString path = _service->desktopEntryPath();
 
     // If the path to the desktop file is relative, try to get the full
     // path from KStdDirs.
@@ -223,10 +223,10 @@ void ServiceButton::properties()
     KPropertiesDialog* dialog = new KPropertiesDialog(serviceURL, 0, 0,
                                                       false, false);
     dialog->setFileNameReadOnly(true);
-    connect(dialog, SIGNAL(saveAs(const KURL &, KURL &)),
-            this, SLOT(slotSaveAs(const KURL &, KURL &)));
-    connect(dialog, SIGNAL(propertiesClosed()),
-            this, SLOT(slotUpdate()));
+    connect(dialog, TQT_SIGNAL(saveAs(const KURL &, KURL &)),
+            this, TQT_SLOT(slotSaveAs(const KURL &, KURL &)));
+    connect(dialog, TQT_SIGNAL(propertiesClosed()),
+            this, TQT_SLOT(slotUpdate()));
     dialog->show();
 }
 
@@ -239,10 +239,10 @@ void ServiceButton::slotUpdate()
 
 void ServiceButton::slotSaveAs(const KURL &oldUrl, KURL &newUrl)
 {
-    QString oldPath = oldUrl.path();
+    TQString oldPath = oldUrl.path();
     if (locateLocal("appdata", oldUrl.fileName()) != oldPath)
     {
-       QString path = KickerLib::newDesktopFile(oldUrl);
+       TQString path = KickerLib::newDesktopFile(oldUrl);
        newUrl.setPath(path);
        _id = path;
     }
@@ -250,7 +250,7 @@ void ServiceButton::slotSaveAs(const KURL &oldUrl, KURL &newUrl)
 
 bool ServiceButton::checkForBackingFile()
 {
-    QString id = _id;
+    TQString id = _id;
     loadServiceFromId(_id);
 
     // we need to reset the _id back to whatever it was

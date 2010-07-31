@@ -32,13 +32,13 @@ class HistorySidebarConfig : public KCModule
   Q_OBJECT
 
 public:
-  HistorySidebarConfig( QWidget *parent=0, const char* name=0, const QStringList &list=QStringList() );
+  HistorySidebarConfig( TQWidget *parent=0, const char* name=0, const TQStringList &list=TQStringList() );
 
   void load();
   void save();
   void defaults();
 
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 private slots:
   void configChanged();
@@ -53,8 +53,8 @@ private slots:
   void slotClearHistory();
 
 private:
-  QFont m_fontNewer;
-  QFont m_fontOlder;
+  TQFont m_fontNewer;
+  TQFont m_fontOlder;
 
   KonqSidebarHistoryDlg* dialog;
   KonqSidebarHistorySettings *m_settings;

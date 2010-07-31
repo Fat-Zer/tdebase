@@ -20,7 +20,7 @@
 #ifndef PROGRAM_H
 #define PROGRAM_H
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 /**
  * start programs and write to thieir stdin, stderr,
@@ -29,7 +29,7 @@
 class Program
 {
 public:
-	Program(const QStringList &args);
+	Program(const TQStringList &args);
 	~Program();
 	bool start();
 	bool isRunning();
@@ -45,7 +45,7 @@ protected:
 	int mStdin[2];
 	int mStderr[2];
    int m_pid;
-	QStringList mArgs;
+	TQStringList mArgs;
 	bool mStarted;
 };
 

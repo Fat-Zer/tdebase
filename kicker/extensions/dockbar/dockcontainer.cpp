@@ -21,10 +21,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qwidget.h>
-#include <qtooltip.h>
+#include <tqwidget.h>
+#include <tqtooltip.h>
 #include <kwin.h>
-#include <qvalidator.h>
+#include <tqvalidator.h>
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kpopupmenu.h>
@@ -38,9 +38,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <X11/Xutil.h>
 
 
-DockContainer::DockContainer( QString command, QWidget *parent,
-                              QString resname, QString resclass, bool undocked_style )
-    : QFrame( parent, resname.ascii(),
+DockContainer::DockContainer( TQString command, TQWidget *parent,
+                              TQString resname, TQString resclass, bool undocked_style )
+    : TQFrame( parent, resname.ascii(),
               undocked_style ? WStyle_Customize |
               WStyle_StaysOnTop | WStyle_Tool |
               WStyle_NoBorder | WX11BypassWM : 0 ),
@@ -64,7 +64,7 @@ DockContainer::DockContainer( QString command, QWidget *parent,
     if (!undocked_style) {
         setFrameStyle(StyledPanel | Raised);
         setLineWidth(border());
-        QToolTip::add(this, command);
+        TQToolTip::add(this, command);
     } else {
         setFrameStyle(StyledPanel | Plain);
         setLineWidth(1);
@@ -76,7 +76,7 @@ void DockContainer::embed( WId id )
 {
     if( id == _embeddedWinId || id == 0)
         return;
-    QRect geom = KWin::windowInfo(id,NET::WMKDEFrameStrut).frameGeometry();
+    TQRect geom = KWin::windowInfo(id,NET::WMKDEFrameStrut).frameGeometry();
 
     // does the same as KWM::prepareForSwallowing()
     XWithdrawWindow( qt_xdisplay(), id, qt_xscreen() );
@@ -147,10 +147,10 @@ bool DockContainer::x11Event( XEvent *e )
 void DockContainer::askNewCommand(bool bad_command)
 {
     bool ok;
-    QString title( i18n("Enter Command Line for Applet %1.%2").arg(resName()).arg(resClass()) );
-    QString description( i18n("This applet does not behave correctly and the dockbar was unable to "
+    TQString title( i18n("Enter Command Line for Applet %1.%2").arg(resName()).arg(resClass()) );
+    TQString description( i18n("This applet does not behave correctly and the dockbar was unable to "
                               "find the command line necessary to launch it the next time KDE starts up") );
-    QString cmd;
+    TQString cmd;
 
     /*
       I was not able to figure out why valgrind complains inside the getText call..
@@ -160,13 +160,13 @@ void DockContainer::askNewCommand(bool bad_command)
         cmd = KInputDialog::getText( title, description,
                                      command(), &ok, this );
     } else {
-        cmd = KInputDialog::getText( title, QString::null,
+        cmd = KInputDialog::getText( title, TQString::null,
                                      command(), &ok, this );
     }
     if (ok) { _command = cmd; emit settingsChanged(this); }
 }
 
-void DockContainer::popupMenu(QPoint p)
+void DockContainer::popupMenu(TQPoint p)
 {
     int r;
     {

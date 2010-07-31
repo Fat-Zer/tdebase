@@ -20,12 +20,12 @@
 #include "kabstractdebugdialog.h"
 #include <kconfig.h>
 #include <kpushbutton.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kstdguiitem.h>
 
-KAbstractDebugDialog::KAbstractDebugDialog( QWidget *parent, const char *name, bool modal )
+KAbstractDebugDialog::KAbstractDebugDialog( TQWidget *parent, const char *name, bool modal )
     : KDialog( parent, name, modal )
 {
     pConfig = new KConfig( "kdebugrc" );
@@ -36,14 +36,14 @@ KAbstractDebugDialog::~KAbstractDebugDialog()
     delete pConfig;
 }
 
-void KAbstractDebugDialog::buildButtons( QVBoxLayout * topLayout )
+void KAbstractDebugDialog::buildButtons( TQVBoxLayout * topLayout )
 {
-  QHBoxLayout *hbox = new QHBoxLayout( KDialog::spacingHint() );
+  TQHBoxLayout *hbox = new TQHBoxLayout( KDialog::spacingHint() );
   topLayout->addLayout( hbox );
   pHelpButton = new KPushButton( KStdGuiItem::help(), this );
   hbox->addWidget( pHelpButton );
   hbox->addStretch(10);
-  QSpacerItem *spacer = new QSpacerItem(40, 0);
+  TQSpacerItem *spacer = new TQSpacerItem(40, 0);
   hbox->addItem(spacer);
   pOKButton = new KPushButton( KStdGuiItem::ok(), this );
   hbox->addWidget( pOKButton );
@@ -64,10 +64,10 @@ void KAbstractDebugDialog::buildButtons( QVBoxLayout * topLayout )
   pApplyButton->setFixedWidth( w4 );
   pCancelButton->setFixedWidth( w4 );
 
-  connect( pHelpButton, SIGNAL( clicked() ), SLOT( slotShowHelp() ) );
-  connect( pOKButton, SIGNAL( clicked() ), SLOT( accept() ) );
-  connect( pApplyButton, SIGNAL( clicked() ), SLOT( slotApply() ) );
-  connect( pCancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
+  connect( pHelpButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotShowHelp() ) );
+  connect( pOKButton, TQT_SIGNAL( clicked() ), TQT_SLOT( accept() ) );
+  connect( pApplyButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotApply() ) );
+  connect( pCancelButton, TQT_SIGNAL( clicked() ), TQT_SLOT( reject() ) );
 }
 
 void KAbstractDebugDialog::slotShowHelp()

@@ -26,17 +26,17 @@
 #include "kateviewmanager.h"
 #include "katemainwindow.h"
 
-#include <qapplication.h>
-#include <qpainter.h>
-#include <qpopupmenu.h>
-#include <qheader.h>
-#include <qcolor.h>
-#include <qcheckbox.h>
-#include <qhbox.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
+#include <tqapplication.h>
+#include <tqpainter.h>
+#include <tqpopupmenu.h>
+#include <tqheader.h>
+#include <tqcolor.h>
+#include <tqcheckbox.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqwhatsthis.h>
 
 #include <kiconloader.h>
 #include <kconfig.h>
@@ -54,16 +54,16 @@
 class ToolTip : public QToolTip
 {
   public:
-    ToolTip( QWidget *parent, KateFileList *lv )
-      : QToolTip( parent ),
+    ToolTip( TQWidget *parent, KateFileList *lv )
+      : TQToolTip( parent ),
     m_listView( lv )
     {
     }
     virtual ~ToolTip() {};
 
-    void maybeTip( const QPoint &pos )
+    void maybeTip( const TQPoint &pos )
     {
-      QListViewItem *i = m_listView->itemAt( pos );
+      TQListViewItem *i = m_listView->itemAt( pos );
       if ( ! i ) return;
 
       KateFileListItem *item = ((KateFileListItem*)i);
@@ -82,7 +82,7 @@ class ToolTip : public QToolTip
 //BEGIN KateFileList
 KateFileList::KateFileList (KateMainWindow *main,
                             KateViewManager *_viewManager,
-                            QWidget * parent, const char * name )
+                            TQWidget * parent, const char * name )
     :  KListView (parent, name)
     , m_sort( KateFileList::sortByID )
 {
@@ -90,18 +90,18 @@ KateFileList::KateFileList (KateMainWindow *main,
   m_tooltip = new ToolTip( viewport(), this );
 
   // default colors
-  m_viewShade = QColor( 51, 204, 255 );
-  m_editShade = QColor( 255, 102, 153 );
+  m_viewShade = TQColor( 51, 204, 255 );
+  m_editShade = TQColor( 255, 102, 153 );
   m_enableBgShading = false;
 
-  setFocusPolicy ( QWidget::NoFocus  );
+  setFocusPolicy ( TQWidget::NoFocus  );
 
   viewManager = _viewManager;
 
   header()->hide();
   addColumn("Document Name");
 
-  setSelectionMode( QListView::Single );
+  setSelectionMode( TQListView::Single );
   setSorting( 0, true );
   setShowToolTips( false );
 
@@ -113,18 +113,18 @@ KateFileList::KateFileList (KateMainWindow *main,
     slotModChanged (KateDocManager::self()->document(i));
   }
 
-  connect(KateDocManager::self(),SIGNAL(documentCreated(Kate::Document *)),
-	  this,SLOT(slotDocumentCreated(Kate::Document *)));
-  connect(KateDocManager::self(),SIGNAL(documentDeleted(uint)),
-	  this,SLOT(slotDocumentDeleted(uint)));
+  connect(KateDocManager::self(),TQT_SIGNAL(documentCreated(Kate::Document *)),
+	  this,TQT_SLOT(slotDocumentCreated(Kate::Document *)));
+  connect(KateDocManager::self(),TQT_SIGNAL(documentDeleted(uint)),
+	  this,TQT_SLOT(slotDocumentDeleted(uint)));
 
   // don't Honour KDE single/double click setting, this files are already open,
   // no need for hassle of considering double-click
-  connect(this,SIGNAL(selectionChanged(QListViewItem *)),
-	  this,SLOT(slotActivateView(QListViewItem *)));
-  connect(viewManager,SIGNAL(viewChanged()), this,SLOT(slotViewChanged()));
-  connect(this,SIGNAL(contextMenuRequested( QListViewItem *, const QPoint &, int )),
-	  this,SLOT(slotMenu ( QListViewItem *, const QPoint &, int )));
+  connect(this,TQT_SIGNAL(selectionChanged(TQListViewItem *)),
+	  this,TQT_SLOT(slotActivateView(TQListViewItem *)));
+  connect(viewManager,TQT_SIGNAL(viewChanged()), this,TQT_SLOT(slotViewChanged()));
+  connect(this,TQT_SIGNAL(contextMenuRequested( TQListViewItem *, const TQPoint &, int )),
+	  this,TQT_SLOT(slotMenu ( TQListViewItem *, const TQPoint &, int )));
 }
 
 KateFileList::~KateFileList ()
@@ -134,14 +134,14 @@ KateFileList::~KateFileList ()
 
 void KateFileList::setupActions ()
 {
-  windowNext = KStdAction::back(this, SLOT(slotPrevDocument()), m_main->actionCollection());
-  windowPrev = KStdAction::forward(this, SLOT(slotNextDocument()), m_main->actionCollection());
+  windowNext = KStdAction::back(this, TQT_SLOT(slotPrevDocument()), m_main->actionCollection());
+  windowPrev = KStdAction::forward(this, TQT_SLOT(slotNextDocument()), m_main->actionCollection());
   sortAction = new KSelectAction( i18n("Sort &By"), 0,
       m_main->actionCollection(), "filelist_sortby"  );
-  QStringList l;
+  TQStringList l;
   l << i18n("Opening Order") << i18n("Document Name") << i18n("URL");
   sortAction->setItems( l );
-  connect( sortAction, SIGNAL(activated(int)), this, SLOT(setSortType(int)) );
+  connect( sortAction, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setSortType(int)) );
 }
 
 void KateFileList::updateActions ()
@@ -150,7 +150,7 @@ void KateFileList::updateActions ()
   windowPrev->setEnabled(KateDocManager::self()->documents()  > 1);
 }
 
-void KateFileList::keyPressEvent(QKeyEvent *e) {
+void KateFileList::keyPressEvent(TQKeyEvent *e) {
   if ( ( e->key() == Key_Return ) || ( e->key() == Key_Enter ) )
   {
     e->accept();
@@ -166,7 +166,7 @@ void KateFileList::keyPressEvent(QKeyEvent *e) {
 // leftclick outside items.
 // ### if we get to accept keyboard navigation, set focus before
 // returning
-void KateFileList::contentsMousePressEvent( QMouseEvent *e )
+void KateFileList::contentsMousePressEvent( TQMouseEvent *e )
 {
   if ( ! itemAt( contentsToViewport( e->pos() ) ) )
   return;
@@ -174,7 +174,7 @@ void KateFileList::contentsMousePressEvent( QMouseEvent *e )
   KListView::contentsMousePressEvent( e );
 }
 
-void KateFileList::resizeEvent( QResizeEvent *e )
+void KateFileList::resizeEvent( TQResizeEvent *e )
 {
   KListView::resizeEvent( e );
 
@@ -217,9 +217,9 @@ void KateFileList::slotPrevDocument()
 void KateFileList::slotDocumentCreated (Kate::Document *doc)
 {
   new KateFileListItem( this, doc/*, doc->documentNumber()*/ );
-  connect(doc,SIGNAL(modStateChanged(Kate::Document *)),this,SLOT(slotModChanged(Kate::Document *)));
-  connect(doc,SIGNAL(nameChanged(Kate::Document *)),this,SLOT(slotNameChanged(Kate::Document *)));
-  connect(doc,SIGNAL(modifiedOnDisc(Kate::Document *, bool, unsigned char)),this,SLOT(slotModifiedOnDisc(Kate::Document *, bool, unsigned char)));
+  connect(doc,TQT_SIGNAL(modStateChanged(Kate::Document *)),this,TQT_SLOT(slotModChanged(Kate::Document *)));
+  connect(doc,TQT_SIGNAL(nameChanged(Kate::Document *)),this,TQT_SLOT(slotNameChanged(Kate::Document *)));
+  connect(doc,TQT_SIGNAL(modifiedOnDisc(Kate::Document *, bool, unsigned char)),this,TQT_SLOT(slotModifiedOnDisc(Kate::Document *, bool, unsigned char)));
 
   sort();
   updateActions ();
@@ -227,7 +227,7 @@ void KateFileList::slotDocumentCreated (Kate::Document *doc)
 
 void KateFileList::slotDocumentDeleted (uint documentNumber)
 {
-  QListViewItem * item = firstChild();
+  TQListViewItem * item = firstChild();
   while( item ) {
     if ( ((KateFileListItem *)item)->documentNumber() == documentNumber )
     {
@@ -244,7 +244,7 @@ void KateFileList::slotDocumentDeleted (uint documentNumber)
   updateActions ();
 }
 
-void KateFileList::slotActivateView( QListViewItem *item )
+void KateFileList::slotActivateView( TQListViewItem *item )
 {
   if ( ! item || item->rtti() != RTTI_KateFileListItem )
     return;
@@ -256,7 +256,7 @@ void KateFileList::slotModChanged (Kate::Document *doc)
 {
   if (!doc) return;
 
-  QListViewItem * item = firstChild();
+  TQListViewItem * item = firstChild();
   while( item )
   {
     if ( ((KateFileListItem *)item)->documentNumber() == doc->documentNumber() )
@@ -291,7 +291,7 @@ void KateFileList::slotNameChanged (Kate::Document *doc)
 
   // ### using nextSibling to *only* look at toplevel items.
   // child items could be marks for example
-  QListViewItem * item = firstChild();
+  TQListViewItem * item = firstChild();
   while( item ) {
     if ( ((KateFileListItem*)item)->document() == doc )
     {
@@ -311,7 +311,7 @@ void KateFileList::slotViewChanged ()
   Kate::View *view = viewManager->activeView();
   uint dn = view->getDoc()->documentNumber();
 
-  QListViewItem * i = firstChild();
+  TQListViewItem * i = firstChild();
   while( i ) {
     if ( ((KateFileListItem *)i)->documentNumber() == dn )
     {
@@ -348,23 +348,23 @@ void KateFileList::slotViewChanged ()
 
 }
 
-void KateFileList::slotMenu ( QListViewItem *item, const QPoint &p, int /*col*/ )
+void KateFileList::slotMenu ( TQListViewItem *item, const TQPoint &p, int /*col*/ )
 {
   if (!item)
     return;
 
-  QPopupMenu *menu = (QPopupMenu*) ((viewManager->mainWindow())->factory()->container("filelist_popup", viewManager->mainWindow()));
+  TQPopupMenu *menu = (TQPopupMenu*) ((viewManager->mainWindow())->factory()->container("filelist_popup", viewManager->mainWindow()));
 
   if (menu)
     menu->exec(p);
 }
 
-QString KateFileList::tooltip( QListViewItem *item, int )
+TQString KateFileList::tooltip( TQListViewItem *item, int )
 {
   KateFileListItem *i = ((KateFileListItem*)item);
-  if ( ! i ) return QString::null;
+  if ( ! i ) return TQString::null;
 
-  QString str;
+  TQString str;
   const KateDocumentInfo *info = KateDocManager::self()->documentInfo(i->document());
 
   if (info && info->modifiedOnDisc)
@@ -393,9 +393,9 @@ void KateFileList::updateSort ()
   sort ();
 }
 
-void KateFileList::readConfig( KConfig *config, const QString &group )
+void KateFileList::readConfig( KConfig *config, const TQString &group )
 {
-  QString oldgroup = config->group();
+  TQString oldgroup = config->group();
   config->setGroup( group );
 
   setSortType( config->readNumEntry( "Sort Type", sortByID ) );
@@ -408,9 +408,9 @@ void KateFileList::readConfig( KConfig *config, const QString &group )
   config->setGroup( oldgroup );
 }
 
-void KateFileList::writeConfig( KConfig *config, const QString &group )
+void KateFileList::writeConfig( KConfig *config, const TQString &group )
 {
-  QString oldgroup = config->group();
+  TQString oldgroup = config->group();
   config->setGroup( group );
 
   config->writeEntry( "Sort Type", m_sort );
@@ -421,21 +421,21 @@ void KateFileList::writeConfig( KConfig *config, const QString &group )
   config->setGroup( oldgroup );
 }
 
-void KateFileList::takeItem( QListViewItem *item )
+void KateFileList::takeItem( TQListViewItem *item )
 {
   if ( item->rtti() == RTTI_KateFileListItem )
   {
     m_editHistory.removeRef( (KateFileListItem*)item );
     m_viewHistory.removeRef( (KateFileListItem*)item );
   }
-  QListView::takeItem( item );
+  TQListView::takeItem( item );
 }
 //END KateFileList
 
 //BEGIN KateFileListItem
-KateFileListItem::KateFileListItem( QListView* lv,
+KateFileListItem::KateFileListItem( TQListView* lv,
 				    Kate::Document *_doc )
-  : QListViewItem( lv, _doc->docName() ),
+  : TQListViewItem( lv, _doc->docName() ),
     doc( _doc ),
     m_viewhistpos( 0 ),
     m_edithistpos( 0 ),
@@ -447,13 +447,13 @@ KateFileListItem::~KateFileListItem()
 {
 }
 
-const QPixmap *KateFileListItem::pixmap ( int column ) const
+const TQPixmap *KateFileListItem::pixmap ( int column ) const
 {
   if ( column == 0) {
-    static QPixmap noPm = SmallIcon ("null");
-    static QPixmap modPm = SmallIcon("modified");
-    static QPixmap discPm = SmallIcon("modonhd");
-    static QPixmap modmodPm = SmallIcon("modmod");
+    static TQPixmap noPm = SmallIcon ("null");
+    static TQPixmap modPm = SmallIcon("modified");
+    static TQPixmap discPm = SmallIcon("modonhd");
+    static TQPixmap modmodPm = SmallIcon("modmod");
 
     const KateDocumentInfo *info = KateDocManager::self()->documentInfo(doc);
 
@@ -466,22 +466,22 @@ const QPixmap *KateFileListItem::pixmap ( int column ) const
   return 0;
 }
 
-void KateFileListItem::paintCell( QPainter *painter, const QColorGroup & cg, int column, int width, int align )
+void KateFileListItem::paintCell( TQPainter *painter, const TQColorGroup & cg, int column, int width, int align )
 {
   KateFileList *fl = (KateFileList*)listView();
   if ( ! fl ) return;
 
   if ( column == 0 )
   {
-    QColorGroup cgNew = cg;
+    TQColorGroup cgNew = cg;
 
     // replace the base color with a different shading if necessary...
     if ( fl->shadingEnabled() && m_viewhistpos > 1 )
     {
-      QColor b( cg.base() );
+      TQColor b( cg.base() );
 
-      QColor shade = fl->viewShade();
-      QColor eshade = fl->editShade();
+      TQColor shade = fl->viewShade();
+      TQColor eshade = fl->editShade();
       int hc = fl->histCount();
       // If this file is in the edit history, blend in the eshade
       // color. The blend is weighted by the position in the editing history
@@ -507,16 +507,16 @@ void KateFileListItem::paintCell( QPainter *painter, const QColorGroup & cg, int
           (int)((b.blue()*(1-t)) + (shade.blue()*t))
               );
 
-      cgNew.setColor(QColorGroup::Base, b);
+      cgNew.setColor(TQColorGroup::Base, b);
     }
 
-    QListViewItem::paintCell( painter, cgNew, column, width, align );
+    TQListViewItem::paintCell( painter, cgNew, column, width, align );
   }
   else
-    QListViewItem::paintCell( painter, cg, column, width, align );
+    TQListViewItem::paintCell( painter, cg, column, width, align );
 }
 
-int KateFileListItem::compare ( QListViewItem * i, int col, bool ascending ) const
+int KateFileListItem::compare ( TQListViewItem * i, int col, bool ascending ) const
 {
   if ( i->rtti() == RTTI_KateFileListItem )
   {
@@ -533,7 +533,7 @@ int KateFileListItem::compare ( QListViewItem * i, int col, bool ascending ) con
         return doc->url().prettyURL().compare( ((KateFileListItem*)i)->document()->url().prettyURL() );
         break;
       default:
-        return QListViewItem::compare( i, col, ascending );
+        return TQListViewItem::compare( i, col, ascending );
     }
   }
   return 0;
@@ -541,68 +541,68 @@ int KateFileListItem::compare ( QListViewItem * i, int col, bool ascending ) con
 //END KateFileListItem
 
 //BEGIN KFLConfigPage
-KFLConfigPage::KFLConfigPage( QWidget* parent, const char *name, KateFileList *fl )
+KFLConfigPage::KFLConfigPage( TQWidget* parent, const char *name, KateFileList *fl )
   :  Kate::ConfigPage( parent, name ),
     m_filelist( fl ),
     m_changed( false )
 {
-  QVBoxLayout *lo1 = new QVBoxLayout( this );
+  TQVBoxLayout *lo1 = new TQVBoxLayout( this );
   int spacing = KDialog::spacingHint();
   lo1->setSpacing( spacing );
 
-  QGroupBox *gb = new QGroupBox( 1, Qt::Horizontal, i18n("Background Shading"), this );
+  TQGroupBox *gb = new TQGroupBox( 1, Qt::Horizontal, i18n("Background Shading"), this );
   lo1->addWidget( gb );
 
-  QWidget *g = new QWidget( gb );
-  QGridLayout *lo = new QGridLayout( g, 2, 2 );
+  TQWidget *g = new TQWidget( gb );
+  TQGridLayout *lo = new TQGridLayout( g, 2, 2 );
   lo->setSpacing( KDialog::spacingHint() );
-  cbEnableShading = new QCheckBox( i18n("&Enable background shading"), g );
+  cbEnableShading = new TQCheckBox( i18n("&Enable background shading"), g );
   lo->addMultiCellWidget( cbEnableShading, 1, 1, 0, 1 );
 
   kcbViewShade = new KColorButton( g );
-  lViewShade = new QLabel( kcbViewShade, i18n("&Viewed documents' shade:"), g );
+  lViewShade = new TQLabel( kcbViewShade, i18n("&Viewed documents' shade:"), g );
   lo->addWidget( lViewShade, 2, 0 );
   lo->addWidget( kcbViewShade, 2, 1 );
 
   kcbEditShade = new KColorButton( g );
-  lEditShade = new QLabel( kcbEditShade, i18n("&Modified documents' shade:"), g );
+  lEditShade = new TQLabel( kcbEditShade, i18n("&Modified documents' shade:"), g );
   lo->addWidget( lEditShade, 3, 0 );
   lo->addWidget( kcbEditShade, 3, 1 );
 
   // sorting
-  QHBox *hbSorting = new QHBox( this );
+  TQHBox *hbSorting = new TQHBox( this );
   lo1->addWidget( hbSorting );
-  lSort = new QLabel( i18n("&Sort by:"), hbSorting );
-  cmbSort = new QComboBox( hbSorting );
+  lSort = new TQLabel( i18n("&Sort by:"), hbSorting );
+  cmbSort = new TQComboBox( hbSorting );
   lSort->setBuddy( cmbSort );
-  QStringList l;
+  TQStringList l;
   l << i18n("Opening Order") << i18n("Document Name") << i18n("URL");
   cmbSort->insertStringList( l );
 
   lo1->insertStretch( -1, 10 );
 
-  QWhatsThis::add( cbEnableShading, i18n(
+  TQWhatsThis::add( cbEnableShading, i18n(
       "When background shading is enabled, documents that have been viewed "
       "or edited within the current session will have a shaded background. "
       "The most recent documents have the strongest shade.") );
-  QWhatsThis::add( kcbViewShade, i18n(
+  TQWhatsThis::add( kcbViewShade, i18n(
       "Set the color for shading viewed documents.") );
-  QWhatsThis::add( kcbEditShade, i18n(
+  TQWhatsThis::add( kcbEditShade, i18n(
       "Set the color for modified documents. This color is blended into "
       "the color for viewed files. The most recently edited documents get "
       "most of this color.") );
 
-  QWhatsThis::add( cmbSort, i18n(
+  TQWhatsThis::add( cmbSort, i18n(
       "Set the sorting method for the documents.") );
 
   reload();
 
   slotEnableChanged();
-  connect( cbEnableShading, SIGNAL(toggled(bool)), this, SLOT(slotMyChanged()) );
-  connect( cbEnableShading, SIGNAL(toggled(bool)), this, SLOT(slotEnableChanged()) );
-  connect( kcbViewShade, SIGNAL(changed(const QColor&)), this, SLOT(slotMyChanged()) );
-  connect( kcbEditShade, SIGNAL(changed(const QColor&)), this, SLOT(slotMyChanged()) );
-  connect( cmbSort, SIGNAL(activated(int)), this, SLOT(slotMyChanged()) );
+  connect( cbEnableShading, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotMyChanged()) );
+  connect( cbEnableShading, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotEnableChanged()) );
+  connect( kcbViewShade, TQT_SIGNAL(changed(const TQColor&)), this, TQT_SLOT(slotMyChanged()) );
+  connect( kcbEditShade, TQT_SIGNAL(changed(const TQColor&)), this, TQT_SLOT(slotMyChanged()) );
+  connect( cmbSort, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotMyChanged()) );
 }
 
 void KFLConfigPage::apply()

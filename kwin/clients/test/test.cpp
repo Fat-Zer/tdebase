@@ -1,6 +1,6 @@
 #include "test.h"
 
-#include <qtooltip.h>
+#include <tqtooltip.h>
 #include <kglobal.h>
 #include <kdebug.h>
 
@@ -20,16 +20,16 @@ void Decoration::init()
     widget()->installEventFilter( this );
     if( isCloseable())
 	{
-        button = new QPushButton( widget());
+        button = new TQPushButton( widget());
         button->show();
         button->setCursor( arrowCursor );
 	button->move( 0, 0 );
-        connect( button, SIGNAL( clicked()), SLOT( closeWindow()));
-	QToolTip::add( button, "Zelva Mana" );
+        connect( button, TQT_SIGNAL( clicked()), TQT_SLOT( closeWindow()));
+	TQToolTip::add( button, "Zelva Mana" );
 	}
     }
     
-Decoration::MousePosition Decoration::mousePosition( const QPoint& p ) const
+Decoration::MousePosition Decoration::mousePosition( const TQPoint& p ) const
     {
     const int range = 16;
     const int border = 4;
@@ -88,30 +88,30 @@ void Decoration::reset( unsigned long )
     {
     }
     
-void Decoration::resize( const QSize& s )
+void Decoration::resize( const TQSize& s )
     {
     widget()->resize( s );
     }
     
-QSize Decoration::minimumSize() const
+TQSize Decoration::minimumSize() const
     {
-    return QSize( 100, 50 );
+    return TQSize( 100, 50 );
     }
     
-bool Decoration::eventFilter( QObject* o, QEvent* e )
+bool Decoration::eventFilter( TQObject* o, TQEvent* e )
     {
     if( o == widget())
         {
         switch( e->type())
             {
-            case QEvent::MouseButtonPress:
+            case TQEvent::MouseButtonPress:
 	        { // FRAME
-                processMousePressEvent( static_cast< QMouseEvent* >( e ));
+                processMousePressEvent( static_cast< TQMouseEvent* >( e ));
         	return true;
 	        }
-            case QEvent::Show:
+            case TQEvent::Show:
                 break;
-            case QEvent::Hide:
+            case TQEvent::Hide:
                 break;
             default:
                 break;
@@ -121,8 +121,8 @@ bool Decoration::eventFilter( QObject* o, QEvent* e )
     }
 
 }
-#include <qapplication.h>
-#include <qpainter.h>
+#include <tqapplication.h>
+#include <tqpainter.h>
 #include <X11/Xlib.h>
 #include <math.h>
 #include <unistd.h>
@@ -146,7 +146,7 @@ bool Decoration::animateMinimize(bool iconify)
         helperShowHide( false );
         qApp->syncX();
 
-        QRect r = iconGeometry();
+        TQRect r = iconGeometry();
 
         if (!r.isValid())
           return true;
@@ -178,7 +178,7 @@ bool Decoration::animateMinimize(bool iconify)
 
         double delta  = finalAngle / steps;
 
-        QPainter p( workspaceWidget());
+        TQPainter p( workspaceWidget());
         p.setRasterOp(Qt::NotROP);
 
         for (double angle = 0; ; angle += delta) {
@@ -190,10 +190,10 @@ bool Decoration::animateMinimize(bool iconify)
           double dch = (ch / 2) * cos(angle);
           double midy = cy + (ch / 2);
 
-          QPoint p1(int(cx + dx), int(midy - dch));
-          QPoint p2(int(cx + cw - dx), p1.y());
-          QPoint p3(int(cx + dw + dx), int(midy + dch));
-          QPoint p4(int(cx - dx), p3.y());
+          TQPoint p1(int(cx + dx), int(midy - dch));
+          TQPoint p2(int(cx + cw - dx), p1.y());
+          TQPoint p3(int(cx + dw + dx), int(midy + dch));
+          TQPoint p4(int(cx - dx), p3.y());
 
           grabXServer();
 
@@ -240,12 +240,12 @@ bool Decoration::animateMinimize(bool iconify)
 
         int stepCount = 12;
 
-        QRect r(geometry());
+        TQRect r(geometry());
 
         int dx = r.width() / (stepCount * 2);
         int dy = r.height() / (stepCount * 2);
 
-        QPainter p( workspaceWidget());
+        TQPainter p( workspaceWidget());
         p.setRasterOp(Qt::NotROP);
 
         for (int step = 0; step < stepCount; step++) {
@@ -271,21 +271,21 @@ bool Decoration::animateMinimize(bool iconify)
 
     default:
       {
-        QRect icongeom = iconGeometry();
+        TQRect icongeom = iconGeometry();
 
         if (!icongeom.isValid())
           return true;
 
-        QRect wingeom = geometry();
+        TQRect wingeom = geometry();
 
-        QPainter p( workspaceWidget());
+        TQPainter p( workspaceWidget());
 
         p.setRasterOp(Qt::NotROP);
 
 #if 0
         if (iconify)
           p.setClipRegion(
-              QRegion( workspaceWidget()->rect()) - wingeom
+              TQRegion( workspaceWidget()->rect()) - wingeom
           );
 #endif
 

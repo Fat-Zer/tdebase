@@ -17,12 +17,12 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qslider.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqslider.h>
 
 #include <kcolorbutton.h>
 #include <klocale.h>
@@ -31,7 +31,7 @@
 #include "advancedOptions.h"
 #include "main.h"
 
-advancedDialog::advancedDialog(QWidget* parent, const char* name)
+advancedDialog::advancedDialog(TQWidget* parent, const char* name)
     : KDialogBase(KDialogBase::Plain,
                   i18n("Advanced Options"),
                   Ok|Apply|Cancel,
@@ -40,29 +40,29 @@ advancedDialog::advancedDialog(QWidget* parent, const char* name)
                   name,
                   false, false)
 {
-    connect(this, SIGNAL(applyClicked()),
-            this, SLOT(save()));
-    connect(this, SIGNAL(okClicked()),
-            this, SLOT(save()));
+    connect(this, TQT_SIGNAL(applyClicked()),
+            this, TQT_SLOT(save()));
+    connect(this, TQT_SIGNAL(okClicked()),
+            this, TQT_SLOT(save()));
 
-    QFrame* page = plainPage();
-    QVBoxLayout* layout = new QVBoxLayout(page);
+    TQFrame* page = plainPage();
+    TQVBoxLayout* layout = new TQVBoxLayout(page);
     m_advancedWidget = new advancedKickerOptions(page);
     layout->addWidget(m_advancedWidget);
     layout->addStretch();
 
     setMinimumSize( sizeHint() );
 
-    connect(m_advancedWidget->handles, SIGNAL(clicked(int)),
-            this, SLOT(changed()));
-    connect(m_advancedWidget->hideButtonSize, SIGNAL(valueChanged(int)),
-            this, SLOT(changed()));
-    connect(m_advancedWidget->tintColorB, SIGNAL(clicked()),
-            this, SLOT(changed()));
-    connect(m_advancedWidget->tintSlider, SIGNAL(valueChanged(int)),
-            this, SLOT(changed()));
-    connect(m_advancedWidget->menubarPanelTransparent, SIGNAL(clicked()),
-            this, SLOT(changed()));
+    connect(m_advancedWidget->handles, TQT_SIGNAL(clicked(int)),
+            this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->hideButtonSize, TQT_SIGNAL(valueChanged(int)),
+            this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->tintColorB, TQT_SIGNAL(clicked()),
+            this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->tintSlider, TQT_SIGNAL(valueChanged(int)),
+            this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->menubarPanelTransparent, TQT_SIGNAL(clicked()),
+            this, TQT_SLOT(changed()));
     load();
 }
 
@@ -86,7 +86,7 @@ void advancedDialog::load()
 
     int defaultHideButtonSize = c.readNumEntry("HideButtonSize", 14);
     m_advancedWidget->hideButtonSize->setValue(defaultHideButtonSize);
-    QColor color = c.readColorEntry( "TintColor", &colorGroup().mid() );
+    TQColor color = c.readColorEntry( "TintColor", &colorGroup().mid() );
     m_advancedWidget->tintColorB->setColor( color );
     int tintValue = c.readNumEntry( "TintValue", 33 );
     m_advancedWidget->tintSlider->setValue( tintValue );
@@ -115,11 +115,11 @@ void advancedDialog::save()
     c.writeEntry("MenubarPanelTransparent",
                  m_advancedWidget->menubarPanelTransparent->isChecked());
 
-    QStringList elist = c.readListEntry("Extensions2");
-    for (QStringList::Iterator it = elist.begin(); it != elist.end(); ++it)
+    TQStringList elist = c.readListEntry("Extensions2");
+    for (TQStringList::Iterator it = elist.begin(); it != elist.end(); ++it)
     {
         // extension id
-        QString group(*it);
+        TQString group(*it);
 
         // is there a config group for this extension?
         if(!c.hasGroup(group) ||

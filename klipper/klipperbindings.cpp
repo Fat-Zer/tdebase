@@ -19,10 +19,10 @@
 */
 #ifndef NOSLOTS
 # define DEF( name, key3, key4, fnSlot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4, this, SLOT(fnSlot) )
+   keys->insert( name, i18n(name), TQString::null, key3, key4, this, TQT_SLOT(fnSlot) )
 #else
 # define DEF( name, key3, key4, fnSlot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4 )
+   keys->insert( name, i18n(name), TQString::null, key3, key4 )
 #endif
 #define WIN KKey::QtWIN
 

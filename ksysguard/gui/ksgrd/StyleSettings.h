@@ -26,7 +26,7 @@
 
 #include <kdialogbase.h>
 
-#include <qcolor.h>
+#include <tqcolor.h>
 
 class KColorButton;
 
@@ -38,30 +38,30 @@ class StyleSettings : public KDialogBase
   Q_OBJECT
 
   public:
-    StyleSettings( QWidget *parent = 0, const char *name = 0 );
+    StyleSettings( TQWidget *parent = 0, const char *name = 0 );
     ~StyleSettings();
 
-    void setFirstForegroundColor( const QColor &color );
-    QColor firstForegroundColor() const;
+    void setFirstForegroundColor( const TQColor &color );
+    TQColor firstForegroundColor() const;
 
-    void setSecondForegroundColor( const QColor &color );
-    QColor secondForegroundColor() const;
+    void setSecondForegroundColor( const TQColor &color );
+    TQColor secondForegroundColor() const;
 
-    void setAlarmColor( const QColor &color );
-    QColor alarmColor() const;
+    void setAlarmColor( const TQColor &color );
+    TQColor alarmColor() const;
 
-    void setBackgroundColor( const QColor &color );
-    QColor backgroundColor() const;
+    void setBackgroundColor( const TQColor &color );
+    TQColor backgroundColor() const;
 
     void setFontSize( uint size );
     uint fontSize() const;
 
-    void setSensorColors( const QValueList<QColor> &list );
-    QValueList<QColor> sensorColors();
+    void setSensorColors( const TQValueList<TQColor> &list );
+    TQValueList<TQColor> sensorColors();
 
   private slots:
     void editSensorColor();
-    void selectionChanged( QListBoxItem* );
+    void selectionChanged( TQListBoxItem* );
 
   private:
     KColorButton *mFirstForegroundColor;
@@ -69,10 +69,10 @@ class StyleSettings : public KDialogBase
     KColorButton *mAlarmColor;
     KColorButton *mBackgroundColor;
 
-    QSpinBox *mFontSize;
+    TQSpinBox *mFontSize;
 
-    QListBox *mColorListBox;
-    QPushButton *mEditColorButton;
+    TQListBox *mColorListBox;
+    TQPushButton *mEditColorButton;
 };
 
 #endif

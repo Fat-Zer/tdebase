@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Implementation of QWidget class
+** Implementation of TQWidget class
 **
 ** Created : 931031
 **
@@ -36,10 +36,10 @@
 #ifndef QXTEVENTLOOP_H
 #define QXTEVENTLOOP_H
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 #if QT_VERSION >= 0x030100
-#include <qeventloop.h>
+#include <tqeventloop.h>
 
 
 
@@ -57,11 +57,11 @@ public:
 
     XtAppContext applicationContext() const;
 
-    void registerSocketNotifier( QSocketNotifier * );
-    void unregisterSocketNotifier( QSocketNotifier * );
+    void registerSocketNotifier( TQSocketNotifier * );
+    void unregisterSocketNotifier( TQSocketNotifier * );
 
-    static void registerWidget( QWidget* );
-    static void unregisterWidget( QWidget* );
+    static void registerWidget( TQWidget* );
+    static void unregisterWidget( TQWidget* );
     static bool redeliverEvent( XEvent *event );
     static XEvent* lastEvent();
 

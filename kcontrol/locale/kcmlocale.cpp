@@ -23,13 +23,13 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlistbox.h>
+#include <tqpushbutton.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include <kdebug.h>
 #include <kdialog.h>
@@ -43,50 +43,50 @@
 #include "toplevel.h"
 
 KLocaleConfig::KLocaleConfig(KLocale *locale,
-                             QWidget *parent, const char *name)
-  : QWidget (parent, name),
+                             TQWidget *parent, const char *name)
+  : TQWidget (parent, name),
     m_locale(locale)
 {
-  QGridLayout *lay = new QGridLayout(this, 4, 3,
+  TQGridLayout *lay = new TQGridLayout(this, 4, 3,
                                      KDialog::marginHint(),
                                      KDialog::spacingHint());
 
-  m_labCountry = new QLabel(this, I18N_NOOP("Country or region:"));
+  m_labCountry = new TQLabel(this, I18N_NOOP("Country or region:"));
   m_comboCountry = new KLanguageButton( this );
   m_labCountry->setBuddy(m_comboCountry);
-  connect( m_comboCountry, SIGNAL(activated(const QString &)),
-           this, SLOT(changedCountry(const QString &)) );
+  connect( m_comboCountry, TQT_SIGNAL(activated(const TQString &)),
+           this, TQT_SLOT(changedCountry(const TQString &)) );
 
-  m_labLang = new QLabel(this, I18N_NOOP("Languages:"));
+  m_labLang = new TQLabel(this, I18N_NOOP("Languages:"));
   m_labLang->setAlignment( AlignTop );
 
-  m_languages = new QListBox(this);
-  connect(m_languages, SIGNAL(selectionChanged()),
-          SLOT(slotCheckButtons()));
+  m_languages = new TQListBox(this);
+  connect(m_languages, TQT_SIGNAL(selectionChanged()),
+          TQT_SLOT(slotCheckButtons()));
 
-  QWidget * vb = new QWidget(this);
-  QVBoxLayout * boxlay = new QVBoxLayout(vb, 0, KDialog::spacingHint());
-  m_addLanguage = new KLanguageButton(QString::null, vb, I18N_NOOP("Add Language"));
+  TQWidget * vb = new TQWidget(this);
+  TQVBoxLayout * boxlay = new TQVBoxLayout(vb, 0, KDialog::spacingHint());
+  m_addLanguage = new KLanguageButton(TQString::null, vb, I18N_NOOP("Add Language"));
   boxlay->add(m_addLanguage);
-  connect(m_addLanguage, SIGNAL(activated(const QString &)),
-          SLOT(slotAddLanguage(const QString &)));
-  m_removeLanguage = new QPushButton(vb, I18N_NOOP("Remove Language"));
-  m_upButton = new QPushButton(vb, I18N_NOOP("Move Up"));
-  m_downButton = new QPushButton(vb, I18N_NOOP("Move Down"));
+  connect(m_addLanguage, TQT_SIGNAL(activated(const TQString &)),
+          TQT_SLOT(slotAddLanguage(const TQString &)));
+  m_removeLanguage = new TQPushButton(vb, I18N_NOOP("Remove Language"));
+  m_upButton = new TQPushButton(vb, I18N_NOOP("Move Up"));
+  m_downButton = new TQPushButton(vb, I18N_NOOP("Move Down"));
   boxlay->add(m_removeLanguage);
   boxlay->add(m_upButton);
   boxlay->add(m_downButton);
-  connect(m_removeLanguage, SIGNAL(clicked()),
-          SLOT(slotRemoveLanguage()));
-  connect(m_upButton, SIGNAL(clicked()),
-          SLOT(slotLanguageUp()));
-  connect(m_downButton, SIGNAL(clicked()),
-          SLOT(slotLanguageDown()));
+  connect(m_removeLanguage, TQT_SIGNAL(clicked()),
+          TQT_SLOT(slotRemoveLanguage()));
+  connect(m_upButton, TQT_SIGNAL(clicked()),
+          TQT_SLOT(slotLanguageUp()));
+  connect(m_downButton, TQT_SIGNAL(clicked()),
+          TQT_SLOT(slotLanguageDown()));
   boxlay->insertStretch(-1);
 
   // #### HPB: This should be implemented for KDE 3
-  //  new QLabel(this, I18N_NOOP("Encoding:"));
-  //QComboBox * cb = new QComboBox( this );
+  //  new TQLabel(this, I18N_NOOP("Encoding:"));
+  //TQComboBox * cb = new TQComboBox( this );
   //cb->insertStringList( KGlobal::charsets()->descriptiveEncodingNames() );
 
   lay->addMultiCellWidget(m_labCountry, 0, 0, 0, 1);
@@ -101,19 +101,19 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
   lay->setColStretch(2, 1);
 
   // Added jriddell 2007-01-08, for Kubuntu Language Selector spec
-  QHBoxLayout* languageSelectorLayout = new QHBoxLayout();
-  installLanguage = new QPushButton(i18n("Install New Language"), this);
+  TQHBoxLayout* languageSelectorLayout = new TQHBoxLayout();
+  installLanguage = new TQPushButton(i18n("Install New Language"), this);
   languageSelectorLayout->addWidget(installLanguage);
-  uninstallLanguage = new QPushButton(i18n("Uninstall Language"), this);
+  uninstallLanguage = new TQPushButton(i18n("Uninstall Language"), this);
   languageSelectorLayout->addWidget(uninstallLanguage);
-  selectLanguage = new QPushButton(i18n("Select System Language"), this);
+  selectLanguage = new TQPushButton(i18n("Select System Language"), this);
   languageSelectorLayout->addWidget(selectLanguage);
   languageSelectorLayout->addStretch();
   lay->addMultiCellLayout(languageSelectorLayout, 3, 3, 0, 2);
 
-  connect( installLanguage, SIGNAL(clicked()), this, SLOT(slotInstallLanguage()) );
-  connect( uninstallLanguage, SIGNAL(clicked()), this, SLOT(slotUninstallLanguage()) );
-  connect( selectLanguage, SIGNAL(clicked()), this, SLOT(slotSelectLanguage()) );
+  connect( installLanguage, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotInstallLanguage()) );
+  connect( uninstallLanguage, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotUninstallLanguage()) );
+  connect( selectLanguage, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSelectLanguage()) );
 
 }
 
@@ -123,8 +123,8 @@ void KLocaleConfig::slotInstallLanguage()
 
   *proc << "kdesu";
   *proc << "qt-language-selector --mode install";
-  QApplication::connect(proc, SIGNAL(processExited(KProcess *)),
-			this, SLOT(slotLanguageSelectorExited(KProcess *)));
+  TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
+			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
   setEnabled(false);
   proc->start();
 }
@@ -135,8 +135,8 @@ void KLocaleConfig::slotUninstallLanguage()
 
   *proc << "kdesu";
   *proc << "qt-language-selector --mode uninstall";
-  QApplication::connect(proc, SIGNAL(processExited(KProcess *)),
-			this, SLOT(slotLanguageSelectorExited(KProcess *)));
+  TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
+			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
   setEnabled(false);
   proc->start();
 }
@@ -147,8 +147,8 @@ void KLocaleConfig::slotSelectLanguage()
 
   *proc << "kdesu";
   *proc << "qt-language-selector --mode select";
-  QApplication::connect(proc, SIGNAL(processExited(KProcess *)),
-			this, SLOT(slotLanguageSelectorExited(KProcess *)));
+  TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
+			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
   setEnabled(false);
   proc->start();
 }
@@ -160,9 +160,9 @@ void KLocaleConfig::slotLanguageSelectorExited(KProcess *)
   setEnabled(true);
 }
 
-void KLocaleConfig::slotAddLanguage(const QString & code)
+void KLocaleConfig::slotAddLanguage(const TQString & code)
 {
-  QStringList languageList = m_locale->languageList();
+  TQStringList languageList = m_locale->languageList();
 
   int pos = m_languages->currentItem();
   if ( pos < 0 )
@@ -176,7 +176,7 @@ void KLocaleConfig::slotAddLanguage(const QString & code)
   if ( oldPos != -1 && oldPos < pos )
     --pos;
 
-  QStringList::Iterator it = languageList.at( pos );
+  TQStringList::Iterator it = languageList.at( pos );
 
   languageList.insert( it, code );
 
@@ -189,10 +189,10 @@ void KLocaleConfig::slotAddLanguage(const QString & code)
 
 void KLocaleConfig::slotRemoveLanguage()
 {
-  QStringList languageList = m_locale->languageList();
+  TQStringList languageList = m_locale->languageList();
   int pos = m_languages->currentItem();
 
-  QStringList::Iterator it = languageList.at( pos );
+  TQStringList::Iterator it = languageList.at( pos );
 
   if ( it != languageList.end() )
     {
@@ -208,15 +208,15 @@ void KLocaleConfig::slotRemoveLanguage()
 
 void KLocaleConfig::slotLanguageUp()
 {
-  QStringList languageList = m_locale->languageList();
+  TQStringList languageList = m_locale->languageList();
   int pos = m_languages->currentItem();
 
-  QStringList::Iterator it1 = languageList.at( pos - 1 );
-  QStringList::Iterator it2 = languageList.at( pos );
+  TQStringList::Iterator it1 = languageList.at( pos - 1 );
+  TQStringList::Iterator it2 = languageList.at( pos );
 
   if ( it1 != languageList.end() && it2 != languageList.end()  )
   {
-    QString str = *it1;
+    TQString str = *it1;
     *it1 = *it2;
     *it2 = str;
 
@@ -230,15 +230,15 @@ void KLocaleConfig::slotLanguageUp()
 
 void KLocaleConfig::slotLanguageDown()
 {
-  QStringList languageList = m_locale->languageList();
+  TQStringList languageList = m_locale->languageList();
   int pos = m_languages->currentItem();
 
-  QStringList::Iterator it1 = languageList.at( pos );
-  QStringList::Iterator it2 = languageList.at( pos + 1 );
+  TQStringList::Iterator it1 = languageList.at( pos );
+  TQStringList::Iterator it2 = languageList.at( pos + 1 );
 
   if ( it1 != languageList.end() && it2 != languageList.end()  )
     {
-      QString str = *it1;
+      TQString str = *it1;
       *it1 = *it2;
       *it2 = str;
 
@@ -259,49 +259,49 @@ void KLocaleConfig::loadLanguageList()
   // clear the list
   m_addLanguage->clear();
 
-  QStringList first = languageList();
+  TQStringList first = languageList();
 
-  QStringList prilang;
+  TQStringList prilang;
   // add the primary languages for the country to the list
-  for ( QStringList::ConstIterator it = first.begin();
+  for ( TQStringList::ConstIterator it = first.begin();
         it != first.end();
         ++it )
   {
-    QString str = locate("locale", QString::fromLatin1("%1/entry.desktop")
+    TQString str = locate("locale", TQString::fromLatin1("%1/entry.desktop")
                          .arg(*it));
     if (!str.isNull())
       prilang << str;
   }
 
   // add all languages to the list
-  QStringList alllang = KGlobal::dirs()->findAllResources("locale",
-                               QString::fromLatin1("*/entry.desktop"), 
+  TQStringList alllang = KGlobal::dirs()->findAllResources("locale",
+                               TQString::fromLatin1("*/entry.desktop"), 
                                false, true);
-  QStringList langlist = prilang;
+  TQStringList langlist = prilang;
   if (langlist.count() > 0)
-    langlist << QString::null; // separator
+    langlist << TQString::null; // separator
   langlist += alllang;
 
   int menu_index = -2;
-  QString submenu; // we are working on this menu
-  for ( QStringList::ConstIterator it = langlist.begin();
+  TQString submenu; // we are working on this menu
+  for ( TQStringList::ConstIterator it = langlist.begin();
         it != langlist.end(); ++it )
   {
     if ((*it).isNull())
     {
       m_addLanguage->insertSeparator();
-      submenu = QString::fromLatin1("other");
+      submenu = TQString::fromLatin1("other");
       m_addLanguage->insertSubmenu(m_locale->translate("Other"),
-                                   submenu, QString::null, -1);
+                                   submenu, TQString::null, -1);
       menu_index = -2; // first entries should _not_ be sorted
       continue;
     }
     KSimpleConfig entry(*it);
     entry.setGroup("KCM Locale");
-    QString name = entry.readEntry("Name",
+    TQString name = entry.readEntry("Name",
                                    m_locale->translate("without name"));
 
-    QString tag = *it;
+    TQString tag = *it;
     int index = tag.findRev('/');
     tag = tag.left(index);
     index = tag.findRev('/');
@@ -319,20 +319,20 @@ void KLocaleConfig::loadCountryList()
   KLocale *lsave = KGlobal::_locale;
   KGlobal::_locale = m_locale;
 
-  QString sub = QString::fromLatin1("l10n/");
+  TQString sub = TQString::fromLatin1("l10n/");
 
   // clear the list
   m_comboCountry->clear();
 
-  QStringList regionlist = KGlobal::dirs()->findAllResources("locale",
-                                 sub + QString::fromLatin1("*.desktop"), 
+  TQStringList regionlist = KGlobal::dirs()->findAllResources("locale",
+                                 sub + TQString::fromLatin1("*.desktop"), 
                                  false, true );
 
-  for ( QStringList::ConstIterator it = regionlist.begin();
+  for ( TQStringList::ConstIterator it = regionlist.begin();
     it != regionlist.end();
     ++it )
   {
-    QString tag = *it;
+    TQString tag = *it;
     int index;
 
     index = tag.findRev('/');
@@ -345,42 +345,42 @@ void KLocaleConfig::loadCountryList()
 
     KSimpleConfig entry(*it);
     entry.setGroup("KCM Locale");
-    QString name = entry.readEntry("Name",
+    TQString name = entry.readEntry("Name",
                                    m_locale->translate("without name"));
 
-    QString map( locate( "locale",
-                          QString::fromLatin1( "l10n/%1.png" )
+    TQString map( locate( "locale",
+                          TQString::fromLatin1( "l10n/%1.png" )
                           .arg(tag) ) );
-    QIconSet icon;
+    TQIconSet icon;
     if ( !map.isNull() )
       icon = KGlobal::iconLoader()->loadIconSet(map, KIcon::Small);
     m_comboCountry->insertSubmenu( icon, name, tag, sub, -2 );
   }
 
   // add all languages to the list
-  QStringList countrylist = KGlobal::dirs()->findAllResources
-    ("locale", sub + QString::fromLatin1("*/entry.desktop"), false, true);
+  TQStringList countrylist = KGlobal::dirs()->findAllResources
+    ("locale", sub + TQString::fromLatin1("*/entry.desktop"), false, true);
 
-  for ( QStringList::ConstIterator it = countrylist.begin();
+  for ( TQStringList::ConstIterator it = countrylist.begin();
         it != countrylist.end(); ++it )
   {
     KSimpleConfig entry(*it);
     entry.setGroup("KCM Locale");
-    QString name = entry.readEntry("Name",
+    TQString name = entry.readEntry("Name",
                                    m_locale->translate("without name"));
-    QString submenu = entry.readEntry("Region");
+    TQString submenu = entry.readEntry("Region");
 
-    QString tag = *it;
+    TQString tag = *it;
     int index = tag.findRev('/');
     tag.truncate(index);
     index = tag.findRev('/');
     tag = tag.mid(index + 1);
     int menu_index = submenu.isEmpty() ? -1 : -2;
 
-    QString flag( locate( "locale",
-                          QString::fromLatin1( "l10n/%1/flag.png" )
+    TQString flag( locate( "locale",
+                          TQString::fromLatin1( "l10n/%1/flag.png" )
                           .arg(tag) ) );
-    QIconSet icon( KGlobal::iconLoader()->loadIconSet(flag, KIcon::Small) );
+    TQIconSet icon( KGlobal::iconLoader()->loadIconSet(flag, KIcon::Small) );
     m_comboCountry->insertItem( icon, name, tag, submenu, menu_index );
   }
 
@@ -388,15 +388,15 @@ void KLocaleConfig::loadCountryList()
   KGlobal::_locale = lsave;
 }
 
-void KLocaleConfig::readLocale(const QString &path, QString &name,
-                               const QString &sub) const
+void KLocaleConfig::readLocale(const TQString &path, TQString &name,
+                               const TQString &sub) const
 {
   // temperary use of our locale as the global locale
   KLocale *lsave = KGlobal::_locale;
   KGlobal::_locale = m_locale;
 
   // read the name
-  QString filepath = QString::fromLatin1("%1%2/entry.desktop")
+  TQString filepath = TQString::fromLatin1("%1%2/entry.desktop")
     .arg(sub)
     .arg(path);
 
@@ -416,7 +416,7 @@ void KLocaleConfig::save()
 
   config->writeEntry("Country", m_locale->country(), true, true);
   if ( m_locale->languageList().isEmpty() )
-    config->writeEntry("Language", QString::fromLatin1(""), true, true);
+    config->writeEntry("Language", TQString::fromLatin1(""), true, true);
   else
     config->writeEntry("Language",
                        m_locale->languageList(), ':', true, true);
@@ -439,13 +439,13 @@ void KLocaleConfig::slotLocaleChanged()
 
   // update language widget
   m_languages->clear();
-  QStringList languageList = m_locale->languageList();
-  for ( QStringList::Iterator it = languageList.begin();
+  TQStringList languageList = m_locale->languageList();
+  for ( TQStringList::Iterator it = languageList.begin();
         it != languageList.end();
         ++it )
   {
-    QString name;
-    readLocale(*it, name, QString::null);
+    TQString name;
+    readLocale(*it, name, TQString::null);
 
     m_languages->insertItem(name);
   }
@@ -458,29 +458,29 @@ void KLocaleConfig::slotTranslate()
 {
   kdDebug() << "slotTranslate()" << endl;
 
-  QToolTip::add(m_comboCountry, m_locale->translate
+  TQToolTip::add(m_comboCountry, m_locale->translate
         ( "This is where you live. KDE will use the defaults for "
           "this country or region.") );
-  QToolTip::add(m_addLanguage, m_locale->translate
+  TQToolTip::add(m_addLanguage, m_locale->translate
         ( "This will add a language to the list. If the language is already "
           "in the list, the old one will be moved instead." ) );
 
-  QToolTip::add(m_removeLanguage, m_locale->translate
+  TQToolTip::add(m_removeLanguage, m_locale->translate
         ( "This will remove the highlighted language from the list." ) );
 
-  QToolTip::add(m_languages, m_locale->translate
+  TQToolTip::add(m_languages, m_locale->translate
         ( "KDE programs will be displayed in the first available language in "
           "this list.\nIf none of the languages are available, US English "
           "will be used.") );
 
-  QString str;
+  TQString str;
 
   str = m_locale->translate
     ( "Here you can choose your country or region. The settings "
       "for languages, numbers etc. will automatically switch to the "
       "corresponding values." );
-  QWhatsThis::add( m_labCountry, str );
-  QWhatsThis::add( m_comboCountry, str );
+  TQWhatsThis::add( m_labCountry, str );
+  TQWhatsThis::add( m_comboCountry, str );
 
   str = m_locale->translate
     ( "Here you can choose the languages that will be used by KDE. If the "
@@ -490,16 +490,16 @@ void KLocaleConfig::slotTranslate()
       "languages from the place you got KDE from.<p>"
       "Note that some applications may not be translated to your languages; "
       "in this case, they will automatically fall back to US English." );
-  QWhatsThis::add( m_labLang, str );
-  QWhatsThis::add( m_languages, str );
-  QWhatsThis::add( m_addLanguage, str );
-  QWhatsThis::add( m_removeLanguage, str );
+  TQWhatsThis::add( m_labLang, str );
+  TQWhatsThis::add( m_languages, str );
+  TQWhatsThis::add( m_addLanguage, str );
+  TQWhatsThis::add( m_removeLanguage, str );
 }
 
-QStringList KLocaleConfig::languageList() const
+TQStringList KLocaleConfig::languageList() const
 {
-  QString fileName = locate("locale",
-                            QString::fromLatin1("l10n/%1/entry.desktop")
+  TQString fileName = locate("locale",
+                            TQString::fromLatin1("l10n/%1/entry.desktop")
                             .arg(m_locale->country()));
 
   KSimpleConfig entry(fileName);
@@ -508,19 +508,19 @@ QStringList KLocaleConfig::languageList() const
   return entry.readListEntry("Languages");
 }
 
-void KLocaleConfig::changedCountry(const QString & code)
+void KLocaleConfig::changedCountry(const TQString & code)
 {
   m_locale->setCountry(code);
 
   // change to the preferred languages in that country, installed only
-  QStringList languages = languageList();
-  QStringList newLanguageList;
-  for ( QStringList::Iterator it = languages.begin();
+  TQStringList languages = languageList();
+  TQStringList newLanguageList;
+  for ( TQStringList::Iterator it = languages.begin();
         it != languages.end();
         ++it )
   {
-    QString name;
-    readLocale(*it, name, QString::null);
+    TQString name;
+    readLocale(*it, name, TQString::null);
 
     if (!name.isEmpty())
       newLanguageList += *it;

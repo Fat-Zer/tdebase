@@ -25,38 +25,38 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define KICKER_MENU_MANAGER_H
 
 #include <dcopobject.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 class PanelKMenu;
 class KickerClientMenu;
 class PanelPopupButton;
 
-typedef QValueList<PanelPopupButton*> KButtonList;
+typedef TQValueList<PanelPopupButton*> KButtonList;
 
 /**
  * The factory for menus created by other applications. Also the owner of these menus.
  */
-class MenuManager : public QObject, DCOPObject
+class MenuManager : public TQObject, DCOPObject
 {
     Q_OBJECT
 public:
     static MenuManager* the();
 
     // dcop exported
-    QCString createMenu(QPixmap icon, QString text);
-    void removeMenu(QCString menu);
+    TQCString createMenu(TQPixmap icon, TQString text);
+    void removeMenu(TQCString menu);
 
     // dcop internal
-    bool process(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &reply);
+    bool process(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &reply);
 
     // KMenu controls
     PanelKMenu* kmenu() { return m_kmenu; }
     void showKMenu();
-    void popupKMenu(const QPoint &p);
+    void popupKMenu(const TQPoint &p);
 
     void registerKButton(PanelPopupButton *button);
     void unregisterKButton(PanelPopupButton *button);
-    PanelPopupButton* findKButtonFor(QPopupMenu* menu);
+    PanelPopupButton* findKButtonFor(TQPopupMenu* menu);
     ~MenuManager();
 
 public slots:
@@ -64,15 +64,15 @@ public slots:
     void kmenuAccelActivated();
 
 protected slots:
-    void applicationRemoved(const QCString&);
+    void applicationRemoved(const TQCString&);
 
 protected:
     PanelKMenu* m_kmenu;
-    typedef QValueList<KickerClientMenu*> ClientMenuList;
+    typedef TQValueList<KickerClientMenu*> ClientMenuList;
     ClientMenuList clientmenus;
 
 private:
-    MenuManager(QObject *parent = 0);
+    MenuManager(TQObject *parent = 0);
 
     static MenuManager* m_self;
     KButtonList m_kbuttons;

@@ -24,8 +24,8 @@
 #ifndef KGREETERPLUGIN_H
 #define KGREETERPLUGIN_H
 
-#include <qvariant.h>
-#include <qmessagebox.h>
+#include <tqvariant.h>
+#include <tqmessagebox.h>
 #include <kdemacros.h>
 
 class KdmThemer;
@@ -58,7 +58,7 @@ public:
      * user changes.
      * @param user the user logging in
      */
-    virtual void gplugSetUser( const QString &user ) = 0;
+    virtual void gplugSetUser( const TQString &user ) = 0;
     /**
      * Start processing.
      */
@@ -76,7 +76,7 @@ public:
      * @param type message severity
      * @param text message text
      */
-    virtual void gplugMsgBox( QMessageBox::Icon type, const QString &text ) = 0;
+    virtual void gplugMsgBox( TQMessageBox::Icon type, const TQString &text ) = 0;
 };
 
 /**
@@ -122,7 +122,7 @@ public:
      * Will be called only when not running.
      * @param users the users to load.
      */
-    virtual void loadUsers( const QStringList &users ) = 0;
+    virtual void loadUsers( const TQStringList &users ) = 0;
 
     /**
      * Preload the talker with an (opaque to the greeter) entity.
@@ -134,13 +134,13 @@ public:
      *  the password field with anything, disabling it, and placing the
      *  cursor in the user name field.
      */
-    virtual void presetEntity( const QString &entity, int field ) = 0;
+    virtual void presetEntity( const TQString &entity, int field ) = 0;
 
     /**
      * Obtain the actually logged in entity.
      * Will be called only after succeeded() was called.
      */
-    virtual QString getEntity() const = 0;
+    virtual TQString getEntity() const = 0;
 
     /**
      * "Push" a user into the talker. That can be a click into the user list
@@ -149,7 +149,7 @@ public:
      * @param user the user to set. Note that this is a UNIX login, not a
      *  canonical entity
      */
-    virtual void setUser( const QString &user ) = 0;
+    virtual void setUser( const TQString &user ) = 0;
 
     /**
      * En-/disable any widgets contained in the talker.
@@ -277,14 +277,14 @@ public:
     virtual void clear() = 0;
 
     /**
-     * Obtain the QLayoutItem containg the widget(s) to actually handle the
-     * conversation. See QLayout and QWidgetItem for possible implementations.
+     * Obtain the TQLayoutItem containg the widget(s) to actually handle the
+     * conversation. See TQLayout and TQWidgetItem for possible implementations.
      */
-    QLayoutItem *getLayoutItem() const { return layoutItem; }
+    TQLayoutItem *getLayoutItem() const { return layoutItem; }
 
 protected:
     KGreeterPluginHandler *handler;
-    QLayoutItem *layoutItem;
+    TQLayoutItem *layoutItem;
 };
 
 struct KDE_EXPORT kgreeterplugin_info {
@@ -345,9 +345,9 @@ struct KDE_EXPORT kgreeterplugin_info {
      * @param ctx context pointer for @p getConf
      * @return if false, unload the plugin again (don't call done() first)
      */
-    bool (*init)( const QString &method,
-                  QVariant (*getConf)( void *ctx, const char *key,
-                                       const QVariant &dflt ),
+    bool (*init)( const TQString &method,
+                  TQVariant (*getConf)( void *ctx, const char *key,
+                                       const TQVariant &dflt ),
                   void *ctx );
 
     /**
@@ -392,8 +392,8 @@ struct KDE_EXPORT kgreeterplugin_info {
      */
     KGreeterPlugin *(*create)( KGreeterPluginHandler *handler,
                                KdmThemer *themer,
-                               QWidget *parent, QWidget *predecessor,
-                               const QString &fixedEntity,
+                               TQWidget *parent, TQWidget *predecessor,
+                               const TQString &fixedEntity,
                                KGreeterPlugin::Function func,
                                KGreeterPlugin::Context ctx );
 };

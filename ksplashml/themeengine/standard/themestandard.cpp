@@ -18,11 +18,11 @@
 #include <kstandarddirs.h>
 #include <kconfig.h>
 
-#include <qdesktopwidget.h>
-#include <qlabel.h>
-#include <qpalette.h>
-#include <qpixmap.h>
-#include <qwidget.h>
+#include <tqdesktopwidget.h>
+#include <tqlabel.h>
+#include <tqpalette.h>
+#include <tqpixmap.h>
+#include <tqwidget.h>
 
 #include <objkstheme.h>
 #include "themestandard.h"
@@ -30,10 +30,10 @@
 #include "wndicon.h"
 #include "wndstatus.h"
 
-ThemeStandard::ThemeStandard( QWidget *parent, const char *name, const QStringList &args )
+ThemeStandard::ThemeStandard( TQWidget *parent, const char *name, const TQStringList &args )
   :ThemeEngine( parent, name, args ), mIcon(0L), mPrevIcon(0L), mIconCount(0), mStdIconWidth(-1),
   mIconPos(WndIcon::HBottomLeft), mSbAtTop(false), mSbVisible(true), mSbPbVisible(true), mSbFontName("helvetica"),
-  mSbFontSz(16), mSbFontBold(true), mSbFontItalic(false), mSbFont(QFont()), mSbFg(QColor()), mSbBg(QColor()),
+  mSbFontSz(16), mSbFontBold(true), mSbFontItalic(false), mSbFont(TQFont()), mSbFg(TQColor()), mSbBg(TQColor()),
   mSbIcon("run"), mIconsVisible(true), mIconsJumping(true), mSplashScreen("(Default)")
 {
   _readSettings();
@@ -42,19 +42,19 @@ ThemeStandard::ThemeStandard( QWidget *parent, const char *name, const QStringLi
 
 void ThemeStandard::_initUi()
 {
-  setFrameStyle( QFrame::NoFrame );
+  setFrameStyle( TQFrame::NoFrame );
 
-  QString pixName = mTheme->locateThemeData( mSplashScreen );
+  TQString pixName = mTheme->locateThemeData( mSplashScreen );
 
   if( mSplashScreen == "(Default)" || pixName.isEmpty() )
   {
-    QString resource_prefix = "pics/";
+    TQString resource_prefix = "pics/";
     if ( mTheme->loColor() )
       resource_prefix += "locolor/";
     pixName = locate( "appdata", resource_prefix + "splash.png");
   }
 
-  QPixmap px = QPixmap( pixName );
+  TQPixmap px = TQPixmap( pixName );
 
   if( !px.isNull() )
   {
@@ -62,7 +62,7 @@ void ThemeStandard::_initUi()
     int pw = px.width();
     int ph = px.height();
 
-    QLabel *lbl = new QLabel( this );
+    TQLabel *lbl = new TQLabel( this );
     lbl->setBackgroundMode( NoBackground );
     lbl->setFixedSize( pw, ph );
     lbl->setPixmap( px );
@@ -75,16 +75,16 @@ void ThemeStandard::_initUi()
     resize( 0, 0 );
   }
 
-  const QRect rect = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
+  const TQRect rect = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
   // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
 
   move( rect.x() + (rect.width() - size().width())/2,
         rect.y() + (rect.height() - size().height())/2 );
 
-  mStatus = new WndStatus( QPalette(), mTheme->xineramaScreen(), mSbAtTop, mSbPbVisible, mSbFont, mSbFg, mSbBg, mSbIcon );
+  mStatus = new WndStatus( TQPalette(), mTheme->xineramaScreen(), mSbAtTop, mSbPbVisible, mSbFont, mSbFg, mSbBg, mSbIcon );
 }
 
-void ThemeStandard::showEvent( QShowEvent * )
+void ThemeStandard::showEvent( TQShowEvent * )
 {
 
   ThemeEngine::show();
@@ -101,9 +101,9 @@ void ThemeStandard::showEvent( QShowEvent * )
 }
 
 // Adjust the visible icon.
-void ThemeStandard::slotSetPixmap( const QString& pxn )
+void ThemeStandard::slotSetPixmap( const TQString& pxn )
 {
-  QPixmap px = DesktopIcon( pxn );
+  TQPixmap px = DesktopIcon( pxn );
 
   if ( px.isNull() )
     px = DesktopIcon( "go" );
@@ -119,7 +119,7 @@ void ThemeStandard::slotSetPixmap( const QString& pxn )
     mStdIconWidth = DesktopIcon( "go" ).width();
 
   mIcon = new WndIcon( ++mIconCount, mStdIconWidth, mStatusBarHeight, mTheme->xineramaScreen(),
-                       px, QString::null, mIconPos, mSbAtTop, mIconsJumping );
+                       px, TQString::null, mIconPos, mSbAtTop, mIconsJumping );
   mIcon->show();
 
   if( mIconsJumping )
@@ -139,11 +139,11 @@ void ThemeStandard::_readSettings()
   if ( !cfg )
     return;
 
-  //if ( !cfg->hasGroup( QString("KSplash Theme: %1").arg(mTheme->theme()) ) )
+  //if ( !cfg->hasGroup( TQString("KSplash Theme: %1").arg(mTheme->theme()) ) )
   //  return;
-  cfg->setGroup( QString("KSplash Theme: %1").arg(mTheme->theme()) );
+  cfg->setGroup( TQString("KSplash Theme: %1").arg(mTheme->theme()) );
 
-  QString sbpos = cfg->readEntry( "Statusbar Position", "Bottom" ).upper();
+  TQString sbpos = cfg->readEntry( "Statusbar Position", "Bottom" ).upper();
   mSbAtTop = ( sbpos == "TOP" );
   mSbVisible = cfg->readBoolEntry( "Statusbar Visible", true);
   mSbPbVisible = cfg->readBoolEntry( "Progress Visible", true);
@@ -152,7 +152,7 @@ void ThemeStandard::_readSettings()
   mSbFontSz = cfg->readNumEntry( "Statusbar Font Size", 16 );
   mSbFontBold = cfg->readBoolEntry( "Statusbar Font Bold", true );
   mSbFontItalic = cfg->readBoolEntry( "Statusbar Font Italic", false );
-  mSbFont = QFont( mSbFontName, mSbFontSz, ( mSbFontBold? QFont::Bold : QFont::Normal ) );
+  mSbFont = TQFont( mSbFontName, mSbFontSz, ( mSbFontBold? TQFont::Bold : TQFont::Normal ) );
   if( mSbFontItalic )
     mSbFont.setItalic( true );
 

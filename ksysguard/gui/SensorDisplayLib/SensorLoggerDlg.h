@@ -23,8 +23,8 @@
 
 #include <kdialogbase.h>
 
-#include <qstring.h>
-#include <qcolor.h>
+#include <tqstring.h>
+#include <tqcolor.h>
 
 class SensorLoggerDlgWidget;
 
@@ -34,16 +34,16 @@ class SensorLoggerDlg : public KDialogBase
 
   public:
 
-    SensorLoggerDlg( QWidget *parent=0, const char *name=0 );
+    SensorLoggerDlg( TQWidget *parent=0, const char *name=0 );
 
-    QString fileName() const;
+    TQString fileName() const;
     int timerInterval() const;
     bool lowerLimitActive() const;
     bool upperLimitActive() const;
     double lowerLimit() const;
     double upperLimit() const;
 
-    void setFileName( const QString & );
+    void setFileName( const TQString & );
     void setTimerInterval( int );
     void setLowerLimitActive( bool );
     void setUpperLimitActive( bool );

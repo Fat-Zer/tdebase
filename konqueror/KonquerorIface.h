@@ -22,10 +22,10 @@
 #define __KonquerorIface_h__
 
 #include <dcopobject.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 #include <dcopref.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 /**
  * DCOP interface for konqueror
  */
@@ -42,55 +42,55 @@ k_dcop:
   /**
    * Opens a new window for the given @p url (using createSimpleWindow, i.e. a single view)
    */
-  DCOPRef openBrowserWindow( const QString &url );
+  DCOPRef openBrowserWindow( const TQString &url );
   /**
    * Like @ref openBrowserWindow , with setting the application startup notification ( ASN )
    * property on the window.
    */
-  DCOPRef openBrowserWindowASN( const QString &url, const QCString &startup_id );
+  DCOPRef openBrowserWindowASN( const TQString &url, const TQCString &startup_id );
 
   /**
    * Opens a new window for the given @p url (using createNewWindow, i.e. with an appropriate profile)
    */
-  DCOPRef createNewWindow( const QString &url );
+  DCOPRef createNewWindow( const TQString &url );
   /**
    * Like @ref createNewWindow , with setting the application startup notification ( ASN )
    * property on the window.
    */
-  DCOPRef createNewWindowASN( const QString &url, const QCString &startup_id, bool tempFile );
+  DCOPRef createNewWindowASN( const TQString &url, const TQCString &startup_id, bool tempFile );
 
   /**
    * Opens a new window like @ref createNewWindow, then selects the given @p filesToSelect
    */
-  DCOPRef createNewWindowWithSelection( const QString &url, QStringList filesToSelect );
+  DCOPRef createNewWindowWithSelection( const TQString &url, TQStringList filesToSelect );
   /**
    * Like @ref createNewWindowWithSelection, with setting the application startup notification ( ASN )
    * property on the window.
    */
-  DCOPRef createNewWindowWithSelectionASN( const QString &url, QStringList filesToSelect, const QCString &startup_id );
+  DCOPRef createNewWindowWithSelectionASN( const TQString &url, TQStringList filesToSelect, const TQCString &startup_id );
 
   /**
    * Opens a new window for the given @p url (using createNewWindow, i.e. with an appropriate profile)
    * @param mimetype to speed it up.
    */
-  DCOPRef createNewWindow( const QString &url, const QString & mimetype, bool tempFile );
+  DCOPRef createNewWindow( const TQString &url, const TQString & mimetype, bool tempFile );
   /**
    * Like @ref createNewWindow , with setting the application startup notification ( ASN )
    * property on the window.
    */
-  DCOPRef createNewWindowASN( const QString &url, const QString & mimetype,
-      const QCString &startup_id, bool tempFile );
+  DCOPRef createNewWindowASN( const TQString &url, const TQString & mimetype,
+      const TQCString &startup_id, bool tempFile );
 
   /**
    * As the name says, this creates a window from a profile.
    * Used for instance by khelpcenter.
    */
-  DCOPRef createBrowserWindowFromProfile( const QString &path );
+  DCOPRef createBrowserWindowFromProfile( const TQString &path );
   /**
    * Like @ref createBrowserWindowFromProfile , with setting the application startup
    * notification ( ASN ) property on the window.
    */
-  DCOPRef createBrowserWindowFromProfileASN( const QString &path, const QCString &startup_id );
+  DCOPRef createBrowserWindowFromProfileASN( const TQString &path, const TQCString &startup_id );
 
   /**
    * As the name says, this creates a window from a profile.
@@ -98,13 +98,13 @@ k_dcop:
    * @param path full path to the profile file
    * @param filename name of the profile file, if under the profiles dir
    */
-  DCOPRef createBrowserWindowFromProfile( const QString &path, const QString &filename );
+  DCOPRef createBrowserWindowFromProfile( const TQString &path, const TQString &filename );
   /**
    * Like @ref createBrowserWindowFromProfile , with setting the application startup
    * notification ( ASN ) property on the window.
    */
-  DCOPRef createBrowserWindowFromProfileASN( const QString &path, const QString &filename,
-      const QCString &startup_id );
+  DCOPRef createBrowserWindowFromProfileASN( const TQString &path, const TQString &filename,
+      const TQCString &startup_id );
 
   /**
    * Creates a window from a profile and a URL.
@@ -114,13 +114,13 @@ k_dcop:
    * @param filename name of the profile file, if under the profiles dir
    * @param url the URL to open
    */
-  DCOPRef createBrowserWindowFromProfileAndURL( const QString &path, const QString &filename, const QString &url );
+  DCOPRef createBrowserWindowFromProfileAndURL( const TQString &path, const TQString &filename, const TQString &url );
   /**
    * Like @ref createBrowserWindowFromProfileAndURL , with setting the application startup
    * notification ( ASN ) property on the window.
    */
-  DCOPRef createBrowserWindowFromProfileAndURLASN( const QString &path, const QString &filename, const QString &url,
-      const QCString &startup_id );
+  DCOPRef createBrowserWindowFromProfileAndURLASN( const TQString &path, const TQString &filename, const TQString &url,
+      const TQCString &startup_id );
 
   /**
    * Creates a window the fastest way : the caller has to provide
@@ -130,13 +130,13 @@ k_dcop:
    * @param url the URL to open
    * @param mimetype the mimetype that the URL we want to open has
    */
-  DCOPRef createBrowserWindowFromProfileAndURL( const QString &path, const QString &filename, const QString &url, const QString &mimetype );
+  DCOPRef createBrowserWindowFromProfileAndURL( const TQString &path, const TQString &filename, const TQString &url, const TQString &mimetype );
   /**
    * Like @ref createBrowserWindowFromProfileAndURL , with setting the application startup
    * notification ( ASN ) property on the window.
    */
-  DCOPRef createBrowserWindowFromProfileAndURLASN( const QString &path, const QString &filename, const QString &url, const QString &mimetype,
-      const QCString& startup_id );
+  DCOPRef createBrowserWindowFromProfileAndURLASN( const TQString &path, const TQString &filename, const TQString &url, const TQString &mimetype,
+      const TQCString& startup_id );
 
   /**
    * Called by kcontrol when the global configuration changes
@@ -146,12 +146,12 @@ k_dcop:
   /**
    * @return the name of the instance's crash log file
    */
-  QString crashLogFile();
+  TQString crashLogFile();
 
   /**
    * @return a list of references to all the windows
    */
-  QValueList<DCOPRef> getWindows();
+  TQValueList<DCOPRef> getWindows();
 
   /**
    *  Called internally as broadcast when the user adds/removes/renames a view profile
@@ -161,17 +161,17 @@ k_dcop:
   /**
    * Called internally as broadcast when a URL is to be added to the combobox.
    */
-  ASYNC addToCombo( QString, QCString );
+  ASYNC addToCombo( TQString, TQCString );
 
   /**
    * Called internall as broadcast when a URL has to be removed from the combo.
    */
-  ASYNC removeFromCombo( QString, QCString );
+  ASYNC removeFromCombo( TQString, TQCString );
 
   /**
    * Called internally as a broadcast when the combobox was cleared.
    */
-  ASYNC comboCleared( QCString );
+  ASYNC comboCleared( TQCString );
 
   /**
    * Used by kfmclient when the 'minimize memory usage' setting is set

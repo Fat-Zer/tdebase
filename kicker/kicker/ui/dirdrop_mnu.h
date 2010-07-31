@@ -24,14 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __dirdrop_mnu_h__
 #define __dirdrop_mnu_h__
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 // The directory dropped menu
 class PanelDirDropMenu : public QPopupMenu
 {
 public:
     enum OpButton{Url=1, Browser};
-    PanelDirDropMenu(QWidget *parent=0, const char *name=0);
+    PanelDirDropMenu(TQWidget *parent=0, const char *name=0);
 };
 
 #endif

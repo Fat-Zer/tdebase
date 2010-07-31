@@ -21,7 +21,7 @@
 #include <kparts/factory.h>
 #include <kparts/event.h>
 #include <kparts/browserextension.h>
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 #include "sidebar_widget.h"
 #include "konqsidebariface_p.h"
 
@@ -43,7 +43,7 @@ class KonqSidebarBrowserExtension : public KParts::BrowserExtension
 	~KonqSidebarBrowserExtension(){;}
 
 	protected:
-	QGuardedPtr<Sidebar_Widget> widget;
+	TQGuardedPtr<Sidebar_Widget> widget;
 
 
 // The following slots are needed for konqueror's standard actions
@@ -77,8 +77,8 @@ public:
     /**
      * Default constructor
      */
-    KonqSidebar(QWidget *parentWidget, const char *widgetName,
-                    QObject *parent, const char *name,bool universalMode);
+    KonqSidebar(TQWidget *parentWidget, const char *widgetName,
+                    TQObject *parent, const char *name,bool universalMode);
 
     /**
      * Destructor
@@ -97,7 +97,7 @@ protected:
     KonqSidebarBrowserExtension * m_extension;
     virtual bool openFile();
 
-    virtual void customEvent(QCustomEvent* ev);
+    virtual void customEvent(TQCustomEvent* ev);
 
 private:
      class Sidebar_Widget *m_widget;
@@ -113,9 +113,9 @@ class KonqSidebarFactory : public KParts::Factory
 public:
     KonqSidebarFactory();
     virtual ~KonqSidebarFactory();
-    virtual KParts::Part* createPartObject( QWidget *parentWidget, const char *widgetName,
-                                            QObject *parent, const char *name,
-                                            const char *classname, const QStringList &args );
+    virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *widgetName,
+                                            TQObject *parent, const char *name,
+                                            const char *classname, const TQStringList &args );
     static KInstance* instance();
 
 private:

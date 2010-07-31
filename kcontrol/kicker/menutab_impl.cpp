@@ -15,12 +15,12 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qcheckbox.h>
-#include <qdir.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
+#include <tqcheckbox.h>
+#include <tqdir.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -42,19 +42,19 @@
 #include "menutab_impl.h"
 #include "menutab_impl.moc"
 
-kSubMenuItem::kSubMenuItem(QListView* parent,
-                           const QString& visibleName,
-                           const QString& desktopFile,
-                           const QPixmap& icon,
+kSubMenuItem::kSubMenuItem(TQListView* parent,
+                           const TQString& visibleName,
+                           const TQString& desktopFile,
+                           const TQPixmap& icon,
                            bool checked)
-    : QCheckListItem(parent, visibleName, QCheckListItem::CheckBox),
+    : TQCheckListItem(parent, visibleName, TQCheckListItem::CheckBox),
       m_desktopFile(desktopFile)
 {
     setPixmap(0, icon);
     setOn(checked);
 }
 
-QString kSubMenuItem::desktopFile()
+TQString kSubMenuItem::desktopFile()
 {
     return m_desktopFile;
 }
@@ -64,32 +64,32 @@ void kSubMenuItem::stateChange(bool state)
     emit toggled(state);
 }
 
-MenuTab::MenuTab( QWidget *parent, const char* name )
+MenuTab::MenuTab( TQWidget *parent, const char* name )
   : MenuTabBase (parent, name),
     m_bookmarkMenu(0),
     m_quickBrowserMenu(0)
 {
     // connections
-    connect(m_editKMenuButton, SIGNAL(clicked()), SLOT(launchMenuEditor()));
-    connect(btnCustomKMenuIcon, SIGNAL(clicked()), SLOT(launchIconEditor()));
-    connect(kcfg_KMenuText, SIGNAL(textChanged(QString)), SLOT(kmenuChanged()));
-    connect(kcfg_ShowKMenuText, SIGNAL(toggled(bool)), SLOT(kmenuChanged()));
-    //connect(kcfg_ButtonFont, SIGNAL(fontSelected(const QFont &)), SLOT(kmenuChanged()));
-    connect(maxrecentdocs, SIGNAL(valueChanged(int)), this, SLOT(changed()));
+    connect(m_editKMenuButton, TQT_SIGNAL(clicked()), TQT_SLOT(launchMenuEditor()));
+    connect(btnCustomKMenuIcon, TQT_SIGNAL(clicked()), TQT_SLOT(launchIconEditor()));
+    connect(kcfg_KMenuText, TQT_SIGNAL(textChanged(TQString)), TQT_SLOT(kmenuChanged()));
+    connect(kcfg_ShowKMenuText, TQT_SIGNAL(toggled(bool)), TQT_SLOT(kmenuChanged()));
+    //connect(kcfg_ButtonFont, TQT_SIGNAL(fontSelected(const TQFont &)), TQT_SLOT(kmenuChanged()));
+    connect(maxrecentdocs, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
 
     KIconLoader * ldr = KGlobal::iconLoader();
-    QPixmap kmenu_icon;
+    TQPixmap kmenu_icon;
     m_kmenu_icon = KickerSettings::customKMenuIcon();
     if (m_kmenu_icon.isNull() == true) {
-        m_kmenu_icon = QString("kmenu");
+        m_kmenu_icon = TQString("kmenu");
     }
     kmenu_icon = ldr->loadIcon(m_kmenu_icon, KIcon::Small, KIcon::SizeSmall);
     btnCustomKMenuIcon->setPixmap(kmenu_icon);
 
     KConfig *config;
-    config = new KConfig(QString::fromLatin1("kdeglobals"), false, false);
-    config->setGroup(QString::fromLatin1("RecentDocuments"));
-    maxrecentdocs->setValue(config->readNumEntry(QString::fromLatin1("MaxEntries"), 10));
+    config = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
+    config->setGroup(TQString::fromLatin1("RecentDocuments"));
+    maxrecentdocs->setValue(config->readNumEntry(TQString::fromLatin1("MaxEntries"), 10));
 
     m_browserGroupLayout->setColStretch( 1, 1 );
     m_pRecentOrderGroupLayout->setColStretch( 1, 1 );
@@ -113,29 +113,29 @@ void MenuTab::load( bool useDefaults )
     // show the bookmark menu?
     m_bookmarkMenu = new kSubMenuItem(m_subMenus,
                                       i18n("Bookmarks"),
-                                      QString::null,
+                                      TQString::null,
                                       SmallIcon("bookmark"),
                                       c->readBoolEntry("UseBookmarks", false));
-    connect(m_bookmarkMenu, SIGNAL(toggled(bool)), SIGNAL(changed()));
+    connect(m_bookmarkMenu, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
 
     // show the quick menus menu?
     m_quickBrowserMenu = new kSubMenuItem(m_subMenus,
                                           i18n("Quick Browser"),
-                                          QString::null,
+                                          TQString::null,
                                           SmallIcon("kdisknav"),
                                           c->readBoolEntry("UseBrowser", false));
-    connect(m_quickBrowserMenu, SIGNAL(toggled(bool)), SIGNAL(changed()));
+    connect(m_quickBrowserMenu, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
 
-    QStringList ext_default;
+    TQStringList ext_default;
     ext_default << "prefmenu.desktop" << "systemmenu.desktop";
-    QStringList ext = c->readListEntry("Extensions", ext_default);
-    QStringList dirs = KGlobal::dirs()->findDirs("data", "kicker/menuext");
+    TQStringList ext = c->readListEntry("Extensions", ext_default);
+    TQStringList dirs = KGlobal::dirs()->findDirs("data", "kicker/menuext");
     kSubMenuItem* menuItem(0);
-    for (QStringList::ConstIterator dit=dirs.begin(); dit!=dirs.end(); ++dit)
+    for (TQStringList::ConstIterator dit=dirs.begin(); dit!=dirs.end(); ++dit)
     {
-        QDir d(*dit, "*.desktop");
-        QStringList av = d.entryList();
-        for (QStringList::ConstIterator it=av.begin(); it!=av.end(); ++it)
+        TQDir d(*dit, "*.desktop");
+        TQStringList av = d.entryList();
+        for (TQStringList::ConstIterator it=av.begin(); it!=av.end(); ++it)
         {
             KDesktopFile df(d.absFilePath(*it), true);
             menuItem = new kSubMenuItem(m_subMenus,
@@ -143,7 +143,7 @@ void MenuTab::load( bool useDefaults )
                                         *it,
                                         SmallIcon(df.readIcon()),
                                         qFind(ext.begin(), ext.end(), *it) != ext.end());
-            connect(menuItem, SIGNAL(toggled(bool)), SIGNAL(changed()));
+            connect(menuItem, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
         }
     }
 
@@ -159,8 +159,8 @@ void MenuTab::save()
 
     c->setGroup("menus");
 
-    QStringList ext;
-    QListViewItem *item(0);
+    TQStringList ext;
+    TQListViewItem *item(0);
     for (item = m_subMenus->firstChild(); item; item = item->nextSibling())
     {
         bool isOn = static_cast<kSubMenuItem*>(item)->isOn();
@@ -188,8 +188,8 @@ void MenuTab::save()
 
     // Save recent documents
     KConfig *config;
-    config = new KConfig(QString::fromLatin1("kdeglobals"), false, false);
-    config->setGroup(QString::fromLatin1("RecentDocuments"));
+    config = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
+    config->setGroup(TQString::fromLatin1("RecentDocuments"));
     config->writeEntry("MaxEntries", maxrecentdocs->value());
     config->sync();
 
@@ -206,7 +206,7 @@ void MenuTab::defaults()
 void MenuTab::launchMenuEditor()
 {
     if ( KApplication::startServiceByDesktopName( "kmenuedit",
-                                                  QString::null /*url*/,
+                                                  TQString::null /*url*/,
                                                   0 /*error*/,
                                                   0 /*dcopservice*/,
                                                   0 /*pid*/,
@@ -223,13 +223,13 @@ void MenuTab::launchMenuEditor()
 void MenuTab::launchIconEditor()
 {
     KIconDialog dlg(this);
-    QString newIcon = dlg.selectIcon(KIcon::Small, KIcon::Application);
+    TQString newIcon = dlg.selectIcon(KIcon::Small, KIcon::Application);
     if (newIcon.isEmpty())
         return;
 
     m_kmenu_icon = newIcon;
     KIconLoader * ldr = KGlobal::iconLoader();
-    QPixmap kmenu_icon;
+    TQPixmap kmenu_icon;
     kmenu_icon = ldr->loadIcon(m_kmenu_icon, KIcon::Small, KIcon::SizeSmall);
     btnCustomKMenuIcon->setPixmap(kmenu_icon);
     m_kmenu_button_changed = true;

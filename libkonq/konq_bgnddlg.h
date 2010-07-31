@@ -21,8 +21,8 @@
 #ifndef __konq_bgnd_h
 #define __konq_bgnd_h
 
-#include <qstring.h>
-#include <qpixmap.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
 
 #include <kdialogbase.h>
 
@@ -42,12 +42,12 @@ public:
   /**
    * Constructor
    */
-  KonqBgndDialog( QWidget* parent, const QString& pixmapFile,
-                  const QColor& theColor, const QColor& defaultColor );
+  KonqBgndDialog( TQWidget* parent, const TQString& pixmapFile,
+                  const TQColor& theColor, const TQColor& defaultColor );
   ~KonqBgndDialog();
 
-  QColor color() const;
-  const QString& pixmapFile() const { return m_pixmapFile; }
+  TQColor color() const;
+  const TQString& pixmapFile() const { return m_pixmapFile; }
 
 private slots:
   void slotBackgroundModeChanged();
@@ -56,16 +56,16 @@ private slots:
   
 private:
   void initPictures();
-  void loadPicture( const QString& fileName );
+  void loadPicture( const TQString& fileName );
 
-  QColor m_color;
-  QPixmap m_pixmap;
-  QString m_pixmapFile;
-  QFrame* m_preview;
+  TQColor m_color;
+  TQPixmap m_pixmap;
+  TQString m_pixmapFile;
+  TQFrame* m_preview;
   
-  QButtonGroup* m_buttonGroup;
-  QRadioButton* m_radioColor;
-  QRadioButton* m_radioPicture;
+  TQButtonGroup* m_buttonGroup;
+  TQRadioButton* m_radioColor;
+  TQRadioButton* m_radioPicture;
   KURLRequester* m_comboPicture;
   KColorButton* m_buttonColor;
   

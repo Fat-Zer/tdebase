@@ -17,13 +17,13 @@ public:
     KasClockItem( KasBar *parent );
     virtual ~KasClockItem();
 
-    void paint( QPainter *p );
+    void paint( TQPainter *p );
 
 public slots:
     void updateTime();
 
-    void showMenuAt( QMouseEvent *ev );
-    void showMenuAt( QPoint p );
+    void showMenuAt( TQMouseEvent *ev );
+    void showMenuAt( TQPoint p );
 
 protected:
     /** Reimplemented from KasItem to create a date picker. */

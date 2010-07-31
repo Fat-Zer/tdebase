@@ -23,10 +23,10 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kpixmap.h>
-#include <qpixmapcache.h>
-#include <qiconview.h>
+#include <tqpixmapcache.h>
+#include <tqiconview.h>
 #include <unistd.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <iostream>
 #include <ktrader.h>
 #include <kinstance.h>
@@ -34,16 +34,16 @@
 
 #include <ksimpleconfig.h>
 
-static QPixmap wallpaperPixmap( const QString & _wallpaper )
+static TQPixmap wallpaperPixmap( const TQString & _wallpaper )
 {
-    QString key = "wallpapers/";
+    TQString key = "wallpapers/";
     key += _wallpaper;
     KPixmap pix;
 
-    if ( QPixmapCache::find( key, pix ) )
+    if ( TQPixmapCache::find( key, pix ) )
       return pix;
 
-    QString path = locate("tiles", _wallpaper);
+    TQString path = locate("tiles", _wallpaper);
     if (path.isEmpty())
         path = locate("wallpaper", _wallpaper);
     if (!path.isEmpty())
@@ -56,20 +56,20 @@ static QPixmap wallpaperPixmap( const QString & _wallpaper )
       if ( pix.isNull() )
         kdWarning(1203) << "Could not load wallpaper " << path << endl;
       else
-        QPixmapCache::insert( key, pix );
+        TQPixmapCache::insert( key, pix );
       return pix;
     } else kdWarning(1203) << "Couldn't locate wallpaper " << _wallpaper << endl;
-    return QPixmap();
+    return TQPixmap();
 }
 
 struct KonqPropsView::Private
 {
-   QStringList* previewsToShow;
+   TQStringList* previewsToShow;
    bool previewsEnabled:1;
    bool caseInsensitiveSort:1;
    bool dirsfirst:1;
    bool descending:1;
-   QString sortcriterion;
+   TQString sortcriterion;
 };
 
 KonqPropsView::KonqPropsView( KInstance * instance, KonqPropsView * defaultProps )
@@ -88,7 +88,7 @@ KonqPropsView::KonqPropsView( KInstance * instance, KonqPropsView * defaultProps
   d->caseInsensitiveSort=config->readBoolEntry( "CaseInsensitiveSort", true );
 
   m_iIconSize = config->readNumEntry( "IconSize", 0 );
-  m_iItemTextPos = config->readNumEntry( "ItemTextPos", QIconView::Bottom );
+  m_iItemTextPos = config->readNumEntry( "ItemTextPos", TQIconView::Bottom );
   d->sortcriterion = config->readEntry( "SortingCriterion", "sort_nci" );
   d->dirsfirst = config->readBoolEntry( "SortDirsFirst", true );
   d->descending = config->readBoolEntry( "SortDescending", false );
@@ -109,9 +109,9 @@ KonqPropsView::KonqPropsView( KInstance * instance, KonqPropsView * defaultProps
 
   d->previewsEnabled = config->readBoolEntry( "PreviewsEnabled", true );
 
-  QColor tc = KonqFMSettings::settings()->normalTextColor();
+  TQColor tc = KonqFMSettings::settings()->normalTextColor();
   m_textColor = config->readColorEntry( "TextColor", &tc );
-  m_bgColor = config->readColorEntry( "BgColor" ); // will be set to QColor() if not found
+  m_bgColor = config->readColorEntry( "BgColor" ); // will be set to TQColor() if not found
   m_bgPixmapFile = config->readPathEntry( "BgImage" );
   //kdDebug(1203) << "KonqPropsView::KonqPropsView from \"config\" : BgImage=" << m_bgPixmapFile << endl;
 
@@ -188,8 +188,8 @@ bool KonqPropsView::enterDir( const KURL & dir )
   // Check for .directory
   KURL u ( dir );
   u.addPath(".directory");
-  bool dotDirExists = u.isLocalFile() && QFile::exists( u.path() );
-  dotDirectory = u.isLocalFile() ? u.path() : QString::null;
+  bool dotDirExists = u.isLocalFile() && TQFile::exists( u.path() );
+  dotDirectory = u.isLocalFile() ? u.path() : TQString::null;
 
   // Revert to default setting first - unless there is no .directory
   // in the previous dir nor in this one (then we can keep the current settings)
@@ -300,7 +300,7 @@ void KonqPropsView::setItemTextPos( int pos )
     }
 }
 
-void KonqPropsView::setSortCriterion( const QString &criterion )
+void KonqPropsView::setSortCriterion( const TQString &criterion )
 {
     d->sortcriterion = criterion;
     if ( m_defaultProps && !m_bSaveViewPropertiesLocally )
@@ -393,7 +393,7 @@ void KonqPropsView::setShowingDirectoryOverlays( bool show )
     }
 }
 
-void KonqPropsView::setShowingPreview( const QString &preview, bool show )
+void KonqPropsView::setShowingPreview( const TQString &preview, bool show )
 {
     if ( m_dontPreview.contains( preview ) != show )
         return;
@@ -452,7 +452,7 @@ bool KonqPropsView::isShowingPreview()
     return d->previewsEnabled;
 }
 
-void KonqPropsView::setBgColor( const QColor & color )
+void KonqPropsView::setBgColor( const TQColor & color )
 {
     m_bgColor = color;
     if ( m_defaultProps && !m_bSaveViewPropertiesLocally )
@@ -471,7 +471,7 @@ void KonqPropsView::setBgColor( const QColor & color )
     }
 }
 
-const QColor & KonqPropsView::bgColor( QWidget * widget ) const
+const TQColor & KonqPropsView::bgColor( TQWidget * widget ) const
 {
     if ( !m_bgColor.isValid() )
         return widget->colorGroup().base();
@@ -479,7 +479,7 @@ const QColor & KonqPropsView::bgColor( QWidget * widget ) const
         return m_bgColor;
 }
 
-void KonqPropsView::setTextColor( const QColor & color )
+void KonqPropsView::setTextColor( const TQColor & color )
 {
     m_textColor = color;
     if ( m_defaultProps && !m_bSaveViewPropertiesLocally )
@@ -498,7 +498,7 @@ void KonqPropsView::setTextColor( const QColor & color )
     }
 }
 
-const QColor & KonqPropsView::textColor( QWidget * widget ) const
+const TQColor & KonqPropsView::textColor( TQWidget * widget ) const
 {
     if ( !m_textColor.isValid() )
         return widget->colorGroup().text();
@@ -506,7 +506,7 @@ const QColor & KonqPropsView::textColor( QWidget * widget ) const
         return m_textColor;
 }
 
-void KonqPropsView::setBgPixmapFile( const QString & file )
+void KonqPropsView::setBgPixmapFile( const TQString & file )
 {
     m_bgPixmapFile = file;
 
@@ -526,22 +526,22 @@ void KonqPropsView::setBgPixmapFile( const QString & file )
     }
 }
 
-QPixmap KonqPropsView::loadPixmap() const
+TQPixmap KonqPropsView::loadPixmap() const
 {
     //kdDebug(1203) << "KonqPropsView::loadPixmap " << m_bgPixmapFile << endl;
-    QPixmap bgPixmap;
+    TQPixmap bgPixmap;
     if ( !m_bgPixmapFile.isEmpty() )
         bgPixmap = wallpaperPixmap( m_bgPixmapFile );
     return bgPixmap;
 }
 
-void KonqPropsView::applyColors(QWidget * widget) const
+void KonqPropsView::applyColors(TQWidget * widget) const
 {
     if ( m_bgPixmapFile.isEmpty() )
         widget->setPaletteBackgroundColor( bgColor( widget ) );
     else
     {
-        QPixmap pix = loadPixmap();
+        TQPixmap pix = loadPixmap();
         // don't set an null pixmap, as this leads to
         // undefined results with regards to the background of widgets
         // that have the iconview as a parent and on the iconview itself
@@ -556,7 +556,7 @@ void KonqPropsView::applyColors(QWidget * widget) const
         widget->setPaletteForegroundColor( m_textColor );
 }
 
-const QStringList& KonqPropsView::previewSettings()
+const TQStringList& KonqPropsView::previewSettings()
 {
     if ( ! d->previewsToShow )
     {
@@ -566,7 +566,7 @@ const QStringList& KonqPropsView::previewSettings()
             KTrader::OfferList plugins = KTrader::self()->query( "ThumbCreator" );
             for ( KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
             {
-            QString name = (*it)->desktopEntryName();
+            TQString name = (*it)->desktopEntryName();
             if ( ! m_dontPreview.contains(name) )
                     d->previewsToShow->append( name );
             }
@@ -578,7 +578,7 @@ const QStringList& KonqPropsView::previewSettings()
     return *(d->previewsToShow);
 }
 
-const QString& KonqPropsView::sortCriterion() const {
+const TQString& KonqPropsView::sortCriterion() const {
     return d->sortcriterion;
 }
 

@@ -32,8 +32,8 @@
 #ifndef __KIOSMTP_REQUEST_H__
 #define __KIOSMTP_REQUEST_H__
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 class KURL;
 
@@ -47,30 +47,30 @@ namespace KioSMTP {
 
     static Request fromURL( const KURL & url );
 
-    QString profileName() const { return mProfileName; }
-    void setProfileName( const QString & profileName ) { mProfileName = profileName; }
+    TQString profileName() const { return mProfileName; }
+    void setProfileName( const TQString & profileName ) { mProfileName = profileName; }
     bool hasProfile() const { return !profileName().isNull(); }
 
-    QString subject() const { return mSubject; }
-    void setSubject( const QString & subject ) { mSubject = subject; }
+    TQString subject() const { return mSubject; }
+    void setSubject( const TQString & subject ) { mSubject = subject; }
 
-    QString fromAddress() const { return mFromAddress; }
-    void setFromAddress( const QString & fromAddress ) { mFromAddress = fromAddress; }
+    TQString fromAddress() const { return mFromAddress; }
+    void setFromAddress( const TQString & fromAddress ) { mFromAddress = fromAddress; }
     bool hasFromAddress() const { return !mFromAddress.isEmpty(); }
 
-    QStringList recipients() const { return to() + cc() + bcc() ; }
+    TQStringList recipients() const { return to() + cc() + bcc() ; }
     bool hasRecipients() const { return !to().empty() || !cc().empty() || !bcc().empty() ; }
 
-    QStringList to() const { return mTo; }
-    QStringList cc() const { return mCc; }
-    QStringList bcc() const { return mBcc; }
-    void addTo( const QString & to ) { mTo.push_back( to ); }
-    void addCc( const QString & cc ) { mCc.push_back( cc ); }
-    void addBcc( const QString & bcc ) { mBcc.push_back( bcc ); }
+    TQStringList to() const { return mTo; }
+    TQStringList cc() const { return mCc; }
+    TQStringList bcc() const { return mBcc; }
+    void addTo( const TQString & to ) { mTo.push_back( to ); }
+    void addCc( const TQString & cc ) { mCc.push_back( cc ); }
+    void addBcc( const TQString & bcc ) { mBcc.push_back( bcc ); }
 
-    QString heloHostname() const { return mHeloHostname; }
-    QCString heloHostnameCString() const;
-    void setHeloHostname( const QString & hostname ) { mHeloHostname = hostname; }
+    TQString heloHostname() const { return mHeloHostname; }
+    TQCString heloHostnameCString() const;
+    void setHeloHostname( const TQString & hostname ) { mHeloHostname = hostname; }
 
     bool emitHeaders() const { return mEmitHeaders; }
     void setEmitHeaders( bool emitHeaders ) { mEmitHeaders = emitHeaders; }
@@ -85,11 +85,11 @@ namespace KioSMTP {
 	serialization of the header fields "To", "Cc", "Subject" and
 	"From", as determined by the respective settings. If @ref
 	#emitHeaders() is false, returns a null string. */
-    QCString headerFields( const QString & fromRealName=QString::null ) const;
+    TQCString headerFields( const TQString & fromRealName=TQString::null ) const;
 
   private:
-    QStringList mTo, mCc, mBcc;
-    QString mProfileName, mSubject, mFromAddress, mHeloHostname;
+    TQStringList mTo, mCc, mBcc;
+    TQString mProfileName, mSubject, mFromAddress, mHeloHostname;
     bool mEmitHeaders;
     bool m8Bit;
     unsigned int mSize;

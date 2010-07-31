@@ -7,8 +7,8 @@
 
 #include <kdialogbase.h>
 
-#include <qlineedit.h>
-#include <qstringlist.h>
+#include <tqlineedit.h>
+#include <tqstringlist.h>
 
 class QLabel;
 class QComboBox;
@@ -47,7 +47,7 @@ public:
      * @param parent parent widget this belongs to
      * @param name internal name
      */
-    PolicyDialog(Policies *policies, QWidget *parent = 0, const char *name = 0 );
+    PolicyDialog(Policies *policies, TQWidget *parent = 0, const char *name = 0 );
 
     virtual ~PolicyDialog() {};
 
@@ -61,12 +61,12 @@ public:
      * @return the textual representation of the current "feature enabled"
      * policy
      */
-    QString featureEnabledPolicyText() const;
+    TQString featureEnabledPolicyText() const;
 
     /*
     * @return the hostname for which the policy is being set
     */
-    QString domain() const { return le_domain->text(); }
+    TQString domain() const { return le_domain->text(); }
 
     /*
     * Sets the line-edit to be enabled/disabled.
@@ -77,20 +77,20 @@ public:
     * @param state @p true to enable the line-edit, otherwise disabled.
     * @param text  the text to be set in the line-edit. Default is NULL.
     */
-    void setDisableEdit( bool /*state*/, const QString& text = QString::null );
+    void setDisableEdit( bool /*state*/, const TQString& text = TQString::null );
 
     /**
      * Sets the label for the "feature enabled" policy
      * @param text label text
      */
-    void setFeatureEnabledLabel(const QString &text);
+    void setFeatureEnabledLabel(const TQString &text);
 
     /**
      * Sets the "What's This" text for the "feature enabled" policy
      * combo box.
      * @param text what's-this text
      */
-    void setFeatureEnabledWhatsThis(const QString &text);
+    void setFeatureEnabledWhatsThis(const TQString &text);
 
     /**
      * Syncs the controls with the current content of the
@@ -108,23 +108,23 @@ public:
      * @param panel pointer to widget to insert. The dialog takes ownership
      *		of it, but does not reparent it.
      */
-    void addPolicyPanel(QWidget *panel);
+    void addPolicyPanel(TQWidget *panel);
 
 protected slots:
 
     virtual void accept();
-    void slotTextChanged( const QString &text);
+    void slotTextChanged( const TQString &text);
 
 private:
     Policies *policies;
-    QVBoxLayout *topl;
+    TQVBoxLayout *topl;
     int insertIdx;
-    QLineEdit *le_domain;
-    QLabel *l_feature_policy;
-    QComboBox *cb_feature_policy;
-    QWidget *panel;
-    QStringList policy_values;
-    QPushButton *okButton;
+    TQLineEdit *le_domain;
+    TQLabel *l_feature_policy;
+    TQComboBox *cb_feature_policy;
+    TQWidget *panel;
+    TQStringList policy_values;
+    TQPushButton *okButton;
 };
 
 #endif

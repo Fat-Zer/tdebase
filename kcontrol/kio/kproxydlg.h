@@ -22,7 +22,7 @@
 #ifndef _KPROXYDIALOG_H
 #define _KPROXYDIALOG_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kcmodule.h>
 
@@ -36,18 +36,18 @@ class KProxyOptions : public KCModule
   Q_OBJECT
 
 public:
-  KProxyOptions( QWidget* parent = 0 );
+  KProxyOptions( TQWidget* parent = 0 );
   ~KProxyOptions();
 
   virtual void load();
   virtual void save();
   virtual void defaults();
-  virtual QString quickHelp() const;
+  virtual TQString quickHelp() const;
 
 private:
   KCModule* mProxy;
   KCModule* mSocks;
-  QTabWidget* mTab;
+  TQTabWidget* mTab;
 };
 
 class KProxyDialog : public KCModule
@@ -55,13 +55,13 @@ class KProxyDialog : public KCModule
   Q_OBJECT
 
 public:
-  KProxyDialog( QWidget* parent = 0 );
+  KProxyDialog( TQWidget* parent = 0 );
   ~KProxyDialog();
 
   virtual void load();
   virtual void save();
   virtual void defaults();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 private slots:
   void slotChanged();
@@ -71,7 +71,7 @@ private slots:
   void setupEnvProxy();
 
 private:
-  void showInvalidMessage( const QString& _msg = QString::null );
+  void showInvalidMessage( const TQString& _msg = TQString::null );
 
 private:
   KProxyDialogUI* mDlg;

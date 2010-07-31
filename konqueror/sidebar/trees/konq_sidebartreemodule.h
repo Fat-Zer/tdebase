@@ -19,7 +19,7 @@
 #ifndef konq_treemodule_h
 #define konq_treemodule_h
 
-#include <qobject.h>
+#include <tqobject.h>
 #include "konq_sidebartree.h"
 class QDragObject;
 class KonqSidebarTreeItem;
@@ -53,7 +53,7 @@ public:
     bool showHidden() { return m_showHidden;}
     virtual void setShowHidden(bool showhidden) {m_showHidden=showhidden;}
 
-    virtual bool handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *, const QPoint& ) { return false; }
+    virtual bool handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *, const TQPoint& ) { return false; }
 
 protected:
     KonqSidebarTree * m_pTree;

@@ -16,28 +16,28 @@
 
 #include "main_buttons_widget.h"
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 #include "kcmkhotkeys.h"
 
 namespace KHotKeys
 {
 
-Main_buttons_widget::Main_buttons_widget( QWidget* parent_P, const char* name_P )
+Main_buttons_widget::Main_buttons_widget( TQWidget* parent_P, const char* name_P )
     : Main_buttons_widget_ui( parent_P, name_P )
     {
-    connect( new_action_button, SIGNAL( clicked()), SIGNAL( new_action_pressed()));
-    connect( new_action_group_button, SIGNAL( clicked()), SIGNAL( new_action_group_pressed()));
-    connect( delete_action_button, SIGNAL( clicked()), SIGNAL( delete_action_pressed()));
-    connect( global_settings_button, SIGNAL( clicked()), SIGNAL( global_settings_pressed()));
+    connect( new_action_button, TQT_SIGNAL( clicked()), TQT_SIGNAL( new_action_pressed()));
+    connect( new_action_group_button, TQT_SIGNAL( clicked()), TQT_SIGNAL( new_action_group_pressed()));
+    connect( delete_action_button, TQT_SIGNAL( clicked()), TQT_SIGNAL( delete_action_pressed()));
+    connect( global_settings_button, TQT_SIGNAL( clicked()), TQT_SIGNAL( global_settings_pressed()));
     enable_delete( false );
     // KHotKeys::Module::changed()
-    connect( new_action_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( new_action_group_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( delete_action_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
+    connect( new_action_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( new_action_group_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( delete_action_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
     setMaximumHeight( sizeHint().height()); // it gets too high and I have no idea why
     }
 

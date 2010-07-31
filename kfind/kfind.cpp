@@ -26,15 +26,15 @@
  **********************************************************************/
 
 #include <kpushbutton.h>
-#include <qlayout.h>
-#include <qvbox.h>
+#include <tqlayout.h>
+#include <tqvbox.h>
 
 #include <kdialog.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kseparator.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
 #include <kstdguiitem.h>
 
 #include "kftabdlg.h"
@@ -42,11 +42,11 @@
 
 #include "kfind.moc"
 
-Kfind::Kfind(QWidget *parent, const char *name)
-  : QWidget( parent, name )
+Kfind::Kfind(TQWidget *parent, const char *name)
+  : TQWidget( parent, name )
 {
   kdDebug() << "Kfind::Kfind " << this << endl;
-  QBoxLayout * mTopLayout = new QBoxLayout( this, QBoxLayout::LeftToRight,
+  TQBoxLayout * mTopLayout = new TQBoxLayout( this, TQBoxLayout::LeftToRight,
                                             KDialog::marginHint(), KDialog::spacingHint() );
 
   // create tabwidget
@@ -58,30 +58,30 @@ Kfind::Kfind(QWidget *parent, const char *name)
    * pixel for me which is visually distracting (GS).
   // create separator
   KSeparator * mActionSep = new KSeparator( this );
-  mActionSep->setFocusPolicy( QWidget::ClickFocus );
-  mActionSep->setOrientation( QFrame::VLine );
+  mActionSep->setFocusPolicy( TQWidget::ClickFocus );
+  mActionSep->setOrientation( TQFrame::VLine );
   mTopLayout->addWidget(mActionSep);
   */
 
   // create button box
-  QVBox * mButtonBox = new QVBox( this );
-  QVBoxLayout *lay = (QVBoxLayout*)mButtonBox->layout();
+  TQVBox * mButtonBox = new TQVBox( this );
+  TQVBoxLayout *lay = (TQVBoxLayout*)mButtonBox->layout();
   lay->addStretch(1);
   mTopLayout->addWidget(mButtonBox);
 
   mSearch = new KPushButton( KGuiItem(i18n("&Find"), "find"), mButtonBox );
   mButtonBox->setSpacing( (tabWidget->sizeHint().height()-4*mSearch->sizeHint().height()) / 4);
-  connect( mSearch, SIGNAL(clicked()), this, SLOT( startSearch() ) );
+  connect( mSearch, TQT_SIGNAL(clicked()), this, TQT_SLOT( startSearch() ) );
   mStop = new KPushButton( KGuiItem(i18n("Stop"), "stop"), mButtonBox );
-  connect( mStop, SIGNAL(clicked()), this, SLOT( stopSearch() ) );
+  connect( mStop, TQT_SIGNAL(clicked()), this, TQT_SLOT( stopSearch() ) );
   mSave = new KPushButton( KStdGuiItem::saveAs(), mButtonBox );
-  connect( mSave, SIGNAL(clicked()), this, SLOT( saveResults() ) );
+  connect( mSave, TQT_SIGNAL(clicked()), this, TQT_SLOT( saveResults() ) );
 
   KPushButton * mClose = new KPushButton( KStdGuiItem::close(), mButtonBox );
-  connect( mClose, SIGNAL(clicked()), this, SIGNAL( destroyMe() ) );
+  connect( mClose, TQT_SIGNAL(clicked()), this, TQT_SIGNAL( destroyMe() ) );
 
   // react to search requests from widget
-  connect( tabWidget, SIGNAL(startSearch()), this, SLOT( startSearch() ) );
+  connect( tabWidget, TQT_SIGNAL(startSearch()), this, TQT_SLOT( startSearch() ) );
 
   mSearch->setEnabled(true); // Enable "Search"
   mStop->setEnabled(false);  // Disable "Stop"
@@ -164,7 +164,7 @@ void Kfind::setFocus()
   tabWidget->setFocus();
 }
 
-void Kfind::saveState( QDataStream *stream )
+void Kfind::saveState( TQDataStream *stream )
 {
   query->kill();
   *stream << tabWidget->nameBox->currentText();
@@ -174,9 +174,9 @@ void Kfind::saveState( QDataStream *stream )
   *stream << (int)( tabWidget->subdirsCb->isChecked() ? 0 : 1 );
 }
 
-void Kfind::restoreState( QDataStream *stream )
+void Kfind::restoreState( TQDataStream *stream )
 {
-  QString namesearched, dirsearched,containing;
+  TQString namesearched, dirsearched,containing;
   int typeIdx;
   int subdirs;
   *stream >> namesearched;

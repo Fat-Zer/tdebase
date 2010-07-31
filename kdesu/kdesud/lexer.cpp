@@ -8,11 +8,11 @@
  */
 
 #include <ctype.h>
-#include <qcstring.h>
+#include <tqcstring.h>
 #include "lexer.h"
 
 
-Lexer::Lexer(const QCString &input)
+Lexer::Lexer(const TQCString &input)
 {
     m_Input = input;
     in = 0;
@@ -25,7 +25,7 @@ Lexer::~Lexer()
     m_Output.fill('x');
 }
 
-QCString &Lexer::lval()
+TQCString &Lexer::lval()
 {
     return m_Output;
 }

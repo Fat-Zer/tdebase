@@ -22,10 +22,10 @@
 
 #include <config.h>
 
-#include <qcheckbox.h>
-#include <qevent.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
+#include <tqcheckbox.h>
+#include <tqevent.h>
+#include <tqpushbutton.h>
+#include <tqspinbox.h>
 
 #include <kfiledialog.h>
 #include <kimageio.h>
@@ -39,23 +39,23 @@
 
 /**** BGMultiWallpaperList ****/
 
-BGMultiWallpaperList::BGMultiWallpaperList(QWidget *parent, const char *name)
-	: QListBox(parent, name)
+BGMultiWallpaperList::BGMultiWallpaperList(TQWidget *parent, const char *name)
+	: TQListBox(parent, name)
 {
    setAcceptDrops(true);
-   setSelectionMode(QListBox::Extended);
+   setSelectionMode(TQListBox::Extended);
 }
 
 
-void BGMultiWallpaperList::dragEnterEvent(QDragEnterEvent *ev)
+void BGMultiWallpaperList::dragEnterEvent(TQDragEnterEvent *ev)
 {
    ev->accept(KURLDrag::canDecode(ev));
 }
 
 
-void BGMultiWallpaperList::dropEvent(QDropEvent *ev)
+void BGMultiWallpaperList::dropEvent(TQDropEvent *ev)
 {
-   QStringList files;
+   TQStringList files;
    KURL::List urls;
    KURLDrag::decode(ev, urls);
    for(KURL::List::ConstIterator it = urls.begin();
@@ -95,7 +95,7 @@ void BGMultiWallpaperList::ensureSelectionVisible()
 /**** BGMultiWallpaperDialog ****/
 
 BGMultiWallpaperDialog::BGMultiWallpaperDialog(KBackgroundSettings *settings,
-	QWidget *parent, const char *name)
+	TQWidget *parent, const char *name)
 	: KDialogBase(parent, name, true, i18n("Setup Slide Show"),
 	Ok | Cancel, Ok, true), m_pSettings(settings)
 {
@@ -114,18 +114,18 @@ BGMultiWallpaperDialog::BGMultiWallpaperDialog(KBackgroundSettings *settings,
    if (m_pSettings->multiWallpaperMode() == KBackgroundSettings::Random)
       dlg->m_cbRandom->setChecked(true);
 
-   connect(dlg->m_buttonAdd, SIGNAL(clicked()), SLOT(slotAdd()));
-   connect(dlg->m_buttonRemove, SIGNAL(clicked()), SLOT(slotRemove()));
-   connect(dlg->m_buttonMoveUp, SIGNAL(clicked()), SLOT(slotMoveUp()));
-   connect(dlg->m_buttonMoveDown, SIGNAL(clicked()), SLOT(slotMoveDown()));
-   connect(dlg->m_listImages,  SIGNAL(clicked ( QListBoxItem * )), SLOT(slotItemSelected( QListBoxItem *)));
+   connect(dlg->m_buttonAdd, TQT_SIGNAL(clicked()), TQT_SLOT(slotAdd()));
+   connect(dlg->m_buttonRemove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemove()));
+   connect(dlg->m_buttonMoveUp, TQT_SIGNAL(clicked()), TQT_SLOT(slotMoveUp()));
+   connect(dlg->m_buttonMoveDown, TQT_SIGNAL(clicked()), TQT_SLOT(slotMoveDown()));
+   connect(dlg->m_listImages,  TQT_SIGNAL(clicked ( TQListBoxItem * )), TQT_SLOT(slotItemSelected( TQListBoxItem *)));
    dlg->m_buttonRemove->setEnabled( false );
    dlg->m_buttonMoveUp->setEnabled( false );
    dlg->m_buttonMoveDown->setEnabled( false );
 
 }
 
-void BGMultiWallpaperDialog::slotItemSelected( QListBoxItem * )
+void BGMultiWallpaperDialog::slotItemSelected( TQListBoxItem * )
 {
     dlg->m_buttonRemove->setEnabled( dlg->m_listImages->hasSelection() );
     setEnabledMoveButtons();
@@ -134,7 +134,7 @@ void BGMultiWallpaperDialog::slotItemSelected( QListBoxItem * )
 void BGMultiWallpaperDialog::setEnabledMoveButtons()
 {
     bool hasSelection = dlg->m_listImages->hasSelection();
-    QListBoxItem * item;
+    TQListBoxItem * item;
 
     item = dlg->m_listImages->firstItem();
     dlg->m_buttonMoveUp->setEnabled( hasSelection && item && !item->isSelected() );
@@ -144,7 +144,7 @@ void BGMultiWallpaperDialog::setEnabledMoveButtons()
 
 void BGMultiWallpaperDialog::slotAdd()
 {
-    QStringList mimeTypes = KImageIO::mimeTypes( KImageIO::Reading );
+    TQStringList mimeTypes = KImageIO::mimeTypes( KImageIO::Reading );
 #ifdef HAVE_LIBART
     mimeTypes += "image/svg+xml";
 #endif
@@ -160,7 +160,7 @@ void BGMultiWallpaperDialog::slotAdd()
                                                  KFile::LocalOnly);
     fileDialog.setMode(mode);
     fileDialog.exec();
-    QStringList files = fileDialog.selectedFiles();
+    TQStringList files = fileDialog.selectedFiles();
     if (files.isEmpty())
 	return;
 
@@ -172,7 +172,7 @@ void BGMultiWallpaperDialog::slotRemove()
     int current = -1;
     for ( unsigned i = 0; i < dlg->m_listImages->count();)
     {
-        QListBoxItem * item = dlg->m_listImages->item( i );
+        TQListBoxItem * item = dlg->m_listImages->item( i );
         if ( item && item->isSelected())
         {
             dlg->m_listImages->removeItem(i);
@@ -194,7 +194,7 @@ void BGMultiWallpaperDialog::slotMoveUp()
 {
     for ( unsigned i = 1; i < dlg->m_listImages->count(); i++)
     {
-        QListBoxItem * item = dlg->m_listImages->item( i );
+        TQListBoxItem * item = dlg->m_listImages->item( i );
         if ( item && item->isSelected() )
         {
             dlg->m_listImages->takeItem( item );
@@ -209,7 +209,7 @@ void BGMultiWallpaperDialog::slotMoveDown()
 {
     for ( unsigned i = dlg->m_listImages->count() - 1; i > 0; i--)
     {
-        QListBoxItem * item = dlg->m_listImages->item( i - 1 );
+        TQListBoxItem * item = dlg->m_listImages->item( i - 1 );
         if ( item && item->isSelected())
         {
             dlg->m_listImages->takeItem( item );
@@ -222,7 +222,7 @@ void BGMultiWallpaperDialog::slotMoveDown()
 
 void BGMultiWallpaperDialog::slotOk()
 {
-    QStringList lst;
+    TQStringList lst;
     for (unsigned i=0; i < dlg->m_listImages->count(); i++)
 	lst.append(dlg->m_listImages->text(i));
     m_pSettings->setWallpaperList(lst);

@@ -30,7 +30,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class UnhideTrigger : public QObject
 {
@@ -55,7 +55,7 @@ private:
 	void emitTrigger( Trigger t , int XineramaScreen );
 	Trigger _lastTrigger;
 	int _lastXineramaScreen;
-	QTimer *_timer;
+	TQTimer *_timer;
 	int enabledCount;
 };
 

@@ -52,15 +52,15 @@
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qgrid.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqgrid.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqslider.h>
+#include <tqspinbox.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
 
 #include <kcolorbutton.h>
 #include <kconfig.h>
@@ -79,7 +79,7 @@
 #define LargeIcon(x) KGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeLarge )
 
 
-KasPrefsDialog::KasPrefsDialog( KasTasker *kas, QWidget *parent )
+KasPrefsDialog::KasPrefsDialog( KasTasker *kas, TQWidget *parent )
    : KDialogBase( KDialogBase::IconList, i18n("Kasbar Preferences"),
 		  KDialogBase::Ok | KDialogBase::Cancel,
 		  KDialogBase::Ok,
@@ -110,21 +110,21 @@ void KasPrefsDialog::itemSizeChanged( int sz )
 
 void KasPrefsDialog::addLookPage()
 {
-   QVBox *lookPage = addVBoxPage( i18n("Appearance"), QString::null, Icon( "appearance" ) );
+   TQVBox *lookPage = addVBoxPage( i18n("Appearance"), TQString::null, Icon( "appearance" ) );
 
    //
    // Item size
    //
 
-   QGrid *itemSizeBox = new QGrid( 2, lookPage );
+   TQGrid *itemSizeBox = new TQGrid( 2, lookPage );
    itemSizeBox->setSpacing( spacingHint() );
 
-   QWhatsThis::add( itemSizeBox,
+   TQWhatsThis::add( itemSizeBox,
 		    i18n( "Specifies the size of the task items." ) );
 
-   QLabel *itemSizeLabel = new QLabel( i18n("Si&ze:"), itemSizeBox );
+   TQLabel *itemSizeLabel = new TQLabel( i18n("Si&ze:"), itemSizeBox );
 
-   itemSizeCombo = new QComboBox( itemSizeBox );
+   itemSizeCombo = new TQComboBox( itemSizeBox );
    itemSizeCombo->insertItem( i18n( "Enormous" ) );
    itemSizeCombo->insertItem( i18n( "Huge" ) );
    itemSizeCombo->insertItem( i18n( "Large" ) );
@@ -134,20 +134,20 @@ void KasPrefsDialog::addLookPage()
 
    itemSizeLabel->setBuddy( itemSizeCombo );
 
-   connect( itemSizeCombo, SIGNAL( activated( int ) ),
-	    kasbar, SLOT( setItemSize( int ) ) );
-   connect( itemSizeCombo, SIGNAL( activated( int ) ), SLOT( itemSizeChanged( int ) ) );
+   connect( itemSizeCombo, TQT_SIGNAL( activated( int ) ),
+	    kasbar, TQT_SLOT( setItemSize( int ) ) );
+   connect( itemSizeCombo, TQT_SIGNAL( activated( int ) ), TQT_SLOT( itemSizeChanged( int ) ) );
 
-   new QWidget( itemSizeBox );
+   new TQWidget( itemSizeBox );
 
-   customSize = new QSpinBox( 5, 1000, 1, itemSizeBox );
+   customSize = new TQSpinBox( 5, 1000, 1, itemSizeBox );
 
    customSize->setValue( kasbar->itemExtent() );
 
-   connect( customSize, SIGNAL( valueChanged( int ) ),
-	    kasbar, SLOT( setItemExtent( int ) ) );
-   connect( customSize, SIGNAL( valueChanged( int ) ),
-	    kasbar, SLOT( customSizeChanged( int ) ) );
+   connect( customSize, TQT_SIGNAL( valueChanged( int ) ),
+	    kasbar, TQT_SLOT( setItemExtent( int ) ) );
+   connect( customSize, TQT_SIGNAL( valueChanged( int ) ),
+	    kasbar, TQT_SLOT( customSizeChanged( int ) ) );
 
    int sz = kasbar->itemSize();
    itemSizeCombo->setCurrentItem( sz );
@@ -157,12 +157,12 @@ void KasPrefsDialog::addLookPage()
    // Boxes per line
    //
 
-   QHBox *maxBoxesBox = new QHBox( lookPage );
-   QWhatsThis::add( maxBoxesBox,
+   TQHBox *maxBoxesBox = new TQHBox( lookPage );
+   TQWhatsThis::add( maxBoxesBox,
 		    i18n( "Specifies the maximum number of items that should be placed in a line "
 			  "before starting a new row or column. If the value is 0 then all the "
 			  "available space will be used." ) );
-   QLabel *maxBoxesLabel = new QLabel( i18n("Bo&xes per line: "), maxBoxesBox );
+   TQLabel *maxBoxesLabel = new TQLabel( i18n("Bo&xes per line: "), maxBoxesBox );
 
    KConfig *conf = kasbar->config();
    if ( conf )
@@ -171,273 +171,273 @@ void KasPrefsDialog::addLookPage()
 				   conf ? conf->readNumEntry( "MaxBoxes", 0 ) : 11,
 				   10,
 				   maxBoxesBox, "maxboxes" );
-   connect( maxBoxesSpin, SIGNAL( valueChanged( int ) ), kasbar, SLOT( setMaxBoxes( int ) ) );
+   connect( maxBoxesSpin, TQT_SIGNAL( valueChanged( int ) ), kasbar, TQT_SLOT( setMaxBoxes( int ) ) );
    maxBoxesLabel->setBuddy( maxBoxesSpin );
 
    //
    // Mode
    //
 
-   detachedCheck = new QCheckBox( i18n("&Detach from screen edge"), lookPage );
-   QWhatsThis::add( detachedCheck, i18n( "Detaches the bar from the screen edge and makes it draggable." ) );
+   detachedCheck = new TQCheckBox( i18n("&Detach from screen edge"), lookPage );
+   TQWhatsThis::add( detachedCheck, i18n( "Detaches the bar from the screen edge and makes it draggable." ) );
 
    detachedCheck->setEnabled( !kasbar->isStandAlone() );
    detachedCheck->setChecked( kasbar->isDetached() );
-   connect( detachedCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setDetached(bool) ) );
+   connect( detachedCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setDetached(bool) ) );
 
-   (void) new QWidget( lookPage, "spacer" );
-   (void) new QWidget( lookPage, "spacer" );
-   (void) new QWidget( lookPage, "spacer" );
+   (void) new TQWidget( lookPage, "spacer" );
+   (void) new TQWidget( lookPage, "spacer" );
+   (void) new TQWidget( lookPage, "spacer" );
 }
 
 void KasPrefsDialog::addBackgroundPage()
 {
-   QVBox *bgPage = addVBoxPage( i18n("Background"), QString::null, Icon( "background" ) );
+   TQVBox *bgPage = addVBoxPage( i18n("Background"), TQString::null, Icon( "background" ) );
 
-   transCheck = new QCheckBox( i18n("Trans&parent"), bgPage );
-   QWhatsThis::add( transCheck, i18n( "Enables pseudo-transparent mode." ) );
+   transCheck = new TQCheckBox( i18n("Trans&parent"), bgPage );
+   TQWhatsThis::add( transCheck, i18n( "Enables pseudo-transparent mode." ) );
    transCheck->setChecked( kasbar->isTransparent() );
-   connect( transCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setTransparent(bool) ) );
+   connect( transCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setTransparent(bool) ) );
 
-   tintCheck = new QCheckBox( i18n("Enable t&int"), bgPage );
-   QWhatsThis::add( tintCheck,
+   tintCheck = new TQCheckBox( i18n("Enable t&int"), bgPage );
+   TQWhatsThis::add( tintCheck,
 		    i18n( "Enables tinting the background that shows through in transparent mode." ) );
    tintCheck->setChecked( kasbar->hasTint() );
-   connect( tintCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setTint(bool) ) );
+   connect( tintCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setTint(bool) ) );
 
-   QHBox *tintColBox = new QHBox( bgPage );
-   QWhatsThis::add( tintColBox,
+   TQHBox *tintColBox = new TQHBox( bgPage );
+   TQWhatsThis::add( tintColBox,
 		    i18n( "Specifies the color used for the background tint." ) );
-   connect( tintCheck, SIGNAL( toggled(bool) ), tintColBox, SLOT( setEnabled(bool) ) );
+   connect( tintCheck, TQT_SIGNAL( toggled(bool) ), tintColBox, TQT_SLOT( setEnabled(bool) ) );
    tintColBox->setEnabled( kasbar->hasTint() );
 
-   QLabel *tintLabel = new QLabel( i18n("Tint &color:"), tintColBox );
+   TQLabel *tintLabel = new TQLabel( i18n("Tint &color:"), tintColBox );
 
    tintButton = new KColorButton( kasbar->tintColor(), tintColBox );
-   connect( tintButton, SIGNAL( changed( const QColor & ) ),
-	    kasbar, SLOT( setTintColor( const QColor & ) ) );
+   connect( tintButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    kasbar, TQT_SLOT( setTintColor( const TQColor & ) ) );
    tintLabel->setBuddy( tintButton );
 
-   QHBox *tintAmtBox = new QHBox( bgPage );
-   QWhatsThis::add( tintAmtBox,
+   TQHBox *tintAmtBox = new TQHBox( bgPage );
+   TQWhatsThis::add( tintAmtBox,
 		    i18n( "Specifies the strength of the background tint." ) );
-   connect( tintCheck, SIGNAL( toggled(bool) ), tintAmtBox, SLOT( setEnabled(bool) ) );
+   connect( tintCheck, TQT_SIGNAL( toggled(bool) ), tintAmtBox, TQT_SLOT( setEnabled(bool) ) );
    tintAmtBox->setEnabled( kasbar->hasTint() );
 
-   QLabel *tintStrengthLabel = new QLabel( i18n("Tint &strength: "), tintAmtBox );
+   TQLabel *tintStrengthLabel = new TQLabel( i18n("Tint &strength: "), tintAmtBox );
 
    int percent = (int) (kasbar->tintAmount() * 100.0);
-   tintAmount = new QSlider( 0, 100, 1, percent, Horizontal, tintAmtBox );
+   tintAmount = new TQSlider( 0, 100, 1, percent, Horizontal, tintAmtBox );
    tintAmount->setTracking( true );
-   connect( tintAmount, SIGNAL( valueChanged( int ) ),
-	    kasbar, SLOT( setTintAmount( int ) ) );
+   connect( tintAmount, TQT_SIGNAL( valueChanged( int ) ),
+	    kasbar, TQT_SLOT( setTintAmount( int ) ) );
    tintStrengthLabel->setBuddy( tintAmount );
 
-   (void) new QWidget( bgPage, "spacer" );
-   (void) new QWidget( bgPage, "spacer" );
-   (void) new QWidget( bgPage, "spacer" );
+   (void) new TQWidget( bgPage, "spacer" );
+   (void) new TQWidget( bgPage, "spacer" );
+   (void) new TQWidget( bgPage, "spacer" );
 }
 
 void KasPrefsDialog::addThumbsPage()
 {
-   QVBox *thumbsPage = addVBoxPage( i18n("Thumbnails"), QString::null, Icon( "icons" ) );
+   TQVBox *thumbsPage = addVBoxPage( i18n("Thumbnails"), TQString::null, Icon( "icons" ) );
 
-   thumbsCheck = new QCheckBox( i18n("Enable thu&mbnails"), thumbsPage );
-   QWhatsThis::add( thumbsCheck,
+   thumbsCheck = new TQCheckBox( i18n("Enable thu&mbnails"), thumbsPage );
+   TQWhatsThis::add( thumbsCheck,
 		    i18n( "Enables the display of a thumbnailed image of the window when "
 			  "you move your mouse pointer over an item. The thumbnails are "
 			  "approximate, and may not reflect the current window contents.\n\n"
 			  "Using this option on a slow machine may cause performance problems." ) );
    thumbsCheck->setChecked( kasbar->thumbnailsEnabled() );
-   connect( thumbsCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setThumbnailsEnabled(bool) ) );
+   connect( thumbsCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setThumbnailsEnabled(bool) ) );
 
-   embedThumbsCheck = new QCheckBox( i18n("&Embed thumbnails"), thumbsPage );
+   embedThumbsCheck = new TQCheckBox( i18n("&Embed thumbnails"), thumbsPage );
    embedThumbsCheck->setChecked( kasbar->embedThumbnails() );
-   connect( embedThumbsCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setEmbedThumbnails(bool) ) );
+   connect( embedThumbsCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setEmbedThumbnails(bool) ) );
 
-   QHBox *thumbSizeBox = new QHBox( thumbsPage );
-   QWhatsThis::add( thumbSizeBox,
+   TQHBox *thumbSizeBox = new TQHBox( thumbsPage );
+   TQWhatsThis::add( thumbSizeBox,
 		    i18n( "Controls the size of the window thumbnails. Using large sizes may "
 			  "cause performance problems." ) );
-   QLabel *thumbSizeLabel = new QLabel( i18n("Thumbnail &size: "), thumbSizeBox );
+   TQLabel *thumbSizeLabel = new TQLabel( i18n("Thumbnail &size: "), thumbSizeBox );
    int percent = (int) (kasbar->thumbnailSize() * 100.0);
-   thumbSizeSlider = new QSlider( 0, 100, 1, percent, Horizontal, thumbSizeBox );
-   connect( thumbSizeSlider, SIGNAL( valueChanged( int ) ),
-	    kasbar, SLOT( setThumbnailSize( int ) ) );
+   thumbSizeSlider = new TQSlider( 0, 100, 1, percent, Horizontal, thumbSizeBox );
+   connect( thumbSizeSlider, TQT_SIGNAL( valueChanged( int ) ),
+	    kasbar, TQT_SLOT( setThumbnailSize( int ) ) );
    thumbSizeLabel->setBuddy( thumbSizeSlider );
 
-   QHBox *thumbUpdateBox = new QHBox( thumbsPage );
+   TQHBox *thumbUpdateBox = new TQHBox( thumbsPage );
    thumbUpdateBox->setSpacing( spacingHint() );
-   QWhatsThis::add( thumbUpdateBox,
+   TQWhatsThis::add( thumbUpdateBox,
 		    i18n( "Controls the frequency with which the thumbnail of the active window "
 			  "is updated. If the value is 0 then no updates will be performed.\n\n"
 			  "Using small values may cause performance problems on slow machines." ) );
-   QLabel *thumbUpdateLabel = new QLabel( i18n("&Update thumbnail every: "), thumbUpdateBox );
-   thumbUpdateSpin = new QSpinBox( 0, 1000, 1, thumbUpdateBox );
+   TQLabel *thumbUpdateLabel = new TQLabel( i18n("&Update thumbnail every: "), thumbUpdateBox );
+   thumbUpdateSpin = new TQSpinBox( 0, 1000, 1, thumbUpdateBox );
    thumbUpdateSpin->setValue( kasbar->thumbnailUpdateDelay() );
-   connect( thumbUpdateSpin, SIGNAL( valueChanged( int ) ),
-   	    kasbar, SLOT( setThumbnailUpdateDelay( int ) ) );
-   (void) new QLabel( i18n("seconds"), thumbUpdateBox );
+   connect( thumbUpdateSpin, TQT_SIGNAL( valueChanged( int ) ),
+   	    kasbar, TQT_SLOT( setThumbnailUpdateDelay( int ) ) );
+   (void) new TQLabel( i18n("seconds"), thumbUpdateBox );
    thumbUpdateLabel->setBuddy( thumbUpdateSpin );
 
-   (void) new QWidget( thumbsPage, "spacer" );
-   (void) new QWidget( thumbsPage, "spacer" );
-   (void) new QWidget( thumbsPage, "spacer" );
+   (void) new TQWidget( thumbsPage, "spacer" );
+   (void) new TQWidget( thumbsPage, "spacer" );
+   (void) new TQWidget( thumbsPage, "spacer" );
 }
 
 void KasPrefsDialog::addBehavePage()
 {
-   QVBox *behavePage = addVBoxPage( i18n("Behavior"), QString::null, Icon( "window_list" ) );
+   TQVBox *behavePage = addVBoxPage( i18n("Behavior"), TQString::null, Icon( "window_list" ) );
 
-   groupWindowsCheck = new QCheckBox( i18n("&Group windows"), behavePage );
-   QWhatsThis::add( groupWindowsCheck,
+   groupWindowsCheck = new TQCheckBox( i18n("&Group windows"), behavePage );
+   TQWhatsThis::add( groupWindowsCheck,
 		    i18n( "Enables the grouping together of related windows." ) );
    groupWindowsCheck->setChecked( kasbar->groupWindows() );
-   connect( groupWindowsCheck, SIGNAL( toggled(bool) ),
-	    kasbar, SLOT( setGroupWindows(bool) ) );
+   connect( groupWindowsCheck, TQT_SIGNAL( toggled(bool) ),
+	    kasbar, TQT_SLOT( setGroupWindows(bool) ) );
 
-   showAllWindowsCheck = new QCheckBox( i18n("Show all &windows"), behavePage );
-   QWhatsThis::add( showAllWindowsCheck,
+   showAllWindowsCheck = new TQCheckBox( i18n("Show all &windows"), behavePage );
+   TQWhatsThis::add( showAllWindowsCheck,
 		    i18n( "Enables the display of all windows, not just those on the current desktop." ) );
    showAllWindowsCheck->setChecked( kasbar->showAllWindows() );
-   connect( showAllWindowsCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setShowAllWindows(bool) ) );
+   connect( showAllWindowsCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setShowAllWindows(bool) ) );
 
-   groupInactiveCheck = new QCheckBox( i18n("&Group windows on inactive desktops"), behavePage );
-   QWhatsThis::add( groupInactiveCheck,
+   groupInactiveCheck = new TQCheckBox( i18n("&Group windows on inactive desktops"), behavePage );
+   TQWhatsThis::add( groupInactiveCheck,
 		    i18n( "Enables the grouping together of windows that are not on the current desktop." ) );
    groupInactiveCheck->setChecked( kasbar->groupInactiveDesktops() );
-   connect( groupInactiveCheck, SIGNAL( toggled(bool) ),
-	    kasbar, SLOT( setGroupInactiveDesktops(bool) ) );
+   connect( groupInactiveCheck, TQT_SIGNAL( toggled(bool) ),
+	    kasbar, TQT_SLOT( setGroupInactiveDesktops(bool) ) );
 
-   onlyShowMinimizedCheck = new QCheckBox( i18n("Only show &minimized windows"), behavePage );
-   QWhatsThis::add( onlyShowMinimizedCheck,
+   onlyShowMinimizedCheck = new TQCheckBox( i18n("Only show &minimized windows"), behavePage );
+   TQWhatsThis::add( onlyShowMinimizedCheck,
 		    i18n( "When this option is checked only minimized windows are shown in the bar. " \
 			  "This gives Kasbar similar behavior to the icon handling in older environments " \
 			  "like CDE or OpenLook." ) );
    onlyShowMinimizedCheck->setChecked( kasbar->onlyShowMinimized() );
-   connect( onlyShowMinimizedCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setOnlyShowMinimized(bool) ) );
+   connect( onlyShowMinimizedCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setOnlyShowMinimized(bool) ) );
 
-   (void) new QWidget( behavePage, "spacer" );
-   (void) new QWidget( behavePage, "spacer" );
+   (void) new TQWidget( behavePage, "spacer" );
+   (void) new TQWidget( behavePage, "spacer" );
 }
 
 void KasPrefsDialog::addColorsPage()
 {
-   QVBox *colorsPage = addVBoxPage( i18n("Colors"), QString::null, Icon( "colors" ) );
+   TQVBox *colorsPage = addVBoxPage( i18n("Colors"), TQString::null, Icon( "colors" ) );
 
    // Item label colors
-   QGrid *group = new QGrid( 2, colorsPage );
+   TQGrid *group = new TQGrid( 2, colorsPage );
 
-   QLabel *labelPenLabel = new QLabel( i18n("Label foreground:"), group );
+   TQLabel *labelPenLabel = new TQLabel( i18n("Label foreground:"), group );
 
    labelPenButton = new KColorButton( res->labelPenColor(), group );
-   connect( labelPenButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setLabelPenColor( const QColor & ) ) );
+   connect( labelPenButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setLabelPenColor( const TQColor & ) ) );
    labelPenLabel->setBuddy( labelPenButton );
 
-   QLabel *labelBackgroundLabel = new QLabel( i18n("Label background:"), group );
+   TQLabel *labelBackgroundLabel = new TQLabel( i18n("Label background:"), group );
    labelBackgroundButton = new KColorButton( res->labelBgColor(), group );
-   connect( labelBackgroundButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setLabelBgColor( const QColor & ) ) );
+   connect( labelBackgroundButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setLabelBgColor( const TQColor & ) ) );
    labelBackgroundLabel->setBuddy( labelBackgroundButton );
 
    // Inactive colors
-   group = new QGrid( 2, colorsPage );
+   group = new TQGrid( 2, colorsPage );
 
-   QLabel *inactivePenLabel = new QLabel( i18n("Inactive foreground:"), group );
+   TQLabel *inactivePenLabel = new TQLabel( i18n("Inactive foreground:"), group );
    inactivePenButton = new KColorButton( res->inactivePenColor(), group );
-   connect( inactivePenButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setInactivePenColor( const QColor & ) ) );
+   connect( inactivePenButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setInactivePenColor( const TQColor & ) ) );
    inactivePenLabel->setBuddy( inactivePenButton );
 
-   QLabel *inactiveBgLabel = new QLabel( i18n("Inactive background:"), group );
+   TQLabel *inactiveBgLabel = new TQLabel( i18n("Inactive background:"), group );
    inactiveBgButton = new KColorButton( res->inactiveBgColor(), group );
-   connect( inactiveBgButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setInactiveBgColor( const QColor & ) ) );
+   connect( inactiveBgButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setInactiveBgColor( const TQColor & ) ) );
    inactiveBgLabel->setBuddy( inactiveBgButton );
 
    // Active colors
-   group = new QGrid( 2, colorsPage );
+   group = new TQGrid( 2, colorsPage );
 
-   QLabel *activePenLabel = new QLabel( i18n("Active foreground:"), group );
+   TQLabel *activePenLabel = new TQLabel( i18n("Active foreground:"), group );
    activePenButton = new KColorButton( res->activePenColor(), group );
-   connect( activePenButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setActivePenColor( const QColor & ) ) );
+   connect( activePenButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setActivePenColor( const TQColor & ) ) );
    activePenLabel->setBuddy( activePenButton );
 
-   QLabel *activeBgLabel = new QLabel( i18n("Active background:"), group );
+   TQLabel *activeBgLabel = new TQLabel( i18n("Active background:"), group );
    activeBgButton = new KColorButton( res->activeBgColor(), group );
-   connect( activeBgButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setActiveBgColor( const QColor & ) ) );
+   connect( activeBgButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setActiveBgColor( const TQColor & ) ) );
    activeBgLabel->setBuddy( activeBgButton );
 
-   group = new QGrid( 2, colorsPage );
+   group = new TQGrid( 2, colorsPage );
 
-   QLabel *progressLabel = new QLabel( i18n("&Progress color:"), group );
+   TQLabel *progressLabel = new TQLabel( i18n("&Progress color:"), group );
    progressButton = new KColorButton( res->progressColor(), group );
-   connect( progressButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setProgressColor( const QColor & ) ) );
+   connect( progressButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setProgressColor( const TQColor & ) ) );
    progressLabel->setBuddy( progressButton );
 
-   QLabel *attentionLabel = new QLabel( i18n("&Attention color:"), group );
+   TQLabel *attentionLabel = new TQLabel( i18n("&Attention color:"), group );
    attentionButton = new KColorButton( res->attentionColor(), group );
-   connect( attentionButton, SIGNAL( changed( const QColor & ) ),
-	    res, SLOT( setAttentionColor( const QColor & ) ) );
+   connect( attentionButton, TQT_SIGNAL( changed( const TQColor & ) ),
+	    res, TQT_SLOT( setAttentionColor( const TQColor & ) ) );
    attentionLabel->setBuddy( attentionButton );
 
-   (void) new QWidget( colorsPage, "spacer" );
+   (void) new TQWidget( colorsPage, "spacer" );
 }
 
 void KasPrefsDialog::addIndicatorsPage()
 {
-   QVBox *indicatorsPage = addVBoxPage( i18n("Indicators"), QString::null, Icon( "bell" ) );
+   TQVBox *indicatorsPage = addVBoxPage( i18n("Indicators"), TQString::null, Icon( "bell" ) );
 
-   (void) new QWidget( indicatorsPage, "spacer" );
-   (void) new QWidget( indicatorsPage, "spacer" );
+   (void) new TQWidget( indicatorsPage, "spacer" );
+   (void) new TQWidget( indicatorsPage, "spacer" );
 }
 
 void KasPrefsDialog::addAdvancedPage()
 {
-   QVBox *advancedPage = addVBoxPage( i18n("Advanced"), QString::null, Icon( "misc" ) );
+   TQVBox *advancedPage = addVBoxPage( i18n("Advanced"), TQString::null, Icon( "misc" ) );
 
    // Startup notifier
-   notifierCheck = new QCheckBox( i18n("Enable &startup notifier"), advancedPage );
-   QWhatsThis::add( notifierCheck,
+   notifierCheck = new TQCheckBox( i18n("Enable &startup notifier"), advancedPage );
+   TQWhatsThis::add( notifierCheck,
 		    i18n( "Enables the display of tasks that are starting but have not yet "
 			  "created a window." ) );
    notifierCheck->setChecked( kasbar->notifierEnabled() );
-   connect( notifierCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setNotifierEnabled(bool) ) );
+   connect( notifierCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setNotifierEnabled(bool) ) );
 
    // Status advanced
-   modifiedCheck = new QCheckBox( i18n("Enable &modified indicator"), advancedPage );
-   QWhatsThis::add( modifiedCheck,
+   modifiedCheck = new TQCheckBox( i18n("Enable &modified indicator"), advancedPage );
+   TQWhatsThis::add( modifiedCheck,
 		    i18n( "Enables the display of a floppy disk state icon for windows containing "
 			  "a modified document." ) );
    modifiedCheck->setChecked( kasbar->showModified() );
-   connect( modifiedCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setShowModified(bool) ) );
+   connect( modifiedCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setShowModified(bool) ) );
 
-   progressCheck = new QCheckBox( i18n("Enable &progress indicator"), advancedPage );
-   QWhatsThis::add( progressCheck,
+   progressCheck = new TQCheckBox( i18n("Enable &progress indicator"), advancedPage );
+   TQWhatsThis::add( progressCheck,
 		    i18n( "Enables the display of a progress bar in the label of windows show "
 			  "are progress indicators." ) );
    progressCheck->setChecked( kasbar->showProgress() );
-   connect( progressCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setShowProgress(bool) ) );
+   connect( progressCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setShowProgress(bool) ) );
 
-   attentionCheck = new QCheckBox( i18n("Enable &attention indicator"), advancedPage );
-   QWhatsThis::add( attentionCheck,
+   attentionCheck = new TQCheckBox( i18n("Enable &attention indicator"), advancedPage );
+   TQWhatsThis::add( attentionCheck,
 		    i18n( "Enables the display of an icon that indicates a window that needs attention." ) );
    attentionCheck->setChecked( kasbar->showAttention() );
-   connect( attentionCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setShowAttention(bool) ) );
+   connect( attentionCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setShowAttention(bool) ) );
 
-   inactiveFramesCheck = new QCheckBox( i18n("Enable frames for inactive items"), advancedPage );
-   QWhatsThis::add( inactiveFramesCheck,
+   inactiveFramesCheck = new TQCheckBox( i18n("Enable frames for inactive items"), advancedPage );
+   TQWhatsThis::add( inactiveFramesCheck,
 		    i18n( "Enables frames around inactive items, if you want the bar to disappear into " \
 			  "the background you should probably uncheck this option." ) );
    inactiveFramesCheck->setChecked( kasbar->paintInactiveFrames() );
-   connect( inactiveFramesCheck, SIGNAL( toggled(bool) ), kasbar, SLOT( setPaintInactiveFrames(bool) ) );
+   connect( inactiveFramesCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setPaintInactiveFrames(bool) ) );
 
-   (void) new QWidget( advancedPage, "spacer" );
-   (void) new QWidget( advancedPage, "spacer" );
+   (void) new TQWidget( advancedPage, "spacer" );
+   (void) new TQWidget( advancedPage, "spacer" );
 }
 
 void KasPrefsDialog::customSizeChanged ( int value )
@@ -458,11 +458,11 @@ void KasPrefsDialog::accept()
        conf->sync();
    }
 
-   QDialog::accept();
+   TQDialog::accept();
 }
 
 void KasPrefsDialog::reject()
 {
    kasbar->readConfig();
-   QDialog::reject();
+   TQDialog::reject();
 }

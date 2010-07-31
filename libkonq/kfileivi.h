@@ -60,9 +60,9 @@ public:
 
     /**
      * @return true if dropping on this file is allowed
-     * Overloads QIconView::acceptDrop()
+     * Overloads TQIconView::acceptDrop()
      */
-    virtual bool acceptDrop( const QMimeSource *mime ) const;
+    virtual bool acceptDrop( const TQMimeSource *mime ) const;
 
     /**
      * Changes the icon for this item.
@@ -83,7 +83,7 @@ public:
      * @param recalc whether to update the layout of the icon view when setting the icon
      * @param redraw whether to redraw the item after setting the icon
      */
-    void setPixmapDirect( const QPixmap & pixmap,
+    void setPixmapDirect( const TQPixmap & pixmap,
                           bool recalc=false,
                           bool redraw=false);
 
@@ -125,7 +125,7 @@ public:
     /**
      * Set this when the thumbnail was loaded
      */
-    void setThumbnailPixmap( const QPixmap & pixmap );
+    void setThumbnailPixmap( const TQPixmap & pixmap );
 
     /**
      * Set the icon to use the specified KIconEffect
@@ -141,9 +141,9 @@ public:
     /**
      * Sets an icon to be shown over the bottom left corner of the icon.
      * Currently used for directory overlays.
-     * setOverlay(QString::null) to remove icon.
+     * setOverlay(TQString::null) to remove icon.
      */
-    void setOverlay( const QString & iconName);
+    void setOverlay( const TQString & iconName);
 
     /**
      * Redetermines the icon (useful if KFileItem might return another icon).
@@ -151,13 +151,13 @@ public:
      */
     virtual void refreshIcon( bool redraw );
 
-    virtual void setKey( const QString &key );
+    virtual void setKey( const TQString &key );
 
     /**
      * Paints this item. Takes care of using the normal or alpha
      * blending methods depending on the configuration.
      */
-    virtual void paintItem( QPainter *p, const QColorGroup &cg );
+    virtual void paintItem( TQPainter *p, const TQColorGroup &cg );
 
     virtual bool move( int x, int y );
 
@@ -166,13 +166,13 @@ public:
      * @param movieFileName the base name for the mng, e.g. "folder".
      * Nothing happens if there is no animation available.
      */
-    void setMouseOverAnimation( const QString& movieFileName );
-    QString mouseOverAnimation() const;
+    void setMouseOverAnimation( const TQString& movieFileName );
+    TQString mouseOverAnimation() const;
 
     /**
      * Return true if the icon _might_ have an animation available.
      * This doesn't mean the .mng exists (only determined when hovering on the
-     * icon - and if it doesn't exist setMouseOverAnimation(QString::null) is called),
+     * icon - and if it doesn't exist setMouseOverAnimation(TQString::null) is called),
      * and it doesn't mean that it's currently running either.
      */
     bool hasAnimation() const;
@@ -191,31 +191,31 @@ public:
     KIVDirectoryOverlay* setShowDirectoryOverlay( bool );
     bool showDirectoryOverlay( );
 
-    virtual int compare( QIconViewItem *i ) const;
+    virtual int compare( TQIconViewItem *i ) const;
 
 protected:
-    virtual void dropped( QDropEvent *e, const QValueList<QIconDragItem> &  );
+    virtual void dropped( TQDropEvent *e, const TQValueList<TQIconDragItem> &  );
 
     /**
      * Contains the logic and code for painting the overlay pixmap.
      */
-    void paintOverlay( QPainter *p ) const;
+    void paintOverlay( TQPainter *p ) const;
 
     /**
      * Updates the colorgroup.
      */
-    QColorGroup updateColors(const QColorGroup &c) const;
+    TQColorGroup updateColors(const TQColorGroup &c) const;
 
     /**
      * Contains the logic and code for painting links.
      */
-    void paintFontUpdate( QPainter *p ) const;
+    void paintFontUpdate( TQPainter *p ) const;
 
 private:
     /** You are not supposed to call this on a KFileIVI, from the outside,
      * it bypasses the icons cache */
-    virtual void setPixmap ( const QPixmap & icon ) { KIconViewItem::setPixmap( icon ); }
-    virtual void setPixmap ( const QPixmap & icon, bool recalc, bool redraw = TRUE )
+    virtual void setPixmap ( const TQPixmap & icon ) { KIconViewItem::setPixmap( icon ); }
+    virtual void setPixmap ( const TQPixmap & icon, bool recalc, bool redraw = TRUE )
         { KIconViewItem::setPixmap( icon, recalc, redraw ); }
 
     /** Check if a thumbnail will be generated and calc the size of the icon */

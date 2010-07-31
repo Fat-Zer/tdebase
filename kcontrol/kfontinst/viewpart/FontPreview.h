@@ -29,11 +29,11 @@
 // (C) Craig Drummond, 2001, 2002, 2003, 2004
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qsize.h>
-#include <qwidget.h>
-#include <qcolor.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
+#include <tqsize.h>
+#include <tqwidget.h>
+#include <tqcolor.h>
 #include <kurl.h>
 #include "FcEngine.h"
 
@@ -46,12 +46,12 @@ class CFontPreview : public QWidget
 
     public:
 
-    CFontPreview(QWidget *parent, const char *name=NULL);
+    CFontPreview(TQWidget *parent, const char *name=NULL);
     virtual ~CFontPreview() {}
 
-    void        paintEvent(QPaintEvent *);
-    QSize       sizeHint() const;
-    QSize       minimumSizeHint() const;
+    void        paintEvent(TQPaintEvent *);
+    TQSize       sizeHint() const;
+    TQSize       minimumSizeHint() const;
 
     void        showFont(const KURL &url);
     void        showFont();
@@ -69,13 +69,13 @@ class CFontPreview : public QWidget
     private:
 
     CFcEngine itsEngine;
-    QPixmap   itsPixmap;
+    TQPixmap   itsPixmap;
     KURL      itsCurrentUrl;
     int       itsCurrentFace,
               itsLastWidth,
               itsLastHeight;
-    QColor    itsBgndCol;
-    QString   itsFontName;
+    TQColor    itsBgndCol;
+    TQString   itsFontName;
 };
 
 }

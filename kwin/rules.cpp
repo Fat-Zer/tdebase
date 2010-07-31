@@ -12,10 +12,10 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include <fixx11h.h>
 #include <kconfig.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 #include <ktempfile.h>
 #include <ksimpleconfig.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #ifndef KCMRULES
 #include "client.h"
@@ -64,14 +64,14 @@ Rules::Rules()
     {
     }
 
-Rules::Rules( const QString& str, bool temporary )
+Rules::Rules( const TQString& str, bool temporary )
     : temporary_state( temporary ? 2 : 0 )
     {
     KTempFile file;
-    QFile* f = file.file();
+    TQFile* f = file.file();
     if( f != NULL )
         {
-        QCString s = str.utf8();
+        TQCString s = str.utf8();
         f->writeBlock( s.data(), s.length());
         }
     file.close();
@@ -134,10 +134,10 @@ void Rules::readFromCfg( KConfig& cfg )
         sizerule = UnusedSetRule;
     READ_FORCE_RULE( minsize, Size, );
     if( !minsize.isValid())
-        minsize = QSize( 1, 1 );
+        minsize = TQSize( 1, 1 );
     READ_FORCE_RULE( maxsize, Size, );
     if( maxsize.isEmpty())
-        maxsize = QSize( 32767, 32767 );
+        maxsize = TQSize( 32767, 32767 );
     READ_FORCE_RULE( opacityactive, Num, );
     if( opacityactive < 0 || opacityactive > 100 )
         opacityactive = 100;
@@ -293,7 +293,7 @@ bool Rules::isEmpty() const
         && disableglobalshortcutsrule == UnusedForceRule );
     }
 
-Rules::SetRule Rules::readSetRule( KConfig& cfg, const QString& key )
+Rules::SetRule Rules::readSetRule( KConfig& cfg, const TQString& key )
     {
     int v = cfg.readNumEntry( key );
     if( v >= DontAffect && v <= ForceTemporarily )
@@ -301,7 +301,7 @@ Rules::SetRule Rules::readSetRule( KConfig& cfg, const QString& key )
     return UnusedSetRule;
     }
 
-Rules::ForceRule Rules::readForceRule( KConfig& cfg, const QString& key )
+Rules::ForceRule Rules::readForceRule( KConfig& cfg, const TQString& key )
     {
     int v = cfg.readNumEntry( key );
     if( v == DontAffect || v == Force || v == ForceTemporarily )
@@ -309,7 +309,7 @@ Rules::ForceRule Rules::readForceRule( KConfig& cfg, const QString& key )
     return UnusedForceRule;
     }
 
-NET::WindowType Rules::readType( KConfig& cfg, const QString& key )
+NET::WindowType Rules::readType( KConfig& cfg, const TQString& key )
     {
     int v = cfg.readNumEntry( key );
     if( v >= NET::Normal && v <= NET::Splash )
@@ -329,13 +329,13 @@ bool Rules::matchType( NET::WindowType match_type ) const
     return true;
     }
     
-bool Rules::matchWMClass( const QCString& match_class, const QCString& match_name ) const
+bool Rules::matchWMClass( const TQCString& match_class, const TQCString& match_name ) const
     {
     if( wmclassmatch != UnimportantMatch )
         { // TODO optimize?
-        QCString cwmclass = wmclasscomplete
+        TQCString cwmclass = wmclasscomplete
             ? match_name + ' ' + match_class : match_class;
-        if( wmclassmatch == RegExpMatch && QRegExp( wmclass ).search( cwmclass ) == -1 )
+        if( wmclassmatch == RegExpMatch && TQRegExp( wmclass ).search( cwmclass ) == -1 )
             return false;
         if( wmclassmatch == ExactMatch && wmclass != cwmclass )
             return false;
@@ -345,11 +345,11 @@ bool Rules::matchWMClass( const QCString& match_class, const QCString& match_nam
     return true;
     }
     
-bool Rules::matchRole( const QCString& match_role ) const
+bool Rules::matchRole( const TQCString& match_role ) const
     {
     if( windowrolematch != UnimportantMatch )
         {
-        if( windowrolematch == RegExpMatch && QRegExp( windowrole ).search( match_role ) == -1 )
+        if( windowrolematch == RegExpMatch && TQRegExp( windowrole ).search( match_role ) == -1 )
             return false;
         if( windowrolematch == ExactMatch && windowrole != match_role )
             return false;
@@ -359,11 +359,11 @@ bool Rules::matchRole( const QCString& match_role ) const
     return true;
     }
     
-bool Rules::matchTitle( const QString& match_title ) const
+bool Rules::matchTitle( const TQString& match_title ) const
     {
     if( titlematch != UnimportantMatch )
         {
-        if( titlematch == RegExpMatch && QRegExp( title ).search( match_title ) == -1 )
+        if( titlematch == RegExpMatch && TQRegExp( title ).search( match_title ) == -1 )
             return false;
         if( titlematch == ExactMatch && title != match_title )
             return false;
@@ -373,7 +373,7 @@ bool Rules::matchTitle( const QString& match_title ) const
     return true;
     }
 
-bool Rules::matchClientMachine( const QCString& match_machine ) const
+bool Rules::matchClientMachine( const TQCString& match_machine ) const
     {
     if( clientmachinematch != UnimportantMatch )
         {
@@ -382,7 +382,7 @@ bool Rules::matchClientMachine( const QCString& match_machine ) const
             && matchClientMachine( "localhost" ))
             return true;
         if( clientmachinematch == RegExpMatch
-            && QRegExp( clientmachine ).search( match_machine ) == -1 )
+            && TQRegExp( clientmachine ).search( match_machine ) == -1 )
             return false;
         if( clientmachinematch == ExactMatch
             && clientmachine != match_machine )
@@ -419,7 +419,7 @@ bool Rules::update( Client* c )
         {
         if( !c->isFullScreen())
             {
-            QPoint new_pos = position;
+            TQPoint new_pos = position;
             // don't use the position in the direction which is maximized
             if(( c->maximizeMode() & MaximizeHorizontal ) == 0 )
                 new_pos.setX( c->pos().x());
@@ -433,7 +433,7 @@ bool Rules::update( Client* c )
         {
         if( !c->isFullScreen())
             {
-            QSize new_size = size;
+            TQSize new_size = size;
             // don't use the position in the direction which is maximized
             if(( c->maximizeMode() & MaximizeHorizontal ) == 0 )
                 new_size.setWidth( c->size().width());
@@ -529,10 +529,10 @@ bool Rules::apply##name( type& arg ) const \
 
 APPLY_FORCE_RULE( placement, Placement, Placement::Policy )
 
-bool Rules::applyGeometry( QRect& rect, bool init ) const
+bool Rules::applyGeometry( TQRect& rect, bool init ) const
     {
-    QPoint p = rect.topLeft();
-    QSize s = rect.size();
+    TQPoint p = rect.topLeft();
+    TQSize s = rect.size();
     bool ret = false; // no short-circuiting
     if( applyPosition( p, init ))
         {
@@ -547,22 +547,22 @@ bool Rules::applyGeometry( QRect& rect, bool init ) const
     return ret;
     }
 
-bool Rules::applyPosition( QPoint& pos, bool init ) const
+bool Rules::applyPosition( TQPoint& pos, bool init ) const
     {
     if( this->position != invalidPoint && checkSetRule( positionrule, init ))
         pos = this->position;
     return checkSetStop( positionrule );
     }
 
-bool Rules::applySize( QSize& s, bool init ) const
+bool Rules::applySize( TQSize& s, bool init ) const
     {
     if( this->size.isValid() && checkSetRule( sizerule, init ))
         s = this->size;
     return checkSetStop( sizerule );
     }
 
-APPLY_FORCE_RULE( minsize, MinSize, QSize )
-APPLY_FORCE_RULE( maxsize, MaxSize, QSize )
+APPLY_FORCE_RULE( minsize, MinSize, TQSize )
+APPLY_FORCE_RULE( maxsize, MaxSize, TQSize )
 APPLY_FORCE_RULE( opacityactive, OpacityActive, int )
 APPLY_FORCE_RULE( opacityinactive, OpacityInactive, int )
 APPLY_FORCE_RULE( ignoreposition, IgnorePosition, bool )
@@ -615,7 +615,7 @@ APPLY_FORCE_RULE( acceptfocus, AcceptFocus, bool )
 APPLY_FORCE_RULE( moveresizemode, MoveResizeMode, Options::MoveResizeMode )
 APPLY_FORCE_RULE( closeable, Closeable, bool )
 APPLY_FORCE_RULE( strictgeometry, StrictGeometry, bool )
-APPLY_RULE( shortcut, Shortcut, QString )
+APPLY_RULE( shortcut, Shortcut, TQString )
 APPLY_FORCE_RULE( disableglobalshortcuts, DisableGlobalShortcuts, bool )
 
 
@@ -695,8 +695,8 @@ kdbgstream& operator<<( kdbgstream& stream, const Rules* r )
 #ifndef KCMRULES
 void WindowRules::discardTemporary()
     {
-    QValueVector< Rules* >::Iterator it2 = rules.begin();
-    for( QValueVector< Rules* >::Iterator it = rules.begin();
+    TQValueVector< Rules* >::Iterator it2 = rules.begin();
+    for( TQValueVector< Rules* >::Iterator it = rules.begin();
          it != rules.end();
          )
         {
@@ -713,7 +713,7 @@ void WindowRules::discardTemporary()
 void WindowRules::update( Client* c )
     {
     bool updated = false;
-    for( QValueVector< Rules* >::ConstIterator it = rules.begin();
+    for( TQValueVector< Rules* >::ConstIterator it = rules.begin();
          it != rules.end();
          ++it )
         if( (*it)->update( c )) // no short-circuiting here
@@ -728,7 +728,7 @@ type WindowRules::check##rule( type arg, bool init ) const \
     if( rules.count() == 0 ) \
         return arg; \
     type ret = arg; \
-    for( QValueVector< Rules* >::ConstIterator it = rules.begin(); \
+    for( TQValueVector< Rules* >::ConstIterator it = rules.begin(); \
          it != rules.end(); \
          ++it ) \
         { \
@@ -744,7 +744,7 @@ type WindowRules::check##rule( type arg ) const \
     if( rules.count() == 0 ) \
         return arg; \
     type ret = arg; \
-    for( QValueVector< Rules* >::ConstIterator it = rules.begin(); \
+    for( TQValueVector< Rules* >::ConstIterator it = rules.begin(); \
          it != rules.end(); \
          ++it ) \
         { \
@@ -756,15 +756,15 @@ type WindowRules::check##rule( type arg ) const \
 
 CHECK_FORCE_RULE( Placement, Placement::Policy )
 
-QRect WindowRules::checkGeometry( QRect rect, bool init ) const
+TQRect WindowRules::checkGeometry( TQRect rect, bool init ) const
     {
-    return QRect( checkPosition( rect.topLeft(), init ), checkSize( rect.size(), init ));
+    return TQRect( checkPosition( rect.topLeft(), init ), checkSize( rect.size(), init ));
     }
 
-CHECK_RULE( Position, QPoint )
-CHECK_RULE( Size, QSize )
-CHECK_FORCE_RULE( MinSize, QSize )
-CHECK_FORCE_RULE( MaxSize, QSize )
+CHECK_RULE( Position, TQPoint )
+CHECK_RULE( Size, TQSize )
+CHECK_FORCE_RULE( MinSize, TQSize )
+CHECK_FORCE_RULE( MaxSize, TQSize )
 CHECK_FORCE_RULE( OpacityActive, int )
 CHECK_FORCE_RULE( OpacityInactive, int )
 CHECK_FORCE_RULE( IgnorePosition, bool )
@@ -799,7 +799,7 @@ CHECK_FORCE_RULE( AcceptFocus, bool )
 CHECK_FORCE_RULE( MoveResizeMode, Options::MoveResizeMode )
 CHECK_FORCE_RULE( Closeable, bool )
 CHECK_FORCE_RULE( StrictGeometry, bool )
-CHECK_RULE( Shortcut, QString )
+CHECK_RULE( Shortcut, TQString )
 CHECK_FORCE_RULE( DisableGlobalShortcuts, bool )
 
 #undef CHECK_RULE
@@ -823,8 +823,8 @@ void Client::applyWindowRules()
     // apply force rules
     // Placement - does need explicit update, just like some others below
     // Geometry : setGeometry() doesn't check rules
-    QRect orig_geom = QRect( pos(), sizeForClientSize( clientSize())); // handle shading
-    QRect geom = client_rules.checkGeometry( orig_geom );
+    TQRect orig_geom = TQRect( pos(), sizeForClientSize( clientSize())); // handle shading
+    TQRect geom = client_rules.checkGeometry( orig_geom );
     if( geom != orig_geom )
         setGeometry( geom );
     // MinSize, MaxSize handled by Geometry
@@ -851,7 +851,7 @@ void Client::applyWindowRules()
         workspace()->activateNextClient( this );
     // MoveResizeMode
     // Closeable
-    QSize s = adjustedSize();
+    TQSize s = adjustedSize();
     if( s != size())
         resizeWithChecks( s );
     // StrictGeometry
@@ -917,8 +917,8 @@ void Client::checkAndSetInitialRuledOpacity()
 
 WindowRules Workspace::findWindowRules( const Client* c, bool ignore_temporary )
     {
-    QValueVector< Rules* > ret;
-    for( QValueList< Rules* >::Iterator it = rules.begin();
+    TQValueVector< Rules* > ret;
+    for( TQValueList< Rules* >::Iterator it = rules.begin();
          it != rules.end();
          )
         {
@@ -946,8 +946,8 @@ WindowRules Workspace::findWindowRules( const Client* c, bool ignore_temporary )
 void Workspace::editWindowRules( Client* c, bool whole_app )
     {
     writeWindowRules();
-    QStringList args;
-    args << "--wid" << QString::number( c->window());
+    TQStringList args;
+    args << "--wid" << TQString::number( c->window());
     if( whole_app )
         args << "--whole-app";
     KApplication::kdeinitExec( "kwin_rules_dialog", args );
@@ -967,7 +967,7 @@ void Workspace::loadWindowRules()
          i <= count;
          ++i )
         {
-        cfg.setGroup( QString::number( i ));
+        cfg.setGroup( TQString::number( i ));
         Rules* rule = new Rules( cfg );
         rules.append( rule );
         }
@@ -977,30 +977,30 @@ void Workspace::writeWindowRules()
     {
     rulesUpdatedTimer.stop();
     KConfig cfg( "kwinrulesrc" );
-    QStringList groups = cfg.groupList();
-    for( QStringList::ConstIterator it = groups.begin();
+    TQStringList groups = cfg.groupList();
+    for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();
          ++it )
         cfg.deleteGroup( *it );
     cfg.setGroup( "General" );
     cfg.writeEntry( "count", rules.count());
     int i = 1;
-    for( QValueList< Rules* >::ConstIterator it = rules.begin();
+    for( TQValueList< Rules* >::ConstIterator it = rules.begin();
          it != rules.end();
          ++it )
         {
         if( (*it)->isTemporary())
             continue;
-        cfg.setGroup( QString::number( i ));
+        cfg.setGroup( TQString::number( i ));
         (*it)->write( cfg );
         ++i;
         }
     }
 
-void Workspace::gotTemporaryRulesMessage( const QString& message )
+void Workspace::gotTemporaryRulesMessage( const TQString& message )
     {
     bool was_temporary = false;
-    for( QValueList< Rules* >::ConstIterator it = rules.begin();
+    for( TQValueList< Rules* >::ConstIterator it = rules.begin();
          it != rules.end();
          ++it )
         if( (*it)->isTemporary())
@@ -1008,13 +1008,13 @@ void Workspace::gotTemporaryRulesMessage( const QString& message )
     Rules* rule = new Rules( message, true );
     rules.prepend( rule ); // highest priority first
     if( !was_temporary )
-        QTimer::singleShot( 60000, this, SLOT( cleanupTemporaryRules()));
+        TQTimer::singleShot( 60000, this, TQT_SLOT( cleanupTemporaryRules()));
     }
 
 void Workspace::cleanupTemporaryRules()
     {
     bool has_temporary = false;
-    for( QValueList< Rules* >::Iterator it = rules.begin();
+    for( TQValueList< Rules* >::Iterator it = rules.begin();
          it != rules.end();
          )
         {
@@ -1028,13 +1028,13 @@ void Workspace::cleanupTemporaryRules()
             }
         }
     if( has_temporary )
-        QTimer::singleShot( 60000, this, SLOT( cleanupTemporaryRules()));
+        TQTimer::singleShot( 60000, this, TQT_SLOT( cleanupTemporaryRules()));
     }
 
 void Workspace::discardUsedWindowRules( Client* c, bool withdrawn )
     {
     bool updated = false;
-    for( QValueList< Rules* >::Iterator it = rules.begin();
+    for( TQValueList< Rules* >::Iterator it = rules.begin();
          it != rules.end();
          )
         {

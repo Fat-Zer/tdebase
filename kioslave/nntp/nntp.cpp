@@ -12,8 +12,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 
 #include <kinstance.h>
 #include <kdebug.h>
@@ -62,7 +62,7 @@ int kdemain(int argc, char **argv) {
 
 /****************** NNTPProtocol ************************/
 
-NNTPProtocol::NNTPProtocol ( const QCString & pool, const QCString & app, bool isSSL )
+NNTPProtocol::NNTPProtocol ( const TQCString & pool, const TQCString & app, bool isSSL )
   : TCPSlaveBase( (isSSL ? NNTPS_PORT : NNTP_PORT), (isSSL ? "nntps" : "nntp"), pool,
                   app, isSSL )
 {
@@ -81,10 +81,10 @@ NNTPProtocol::~NNTPProtocol() {
   nntp_close();
 }
 
-void NNTPProtocol::setHost ( const QString & host, int port, const QString & user,
-                             const QString & pass )
+void NNTPProtocol::setHost ( const TQString & host, int port, const TQString & user,
+                             const TQString & pass )
 {
-  DBG << "setHost: " << ( ! user.isEmpty() ? (user+"@") : QString(""))
+  DBG << "setHost: " << ( ! user.isEmpty() ? (user+"@") : TQString(""))
       << host << ":" << ( ( port == 0 ) ? m_iDefaultPort : port  ) << endl;
 
   if ( isConnectionValid() && (mHost != host || m_iPort != port ||
@@ -99,11 +99,11 @@ void NNTPProtocol::setHost ( const QString & host, int port, const QString & use
 
 void NNTPProtocol::get(const KURL& url) {
   DBG << "get " << url.prettyURL() << endl;
-  QString path = QDir::cleanDirPath(url.path());
-  QRegExp regMsgId = QRegExp("^\\/?[a-z0-9\\.\\-_]+\\/<\\S+>$", false);
+  TQString path = TQDir::cleanDirPath(url.path());
+  TQRegExp regMsgId = TQRegExp("^\\/?[a-z0-9\\.\\-_]+\\/<\\S+>$", false);
   int pos;
-  QString group;
-  QString msg_id;
+  TQString group;
+  TQString msg_id;
 
   // path should be like: /group/<msg_id>
   if (regMsgId.search(path) != 0) {
@@ -142,8 +142,8 @@ void NNTPProtocol::get(const KURL& url) {
   }
 
   // read and send data
-  QCString line;
-  QByteArray buffer;
+  TQCString line;
+  TQByteArray buffer;
   char tmp[MAX_PACKET_LEN];
   int len = 0;
   while ( true ) {
@@ -160,7 +160,7 @@ void NNTPProtocol::get(const KURL& url) {
       break;
     if ( line.left(2) == ".." )
       line.remove( 0, 1 );
-    // cannot use QCString, it would send the 0-terminator too
+    // cannot use TQCString, it would send the 0-terminator too
     buffer.setRawData( line.data(), line.length() );
     data( buffer );
     buffer.resetRawData( line.data(), line.length() );
@@ -181,10 +181,10 @@ void NNTPProtocol::put( const KURL &/*url*/, int /*permissions*/, bool /*overwri
     finished();
 }
 
-void NNTPProtocol::special(const QByteArray& data) {
+void NNTPProtocol::special(const TQByteArray& data) {
   // 1 = post article
   int cmd;
-  QDataStream stream(data, IO_ReadOnly);
+  TQDataStream stream(data, IO_ReadOnly);
 
   if ( !nntp_open() )
     return;
@@ -214,13 +214,13 @@ bool NNTPProtocol::post_article() {
   int result;
   bool last_chunk_had_line_ending = true;
   do {
-    QByteArray buffer;
-    QCString data;
+    TQByteArray buffer;
+    TQCString data;
     dataReq();
     result = readData(buffer);
     // treat the buffer data
     if (result>0) {
-      data = QCString(buffer.data(),buffer.size()+1);
+      data = TQCString(buffer.data(),buffer.size()+1);
       // translate "\r\n." to "\r\n.."
       int pos=0;
       if (last_chunk_had_line_ending && data[0] == '.') {
@@ -265,17 +265,17 @@ bool NNTPProtocol::post_article() {
 void NNTPProtocol::stat( const KURL& url ) {
   DBG << "stat " << url.prettyURL() << endl;
   UDSEntry entry;
-  QString path = QDir::cleanDirPath(url.path());
-  QRegExp regGroup = QRegExp("^\\/?[a-z0-9\\.\\-_]+\\/?$",false);
-  QRegExp regMsgId = QRegExp("^\\/?[a-z0-9\\.\\-_]+\\/<\\S+>$", false);
+  TQString path = TQDir::cleanDirPath(url.path());
+  TQRegExp regGroup = TQRegExp("^\\/?[a-z0-9\\.\\-_]+\\/?$",false);
+  TQRegExp regMsgId = TQRegExp("^\\/?[a-z0-9\\.\\-_]+\\/<\\S+>$", false);
   int pos;
-  QString group;
-  QString msg_id;
+  TQString group;
+  TQString msg_id;
 
   // / = group list
   if (path.isEmpty() || path == "/") {
     DBG << "stat root" << endl;
-    fillUDSEntry(entry, QString::null, 0, postingAllowed, false);
+    fillUDSEntry(entry, TQString::null, 0, postingAllowed, false);
 
   // /group = message list
   } else if (regGroup.search(path) == 0) {
@@ -312,7 +312,7 @@ void NNTPProtocol::listDir( const KURL& url ) {
   if ( !nntp_open() )
     return;
 
-  QString path = QDir::cleanDirPath(url.path());
+  TQString path = TQDir::cleanDirPath(url.path());
 
   if (path.isEmpty())
   {
@@ -329,20 +329,20 @@ void NNTPProtocol::listDir( const KURL& url ) {
   } else {
     // if path = /group
     int pos;
-    QString group;
+    TQString group;
     if (path.left(1) == "/")
       path.remove(0,1);
     if ((pos = path.find('/')) > 0)
       group = path.left(pos);
     else
       group = path;
-    QString first = url.queryItem( "first" );
+    TQString first = url.queryItem( "first" );
     if ( fetchGroup( group, first.toULong() ) )
       finished();
   }
 }
 
-void NNTPProtocol::fetchGroups( const QString &since )
+void NNTPProtocol::fetchGroups( const TQString &since )
 {
   int expected;
   int res;
@@ -361,7 +361,7 @@ void NNTPProtocol::fetchGroups( const QString &since )
   }
 
   // read newsgroups line by line
-  QCString line, group;
+  TQCString line, group;
   int pos, pos2;
   long msg_cnt;
   bool moderated;
@@ -407,7 +407,7 @@ void NNTPProtocol::fetchGroups( const QString &since )
       // incremental article listing
       UDSAtom atom;
       atom.m_uds = UDS_EXTRA;
-      atom.m_str = QString::number( last );
+      atom.m_str = TQString::number( last );
       entry.append( atom );
       entryList.append(entry);
 
@@ -422,9 +422,9 @@ void NNTPProtocol::fetchGroups( const QString &since )
   if (entryList.count() > 0) listEntries(entryList);
 }
 
-bool NNTPProtocol::fetchGroup( QString &group, unsigned long first ) {
+bool NNTPProtocol::fetchGroup( TQString &group, unsigned long first ) {
   int res_code;
-  QString resp_line;
+  TQString resp_line;
 
   // select group
   res_code = sendCommand( "GROUP " + group );
@@ -471,15 +471,15 @@ bool NNTPProtocol::fetchGroupRFC977( unsigned long first )
   UDSEntryList entryList;
 
   // set article pointer to first article and get msg-id of it
-  int res_code = sendCommand( "STAT " + QString::number( first ) );
-  QString resp_line = readBuffer;
+  int res_code = sendCommand( "STAT " + TQString::number( first ) );
+  TQString resp_line = readBuffer;
   if (res_code != 223) {
     unexpected_response(res_code,"STAT");
     return false;
   }
 
   //STAT res_line: 223 nnn <msg_id> ...
-  QString msg_id;
+  TQString msg_id;
   int pos, pos2;
   if ((pos = resp_line.find('<')) > 0 && (pos2 = resp_line.find('>',pos+1))) {
     msg_id = resp_line.mid(pos,pos2-pos+1);
@@ -528,8 +528,8 @@ bool NNTPProtocol::fetchGroupXOVER( unsigned long first, bool &notSupported )
 {
   notSupported = false;
 
-  QString line;
-  QStringList headers;
+  TQString line;
+  TQStringList headers;
 
   int res = sendCommand( "LIST OVERVIEW.FMT" );
   if ( res == 215 ) {
@@ -552,7 +552,7 @@ bool NNTPProtocol::fetchGroupXOVER( unsigned long first, bool &notSupported )
         << "References:" << "Bytes:" << "Lines:";
   }
 
-  res = sendCommand( "XOVER " + QString::number( first ) + "-" );
+  res = sendCommand( "XOVER " + TQString::number( first ) + "-" );
   if ( res == 420 )
     return true; // no articles selected
   if ( res == 500 )
@@ -561,12 +561,12 @@ bool NNTPProtocol::fetchGroupXOVER( unsigned long first, bool &notSupported )
     return false;
 
   long msgSize;
-  QString msgId;
+  TQString msgId;
   UDSAtom atom;
   UDSEntry entry;
   UDSEntryList entryList;
 
-  QStringList fields;
+  TQStringList fields;
   while ( true ) {
     if ( ! waitForResponse( readTimeout() ) ) {
       error( ERR_SERVER_TIMEOUT, mHost );
@@ -582,11 +582,11 @@ bool NNTPProtocol::fetchGroupXOVER( unsigned long first, bool &notSupported )
       return true;
     }
 
-    fields = QStringList::split( "\t", line, true );
-    msgId = QString::null;
+    fields = TQStringList::split( "\t", line, true );
+    msgId = TQString::null;
     msgSize = 0;
-    QStringList::ConstIterator it = headers.constBegin();
-    QStringList::ConstIterator it2 = fields.constBegin();
+    TQStringList::ConstIterator it = headers.constBegin();
+    TQStringList::ConstIterator it2 = fields.constBegin();
     ++it2; // first entry is the serial number
     for ( ; it != headers.constEnd() && it2 != fields.constEnd(); ++it, ++it2 ) {
       if ( (*it).contains( "Message-ID:", false ) ) {
@@ -617,7 +617,7 @@ bool NNTPProtocol::fetchGroupXOVER( unsigned long first, bool &notSupported )
 }
 
 
-void NNTPProtocol::fillUDSEntry(UDSEntry& entry, const QString& name, long size,
+void NNTPProtocol::fillUDSEntry(UDSEntry& entry, const TQString& name, long size,
   bool posting_allowed, bool is_article) {
 
   long posting=0;
@@ -633,14 +633,14 @@ void NNTPProtocol::fillUDSEntry(UDSEntry& entry, const QString& name, long size,
 
   // entry size
   atom.m_uds = UDS_SIZE;
-  atom.m_str = QString::null;
+  atom.m_str = TQString::null;
   atom.m_long = size;
   entry.append(atom);
 
   // file type
   atom.m_uds = UDS_FILE_TYPE;
   atom.m_long = is_article? S_IFREG : S_IFDIR;
-  atom.m_str = QString::null;
+  atom.m_str = TQString::null;
   entry.append(atom);
 
   // access permissions
@@ -648,11 +648,11 @@ void NNTPProtocol::fillUDSEntry(UDSEntry& entry, const QString& name, long size,
   posting = posting_allowed? (S_IWUSR | S_IWGRP | S_IWOTH) : 0;
   atom.m_long = (is_article)? (S_IRUSR | S_IRGRP | S_IROTH) :
     (S_IRUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH | posting);
-  atom.m_str = QString::null;
+  atom.m_str = TQString::null;
   entry.append(atom);
 
   atom.m_uds = UDS_USER;
-  atom.m_str = mUser.isEmpty() ? QString("root") : mUser;
+  atom.m_str = mUser.isEmpty() ? TQString("root") : mUser;
   atom.m_long= 0;
   entry.append(atom);
 
@@ -746,7 +746,7 @@ bool NNTPProtocol::nntp_open()
   }
 }
 
-int NNTPProtocol::sendCommand( const QString &cmd )
+int NNTPProtocol::sendCommand( const TQString &cmd )
 {
   int res_code = 0;
 
@@ -811,7 +811,7 @@ int NNTPProtocol::sendCommand( const QString &cmd )
   return res_code;
 }
 
-void NNTPProtocol::unexpected_response( int res_code, const QString & command) {
+void NNTPProtocol::unexpected_response( int res_code, const TQString & command) {
   ERR << "Unexpected response to " << command << " command: (" << res_code << ") "
       << readBuffer << endl;
   error(ERR_INTERNAL,i18n("Unexpected server response to %1 command:\n%2").
@@ -845,8 +845,8 @@ int NNTPProtocol::evalResponse ( char *data, ssize_t &len )
    use the KIO::Error's instead, but let this here for
    documentation of the NNTP response codes and may
    by later use.
-QString& NNTPProtocol::errorStr(int resp_code) {
-  QString ret;
+TQString& NNTPProtocol::errorStr(int resp_code) {
+  TQString ret;
 
   switch (resp_code) {
   case 100: ret = "help text follows"; break;
@@ -888,7 +888,7 @@ QString& NNTPProtocol::errorStr(int resp_code) {
   case 501: ret = "command syntax error"; break;
   case 502: ret = "access restriction or permission denied"; break;
   case 503: ret = "program fault - command not performed"; break;
-  default:  ret = QString("unknown NNTP response code %1").arg(resp_code);
+  default:  ret = TQString("unknown NNTP response code %1").arg(resp_code);
   }
 
   return ret;

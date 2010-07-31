@@ -2,30 +2,30 @@
 #define __PIXMAP_H__
 
 
-#include <qpixmap.h>
-#include <qdict.h>
-#include <qstring.h>
+#include <tqpixmap.h>
+#include <tqdict.h>
+#include <tqstring.h>
 
 
 class LayoutIcon {
 
 private:
 	static LayoutIcon* instance;
-	static const QString flagTemplate;
+	static const TQString flagTemplate;
 	
-	QDict<QPixmap> m_pixmapCache;
-	QFont m_labelFont;
+	TQDict<TQPixmap> m_pixmapCache;
+	TQFont m_labelFont;
 
 	LayoutIcon();
-	QPixmap* createErrorPixmap();
-	void dimPixmap(QPixmap& pixmap);
-	QString getCountryFromLayoutName(const QString& layoutName);
+	TQPixmap* createErrorPixmap();
+	void dimPixmap(TQPixmap& pixmap);
+	TQString getCountryFromLayoutName(const TQString& layoutName);
 	
   public:
-	static const QString& ERROR_CODE;
+	static const TQString& ERROR_CODE;
 	
 	static LayoutIcon& getInstance();
-	const QPixmap& findPixmap(const QString& code, bool showFlag, const QString& displayName="");
+	const TQPixmap& findPixmap(const TQString& code, bool showFlag, const TQString& displayName="");
 };
 
 #endif

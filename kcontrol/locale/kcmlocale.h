@@ -25,8 +25,8 @@
 #ifndef KCMLOCALE_H
 #define KCMLOCALE_H
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 
 class KAddButton;
 class KLanguageButton;
@@ -43,7 +43,7 @@ class KLocaleConfig : public QWidget
 
 public:
   KLocaleConfig( KLocale *_locale,
-                 QWidget *parent = 0, const char *name = 0);
+                 TQWidget *parent = 0, const char *name = 0);
 
   void save();
 
@@ -65,11 +65,11 @@ private slots:
   void loadLanguageList();
   void loadCountryList();
 
-  void changedCountry(const QString & code);
-  void readLocale(const QString &path, QString &name,
-                  const QString &sub) const;
+  void changedCountry(const TQString & code);
+  void readLocale(const TQString &path, TQString &name,
+                  const TQString &sub) const;
 
-  void slotAddLanguage(const QString & id);
+  void slotAddLanguage(const TQString & id);
   void slotRemoveLanguage();
   void slotLanguageUp();
   void slotLanguageDown();
@@ -81,24 +81,24 @@ private slots:
   void slotLanguageSelectorExited(KProcess *);
 
 private:
-  QStringList languageList() const;
+  TQStringList languageList() const;
 
   KLocale *m_locale;
 
   KLanguageButton *m_comboCountry;
 
-  QLabel *m_labCountry;
-  QLabel *m_labLang;
+  TQLabel *m_labCountry;
+  TQLabel *m_labLang;
 
-  QListBox * m_languages;
+  TQListBox * m_languages;
   KLanguageButton * m_addLanguage;
-  QPushButton * m_removeLanguage;
-  QPushButton * m_upButton;
-  QPushButton * m_downButton;
+  TQPushButton * m_removeLanguage;
+  TQPushButton * m_upButton;
+  TQPushButton * m_downButton;
 
-  QPushButton* installLanguage;
-  QPushButton* uninstallLanguage;
-  QPushButton* selectLanguage;
+  TQPushButton* installLanguage;
+  TQPushButton* uninstallLanguage;
+  TQPushButton* selectLanguage;
 };
 
 #endif

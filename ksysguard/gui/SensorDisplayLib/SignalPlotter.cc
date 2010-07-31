@@ -24,8 +24,8 @@
 #include <math.h>
 #include <string.h>
 
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -34,8 +34,8 @@
 
 #include "SignalPlotter.h"
 
-SignalPlotter::SignalPlotter( QWidget *parent, const char *name )
-  : QWidget( parent, name )
+SignalPlotter::SignalPlotter( TQWidget *parent, const char *name )
+  : TQWidget( parent, name )
 {
   // Auto deletion does not work for pointer to arrays.
   mBeamData.setAutoDelete( false );
@@ -50,8 +50,8 @@ SignalPlotter::SignalPlotter( QWidget *parent, const char *name )
 
   // Anything smaller than this does not make sense.
   setMinimumSize( 16, 16 );
-  setSizePolicy( QSizePolicy( QSizePolicy::Expanding,
-                 QSizePolicy::Expanding, false ) );
+  setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding,
+                 TQSizePolicy::Expanding, false ) );
 
   mShowVerticalLines = true;
   mVerticalLinesColor = KSGRD::Style->firstForegroundColor();
@@ -77,7 +77,7 @@ SignalPlotter::~SignalPlotter()
     delete [] p;
 }
 
-bool SignalPlotter::addBeam( const QColor &color )
+bool SignalPlotter::addBeam( const TQColor &color )
 {
   double* d = new double[ mSamples ];
   memset( d, 0, sizeof(double) * mSamples );
@@ -87,7 +87,7 @@ bool SignalPlotter::addBeam( const QColor &color )
   return true;
 }
 
-void SignalPlotter::addSample( const QValueList<double>& sampleBuf )
+void SignalPlotter::addSample( const TQValueList<double>& sampleBuf )
 {
   if ( mBeamData.count() != sampleBuf.count() )
     return;
@@ -114,7 +114,7 @@ void SignalPlotter::addSample( const QValueList<double>& sampleBuf )
   }
 
   // Shift data buffers one sample down and insert new samples.
-  QValueList<double>::ConstIterator s;
+  TQValueList<double>::ConstIterator s;
   for ( d = mBeamData.first(), s = sampleBuf.begin(); d; d = mBeamData.next(), ++s ) {
     memmove( d, d + 1, ( mSamples - 1 ) * sizeof( double ) );
     d[ mSamples - 1 ] = *s;
@@ -123,14 +123,14 @@ void SignalPlotter::addSample( const QValueList<double>& sampleBuf )
   update();
 }
 
-void SignalPlotter::reorderBeams( const QValueList<int>& newOrder )
+void SignalPlotter::reorderBeams( const TQValueList<int>& newOrder )
 {
   if(newOrder.count() != mBeamData.count()) {
     kdDebug() << "Serious problem in move sample" << endl;
     return;
   }
-  QPtrList<double> newBeamData;
-  QValueList<QColor> newBeamColor;
+  TQPtrList<double> newBeamData;
+  TQValueList<TQColor> newBeamColor;
 
   for(uint i = 0; i < newOrder.count(); i++) {
     int newIndex = newOrder[i];
@@ -152,7 +152,7 @@ void SignalPlotter::changeRange( int beam, double min, double max )
   mMaxValue = max;
 }
 
-QValueList<QColor> &SignalPlotter::beamColors()
+TQValueList<TQColor> &SignalPlotter::beamColors()
 {
   return mBeamColor;
 }
@@ -164,12 +164,12 @@ void SignalPlotter::removeBeam( uint pos )
   delete [] p;
 }
 
-void SignalPlotter::setTitle( const QString &title )
+void SignalPlotter::setTitle( const TQString &title )
 {
   mTitle = title;
 }
 
-QString SignalPlotter::title() const
+TQString SignalPlotter::title() const
 {
   return mTitle;
 }
@@ -239,12 +239,12 @@ bool SignalPlotter::showVerticalLines() const
   return mShowVerticalLines;
 }
 
-void SignalPlotter::setVerticalLinesColor( const QColor &color )
+void SignalPlotter::setVerticalLinesColor( const TQColor &color )
 {
   mVerticalLinesColor = color;
 }
 
-QColor SignalPlotter::verticalLinesColor() const
+TQColor SignalPlotter::verticalLinesColor() const
 {
   return mVerticalLinesColor;
 }
@@ -279,12 +279,12 @@ bool SignalPlotter::showHorizontalLines() const
   return mShowHorizontalLines;
 }
 
-void SignalPlotter::setHorizontalLinesColor( const QColor &color )
+void SignalPlotter::setHorizontalLinesColor( const TQColor &color )
 {
   mHorizontalLinesColor = color;
 }
 
-QColor SignalPlotter::horizontalLinesColor() const
+TQColor SignalPlotter::horizontalLinesColor() const
 {
   return mHorizontalLinesColor;
 }
@@ -329,17 +329,17 @@ int SignalPlotter::fontSize() const
   return mFontSize;
 }
 
-void SignalPlotter::setBackgroundColor( const QColor &color )
+void SignalPlotter::setBackgroundColor( const TQColor &color )
 {
   mBackgroundColor = color;
 }
 
-QColor SignalPlotter::backgroundColor() const
+TQColor SignalPlotter::backgroundColor() const
 {
   return mBackgroundColor;
 }
 
-void SignalPlotter::resizeEvent( QResizeEvent* )
+void SignalPlotter::resizeEvent( TQResizeEvent* )
 {
   Q_ASSERT( width() > 2 );
 
@@ -385,7 +385,7 @@ void SignalPlotter::updateDataBuffers()
   mSamples = newSampleNum;
 }
 
-void SignalPlotter::paintEvent( QPaintEvent* )
+void SignalPlotter::paintEvent( TQPaintEvent* )
 {
   uint w = width();
   uint h = height();
@@ -394,14 +394,14 @@ void SignalPlotter::paintEvent( QPaintEvent* )
   if ( w <= 2 )
     return;
 
-  QPixmap pm( w, h );
-  QPainter p;
+  TQPixmap pm( w, h );
+  TQPainter p;
   p.begin( &pm, this );
 
   pm.fill( mBackgroundColor );
   /* Draw white line along the bottom and the right side of the
    * widget to create a 3D like look. */
-  p.setPen( QColor( colorGroup().light() ) );
+  p.setPen( TQColor( colorGroup().light() ) );
   if(mShowThinFrame) {
     p.drawLine( 0, h - 1, w - 1, h - 1 );
     p.drawLine( w - 1, 0, w - 1, h - 1 );
@@ -441,7 +441,7 @@ void SignalPlotter::paintEvent( QPaintEvent* )
     /* Draw horizontal bar with current sensor values at top of display. */
     p.setPen( mHorizontalLinesColor );
     int x0 = w / 2;
-    p.setFont( QFont( p.font().family(), mFontSize ) );
+    p.setFont( TQFont( p.font().family(), mFontSize ) );
     top = p.fontMetrics().height();
     h -= top;
     int h0 = top - 2; // h0 is our new top.  It's at least 5 pixels high
@@ -452,7 +452,7 @@ void SignalPlotter::paintEvent( QPaintEvent* )
 
     double bias = -minValue;
     double scaleFac = ( w - x0 - 2 ) / range;
-    QValueList<QColor>::Iterator col;
+    TQValueList<TQColor>::Iterator col;
     col = mBeamColor.begin();
     for ( double* d = mBeamData.first(); d; d = mBeamData.next(), ++col ) {
       int start = x0 + (int)( bias * scaleFac );
@@ -502,7 +502,7 @@ void SignalPlotter::paintEvent( QPaintEvent* )
     int xPos = 0;
     for ( int i = 0; i < mSamples; i++, xPos += mHorizontalScale ) {
       double bias = -minValue;
-      QValueList<QColor>::Iterator col;
+      TQValueList<TQColor>::Iterator col;
       col = mBeamColor.begin();
       double sum = 0.0;
       for ( double* d = mBeamData.first(); d; d = mBeamData.next(), ++col ) {
@@ -537,7 +537,7 @@ void SignalPlotter::paintEvent( QPaintEvent* )
     int x1 = w - ( ( mSamples + 1 ) * mHorizontalScale );
 
     for ( int i = 0; i < mSamples; i++ ) {
-      QValueList<QColor>::Iterator col;
+      TQValueList<TQColor>::Iterator col;
       col = mBeamColor.begin();
       double sum = 0.0;
       int y = top + h - 2;
@@ -563,10 +563,10 @@ void SignalPlotter::paintEvent( QPaintEvent* )
         /* If the line is longer than 2 pixels we draw only the last
          * 2 pixels with the bright color. The rest is painted with
          * a 50% darker color. */
-        QPen lastPen = QPen( p.pen() );
+        TQPen lastPen = TQPen( p.pen() );
         p.setPen( (*col).dark( 150 ) );
         p.setBrush( (*col).dark( 150 ) );
-        QPointArray pa( 4 );
+        TQPointArray pa( 4 );
         int prevY = ( i == 0 ) ? y : prevVals[ j ];
         pa.putPoints( 0, 1, x1, prevY );
         pa.putPoints( 1, 1, x2, y );
@@ -612,8 +612,8 @@ void SignalPlotter::paintEvent( QPaintEvent* )
    * Values are only draw when width is greater than 60 */
   if ( mShowHorizontalLines ) {
     p.setPen( mHorizontalLinesColor );
-    p.setFont( QFont( p.font().family(), mFontSize ) );
-    QString val;
+    p.setFont( TQFont( p.font().family(), mFontSize ) );
+    TQString val;
 
     /* top = 0 or  font.height    depending on whether there's a topbar or not
      * h = graphing area.height   - i.e. the actual space we have to draw inside
@@ -628,7 +628,7 @@ void SignalPlotter::paintEvent( QPaintEvent* )
 
       if ( mShowLabels && h > ( mFontSize + 1 ) * ( mHorizontalLinesCount + 1 )
            && w > 60 ) {
-        val = QString::number(maxValue - (y * range) / (mHorizontalLinesCount+1 ) );
+        val = TQString::number(maxValue - (y * range) / (mHorizontalLinesCount+1 ) );
         p.drawText( 6, y_coord  - 1, val );  //draw the text one pixel raised above the line
       }
     }
@@ -636,7 +636,7 @@ void SignalPlotter::paintEvent( QPaintEvent* )
     //Draw the bottom most (minimum) number as well
     if ( mShowLabels && h > ( mFontSize + 1 ) * ( mHorizontalLinesCount + 1 )
          && w > 60 ) {
-      val = QString::number( minValue );
+      val = TQString::number( minValue );
       p.drawText( 6, top + h - 2, val );
     }
   }

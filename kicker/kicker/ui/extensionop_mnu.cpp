@@ -29,8 +29,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kicker.h"
 #include "extensionop_mnu.h"
 
-PanelExtensionOpMenu::PanelExtensionOpMenu(const QString& extension, int actions, QWidget *parent, const char *name)
-  : QPopupMenu(parent, name)
+PanelExtensionOpMenu::PanelExtensionOpMenu(const TQString& extension, int actions, TQWidget *parent, const char *name)
+  : TQPopupMenu(parent, name)
 {
     if (!Kicker::the()->isImmutable())
     {

@@ -33,10 +33,10 @@
 
 #include <kwinmodule.h>
 
-#include <qstrlist.h>
-#include <qintdict.h>
-#include <qptrdict.h>
-#include <qsignalmapper.h>
+#include <tqstrlist.h>
+#include <tqintdict.h>
+#include <tqptrdict.h>
+#include <tqsignalmapper.h>
 
 #include "TEPty.h"
 #include "TEWidget.h"
@@ -63,7 +63,7 @@ class KTabWidget;
 class QToolButton;
 
 // Defined in main.C
-const char *konsole_shell(QStrList &args);
+const char *konsole_shell(TQStrList &args);
 
 class Konsole : public KMainWindow, virtual public KonsoleIface
 {
@@ -74,47 +74,47 @@ public:
 
   Konsole(const char * name, int histon, bool menubaron, bool tabbaron,
     bool frameon, bool scrollbaron,
-    QCString type = 0, bool b_inRestore = false, const int wanted_tabbar = 0,
-    const QString &workdir=QString::null);
+    TQCString type = 0, bool b_inRestore = false, const int wanted_tabbar = 0,
+    const TQString &workdir=TQString::null);
 
   ~Konsole();
   void setColLin(int columns, int lines);
   void setAutoClose(bool on);
   void initFullScreen();
   void initSessionFont(int fontNo);
-  void initSessionFont(QFont f);
-  void initSessionKeyTab(const QString &keyTab);
+  void initSessionFont(TQFont f);
+  void initSessionKeyTab(const TQString &keyTab);
   void initMonitorActivity(bool on);
   void initMonitorSilence(bool on);
   void initMasterMode(bool on);
-  void initTabColor(QColor color);
+  void initTabColor(TQColor color);
   void initHistory(int lines, bool enable);
-  void newSession(const QString &program, const QStrList &args, const QString &term, const QString &icon, const QString &title, const QString &cwd);
-  void setSchema(const QString & path);
+  void newSession(const TQString &program, const TQStrList &args, const TQString &term, const TQString &icon, const TQString &title, const TQString &cwd);
+  void setSchema(const TQString & path);
   void setEncoding(int);
-  void setSessionTitle(QString&, TESession* = 0);
-  void setSessionEncoding(const QString&, TESession* = 0);
+  void setSessionTitle(TQString&, TESession* = 0);
+  void setSessionEncoding(const TQString&, TESession* = 0);
 
   void enableFullScripting(bool b);
   void enableFixedSize(bool b);
 
-  void setDefaultSession(const QString &filename);
+  void setDefaultSession(const TQString &filename);
   void showTipOnStart();
 
   // Additional functions for DCOP
   int sessionCount() { return sessions.count(); }
 
-  QString currentSession();
-  QString newSession(const QString &type);
-  QString sessionId(const int position);
+  TQString currentSession();
+  TQString newSession(const TQString &type);
+  TQString sessionId(const int position);
 
-  void activateSession(const QString& sessionId);
-  void feedAllSessions(const QString &text);
-  void sendAllSessions(const QString &text);
+  void activateSession(const TQString& sessionId);
+  void feedAllSessions(const TQString &text);
+  void sendAllSessions(const TQString &text);
 
   KURL baseURL() const;
 
-  virtual bool processDynamic(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData);
+  virtual bool processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData);
   virtual QCStringList functionsDynamic();
 
   void callReadPropertiesInternal(KConfig *config, int number) { readPropertiesInternal(config,number); }
@@ -124,15 +124,15 @@ public:
 
 public slots:
   void activateSession(int position);
-  void activateSession(QWidget*);
+  void activateSession(TQWidget*);
   void slotUpdateSessionConfig(TESession *session);
-  void slotResizeSession(TESession*, QSize);
-  void slotSetSessionEncoding(TESession *session, const QString &encoding);
-  void slotGetSessionSchema(TESession *session, QString &schema);
-  void slotSetSessionSchema(TESession *session, const QString &schema);
+  void slotResizeSession(TESession*, TQSize);
+  void slotSetSessionEncoding(TESession *session, const TQString &encoding);
+  void slotGetSessionSchema(TESession *session, TQString &schema);
+  void slotSetSessionSchema(TESession *session, const TQString &schema);
 
   void makeGUI();
-  QString newSession();
+  TQString newSession();
 
 protected:
 
@@ -184,7 +184,7 @@ private slots:
   void slotSelectTabbar();
   void slotToggleMenubar();
   void slotRenameSession();
-  void slotRenameSession(TESession* ses, const QString &name);
+  void slotRenameSession(TESession* ses, const TQString &name);
   void slotToggleMonitor();
   void slotToggleMasterMode();
   void slotClearAllSessionHistories();
@@ -209,8 +209,8 @@ private slots:
 
   void disableMasterModeConnections();
   void enableMasterModeConnections();
-  void enterURL( const QString&, const QString& );
-  void newSession( const QString&, const QString& );
+  void enterURL( const TQString&, const TQString& );
+  void newSession( const TQString&, const TQString& );
 
   void slotFind();
   void slotFindDone();
@@ -237,14 +237,14 @@ private slots:
 
   void toggleBidi();
 
-  void slotTabContextMenu(QWidget*, const QPoint &);
+  void slotTabContextMenu(TQWidget*, const TQPoint &);
   void slotTabDetachSession();
   void slotTabRenameSession();
   void slotTabSelectColor();
   void slotTabCloseSession();
   void slotTabToggleMonitor();
   void slotTabToggleMasterMode();
-  void slotTabbarContextMenu(const QPoint &);
+  void slotTabbarContextMenu(const TQPoint &);
   void slotTabSetViewOptions(int);
   void slotTabbarToggleDynamicHide();
   void slotToggleAutoResizeTabs();
@@ -253,10 +253,10 @@ private slots:
   void slotSetEncoding();
 private:
   KSimpleConfig *defaultSession();
-  QString newSession(KSimpleConfig *co, QString pgm = QString::null, const QStrList &args = QStrList(),
-                     const QString &_term = QString::null, const QString &_icon = QString::null,
-                     const QString &_title = QString::null, const QString &_cwd = QString::null);
-  void readProperties(KConfig *config, const QString &schema, bool globalConfigOnly);
+  TQString newSession(KSimpleConfig *co, TQString pgm = TQString::null, const TQStrList &args = TQStrList(),
+                     const TQString &_term = TQString::null, const TQString &_icon = TQString::null,
+                     const TQString &_title = TQString::null, const TQString &_cwd = TQString::null);
+  void readProperties(KConfig *config, const TQString &schema, bool globalConfigOnly);
   void applySettingsToGUI();
   void makeTabWidget();
   void makeBasicGUI();
@@ -270,31 +270,31 @@ private:
   void setMasterMode(bool _state, TESession* _se=0);
 
   void buildSessionMenus();
-  void addSessionCommand(const QString & path);
+  void addSessionCommand(const TQString & path);
   void loadSessionCommands();
   void createSessionMenus();
-  void addScreenSession(const QString & path, const QString & socket);
+  void addScreenSession(const TQString & path, const TQString & socket);
   void resetScreenSessions();
   void checkBitmapFonts();
 
   void initTEWidget(TEWidget* new_te, TEWidget* default_te);
 
-  void createSessionTab(TEWidget *widget, const QIconSet& iconSet,
-                        const QString &text, int index = -1);
-  QIconSet iconSetForSession(TESession *session) const;
+  void createSessionTab(TEWidget *widget, const TQIconSet& iconSet,
+                        const TQString &text, int index = -1);
+  TQIconSet iconSetForSession(TESession *session) const;
 
-  bool eventFilter( QObject *o, QEvent *e );
+  bool eventFilter( TQObject *o, TQEvent *e );
 
-  QPtrList<TEWidget> activeTEs();
+  TQPtrList<TEWidget> activeTEs();
 
-  QPtrDict<TESession> action2session;
-  QPtrDict<KRadioAction> session2action;
-  QPtrList<TESession> sessions;
+  TQPtrDict<TESession> action2session;
+  TQPtrDict<KRadioAction> session2action;
+  TQPtrList<TESession> sessions;
 
-  QIntDict<KSimpleConfig> no2command;     //QT4 - convert to QList
+  TQIntDict<KSimpleConfig> no2command;     //QT4 - convert to QList
 
   KSimpleConfig* m_defaultSession;
-  QString m_defaultSessionFilename;
+  TQString m_defaultSessionFilename;
 
   KTabWidget* tabwidget;
   TEWidget*      te;     // the visible TEWidget, either sole one or one of many
@@ -302,9 +302,9 @@ private:
   TESession*     se_previous;
   TESession*     m_initialSession;
   ColorSchemaList* colors;
-  QString        s_encodingName;
+  TQString        s_encodingName;
 
-  QPtrDict<KRootPixmap> rootxpms;
+  TQPtrDict<KRootPixmap> rootxpms;
   KWinModule*    kWinModule;
 
   KMenuBar*   menubar;
@@ -371,7 +371,7 @@ private:
   KonsoleFind* m_finddialog;
   bool         m_find_first;
   bool         m_find_found;
-  QString      m_find_pattern;
+  TQString      m_find_pattern;
 
   int cmd_serial;
   int cmd_first_screen;
@@ -386,17 +386,17 @@ private:
   int         sessionIdCounter;
   int         monitorSilenceSeconds;
 
-  QString     s_schema;
-  QString     s_kconfigSchema;
-  QString     s_word_seps;			// characters that are considered part of a word
-  QString     pmPath; // pixmap path
-  QString     dropText;
-  QFont       defaultFont;
-  QSize       defaultSize;
+  TQString     s_schema;
+  TQString     s_kconfigSchema;
+  TQString     s_word_seps;			// characters that are considered part of a word
+  TQString     pmPath; // pixmap path
+  TQString     dropText;
+  TQFont       defaultFont;
+  TQSize       defaultSize;
 
-  QRect       _saveGeometry;
+  TQRect       _saveGeometry;
 
-  QTimer      m_closeTimeout;
+  TQTimer      m_closeTimeout;
 
   TabViewModes m_tabViewMode;
   bool        b_dynamicTabHide;
@@ -426,15 +426,15 @@ private:
 
   TESession*  m_contextMenuSession;
 
-  QToolButton* m_newSessionButton;
-  QToolButton* m_removeSessionButton;
-  QPoint      m_newSessionButtonMousePressPos;
+  TQToolButton* m_newSessionButton;
+  TQToolButton* m_removeSessionButton;
+  TQPoint      m_newSessionButtonMousePressPos;
 
-  QSignalMapper* sessionNumberMapper;
-  QStringList    sl_sessionShortCuts;
-  QString  s_workDir;
+  TQSignalMapper* sessionNumberMapper;
+  TQStringList    sl_sessionShortCuts;
+  TQString  s_workDir;
 
-  QColor    m_tabColor;
+  TQColor    m_tabColor;
 };
 
 class QSpinBox;
@@ -445,7 +445,7 @@ class HistoryTypeDialog : public KDialogBase
 public:
   HistoryTypeDialog(const HistoryType& histType,
                     unsigned int histSize,
-                    QWidget *parent);
+                    TQWidget *parent);
 
 public slots:
 
@@ -457,10 +457,10 @@ public slots:
   bool isOn() const;
 
 protected:
-  QLabel*        m_label;
-  QSpinBox*      m_size;
-  QCheckBox*     m_btnEnable;
-  QPushButton*   m_setUnlimited;
+  TQLabel*        m_label;
+  TQSpinBox*      m_size;
+  TQCheckBox*     m_btnEnable;
+  TQPushButton*   m_setUnlimited;
 };
 
 class SizeDialog : public KDialogBase
@@ -469,7 +469,7 @@ class SizeDialog : public KDialogBase
 public:
   SizeDialog(unsigned int const columns,
              unsigned int const lines,
-             QWidget *parent);
+             TQWidget *parent);
 
 public slots:
   void slotDefault();
@@ -478,24 +478,24 @@ public slots:
   unsigned int lines() const;
 
 protected:
-  QSpinBox*  m_columns;
-  QSpinBox*  m_lines;
+  TQSpinBox*  m_columns;
+  TQSpinBox*  m_lines;
 };
 
 class KonsoleFind : public KEdFind
 {
     Q_OBJECT
 public:
-  KonsoleFind( QWidget *parent = 0, const char *name=0, bool modal=true );
+  KonsoleFind( TQWidget *parent = 0, const char *name=0, bool modal=true );
   bool reg_exp() const;
 
 private slots:
   void slotEditRegExp();
 
 private:
-  QCheckBox*    m_asRegExp;
-  QDialog*      m_editorDialog;
-  QPushButton*  m_editRegExp;
+  TQCheckBox*    m_asRegExp;
+  TQDialog*      m_editorDialog;
+  TQPushButton*  m_editRegExp;
 };
 
 #endif

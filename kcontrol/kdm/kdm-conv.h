@@ -22,13 +22,13 @@
 #ifndef __KDMCONV_H__
 #define __KDMCONV_H__
 
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qimage.h>
-#include <qgroupbox.h>
-#include <qradiobutton.h>
-#include <qcheckbox.h>
-#include <qspinbox.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqimage.h>
+#include <tqgroupbox.h>
+#include <tqradiobutton.h>
+#include <tqcheckbox.h>
+#include <tqspinbox.h>
 
 #include <klistbox.h>
 #include <kcombobox.h>
@@ -44,7 +44,7 @@ class KDMConvenienceWidget : public QWidget
 	Q_OBJECT
 
 public:
-	KDMConvenienceWidget(QWidget *parent=0, const char *name=0);
+	KDMConvenienceWidget(TQWidget *parent=0, const char *name=0);
 
         void load();
         void save();
@@ -53,8 +53,8 @@ public:
 
 public slots:
 	void slotClearUsers();
-	void slotAddUsers(const QMap<QString,int> &);
-	void slotDelUsers(const QMap<QString,int> &);
+	void slotAddUsers(const TQMap<TQString,int> &);
+	void slotDelUsers(const TQMap<TQString,int> &);
 
 
 signals:
@@ -63,9 +63,9 @@ signals:
 private slots:
 	void slotPresChanged();
 	void slotChanged();
-	void slotSetAutoUser( const QString &user );
-	void slotSetPreselUser( const QString &user );
-	void slotUpdateNoPassUser( QListViewItem *item );
+	void slotSetAutoUser( const TQString &user );
+	void slotSetPreselUser( const TQString &user );
+	void slotUpdateNoPassUser( TQListViewItem *item );
 
 private:
 	QGroupBox	*alGroup, *puGroup, *npGroup, *btGroup;

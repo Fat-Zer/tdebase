@@ -20,8 +20,8 @@
 #ifndef KONQ_HISTORYCOMM_H
 #define KONQ_HISTORYCOMM_H
 
-#include <qdatetime.h>
-#include <qstringlist.h>
+#include <tqdatetime.h>
+#include <tqstringlist.h>
 
 #include <dcopobject.h>
 #include <kurl.h>
@@ -35,18 +35,18 @@ public:
 	: numberOfTimesVisited(1) {}
 
     KURL url;
-    QString typedURL;
-    QString title;
+    TQString typedURL;
+    TQString title;
     Q_UINT32 numberOfTimesVisited;
-    QDateTime firstVisited;
-    QDateTime lastVisited;
+    TQDateTime firstVisited;
+    TQDateTime lastVisited;
 };
 
 
-// QDataStream operators (read and write a KonqHistoryEntry
+// TQDataStream operators (read and write a KonqHistoryEntry
 // from/into a QDataStream
-QDataStream& operator<< (QDataStream& s, const KonqHistoryEntry& e);
-QDataStream& operator>> (QDataStream& s, KonqHistoryEntry& e);
+TQDataStream& operator<< (TQDataStream& s, const KonqHistoryEntry& e);
+TQDataStream& operator>> (TQDataStream& s, KonqHistoryEntry& e);
 
 ///////////////////////////////////////////////////////////////////
 
@@ -61,16 +61,16 @@ class KonqHistoryComm : public DCOPObject
     K_DCOP
 
 protected:
-    KonqHistoryComm( QCString objId ) : DCOPObject( objId ) {}
+    KonqHistoryComm( TQCString objId ) : DCOPObject( objId ) {}
 
 k_dcop:
-    virtual ASYNC notifyHistoryEntry( KonqHistoryEntry e, QCString saveId) = 0;
-    virtual ASYNC notifyMaxCount( Q_UINT32 count, QCString saveId ) = 0;
-    virtual ASYNC notifyMaxAge( Q_UINT32 days, QCString saveId ) = 0;
-    virtual ASYNC notifyClear( QCString saveId ) = 0;
-    virtual ASYNC notifyRemove( KURL url, QCString saveId ) = 0;
-    virtual ASYNC notifyRemove( KURL::List url, QCString saveId ) = 0;
-    virtual QStringList allURLs() const = 0;
+    virtual ASYNC notifyHistoryEntry( KonqHistoryEntry e, TQCString saveId) = 0;
+    virtual ASYNC notifyMaxCount( Q_UINT32 count, TQCString saveId ) = 0;
+    virtual ASYNC notifyMaxAge( Q_UINT32 days, TQCString saveId ) = 0;
+    virtual ASYNC notifyClear( TQCString saveId ) = 0;
+    virtual ASYNC notifyRemove( KURL url, TQCString saveId ) = 0;
+    virtual ASYNC notifyRemove( KURL::List url, TQCString saveId ) = 0;
+    virtual TQStringList allURLs() const = 0;
 
 };
 

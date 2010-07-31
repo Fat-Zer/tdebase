@@ -37,11 +37,11 @@ class KLanguageCombo : public KTagComboBox
   Q_OBJECT
 
 public:
-  KLanguageCombo(QWidget *parent=0, const char *name=0);
+  KLanguageCombo(TQWidget *parent=0, const char *name=0);
   ~KLanguageCombo();
 
-  void insertLanguage(const QString& path, const QString& name, const QString& sub = QString::null, const QString &submenu = QString::null, int index = -1);
-  void changeLanguage(const QString& name, int i);
+  void insertLanguage(const TQString& path, const TQString& name, const TQString& sub = TQString::null, const TQString &submenu = TQString::null, int index = -1);
+  void changeLanguage(const TQString& name, int i);
 };
 
 #endif

@@ -27,8 +27,8 @@
 
 #include <kapplication.h>
 #include <dcopclient.h>
-#include <qtabwidget.h>
-#include <qlayout.h>
+#include <tqtabwidget.h>
+#include <tqlayout.h>
 
 #include "jsopts.h"
 #include "javaopts.h"
@@ -43,31 +43,31 @@
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_khtml_behavior(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_khtml_behavior(TQWidget *parent, const char *name)
 	{
 		KConfig *c = new KConfig( "konquerorrc", false, false );
 		return new KMiscHTMLOptions(c, "HTML Settings", parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_khtml_fonts(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_khtml_fonts(TQWidget *parent, const char *name)
 	{
 		KConfig *c = new KConfig( "konquerorrc", false, false );
 		return new KAppearanceOptions(c, "HTML Settings", parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_khtml_java_js(QWidget *parent, const char* /*name*/)
+	KDE_EXPORT KCModule *create_khtml_java_js(TQWidget *parent, const char* /*name*/)
 	{
 		KConfig *c = new KConfig( "konquerorrc", false, false );
 		return new KJSParts(c, parent, "kcmkonqhtml");
 	}
 
-	KDE_EXPORT KCModule *create_khtml_plugins(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_khtml_plugins(TQWidget *parent, const char *name)
 	{
 		KConfig *c = new KConfig( "konquerorrc", false, false );
 		return new KPluginOptions(c, "Java/JavaScript Settings", parent, name);
 	}
 
-        KDE_EXPORT KCModule *create_khtml_filter(QWidget *parent, const char *name )
+        KDE_EXPORT KCModule *create_khtml_filter(TQWidget *parent, const char *name )
         {
 	    KConfig *c = new KConfig( "khtmlrc", false, false );
             return new KCMFilter(c, "Filter Settings", parent, name);
@@ -75,7 +75,7 @@ extern "C"
 }
 
 
-KJSParts::KJSParts(KConfig *config, QWidget *parent, const char *name)
+KJSParts::KJSParts(KConfig *config, TQWidget *parent, const char *name)
 	: KCModule(parent, name), mConfig(config)
 {
   KAboutData *about =
@@ -97,18 +97,18 @@ KJSParts::KJSParts(KConfig *config, QWidget *parent, const char *name)
 
   setAboutData( about );
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  tab = new QTabWidget(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  tab = new TQTabWidget(this);
   layout->addWidget(tab);
 
   // ### the groupname is duplicated in KJSParts::save
   java = new KJavaOptions( config, "Java/JavaScript Settings", this, name );
   tab->addTab( java, i18n( "&Java" ) );
-  connect( java, SIGNAL( changed( bool ) ), SIGNAL( changed( bool ) ) );
+  connect( java, TQT_SIGNAL( changed( bool ) ), TQT_SIGNAL( changed( bool ) ) );
 
   javascript = new KJavaScriptOptions( config, "Java/JavaScript Settings", this, name );
   tab->addTab( javascript, i18n( "Java&Script" ) );
-  connect( javascript, SIGNAL( changed( bool ) ), SIGNAL( changed( bool ) ) );
+  connect( javascript, TQT_SIGNAL( changed( bool ) ), TQT_SIGNAL( changed( bool ) ) );
 }
 
 KJSParts::~KJSParts()
@@ -141,7 +141,7 @@ void KJSParts::save()
 
   // Send signal to konqueror
   // Warning. In case something is added/changed here, keep kfmclient in sync
-  QByteArray data;
+  TQByteArray data;
   if ( !kapp->dcopClient()->isAttached() )
     kapp->dcopClient()->attach();
   kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
@@ -154,7 +154,7 @@ void KJSParts::defaults()
   java->defaults();
 }
 
-QString KJSParts::quickHelp() const
+TQString KJSParts::quickHelp() const
 {
   return i18n("<h2>JavaScript</h2>On this page, you can configure "
               "whether JavaScript programs embedded in web pages should "

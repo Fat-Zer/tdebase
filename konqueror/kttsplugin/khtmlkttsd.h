@@ -33,7 +33,7 @@ public:
     /**
      * Construct a new KParts plugin.
      */
-    KHTMLPluginKTTSD( QObject* parent, const char* name, const QStringList& );
+    KHTMLPluginKTTSD( TQObject* parent, const char* name, const TQStringList& );
 
     /**
      * Destructor.

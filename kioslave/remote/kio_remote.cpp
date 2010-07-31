@@ -56,8 +56,8 @@ extern "C" {
 }
 
 
-RemoteProtocol::RemoteProtocol(const QCString &protocol,
-                               const QCString &pool, const QCString &app)
+RemoteProtocol::RemoteProtocol(const TQCString &protocol,
+                               const TQCString &pool, const TQCString &app)
 	: SlaveBase(protocol, pool, app)
 {
 }
@@ -77,7 +77,7 @@ void RemoteProtocol::listDir(const KURL &url)
 	}
 
 	int second_slash_idx = url.path().find( '/', 1 );
-	QString root_dirname = url.path().mid( 1, second_slash_idx-1 );
+	TQString root_dirname = url.path().mid( 1, second_slash_idx-1 );
 	
 	KURL target = m_impl.findBaseURL( root_dirname );
 	kdDebug(1220) << "possible redirection target : " << target << endl;
@@ -125,7 +125,7 @@ void RemoteProtocol::stat(const KURL &url)
 {
 	kdDebug(1220) << "RemoteProtocol::stat: " << url << endl;
  
-	QString path = url.path();
+	TQString path = url.path();
 	if ( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
@@ -152,7 +152,7 @@ void RemoteProtocol::stat(const KURL &url)
 	}
 
 	int second_slash_idx = url.path().find( '/', 1 );
-	QString root_dirname = url.path().mid( 1, second_slash_idx-1 );
+	TQString root_dirname = url.path().mid( 1, second_slash_idx-1 );
 	
 	if ( second_slash_idx==-1 || ( (int)url.path().length() )==second_slash_idx+1 )
 	{
@@ -198,7 +198,7 @@ void RemoteProtocol::get(const KURL &url)
 {
 	kdDebug(1220) << "RemoteProtocol::get: " << url << endl;
 
-	QString file = m_impl.findDesktopFile( url.fileName() );
+	TQString file = m_impl.findDesktopFile( url.fileName() );
 	kdDebug(1220) << "desktop file : " << file << endl;
 	
 	if (!file.isEmpty())

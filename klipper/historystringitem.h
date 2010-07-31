@@ -20,8 +20,8 @@
 #ifndef _HISTORYSTRINGITEM_H_
 #define _HISTORYSTRINGITEM_H_
 
-#include <qstring.h>
-#include <qdragobject.h>
+#include <tqstring.h>
+#include <tqdragobject.h>
 
 #include "historyitem.h"
 
@@ -31,27 +31,27 @@
 class HistoryStringItem : public HistoryItem
 {
 public:
-    HistoryStringItem( const QString& data );
+    HistoryStringItem( const TQString& data );
     virtual ~HistoryStringItem() {}
-    virtual QString text() const;
+    virtual TQString text() const;
     virtual bool operator==( const HistoryItem& rhs) const {
         if ( const HistoryStringItem* casted_rhs = dynamic_cast<const HistoryStringItem*>( &rhs ) ) {
             return casted_rhs->m_data == m_data;
         }
         return false;
     }
-    virtual QMimeSource* mimeSource() const { return new QTextDrag( m_data ) ; }
+    virtual TQMimeSource* mimeSource() const { return new TQTextDrag( m_data ) ; }
 
     /**
      * Write object on datastream
      */
-    virtual void write( QDataStream& stream ) const;
+    virtual void write( TQDataStream& stream ) const;
 
 private:
-    QString m_data;
+    TQString m_data;
 };
 
-inline QString HistoryStringItem::text() const { return m_data; }
+inline TQString HistoryStringItem::text() const { return m_data; }
 
 
 #endif

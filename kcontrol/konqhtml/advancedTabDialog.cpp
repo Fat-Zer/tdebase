@@ -17,12 +17,12 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qslider.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqslider.h>
 
 #include <kapplication.h>
 #include <dcopclient.h>
@@ -34,7 +34,7 @@
 #include "advancedTabOptions.h"
 #include "main.h"
 
-advancedTabDialog::advancedTabDialog(QWidget* parent, KConfig* config, const char* name)
+advancedTabDialog::advancedTabDialog(TQWidget* parent, KConfig* config, const char* name)
     : KDialogBase(KDialogBase::Plain,
                   i18n("Advanced Options"),
                   KDialogBase::Ok |
@@ -46,25 +46,25 @@ advancedTabDialog::advancedTabDialog(QWidget* parent, KConfig* config, const cha
                   true, true),
                   m_pConfig(config)
 {
-    connect(this, SIGNAL(applyClicked()),
-            this, SLOT(save()));
-    connect(this, SIGNAL(okClicked()),
-            this, SLOT(save()));
+    connect(this, TQT_SIGNAL(applyClicked()),
+            this, TQT_SLOT(save()));
+    connect(this, TQT_SIGNAL(okClicked()),
+            this, TQT_SLOT(save()));
     actionButton(Apply)->setEnabled(false);
-    QFrame* page = plainPage();
-    QVBoxLayout* layout = new QVBoxLayout(page);
+    TQFrame* page = plainPage();
+    TQVBoxLayout* layout = new TQVBoxLayout(page);
     m_advancedWidget = new advancedTabOptions(page);
     layout->addWidget(m_advancedWidget);
     layout->addSpacing( 20 );
     layout->addStretch();
 
-    connect(m_advancedWidget->m_pNewTabsInBackground, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(m_advancedWidget->m_pOpenAfterCurrentPage, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(m_advancedWidget->m_pTabConfirm, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(m_advancedWidget->m_pTabCloseActivatePrevious, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(m_advancedWidget->m_pPermanentCloseButton, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(m_advancedWidget->m_pKonquerorTabforExternalURL, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(m_advancedWidget->m_pPopupsWithinTabs, SIGNAL(clicked()), this, SLOT(changed()));
+    connect(m_advancedWidget->m_pNewTabsInBackground, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pOpenAfterCurrentPage, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pTabConfirm, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pTabCloseActivatePrevious, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pPermanentCloseButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pKonquerorTabforExternalURL, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pPopupsWithinTabs, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
     load();
 }
@@ -105,7 +105,7 @@ void advancedTabDialog::save()
     if ( m_advancedWidget->m_pTabConfirm->isChecked() ) m_pConfig->deleteEntry( "MultipleTabConfirm" );
     else m_pConfig->writeEntry( "MultipleTabConfirm", true );
 
-    QByteArray data;
+    TQByteArray data;
     if ( !KApplication::kApplication()->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
     KApplication::kApplication()->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );

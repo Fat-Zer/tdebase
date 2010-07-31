@@ -12,12 +12,12 @@
 #ifndef GESTURE_DRAWER_H
 #define GESTURE_DRAWER_H
 
-#include <qframe.h>
-#include <qstring.h>
-#include <qevent.h>
-#include <qpoint.h>
-#include <qwidget.h>
-#include <qsize.h>
+#include <tqframe.h>
+#include <tqstring.h>
+#include <tqevent.h>
+#include <tqpoint.h>
+#include <tqwidget.h>
+#include <tqsize.h>
 
 namespace KHotKeys
 {
@@ -26,23 +26,23 @@ class GestureDrawer : public QFrame
     {
     Q_OBJECT
     public:
-        GestureDrawer(QWidget *parent, const char *name);
+        GestureDrawer(TQWidget *parent, const char *name);
         ~GestureDrawer();
 
-        void setData(const QString &data);
+        void setData(const TQString &data);
 
-        virtual QSize sizeHint() const { return QSize(30, 30); }
+        virtual TQSize sizeHint() const { return TQSize(30, 30); }
 
     protected:
-        void paintEvent(QPaintEvent *ev);
+        void paintEvent(TQPaintEvent *ev);
 
     private:
-        QPoint lookupCellCoords(Q_UINT32 cell);
-        void drawArrowHead(QPoint &start, QPoint &end,
-                           QPainter &p);
+        TQPoint lookupCellCoords(Q_UINT32 cell);
+        void drawArrowHead(TQPoint &start, TQPoint &end,
+                           TQPainter &p);
 
 
-        QString _data;
+        TQString _data;
     };
 
 } // namespace KHotKeys

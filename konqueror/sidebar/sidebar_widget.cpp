@@ -18,13 +18,13 @@
 
 #include <limits.h>
 
-#include <qdir.h>
-#include <qpopupmenu.h>
-#include <qhbox.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
-#include <qlayout.h>
-#include <qstringlist.h>
+#include <tqdir.h>
+#include <tqpopupmenu.h>
+#include <tqhbox.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
+#include <tqlayout.h>
+#include <tqstringlist.h>
 
 #include <klocale.h>
 #include <ksimpleconfig.h>
@@ -49,17 +49,17 @@
 #include "sidebar_widget.moc"
 
 
-addBackEnd::addBackEnd(QWidget *parent, class QPopupMenu *addmenu,
-                       bool universal, const QString &currentProfile,
+addBackEnd::addBackEnd(TQWidget *parent, class TQPopupMenu *addmenu,
+                       bool universal, const TQString &currentProfile,
                        const char *name)
- : QObject(parent,name),
+ : TQObject(parent,name),
    m_parent(parent)
 {
 	m_universal=universal;
 	m_currentProfile = currentProfile;
 	menu = addmenu;
-	connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowAddMenu()));
-	connect(menu,SIGNAL(activated(int)),this,SLOT(activatedAddMenu(int)));
+	connect(menu,TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(aboutToShowAddMenu()));
+	connect(menu,TQT_SIGNAL(activated(int)),this,TQT_SLOT(activatedAddMenu(int)));
 }
 
 void addBackEnd::aboutToShowAddMenu()
@@ -67,7 +67,7 @@ void addBackEnd::aboutToShowAddMenu()
 	if (!menu)
 		return;
 	KStandardDirs *dirs = KGlobal::dirs();
-	QStringList list = dirs->findAllResources("data","konqsidebartng/add/*.desktop",true,true);
+	TQStringList list = dirs->findAllResources("data","konqsidebartng/add/*.desktop",true,true);
 	libNames.setAutoDelete(true);
 	libNames.resize(0);
 	libParam.setAutoDelete(true);
@@ -75,7 +75,7 @@ void addBackEnd::aboutToShowAddMenu()
 	menu->clear();
 	int i = 0;
 
-	for (QStringList::Iterator it = list.begin(); it != list.end(); ++it, i++ )
+	for (TQStringList::Iterator it = list.begin(); it != list.end(); ++it, i++ )
 	{
 		KDesktopFile *confFile;
 
@@ -98,7 +98,7 @@ void addBackEnd::aboutToShowAddMenu()
 				continue;
 			}
 		}
-		QString icon = confFile->readIcon();
+		TQString icon = confFile->readIcon();
 		if (!icon.isEmpty())
 		{
 			menu->insertItem(SmallIcon(icon),
@@ -107,9 +107,9 @@ void addBackEnd::aboutToShowAddMenu()
 			menu->insertItem(confFile->readEntry("Name"), i);
 		}
 		libNames.resize(libNames.size()+1);
-		libNames.insert(libNames.count(), new QString(confFile->readEntry("X-KDE-KonqSidebarAddModule")));
+		libNames.insert(libNames.count(), new TQString(confFile->readEntry("X-KDE-KonqSidebarAddModule")));
 		libParam.resize(libParam.size()+1);
-		libParam.insert(libParam.count(), new QString(confFile->readEntry("X-KDE-KonqSidebarAddParam")));
+		libParam.insert(libParam.count(), new TQString(confFile->readEntry("X-KDE-KonqSidebarAddParam")));
 		delete confFile;
 	}
         menu->insertSeparator();
@@ -122,12 +122,12 @@ void addBackEnd::doRollBack()
 	if (KMessageBox::warningContinueCancel(m_parent, i18n("<qt>This removes all your entries from the sidebar and adds the system default ones.<BR><B>This procedure is irreversible</B><BR>Do you want to proceed?</qt>"))==KMessageBox::Continue)
 	{
 		KStandardDirs *dirs = KGlobal::dirs();
-		QString loc=dirs->saveLocation("data","konqsidebartng/" + m_currentProfile + "/",true);
-		QDir dir(loc);
-		QStringList dirEntries = dir.entryList( QDir::Dirs | QDir::NoSymLinks );
+		TQString loc=dirs->saveLocation("data","konqsidebartng/" + m_currentProfile + "/",true);
+		TQDir dir(loc);
+		TQStringList dirEntries = dir.entryList( TQDir::Dirs | TQDir::NoSymLinks );
 		dirEntries.remove(".");
 		dirEntries.remove("..");
-		for ( QStringList::Iterator it = dirEntries.begin(); it != dirEntries.end(); ++it ) {
+		for ( TQStringList::Iterator it = dirEntries.begin(); it != dirEntries.end(); ++it ) {
 			if ((*it)!="add")
 				 KIO::NetAccess::del(KURL( loc+(*it) ), m_parent);
 		}
@@ -136,10 +136,10 @@ void addBackEnd::doRollBack()
 }
 
 
-static QString findFileName(const QString* tmpl,bool universal, const QString &profile) {
-	QString myFile, filename;
+static TQString findFileName(const TQString* tmpl,bool universal, const TQString &profile) {
+	TQString myFile, filename;
 	KStandardDirs *dirs = KGlobal::dirs();
-	QString tmp = *tmpl;
+	TQString tmp = *tmpl;
 
 	if (universal) {
 		dirs->saveLocation("data", "konqsidebartng/kicker_entries/", true);
@@ -151,14 +151,14 @@ static QString findFileName(const QString* tmpl,bool universal, const QString &p
 	filename = tmp.arg("");
 	myFile = locateLocal("data", filename);
 
-	if (QFile::exists(myFile)) {
+	if (TQFile::exists(myFile)) {
 		for (ulong l = 0; l < ULONG_MAX; l++) {
 			filename = tmp.arg(l);
 			myFile = locateLocal("data", filename);
-			if (!QFile::exists(myFile)) {
+			if (!TQFile::exists(myFile)) {
 				break;
 			} else {
-				myFile = QString::null;
+				myFile = TQString::null;
 			}
 		}
 	}
@@ -168,7 +168,7 @@ static QString findFileName(const QString* tmpl,bool universal, const QString &p
 
 void addBackEnd::activatedAddMenu(int id)
 {
-	kdDebug() << "activatedAddMenu: " << QString("%1").arg(id) << endl;
+	kdDebug() << "activatedAddMenu: " << TQString("%1").arg(id) << endl;
 	if (((uint)id) == libNames.size())
 		doRollBack();
 	if(((uint)id) >= libNames.size())
@@ -177,32 +177,32 @@ void addBackEnd::activatedAddMenu(int id)
 	KLibLoader *loader = KLibLoader::self();
 
         // try to load the library
-	QString libname = *libNames.at(id);
-        KLibrary *lib = loader->library(QFile::encodeName(libname));
+	TQString libname = *libNames.at(id);
+        KLibrary *lib = loader->library(TQFile::encodeName(libname));
         if (lib)
        	{
 		// get the create_ function
-		QString factory("add_");
+		TQString factory("add_");
 		factory = factory+(*libNames.at(id));
-		void *add = lib->symbol(QFile::encodeName(factory));
+		void *add = lib->symbol(TQFile::encodeName(factory));
 
 		if (add)
 		{
 			//call the add function
-			bool (*func)(QString*, QString*, QMap<QString,QString> *);
-			QMap<QString,QString> map;
-			func = (bool (*)(QString*, QString*, QMap<QString,QString> *)) add;
-			QString *tmp = new QString("");
+			bool (*func)(TQString*, TQString*, TQMap<TQString,TQString> *);
+			TQMap<TQString,TQString> map;
+			func = (bool (*)(TQString*, TQString*, TQMap<TQString,TQString> *)) add;
+			TQString *tmp = new TQString("");
 			if (func(tmp,libParam.at(id),&map))
 			{
-				QString myFile = findFileName(tmp,m_universal,m_currentProfile);
+				TQString myFile = findFileName(tmp,m_universal,m_currentProfile);
 
 				if (!myFile.isEmpty())
 				{
 					kdDebug() <<"trying to save to file: "<<myFile << endl;
 					KSimpleConfig scf(myFile,false);
 					scf.setGroup("Desktop Entry");
-					for (QMap<QString,QString>::ConstIterator it = map.begin(); it != map.end(); ++it) {
+					for (TQMap<TQString,TQString>::ConstIterator it = map.begin(); it != map.end(); ++it) {
 						kdDebug() <<"writing:"<<it.key()<<" / "<<it.data()<<endl;
 						scf.writePathEntry(it.key(), it.data());
 					}
@@ -228,8 +228,8 @@ void addBackEnd::activatedAddMenu(int id)
 /*                      Sidebar_Widget                        */
 /**************************************************************/
 
-Sidebar_Widget::Sidebar_Widget(QWidget *parent, KParts::ReadOnlyPart *par, const char *name,bool universalMode, const QString &currentProfile)
-	:QWidget(parent,name),m_universalMode(universalMode),m_partParent(par),m_currentProfile(currentProfile)
+Sidebar_Widget::Sidebar_Widget(TQWidget *parent, KParts::ReadOnlyPart *par, const char *name,bool universalMode, const TQString &currentProfile)
+	:TQWidget(parent,name),m_universalMode(universalMode),m_partParent(par),m_currentProfile(currentProfile)
 {
 	m_somethingVisible = false;
 	m_initial = true;
@@ -251,19 +251,19 @@ Sidebar_Widget::Sidebar_Widget(QWidget *parent, KParts::ReadOnlyPart *par, const
 	m_buttons.setAutoDelete(true);
 	m_hasStoredUrl = false;
 	m_latestViewed = -1;
-	setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+	setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding));
 
-	QSplitter *splitterWidget = splitter();
+	TQSplitter *splitterWidget = splitter();
 	if (splitterWidget) {
-		splitterWidget->setResizeMode(parent, QSplitter::FollowSizeHint);
+		splitterWidget->setResizeMode(parent, TQSplitter::FollowSizeHint);
 		splitterWidget->setOpaqueResize( false );
-		connect(splitterWidget,SIGNAL(setRubberbandCalled()),SLOT(userMovedSplitter()));
+		connect(splitterWidget,TQT_SIGNAL(setRubberbandCalled()),TQT_SLOT(userMovedSplitter()));
 	}
 		
 	m_area = new KDockArea(this);
-	m_area->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+	m_area->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding));
 	m_mainDockWidget = m_area->createDockWidget("free", 0);
-	m_mainDockWidget->setWidget(new QWidget(m_mainDockWidget));
+	m_mainDockWidget->setWidget(new TQWidget(m_mainDockWidget));
 	m_area->setMainDockWidget(m_mainDockWidget);
 	m_area->setMinimumWidth(0);
 	m_mainDockWidget->setDockSite(KDockWidget::DockTop);
@@ -272,8 +272,8 @@ Sidebar_Widget::Sidebar_Widget(QWidget *parent, KParts::ReadOnlyPart *par, const
 	m_buttonBar = new KMultiTabBar(KMultiTabBar::Vertical,this);
 	m_buttonBar->showActiveTabTexts(true);
 
-	m_menu = new QPopupMenu(this, "Sidebar_Widget::Menu");
-	QPopupMenu *addMenu = new QPopupMenu(this, "Sidebar_Widget::addPopup");
+	m_menu = new TQPopupMenu(this, "Sidebar_Widget::Menu");
+	TQPopupMenu *addMenu = new TQPopupMenu(this, "Sidebar_Widget::addPopup");
 	m_menu->insertItem(i18n("Add New"), addMenu, 0);
 	m_menu->insertItem(i18n("Multiple Views"), 1);
 	m_menu->insertItem(i18n("Show Tabs Left"), 2);
@@ -281,22 +281,22 @@ Sidebar_Widget::Sidebar_Widget(QWidget *parent, KParts::ReadOnlyPart *par, const
 	if (!m_universalMode) {
 		m_menu->insertItem(SmallIconSet("remove"),
                                    i18n("Close Navigation Panel"),
-				par, SLOT(deleteLater()));
+				par, TQT_SLOT(deleteLater()));
 	}
-        connect(m_menu, SIGNAL(aboutToShow()),
-		this, SLOT(aboutToShowConfigMenu()));
-	connect(m_menu, SIGNAL(activated(int)),
-		this, SLOT(activatedMenu(int)));
+        connect(m_menu, TQT_SIGNAL(aboutToShow()),
+		this, TQT_SLOT(aboutToShowConfigMenu()));
+	connect(m_menu, TQT_SIGNAL(activated(int)),
+		this, TQT_SLOT(activatedMenu(int)));
 
 	m_buttonPopup = 0;
 	addBackEnd *ab = new addBackEnd(this, addMenu, universalMode,
                                         currentProfile,
                                         "Sidebar_Widget-addBackEnd");
 
-	connect(ab, SIGNAL(updateNeeded()),
-		this, SLOT(updateButtons()));
-	connect(ab, SIGNAL(initialCopyNeeded()),
-		this, SLOT(finishRollBack()));
+	connect(ab, TQT_SIGNAL(updateNeeded()),
+		this, TQT_SLOT(updateButtons()));
+	connect(ab, TQT_SIGNAL(initialCopyNeeded()),
+		this, TQT_SLOT(finishRollBack()));
 
 	initialCopy();
 
@@ -316,31 +316,31 @@ Sidebar_Widget::Sidebar_Widget(QWidget *parent, KParts::ReadOnlyPart *par, const
         m_menu->setItemVisible(2, !m_immutableShowTabsLeft);
         m_menu->setItemVisible(3, !m_immutableShowExtraButtons);
 
-	connect(&m_configTimer, SIGNAL(timeout()),
-		this, SLOT(saveConfig()));
+	connect(&m_configTimer, TQT_SIGNAL(timeout()),
+		this, TQT_SLOT(saveConfig()));
 	m_somethingVisible = !m_openViews.isEmpty();
 	doLayout();
-	QTimer::singleShot(0,this,SLOT(createButtons()));
-	connect(m_area, SIGNAL(dockWidgetHasUndocked(KDockWidget*)),
-		this, SLOT(dockWidgetHasUndocked(KDockWidget*)));
+	TQTimer::singleShot(0,this,TQT_SLOT(createButtons()));
+	connect(m_area, TQT_SIGNAL(dockWidgetHasUndocked(KDockWidget*)),
+		this, TQT_SLOT(dockWidgetHasUndocked(KDockWidget*)));
 }
 
-void Sidebar_Widget::addWebSideBar(const KURL& url, const QString& /*name*/) {
+void Sidebar_Widget::addWebSideBar(const KURL& url, const TQString& /*name*/) {
 	//kdDebug() << "Web sidebar entry to be added: " << url.url()
 	//	<< " [" << name << "]" << endl;
 
 	// Look for existing ones with this URL
 	KStandardDirs *dirs = KGlobal::dirs();
-	QString list;
+	TQString list;
 	dirs->saveLocation("data", m_relPath, true);
 	list = locateLocal("data", m_relPath);
 
 	// Go through list to see which ones exist.  Check them for the URL
-	QStringList files = QDir(list).entryList("websidebarplugin*.desktop");
-	for (QStringList::Iterator it = files.begin(); it != files.end(); ++it){
+	TQStringList files = TQDir(list).entryList("websidebarplugin*.desktop");
+	for (TQStringList::Iterator it = files.begin(); it != files.end(); ++it){
 		KSimpleConfig scf(list + *it, false);
 		scf.setGroup("Desktop Entry");
-		if (scf.readPathEntry("URL", QString::null) == url.url()) {
+		if (scf.readPathEntry("URL", TQString::null) == url.url()) {
 			// We already have this one!
 			KMessageBox::information(this,
 					i18n("This entry already exists."));
@@ -348,8 +348,8 @@ void Sidebar_Widget::addWebSideBar(const KURL& url, const QString& /*name*/) {
 		}
 	}
 
-	QString tmpl = "websidebarplugin%1.desktop";
-	QString myFile = findFileName(&tmpl,m_universalMode,m_currentProfile);
+	TQString tmpl = "websidebarplugin%1.desktop";
+	TQString myFile = findFileName(&tmpl,m_universalMode,m_currentProfile);
 
 	if (!myFile.isEmpty()) {
 		KSimpleConfig scf(myFile, false);
@@ -362,7 +362,7 @@ void Sidebar_Widget::addWebSideBar(const KURL& url, const QString& /*name*/) {
 		scf.writeEntry("X-KDE-KonqSidebarModule", "konqsidebar_web");
 		scf.sync();
 
-		QTimer::singleShot(0,this,SLOT(updateButtons()));
+		TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
 	}
 }
 
@@ -371,7 +371,7 @@ void Sidebar_Widget::finishRollBack()
 {
 	m_path = KGlobal::dirs()->saveLocation("data",m_relPath,true);
         initialCopy();
-        QTimer::singleShot(0,this,SLOT(updateButtons()));
+        TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
 }
 
 
@@ -390,7 +390,7 @@ void Sidebar_Widget::doLayout()
 	if (m_layout)
 		delete m_layout;
 
-	m_layout = new QHBoxLayout(this);
+	m_layout = new TQHBoxLayout(this);
 	if  (m_showTabsLeft)
 	{
 		m_layout->add(m_buttonBar);
@@ -418,7 +418,7 @@ void Sidebar_Widget::aboutToShowConfigMenu()
 void Sidebar_Widget::initialCopy()
 {
 	kdDebug()<<"Initial copy"<<endl;
-	QStringList dirtree_dirs;
+	TQStringList dirtree_dirs;
 	if (m_universalMode)
 		dirtree_dirs = KGlobal::dirs()->findDirs("data","konqsidebartng/kicker_entries/");
 	else
@@ -431,8 +431,8 @@ void Sidebar_Widget::initialCopy()
 	int lVersion=lcfg.readNumEntry("Version",0);
 
 
-	for (QStringList::const_iterator ddit=dirtree_dirs.begin();ddit!=dirtree_dirs.end();++ddit) {
-		QString dirtree_dir=*ddit;
+	for (TQStringList::const_iterator ddit=dirtree_dirs.begin();ddit!=dirtree_dirs.end();++ddit) {
+		TQString dirtree_dir=*ddit;
 		if (dirtree_dir == m_path) continue;
 
 
@@ -446,18 +446,18 @@ void Sidebar_Widget::initialCopy()
 			if (lVersion >= gversion)
 				continue;
 
-	 	        QDir dir(m_path);
-    		        QStringList entries = dir.entryList( QDir::Files );
-                	QStringList dirEntries = dir.entryList( QDir::Dirs | QDir::NoSymLinks );
+	 	        TQDir dir(m_path);
+    		        TQStringList entries = dir.entryList( TQDir::Files );
+                	TQStringList dirEntries = dir.entryList( TQDir::Dirs | TQDir::NoSymLinks );
 	                dirEntries.remove( "." );
         	        dirEntries.remove( ".." );
 
-	                QDir globalDir( dirtree_dir );
+	                TQDir globalDir( dirtree_dir );
         	        Q_ASSERT( globalDir.isReadable() );
 	                // Only copy the entries that don't exist yet in the local dir
-        	        QStringList globalDirEntries = globalDir.entryList();
-                	QStringList::ConstIterator eIt = globalDirEntries.begin();
-	                QStringList::ConstIterator eEnd = globalDirEntries.end();
+        	        TQStringList globalDirEntries = globalDir.entryList();
+                	TQStringList::ConstIterator eIt = globalDirEntries.begin();
+	                TQStringList::ConstIterator eEnd = globalDirEntries.end();
         	        for (; eIt != eEnd; ++eIt )
                 	{
                 		//kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir contains " << *eIt << endl;
@@ -465,12 +465,12 @@ void Sidebar_Widget::initialCopy()
 					!entries.contains( *eIt ) &&
 					!dirEntries.contains( *eIt ) )
 				{ // we don't have that one yet -> copy it.
-					QString cp("cp -R -- ");
+					TQString cp("cp -R -- ");
 					cp += KProcess::quote(dirtree_dir + *eIt);
 					cp += " ";
 					cp += KProcess::quote(m_path);
 					kdDebug() << "SidebarWidget::intialCopy executing " << cp << endl;
-					::system( QFile::encodeName(cp) );
+					::system( TQFile::encodeName(cp) );
 				}
 			}
 		}
@@ -489,7 +489,7 @@ void Sidebar_Widget::buttonPopupActivate(int id)
 		{
 			KIconDialog kicd(this);
 //			kicd.setStrictIconSize(true);
-			QString iconname=kicd.selectIcon(KIcon::Small);
+			TQString iconname=kicd.selectIcon(KIcon::Small);
 			kdDebug()<<"New Icon Name:"<<iconname<<endl;
 			if (!iconname.isEmpty())
 			{
@@ -497,7 +497,7 @@ void Sidebar_Widget::buttonPopupActivate(int id)
 				ksc.setGroup("Desktop Entry");
 				ksc.writeEntry("Icon",iconname);
 				ksc.sync();
-			        QTimer::singleShot(0,this,SLOT(updateButtons()));
+			        TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
 			}
 			break;
 		}
@@ -515,12 +515,12 @@ void Sidebar_Widget::buttonPopupActivate(int id)
                                 }
                                 else
                                 {
-                                    QString newurl= dlg->selectedURL().prettyURL();
+                                    TQString newurl= dlg->selectedURL().prettyURL();
                                     //If we are going to set the name by 'set name', we don't set it here.
                                     //ksc.writeEntry("Name",newurl);
                                     ksc.writePathEntry("URL",newurl);
                                     ksc.sync();
-                                    QTimer::singleShot(0,this,SLOT(updateButtons()));
+                                    TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
                                 }
 			}
                         delete dlg;
@@ -529,12 +529,12 @@ void Sidebar_Widget::buttonPopupActivate(int id)
 		case 3:
 		{
 			if (KMessageBox::warningContinueCancel(this,i18n("<qt>Do you really want to remove the <b>%1</b> tab?</qt>").arg(m_currentButton->displayName),
-                            QString::null,KStdGuiItem::del())==KMessageBox::Continue)
+                            TQString::null,KStdGuiItem::del())==KMessageBox::Continue)
 			{
-				QFile f(m_path+m_currentButton->file);
+				TQFile f(m_path+m_currentButton->file);
 				if (!f.remove())
 					qDebug("Error, file not deleted");
-				QTimer::singleShot(0,this,SLOT(updateButtons()));
+				TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
 			}
 			break;
 		}
@@ -543,7 +543,7 @@ void Sidebar_Widget::buttonPopupActivate(int id)
 			bool ok;
 			
 			// Pop up the dialog asking the user for name.
-			const QString name = KInputDialog::getText(i18n("Set Name"), i18n("Enter the name:"),
+			const TQString name = KInputDialog::getText(i18n("Set Name"), i18n("Enter the name:"),
 			        m_currentButton->displayName, &ok, this);
 			
 			if(ok)
@@ -554,8 +554,8 @@ void Sidebar_Widget::buttonPopupActivate(int id)
 				ksc.writeEntry("Name", name, true, false, true /*localized*/ );
 				ksc.sync();
 				
-				// Update the buttons with a QTimer (why?)
-				QTimer::singleShot(0,this,SLOT(updateButtons()));
+				// Update the buttons with a TQTimer (why?)
+				TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
 			}
 			break;
 		}
@@ -720,9 +720,9 @@ void Sidebar_Widget::createButtons()
 	if (!m_path.isEmpty())
 	{
 		kdDebug()<<"m_path: "<<m_path<<endl;
-		QDir dir(m_path);
-		QStringList list=dir.entryList("*.desktop");
-		for (QStringList::Iterator it=list.begin(); it!=list.end(); ++it)
+		TQDir dir(m_path);
+		TQStringList list=dir.entryList("*.desktop");
+		for (TQStringList::Iterator it=list.begin(); it!=list.end(); ++it)
 		{
 			addButton(*it);
 		}
@@ -790,7 +790,7 @@ bool Sidebar_Widget::openURL(const class KURL &url)
 	return ret;
 }
 
-bool Sidebar_Widget::addButton(const QString &desktoppath,int pos)
+bool Sidebar_Widget::addButton(const TQString &desktoppath,int pos)
 {
 	int lastbtn = m_buttons.count();
 	m_buttons.resize(m_buttons.size()+1);
@@ -802,11 +802,11 @@ bool Sidebar_Widget::addButton(const QString &desktoppath,int pos)
 	confFile = new KSimpleConfig(m_path+desktoppath,true);
 	confFile->setGroup("Desktop Entry");
 
-    	QString icon = confFile->readEntry("Icon");
-	QString name = confFile->readEntry("Name");
-	QString comment = confFile->readEntry("Comment");
-	QString url = confFile->readPathEntry("URL",QString::null);
-	QString lib = confFile->readEntry("X-KDE-KonqSidebarModule");
+    	TQString icon = confFile->readEntry("Icon");
+	TQString name = confFile->readEntry("Name");
+	TQString comment = confFile->readEntry("Comment");
+	TQString url = confFile->readPathEntry("URL",TQString::null);
+	TQString lib = confFile->readEntry("X-KDE-KonqSidebarModule");
 
         delete confFile;
 
@@ -818,11 +818,11 @@ bool Sidebar_Widget::addButton(const QString &desktoppath,int pos)
 		/*int id=*/m_buttons.insert(lastbtn, bi);
 		KMultiTabBarTab *tab = m_buttonBar->tab(lastbtn);
 		tab->installEventFilter(this);
-		connect(tab,SIGNAL(clicked(int)),this,SLOT(showHidePage(int)));
+		connect(tab,TQT_SIGNAL(clicked(int)),this,TQT_SLOT(showHidePage(int)));
 
 		// Set Whats This help
 		// This uses the comments in the .desktop files
-		QWhatsThis::add(tab, comment);
+		TQWhatsThis::add(tab, comment);
 	}
 
 	return true;
@@ -830,10 +830,10 @@ bool Sidebar_Widget::addButton(const QString &desktoppath,int pos)
 
 
 
-bool Sidebar_Widget::eventFilter(QObject *obj, QEvent *ev)
+bool Sidebar_Widget::eventFilter(TQObject *obj, TQEvent *ev)
 {
 
-	if (ev->type()==QEvent::MouseButtonPress && ((QMouseEvent *)ev)->button()==QMouseEvent::RightButton)
+	if (ev->type()==TQEvent::MouseButtonPress && ((TQMouseEvent *)ev)->button()==TQMouseEvent::RightButton)
 	{
 		KMultiTabBarTab *bt=dynamic_cast<KMultiTabBarTab*>(obj);
 		if (bt)
@@ -862,14 +862,14 @@ bool Sidebar_Widget::eventFilter(QObject *obj, QEvent *ev)
 					m_buttonPopup->insertItem(SmallIconSet("editdelete"), i18n("Remove"),3);
 					m_buttonPopup->insertSeparator();
 					m_buttonPopup->insertItem(SmallIconSet("configure"), i18n("Configure Navigation Panel"), m_menu, 4);
-					connect(m_buttonPopup, SIGNAL(activated(int)),
-						this, SLOT(buttonPopupActivate(int)));
+					connect(m_buttonPopup, TQT_SIGNAL(activated(int)),
+						this, TQT_SLOT(buttonPopupActivate(int)));
 				}
 				m_buttonPopup->setItemEnabled(2,!m_currentButton->URL.isEmpty());
 			        m_buttonPopup->changeTitle(50,SmallIcon(m_currentButton->iconName),
 						m_currentButton->displayName);
 				if (!m_disableConfig)
-                                { m_buttonPopup->exec(QCursor::pos()); }
+                                { m_buttonPopup->exec(TQCursor::pos()); }
 			}
 			return true;
 
@@ -878,33 +878,33 @@ bool Sidebar_Widget::eventFilter(QObject *obj, QEvent *ev)
 	return false;
 }
 
-void Sidebar_Widget::mousePressEvent(QMouseEvent *ev)
+void Sidebar_Widget::mousePressEvent(TQMouseEvent *ev)
 {
-	if (ev->type()==QEvent::MouseButtonPress &&
-            ((QMouseEvent *)ev)->button()==QMouseEvent::RightButton &&
+	if (ev->type()==TQEvent::MouseButtonPress &&
+            ((TQMouseEvent *)ev)->button()==TQMouseEvent::RightButton &&
             !m_disableConfig)
-        { m_menu->exec(QCursor::pos()); }
+        { m_menu->exec(TQCursor::pos()); }
 }
 
-KonqSidebarPlugin *Sidebar_Widget::loadModule(QWidget *par,QString &desktopName,QString lib_name,ButtonInfo* bi)
+KonqSidebarPlugin *Sidebar_Widget::loadModule(TQWidget *par,TQString &desktopName,TQString lib_name,ButtonInfo* bi)
 {
 	KLibLoader *loader = KLibLoader::self();
 
 	// try to load the library
-      	KLibrary *lib = loader->library(QFile::encodeName(lib_name));
+      	KLibrary *lib = loader->library(TQFile::encodeName(lib_name));
 	if (lib)
 	{
 		// get the create_ function
-		QString factory("create_%1");
-		void *create = lib->symbol(QFile::encodeName(factory.arg(lib_name)));
+		TQString factory("create_%1");
+		void *create = lib->symbol(TQFile::encodeName(factory.arg(lib_name)));
 
 		if (create)
 		{
 			// create the module
 
-			KonqSidebarPlugin* (*func)(KInstance*,QObject *, QWidget*, QString&, const char *);
-			func = (KonqSidebarPlugin* (*)(KInstance*,QObject *, QWidget *, QString&, const char *)) create;
-			QString fullPath(m_path+desktopName);
+			KonqSidebarPlugin* (*func)(KInstance*,TQObject *, TQWidget*, TQString&, const char *);
+			func = (KonqSidebarPlugin* (*)(KInstance*,TQObject *, TQWidget *, TQString&, const char *)) create;
+			TQString fullPath(m_path+desktopName);
 			return  (KonqSidebarPlugin*)func(getInstance(),bi,par,fullPath,0);
 		}
 	} else {
@@ -939,11 +939,11 @@ bool Sidebar_Widget::createView( ButtonInfo *data)
 		KDockWidget::DockBottom/*|KDockWidget::DockDesktop*/);
 		data->dock->setDockSite(KDockWidget::DockTop|KDockWidget::DockBottom);
 		connectModule(data->module);
-		connect(this, SIGNAL(fileSelection(const KFileItemList&)),
-			data->module, SLOT(openPreview(const KFileItemList&)));
+		connect(this, TQT_SIGNAL(fileSelection(const KFileItemList&)),
+			data->module, TQT_SLOT(openPreview(const KFileItemList&)));
 
-		connect(this, SIGNAL(fileMouseOver(const KFileItem&)),
-			data->module, SLOT(openPreviewOnMouseOver(const KFileItem&)));
+		connect(this, TQT_SIGNAL(fileMouseOver(const KFileItem&)),
+			data->module, TQT_SLOT(openPreviewOnMouseOver(const KFileItem&)));
 	}
 
 	delete confFile;
@@ -976,14 +976,14 @@ void Sidebar_Widget::showHidePage(int page)
 			m_buttonBar->setTab(page,true);
 
 			connect(info->module,
-				SIGNAL(setIcon(const QString&)),
+				TQT_SIGNAL(setIcon(const TQString&)),
 				m_buttonBar->tab(page),
-				SLOT(setIcon(const QString&)));
+				TQT_SLOT(setIcon(const TQString&)));
 
 			connect(info->module,
-				SIGNAL(setCaption(const QString&)),
+				TQT_SIGNAL(setCaption(const TQString&)),
 				m_buttonBar->tab(page),
-				SLOT(setText(const QString&)));
+				TQT_SLOT(setText(const TQString&)));
 
 			if (m_singleWidgetMode)
 			{
@@ -1059,10 +1059,10 @@ void Sidebar_Widget::collapseExpandSidebar()
 	}
 }
 
-QSize Sidebar_Widget::sizeHint() const
+TQSize Sidebar_Widget::sizeHint() const
 {
         if (m_somethingVisible)
-           return QSize(m_savedWidth,200);
+           return TQSize(m_savedWidth,200);
         return minimumSizeHint();
 }
 
@@ -1089,17 +1089,17 @@ KInstance  *Sidebar_Widget::getInstance()
 }
 
 void Sidebar_Widget::submitFormRequest(const char *action,
-					const QString& url,
-					const QByteArray& formData,
-					const QString& /*target*/,
-					const QString& contentType,
-					const QString& /*boundary*/ )
+					const TQString& url,
+					const TQByteArray& formData,
+					const TQString& /*target*/,
+					const TQString& contentType,
+					const TQString& /*boundary*/ )
 {
 KParts::URLArgs args;
 
 	args.setContentType("Content-Type: " + contentType);
 	args.postData = formData;
-	args.setDoPost(QCString(action).lower() == "post");
+	args.setDoPost(TQCString(action).lower() == "post");
 	// boundary?
 	emit getExtension()->openURLRequest(KURL( url ), args);
 }
@@ -1127,7 +1127,7 @@ void Sidebar_Widget::enableAction( const char * name, bool enabled )
 		ButtonInfo *btninfo = static_cast<ButtonInfo*>(sender()->parent());
 		if (btninfo)
 		{
-			QString n(name);
+			TQString n(name);
 			if (n == "copy")
 				btninfo->copy = enabled;
 			else if (n == "cut")
@@ -1164,82 +1164,82 @@ bool  Sidebar_Widget::doEnableActions()
 
 }
 
-void Sidebar_Widget::popupMenu( const QPoint &global, const KFileItemList &items )
+void Sidebar_Widget::popupMenu( const TQPoint &global, const KFileItemList &items )
 {
 	if (doEnableActions())
 		getExtension()->popupMenu(global,items);
 }
 
 
-void Sidebar_Widget::popupMenu( KXMLGUIClient *client, const QPoint &global, const KFileItemList &items )
+void Sidebar_Widget::popupMenu( KXMLGUIClient *client, const TQPoint &global, const KFileItemList &items )
 {
 	if (doEnableActions())
 		getExtension()->popupMenu(client,global,items);
 }
 
-void Sidebar_Widget::popupMenu( const QPoint &global, const KURL &url,
-	const QString &mimeType, mode_t mode)
+void Sidebar_Widget::popupMenu( const TQPoint &global, const KURL &url,
+	const TQString &mimeType, mode_t mode)
 {
 	if (doEnableActions())
 		getExtension()->popupMenu(global,url,mimeType,mode);
 }
 
 void Sidebar_Widget::popupMenu( KXMLGUIClient *client,
-	const QPoint &global, const KURL &url,
-	const QString &mimeType, mode_t mode )
+	const TQPoint &global, const KURL &url,
+	const TQString &mimeType, mode_t mode )
 {
 	if (doEnableActions())
 		getExtension()->popupMenu(client,global,url,mimeType,mode);
 }
 
-void Sidebar_Widget::connectModule(QObject *mod)
+void Sidebar_Widget::connectModule(TQObject *mod)
 {
 	if (mod->metaObject()->findSignal("started(KIO::Job*)") != -1) {
-		connect(mod,SIGNAL(started(KIO::Job *)),this, SIGNAL(started(KIO::Job*)));
+		connect(mod,TQT_SIGNAL(started(KIO::Job *)),this, TQT_SIGNAL(started(KIO::Job*)));
 	}
 
 	if (mod->metaObject()->findSignal("completed()") != -1) {
-		connect(mod,SIGNAL(completed()),this,SIGNAL(completed()));
+		connect(mod,TQT_SIGNAL(completed()),this,TQT_SIGNAL(completed()));
 	}
 
-	if (mod->metaObject()->findSignal("popupMenu(const QPoint&,const KURL&,const QString&,mode_t)") != -1) {
-		connect(mod,SIGNAL(popupMenu( const QPoint &, const KURL &,
-			const QString &, mode_t)),this,SLOT(popupMenu( const
-			QPoint &, const KURL&, const QString &, mode_t)));
+	if (mod->metaObject()->findSignal("popupMenu(const TQPoint&,const KURL&,const TQString&,mode_t)") != -1) {
+		connect(mod,TQT_SIGNAL(popupMenu( const TQPoint &, const KURL &,
+			const TQString &, mode_t)),this,TQT_SLOT(popupMenu( const
+			TQPoint &, const KURL&, const TQString &, mode_t)));
 	}
 
-	if (mod->metaObject()->findSignal("popupMenu(KXMLGUIClient*,const QPoint&,const KURL&,const QString&,mode_t)") != -1) {
-		connect(mod,SIGNAL(popupMenu( KXMLGUIClient *, const QPoint &,
-			const KURL &,const QString &, mode_t)),this,
-			SLOT(popupMenu( KXMLGUIClient *, const QPoint &,
-			const KURL &,const QString &, mode_t)));
+	if (mod->metaObject()->findSignal("popupMenu(KXMLGUIClient*,const TQPoint&,const KURL&,const TQString&,mode_t)") != -1) {
+		connect(mod,TQT_SIGNAL(popupMenu( KXMLGUIClient *, const TQPoint &,
+			const KURL &,const TQString &, mode_t)),this,
+			TQT_SLOT(popupMenu( KXMLGUIClient *, const TQPoint &,
+			const KURL &,const TQString &, mode_t)));
 	}
 
-	if (mod->metaObject()->findSignal("popupMenu(const QPoint&,const KFileItemList&)") != -1) {
-		connect(mod,SIGNAL(popupMenu( const QPoint &, const KFileItemList & )),
-			this,SLOT(popupMenu( const QPoint &, const KFileItemList & )));
+	if (mod->metaObject()->findSignal("popupMenu(const TQPoint&,const KFileItemList&)") != -1) {
+		connect(mod,TQT_SIGNAL(popupMenu( const TQPoint &, const KFileItemList & )),
+			this,TQT_SLOT(popupMenu( const TQPoint &, const KFileItemList & )));
 	}
 
 	if (mod->metaObject()->findSignal("openURLRequest(const KURL&,const KParts::URLArgs&)") != -1) {
-		connect(mod,SIGNAL(openURLRequest( const KURL &, const KParts::URLArgs &)),
-			this,SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
+		connect(mod,TQT_SIGNAL(openURLRequest( const KURL &, const KParts::URLArgs &)),
+			this,TQT_SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
 	}
 
-	if (mod->metaObject()->findSignal("submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&)") != -1) {
+	if (mod->metaObject()->findSignal("submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)") != -1) {
 		connect(mod,
-			SIGNAL(submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&)),
+			TQT_SIGNAL(submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)),
 			this,
-			SLOT(submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&)));
+			TQT_SLOT(submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)));
 	}
 
 	if (mod->metaObject()->findSignal("enableAction(const char*,bool)") != -1) {
-		connect(mod,SIGNAL(enableAction( const char *, bool)),
-			this,SLOT(enableAction(const char *, bool)));
+		connect(mod,TQT_SIGNAL(enableAction( const char *, bool)),
+			this,TQT_SLOT(enableAction(const char *, bool)));
 	}
 
 	if (mod->metaObject()->findSignal("createNewWindow(const KURL&,const KParts::URLArgs&)") != -1) {
-		connect(mod,SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)),
-			this,SLOT(createNewWindow( const KURL &, const KParts::URLArgs &)));
+		connect(mod,TQT_SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)),
+			this,TQT_SLOT(createNewWindow( const KURL &, const KParts::URLArgs &)));
 	}
 }
 
@@ -1260,29 +1260,29 @@ Sidebar_Widget::~Sidebar_Widget()
 	}
 }
 
-void Sidebar_Widget::customEvent(QCustomEvent* ev)
+void Sidebar_Widget::customEvent(TQCustomEvent* ev)
 {
 	if (KonqFileSelectionEvent::test(ev))
 	{
 		emit fileSelection(static_cast<KonqFileSelectionEvent*>(ev)->selection());
 	} else if (KonqFileMouseOverEvent::test(ev)) {
 		if (!(static_cast<KonqFileMouseOverEvent*>(ev)->item())) {
-			emit fileMouseOver(KFileItem(KURL(),QString::null,KFileItem::Unknown));
+			emit fileMouseOver(KFileItem(KURL(),TQString::null,KFileItem::Unknown));
 		} else {
 			emit fileMouseOver(*static_cast<KonqFileMouseOverEvent*>(ev)->item());
 		}
 	} 
 }
 
-void Sidebar_Widget::resizeEvent(QResizeEvent* ev)
+void Sidebar_Widget::resizeEvent(TQResizeEvent* ev)
 {
 	if (m_somethingVisible && m_userMovedSplitter)
 	{
 		int newWidth = width();
-                QSplitter *split = splitter();
+                TQSplitter *split = splitter();
 		if (split && (m_savedWidth != newWidth))
 		{
-			QValueList<int> sizes = split->sizes();
+			TQValueList<int> sizes = split->sizes();
 			if ((sizes.count() >= 2) && (sizes[1]))
 			{
 				m_savedWidth = newWidth;
@@ -1292,16 +1292,16 @@ void Sidebar_Widget::resizeEvent(QResizeEvent* ev)
 		}
 	}
 	m_userMovedSplitter = false;
-	QWidget::resizeEvent(ev);
+	TQWidget::resizeEvent(ev);
 }
 
-QSplitter *Sidebar_Widget::splitter() const
+TQSplitter *Sidebar_Widget::splitter() const
 {
 	if (m_universalMode) return 0;
-	QObject *p = parent();
+	TQObject *p = parent();
 	if (!p) return 0;
 	p = p->parent();
-	return static_cast<QSplitter*>(p);
+	return static_cast<TQSplitter*>(p);
 }
 
 void Sidebar_Widget::userMovedSplitter()

@@ -24,7 +24,7 @@ class Dcop_widget
     {
     Q_OBJECT
     public:
-        Dcop_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Dcop_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void set_data( const Dcop_action* data_P );
         Dcop_action* get_data( Action_data* data_P ) const;
     public slots:

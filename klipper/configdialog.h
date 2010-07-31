@@ -20,12 +20,12 @@
 #ifndef CONFIGDIALOG_H
 #define CONFIGDIALOG_H
 
-#include <qcheckbox.h>
-#include <qevent.h>
-#include <qgroupbox.h>
-#include <qheader.h>
-#include <qradiobutton.h>
-#include <qvbox.h>
+#include <tqcheckbox.h>
+#include <tqevent.h>
+#include <tqgroupbox.h>
+#include <tqheader.h>
+#include <tqradiobutton.h>
+#include <tqvbox.h>
 
 #include <kdialogbase.h>
 #include <keditlistbox.h>
@@ -49,7 +49,7 @@ class GeneralWidget : public QVBox
     friend class ConfigDialog;
 
 public:
-    GeneralWidget( QWidget *parent, const char *name );
+    GeneralWidget( TQWidget *parent, const char *name );
     ~GeneralWidget();
 
 private slots:
@@ -57,9 +57,9 @@ private slots:
     void slotClipConfigChanged();
 
 private:
-    QCheckBox *cbMousePos, *cbSaveContents, *cbReplayAIH, *cbNoNull;
-    QCheckBox *cbIgnoreSelection, *cbStripWhitespace;
-    QRadioButton *cbSynchronize, *cbImplicitSelection, *cbSeparate;
+    TQCheckBox *cbMousePos, *cbSaveContents, *cbReplayAIH, *cbNoNull;
+    TQCheckBox *cbIgnoreSelection, *cbStripWhitespace;
+    TQRadioButton *cbSynchronize, *cbImplicitSelection, *cbSeparate;
     KIntNumInput *popupTimeout, *maxItems;
 
 };
@@ -71,11 +71,11 @@ class AdvancedWidget : public QVBox
     Q_OBJECT
 
 public:
-    AdvancedWidget( QWidget *parent = 0L, const char *name = 0L );
+    AdvancedWidget( TQWidget *parent = 0L, const char *name = 0L );
     ~AdvancedWidget();
 
-    void setWMClasses( const QStringList& items );
-    QStringList wmClasses() const { return editListBox->items(); }
+    void setWMClasses( const TQStringList& items );
+    TQStringList wmClasses() const { return editListBox->items(); }
 
 private:
     KEditListBox *editListBox;
@@ -88,7 +88,7 @@ class ActionWidget : public QVBox
     friend class ConfigDialog;
 
 public:
-    ActionWidget( const ActionList *list, ConfigDialog* configWidget, QWidget *parent, const char *name );
+    ActionWidget( const ActionList *list, ConfigDialog* configWidget, TQWidget *parent, const char *name );
     ~ActionWidget();
 
     /**
@@ -98,23 +98,23 @@ public:
      */
     ActionList * actionList();
 
-    void setWMClasses( const QStringList& items ) { m_wmClasses = items; }
-    QStringList wmClasses() const                 { return m_wmClasses; }
+    void setWMClasses( const TQStringList& items ) { m_wmClasses = items; }
+    TQStringList wmClasses() const                 { return m_wmClasses; }
 
 private slots:
     void slotAddAction();
     void slotDeleteAction();
-    void slotItemChanged( QListViewItem *, const QPoint& , int );
+    void slotItemChanged( TQListViewItem *, const TQPoint& , int );
     void slotAdvanced();
-    void slotContextMenu( KListView *, QListViewItem *, const QPoint& );
-    void selectionChanged ( QListViewItem *);
+    void slotContextMenu( KListView *, TQListViewItem *, const TQPoint& );
+    void selectionChanged ( TQListViewItem *);
 
 private:
     KListView *listView;
-    QStringList m_wmClasses;
+    TQStringList m_wmClasses;
     AdvancedWidget *advancedWidget;
-    QPushButton *delActionButton;
-    QCheckBox *cbUseGUIRegExpEditor;
+    TQPushButton *delActionButton;
+    TQCheckBox *cbUseGUIRegExpEditor;
 };
 
 /*class KeysWidget : public QVBox
@@ -124,7 +124,7 @@ private:
     friend class ConfigDialog;
 
 public:
-    KeysWidget( KAccelActions &keyMap, QWidget *parent, const char *name );
+    KeysWidget( KAccelActions &keyMap, TQWidget *parent, const char *name );
     ~KeysWidget();
 
 private:
@@ -168,7 +168,7 @@ public:
     {
         return generalWidget->cbIgnoreSelection->isChecked();
     }
-    QStringList noActionsFor() const {
+    TQStringList noActionsFor() const {
 	return actionWidget->wmClasses();
     }
     bool useGUIRegExpEditor() const
@@ -210,7 +210,7 @@ public:
     void setSynchronize( bool synchronize ) {
         generalWidget->cbSynchronize->setChecked( synchronize );
     }
-    void setNoActionsFor( const QStringList& items ) {
+    void setNoActionsFor( const TQStringList& items ) {
 	actionWidget->setWMClasses( items );
     }
     void setUseGUIRegExpEditor( bool enabled )
@@ -234,30 +234,30 @@ private:
 class ListView : public KListView
 {
 public:
-    ListView( ConfigDialog* configWidget, QWidget *parent, const char *name )
+    ListView( ConfigDialog* configWidget, TQWidget *parent, const char *name )
 	: KListView( parent, name ), _configWidget( configWidget ),
           _regExpEditor(0L) {}
-    // QListView has a weird idea of a sizeHint...
-    virtual QSize sizeHint () const {
+    // TQListView has a weird idea of a sizeHint...
+    virtual TQSize sizeHint () const {
 	int w = minimumSizeHint().width();
 	int h = header()->height();
 	h += viewport()->sizeHint().height();
 	h += horizontalScrollBar()->height();
 	
-	QListViewItem *item = firstChild();
+	TQListViewItem *item = firstChild();
 	while ( item ) {
 	    h += item->totalHeight();
 	    item = item->nextSibling();
 	}
 
-	return QSize( w, h );
+	return TQSize( w, h );
     }
 
 protected:
-    virtual void rename( QListViewItem* item, int c );
+    virtual void rename( TQListViewItem* item, int c );
 private:
     ConfigDialog* _configWidget;
-    QDialog* _regExpEditor;
+    TQDialog* _regExpEditor;
 };
 
 #endif // CONFIGDIALOG_H

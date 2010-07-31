@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __runapplet_h__
 #define __runapplet_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kpanelapplet.h>
 
 class QLabel;
@@ -38,28 +38,28 @@ class RunApplet : public KPanelApplet
     Q_OBJECT
 
 public:
-    RunApplet(const QString& configFile, Type t = Stretch, int actions = 0,
-	      QWidget *parent = 0, const char *name = 0);
+    RunApplet(const TQString& configFile, Type t = Stretch, int actions = 0,
+	      TQWidget *parent = 0, const char *name = 0);
     virtual ~RunApplet();
 
     int widthForHeight(int height) const;
     int heightForWidth(int width) const;
 
 protected:
-    void resizeEvent(QResizeEvent*);
+    void resizeEvent(TQResizeEvent*);
     void positionChange(KPanelApplet::Position);
 
 protected slots:
-    void run_command(const QString&);
+    void run_command(const TQString&);
     void popup_combo();
     void setButtonText();
 
 private:
     KHistoryCombo  *_input;
     KURIFilterData *_filterData;
-    QLabel         *_label;
-    QPushButton    *_btn;
-    QHBox          *_hbox;
+    TQLabel         *_label;
+    TQPushButton    *_btn;
+    TQHBox          *_hbox;
 };
 
 #endif

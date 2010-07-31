@@ -42,28 +42,28 @@ class KdeprintFax : public KMainWindow
 public:
 	struct FaxItem
 	{
-		QString number;
-		QString name;
-		QString enterprise;
+		TQString number;
+		TQString name;
+		TQString enterprise;
 	};
-	typedef QValueList<FaxItem> FaxItemList;
-	typedef QValueList<FaxItem>::ConstIterator FaxItemListIterator;
+	typedef TQValueList<FaxItem> FaxItemList;
+	typedef TQValueList<FaxItem>::ConstIterator FaxItemListIterator;
 
-	KdeprintFax(QWidget *parent = 0, const char *name = 0);
+	KdeprintFax(TQWidget *parent = 0, const char *name = 0);
 	~KdeprintFax();
 
 	void addURL(KURL url);
-	void setPhone(QString phone);
+	void setPhone(TQString phone);
 	void sendFax( bool quitAfterSend );
-	QStringList files();
+	TQStringList files();
 	int faxCount() const;
-	//QString number( int i = 0 ) const;
-	//QString name( int i = 0 ) const;
-	//QString enterprise( int i = 0 ) const;
+	//TQString number( int i = 0 ) const;
+	//TQString name( int i = 0 ) const;
+	//TQString enterprise( int i = 0 ) const;
 	FaxItemList faxList() const;
-	QString comment() const;
-	QString time() const;
-	QString subject() const;
+	TQString comment() const;
+	TQString time() const;
+	TQString subject() const;
 	bool cover() const;
 
 protected slots:
@@ -73,7 +73,7 @@ protected slots:
 	void slotRemove();
 	void slotFax();
 	void slotAbort();
-	void slotMessage(const QString&);
+	void slotMessage(const TQString&);
 	void slotFaxSent(bool);
 	void slotViewLog();
 	void slotConfigure();
@@ -86,16 +86,16 @@ protected slots:
 	void slotFaxSelectionChanged();
 	void slotFaxRemove();
 	void slotFaxAdd();
-	void slotFaxExecuted( QListViewItem* );
+	void slotFaxExecuted( TQListViewItem* );
 	void slotCoverToggled(bool toggle);
 
 protected:
 	void initActions();
-	void dragEnterEvent(QDragEnterEvent*);
-	void dropEvent(QDropEvent*);
+	void dragEnterEvent(TQDragEnterEvent*);
+	void dropEvent(TQDropEvent*);
 	void updateState();
-	bool manualFaxDialog( QString& number, QString& name, QString& enterprise );
-	//QListViewItem* faxItem( int i = 0 ) const;
+	bool manualFaxDialog( TQString& number, TQString& name, TQString& enterprise );
+	//TQListViewItem* faxItem( int i = 0 ) const;
 
 private:
 	KListBox	*m_files;
@@ -107,8 +107,8 @@ private:
 	QLabel		*m_msglabel;
 	QTimeEdit	*m_time;
 	QComboBox	*m_timecombo;
-	QPushButton *m_upbtn, *m_downbtn;
-	QPushButton *m_newbtn, *m_abbtn, *m_delbtn;
+	TQPushButton *m_upbtn, *m_downbtn;
+	TQPushButton *m_newbtn, *m_abbtn, *m_delbtn;
 	bool m_quitAfterSend;
 };
 

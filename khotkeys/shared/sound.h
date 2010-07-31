@@ -20,8 +20,8 @@
 #ifndef SOUND_H
 #define SOUND_H
 
-#include <qmemarray.h>
-#include <qstring.h>
+#include <tqmemarray.h>
+#include <tqstring.h>
 #include <kdemacros.h>
 
 /**
@@ -32,8 +32,8 @@ public:
     Sound();
     ~Sound();
 
-	void load(const QString &filename);
-	void save(const QString &filename) const;
+	void load(const TQString &filename);
+	void save(const TQString &filename) const;
 
 	unsigned int size() const
 	{
@@ -50,7 +50,7 @@ public:
 		return _fs;
 	}
 
-	QMemArray<Q_INT32> data;
+	TQMemArray<Q_INT32> data;
 	Q_UINT32 max;
 	uint _fs;
 };

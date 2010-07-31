@@ -22,15 +22,15 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qfile.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
-#include <qtabwidget.h>
-#include <qtextcodec.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
+#include <tqfile.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqspinbox.h>
+#include <tqtabwidget.h>
+#include <tqtextcodec.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -45,22 +45,22 @@
 
 #include "kcmioslaveinfo.h"
 
-typedef KGenericFactory<KCMIOSlaveInfo, QWidget> SlaveFactory;
+typedef KGenericFactory<KCMIOSlaveInfo, TQWidget> SlaveFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_ioslaveinfo, SlaveFactory("kcmioslaveinfo") )
 
-KCMIOSlaveInfo::KCMIOSlaveInfo(QWidget *parent, const char *name, const QStringList &)
+KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStringList &)
                :KCModule(SlaveFactory::instance(), parent,name),m_ioslavesLb(0),m_tfj(0)
 {
-   QVBoxLayout *layout=new QVBoxLayout(this, 0, KDialog::spacingHint());
+   TQVBoxLayout *layout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
    setQuickHelp( i18n("<h1>IO slaves</h1> Gives you an overview of the installed ioslaves."));
    setButtons( KCModule::Help );
 
-   QLabel* label=new QLabel(i18n("Available IO slaves:"),this);
-   QHBox *hbox=new QHBox(this);
+   TQLabel* label=new TQLabel(i18n("Available IO slaves:"),this);
+   TQHBox *hbox=new TQHBox(this);
    m_ioslavesLb=new KListBox(hbox);
    m_ioslavesLb->setMinimumSize(fontMetrics().width("blahfaselwhatever----"),10);
-   connect( m_ioslavesLb, SIGNAL( selectionChanged( QListBoxItem * ) ), SLOT( showInfo( QListBoxItem * ) ) );
+   connect( m_ioslavesLb, TQT_SIGNAL( selectionChanged( TQListBoxItem * ) ), TQT_SLOT( showInfo( TQListBoxItem * ) ) );
    //TODO make something useful after 2.1 is released
    m_info=new KTextBrowser(hbox);
    hbox->setSpacing(KDialog::spacingHint());
@@ -70,10 +70,10 @@ KCMIOSlaveInfo::KCMIOSlaveInfo(QWidget *parent, const char *name, const QStringL
    hbox->setStretchFactor(m_ioslavesLb,1);
    hbox->setStretchFactor(m_info,5);
 
-   QStringList protocols=KProtocolInfo::protocols();
-   for (QStringList::Iterator it=protocols.begin(); it!=protocols.end(); ++it)
+   TQStringList protocols=KProtocolInfo::protocols();
+   for (TQStringList::Iterator it=protocols.begin(); it!=protocols.end(); ++it)
    {
-      QString proto = *it;
+      TQString proto = *it;
       m_ioslavesLb->insertItem( SmallIcon( KProtocolInfo::icon( proto )), 
                                 proto );
    };
@@ -94,13 +94,13 @@ KCMIOSlaveInfo::KCMIOSlaveInfo(QWidget *parent, const char *name, const QStringL
 
 }
 
-void KCMIOSlaveInfo::slaveHelp( KIO::Job *, const QByteArray &data)
+void KCMIOSlaveInfo::slaveHelp( KIO::Job *, const TQByteArray &data)
 {
     if ( data.size() == 0 ) { // EOF
         int index = helpData.find( "<meta http-equiv=\"Content-Type\"" );
         index = helpData.find( "charset=", index ) + 8;
-        QString charset = helpData.mid( index, helpData.find( '\"', index ) - index );
-        QString text = QTextCodec::codecForName(charset.latin1())->toUnicode( helpData );
+        TQString charset = helpData.mid( index, helpData.find( '\"', index ) - index );
+        TQString text = TQTextCodec::codecForName(charset.latin1())->toUnicode( helpData );
         index = text.find( "<div class=\"titlepage\">" );
         text = text.mid( index );
         index = text.find( "<table width=\"100%\" class=\"bottom-nav\"" );
@@ -116,9 +116,9 @@ void KCMIOSlaveInfo::slotResult(KIO::Job *)
    m_tfj = 0;
 }
 
-void KCMIOSlaveInfo::showInfo(const QString& protocol)
+void KCMIOSlaveInfo::showInfo(const TQString& protocol)
 {
-   QString file = QString("kioslave/%1.docbook").arg( protocol );
+   TQString file = TQString("kioslave/%1.docbook").arg( protocol );
    file = KGlobal::locale()->langLookup( file );
    if (m_tfj)
    {
@@ -129,15 +129,15 @@ void KCMIOSlaveInfo::showInfo(const QString& protocol)
    if (!file.isEmpty())
    {
        helpData.truncate( 0 );
-       m_tfj = KIO::get( KURL( QString("help:/kioslave/%1.html").arg( protocol ) ), true, false );
-       connect( m_tfj, SIGNAL( data( KIO::Job *, const QByteArray &) ), SLOT( slaveHelp( KIO::Job *, const QByteArray &) ) );
-       connect( m_tfj, SIGNAL( result( KIO::Job * ) ), SLOT( slotResult( KIO::Job * ) ) );
+       m_tfj = KIO::get( KURL( TQString("help:/kioslave/%1.html").arg( protocol ) ), true, false );
+       connect( m_tfj, TQT_SIGNAL( data( KIO::Job *, const TQByteArray &) ), TQT_SLOT( slaveHelp( KIO::Job *, const TQByteArray &) ) );
+       connect( m_tfj, TQT_SIGNAL( result( KIO::Job * ) ), TQT_SLOT( slotResult( KIO::Job * ) ) );
        return;
    }
    m_info->setText(i18n("Some info about protocol %1:/ ...").arg(protocol));
 }
 
-void KCMIOSlaveInfo::showInfo(QListBoxItem *item)
+void KCMIOSlaveInfo::showInfo(TQListBoxItem *item)
 {
    if (item==0)
       return;

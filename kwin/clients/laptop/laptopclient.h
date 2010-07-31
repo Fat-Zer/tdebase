@@ -7,7 +7,7 @@
 #ifndef __KDECLIENT_H
 #define __KDECLIENT_H
 
-#include <qbitmap.h>
+#include <tqbitmap.h>
 #include <kpixmap.h>
 #include <kcommondecoration.h>
 #include <kdecorationfactory.h>
@@ -24,8 +24,8 @@ public:
     virtual void reset(unsigned long changed);
 
 protected:
-    virtual void drawButton(QPainter *p);
-    QBitmap deco;
+    virtual void drawButton(TQPainter *p);
+    TQBitmap deco;
 };
 
 class LaptopClient : public KCommonDecoration
@@ -34,18 +34,18 @@ public:
     LaptopClient( KDecorationBridge* b, KDecorationFactory* f );
     ~LaptopClient();
 
-    virtual QString visibleName() const;
-    virtual QString defaultButtonsLeft() const;
-    virtual QString defaultButtonsRight() const;
+    virtual TQString visibleName() const;
+    virtual TQString defaultButtonsLeft() const;
+    virtual TQString defaultButtonsRight() const;
     virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
     virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
     virtual KCommonDecorationButton *createButton(ButtonType type);
 
-    virtual QRegion cornerShape(WindowCorner corner);
+    virtual TQRegion cornerShape(WindowCorner corner);
 
     void init();
 protected:
-    void paintEvent( QPaintEvent* );
+    void paintEvent( TQPaintEvent* );
     void reset( unsigned long );
     void updateActiveBuffer();
     void captionChange();
@@ -58,7 +58,7 @@ private:
     bool bufferDirty;
 };
 
-class LaptopClientFactory : public QObject, public KDecorationFactory
+class LaptopClientFactory : public TQObject, public KDecorationFactory
 {
 public:
     LaptopClientFactory();
@@ -66,7 +66,7 @@ public:
     virtual KDecoration* createDecoration( KDecorationBridge* );
     virtual bool reset( unsigned long changed );
     virtual bool supports( Ability ability );
-    virtual QValueList< BorderSize > borderSizes() const;
+    virtual TQValueList< BorderSize > borderSizes() const;
 private:
     void findPreferredHandleSize();
 };

@@ -20,7 +20,7 @@
 #ifndef KONQ_PIXMAPPROVIDER_H
 #define KONQ_PIXMAPPROVIDER_H
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #include <kpixmapprovider.h>
 #include "konq_faviconmgr.h"
@@ -39,17 +39,17 @@ public:
     /**
      * Looks up a pixmap for @p url. Uses a cache for the iconname of url.
      */
-    virtual QPixmap pixmapFor( const QString& url, int size = 0 );
+    virtual TQPixmap pixmapFor( const TQString& url, int size = 0 );
 
     /**
      * Loads the cache to @p kc from the current KConfig-group from key @p key.
      */
-    void load( KConfig * kc, const QString& key );
+    void load( KConfig * kc, const TQString& key );
     /**
      * Saves the cache to @p kc into the current KConfig-group as key @p key.
      * Only those @p items are saved, otherwise the cache would grow forever.
      */
-    void save( KConfig *, const QString& key, const QStringList& items );
+    void save( KConfig *, const TQString& key, const TQStringList& items );
 
     /**
      * Clears the pixmap cache
@@ -60,20 +60,20 @@ public:
      * Looks up an iconname for @p url. Uses a cache for the iconname of url.
      * @since 3.4.1
      */
-    QString iconNameFor( const QString& url );
+    TQString iconNameFor( const TQString& url );
 
 protected:
-    KonqPixmapProvider( QObject *parent=0, const char *name=0 );
+    KonqPixmapProvider( TQObject *parent=0, const char *name=0 );
 
     /**
      * Overridden from KonqFavIconMgr to update the cache
      */
-    virtual void notifyChange( bool isHost, QString hostOrURL, QString iconName );
+    virtual void notifyChange( bool isHost, TQString hostOrURL, TQString iconName );
 
-    QPixmap loadIcon( const QString& url, const QString& icon, int size );
+    TQPixmap loadIcon( const TQString& url, const TQString& icon, int size );
 
 private:
-    QMap<QString,QString> iconMap;
+    TQMap<TQString,TQString> iconMap;
     static KonqPixmapProvider * s_self;
 };
 

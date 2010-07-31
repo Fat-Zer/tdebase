@@ -11,8 +11,8 @@
 #ifndef SPLASHINSTALLER_H
 #define SPLASHINSTALLER_H
 
-#include <qmap.h>
-#include <qpoint.h>
+#include <tqmap.h>
+#include <tqpoint.h>
 
 #include <klistbox.h>
 #include <kurl.h>
@@ -26,7 +26,7 @@ class SplashInstaller : public QWidget
 {
   Q_OBJECT
 public:
-  SplashInstaller(QWidget *parent=0, const char *aName=0, bool aInit=FALSE);
+  SplashInstaller(TQWidget *parent=0, const char *aName=0, bool aInit=FALSE);
   ~SplashInstaller();
 
   virtual void load();
@@ -48,39 +48,39 @@ protected:
   /** Scan Themes directory for available theme packages */
   virtual void readThemesList();
   /** add a theme to the list, returns the list index */
-  int addTheme(const QString &path, const QString &name);
+  int addTheme(const TQString &path, const TQString &name);
   void addNewTheme(const KURL &srcURL);
-  int findTheme( const QString &theme );
+  int findTheme( const TQString &theme );
 
 private:
   bool mGui;
   ThemeListBox *mThemesList;
-  QPushButton *mBtnAdd, *mBtnRemove, *mBtnTest;
-  QTextEdit *mText;
-  QLabel *mPreview;
+  TQPushButton *mBtnAdd, *mBtnRemove, *mBtnTest;
+  TQTextEdit *mText;
+  TQLabel *mPreview;
 };
 
 class ThemeListBox: public KListBox
 {
   Q_OBJECT
 public:
-  ThemeListBox(QWidget *parent);
-  QMap<QString, QString> text2path;
+  ThemeListBox(TQWidget *parent);
+  TQMap<TQString, TQString> text2path;
 
 signals:
   void filesDropped(const KURL::List &urls);
 
 protected:
-  void dragEnterEvent(QDragEnterEvent* event);
-  void dropEvent(QDropEvent* event);
-  void mouseMoveEvent(QMouseEvent *e);
+  void dragEnterEvent(TQDragEnterEvent* event);
+  void dropEvent(TQDropEvent* event);
+  void mouseMoveEvent(TQMouseEvent *e);
 
 protected slots:
-  void slotMouseButtonPressed(int button, QListBoxItem *item, const QPoint &p);
+  void slotMouseButtonPressed(int button, TQListBoxItem *item, const TQPoint &p);
 
 private:
-  QString mDragFile;
-  QPoint mOldPos;
+  TQString mDragFile;
+  TQPoint mOldPos;
 
 };
 

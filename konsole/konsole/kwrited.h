@@ -21,10 +21,10 @@
 #ifndef KWRITED_H
 #define KWRITED_H
 
-#include <qtextedit.h>
+#include <tqtextedit.h>
 #include <kdedmodule.h>
-#include <qpopupmenu.h>
-#include <qtextedit.h>
+#include <tqpopupmenu.h>
+#include <tqtextedit.h>
 
 class KPty;
 
@@ -34,7 +34,7 @@ public:
   KWrited();
  ~KWrited();
 protected:
-  virtual QPopupMenu *createPopupMenu(const QPoint &);
+  virtual TQPopupMenu *createPopupMenu(const TQPoint &);
 private slots:
   void block_in(int fd);
   void clearText(void);
@@ -47,7 +47,7 @@ class KWritedModule : public KDEDModule
   Q_OBJECT
   K_DCOP
 public:
-  KWritedModule( const QCString& obj );
+  KWritedModule( const TQCString& obj );
  ~KWritedModule();
 private:
   KWrited* pro;

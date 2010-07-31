@@ -12,10 +12,10 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_WORKSPACE_H
 #define KWIN_WORKSPACE_H
 
-#include <qtimer.h>
-#include <qvaluevector.h>
+#include <tqtimer.h>
+#include <tqvaluevector.h>
 #include <kshortcut.h>
-#include <qcursor.h>
+#include <tqcursor.h>
 #include <netwm.h>
 #include <kxmessages.h>
 
@@ -68,9 +68,9 @@ class SystemTrayWindow
         WId winFor;
     };
 
-typedef QValueList<SystemTrayWindow> SystemTrayWindowList;
+typedef TQValueList<SystemTrayWindow> SystemTrayWindowList;
 
-class Workspace : public QObject, public KWinInterface, public KDecorationDefines
+class Workspace : public TQObject, public KWinInterface, public KDecorationDefines
     {
     Q_OBJECT
     public:
@@ -89,9 +89,9 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         template< typename T1, typename T2 > void forEachClient( T1 procedure, T2 predicate );
         template< typename T > void forEachClient( T procedure );
 
-        QRect clientArea( clientAreaOption, const QPoint& p, int desktop ) const;
-        QRect clientArea( clientAreaOption, const Client* c ) const;
-        QRect clientArea( clientAreaOption, int screen, int desktop ) const;
+        TQRect clientArea( clientAreaOption, const TQPoint& p, int desktop ) const;
+        TQRect clientArea( clientAreaOption, const Client* c ) const;
+        TQRect clientArea( clientAreaOption, int screen, int desktop ) const;
 
         /**
          * @internal
@@ -134,11 +134,11 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
          */
         void setClientIsMoving( Client *c );
 
-        void place( Client *c, QRect& area );
-        void placeSmart( Client* c, const QRect& area );
+        void place( Client *c, TQRect& area );
+        void placeSmart( Client* c, const TQRect& area );
 
-        QPoint adjustClientPosition( Client* c, QPoint pos );
-        QRect adjustClientSize( Client* c, QRect moveResizeGeom, int mode );
+        TQPoint adjustClientPosition( Client* c, TQPoint pos );
+        TQRect adjustClientSize( Client* c, TQRect moveResizeGeom, int mode );
         void raiseClient( Client* c );
         void lowerClient( Client* c );
         void raiseClientRequest( Client* c, NET::RequestSource src, Time timestamp );
@@ -151,7 +151,7 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         void clientHidden( Client*  );
         void clientAttentionChanged( Client* c, bool set );
 
-        void clientMoved(const QPoint &pos, Time time);
+        void clientMoved(const TQPoint &pos, Time time);
 
         /**
          * Returns the current virtual desktop of this workspace
@@ -166,11 +166,11 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         int activeScreen() const;
         int numScreens() const;
         void checkActiveScreen( const Client* c );
-        void setActiveScreenMouse( QPoint mousepos );
-        QRect screenGeometry( int screen ) const;
-        int screenNumber( QPoint pos ) const;
+        void setActiveScreenMouse( TQPoint mousepos );
+        TQRect screenGeometry( int screen ) const;
+        int screenNumber( TQPoint pos ) const;
 
-        QWidget* desktopWidget();
+        TQWidget* desktopWidget();
 
     // for TabBox
         Client* nextFocusChainClient(Client*) const;
@@ -204,12 +204,12 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
 	 * Shows the menu operations menu for the client and makes it active if
 	 * it's not already.
          */
-        void showWindowMenu( const QRect &pos, Client* cl );
+        void showWindowMenu( const TQRect &pos, Client* cl );
 	/**
 	 * Backwards compatibility.
 	 */
         void showWindowMenu( int x, int y, Client* cl );
-        void showWindowMenu( QPoint pos, Client* cl );
+        void showWindowMenu( TQPoint pos, Client* cl );
 
         void updateMinimizedOfTransients( Client* );
         void updateOnAllDesktopsOfTransients( Client* );
@@ -229,21 +229,21 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
     // dcop interface
         void cascadeDesktop();
         void unclutterDesktop();
-        void doNotManage(QString);
+        void doNotManage(TQString);
         bool setCurrentDesktop( int new_desktop );
         void nextDesktop();
         void previousDesktop();
         void circulateDesktopApplications();
         void setCurrentScreen( int new_screen );
 
-        QString desktopName( int desk ) const;
+        TQString desktopName( int desk ) const;
         virtual void setDesktopLayout(int , int , int );
         void updateDesktopLayout();
         void setShowingDesktop( bool showing );
         void resetShowingDesktop( bool keep_hidden );
         bool showingDesktop() const;
 
-        bool isNotManaged( const QString& title );  // ### setter or getter ?
+        bool isNotManaged( const TQString& title );  // ### setter or getter ?
 
         void sendPingToWindow( Window w, Time timestamp ); // called from Client::pingWindow()
         void sendTakeActivity( Client* c, Time timestamp, long flags ); // called from Client::takeActivity()
@@ -289,12 +289,12 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         int packPositionUp( const Client* cl, int oldy, bool top_edge ) const;
         int packPositionDown( const Client* cl, int oldy, bool bottom_edge ) const;
 
-        static QStringList configModules(bool controlCenter);
+        static TQStringList configModules(bool controlCenter);
 
         void cancelDelayFocus();
         void requestDelayFocus( Client* );
-        void updateFocusMousePosition( const QPoint& pos );
-        QPoint focusMousePosition() const;
+        void updateFocusMousePosition( const TQPoint& pos );
+        TQPoint focusMousePosition() const;
         
         void toggleTopDockShadows(bool on);
 
@@ -390,7 +390,7 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         void lostTopMenuSelection();
         void lostTopMenuOwner();
         void delayFocus();
-        void gotTemporaryRulesMessage( const QString& );
+        void gotTemporaryRulesMessage( const TQString& );
         void cleanupTemporaryRules();
         void writeWindowRules();
         void kipcMessage( int id, int data );
@@ -468,7 +468,7 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
     // mouse emulation
         WId getMouseEmulationWindow();
         enum MouseEmulation { EmuPress, EmuRelease, EmuMove };
-        unsigned int sendFakedMouseEvent( QPoint pos, WId win, MouseEmulation type, int button, unsigned int state ); // returns the new state
+        unsigned int sendFakedMouseEvent( TQPoint pos, WId win, MouseEmulation type, int button, unsigned int state ); // returns the new state
 
         void tabBoxKeyPress( const KKeyNative& keyX );
         void tabBoxKeyRelease( const XKeyEvent& ev );
@@ -482,11 +482,11 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
 
     // ------------------
     
-        void helperDialog( const QString& message, const Client* c );
+        void helperDialog( const TQString& message, const Client* c );
 
         void calcDesktopLayout(int &x, int &y) const;
 
-        QPopupMenu* clientPopup();
+        TQPopupMenu* clientPopup();
         void closeActivePopup();
 
         void updateClientArea( bool force );
@@ -495,22 +495,22 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
 
         int current_desktop;
         int number_of_desktops;
-        QMemArray<int> desktop_focus_chain;
+        TQMemArray<int> desktop_focus_chain;
         int active_screen;
 
-        QWidget* active_popup;
+        TQWidget* active_popup;
         Client* active_popup_client;
 
-        QWidget* desktop_widget;
+        TQWidget* desktop_widget;
 
         void loadSessionInfo();
         void loadWindowRules();
         void editWindowRules( Client* c, bool whole_app );
 
-        QPtrList<SessionInfo> session;
-        QValueList<Rules*> rules;
+        TQPtrList<SessionInfo> session;
+        TQValueList<Rules*> rules;
         KXMessages temporaryRulesMessages;
-        QTimer rulesUpdatedTimer;
+        TQTimer rulesUpdatedTimer;
         bool rules_updates_disabled;
         static const char* windowTypeToTxt( NET::WindowType type );
         static NET::WindowType txtToWindowType( const char* txt );
@@ -523,16 +523,16 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         Client* pending_take_activity;
 
     // delay(ed) window focus timer and client
-        QTimer* delayFocusTimer;
+        TQTimer* delayFocusTimer;
         Client* delayfocus_client;
-        QPoint focusMousePos;
+        TQPoint focusMousePos;
 
         ClientList clients;
         ClientList desktops;
 
         ClientList unconstrained_stacking_order; // topmost last
         ClientList stacking_order; // topmost last
-        QValueVector< ClientList > focus_chain; // currently active last
+        TQValueVector< ClientList > focus_chain; // currently active last
         ClientList global_focus_chain; // this one is only for things like tabbox's MRU
         ClientList should_get_focus; // last is most recent
         ClientList attention_chain;
@@ -564,9 +564,9 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         TabBox* tab_box;
         PopupInfo* popupinfo;
 
-        QPopupMenu *popup;
-        QPopupMenu *advanced_popup;
-        QPopupMenu *desk_popup;
+        TQPopupMenu *popup;
+        TQPopupMenu *advanced_popup;
+        TQPopupMenu *desk_popup;
         int desk_popup_index;
 
         KGlobalAccel *keys;
@@ -582,19 +582,19 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         PluginMgr *mgr;
 
         RootInfo *rootInfo;
-        QWidget* supportWindow;
+        TQWidget* supportWindow;
 
     // swallowing
-        QStringList doNotManageList;
+        TQStringList doNotManageList;
 
     // colormap handling
         Colormap default_colormap;
         Colormap installed_colormap;
 
     // Timer to collect requests for 'reconfigure'
-        QTimer reconfigureTimer;
+        TQTimer reconfigureTimer;
 
-        QTimer updateToolWindowsTimer;
+        TQTimer updateToolWindowsTimer;
 
         static Workspace *_self;
 
@@ -614,7 +614,7 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         int electricBottom;
         Time electric_time_first;
         Time electric_time_last;
-        QPoint electric_push_point;
+        TQPoint electric_push_point;
 
         Qt::Orientation layoutOrientation;
         int layoutX;
@@ -622,15 +622,15 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
 
         Placement *initPositioning;
 
-        QRect* workarea; //  array of workareas for virtual desktops
-        QRect** screenarea; // array of workareas per xinerama screen for all virtual desktops
+        TQRect* workarea; //  array of workareas for virtual desktops
+        TQRect** screenarea; // array of workareas per xinerama screen for all virtual desktops
 
         bool managing_topmenus;
         KSelectionOwner* topmenu_selection;
         KSelectionWatcher* topmenu_watcher;
         ClientList topmenus; // doesn't own them
         mutable int topmenu_height;
-        QWidget* topmenu_space;
+        TQWidget* topmenu_space;
 
         int set_active_client_recursion;
         int block_stacking_updates; // when >0, stacking updates are temporarily disabled
@@ -640,8 +640,8 @@ class Workspace : public QObject, public KWinInterface, public KDecorationDefine
         friend class StackingUpdatesBlocker;
         
         //kompmgr
-        QSlider *transSlider;
-        QPushButton *transButton;
+        TQSlider *transSlider;
+        TQPushButton *transButton;
         // not used yet
         /*Client* topDock;
         int maximizedWindowCounter;
@@ -738,14 +738,14 @@ inline const ClientList& Workspace::stackingOrder() const
     return stacking_order;
     }
 
-inline void Workspace::showWindowMenu(QPoint pos, Client* cl)
+inline void Workspace::showWindowMenu(TQPoint pos, Client* cl)
     {
-    showWindowMenu(QRect(pos, pos), cl);
+    showWindowMenu(TQRect(pos, pos), cl);
     }
 
 inline void Workspace::showWindowMenu(int x, int y, Client* cl)
     {
-    showWindowMenu(QRect(QPoint(x, y), QPoint(x, y)), cl);
+    showWindowMenu(TQRect(TQPoint(x, y), TQPoint(x, y)), cl);
     }
 
 inline
@@ -803,13 +803,13 @@ bool Workspace::rulesUpdatesDisabled() const
     }
 
 inline
-void Workspace::updateFocusMousePosition( const QPoint& pos )
+void Workspace::updateFocusMousePosition( const TQPoint& pos )
     {
     focusMousePos = pos;
     }
 
 inline
-QPoint Workspace::focusMousePosition() const
+TQPoint Workspace::focusMousePosition() const
     {
     return focusMousePos;
     }

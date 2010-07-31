@@ -28,7 +28,7 @@ class KHotKeysModule
         ASYNC reread_configuration();
         ASYNC quit(); 
     public:
-        KHotKeysModule( const QCString& obj );
+        KHotKeysModule( const TQCString& obj );
         virtual ~KHotKeysModule();
     private:
         Action_data_group* actions_root;

@@ -24,10 +24,10 @@
 #include <config.h>
 
 #include <kprocess.h>
-#include <qsocketnotifier.h>
-#include <qstrlist.h>
-#include <qvaluelist.h>
-#include <qmemarray.h>
+#include <tqsocketnotifier.h>
+#include <tqstrlist.h>
+#include <tqvaluelist.h>
+#include <tqmemarray.h>
 
 class TEPty: public KProcess
 {
@@ -52,10 +52,10 @@ Q_OBJECT
      * the necessary connections to the signals and slots of the
      * instance before starting the execution of the client.
      */
-    int run( const char* pgm, QStrList & args, const char* term, ulong winid, bool _addutmp,
+    int run( const char* pgm, TQStrList & args, const char* term, ulong winid, bool _addutmp,
              const char* konsole_dcop = "", const char* konsole_dcop_session = "" );
     void setWriteable(bool writeable);
-    QString error() { return m_strError; }
+    TQString error() { return m_strError; }
     void setXonXoff(bool on);
     void setSize(int lines, int cols);
     void setErase(char erase);
@@ -112,7 +112,7 @@ Q_OBJECT
 
   private:
 
-    QString m_strError;
+    TQString m_strError;
 
     struct SendJob {
       SendJob() {}
@@ -120,10 +120,10 @@ Q_OBJECT
         buffer.duplicate(b,len);
         length = len;
       }
-      QMemArray<char> buffer;
+      TQMemArray<char> buffer;
       int length;
     };
-    QValueList<SendJob> pendingSendJobs;
+    TQValueList<SendJob> pendingSendJobs;
     bool m_bufferFull;
 };
 

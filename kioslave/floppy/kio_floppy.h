@@ -25,12 +25,12 @@
 
 #include "program.h"
 
-#include <qstring.h>
+#include <tqstring.h>
 
 struct StatInfo
 {
    StatInfo():name(""),time(0),size(0),mode(0),freeSpace(0),isDir(false),isValid(false) {;}
-   QString name;
+   TQString name;
    time_t time;
    int size;
    int mode;
@@ -43,7 +43,7 @@ struct StatInfo
 class FloppyProtocol : public KIO::SlaveBase
 {
    public:
-      FloppyProtocol (const QCString &pool, const QCString &app );
+      FloppyProtocol (const TQCString &pool, const TQCString &app );
       virtual ~FloppyProtocol();
 
       virtual void listDir( const KURL& url);
@@ -59,13 +59,13 @@ class FloppyProtocol : public KIO::SlaveBase
       int readStdout();
       int readStderr();
 
-      StatInfo createStatInfo(const QString line, bool makeStat=false, const QString& dirName="");
+      StatInfo createStatInfo(const TQString line, bool makeStat=false, const TQString& dirName="");
       void createUDSEntry(const StatInfo& info, KIO::UDSEntry& entry);
       StatInfo _stat(const KURL& _url);
       int freeSpace(const KURL& url);
 
-      bool stopAfterError(const KURL& url, const QString& drive);
-      void errorMissingMToolsProgram(const QString& name);
+      bool stopAfterError(const KURL& url, const TQString& drive);
+      void errorMissingMToolsProgram(const TQString& name);
 
       void clearBuffers();
       void terminateBuffers();

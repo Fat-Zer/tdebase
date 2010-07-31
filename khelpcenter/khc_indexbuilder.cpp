@@ -33,10 +33,10 @@
 #include <kstandarddirs.h>
 #include <kconfig.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qdir.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqdir.h>
+#include <tqtextstream.h>
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -44,7 +44,7 @@
 
 using namespace KHC;
 
-IndexBuilder::IndexBuilder(const QString& cmdFile)
+IndexBuilder::IndexBuilder(const TQString& cmdFile)
 {
   m_cmdFile = cmdFile;
   kdDebug(1402) << "IndexBuilder()" << endl;
@@ -52,14 +52,14 @@ IndexBuilder::IndexBuilder(const QString& cmdFile)
 
 void IndexBuilder::buildIndices()
 {
-  QFile f( m_cmdFile );
+  TQFile f( m_cmdFile );
   if ( !f.open( IO_ReadOnly ) ) {
     kdError() << "Unable to open file '" << m_cmdFile << "'" << endl;
     exit( 1 );
   }
   kdDebug(1402) << "Opened file '" << m_cmdFile << "'" << endl;
-  QTextStream ts( &f );
-  QString line = ts.readLine();
+  TQTextStream ts( &f );
+  TQString line = ts.readLine();
   while ( !line.isNull() ) {
     kdDebug(1402) << "LINE: " << line << endl;
     mCmdQueue.append( line );
@@ -73,30 +73,30 @@ void IndexBuilder::processCmdQueue()
 {
   kdDebug(1402) << "IndexBuilder::processCmdQueue()" << endl;
 
-  QStringList::Iterator it = mCmdQueue.begin();
+  TQStringList::Iterator it = mCmdQueue.begin();
 
   if ( it == mCmdQueue.end() ) {
     quit();
     return;
   }
 
-  QString cmd = *it;
+  TQString cmd = *it;
 
   kdDebug(1402) << "PROCESS: " << cmd << endl;
 
   KProcess *proc = new KProcess;
   proc->setRunPrivileged( true );
 
-  QStringList args = QStringList::split( " ", cmd );
+  TQStringList args = TQStringList::split( " ", cmd );
   *proc << args;
 
 
-  connect( proc, SIGNAL( processExited( KProcess * ) ),
-           SLOT( slotProcessExited( KProcess * ) ) );
-  connect( proc, SIGNAL( receivedStdout(KProcess *, char *, int ) ),
-           SLOT( slotReceivedStdout(KProcess *, char *, int ) ) );
-  connect( proc, SIGNAL( receivedStderr(KProcess *, char *, int ) ),
-           SLOT( slotReceivedStderr(KProcess *, char *, int ) ) );
+  connect( proc, TQT_SIGNAL( processExited( KProcess * ) ),
+           TQT_SLOT( slotProcessExited( KProcess * ) ) );
+  connect( proc, TQT_SIGNAL( receivedStdout(KProcess *, char *, int ) ),
+           TQT_SLOT( slotReceivedStdout(KProcess *, char *, int ) ) );
+  connect( proc, TQT_SIGNAL( receivedStderr(KProcess *, char *, int ) ),
+           TQT_SLOT( slotReceivedStderr(KProcess *, char *, int ) ) );
 
   mCmdQueue.remove( it );
 
@@ -126,31 +126,31 @@ void IndexBuilder::slotProcessExited( KProcess *proc )
 
 void IndexBuilder::slotReceivedStdout( KProcess *, char *buffer, int buflen )
 {
-  QString text = QString::fromLocal8Bit( buffer, buflen );
+  TQString text = TQString::fromLocal8Bit( buffer, buflen );
   std::cout << text.local8Bit().data() << std::flush;
 }
 
 void IndexBuilder::slotReceivedStderr( KProcess *, char *buffer, int buflen )
 {
-  QString text = QString::fromLocal8Bit( buffer, buflen );
+  TQString text = TQString::fromLocal8Bit( buffer, buflen );
   std::cerr << text.local8Bit().data() << std::flush;
 }
 
-void IndexBuilder::sendErrorSignal( const QString &error )
+void IndexBuilder::sendErrorSignal( const TQString &error )
 {
   kdDebug(1402) << "IndexBuilder::sendErrorSignal()" << endl;
   
-  QByteArray params;
-  QDataStream stream( params, IO_WriteOnly );
+  TQByteArray params;
+  TQDataStream stream( params, IO_WriteOnly );
   stream << error;
-  kapp->dcopClient()->emitDCOPSignal("buildIndexError(QString)", params );  
+  kapp->dcopClient()->emitDCOPSignal("buildIndexError(TQString)", params );  
 }
 
 void IndexBuilder::sendProgressSignal()
 {
   kdDebug(1402) << "IndexBuilder::sendProgressSignal()" << endl;
  
-  kapp->dcopClient()->emitDCOPSignal("buildIndexProgress()", QByteArray() );  
+  kapp->dcopClient()->emitDCOPSignal("buildIndexProgress()", TQByteArray() );  
 }
 
 void IndexBuilder::quit()
@@ -192,13 +192,13 @@ int main( int argc, char **argv )
     return 1;
   }
 
-  QString cmdFile = args->arg( 0 );
-  QString indexDir = args->arg( 1 );
+  TQString cmdFile = args->arg( 0 );
+  TQString indexDir = args->arg( 1 );
 
   kdDebug(1402) << "cmdFile: " << cmdFile << endl;
   kdDebug(1402) << "indexDir: " << indexDir << endl;
 
-  QFile file( indexDir + "/testaccess" );
+  TQFile file( indexDir + "/testaccess" );
   if ( !file.open( IO_WriteOnly ) || file.putch( ' ' ) < 0 ) {
     kdDebug(1402) << "access denied" << endl;
     return 2;
@@ -211,7 +211,7 @@ int main( int argc, char **argv )
 
   IndexBuilder builder(cmdFile);
 
-  QTimer::singleShot(0, &builder, SLOT(buildIndices()));
+  TQTimer::singleShot(0, &builder, TQT_SLOT(buildIndices()));
 
   return app.exec();
 }

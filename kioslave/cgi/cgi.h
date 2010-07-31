@@ -18,7 +18,7 @@
 #ifndef KIO_CGI_H
 #define KIO_CGI_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kio/slavebase.h>
 
@@ -31,7 +31,7 @@ class KProcess;
 class CgiProtocol : public KIO::SlaveBase
 {
   public:
-    CgiProtocol( const QCString &pool, const QCString &app );
+    CgiProtocol( const TQCString &pool, const TQCString &app );
     virtual ~CgiProtocol();
 
     virtual void get( const KURL& url );
@@ -39,10 +39,10 @@ class CgiProtocol : public KIO::SlaveBase
 //    virtual void mimetype( const KURL& url );
 
   protected:
-//    QCString errorMessage();
+//    TQCString errorMessage();
 
   private:
-    QStringList mCgiPaths;
+    TQStringList mCgiPaths;
 };
 
 #endif

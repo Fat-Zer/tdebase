@@ -20,10 +20,10 @@
 
 #include <unistd.h>
 
-#include <qdir.h>
-#include <qimage.h>
-#include <qstringlist.h>
-#include <qcursor.h>
+#include <tqdir.h>
+#include <tqimage.h>
+#include <tqstringlist.h>
+#include <tqcursor.h>
 
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -34,25 +34,25 @@
 #include "treeview.moc"
 #include "khotkeys.h"
 
-AppTreeItem::AppTreeItem(QListViewItem *parent, const QString& storageId)
+AppTreeItem::AppTreeItem(TQListViewItem *parent, const TQString& storageId)
     : KListViewItem(parent), m_init(false), m_storageId(storageId) {}
 
-AppTreeItem::AppTreeItem(QListViewItem *parent, QListViewItem *after, const QString& storageId)
+AppTreeItem::AppTreeItem(TQListViewItem *parent, TQListViewItem *after, const TQString& storageId)
     : KListViewItem(parent, after), m_init(false), m_storageId(storageId) {}
 
-AppTreeItem::AppTreeItem(QListView *parent, const QString& storageId)
+AppTreeItem::AppTreeItem(TQListView *parent, const TQString& storageId)
     : KListViewItem(parent), m_init(false), m_storageId(storageId) {}
 
-AppTreeItem::AppTreeItem(QListView *parent, QListViewItem *after, const QString& storageId)
+AppTreeItem::AppTreeItem(TQListView *parent, TQListViewItem *after, const TQString& storageId)
     : KListViewItem(parent, after), m_init(false), m_storageId(storageId) {}
 
-void AppTreeItem::setName(const QString &name)
+void AppTreeItem::setName(const TQString &name)
 {
     m_name = name;
     setText(0, m_name);
 }
 
-void AppTreeItem::setAccel(const QString &accel)
+void AppTreeItem::setAccel(const TQString &accel)
 {
     m_accel = accel;
     int temp = accel.find(';');
@@ -64,7 +64,7 @@ void AppTreeItem::setAccel(const QString &accel)
     else
     {
         setText(1, m_accel);
-        setText(2, QString::null);
+        setText(2, TQString::null);
     }
 }
 
@@ -76,16 +76,16 @@ void AppTreeItem::setOpen(bool o)
        AppTreeView *tv = static_cast<AppTreeView *>(listView());
        tv->fillBranch(m_directoryPath, this);
     }
-    QListViewItem::setOpen(o);
+    TQListViewItem::setOpen(o);
 }
 
-static QPixmap appIcon(const QString &iconName)
+static TQPixmap appIcon(const TQString &iconName)
 {
-    QPixmap normal = SmallIcon( iconName );
+    TQPixmap normal = SmallIcon( iconName );
     // make sure they are not larger than 20x20
     if (normal.width() > 20 || normal.height() > 20)
     {
-       QImage tmp = normal.convertToImage();
+       TQImage tmp = normal.convertToImage();
        tmp = tmp.smoothScale(20, 20);
        normal.convertFromImage(tmp);
     }
@@ -93,10 +93,10 @@ static QPixmap appIcon(const QString &iconName)
 }
 
 
-AppTreeView::AppTreeView( QWidget *parent, const char *name )
+AppTreeView::AppTreeView( TQWidget *parent, const char *name )
     : KListView(parent, name)
 {
-    setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+    setFrameStyle(TQFrame::WinPanel | TQFrame::Sunken);
     setAllColumnsShowFocus(true);
     setRootIsDecorated(true);
     setSorting(-1);
@@ -109,11 +109,11 @@ AppTreeView::AppTreeView( QWidget *parent, const char *name )
     addColumn(i18n("Shortcut"));
     addColumn(i18n("Alternate"));
 
-    connect(this, SIGNAL(clicked( QListViewItem* )),
-            SLOT(itemSelected( QListViewItem* )));
+    connect(this, TQT_SIGNAL(clicked( TQListViewItem* )),
+            TQT_SLOT(itemSelected( TQListViewItem* )));
 
-    connect(this,SIGNAL(selectionChanged ( QListViewItem * )),
-            SLOT(itemSelected( QListViewItem* )));
+    connect(this,TQT_SIGNAL(selectionChanged ( TQListViewItem * )),
+            TQT_SLOT(itemSelected( TQListViewItem* )));
 }
 
 AppTreeView::~AppTreeView()
@@ -122,16 +122,16 @@ AppTreeView::~AppTreeView()
 
 void AppTreeView::fill()
 {
-    QApplication::setOverrideCursor(Qt::WaitCursor);
+    TQApplication::setOverrideCursor(Qt::WaitCursor);
     clear();
-    fillBranch(QString::null, 0);
-    QApplication::restoreOverrideCursor();
+    fillBranch(TQString::null, 0);
+    TQApplication::restoreOverrideCursor();
 }
 
-void AppTreeView::fillBranch(const QString& rPath, AppTreeItem *parent)
+void AppTreeView::fillBranch(const TQString& rPath, AppTreeItem *parent)
 {
     // get rid of leading slash in the relative path
-    QString relPath = rPath;
+    TQString relPath = rPath;
     if(relPath[0] == '/')
         relPath = relPath.mid(1, relPath.length());
 
@@ -143,7 +143,7 @@ void AppTreeView::fillBranch(const QString& rPath, AppTreeItem *parent)
 
     KServiceGroup::List list = root->entries(true);
 
-    QListViewItem *after = 0;
+    TQListViewItem *after = 0;
 
     for(KServiceGroup::List::ConstIterator it = list.begin();
         it != list.end(); ++it) 
@@ -153,7 +153,7 @@ void AppTreeView::fillBranch(const QString& rPath, AppTreeItem *parent)
         if (e->isType(KST_KServiceGroup)) 
         {
             KServiceGroup::Ptr g(static_cast<KServiceGroup *>(e));
-            QString groupCaption = g->caption();
+            TQString groupCaption = g->caption();
 
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace them with two ampersands.
@@ -161,9 +161,9 @@ void AppTreeView::fillBranch(const QString& rPath, AppTreeItem *parent)
 
             AppTreeItem *item;
             if (parent == 0)
-                item = new AppTreeItem(this,  after, QString::null);
+                item = new AppTreeItem(this,  after, TQString::null);
             else
-                item = new AppTreeItem(parent, after, QString::null);
+                item = new AppTreeItem(parent, after, TQString::null);
 
             item->setName(groupCaption);
             item->setPixmap(0, appIcon(g->icon()));
@@ -174,7 +174,7 @@ void AppTreeView::fillBranch(const QString& rPath, AppTreeItem *parent)
         else if (e->isType(KST_KService)) 
         {
             KService::Ptr s(static_cast<KService *>(e));
-            QString serviceCaption = s->name();
+            TQString serviceCaption = s->name();
 
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace them with two ampersands.
@@ -195,7 +195,7 @@ void AppTreeView::fillBranch(const QString& rPath, AppTreeItem *parent)
     }
 }
 
-void AppTreeView::itemSelected(QListViewItem *item)
+void AppTreeView::itemSelected(TQListViewItem *item)
 {
     AppTreeItem *_item = static_cast<AppTreeItem*>(item);
 
@@ -204,29 +204,29 @@ void AppTreeView::itemSelected(QListViewItem *item)
     emit entrySelected(_item->storageId(), _item->accel(), _item->isDirectory());
 }
 
-QStringList AppTreeView::fileList(const QString& rPath)
+TQStringList AppTreeView::fileList(const TQString& rPath)
 {
-    QString relativePath = rPath;
+    TQString relativePath = rPath;
 
     // truncate "/.directory"
     int pos = relativePath.findRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
-    QStringList filelist;
+    TQStringList filelist;
 
     // loop through all resource dirs and build a file list
-    QStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
-    for (QStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
+    TQStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
+    for (TQStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
     {
-        QDir dir((*it) + "/" + relativePath);
+        TQDir dir((*it) + "/" + relativePath);
         if(!dir.exists()) continue;
 
-        dir.setFilter(QDir::Files);
+        dir.setFilter(TQDir::Files);
         dir.setNameFilter("*.desktop;*.kdelnk");
 
         // build a list of files
-        QStringList files = dir.entryList();
-        for (QStringList::ConstIterator it = files.begin(); it != files.end(); ++it) {
+        TQStringList files = dir.entryList();
+        for (TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it) {
             // does not work?!
             //if (filelist.contains(*it)) continue;
 
@@ -243,27 +243,27 @@ QStringList AppTreeView::fileList(const QString& rPath)
     return filelist;
 }
 
-QStringList AppTreeView::dirList(const QString& rPath)
+TQStringList AppTreeView::dirList(const TQString& rPath)
 {
-    QString relativePath = rPath;
+    TQString relativePath = rPath;
 
     // truncate "/.directory"
     int pos = relativePath.findRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
-    QStringList dirlist;
+    TQStringList dirlist;
 
     // loop through all resource dirs and build a subdir list
-    QStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
-    for (QStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
+    TQStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
+    for (TQStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
     {
-        QDir dir((*it) + "/" + relativePath);
+        TQDir dir((*it) + "/" + relativePath);
         if(!dir.exists()) continue;
-        dir.setFilter(QDir::Dirs);
+        dir.setFilter(TQDir::Dirs);
 
         // build a list of subdirs
-        QStringList subdirs = dir.entryList();
-        for (QStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it) {
+        TQStringList subdirs = dir.entryList();
+        for (TQStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it) {
             if ((*it) == "." || (*it) == "..") continue;
             // does not work?!
             // if (dirlist.contains(*it)) continue;

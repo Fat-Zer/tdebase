@@ -8,10 +8,10 @@
 #ifndef __COLORSCM_H__
 #define __COLORSCM_H__
 
-#include <qcolor.h>
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqcolor.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kcmodule.h>
 #include <kdialogbase.h>
@@ -39,7 +39,7 @@ class KColorScheme: public KCModule
     Q_OBJECT
 
 public:
-    KColorScheme(QWidget *parent, const char *name, const QStringList &);
+    KColorScheme(TQWidget *parent, const char *name, const TQStringList &);
     ~KColorScheme();
 
     virtual void load();
@@ -53,38 +53,38 @@ private slots:
     void slotAdd();
     void slotRemove();
     void slotImport();
-    void slotSelectColor(const QColor &col);
+    void slotSelectColor(const TQColor &col);
     void slotWidgetColor(int);
-    void slotColorForWidget(int, const QColor &);
+    void slotColorForWidget(int, const TQColor &);
     void slotPreviewScheme(int);
     void slotShadeSortColumnChanged(bool);
 
 private:
-    void setColorName( const QString &name, int id );
+    void setColorName( const TQString &name, int id );
     void readScheme(int index=0);
     void readSchemeNames();
-	void insertEntry(const QString &sFile, const QString &sName);
-    int findSchemeByName(const QString &scheme);
-    QPalette createPalette();
+	void insertEntry(const TQString &sFile, const TQString &sName);
+    int findSchemeByName(const TQString &scheme);
+    TQPalette createPalette();
     
-    QColor &color(int index);
+    TQColor &color(int index);
 
     int nSysSchemes;
     bool useRM;
 
-    QColor colorPushColor;
-    QSlider *sb;
-    QComboBox *wcCombo;
-    QPushButton *addBt, *removeBt, *importBt;
+    TQColor colorPushColor;
+    TQSlider *sb;
+    TQComboBox *wcCombo;
+    TQPushButton *addBt, *removeBt, *importBt;
     KListBox *sList;
     KColorSchemeList *mSchemeList;
-    QString sCurrentScheme;
+    TQString sCurrentScheme;
 
     KColorButton *colorButton;
     WidgetCanvas *cs;
     
-    QCheckBox *cbExportColors;
-    QCheckBox *cbShadeList;
+    TQCheckBox *cbExportColors;
+    TQCheckBox *cbShadeList;
 };
 
 #endif

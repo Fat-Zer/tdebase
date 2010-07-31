@@ -30,9 +30,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "Misc.h"
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <time.h>
 
 namespace KFI
@@ -53,12 +53,12 @@ class CXConfig
             FONT_CONFIG
         };
 
-        TPath(const QString &d, bool u=false, EType t=DIR, bool o=true)
+        TPath(const TQString &d, bool u=false, EType t=DIR, bool o=true)
            : dir(DIR==t ? Misc::dirSyntax(d) : d), unscaled(u), orig(o), type(t) {}
 
-        static EType getType(const QString &d);
+        static EType getType(const TQString &d);
 
-        QString dir;
+        TQString dir;
         bool    unscaled,
                 orig;          // Was dir in file when read?
         EType   type;
@@ -72,16 +72,16 @@ class CXConfig
 
     public:
 
-    CXConfig(EType type, const QString &file);
+    CXConfig(EType type, const TQString &file);
 
-    static bool configureDir(const QString &dir);
+    static bool configureDir(const TQString &dir);
 
     bool  ok()                       { return itsOk; }
     bool  writable()                 { return itsWritable; }
     bool  readConfig();
     bool  writeConfig();
     bool  madeChanges();
-    void  addPath(const QString &dir, bool unscaled=false);
+    void  addPath(const TQString &dir, bool unscaled=false);
     bool  inPath(TPath::EType type);
     bool  xfsInPath()                { return inPath(TPath::FONT_SERVER); }
     bool  fcInPath()                 { return inPath(TPath::FONT_CONFIG); }
@@ -96,13 +96,13 @@ class CXConfig
     bool processX11(bool read);
     bool processXfs(bool read);
 
-    TPath * findPath(const QString &dir);
+    TPath * findPath(const TQString &dir);
 
     private:
 
     EType           itsType;
-    QPtrList<TPath> itsPaths;
-    QString         itsFileName,
+    TQPtrList<TPath> itsPaths;
+    TQString         itsFileName,
                     itsInsertPos;
     bool            itsOk,
                     itsWritable;

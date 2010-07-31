@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 extern "C"
 {
-    KDE_EXPORT KPanelExtension* init(QWidget *parent, const QString& configFile)
+    KDE_EXPORT KPanelExtension* init(TQWidget *parent, const TQString& configFile)
     {
 	KGlobal::locale()->insertCatalogue("dockbarextension");
 	return new DockBarExtension(configFile, KPanelExtension::Normal,
@@ -52,15 +52,15 @@ extern "C"
     }
 }
 
-DockBarExtension::DockBarExtension(const QString& configFile, Type type,
-				   int actions, QWidget *parent, const char *name)
+DockBarExtension::DockBarExtension(const TQString& configFile, Type type,
+				   int actions, TQWidget *parent, const char *name)
   : KPanelExtension(configFile, type, actions, parent, name)
 {
     dragging_container = 0;
     kwin_module = new KWinModule(this);
-    connect( kwin_module, SIGNAL( windowAdded(WId) ), SLOT( windowAdded(WId) ) );
+    connect( kwin_module, TQT_SIGNAL( windowAdded(WId) ), TQT_SLOT( windowAdded(WId) ) );
     setMinimumSize(DockContainer::sz(), DockContainer::sz());
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
     loadContainerConfig();
 }
 
@@ -77,15 +77,15 @@ DockBarExtension::~DockBarExtension()
     if (dragging_container) delete dragging_container;
 }
 
-QSize DockBarExtension::sizeHint(Position p, QSize) const
+TQSize DockBarExtension::sizeHint(Position p, TQSize) const
 {
     if (p == Left || p == Right)
-	return QSize(DockContainer::sz(), DockContainer::sz() * containers.count());
+	return TQSize(DockContainer::sz(), DockContainer::sz() * containers.count());
     else
-	return QSize(DockContainer::sz() * containers.count(), DockContainer::sz());
+	return TQSize(DockContainer::sz() * containers.count(), DockContainer::sz());
 }
 
-void DockBarExtension::resizeEvent(QResizeEvent*)
+void DockBarExtension::resizeEvent(TQResizeEvent*)
 {
     layoutContainers();   
 }
@@ -96,7 +96,7 @@ void DockBarExtension::windowAdded(WId win)
     // try to read WM_COMMAND
     int argc;
     char **argv;
-    QString command;
+    TQString command;
     if (XGetCommand(qt_xdisplay(), win, &argv, &argc)) {
 	command = KShell::joinArgs(argv, argc);
 	XFreeStringList(argv);
@@ -145,7 +145,7 @@ void DockBarExtension::windowAdded(WId win)
 
     // try to read class hint
     XClassHint hint;
-    QString resClass, resName;
+    TQString resClass, resName;
     if (XGetClassHint(qt_xdisplay(), win, &hint)) {
         resName =  hint.res_name;
         resClass = hint.res_class;
@@ -182,7 +182,7 @@ void DockBarExtension::layoutContainers()
     }
 }
 
-void DockBarExtension::embedWindow(WId win, QString command, QString resName, QString resClass)
+void DockBarExtension::embedWindow(WId win, TQString command, TQString resName, TQString resClass)
 {
     if (win == 0) return; 
     DockContainer* container = 0;
@@ -204,7 +204,7 @@ void DockBarExtension::embedWindow(WId win, QString command, QString resName, QS
     }
     
     if (container == 0) {
-	QString cmd = command.isNull() ? resClass : command;
+	TQString cmd = command.isNull() ? resClass : command;
 	if (KStandardDirs::findExe(KShell::splitArgs(cmd).front()).isEmpty())
 	    ncmd = true;
 	container = new DockContainer(cmd, this, resName, resClass);
@@ -236,10 +236,10 @@ void DockBarExtension::addContainer(DockContainer* c, int pos)
 
         containers.insert(it, c);
     }
-    connect(c, SIGNAL(embeddedWindowDestroyed(DockContainer*)), 
-            SLOT(embeddedWindowDestroyed(DockContainer*)));
-    connect(c, SIGNAL(settingsChanged(DockContainer*)), 
-            SLOT(settingsChanged(DockContainer*)));
+    connect(c, TQT_SIGNAL(embeddedWindowDestroyed(DockContainer*)), 
+            TQT_SLOT(embeddedWindowDestroyed(DockContainer*)));
+    connect(c, TQT_SIGNAL(settingsChanged(DockContainer*)), 
+            TQT_SLOT(settingsChanged(DockContainer*)));
     c->resize(DockContainer::sz(), DockContainer::sz());
     c->show();
 }
@@ -272,7 +272,7 @@ void DockBarExtension::settingsChanged(DockContainer *)
 
 void DockBarExtension::saveContainerConfig()
 {
-    QStringList applet_list;
+    TQStringList applet_list;
     KConfig *conf = config();
     unsigned count = 0;
 
@@ -283,7 +283,7 @@ void DockBarExtension::saveContainerConfig()
         DockContainer* c = *it;
         if (!c->command().isEmpty())
         {
-            QString applet_gid = QString("Applet_%1").arg(QString::number(count));
+            TQString applet_gid = TQString("Applet_%1").arg(TQString::number(count));
             applet_list.append(applet_gid);
             conf->setGroup(applet_gid);
             conf->writePathEntry("Command", c->command());
@@ -302,15 +302,15 @@ void DockBarExtension::loadContainerConfig()
 {
     KConfig *conf = config();
     conf->setGroup("General");
-    QStringList applets = conf->readListEntry("Applets");
+    TQStringList applets = conf->readListEntry("Applets");
     
-    QStringList fail_list;
-    for (QStringList::Iterator it = applets.begin(); it != applets.end(); ++it) {
+    TQStringList fail_list;
+    for (TQStringList::Iterator it = applets.begin(); it != applets.end(); ++it) {
         if (!conf->hasGroup(*it)) continue;
         conf->setGroup(*it);
-        QString cmd = conf->readPathEntry("Command");
-        QString resName  = conf->readPathEntry("resName");
-        QString resClass = conf->readEntry("resClass");
+        TQString cmd = conf->readPathEntry("Command");
+        TQString resName  = conf->readPathEntry("resName");
+        TQString resClass = conf->readEntry("resClass");
         if (cmd.isEmpty() || resName.isEmpty() || resClass.isEmpty()) continue;
 
         DockContainer* c = new DockContainer(cmd, this, resName, resClass );
@@ -328,7 +328,7 @@ void DockBarExtension::loadContainerConfig()
     saveContainerConfig();
 }
 
-int DockBarExtension::findContainerAtPoint(const QPoint& p)
+int DockBarExtension::findContainerAtPoint(const TQPoint& p)
 {
     int i = 0;
     for (DockContainer::Vector::const_iterator it = containers.constBegin();
@@ -344,7 +344,7 @@ int DockBarExtension::findContainerAtPoint(const QPoint& p)
     return -1;
 }
 
-void DockBarExtension::mousePressEvent(QMouseEvent *e ) {
+void DockBarExtension::mousePressEvent(TQMouseEvent *e ) {
     if (e->button() == LeftButton) {
         // Store the position of the mouse clic.
         mclic_pos = e->pos();
@@ -354,7 +354,7 @@ void DockBarExtension::mousePressEvent(QMouseEvent *e ) {
     }
 }
 
-void DockBarExtension::mouseReleaseEvent(QMouseEvent *e ) {
+void DockBarExtension::mouseReleaseEvent(TQMouseEvent *e ) {
     if (e->button() != LeftButton) return;
     if (dragging_container) {  
         releaseMouse();
@@ -365,11 +365,11 @@ void DockBarExtension::mouseReleaseEvent(QMouseEvent *e ) {
     }
 }
 
-void DockBarExtension::mouseMoveEvent(QMouseEvent *e) {
+void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
     if (! (e->state() & LeftButton) ) return;
     if (dragging_container == 0) {
         // Check whether the user has moved far enough.
-        int delay = QApplication::startDragDistance();
+        int delay = TQApplication::startDragDistance();
         if ( (mclic_pos - e->pos()).manhattanLength() > delay ) {
             int pos = findContainerAtPoint(e->pos());
             original_container = 0;
@@ -388,7 +388,7 @@ void DockBarExtension::mouseMoveEvent(QMouseEvent *e) {
         dragging_container->move(e->globalPos() - mclic_dock_pos);
         
         // change layout of other containers 
-        QPoint dragpos(dragging_container->pos()), 
+        TQPoint dragpos(dragging_container->pos()), 
             barpos(mapToGlobal(pos()));
         int pdrag1,pdrag2,psz;
         pdrag1 = dragpos.x() - barpos.x() + DockContainer::sz()/2;

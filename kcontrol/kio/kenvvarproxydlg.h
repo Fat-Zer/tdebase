@@ -21,7 +21,7 @@
 #ifndef KENVVAR_PROXY_DIALOG_H
 #define KENVVAR_PROXY_DIALOG_H
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #include "kproxydlgbase.h"
 
@@ -32,7 +32,7 @@ class KEnvVarProxyDlg : public KProxyDialogBase
     Q_OBJECT
 
 public:
-    KEnvVarProxyDlg( QWidget* parent = 0, const char* name = 0 );
+    KEnvVarProxyDlg( TQWidget* parent = 0, const char* name = 0 );
     ~KEnvVarProxyDlg();
 
     virtual const KProxyData data() const;
@@ -52,6 +52,6 @@ protected:
 
 private:
     EnvVarProxyDlgUI* mDlg;
-    QMap<QString, QString> mEnvVarsMap;
+    TQMap<TQString, TQString> mEnvVarsMap;
 };
 #endif

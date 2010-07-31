@@ -14,8 +14,8 @@
 
 #include <ksystemtray.h>
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 #include "kxkbconfig.h"
 
@@ -35,12 +35,12 @@ class KxkbLabelController: public QObject
 public:
 	enum { START_MENU_ID = 100, CONFIG_MENU_ID = 130, HELP_MENU_ID = 131 };
 
-    KxkbLabelController(QLabel *label, QPopupMenu* contextMenu);
+    KxkbLabelController(TQLabel *label, TQPopupMenu* contextMenu);
 
-    void initLayoutList(const QValueList<LayoutUnit>& layouts, const XkbRules& rule);
+    void initLayoutList(const TQValueList<LayoutUnit>& layouts, const XkbRules& rule);
     void setCurrentLayout(const LayoutUnit& layout);
-// 	void setCurrentLayout(const QString& layout, const QString &variant);
-	void setError(const QString& layoutInfo="");
+// 	void setCurrentLayout(const TQString& layout, const TQString &variant);
+	void setError(const TQString& layoutInfo="");
     void setShowFlag(bool showFlag) { m_showFlag = showFlag; }
 	void show() { label->show(); }
 	
@@ -51,19 +51,19 @@ public:
 
 // protected:
 // 
-//     void mouseReleaseEvent(QMouseEvent *);
+//     void mouseReleaseEvent(TQMouseEvent *);
 
 private:
-	QLabel* label;
-	QPopupMenu* contextMenu;
+	TQLabel* label;
+	TQPopupMenu* contextMenu;
 	
 	const int m_menuStartIndex;
 	bool m_showFlag;
 	int m_prevLayoutCount;
-    QMap<QString, QString> m_descriptionMap;
+    TQMap<TQString, TQString> m_descriptionMap;
 	
-	void setToolTip(const QString& tip);
-	void setPixmap(const QPixmap& pixmap);
+	void setToolTip(const TQString& tip);
+	void setPixmap(const TQPixmap& pixmap);
 };
 
 
@@ -76,9 +76,9 @@ class KxkbSystemTray : public KSystemTray
 		KSystemTray(NULL)
 	{}
 	
-	void mouseReleaseEvent(QMouseEvent *ev)
+	void mouseReleaseEvent(TQMouseEvent *ev)
 	{
-		if (ev->button() == QMouseEvent::LeftButton)
+		if (ev->button() == TQMouseEvent::LeftButton)
 			emit toggled();
 		KSystemTray::mouseReleaseEvent(ev);
 	}

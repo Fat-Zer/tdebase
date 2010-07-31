@@ -20,12 +20,12 @@ class KfindWindow;
 class KfFileLVI : public QListViewItem
 {
  public:
-  KfFileLVI(KfindWindow* lv, const KFileItem &item,const QString& matchingLine);
+  KfFileLVI(KfindWindow* lv, const KFileItem &item,const TQString& matchingLine);
   ~KfFileLVI();
 
-  QString key(int column, bool) const;
+  TQString key(int column, bool) const;
 
-  QFileInfo *fileInfo;
+  TQFileInfo *fileInfo;
   KFileItem fileitem;
 };
 
@@ -33,18 +33,18 @@ class KfindWindow: public   KListView
 {
   Q_OBJECT
 public:
-  KfindWindow( QWidget * parent = 0, const char * name = 0 );
+  KfindWindow( TQWidget * parent = 0, const char * name = 0 );
 
   void beginSearch(const KURL& baseUrl);
   void endSearch();
 
-  void insertItem(const KFileItem &item, const QString& matchingLine);
+  void insertItem(const KFileItem &item, const TQString& matchingLine);
 
-  QString reducedDir(const QString& fullDir);
+  TQString reducedDir(const TQString& fullDir);
 
 public slots:
   void copySelection();
-  void slotContextMenu(KListView *,QListViewItem *item,const QPoint&p);
+  void slotContextMenu(KListView *,TQListViewItem *item,const TQPoint&p);
 
 private slots:
   void deleteFiles();
@@ -53,19 +53,19 @@ private slots:
   void saveResults();
   void openBinding();
   void selectionHasChanged();
-  void slotExecute(QListViewItem*);
+  void slotExecute(TQListViewItem*);
   void slotOpenWith();
   
 protected:
-  virtual void resizeEvent(QResizeEvent *e);
+  virtual void resizeEvent(TQResizeEvent *e);
 
-  virtual QDragObject *dragObject();
+  virtual TQDragObject *dragObject();
 
 signals:
   void resultSelected(bool);
 
 private:
-  QString m_baseDir;
+  TQString m_baseDir;
   KPopupMenu *m_menu;
   bool haveSelection;
   bool m_pressed;

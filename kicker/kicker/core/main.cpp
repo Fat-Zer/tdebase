@@ -51,13 +51,13 @@ static const char version[] = VERSION;
 static void sighandler(int)
 {
     fprintf(stderr, "kicker: sighandler called\n");
-    QApplication::exit();
+    TQApplication::exit();
 }
 
 extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 {
     {
-        QCString multiHead = getenv("KDE_MULTIHEAD");
+        TQCString multiHead = getenv("KDE_MULTIHEAD");
         if (multiHead.lower() == "true") {
 	    Display *dpy = XOpenDisplay(NULL);
 	    if (! dpy) {
@@ -69,14 +69,14 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 	    int number_of_screens = ScreenCount(dpy);
 	    kicker_screen_number = DefaultScreen(dpy);
 	    int pos;
-	    QCString display_name = XDisplayString(dpy);
+	    TQCString display_name = XDisplayString(dpy);
 	    XCloseDisplay(dpy);
 	    dpy = 0;
 
 	    if ((pos = display_name.findRev('.')) != -1)
 		display_name.remove(pos, 10);
 
-            QCString env;
+            TQCString env;
 	    if (number_of_screens != 1) {
 		for (int i = 0; i < number_of_screens; i++) {
 		    if (i != kicker_screen_number && fork() == 0) {
@@ -101,7 +101,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 
     KGlobal::locale()->setMainCatalogue("kicker");
 
-    QCString appname;
+    TQCString appname;
     if (kicker_screen_number == 0)
 	appname = "kicker";
     else
@@ -140,12 +140,12 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 	signal(SIGHUP, SIG_IGN);
 
     // send it even before KApplication ctor, because ksmserver will launch another app as soon
-    // as QApplication registers with it
+    // as TQApplication registers with it
     DCOPClient* cl = new DCOPClient;
     cl->attach();
     DCOPRef r( "ksmserver", "ksmserver" );
     r.setDCOPClient( cl );
-    r.send( "suspendStartup", QCString( "kicker" ));
+    r.send( "suspendStartup", TQCString( "kicker" ));
     delete cl;
     Kicker* kicker = new Kicker;
     int rv = kicker->exec();

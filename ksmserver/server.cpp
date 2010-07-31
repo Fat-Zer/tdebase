@@ -56,15 +56,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <limits.h>
 #endif
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qdatastream.h>
-#include <qptrstack.h>
-#include <qpushbutton.h>
-#include <qmessagebox.h>
-#include <qguardedptr.h>
-#include <qtimer.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqdatastream.h>
+#include <tqptrstack.h>
+#include <tqpushbutton.h>
+#include <tqmessagebox.h>
+#include <tqguardedptr.h>
+#include <tqtimer.h>
+#include <tqregexp.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -98,14 +98,14 @@ KSMServer* KSMServer::self()
 /*! Utility function to execute a command on the local machine. Used
  * to restart applications.
  */
-void KSMServer::startApplication( QStringList command, const QString& clientMachine,
-    const QString& userId )
+void KSMServer::startApplication( TQStringList command, const TQString& clientMachine,
+    const TQString& userId )
 {
     if ( command.isEmpty() )
         return;
     if ( !userId.isEmpty()) {
         struct passwd* pw = getpwuid( getuid());
-        if( pw != NULL && userId != QString::fromLocal8Bit( pw->pw_name )) {
+        if( pw != NULL && userId != TQString::fromLocal8Bit( pw->pw_name )) {
             command.prepend( "--" );
             command.prepend( userId );
             command.prepend( "-u" );
@@ -117,22 +117,22 @@ void KSMServer::startApplication( QStringList command, const QString& clientMach
 	command.prepend( xonCommand ); // "xon" by default
     }
     int n = command.count();
-    QCString app = command[0].latin1();
-    QValueList<QCString> argList;
+    TQCString app = command[0].latin1();
+    TQValueList<TQCString> argList;
     for ( int i=1; i < n; i++)
-       argList.append( QCString(command[i].latin1()));
-    DCOPRef( launcher ).send( "exec_blind", app, DCOPArg( argList, "QValueList<QCString>" ) );
+       argList.append( TQCString(command[i].latin1()));
+    DCOPRef( launcher ).send( "exec_blind", app, DCOPArg( argList, "TQValueList<TQCString>" ) );
 }
 
 /*! Utility function to execute a command on the local machine. Used
  * to discard session data
  */
-void KSMServer::executeCommand( const QStringList& command )
+void KSMServer::executeCommand( const TQStringList& command )
 {
     if ( command.isEmpty() )
         return;
     KProcess proc;
-    for ( QStringList::ConstIterator it = command.begin();
+    for ( TQStringList::ConstIterator it = command.begin();
           it != command.end(); ++it )
         proc << (*it).latin1();
     proc.start( KProcess::Block );
@@ -301,8 +301,8 @@ class KSMListener : public QSocketNotifier
 {
 public:
     KSMListener( IceListenObj obj )
-        : QSocketNotifier( IceGetListenConnectionNumber( obj ),
-                           QSocketNotifier::Read, 0, 0)
+        : TQSocketNotifier( IceGetListenConnectionNumber( obj ),
+                           TQSocketNotifier::Read, 0, 0)
 {
     listenObj = obj;
 }
@@ -314,8 +314,8 @@ class KSMConnection : public QSocketNotifier
 {
  public:
   KSMConnection( IceConn conn )
-    : QSocketNotifier( IceConnectionNumber( conn ),
-                       QSocketNotifier::Read, 0, 0 )
+    : TQSocketNotifier( IceConnectionNumber( conn ),
+                       TQSocketNotifier::Read, 0, 0 )
     {
         iceConn = conn;
     }
@@ -432,7 +432,7 @@ Status SetAuthentication (int count, IceListenObj *listenObjs,
     addAuthFile.close();
     remAuthFile->close();
 
-    QString iceAuth = KGlobal::dirs()->findExe("iceauth");
+    TQString iceAuth = KGlobal::dirs()->findExe("iceauth");
     if (iceAuth.isEmpty())
     {
         qWarning("KSMServer: could not find iceauth");
@@ -462,7 +462,7 @@ void FreeAuthenticationData(int count, IceAuthDataEntry *authDataEntries)
 
     free (authDataEntries);
 
-    QString iceAuth = KGlobal::dirs()->findExe("iceauth");
+    TQString iceAuth = KGlobal::dirs()->findExe("iceauth");
     if (iceAuth.isEmpty())
     {
         qWarning("KSMServer: could not find iceauth");
@@ -578,7 +578,7 @@ static Status KSMNewClientProc ( SmsConn conn, SmPointer manager_data,
 extern "C" int _IceTransNoListen(const char * protocol);
 #endif
 
-KSMServer::KSMServer( const QString& windowManager, bool _only_local )
+KSMServer::KSMServer( const TQString& windowManager, bool _only_local )
   : DCOPObject("ksmserver"), sessionGroup( "" )
 {
     the_server = this;
@@ -596,9 +596,9 @@ KSMServer::KSMServer( const QString& windowManager, bool _only_local )
     clientInteracting = 0;
     xonCommand = config->readEntry( "xonCommand", "xon" );
     
-    connect( &knotifyTimeoutTimer, SIGNAL( timeout()), SLOT( knotifyTimeout()));
-    connect( &startupSuspendTimeoutTimer, SIGNAL( timeout()), SLOT( startupSuspendTimeout()));
-    connect( &pendingShutdown, SIGNAL( timeout()), SLOT( pendingShutdownTimeout()));
+    connect( &knotifyTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( knotifyTimeout()));
+    connect( &startupSuspendTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( startupSuspendTimeout()));
+    connect( &pendingShutdown, TQT_SIGNAL( timeout()), TQT_SLOT( pendingShutdownTimeout()));
 
     only_local = _only_local;
 #ifdef HAVE__ICETRANSNOLISTEN
@@ -629,10 +629,10 @@ KSMServer::KSMServer( const QString& windowManager, bool _only_local )
 
     {
         // publish available transports.
-        QCString fName = QFile::encodeName(locateLocal("socket", "KSMserver"));
-        QCString display = ::getenv("DISPLAY");
+        TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
+        TQCString display = ::getenv("DISPLAY");
         // strip the screen number from the display
-        display.replace(QRegExp("\\.[0-9]+$"), "");
+        display.replace(TQRegExp("\\.[0-9]+$"), "");
         int i;
         while( (i = display.find(':')) >= 0)
            display[i] = '_';
@@ -669,7 +669,7 @@ KSMServer::KSMServer( const QString& windowManager, bool _only_local )
     for ( int i = 0; i < numTransports; i++) {
         con = new KSMListener( listenObjs[i] );
         listener.append( con );
-        connect( con, SIGNAL( activated(int) ), this, SLOT( newConnection(int) ) );
+        connect( con, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( newConnection(int) ) );
     }
 
     signal(SIGHUP, sighandler);
@@ -677,9 +677,9 @@ KSMServer::KSMServer( const QString& windowManager, bool _only_local )
     signal(SIGINT, sighandler);
     signal(SIGPIPE, SIG_IGN);
 
-    connect( &protectionTimer, SIGNAL( timeout() ), this, SLOT( protectionTimeout() ) );
-    connect( &restoreTimer, SIGNAL( timeout() ), this, SLOT( tryRestoreNext() ) );
-    connect( kapp, SIGNAL( shutDown() ), this, SLOT( cleanUp() ) );
+    connect( &protectionTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( protectionTimeout() ) );
+    connect( &restoreTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( tryRestoreNext() ) );
+    connect( kapp, TQT_SIGNAL( shutDown() ), this, TQT_SLOT( cleanUp() ) );
 }
 
 KSMServer::~KSMServer()
@@ -694,10 +694,10 @@ void KSMServer::cleanUp()
     clean = true;
     IceFreeListenObjs (numTransports, listenObjs);
 
-    QCString fName = QFile::encodeName(locateLocal("socket", "KSMserver"));
-    QCString display = ::getenv("DISPLAY");
+    TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
+    TQCString display = ::getenv("DISPLAY");
     // strip the screen number from the display
-    display.replace(QRegExp("\\.[0-9]+$"), "");
+    display.replace(TQRegExp("\\.[0-9]+$"), "");
     int i;
     while( (i = display.find(':')) >= 0)
          display[i] = '_';
@@ -717,7 +717,7 @@ void KSMServer::cleanUp()
 void* KSMServer::watchConnection( IceConn iceConn )
 {
     KSMConnection* conn = new KSMConnection( iceConn );
-    connect( conn, SIGNAL( activated(int) ), this, SLOT( processData(int) ) );
+    connect( conn, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( processData(int) ) );
     return (void*) conn;
 }
 
@@ -740,7 +740,7 @@ void KSMServer::processData( int /*socket*/ )
     IceProcessMessagesStatus status = IceProcessMessages( iceConn, 0, 0 );
     if ( status == IceProcessMessagesIOError ) {
         IceSetShutdownNegotiation( iceConn, False );
-        QPtrListIterator<KSMClient> it ( clients );
+        TQPtrListIterator<KSMClient> it ( clients );
         while ( it.current() &&SmsGetIceConnection( it.current()->connection() ) != iceConn )
             ++it;
         if ( it.current() ) {
@@ -797,7 +797,7 @@ void KSMServer::newConnection( int /*socket*/ )
 }
 
 
-QString KSMServer::currentSession()
+TQString KSMServer::currentSession()
 {
     if ( sessionGroup.startsWith( "Session: " ) )
         return sessionGroup.mid( 9 );
@@ -810,7 +810,7 @@ void KSMServer::discardSession()
     config->setGroup( sessionGroup );
     int count =  config->readNumEntry( "count", 0 );
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
-        QStringList discardCommand = c->discardCommand();
+        TQStringList discardCommand = c->discardCommand();
         if ( discardCommand.isEmpty())
             continue;
         // check that non of the old clients used the exactly same
@@ -818,7 +818,7 @@ void KSMServer::discardSession()
         // case up to KDE and Qt < 3.1
         int i = 1;
         while ( i <= count &&
-                config->readPathListEntry( QString("discardCommand") + QString::number(i) ) != discardCommand )
+                config->readPathListEntry( TQString("discardCommand") + TQString::number(i) ) != discardCommand )
             i++;
         if ( i <= count )
             executeCommand( discardCommand );
@@ -830,11 +830,11 @@ void KSMServer::storeSession()
     KConfig* config = KGlobal::config();
     config->reparseConfiguration(); // config may have changed in the KControl module
     config->setGroup("General" );
-    excludeApps = QStringList::split( QRegExp( "[,:]" ), config->readEntry( "excludeApps" ).lower()); 
+    excludeApps = TQStringList::split( TQRegExp( "[,:]" ), config->readEntry( "excludeApps" ).lower()); 
     config->setGroup( sessionGroup );
     int count =  config->readNumEntry( "count" );
     for ( int i = 1; i <= count; i++ ) {
-        QStringList discardCommand = config->readPathListEntry( QString("discardCommand") + QString::number(i) );
+        TQStringList discardCommand = config->readPathListEntry( TQString("discardCommand") + TQString::number(i) );
         if ( discardCommand.isEmpty())
             continue;
         // check that non of the new clients uses the exactly same
@@ -864,22 +864,22 @@ void KSMServer::storeSession()
         int restartHint = c->restartStyleHint();
         if (restartHint == SmRestartNever)
            continue;
-        QString program = c->program();
-        QStringList restartCommand = c->restartCommand();
+        TQString program = c->program();
+        TQStringList restartCommand = c->restartCommand();
         if (program.isEmpty() && restartCommand.isEmpty())
            continue;
         if (excludeApps.contains( program.lower()))
             continue;
 
         count++;
-        QString n = QString::number(count);
-        config->writeEntry( QString("program")+n, program );
-        config->writeEntry( QString("clientId")+n, c->clientId() );
-        config->writeEntry( QString("restartCommand")+n, restartCommand );
-        config->writePathEntry( QString("discardCommand")+n, c->discardCommand() );
-        config->writeEntry( QString("restartStyleHint")+n, restartHint );
-        config->writeEntry( QString("userId")+n, c->userId() );
-        config->writeEntry( QString("wasWm")+n, isWM( c ));
+        TQString n = TQString::number(count);
+        config->writeEntry( TQString("program")+n, program );
+        config->writeEntry( TQString("clientId")+n, c->clientId() );
+        config->writeEntry( TQString("restartCommand")+n, restartCommand );
+        config->writePathEntry( TQString("discardCommand")+n, c->discardCommand() );
+        config->writeEntry( TQString("restartStyleHint")+n, restartHint );
+        config->writeEntry( TQString("userId")+n, c->userId() );
+        config->writeEntry( TQString("wasWm")+n, isWM( c ));
     }
     config->writeEntry( "count", count );
 
@@ -891,12 +891,12 @@ void KSMServer::storeSession()
 }
 
 
-QStringList KSMServer::sessionList()
+TQStringList KSMServer::sessionList()
 {
-    QStringList sessions = "default";
+    TQStringList sessions = "default";
     KConfig* config = KGlobal::config();
-    QStringList groups = config->groupList();
-    for ( QStringList::ConstIterator it = groups.begin(); it != groups.end(); it++ )
+    TQStringList groups = config->groupList();
+    for ( TQStringList::ConstIterator it = groups.begin(); it != groups.end(); it++ )
         if ( (*it).startsWith( "Session: " ) )
             sessions << (*it).mid( 9 );
     return sessions;
@@ -907,7 +907,7 @@ bool KSMServer::isWM( const KSMClient* client ) const
     return isWM( client->program());
 }
 
-bool KSMServer::isWM( const QString& program ) const
+bool KSMServer::isWM( const TQString& program ) const
 {
     // KWin relies on ksmserver's special treatment in phase1,
     // therefore make sure it's recognized even if ksmserver

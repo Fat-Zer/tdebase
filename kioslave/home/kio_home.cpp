@@ -56,8 +56,8 @@ extern "C" {
 }
 
 
-HomeProtocol::HomeProtocol(const QCString &protocol,
-                               const QCString &pool, const QCString &app)
+HomeProtocol::HomeProtocol(const TQCString &protocol,
+                               const TQCString &pool, const TQCString &app)
 	: ForwardingSlaveBase(protocol, pool, app)
 {
 }
@@ -68,7 +68,7 @@ HomeProtocol::~HomeProtocol()
 
 bool HomeProtocol::rewriteURL(const KURL &url, KURL &newUrl)
 {
-	QString name, path;
+	TQString name, path;
 
 	if ( !m_impl.parseURL(url, name, path) )
 	{
@@ -97,7 +97,7 @@ void HomeProtocol::listDir(const KURL &url)
 		return;
 	}
 
-	QString name, path;
+	TQString name, path;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( !ok )
@@ -145,7 +145,7 @@ void HomeProtocol::stat(const KURL &url)
 {
 	kdDebug() << "HomeProtocol::stat: " << url << endl;
  
-	QString path = url.path();
+	TQString path = url.path();
 	if ( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
@@ -156,7 +156,7 @@ void HomeProtocol::stat(const KURL &url)
 		return;
 	}
 
-	QString name;
+	TQString name;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( !ok )

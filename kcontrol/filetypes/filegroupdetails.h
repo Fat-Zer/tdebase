@@ -18,7 +18,7 @@
 #ifndef _FILEGROUPDETAILS_H
 #define _FILEGROUPDETAILS_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 class TypesListItem;
 class QButtonGroup;
 
@@ -30,7 +30,7 @@ class FileGroupDetails : public QWidget
 {
   Q_OBJECT
 public:
-  FileGroupDetails(QWidget *parent = 0, const char *name = 0);
+  FileGroupDetails(TQWidget *parent = 0, const char *name = 0);
 
   void setTypeItem( TypesListItem * item );
 
@@ -44,7 +44,7 @@ private:
   TypesListItem * m_item;
 
   // Embedding config
-  QButtonGroup *m_autoEmbed;
+  TQButtonGroup *m_autoEmbed;
 };
 
 #endif

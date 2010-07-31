@@ -38,7 +38,7 @@ public:
      * @param module the module handling this toplevel item
      * @param path the path to the desktop file that was the reason for creating this item
      */
-    KonqSidebarTreeTopLevelItem( KonqSidebarTree *parent, KonqSidebarTreeModule * module, const QString & path )
+    KonqSidebarTreeTopLevelItem( KonqSidebarTree *parent, KonqSidebarTreeModule * module, const TQString & path )
         : KonqSidebarTreeItem(parent, 0L), m_module(module), m_path(path), m_bTopLevelGroup(false) { init(); }
 
     /**
@@ -46,14 +46,14 @@ public:
      * @param module the module handling this toplevel item
      * @param path the path to the desktop file that was the reason for creating this item
      */
-    KonqSidebarTreeTopLevelItem( KonqSidebarTreeItem *parentItem, KonqSidebarTreeModule * module, const QString & path )
+    KonqSidebarTreeTopLevelItem( KonqSidebarTreeItem *parentItem, KonqSidebarTreeModule * module, const TQString & path )
         : KonqSidebarTreeItem( parentItem, 0L), m_module(module), m_path(path), m_bTopLevelGroup(false) { init(); }
 
     void init();
 
-    virtual bool acceptsDrops( const QStrList & formats );
-    virtual void drop( QDropEvent * ev );
-    virtual QDragObject * dragObject( QWidget * parent, bool move = false );
+    virtual bool acceptsDrops( const TQStrList & formats );
+    virtual void drop( TQDropEvent * ev );
+    virtual TQDragObject * dragObject( TQWidget * parent, bool move = false );
     virtual void middleButtonClicked();
     virtual void rightButtonPressed();
 
@@ -62,7 +62,7 @@ public:
     virtual void del();
     virtual void shred();
     virtual void rename(); // start a rename operation
-    virtual void rename( const QString & name ); // do the actual renaming
+    virtual void rename( const TQString & name ); // do the actual renaming
 
     virtual void setOpen( bool open );
 
@@ -71,7 +71,7 @@ public:
 
     virtual KURL externalURL() const { return m_externalURL; }
 
-    virtual QString toolTipText() const;
+    virtual TQString toolTipText() const;
 
     virtual void itemSelected();
 
@@ -87,13 +87,13 @@ public:
     KonqSidebarTreeModule *module() const { return m_module; }
 
     // The path to the desktop file responsible for this toplevel item
-    QString path() const { return m_path; }
+    TQString path() const { return m_path; }
 
 protected:
     void delOperation( int method );
     KonqSidebarTreeModule *m_module;
-    QString m_path;
-    QString m_comment;
+    TQString m_path;
+    TQString m_comment;
     KURL m_externalURL;
     bool m_bTopLevelGroup;
 };

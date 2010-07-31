@@ -25,7 +25,7 @@
 
 class KCmdLineArgs;
 
-class KCMInit : public QObject, public DCOPObject
+class KCMInit : public TQObject, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
@@ -36,10 +36,10 @@ class KCMInit : public QObject, public DCOPObject
         KCMInit( KCmdLineArgs* args );
         virtual ~KCMInit();
     private:
-        bool runModule(const QString &libName, KService::Ptr service);
+        bool runModule(const TQString &libName, KService::Ptr service);
         void runModules( int phase );
         KService::List list;
-        QStrList alreadyInitialized;
+        TQStrList alreadyInitialized;
 };
 
 #endif

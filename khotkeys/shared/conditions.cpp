@@ -51,7 +51,7 @@ Condition::Condition( KConfig&, Condition_list_base* parent_P )
 
 Condition* Condition::create_cfg_read( KConfig& cfg_P, Condition_list_base* parent_P )
     {
-    QString type = cfg_P.readEntry( "Type" );
+    TQString type = cfg_P.readEntry( "Type" );
     if( type == "ACTIVE_WINDOW" )
         return new Active_window_condition( cfg_P, parent_P );
     if( type == "EXISTING_WINDOW" )
@@ -99,7 +99,7 @@ void Condition::debug( int depth_P )
     kdDebug( 1217 ) << tmp << description() << ":(" << this << ")" << endl;
     }
 
-void Condition::debug_list( const QPtrList< Condition >& list_P, int depth_P )
+void Condition::debug_list( const TQPtrList< Condition >& list_P, int depth_P )
     {
     char tmp[ 1024 ];
     int i;
@@ -108,7 +108,7 @@ void Condition::debug_list( const QPtrList< Condition >& list_P, int depth_P )
          ++i )
         tmp[ i ] = ' ';
     tmp[ i ] = '\0';
-    for( QPtrListIterator< Condition > it( list_P );
+    for( TQPtrListIterator< Condition > it( list_P );
          it;
          ++it )
         (*it)->debug( depth_P + 1 );
@@ -121,13 +121,13 @@ void Condition::debug_list( const QPtrList< Condition >& list_P, int depth_P )
 Condition_list_base::Condition_list_base( KConfig& cfg_P, Condition_list_base* parent_P )
     : Condition( parent_P )
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int cnt = cfg_P.readNumEntry( "ConditionsCount", 0 );
     for( int i = 0;
          i < cnt;
          ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         (void) Condition::create_cfg_read( cfg_P, this );
         }
     cfg_P.setGroup( save_cfg_group );
@@ -145,13 +145,13 @@ Condition_list_base::~Condition_list_base()
     
 void Condition_list_base::cfg_write( KConfig& cfg_P ) const
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int i = 0;
     for( Iterator it( *this );
          it;
          ++it, ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         it.current()->cfg_write( cfg_P );
         }
     cfg_P.setGroup( save_cfg_group );
@@ -230,10 +230,10 @@ void Condition_list::set_data( Action_data_base* data_P )
     data = data_P;
     }
 
-const QString Condition_list::description() const
+const TQString Condition_list::description() const
     {
     assert( false );
-    return QString::null;
+    return TQString::null;
     }
 
 Condition_list* Condition_list::copy( Condition_list_base* ) const
@@ -247,7 +247,7 @@ Condition_list* Condition_list::copy( Condition_list_base* ) const
 Active_window_condition::Active_window_condition( KConfig& cfg_P, Condition_list_base* parent_P )
     : Condition( cfg_P, parent_P )
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Window" );
     _window = new Windowdef_list( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -257,8 +257,8 @@ Active_window_condition::Active_window_condition( KConfig& cfg_P, Condition_list
 
 void Active_window_condition::init()
     {
-    connect( windows_handler, SIGNAL( active_window_changed( WId )),
-        this, SLOT( active_window_changed( WId )));
+    connect( windows_handler, TQT_SIGNAL( active_window_changed( WId )),
+        this, TQT_SLOT( active_window_changed( WId )));
     }
 
 bool Active_window_condition::match() const
@@ -276,7 +276,7 @@ void Active_window_condition::set_match()
 void Active_window_condition::cfg_write( KConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Window" );
     window()->cfg_write( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -292,7 +292,7 @@ Condition* Active_window_condition::copy( Condition_list_base* parent_P ) const
     return new Active_window_condition( window()->copy(), parent_P );
     }
 
-const QString Active_window_condition::description() const
+const TQString Active_window_condition::description() const
     {
     return i18n( "Active window: " ) + window()->comment();
     }
@@ -313,7 +313,7 @@ Active_window_condition::~Active_window_condition()
 Existing_window_condition::Existing_window_condition( KConfig& cfg_P, Condition_list_base* parent_P )
     : Condition( cfg_P, parent_P )
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Window" );
     _window = new Windowdef_list( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -323,8 +323,8 @@ Existing_window_condition::Existing_window_condition( KConfig& cfg_P, Condition_
 
 void Existing_window_condition::init()
     {
-    connect( windows_handler, SIGNAL( window_added( WId )), this, SLOT( window_added( WId )));
-    connect( windows_handler, SIGNAL( window_removed( WId )), this, SLOT( window_removed( WId )));
+    connect( windows_handler, TQT_SIGNAL( window_added( WId )), this, TQT_SLOT( window_added( WId )));
+    connect( windows_handler, TQT_SIGNAL( window_removed( WId )), this, TQT_SLOT( window_removed( WId )));
     }
 
 bool Existing_window_condition::match() const
@@ -345,7 +345,7 @@ void Existing_window_condition::set_match( WId w_P )
 void Existing_window_condition::cfg_write( KConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Window" );
     window()->cfg_write( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -361,7 +361,7 @@ Condition* Existing_window_condition::copy( Condition_list_base* parent_P ) cons
     return new Existing_window_condition( window()->copy(), parent_P );
     }
 
-const QString Existing_window_condition::description() const
+const TQString Existing_window_condition::description() const
     {
     return i18n( "Existing window: " ) + window()->comment();
     }
@@ -409,7 +409,7 @@ Not_condition* Not_condition::copy( Condition_list_base* parent_P ) const
     return ret;
     }
 
-const QString Not_condition::description() const
+const TQString Not_condition::description() const
     {
     return i18n( "Not_condition", "Not" );
     }
@@ -453,7 +453,7 @@ And_condition* And_condition::copy( Condition_list_base* parent_P ) const
     return ret;
     }
 
-const QString And_condition::description() const
+const TQString And_condition::description() const
     {
     return i18n( "And_condition", "And" );
     }
@@ -494,7 +494,7 @@ Or_condition* Or_condition::copy( Condition_list_base* parent_P ) const
     return ret;
     }
 
-const QString Or_condition::description() const
+const TQString Or_condition::description() const
     {
     return i18n( "Or_condition", "Or" );
     }

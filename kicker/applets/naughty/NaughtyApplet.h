@@ -22,7 +22,7 @@
 #define NAUGHTY_H
 
 #include <kpanelapplet.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include "simplebutton.h"
 
@@ -37,10 +37,10 @@ class NaughtyApplet : public KPanelApplet
 
     NaughtyApplet
       (
-       const QString & configFile,
+       const TQString & configFile,
        Type t = Normal,
        int actions = 0,
-       QWidget * parent = 0,
+       TQWidget * parent = 0,
        const char * name = 0
       );
 
@@ -55,7 +55,7 @@ class NaughtyApplet : public KPanelApplet
 
   protected slots:
 
-    void slotWarn(ulong pid, const QString & name);
+    void slotWarn(ulong pid, const TQString & name);
     void slotLoad(uint);
     void slotPreferences();
 
@@ -70,7 +70,7 @@ class NaughtyApplet : public KPanelApplet
 
     NaughtyProcessMonitor * monitor_;
     SimpleButton * button_;
-    QStringList ignoreList_;
+    TQStringList ignoreList_;
 };
 
 #endif

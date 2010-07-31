@@ -22,13 +22,13 @@
 
 */
 
-#include <qcursor.h>
-#include <qdom.h>
-#include <qdragobject.h>
-#include <qfile.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtooltip.h>
+#include <tqcursor.h>
+#include <tqdom.h>
+#include <tqdragobject.h>
+#include <tqfile.h>
+#include <tqpushbutton.h>
+#include <tqspinbox.h>
+#include <tqtooltip.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -50,7 +50,7 @@
 
 extern "C"
 {
-  KDE_EXPORT KPanelApplet* init( QWidget *parent, const QString& configFile )
+  KDE_EXPORT KPanelApplet* init( TQWidget *parent, const TQString& configFile )
   {
     KGlobal::locale()->insertCatalogue( "ksysguard" );
     return new KSysGuardApplet( configFile, KPanelApplet::Normal,
@@ -59,8 +59,8 @@ extern "C"
   }
 }
 
-KSysGuardApplet::KSysGuardApplet( const QString& configFile, Type type,
-                                  int actions, QWidget *parent,
+KSysGuardApplet::KSysGuardApplet( const TQString& configFile, Type type,
+                                  int actions, TQWidget *parent,
                                   const char *name )
   : KPanelApplet( configFile, type, actions, parent, name)
 {
@@ -71,7 +71,7 @@ KSysGuardApplet::KSysGuardApplet( const QString& configFile, Type type,
   KSGRD::Style = new KSGRD::StyleEngine();
 
   mDockCount = 1;
-  mDockList = new QWidget*[ mDockCount ];
+  mDockList = new TQWidget*[ mDockCount ];
 
   mSizeRatio = 1.0;
   addEmptyDisplay( mDockList, 0 );
@@ -108,7 +108,7 @@ int KSysGuardApplet::heightForWidth( int width ) const
   return ( (int) ( width * mSizeRatio + 0.5 ) * mDockCount );
 }
 
-void KSysGuardApplet::resizeEvent( QResizeEvent* )
+void KSysGuardApplet::resizeEvent( TQResizeEvent* )
 {
   layout();
 }
@@ -120,9 +120,9 @@ void KSysGuardApplet::preferences()
   }
   mSettingsDlg = new KSGAppletSettings( this );
 
-  connect( mSettingsDlg, SIGNAL( applyClicked() ), SLOT( applySettings() ) );
-  connect( mSettingsDlg, SIGNAL( okClicked() ), SLOT( applySettings() ) );
-  connect( mSettingsDlg, SIGNAL( finished() ), SLOT( preferencesFinished() ) );
+  connect( mSettingsDlg, TQT_SIGNAL( applyClicked() ), TQT_SLOT( applySettings() ) );
+  connect( mSettingsDlg, TQT_SIGNAL( okClicked() ), TQT_SLOT( applySettings() ) );
+  connect( mSettingsDlg, TQT_SIGNAL( finished() ), TQT_SLOT( preferencesFinished() ) );
 
   mSettingsDlg->setNumDisplay( mDockCount );
   mSettingsDlg->setSizeRatio( (int) ( mSizeRatio * 100.0 + 0.5 ) );
@@ -142,7 +142,7 @@ void KSysGuardApplet::applySettings()
   resizeDocks( mSettingsDlg->numDisplay() );
 
   for ( uint i = 0; i < mDockCount; ++i )
-    if ( !mDockList[ i ]->isA( "QFrame" ) )
+    if ( !mDockList[ i ]->isA( "TQFrame" ) )
       ((KSGRD::SensorDisplay*)mDockList[ i ])->setUpdateInterval( updateInterval() );
 
   save();
@@ -171,7 +171,7 @@ void KSysGuardApplet::layout()
   }
 }
 
-int KSysGuardApplet::findDock( const QPoint& point )
+int KSysGuardApplet::findDock( const TQPoint& point )
 {
   if ( orientation() == Horizontal )
     return ( point.x() / (int) ( height() * mSizeRatio + 0.5 ) );
@@ -179,38 +179,38 @@ int KSysGuardApplet::findDock( const QPoint& point )
     return ( point.y() / (int) ( width() * mSizeRatio + 0.5 ) );
 }
 
-void KSysGuardApplet::dragEnterEvent( QDragEnterEvent *e )
+void KSysGuardApplet::dragEnterEvent( TQDragEnterEvent *e )
 {
-  e->accept( QTextDrag::canDecode( e ) );
+  e->accept( TQTextDrag::canDecode( e ) );
 }
 
-void KSysGuardApplet::dropEvent( QDropEvent *e )
+void KSysGuardApplet::dropEvent( TQDropEvent *e )
 {
-  QString dragObject;
+  TQString dragObject;
 
-  if ( QTextDrag::decode( e, dragObject ) ) {
+  if ( TQTextDrag::decode( e, dragObject ) ) {
     // The host name, sensor name and type are seperated by a ' '.
-    QStringList parts = QStringList::split( ' ', dragObject );
+    TQStringList parts = TQStringList::split( ' ', dragObject );
 
-    QString hostName = parts[ 0 ];
-    QString sensorName = parts[ 1 ];
-    QString sensorType = parts[ 2 ];
-    QString sensorDescr = parts[ 3 ];
+    TQString hostName = parts[ 0 ];
+    TQString sensorName = parts[ 1 ];
+    TQString sensorType = parts[ 2 ];
+    TQString sensorDescr = parts[ 3 ];
 
     if ( hostName.isEmpty() || sensorName.isEmpty() || sensorType.isEmpty() )
       return;
 
     int dock = findDock( e->pos() );
-    if ( mDockList[ dock ]->isA( "QFrame" ) ) {
+    if ( mDockList[ dock ]->isA( "TQFrame" ) ) {
       if ( sensorType == "integer" || sensorType == "float" ) {
         KPopupMenu popup;
-        QWidget *wdg = 0;
+        TQWidget *wdg = 0;
 
         popup.insertTitle( i18n( "Select Display Type" ) );
         popup.insertItem( i18n( "&Signal Plotter" ), 1 );
         popup.insertItem( i18n( "&Multimeter" ), 2 );
         popup.insertItem( i18n( "&Dancing Bars" ), 3 );
-        switch ( popup.exec( QCursor::pos() ) ) {
+        switch ( popup.exec( TQCursor::pos() ) ) {
           case 1:
             wdg = new FancyPlotter( this, "FancyPlotter", sensorDescr,
                                     100.0, 100.0, true );
@@ -232,8 +232,8 @@ void KSysGuardApplet::dropEvent( QDropEvent *e )
           mDockList[ dock ] = wdg;
           layout();
 
-          connect( wdg, SIGNAL( modified( bool ) ),
-                   SLOT( sensorDisplayModified( bool ) ) );
+          connect( wdg, TQT_SIGNAL( modified( bool ) ),
+                   TQT_SLOT( sensorDisplayModified( bool ) ) );
 
           mDockList[ dock ]->show();
         }
@@ -246,7 +246,7 @@ void KSysGuardApplet::dropEvent( QDropEvent *e )
       }
     }
 
-    if ( !mDockList[ dock ]->isA( "QFrame" ) )
+    if ( !mDockList[ dock ]->isA( "TQFrame" ) )
       ((KSGRD::SensorDisplay*)mDockList[ dock ])->
                   addSensor( hostName, sensorName, sensorType, sensorDescr );
   }
@@ -254,9 +254,9 @@ void KSysGuardApplet::dropEvent( QDropEvent *e )
   save();
 }
 
-void KSysGuardApplet::customEvent( QCustomEvent *e )
+void KSysGuardApplet::customEvent( TQCustomEvent *e )
 {
-  if ( e->type() == QEvent::User ) {
+  if ( e->type() == TQEvent::User ) {
     // SensorDisplays send out this event if they want to be removed.
     removeDisplay( (KSGRD::SensorDisplay*)e->data() );
     save();
@@ -286,7 +286,7 @@ void KSysGuardApplet::resizeDocks( uint newDockCount )
   }
 
   // Create and initialize new dock array.
-  QWidget** tmp = new QWidget*[ newDockCount ];
+  TQWidget** tmp = new TQWidget*[ newDockCount ];
 
   uint i;
   for ( i = 0; ( i < newDockCount ) && ( i < mDockCount ); ++i )
@@ -311,16 +311,16 @@ bool KSysGuardApplet::load()
 {
   KStandardDirs* kstd = KGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
-  QString fileName = kstd->findResource( "data", "KSysGuardApplet.xml" );
+  TQString fileName = kstd->findResource( "data", "KSysGuardApplet.xml" );
 
-  QFile file( fileName );
+  TQFile file( fileName );
   if ( !file.open( IO_ReadOnly ) ) {
     KMessageBox::sorry( this, i18n( "Cannot open the file %1." ).arg( fileName ) );
     return false;
   }
 
   // Parse the XML file.
-  QDomDocument doc;
+  TQDomDocument doc;
 
   // Read in file and check for a valid XML header.
   if ( !doc.setContent( &file ) ) {
@@ -337,7 +337,7 @@ bool KSysGuardApplet::load()
     return false;
   }
 
-  QDomElement element = doc.documentElement();
+  TQDomElement element = doc.documentElement();
   bool ok;
   uint count = element.attribute( "dockCnt" ).toUInt( &ok );
   if ( !ok )
@@ -355,10 +355,10 @@ bool KSysGuardApplet::load()
 
   /* Load lists of hosts that are needed for the work sheet and try
    * to establish a connection. */
-  QDomNodeList dnList = element.elementsByTagName( "host" );
+  TQDomNodeList dnList = element.elementsByTagName( "host" );
   uint i;
   for ( i = 0; i < dnList.count(); ++i ) {
-    QDomElement element = dnList.item( i ).toElement();
+    TQDomElement element = dnList.item( i ).toElement();
     int port = element.attribute( "port" ).toInt( &ok );
     if ( !ok )
       port = -1;
@@ -374,7 +374,7 @@ bool KSysGuardApplet::load()
   // Load the displays and place them into the work sheet.
   dnList = element.elementsByTagName( "display" );
   for ( i = 0; i < dnList.count(); ++i ) {
-    QDomElement element = dnList.item( i ).toElement();
+    TQDomElement element = dnList.item( i ).toElement();
     uint dock = element.attribute( "dock" ).toUInt();
     if ( i >= mDockCount ) {
       kdDebug (1215) << "Dock number " << i << " out of range "
@@ -382,7 +382,7 @@ bool KSysGuardApplet::load()
       return false;
     }
 
-    QString classType = element.attribute( "class" );
+    TQString classType = element.attribute( "class" );
     KSGRD::SensorDisplay* newDisplay;
     if ( classType == "FancyPlotter" )
       newDisplay = new FancyPlotter( this, "FancyPlotter", "Dummy", 100.0, 100.0, true /*no frame*/, true /*run ksysguard menu*/);
@@ -405,8 +405,8 @@ bool KSysGuardApplet::load()
     delete mDockList[ dock ];
     mDockList[ dock ] = newDisplay;
 
-    connect( newDisplay, SIGNAL( modified( bool ) ),
-             SLOT( sensorDisplayModified( bool ) ) );
+    connect( newDisplay, TQT_SIGNAL( modified( bool ) ),
+             TQT_SLOT( sensorDisplayModified( bool ) ) );
   }
 
   return true;
@@ -415,31 +415,31 @@ bool KSysGuardApplet::load()
 bool KSysGuardApplet::save()
 {
   // Parse the XML file.
-  QDomDocument doc( "KSysGuardApplet" );
+  TQDomDocument doc( "KSysGuardApplet" );
   doc.appendChild( doc.createProcessingInstruction(
                    "xml", "version=\"1.0\" encoding=\"UTF-8\"" ) );
 
   // save work sheet information
-  QDomElement ws = doc.createElement( "WorkSheet" );
+  TQDomElement ws = doc.createElement( "WorkSheet" );
   doc.appendChild( ws );
   ws.setAttribute( "dockCnt", mDockCount );
   ws.setAttribute( "sizeRatio", mSizeRatio );
   ws.setAttribute( "interval", updateInterval() );
 
-  QStringList hosts;
+  TQStringList hosts;
   uint i;
   for ( i = 0; i < mDockCount; ++i )
-    if ( !mDockList[ i ]->isA( "QFrame" ) )
+    if ( !mDockList[ i ]->isA( "TQFrame" ) )
       ((KSGRD::SensorDisplay*)mDockList[ i ])->hosts( hosts );
 
   // save host information (name, shell, etc.)
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   for ( it = hosts.begin(); it != hosts.end(); ++it ) {
-    QString shell, command;
+    TQString shell, command;
     int port;
 
     if ( KSGRD::SensorMgr->hostInfo( *it, shell, command, port ) ) {
-      QDomElement host = doc.createElement( "host" );
+      TQDomElement host = doc.createElement( "host" );
       ws.appendChild( host );
       host.setAttribute( "name", *it );
       host.setAttribute( "shell", shell );
@@ -449,8 +449,8 @@ bool KSysGuardApplet::save()
   }
 
   for ( i = 0; i < mDockCount; ++i )
-    if ( !mDockList[ i ]->isA( "QFrame" ) ) {
-      QDomElement element = doc.createElement( "display" );
+    if ( !mDockList[ i ]->isA( "TQFrame" ) ) {
+      TQDomElement element = doc.createElement( "display" );
       ws.appendChild( element );
       element.setAttribute( "dock", i );
       element.setAttribute( "class", mDockList[ i ]->className() );
@@ -460,14 +460,14 @@ bool KSysGuardApplet::save()
 
   KStandardDirs* kstd = KGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
-  QString fileName = kstd->saveLocation( "data", "ksysguard" );
+  TQString fileName = kstd->saveLocation( "data", "ksysguard" );
   fileName += "/KSysGuardApplet.xml";
 
   KSaveFile file( fileName, 0644 );
 
   if ( file.status() == 0 )
   {
-    file.textStream()->setEncoding( QTextStream::UnicodeUTF8 );
+    file.textStream()->setEncoding( TQTextStream::UnicodeUTF8 );
     *(file.textStream()) << doc;
     file.close();
   }
@@ -480,11 +480,11 @@ bool KSysGuardApplet::save()
   return true;
 }
 
-void KSysGuardApplet::addEmptyDisplay( QWidget **dock, uint pos )
+void KSysGuardApplet::addEmptyDisplay( TQWidget **dock, uint pos )
 {
-  dock[ pos ] = new QFrame( this );
-  ((QFrame*)dock[ pos ])->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
-  QToolTip::add( dock[ pos ],
+  dock[ pos ] = new TQFrame( this );
+  ((TQFrame*)dock[ pos ])->setFrameStyle( TQFrame::WinPanel | TQFrame::Sunken );
+  TQToolTip::add( dock[ pos ],
                  i18n( "Drag sensors from the KDE System Guard into this cell." ) );
 
   layout();

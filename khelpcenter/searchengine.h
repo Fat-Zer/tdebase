@@ -1,9 +1,9 @@
 #ifndef SEARCHENGINE_H
 #define SEARCHENGINE_H
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 #include <kpixmap.h>
 #include <kio/job.h>
@@ -22,7 +22,7 @@ class SearchEngine;
 class View;
 class SearchHandler;
 
-class SearchTraverser : public QObject, public DocEntryTraverser
+class SearchTraverser : public TQObject, public DocEntryTraverser
 {
     Q_OBJECT
   public:
@@ -46,8 +46,8 @@ class SearchTraverser : public QObject, public DocEntryTraverser
     void disconnectHandler( SearchHandler *handler );
 
   protected slots:
-    void showSearchResult( SearchHandler *, DocEntry *, const QString &result );
-    void showSearchError( SearchHandler *, DocEntry *, const QString &error );
+    void showSearchResult( SearchHandler *, DocEntry *, const TQString &result );
+    void showSearchError( SearchHandler *, DocEntry *, const TQString &error );
 
   private:
     const int mMaxLevel;
@@ -56,11 +56,11 @@ class SearchTraverser : public QObject, public DocEntryTraverser
     int mLevel;
 
     DocEntry *mEntry;
-    QString mJobData;
+    TQString mJobData;
     
-    QString mResult;
+    TQString mResult;
     
-    QMap<SearchHandler *, int> mConnectCount;
+    TQMap<SearchHandler *, int> mConnectCount;
 };
 
 
@@ -75,35 +75,35 @@ class SearchEngine : public QObject
 
     bool initSearchHandlers();
 
-    bool search( QString words, QString method = "and", int matches = 5,
-                 QString scope = "" );
+    bool search( TQString words, TQString method = "and", int matches = 5,
+                 TQString scope = "" );
 
     Formatter *formatter() const; 
     View *view() const;
 
-    QString substituteSearchQuery( const QString &query );
+    TQString substituteSearchQuery( const TQString &query );
 
-    static QString substituteSearchQuery( const QString &query,
-      const QString &identifier, const QStringList &words, int maxResults,
-      Operation operation, const QString &lang );
+    static TQString substituteSearchQuery( const TQString &query,
+      const TQString &identifier, const TQStringList &words, int maxResults,
+      Operation operation, const TQString &lang );
 
     void finishSearch();
 
     /**
       Append error message to error log.
     */
-    void logError( DocEntry *entry, const QString &msg );
+    void logError( DocEntry *entry, const TQString &msg );
 
     /**
       Return error log.
     */
-    QString errorLog() const;
+    TQString errorLog() const;
 
     bool isRunning() const;
 
-    SearchHandler *handler( const QString &documentType ) const;
+    SearchHandler *handler( const TQString &documentType ) const;
 
-    QStringList words() const;
+    TQStringList words() const;
     int maxResults() const;
     Operation operation() const;
 
@@ -124,25 +124,25 @@ class SearchEngine : public QObject
   private:
     KProcess *mProc;
     bool mSearchRunning;
-    QString mSearchResult;
+    TQString mSearchResult;
 
-    QString mStderr;
+    TQString mStderr;
 
     View *mView;
     
-    QString mWords;
+    TQString mWords;
     int mMatches;
-    QString mMethod;
-    QString mLang;
-    QString mScope;
+    TQString mMethod;
+    TQString mLang;
+    TQString mScope;
 
-    QStringList mWordList;
+    TQStringList mWordList;
     int mMaxResults;
     Operation mOperation;
     
     DocEntryTraverser *mRootTraverser;
 
-    QMap<QString, SearchHandler *> mHandlers;
+    TQMap<TQString, SearchHandler *> mHandlers;
 };
 
 }

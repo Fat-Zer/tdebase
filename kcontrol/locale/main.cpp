@@ -30,7 +30,7 @@ extern "C" {
 
 /*
 extern "C" {
-  KCModule *create_locale(QWidget *parent, const char* name) {
+  KCModule *create_locale(TQWidget *parent, const char* name) {
     KLocale::setMainCatalogue("kcmlocale");
     return new KLocaleApplication(parent, "kcmlocale");
   }

@@ -44,10 +44,10 @@ class PanelExtension : public KPanelExtension, virtual public  DCOPObject
     K_DCOP
 
 public:
-    PanelExtension(const QString& configFile, QWidget *parent = 0, const char *name = 0);
+    PanelExtension(const TQString& configFile, TQWidget *parent = 0, const char *name = 0);
     virtual ~PanelExtension();
 
-    QPopupMenu* opMenu();
+    TQPopupMenu* opMenu();
 
 k_dcop:
     int panelSize() { return sizeInPixels(); }
@@ -58,31 +58,31 @@ k_dcop:
     void addKMenuButton();
     void addDesktopButton();
     void addWindowListButton();
-    void addURLButton(const QString &url);
-    void addBrowserButton(const QString &startDir);
-    void addServiceButton(const QString &desktopEntry);
-    void addServiceMenuButton(const QString &name, const QString& relPath);
-    void addNonKDEAppButton(const QString &filePath, const QString &icon,
-                            const QString &cmdLine, bool inTerm);
-    void addNonKDEAppButton(const QString &title, const QString &description,
-                            const QString &filePath, const QString &icon,
-                            const QString &cmdLine, bool inTerm);
+    void addURLButton(const TQString &url);
+    void addBrowserButton(const TQString &startDir);
+    void addServiceButton(const TQString &desktopEntry);
+    void addServiceMenuButton(const TQString &name, const TQString& relPath);
+    void addNonKDEAppButton(const TQString &filePath, const TQString &icon,
+                            const TQString &cmdLine, bool inTerm);
+    void addNonKDEAppButton(const TQString &title, const TQString &description,
+                            const TQString &filePath, const TQString &icon,
+                            const TQString &cmdLine, bool inTerm);
 
-    void addApplet(const QString &desktopFile);
-    void addAppletContainer(const QString &desktopFile); // KDE4: remove, useless
+    void addApplet(const TQString &desktopFile);
+    void addAppletContainer(const TQString &desktopFile); // KDE4: remove, useless
 
-    bool insertApplet(const QString& desktopFile, int index);
-    bool insertImmutableApplet(const QString& desktopFile, int index);
-    QStringList listApplets();
+    bool insertApplet(const TQString& desktopFile, int index);
+    bool insertImmutableApplet(const TQString& desktopFile, int index);
+    TQStringList listApplets();
     bool removeApplet(int index);
 
     void restart(); // KDE4: remove, moved to Kicker
     void configure(); // KDE4: remove, moved to Kikcker
 
 public:
-    QSize sizeHint(Position, QSize maxSize) const;
+    TQSize sizeHint(Position, TQSize maxSize) const;
     Position preferedPosition() const { return Bottom; }
-    bool eventFilter( QObject *, QEvent * );
+    bool eventFilter( TQObject *, TQEvent * );
 
 protected:
     void positionChange(Position);
@@ -98,12 +98,12 @@ protected slots:
     virtual void populateContainerArea();
 
 private:
-    QPopupMenu* _opMnu;
-    QPopupMenu* m_panelAddMenu;
-    QPopupMenu* m_removeMnu;
-    QPopupMenu* m_addExtensionMenu;
-    QPopupMenu* m_removeExtensionMenu;
-    QString _configFile;
+    TQPopupMenu* _opMnu;
+    TQPopupMenu* m_panelAddMenu;
+    TQPopupMenu* m_removeMnu;
+    TQPopupMenu* m_addExtensionMenu;
+    TQPopupMenu* m_removeExtensionMenu;
+    TQString _configFile;
     bool m_opMenuBuilt;
 };
 

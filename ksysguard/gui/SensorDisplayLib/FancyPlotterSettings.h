@@ -41,11 +41,11 @@ class FancyPlotterSettings : public KDialogBase
   Q_OBJECT
 
   public:
-    FancyPlotterSettings( QWidget* parent = 0, const char* name = 0 );
+    FancyPlotterSettings( TQWidget* parent = 0, const char* name = 0 );
     ~FancyPlotterSettings();
 
-    void setTitle( const QString &title );
-    QString title() const;
+    void setTitle( const TQString &title );
+    TQString title() const;
 
     void setUseAutoRange( bool value );
     bool useAutoRange() const;
@@ -65,8 +65,8 @@ class FancyPlotterSettings : public KDialogBase
     void setShowVerticalLines( bool value );
     bool showVerticalLines() const;
 
-    void setVerticalLinesColor( const QColor &color );
-    QColor verticalLinesColor() const;
+    void setVerticalLinesColor( const TQColor &color );
+    TQColor verticalLinesColor() const;
 
     void setVerticalLinesDistance( int distance );
     int verticalLinesDistance() const;
@@ -77,8 +77,8 @@ class FancyPlotterSettings : public KDialogBase
     void setShowHorizontalLines( bool value );
     bool showHorizontalLines() const;
 
-    void setHorizontalLinesColor( const QColor &color );
-    QColor horizontalLinesColor() const;
+    void setHorizontalLinesColor( const TQColor &color );
+    TQColor horizontalLinesColor() const;
 
     void setHorizontalLinesCount( int count );
     int horizontalLinesCount() const;
@@ -92,13 +92,13 @@ class FancyPlotterSettings : public KDialogBase
     void setFontSize( int size );
     int fontSize() const;
 
-    void setBackgroundColor( const QColor &color );
-    QColor backgroundColor() const;
+    void setBackgroundColor( const TQColor &color );
+    TQColor backgroundColor() const;
 
-    void setSensors( const QValueList< QStringList > &list );
-    QValueList< QStringList > sensors() const;
-    QValueList<int> order() const;
-    QValueList<int> deleted() const;
+    void setSensors( const TQValueList< TQStringList > &list );
+    TQValueList< TQStringList > sensors() const;
+    TQValueList<int> order() const;
+    TQValueList<int> deleted() const;
     void clearDeleted();
     void resetOrder();
 
@@ -107,7 +107,7 @@ class FancyPlotterSettings : public KDialogBase
     void removeSensor();
     void moveUpSensor();
     void moveDownSensor();
-    void selectionChanged( QListViewItem* );
+    void selectionChanged( TQListViewItem* );
 
   private:
 
@@ -123,21 +123,21 @@ class FancyPlotterSettings : public KDialogBase
     KIntNumInput *mFontSize;
     KListView *mSensorView;
 
-    QCheckBox *mShowVerticalLines;
-    QCheckBox *mShowHorizontalLines;
-    QCheckBox *mVerticalLinesScroll;
-    QCheckBox *mUseAutoRange;
-    QCheckBox *mShowLabels;
-    QCheckBox *mShowTopBar;
-    QPushButton *mEditButton;
-    QPushButton *mRemoveButton;
-    QPushButton *mMoveUpButton;
-    QPushButton *mMoveDownButton;
-    QRadioButton *mUsePolygonStyle;
-    QRadioButton *mUseOriginalStyle;
+    TQCheckBox *mShowVerticalLines;
+    TQCheckBox *mShowHorizontalLines;
+    TQCheckBox *mVerticalLinesScroll;
+    TQCheckBox *mUseAutoRange;
+    TQCheckBox *mShowLabels;
+    TQCheckBox *mShowTopBar;
+    TQPushButton *mEditButton;
+    TQPushButton *mRemoveButton;
+    TQPushButton *mMoveUpButton;
+    TQPushButton *mMoveDownButton;
+    TQRadioButton *mUsePolygonStyle;
+    TQRadioButton *mUseOriginalStyle;
 
     /** The numbers of the sensors to be delete.*/
-    QValueList<int> mDeleted;
+    TQValueList<int> mDeleted;
 };
 
 #endif

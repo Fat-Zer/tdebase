@@ -22,8 +22,8 @@
 #ifndef KONQ_FILETIP_H
 #define KONQ_FILETIP_H
 
-#include <qframe.h>
-#include <qpixmap.h>
+#include <tqframe.h>
+#include <tqpixmap.h>
 #include <kio/previewjob.h>
 
 #include <libkonq_export.h>
@@ -40,7 +40,7 @@ class LIBKONQ_EXPORT KonqFileTip : public QFrame
   Q_OBJECT
 
   public:
-    KonqFileTip( QScrollView *parent );
+    KonqFileTip( TQScrollView *parent );
     ~KonqFileTip();
 
     void setPreview(bool on);
@@ -57,17 +57,17 @@ class LIBKONQ_EXPORT KonqFileTip : public QFrame
       @param rect the rectangle around which the tip will be shown
       @param pixmap the pixmap to be shown. If 0, no pixmap is shown
       */
-    void setItem( KFileItem *item, const QRect &rect = QRect(),
-                  const QPixmap *pixmap = 0 );
+    void setItem( KFileItem *item, const TQRect &rect = TQRect(),
+                  const TQPixmap *pixmap = 0 );
 
-    virtual bool eventFilter( QObject *, QEvent *e );
+    virtual bool eventFilter( TQObject *, TQEvent *e );
 
   protected:
-    virtual void drawContents( QPainter *p );
-    virtual void resizeEvent( QResizeEvent * );
+    virtual void drawContents( TQPainter *p );
+    virtual void resizeEvent( TQResizeEvent * );
 
   private slots:
-    void gotPreview( const KFileItem*, const QPixmap& );
+    void gotPreview( const KFileItem*, const TQPixmap& );
     void gotPreviewResult();
 
     void startDelayed();
@@ -79,19 +79,19 @@ class LIBKONQ_EXPORT KonqFileTip : public QFrame
 
     void reposition();
 
-    QLabel*    m_iconLabel;
-    QLabel*    m_textLabel;
+    TQLabel*    m_iconLabel;
+    TQLabel*    m_textLabel;
     bool       m_on : 1;
     bool       m_preview : 1;  // shall the preview icon be shown
     bool       m_filter : 1;
-    QPixmap    m_corners[4];
+    TQPixmap    m_corners[4];
     int        m_corner;
     int        m_num;
-    QScrollView* m_view;
+    TQScrollView* m_view;
     KFileItem* m_item;
     KIO::PreviewJob* m_previewJob;
-    QRect      m_rect;
-    QTimer*    m_timer;
+    TQRect      m_rect;
+    TQTimer*    m_timer;
 };
 
 #endif

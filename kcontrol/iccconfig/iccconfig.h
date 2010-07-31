@@ -42,8 +42,8 @@ class KICCConfig : public KCModule, public DCOPObject
 
 
 public:
-  //KICCConfig(QWidget *parent = 0L, const char *name = 0L);
-  KICCConfig(QWidget *parent, const char *name, const QStringList &);
+  //KICCConfig(TQWidget *parent = 0L, const char *name = 0L);
+  KICCConfig(TQWidget *parent, const char *name, const TQStringList &);
   virtual ~KICCConfig();
 
   ICCConfigBase *base;
@@ -54,7 +54,7 @@ public:
   void defaults();
 
   int buttons();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
  k_dcop:
 
@@ -66,14 +66,14 @@ private:
   ScreenInfo *randr_screen_info;
   int numberOfProfiles;
   int numberOfScreens;
-  QStringList cfgScreenInfo;
-  QStringList cfgProfiles;
+  TQStringList cfgScreenInfo;
+  TQStringList cfgProfiles;
   void updateDisplayedInformation ();
-  QString extractFileName(QString displayName, QString profileName);
-  QString *iccFileArray;
-  int findProfileIndex(QString profileName);
-  int findScreenIndex(QString screenName);
-  QString m_defaultProfile;
+  TQString extractFileName(TQString displayName, TQString profileName);
+  TQString *iccFileArray;
+  int findProfileIndex(TQString profileName);
+  int findScreenIndex(TQString screenName);
+  TQString m_defaultProfile;
 
 private slots:
   void selectProfile (int slotNumber);

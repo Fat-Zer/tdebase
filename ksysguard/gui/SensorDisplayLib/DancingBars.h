@@ -25,7 +25,7 @@
 #define KSG_DANCINGBARS_H
 
 #include <SensorDisplay.h>
-#include <qbitarray.h>
+#include <tqbitarray.h>
 
 class KIntNumInput;
 
@@ -41,25 +41,25 @@ class DancingBars : public KSGRD::SensorDisplay
   Q_OBJECT
 
   public:
-    DancingBars( QWidget *parent = 0, const char *name = 0,
-                 const QString &title = QString::null, int min = 0,
+    DancingBars( TQWidget *parent = 0, const char *name = 0,
+                 const TQString &title = TQString::null, int min = 0,
                  int max = 100, bool noFrame = false, bool isApplet = false );
     virtual ~DancingBars();
 
     void configureSettings();
 
-    bool addSensor( const QString &hostName, const QString &name,
-                    const QString &type, const QString &title );
+    bool addSensor( const TQString &hostName, const TQString &name,
+                    const TQString &type, const TQString &title );
     bool removeSensor( uint pos );
 
-    void updateSamples( const QMemArray<double> &samples );
+    void updateSamples( const TQMemArray<double> &samples );
 
-    virtual QSize sizeHint();
+    virtual TQSize sizeHint();
 
-    virtual void answerReceived( int id, const QString &answer );
+    virtual void answerReceived( int id, const TQString &answer );
 
-    bool restoreSettings( QDomElement& );
-    bool saveSettings( QDomDocument&, QDomElement&, bool save = true );
+    bool restoreSettings( TQDomElement& );
+    bool saveSettings( TQDomDocument&, TQDomElement&, bool save = true );
 
     virtual bool hasSettingsDialog() const;
 
@@ -68,7 +68,7 @@ class DancingBars : public KSGRD::SensorDisplay
     virtual void applyStyle();
 
   protected:
-    virtual void resizeEvent( QResizeEvent* );
+    virtual void resizeEvent( TQResizeEvent* );
 
   private:
     uint mBars;
@@ -83,8 +83,8 @@ class DancingBars : public KSGRD::SensorDisplay
       received. The flags variable is used to ensure that all samples have
       been received.
      */
-    QMemArray<double> mSampleBuffer;
-    QBitArray mFlags;
+    TQMemArray<double> mSampleBuffer;
+    TQBitArray mFlags;
 };
 
 #endif

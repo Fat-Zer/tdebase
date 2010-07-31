@@ -34,7 +34,7 @@ class RecentDocsMenu : public KPanelMenu
 	Q_OBJECT
 
 public:
-	RecentDocsMenu(QWidget* parent, const char* name, const QStringList &/*args*/);
+	RecentDocsMenu(TQWidget* parent, const char* name, const TQStringList &/*args*/);
     ~RecentDocsMenu();
 	void initialize();
 
@@ -44,12 +44,12 @@ protected slots:
     void slotAboutToShow();
 
 protected:
-	void mousePressEvent(QMouseEvent* e);
-	void mouseMoveEvent(QMouseEvent* e);
+	void mousePressEvent(TQMouseEvent* e);
+	void mouseMoveEvent(TQMouseEvent* e);
 
 private:
-	QStringList _fileList;
-	QPoint _mouseDown;
+	TQStringList _fileList;
+	TQPoint _mouseDown;
 };
 
 #endif // RECENTDOCSMENU_H

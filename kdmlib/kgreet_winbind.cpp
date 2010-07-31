@@ -34,27 +34,27 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kuser.h>
 #include <kprocio.h>
 
-#include <qregexp.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqregexp.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include <stdlib.h>
 
 class KDMPasswordEdit : public KPasswordEdit {
 public:
-	KDMPasswordEdit( QWidget *parent ) : KPasswordEdit( parent, 0 ) {}
-	KDMPasswordEdit( KPasswordEdit::EchoModes echoMode, QWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
+	KDMPasswordEdit( TQWidget *parent ) : KPasswordEdit( parent, 0 ) {}
+	KDMPasswordEdit( KPasswordEdit::EchoModes echoMode, TQWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
 protected:
-	virtual void contextMenuEvent( QContextMenuEvent * ) {}
+	virtual void contextMenuEvent( TQContextMenuEvent * ) {}
 };
 
 static int echoMode;
 static char separator;
-static QStringList staticDomains;
-static QString defaultDomain;
+static TQStringList staticDomains;
+static TQString defaultDomain;
 
 static void
-splitEntity( const QString &ent, QString &dom, QString &usr )
+splitEntity( const TQString &ent, TQString &dom, TQString &usr )
 {
 	int pos = ent.find( separator );
 	if (pos < 0)
@@ -65,10 +65,10 @@ splitEntity( const QString &ent, QString &dom, QString &usr )
 
 KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
                                   KdmThemer *themer,
-                                  QWidget *parent, QWidget *pred,
-                                  const QString &_fixedEntity,
+                                  TQWidget *parent, TQWidget *pred,
+                                  const TQString &_fixedEntity,
                                   Function _func, Context _ctx ) :
-	QObject(),
+	TQObject(),
 	KGreeterPlugin( _handler ),
 	func( _func ),
 	ctx( _ctx ),
@@ -77,7 +77,7 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 	running( false )
 {
 	KdmItem *user_entry = 0, *pw_entry = 0, *domain_entry = 0;
-	QGridLayout *grid = 0;
+	TQGridLayout *grid = 0;
 
 	int line = 0;
 	layoutItem = 0;
@@ -89,7 +89,7 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 		themer = 0;
 
 	if (!themer)
-		layoutItem = grid = new QGridLayout( 0, 0, 10 );
+		layoutItem = grid = new TQGridLayout( 0, 0, 10 );
 
 	domainLabel = loginLabel = passwdLabel = passwd1Label = passwd2Label = 0;
 	domainCombo = 0;
@@ -103,12 +103,12 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 	if (func != ChAuthTok) {
 		if (fixedUser.isEmpty()) {
 			domainCombo = new KComboBox( parent );
-			connect( domainCombo, SIGNAL(activated( const QString & )),
-			         SLOT(slotChangedDomain( const QString & )) );
-			connect( domainCombo, SIGNAL(activated( const QString & )),
-			         SLOT(slotLoginLostFocus()) );
-			connect( domainCombo, SIGNAL(activated( const QString & )),
-			         SLOT(slotActivity()) );
+			connect( domainCombo, TQT_SIGNAL(activated( const TQString & )),
+			         TQT_SLOT(slotChangedDomain( const TQString & )) );
+			connect( domainCombo, TQT_SIGNAL(activated( const TQString & )),
+			         TQT_SLOT(slotLoginLostFocus()) );
+			connect( domainCombo, TQT_SIGNAL(activated( const TQString & )),
+			         TQT_SLOT(slotActivity()) );
 			// should handle loss of focus
 			loginEdit = new KLineEdit( parent );
 			loginEdit->setContextMenuEnabled( false );
@@ -124,42 +124,42 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 				user_entry->setWidget( loginEdit );
 				domain_entry->setWidget( domainCombo );
 			} else {
-				domainLabel = new QLabel( domainCombo, i18n("&Domain:"), parent );
-				loginLabel = new QLabel( loginEdit, i18n("&Username:"), parent );
+				domainLabel = new TQLabel( domainCombo, i18n("&Domain:"), parent );
+				loginLabel = new TQLabel( loginEdit, i18n("&Username:"), parent );
 				grid->addWidget( domainLabel, line, 0 );
 				grid->addWidget( domainCombo, line++, 1 );
 				grid->addWidget( loginLabel, line, 0 );
 				grid->addWidget( loginEdit, line++, 1 );
 			}
-			connect( loginEdit, SIGNAL(lostFocus()), SLOT(slotLoginLostFocus()) );
-			connect( loginEdit, SIGNAL(lostFocus()), SLOT(slotActivity()) );
-			connect( loginEdit, SIGNAL(textChanged( const QString & )), SLOT(slotActivity()) );
-			connect( loginEdit, SIGNAL(selectionChanged()), SLOT(slotActivity()) );
-			connect(&mDomainListTimer, SIGNAL(timeout()), SLOT(slotStartDomainList()));
+			connect( loginEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotLoginLostFocus()) );
+			connect( loginEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotActivity()) );
+			connect( loginEdit, TQT_SIGNAL(textChanged( const TQString & )), TQT_SLOT(slotActivity()) );
+			connect( loginEdit, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotActivity()) );
+			connect(&mDomainListTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotStartDomainList()));
 			domainCombo->insertStringList( staticDomains );
-			QTimer::singleShot(0, this, SLOT(slotStartDomainList()));
+			TQTimer::singleShot(0, this, TQT_SLOT(slotStartDomainList()));
 		} else if (ctx != Login && ctx != Shutdown && grid) {
-			domainLabel = new QLabel( i18n("Domain:"), parent );
+			domainLabel = new TQLabel( i18n("Domain:"), parent );
 			grid->addWidget( domainLabel, line, 0 );
-			grid->addWidget( new QLabel( fixedDomain, parent ), line++, 1 );
-			loginLabel = new QLabel( i18n("Username:"), parent );
+			grid->addWidget( new TQLabel( fixedDomain, parent ), line++, 1 );
+			loginLabel = new TQLabel( i18n("Username:"), parent );
 			grid->addWidget( loginLabel, line, 0 );
-			grid->addWidget( new QLabel( fixedUser, parent ), line++, 1 );
+			grid->addWidget( new TQLabel( fixedUser, parent ), line++, 1 );
 		}
 		if (echoMode == -1)
 			passwdEdit = new KDMPasswordEdit( parent );
 		else
 			passwdEdit = new KDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode,
 			                                  parent );
-		connect( passwdEdit, SIGNAL(textChanged( const QString & )),
-		         SLOT(slotActivity()) );
-		connect( passwdEdit, SIGNAL(lostFocus()), SLOT(slotActivity()) );
+		connect( passwdEdit, TQT_SIGNAL(textChanged( const TQString & )),
+		         TQT_SLOT(slotActivity()) );
+		connect( passwdEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotActivity()) );
 
 		if (!grid) {
 			passwdEdit->adjustSize();
 			pw_entry->setWidget( passwdEdit );
 		} else {
-			passwdLabel = new QLabel( passwdEdit,
+			passwdLabel = new TQLabel( passwdEdit,
 			                          func == Authenticate ?
 			                          i18n("&Password:") :
 			                          i18n("Current &password:"),
@@ -185,8 +185,8 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 			passwd1Edit = new KDMPasswordEdit( parent );
 			passwd2Edit = new KDMPasswordEdit( parent );
 		}
-		passwd1Label = new QLabel( passwd1Edit, i18n("&New password:"), parent );
-		passwd2Label = new QLabel( passwd2Edit, i18n("Con&firm password:"), parent );
+		passwd1Label = new TQLabel( passwd1Edit, i18n("&New password:"), parent );
+		passwd2Label = new TQLabel( passwd2Edit, i18n("Con&firm password:"), parent );
 		if (pred) {
 			parent->setTabOrder( pred, passwd1Edit );
 			parent->setTabOrder( passwd1Edit, passwd2Edit );
@@ -212,26 +212,26 @@ KWinbindGreeter::~KWinbindGreeter()
 		delete domainCombo;
 		return;
 	}
-	QLayoutIterator it = static_cast<QLayout *>(layoutItem)->iterator();
-	for (QLayoutItem *itm = it.current(); itm; itm = ++it)
+	TQLayoutIterator it = static_cast<TQLayout *>(layoutItem)->iterator();
+	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 		delete itm->widget();
 	delete layoutItem;
         delete m_domainLister;
 }
 
 void
-KWinbindGreeter::slotChangedDomain( const QString &dom )
+KWinbindGreeter::slotChangedDomain( const TQString &dom )
 {
 	if (!loginEdit->completionObject())
 		return;
-	QStringList users;
+	TQStringList users;
 	if (dom == "<local>") {
-		for (QStringList::ConstIterator it = allUsers.begin(); it != allUsers.end(); ++it)
+		for (TQStringList::ConstIterator it = allUsers.begin(); it != allUsers.end(); ++it)
 			if ((*it).find( separator ) < 0)
 				users << *it;
 	} else {
-		QString st( dom + separator );
-		for (QStringList::ConstIterator it = allUsers.begin(); it != allUsers.end(); ++it)
+		TQString st( dom + separator );
+		for (TQStringList::ConstIterator it = allUsers.begin(); it != allUsers.end(); ++it)
 			if ((*it).startsWith( st ))
 				users << (*it).mid( st.length() );
 	}
@@ -239,7 +239,7 @@ KWinbindGreeter::slotChangedDomain( const QString &dom )
 }
 
 void // virtual
-KWinbindGreeter::loadUsers( const QStringList &users )
+KWinbindGreeter::loadUsers( const TQStringList &users )
 {
 	allUsers = users;
 	KCompletion *userNamesCompletion = new KCompletion;
@@ -250,9 +250,9 @@ KWinbindGreeter::loadUsers( const QStringList &users )
 }
 
 void // virtual
-KWinbindGreeter::presetEntity( const QString &entity, int field )
+KWinbindGreeter::presetEntity( const TQString &entity, int field )
 {
-	QString dom, usr;
+	TQString dom, usr;
 	splitEntity( entity, dom, usr );
 	domainCombo->setCurrentItem( dom, true );
 	slotChangedDomain( dom );
@@ -271,10 +271,10 @@ KWinbindGreeter::presetEntity( const QString &entity, int field )
 	curUser = entity;
 }
 
-QString // virtual
+TQString // virtual
 KWinbindGreeter::getEntity() const
 {
-	QString dom, usr;
+	TQString dom, usr;
 	if (fixedUser.isEmpty())
 		dom = domainCombo->currentText(), usr = loginEdit->text();
 	else
@@ -283,11 +283,11 @@ KWinbindGreeter::getEntity() const
 }
 
 void // virtual
-KWinbindGreeter::setUser( const QString &user )
+KWinbindGreeter::setUser( const TQString &user )
 {
 	// assert (fixedUser.isEmpty());
 	curUser = user;
-	QString dom, usr;
+	TQString dom, usr;
 	splitEntity( user, dom, usr );
 	domainCombo->setCurrentItem( dom, true );
 	slotChangedDomain( dom );
@@ -340,7 +340,7 @@ bool // virtual
 KWinbindGreeter::textMessage( const char *text, bool err )
 {
 	if (!err &&
-	    QString( text ).find( QRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
+	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
 		return true;
 	return false;
 }
@@ -354,19 +354,19 @@ KWinbindGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 	else if (!authTok)
 		exp = 1;
 	else {
-		QString pr( prompt );
-		if (pr.find( QRegExp( "\\b(old|current)\\b", false ) ) >= 0) {
+		TQString pr( prompt );
+		if (pr.find( TQRegExp( "\\b(old|current)\\b", false ) ) >= 0) {
 			handler->gplugReturnText( "",
 			                          KGreeterPluginHandler::IsOldPassword |
 			                          KGreeterPluginHandler::IsSecret );
 			return;
-		} else if (pr.find( QRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
+		} else if (pr.find( TQRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
 		                             false ) ) >= 0)
 			exp = 3;
-		else if (pr.find( QRegExp( "\\bnew\\b", false ) ) >= 0)
+		else if (pr.find( TQRegExp( "\\bnew\\b", false ) ) >= 0)
 			exp = 2;
 		else {
-			handler->gplugMsgBox( QMessageBox::Critical,
+			handler->gplugMsgBox( TQMessageBox::Critical,
 			                      i18n("Unrecognized prompt \"%1\"")
 			                      .arg( prompt ) );
 			handler->gplugReturnText( 0, 0 );
@@ -505,7 +505,7 @@ KWinbindGreeter::clear()
 		slotChangedDomain( defaultDomain );
 		loginEdit->clear();
 		loginEdit->setFocus();
-		curUser = QString::null;
+		curUser = TQString::null;
 	} else
 		passwdEdit->setFocus();
 }
@@ -538,7 +538,7 @@ KWinbindGreeter::slotLoginLostFocus()
 {
 	if (!running)
 		return;
-	QString ent( getEntity() );
+	TQString ent( getEntity() );
 	if (exp > 0) {
 		if (curUser == ent)
 			return;
@@ -563,8 +563,8 @@ KWinbindGreeter::slotStartDomainList()
     mDomainListing.clear();
 
     m_domainLister = new KProcIO;
-    connect(m_domainLister, SIGNAL(readReady(KProcIO*)), SLOT(slotReadDomainList()));
-    connect(m_domainLister, SIGNAL(processExited(KProcess*)), SLOT(slotEndDomainList()));
+    connect(m_domainLister, TQT_SIGNAL(readReady(KProcIO*)), TQT_SLOT(slotReadDomainList()));
+    connect(m_domainLister, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotEndDomainList()));
 
     (*m_domainLister) << "wbinfo" << "--own-domain" << "--trusted-domains";
     m_domainLister->setComm (KProcess::Stdout);
@@ -574,7 +574,7 @@ KWinbindGreeter::slotStartDomainList()
 void
 KWinbindGreeter::slotReadDomainList()
 {
-    QString line;
+    TQString line;
 
     while ( m_domainLister->readln( line ) != -1 ) {
         mDomainListing.append(line);
@@ -587,17 +587,17 @@ KWinbindGreeter::slotEndDomainList()
     delete m_domainLister;
     m_domainLister = 0;
 
-    QStringList domainList;
+    TQStringList domainList;
     domainList = staticDomains;
 
-    for (QStringList::const_iterator it = mDomainListing.begin();
+    for (TQStringList::const_iterator it = mDomainListing.begin();
          it != mDomainListing.end(); ++it) {
 
         if (!domainList.contains(*it))
             domainList.append(*it);
     }
 
-    QString current = domainCombo->currentText();
+    TQString current = domainCombo->currentText();
 
     for (int i = 0; i < domainList.count(); ++i) {
         if (i < domainCombo->count())
@@ -619,21 +619,21 @@ KWinbindGreeter::slotEndDomainList()
 
 // factory
 
-static bool init( const QString &,
-                  QVariant (*getConf)( void *, const char *, const QVariant & ),
+static bool init( const TQString &,
+                  TQVariant (*getConf)( void *, const char *, const TQVariant & ),
                   void *ctx )
 {
-	echoMode = getConf( ctx, "EchoMode", QVariant( -1 ) ).toInt();
-	staticDomains = QStringList::split( ':', getConf( ctx, "winbind.Domains", QVariant( "" ) ).toString() );
+	echoMode = getConf( ctx, "EchoMode", TQVariant( -1 ) ).toInt();
+	staticDomains = TQStringList::split( ':', getConf( ctx, "winbind.Domains", TQVariant( "" ) ).toString() );
 	if (!staticDomains.contains("<local>"))
 		staticDomains << "<local>";
 
-	defaultDomain = getConf( ctx, "winbind.DefaultDomain", QVariant( staticDomains.first() ) ).toString();
-	QString sepstr = getConf( ctx, "winbind.Separator", QVariant( QString::null ) ).toString();
+	defaultDomain = getConf( ctx, "winbind.DefaultDomain", TQVariant( staticDomains.first() ) ).toString();
+	TQString sepstr = getConf( ctx, "winbind.Separator", TQVariant( TQString::null ) ).toString();
 	if (sepstr.isNull()) {
 		FILE *sepfile = popen( "wbinfo --separator 2>/dev/null", "r" );
 		if (sepfile) {
-			QTextIStream( sepfile ) >> sepstr;
+			TQTextIStream( sepfile ) >> sepstr;
 			if (pclose( sepfile ))
 				sepstr = "\\";
 		} else
@@ -649,13 +649,13 @@ static void done( void )
 	KGlobal::locale()->removeCatalogue( "kgreet_winbind" );
 	// avoid static deletion problems ... hopefully
 	staticDomains.clear();
-	defaultDomain = QString::null;
+	defaultDomain = TQString::null;
 }
 
 static KGreeterPlugin *
 create( KGreeterPluginHandler *handler, KdmThemer *themer,
-        QWidget *parent, QWidget *predecessor,
-        const QString &fixedEntity,
+        TQWidget *parent, TQWidget *predecessor,
+        const TQString &fixedEntity,
         KGreeterPlugin::Function func,
         KGreeterPlugin::Context ctx )
 {

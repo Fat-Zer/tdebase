@@ -20,9 +20,9 @@
 #ifndef _BGDIALOG_H_
 #define _BGDIALOG_H_
 
-#include <qptrvector.h>
-#include <qmap.h>
-#include <qvaluevector.h>
+#include <tqptrvector.h>
+#include <tqmap.h>
+#include <tqvaluevector.h>
 
 #include "bgdialog_ui.h"
 #include "bgrender.h"
@@ -36,7 +36,7 @@ class BGDialog : public BGDialog_UI
 {
    Q_OBJECT
 public:
-   BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop = true);
+   BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop = true);
    ~BGDialog();
 
    void load( bool useDefaults );
@@ -45,7 +45,7 @@ public:
 
    void makeReadOnly();
 
-   QString quickHelp() const;
+   TQString quickHelp() const;
 
 signals:
    void changed(bool);
@@ -55,7 +55,7 @@ protected:
    void updateUI();
    KBackgroundRenderer * eRenderer();
 
-   void setWallpaper(const QString &);
+   void setWallpaper(const TQString &);
 
    void loadWallpaperFilesList();
 
@@ -68,10 +68,10 @@ protected slots:
    void slotWallpaperPos(int);
    void slotWallpaperSelection();
    void slotSetupMulti();
-   void slotPrimaryColor(const QColor &color);
-   void slotSecondaryColor(const QColor &color);
+   void slotPrimaryColor(const TQColor &color);
+   void slotSecondaryColor(const TQColor &color);
    void slotPattern(int pattern);
-   void slotImageDropped(const QString &uri);
+   void slotImageDropped(const TQString &uri);
    void slotPreviewDone(int desk, int screen);
    void slotAdvanced();
    void slotGetNewStuff();
@@ -95,9 +95,9 @@ protected:
    int m_screen;
    int m_eDesk;
    int m_eScreen;
-   QValueVector< QPtrVector<KBackgroundRenderer> > m_renderer; // m_renderer[desk][screen]
-   QMap<QString,int> m_wallpaper;
-   QStringList m_patterns;
+   TQValueVector< TQPtrVector<KBackgroundRenderer> > m_renderer; // m_renderer[desk][screen]
+   TQMap<TQString,int> m_wallpaper;
+   TQStringList m_patterns;
    int m_slideShowRandom; // Remembers last Slide Show setting
    int m_wallpaperPos; // Remembers last wallpaper pos
 

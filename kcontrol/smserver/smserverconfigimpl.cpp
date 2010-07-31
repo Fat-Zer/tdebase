@@ -18,7 +18,7 @@
 #include "smserverconfigimpl.h"
 #include "smserverconfigimpl.moc"
 
-SMServerConfigImpl::SMServerConfigImpl(QWidget *parent, const char *name ) : SMServerConfigDlg(parent,name) {
+SMServerConfigImpl::SMServerConfigImpl(TQWidget *parent, const char *name ) : SMServerConfigDlg(parent,name) {
 
 }
 SMServerConfigImpl::~SMServerConfigImpl(){

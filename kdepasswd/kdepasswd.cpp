@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     KUniqueApplication app;
 
     KUser ku;
-    QCString user;
+    TQCString user;
     bool bRoot = ku.isSuperUser();
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    QCString oldpass;
+    TQCString oldpass;
     if (!bRoot)
     {
         int result = KDEpasswd1Dialog::getPassword(oldpass);

@@ -6,10 +6,10 @@
 class KSSMonitor : public KSWidget
 {
 public:
-    KSSMonitor( QWidget *parent ) : KSWidget( parent ) {}
+    KSSMonitor( TQWidget *parent ) : KSWidget( parent ) {}
 
     // we don't want no steenking palette change
-    virtual void setPalette( const QPalette & ) {}
+    virtual void setPalette( const TQPalette & ) {}
 };
 
 #endif

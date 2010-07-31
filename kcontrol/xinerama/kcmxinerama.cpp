@@ -31,16 +31,16 @@
 #include <kmessagebox.h>
 #include <kwin.h>
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qtable.h>
-#include <qcolor.h>
-#include <qpushbutton.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqtable.h>
+#include <tqcolor.h>
+#include <tqpushbutton.h>
 
 
-KCMXinerama::KCMXinerama(QWidget *parent, const char *name)
+KCMXinerama::KCMXinerama(TQWidget *parent, const char *name)
   : KCModule(parent, name) {
 	_indicators.setAutoDelete(true);
 
@@ -59,48 +59,48 @@ KCMXinerama::KCMXinerama(QWidget *parent, const char *name)
 	config = new KConfig("kdeglobals", false, false);
 	ksplashrc = new KConfig("ksplashrc", false, false);
 
-	connect(&_timer, SIGNAL(timeout()), this, SLOT(clearIndicator()));
+	connect(&_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(clearIndicator()));
 
-	QGridLayout *grid = new QGridLayout(this, 1, 1, KDialog::marginHint(),
+	TQGridLayout *grid = new TQGridLayout(this, 1, 1, KDialog::marginHint(),
 							KDialog::spacingHint());
 
 	// Setup the panel
-	_displays = QApplication::desktop()->numScreens();
+	_displays = TQApplication::desktop()->numScreens();
 
-	if (QApplication::desktop()->isVirtualDesktop()) {
-		QStringList dpyList;
+	if (TQApplication::desktop()->isVirtualDesktop()) {
+		TQStringList dpyList;
 		xw = new XineramaWidget(this);
 		grid->addWidget(xw, 0, 0);
-		QString label = i18n("Display %1");
+		TQString label = i18n("Display %1");
 
 		xw->headTable->setNumRows(_displays);
 
 		for (int i = 0; i < _displays; i++) {
-			QString l = label.arg(i+1);
-			QRect geom = QApplication::desktop()->screenGeometry(i);
+			TQString l = label.arg(i+1);
+			TQRect geom = TQApplication::desktop()->screenGeometry(i);
 			xw->_unmanagedDisplay->insertItem(l);
 			xw->_ksplashDisplay->insertItem(l);
 			dpyList.append(l);
-			xw->headTable->setText(i, 0, QString::number(geom.x()));
-			xw->headTable->setText(i, 1, QString::number(geom.y()));
-			xw->headTable->setText(i, 2, QString::number(geom.width()));
-			xw->headTable->setText(i, 3, QString::number(geom.height()));
+			xw->headTable->setText(i, 0, TQString::number(geom.x()));
+			xw->headTable->setText(i, 1, TQString::number(geom.y()));
+			xw->headTable->setText(i, 2, TQString::number(geom.width()));
+			xw->headTable->setText(i, 3, TQString::number(geom.height()));
 		}
 
 		xw->_unmanagedDisplay->insertItem(i18n("Display Containing the Pointer"));
 
 		xw->headTable->setRowLabels(dpyList);
 
-		connect(xw->_ksplashDisplay, SIGNAL(activated(int)),
-			this, SLOT(windowIndicator(int)));
-		connect(xw->_unmanagedDisplay, SIGNAL(activated(int)),
-			this, SLOT(windowIndicator(int)));
-		connect(xw->_identify, SIGNAL(clicked()),
-			this, SLOT(indicateWindows()));
+		connect(xw->_ksplashDisplay, TQT_SIGNAL(activated(int)),
+			this, TQT_SLOT(windowIndicator(int)));
+		connect(xw->_unmanagedDisplay, TQT_SIGNAL(activated(int)),
+			this, TQT_SLOT(windowIndicator(int)));
+		connect(xw->_identify, TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(indicateWindows()));
 
-		connect(xw, SIGNAL(configChanged()), this, SLOT(changed()));
+		connect(xw, TQT_SIGNAL(configChanged()), this, TQT_SLOT(changed()));
 	} else { // no Xinerama
-		QLabel *ql = new QLabel(i18n("<qt><p>This module is only for configuring systems with a single desktop spread across multiple monitors. You do not appear to have this configuration.</p></qt>"), this);
+		TQLabel *ql = new TQLabel(i18n("<qt><p>This module is only for configuring systems with a single desktop spread across multiple monitors. You do not appear to have this configuration.</p></qt>"), this);
 		grid->addWidget(ql, 0, 0);
 	}
 
@@ -129,7 +129,7 @@ void KCMXinerama::load() {
 }
 
 void KCMXinerama::load(bool useDefaults) {
-	if (QApplication::desktop()->isVirtualDesktop()) {
+	if (TQApplication::desktop()->isVirtualDesktop()) {
 		int item = 0;
 		config->setReadDefaults( useDefaults );
 		config->setGroup("Windows");
@@ -138,17 +138,17 @@ void KCMXinerama::load(bool useDefaults) {
 		xw->_enablePlacement->setChecked(config->readBoolEntry(KWIN_XINERAMA_PLACEMENT, true));
 		xw->_enableMaximize->setChecked(config->readBoolEntry(KWIN_XINERAMA_MAXIMIZE, true));
 		xw->_enableFullscreen->setChecked(config->readBoolEntry(KWIN_XINERAMA_FULLSCREEN, true));
-		item = config->readNumEntry("Unmanaged", QApplication::desktop()->primaryScreen());
+		item = config->readNumEntry("Unmanaged", TQApplication::desktop()->primaryScreen());
 		if ((item < 0 || item >= _displays) && (item != -3))
-			xw->_unmanagedDisplay->setCurrentItem(QApplication::desktop()->primaryScreen());
+			xw->_unmanagedDisplay->setCurrentItem(TQApplication::desktop()->primaryScreen());
 		else if (item == -3) // pointer warp
 			xw->_unmanagedDisplay->setCurrentItem(_displays);
 		else	xw->_unmanagedDisplay->setCurrentItem(item);
 
 		ksplashrc->setGroup("Xinerama");
-		item = ksplashrc->readNumEntry("KSplashScreen", QApplication::desktop()->primaryScreen());
+		item = ksplashrc->readNumEntry("KSplashScreen", TQApplication::desktop()->primaryScreen());
 		if (item < 0 || item >= _displays)
-			xw->_ksplashDisplay->setCurrentItem(QApplication::desktop()->primaryScreen());
+			xw->_ksplashDisplay->setCurrentItem(TQApplication::desktop()->primaryScreen());
 		else xw->_ksplashDisplay->setCurrentItem(item);
 		
 		emit changed(useDefaults);
@@ -159,7 +159,7 @@ void KCMXinerama::load(bool useDefaults) {
 
 
 void KCMXinerama::save() {
-	if (QApplication::desktop()->isVirtualDesktop()) {
+	if (TQApplication::desktop()->isVirtualDesktop()) {
 		config->setGroup("Windows");
 		config->writeEntry(KWIN_XINERAMA,
 					xw->_enableXinerama->isChecked());
@@ -215,18 +215,18 @@ void KCMXinerama::windowIndicator(int dpy) {
 	_timer.start(1500, true);
 }
 
-QWidget *KCMXinerama::indicator(int dpy) {
-	QLabel *si = new QLabel(QString::number(dpy+1), 0, "Screen Indicator", WX11BypassWM );
+TQWidget *KCMXinerama::indicator(int dpy) {
+	TQLabel *si = new TQLabel(TQString::number(dpy+1), 0, "Screen Indicator", WX11BypassWM );
 
-	QFont fnt = KGlobalSettings::generalFont();
+	TQFont fnt = KGlobalSettings::generalFont();
 	fnt.setPixelSize(100);
 	si->setFont(fnt);
-	si->setFrameStyle(QFrame::Panel);
-	si->setFrameShadow(QFrame::Plain);
+	si->setFrameStyle(TQFrame::Panel);
+	si->setFrameShadow(TQFrame::Plain);
 	si->setAlignment(Qt::AlignCenter);
 
-	QPoint screenCenter(QApplication::desktop()->screenGeometry(dpy).center());
-	QRect targetGeometry(QPoint(0,0), si->sizeHint());
+	TQPoint screenCenter(TQApplication::desktop()->screenGeometry(dpy).center());
+	TQRect targetGeometry(TQPoint(0,0), si->sizeHint());
         targetGeometry.moveCenter(screenCenter);
 	si->setGeometry(targetGeometry);
 	si->show();
@@ -239,13 +239,13 @@ void KCMXinerama::clearIndicator() {
 }
 
 extern "C" {
-        KDE_EXPORT KCModule *create_xinerama(QWidget *parent, const char *name) {
+        KDE_EXPORT KCModule *create_xinerama(TQWidget *parent, const char *name) {
    	    KGlobal::locale()->insertCatalogue("kcmxinerama");
 	    return new KCMXinerama(parent, name);
         }
 
 	KDE_EXPORT bool test_xinerama() {
-		return QApplication::desktop()->isVirtualDesktop();
+		return TQApplication::desktop()->isVirtualDesktop();
 	}
 }
 

@@ -30,13 +30,13 @@ class LanBrowser:public KCModule
 {
    Q_OBJECT
    public:
-      LanBrowser(QWidget *parent=0);
+      LanBrowser(TQWidget *parent=0);
       virtual void load();
       virtual void save();
 
    private:
-      QVBoxLayout layout;
-      QTabWidget tabs;
+      TQVBoxLayout layout;
+      TQTabWidget tabs;
       KCModule *smbPage;
       KCModule *lisaPage;
 //      KCModule *resLisaPage;

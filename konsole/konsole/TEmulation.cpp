@@ -75,8 +75,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <qregexp.h>
-#include <qclipboard.h>
+#include <tqregexp.h>
+#include <tqclipboard.h>
 
 #include <assert.h>
 
@@ -108,8 +108,8 @@ TEmulation::TEmulation(TEWidget* w)
   screen[1] = new TEScreen(gui->Lines(),gui->Columns());
   scr = screen[0];
 
-  QObject::connect(&bulk_timer1, SIGNAL(timeout()), this, SLOT(showBulk()) );
-  QObject::connect(&bulk_timer2, SIGNAL(timeout()), this, SLOT(showBulk()) );
+  TQObject::connect(&bulk_timer1, TQT_SIGNAL(timeout()), this, TQT_SLOT(showBulk()) );
+  TQObject::connect(&bulk_timer2, TQT_SIGNAL(timeout()), this, TQT_SLOT(showBulk()) );
   connectGUI();
   setKeymap(0); // Default keymap
 }
@@ -119,24 +119,24 @@ TEmulation::TEmulation(TEWidget* w)
 
 void TEmulation::connectGUI()
 {
-  QObject::connect(gui,SIGNAL(changedHistoryCursor(int)),
-                   this,SLOT(onHistoryCursorChange(int)));
-  QObject::connect(gui,SIGNAL(keyPressedSignal(QKeyEvent*)),
-                   this,SLOT(onKeyPress(QKeyEvent*)));
-  QObject::connect(gui,SIGNAL(beginSelectionSignal(const int,const int,const bool)),
-		   this,SLOT(onSelectionBegin(const int,const int,const bool)) );
-  QObject::connect(gui,SIGNAL(extendSelectionSignal(const int,const int)),
-		   this,SLOT(onSelectionExtend(const int,const int)) );
-  QObject::connect(gui,SIGNAL(endSelectionSignal(const bool)),
-		   this,SLOT(setSelection(const bool)) );
-  QObject::connect(gui,SIGNAL(copySelectionSignal()),
-		   this,SLOT(copySelection()) );
-  QObject::connect(gui,SIGNAL(clearSelectionSignal()),
-		   this,SLOT(clearSelection()) );
-  QObject::connect(gui,SIGNAL(isBusySelecting(bool)),
-		   this,SLOT(isBusySelecting(bool)) );
-  QObject::connect(gui,SIGNAL(testIsSelected(const int, const int, bool &)),
-		   this,SLOT(testIsSelected(const int, const int, bool &)) );
+  TQObject::connect(gui,TQT_SIGNAL(changedHistoryCursor(int)),
+                   this,TQT_SLOT(onHistoryCursorChange(int)));
+  TQObject::connect(gui,TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
+                   this,TQT_SLOT(onKeyPress(TQKeyEvent*)));
+  TQObject::connect(gui,TQT_SIGNAL(beginSelectionSignal(const int,const int,const bool)),
+		   this,TQT_SLOT(onSelectionBegin(const int,const int,const bool)) );
+  TQObject::connect(gui,TQT_SIGNAL(extendSelectionSignal(const int,const int)),
+		   this,TQT_SLOT(onSelectionExtend(const int,const int)) );
+  TQObject::connect(gui,TQT_SIGNAL(endSelectionSignal(const bool)),
+		   this,TQT_SLOT(setSelection(const bool)) );
+  TQObject::connect(gui,TQT_SIGNAL(copySelectionSignal()),
+		   this,TQT_SLOT(copySelection()) );
+  TQObject::connect(gui,TQT_SIGNAL(clearSelectionSignal()),
+		   this,TQT_SLOT(clearSelection()) );
+  TQObject::connect(gui,TQT_SIGNAL(isBusySelecting(bool)),
+		   this,TQT_SLOT(isBusySelecting(bool)) );
+  TQObject::connect(gui,TQT_SIGNAL(testIsSelected(const int, const int, bool &)),
+		   this,TQT_SLOT(testIsSelected(const int, const int, bool &)) );
 }
 
 /*!
@@ -147,24 +147,24 @@ void TEmulation::changeGUI(TEWidget* newgui)
   if (static_cast<TEWidget *>( gui )==newgui) return;
 
   if ( gui ) {
-    QObject::disconnect(gui,SIGNAL(changedHistoryCursor(int)),
-                     this,SLOT(onHistoryCursorChange(int)));
-    QObject::disconnect(gui,SIGNAL(keyPressedSignal(QKeyEvent*)),
-                     this,SLOT(onKeyPress(QKeyEvent*)));
-    QObject::disconnect(gui,SIGNAL(beginSelectionSignal(const int,const int,const bool)),
-                     this,SLOT(onSelectionBegin(const int,const int,const bool)) );
-    QObject::disconnect(gui,SIGNAL(extendSelectionSignal(const int,const int)),
-                     this,SLOT(onSelectionExtend(const int,const int)) );
-    QObject::disconnect(gui,SIGNAL(endSelectionSignal(const bool)),
-                     this,SLOT(setSelection(const bool)) );
-    QObject::disconnect(gui,SIGNAL(copySelectionSignal()),
-                     this,SLOT(copySelection()) );
-    QObject::disconnect(gui,SIGNAL(clearSelectionSignal()),
-                     this,SLOT(clearSelection()) );
-    QObject::disconnect(gui,SIGNAL(isBusySelecting(bool)),
-                     this,SLOT(isBusySelecting(bool)) );
-    QObject::disconnect(gui,SIGNAL(testIsSelected(const int, const int, bool &)),
-                     this,SLOT(testIsSelected(const int, const int, bool &)) );
+    TQObject::disconnect(gui,TQT_SIGNAL(changedHistoryCursor(int)),
+                     this,TQT_SLOT(onHistoryCursorChange(int)));
+    TQObject::disconnect(gui,TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
+                     this,TQT_SLOT(onKeyPress(TQKeyEvent*)));
+    TQObject::disconnect(gui,TQT_SIGNAL(beginSelectionSignal(const int,const int,const bool)),
+                     this,TQT_SLOT(onSelectionBegin(const int,const int,const bool)) );
+    TQObject::disconnect(gui,TQT_SIGNAL(extendSelectionSignal(const int,const int)),
+                     this,TQT_SLOT(onSelectionExtend(const int,const int)) );
+    TQObject::disconnect(gui,TQT_SIGNAL(endSelectionSignal(const bool)),
+                     this,TQT_SLOT(setSelection(const bool)) );
+    TQObject::disconnect(gui,TQT_SIGNAL(copySelectionSignal()),
+                     this,TQT_SLOT(copySelection()) );
+    TQObject::disconnect(gui,TQT_SIGNAL(clearSelectionSignal()),
+                     this,TQT_SLOT(clearSelection()) );
+    TQObject::disconnect(gui,TQT_SIGNAL(isBusySelecting(bool)),
+                     this,TQT_SLOT(isBusySelecting(bool)) );
+    TQObject::disconnect(gui,TQT_SIGNAL(testIsSelected(const int, const int, bool &)),
+                     this,TQT_SLOT(testIsSelected(const int, const int, bool &)) );
   }
   gui=newgui;
   connectGUI();
@@ -204,7 +204,7 @@ const HistoryType& TEmulation::history()
   return screen[0]->getScroll();
 }
 
-void TEmulation::setCodec(const QTextCodec * qtc)
+void TEmulation::setCodec(const TQTextCodec * qtc)
 {
   m_codec = qtc;
   delete decoder;
@@ -214,8 +214,8 @@ void TEmulation::setCodec(const QTextCodec * qtc)
 
 void TEmulation::setCodec(int c)
 {
-  setCodec(c ? QTextCodec::codecForName("utf8")
-           : QTextCodec::codecForLocale());
+  setCodec(c ? TQTextCodec::codecForName("utf8")
+           : TQTextCodec::codecForLocale());
 }
 
 void TEmulation::setKeymap(int no)
@@ -223,12 +223,12 @@ void TEmulation::setKeymap(int no)
   keytrans = KeyTrans::find(no);
 }
 
-void TEmulation::setKeymap(const QString &id)
+void TEmulation::setKeymap(const TQString &id)
 {
   keytrans = KeyTrans::find(id);
 }
 
-QString TEmulation::keymap()
+TQString TEmulation::keymap()
 {
   return keytrans->id();
 }
@@ -276,7 +276,7 @@ void TEmulation::onRcvChar(int c)
 /*!
 */
 
-void TEmulation::onKeyPress( QKeyEvent* ev )
+void TEmulation::onKeyPress( TQKeyEvent* ev )
 {
   if (!listenToKeyPress) return; // someone else gets the keys
   emit notifySessionState(NOTIFYNORMAL);
@@ -308,7 +308,7 @@ void TEmulation::onRcvBlock(const char *s, int len)
 
   bulkStart();
 
-  QString r;
+  TQString r;
   int i, l;
 
   for (i = 0; i < len; i++)
@@ -318,7 +318,7 @@ void TEmulation::onRcvBlock(const char *s, int len)
     if ((unsigned char) s[i] < 32)
     {
        if (!r.length()) {
-         QString tmp;
+         TQString tmp;
          // Flush decoder
          while(!tmp.length())
              tmp = decoder->toUnicode(" ",1);
@@ -342,7 +342,7 @@ void TEmulation::onRcvBlock(const char *s, int len)
 
     for (int j = 0; j < reslen; j++)
     {
-      if (r[j].category() == QChar::Mark_NonSpacing)
+      if (r[j].category() == TQChar::Mark_NonSpacing)
          scr->compose(r.mid(j,1));
       else
          onRcvChar(r[j].unicode());
@@ -367,7 +367,7 @@ void TEmulation::onSelectionExtend(const int x, const int y) {
 
 void TEmulation::setSelection(const bool preserve_line_breaks) {
   if (!connected) return;
-  QString t = scr->getSelText(preserve_line_breaks);
+  TQString t = scr->getSelText(preserve_line_breaks);
   if (!t.isNull()) gui->setSelection(t);
 }
 
@@ -391,11 +391,11 @@ void TEmulation::clearSelection() {
 
 void TEmulation::copySelection() {
   if (!connected) return;
-  QString t = scr->getSelText(true);
-  QApplication::clipboard()->setText(t);
+  TQString t = scr->getSelText(true);
+  TQApplication::clipboard()->setText(t);
 }
 
-void TEmulation::streamHistory(QTextStream* stream) {
+void TEmulation::streamHistory(TQTextStream* stream) {
   scr->streamHistory(stream);
 }
 
@@ -404,16 +404,16 @@ void TEmulation::findTextBegin()
   m_findPos = -1;
 }
 
-bool TEmulation::findTextNext( const QString &str, bool forward, bool caseSensitive, bool regExp )
+bool TEmulation::findTextNext( const TQString &str, bool forward, bool caseSensitive, bool regExp )
 {
   int pos = -1;
-  QString string;
+  TQString string;
 
   if (forward) {
     for (int i = (m_findPos==-1?0:m_findPos+1); i<(scr->getHistLines()+scr->getLines()); i++) {
       string = scr->getHistoryLine(i);
       if (regExp)
-        pos = string.find( QRegExp(str,caseSensitive) );
+        pos = string.find( TQRegExp(str,caseSensitive) );
       else
         pos = string.find(str, 0, caseSensitive);
       if(pos!=-1) {
@@ -431,7 +431,7 @@ bool TEmulation::findTextNext( const QString &str, bool forward, bool caseSensit
     for(int i = (m_findPos==-1?(scr->getHistLines()+scr->getLines()):m_findPos-1); i>=0; i--) {
       string = scr->getHistoryLine(i);
       if (regExp)
-        pos = string.find( QRegExp(str,caseSensitive) );
+        pos = string.find( TQRegExp(str,caseSensitive) );
       else
         pos = string.find(str, 0, caseSensitive);
       if(pos!=-1) {
@@ -529,9 +529,9 @@ void TEmulation::onImageSizeChange(int lines, int columns)
    //kdDebug(1211)<<"TEmulation::onImageSizeChange() done"<<endl;
 }
 
-QSize TEmulation::imageSize()
+TQSize TEmulation::imageSize()
 {
-  return QSize(scr->getColumns(), scr->getLines());
+  return TQSize(scr->getColumns(), scr->getLines());
 }
 
 void TEmulation::onHistoryCursorChange(int cursor)

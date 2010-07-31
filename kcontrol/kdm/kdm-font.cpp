@@ -21,13 +21,13 @@
 #include <sys/types.h>
 
 
-#include <qapplication.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
+#include <tqapplication.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
 
 #include <kdialog.h>
 #include <ksimpleconfig.h>
@@ -39,38 +39,38 @@
 
 extern KSimpleConfig *config;
 
-KDMFontWidget::KDMFontWidget(QWidget *parent, const char *name)
-  : QWidget(parent, name)
+KDMFontWidget::KDMFontWidget(TQWidget *parent, const char *name)
+  : TQWidget(parent, name)
 {
-  QGridLayout *ml = new QGridLayout(this, 5, 2, KDialog::marginHint(), KDialog::spacingHint());
-  QLabel *label = new QLabel(i18n("&General:"), this);
+  TQGridLayout *ml = new TQGridLayout(this, 5, 2, KDialog::marginHint(), KDialog::spacingHint());
+  TQLabel *label = new TQLabel(i18n("&General:"), this);
   stdFontChooser = new KFontRequester(this);
   label->setBuddy(stdFontChooser);
-  QWhatsThis::add( stdFontChooser, i18n("This changes the font which is used for all the text in the login manager except for the greeting and failure messages.") );
-  connect(stdFontChooser, SIGNAL(fontSelected(const QFont&)),this,SLOT(configChanged()));
+  TQWhatsThis::add( stdFontChooser, i18n("This changes the font which is used for all the text in the login manager except for the greeting and failure messages.") );
+  connect(stdFontChooser, TQT_SIGNAL(fontSelected(const TQFont&)),this,TQT_SLOT(configChanged()));
   ml->addWidget(label, 1, 0);
   ml->addWidget(stdFontChooser, 1, 1);
 
-  label = new QLabel(i18n("&Failures:"), this);
+  label = new TQLabel(i18n("&Failures:"), this);
   failFontChooser = new KFontRequester(this);
   label->setBuddy(failFontChooser);
-  QWhatsThis::add( failFontChooser, i18n("This changes the font which is used for failure messages in the login manager.") );
-  connect(failFontChooser, SIGNAL(fontSelected(const QFont&)),this,SLOT(configChanged()));
+  TQWhatsThis::add( failFontChooser, i18n("This changes the font which is used for failure messages in the login manager.") );
+  connect(failFontChooser, TQT_SIGNAL(fontSelected(const TQFont&)),this,TQT_SLOT(configChanged()));
   ml->addWidget(label, 2, 0);
   ml->addWidget(failFontChooser, 2, 1);
 
-  label = new QLabel(i18n("Gree&ting:"), this);
+  label = new TQLabel(i18n("Gree&ting:"), this);
   greetingFontChooser = new KFontRequester(this);
   label->setBuddy(greetingFontChooser);
-  QWhatsThis::add( greetingFontChooser, i18n("This changes the font which is used for the login manager's greeting.") );
-  connect(greetingFontChooser, SIGNAL(fontSelected(const QFont&)),this,SLOT(configChanged()));
+  TQWhatsThis::add( greetingFontChooser, i18n("This changes the font which is used for the login manager's greeting.") );
+  connect(greetingFontChooser, TQT_SIGNAL(fontSelected(const TQFont&)),this,TQT_SLOT(configChanged()));
   ml->addWidget(label, 3, 0);
   ml->addWidget(greetingFontChooser, 3, 1);
 
-  aacb = new QCheckBox (i18n("Use anti-aliasing for fonts"), this);
-  QWhatsThis::add( aacb, i18n("If you check this box and your X-Server has the Xft extension, "
+  aacb = new TQCheckBox (i18n("Use anti-aliasing for fonts"), this);
+  TQWhatsThis::add( aacb, i18n("If you check this box and your X-Server has the Xft extension, "
 	"fonts will be antialiased (smoothed) in the login dialog.") );
-  connect(aacb, SIGNAL(toggled ( bool )),this,SLOT(configChanged()));
+  connect(aacb, TQT_SIGNAL(toggled ( bool )),this,TQT_SLOT(configChanged()));
   ml->addMultiCellWidget(aacb, 4, 4, 0, 1);
   ml->setRowStretch(5, 10);
 }
@@ -90,9 +90,9 @@ void KDMFontWidget::configChanged()
 
 void KDMFontWidget::set_def()
 {
-  stdFontChooser->setFont(QFont("Sans Serif", 10));
-  failFontChooser->setFont(QFont("Sans Serif", 10, QFont::Bold));
-  greetingFontChooser->setFont(QFont("Sans Serif", 22));
+  stdFontChooser->setFont(TQFont("Sans Serif", 10));
+  failFontChooser->setFont(TQFont("Sans Serif", 10, TQFont::Bold));
+  greetingFontChooser->setFont(TQFont("Sans Serif", 22));
 }
 
 void KDMFontWidget::save()
@@ -114,7 +114,7 @@ void KDMFontWidget::load()
   config->setGroup("X-*-Greeter");
 
   // Read the fonts
-  QFont font = stdFontChooser->font();
+  TQFont font = stdFontChooser->font();
   stdFontChooser->setFont(config->readFontEntry("StdFont", &font));
   font = failFontChooser->font();
   failFontChooser->setFont(config->readFontEntry("FailFont", &font));

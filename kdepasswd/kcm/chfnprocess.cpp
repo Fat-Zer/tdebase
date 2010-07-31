@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <kdesu/process.h>
 #include <kdebug.h>
@@ -52,7 +52,7 @@ int ChfnProcess::ConverseChfn(const char *pass)
 {
   int status=-1;
 
-  QCString line;
+  TQCString line;
   while(1)
   {
     line = readLine();

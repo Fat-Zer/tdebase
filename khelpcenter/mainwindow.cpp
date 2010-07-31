@@ -42,9 +42,9 @@
 #include <kstdaccel.h>
 #include <kdialogbase.h>
 
-#include <qsplitter.h>
-#include <qtextedit.h>
-#include <qlayout.h>
+#include <tqsplitter.h>
+#include <tqtextedit.h>
+#include <tqlayout.h>
 
 #include <stdlib.h>
 #include <assert.h>
@@ -54,15 +54,15 @@ using namespace KHC;
 class LogDialog : public KDialogBase
 {
   public:
-    LogDialog( QWidget *parent = 0 )
+    LogDialog( TQWidget *parent = 0 )
       : KDialogBase( Plain, i18n("Search Error Log"), Ok, Ok, parent, 0,
                      false )
     {
-      QFrame *topFrame = plainPage();
+      TQFrame *topFrame = plainPage();
 
-      QBoxLayout *topLayout = new QVBoxLayout( topFrame );
+      TQBoxLayout *topLayout = new TQVBoxLayout( topFrame );
 
-      mTextView = new QTextEdit( topFrame );
+      mTextView = new TQTextEdit( topFrame );
       mTextView->setTextFormat( LogText );
       topLayout->addWidget( mTextView );
 
@@ -74,13 +74,13 @@ class LogDialog : public KDialogBase
       saveDialogSize( "logdialog" );
     }
 
-    void setLog( const QString &log )
+    void setLog( const TQString &log )
     {
       mTextView->setText( log );
     }
 
   private:
-    QTextEdit *mTextView;
+    TQTextEdit *mTextView;
 };
 
 
@@ -88,44 +88,44 @@ MainWindow::MainWindow()
     : KMainWindow(0, "MainWindow"), DCOPObject( "KHelpCenterIface" ),
       mLogDialog( 0 )
 {
-    mSplitter = new QSplitter( this );
+    mSplitter = new TQSplitter( this );
 
     mDoc = new View( mSplitter, 0, this, 0, KHTMLPart::DefaultGUI, actionCollection() );
-    connect( mDoc, SIGNAL( setWindowCaption( const QString & ) ),
-             SLOT( setCaption( const QString & ) ) );
-    connect( mDoc, SIGNAL( setStatusBarText( const QString & ) ),
-             SLOT( statusBarMessage( const QString & ) ) );
-    connect( mDoc, SIGNAL( onURL( const QString & ) ),
-             SLOT( statusBarMessage( const QString & ) ) );
-    connect( mDoc, SIGNAL( started( KIO::Job * ) ),
-             SLOT( slotStarted( KIO::Job * ) ) );
-    connect( mDoc, SIGNAL( completed() ),
-             SLOT( documentCompleted() ) );
-    connect( mDoc, SIGNAL( searchResultCacheAvailable() ),
-             SLOT( enableLastSearchAction() ) );
+    connect( mDoc, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
+             TQT_SLOT( setCaption( const TQString & ) ) );
+    connect( mDoc, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
+             TQT_SLOT( statusBarMessage( const TQString & ) ) );
+    connect( mDoc, TQT_SIGNAL( onURL( const TQString & ) ),
+             TQT_SLOT( statusBarMessage( const TQString & ) ) );
+    connect( mDoc, TQT_SIGNAL( started( KIO::Job * ) ),
+             TQT_SLOT( slotStarted( KIO::Job * ) ) );
+    connect( mDoc, TQT_SIGNAL( completed() ),
+             TQT_SLOT( documentCompleted() ) );
+    connect( mDoc, TQT_SIGNAL( searchResultCacheAvailable() ),
+             TQT_SLOT( enableLastSearchAction() ) );
 
-    connect( mDoc, SIGNAL( selectionChanged() ),
-             SLOT( enableCopyTextAction() ) );
+    connect( mDoc, TQT_SIGNAL( selectionChanged() ),
+             TQT_SLOT( enableCopyTextAction() ) );
 
     statusBar()->insertItem(i18n("Preparing Index"), 0, 1);
     statusBar()->setItemAlignment(0, AlignLeft | AlignVCenter);
 
     connect( mDoc->browserExtension(),
-             SIGNAL( openURLRequest( const KURL &,
+             TQT_SIGNAL( openURLRequest( const KURL &,
                                      const KParts::URLArgs & ) ),
-             SLOT( slotOpenURLRequest( const KURL &,
+             TQT_SLOT( slotOpenURLRequest( const KURL &,
                                        const KParts::URLArgs & ) ) );
 
     mNavigator = new Navigator( mDoc, mSplitter, "nav" );
-    connect( mNavigator, SIGNAL( itemSelected( const QString & ) ),
-             SLOT( viewUrl( const QString & ) ) );
-    connect( mNavigator, SIGNAL( glossSelected( const GlossaryEntry & ) ),
-             SLOT( slotGlossSelected( const GlossaryEntry & ) ) );
+    connect( mNavigator, TQT_SIGNAL( itemSelected( const TQString & ) ),
+             TQT_SLOT( viewUrl( const TQString & ) ) );
+    connect( mNavigator, TQT_SIGNAL( glossSelected( const GlossaryEntry & ) ),
+             TQT_SLOT( slotGlossSelected( const GlossaryEntry & ) ) );
 
     mSplitter->moveToFirst(mNavigator);
-    mSplitter->setResizeMode(mNavigator, QSplitter::KeepSize);
+    mSplitter->setResizeMode(mNavigator, TQSplitter::KeepSize);
     setCentralWidget( mSplitter );
-    QValueList<int> sizes;
+    TQValueList<int> sizes;
     sizes << 220 << 580;
     mSplitter->setSizes(sizes);
     setGeometry(366, 0, 800, 600);
@@ -150,10 +150,10 @@ MainWindow::MainWindow()
 
     History::self().installMenuBarHook( this );
 
-    connect( &History::self(), SIGNAL( goInternalUrl( const KURL & ) ),
-             mNavigator, SLOT( openInternalUrl( const KURL & ) ) );
-    connect( &History::self(), SIGNAL( goUrl( const KURL & ) ),
-             mNavigator, SLOT( selectItem( const KURL & ) ) );
+    connect( &History::self(), TQT_SIGNAL( goInternalUrl( const KURL & ) ),
+             mNavigator, TQT_SLOT( openInternalUrl( const KURL & ) ) );
+    connect( &History::self(), TQT_SIGNAL( goUrl( const KURL & ) ),
+             mNavigator, TQT_SLOT( selectItem( const KURL & ) ) );
 
     statusBarMessage(i18n("Ready"));
     enableCopyTextAction();
@@ -187,7 +187,7 @@ void MainWindow::readConfig()
 {
     KConfig *config = KGlobal::config();
     config->setGroup( "MainWindowState" );
-    QValueList<int> sizes = config->readIntListEntry( "Splitter" );
+    TQValueList<int> sizes = config->readIntListEntry( "Splitter" );
     if ( sizes.count() == 2 ) {
         mSplitter->setSizes( sizes );
     }
@@ -208,48 +208,48 @@ void MainWindow::writeConfig()
 
 void MainWindow::setupActions()
 {
-    KStdAction::quit( this, SLOT( close() ), actionCollection() );
-    KStdAction::print( this, SLOT( print() ), actionCollection(),
+    KStdAction::quit( this, TQT_SLOT( close() ), actionCollection() );
+    KStdAction::print( this, TQT_SLOT( print() ), actionCollection(),
                        "printFrame" );
 
-    KAction *prevPage  = new KAction( i18n( "Previous Page" ), CTRL+Key_PageUp, mDoc, SLOT( prevPage() ),
+    KAction *prevPage  = new KAction( i18n( "Previous Page" ), CTRL+Key_PageUp, mDoc, TQT_SLOT( prevPage() ),
                          actionCollection(), "prevPage" );
     prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
 
-    KAction *nextPage  = new KAction( i18n( "Next Page" ), CTRL + Key_PageDown, mDoc, SLOT( nextPage() ),
+    KAction *nextPage  = new KAction( i18n( "Next Page" ), CTRL + Key_PageDown, mDoc, TQT_SLOT( nextPage() ),
                          actionCollection(), "nextPage" );
     nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 
-    KAction *home = KStdAction::home( this, SLOT( slotShowHome() ), actionCollection() );
+    KAction *home = KStdAction::home( this, TQT_SLOT( slotShowHome() ), actionCollection() );
     home->setText(i18n("Table of &Contents"));
     home->setToolTip(i18n("Table of contents"));
     home->setWhatsThis(i18n("Go back to the table of contents"));
 
-    mCopyText = KStdAction::copy( this, SLOT(slotCopySelectedText()), actionCollection(), "copy_text");
+    mCopyText = KStdAction::copy( this, TQT_SLOT(slotCopySelectedText()), actionCollection(), "copy_text");
 
     mLastSearchAction = new KAction( i18n("&Last Search Result"), 0, this,
-                                     SLOT( slotLastSearch() ),
+                                     TQT_SLOT( slotLastSearch() ),
                                      actionCollection(), "lastsearch" );
     mLastSearchAction->setEnabled( false );
 
     new KAction( i18n("Build Search Index..."), 0, mNavigator,
-      SLOT( showIndexDialog() ), actionCollection(), "build_index" );
-    KStdAction::keyBindings( guiFactory(), SLOT( configureShortcuts() ),
+      TQT_SLOT( showIndexDialog() ), actionCollection(), "build_index" );
+    KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ),
       actionCollection() );
 
     KConfig *cfg = KGlobal::config();
     cfg->setGroup( "Debug" );
     if ( cfg->readBoolEntry( "SearchErrorLog", false ) ) {
       new KAction( i18n("Show Search Error Log"), 0, this,
-                   SLOT( showSearchStderr() ), actionCollection(),
+                   TQT_SLOT( showSearchStderr() ), actionCollection(),
                    "show_search_stderr" );
     }
 
     History::self().setupActions( actionCollection() );
 
-    new KAction( i18n( "Configure Fonts..." ), KShortcut(), this, SLOT( slotConfigureFonts() ), actionCollection(), "configure_fonts" );
-    new KAction( i18n( "Increase Font Sizes" ), "viewmag+", KShortcut(), this, SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
-    new KAction( i18n( "Decrease Font Sizes" ), "viewmag-", KShortcut(), this, SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
+    new KAction( i18n( "Configure Fonts..." ), KShortcut(), this, TQT_SLOT( slotConfigureFonts() ), actionCollection(), "configure_fonts" );
+    new KAction( i18n( "Increase Font Sizes" ), "viewmag+", KShortcut(), this, TQT_SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
+    new KAction( i18n( "Decrease Font Sizes" ), "viewmag-", KShortcut(), this, TQT_SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
 }
 
 void MainWindow::slotCopySelectedText()
@@ -265,8 +265,8 @@ void MainWindow::print()
 void MainWindow::slotStarted(KIO::Job *job)
 {
     if (job)
-       connect(job, SIGNAL(infoMessage( KIO::Job *, const QString &)),
-               SLOT(slotInfoMessage(KIO::Job *, const QString &)));
+       connect(job, TQT_SIGNAL(infoMessage( KIO::Job *, const TQString &)),
+               TQT_SLOT(slotInfoMessage(KIO::Job *, const TQString &)));
 
     History::self().updateActions();
 }
@@ -286,7 +286,7 @@ void MainWindow::slotOpenURLRequest( const KURL &url,
   viewUrl( url, args );
 }
 
-void MainWindow::viewUrl( const QString &url )
+void MainWindow::viewUrl( const TQString &url )
 {
   viewUrl( KURL( url ) );
 }
@@ -295,7 +295,7 @@ void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
 {
     stop();
 
-    QString proto = url.protocol().lower();
+    TQString proto = url.protocol().lower();
 
     if ( proto == "khelpcenter" ) {
       History::self().createEntry();
@@ -325,8 +325,8 @@ void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
 
     mDoc->browserExtension()->setURLArgs( args );
 
-    if ( proto == QString::fromLatin1("glossentry") ) {
-        QString decodedEntryId = KURL::decode_string( url.encodedPathAndQuery() );
+    if ( proto == TQString::fromLatin1("glossentry") ) {
+        TQString decodedEntryId = KURL::decode_string( url.encodedPathAndQuery() );
         slotGlossSelected( mNavigator->glossEntry( decodedEntryId ) );
         mNavigator->slotSelectGlossEntry( decodedEntryId );
     } else {
@@ -342,22 +342,22 @@ void MainWindow::documentCompleted()
     History::self().updateActions();
 }
 
-void MainWindow::slotInfoMessage(KIO::Job *, const QString &m)
+void MainWindow::slotInfoMessage(KIO::Job *, const TQString &m)
 {
     statusBarMessage(m);
 }
 
-void MainWindow::statusBarMessage(const QString &m)
+void MainWindow::statusBarMessage(const TQString &m)
 {
     statusBar()->changeItem(m, 0);
 }
 
-void MainWindow::openUrl( const QString &url )
+void MainWindow::openUrl( const TQString &url )
 {
     openUrl( KURL( url ) );
 }
 
-void MainWindow::openUrl( const QString &url, const QCString& startup_id )
+void MainWindow::openUrl( const TQString &url, const TQCString& startup_id )
 {
     KStartupInfo::setNewStartupId( this, startup_id );
     openUrl( KURL( url ) );
@@ -419,7 +419,7 @@ void MainWindow::enableLastSearchAction()
 
 void MainWindow::showSearchStderr()
 {
-  QString log = mNavigator->searchEngine()->errorLog();
+  TQString log = mNavigator->searchEngine()->errorLog();
 
   if ( !mLogDialog ) {
     mLogDialog = new LogDialog( this );
@@ -458,7 +458,7 @@ void MainWindow::updateZoomActions()
 void MainWindow::slotConfigureFonts()
 {
   FontDialog dlg( this );
-  if ( dlg.exec() == QDialog::Accepted )
+  if ( dlg.exec() == TQDialog::Accepted )
     mDoc->slotReload();
 }
 

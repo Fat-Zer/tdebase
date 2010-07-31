@@ -19,8 +19,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <qlayout.h>
-#include <qsplitter.h>
+#include <tqlayout.h>
+#include <tqsplitter.h>
 
 #include <kcmodule.h>
 #include <kaboutdata.h>
@@ -48,7 +48,7 @@
 
 extern "C"
 {
-    KDE_EXPORT KCModule* create_khotkeys( QWidget* parent_P, const char* name_P )
+    KDE_EXPORT KCModule* create_khotkeys( TQWidget* parent_P, const char* name_P )
     {
 //    sleep( 20 ); // CHECKME DEBUG
     KGlobal::locale()->insertCatalogue("khotkeys");
@@ -61,7 +61,7 @@ extern "C"
 namespace KHotKeys
 {
 
-Module::Module( QWidget* parent_P, const char* )
+Module::Module( TQWidget* parent_P, const char* )
     : KCModule( parent_P, "khotkeys" ), _actions_root( NULL ), _current_action_data( NULL ),
         listview_is_changed( false ), deleting_action( false )
     {
@@ -69,21 +69,21 @@ Module::Module( QWidget* parent_P, const char* )
     module = this;
     init_global_data( false, this ); // don't grab keys
     init_arts();
-    QVBoxLayout* vbox = new QVBoxLayout( this ); 
+    TQVBoxLayout* vbox = new TQVBoxLayout( this ); 
     vbox->setSpacing( 6 );
     vbox->setMargin( 11 );
-    QSplitter* splt = new QSplitter( this );
+    TQSplitter* splt = new TQSplitter( this );
     actions_listview_widget = new Actions_listview_widget( splt );
     tab_widget = new Tab_widget( splt );
     vbox->addWidget( splt );
     buttons_widget = new Main_buttons_widget( this );
     vbox->addWidget( buttons_widget );
-    connect( actions_listview_widget, SIGNAL( current_action_changed()),
-        SLOT( listview_current_action_changed()));
-    connect( buttons_widget, SIGNAL( new_action_pressed()),  SLOT( new_action()));
-    connect( buttons_widget, SIGNAL( new_action_group_pressed()),  SLOT( new_action_group()));
-    connect( buttons_widget, SIGNAL( delete_action_pressed()),  SLOT( delete_action()));
-    connect( buttons_widget, SIGNAL( global_settings_pressed()), SLOT( global_settings()));
+    connect( actions_listview_widget, TQT_SIGNAL( current_action_changed()),
+        TQT_SLOT( listview_current_action_changed()));
+    connect( buttons_widget, TQT_SIGNAL( new_action_pressed()),  TQT_SLOT( new_action()));
+    connect( buttons_widget, TQT_SIGNAL( new_action_group_pressed()),  TQT_SLOT( new_action_group()));
+    connect( buttons_widget, TQT_SIGNAL( delete_action_pressed()),  TQT_SLOT( delete_action()));
+    connect( buttons_widget, TQT_SIGNAL( global_settings_pressed()), TQT_SLOT( global_settings()));
 //    listview_current_action_changed(); // init
 						
 		KAboutData* about = new KAboutData("kcmkhotkeys", I18N_NOOP("KHotKeys"), KHOTKEYS_VERSION,
@@ -124,7 +124,7 @@ void Module::save()
     settings.write_settings();
     if( daemon_disabled())
         {
-        QByteArray data;
+        TQByteArray data;
         kapp->dcopClient()->send( "khotkeys*", "khotkeys", "quit()", data );
         kdDebug( 1217 ) << "disabling khotkeys daemon" << endl;
         }
@@ -137,7 +137,7 @@ void Module::save()
             }
         else
             {
-            QByteArray data;
+            TQByteArray data;
             kapp->dcopClient()->send( "khotkeys*", "khotkeys", "reread_configuration()", data );
             kdDebug( 1217 ) << "telling khotkeys daemon to reread configuration" << endl;
             }
@@ -146,12 +146,12 @@ void Module::save()
     }
 
 
-QString Module::quickHelp() const
+TQString Module::quickHelp() const
     {
     return i18n( "" ); // TODO CHECKME
     }
 
-void Module::action_name_changed( const QString& name_P )
+void Module::action_name_changed( const TQString& name_P )
     {
     current_action_data()->set_name( name_P );
     actions_listview_widget->action_name_changed( name_P );
@@ -272,7 +272,7 @@ void Module::set_gestures_exclude( Windowdef_list* windows )
 
 void Module::import()
     {
-    QString file = KFileDialog::getOpenFileName( QString::null, "*.khotkeys", topLevelWidget(),
+    TQString file = KFileDialog::getOpenFileName( TQString::null, "*.khotkeys", topLevelWidget(),
         i18n( "Select File with Actions to Be Imported" ));
     if( file.isEmpty())
         return;

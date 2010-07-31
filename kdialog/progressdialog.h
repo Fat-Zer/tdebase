@@ -27,7 +27,7 @@ class ProgressDialog : public KProgressDialog, virtual public ProgressDialogIfac
     Q_OBJECT
 
     public:
-      ProgressDialog(QWidget* parent = 0, const QString& caption = QString::null, const QString& text = QString::null, int totalSteps = 100);
+      ProgressDialog(TQWidget* parent = 0, const TQString& caption = TQString::null, const TQString& text = TQString::null, int totalSteps = 100);
       
       void setTotalSteps( int );
       int totalSteps() const;
@@ -35,7 +35,7 @@ class ProgressDialog : public KProgressDialog, virtual public ProgressDialogIfac
       void setProgress( int );
       int progress() const;
       
-      void setLabel(const QString&);
+      void setLabel(const TQString&);
     
       void showCancelButton(bool show);
       bool wasCancelled() const;

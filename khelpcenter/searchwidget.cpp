@@ -23,10 +23,10 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
 
 #include <ksimpleconfig.h>
 #include <kapplication.h>
@@ -44,68 +44,68 @@
 
 namespace KHC {
 
-SearchWidget::SearchWidget( SearchEngine *engine, QWidget *parent )
-  : QWidget( parent ), DCOPObject( "SearchWidget" ), mEngine( engine ),
+SearchWidget::SearchWidget( SearchEngine *engine, TQWidget *parent )
+  : TQWidget( parent ), DCOPObject( "SearchWidget" ), mEngine( engine ),
   mScopeCount( 0 )
 {
-  QBoxLayout *topLayout = new QVBoxLayout( this, 2, 2 );
+  TQBoxLayout *topLayout = new TQVBoxLayout( this, 2, 2 );
 
-  QBoxLayout *hLayout = new QHBoxLayout( topLayout );
+  TQBoxLayout *hLayout = new TQHBoxLayout( topLayout );
 
-  mMethodCombo = new QComboBox( this );
+  mMethodCombo = new TQComboBox( this );
   mMethodCombo->insertItem( i18n("and") );
   mMethodCombo->insertItem( i18n("or") );
 
-  QLabel *l = new QLabel( mMethodCombo, i18n("&Method:"), this );
+  TQLabel *l = new TQLabel( mMethodCombo, i18n("&Method:"), this );
 
   hLayout->addWidget( l );
   hLayout->addWidget( mMethodCombo );
 
-  hLayout = new QHBoxLayout( topLayout );
+  hLayout = new TQHBoxLayout( topLayout );
 
-  mPagesCombo = new QComboBox( this );
+  mPagesCombo = new TQComboBox( this );
   mPagesCombo->insertItem( "5" );
   mPagesCombo->insertItem( "10" );
   mPagesCombo->insertItem( "25" );
   mPagesCombo->insertItem( "50" );
   mPagesCombo->insertItem( "1000" );
 
-  l = new QLabel( mPagesCombo, i18n("Max. &results:"), this );
+  l = new TQLabel( mPagesCombo, i18n("Max. &results:"), this );
   
   hLayout->addWidget( l );
   hLayout->addWidget( mPagesCombo );
 
-  hLayout = new QHBoxLayout( topLayout );
+  hLayout = new TQHBoxLayout( topLayout );
 
-  mScopeCombo = new QComboBox( this );
+  mScopeCombo = new TQComboBox( this );
   for (int i=0; i < ScopeNum; ++i ) {
     mScopeCombo->insertItem( scopeSelectionLabel( i ) );
   }
-  connect( mScopeCombo, SIGNAL( activated( int ) ),
-           SLOT( scopeSelectionChanged( int ) ) );
+  connect( mScopeCombo, TQT_SIGNAL( activated( int ) ),
+           TQT_SLOT( scopeSelectionChanged( int ) ) );
 
-  l = new QLabel( mScopeCombo, i18n("&Scope selection:"), this );
+  l = new TQLabel( mScopeCombo, i18n("&Scope selection:"), this );
 
   hLayout->addWidget( l );
   hLayout->addWidget( mScopeCombo );
 
-  mScopeListView = new QListView( this );
+  mScopeListView = new TQListView( this );
   mScopeListView->setRootIsDecorated( true );
   mScopeListView->addColumn( i18n("Scope") );
   topLayout->addWidget( mScopeListView, 1 );
 
-  QPushButton *indexButton = new QPushButton( i18n("Build Search &Index..."),
+  TQPushButton *indexButton = new TQPushButton( i18n("Build Search &Index..."),
                                               this );
-  connect( indexButton, SIGNAL( clicked() ), SIGNAL( showIndexDialog() ) );
+  connect( indexButton, TQT_SIGNAL( clicked() ), TQT_SIGNAL( showIndexDialog() ) );
   topLayout->addWidget( indexButton );
 
 // FIXME: Use SearchHandler on double-clicked document
 #if 0
-  connect( mScopeListView, SIGNAL( doubleClicked( QListViewItem * ) ),
-           SLOT( scopeDoubleClicked( QListViewItem * ) ) );
+  connect( mScopeListView, TQT_SIGNAL( doubleClicked( TQListViewItem * ) ),
+           TQT_SLOT( scopeDoubleClicked( TQListViewItem * ) ) );
 #endif
-  connect( mScopeListView, SIGNAL( clicked( QListViewItem * ) ),
-           SLOT( scopeClicked( QListViewItem * ) ) );
+  connect( mScopeListView, TQT_SIGNAL( clicked( TQListViewItem * ) ),
+           TQT_SLOT( scopeClicked( TQListViewItem * ) ) );
 }
 
 
@@ -128,7 +128,7 @@ void SearchWidget::readConfig( KConfig *cfg )
 
   if ( scopeSelection == ScopeCustom ) {
     cfg->setGroup( "Custom Search Scope" );
-    QListViewItemIterator it( mScopeListView );
+    TQListViewItemIterator it( mScopeListView );
     while( it.current() ) {
       if ( it.current()->rtti() == ScopeItem::rttiId() ) {
         ScopeItem *item = static_cast<ScopeItem *>( it.current() );
@@ -152,7 +152,7 @@ void SearchWidget::writeConfig( KConfig *cfg )
 
   if ( mScopeCombo->currentItem() == ScopeCustom ) {
     cfg->setGroup( "Custom Search Scope" );
-    QListViewItemIterator it( mScopeListView );
+    TQListViewItemIterator it( mScopeListView );
     while( it.current() ) {
       if ( it.current()->rtti() == ScopeItem::rttiId() ) {
         ScopeItem *item = static_cast<ScopeItem *>( it.current() );
@@ -165,7 +165,7 @@ void SearchWidget::writeConfig( KConfig *cfg )
 
 void SearchWidget::slotSwitchBoxes()
 {
-  QListViewItemIterator it( mScopeListView );
+  TQListViewItemIterator it( mScopeListView );
   while( it.current() ) {
     if ( it.current()->rtti() == ScopeItem::rttiId() ) {
       ScopeItem *item = static_cast<ScopeItem *>( it.current() );
@@ -179,7 +179,7 @@ void SearchWidget::slotSwitchBoxes()
 
 void SearchWidget::scopeSelectionChanged( int id )
 {
-  QListViewItemIterator it( mScopeListView );
+  TQListViewItemIterator it( mScopeListView );
   while( it.current() ) {
     if ( it.current()->rtti() == ScopeItem::rttiId() ) {
       ScopeItem *item = static_cast<ScopeItem *>( it.current() );
@@ -207,9 +207,9 @@ void SearchWidget::scopeSelectionChanged( int id )
   checkScope();
 }
 
-QString SearchWidget::method()
+TQString SearchWidget::method()
 {
-  QString m = "and";
+  TQString m = "and";
   if ( mMethodCombo->currentItem() == 1)
     m = "or";
 
@@ -223,11 +223,11 @@ int SearchWidget::pages()
   return p;
 }
 
-QString SearchWidget::scope()
+TQString SearchWidget::scope()
 {
-  QString scope;
+  TQString scope;
 
-  QListViewItemIterator it( mScopeListView );
+  TQListViewItemIterator it( mScopeListView );
   while( it.current() ) {
     if ( it.current()->rtti() == ScopeItem::rttiId() ) {
       ScopeItem *item = static_cast<ScopeItem *>( it.current() );
@@ -275,11 +275,11 @@ class ScopeTraverser : public DocEntryTraverser
         return this;
       } else {
         ScopeTraverser *t = new ScopeTraverser( mWidget, mLevel + 1 );
-        QListViewItem *item = 0;
+        TQListViewItem *item = 0;
         if ( mParentItem ) {
-          item = new QListViewItem( mParentItem, entry->name() );
+          item = new TQListViewItem( mParentItem, entry->name() );
         } else {
-          item = new QListViewItem( mWidget->listView(), entry->name() );
+          item = new TQListViewItem( mWidget->listView(), entry->name() );
         }
         item->setOpen( true );
         t->mParentItem = item;
@@ -302,7 +302,7 @@ class ScopeTraverser : public DocEntryTraverser
   private:
     SearchWidget *mWidget;
     int mLevel;
-    QListViewItem *mParentItem;
+    TQListViewItem *mParentItem;
 
     static int mNestingLevel;
 };
@@ -326,26 +326,26 @@ void SearchWidget::updateScopeList()
   checkScope();
 }
 
-void SearchWidget::scopeDoubleClicked( QListViewItem *item )
+void SearchWidget::scopeDoubleClicked( TQListViewItem *item )
 {
   if ( !item || item->rtti() != ScopeItem::rttiId() ) return;
   ScopeItem *scopeItem = static_cast<ScopeItem *>( item );
 
-  QString searchUrl = scopeItem->entry()->search();
+  TQString searchUrl = scopeItem->entry()->search();
   
   kdDebug() << "DoubleClick: " << searchUrl << endl;
   
   emit searchResult( searchUrl );
 }
 
-void SearchWidget::scopeClicked( QListViewItem * )
+void SearchWidget::scopeClicked( TQListViewItem * )
 {
   checkScope();
 
   mScopeCombo->setCurrentItem( ScopeCustom );
 }
 
-QString SearchWidget::scopeSelectionLabel( int id ) const
+TQString SearchWidget::scopeSelectionLabel( int id ) const
 {
   switch( id ) {
     case ScopeCustom:
@@ -365,7 +365,7 @@ void SearchWidget::checkScope()
 {
   mScopeCount = 0;
 
-  QListViewItemIterator it( mScopeListView );
+  TQListViewItemIterator it( mScopeListView );
   while( it.current() ) {
     if ( it.current()->rtti() == ScopeItem::rttiId() ) {
       ScopeItem *item = static_cast<ScopeItem *>( it.current() );

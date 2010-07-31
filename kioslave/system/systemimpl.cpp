@@ -24,40 +24,40 @@
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 
-#include <qapplication.h>
-#include <qeventloop.h>
-#include <qdir.h>
+#include <tqapplication.h>
+#include <tqeventloop.h>
+#include <tqdir.h>
 
 #include <sys/stat.h>
 
-SystemImpl::SystemImpl() : QObject()
+SystemImpl::SystemImpl() : TQObject()
 {
 	KGlobal::dirs()->addResourceType("system_entries",
 		KStandardDirs::kde_default("data") + "systemview");
 }
 
-bool SystemImpl::listRoot(QValueList<KIO::UDSEntry> &list)
+bool SystemImpl::listRoot(TQValueList<KIO::UDSEntry> &list)
 {
 	kdDebug() << "SystemImpl::listRoot" << endl;
 
-	QStringList names_found;
-	QStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList names_found;
+	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
 
-	QStringList::ConstIterator dirpath = dirList.begin();
-	QStringList::ConstIterator end = dirList.end();
+	TQStringList::ConstIterator dirpath = dirList.begin();
+	TQStringList::ConstIterator end = dirList.end();
 	for(; dirpath!=end; ++dirpath)
 	{
-		QDir dir = *dirpath;
+		TQDir dir = *dirpath;
 		if (!dir.exists()) continue;
 
-		QStringList filenames
-			= dir.entryList( QDir::Files | QDir::Readable );
+		TQStringList filenames
+			= dir.entryList( TQDir::Files | TQDir::Readable );
 
 
 		KIO::UDSEntry entry;
 
-		QStringList::ConstIterator filename = filenames.begin();
-		QStringList::ConstIterator endf = filenames.end();
+		TQStringList::ConstIterator filename = filenames.begin();
+		TQStringList::ConstIterator endf = filenames.end();
 
 		for(; filename!=endf; ++filename)
 		{
@@ -77,9 +77,9 @@ bool SystemImpl::listRoot(QValueList<KIO::UDSEntry> &list)
 	return true;
 }
 
-bool SystemImpl::parseURL(const KURL &url, QString &name, QString &path) const
+bool SystemImpl::parseURL(const KURL &url, TQString &name, TQString &path) const
 {
-	QString url_path = url.path();
+	TQString url_path = url.path();
 
 	int i = url_path.find('/', 1);
 	if (i > 0)
@@ -90,13 +90,13 @@ bool SystemImpl::parseURL(const KURL &url, QString &name, QString &path) const
 	else
 	{
 		name = url_path.mid(1);
-		path = QString::null;
+		path = TQString::null;
 	}
 
-	return name != QString::null;
+	return name != TQString::null;
 }
 
-bool SystemImpl::realURL(const QString &name, const QString &path,
+bool SystemImpl::realURL(const TQString &name, const TQString &path,
                          KURL &url) const
 {
 	url = findBaseURL(name);
@@ -109,25 +109,25 @@ bool SystemImpl::realURL(const QString &name, const QString &path,
 	return true;
 }
 
-bool SystemImpl::statByName(const QString &filename, KIO::UDSEntry& entry)
+bool SystemImpl::statByName(const TQString &filename, KIO::UDSEntry& entry)
 {
 	kdDebug() << "SystemImpl::statByName" << endl;
 
-	QStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
 
-	QStringList::ConstIterator dirpath = dirList.begin();
-	QStringList::ConstIterator end = dirList.end();
+	TQStringList::ConstIterator dirpath = dirList.begin();
+	TQStringList::ConstIterator end = dirList.end();
 	for(; dirpath!=end; ++dirpath)
 	{
-		QDir dir = *dirpath;
+		TQDir dir = *dirpath;
 		if (!dir.exists()) continue;
 
-		QStringList filenames
-			= dir.entryList( QDir::Files | QDir::Readable );
+		TQStringList filenames
+			= dir.entryList( TQDir::Files | TQDir::Readable );
 
 
-		QStringList::ConstIterator name = filenames.begin();
-		QStringList::ConstIterator endf = filenames.end();
+		TQStringList::ConstIterator name = filenames.begin();
+		TQStringList::ConstIterator endf = filenames.end();
 
 		for(; name!=endf; ++name)
 		{
@@ -142,27 +142,27 @@ bool SystemImpl::statByName(const QString &filename, KIO::UDSEntry& entry)
 	return false;
 }
 
-KURL SystemImpl::findBaseURL(const QString &filename) const
+KURL SystemImpl::findBaseURL(const TQString &filename) const
 {
 	kdDebug() << "SystemImpl::findBaseURL" << endl;
 
-	QStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
 
-	QStringList::ConstIterator dirpath = dirList.begin();
-	QStringList::ConstIterator end = dirList.end();
+	TQStringList::ConstIterator dirpath = dirList.begin();
+	TQStringList::ConstIterator end = dirList.end();
 	for(; dirpath!=end; ++dirpath)
 	{
-		QDir dir = *dirpath;
+		TQDir dir = *dirpath;
 		if (!dir.exists()) continue;
 
-		QStringList filenames
-			= dir.entryList( QDir::Files | QDir::Readable );
+		TQStringList filenames
+			= dir.entryList( TQDir::Files | TQDir::Readable );
 
 
 		KIO::UDSEntry entry;
 
-		QStringList::ConstIterator name = filenames.begin();
-		QStringList::ConstIterator endf = filenames.end();
+		TQStringList::ConstIterator name = filenames.begin();
+		TQStringList::ConstIterator endf = filenames.end();
 
 		for(; name!=endf; ++name)
 		{
@@ -186,7 +186,7 @@ KURL SystemImpl::findBaseURL(const QString &filename) const
 
 
 static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
-                    const QString &s = QString::null)
+                    const TQString &s = TQString::null)
 {
 	KIO::UDSAtom atom;
 	atom.m_uds = ID;
@@ -207,8 +207,8 @@ void SystemImpl::createTopLevelEntry(KIO::UDSEntry &entry) const
 }
 
 void SystemImpl::createEntry(KIO::UDSEntry &entry,
-                             const QString &directory,
-                             const QString &file)
+                             const TQString &directory,
+                             const TQString &file)
 {
 	kdDebug() << "SystemImpl::createEntry" << endl;
 
@@ -226,7 +226,7 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 	
 	addAtom(entry, KIO::UDS_NAME, 0, desktop.readName());
 	
-	QString new_filename = file;
+	TQString new_filename = file;
 	new_filename.truncate(file.length()-8);
 
 	if ( desktop.readURL().isEmpty() )
@@ -241,8 +241,8 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
 	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
 
-	QString icon = desktop.readIcon();
-	QString empty_icon = desktop.readEntry("EmptyIcon");
+	TQString icon = desktop.readIcon();
+	TQString empty_icon = desktop.readEntry("EmptyIcon");
 
 	if (!empty_icon.isEmpty())
 	{
@@ -251,12 +251,12 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 		m_lastListingEmpty = true;
 
 		KIO::ListJob *job = KIO::listDir(url, false, false);
-		connect( job, SIGNAL( entries(KIO::Job *,
+		connect( job, TQT_SIGNAL( entries(KIO::Job *,
 		                      const KIO::UDSEntryList &) ),
-		         this, SLOT( slotEntries(KIO::Job *,
+		         this, TQT_SLOT( slotEntries(KIO::Job *,
 			             const KIO::UDSEntryList &) ) );
-		connect( job, SIGNAL( result(KIO::Job *) ),
-		         this, SLOT( slotResult(KIO::Job *) ) );
+		connect( job, TQT_SIGNAL( result(KIO::Job *) ),
+		         this, TQT_SLOT( slotResult(KIO::Job *) ) );
 		qApp->eventLoop()->enterLoop();
 
 		if (m_lastListingEmpty) icon = empty_icon;

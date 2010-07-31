@@ -11,8 +11,8 @@
 
 #include <kgreeterplugin.h>
 
-#include <qdialog.h>
-#include <qstringlist.h>
+#include <tqdialog.h>
+#include <tqstringlist.h>
 
 struct GreeterPluginHandle;
 class LockProcess;
@@ -27,7 +27,7 @@ class QListView;
 // Simple dialog for entering a password.
 // It does not handle password validation.
 //
-class PasswordDlg : public QDialog, public KGreeterPluginHandler
+class PasswordDlg : public TQDialog, public KGreeterPluginHandler
 {
     Q_OBJECT
 
@@ -39,14 +39,14 @@ public:
     // from KGreetPluginHandler
     virtual void gplugReturnText( const char *text, int tag );
     virtual void gplugReturnBinary( const char *data );
-    virtual void gplugSetUser( const QString & );
+    virtual void gplugSetUser( const TQString & );
     virtual void gplugStart();
     virtual void gplugActivity();
-    virtual void gplugMsgBox( QMessageBox::Icon type, const QString &text );
+    virtual void gplugMsgBox( TQMessageBox::Icon type, const TQString &text );
 
 protected:
-    virtual void timerEvent(QTimerEvent *);
-    virtual bool eventFilter(QObject *, QEvent *);
+    virtual void timerEvent(TQTimerEvent *);
+    virtual bool eventFilter(TQObject *, TQEvent *);
 
 private slots:
     void slotSwitchUser();
@@ -57,7 +57,7 @@ private slots:
     void slotActivity();
 
 private:
-    void setLayoutText( const QString &txt );
+    void setLayoutText( const TQString &txt );
     void capsLocked();
     void updateLabel();
     int Reader (void *buf, int count);
@@ -73,19 +73,19 @@ private:
     void cantCheck();
     GreeterPluginHandle *mPlugin;
     KGreeterPlugin *greet;
-    QFrame      *frame;
-    QGridLayout *frameLayout;
-    QLabel      *mStatusLabel;
+    TQFrame      *frame;
+    TQGridLayout *frameLayout;
+    TQLabel      *mStatusLabel;
     KPushButton *mNewSessButton, *ok, *cancel;
-    QPushButton *mLayoutButton;
+    TQPushButton *mLayoutButton;
     int         mFailedTimerId;
     int         mTimeoutTimerId;
     int         mCapsLocked;
     bool        mUnlockingFailed;
-    QStringList layoutsList;
-    QStringList::iterator currLayout;
+    TQStringList layoutsList;
+    TQStringList::iterator currLayout;
     int         sPid, sFd;
-    QListView   *lv;
+    TQListView   *lv;
 };
 
 #endif

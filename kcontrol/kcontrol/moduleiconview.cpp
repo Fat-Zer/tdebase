@@ -18,8 +18,8 @@
 
 */
 
-#include <qheader.h>
-#include <qcursor.h>
+#include <tqheader.h>
+#include <tqcursor.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -34,13 +34,13 @@
 #include "global.h"
 
 
-ModuleIconView::ModuleIconView(ConfigModuleList *list, QWidget * parent, const char * name)
+ModuleIconView::ModuleIconView(ConfigModuleList *list, TQWidget * parent, const char * name)
   : KListView(parent, name)
   , _path(KCGlobal::baseGroup())
   , _modules(list)
 {
   setSorting(1, true);
-  addColumn(QString::null);
+  addColumn(TQString::null);
 
   // Needed to enforce a cut of the items label rather than
   // showing a horizontal scrollbar
@@ -51,15 +51,15 @@ ModuleIconView::ModuleIconView(ConfigModuleList *list, QWidget * parent, const c
   // This is intentionally _not_ connected with executed(), since
   // honoring doubleclick doesn't make any sense here (changed by
   // large user demand)
-  connect(this, SIGNAL(clicked(QListViewItem*)),
-          this, SLOT(slotItemSelected(QListViewItem*)));
+  connect(this, TQT_SIGNAL(clicked(TQListViewItem*)),
+          this, TQT_SLOT(slotItemSelected(TQListViewItem*)));
 }
 
 void ModuleIconView::makeSelected(ConfigModule *m)
 {
   if (!m) return;
 
-  for (QListViewItem *i = firstChild(); i; i = i->nextSibling())
+  for (TQListViewItem *i = firstChild(); i; i = i->nextSibling())
   {
      if(static_cast<ModuleIconItem*>(i)->module() == m)
      {
@@ -72,7 +72,7 @@ void ModuleIconView::makeSelected(ConfigModule *m)
 void ModuleIconView::makeVisible(ConfigModule *m)
 {
   if (!m) return;
-  QString tmp = _modules->findModule(m);
+  TQString tmp = _modules->findModule(m);
   if (tmp.isEmpty())
      return;
 
@@ -84,7 +84,7 @@ void ModuleIconView::fill()
 {
   clear();
 
-  QPixmap icon;
+  TQPixmap icon;
   // add our "up" icon if we aren't top level
   if (_path != KCGlobal::baseGroup())
   {
@@ -94,16 +94,16 @@ void ModuleIconView::fill()
      i->setOrderNo(0);
      int last_slash = _path.findRev('/', -2);
      if (last_slash == -1)
-        i->setTag(QString::null);
+        i->setTag(TQString::null);
      else
         i->setTag(_path.left(last_slash+1));
   }
 
   int c = 0;
-  QStringList submenus = _modules->submenus(_path);
-  for (QStringList::Iterator it = submenus.begin(); it != submenus.end(); ++it )
+  TQStringList submenus = _modules->submenus(_path);
+  for (TQStringList::Iterator it = submenus.begin(); it != submenus.end(); ++it )
   {
-     QString path = (*it);
+     TQString path = (*it);
 
      KServiceGroup::Ptr group = KServiceGroup::group(path);
      if (!group || !group->isValid())
@@ -117,7 +117,7 @@ void ModuleIconView::fill()
   }
 
   c = 0;
-  QPtrList<ConfigModule> moduleList = _modules->modules(_path);
+  TQPtrList<ConfigModule> moduleList = _modules->modules(_path);
   for (ConfigModule *module=moduleList.first(); module != 0; module=moduleList.next())
   {
      icon = loadIcon( module->icon() );
@@ -127,9 +127,9 @@ void ModuleIconView::fill()
   }
 }
 
-void ModuleIconView::slotItemSelected(QListViewItem* item)
+void ModuleIconView::slotItemSelected(TQListViewItem* item)
 {
-  QApplication::restoreOverrideCursor();
+  TQApplication::restoreOverrideCursor();
   if (!item) return;
 
   if (static_cast<ModuleIconItem*>(item)->module())
@@ -144,7 +144,7 @@ void ModuleIconView::slotItemSelected(QListViewItem* item)
   }
 }
 
-void ModuleIconView::keyPressEvent(QKeyEvent *e)
+void ModuleIconView::keyPressEvent(TQKeyEvent *e)
 {
   if(   e->key() == Key_Return
      || e->key() == Key_Enter
@@ -159,9 +159,9 @@ void ModuleIconView::keyPressEvent(QKeyEvent *e)
   }
 }
 
-QPixmap ModuleIconView::loadIcon( const QString &name )
+TQPixmap ModuleIconView::loadIcon( const TQString &name )
 {
-  QPixmap icon = DesktopIcon( name, KCGlobal::iconSize() );
+  TQPixmap icon = DesktopIcon( name, KCGlobal::iconSize() );
 
   if(icon.isNull())
      icon = DesktopIcon( "folder", KCGlobal::iconSize() );

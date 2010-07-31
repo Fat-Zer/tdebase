@@ -22,8 +22,8 @@
 #ifndef __konq_factory_h__
 #define __konq_factory_h__
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <klibloader.h>
 #include <ktrader.h>
@@ -39,7 +39,7 @@ class KonqViewFactory
 public:
   KonqViewFactory() : m_factory( 0L ), m_createBrowser( false ) {}
 
-  KonqViewFactory( KLibFactory *factory, const QStringList &args, bool createBrowser );
+  KonqViewFactory( KLibFactory *factory, const TQStringList &args, bool createBrowser );
 
   KonqViewFactory( const KonqViewFactory &factory )
   { (*this) = factory; }
@@ -52,28 +52,28 @@ public:
     return *this;
   }
 
-  KParts::ReadOnlyPart *create( QWidget *parentWidget, const char *widgetName,
-                                QObject *parent, const char *name );
+  KParts::ReadOnlyPart *create( TQWidget *parentWidget, const char *widgetName,
+                                TQObject *parent, const char *name );
 
   bool isNull() const { return m_factory ? false : true; }
 
 private:
   KLibFactory *m_factory;
-  QStringList m_args;
+  TQStringList m_args;
   bool m_createBrowser;
 };
 
 class KonqFactory
 {
 public:
-  static KonqViewFactory createView( const QString &serviceType,
-				     const QString &serviceName = QString::null,
+  static KonqViewFactory createView( const TQString &serviceType,
+				     const TQString &serviceName = TQString::null,
 				     KService::Ptr *serviceImpl = 0,
 				     KTrader::OfferList *partServiceOffers = 0,
 				     KTrader::OfferList *appServiceOffers = 0,
 				     bool forceAutoEmbed = false );
 
-  static void getOffers( const QString & serviceType,
+  static void getOffers( const TQString & serviceType,
                          KTrader::OfferList *partServiceOffers = 0,
                          KTrader::OfferList *appServiceOffers = 0);
 

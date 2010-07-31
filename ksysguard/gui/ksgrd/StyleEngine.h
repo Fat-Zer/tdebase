@@ -24,9 +24,9 @@
 #ifndef KSG_STYLEENGINE_H
 #define KSG_STYLEENGINE_H
 
-#include <qcolor.h>
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqcolor.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 
 #include <kdemacros.h>
 
@@ -49,14 +49,14 @@ class KDE_EXPORT StyleEngine : public QObject
     void readProperties( KConfig* );
     void saveProperties( KConfig* );
 
-    const QColor& firstForegroundColor() const;
-    const QColor& secondForegroundColor() const;
-    const QColor& alarmColor() const;
-    const QColor& backgroundColor() const;
+    const TQColor& firstForegroundColor() const;
+    const TQColor& secondForegroundColor() const;
+    const TQColor& alarmColor() const;
+    const TQColor& backgroundColor() const;
 
     uint fontSize() const;
 
-    const QColor& sensorColor( uint pos );
+    const TQColor& sensorColor( uint pos );
     uint numSensorColors() const;
 
   public slots:
@@ -69,12 +69,12 @@ class KDE_EXPORT StyleEngine : public QObject
   private:
     void apply();
 
-    QColor mFirstForegroundColor;
-    QColor mSecondForegroundColor;
-    QColor mAlarmColor;
-    QColor mBackgroundColor;
+    TQColor mFirstForegroundColor;
+    TQColor mSecondForegroundColor;
+    TQColor mAlarmColor;
+    TQColor mBackgroundColor;
     uint mFontSize;
-    QValueList<QColor> mSensorColors;
+    TQValueList<TQColor> mSensorColors;
 
     StyleSettings *mSettingsDialog;
 };

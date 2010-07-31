@@ -25,7 +25,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -43,13 +43,13 @@
 #include <kmessagebox.h>
 #include <kstaticdeleter.h>
 
-#include <qregexp.h>
-#include <qdatetime.h>
+#include <tqregexp.h>
+#include <tqdatetime.h>
 
 #include <config.h>
 
-template class QPtrList<KFileIVI>;
-//template class QValueList<int>;
+template class TQPtrList<KFileIVI>;
+//template class TQValueList<int>;
 
 class KonqIconViewFactory : public KParts::Factory
 {
@@ -72,8 +72,8 @@ public:
       s_defaultViewProps = 0;
    }
 
-    virtual KParts::Part* createPartObject( QWidget *parentWidget, const char *,
-                                      QObject *parent, const char *name, const char*, const QStringList &args )
+    virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *,
+                                      TQObject *parent, const char *name, const char*, const TQStringList &args )
    {
       if( args.count() < 1 )
          kdWarning() << "KonqKfmIconView: Missing Parameter" << endl;
@@ -158,13 +158,13 @@ void IconViewBrowserExtension::setSaveViewPropertiesLocally( bool value )
   m_iconView->m_pProps->setSaveViewPropertiesLocally( value );
 }
 
-void IconViewBrowserExtension::setNameFilter( const QString &nameFilter )
+void IconViewBrowserExtension::setNameFilter( const TQString &nameFilter )
 {
   //kdDebug(1202) << "IconViewBrowserExtension::setNameFilter " << nameFilter << endl;
   m_iconView->m_nameFilter = nameFilter;
 }
 
-KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const char *name, const QString& mode  )
+KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode  )
     : KonqDirPart( parent, name )
     , m_bNeedSetCurrentItem( false )
     , m_pEnsureVisible( 0 )
@@ -182,22 +182,22 @@ KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const 
     m_pIconView = new KonqIconViewWidget( parentWidget, "qiconview" );
     m_pIconView->initConfig( true );
 
-    connect( m_pIconView,  SIGNAL(imagePreviewFinished()),
-             this, SLOT(slotRenderingFinished()));
+    connect( m_pIconView,  TQT_SIGNAL(imagePreviewFinished()),
+             this, TQT_SLOT(slotRenderingFinished()));
 
     // connect up the icon inc/dec signals
-    connect( m_pIconView,  SIGNAL(incIconSize()),
-             this, SLOT(slotIncIconSize()));
-    connect( m_pIconView,  SIGNAL(decIconSize()),
-             this, SLOT(slotDecIconSize()));
+    connect( m_pIconView,  TQT_SIGNAL(incIconSize()),
+             this, TQT_SLOT(slotIncIconSize()));
+    connect( m_pIconView,  TQT_SIGNAL(decIconSize()),
+             this, TQT_SLOT(slotDecIconSize()));
 
     // pass signals to the extension
-    connect( m_pIconView, SIGNAL( enableAction( const char *, bool ) ),
-             m_extension, SIGNAL( enableAction( const char *, bool ) ) );
+    connect( m_pIconView, TQT_SIGNAL( enableAction( const char *, bool ) ),
+             m_extension, TQT_SIGNAL( enableAction( const char *, bool ) ) );
 
     // signals from konqdirpart (for BC reasons)
-    connect( this, SIGNAL( findOpened( KonqDirPart * ) ), SLOT( slotKFindOpened() ) );
-    connect( this, SIGNAL( findClosed( KonqDirPart * ) ), SLOT( slotKFindClosed() ) );
+    connect( this, TQT_SIGNAL( findOpened( KonqDirPart * ) ), TQT_SLOT( slotKFindOpened() ) );
+    connect( this, TQT_SIGNAL( findClosed( KonqDirPart * ) ), TQT_SLOT( slotKFindClosed() ) );
 
     setWidget( m_pIconView );
     m_mimeTypeResolver = new KMimeTypeResolver<KFileIVI,KonqKfmIconView>(this);
@@ -209,39 +209,39 @@ KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const 
     // Don't repaint on configuration changes during construction
     m_bInit = true;
 
-    m_paDotFiles = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, SLOT( slotShowDot() ),
+    m_paDotFiles = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ),
                                       actionCollection(), "show_dot" );
 //    m_paDotFiles->setCheckedState(i18n("Hide &Hidden Files"));
     m_paDotFiles->setToolTip( i18n( "Toggle displaying of hidden dot files" ) );
 
-    m_paDirectoryOverlays = new KToggleAction( i18n( "&Folder Icons Reflect Contents" ), 0, this, SLOT( slotShowDirectoryOverlays() ),
+    m_paDirectoryOverlays = new KToggleAction( i18n( "&Folder Icons Reflect Contents" ), 0, this, TQT_SLOT( slotShowDirectoryOverlays() ),
                                       actionCollection(), "show_directory_overlays" );
 
     m_pamPreview = new KActionMenu( i18n( "&Preview" ), actionCollection(), "iconview_preview" );
 
     m_paEnablePreviews = new KToggleAction( i18n("Enable Previews"), 0, actionCollection(), "iconview_preview_all" );
     m_paEnablePreviews->setCheckedState( i18n("Disable Previews") );
-    connect( m_paEnablePreviews, SIGNAL( toggled( bool ) ), this, SLOT( slotPreview( bool ) ) );
+    connect( m_paEnablePreviews, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotPreview( bool ) ) );
     m_paEnablePreviews->setIcon("thumbnail");
     m_pamPreview->insert( m_paEnablePreviews );
     m_pamPreview->insert( new KActionSeparator(this) );
 
     KTrader::OfferList plugins = KTrader::self()->query( "ThumbCreator" );
-    QMap< QString, KToggleAction* > previewActions;
+    TQMap< TQString, KToggleAction* > previewActions;
     for ( KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
     {
         if ( KToggleAction*& preview = previewActions[ ( *it )->name() ] )
-            preview->setName( QCString( preview->name() ) + ',' + ( *it )->desktopEntryName().latin1() );
+            preview->setName( TQCString( preview->name() ) + ',' + ( *it )->desktopEntryName().latin1() );
         else
         {
             preview = new KToggleAction( (*it)->name(), 0, actionCollection(), (*it)->desktopEntryName().latin1() );
-            connect( preview, SIGNAL( toggled( bool ) ), this, SLOT( slotPreview( bool ) ) );
+            connect( preview, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotPreview( bool ) ) );
             m_pamPreview->insert( preview );
             m_paPreviewPlugins.append( preview );
         }
     }
     KToggleAction *soundPreview = new KToggleAction( i18n("Sound Files"), 0, actionCollection(), "audio/" );
-    connect( soundPreview, SIGNAL( toggled( bool ) ), this, SLOT( slotPreview( bool ) ) );
+    connect( soundPreview, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotPreview( bool ) ) );
     m_pamPreview->insert( soundPreview );
     m_paPreviewPlugins.append( soundPreview );
 
@@ -265,14 +265,14 @@ KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const 
     aSortByType->setChecked( false );
     aSortByDate->setChecked( false );
 
-    connect( aSortByNameCS, SIGNAL( toggled( bool ) ), this, SLOT( slotSortByNameCaseSensitive( bool ) ) );
-    connect( aSortByNameCI, SIGNAL( toggled( bool ) ), this, SLOT( slotSortByNameCaseInsensitive( bool ) ) );
-    connect( aSortBySize, SIGNAL( toggled( bool ) ), this, SLOT( slotSortBySize( bool ) ) );
-    connect( aSortByType, SIGNAL( toggled( bool ) ), this, SLOT( slotSortByType( bool ) ) );
-    connect( aSortByDate, SIGNAL( toggled( bool ) ), this, SLOT( slotSortByDate( bool ) ) );
+    connect( aSortByNameCS, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotSortByNameCaseSensitive( bool ) ) );
+    connect( aSortByNameCI, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotSortByNameCaseInsensitive( bool ) ) );
+    connect( aSortBySize, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotSortBySize( bool ) ) );
+    connect( aSortByType, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotSortByType( bool ) ) );
+    connect( aSortByDate, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotSortByDate( bool ) ) );
 
     //enable menu item representing the saved sorting criterion
-    QString sortcrit = KonqIconViewFactory::defaultViewProps()->sortCriterion();
+    TQString sortcrit = KonqIconViewFactory::defaultViewProps()->sortCriterion();
     KRadioAction *sort_action = dynamic_cast<KRadioAction *>(actionCollection()->action(sortcrit.latin1()));
     if(sort_action!=NULL) sort_action->activate();
 
@@ -281,8 +281,8 @@ KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const 
 
     m_paSortDirsFirst->setChecked( KonqIconViewFactory::defaultViewProps()->isDirsFirst() );
 
-    connect( aSortDescending, SIGNAL( toggled( bool ) ), this, SLOT( slotSortDescending() ) );
-    connect( m_paSortDirsFirst, SIGNAL( toggled( bool ) ), this, SLOT( slotSortDirsFirst() ) );
+    connect( aSortDescending, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotSortDescending() ) );
+    connect( m_paSortDirsFirst, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotSortDirsFirst() ) );
 
     //enable stored settings
     slotSortDirsFirst();
@@ -302,15 +302,15 @@ KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const 
 
     m_pamSort->insert( aSortDescending );
     */
-    m_paSelect = new KAction( i18n( "Se&lect..." ), CTRL+Key_Plus, this, SLOT( slotSelect() ),
+    m_paSelect = new KAction( i18n( "Se&lect..." ), CTRL+Key_Plus, this, TQT_SLOT( slotSelect() ),
                               actionCollection(), "select" );
-    m_paUnselect = new KAction( i18n( "Unselect..." ), CTRL+Key_Minus, this, SLOT( slotUnselect() ),
+    m_paUnselect = new KAction( i18n( "Unselect..." ), CTRL+Key_Minus, this, TQT_SLOT( slotUnselect() ),
                                 actionCollection(), "unselect" );
-    m_paSelectAll = KStdAction::selectAll( this, SLOT( slotSelectAll() ), actionCollection(), "selectall" );
-    m_paUnselectAll = new KAction( i18n( "Unselect All" ), CTRL+Key_U, this, SLOT( slotUnselectAll() ),
+    m_paSelectAll = KStdAction::selectAll( this, TQT_SLOT( slotSelectAll() ), actionCollection(), "selectall" );
+    m_paUnselectAll = new KAction( i18n( "Unselect All" ), CTRL+Key_U, this, TQT_SLOT( slotUnselectAll() ),
                                    actionCollection(), "unselectall" );
     m_paInvertSelection = new KAction( i18n( "&Invert Selection" ), CTRL+Key_Asterisk,
-                                       this, SLOT( slotInvertSelection() ),
+                                       this, TQT_SLOT( slotInvertSelection() ),
                                        actionCollection(), "invertselection" );
 
     m_paSelect->setToolTip( i18n( "Allows selecting of file or folder items based on a given mask" ) );
@@ -323,65 +323,65 @@ KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const 
     //m_paRightText = new KToggleAction( i18n( "Text at &Right" ), 0, actionCollection(), "textright" );
     //m_paBottomText->setExclusiveGroup( "TextPos" );
     //m_paRightText->setExclusiveGroup( "TextPos" );
-    //connect( m_paBottomText, SIGNAL( toggled( bool ) ), this, SLOT( slotTextBottom( bool ) ) );
-    //connect( m_paRightText, SIGNAL( toggled( bool ) ), this, SLOT( slotTextRight( bool ) ) );
+    //connect( m_paBottomText, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotTextBottom( bool ) ) );
+    //connect( m_paRightText, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotTextRight( bool ) ) );
 
-    connect( m_pIconView, SIGNAL( executed( QIconViewItem * ) ),
-             this, SLOT( slotReturnPressed( QIconViewItem * ) ) );
-    connect( m_pIconView, SIGNAL( returnPressed( QIconViewItem * ) ),
-             this, SLOT( slotReturnPressed( QIconViewItem * ) ) );
+    connect( m_pIconView, TQT_SIGNAL( executed( TQIconViewItem * ) ),
+             this, TQT_SLOT( slotReturnPressed( TQIconViewItem * ) ) );
+    connect( m_pIconView, TQT_SIGNAL( returnPressed( TQIconViewItem * ) ),
+             this, TQT_SLOT( slotReturnPressed( TQIconViewItem * ) ) );
 
-    connect( m_pIconView, SIGNAL( onItem( QIconViewItem * ) ),
-             this, SLOT( slotOnItem( QIconViewItem * ) ) );
+    connect( m_pIconView, TQT_SIGNAL( onItem( TQIconViewItem * ) ),
+             this, TQT_SLOT( slotOnItem( TQIconViewItem * ) ) );
 
-    connect( m_pIconView, SIGNAL( onViewport() ),
-             this, SLOT( slotOnViewport() ) );
+    connect( m_pIconView, TQT_SIGNAL( onViewport() ),
+             this, TQT_SLOT( slotOnViewport() ) );
 
-    connect( m_pIconView, SIGNAL( mouseButtonPressed(int, QIconViewItem*, const QPoint&)),
-             this, SLOT( slotMouseButtonPressed(int, QIconViewItem*, const QPoint&)) );
-    connect( m_pIconView, SIGNAL( mouseButtonClicked(int, QIconViewItem*, const QPoint&)),
-             this, SLOT( slotMouseButtonClicked(int, QIconViewItem*, const QPoint&)) );
-    connect( m_pIconView, SIGNAL( contextMenuRequested(QIconViewItem*, const QPoint&)),
-             this, SLOT( slotContextMenuRequested(QIconViewItem*, const QPoint&)) );
+    connect( m_pIconView, TQT_SIGNAL( mouseButtonPressed(int, TQIconViewItem*, const TQPoint&)),
+             this, TQT_SLOT( slotMouseButtonPressed(int, TQIconViewItem*, const TQPoint&)) );
+    connect( m_pIconView, TQT_SIGNAL( mouseButtonClicked(int, TQIconViewItem*, const TQPoint&)),
+             this, TQT_SLOT( slotMouseButtonClicked(int, TQIconViewItem*, const TQPoint&)) );
+    connect( m_pIconView, TQT_SIGNAL( contextMenuRequested(TQIconViewItem*, const TQPoint&)),
+             this, TQT_SLOT( slotContextMenuRequested(TQIconViewItem*, const TQPoint&)) );
 
     // Signals needed to implement the spring loading folders behavior
-    connect( m_pIconView, SIGNAL( held( QIconViewItem * ) ),
-             this, SLOT( slotDragHeld( QIconViewItem * ) ) );
-    connect( m_pIconView, SIGNAL( dragEntered( bool ) ),
-             this, SLOT( slotDragEntered( bool ) ) );
-    connect( m_pIconView, SIGNAL( dragLeft() ),
-             this, SLOT( slotDragLeft() ) );
-    connect( m_pIconView, SIGNAL( dragMove( bool ) ),
-             this, SLOT( slotDragMove( bool ) ) );
-    connect( m_pIconView, SIGNAL( dragFinished() ),
-             this, SLOT( slotDragFinished() ) );
+    connect( m_pIconView, TQT_SIGNAL( held( TQIconViewItem * ) ),
+             this, TQT_SLOT( slotDragHeld( TQIconViewItem * ) ) );
+    connect( m_pIconView, TQT_SIGNAL( dragEntered( bool ) ),
+             this, TQT_SLOT( slotDragEntered( bool ) ) );
+    connect( m_pIconView, TQT_SIGNAL( dragLeft() ),
+             this, TQT_SLOT( slotDragLeft() ) );
+    connect( m_pIconView, TQT_SIGNAL( dragMove( bool ) ),
+             this, TQT_SLOT( slotDragMove( bool ) ) );
+    connect( m_pIconView, TQT_SIGNAL( dragFinished() ),
+             this, TQT_SLOT( slotDragFinished() ) );
 
     // Create the directory lister
     m_dirLister = new KDirLister( true );
     setDirLister( m_dirLister );
     m_dirLister->setMainWindow(m_pIconView->topLevelWidget());
 
-    connect( m_dirLister, SIGNAL( started( const KURL & ) ),
-             this, SLOT( slotStarted() ) );
-    connect( m_dirLister, SIGNAL( completed() ), this, SLOT( slotCompleted() ) );
-    connect( m_dirLister, SIGNAL( canceled( const KURL& ) ), this, SLOT( slotCanceled( const KURL& ) ) );
-    connect( m_dirLister, SIGNAL( clear() ), this, SLOT( slotClear() ) );
-    connect( m_dirLister, SIGNAL( newItems( const KFileItemList& ) ),
-             this, SLOT( slotNewItems( const KFileItemList& ) ) );
-    connect( m_dirLister, SIGNAL( deleteItem( KFileItem * ) ),
-             this, SLOT( slotDeleteItem( KFileItem * ) ) );
-    connect( m_dirLister, SIGNAL( refreshItems( const KFileItemList& ) ),
-             this, SLOT( slotRefreshItems( const KFileItemList& ) ) );
-    connect( m_dirLister, SIGNAL( redirection( const KURL & ) ),
-             this, SLOT( slotRedirection( const KURL & ) ) );
-    connect( m_dirLister, SIGNAL( itemsFilteredByMime(const KFileItemList& ) ),
-             SIGNAL( itemsFilteredByMime(const KFileItemList& ) ) );
-    connect( m_dirLister, SIGNAL( infoMessage( const QString& ) ),
-             extension(), SIGNAL( infoMessage( const QString& ) ) );
-    connect( m_dirLister, SIGNAL( percent( int ) ),
-             extension(), SIGNAL( loadingProgress( int ) ) );
-    connect( m_dirLister, SIGNAL( speed( int ) ),
-             extension(), SIGNAL( speedProgress( int ) ) );
+    connect( m_dirLister, TQT_SIGNAL( started( const KURL & ) ),
+             this, TQT_SLOT( slotStarted() ) );
+    connect( m_dirLister, TQT_SIGNAL( completed() ), this, TQT_SLOT( slotCompleted() ) );
+    connect( m_dirLister, TQT_SIGNAL( canceled( const KURL& ) ), this, TQT_SLOT( slotCanceled( const KURL& ) ) );
+    connect( m_dirLister, TQT_SIGNAL( clear() ), this, TQT_SLOT( slotClear() ) );
+    connect( m_dirLister, TQT_SIGNAL( newItems( const KFileItemList& ) ),
+             this, TQT_SLOT( slotNewItems( const KFileItemList& ) ) );
+    connect( m_dirLister, TQT_SIGNAL( deleteItem( KFileItem * ) ),
+             this, TQT_SLOT( slotDeleteItem( KFileItem * ) ) );
+    connect( m_dirLister, TQT_SIGNAL( refreshItems( const KFileItemList& ) ),
+             this, TQT_SLOT( slotRefreshItems( const KFileItemList& ) ) );
+    connect( m_dirLister, TQT_SIGNAL( redirection( const KURL & ) ),
+             this, TQT_SLOT( slotRedirection( const KURL & ) ) );
+    connect( m_dirLister, TQT_SIGNAL( itemsFilteredByMime(const KFileItemList& ) ),
+             TQT_SIGNAL( itemsFilteredByMime(const KFileItemList& ) ) );
+    connect( m_dirLister, TQT_SIGNAL( infoMessage( const TQString& ) ),
+             extension(), TQT_SIGNAL( infoMessage( const TQString& ) ) );
+    connect( m_dirLister, TQT_SIGNAL( percent( int ) ),
+             extension(), TQT_SIGNAL( loadingProgress( int ) ) );
+    connect( m_dirLister, TQT_SIGNAL( speed( int ) ),
+             extension(), TQT_SIGNAL( speedProgress( int ) ) );
 
     // Now we may react to configuration changes
     m_bInit = false;
@@ -392,10 +392,10 @@ KonqKfmIconView::KonqKfmIconView( QWidget *parentWidget, QObject *parent, const 
     m_bUpdateContentsPosAfterListing = false;
     m_bDirPropertiesChanged = true;
     m_bPreviewRunningBeforeCloseURL = false;
-    m_pIconView->setResizeMode( QIconView::Adjust );
+    m_pIconView->setResizeMode( TQIconView::Adjust );
 
-    connect( m_pIconView, SIGNAL( selectionChanged() ),
-             this, SLOT( slotSelectionChanged() ) );
+    connect( m_pIconView, TQT_SIGNAL( selectionChanged() ),
+             this, TQT_SLOT( slotSelectionChanged() ) );
 
     // Respect kcmkonq's configuration for word-wrap icon text.
     // If we want something else, we have to adapt the configuration or remove it...
@@ -429,7 +429,7 @@ const KFileItem * KonqKfmIconView::currentItem()
 
 void KonqKfmIconView::slotPreview( bool toggle )
 {
-    QCString name = sender()->name(); // e.g. clipartthumbnail (or audio/, special case)
+    TQCString name = sender()->name(); // e.g. clipartthumbnail (or audio/, special case)
     if (name == "iconview_preview_all")
     {
         m_pProps->setShowingPreview( toggle );
@@ -453,8 +453,8 @@ void KonqKfmIconView::slotPreview( bool toggle )
     }
     else
     {
-        QStringList types = QStringList::split( ',', name );
-        for ( QStringList::ConstIterator it = types.begin(); it != types.end(); ++it )
+        TQStringList types = TQStringList::split( ',', name );
+        for ( TQStringList::ConstIterator it = types.begin(); it != types.end(); ++it )
         {
             m_pProps->setShowingPreview( *it, toggle );
             m_pIconView->setPreviewSettings( m_pProps->previewSettings() );
@@ -471,7 +471,7 @@ void KonqKfmIconView::slotPreview( bool toggle )
                         bool previewRunning = m_pIconView->isPreviewRunning();
                         if ( previewRunning )
                             m_pIconView->stopImagePreview();
-                        QStringList mimeTypes = serv->property("MimeTypes").toStringList();
+                        TQStringList mimeTypes = serv->property("MimeTypes").toStringList();
                         m_pIconView->setIcons( m_pIconView->iconSize(), mimeTypes );
                         if ( previewRunning )
                             m_pIconView->startImagePreview( m_pProps->previewSettings(), false );
@@ -502,7 +502,7 @@ void KonqKfmIconView::slotShowDirectoryOverlays()
 
     m_pProps->setShowingDirectoryOverlays( show );
 
-    for ( QIconViewItem *item = m_pIconView->firstItem(); item; item = item->nextItem() )
+    for ( TQIconViewItem *item = m_pIconView->firstItem(); item; item = item->nextItem() )
     {
         KFileIVI* kItem = static_cast<KFileIVI*>(item);
         if ( !kItem->item()->isDir() ) continue;
@@ -520,15 +520,15 @@ void KonqKfmIconView::slotShowDirectoryOverlays()
 void KonqKfmIconView::slotSelect()
 {
     bool ok;
-    QString pattern = KInputDialog::getText( QString::null,
+    TQString pattern = KInputDialog::getText( TQString::null,
         i18n( "Select files:" ), "*", &ok, m_pIconView );
     if ( ok )
     {
-        QRegExp re( pattern, true, true );
+        TQRegExp re( pattern, true, true );
 
         m_pIconView->blockSignals( true );
 
-        QIconViewItem *it = m_pIconView->firstItem();
+        TQIconViewItem *it = m_pIconView->firstItem();
         while ( it )
         {
             if ( re.exactMatch( it->text() ) )
@@ -547,15 +547,15 @@ void KonqKfmIconView::slotSelect()
 void KonqKfmIconView::slotUnselect()
 {
     bool ok;
-    QString pattern = KInputDialog::getText( QString::null,
+    TQString pattern = KInputDialog::getText( TQString::null,
         i18n( "Unselect files:" ), "*", &ok, m_pIconView );
     if ( ok )
     {
-        QRegExp re( pattern, true, true );
+        TQRegExp re( pattern, true, true );
 
         m_pIconView->blockSignals( true );
 
-        QIconViewItem *it = m_pIconView->firstItem();
+        TQIconViewItem *it = m_pIconView->firstItem();
         while ( it )
         {
             if ( re.exactMatch( it->text() ) )
@@ -705,7 +705,7 @@ bool KonqKfmIconView::doCloseURL()
     return true;
 }
 
-void KonqKfmIconView::slotReturnPressed( QIconViewItem *item )
+void KonqKfmIconView::slotReturnPressed( TQIconViewItem *item )
 {
     if ( !item )
         return;
@@ -719,7 +719,7 @@ void KonqKfmIconView::slotReturnPressed( QIconViewItem *item )
     lmbClicked( fileItem );
 }
 
-void KonqKfmIconView::slotDragHeld( QIconViewItem *item )
+void KonqKfmIconView::slotDragHeld( TQIconViewItem *item )
 {
     kdDebug() << "KonqKfmIconView::slotDragHeld()" << endl;
 
@@ -764,7 +764,7 @@ void KonqKfmIconView::slotDragFinished()
 }
 
 
-void KonqKfmIconView::slotContextMenuRequested(QIconViewItem* _item, const QPoint& _global)
+void KonqKfmIconView::slotContextMenuRequested(TQIconViewItem* _item, const TQPoint& _global)
 {
     const KFileItemList items = m_pIconView->selectedFileItems();
     if ( items.isEmpty() )
@@ -780,7 +780,7 @@ void KonqKfmIconView::slotContextMenuRequested(QIconViewItem* _item, const QPoin
     if ( rootItem ) {
         KURL parentDirURL = rootItem->url();
         // Check if parentDirURL applies to the selected items (usually yes, but not with search results)
-        QPtrListIterator<KFileItem> kit( items );
+        TQPtrListIterator<KFileItem> kit( items );
         for ( ; kit.current(); ++kit )
             if ( kit.current()->url().directory( 1 ) != rootItem->url().path() )
                 parentDirURL = KURL();
@@ -792,7 +792,7 @@ void KonqKfmIconView::slotContextMenuRequested(QIconViewItem* _item, const QPoin
     emit m_extension->popupMenu( 0L, _global, items, KParts::URLArgs(), popupFlags);
 }
 
-void KonqKfmIconView::slotMouseButtonPressed(int _button, QIconViewItem* _item, const QPoint&)
+void KonqKfmIconView::slotMouseButtonPressed(int _button, TQIconViewItem* _item, const TQPoint&)
 {
     if ( _button == RightButton && !_item )
     {
@@ -822,14 +822,14 @@ void KonqKfmIconView::slotMouseButtonPressed(int _button, QIconViewItem* _item, 
 
         KParts::BrowserExtension::PopupFlags popupFlags = KParts::BrowserExtension::ShowNavigationItems | KParts::BrowserExtension::ShowUp;
 
-        emit m_extension->popupMenu( 0L, QCursor::pos(), items, KParts::URLArgs(), popupFlags );
+        emit m_extension->popupMenu( 0L, TQCursor::pos(), items, KParts::URLArgs(), popupFlags );
 
         if ( delRootItem )
             delete item; // we just created it
     }
 }
 
-void KonqKfmIconView::slotMouseButtonClicked(int _button, QIconViewItem* _item, const QPoint& )
+void KonqKfmIconView::slotMouseButtonClicked(int _button, TQIconViewItem* _item, const TQPoint& )
 {
     if( _button == MidButton )
         mmbClicked( _item ? static_cast<KFileIVI*>(_item)->item() : 0L );
@@ -859,7 +859,7 @@ void KonqKfmIconView::slotCanceled( const KURL& url )
     // It could be about the URL we were listing, and openURL() aborted it.
     if ( m_bLoading && url.equals( m_pIconView->url(), true ) )
     {
-        emit canceled( QString::null );
+        emit canceled( TQString::null );
         m_bLoading = false;
     }
 
@@ -962,7 +962,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         KFileItem* fileItem = item->item();
 
         if ( !m_itemsToSelect.isEmpty() ) {
-           QStringList::Iterator tsit = m_itemsToSelect.find( fileItem->name() );
+           TQStringList::Iterator tsit = m_itemsToSelect.find( fileItem->name() );
            if ( tsit != m_itemsToSelect.end() ) {
               m_itemsToSelect.remove( tsit );
               m_pIconView->setSelected( item, true, true );
@@ -979,7 +979,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
             showDirectoryOverlay(item);
         }
 
-        QString key;
+        TQString key;
 
         switch ( m_eSortCriterion )
         {
@@ -989,7 +989,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
             case Type: key = item->item()->mimetype()+ "\008" +item->text().lower(); break; // ### slows down listing :-(
             case Date:
             {
-                QDateTime dayt;
+                TQDateTime dayt;
                 dayt.setTime_t(item->item()->time(KIO::UDS_MODIFICATION_TIME ));
                 key = dayt.toString("yyyyMMddhhmmss");
                 break;
@@ -1065,9 +1065,9 @@ void KonqKfmIconView::showDirectoryOverlay(KFileIVI* item)
         {
            if (!m_paOutstandingOverlaysTimer)
            {
-              m_paOutstandingOverlaysTimer = new QTimer(this);
-              connect(m_paOutstandingOverlaysTimer, SIGNAL(timeout()),
-                      SLOT(slotDirectoryOverlayStart()));
+              m_paOutstandingOverlaysTimer = new TQTimer(this);
+              connect(m_paOutstandingOverlaysTimer, TQT_SIGNAL(timeout()),
+                      TQT_SLOT(slotDirectoryOverlayStart()));
            }
            m_paOutstandingOverlaysTimer->start(20, true);
         }
@@ -1086,7 +1086,7 @@ void KonqKfmIconView::slotDirectoryOverlayStart()
 
        if (overlay)
        {
-          connect( overlay, SIGNAL( finished() ), this, SLOT( slotDirectoryOverlayFinished() ) );
+          connect( overlay, TQT_SIGNAL( finished() ), this, TQT_SLOT( slotDirectoryOverlayFinished() ) );
           overlay->start(); // Watch out, may emit finished() immediately!!
           return; // Let it run....
        }
@@ -1115,7 +1115,7 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
         kdDebug() << "KonqKfmIconView::slotRefreshItems '" << rit.current()->name() << "' ivi=" << ivi << endl;
         if (ivi)
         {
-            QSize oldSize = ivi->pixmap()->size();
+            TQSize oldSize = ivi->pixmap()->size();
             if ( ivi->isThumbnail() ) {
                 bNeedPreviewJob = true;
                 ivi->invalidateThumbnail();
@@ -1153,9 +1153,9 @@ void KonqKfmIconView::slotClear()
     m_pIconView->viewport()->setUpdatesEnabled( false );
     if ( !m_pTimeoutRefreshTimer )
     {
-        m_pTimeoutRefreshTimer = new QTimer( this );
-        connect( m_pTimeoutRefreshTimer, SIGNAL( timeout() ),
-                 this, SLOT( slotRefreshViewport() ) );
+        m_pTimeoutRefreshTimer = new TQTimer( this );
+        connect( m_pTimeoutRefreshTimer, TQT_SIGNAL( timeout() ),
+                 this, TQT_SLOT( slotRefreshViewport() ) );
     }
     m_pTimeoutRefreshTimer->start( 700, true );
 
@@ -1180,7 +1180,7 @@ void KonqKfmIconView::slotClear()
 
 void KonqKfmIconView::slotRedirection( const KURL & url )
 {
-    const QString prettyURL = url.pathOrURL();
+    const TQString prettyURL = url.pathOrURL();
     emit m_extension->setLocationBarURL( prettyURL );
     emit setWindowCaption( prettyURL );
     m_pIconView->setURL( url );
@@ -1245,7 +1245,7 @@ void KonqKfmIconView::slotRenderingFinished()
 void KonqKfmIconView::slotRefreshViewport()
 {
     kdDebug(1202) << "KonqKfmIconView::slotRefreshViewport()" << endl;
-    QWidget * vp = m_pIconView->viewport();
+    TQWidget * vp = m_pIconView->viewport();
     bool prevState = vp->isUpdatesEnabled();
     vp->setUpdatesEnabled( true );
     vp->repaint();
@@ -1270,7 +1270,7 @@ bool KonqKfmIconView::doOpenURL( const KURL & url )
     m_dirLister->setMimeFilter( mimeFilter() );
 
     // This *must* happen before m_dirLister->openURL because it emits
-    // clear() and QIconView::clear() calls setContentsPos(0,0)!
+    // clear() and TQIconView::clear() calls setContentsPos(0,0)!
     KParts::URLArgs args = m_extension->urlArgs();
     if ( args.reload )
     {
@@ -1305,9 +1305,9 @@ bool KonqKfmIconView::doOpenURL( const KURL & url )
       m_paEnablePreviews->setChecked( m_pProps->isShowingPreview() );
       for ( m_paPreviewPlugins.first(); m_paPreviewPlugins.current(); m_paPreviewPlugins.next() )
       {
-          QStringList types = QStringList::split( ',', m_paPreviewPlugins.current()->name() );
+          TQStringList types = TQStringList::split( ',', m_paPreviewPlugins.current()->name() );
           bool enabled = false;
-          for ( QStringList::ConstIterator it = types.begin(); it != types.end(); ++it )
+          for ( TQStringList::ConstIterator it = types.begin(); it != types.end(); ++it )
               if ( m_pProps->isShowingPreview( *it ) )
               {
                   enabled = true;
@@ -1318,7 +1318,7 @@ bool KonqKfmIconView::doOpenURL( const KURL & url )
       }
     }
 
-    const QString prettyURL = url.pathOrURL();
+    const TQString prettyURL = url.pathOrURL();
     emit setWindowCaption( prettyURL );
 
     return true;
@@ -1334,7 +1334,7 @@ void KonqKfmIconView::slotKFindClosed()
     m_dirLister->setAutoUpdate( true );
 }
 
-void KonqKfmIconView::slotOnItem( QIconViewItem *item )
+void KonqKfmIconView::slotOnItem( TQIconViewItem *item )
 {
     emit setStatusBarText( static_cast<KFileIVI *>(item)->item()->getStatusBarInfo() );
     emitMouseOver( static_cast<KFileIVI*>(item)->item());
@@ -1347,7 +1347,7 @@ void KonqKfmIconView::slotOnViewport()
     emitMouseOver( 0 );
 }
 
-void KonqKfmIconView::setViewMode( const QString &mode )
+void KonqKfmIconView::setViewMode( const TQString &mode )
 {
     if ( mode == m_mode )
         return;
@@ -1357,13 +1357,13 @@ void KonqKfmIconView::setViewMode( const QString &mode )
     m_mode = mode;
     if (mode=="MultiColumnView")
     {
-        m_pIconView->setArrangement(QIconView::TopToBottom);
-        m_pIconView->setItemTextPos(QIconView::Right);
+        m_pIconView->setArrangement(TQIconView::TopToBottom);
+        m_pIconView->setItemTextPos(TQIconView::Right);
     }
     else
     {
-        m_pIconView->setArrangement(QIconView::LeftToRight);
-        m_pIconView->setItemTextPos(QIconView::Bottom);
+        m_pIconView->setArrangement(TQIconView::LeftToRight);
+        m_pIconView->setItemTextPos(TQIconView::Bottom);
     }
 
     if ( m_bPreviewRunningBeforeCloseURL )
@@ -1380,28 +1380,28 @@ void KonqKfmIconView::setupSortKeys()
     {
     case NameCaseSensitive:
         m_pIconView->setCaseInsensitiveSort( false );
-        for ( QIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
+        for ( TQIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
             it->setKey( it->text() );
         break;
     case NameCaseInsensitive:
         m_pIconView->setCaseInsensitiveSort( true );
-        for ( QIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
+        for ( TQIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
             it->setKey( it->text().lower() );
         break;
     case Size:
-        for ( QIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
+        for ( TQIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
             it->setKey( makeSizeKey( (KFileIVI *)it ) );
         break;
     case Type:
         // Sort by Type + Name (#17014)
-        for ( QIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
+        for ( TQIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
             it->setKey( static_cast<KFileIVI *>( it )->item()->mimetype() + "\008" + it->text().lower() );
         break;
     case Date:
     {
         //Sorts by time of modification (#52750)
-        QDateTime dayt;
-        for ( QIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
+        TQDateTime dayt;
+        for ( TQIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
         {
             dayt.setTime_t(static_cast<KFileIVI *>( it )->item()->time(KIO::UDS_MODIFICATION_TIME));
             it->setKey(dayt.toString("yyyyMMddhhmmss"));
@@ -1411,7 +1411,7 @@ void KonqKfmIconView::setupSortKeys()
     }
 }
 
-QString KonqKfmIconView::makeSizeKey( KFileIVI *item )
+TQString KonqKfmIconView::makeSizeKey( KFileIVI *item )
 {
     return KIO::number( item->item()->size() ).rightJustify( 20, '0' );
 }
@@ -1428,8 +1428,8 @@ static KStaticDeleter<SpringLoadingManager> s_springManagerDeleter;
 SpringLoadingManager::SpringLoadingManager()
     : m_startPart(0L)
 {
-    connect( &m_endTimer, SIGNAL( timeout() ),
-             this, SLOT( finished() ) );
+    connect( &m_endTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( finished() ) );
 
 }
 
@@ -1451,7 +1451,7 @@ bool SpringLoadingManager::exists()
 
 void SpringLoadingManager::springLoadTrigger(KonqKfmIconView *view,
                                              KFileItem *file,
-                                             QIconViewItem *item)
+                                             TQIconViewItem *item)
 {
     if ( !file || !file->isDir() )
         return;
@@ -1483,7 +1483,7 @@ void SpringLoadingManager::springLoadTrigger(KonqKfmIconView *view,
     // Open the folder URL, we don't want to modify the browser
     // history, hence the use of openURL and setLocationBarURL
     view->openURL(url);
-    const QString prettyURL = url.pathOrURL();
+    const TQString prettyURL = url.pathOrURL();
     emit view->extension()->setLocationBarURL( prettyURL );
 }
 
@@ -1526,7 +1526,7 @@ void SpringLoadingManager::finished()
 
     KonqKfmIconView *view = static_cast<KonqKfmIconView*>(part);
     view->openURL(url);
-    const QString prettyURL = url.pathOrURL();
+    const TQString prettyURL = url.pathOrURL();
     emit view->extension()->setLocationBarURL( prettyURL );
 
     deleteLater();

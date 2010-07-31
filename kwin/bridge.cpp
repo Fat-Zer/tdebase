@@ -41,9 +41,9 @@ BRIDGE_HELPER( bool, keepAbove,,, const )
 BRIDGE_HELPER( bool, keepBelow,,, const )
 BRIDGE_HELPER( bool, isMovable,,, const )
 BRIDGE_HELPER( bool, isResizable,,, const )
-BRIDGE_HELPER( QString, caption,,, const )
-BRIDGE_HELPER( void, processMousePressEvent, QMouseEvent* e, e, )
-BRIDGE_HELPER( QRect, geometry,,, const )
+BRIDGE_HELPER( TQString, caption,,, const )
+BRIDGE_HELPER( void, processMousePressEvent, TQMouseEvent* e, e, )
+BRIDGE_HELPER( TQRect, geometry,,, const )
 BRIDGE_HELPER( void, closeWindow,,, )
 BRIDGE_HELPER( void, maximize, MaximizeMode m, m, )
 BRIDGE_HELPER( void, minimize,,, )
@@ -67,9 +67,9 @@ NET::WindowType Bridge::windowType( unsigned long supported_types ) const
     return c->windowType( false, supported_types );
     }
 
-QIconSet Bridge::icon() const
+TQIconSet Bridge::icon() const
     {
-    return QIconSet( c->miniIcon(), c->icon());
+    return TQIconSet( c->miniIcon(), c->icon());
     }
 
 bool Bridge::isSetShade() const
@@ -77,12 +77,12 @@ bool Bridge::isSetShade() const
     return c->shadeMode() != ShadeNone;
     }
 
-void Bridge::showWindowMenu( QPoint p )
+void Bridge::showWindowMenu( TQPoint p )
     {
     c->workspace()->showWindowMenu( p, c );
     }
 
-void Bridge::showWindowMenu( const QRect &p )
+void Bridge::showWindowMenu( const TQRect &p )
     {
     c->workspace()->showWindowMenu( p, c );
     }
@@ -92,7 +92,7 @@ void Bridge::performWindowOperation( WindowOperation op )
     c->workspace()->performWindowOperation( c, op );
     }
 
-void Bridge::setMask( const QRegion& r, int mode )
+void Bridge::setMask( const TQRegion& r, int mode )
     {
     c->setMask( r, mode );
     }
@@ -102,13 +102,13 @@ bool Bridge::isPreview() const
     return false;
     }
 
-QRect Bridge::iconGeometry() const
+TQRect Bridge::iconGeometry() const
     {
     NETRect r = c->info->iconGeometry();
-    return QRect( r.pos.x, r.pos.y, r.size.width, r.size.height );
+    return TQRect( r.pos.x, r.pos.y, r.size.width, r.size.height );
     }
 
-QWidget* Bridge::workspaceWidget() const
+TQWidget* Bridge::workspaceWidget() const
     {
     return c->workspace()->desktopWidget();
     }
@@ -125,7 +125,7 @@ void Bridge::titlebarDblClickOperation()
 
 void Bridge::titlebarMouseWheelOperation( int delta )
     {
-    c->performMouseCommand( options->operationTitlebarMouseWheel( delta ), QCursor::pos());
+    c->performMouseCommand( options->operationTitlebarMouseWheel( delta ), TQCursor::pos());
     }
 
 void Bridge::setShade( bool set )
@@ -138,7 +138,7 @@ int Bridge::currentDesktop() const
     return c->workspace()->currentDesktop();
     }
 
-QWidget* Bridge::initialParentWidget() const
+TQWidget* Bridge::initialParentWidget() const
     {
     return NULL;
     }
@@ -156,9 +156,9 @@ void Bridge::helperShowHide( bool show )
         c->rawHide();
     }
 
-QRegion Bridge::unobscuredRegion( const QRegion& r ) const
+TQRegion Bridge::unobscuredRegion( const TQRegion& r ) const
     {
-    QRegion reg( r );
+    TQRegion reg( r );
     const ClientList stacking_order = c->workspace()->stackingOrder();
     ClientList::ConstIterator it = stacking_order.find( c );
     ++it;
@@ -183,7 +183,7 @@ QRegion Bridge::unobscuredRegion( const QRegion& r ) const
 	   we choose ours */
 	int dx = (*it)->x() - c->x();
 	int dy = (*it)->y() - c->y();
-	QRegion creg = (*it)->mask();
+	TQRegion creg = (*it)->mask();
 	creg.translate(dx, dy);
 	reg -= creg;
 	if (reg.isEmpty())

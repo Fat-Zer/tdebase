@@ -21,18 +21,18 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "workspace.h"
 
 #include <fixx11h.h>
-#include <qhbox.h>
-#include <qpushbutton.h>
-#include <qslider.h>
-#include <qtooltip.h>
-#include <qpopupmenu.h>
+#include <tqhbox.h>
+#include <tqpushbutton.h>
+#include <tqslider.h>
+#include <tqtooltip.h>
+#include <tqpopupmenu.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kglobalaccel.h>
 #include <kapplication.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include "killwindow.h"
 #include "tabbox.h"
@@ -44,20 +44,20 @@ namespace KWinInternal
 // Workspace
 //****************************************
 
-QPopupMenu* Workspace::clientPopup()
+TQPopupMenu* Workspace::clientPopup()
     {
     if ( !popup )
         {
         popup = new QPopupMenu;
         popup->setCheckable( TRUE );
         popup->setFont(KGlobalSettings::menuFont());
-        connect( popup, SIGNAL( aboutToShow() ), this, SLOT( clientPopupAboutToShow() ) );
-        connect( popup, SIGNAL( activated(int) ), this, SLOT( clientPopupActivated(int) ) );
+        connect( popup, TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( clientPopupAboutToShow() ) );
+        connect( popup, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( clientPopupActivated(int) ) );
       
-        advanced_popup = new QPopupMenu( popup );
+        advanced_popup = new TQPopupMenu( popup );
         advanced_popup->setCheckable( TRUE );
         advanced_popup->setFont(KGlobalSettings::menuFont());
-        connect( advanced_popup, SIGNAL( activated(int) ), this, SLOT( clientPopupActivated(int) ) );
+        connect( advanced_popup, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( clientPopupActivated(int) ) );
         advanced_popup->insertItem( SmallIconSet( "up" ),
             i18n("Keep &Above Others")+'\t'+keys->shortcut("Window Above Other Windows").seq(0).toString(), Options::KeepAboveOp );
         advanced_popup->insertItem( SmallIconSet( "down" ),
@@ -74,17 +74,17 @@ QPopupMenu* Workspace::clientPopup()
         desk_popup_index = popup->count();
         
         if (options->useTranslucency){
-            QPopupMenu *trans_popup = new QPopupMenu( popup );
-            QVBox *transBox = new QVBox(trans_popup);
-            transButton = new QPushButton(transBox, "transButton");
-            QToolTip::add(transButton, i18n("Reset opacity to default value"));
-            transSlider = new QSlider(0, 100, 1, 100, Qt::Vertical, transBox, "transSlider");
-            QToolTip::add(transSlider, i18n("Slide this to set the window's opacity"));
-            connect(transButton, SIGNAL(clicked()), SLOT(resetClientOpacity()));
-            connect(transButton, SIGNAL(clicked()), trans_popup, SLOT(hide()));
-            connect(transSlider, SIGNAL(valueChanged(int)), SLOT(setTransButtonText(int)));
-            connect(transSlider, SIGNAL(valueChanged(int)), this, SLOT(setPopupClientOpacity(int)));
-//             connect(transSlider, SIGNAL(sliderReleased()), trans_popup, SLOT(hide()));
+            TQPopupMenu *trans_popup = new TQPopupMenu( popup );
+            TQVBox *transBox = new TQVBox(trans_popup);
+            transButton = new TQPushButton(transBox, "transButton");
+            TQToolTip::add(transButton, i18n("Reset opacity to default value"));
+            transSlider = new TQSlider(0, 100, 1, 100, Qt::Vertical, transBox, "transSlider");
+            TQToolTip::add(transSlider, i18n("Slide this to set the window's opacity"));
+            connect(transButton, TQT_SIGNAL(clicked()), TQT_SLOT(resetClientOpacity()));
+            connect(transButton, TQT_SIGNAL(clicked()), trans_popup, TQT_SLOT(hide()));
+            connect(transSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(setTransButtonText(int)));
+            connect(transSlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(setPopupClientOpacity(int)));
+//             connect(transSlider, TQT_SIGNAL(sliderReleased()), trans_popup, TQT_SLOT(hide()));
             trans_popup->insertItem(transBox);
             popup->insertItem(i18n("&Opacity"), trans_popup );
         }
@@ -100,7 +100,7 @@ QPopupMenu* Workspace::clientPopup()
         if (!KGlobal::config()->isImmutable() && 
             !kapp->authorizeControlModules(Workspace::configModules(true)).isEmpty())
             {
-            popup->insertItem(SmallIconSet( "configure" ), i18n("Configur&e Window Behavior..."), this, SLOT( configureWM() ));
+            popup->insertItem(SmallIconSet( "configure" ), i18n("Configur&e Window Behavior..."), this, TQT_SLOT( configureWM() ));
             popup->insertSeparator();
             }
 
@@ -125,9 +125,9 @@ void Workspace::setTransButtonText(int value)
     else if (value >= 100 )
         transButton->setText("100 %");
     else if(value < 10)
-        transButton->setText("00"+QString::number(value)+" %");
+        transButton->setText("00"+TQString::number(value)+" %");
     else if(value < 100)
-        transButton->setText("0"+QString::number(value)+" %");
+        transButton->setText("0"+TQString::number(value)+" %");
     }
 
 void Workspace::resetClientOpacity()
@@ -187,13 +187,13 @@ void Workspace::initDesktopPopup()
     if (desk_popup)
         return;
 
-    desk_popup = new QPopupMenu( popup );
+    desk_popup = new TQPopupMenu( popup );
     desk_popup->setCheckable( TRUE );
     desk_popup->setFont(KGlobalSettings::menuFont());
-    connect( desk_popup, SIGNAL( activated(int) ),
-             this, SLOT( slotSendToDesktop(int) ) );
-    connect( desk_popup, SIGNAL( aboutToShow() ),
-             this, SLOT( desktopPopupAboutToShow() ) );
+    connect( desk_popup, TQT_SIGNAL( activated(int) ),
+             this, TQT_SLOT( slotSendToDesktop(int) ) );
+    connect( desk_popup, TQT_SIGNAL( aboutToShow() ),
+             this, TQT_SLOT( desktopPopupAboutToShow() ) );
 
     popup->insertItem(i18n("To &Desktop"), desk_popup, -1, desk_popup_index );
     }
@@ -216,7 +216,7 @@ void Workspace::desktopPopupAboutToShow()
     const int BASE = 10;
     for ( int i = 1; i <= numberOfDesktops(); i++ ) 
         {
-        QString basic_name("%1  %2");
+        TQString basic_name("%1  %2");
         if (i<BASE)
             {
             basic_name.prepend('&');
@@ -286,10 +286,10 @@ void Workspace::setupWindowShortcut( Client* c )
     client_keys->suspend( true );
     client_keys_dialog = new ShortcutDialog( c->shortcut());
     client_keys_client = c;
-    connect( client_keys_dialog, SIGNAL( dialogDone( bool )), SLOT( setupWindowShortcutDone( bool )));
-    QRect r = clientArea( ScreenArea, c );
-    QSize size = client_keys_dialog->sizeHint();
-    QPoint pos = c->pos() + c->clientPos();
+    connect( client_keys_dialog, TQT_SIGNAL( dialogDone( bool )), TQT_SLOT( setupWindowShortcutDone( bool )));
+    TQRect r = clientArea( ScreenArea, c );
+    TQSize size = client_keys_dialog->sizeHint();
+    TQPoint pos = c->pos() + c->clientPos();
     if( pos.x() + size.width() >= r.right())
         pos.setX( r.right() - size.width());
     if( pos.y() + size.height() >= r.bottom())
@@ -317,13 +317,13 @@ void Workspace::setupWindowShortcutDone( bool ok )
 
 void Workspace::clientShortcutUpdated( Client* c )
     {
-    QString key = QString::number( c->window());
+    TQString key = TQString::number( c->window());
     client_keys->remove( key );
     if( !c->shortcut().isNull())
         {
         client_keys->insert( key, key );
         client_keys->setShortcut( key, c->shortcut());
-        client_keys->setSlot( key, c, SLOT( shortcutActivated()));
+        client_keys->setSlot( key, c, TQT_SLOT( shortcutActivated()));
         client_keys->setActionEnabled( key, true );
         }
     client_keys->updateConnections();
@@ -333,7 +333,7 @@ void Workspace::clientPopupActivated( int id )
     {
     WindowOperation op = static_cast< WindowOperation >( id );
     Client* c = active_popup_client ? active_popup_client : active_client;
-    QString type;
+    TQString type;
     switch( op )
         {
         case FullScreenOp:
@@ -359,22 +359,22 @@ void Workspace::performWindowOperation( Client* c, Options::WindowOperation op )
         return;
 
     if (op == Options::MoveOp || op == Options::UnrestrictedMoveOp )
-        QCursor::setPos( c->geometry().center() );
+        TQCursor::setPos( c->geometry().center() );
     if (op == Options::ResizeOp || op == Options::UnrestrictedResizeOp )
-        QCursor::setPos( c->geometry().bottomRight());
+        TQCursor::setPos( c->geometry().bottomRight());
     switch ( op ) 
         {
         case Options::MoveOp:
-            c->performMouseCommand( Options::MouseMove, QCursor::pos() );
+            c->performMouseCommand( Options::MouseMove, TQCursor::pos() );
             break;
         case Options::UnrestrictedMoveOp:
-            c->performMouseCommand( Options::MouseUnrestrictedMove, QCursor::pos() );
+            c->performMouseCommand( Options::MouseUnrestrictedMove, TQCursor::pos() );
             break;
         case Options::ResizeOp:
-            c->performMouseCommand( Options::MouseResize, QCursor::pos() );
+            c->performMouseCommand( Options::MouseResize, TQCursor::pos() );
             break;
         case Options::UnrestrictedResizeOp:
-            c->performMouseCommand( Options::MouseUnrestrictedResize, QCursor::pos() );
+            c->performMouseCommand( Options::MouseUnrestrictedResize, TQCursor::pos() );
             break;
         case Options::CloseOp:
             c->closeWindow();
@@ -396,7 +396,7 @@ void Workspace::performWindowOperation( Client* c, Options::WindowOperation op )
             c->minimize();
             break;
         case Options::ShadeOp:
-            c->performMouseCommand( Options::MouseShade, QCursor::pos());
+            c->performMouseCommand( Options::MouseShade, TQCursor::pos());
             break;
         case Options::OnAllDesktopsOp:
             c->setOnAllDesktops( !c->isOnAllDesktops() );
@@ -426,7 +426,7 @@ void Workspace::performWindowOperation( Client* c, Options::WindowOperation op )
             break;
             }
         case Options::OperationsOp:
-            c->performMouseCommand( Options::MouseShade, QCursor::pos());
+            c->performMouseCommand( Options::MouseShade, TQCursor::pos());
             break;
         case Options::WindowRulesOp:
             editWindowRules( c, false );
@@ -448,7 +448,7 @@ void Workspace::performWindowOperation( Client* c, Options::WindowOperation op )
 /*!
   Performs a mouse command on this client (see options.h)
  */
-bool Client::performMouseCommand( Options::MouseCommand command, QPoint globalPos, bool handled )
+bool Client::performMouseCommand( Options::MouseCommand command, TQPoint globalPos, bool handled )
     {
     bool replay = FALSE;
     switch (command) 
@@ -521,7 +521,7 @@ bool Client::performMouseCommand( Options::MouseCommand command, QPoint globalPo
                 finishMoveResize( false );
             mode = PositionCenter;
             buttonDown = TRUE;
-            moveOffset = QPoint( globalPos.x() - x(), globalPos.y() - y()); // map from global
+            moveOffset = TQPoint( globalPos.x() - x(), globalPos.y() - y()); // map from global
             invertedMoveOffset = rect().bottomRight() - moveOffset;
             unrestrictedMoveResize = ( command == Options::MouseActivateRaiseAndUnrestrictedMove
                                     || command == Options::MouseUnrestrictedMove );
@@ -541,7 +541,7 @@ bool Client::performMouseCommand( Options::MouseCommand command, QPoint globalPo
             if( moveResizeMode )
                 finishMoveResize( false );
             buttonDown = TRUE;
-            moveOffset = QPoint( globalPos.x() - x(), globalPos.y() - y()); // map from global
+            moveOffset = TQPoint( globalPos.x() - x(), globalPos.y() - y()); // map from global
             int x = moveOffset.x(), y = moveOffset.y();
             bool left = x < width() / 3;
             bool right = x >= 2 * width() / 3;
@@ -1009,11 +1009,11 @@ void Workspace::slotWindowOperations()
     {
     if ( !active_client )
         return;
-    QPoint pos = active_client->pos() + active_client->clientPos();
+    TQPoint pos = active_client->pos() + active_client->clientPos();
     showWindowMenu( pos.x(), pos.y(), active_client );
     }
 
-void Workspace::showWindowMenu( const QRect &pos, Client* cl )
+void Workspace::showWindowMenu( const TQRect &pos, Client* cl )
     {
     if (!kapp->authorizeKAction("kwin_rmb"))
         return;
@@ -1027,21 +1027,21 @@ void Workspace::showWindowMenu( const QRect &pos, Client* cl )
         return;
 
     active_popup_client = cl;
-    QPopupMenu* p = clientPopup();
+    TQPopupMenu* p = clientPopup();
     active_popup = p;
     int x = pos.left();
     int y = pos.bottom();
     if (y == pos.top())
-	p->exec( QPoint( x, y ) );
+	p->exec( TQPoint( x, y ) );
     else
         {
-	QRect area = clientArea(ScreenArea, QPoint(x, y), currentDesktop());
+	TQRect area = clientArea(ScreenArea, TQPoint(x, y), currentDesktop());
         clientPopupAboutToShow(); // needed for sizeHint() to be correct :-/
 	int popupHeight = p->sizeHint().height();
 	if (y + popupHeight < area.height())
-	    p->exec( QPoint( x, y ) );
+	    p->exec( TQPoint( x, y ) );
 	else
-	    p->exec( QPoint( x, pos.top() - popupHeight ) );
+	    p->exec( TQPoint( x, pos.top() - popupHeight ) );
         }
     // active popup may be already changed (e.g. the window shortcut dialog)
     if( active_popup == p )
@@ -1077,9 +1077,9 @@ void Workspace::slotWindowResize()
     performWindowOperation( c, Options::UnrestrictedResizeOp );
     }
 
-void Client::setShortcut( const QString& _cut )
+void Client::setShortcut( const TQString& _cut )
     {
-    QString cut = rules()->checkShortcut( _cut );
+    TQString cut = rules()->checkShortcut( _cut );
     if( cut.isEmpty())
         return setShortcutInternal( KShortcut());
 // Format:
@@ -1093,17 +1093,17 @@ void Client::setShortcut( const QString& _cut )
             setShortcutInternal( KShortcut());
         return;
         }
-    QValueList< KShortcut > keys;
-    QStringList groups = QStringList::split( ' ', cut );
-    for( QStringList::ConstIterator it = groups.begin();
+    TQValueList< KShortcut > keys;
+    TQStringList groups = TQStringList::split( ' ', cut );
+    for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();
          ++it )
         {
-        QRegExp reg( "(.*\\+)\\((.*)\\)" );
+        TQRegExp reg( "(.*\\+)\\((.*)\\)" );
         if( reg.search( *it ) > -1 )
             {
-            QString base = reg.cap( 1 );
-            QString list = reg.cap( 2 );
+            TQString base = reg.cap( 1 );
+            TQString list = reg.cap( 2 );
             for( unsigned int i = 0;
                  i < list.length();
                  ++i )
@@ -1114,14 +1114,14 @@ void Client::setShortcut( const QString& _cut )
                 }
             }
         }
-    for( QValueList< KShortcut >::ConstIterator it = keys.begin();
+    for( TQValueList< KShortcut >::ConstIterator it = keys.begin();
          it != keys.end();
          ++it )
         {
         if( _shortcut == *it ) // current one is in the list
             return;
         }
-    for( QValueList< KShortcut >::ConstIterator it = keys.begin();
+    for( TQValueList< KShortcut >::ConstIterator it = keys.begin();
          it != keys.end();
          ++it )
         {

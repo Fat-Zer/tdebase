@@ -17,9 +17,9 @@
 
 #include <stdlib.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
 
 #include <ksimpleconfig.h>
 #include <kglobal.h>
@@ -38,7 +38,7 @@ KFindLanguage::KFindLanguage() {
 
 	m_country = config->readEntry("Country", "C");
 	if (m_country == "C") {
-		m_country = QString::fromLatin1(getenv("LANG"));
+		m_country = TQString::fromLatin1(getenv("LANG"));
 		if(m_country.left(5) == "nn_NO") // glibc's nn_NO is KDE's no_NY
 			m_country = "no";
 		if(m_country.contains("_"))
@@ -54,34 +54,34 @@ KFindLanguage::KFindLanguage() {
 	}
 
 	// get the users primary Languages
-	KSimpleConfig ent(locate("locale", QString::fromLatin1("l10n/%1/entry.desktop").arg(m_country)), true);
+	KSimpleConfig ent(locate("locale", TQString::fromLatin1("l10n/%1/entry.desktop").arg(m_country)), true);
 	ent.setGroup("KCM Locale");
-	QStringList langs = ent.readListEntry("Languages");
+	TQStringList langs = ent.readListEntry("Languages");
 	if (langs.isEmpty())
 		langs.append("en_US");
 
 	// add the primary languages for the country to the list
-	QStringList prilang;
-	for ( QStringList::ConstIterator it = langs.begin(); it != langs.end(); ++it ) {
-		QString str = locate("locale", *it + "/entry.desktop");
+	TQStringList prilang;
+	for ( TQStringList::ConstIterator it = langs.begin(); it != langs.end(); ++it ) {
+		TQString str = locate("locale", *it + "/entry.desktop");
 		if (!str.isNull())
 			prilang << str;
 	}
 
 	// add all languages to the list
-	QStringList alllang = KGlobal::dirs()->findAllResources("locale", "*/entry.desktop", false, true);
+	TQStringList alllang = KGlobal::dirs()->findAllResources("locale", "*/entry.desktop", false, true);
 	alllang.sort();
-	QStringList langlist = prilang;
+	TQStringList langlist = prilang;
 	if (langlist.count() > 0)
-		langlist << QString::null; // separator
+		langlist << TQString::null; // separator
 	langlist += alllang;
 
-	for ( QStringList::ConstIterator it = langlist.begin();	it != langlist.end(); ++it ) {
+	for ( TQStringList::ConstIterator it = langlist.begin();	it != langlist.end(); ++it ) {
 		KSimpleConfig entry(*it);
 		entry.setGroup("KCM Locale");
-		QString name = entry.readEntry("Name", i18n("without name"));
+		TQString name = entry.readEntry("Name", i18n("without name"));
 
-		QString tag = *it;
+		TQString tag = *it;
 		int index = tag.findRev('/');
 		tag = tag.left(index);
 		index = tag.findRev('/');
@@ -92,11 +92,11 @@ KFindLanguage::KFindLanguage() {
 	}
 
 	// now find the best language for the user
-	QString compare = m_oldlang;
+	TQString compare = m_oldlang;
 	if (m_oldlang.isEmpty()) {
 		compare = langs.first();
-		for(QStringList::Iterator it = langs.begin(); it != langs.end(); ++it) {
-			if (*it == QString::fromLatin1(getenv("LANG")).mid(3, 2).lower())
+		for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it) {
+			if (*it == TQString::fromLatin1(getenv("LANG")).mid(3, 2).lower())
 				compare = *it;
 		}
 	}
@@ -106,10 +106,10 @@ KFindLanguage::KFindLanguage() {
 	// Find the users's language
 	int bestmatch = -1;
 
-	QStringList::ConstIterator it;
+	TQStringList::ConstIterator it;
 	for( it = m_langlist.begin(); it != m_langlist.end(); ++it) {
 		int match=0;
-		QString l = (*it).left((*it).find(";"));
+		TQString l = (*it).left((*it).find(";"));
 		if (l == "C")
 			match++;
 		if(l.contains(compare))
@@ -130,22 +130,22 @@ KFindLanguage::KFindLanguage() {
 KFindLanguage::~KFindLanguage() {
 }
 
-QStringList KFindLanguage::getLangList() const {
+TQStringList KFindLanguage::getLangList() const {
 	return m_langlist;
 }
 
-QMap<QString,QString> KFindLanguage::getLangMap() const {
+TQMap<TQString,TQString> KFindLanguage::getLangMap() const {
 	return m_langmap;
 }
 
-QString KFindLanguage::getBestLang() const {
+TQString KFindLanguage::getBestLang() const {
 	return m_bestlang;
 }
 
-QString KFindLanguage::getOldLang() const {
+TQString KFindLanguage::getOldLang() const {
 	return m_oldlang;
 }
 
-QString KFindLanguage::getCountry() const {
+TQString KFindLanguage::getCountry() const {
 	return m_country;
 }

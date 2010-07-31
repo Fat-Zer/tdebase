@@ -22,7 +22,7 @@
 #ifndef __treeview_h__
 #define __treeview_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <klistview.h>
 #include <kservice.h>
 #include <kservicegroup.h>
@@ -39,13 +39,13 @@ class KShortcut;
 class TreeItem : public QListViewItem
 {
 public:
-  TreeItem(QListViewItem *parent, QListViewItem *after, const QString &menuIdn, bool __init = false);
-    TreeItem(QListView *parent, QListViewItem* after, const QString &menuId, bool __init = false);
+  TreeItem(TQListViewItem *parent, TQListViewItem *after, const TQString &menuIdn, bool __init = false);
+    TreeItem(TQListView *parent, TQListViewItem* after, const TQString &menuId, bool __init = false);
 
-    QString menuId() const { return _menuId; }
+    TQString menuId() const { return _menuId; }
 
-    QString directory() const { return _directoryPath; }
-    void setDirectoryPath(const QString& path) { _directoryPath = path; }
+    TQString directory() const { return _directoryPath; }
+    void setDirectoryPath(const TQString& path) { _directoryPath = path; }
 
     MenuFolderInfo *folderInfo() { return m_folderInfo; }
     void setMenuFolderInfo(MenuFolderInfo *folderInfo) { m_folderInfo = folderInfo; }
@@ -53,8 +53,8 @@ public:
     MenuEntryInfo *entryInfo() { return m_entryInfo; }
     void setMenuEntryInfo(MenuEntryInfo *entryInfo) { m_entryInfo = entryInfo; }
 
-    QString name() const { return _name; }
-    void setName(const QString &name);
+    TQString name() const { return _name; }
+    void setName(const TQString &name);
 
     bool isDirectory() const { return m_folderInfo; }
     bool isEntry() const { return m_entryInfo; }
@@ -64,12 +64,12 @@ public:
 
     bool isLayoutDirty() { return _layoutDirty; }
     void setLayoutDirty() { _layoutDirty = true; }
-    QStringList layout();
+    TQStringList layout();
 
     virtual void setOpen(bool o);
     void load();
 
-    virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
+    virtual void paintCell(TQPainter * p, const TQColorGroup & cg, int column, int width, int align);
     virtual void setup();
 
 private:
@@ -78,9 +78,9 @@ private:
     bool _hidden : 1;
     bool _init : 1;
     bool _layoutDirty : 1;
-    QString _menuId;
-    QString _name;
-    QString _directoryPath;
+    TQString _menuId;
+    TQString _name;
+    TQString _directoryPath;
     MenuFolderInfo *m_folderInfo;
     MenuEntryInfo *m_entryInfo;
 };
@@ -90,17 +90,17 @@ class TreeView : public KListView
     friend class TreeItem;
     Q_OBJECT
 public:
-    TreeView(bool controlCenter, KActionCollection *ac, QWidget *parent=0, const char *name=0);
+    TreeView(bool controlCenter, KActionCollection *ac, TQWidget *parent=0, const char *name=0);
     ~TreeView();
 
-    void readMenuFolderInfo(MenuFolderInfo *folderInfo=0, KServiceGroup::Ptr folder=0, const QString &prefix=QString::null);
+    void readMenuFolderInfo(MenuFolderInfo *folderInfo=0, KServiceGroup::Ptr folder=0, const TQString &prefix=TQString::null);
     void setViewMode(bool showHidden);
     bool save();
 
     bool dirty();
 
-    void selectMenu(const QString &menu);
-    void selectMenuEntry(const QString &menuEntry);
+    void selectMenu(const TQString &menu);
+    void selectMenuEntry(const TQString &menuEntry);
     
 public slots:
     void currentChanged(MenuFolderInfo *folderInfo);
@@ -112,9 +112,9 @@ signals:
     void entrySelected(MenuEntryInfo *entryInfo);
     void disableAction();
 protected slots:
-    void itemSelected(QListViewItem *);
-    void slotDropped(QDropEvent *, QListViewItem *, QListViewItem *);
-    void slotRMBPressed(QListViewItem*, const QPoint&);
+    void itemSelected(TQListViewItem *);
+    void slotDropped(TQDropEvent *, TQListViewItem *, TQListViewItem *);
+    void slotRMBPressed(TQListViewItem*, const TQPoint&);
 
     void newsubmenu();
     void newitem();
@@ -126,16 +126,16 @@ protected slots:
     void del();
 
 protected:
-    TreeItem *createTreeItem(TreeItem *parent, QListViewItem *after, MenuFolderInfo *folderInfo, bool _init = false);
-    TreeItem *createTreeItem(TreeItem *parent, QListViewItem *after, MenuEntryInfo *entryInfo, bool _init = false);
-    TreeItem *createTreeItem(TreeItem *parent, QListViewItem *after, MenuSeparatorInfo *sepInfo, bool _init = false);
+    TreeItem *createTreeItem(TreeItem *parent, TQListViewItem *after, MenuFolderInfo *folderInfo, bool _init = false);
+    TreeItem *createTreeItem(TreeItem *parent, TQListViewItem *after, MenuEntryInfo *entryInfo, bool _init = false);
+    TreeItem *createTreeItem(TreeItem *parent, TQListViewItem *after, MenuSeparatorInfo *sepInfo, bool _init = false);
 
     void del(TreeItem *, bool deleteInfo);
     void fill();
     void fillBranch(MenuFolderInfo *folderInfo, TreeItem *parent);
-    QString findName(KDesktopFile *df, bool deleted);
+    TQString findName(KDesktopFile *df, bool deleted);
 
-    void closeAllItems(QListViewItem *item);
+    void closeAllItems(TQListViewItem *item);
 
     // moving = src will be removed later
     void copy( bool moving );
@@ -146,30 +146,30 @@ protected:
     void setLayoutDirty(TreeItem *);
     void saveLayout();
 
-    QStringList fileList(const QString& relativePath);
-    QStringList dirList(const QString& relativePath);
+    TQStringList fileList(const TQString& relativePath);
+    TQStringList dirList(const TQString& relativePath);
 
-    virtual bool acceptDrag(QDropEvent* event) const;
-    virtual QDragObject *dragObject();
+    virtual bool acceptDrag(TQDropEvent* event) const;
+    virtual TQDragObject *dragObject();
     virtual void startDrag();
 
 private:
     KActionCollection *m_ac;
-    QPopupMenu        *m_rmb;
+    TQPopupMenu        *m_rmb;
     int                m_clipboard;
     MenuFolderInfo    *m_clipboardFolderInfo;
     MenuEntryInfo     *m_clipboardEntryInfo;
     int                m_drag;
     MenuFolderInfo    *m_dragInfo;
     TreeItem          *m_dragItem;
-    QString            m_dragPath;
+    TQString            m_dragPath;
     bool               m_showHidden;
     bool               m_controlCenter;
     MenuFile          *m_menuFile;
     MenuFolderInfo    *m_rootFolder;
     MenuSeparatorInfo *m_separator;
-    QStringList        m_newMenuIds;
-    QStringList        m_newDirectoryList;
+    TQStringList        m_newMenuIds;
+    TQStringList        m_newDirectoryList;
     bool               m_detailedMenuEntries;
     bool               m_detailedEntriesNamesFirst;
     bool               m_layoutDirty;

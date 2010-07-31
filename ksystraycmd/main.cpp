@@ -67,7 +67,7 @@ int main( int argc, char *argv[] )
   KSysTrayCmd cmd;
 
   // Read the window id
-  QString wid = args->getOption( "wid" );
+  TQString wid = args->getOption( "wid" );
   if ( !wid.isEmpty() ) {
       int base = 10;
       if ( wid.startsWith( "0x" ) ) {
@@ -85,7 +85,7 @@ int main( int argc, char *argv[] )
   }
 
   // Read window title regexp
-  QString title = args->getOption( "window" );
+  TQString title = args->getOption( "window" );
   if ( !title.isEmpty() )
       cmd.setPattern( title );
 
@@ -93,14 +93,14 @@ int main( int argc, char *argv[] )
     KCmdLineArgs::usage(i18n("No command or window specified"));
 
   // Read the command
-  QString command;
+  TQString command;
   for ( int i = 0; i < args->count(); i++ )
-    command += KProcess::quote(QString::fromLocal8Bit( args->arg(i) )) + " ";
+    command += KProcess::quote(TQString::fromLocal8Bit( args->arg(i) )) + " ";
   if ( !command.isEmpty() )
       cmd.setCommand( command );
 
   // Tooltip
-  QString tip = args->getOption( "tooltip" );
+  TQString tip = args->getOption( "tooltip" );
   if ( !tip.isEmpty() )
     cmd.setDefaultTip( tip );
 

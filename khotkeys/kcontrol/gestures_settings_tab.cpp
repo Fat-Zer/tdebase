@@ -17,9 +17,9 @@
 #include "gestures_settings_tab.h"
 
 #include <klocale.h>
-#include <qcombobox.h>
+#include <tqcombobox.h>
 #include <knuminput.h>
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 
 #include "kcmkhotkeys.h"
 #include "windowdef_list_widget.h"
@@ -27,7 +27,7 @@
 namespace KHotKeys
 {
 
-Gestures_settings_tab::Gestures_settings_tab( QWidget* parent_P, const char* name_P )
+Gestures_settings_tab::Gestures_settings_tab( TQWidget* parent_P, const char* name_P )
     : Gestures_settings_tab_ui( parent_P, name_P )
     {
     mouse_button_combo->insertItem( i18n( "Button 2 (middle)" ), 0 );
@@ -39,12 +39,12 @@ Gestures_settings_tab::Gestures_settings_tab( QWidget* parent_P, const char* nam
     mouse_button_combo->insertItem( i18n( "Button 8 (if available)" ), 6 );
     mouse_button_combo->insertItem( i18n( "Button 9 (if available)" ), 7 );
     // KHotKeys::Module::changed()
-    connect( mouse_gestures_globally, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( mouse_button_combo, SIGNAL( activated( int )),
-        module, SLOT( changed()));
-    connect( timeout_input, SIGNAL( valueChanged( int )),
-        module, SLOT( changed()));
+    connect( mouse_gestures_globally, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( mouse_button_combo, TQT_SIGNAL( activated( int )),
+        module, TQT_SLOT( changed()));
+    connect( timeout_input, TQT_SIGNAL( valueChanged( int )),
+        module, TQT_SLOT( changed()));
     }
 
 void Gestures_settings_tab::read_data()

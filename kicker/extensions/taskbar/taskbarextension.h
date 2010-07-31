@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __taskbarextension_h__
 #define __taskbarextension_h__
 
-#include <qimage.h>
+#include <tqimage.h>
 
 #include <dcopobject.h>
 #include <kpanelextension.h>
@@ -45,28 +45,28 @@ k_dcop:
     void configure();
 
 public:
-    TaskBarExtension( const QString& configFile, Type t = Normal,
-		      int actions = 0, QWidget *parent = 0, const char *name = 0 );
+    TaskBarExtension( const TQString& configFile, Type t = Normal,
+		      int actions = 0, TQWidget *parent = 0, const char *name = 0 );
     ~TaskBarExtension();
 
-    QSize sizeHint( Position, QSize maxSize ) const;
+    TQSize sizeHint( Position, TQSize maxSize ) const;
     Position preferedPosition() const { return Bottom; }
 
 protected:
-    void resizeEvent(QResizeEvent*);
+    void resizeEvent(TQResizeEvent*);
 
     void positionChange( Position );
     void preferences();
 
 private:
     TaskBarContainer *m_container;
-    QImage m_bgImage;
-    QString m_bgFilename;
+    TQImage m_bgImage;
+    TQString m_bgFilename;
     KRootPixmap *m_rootPixmap;
 
 private slots:
     void setBackgroundTheme();
-    void updateBackground(const QPixmap&);
+    void updateBackground(const TQPixmap&);
 };
 
 #endif

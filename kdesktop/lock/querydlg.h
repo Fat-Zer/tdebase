@@ -8,8 +8,8 @@
 #ifndef __QUERYDLG_H__
 #define __QUERYDLG_H__
 
-#include <qdialog.h>
-#include <qstringlist.h>
+#include <tqdialog.h>
+#include <tqstringlist.h>
 
 #include <kpassdlg.h>
 
@@ -33,7 +33,7 @@ public:
     ~QueryDlg();
     virtual void show();
 
-    void updateLabel( QString &txt );
+    void updateLabel( TQString &txt );
     void setUnlockIcon();
     void setWarningIcon();
     const char * getEntry();
@@ -42,14 +42,14 @@ private slots:
     void slotOK();
 
 private:
-    QFrame      *frame;
-    QGridLayout *frameLayout;
-    QLabel      *mStatusLabel;
-    QLabel      *mpixLabel;
+    TQFrame      *frame;
+    TQGridLayout *frameLayout;
+    TQLabel      *mStatusLabel;
+    TQLabel      *mpixLabel;
     int         mCapsLocked;
     bool        mUnlockingFailed;
-    QStringList layoutsList;
-    QStringList::iterator currLayout;
+    TQStringList layoutsList;
+    TQStringList::iterator currLayout;
     int         sPid, sFd;
     KPushButton *ok;
     KPasswordEdit *pin_box;

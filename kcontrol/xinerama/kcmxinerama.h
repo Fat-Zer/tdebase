@@ -22,8 +22,8 @@
 #define _KCM_XINERAMA_H
 
 #include <kcmodule.h>
-#include <qptrlist.h>
-#include <qtimer.h>
+#include <tqptrlist.h>
+#include <tqtimer.h>
 
 #include "xineramawidget.h"
 
@@ -33,7 +33,7 @@ class QWidget;
 class KCMXinerama : public KCModule {
 	Q_OBJECT
 public:
-	KCMXinerama(QWidget *parent = 0L, const char *name = 0L);
+	KCMXinerama(TQWidget *parent = 0L, const char *name = 0L);
 	virtual ~KCMXinerama();
 
 	void load();
@@ -48,11 +48,11 @@ public slots:
 	void indicateWindows();
 
 private:
-	QWidget* indicator(int dpy);
+	TQWidget* indicator(int dpy);
 	KConfig *config, *ksplashrc;
 	XineramaWidget *xw;
-	QTimer _timer;
-	QPtrList<QWidget> _indicators;
+	TQTimer _timer;
+	TQPtrList<TQWidget> _indicators;
 
 	int _displays;
 

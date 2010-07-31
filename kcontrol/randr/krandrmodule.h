@@ -30,7 +30,7 @@ class KRandRModule : public KCModule, public KRandrSimpleAPI
 	Q_OBJECT
 
 public:
-	KRandRModule(QWidget *parent, const char *name, const QStringList& _args);
+	KRandRModule(TQWidget *parent, const char *name, const TQStringList& _args);
 
 	virtual void load();
 	virtual void load(bool useDefaults);
@@ -55,10 +55,10 @@ protected:
 
 	KComboBox*		m_screenSelector;
 	KComboBox*		m_sizeCombo;
-	QButtonGroup*	m_rotationGroup;
+	TQButtonGroup*	m_rotationGroup;
 	KComboBox*		m_refreshRates;
-	QCheckBox*		m_applyOnStartup;
-	QCheckBox*		m_syncTrayApp;
+	TQCheckBox*		m_applyOnStartup;
+	TQCheckBox*		m_syncTrayApp;
 	bool			m_oldApply;
 	bool			m_oldSyncTrayApp;
 

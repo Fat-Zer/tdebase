@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __removeapplet_mnu_h__
 #define __removeapplet_mnu_h__
 
-#include <qptrlist.h>
-#include <qpopupmenu.h>
+#include <tqptrlist.h>
+#include <tqpopupmenu.h>
 
 #include "appletinfo.h"
 #include "container_base.h"
@@ -37,7 +37,7 @@ class PanelRemoveAppletMenu : public QPopupMenu
     Q_OBJECT
 
 public:
-    PanelRemoveAppletMenu(ContainerArea* cArea, QWidget* parent = 0, const char* name = 0);
+    PanelRemoveAppletMenu(ContainerArea* cArea, TQWidget* parent = 0, const char* name = 0);
 
 protected slots:
     void slotExec( int id );

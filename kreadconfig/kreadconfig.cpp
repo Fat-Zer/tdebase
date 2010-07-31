@@ -53,11 +53,11 @@ int main(int argc, char **argv)
 	KCmdLineArgs::addCmdLineOptions(options);
 	KCmdLineArgs *args=KCmdLineArgs::parsedArgs();
 
-	QString group=QString::fromLocal8Bit(args->getOption("group"));
-	QString key=QString::fromLocal8Bit(args->getOption("key"));
-	QString file=QString::fromLocal8Bit(args->getOption("file"));
-	QCString dflt=args->getOption("default");
-	QCString type=args->getOption("type").lower();
+	TQString group=TQString::fromLocal8Bit(args->getOption("group"));
+	TQString key=TQString::fromLocal8Bit(args->getOption("key"));
+	TQString file=TQString::fromLocal8Bit(args->getOption("file"));
+	TQCString dflt=args->getOption("default");
+	TQCString type=args->getOption("type").lower();
 
 	if (key.isNull()) {
 		KCmdLineArgs::usage();

@@ -29,15 +29,15 @@
 #include "FontPreview.h"
 #include <kapplication.h>
 #include <klocale.h>
-#include <qpainter.h>
-#include <qimage.h>
+#include <tqpainter.h>
+#include <tqimage.h>
 #include <stdlib.h>
 
 namespace KFI
 {
 
-CFontPreview::CFontPreview(QWidget *parent, const char *name)
-            : QWidget(parent, name),
+CFontPreview::CFontPreview(TQWidget *parent, const char *name)
+            : TQWidget(parent, name),
               itsCurrentFace(1),
               itsLastWidth(0),
               itsLastHeight(0),
@@ -71,7 +71,7 @@ void CFontPreview::showFont()
     }
     else
     {
-        QPixmap nullPix;
+        TQPixmap nullPix;
 
         setEraseColor(itsBgndCol);
         itsPixmap=nullPix;
@@ -80,9 +80,9 @@ void CFontPreview::showFont()
     }
 }
 
-void CFontPreview::paintEvent(QPaintEvent *)
+void CFontPreview::paintEvent(TQPaintEvent *)
 {
-    QPainter paint(this);
+    TQPainter paint(this);
  
     if(itsPixmap.isNull())
     {
@@ -103,14 +103,14 @@ void CFontPreview::paintEvent(QPaintEvent *)
     }
 }
 
-QSize CFontPreview::sizeHint() const
+TQSize CFontPreview::sizeHint() const
 {
-    return QSize(132, 132);
+    return TQSize(132, 132);
 }
 
-QSize CFontPreview::minimumSizeHint() const
+TQSize CFontPreview::minimumSizeHint() const
 {
-    return QSize(32, 32);
+    return TQSize(32, 32);
 }
 
 }

@@ -26,13 +26,13 @@
 #include <kuser.h>
 #include <kemailsettings.h>
 
-#include <qcheckbox.h>
-#include <qdesktopwidget.h>
-#include <qlabel.h>
-#include <qpainter.h>
-#include <qrect.h>
-#include <qstringlist.h>
-#include <qwidget.h>
+#include <tqcheckbox.h>
+#include <tqdesktopwidget.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
+#include <tqrect.h>
+#include <tqstringlist.h>
+#include <tqwidget.h>
 
 #include <objkstheme.h>
 #include "themeredmond.h"
@@ -41,22 +41,22 @@
 
 K_EXPORT_COMPONENT_FACTORY( ksplashredmond, KGenericFactory<ThemeRedmond>( "ksplash" ) )
 
-CfgRedmond::CfgRedmond( QWidget *p, KConfig *c )
+CfgRedmond::CfgRedmond( TQWidget *p, KConfig *c )
   :ThemeEngineConfig( p, c )
 {
-  QVBox *vbox = new QVBox( this );
+  TQVBox *vbox = new TQVBox( this );
   vbox->setSpacing( KDialog::spacingHint() );
 
-  QFont defaultFont( "Arial", 48, QFont::Bold );
+  TQFont defaultFont( "Arial", 48, TQFont::Bold );
   defaultFont.setItalic( true );
-  QFont defaultUsernameFont( "Arial", 16, QFont::Bold );
-  QFont defaultActionFont( "Arial", 12, QFont::Bold );
-  QColor defaultDarkColor( 3, 47, 156 );
-  QColor defaultWhiteColor( Qt::white );
+  TQFont defaultUsernameFont( "Arial", 16, TQFont::Bold );
+  TQFont defaultActionFont( "Arial", 12, TQFont::Bold );
+  TQColor defaultDarkColor( 3, 47, 156 );
+  TQColor defaultWhiteColor( Qt::white );
 
-  QHBox *hbox = new QHBox( vbox );
-  hbox->setFrameStyle( QFrame::WinPanel );
-  hbox->setFrameShadow( QFrame::Sunken );
+  TQHBox *hbox = new TQHBox( vbox );
+  hbox->setFrameStyle( TQFrame::WinPanel );
+  hbox->setFrameShadow( TQFrame::Sunken );
   PreviewRedmond* _preview = new PreviewRedmond( hbox );
   _preview->setFixedSize( 320, 200 );
 
@@ -73,11 +73,11 @@ CfgRedmond::CfgRedmond( QWidget *p, KConfig *c )
 
   _preview->setIcon( c->readEntry( "User Icon", "kmenu" ) );
 
-  QLabel *lbl = new QLabel( vbox );
+  TQLabel *lbl = new TQLabel( vbox );
   lbl->setText( i18n("(Sorry, but I haven't finished writing this one yet...)") );
 }
 
-ThemeRedmond::ThemeRedmond( QWidget *parent, const char *name, const QStringList &args )
+ThemeRedmond::ThemeRedmond( TQWidget *parent, const char *name, const TQStringList &args )
     :ThemeEngine( parent, name, args )
 {
   _readSettings();
@@ -86,17 +86,17 @@ ThemeRedmond::ThemeRedmond( QWidget *parent, const char *name, const QStringList
 
 void ThemeRedmond::_initUi()
 {
-  const QRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
-  //QRect fullScreen = KGlobalSettings::desktopGeometry(0L);
+  const TQRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
+  //TQRect fullScreen = KGlobalSettings::desktopGeometry(0L);
 
   mImage.resize( screen.width(), screen.height() );
 
-  QPainter p;
+  TQPainter p;
   p.begin( &mImage );
-  p.fillRect( screen, QColor(3,47,156) );
+  p.fillRect( screen, TQColor(3,47,156) );
   p.setPen( mActionTextColor );
 
-  QString bgimg;
+  TQString bgimg;
 
   // Start by seeing if the theme prefers a particular image.
   if( !mBackgroundImage.isEmpty() )
@@ -119,7 +119,7 @@ void ThemeRedmond::_initUi()
   * 1024x768 images.)
   */
   if( bgimg.isEmpty() )
-    bgimg = mTheme->locateThemeData( QString( "Background-%2x%3.png" ).arg( screen.width() ).arg( screen.height() ) );
+    bgimg = mTheme->locateThemeData( TQString( "Background-%2x%3.png" ).arg( screen.width() ).arg( screen.height() ) );
 
   // If that can't be found, look for THEMEDIR/Background.png
   if( bgimg.isNull() && !mTheme->themeDir().isNull() )
@@ -128,36 +128,36 @@ void ThemeRedmond::_initUi()
   if( mPixmap.isNull() )
     mPixmap = DesktopIcon( "kmenu", 48 );
 
-  QPixmap pix( bgimg );
+  TQPixmap pix( bgimg );
 
   if( !pix.isNull() )
   {
 
-    QPixmap tmp( QSize(screen.width(), screen.height() ) );
+    TQPixmap tmp( TQSize(screen.width(), screen.height() ) );
     float sw = (float)screen.width() / pix.width();
     float sh = (float)(screen.height()) / pix.height();
 
-    QWMatrix matrix;
+    TQWMatrix matrix;
     matrix.scale( sw, sh );
     tmp = pix.xForm( matrix );
 
     p.drawPixmap( 0, 0, tmp );
   }
 
-  QFont f = mWelcomeFont;
+  TQFont f = mWelcomeFont;
   if( mWelcomeFontItalic )
-    f.setItalic( true ); // this SHOULD BE stored in the QFont entry, dang it.
+    f.setItalic( true ); // this SHOULD BE stored in the TQFont entry, dang it.
   p.setFont( f );
-  QFontMetrics met( f );
-  QSize fmet = met.size( 0L, mWelcomeText );
+  TQFontMetrics met( f );
+  TQSize fmet = met.size( 0L, mWelcomeText );
 
   // Paint the "Welcome" message, if we are instructed to. Optionally dispense with the
   // shadow.
   if ( mShowWelcomeText )
   {
-    if( mWelcomeTextPosition == QPoint( 0, 0 ) )
+    if( mWelcomeTextPosition == TQPoint( 0, 0 ) )
     {
-      mWelcomeTextPosition = QPoint( (screen.width()/2) - fmet.width() - 25,
+      mWelcomeTextPosition = TQPoint( (screen.width()/2) - fmet.width() - 25,
               (screen.height()/2) - (fmet.height()/2) + fmet.height() );
     }
   }
@@ -167,7 +167,7 @@ void ThemeRedmond::_initUi()
     if( mShowWelcomeTextShadow )
     {
       p.setPen( mWelcomeTextShadowColor );
-      p.drawText( mWelcomeTextPosition+QPoint(2,2), mWelcomeText );
+      p.drawText( mWelcomeTextPosition+TQPoint(2,2), mWelcomeText );
     }
     p.setPen( mWelcomeTextColor );
     p.drawText( mWelcomeTextPosition, mWelcomeText );
@@ -176,7 +176,7 @@ void ThemeRedmond::_initUi()
   // The current theme wants to say something in particular, rather than display the
   // account's fullname.
   KUser user;
-  QString greetingString = ( !mUsernameText.isNull() ) ? mUsernameText : user.fullName();
+  TQString greetingString = ( !mUsernameText.isNull() ) ? mUsernameText : user.fullName();
   // when we use KUser (system account data) we should also check KEMailSettings (e-mail settings and kcm_useraccount)
   // people often write real names only in e-mail settings
   if ( greetingString.isEmpty() )
@@ -188,7 +188,7 @@ void ThemeRedmond::_initUi()
   // Try to load the user's KDM icon... TODO: Make this overridable by the Theme.
   if( mUseKdmUserIcon )
   {
-    const QString defSys( ".default.face.icon" );  // The system-wide default image
+    const TQString defSys( ".default.face.icon" );  // The system-wide default image
     const int fAdminOnly  = 1;
     const int fAdminFirst = fAdminOnly+1;
     const int fUserFirst  = fAdminFirst+1;
@@ -197,41 +197,41 @@ void ThemeRedmond::_initUi()
     int faceSource = fAdminOnly;
     KConfig *kdmconfig = new KConfig("kdm/kdmrc", true);
     kdmconfig->setGroup("X-*-Greeter");
-    QString userPicsDir = kdmconfig->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces" ) + '/';
-    QString fs = kdmconfig->readEntry( "FaceSource" );
-    if (fs == QString::fromLatin1("UserOnly"))
+    TQString userPicsDir = kdmconfig->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces" ) + '/';
+    TQString fs = kdmconfig->readEntry( "FaceSource" );
+    if (fs == TQString::fromLatin1("UserOnly"))
       faceSource = fUserOnly;
-    else if (fs == QString::fromLatin1("PreferUser"))
+    else if (fs == TQString::fromLatin1("PreferUser"))
       faceSource = fUserFirst;
-    else if (fs == QString::fromLatin1("PreferAdmin"))
+    else if (fs == TQString::fromLatin1("PreferAdmin"))
       faceSource = fAdminFirst;
     else
       faceSource = fAdminOnly; // Admin Only
     delete kdmconfig;
 
-    QPixmap userp;
+    TQPixmap userp;
     if ( faceSource == fAdminFirst )
     {
       // If the administrator's choice takes preference
-      userp = QPixmap( userPicsDir + user.loginName() + ".face.icon" );
+      userp = TQPixmap( userPicsDir + user.loginName() + ".face.icon" );
       if ( userp.isNull() )
         faceSource = fUserOnly;
     }
     if ( faceSource >= fUserFirst)
     {
       // If the user's choice takes preference
-      userp = QPixmap( user.homeDir() + "/.face.icon" );
+      userp = TQPixmap( user.homeDir() + "/.face.icon" );
       if ( userp.isNull() && faceSource == fUserFirst ) // The user has no face, should we check for the admin's setting?
-        userp = QPixmap( userPicsDir + user.loginName() + ".face.icon" );
+        userp = TQPixmap( userPicsDir + user.loginName() + ".face.icon" );
       if ( userp.isNull() )
-        userp = QPixmap( userPicsDir + defSys );
+        userp = TQPixmap( userPicsDir + defSys );
     }
     else if ( faceSource <= fAdminOnly )
     {
       // Admin only
-      userp = QPixmap( userPicsDir + user.loginName() + ".face.icon" );
+      userp = TQPixmap( userPicsDir + user.loginName() + ".face.icon" );
       if ( userp.isNull() )
-        userp = QPixmap( userPicsDir + defSys );
+        userp = TQPixmap( userPicsDir + defSys );
     }
     if( !userp.isNull() )
       mPixmap = userp;
@@ -239,10 +239,10 @@ void ThemeRedmond::_initUi()
 
   if( mShowIcon )
   {
-    QPoint pos = mIconPosition;
-    if( pos == QPoint( 0, 0 ) )
+    TQPoint pos = mIconPosition;
+    if( pos == TQPoint( 0, 0 ) )
     {
-      pos = QPoint( (screen.width()/2) + 10, (screen.height()/2) );
+      pos = TQPoint( (screen.width()/2) + 10, (screen.height()/2) );
     }
     p.drawPixmap( pos, mPixmap );
   }
@@ -250,15 +250,15 @@ void ThemeRedmond::_initUi()
   // User name font. Leave this nailed-up for now.
   f = mUsernameFont;
   p.setFont( f );
-  met = QFontMetrics( f );
+  met = TQFontMetrics( f );
   fmet = met.size( 0L, greetingString );
 
   if( mShowUsernameText )
   {
-    QPoint pos = mUsernameTextPosition;
-    if( pos == QPoint( 0, 0 ) )
+    TQPoint pos = mUsernameTextPosition;
+    if( pos == TQPoint( 0, 0 ) )
     {
-      pos = QPoint(
+      pos = TQPoint(
               (screen.width()/2) + mPixmap.width() + 20,
               (screen.height()/2) - (fmet.height()/2) + fmet.height()
             );
@@ -273,14 +273,14 @@ void ThemeRedmond::_initUi()
   move( screen.topLeft() );
 }
 
-void ThemeRedmond::paintEvent( QPaintEvent *pe )
+void ThemeRedmond::paintEvent( TQPaintEvent *pe )
 {
-  const QRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
+  const TQRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
 
-  QPainter p;
+  TQPainter p;
   p.begin( this );
 
-  QRect r = pe->rect();
+  TQRect r = pe->rect();
 
   bitBlt( this, r.x(), r.y(),
           &mImage, r.x(), r.y(), r.width(), r.height() );
@@ -288,15 +288,15 @@ void ThemeRedmond::paintEvent( QPaintEvent *pe )
   if (mShowActionText)
   {
     p.setPen( mActionTextColor );
-    QFont f = mActionFont;
+    TQFont f = mActionFont;
     p.setFont( f );
-    QFontMetrics met( f );
-    QSize fmet = met.size( 0L, mText );
+    TQFontMetrics met( f );
+    TQSize fmet = met.size( 0L, mText );
 
     mMsgPos = mActionTextPosition;
-    if( mMsgPos == QPoint( 0, 0 ) )
+    if( mMsgPos == TQPoint( 0, 0 ) )
     {
-      mMsgPos = QPoint(
+      mMsgPos = TQPoint(
         (screen.width()/2) + mPixmap.width() + 20,
         (screen.height()/2) + (int)(fmet.height()*0.85) + 15
         );
@@ -308,8 +308,8 @@ void ThemeRedmond::paintEvent( QPaintEvent *pe )
 
 void ThemeRedmond::_readSettings()
 {
-  const QRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
-  //QRect fullScreen = KGlobalSettings::desktopGeometry(0L);
+  const TQRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
+  //TQRect fullScreen = KGlobalSettings::desktopGeometry(0L);
 
   if( !mTheme )
     return;
@@ -317,23 +317,23 @@ void ThemeRedmond::_readSettings()
   if( !cfg )
     return;
 
-  //if( !cfg->hasGroup( QString("KSplash Theme: %1").arg(mTheme->theme()) ) )
+  //if( !cfg->hasGroup( TQString("KSplash Theme: %1").arg(mTheme->theme()) ) )
   //  return;
-  cfg->setGroup( QString("KSplash Theme: %1").arg(mTheme->theme()) );
+  cfg->setGroup( TQString("KSplash Theme: %1").arg(mTheme->theme()) );
 
   // Overall appearance
-  mBackgroundImage = cfg->readEntry( "Background Image", QString::null );
+  mBackgroundImage = cfg->readEntry( "Background Image", TQString::null );
   mIcon = cfg->readEntry( "User Icon", "kmenu" );
   mWelcomeText = cfg->readEntry( "Welcome Text", i18n("Welcome") );
-  mUsernameText = cfg->readEntry( "Username Text", QString::null );
+  mUsernameText = cfg->readEntry( "Username Text", TQString::null );
 
   // If any of these are set to (0,0), then we will autoposition the text later (and it _will_
   // be centered on the screen!). The Theme may move this text however the author desires.
-  QPoint absZero( 0, 0 );
-  mWelcomeTextPosition  = cfg->readPointEntry( QString("Welcome Text Position %1").arg(screen.width()), &absZero );
-  mUsernameTextPosition = cfg->readPointEntry( QString("Username Text Position %1").arg(screen.width()), &absZero );
-  mActionTextPosition   = cfg->readPointEntry( QString("Action Text Position %1").arg(screen.width()), &absZero );
-  mIconPosition         = cfg->readPointEntry( QString("Icon Position %1").arg(screen.width()), &absZero );
+  TQPoint absZero( 0, 0 );
+  mWelcomeTextPosition  = cfg->readPointEntry( TQString("Welcome Text Position %1").arg(screen.width()), &absZero );
+  mUsernameTextPosition = cfg->readPointEntry( TQString("Username Text Position %1").arg(screen.width()), &absZero );
+  mActionTextPosition   = cfg->readPointEntry( TQString("Action Text Position %1").arg(screen.width()), &absZero );
+  mIconPosition         = cfg->readPointEntry( TQString("Icon Position %1").arg(screen.width()), &absZero );
 
   // Allow the Theme to hide particular components.
   mShowWelcomeText       = cfg->readBoolEntry( "Show Welcome Text", true );
@@ -345,18 +345,18 @@ void ThemeRedmond::_readSettings()
 
   // Setup our fonts. There are only 3 elements which use 'em, so this is fairly
   // straightforward.
-  QFont defaultFont( "Arial", 48, QFont::Bold );
+  TQFont defaultFont( "Arial", 48, TQFont::Bold );
   defaultFont.setItalic( true );
-  QFont defaultUsernameFont( "Arial", 16, QFont::Bold );
-  QFont defaultActionFont( "Arial", 12, QFont::Bold );
+  TQFont defaultUsernameFont( "Arial", 16, TQFont::Bold );
+  TQFont defaultActionFont( "Arial", 12, TQFont::Bold );
 
   mWelcomeFont       = cfg->readFontEntry( "Welcome Font", &defaultFont );
   mWelcomeFontItalic = cfg->readBoolEntry( "Welcome Font Italic", true );
   mUsernameFont      = cfg->readFontEntry( "Username Font", &defaultUsernameFont );
   mActionFont        = cfg->readFontEntry( "Action Font", &defaultActionFont );
 
-  QColor defaultDarkColor( 3, 47, 156 );
-  QColor defaultWhiteColor( Qt::white );
+  TQColor defaultDarkColor( 3, 47, 156 );
+  TQColor defaultWhiteColor( Qt::white );
 
   mWelcomeTextColor       = cfg->readColorEntry( "Welcome Text Color", &defaultWhiteColor );
   mWelcomeTextShadowColor = cfg->readColorEntry( "Welcome Shadow Color", &defaultDarkColor );

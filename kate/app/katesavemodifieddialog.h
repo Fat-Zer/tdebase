@@ -28,20 +28,20 @@ class KListView;
 class KateSaveModifiedDialog: public KDialogBase {
 	Q_OBJECT
 public:
-	KateSaveModifiedDialog(QWidget *parent, QPtrList<Kate::Document> documents);
+	KateSaveModifiedDialog(TQWidget *parent, TQPtrList<Kate::Document> documents);
 	virtual ~KateSaveModifiedDialog();
-	static bool queryClose(QWidget *parent,QPtrList<Kate::Document> documents);
+	static bool queryClose(TQWidget *parent,TQPtrList<Kate::Document> documents);
 protected:
 	virtual void slotUser2();
 	virtual void slotUser1();
-	bool doSave(QListViewItem *root);
+	bool doSave(TQListViewItem *root);
 protected slots:
 	void slotSelectAll();
 	void slotItemSelected();
 	
 private:
-	QListViewItem *m_projectRoot;
-	QListViewItem *m_documentRoot;
+	TQListViewItem *m_projectRoot;
+	TQListViewItem *m_documentRoot;
 	KListView *m_list;
 };
 

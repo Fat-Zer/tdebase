@@ -51,8 +51,8 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <qpainter.h>
-#include <qapplication.h>
+#include <tqpainter.h>
+#include <tqapplication.h>
 
 #include <kdebug.h>
 #include <kglobalsettings.h>
@@ -76,7 +76,7 @@ KasTaskPopup::KasTaskPopup( KasTaskItem *item, const char *name )
     setFont(KGlobalSettings::generalFont());
     setMouseTracking( true );
 
-    QString text = item->task()->visibleIconicName();
+    TQString text = item->task()->visibleIconicName();
     if ( item->kasbar()->thumbnailsEnabled() && item->task()->hasThumbnail() ) {
         titleBg.resize( width(), TITLE_HEIGHT );
 
@@ -94,7 +94,7 @@ KasTaskPopup::KasTaskPopup( KasTaskItem *item, const char *name )
                              Qt::black, colorGroup().mid(),
                              KPixmapEffect::DiagonalGradient );
 
-    connect( item->task(), SIGNAL( thumbnailChanged() ), SLOT( refresh() ) );
+    connect( item->task(), TQT_SIGNAL( thumbnailChanged() ), TQT_SLOT( refresh() ) );
 }
 
 KasTaskPopup::~KasTaskPopup()
@@ -103,7 +103,7 @@ KasTaskPopup::~KasTaskPopup()
 
 void KasTaskPopup::refresh()
 {
-    QString text = item->task()->visibleIconicName();
+    TQString text = item->task()->visibleIconicName();
     if (  item->kasbar()->thumbnailsEnabled() && item->task()->hasThumbnail() ) {
         resize( item->task()->thumbnail().width() + 2,
 		TITLE_HEIGHT + item->task()->thumbnail().height() + 2 );
@@ -112,12 +112,12 @@ void KasTaskPopup::refresh()
     update();
 }
 
-void KasTaskPopup::paintEvent( QPaintEvent * )
+void KasTaskPopup::paintEvent( TQPaintEvent * )
 {
-    QPainter p( this );
+    TQPainter p( this );
     p.drawPixmap( 0, 0, titleBg );
 
-    QString text = item->task()->visibleIconicName();
+    TQString text = item->task()->visibleIconicName();
 
     p.setPen( Qt::white );
     if ( fontMetrics().width( text ) > width() - 4 )
@@ -126,7 +126,7 @@ void KasTaskPopup::paintEvent( QPaintEvent * )
     else
         p.drawText( 1, 1, width() - 4, TITLE_HEIGHT - 1, AlignCenter, text );
 
-    QPixmap thumb = item->task()->thumbnail();
+    TQPixmap thumb = item->task()->thumbnail();
     if ( !thumb.isNull() )
         p.drawPixmap( 1, TITLE_HEIGHT, thumb );
 

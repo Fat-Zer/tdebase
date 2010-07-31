@@ -27,8 +27,8 @@
  * but can be treated like a usual widget
  */
 
-#include <qvaluelist.h>
-#include <qsize.h>
+#include <tqvaluelist.h>
+#include <tqsize.h>
 
 class KdmItem;
 
@@ -48,20 +48,20 @@ public:
 
 	// Updates the layout of all items knowing that the parent
 	// has the @p parentGeometry geometry
-//	virtual void update( const QRect &parentGeometry ) = 0;
+//	virtual void update( const TQRect &parentGeometry ) = 0;
 
 protected:
-	QValueList<KdmItem *> m_children;
+	TQValueList<KdmItem *> m_children;
 };
 
 class KdmLayoutFixed : public KdmLayout {
 
 public:
-	KdmLayoutFixed( const QDomNode &node );
+	KdmLayoutFixed( const TQDomNode &node );
 
 	// Updates the layout of all boxed items knowing that the parent
 	// has the @p parentGeometry geometry
-	void update( const QRect &parentGeometry, bool force );
+	void update( const TQRect &parentGeometry, bool force );
 };
 
 /**
@@ -72,15 +72,15 @@ public:
 class KdmLayoutBox : public KdmLayout {
 
 public:
-	KdmLayoutBox( const QDomNode &node );
+	KdmLayoutBox( const TQDomNode &node );
 
 	// Updates the layout of all boxed items knowing that they
 	// should fit into @p parentGeometry container
-	void update( const QRect &parentGeometry, bool force );
+	void update( const TQRect &parentGeometry, bool force );
 
 	// Computes the size hint of the box, telling which is the
 	// smallest size inside which boxed items will fit
-	QSize sizeHint();
+	TQSize sizeHint();
 
 private:
 	struct {
@@ -92,7 +92,7 @@ private:
 		int minheight;
 		bool homogeneous;
 	} box;
-//	QSize hintedSize;
+//	TQSize hintedSize;
 };
 
 #endif

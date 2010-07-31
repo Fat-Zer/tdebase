@@ -55,8 +55,8 @@ class KWrite : public KParts::MainWindow
 
     bool queryClose();
 
-    void dragEnterEvent( QDragEnterEvent * );
-    void dropEvent( QDropEvent * );
+    void dragEnterEvent( TQDragEnterEvent * );
+    void dropEvent( TQDropEvent * );
 
   public slots:
     void slotNew();
@@ -76,10 +76,10 @@ class KWrite : public KParts::MainWindow
     void printNow();
     void printDlg();
 
-    void newStatus(const QString &msg);
+    void newStatus(const TQString &msg);
     void newCaption();
 
-    void slotDropEvent(QDropEvent *);
+    void slotDropEvent(TQDropEvent *);
 
     void slotEnableActions( bool enable );
 
@@ -113,10 +113,10 @@ class KWrite : public KParts::MainWindow
     KToggleAction * m_paShowPath;
     KToggleAction * m_paShowStatusBar;
 
-    QString encoding;
+    TQString encoding;
 
-    static QPtrList<KTextEditor::Document> docList;
-    static QPtrList<KWrite> winList;
+    static TQPtrList<KTextEditor::Document> docList;
+    static TQPtrList<KWrite> winList;
 };
 
 class KWriteEditorChooser: public KDialogBase
@@ -124,7 +124,7 @@ class KWriteEditorChooser: public KDialogBase
   Q_OBJECT
 
   public:
-    KWriteEditorChooser(QWidget *parent);
+    KWriteEditorChooser(TQWidget *parent);
     virtual ~KWriteEditorChooser();
 
   private:

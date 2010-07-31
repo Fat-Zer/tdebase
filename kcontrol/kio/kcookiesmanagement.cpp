@@ -19,15 +19,15 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qapplication.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qtimer.h>
-#include <qdatetime.h>
-#include <qtoolbutton.h>
+#include <tqapplication.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqtimer.h>
+#include <tqdatetime.h>
+#include <tqtoolbutton.h>
 
 #include <kidna.h>
 #include <kdebug.h>
@@ -49,24 +49,24 @@
 
 struct CookieProp
 {
-    QString host;
-    QString name;
-    QString value;
-    QString domain;
-    QString path;
-    QString expireDate;
-    QString secure;
+    TQString host;
+    TQString name;
+    TQString value;
+    TQString domain;
+    TQString path;
+    TQString expireDate;
+    TQString secure;
     bool allLoaded;
 };
 
-CookieListViewItem::CookieListViewItem(QListView *parent, QString dom)
-                   :QListViewItem(parent)
+CookieListViewItem::CookieListViewItem(TQListView *parent, TQString dom)
+                   :TQListViewItem(parent)
 {
     init( 0, dom );
 }
 
-CookieListViewItem::CookieListViewItem(QListViewItem *parent, CookieProp *cookie)
-                   :QListViewItem(parent)
+CookieListViewItem::CookieListViewItem(TQListViewItem *parent, CookieProp *cookie)
+                   :TQListViewItem(parent)
 {
     init( cookie );
 }
@@ -76,7 +76,7 @@ CookieListViewItem::~CookieListViewItem()
     delete mCookie;
 }
 
-void CookieListViewItem::init( CookieProp* cookie, QString domain,
+void CookieListViewItem::init( CookieProp* cookie, TQString domain,
                                bool cookieLoaded )
 {
     mCookie = cookie;
@@ -91,38 +91,38 @@ CookieProp* CookieListViewItem::leaveCookie()
     return ret;
 }
 
-QString CookieListViewItem::text(int f) const
+TQString CookieListViewItem::text(int f) const
 {
     if (mCookie)
-        return f == 0 ? QString::null : KIDNA::toUnicode(mCookie->host);
+        return f == 0 ? TQString::null : KIDNA::toUnicode(mCookie->host);
     else
-        return f == 0 ? KIDNA::toUnicode(mDomain) : QString::null;
+        return f == 0 ? KIDNA::toUnicode(mDomain) : TQString::null;
 }
 
-KCookiesManagement::KCookiesManagement(QWidget *parent)
+KCookiesManagement::KCookiesManagement(TQWidget *parent)
                    : KCModule(parent, "kcmkio")
 {
   // Toplevel layout
-  QVBoxLayout* mainLayout = new QVBoxLayout(this, KDialog::marginHint(),
+  TQVBoxLayout* mainLayout = new TQVBoxLayout(this, KDialog::marginHint(),
                                             KDialog::spacingHint());
 
   dlg = new KCookiesManagementDlgUI (this);
 
-  dlg->tbClearSearchLine->setIconSet(SmallIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
+  dlg->tbClearSearchLine->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
   dlg->kListViewSearchLine->setListView(dlg->lvCookies);
 
   mainLayout->addWidget(dlg);
   dlg->lvCookies->setSorting(0);
 
-  connect(dlg->lvCookies, SIGNAL(expanded(QListViewItem*)), SLOT(getCookies(QListViewItem*)) );
-  connect(dlg->lvCookies, SIGNAL(selectionChanged(QListViewItem*)), SLOT(showCookieDetails(QListViewItem*)) );
+  connect(dlg->lvCookies, TQT_SIGNAL(expanded(TQListViewItem*)), TQT_SLOT(getCookies(TQListViewItem*)) );
+  connect(dlg->lvCookies, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(showCookieDetails(TQListViewItem*)) );
 
-  connect(dlg->pbDelete, SIGNAL(clicked()), SLOT(deleteCookie()));
-  connect(dlg->pbDeleteAll, SIGNAL(clicked()), SLOT(deleteAllCookies()));
-  connect(dlg->pbReload, SIGNAL(clicked()), SLOT(getDomains()));
-  connect(dlg->pbPolicy, SIGNAL(clicked()), SLOT(doPolicy()));
+  connect(dlg->pbDelete, TQT_SIGNAL(clicked()), TQT_SLOT(deleteCookie()));
+  connect(dlg->pbDeleteAll, TQT_SIGNAL(clicked()), TQT_SLOT(deleteAllCookies()));
+  connect(dlg->pbReload, TQT_SIGNAL(clicked()), TQT_SLOT(getDomains()));
+  connect(dlg->pbPolicy, TQT_SIGNAL(clicked()), TQT_SLOT(doPolicy()));
 
-  connect(dlg->lvCookies, SIGNAL(doubleClicked (QListViewItem *)), SLOT(doPolicy()));
+  connect(dlg->lvCookies, TQT_SIGNAL(doubleClicked (TQListViewItem *)), TQT_SLOT(doPolicy()));
   deletedCookies.setAutoDelete(true);
   m_bDeleteAll = false;
   mainWidget = parent;
@@ -147,8 +147,8 @@ void KCookiesManagement::save()
   {
     if(!DCOPRef("kded", "kcookiejar").send("deleteAllCookies"))
     {
-      QString caption = i18n ("DCOP Communication Error");
-      QString message = i18n ("Unable to delete all the cookies as requested.");
+      TQString caption = i18n ("DCOP Communication Error");
+      TQString message = i18n ("Unable to delete all the cookies as requested.");
       KMessageBox::sorry (this, message,caption);
       return;
     }
@@ -156,19 +156,19 @@ void KCookiesManagement::save()
   }
 
   // Certain groups of cookies were deleted...
-  QStringList::Iterator dIt = deletedDomains.begin();
+  TQStringList::Iterator dIt = deletedDomains.begin();
   while( dIt != deletedDomains.end() )
   {
-    QByteArray call;
-    QByteArray reply;
-    QCString replyType;
-    QDataStream callStream(call, IO_WriteOnly);
+    TQByteArray call;
+    TQByteArray reply;
+    TQCString replyType;
+    TQDataStream callStream(call, IO_WriteOnly);
     callStream << *dIt;
 
     if( !DCOPRef("kded", "kcookiejar").send("deleteCookiesFromDomain", (*dIt)) )
     {
-      QString caption = i18n ("DCOP Communication Error");
-      QString message = i18n ("Unable to delete cookies as requested.");
+      TQString caption = i18n ("DCOP Communication Error");
+      TQString message = i18n ("Unable to delete cookies as requested.");
       KMessageBox::sorry (this, message,caption);
       return;
     }
@@ -178,12 +178,12 @@ void KCookiesManagement::save()
 
   // Individual cookies were deleted...
   bool success = true; // Maybe we can go on...
-  QDictIterator<CookiePropList> cookiesDom(deletedCookies);
+  TQDictIterator<CookiePropList> cookiesDom(deletedCookies);
 
   while(cookiesDom.current())
   {
     CookiePropList *list = cookiesDom.current();
-    QPtrListIterator<CookieProp> cookie(*list);
+    TQPtrListIterator<CookieProp> cookie(*list);
 
     while(*cookie)
     {
@@ -236,7 +236,7 @@ void KCookiesManagement::clearCookieDetails()
   dlg->leSecure->clear();
 }
 
-QString KCookiesManagement::quickHelp() const
+TQString KCookiesManagement::quickHelp() const
 {
   return i18n("<h1>Cookies Management Quick Help</h1>" );
 }
@@ -247,14 +247,14 @@ void KCookiesManagement::getDomains()
 
   if( !reply.isValid() )
   {
-    QString caption = i18n ("Information Lookup Failure");
-    QString message = i18n ("Unable to retrieve information about the "
+    TQString caption = i18n ("Information Lookup Failure");
+    TQString message = i18n ("Unable to retrieve information about the "
                             "cookies stored on your computer.");
     KMessageBox::sorry (this, message, caption);
     return;
   }
 
-  QStringList domains = reply;
+  TQStringList domains = reply;
 
   if ( dlg->lvCookies->childCount() )
   {
@@ -263,7 +263,7 @@ void KCookiesManagement::getDomains()
   }
 
   CookieListViewItem *dom;
-  for(QStringList::Iterator dIt = domains.begin(); dIt != domains.end(); dIt++)
+  for(TQStringList::Iterator dIt = domains.begin(); dIt != domains.end(); dIt++)
   {
     dom = new CookieListViewItem(dlg->lvCookies, *dIt);
     dom->setExpandable(true);
@@ -273,25 +273,25 @@ void KCookiesManagement::getDomains()
   dlg->pbDeleteAll->setEnabled(dlg->lvCookies->childCount());
 }
 
-void KCookiesManagement::getCookies(QListViewItem *cookieDom)
+void KCookiesManagement::getCookies(TQListViewItem *cookieDom)
 {
   CookieListViewItem* ckd = static_cast<CookieListViewItem*>(cookieDom);
   if ( ckd->cookiesLoaded() )
     return;
 
-  QValueList<int> fields;
+  TQValueList<int> fields;
   fields << 0 << 1 << 2 << 3;
 
   DCOPReply reply = DCOPRef ("kded", "kcookiejar").call ("findCookies",
-                                                         DCOPArg(fields, "QValueList<int>"),
+                                                         DCOPArg(fields, "TQValueList<int>"),
                                                          ckd->domain(),
-                                                         QString::null,
-                                                         QString::null,
-                                                         QString::null);
+                                                         TQString::null,
+                                                         TQString::null,
+                                                         TQString::null);
   if(reply.isValid())
   {
-    QStringList fieldVal = reply;
-    QStringList::Iterator fIt = fieldVal.begin();
+    TQStringList fieldVal = reply;
+    TQStringList::Iterator fIt = fieldVal.begin();
 
     while(fIt != fieldVal.end())
     {
@@ -310,11 +310,11 @@ void KCookiesManagement::getCookies(QListViewItem *cookieDom)
 
 bool KCookiesManagement::cookieDetails(CookieProp *cookie)
 {
-  QValueList<int> fields;
+  TQValueList<int> fields;
   fields << 4 << 5 << 7;
 
   DCOPReply reply = DCOPRef ("kded", "kcookiejar").call ("findCookies",
-                                                         DCOPArg(fields, "QValueList<int>"),
+                                                         DCOPArg(fields, "TQValueList<int>"),
                                                          cookie->domain,
                                                          cookie->host,
                                                          cookie->path,
@@ -322,9 +322,9 @@ bool KCookiesManagement::cookieDetails(CookieProp *cookie)
   if( !reply.isValid() )
     return false;
 
-  QStringList fieldVal = reply;
+  TQStringList fieldVal = reply;
 
-  QStringList::Iterator c = fieldVal.begin();
+  TQStringList::Iterator c = fieldVal.begin();
   cookie->value = *c++;
   unsigned tmp = (*c++).toUInt();
 
@@ -332,7 +332,7 @@ bool KCookiesManagement::cookieDetails(CookieProp *cookie)
     cookie->expireDate = i18n("End of session");
   else
   {
-    QDateTime expDate;
+    TQDateTime expDate;
     expDate.setTime_t(tmp);
     cookie->expireDate = KGlobal::locale()->formatDateTime(expDate);
   }
@@ -343,7 +343,7 @@ bool KCookiesManagement::cookieDetails(CookieProp *cookie)
   return true;
 }
 
-void KCookiesManagement::showCookieDetails(QListViewItem* item)
+void KCookiesManagement::showCookieDetails(TQListViewItem* item)
 {
   kdDebug () << "::showCookieDetails... " << endl;
   CookieProp *cookie = static_cast<CookieListViewItem*>(item)->cookie();
@@ -379,7 +379,7 @@ void KCookiesManagement::doPolicy()
   {
     CookieProp *cookie = item->cookie();
 
-    QString domain = cookie->domain;
+    TQString domain = cookie->domain;
 
     if( domain.isEmpty() )
     {
@@ -402,7 +402,7 @@ void KCookiesManagement::doPolicy()
 }
 
 
-void KCookiesManagement::deleteCookie(QListViewItem* deleteItem)
+void KCookiesManagement::deleteCookie(TQListViewItem* deleteItem)
 {
   CookieListViewItem *item = static_cast<CookieListViewItem*>( deleteItem );
   if( item->cookie() )
@@ -433,7 +433,7 @@ void KCookiesManagement::deleteCookie()
 {
   deleteCookie(dlg->lvCookies->currentItem());
 
-  QListViewItem* currentItem = dlg->lvCookies->currentItem();
+  TQListViewItem* currentItem = dlg->lvCookies->currentItem();
 
   if ( currentItem )
   {
@@ -461,7 +461,7 @@ void KCookiesManagement::deleteAllCookies()
   }
   else
   {
-    QListViewItem* item = dlg->lvCookies->firstChild();
+    TQListViewItem* item = dlg->lvCookies->firstChild();
 
     while (item)
     {

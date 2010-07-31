@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qregexp.h>
+#include <tqregexp.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -37,14 +37,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "removebutton_mnu.moc"
 
 PanelRemoveButtonMenu::PanelRemoveButtonMenu( ContainerArea* cArea,
-                                              QWidget *parent, const char *name )
-    : QPopupMenu( parent, name ), containerArea( cArea )
+                                              TQWidget *parent, const char *name )
+    : TQPopupMenu( parent, name ), containerArea( cArea )
 {
-    connect(this, SIGNAL(activated(int)), SLOT(slotExec(int)));
-    connect(this, SIGNAL(aboutToShow()), SLOT(slotAboutToShow()));
+    connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
+    connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 }
 
-void PanelRemoveButtonMenu::addToContainers(const QString& type)
+void PanelRemoveButtonMenu::addToContainers(const TQString& type)
 {
     BaseContainer::List list = containerArea->containers(type);
     for (BaseContainer::Iterator it = list.begin();
@@ -70,7 +70,7 @@ void PanelRemoveButtonMenu::slotAboutToShow()
     addToContainers("ExecButton");
 
     int id = 0;
-    QValueList<PanelMenuItemInfo> items;
+    TQValueList<PanelMenuItemInfo> items;
     for (BaseContainer::Iterator it = containers.begin(); it != containers.end(); ++it)
     {
         items.append(PanelMenuItemInfo((*it)->icon(), (*it)->visibleName(), id));
@@ -79,7 +79,7 @@ void PanelRemoveButtonMenu::slotAboutToShow()
 
     qHeapSort(items);
 
-    for (QValueList<PanelMenuItemInfo>::iterator it = items.begin();
+    for (TQValueList<PanelMenuItemInfo>::iterator it = items.begin();
          it != items.end();
          ++it)
     {
@@ -89,7 +89,7 @@ void PanelRemoveButtonMenu::slotAboutToShow()
     if (containers.count() > 1)
     {
         insertSeparator();
-        insertItem(i18n("All"), this, SLOT(slotRemoveAll()), 0, id);
+        insertItem(i18n("All"), this, TQT_SLOT(slotRemoveAll()), 0, id);
     }
 }
 

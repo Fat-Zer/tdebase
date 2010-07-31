@@ -51,10 +51,10 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qtimer.h>
-#include <qwmatrix.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqtimer.h>
+#include <tqwmatrix.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -83,10 +83,10 @@ KasGroupItem::KasGroupItem( KasTasker *parent )
     setGroupItem( true );
     setText( i18n("Group") );
 
-    connect( parent, SIGNAL( layoutChanged() ), this, SLOT( hidePopup() ) );
-    connect( parent, SIGNAL( layoutChanged() ), this, SLOT( update() ) );
-    connect( this, SIGNAL(leftButtonClicked(QMouseEvent *)), SLOT(togglePopup()) );
-    connect( this, SIGNAL(rightButtonClicked(QMouseEvent *)), SLOT(showGroupMenuAt(QMouseEvent *) ) );
+    connect( parent, TQT_SIGNAL( layoutChanged() ), this, TQT_SLOT( hidePopup() ) );
+    connect( parent, TQT_SIGNAL( layoutChanged() ), this, TQT_SLOT( update() ) );
+    connect( this, TQT_SIGNAL(leftButtonClicked(TQMouseEvent *)), TQT_SLOT(togglePopup()) );
+    connect( this, TQT_SIGNAL(rightButtonClicked(TQMouseEvent *)), TQT_SLOT(showGroupMenuAt(TQMouseEvent *) ) );
 }
 
 KasGroupItem::~KasGroupItem()
@@ -109,7 +109,7 @@ void KasGroupItem::addTask( Task::Ptr t )
 	updateIcon();
     }
 
-    connect( t, SIGNAL( changed(bool) ), this, SLOT( update() ) );
+    connect( t, TQT_SIGNAL( changed(bool) ), this, TQT_SLOT( update() ) );
     update();
 }
 
@@ -140,7 +140,7 @@ void KasGroupItem::removeTask( Task::Ptr t )
 
 void KasGroupItem::updateIcon()
 {
-    QPixmap p;
+    TQPixmap p;
     bool usedIconLoader = false;
     Task::Ptr t = items.first();
     if (!t)
@@ -162,7 +162,7 @@ void KasGroupItem::updateIcon()
     setIcon( p );
 }
 
-void KasGroupItem::paint( QPainter *p )
+void KasGroupItem::paint( TQPainter *p )
 {
     KasItem::paint( p );
 
@@ -180,7 +180,7 @@ void KasGroupItem::paint( QPainter *p )
     p->setPen( isShowingPopup() ? res->activePenColor() : res->inactivePenColor() );
 
     if ( modCount ) {
-	QString modCountStr;
+	TQString modCountStr;
 	modCountStr.setNum( modCount );
 	p->drawText( extent()-fontMetrics().width( modCountStr )-3,
 		     15+fontMetrics().ascent(),
@@ -226,7 +226,7 @@ void KasGroupItem::paint( QPainter *p )
     }
 
     if ( ((int) items.count() > microsPerCol) && ( kasbar()->itemSize() != KasBar::Small ) ) {
-	QString countStr;
+	TQString countStr;
 	countStr.setNum( items.count() );
 	p->drawText( extent()-fontMetrics().width( countStr )-3,
 		     extent()+fontMetrics().ascent()-16,
@@ -257,7 +257,7 @@ KasPopup *KasGroupItem::createPopup()
     KasPopup *pop = new KasPopup( this );
     bar = kasbar()->createChildBar( ( kasbar()->orientation() == Horizontal ) ? Vertical : Horizontal, pop );
 
-    connect( pop, SIGNAL(shown()), SLOT(updatePopup()) );
+    connect( pop, TQT_SIGNAL(shown()), TQT_SLOT(updatePopup()) );
 
     return pop;
 
@@ -283,15 +283,15 @@ void KasGroupItem::ungroup()
     kasbar()->moveToMain( this );
 }
 
-void KasGroupItem::showGroupMenuAt( QMouseEvent *ev )
+void KasGroupItem::showGroupMenuAt( TQMouseEvent *ev )
 {
     showGroupMenuAt( ev->globalPos() );
 }
 
-void KasGroupItem::showGroupMenuAt( const QPoint &p )
+void KasGroupItem::showGroupMenuAt( const TQPoint &p )
 {
     TaskRMBMenu *tm = new TaskRMBMenu(items, true, kasbar());
-    tm->insertItem( i18n("&Ungroup" ), this, SLOT( ungroup() ) );
+    tm->insertItem( i18n("&Ungroup" ), this, TQT_SLOT( ungroup() ) );
     tm->insertSeparator();
     tm->insertItem( i18n("&Kasbar"), kasbar()->contextMenu() );
 

@@ -8,7 +8,7 @@
 #ifndef __BLANKSCRN_H__
 #define __BLANKSCRN_H__
 
-#include <qcolor.h>
+#include <tqcolor.h>
 #include <kdialogbase.h>
 #include <kscreensaver.h>
 
@@ -22,34 +22,34 @@ public:
 	KBlankSaver( WId drawable );
 	virtual ~KBlankSaver();
 
-	void setColor( const QColor &col );
+	void setColor( const TQColor &col );
 
 private:
 	void readSettings();
 	void blank();
 
 private:
-	QColor color;
+	TQColor color;
 };
 
 class KBlankSetup : public KDialogBase
 {
 	Q_OBJECT
 public:
-	KBlankSetup( QWidget *parent = NULL, const char *name = NULL );
+	KBlankSetup( TQWidget *parent = NULL, const char *name = NULL );
 
 protected:
 	void readSettings();
 
 private slots:
-	void slotColor( const QColor & );
+	void slotColor( const TQColor & );
 	void slotOk();
 
 private:
-	QWidget *preview;
+	TQWidget *preview;
 	KBlankSaver *saver;
 
-	QColor color;
+	TQColor color;
 };
 
 #endif

@@ -29,7 +29,7 @@
 #include <kglobal.h>
 #include <kconfig.h>
 #include <dcopref.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <X11/Xlib.h>
 
@@ -41,7 +41,7 @@
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_mouse(QWidget *parent, const char *)
+  KDE_EXPORT KCModule *create_mouse(TQWidget *parent, const char *)
   {
     return new MouseConfig(parent, "kcminput");
   }
@@ -55,15 +55,15 @@ extern "C"
 
 #ifdef HAVE_XCURSOR
     config->setGroup("Mouse");
-    QCString theme = QFile::encodeName(config->readEntry("cursorTheme", QString()));
-    QCString size = config->readEntry("cursorSize", QString()).local8Bit();
+    TQCString theme = TQFile::encodeName(config->readEntry("cursorTheme", TQString()));
+    TQCString size = config->readEntry("cursorSize", TQString()).local8Bit();
 
     // Note: If you update this code, update kapplymousetheme as well.
 
     // use a default value for theme only if it's not configured at all, not even in X resources
     if( theme.isEmpty()
-        && QCString( XGetDefault( qt_xdisplay(), "Xcursor", "theme" )).isEmpty()
-        && QCString( XcursorGetTheme( qt_xdisplay())).isEmpty())
+        && TQCString( XGetDefault( qt_xdisplay(), "Xcursor", "theme" )).isEmpty()
+        && TQCString( XcursorGetTheme( qt_xdisplay())).isEmpty())
     {
         theme = "default";
     }
@@ -84,9 +84,9 @@ extern "C"
     // variables when launching applications.
     DCOPRef klauncher("klauncher");
     if( !theme.isEmpty())
-        klauncher.send("setLaunchEnv", QCString("XCURSOR_THEME"), theme);
+        klauncher.send("setLaunchEnv", TQCString("XCURSOR_THEME"), theme);
     if( !size.isEmpty())
-        klauncher.send("setLaunchEnv", QCString("XCURSOR_SIZE"), size);
+        klauncher.send("setLaunchEnv", TQCString("XCURSOR_SIZE"), size);
 #endif
 
     delete config;

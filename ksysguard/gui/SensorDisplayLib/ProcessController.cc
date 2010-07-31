@@ -23,7 +23,7 @@
 
 #include <assert.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -37,40 +37,40 @@
 #include "ProcessController.moc"
 #include "SignalIDs.h"
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
 
 #include <kapplication.h>
 #include <kpushbutton.h>
 
 
 
-ProcessController::ProcessController(QWidget* parent, const char* name, const QString &title, bool nf)
+ProcessController::ProcessController(TQWidget* parent, const char* name, const TQString &title, bool nf)
 	: KSGRD::SensorDisplay(parent, name, title, nf)
 {
 	dict.setAutoDelete(true);
-	dict.insert("Name", new QString(i18n("Name")));
-	dict.insert("PID", new QString(i18n("PID")));
-	dict.insert("PPID", new QString(i18n("PPID")));
-	dict.insert("UID", new QString(i18n("UID")));
-	dict.insert("GID", new QString(i18n("GID")));
-	dict.insert("Status", new QString(i18n("Status")));
-	dict.insert("User%", new QString(i18n("User%")));
-	dict.insert("System%", new QString(i18n("System%")));
-	dict.insert("Nice", new QString(i18n("Nice")));
-	dict.insert("VmSize", new QString(i18n("VmSize")));
-	dict.insert("VmRss", new QString(i18n("VmRss")));
-	dict.insert("Login", new QString(i18n("Login")));
-	dict.insert("Command", new QString(i18n("Command")));
+	dict.insert("Name", new TQString(i18n("Name")));
+	dict.insert("PID", new TQString(i18n("PID")));
+	dict.insert("PPID", new TQString(i18n("PPID")));
+	dict.insert("UID", new TQString(i18n("UID")));
+	dict.insert("GID", new TQString(i18n("GID")));
+	dict.insert("Status", new TQString(i18n("Status")));
+	dict.insert("User%", new TQString(i18n("User%")));
+	dict.insert("System%", new TQString(i18n("System%")));
+	dict.insert("Nice", new TQString(i18n("Nice")));
+	dict.insert("VmSize", new TQString(i18n("VmSize")));
+	dict.insert("VmRss", new TQString(i18n("VmRss")));
+	dict.insert("Login", new TQString(i18n("Login")));
+	dict.insert("Command", new TQString(i18n("Command")));
 
 	// Setup the geometry management.
-	gm = new QVBoxLayout(this, 10);
+	gm = new TQVBoxLayout(this, 10);
 	Q_CHECK_PTR(gm);
 	gm->addSpacing(15);
 
-	gmSearch = new QHBoxLayout();
+	gmSearch = new TQHBoxLayout();
 	Q_CHECK_PTR(gmSearch);
 	gm->addLayout(gmSearch, 0);
 
@@ -81,17 +81,17 @@ ProcessController::ProcessController(QWidget* parent, const char* name, const QS
 	pListSearchLine = new KListViewSearchLineWidget(pList, this, "process_list_search_line");
 	gmSearch->addWidget(pListSearchLine, 1);
 
-	connect(pList, SIGNAL(killProcess(int, int)),
-			this, SLOT(killProcess(int, int)));
-	connect(pList, SIGNAL(reniceProcess(const QValueList<int> &, int)),
-			this, SLOT(reniceProcess(const QValueList<int> &, int)));
-	connect(pList, SIGNAL(listModified(bool)),
-			this, SLOT(setModified(bool)));
+	connect(pList, TQT_SIGNAL(killProcess(int, int)),
+			this, TQT_SLOT(killProcess(int, int)));
+	connect(pList, TQT_SIGNAL(reniceProcess(const TQValueList<int> &, int)),
+			this, TQT_SLOT(reniceProcess(const TQValueList<int> &, int)));
+	connect(pList, TQT_SIGNAL(listModified(bool)),
+			this, TQT_SLOT(setModified(bool)));
 
 	/* Create the combo box to configure the process filter. The
 	 * cbFilter must be created prior to constructing pList as the
 	 * pList constructor sets cbFilter to its start value. */
-	cbFilter = new QComboBox(this, "pList_cbFilter");
+	cbFilter = new TQComboBox(this, "pList_cbFilter");
 	Q_CHECK_PTR(cbFilter);
 	gmSearch->addWidget(cbFilter,0);
 	cbFilter->insertItem(i18n("All Processes"), 0);
@@ -100,30 +100,30 @@ ProcessController::ProcessController(QWidget* parent, const char* name, const QS
 	cbFilter->insertItem(i18n("Own Processes"), 3);
 	cbFilter->setMinimumSize(cbFilter->sizeHint());
 	// Create the check box to switch between tree view and list view.
-	xbTreeView = new QCheckBox(i18n("&Tree"), this, "xbTreeView");
+	xbTreeView = new TQCheckBox(i18n("&Tree"), this, "xbTreeView");
 	Q_CHECK_PTR(xbTreeView);
 	xbTreeView->setMinimumSize(xbTreeView->sizeHint());
-	connect(xbTreeView, SIGNAL(toggled(bool)),
-			this, SLOT(setTreeView(bool)));
+	connect(xbTreeView, TQT_SIGNAL(toggled(bool)),
+			this, TQT_SLOT(setTreeView(bool)));
 
 
 	/* When the both cbFilter and pList are constructed we can connect the
 	 * missing link. */
-	connect(cbFilter, SIGNAL(activated(int)),
-			this, SLOT(filterModeChanged(int)));
+	connect(cbFilter, TQT_SIGNAL(activated(int)),
+			this, TQT_SLOT(filterModeChanged(int)));
 
 	// Create the 'Refresh' button.
 	bRefresh = new KPushButton( KGuiItem(  i18n( "&Refresh" ), "reload" ),
             this, "bRefresh" );
 	Q_CHECK_PTR(bRefresh);
 	bRefresh->setMinimumSize(bRefresh->sizeHint());
-	connect(bRefresh, SIGNAL(clicked()), this, SLOT(updateList()));
+	connect(bRefresh, TQT_SIGNAL(clicked()), this, TQT_SLOT(updateList()));
 
 	// Create the 'Kill' button.
 	bKill = new KPushButton(i18n("&Kill"), this, "bKill");
 	Q_CHECK_PTR(bKill);
 	bKill->setMinimumSize(bKill->sizeHint());
-	connect(bKill, SIGNAL(clicked()), this, SLOT(killProcess()));
+	connect(bKill, TQT_SIGNAL(clicked()), this, TQT_SLOT(killProcess()));
 	/* Disable the kill button until we know that the daemon supports the
 	 * kill command. */
 	bKill->setEnabled(false);
@@ -131,7 +131,7 @@ ProcessController::ProcessController(QWidget* parent, const char* name, const QS
 
 	gm->addWidget(pList, 1);
 
-	gm1 = new QHBoxLayout();
+	gm1 = new TQHBoxLayout();
 	Q_CHECK_PTR(gm1);
 	gm->addLayout(gm1, 0);
 	gm1->addStretch();
@@ -154,7 +154,7 @@ ProcessController::ProcessController(QWidget* parent, const char* name, const QS
 void ProcessController::setSearchFocus() {
 	//stupid search line widget.  See rant in fixTabOrder
 	if(!pListSearchLine->searchLine())
-		QTimer::singleShot(100, this, SLOT(setSearchFocus()));
+		TQTimer::singleShot(100, this, TQT_SLOT(setSearchFocus()));
 	else {
 		pListSearchLine->searchLine()->setFocus();
 	}
@@ -167,7 +167,7 @@ void ProcessController::fixTabOrder() {
 	//
 	//Did i mention I hate this?
 	if(!pListSearchLine->searchLine())
-		QTimer::singleShot(100, this, SLOT(fixTabOrder()));
+		TQTimer::singleShot(100, this, TQT_SLOT(fixTabOrder()));
 	else {
 		setTabOrder(pListSearchLine->searchLine(), cbFilter);
 		setTabOrder(cbFilter, pList);
@@ -178,19 +178,19 @@ void ProcessController::fixTabOrder() {
 }
 
 void
-ProcessController::resizeEvent(QResizeEvent* ev)
+ProcessController::resizeEvent(TQResizeEvent* ev)
 {
 	if(frame())
 		frame()->setGeometry(0, 0, width(), height());
 
-	QWidget::resizeEvent(ev);
+	TQWidget::resizeEvent(ev);
 }
 
 bool
-ProcessController::addSensor(const QString& hostName,
-							 const QString& sensorName,
-							const QString& sensorType,
-							 const QString& title)
+ProcessController::addSensor(const TQString& hostName,
+							 const TQString& sensorName,
+							const TQString& sensorType,
+							 const TQString& title)
 {
 	if (sensorType != "table")
 		return (false);
@@ -220,11 +220,11 @@ void
 ProcessController::killProcess(int pid, int sig)
 {
 	sendRequest(sensors().at(0)->hostName(),
-				QString("kill %1 %2" ).arg(pid).arg(sig), 3);
+				TQString("kill %1 %2" ).arg(pid).arg(sig), 3);
 
 	if ( !timerOn() )
 	    // give ksysguardd time to update its proccess list
-	    QTimer::singleShot(3000, this, SLOT(updateList()));
+	    TQTimer::singleShot(3000, this, TQT_SLOT(updateList()));
 	else
 	    updateList();
 }
@@ -232,7 +232,7 @@ ProcessController::killProcess(int pid, int sig)
 void
 ProcessController::killProcess()
 {
-	const QStringList& selectedAsStrings = pList->getSelectedAsStrings();
+	const TQStringList& selectedAsStrings = pList->getSelectedAsStrings();
 	if (selectedAsStrings.isEmpty())
 	{
 		KMessageBox::sorry(this,
@@ -241,7 +241,7 @@ ProcessController::killProcess()
 	}
 	else
 	{
-		QString  msg = i18n("Do you want to kill the selected process?",
+		TQString  msg = i18n("Do you want to kill the selected process?",
 				"Do you want to kill the %n selected processes?",
 				selectedAsStrings.count());
 
@@ -253,7 +253,7 @@ ProcessController::killProcess()
 
 		bool dontAgain = false;
 		
-		int res = KMessageBox::createKMessageBox(dlg, QMessageBox::Question,
+		int res = KMessageBox::createKMessageBox(dlg, TQMessageBox::Question,
 			                                 msg, selectedAsStrings,
 							 i18n("Do not ask again"), &dontAgain, 
 							 KMessageBox::Notify);
@@ -264,32 +264,32 @@ ProcessController::killProcess()
 		}
 	}
 
-	const QValueList<int>& selectedPIds = pList->getSelectedPIds();
+	const TQValueList<int>& selectedPIds = pList->getSelectedPIds();
 
 	// send kill signal to all seleted processes
-	QValueListConstIterator<int> it;
+	TQValueListConstIterator<int> it;
 	for (it = selectedPIds.begin(); it != selectedPIds.end(); ++it)
-		sendRequest(sensors().at(0)->hostName(), QString("kill %1 %2" ).arg(*it)
+		sendRequest(sensors().at(0)->hostName(), TQString("kill %1 %2" ).arg(*it)
 					.arg(MENU_ID_SIGKILL), 3);
 
 	if ( !timerOn())
 		// give ksysguardd time to update its proccess list
-		QTimer::singleShot(3000, this, SLOT(updateList()));
+		TQTimer::singleShot(3000, this, TQT_SLOT(updateList()));
 	else
 		updateList();
 }
 
 void
-ProcessController::reniceProcess(const QValueList<int> &pids, int niceValue)
+ProcessController::reniceProcess(const TQValueList<int> &pids, int niceValue)
 {
-	for( QValueList<int>::ConstIterator it = pids.constBegin(), end = pids.constEnd(); it != end; ++it )
+	for( TQValueList<int>::ConstIterator it = pids.constBegin(), end = pids.constEnd(); it != end; ++it )
 		sendRequest(sensors().at(0)->hostName(),
-					QString("setpriority %1 %2" ).arg(*it).arg(niceValue), 5);
+					TQString("setpriority %1 %2" ).arg(*it).arg(niceValue), 5);
 	sendRequest(sensors().at(0)->hostName(), "ps", 2);  //update the display afterwards
 }
 
 void
-ProcessController::answerReceived(int id, const QString& answer)
+ProcessController::answerReceived(int id, const TQString& answer)
 {
 	/* We received something, so the sensor is probably ok. */
 	sensorError(id, false);
@@ -314,7 +314,7 @@ ProcessController::answerReceived(int id, const QString& answer)
 		pList->removeColumns();
 		for (unsigned int i = 0; i < headers.count(); i++)
 		{
-			QString header;
+			TQString header;
 			if (dict[headers[i]])
 				header = *dict[headers[i]];
 			else
@@ -421,11 +421,11 @@ ProcessController::sensorError(int, bool err)
 }
 
 bool
-ProcessController::restoreSettings(QDomElement& element)
+ProcessController::restoreSettings(TQDomElement& element)
 {
 	bool result = addSensor(element.attribute("hostName"),
 							element.attribute("sensorName"), (element.attribute("sensorType").isEmpty() ? "table" : element.attribute("sensorType")),
-							QString::null);
+							TQString::null);
 
 	xbTreeView->setChecked(element.attribute("tree").toInt());
 	setTreeView(element.attribute("tree").toInt());
@@ -450,7 +450,7 @@ ProcessController::restoreSettings(QDomElement& element)
 }
 
 bool
-ProcessController::saveSettings(QDomDocument& doc, QDomElement& element, bool save)
+ProcessController::saveSettings(TQDomDocument& doc, TQDomElement& element, bool save)
 {
 	element.setAttribute("hostName", sensors().at(0)->hostName());
 	element.setAttribute("sensorName", sensors().at(0)->name());

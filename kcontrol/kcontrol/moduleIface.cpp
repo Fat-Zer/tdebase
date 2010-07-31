@@ -23,26 +23,26 @@
 #include <kdebug.h>
 #include <kconfig.h>
 
-ModuleIface::ModuleIface(QObject *parent, const char *name) 
-	: QObject(parent, name), DCOPObject(name) {
+ModuleIface::ModuleIface(TQObject *parent, const char *name) 
+	: TQObject(parent, name), DCOPObject(name) {
 
-	_parent = static_cast<QWidget *>(parent);
+	_parent = static_cast<TQWidget *>(parent);
 
 }
 
 ModuleIface::~ModuleIface() {
 }
 
-QFont ModuleIface::getFont() {
+TQFont ModuleIface::getFont() {
 	return _parent->font(); 
 }
 
-QPalette ModuleIface::getPalette(){
+TQPalette ModuleIface::getPalette(){
 	kdDebug(1208) << "Returned Palette" << endl;
 	return _parent->palette();
 }
 
-QString ModuleIface::getStyle() {
+TQString ModuleIface::getStyle() {
 	KConfig config(  "kdeglobals" );
 	config.setGroup( "General" );
 	return config.readEntry("widgetStyle");

@@ -9,7 +9,7 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -25,7 +25,7 @@
 #include "kxkbconfig.h"
 
 
-KxkbLabelController::KxkbLabelController(QLabel* label_, QPopupMenu* contextMenu_) :
+KxkbLabelController::KxkbLabelController(TQLabel* label_, TQPopupMenu* contextMenu_) :
     label(label_),
     contextMenu(contextMenu_),
  	m_menuStartIndex(contextMenu_->count()),
@@ -35,13 +35,13 @@ KxkbLabelController::KxkbLabelController(QLabel* label_, QPopupMenu* contextMenu
 // 	kdDebug() << "Creating KxkbLabelController with startMenuIndex " << m_menuStartIndex << endl;
 }
 
-void KxkbLabelController::setToolTip(const QString& tip)
+void KxkbLabelController::setToolTip(const TQString& tip)
 {
-	QToolTip::remove(label);
-	QToolTip::add(label, tip);
+	TQToolTip::remove(label);
+	TQToolTip::add(label, tip);
 }
 
-void KxkbLabelController::setPixmap(const QPixmap& pixmap)
+void KxkbLabelController::setPixmap(const TQPixmap& pixmap)
 {
 	KIconEffect iconeffect;
 	label->setPixmap( iconeffect.apply(pixmap, KIcon::Panel, KIcon::DefaultState) );
@@ -55,19 +55,19 @@ void KxkbLabelController::setCurrentLayout(const LayoutUnit& layoutUnit)
 }
 
 
-void KxkbLabelController::setError(const QString& layoutInfo)
+void KxkbLabelController::setError(const TQString& layoutInfo)
 {
-    QString msg = i18n("Error changing keyboard layout to '%1'").arg(layoutInfo);
+    TQString msg = i18n("Error changing keyboard layout to '%1'").arg(layoutInfo);
 	setToolTip(msg);
 
 	label->setPixmap(LayoutIcon::getInstance().findPixmap("error", m_showFlag));
 }
 
 
-void KxkbLabelController::initLayoutList(const QValueList<LayoutUnit>& layouts, const XkbRules& rules)
+void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& layouts, const XkbRules& rules)
 {
 //	KPopupMenu* menu = contextMenu();
-	QPopupMenu* menu = contextMenu;
+	TQPopupMenu* menu = contextMenu;
 //	int index = menu->indexOf(0);
 
     m_descriptionMap.clear();
@@ -84,16 +84,16 @@ void KxkbLabelController::initLayoutList(const QValueList<LayoutUnit>& layouts, 
     KIconEffect iconeffect;
     
 	int cnt = 0;
-    QValueList<LayoutUnit>::ConstIterator it;
+    TQValueList<LayoutUnit>::ConstIterator it;
     for (it=layouts.begin(); it != layouts.end(); ++it)
     {
-		const QString layoutName = (*it).layout;
-		const QString variantName = (*it).variant;
+		const TQString layoutName = (*it).layout;
+		const TQString variantName = (*it).variant;
 		
-		const QPixmap& layoutPixmap = LayoutIcon::getInstance().findPixmap(layoutName, m_showFlag, (*it).displayName);
-        const QPixmap pix = iconeffect.apply(layoutPixmap, KIcon::Small, KIcon::DefaultState);
+		const TQPixmap& layoutPixmap = LayoutIcon::getInstance().findPixmap(layoutName, m_showFlag, (*it).displayName);
+        const TQPixmap pix = iconeffect.apply(layoutPixmap, KIcon::Small, KIcon::DefaultState);
 		
-		QString fullName = i18n((rules.layouts()[layoutName]));
+		TQString fullName = i18n((rules.layouts()[layoutName]));
 		if( variantName.isEmpty() == false )
 			fullName += " (" + variantName + ")";
 		contextMenu->insertItem(pix, fullName, START_MENU_ID + cnt, m_menuStartIndex + cnt);
@@ -114,15 +114,15 @@ void KxkbLabelController::initLayoutList(const QValueList<LayoutUnit>& layouts, 
 
 /*    if( index != -1 ) { //not first start
 		menu->insertSeparator();
-		KAction* quitAction = KStdAction::quit(this, SIGNAL(quitSelected()), actionCollection());
+		KAction* quitAction = KStdAction::quit(this, TQT_SIGNAL(quitSelected()), actionCollection());
         if (quitAction)
     	    quitAction->plug(menu);
     }*/
 }
 
-// void KxkbLabelController::mouseReleaseEvent(QMouseEvent *ev)
+// void KxkbLabelController::mouseReleaseEvent(TQMouseEvent *ev)
 // {
-//     if (ev->button() == QMouseEvent::LeftButton)
+//     if (ev->button() == TQMouseEvent::LeftButton)
 //         emit toggled();
 //     KSystemTray::mouseReleaseEvent(ev);
 // }

@@ -18,7 +18,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <kdebug.h>
 #include <kdesu/su.h>
@@ -86,7 +86,7 @@ int ConnectionHandler::handle()
 
     // Do we have a complete command yet?
     int n;
-    QCString newbuf;
+    TQCString newbuf;
     while ((n = m_Buf.find('\n')) != -1)
     {
         newbuf = m_Buf.left(n+1);
@@ -100,10 +100,10 @@ int ConnectionHandler::handle()
     return 0;
 }
 
-QCString ConnectionHandler::makeKey(int _namespace, QCString s1,
-        QCString s2, QCString s3)
+TQCString ConnectionHandler::makeKey(int _namespace, TQCString s1,
+        TQCString s2, TQCString s3)
 {
-    QCString res;
+    TQCString res;
     res.setNum(_namespace);
     res += "*";
     res += s1 + "*" + s2 + "*" + s3;
@@ -114,7 +114,7 @@ void ConnectionHandler::sendExitCode()
 {
     if (!m_needExitCode)
        return;
-    QCString buf;
+    TQCString buf;
     buf.setNum(m_exitCode);
     buf.prepend("OK ");
     buf.append("\n");
@@ -122,9 +122,9 @@ void ConnectionHandler::sendExitCode()
     send(m_Fd, buf.data(), buf.length(), 0);
 }
 
-void ConnectionHandler::respond(int ok, QCString s)
+void ConnectionHandler::respond(int ok, TQCString s)
 {
-    QCString buf;
+    TQCString buf;
 
     switch (ok) {
     case Res_OK:
@@ -152,7 +152,7 @@ void ConnectionHandler::respond(int ok, QCString s)
  * close the socket in the main accept loop.
  */
 
-int ConnectionHandler::doCommand(QCString buf)
+int ConnectionHandler::doCommand(TQCString buf)
 {
     if ((uid_t) peerUid() != getuid())
     {
@@ -161,7 +161,7 @@ int ConnectionHandler::doCommand(QCString buf)
         return -1;
     }
 
-    QCString key, command, pass, name, user, value, env_check;
+    TQCString key, command, pass, name, user, value, env_check;
     Data_entry data;
 
     Lexer *l = new Lexer(buf);
@@ -221,7 +221,7 @@ int ConnectionHandler::doCommand(QCString buf)
 
     case Lexer::Tok_exec:  // "EXEC command:string user:string [options:string (env:string)*]\n"
     {
-        QCString options;
+        TQCString options;
         QCStringList env;
         tok = l->lex();
         if (tok != Lexer::Tok_str)
@@ -242,7 +242,7 @@ int ConnectionHandler::doCommand(QCString buf)
             {
                if (tok != Lexer::Tok_str)
                    goto parse_error;
-               QCString env_str = l->lval();
+               TQCString env_str = l->lval();
                env.append(env_str);
                if (strncmp(env_str, "DESKTOP_STARTUP_ID=", strlen("DESKTOP_STARTUP_ID=")) != 0)
                    env_check += "*"+env_str;
@@ -250,7 +250,7 @@ int ConnectionHandler::doCommand(QCString buf)
             }
         }
 
-        QCString auth_user;
+        TQCString auth_user;
         if ((m_Scheduler != SuProcess::SchedNormal) || (m_Priority > 50))
             auth_user = "root";
         else

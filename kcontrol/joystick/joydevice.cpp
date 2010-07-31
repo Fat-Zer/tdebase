@@ -36,7 +36,7 @@
 
 //--------------------------------------------------------------
 
-JoyDevice::JoyDevice(const QString &devicefile)
+JoyDevice::JoyDevice(const TQString &devicefile)
   : devName(devicefile), joyFd(-1), buttons(0), axes(0),
     amin(0), amax(0), corr(0), origCorr(0)
 {
@@ -44,7 +44,7 @@ JoyDevice::JoyDevice(const QString &devicefile)
 
 //--------------------------------------------------------------
 
-QString JoyDevice::errText(ErrorCode code) const
+TQString JoyDevice::errText(ErrorCode code) const
 {
   switch ( code )
   {

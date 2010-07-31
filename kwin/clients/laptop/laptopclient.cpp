@@ -8,12 +8,12 @@
 
 #include <kconfig.h> // up here to avoid X11 header conflict :P
 #include "laptopclient.h"
-#include <qdrawutil.h>
+#include <tqdrawutil.h>
 #include <kpixmapeffect.h>
 #include <kdrawutil.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <qbitmap.h>
+#include <tqbitmap.h>
 
 namespace Laptop {
 
@@ -41,7 +41,7 @@ static const unsigned char unsticky_bits[] = {
 static const unsigned char sticky_bits[] = {
    0x3c, 0x42, 0x81, 0x81, 0x81, 0x81, 0x42, 0x3c};
 
-static QPixmap *titlePix;
+static TQPixmap *titlePix;
 static KPixmap *aUpperGradient;
 static KPixmap *iUpperGradient;
 // buttons active, inactive, up, down, and 2 sizes :P
@@ -53,7 +53,7 @@ static KPixmap *btnPix2;
 static KPixmap *btnDownPix2;
 static KPixmap *iBtnPix2;
 static KPixmap *iBtnDownPix2;
-static QColor btnForeground;
+static TQColor btnForeground;
 
 static int titleHeight = 14;
 static int btnWidth1 = 17;
@@ -77,9 +77,9 @@ static inline const KDecorationOptions* options()
     return KDecoration::options();
 }
 
-static void drawButtonFrame(KPixmap *pix, const QColorGroup &g, bool sunken)
+static void drawButtonFrame(KPixmap *pix, const TQColorGroup &g, bool sunken)
 {
-    QPainter p;
+    TQPainter p;
     int w = pix->width();
     int h = pix->height();
     int x2 = w-1;
@@ -107,7 +107,7 @@ static void create_pixmaps()
         return;
     pixmaps_created = true;
 
-    titleHeight = QFontMetrics(options()->font(true)).height() + 2;
+    titleHeight = TQFontMetrics(options()->font(true)).height() + 2;
     if (titleHeight < handleSize) titleHeight = handleSize;
     titleHeight &= ~1; // Make title height even
     if (titleHeight < 14) titleHeight = 14;
@@ -116,11 +116,11 @@ static void create_pixmaps()
     btnWidth2 = 3*titleHeight/2 + 6;
 
     // titlebar
-    QPainter p;
-    QPainter maskPainter;
+    TQPainter p;
+    TQPainter maskPainter;
     int i, x, y;
-    titlePix = new QPixmap(33, 12);
-    QBitmap mask(33, 12);
+    titlePix = new TQPixmap(33, 12);
+    TQBitmap mask(33, 12);
     mask.fill(Qt::color0);
 
     p.begin(titlePix);
@@ -140,12 +140,12 @@ static void create_pixmaps()
     maskPainter.end();
     titlePix->setMask(mask);
 
-    if(QPixmap::defaultDepth() > 8){
+    if(TQPixmap::defaultDepth() > 8){
         aUpperGradient = new KPixmap;
         aUpperGradient->resize(32, titleHeight+2);
         iUpperGradient = new KPixmap;
         iUpperGradient->resize(32, titleHeight+2);
-        QColor bgColor = options()->color(KDecoration::ColorTitleBar, true);
+        TQColor bgColor = options()->color(KDecoration::ColorTitleBar, true);
         KPixmapEffect::gradient(*aUpperGradient,
                                 bgColor.light(120),
                                 bgColor.dark(120),
@@ -157,8 +157,8 @@ static void create_pixmaps()
                                 KPixmapEffect::VerticalGradient);
     }
     // buttons (active/inactive, sunken/unsunken, 2 sizes each)
-    QColorGroup g = options()->colorGroup(KDecoration::ColorButtonBg, true);
-    QColor c = g.background();
+    TQColorGroup g = options()->colorGroup(KDecoration::ColorButtonBg, true);
+    TQColor c = g.background();
     btnPix1 = new KPixmap;
     btnPix1->resize(btnWidth1, titleHeight);
     btnDownPix1 = new KPixmap;
@@ -175,7 +175,7 @@ static void create_pixmaps()
     iBtnPix2->resize(btnWidth2, titleHeight);
     iBtnDownPix2 = new KPixmap;
     iBtnDownPix2->resize(btnWidth2, titleHeight);
-    if(QPixmap::defaultDepth() > 8){
+    if(TQPixmap::defaultDepth() > 8){
         KPixmapEffect::gradient(*btnPix1, c.light(120), c.dark(130),
                                 KPixmapEffect::DiagonalGradient);
         KPixmapEffect::gradient(*btnDownPix1, c.dark(130), c.light(120),
@@ -249,7 +249,7 @@ static void delete_pixmaps()
 LaptopButton::LaptopButton(ButtonType type, LaptopClient *parent, const char *name)
     : KCommonDecorationButton(type, parent, name)
 {
-    setBackgroundMode(QWidget::NoBackground);
+    setBackgroundMode(TQWidget::NoBackground);
 }
 
 void LaptopButton::reset(unsigned long changed)
@@ -287,16 +287,16 @@ void LaptopButton::reset(unsigned long changed)
 void LaptopButton::setBitmap(const unsigned char *bitmap)
 {
     if (bitmap)
-        deco = QBitmap(8, 8, bitmap, true);
+        deco = TQBitmap(8, 8, bitmap, true);
     else {
-        deco = QBitmap(8,8);
+        deco = TQBitmap(8,8);
         deco.fill(Qt::color0);
     }
     deco.setMask(deco);
     repaint();
 }
 
-void LaptopButton::drawButton(QPainter *p)
+void LaptopButton::drawButton(TQPainter *p)
 {
     bool smallBtn = width() == btnWidth1;
     if(btnPix1){
@@ -314,7 +314,7 @@ void LaptopButton::drawButton(QPainter *p)
         }
     }
     else{
-        QColorGroup g = options()->colorGroup(KDecoration::ColorButtonBg, decoration()->isActive());
+        TQColorGroup g = options()->colorGroup(KDecoration::ColorButtonBg, decoration()->isActive());
         int w = width();
         int h = height();
         p->fillRect(1, 1, w-2, h-2, isDown() ? g.mid() : g.button());
@@ -348,17 +348,17 @@ LaptopClient::~LaptopClient()
 {
 }
 
-QString LaptopClient::visibleName() const
+TQString LaptopClient::visibleName() const
 {
     return i18n("Laptop");
 }
 
-QString LaptopClient::defaultButtonsLeft() const
+TQString LaptopClient::defaultButtonsLeft() const
 {
     return "X";
 }
 
-QString LaptopClient::defaultButtonsRight() const
+TQString LaptopClient::defaultButtonsRight() const
 {
     return "HSIA";
 }
@@ -466,12 +466,12 @@ void LaptopClient::captionChange()
     KCommonDecoration::captionChange();
 }
 
-void LaptopClient::paintEvent( QPaintEvent* )
+void LaptopClient::paintEvent( TQPaintEvent* )
 {
-    QPainter p(widget());
-    QColorGroup g = options()->colorGroup(KDecoration::ColorFrame, isActive());
+    TQPainter p(widget());
+    TQColorGroup g = options()->colorGroup(KDecoration::ColorFrame, isActive());
 
-    QRect r(widget()->rect());
+    TQRect r(widget()->rect());
     p.setPen(Qt::black);
     p.drawRect(r);
 
@@ -511,18 +511,18 @@ void LaptopClient::paintEvent( QPaintEvent* )
 	if (r.width() > 3*handleSize + 20) {
 	    int range = 8 + 3*handleSize/2;
 	    qDrawShadePanel(&p, r.x() + 1, r.bottom() - bs, range, 
-		    handleSize - 2, g, false, 1, &g.brush(QColorGroup::Mid));
+		    handleSize - 2, g, false, 1, &g.brush(TQColorGroup::Mid));
 	    qDrawShadePanel(&p, r.x() + range + 1, r.bottom() - bs,
 		    r.width() - 2*range - 2, handleSize - 2, g, false, 1,
-		    isActive() ? &g.brush(QColorGroup::Background) :
-				 &g.brush(QColorGroup::Mid));
+		    isActive() ? &g.brush(TQColorGroup::Background) :
+				 &g.brush(TQColorGroup::Mid));
 	    qDrawShadePanel(&p, r.right() - range, r.bottom() - bs,
-		    range, bs, g, false, 1, &g.brush(QColorGroup::Mid));
+		    range, bs, g, false, 1, &g.brush(TQColorGroup::Mid));
 	} else {
 	    qDrawShadePanel(&p, r.x() + 1, r.bottom() - bs,
 		    r.width() - 2, bs, g, false, 1,
-		    isActive() ?  &g.brush(QColorGroup::Background) :
-				  &g.brush(QColorGroup::Mid));
+		    isActive() ?  &g.brush(TQColorGroup::Background) :
+				  &g.brush(TQColorGroup::Mid));
 	}
     }
 
@@ -545,7 +545,7 @@ void LaptopClient::paintEvent( QPaintEvent* )
                        options()->color(KDecoration::ColorTitleBar, false));
 
         p.setFont(options()->font(false, isToolWindow() ));
-        QFontMetrics fm(options()->font(false));
+        TQFontMetrics fm(options()->font(false));
         g = options()->colorGroup(KDecoration::ColorTitleBar, false);
         if(iUpperGradient)
             p.drawTiledPixmap(r.x()+((r.width()-fm.width(caption()))/2)-4,
@@ -554,7 +554,7 @@ void LaptopClient::paintEvent( QPaintEvent* )
         else
             p.fillRect(r.x()+((r.width()-fm.width(caption()))/2)-4, r.y(),
                        fm.width(caption())+8, r.height()-1,
-                       g.brush(QColorGroup::Background));
+                       g.brush(TQColorGroup::Background));
         p.setPen(g.mid());
         p.drawLine(r.x(), r.y(), r.right(), r.y());
         p.drawLine(r.x(), r.y(), r.x(), r.bottom());
@@ -572,23 +572,23 @@ void LaptopClient::paintEvent( QPaintEvent* )
     }
 }
 
-QRegion LaptopClient::cornerShape(WindowCorner corner)
+TQRegion LaptopClient::cornerShape(WindowCorner corner)
 {
     switch (corner) {
         case WC_TopLeft:
-            return QRect(0, 0, 1, 1);
+            return TQRect(0, 0, 1, 1);
 
         case WC_TopRight:
-            return QRect(width()-1, 0, 1, 1);
+            return TQRect(width()-1, 0, 1, 1);
 
         case WC_BottomLeft:
-            return QRect(0, height()-1, 1, 1);
+            return TQRect(0, height()-1, 1, 1);
 
         case WC_BottomRight:
-            return QRect(width()-1, height()-1, 1, 1);
+            return TQRect(width()-1, height()-1, 1, 1);
 
         default:
-            return QRegion();
+            return TQRegion();
     }
 
 }
@@ -605,7 +605,7 @@ bool LaptopClient::mustDrawHandle() const
 
 void LaptopClient::updateActiveBuffer( )
 {
-    QRect rTitle = titleRect();
+    TQRect rTitle = titleRect();
     if( !bufferDirty && (lastBufferWidth == rTitle.width()))
         return;
     if ( rTitle.width() <= 0 || rTitle.height() <= 0 )
@@ -615,8 +615,8 @@ void LaptopClient::updateActiveBuffer( )
 
     activeBuffer.resize(rTitle.width(),
                         rTitle.height());
-    QPainter p;
-    QRect r(0, 0, activeBuffer.width(), activeBuffer.height());
+    TQPainter p;
+    TQRect r(0, 0, activeBuffer.width(), activeBuffer.height());
     p.begin(&activeBuffer);
     if(aUpperGradient){
         p.drawTiledPixmap(r, *aUpperGradient);
@@ -628,8 +628,8 @@ void LaptopClient::updateActiveBuffer( )
         p.drawTiledPixmap(r, *titlePix);
 
     p.setFont(options()->font(true, isToolWindow() ));
-    QFontMetrics fm(options()->font(true));
-    QColorGroup g = options()->colorGroup(KDecoration::ColorTitleBar, true);
+    TQFontMetrics fm(options()->font(true));
+    TQColorGroup g = options()->colorGroup(KDecoration::ColorTitleBar, true);
     if(aUpperGradient)
         p.drawTiledPixmap(r.x()+((r.width()-fm.width(caption()))/2)-4,
                           r.y(), fm.width(caption())+8, r.height()-1,
@@ -637,7 +637,7 @@ void LaptopClient::updateActiveBuffer( )
     else
         p.fillRect(r.x()+((r.width()-fm.width(caption()))/2)-4, 0,
                    fm.width(caption())+8, r.height(),
-                   g.brush(QColorGroup::Background));
+                   g.brush(TQColorGroup::Background));
     p.setPen(g.mid());
     p.drawLine(r.x(), r.y(), r.right(), r.y());
     p.drawLine(r.x(), r.y(), r.x(), r.bottom());
@@ -723,11 +723,11 @@ bool LaptopClientFactory::supports( Ability ability )
     };
 }
 
-QValueList< LaptopClientFactory::BorderSize >
+TQValueList< LaptopClientFactory::BorderSize >
 LaptopClientFactory::borderSizes() const
 {
     // the list must be sorted
-    return QValueList< BorderSize >() << BorderNormal << BorderLarge <<
+    return TQValueList< BorderSize >() << BorderNormal << BorderLarge <<
 	BorderVeryLarge <<  BorderHuge << BorderVeryHuge << BorderOversized;
 }
 

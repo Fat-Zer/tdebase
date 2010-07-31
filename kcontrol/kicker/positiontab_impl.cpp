@@ -18,14 +18,14 @@
 
 #include <stdlib.h>
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qslider.h>
-#include <qtooltip.h>
-#include <qtimer.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqslider.h>
+#include <tqtooltip.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -50,7 +50,7 @@ extern const int maxX = 150;
 extern const int maxY = 114;
 extern const int margin = 1;
 
-PositionTab::PositionTab(QWidget *parent, const char* name)
+PositionTab::PositionTab(TQWidget *parent, const char* name)
   : PositionTabBase(parent, name),
     m_pretendPanel(0),
     m_desktopPreview(0),
@@ -58,103 +58,103 @@ PositionTab::PositionTab(QWidget *parent, const char* name)
     m_panelPos(PosBottom),
     m_panelAlign(AlignLeft)
 {
-    QPixmap monitor(locate("data", "kcontrol/pics/monitor.png"));
+    TQPixmap monitor(locate("data", "kcontrol/pics/monitor.png"));
     m_monitorImage->setPixmap(monitor);
     m_monitorImage->setFixedSize(m_monitorImage->sizeHint());
 
-    m_pretendDesktop = new QWidget(m_monitorImage, "pretendBG");
+    m_pretendDesktop = new TQWidget(m_monitorImage, "pretendBG");
     m_pretendDesktop->setGeometry(offsetX, offsetY, maxX, maxY);
-    m_pretendPanel = new QFrame(m_monitorImage, "pretendPanel");
+    m_pretendPanel = new TQFrame(m_monitorImage, "pretendPanel");
     m_pretendPanel->setGeometry(offsetX + margin, maxY + offsetY - 10,
                                 maxX - margin, 10 - margin);
-    m_pretendPanel->setFrameShape(QFrame::MenuBarPanel);
+    m_pretendPanel->setFrameShape(TQFrame::MenuBarPanel);
 
     /*
      * set the tooltips on the buttons properly for RTL langs
      */
     if (kapp->reverseLayout())
     {
-        QToolTip::add(locationTopRight,     i18n("Top left"));
-        QToolTip::add(locationTop,          i18n("Top center"));
-        QToolTip::add(locationTopLeft,      i18n("Top right" ) );
-        QToolTip::add(locationRightTop,     i18n("Left top"));
-        QToolTip::add(locationRight,        i18n("Left center"));
-        QToolTip::add(locationRightBottom,  i18n("Left bottom"));
-        QToolTip::add(locationBottomRight,  i18n("Bottom left"));
-        QToolTip::add(locationBottom,       i18n("Bottom center"));
-        QToolTip::add(locationBottomLeft,   i18n("Bottom right"));
-        QToolTip::add(locationLeftTop,      i18n("Right top"));
-        QToolTip::add(locationLeft,         i18n("Right center"));
-        QToolTip::add(locationLeftBottom,   i18n("Right bottom"));
+        TQToolTip::add(locationTopRight,     i18n("Top left"));
+        TQToolTip::add(locationTop,          i18n("Top center"));
+        TQToolTip::add(locationTopLeft,      i18n("Top right" ) );
+        TQToolTip::add(locationRightTop,     i18n("Left top"));
+        TQToolTip::add(locationRight,        i18n("Left center"));
+        TQToolTip::add(locationRightBottom,  i18n("Left bottom"));
+        TQToolTip::add(locationBottomRight,  i18n("Bottom left"));
+        TQToolTip::add(locationBottom,       i18n("Bottom center"));
+        TQToolTip::add(locationBottomLeft,   i18n("Bottom right"));
+        TQToolTip::add(locationLeftTop,      i18n("Right top"));
+        TQToolTip::add(locationLeft,         i18n("Right center"));
+        TQToolTip::add(locationLeftBottom,   i18n("Right bottom"));
     }
     else
     {
-        QToolTip::add(locationTopLeft,      i18n("Top left"));
-        QToolTip::add(locationTop,          i18n("Top center"));
-        QToolTip::add(locationTopRight,     i18n("Top right" ) );
-        QToolTip::add(locationLeftTop,      i18n("Left top"));
-        QToolTip::add(locationLeft,         i18n("Left center"));
-        QToolTip::add(locationLeftBottom,   i18n("Left bottom"));
-        QToolTip::add(locationBottomLeft,   i18n("Bottom left"));
-        QToolTip::add(locationBottom,       i18n("Bottom center"));
-        QToolTip::add(locationBottomRight,  i18n("Bottom right"));
-        QToolTip::add(locationRightTop,     i18n("Right top"));
-        QToolTip::add(locationRight,        i18n("Right center"));
-        QToolTip::add(locationRightBottom,  i18n("Right bottom"));
+        TQToolTip::add(locationTopLeft,      i18n("Top left"));
+        TQToolTip::add(locationTop,          i18n("Top center"));
+        TQToolTip::add(locationTopRight,     i18n("Top right" ) );
+        TQToolTip::add(locationLeftTop,      i18n("Left top"));
+        TQToolTip::add(locationLeft,         i18n("Left center"));
+        TQToolTip::add(locationLeftBottom,   i18n("Left bottom"));
+        TQToolTip::add(locationBottomLeft,   i18n("Bottom left"));
+        TQToolTip::add(locationBottom,       i18n("Bottom center"));
+        TQToolTip::add(locationBottomRight,  i18n("Bottom right"));
+        TQToolTip::add(locationRightTop,     i18n("Right top"));
+        TQToolTip::add(locationRight,        i18n("Right center"));
+        TQToolTip::add(locationRightBottom,  i18n("Right bottom"));
     }
 
     // connections
-    connect(m_locationGroup, SIGNAL(clicked(int)), SIGNAL(changed()));
-    connect(m_xineramaScreenComboBox, SIGNAL(highlighted(int)), SIGNAL(changed()));
+    connect(m_locationGroup, TQT_SIGNAL(clicked(int)), TQT_SIGNAL(changed()));
+    connect(m_xineramaScreenComboBox, TQT_SIGNAL(highlighted(int)), TQT_SIGNAL(changed()));
 
-    connect(m_identifyButton,SIGNAL(clicked()),SLOT(showIdentify()));
+    connect(m_identifyButton,TQT_SIGNAL(clicked()),TQT_SLOT(showIdentify()));
 
-    for(int s=0; s < QApplication::desktop()->numScreens(); s++)
+    for(int s=0; s < TQApplication::desktop()->numScreens(); s++)
     {   /* populate the combobox for the available screens */
-        m_xineramaScreenComboBox->insertItem(QString::number(s+1));
+        m_xineramaScreenComboBox->insertItem(TQString::number(s+1));
     }
     m_xineramaScreenComboBox->insertItem(i18n("All Screens"));
 
     // hide the xinerama chooser widgets if there is no need for them
-    if (QApplication::desktop()->numScreens() < 2)
+    if (TQApplication::desktop()->numScreens() < 2)
     {
         m_identifyButton->hide();
         m_xineramaScreenComboBox->hide();
         m_xineramaScreenLabel->hide();
     }
 
-    connect(m_percentSlider, SIGNAL(valueChanged(int)), SIGNAL(changed()));
-    connect(m_percentSpinBox, SIGNAL(valueChanged(int)), SIGNAL(changed()));
-    connect(m_expandCheckBox, SIGNAL(clicked()), SIGNAL(changed()));
+    connect(m_percentSlider, TQT_SIGNAL(valueChanged(int)), TQT_SIGNAL(changed()));
+    connect(m_percentSpinBox, TQT_SIGNAL(valueChanged(int)), TQT_SIGNAL(changed()));
+    connect(m_expandCheckBox, TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()));
 
-    connect(m_sizeGroup, SIGNAL(clicked(int)), SIGNAL(changed()));
-    connect(m_customSlider, SIGNAL(valueChanged(int)), SIGNAL(changed()));
-    connect(m_customSpinbox, SIGNAL(valueChanged(int)), SIGNAL(changed()));
+    connect(m_sizeGroup, TQT_SIGNAL(clicked(int)), TQT_SIGNAL(changed()));
+    connect(m_customSlider, TQT_SIGNAL(valueChanged(int)), TQT_SIGNAL(changed()));
+    connect(m_customSpinbox, TQT_SIGNAL(valueChanged(int)), TQT_SIGNAL(changed()));
 
     m_desktopPreview = new KVirtualBGRenderer(0);
-    connect(m_desktopPreview, SIGNAL(imageDone(int)),
-            SLOT(slotBGPreviewReady(int)));
+    connect(m_desktopPreview, TQT_SIGNAL(imageDone(int)),
+            TQT_SLOT(slotBGPreviewReady(int)));
 
-    connect(KickerConfig::the(), SIGNAL(extensionInfoChanged()),
-            SLOT(infoUpdated()));
-    connect(KickerConfig::the(), SIGNAL(extensionAdded(ExtensionInfo*)),
-            SLOT(extensionAdded(ExtensionInfo*)));
-    connect(KickerConfig::the(), SIGNAL(extensionRemoved(ExtensionInfo*)),
-            SLOT(extensionRemoved(ExtensionInfo*)));
-    connect(KickerConfig::the(), SIGNAL(extensionChanged(const QString&)),
-            SLOT(extensionChanged(const QString&)));
-    connect(KickerConfig::the(), SIGNAL(extensionAboutToChange(const QString&)),
-            SLOT(extensionAboutToChange(const QString&)));
+    connect(KickerConfig::the(), TQT_SIGNAL(extensionInfoChanged()),
+            TQT_SLOT(infoUpdated()));
+    connect(KickerConfig::the(), TQT_SIGNAL(extensionAdded(ExtensionInfo*)),
+            TQT_SLOT(extensionAdded(ExtensionInfo*)));
+    connect(KickerConfig::the(), TQT_SIGNAL(extensionRemoved(ExtensionInfo*)),
+            TQT_SLOT(extensionRemoved(ExtensionInfo*)));
+    connect(KickerConfig::the(), TQT_SIGNAL(extensionChanged(const TQString&)),
+            TQT_SLOT(extensionChanged(const TQString&)));
+    connect(KickerConfig::the(), TQT_SIGNAL(extensionAboutToChange(const TQString&)),
+            TQT_SLOT(extensionAboutToChange(const TQString&)));
     // position tab tells hiding tab about extension selections and vice versa
-    connect(KickerConfig::the(), SIGNAL(hidingPanelChanged(int)),
-            SLOT(jumpToPanel(int)));
-    connect(m_panelList, SIGNAL(activated(int)),
-            KickerConfig::the(), SIGNAL(positionPanelChanged(int)));
+    connect(KickerConfig::the(), TQT_SIGNAL(hidingPanelChanged(int)),
+            TQT_SLOT(jumpToPanel(int)));
+    connect(m_panelList, TQT_SIGNAL(activated(int)),
+            KickerConfig::the(), TQT_SIGNAL(positionPanelChanged(int)));
 
-    connect(m_panelSize, SIGNAL(activated(int)),
-            SLOT(sizeChanged(int)));
-    connect(m_panelSize, SIGNAL(activated(int)),
-            SIGNAL(changed()));
+    connect(m_panelSize, TQT_SIGNAL(activated(int)),
+            TQT_SLOT(sizeChanged(int)));
+    connect(m_panelSize, TQT_SIGNAL(activated(int)),
+            TQT_SIGNAL(changed()));
 }
 
 PositionTab::~PositionTab()
@@ -191,9 +191,9 @@ void PositionTab::defaults()
     m_percentSlider->setValue( 100 ); // use all space available
     m_percentSpinBox->setValue( 100 ); // use all space available
     m_expandCheckBox->setChecked( true ); // expand as required
-    m_xineramaScreenComboBox->setCurrentItem(QApplication::desktop()->primaryScreen());
+    m_xineramaScreenComboBox->setCurrentItem(TQApplication::desktop()->primaryScreen());
 
-    if (QApplication::reverseLayout())
+    if (TQApplication::reverseLayout())
     {
         // RTL lang aligns right
         m_panelAlign = AlignRight;
@@ -220,7 +220,7 @@ void PositionTab::sizeChanged(int which)
 
 void PositionTab::movePanel(int whichButton)
 {
-    QPushButton* pushed = reinterpret_cast<QPushButton*>(m_locationGroup->find(whichButton));
+    TQPushButton* pushed = reinterpret_cast<TQPushButton*>(m_locationGroup->find(whichButton));
 
     if (pushed == locationTopLeft)
     {
@@ -490,7 +490,7 @@ void PositionTab::slotBGPreviewReady(int)
     m_pretendDesktop->setBackgroundPixmap(m_desktopPreview->pixmap());
 #if 0
     KPixmap pm;
-    if (QPixmap::defaultDepth() < 15)
+    if (TQPixmap::defaultDepth() < 15)
     {
         pm.convertFromImage(*m_desktopPreview->image(), KPixmap::LowColor);
     }
@@ -559,12 +559,12 @@ void PositionTab::switchPanel(int panelItem)
     m_sizeGroup->setEnabled(m_panelInfo->_resizeable);
     m_panelPos = m_panelInfo->_position;
     m_panelAlign = m_panelInfo->_alignment;
-    if(m_panelInfo->_xineramaScreen >= 0 && m_panelInfo->_xineramaScreen < QApplication::desktop()->numScreens())
+    if(m_panelInfo->_xineramaScreen >= 0 && m_panelInfo->_xineramaScreen < TQApplication::desktop()->numScreens())
         m_xineramaScreenComboBox->setCurrentItem(m_panelInfo->_xineramaScreen);
     else if(m_panelInfo->_xineramaScreen == -2) /* the All Screens option: qt uses -1 for default, so -2 for all */
         m_xineramaScreenComboBox->setCurrentItem(m_xineramaScreenComboBox->count()-1);
     else
-        m_xineramaScreenComboBox->setCurrentItem(QApplication::desktop()->primaryScreen());
+        m_xineramaScreenComboBox->setCurrentItem(TQApplication::desktop()->primaryScreen());
 
     setPositionButtons();
 
@@ -633,7 +633,7 @@ void PositionTab::infoUpdated()
     switchPanel(0);
 }
 
-void PositionTab::extensionAboutToChange(const QString& configPath)
+void PositionTab::extensionAboutToChange(const TQString& configPath)
 {
     ExtensionInfo* extension = (KickerConfig::the()->extensionsInfo())[m_panelList->currentItem()];
     if (extension && extension->_configPath == configPath)
@@ -642,7 +642,7 @@ void PositionTab::extensionAboutToChange(const QString& configPath)
     }
 }
 
-void PositionTab::extensionChanged(const QString& configPath)
+void PositionTab::extensionChanged(const TQString& configPath)
 {
     ExtensionInfo* extension = (KickerConfig::the()->extensionsInfo())[m_panelList->currentItem()];
     if (extension && extension->_configPath == configPath)
@@ -684,26 +684,26 @@ void PositionTab::storeInfo()
 
 void PositionTab::showIdentify()
 {
-    for(int s=0; s < QApplication::desktop()->numScreens();s++)
+    for(int s=0; s < TQApplication::desktop()->numScreens();s++)
     {
 
-        QLabel *screenLabel = new QLabel(0,"Screen Identify", WDestructiveClose | WStyle_Customize | WX11BypassWM );
+        TQLabel *screenLabel = new TQLabel(0,"Screen Identify", WDestructiveClose | WStyle_Customize | WX11BypassWM );
 
-        QFont identifyFont(KGlobalSettings::generalFont());
+        TQFont identifyFont(KGlobalSettings::generalFont());
         identifyFont.setPixelSize(100);
         screenLabel->setFont(identifyFont);
 
-        screenLabel->setFrameStyle(QFrame::Panel);
-        screenLabel->setFrameShadow(QFrame::Plain);
+        screenLabel->setFrameStyle(TQFrame::Panel);
+        screenLabel->setFrameShadow(TQFrame::Plain);
 
         screenLabel->setAlignment(Qt::AlignCenter);
         screenLabel->setNum(s + 1);
         // BUGLET: we should not allow the identification to be entered again
         //         until the timer fires.
-        QTimer::singleShot(1500, screenLabel, SLOT(close()));
+        TQTimer::singleShot(1500, screenLabel, TQT_SLOT(close()));
 
-        QPoint screenCenter(QApplication::desktop()->screenGeometry(s).center());
-        QRect targetGeometry(QPoint(0,0),screenLabel->sizeHint());
+        TQPoint screenCenter(TQApplication::desktop()->screenGeometry(s).center());
+        TQRect targetGeometry(TQPoint(0,0),screenLabel->sizeHint());
         targetGeometry.moveCenter(screenCenter);
 
         screenLabel->setGeometry(targetGeometry);

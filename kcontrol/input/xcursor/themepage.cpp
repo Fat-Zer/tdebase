@@ -33,15 +33,15 @@
 #include <kio/netaccess.h>
 #include <ktar.h>
 
-#include <qlayout.h>
-#include <qdir.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qhbox.h>
-#include <qpainter.h>
-#include <qfileinfo.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqdir.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqhbox.h>
+#include <tqpainter.h>
+#include <tqfileinfo.h>
+#include <tqpushbutton.h>
 
 #include <cstdlib> // for getenv()
 
@@ -68,23 +68,23 @@ namespace {
 }
 
 struct ThemeInfo {
-	QString path;           // Path to the cursor theme
+	TQString path;           // Path to the cursor theme
 	bool writable;          // Theme directory is writable
 };
 
 
-ThemePage::ThemePage( QWidget* parent, const char* name )
-	: QWidget( parent, name ), selectedTheme( NULL ), currentTheme( NULL )
+ThemePage::ThemePage( TQWidget* parent, const char* name )
+	: TQWidget( parent, name ), selectedTheme( NULL ), currentTheme( NULL )
 {
-	QBoxLayout *layout = new QVBoxLayout( this );
+	TQBoxLayout *layout = new TQVBoxLayout( this );
 	layout->setAutoAdd( true );
 	layout->setMargin( KDialog::marginHint() );
 	layout->setSpacing( KDialog::spacingHint() );
 
-	new QLabel( i18n("Select the cursor theme you want to use (hover preview to test cursor):"), this );
+	new TQLabel( i18n("Select the cursor theme you want to use (hover preview to test cursor):"), this );
 
 	// Create the preview widget
-	preview = new PreviewWidget( new QHBox( this ) );
+	preview = new PreviewWidget( new TQHBox( this ) );
 
 	// Create the theme list view
 	listview = new KListView( this );
@@ -93,26 +93,26 @@ ThemePage::ThemePage( QWidget* parent, const char* name )
 	listview->addColumn( i18n("Name") );
 	listview->addColumn( i18n("Description") );
 
-	connect( listview, SIGNAL(selectionChanged(QListViewItem*)),
-			SLOT(selectionChanged(QListViewItem*)) );
+	connect( listview, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+			TQT_SLOT(selectionChanged(TQListViewItem*)) );
 
 	themeDirs = getThemeBaseDirs();
 	insertThemes();
 
-	QHBox *hbox = new QHBox( this );
+	TQHBox *hbox = new TQHBox( this );
 	hbox->setSpacing( KDialog::spacingHint() );
-	installButton = new QPushButton( i18n("Install New Theme..."), hbox );
-	removeButton = new QPushButton( i18n("Remove Theme"), hbox );
+	installButton = new TQPushButton( i18n("Install New Theme..."), hbox );
+	removeButton = new TQPushButton( i18n("Remove Theme"), hbox );
 
-	connect( installButton, SIGNAL( clicked() ), SLOT( installClicked() ) );
-	connect( removeButton, SIGNAL( clicked() ), SLOT( removeClicked() ) );
+	connect( installButton, TQT_SIGNAL( clicked() ), TQT_SLOT( installClicked() ) );
+	connect( removeButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removeClicked() ) );
 
 	// Disable the install button if ~/.icons isn't writable
-	QString path = QDir::homeDirPath() + "/.icons";
-	QFileInfo icons = QFileInfo( path );
+	TQString path = TQDir::homeDirPath() + "/.icons";
+	TQFileInfo icons = TQFileInfo( path );
 
 	if ( ( icons.exists() && !icons.isWritable() ) ||
-		( !icons.exists() && !QFileInfo( QDir::homeDirPath() ).isWritable() ) )
+		( !icons.exists() && !TQFileInfo( TQDir::homeDirPath() ).isWritable() ) )
 		installButton->setEnabled( false );
 
 	if ( !themeDirs.contains( path ) )
@@ -134,7 +134,7 @@ void ThemePage::save()
 
 	KConfig c( "kcminputrc" );
 	c.setGroup( "Mouse" );
-	c.writeEntry( "cursorTheme", selectedTheme != "system" ? selectedTheme : QString::null );
+	c.writeEntry( "cursorTheme", selectedTheme != "system" ? selectedTheme : TQString::null );
 
 	KMessageBox::information( this, i18n("You have to restart KDE for these "
 				"changes to take effect."), i18n("Cursor Settings Changed"),
@@ -163,7 +163,7 @@ void ThemePage::load( bool useDefaults )
             currentTheme = "system";
 
 	// Find the theme in the listview and select it
-	QListViewItem *item = listview->findItem( currentTheme, DirColumn );
+	TQListViewItem *item = listview->findItem( currentTheme, DirColumn );
         if( !item )
                 item = listview->findItem( "system", DirColumn );
 	selectedTheme = item->text( DirColumn );
@@ -186,7 +186,7 @@ void ThemePage::defaults()
 }
 
 
-void ThemePage::selectionChanged( QListViewItem *item )
+void ThemePage::selectionChanged( TQListViewItem *item )
 {
 	if ( !item )
 	{
@@ -209,13 +209,13 @@ void ThemePage::selectionChanged( QListViewItem *item )
 void ThemePage::installClicked()
 {
 	// Get the URL for the theme we're going to install
-	KURL url = KURLRequesterDlg::getURL( QString::null, this, i18n( "Drag or Type Theme URL" ) );
+	KURL url = KURLRequesterDlg::getURL( TQString::null, this, i18n( "Drag or Type Theme URL" ) );
 	if ( url.isEmpty() )
 		return;
 
-	QString tmpFile;
+	TQString tmpFile;
 	if ( !KIO::NetAccess::download( url, tmpFile, this ) ) {
-		QString text;
+		TQString text;
 
 		if ( url.isLocalFile() )
 			text = i18n( "Unable to find the cursor theme archive %1." );
@@ -237,7 +237,7 @@ void ThemePage::installClicked()
 
 void ThemePage::removeClicked()
 {
-	QString question = i18n( "<qt>Are you sure you want to remove the "
+	TQString question = i18n( "<qt>Are you sure you want to remove the "
 		"<strong>%1</strong> cursor theme?<br>"
 		"This will delete all the files installed by this theme.</qt>")
 		.arg( listview->currentItem()->text( NameColumn ) );
@@ -266,7 +266,7 @@ void ThemePage::removeClicked()
 }
 
 
-bool ThemePage::installThemes( const QString &file )
+bool ThemePage::installThemes( const TQString &file )
 {
 	KTar archive( file );
 
@@ -274,10 +274,10 @@ bool ThemePage::installThemes( const QString &file )
 		return false;
 
 	const KArchiveDirectory *archiveDir = archive.directory();
-	QStringList themeDirs;
+	TQStringList themeDirs;
 
-	const QStringList entries = archiveDir->entries();
-	for ( QStringList::ConstIterator it = entries.begin(); it != entries.end(); ++it )
+	const TQStringList entries = archiveDir->entries();
+	for ( TQStringList::ConstIterator it = entries.begin(); it != entries.end(); ++it )
 	{
 		const KArchiveEntry *entry = archiveDir->entry( *it );
 		if ( entry->isDirectory() && entry->name().lower() != "default" ) {
@@ -290,14 +290,14 @@ bool ThemePage::installThemes( const QString &file )
 	if ( themeDirs.count() < 1 )
 		return false;
 
-	const QString destDir = QDir::homeDirPath() + "/.icons/";
+	const TQString destDir = TQDir::homeDirPath() + "/.icons/";
 	KStandardDirs::makeDir( destDir ); // Make sure the directory exists
 
-	for ( QStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
+	for ( TQStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
 	{
 		// Check if a theme with that name already exists
-		if ( QDir( destDir ).exists( *it ) ) {
-			const QString question = i18n( "A theme named %1 already exists in your icon "
+		if ( TQDir( destDir ).exists( *it ) ) {
+			const TQString question = i18n( "A theme named %1 already exists in your icon "
 					"theme folder. Do you want replace it with this one?" ).arg( *it );
 			int answer = KMessageBox::warningContinueCancel( this, question, i18n( "Overwrite Theme?"), i18n("Replace") );
 			if ( answer != KMessageBox::Continue )
@@ -314,7 +314,7 @@ bool ThemePage::installThemes( const QString &file )
 		//     result in strange side effects (from the average users point of view). OTOH
 		//     a user might want to do this 'upgrade' a global theme.
 
-		const QString dest = destDir + *it;
+		const TQString dest = destDir + *it;
 		const KArchiveDirectory *dir = static_cast< const KArchiveDirectory* >( archiveDir->entry( *it ) );
 		dir->copyTo( dest );
 		insertTheme( dest );
@@ -327,14 +327,14 @@ bool ThemePage::installThemes( const QString &file )
 }
 
 
-void ThemePage::insertTheme( const QString &path )
+void ThemePage::insertTheme( const TQString &path )
 {
-	QString dirName = QDir( path ).dirName();
+	TQString dirName = TQDir( path ).dirName();
 
 	// Defaults in case there's no name or comment field.
-	QString name   = dirName;
-	QString desc   = i18n( "No description available" );
-	QString sample = "left_ptr";
+	TQString name   = dirName;
+	TQString desc   = i18n( "No description available" );
+	TQString sample = "left_ptr";
 
 	KSimpleConfig c( path + "/index.theme", true ); // Open read-only
 	c.setGroup( "Icon Theme" );
@@ -373,11 +373,11 @@ void ThemePage::insertTheme( const QString &path )
 }
 
 
-const QStringList ThemePage::getThemeBaseDirs() const
+const TQStringList ThemePage::getThemeBaseDirs() const
 {
 #if XCURSOR_LIB_MAJOR == 1 && XCURSOR_LIB_MINOR < 1
 	// These are the default paths Xcursor will scan for cursor themes
-	QString path( "~/.icons:/usr/share/icons:/usr/share/pixmaps:/usr/X11R6/lib/X11/icons" );
+	TQString path( "~/.icons:/usr/share/icons:/usr/share/pixmaps:/usr/X11R6/lib/X11/icons" );
 
 	// If XCURSOR_PATH is set, use that instead of the default path
 	char *xcursorPath = std::getenv( "XCURSOR_PATH" );
@@ -385,35 +385,35 @@ const QStringList ThemePage::getThemeBaseDirs() const
 		path = xcursorPath;
 #else
 	// Get the search patch from Xcursor
-	QString path = XcursorLibraryPath();
+	TQString path = XcursorLibraryPath();
 #endif
 	// Expand all occurences of ~ to the home dir
-	path.replace( "~/", QDir::homeDirPath() + '/' );
-	return QStringList::split( ':', path );
+	path.replace( "~/", TQDir::homeDirPath() + '/' );
+	return TQStringList::split( ':', path );
 }
 
 
-bool ThemePage::isCursorTheme( const QString &theme, const int depth ) const
+bool ThemePage::isCursorTheme( const TQString &theme, const int depth ) const
 {
 	// Prevent infinate recursion
 	if ( depth > 10 )
 		return false;
 
 	// Search each icon theme directory for 'theme'
-	for ( QStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
+	for ( TQStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
 	{
-		QDir dir( *it  );
+		TQDir dir( *it  );
 		if ( !dir.exists() )
 			continue;
 
-		const QStringList subdirs( dir.entryList( QDir::Dirs ) );
+		const TQStringList subdirs( dir.entryList( TQDir::Dirs ) );
 		if ( subdirs.contains( theme ) )
 		{
-			const QString path       = *it + '/' + theme;
-			const QString indexfile  = path + "/index.theme";
+			const TQString path       = *it + '/' + theme;
+			const TQString indexfile  = path + "/index.theme";
 			const bool haveIndexFile = dir.exists( indexfile );
 			const bool haveCursors   = dir.exists( path + "/cursors" );
-			QStringList inherit;
+			TQStringList inherit;
 
 			// Return true if we have a cursors subdirectory
 			if ( haveCursors )
@@ -428,7 +428,7 @@ bool ThemePage::isCursorTheme( const QString &theme, const int depth ) const
 			}
 
 			// Recurse through the list of inherited themes
-			for ( QStringList::ConstIterator it2 = inherit.begin(); it2 != inherit.end(); ++it2 )
+			for ( TQStringList::ConstIterator it2 = inherit.begin(); it2 != inherit.end(); ++it2 )
 			{
 				if ( *it2 == theme ) // Avoid possible DoS
 					continue;
@@ -448,17 +448,17 @@ void ThemePage::insertThemes()
 	// Scan each base dir for cursor themes and add them to the listview.
 	// An icon theme is considered to be a cursor theme if it contains
 	// a cursors subdirectory or if it inherits a cursor theme.
-	for ( QStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
+	for ( TQStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
 	{
-		QDir dir( *it );
+		TQDir dir( *it );
 		if ( !dir.exists() )
 			continue;
 
-		QStringList subdirs( dir.entryList( QDir::Dirs ) );
+		TQStringList subdirs( dir.entryList( TQDir::Dirs ) );
 		subdirs.remove( "." );
 		subdirs.remove( ".." );
 
-		for ( QStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it )
+		for ( TQStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it )
 		{
 			// Only add the theme if we don't already have a theme with that name
 			// in the list. Xcursor will use the first theme it finds in that
@@ -467,8 +467,8 @@ void ThemePage::insertThemes()
 			if ( listview->findItem( *it, DirColumn ) )
 				continue;
 
-			const QString path       = dir.path() + '/' + *it;
-			const QString indexfile  = path + "/index.theme";
+			const TQString path       = dir.path() + '/' + *it;
+			const TQString indexfile  = path + "/index.theme";
 			const bool haveIndexFile = dir.exists( *it + "/index.theme" );
 			const bool haveCursors   = dir.exists( *it + "/cursors" );
 
@@ -479,9 +479,9 @@ void ThemePage::insertThemes()
 
 			// Defaults in case there's no index.theme file or it lacks
 			// a name and a comment field.
-			QString name   = *it;
-			QString desc   = i18n( "No description available" );
-			QString sample = "left_ptr";
+			TQString name   = *it;
+			TQString desc   = i18n( "No description available" );
+			TQString sample = "left_ptr";
 
 			// Parse the index.theme file if the theme has one.
 			if ( haveIndexFile )
@@ -498,8 +498,8 @@ void ThemePage::insertThemes()
 				if ( !haveCursors )
 				{
 					bool result = false;
-					QStringList inherit = c.readListEntry( "Inherits" );
-					for ( QStringList::ConstIterator it2 = inherit.begin(); it2 != inherit.end(); ++it2 )
+					TQStringList inherit = c.readListEntry( "Inherits" );
+					for ( TQStringList::ConstIterator it2 = inherit.begin(); it2 != inherit.end(); ++it2 )
 						if ( result = isCursorTheme( *it2 ) )
 							break;
 
@@ -518,7 +518,7 @@ void ThemePage::insertThemes()
 			// Create a ThemeInfo object, and fill in the members
 			ThemeInfo *info = new ThemeInfo;
 			info->path     = path;
-			info->writable = QFileInfo( path ).isWritable();
+			info->writable = TQFileInfo( path ).isWritable();
 			themeInfo.insert( *it, info );
 
 			// Create the listview item and insert it into the list.
@@ -542,10 +542,10 @@ void ThemePage::insertThemes()
 }
 
 
-QPixmap ThemePage::createIcon( const QString &theme, const QString &sample ) const
+TQPixmap ThemePage::createIcon( const TQString &theme, const TQString &sample ) const
 {
 	XcursorImage *xcur;
-	QPixmap pix;
+	TQPixmap pix;
 
 	xcur = XcursorLibraryLoadImage( sample.latin1(), theme.latin1(), iconSize );
 	if ( !xcur ) xcur = XcursorLibraryLoadImage( "left_ptr", theme.latin1(), iconSize );
@@ -553,7 +553,7 @@ QPixmap ThemePage::createIcon( const QString &theme, const QString &sample ) con
 	if ( xcur ) {
 		// Calculate an auto-crop rectangle for the cursor image
 		// (helps with cursors converted from windows .cur or .ani files)
-		QRect r( QPoint( xcur->width, xcur->height ), QPoint() );
+		TQRect r( TQPoint( xcur->width, xcur->height ), TQPoint() );
 		XcursorPixel *src = xcur->pixels;
 
 		for ( int y = 0; y < int( xcur->height ); y++ ) {
@@ -574,7 +574,7 @@ QPixmap ThemePage::createIcon( const QString &theme, const QString &sample ) con
 		int size = kMax( iconSize, kMax( r.width(), r.height() ) );
 
 		// Create the intermediate QImage
-		QImage image( size, size, 32 );
+		TQImage image( size, size, 32 );
 		image.setAlphaBuffer( true );
 
 		// Clear the image
@@ -583,13 +583,13 @@ QPixmap ThemePage::createIcon( const QString &theme, const QString &sample ) con
 			dst[i] = 0;
 
 		// Compute the source and destination offsets
-		QPoint dstOffset( (image.width() - r.width()) / 2, (image.height() - r.height()) / 2 );
-		QPoint srcOffset( r.topLeft() );
+		TQPoint dstOffset( (image.width() - r.width()) / 2, (image.height() - r.height()) / 2 );
+		TQPoint srcOffset( r.topLeft() );
 
 		dst = reinterpret_cast<Q_UINT32*>( image.scanLine(dstOffset.y()) ) + dstOffset.x();
 		src = reinterpret_cast<Q_UINT32*>( xcur->pixels ) + srcOffset.y() * xcur->width + srcOffset.x();
 
-		// Copy the XcursorImage into the QImage, converting it from premultiplied
+		// Copy the XcursorImage into the TQImage, converting it from premultiplied
 		// to non-premultiplied alpha and cropping it if needed.
 		for ( int y = 0; y < r.height(); y++ )
 		{
@@ -614,13 +614,13 @@ QPixmap ThemePage::createIcon( const QString &theme, const QString &sample ) con
 
 		// Scale down the image if we need to
 		if ( image.width() > iconSize || image.height() > iconSize )
-			image = image.smoothScale( iconSize, iconSize, QImage::ScaleMin );
+			image = image.smoothScale( iconSize, iconSize, TQImage::ScaleMin );
 
 		pix.convertFromImage( image );
 		XcursorImageDestroy( xcur );
 	} else {
 
-		QImage image( iconSize, iconSize, 32 );
+		TQImage image( iconSize, iconSize, 32 );
 		image.setAlphaBuffer( true );
 
 		Q_UINT32 *data = reinterpret_cast< Q_UINT32* >( image.bits() );

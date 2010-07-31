@@ -35,7 +35,7 @@ class PrivatePluginConfigInterfaceExtension
 
 using namespace Kate;
 
-PluginConfigPage::PluginConfigPage ( QWidget *parent, const char *name ) : QWidget (parent, name) { }
+PluginConfigPage::PluginConfigPage ( TQWidget *parent, const char *name ) : TQWidget (parent, name) { }
  
 PluginConfigPage::~PluginConfigPage () { }
 

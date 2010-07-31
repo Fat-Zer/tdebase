@@ -30,11 +30,11 @@ class KAbstractDebugDialog : public KDialog
 {
   Q_OBJECT
 public:
-  KAbstractDebugDialog( QWidget *parent=0, const char *name=0, bool modal=true );
+  KAbstractDebugDialog( TQWidget *parent=0, const char *name=0, bool modal=true );
 
   virtual ~KAbstractDebugDialog();
 
-  virtual void buildButtons(QVBoxLayout * topLayout);
+  virtual void buildButtons(TQVBoxLayout * topLayout);
 
   virtual void save() = 0;
   KConfig * config() { return pConfig; }

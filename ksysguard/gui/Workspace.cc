@@ -21,9 +21,9 @@
 
 */
 
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qwhatsthis.h>
+#include <tqlineedit.h>
+#include <tqspinbox.h>
+#include <tqwhatsthis.h>
 
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -39,18 +39,18 @@
 
 #include "Workspace.h"
 
-Workspace::Workspace( QWidget* parent, const char* name )
-  : QTabWidget( parent, name )
+Workspace::Workspace( TQWidget* parent, const char* name )
+  : TQTabWidget( parent, name )
 {
   KAcceleratorManager::setNoAccel(this);
  
   mSheetList.setAutoDelete( true );
   mAutoSave = true;
 
-  connect( this, SIGNAL( currentChanged( QWidget* ) ),
-           SLOT( updateCaption( QWidget* ) ) );
+  connect( this, TQT_SIGNAL( currentChanged( TQWidget* ) ),
+           TQT_SLOT( updateCaption( TQWidget* ) ) );
 
-  QWhatsThis::add( this, i18n( "This is your work space. It holds your worksheets. You need "
+  TQWhatsThis::add( this, i18n( "This is your work space. It holds your worksheets. You need "
                                "to create a new worksheet (Menu File->New) before "
                                "you can drag sensors here." ) );
 }
@@ -62,8 +62,8 @@ Workspace::~Workspace()
    * administration data is already deleted but slots are still
    * being triggered. TODO: I need to ask the Trolls about this. */
 
-  disconnect( this, SIGNAL( currentChanged( QWidget* ) ), this,
-              SLOT( updateCaption( QWidget* ) ) );
+  disconnect( this, TQT_SIGNAL( currentChanged( TQWidget* ) ), this,
+              TQT_SLOT( updateCaption( TQWidget* ) ) );
 }
 
 void Workspace::saveProperties( KConfig *cfg )
@@ -71,9 +71,9 @@ void Workspace::saveProperties( KConfig *cfg )
   cfg->writePathEntry( "WorkDir", mWorkDir );
   cfg->writeEntry( "CurrentSheet", tabLabel( currentPage() ) );
 
-  QPtrListIterator<WorkSheet> it( mSheetList);
+  TQPtrListIterator<WorkSheet> it( mSheetList);
 
-  QStringList list;
+  TQStringList list;
   for ( int i = 0; it.current(); ++it, ++i )
     if ( !(*it)->fileName().isEmpty() )
       list.append( (*it)->fileName() );
@@ -83,7 +83,7 @@ void Workspace::saveProperties( KConfig *cfg )
 
 void Workspace::readProperties( KConfig *cfg )
 {
-  QString currentSheet;
+  TQString currentSheet;
 
   mWorkDir = cfg->readPathEntry( "WorkDir" );
 
@@ -96,8 +96,8 @@ void Workspace::readProperties( KConfig *cfg )
 
     mWorkDir = kstd->saveLocation( "data", "ksysguard" );
 
-    QString origFile = kstd->findResource( "data", "SystemLoad.sgrd" );
-    QString newFile = mWorkDir + "/" + i18n( "System Load" ) + ".sgrd";
+    TQString origFile = kstd->findResource( "data", "SystemLoad.sgrd" );
+    TQString newFile = mWorkDir + "/" + i18n( "System Load" ) + ".sgrd";
     if ( !origFile.isEmpty() )
       restoreWorkSheet( origFile, newFile );
 
@@ -109,13 +109,13 @@ void Workspace::readProperties( KConfig *cfg )
     currentSheet = i18n( "System Load" );
   } else {
     currentSheet = cfg->readEntry( "CurrentSheet" );
-    QStringList list = cfg->readPathListEntry( "Sheets" );
-    for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+    TQStringList list = cfg->readPathListEntry( "Sheets" );
+    for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
       restoreWorkSheet( *it );
   }
 
   // Determine visible sheet.
-  QPtrListIterator<WorkSheet> it( mSheetList );
+  TQPtrListIterator<WorkSheet> it( mSheetList );
   for ( ; it.current(); ++it )
     if ( currentSheet == tabLabel(*it) ) {
       showPage( *it );
@@ -127,13 +127,13 @@ void Workspace::newWorkSheet()
 {
   /* Find a name of the form "Sheet %d" that is not yet used by any
    * of the existing worksheets. */
-  QString sheetName;
+  TQString sheetName;
   bool found;
 
   int i = 1;
   do {
     sheetName = i18n( "Sheet %1" ).arg( i++ );
-    QPtrListIterator<WorkSheet> it( mSheetList );
+    TQPtrListIterator<WorkSheet> it( mSheetList );
     found = false;
     for ( ; it.current() && !found; ++it )
       if ( tabLabel(*it) == sheetName )
@@ -148,23 +148,23 @@ void Workspace::newWorkSheet()
     insertTab( sheet, dlg.sheetTitle() );
     mSheetList.append( sheet );
     showPage( sheet );
-    connect( sheet, SIGNAL( sheetModified( QWidget* ) ),
-             SLOT( updateCaption( QWidget* ) ) );
-    connect( sheet, SIGNAL( titleChanged( QWidget* ) ),
-             SLOT( updateSheetTitle( QWidget* ) ) );
+    connect( sheet, TQT_SIGNAL( sheetModified( TQWidget* ) ),
+             TQT_SLOT( updateCaption( TQWidget* ) ) );
+    connect( sheet, TQT_SIGNAL( titleChanged( TQWidget* ) ),
+             TQT_SLOT( updateSheetTitle( TQWidget* ) ) );
   }
 }
 
 bool Workspace::saveOnQuit()
 {
-  QPtrListIterator<WorkSheet> it( mSheetList );
+  TQPtrListIterator<WorkSheet> it( mSheetList );
   for ( ; it.current(); ++it )
     if ( (*it)->modified() ) {
       if ( !mAutoSave || (*it)->fileName().isEmpty() ) {
         int res = KMessageBox::warningYesNoCancel( this,
                   i18n( "The worksheet '%1' contains unsaved data.\n"
                         "Do you want to save the worksheet?")
-                  .arg( tabLabel( *it ) ), QString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
+                  .arg( tabLabel( *it ) ), TQString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
         if ( res == KMessageBox::Yes )
           saveWorkSheet( *it );
         else if ( res == KMessageBox::Cancel )
@@ -194,7 +194,7 @@ void Workspace::loadWorkSheet( const KURL &url )
   /* It's probably not worth the effort to make this really network
    * transparent. Unless s/o beats me up I use this pseudo transparent
    * code. */
-  QString tmpFile;
+  TQString tmpFile;
   KIO::NetAccess::download( url, tmpFile, this );
   mWorkDir = tmpFile.left( tmpFile.findRev( '/' ) );
 
@@ -207,7 +207,7 @@ void Workspace::loadWorkSheet( const KURL &url )
   KURL tmpFileUrl;
   tmpFileUrl.setPath( tmpFile );
   if ( tmpFileUrl != url.url() )
-    mSheetList.last()->setFileName( QString::null );
+    mSheetList.last()->setFileName( TQString::null );
   KIO::NetAccess::removeTempFile( tmpFile );
 
   emit announceRecentURL( KURL( url ) );
@@ -230,7 +230,7 @@ void Workspace::saveWorkSheet( WorkSheet *sheet )
     return;
   }
 
-  QString fileName = sheet->fileName();
+  TQString fileName = sheet->fileName();
   if ( fileName.isEmpty() ) {
     KFileDialog dlg( 0, i18n( "*.sgrd|Sensor Files" ), this,
                      "LoadFileDialog", true );
@@ -243,7 +243,7 @@ void Workspace::saveWorkSheet( WorkSheet *sheet )
     mWorkDir = fileName.left( fileName.findRev( '/' ) );
 
     // extract filename without path
-    QString baseName = fileName.right( fileName.length() - fileName.findRev( '/' ) - 1 );
+    TQString baseName = fileName.right( fileName.length() - fileName.findRev( '/' ) - 1 );
 
     // chop off extension (usually '.sgrd')
     baseName = baseName.left( baseName.findRev( '.' ) );
@@ -270,7 +270,7 @@ void Workspace::saveWorkSheetAs( WorkSheet *sheet )
     return;
   }
 
-  QString fileName;
+  TQString fileName;
   do {
     KFileDialog dlg( 0, "*.sgrd", this, "LoadFileDialog", true );
     fileName = dlg.getSaveFileName( mWorkDir + "/" + tabLabel( currentPage() ) +
@@ -281,7 +281,7 @@ void Workspace::saveWorkSheetAs( WorkSheet *sheet )
     mWorkDir = fileName.left( fileName.findRev( '/' ) );
 
     // extract filename without path
-    QString baseName = fileName.right( fileName.length() - fileName.findRev( '/' ) - 1 );
+    TQString baseName = fileName.right( fileName.length() - fileName.findRev( '/' ) - 1 );
 
     // chop off extension (usually '.sgrd')
     baseName = baseName.left( baseName.findRev( '.' ) );
@@ -304,7 +304,7 @@ void Workspace::deleteWorkSheet()
         int res = KMessageBox::warningYesNoCancel( this,
                             i18n( "The worksheet '%1' contains unsaved data.\n"
                                   "Do you want to save the worksheet?" )
-                            .arg( tabLabel( current ) ), QString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
+                            .arg( tabLabel( current ) ), TQString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
         if ( res == KMessageBox::Cancel )
           return;
 
@@ -317,7 +317,7 @@ void Workspace::deleteWorkSheet()
     removePage( current );
     mSheetList.remove( current );
   } else {
-    QString msg = i18n( "There are no worksheets that could be deleted." );
+    TQString msg = i18n( "There are no worksheets that could be deleted." );
     KMessageBox::error( this, msg );
   }
 }
@@ -331,9 +331,9 @@ void Workspace::removeAllWorkSheets()
   }
 }
 
-void Workspace::deleteWorkSheet( const QString &fileName )
+void Workspace::deleteWorkSheet( const TQString &fileName )
 {
-  QPtrListIterator<WorkSheet> it( mSheetList );
+  TQPtrListIterator<WorkSheet> it( mSheetList );
   for ( ; it.current(); ++it )
     if ( (*it)->fileName() == fileName ) {
       removePage( *it );
@@ -342,19 +342,19 @@ void Workspace::deleteWorkSheet( const QString &fileName )
     }
 }
 
-WorkSheet *Workspace::restoreWorkSheet( const QString &fileName, const QString &newName )
+WorkSheet *Workspace::restoreWorkSheet( const TQString &fileName, const TQString &newName )
 {
   /* We might want to save the worksheet under a different name later. This
    * name can be specified by newName. If newName is empty we use the
    * original name to save the work sheet. */
-  QString tmpStr;
+  TQString tmpStr;
   if ( newName.isEmpty() )
     tmpStr = fileName;
   else
     tmpStr = newName;
 
   // extract filename without path
-  QString baseName = tmpStr.right( tmpStr.length() - tmpStr.findRev( '/' ) - 1 );
+  TQString baseName = tmpStr.right( tmpStr.length() - tmpStr.findRev( '/' ) - 1 );
 
   // chop off extension (usually '.sgrd')
   baseName = baseName.left( baseName.findRev( '.' ) );
@@ -370,8 +370,8 @@ WorkSheet *Workspace::restoreWorkSheet( const QString &fileName, const QString &
   }
   
   mSheetList.append( sheet );
-  connect( sheet, SIGNAL( sheetModified( QWidget* ) ),
-           SLOT( updateCaption( QWidget* ) ) );
+  connect( sheet, TQT_SIGNAL( sheetModified( TQWidget* ) ),
+           TQT_SLOT( updateCaption( TQWidget* ) ) );
 
   /* Force the file name to be the new name. This also sets the modified
    * flag, so that the file will get saved on exit. */
@@ -415,18 +415,18 @@ void Workspace::configure()
   current->settings();
 }
 
-void Workspace::updateCaption( QWidget* wdg )
+void Workspace::updateCaption( TQWidget* wdg )
 {
   if ( wdg )
     emit setCaption( tabLabel( wdg ), ((WorkSheet*)wdg)->modified() );
   else
-    emit setCaption( QString::null, false );
+    emit setCaption( TQString::null, false );
 
   for ( WorkSheet* s = mSheetList.first(); s != 0; s = mSheetList.next() )
     ((WorkSheet*)s)->setIsOnTop( s == wdg );
 }
 
-void Workspace::updateSheetTitle( QWidget* wdg )
+void Workspace::updateSheetTitle( TQWidget* wdg )
 {
   if ( wdg )
     changeTab( wdg, static_cast<WorkSheet*>( wdg )->title() );
@@ -443,7 +443,7 @@ void Workspace::showProcesses()
   KStandardDirs* kstd = KGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
 
-  QString file = kstd->findResource( "data", "ProcessTable.sgrd" );
+  TQString file = kstd->findResource( "data", "ProcessTable.sgrd" );
   if ( file.isEmpty() ) {
     KMessageBox::error( this, i18n( "Cannot find file ProcessTable.sgrd." ) );
     return;

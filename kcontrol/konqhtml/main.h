@@ -39,17 +39,17 @@ class KJSParts : public KCModule
 
 public:
 
-  KJSParts(KConfig *config,QWidget *parent, const char *name);
+  KJSParts(KConfig *config,TQWidget *parent, const char *name);
   virtual ~KJSParts();
 
   void load();
   void save();
   void defaults();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 
 private:
-  QTabWidget   *tab;
+  TQTabWidget   *tab;
 
   KJavaScriptOptions *javascript;
   KJavaOptions       *java;

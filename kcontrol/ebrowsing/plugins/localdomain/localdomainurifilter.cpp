@@ -26,8 +26,8 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 
-#include <qregexp.h>
-#include <qfile.h>
+#include <tqregexp.h>
+#include <tqfile.h>
 
 #define HOSTPORT_PATTERN "[a-zA-Z0-9][a-zA-Z0-9+-]*(?:\\:[0-9]{1,5})?(?:/[\\w:@&=+$,-.!~*'()]*)*"
 
@@ -36,12 +36,12 @@
  * kdelibs/kio/tests/kurifiltertest
  */
  
-LocalDomainURIFilter::LocalDomainURIFilter( QObject *parent, const char *name,
-                                            const QStringList & /*args*/ )
+LocalDomainURIFilter::LocalDomainURIFilter( TQObject *parent, const char *name,
+                                            const TQStringList & /*args*/ )
     : KURIFilterPlugin( parent, name ? name : "localdomainurifilter", 1.0 ),
       DCOPObject( "LocalDomainURIFilterIface" ),
       last_time( 0 ),
-      m_hostPortPattern( QString::fromLatin1(HOSTPORT_PATTERN) )
+      m_hostPortPattern( TQString::fromLatin1(HOSTPORT_PATTERN) )
 {
     configure();
 }
@@ -49,14 +49,14 @@ LocalDomainURIFilter::LocalDomainURIFilter( QObject *parent, const char *name,
 bool LocalDomainURIFilter::filterURI( KURIFilterData& data ) const
 {
     KURL url = data.uri();
-    QString cmd = url.url();
+    TQString cmd = url.url();
     
     kdDebug() << "LocalDomainURIFilter::filterURI: " << url << endl;
     
     if( m_hostPortPattern.exactMatch( cmd ) && 
         isLocalDomainHost( cmd ) )
     {
-        cmd.prepend( QString::fromLatin1("http://") );
+        cmd.prepend( TQString::fromLatin1("http://") );
         setFilteredURI( data, KURL( cmd ) );
         setURIType( data, KURIFilterData::NET_PROTOCOL );
         
@@ -68,24 +68,24 @@ bool LocalDomainURIFilter::filterURI( KURIFilterData& data ) const
 }
 
 // if it's e.g. just 'www', try if it's a hostname in the local search domain
-bool LocalDomainURIFilter::isLocalDomainHost( QString& cmd ) const
+bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
 {
     // find() returns -1 when no match -> left()/truncate() are noops then
-    QString host( cmd.left( cmd.find( '/' ) ) );
+    TQString host( cmd.left( cmd.find( '/' ) ) );
     host.truncate( host.find( ':' ) ); // Remove port number
 
     if( !(host == last_host && last_time > time( NULL ) - 5 ) ) {
 
-        QString helper = KStandardDirs::findExe(QString::fromLatin1( "klocaldomainurifilterhelper" ));
+        TQString helper = KStandardDirs::findExe(TQString::fromLatin1( "klocaldomainurifilterhelper" ));
         if( helper.isEmpty())
             return last_result = false;
 
-        m_fullname = QString::null;
+        m_fullname = TQString::null;
 
         KProcess proc;
         proc << helper << host;
-        connect( &proc, SIGNAL(receivedStdout(KProcess *, char *, int)),
-                 SLOT(receiveOutput(KProcess *, char *, int)) );
+        connect( &proc, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+                 TQT_SLOT(receiveOutput(KProcess *, char *, int)) );
         if( !proc.start( KProcess::NotifyOnExit, KProcess::Stdout ))
             return last_result = false;
 
@@ -103,7 +103,7 @@ bool LocalDomainURIFilter::isLocalDomainHost( QString& cmd ) const
 
 void LocalDomainURIFilter::receiveOutput( KProcess *, char *buf, int )
 {
-    m_fullname = QFile::decodeName( buf );
+    m_fullname = TQFile::decodeName( buf );
 }
 
 void LocalDomainURIFilter::configure()

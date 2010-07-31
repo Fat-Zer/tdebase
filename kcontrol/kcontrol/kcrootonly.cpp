@@ -16,18 +16,18 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */                                                                            
 
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include <klocale.h>
 
 #include "kcrootonly.h"
 
-KCRootOnly::KCRootOnly(QWidget *parent, const char *name)
+KCRootOnly::KCRootOnly(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-   QVBoxLayout *layout=new QVBoxLayout(this);
-   QLabel *label = new QLabel(i18n("<big>You need super user privileges to run this control module.</big><br>"
+   TQVBoxLayout *layout=new TQVBoxLayout(this);
+   TQLabel *label = new TQLabel(i18n("<big>You need super user privileges to run this control module.</big><br>"
                                     "Click on the \"Administrator Mode\" button below."), this);
    layout->addWidget(label);
    label->setAlignment(AlignCenter);

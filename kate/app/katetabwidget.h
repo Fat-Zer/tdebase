@@ -34,29 +34,29 @@ class KateTabWidget : public KTabWidget
     };
 
   public:
-    KateTabWidget(QWidget* parent, const char* name=0);
+    KateTabWidget(TQWidget* parent, const char* name=0);
     virtual ~KateTabWidget();
 
-    virtual void addTab ( QWidget * child, const QString & label );
+    virtual void addTab ( TQWidget * child, const TQString & label );
 
-    virtual void addTab ( QWidget * child, const QIconSet & iconset, const QString & label );
+    virtual void addTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label );
 
-    virtual void addTab ( QWidget * child, QTab * tab );
+    virtual void addTab ( TQWidget * child, TQTab * tab );
 
-    virtual void insertTab ( QWidget * child, const QString & label, int index = -1 );
+    virtual void insertTab ( TQWidget * child, const TQString & label, int index = -1 );
 
-    virtual void insertTab ( QWidget * child, const QIconSet & iconset, const QString & label, int index = -1 );
+    virtual void insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index = -1 );
 
-    virtual void insertTab ( QWidget * child, QTab * tab, int index = -1 );
+    virtual void insertTab ( TQWidget * child, TQTab * tab, int index = -1 );
 
-    virtual void removePage ( QWidget * w );
+    virtual void removePage ( TQWidget * w );
 
     TabWidgetVisibility tabWidgetVisibility() const;
 
     void setTabWidgetVisibility( TabWidgetVisibility );
 
   private slots:
-    void closeTab(QWidget* w);
+    void closeTab(TQWidget* w);
 
   private:
     void maybeShow();

@@ -21,7 +21,7 @@
 #include "styleconfdialog.h"
 #include <klocale.h>
 
-StyleConfigDialog::StyleConfigDialog(QWidget* parent, QString styleName):
+StyleConfigDialog::StyleConfigDialog(TQWidget* parent, TQString styleName):
   KDialogBase(parent, "StyleConfigDialog",
            true, /*modal*/
            i18n("Configure %1").arg(styleName),
@@ -29,8 +29,8 @@ StyleConfigDialog::StyleConfigDialog(QWidget* parent, QString styleName):
            KDialogBase::Cancel)
 {
   m_dirty = false;
-  connect( this, SIGNAL( defaultClicked() ), this, SIGNAL( defaults() ));
-  connect( this, SIGNAL( okClicked() ), this, SIGNAL( save() ));
+  connect( this, TQT_SIGNAL( defaultClicked() ), this, TQT_SIGNAL( defaults() ));
+  connect( this, TQT_SIGNAL( okClicked() ), this, TQT_SIGNAL( save() ));
 }
 
 bool StyleConfigDialog::isDirty() const

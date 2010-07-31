@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __applethandle_h__
 #define __applethandle_h__
 
-#include <qwidget.h>
-#include <qpushbutton.h>
+#include <tqwidget.h>
+#include <tqpushbutton.h>
 
 #include "container_applet.h"
 #include "simplebutton.h"
@@ -45,7 +45,7 @@ class AppletHandle : public QWidget
         void resetLayout();
         void setFadeOutHandle(bool);
 
-        bool eventFilter (QObject *, QEvent *);
+        bool eventFilter (TQObject *, TQEvent *);
 
         int widthForHeight( int h ) const;
         int heightForWidth( int w ) const;
@@ -61,10 +61,10 @@ class AppletHandle : public QWidget
             return m_applet->orientation();
         }
 
-        bool onMenuButton(const QPoint& point) const;
+        bool onMenuButton(const TQPoint& point) const;
 
     signals:
-        void moveApplet( const QPoint& moveOffset );
+        void moveApplet( const TQPoint& moveOffset );
         void showAppletMenu();
 
     public slots:
@@ -76,12 +76,12 @@ class AppletHandle : public QWidget
 
     private:
         AppletContainer* m_applet;
-        QBoxLayout* m_layout;
+        TQBoxLayout* m_layout;
         AppletHandleDrag* m_dragBar;
         AppletHandleButton* m_menuButton;
         bool m_drawHandle;
         KPanelApplet::Direction m_popupDirection;
-        QTimer* m_handleHoverTimer;
+        TQTimer* m_handleHoverTimer;
         bool m_inside;
 };
 
@@ -92,15 +92,15 @@ class AppletHandleDrag : public QWidget
     public:
         AppletHandleDrag(AppletHandle* parent);
 
-        QSize minimumSizeHint() const;
-        QSize minimumSize() const { return minimumSizeHint(); }
-        QSize sizeHint() const { return minimumSize(); }
-        QSizePolicy sizePolicy() const;
+        TQSize minimumSizeHint() const;
+        TQSize minimumSize() const { return minimumSizeHint(); }
+        TQSize sizeHint() const { return minimumSize(); }
+        TQSizePolicy sizePolicy() const;
 
     protected:
-        void paintEvent( QPaintEvent* );
-        void enterEvent( QEvent* );
-        void leaveEvent( QEvent* );
+        void paintEvent( TQPaintEvent* );
+        void enterEvent( TQEvent* );
+        void leaveEvent( TQEvent* );
         const AppletHandle* m_parent;
     
     private:
@@ -113,10 +113,10 @@ class AppletHandleButton : public SimpleArrowButton
     
     public:
         AppletHandleButton(AppletHandle *parent);
-        QSize minimumSizeHint() const;
-        QSize minimumSize() const { return minimumSizeHint(); }
-        QSize sizeHint() const { return minimumSize(); }
-        QSizePolicy sizePolicy() const;
+        TQSize minimumSizeHint() const;
+        TQSize minimumSize() const { return minimumSizeHint(); }
+        TQSize sizeHint() const { return minimumSize(); }
+        TQSizePolicy sizePolicy() const;
 
     private:
         bool m_moveMouse;

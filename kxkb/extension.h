@@ -12,25 +12,25 @@ public:
 	bool init();
 	void reset();
 
-	static bool setXkbOptions(const QString& options, bool resetOldOptions);
-	bool setLayout(const QString& model,
-					const QString& layout, const QString& variant,
-					const QString& includeGroup, bool useCompiledLayouts=true);
+	static bool setXkbOptions(const TQString& options, bool resetOldOptions);
+	bool setLayout(const TQString& model,
+					const TQString& layout, const TQString& variant,
+					const TQString& includeGroup, bool useCompiledLayouts=true);
 	bool setGroup(unsigned int group);
 	unsigned int getGroup() const;
 
 private:
     Display *m_dpy;
-	QString m_tempDir;
-	static QMap<QString, FILE*> fileCache;
+	TQString m_tempDir;
+	static TQMap<TQString, FILE*> fileCache;
 	
-	bool setLayoutInternal(const QString& model,
-				   const QString& layout, const QString& variant,
-				   const QString& includeGroup);
-	bool compileCurrentLayout(const QString& layoutKey);
-	bool setCompiledLayout(const QString& layoutKey);
+	bool setLayoutInternal(const TQString& model,
+				   const TQString& layout, const TQString& variant,
+				   const TQString& includeGroup);
+	bool compileCurrentLayout(const TQString& layoutKey);
+	bool setCompiledLayout(const TQString& layoutKey);
 	
-	QString getPrecompiledLayoutFilename(const QString& layoutKey);
+	TQString getPrecompiledLayoutFilename(const TQString& layoutKey);
 //	void deletePrecompiledLayouts();
 };
 

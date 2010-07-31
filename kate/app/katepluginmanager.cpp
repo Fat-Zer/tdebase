@@ -27,12 +27,12 @@
 #include "../interfaces/application.h"
 
 #include <kconfig.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <qfile.h>
+#include <tqfile.h>
 
-KatePluginManager::KatePluginManager(QObject *parent) : QObject (parent)
+KatePluginManager::KatePluginManager(TQObject *parent) : TQObject (parent)
 {
   m_pluginManager = new Kate::PluginManager (this);
   setupPluginList ();
@@ -57,13 +57,13 @@ KatePluginManager *KatePluginManager::self()
 
 void KatePluginManager::setupPluginList ()
 {
-  QValueList<KService::Ptr> traderList= KTrader::self()->query("Kate/Plugin", "(not ('Kate/ProjectPlugin' in ServiceTypes)) and (not ('Kate/InitPlugin' in ServiceTypes))");
+  TQValueList<KService::Ptr> traderList= KTrader::self()->query("Kate/Plugin", "(not ('Kate/ProjectPlugin' in ServiceTypes)) and (not ('Kate/InitPlugin' in ServiceTypes))");
 
   for(KTrader::OfferList::Iterator it(traderList.begin()); it != traderList.end(); ++it)
   {
     KService::Ptr ptr = (*it);
 
-    QString pVersion = ptr->property("X-Kate-Version").toString();
+    TQString pVersion = ptr->property("X-Kate-Version").toString();
 
 //    if ((pVersion >= "2.5") && (pVersion <= KateApp::kateVersion(false)))
     if (pVersion == "2.5")
@@ -94,7 +94,7 @@ void KatePluginManager::writeConfig ()
 
   for (unsigned int i=0; i < m_pluginList.size(); ++i)
   {
-    QString saveName=m_pluginList[i].service->property("X-Kate-PluginName").toString();
+    TQString saveName=m_pluginList[i].service->property("X-Kate-PluginName").toString();
 
     if (saveName.isEmpty())
       saveName = m_pluginList[i].service->library();
@@ -143,12 +143,12 @@ void KatePluginManager::disableAllPluginsGUI (KateMainWindow *win)
 
 void KatePluginManager::loadPlugin (KatePluginInfo *item)
 {
-  QString pluginName=item->service->property("X-Kate-PluginName").toString();
+  TQString pluginName=item->service->property("X-Kate-PluginName").toString();
 
   if (pluginName.isEmpty())
     pluginName=item->service->library();
 
-  item->load = (item->plugin = Kate::createPlugin (QFile::encodeName(item->service->library()), Kate::application(), 0, pluginName));
+  item->load = (item->plugin = Kate::createPlugin (TQFile::encodeName(item->service->library()), Kate::application(), 0, pluginName));
 }
 
 void KatePluginManager::unloadPlugin (KatePluginInfo *item)
@@ -197,12 +197,12 @@ void KatePluginManager::disablePluginGUI (KatePluginInfo *item)
   }
 }
 
-Kate::Plugin *KatePluginManager::plugin(const QString &name)
+Kate::Plugin *KatePluginManager::plugin(const TQString &name)
 {
   for (unsigned int i=0; i < m_pluginList.size(); ++i)
   {
     KatePluginInfo *info = &m_pluginList[i];
-    QString pluginName=info->service->property("X-Kate-PluginName").toString();
+    TQString pluginName=info->service->property("X-Kate-PluginName").toString();
     if (pluginName.isEmpty())
        pluginName=info->service->library();
     if  (pluginName==name)
@@ -216,6 +216,6 @@ Kate::Plugin *KatePluginManager::plugin(const QString &name)
   return 0;
 }
 
-bool KatePluginManager::pluginAvailable(const QString &){return false;}
-class Kate::Plugin *KatePluginManager::loadPlugin(const QString &,bool ){return 0;}
-void KatePluginManager::unloadPlugin(const QString &,bool){;}
+bool KatePluginManager::pluginAvailable(const TQString &){return false;}
+class Kate::Plugin *KatePluginManager::loadPlugin(const TQString &,bool ){return 0;}
+void KatePluginManager::unloadPlugin(const TQString &,bool){;}

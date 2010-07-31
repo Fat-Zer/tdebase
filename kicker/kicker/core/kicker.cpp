@@ -24,9 +24,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qtimer.h>
-#include <qtooltip.h>
+#include <tqfile.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 
 #include <dcopclient.h>
 #include <kconfig.h>
@@ -74,7 +74,7 @@ Kicker::Kicker()
         // this means we've most likely crashed once. so let's see if we
         // stay up for more than 2 minutes time, and if so reset the
         // crash handler since the crash isn't a frequent offender
-        QTimer::singleShot(120000, this, SLOT(setCrashHandler()));
+        TQTimer::singleShot(120000, this, TQT_SLOT(setCrashHandler()));
     }
     else
     {
@@ -93,7 +93,7 @@ Kicker::Kicker()
 
     dcopClient()->setDefaultObject("Panel");
     disableSessionManagement();
-    QString dataPathBase = KStandardDirs::kde_default("data").append("kicker/");
+    TQString dataPathBase = KStandardDirs::kde_default("data").append("kicker/");
     KGlobal::dirs()->addResourceType("mini", dataPathBase + "pics/mini");
     KGlobal::dirs()->addResourceType("icon", dataPathBase + "pics");
     KGlobal::dirs()->addResourceType("builtinbuttons", dataPathBase + "builtins");
@@ -121,19 +121,19 @@ Kicker::Kicker()
     // set up our global settings
     configure();
 
-    connect(this, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)));
-    connect(this, SIGNAL(kdisplayPaletteChanged()), SLOT(paletteChanged()));
-    connect(this, SIGNAL(kdisplayStyleChanged()), SLOT(slotStyleChanged()));
+    connect(this, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
+    connect(this, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
+    connect(this, TQT_SIGNAL(kdisplayStyleChanged()), TQT_SLOT(slotStyleChanged()));
 
 #if (QT_VERSION-0 >= 0x030200) // XRANDR support
-    connect(desktop(), SIGNAL(resized(int)), SLOT(slotDesktopResized()));
+    connect(desktop(), TQT_SIGNAL(resized(int)), TQT_SLOT(slotDesktopResized()));
 #endif
 
     // the panels, aka extensions
-    QTimer::singleShot(0, ExtensionManager::the(), SLOT(initialize()));
+    TQTimer::singleShot(0, ExtensionManager::the(), TQT_SLOT(initialize()));
 
-    connect(ExtensionManager::the(), SIGNAL(desktopIconsAreaChanged(const QRect &, int)),
-            this, SLOT(slotDesktopIconsAreaChanged(const QRect &, int)));
+    connect(ExtensionManager::the(), TQT_SIGNAL(desktopIconsAreaChanged(const TQRect &, int)),
+            this, TQT_SLOT(slotDesktopIconsAreaChanged(const TQRect &, int)));
 }
 
 Kicker::~Kicker()
@@ -205,7 +205,7 @@ void Kicker::slotStyleChanged()
 	restart();
 }
 
-bool Kicker::highlightMenuItem(const QString &menuId)
+bool Kicker::highlightMenuItem(const TQString &menuId)
 {
     return MenuManager::the()->kmenu()->highlightMenuItem( menuId );
 }
@@ -215,7 +215,7 @@ void Kicker::showKMenu()
     MenuManager::the()->showKMenu();
 }
 
-void Kicker::popupKMenu(const QPoint &p)
+void Kicker::popupKMenu(const TQPoint &p)
 {
     MenuManager::the()->popupKMenu(p);
 }
@@ -231,13 +231,13 @@ void Kicker::configure()
 
     KickerSettings::self()->readConfig();
 
-    QToolTip::setGloballyEnabled(KickerSettings::showToolTips());
+    TQToolTip::setGloballyEnabled(KickerSettings::showToolTips());
 
     if (notFirstConfig)
     {
         emit configurationChanged();
         {
-            QByteArray data;
+            TQByteArray data;
             emitDCOPSignal("configurationChanged()", data);
         }
     }
@@ -254,7 +254,7 @@ void Kicker::quit()
 void Kicker::restart()
 {
     // do this on a timer to give us time to return true
-    QTimer::singleShot(0, this, SLOT(slotRestart()));
+    TQTimer::singleShot(0, this, TQT_SLOT(slotRestart()));
 }
 
 void Kicker::slotRestart()
@@ -267,7 +267,7 @@ void Kicker::slotRestart()
     char ** o_argv = new char*[2];
     o_argv[0] = strdup("kicker");
     o_argv[1] = 0L;
-    execv(QFile::encodeName(locate("exe", "kdeinit_wrapper")), o_argv);
+    execv(TQFile::encodeName(locate("exe", "kdeinit_wrapper")), o_argv);
 
     exit(1);
 }
@@ -282,14 +282,14 @@ bool Kicker::isKioskImmutable() const
     return config()->isImmutable();
 }
 
-void Kicker::addExtension( const QString &desktopFile )
+void Kicker::addExtension( const TQString &desktopFile )
 {
    ExtensionManager::the()->addExtension( desktopFile );
 }
 
-QStringList Kicker::configModules(bool controlCenter)
+TQStringList Kicker::configModules(bool controlCenter)
 {
-    QStringList args;
+    TQStringList args;
 
     if (controlCenter)
     {
@@ -306,39 +306,39 @@ QStringList Kicker::configModules(bool controlCenter)
     return args;
 }
 
-QPoint Kicker::insertionPoint()
+TQPoint Kicker::insertionPoint()
 {
     return m_insertionPoint;
 }
 
-void Kicker::setInsertionPoint(const QPoint &p)
+void Kicker::setInsertionPoint(const TQPoint &p)
 {
     m_insertionPoint = p;
 }
 
 
-void Kicker::showConfig(const QString& configPath, int page)
+void Kicker::showConfig(const TQString& configPath, int page)
 {
     if (!m_configDialog)
     {
          m_configDialog = new KCMultiDialog(0);
 
-         QStringList modules = configModules(false);
-         QStringList::ConstIterator end(modules.end());
-         for (QStringList::ConstIterator it = modules.begin(); it != end; ++it)
+         TQStringList modules = configModules(false);
+         TQStringList::ConstIterator end(modules.end());
+         for (TQStringList::ConstIterator it = modules.begin(); it != end; ++it)
          {
             m_configDialog->addModule(*it);
          }
 
-         connect(m_configDialog, SIGNAL(finished()), SLOT(configDialogFinished()));
+         connect(m_configDialog, TQT_SIGNAL(finished()), TQT_SLOT(configDialogFinished()));
     }
 
     if (!configPath.isEmpty())
     {
-        QByteArray data;
-        QDataStream stream(data, IO_WriteOnly);
+        TQByteArray data;
+        TQDataStream stream(data, IO_WriteOnly);
         stream << configPath;
-        emitDCOPSignal("configSwitchToPanel(QString)", data);
+        emitDCOPSignal("configSwitchToPanel(TQString)", data);
     }
 
     KWin::setOnDesktop(m_configDialog->winId(), KWin::currentDesktop());
@@ -352,7 +352,7 @@ void Kicker::showConfig(const QString& configPath, int page)
 
 void Kicker::showTaskBarConfig()
 {
-    showConfig(QString(), 4);
+    showConfig(TQString(), 4);
 }
 
 void Kicker::configureMenubar()
@@ -386,16 +386,16 @@ KWinModule* Kicker::kwinModule()
     return m_kwinModule;
 }
 
-QRect Kicker::desktopIconsArea(int screen) const
+TQRect Kicker::desktopIconsArea(int screen) const
 {
     return ExtensionManager::the()->desktopIconsArea(screen);
 }
 
-void Kicker::slotDesktopIconsAreaChanged(const QRect &area, int screen)
+void Kicker::slotDesktopIconsAreaChanged(const TQRect &area, int screen)
 {
-    QByteArray params;
-    QDataStream stream(params, IO_WriteOnly);
+    TQByteArray params;
+    TQDataStream stream(params, IO_WriteOnly);
     stream << area;
     stream << screen;
-    emitDCOPSignal("desktopIconsAreaChanged(QRect, int)", params);
+    emitDCOPSignal("desktopIconsAreaChanged(TQRect, int)", params);
 }

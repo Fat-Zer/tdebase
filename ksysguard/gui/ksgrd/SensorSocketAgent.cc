@@ -34,10 +34,10 @@ using namespace KSGRD;
 SensorSocketAgent::SensorSocketAgent( SensorManager *sm )
   : SensorAgent( sm )
 {
-  connect( &mSocket, SIGNAL( gotError( int ) ), SLOT( error( int ) ) );
-  connect( &mSocket, SIGNAL( bytesWritten( int ) ), SLOT( msgSent( int ) ) );
-  connect( &mSocket, SIGNAL( readyRead() ), SLOT( msgRcvd() ) );
-  connect( &mSocket, SIGNAL( closed() ), SLOT( connectionClosed() ) );
+  connect( &mSocket, TQT_SIGNAL( gotError( int ) ), TQT_SLOT( error( int ) ) );
+  connect( &mSocket, TQT_SIGNAL( bytesWritten( int ) ), TQT_SLOT( msgSent( int ) ) );
+  connect( &mSocket, TQT_SIGNAL( readyRead() ), TQT_SLOT( msgRcvd() ) );
+  connect( &mSocket, TQT_SIGNAL( closed() ), TQT_SLOT( connectionClosed() ) );
 }
 
 SensorSocketAgent::~SensorSocketAgent()
@@ -46,8 +46,8 @@ SensorSocketAgent::~SensorSocketAgent()
   mSocket.flush();
 }
 	
-bool SensorSocketAgent::start( const QString &host, const QString&,
-                               const QString&, int port )
+bool SensorSocketAgent::start( const TQString &host, const TQString&,
+                               const TQString&, int port )
 {
   if ( port <= 0 )
     kdDebug(1215) << "SensorSocketAgent::start: Illegal port " << port << endl;
@@ -55,15 +55,15 @@ bool SensorSocketAgent::start( const QString &host, const QString&,
   setHostName( host );
   mPort = port;
 
-  mSocket.connect( hostName(), QString::number(mPort) );
+  mSocket.connect( hostName(), TQString::number(mPort) );
 
   return true;
 }
 
-void SensorSocketAgent::hostInfo( QString &shell, QString &command, int &port ) const
+void SensorSocketAgent::hostInfo( TQString &shell, TQString &command, int &port ) const
 {
-  shell = QString::null;
-  command = QString::null;
+  shell = TQString::null;
+  command = TQString::null;
   port = mPort;
 }
 
@@ -84,7 +84,7 @@ void SensorSocketAgent::msgRcvd()
   char* buffer = new char[ buflen ];
 
   mSocket.readBlock( buffer, buflen );
-  QString buf = QString::fromLocal8Bit( buffer, buflen );
+  TQString buf = TQString::fromLocal8Bit( buffer, buflen );
   delete [] buffer;
 
   processAnswer( buf );

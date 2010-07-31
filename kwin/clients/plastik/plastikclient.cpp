@@ -22,15 +22,15 @@
 
 #include <klocale.h>
 
-#include <qbitmap.h>
-#include <qdatetime.h>
-#include <qfontmetrics.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qdesktopwidget.h>
+#include <tqbitmap.h>
+#include <tqdatetime.h>
+#include <tqfontmetrics.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqdesktopwidget.h>
 
 #include "plastikclient.h"
 #include "plastikbutton.h"
@@ -41,9 +41,9 @@ namespace KWinPlastik
 
 PlastikClient::PlastikClient(KDecorationBridge* bridge, KDecorationFactory* factory)
     : KCommonDecoration (bridge, factory),
-    s_titleFont(QFont() )
+    s_titleFont(TQFont() )
 {
-    memset(m_captionPixmaps, 0, sizeof(QPixmap*)*2);
+    memset(m_captionPixmaps, 0, sizeof(TQPixmap*)*2);
 }
 
 PlastikClient::~PlastikClient()
@@ -51,17 +51,17 @@ PlastikClient::~PlastikClient()
     clearCaptionPixmaps();
 }
 
-QString PlastikClient::visibleName() const
+TQString PlastikClient::visibleName() const
 {
     return i18n("Plastik");
 }
 
-QString PlastikClient::defaultButtonsLeft() const
+TQString PlastikClient::defaultButtonsLeft() const
 {
     return "M";
 }
 
-QString PlastikClient::defaultButtonsRight() const
+TQString PlastikClient::defaultButtonsRight() const
 {
     return "HIAX";
 }
@@ -197,7 +197,7 @@ void PlastikClient::init()
     KCommonDecoration::init();
 }
 
-QRegion PlastikClient::cornerShape(WindowCorner corner)
+TQRegion PlastikClient::cornerShape(WindowCorner corner)
 {
     int w = widget()->width();
     int h = widget()->height();
@@ -205,37 +205,37 @@ QRegion PlastikClient::cornerShape(WindowCorner corner)
     switch (corner) {
         case WC_TopLeft:
             if (layoutMetric(LM_TitleEdgeLeft) > 0)
-                return QRegion(0, 0, 1, 2) + QRegion(1, 0, 1, 1);
+                return TQRegion(0, 0, 1, 2) + TQRegion(1, 0, 1, 1);
             else
-                return QRegion();
+                return TQRegion();
 
         case WC_TopRight:
             if (layoutMetric(LM_TitleEdgeRight) > 0)
-                return QRegion(w-1, 0, 1, 2) + QRegion(w-2, 0, 1, 1);
+                return TQRegion(w-1, 0, 1, 2) + TQRegion(w-2, 0, 1, 1);
             else
-                return QRegion();
+                return TQRegion();
 
         case WC_BottomLeft:
             if (layoutMetric(LM_BorderBottom) > 0)
-                return QRegion(0, h-1, 1, 1);
+                return TQRegion(0, h-1, 1, 1);
             else
-                return QRegion();
+                return TQRegion();
 
         case WC_BottomRight:
             if (layoutMetric(LM_BorderBottom) > 0)
-                return QRegion(w-1, h-1, 1, 1);
+                return TQRegion(w-1, h-1, 1, 1);
             else
-                return QRegion();
+                return TQRegion();
 
         default:
-            return QRegion();
+            return TQRegion();
     }
 
 }
 
-void PlastikClient::paintEvent(QPaintEvent *e)
+void PlastikClient::paintEvent(TQPaintEvent *e)
 {
-    QRegion region = e->region();
+    TQRegion region = e->region();
 
     PlastikHandler *handler = Handler();
 
@@ -245,10 +245,10 @@ void PlastikClient::paintEvent(QPaintEvent *e)
     bool active = isActive();
     bool toolWindow = isToolWindow();
 
-    QPainter painter(widget() );
+    TQPainter painter(widget() );
 
     // often needed coordinates
-    QRect r = widget()->rect();
+    TQRect r = widget()->rect();
 
     int r_w = r.width();
 //     int r_h = r.height();
@@ -270,11 +270,11 @@ void PlastikClient::paintEvent(QPaintEvent *e)
 
     const int sideHeight = borderBottomTop-titleEdgeBottomBottom-1;
 
-    QRect Rtitle = QRect(r_x+titleEdgeLeft+buttonsLeftWidth(), r_y+titleEdgeTop,
+    TQRect Rtitle = TQRect(r_x+titleEdgeLeft+buttonsLeftWidth(), r_y+titleEdgeTop,
                          r_x2-titleEdgeRight-buttonsRightWidth()-(r_x+titleEdgeLeft+buttonsLeftWidth()),
                          titleEdgeBottomBottom-(r_y+titleEdgeTop) );
 
-    QRect tempRect;
+    TQRect tempRect;
 
     // topSpacer
     if(titleEdgeTop > 0)
@@ -308,7 +308,7 @@ void PlastikClient::paintEvent(QPaintEvent *e)
     }
 
     // titleSpacer
-    const QPixmap &caption = captionPixmap();
+    const TQPixmap &caption = captionPixmap();
     if(Rtitle.width() > 0)
     {
         m_captionRect = captionRect(); // also update m_captionRect!
@@ -376,10 +376,10 @@ void PlastikClient::paintEvent(QPaintEvent *e)
     }
 }
 
-QRect PlastikClient::captionRect() const
+TQRect PlastikClient::captionRect() const
 {
-    const QPixmap &caption = captionPixmap();
-    QRect r = widget()->rect();
+    const TQPixmap &caption = captionPixmap();
+    TQRect r = widget()->rect();
 
     const int titleHeight = layoutMetric(LM_TitleHeight);
     const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
@@ -413,12 +413,12 @@ QRect PlastikClient::captionRect() const
         tX = titleLeft+titleWidth-caption.width();
     }
 
-    return QRect(tX, r.top()+titleEdgeTop, tW, titleHeight+titleEdgeBottom);
+    return TQRect(tX, r.top()+titleEdgeTop, tW, titleHeight+titleEdgeBottom);
 }
 
 void PlastikClient::updateCaption()
 {
-    QRect oldCaptionRect = m_captionRect;
+    TQRect oldCaptionRect = m_captionRect;
 
     if (oldCaption != caption() )
         clearCaptionPixmaps();
@@ -453,12 +453,12 @@ void PlastikClient::reset( unsigned long changed )
     KCommonDecoration::reset(changed);
 }
 
-const QPixmap &PlastikClient::getTitleBarTile(bool active) const
+const TQPixmap &PlastikClient::getTitleBarTile(bool active) const
 {
     return Handler()->pixmap(TitleBarTile, active, isToolWindow() );
 }
 
-const QPixmap &PlastikClient::captionPixmap() const
+const TQPixmap &PlastikClient::captionPixmap() const
 {
     bool active = isActive();
 
@@ -469,44 +469,44 @@ const QPixmap &PlastikClient::captionPixmap() const
     // not found, create new pixmap...
 
     const uint maxCaptionLength = 300; // truncate captions longer than this!
-    QString c(caption() );
+    TQString c(caption() );
     if (c.length() > maxCaptionLength) {
         c.truncate(maxCaptionLength);
         c.append(" [...]");
     }
 
-    QFontMetrics fm(s_titleFont);
+    TQFontMetrics fm(s_titleFont);
     int captionWidth  = fm.width(c);
     int captionHeight = fm.height();
 
     const int th  = layoutMetric(LM_TitleHeight, false) + layoutMetric(LM_TitleEdgeBottom, false);
 
-    QPainter painter;
+    TQPainter painter;
 
     const int thickness = 2;
 
-    QPixmap *captionPixmap = new QPixmap(captionWidth+2*thickness, th);
+    TQPixmap *captionPixmap = new TQPixmap(captionWidth+2*thickness, th);
 
     painter.begin(captionPixmap);
     painter.drawTiledPixmap(captionPixmap->rect(),
                             Handler()->pixmap(TitleBarTile, active, isToolWindow()) );
 
     painter.setFont(s_titleFont);
-    QPoint tp(1, captionHeight-1);
+    TQPoint tp(1, captionHeight-1);
     if(Handler()->titleShadow())
     {
-        QColor shadowColor;
+        TQColor shadowColor;
         if (qGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
-            shadowColor = QColor(255, 255, 255);
+            shadowColor = TQColor(255, 255, 255);
         else
-            shadowColor = QColor(0,0,0);
+            shadowColor = TQColor(0,0,0);
 
         painter.setPen(alphaBlendColors(options()->color(ColorTitleBar, active), shadowColor, 205) );
-        painter.drawText(tp+QPoint(1,2), c);
+        painter.drawText(tp+TQPoint(1,2), c);
         painter.setPen(alphaBlendColors(options()->color(ColorTitleBar, active), shadowColor, 225) );
-        painter.drawText(tp+QPoint(2,2), c);
+        painter.drawText(tp+TQPoint(2,2), c);
         painter.setPen(alphaBlendColors(options()->color(ColorTitleBar, active), shadowColor, 165) );
-        painter.drawText(tp+QPoint(1,1), c);
+        painter.drawText(tp+TQPoint(1,1), c);
     }
     painter.setPen(Handler()->getColor(TitleFont,active) );
     painter.drawText(tp, c );

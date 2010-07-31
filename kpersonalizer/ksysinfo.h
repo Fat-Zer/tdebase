@@ -32,10 +32,10 @@ public:
 	int getXRelease();
 	bool getRenderSupport();
 	/* font - info */
-	QFont getNormalFont();
-	QFont getSmallFont();
-	QFont getBoldFont();
-	QFont getFixedWidthFont();
+	TQFont getNormalFont();
+	TQFont getSmallFont();
+	TQFont getBoldFont();
+	TQFont getFixedWidthFont();
 	/* Hardware - info */
 	int getCpuSpeed();
 private:
@@ -44,15 +44,15 @@ private:
 	void initHWInfo();
 private:
 	/* XServer - info */
-	QString m_xvendor;
+	TQString m_xvendor;
 	bool m_xfree_inc;
 	bool m_xorg;
 	int m_xrelease;
 	bool m_xrender;
 	/* font - info */
-	QFontDatabase* m_fdb;
-	QString m_normal_font;
-	QString m_fixed_font;
+	TQFontDatabase* m_fdb;
+	TQString m_normal_font;
+	TQString m_fixed_font;
 	/* Hardware - info */
 	int m_cpu_speed;
 };

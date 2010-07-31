@@ -25,43 +25,43 @@
 #include <kurl.h>
 #include <dcopobject.h>
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include "medium.h"
 
-class MediaImpl : public QObject, public DCOPObject
+class MediaImpl : public TQObject, public DCOPObject
 {
 Q_OBJECT
 K_DCOP
 public:
 	MediaImpl();
-	bool parseURL(const KURL &url, QString &name, QString &path) const;
-	bool realURL(const QString &name, const QString &path, KURL &url);
+	bool parseURL(const KURL &url, TQString &name, TQString &path) const;
+	bool realURL(const TQString &name, const TQString &path, KURL &url);
 
-	bool statMedium(const QString &name, KIO::UDSEntry &entry);
-	bool statMediumByLabel(const QString &label, KIO::UDSEntry &entry);
-	bool listMedia(QValueList<KIO::UDSEntry> &list);
-	bool setUserLabel(const QString &name, const QString &label);
+	bool statMedium(const TQString &name, KIO::UDSEntry &entry);
+	bool statMediumByLabel(const TQString &label, KIO::UDSEntry &entry);
+	bool listMedia(TQValueList<KIO::UDSEntry> &list);
+	bool setUserLabel(const TQString &name, const TQString &label);
 
 	void createTopLevelEntry(KIO::UDSEntry& entry) const;
 
 	int lastErrorCode() const { return m_lastErrorCode; }
-	QString lastErrorMessage() const { return m_lastErrorMessage; }
+	TQString lastErrorMessage() const { return m_lastErrorMessage; }
 
 k_dcop:
-	void slotMediumChanged(const QString &name);
+	void slotMediumChanged(const TQString &name);
 
 signals:
-	void warning(const QString &msg);
+	void warning(const TQString &msg);
 
 private slots:
-	void slotWarning(KIO::Job *job, const QString &msg);
+	void slotWarning(KIO::Job *job, const TQString &msg);
 	void slotMountResult(KIO::Job *job);
 	void slotStatResult(KIO::Job *job);
 
 private:
-	const Medium findMediumByName(const QString &name, bool &ok);
+	const Medium findMediumByName(const TQString &name, bool &ok);
 	bool ensureMediumMounted(Medium &medium);
 
 	KIO::UDSEntry extractUrlInfos(const KURL &url);
@@ -75,7 +75,7 @@ private:
 	/// Last error code stored in class to simplify API.
 	/// Note that this means almost no method can be const.
 	int m_lastErrorCode;
-	QString m_lastErrorMessage;
+	TQString m_lastErrorMessage;
 };
 
 #endif

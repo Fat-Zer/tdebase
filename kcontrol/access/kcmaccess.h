@@ -33,7 +33,7 @@ class ExtendedIntNumInput : public KIntNumInput
 	  * Constructs an input control for integer values
 	  * with base 10 and initial value 0.
 	  */
-		ExtendedIntNumInput(QWidget *parent=0, const char *name=0);
+		ExtendedIntNumInput(TQWidget *parent=0, const char *name=0);
 		
     /**
 	  * Destructor
@@ -63,7 +63,7 @@ class KAccessConfig : public KCModule
 
 public:
 
-  KAccessConfig(QWidget *parent = 0L, const char *name = 0L);
+  KAccessConfig(TQWidget *parent = 0L, const char *name = 0L);
   virtual ~KAccessConfig();
   
   void load();
@@ -83,28 +83,28 @@ protected slots:
 
 private:
 
-  QCheckBox *systemBell, *customBell, *visibleBell;
-  QRadioButton *invertScreen, *flashScreen;
-  QLabel    *soundLabel, *colorLabel;
-  QLineEdit *soundEdit;
-  QPushButton *soundButton;
+  TQCheckBox *systemBell, *customBell, *visibleBell;
+  TQRadioButton *invertScreen, *flashScreen;
+  TQLabel    *soundLabel, *colorLabel;
+  TQLineEdit *soundEdit;
+  TQPushButton *soundButton;
   KColorButton *colorButton;
   ExtendedIntNumInput *durationSlider;
 
-  QCheckBox *stickyKeys, *stickyKeysLock, *stickyKeysAutoOff;
-  QCheckBox *stickyKeysBeep, *toggleKeysBeep, *kNotifyModifiers;
-  QPushButton *kNotifyModifiersButton;
+  TQCheckBox *stickyKeys, *stickyKeysLock, *stickyKeysAutoOff;
+  TQCheckBox *stickyKeysBeep, *toggleKeysBeep, *kNotifyModifiers;
+  TQPushButton *kNotifyModifiersButton;
 
-  QCheckBox *slowKeys, *bounceKeys;
+  TQCheckBox *slowKeys, *bounceKeys;
   ExtendedIntNumInput *slowKeysDelay, *bounceKeysDelay;
-  QCheckBox *slowKeysPressBeep, *slowKeysAcceptBeep;
-  QCheckBox *slowKeysRejectBeep, *bounceKeysRejectBeep;
+  TQCheckBox *slowKeysPressBeep, *slowKeysAcceptBeep;
+  TQCheckBox *slowKeysRejectBeep, *bounceKeysRejectBeep;
 
-  QCheckBox *gestures, *gestureConfirmation;
-  QCheckBox *timeout;
+  TQCheckBox *gestures, *gestureConfirmation;
+  TQCheckBox *timeout;
   KIntNumInput *timeoutDelay;
-  QCheckBox *accessxBeep, *kNotifyAccessX;
-  QPushButton *kNotifyAccessXButton;
+  TQCheckBox *accessxBeep, *kNotifyAccessX;
+  TQPushButton *kNotifyAccessXButton;
 };
 
 

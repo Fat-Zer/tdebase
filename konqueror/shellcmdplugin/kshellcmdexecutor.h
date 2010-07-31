@@ -20,8 +20,8 @@
 #ifndef SHELLCOMMANDEXECUTOR_H
 #define SHELLCOMMANDEXECUTOR_H
 
-#include <qstring.h>
-#include <qtextview.h>
+#include <tqstring.h>
+#include <tqtextview.h>
 
 class PtyProcess;
 class QSocketNotifier;
@@ -30,7 +30,7 @@ class KShellCommandExecutor:public QTextView
 {
    Q_OBJECT
    public:
-      KShellCommandExecutor(const QString& command, QWidget* parent=0);
+      KShellCommandExecutor(const TQString& command, TQWidget* parent=0);
       virtual ~KShellCommandExecutor();
       int exec();
    signals:
@@ -39,9 +39,9 @@ class KShellCommandExecutor:public QTextView
       void slotFinished();
    protected:
       PtyProcess *m_shellProcess;
-      QString m_command;
-      QSocketNotifier *m_readNotifier;
-      QSocketNotifier *m_writeNotifier;
+      TQString m_command;
+      TQSocketNotifier *m_readNotifier;
+      TQSocketNotifier *m_writeNotifier;
    protected slots:
       void readDataFromShell();
       void writeDataToShell();

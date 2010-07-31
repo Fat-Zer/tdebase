@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <dcopclient.h>
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <X11/Xauth.h>
 #include <X11/Xlib.h>
@@ -90,7 +90,7 @@ DM::DM() : fd( -1 )
 		break;
 	case OldKDM:
 		{
-			QString tf( ctl );
+			TQString tf( ctl );
 			tf.truncate( tf.find( ',' ) );
 			fd = ::open( tf.latin1(), O_WRONLY );
 		}
@@ -107,7 +107,7 @@ DM::~DM()
 bool
 DM::exec( const char *cmd )
 {
-	QCString buf;
+	TQCString buf;
 
 	return exec( cmd, buf );
 }
@@ -125,7 +125,7 @@ DM::exec( const char *cmd )
  *   from KDM.
  */
 bool
-DM::exec( const char *cmd, QCString &buf )
+DM::exec( const char *cmd, TQCString &buf )
 {
 	bool ret = false;
 	int tl;
@@ -175,7 +175,7 @@ DM::canShutdown()
 	if (DMType == OldKDM)
 		return strstr( ctl, ",maysd" ) != 0;
 
-	QCString re;
+	TQCString re;
 
 	if (DMType == GDM)
 		return exec( "QUERY_LOGOUT_ACTION\n", re ) && re.find("HALT") >= 0;
@@ -186,14 +186,14 @@ DM::canShutdown()
 void
 DM::shutdown( KApplication::ShutdownType shutdownType,
               KApplication::ShutdownMode shutdownMode, /* NOT Default */
-              const QString &bootOption )
+              const TQString &bootOption )
 {
 	if (shutdownType == KApplication::ShutdownTypeNone)
 		return;
 
 	bool cap_ask;
 	if (DMType == NewKDM) {
-		QCString re;
+		TQCString re;
 		cap_ask = exec( "caps\n", re ) && re.find( "\tshutdown ask" ) >= 0;
 	} else {
 		if (!bootOption.isEmpty())
@@ -203,7 +203,7 @@ DM::shutdown( KApplication::ShutdownType shutdownType,
 	if (!cap_ask && shutdownMode == KApplication::ShutdownModeInteractive)
 		shutdownMode = KApplication::ShutdownModeForceNow;
 
-	QCString cmd;
+	TQCString cmd;
 	if (DMType == GDM) {
 		cmd.append( shutdownMode == KApplication::ShutdownModeForceNow ?
 		            "SET_LOGOUT_ACTION " : "SET_SAFE_LOGOUT_ACTION " );
@@ -226,16 +226,16 @@ DM::shutdown( KApplication::ShutdownType shutdownType,
 }
 
 bool
-DM::bootOptions( QStringList &opts, int &defopt, int &current )
+DM::bootOptions( TQStringList &opts, int &defopt, int &current )
 {
 	if (DMType != NewKDM)
 		return false;
 
-	QCString re;
+	TQCString re;
 	if (!exec( "listbootoptions\n", re ))
 		return false;
 
-	opts = QStringList::split( '\t', QString::fromLocal8Bit( re.data() ) );
+	opts = TQStringList::split( '\t', TQString::fromLocal8Bit( re.data() ) );
 	if (opts.size() < 4)
 		return false;
 
@@ -247,8 +247,8 @@ DM::bootOptions( QStringList &opts, int &defopt, int &current )
 	if (!ok)
 		return false;
 
-	opts = QStringList::split( ' ', opts[1] );
-	for (QStringList::Iterator it = opts.begin(); it != opts.end(); ++it)
+	opts = TQStringList::split( ' ', opts[1] );
+	for (TQStringList::Iterator it = opts.begin(); it != opts.end(); ++it)
 		(*it).replace( "\\s", " " );
 
 	return true;
@@ -270,7 +270,7 @@ DM::isSwitchable()
 	if (DMType == GDM)
 		return exec( "QUERY_VT\n" );
 
-	QCString re;
+	TQCString re;
 
 	return exec( "caps\n", re ) && re.find( "\tlocal" ) >= 0;
 }
@@ -284,7 +284,7 @@ DM::numReserve()
 	if (DMType == OldKDM)
 		return strstr( ctl, ",rsvd" ) ? 1 : -1;
 
-	QCString re;
+	TQCString re;
 	int p;
 
 	if (!(exec( "caps\n", re ) && (p = re.find( "\treserve " )) >= 0))
@@ -307,14 +307,14 @@ DM::localSessions( SessList &list )
 	if (DMType == OldKDM)
 		return false;
 
-	QCString re;
+	TQCString re;
 
 	if (DMType == GDM) {
 		if (!exec( "CONSOLE_SERVERS\n", re ))
 			return false;
-		QStringList sess = QStringList::split( QChar(';'), re.data() + 3 );
-		for (QStringList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
-			QStringList ts = QStringList::split( QChar(','), *it, true );
+		TQStringList sess = TQStringList::split( TQChar(';'), re.data() + 3 );
+		for (TQStringList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
+			TQStringList ts = TQStringList::split( TQChar(','), *it, true );
 			SessEnt se;
 			se.display = ts[0];
 			se.user = ts[1];
@@ -327,9 +327,9 @@ DM::localSessions( SessList &list )
 	} else {
 		if (!exec( "list\talllocal\n", re ))
 			return false;
-		QStringList sess = QStringList::split( QChar('\t'), re.data() + 3 );
-		for (QStringList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
-			QStringList ts = QStringList::split( QChar(','), *it, true );
+		TQStringList sess = TQStringList::split( TQChar('\t'), re.data() + 3 );
+		for (TQStringList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
+			TQStringList ts = TQStringList::split( TQChar(','), *it, true );
 			SessEnt se;
 			se.display = ts[0];
 			if (ts[1][0] == '@')
@@ -347,11 +347,11 @@ DM::localSessions( SessList &list )
 }
 
 void
-DM::sess2Str2( const SessEnt &se, QString &user, QString &loc )
+DM::sess2Str2( const SessEnt &se, TQString &user, TQString &loc )
 {
 	if (se.tty) {
 		user = i18n("user: ...", "%1: TTY login").arg( se.user );
-		loc = se.vt ? QString("vt%1").arg( se.vt ) : se.display ;
+		loc = se.vt ? TQString("vt%1").arg( se.vt ) : se.display ;
 	} else {
 		user =
 			se.user.isEmpty() ?
@@ -366,7 +366,7 @@ DM::sess2Str2( const SessEnt &se, QString &user, QString &loc )
 						.arg( se.user ).arg( se.session );
 		loc =
 			se.vt ?
-				QString("%1, vt%2").arg( se.display ).arg( se.vt ) :
+				TQString("%1, vt%2").arg( se.display ).arg( se.vt ) :
 				se.display;
 	}
 }
@@ -374,7 +374,7 @@ DM::sess2Str2( const SessEnt &se, QString &user, QString &loc )
 QString
 DM::sess2Str( const SessEnt &se )
 {
-	QString user, loc;
+	TQString user, loc;
 
 	sess2Str2( se, user, loc );
 	return i18n("session (location)", "%1 (%2)").arg( user ).arg( loc );
@@ -384,9 +384,9 @@ bool
 DM::switchVT( int vt )
 {
 	if (DMType == GDM)
-		return exec( QString("SET_VT %1\n").arg(vt).latin1() );
+		return exec( TQString("SET_VT %1\n").arg(vt).latin1() );
 
-	return exec( QString("activate\tvt%1\n").arg(vt).latin1() );
+	return exec( TQString("activate\tvt%1\n").arg(vt).latin1() );
 }
 
 void
@@ -404,7 +404,7 @@ DM::GDMAuthenticate()
 	int dnl;
 	Xauth *xau;
 
-	dpy = DisplayString( QPaintDevice::x11AppDisplay() );
+	dpy = DisplayString( TQPaintDevice::x11AppDisplay() );
 	if (!dpy) {
 		dpy = ::getenv( "DISPLAY" );
 		if (!dpy)
@@ -424,9 +424,9 @@ DM::GDMAuthenticate()
 		    xau->data_length == 16 &&
 		    xau->name_length == 18 && !memcmp( xau->name, "MIT-MAGIC-COOKIE-1", 18 ))
 		{
-			QString cmd( "AUTH_LOCAL " );
+			TQString cmd( "AUTH_LOCAL " );
 			for (int i = 0; i < 16; i++)
-				cmd += QString::number( (uchar)xau->data[i], 16 ).rightJustify( 2, '0');
+				cmd += TQString::number( (uchar)xau->data[i], 16 ).rightJustify( 2, '0');
 			cmd += "\n";
 			if (exec( cmd.latin1() )) {
 				XauDisposeAuth( xau );

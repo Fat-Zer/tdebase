@@ -31,26 +31,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kpassdlg.h>
 #include <kuser.h>
 
-#include <qregexp.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqregexp.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 class KDMPasswordEdit : public KPasswordEdit {
 public:
-	KDMPasswordEdit( QWidget *parent ) : KPasswordEdit( parent, 0 ) {}
-	KDMPasswordEdit( KPasswordEdit::EchoModes echoMode, QWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
+	KDMPasswordEdit( TQWidget *parent ) : KPasswordEdit( parent, 0 ) {}
+	KDMPasswordEdit( KPasswordEdit::EchoModes echoMode, TQWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
 protected:
-	virtual void contextMenuEvent( QContextMenuEvent * ) {}
+	virtual void contextMenuEvent( TQContextMenuEvent * ) {}
 };
 
 static int echoMode;
 
 KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
                                   KdmThemer *themer,
-                                  QWidget *parent, QWidget *pred,
-                                  const QString &_fixedEntity,
+                                  TQWidget *parent, TQWidget *pred,
+                                  const TQString &_fixedEntity,
                                   Function _func, Context _ctx ) :
-	QObject(),
+	TQObject(),
 	KGreeterPlugin( _handler ),
 	fixedUser( _fixedEntity ),
 	func( _func ),
@@ -60,7 +60,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 	running( false )
 {
 	KdmItem *user_entry = 0, *pw_entry = 0;
-	QGridLayout *grid = 0;
+	TQGridLayout *grid = 0;
 	int line = 0;
 
 	layoutItem = 0;
@@ -71,7 +71,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 		themer = 0;
 
 	if (!themer)
-		layoutItem = grid = new QGridLayout( 0, 0, 10 );
+		layoutItem = grid = new TQGridLayout( 0, 0, 10 );
 
 	loginLabel = passwdLabel = passwd1Label = passwd2Label = 0;
 	loginEdit = 0;
@@ -82,10 +82,10 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 		if (fixedUser.isEmpty()) {
 			loginEdit = new KLineEdit( parent );
 			loginEdit->setContextMenuEnabled( false );
-			connect( loginEdit, SIGNAL(lostFocus()), SLOT(slotLoginLostFocus()) );
-			connect( loginEdit, SIGNAL(lostFocus()), SLOT(slotActivity()) );
-			connect( loginEdit, SIGNAL(textChanged( const QString & )), SLOT(slotActivity()) );
-			connect( loginEdit, SIGNAL(selectionChanged()), SLOT(slotActivity()) );
+			connect( loginEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotLoginLostFocus()) );
+			connect( loginEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotActivity()) );
+			connect( loginEdit, TQT_SIGNAL(textChanged( const TQString & )), TQT_SLOT(slotActivity()) );
+			connect( loginEdit, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotActivity()) );
 			if (pred) {
 				parent->setTabOrder( pred, loginEdit );
 				pred = loginEdit;
@@ -94,23 +94,23 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 				loginEdit->adjustSize();
 				user_entry->setWidget( loginEdit );
 			} else {
-				loginLabel = new QLabel( loginEdit, i18n("&Username:"), parent );
+				loginLabel = new TQLabel( loginEdit, i18n("&Username:"), parent );
 				grid->addWidget( loginLabel, line, 0 );
 				grid->addWidget( loginEdit, line++, 1 );
 			}
 		} else if (ctx != Login && ctx != Shutdown && grid) {
-			loginLabel = new QLabel( i18n("Username:"), parent );
+			loginLabel = new TQLabel( i18n("Username:"), parent );
 			grid->addWidget( loginLabel, line, 0 );
-			grid->addWidget( new QLabel( fixedUser, parent ), line++, 1 );
+			grid->addWidget( new TQLabel( fixedUser, parent ), line++, 1 );
 		}
 		if (echoMode == -1)
 			passwdEdit = new KDMPasswordEdit( parent );
 		else
 			passwdEdit = new KDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode,
 			                                  parent );
-		connect( passwdEdit, SIGNAL(textChanged( const QString & )),
-		         SLOT(slotActivity()) );
-		connect( passwdEdit, SIGNAL(lostFocus()), SLOT(slotActivity()) );
+		connect( passwdEdit, TQT_SIGNAL(textChanged( const TQString & )),
+		         TQT_SLOT(slotActivity()) );
+		connect( passwdEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotActivity()) );
 		if (pred) {
 			parent->setTabOrder( pred, passwdEdit );
 			pred = passwdEdit;
@@ -119,7 +119,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 			passwdEdit->adjustSize();
 			pw_entry->setWidget( passwdEdit );
 		} else {
-			passwdLabel = new QLabel( passwdEdit,
+			passwdLabel = new TQLabel( passwdEdit,
 			                          func == Authenticate ?
 			                            i18n("&Password:") :
 			                            i18n("Current &password:"),
@@ -140,8 +140,8 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 			passwd1Edit = new KDMPasswordEdit( parent );
 			passwd2Edit = new KDMPasswordEdit( parent );
 		}
-		passwd1Label = new QLabel( passwd1Edit, i18n("&New password:"), parent );
-		passwd2Label = new QLabel( passwd2Edit, i18n("Con&firm password:"), parent );
+		passwd1Label = new TQLabel( passwd1Edit, i18n("&New password:"), parent );
+		passwd2Label = new TQLabel( passwd2Edit, i18n("Con&firm password:"), parent );
 		if (pred) {
 			parent->setTabOrder( pred, passwd1Edit );
 			parent->setTabOrder( passwd1Edit, passwd2Edit );
@@ -166,14 +166,14 @@ KClassicGreeter::~KClassicGreeter()
 		delete passwdEdit;
 		return;
 	}
-	QLayoutIterator it = static_cast<QLayout *>(layoutItem)->iterator();
-	for (QLayoutItem *itm = it.current(); itm; itm = ++it)
+	TQLayoutIterator it = static_cast<TQLayout *>(layoutItem)->iterator();
+	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 		 delete itm->widget();
 	delete layoutItem;
 }
 
 void // virtual
-KClassicGreeter::loadUsers( const QStringList &users )
+KClassicGreeter::loadUsers( const TQStringList &users )
 {
 	KCompletion *userNamesCompletion = new KCompletion;
 	userNamesCompletion->setItems( users );
@@ -183,7 +183,7 @@ KClassicGreeter::loadUsers( const QStringList &users )
 }
 
 void // virtual
-KClassicGreeter::presetEntity( const QString &entity, int field )
+KClassicGreeter::presetEntity( const TQString &entity, int field )
 {
 	loginEdit->setText( entity );
 	if (field == 1)
@@ -200,14 +200,14 @@ KClassicGreeter::presetEntity( const QString &entity, int field )
 	curUser = entity;
 }
 
-QString // virtual
+TQString // virtual
 KClassicGreeter::getEntity() const
 {
 	return fixedUser.isEmpty() ? loginEdit->text() : fixedUser;
 }
 
 void // virtual
-KClassicGreeter::setUser( const QString &user )
+KClassicGreeter::setUser( const TQString &user )
 {
 	// assert( fixedUser.isEmpty() );
 	curUser = user;
@@ -259,7 +259,7 @@ bool // virtual
 KClassicGreeter::textMessage( const char *text, bool err )
 {
 	if (!err &&
-	    QString( text ).find( QRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
+	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
 		return true;
 	return false;
 }
@@ -273,21 +273,21 @@ KClassicGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 	else if (!authTok)
 		exp = 1;
 	else {
-		QString pr( prompt );
-		if (pr.find( QRegExp( "\\bpassword\\b", false ) ) >= 0) {
-			if (pr.find( QRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
+		TQString pr( prompt );
+		if (pr.find( TQRegExp( "\\bpassword\\b", false ) ) >= 0) {
+			if (pr.find( TQRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
 			                      false ) ) >= 0)
 				exp = 3;
-			else if (pr.find( QRegExp( "\\bnew\\b", false ) ) >= 0)
+			else if (pr.find( TQRegExp( "\\bnew\\b", false ) ) >= 0)
 				exp = 2;
-			else { // QRegExp( "\\b(old|current)\\b", false ) is too strict
+			else { // TQRegExp( "\\b(old|current)\\b", false ) is too strict
 				handler->gplugReturnText( "",
 				                          KGreeterPluginHandler::IsOldPassword |
 				                          KGreeterPluginHandler::IsSecret );
 				return;
 			}
 		} else {
-			handler->gplugMsgBox( QMessageBox::Critical,
+			handler->gplugMsgBox( TQMessageBox::Critical,
 			                      i18n("Unrecognized prompt \"%1\"")
 			                      .arg( prompt ) );
 			handler->gplugReturnText( 0, 0 );
@@ -422,7 +422,7 @@ KClassicGreeter::clear()
 	if (loginEdit) {
 		loginEdit->clear();
 		loginEdit->setFocus();
-		curUser = QString::null;
+		curUser = TQString::null;
 	} else
 		passwdEdit->setFocus();
 }
@@ -472,11 +472,11 @@ KClassicGreeter::slotActivity()
 
 // factory
 
-static bool init( const QString &,
-                  QVariant (*getConf)( void *, const char *, const QVariant & ),
+static bool init( const TQString &,
+                  TQVariant (*getConf)( void *, const char *, const TQVariant & ),
                   void *ctx )
 {
-	echoMode = getConf( ctx, "EchoMode", QVariant( -1 ) ).toInt();
+	echoMode = getConf( ctx, "EchoMode", TQVariant( -1 ) ).toInt();
 	KGlobal::locale()->insertCatalogue( "kgreet_classic" );
 	return true;
 }
@@ -488,8 +488,8 @@ static void done( void )
 
 static KGreeterPlugin *
 create( KGreeterPluginHandler *handler, KdmThemer *themer,
-        QWidget *parent, QWidget *predecessor,
-        const QString &fixedEntity,
+        TQWidget *parent, TQWidget *predecessor,
+        const TQString &fixedEntity,
         KGreeterPlugin::Function func,
         KGreeterPlugin::Context ctx )
 {

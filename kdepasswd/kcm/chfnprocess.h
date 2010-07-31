@@ -11,7 +11,7 @@
 #ifndef CHFNPROC_H
 #define CHFNPROC_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 #include <kdesu/process.h>
 
 class ChfnProcess : public PtyProcess
@@ -22,12 +22,12 @@ public:
 
   int exec(const char *pass, const char *name);
 
-  QCString error() { return m_Error; }
+  TQCString error() { return m_Error; }
 
 private:
   int ConverseChfn(const char *pass);
 
-  QCString m_Error;
+  TQCString m_Error;
 };
 
 #endif

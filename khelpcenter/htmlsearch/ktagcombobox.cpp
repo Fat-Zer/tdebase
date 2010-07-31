@@ -22,8 +22,8 @@
  */
 
 #define INCLUDE_MENUITEM_DEF 1
-#include <qpainter.h>
-#include <qpopupmenu.h>
+#include <tqpainter.h>
+#include <tqpopupmenu.h>
 
 #include <kdebug.h>
 
@@ -36,8 +36,8 @@ KTagComboBox::~KTagComboBox ()
   delete tags;
 }
 
-KTagComboBox::KTagComboBox (QWidget * parent, const char *name)
-  : QComboBox(parent, name),
+KTagComboBox::KTagComboBox (TQWidget * parent, const char *name)
+  : TQComboBox(parent, name),
 	popup(0),
 	old_popup(0)
 {
@@ -48,10 +48,10 @@ KTagComboBox::KTagComboBox (QWidget * parent, const char *name)
 
 void KTagComboBox::popupMenu()
 {
-   popup->popup( mapToGlobal( QPoint(0,0) ), current );
+   popup->popup( mapToGlobal( TQPoint(0,0) ), current );
 }
 
-void KTagComboBox::keyPressEvent( QKeyEvent *e )
+void KTagComboBox::keyPressEvent( TQKeyEvent *e )
 {
     int c;
 
@@ -73,7 +73,7 @@ void KTagComboBox::keyPressEvent( QKeyEvent *e )
     emit activated( c );
 }
 
-void KTagComboBox::mousePressEvent( QMouseEvent * )
+void KTagComboBox::mousePressEvent( TQMouseEvent * )
 {
   popupMenu();
 }
@@ -97,11 +97,11 @@ void KTagComboBox::clear()
 
   delete old_popup;
   old_popup = popup;
-  popup = new QPopupMenu(this);
-  connect( popup, SIGNAL(activated(int)),
-                        SLOT(internalActivate(int)) );
-  connect( popup, SIGNAL(highlighted(int)),
-                        SLOT(internalHighlight(int)) );
+  popup = new TQPopupMenu(this);
+  connect( popup, TQT_SIGNAL(activated(int)),
+                        TQT_SLOT(internalActivate(int)) );
+  connect( popup, TQT_SIGNAL(highlighted(int)),
+                        TQT_SLOT(internalHighlight(int)) );
 }
 
 int KTagComboBox::count() const
@@ -109,7 +109,7 @@ int KTagComboBox::count() const
   return tags->count();
 }
 
-static inline void checkInsertPos(QPopupMenu *popup, const QString & str, int &index)
+static inline void checkInsertPos(TQPopupMenu *popup, const TQString & str, int &index)
 {
   if (index == -2) index = popup->count();
   if (index != -1) return;
@@ -131,14 +131,14 @@ static inline void checkInsertPos(QPopupMenu *popup, const QString & str, int &i
   index = a; // it doesn't really matter ... a == b here.
 }
 
-static inline QPopupMenu *checkInsertIndex(QPopupMenu *popup, const QStringList *tags, const QString &submenu)
+static inline TQPopupMenu *checkInsertIndex(TQPopupMenu *popup, const TQStringList *tags, const TQString &submenu)
 {
   int pos = tags->findIndex(submenu);
 
-  QPopupMenu *pi = 0;
+  TQPopupMenu *pi = 0;
   if (pos != -1)
   {
-    QMenuItem *p = popup->findItem(pos);
+    TQMenuItem *p = popup->findItem(pos);
     pi = p?p->popup():0;
   }
   if (!pi) pi = popup;
@@ -146,50 +146,50 @@ static inline QPopupMenu *checkInsertIndex(QPopupMenu *popup, const QStringList 
   return pi;
 }
 
-void KTagComboBox::insertItem(const QIconSet& icon, const QString &text, const QString &tag, const QString &submenu, int index )
+void KTagComboBox::insertItem(const TQIconSet& icon, const TQString &text, const TQString &tag, const TQString &submenu, int index )
 {
-  QPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
+  TQPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
   checkInsertPos(pi, text, index);
   pi->insertItem(icon, text, count(), index);
   tags->append(tag);
 }
 
-void KTagComboBox::insertItem(const QString &text, const QString &tag, const QString &submenu, int index )
+void KTagComboBox::insertItem(const TQString &text, const TQString &tag, const TQString &submenu, int index )
 {
-  QPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
+  TQPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
   checkInsertPos(pi, text, index);
   pi->insertItem(text, count(), index);
   tags->append(tag);
 }
 
-void KTagComboBox::insertSeparator(const QString &submenu, int index)
+void KTagComboBox::insertSeparator(const TQString &submenu, int index)
 {
-  QPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
+  TQPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
   pi->insertSeparator(index);
-  tags->append(QString::null);
+  tags->append(TQString::null);
 }
 
-void KTagComboBox::insertSubmenu(const QString &text, const QString &tag, const QString &submenu, int index)
+void KTagComboBox::insertSubmenu(const TQString &text, const TQString &tag, const TQString &submenu, int index)
 {
-  QPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
-  QPopupMenu *p = new QPopupMenu(pi);
+  TQPopupMenu *pi = checkInsertIndex(popup, tags, submenu);
+  TQPopupMenu *p = new TQPopupMenu(pi);
   checkInsertPos(pi, text, index);
   pi->insertItem(text, p, count(), index);
   tags->append(tag);
-  connect( p, SIGNAL(activated(int)),
-                        SLOT(internalActivate(int)) );
-  connect( p, SIGNAL(highlighted(int)),
-                        SLOT(internalHighlight(int)) );
+  connect( p, TQT_SIGNAL(activated(int)),
+                        TQT_SLOT(internalActivate(int)) );
+  connect( p, TQT_SIGNAL(highlighted(int)),
+                        TQT_SLOT(internalHighlight(int)) );
 }
 
-void KTagComboBox::paintEvent( QPaintEvent * ev)
+void KTagComboBox::paintEvent( TQPaintEvent * ev)
 {
-  QComboBox::paintEvent(ev);
+  TQComboBox::paintEvent(ev);
 
-  QPainter p (this);
+  TQPainter p (this);
 
   // Text
-  QRect clip(2, 2, width() - 4, height() - 4);
+  TQRect clip(2, 2, width() - 4, height() - 4);
 #if 0
   if ( hasFocus() && style().guiStyle() != MotifStyle )
     p.setPen( colorGroup().highlightedText() );
@@ -197,29 +197,29 @@ void KTagComboBox::paintEvent( QPaintEvent * ev)
   p.drawText(clip, AlignCenter | SingleLine, popup->text( current ));
 
   // Icon
-  QIconSet *icon = popup->iconSet( this->current );
+  TQIconSet *icon = popup->iconSet( this->current );
   if (icon) {
-    QPixmap pm = icon->pixmap();
+    TQPixmap pm = icon->pixmap();
     p.drawPixmap( 4, (height()-pm.height())/2, pm );
   }
 }
 
-bool KTagComboBox::containsTag( const QString &str ) const
+bool KTagComboBox::containsTag( const TQString &str ) const
 {
   return tags->contains(str) > 0;
 }
 
-QString KTagComboBox::currentTag() const
+TQString KTagComboBox::currentTag() const
 {
   return *tags->at(currentItem());
 }
 
-QString KTagComboBox::tag(int i) const
+TQString KTagComboBox::tag(int i) const
 {
   if (i < 0 || i >= count())
   {
     kdDebug() << "KTagComboBox::tag(), unknown tag " << i << endl;
-    return QString::null;
+    return TQString::null;
   }
   return *tags->at(i);
 }
@@ -236,7 +236,7 @@ void KTagComboBox::setCurrentItem(int i)
   repaint();
 }
 
-void KTagComboBox::setCurrentItem(const QString &code)
+void KTagComboBox::setCurrentItem(const TQString &code)
 {
   int i = tags->findIndex(code);
   if (code.isNull())
@@ -245,8 +245,8 @@ void KTagComboBox::setCurrentItem(const QString &code)
     setCurrentItem(i);
 }
 
-void KTagComboBox::setFont( const QFont &font )
+void KTagComboBox::setFont( const TQFont &font )
 {
-  QComboBox::setFont( font );
+  TQComboBox::setFont( font );
   popup->setFont( font );
 }

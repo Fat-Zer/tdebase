@@ -20,7 +20,7 @@
 #ifndef PREFERENCESDIALOG_H
 #define PREFERENCESDIALOG_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdialogbase.h>
 #include <kfileitem.h>
 
@@ -32,14 +32,14 @@ class PreferencesDialog : public KDialogBase
 {
    Q_OBJECT
 public:
-	PreferencesDialog(KFileItemList media, QWidget *parent=0, const char *name=0);
+	PreferencesDialog(KFileItemList media, TQWidget *parent=0, const char *name=0);
 	~PreferencesDialog();
 
-	QStringList excludedMediumTypes();
-	void setExcludedMediumTypes(QStringList excludedTypesList);
+	TQStringList excludedMediumTypes();
+	void setExcludedMediumTypes(TQStringList excludedTypesList);
 
-	QStringList excludedMedia();
-	void setExcludedMedia(QStringList excludedList);
+	TQStringList excludedMedia();
+	void setExcludedMedia(TQStringList excludedList);
 
 protected slots:
 	void slotDefault();

@@ -39,11 +39,11 @@
 //-------------
 // QT includes
 //-------------
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
-#include <qstrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
+#include <tqstrlist.h>
 
 //--------------
 // KDE includes
@@ -68,7 +68,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <time.h>
-#include <qobject.h>
+#include <tqobject.h>
 
 //-------------------------------
 // Samba client library includes
@@ -92,7 +92,7 @@ class KProcess;
 //===========================================================================
 
 
-class SMBSlave : public QObject, public KIO::SlaveBase
+class SMBSlave : public TQObject, public KIO::SlaveBase
 {
     Q_OBJECT
 
@@ -105,10 +105,10 @@ private:
     /**
      * From Controlcenter
      */
-    QString  m_default_user;
-//    QString  m_default_workgroup; //currently unused, Alex <neundorf@kde.org>
-    QString  m_default_password;
-    QString  m_default_encoding;
+    TQString  m_default_user;
+//    TQString  m_default_workgroup; //currently unused, Alex <neundorf@kde.org>
+    TQString  m_default_password;
+    TQString  m_default_encoding;
 
     /**
      * we store the current url, it's needed for
@@ -234,7 +234,7 @@ public:
     //-----------------------------------------------------------------------
 
     // Functions overwritten in kio_smb.cpp
-    SMBSlave(const QCString& pool, const QCString& app);
+    SMBSlave(const TQCString& pool, const TQCString& app);
     virtual ~SMBSlave();
 
     // Functions overwritten in kio_smb_browse.cpp
@@ -255,18 +255,18 @@ public:
     virtual void put( const KURL& kurl, int permissions, bool overwrite, bool resume );
 
     // Functions not implemented  (yet)
-    //virtual void setHost(const QString& host, int port, const QString& user, const QString& pass);
+    //virtual void setHost(const TQString& host, int port, const TQString& user, const TQString& pass);
     //virtual void openConnection();
     //virtual void closeConnection();
     //virtual void slave_status();
-    virtual void special( const QByteArray & );
+    virtual void special( const TQByteArray & );
 
 private slots:
     void readOutput(KProcess *proc, char *buffer, int buflen);
     void readStdErr(KProcess *proc, char *buffer, int buflen);
 
 private:
-    QString mybuf, mystderr;
+    TQString mybuf, mystderr;
 
 };
 

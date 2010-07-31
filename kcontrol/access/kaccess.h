@@ -2,8 +2,8 @@
 #define __K_ACCESS_H__
 
 
-#include <qwidget.h>
-#include <qcolor.h>
+#include <tqwidget.h>
+#include <tqcolor.h>
 
 
 #include <kuniqueapplication.h>
@@ -62,23 +62,23 @@ private:
 
   bool    _systemBell, _artsBell, _visibleBell, _visibleBellInvert;
   bool    _artsBellBlocked;
-  QString _artsBellFile;
-  QColor  _visibleBellColor;
+  TQString _artsBellFile;
+  TQColor  _visibleBellColor;
   int     _visibleBellPause;
 
   bool    _gestures, _gestureConfirmation;
   bool    _kNotifyModifiers, _kNotifyAccessX;
 
-  QWidget *overlay;
+  TQWidget *overlay;
 
-  QTimer *artsBellTimer;
+  TQTimer *artsBellTimer;
 
   KWinModule wm;
 
   WId _activeWindow;
 
   KDialogBase *dialog;
-  QLabel *featuresLabel;
+  TQLabel *featuresLabel;
   KComboBox *showModeCombobox;
 
   int keys[8];
@@ -93,13 +93,13 @@ class VisualBell : public QWidget
 public:
 
   VisualBell(int pause) 
-    : QWidget(0, 0, WX11BypassWM), _pause(pause)
+    : TQWidget(0, 0, WX11BypassWM), _pause(pause)
     {};
 
   
 protected:
   
-  void paintEvent(QPaintEvent *);
+  void paintEvent(TQPaintEvent *);
 
 
 private:

@@ -30,12 +30,12 @@
 #include <kiconloader.h>
 #include <klineedit.h>
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qtabwidget.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqtabwidget.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include "indexwidget.h"
 #include "searchwidget.h"
@@ -52,21 +52,21 @@ TopLevel::TopLevel(const char* name)
   : KMainWindow( 0, name, WStyle_ContextHelp  )
   , _active(0), dummyAbout(0)
 {
-  setCaption(QString::null);
+  setCaption(TQString::null);
 
   report_bug = 0;
 
   // read settings
   KConfig *config = KGlobal::config();
   config->setGroup("Index");
-  QString viewmode = config->readEntry("ViewMode", "Tree");
+  TQString viewmode = config->readEntry("ViewMode", "Tree");
 
   if (viewmode == "Tree")
     KCGlobal::setViewMode(Tree);
   else
     KCGlobal::setViewMode(Icon);
 
-  QString size = config->readEntry("IconSize", "Medium");
+  TQString size = config->readEntry("IconSize", "Medium");
   if (size == "Small")
     KCGlobal::setIconSize(KIcon::SizeSmall);
   else if (size == "Large")
@@ -81,58 +81,58 @@ TopLevel::TopLevel(const char* name)
   _modules->readDesktopEntries();
 
   for ( ConfigModule* m = _modules->first(); m; m = _modules->next() ) {
-      connect( m, SIGNAL( handbookRequest() ), this, SLOT( slotHandbookRequest() ) );
-      connect( m, SIGNAL( helpRequest() ), this, SLOT( slotHelpRequest() ) );
+      connect( m, TQT_SIGNAL( handbookRequest() ), this, TQT_SLOT( slotHandbookRequest() ) );
+      connect( m, TQT_SIGNAL( helpRequest() ), this, TQT_SLOT( slotHelpRequest() ) );
   }
 
   // create the layout box
-  _splitter = new QSplitter( QSplitter::Horizontal, this );
+  _splitter = new TQSplitter( TQSplitter::Horizontal, this );
 
-  QFrame* leftFrame = new QFrame ( _splitter );
-  QBoxLayout *leftFrameLayout = new QVBoxLayout( leftFrame );
+  TQFrame* leftFrame = new TQFrame ( _splitter );
+  TQBoxLayout *leftFrameLayout = new TQVBoxLayout( leftFrame );
 
-  QFrame* mSearchFrame = new QFrame( leftFrame );
+  TQFrame* mSearchFrame = new TQFrame( leftFrame );
   leftFrameLayout->addWidget( mSearchFrame );
 
-  QBoxLayout *searchLayout = new QHBoxLayout( mSearchFrame );
+  TQBoxLayout *searchLayout = new TQHBoxLayout( mSearchFrame );
   searchLayout->setSpacing( KDialog::spacingHint() );
   searchLayout->setMargin( 6 );
 
-  QPushButton *clearButton = new QPushButton( mSearchFrame );
+  TQPushButton *clearButton = new TQPushButton( mSearchFrame );
   clearButton->setIconSet( KApplication::reverseLayout() ?
     SmallIconSet( "clear_left" ) : SmallIconSet("locationbar_erase") );
   searchLayout->addWidget( clearButton );
-  QToolTip::add( clearButton, i18n("Clear search") );
+  TQToolTip::add( clearButton, i18n("Clear search") );
 
-  QLabel *label = new QLabel(i18n("Search:"), mSearchFrame );
+  TQLabel *label = new TQLabel(i18n("Search:"), mSearchFrame );
   searchLayout->addWidget( label );
   
   KLineEdit *searchEdit = new KLineEdit( mSearchFrame );
   clearButton->setFixedHeight( searchEdit->height() );
-  connect( clearButton, SIGNAL( clicked() ), searchEdit, SLOT( clear() ) );
+  connect( clearButton, TQT_SIGNAL( clicked() ), searchEdit, TQT_SLOT( clear() ) );
   label->setBuddy( searchEdit );
   searchLayout->addWidget( searchEdit );
-  connect( searchEdit, SIGNAL( textChanged( const QString & ) ),
-           SLOT( slotSearchChanged(const QString &) ) );
+  connect( searchEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           TQT_SLOT( slotSearchChanged(const TQString &) ) );
 
   // create the left hand side under search
-  _stack = new QWidgetStack( leftFrame );
+  _stack = new TQWidgetStack( leftFrame );
   leftFrameLayout->addWidget( _stack );
 
   // index tab
   _index = new IndexWidget(_modules, this);
-  connect(_index, SIGNAL(moduleActivated(ConfigModule*)),
-                  this, SLOT(activateModule(ConfigModule*)));
+  connect(_index, TQT_SIGNAL(moduleActivated(ConfigModule*)),
+                  this, TQT_SLOT(activateModule(ConfigModule*)));
   _stack->addWidget( _index );
 
-  connect(_index, SIGNAL(categorySelected(QListViewItem*)),
-                  this, SLOT(categorySelected(QListViewItem*)));
+  connect(_index, TQT_SIGNAL(categorySelected(TQListViewItem*)),
+                  this, TQT_SLOT(categorySelected(TQListViewItem*)));
 
   // search tab
   _search = new SearchWidget(this);
   _search->populateKeywordList(_modules);
-  connect(_search, SIGNAL(moduleSelected(ConfigModule *)),
-                  this, SLOT(activateModule(ConfigModule *)));
+  connect(_search, TQT_SIGNAL(moduleSelected(ConfigModule *)),
+                  this, TQT_SLOT(activateModule(ConfigModule *)));
 
   _stack->addWidget( _search );
 
@@ -142,21 +142,21 @@ TopLevel::TopLevel(const char* name)
   // help widget
   _help = new HelpWidget(_dock);
 
-  _stack->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
+  _stack->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
  // Restore sizes
   config->setGroup("General");
-  QValueList<int> sizes = config->readIntListEntry(  "SplitterSizes" );
+  TQValueList<int> sizes = config->readIntListEntry(  "SplitterSizes" );
   if (!sizes.isEmpty())
      _splitter->setSizes(sizes);
 
   // That one does the trick ...
-  _splitter->setResizeMode( leftFrame, QSplitter::KeepSize );
+  _splitter->setResizeMode( leftFrame, TQSplitter::KeepSize );
 
-  connect(_dock, SIGNAL(newModule(const QString&, const QString&, const QString&)),
-                  this, SLOT(newModule(const QString&, const QString&, const QString&)));
-  connect(_dock, SIGNAL(changedModule(ConfigModule*)),
-          SLOT(changedModule(ConfigModule*)));
+  connect(_dock, TQT_SIGNAL(newModule(const TQString&, const TQString&, const TQString&)),
+                  this, TQT_SLOT(newModule(const TQString&, const TQString&, const TQString&)));
+  connect(_dock, TQT_SIGNAL(changedModule(ConfigModule*)),
+          TQT_SLOT(changedModule(ConfigModule*)));
 
   // set the main view
   setCentralWidget( _splitter );
@@ -178,8 +178,8 @@ TopLevel::TopLevel(const char* name)
   if (KCGlobal::isInfoCenter())
   {
       AboutWidget *aw = new AboutWidget( this, 0, _index->firstTreeViewItem());
-      connect( aw, SIGNAL( moduleSelected( ConfigModule * ) ),
-               SLOT( activateModule( ConfigModule * ) ) );
+      connect( aw, TQT_SIGNAL( moduleSelected( ConfigModule * ) ),
+               TQT_SLOT( activateModule( ConfigModule * ) ) );
       _dock->setBaseWidget( aw );
       KWin::setIcons(  winId(),
 		       KGlobal::iconLoader()->loadIcon("hwinfo",  KIcon::NoGroup,  32 ),
@@ -188,8 +188,8 @@ TopLevel::TopLevel(const char* name)
   else
   {
       AboutWidget *aw = new AboutWidget(this);
-      connect( aw, SIGNAL( moduleSelected( ConfigModule * ) ),
-                   SLOT( activateModule( ConfigModule * ) ) );
+      connect( aw, TQT_SIGNAL( moduleSelected( ConfigModule * ) ),
+                   TQT_SLOT( activateModule( ConfigModule * ) ) );
       _dock->setBaseWidget(aw);
   }
 }
@@ -234,40 +234,40 @@ bool TopLevel::queryClose()
 
 void TopLevel::setupActions()
 {
-  KStdAction::quit(this, SLOT(close()), actionCollection());
-  KStdAction::keyBindings(guiFactory(), SLOT(configureShortcuts()),
+  KStdAction::quit(this, TQT_SLOT(close()), actionCollection());
+  KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()),
 actionCollection());
   icon_view = new KRadioAction
-    (i18n("&Icon View"), 0, this, SLOT(activateIconView()),
+    (i18n("&Icon View"), 0, this, TQT_SLOT(activateIconView()),
      actionCollection(), "activate_iconview");
   icon_view->setExclusiveGroup( "viewmode" );
 
   tree_view = new KRadioAction
-    (i18n("&Tree View"), 0, this, SLOT(activateTreeView()),
+    (i18n("&Tree View"), 0, this, TQT_SLOT(activateTreeView()),
      actionCollection(), "activate_treeview");
   tree_view->setExclusiveGroup( "viewmode" );
 
   icon_small = new KRadioAction
-    (i18n("&Small"), 0, this, SLOT(activateSmallIcons()),
+    (i18n("&Small"), 0, this, TQT_SLOT(activateSmallIcons()),
      actionCollection(), "activate_smallicons");
   icon_small->setExclusiveGroup( "iconsize" );
 
   icon_medium = new KRadioAction
-    (i18n("&Medium"), 0, this, SLOT(activateMediumIcons()),
+    (i18n("&Medium"), 0, this, TQT_SLOT(activateMediumIcons()),
      actionCollection(), "activate_mediumicons");
   icon_medium->setExclusiveGroup( "iconsize" );
 
   icon_large = new KRadioAction
-    (i18n("&Large"), 0, this, SLOT(activateLargeIcons()),
+    (i18n("&Large"), 0, this, TQT_SLOT(activateLargeIcons()),
      actionCollection(), "activate_largeicons");
   icon_large->setExclusiveGroup( "iconsize" );
 
   icon_huge = new KRadioAction
-    (i18n("&Huge"), 0, this, SLOT(activateHugeIcons()),
+    (i18n("&Huge"), 0, this, TQT_SLOT(activateHugeIcons()),
      actionCollection(), "activate_hugeicons");
   icon_huge->setExclusiveGroup( "iconsize" );
 
-  about_module = new KAction(i18n("About Current Module"), 0, this, SLOT(aboutModule()), actionCollection(), "help_about_module");
+  about_module = new KAction(i18n("About Current Module"), 0, this, TQT_SLOT(aboutModule()), actionCollection(), "help_about_module");
   about_module->setEnabled(false);
 
   // I need to add this so that each module can get a bug reported,
@@ -280,7 +280,7 @@ actionCollection());
   report_bug = actionCollection()->action("help_report_bug");
   report_bug->setText(i18n("&Report Bug..."));
   report_bug->disconnect();
-  connect(report_bug, SIGNAL(activated()), SLOT(reportBug()));
+  connect(report_bug, TQT_SIGNAL(activated()), TQT_SLOT(reportBug()));
 }
 
 void TopLevel::activateIconView()
@@ -345,7 +345,7 @@ void TopLevel::activateHugeIcons()
   _index->reload();
 }
 
-void TopLevel::newModule(const QString &name, const QString& docPath, const QString &quickhelp)
+void TopLevel::newModule(const TQString &name, const TQString& docPath, const TQString &quickhelp)
 {
     setCaption(name, false);
 
@@ -366,7 +366,7 @@ void TopLevel::changedModule(ConfigModule *changed)
     setCaption(changed->moduleName(), changed->isChanged() );
 }
 
-void TopLevel::categorySelected(QListViewItem *category)
+void TopLevel::categorySelected(TQListViewItem *category)
 {
   if (_active)
   {
@@ -390,13 +390,13 @@ void TopLevel::categorySelected(QListViewItem *category)
   }
   _dock->removeModule();
   about_module->setText( i18n( "About Current Module" ) );
-  about_module->setIconSet( QIconSet() );
+  about_module->setIconSet( TQIconSet() );
   about_module->setEnabled( false );
 
   // insert the about widget
-  QListViewItem *firstItem = category->firstChild();
-  QString caption = static_cast<ModuleTreeItem*>(category)->caption();
-  QString icon = static_cast<ModuleTreeItem*>(category)->icon();
+  TQListViewItem *firstItem = category->firstChild();
+  TQString caption = static_cast<ModuleTreeItem*>(category)->caption();
+  TQString icon = static_cast<ModuleTreeItem*>(category)->icon();
   if( _dock->baseWidget()->isA( "AboutWidget" ) )
   {
     static_cast<AboutWidget *>( _dock->baseWidget() )->setCategory( firstItem, icon, caption);
@@ -404,8 +404,8 @@ void TopLevel::categorySelected(QListViewItem *category)
   else
   {
     AboutWidget *aw = new AboutWidget( this, 0, firstItem, caption );
-    connect( aw, SIGNAL( moduleSelected( ConfigModule * ) ),
-             SLOT( activateModule( ConfigModule * ) ) );
+    connect( aw, TQT_SIGNAL( moduleSelected( ConfigModule * ) ),
+             TQT_SLOT( activateModule( ConfigModule * ) ) );
     _dock->setBaseWidget( aw );
   }
 }
@@ -445,7 +445,7 @@ void TopLevel::activateModule(ConfigModule *mod)
   else
   {
      about_module->setText(i18n("About Current Module"));
-     about_module->setIconSet(QIconSet());
+     about_module->setIconSet(TQIconSet());
      about_module->setEnabled(false);
   }
 }
@@ -456,7 +456,7 @@ void TopLevel::deleteDummyAbout()
   dummyAbout = 0;
 }
 
-void TopLevel::slotSearchChanged(const QString& search)
+void TopLevel::slotSearchChanged(const TQString& search)
 {
     if (search.isEmpty())
        _stack->raiseWidget(_index);
@@ -469,7 +469,7 @@ void TopLevel::slotSearchChanged(const QString& search)
 
 void TopLevel::slotHelpRequest()
 {
-    _help->display(_help->text(), QCursor::pos ( ), _dock);
+    _help->display(_help->text(), TQCursor::pos ( ), _dock);
 }
 
 void TopLevel::slotHandbookRequest()
@@ -500,7 +500,7 @@ void TopLevel::reportBug()
     }
     KBugReport *br = new KBugReport(this, false, dummyAbout);
     if (deleteit)
-        connect(br, SIGNAL(finished()), SLOT(deleteDummyAbout()));
+        connect(br, TQT_SIGNAL(finished()), TQT_SLOT(deleteDummyAbout()));
     else
         dummyAbout = 0;
     br->show();
@@ -512,7 +512,7 @@ void TopLevel::aboutModule()
     dlg.exec();
 }
 
-QString TopLevel::handleAmpersand( QString modulename ) const
+TQString TopLevel::handleAmpersand( TQString modulename ) const
 {
    if( modulename.contains( '&' )) // double it
    {

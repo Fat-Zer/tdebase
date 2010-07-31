@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qdragobject.h>
+#include <tqdragobject.h>
 
 #include <ksycocaentry.h>
 #include <kservice.h>
@@ -33,14 +33,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "addbutton_mnu.moc"
 #include "containerarea.h"
 
-PanelAddButtonMenu::PanelAddButtonMenu(ContainerArea* cArea, const QString & label,
-				       const QString & relPath, QWidget * parent, const char * name,  const QString& _inlineHeader)
+PanelAddButtonMenu::PanelAddButtonMenu(ContainerArea* cArea, const TQString & label,
+				       const TQString & relPath, TQWidget * parent, const char * name,  const TQString& _inlineHeader)
     : PanelServiceMenu(label, relPath, parent, name, true, _inlineHeader), containerArea(cArea)
 {
 }
 
-PanelAddButtonMenu::PanelAddButtonMenu(ContainerArea* cArea, QWidget * parent, const char * name, const QString& _inlineHeader)
-    : PanelServiceMenu(QString::null, QString::null, parent, name, true, _inlineHeader), containerArea(cArea)
+PanelAddButtonMenu::PanelAddButtonMenu(ContainerArea* cArea, TQWidget * parent, const char * name, const TQString& _inlineHeader)
+    : PanelServiceMenu(TQString::null, TQString::null, parent, name, true, _inlineHeader), containerArea(cArea)
 {
 }
 
@@ -60,8 +60,8 @@ void PanelAddButtonMenu::slotExec(int id)
     }
 }
 
-PanelServiceMenu * PanelAddButtonMenu::newSubMenu(const QString & label, const QString & relPath,
-						QWidget * parent, const char * name, const QString& _inlineHeader)
+PanelServiceMenu * PanelAddButtonMenu::newSubMenu(const TQString & label, const TQString & relPath,
+						TQWidget * parent, const char * name, const TQString& _inlineHeader)
 {
     return new PanelAddButtonMenu(containerArea, label, relPath, parent, name, _inlineHeader);
 }

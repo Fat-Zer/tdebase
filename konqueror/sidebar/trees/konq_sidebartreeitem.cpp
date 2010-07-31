@@ -22,13 +22,13 @@
 //#include "konq_sidebartreepart.h"
 
 KonqSidebarTreeItem::KonqSidebarTreeItem( KonqSidebarTreeItem *parentItem, KonqSidebarTreeTopLevelItem *topLevelItem )
-    : QListViewItem( parentItem )
+    : TQListViewItem( parentItem )
 {
     initItem( topLevelItem );
 }
 
 KonqSidebarTreeItem::KonqSidebarTreeItem( KonqSidebarTree *parent, KonqSidebarTreeTopLevelItem *topLevelItem )
-    : QListViewItem( parent )
+    : TQListViewItem( parent )
 {
     initItem( topLevelItem );
 }

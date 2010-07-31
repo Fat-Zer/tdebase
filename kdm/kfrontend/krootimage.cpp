@@ -25,7 +25,7 @@ Boston, MA 02110-1301, USA.
 #include <ksimpleconfig.h>
 #include <klocale.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "krootimage.h"
 
@@ -46,10 +46,10 @@ static KCmdLineOptions options[] = {
 
 MyApplication::MyApplication( const char *conf )
 	: KApplication(),
-	  renderer( 0, new KSimpleConfig( QFile::decodeName( conf ) ) )
+	  renderer( 0, new KSimpleConfig( TQFile::decodeName( conf ) ) )
 {
-	connect( &timer, SIGNAL(timeout()), SLOT(slotTimeout()) );
-	connect( &renderer, SIGNAL(imageDone( int )), this, SLOT(renderDone()) );
+	connect( &timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
+	connect( &renderer, TQT_SIGNAL(imageDone( int )), this, TQT_SLOT(renderDone()) );
 	renderer.enableTiling( true ); // optimize
 	renderer.changeWallpaper(); // cannot do it when we're killed, so do it now
 	timer.start( 60000 );

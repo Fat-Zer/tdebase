@@ -34,11 +34,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 static const int REMOVEALLID = 1000;
 
-PanelRemoveExtensionMenu::PanelRemoveExtensionMenu( QWidget *parent, const char *name )
-    : QPopupMenu( parent, name )
+PanelRemoveExtensionMenu::PanelRemoveExtensionMenu( TQWidget *parent, const char *name )
+    : TQPopupMenu( parent, name )
 {
-    connect(this, SIGNAL(activated(int)), SLOT(slotExec(int)));
-    connect(this, SIGNAL(aboutToShow()), SLOT(slotAboutToShow()));
+    connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
+    connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 }
 
 PanelRemoveExtensionMenu::PanelRemoveExtensionMenu()
@@ -51,13 +51,13 @@ void PanelRemoveExtensionMenu::slotAboutToShow()
 
     clear();
     m_containers = ExtensionManager::the()->containers();
-    QValueList<PanelMenuItemInfo> items;
+    TQValueList<PanelMenuItemInfo> items;
 
     ExtensionList::iterator itEnd = m_containers.end();
     for (ExtensionList::iterator it = m_containers.begin(); it != itEnd; ++it)
     {
         const AppletInfo info = (*it)->info();
-        QString name = info.name().replace("&", "&&");
+        TQString name = info.name().replace("&", "&&");
         switch ((*it)->position())
         {
             case KPanelExtension::Top:
@@ -76,13 +76,13 @@ void PanelRemoveExtensionMenu::slotAboutToShow()
                 name = i18n("%1 (Floating)").arg(name);
             break;
          }
-        items.append(PanelMenuItemInfo(QString::null, name, id));
+        items.append(PanelMenuItemInfo(TQString::null, name, id));
         ++id;
     }
 
     qHeapSort(items);
-    QValueList<PanelMenuItemInfo>::iterator itEnd2 = items.end();
-    for (QValueList<PanelMenuItemInfo>::iterator it = items.begin(); it != itEnd2; ++it)
+    TQValueList<PanelMenuItemInfo>::iterator itEnd2 = items.end();
+    for (TQValueList<PanelMenuItemInfo>::iterator it = items.begin(); it != itEnd2; ++it)
     {
         (*it).plug(this);
     }

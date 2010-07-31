@@ -20,8 +20,8 @@
 #ifndef _CLIPBOARDPOLL_H_
 #define _CLIPBOARDPOLL_H_
 
-#include <qwidget.h>
-#include <qtimer.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
@@ -30,7 +30,7 @@ class ClipboardPoll
     {
     Q_OBJECT
     public:
-        ClipboardPoll( QWidget* parent );
+        ClipboardPoll( TQWidget* parent );
     signals:
         void clipboardChanged( bool selectionMode );
     protected:
@@ -55,7 +55,7 @@ class ClipboardPoll
         bool checkTimestamp( SelectionData& data );
         bool changedTimestamp( SelectionData& data, const XEvent& e );
         void initPolling();
-        QTimer timer;
+        TQTimer timer;
         SelectionData selection;
         SelectionData clipboard;
         Atom xa_clipboard;

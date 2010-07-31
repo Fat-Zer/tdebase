@@ -21,14 +21,14 @@
 
 */
 
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtabwidget.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlistbox.h>
+#include <tqpixmap.h>
+#include <tqpushbutton.h>
+#include <tqspinbox.h>
+#include <tqtabwidget.h>
 
 #include <kaccelmanager.h>
 #include <kcolorbutton.h>
@@ -37,45 +37,45 @@
 
 #include "StyleSettings.h"
 
-StyleSettings::StyleSettings( QWidget *parent, const char *name )
+StyleSettings::StyleSettings( TQWidget *parent, const char *name )
   : KDialogBase( Tabbed, i18n( "Global Style Settings" ), Help | Ok | Apply |
                  Cancel, Ok, parent, name, true, true )
 {
-  QFrame *page = addPage( i18n( "Display Style" ) );
-  QGridLayout *layout = new QGridLayout( page, 6, 2, 0, spacingHint() );
+  TQFrame *page = addPage( i18n( "Display Style" ) );
+  TQGridLayout *layout = new TQGridLayout( page, 6, 2, 0, spacingHint() );
 
-  QLabel *label = new QLabel( i18n( "First foreground color:" ), page );
+  TQLabel *label = new TQLabel( i18n( "First foreground color:" ), page );
   layout->addWidget( label, 0, 0 );
 
   mFirstForegroundColor = new KColorButton( page );
   layout->addWidget( mFirstForegroundColor, 0, 1 );
   label->setBuddy( mFirstForegroundColor );
 
-  label = new QLabel( i18n( "Second foreground color:" ), page );
+  label = new TQLabel( i18n( "Second foreground color:" ), page );
   layout->addWidget( label, 1, 0 );
 
   mSecondForegroundColor = new KColorButton( page );
   layout->addWidget( mSecondForegroundColor, 1, 1 );
   label->setBuddy( mSecondForegroundColor );
 
-  label = new QLabel( i18n( "Alarm color:" ), page );
+  label = new TQLabel( i18n( "Alarm color:" ), page );
   layout->addWidget( label, 2, 0 );
 
   mAlarmColor = new KColorButton( page );
   layout->addWidget( mAlarmColor, 2, 1 );
   label->setBuddy( mAlarmColor );
 
-  label = new QLabel( i18n( "Background color:" ), page );
+  label = new TQLabel( i18n( "Background color:" ), page );
   layout->addWidget( label, 3, 0 );
 
   mBackgroundColor = new KColorButton( page );
   layout->addWidget( mBackgroundColor, 3, 1 );
   label->setBuddy( mBackgroundColor );
 
-  label = new QLabel( i18n( "Font size:" ), page );
+  label = new TQLabel( i18n( "Font size:" ), page );
   layout->addWidget( label, 4, 0 );
 
-  mFontSize = new QSpinBox( 7, 48, 1, page );
+  mFontSize = new TQSpinBox( 7, 48, 1, page );
   mFontSize->setValue( 8 );
   layout->addWidget( mFontSize, 4, 1 );
   label->setBuddy( mFontSize );
@@ -83,21 +83,21 @@ StyleSettings::StyleSettings( QWidget *parent, const char *name )
   layout->setRowStretch( 5, 1 );
 
   page = addPage( i18n( "Sensor Colors" ) );
-  layout = new QGridLayout( page, 1, 2, 0, spacingHint() );
+  layout = new TQGridLayout( page, 1, 2, 0, spacingHint() );
 
-  mColorListBox = new QListBox( page );
+  mColorListBox = new TQListBox( page );
   layout->addWidget( mColorListBox, 0, 0 );
 
-  mEditColorButton = new QPushButton( i18n( "Change Color..." ), page );
+  mEditColorButton = new TQPushButton( i18n( "Change Color..." ), page );
   mEditColorButton->setEnabled( false );
   layout->addWidget( mEditColorButton, 0, 1, Qt::AlignTop );
 
-  connect( mColorListBox, SIGNAL( selectionChanged( QListBoxItem* ) ),
-           SLOT( selectionChanged( QListBoxItem* ) ) );
-  connect( mColorListBox, SIGNAL( doubleClicked( QListBoxItem* ) ),
-           SLOT( editSensorColor() ) );
-  connect( mEditColorButton, SIGNAL( clicked() ),
-           SLOT( editSensorColor() ) );
+  connect( mColorListBox, TQT_SIGNAL( selectionChanged( TQListBoxItem* ) ),
+           TQT_SLOT( selectionChanged( TQListBoxItem* ) ) );
+  connect( mColorListBox, TQT_SIGNAL( doubleClicked( TQListBoxItem* ) ),
+           TQT_SLOT( editSensorColor() ) );
+  connect( mEditColorButton, TQT_SIGNAL( clicked() ),
+           TQT_SLOT( editSensorColor() ) );
 
   KAcceleratorManager::manage( this );
 }
@@ -106,42 +106,42 @@ StyleSettings::~StyleSettings()
 {
 }
 
-void StyleSettings::setFirstForegroundColor( const QColor &color )
+void StyleSettings::setFirstForegroundColor( const TQColor &color )
 {
   mFirstForegroundColor->setColor( color );
 }
 
-QColor StyleSettings::firstForegroundColor() const
+TQColor StyleSettings::firstForegroundColor() const
 {
   return mFirstForegroundColor->color();
 }
 
-void StyleSettings::setSecondForegroundColor( const QColor &color )
+void StyleSettings::setSecondForegroundColor( const TQColor &color )
 {
   mSecondForegroundColor->setColor( color );
 }
 
-QColor StyleSettings::secondForegroundColor() const
+TQColor StyleSettings::secondForegroundColor() const
 {
   return mSecondForegroundColor->color();
 }
 
-void StyleSettings::setAlarmColor( const QColor &color )
+void StyleSettings::setAlarmColor( const TQColor &color )
 {
   mAlarmColor->setColor( color );
 }
 
-QColor StyleSettings::alarmColor() const
+TQColor StyleSettings::alarmColor() const
 {
   return mAlarmColor->color();
 }
 
-void StyleSettings::setBackgroundColor( const QColor &color )
+void StyleSettings::setBackgroundColor( const TQColor &color )
 {
   mBackgroundColor->setColor( color );
 }
 
-QColor StyleSettings::backgroundColor() const
+TQColor StyleSettings::backgroundColor() const
 {
   return mBackgroundColor->color();
 }
@@ -156,23 +156,23 @@ uint StyleSettings::fontSize() const
   return mFontSize->value();
 }
 
-void StyleSettings::setSensorColors( const QValueList<QColor> &list )
+void StyleSettings::setSensorColors( const TQValueList<TQColor> &list )
 {
   mColorListBox->clear();
 
   for ( uint i = 0; i < list.count(); ++i ) {
-    QPixmap pm( 12, 12 );
+    TQPixmap pm( 12, 12 );
 		pm.fill( *list.at( i ) );
     mColorListBox->insertItem( pm, i18n( "Color %1" ).arg( i ) );
 	}
 }
 
-QValueList<QColor> StyleSettings::sensorColors()
+TQValueList<TQColor> StyleSettings::sensorColors()
 {
-  QValueList<QColor> list;
+  TQValueList<TQColor> list;
 
   for ( uint i = 0; i < mColorListBox->count(); ++i )
-    list.append( QColor( mColorListBox->pixmap( i )->convertToImage().pixel( 1, 1 ) ) );
+    list.append( TQColor( mColorListBox->pixmap( i )->convertToImage().pixel( 1, 1 ) ) );
 
   return list;
 }
@@ -184,16 +184,16 @@ void StyleSettings::editSensorColor()
   if ( pos < 0 )
     return;
 
-  QColor color = mColorListBox->pixmap( pos )->convertToImage().pixel( 1, 1 );
+  TQColor color = mColorListBox->pixmap( pos )->convertToImage().pixel( 1, 1 );
 
   if ( KColorDialog::getColor( color ) == KColorDialog::Accepted ) {
-    QPixmap pm( 12, 12 );
+    TQPixmap pm( 12, 12 );
 		pm.fill( color );
     mColorListBox->changeItem( pm, mColorListBox->text( pos ), pos );
 	}
 }
 
-void StyleSettings::selectionChanged( QListBoxItem *item )
+void StyleSettings::selectionChanged( TQListBoxItem *item )
 {
   mEditColorButton->setEnabled( item != 0 );
 }

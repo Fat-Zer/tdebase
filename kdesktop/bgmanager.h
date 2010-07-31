@@ -10,8 +10,8 @@
 #ifndef __BGManager_h_Included__
 #define __BGManager_h_Included__
 
-#include <qstring.h>
-#include <qptrvector.h>
+#include <tqstring.h>
+#include <tqptrvector.h>
 
 #include <KBackgroundIface.h>
 
@@ -50,13 +50,13 @@ struct KBackgroundCacheEntry
  */
 
 class KBackgroundManager
-    : public QObject,
+    : public TQObject,
       virtual public KBackgroundIface
 {
     Q_OBJECT
 
 public:
-    KBackgroundManager(QWidget *desktop, KWinModule* kwinModule);
+    KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule);
     ~KBackgroundManager();
 
     void configure();
@@ -65,15 +65,15 @@ public:
     void setExport(int);
     bool isExport() { return m_bExport; };
     void setCache(int, int);
-    void setWallpaper(int desk, QString wallpaper, int mode);
-    void setWallpaper(QString wallpaper, int mode);
-    void setWallpaper(QString wallpaper);
+    void setWallpaper(int desk, TQString wallpaper, int mode);
+    void setWallpaper(TQString wallpaper, int mode);
+    void setWallpaper(TQString wallpaper);
     void changeWallpaper();
-    QString currentWallpaper(int desk);
-    void setColor(const QColor & c, bool isColorA = true);
+    TQString currentWallpaper(int desk);
+    void setColor(const TQColor & c, bool isColorA = true);
     void setBackgroundEnabled(const bool enable);
-    QStringList wallpaperList(int desk);
-    QStringList wallpaperFiles(int desk);
+    TQStringList wallpaperList(int desk);
+    TQStringList wallpaperFiles(int desk);
 
 signals:
     void initDone();
@@ -82,7 +82,7 @@ private slots:
     void slotTimeout();
     void slotImageDone(int desk);
     void slotChangeDesktop(int);
-    void slotChangeViewport(int, const QPoint&);
+    void slotChangeViewport(int, const TQPoint&);
     void slotChangeNumberOfDesktops(int);
     void repaintBackground();
     void desktopResized();
@@ -105,7 +105,7 @@ private:
 
     void renderBackground(int desk);
     void exportBackground(int pixmap, int desk);
-    int pixmapSize(QPixmap *pm);
+    int pixmapSize(TQPixmap *pm);
     int cacheSize();
     void removeCache(int desk);
     bool freeCache(int size);
@@ -121,15 +121,15 @@ private:
     int m_Serial, m_Hash, m_Current;
 
     KConfig *m_pConfig;
-    QWidget *m_pDesktop;
-    QTimer *m_pTimer;
+    TQWidget *m_pDesktop;
+    TQTimer *m_pTimer;
 
 #ifdef COMPOSITE
 	KPixmap *m_tPixmap;
 #endif
 	
-    QPtrVector<KVirtualBGRenderer> m_Renderer;
-    QPtrVector<KBackgroundCacheEntry> m_Cache;
+    TQPtrVector<KVirtualBGRenderer> m_Renderer;
+    TQPtrVector<KBackgroundCacheEntry> m_Cache;
 
     KWinModule *m_pKwinmodule;
     KPixmapServer *m_pPixmapServer;

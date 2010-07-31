@@ -30,7 +30,7 @@ SearchProvider::SearchProvider(const KService::Ptr service)
     m_charset = service->property("Charset").toString();
 }
 
-void SearchProvider::setName(const QString &name)
+void SearchProvider::setName(const TQString &name)
 {
     if (m_name == name)
         return;
@@ -38,7 +38,7 @@ void SearchProvider::setName(const QString &name)
     m_dirty = true;
 }
 
-void SearchProvider::setQuery(const QString &query)
+void SearchProvider::setQuery(const TQString &query)
 {
     if (m_query == query)
         return;
@@ -46,7 +46,7 @@ void SearchProvider::setQuery(const QString &query)
     m_dirty = true;
 }
 
-void SearchProvider::setKeys(const QStringList &keys)
+void SearchProvider::setKeys(const TQStringList &keys)
 {
     if (m_keys == keys)
         return;
@@ -54,7 +54,7 @@ void SearchProvider::setKeys(const QStringList &keys)
     m_dirty = true;
 }
 
-void SearchProvider::setCharset(const QString &charset)
+void SearchProvider::setCharset(const TQString &charset)
 {
     if (m_charset == charset)
         return;
@@ -62,17 +62,17 @@ void SearchProvider::setCharset(const QString &charset)
     m_dirty = true;
 }
 
-SearchProvider *SearchProvider::findByDesktopName(const QString &name)
+SearchProvider *SearchProvider::findByDesktopName(const TQString &name)
 {
     KService::Ptr service =
-        KService::serviceByDesktopPath(QString("searchproviders/%1.desktop").arg(name));
+        KService::serviceByDesktopPath(TQString("searchproviders/%1.desktop").arg(name));
     return service ? new SearchProvider(service) : 0;
 }
 
-SearchProvider *SearchProvider::findByKey(const QString &key)
+SearchProvider *SearchProvider::findByKey(const TQString &key)
 {
     KTrader::OfferList providers =
-        KTrader::self()->query("SearchProvider", QString("'%1' in Keys").arg(key));
+        KTrader::self()->query("SearchProvider", TQString("'%1' in Keys").arg(key));
     return providers.count() ? new SearchProvider(providers[0]) : 0;
 }
 

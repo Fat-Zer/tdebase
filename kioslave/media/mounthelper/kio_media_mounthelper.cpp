@@ -26,7 +26,7 @@
 #include <kmessagebox.h>
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <stdlib.h>
 #include <kdebug.h>
 #include <kglobal.h>
@@ -45,7 +45,7 @@ const Medium MountHelper::findMedium(const KURL &url)
 	DCOPReply reply = mediamanager.call( "properties", url.fileName() );
 	if ( !reply.isValid() ) {
 		m_errorStr = i18n("The KDE mediamanager is not running.")+"\n";
-		return Medium(QString::null, QString::null);
+		return Medium(TQString::null, TQString::null);
 	}
 	const Medium& medium = Medium::create(reply);
 	if ( medium.id().isEmpty() ) {
@@ -53,7 +53,7 @@ const Medium MountHelper::findMedium(const KURL &url)
 		reply = mediamanager.call( "properties", url.prettyURL() );
 		if ( !reply.isValid() ) {
 			m_errorStr = i18n("Internal Error");
-			return Medium(QString::null, QString::null);
+			return Medium(TQString::null, TQString::null);
 		}
 		return Medium::create(reply);
 	} else {
@@ -65,7 +65,7 @@ MountHelper::MountHelper() : KApplication()
 {
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-	m_errorStr = QString::null;
+	m_errorStr = TQString::null;
 
 	KURL url(args->url(0));
 	const Medium medium = findMedium(url);
@@ -74,19 +74,19 @@ MountHelper::MountHelper() : KApplication()
 	{
 		if (m_errorStr.isEmpty())
 			m_errorStr+= i18n("%1 cannot be found.").arg(url.prettyURL());
-		QTimer::singleShot(0, this, SLOT(error()) );
+		TQTimer::singleShot(0, this, TQT_SLOT(error()) );
 		return;
 	}
 
 	if ( !medium.isMountable() && !args->isSet("e") && !args->isSet("s"))
 	{
 		m_errorStr = i18n("%1 is not a mountable media.").arg(url.prettyURL());
-		QTimer::singleShot(0, this, SLOT(error()) );
+		TQTimer::singleShot(0, this, TQT_SLOT(error()) );
 		return;
 	}
 
-	QString device = medium.deviceNode();
-	QString mount_point = medium.mountPoint();
+	TQString device = medium.deviceNode();
+	TQString mount_point = medium.mountPoint();
 
 	m_isCdrom = medium.mimeType().find("dvd")!=-1
 	         || medium.mimeType().find("cd")!=-1;
@@ -96,20 +96,20 @@ MountHelper::MountHelper() : KApplication()
 		if (!medium.isEncrypted())
 		{
 			m_errorStr = i18n("%1 is not an encrypted media.").arg(url.prettyURL());
-			QTimer::singleShot(0, this, SLOT(error()) );
+			TQTimer::singleShot(0, this, TQT_SLOT(error()) );
 			return;
 		}
 		if (!medium.needDecryption())
 		{
 			m_errorStr = i18n("%1 is already decrypted.").arg(url.prettyURL());
-			QTimer::singleShot(0, this, SLOT(error()) );
+			TQTimer::singleShot(0, this, TQT_SLOT(error()) );
 			return;
 		}
 
-		QString iconName = medium.iconName();
+		TQString iconName = medium.iconName();
 		if (iconName.isEmpty())
 		{
-			QString mime = medium.mimeType();
+			TQString mime = medium.mimeType();
 			iconName = KMimeType::mimeType(mime)->icon(mime, false);
 		}
 
@@ -117,9 +117,9 @@ MountHelper::MountHelper() : KApplication()
 		dialog = new Dialog(url.prettyURL(), iconName);
 		dialog->show();
 
-		connect(dialog, SIGNAL (user1Clicked()), this, SLOT (slotSendPassword()));
-		connect(dialog, SIGNAL (cancelClicked()), this, SLOT (slotCancel()));
-		connect(this, SIGNAL (signalPasswordError(QString)), dialog, SLOT (slotDialogError(QString)));
+		connect(dialog, TQT_SIGNAL (user1Clicked()), this, TQT_SLOT (slotSendPassword()));
+		connect(dialog, TQT_SIGNAL (cancelClicked()), this, TQT_SLOT (slotCancel()));
+		connect(this, TQT_SIGNAL (signalPasswordError(TQString)), dialog, TQT_SLOT (slotDialogError(TQString)));
 	}
 	else if (args->isSet("u"))
 	{
@@ -180,7 +180,7 @@ MountHelper::MountHelper() : KApplication()
 	}
 }
 
-void MountHelper::invokeEject(const QString &device, bool quiet)
+void MountHelper::invokeEject(const TQString &device, bool quiet)
 {
 	KProcess *proc = new KProcess(this);
 	*proc << "kdeeject";
@@ -189,8 +189,8 @@ void MountHelper::invokeEject(const QString &device, bool quiet)
 		*proc << "-q";
 	}
 	*proc << device;
-	connect( proc, SIGNAL(processExited(KProcess *)),
-		this, SLOT( ejectFinished(KProcess *) ) );
+	connect( proc, TQT_SIGNAL(processExited(KProcess *)),
+		this, TQT_SLOT( ejectFinished(KProcess *) ) );
 	proc->start();
 }
 
@@ -209,7 +209,7 @@ void MountHelper::ejectFinished(KProcess* proc)
 				m_errorStr = i18n("The device was successfully unmounted, but could not be ejected");
 		}
 //X Comment this because the error is useless as long as the unmount is successfull. 
-//X 		QTimer::singleShot(0, this, SLOT(error()));
+//X 		TQTimer::singleShot(0, this, TQT_SLOT(error()));
       ::exit(0);
 	}
 }
@@ -229,7 +229,7 @@ void MountHelper::slotSendPassword()
 		m_errorStr = i18n("The KDE mediamanager is not running.");
 		error();
 	} else {
-		QString errorMsg = reply;
+		TQString errorMsg = reply;
 		if (errorMsg.isNull()) {
 			exit(0);
 		} else {

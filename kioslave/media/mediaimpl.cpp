@@ -28,20 +28,20 @@
 #include <kmimetype.h>
 
 #include <kapplication.h>
-#include <qeventloop.h>
+#include <tqeventloop.h>
 
 #include <sys/stat.h>
 
 #include "medium.h"
 
-MediaImpl::MediaImpl() : QObject(), DCOPObject("mediaimpl"), mp_mounting(0L)
+MediaImpl::MediaImpl() : TQObject(), DCOPObject("mediaimpl"), mp_mounting(0L)
 {
 
 }
 
-bool MediaImpl::parseURL(const KURL &url, QString &name, QString &path) const
+bool MediaImpl::parseURL(const KURL &url, TQString &name, TQString &path) const
 {
-	QString url_path = url.path();
+	TQString url_path = url.path();
 
 	int i = url_path.find('/', 1);
         if (i > 0)
@@ -52,13 +52,13 @@ bool MediaImpl::parseURL(const KURL &url, QString &name, QString &path) const
         else
         {
                 name = url_path.mid(1);
-                path = QString::null;
+                path = TQString::null;
         }
 
-	return name != QString::null;
+	return name != TQString::null;
 }
 
-bool MediaImpl::realURL(const QString &name, const QString &path, KURL &url)
+bool MediaImpl::realURL(const TQString &name, const TQString &path, KURL &url)
 {
 	bool ok;
 	Medium m = findMediumByName(name, ok);
@@ -73,7 +73,7 @@ bool MediaImpl::realURL(const QString &name, const QString &path, KURL &url)
 }
 
 
-bool MediaImpl::statMedium(const QString &name, KIO::UDSEntry &entry)
+bool MediaImpl::statMedium(const TQString &name, KIO::UDSEntry &entry)
 {
 	kdDebug(1219) << "MediaImpl::statMedium: " << name << endl;
 
@@ -100,7 +100,7 @@ bool MediaImpl::statMedium(const QString &name, KIO::UDSEntry &entry)
 	return true;
 }
 
-bool MediaImpl::statMediumByLabel(const QString &label, KIO::UDSEntry &entry)
+bool MediaImpl::statMediumByLabel(const TQString &label, KIO::UDSEntry &entry)
 {
 	kdDebug(1219) << "MediaImpl::statMediumByLabel: " << label << endl;
 
@@ -114,7 +114,7 @@ bool MediaImpl::statMediumByLabel(const QString &label, KIO::UDSEntry &entry)
 		return false;
 	}
 
-	QString name = reply;
+	TQString name = reply;
 
 	if (name.isEmpty())
 	{
@@ -126,7 +126,7 @@ bool MediaImpl::statMediumByLabel(const QString &label, KIO::UDSEntry &entry)
 }
 
 
-bool MediaImpl::listMedia(QValueList<KIO::UDSEntry> &list)
+bool MediaImpl::listMedia(TQValueList<KIO::UDSEntry> &list)
 {
 	kdDebug(1219) << "MediaImpl::listMedia" << endl;
 
@@ -159,7 +159,7 @@ bool MediaImpl::listMedia(QValueList<KIO::UDSEntry> &list)
 	return true;
 }
 
-bool MediaImpl::setUserLabel(const QString &name, const QString &label)
+bool MediaImpl::setUserLabel(const TQString &name, const TQString &label)
 {
 	kdDebug(1219) << "MediaImpl::setUserLabel: " << name << ", " << label << endl;
 
@@ -175,7 +175,7 @@ bool MediaImpl::setUserLabel(const QString &name, const QString &label)
 	}
 	else
 	{
-		QString returned_name = reply;
+		TQString returned_name = reply;
 		if (!returned_name.isEmpty()
 		 && returned_name!=name)
 		{
@@ -199,7 +199,7 @@ bool MediaImpl::setUserLabel(const QString &name, const QString &label)
 	}
 }
 
-const Medium MediaImpl::findMediumByName(const QString &name, bool &ok)
+const Medium MediaImpl::findMediumByName(const TQString &name, bool &ok)
 {
 	DCOPRef mediamanager("kded", "mediamanager");
 	DCOPReply reply = mediamanager.call( "properties", name );
@@ -246,16 +246,16 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		                           medium.deviceNode(),
 		                           medium.mountPoint());
 		job->setAutoWarningHandlingEnabled(false);
-		connect( job, SIGNAL( result( KIO::Job * ) ),
-		         this, SLOT( slotMountResult( KIO::Job * ) ) );
-		connect( job, SIGNAL( warning( KIO::Job *, const QString & ) ),
-		         this, SLOT( slotWarning( KIO::Job *, const QString & ) ) );
+		connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+		         this, TQT_SLOT( slotMountResult( KIO::Job * ) ) );
+		connect( job, TQT_SIGNAL( warning( KIO::Job *, const TQString & ) ),
+		         this, TQT_SLOT( slotWarning( KIO::Job *, const TQString & ) ) );
 		*/
 		kapp->dcopClient()
 		->connectDCOPSignal("kded", "mediamanager",
-		                    "mediumChanged(QString, bool)",
+		                    "mediumChanged(TQString, bool)",
 		                    "mediaimpl",
-		                    "slotMediumChanged(QString)",
+		                    "slotMediumChanged(TQString)",
 		                    false);
 
 		DCOPRef mediamanager("kded", "mediamanager");
@@ -274,9 +274,9 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		
 		kapp->dcopClient()
 		->disconnectDCOPSignal("kded", "mediamanager",
-		                       "mediumChanged(QString, bool)",
+		                       "mediumChanged(TQString, bool)",
 		                       "mediaimpl",
-		                       "slotMediumChanged(QString)");
+		                       "slotMediumChanged(TQString)");
 		
 		return m_lastErrorCode==0;
 	}
@@ -284,7 +284,7 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 	return true;
 }
 
-void MediaImpl::slotWarning( KIO::Job * /*job*/, const QString &msg )
+void MediaImpl::slotWarning( KIO::Job * /*job*/, const TQString &msg )
 {
 	emit warning( msg );
 }
@@ -301,7 +301,7 @@ void MediaImpl::slotMountResult(KIO::Job *job)
 	}
 }
 
-void MediaImpl::slotMediumChanged(const QString &name)
+void MediaImpl::slotMediumChanged(const TQString &name)
 {
 	kdDebug(1219) << "MediaImpl::slotMediumChanged:" << name << endl;
 
@@ -315,7 +315,7 @@ void MediaImpl::slotMediumChanged(const QString &name)
 }
 
 static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
-                    const QString &s = QString::null)
+                    const TQString &s = TQString::null)
 {
 	KIO::UDSAtom atom;
 	atom.m_uds = ID;
@@ -353,10 +353,10 @@ KIO::UDSEntry MediaImpl::extractUrlInfos(const KURL &url)
 
 	KIO::StatJob *job = KIO::stat(url, false);
 	job->setAutoWarningHandlingEnabled( false );
-	connect( job, SIGNAL( result(KIO::Job *) ),
-	         this, SLOT( slotStatResult(KIO::Job *) ) );
-	connect( job, SIGNAL( warning( KIO::Job *, const QString & ) ),
-	         this, SLOT( slotWarning( KIO::Job *, const QString & ) ) );
+	connect( job, TQT_SIGNAL( result(KIO::Job *) ),
+	         this, TQT_SLOT( slotStatResult(KIO::Job *) ) );
+	connect( job, TQT_SIGNAL( warning( KIO::Job *, const TQString & ) ),
+	         this, TQT_SLOT( slotWarning( KIO::Job *, const TQString & ) ) );
 	qApp->eventLoop()->enterLoop();
 
 	KIO::UDSEntry::iterator it = m_entryBuffer.begin();
@@ -395,7 +395,7 @@ void MediaImpl::createMediumEntry(KIO::UDSEntry& entry,
 {
 	kdDebug(1219) << "MediaProtocol::createMedium" << endl;
 
-	QString url = "media:/"+medium.name();
+	TQString url = "media:/"+medium.name();
 
 	kdDebug(1219) << "url = " << url << ", mime = " << medium.mimeType() << endl;
 
@@ -403,7 +403,7 @@ void MediaImpl::createMediumEntry(KIO::UDSEntry& entry,
 
 	addAtom(entry, KIO::UDS_URL, 0, url);
 
-	QString label = KIO::encodeFileName( medium.prettyLabel() );
+	TQString label = KIO::encodeFileName( medium.prettyLabel() );
 	addAtom(entry, KIO::UDS_NAME, 0, label);
 
 	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
@@ -417,8 +417,8 @@ void MediaImpl::createMediumEntry(KIO::UDSEntry& entry,
 	}
 	else
 	{
-		QString mime = medium.mimeType();
-		QString icon = KMimeType::mimeType(mime)->icon(mime, false);
+		TQString mime = medium.mimeType();
+		TQString icon = KMimeType::mimeType(mime)->icon(mime, false);
 		addAtom(entry, KIO::UDS_ICON_NAME, 0, icon);
 	}
 

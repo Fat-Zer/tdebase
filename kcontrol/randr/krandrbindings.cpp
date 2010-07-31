@@ -19,16 +19,16 @@
 */
 #ifndef NOSLOTS
 # define DEF( name, key3, key4, fnSlot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4, this, SLOT(fnSlot) )
+   keys->insert( name, i18n(name), TQString::null, key3, key4, this, TQT_SLOT(fnSlot) )
 #else
 # define DEF( name, key3, key4, fnSlot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4 )
+   keys->insert( name, i18n(name), TQString::null, key3, key4 )
 #endif
 #define WIN KKey::QtWIN
 
 	keys->insert( "Program:krandrtray", i18n("Display Control") );
 
-	DEF( I18N_NOOP("Switch Displays"), KShortcut::KShortcut(QString("XF86Display")), KShortcut::KShortcut(QString("XF86Display")), slotCycleDisplays() );
+	DEF( I18N_NOOP("Switch Displays"), KShortcut::KShortcut(TQString("XF86Display")), KShortcut::KShortcut(TQString("XF86Display")), slotCycleDisplays() );
 
 #undef DEF
 #undef WIN

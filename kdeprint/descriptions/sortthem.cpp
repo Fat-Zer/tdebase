@@ -1,14 +1,14 @@
 
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 
 
 int main(int argc, char **argv) {
-QStringList have;
+TQStringList have;
 char buf[1024];
 
 

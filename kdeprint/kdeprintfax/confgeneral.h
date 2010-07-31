@@ -21,7 +21,7 @@
 #ifndef CONFGENERAL_H
 #define CONFGENERAL_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QLineEdit;
 class QCheckBox;
@@ -29,15 +29,15 @@ class QCheckBox;
 class ConfGeneral : public QWidget
 {
 public:
-	ConfGeneral(QWidget *parent = 0, const char *name = 0);
+	ConfGeneral(TQWidget *parent = 0, const char *name = 0);
 
 	void load();
 	void save();
 
 private:
 	QLineEdit	*m_name, *m_company, *m_number;
-	QCheckBox   *m_replace_int_char;
-	QLineEdit   *m_replace_int_char_val;
+	TQCheckBox   *m_replace_int_char;
+	TQLineEdit   *m_replace_int_char_val;
 };
 
 #endif

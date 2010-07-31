@@ -76,7 +76,7 @@ KDesktopApp *myApp = NULL;
 // -----------------------------------------------------------------------------
 
 int kdesktop_screen_number = 0;
-QCString kdesktop_name, kicker_name, kwin_name;
+TQCString kdesktop_name, kicker_name, kwin_name;
 
 static void crashHandler(int sigId)
 {
@@ -125,14 +125,14 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 	    int number_of_screens = ScreenCount(dpy);
 	    kdesktop_screen_number = DefaultScreen(dpy);
 	    int pos;
-	    QCString display_name = XDisplayString(dpy);
+	    TQCString display_name = XDisplayString(dpy);
 	    XCloseDisplay(dpy);
 	    dpy = 0;
 
 	    if ((pos = display_name.findRev('.')) != -1)
 		display_name.remove(pos, 10);
 
-            QCString env;
+            TQCString env;
 	    if (number_of_screens != 1) {
 		for (int i = 0; i < number_of_screens; i++) {
 		    if (i != kdesktop_screen_number && fork() == 0) {
@@ -192,7 +192,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     cl->attach();
     DCOPRef r( "ksmserver", "ksmserver" );
     r.setDCOPClient( cl );
-    r.send( "suspendStartup", QCString( "kdesktop" ));
+    r.send( "suspendStartup", TQCString( "kdesktop" ));
     delete cl;
 
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -237,7 +237,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
                 }
             }
         }
-        // The QApplication ctor used is normally intended for applications not using Qt
+        // The TQApplication ctor used is normally intended for applications not using Qt
         // as the primary toolkit (e.g. Motif apps also using Qt), with some slightly
         // unpleasant side effects (e.g. #83974). This code checks if qt-copy patch #0078
         // is applied, which allows turning this off.

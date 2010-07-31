@@ -33,17 +33,17 @@ class PanelAddButtonMenu : public PanelServiceMenu
     Q_OBJECT
 
 public:
-    PanelAddButtonMenu(ContainerArea* cArea, const QString & label, const QString & relPath,
-		       QWidget * parent  = 0, const char * name = 0,const QString& _inlineHeader= QString::null);
-    PanelAddButtonMenu(ContainerArea* cArea, QWidget * parent = 0, const char * name = 0, const QString& _inlineHeader= QString::null);
+    PanelAddButtonMenu(ContainerArea* cArea, const TQString & label, const TQString & relPath,
+		       TQWidget * parent  = 0, const char * name = 0,const TQString& _inlineHeader= TQString::null);
+    PanelAddButtonMenu(ContainerArea* cArea, TQWidget * parent = 0, const char * name = 0, const TQString& _inlineHeader= TQString::null);
 
 protected slots:
     virtual void slotExec(int id);
     virtual void addNonKDEApp();
 
 protected:
-    virtual PanelServiceMenu * newSubMenu(const QString & label, const QString & relPath,
-					  QWidget * parent, const char * name, const QString & _inlineHeader=QString::null);
+    virtual PanelServiceMenu * newSubMenu(const TQString & label, const TQString & relPath,
+					  TQWidget * parent, const char * name, const TQString & _inlineHeader=TQString::null);
 private:
     ContainerArea *containerArea;
 };

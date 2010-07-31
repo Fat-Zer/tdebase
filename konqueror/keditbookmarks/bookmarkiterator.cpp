@@ -26,11 +26,11 @@
 
 #include <kdebug.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
-BookmarkIterator::BookmarkIterator(QValueList<KBookmark> bks) : m_bklist(bks) {
-    connect(this, SIGNAL( deleteSelf(BookmarkIterator *) ), 
-            SLOT( slotCancelTest(BookmarkIterator *) ));
+BookmarkIterator::BookmarkIterator(TQValueList<KBookmark> bks) : m_bklist(bks) {
+    connect(this, TQT_SIGNAL( deleteSelf(BookmarkIterator *) ), 
+            TQT_SLOT( slotCancelTest(BookmarkIterator *) ));
     delayedEmitNextOne();
 }
 
@@ -39,7 +39,7 @@ BookmarkIterator::~BookmarkIterator() {
 }
 
 void BookmarkIterator::delayedEmitNextOne() {
-    QTimer::singleShot(1, this, SLOT( nextOne() ));
+    TQTimer::singleShot(1, this, TQT_SLOT( nextOne() ));
 }
 
 void BookmarkIterator::slotCancelTest(BookmarkIterator *test) {
@@ -65,7 +65,7 @@ void BookmarkIterator::nextOne() {
         return;
     }
 
-    QValueListIterator<KBookmark> head = m_bklist.begin();
+    TQValueListIterator<KBookmark> head = m_bklist.begin();
     KBookmark bk = (*head);
 
     bool viable = bk.hasParent() && isApplicable(bk);

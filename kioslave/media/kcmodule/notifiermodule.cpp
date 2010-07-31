@@ -21,7 +21,7 @@
 
 #include <klocale.h>
 
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <kcombobox.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
@@ -31,10 +31,10 @@
 #include "actionlistboxitem.h"
 #include "mimetypelistboxitem.h"
 
-NotifierModule::NotifierModule(QWidget *parent, const char *name)
+NotifierModule::NotifierModule(TQWidget *parent, const char *name)
 	: KCModule(parent, name)
 {
-	QBoxLayout *layout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+	TQBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 	
 	m_view = new NotifierModuleView( this );
 	layout->addWidget( m_view );
@@ -45,10 +45,10 @@ NotifierModule::NotifierModule(QWidget *parent, const char *name)
 	
 	m_view->mimetypesCombo->insertItem( i18n("All Mime Types") );
 
-	QStringList mimetypes = m_settings.supportedMimetypes();
+	TQStringList mimetypes = m_settings.supportedMimetypes();
 
-	QStringList::iterator it = mimetypes.begin();
-	QStringList::iterator end = mimetypes.end();
+	TQStringList::iterator it = mimetypes.begin();
+	TQStringList::iterator end = mimetypes.end();
 
 	for ( ; it!=end; ++it )
 	{
@@ -57,18 +57,18 @@ NotifierModule::NotifierModule(QWidget *parent, const char *name)
 	
 	updateListBox();
 
-	connect( m_view->mimetypesCombo, SIGNAL( activated(int) ),
-	         this, SLOT( slotMimeTypeChanged(int) ) );
-	connect( m_view->actionsList, SIGNAL( selectionChanged(QListBoxItem*) ),
-	         this, SLOT( slotActionSelected(QListBoxItem*) ) );
-	connect( m_view->addButton, SIGNAL( clicked() ),
-	         this, SLOT( slotAdd() ) );
-	connect( m_view->editButton, SIGNAL( clicked() ),
-	         this, SLOT( slotEdit() ) );
-	connect( m_view->deleteButton, SIGNAL( clicked() ),
-	         this, SLOT( slotDelete() ) );
-	connect( m_view->toggleAutoButton, SIGNAL( clicked() ),
-	         this, SLOT( slotToggleAuto() ) );
+	connect( m_view->mimetypesCombo, TQT_SIGNAL( activated(int) ),
+	         this, TQT_SLOT( slotMimeTypeChanged(int) ) );
+	connect( m_view->actionsList, TQT_SIGNAL( selectionChanged(TQListBoxItem*) ),
+	         this, TQT_SLOT( slotActionSelected(TQListBoxItem*) ) );
+	connect( m_view->addButton, TQT_SIGNAL( clicked() ),
+	         this, TQT_SLOT( slotAdd() ) );
+	connect( m_view->editButton, TQT_SIGNAL( clicked() ),
+	         this, TQT_SLOT( slotEdit() ) );
+	connect( m_view->deleteButton, TQT_SIGNAL( clicked() ),
+	         this, TQT_SLOT( slotDelete() ) );
+	connect( m_view->toggleAutoButton, TQT_SIGNAL( clicked() ),
+	         this, TQT_SLOT( slotToggleAuto() ) );
 }
 
 NotifierModule::~NotifierModule()
@@ -97,7 +97,7 @@ void NotifierModule::updateListBox()
 	m_view->actionsList->clear();
 	slotActionSelected( 0L );
 
-	QValueList<NotifierAction*> services;
+	TQValueList<NotifierAction*> services;
 	if ( m_mimetype.isEmpty() )
 	{
 		services = m_settings.actions();
@@ -107,7 +107,7 @@ void NotifierModule::updateListBox()
 		services = m_settings.actionsForMimetype( m_mimetype );
 	}
 
-	QValueList<NotifierAction*>::iterator it;
+	TQValueList<NotifierAction*>::iterator it;
 	
 	for ( it = services.begin(); it != services.end(); ++it )
 	{
@@ -115,7 +115,7 @@ void NotifierModule::updateListBox()
 	}
 }
 
-void NotifierModule::slotActionSelected(QListBoxItem *item)
+void NotifierModule::slotActionSelected(TQListBoxItem *item)
 {
 	NotifierAction *action = 0L;
 
@@ -137,11 +137,11 @@ void NotifierModule::slotMimeTypeChanged(int index)
 {
 	if ( index == 0 )
 	{
-		m_mimetype = QString();
+		m_mimetype = TQString();
 	}
 	else
 	{
-		QListBoxItem *item = m_view->mimetypesCombo->listBox()->item( index );
+		TQListBoxItem *item = m_view->mimetypesCombo->listBox()->item( index );
 		MimetypeListBoxItem *mime_item
 			= static_cast<MimetypeListBoxItem*>( item );
 		m_mimetype = mime_item->mimetype();
@@ -157,7 +157,7 @@ void NotifierModule::slotAdd()
 	
 	int value = dialog.exec();
 	
-	if ( value == QDialog::Accepted )
+	if ( value == TQDialog::Accepted )
 	{
 		m_settings.addAction( action );
 		updateListBox();
@@ -181,7 +181,7 @@ void NotifierModule::slotEdit()
 		
 		int value = dialog.exec();
 		
-		if ( value == QDialog::Accepted )
+		if ( value == TQDialog::Accepted )
 		{
 			updateListBox();
 			emit changed( true );

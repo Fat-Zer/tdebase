@@ -34,8 +34,8 @@ class TaskbarApplet : public KPanelApplet
     Q_OBJECT
 
 public:
-    TaskbarApplet( const QString& configFile, Type t = Normal, int actions = 0,
-		   QWidget *parent = 0, const char *name = 0 );
+    TaskbarApplet( const TQString& configFile, Type t = Normal, int actions = 0,
+		   TQWidget *parent = 0, const char *name = 0 );
     ~TaskbarApplet();
 
     int widthForHeight( int h ) const;
@@ -44,10 +44,10 @@ public:
     void preferences();
 
 protected:
-    void moveEvent(QMoveEvent *);
+    void moveEvent(TQMoveEvent *);
     void popupDirectionChange( Direction );
     void orientationChange( Orientation );
-    void paletteChange(const QPalette &);
+    void paletteChange(const TQPalette &);
 
 private:
     TaskBarContainer*     container;

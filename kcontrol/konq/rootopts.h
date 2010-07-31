@@ -13,7 +13,7 @@
 #define __ROOT_OPTIONS_H
 
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kcmodule.h>
 #include <kio/global.h>
@@ -37,7 +37,7 @@ class DesktopPathConfig : public KCModule
 {
         Q_OBJECT
 public:
-        DesktopPathConfig(QWidget *parent = 0L, const char *name = 0L );
+        DesktopPathConfig(TQWidget *parent = 0L, const char *name = 0L );
         virtual void load();
         virtual void load( bool useDefaults );
         virtual void save();
@@ -52,7 +52,7 @@ private:
         KURLRequester *urAutostart;
         KURLRequester *urDocument;
 
-        bool moveDir( const KURL & src, const KURL & dest, const QString & type );
+        bool moveDir( const KURL & src, const KURL & dest, const TQString & type );
         bool m_ok;
         KURL m_copyToDest; // used when the destination directory already exists
         KURL m_copyFromSrc;

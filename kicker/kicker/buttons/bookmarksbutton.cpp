@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 #include <kaction.h>
 #include <kbookmark.h>
@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "bookmarksbutton.h"
 #include "bookmarksbutton.moc"
 
-BookmarksButton::BookmarksButton(QWidget* parent)
+BookmarksButton::BookmarksButton(TQWidget* parent)
     : PanelPopupButton(parent, "BookmarksButton"),
       bookmarkParent(0),
       bookmarkMenu(0),
@@ -49,7 +49,7 @@ BookmarksButton::BookmarksButton(QWidget* parent)
                                      actionCollection,
                                      true, false);
     setPopup(bookmarkParent);
-    QToolTip::add(this, i18n("Bookmarks"));
+    TQToolTip::add(this, i18n("Bookmarks"));
     setTitle(i18n("Bookmarks"));
     setIcon("bookmark");
 }

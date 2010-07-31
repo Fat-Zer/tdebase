@@ -25,9 +25,9 @@
 #ifndef _BGMONITOR_H_
 #define _BGMONITOR_H_
 
-#include <qlabel.h>
-#include <qvaluevector.h>
-#include <qwidget.h>
+#include <tqlabel.h>
+#include <tqvaluevector.h>
+#include <tqwidget.h>
 
 class BGMonitor;
 class BGMonitorLabel;
@@ -41,32 +41,32 @@ class BGMonitorArrangement : public QWidget
 {
     Q_OBJECT
 public:
-    BGMonitorArrangement(QWidget *parent, const char *name=0L);
+    BGMonitorArrangement(TQWidget *parent, const char *name=0L);
     
     /**
      * Splits up the pixmap according to monitor geometries and sets each
      * BGMonitor pixmap accordingly.
      */
     void setPixmap( const KPixmap & pm );
-    QSize combinedPreviewSize() const { return m_combinedPreviewSize; }
-    QSize maxPreviewSize() const { return m_maxPreviewSize; }
+    TQSize combinedPreviewSize() const { return m_combinedPreviewSize; }
+    TQSize maxPreviewSize() const { return m_maxPreviewSize; }
     unsigned numMonitors() const { return m_pBGMonitor.size(); }
     
     BGMonitor * monitor( unsigned screen ) const;
     void updateArrangement();
 
 signals:
-    void imageDropped(const QString &);
+    void imageDropped(const TQString &);
     
 protected:
-    virtual void resizeEvent( QResizeEvent * );
-    QRect expandToPreview( QRect r ) const;
-    QSize expandToPreview( QSize s ) const;
-    QPoint expandToPreview( QPoint p ) const;
+    virtual void resizeEvent( TQResizeEvent * );
+    TQRect expandToPreview( TQRect r ) const;
+    TQSize expandToPreview( TQSize s ) const;
+    TQPoint expandToPreview( TQPoint p ) const;
     
-    QValueVector<BGMonitorLabel*> m_pBGMonitor;
-    QSize m_combinedPreviewSize;
-    QSize m_maxPreviewSize;
+    TQValueVector<BGMonitorLabel*> m_pBGMonitor;
+    TQSize m_combinedPreviewSize;
+    TQSize m_maxPreviewSize;
 };
 
 /**
@@ -75,18 +75,18 @@ protected:
 class BGMonitorLabel : public QLabel
 {
 public:
-    BGMonitorLabel(QWidget *parent, const char *name=0L);
+    BGMonitorLabel(TQWidget *parent, const char *name=0L);
     
     BGMonitor * monitor() const { return m_pBGMonitor; }
     void updateMonitorGeometry();
     
-    void setPreviewPosition( QRect r ) { m_previewPosition = r; }
-    QRect previewPosition() const { return m_previewPosition; }
+    void setPreviewPosition( TQRect r ) { m_previewPosition = r; }
+    TQRect previewPosition() const { return m_previewPosition; }
     
 protected:
-    virtual void resizeEvent( QResizeEvent * );
+    virtual void resizeEvent( TQResizeEvent * );
     BGMonitor * m_pBGMonitor;
-    QRect m_previewPosition;
+    TQRect m_previewPosition;
 };
 
 
@@ -97,14 +97,14 @@ class BGMonitor : public QLabel
 {
     Q_OBJECT
 public:
-    BGMonitor(QWidget *parent, const char *name=0L);
+    BGMonitor(TQWidget *parent, const char *name=0L);
 
 signals:
-    void imageDropped(const QString &);
+    void imageDropped(const TQString &);
 
 protected:
-    virtual void dropEvent(QDropEvent *);
-    virtual void dragEnterEvent(QDragEnterEvent *);
+    virtual void dropEvent(TQDropEvent *);
+    virtual void dragEnterEvent(TQDragEnterEvent *);
 };
 
 

@@ -65,9 +65,9 @@ public:
      * Appends the specified file and dir to this SMBUrl
      * "smb://server/share" --> "smb://server/share/filedir"
      */
-    void addPath(const QString &filedir);
+    void addPath(const TQString &filedir);
 
-    bool cd(const QString &dir);
+    bool cd(const TQString &dir);
 
     /**
      *   Returns the type of this SMBUrl:
@@ -78,33 +78,33 @@ public:
      */
     SMBUrlType getType() const;
 
-    void setPass( const QString& _txt ) { KURL::setPass(_txt); updateCache(); }
-    void setUser( const QString& _txt ) { KURL::setUser(_txt); updateCache(); }
-    void setHost( const QString& _txt ) { KURL::setHost(_txt); updateCache(); }
+    void setPass( const TQString& _txt ) { KURL::setPass(_txt); updateCache(); }
+    void setUser( const TQString& _txt ) { KURL::setUser(_txt); updateCache(); }
+    void setHost( const TQString& _txt ) { KURL::setHost(_txt); updateCache(); }
 
     /**
      * Returns the workgroup if it given in url
      */
-//    QString getWorkgroup() const;
+//    TQString getWorkgroup() const;
 
     /**
      * Returns path after workgroup
      */
-//    QString getServerShareDir() const;
+//    TQString getServerShareDir() const;
 
      /**
      * Return a URL that is suitable for libsmbclient
      */
-    QCString toSmbcUrl() const { return m_surl; }
+    TQCString toSmbcUrl() const { return m_surl; }
 
 private:
     /**
-     * Change from QString to QCString (MS Windows's character encoding)
+     * Change from TQString to TQCString (MS Windows's character encoding)
      */
-    QCString fromUnicode( const QString &_str ) const;
+    TQCString fromUnicode( const TQString &_str ) const;
 
     void updateCache();
-    QCString m_surl;
+    TQCString m_surl;
 
     /**
      * Type of URL

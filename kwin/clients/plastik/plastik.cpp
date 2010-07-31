@@ -20,9 +20,9 @@
   Boston, MA 02110-1301, USA.
  */
 
-#include <qbitmap.h>
-#include <qpainter.h>
-#include <qimage.h>
+#include <tqbitmap.h>
+#include <tqpainter.h>
+#include <tqimage.h>
 
 #include <kconfig.h>
 #include <kpixmap.h>
@@ -39,8 +39,8 @@ namespace KWinPlastik
 
 PlastikHandler::PlastikHandler()
 {
-    memset(m_pixmaps, 0, sizeof(QPixmap*)*NumPixmaps*2*2); // set elements to 0
-    memset(m_bitmaps, 0, sizeof(QBitmap*)*NumButtonIcons*2);
+    memset(m_pixmaps, 0, sizeof(TQPixmap*)*NumPixmaps*2*2); // set elements to 0
+    memset(m_bitmaps, 0, sizeof(TQBitmap*)*NumButtonIcons*2);
 
     reset(0);
 }
@@ -88,7 +88,7 @@ bool PlastikHandler::reset(unsigned long changed)
     }
 
     // check if we are in reverse layout mode
-    m_reverse = QApplication::reverseLayout();
+    m_reverse = TQApplication::reverseLayout();
 
     // read in the configuration
     readConfig();
@@ -168,7 +168,7 @@ void PlastikHandler::readConfig()
     // grab settings
     m_titleShadow    = config.readBoolEntry("TitleShadow", true);
 
-    QFontMetrics fm(m_titleFont);  // active font = inactive font
+    TQFontMetrics fm(m_titleFont);  // active font = inactive font
     int titleHeightMin = config.readNumEntry("MinTitleHeight", 16);
     // The title should strech with bigger font sizes!
     m_titleHeight = QMAX(titleHeightMin, fm.height() + 4); // 4 px for the shadow etc.
@@ -176,7 +176,7 @@ void PlastikHandler::readConfig()
     if ( m_titleHeight%2 == 0)
         m_titleHeight++;
 
-    fm = QFontMetrics(m_titleFontTool);  // active font = inactive font
+    fm = TQFontMetrics(m_titleFontTool);  // active font = inactive font
     int titleHeightToolMin = config.readNumEntry("MinTitleHeightTool", 13);
     // The title should strech with bigger font sizes!
     m_titleHeightTool = QMAX(titleHeightToolMin, fm.height() ); // don't care about the shadow etc.
@@ -184,7 +184,7 @@ void PlastikHandler::readConfig()
     if ( m_titleHeightTool%2 == 0)
         m_titleHeightTool++;
 
-    QString value = config.readEntry("TitleAlignment", "AlignLeft");
+    TQString value = config.readEntry("TitleAlignment", "AlignLeft");
     if (value == "AlignLeft")         m_titleAlign = Qt::AlignLeft;
     else if (value == "AlignHCenter") m_titleAlign = Qt::AlignHCenter;
     else if (value == "AlignRight")   m_titleAlign = Qt::AlignRight;
@@ -194,7 +194,7 @@ void PlastikHandler::readConfig()
     m_menuClose = config.readBoolEntry("CloseOnMenuDoubleClick", true);
 }
 
-QColor PlastikHandler::getColor(KWinPlastik::ColorType type, const bool active)
+TQColor PlastikHandler::getColor(KWinPlastik::ColorType type, const bool active)
 {
     switch (type) {
         case WindowContour:
@@ -225,15 +225,15 @@ QColor PlastikHandler::getColor(KWinPlastik::ColorType type, const bool active)
     }
 }
 
-void PlastikHandler::pretile( QPixmap *&pix, int size, Qt::Orientation dir ) const
+void PlastikHandler::pretile( TQPixmap *&pix, int size, Qt::Orientation dir ) const
 {
-    QPixmap *newpix;
-    QPainter p;
+    TQPixmap *newpix;
+    TQPainter p;
 
     if ( dir == Qt::Horizontal )
-        newpix = new QPixmap( size, pix->height() );
+        newpix = new TQPixmap( size, pix->height() );
     else
-        newpix = new QPixmap( pix->width(), size );
+        newpix = new TQPixmap( pix->width(), size );
 
     p.begin( newpix );
     p.drawTiledPixmap( newpix->rect(), *pix ) ;
@@ -243,12 +243,12 @@ void PlastikHandler::pretile( QPixmap *&pix, int size, Qt::Orientation dir ) con
     pix = newpix;
 }
 
-const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow)
+const TQPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow)
 {
     if (m_pixmaps[toolWindow][active][type])
         return *m_pixmaps[toolWindow][active][type];
 
-    QPixmap *pm = 0;
+    TQPixmap *pm = 0;
 
     switch (type) {
         case TitleBarTileTop:
@@ -257,8 +257,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             const int titleBarTileHeight = (toolWindow ? m_titleHeightTool : m_titleHeight) + 2;
             // gradient used as well in TitleBarTileTop as TitleBarTile
             const int gradientHeight = 2 + titleBarTileHeight-1;
-            QPixmap gradient(1, gradientHeight);
-            QPainter painter(&gradient);
+            TQPixmap gradient(1, gradientHeight);
+            TQPainter painter(&gradient);
             KPixmap tempPixmap;
             tempPixmap.resize(1, 4);
             KPixmapEffect::gradient(tempPixmap,
@@ -276,7 +276,7 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
 
             // actual titlebar tiles
             if (type == TitleBarTileTop) {
-                pm = new QPixmap(1, 4);
+                pm = new TQPixmap(1, 4);
                 painter.begin(pm);
                 // contour
                 painter.setPen(getColor(WindowContour, active) );
@@ -288,7 +288,7 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
                 painter.drawPixmap(0, 2, gradient);
                 painter.end();
             } else {
-                pm = new QPixmap(1, titleBarTileHeight);
+                pm = new TQPixmap(1, titleBarTileHeight);
                 painter.begin(pm);
                 painter.drawPixmap(0, 0, gradient, 0,2);
                 if (m_coloredBorder) {
@@ -310,8 +310,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             const int w = m_borderSize;
             const int h = 4 + (toolWindow ? m_titleHeightTool : m_titleHeight) + 2;
 
-            pm = new QPixmap(w, h);
-            QPainter painter(pm);
+            pm = new TQPixmap(w, h);
+            TQPainter painter(pm);
 
             painter.drawTiledPixmap(0,0, w, 4, pixmap(TitleBarTileTop, active, toolWindow) );
             painter.drawTiledPixmap(0,4, w, h-4, pixmap(TitleBarTile, active, toolWindow) );
@@ -320,7 +320,7 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             painter.drawLine(0,0, 0,h);
             painter.drawPoint(1,1);
 
-            const QColor highlightTitleLeft = getColor(ShadeTitleLight, active);
+            const TQColor highlightTitleLeft = getColor(ShadeTitleLight, active);
             painter.setPen(highlightTitleLeft);
             painter.drawLine(1,2, 1,h);
 
@@ -330,7 +330,7 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             }
 
             // outside the region normally masked by doShape
-            painter.setPen(QColor(0,0,0) );
+            painter.setPen(TQColor(0,0,0) );
             painter.drawLine(0, 0, 1, 0 );
             painter.drawPoint(0, 1);
 
@@ -342,8 +342,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             const int w = m_borderSize;
             const int h = 4 + (toolWindow ? m_titleHeightTool : m_titleHeight) + 2;
 
-            pm = new QPixmap(w, h);
-            QPainter painter(pm);
+            pm = new TQPixmap(w, h);
+            TQPainter painter(pm);
 
             painter.drawTiledPixmap(0,0, w, 4, pixmap(TitleBarTileTop, active, toolWindow) );
             painter.drawTiledPixmap(0,4, w, h-4, pixmap(TitleBarTile, active, toolWindow) );
@@ -352,7 +352,7 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             painter.drawLine(w-1,0, w-1,h);
             painter.drawPoint(w-2,1);
 
-            const QColor highlightTitleRight = getColor(ShadeTitleDark, active);
+            const TQColor highlightTitleRight = getColor(ShadeTitleDark, active);
             painter.setPen(highlightTitleRight);
             painter.drawLine(w-2,2, w-2,h);
 
@@ -362,7 +362,7 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             }
 
             // outside the region normally masked by doShape
-            painter.setPen(QColor(0,0,0) );
+            painter.setPen(TQColor(0,0,0) );
             painter.drawLine(w-2, 0, w-1, 0 );
             painter.drawPoint(w-1, 1);
 
@@ -373,8 +373,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
         {
             const int w = m_borderSize;
 
-            pm = new QPixmap(w, 1);
-            QPainter painter(pm);
+            pm = new TQPixmap(w, 1);
+            TQPainter painter(pm);
             if (m_coloredBorder) {
                 painter.setPen(getColor(WindowContour, active) );
                 painter.drawPoint(0, 0);
@@ -408,8 +408,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
         {
             const int w = m_borderSize;
 
-            pm = new QPixmap(w, 1);
-            QPainter painter(pm);
+            pm = new TQPixmap(w, 1);
+            TQPainter painter(pm);
             if (m_coloredBorder) {
                 painter.setPen(getColor(TitleGradient3, active).dark(110) );
                 painter.drawPoint(0,0);
@@ -443,8 +443,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             const int w = m_borderSize;
             const int h = m_borderSize;
 
-            pm = new QPixmap(w, h);
-            QPainter painter(pm);
+            pm = new TQPixmap(w, h);
+            TQPainter painter(pm);
             painter.drawTiledPixmap(0,0,w,h, pixmap(BorderBottomTile, active, toolWindow) );
             painter.setPen(getColor(WindowContour, active) );
             painter.drawLine(0,0, 0,h);
@@ -473,8 +473,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
             const int w = m_borderSize;
             const int h = m_borderSize;
 
-            pm = new QPixmap(w, h);
-            QPainter painter(pm);
+            pm = new TQPixmap(w, h);
+            TQPainter painter(pm);
             painter.drawTiledPixmap(0,0,w,h, pixmap(BorderBottomTile, active, toolWindow) );
             painter.setPen(getColor(WindowContour, active) );
             painter.drawLine(w-1,0, w-1,h);
@@ -501,8 +501,8 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
         {
             const int h = m_borderSize;
 
-            pm = new QPixmap(1, m_borderSize);
-            QPainter painter(pm);
+            pm = new TQPixmap(1, m_borderSize);
+            TQPainter painter(pm);
 
             if (m_coloredBorder) {
                 painter.setPen(getColor(TitleGradient3, active).dark(110) );
@@ -533,7 +533,7 @@ const QPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindow
     return *pm;
 }
 
-const QBitmap &PlastikHandler::buttonBitmap(ButtonIcon type, const QSize &size, bool toolWindow)
+const TQBitmap &PlastikHandler::buttonBitmap(ButtonIcon type, const TQSize &size, bool toolWindow)
 {
     int typeIndex = type;
 
@@ -552,7 +552,7 @@ const QBitmap &PlastikHandler::buttonBitmap(ButtonIcon type, const QSize &size, 
     int w = size.width() - reduceW;
     int h = size.height() - reduceH;
 
-    if (m_bitmaps[toolWindow][typeIndex] && m_bitmaps[toolWindow][typeIndex]->size()==QSize(w,h) )
+    if (m_bitmaps[toolWindow][typeIndex] && m_bitmaps[toolWindow][typeIndex]->size()==TQSize(w,h) )
         return *m_bitmaps[toolWindow][typeIndex];
 
     // no matching pixmap found, create a new one...
@@ -560,17 +560,17 @@ const QBitmap &PlastikHandler::buttonBitmap(ButtonIcon type, const QSize &size, 
     delete m_bitmaps[toolWindow][typeIndex];
     m_bitmaps[toolWindow][typeIndex] = 0;
 
-    QBitmap bmp = IconEngine::icon(type /*icon*/, QMIN(w,h) );
-    QBitmap *bitmap = new QBitmap(bmp);
+    TQBitmap bmp = IconEngine::icon(type /*icon*/, QMIN(w,h) );
+    TQBitmap *bitmap = new TQBitmap(bmp);
     m_bitmaps[toolWindow][typeIndex] = bitmap;
     return *bitmap;
 }
 
-QValueList< PlastikHandler::BorderSize >
+TQValueList< PlastikHandler::BorderSize >
 PlastikHandler::borderSizes() const
 {
     // the list must be sorted
-    return QValueList< BorderSize >() << BorderTiny << BorderNormal <<
+    return TQValueList< BorderSize >() << BorderTiny << BorderNormal <<
 	BorderLarge << BorderVeryLarge <<  BorderHuge <<
 	BorderVeryHuge << BorderOversized;
 }

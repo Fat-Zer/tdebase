@@ -19,10 +19,10 @@
 #ifndef HISTORY_MODULE_H
 #define HISTORY_MODULE_H
 
-#include <qdatetime.h>
-#include <qobject.h>
-#include <qdict.h>
-#include <qpixmap.h>
+#include <tqdatetime.h>
+#include <tqobject.h>
+#include <tqdict.h>
+#include <tqpixmap.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -36,7 +36,7 @@ class KonqSidebarHistorySettings;
 class KonqSidebarTree;
 class KonqSidebarTreeItem;
 
-class KonqSidebarHistoryModule : public QObject, public KonqSidebarTreeModule
+class KonqSidebarHistoryModule : public TQObject, public KonqSidebarTreeModule
 {
     Q_OBJECT
 
@@ -50,18 +50,18 @@ public:
     virtual ~KonqSidebarHistoryModule();
 
     virtual void addTopLevelItem( KonqSidebarTreeTopLevelItem * item );
-    virtual bool handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *item, const QPoint& pos );
+    virtual bool handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *item, const TQPoint& pos );
 
-    void showPopupMenu( int which, const QPoint& pos );
+    void showPopupMenu( int which, const TQPoint& pos );
 
     // called by the items
     void showPopupMenu();
     void groupOpened( KonqSidebarHistoryGroupItem *item, bool open );
-    const QDateTime& currentTime() const { return m_currentTime; }
+    const TQDateTime& currentTime() const { return m_currentTime; }
     bool sortsByName() const { return m_sortsByName; }
 
-    static QString groupForURL( const KURL& url ) {
-	static const QString& misc = KGlobal::staticQString(i18n("Miscellaneous"));
+    static TQString groupForURL( const KURL& url ) {
+	static const TQString& misc = KGlobal::staticQString(i18n("Miscellaneous"));
 	return url.host().isEmpty() ? misc : url.host();
     }
 
@@ -78,7 +78,7 @@ private slots:
     void slotPreferences();
     void slotSettingsChanged();
 
-    void slotItemExpanded( QListViewItem * );
+    void slotItemExpanded( TQListViewItem * );
 
     void slotSortByName();
     void slotSortByDate();
@@ -89,19 +89,19 @@ private:
     KonqSidebarHistoryGroupItem *getGroupItem( const KURL& url );
 
     void sortingChanged();
-    typedef QDictIterator<KonqSidebarHistoryGroupItem> HistoryItemIterator;
-    QDict<KonqSidebarHistoryGroupItem> m_dict;
+    typedef TQDictIterator<KonqSidebarHistoryGroupItem> HistoryItemIterator;
+    TQDict<KonqSidebarHistoryGroupItem> m_dict;
 
     KonqSidebarTreeTopLevelItem * m_topLevelItem;
 
     KActionCollection *m_collection;
 
     KDialogBase *m_dlg;
-    QPixmap m_folderClosed;
-    QPixmap m_folderOpen;
+    TQPixmap m_folderClosed;
+    TQPixmap m_folderOpen;
     bool m_initialized;
     bool m_sortsByName;
-    QDateTime m_currentTime; // used for sorting the items by date
+    TQDateTime m_currentTime; // used for sorting the items by date
     static KonqSidebarHistorySettings *s_settings;
 };
 

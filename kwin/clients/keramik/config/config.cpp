@@ -26,14 +26,14 @@
 #include <kglobal.h>
 #include <klocale.h>
 
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 
 #include "config.h"
 #include "config.moc"
 
 extern "C"
 {
-	KDE_EXPORT QObject* allocate_config( KConfig* conf, QWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
 	{
 		return ( new KeramikConfig( conf, parent ) );
 	}
@@ -44,21 +44,21 @@ extern "C"
  * 'conf' 	is a pointer to the kwindecoration modules open kwin config,
  *			and is by default set to the "Style" group.
  *
- * 'parent'	is the parent of the QObject, which is a VBox inside the
+ * 'parent'	is the parent of the TQObject, which is a VBox inside the
  *			Configure tab in kwindecoration
  */
 
-KeramikConfig::KeramikConfig( KConfig* conf, QWidget* parent )
-	: QObject( parent )
+KeramikConfig::KeramikConfig( KConfig* conf, TQWidget* parent )
+	: TQObject( parent )
 {
 	KGlobal::locale()->insertCatalogue("kwin_clients");
 	c = new KConfig( "kwinkeramikrc" );
 	
 	ui = new KeramikConfigUI( parent );
-	connect( ui->showAppIcons,    SIGNAL(clicked()), SIGNAL(changed()) );
-	connect( ui->smallCaptions,   SIGNAL(clicked()), SIGNAL(changed()) );
-	connect( ui->largeGrabBars,   SIGNAL(clicked()), SIGNAL(changed()) );
-	connect( ui->useShadowedText, SIGNAL(clicked()), SIGNAL(changed()) );
+	connect( ui->showAppIcons,    TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()) );
+	connect( ui->smallCaptions,   TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()) );
+	connect( ui->largeGrabBars,   TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()) );
+	connect( ui->useShadowedText, TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()) );
 
 	load( conf );
 	ui->show();

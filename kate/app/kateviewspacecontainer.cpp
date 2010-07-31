@@ -48,17 +48,17 @@
 
 #include <ktexteditor/encodinginterface.h>
 
-#include <qlayout.h>
-#include <qobjectlist.h>
-#include <qstringlist.h>
-#include <qvbox.h>
-#include <qtimer.h>
-#include <qfileinfo.h>
+#include <tqlayout.h>
+#include <tqobjectlist.h>
+#include <tqstringlist.h>
+#include <tqvbox.h>
+#include <tqtimer.h>
+#include <tqfileinfo.h>
 
 //END Includes
 
-KateViewSpaceContainer::KateViewSpaceContainer (QWidget *parent, KateViewManager *viewManager)
- : QVBox  (parent)
+KateViewSpaceContainer::KateViewSpaceContainer (TQWidget *parent, KateViewManager *viewManager)
+ : TQVBox  (parent)
  , m_viewManager(viewManager)
  , m_blockViewCreationAndActivation (false)
  , m_activeViewRunning (false)
@@ -69,14 +69,14 @@ KateViewSpaceContainer::KateViewSpaceContainer (QWidget *parent, KateViewManager
   m_viewSpaceList.setAutoDelete(true);
 
   KateViewSpace* vs = new KateViewSpace( this, this );
-  connect(this, SIGNAL(statusChanged(Kate::View *, int, int, int, bool, int, const QString&)), vs, SLOT(slotStatusChanged(Kate::View *, int, int, int, bool, int, const QString&)));
+  connect(this, TQT_SIGNAL(statusChanged(Kate::View *, int, int, int, bool, int, const TQString&)), vs, TQT_SLOT(slotStatusChanged(Kate::View *, int, int, int, bool, int, const TQString&)));
   vs->setActive( true );
   m_viewSpaceList.append(vs);
-  connect( this, SIGNAL(viewChanged()), this, SLOT(slotViewChanged()) );
-  connect(KateDocManager::self(), SIGNAL(initialDocumentReplaced()), this, SIGNAL(viewChanged()));
+  connect( this, TQT_SIGNAL(viewChanged()), this, TQT_SLOT(slotViewChanged()) );
+  connect(KateDocManager::self(), TQT_SIGNAL(initialDocumentReplaced()), this, TQT_SIGNAL(viewChanged()));
 
-  connect(KateDocManager::self(),SIGNAL(documentCreated(Kate::Document *)),this,SLOT(documentCreated(Kate::Document *)));
-  connect(KateDocManager::self(),SIGNAL(documentDeleted(uint)),this,SLOT(documentDeleted(uint)));
+  connect(KateDocManager::self(),TQT_SIGNAL(documentCreated(Kate::Document *)),this,TQT_SLOT(documentCreated(Kate::Document *)));
+  connect(KateDocManager::self(),TQT_SIGNAL(documentDeleted(uint)),this,TQT_SLOT(documentDeleted(uint)));
 }
 
 KateViewSpaceContainer::~KateViewSpaceContainer ()
@@ -120,19 +120,19 @@ bool KateViewSpaceContainer::createView ( Kate::Document *doc )
   view->actionCollection()->remove (view->actionCollection()->action( "set_confdlg" ));
 
   // popup menu
-  view->installPopup ((QPopupMenu*)(mainWindow()->factory()->container("ktexteditor_popup", mainWindow())) );
+  view->installPopup ((TQPopupMenu*)(mainWindow()->factory()->container("ktexteditor_popup", mainWindow())) );
 
-  connect(view->getDoc(),SIGNAL(nameChanged(Kate::Document *)),this,SLOT(statusMsg()));
-  connect(view,SIGNAL(cursorPositionChanged()),this,SLOT(statusMsg()));
-  connect(view,SIGNAL(newStatus()),this,SLOT(statusMsg()));
-  connect(view->getDoc(), SIGNAL(undoChanged()), this, SLOT(statusMsg()));
-  connect(view,SIGNAL(dropEventPass(QDropEvent *)), mainWindow(),SLOT(slotDropEvent(QDropEvent *)));
-  connect(view,SIGNAL(gotFocus(Kate::View *)),this,SLOT(activateSpace(Kate::View *)));
+  connect(view->getDoc(),TQT_SIGNAL(nameChanged(Kate::Document *)),this,TQT_SLOT(statusMsg()));
+  connect(view,TQT_SIGNAL(cursorPositionChanged()),this,TQT_SLOT(statusMsg()));
+  connect(view,TQT_SIGNAL(newStatus()),this,TQT_SLOT(statusMsg()));
+  connect(view->getDoc(), TQT_SIGNAL(undoChanged()), this, TQT_SLOT(statusMsg()));
+  connect(view,TQT_SIGNAL(dropEventPass(TQDropEvent *)), mainWindow(),TQT_SLOT(slotDropEvent(TQDropEvent *)));
+  connect(view,TQT_SIGNAL(gotFocus(Kate::View *)),this,TQT_SLOT(activateSpace(Kate::View *)));
 
   activeViewSpace()->addView( view );
   activateView( view );
-  connect( doc, SIGNAL(modifiedOnDisc(Kate::Document *, bool, unsigned char)),
-      activeViewSpace(), SLOT(modifiedOnDisc(Kate::Document *, bool, unsigned char)) );
+  connect( doc, TQT_SIGNAL(modifiedOnDisc(Kate::Document *, bool, unsigned char)),
+      activeViewSpace(), TQT_SLOT(modifiedOnDisc(Kate::Document *, bool, unsigned char)) );
 
   return true;
 }
@@ -159,7 +159,7 @@ bool KateViewSpaceContainer::deleteView (Kate::View *view, bool delViewSpace)
 
 KateViewSpace* KateViewSpaceContainer::activeViewSpace ()
 {
-  QPtrListIterator<KateViewSpace> it(m_viewSpaceList);
+  TQPtrListIterator<KateViewSpace> it(m_viewSpaceList);
 
   for (; it.current(); ++it)
   {
@@ -183,7 +183,7 @@ Kate::View* KateViewSpaceContainer::activeView ()
 
   m_activeViewRunning = true;
 
-  for (QPtrListIterator<Kate::View> it(m_viewList); it.current(); ++it)
+  for (TQPtrListIterator<Kate::View> it(m_viewList); it.current(); ++it)
   {
     if ( it.current()->isActive() )
     {
@@ -256,7 +256,7 @@ void KateViewSpaceContainer::reactivateActiveView() {
     activateView(view);
   } else if (m_pendingViewCreation) {
     m_pendingViewCreation=false;
-    disconnect(m_pendingDocument,SIGNAL(nameChanged(Kate::Document *)),this,SLOT(slotPendingDocumentNameChanged()));
+    disconnect(m_pendingDocument,TQT_SIGNAL(nameChanged(Kate::Document *)),this,TQT_SLOT(slotPendingDocumentNameChanged()));
     createView(m_pendingDocument);
   }
 }
@@ -304,7 +304,7 @@ void KateViewSpaceContainer::activateView( uint documentNumber )
   }
   else
   {
-    QPtrListIterator<Kate::View> it(m_viewList);
+    TQPtrListIterator<Kate::View> it(m_viewList);
     for ( ;it.current(); ++it)
     {
       if ( it.current()->getDoc()->documentNumber() == documentNumber  )
@@ -359,7 +359,7 @@ void KateViewSpaceContainer::activatePrevView()
 
 void KateViewSpaceContainer::closeViews(uint documentNumber)
 {
-    QPtrList<Kate::View> closeList;
+    TQPtrList<Kate::View> closeList;
 
     for (uint z=0 ; z < m_viewList.count(); z++)
     {
@@ -378,12 +378,12 @@ void KateViewSpaceContainer::closeViews(uint documentNumber)
     }
 
   if (m_blockViewCreationAndActivation) return;
-  QTimer::singleShot(0,this,SIGNAL(viewChanged()));
+  TQTimer::singleShot(0,this,TQT_SIGNAL(viewChanged()));
   //emit m_viewManager->viewChanged ();
 }
 
 void KateViewSpaceContainer::slotPendingDocumentNameChanged() {
-          QString c;
+          TQString c;
           if (m_pendingDocument->url().isEmpty() || (!showFullPath))
           {
             c = m_pendingDocument->docName();
@@ -422,7 +422,7 @@ void KateViewSpaceContainer::statusMsg ()
   int mod = (int)v->getDoc()->isModified();
   bool block=v->getDoc()->blockSelectionMode();
 
-  QString c;
+  TQString c;
   if (v->getDoc()->url().isEmpty() || (!showFullPath))
   {
     c = v->getDoc()->docName();
@@ -448,9 +448,9 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
 
   bool isFirstTime = vs->parentWidget() == this;
 
-  QValueList<int> psizes;
+  TQValueList<int> psizes;
   if ( ! isFirstTime )
-    if ( QSplitter *ps = static_cast<QSplitter*>(vs->parentWidget()->qt_cast("QSplitter")) )
+    if ( TQSplitter *ps = static_cast<TQSplitter*>(vs->parentWidget()->qt_cast("TQSplitter")) )
       psizes = ps->sizes();
 
   Qt::Orientation o = isHoriz ? Qt::Vertical : Qt::Horizontal;
@@ -464,24 +464,24 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
     if ( !((KateMDI::Splitter*)vs->parentWidget())->isLastChild( vs ) )
        ((KateMDI::Splitter*)s->parentWidget())->moveToFirst( s );
   }
-  vs->reparent( s, 0, QPoint(), true );
+  vs->reparent( s, 0, TQPoint(), true );
   KateViewSpace* vsNew = new KateViewSpace( this, s );
 
   if (atTop)
     s->moveToFirst( vsNew );
 
   if (!isFirstTime)
-    if (QSplitter *ps = static_cast<QSplitter*>(s->parentWidget()->qt_cast("QSplitter")) )
+    if (TQSplitter *ps = static_cast<TQSplitter*>(s->parentWidget()->qt_cast("TQSplitter")) )
       ps->setSizes( psizes );
 
   s->show();
 
-  QValueList<int> sizes;
+  TQValueList<int> sizes;
   int space = 50;//isHoriz ? s->parentWidget()->height()/2 : s->parentWidget()->width()/2;
   sizes << space << space;
   s->setSizes( sizes );
 
-  connect(this, SIGNAL(statusChanged(Kate::View *, int, int, int, bool, int, const QString &)), vsNew, SLOT(slotStatusChanged(Kate::View *, int, int,int, bool, int, const QString &)));
+  connect(this, TQT_SIGNAL(statusChanged(Kate::View *, int, int, int, bool, int, const TQString &)), vsNew, TQT_SLOT(slotStatusChanged(Kate::View *, int, int,int, bool, int, const TQString &)));
   m_viewSpaceList.append( vsNew );
   activeViewSpace()->setActive( false );
   vsNew->setActive( true, true );
@@ -511,7 +511,7 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
 
   // save some size information
   KateMDI::Splitter* pp=0L;
-  QValueList<int> ppsizes;
+  TQValueList<int> ppsizes;
   if (m_viewSpaceList.count() > 2 && p->parentWidget() != this)
   {
     pp = (KateMDI::Splitter*)p->parentWidget();
@@ -552,9 +552,9 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
   // reparent the other sibling of the parent.
   while (p->children ())
   {
-    QWidget* other = ((QWidget *)(( QPtrList<QObject>*)p->children())->first());
+    TQWidget* other = ((TQWidget *)(( TQPtrList<TQObject>*)p->children())->first());
 
-    other->reparent( p->parentWidget(), 0, QPoint(), true );
+    other->reparent( p->parentWidget(), 0, TQPoint(), true );
     // We also need to find the right viewspace to become active
     if (pIsFirst)
        ((KateMDI::Splitter*)p->parentWidget())->moveToFirst( other );
@@ -562,7 +562,7 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
       setActiveSpace( (KateViewSpace*)other );
     }
     else {
-      QObjectList* l = other->queryList( "KateViewSpace" );
+      TQObjectList* l = other->queryList( "KateViewSpace" );
       if ( l->first() != 0 ) { // I REALLY hope so!
         setActiveSpace( (KateViewSpace*)l->first() );
       }
@@ -602,7 +602,7 @@ void KateViewSpaceContainer::setShowFullPath( bool enable )
  * session config functions
  */
 
-void KateViewSpaceContainer::saveViewConfiguration(KConfig *config,const QString& group)
+void KateViewSpaceContainer::saveViewConfiguration(KConfig *config,const TQString& group)
 {
   bool weHaveSplittersAlive (viewSpaceCount() > 1);
 
@@ -620,8 +620,8 @@ void KateViewSpaceContainer::saveViewConfiguration(KConfig *config,const QString
 
   // I need the first splitter, the one which has this as parent.
   KateMDI::Splitter* s;
-  QObjectList *l = queryList("KateMDI::Splitter", 0, false, false);
-  QObjectListIt it( *l );
+  TQObjectList *l = queryList("KateMDI::Splitter", 0, false, false);
+  TQObjectListIt it( *l );
 
   if ( (s = (KateMDI::Splitter*)it.current()) != 0 )
     saveSplitterConfig( s, 0, config , group);
@@ -629,7 +629,7 @@ void KateViewSpaceContainer::saveViewConfiguration(KConfig *config,const QString
   delete l;
 }
 
-void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const QString& group)
+void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const TQString& group)
 {
   config->setGroup(group);
   //config->setGroup ("View Configuration");
@@ -638,7 +638,7 @@ void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const QS
   if (!config->readBoolEntry ("Splitters"))
   {
     // only add the new views needed, let the old stay, won't hurt if one around
-    m_viewSpaceList.first ()->restoreConfig (this, config, QString(group+"-ViewSpace 0"));
+    m_viewSpaceList.first ()->restoreConfig (this, config, TQString(group+"-ViewSpace 0"));
   }
   else
   {
@@ -652,7 +652,7 @@ void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const QS
     m_viewSpaceList.clear();
 
     // call restoreSplitter for Splitter 0
-    restoreSplitter( config, QString(group+"-Splitter 0"), this,group );
+    restoreSplitter( config, TQString(group+"-Splitter 0"), this,group );
   }
 
   // finally, make the correct view active.
@@ -665,26 +665,26 @@ void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const QS
 }
 
 
-void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, KConfig* config, const QString& viewConfGrp )
+void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, KConfig* config, const TQString& viewConfGrp )
 {
-  QString grp = QString(viewConfGrp+"-Splitter %1").arg(idx);
+  TQString grp = TQString(viewConfGrp+"-Splitter %1").arg(idx);
   config->setGroup(grp);
 
   // Save sizes, orient, children for this splitter
   config->writeEntry( "Sizes", s->sizes() );
   config->writeEntry( "Orientation", s->orientation() );
 
-  QStringList childList;
+  TQStringList childList;
   // a katesplitter has two children, of which one may be a KateSplitter.
-  const QObjectList* l = s->children();
-  QObjectListIt it( *l );
-  QObject* obj;
+  const TQObjectList* l = s->children();
+  TQObjectListIt it( *l );
+  TQObject* obj;
   for (; it.current(); ++it) {
    obj = it.current();
-   QString n;  // name for child list, see below
+   TQString n;  // name for child list, see below
    // For KateViewSpaces, ask them to save the file list.
    if ( obj->isA("KateViewSpace") ) {
-     n = QString(viewConfGrp+"-ViewSpace %1").arg( m_viewSpaceList.find((KateViewSpace*)obj) );
+     n = TQString(viewConfGrp+"-ViewSpace %1").arg( m_viewSpaceList.find((KateViewSpace*)obj) );
      ((KateViewSpace*)obj)->saveConfig ( config, m_viewSpaceList.find((KateViewSpace*)obj), viewConfGrp);
      // save active viewspace
      if ( ((KateViewSpace*)obj)->isActiveSpace() ) {
@@ -696,11 +696,11 @@ void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, 
    else if ( obj->isA("KateMDI::Splitter") ) {
      idx++;
      saveSplitterConfig( (KateMDI::Splitter*)obj, idx, config,viewConfGrp);
-     n = QString(viewConfGrp+"-Splitter %1").arg( idx );
+     n = TQString(viewConfGrp+"-Splitter %1").arg( idx );
    }
    // make sure list goes in right place!
    if (!n.isEmpty()) {
-     if ( childList.count() > 0 && ! s->isLastChild( (QWidget*)obj ) )
+     if ( childList.count() > 0 && ! s->isLastChild( (TQWidget*)obj ) )
        childList.prepend( n );
      else
        childList.append( n );
@@ -712,21 +712,21 @@ void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, 
   config->writeEntry("Children", childList);
 }
 
-void KateViewSpaceContainer::restoreSplitter( KConfig* config, const QString &group, QWidget* parent, const QString& viewConfGrp)
+void KateViewSpaceContainer::restoreSplitter( KConfig* config, const TQString &group, TQWidget* parent, const TQString& viewConfGrp)
 {
   config->setGroup( group );
 
   KateMDI::Splitter* s = new KateMDI::Splitter((Qt::Orientation)config->readNumEntry("Orientation"), parent);
 
-  QStringList children = config->readListEntry( "Children" );
-  for (QStringList::Iterator it=children.begin(); it!=children.end(); ++it)
+  TQStringList children = config->readListEntry( "Children" );
+  for (TQStringList::Iterator it=children.begin(); it!=children.end(); ++it)
   {
     // for a viewspace, create it and open all documents therein.
     if ( (*it).startsWith(viewConfGrp+"-ViewSpace") )
     {
      KateViewSpace* vs = new KateViewSpace( this, s );
 
-     connect(this, SIGNAL(statusChanged(Kate::View *, int, int, int, bool, int, const QString &)), vs, SLOT(slotStatusChanged(Kate::View *, int, int, int, bool, int, const QString &)));
+     connect(this, TQT_SIGNAL(statusChanged(Kate::View *, int, int, int, bool, int, const TQString &)), vs, TQT_SLOT(slotStatusChanged(Kate::View *, int, int, int, bool, int, const TQString &)));
 
      if (m_viewSpaceList.isEmpty())
        vs->setActive (true);
@@ -741,7 +741,7 @@ void KateViewSpaceContainer::restoreSplitter( KConfig* config, const QString &gr
     else
     {
       // for a splitter, recurse.
-      restoreSplitter( config, QString(*it), s, viewConfGrp );
+      restoreSplitter( config, TQString(*it), s, viewConfGrp );
     }
   }
 

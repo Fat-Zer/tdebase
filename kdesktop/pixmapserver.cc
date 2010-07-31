@@ -37,7 +37,7 @@
 
 
 KPixmapServer::KPixmapServer()
-    : QWidget(0L, "shpixmap comm window")
+    : TQWidget(0L, "shpixmap comm window")
 {
     kapp->installX11EventFilter(this);
     pixmap = XInternAtom(qt_xdisplay(), "PIXMAP", false);
@@ -56,7 +56,7 @@ KPixmapServer::~KPixmapServer()
 }
 
 
-void KPixmapServer::add(QString name, QPixmap *pm, bool overwrite)
+void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
 {
     if (m_Names.contains(name)) 
     {
@@ -65,7 +65,7 @@ void KPixmapServer::add(QString name, QPixmap *pm, bool overwrite)
 	else return;
     }
 	
-    QString str = QString("KDESHPIXMAP:%1").arg(name);
+    TQString str = TQString("KDESHPIXMAP:%1").arg(name);
     Atom sel = XInternAtom(qt_xdisplay(), str.latin1(), false);
     KPixmapInode pi;
     pi.handle = pm->handle();
@@ -92,7 +92,7 @@ void KPixmapServer::add(QString name, QPixmap *pm, bool overwrite)
 }
 
 
-void KPixmapServer::remove(QString name)
+void KPixmapServer::remove(TQString name)
 {
     // Remove the name
     NameIterator it = m_Names.find(name);
@@ -119,9 +119,9 @@ void KPixmapServer::remove(QString name)
 }
 
 
-QStringList KPixmapServer::list()
+TQStringList KPixmapServer::list()
 {
-    QStringList lst;
+    TQStringList lst;
     NameIterator it;
     for (it=m_Names.begin(); it!=m_Names.end(); it++)
 	lst += it.key();
@@ -129,7 +129,7 @@ QStringList KPixmapServer::list()
 }
 
 
-void KPixmapServer::setOwner(QString name)
+void KPixmapServer::setOwner(TQString name)
 {
     NameIterator it = m_Names.find(name);
     if (it == m_Names.end())

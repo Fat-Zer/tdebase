@@ -11,10 +11,10 @@
 #ifndef BGRender_h_Included
 #define BGRender_h_Included
 
-#include <qobject.h>
-#include <qptrvector.h>
-#include <qimage.h>
-#include <qpixmap.h>
+#include <tqobject.h>
+#include <tqptrvector.h>
+#include <tqimage.h>
+#include <tqpixmap.h>
 
 #include "bgsettings.h"
 
@@ -30,13 +30,13 @@ class KShellProcess;
 class KStandardDirs;
 
 /**
- * This class renders a desktop background to a QImage. The operation is
+ * This class renders a desktop background to a TQImage. The operation is
  * asynchronous: connect to the signal imageDone() to find out when the
  * rendering is finished. It also has support for preview images, like
  * the monitor in kcmdisplay.
  */
 class KBackgroundRenderer:
-	public QObject,
+	public TQObject,
 	public KBackgroundSettings
 {
     Q_OBJECT
@@ -47,11 +47,11 @@ public:
     
     void load(int desk, int screen, bool drawBackgroundPerScreen, bool reparseConfig=true);
 
-    void setPreview(const QSize &size);
-    void setSize(const QSize &size);
+    void setPreview(const TQSize &size);
+    void setSize(const TQSize &size);
     
-    QPixmap pixmap();
-    QImage image();
+    TQPixmap pixmap();
+    TQImage image();
     bool isActive() { return m_State & Rendering; }
     void cleanup();
     void saveCacheFile();
@@ -79,10 +79,10 @@ private:
 	WallpaperStarted = 0x10, WallpaperDone = 0x20,
 	AllDone = 0x40 };
 
-    QString buildCommand();
+    TQString buildCommand();
     void createTempFile();
-    void tile(QImage& dst, QRect rect, const QImage& src);
-    void blend(QImage& dst, QRect dr, const QImage& src, QPoint soffs = QPoint(0, 0), int blendFactor=100);
+    void tile(TQImage& dst, TQRect rect, const TQImage& src);
+    void blend(TQImage& dst, TQRect dr, const TQImage& src, TQPoint soffs = TQPoint(0, 0), int blendFactor=100);
 
     void wallpaperBlend();
     void fastWallpaperBlend();
@@ -91,7 +91,7 @@ private:
     int doBackground(bool quit=false);
     int doWallpaper(bool quit=false);
     void setBusyCursor(bool isBusy);
-    QString cacheFileName();
+    TQString cacheFileName();
     bool useCacheFile() const;
     bool canTile() const;
     
@@ -103,11 +103,11 @@ private:
     bool m_TilingEnabled;
 
     KTempFile* m_Tempfile;
-    QSize m_Size, m_rSize;
-    QRect m_WallpaperRect;
-    QImage m_Image, m_Background, m_Wallpaper;
-    QPixmap m_Pixmap;
-    QTimer *m_pTimer;
+    TQSize m_Size, m_rSize;
+    TQRect m_WallpaperRect;
+    TQImage m_Image, m_Background, m_Wallpaper;
+    TQPixmap m_Pixmap;
+    TQTimer *m_pTimer;
 
     KStandardDirs *m_pDirs;
     KShellProcess *m_pProc;
@@ -130,9 +130,9 @@ public:
     KBackgroundRenderer * renderer(unsigned screen);
     unsigned numRenderers() const { return m_numRenderers; }
 
-    QPixmap pixmap();
+    TQPixmap pixmap();
     
-    void setPreview(const QSize & size);
+    void setPreview(const TQSize & size);
     
     bool needProgramUpdate();
     void programUpdate();
@@ -159,7 +159,7 @@ private slots:
     void screenDone(int desk, int screen);
 
 private:
-    QSize renderSize(int screen); // the size the renderer should be
+    TQSize renderSize(int screen); // the size the renderer should be
     void initRenderers();
     
     KConfig *m_pConfig;
@@ -170,11 +170,11 @@ private:
     bool m_bDrawBackgroundPerScreen;
     bool m_bCommonScreen;
     bool m_bDeleteConfig;
-    QSize m_size;
+    TQSize m_size;
     
-    QMemArray<bool> m_bFinished;
-    QPtrVector<KBackgroundRenderer> m_renderer;
-    QPixmap *m_pPixmap;
+    TQMemArray<bool> m_bFinished;
+    TQPtrVector<KBackgroundRenderer> m_renderer;
+    TQPixmap *m_pPixmap;
 };
 
 

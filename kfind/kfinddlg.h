@@ -25,29 +25,29 @@ class KfindDlg: public KDialogBase
 Q_OBJECT
 
 public:
-  KfindDlg(const KURL & url, QWidget * parent = 0, const char * name = 0);
+  KfindDlg(const KURL & url, TQWidget * parent = 0, const char * name = 0);
   ~KfindDlg();
   void copySelection();
 
-  void setStatusMsg(const QString &);
-  void setProgressMsg(const QString &);
+  void setStatusMsg(const TQString &);
+  void setProgressMsg(const TQString &);
 
 private:
-  void closeEvent(QCloseEvent *);
-  /*Return a QStringList of all subdirs of d*/
-  QStringList getAllSubdirs(QDir d);
+  void closeEvent(TQCloseEvent *);
+  /*Return a TQStringList of all subdirs of d*/
+  TQStringList getAllSubdirs(TQDir d);
 
 public slots:
   void startSearch();
   void stopSearch();
   void newSearch();
-  void addFile(const KFileItem* item, const QString& matchingLine);
+  void addFile(const KFileItem* item, const TQString& matchingLine);
   void setFocus();
   void slotResult(int);
 //  void slotSearchDone();
   void  about ();
-  void slotDeleteItem(const QString&);
-  void slotNewItems( const QString&  );
+  void slotDeleteItem(const TQString&);
+  void slotNewItems( const TQString&  );
 
 signals:
   void haveResults(bool);

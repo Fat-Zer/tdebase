@@ -31,58 +31,58 @@
 */
        
 
-bool GetInfo_CPU( QListView * )
+bool GetInfo_CPU( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_IRQ( QListView * )
+bool GetInfo_IRQ( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_DMA( QListView * )
+bool GetInfo_DMA( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_PCI( QListView * )
+bool GetInfo_PCI( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_IO_Ports( QListView * )
+bool GetInfo_IO_Ports( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Sound( QListView * )
+bool GetInfo_Sound( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Devices( QListView * )
+bool GetInfo_Devices( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_SCSI( QListView * )
+bool GetInfo_SCSI( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Partitions( QListView * )
+bool GetInfo_Partitions( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_XServer_and_Video( QListView *lBox )
+bool GetInfo_XServer_and_Video( TQListView *lBox )
 {
 	return GetInfo_XServer_Generic( lBox );
 }
 
 /* Generic GetInfo? ~Jahshan */
-bool GetInfo_CD_ROM(QListView * lBox)
+bool GetInfo_CD_ROM(TQListView * lBox)
 {
 	return false;
 }

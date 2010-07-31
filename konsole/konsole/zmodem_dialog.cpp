@@ -18,24 +18,24 @@
 
 #include "zmodem_dialog.h"
 
-#include <qtextedit.h>
+#include <tqtextedit.h>
 
 #include <klocale.h>
 
-ZModemDialog::ZModemDialog(QWidget *parent, bool modal, const QString &caption)
+ZModemDialog::ZModemDialog(TQWidget *parent, bool modal, const TQString &caption)
  : KDialogBase(parent, "zmodem_progress", modal, caption,
    User1|Close, User1, true,
    i18n("&Stop"))
 {
   setEscapeButton(User1);
   enableButton(Close, false);
-  textEdit = new QTextEdit(this);
+  textEdit = new TQTextEdit(this);
   textEdit->setMinimumSize(400, 100);
   setMainWidget(textEdit);
-  connect(this, SIGNAL(user1Clicked()), this, SLOT(slotClose()));
+  connect(this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(slotClose()));
 }
 
-void ZModemDialog::addProgressText(const QString &txt)
+void ZModemDialog::addProgressText(const TQString &txt)
 {
   int p = textEdit->paragraphs();
   textEdit->insertParagraph(txt, p);

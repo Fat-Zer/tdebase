@@ -40,7 +40,7 @@
 #include <kmessagebox.h>
 
 KateConsole::KateConsole (KateMainWindow *mw, KateMDI::ToolView* parent)
- : QVBox (parent)
+ : TQVBox (parent)
  , m_part (0)
  , m_mw (mw)
  , m_toolView (parent)
@@ -50,7 +50,7 @@ KateConsole::KateConsole (KateMainWindow *mw, KateMDI::ToolView* parent)
 KateConsole::~KateConsole ()
 {
   if (m_part)
-    disconnect ( m_part, SIGNAL(destroyed()), this, SLOT(slotDestroyed()) );
+    disconnect ( m_part, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
 }
 
 void KateConsole::loadConsoleIfNeeded()
@@ -74,7 +74,7 @@ void KateConsole::loadConsoleIfNeeded()
 
   m_part->widget()->show();
 
-  connect ( m_part, SIGNAL(destroyed()), this, SLOT(slotDestroyed()) );
+  connect ( m_part, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
 
   if (m_mw->viewManager()->activeView())
     if (m_mw->viewManager()->activeView()->getDoc()->url().isValid())
@@ -93,7 +93,7 @@ void KateConsole::slotDestroyed ()
   }
 }
 
-void KateConsole::showEvent(QShowEvent *)
+void KateConsole::showEvent(TQShowEvent *)
 {
   if (m_part) return;
 
@@ -109,7 +109,7 @@ void KateConsole::cd (const KURL &url)
   m_part->openURL (url);
 }
 
-void KateConsole::sendInput( const QString& text )
+void KateConsole::sendInput( const TQString& text )
 {
   loadConsoleIfNeeded();
 

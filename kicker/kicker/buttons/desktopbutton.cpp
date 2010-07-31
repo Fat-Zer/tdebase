@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
-#include <qdragobject.h>
+#include <tqtooltip.h>
+#include <tqdragobject.h>
 
 #include <klocale.h>
 #include <kglobalsettings.h>
@@ -36,17 +36,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "desktopbutton.h"
 #include "desktopbutton.moc"
 
-DesktopButton::DesktopButton( QWidget* parent )
+DesktopButton::DesktopButton( TQWidget* parent )
   : PanelButton( parent, "DesktopButton" )
 {
     setToggleButton(true);
 
-    QToolTip::add(this, i18n("Show desktop"));
+    TQToolTip::add(this, i18n("Show desktop"));
     setTitle(i18n("Desktop Access"));
     setIcon("desktop");
 
-    connect( this, SIGNAL(toggled(bool)), this, SLOT(showDesktop(bool)) );
-    connect( ShowDesktop::the(), SIGNAL(desktopShown(bool)), this, SLOT(toggle(bool)) );
+    connect( this, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(showDesktop(bool)) );
+    connect( ShowDesktop::the(), TQT_SIGNAL(desktopShown(bool)), this, TQT_SLOT(toggle(bool)) );
 
     setOn( ShowDesktop::the()->desktopShowing() );
 }
@@ -65,7 +65,7 @@ void DesktopButton::showDesktop(bool showDesktop)
     KickerTip::enableTipping(true);
 }
 
-void DesktopButton::dragEnterEvent( QDragEnterEvent *ev )
+void DesktopButton::dragEnterEvent( TQDragEnterEvent *ev )
 {
     if ((ev->source() != this) && KURLDrag::canDecode(ev))
         ev->accept(rect());
@@ -74,10 +74,10 @@ void DesktopButton::dragEnterEvent( QDragEnterEvent *ev )
     PanelButton::dragEnterEvent(ev);
 }
 
-void DesktopButton::dropEvent( QDropEvent *ev )
+void DesktopButton::dropEvent( TQDropEvent *ev )
 {
     KURL dPath (  KGlobalSettings::desktopPath() );
-    KFileItem item( dPath, QString::fromLatin1( "inode/directory" ), KFileItem::Unknown );
+    KFileItem item( dPath, TQString::fromLatin1( "inode/directory" ), KFileItem::Unknown );
     KonqOperations::doDrop( &item, dPath, ev, this );
     PanelButton::dropEvent(ev);
 }

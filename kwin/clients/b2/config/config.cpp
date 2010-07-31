@@ -8,14 +8,14 @@
 
 #include "config.h"
 #include <kglobal.h>
-#include <qwhatsthis.h>
-#include <qvbox.h>
+#include <tqwhatsthis.h>
+#include <tqvbox.h>
 #include <klocale.h>
 
 
 extern "C"
 {
-	KDE_EXPORT QObject* allocate_config( KConfig* conf, QWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
 	{
 		return(new B2Config(conf, parent));
 	}
@@ -26,43 +26,43 @@ extern "C"
  * 'conf' 	is a pointer to the kwindecoration modules open kwin config,
  *			and is by default set to the "Style" group.
  *
- * 'parent'	is the parent of the QObject, which is a VBox inside the
+ * 'parent'	is the parent of the TQObject, which is a VBox inside the
  *			Configure tab in kwindecoration
  */
 
-B2Config::B2Config( KConfig* conf, QWidget* parent )
-	: QObject( parent )
+B2Config::B2Config( KConfig* conf, TQWidget* parent )
+	: TQObject( parent )
 {
 	KGlobal::locale()->insertCatalogue("kwin_b2_config");
 	b2Config = new KConfig("kwinb2rc");
-	gb = new QVBox(parent);
+	gb = new TQVBox(parent);
 
-	cbColorBorder = new QCheckBox(
+	cbColorBorder = new TQCheckBox(
 			i18n("Draw window frames using &titlebar colors"), gb);
-	QWhatsThis::add(cbColorBorder,
+	TQWhatsThis::add(cbColorBorder,
 			i18n("When selected, the window borders "
 				"are drawn using the titlebar colors; otherwise, they are "
 				"drawn using normal border colors."));
 
 	// Grab Handle
-    showGrabHandleCb = new QCheckBox(
+    showGrabHandleCb = new TQCheckBox(
 	    i18n("Draw &resize handle"), gb);
-    QWhatsThis::add(showGrabHandleCb,
+    TQWhatsThis::add(showGrabHandleCb,
 	    i18n("When selected, decorations are drawn with a \"grab handle\" "
 		 "in the bottom right corner of the windows; "
 		 "otherwise, no grab handle is drawn."));
 
     // Double click menu option support
-    actionsGB = new QHGroupBox(i18n("Actions Settings"), gb);
-    QLabel *menuDblClickLabel = new QLabel(actionsGB);
+    actionsGB = new TQHGroupBox(i18n("Actions Settings"), gb);
+    TQLabel *menuDblClickLabel = new TQLabel(actionsGB);
     menuDblClickLabel->setText(i18n("Double click on menu button:"));
-    menuDblClickOp = new QComboBox(actionsGB);
+    menuDblClickOp = new TQComboBox(actionsGB);
     menuDblClickOp->insertItem(i18n("Do Nothing"));
     menuDblClickOp->insertItem(i18n("Minimize Window"));
     menuDblClickOp->insertItem(i18n("Shade Window"));
     menuDblClickOp->insertItem(i18n("Close Window"));
 
-    QWhatsThis::add(menuDblClickOp,
+    TQWhatsThis::add(menuDblClickOp,
 	    i18n("An action can be associated to a double click "
 		 "of the menu button. Leave it to none if in doubt."));
 
@@ -70,12 +70,12 @@ B2Config::B2Config( KConfig* conf, QWidget* parent )
 	load(conf);
 
 	// Ensure we track user changes properly
-	connect(cbColorBorder, SIGNAL(clicked()),
-			this, SLOT(slotSelectionChanged()));
-    connect(showGrabHandleCb, SIGNAL(clicked()),
-		    this, SLOT(slotSelectionChanged()));
-    connect(menuDblClickOp, SIGNAL(activated(int)),
-		    this, SLOT(slotSelectionChanged()));
+	connect(cbColorBorder, TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(slotSelectionChanged()));
+    connect(showGrabHandleCb, TQT_SIGNAL(clicked()),
+		    this, TQT_SLOT(slotSelectionChanged()));
+    connect(menuDblClickOp, TQT_SIGNAL(activated(int)),
+		    this, TQT_SLOT(slotSelectionChanged()));
 	// Make the widgets visible in kwindecoration
 	gb->show();
 }
@@ -106,7 +106,7 @@ void B2Config::load(KConfig * /*conf*/)
     override = b2Config->readBoolEntry( "DrawGrabHandle", true );
     showGrabHandleCb->setChecked(override);
 
-    QString returnString = b2Config->readEntry(
+    TQString returnString = b2Config->readEntry(
 					"MenuButtonDoubleClickOperation", "NoOp");
 
     int op;
@@ -124,7 +124,7 @@ void B2Config::load(KConfig * /*conf*/)
 
 }
 
-static QString opToString(int op)
+static TQString opToString(int op)
 {
     switch (op) {
     case 1:

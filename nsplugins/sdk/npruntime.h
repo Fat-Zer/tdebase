@@ -65,7 +65,7 @@
 #ifndef _NP_RUNTIME_H_
 #define _NP_RUNTIME_H_
 
-#include <qglobal.h>
+#include <tqglobal.h>
 typedef Q_UINT32 uint32_t;
 
 #ifdef __cplusplus

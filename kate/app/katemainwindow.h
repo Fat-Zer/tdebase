@@ -58,7 +58,7 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
      * @param sconfig session config for this window, 0 if none
      * @param sgroup session config group to use
      */
-    KateMainWindow (KConfig *sconfig, const QString &sgroup);
+    KateMainWindow (KConfig *sconfig, const TQString &sgroup);
 
     /**
      * Destruct the nice window
@@ -124,8 +124,8 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
      */
     void saveOptions();
 
-    void dragEnterEvent( QDragEnterEvent * );
-    void dropEvent( QDropEvent * );
+    void dragEnterEvent( TQDragEnterEvent * );
+    void dropEvent( TQDropEvent * );
 
   /**
    * slots used for actions in the menus/toolbars
@@ -138,7 +138,7 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
 
     void slotOpenWithMenuAction(int idx);
 
-    void slotGrepToolItemSelected ( const QString &filename, int linenumber );
+    void slotGrepToolItemSelected ( const TQString &filename, int linenumber );
     void slotMail();
 
     void slotFileQuit();
@@ -147,7 +147,7 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
     void slotWindowActivated ();
     void slotUpdateOpenWith();
     void documentMenuAboutToShow();
-    void slotDropEvent(QDropEvent *);
+    void slotDropEvent(TQDropEvent *);
     void editKeys();
     void mSlotFixOpenWithMenu();
 
@@ -163,13 +163,13 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
     void slotFullScreen(bool);
 
   public:
-    void openURL (const QString &name=0L);
+    void openURL (const TQString &name=0L);
 
   private slots:
     void updateGrepDir (bool visible);
 
   protected:
-    bool event( QEvent * );
+    bool event( TQEvent * );
 
   private slots:
     void slotDocumentCloseAll();
@@ -199,7 +199,7 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
 
     KActionMenu* documentOpenWith;
 
-    QPopupMenu *documentMenu;
+    TQPopupMenu *documentMenu;
 
     KToggleAction* settingsShowFilelist;
     KToggleAction* settingsShowFileselector;

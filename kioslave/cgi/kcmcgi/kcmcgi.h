@@ -29,25 +29,25 @@ class KCMCgi : public KCModule
 {
     Q_OBJECT
   public:
-    KCMCgi( QWidget *parent = 0, const char *name = 0 );
+    KCMCgi( TQWidget *parent = 0, const char *name = 0 );
     ~KCMCgi();
 
     void load();
     void save();
     void defaults();
-    QString quickHelp() const;
+    TQString quickHelp() const;
 
   public slots:
 
   protected slots:
     void addPath();
     void removePath();
-    void slotItemSelected( QListBoxItem * item );
+    void slotItemSelected( TQListBoxItem * item );
   private:
     void updateButton();
-    QListBox *mListBox;
-    QPushButton *mAddButton;
-    QPushButton *mRemoveButton;
+    TQListBox *mListBox;
+    TQPushButton *mAddButton;
+    TQPushButton *mRemoveButton;
 
     KConfig *mConfig;
 };

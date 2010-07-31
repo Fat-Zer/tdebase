@@ -22,8 +22,8 @@
 #ifndef __DOMAINLISTVIEW_H__
 #define __DOMAINLISTVIEW_H__
 
-#include <qgroupbox.h>
-#include <qmap.h>
+#include <tqgroupbox.h>
+#include <tqmap.h>
 
 class QListViewItem;
 class QPushButton;
@@ -51,7 +51,7 @@ class PolicyDialog;
  *
  * @author Leo Savernik
  */
-class DomainListView : public QGroupBox {
+class DomainListView : public TQGroupBox {
   Q_OBJECT
 public:
   /** Enumerates the available buttons.
@@ -67,7 +67,7 @@ public:
    * @param parent parent widget
    * @param name internal name for debugging
    */
-  DomainListView(KConfig *config,const QString &title,QWidget *parent,
+  DomainListView(KConfig *config,const TQString &title,TQWidget *parent,
   		const char *name = 0);
 
   virtual ~DomainListView();
@@ -87,31 +87,31 @@ public:
    *
    * Note: The add button already contains a default "what's this" text.
    */
-  QPushButton *addButton() const { return addDomainPB; }
+  TQPushButton *addButton() const { return addDomainPB; }
 
   /**
    * returns the change push-button.
    *
    * Note: The change button already contains a default "what's this" text.
    */
-  QPushButton *changeButton() const { return changeDomainPB; }
+  TQPushButton *changeButton() const { return changeDomainPB; }
 
   /**
    * returns the delete push-button.
    *
    * Note: The delete button already contains a default "what's this" text.
    */
-  QPushButton *deleteButton() const { return deleteDomainPB; }
+  TQPushButton *deleteButton() const { return deleteDomainPB; }
 
   /**
    * returns the import push-button.
    */
-  QPushButton *importButton() const { return importDomainPB; }
+  TQPushButton *importButton() const { return importDomainPB; }
 
   /**
    * returns the export push-button.
    */
-  QPushButton *exportButton() const { return exportDomainPB; }
+  TQPushButton *exportButton() const { return exportDomainPB; }
 
   /**
    * Initializes the list view with the given list of domains as well
@@ -121,7 +121,7 @@ public:
    *
    * @param domainList given list of domains
    */
-  void initialize(const QStringList &domainList);
+  void initialize(const TQStringList &domainList);
 
   /**
    * saves the current state of all domains to the configuration object.
@@ -129,7 +129,7 @@ public:
    * @param domainListKey the name of the key which the list of domains
    *	is stored under.
    */
-  void save(const QString &group, const QString &domainListKey);
+  void save(const TQString &group, const TQString &domainListKey);
 
 
 signals:
@@ -195,13 +195,13 @@ protected:
 
   KListView *domainSpecificLV;
 
-  QPushButton* addDomainPB;
-  QPushButton* changeDomainPB;
-  QPushButton* deleteDomainPB;
-  QPushButton* importDomainPB;
-  QPushButton* exportDomainPB;
+  TQPushButton* addDomainPB;
+  TQPushButton* changeDomainPB;
+  TQPushButton* deleteDomainPB;
+  TQPushButton* importDomainPB;
+  TQPushButton* exportDomainPB;
 
-  typedef QMap<QListViewItem*, Policies *> DomainPolicyMap;
+  typedef TQMap<TQListViewItem*, Policies *> DomainPolicyMap;
   DomainPolicyMap domainPolicies;
 };
 

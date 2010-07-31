@@ -24,7 +24,7 @@
 
 #include <kaction.h>
 #include <kxmlguiclient.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <libkonq_export.h>
 
 /**
@@ -40,26 +40,26 @@ public:
   /**
    * Reimplemented for internal purpose
    */
-  QDomDocument domDocument( ) const;
+  TQDomDocument domDocument( ) const;
 
-  QDomElement DomElement( ) const; // KDE4: s/D/d/
+  TQDomElement DomElement( ) const; // KDE4: s/D/d/
 
 protected:
-  void addAction( KAction *action, const QDomElement &menu = QDomElement() );
-  void addAction( const char *name, const QDomElement &menu = QDomElement() );
-  void addSeparator( const QDomElement &menu = QDomElement() );
+  void addAction( KAction *action, const TQDomElement &menu = TQDomElement() );
+  void addAction( const char *name, const TQDomElement &menu = TQDomElement() );
+  void addSeparator( const TQDomElement &menu = TQDomElement() );
   /// only add a separator if an action is added afterwards
   void addPendingSeparator();
-  void addGroup( const QString &grp );
-  void addMerge( const QString &name );
+  void addGroup( const TQString &grp );
+  void addMerge( const TQString &name );
 
   // @return true if addAction was called at least once
   bool hasAction() const;
   void prepareXMLGUIStuff();
 
 // KDE4: make private
-  QDomElement m_menuElement;
-  QDomDocument m_doc;
+  TQDomElement m_menuElement;
+  TQDomDocument m_doc;
 
 private:
   void handlePendingSeparator();

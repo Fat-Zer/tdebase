@@ -24,10 +24,10 @@
 #ifndef KFILE_IVI_DESKTOP
 #define KFILE_IVI_DESKTOP
 
-#include <qcolor.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qstring.h>
+#include <tqcolor.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
+#include <tqstring.h>
 #include <kfileivi.h>
 
 /*
@@ -69,7 +69,7 @@ class KFileIVIDesktop : public KFileIVI
      * Reimplements KIconView::calcRect to take the shadow metrics
      * into account
      */
-     virtual void calcRect( const QString& _text );
+     virtual void calcRect( const TQString& _text );
 
     /**
      * Paints this item. Takes care of using the normal or alpha
@@ -77,7 +77,7 @@ class KFileIVIDesktop : public KFileIVI
      * @param p the painter for drawing the item
      * @param cg the base color group
      */
-    virtual void paintItem(QPainter *p, const QColorGroup &cg);
+    virtual void paintItem(TQPainter *p, const TQColorGroup &cg);
 
     /**
 
@@ -85,7 +85,7 @@ class KFileIVIDesktop : public KFileIVI
      * @param p the painter for drawing the item
      * @param cg the base color group
      */
-    virtual void drawShadowedText(QPainter *p, const QColorGroup &cg);
+    virtual void drawShadowedText(TQPainter *p, const TQColorGroup &cg);
 
     /**
      * Builds the shadow. As the algorithm is pretty slow (at pixel level),
@@ -94,14 +94,14 @@ class KFileIVIDesktop : public KFileIVI
      * @param align the shadow alignment
      * @param shadowColor the shadow color
      */
-    virtual QImage *buildShadow(QPainter *p, const int align, QColor &shadowColor);
+    virtual TQImage *buildShadow(TQPainter *p, const int align, TQColor &shadowColor);
 
  protected:
-    void setNormalImage(QImage *newImage) { delete m_normalImage; m_normalImage = newImage; };
-    void setSelectedImage(QImage *newImage) { delete m_selectedImage; m_selectedImage = newImage; };
+    void setNormalImage(TQImage *newImage) { delete m_normalImage; m_normalImage = newImage; };
+    void setSelectedImage(TQImage *newImage) { delete m_selectedImage; m_selectedImage = newImage; };
 
-    QImage *normalImage() { return m_normalImage; };
-    QImage *selectedImage() { return m_selectedImage; };
+    TQImage *normalImage() { return m_normalImage; };
+    TQImage *selectedImage() { return m_selectedImage; };
 
  private:
     bool shouldUpdateShadow(bool selected);
@@ -109,10 +109,10 @@ class KFileIVIDesktop : public KFileIVI
 
     KShadowEngine *m_shadow;
 
-    QImage  *m_selectedImage;
-    QImage  *m_normalImage;
+    TQImage  *m_selectedImage;
+    TQImage  *m_normalImage;
 
-    QString oldText;
+    TQString oldText;
 
     unsigned long _selectedUID;
     unsigned long _normalUID;

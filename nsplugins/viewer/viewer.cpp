@@ -34,8 +34,8 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <qptrlist.h>
-#include <qsocketnotifier.h>
+#include <tqptrlist.h>
+#include <tqsocketnotifier.h>
 #include <stdlib.h>
 #include <sys/resource.h>
 #include <sys/time.h>
@@ -85,7 +85,7 @@ static int x_errhandler(Display *dpy, XErrorEvent *error)
  * the "old style" and keep lot's of global vars. :-)
  */
 
-static QCString g_dcopId;
+static TQCString g_dcopId;
 
 /**
  * parseCommandLine - get command line parameters
@@ -122,11 +122,11 @@ void quitXt()
 struct SocketNot
 {
   int fd;
-  QObject *obj;
+  TQObject *obj;
   XtInputId id;
 };
 
-QPtrList<SocketNot> _notifiers[3];
+TQPtrList<SocketNot> _notifiers[3];
 
 /**
  * socketCallback - send event to the socket notifier
@@ -136,10 +136,10 @@ void socketCallback(void *client_data, int* /*source*/, XtInputId* /*id*/)
 {
   kdDebug(1430) << "-> socketCallback( client_data=" << client_data << " )" << endl;
 
-  QEvent event( QEvent::SockAct );
+  TQEvent event( TQEvent::SockAct );
   SocketNot *socknot = (SocketNot *)client_data;
   kdDebug(1430) << "obj=" << (void*)socknot->obj << endl;
-  QApplication::sendEvent( socknot->obj, &event );
+  TQApplication::sendEvent( socknot->obj, &event );
 
   kdDebug(1430) << "<- socketCallback" << endl;
 }
@@ -151,12 +151,12 @@ void socketCallback(void *client_data, int* /*source*/, XtInputId* /*id*/)
  * the original one in Qt. I hope this works with every dynamic library loader on any OS.
  *
  */
-extern bool qt_set_socket_handler( int, int, QObject *, bool );
-bool qt_set_socket_handler( int sockfd, int type, QObject *obj, bool enable )
+extern bool qt_set_socket_handler( int, int, TQObject *, bool );
+bool qt_set_socket_handler( int sockfd, int type, TQObject *obj, bool enable )
 {
   if ( sockfd < 0 || type < 0 || type > 2 || obj == 0 ) {
 #if defined(CHECK_RANGE)
-      qWarning( "QSocketNotifier: Internal error" );
+      qWarning( "TQSocketNotifier: Internal error" );
 #endif
       return FALSE;
   }
@@ -164,9 +164,9 @@ bool qt_set_socket_handler( int sockfd, int type, QObject *obj, bool enable )
   XtPointer inpMask = 0;
 
   switch (type) {
-  case QSocketNotifier::Read:      inpMask = (XtPointer)XtInputReadMask; break;
-  case QSocketNotifier::Write:     inpMask = (XtPointer)XtInputWriteMask; break;
-  case QSocketNotifier::Exception: inpMask = (XtPointer)XtInputExceptMask; break;
+  case TQSocketNotifier::Read:      inpMask = (XtPointer)XtInputReadMask; break;
+  case TQSocketNotifier::Write:     inpMask = (XtPointer)XtInputWriteMask; break;
+  case TQSocketNotifier::Exception: inpMask = (XtPointer)XtInputExceptMask; break;
   default: return FALSE;
   }
 
@@ -185,7 +185,7 @@ bool qt_set_socket_handler( int sockfd, int type, QObject *obj, bool enable )
 #if defined(CHECK_STATE)
           if ( p && p->fd==sockfd ) {
               static const char *t[] = { "read", "write", "exception" };
-              qWarning( "QSocketNotifier: Multiple socket notifiers for "
+              qWarning( "TQSocketNotifier: Multiple socket notifiers for "
                         "same socket %d and type %s", sockfd, t[type] );
           }
 #endif

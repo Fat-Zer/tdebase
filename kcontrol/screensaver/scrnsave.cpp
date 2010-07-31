@@ -17,16 +17,16 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qheader.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qslider.h>
-#include <qtimer.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqheader.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlistview.h>
+#include <tqpushbutton.h>
+#include <tqslider.h>
+#include <tqtimer.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 
@@ -48,7 +48,7 @@
 
 #include <fixx11h.h>
 
-template class QPtrList<SaverConfig>;
+template class TQPtrList<SaverConfig>;
 
 const uint widgetEventMask =                 // X event mask
 (uint)(
@@ -59,18 +59,18 @@ const uint widgetEventMask =                 // X event mask
 
 //===========================================================================
 // DLL Interface for kcontrol
-typedef KGenericFactory<KScreenSaver, QWidget > KSSFactory;
+typedef KGenericFactory<KScreenSaver, TQWidget > KSSFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_screensaver, KSSFactory("kcmscreensaver") )
 
 
-static QString findExe(const QString &exe) {
-    QString result = locate("exe", exe);
+static TQString findExe(const TQString &exe) {
+    TQString result = locate("exe", exe);
     if (result.isEmpty())
         result = KStandardDirs::findExe(exe);
     return result;
 }
 
-KScreenSaver::KScreenSaver(QWidget *parent, const char *name, const QStringList&)
+KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringList&)
     : KCModule(KSSFactory::instance(), parent, name)
 {
     mSetupProc = 0;
@@ -99,7 +99,7 @@ KScreenSaver::KScreenSaver(QWidget *parent, const char *name, const QStringList&
     setButtons( KCModule::Help | KCModule::Default | KCModule::Apply );
 
     // Add KDE specific screensaver path
-    QString relPath="System/ScreenSavers/";
+    TQString relPath="System/ScreenSavers/";
     KServiceGroup::Ptr servGroup = KServiceGroup::baseGroup( "screensavers" );
     if (servGroup)
     {
@@ -114,108 +114,108 @@ KScreenSaver::KScreenSaver(QWidget *parent, const char *name, const QStringList&
     readSettings( false );
 
     mSetupProc = new KProcess;
-    connect(mSetupProc, SIGNAL(processExited(KProcess *)),
-            this, SLOT(slotSetupDone(KProcess *)));
+    connect(mSetupProc, TQT_SIGNAL(processExited(KProcess *)),
+            this, TQT_SLOT(slotSetupDone(KProcess *)));
 
     mPreviewProc = new KProcess;
-    connect(mPreviewProc, SIGNAL(processExited(KProcess *)),
-            this, SLOT(slotPreviewExited(KProcess *)));
+    connect(mPreviewProc, TQT_SIGNAL(processExited(KProcess *)),
+            this, TQT_SLOT(slotPreviewExited(KProcess *)));
 
-    QBoxLayout *topLayout = new QHBoxLayout(this, 0, KDialog::spacingHint());
+    TQBoxLayout *topLayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
 
     // left column
-    QVBoxLayout *leftColumnLayout =
-        new QVBoxLayout(topLayout, KDialog::spacingHint());
-    QBoxLayout *vLayout =
-        new QVBoxLayout(leftColumnLayout, KDialog::spacingHint());
+    TQVBoxLayout *leftColumnLayout =
+        new TQVBoxLayout(topLayout, KDialog::spacingHint());
+    TQBoxLayout *vLayout =
+        new TQVBoxLayout(leftColumnLayout, KDialog::spacingHint());
 
-    mSaverGroup = new QGroupBox(i18n("Screen Saver"), this );
+    mSaverGroup = new TQGroupBox(i18n("Screen Saver"), this );
     mSaverGroup->setColumnLayout( 0, Qt::Horizontal );
     vLayout->addWidget(mSaverGroup);
     vLayout->setStretchFactor( mSaverGroup, 10 );
-    QBoxLayout *groupLayout = new QVBoxLayout( mSaverGroup->layout(),
+    TQBoxLayout *groupLayout = new TQVBoxLayout( mSaverGroup->layout(),
         KDialog::spacingHint() );
 
-    mSaverListView = new QListView( mSaverGroup );
+    mSaverListView = new TQListView( mSaverGroup );
     mSaverListView->setMinimumHeight( 120 );
-    mSaverListView->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    mSaverListView->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
     mSaverListView->addColumn("");
     mSaverListView->header()->hide();
     mSelected = -1;
     groupLayout->addWidget( mSaverListView, 10 );
-    connect( mSaverListView, SIGNAL(doubleClicked ( QListViewItem *)), this, SLOT( slotSetup()));
-    QWhatsThis::add( mSaverListView, i18n("Select the screen saver to use.") );
+    connect( mSaverListView, TQT_SIGNAL(doubleClicked ( TQListViewItem *)), this, TQT_SLOT( slotSetup()));
+    TQWhatsThis::add( mSaverListView, i18n("Select the screen saver to use.") );
 
-    QBoxLayout* hlay = new QHBoxLayout(groupLayout, KDialog::spacingHint());
-    mSetupBt = new QPushButton( i18n("&Setup..."), mSaverGroup );
-    connect( mSetupBt, SIGNAL( clicked() ), SLOT( slotSetup() ) );
+    TQBoxLayout* hlay = new TQHBoxLayout(groupLayout, KDialog::spacingHint());
+    mSetupBt = new TQPushButton( i18n("&Setup..."), mSaverGroup );
+    connect( mSetupBt, TQT_SIGNAL( clicked() ), TQT_SLOT( slotSetup() ) );
     mSetupBt->setEnabled(false);
     hlay->addWidget( mSetupBt );
-    QWhatsThis::add( mSetupBt, i18n("Configure the screen saver's options, if any.") );
+    TQWhatsThis::add( mSetupBt, i18n("Configure the screen saver's options, if any.") );
 
-    mTestBt = new QPushButton( i18n("&Test"), mSaverGroup );
-    connect( mTestBt, SIGNAL( clicked() ), SLOT( slotTest() ) );
+    mTestBt = new TQPushButton( i18n("&Test"), mSaverGroup );
+    connect( mTestBt, TQT_SIGNAL( clicked() ), TQT_SLOT( slotTest() ) );
     mTestBt->setEnabled(false);
     hlay->addWidget( mTestBt );
-    QWhatsThis::add( mTestBt, i18n("Show a full screen preview of the screen saver.") );
+    TQWhatsThis::add( mTestBt, i18n("Show a full screen preview of the screen saver.") );
 
-    mSettingsGroup = new QGroupBox( i18n("Settings"), this );
+    mSettingsGroup = new TQGroupBox( i18n("Settings"), this );
     mSettingsGroup->setColumnLayout( 0, Qt::Vertical );
     leftColumnLayout->addWidget( mSettingsGroup );
-    groupLayout = new QVBoxLayout( mSettingsGroup->layout(),
+    groupLayout = new TQVBoxLayout( mSettingsGroup->layout(),
         KDialog::spacingHint() );
 
-    mEnabledCheckBox = new QCheckBox(i18n(
+    mEnabledCheckBox = new TQCheckBox(i18n(
         "Start a&utomatically"), mSettingsGroup);
     mEnabledCheckBox->setChecked(mEnabled);
-    QWhatsThis::add( mEnabledCheckBox, i18n(
+    TQWhatsThis::add( mEnabledCheckBox, i18n(
         "Automatically start the screen saver after a period of inactivity.") );
-    connect(mEnabledCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(slotEnable(bool)));
+    connect(mEnabledCheckBox, TQT_SIGNAL(toggled(bool)),
+            this, TQT_SLOT(slotEnable(bool)));
     groupLayout->addWidget(mEnabledCheckBox);
 
-    QBoxLayout *hbox = new QHBoxLayout();
+    TQBoxLayout *hbox = new TQHBoxLayout();
     groupLayout->addLayout(hbox);
     hbox->addSpacing(30);
-    mActivateLbl = new QLabel(i18n("After:"), mSettingsGroup);
+    mActivateLbl = new TQLabel(i18n("After:"), mSettingsGroup);
     mActivateLbl->setEnabled(mEnabled);
     hbox->addWidget(mActivateLbl);
-    mWaitEdit = new QSpinBox(mSettingsGroup);
+    mWaitEdit = new TQSpinBox(mSettingsGroup);
     mWaitEdit->setSteps(1, 10);
     mWaitEdit->setRange(1, INT_MAX);
     mWaitEdit->setSuffix(i18n(" min"));
     mWaitEdit->setValue(mTimeout/60);
     mWaitEdit->setEnabled(mEnabled);
-    connect(mWaitEdit, SIGNAL(valueChanged(int)),
-            this, SLOT(slotTimeoutChanged(int)));
+    connect(mWaitEdit, TQT_SIGNAL(valueChanged(int)),
+            this, TQT_SLOT(slotTimeoutChanged(int)));
     mActivateLbl->setBuddy(mWaitEdit);
     hbox->addWidget(mWaitEdit);
     hbox->addStretch(1);
-    QString wtstr = i18n(
+    TQString wtstr = i18n(
         "The period of inactivity "
         "after which the screen saver should start.");
-    QWhatsThis::add( mActivateLbl, wtstr );
-    QWhatsThis::add( mWaitEdit, wtstr );
+    TQWhatsThis::add( mActivateLbl, wtstr );
+    TQWhatsThis::add( mWaitEdit, wtstr );
 
-    mLockCheckBox = new QCheckBox( i18n(
+    mLockCheckBox = new TQCheckBox( i18n(
         "&Require password to stop"), mSettingsGroup );
     mLockCheckBox->setEnabled( mEnabled );
     mLockCheckBox->setChecked( mLock );
-    connect( mLockCheckBox, SIGNAL( toggled( bool ) ),
-             this, SLOT( slotLock( bool ) ) );
+    connect( mLockCheckBox, TQT_SIGNAL( toggled( bool ) ),
+             this, TQT_SLOT( slotLock( bool ) ) );
     groupLayout->addWidget(mLockCheckBox);
-    QWhatsThis::add( mLockCheckBox, i18n(
+    TQWhatsThis::add( mLockCheckBox, i18n(
         "Prevent potential unauthorized use by requiring a password"
         " to stop the screen saver.") );
-    hbox = new QHBoxLayout();
+    hbox = new TQHBoxLayout();
     groupLayout->addLayout(hbox);
     hbox->addSpacing(30);
-    mLockLbl = new QLabel(i18n("After:"), mSettingsGroup);
+    mLockLbl = new TQLabel(i18n("After:"), mSettingsGroup);
     mLockLbl->setEnabled(mEnabled && mLock);
-    QWhatsThis::add( mLockLbl, i18n(
+    TQWhatsThis::add( mLockLbl, i18n(
         "The amount of time, after the screen saver has started, to ask for the unlock password.") );
     hbox->addWidget(mLockLbl);
-    mWaitLockEdit = new QSpinBox(mSettingsGroup);
+    mWaitLockEdit = new TQSpinBox(mSettingsGroup);
     mWaitLockEdit->setSteps(1, 10);
     mWaitLockEdit->setRange(1, 300);
     mWaitLockEdit->setSuffix(i18n(" sec"));
@@ -230,38 +230,38 @@ KScreenSaver::KScreenSaver(QWidget *parent, const char *name, const QStringList&
         mWaitEdit->setFixedWidth( mWaitLockEdit->sizeHint().width() );
         mWaitLockEdit->setFixedWidth( mWaitLockEdit->sizeHint().width() );
     }
-    connect(mWaitLockEdit, SIGNAL(valueChanged(int)),
-            this, SLOT(slotLockTimeoutChanged(int)));
+    connect(mWaitLockEdit, TQT_SIGNAL(valueChanged(int)),
+            this, TQT_SLOT(slotLockTimeoutChanged(int)));
     mLockLbl->setBuddy(mWaitLockEdit);
     hbox->addWidget(mWaitLockEdit);
     hbox->addStretch(1);
-    QString wltstr = i18n(
+    TQString wltstr = i18n(
         "Choose the period "
         "after which the display will be locked. ");
-    QWhatsThis::add( mLockLbl, wltstr );
-    QWhatsThis::add( mWaitLockEdit, wltstr );
+    TQWhatsThis::add( mLockLbl, wltstr );
+    TQWhatsThis::add( mWaitLockEdit, wltstr );
 
     // right column
-    QBoxLayout* rightColumnLayout =
-        new QVBoxLayout(topLayout, KDialog::spacingHint());
+    TQBoxLayout* rightColumnLayout =
+        new TQVBoxLayout(topLayout, KDialog::spacingHint());
 
-    mMonitorLabel = new QLabel( this );
+    mMonitorLabel = new TQLabel( this );
     mMonitorLabel->setAlignment( AlignCenter );
-    mMonitorLabel->setPixmap( QPixmap(locate("data",
+    mMonitorLabel->setPixmap( TQPixmap(locate("data",
                          "kcontrol/pics/monitor.png")));
     rightColumnLayout->addWidget(mMonitorLabel, 0);
-    QWhatsThis::add( mMonitorLabel, i18n("A preview of the selected screen saver.") );
+    TQWhatsThis::add( mMonitorLabel, i18n("A preview of the selected screen saver.") );
 
-    QBoxLayout* advancedLayout = new QHBoxLayout( rightColumnLayout, 3 );
-    advancedLayout->addWidget( new QWidget( this ) );
-    QPushButton* advancedBt = new QPushButton(
+    TQBoxLayout* advancedLayout = new TQHBoxLayout( rightColumnLayout, 3 );
+    advancedLayout->addWidget( new TQWidget( this ) );
+    TQPushButton* advancedBt = new TQPushButton(
         i18n( "Advanced &Options" ), this, "advancedBtn" );
-    advancedBt->setSizePolicy( QSizePolicy(
-        QSizePolicy::Fixed, QSizePolicy::Fixed) );
-    connect( advancedBt, SIGNAL( clicked() ),
-             this, SLOT( slotAdvanced() ) );
+    advancedBt->setSizePolicy( TQSizePolicy(
+        TQSizePolicy::Fixed, TQSizePolicy::Fixed) );
+    connect( advancedBt, TQT_SIGNAL( clicked() ),
+             this, TQT_SLOT( slotAdvanced() ) );
     advancedLayout->addWidget( advancedBt );
-    advancedLayout->addWidget( new QWidget( this ) );
+    advancedLayout->addWidget( new TQWidget( this ) );
 
     rightColumnLayout->addStretch();
 
@@ -275,8 +275,8 @@ KScreenSaver::KScreenSaver(QWidget *parent, const char *name, const QStringList&
     // finding the savers can take some time, so defer loading until
     // we've started up.
     mNumLoaded = 0;
-    mLoadTimer = new QTimer( this );
-    connect( mLoadTimer, SIGNAL(timeout()), SLOT(findSavers()) );
+    mLoadTimer = new TQTimer( this );
+    connect( mLoadTimer, TQT_SIGNAL(timeout()), TQT_SLOT(findSavers()) );
     mLoadTimer->start( 100 );
     mChanged = false;
     emit changed(false);
@@ -296,7 +296,7 @@ KScreenSaver::KScreenSaver(QWidget *parent, const char *name, const QStringList&
 
 //---------------------------------------------------------------------------
 //
-void KScreenSaver::resizeEvent( QResizeEvent * )
+void KScreenSaver::resizeEvent( TQResizeEvent * )
 {
 
   if (mMonitor)
@@ -308,7 +308,7 @@ void KScreenSaver::resizeEvent( QResizeEvent * )
 
 //---------------------------------------------------------------------------
 //
-void KScreenSaver::mousePressEvent( QMouseEvent *)
+void KScreenSaver::mousePressEvent( TQMouseEvent *)
 {
     if ( mTesting )
 	slotStopTest();
@@ -316,7 +316,7 @@ void KScreenSaver::mousePressEvent( QMouseEvent *)
 
 //---------------------------------------------------------------------------
 //
-void KScreenSaver::keyPressEvent( QKeyEvent *)
+void KScreenSaver::keyPressEvent( TQKeyEvent *)
 {
     if ( mTesting )
 	slotStopTest();
@@ -356,7 +356,7 @@ void KScreenSaver::load( bool useDefaults )
 //if no saver was selected, the "Reset" and the "Enable screensaver", it is only called when starting and when pressing reset, aleXXX
 //    mSelected = -1;
     int i = 0;
-    QListViewItem *selectedItem = 0;
+    TQListViewItem *selectedItem = 0;
     for (SaverConfig* saver = mSaverList.first(); saver != 0; saver = mSaverList.next()) {
         if (saver->file() == mSaver)
         {
@@ -467,7 +467,7 @@ void KScreenSaver::findSavers()
     if ( !mNumLoaded ) {
         mSaverFileList = KGlobal::dirs()->findAllResources("scrsav",
                             "*.desktop", false, true);
-        new QListViewItem ( mSaverListView, i18n("Loading...") );
+        new TQListViewItem ( mSaverListView, i18n("Loading...") );
         if ( mSaverFileList.isEmpty() )
             mLoadTimer->stop();
         else
@@ -477,7 +477,7 @@ void KScreenSaver::findSavers()
     for ( int i = 0; i < 5 &&
             (unsigned)mNumLoaded < mSaverFileList.count();
             i++, mNumLoaded++ ) {
-        QString file = mSaverFileList[mNumLoaded];
+        TQString file = mSaverFileList[mNumLoaded];
         SaverConfig *saver = new SaverConfig;
         if (saver->read(file)) {
             mSaverList.append(saver);
@@ -486,7 +486,7 @@ void KScreenSaver::findSavers()
     }
 
     if ( (unsigned)mNumLoaded == mSaverFileList.count() ) {
-        QListViewItem *selectedItem = 0;
+        TQListViewItem *selectedItem = 0;
         int categoryCount = 0;
         int indx = 0;
 
@@ -498,17 +498,17 @@ void KScreenSaver::findSavers()
         mSaverListView->clear();
         for ( SaverConfig *s = mSaverList.first(); s != 0; s = mSaverList.next())
         {
-            QListViewItem *item;
+            TQListViewItem *item;
             if (s->category().isEmpty())
-                item = new QListViewItem ( mSaverListView, s->name(), "2" + s->name() );
+                item = new TQListViewItem ( mSaverListView, s->name(), "2" + s->name() );
             else
             {
-                QListViewItem *categoryItem = mSaverListView->findItem( s->category(), 0 );
+                TQListViewItem *categoryItem = mSaverListView->findItem( s->category(), 0 );
                 if ( !categoryItem ) {
-                    categoryItem = new QListViewItem ( mSaverListView, s->category(), "1" + s->category() );
+                    categoryItem = new TQListViewItem ( mSaverListView, s->category(), "1" + s->category() );
                     categoryItem->setPixmap ( 0, SmallIcon ( "kscreensaver" ) );
                 }
-                item = new QListViewItem ( categoryItem, s->name(), s->name() );
+                item = new TQListViewItem ( categoryItem, s->name(), s->name() );
                 categoryCount++;
             }
             if (s->file() == mSaver) {
@@ -519,10 +519,10 @@ void KScreenSaver::findSavers()
         }
 
         // Delete categories with only one item
-        QListViewItemIterator it ( mSaverListView );
+        TQListViewItemIterator it ( mSaverListView );
         for ( ; it.current(); it++ )
             if ( it.current()->childCount() == 1 ) {
-               QListViewItem *item = it.current()->firstChild();
+               TQListViewItem *item = it.current()->firstChild();
                it.current()->takeItem( item );
                mSaverListView->insertItem ( item );
                delete it.current();
@@ -541,8 +541,8 @@ void KScreenSaver::findSavers()
             mTestBt->setEnabled(true);
         }
 
-        connect( mSaverListView, SIGNAL( currentChanged( QListViewItem * ) ),
-                 this, SLOT( slotScreenSaver( QListViewItem * ) ) );
+        connect( mSaverListView, TQT_SIGNAL( currentChanged( TQListViewItem * ) ),
+                 this, TQT_SLOT( slotScreenSaver( TQListViewItem * ) ) );
 
         setMonitor();
     }
@@ -587,12 +587,12 @@ void KScreenSaver::slotPreviewExited(KProcess *)
     if (mSelected >= 0) {
         mPreviewProc->clearArguments();
 
-        QString saver = mSaverList.at(mSelected)->saver();
-        QTextStream ts(&saver, IO_ReadOnly);
+        TQString saver = mSaverList.at(mSelected)->saver();
+        TQTextStream ts(&saver, IO_ReadOnly);
 
-        QString word;
+        TQString word;
         ts >> word;
-        QString path = findExe(word);
+        TQString path = findExe(word);
 
         if (!path.isEmpty())
         {
@@ -632,7 +632,7 @@ void KScreenSaver::slotEnable(bool e)
 
 //---------------------------------------------------------------------------
 //
-void KScreenSaver::slotScreenSaver(QListViewItem *item)
+void KScreenSaver::slotScreenSaver(TQListViewItem *item)
 {
     if (!item)
       return;
@@ -690,15 +690,15 @@ void KScreenSaver::slotSetup()
 
     mSetupProc->clearArguments();
 
-    QString saver = mSaverList.at(mSelected)->setup();
+    TQString saver = mSaverList.at(mSelected)->setup();
     if( saver.isEmpty())
         return;
-    QTextStream ts(&saver, IO_ReadOnly);
+    TQTextStream ts(&saver, IO_ReadOnly);
 
-    QString word;
+    TQString word;
     ts >> word;
     bool kxsconfig = word == "kxsconfig";
-    QString path = findExe(word);
+    TQString path = findExe(word);
 
     if (!path.isEmpty())
     {
@@ -758,12 +758,12 @@ void KScreenSaver::slotTest()
     }
 
     mTestProc->clearArguments();
-    QString saver = mSaverList.at(mSelected)->saver();
-    QTextStream ts(&saver, IO_ReadOnly);
+    TQString saver = mSaverList.at(mSelected)->saver();
+    TQTextStream ts(&saver, IO_ReadOnly);
 
-    QString word;
+    TQString word;
     ts >> word;
-    QString path = findExe(word);
+    TQString path = findExe(word);
 
     if (!path.isEmpty())
     {
@@ -772,7 +772,7 @@ void KScreenSaver::slotTest()
         if (!mTestWin)
         {
             mTestWin = new TestWin();
-            mTestWin->setBackgroundMode(QWidget::NoBackground);
+            mTestWin->setBackgroundMode(TQWidget::NoBackground);
             mTestWin->setGeometry(0, 0, kapp->desktop()->width(),
                                     kapp->desktop()->height());
         }

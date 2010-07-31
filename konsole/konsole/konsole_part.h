@@ -52,10 +52,10 @@ public:
     konsoleFactory();
     virtual ~konsoleFactory();
 
-    virtual KParts::Part* createPartObject(QWidget *parentWidget = 0, const char *widgetName = 0,
-                                     QObject* parent = 0, const char* name = 0,
+    virtual KParts::Part* createPartObject(TQWidget *parentWidget = 0, const char *widgetName = 0,
+                                     TQObject* parent = 0, const char* name = 0,
                                      const char* classname = "KParts::Part",
-                                     const QStringList &args = QStringList());
+                                     const TQStringList &args = TQStringList());
 
     static KInstance *instance();
 
@@ -70,12 +70,12 @@ class konsolePart: public KParts::ReadOnlyPart, public TerminalInterface, public
 {
     Q_OBJECT
 	public:
-    konsolePart(QWidget *parentWidget, const char *widgetName, QObject * parent, const char *name, const char *classname = 0);
+    konsolePart(TQWidget *parentWidget, const char *widgetName, TQObject * parent, const char *name, const char *classname = 0);
     virtual ~konsolePart();
 
 signals:
     void processExited( KProcess * );
-    void receivedData( const QString& s );
+    void receivedData( const TQString& s );
     void forkedChild();
  protected:
     virtual bool openURL( const KURL & url );
@@ -93,7 +93,7 @@ signals:
     void enableMasterModeConnections();
 
  private slots:
-    void emitOpenURLRequest(const QString &url);
+    void emitOpenURLRequest(const TQString &url);
 
     void readProperties();
     void saveProperties();
@@ -136,11 +136,11 @@ signals:
     void setSchema(ColorSchema* s);
     void updateKeytabMenu();
 
-	bool doOpenStream( const QString& );
-	bool doWriteStream( const QByteArray& );
+	bool doOpenStream( const TQString& );
+	bool doWriteStream( const TQByteArray& );
 	bool doCloseStream();
 
-    QWidget* parentWidget;
+    TQWidget* parentWidget;
     TEWidget* te;
     TESession* se;
     ColorSchemaList* colors;
@@ -166,12 +166,12 @@ signals:
     KPopupMenu* m_options;
     KPopupMenu* m_popupMenu;
 
-    QFont       defaultFont;
+    TQFont       defaultFont;
 
-    QString     pmPath; // pixmap path
-    QString     s_schema;
-    QString     s_kconfigSchema;
-    QString     s_word_seps;			// characters that are considered part of a word
+    TQString     pmPath; // pixmap path
+    TQString     s_schema;
+    TQString     s_kconfigSchema;
+    TQString     s_word_seps;			// characters that are considered part of a word
 
     bool        b_framevis:1;
     bool        b_histEnabled:1;
@@ -194,11 +194,11 @@ public:
 
     // these are the implementations for the TermEmuInterface
     // functions...
-    void startProgram( const QString& program,
-                       const QStrList& args );
+    void startProgram( const TQString& program,
+                       const TQStrList& args );
     void newSession();
-    void showShellInDir( const QString& dir );
-    void sendInput( const QString& text );
+    void showShellInDir( const TQString& dir );
+    void sendInput( const TQString& text );
     void setAutoDestroy( bool );
     void setAutoStartShell( bool );
 };
@@ -211,7 +211,7 @@ class HistoryTypeDialog : public KDialogBase
 public:
   HistoryTypeDialog(const HistoryType& histType,
                     unsigned int histSize,
-                    QWidget *parent);
+                    TQWidget *parent);
 
 public slots:
   void slotDefault();
@@ -222,9 +222,9 @@ public slots:
   bool isOn() const;
 
 protected:
-  QCheckBox* m_btnEnable;
-  QSpinBox*  m_size;
-  QPushButton* m_setUnlimited;
+  TQCheckBox* m_btnEnable;
+  TQSpinBox*  m_size;
+  TQPushButton* m_setUnlimited;
 };
 
 //////////////////////////////////////////////////////////////////////

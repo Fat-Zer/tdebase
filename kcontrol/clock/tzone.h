@@ -24,7 +24,7 @@
 
 #include <ktimezones.h>
 #include <ktimezonewidget.h>
-#include <qvgroupbox.h>
+#include <tqvgroupbox.h>
 
 class QComboBox;
 class QLabel;
@@ -34,7 +34,7 @@ class Tzone : public QVGroupBox
   Q_OBJECT
 
 public:
-  Tzone( QWidget *parent=0, const char* name=0 );
+  Tzone( TQWidget *parent=0, const char* name=0 );
 
   void	save();
   void  load();
@@ -48,7 +48,7 @@ protected slots:
 private:
   void currentZone();
   KTimezones m_zoneDb;
-  QLabel *m_local;
+  TQLabel *m_local;
   KTimezoneWidget *tzonelist;
 };
 

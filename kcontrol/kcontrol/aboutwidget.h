@@ -20,9 +20,9 @@
 #ifndef __aboutwidget_h__
 #define __aboutwidget_h__
 
-#include <qwidget.h>
-#include <qlistview.h>
-#include <qhbox.h>
+#include <tqwidget.h>
+#include <tqlistview.h>
+#include <tqhbox.h>
 
 class KCModuleInfo;
 class QPixmap;
@@ -36,13 +36,13 @@ class AboutWidget : public QHBox
   Q_OBJECT    
   
 public:   
-  AboutWidget(QWidget *parent, const char *name=0, QListViewItem* category=0, const QString &caption=QString::null);
+  AboutWidget(TQWidget *parent, const char *name=0, TQListViewItem* category=0, const TQString &caption=TQString::null);
 
     /**
      * Set a new category without creating a new AboutWidget if there is
      * one visible already (reduces flicker)
      */
-    void setCategory( QListViewItem* category, const QString& icon, const QString& caption);
+    void setCategory( TQListViewItem* category, const TQString& icon, const TQString& caption);
 
 signals:
     void moduleSelected(ConfigModule *);
@@ -58,11 +58,11 @@ private:
     void updatePixmap();
 
     bool    _moduleList;
-    QListViewItem* _category;
-    QString _icon;
-    QString _caption;
+    TQListViewItem* _category;
+    TQString _icon;
+    TQString _caption;
     KHTMLPart *_viewer;
-    QMap<QString,ConfigModule*> _moduleMap;
+    TQMap<TQString,ConfigModule*> _moduleMap;
 };
 
 #endif

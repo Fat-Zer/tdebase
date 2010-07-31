@@ -17,32 +17,32 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-#include <qcolor.h>
-#include <qcursor.h>
-#include <qdesktopwidget.h>
-#include <qfont.h>
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qstring.h>
+#include <tqcolor.h>
+#include <tqcursor.h>
+#include <tqdesktopwidget.h>
+#include <tqfont.h>
+#include <tqpixmap.h>
+#include <tqrect.h>
+#include <tqstring.h>
 
 #include "objkstheme.h"
 #include "objkstheme.moc"
 
-ObjKsTheme::ObjKsTheme( const QString& theme )
+ObjKsTheme::ObjKsTheme( const TQString& theme )
   :mActiveTheme (theme), mThemeDir("/"), mThemeConfig (0L), mThemePrefix( "Themes/" ), d(0)
 {
   // Get Xinerama config.
   KConfig *config = kapp->config();
   config->setGroup( "Xinerama" );
-  QDesktopWidget *desktop = kapp->desktop();
+  TQDesktopWidget *desktop = kapp->desktop();
   mXineramaScreen = config->readNumEntry("KSplashScreen", desktop->primaryScreen());
 
   // For Xinerama, let's put the mouse on the first head.  Otherwise it could appear anywhere!
   if (desktop->isVirtualDesktop() && mXineramaScreen != -2)
   {
-    QRect rect = desktop->screenGeometry( mXineramaScreen );
-    if (!rect.contains(QCursor::pos()))
-      QCursor::setPos(rect.center());
+    TQRect rect = desktop->screenGeometry( mXineramaScreen );
+    if (!rect.contains(TQCursor::pos()))
+      TQCursor::setPos(rect.center());
   }
 
   // Does the active theme exist?
@@ -58,18 +58,18 @@ ObjKsTheme::~ObjKsTheme()
 {
 }
 
-bool ObjKsTheme::loadThemeRc( const QString& activeTheme, bool force )
+bool ObjKsTheme::loadThemeRc( const TQString& activeTheme, bool force )
 {
   //kdDebug() << "ObjKsTheme::loadThemeRc: " << activeTheme << endl;
-  QString prefix("Themes/");
-  QString themeFile;
+  TQString prefix("Themes/");
+  TQString themeFile;
   KConfig *cf = 0L;
 
   // Try our best to find a theme file.
-  themeFile = locate( "appdata", prefix + activeTheme + "/" + QString("Theme.rc") );
-  themeFile = themeFile.isEmpty() ? locate("appdata",prefix+activeTheme+"/"+QString("Theme.RC")):themeFile;
-  themeFile = themeFile.isEmpty() ? locate("appdata",prefix+activeTheme+"/"+QString("theme.rc")):themeFile;
-  themeFile = themeFile.isEmpty() ? locate("appdata",prefix+activeTheme+"/"+activeTheme+QString(".rc")):themeFile;
+  themeFile = locate( "appdata", prefix + activeTheme + "/" + TQString("Theme.rc") );
+  themeFile = themeFile.isEmpty() ? locate("appdata",prefix+activeTheme+"/"+TQString("Theme.RC")):themeFile;
+  themeFile = themeFile.isEmpty() ? locate("appdata",prefix+activeTheme+"/"+TQString("theme.rc")):themeFile;
+  themeFile = themeFile.isEmpty() ? locate("appdata",prefix+activeTheme+"/"+activeTheme+TQString(".rc")):themeFile;
 
   if( !themeFile.isEmpty() )
      cf = new KConfig( themeFile );
@@ -89,7 +89,7 @@ bool ObjKsTheme::loadThemeRc( const QString& activeTheme, bool force )
   return false;
 }
 
-bool ObjKsTheme::loadLocalConfig( const QString& activeTheme, bool force )
+bool ObjKsTheme::loadLocalConfig( const TQString& activeTheme, bool force )
 {
   //kdDebug() << "ObjKsTheme::loadLocalConfig" << endl;
   KConfig *cfg = kapp->config();
@@ -97,7 +97,7 @@ bool ObjKsTheme::loadLocalConfig( const QString& activeTheme, bool force )
 }
 
 // ObjKsConfig::loadKConfig(): Load our settings from a KConfig object.
-bool ObjKsTheme::loadKConfig( KConfig *cfg, const QString& activeTheme, bool force )
+bool ObjKsTheme::loadKConfig( KConfig *cfg, const TQString& activeTheme, bool force )
 {
   //kdDebug() << "ObjKsTheme::loadKConfig" << endl;
   if( !cfg )
@@ -106,10 +106,10 @@ bool ObjKsTheme::loadKConfig( KConfig *cfg, const QString& activeTheme, bool for
   // Themes are always stored in the group [KSplash Theme: ThemeName],
   // and ThemeName should always be the same name as the themedir, if any.
   // If we can't find this theme group, then we can't load.
-  if( !cfg->hasGroup( QString("KSplash Theme: %1").arg(activeTheme) ) && !force )
+  if( !cfg->hasGroup( TQString("KSplash Theme: %1").arg(activeTheme) ) && !force )
     return false;
 
-  cfg->setGroup( QString("KSplash Theme: %1").arg(activeTheme) );
+  cfg->setGroup( TQString("KSplash Theme: %1").arg(activeTheme) );
   mThemeConfig = cfg;
 
   mThemeEngine = cfg->readEntry( "Engine", "Default" );
@@ -146,21 +146,21 @@ void ObjKsTheme::loadCmdLineArgs( KCmdLineArgs *args )
 
   mManagedMode = args->isSet( "managed" );
   mTesting = args->isSet("test");
-  mLoColor = ( QPixmap::defaultDepth() <= 8 );
-  QString theme = args->getOption( "theme" );
+  mLoColor = ( TQPixmap::defaultDepth() <= 8 );
+  TQString theme = args->getOption( "theme" );
   if( theme != mActiveTheme && !theme.isNull() )
     if( loadThemeRc( theme, false ) )
       mActiveTheme = theme;
   //args->clear();
 }
 
-QString ObjKsTheme::locateThemeData( const QString &resource )
+TQString ObjKsTheme::locateThemeData( const TQString &resource )
 {
   if ( !mLoColor )
     return locate( "appdata", mThemePrefix+resource );
   else
   {
-    QString res = locate( "appdata", mThemePrefix+"locolor/"+resource );
+    TQString res = locate( "appdata", mThemePrefix+"locolor/"+resource );
     if ( res.isEmpty() )
       res = locate( "appdata", mThemePrefix+resource );
     return res;

@@ -23,15 +23,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <unistd.h>
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qstyle.h>
-#include <qtextstream.h>
-#include <qtimer.h>
-#include <qwmatrix.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqstyle.h>
+#include <tqtextstream.h>
+#include <tqtimer.h>
+#include <tqwmatrix.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -69,8 +69,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 extern int kicker_screen_number;
 
 ContainerArea::ContainerArea(KConfig* _c,
-                             QWidget* parent,
-                             QPopupMenu* opMenu,
+                             TQWidget* parent,
+                             TQPopupMenu* opMenu,
                              const char* name)
     : Panner(parent, name),
       _moveAC(0),
@@ -78,7 +78,7 @@ ContainerArea::ContainerArea(KConfig* _c,
       _config(_c),
       _dragIndicator(0),
       _dragMoveAC(0),
-      _dragMoveOffset(QPoint(0,0)),
+      _dragMoveOffset(TQPoint(0,0)),
       m_opMenu(opMenu),
       _rootPixmap(0),
       _useBgTheme(false),
@@ -100,11 +100,11 @@ ContainerArea::ContainerArea(KConfig* _c,
 
     setBackground();
 
-    connect(&_autoScrollTimer, SIGNAL(timeout()), SLOT(autoScroll()));
-    connect(kapp, SIGNAL(kdisplayPaletteChanged()), SLOT(setBackground()));
-    connect(Kicker::the(), SIGNAL(immutabilityChanged(bool)),
-            SLOT(immutabilityChanged(bool)));
-    connect(this, SIGNAL(contentsMoving(int, int)), SLOT(setBackground()));
+    connect(&_autoScrollTimer, TQT_SIGNAL(timeout()), TQT_SLOT(autoScroll()));
+    connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(setBackground()));
+    connect(Kicker::the(), TQT_SIGNAL(immutabilityChanged(bool)),
+            TQT_SLOT(immutabilityChanged(bool)));
+    connect(this, TQT_SIGNAL(contentsMoving(int, int)), TQT_SLOT(setBackground()));
 }
 
 ContainerArea::~ContainerArea()
@@ -139,7 +139,7 @@ void ContainerArea::initialize(bool useDefaultConfig)
     }
 
     setAcceptDrops(!isImmutable());
-    QTimer::singleShot(0, this, SLOT(resizeContents()));
+    TQTimer::singleShot(0, this, TQT_SLOT(resizeContents()));
 }
 
 void ContainerArea::defaultContainerConfig()
@@ -160,12 +160,12 @@ void ContainerArea::defaultContainerConfig()
     }
 
     dsize -= 560;
-    QStringList buttons;
+    TQStringList buttons;
 
-    QFile f(locate("data", "kicker/default-apps"));
+    TQFile f(locate("data", "kicker/default-apps"));
     if (f.open(IO_ReadOnly))
     {
-        QTextStream is(&f);
+        TQTextStream is(&f);
 
         while (!is.eof())
             buttons << is.readLine();
@@ -179,7 +179,7 @@ void ContainerArea::defaultContainerConfig()
     }
 
     //int size = dsize;
-    for (QStringList::ConstIterator it = buttons.begin(); it != buttons.end(); ++it)
+    for (TQStringList::ConstIterator it = buttons.begin(); it != buttons.end(); ++it)
     {
         /*size -= 42;
         if (size <= 0)
@@ -190,9 +190,9 @@ void ContainerArea::defaultContainerConfig()
         if (!service)
         {
             // look for a special button
-            QString s = locate("appdata", *it);
+            TQString s = locate("appdata", *it);
             if (s.isEmpty()) continue;
-            QString itExt = (*it).section('/', 1);
+            TQString itExt = (*it).section('/', 1);
             button = new ExtensionButtonContainer(itExt, m_opMenu, m_contents);
         }
         else
@@ -216,7 +216,7 @@ void ContainerArea::defaultContainerConfig()
     AppletContainer* a = manager->createAppletContainer(
         "minipagerapplet.desktop",
         true,
-        QString::null,
+        TQString::null,
         m_opMenu,
         m_contents);
     if (a)
@@ -229,7 +229,7 @@ void ContainerArea::defaultContainerConfig()
     a = manager->createAppletContainer(
         "taskbarapplet.desktop",
         true,
-        QString::null,
+        TQString::null,
         m_opMenu,
         m_contents);
     if (a)
@@ -242,7 +242,7 @@ void ContainerArea::defaultContainerConfig()
     a = manager->createAppletContainer(
         "systemtrayapplet.desktop",
         true,
-        QString::null,
+        TQString::null,
         m_opMenu,
         m_contents );
     if (a)
@@ -255,7 +255,7 @@ void ContainerArea::defaultContainerConfig()
     a = manager->createAppletContainer(
         "clockapplet.desktop",
         true,
-        QString::null,
+        TQString::null,
         m_opMenu,
         m_contents );
     if (a)
@@ -274,17 +274,17 @@ void ContainerArea::defaultContainerConfig()
     saveContainerConfig();
 }
 
-void ContainerArea::loadContainers(const QStringList& containers)
+void ContainerArea::loadContainers(const TQStringList& containers)
 {
     // read applet list
     bool badApplets = false;
 
     // now restore the applets
-    QStringList::const_iterator it = containers.constBegin();
-    QStringList::const_iterator itEnd = containers.constEnd();
+    TQStringList::const_iterator it = containers.constBegin();
+    TQStringList::const_iterator itEnd = containers.constEnd();
     for (; it != itEnd; ++it)
     {
-        QString appletId(*it);
+        TQString appletId(*it);
 
         // is there a config group for this applet?
         if (!_config->hasGroup(appletId))
@@ -298,7 +298,7 @@ void ContainerArea::loadContainers(const QStringList& containers)
 
         int sep = appletId.findRev('_');
         Q_ASSERT(sep != -1);
-        QString appletType = appletId.left(sep);
+        TQString appletType = appletId.left(sep);
 
         // create a matching applet container
         if (appletType == "KMenuButton")
@@ -359,7 +359,7 @@ void ContainerArea::loadContainers(const QStringList& containers)
     // it gets executed too soon. we need to wait until the containers are
     // actually resized, but we enter the event loop prior to that happening
     // above.
-    QTimer::singleShot(0, this, SLOT(updateContainersBackground()));
+    TQTimer::singleShot(0, this, TQT_SLOT(updateContainersBackground()));
 }
 
 void ContainerArea::saveContainerConfig(bool layoutOnly)
@@ -370,8 +370,8 @@ void ContainerArea::saveContainerConfig(bool layoutOnly)
     }
 
     // Save the applet list
-    QStringList alist;
-    QLayoutIterator it2 = m_layout->iterator();
+    TQStringList alist;
+    TQLayoutIterator it2 = m_layout->iterator();
     for (; it2.current(); ++it2)
     {
         BaseContainer* a = dynamic_cast<BaseContainer*>(it2.current()->widget());
@@ -414,9 +414,9 @@ void ContainerArea::configure()
     resizeContents();
 }
 
-const QWidget* ContainerArea::addButton(const AppletInfo& info)
+const TQWidget* ContainerArea::addButton(const AppletInfo& info)
 {
-    QString buttonType = info.library();
+    TQString buttonType = info.library();
 
     if (buttonType == "BookmarksButton")
     {
@@ -453,7 +453,7 @@ const QWidget* ContainerArea::addButton(const AppletInfo& info)
     return 0;
 }
 
-const QWidget* ContainerArea::addKMenuButton()
+const TQWidget* ContainerArea::addKMenuButton()
 {
     if (!canAddContainers())
     {
@@ -465,7 +465,7 @@ const QWidget* ContainerArea::addKMenuButton()
     return b;
 }
 
-const QWidget* ContainerArea::addDesktopButton()
+const TQWidget* ContainerArea::addDesktopButton()
 {
     if (!canAddContainers())
     {
@@ -477,7 +477,7 @@ const QWidget* ContainerArea::addDesktopButton()
     return b;
 }
 
-const QWidget* ContainerArea::addWindowListButton()
+const TQWidget* ContainerArea::addWindowListButton()
 {
     if (!canAddContainers())
     {
@@ -489,7 +489,7 @@ const QWidget* ContainerArea::addWindowListButton()
     return b;
 }
 
-const QWidget* ContainerArea::addBookmarksButton()
+const TQWidget* ContainerArea::addBookmarksButton()
 {
     if (!canAddContainers())
     {
@@ -501,7 +501,7 @@ const QWidget* ContainerArea::addBookmarksButton()
     return b;
 }
 
-const QWidget* ContainerArea::addServiceButton(const QString& desktopFile)
+const TQWidget* ContainerArea::addServiceButton(const TQString& desktopFile)
 {
     if (!canAddContainers())
     {
@@ -514,7 +514,7 @@ const QWidget* ContainerArea::addServiceButton(const QString& desktopFile)
     return b;
 }
 
-const QWidget* ContainerArea::addURLButton(const QString &url)
+const TQWidget* ContainerArea::addURLButton(const TQString &url)
 {
     if (!canAddContainers())
     {
@@ -526,17 +526,17 @@ const QWidget* ContainerArea::addURLButton(const QString &url)
     return b;
 }
 
-const QWidget* ContainerArea::addBrowserButton()
+const TQWidget* ContainerArea::addBrowserButton()
 {
     if (!canAddContainers())
     {
         return 0;
     }
 
-    PanelBrowserDialog *dlg = new PanelBrowserDialog(QDir::home().path(),
+    PanelBrowserDialog *dlg = new PanelBrowserDialog(TQDir::home().path(),
                                                      "kdisknav");
 
-    if (dlg->exec() == QDialog::Accepted)
+    if (dlg->exec() == TQDialog::Accepted)
     {
         return addBrowserButton(dlg->path(), dlg->icon());
     }
@@ -544,8 +544,8 @@ const QWidget* ContainerArea::addBrowserButton()
     return 0;
 }
 
-const QWidget* ContainerArea::addBrowserButton(const QString &startDir,
-                                       const QString& icon)
+const TQWidget* ContainerArea::addBrowserButton(const TQString &startDir,
+                                       const TQString& icon)
 {
     if (!canAddContainers())
     {
@@ -558,7 +558,7 @@ const QWidget* ContainerArea::addBrowserButton(const QString &startDir,
     return b;
 }
 
-const QWidget* ContainerArea::addServiceMenuButton(const QString& relPath)
+const TQWidget* ContainerArea::addServiceMenuButton(const TQString& relPath)
 {
     if (!canAddContainers())
     {
@@ -571,17 +571,17 @@ const QWidget* ContainerArea::addServiceMenuButton(const QString& relPath)
     return b;
 }
 
-const QWidget* ContainerArea::addNonKDEAppButton()
+const TQWidget* ContainerArea::addNonKDEAppButton()
 {
     if (!canAddContainers())
     {
         return 0;
     }
 
-    PanelExeDialog dlg(QString::null, QString::null, QString::null,
-                       QString::null, QString::null, false, 0);
+    PanelExeDialog dlg(TQString::null, TQString::null, TQString::null,
+                       TQString::null, TQString::null, false, 0);
 
-    if (dlg.exec() == QDialog::Accepted)
+    if (dlg.exec() == TQDialog::Accepted)
     {
         return addNonKDEAppButton(dlg.title(), dlg.description(),
                                   dlg.command(), dlg.iconPath(),
@@ -592,11 +592,11 @@ const QWidget* ContainerArea::addNonKDEAppButton()
     return 0;
 }
 
-const QWidget* ContainerArea::addNonKDEAppButton(const QString &name,
-                                                 const QString &description,
-                                                 const QString& filePath,
-                                                 const QString &icon,
-                                                 const QString &cmdLine,
+const TQWidget* ContainerArea::addNonKDEAppButton(const TQString &name,
+                                                 const TQString &description,
+                                                 const TQString& filePath,
+                                                 const TQString &icon,
+                                                 const TQString &cmdLine,
                                                  bool inTerm)
 {
     if (!canAddContainers())
@@ -613,7 +613,7 @@ const QWidget* ContainerArea::addNonKDEAppButton(const QString &name,
     return b;
 }
 
-const QWidget* ContainerArea::addExtensionButton(const QString& df)
+const TQWidget* ContainerArea::addExtensionButton(const TQString& df)
 {
     if (!canAddContainers())
     {
@@ -651,7 +651,7 @@ AppletContainer* ContainerArea::addApplet(const AppletInfo& info,
     AppletContainer* a = PluginManager::the()->createAppletContainer(
         info.desktopFile(),
         false,         // not startup
-        QString::null, // no config
+        TQString::null, // no config
         m_opMenu,
         m_contents,
         isImmutable);
@@ -682,8 +682,8 @@ void ContainerArea::addContainer(BaseContainer* a, bool arrange, int index)
 
     if (arrange)
     {
-        QWidget* w = m_layout->widgetAt(index);
-        QPoint oldInsertionPoint = Kicker::the()->insertionPoint();
+        TQWidget* w = m_layout->widgetAt(index);
+        TQPoint oldInsertionPoint = Kicker::the()->insertionPoint();
         if (w)
         {
             // let's set the insertion point to where the widget asked to be
@@ -693,7 +693,7 @@ void ContainerArea::addContainer(BaseContainer* a, bool arrange, int index)
 
         if (Kicker::the()->insertionPoint().isNull())
         {
-            m_layout->insertIntoFreeSpace(a, QPoint());
+            m_layout->insertIntoFreeSpace(a, TQPoint());
         }
         else
         {
@@ -710,20 +710,20 @@ void ContainerArea::addContainer(BaseContainer* a, bool arrange, int index)
         m_layout->add(a);
     }
 
-    connect(a, SIGNAL(moveme(BaseContainer*)),
-            SLOT(startContainerMove(BaseContainer*)));
-    connect(a, SIGNAL(removeme(BaseContainer*)),
-            SLOT(removeContainer(BaseContainer*)));
-    connect(a, SIGNAL(takeme(BaseContainer*)),
-            SLOT(takeContainer(BaseContainer*)));
-    connect(a, SIGNAL(requestSave()),
-            SLOT(slotSaveContainerConfig()));
-    connect(a, SIGNAL(maintainFocus(bool)),
-            this, SIGNAL(maintainFocus(bool)));
+    connect(a, TQT_SIGNAL(moveme(BaseContainer*)),
+            TQT_SLOT(startContainerMove(BaseContainer*)));
+    connect(a, TQT_SIGNAL(removeme(BaseContainer*)),
+            TQT_SLOT(removeContainer(BaseContainer*)));
+    connect(a, TQT_SIGNAL(takeme(BaseContainer*)),
+            TQT_SLOT(takeContainer(BaseContainer*)));
+    connect(a, TQT_SIGNAL(requestSave()),
+            TQT_SLOT(slotSaveContainerConfig()));
+    connect(a, TQT_SIGNAL(maintainFocus(bool)),
+            this, TQT_SIGNAL(maintainFocus(bool)));
 
     if (dynamic_cast<AppletContainer*>(a))
     {
-        connect(a, SIGNAL(updateLayout()), SLOT(resizeContents()));
+        connect(a, TQT_SIGNAL(updateLayout()), TQT_SLOT(resizeContents()));
     }
 
     a->configure(orientation(), popupDirection());
@@ -806,16 +806,16 @@ void ContainerArea::takeContainer(BaseContainer* a)
         return;
     }
 
-    disconnect(a, SIGNAL(moveme(BaseContainer*)),
-               this, SLOT(startContainerMove(BaseContainer*)));
-    disconnect(a, SIGNAL(removeme(BaseContainer*)),
-               this, SLOT(removeContainer(BaseContainer*)));
-    disconnect(a, SIGNAL(takeme(BaseContainer*)),
-               this, SLOT(takeContainer(BaseContainer*)));
-    disconnect(a, SIGNAL(requestSave()),
-               this, SLOT(slotSaveContainerConfig()));
-    disconnect(a, SIGNAL(maintainFocus(bool)),
-               this, SIGNAL(maintainFocus(bool)));
+    disconnect(a, TQT_SIGNAL(moveme(BaseContainer*)),
+               this, TQT_SLOT(startContainerMove(BaseContainer*)));
+    disconnect(a, TQT_SIGNAL(removeme(BaseContainer*)),
+               this, TQT_SLOT(removeContainer(BaseContainer*)));
+    disconnect(a, TQT_SIGNAL(takeme(BaseContainer*)),
+               this, TQT_SLOT(takeContainer(BaseContainer*)));
+    disconnect(a, TQT_SIGNAL(requestSave()),
+               this, TQT_SLOT(slotSaveContainerConfig()));
+    disconnect(a, TQT_SIGNAL(maintainFocus(bool)),
+               this, TQT_SIGNAL(maintainFocus(bool)));
 
     // Just remove the group from our own config file. Leave separate config
     // files untouched.
@@ -859,10 +859,10 @@ void ContainerArea::resizeContents()
     }
 }
 
-QString ContainerArea::createUniqueId(const QString& appletType) const
+TQString ContainerArea::createUniqueId(const TQString& appletType) const
 {
-    QString idBase = appletType + "_%1";
-    QString newId;
+    TQString idBase = appletType + "_%1";
+    TQString newId;
     int i = 0;
     bool unique = false;
 
@@ -911,7 +911,7 @@ void ContainerArea::startContainerMove(BaseContainer *a)
     a->raise();
 }
 
-void ContainerArea::mouseReleaseEvent(QMouseEvent *)
+void ContainerArea::mouseReleaseEvent(TQMouseEvent *)
 {
     if (!_moveAC)
     {
@@ -936,7 +936,7 @@ void ContainerArea::mouseReleaseEvent(QMouseEvent *)
     saveContainerConfig(true);
 }
 
-void ContainerArea::mouseMoveEvent(QMouseEvent *ev)
+void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
 {
     if (!_moveAC)
     {
@@ -1035,7 +1035,7 @@ bool ContainerArea::isImmutable() const
     return m_immutable || Kicker::the()->isImmutable();
 }
 
-void ContainerArea::dragEnterEvent(QDragEnterEvent *ev)
+void ContainerArea::dragEnterEvent(TQDragEnterEvent *ev)
 {
     bool canAccept = !isImmutable() &&
                      (PanelDrag::canDecode(ev) ||
@@ -1066,13 +1066,13 @@ void ContainerArea::dragEnterEvent(QDragEnterEvent *ev)
 
     if (orientation() == Horizontal)
     {
-        _dragIndicator->setPreferredSize(QSize(preferedWidth, height()));
+        _dragIndicator->setPreferredSize(TQSize(preferedWidth, height()));
     }
     else
     {
-        _dragIndicator->setPreferredSize(QSize(width(), preferedHeight));
+        _dragIndicator->setPreferredSize(TQSize(width(), preferedHeight));
     }
-    _dragMoveOffset = QPoint(_dragIndicator->width()/2,
+    _dragMoveOffset = TQPoint(_dragIndicator->width()/2,
                              _dragIndicator->height()/2);
 
     // Find the container before the position of the dragindicator.
@@ -1108,7 +1108,7 @@ void ContainerArea::dragEnterEvent(QDragEnterEvent *ev)
     _dragIndicator->show();
 }
 
-void ContainerArea::dragMoveEvent(QDragMoveEvent* ev)
+void ContainerArea::dragMoveEvent(TQDragMoveEvent* ev)
 {
     if (ev->source() == this)
     {
@@ -1117,10 +1117,10 @@ void ContainerArea::dragMoveEvent(QDragMoveEvent* ev)
         // then it does work only on every second event.
 
         // Cancel the drag by faking an Escape keystroke.
-        QKeyEvent fakedKeyPress(QEvent::KeyPress, Key_Escape, 0, 0);
-        QKeyEvent fakedKeyRelease(QEvent::KeyRelease, Key_Escape, 0, 0);
-        QApplication::sendEvent(this, &fakedKeyPress);
-        QApplication::sendEvent(this, &fakedKeyRelease);
+        TQKeyEvent fakedKeyPress(TQEvent::KeyPress, Key_Escape, 0, 0);
+        TQKeyEvent fakedKeyRelease(TQEvent::KeyRelease, Key_Escape, 0, 0);
+        TQApplication::sendEvent(this, &fakedKeyPress);
+        TQApplication::sendEvent(this, &fakedKeyRelease);
         qApp->processEvents();
         startContainerMove(_moveAC);
 
@@ -1151,7 +1151,7 @@ void ContainerArea::dragMoveEvent(QDragMoveEvent* ev)
     }
 }
 
-void ContainerArea::dragLeaveEvent(QDragLeaveEvent*)
+void ContainerArea::dragLeaveEvent(TQDragLeaveEvent*)
 {
     if (_dragIndicator)
     {
@@ -1161,7 +1161,7 @@ void ContainerArea::dragLeaveEvent(QDragLeaveEvent*)
     _dragMoveAC = 0;
 }
 
-void ContainerArea::dropEvent(QDropEvent *ev)
+void ContainerArea::dropEvent(TQDropEvent *ev)
 {
     if (!_dragIndicator)
     {
@@ -1182,7 +1182,7 @@ void ContainerArea::dropEvent(QDropEvent *ev)
             return;
         }
 
-        QObject *parent = ev->source() ? ev->source()->parent() : 0;
+        TQObject *parent = ev->source() ? ev->source()->parent() : 0;
         while (parent && (parent != this))
         {
             parent = parent->parent();
@@ -1217,7 +1217,7 @@ void ContainerArea::dropEvent(QDropEvent *ev)
         a->reparent(m_contents, 0, _dragIndicator->pos(), true);
         a->setAppletId(createUniqueId(a->appletType()));
         addContainer(a, true);
-        Kicker::the()->setInsertionPoint(QPoint());
+        Kicker::the()->setInsertionPoint(TQPoint());
         m_layout->updateFreeSpaceValues();
         _dragMoveAC = 0;
         _dragIndicator->hide();
@@ -1243,7 +1243,7 @@ void ContainerArea::dropEvent(QDropEvent *ev)
            addApplet(info);
         }
 
-        Kicker::the()->setInsertionPoint(QPoint());
+        Kicker::the()->setInsertionPoint(TQPoint());
         return;
     }
 
@@ -1269,7 +1269,7 @@ void ContainerArea::dropEvent(QDropEvent *ev)
         // see if it's a executable or directory
         if (url.protocol() == "programs")
         {
-            QString relPath = url.path();
+            TQString relPath = url.path();
             if (relPath[0] == '/')
             {
                 relPath = relPath.right(relPath.length() - 1);
@@ -1278,7 +1278,7 @@ void ContainerArea::dropEvent(QDropEvent *ev)
         }
         else if (url.isLocalFile()) 
         {
-            QFileInfo fi(url.path());
+            TQFileInfo fi(url.path());
             if (fi.isDir()) 
             { // directory
                 switch (PanelDirDropMenu().exec(mapToGlobal(ev->pos()))) 
@@ -1308,15 +1308,15 @@ void ContainerArea::dropEvent(QDropEvent *ev)
             else if (fi.isExecutable())
             {
                 // non-KDE executable
-                QString pixmapFile;
+                TQString pixmapFile;
                 KMimeType::pixmapForURL(url, 0, KIcon::Panel, 0,
                                         KIcon::DefaultState, &pixmapFile);
-                PanelExeDialog dlg(QString::null, QString::null, url.path(),
-                                   pixmapFile, QString::null, false, 0);
-                if (dlg.exec() == QDialog::Accepted)
+                PanelExeDialog dlg(TQString::null, TQString::null, url.path(),
+                                   pixmapFile, TQString::null, false, 0);
+                if (dlg.exec() == TQDialog::Accepted)
                 {
                     // KIconloader returns a full path, we only want the name
-                    QFileInfo iconfi(dlg.iconPath());
+                    TQFileInfo iconfi(dlg.iconPath());
                     a = new NonKDEAppButtonContainer(dlg.title(),
                                                      dlg.description(),
                                                      dlg.command(),
@@ -1340,7 +1340,7 @@ void ContainerArea::dropEvent(QDropEvent *ev)
         if (!a)
         {
             _dragIndicator->hide();
-            Kicker::the()->setInsertionPoint(QPoint());
+            Kicker::the()->setInsertionPoint(TQPoint());
             m_layout->setStretchEnabled(true);
             return;
         }
@@ -1352,11 +1352,11 @@ void ContainerArea::dropEvent(QDropEvent *ev)
     saveContainerConfig();
     _dragMoveAC = 0;
     _dragIndicator->hide();
-    Kicker::the()->setInsertionPoint(QPoint());
+    Kicker::the()->setInsertionPoint(TQPoint());
     m_layout->setStretchEnabled(true);
 }
 
-bool ContainerArea::eventFilter(QObject* o, QEvent* e)
+bool ContainerArea::eventFilter(TQObject* o, TQEvent* e)
 {
     // Propagate the layout hints which m_contents receives. This way widgets
     // which contain a ContainerArea can react to layout changes of its
@@ -1364,7 +1364,7 @@ bool ContainerArea::eventFilter(QObject* o, QEvent* e)
     // want to grow as well.
     if (o == m_contents)
     {
-        if (e->type() == QEvent::LayoutHint)
+        if (e->type() == TQEvent::LayoutHint)
         {
             updateGeometry(); // Posts a new layout hint to our parent.
         }
@@ -1374,13 +1374,13 @@ bool ContainerArea::eventFilter(QObject* o, QEvent* e)
     return Panner::eventFilter(o, e);
 }
 
-void ContainerArea::resizeEvent(QResizeEvent *ev)
+void ContainerArea::resizeEvent(TQResizeEvent *ev)
 {
     Panner::resizeEvent(ev);
     setBackground();
 }
 
-void ContainerArea::viewportResizeEvent(QResizeEvent* ev)
+void ContainerArea::viewportResizeEvent(TQResizeEvent* ev)
 {
     Panner::viewportResizeEvent(ev);
     if (orientation() == Horizontal)
@@ -1411,8 +1411,8 @@ void ContainerArea::setBackground()
         {
             _rootPixmap = new KRootPixmap(this);
             _rootPixmap->setCustomPainting(true);
-            connect(_rootPixmap, SIGNAL(backgroundUpdated(const QPixmap&)),
-                    SLOT(updateBackground(const QPixmap&)));
+            connect(_rootPixmap, TQT_SIGNAL(backgroundUpdated(const TQPixmap&)),
+                    TQT_SLOT(updateBackground(const TQPixmap&)));
         }
         else
         {
@@ -1438,9 +1438,9 @@ void ContainerArea::setBackground()
         // by keeping the src image static, we can share it among panels and only
         // reload from disk when it actually changes in the config, not every time we
         // get a resize or configure event
-        static QString bgStr;
-        static QImage srcImage;
-        QString newBgStr = locate("appdata", KickerSettings::backgroundTheme());
+        static TQString bgStr;
+        static TQImage srcImage;
+        TQString newBgStr = locate("appdata", KickerSettings::backgroundTheme());
 
         if (bgStr != newBgStr)
         {
@@ -1454,13 +1454,13 @@ void ContainerArea::setBackground()
         }
         else
         {
-            QImage bgImage = srcImage;
+            TQImage bgImage = srcImage;
 
             if (orientation() == Vertical)
             {
                 if (KickerSettings::rotateBackground())
                 {
-                    QWMatrix matrix;
+                    TQWMatrix matrix;
                     matrix.rotate(position() == KPanelExtension::Left ? 90: 270);
                     bgImage = bgImage.xForm(matrix);
                 }
@@ -1472,7 +1472,7 @@ void ContainerArea::setBackground()
                 if (position() == KPanelExtension::Top &&
                     KickerSettings::rotateBackground())
                 {
-                    QWMatrix matrix;
+                    TQWMatrix matrix;
                     matrix.rotate(180);
                     bgImage = bgImage.xForm(matrix);
                 }
@@ -1484,8 +1484,8 @@ void ContainerArea::setBackground()
             {
                 KickerLib::colorize(bgImage);
             }
-            setPaletteBackgroundPixmap(QPixmap(bgImage));
-            QTimer::singleShot(0, this, SLOT(updateContainersBackground()));
+            setPaletteBackgroundPixmap(TQPixmap(bgImage));
+            TQTimer::singleShot(0, this, TQT_SLOT(updateContainersBackground()));
         }
     }
 
@@ -1507,12 +1507,12 @@ void ContainerArea::immutabilityChanged(bool immutable)
     }
 
     setAcceptDrops(!isImmutable());
-    QTimer::singleShot(0, this, SLOT(setBackground()));
+    TQTimer::singleShot(0, this, TQT_SLOT(setBackground()));
 }
 
-QRect ContainerArea::availableSpaceFollowing(BaseContainer* a)
+TQRect ContainerArea::availableSpaceFollowing(BaseContainer* a)
 {
-    QRect availableSpace = rect();
+    TQRect availableSpace = rect();
     BaseContainer* b = 0;
 
     if (a)
@@ -1564,7 +1564,7 @@ QRect ContainerArea::availableSpaceFollowing(BaseContainer* a)
 
 void ContainerArea::moveDragIndicator(int pos)
 {
-    QRect availableSpace = availableSpaceFollowing(_dragMoveAC);
+    TQRect availableSpace = availableSpaceFollowing(_dragMoveAC);
 
     // Move _dragIndicator to position pos, restricted by availableSpace.
     // Resize _dragIndicator if necessary.
@@ -1606,11 +1606,11 @@ void ContainerArea::moveDragIndicator(int pos)
     }
 }
 
-void ContainerArea::updateBackground( const QPixmap& pm )
+void ContainerArea::updateBackground( const TQPixmap& pm )
 {
-    QBrush bgBrush(colorGroup().background(), pm);
-    QPalette pal = kapp->palette();
-    pal.setBrush(QColorGroup::Background, bgBrush);
+    TQBrush bgBrush(colorGroup().background(), pm);
+    TQPalette pal = kapp->palette();
+    pal.setBrush(TQColorGroup::Background, bgBrush);
     setPalette(pal);
 
     // because the Pixmap can be smaller as the containerarea
@@ -1632,7 +1632,7 @@ void ContainerArea::resizeContents(int w, int h)
     if (!m_updateBackgroundsCalled)
     {
         m_updateBackgroundsCalled = true;
-        QTimer::singleShot(0, this, SLOT(updateContainersBackground()));
+        TQTimer::singleShot(0, this, TQT_SLOT(updateContainersBackground()));
     }
 }
 
@@ -1761,8 +1761,8 @@ void ContainerArea::updateContainersBackground()
     // case the cached is cleared).
         if( !m_cachedGeometry.contains( *it ))
         {
-            m_cachedGeometry[ *it ] = QRect();
-            connect( *it, SIGNAL( destroyed()), SLOT( destroyCachedGeometry()));
+            m_cachedGeometry[ *it ] = TQRect();
+            connect( *it, TQT_SIGNAL( destroyed()), TQT_SLOT( destroyCachedGeometry()));
         }
         if( m_cachedGeometry[ *it ] != (*it)->geometry())
         {
@@ -1774,10 +1774,10 @@ void ContainerArea::updateContainersBackground()
 
 void ContainerArea::destroyCachedGeometry()
 {
-    m_cachedGeometry.remove(const_cast<QWidget*>(static_cast<const QWidget*>(sender())));
+    m_cachedGeometry.remove(const_cast<TQWidget*>(static_cast<const TQWidget*>(sender())));
 }
 
-BaseContainer::List ContainerArea::containers(const QString& type) const
+BaseContainer::List ContainerArea::containers(const TQString& type) const
 {
     if (type.isEmpty() || type == "All")
     {
@@ -1792,7 +1792,7 @@ BaseContainer::List ContainerArea::containers(const QString& type) const
              it != m_containers.constEnd();
              ++it)
         {
-            QString type = (*it)->appletType();
+            TQString type = (*it)->appletType();
             if (type == "KMenuButton" ||
                 type == "WindowListButton" ||
                 type == "BookmarksButton" ||
@@ -1821,7 +1821,7 @@ BaseContainer::List ContainerArea::containers(const QString& type) const
     return list;
 }
 
-int ContainerArea::containerCount(const QString& type) const
+int ContainerArea::containerCount(const TQString& type) const
 {
     if (type.isEmpty() || type == "All")
     {
@@ -1835,7 +1835,7 @@ int ContainerArea::containerCount(const QString& type) const
              it != m_containers.end();
              ++it)
         {
-            QString type = (*it)->appletType();
+            TQString type = (*it)->appletType();
             if (type == "KMenuButton" ||
                 type == "WindowListButton" ||
                 type == "BookmarksButton" ||
@@ -1864,7 +1864,7 @@ int ContainerArea::containerCount(const QString& type) const
     return count;
 }
 
-QStringList ContainerArea::listContainers() const
+TQStringList ContainerArea::listContainers() const
 {
     return m_layout->listItems();
 }
@@ -1879,7 +1879,7 @@ void ContainerArea::showAddAppletDialog()
     if (!m_addAppletDialog)
     {
         m_addAppletDialog = new AddAppletDialog(this, this, 0);
-        connect(m_addAppletDialog, SIGNAL(finished()), this, SLOT(addAppletDialogDone()));
+        connect(m_addAppletDialog, TQT_SIGNAL(finished()), this, TQT_SLOT(addAppletDialogDone()));
     }
     else
     {
@@ -1900,7 +1900,7 @@ void ContainerArea::addAppletDialogDone()
     m_addAppletDialog = 0;
 }
 
-const QPixmap* ContainerArea::completeBackgroundPixmap() const
+const TQPixmap* ContainerArea::completeBackgroundPixmap() const
 {
     return &_completeBg;
 }
@@ -1916,22 +1916,22 @@ int ContainerArea::heightForWidth(int w) const
 }
 
 
-DragIndicator::DragIndicator(QWidget* parent, const char* name)
-    : QWidget(parent, name) 
+DragIndicator::DragIndicator(TQWidget* parent, const char* name)
+    : TQWidget(parent, name) 
 {
     setBackgroundOrigin(AncestorOrigin);
 }
 
 
-void DragIndicator::paintEvent(QPaintEvent*)
+void DragIndicator::paintEvent(TQPaintEvent*)
 {
-    QPainter painter(this);
-    QRect rect(0, 0, width(), height());
-    style().drawPrimitive( QStyle::PE_FocusRect, &painter, rect, colorGroup(),
-                           QStyle::Style_Default, colorGroup().base() );
+    TQPainter painter(this);
+    TQRect rect(0, 0, width(), height());
+    style().drawPrimitive( TQStyle::PE_FocusRect, &painter, rect, colorGroup(),
+                           TQStyle::Style_Default, colorGroup().base() );
 }
 
-void DragIndicator::mousePressEvent(QMouseEvent*)
+void DragIndicator::mousePressEvent(TQMouseEvent*)
 {
     hide();
 }

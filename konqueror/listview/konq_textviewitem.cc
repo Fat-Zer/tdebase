@@ -24,17 +24,17 @@
 #include <stdio.h>
 #include <kglobal.h>
 
-int KonqTextViewItem::compare( QListViewItem *item, int col, bool ascending ) const
+int KonqTextViewItem::compare( TQListViewItem *item, int col, bool ascending ) const
 {
    if (col==1)
       return KonqBaseListViewItem::compare(item, 0, ascending);
    return KonqBaseListViewItem::compare(item, col, ascending);
 }
 
-/*QString KonqTextViewItem::key( int _column, bool asc) const
+/*TQString KonqTextViewItem::key( int _column, bool asc) const
 {
    if (_column==1) return key(0,asc);
-   QString tmp = QString::number( sortChar );
+   TQString tmp = TQString::number( sortChar );
    //check if it is a time column
    if (_column>1)
    {
@@ -48,7 +48,7 @@ int KonqTextViewItem::compare( QListViewItem *item, int col, bool ascending ) co
                 || (cInfo->udsId==KIO::UDS_ACCESS_TIME)
                 || (cInfo->udsId==KIO::UDS_CREATION_TIME))
             {
-               tmp += QString::number( m_fileitem->time(cInfo->udsId) ).rightJustify( 14, '0' );
+               tmp += TQString::number( m_fileitem->time(cInfo->udsId) ).rightJustify( 14, '0' );
                return tmp;
             }
             else if (cInfo->udsId==KIO::UDS_SIZE)
@@ -67,7 +67,7 @@ int KonqTextViewItem::compare( QListViewItem *item, int col, bool ascending ) co
 
 void KonqTextViewItem::updateContents()
 {
-   QString tmp;
+   TQString tmp;
    KIO::filesize_t size=m_fileitem->size();
    mode_t m=m_fileitem->mode();
 
@@ -185,7 +185,7 @@ void KonqTextViewItem::updateContents()
             {
                if ((*it).m_uds==(unsigned int)tmpColumn->udsId)
                {
-                  QDateTime dt;
+                  TQDateTime dt;
                   dt.setTime_t((time_t) (*it).m_long);
                   setText(tmpColumn->displayInColumn,KGlobal::locale()->formatDateTime(dt));
                   break;
@@ -200,25 +200,25 @@ void KonqTextViewItem::updateContents()
    };
 }
 
-void KonqTextViewItem::paintCell( QPainter *_painter, const QColorGroup & _cg, int _column, int _width, int _alignment )
+void KonqTextViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment )
 {
-   QColorGroup cg( _cg );
-   cg.setColor(QColorGroup::Text, static_cast<KonqTextViewWidget *>(listView())->colors[type]);
+   TQColorGroup cg( _cg );
+   cg.setColor(TQColorGroup::Text, static_cast<KonqTextViewWidget *>(listView())->colors[type]);
    // Don't do that! Keep things readable whatever the selection background color is
-//   cg.setColor(QColorGroup::HighlightedText, static_cast<KonqTextViewWidget *>(listView())->highlight[type]);
-//   cg.setColor(QColorGroup::Highlight, Qt::darkGray);
+//   cg.setColor(TQColorGroup::HighlightedText, static_cast<KonqTextViewWidget *>(listView())->highlight[type]);
+//   cg.setColor(TQColorGroup::Highlight, Qt::darkGray);
 
    KListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
 }
 
-/*void KonqTextViewItem::paintFocus( QPainter *_p, const QColorGroup &_cg, const QRect &_r )
+/*void KonqTextViewItem::paintFocus( TQPainter *_p, const TQColorGroup &_cg, const TQRect &_r )
 {
    listView()->style().drawFocusRect( _p, _r, _cg,
            isSelected() ? &_cg.highlight() : &_cg.base(), isSelected() );
 
-   QPixmap pix( _r.width(), _r.height() );
+   TQPixmap pix( _r.width(), _r.height() );
    bitBlt( &pix, 0, 0, _p->device(), _r.left(), _r.top(), _r.width(), _r.height() );
-   QImage im = pix.convertToImage();
+   TQImage im = pix.convertToImage();
    im = KImageEffect::fade( im, 0.25, Qt::black );
    _p->drawImage( _r.topLeft(), im );
 }*/

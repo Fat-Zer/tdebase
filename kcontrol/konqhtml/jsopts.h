@@ -35,13 +35,13 @@ class KJavaScriptOptions;
 class JSDomainListView : public DomainListView {
   Q_OBJECT
 public:
-  JSDomainListView(KConfig *config,const QString &group,KJavaScriptOptions *opt,
-  		QWidget *parent,const char *name = 0);
+  JSDomainListView(KConfig *config,const TQString &group,KJavaScriptOptions *opt,
+  		TQWidget *parent,const char *name = 0);
   virtual ~JSDomainListView();
 
   /** remnant for importing pre KDE 3.2 settings
     */
-  void updateDomainListLegacy(const QStringList &domainConfig);
+  void updateDomainListLegacy(const TQStringList &domainConfig);
 
 protected:
   virtual JSPolicies *createPolicies();
@@ -50,7 +50,7 @@ protected:
   		Policies *copy);
 
 private:
-  QString group;
+  TQString group;
   KJavaScriptOptions *options;
 };
 
@@ -58,7 +58,7 @@ class KJavaScriptOptions : public KCModule
 {
   Q_OBJECT
 public:
-  KJavaScriptOptions( KConfig* config, QString group, QWidget* parent = 0, const char* name = 0 );
+  KJavaScriptOptions( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
 
   virtual void load();
   virtual void load( bool useDefaults );
@@ -73,11 +73,11 @@ private slots:
 private:
 
   KConfig *m_pConfig;
-  QString m_groupname;
+  TQString m_groupname;
   JSPolicies js_global_policies;
-  QCheckBox *enableJavaScriptGloballyCB;
-  QCheckBox *reportErrorsCB;
-  QCheckBox *jsDebugWindow;
+  TQCheckBox *enableJavaScriptGloballyCB;
+  TQCheckBox *reportErrorsCB;
+  TQCheckBox *jsDebugWindow;
   JSPoliciesFrame *js_policies_frame;
   bool _removeECMADomainSettings;
 

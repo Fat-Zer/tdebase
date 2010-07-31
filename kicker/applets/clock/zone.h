@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __ZONE_H
 
 #include <ktimezones.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 class KConfig;
 class KListView;
@@ -38,24 +38,24 @@ public:
 
 	void writeSettings();
 
-	QString zone() const { return zone(_zoneIndex); };
-	QString zone(int z) const;
-	QStringList remoteZoneList() const { return _remotezonelist; };
+	TQString zone() const { return zone(_zoneIndex); };
+	TQString zone(int z) const;
+	TQStringList remoteZoneList() const { return _remotezonelist; };
 	int remoteZoneCount() { return _remotezonelist.count(); };
 	unsigned int zoneIndex() const { return _zoneIndex; }
 	void setZone(int z = 0);
 
 	void nextZone();
 	void prevZone();
-	int calc_TZ_offset(const QString& zone, bool reset=false);
+	int calc_TZ_offset(const TQString& zone, bool reset=false);
 	void readZoneList(KListView *listView);
 	void getSelectedZonelist(KListView *listView);
 
 protected:
         KTimezones m_zoneDb;
-	QStringList _remotezonelist;
+	TQStringList _remotezonelist;
 	KConfig *config;
-        QString _defaultTZ;
+        TQString _defaultTZ;
 	unsigned int _zoneIndex;
 };
 

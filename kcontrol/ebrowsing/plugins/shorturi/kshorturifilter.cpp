@@ -26,8 +26,8 @@
 #include <pwd.h>
 #include <sys/stat.h>
 
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -43,7 +43,7 @@
 #define IPv6_PATTERN    "^\\[.*\\]"
 #define ENV_VAR_PATTERN "\\$[a-zA-Z_][a-zA-Z0-9_]*"
 
-#define QFL1(x) QString::fromLatin1(x)
+#define QFL1(x) TQString::fromLatin1(x)
 
  /**
   * IMPORTANT:
@@ -54,15 +54,15 @@
   *  test code to kdelibs/kio/tests/kurifiltertest.
   */
 
-typedef QMap<QString,QString> EntryMap;
+typedef TQMap<TQString,TQString> EntryMap;
 
-static bool isValidShortURL( const QString& cmd, bool verbose = false )
+static bool isValidShortURL( const TQString& cmd, bool verbose = false )
 {
   // Examples of valid short URLs:
   // "kde.org", "foo.bar:8080", "user@foo.bar:3128"
   // "192.168.1.0", "127.0.0.1:3128"
   // "[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]"
-  QRegExp exp;
+  TQRegExp exp;
 
   // Match FQDN_PATTERN
   exp.setPattern( QFL1(FQDN_PATTERN) );
@@ -110,9 +110,9 @@ static bool isValidShortURL( const QString& cmd, bool verbose = false )
   return false;
 }
 
-static QString removeArgs( const QString& _cmd )
+static TQString removeArgs( const TQString& _cmd )
 {
-  QString cmd( _cmd );
+  TQString cmd( _cmd );
 
   if( cmd[0] != '\'' && cmd[0] != '"' )
   {
@@ -134,8 +134,8 @@ static QString removeArgs( const QString& _cmd )
   return cmd;
 }
 
-KShortURIFilter::KShortURIFilter( QObject *parent, const char *name,
-                                  const QStringList & /*args*/ )
+KShortURIFilter::KShortURIFilter( TQObject *parent, const char *name,
+                                  const TQStringList & /*args*/ )
                 :KURIFilterPlugin( parent, name ? name : "kshorturifilter", 1.0),
                  DCOPObject("KShortURIFilterIface")
 {
@@ -158,19 +158,19 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   */
 
   KURL url = data.uri();
-  QString cmd = data.typedString();
+  TQString cmd = data.typedString();
   bool isMalformed = !url.isValid();
   //kdDebug() << "url=" << url.url() << " cmd=" << cmd << " isMalformed=" << isMalformed << endl;
 
   if (!isMalformed &&
       (url.protocol().length() == 4) &&
-      (url.protocol() != QString::fromLatin1("http")) &&
+      (url.protocol() != TQString::fromLatin1("http")) &&
       (url.protocol()[0]=='h') &&
       (url.protocol()[1]==url.protocol()[2]) &&
       (url.protocol()[3]=='p'))
   {
      // Handle "encrypted" URLs like: h++p://www.kde.org
-     url.setProtocol( QString::fromLatin1("http"));
+     url.setProtocol( TQString::fromLatin1("http"));
      setFilteredURI( data, url);
      setURIType( data, KURIFilterData::NET_PROTOCOL );
      return true;
@@ -181,7 +181,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // executable and only the argument part, if any, changed! (Dawit)
   // You mean caching the last filtering, to try and reuse it, to save stat()s? (David)
 
-  const QString starthere_proto = QFL1("start-here:");
+  const TQString starthere_proto = QFL1("start-here:");
   if (cmd.find(starthere_proto, 0, true) == 0 )
   {
     setFilteredURI( data, KURL("system:/") );
@@ -190,8 +190,8 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   }
 
   // Handle MAN & INFO pages shortcuts...
-  const QString man_proto = QFL1("man:");
-  const QString info_proto = QFL1("info:");
+  const TQString man_proto = QFL1("man:");
+  const TQString info_proto = QFL1("info:");
   if( cmd[0] == '#' ||
       cmd.find( man_proto, 0, true ) == 0 ||
       cmd.find( info_proto, 0, true ) == 0 )
@@ -210,11 +210,11 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   }
 
   // Detect UNC style (aka windows SMB) URLs
-  if ( cmd.startsWith( QString::fromLatin1( "\\\\") ) )
+  if ( cmd.startsWith( TQString::fromLatin1( "\\\\") ) )
   {
     // make sure path is unix style
     cmd.replace('\\', '/');
-    cmd.prepend( QString::fromLatin1( "smb:" ) );
+    cmd.prepend( TQString::fromLatin1( "smb:" ) );
     setFilteredURI( data, KURL( cmd ));
     setURIType( data, KURIFilterData::NET_PROTOCOL );
     return true;
@@ -223,12 +223,12 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   bool expanded = false;
 
   // Expanding shortcut to HOME URL...
-  QString path;
-  QString ref;
-  QString query;
-  QString nameFilter;
+  TQString path;
+  TQString ref;
+  TQString query;
+  TQString nameFilter;
 
-  if (KURL::isRelativeURL(cmd) && QDir::isRelativePath(cmd)) {
+  if (KURL::isRelativeURL(cmd) && TQDir::isRelativePath(cmd)) {
      path = cmd;
   }
   else
@@ -239,7 +239,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
       // but not for "/tmp/a#b", if "a#b" is an existing file,
       // or for "/tmp/a?b" (#58990)
       if ( ( url.hasRef() || !url.query().isEmpty() ) // avoid the calling exists() when not needed
-           && QFile::exists(url.path())
+           && TQFile::exists(url.path())
            && !url.path().endsWith(QFL1("/")) ) // /tmp/?foo is a namefilter, not a query
       {
         path = url.path();
@@ -262,19 +262,19 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
       slashPos = path.length();
     if( slashPos == 1 )   // ~/
     {
-      path.replace ( 0, 1, QDir::homeDirPath() );
+      path.replace ( 0, 1, TQDir::homeDirPath() );
     }
     else // ~username/
     {
-      QString user = path.mid( 1, slashPos-1 );
+      TQString user = path.mid( 1, slashPos-1 );
       struct passwd *dir = getpwnam(user.local8Bit().data());
       if( dir && strlen(dir->pw_dir) )
       {
-        path.replace (0, slashPos, QString::fromLocal8Bit(dir->pw_dir));
+        path.replace (0, slashPos, TQString::fromLocal8Bit(dir->pw_dir));
       }
       else
       {
-        QString msg = dir ? i18n("<qt><b>%1</b> does not have a home folder.</qt>").arg(user) :
+        TQString msg = dir ? i18n("<qt><b>%1</b> does not have a home folder.</qt>").arg(user) :
                             i18n("<qt>There is no user called <b>%1</b>.</qt>").arg(user);
         setErrorMsg( data, msg );
         setURIType( data, KURIFilterData::ERROR );
@@ -287,13 +287,13 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   }
   else if ( path[0] == '$' ) {
     // Environment variable expansion.
-    QRegExp r (QFL1(ENV_VAR_PATTERN));
+    TQRegExp r (QFL1(ENV_VAR_PATTERN));
     if ( r.search( path ) == 0 )
     {
       const char* exp = getenv( path.mid( 1, r.matchedLength() - 1 ).local8Bit().data() );
       if(exp)
       {
-        path.replace( 0, r.matchedLength(), QString::fromLocal8Bit(exp) );
+        path.replace( 0, r.matchedLength(), TQString::fromLocal8Bit(exp) );
         expanded = true;
       }
     }
@@ -318,7 +318,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // Checking for local resource match...
   // Determine if "uri" is an absolute path to a local resource  OR
   // A local resource with a supplied absolute path in KURIFilterData
-  QString abs_path = data.absolutePath();
+  TQString abs_path = data.absolutePath();
 
   bool canBeAbsolute = (isMalformed && !abs_path.isEmpty());
   bool canBeLocalAbsolute = (canBeAbsolute && abs_path[0] =='/');
@@ -330,16 +330,16 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   struct stat buff;
   if ( canBeLocalAbsolute )
   {
-    QString abs = QDir::cleanDirPath( abs_path );
+    TQString abs = TQDir::cleanDirPath( abs_path );
     // combine absolute path (abs_path) and relative path (cmd) into abs_path
     int len = path.length();
     if( (len==1 && path[0]=='.') || (len==2 && path[0]=='.' && path[1]=='.') )
         path += '/';
     //kdDebug() << "adding " << abs << " and " << path << endl;
-    abs = QDir::cleanDirPath(abs + '/' + path);
+    abs = TQDir::cleanDirPath(abs + '/' + path);
     //kdDebug() << "checking whether " << abs << " exists." << endl;
     // Check if it exists
-    if( stat( QFile::encodeName(abs).data(), &buff ) == 0 )
+    if( stat( TQFile::encodeName(abs).data(), &buff ) == 0 )
     {
       path = abs; // yes -> store as the new cmd
       exists = true;
@@ -349,7 +349,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
 
   if( isLocalFullPath && !exists )
   {
-    exists = ( stat( QFile::encodeName(path).data() , &buff ) == 0 );
+    exists = ( stat( TQFile::encodeName(path).data() , &buff ) == 0 );
 
     if ( !exists ) {
       // Support for name filter (/foo/*.txt), see also KonqMainWindow::detectNameFilter
@@ -357,10 +357,10 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
       int lastSlash = path.findRev( '/' );
       if ( lastSlash > -1 && path.find( ' ', lastSlash ) == -1 ) // no space after last slash, otherwise it's more likely command-line arguments
       {
-        QString fileName = path.mid( lastSlash + 1 );
-        QString testPath = path.left( lastSlash + 1 );
+        TQString fileName = path.mid( lastSlash + 1 );
+        TQString testPath = path.left( lastSlash + 1 );
         if ( ( fileName.find( '*' ) != -1 || fileName.find( '[' ) != -1 || fileName.find( '?' ) != -1 )
-           && stat( QFile::encodeName(testPath).data(), &buff ) == 0 )
+           && stat( TQFile::encodeName(testPath).data(), &buff ) == 0 )
         {
           nameFilter = fileName;
           kdDebug() << "Setting nameFilter to " << nameFilter << endl;
@@ -379,7 +379,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
     u.setRef(ref);
     u.setQuery(query);
 
-    if (kapp && !kapp->authorizeURLAction( QString::fromLatin1("open"), KURL(), u))
+    if (kapp && !kapp->authorizeURLAction( TQString::fromLatin1("open"), KURL(), u))
     {
       // No authorisation, we pretend it's a file will get
       // an access denied error later on.
@@ -390,7 +390,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
 
     // Can be abs path to file or directory, or to executable with args
     bool isDir = S_ISDIR( buff.st_mode );
-    if( !isDir && access ( QFile::encodeName(path).data(), X_OK) == 0 )
+    if( !isDir && access ( TQFile::encodeName(path).data(), X_OK) == 0 )
     {
       //kdDebug() << "Abs path to EXECUTABLE" << endl;
       setFilteredURI( data, u );
@@ -417,7 +417,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // if it is executable under the user's $PATH variable.
   // We try hard to avoid parsing any possible command
   // line arguments or options that might have been supplied.
-  QString exe = removeArgs( cmd );
+  TQString exe = removeArgs( cmd );
   //kdDebug() << k_funcinfo << "findExe with " << exe << endl;
   if( data.checkForExecutables() && !KStandardDirs::findExe( exe ).isNull() )
   {
@@ -435,8 +435,8 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // be slow things down...
   if ( !isMalformed && !isLocalFullPath )
   {
-    const QStringList protocols = KProtocolInfo::protocols();
-    for( QStringList::ConstIterator it = protocols.begin(); it != protocols.end(); ++it )
+    const TQStringList protocols = KProtocolInfo::protocols();
+    for( TQStringList::ConstIterator it = protocols.begin(); it != protocols.end(); ++it )
     {
       if( (url.protocol() == *it) )
       {
@@ -455,10 +455,10 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // TODO: Make configurable at some point...
   if ( !cmd.contains( ' ' ) )
   {
-    QValueList<URLHint>::ConstIterator it;
+    TQValueList<URLHint>::ConstIterator it;
     for( it = m_urlHints.begin(); it != m_urlHints.end(); ++it )
     {
-      QRegExp match( (*it).regexp );
+      TQRegExp match( (*it).regexp );
       if ( match.search( cmd, 0 ) == 0 )
       {
         //kdDebug() << "match - prepending " << (*it).prepend << endl;
@@ -492,7 +492,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
     u.setPath(path);
     u.setRef(ref);
 
-    if (kapp && !kapp->authorizeURLAction( QString::fromLatin1("open"), KURL(), u))
+    if (kapp && !kapp->authorizeURLAction( TQString::fromLatin1("open"), KURL(), u))
     {
       // No authorisation, we pretend it exists and will get
       // an access denied error later on.
@@ -511,12 +511,12 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   return false;
 }
 
-KCModule* KShortURIFilter::configModule( QWidget*, const char* ) const
+KCModule* KShortURIFilter::configModule( TQWidget*, const char* ) const
 {
     return 0; //new KShortURIOptions( parent, name );
 }
 
-QString KShortURIFilter::configName() const
+TQString KShortURIFilter::configName() const
 {
     return i18n("&ShortURLs");
 }
@@ -536,7 +536,7 @@ void KShortURIFilter::configure()
 
   for( EntryMap::Iterator it = patterns.begin(); it != patterns.end(); ++it )
   {
-    QString protocol = protocols[it.key()];
+    TQString protocol = protocols[it.key()];
     if (!protocol.isEmpty())
     {
       int type = config.readNumEntry(it.key(), -1);

@@ -34,7 +34,7 @@
 #include <pwd.h>
 #include <grp.h>
 
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <kglobal.h>
 
@@ -83,7 +83,7 @@ bool SMBSlave::browse_stat_path(const SMBUrl& _url, UDSEntry& udsentry, bool ign
       if ( user )
           udsatom.m_str = user->pw_name;
       else
-          udsatom.m_str = QString::number( uid );
+          udsatom.m_str = TQString::number( uid );
       udsentry.append(udsatom);
 
       udsatom.m_uds  = KIO::UDS_GROUP;
@@ -92,7 +92,7 @@ bool SMBSlave::browse_stat_path(const SMBUrl& _url, UDSEntry& udsentry, bool ign
       if ( grp )
           udsatom.m_str = grp->gr_name;
       else
-          udsatom.m_str = QString::number( gid );
+          udsatom.m_str = TQString::number( gid );
       udsentry.append(udsatom);
 
       udsatom.m_uds  = KIO::UDS_ACCESS;
@@ -194,7 +194,7 @@ void SMBSlave::stat( const KURL& kurl )
 KURL SMBSlave::checkURL(const KURL& kurl) const
 {
     kdDebug(KIO_SMB) << "checkURL " << kurl << endl;
-    QString surl = kurl.url();
+    TQString surl = kurl.url();
     if (surl.startsWith("smb:/")) {
         if (surl.length() == 5) // just the above
             return kurl; // unchanged
@@ -211,7 +211,7 @@ KURL SMBSlave::checkURL(const KURL& kurl) const
     if (surl.contains('@') && !surl.contains("smb://")) {
         KURL url(kurl);
         url.setPath("/"+kurl.url().right( kurl.url().length()-kurl.url().find('@') -1));
-        QString userinfo = kurl.url().mid(5, kurl.url().find('@')-5);
+        TQString userinfo = kurl.url().mid(5, kurl.url().find('@')-5);
         if(userinfo.contains(':'))  {
             url.setUser(userinfo.left(userinfo.find(':')));
             url.setPass(userinfo.right(userinfo.length()-userinfo.find(':')-1));
@@ -305,7 +305,7 @@ void SMBSlave::reportError(const SMBUrl &url)
 								"if they ask for it)") );
 	  break;
     default:
-        error( ERR_INTERNAL, i18n("Unknown error condition in stat: %1").arg(QString::fromLocal8Bit( strerror(errno))) );
+        error( ERR_INTERNAL, i18n("Unknown error condition in stat: %1").arg(TQString::fromLocal8Bit( strerror(errno))) );
     }
 }
 
@@ -343,10 +343,10 @@ void SMBSlave::listDir( const KURL& kurl )
 
            // Set name
            atom.m_uds = KIO::UDS_NAME;
-           QString dirpName = QString::fromUtf8( dirp->name );
+           TQString dirpName = TQString::fromUtf8( dirp->name );
            // We cannot trust dirp->commentlen has it might be with or without the NUL character
            // See KDE bug #111430 and Samba bug #3030
-           QString comment = QString::fromUtf8( dirp->comment );
+           TQString comment = TQString::fromUtf8( dirp->comment );
            if ( dirp->smbc_type == SMBC_SERVER || dirp->smbc_type == SMBC_WORKGROUP ) {
                atom.m_str = dirpName.lower();
                atom.m_str.at( 0 ) = dirpName.at( 0 ).upper();
@@ -398,18 +398,18 @@ void SMBSlave::listDir( const KURL& kurl )
 
                if (dirp->smbc_type == SMBC_SERVER) {
                    atom.m_uds = KIO::UDS_URL;
-                   // QString workgroup = m_current_url.host().upper();
+                   // TQString workgroup = m_current_url.host().upper();
                    KURL u("smb:/");
                    u.setHost(dirpName);
                    atom.m_str = u.url();
 
                    // when libsmbclient knows
-                   // atom.m_str = QString("smb://%1?WORKGROUP=%2").arg(dirpName).arg(workgroup.upper());
+                   // atom.m_str = TQString("smb://%1?WORKGROUP=%2").arg(dirpName).arg(workgroup.upper());
                    kdDebug(KIO_SMB) << "list item " << atom.m_str << endl;
                    udsentry.append(atom);
 
                    atom.m_uds = KIO::UDS_MIME_TYPE;
-                   atom.m_str = QString::fromLatin1("application/x-smb-server");
+                   atom.m_str = TQString::fromLatin1("application/x-smb-server");
                    udsentry.append(atom);
                }
 
@@ -429,11 +429,11 @@ void SMBSlave::listDir( const KURL& kurl )
                udsentry.append(atom);
 
                atom.m_uds = KIO::UDS_MIME_TYPE;
-               atom.m_str = QString::fromLatin1("application/x-smb-workgroup");
+               atom.m_str = TQString::fromLatin1("application/x-smb-workgroup");
                udsentry.append(atom);
 
                atom.m_uds = KIO::UDS_URL;
-               // QString workgroup = m_current_url.host().upper();
+               // TQString workgroup = m_current_url.host().upper();
                KURL u("smb:/");
                u.setHost(dirpName);
                atom.m_str = u.url();

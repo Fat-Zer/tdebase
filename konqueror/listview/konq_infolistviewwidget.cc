@@ -29,16 +29,16 @@
 #include <kuserprofile.h>
 #include <kio/metainfojob.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 KonqInfoListViewWidget::KonqInfoListViewWidget( KonqListView* parent,
-                                                QWidget* parentWidget)
+                                                TQWidget* parentWidget)
   : KonqBaseListViewWidget(parent, parentWidget)
 {
     m_metaInfoJob = 0;
 
     m_mtSelector = new KSelectAction(i18n("View &As"), 0, this,
-                                     SLOT(slotSelectMimeType()),
+                                     TQT_SLOT(slotSelectMimeType()),
                                      parent->actionCollection(), "view_as" );
 
     kdDebug(1203) << "created info list view\n";
@@ -52,10 +52,10 @@ KonqInfoListViewWidget::~KonqInfoListViewWidget()
 
 void KonqInfoListViewWidget::slotSelectMimeType()
 {
-    QString comment = m_mtSelector->currentText();
+    TQString comment = m_mtSelector->currentText();
 
     // find the mime type by comment
-    QMapIterator<QString, KonqILVMimeType> it;
+    TQMapIterator<TQString, KonqILVMimeType> it;
     for (it = m_counts.begin(); it!=m_counts.end(); ++it)
     {
         if ((*it).mimetype->comment() == comment)
@@ -94,26 +94,26 @@ void KonqInfoListViewWidget::createFavoriteColumns()
           (mimeTypeInfo = KFileMetaInfoProvider::self()
                             ->mimeTypeInfo(m_favorite.mimetype->name())))
     {
-        QStringList preferredCols = mimeTypeInfo->preferredKeys();
+        TQStringList preferredCols = mimeTypeInfo->preferredKeys();
         m_columnKeys.clear(); //We create the columnKeys as we're creating
         //the actual columns, to make sure they're synced
 
         // get the translations
-        QStringList groups = mimeTypeInfo->preferredGroups();
+        TQStringList groups = mimeTypeInfo->preferredGroups();
         if (groups.isEmpty()) groups = mimeTypeInfo->supportedGroups();
 
-        QStringList::Iterator prefKey = preferredCols.begin();
+        TQStringList::Iterator prefKey = preferredCols.begin();
         for (; prefKey != preferredCols.end(); ++prefKey)
         {
-            QStringList::Iterator group = groups.begin();
+            TQStringList::Iterator group = groups.begin();
             for (; group != groups.end(); ++group)
             {
                 const KFileMimeTypeInfo::GroupInfo* groupInfo =
                                     mimeTypeInfo->groupInfo(*group);
                 if(groupInfo)
                 {
-                    QStringList keys = groupInfo->supportedKeys();
-                    QStringList::Iterator key = keys.begin();
+                    TQStringList keys = groupInfo->supportedKeys();
+                    TQStringList::Iterator key = keys.begin();
                     for (; key != keys.end(); ++key)
                     {
                         if ( *key == *prefKey )
@@ -147,7 +147,7 @@ void KonqInfoListViewWidget::rebuildView()
     // make a KFileItemList from all our Items
     KFileItemList list;
 
-    QListViewItemIterator it(this);
+    TQListViewItemIterator it(this);
     for (; it.current(); ++it)
     {
         list.append(static_cast<KonqInfoListViewItem*>(it.current())->item());
@@ -157,7 +157,7 @@ void KonqInfoListViewWidget::rebuildView()
     clear();
 
     // and rebuild them
-    for (QPtrListIterator<KFileItem> kit(list); kit.current(); ++kit)
+    for (TQPtrListIterator<KFileItem> kit(list); kit.current(); ++kit)
     {
         KonqInfoListViewItem* tmp = new KonqInfoListViewItem( this, *kit );
 //        if (m_goToFirstItem==false)
@@ -190,7 +190,7 @@ void KonqInfoListViewWidget::rebuildView()
 void KonqInfoListViewWidget::slotNewItems( const KFileItemList& list)
 {
     slotStarted(); // ############# WHY?
-    for (QPtrListIterator<KFileItem> kit ( list ); kit.current(); ++kit )
+    for (TQPtrListIterator<KFileItem> kit ( list ); kit.current(); ++kit )
     {
         KonqInfoListViewItem * tmp = new KonqInfoListViewItem( this, *kit );
 
@@ -201,7 +201,7 @@ void KonqInfoListViewWidget::slotNewItems( const KFileItemList& list)
         }
 
         if ( !m_itemsToSelect.isEmpty() ) {
-           QStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
+           TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
            if ( tsit != m_itemsToSelect.end() ) {
               m_itemsToSelect.remove( tsit );
               setSelected( tmp, true );
@@ -230,16 +230,16 @@ void KonqInfoListViewWidget::slotNewItems( const KFileItemList& list)
     // start getting metainfo from the files
     if (m_metaInfoJob)
     {
-       for (QPtrListIterator<KFileItem> kit ( list ); kit.current(); ++kit )
+       for (TQPtrListIterator<KFileItem> kit ( list ); kit.current(); ++kit )
           m_metaInfoTodo.append(kit.current());
     }
     else
     {
         m_metaInfoJob = KIO::fileMetaInfo(list);
-        connect( m_metaInfoJob, SIGNAL( gotMetaInfo( const KFileItem*)),
-             this, SLOT( slotMetaInfo( const KFileItem*)));
-        connect( m_metaInfoJob, SIGNAL( result( KIO::Job*)),
-             this, SLOT( slotMetaInfoResult()));
+        connect( m_metaInfoJob, TQT_SIGNAL( gotMetaInfo( const KFileItem*)),
+             this, TQT_SLOT( slotMetaInfo( const KFileItem*)));
+        connect( m_metaInfoJob, TQT_SIGNAL( result( KIO::Job*)),
+             this, TQT_SLOT( slotMetaInfoResult()));
     }
 }
 
@@ -250,16 +250,16 @@ void KonqInfoListViewWidget::slotRefreshItems( const KFileItemList& list)
     // start getting metainfo from the files
     if (m_metaInfoJob)
     {
-       for (QPtrListIterator<KFileItem> kit ( list ); kit.current(); ++kit )
+       for (TQPtrListIterator<KFileItem> kit ( list ); kit.current(); ++kit )
           m_metaInfoTodo.append(kit.current());
     }
     else
     {
         m_metaInfoJob = KIO::fileMetaInfo(list);
-        connect( m_metaInfoJob, SIGNAL( gotMetaInfo( const KFileItem*)),
-             this, SLOT( slotMetaInfo( const KFileItem*)));
-        connect( m_metaInfoJob, SIGNAL( result( KIO::Job*)),
-             this, SLOT( slotMetaInfoResult()));
+        connect( m_metaInfoJob, TQT_SIGNAL( gotMetaInfo( const KFileItem*)),
+             this, TQT_SLOT( slotMetaInfo( const KFileItem*)));
+        connect( m_metaInfoJob, TQT_SIGNAL( result( KIO::Job*)),
+             this, TQT_SLOT( slotMetaInfoResult()));
     }
     KonqBaseListViewWidget::slotRefreshItems(list);
 }
@@ -286,7 +286,7 @@ void KonqInfoListViewWidget::slotClear()
 void KonqInfoListViewWidget::slotMetaInfo(const KFileItem* item)
 {
     // need to search for the item (any better way?)
-    QListViewItemIterator it(this);
+    TQListViewItemIterator it(this);
     for (; it.current(); ++it)
     {
         if (static_cast<KonqInfoListViewItem*>(it.current())->item()==item)
@@ -312,10 +312,10 @@ void KonqInfoListViewWidget::slotMetaInfoResult()
     else
     {
         m_metaInfoJob = KIO::fileMetaInfo(m_metaInfoTodo);
-        connect( m_metaInfoJob, SIGNAL( gotMetaInfo( const KFileItem*)),
-             this, SLOT( slotMetaInfo( const KFileItem*)));
-        connect( m_metaInfoJob, SIGNAL( result( KIO::Job*)),
-             this, SLOT( slotMetaInfoResult()));
+        connect( m_metaInfoJob, TQT_SIGNAL( gotMetaInfo( const KFileItem*)),
+             this, TQT_SLOT( slotMetaInfo( const KFileItem*)));
+        connect( m_metaInfoJob, TQT_SIGNAL( result( KIO::Job*)),
+             this, TQT_SLOT( slotMetaInfoResult()));
         m_metaInfoTodo.clear();
     }
 }
@@ -327,7 +327,7 @@ void KonqInfoListViewWidget::determineCounts(const KFileItemList& list)
     // get the counts
     for (KFileItemListIterator it(list); it.current(); ++it)
     {
-        QString mt = it.current()->mimetype();
+        TQString mt = it.current()->mimetype();
         m_counts[mt].count++;
         if (!m_counts[mt].mimetype)
             m_counts[mt].mimetype = it.current()->determineMimeType();
@@ -338,9 +338,9 @@ void KonqInfoListViewWidget::determineCounts(const KFileItemList& list)
 
     KFileMetaInfoProvider* prov = KFileMetaInfoProvider::self();
 
-    QStringList mtlist;
+    TQStringList mtlist;
 
-    QMapIterator<QString, KonqILVMimeType> it;
+    TQMapIterator<TQString, KonqILVMimeType> it;
     for (it = m_counts.begin(); it!=m_counts.end(); ++it)
     {
         // look if there is a plugin for this mimetype
@@ -365,12 +365,12 @@ void KonqInfoListViewWidget::determineCounts(const KFileItemList& list)
     }
 
     m_mtSelector->setItems(mtlist);
-//    QPopupMenu* menu = m_mtSelector->popupMenu();
+//    TQPopupMenu* menu = m_mtSelector->popupMenu();
 
     // insert the icons
 //    for (int i=0; i<menu->count(); ++i)
 //    {
-//        menu->changeItem(i, QIconSet(blah));
+//        menu->changeItem(i, TQIconSet(blah));
 //    }
 
     if (m_favorite.mimetype)

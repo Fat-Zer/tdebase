@@ -28,11 +28,11 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
 using namespace KHC;
 
-PluginTraverser::PluginTraverser( Navigator *navigator, QListView *parent )
+PluginTraverser::PluginTraverser( Navigator *navigator, TQListView *parent )
   : DocEntryTraverser(),
   mListView( parent ),
   mParentItem( 0 ),

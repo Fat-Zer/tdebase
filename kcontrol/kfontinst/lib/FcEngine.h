@@ -5,9 +5,9 @@
 #include "config.h"
 #endif
 
-#include <qstring.h>
-#include <qvaluevector.h>
-#include <qfont.h>
+#include <tqstring.h>
+#include <tqvaluevector.h>
+#include <tqfont.h>
 #include <kurl.h>
 #include <kdeversion.h>
 #include <fontconfig/fontconfig.h>
@@ -53,33 +53,33 @@ class KDE_EXPORT CFcEngine
     ~CFcEngine();
 
 #ifdef HAVE_XFT
-    bool    draw(const KURL &url, int w, int h, QPixmap &pix, int faceNo, bool thumb);
+    bool    draw(const KURL &url, int w, int h, TQPixmap &pix, int faceNo, bool thumb);
 #endif
     int     getNumIndexes() { return itsIndexCount; } // Only valid after draw has been called!
-    QString getName(const KURL &url, int faceNo=0);
-    bool    getInfo(const KURL &url, int faceNo, QString &full, QString &family, QString &foundry, QString &weight,
+    TQString getName(const KURL &url, int faceNo=0);
+    bool    getInfo(const KURL &url, int faceNo, TQString &full, TQString &family, TQString &foundry, TQString &weight,
 #ifndef KFI_FC_NO_WIDTHS
-                    QString &width,
+                    TQString &width,
 #endif
-                    QString &spacing, QString &slant);
-    QFont   getQFont(const QString &name, int size);
+                    TQString &spacing, TQString &slant);
+    TQFont   getQFont(const TQString &name, int size);
 
-    const QValueVector<int> & sizes() const { return itsSizes; }
+    const TQValueVector<int> & sizes() const { return itsSizes; }
     int                       alphaSize() const { return itsAlphaSize; }
 
-    static QString getPreviewString();
-    static void    setPreviewString(const QString &str);
-    static QString getUppercaseLetters();
-    static QString getLowercaseLetters();
-    static QString getPunctuation();
-    static QString getFcString(FcPattern *pat, const char *val, int faceNo=0);
-    static QString createName(FcPattern *pat, int faceNo=0);
-    static QString weightStr(int weight, bool emptyNormal=true);
+    static TQString getPreviewString();
+    static void    setPreviewString(const TQString &str);
+    static TQString getUppercaseLetters();
+    static TQString getLowercaseLetters();
+    static TQString getPunctuation();
+    static TQString getFcString(FcPattern *pat, const char *val, int faceNo=0);
+    static TQString createName(FcPattern *pat, int faceNo=0);
+    static TQString weightStr(int weight, bool emptyNormal=true);
 #ifndef KFI_FC_NO_WIDTHS
-    static QString widthStr(int width, bool emptyNormal=true);
+    static TQString widthStr(int width, bool emptyNormal=true);
 #endif
-    static QString slantStr(int slant, bool emptyNormal=true);
-    static QString spacingStr(int spacing);
+    static TQString slantStr(int slant, bool emptyNormal=true);
+    static TQString spacingStr(int spacing);
 
     static const int constScalableSizes[];
     static const int constDefaultAlphaSize;
@@ -87,16 +87,16 @@ class KDE_EXPORT CFcEngine
     private:
 
     bool      parseUrl(const KURL &url, int faceNo, bool all=false);
-    void      parseName(const QString &name, int faceNo, bool all=false);
+    void      parseName(const TQString &name, int faceNo, bool all=false);
 #ifdef HAVE_XFT
-    XftFont * getFont(int size, QPixmap *pix=NULL);
-    void      getSizes(QPixmap *pix=NULL);
+    XftFont * getFont(int size, TQPixmap *pix=NULL);
+    void      getSizes(TQPixmap *pix=NULL);
 #endif
 
     private:
 
     bool              itsInstalled;
-    QString           itsName,
+    TQString           itsName,
                       itsDescriptiveName,
                       itsFoundry;
     int               itsIndex,
@@ -108,7 +108,7 @@ class KDE_EXPORT CFcEngine
                       itsSlant,
                       itsSpacing,
                       itsAlphaSize;
-    QValueVector<int> itsSizes;
+    TQValueVector<int> itsSizes;
     KURL              itsLastUrl;
     FcBool            itsScalable;
 };

@@ -12,8 +12,8 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_UTILS_H
 #define KWIN_UTILS_H
 
-#include <qvaluelist.h>
-#include <qwidget.h>
+#include <tqvaluelist.h>
+#include <tqwidget.h>
 #include <kmanagerselection.h>
 #include <netwm_def.h>
 #include <kshortcutdialog.h>
@@ -36,17 +36,17 @@ const long ClientWinMask = KeyPressMask | KeyReleaseMask |
                   StructureNotifyMask |
                   SubstructureRedirectMask;
 
-const QPoint invalidPoint( INT_MIN, INT_MIN );
+const TQPoint invalidPoint( INT_MIN, INT_MIN );
 
 class Client;
 class Group;
 class Options;
 
-typedef QValueList< Client* > ClientList;
-typedef QValueList< const Client* > ConstClientList;
+typedef TQValueList< Client* > ClientList;
+typedef TQValueList< const Client* > ConstClientList;
 
-typedef QValueList< Group* > GroupList;
-typedef QValueList< const Group* > ConstGroupList;
+typedef TQValueList< Group* > GroupList;
+typedef TQValueList< const Group* > ConstGroupList;
 
 extern Options* options;
 
@@ -189,7 +189,7 @@ class TemporaryAssign
         T orig;
     };
 
-QCString getStringProperty(WId w, Atom prop, char separator=0);
+TQCString getStringProperty(WId w, Atom prop, char separator=0);
 void updateXTime();
 void grabXServer();
 void ungrabXServer();
@@ -247,7 +247,7 @@ Time timestampDiff( Time time1, Time time2 ) // returns time2 - time1
     return NET::timestampDiff( time1, time2 );
     }
 
-bool isLocalMachine( const QCString& host );
+bool isLocalMachine( const TQCString& host );
 
 void checkNonExistentClients();
 

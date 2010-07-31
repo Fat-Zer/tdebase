@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qimage.h>
-#include <qregexp.h>
+#include <tqimage.h>
+#include <tqregexp.h>
 
 #include <kconfig.h>
 #include <kiconloader.h>
@@ -29,11 +29,11 @@
 class KCustomMenu::KCustomMenuPrivate
 {
 public:
-   QMap<int,KService::Ptr> entryMap;
+   TQMap<int,KService::Ptr> entryMap;
 };
 
-KCustomMenu::KCustomMenu(const QString &configfile, QWidget *parent)
-   : QPopupMenu(parent, "kcustom_menu")
+KCustomMenu::KCustomMenu(const TQString &configfile, TQWidget *parent)
+   : TQPopupMenu(parent, "kcustom_menu")
 {
   d = new KCustomMenuPrivate; 
   
@@ -41,7 +41,7 @@ KCustomMenu::KCustomMenu(const QString &configfile, QWidget *parent)
   int count = cfg.readNumEntry("NrOfItems");
   for(int i = 0; i < count; i++)
   {
-     QString entry = cfg.readEntry(QString("Item%1").arg(i+1));
+     TQString entry = cfg.readEntry(TQString("Item%1").arg(i+1));
      if (entry.isEmpty())
         continue;
 
@@ -57,7 +57,7 @@ KCustomMenu::KCustomMenu(const QString &configfile, QWidget *parent)
  
      insertMenuItem( menuItem, -1 );
   }
-  connect(this, SIGNAL(activated(int)), this, SLOT(slotActivated(int)));
+  connect(this, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotActivated(int)));
 }
 
 KCustomMenu::~KCustomMenu()
@@ -78,31 +78,31 @@ KCustomMenu::slotActivated(int id)
 void 
 KCustomMenu::insertMenuItem(KService::Ptr & s, int nId, int nIndex/*= -1*/)
 {
-    QString serviceName = s->name();
+    TQString serviceName = s->name();
 
     // item names may contain ampersands. To avoid them being converted
     // to accelators, replace them with two ampersands.
     serviceName.replace("&", "&&");
 
-    QPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
+    TQPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
                                                                  0, KIcon::DefaultState, 0L, true);
-    QPixmap active = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
+    TQPixmap active = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
                                                                  0, KIcon::ActiveState, 0L, true);
     // make sure they are not larger than 16x16
     if (normal.width() > 16 || normal.height() > 16) {
-        QImage tmp = normal.convertToImage();
+        TQImage tmp = normal.convertToImage();
         tmp = tmp.smoothScale(16, 16);
         normal.convertFromImage(tmp);
     }
     if (active.width() > 16 || active.height() > 16) {
-        QImage tmp = active.convertToImage();
+        TQImage tmp = active.convertToImage();
         tmp = tmp.smoothScale(16, 16);
         active.convertFromImage(tmp);
     }
 
-    QIconSet iconset;
-    iconset.setPixmap(normal, QIconSet::Small, QIconSet::Normal);
-    iconset.setPixmap(active, QIconSet::Small, QIconSet::Active);
+    TQIconSet iconset;
+    iconset.setPixmap(normal, TQIconSet::Small, TQIconSet::Normal);
+    iconset.setPixmap(active, TQIconSet::Small, TQIconSet::Active);
 
     int newId = insertItem(iconset, serviceName, nId, nIndex);
     d->entryMap.insert(newId, s);

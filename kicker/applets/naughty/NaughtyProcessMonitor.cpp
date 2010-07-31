@@ -33,14 +33,14 @@
 #include <signal.h>
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
-#include <qdir.h>
-#include <qtimer.h>
-#include <qmap.h>
-#include <qdatetime.h>
+#include <tqfile.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
+#include <tqdir.h>
+#include <tqtimer.h>
+#include <tqmap.h>
+#include <tqdatetime.h>
 
 #include <klocale.h>
 
@@ -64,12 +64,12 @@ class NaughtyProcessMonitorPrivate
     }
 
     uint interval_;
-    QTimer * timer_;
-    QMap<ulong, uint> loadMap_;
-    QMap<ulong, uint> scoreMap_;
+    TQTimer * timer_;
+    TQMap<ulong, uint> loadMap_;
+    TQMap<ulong, uint> scoreMap_;
 #ifdef __OpenBSD__
-    QMap<ulong, uint> cacheLoadMap_;
-    QMap<ulong, uid_t> uidMap_;
+    TQMap<ulong, uint> cacheLoadMap_;
+    TQMap<ulong, uid_t> uidMap_;
 #endif
     uint oldLoad_;
     uint triggerLevel_;
@@ -86,16 +86,16 @@ NaughtyProcessMonitor::NaughtyProcessMonitor
   (
    uint interval,
    uint triggerLevel,
-   QObject * parent,
+   TQObject * parent,
    const char * name
   )
-  : QObject(parent, name)
+  : TQObject(parent, name)
 {
   d = new NaughtyProcessMonitorPrivate;
   d->interval_ = interval * 1000;
   d->triggerLevel_ = triggerLevel;
-  d->timer_ = new QTimer(this);
-  connect(d->timer_, SIGNAL(timeout()), this, SLOT(slotTimeout()));
+  d->timer_ = new TQTimer(this);
+  connect(d->timer_, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotTimeout()));
 }
 
 NaughtyProcessMonitor::~NaughtyProcessMonitor()
@@ -151,9 +151,9 @@ NaughtyProcessMonitor::slotTimeout()
   if (cpu > d->triggerLevel_ * (d->interval_ / 1000))
   {
     uint load;
-    QValueList<ulong> l(pidList());
+    TQValueList<ulong> l(pidList());
 
-    for (QValueList<ulong>::ConstIterator it(l.begin()); it != l.end(); ++it)
+    for (TQValueList<ulong>::ConstIterator it(l.begin()); it != l.end(); ++it)
       if (getLoad(*it, load))
         _process(*it, load);
   }
@@ -196,19 +196,19 @@ NaughtyProcessMonitor::_process(ulong pid, uint load)
 NaughtyProcessMonitor::canKill(ulong pid) const
 {
 #ifdef __linux__
-  QFile f("/proc/" + QString::number(pid) + "/status");
+  TQFile f("/proc/" + TQString::number(pid) + "/status");
 
   if (!f.open(IO_ReadOnly))
     return false;
 
-  QTextStream t(&f);
+  TQTextStream t(&f);
 
-  QString s;
+  TQString s;
 
   while (!t.atEnd() && s.left(4) != "Uid:")
     s = t.readLine();
 
-  QStringList l(QStringList::split('\t', s));
+  TQStringList l(TQStringList::split('\t', s));
 
   uint a(l[1].toUInt());
 
@@ -236,12 +236,12 @@ NaughtyProcessMonitor::processName(ulong pid) const
 {
 #if defined(__linux__) || defined(__OpenBSD__)
 #ifdef __linux__
-  QFile f("/proc/" + QString::number(pid) + "/cmdline");
+  TQFile f("/proc/" + TQString::number(pid) + "/cmdline");
 
   if (!f.open(IO_ReadOnly))
     return i18n("Unknown");
 
-  QCString s;
+  TQCString s;
 
   while (true)
   {
@@ -255,7 +255,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
   }
 
  // Now strip 'kdeinit:' prefix.
-  QString unicode(QString::fromLocal8Bit(s));
+  TQString unicode(TQString::fromLocal8Bit(s));
 
 #elif defined(__OpenBSD__)
   int mib[4] ;
@@ -280,14 +280,14 @@ NaughtyProcessMonitor::processName(ulong pid) const
   }
   
  // Now strip 'kdeinit:' prefix.
-  QString unicode(QString::fromLocal8Bit(argv[0]));
+  TQString unicode(TQString::fromLocal8Bit(argv[0]));
 
   free (argv) ;
 #endif
 
-  QStringList parts(QStringList::split(' ', unicode));
+  TQStringList parts(TQStringList::split(' ', unicode));
 
-  QString processName = parts[0] == "kdeinit:" ? parts[1] : parts[0];
+  TQString processName = parts[0] == "kdeinit:" ? parts[1] : parts[0];
 
   int lastSlash = processName.findRev('/');
 
@@ -299,7 +299,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
 
 #else
   Q_UNUSED( pid );
-  return QString::null;
+  return TQString::null;
 #endif
 }
 
@@ -307,18 +307,18 @@ NaughtyProcessMonitor::processName(ulong pid) const
 NaughtyProcessMonitor::cpuLoad() const
 {
 #ifdef __linux__
-  QFile f("/proc/stat");
+  TQFile f("/proc/stat");
 
   if (!f.open(IO_ReadOnly))
     return 0;
 
   bool forgetThisOne = 0 == d->oldLoad_;
 
-  QTextStream t(&f);
+  TQTextStream t(&f);
 
-  QString s = t.readLine();
+  TQString s = t.readLine();
 
-  QStringList l(QStringList::split(' ', s));
+  TQStringList l(TQStringList::split(' ', s));
 
   uint user  = l[1].toUInt();
   uint sys   = l[3].toUInt();
@@ -355,15 +355,15 @@ NaughtyProcessMonitor::cpuLoad() const
 #endif
 }
 
-  QValueList<ulong>
+  TQValueList<ulong>
 NaughtyProcessMonitor::pidList() const
 {
 #ifdef __linux__
-  QStringList dl(QDir("/proc").entryList());
+  TQStringList dl(TQDir("/proc").entryList());
 
-  QValueList<ulong> pl;
+  TQValueList<ulong> pl;
 
-  for (QStringList::ConstIterator it(dl.begin()); it != dl.end(); ++it)
+  for (TQStringList::ConstIterator it(dl.begin()); it != dl.end(); ++it)
     if (((*it)[0].isDigit()))
       pl << (*it).toUInt();
 
@@ -374,7 +374,7 @@ NaughtyProcessMonitor::pidList() const
   size_t size ;
   struct kinfo_proc *kp ;
   int i ;
-  QValueList<ulong> l;
+  TQValueList<ulong> l;
 
   // fetch number of processes
 
@@ -421,7 +421,7 @@ NaughtyProcessMonitor::pidList() const
   
   return l ;
 #else
-  QValueList<ulong> l;
+  TQValueList<ulong> l;
   return l;
 #endif
 }
@@ -430,16 +430,16 @@ NaughtyProcessMonitor::pidList() const
 NaughtyProcessMonitor::getLoad(ulong pid, uint & load) const
 {
 #ifdef __linux__
-  QFile f("/proc/" + QString::number(pid) + "/stat");
+  TQFile f("/proc/" + TQString::number(pid) + "/stat");
 
   if (!f.open(IO_ReadOnly))
     return false;
 
-  QTextStream t(&f);
+  TQTextStream t(&f);
 
-  QString line(t.readLine());
+  TQString line(t.readLine());
 
-  QStringList fields(QStringList::split(' ', line));
+  TQStringList fields(TQStringList::split(' ', line));
 
   uint userTime (fields[13].toUInt());
   uint sysTime  (fields[14].toUInt());

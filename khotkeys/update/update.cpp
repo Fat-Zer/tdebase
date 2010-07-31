@@ -39,8 +39,8 @@ int main( int argc, char* argv[] )
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app( false, true ); // X11 connection is necessary for KKey* stuff :-/
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-    QCString id = args->getOption( "id" );
-    QString file = locate( "data", "khotkeys/" + id + ".khotkeys" );
+    TQCString id = args->getOption( "id" );
+    TQString file = locate( "data", "khotkeys/" + id + ".khotkeys" );
     if( file.isEmpty())
         {
         kdWarning() << "File " << id << " not found!" << endl;
@@ -56,7 +56,7 @@ int main( int argc, char* argv[] )
         return 2;
         }
     settings.write_settings();
-    QByteArray data;
+    TQByteArray data;
     kapp->dcopClient()->send( "khotkeys*", "khotkeys", "reread_configuration()", data );
     return 0;
     }

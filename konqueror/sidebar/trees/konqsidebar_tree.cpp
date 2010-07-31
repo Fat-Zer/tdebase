@@ -8,12 +8,12 @@
 #include <kiconloader.h>
 #include <klistviewsearchline.h>
 
-#include <qclipboard.h>
-#include <qdragobject.h>
-#include <qtoolbutton.h>
-#include <qvbox.h>
+#include <tqclipboard.h>
+#include <tqdragobject.h>
+#include <tqtoolbutton.h>
+#include <tqvbox.h>
 
-KonqSidebar_Tree::KonqSidebar_Tree(KInstance *instance,QObject *parent,QWidget *widgetParent, QString &desktopName_, const char* name):
+KonqSidebar_Tree::KonqSidebar_Tree(KInstance *instance,TQObject *parent,TQWidget *widgetParent, TQString &desktopName_, const char* name):
                    KonqSidebarPlugin(instance,parent,widgetParent,desktopName_,name)
 	{
 		KSimpleConfig ksc(desktopName_);
@@ -21,48 +21,48 @@ KonqSidebar_Tree::KonqSidebar_Tree(KInstance *instance,QObject *parent,QWidget *
 		int virt= ( (ksc.readEntry("X-KDE-TreeModule","")=="Virtual") ?VIRT_Folder:VIRT_Link);
 		if (virt==1) desktopName_=ksc.readEntry("X-KDE-RelURL","");
 
-		widget = new QVBox(widgetParent);
+		widget = new TQVBox(widgetParent);
 
 		if (ksc.readBoolEntry("X-KDE-SearchableTreeModule",false)) {
-			QHBox* searchline = new QHBox(widget);
+			TQHBox* searchline = new TQHBox(widget);
 			searchline->setSpacing(KDialog::spacingHint());
 			tree=new KonqSidebarTree(this,widget,virt,desktopName_);
-			QToolButton *clearSearch = new QToolButton(searchline);
+			TQToolButton *clearSearch = new TQToolButton(searchline);
 			clearSearch->setTextLabel(i18n("Clear Search"), true);
-			clearSearch->setIconSet(SmallIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
-			QLabel* slbl = new QLabel(i18n("Se&arch:"), searchline);
+			clearSearch->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
+			TQLabel* slbl = new TQLabel(i18n("Se&arch:"), searchline);
 			KListViewSearchLine* listViewSearch = new KListViewSearchLine(searchline,tree);
 			slbl->setBuddy(listViewSearch);
-			connect(clearSearch, SIGNAL(pressed()), listViewSearch, SLOT(clear()));
+			connect(clearSearch, TQT_SIGNAL(pressed()), listViewSearch, TQT_SLOT(clear()));
 		}
 		else
 			tree=new KonqSidebarTree(this,widget,virt,desktopName_);
 
-    		connect(tree, SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs &)),
-			this,SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs &)));
+    		connect(tree, TQT_SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs &)),
+			this,TQT_SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs &)));
 
-		connect(tree,SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)),
-			this,SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)));
+		connect(tree,TQT_SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)),
+			this,TQT_SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)));
 
-		connect(tree,SIGNAL(popupMenu( const QPoint &, const KURL &, const QString &, mode_t )),
-			this,SIGNAL(popupMenu( const QPoint &, const KURL &, const QString &, mode_t )));
+		connect(tree,TQT_SIGNAL(popupMenu( const TQPoint &, const KURL &, const TQString &, mode_t )),
+			this,TQT_SIGNAL(popupMenu( const TQPoint &, const KURL &, const TQString &, mode_t )));
 
-		connect(tree,SIGNAL(popupMenu( const QPoint &, const KFileItemList & )),
-			this,SIGNAL(popupMenu( const QPoint &, const KFileItemList & )));
+		connect(tree,TQT_SIGNAL(popupMenu( const TQPoint &, const KFileItemList & )),
+			this,TQT_SIGNAL(popupMenu( const TQPoint &, const KFileItemList & )));
 
-		connect(tree,SIGNAL(enableAction( const char *, bool )),
-			this,SIGNAL(enableAction( const char *, bool)));
+		connect(tree,TQT_SIGNAL(enableAction( const char *, bool )),
+			this,TQT_SIGNAL(enableAction( const char *, bool)));
 
         }
 
 
 KonqSidebar_Tree::~KonqSidebar_Tree(){;}
 
-void* KonqSidebar_Tree::provides(const QString &) {return 0;}
+void* KonqSidebar_Tree::provides(const TQString &) {return 0;}
 
-//void KonqSidebar_Tree::emitStatusBarText (const QString &) {;}
+//void KonqSidebar_Tree::emitStatusBarText (const TQString &) {;}
 
-QWidget *KonqSidebar_Tree::getWidget(){return widget;}
+TQWidget *KonqSidebar_Tree::getWidget(){return widget;}
 
 void KonqSidebar_Tree::handleURL(const KURL &url)
     {
@@ -73,16 +73,16 @@ void KonqSidebar_Tree::handleURL(const KURL &url)
 
 void KonqSidebar_Tree::cut()
 {
-    QDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L, true );
+    TQDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L, true );
     if (drag)
-        QApplication::clipboard()->setData( drag );
+        TQApplication::clipboard()->setData( drag );
 }
 
 void KonqSidebar_Tree::copy()
 {
-    QDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L );
+    TQDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L );
     if (drag)
-        QApplication::clipboard()->setData( drag );
+        TQApplication::clipboard()->setData( drag );
 }
 
 void KonqSidebar_Tree::paste()
@@ -123,7 +123,7 @@ void KonqSidebar_Tree::rename()
 
 extern "C"
 {
-    KDE_EXPORT void*  create_konqsidebar_tree(KInstance *inst,QObject *par,QWidget *widp,QString &desktopname,const char *name)
+    KDE_EXPORT void*  create_konqsidebar_tree(KInstance *inst,TQObject *par,TQWidget *widp,TQString &desktopname,const char *name)
     {
         return new KonqSidebar_Tree(inst,par,widp,desktopname,name);
     }
@@ -131,19 +131,19 @@ extern "C"
 
 extern "C"
 {
-   KDE_EXPORT bool add_konqsidebar_tree(QString* fn, QString*, QMap<QString,QString> *map)
+   KDE_EXPORT bool add_konqsidebar_tree(TQString* fn, TQString*, TQMap<TQString,TQString> *map)
    {
 	  KStandardDirs *dirs=KGlobal::dirs();
-	  QStringList list=dirs->findAllResources("data","konqsidebartng/dirtree/*.desktop",false,true);
-	  QStringList names;
-	  for (QStringList::ConstIterator it=list.begin();it!=list.end();++it)
+	  TQStringList list=dirs->findAllResources("data","konqsidebartng/dirtree/*.desktop",false,true);
+	  TQStringList names;
+	  for (TQStringList::ConstIterator it=list.begin();it!=list.end();++it)
 	  {
 		KSimpleConfig sc(*it);
 		sc.setGroup("Desktop Entry");
 		names<<sc.readEntry("Name");
 	  }
 
-	QString item = KInputDialog::getItem( i18n( "Select Type" ),
+	TQString item = KInputDialog::getItem( i18n( "Select Type" ),
 		i18n( "Select type:" ), names );
 	if (!item.isEmpty())
 		{

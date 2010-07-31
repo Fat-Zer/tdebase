@@ -22,11 +22,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qpainter.h>
-#include <qpopupmenu.h>
-#include <qslider.h>
-#include <qtimer.h>
-#include <qtooltip.h>
+#include <tqpainter.h>
+#include <tqpopupmenu.h>
+#include <tqslider.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 
 #include <dcopclient.h>
 #include <kaction.h>
@@ -69,7 +69,7 @@ const ButtonGroup::Index Append=ButtonGroup::Append;
 
 extern "C"
 {
-    KDE_EXPORT KPanelApplet* init(QWidget *parent, const QString& configFile)
+    KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
         KGlobal::locale()->insertCatalogue("quicklauncher");
         return new QuickLauncher(configFile, KPanelApplet::Normal,
@@ -78,8 +78,8 @@ extern "C"
     }
 }
 
-QuickLauncher::QuickLauncher(const QString& configFile, Type type, int actions,
-                             QWidget *parent, const char *name) : 
+QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
+                             TQWidget *parent, const char *name) : 
     KPanelApplet(configFile, type, actions, parent, name)
 {
     DCOPObject::setObjId("QuickLauncherApplet");
@@ -108,10 +108,10 @@ QuickLauncher::QuickLauncher(const QString& configFile, Type type, int actions,
     m_dragButtons = 0;
 
     m_configAction = new KAction(i18n("Configure Quicklauncher..."), "configure", KShortcut(),
-        this, SLOT(slotConfigure()), this);
+        this, TQT_SLOT(slotConfigure()), this);
 
-    m_saveTimer = new QTimer(this);
-    connect(m_saveTimer, SIGNAL(timeout()), this, SLOT(saveConfig()));
+    m_saveTimer = new TQTimer(this);
+    connect(m_saveTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(saveConfig()));
 
     m_popularity = new PopularityStatistics();
 
@@ -125,15 +125,15 @@ QuickLauncher::QuickLauncher(const QString& configFile, Type type, int actions,
     setRefreshEnabled(true);
 
     setAcceptDrops(true);
-    //QToolTip::add(this, i18n("Drop applications here"));
+    //TQToolTip::add(this, i18n("Drop applications here"));
     DEBUGSTR << "    QuickLauncher::QuickLauncher(" << configFile << 
                 ",...) END" << endl << flush;
 
     DCOPClient *dcopClient = KApplication::dcopClient();
     dcopClient->connectDCOPSignal(0, "appLauncher", 
-        "serviceStartedByStorageId(QString,QString)",
+        "serviceStartedByStorageId(TQString,TQString)",
         "QuickLauncherApplet",
-        "serviceStartedByStorageId(QString,QString)",
+        "serviceStartedByStorageId(TQString,TQString)",
         false);
     kdDebug() << "Quicklauncher registered DCOP signal" << endl;
 }
@@ -161,22 +161,22 @@ QuickLauncher::~QuickLauncher()
 void QuickLauncher::buildPopupMenu()
 {
     QuickAddAppsMenu *addAppsMenu = new QuickAddAppsMenu(this, this);
-    m_popup = new QPopupMenu(this);
+    m_popup = new TQPopupMenu(this);
     m_popup->insertItem(i18n("Add Application"), addAppsMenu);
     m_configAction->plug(m_popup);
 
-    m_appletPopup = new QPopupMenu(this);
+    m_appletPopup = new TQPopupMenu(this);
     m_appletPopup->insertItem(i18n("Add Application"), addAppsMenu);
-    m_removeAppsMenu = new QPopupMenu(this);
-    connect(m_removeAppsMenu, SIGNAL(aboutToShow()),
-            SLOT(fillRemoveAppsMenu()));
-    connect(m_removeAppsMenu, SIGNAL(activated(int)), 
-            SLOT(removeAppManually(int)));
+    m_removeAppsMenu = new TQPopupMenu(this);
+    connect(m_removeAppsMenu, TQT_SIGNAL(aboutToShow()),
+            TQT_SLOT(fillRemoveAppsMenu()));
+    connect(m_removeAppsMenu, TQT_SIGNAL(activated(int)), 
+            TQT_SLOT(removeAppManually(int)));
     m_appletPopup->insertItem(i18n("Remove Application"), m_removeAppsMenu);
 
     m_appletPopup->insertSeparator();
     m_appletPopup->setCheckable( true );
-    m_appletPopup->insertItem(i18n("About"), this, SLOT(about()));
+    m_appletPopup->insertItem(i18n("About"), this, TQT_SLOT(about()));
     setCustomMenu(m_appletPopup);
 }
 
@@ -189,7 +189,7 @@ void QuickLauncher::fillRemoveAppsMenu()
     int i = 0;
     while (iter != m_buttons->end())
     {
-        QString text = QToolTip::textFor(*iter);
+        TQString text = TQToolTip::textFor(*iter);
         if (text.isEmpty())
         {
             text = (*iter)->url();
@@ -235,8 +235,8 @@ void QuickLauncher::slotConfigure()
         m_configDialog = new ConfigDlg(this, "configdialog", 
             m_settings, SIZE_AUTO, KDialogBase::Plain, KDialogBase::Ok | 
             KDialogBase::Cancel | KDialogBase::Apply | KDialogBase::Default);
-        connect(m_configDialog, SIGNAL(settingsChanged()),
-            this, SLOT(slotSettingsDialogChanged()));
+        connect(m_configDialog, TQT_SIGNAL(settingsChanged()),
+            this, TQT_SLOT(slotSettingsDialogChanged()));
     }
 
     m_configDialog->show();
@@ -254,7 +254,7 @@ int QuickLauncher::findApp(QuickButton *button)
 }
 
 
-int QuickLauncher::findApp(QString url)
+int QuickLauncher::findApp(TQString url)
 {
     if (m_buttons->empty())
     {
@@ -285,8 +285,8 @@ void QuickLauncher::removeApp(int index, bool manuallyRemoved)
     DEBUGSTR << "Removing button.  index=" << index << " url='" <<
         (*m_buttons)[index]->url() << "'" << endl << flush;
 
-    QString removeAppUrl = (*m_buttons)[index]->url();
-    QString removeAppMenuId = (*m_buttons)[index]->menuId();
+    TQString removeAppUrl = (*m_buttons)[index]->url();
+    TQString removeAppMenuId = (*m_buttons)[index]->menuId();
    
     delete (*m_buttons)[index];
     m_buttons->eraseAt(index);
@@ -307,7 +307,7 @@ void QuickLauncher::removeApp(int index, bool manuallyRemoved)
 }
 
 
-void QuickLauncher::removeApp(QString url, bool manuallyRemoved)
+void QuickLauncher::removeApp(TQString url, bool manuallyRemoved)
 {
     int index = findApp(url);
     if (index == NotFound)
@@ -333,7 +333,7 @@ void QuickLauncher::removeAppManually(QuickButton *button)
 int QuickLauncher::widthForHeight(int h) const
 {
     FlowGridManager temp_manager = *m_manager;
-    temp_manager.setFrameSize(QSize(h,h));
+    temp_manager.setFrameSize(TQSize(h,h));
     temp_manager.setOrientation(Qt::Horizontal); // ??? probably not necessary
     if (temp_manager.isValid())
     {
@@ -346,7 +346,7 @@ int QuickLauncher::widthForHeight(int h) const
 int QuickLauncher::heightForWidth(int w) const
 {
     FlowGridManager temp_manager=*m_manager;
-    temp_manager.setFrameSize(QSize(w,w));
+    temp_manager.setFrameSize(TQSize(w,w));
     temp_manager.setOrientation(Qt::Vertical); // ??? probably not necessary
     if (temp_manager.isValid())
     {
@@ -365,10 +365,10 @@ int QuickLauncher::dimension() const
     return size().height();
 }
 
-void QuickLauncher::addApp(QString url, bool manuallyAdded)
+void QuickLauncher::addApp(TQString url, bool manuallyAdded)
 {
     assert(m_buttons);
-    QString newButtonId = QuickURL(url).menuId();
+    TQString newButtonId = QuickURL(url).menuId();
     if (m_appOrdering.find(newButtonId) == m_appOrdering.end())
     {
         m_appOrdering[newButtonId] = m_appOrdering.size();
@@ -376,7 +376,7 @@ void QuickLauncher::addApp(QString url, bool manuallyAdded)
     uint appPos;
     for (appPos = 0; appPos < m_buttons->size(); ++appPos)
     {
-        QString buttonId = (*m_buttons)[appPos]->menuId();
+        TQString buttonId = (*m_buttons)[appPos]->menuId();
         if (m_appOrdering[buttonId] >= m_appOrdering[newButtonId])
         {
             break;
@@ -385,18 +385,18 @@ void QuickLauncher::addApp(QString url, bool manuallyAdded)
     addApp(url, appPos, manuallyAdded);
 }
 
-QuickButton* QuickLauncher::createButton(QString url)
+QuickButton* QuickLauncher::createButton(TQString url)
 {
     QuickButton* newButton=new QuickButton(url, m_configAction, this);
-    connect(newButton, SIGNAL(executed(QString)), 
-            this, SLOT(slotOwnServiceExecuted(QString)));
-    connect(newButton, SIGNAL(stickyToggled(bool)), 
-            this, SLOT(slotStickyToggled()));
+    connect(newButton, TQT_SIGNAL(executed(TQString)), 
+            this, TQT_SLOT(slotOwnServiceExecuted(TQString)));
+    connect(newButton, TQT_SIGNAL(stickyToggled(bool)), 
+            this, TQT_SLOT(slotStickyToggled()));
     newButton->setPopupDirection(popupDirection());
     return newButton;
 }
 
-void QuickLauncher::addApp(QString url, int index, bool manuallyAdded)
+void QuickLauncher::addApp(TQString url, int index, bool manuallyAdded)
 {
     DEBUGSTR << endl <<"About to add: url='" << url << 
                 "' index=" << index << endl << flush;
@@ -447,12 +447,12 @@ void QuickLauncher::updateInsertionPosToStatusQuo()
     // Update the app ordering map, so that next time, 
     // addApp(url,manAdded) (without index) will insert the 
     // item at the same position again.
-    std::list<QString> appList;
+    std::list<TQString> appList;
     std::set<int> posList;
     //kdDebug() << "Rearranging application order. Before:" << endl;
     for (uint n = 0; n < m_buttons->size(); ++n)
     {
-        QString buttonId = (*m_buttons)[n]->menuId();
+        TQString buttonId = (*m_buttons)[n]->menuId();
         appList.push_back(buttonId);
         if (m_appOrdering.find(buttonId) == m_appOrdering.end())
         {
@@ -473,7 +473,7 @@ void QuickLauncher::updateInsertionPosToStatusQuo()
     //kdDebug() << "Done." << endl;
 }
 
-void QuickLauncher::addAppBeforeManually(QString url, QString sender)
+void QuickLauncher::addAppBeforeManually(TQString url, TQString sender)
 {
     if (sender.isNull())
     {
@@ -501,7 +501,7 @@ void QuickLauncher::about()
 }
 
 
-void QuickLauncher::mousePressEvent(QMouseEvent *e)
+void QuickLauncher::mousePressEvent(TQMouseEvent *e)
 {
     if (e->button() == RightButton)
     {
@@ -509,12 +509,12 @@ void QuickLauncher::mousePressEvent(QMouseEvent *e)
     }
 }
 
-void QuickLauncher::resizeEvent(QResizeEvent*)
+void QuickLauncher::resizeEvent(TQResizeEvent*)
 {
     refreshContents();
 }
 
-void QuickLauncher::dragEnterEvent(QDragEnterEvent *e)
+void QuickLauncher::dragEnterEvent(TQDragEnterEvent *e)
 {
     DEBUGSTR << "QuickLauncher::dragEnterEvent(pos=" << e->pos() << 
         " type=" << e->type() << ")" << endl << flush;
@@ -534,7 +534,7 @@ void QuickLauncher::dragEnterEvent(QDragEnterEvent *e)
     m_dragButtons=new ButtonGroup;
     m_oldButtons=new ButtonGroup(*m_buttons);
 
-    QString url;
+    TQString url;
     KURL::List::ConstIterator it = kurlList.begin();
     for ( ; it != kurlList.end(); ++it )
     {
@@ -568,7 +568,7 @@ void QuickLauncher::dragEnterEvent(QDragEnterEvent *e)
 }
 
 
-void QuickLauncher::dragMoveEvent(QDragMoveEvent *e)
+void QuickLauncher::dragMoveEvent(TQDragMoveEvent *e)
 {
     if (!m_dragAccepted)
     {
@@ -594,7 +594,7 @@ void QuickLauncher::dragMoveEvent(QDragMoveEvent *e)
 }
 
 
-void QuickLauncher::dragLeaveEvent(QDragLeaveEvent *e)
+void QuickLauncher::dragLeaveEvent(TQDragLeaveEvent *e)
 {
     DEBUGSTR << "QuickLauncher::dragLeaveEvent(type=" << 
         e->type() << ")" << endl << flush;
@@ -612,7 +612,7 @@ void QuickLauncher::dragLeaveEvent(QDragLeaveEvent *e)
 }
 
 
-void QuickLauncher::dropEvent(QDropEvent *e)
+void QuickLauncher::dropEvent(TQDropEvent *e)
 {
     DEBUGSTR << "QuickLauncher::dropEvent(pos=" << e->pos() << 
         " type=" << e->type() << ")" << endl << flush;
@@ -719,13 +719,13 @@ void QuickLauncher::refreshContents()
     }
     m_space = std::max((idim/8)-1, 0);
     m_border = m_space;
-    m_buttonSize = QSize(idim, idim);
+    m_buttonSize = TQSize(idim, idim);
     m_manager->setOrientation(orientation());
     m_manager->setNumItems(m_buttons->size());
     m_manager->setFrameSize(size());
     m_manager->setItemSize(m_buttonSize);
-    m_manager->setSpaceSize(QSize(m_space, m_space));
-    m_manager->setBorderSize(QSize(m_border, m_border));
+    m_manager->setSpaceSize(TQSize(m_space, m_space));
+    m_manager->setBorderSize(TQSize(m_border, m_border));
     if (!m_refreshEnabled)
     {
         m_needsRefresh=true;
@@ -740,7 +740,7 @@ void QuickLauncher::refreshContents()
     }
 
     unsigned index;
-    QPoint pos;
+    TQPoint pos;
     setUpdatesEnabled(false);
     m_buttons->setUpdatesEnabled(false);
     for (index = 0; index < m_buttons->size(); index++)
@@ -812,13 +812,13 @@ void QuickLauncher::loadConfig()
     DEBUGSTR << "    ConserveSpace=" << (m_manager->conserveSpace()) << 
         endl << flush;
     DEBUGSTR << "    DragEnabled=" << isDragEnabled() << endl << flush;*/
-    QStringList volatileButtons = m_settings->volatileButtons();
-    QStringList urls = m_settings->buttons();
+    TQStringList volatileButtons = m_settings->volatileButtons();
+    TQStringList urls = m_settings->buttons();
     kdDebug() << "GetButtons " << urls.join("/") << endl;
-    QStringList::Iterator iter(urls.begin());
+    TQStringList::Iterator iter(urls.begin());
     int n = 0;
     while (iter != urls.end()) {
-        QString url = *iter;
+        TQString url = *iter;
         addApp(url, n, false);
         ++iter;
         ++n;
@@ -838,8 +838,8 @@ void QuickLauncher::loadConfig()
     m_popularity->readConfig(m_settings);
     m_popularity->setHistoryHorizon(m_settings->historyHorizon()/100.0);
 
-    QStringList serviceNames = m_settings->serviceNames();
-    QValueList<int> insPos = m_settings->serviceInspos();
+    TQStringList serviceNames = m_settings->serviceNames();
+    TQValueList<int> insPos = m_settings->serviceInspos();
     for (int n=std::min(serviceNames.size(),insPos.size())-1; n>=0; --n)
     {
         m_appOrdering[serviceNames[n]] = insPos[n];
@@ -853,7 +853,7 @@ void QuickLauncher::saveConfig()
         m_needsSave=true;
         return;
     }
-    QStringList urls, volatileUrls;
+    TQStringList urls, volatileUrls;
     ButtonIter iter = m_buttons->begin();
     while (iter != m_buttons->end()) {
         if ((*iter)->sticky() == false)
@@ -872,8 +872,8 @@ void QuickLauncher::saveConfig()
     m_popularity->writeConfig(m_settings);
     
     // m_popularity must have written the current service list by now
-    QStringList serviceNames = m_settings->serviceNames();
-    QValueList<int> insertionPositions;
+    TQStringList serviceNames = m_settings->serviceNames();
+    TQValueList<int> insertionPositions;
     for (int n=0; n<int(serviceNames.size()); ++n)
     {
         if (m_appOrdering.find(serviceNames[n]) != m_appOrdering.end())
@@ -901,25 +901,25 @@ void QuickLauncher::setRefreshEnabled(bool enable)
     }
 }
 
-void QuickLauncher::serviceStartedByStorageId(QString /*starter*/, QString storageId)
+void QuickLauncher::serviceStartedByStorageId(TQString /*starter*/, TQString storageId)
 {
     KService::Ptr service = KService::serviceByStorageId(storageId);
-    if (service->icon() == QString::null) 
+    if (service->icon() == TQString::null) 
     {
         kdDebug() << storageId << " has no icon. Makes no sense to add it.";
         return;
     }
     QuickURL url = QuickURL(locate("apps", service->desktopEntryPath()));
-    QString desktopMenuId(url.menuId());
+    TQString desktopMenuId(url.menuId());
     kdDebug() << "storageId=" << storageId << " desktopURL=" << desktopMenuId << endl;
     // A service was started somwhere else. If the quicklauncher contains
     // this service too, we flash the icon
     QuickButton *startedButton = 0;
-    std::set<QString> buttonIdSet;
+    std::set<TQString> buttonIdSet;
     for (uint n = 0; n < m_buttons->size(); ++n)
     {
         QuickButton *button = (*m_buttons)[n];
-        QString buttonMenuId = button->menuId();
+        TQString buttonMenuId = button->menuId();
         buttonIdSet.insert(buttonMenuId);
         if (desktopMenuId == buttonMenuId)
         {
@@ -936,7 +936,7 @@ void QuickLauncher::serviceStartedByStorageId(QString /*starter*/, QString stora
 
     if (m_settings->autoAdjustEnabled())
     {
-        QTimer::singleShot(0, this, SLOT(slotAdjustToCurrentPopularity()));
+        TQTimer::singleShot(0, this, TQT_SLOT(slotAdjustToCurrentPopularity()));
     }
 }
 
@@ -958,8 +958,8 @@ void QuickLauncher::slotAdjustToCurrentPopularity()
         minAddPopularity += (belowAvgAllowed * stats->popularityByRank(n)) / maxItems;
     }
     double minDelPopularity = minAddPopularity * hysteresisFactor;
-    std::map<QString, QuickButton*> removeableApps;
-    std::set<QString> existingApps;
+    std::map<TQString, QuickButton*> removeableApps;
+    std::set<TQString> existingApps;
     int numApps = m_buttons->size();
     for (int n = 0; n < int(m_buttons->size()); ++n)
     {
@@ -978,7 +978,7 @@ void QuickLauncher::slotAdjustToCurrentPopularity()
          (numApps < maxItems && stats->popularityByRank(n) > minAddPopularity);
          ++n)
     {
-        QString app = m_popularity->serviceByRank(n);
+        TQString app = m_popularity->serviceByRank(n);
         if (existingApps.find(app) == existingApps.end())
         {
             addApp(QuickURL(m_popularity->serviceByRank(n)).url(), false);
@@ -1005,12 +1005,12 @@ void QuickLauncher::slotAdjustToCurrentPopularity()
     m_saveTimer->start(10000,true);
 }
 
-void QuickLauncher::slotOwnServiceExecuted(QString serviceMenuId)
+void QuickLauncher::slotOwnServiceExecuted(TQString serviceMenuId)
 {
     m_popularity->useService(serviceMenuId);
     if (m_settings->autoAdjustEnabled())
     {
-        QTimer::singleShot(0, this, SLOT(slotAdjustToCurrentPopularity()));
+        TQTimer::singleShot(0, this, TQT_SLOT(slotAdjustToCurrentPopularity()));
     }
 }
 
@@ -1019,25 +1019,25 @@ void QuickLauncher::updateStickyHighlightLayer()
     // Creates a transparent image which is used
     // to highlight those buttons which will never
     // be removed automatically from the launcher
-    QPixmap areaPix(width(), height());
-    QPainter areaPixPainter(&areaPix);
-    areaPixPainter.fillRect(0, 0, width(), height(), QColor(255, 255, 255));
-    QSize itemSize = m_manager->itemSize();
-    QSize spaceSize = m_manager->spaceSize();
+    TQPixmap areaPix(width(), height());
+    TQPainter areaPixPainter(&areaPix);
+    areaPixPainter.fillRect(0, 0, width(), height(), TQColor(255, 255, 255));
+    TQSize itemSize = m_manager->itemSize();
+    TQSize spaceSize = m_manager->spaceSize();
     for (uint n=0; n<m_buttons->size(); ++n)
     {
-        QPoint pos = m_manager->pos(n);
+        TQPoint pos = m_manager->pos(n);
         if ((*m_buttons)[n]->sticky() == false)
         {
             areaPixPainter.fillRect(pos.x()-(spaceSize.width()+1)/2, 
                                     pos.y()-(spaceSize.height()+1)/2, 
                                     itemSize.width()+spaceSize.width()+1, 
                                     itemSize.height()+spaceSize.height()+1, 
-                                    QColor(0, 0, 0));
+                                    TQColor(0, 0, 0));
         }
     }
-    QImage areaLayer = areaPix.convertToImage();
-    m_stickyHighlightLayer = QImage(width(), height(), 32);
+    TQImage areaLayer = areaPix.convertToImage();
+    m_stickyHighlightLayer = TQImage(width(), height(), 32);
     m_stickyHighlightLayer.setAlphaBuffer(true);
     int pix, tlPix, brPix, w(width()), h(height());
     QRgb transparent(qRgba(0, 0, 0, 0));
@@ -1063,14 +1063,14 @@ void QuickLauncher::updateStickyHighlightLayer()
     repaint();
 }
 
-void QuickLauncher::paintEvent(QPaintEvent* e)
+void QuickLauncher::paintEvent(TQPaintEvent* e)
 {
     KPanelApplet::paintEvent(e);
 
     if (m_settings->autoAdjustEnabled() && 
         m_settings->showVolatileButtonIndicator())
     {
-        QPainter p(this);
+        TQPainter p(this);
         p.drawImage(0, 0, m_stickyHighlightLayer);
     }
 }

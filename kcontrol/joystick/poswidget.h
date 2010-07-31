@@ -21,7 +21,7 @@
 #ifndef _POSWIDGET_H_
 #define _POSWIDGET_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 /**
   Widget to display the joystick-selected (x,y) position
@@ -31,7 +31,7 @@ class PosWidget : public QWidget
   Q_OBJECT
   
   public:
-    PosWidget(QWidget *parent = 0, const char *name = 0);
+    PosWidget(TQWidget *parent = 0, const char *name = 0);
 
     void changeX(int x);
     void changeY(int y);
@@ -42,7 +42,7 @@ class PosWidget : public QWidget
     void showTrace(bool t);
 
   protected:
-    virtual void paintEvent(QPaintEvent *);
+    virtual void paintEvent(TQPaintEvent *);
 
   private:
     void eraseOld();

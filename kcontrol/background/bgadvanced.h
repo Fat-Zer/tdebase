@@ -23,9 +23,9 @@
 #ifndef BGADVANCED_H
 #define BGADVANCED_H
 
-#include <qdict.h>
-#include <qlistview.h>
-#include <qstringlist.h>
+#include <tqdict.h>
+#include <tqlistview.h>
+#include <tqstringlist.h>
 
 #include <kdialogbase.h>
 
@@ -40,14 +40,14 @@ class BGAdvancedDialog : public KDialogBase
 {
    Q_OBJECT
 public:
-   BGAdvancedDialog(KBackgroundRenderer *_r, QWidget *parent, bool m_multidesktop);
+   BGAdvancedDialog(KBackgroundRenderer *_r, TQWidget *parent, bool m_multidesktop);
 
    void setCacheSize(int s);
    int cacheSize();
-   QColor textColor();
-   void setTextColor(const QColor &color);
-   QColor textBackgroundColor();
-   void setTextBackgroundColor(const QColor &color);
+   TQColor textColor();
+   void setTextColor(const TQColor &color);
+   TQColor textBackgroundColor();
+   void setTextBackgroundColor(const TQColor &color);
    bool shadowEnabled();
    void setShadowEnabled(bool enabled);
    void setTextLines(int lines);
@@ -59,7 +59,7 @@ public:
 
    void makeReadOnly();
 
-   QString backgroundProgram() const;
+   TQString backgroundProgram() const;
    int backgroundMode() const;
 
 public slots:
@@ -68,13 +68,13 @@ public slots:
    void slotModify();
 
 protected:
-   void addProgram(const QString &name);
-   void removeProgram(const QString &name);
-   void selectProgram(const QString &name);
+   void addProgram(const TQString &name);
+   void removeProgram(const TQString &name);
+   void selectProgram(const TQString &name);
 
 protected slots:
-   void slotProgramItemClicked(QListViewItem *item);
-   void slotProgramItemDoubleClicked(QListViewItem *item);
+   void slotProgramItemClicked(TQListViewItem *item);
+   void slotProgramItemDoubleClicked(TQListViewItem *item);
    void slotProgramChanged();
    void slotEnableProgram(bool b);
 
@@ -83,9 +83,9 @@ private:
 
    BGAdvancedBase *dlg;
 
-   QWidget *m_pMonitor;
-   QDict<QListViewItem> m_programItems;
-   QString m_selectedProgram;
+   TQWidget *m_pMonitor;
+   TQDict<TQListViewItem> m_programItems;
+   TQString m_selectedProgram;
    int m_oldBackgroundMode;
    int m_backgroundMode;
 };
@@ -98,21 +98,21 @@ class KProgramEditDialog: public KDialogBase
     Q_OBJECT
 
 public:
-    KProgramEditDialog(const QString &program=QString::null, QWidget *parent=0L,
+    KProgramEditDialog(const TQString &program=TQString::null, TQWidget *parent=0L,
 	    char *name=0L);
 
     /** The program name is here in case the user changed it */
-    QString program()const;
+    TQString program()const;
 
 public slots:
     void slotOk();
 
 private:
-    QString m_Program;
-    QLineEdit *m_NameEdit, *m_CommentEdit;
-    QLineEdit *m_ExecEdit, *m_CommandEdit;
-    QLineEdit *m_PreviewEdit;
-    QSpinBox *m_RefreshEdit;
+    TQString m_Program;
+    TQLineEdit *m_NameEdit, *m_CommentEdit;
+    TQLineEdit *m_ExecEdit, *m_CommandEdit;
+    TQLineEdit *m_PreviewEdit;
+    TQSpinBox *m_RefreshEdit;
     KBackgroundProgram *m_Prog;
 };
 

@@ -15,9 +15,9 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -32,7 +32,7 @@
 #include <sys/param.h>
 #endif
 
-QPtrList<USBDevice> USBDevice::_devices;
+TQPtrList<USBDevice> USBDevice::_devices;
 USBDB *USBDevice::_db;
 
 
@@ -50,26 +50,26 @@ USBDevice::USBDevice()
     _db = new USBDB;
 }
 
-static QString catFile(QString fname)
+static TQString catFile(TQString fname)
 {
   char buffer[256];
-  QString result;
-  int fd = ::open(QFile::encodeName(fname), O_RDONLY);
+  TQString result;
+  int fd = ::open(TQFile::encodeName(fname), O_RDONLY);
   if (fd<0)
-	return QString::null;
+	return TQString::null;
 
   if (fd >= 0)
     {
       ssize_t count;
       while ((count = ::read(fd, buffer, 256)) > 0)
-	result.append(QString(buffer).left(count));
+	result.append(TQString(buffer).left(count));
 
       ::close(fd);
     }
   return result.stripWhiteSpace();
 }
 
-void USBDevice::parseSysDir(int bus, int parent, int level, QString dname)
+void USBDevice::parseSysDir(int bus, int parent, int level, TQString dname)
 {
   _level = level;
   _parent = parent;
@@ -80,7 +80,7 @@ void USBDevice::parseSysDir(int bus, int parent, int level, QString dname)
   _device = catFile(dname + "/devnum").toUInt();
 
   if (_device == 1)
-    _product += QString(" (%1)").arg(_bus);
+    _product += TQString(" (%1)").arg(_bus);
 
   _vendorID = catFile(dname + "/idVendor").toUInt(0, 16);
   _prodID = catFile(dname + "/idProduct").toUInt(0, 16);
@@ -97,12 +97,12 @@ void USBDevice::parseSysDir(int bus, int parent, int level, QString dname)
   _verMajor = int(version);
   _verMinor = int(10*(version - floor(version)));
 
-  QDir dir(dname);
-  dir.setNameFilter(QString("%1-*").arg(bus));
-  dir.setFilter(QDir::Dirs);
-  QStringList list = dir.entryList();
+  TQDir dir(dname);
+  dir.setNameFilter(TQString("%1-*").arg(bus));
+  dir.setFilter(TQDir::Dirs);
+  TQStringList list = dir.entryList();
 
-  for(QStringList::Iterator it = list.begin(); it != list.end(); ++it) {
+  for(TQStringList::Iterator it = list.begin(); it != list.end(); ++it) {
     if ((*it).contains(':'))
       continue;
 
@@ -111,7 +111,7 @@ void USBDevice::parseSysDir(int bus, int parent, int level, QString dname)
   }
 }
 
-void USBDevice::parseLine(QString line)
+void USBDevice::parseLine(TQString line)
 {
   if (line.startsWith("T:"))
     sscanf(line.local8Bit().data(),
@@ -123,7 +123,7 @@ void USBDevice::parseLine(QString line)
     _product = line.mid(12);
     /* add bus number to root devices */
     if (_device==1)
-	_product += QString(" (%1)").arg(_bus);
+	_product += TQString(" (%1)").arg(_bus);
   }
   else if (line.startsWith("S:  SerialNumber"))
     _serial = line.mid(17);
@@ -151,27 +151,27 @@ void USBDevice::parseLine(QString line)
 
 USBDevice *USBDevice::find(int bus, int device)
 {
-  QPtrListIterator<USBDevice> it(_devices);
+  TQPtrListIterator<USBDevice> it(_devices);
   for ( ; it.current(); ++it)
     if (it.current()->bus() == bus && it.current()->device() == device)
       return it.current();
   return 0;
 }
 
-QString USBDevice::product()
+TQString USBDevice::product()
 {
   if (!_product.isEmpty())
     return _product;
-  QString pname = _db->device(_vendorID, _prodID);
+  TQString pname = _db->device(_vendorID, _prodID);
   if (!pname.isEmpty())
     return pname;
   return i18n("Unknown");
 }
 
 
-QString USBDevice::dump()
+TQString USBDevice::dump()
 {
-  QString r;
+  TQString r;
 
   r = "<qml><h2><center>" + product() + "</center></h2><br/><hl/>";
 
@@ -182,41 +182,41 @@ QString USBDevice::dump()
 
   r += "<br/><table>";
 
-  QString c = QString("<td>%1</td>").arg(_class);
-  QString cname = _db->cls(_class);
+  TQString c = TQString("<td>%1</td>").arg(_class);
+  TQString cname = _db->cls(_class);
   if (!cname.isEmpty())
     c += "<td>(" + i18n(cname.latin1()) +")</td>";
   r += i18n("<tr><td><i>Class</i></td>%1</tr>").arg(c);
-  QString sc = QString("<td>%1</td>").arg(_sub);
-  QString scname = _db->subclass(_class, _sub);
+  TQString sc = TQString("<td>%1</td>").arg(_sub);
+  TQString scname = _db->subclass(_class, _sub);
   if (!scname.isEmpty())
     sc += "<td>(" + i18n(scname.latin1()) +")</td>";
   r += i18n("<tr><td><i>Subclass</i></td>%1</tr>").arg(sc);
-  QString pr = QString("<td>%1</td>").arg(_prot);
-  QString prname = _db->protocol(_class, _sub, _prot);
+  TQString pr = TQString("<td>%1</td>").arg(_prot);
+  TQString prname = _db->protocol(_class, _sub, _prot);
   if (!prname.isEmpty())
     pr += "<td>(" + prname +")</td>";
   r += i18n("<tr><td><i>Protocol</i></td>%1</tr>").arg(pr);
 #ifndef Q_OS_FREEBSD
   r += i18n("<tr><td><i>USB Version</i></td><td>%1.%2</td></tr>")
     .arg(_verMajor,0,16)
-    .arg(QString::number(_verMinor,16).prepend('0').right(2));
+    .arg(TQString::number(_verMinor,16).prepend('0').right(2));
 #endif
   r += "<tr><td></td></tr>";
 
-  QString v = QString::number(_vendorID,16);
-  QString name = _db->vendor(_vendorID);
+  TQString v = TQString::number(_vendorID,16);
+  TQString name = _db->vendor(_vendorID);
   if (!name.isEmpty())
     v += "<td>(" + name +")</td>";
   r += i18n("<tr><td><i>Vendor ID</i></td><td>0x%1</td></tr>").arg(v);
-  QString p = QString::number(_prodID,16);
-  QString pname = _db->device(_vendorID, _prodID);
+  TQString p = TQString::number(_prodID,16);
+  TQString pname = _db->device(_vendorID, _prodID);
   if (!pname.isEmpty())
     p += "<td>(" + pname +")</td>";
   r += i18n("<tr><td><i>Product ID</i></td><td>0x%1</td></tr>").arg(p);
   r += i18n("<tr><td><i>Revision</i></td><td>%1.%2</td></tr>")
     .arg(_revMajor,0,16)
-    .arg(QString::number(_revMinor,16).prepend('0').right(2));
+    .arg(TQString::number(_revMinor,16).prepend('0').right(2));
   r += "<tr><td></td></tr>";
 
   r += i18n("<tr><td><i>Speed</i></td><td>%1 Mbit/s</td></tr>").arg(_speed);
@@ -228,7 +228,7 @@ QString USBDevice::dump()
 		r += i18n("<tr><td><i>Power Consumption</i></td><td>self powered</td></tr>");
 	r += i18n("<tr><td><i>Attached Devicenodes</i></td><td>%1</td></tr>").arg(*_devnodes.at(0));
 	if ( _devnodes.count() > 1 )
-		for ( QStringList::Iterator it = _devnodes.at(1); it != _devnodes.end(); ++it )
+		for ( TQStringList::Iterator it = _devnodes.at(1); it != _devnodes.end(); ++it )
 			r += "<tr><td></td><td>" + *it + "</td></tr>";
 #else  
   r += i18n("<tr><td><i>Max. Packet Size</i></td><td>%1</td></tr>").arg(_maxPacketSize);
@@ -250,18 +250,18 @@ QString USBDevice::dump()
 
 
 #ifndef Q_OS_FREEBSD
-bool USBDevice::parse(QString fname)
+bool USBDevice::parse(TQString fname)
 {
   _devices.clear();
 
-  QString result;
+  TQString result;
 
   // read in the complete file
   //
-  // Note: we can't use a QTextStream, as the files in /proc
+  // Note: we can't use a TQTextStream, as the files in /proc
   // are pseudo files with zero length
   char buffer[256];
-  int fd = ::open(QFile::encodeName(fname), O_RDONLY);
+  int fd = ::open(TQFile::encodeName(fname), O_RDONLY);
   if (fd<0)
 	return false;
 
@@ -269,7 +269,7 @@ bool USBDevice::parse(QString fname)
     {
       ssize_t count;
       while ((count = ::read(fd, buffer, 256)) > 0)
-	result.append(QString(buffer).left(count));
+	result.append(TQString(buffer).left(count));
 
       ::close(fd);
     }
@@ -277,10 +277,10 @@ bool USBDevice::parse(QString fname)
   // read in the device infos
   USBDevice *device = 0;
   int start=0, end;
-  result.replace(QRegExp("^\n"),"");
+  result.replace(TQRegExp("^\n"),"");
   while ((end = result.find('\n', start)) > 0)
     {
-      QString line = result.mid(start, end-start);
+      TQString line = result.mid(start, end-start);
 
       if (line.startsWith("T:"))
 	device = new USBDevice();
@@ -293,17 +293,17 @@ bool USBDevice::parse(QString fname)
   return true;
 }
 
-bool USBDevice::parseSys(QString dname)
+bool USBDevice::parseSys(TQString dname)
 {
-   QDir d(dname);
+   TQDir d(dname);
    d.setNameFilter("usb*");
-   QStringList list = d.entryList();
+   TQStringList list = d.entryList();
 
-   for(QStringList::Iterator it = list.begin(); it != list.end(); ++it) {
+   for(TQStringList::Iterator it = list.begin(); it != list.end(); ++it) {
      USBDevice* device = new USBDevice();
 
      int bus = 0;
-     QRegExp bus_reg("[a-z]*([0-9]+)");
+     TQRegExp bus_reg("[a-z]*([0-9]+)");
      if (bus_reg.search(*it) != -1)
          bus = bus_reg.cap(1).toInt();
 
@@ -332,10 +332,10 @@ void USBDevice::collectData( int fd, int level, usb_device_info &di, int parent)
 	
 	_bus          = di.udi_bus;
 	_device       = di.udi_addr;
-	_product      = QString::fromLatin1(di.udi_product);
+	_product      = TQString::fromLatin1(di.udi_product);
 	if ( _device == 1 )
-		_product += " " + QString::number( _bus );
-	_manufacturer = QString::fromLatin1(di.udi_vendor);
+		_product += " " + TQString::number( _bus );
+	_manufacturer = TQString::fromLatin1(di.udi_vendor);
 	_prodID       = di.udi_productNo;
 	_vendorID     = di.udi_vendorNo;
 	_class        = di.udi_class;
@@ -387,13 +387,13 @@ void USBDevice::collectData( int fd, int level, usb_device_info &di, int parent)
 
 
 
-bool USBDevice::parse(QString fname)
+bool USBDevice::parse(TQString fname)
 {
 	static bool showErrorMessage = true;
 	bool error = false;
 	_devices.clear();
 	
-	QFile controller("/dev/usb0");
+	TQFile controller("/dev/usb0");
 	int i = 1;
 	while ( controller.exists() )
 	{
@@ -418,7 +418,7 @@ bool USBDevice::parse(QString fname)
 		} else {
 			error = true;
 		}
-		controller.setName( QString::fromLocal8Bit("/dev/usb%1").arg(i++) );
+		controller.setName( TQString::fromLocal8Bit("/dev/usb%1").arg(i++) );
 	}
 	
 	if ( showErrorMessage && error ) {

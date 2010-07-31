@@ -26,7 +26,7 @@
 #ifndef __KCOOKIESPOLICIES_H
 #define __KCOOKIESPOLICIES_H
 
-#include <qmap.h>
+#include <tqmap.h>
 #include <kcmodule.h>
 
 #include "policydlg.h"
@@ -41,15 +41,15 @@ class KCookiesPolicies : public KCModule
     Q_OBJECT
 
 public:
-    KCookiesPolicies(QWidget *parent = 0);
+    KCookiesPolicies(TQWidget *parent = 0);
     ~KCookiesPolicies();
 
     virtual void load();
     virtual void save();
     virtual void defaults();
-    virtual QString quickHelp() const;
+    virtual TQString quickHelp() const;
 
-    void addNewPolicy(const QString& domain);
+    void addNewPolicy(const TQString& domain);
 
 protected slots:
     void autoAcceptSessionCookies ( bool );
@@ -66,16 +66,16 @@ protected slots:
     void addPressed();
 
 private:
-    void updateDomainList(const QStringList& list);
-    bool handleDuplicate( const QString& domain, int );
-    void splitDomainAdvice (const QString& configStr, QString &domain,
+    void updateDomainList(const TQStringList& list);
+    bool handleDuplicate( const TQString& domain, int );
+    void splitDomainAdvice (const TQString& configStr, TQString &domain,
                             KCookieAdvice::Value &advice);
 
 private:
     int d_itemsSelected;
     bool d_configChanged;
     KCookiesPolicyDlgUI* dlg;
-    QMap<QListViewItem*, const char*> m_pDomainPolicy;
+    TQMap<TQListViewItem*, const char*> m_pDomainPolicy;
 };
 
 #endif // __KCOOKIESPOLICIES_H

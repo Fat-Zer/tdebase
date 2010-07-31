@@ -42,9 +42,9 @@ namespace Web
       WebClient(KDecorationBridge* bridge, KDecorationFactory* factory);
       ~WebClient();
 
-      virtual QString visibleName() const;
-      virtual QString defaultButtonsLeft() const;
-      virtual QString defaultButtonsRight() const;
+      virtual TQString visibleName() const;
+      virtual TQString defaultButtonsLeft() const;
+      virtual TQString defaultButtonsRight() const;
       virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
       virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
       virtual KCommonDecorationButton *createButton(ButtonType type);
@@ -56,7 +56,7 @@ namespace Web
     protected:
       virtual void reset( unsigned long changed );
 
-      virtual void paintEvent(QPaintEvent *);
+      virtual void paintEvent(TQPaintEvent *);
 
     private:
 
@@ -64,10 +64,10 @@ namespace Web
 
       bool shape_;
 
-      QBitmap       _buttonBitmap(ButtonType t) const;
+      TQBitmap       _buttonBitmap(ButtonType t) const;
   };
 
-  class WebFactory : public QObject, public KDecorationFactory
+  class WebFactory : public TQObject, public KDecorationFactory
   {
     Q_OBJECT
 
@@ -78,7 +78,7 @@ namespace Web
       virtual KDecoration* createDecoration( KDecorationBridge* );
       virtual bool reset( unsigned long changed );
       virtual bool supports( Ability ability );
-      virtual QValueList< BorderSize > borderSizes() const;
+      virtual TQValueList< BorderSize > borderSizes() const;
   };
 }
 

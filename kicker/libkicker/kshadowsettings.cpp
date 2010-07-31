@@ -19,8 +19,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include "kshadowsettings.h"
 
 KShadowSettings::KShadowSettings()
@@ -30,7 +30,7 @@ KShadowSettings::KShadowSettings()
 }
 
 // load/save methods
-void KShadowSettings::fromString(const QString &val)
+void KShadowSettings::fromString(const TQString &val)
 {
   setOffsetX(val.section(',', OFFSET_X, OFFSET_X).toInt());
   setOffsetY(val.section(',', OFFSET_Y, OFFSET_Y).toInt());
@@ -41,9 +41,9 @@ void KShadowSettings::fromString(const QString &val)
   setSelectionType((SelectionType)val.section(',', SELECTION_TYPE, SELECTION_TYPE).toInt());
 }
 
-QString KShadowSettings::toString() const
+TQString KShadowSettings::toString() const
 {
-  QString result;
+  TQString result;
   result.sprintf("%d,%d,%f,%f,%d,%d,%d",
 		 offsetX(),
 		 offsetY(),

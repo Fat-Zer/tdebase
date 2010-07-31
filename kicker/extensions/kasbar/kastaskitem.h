@@ -57,7 +57,7 @@
 #ifndef KASTASKITEM_H
 #define KASTASKITEM_H
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include "kasitem.h"
 
 class Task;
@@ -76,10 +76,10 @@ class KasTaskItem : public KasItem
     KasTaskItem( KasTasker *parent, Task::Ptr task );
     virtual ~KasTaskItem();
 
-    QPixmap icon();
+    TQPixmap icon();
 
     /** Reimplemented to paint the item. */
-    virtual void paint( QPainter *p );
+    virtual void paint( TQPainter *p );
 
     /** Returns the task the item is displaying. */
     Task::Ptr task() const { return task_; }
@@ -87,7 +87,7 @@ class KasTaskItem : public KasItem
     /** Returns the parent KasTasker object. */
     KasTasker *kasbar() const;
 
-    QString expandMacros( const QString &format, QObject *data );
+    TQString expandMacros( const TQString &format, TQObject *data );
 
 public slots:
     void updateTask(bool geometryChangeOnly);
@@ -101,12 +101,12 @@ public slots:
     void iconChanged();
     void checkAttention();
 
-    void showWindowMenuAt( QPoint pos );
+    void showWindowMenuAt( TQPoint pos );
     void sendToTray();
     void showPropertiesDialog();
 
     void toggleActivateAction();
-    void showWindowMenuAt( QMouseEvent *ev );
+    void showWindowMenuAt( TQMouseEvent *ev );
 
 protected:
     /**
@@ -114,9 +114,9 @@ protected:
      */
     virtual KasPopup *createPopup();
 
-    QWidget *createTaskProps( QObject *target, QWidget *parent=0, bool recursive=true );
-    QWidget *createX11Props( QWidget *tabbed );
-    QWidget *createNETProps( QWidget *tabbed );
+    TQWidget *createTaskProps( TQObject *target, TQWidget *parent=0, bool recursive=true );
+    TQWidget *createX11Props( TQWidget *tabbed );
+    TQWidget *createNETProps( TQWidget *tabbed );
 
     /**
      * Reimplemented to activate the task.
@@ -125,10 +125,10 @@ protected:
 
 private:
     Task::Ptr task_;
-    QTimer *thumbTimer;
+    TQTimer *thumbTimer;
     bool usedIconLoader;
     bool iconHasChanged;
-    QTimer *attentionTimer;
+    TQTimer *attentionTimer;
 };
 
 #endif // KASTASKITEM_H

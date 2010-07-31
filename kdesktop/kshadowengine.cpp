@@ -22,7 +22,7 @@
  */
 
 #include "kshadowengine.h"
-#include <qcolor.h>
+#include <tqcolor.h>
 #include "kshadowsettings.h"
 
 KShadowEngine::KShadowEngine() :
@@ -54,9 +54,9 @@ KShadowSettings *KShadowEngine::shadowSettings()
   return m_shadowSettings;
 }
 
-QImage KShadowEngine::makeShadow(const QPixmap& textPixmap, const QColor &bgColor)
+TQImage KShadowEngine::makeShadow(const TQPixmap& textPixmap, const TQColor &bgColor)
 {
-  QImage result;
+  TQImage result;
 
   // create a new image for for the shaddow
   int w = textPixmap.width();
@@ -74,7 +74,7 @@ QImage KShadowEngine::makeShadow(const QPixmap& textPixmap, const QColor &bgColo
   /*
    *	This is the source pixmap
    */
-  QImage img = textPixmap.convertToImage().convertDepth(32);
+  TQImage img = textPixmap.convertToImage().convertDepth(32);
 
   /*
    *	Resize the image if necessary
@@ -121,7 +121,7 @@ QImage KShadowEngine::makeShadow(const QPixmap& textPixmap, const QColor &bgColo
 // Multiplication factor for pixels diagonal to the text
 #define DIAGONAL_FACTOR 1.0
 
-double KShadowEngine::defaultDecay(QImage& source, int i, int j)
+double KShadowEngine::defaultDecay(TQImage& source, int i, int j)
 {
   if ((i < 1) || (j < 1) || (i > source.width() - 2) || (j > source.height() - 2))
     return 0;
@@ -140,19 +140,19 @@ double KShadowEngine::defaultDecay(QImage& source, int i, int j)
   return alphaShadow;
 }
 
-double KShadowEngine::doubleLinearDecay(QImage& source, int i, int j)
+double KShadowEngine::doubleLinearDecay(TQImage& source, int i, int j)
 {
   //printf("img: %p, %d %d\n", (char *) &source, i, j);
   return defaultDecay( source, i, j ); // for now
 }
 
-double KShadowEngine::radialDecay(QImage& source, int i, int j)
+double KShadowEngine::radialDecay(TQImage& source, int i, int j)
 {
   //printf("img: %p, %d %d\n", (char *) &source, i, j);
   return defaultDecay( source, i, j ); // for now
 }
 
-double KShadowEngine::noDecay(QImage& source, int i, int j)
+double KShadowEngine::noDecay(TQImage& source, int i, int j)
 {
   // create a new image for for the shaddow
   int w = source.width();

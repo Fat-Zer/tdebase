@@ -17,18 +17,18 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qcheckbox.h>
-#include <qtooltip.h>
-#include <qbuttongroup.h>
-#include <qlineedit.h>
-#include <qfileinfo.h>
-#include <qlabel.h>
-#include <qregexp.h>
+#include <tqcheckbox.h>
+#include <tqtooltip.h>
+#include <tqbuttongroup.h>
+#include <tqlineedit.h>
+#include <tqfileinfo.h>
+#include <tqlabel.h>
+#include <tqregexp.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <qcombobox.h>
-#include <qtimer.h>
+#include <tqcombobox.h>
+#include <tqtimer.h>
 #include <kdebug.h>
 #include "propertiespage.h"
 #include <dcopref.h>
@@ -37,14 +37,14 @@
 const char *short_names[] = {"lower", "win95", "winnt", "mixed", 0 };
 const char *journales[] = {"data", "ordered", "writeback", 0 };
 
-PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
+PropertiesPage::PropertiesPage(TQWidget* parent, const TQString &_id)
   : PropertiesPageGUI(parent), id(_id)
 {
   kdDebug() << "props page " << id << endl;
   DCOPRef mediamanager("kded", "mediamanager");
   DCOPReply reply = mediamanager.call( "mountoptions", id);
 
-  QStringList list;
+  TQStringList list;
 
   if (reply.isValid())
     list = reply;
@@ -52,10 +52,10 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
   if (list.size()) {
     kdDebug() << "list " << list << endl;
 
-    for (QStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
+    for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
       {
-	QString key = (*it).left((*it).find('='));
-	QString value = (*it).mid((*it).find('=') + 1);
+	TQString key = (*it).left((*it).find('='));
+	TQString value = (*it).mid((*it).find('=') + 1);
 	kdDebug() << "key '" << key << "' value '" << value << "'\n";
 	options[key] = value;
       }
@@ -64,43 +64,43 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
       option_ro->hide();
     else
       option_ro->setChecked(options["ro"] == "true");
-    connect( option_ro, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_ro, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("quiet"))
       option_quiet->hide();
     else
       option_quiet->setChecked(options["quiet"] == "true");
-    connect( option_quiet, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_quiet, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("sync"))
       option_sync->hide();
     else
       option_sync->setChecked(options["sync"] == "true");
-    connect( option_sync, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_sync, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("atime"))
       option_atime->hide();
     else
       option_atime->setChecked(options["atime"] == "true");
-    connect( option_atime, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_atime, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("flush"))
       option_flush->hide();
     else
       option_flush->setChecked(options["flush"] == "true");
-    connect( option_flush, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_flush, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("utf8"))
       option_utf8->hide();
     else
       option_utf8->setChecked(options["utf8"] == "true");
-    connect( option_utf8, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_utf8, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("uid"))
       option_uid->hide();
     else
       option_uid->setChecked(options["uid"] == "true");
-    connect( option_uid, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_uid, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("shortname"))
       {
@@ -115,7 +115,7 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
 	      option_shortname->setCurrentItem(index);
 	      break;
 	    }
-	connect( option_shortname, SIGNAL( activated(int) ), SIGNAL( changed() ) );
+	connect( option_shortname, TQT_SIGNAL( activated(int) ), TQT_SIGNAL( changed() ) );
       }
 
     if (!options.contains("journaling"))
@@ -131,14 +131,14 @@ PropertiesPage::PropertiesPage(QWidget* parent, const QString &_id)
 	      option_journaling->setCurrentItem(index);
 	      break;
 	    }
-	connect( option_journaling, SIGNAL( activated(int) ), SIGNAL( changed() ) );
+	connect( option_journaling, TQT_SIGNAL( activated(int) ), TQT_SIGNAL( changed() ) );
       }
 
     label_filesystem->setText(i18n("Filesystem: %1").arg(options["filesystem"]));
     option_mountpoint->setText(options["mountpoint"]);
-    connect( option_mountpoint, SIGNAL( textChanged( const QString &) ), SIGNAL( changed() ) );
+    connect( option_mountpoint, TQT_SIGNAL( textChanged( const TQString &) ), TQT_SIGNAL( changed() ) );
     option_automount->setChecked(options["automount"] == "true");
-    connect( option_automount, SIGNAL( stateChanged(int) ), SIGNAL( changed() ) );
+    connect( option_automount, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
     if (!options.contains("journaling") &&
 	!options.contains("shortname") &&
@@ -161,43 +161,43 @@ PropertiesPage::~PropertiesPage()
 
 bool PropertiesPage::save()
 {
-  QStringList result;
+  TQStringList result;
 
   if (options.contains("ro"))
-    result << QString("ro=%1").arg(option_ro->isChecked() ? "true" : "false");
+    result << TQString("ro=%1").arg(option_ro->isChecked() ? "true" : "false");
 
   if (options.contains("quiet"))
-    result << QString("quiet=%1").arg(option_quiet->isChecked() ? "true" : "false");
+    result << TQString("quiet=%1").arg(option_quiet->isChecked() ? "true" : "false");
 
   if (options.contains("sync"))
-    result << QString("sync=%1").arg(option_sync->isChecked() ? "true" : "false");
+    result << TQString("sync=%1").arg(option_sync->isChecked() ? "true" : "false");
 
   if (options.contains("atime"))
-    result << QString("atime=%1").arg(option_atime->isChecked() ? "true" : "false");
+    result << TQString("atime=%1").arg(option_atime->isChecked() ? "true" : "false");
 
   if (options.contains("flush"))
-    result << QString("flush=%1").arg(option_flush->isChecked() ? "true" : "false");
+    result << TQString("flush=%1").arg(option_flush->isChecked() ? "true" : "false");
 
   if (options.contains("utf8"))
-    result << QString("utf8=%1").arg(option_utf8->isChecked() ? "true" : "false");
+    result << TQString("utf8=%1").arg(option_utf8->isChecked() ? "true" : "false");
 
   if (options.contains("uid"))
-    result << QString("uid=%1").arg(option_uid->isChecked() ? "true" : "false");
+    result << TQString("uid=%1").arg(option_uid->isChecked() ? "true" : "false");
 
   if (options.contains("shortname"))
-    result << QString("shortname=%1").arg(short_names[option_shortname->currentItem()]);
+    result << TQString("shortname=%1").arg(short_names[option_shortname->currentItem()]);
 
   if (options.contains("journaling"))
-    result << QString("journaling=%1").arg(journales[option_journaling->currentItem()]);
+    result << TQString("journaling=%1").arg(journales[option_journaling->currentItem()]);
 
-  QString mp = option_mountpoint->text();
+  TQString mp = option_mountpoint->text();
   if (!mp.startsWith("/media/"))
     {
       KMessageBox::sorry(this, i18n("Mountpoint has to be below /media"));
       return false;
     }
-  result << QString("mountpoint=%1").arg(mp);
-  result << QString("automount=%1").arg(option_automount->isChecked() ? "true" : "false");
+  result << TQString("mountpoint=%1").arg(mp);
+  result << TQString("automount=%1").arg(option_automount->isChecked() ? "true" : "false");
 
   kdDebug() << result << endl;
 

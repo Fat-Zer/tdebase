@@ -2,9 +2,9 @@
 
 bool KonqHistoryEntry::marshalURLAsStrings;
 
-// QDataStream operators (read and write a KonqHistoryEntry
-// from/into a QDataStream)
-QDataStream& operator<< (QDataStream& s, const KonqHistoryEntry& e) {
+// TQDataStream operators (read and write a KonqHistoryEntry
+// from/into a TQDataStream)
+TQDataStream& operator<< (TQDataStream& s, const KonqHistoryEntry& e) {
     if (KonqHistoryEntry::marshalURLAsStrings)
 	s << e.url.url();
     else
@@ -19,10 +19,10 @@ QDataStream& operator<< (QDataStream& s, const KonqHistoryEntry& e) {
     return s;
 }
 
-QDataStream& operator>> (QDataStream& s, KonqHistoryEntry& e) {
+TQDataStream& operator>> (TQDataStream& s, KonqHistoryEntry& e) {
     if (KonqHistoryEntry::marshalURLAsStrings)
     {
-	QString url;
+	TQString url;
 	s >> url;
 	e.url = url;
     }

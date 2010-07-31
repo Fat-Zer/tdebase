@@ -22,8 +22,8 @@
 #ifndef KWIN_WEB_BUTTON_H
 #define KWIN_WEB_BUTTON_H
 
-#include <qwidget.h>
-#include <qbitmap.h>
+#include <tqwidget.h>
+#include <tqbitmap.h>
 #include <klocale.h>
 
 #include "../../lib/kcommondecoration.h"
@@ -50,12 +50,12 @@ namespace Web
     protected:
       void setBitmap(const unsigned char *bitmap);
 
-      void enterEvent(QEvent *);
-      void leaveEvent(QEvent *);
-      void drawButton(QPainter *p);
+      void enterEvent(TQEvent *);
+      void leaveEvent(TQEvent *);
+      void drawButton(TQPainter *p);
 
     private:
-      QBitmap bitmap_;
+      TQBitmap bitmap_;
 
       bool mouseOver_;
 

@@ -18,12 +18,12 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <fixx11h.h>
 #include <kconfig.h>
 #include <kglobal.h>
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <klocale.h>
-#include <qregexp.h>
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qclipboard.h>
+#include <tqregexp.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqclipboard.h>
 #include <kmenubar.h>
 #include <kprocess.h>
 #include <kglobalaccel.h>
@@ -68,7 +68,7 @@ bool allowKompmgrRestart = TRUE;
 // code.
 Workspace::Workspace( bool restore )
   : DCOPObject        ("KWinInterface"),
-    QObject           (0, "workspace"),
+    TQObject           (0, "workspace"),
     current_desktop   (0),
     number_of_desktops(0),
     active_screen     (0),
@@ -133,9 +133,9 @@ Workspace::Workspace( bool restore )
     installed_colormap = default_colormap;
     session.setAutoDelete( TRUE );
 
-    connect( &temporaryRulesMessages, SIGNAL( gotMessage( const QString& )),
-        this, SLOT( gotTemporaryRulesMessage( const QString& )));
-    connect( &rulesUpdatedTimer, SIGNAL( timeout()), this, SLOT( writeWindowRules()));
+    connect( &temporaryRulesMessages, TQT_SIGNAL( gotMessage( const TQString& )),
+        this, TQT_SLOT( gotTemporaryRulesMessage( const TQString& )));
+    connect( &rulesUpdatedTimer, TQT_SIGNAL( timeout()), this, TQT_SLOT( writeWindowRules()));
 
     updateXTime(); // needed for proper initialization of user_time in Client ctor
 
@@ -149,10 +149,10 @@ Workspace::Workspace( bool restore )
 
     loadWindowRules();
 
-    (void) QApplication::desktop(); // trigger creation of desktop widget
+    (void) TQApplication::desktop(); // trigger creation of desktop widget
 
     desktop_widget =
-      new QWidget(
+      new TQWidget(
         0,
         "desktop_widget",
         Qt::WType_Desktop | Qt::WPaintUnclipped
@@ -197,14 +197,14 @@ Workspace::Workspace( bool restore )
     init();
 
 #if (QT_VERSION-0 >= 0x030200) // XRANDR support
-    connect( kapp->desktop(), SIGNAL( resized( int )), SLOT( desktopResized()));
+    connect( kapp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized()));
 #endif
 
     // start kompmgr - i wanted to put this into main.cpp, but that would prevent dcop support, as long as Application was no dcop_object
     if (options->useTranslucency)
         {
         kompmgr = new KProcess;
-        connect(kompmgr, SIGNAL(receivedStderr(KProcess*, char*, int)), SLOT(handleKompmgrOutput(KProcess*, char*, int)));
+        connect(kompmgr, TQT_SIGNAL(receivedStderr(KProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(KProcess*, char*, int)));
         *kompmgr << "kompmgr";
         startKompmgr();
         }
@@ -330,15 +330,15 @@ void Workspace::init()
     // now we know how many desktops we'll, thus, we initialise the positioning object
     initPositioning = new Placement(this);
 
-    connect(&reconfigureTimer, SIGNAL(timeout()), this,
-            SLOT(slotReconfigure()));
-    connect( &updateToolWindowsTimer, SIGNAL( timeout()), this, SLOT( slotUpdateToolWindows()));
+    connect(&reconfigureTimer, TQT_SIGNAL(timeout()), this,
+            TQT_SLOT(slotReconfigure()));
+    connect( &updateToolWindowsTimer, TQT_SIGNAL( timeout()), this, TQT_SLOT( slotUpdateToolWindows()));
 
-    connect(kapp, SIGNAL(appearanceChanged()), this,
-            SLOT(slotReconfigure()));
-    connect(kapp, SIGNAL(settingsChanged(int)), this,
-            SLOT(slotSettingsChanged(int)));
-    connect(kapp, SIGNAL( kipcMessage( int, int )), this, SLOT( kipcMessage( int, int )));
+    connect(kapp, TQT_SIGNAL(appearanceChanged()), this,
+            TQT_SLOT(slotReconfigure()));
+    connect(kapp, TQT_SIGNAL(settingsChanged(int)), this,
+            TQT_SLOT(slotSettingsChanged(int)));
+    connect(kapp, TQT_SIGNAL( kipcMessage( int, int )), this, TQT_SLOT( kipcMessage( int, int )));
 
     active_client = NULL;
     rootInfo->setActiveWindow( None );
@@ -379,7 +379,7 @@ void Workspace::init()
                 Client* c = createClient( wins[i], true );
                 if ( c != NULL && root != qt_xrootwin() ) 
                     { // TODO what is this?
-                // TODO may use QWidget:.create
+                // TODO may use TQWidget:.create
                     XReparentWindow( qt_xdisplay(), c->frameId(), root, 0, 0 );
                     c->move(0,0);
                     }
@@ -397,7 +397,7 @@ void Workspace::init()
         NETPoint* viewports = new NETPoint[ number_of_desktops ];
         rootInfo->setDesktopViewport( number_of_desktops, *viewports );
         delete[] viewports;
-        QRect geom = QApplication::desktop()->geometry();
+        TQRect geom = TQApplication::desktop()->geometry();
         NETSize desktop_geometry;
         desktop_geometry.width = geom.width();
         desktop_geometry.height = geom.height();
@@ -558,7 +558,7 @@ void Workspace::removeClient( Client* c, allowed_t )
     if( client_keys_client == c )
         setupWindowShortcutDone( false );
     if( !c->shortcut().isNull())
-        c->setShortcut( QString::null ); // remove from client_keys
+        c->setShortcut( TQString::null ); // remove from client_keys
 
     if( c->isDialog())
         Notify::raise( Notify::TransDelete );
@@ -935,9 +935,9 @@ void Workspace::slotReconfigure()
     if( mgr->reset( changed ))
         { // decorations need to be recreated
 #if 0 // This actually seems to make things worse now
-        QWidget curtain;
+        TQWidget curtain;
         curtain.setBackgroundMode( NoBackground );
-        curtain.setGeometry( QApplication::desktop()->geometry() );
+        curtain.setGeometry( TQApplication::desktop()->geometry() );
         curtain.show();
 #endif
         for( ClientList::ConstIterator it = clients.begin();
@@ -989,14 +989,14 @@ void Workspace::slotReconfigure()
         bool tmp = options->useTranslucency;
         stopKompmgr();
         if (tmp)
-            QTimer::singleShot( 200, this, SLOT(startKompmgr()) ); // wait some time to ensure system's ready for restart
+            TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) ); // wait some time to ensure system's ready for restart
         }
     }
 
 void Workspace::loadDesktopSettings()
     {
     KConfig* c = KGlobal::config();
-    QCString groupname;
+    TQCString groupname;
     if (screen_number == 0)
         groupname = "Desktops";
     else
@@ -1015,7 +1015,7 @@ void Workspace::loadDesktopSettings()
     focus_chain.resize( n + 1 );
     for(int i = 1; i <= n; i++) 
         {
-        QString s = c->readEntry(QString("Name_%1").arg(i),
+        TQString s = c->readEntry(TQString("Name_%1").arg(i),
                                 i18n("Desktop %1").arg(i));
         rootInfo->setDesktopName( i, s.utf8().data() );
         desktop_focus_chain[i-1] = i;
@@ -1025,7 +1025,7 @@ void Workspace::loadDesktopSettings()
 void Workspace::saveDesktopSettings()
     {
     KConfig* c = KGlobal::config();
-    QCString groupname;
+    TQCString groupname;
     if (screen_number == 0)
         groupname = "Desktops";
     else
@@ -1035,8 +1035,8 @@ void Workspace::saveDesktopSettings()
     c->writeEntry("Number", number_of_desktops );
     for(int i = 1; i <= number_of_desktops; i++) 
         {
-        QString s = desktopName( i );
-        QString defaultvalue = i18n("Desktop %1").arg(i);
+        TQString s = desktopName( i );
+        TQString defaultvalue = i18n("Desktop %1").arg(i);
         if ( s.isEmpty() ) 
             {
             s = defaultvalue;
@@ -1045,20 +1045,20 @@ void Workspace::saveDesktopSettings()
 
         if (s != defaultvalue) 
             {
-            c->writeEntry( QString("Name_%1").arg(i), s );
+            c->writeEntry( TQString("Name_%1").arg(i), s );
             }
         else 
             {
-            QString currentvalue = c->readEntry(QString("Name_%1").arg(i));
+            TQString currentvalue = c->readEntry(TQString("Name_%1").arg(i));
             if (currentvalue != defaultvalue)
-                c->writeEntry( QString("Name_%1").arg(i), "" );
+                c->writeEntry( TQString("Name_%1").arg(i), "" );
             }
         }
     }
 
-QStringList Workspace::configModules(bool controlCenter)
+TQStringList Workspace::configModules(bool controlCenter)
     {
-    QStringList args;
+    TQStringList args;
     args <<  "kde-kwindecoration.desktop";
     if (controlCenter)
         args << "kde-kwinoptions.desktop";
@@ -1075,7 +1075,7 @@ void Workspace::configureWM()
 /*!
   avoids managing a window with title \a title
  */
-void Workspace::doNotManage( QString title )
+void Workspace::doNotManage( TQString title )
     {
     doNotManageList.append( title );
     }
@@ -1083,11 +1083,11 @@ void Workspace::doNotManage( QString title )
 /*!
   Hack for java applets
  */
-bool Workspace::isNotManaged( const QString& title )
+bool Workspace::isNotManaged( const TQString& title )
     {
-    for ( QStringList::Iterator it = doNotManageList.begin(); it != doNotManageList.end(); ++it ) 
+    for ( TQStringList::Iterator it = doNotManageList.begin(); it != doNotManageList.end(); ++it ) 
         {
-        QRegExp r( (*it) );
+        TQRegExp r( (*it) );
         if (r.search(title) != -1) 
             {
             doNotManageList.remove( it );
@@ -1102,11 +1102,11 @@ bool Workspace::isNotManaged( const QString& title )
  */
 void Workspace::refresh() 
     {
-    QWidget w;
-    w.setGeometry( QApplication::desktop()->geometry() );
+    TQWidget w;
+    w.setGeometry( TQApplication::desktop()->geometry() );
     w.show();
     w.hide();
-    QApplication::flushX();
+    TQApplication::flushX();
     }
 
 /*!
@@ -1122,18 +1122,18 @@ class ObscuringWindows
         ~ObscuringWindows();
         void create( Client* c );
     private:
-        QValueList<Window> obscuring_windows;
-        static QValueList<Window>* cached;
+        TQValueList<Window> obscuring_windows;
+        static TQValueList<Window>* cached;
         static unsigned int max_cache_size;
     };
 
-QValueList<Window>* ObscuringWindows::cached = 0;
+TQValueList<Window>* ObscuringWindows::cached = 0;
 unsigned int ObscuringWindows::max_cache_size = 0;
 
 void ObscuringWindows::create( Client* c )
     {
     if( cached == 0 )
-        cached = new QValueList<Window>;
+        cached = new TQValueList<Window>;
     Window obs_win;
     XWindowChanges chngs;
     int mask = CWSibling | CWStackMode;
@@ -1165,7 +1165,7 @@ void ObscuringWindows::create( Client* c )
 ObscuringWindows::~ObscuringWindows()
     {
     max_cache_size = QMAX( max_cache_size, obscuring_windows.count() + 4 ) - 1;
-    for( QValueList<Window>::ConstIterator it = obscuring_windows.begin();
+    for( TQValueList<Window>::ConstIterator it = obscuring_windows.begin();
          it != obscuring_windows.end();
          ++it ) 
         {
@@ -1280,15 +1280,15 @@ bool Workspace::setCurrentDesktop( int new_desktop )
     // Update focus chain:
     //  If input: chain = { 1, 2, 3, 4 } and current_desktop = 3,
     //   Output: chain = { 3, 1, 2, 4 }.
-//    kdDebug(1212) << QString("Switching to desktop #%1, at focus_chain[currentDesktop()] index %2\n")
+//    kdDebug(1212) << TQString("Switching to desktop #%1, at focus_chain[currentDesktop()] index %2\n")
 //      .arg(currentDesktop()).arg(desktop_focus_chain.find( currentDesktop() ));
     for( int i = desktop_focus_chain.find( currentDesktop() ); i > 0; i-- )
         desktop_focus_chain[i] = desktop_focus_chain[i-1];
     desktop_focus_chain[0] = currentDesktop();
 
-//    QString s = "desktop_focus_chain[] = { ";
+//    TQString s = "desktop_focus_chain[] = { ";
 //    for( uint i = 0; i < desktop_focus_chain.size(); i++ )
-//        s += QString::number(desktop_focus_chain[i]) + ", ";
+//        s += TQString::number(desktop_focus_chain[i]) + ", ";
 //    kdDebug(1212) << s << "}\n";
 
     if( old_desktop != 0 )  // not for the very first time
@@ -1542,7 +1542,7 @@ int Workspace::activeScreen() const
             return qApp->desktop()->screenNumber( activeClient()->geometry().center());
         return active_screen;
         }
-    return qApp->desktop()->screenNumber( QCursor::pos());
+    return qApp->desktop()->screenNumber( TQCursor::pos());
     }
 
 // check whether a client moved completely out of what's considered the active screen,
@@ -1559,21 +1559,21 @@ void Workspace::checkActiveScreen( const Client* c )
 
 // called e.g. when a user clicks on a window, set active screen to be the screen
 // where the click occured
-void Workspace::setActiveScreenMouse( QPoint mousepos )
+void Workspace::setActiveScreenMouse( TQPoint mousepos )
     {
     if( !options->xineramaEnabled )
         return;
     active_screen = qApp->desktop()->screenNumber( mousepos );
     }
 
-QRect Workspace::screenGeometry( int screen ) const
+TQRect Workspace::screenGeometry( int screen ) const
     {
     if (( !options->xineramaEnabled ) || (kapp->desktop()->numScreens() < 2))
         return qApp->desktop()->geometry();
     return qApp->desktop()->screenGeometry( screen );
     }
 
-int Workspace::screenNumber( QPoint pos ) const
+int Workspace::screenNumber( TQPoint pos ) const
     {
     if( !options->xineramaEnabled )
         return 0;
@@ -1585,8 +1585,8 @@ void Workspace::sendClientToScreen( Client* c, int screen )
     if( c->screen() == screen ) // don't use isOnScreen(), that's true even when only partially
         return;
     GeometryUpdatesPostponer blocker( c );
-    QRect old_sarea = clientArea( MaximizeArea, c );
-    QRect sarea = clientArea( MaximizeArea, screen, c->desktop());
+    TQRect old_sarea = clientArea( MaximizeArea, c );
+    TQRect sarea = clientArea( MaximizeArea, screen, c->desktop());
     c->setGeometry( sarea.x() - old_sarea.x() + c->x(), sarea.y() - old_sarea.y() + c->y(),
         c->size().width(), c->size().height());
     c->checkWorkspacePosition();
@@ -1756,7 +1756,7 @@ void Workspace::slotGrabWindow()
     {
     if ( active_client ) 
         {
-        QPixmap snapshot = QPixmap::grabWindow( active_client->frameId() );
+        TQPixmap snapshot = TQPixmap::grabWindow( active_client->frameId() );
 
 	//No XShape - no work.
         if( Shape::available()) 
@@ -1771,23 +1771,23 @@ void Workspace::slotGrabWindow()
 	    // to limit our work region
             if (rects) 
                 {
-		//Create a QRegion from the rectangles describing the bounding mask.
-                QRegion contents;
+		//Create a TQRegion from the rectangles describing the bounding mask.
+                TQRegion contents;
                 for (int pos = 0; pos < count; pos++)
-                    contents += QRegion(rects[pos].x, rects[pos].y,
+                    contents += TQRegion(rects[pos].x, rects[pos].y,
                                         rects[pos].width, rects[pos].height);
                 XFree(rects);
 
 		//Create the bounding box.
-                QRegion bbox(0, 0, snapshot.width(), snapshot.height());
+                TQRegion bbox(0, 0, snapshot.width(), snapshot.height());
 
 		//Get the masked away area.
-                QRegion maskedAway = bbox - contents;
-                QMemArray<QRect> maskedAwayRects = maskedAway.rects();
+                TQRegion maskedAway = bbox - contents;
+                TQMemArray<TQRect> maskedAwayRects = maskedAway.rects();
 
 		//Construct a bitmap mask from the rectangles
-                QBitmap mask( snapshot.width(), snapshot.height());
-                QPainter p(&mask);
+                TQBitmap mask( snapshot.width(), snapshot.height());
+                TQPainter p(&mask);
                 p.fillRect(0, 0, mask.width(), mask.height(), Qt::color1);
                 for (uint pos = 0; pos < maskedAwayRects.count(); pos++)
                     p.fillRect(maskedAwayRects[pos], Qt::color0);
@@ -1796,7 +1796,7 @@ void Workspace::slotGrabWindow()
                 }
             }
 
-        QClipboard *cb = QApplication::clipboard();
+        QClipboard *cb = TQApplication::clipboard();
         cb->setPixmap( snapshot );
         }
     else
@@ -1808,8 +1808,8 @@ void Workspace::slotGrabWindow()
 */
 void Workspace::slotGrabDesktop()
     {
-    QPixmap p = QPixmap::grabWindow( qt_xrootwin() );
-    QClipboard *cb = QApplication::clipboard();
+    TQPixmap p = TQPixmap::grabWindow( qt_xrootwin() );
+    QClipboard *cb = TQApplication::clipboard();
     cb->setPixmap( p );
     }
 
@@ -1869,12 +1869,12 @@ WId Workspace::getMouseEmulationWindow()
 /*!
   Sends a faked mouse event to the specified window. Returns the new button state.
  */
-unsigned int Workspace::sendFakedMouseEvent( QPoint pos, WId w, MouseEmulation type, int button, unsigned int state )
+unsigned int Workspace::sendFakedMouseEvent( TQPoint pos, WId w, MouseEmulation type, int button, unsigned int state )
     {
     if ( !w )
         return state;
-    QWidget* widget = QWidget::find( w );
-    if ( (!widget ||  widget->inherits("QToolButton") ) && !findClient( WindowMatchPredicate( w )) ) 
+    TQWidget* widget = TQWidget::find( w );
+    if ( (!widget ||  widget->inherits("TQToolButton") ) && !findClient( WindowMatchPredicate( w )) ) 
         {
         int x, y;
         Window xw;
@@ -1960,7 +1960,7 @@ bool Workspace::keyPressMouseEmulation( XKeyEvent& ev )
     bool is_alt = km & Mod1Mask;
     bool is_shift = km & ShiftMask;
     int delta = is_control?1:is_alt?32:8;
-    QPoint pos = QCursor::pos();
+    TQPoint pos = TQCursor::pos();
 
     switch ( kc ) 
         {
@@ -2035,7 +2035,7 @@ bool Workspace::keyPressMouseEmulation( XKeyEvent& ev )
             return FALSE;
         }
 
-    QCursor::setPos( pos );
+    TQCursor::setPos( pos );
     if ( mouse_emulation_state )
         mouse_emulation_state = sendFakedMouseEvent( pos, mouse_emulation_window, EmuMove, 0,  mouse_emulation_state );
     return TRUE;
@@ -2047,7 +2047,7 @@ bool Workspace::keyPressMouseEmulation( XKeyEvent& ev )
   sometimes required by clients to draw on it, for example outlines on
   moving or resizing.
  */
-QWidget* Workspace::desktopWidget()
+TQWidget* Workspace::desktopWidget()
     {
     return desktop_widget;
     }
@@ -2063,8 +2063,8 @@ void Workspace::requestDelayFocus( Client* c )
     {
     delayfocus_client = c;
     delete delayFocusTimer;
-    delayFocusTimer = new QTimer( this );
-    connect( delayFocusTimer, SIGNAL( timeout() ), this, SLOT( delayFocus() ) );
+    delayFocusTimer = new TQTimer( this );
+    connect( delayFocusTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( delayFocus() ) );
     delayFocusTimer->start( options->delayFocusInterval, TRUE  );
     }
     
@@ -2088,7 +2088,7 @@ void Workspace::checkElectricBorders( bool force )
     
     electric_current_border = 0;
 
-    QRect r = QApplication::desktop()->geometry();
+    TQRect r = TQApplication::desktop()->geometry();
     electricTop = r.top();
     electricBottom = r.bottom();
     electricLeft = r.left();
@@ -2107,7 +2107,7 @@ void Workspace::createBorderWindows()
 
     electric_have_borders = true;
 
-    QRect r = QApplication::desktop()->geometry();
+    TQRect r = TQApplication::desktop()->geometry();
     XSetWindowAttributes attributes;
     unsigned long valuemask;
     attributes.override_redirect = True;
@@ -2196,7 +2196,7 @@ void Workspace::destroyBorderWindows()
     electric_right_border  = None;
     }
 
-void Workspace::clientMoved(const QPoint &pos, Time now)
+void Workspace::clientMoved(const TQPoint &pos, Time now)
     {
     if (options->electricBorders() == Options::ElectricDisabled)
        return;
@@ -2231,7 +2231,7 @@ void Workspace::clientMoved(const QPoint &pos, Time now)
             {
             electric_current_border = 0;
 
-            QRect r = QApplication::desktop()->geometry();
+            TQRect r = TQApplication::desktop()->geometry();
             int offset;
 
             int desk_before = currentDesktop();
@@ -2242,7 +2242,7 @@ void Workspace::clientMoved(const QPoint &pos, Time now)
                  if (currentDesktop() != desk_before) 
                     {
                     offset = r.width() / 5;
-                    QCursor::setPos(r.width() - offset, pos.y());
+                    TQCursor::setPos(r.width() - offset, pos.y());
                     }
                 break;
 
@@ -2251,7 +2251,7 @@ void Workspace::clientMoved(const QPoint &pos, Time now)
                 if (currentDesktop() != desk_before) 
                     {
                     offset = r.width() / 5;
-                    QCursor::setPos(offset, pos.y());
+                    TQCursor::setPos(offset, pos.y());
                     }
                 break;
 
@@ -2260,7 +2260,7 @@ void Workspace::clientMoved(const QPoint &pos, Time now)
                 if (currentDesktop() != desk_before) 
                     {
                     offset = r.height() / 5;
-                    QCursor::setPos(pos.x(), r.height() - offset);
+                    TQCursor::setPos(pos.x(), r.height() - offset);
                     }
                 break;
 
@@ -2269,7 +2269,7 @@ void Workspace::clientMoved(const QPoint &pos, Time now)
                 if (currentDesktop() != desk_before) 
                     {
                     offset = r.height() / 5;
-                    QCursor::setPos(pos.x(), offset);
+                    TQCursor::setPos(pos.x(), offset);
                     }
                 break;
                 }
@@ -2289,10 +2289,10 @@ void Workspace::clientMoved(const QPoint &pos, Time now)
   // reset the pointer to find out wether the user is really pushing
     switch( border)
         {
-        case 1: QCursor::setPos(pos.x()+mouse_warp, pos.y()); break;
-        case 2: QCursor::setPos(pos.x()-mouse_warp, pos.y()); break;
-        case 3: QCursor::setPos(pos.x(), pos.y()+mouse_warp); break;
-        case 4: QCursor::setPos(pos.x(), pos.y()-mouse_warp); break;
+        case 1: TQCursor::setPos(pos.x()+mouse_warp, pos.y()); break;
+        case 2: TQCursor::setPos(pos.x()-mouse_warp, pos.y()); break;
+        case 3: TQCursor::setPos(pos.x(), pos.y()+mouse_warp); break;
+        case 4: TQCursor::setPos(pos.x(), pos.y()-mouse_warp); break;
         }
     }
 
@@ -2310,7 +2310,7 @@ bool Workspace::electricBorder(XEvent *e)
             e->xcrossing.window == electric_right_border)
             // the user entered an electric border
             {
-            clientMoved( QPoint( e->xcrossing.x_root, e->xcrossing.y_root ), e->xcrossing.time );
+            clientMoved( TQPoint( e->xcrossing.x_root, e->xcrossing.y_root ), e->xcrossing.time );
             return true;
             }
         }
@@ -2323,7 +2323,7 @@ bool Workspace::electricBorder(XEvent *e)
                  || e->xclient.window == electric_right_border ))
             {
             updateXTime();
-            clientMoved( QPoint( e->xclient.data.l[2]>>16, e->xclient.data.l[2]&0xffff), qt_x_time );
+            clientMoved( TQPoint( e->xclient.data.l[2]>>16, e->xclient.data.l[2]&0xffff), qt_x_time );
             return true;
             }
         }
@@ -2379,12 +2379,12 @@ void Workspace::lostTopMenuSelection()
     {
 //    kdDebug() << "lost TopMenu selection" << endl;
     // make sure this signal is always set when not owning the selection
-    disconnect( topmenu_watcher, SIGNAL( lostOwner()), this, SLOT( lostTopMenuOwner()));
-    connect( topmenu_watcher, SIGNAL( lostOwner()), this, SLOT( lostTopMenuOwner()));
+    disconnect( topmenu_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( lostTopMenuOwner()));
+    connect( topmenu_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( lostTopMenuOwner()));
     if( !managing_topmenus )
         return;
-    connect( topmenu_watcher, SIGNAL( lostOwner()), this, SLOT( lostTopMenuOwner()));
-    disconnect( topmenu_selection, SIGNAL( lostOwnership()), this, SLOT( lostTopMenuSelection()));
+    connect( topmenu_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( lostTopMenuOwner()));
+    disconnect( topmenu_selection, TQT_SIGNAL( lostOwnership()), this, TQT_SLOT( lostTopMenuSelection()));
     managing_topmenus = false;
     delete topmenu_space;
     topmenu_space = NULL;
@@ -2413,8 +2413,8 @@ void Workspace::setupTopMenuHandling()
     {
     if( managing_topmenus )
         return;
-    connect( topmenu_selection, SIGNAL( lostOwnership()), this, SLOT( lostTopMenuSelection()));
-    disconnect( topmenu_watcher, SIGNAL( lostOwner()), this, SLOT( lostTopMenuOwner()));
+    connect( topmenu_selection, TQT_SIGNAL( lostOwnership()), this, TQT_SLOT( lostTopMenuSelection()));
+    disconnect( topmenu_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( lostTopMenuOwner()));
     managing_topmenus = true;
     topmenu_space = new QWidget;
     Window stack[ 2 ];
@@ -2443,9 +2443,9 @@ KDecoration* Workspace::createDecoration( KDecorationBridge* bridge )
     return mgr->createDecoration( bridge );
     }
 
-QString Workspace::desktopName( int desk ) const
+TQString Workspace::desktopName( int desk ) const
     {
-    return QString::fromUtf8( rootInfo->desktopName( desk ) );
+    return TQString::fromUtf8( rootInfo->desktopName( desk ) );
     }
 
 bool Workspace::checkStartupNotification( Window w, KStartupInfoId& id, KStartupInfoData& data )
@@ -2462,13 +2462,13 @@ void Workspace::focusToNull()
     XSetInputFocus(qt_xdisplay(), null_focus_window, RevertToPointerRoot, qt_x_time );
     }
 
-void Workspace::helperDialog( const QString& message, const Client* c )
+void Workspace::helperDialog( const TQString& message, const Client* c )
     {
-    QStringList args;
-    QString type;
+    TQStringList args;
+    TQString type;
     if( message == "noborderaltf3" )
         {
-        QString shortcut = QString( "%1 (%2)" ).arg( keys->label( "Window Operations Menu" ))
+        TQString shortcut = TQString( "%1 (%2)" ).arg( keys->label( "Window Operations Menu" ))
             .arg( keys->shortcut( "Window Operations Menu" ).seq( 0 ).toString());
         args << "--msgbox" <<
               i18n( "You have selected to show a window without its border.\n"
@@ -2480,7 +2480,7 @@ void Workspace::helperDialog( const QString& message, const Client* c )
         }
     else if( message == "fullscreenaltf3" )
         {
-        QString shortcut = QString( "%1 (%2)" ).arg( keys->label( "Window Operations Menu" ))
+        TQString shortcut = TQString( "%1 (%2)" ).arg( keys->label( "Window Operations Menu" ))
             .arg( keys->shortcut( "Window Operations Menu" ).seq( 0 ).toString());
         args << "--msgbox" <<
               i18n( "You have selected to show a window in fullscreen mode.\n"
@@ -2504,7 +2504,7 @@ void Workspace::helperDialog( const QString& message, const Client* c )
         proc << "--dontagain" << "kwin_dialogsrc:" + type;
         }
     if( c != NULL )
-        proc << "--embed" << QString::number( c->window());
+        proc << "--embed" << TQString::number( c->window());
     proc.start( KProcess::DontCare );
     }
 
@@ -2530,14 +2530,14 @@ void Workspace::startKompmgr()
         char selection_name[ 100 ];
         sprintf( selection_name, "_NET_WM_CM_S%d", DefaultScreen( qt_xdisplay()));
         kompmgr_selection = new KSelectionOwner( selection_name );
-        connect( kompmgr_selection, SIGNAL( lostOwnership()), SLOT( stopKompmgr()));
+        connect( kompmgr_selection, TQT_SIGNAL( lostOwnership()), TQT_SLOT( stopKompmgr()));
         kompmgr_selection->claim( true );
-        connect(kompmgr, SIGNAL(processExited(KProcess*)), SLOT(restartKompmgr()));
+        connect(kompmgr, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(restartKompmgr()));
         options->useTranslucency = TRUE;
         allowKompmgrRestart = FALSE;
-        QTimer::singleShot( 60000, this, SLOT(unblockKompmgrRestart()) );
-        QByteArray ba;
-        QDataStream arg(ba, IO_WriteOnly);
+        TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
+        TQByteArray ba;
+        TQDataStream arg(ba, IO_WriteOnly);
         arg << "";
         kapp->dcopClient()->emitDCOPSignal("default", "kompmgrStarted()", ba);
         }
@@ -2550,12 +2550,12 @@ void Workspace::stopKompmgr()
         return;
     delete kompmgr_selection;
     kompmgr_selection = NULL;
-    kompmgr->disconnect(this, SLOT(restartKompmgr()));
+    kompmgr->disconnect(this, TQT_SLOT(restartKompmgr()));
     options->useTranslucency = FALSE;
     if (popup){ delete popup; popup = 0L; } // to add/remove opacity slider
     kompmgr->kill();
-    QByteArray ba;
-    QDataStream arg(ba, IO_WriteOnly);
+    TQByteArray ba;
+    TQDataStream arg(ba, IO_WriteOnly);
     arg << "";
     kapp->dcopClient()->emitDCOPSignal("default", "kompmgrStopped()", ba);
 }
@@ -2571,7 +2571,7 @@ void Workspace::unblockKompmgrRestart()
 }
 
 void Workspace::restartKompmgr()
-// this is for inernal purpose (crashhandling) only, usually you want to use workspace->stopKompmgr(); QTimer::singleShot(200, workspace, SLOT(startKompmgr()));
+// this is for inernal purpose (crashhandling) only, usually you want to use workspace->stopKompmgr(); TQTimer::singleShot(200, workspace, TQT_SLOT(startKompmgr()));
 {
     if (!allowKompmgrRestart) // uh-ohh
         {
@@ -2609,14 +2609,14 @@ void Workspace::restartKompmgr()
     else
         {
         allowKompmgrRestart = FALSE;
-        QTimer::singleShot( 60000, this, SLOT(unblockKompmgrRestart()) );
+        TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
         }
 }
 
 void Workspace::handleKompmgrOutput( KProcess* , char *buffer, int buflen)
 {
-    QString message;
-    QString output = QString::fromLocal8Bit( buffer, buflen );
+    TQString message;
+    TQString output = TQString::fromLocal8Bit( buffer, buflen );
     if (output.contains("Started",false))
         ; // don't do anything, just pass to the connection release
     else if (output.contains("Can't open display",false))
@@ -2635,7 +2635,7 @@ void Workspace::handleKompmgrOutput( KProcess* , char *buffer, int buflen)
     else return; //skip others
     // kompmgr startup failed or succeeded, release connection
     kompmgr->closeStderr();
-    disconnect(kompmgr, SIGNAL(receivedStderr(KProcess*, char*, int)), this, SLOT(handleKompmgrOutput(KProcess*, char*, int)));
+    disconnect(kompmgr, TQT_SIGNAL(receivedStderr(KProcess*, char*, int)), this, TQT_SLOT(handleKompmgrOutput(KProcess*, char*, int)));
     if( !message.isEmpty())
         {
         KProcess proc;

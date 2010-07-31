@@ -32,11 +32,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #ifdef __cplusplus
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qfont.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqfont.h>
 
-extern QString _stsFile;
+extern TQString _stsFile;
 extern bool _isLocal;
 extern bool _authorized;
 
@@ -44,7 +44,7 @@ CONF_GREET_CPP_DECLS
 
 // this file happens to be included everywhere, so just put it here
 struct dpySpec;
-void decodeSess( dpySpec *sess, QString &user, QString &loc );
+void decodeSess( dpySpec *sess, TQString &user, TQString &loc );
 
 extern "C"
 #endif

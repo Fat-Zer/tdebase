@@ -21,9 +21,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qcursor.h>
-#include <qpixmap.h>
-#include <qtimer.h>
+#include <tqcursor.h>
+#include <tqpixmap.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <dcopclient.h>
@@ -59,13 +59,13 @@ MenuManager* MenuManager::the()
     return m_self;
 }
 
-MenuManager::MenuManager(QObject *parent)
-    : QObject(parent, "MenuManager"), DCOPObject("MenuManager")
+MenuManager::MenuManager(TQObject *parent)
+    : TQObject(parent, "MenuManager"), DCOPObject("MenuManager")
 {
     m_kmenu = new PanelKMenu;
     kapp->dcopClient()->setNotifications(true);
-    connect(kapp->dcopClient(), SIGNAL(applicationRemoved(const QCString&)),
-            this, SLOT(applicationRemoved(const QCString&)));
+    connect(kapp->dcopClient(), TQT_SIGNAL(applicationRemoved(const TQCString&)),
+            this, TQT_SLOT(applicationRemoved(const TQCString&)));
 }
 
 MenuManager::~MenuManager()
@@ -88,7 +88,7 @@ void MenuManager::showKMenu()
     m_kmenu->showMenu();
 }
 
-void MenuManager::popupKMenu(const QPoint &p)
+void MenuManager::popupKMenu(const TQPoint &p)
 {
 //    kdDebug(1210) << "popupKMenu()" << endl;
     if (m_kmenu->isVisible())
@@ -97,7 +97,7 @@ void MenuManager::popupKMenu(const QPoint &p)
     }
     else if (p.isNull())
     {
-        m_kmenu->popup(QCursor::pos());
+        m_kmenu->popup(TQCursor::pos());
     }
     else
     {
@@ -120,7 +120,7 @@ void MenuManager::unregisterKButton(PanelPopupButton *button)
     m_kbuttons.remove(button);
 }
 
-PanelPopupButton* MenuManager::findKButtonFor(QPopupMenu* menu)
+PanelPopupButton* MenuManager::findKButtonFor(TQPopupMenu* menu)
 {
     KButtonList::const_iterator itEnd = m_kbuttons.constEnd();
     for (KButtonList::const_iterator it = m_kbuttons.constBegin(); it != itEnd; ++it)
@@ -147,37 +147,37 @@ void MenuManager::kmenuAccelActivated()
     if (m_kbuttons.isEmpty())
     {
         // no button to use, make it behave like a desktop menu
-        QPoint p;
+        TQPoint p;
         // Popup the K-menu at the center of the screen.
-        QDesktopWidget* desktop = KApplication::desktop();
-        QRect r;
+        TQDesktopWidget* desktop = KApplication::desktop();
+        TQRect r;
         if (desktop->numScreens() < 2)
             r = desktop->geometry();
         else
-            r = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+            r = desktop->screenGeometry(desktop->screenNumber(TQCursor::pos()));
         // kMenu->rect() is not valid before showing, use sizeHint()
-        p = r.center() - QRect( QPoint( 0, 0 ), m_kmenu->sizeHint()).center();
+        p = r.center() - TQRect( TQPoint( 0, 0 ), m_kmenu->sizeHint()).center();
         m_kmenu->popup(p);
 
         // when the cursor is in the area where the menu pops up,
         // the item under the cursor gets selected. The single shot
         // avoids this from happening by allowing the item to be selected
         // when the event loop is enterred, and then resetting it.
-        QTimer::singleShot(0, this, SLOT(slotSetKMenuItemActive()));
+        TQTimer::singleShot(0, this, TQT_SLOT(slotSetKMenuItemActive()));
     }
     else
     {
         // We need the kmenu's size to place it at the right position.
         // We cannot rely on the popup menu's current size(), if it wasn't
         // shown before, so we resize it here according to its sizeHint().
-        const QSize size = m_kmenu->sizeHint();
+        const TQSize size = m_kmenu->sizeHint();
         m_kmenu->resize(size.width(),size.height());
 
         PanelPopupButton* button = findKButtonFor(m_kmenu);
 
         // let's unhide the panel while we're at it. traverse the widget
         // hierarchy until we find the panel, if any
-        QObject* menuParent = button->parent();
+        TQObject* menuParent = button->parent();
         while (menuParent)
         {
             ExtensionContainer* ext = dynamic_cast<ExtensionContainer*>(menuParent);
@@ -198,11 +198,11 @@ void MenuManager::kmenuAccelActivated()
     }
 }
 
-QCString MenuManager::createMenu(QPixmap icon, QString text)
+TQCString MenuManager::createMenu(TQPixmap icon, TQString text)
 {
     static int menucount = 0;
     menucount++;
-    QCString name;
+    TQCString name;
     name.sprintf("kickerclientmenu-%d", menucount );
     KickerClientMenu* p = new KickerClientMenu( 0, name );
     clientmenus.append(p);
@@ -215,7 +215,7 @@ QCString MenuManager::createMenu(QPixmap icon, QString text)
     return name;
 }
 
-void MenuManager::removeMenu(QCString menu)
+void MenuManager::removeMenu(TQCString menu)
 {
     bool iterate = true;
     ClientMenuList::iterator it = clientmenus.begin();
@@ -234,7 +234,7 @@ void MenuManager::removeMenu(QCString menu)
 }
 
 
-void MenuManager::applicationRemoved(const QCString& appRemoved)
+void MenuManager::applicationRemoved(const TQCString& appRemoved)
 {
     bool iterate = true;
     ClientMenuList::iterator it = clientmenus.begin();
@@ -252,21 +252,21 @@ void MenuManager::applicationRemoved(const QCString& appRemoved)
     m_kmenu->adjustSize();
 }
 
-bool MenuManager::process(const QCString &fun, const QByteArray &data,
-				QCString &replyType, QByteArray &replyData)
+bool MenuManager::process(const TQCString &fun, const TQByteArray &data,
+				TQCString &replyType, TQByteArray &replyData)
 {
-    if ( fun == "createMenu(QPixmap,QString)" ) {
-	QDataStream dataStream( data, IO_ReadOnly );
-	QPixmap icon;
-	QString text;
+    if ( fun == "createMenu(TQPixmap,TQString)" ) {
+	TQDataStream dataStream( data, IO_ReadOnly );
+	TQPixmap icon;
+	TQString text;
 	dataStream >> icon >> text;
-	QDataStream reply( replyData, IO_WriteOnly );
+	TQDataStream reply( replyData, IO_WriteOnly );
 	reply << createMenu( icon, text );
-	replyType = "QCString";
+	replyType = "TQCString";
 	return true;
-    } else if ( fun == "removeMenu(QCString)" ) {
-	QDataStream dataStream( data, IO_ReadOnly );
-	QCString menu;
+    } else if ( fun == "removeMenu(TQCString)" ) {
+	TQDataStream dataStream( data, IO_ReadOnly );
+	TQCString menu;
 	dataStream >> menu;
 	removeMenu( menu );
 	replyType = "void";

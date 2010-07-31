@@ -43,11 +43,11 @@ void FavIconsItrHolder::doItrListChanged() {
     {
         kdDebug()<<"Notifing managers "<<m_affectedBookmark<<endl;
         CurrentMgr::self()->notifyManagers(CurrentMgr::bookmarkAt(m_affectedBookmark).toGroup());
-        m_affectedBookmark = QString::null;
+        m_affectedBookmark = TQString::null;
     }
 }
 
-void FavIconsItrHolder::addAffectedBookmark( const QString & address )
+void FavIconsItrHolder::addAffectedBookmark( const TQString & address )
 {
     kdDebug()<<"addAffectedBookmark "<<address<<endl;
     if(m_affectedBookmark.isNull())
@@ -59,7 +59,7 @@ void FavIconsItrHolder::addAffectedBookmark( const QString & address )
 
 /* -------------------------- */
 
-FavIconsItr::FavIconsItr(QValueList<KBookmark> bks)
+FavIconsItr::FavIconsItr(TQValueList<KBookmark> bks)
     : BookmarkIterator(bks) {
     m_updater = 0;
 }
@@ -86,8 +86,8 @@ void FavIconsItr::doAction() {
     curItem()->setTmpStatus(i18n("Updating favicon..."));
     if (!m_updater) {
         m_updater = new FavIconUpdater(kapp, "FavIconUpdater");
-        connect(m_updater, SIGNAL( done(bool) ),
-                this,      SLOT( slotDone(bool) ) );
+        connect(m_updater, TQT_SIGNAL( done(bool) ),
+                this,      TQT_SLOT( slotDone(bool) ) );
     }
     if (curBk().url().protocol().startsWith("http")) {
         m_updater->downloadIcon(curBk());

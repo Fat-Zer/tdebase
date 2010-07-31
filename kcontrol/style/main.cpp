@@ -5,12 +5,12 @@
 #include "kcmstyle.h"
 
 extern "C" {
-    KCModule *create_style(QWidget *parent, const char *) {
+    KCModule *create_style(TQWidget *parent, const char *) {
       return new KCMStyle(parent, "kcmstyle");
     }
 }
 
 /*
-typedef KGenericFactory<KWidgetSettingsModule, QWidget> GeneralFactory;
+typedef KGenericFactory<KWidgetSettingsModule, TQWidget> GeneralFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_style, GeneralFactory )
 */

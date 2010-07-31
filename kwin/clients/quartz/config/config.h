@@ -10,8 +10,8 @@
 #ifndef __KDE_QUARTZCONFIG_H
 #define __KDE_QUARTZCONFIG_H
 
-#include <qcheckbox.h>
-#include <qvbox.h>
+#include <tqcheckbox.h>
+#include <tqvbox.h>
 #include <kconfig.h>
 
 class QuartzConfig: public QObject
@@ -19,7 +19,7 @@ class QuartzConfig: public QObject
 	Q_OBJECT
 
 	public:
-		QuartzConfig( KConfig* conf, QWidget* parent );
+		QuartzConfig( KConfig* conf, TQWidget* parent );
 		~QuartzConfig();
 
 	// These public signals/slots work similar to KCM modules
@@ -36,9 +36,9 @@ class QuartzConfig: public QObject
 
 	private:
 		KConfig*   quartzConfig;
-		QCheckBox* cbColorBorder;
-		QCheckBox* cbExtraSmall;
-		QVBox* gb;
+		TQCheckBox* cbColorBorder;
+		TQCheckBox* cbExtraSmall;
+		TQVBox* gb;
 };
 
 

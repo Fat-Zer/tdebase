@@ -27,10 +27,10 @@ DESCRIPTION
 #include <stdlib.h>
 #include <assert.h>
 
-#include <qregexp.h>
-#include <qfile.h>
-#include <qstringlist.h>
-#include <qimage.h>
+#include <tqregexp.h>
+#include <tqfile.h>
+#include <tqstringlist.h>
+#include <tqimage.h>
 
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -79,7 +79,7 @@ KXKBApp::KXKBApp(bool allowStyles, bool GUIenabled)
 
 	m_layoutOwnerMap = new LayoutMap(kxkbConfig);
 
-    connect( this, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)) );
+    connect( this, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)) );
     addKipcEventMask( KIPC::SettingsChanged );
 }
 
@@ -129,7 +129,7 @@ bool KXKBApp::settingsRead()
 		kWinModule = NULL;
 	}
 	else {
-		QDesktopWidget desktopWidget;
+		TQDesktopWidget desktopWidget;
 		if( desktopWidget.numScreens() > 1 && desktopWidget.isVirtualDesktop() == false ) {
 			kdWarning() << "With non-virtual desktop only global switching policy supported on non-primary screens" << endl;
 			//TODO: find out how to handle that
@@ -137,7 +137,7 @@ bool KXKBApp::settingsRead()
 		
 		if( kWinModule == NULL ) {
 			kWinModule = new KWinModule(0, KWinModule::INFO_DESKTOP);
-			connect(kWinModule, SIGNAL(activeWindowChanged(WId)), SLOT(windowChanged(WId)));
+			connect(kWinModule, TQT_SIGNAL(activeWindowChanged(WId)), TQT_SLOT(windowChanged(WId)));
 		}
 		m_prevWinId = kWinModule->activeWindow();
 		kdDebug() << "Active window " << m_prevWinId << endl;
@@ -158,9 +158,9 @@ bool KXKBApp::settingsRead()
 	m_currentLayout = kxkbConfig.getDefaultLayout();
 	
 	if( kxkbConfig.m_layouts.count() == 1 ) {
-		QString layoutName = m_currentLayout.layout;
-		QString variantName = m_currentLayout.variant;
-		QString includeName = m_currentLayout.includeGroup;
+		TQString layoutName = m_currentLayout.layout;
+		TQString variantName = m_currentLayout.variant;
+		TQString includeName = m_currentLayout.includeGroup;
 		int group = m_currentLayout.defaultGroup;
 		
 		if( !m_extension->setLayout(kxkbConfig.m_model, layoutName, variantName, includeName, false) 
@@ -196,8 +196,8 @@ void KXKBApp::initTray()
 	//	popupMenu->insertTitle( kapp->miniIcon(), kapp->caption() );
 
 		m_tray = new KxkbLabelController(sysTray, popupMenu);
- 		connect(popupMenu, SIGNAL(activated(int)), this, SLOT(menuActivated(int)));
-		connect(sysTray, SIGNAL(toggled()), this, SLOT(toggled()));
+ 		connect(popupMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(menuActivated(int)));
+		connect(sysTray, TQT_SIGNAL(toggled()), this, TQT_SLOT(toggled()));
 	}
 	
 	m_tray->setShowFlag(kxkbConfig.m_showFlag);
@@ -214,7 +214,7 @@ void KXKBApp::layoutApply()
 }
 
 // kdcop
-bool KXKBApp::setLayout(const QString& layoutPair)
+bool KXKBApp::setLayout(const TQString& layoutPair)
 {
 	const LayoutUnit layoutUnitKey(layoutPair);
 	if( kxkbConfig.m_layouts.contains(layoutUnitKey) ) {
@@ -347,18 +347,18 @@ This is done by loading each one of them and then dumping the compiled
 map from the X server into our local buffer.*/
 // void KXKBApp::initPrecompiledLayouts()
 // {
-//     QStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );
-//     QString tempDir = dirs.count() == 0 ? "/tmp/" : dirs[0]; 
+//     TQStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );
+//     TQString tempDir = dirs.count() == 0 ? "/tmp/" : dirs[0]; 
 // 
-// 	QValueList<LayoutUnit>::ConstIterator end = kxkbConfig.m_layouts.end();
+// 	TQValueList<LayoutUnit>::ConstIterator end = kxkbConfig.m_layouts.end();
 // 
-// 	for (QValueList<LayoutUnit>::ConstIterator it = kxkbConfig.m_layouts.begin(); it != end; ++it)
+// 	for (TQValueList<LayoutUnit>::ConstIterator it = kxkbConfig.m_layouts.begin(); it != end; ++it)
 //     {
 // 		LayoutUnit layoutUnit(*it);
 // //	const char* baseGr = m_includes[layout]; 
 // //	int group = m_rules->getGroup(layout, baseGr);
 // //    	if( m_extension->setLayout(m_model, layout, m_variants[layout], group, baseGr) ) {
-// 		QString compiledLayoutFileName = tempDir + layoutUnit.layout + "." + layoutUnit.variant + ".xkm";
+// 		TQString compiledLayoutFileName = tempDir + layoutUnit.layout + "." + layoutUnit.variant + ".xkm";
 // //    	    if( m_extension->getCompiledLayout(compiledLayoutFileName) )
 // 		m_compiledLayoutFileNames[layoutUnit.toPair()] = compiledLayoutFileName;
 // //	}

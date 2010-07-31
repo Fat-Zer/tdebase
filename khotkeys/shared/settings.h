@@ -48,7 +48,7 @@ class KDE_EXPORT Settings
         void read_actions_recursively_v2( KConfig& cfg_P, Action_data_group* parent_P,
             bool include_disabled_P );
     private:
-        QStringList already_imported;
+        TQStringList already_imported;
     KHOTKEYS_DISABLE_COPY( Settings );
     };
 

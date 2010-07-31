@@ -18,10 +18,10 @@
 
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qsortedlist.h>
-#include <qregexp.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqsortedlist.h>
+#include <tqregexp.h>
 
 #include <klineedit.h>
 #include <kiconloader.h>
@@ -37,8 +37,8 @@
 class ModuleItem : public QListBoxPixmap
 {
 public:
- ModuleItem(ConfigModule *module, QListBox * listbox = 0) :
-	QListBoxPixmap(listbox,
+ ModuleItem(ConfigModule *module, TQListBox * listbox = 0) :
+	TQListBoxPixmap(listbox,
       KGlobal::iconLoader()->loadIcon(module->icon(), KIcon::Desktop, KIcon::SizeSmall),
       module->moduleName())
   , m_module(module)
@@ -53,7 +53,7 @@ protected:
 
 };
 
-KeywordListEntry::KeywordListEntry(const QString& name, ConfigModule* module)
+KeywordListEntry::KeywordListEntry(const TQString& name, ConfigModule* module)
   : _name(name)
 {
   if(module)
@@ -66,35 +66,35 @@ void KeywordListEntry::addModule(ConfigModule* module)
     _modules.append(module);
 }
 
-SearchWidget::SearchWidget(QWidget *parent , const char *name)
-  : QWidget(parent, name)
+SearchWidget::SearchWidget(TQWidget *parent , const char *name)
+  : TQWidget(parent, name)
 {
   _keywords.setAutoDelete(true);
 
-  QVBoxLayout * l = new QVBoxLayout(this, 0, 2);
+  TQVBoxLayout * l = new TQVBoxLayout(this, 0, 2);
 
   // keyword list
   _keyList = new KListBox(this);
-  QLabel *keyl = new QLabel(_keyList, i18n("&Keywords:"), this);
+  TQLabel *keyl = new TQLabel(_keyList, i18n("&Keywords:"), this);
 
   l->addWidget(keyl);
   l->addWidget(_keyList);
 
   // result list
   _resultList = new KListBox(this);
-  QLabel *resultl = new QLabel(_resultList, i18n("&Results:"), this);
+  TQLabel *resultl = new TQLabel(_resultList, i18n("&Results:"), this);
 
   l->addWidget(resultl);
   l->addWidget(_resultList);
 
 
-  connect(_keyList, SIGNAL(highlighted(const QString&)),
-          this, SLOT(slotKeywordSelected(const QString&)));
+  connect(_keyList, TQT_SIGNAL(highlighted(const TQString&)),
+          this, TQT_SLOT(slotKeywordSelected(const TQString&)));
 
-  connect(_resultList, SIGNAL(selected(QListBoxItem*)),
-          this, SLOT(slotModuleSelected(QListBoxItem *)));
-  connect(_resultList, SIGNAL(clicked(QListBoxItem *)),
-          this, SLOT(slotModuleClicked(QListBoxItem *)));
+  connect(_resultList, TQT_SIGNAL(selected(TQListBoxItem*)),
+          this, TQT_SLOT(slotModuleSelected(TQListBoxItem *)));
+  connect(_resultList, TQT_SIGNAL(clicked(TQListBoxItem *)),
+          this, TQT_SLOT(slotModuleClicked(TQListBoxItem *)));
 }
 
 void SearchWidget::populateKeywordList(ConfigModuleList *list)
@@ -108,13 +108,13 @@ void SearchWidget::populateKeywordList(ConfigModuleList *list)
         continue;
 
       // get the modules keyword list
-      QStringList kw = module->keywords();
+      TQStringList kw = module->keywords();
       kw << module->moduleName();
 
       // loop through the keyword list to populate _keywords
-      for(QStringList::ConstIterator it = kw.begin(); it != kw.end(); ++it)
+      for(TQStringList::ConstIterator it = kw.begin(); it != kw.end(); ++it)
         {
-          QString name = (*it).lower();
+          TQString name = (*it).lower();
           bool found = false;
 
           // look if _keywords already has an entry for this keyword
@@ -140,35 +140,35 @@ void SearchWidget::populateKeywordList(ConfigModuleList *list)
   populateKeyListBox("*");
 }
 
-void SearchWidget::populateKeyListBox(const QString& s)
+void SearchWidget::populateKeyListBox(const TQString& s)
 {
   _keyList->clear();
 
-  QStringList matches;
+  TQStringList matches;
 
   for(KeywordListEntry *k = _keywords.first(); k != 0; k = _keywords.next())
     {
-      if ( QRegExp(s, false, true).search(k->moduleName()) >= 0)
+      if ( TQRegExp(s, false, true).search(k->moduleName()) >= 0)
         matches.append(k->moduleName().stripWhiteSpace());
     }
 
-  for(QStringList::ConstIterator it = matches.begin(); it != matches.end(); it++)
+  for(TQStringList::ConstIterator it = matches.begin(); it != matches.end(); it++)
     _keyList->insertItem(*it);
 
   _keyList->sort();
 }
 
-void SearchWidget::populateResultListBox(const QString& s)
+void SearchWidget::populateResultListBox(const TQString& s)
 {
   _resultList->clear();
 
-  QPtrList<ModuleItem> results;
+  TQPtrList<ModuleItem> results;
 
   for(KeywordListEntry *k = _keywords.first(); k != 0; k = _keywords.next())
     {
       if (k->moduleName() == s)
         {
-          QPtrList<ConfigModule> modules = k->modules();
+          TQPtrList<ConfigModule> modules = k->modules();
 
           for(ConfigModule *m = modules.first(); m != 0; m = modules.next())
               new ModuleItem(m, _resultList);
@@ -178,27 +178,27 @@ void SearchWidget::populateResultListBox(const QString& s)
   _resultList->sort();
 }
 
-void SearchWidget::searchTextChanged(const QString & s)
+void SearchWidget::searchTextChanged(const TQString & s)
 {
-  QString regexp = s;
+  TQString regexp = s;
   regexp += "*";
   populateKeyListBox(regexp);
   if (_keyList->count()==1)
     _keyList->setSelected(0,true);
 }
 
-void SearchWidget::slotKeywordSelected(const QString & s)
+void SearchWidget::slotKeywordSelected(const TQString & s)
 {
   populateResultListBox(s);
 }
 
-void SearchWidget::slotModuleSelected(QListBoxItem *item)
+void SearchWidget::slotModuleSelected(TQListBoxItem *item)
 {
   if (item)
     emit moduleSelected( static_cast<ModuleItem*>(item)->module() );
 }
 
-void SearchWidget::slotModuleClicked(QListBoxItem *item)
+void SearchWidget::slotModuleClicked(TQListBoxItem *item)
 {
   if (item)
     emit moduleSelected( static_cast<ModuleItem*>(item)->module() );

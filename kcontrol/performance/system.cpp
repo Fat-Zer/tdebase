@@ -19,18 +19,18 @@
 #include "system.h"
 
 #include <kconfig.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
+#include <tqwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
 #include <klocale.h>
 
 namespace KCMPerformance
 {
 
-SystemWidget::SystemWidget( QWidget* parent_P )
+SystemWidget::SystemWidget( TQWidget* parent_P )
     : System_ui( parent_P )
     {
-    QString tmp = 
+    TQString tmp = 
         i18n( "<p>During startup KDE needs to perform a check of its system configuration"
               " (mimetypes, installed applications, etc.), and in case the configuration"
               " has changed since the last time, the system configuration cache (KSyCoCa)"
@@ -49,9 +49,9 @@ SystemWidget::SystemWidget( QWidget* parent_P )
               " handler will refuse to provide backtrace for the bugreport with this option"
               " turned on (you will need to reproduce it again with this option turned off,"
               " or turn on the developer mode for the crash handler).</p>" );
-    QWhatsThis::add( cb_disable_kbuildsycoca, tmp );
-    QWhatsThis::add( label_kbuildsycoca, tmp );
-    connect( cb_disable_kbuildsycoca, SIGNAL( clicked()), SIGNAL( changed()));
+    TQWhatsThis::add( cb_disable_kbuildsycoca, tmp );
+    TQWhatsThis::add( label_kbuildsycoca, tmp );
+    connect( cb_disable_kbuildsycoca, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
     defaults();
     }
 

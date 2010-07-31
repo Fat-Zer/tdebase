@@ -1,12 +1,12 @@
 #ifndef _MEMORY_H_KDEINFO_INCLUDED_
 #define _MEMORY_H_KDEINFO_INCLUDED_
 
-#include <qwidget.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qtabdialog.h>
-#include <qpushbutton.h>
-#include <qtimer.h>
+#include <tqwidget.h>
+#include <tqframe.h>
+#include <tqlabel.h>
+#include <tqtabdialog.h>
+#include <tqpushbutton.h>
+#include <tqtimer.h>
 
 #include <kcmodule.h>
 #include <kaboutdata.h>
@@ -20,35 +20,35 @@ typedef unsigned long long t_memsize;
 typedef unsigned long t_memsize;
 #endif
 
-#define COLOR_USED_MEMORY QColor(255,0,0)
-#define COLOR_USED_SWAP   QColor(255,134,64)
-#define COLOR_FREE_MEMORY QColor(127,255,212)
+#define COLOR_USED_MEMORY TQColor(255,0,0)
+#define COLOR_USED_SWAP   TQColor(255,134,64)
+#define COLOR_FREE_MEMORY TQColor(127,255,212)
 
 class KMemoryWidget:public KCModule {
   Q_OBJECT 
 	  
   public:
-    KMemoryWidget(QWidget * parent, const char *name = 0);
+    KMemoryWidget(TQWidget * parent, const char *name = 0);
     ~KMemoryWidget();
 
-    QString quickHelp() const;
+    TQString quickHelp() const;
 
   private:
-    QString Not_Available_Text;
-    QTimer *timer;
+    TQString Not_Available_Text;
+    TQTimer *timer;
 
     bool ram_colors_initialized,
 	swap_colors_initialized, 
 	all_colors_initialized;
 
-    QColor ram_colors[4];
-    QString ram_text[4];
+    TQColor ram_colors[4];
+    TQString ram_text[4];
     
-    QColor swap_colors[2];
-    QString swap_text[2];
+    TQColor swap_colors[2];
+    TQString swap_text[2];
     
-    QColor all_colors[3];
-    QString all_text[3];
+    TQColor all_colors[3];
+    TQString all_text[3];
 
     void update();
 
@@ -56,8 +56,8 @@ class KMemoryWidget:public KCModule {
 		      int count,
 		      t_memsize total,
 		      t_memsize *used, 
-		      QColor *color,
-		      QString *text);
+		      TQColor *color,
+		      TQString *text);
     public slots:
     void update_Values();
 };

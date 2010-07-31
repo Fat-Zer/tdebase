@@ -1,10 +1,10 @@
 #include "modifiers.h"
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -51,8 +51,8 @@ Extra1		[]		[] User definable
 //1) labels: Shift | Ctrl | Option | Command
 //2) swap Ctrl & Command
 
-ModifiersModule::ModifiersModule( QWidget *parent, const char *name )
-:	QWidget( parent, name )
+ModifiersModule::ModifiersModule( TQWidget *parent, const char *name )
+:	TQWidget( parent, name )
 {
 	initGUI();
 	load( false );
@@ -168,31 +168,31 @@ void ModifiersModule::setupMacModifierKeys()
 
 void ModifiersModule::initGUI()
 {
-	QGridLayout* pLayoutTop = new QGridLayout( this, 6, 2, KDialog::marginHint() );
+	TQGridLayout* pLayoutTop = new TQGridLayout( this, 6, 2, KDialog::marginHint() );
 	pLayoutTop->setColStretch( 1, 1 );
 
-	QGroupBox* pGroup = new QGroupBox( 2, Qt::Horizontal, i18n("KDE Modifiers"), this );
+	TQGroupBox* pGroup = new TQGroupBox( 2, Qt::Horizontal, i18n("KDE Modifiers"), this );
 	pLayoutTop->addWidget( pGroup, 0, 0 );
 
-	QLabel* plbl = new QLabel( i18n("Modifier"), pGroup );
-	QFont font = plbl->font();
+	TQLabel* plbl = new TQLabel( i18n("Modifier"), pGroup );
+	TQFont font = plbl->font();
 	font.setUnderline( true );
-	font.setWeight( QFont::Bold );
+	font.setWeight( TQFont::Bold );
 	plbl->setFont( font );
-	plbl = new QLabel( i18n("X11-Mod"), pGroup );
+	plbl = new TQLabel( i18n("X11-Mod"), pGroup );
 	plbl->setFont( font );
 
-	new QLabel( i18n("QAccel", "Shift"), pGroup );
-	new QLabel( "shift", pGroup );
+	new TQLabel( i18n("TQAccel", "Shift"), pGroup );
+	new TQLabel( "shift", pGroup );
 
-	m_plblCtrl = new QLabel( i18n("QAccel", "Ctrl"), pGroup );
-	new QLabel( "control", pGroup );
+	m_plblCtrl = new TQLabel( i18n("TQAccel", "Ctrl"), pGroup );
+	new TQLabel( "control", pGroup );
 
-	m_plblAlt = new QLabel( i18n("QAccel", "Alt"), pGroup );
-	new QLabel( "mod1", pGroup );
+	m_plblAlt = new TQLabel( i18n("TQAccel", "Alt"), pGroup );
+	new TQLabel( "mod1", pGroup );
 
-	m_plblWin = new QLabel( i18n("Win"), pGroup );
-	m_plblWinModX = new QLabel( "", pGroup );
+	m_plblWin = new TQLabel( i18n("Win"), pGroup );
+	m_plblWinModX = new TQLabel( "", pGroup );
 	/*m_pcbWinX = newModXComboBox( pGroup );
 	int i;
 	switch( KKeyNative::modX(KKey::WIN) ) {
@@ -204,14 +204,14 @@ void ModifiersModule::initGUI()
 	}
 	m_pcbWinX->setCurrentItem( i );*/
 
-	m_pchkMacKeyboard = new QCheckBox( i18n("Macintosh keyboard"), this );
+	m_pchkMacKeyboard = new TQCheckBox( i18n("Macintosh keyboard"), this );
 	m_pchkMacKeyboard->setChecked( m_bMacKeyboardOrig );
-	connect( m_pchkMacKeyboard, SIGNAL(clicked()), SLOT(slotMacKeyboardClicked()) );
+	connect( m_pchkMacKeyboard, TQT_SIGNAL(clicked()), TQT_SLOT(slotMacKeyboardClicked()) );
 	pLayoutTop->addWidget( m_pchkMacKeyboard, 1, 0 );
 
-	m_pchkMacSwap = new QCheckBox( i18n("MacOS-style modifier usage"), this );
+	m_pchkMacSwap = new TQCheckBox( i18n("MacOS-style modifier usage"), this );
 	m_pchkMacSwap->setChecked( m_bMacSwapOrig );
-	QWhatsThis::add( m_pchkMacSwap,
+	TQWhatsThis::add( m_pchkMacSwap,
 		i18n("Checking this box will change your X Modifier Mapping to "
 			"better reflect the standard MacOS modifier key usage. "
 			"It allows you to use <i>Command+C</i> for <i>Copy</i>, for instance, "
@@ -219,18 +219,18 @@ void ModifiersModule::initGUI()
 			"<b>Command</b> will be used for application and console commands, "
 			"<b>Option</b> as a command modifier and for navigating menus and dialogs, "
 			"and <b>Control</b> for window manager commands.") );
-	connect( m_pchkMacSwap, SIGNAL(clicked()), SLOT(slotMacSwapClicked()) );
+	connect( m_pchkMacSwap, TQT_SIGNAL(clicked()), TQT_SLOT(slotMacSwapClicked()) );
 	pLayoutTop->addWidget( m_pchkMacSwap, 2, 0 );
 
 	//------------------
 	pLayoutTop->addRowSpacing( 3, KDialog::spacingHint() * 3 );
 
-	pGroup = new QGroupBox( 1, Qt::Horizontal, i18n("X Modifier Mapping"), this );
+	pGroup = new TQGroupBox( 1, Qt::Horizontal, i18n("X Modifier Mapping"), this );
 	pLayoutTop->addWidget( pGroup, 4, 0 );
 
 	m_plstXMods = new KListView( pGroup );
 	m_plstXMods->setSorting( -1 );
-	m_plstXMods->setSelectionMode( QListView::NoSelection );
+	m_plstXMods->setSelectionMode( TQListView::NoSelection );
 	m_plstXMods->setAllColumnsShowFocus( true );
 	m_plstXMods->addColumn( i18n("X11-Mod") );
 
@@ -249,7 +249,7 @@ void ModifiersModule::initGUI()
 	updateWidgets();
 }
 
-/*KComboBox* ModifiersModule::newModXComboBox( QWidget* parent )
+/*KComboBox* ModifiersModule::newModXComboBox( TQWidget* parent )
 {
 	KComboBox* pcb = new KComboBox( parent );
 	pcb->insertItem( "" );
@@ -285,8 +285,8 @@ void ModifiersModule::updateWidgets()
 		}
 		m_pchkMacSwap->setEnabled( true );
 	} else {
-		m_plblCtrl->setText( i18n("QAccel", "Ctrl") );
-		m_plblAlt->setText( i18n("QAccel", "Alt") );
+		m_plblCtrl->setText( i18n("TQAccel", "Ctrl") );
+		m_plblAlt->setText( i18n("TQAccel", "Alt") );
 		m_plblWin->setText( i18n("Win") );
 		m_pchkMacSwap->setEnabled( false );
 	}
@@ -325,7 +325,7 @@ void ModifiersModule::updateWidgets()
 		default:       i = 0;
 	}
 	if( i != 0 )
-		m_plblWinModX->setText( "mod" + QString::number(i) );
+		m_plblWinModX->setText( "mod" + TQString::number(i) );
 	else
 		m_plblWinModX->setText( "<" + i18n("None") + ">" );
 }

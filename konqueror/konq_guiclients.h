@@ -21,8 +21,8 @@
 #define __konq_guiclients_h__
 
 #include <kxmlguiclient.h>
-#include <qobject.h>
-#include <qdict.h>
+#include <tqobject.h>
+#include <tqdict.h>
 #include <ktrader.h>
 
 class KAction;
@@ -59,14 +59,14 @@ public:
                       bool isIntoTrash, bool doTabHandling );
   virtual ~PopupMenuGUIClient();
 
-  virtual KAction *action( const QDomElement &element ) const;
+  virtual KAction *action( const TQDomElement &element ) const;
 
 private:
-  void addEmbeddingService( QDomElement &menu, int idx, const QString &name, const KService::Ptr &service );
+  void addEmbeddingService( TQDomElement &menu, int idx, const TQString &name, const KService::Ptr &service );
 
   KonqMainWindow *m_mainWindow;
 
-  QDomDocument m_doc;
+  TQDomDocument m_doc;
 };
 
 class ToggleViewGUIClient : public QObject
@@ -78,10 +78,10 @@ public:
 
   bool empty() const { return m_empty; }
 
-  QPtrList<KAction> actions() const;
-  KAction *action( const QString &name ) { return m_actions[ name ]; }
+  TQPtrList<KAction> actions() const;
+  KAction *action( const TQString &name ) { return m_actions[ name ]; }
 
-  void saveConfig( bool add, const QString &serviceName );
+  void saveConfig( bool add, const TQString &serviceName );
 
 private slots:
   void slotToggleView( bool toggle );
@@ -89,9 +89,9 @@ private slots:
   void slotViewRemoved( KonqView *view );
 private:
   KonqMainWindow *m_mainWindow;
-  QDict<KAction> m_actions;
+  TQDict<KAction> m_actions;
   bool m_empty;
-  QMap<QString,bool> m_mapOrientation;
+  TQMap<TQString,bool> m_mapOrientation;
 };
 
 #endif

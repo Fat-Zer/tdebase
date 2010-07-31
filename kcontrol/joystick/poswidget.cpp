@@ -20,15 +20,15 @@
  ***************************************************************************/
 #include "poswidget.h"
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #define XY_WIDTH 220
 #define MARK_WIDTH 10
 
 //-----------------------------------------------------------------
 
-PosWidget::PosWidget(QWidget *parent, const char *name)
-  : QWidget(parent, name, WRepaintNoErase), x(0), y(0), trace(false)
+PosWidget::PosWidget(TQWidget *parent, const char *name)
+  : TQWidget(parent, name, WRepaintNoErase), x(0), y(0), trace(false)
 {
   setMinimumSize(XY_WIDTH, XY_WIDTH);
   setMaximumSize(XY_WIDTH, XY_WIDTH);
@@ -37,9 +37,9 @@ PosWidget::PosWidget(QWidget *parent, const char *name)
 
 //-----------------------------------------------------------------
 
-void PosWidget::paintEvent(QPaintEvent *)
+void PosWidget::paintEvent(TQPaintEvent *)
 {
-  QPainter paint(this);
+  TQPainter paint(this);
 
   paint.drawRect(0, 0, width(), height());
   paint.setPen(Qt::gray);
@@ -106,7 +106,7 @@ void PosWidget::showTrace(bool t)
 
 void PosWidget::eraseOld()
 {
-  QPainter paint(this);
+  TQPainter paint(this);
 
   //paint.eraseRect(x - MARK_WIDTH/2, y - MARK_WIDTH/2, MARK_WIDTH + 1, MARK_WIDTH + 1);
 

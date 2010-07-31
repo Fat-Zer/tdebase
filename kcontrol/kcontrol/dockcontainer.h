@@ -20,8 +20,8 @@
 #ifndef __dockcontainer_h__
 #define __dockcontainer_h__
 
-#include <qwidgetstack.h>
-#include <qvbox.h>
+#include <tqwidgetstack.h>
+#include <tqvbox.h>
 
 class ConfigModule;
 class ModuleTitle;
@@ -33,7 +33,7 @@ class ModuleWidget : public QVBox
   Q_OBJECT
 
   public:
-    ModuleWidget( QWidget *parent, const char *name );
+    ModuleWidget( TQWidget *parent, const char *name );
     ~ModuleWidget() {}
 
     ProxyWidget* load( ConfigModule *module );
@@ -43,7 +43,7 @@ class ModuleWidget : public QVBox
 
   protected:
     ModuleTitle *m_title;
-    QVBox *m_body;
+    TQVBox *m_body;
 };
 
 class DockContainer : public QWidgetStack
@@ -51,11 +51,11 @@ class DockContainer : public QWidgetStack
   Q_OBJECT
 
 public:
-  DockContainer(QWidget *parent=0);
+  DockContainer(TQWidget *parent=0);
   virtual ~DockContainer();
 
-  void setBaseWidget(QWidget *widget);
-  QWidget *baseWidget() { return _basew; }
+  void setBaseWidget(TQWidget *widget);
+  TQWidget *baseWidget() { return _basew; }
 
   bool dockModule(ConfigModule *module);
   ConfigModule *module() { return _module; }
@@ -72,12 +72,12 @@ protected:
   ProxyWidget* loadModule( ConfigModule *module );
 
 signals:
-  void newModule(const QString &name, const QString& docPath, const QString &quickhelp);
+  void newModule(const TQString &name, const TQString& docPath, const TQString &quickhelp);
   void changedModule(ConfigModule *module);
 
 private:
-  QWidget      *_basew;
-  QLabel       *_busyw;
+  TQWidget      *_basew;
+  TQLabel       *_busyw;
   ModuleWidget *_modulew;
   ConfigModule *_module;
 

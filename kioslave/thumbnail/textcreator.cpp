@@ -18,9 +18,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
-#include <qpixmap.h>
-#include <qimage.h>
+#include <tqfile.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
 
 #include <kstandarddirs.h>
 #include <kpixmapsplitter.h>
@@ -49,7 +49,7 @@ TextCreator::~TextCreator()
     delete [] m_data;
 }
 
-bool TextCreator::create(const QString &path, int width, int height, QImage &img)
+bool TextCreator::create(const TQString &path, int width, int height, TQImage &img)
 {
     // Filter out unwanted mimetypes
     KMimeType::Ptr mimeType = KMimeType::findByPath( path );
@@ -59,12 +59,12 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
     if ( !m_splitter )
     {
         m_splitter = new KPixmapSplitter;
-        QString pixmap = locate( "data", "konqueror/pics/thumbnailfont_7x4.png" );
+        TQString pixmap = locate( "data", "konqueror/pics/thumbnailfont_7x4.png" );
         if ( !pixmap.isEmpty() )
         {
             // FIXME: make font/glyphsize configurable...
-            m_splitter->setPixmap( QPixmap( pixmap ));
-            m_splitter->setItemSize( QSize( 4, 7 ));
+            m_splitter->setPixmap( TQPixmap( pixmap ));
+            m_splitter->setItemSize( TQSize( 4, 7 ));
         }
     }
 
@@ -72,7 +72,7 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
 
     // determine some sizes...
     // example: width: 60, height: 64
-    QSize pixmapSize( width, height );
+    TQSize pixmapSize( width, height );
     if (height * 3 > width * 4)
         pixmapSize.setHeight( width * 4 / 3 );
     else
@@ -85,7 +85,7 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
     int xborder = 1 + pixmapSize.width()/16;  // minimum x-border
     int yborder = 1 + pixmapSize.height()/16; // minimum y-border
 
-    QSize chSize = m_splitter->itemSize(); // the size of one char
+    TQSize chSize = m_splitter->itemSize(); // the size of one char
     int xOffset = chSize.width();
     int yOffset = chSize.height();
 
@@ -99,7 +99,7 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
     const int bytesToRead = 120 * numLines;
 
     // create text-preview
-    QFile file( path );
+    TQFile file( path );
     if ( file.open( IO_ReadOnly ))
     {
         if ( !m_data || m_dataSize < bytesToRead + 1 )
@@ -114,12 +114,12 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
         {
             ok = true;
             m_data[read] = '\0';
-            QString text = QString::fromLocal8Bit( m_data );
+            TQString text = TQString::fromLocal8Bit( m_data );
             // FIXME: maybe strip whitespace and read more?
 
-            m_pixmap.fill( QColor( 245, 245, 245 ) ); // light-grey background
+            m_pixmap.fill( TQColor( 245, 245, 245 ) ); // light-grey background
 
-            QRect rect;
+            TQRect rect;
 
             int rest = m_pixmap.width() - (numCharsPerLine * chSize.width());
             xborder = QMAX( xborder, rest/2); // center horizontally
@@ -132,7 +132,7 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
             int posLastLine = m_pixmap.height() - (chSize.height() + yborder);
             bool newLine = false;
             Q_ASSERT( posNewLine > 0 );
-            const QPixmap *fontPixmap = &(m_splitter->pixmap());
+            const TQPixmap *fontPixmap = &(m_splitter->pixmap());
 
             for ( uint i = 0; i < text.length(); i++ )
             {
@@ -158,7 +158,7 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
                 }
 
                 // check for newlines in the text (unix,dos)
-                QChar ch = text.at( i );
+                TQChar ch = text.at( i );
                 if ( ch == '\n' )
                 {
                     newLine = true;
@@ -174,7 +174,7 @@ bool TextCreator::create(const QString &path, int width, int height, QImage &img
                 rect = m_splitter->coordinates( ch );
                 if ( !rect.isEmpty() )
                 {
-                    bitBlt( &m_pixmap, QPoint(x,y), fontPixmap, rect, Qt::CopyROP );
+                    bitBlt( &m_pixmap, TQPoint(x,y), fontPixmap, rect, Qt::CopyROP );
                 }
 
                 x += xOffset; // next character

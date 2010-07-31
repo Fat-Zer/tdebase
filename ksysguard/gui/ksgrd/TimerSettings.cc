@@ -24,37 +24,37 @@
 #include <kaccelmanager.h>
 #include <klocale.h>
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqspinbox.h>
+#include <tqwhatsthis.h>
 
 #include "TimerSettings.h"
 
-TimerSettings::TimerSettings( QWidget *parent, const char *name )
+TimerSettings::TimerSettings( TQWidget *parent, const char *name )
   : KDialogBase( Plain, i18n( "Timer Settings" ), Ok | Cancel,
                  Ok, parent, name, true, true )
 {
-  QFrame *page = plainPage();
+  TQFrame *page = plainPage();
 
-  QGridLayout *layout = new QGridLayout( page, 2, 2, 0, spacingHint() );
+  TQGridLayout *layout = new TQGridLayout( page, 2, 2, 0, spacingHint() );
 
-  mUseGlobalUpdate = new QCheckBox( i18n( "Use update interval of worksheet" ), page );
+  mUseGlobalUpdate = new TQCheckBox( i18n( "Use update interval of worksheet" ), page );
   layout->addMultiCellWidget( mUseGlobalUpdate, 0, 0, 0, 1 );
 
-  mLabel = new QLabel( i18n( "Update interval:" ), page );
+  mLabel = new TQLabel( i18n( "Update interval:" ), page );
   layout->addWidget( mLabel, 1, 0 );
 
-  mInterval = new QSpinBox( 1, 300, 1, page );
+  mInterval = new TQSpinBox( 1, 300, 1, page );
   mInterval->setValue( 2 );
   mInterval->setSuffix( i18n( " sec" ) );
   layout->addWidget( mInterval, 1, 1 );
   mLabel->setBuddy( mInterval );
-  QWhatsThis::add( mInterval, i18n( "All displays of the sheet are updated at the rate specified here." ) );
+  TQWhatsThis::add( mInterval, i18n( "All displays of the sheet are updated at the rate specified here." ) );
 
-  connect( mUseGlobalUpdate, SIGNAL( toggled( bool ) ),
-           SLOT( globalUpdateChanged( bool ) ) );
+  connect( mUseGlobalUpdate, TQT_SIGNAL( toggled( bool ) ),
+           TQT_SLOT( globalUpdateChanged( bool ) ) );
 
   mUseGlobalUpdate->setChecked( true );
 

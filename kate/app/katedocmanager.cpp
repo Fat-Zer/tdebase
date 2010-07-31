@@ -42,12 +42,12 @@
 #include <kio/job.h>
 #include <kwin.h>
 
-#include <qdatetime.h>
-#include <qtextcodec.h>
-#include <qprogressdialog.h>
+#include <tqdatetime.h>
+#include <tqtextcodec.h>
+#include <tqprogressdialog.h>
 
-KateDocManager::KateDocManager (QObject *parent)
- : QObject (parent)
+KateDocManager::KateDocManager (TQObject *parent)
+ : TQObject (parent)
  , m_saveMetaInfos(true)
  , m_daysMetaInfos(0)
 {
@@ -80,13 +80,13 @@ KateDocManager::~KateDocManager ()
     // purge saved filesessions
     if (m_daysMetaInfos > 0)
     {
-      QStringList groups = m_metaInfos->groupList();
-      QDateTime *def = new QDateTime(QDate(1970, 1, 1));
-      for (QStringList::Iterator it = groups.begin(); it != groups.end(); ++it)
+      TQStringList groups = m_metaInfos->groupList();
+      TQDateTime *def = new TQDateTime(TQDate(1970, 1, 1));
+      for (TQStringList::Iterator it = groups.begin(); it != groups.end(); ++it)
       {
         m_metaInfos->setGroup(*it);
-        QDateTime last = m_metaInfos->readDateTimeEntry("Time", def);
-        if (last.daysTo(QDateTime::currentDateTime()) > m_daysMetaInfos)
+        TQDateTime last = m_metaInfos->readDateTimeEntry("Time", def);
+        if (last.daysTo(TQDateTime::currentDateTime()) > m_daysMetaInfos)
           m_metaInfos->deleteGroup(*it);
       }
       delete def;
@@ -116,7 +116,7 @@ Kate::Document *KateDocManager::createDoc ()
   emit documentCreated ((Kate::Document *)doc);
   emit m_documentManager->documentCreated ((Kate::Document *)doc);
 
-  connect(doc,SIGNAL(modifiedOnDisc(Kate::Document *, bool, unsigned char)),this,SLOT(slotModifiedOnDisc(Kate::Document *, bool, unsigned char)));
+  connect(doc,TQT_SIGNAL(modifiedOnDisc(Kate::Document *, bool, unsigned char)),this,TQT_SLOT(slotModifiedOnDisc(Kate::Document *, bool, unsigned char)));
   return (Kate::Document *)doc;
 }
 
@@ -204,7 +204,7 @@ uint KateDocManager::documents ()
 
 int KateDocManager::findDocument ( KURL url )
 {
-  QPtrListIterator<Kate::Document> it(m_docList);
+  TQPtrListIterator<Kate::Document> it(m_docList);
 
   for (; it.current(); ++it)
   {
@@ -216,7 +216,7 @@ int KateDocManager::findDocument ( KURL url )
 
 Kate::Document *KateDocManager::findDocumentByUrl( KURL url )
 {
-  for (QPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it)
+  for (TQPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it)
   {
     if ( it.current()->url() == url)
       return it.current();
@@ -231,7 +231,7 @@ bool KateDocManager::isOpen(KURL url)
   return findDocumentByUrl (url) != 0;
 }
 
-Kate::Document *KateDocManager::openURL (const KURL& url,const QString &encoding, uint *id, bool isTempFile)
+Kate::Document *KateDocManager::openURL (const KURL& url,const TQString &encoding, uint *id, bool isTempFile)
 {
   // special handling if still only the first initial doc is there
   if (!documentList().isEmpty() && (documentList().count() == 1) && (!documentList().at(0)->isModified() && documentList().at(0)->url().isEmpty()))
@@ -248,7 +248,7 @@ Kate::Document *KateDocManager::openURL (const KURL& url,const QString &encoding
 
     if ( isTempFile && !url.isEmpty() && url.isLocalFile() )
     {
-      QFileInfo fi( url.path() );
+      TQFileInfo fi( url.path() );
       if ( fi.exists() )
       {
         m_tempFiles[ doc->documentNumber() ] = qMakePair(url, fi.lastModified());
@@ -256,7 +256,7 @@ Kate::Document *KateDocManager::openURL (const KURL& url,const QString &encoding
       }
     }
 
-    connect(doc, SIGNAL(modStateChanged(Kate::Document *)), this, SLOT(slotModChanged(Kate::Document *)));
+    connect(doc, TQT_SIGNAL(modStateChanged(Kate::Document *)), this, TQT_SLOT(slotModChanged(Kate::Document *)));
 
     emit initialDocumentReplaced();
 
@@ -279,7 +279,7 @@ Kate::Document *KateDocManager::openURL (const KURL& url,const QString &encoding
 
   if ( isTempFile && !url.isEmpty() && url.isLocalFile() )
   {
-    QFileInfo fi( url.path() );
+    TQFileInfo fi( url.path() );
     if ( fi.exists() )
     {
       m_tempFiles[ doc->documentNumber() ] = qMakePair(url, fi.lastModified());
@@ -298,7 +298,7 @@ bool KateDocManager::closeDocument(class Kate::Document *doc,bool closeURL)
   if (closeURL)
   if (!doc->closeURL()) return false;
 
-  QPtrList<Kate::View> closeList;
+  TQPtrList<Kate::View> closeList;
   uint documentNumber = doc->documentNumber();
 
   for (uint i=0; i < KateApp::self()->mainWindows (); i++ )
@@ -308,7 +308,7 @@ bool KateDocManager::closeDocument(class Kate::Document *doc,bool closeURL)
 
   if ( closeURL && m_tempFiles.contains( documentNumber ) )
   {
-    QFileInfo fi( m_tempFiles[ documentNumber ].first.path() );
+    TQFileInfo fi( m_tempFiles[ documentNumber ].first.path() );
     if ( fi.lastModified() <= m_tempFiles[ documentNumber ].second /*||
          KMessageBox::questionYesNo( KateApp::self()->activeMainWindow(),
             i18n("The supposedly temporary file %1 has been modified. "
@@ -346,7 +346,7 @@ bool KateDocManager::closeAllDocuments(bool closeURL)
 {
   bool res = true;
 
-  QPtrList<Kate::Document> docs = m_docList;
+  TQPtrList<Kate::Document> docs = m_docList;
 
   for (uint i=0; i < KateApp::self()->mainWindows (); i++ )
   {
@@ -370,9 +370,9 @@ bool KateDocManager::closeAllDocuments(bool closeURL)
   return res;
 }
 
-QPtrList<Kate::Document> KateDocManager::modifiedDocumentList() {
-  QPtrList<Kate::Document> modified;
-  for (QPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it) {
+TQPtrList<Kate::Document> KateDocManager::modifiedDocumentList() {
+  TQPtrList<Kate::Document> modified;
+  for (TQPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it) {
     Kate::Document *doc = it.current();
     if (doc->isModified()) {
       modified.append(doc);
@@ -385,7 +385,7 @@ QPtrList<Kate::Document> KateDocManager::modifiedDocumentList() {
 bool KateDocManager::queryCloseDocuments(KateMainWindow *w)
 {
   uint docCount = m_docList.count();
-  for (QPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it)
+  for (TQPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it)
   {
     Kate::Document *doc = it.current();
 
@@ -402,7 +402,7 @@ bool KateDocManager::queryCloseDocuments(KateMainWindow *w)
       if (msgres==KMessageBox::Yes)
       {
         KEncodingFileDialog::Result r=KEncodingFileDialog::getSaveURLAndEncoding(
-              KTextEditor::encodingInterface(doc)->encoding(),QString::null,QString::null,w,i18n("Save As"));
+              KTextEditor::encodingInterface(doc)->encoding(),TQString::null,TQString::null,w,i18n("Save As"));
 
         doc->setEncoding( r.encoding );
 
@@ -439,23 +439,23 @@ bool KateDocManager::queryCloseDocuments(KateMainWindow *w)
 
 void KateDocManager::saveAll()
 {
-  for (QPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it)
+  for (TQPtrListIterator<Kate::Document> it(m_docList); it.current(); ++it)
     if ( it.current()->isModified() && it.current()->views().count() )
       ((Kate::View*)it.current()->views().first())->save();
 }
 
 void KateDocManager::saveDocumentList (KConfig* config)
 {
-  QString prevGrp=config->group();
+  TQString prevGrp=config->group();
   config->setGroup ("Open Documents");
-  QString grp = config->group();
+  TQString grp = config->group();
 
   config->writeEntry ("Count", m_docList.count());
 
   int i=0;
   for ( Kate::Document *doc = m_docList.first(); doc; doc = m_docList.next() )
   {
-    config->setGroup(QString("Document %1").arg(i));
+    config->setGroup(TQString("Document %1").arg(i));
     doc->writeSessionConfig(config);
     config->setGroup(grp);
 
@@ -467,9 +467,9 @@ void KateDocManager::saveDocumentList (KConfig* config)
 
 void KateDocManager::restoreDocumentList (KConfig* config)
 {
-  QString prevGrp=config->group();
+  TQString prevGrp=config->group();
   config->setGroup ("Open Documents");
-  QString grp = config->group();
+  TQString grp = config->group();
 
   unsigned int count = config->readUnsignedNumEntry("Count", 0);
 
@@ -479,9 +479,9 @@ void KateDocManager::restoreDocumentList (KConfig* config)
     return;
   }
 
-  QProgressDialog *pd = new QProgressDialog(
+  TQProgressDialog *pd = new TQProgressDialog(
         i18n("Reopening files from the last session..."),
-        QString::null,
+        TQString::null,
         count,
         0,
         "openprog");
@@ -492,7 +492,7 @@ void KateDocManager::restoreDocumentList (KConfig* config)
   bool first = true;
   for (unsigned int i=0; i < count; i++)
   {
-    config->setGroup(QString("Document %1").arg(i));
+    config->setGroup(TQString("Document %1").arg(i));
     Kate::Document *doc = 0;
 
     if (first)
@@ -540,13 +540,13 @@ bool KateDocManager::loadMetaInfos(Kate::Document *doc, const KURL &url)
   if (!m_metaInfos->hasGroup(url.prettyURL()))
     return false;
 
-  QCString md5;
+  TQCString md5;
   bool ok = true;
 
   if (computeUrlMD5(url, md5))
   {
     m_metaInfos->setGroup(url.prettyURL());
-    QString old_md5 = m_metaInfos->readEntry("MD5");
+    TQString old_md5 = m_metaInfos->readEntry("MD5");
 
     if ((const char *)md5 == old_md5)
       doc->readSessionConfig(m_metaInfos);
@@ -567,7 +567,7 @@ bool KateDocManager::loadMetaInfos(Kate::Document *doc, const KURL &url)
  */
 void KateDocManager::saveMetaInfos(Kate::Document *doc)
 {
-  QCString md5;
+  TQCString md5;
 
   if (!m_saveMetaInfos)
     return;
@@ -583,14 +583,14 @@ void KateDocManager::saveMetaInfos(Kate::Document *doc)
     m_metaInfos->setGroup(doc->url().prettyURL());
     doc->writeSessionConfig(m_metaInfos);
     m_metaInfos->writeEntry("MD5", (const char *)md5);
-    m_metaInfos->writeEntry("Time", QDateTime::currentDateTime());
+    m_metaInfos->writeEntry("Time", TQDateTime::currentDateTime());
     m_metaInfos->sync();
   }
 }
 
-bool KateDocManager::computeUrlMD5(const KURL &url, QCString &result)
+bool KateDocManager::computeUrlMD5(const KURL &url, TQCString &result)
 {
-  QFile f(url.path());
+  TQFile f(url.path());
 
   if (f.open(IO_ReadOnly))
   {

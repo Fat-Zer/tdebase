@@ -26,8 +26,8 @@
 class HomeProtocol : public KIO::ForwardingSlaveBase
 {
 public:
-	HomeProtocol(const QCString &protocol, const QCString &pool,
-	             const QCString &app);
+	HomeProtocol(const TQCString &protocol, const TQCString &pool,
+	             const TQCString &app);
 	virtual ~HomeProtocol();
 
 	virtual bool rewriteURL(const KURL &url, KURL &newUrl);

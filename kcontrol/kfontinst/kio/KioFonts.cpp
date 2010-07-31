@@ -49,13 +49,13 @@
 #include <kio/netaccess.h>
 #include <kio/slaveinterface.h>
 #include <kio/connection.h>
-#include <qtextstream.h>
+#include <tqtextstream.h>
 #include <kmimetype.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <qdir.h>
-#include <qdatastream.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqdatastream.h>
+#include <tqregexp.h>
 #include <kinstance.h>
 #include <klargefile.h>
 #include <ktempfile.h>
@@ -76,8 +76,8 @@
 
 #ifdef KFI_FORCE_DEBUG_TO_STDERR
 
-#include <qtextstream.h>
-QTextOStream ostr(stderr);
+#include <tqtextstream.h>
+TQTextOStream ostr(stderr);
 #define KFI_DBUG ostr << "[" << (int)(getpid()) << "] "
 
 #else
@@ -121,32 +121,32 @@ int kdemain(int argc, char **argv)
 namespace KFI
 {
 
-inline bool isSysFolder(const QString &sect)
+inline bool isSysFolder(const TQString &sect)
 {
     return i18n(KFI_KIO_FONTS_SYS)==sect || KFI_KIO_FONTS_SYS==sect;
 }
 
-inline bool isUserFolder(const QString &sect)
+inline bool isUserFolder(const TQString &sect)
 {
     return i18n(KFI_KIO_FONTS_USER)==sect || KFI_KIO_FONTS_USER==sect;
 }
 
-static QString removeMultipleExtension(const KURL &url)
+static TQString removeMultipleExtension(const KURL &url)
 {
-    QString fname(url.fileName());
+    TQString fname(url.fileName());
     int     pos;
 
-    if(-1!=(pos=fname.findRev(QString::fromLatin1(constMultipleExtension))))
+    if(-1!=(pos=fname.findRev(TQString::fromLatin1(constMultipleExtension))))
         fname=fname.left(pos);
 
     return fname;
 }
 
-static QString modifyName(const QString &fname)
+static TQString modifyName(const TQString &fname)
 {
     static const char constSymbols[]={ '-', ' ', ':', 0 };
 
-    QString rv(fname);
+    TQString rv(fname);
     int     dotPos=rv.findRev('.');
 
     if(-1!=dotPos)
@@ -163,7 +163,7 @@ static QString modifyName(const QString &fname)
     return rv;
 }
 
-static int getSize(const QCString &file)
+static int getSize(const TQCString &file)
 {
     KDE_struct_stat buff;
 
@@ -185,12 +185,12 @@ static int getSize(const QCString &file)
     return -1;
 }
 
-static int getFontSize(const QString &file)
+static int getFontSize(const TQString &file)
 {
     int size=0;
 
     KURL::List  urls;
-    QStringList files;
+    TQStringList files;
 
     Misc::getAssociatedUrls(KURL(file), urls);
 
@@ -205,12 +205,12 @@ static int getFontSize(const QString &file)
             files.append((*uIt).path());
     }
 
-    QStringList::Iterator it(files.begin()),
+    TQStringList::Iterator it(files.begin()),
                           end(files.end());
 
     for(; it!=end; ++it)
     {
-        int s=getSize(QFile::encodeName(*it));
+        int s=getSize(TQFile::encodeName(*it));
 
         if(s>-1)
             size+=s;
@@ -219,9 +219,9 @@ static int getFontSize(const QString &file)
     return size;
 }
 
-static int getSize(QValueList<FcPattern *> &patterns)
+static int getSize(TQValueList<FcPattern *> &patterns)
 {
-    QValueList<FcPattern *>::Iterator it,
+    TQValueList<FcPattern *>::Iterator it,
                                       end=patterns.end();
     int                               size=0;
 
@@ -231,7 +231,7 @@ static int getSize(QValueList<FcPattern *> &patterns)
     return size;
 }
 
-static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l, const QString &s=QString::null)
+static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l, const TQString &s=TQString::null)
 {
     KIO::UDSAtom atom;
     atom.m_uds = ID;
@@ -240,12 +240,12 @@ static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l, const QString
     entry.append(atom);
 }
 
-static bool createFolderUDSEntry(KIO::UDSEntry &entry, const QString &name, const QString &path, bool sys)
+static bool createFolderUDSEntry(KIO::UDSEntry &entry, const TQString &name, const TQString &path, bool sys)
 {
     KFI_DBUG << "createFolderUDSEntry " << name << ' ' << path << ' ' << sys << ' ' << endl;
 
     KDE_struct_stat buff;
-    QCString        cPath(QFile::encodeName(path));
+    TQCString        cPath(TQFile::encodeName(path));
 
     entry.clear();
 
@@ -262,7 +262,7 @@ static bool createFolderUDSEntry(KIO::UDSEntry &entry, const QString &name, cons
             if(n!= -1)
                 buffer2[n]='\0';
 
-            addAtom(entry, KIO::UDS_LINK_DEST, 0, QString::fromLocal8Bit(buffer2));
+            addAtom(entry, KIO::UDS_LINK_DEST, 0, TQString::fromLocal8Bit(buffer2));
 
             if(-1==KDE_stat(cPath, &buff))
             {
@@ -282,17 +282,17 @@ static bool createFolderUDSEntry(KIO::UDSEntry &entry, const QString &name, cons
         addAtom(entry, KIO::UDS_MODIFICATION_TIME, buff.st_mtime);
 
         struct passwd *user = getpwuid(buff.st_uid);
-        addAtom(entry, KIO::UDS_USER, 0, user ? user->pw_name : QString::number(buff.st_uid).latin1());
+        addAtom(entry, KIO::UDS_USER, 0, user ? user->pw_name : TQString::number(buff.st_uid).latin1());
 
         struct group *grp = getgrgid(buff.st_gid);
-        addAtom(entry, KIO::UDS_GROUP, 0, grp ? grp->gr_name : QString::number(buff.st_gid).latin1());
+        addAtom(entry, KIO::UDS_GROUP, 0, grp ? grp->gr_name : TQString::number(buff.st_gid).latin1());
 
         addAtom(entry, KIO::UDS_ACCESS_TIME, buff.st_atime);
         addAtom(entry, KIO::UDS_MIME_TYPE, 0, sys
                                                 ? KFI_KIO_FONTS_PROTOCOL"/system-folder" 
                                                 : KFI_KIO_FONTS_PROTOCOL"/folder");
         addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
-        QString url(KFI_KIO_FONTS_PROTOCOL+QString::fromLatin1(":/"));
+        TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::fromLatin1(":/"));
         return true;
     }
     else if (sys && !Misc::root())   // Default system fonts folder does not actually exist yet!
@@ -313,7 +313,7 @@ static bool createFolderUDSEntry(KIO::UDSEntry &entry, const QString &name, cons
     return false;
 }
 
-static bool createFontUDSEntry(KIO::UDSEntry &entry, const QString &name, QValueList<FcPattern *> &patterns, bool sys)
+static bool createFontUDSEntry(KIO::UDSEntry &entry, const TQString &name, TQValueList<FcPattern *> &patterns, bool sys)
 {
     KFI_DBUG << "createFontUDSEntry " << name << ' ' << patterns.count() << endl;
 
@@ -331,8 +331,8 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const QString &name, QValue
 
     //
     // In case of mixed bitmap/scalable - prefer scalable
-    QValueList<FcPattern *>           sortedPatterns;
-    QValueList<FcPattern *>::Iterator it,
+    TQValueList<FcPattern *>           sortedPatterns;
+    TQValueList<FcPattern *>::Iterator it,
                                       end(patterns.end());
     FcBool                            b=FcFalse;
 
@@ -348,8 +348,8 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const QString &name, QValue
 
     for(it=sortedPatterns.begin(); it!=end; ++it)
     {
-        QString         path(CFcEngine::getFcString(*it, FC_FILE));
-        QCString        cPath(QFile::encodeName(path));
+        TQString         path(CFcEngine::getFcString(*it, FC_FILE));
+        TQCString        cPath(TQFile::encodeName(path));
         KDE_struct_stat buff;
 
         if(-1!=KDE_lstat(cPath, &buff))
@@ -366,7 +366,7 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const QString &name, QValue
                 if(n!= -1)
                     buffer2[n]='\0';
 
-                addAtom(entry, KIO::UDS_LINK_DEST, 0, QString::fromLocal8Bit(buffer2));
+                addAtom(entry, KIO::UDS_LINK_DEST, 0, TQString::fromLocal8Bit(buffer2));
 
                 if(-1==KDE_stat(cPath, &buff))
                 {
@@ -384,24 +384,24 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const QString &name, QValue
             addAtom(entry, KIO::UDS_MODIFICATION_TIME, buff.st_mtime);
 
             struct passwd *user = getpwuid(buff.st_uid);
-            addAtom(entry, KIO::UDS_USER, 0, user ? user->pw_name : QString::number(buff.st_uid).latin1());
+            addAtom(entry, KIO::UDS_USER, 0, user ? user->pw_name : TQString::number(buff.st_uid).latin1());
 
             struct group *grp = getgrgid(buff.st_gid);
-            addAtom(entry, KIO::UDS_GROUP, 0, grp ? grp->gr_name : QString::number(buff.st_gid).latin1());
+            addAtom(entry, KIO::UDS_GROUP, 0, grp ? grp->gr_name : TQString::number(buff.st_gid).latin1());
 
             addAtom(entry, KIO::UDS_ACCESS_TIME, buff.st_atime);
             addAtom(entry, KIO::UDS_MIME_TYPE, 0, KMimeType::findByPath(path, 0, true)->name());
             addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 
-            QString url(KFI_KIO_FONTS_PROTOCOL+QString::fromLatin1(":/"));
+            TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::fromLatin1(":/"));
 
             if(!Misc::root())
             {
                 url+=sys ? i18n(KFI_KIO_FONTS_SYS) : i18n(KFI_KIO_FONTS_USER);
-                url+=QString::fromLatin1("/");
+                url+=TQString::fromLatin1("/");
             }
             if(multiple)
-                url+=name+QString::fromLatin1(constMultipleExtension);
+                url+=name+TQString::fromLatin1(constMultipleExtension);
             else
                 url+=Misc::getFile(path);
             addAtom(entry, KIO::UDS_URL, 0, url);
@@ -423,7 +423,7 @@ static KURL getRedirect(const KURL &u)
     // Go from fonts:/System to fonts:/
 
     KURL    redirect(u);
-    QString path(u.path()),
+    TQString path(u.path()),
             sect(CKioFonts::getSect(path));
 
     path.remove(sect);
@@ -439,13 +439,13 @@ static bool nonRootSys(const KURL &u)
     return !Misc::root() && isSysFolder(CKioFonts::getSect(u.path()));
 }
 
-static QString getFontFolder(const QString &defaultDir, const QString &root, QStringList &dirs)
+static TQString getFontFolder(const TQString &defaultDir, const TQString &root, TQStringList &dirs)
 {
     if(dirs.contains(defaultDir))
         return defaultDir;
     else
     {
-        QStringList::Iterator it,
+        TQStringList::Iterator it,
                               end=dirs.end();
         bool                  found=false;
 
@@ -454,7 +454,7 @@ static QString getFontFolder(const QString &defaultDir, const QString &root, QSt
                 return *it;
     }
 
-    return QString::null;
+    return TQString::null;
 }
 
 static bool writeAll(int fd, const char *buf, size_t len)
@@ -479,16 +479,16 @@ static bool checkExt(const char *fname, const char *ext)
                  : false;
 }
 
-static bool isAAfm(const QString &fname)
+static bool isAAfm(const TQString &fname)
 {
-    if(checkExt(QFile::encodeName(fname), "afm"))   // CPD? Is this a necessary check?
+    if(checkExt(TQFile::encodeName(fname), "afm"))   // CPD? Is this a necessary check?
     {
-        QFile file(fname);
+        TQFile file(fname);
 
         if(file.open(IO_ReadOnly))
         {
-            QTextStream stream(&file);
-            QString     line;
+            TQTextStream stream(&file);
+            TQString     line;
 
             for(int lc=0; lc<30 && !stream.atEnd(); ++lc)
             {
@@ -508,17 +508,17 @@ static bool isAAfm(const QString &fname)
     return false;
 }
 
-static bool isAPfm(const QString &fname)
+static bool isAPfm(const TQString &fname)
 {
     bool ok=false;
 
     // I know extension checking is bad, but Ghostscript's pf2afm requires the pfm file to
     // have the .pfm extension...
-    if(checkExt(QFile::encodeName(fname), "pfm"))
+    if(checkExt(TQFile::encodeName(fname), "pfm"))
     {
         //
         // OK, the extension matches, so perform a little contents checking...
-        FILE *f=fopen(QFile::encodeName(fname).data(), "r");
+        FILE *f=fopen(TQFile::encodeName(fname).data(), "r");
 
         if(f)
         {
@@ -561,14 +561,14 @@ static bool isAPfm(const QString &fname)
 
 //
 // This function is *only* used for the generation of AFMs from PFMs.
-static bool isAType1(const QString &fname)
+static bool isAType1(const TQString &fname)
 {
     static const char *       constStr="%!PS-AdobeFont-";
     static const unsigned int constStrLen=15;
     static const unsigned int constPfbOffset=6;
     static const unsigned int constPfbLen=constStrLen+constPfbOffset;
 
-    QCString name(QFile::encodeName(fname));
+    TQCString name(TQFile::encodeName(fname));
     char     buffer[constPfbLen];
     bool     match=false;
 
@@ -600,53 +600,53 @@ static bool isAType1(const QString &fname)
     return match;
 }
 
-static QString getMatch(const QString &file, const char *extension)
+static TQString getMatch(const TQString &file, const char *extension)
 {
-    QString f(Misc::changeExt(file, extension));
+    TQString f(Misc::changeExt(file, extension));
 
-    return Misc::fExists(f) ? f : QString::null;
+    return Misc::fExists(f) ? f : TQString::null;
 }
 
 inline bool isHidden(const KURL &u)
 {
-    return QChar('.')==u.fileName()[0];
+    return TQChar('.')==u.fileName()[0];
 }
 
 struct FontList
 {
     struct Path
     {
-        Path(const QString &p=QString::null) : orig(p) { }
+        Path(const TQString &p=TQString::null) : orig(p) { }
 
-        QString orig,
+        TQString orig,
                 modified;
 
         bool operator==(const Path &p) const { return p.orig==orig; }
     };
 
-    FontList(const QString &n=QString::null, const QString &p=QString::null) : name(n) { if(!p.isEmpty()) paths.append(Path(p)); }
+    FontList(const TQString &n=TQString::null, const TQString &p=TQString::null) : name(n) { if(!p.isEmpty()) paths.append(Path(p)); }
 
-    QString          name;
-    QValueList<Path> paths;
+    TQString          name;
+    TQValueList<Path> paths;
 
     bool operator==(const FontList &f) const { return f.name==name; }
 };
 
 //
 // This function returns a set of maping of from -> to for copy/move operations
-static bool getFontList(const QStringList &files, QMap<QString, QString> &map)
+static bool getFontList(const TQStringList &files, TQMap<TQString, TQString> &map)
 {
     //
     // First of all create a list of font files, and their paths
-    QStringList::ConstIterator it=files.begin(),
+    TQStringList::ConstIterator it=files.begin(),
                                end=files.end();
-    QValueList<FontList>       list;
+    TQValueList<FontList>       list;
 
     for(;it!=end; ++it)
     {
-        QString                        name(Misc::getFile(*it)),
+        TQString                        name(Misc::getFile(*it)),
                                        path(Misc::getDir(*it));
-        QValueList<FontList>::Iterator entry=list.find(FontList(name));
+        TQValueList<FontList>::Iterator entry=list.find(FontList(name));
 
         if(entry!=list.end())
         {
@@ -657,12 +657,12 @@ static bool getFontList(const QStringList &files, QMap<QString, QString> &map)
             list.append(FontList(name, path));
     }
 
-    QValueList<FontList>::Iterator fIt(list.begin()),
+    TQValueList<FontList>::Iterator fIt(list.begin()),
                                    fEnd(list.end());
 
     for(; fIt!=fEnd; ++fIt)
     {
-        QValueList<FontList::Path>::Iterator pBegin((*fIt).paths.begin()),
+        TQValueList<FontList::Path>::Iterator pBegin((*fIt).paths.begin()),
                                              pIt(++pBegin),
                                              pEnd((*fIt).paths.end());
         --pBegin;
@@ -705,7 +705,7 @@ static bool getFontList(const QStringList &files, QMap<QString, QString> &map)
     return list.count() ? true : false;
 }
 
-CKioFonts::CKioFonts(const QCString &pool, const QCString &app)
+CKioFonts::CKioFonts(const TQCString &pool, const TQCString &app)
          : KIO::SlaveBase(KFI_KIO_FONTS_PROTOCOL, pool, app),
            itsRoot(Misc::root()),
            itsUsingFcFpe(false),
@@ -735,7 +735,7 @@ CKioFonts::CKioFonts(const QCString &pool, const QCString &app)
     // 4. If either are not found, then add to local.conf / .fonts.conf
 
     FcStrList   *list=FcConfigGetFontDirs(FcInitLoadConfigAndFonts());
-    QStringList dirs;
+    TQStringList dirs;
     FcChar8     *dir;
 
     while((dir=FcStrListNext(list)))
@@ -745,8 +745,8 @@ CKioFonts::CKioFonts(const QCString &pool, const QCString &app)
 
     if(!itsRoot)
     {
-        QString home(Misc::dirSyntax(QDir::homeDirPath())),
-                defaultDir(Misc::dirSyntax(QDir::homeDirPath()+"/.fonts/")),
+        TQString home(Misc::dirSyntax(TQDir::homeDirPath())),
+                defaultDir(Misc::dirSyntax(TQDir::homeDirPath()+"/.fonts/")),
                 dir(getFontFolder(defaultDir, home, dirs));
 
         if(dir.isEmpty())  // Then no $HOME/ was found in fontconfigs dirs!
@@ -760,7 +760,7 @@ CKioFonts::CKioFonts(const QCString &pool, const QCString &app)
         itsFolders[FOLDER_USER].location=dir;
     }
 
-    QString sysDefault("/usr/local/share/fonts/"),
+    TQString sysDefault("/usr/local/share/fonts/"),
             sysDir(getFontFolder(sysDefault, "/usr/local/share/", dirs));
 
     if(sysDir.isEmpty())
@@ -804,9 +804,9 @@ CKioFonts::CKioFonts(const QCString &pool, const QCString &app)
                 }
                 else
                 {
-                    QString str(paths[path]);
+                    TQString str(paths[path]);
 
-                    str.replace(QRegExp("\\s*"), "");
+                    str.replace(TQRegExp("\\s*"), "");
 
                     if(0==str.find("unix/:"))
                         itsUsingXfsFpe=true;
@@ -833,14 +833,14 @@ void CKioFonts::listDir(const KURL &url)
         KIO::UDSEntry entry;
         int           size=0;
 
-        if(itsRoot || QStringList::split('/', url.path(), false).count()!=0)
+        if(itsRoot || TQStringList::split('/', url.path(), false).count()!=0)
         {
             EFolder folder=getFolder(url);
 
             totalSize(itsFolders[folder].fontMap.count());
             if(itsFolders[folder].fontMap.count())
             {
-                QMap<QString, QValueList<FcPattern *> >::Iterator it=itsFolders[folder].fontMap.begin(),
+                TQMap<TQString, TQValueList<FcPattern *> >::Iterator it=itsFolders[folder].fontMap.begin(),
                                                                   end=itsFolders[folder].fontMap.end();
 
                 for ( ; it != end; ++it)
@@ -874,7 +874,7 @@ void CKioFonts::stat(const KURL &url)
 
     if(updateFontList() && checkUrl(url, true))
     {
-        QString path(url.path(-1));
+        TQString path(url.path(-1));
 
         if(path.isEmpty())
         {
@@ -882,7 +882,7 @@ void CKioFonts::stat(const KURL &url)
             return;
         }
 
-        QStringList   pathList(QStringList::split('/', path, false));
+        TQStringList   pathList(TQStringList::split('/', path, false));
         KIO::UDSEntry entry;
         bool          err=false;
 
@@ -925,7 +925,7 @@ bool CKioFonts::createStatEntry(KIO::UDSEntry &entry, const KURL &url, EFolder f
 {
     KFI_DBUG << "createStatEntry " << url.path() << endl;
 
-    QMap<QString, QValueList<FcPattern *> >::Iterator it=getMap(url);
+    TQMap<TQString, TQValueList<FcPattern *> >::Iterator it=getMap(url);
 
     if(it!=itsFolders[folder].fontMap.end())
         return createFontUDSEntry(entry, it.key(), it.data(), FOLDER_SYS==folder);
@@ -937,7 +937,7 @@ void CKioFonts::get(const KURL &url)
     KFI_DBUG << "get " << url.path() << " query:" << url.query() << endl;
 
     bool        thumb="1"==metaData("thumbnail");
-    QStringList srcFiles;
+    TQStringList srcFiles;
 
     if(updateFontList() && checkUrl(url) && getSourceFiles(url, srcFiles))  // Any error will be logged in getSourceFiles
     {
@@ -948,8 +948,8 @@ void CKioFonts::get(const KURL &url)
         // read this and just ask Xft/fontconfig for the font data.
         if(thumb)
         {
-            QByteArray   array;
-            QTextOStream stream(array);
+            TQByteArray   array;
+            TQTextOStream stream(array);
 
             emit mimeType("text/plain");
 
@@ -959,13 +959,13 @@ void CKioFonts::get(const KURL &url)
             totalSize(array.size());
             data(array);
             processedSize(array.size());
-            data(QByteArray());
+            data(TQByteArray());
             processedSize(array.size());
             finished();
             return;
         }
 
-        QString         realPath,
+        TQString         realPath,
                         useMime;
         KDE_struct_stat buff;
         bool            multiple=false;
@@ -982,11 +982,11 @@ void CKioFonts::get(const KURL &url)
 
             if(tar.open(IO_WriteOnly))
             {
-                QMap<QString, QString> map;
+                TQMap<TQString, TQString> map;
 
                 getFontList(srcFiles, map);
 
-                QMap<QString, QString>::Iterator fIt(map.begin()),
+                TQMap<TQString, TQString>::Iterator fIt(map.begin()),
                                                  fEnd(map.end());
 
                 //
@@ -999,7 +999,7 @@ void CKioFonts::get(const KURL &url)
             }
         }
 
-        QCString realPathC(QFile::encodeName(realPath));
+        TQCString realPathC(TQFile::encodeName(realPath));
         KFI_DBUG << "real: " << realPathC << endl;
     
         if (-2==KDE_stat(realPathC.data(), &buff))
@@ -1024,7 +1024,7 @@ void CKioFonts::get(const KURL &url)
     
                 KIO::filesize_t processed=0;
                 char            buffer[MAX_IPC_SIZE];
-                QByteArray      array;
+                TQByteArray      array;
     
                 while(1)
                 {
@@ -1050,7 +1050,7 @@ void CKioFonts::get(const KURL &url)
                     processedSize(processed);
                 }
     
-                data(QByteArray());
+                data(TQByteArray());
                 close(fd);
     
                 processedSize(buff.st_size);
@@ -1080,9 +1080,9 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
     bool            changed=confirmUrl(url),
                     nrs=nonRootSys(url);
     EFolder         destFolder(getFolder(url));
-    QString         dest=itsFolders[destFolder].location+modifyName(url.fileName()),
+    TQString         dest=itsFolders[destFolder].location+modifyName(url.fileName()),
                     passwd;
-    QCString        destC=QFile::encodeName(dest);
+    TQCString        destC=TQFile::encodeName(dest);
     KDE_struct_stat buffDest;
     bool            destExists=(KDE_lstat(destC.data(), &buffDest)!= -1);
 
@@ -1111,7 +1111,7 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
     //       an AFM or PFM file
     //    3. If its OK, then get the fonts "name" from 
     KTempFile tmpFile;
-    QCString  tmpFileC(QFile::encodeName(tmpFile.name()));
+    TQCString  tmpFileC(TQFile::encodeName(tmpFile.name()));
 
     tmpFile.setAutoDelete(true);
 
@@ -1122,20 +1122,20 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
    
         if(nrs)  // Ask root to copy the font...
         {
-            QCString cmd;
+            TQCString cmd;
 
             if(!Misc::dExists(itsFolders[destFolder].location))
             {
                 cmd+="mkdir ";
-                cmd+=QFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
                 cmd+=" && chmod 0755 ";
-                cmd+=QFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
                 cmd+=" && ";
             }
             cmd+="cp -f ";
-            cmd+=QFile::encodeName(KProcess::quote(tmpFileC));
+            cmd+=TQFile::encodeName(KProcess::quote(tmpFileC));
             cmd+=" ";
-            cmd+=QFile::encodeName(KProcess::quote(destC));
+            cmd+=TQFile::encodeName(KProcess::quote(destC));
             cmd+=" && chmod 0644 ";
             cmd+=destC;
 
@@ -1177,16 +1177,16 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
     }
 }
 
-bool CKioFonts::putReal(const QString &destOrig, const QCString &destOrigC, bool origExists,
+bool CKioFonts::putReal(const TQString &destOrig, const TQCString &destOrigC, bool origExists,
                         int mode, bool resume)
 {
     bool    markPartial=config()->readBoolEntry("MarkPartial", true);
-    QString dest;
+    TQString dest;
 
     if (markPartial)
     {
-        QString  destPart(destOrig+QString::fromLatin1(".part"));
-        QCString destPartC(QFile::encodeName(destPart));
+        TQString  destPart(destOrig+TQString::fromLatin1(".part"));
+        TQCString destPartC(TQFile::encodeName(destPart));
 
         dest = destPart;
 
@@ -1218,7 +1218,7 @@ bool CKioFonts::putReal(const QString &destOrig, const QCString &destOrigC, bool
             // Catch errors when we try to open the file.
     }
 
-    QCString destC(QFile::encodeName(dest));
+    TQCString destC(TQFile::encodeName(dest));
 
     int fd;
 
@@ -1244,7 +1244,7 @@ bool CKioFonts::putReal(const QString &destOrig, const QCString &destOrigC, bool
     // Loop until we got 0 (end of data)
     do
     {
-        QByteArray buffer;
+        TQByteArray buffer;
 
         dataReq(); // Request for data
         result = readData(buffer);
@@ -1324,14 +1324,14 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
     {
         //checkUrl(u) // CPD as per comment in ::put()
 
-        QStringList srcFiles;
+        TQStringList srcFiles;
 
         if(getSourceFiles(src, srcFiles))  // Any error will be logged in getSourceFiles
         {
             KURL                   dest(d);
             bool                   changed=confirmUrl(dest);
             EFolder                destFolder(getFolder(dest));
-            QMap<QString, QString> map;
+            TQMap<TQString, TQString> map;
 
             if(!fromFonts)
                 map[src.path()]=src.fileName();
@@ -1345,28 +1345,28 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
             {
                 if(nonRootSys(dest))
                 {
-                    QCString cmd;
+                    TQCString cmd;
                     int      size=0;
 
                     if(!Misc::dExists(itsFolders[destFolder].location))
                     {
                         cmd+="mkdir ";
-                        cmd+=QFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
                         cmd+=" && chmod 0755 ";
-                        cmd+=QFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
                         cmd+=" && ";
                     }
 
-                    QMap<QString, QString>::Iterator fIt(map.begin()),
+                    TQMap<TQString, TQString>::Iterator fIt(map.begin()),
                                                      fEnd(map.end());
 
                     for(; fIt!=fEnd; ++fIt)
                     {
                         cmd+="cp -f ";
-                        cmd+=QFile::encodeName(KProcess::quote(fIt.key()));
+                        cmd+=TQFile::encodeName(KProcess::quote(fIt.key()));
                         cmd+=" ";
-                        cmd+=QFile::encodeName(KProcess::quote(itsFolders[destFolder].location+modifyName(fIt.data())));
-                        int s=getSize(QFile::encodeName(fIt.key()));
+                        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location+modifyName(fIt.data())));
+                        int s=getSize(TQFile::encodeName(fIt.key()));
                         if(s>0)
                             size+=s;
                         if(++fIt!=fEnd)
@@ -1379,7 +1379,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
     
                     totalSize(size);
   
-                    QString passwd=getRootPasswd();
+                    TQString passwd=getRootPasswd();
 
                     if(doRootCmd(cmd, passwd))
                     {
@@ -1396,13 +1396,13 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
                 }
                 else
                 {
-                    QMap<QString, QString>::Iterator fIt(map.begin()),
+                    TQMap<TQString, TQString>::Iterator fIt(map.begin()),
                                                      fEnd(map.end());
 
                     for(; fIt!=fEnd; ++fIt)
                     {
-                        QCString        realSrc(QFile::encodeName(fIt.key())),
-                                        realDest(QFile::encodeName(itsFolders[destFolder].location+modifyName(fIt.data())));
+                        TQCString        realSrc(TQFile::encodeName(fIt.key())),
+                                        realDest(TQFile::encodeName(itsFolders[destFolder].location+modifyName(fIt.data())));
                         KDE_struct_stat buffSrc;
 
                         if(-1==KDE_stat(realSrc.data(), &buffSrc))
@@ -1437,7 +1437,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
 
                         KIO::filesize_t processed = 0;
                         char            buffer[MAX_IPC_SIZE];
-                        QByteArray      array;
+                        TQByteArray      array;
     
                         while(1)
                         {
@@ -1521,34 +1521,34 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
         // Can't rename from/to file:/ -> therefore rename can only be from fonts:/System to fonts:/Personal,
         // or vice versa.
 
-        QStringList srcFiles;
+        TQStringList srcFiles;
 
         if(getSourceFiles(src, srcFiles))   // Any error will be logged in getSourceFiles
         {
             KURL                   dest(d);
             bool                   changed=confirmUrl(dest);
             EFolder                destFolder(getFolder(dest));
-            QMap<QString, QString> map;
+            TQMap<TQString, TQString> map;
 
             if(confirmMultiple(src, srcFiles, FOLDER_SYS==destFolder ? FOLDER_USER : FOLDER_SYS, OP_MOVE) &&
                getFontList(srcFiles, map) &&
                checkDestFiles(src, map, dest, destFolder, overwrite))
             {
-                QMap<QString, QString>::Iterator fIt(map.begin()),
+                TQMap<TQString, TQString>::Iterator fIt(map.begin()),
                                                  fEnd(map.end());
                 bool                             askPasswd=true,
                                                  toSys=FOLDER_SYS==destFolder;
-                QCString                         userId,
+                TQCString                         userId,
                                                  groupId,
-                                                 destDir(QFile::encodeName(KProcess::quote(itsFolders[destFolder].location)));
+                                                 destDir(TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location)));
 
                 userId.setNum(toSys ? 0 : getuid());
                 groupId.setNum(toSys ? 0 : getgid());
 
                 for(; fIt!=fEnd; ++fIt)
                 {
-                    QCString cmd,
-                             destFile(QFile::encodeName(KProcess::quote(itsFolders[destFolder].location+fIt.data())));
+                    TQCString cmd,
+                             destFile(TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location+fIt.data())));
 
                     if(toSys && !Misc::dExists(itsFolders[destFolder].location))
                     {
@@ -1558,7 +1558,7 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
                     }
 
                     cmd+="mv -f ";
-                    cmd+=QFile::encodeName(KProcess::quote(fIt.key()));
+                    cmd+=TQFile::encodeName(KProcess::quote(fIt.key()));
                     cmd+=" ";
                     cmd+=destFile;
                     cmd+=" && chmod -f 0644 ";
@@ -1570,7 +1570,7 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
                     cmd+=" ";
                     cmd+=destFile;
 
-                    QString sysDir,
+                    TQString sysDir,
                             userDir;
 
                     if(FOLDER_SYS==destFolder)
@@ -1610,28 +1610,28 @@ void CKioFonts::del(const KURL &url, bool)
 {
     KFI_DBUG << "del " << url.path() << endl;
 
-    QValueList<FcPattern *> *entries;
+    TQValueList<FcPattern *> *entries;
 
     if(checkUrl(url) && checkAllowed(url) && 
        updateFontList() && (entries=getEntries(url)) && entries->count() &&
        confirmMultiple(url, entries, getFolder(url), OP_DELETE))
     {
-        QValueList<FcPattern *>::Iterator it,
+        TQValueList<FcPattern *>::Iterator it,
                                           end=entries->end();
         CDirList                          modifiedDirs;
         bool                              clearList=KFI_KIO_NO_CLEAR!=url.query();
 
         if(nonRootSys(url))
         {
-            QCString cmd("rm -f");
+            TQCString cmd("rm -f");
  
             for(it=entries->begin(); it!=end; ++it)
             {
-                QString file(CFcEngine::getFcString(*it, FC_FILE));
+                TQString file(CFcEngine::getFcString(*it, FC_FILE));
 
                 modifiedDirs.add(Misc::getDir(file));
                 cmd+=" ";
-                cmd+=QFile::encodeName(KProcess::quote(file));
+                cmd+=TQFile::encodeName(KProcess::quote(file));
 
                 KURL::List urls;
 
@@ -1645,7 +1645,7 @@ void CKioFonts::del(const KURL &url, bool)
                     for(uIt=urls.begin(); uIt!=uEnd; ++uIt)
                     {
                         cmd+=" ";
-                        cmd+=QFile::encodeName(KProcess::quote((*uIt).path()));
+                        cmd+=TQFile::encodeName(KProcess::quote((*uIt).path()));
                     }
                 }
             }
@@ -1662,9 +1662,9 @@ void CKioFonts::del(const KURL &url, bool)
         {
             for(it=entries->begin(); it!=end; ++it)
             {
-                QString file(CFcEngine::getFcString(*it, FC_FILE));
+                TQString file(CFcEngine::getFcString(*it, FC_FILE));
 
-                if (0!=unlink(QFile::encodeName(file).data()))
+                if (0!=unlink(TQFile::encodeName(file).data()))
                     error(EACCES==errno || EPERM==errno
                             ? KIO::ERR_ACCESS_DENIED
                             : EISDIR==errno
@@ -1685,7 +1685,7 @@ void CKioFonts::del(const KURL &url, bool)
                                              uEnd=urls.end();
 
                         for(uIt=urls.begin(); uIt!=uEnd; ++uIt)
-                            unlink(QFile::encodeName((*uIt).path()).data());
+                            unlink(TQFile::encodeName((*uIt).path()).data());
                     }
                 }
             }
@@ -1732,13 +1732,13 @@ void CKioFonts::modified(EFolder folder, bool clearList, const CDirList &dirs)
         clearFontList();  // List of fonts has changed.../
 }
 
-void CKioFonts::special(const QByteArray &a)
+void CKioFonts::special(const TQByteArray &a)
 {
     KFI_DBUG << "special" << endl;
 
     if(a.size())
     {
-        QDataStream stream(a, IO_ReadOnly);
+        TQDataStream stream(a, IO_ReadOnly);
         int         cmd;
 
         stream >> cmd;
@@ -1760,14 +1760,14 @@ void CKioFonts::special(const QByteArray &a)
                 finished();
                 break;
             default:
-                error( KIO::ERR_UNSUPPORTED_ACTION, QString::number(cmd));
+                error( KIO::ERR_UNSUPPORTED_ACTION, TQString::number(cmd));
         }
     }
     else
         doModified();
 }
 
-void CKioFonts::createRootRefreshCmd(QCString &cmd, const CDirList &dirs, bool reparseCfg)
+void CKioFonts::createRootRefreshCmd(TQCString &cmd, const CDirList &dirs, bool reparseCfg)
 {
     if(reparseCfg)
         reparseConfig();
@@ -1784,7 +1784,7 @@ void CKioFonts::createRootRefreshCmd(QCString &cmd, const CDirList &dirs, bool r
 
         for(; it!=end; ++it)
         {
-            QCString tmpCmd;
+            TQCString tmpCmd;
 
             if(*it==itsFolders[FOLDER_SYS].location)
             {
@@ -1800,7 +1800,7 @@ void CKioFonts::createRootRefreshCmd(QCString &cmd, const CDirList &dirs, bool r
                 cmd+=" && kfontinst ";
                 cmd+=tmpCmd;
                 cmd+=" ";
-                cmd+=QFile::encodeName(KProcess::quote(*it));
+                cmd+=TQFile::encodeName(KProcess::quote(*it));
             }
         }
     }
@@ -1809,7 +1809,7 @@ void CKioFonts::createRootRefreshCmd(QCString &cmd, const CDirList &dirs, bool r
         cmd+=" && kfontinst ";
         cmd+=itsNrsKfiParams;
         cmd+=" ";
-        cmd+=QFile::encodeName(KProcess::quote(itsFolders[FOLDER_SYS].location));
+        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[FOLDER_SYS].location));
     }
 }
 
@@ -1846,7 +1846,7 @@ void CKioFonts::doModified()
 
                 for(; it!=end; ++it)
                 {
-                    Misc::doCmd("kfontinst", itsKfiParams, QFile::encodeName(*it));
+                    Misc::doCmd("kfontinst", itsKfiParams, TQFile::encodeName(*it));
                     KFI_DBUG << "RUN(root): kfontinst " << itsKfiParams << ' ' << *it << endl;
                 }
 
@@ -1859,7 +1859,7 @@ void CKioFonts::doModified()
         }
         else
         {
-            QCString cmd;
+            TQCString cmd;
 
             createRootRefreshCmd(cmd, itsFolders[FOLDER_SYS].modified, false);
             if(doRootCmd(cmd, false) && itsFolders[FOLDER_SYS].modified.contains(itsFolders[FOLDER_SYS].location))
@@ -1885,7 +1885,7 @@ void CKioFonts::doModified()
 
             for(; it!=end; ++it)
             {
-                 Misc::doCmd("kfontinst", itsKfiParams, QFile::encodeName(*it));
+                 Misc::doCmd("kfontinst", itsKfiParams, TQFile::encodeName(*it));
                 KFI_DBUG << "RUN(non-root): kfontinst " << itsKfiParams << ' ' << *it << endl;
             }
         }
@@ -1896,14 +1896,14 @@ void CKioFonts::doModified()
 }
 
 #define SYS_USER "root"
-QString CKioFonts::getRootPasswd(bool askPasswd)
+TQString CKioFonts::getRootPasswd(bool askPasswd)
 {
     KFI_DBUG << "getRootPasswd" << endl;
     KIO::AuthInfo authInfo;
     SuProcess     proc(SYS_USER);
     bool          error=false;
     int           attempts=0;
-    QString       errorMsg;
+    TQString       errorMsg;
 
     authInfo.url=KURL(KFI_KIO_FONTS_PROTOCOL ":///");
     authInfo.username=SYS_USER;
@@ -1923,10 +1923,10 @@ QString CKioFonts::getRootPasswd(bool askPasswd)
         }
     else
         error=proc.checkInstall(authInfo.password.local8Bit()) ? true : false;
-    return error ? QString::null : authInfo.password;
+    return error ? TQString::null : authInfo.password;
 }
 
-bool CKioFonts::doRootCmd(const char *cmd, const QString &passwd)
+bool CKioFonts::doRootCmd(const char *cmd, const TQString &passwd)
 {
     KFI_DBUG << "doRootCmd " << cmd << endl;
 
@@ -1950,7 +1950,7 @@ bool CKioFonts::confirmUrl(KURL &url)
     KFI_DBUG << "confirmUrl " << url.path() << endl;
     if(!itsRoot)
     {
-        QString sect(getSect(url.path()));
+        TQString sect(getSect(url.path()));
 
         if(!isSysFolder(sect) && !isUserFolder(sect))
         {
@@ -1971,12 +1971,12 @@ bool CKioFonts::confirmUrl(KURL &url)
             if(changeToSystem)
             {
                 itsLastDest=DEST_SYS;
-                url.setPath(QChar('/')+i18n(KFI_KIO_FONTS_SYS)+QChar('/')+url.fileName());
+                url.setPath(TQChar('/')+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')+url.fileName());
             }
             else
             {
                 itsLastDest=DEST_USER;
-                url.setPath(QChar('/')+i18n(KFI_KIO_FONTS_USER)+QChar('/')+url.fileName());
+                url.setPath(TQChar('/')+i18n(KFI_KIO_FONTS_USER)+TQChar('/')+url.fileName());
             }
 
             KFI_DBUG << "Changed URL to:" << url.path() << endl;
@@ -2030,25 +2030,25 @@ bool CKioFonts::updateFontList()
 
         if (itsFontList)
         {
-            QString home(Misc::dirSyntax(QDir::homeDirPath()));
+            TQString home(Misc::dirSyntax(TQDir::homeDirPath()));
 
             for (int i = 0; i < itsFontList->nfont; i++)
             {
                 EFolder folder=FOLDER_SYS;
-                QString file(Misc::fileSyntax(CFcEngine::getFcString(itsFontList->fonts[i], FC_FILE)));
+                TQString file(Misc::fileSyntax(CFcEngine::getFcString(itsFontList->fonts[i], FC_FILE)));
 
                 if(!file.isEmpty())
                 {
                     if(!itsRoot && 0==file.find(home))
                         folder=FOLDER_USER;
 
-                    QValueList<FcPattern *> &patterns=
+                    TQValueList<FcPattern *> &patterns=
                                                 itsFolders[folder].fontMap[CFcEngine::createName(itsFontList->fonts[i])];
                     bool                    use=true;
 
                     if(patterns.count()) // Check for duplicates...
                     {
-                        QValueList<FcPattern *>::Iterator it,
+                        TQValueList<FcPattern *>::Iterator it,
                                                           end=patterns.end();
 
                         for(it=patterns.begin(); use && it!=end; ++it)
@@ -2076,10 +2076,10 @@ CKioFonts::EFolder CKioFonts::getFolder(const KURL &url)
     return itsRoot || isSysFolder(getSect(url.path())) ? FOLDER_SYS : FOLDER_USER;
 }
 
-QMap<QString, QValueList<FcPattern *> >::Iterator CKioFonts::getMap(const KURL &url)
+TQMap<TQString, TQValueList<FcPattern *> >::Iterator CKioFonts::getMap(const KURL &url)
 {
     EFolder                                           folder(getFolder(url));
-    QMap<QString, QValueList<FcPattern *> >::Iterator it=itsFolders[folder].fontMap.find(removeMultipleExtension(url));
+    TQMap<TQString, TQValueList<FcPattern *> >::Iterator it=itsFolders[folder].fontMap.find(removeMultipleExtension(url));
 
     if(it==itsFolders[folder].fontMap.end()) // Perhaps it was fonts:/System/times.ttf ???
     {
@@ -2092,9 +2092,9 @@ QMap<QString, QValueList<FcPattern *> >::Iterator CKioFonts::getMap(const KURL &
     return it;
 }
 
-QValueList<FcPattern *> * CKioFonts::getEntries(const KURL &url)
+TQValueList<FcPattern *> * CKioFonts::getEntries(const KURL &url)
 {
-    QMap<QString, QValueList<FcPattern *> >::Iterator it=getMap(url);
+    TQMap<TQString, TQValueList<FcPattern *> >::Iterator it=getMap(url);
 
     if(it!=itsFolders[getFolder(url)].fontMap.end())
         return &(it.data());
@@ -2103,14 +2103,14 @@ QValueList<FcPattern *> * CKioFonts::getEntries(const KURL &url)
     return NULL;
 }
 
-FcPattern * CKioFonts::getEntry(EFolder folder, const QString &file, bool full)
+FcPattern * CKioFonts::getEntry(EFolder folder, const TQString &file, bool full)
 {
-    QMap<QString, QValueList<FcPattern *> >::Iterator it,
+    TQMap<TQString, TQValueList<FcPattern *> >::Iterator it,
                                                       end=itsFolders[folder].fontMap.end();
 
     for(it=itsFolders[folder].fontMap.begin(); it!=end; ++it)
     {
-        QValueList<FcPattern *>::Iterator patIt,
+        TQValueList<FcPattern *>::Iterator patIt,
                                           patEnd=it.data().end();
 
         for(patIt=it.data().begin(); patIt!=patEnd; ++patIt)
@@ -2122,9 +2122,9 @@ FcPattern * CKioFonts::getEntry(EFolder folder, const QString &file, bool full)
     return NULL;
 }
 
-bool CKioFonts::checkFile(const QString &file)
+bool CKioFonts::checkFile(const TQString &file)
 {
-    QCString cFile(QFile::encodeName(file));
+    TQCString cFile(TQFile::encodeName(file));
 
     //
     // To speed things up, check the files extension 1st...
@@ -2135,7 +2135,7 @@ bool CKioFonts::checkFile(const QString &file)
     //
     // No exension match, so try querying with FreeType...
     int       count=0;
-    FcPattern *pat=FcFreeTypeQuery((const FcChar8 *)(QFile::encodeName(file).data()), 0, NULL, &count);
+    FcPattern *pat=FcFreeTypeQuery((const FcChar8 *)(TQFile::encodeName(file).data()), 0, NULL, &count);
 
     if(pat)
     {
@@ -2148,15 +2148,15 @@ bool CKioFonts::checkFile(const QString &file)
     return false;
 }
 
-bool CKioFonts::getSourceFiles(const KURL &src, QStringList &files)
+bool CKioFonts::getSourceFiles(const KURL &src, TQStringList &files)
 {
     if(KFI_KIO_FONTS_PROTOCOL==src.protocol())
     {
-        QValueList<FcPattern *> *entries=getEntries(src);
+        TQValueList<FcPattern *> *entries=getEntries(src);
 
         if(entries && entries->count())
         {
-            QValueList<FcPattern *>::Iterator it,
+            TQValueList<FcPattern *>::Iterator it,
                                               end=entries->end();
 
             for(it=entries->begin(); it!=end; ++it)
@@ -2165,7 +2165,7 @@ bool CKioFonts::getSourceFiles(const KURL &src, QStringList &files)
 
         if(files.count())
         {
-            QStringList::Iterator sIt,
+            TQStringList::Iterator sIt,
                                   sEnd=files.end();
 
             for(sIt=files.begin(); sIt!=sEnd; ++sIt)
@@ -2195,12 +2195,12 @@ bool CKioFonts::getSourceFiles(const KURL &src, QStringList &files)
 
     if(files.count())
     {
-        QStringList::Iterator it,
+        TQStringList::Iterator it,
                               end=files.end();
 
         for(it=files.begin(); it!=end; ++it)
         {
-            QCString        realSrc=QFile::encodeName(*it);
+            TQCString        realSrc=TQFile::encodeName(*it);
             KDE_struct_stat buffSrc;
 
             if (-1==KDE_stat(realSrc.data(), &buffSrc))
@@ -2241,7 +2241,7 @@ bool CKioFonts::checkDestFile(const KURL &src, const KURL &dest, EFolder destFol
     return true;
 }
 
-bool CKioFonts::checkDestFiles(const KURL &src, QMap<QString, QString> &map, const KURL &dest, EFolder destFolder, bool overwrite)
+bool CKioFonts::checkDestFiles(const KURL &src, TQMap<TQString, TQString> &map, const KURL &dest, EFolder destFolder, bool overwrite)
 {
     //
     // Check whether files exist at destination...
@@ -2256,7 +2256,7 @@ bool CKioFonts::checkDestFiles(const KURL &src, QMap<QString, QString> &map, con
 
     if(!overwrite)
     {
-        QMap<QString, QString>::Iterator fIt(map.begin()),
+        TQMap<TQString, TQString>::Iterator fIt(map.begin()),
                                          fEnd(map.end());
 
         for(; fIt!=fEnd; ++fIt)
@@ -2273,14 +2273,14 @@ bool CKioFonts::checkDestFiles(const KURL &src, QMap<QString, QString> &map, con
 //
 // Gather the number and names of the font faces located in "files". If there is more than 1 face
 // (such as there would be for a TTC font), then ask the user for confirmation of the action.
-bool CKioFonts::confirmMultiple(const KURL &url, const QStringList &files, EFolder folder, EOp op)
+bool CKioFonts::confirmMultiple(const KURL &url, const TQStringList &files, EFolder folder, EOp op)
 {
     if(KFI_KIO_FONTS_PROTOCOL!=url.protocol())
         return true;
 
-    QStringList::ConstIterator it,
+    TQStringList::ConstIterator it,
                                end=files.end();
-    QStringList                fonts;
+    TQStringList                fonts;
 
     for(it=files.begin(); it!=files.end(); ++it)
     {
@@ -2288,7 +2288,7 @@ bool CKioFonts::confirmMultiple(const KURL &url, const QStringList &files, EFold
 
         if(pat)
         {
-            QString name(CFcEngine::createName(pat));
+            TQString name(CFcEngine::createName(pat));
 
             if(-1==fonts.findIndex(name))
                 fonts.append(name);
@@ -2297,12 +2297,12 @@ bool CKioFonts::confirmMultiple(const KURL &url, const QStringList &files, EFold
     
     if(fonts.count()>1)
     {
-        QString               out;
-        QStringList::Iterator it,
+        TQString               out;
+        TQStringList::Iterator it,
                               end=fonts.end();
 
         for(it=fonts.begin(); it!=end; ++it)
-            out+=QString("<li>")+*it+QString("</li>");
+            out+=TQString("<li>")+*it+TQString("</li>");
 
         if(KMessageBox::No==messageBox(QuestionYesNo,
                                               OP_MOVE==op
@@ -2328,16 +2328,16 @@ bool CKioFonts::confirmMultiple(const KURL &url, const QStringList &files, EFold
     return true;
 }
 
-bool CKioFonts::confirmMultiple(const KURL &url, QValueList<FcPattern *> *patterns, EFolder folder, EOp op)
+bool CKioFonts::confirmMultiple(const KURL &url, TQValueList<FcPattern *> *patterns, EFolder folder, EOp op)
 {
     if(KFI_KIO_FONTS_PROTOCOL!=url.protocol())
         return true;
 
-    QStringList files;
+    TQStringList files;
 
     if(patterns && patterns->count())
     {
-        QValueList<FcPattern *>::Iterator it,
+        TQValueList<FcPattern *>::Iterator it,
                                           end=patterns->end();
 
         for(it=patterns->begin(); it!=end; ++it)
@@ -2351,7 +2351,7 @@ bool CKioFonts::checkUrl(const KURL &u, bool rootOk)
 {
     if(KFI_KIO_FONTS_PROTOCOL==u.protocol() && (!rootOk || (rootOk && "/"!=u.path())))
     {
-        QString sect(getSect(u.path()));
+        TQString sect(getSect(u.path()));
 
         if(itsRoot)
         {
@@ -2381,12 +2381,12 @@ bool CKioFonts::checkAllowed(const KURL &u)
 {
     if (KFI_KIO_FONTS_PROTOCOL==u.protocol())
     {
-        QString ds(Misc::dirSyntax(u.path()));
+        TQString ds(Misc::dirSyntax(u.path()));
 
-        if(ds==QString(QChar('/')+i18n(KFI_KIO_FONTS_USER)+QChar('/')) ||
-           ds==QString(QChar('/')+i18n(KFI_KIO_FONTS_SYS)+QChar('/')) ||
-           ds==QString(QChar('/')+QString::fromLatin1(KFI_KIO_FONTS_USER)+QChar('/')) ||
-           ds==QString(QChar('/')+QString::fromLatin1(KFI_KIO_FONTS_SYS)+QChar('/')))
+        if(ds==TQString(TQChar('/')+i18n(KFI_KIO_FONTS_USER)+TQChar('/')) ||
+           ds==TQString(TQChar('/')+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')) ||
+           ds==TQString(TQChar('/')+TQString::fromLatin1(KFI_KIO_FONTS_USER)+TQChar('/')) ||
+           ds==TQString(TQChar('/')+TQString::fromLatin1(KFI_KIO_FONTS_SYS)+TQChar('/')))
         {
             error(KIO::ERR_SLAVE_DEFINED, i18n("Sorry, you cannot rename, move, copy, or delete either \"%1\" or \"%2\".")
                   .arg(i18n(KFI_KIO_FONTS_USER)).arg(i18n(KFI_KIO_FONTS_SYS))); \
@@ -2399,7 +2399,7 @@ bool CKioFonts::checkAllowed(const KURL &u)
 
 //
 // Create an AFM from a Type 1 (pfa/pfb) font and its PFM file...
-void CKioFonts::createAfm(const QString &file, bool nrs, const QString &passwd)
+void CKioFonts::createAfm(const TQString &file, bool nrs, const TQString &passwd)
 {
     if(nrs && passwd.isEmpty())
         return;
@@ -2409,12 +2409,12 @@ void CKioFonts::createAfm(const QString &file, bool nrs, const QString &passwd)
 
     if(type1 || pfm)
     {
-        QString afm=getMatch(file, "afm");  // pf2afm wants files with lowercase extension, so just check for lowercase!
+        TQString afm=getMatch(file, "afm");  // pf2afm wants files with lowercase extension, so just check for lowercase!
                                             // -- when a font is installed, the extensio is converted to lowercase anyway...
 
         if(afm.isEmpty())  // No point creating if AFM already exists!
         {
-            QString pfm,
+            TQString pfm,
                     t1;
 
             if(type1)      // Its a Type1, so look for existing PFM
@@ -2432,16 +2432,16 @@ void CKioFonts::createAfm(const QString &file, bool nrs, const QString &passwd)
 
             if(!t1.isEmpty() && !pfm.isEmpty())         // Do we have both Type1 and PFM?
             {
-                QString name(t1.left(t1.length()-4));   // pf2afm wants name without extension...
+                TQString name(t1.left(t1.length()-4));   // pf2afm wants name without extension...
 
                 if(nrs)
                 {
-                    QCString cmd("pf2afm ");
-                    cmd+=QFile::encodeName(KProcess::quote(name));
+                    TQCString cmd("pf2afm ");
+                    cmd+=TQFile::encodeName(KProcess::quote(name));
                     doRootCmd(cmd, passwd);
                 }
                 else
-                    Misc::doCmd("pf2afm", QFile::encodeName(name));
+                    Misc::doCmd("pf2afm", TQFile::encodeName(name));
             }
         }
     }

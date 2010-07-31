@@ -37,18 +37,18 @@ void HomeDirNotify::init()
 	mInited = true;
 
 	KUser current_user;
-	QValueList<KUserGroup> groups = current_user.groups();
-	QValueList<int> uid_list;
+	TQValueList<KUserGroup> groups = current_user.groups();
+	TQValueList<int> uid_list;
 
-	QValueList<KUserGroup>::iterator groups_it = groups.begin();
-	QValueList<KUserGroup>::iterator groups_end = groups.end();
+	TQValueList<KUserGroup>::iterator groups_it = groups.begin();
+	TQValueList<KUserGroup>::iterator groups_end = groups.end();
 
 	for(; groups_it!=groups_end; ++groups_it)
 	{
-		QValueList<KUser> users = (*groups_it).users();
+		TQValueList<KUser> users = (*groups_it).users();
 
-		QValueList<KUser>::iterator it = users.begin();
-		QValueList<KUser>::iterator users_end = users.end();
+		TQValueList<KUser>::iterator it = users.begin();
+		TQValueList<KUser>::iterator users_end = users.end();
 
 		for(; it!=users_end; ++it)
 		{
@@ -57,7 +57,7 @@ void HomeDirNotify::init()
 			{
 				uid_list.append( (*it).uid() );
 				
-				QString name = (*it).loginName();
+				TQString name = (*it).loginName();
 				KURL url;
 				url.setPath( (*it).homeDir() );
 
@@ -72,17 +72,17 @@ KURL HomeDirNotify::toHomeURL(const KURL &url)
 	kdDebug() << "HomeDirNotify::toHomeURL(" << url << ")" << endl;
 	
 	init();
-	QMap<QString,KURL>::iterator it = m_homeFoldersMap.begin();
-	QMap<QString,KURL>::iterator end = m_homeFoldersMap.end();
+	TQMap<TQString,KURL>::iterator it = m_homeFoldersMap.begin();
+	TQMap<TQString,KURL>::iterator end = m_homeFoldersMap.end();
 	
 	for (; it!=end; ++it)
 	{
-		QString name = it.key();
+		TQString name = it.key();
 		KURL base = it.data();
 		
 		if ( base.isParentOf(url) )
 		{
-			QString path = KURL::relativePath(base.path(),
+			TQString path = KURL::relativePath(base.path(),
 			                                  url.path());
 			KURL result("home:/"+name+"/"+path);
 			result.cleanPath();

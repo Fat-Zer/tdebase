@@ -21,15 +21,15 @@
 #ifndef CONFFILTERS_H
 #define CONFFILTERS_H
 
-#include <qwidget.h>
-#include <qpushbutton.h>
+#include <tqwidget.h>
+#include <tqpushbutton.h>
 class KListView;
 
 class ConfFilters : public QWidget
 {
 	Q_OBJECT
 public:
-	ConfFilters(QWidget *parent = 0, const char *name = 0);
+	ConfFilters(TQWidget *parent = 0, const char *name = 0);
 
 	void load();
 	void save();

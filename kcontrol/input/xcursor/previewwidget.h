@@ -27,13 +27,13 @@ class PreviewCursor;
 class PreviewWidget : public QWidget
 {
 	public:
-		PreviewWidget( QWidget *parent = NULL, const char *name = NULL );
+		PreviewWidget( TQWidget *parent = NULL, const char *name = NULL );
 		~PreviewWidget();
 
-		void setTheme( const QString & );
+		void setTheme( const TQString & );
 
-		void paintEvent( QPaintEvent * );
-		void mouseMoveEvent( QMouseEvent * );
+		void paintEvent( TQPaintEvent * );
+		void mouseMoveEvent( TQMouseEvent * );
 
 	private:
 		PreviewCursor **cursors;

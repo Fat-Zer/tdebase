@@ -25,8 +25,8 @@
 #ifndef __KPAGER_H
 #define __KPAGER_H
 
-#include <qwidget.h>
-#include <qintdict.h>
+#include <tqwidget.h>
+#include <tqintdict.h>
 #include <kmainwindow.h>
 #include <kwin.h>
 #include "kpagerIface.h"
@@ -39,7 +39,7 @@ class KPagerMainWindow : public KMainWindow, public virtual KPagerIface
     Q_OBJECT
 
 public:
-    KPagerMainWindow(QWidget *parent=0, const char *name=0);
+    KPagerMainWindow(TQWidget *parent=0, const char *name=0);
     ~KPagerMainWindow();
 
     virtual void showAt(int x, int y);
@@ -50,10 +50,10 @@ public slots:
     
 protected:
     bool queryClose();
-    void showEvent(QShowEvent *ev);
+    void showEvent(TQShowEvent *ev);
 
     KPager *m_pPager;
-    class QTimer *timeout;
+    class TQTimer *timeout;
     bool m_reallyClose;
 };
 
@@ -72,11 +72,11 @@ public:
 
     void redrawDesktops();
 
-    void showPopupMenu( WId wid, QPoint pos);
+    void showPopupMenu( WId wid, TQPoint pos);
 
     KWin::WindowInfo* info( WId win );
 
-    QSize sizeHint() const;
+    TQSize sizeHint() const;
 
     enum LayoutTypes { Classical=0, Horizontal, Vertical };
 
@@ -111,25 +111,25 @@ protected:
 
 protected:
     KWinModule *m_winmodule;
-    QValueList<class Desktop *> m_desktops;
+    TQValueList<class Desktop *> m_desktops;
 
-    QIntDict<KWin::WindowInfo> m_windows;
+    TQIntDict<KWin::WindowInfo> m_windows;
     WId m_activeWin;
 
-    const QString lWidth();
-    const QString lHeight();
+    const TQString lWidth();
+    const TQString lHeight();
 
     LayoutTypes m_layoutType;
 
-    class QGridLayout *m_layout;
+    class TQGridLayout *m_layout;
     KPopupMenu *m_mnu;
-    QPopupMenu *m_smnu, *m_dmnu;
+    TQPopupMenu *m_smnu, *m_dmnu;
     KAction *m_quit_action;
     KAction *m_prefs_action;
     KWin::WindowInfo m_winfo;
     bool m_showStickyOption; // To be removed after the message freeze
 
-    QTimer *m_grabWinTimer;
+    TQTimer *m_grabWinTimer;
     int     m_currentDesktop;
 
 public:

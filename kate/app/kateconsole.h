@@ -25,7 +25,7 @@
 
 #include <kurl.h>
 
-#include <qvbox.h>
+#include <tqvbox.h>
 
 namespace KParts {
   class ReadOnlyPart;
@@ -69,7 +69,7 @@ class KateConsole : public QVBox
      * send given text to console
      * @param text commands for console
      */
-    void sendInput( const QString& text );
+    void sendInput( const TQString& text );
 
   public slots:
     /**
@@ -94,7 +94,7 @@ class KateConsole : public QVBox
      * the konsole get shown
      * @param ev show event
      */
-    void showEvent(QShowEvent *ev);
+    void showEvent(TQShowEvent *ev);
 
   private:
     /**

@@ -27,7 +27,7 @@
  ** a constructor, and a destroy() slot in place of a destructor.
  *****************************************************************************/
 
-#include <qobjectlist.h>
+#include <tqobjectlist.h>
 
 #ifdef KeyPress
 #undef KeyPress
@@ -41,32 +41,32 @@ void StylePreview::init()
 {
     // Ensure that the user can't toy with the child widgets.
     // Method borrowed from Qt's qtconfig.
-    QObjectList* l = queryList("QWidget");
-    QObjectListIt it(*l);
-    QObject* obj;
+    TQObjectList* l = queryList("TQWidget");
+    TQObjectListIt it(*l);
+    TQObject* obj;
     while ((obj = it.current()) != 0)
     {
         ++it;
         obj->installEventFilter(this);
-        ((QWidget*)obj)->setFocusPolicy(NoFocus);
+        ((TQWidget*)obj)->setFocusPolicy(NoFocus);
     }
     delete l;
 }
 
-bool StylePreview::eventFilter( QObject* /* obj */, QEvent* ev )
+bool StylePreview::eventFilter( TQObject* /* obj */, TQEvent* ev )
 {
     switch( ev->type() )
     {
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonRelease:
-        case QEvent::MouseButtonDblClick:
-        case QEvent::MouseMove:
-        case QEvent::KeyPress:
-        case QEvent::KeyRelease:
-        case QEvent::Enter:
-        case QEvent::Leave:
-        case QEvent::Wheel:
-        case QEvent::ContextMenu:
+        case TQEvent::MouseButtonPress:
+        case TQEvent::MouseButtonRelease:
+        case TQEvent::MouseButtonDblClick:
+        case TQEvent::MouseMove:
+        case TQEvent::KeyPress:
+        case TQEvent::KeyRelease:
+        case TQEvent::Enter:
+        case TQEvent::Leave:
+        case TQEvent::Wheel:
+        case TQEvent::ContextMenu:
             return TRUE; // ignore
         default:
             break;

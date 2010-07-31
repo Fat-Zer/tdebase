@@ -24,7 +24,7 @@
 
 #include <kdialog.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include "common.h"
 
@@ -38,7 +38,7 @@ class TopLevel : public KDialog
   Q_OBJECT
 
   public:
-    TopLevel( const QString &destDir, QWidget *parent = 0, const char *name = 0 );
+    TopLevel( const TQString &destDir, TQWidget *parent = 0, const char *name = 0 );
     ~TopLevel();
 
   public slots:
@@ -48,21 +48,21 @@ class TopLevel : public KDialog
     void slotUnselectAll();
 
   private:
-    QListViewItem *addGroupItem( QListViewItem *parent, const QString &relPath,
-                                 const QString &name );
+    TQListViewItem *addGroupItem( TQListViewItem *parent, const TQString &relPath,
+                                 const TQString &name );
 
     KProgress *mProgress;
-    QLabel *mSummary;
-    QListView *mListView;
-    QPushButton *mApplyButton;
-    QPushButton *mQuitButton;
-    QPushButton *mScanButton;
-    QPushButton *mSelectButton;
-    QPushButton *mUnSelectButton;
-    QString mDestDir;
-    QStringList mTemplates;
+    TQLabel *mSummary;
+    TQListView *mListView;
+    TQPushButton *mApplyButton;
+    TQPushButton *mQuitButton;
+    TQPushButton *mScanButton;
+    TQPushButton *mSelectButton;
+    TQPushButton *mUnSelectButton;
+    TQString mDestDir;
+    TQStringList mTemplates;
 
-    QPtrList<AppLnkCache> mAppCache;
+    TQPtrList<AppLnkCache> mAppCache;
 
     int mFound, mAdded;
 };

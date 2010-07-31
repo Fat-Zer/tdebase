@@ -16,8 +16,8 @@
 
 #include "action_group_tab.h"
 
-#include <qlineedit.h>
-#include <qcheckbox.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -31,23 +31,23 @@
 namespace KHotKeys
 {
 
-Action_group_tab::Action_group_tab( QWidget* parent_P , const char* name_P )
+Action_group_tab::Action_group_tab( TQWidget* parent_P , const char* name_P )
     : Action_group_tab_ui( parent_P, name_P )
     {
     clear_data();
     // KHotKeys::Module::changed()
-    connect( action_name_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( disable_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( comment_multilineedit, SIGNAL( textChanged()),
-        module, SLOT( changed()));
+    connect( action_name_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( disable_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( comment_multilineedit, TQT_SIGNAL( textChanged()),
+        module, TQT_SLOT( changed()));
     }
     
 void Action_group_tab::clear_data()
     {
-    disconnect( action_name_lineedit, SIGNAL( textChanged( const QString& )), this,
-        SLOT( action_group_name_changed( const QString& )));
+    disconnect( action_name_lineedit, TQT_SIGNAL( textChanged( const TQString& )), this,
+        TQT_SLOT( action_group_name_changed( const TQString& )));
     action_name_lineedit->clear();
     action_name_lineedit->setReadOnly( false );
     disable_checkbox->setChecked( false );
@@ -71,20 +71,20 @@ void Action_group_tab::set_data( const Action_data_group* data_P )
     else
         disable_checkbox->setText( i18n( "&Disable" ));
     comment_multilineedit->setText( data_P->comment());
-    connect( action_name_lineedit, SIGNAL( textChanged( const QString& )), this,
-        SLOT( action_group_name_changed( const QString& )));
+    connect( action_name_lineedit, TQT_SIGNAL( textChanged( const TQString& )), this,
+        TQT_SLOT( action_group_name_changed( const TQString& )));
     system_group = data_P->system_group();
     }
 
 Action_data_group* Action_group_tab::get_data( Action_data_group* parent_P,
     Condition_list* conditions_P ) const
     {
-    QString name = action_name_lineedit->text();
+    TQString name = action_name_lineedit->text();
     return new Action_data_group( parent_P, name, comment_multilineedit->text(), conditions_P,
         system_group, !disable_checkbox->isChecked());
     }
     
-void Action_group_tab::action_group_name_changed( const QString& name_P )
+void Action_group_tab::action_group_name_changed( const TQString& name_P )
     {
     module->action_name_changed( name_P );
     }

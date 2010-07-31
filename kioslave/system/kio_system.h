@@ -27,8 +27,8 @@
 class SystemProtocol : public KIO::ForwardingSlaveBase
 {
 public:
-	SystemProtocol(const QCString &protocol, const QCString &pool,
-	               const QCString &app);
+	SystemProtocol(const TQCString &protocol, const TQCString &pool,
+	               const TQCString &app);
 	virtual ~SystemProtocol();
 	
 	virtual bool rewriteURL(const KURL &url, KURL &newUrl);

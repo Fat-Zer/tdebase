@@ -25,7 +25,7 @@
 #include <kdesktopfile.h>
 #include <kdebug.h>
 #include <assert.h>
-#include <qfontmetrics.h>
+#include <tqfontmetrics.h>
 
 struct KonqFMSettingsPrivate
 {
@@ -90,7 +90,7 @@ void KonqFMSettings::init( KConfig * config )
 
   d->m_iconTextWidth = config->readNumEntry( "TextWidth", DEFAULT_TEXTWIDTH );
   if ( d->m_iconTextWidth == DEFAULT_TEXTWIDTH )
-    d->m_iconTextWidth = QFontMetrics(m_standardFont).width("0000000000");
+    d->m_iconTextWidth = TQFontMetrics(m_standardFont).width("0000000000");
 
   m_iconTextHeight = config->readNumEntry( "TextHeight", 0 );
   if ( m_iconTextHeight == 0 ) {
@@ -119,11 +119,11 @@ void KonqFMSettings::init( KConfig * config )
 
   m_embedMap = config->entryMap( "EmbedSettings" );
 
-  /// true if QString::localeAwareCompare is case sensitive (it usually isn't, when LC_COLLATE is set)
-  d->localeAwareCompareIsCaseSensitive = QString( "a" ).localeAwareCompare( "B" ) > 0; // see #40131
+  /// true if TQString::localeAwareCompare is case sensitive (it usually isn't, when LC_COLLATE is set)
+  d->localeAwareCompareIsCaseSensitive = TQString( "a" ).localeAwareCompare( "B" ) > 0; // see #40131
 }
 
-bool KonqFMSettings::shouldEmbed( const QString & serviceType ) const
+bool KonqFMSettings::shouldEmbed( const TQString & serviceType ) const
 {
     // First check in user's settings whether to embed or not
     // 1 - in the mimetype file itself
@@ -132,7 +132,7 @@ bool KonqFMSettings::shouldEmbed( const QString & serviceType ) const
     if ( serviceTypePtr )
     {
         hasLocalProtocolRedirect = !serviceTypePtr->property( "X-KDE-LocalProtocol" ).toString().isEmpty();
-        QVariant autoEmbedProp = serviceTypePtr->property( "X-KDE-AutoEmbed" );
+        TQVariant autoEmbedProp = serviceTypePtr->property( "X-KDE-AutoEmbed" );
         if ( autoEmbedProp.isValid() )
         {
             bool autoEmbed = autoEmbedProp.toBool();
@@ -142,14 +142,14 @@ bool KonqFMSettings::shouldEmbed( const QString & serviceType ) const
             kdDebug(1203) << "No X-KDE-AutoEmbed, looking for group" << endl;
     }
     // 2 - in the configuration for the group if nothing was found in the mimetype
-    QString serviceTypeGroup = serviceType.left(serviceType.find("/"));
+    TQString serviceTypeGroup = serviceType.left(serviceType.find("/"));
     kdDebug(1203) << "KonqFMSettings::shouldEmbed : serviceTypeGroup=" << serviceTypeGroup << endl;
     if ( serviceTypeGroup == "inode" || serviceTypeGroup == "Browser" || serviceTypeGroup == "Konqueror" )
         return true; //always embed mimetype inode/*, Browser/* and Konqueror/*
-    QMap<QString, QString>::ConstIterator it = m_embedMap.find( QString::fromLatin1("embed-")+serviceTypeGroup );
+    TQMap<TQString, TQString>::ConstIterator it = m_embedMap.find( TQString::fromLatin1("embed-")+serviceTypeGroup );
     if ( it != m_embedMap.end() ) {
         kdDebug(1203) << "KonqFMSettings::shouldEmbed: " << it.data() << endl;
-        return it.data() == QString::fromLatin1("true");
+        return it.data() == TQString::fromLatin1("true");
     }
     // 3 - if no config found, use default.
     // Note: if you change those defaults, also change kcontrol/filetypes/typeslistitem.cpp !
@@ -169,12 +169,12 @@ bool KonqFMSettings::renameIconDirectly() const
     return d->m_renameIconDirectly;
 }
 
-int KonqFMSettings::caseSensitiveCompare( const QString& a, const QString& b ) const
+int KonqFMSettings::caseSensitiveCompare( const TQString& a, const TQString& b ) const
 {
     if ( d->localeAwareCompareIsCaseSensitive ) {
         return a.localeAwareCompare( b );
     }
-    else // can't use localeAwareCompare, have to fallback to normal QString compare
+    else // can't use localeAwareCompare, have to fallback to normal TQString compare
         return a.compare( b );
 }
 

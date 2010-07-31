@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <dcopclient.h>
 
@@ -36,7 +36,7 @@
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_kwinfocus(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_kwinfocus(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or kwin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
@@ -44,14 +44,14 @@ extern "C"
 		return new KFocusConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinactions(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_kwinactions(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or kwin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
 		return new KActionsOptions( parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinmoving(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_kwinmoving(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or kwin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
@@ -59,7 +59,7 @@ extern "C"
 		return new KMovingConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinadvanced(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_kwinadvanced(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or kwin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
@@ -67,7 +67,7 @@ extern "C"
 		return new KAdvancedConfig(true, c, parent, name);
 	}
         
-	KDE_EXPORT KCModule *create_kwintranslucency(QWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_kwintranslucency(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or kwin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
@@ -75,7 +75,7 @@ extern "C"
 		return new KTranslucencyConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinoptions ( QWidget *parent, const char* name)
+	KDE_EXPORT KCModule *create_kwinoptions ( TQWidget *parent, const char* name)
 	{
 		//CT there's need for decision: kwm or kwin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
@@ -83,44 +83,44 @@ extern "C"
 	}
 }
 
-KWinOptions::KWinOptions(QWidget *parent, const char *name)
+KWinOptions::KWinOptions(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
   mConfig = new KConfig("kwinrc", false, true);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  tab = new QTabWidget(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  tab = new TQTabWidget(this);
   layout->addWidget(tab);
 
   mFocus = new KFocusConfig(false, mConfig, this, "KWin Focus Config");
   mFocus->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mFocus, i18n("&Focus"));
-  connect(mFocus, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mFocus, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "KWin TitleBar Actions");
   mTitleBarActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTitleBarActions, i18n("&Titlebar Actions"));
-  connect(mTitleBarActions, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mTitleBarActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mWindowActions = new KWindowActionsConfig(false, mConfig, this, "KWin Window Actions");
   mWindowActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mWindowActions, i18n("Window Actio&ns"));
-  connect(mWindowActions, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mWindowActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mMoving = new KMovingConfig(false, mConfig, this, "KWin Moving");
   mMoving->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mMoving, i18n("&Moving"));
-  connect(mMoving, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mMoving, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mAdvanced = new KAdvancedConfig(false, mConfig, this, "KWin Advanced");
   mAdvanced->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mAdvanced, i18n("Ad&vanced"));
-  connect(mAdvanced, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mAdvanced, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mTranslucency = new KTranslucencyConfig(false, mConfig, this, "KWin Translucency");
   mTranslucency->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTranslucency, i18n("&Translucency"));
-  connect(mTranslucency, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mTranslucency, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
     
   KAboutData *about =
     new KAboutData(I18N_NOOP("kcmkwinoptions"), I18N_NOOP("Window Behavior Configuration Module"),
@@ -185,7 +185,7 @@ void KWinOptions::defaults()
   mTranslucency->defaults();
 }
 
-QString KWinOptions::quickHelp() const
+TQString KWinOptions::quickHelp() const
 {
   return i18n("<h1>Window Behavior</h1> Here you can customize the way windows behave when being"
     " moved, resized or clicked on. You can also specify a focus policy as well as a placement"
@@ -201,24 +201,24 @@ void KWinOptions::moduleChanged(bool state)
 }
 
 
-KActionsOptions::KActionsOptions(QWidget *parent, const char *name)
+KActionsOptions::KActionsOptions(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
   mConfig = new KConfig("kwinrc", false, true);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  tab = new QTabWidget(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  tab = new TQTabWidget(this);
   layout->addWidget(tab);
 
   mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "KWin TitleBar Actions");
   mTitleBarActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTitleBarActions, i18n("&Titlebar Actions"));
-  connect(mTitleBarActions, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mTitleBarActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mWindowActions = new KWindowActionsConfig(false, mConfig, this, "KWin Window Actions");
   mWindowActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mWindowActions, i18n("Window Actio&ns"));
-  connect(mWindowActions, SIGNAL(changed(bool)), this, SLOT(moduleChanged(bool)));
+  connect(mWindowActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 }
 
 KActionsOptions::~KActionsOptions()

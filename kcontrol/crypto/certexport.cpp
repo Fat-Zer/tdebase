@@ -24,52 +24,52 @@
 #endif
 
 #include "certexport.h"
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 #include <klineedit.h>
 #include <kfiledialog.h>
-#include <qradiobutton.h>
-#include <qvbuttongroup.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqradiobutton.h>
+#include <tqvbuttongroup.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <ksslall.h>
 
 
-KCertExport::KCertExport(QWidget *parent, const char *name) 
+KCertExport::KCertExport(TQWidget *parent, const char *name) 
                              : KDialog(parent, name, true) {
-QGridLayout *grid = new QGridLayout(this, 9, 6, marginHint(), spacingHint());
+TQGridLayout *grid = new TQGridLayout(this, 9, 6, marginHint(), spacingHint());
 
    setCaption(i18n("X509 Certificate Export"));
 
-   QVButtonGroup *bg = new QVButtonGroup(i18n("Format"), this);
-   _pem = new QRadioButton(i18n("&PEM"), bg);
-   _netscape = new QRadioButton(i18n("&Netscape"), bg);
-   _der = new QRadioButton(i18n("&DER/ASN1"), bg);
-   _text = new QRadioButton(i18n("&Text"), bg);
+   TQVButtonGroup *bg = new TQVButtonGroup(i18n("Format"), this);
+   _pem = new TQRadioButton(i18n("&PEM"), bg);
+   _netscape = new TQRadioButton(i18n("&Netscape"), bg);
+   _der = new TQRadioButton(i18n("&DER/ASN1"), bg);
+   _text = new TQRadioButton(i18n("&Text"), bg);
    grid->addMultiCellWidget(bg, 0, 4, 0, 3);
    _pem->setChecked(true);
 
-   grid->addMultiCellWidget(new QLabel(i18n("Filename:"), this), 5, 5, 0, 3);
+   grid->addMultiCellWidget(new TQLabel(i18n("Filename:"), this), 5, 5, 0, 3);
 
    _filename = new KLineEdit(this);
    grid->addMultiCellWidget(_filename, 6, 6, 0, 4);
-   connect(_filename, SIGNAL(textChanged(const QString &)), this, SLOT(slotTextChanged(const QString &)));
-   connect(_filename, SIGNAL(returnPressed()), this, SLOT(slotExport()));
+   connect(_filename, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(slotTextChanged(const TQString &)));
+   connect(_filename, TQT_SIGNAL(returnPressed()), this, TQT_SLOT(slotExport()));
 
-   _choose = new QPushButton("...", this);
+   _choose = new TQPushButton("...", this);
    grid->addWidget(_choose, 6, 5);
-   connect(_choose, SIGNAL(clicked()), this, SLOT(slotChoose()));
+   connect(_choose, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotChoose()));
    
-   _export = new QPushButton(i18n("&Export"), this);
+   _export = new TQPushButton(i18n("&Export"), this);
    grid->addWidget(_export, 8, 4);
-   connect(_export, SIGNAL(clicked()), this, SLOT(slotExport()));
+   connect(_export, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotExport()));
    _export->setEnabled(false);
 
-   _cancel = new QPushButton(i18n("&Cancel"), this);
+   _cancel = new TQPushButton(i18n("&Cancel"), this);
    grid->addWidget(_cancel, 8, 5);
-   connect(_cancel, SIGNAL(clicked()), this, SLOT(reject()));
+   connect(_cancel, TQT_SIGNAL(clicked()), this, TQT_SLOT(reject()));
 }
 
 
@@ -84,8 +84,8 @@ void KCertExport::setCertificate(KSSLCertificate *c) {
 
 
 void KCertExport::slotExport() {
-QByteArray cert;
-QString certt;
+TQByteArray cert;
+TQString certt;
 
    if (_filename->text().isEmpty()) return;
 
@@ -110,7 +110,7 @@ QString certt;
          return;
       }
 
-      QFile outFile(_filename->text());
+      TQFile outFile(_filename->text());
 
       if (!outFile.open(IO_WriteOnly)) {
          KMessageBox::error(this, i18n("Error opening file for output."), i18n("SSL"));
@@ -129,8 +129,8 @@ accept();
 
 
 void KCertExport::slotChoose() {
-  //QString newFile = KFileDialog::getSaveFileName("::x509save", i18n("*.pem|Privacy Enhanced Mail Format\n*.der|DER/ASN1 Format"));
-  QString newFile = KFileDialog::getSaveFileName(QString::null, "application/x-x509-ca-cert");
+  //TQString newFile = KFileDialog::getSaveFileName("::x509save", i18n("*.pem|Privacy Enhanced Mail Format\n*.der|DER/ASN1 Format"));
+  TQString newFile = KFileDialog::getSaveFileName(TQString::null, "application/x-x509-ca-cert");
 
    //  Dunno about this one yet
    // \n*.ncert|Netscape certificate files");
@@ -139,7 +139,7 @@ void KCertExport::slotChoose() {
 }
 
 
-void KCertExport::slotTextChanged(const QString& x) {
+void KCertExport::slotTextChanged(const TQString& x) {
   _export->setEnabled(!x.isEmpty());
 }
   

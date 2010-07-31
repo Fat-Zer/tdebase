@@ -1,13 +1,13 @@
 #include "ktar.h"
 #include <stdio.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <kinstance.h>
 #include <kdebug.h>
 
-void recursive_print( const KTarDirectory * dir, const QString & path )
+void recursive_print( const KTarDirectory * dir, const TQString & path )
 {
-  QStringList l = dir->entries();
-  QStringList::Iterator it = l.begin();
+  TQStringList l = dir->entries();
+  TQStringList::Iterator it = l.begin();
   for( ; it != l.end(); ++it )
   {
     const KTarEntry* entry = dir->entry( (*it) );
@@ -37,7 +37,7 @@ int main( int argc, char** argv )
   }
   KInstance instance("ktartest");
 
-  QString command = argv[1];
+  TQString command = argv[1];
   kdDebug() << "main: command=" << command << endl;
   if ( command == "list" )
   {
@@ -81,19 +81,19 @@ int main( int argc, char** argv )
     Q_ASSERT( e && e->isFile() );
     const KTarFile* f = (KTarFile*)e;
 
-    QByteArray arr( f->data() );
+    TQByteArray arr( f->data() );
     printf("SIZE=%i\n",arr.size() );
-    QString str( arr );
+    TQString str( arr );
     printf("DATA=%s\n", str.latin1());
 
     /*
-    // This is what KGzipDev::readAll could do, if QIODevice::readAll was virtual....
-    QByteArray array(1024);
+    // This is what KGzipDev::readAll could do, if TQIODevice::readAll was virtual....
+    TQByteArray array(1024);
     int n;
     while ( ( n = dev.readBlock( array.data(), array.size() ) ) )
     {
         kdDebug() << "readBlock returned " << n << endl << endl;
-        QCString s(array,n+1); // Terminate with 0 before printing
+        TQCString s(array,n+1); // Terminate with 0 before printing
         printf("%s", s.data());
     }
     dev.close();
@@ -151,9 +151,9 @@ int main( int argc, char** argv )
     Q_ASSERT( e && e->isFile() );
     const KTarFile* f = (KTarFile*)e;
 
-    QByteArray arr( f->data() );
+    TQByteArray arr( f->data() );
     printf("SIZE=%i\n",arr.size() );
-    QString str( arr );
+    TQString str( arr );
     printf("DATA=%s\n", str.latin1());
 
     tar.close();
@@ -172,7 +172,7 @@ int main( int argc, char** argv )
     // Generate long filenames of each possible length bigger than 98...
     for (int i = 98; i < 500 ; i++ )
     {
-      QString str, num;
+      TQString str, num;
       str.fill( 'a', i-10 );
       num.setNum( i );
       num = num.rightJustify( 10, '0' );
@@ -186,7 +186,7 @@ int main( int argc, char** argv )
   }
   else if ( command == "bytearray" )
   {
-    QFile file( argv[2] );
+    TQFile file( argv[2] );
     if ( !file.open( IO_ReadOnly ) )
       return 1;
     KTarGz tar( &file );

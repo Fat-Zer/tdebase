@@ -20,7 +20,7 @@
 #ifndef __konq_treeviewitem_h__
 #define __konq_treeviewitem_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "konq_listviewitems.h"
 
 class KFileItem;
@@ -48,7 +48,7 @@ public:
   KonqListViewDir( KonqTreeViewWidget *_treeview, KonqListViewDir *_parent, KFileItem *_fileitem );
 
   /**
-   * Called when user opens the directory (inherited from QListViewItem).
+   * Called when user opens the directory (inherited from TQListViewItem).
    * Just calls @ref #open().
    */
   virtual void setOpen( bool _open );
@@ -70,7 +70,7 @@ public:
    * URL of this directory
    * @param _trailing set to true for a trailing slash (see KURL)
    */
-  QString url( int _trailing );
+  TQString url( int _trailing );
 
 protected:
   bool m_bComplete;

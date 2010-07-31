@@ -20,17 +20,17 @@
 #include "kcmprintmgr.h"
 #include "kdeprint/kmmainview.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kgenericfactory.h>
 #include <kaboutdata.h>
 #include <kdebug.h>
 #include <klocale.h>
 
-typedef KGenericFactory<KCMPrintMgr, QWidget> KPrintMgrFactory;
+typedef KGenericFactory<KCMPrintMgr, TQWidget> KPrintMgrFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_printmgr, KPrintMgrFactory("kcmprintmgr") )
 
-KCMPrintMgr::KCMPrintMgr(QWidget *parent, const char *name, const QStringList &)
+KCMPrintMgr::KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList &)
 : KCModule(KPrintMgrFactory::instance(),parent,name)
 {
 	setButtons(KCModule::Ok);
@@ -43,7 +43,7 @@ KCMPrintMgr::KCMPrintMgr(QWidget *parent, const char *name, const QStringList &)
 
 	m_mainview = new KMMainView(this,"MainView");
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 0);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 0);
 	main_->addWidget(m_mainview);
 	main_->activate();
 	
@@ -55,7 +55,7 @@ KCMPrintMgr::KCMPrintMgr(QWidget *parent, const char *name, const QStringList &)
 	setAboutData(about);
 }
 
-QString KCMPrintMgr::quickHelp() const
+TQString KCMPrintMgr::quickHelp() const
 {
 	return i18n("<h1>Printers</h1>The KDE printing manager is part of KDEPrint which "
                "is the interface to the real print subsystem of your Operating System (OS). "

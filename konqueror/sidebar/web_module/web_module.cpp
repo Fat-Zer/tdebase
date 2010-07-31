@@ -17,10 +17,10 @@
 */
 
 #include "web_module.h"
-#include <qfileinfo.h>
-#include <qhbox.h>
-#include <qspinbox.h>
-#include <qtimer.h>
+#include <tqfileinfo.h>
+#include <tqhbox.h>
+#include <tqspinbox.h>
+#include <tqtimer.h>
 
 #include <dom/html_inline.h>
 #include <kdebug.h>
@@ -32,34 +32,34 @@
 #include <kstandarddirs.h>
 
 
-KonqSideBarWebModule::KonqSideBarWebModule(KInstance *instance, QObject *parent, QWidget *widgetParent, QString &desktopName, const char* name)
+KonqSideBarWebModule::KonqSideBarWebModule(KInstance *instance, TQObject *parent, TQWidget *widgetParent, TQString &desktopName, const char* name)
 	: KonqSidebarPlugin(instance, parent, widgetParent, desktopName, name)
 {
 	_htmlPart = new KHTMLSideBar(universalMode());
-	connect(_htmlPart, SIGNAL(reload()), this, SLOT(reload()));
-	connect(_htmlPart, SIGNAL(completed()), this, SLOT(pageLoaded()));
+	connect(_htmlPart, TQT_SIGNAL(reload()), this, TQT_SLOT(reload()));
+	connect(_htmlPart, TQT_SIGNAL(completed()), this, TQT_SLOT(pageLoaded()));
 	connect(_htmlPart,
-		SIGNAL(setWindowCaption(const QString&)),
+		TQT_SIGNAL(setWindowCaption(const TQString&)),
 		this,
-		SLOT(setTitle(const QString&)));
+		TQT_SLOT(setTitle(const TQString&)));
 	connect(_htmlPart,
-		SIGNAL(openURLRequest(const QString&, KParts::URLArgs)),
+		TQT_SIGNAL(openURLRequest(const TQString&, KParts::URLArgs)),
 		this,
-		SLOT(urlClicked(const QString&, KParts::URLArgs)));
+		TQT_SLOT(urlClicked(const TQString&, KParts::URLArgs)));
 	connect(_htmlPart->browserExtension(),
-		SIGNAL(openURLRequest(const KURL&, const KParts::URLArgs&)),
+		TQT_SIGNAL(openURLRequest(const KURL&, const KParts::URLArgs&)),
 		this,
-		SLOT(formClicked(const KURL&, const KParts::URLArgs&)));
+		TQT_SLOT(formClicked(const KURL&, const KParts::URLArgs&)));
 	connect(_htmlPart,
-		SIGNAL(setAutoReload()), this, SLOT( setAutoReload() ));
+		TQT_SIGNAL(setAutoReload()), this, TQT_SLOT( setAutoReload() ));
 	connect(_htmlPart,
-		SIGNAL(openURLNewWindow(const QString&, KParts::URLArgs)),
+		TQT_SIGNAL(openURLNewWindow(const TQString&, KParts::URLArgs)),
 		this,
-		SLOT(urlNewWindow(const QString&, KParts::URLArgs)));
+		TQT_SLOT(urlNewWindow(const TQString&, KParts::URLArgs)));
 	connect(_htmlPart,
-		SIGNAL(submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&)),
+		TQT_SIGNAL(submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)),
 		this,
-		SIGNAL(submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&)));
+		TQT_SIGNAL(submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)));
 
 	_desktopName = desktopName;
 
@@ -69,7 +69,7 @@ KonqSideBarWebModule::KonqSideBarWebModule(KInstance *instance, QObject *parent,
 	_url = ksc.readPathEntry("URL");
 	_htmlPart->openURL(_url );
 	// Must load this delayed
-	QTimer::singleShot(0, this, SLOT(loadFavicon()));
+	TQTimer::singleShot(0, this, TQT_SLOT(loadFavicon()));
 }
 
 
@@ -79,18 +79,18 @@ KonqSideBarWebModule::~KonqSideBarWebModule() {
 }
 
 
-QWidget *KonqSideBarWebModule::getWidget() {
+TQWidget *KonqSideBarWebModule::getWidget() {
 	return _htmlPart->widget();
 }
 
 void KonqSideBarWebModule::setAutoReload(){
 	KDialogBase dlg(0, "", true, i18n("Set Refresh Timeout (0 disables)"),
 			KDialogBase::Ok|KDialogBase::Cancel);
-	QHBox *hbox = dlg.makeHBoxMainWidget();
+	TQHBox *hbox = dlg.makeHBoxMainWidget();
 	
-	QSpinBox *mins = new QSpinBox( 0, 120, 1, hbox );
+	TQSpinBox *mins = new TQSpinBox( 0, 120, 1, hbox );
 	mins->setSuffix( i18n(" min") );
-	QSpinBox *secs = new QSpinBox( 0, 59, 1, hbox );
+	TQSpinBox *secs = new TQSpinBox( 0, 59, 1, hbox );
 	secs->setSuffix( i18n(" sec") );
 
 	if( reloadTimeout > 0 )	{
@@ -99,7 +99,7 @@ void KonqSideBarWebModule::setAutoReload(){
 		mins->setValue( ( seconds - secs->value() ) / 60 );
 	}
 	
-	if( dlg.exec() == QDialog::Accepted ) {
+	if( dlg.exec() == TQDialog::Accepted ) {
 		int msec = ( mins->value() * 60 + secs->value() ) * 1000;
 		reloadTimeout = msec;
 		KSimpleConfig ksc(_desktopName);
@@ -109,7 +109,7 @@ void KonqSideBarWebModule::setAutoReload(){
 	}
 }
 
-void *KonqSideBarWebModule::provides(const QString &) {
+void *KonqSideBarWebModule::provides(const TQString &) {
 	return 0L;
 }
 
@@ -118,13 +118,13 @@ void KonqSideBarWebModule::handleURL(const KURL &) {
 }
 
 
-void KonqSideBarWebModule::urlNewWindow(const QString& url, KParts::URLArgs args)
+void KonqSideBarWebModule::urlNewWindow(const TQString& url, KParts::URLArgs args)
 {
 	emit createNewWindow(KURL(url), args);
 }
 
 
-void KonqSideBarWebModule::urlClicked(const QString& url, KParts::URLArgs args) 
+void KonqSideBarWebModule::urlClicked(const TQString& url, KParts::URLArgs args) 
 {
 	emit openURLRequest(KURL(url), args);
 }
@@ -138,7 +138,7 @@ void KonqSideBarWebModule::formClicked(const KURL& url, const KParts::URLArgs& a
 
 
 void KonqSideBarWebModule::loadFavicon() {
-	QString icon = KonqPixmapProvider::iconForURL(_url.url());
+	TQString icon = KonqPixmapProvider::iconForURL(_url.url());
 	if (icon.isEmpty()) {
 		KonqFavIconMgr::downloadHostIcon(_url);
 		icon = KonqPixmapProvider::iconForURL(_url.url());
@@ -161,7 +161,7 @@ void KonqSideBarWebModule::reload() {
 }
 
 
-void KonqSideBarWebModule::setTitle(const QString& title) {
+void KonqSideBarWebModule::setTitle(const TQString& title) {
 	if (!title.isEmpty()) {
 		emit setCaption(title);
 
@@ -176,27 +176,27 @@ void KonqSideBarWebModule::setTitle(const QString& title) {
 
 void KonqSideBarWebModule::pageLoaded() {
 	if( reloadTimeout > 0 ) {
-		QTimer::singleShot( reloadTimeout, this, SLOT( reload() ) );
+		TQTimer::singleShot( reloadTimeout, this, TQT_SLOT( reload() ) );
 	}
 }
 
 
 extern "C" {
-	KDE_EXPORT KonqSidebarPlugin* create_konqsidebar_web(KInstance *instance, QObject *parent, QWidget *widget, QString &desktopName, const char *name) {
+	KDE_EXPORT KonqSidebarPlugin* create_konqsidebar_web(KInstance *instance, TQObject *parent, TQWidget *widget, TQString &desktopName, const char *name) {
 		return new KonqSideBarWebModule(instance, parent, widget, desktopName, name);
 	}
 }
 
 
 extern "C" {
-	KDE_EXPORT bool add_konqsidebar_web(QString* fn, QString* param, QMap<QString,QString> *map) {
+	KDE_EXPORT bool add_konqsidebar_web(TQString* fn, TQString* param, TQMap<TQString,TQString> *map) {
 		Q_UNUSED(param);
 		KGlobal::dirs()->addResourceType("websidebardata", KStandardDirs::kde_default("data") + "konqsidebartng/websidebar");
 		KURL url;
 		url.setProtocol("file");
-		QStringList paths = KGlobal::dirs()->resourceDirs("websidebardata");
-		for (QStringList::Iterator i = paths.begin(); i != paths.end(); ++i) {
-			if (QFileInfo(*i + "websidebar.html").exists()) {
+		TQStringList paths = KGlobal::dirs()->resourceDirs("websidebardata");
+		for (TQStringList::Iterator i = paths.begin(); i != paths.end(); ++i) {
+			if (TQFileInfo(*i + "websidebar.html").exists()) {
 				url.setPath(*i + "websidebar.html");
 				break;
 			}

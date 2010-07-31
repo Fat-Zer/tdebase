@@ -20,7 +20,7 @@
 #ifndef PRINTWRAPPER_H
 #define PRINTWRAPPER_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KPrinter;
 class KPrintDialog;
@@ -43,7 +43,7 @@ private:
 	bool force_stdin;
 	bool check_stdin;
 	KPrintDialog* dlg;
-	QSocketNotifier* notif;
+	TQSocketNotifier* notif;
 };
 
 #endif

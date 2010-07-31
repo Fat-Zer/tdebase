@@ -11,12 +11,12 @@
 
 #include <unistd.h>
 
-#include <qlabel.h>
-#include <qdir.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
-#include <qregexp.h>
+#include <tqlabel.h>
+#include <tqdir.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -35,21 +35,21 @@
 
 //----------------------------------------------------------------------------
 
-KKeyModule::KKeyModule( QWidget *parent, bool isGlobal, bool bSeriesOnly, bool bSeriesNone, const char *name )
-  : QWidget( parent, name )
+KKeyModule::KKeyModule( TQWidget *parent, bool isGlobal, bool bSeriesOnly, bool bSeriesNone, const char *name )
+  : TQWidget( parent, name )
 {
 	init( isGlobal, bSeriesOnly, bSeriesNone );
 }
 
-KKeyModule::KKeyModule( QWidget *parent, bool isGlobal, const char *name )
-  : QWidget( parent, name )
+KKeyModule::KKeyModule( TQWidget *parent, bool isGlobal, const char *name )
+  : TQWidget( parent, name )
 {
 	init( isGlobal, false, false );
 }
 
 void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
 {
-  QString wtstr;
+  TQString wtstr;
 
   KeyType = isGlobal ? "global" : "standard";
 
@@ -73,7 +73,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
     // Sorting Hack: I'll re-write the module once feature-adding begins again.
     if( bSeriesOnly || bSeriesNone ) {
 	for( uint i = 0; i < actions.size(); i++ ) {
-		QString sConfigKey = actions[i].m_sName;
+		TQString sConfigKey = actions[i].m_sName;
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
 		int iLastSpace = sConfigKey.findRev( ' ' );
 		bool bIsNum = false;
@@ -107,30 +107,30 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   //kdDebug(125) << "KKeyModule::init() - Read current key bindings from config." << endl;
   //actions.readActions( KeySet );
 
-  sFileList = new QStringList();
-  sList = new QListBox( this );
+  sFileList = new TQStringList();
+  sList = new TQListBox( this );
 
   //readSchemeNames();
   sList->setCurrentItem( 0 );
-  connect( sList, SIGNAL( highlighted( int ) ),
-           SLOT( slotPreviewScheme( int ) ) );
+  connect( sList, TQT_SIGNAL( highlighted( int ) ),
+           TQT_SLOT( slotPreviewScheme( int ) ) );
 
-  QLabel *label = new QLabel( sList, i18n("&Key Scheme"), this );
+  TQLabel *label = new TQLabel( sList, i18n("&Key Scheme"), this );
 
   wtstr = i18n("Here you can see a list of the existing key binding schemes with 'Current scheme'"
     " referring to the settings you are using right now. Select a scheme to use, remove or"
     " change it.");
-  QWhatsThis::add( label, wtstr );
-  QWhatsThis::add( sList, wtstr );
+  TQWhatsThis::add( label, wtstr );
+  TQWhatsThis::add( sList, wtstr );
 
-  addBt = new QPushButton(  i18n("&Save Scheme..."), this );
-  connect( addBt, SIGNAL( clicked() ), SLOT( slotAdd() ) );
-  QWhatsThis::add(addBt, i18n("Click here to add a new key bindings scheme. You will be prompted for a name."));
+  addBt = new TQPushButton(  i18n("&Save Scheme..."), this );
+  connect( addBt, TQT_SIGNAL( clicked() ), TQT_SLOT( slotAdd() ) );
+  TQWhatsThis::add(addBt, i18n("Click here to add a new key bindings scheme. You will be prompted for a name."));
 
-  removeBt = new QPushButton(  i18n("&Remove Scheme"), this );
+  removeBt = new TQPushButton(  i18n("&Remove Scheme"), this );
   removeBt->setEnabled(FALSE);
-  connect( removeBt, SIGNAL( clicked() ), SLOT( slotRemove() ) );
-  QWhatsThis::add( removeBt, i18n("Click here to remove the selected key bindings scheme. You can not"
+  connect( removeBt, TQT_SIGNAL( clicked() ), TQT_SLOT( slotRemove() ) );
+  TQWhatsThis::add( removeBt, i18n("Click here to remove the selected key bindings scheme. You can not"
     " remove the standard system wide schemes, 'Current scheme' and 'KDE default'.") );
 
   // Hack to get this setting only displayed once.  It belongs in main.cpp instead.
@@ -139,12 +139,12 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   /* Needed to remove because this depended upon non-BC changes in KeyEntry.*/
   // If this is the "Global Keys" section of the KDE Control Center:
   if( isGlobal && !bSeriesOnly ) {
-	preferMetaBt = new QCheckBox( i18n("Prefer 4-modifier defaults"), this );
+	preferMetaBt = new TQCheckBox( i18n("Prefer 4-modifier defaults"), this );
 	if( !KKeySequence::keyboardHasMetaKey() )
 		preferMetaBt->setEnabled( false );
 	preferMetaBt->setChecked( KKeySequence::useFourModifierKeys() );
-	connect( preferMetaBt, SIGNAL(clicked()), SLOT(slotPreferMeta()) );
-	QWhatsThis::add( preferMetaBt, i18n("If your keyboard has a Meta key, but you would "
+	connect( preferMetaBt, TQT_SIGNAL(clicked()), TQT_SLOT(slotPreferMeta()) );
+	TQWhatsThis::add( preferMetaBt, i18n("If your keyboard has a Meta key, but you would "
 		"like KDE to prefer the 3-modifier configuration defaults, then this option "
 		"should be unchecked.") );
   } else
@@ -153,11 +153,11 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   KSeparator* line = new KSeparator( KSeparator::HLine, this );
 
   kc = new KeyChooserSpec( actions, this, isGlobal );
-  connect( kc, SIGNAL(keyChange()), this, SLOT(slotKeyChange()) );
+  connect( kc, TQT_SIGNAL(keyChange()), this, TQT_SLOT(slotKeyChange()) );
 
   readScheme();
 
-  QGridLayout *topLayout = new QGridLayout( this, 6, 2,
+  TQGridLayout *topLayout = new TQGridLayout( this, 6, 2,
                                             KDialog::marginHint(),
                                             KDialog::spacingHint());
   topLayout->addWidget(label, 0, 0);
@@ -179,14 +179,14 @@ KKeyModule::~KKeyModule (){
     delete sFileList;
 }
 
-bool KKeyModule::writeSettings( const QString& sGroup, KConfig* pConfig )
+bool KKeyModule::writeSettings( const TQString& sGroup, KConfig* pConfig )
 {
 	kc->commitChanges();
 	actions.writeActions( sGroup, pConfig, true, false );
 	return true;
 }
 
-bool KKeyModule::writeSettingsGlobal( const QString& sGroup )
+bool KKeyModule::writeSettingsGlobal( const TQString& sGroup )
 {
 	kc->commitChanges();
 	actions.writeActions( sGroup, 0, true, true );
@@ -225,15 +225,15 @@ void KKeyModule::defaults()
 
 /*void KKeyModule::slotRemove()
 {
-  QString kksPath =
+  TQString kksPath =
         KGlobal::dirs()->saveLocation("data", "kcmkeys/" + KeyType);
 
-  QDir d( kksPath );
+  TQDir d( kksPath );
   if (!d.exists()) // what can we do?
     return;
 
-  d.setFilter( QDir::Files );
-  d.setSorting( QDir::Name );
+  d.setFilter( TQDir::Files );
+  d.setSorting( TQDir::Name );
   d.setNameFilter("*.kksrc");
 
   uint ind = sList->currentItem();
@@ -291,14 +291,14 @@ void KKeyModule::readScheme( int index )
 
 /*void KKeyModule::slotAdd()
 {
-  QString sName;
+  TQString sName;
 
   if ( sList->currentItem() >= nSysSchemes )
      sName = sList->currentText();
   SaveScm ss( 0,  "save scheme", sName );
 
   bool nameValid;
-  QString sFile;
+  TQString sFile;
   int exists = -1;
 
   do {
@@ -330,7 +330,7 @@ void KKeyModule::readScheme( int index )
 
         // Make the next letter upper case
 
-        QString s = sFile.mid( ind, 1 );
+        TQString s = sFile.mid( ind, 1 );
         s = s.upper();
         sFile.replace( ind, 1, s );
 
@@ -356,13 +356,13 @@ void KKeyModule::readScheme( int index )
 
   } while ( nameValid == FALSE );
 
-  disconnect( sList, SIGNAL( highlighted( int ) ), this,
-              SLOT( slotPreviewScheme( int ) ) );
+  disconnect( sList, TQT_SIGNAL( highlighted( int ) ), this,
+              TQT_SLOT( slotPreviewScheme( int ) ) );
 
 
-  QString kksPath = KGlobal::dirs()->saveLocation("data", "kcmkeys/");
+  TQString kksPath = KGlobal::dirs()->saveLocation("data", "kcmkeys/");
 
-  QDir d( kksPath );
+  TQDir d( kksPath );
   if ( !d.exists() )
     if ( !d.mkdir( kksPath ) ) {
       qWarning("KKeyModule: Could not make directory to store user info.");
@@ -403,8 +403,8 @@ void KKeyModule::readScheme( int index )
 
   slotSave();
 
-  connect( sList, SIGNAL( highlighted( int ) ), this,
-           SLOT( slotPreviewScheme( int ) ) );
+  connect( sList, TQT_SIGNAL( highlighted( int ) ), this,
+           TQT_SLOT( slotPreviewScheme( int ) ) );
 
   slotPreviewScheme( sList->currentItem() );
 }*/
@@ -426,9 +426,9 @@ void KKeyModule::readScheme( int index )
 
 /*void KKeyModule::readSchemeNames( )
 {
-  QStringList schemes = KGlobal::dirs()->findAllResources("data", "kcmkeys/" + KeyType + "/*.kksrc");
-  //QRegExp r( "-kde[34].kksrc$" );
-  QRegExp r( "-kde3.kksrc$" );
+  TQStringList schemes = KGlobal::dirs()->findAllResources("data", "kcmkeys/" + KeyType + "/*.kksrc");
+  //TQRegExp r( "-kde[34].kksrc$" );
+  TQRegExp r( "-kde3.kksrc$" );
 
   sList->clear();
   sFileList->clear();
@@ -442,7 +442,7 @@ void KKeyModule::readScheme( int index )
   nSysSchemes = 2;
 
   // This for system files
-  for ( QStringList::ConstIterator it = schemes.begin(); it != schemes.end(); ++it) {
+  for ( TQStringList::ConstIterator it = schemes.begin(); it != schemes.end(); ++it) {
     // KPersonalizer relies on .kksrc files containing all the keyboard shortcut
     //  schemes for various setups.  It also requires the KDE defaults to be in
     //  a .kksrc file.  The KDE defaults shouldn't be listed here.
@@ -452,7 +452,7 @@ void KKeyModule::readScheme( int index )
     KSimpleConfig config( *it, true );
     // TODO: Put 'Name' in "Settings" group
     config.setGroup( KeyScheme );
-    QString str = config.readEntry( "Name" );
+    TQString str = config.readEntry( "Name" );
 
     sList->insertItem( str );
     sFileList->append( *it );
@@ -473,7 +473,7 @@ void KKeyModule::init()
 
   /*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
   KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
-  QString fourMods = KGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
+  TQString fourMods = KGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
   KAccel::useFourModifierKeys( fourMods == "true" );
   bool bUseFourModifierKeys = KAccel::useFourModifierKeys();
   KGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );
@@ -508,7 +508,7 @@ void KKeyModule::init()
 // KeyChooserSpec
 //-----------------------------------------------------------------
 
-KeyChooserSpec::KeyChooserSpec( KAccelActions& actions, QWidget* parent, bool bGlobal )
+KeyChooserSpec::KeyChooserSpec( KAccelActions& actions, TQWidget* parent, bool bGlobal )
     : KKeyChooser( actions, parent, bGlobal, false, true ), m_bGlobal( bGlobal )
     {
     //if( global )

@@ -21,12 +21,12 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qcombobox.h>
-#include <qvaluevector.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqcombobox.h>
+#include <tqvaluevector.h>
 
 #include <kdialog.h>
 #include <ksimpleconfig.h>
@@ -41,12 +41,12 @@
 class StringPair
 {
 public:
-  QChar storeName;
-  QString userName;
+  TQChar storeName;
+  TQString userName;
 
-  static StringPair find( const QValueList <StringPair> &list, const QChar &c)
+  static StringPair find( const TQValueList <StringPair> &list, const TQChar &c)
   {
-    for ( QValueList<StringPair>::ConstIterator it = list.begin();
+    for ( TQValueList<StringPair>::ConstIterator it = list.begin();
 	it != list.end();
 	++it )
       if ((*it).storeName==c) return (*it);
@@ -80,7 +80,7 @@ bool operator>= (const StringPair &p1, const StringPair &p2)
   return ! (p1.userName>=p2.userName);
 }
 
-StringPair KLocaleConfigTime::buildStringPair(const QChar &c, const QString &s) const
+StringPair KLocaleConfigTime::buildStringPair(const TQChar &c, const TQString &s) const
 {
   StringPair pair;
   pair.storeName=c;
@@ -88,9 +88,9 @@ StringPair KLocaleConfigTime::buildStringPair(const QChar &c, const QString &s) 
   return pair;
 }
 
-QValueList<StringPair> KLocaleConfigTime::timeMap() const
+TQValueList<StringPair> KLocaleConfigTime::timeMap() const
 {
-  QValueList < StringPair > list;
+  TQValueList < StringPair > list;
   list+=buildStringPair('H',m_locale->translate("HH"));
   list+=buildStringPair('k',m_locale->translate("hH"));
   list+=buildStringPair('I',m_locale->translate("PH"));
@@ -104,9 +104,9 @@ QValueList<StringPair> KLocaleConfigTime::timeMap() const
   return list;
 }
 
-QValueList <StringPair> KLocaleConfigTime::dateMap() const
+TQValueList <StringPair> KLocaleConfigTime::dateMap() const
 {
-  QValueList < StringPair > list;
+  TQValueList < StringPair > list;
   list+=buildStringPair('Y',m_locale->translate("YYYY"));
   list+=buildStringPair('y',m_locale->translate("YY"));
   list+=buildStringPair('n',m_locale->translate("mM"));
@@ -123,19 +123,19 @@ QValueList <StringPair> KLocaleConfigTime::dateMap() const
   return list;
 }
 
-QString KLocaleConfigTime::userToStore(const QValueList<StringPair> & list,
-		    const QString & userFormat) const
+TQString KLocaleConfigTime::userToStore(const TQValueList<StringPair> & list,
+		    const TQString & userFormat) const
 {
-  QString result;
+  TQString result;
 
   for ( uint pos = 0; pos < userFormat.length(); ++pos )
     {
       bool bFound = false;
-      for ( QValueList<StringPair>::ConstIterator it = list.begin();
+      for ( TQValueList<StringPair>::ConstIterator it = list.begin();
 	    it != list.end() && !bFound;
 	    ++it )
 	{
-	  QString s = (*it).userName;
+	  TQString s = (*it).userName;
 
 	  if ( userFormat.mid( pos, s.length() ) == s )
 	    {
@@ -150,7 +150,7 @@ QString KLocaleConfigTime::userToStore(const QValueList<StringPair> & list,
 
       if ( !bFound )
 	{
-	  QChar c = userFormat.at( pos );
+	  TQChar c = userFormat.at( pos );
 	  if ( c == '%' )
 	    result += c;
 
@@ -161,15 +161,15 @@ QString KLocaleConfigTime::userToStore(const QValueList<StringPair> & list,
   return result;
 }
 
-QString KLocaleConfigTime::storeToUser(const QValueList<StringPair> & list,
-				       const QString & storeFormat) const
+TQString KLocaleConfigTime::storeToUser(const TQValueList<StringPair> & list,
+				       const TQString & storeFormat) const
 {
-  QString result;
+  TQString result;
 
   bool escaped = false;
   for ( uint pos = 0; pos < storeFormat.length(); ++pos )
     {
-      QChar c = storeFormat.at(pos);
+      TQChar c = storeFormat.at(pos);
       if ( escaped )
 	{
 	  StringPair it = StringPair::find( list, c );
@@ -190,51 +190,51 @@ QString KLocaleConfigTime::storeToUser(const QValueList<StringPair> & list,
 }
 
 KLocaleConfigTime::KLocaleConfigTime(KLocale *_locale,
-				     QWidget *parent, const char*name)
- : QWidget(parent, name),
+				     TQWidget *parent, const char*name)
+ : TQWidget(parent, name),
    m_locale(_locale)
 {
   // Time
-  QGridLayout *lay = new QGridLayout(this, 7, 2,
+  TQGridLayout *lay = new TQGridLayout(this, 7, 2,
 				     KDialog::marginHint(),
 				     KDialog::spacingHint());
   lay->setAutoAdd(TRUE);
 
-  m_labCalendarSystem = new QLabel(this, I18N_NOOP("Calendar system:"));
-  m_comboCalendarSystem = new QComboBox(false, this);
-  connect(m_comboCalendarSystem, SIGNAL(activated(int)),
-	  this, SLOT(slotCalendarSystemChanged(int)));
-  QStringList tmpCalendars;
-  tmpCalendars << QString::null << QString::null;
+  m_labCalendarSystem = new TQLabel(this, I18N_NOOP("Calendar system:"));
+  m_comboCalendarSystem = new TQComboBox(false, this);
+  connect(m_comboCalendarSystem, TQT_SIGNAL(activated(int)),
+	  this, TQT_SLOT(slotCalendarSystemChanged(int)));
+  TQStringList tmpCalendars;
+  tmpCalendars << TQString::null << TQString::null;
   m_comboCalendarSystem->insertStringList(tmpCalendars);
 
-  m_labTimeFmt = new QLabel(this, I18N_NOOP("Time format:"));
-  m_comboTimeFmt = new QComboBox(true, this);
+  m_labTimeFmt = new TQLabel(this, I18N_NOOP("Time format:"));
+  m_comboTimeFmt = new TQComboBox(true, this);
   //m_edTimeFmt = m_comboTimeFmt->lineEdit();
-  //m_edTimeFmt = new QLineEdit(this);
-  connect( m_comboTimeFmt, SIGNAL( textChanged(const QString &) ),
-	   this, SLOT( slotTimeFmtChanged(const QString &) ) );
+  //m_edTimeFmt = new TQLineEdit(this);
+  connect( m_comboTimeFmt, TQT_SIGNAL( textChanged(const TQString &) ),
+	   this, TQT_SLOT( slotTimeFmtChanged(const TQString &) ) );
 
-  m_labDateFmt = new QLabel(this, I18N_NOOP("Date format:"));
-  m_comboDateFmt = new QComboBox(true, this);
-  connect( m_comboDateFmt, SIGNAL( textChanged(const QString &) ),
-	   this, SLOT( slotDateFmtChanged(const QString &) ) );
+  m_labDateFmt = new TQLabel(this, I18N_NOOP("Date format:"));
+  m_comboDateFmt = new TQComboBox(true, this);
+  connect( m_comboDateFmt, TQT_SIGNAL( textChanged(const TQString &) ),
+	   this, TQT_SLOT( slotDateFmtChanged(const TQString &) ) );
 
-  m_labDateFmtShort = new QLabel(this, I18N_NOOP("Short date format:"));
-  m_comboDateFmtShort = new QComboBox(true, this);
-  connect( m_comboDateFmtShort, SIGNAL( textChanged(const QString &) ),
-	   this, SLOT( slotDateFmtShortChanged(const QString &) ) );
+  m_labDateFmtShort = new TQLabel(this, I18N_NOOP("Short date format:"));
+  m_comboDateFmtShort = new TQComboBox(true, this);
+  connect( m_comboDateFmtShort, TQT_SIGNAL( textChanged(const TQString &) ),
+	   this, TQT_SLOT( slotDateFmtShortChanged(const TQString &) ) );
 
-  m_labWeekStartDay = new QLabel(this, I18N_NOOP("First day of the week:"));
-  m_comboWeekStartDay = new QComboBox(false, this);
-  connect (m_comboWeekStartDay, SIGNAL(activated(int)),
-           this, SLOT(slotWeekStartDayChanged(int)));
+  m_labWeekStartDay = new TQLabel(this, I18N_NOOP("First day of the week:"));
+  m_comboWeekStartDay = new TQComboBox(false, this);
+  connect (m_comboWeekStartDay, TQT_SIGNAL(activated(int)),
+           this, TQT_SLOT(slotWeekStartDayChanged(int)));
 
   updateWeekDayNames();
 
-  m_chDateMonthNamePossessive = new QCheckBox(this, I18N_NOOP("Use declined form of month name"));
-  connect( m_chDateMonthNamePossessive, SIGNAL( clicked() ),
-	     SLOT( slotDateMonthNamePossChanged() ) );
+  m_chDateMonthNamePossessive = new TQCheckBox(this, I18N_NOOP("Use declined form of month name"));
+  connect( m_chDateMonthNamePossessive, TQT_SIGNAL( clicked() ),
+	     TQT_SLOT( slotDateMonthNamePossChanged() ) );
 
   lay->setColStretch(1, 1);
 }
@@ -253,28 +253,28 @@ void KLocaleConfigTime::save()
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",
-			   QString::fromLatin1("l10n/%1/entry.desktop")
+			   TQString::fromLatin1("l10n/%1/entry.desktop")
 			   .arg(m_locale->country())), true);
   ent.setGroup("KCM Locale");
 
-  QString str;
+  TQString str;
 
-  str = ent.readEntry("CalendarSystem", QString::fromLatin1("gregorian"));
+  str = ent.readEntry("CalendarSystem", TQString::fromLatin1("gregorian"));
   config->deleteEntry("CalendarSystem", false, true);
   if (str != m_locale->calendarType())
     config->writeEntry("CalendarSystem", m_locale->calendarType(), true, true);
 
-  str = ent.readEntry("TimeFormat", QString::fromLatin1("%H:%M:%S"));
+  str = ent.readEntry("TimeFormat", TQString::fromLatin1("%H:%M:%S"));
   config->deleteEntry("TimeFormat", false, true);
   if (str != m_locale->timeFormat())
     config->writeEntry("TimeFormat", m_locale->timeFormat(), true, true);
 
-  str = ent.readEntry("DateFormat", QString::fromLatin1("%A %d %B %Y"));
+  str = ent.readEntry("DateFormat", TQString::fromLatin1("%A %d %B %Y"));
   config->deleteEntry("DateFormat", false, true);
   if (str != m_locale->dateFormat())
     config->writeEntry("DateFormat", m_locale->dateFormat(), true, true);
 
-  str = ent.readEntry("DateFormatShort", QString::fromLatin1("%Y-%m-%d"));
+  str = ent.readEntry("DateFormatShort", TQString::fromLatin1("%Y-%m-%d"));
   config->deleteEntry("DateFormatShort", false, true);
   if (str != m_locale->dateFormatShort())
     config->writeEntry("DateFormatShort",
@@ -302,26 +302,26 @@ void KLocaleConfigTime::save()
   KGlobal::_locale = lsave;
 }
 
-void KLocaleConfigTime::showEvent( QShowEvent *e )
+void KLocaleConfigTime::showEvent( TQShowEvent *e )
 {
   // This option makes sense only for languages where nouns are declined
    if ( !m_locale->nounDeclension() )
     m_chDateMonthNamePossessive->hide();
-   QWidget::showEvent( e );
+   TQWidget::showEvent( e );
 }
 
 void KLocaleConfigTime::slotCalendarSystemChanged(int calendarSystem)
 {
   kdDebug() << "CalendarSystem: " << calendarSystem << endl;
 
-  typedef QValueVector<QString> CalendarVector;
+  typedef TQValueVector<TQString> CalendarVector;
   CalendarVector calendars(4);
   calendars[0] = "gregorian";
   calendars[1] = "hijri";
   calendars[2] = "hebrew";
   calendars[3] = "jalali";
 
-  QString calendarType;
+  TQString calendarType;
   bool ok;
   calendarType = calendars.at(calendarSystem, &ok);
   if ( !ok )
@@ -335,14 +335,14 @@ void KLocaleConfigTime::slotCalendarSystemChanged(int calendarSystem)
 
 void KLocaleConfigTime::slotLocaleChanged()
 {
-  typedef QValueVector<QString> CalendarVector;
+  typedef TQValueVector<TQString> CalendarVector;
   CalendarVector calendars(4);
   calendars[0] = "gregorian";
   calendars[1] = "hijri";
   calendars[2] = "hebrew";
   calendars[3] = "jalali";
 
-  QString calendarType = m_locale->calendarType();
+  TQString calendarType = m_locale->calendarType();
   int calendarSystem = 0;
 
   CalendarVector::iterator it = qFind(calendars.begin(), calendars.end(),
@@ -371,11 +371,11 @@ calendarType);
   kdDebug(173) << storeToUser(timeMap(),
 			   m_locale->timeFormat()) << endl;
   kdDebug(173) << userToStore(timeMap(),
-			   QString::fromLatin1("HH:MM:SS AMPM test")) << endl;
+			   TQString::fromLatin1("HH:MM:SS AMPM test")) << endl;
 
 }
 
-void KLocaleConfigTime::slotTimeFmtChanged(const QString &t)
+void KLocaleConfigTime::slotTimeFmtChanged(const TQString &t)
 {
   //  m_locale->setTimeFormat(t);
   m_locale->setTimeFormat( userToStore( timeMap(), t ) );
@@ -383,14 +383,14 @@ void KLocaleConfigTime::slotTimeFmtChanged(const QString &t)
   emit localeChanged();
 }
 
-void KLocaleConfigTime::slotDateFmtChanged(const QString &t)
+void KLocaleConfigTime::slotDateFmtChanged(const TQString &t)
 {
   // m_locale->setDateFormat(t);
   m_locale->setDateFormat( userToStore( dateMap(), t ) );
   emit localeChanged();
 }
 
-void KLocaleConfigTime::slotDateFmtShortChanged(const QString &t)
+void KLocaleConfigTime::slotDateFmtShortChanged(const TQString &t)
 {
   //m_locale->setDateFormatShort(t);
   m_locale->setDateFormatShort( userToStore( dateMap(), t ) );
@@ -414,11 +414,11 @@ void KLocaleConfigTime::slotDateMonthNamePossChanged()
 
 void KLocaleConfigTime::slotTranslate()
 {
-  QString str;
+  TQString str;
 
-  QString sep = QString::fromLatin1("\n");
+  TQString sep = TQString::fromLatin1("\n");
 
-  QString old;
+  TQString old;
 
   // clear() and insertStringList also changes the current item, so
   // we better use save and restore here..
@@ -427,7 +427,7 @@ void KLocaleConfigTime::slotTranslate()
   str = i18n("some reasonable time formats for the language",
 	     "HH:MM:SS\n"
 	     "pH:MM:SS AMPM");
-  m_comboTimeFmt->insertStringList(QStringList::split(sep, str));
+  m_comboTimeFmt->insertStringList(TQStringList::split(sep, str));
   m_comboTimeFmt->setEditText(old);
 
   old = m_comboDateFmt->currentText();
@@ -435,7 +435,7 @@ void KLocaleConfigTime::slotTranslate()
   str = i18n("some reasonable date formats for the language",
 	     "WEEKDAY MONTH dD YYYY\n"
 	     "SHORTWEEKDAY MONTH dD YYYY");
-  m_comboDateFmt->insertStringList(QStringList::split(sep, str));
+  m_comboDateFmt->insertStringList(TQStringList::split(sep, str));
   m_comboDateFmt->setEditText(old);
 
   old = m_comboDateFmtShort->currentText();
@@ -444,13 +444,13 @@ void KLocaleConfigTime::slotTranslate()
 	     "YYYY-MM-DD\n"
 	     "dD.mM.YYYY\n"
 	     "DD.MM.YYYY");
-  m_comboDateFmtShort->insertStringList(QStringList::split(sep, str));
+  m_comboDateFmtShort->insertStringList(TQStringList::split(sep, str));
   m_comboDateFmtShort->setEditText(old);
 
   updateWeekDayNames();
 
   while ( m_comboCalendarSystem->count() < 4 )
-    m_comboCalendarSystem->insertItem(QString::null);
+    m_comboCalendarSystem->insertItem(TQString::null);
   m_comboCalendarSystem->changeItem
     (m_locale->translate("Calendar System Gregorian", "Gregorian"), 0);
   m_comboCalendarSystem->changeItem
@@ -480,10 +480,10 @@ void KLocaleConfigTime::slotTranslate()
      "given time value. Noon is treated as \"pm\" and midnight as \"am\"."
      "</td></tr>"
      "</table>");
-  QWhatsThis::add( m_labTimeFmt, str );
-  QWhatsThis::add( m_comboTimeFmt,  str );
+  TQWhatsThis::add( m_labTimeFmt, str );
+  TQWhatsThis::add( m_comboTimeFmt,  str );
 
-  QString datecodes = m_locale->translate(
+  TQString datecodes = m_locale->translate(
     "<table>"
     "<tr><td><b>YYYY</b></td><td>The year with century as a decimal number."
     "</td></tr>"
@@ -507,27 +507,27 @@ void KLocaleConfigTime::slotTranslate()
   str = m_locale->translate
     ( "<p>The text in this textbox will be used to format long "
       "dates. The sequences below will be replaced:</p>") + datecodes;
-  QWhatsThis::add( m_labDateFmt, str );
-  QWhatsThis::add( m_comboDateFmt,  str );
+  TQWhatsThis::add( m_labDateFmt, str );
+  TQWhatsThis::add( m_comboDateFmt,  str );
 
   str = m_locale->translate
     ( "<p>The text in this textbox will be used to format short "
       "dates. For instance, this is used when listing files. "
       "The sequences below will be replaced:</p>") + datecodes;
-  QWhatsThis::add( m_labDateFmtShort, str );
-  QWhatsThis::add( m_comboDateFmtShort,  str );
+  TQWhatsThis::add( m_labDateFmtShort, str );
+  TQWhatsThis::add( m_comboDateFmtShort,  str );
 
   str = m_locale->translate
     ("<p>This option determines which day will be considered as "
      "the first one of the week.</p>");
-  QWhatsThis::add( m_comboWeekStartDay,  str );
+  TQWhatsThis::add( m_comboWeekStartDay,  str );
 
   if ( m_locale->nounDeclension() )
   {
     str = m_locale->translate
       ("<p>This option determines whether possessive form of month "
        "names should be used in dates.</p>");
-    QWhatsThis::add( m_chDateMonthNamePossessive,  str );
+    TQWhatsThis::add( m_chDateMonthNamePossessive,  str );
   }
 }
 
@@ -537,7 +537,7 @@ void KLocaleConfigTime::updateWeekDayNames()
 
   for ( int i = 1; ; ++i )
   {
-    QString str = calendar->weekDayName(i);
+    TQString str = calendar->weekDayName(i);
     bool outsideComboList = m_comboWeekStartDay->count() < i;
 
     if ( str.isNull() )

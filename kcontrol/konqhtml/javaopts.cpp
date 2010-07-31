@@ -20,10 +20,10 @@
 #include <khtml_settings.h>
 #include <knuminput.h>
 
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qvgroupbox.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqvgroupbox.h>
+#include <tqlabel.h>
 
 #include "htmlopts.h"
 #include "policydlg.h"
@@ -31,13 +31,13 @@
 
 // == class JavaPolicies =====
 
-JavaPolicies::JavaPolicies(KConfig* config, const QString &group, bool global,
-  		const QString &domain) :
+JavaPolicies::JavaPolicies(KConfig* config, const TQString &group, bool global,
+  		const TQString &domain) :
 	Policies(config,group,global,domain,"java.","EnableJava") {
 }
 
-JavaPolicies::JavaPolicies() : Policies(0,QString::null,false,
-	QString::null,QString::null,QString::null) {
+JavaPolicies::JavaPolicies() : Policies(0,TQString::null,false,
+	TQString::null,TQString::null,TQString::null) {
 }
 
 JavaPolicies::~JavaPolicies() {
@@ -45,8 +45,8 @@ JavaPolicies::~JavaPolicies() {
 
 // == class KJavaOptions =====
 
-KJavaOptions::KJavaOptions( KConfig* config, QString group,
-                            QWidget *parent, const char *name )
+KJavaOptions::KJavaOptions( KConfig* config, TQString group,
+                            TQWidget *parent, const char *name )
     : KCModule( parent, name ),
       _removeJavaScriptDomainAdvice(false),
       m_pConfig( config ),
@@ -54,90 +54,90 @@ KJavaOptions::KJavaOptions( KConfig* config, QString group,
       java_global_policies(config,group,true),
       _removeJavaDomainSettings(false)
 {
-    QVBoxLayout* toplevel = new QVBoxLayout( this, 10, 5 );
+    TQVBoxLayout* toplevel = new TQVBoxLayout( this, 10, 5 );
 
     /***************************************************************************
      ********************* Global Settings *************************************
      **************************************************************************/
-    QVGroupBox* globalGB = new QVGroupBox( i18n( "Global Settings" ), this );
+    TQVGroupBox* globalGB = new TQVGroupBox( i18n( "Global Settings" ), this );
     toplevel->addWidget( globalGB );
-    enableJavaGloballyCB = new QCheckBox( i18n( "Enable Ja&va globally" ), globalGB );
-    connect( enableJavaGloballyCB, SIGNAL( clicked() ), this, SLOT( slotChanged() ) );
-    connect( enableJavaGloballyCB, SIGNAL( clicked() ), this, SLOT( toggleJavaControls() ) );
+    enableJavaGloballyCB = new TQCheckBox( i18n( "Enable Ja&va globally" ), globalGB );
+    connect( enableJavaGloballyCB, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChanged() ) );
+    connect( enableJavaGloballyCB, TQT_SIGNAL( clicked() ), this, TQT_SLOT( toggleJavaControls() ) );
 
 
     /***************************************************************************
      ***************** Domain Specific Settings ********************************
      **************************************************************************/
     domainSpecific = new JavaDomainListView(m_pConfig,m_groupname,this,this);
-    connect(domainSpecific,SIGNAL(changed(bool)),SLOT(slotChanged()));
+    connect(domainSpecific,TQT_SIGNAL(changed(bool)),TQT_SLOT(slotChanged()));
     toplevel->addWidget( domainSpecific, 2 );
 
     /***************************************************************************
      ***************** Java Runtime Settings ***********************************
      **************************************************************************/
-    QVGroupBox* javartGB = new QVGroupBox( i18n( "Java Runtime Settings" ), this );
+    TQVGroupBox* javartGB = new TQVGroupBox( i18n( "Java Runtime Settings" ), this );
     toplevel->addWidget( javartGB );
 
-    QWidget* checkboxes = new QWidget( javartGB );
-    QGridLayout* grid = new QGridLayout( checkboxes, 2, 2 );
+    TQWidget* checkboxes = new TQWidget( javartGB );
+    TQGridLayout* grid = new TQGridLayout( checkboxes, 2, 2 );
 
-    javaSecurityManagerCB = new QCheckBox( i18n("&Use security manager" ), checkboxes );
+    javaSecurityManagerCB = new TQCheckBox( i18n("&Use security manager" ), checkboxes );
     grid->addWidget( javaSecurityManagerCB, 0, 0 );
-    connect( javaSecurityManagerCB, SIGNAL(toggled( bool )), this, SLOT(slotChanged()) );
+    connect( javaSecurityManagerCB, TQT_SIGNAL(toggled( bool )), this, TQT_SLOT(slotChanged()) );
 
-    useKioCB = new QCheckBox( i18n("Use &KIO"), checkboxes );
+    useKioCB = new TQCheckBox( i18n("Use &KIO"), checkboxes );
     grid->addWidget( useKioCB, 0, 1 );
-    connect( useKioCB, SIGNAL(toggled( bool )), this, SLOT(slotChanged()) );
+    connect( useKioCB, TQT_SIGNAL(toggled( bool )), this, TQT_SLOT(slotChanged()) );
 
-    enableShutdownCB = new QCheckBox( i18n("Shu&tdown applet server when inactive"), checkboxes );
+    enableShutdownCB = new TQCheckBox( i18n("Shu&tdown applet server when inactive"), checkboxes );
     grid->addWidget( enableShutdownCB, 1, 0 );
-    connect( enableShutdownCB, SIGNAL(toggled( bool )), this, SLOT(slotChanged()) );
-    connect( enableShutdownCB, SIGNAL(clicked()), this, SLOT(toggleJavaControls()) );
+    connect( enableShutdownCB, TQT_SIGNAL(toggled( bool )), this, TQT_SLOT(slotChanged()) );
+    connect( enableShutdownCB, TQT_SIGNAL(clicked()), this, TQT_SLOT(toggleJavaControls()) );
 
-    QHBox* secondsHB = new QHBox( javartGB );
+    TQHBox* secondsHB = new TQHBox( javartGB );
     serverTimeoutSB = new KIntNumInput( secondsHB );
     serverTimeoutSB->setRange( 0, 1000, 5 );
     serverTimeoutSB->setLabel( i18n("App&let server timeout:"), AlignLeft );
     serverTimeoutSB->setSuffix(i18n(" sec"));
-    connect(serverTimeoutSB, SIGNAL(valueChanged(int)),this,SLOT(slotChanged()));
+    connect(serverTimeoutSB, TQT_SIGNAL(valueChanged(int)),this,TQT_SLOT(slotChanged()));
 
-    QHBox* pathHB = new QHBox( javartGB );
+    TQHBox* pathHB = new TQHBox( javartGB );
     pathHB->setSpacing( 10 );
-    QLabel* pathLA = new QLabel( i18n( "&Path to Java executable, or 'java':" ),
+    TQLabel* pathLA = new TQLabel( i18n( "&Path to Java executable, or 'java':" ),
                                  pathHB );
     pathED = new  KURLRequester( pathHB );
-    connect( pathED, SIGNAL(textChanged( const QString& )), this, SLOT(slotChanged()) );
+    connect( pathED, TQT_SIGNAL(textChanged( const TQString& )), this, TQT_SLOT(slotChanged()) );
     pathLA->setBuddy( pathED );
 
-    QHBox* addArgHB = new QHBox( javartGB );
+    TQHBox* addArgHB = new TQHBox( javartGB );
     addArgHB->setSpacing( 10 );
-    QLabel* addArgLA = new QLabel( i18n( "Additional Java a&rguments:" ), addArgHB  );
-    addArgED = new QLineEdit( addArgHB );
-    connect( addArgED, SIGNAL(textChanged( const QString& )), this, SLOT(slotChanged()) );
+    TQLabel* addArgLA = new TQLabel( i18n( "Additional Java a&rguments:" ), addArgHB  );
+    addArgED = new TQLineEdit( addArgHB );
+    connect( addArgED, TQT_SIGNAL(textChanged( const TQString& )), this, TQT_SLOT(slotChanged()) );
     addArgLA->setBuddy( addArgED );
 
     /***************************************************************************
      ********************** WhatsThis? items ***********************************
      **************************************************************************/
-    QWhatsThis::add( enableJavaGloballyCB, i18n("Enables the execution of scripts written in Java "
+    TQWhatsThis::add( enableJavaGloballyCB, i18n("Enables the execution of scripts written in Java "
           "that can be contained in HTML pages. "
           "Note that, as with any browser, enabling active contents can be a security problem.") );
-    QString wtstr = i18n("This box contains the domains and hosts you have set "
+    TQString wtstr = i18n("This box contains the domains and hosts you have set "
                          "a specific Java policy for. This policy will be used "
                          "instead of the default policy for enabling or disabling Java applets on pages sent by these "
                          "domains or hosts. <p>Select a policy and use the controls on "
                          "the right to modify it.");
-    QWhatsThis::add( domainSpecific->listView(), wtstr );
+    TQWhatsThis::add( domainSpecific->listView(), wtstr );
 #if 0
-    QWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
+    TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
                                           "the Java policies. These policies will be merged "
                                           "with the existing ones. Duplicate entries are ignored.") );
-    QWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the Java policy to a zipped "
+    TQWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the Java policy to a zipped "
                                           "file. The file, named <b>java_policy.tgz</b>, will be "
                                           "saved to a location of your choice." ) );
 #endif
-    QWhatsThis::add( domainSpecific, i18n("Here you can set specific Java policies for any particular "
+    TQWhatsThis::add( domainSpecific, i18n("Here you can set specific Java policies for any particular "
                                             "host or domain. To add a new policy, simply click the <i>New...</i> "
                                             "button and supply the necessary information requested by the "
                                             "dialog box. To change an existing policy, click on the <i>Change...</i> "
@@ -150,7 +150,7 @@ KJavaOptions::KJavaOptions( KConfig* config, QString group,
                                             "you to save and retrieve them from a zipped file.") );
 #endif
 
-    QWhatsThis::add( javaSecurityManagerCB, i18n( "Enabling the security manager will cause the jvm to run with a Security "
+    TQWhatsThis::add( javaSecurityManagerCB, i18n( "Enabling the security manager will cause the jvm to run with a Security "
                                                   "Manager in place. This will keep applets from being able to read and "
                                                   "write to your file system, creating arbitrary sockets, and other actions "
                                                   "which could be used to compromise your system. Disable this option at your "
@@ -158,23 +158,23 @@ KJavaOptions::KJavaOptions( KConfig* config, QString group,
                                                   "policytool utility to give code downloaded from certain sites more "
                                                   "permissions." ) );
 
-    QWhatsThis::add( useKioCB, i18n( "Enabling this will cause the jvm to use KIO for network transport ") );
+    TQWhatsThis::add( useKioCB, i18n( "Enabling this will cause the jvm to use KIO for network transport ") );
 
-    QWhatsThis::add( pathED, i18n("Enter the path to the java executable. If you want to use the jre in "
+    TQWhatsThis::add( pathED, i18n("Enter the path to the java executable. If you want to use the jre in "
                                   "your path, simply leave it as 'java'. If you need to use a different jre, "
                                   "enter the path to the java executable (e.g. /usr/lib/jdk/bin/java), "
                                   "or the path to the directory that contains 'bin/java' (e.g. /opt/IBMJava2-13).") );
 
-    QWhatsThis::add( addArgED, i18n("If you want special arguments to be passed to the virtual machine, enter them here.") );
+    TQWhatsThis::add( addArgED, i18n("If you want special arguments to be passed to the virtual machine, enter them here.") );
 
-    QString shutdown = i18n("When all the applets have been destroyed, the applet server should shut down. "
+    TQString shutdown = i18n("When all the applets have been destroyed, the applet server should shut down. "
                                            "However, starting the jvm takes a lot of time. If you would like to "
                                            "keep the java process running while you are "
                                            "browsing, you can set the timeout value to whatever you like. To keep "
                                            "the java process running for the whole time that the konqueror process is, "
                                            "leave the Shutdown Applet Server checkbox unchecked.");
-    QWhatsThis::add( serverTimeoutSB, shutdown);
-    QWhatsThis::add( enableShutdownCB, shutdown);
+    TQWhatsThis::add( serverTimeoutSB, shutdown);
+    TQWhatsThis::add( enableShutdownCB, shutdown);
     // Finally do the loading
     load();
 }
@@ -196,9 +196,9 @@ void KJavaOptions::load(bool useDefaults)
     bool bServerShutdown  = m_pConfig->readBoolEntry( "ShutdownAppletServer", true );
     int  serverTimeout    = m_pConfig->readNumEntry( "AppletServerTimeout", 60 );
 #if defined(PATH_JAVA)
-    QString sJavaPath     = m_pConfig->readPathEntry( "JavaPath", PATH_JAVA );
+    TQString sJavaPath     = m_pConfig->readPathEntry( "JavaPath", PATH_JAVA );
 #else
-    QString sJavaPath     = m_pConfig->readPathEntry( "JavaPath", "/usr/bin/java" );
+    TQString sJavaPath     = m_pConfig->readPathEntry( "JavaPath", "/usr/bin/java" );
 #endif
 
     if( sJavaPath == "/usr/lib/jdk" )
@@ -278,8 +278,8 @@ void KJavaOptions::toggleJavaControls()
 
 // == class JavaDomainListView =====
 
-JavaDomainListView::JavaDomainListView(KConfig *config,const QString &group,
-	KJavaOptions *options,QWidget *parent,const char *name)
+JavaDomainListView::JavaDomainListView(KConfig *config,const TQString &group,
+	KJavaOptions *options,TQWidget *parent,const char *name)
 	: DomainListView(config,i18n( "Doma&in-Specific" ), parent, name),
 	group(group), options(options) {
 }
@@ -287,20 +287,20 @@ JavaDomainListView::JavaDomainListView(KConfig *config,const QString &group,
 JavaDomainListView::~JavaDomainListView() {
 }
 
-void JavaDomainListView::updateDomainListLegacy(const QStringList &domainConfig)
+void JavaDomainListView::updateDomainListLegacy(const TQStringList &domainConfig)
 {
     domainSpecificLV->clear();
     JavaPolicies pol(config,group,false);
     pol.defaults();
-    for ( QStringList::ConstIterator it = domainConfig.begin();
+    for ( TQStringList::ConstIterator it = domainConfig.begin();
           it != domainConfig.end(); ++it)
     {
-        QString domain;
+        TQString domain;
         KHTMLSettings::KJavaScriptAdvice javaAdvice;
         KHTMLSettings::KJavaScriptAdvice javaScriptAdvice;
         KHTMLSettings::splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
 	if (javaAdvice != KHTMLSettings::KJavaScriptDunno) {
-          QListViewItem* index = new QListViewItem( domainSpecificLV, domain,
+          TQListViewItem* index = new TQListViewItem( domainSpecificLV, domain,
                                                   i18n(KHTMLSettings::adviceToStr(javaAdvice))  );
           pol.setDomain(domain);
           pol.setFeatureEnabled(javaAdvice != KHTMLSettings::KJavaScriptReject);
@@ -311,7 +311,7 @@ void JavaDomainListView::updateDomainListLegacy(const QStringList &domainConfig)
 
 void JavaDomainListView::setupPolicyDlg(PushButton trigger,PolicyDialog &pDlg,
 		Policies *pol) {
-  QString caption;
+  TQString caption;
   switch (trigger) {
     case AddButton: caption = i18n( "New Java Policy" );
       pol->setFeatureEnabled(!options->enableJavaGloballyCB->isChecked());

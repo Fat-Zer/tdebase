@@ -25,9 +25,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __addapplet_h__
 #define __addapplet_h__
 
-#include <qstringlist.h>
-#include <qpixmap.h>
-#include <qvaluelist.h>
+#include <tqstringlist.h>
+#include <tqpixmap.h>
+#include <tqvaluelist.h>
 
 #include <klocale.h>
 #include <kdialogbase.h>
@@ -44,12 +44,12 @@ class AddAppletDialog : public KDialogBase
     Q_OBJECT
 
     public:
-        AddAppletDialog(ContainerArea* cArea, QWidget* parent, const char* name);
+        AddAppletDialog(ContainerArea* cArea, TQWidget* parent, const char* name);
         void updateInsertionPoint();
 
     protected:
-        void closeEvent(QCloseEvent*);
-        bool eventFilter(QObject *o, QEvent *e);
+        void closeEvent(TQCloseEvent*);
+        bool eventFilter(TQObject *o, TQEvent *e);
 
     private slots:
         void populateApplets();
@@ -62,21 +62,21 @@ class AddAppletDialog : public KDialogBase
         void resizeAppletView();
 
     private:
-        bool appletMatchesSearch(const AppletWidget* w, const QString& s);
+        bool appletMatchesSearch(const AppletWidget* w, const TQString& s);
 
         AppletView *m_mainWidget;
-        QWidget *m_appletBox;
+        TQWidget *m_appletBox;
 
         AppletInfo::List m_applets;
 
-        QValueList<AppletWidget*> m_appletWidgetList;
+        TQValueList<AppletWidget*> m_appletWidgetList;
         AppletWidget* m_selectedApplet;
 
         ContainerArea* m_containerArea;
         AppletInfo::AppletType m_selectedType;
-        QPoint m_insertionPoint;
+        TQPoint m_insertionPoint;
         bool m_closing;
-        QTimer *m_searchDelay;
+        TQTimer *m_searchDelay;
 };
 
 #endif

@@ -7,8 +7,8 @@
 #ifndef KFTABDLG_H
 #define KFTABDLG_H
 
-#include <qtabwidget.h>
-#include <qvalidator.h> // for KDigitValidator
+#include <tqtabwidget.h>
+#include <tqvalidator.h> // for KDigitValidator
 
 #include <kurl.h>
 #include <kmimetype.h>
@@ -34,7 +34,7 @@ class KfindTabWidget: public QTabWidget
   Q_OBJECT
 
 public:
-  KfindTabWidget(QWidget * parent = 0, const char *name=0);
+  KfindTabWidget(TQWidget * parent = 0, const char *name=0);
   virtual ~KfindTabWidget();
   void initMimeTypes();
   void initSpecialMimeTypes();
@@ -49,7 +49,7 @@ public:
 
   void setURL( const KURL & url );
 
-  virtual QSize sizeHint() const;
+  virtual TQSize sizeHint() const;
 
 public slots:
   void setFocus();
@@ -65,58 +65,58 @@ signals:
 
 protected:
 public:
-  QComboBox   *nameBox;
-  QComboBox   *dirBox;
+  TQComboBox   *nameBox;
+  TQComboBox   *dirBox;
   // for first page
-  QCheckBox   *subdirsCb;
-  QCheckBox *useLocateCb;
+  TQCheckBox   *subdirsCb;
+  TQCheckBox *useLocateCb;
   // for third page
-  QComboBox *typeBox;
-  QLineEdit * textEdit;
-  QCheckBox *caseSensCb;
-  QComboBox *m_usernameBox;
-  QComboBox *m_groupBox;
+  TQComboBox *typeBox;
+  TQLineEdit * textEdit;
+  TQCheckBox *caseSensCb;
+  TQComboBox *m_usernameBox;
+  TQComboBox *m_groupBox;
   //for fourth page
-  QLineEdit *metainfoEdit;
-  QLineEdit *metainfokeyEdit;
+  TQLineEdit *metainfoEdit;
+  TQLineEdit *metainfokeyEdit;
 
 private:
   bool isDateValid();
 
-  QString date2String(const QDate &);
-  QDate &string2Date(const QString &, QDate * );
+  TQString date2String(const TQDate &);
+  TQDate &string2Date(const TQString &, TQDate * );
 
-  QWidget *pages[3];
+  TQWidget *pages[3];
 
   //1st page
-  QPushButton *browseB;
+  TQPushButton *browseB;
 
   KfDirDialog *dirselector;
 
   //2nd page
-  QCheckBox   *findCreated;
-  QComboBox   *betweenType;
-  QButtonGroup *bg;
-  QRadioButton *rb[2];
+  TQCheckBox   *findCreated;
+  TQComboBox   *betweenType;
+  TQButtonGroup *bg;
+  TQRadioButton *rb[2];
   KDateCombo * fromDate;
   KDateCombo * toDate;
-  QSpinBox *timeBox;
+  TQSpinBox *timeBox;
 
   //3rd page
-  QComboBox *sizeBox;
-  QComboBox *sizeUnitBox;
-  QSpinBox *sizeEdit;
-  QCheckBox *caseContextCb;
-  QCheckBox *binaryContextCb;
-  QCheckBox *regexpContentCb;
-  QDialog *regExpDialog;
+  TQComboBox *sizeBox;
+  TQComboBox *sizeUnitBox;
+  TQSpinBox *sizeEdit;
+  TQCheckBox *caseContextCb;
+  TQCheckBox *binaryContextCb;
+  TQCheckBox *regexpContentCb;
+  TQDialog *regExpDialog;
 
   KURL m_url;
 
   KMimeType::List m_types;
-  QStringList m_ImageTypes;
-  QStringList m_VideoTypes;
-  QStringList m_AudioTypes;
+  TQStringList m_ImageTypes;
+  TQStringList m_VideoTypes;
+  TQStringList m_AudioTypes;
 };
 
 class KDigitValidator : public QValidator
@@ -124,13 +124,13 @@ class KDigitValidator : public QValidator
   Q_OBJECT
 
 public:
-  KDigitValidator(QWidget * parent, const char *name = 0 );
+  KDigitValidator(TQWidget * parent, const char *name = 0 );
   ~KDigitValidator();
 
-  QValidator::State validate(QString & input, int &) const;
+  TQValidator::State validate(TQString & input, int &) const;
 
  private:
-  QRegExp *r;
+  TQRegExp *r;
 };
 
 #endif

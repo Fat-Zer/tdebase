@@ -1,7 +1,7 @@
 #ifndef __MODIFIERS_MODULE_H
 #define __MODIFIERS_MODULE_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QCheckBox;
 class QLabel;
@@ -12,7 +12,7 @@ class ModifiersModule : public QWidget
 {
 	Q_OBJECT
  public:
-	ModifiersModule( QWidget *parent = 0, const char *name = 0 );
+	ModifiersModule( TQWidget *parent = 0, const char *name = 0 );
 
 	void load( bool useDefaults );
 	void save();
@@ -25,13 +25,13 @@ class ModifiersModule : public QWidget
 
  protected:
 	bool m_bMacKeyboardOrig, m_bMacSwapOrig;
-	QString m_sLabelCtrlOrig, m_sLabelAltOrig, m_sLabelWinOrig;
+	TQString m_sLabelCtrlOrig, m_sLabelAltOrig, m_sLabelWinOrig;
 
-	QLabel* m_plblCtrl, * m_plblAlt, * m_plblWin;
-	QLabel* m_plblWinModX;
-	QCheckBox* m_pchkMacKeyboard;
+	TQLabel* m_plblCtrl, * m_plblAlt, * m_plblWin;
+	TQLabel* m_plblWinModX;
+	TQCheckBox* m_pchkMacKeyboard;
 	KListView* m_plstXMods;
-	QCheckBox* m_pchkMacSwap;
+	TQCheckBox* m_pchkMacSwap;
 
 	void initGUI();
 	// Places the values in the *Orig variables into their

@@ -24,22 +24,22 @@
 #include "config.h"
 #endif
 
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <kcombobox.h>
-#include <qlistbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qslider.h>
-#include <qstylefactory.h>
-#include <qtabwidget.h>
-#include <qvbox.h>
-#include <qfile.h>
-#include <qsettings.h>
-#include <qobjectlist.h>
-#include <qpixmapcache.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
+#include <tqlistbox.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqslider.h>
+#include <tqstylefactory.h>
+#include <tqtabwidget.h>
+#include <tqvbox.h>
+#include <tqfile.h>
+#include <tqsettings.h>
+#include <tqobjectlist.h>
+#include <tqpixmapcache.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -73,7 +73,7 @@
 // Danimo: Why do we use the old interface?!
 extern "C"
 {
-    KDE_EXPORT KCModule *create_style(QWidget *parent, const char*)
+    KDE_EXPORT KCModule *create_style(TQWidget *parent, const char*)
     {
         KGlobal::locale()->insertCatalogue("kcmstyle");
         return new KCMStyle(parent, "kcmstyle");
@@ -93,8 +93,8 @@ extern "C"
 
         // Write some Qt root property.
 #ifndef __osf__      // this crashes under Tru64 randomly -- will fix later
-        QByteArray properties;
-        QDataStream d(properties, IO_WriteOnly);
+        TQByteArray properties;
+        TQDataStream d(properties, IO_WriteOnly);
         d.setVersion( 3 );      // Qt2 apps need this.
         d << kapp->palette() << KGlobalSettings::generalFont();
         Atom a = XInternAtom(qt_xdisplay(), "_QT_DESKTOP_PROPERTIES", false);
@@ -110,12 +110,12 @@ extern "C"
 }
 
 /*
-typedef KGenericFactory<KWidgetSettingsModule, QWidget> GeneralFactory;
+typedef KGenericFactory<KWidgetSettingsModule, TQWidget> GeneralFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_kcmstyle, GeneralFactory )
 */
 
 
-KCMStyle::KCMStyle( QWidget* parent, const char* name )
+KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	: KCModule( parent, name ), appliedStyle(NULL)
 {
     setQuickHelp( i18n("<h1>Style</h1>"
@@ -142,52 +142,52 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 	setAboutData( about );
 
 	// Setup pages and mainLayout
-	mainLayout = new QVBoxLayout( this );
-	tabWidget  = new QTabWidget( this );
+	mainLayout = new TQVBoxLayout( this );
+	tabWidget  = new TQTabWidget( this );
 	mainLayout->addWidget( tabWidget );
 
-	page1 = new QWidget( tabWidget );
-	page1Layout = new QVBoxLayout( page1, KDialog::marginHint(), KDialog::spacingHint() );
-	page2 = new QWidget( tabWidget );
-	page2Layout = new QVBoxLayout( page2, KDialog::marginHint(), KDialog::spacingHint() );
-	page3 = new QWidget( tabWidget );
-	page3Layout = new QVBoxLayout( page3, KDialog::marginHint(), KDialog::spacingHint() );
+	page1 = new TQWidget( tabWidget );
+	page1Layout = new TQVBoxLayout( page1, KDialog::marginHint(), KDialog::spacingHint() );
+	page2 = new TQWidget( tabWidget );
+	page2Layout = new TQVBoxLayout( page2, KDialog::marginHint(), KDialog::spacingHint() );
+	page3 = new TQWidget( tabWidget );
+	page3Layout = new TQVBoxLayout( page3, KDialog::marginHint(), KDialog::spacingHint() );
 
 	// Add Page1 (Style)
 	// -----------------
-	gbWidgetStyle = new QGroupBox( i18n("Widget Style"), page1, "gbWidgetStyle" );
+	gbWidgetStyle = new TQGroupBox( i18n("Widget Style"), page1, "gbWidgetStyle" );
 	gbWidgetStyle->setColumnLayout( 0, Qt::Vertical );
 	gbWidgetStyle->layout()->setMargin( KDialog::marginHint() );
 	gbWidgetStyle->layout()->setSpacing( KDialog::spacingHint() );
 
-	gbWidgetStyleLayout = new QVBoxLayout( gbWidgetStyle->layout() );
+	gbWidgetStyleLayout = new TQVBoxLayout( gbWidgetStyle->layout() );
 	gbWidgetStyleLayout->setAlignment( Qt::AlignTop );
-	hbLayout = new QHBoxLayout( KDialog::spacingHint(), "hbLayout" );
+	hbLayout = new TQHBoxLayout( KDialog::spacingHint(), "hbLayout" );
 
 	cbStyle = new KComboBox( gbWidgetStyle, "cbStyle" );
 	cbStyle->setEditable( FALSE );
 	hbLayout->addWidget( cbStyle );
 
-	pbConfigStyle = new QPushButton( i18n("Con&figure..."), gbWidgetStyle );
-	pbConfigStyle->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Minimum );
+	pbConfigStyle = new TQPushButton( i18n("Con&figure..."), gbWidgetStyle );
+	pbConfigStyle->setSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Minimum );
 	pbConfigStyle->setEnabled( FALSE );
 	hbLayout->addWidget( pbConfigStyle );
 
 	gbWidgetStyleLayout->addLayout( hbLayout );
 
-	lblStyleDesc = new QLabel( gbWidgetStyle );
+	lblStyleDesc = new TQLabel( gbWidgetStyle );
 	lblStyleDesc->setTextFormat(Qt::RichText);
 	gbWidgetStyleLayout->addWidget( lblStyleDesc );
 
-	cbIconsOnButtons = new QCheckBox( i18n("Sho&w icons on buttons"), gbWidgetStyle );
+	cbIconsOnButtons = new TQCheckBox( i18n("Sho&w icons on buttons"), gbWidgetStyle );
 	gbWidgetStyleLayout->addWidget( cbIconsOnButtons );
-	cbEnableTooltips = new QCheckBox( i18n("E&nable tooltips"), gbWidgetStyle );
+	cbEnableTooltips = new TQCheckBox( i18n("E&nable tooltips"), gbWidgetStyle );
 	gbWidgetStyleLayout->addWidget( cbEnableTooltips );
-	cbTearOffHandles = new QCheckBox( i18n("Show tear-off handles in &popup menus"), gbWidgetStyle );
+	cbTearOffHandles = new TQCheckBox( i18n("Show tear-off handles in &popup menus"), gbWidgetStyle );
 	gbWidgetStyleLayout->addWidget( cbTearOffHandles );
 	cbTearOffHandles->hide(); // reenable when the corresponding Qt method is virtual and properly reimplemented
 
-    QGroupBox *gbPreview = new QGroupBox( i18n( "Preview" ), page1 );
+    TQGroupBox *gbPreview = new TQGroupBox( i18n( "Preview" ), page1 );
 	gbPreview->setColumnLayout( 0, Vertical );
 	gbPreview->layout()->setMargin( 0 );
 	gbPreview->layout()->setSpacing( KDialog::spacingHint() );
@@ -199,84 +199,84 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 	page1Layout->addWidget( gbPreview );
 
 	// Connect all required stuff
-	connect( cbStyle, SIGNAL(activated(int)), this, SLOT(styleChanged()) );
-	connect( cbStyle, SIGNAL(activated(int)), this, SLOT(updateConfigButton()));
-	connect( pbConfigStyle, SIGNAL(clicked()), this, SLOT(styleSpecificConfig()));
+	connect( cbStyle, TQT_SIGNAL(activated(int)), this, TQT_SLOT(styleChanged()) );
+	connect( cbStyle, TQT_SIGNAL(activated(int)), this, TQT_SLOT(updateConfigButton()));
+	connect( pbConfigStyle, TQT_SIGNAL(clicked()), this, TQT_SLOT(styleSpecificConfig()));
 
 	// Add Page2 (Effects)
 	// -------------------
-	cbEnableEffects = new QCheckBox( i18n("&Enable GUI effects"), page2 );
-	containerFrame = new QFrame( page2 );
-	containerFrame->setFrameStyle( QFrame::NoFrame | QFrame::Plain );
+	cbEnableEffects = new TQCheckBox( i18n("&Enable GUI effects"), page2 );
+	containerFrame = new TQFrame( page2 );
+	containerFrame->setFrameStyle( TQFrame::NoFrame | TQFrame::Plain );
 	containerFrame->setMargin(0);
-	containerLayout = new QGridLayout( containerFrame, 1, 1,	// rows, columns
+	containerLayout = new TQGridLayout( containerFrame, 1, 1,	// rows, columns
 		KDialog::marginHint(), KDialog::spacingHint() );
 
-	comboComboEffect = new QComboBox( FALSE, containerFrame );
+	comboComboEffect = new TQComboBox( FALSE, containerFrame );
 	comboComboEffect->insertItem( i18n("Disable") );
 	comboComboEffect->insertItem( i18n("Animate") );
-	lblComboEffect = new QLabel( i18n("Combobo&x effect:"), containerFrame );
+	lblComboEffect = new TQLabel( i18n("Combobo&x effect:"), containerFrame );
 	lblComboEffect->setBuddy( comboComboEffect );
 	containerLayout->addWidget( lblComboEffect, 0, 0 );
 	containerLayout->addWidget( comboComboEffect, 0, 1 );
 
-	comboTooltipEffect = new QComboBox( FALSE, containerFrame );
+	comboTooltipEffect = new TQComboBox( FALSE, containerFrame );
 	comboTooltipEffect->insertItem( i18n("Disable") );
 	comboTooltipEffect->insertItem( i18n("Animate") );
 	comboTooltipEffect->insertItem( i18n("Fade") );
-	lblTooltipEffect = new QLabel( i18n("&Tool tip effect:"), containerFrame );
+	lblTooltipEffect = new TQLabel( i18n("&Tool tip effect:"), containerFrame );
 	lblTooltipEffect->setBuddy( comboTooltipEffect );
 	containerLayout->addWidget( lblTooltipEffect, 1, 0 );
 	containerLayout->addWidget( comboTooltipEffect, 1, 1 );
 
-	comboRubberbandEffect = new QComboBox( FALSE, containerFrame );
+	comboRubberbandEffect = new TQComboBox( FALSE, containerFrame );
 	comboRubberbandEffect->insertItem( i18n("Disable") );
 	comboRubberbandEffect->insertItem( i18n("Make translucent") );
-	lblRubberbandEffect = new QLabel( i18n("&Rubberband effect:"), containerFrame );
+	lblRubberbandEffect = new TQLabel( i18n("&Rubberband effect:"), containerFrame );
 	lblRubberbandEffect->setBuddy( comboRubberbandEffect );
 	containerLayout->addWidget( lblRubberbandEffect, 2, 0 );
 	containerLayout->addWidget( comboRubberbandEffect, 2, 1 );
 	
-	comboMenuEffect = new QComboBox( FALSE, containerFrame );
+	comboMenuEffect = new TQComboBox( FALSE, containerFrame );
 	comboMenuEffect->insertItem( i18n("Disable") );
 	comboMenuEffect->insertItem( i18n("Animate") );
 	comboMenuEffect->insertItem( i18n("Fade") );
 	comboMenuEffect->insertItem( i18n("Make Translucent") );
-	lblMenuEffect = new QLabel( i18n("&Menu effect:"), containerFrame );
+	lblMenuEffect = new TQLabel( i18n("&Menu effect:"), containerFrame );
 	lblMenuEffect->setBuddy( comboMenuEffect );
 	containerLayout->addWidget( lblMenuEffect, 3, 0 );
 	containerLayout->addWidget( comboMenuEffect, 3, 1 );
 
-	comboMenuHandle = new QComboBox( FALSE, containerFrame );
+	comboMenuHandle = new TQComboBox( FALSE, containerFrame );
 	comboMenuHandle->insertItem( i18n("Disable") );
 	comboMenuHandle->insertItem( i18n("Application Level") );
 //	comboMenuHandle->insertItem( i18n("Enable") );
-	lblMenuHandle = new QLabel( i18n("Me&nu tear-off handles:"), containerFrame );
+	lblMenuHandle = new TQLabel( i18n("Me&nu tear-off handles:"), containerFrame );
 	lblMenuHandle->setBuddy( comboMenuHandle );
 	containerLayout->addWidget( lblMenuHandle, 4, 0 );
 	containerLayout->addWidget( comboMenuHandle, 4, 1 );
 
-	cbMenuShadow = new QCheckBox( i18n("Menu &drop shadow"), containerFrame );
+	cbMenuShadow = new TQCheckBox( i18n("Menu &drop shadow"), containerFrame );
 	containerLayout->addWidget( cbMenuShadow, 5, 0 );
 
 	// Push the [label combo] to the left.
-	comboSpacer = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+	comboSpacer = new TQSpacerItem( 20, 20, TQSizePolicy::Expanding, TQSizePolicy::Minimum );
 	containerLayout->addItem( comboSpacer, 1, 2 );
 
 	// Separator.
-	QFrame* hline = new QFrame ( page2 );
-	hline->setFrameStyle( QFrame::HLine | QFrame::Sunken );
+	TQFrame* hline = new TQFrame ( page2 );
+	hline->setFrameStyle( TQFrame::HLine | TQFrame::Sunken );
 
 	// Now implement the Menu Transparency container.
-	menuContainer = new QFrame( page2 );
-	menuContainer->setFrameStyle( QFrame::NoFrame | QFrame::Plain );
+	menuContainer = new TQFrame( page2 );
+	menuContainer->setFrameStyle( TQFrame::NoFrame | TQFrame::Plain );
 	menuContainer->setMargin(0);
-	menuContainerLayout = new QGridLayout( menuContainer, 1, 1,    // rows, columns
+	menuContainerLayout = new TQGridLayout( menuContainer, 1, 1,    // rows, columns
 		KDialog::marginHint(), KDialog::spacingHint() );
 
 	menuPreview = new MenuPreview( menuContainer, /* opacity */ 90, MenuPreview::Blend );
 
-	comboMenuEffectType = new QComboBox( FALSE, menuContainer );
+	comboMenuEffectType = new TQComboBox( FALSE, menuContainer );
 	comboMenuEffectType->insertItem( i18n("Software Tint") );
 	comboMenuEffectType->insertItem( i18n("Software Blend") );
 #ifdef HAVE_XRENDER
@@ -284,25 +284,25 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 #endif
 
 	// So much stuffing around for a simple slider..
-	sliderBox = new QVBox( menuContainer );
+	sliderBox = new TQVBox( menuContainer );
 	sliderBox->setSpacing( KDialog::spacingHint() );
 	sliderBox->setMargin( 0 );
-	slOpacity = new QSlider( 0, 100, 5, /*opacity*/ 90, Qt::Horizontal, sliderBox );
-	slOpacity->setTickmarks( QSlider::Below );
+	slOpacity = new TQSlider( 0, 100, 5, /*opacity*/ 90, Qt::Horizontal, sliderBox );
+	slOpacity->setTickmarks( TQSlider::Below );
 	slOpacity->setTickInterval( 10 );
-	QHBox* box1 = new QHBox( sliderBox );
+	TQHBox* box1 = new TQHBox( sliderBox );
 	box1->setSpacing( KDialog::spacingHint() );
 	box1->setMargin( 0 );
-	QLabel* lbl = new QLabel( i18n("0%"), box1 );
+	TQLabel* lbl = new TQLabel( i18n("0%"), box1 );
 	lbl->setAlignment( AlignLeft );
-	lbl = new QLabel( i18n("50%"), box1 );
+	lbl = new TQLabel( i18n("50%"), box1 );
 	lbl->setAlignment( AlignHCenter );
-	lbl = new QLabel( i18n("100%"), box1 );
+	lbl = new TQLabel( i18n("100%"), box1 );
 	lbl->setAlignment( AlignRight );
 
-	lblMenuEffectType = new QLabel( comboMenuEffectType, i18n("Menu trans&lucency type:"), menuContainer );
+	lblMenuEffectType = new TQLabel( comboMenuEffectType, i18n("Menu trans&lucency type:"), menuContainer );
 	lblMenuEffectType->setAlignment( AlignBottom | AlignLeft );
-	lblMenuOpacity    = new QLabel( slOpacity, i18n("Menu &opacity:"), menuContainer );
+	lblMenuOpacity    = new TQLabel( slOpacity, i18n("Menu &opacity:"), menuContainer );
 	lblMenuOpacity->setAlignment( AlignBottom | AlignLeft );
 
 	menuContainerLayout->addWidget( lblMenuEffectType, 0, 0 );
@@ -317,28 +317,28 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 	page2Layout->addWidget( hline );
 	page2Layout->addWidget( menuContainer );
 
-	QSpacerItem* sp1 = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+	TQSpacerItem* sp1 = new TQSpacerItem( 20, 20, TQSizePolicy::Minimum, TQSizePolicy::Expanding );
 	page2Layout->addItem( sp1 );
 
 	// Data flow stuff.
-	connect( cbEnableEffects,     SIGNAL(toggled(bool)), containerFrame, SLOT(setEnabled(bool)) );
-	connect( cbEnableEffects,     SIGNAL(toggled(bool)), this, SLOT(menuEffectChanged(bool)) );
-	connect( slOpacity,           SIGNAL(valueChanged(int)),menuPreview, SLOT(setOpacity(int)) );
-	connect( comboMenuEffect,     SIGNAL(activated(int)), this, SLOT(menuEffectChanged()) );
-	connect( comboMenuEffect,     SIGNAL(highlighted(int)), this, SLOT(menuEffectChanged()) );
-	connect( comboMenuEffectType, SIGNAL(activated(int)), this, SLOT(menuEffectTypeChanged()) );
-	connect( comboMenuEffectType, SIGNAL(highlighted(int)), this, SLOT(menuEffectTypeChanged()) );
+	connect( cbEnableEffects,     TQT_SIGNAL(toggled(bool)), containerFrame, TQT_SLOT(setEnabled(bool)) );
+	connect( cbEnableEffects,     TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(menuEffectChanged(bool)) );
+	connect( slOpacity,           TQT_SIGNAL(valueChanged(int)),menuPreview, TQT_SLOT(setOpacity(int)) );
+	connect( comboMenuEffect,     TQT_SIGNAL(activated(int)), this, TQT_SLOT(menuEffectChanged()) );
+	connect( comboMenuEffect,     TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(menuEffectChanged()) );
+	connect( comboMenuEffectType, TQT_SIGNAL(activated(int)), this, TQT_SLOT(menuEffectTypeChanged()) );
+	connect( comboMenuEffectType, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(menuEffectTypeChanged()) );
 
 	// Add Page3 (Miscellaneous)
 	// -------------------------
-	cbHoverButtons = new QCheckBox( i18n("High&light buttons under mouse"), page3 );
-	cbTransparentToolbars = new QCheckBox( i18n("Transparent tool&bars when moving"), page3 );
+	cbHoverButtons = new TQCheckBox( i18n("High&light buttons under mouse"), page3 );
+	cbTransparentToolbars = new TQCheckBox( i18n("Transparent tool&bars when moving"), page3 );
 
-	QWidget * dummy = new QWidget( page3 );
+	TQWidget * dummy = new TQWidget( page3 );
 	
-	QHBoxLayout* box2 = new QHBoxLayout( dummy, 0, KDialog::spacingHint() );
-	lbl = new QLabel( i18n("Text pos&ition:"), dummy );
-	comboToolbarIcons = new QComboBox( FALSE, dummy );
+	TQHBoxLayout* box2 = new TQHBoxLayout( dummy, 0, KDialog::spacingHint() );
+	lbl = new TQLabel( i18n("Text pos&ition:"), dummy );
+	comboToolbarIcons = new TQComboBox( FALSE, dummy );
 	comboToolbarIcons->insertItem( i18n("Icons Only") );
 	comboToolbarIcons->insertItem( i18n("Text Only") );
 	comboToolbarIcons->insertItem( i18n("Text Alongside Icons") );
@@ -347,7 +347,7 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 
 	box2->addWidget( lbl );
 	box2->addWidget( comboToolbarIcons );
-	QSpacerItem* sp2 = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+	TQSpacerItem* sp2 = new TQSpacerItem( 20, 20, TQSizePolicy::Expanding, TQSizePolicy::Minimum );
 	box2->addItem( sp2 );
 	
 	page3Layout->addWidget( cbHoverButtons );
@@ -355,32 +355,32 @@ KCMStyle::KCMStyle( QWidget* parent, const char* name )
 	page3Layout->addWidget( dummy );
 	
 	// Layout page3.
-	QSpacerItem* sp3 = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+	TQSpacerItem* sp3 = new TQSpacerItem( 20, 20, TQSizePolicy::Minimum, TQSizePolicy::Expanding );
 	page3Layout->addItem( sp3 );
 
 	// Load settings
 	load();
 
 	// Do all the setDirty connections.
-	connect(cbStyle, SIGNAL(activated(int)), this, SLOT(setStyleDirty()));
+	connect(cbStyle, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setStyleDirty()));
 	// Page2
-	connect( cbEnableEffects,     SIGNAL(toggled(bool)),    this, SLOT(setEffectsDirty()));
-	connect( cbEnableEffects,     SIGNAL(toggled(bool)),    this, SLOT(setStyleDirty()));
-	connect( comboTooltipEffect,  SIGNAL(activated(int)), this, SLOT(setEffectsDirty()));
-	connect( comboRubberbandEffect, SIGNAL(activated(int)),   this, SLOT(setStyleDirty()));
-	connect( comboComboEffect,    SIGNAL(activated(int)), this, SLOT(setEffectsDirty()));
-	connect( comboMenuEffect,     SIGNAL(activated(int)), this, SLOT(setStyleDirty()));
-	connect( comboMenuHandle,     SIGNAL(activated(int)), this, SLOT(setStyleDirty()));
-	connect( comboMenuEffectType, SIGNAL(activated(int)), this, SLOT(setStyleDirty()));
-	connect( slOpacity,           SIGNAL(valueChanged(int)),this, SLOT(setStyleDirty()));
-	connect( cbMenuShadow,        SIGNAL(toggled(bool)),    this, SLOT(setStyleDirty()));
+	connect( cbEnableEffects,     TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
+	connect( cbEnableEffects,     TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setStyleDirty()));
+	connect( comboTooltipEffect,  TQT_SIGNAL(activated(int)), this, TQT_SLOT(setEffectsDirty()));
+	connect( comboRubberbandEffect, TQT_SIGNAL(activated(int)),   this, TQT_SLOT(setStyleDirty()));
+	connect( comboComboEffect,    TQT_SIGNAL(activated(int)), this, TQT_SLOT(setEffectsDirty()));
+	connect( comboMenuEffect,     TQT_SIGNAL(activated(int)), this, TQT_SLOT(setStyleDirty()));
+	connect( comboMenuHandle,     TQT_SIGNAL(activated(int)), this, TQT_SLOT(setStyleDirty()));
+	connect( comboMenuEffectType, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setStyleDirty()));
+	connect( slOpacity,           TQT_SIGNAL(valueChanged(int)),this, TQT_SLOT(setStyleDirty()));
+	connect( cbMenuShadow,        TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setStyleDirty()));
 	// Page3
-	connect( cbHoverButtons,        SIGNAL(toggled(bool)),    this, SLOT(setToolbarsDirty()));
-	connect( cbTransparentToolbars, SIGNAL(toggled(bool)),    this, SLOT(setToolbarsDirty()));
-	connect( cbEnableTooltips,      SIGNAL(toggled(bool)),    this, SLOT(setEffectsDirty()));
-	connect( cbIconsOnButtons,      SIGNAL(toggled(bool)),    this, SLOT(setEffectsDirty()));
-	connect( cbTearOffHandles,      SIGNAL(toggled(bool)),    this, SLOT(setEffectsDirty()));
-	connect( comboToolbarIcons,     SIGNAL(activated(int)), this, SLOT(setToolbarsDirty()));
+	connect( cbHoverButtons,        TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setToolbarsDirty()));
+	connect( cbTransparentToolbars, TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setToolbarsDirty()));
+	connect( cbEnableTooltips,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
+	connect( cbIconsOnButtons,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
+	connect( cbTearOffHandles,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
+	connect( comboToolbarIcons,     TQT_SIGNAL(activated(int)), this, TQT_SLOT(setToolbarsDirty()));
 
 	addWhatsThis();
 
@@ -414,13 +414,13 @@ void KCMStyle::updateConfigButton()
 
 void KCMStyle::styleSpecificConfig()
 {
-	QString libname = styleEntries[currentStyle()]->configPage;
+	TQString libname = styleEntries[currentStyle()]->configPage;
 
 	// Use KLibLoader to get the library, handling
 	// any errors that arise
 	KLibLoader* loader = KLibLoader::self();
 
-	KLibrary* library = loader->library( QFile::encodeName(libname) );
+	KLibrary* library = loader->library( TQFile::encodeName(libname) );
 	if (!library)
 	{
 		KMessageBox::detailedError(this,
@@ -445,24 +445,24 @@ void KCMStyle::styleSpecificConfig()
 	StyleConfigDialog* dial = new StyleConfigDialog(this, styleEntries[currentStyle()]->name);
 	dial->enableButtonSeparator(true);
 
-	typedef QWidget*(* factoryRoutine)( QWidget* parent );
+	typedef TQWidget*(* factoryRoutine)( TQWidget* parent );
 
 	//Get the factory, and make the widget.
 	factoryRoutine factory      = (factoryRoutine)(allocPtr); //Grmbl. So here I am on my
 	//"never use C casts" moralizing streak, and I find that one can't go void* -> function ptr
 	//even with a reinterpret_cast.
 
-	QWidget*       pluginConfig = factory( dial );
+	TQWidget*       pluginConfig = factory( dial );
 
 	//Insert it in...
 	dial->setMainWidget( pluginConfig );
 
 	//..and connect it to the wrapper
-	connect(pluginConfig, SIGNAL(changed(bool)), dial, SLOT(setDirty(bool)));
-	connect(dial, SIGNAL(defaults()), pluginConfig, SLOT(defaults()));
-	connect(dial, SIGNAL(save()), pluginConfig, SLOT(save()));
+	connect(pluginConfig, TQT_SIGNAL(changed(bool)), dial, TQT_SLOT(setDirty(bool)));
+	connect(dial, TQT_SIGNAL(defaults()), pluginConfig, TQT_SLOT(defaults()));
+	connect(dial, TQT_SIGNAL(save()), pluginConfig, TQT_SLOT(save()));
 
-	if (dial->exec() == QDialog::Accepted  && dial->isDirty() ) {
+	if (dial->exec() == TQDialog::Accepted  && dial->isDirty() ) {
 		// Force re-rendering of the preview, to apply settings
 		switchStyle(currentStyle(), true);
 
@@ -526,7 +526,7 @@ void KCMStyle::save()
 		}
 	}
 
-	QString warn_string( i18n("<qt>Selected style: <b>%1</b><br><br>"
+	TQString warn_string( i18n("<qt>Selected style: <b>%1</b><br><br>"
 		"One or more effects that you have chosen could not be applied because the selected "
 		"style does not support them; they have therefore been disabled.<br>"
 		"<br>" ).arg( cbStyle->currentText()) );
@@ -567,7 +567,7 @@ void KCMStyle::save()
 	config.writeEntry( "EffectFadeTooltip", item == 2 );
 	item = comboRubberbandEffect->currentItem();
 	{
-		QSettings settings;	// Only for KStyle stuff
+		TQSettings settings;	// Only for KStyle stuff
 		settings.writeEntry("/KStyle/Settings/SemiTransparentRubberband", item == 1);
 	}
 	item = comboMenuHandle->currentItem();
@@ -577,7 +577,7 @@ void KCMStyle::save()
 	config.writeEntry( "EffectFadeMenu", item == 2 );
 
 	// Handle KStyle's menu effects
-	QString engine("Disabled");
+	TQString engine("Disabled");
 	if (item == 3 && cbEnableEffects->isChecked())	// Make Translucent
 		switch( comboMenuEffectType->currentItem())
 		{
@@ -587,8 +587,8 @@ void KCMStyle::save()
 			case 0: engine = "SoftwareTint"; break;
 		}
 
-	{	// Braces force a QSettings::sync()
-		QSettings settings;	// Only for KStyle stuff
+	{	// Braces force a TQSettings::sync()
+		TQSettings settings;	// Only for KStyle stuff
 		settings.writeEntry("/KStyle/Settings/MenuTransparencyEngine", engine);
 		settings.writeEntry("/KStyle/Settings/MenuOpacity", slOpacity->value()/100.0);
  		settings.writeEntry("/KStyle/Settings/MenuDropShadow",
@@ -605,7 +605,7 @@ void KCMStyle::save()
 	config.setGroup("Toolbar style");
 	config.writeEntry( "Highlighting", cbHoverButtons->isChecked(), true, true );
 	config.writeEntry( "TransparentMoving", cbTransparentToolbars->isChecked(), true, true );
-	QString tbIcon;
+	TQString tbIcon;
 	switch( comboToolbarIcons->currentItem() )
 	{
 		case 1: tbIcon = "TextOnly"; break;
@@ -646,7 +646,7 @@ void KCMStyle::save()
 	}
         //update kicker to re-used tooltips kicker parameter otherwise, it overwritted
         //by style tooltips parameters.
-        QByteArray data;
+        TQByteArray data;
         kapp->dcopClient()->send( "kicker", "kicker", "configure()", data );
 
 	// Clean up
@@ -657,11 +657,11 @@ void KCMStyle::save()
 }
 
 
-bool KCMStyle::findStyle( const QString& str, int& combobox_item )
+bool KCMStyle::findStyle( const TQString& str, int& combobox_item )
 {
 	StyleEntry* se   = styleEntries.find(str.lower());
 
-	QString     name = se ? se->name : str;
+	TQString     name = se ? se->name : str;
 
 	combobox_item = 0;
 
@@ -715,9 +715,9 @@ void KCMStyle::loadStyle( KConfig& config )
 	styleEntries.clear();
 	styleEntries.setAutoDelete(true);
 
-	QString strWidgetStyle;
-	QStringList list = KGlobal::dirs()->findAllResources("themes", "*.themerc", true, true);
-	for (QStringList::iterator it = list.begin(); it != list.end(); ++it)
+	TQString strWidgetStyle;
+	TQStringList list = KGlobal::dirs()->findAllResources("themes", "*.themerc", true, true);
+	for (TQStringList::iterator it = list.begin(); it != list.end(); ++it)
 	{
 		KSimpleConfig config( *it, true );
 		if ( !(config.hasGroup("KDE") && config.hasGroup("Misc")) )
@@ -734,7 +734,7 @@ void KCMStyle::loadStyle( KConfig& config )
 		config.setGroup("Misc");
 		entry->name = config.readEntry("Name");
 		entry->desc = config.readEntry("Comment", i18n("No description available."));
-		entry->configPage = config.readEntry("ConfigPage", QString::null);
+		entry->configPage = config.readEntry("ConfigPage", TQString::null);
 
 		// Check if this style should be shown
 		config.setGroup("Desktop Entry");
@@ -745,14 +745,14 @@ void KCMStyle::loadStyle( KConfig& config )
 	}
 
 	// Obtain all style names
-	QStringList allStyles = QStyleFactory::keys();
+	TQStringList allStyles = TQStyleFactory::keys();
 
 	// Get translated names, remove all hidden style entries.
-	QStringList styles;
+	TQStringList styles;
 	StyleEntry* entry;
-	for (QStringList::iterator it = allStyles.begin(); it != allStyles.end(); it++)
+	for (TQStringList::iterator it = allStyles.begin(); it != allStyles.end(); it++)
 	{
-		QString id = (*it).lower();
+		TQString id = (*it).lower();
 		// Find the entry.
 		if ( (entry = styleEntries.find(id)) != 0 )
 		{
@@ -777,27 +777,27 @@ void KCMStyle::loadStyle( KConfig& config )
 
 	// Find out which style is currently being used
 	config.setGroup( "General" );
-	QString defaultStyle = KStyle::defaultStyle();
-	QString cfgStyle = config.readEntry( "widgetStyle", defaultStyle );
+	TQString defaultStyle = KStyle::defaultStyle();
+	TQString cfgStyle = config.readEntry( "widgetStyle", defaultStyle );
 
 	// Select the current style
 	// Do not use cbStyle->listBox() as this may be NULL for some styles when
 	// they use QPopupMenus for the drop-down list!
 
 	// ##### Since Trolltech likes to seemingly copy & paste code,
-	// QStringList::findItem() doesn't have a Qt::StringComparisonMode field.
+	// TQStringList::findItem() doesn't have a Qt::StringComparisonMode field.
 	// We roll our own (yuck)
 	cfgStyle = cfgStyle.lower();
 	int item = 0;
 	for( int i = 0; i < cbStyle->count(); i++ )
 	{
-		QString id = nameToStyleKey[cbStyle->text(i)];
+		TQString id = nameToStyleKey[cbStyle->text(i)];
 		item = i;
 		if ( id == cfgStyle )	// ExactMatch
 			break;
 		else if ( id.contains( cfgStyle ) )
 			break;
-		else if ( id.contains( QApplication::style().className() ) )
+		else if ( id.contains( TQApplication::style().className() ) )
 			break;
 		item = 0;
 	}
@@ -808,7 +808,7 @@ void KCMStyle::loadStyle( KConfig& config )
 	switchStyle( currentStyle() );	// make resets visible
 }
 
-QString KCMStyle::currentStyle()
+TQString KCMStyle::currentStyle()
 {
 	return nameToStyleKey[cbStyle->currentText()];
 }
@@ -820,19 +820,19 @@ void KCMStyle::styleChanged()
 }
 
 
-void KCMStyle::switchStyle(const QString& styleName, bool force)
+void KCMStyle::switchStyle(const TQString& styleName, bool force)
 {
 	// Don't flicker the preview if the same style is chosen in the cb
 	if (!force && appliedStyle && appliedStyle->name() == styleName) 
 		return;
          
 	// Create an instance of the new style...
-	QStyle* style = QStyleFactory::create(styleName);
+	TQStyle* style = TQStyleFactory::create(styleName);
 	if (!style)
 		return;
 
 	// Prevent Qt from wrongly caching radio button images
-	QPixmapCache::clear();
+	TQPixmapCache::clear();
 
 	setStyleRecursive( stylePreview, style );
 
@@ -844,18 +844,18 @@ void KCMStyle::switchStyle(const QString& styleName, bool force)
 
 	// Set the correct style description
 	StyleEntry* entry = styleEntries.find( styleName );
-	QString desc;
+	TQString desc;
 	desc = i18n("Description: %1").arg( entry ? entry->desc : i18n("No description available.") );
 	lblStyleDesc->setText( desc );
 }
 
-void KCMStyle::setStyleRecursive(QWidget* w, QStyle* s)
+void KCMStyle::setStyleRecursive(TQWidget* w, TQStyle* s)
 {
 	// Don't let broken styles kill the palette
 	// for other styles being previewed. (e.g SGI style)
 	w->unsetPalette();
 
-	QPalette newPalette(KApplication::createApplicationPalette());
+	TQPalette newPalette(KApplication::createApplicationPalette());
 	s->polish( newPalette );
 	w->setPalette(newPalette);
 
@@ -863,18 +863,18 @@ void KCMStyle::setStyleRecursive(QWidget* w, QStyle* s)
 	w->setStyle(s);
 
 	// Recursively update all children.
-	const QObjectList *children = w->children();
+	const TQObjectList *children = w->children();
 	if (!children)
 		return;
 
 	// Apply the style to each child widget.
-	QPtrListIterator<QObject> childit(*children);
-	QObject *child;
+	TQPtrListIterator<TQObject> childit(*children);
+	TQObject *child;
 	while ((child = childit.current()) != 0)
 	{
 		++childit;
 		if (child->isWidgetType())
-			setStyleRecursive((QWidget *) child, s);
+			setStyleRecursive((TQWidget *) child, s);
 	}
 }
 
@@ -902,7 +902,7 @@ void KCMStyle::loadEffects( KConfig& config )
 	else
 		comboTooltipEffect->setCurrentItem( 0 );
 		
-	QSettings settings;
+	TQSettings settings;
 	bool semiTransparentRubberband = settings.readBoolEntry("/KStyle/Settings/SemiTransparentRubberband", false);
 	comboRubberbandEffect->setCurrentItem( semiTransparentRubberband ? 1 : 0 );
 	
@@ -917,7 +917,7 @@ void KCMStyle::loadEffects( KConfig& config )
 
 	// KStyle Menu transparency and drop-shadow options...
 	
-	QString effectEngine = settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled");
+	TQString effectEngine = settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled");
 
 #ifdef HAVE_XRENDER
 	if (effectEngine == "XRender") {
@@ -1007,7 +1007,7 @@ void KCMStyle::loadMisc( KConfig& config )
 	cbHoverButtons->setChecked(config.readBoolEntry("Highlighting", true));
 	cbTransparentToolbars->setChecked(config.readBoolEntry("TransparentMoving", true));
 
-	QString tbIcon = config.readEntry("IconText", "IconOnly");
+	TQString tbIcon = config.readEntry("IconText", "IconOnly");
 	if (tbIcon == "TextOnly")
 		comboToolbarIcons->setCurrentItem(1);
 	else if (tbIcon == "IconTextRight")
@@ -1028,58 +1028,58 @@ void KCMStyle::loadMisc( KConfig& config )
 void KCMStyle::addWhatsThis()
 {
 	// Page1
-	QWhatsThis::add( cbStyle, i18n("Here you can choose from a list of"
+	TQWhatsThis::add( cbStyle, i18n("Here you can choose from a list of"
 							" predefined widget styles (e.g. the way buttons are drawn) which"
 							" may or may not be combined with a theme (additional information"
 							" like a marble texture or a gradient).") );
-	QWhatsThis::add( stylePreview, i18n("This area shows a preview of the currently selected style "
+	TQWhatsThis::add( stylePreview, i18n("This area shows a preview of the currently selected style "
 							"without having to apply it to the whole desktop.") );
 
 	// Page2
-	QWhatsThis::add( page2, i18n("This page allows you to enable various widget style effects. "
+	TQWhatsThis::add( page2, i18n("This page allows you to enable various widget style effects. "
 							"For best performance, it is advisable to disable all effects.") );
-	QWhatsThis::add( cbEnableEffects, i18n( "If you check this box, you can select several effects "
+	TQWhatsThis::add( cbEnableEffects, i18n( "If you check this box, you can select several effects "
 							"for different widgets like combo boxes, menus or tooltips.") );
-	QWhatsThis::add( comboComboEffect, i18n( "<p><b>Disable: </b>do not use any combo box effects.</p>\n"
+	TQWhatsThis::add( comboComboEffect, i18n( "<p><b>Disable: </b>do not use any combo box effects.</p>\n"
 							"<b>Animate: </b>Do some animation.") );
-	QWhatsThis::add( comboTooltipEffect, i18n( "<p><b>Disable: </b>do not use any tooltip effects.</p>\n"
+	TQWhatsThis::add( comboTooltipEffect, i18n( "<p><b>Disable: </b>do not use any tooltip effects.</p>\n"
 							"<p><b>Animate: </b>Do some animation.</p>\n"
 							"<b>Fade: </b>Fade in tooltips using alpha-blending.") );
-	QWhatsThis::add( comboRubberbandEffect, i18n( "<p><b>Disable: </b>do not use any rubberband effects.</p>\n"
+	TQWhatsThis::add( comboRubberbandEffect, i18n( "<p><b>Disable: </b>do not use any rubberband effects.</p>\n"
 							"<b>Make Translucent: </b>Draw a translucent rubberband.") );
-	QWhatsThis::add( comboMenuEffect, i18n( "<p><b>Disable: </b>do not use any menu effects.</p>\n"
+	TQWhatsThis::add( comboMenuEffect, i18n( "<p><b>Disable: </b>do not use any menu effects.</p>\n"
 							"<p><b>Animate: </b>Do some animation.</p>\n"
 							"<p><b>Fade: </b>Fade in menus using alpha-blending.</p>\n"
 							"<b>Make Translucent: </b>Alpha-blend menus for a see-through effect. (KDE styles only)") );
-	QWhatsThis::add( cbMenuShadow, i18n( "When enabled, all popup menus will have a drop-shadow, otherwise "
+	TQWhatsThis::add( cbMenuShadow, i18n( "When enabled, all popup menus will have a drop-shadow, otherwise "
 							"drop-shadows will not be displayed. At present, only KDE styles can have this "
 							"effect enabled.") );
-	QWhatsThis::add( comboMenuEffectType, i18n( "<p><b>Software Tint: </b>Alpha-blend using a flat color.</p>\n"
+	TQWhatsThis::add( comboMenuEffectType, i18n( "<p><b>Software Tint: </b>Alpha-blend using a flat color.</p>\n"
 							"<p><b>Software Blend: </b>Alpha-blend using an image.</p>\n"
 							"<b>XRender Blend: </b>Use the XFree RENDER extension for image blending (if available). "
 							"This method may be slower than the Software routines on non-accelerated displays, "
 							"but may however improve performance on remote displays.</p>\n") );
-	QWhatsThis::add( slOpacity, i18n("By adjusting this slider you can control the menu effect opacity.") );
+	TQWhatsThis::add( slOpacity, i18n("By adjusting this slider you can control the menu effect opacity.") );
 
 	// Page3
-	QWhatsThis::add( page3, i18n("<b>Note:</b> that all widgets in this combobox "
+	TQWhatsThis::add( page3, i18n("<b>Note:</b> that all widgets in this combobox "
 							"do not apply to Qt-only applications.") );
-	QWhatsThis::add( cbHoverButtons, i18n("If this option is selected, toolbar buttons will change "
+	TQWhatsThis::add( cbHoverButtons, i18n("If this option is selected, toolbar buttons will change "
 							"their color when the mouse cursor is moved over them." ) );
-	QWhatsThis::add( cbTransparentToolbars, i18n("If you check this box, the toolbars will be "
+	TQWhatsThis::add( cbTransparentToolbars, i18n("If you check this box, the toolbars will be "
 							"transparent when moving them around.") );
-	QWhatsThis::add( cbEnableTooltips, i18n( "If you check this option, the KDE application "
+	TQWhatsThis::add( cbEnableTooltips, i18n( "If you check this option, the KDE application "
 							"will offer tooltips when the cursor remains over items in the toolbar." ) );
-	QWhatsThis::add( comboToolbarIcons, i18n( "<p><b>Icons only:</b> Shows only icons on toolbar buttons. "
+	TQWhatsThis::add( comboToolbarIcons, i18n( "<p><b>Icons only:</b> Shows only icons on toolbar buttons. "
 							"Best option for low resolutions.</p>"
 							"<p><b>Text only: </b>Shows only text on toolbar buttons.</p>"
 							"<p><b>Text alongside icons: </b> Shows icons and text on toolbar buttons. "
 							"Text is aligned alongside the icon.</p>"
 							"<b>Text under icons: </b> Shows icons and text on toolbar buttons. "
 							"Text is aligned below the icon.") );
-	QWhatsThis::add( cbIconsOnButtons, i18n( "If you enable this option, KDE Applications will "
+	TQWhatsThis::add( cbIconsOnButtons, i18n( "If you enable this option, KDE Applications will "
 							"show small icons alongside some important buttons.") );
-	QWhatsThis::add( cbTearOffHandles, i18n( "If you enable this option some pop-up menus will "
+	TQWhatsThis::add( cbTearOffHandles, i18n( "If you enable this option some pop-up menus will "
 							"show so called tear-off handles. If you click them, you get the menu "
 							"inside a widget. This can be very helpful when performing "
 							"the same action multiple times.") );

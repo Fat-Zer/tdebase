@@ -3,11 +3,11 @@
 
 #include <time.h>
 
-#include <qobject.h>
-#include <qregexp.h>
-#include <qptrqueue.h>
-#include <qdir.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqregexp.h>
+#include <tqptrqueue.h>
+#include <tqdir.h>
+#include <tqstringlist.h>
 
 #include <kio/job.h>
 #include <kurl.h>
@@ -20,21 +20,21 @@ class KQuery : public QObject
   Q_OBJECT
 
  public:
-  KQuery(QObject *parent = 0, const char * name = 0);
+  KQuery(TQObject *parent = 0, const char * name = 0);
   ~KQuery();
 
   void setSizeRange( int mode, KIO::filesize_t value1, KIO::filesize_t value2 );
   void setTimeRange( time_t from, time_t to );
-  void setRegExp( const QString &regexp, bool caseSensitive );
+  void setRegExp( const TQString &regexp, bool caseSensitive );
   void setRecursive( bool recursive );
   void setPath(const KURL & url );
   void setFileType( int filetype );
-  void setMimeType( const QStringList & mimetype );
-  void setContext( const QString & context, bool casesensitive, 
+  void setMimeType( const TQStringList & mimetype );
+  void setContext( const TQString & context, bool casesensitive, 
     bool search_binary, bool useRegexp );
-  void setUsername( QString username );
-  void setGroupname( QString groupname );
-	void setMetaInfo(const QString &metainfo, const QString &metainfokey);
+  void setUsername( TQString username );
+  void setGroupname( TQString groupname );
+	void setMetaInfo(const TQString &metainfo, const TQString &metainfokey);
   void setUseFileIndex(bool);
 
   void start();
@@ -47,7 +47,7 @@ class KQuery : public QObject
 
  public slots: 
   /* List of files found using slocate */
-  void slotListEntries(QStringList);
+  void slotListEntries(TQStringList);
  protected slots:
   /* List of files found using KIO */
   void slotListEntries(KIO::Job *, const KIO::UDSEntryList &);
@@ -58,7 +58,7 @@ class KQuery : public QObject
   void slotendProcessLocate(KProcess*);
 
  signals:
-  void addFile(const KFileItem *filename, const QString& matchingLine);
+  void addFile(const KFileItem *filename, const TQString& matchingLine);
   void result(int);
 
  private:
@@ -71,32 +71,32 @@ class KQuery : public QObject
   KURL m_url;
   time_t m_timeFrom;
   time_t m_timeTo;
-  QRegExp m_regexp;// regexp for file content
+  TQRegExp m_regexp;// regexp for file content
   bool m_recursive;
-  QStringList m_mimetype;
-  QString m_context;
-  QString m_username;
-  QString m_groupname;
-  QString m_metainfo;
-  QString m_metainfokey;
+  TQStringList m_mimetype;
+  TQString m_context;
+  TQString m_username;
+  TQString m_groupname;
+  TQString m_metainfo;
+  TQString m_metainfokey;
   bool m_casesensitive;
   bool m_search_binary;
   bool m_regexpForContent;
   bool m_useLocate;
   char* bufferLocate;
   int bufferLocateLength;
-  QStringList locateList;
+  TQStringList locateList;
   KProcess *processLocate;
-  QPtrList<QRegExp> m_regexps;// regexps for file name
-//  QValueList<bool> m_regexpsContainsGlobs;  // what should this be good for ? Alex
+  TQPtrList<TQRegExp> m_regexps;// regexps for file name
+//  TQValueList<bool> m_regexpsContainsGlobs;  // what should this be good for ? Alex
   KIO::ListJob *job;
   bool m_insideCheckEntries;
-  QPtrQueue<KFileItem> m_fileItems;
-  QRegExp* metaKeyRx;
+  TQPtrQueue<KFileItem> m_fileItems;
+  TQRegExp* metaKeyRx;
   int m_result;
-  QStringList ignore_mimetypes;
-  QStringList ooo_mimetypes;     // OpenOffice.org mimetypes
-  QStringList koffice_mimetypes;
+  TQStringList ignore_mimetypes;
+  TQStringList ooo_mimetypes;     // OpenOffice.org mimetypes
+  TQStringList koffice_mimetypes;
 };
 
 #endif

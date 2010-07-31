@@ -18,13 +18,13 @@
 #include <kimageeffect.h>
 #include <kdrawutil.h>
 #include <klocale.h>
-#include <qlayout.h>
-#include <qdrawutil.h>
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qtooltip.h>
-#include <qapplication.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqdrawutil.h>
+#include <tqbitmap.h>
+#include <tqimage.h>
+#include <tqtooltip.h>
+#include <tqapplication.h>
+#include <tqlabel.h>
 #include <kdebug.h>
 
 namespace Default
@@ -116,7 +116,7 @@ static const unsigned char pinup_mask_bits[] = {
 
 // ===========================================================================
 
-static QPixmap* titlePix;
+static TQPixmap* titlePix;
 static KPixmap* titleBuffer;
 static KPixmap* aUpperGradient;
 static KPixmap* iUpperGradient;
@@ -198,8 +198,8 @@ unsigned long KDEDefaultHandler::readConfig( bool update )
         bool new_showGrabBar 		= conf->readBoolEntry("ShowGrabBar", true);
 	bool new_showTitleBarStipple = conf->readBoolEntry("ShowTitleBarStipple", true);
 	bool new_useGradients 		= conf->readBoolEntry("UseGradients", true);
-	int  new_titleHeight 		= QFontMetrics(options()->font(true)).height();
-	int  new_toolTitleHeight 	= QFontMetrics(options()->font(true, true)).height()-2;
+	int  new_titleHeight 		= TQFontMetrics(options()->font(true)).height();
+	int  new_toolTitleHeight 	= TQFontMetrics(options()->font(true, true)).height()-2;
 
 	int new_borderWidth;
 	switch(options()->preferredBorderSize(this)) {
@@ -257,16 +257,16 @@ unsigned long KDEDefaultHandler::readConfig( bool update )
 // This paints the button pixmaps upon loading the style.
 void KDEDefaultHandler::createPixmaps()
 {
-	bool highcolor = useGradients && (QPixmap::defaultDepth() > 8);
+	bool highcolor = useGradients && (TQPixmap::defaultDepth() > 8);
 
 	// Make the titlebar stipple optional
 	if (showTitleBarStipple)
 	{
-		QPainter p;
-		QPainter maskPainter;
+		TQPainter p;
+		TQPainter maskPainter;
 		int i, x, y;
-		titlePix = new QPixmap(132, normalTitleHeight+2);
-		QBitmap mask(132, normalTitleHeight+2);
+		titlePix = new TQPixmap(132, normalTitleHeight+2);
+		TQBitmap mask(132, normalTitleHeight+2);
 		mask.fill(Qt::color0);
 
 		p.begin(titlePix);
@@ -288,11 +288,11 @@ void KDEDefaultHandler::createPixmaps()
 	} else
 		titlePix = NULL;
 
-	QColor activeTitleColor1(options()->color(ColorTitleBar,      true));
-	QColor activeTitleColor2(options()->color(ColorTitleBlend,    true));
+	TQColor activeTitleColor1(options()->color(ColorTitleBar,      true));
+	TQColor activeTitleColor2(options()->color(ColorTitleBlend,    true));
 
-	QColor inactiveTitleColor1(options()->color(ColorTitleBar,    false));
-	QColor inactiveTitleColor2(options()->color(ColorTitleBlend,  false));
+	TQColor inactiveTitleColor1(options()->color(ColorTitleBar,    false));
+	TQColor inactiveTitleColor2(options()->color(ColorTitleBlend,  false));
 
 	// Create titlebar gradient images if required
 	aUpperGradient = NULL;
@@ -324,8 +324,8 @@ void KDEDefaultHandler::createPixmaps()
 	}
 
 	// Set the sticky pin pixmaps;
-	QColorGroup g;
-	QPainter p;
+	TQColorGroup g;
+	TQPainter p;
 
 	// Active pins
 	g = options()->colorGroup( ColorButtonBg, true );
@@ -335,7 +335,7 @@ void KDEDefaultHandler::createPixmaps()
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pinup_white_bits,
 		pinup_gray_bits, NULL, NULL, pinup_dgray_bits, NULL );
 	p.end();
-	pinUpPix->setMask( QBitmap(16, 16, pinup_mask_bits, true) );
+	pinUpPix->setMask( TQBitmap(16, 16, pinup_mask_bits, true) );
 
 	pinDownPix = new KPixmap();
 	pinDownPix->resize(16, 16);
@@ -343,7 +343,7 @@ void KDEDefaultHandler::createPixmaps()
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pindown_white_bits,
 		pindown_gray_bits, NULL, NULL, pindown_dgray_bits, NULL );
 	p.end();
-	pinDownPix->setMask( QBitmap(16, 16, pindown_mask_bits, true) );
+	pinDownPix->setMask( TQBitmap(16, 16, pindown_mask_bits, true) );
 
 	// Inactive pins
 	g = options()->colorGroup( ColorButtonBg, false );
@@ -353,7 +353,7 @@ void KDEDefaultHandler::createPixmaps()
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pinup_white_bits,
 		pinup_gray_bits, NULL, NULL, pinup_dgray_bits, NULL );
 	p.end();
-	ipinUpPix->setMask( QBitmap(16, 16, pinup_mask_bits, true) );
+	ipinUpPix->setMask( TQBitmap(16, 16, pinup_mask_bits, true) );
 
 	ipinDownPix = new KPixmap();
 	ipinDownPix->resize(16, 16);
@@ -361,7 +361,7 @@ void KDEDefaultHandler::createPixmaps()
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pindown_white_bits,
 		pindown_gray_bits, NULL, NULL, pindown_dgray_bits, NULL );
 	p.end();
-	ipinDownPix->setMask( QBitmap(16, 16, pindown_mask_bits, true) );
+	ipinDownPix->setMask( TQBitmap(16, 16, pindown_mask_bits, true) );
 
 	// Create a title buffer for flicker-free painting
 	titleBuffer = new KPixmap();
@@ -492,16 +492,16 @@ void KDEDefaultHandler::freePixmaps()
 
 
 void KDEDefaultHandler::drawButtonBackground(KPixmap *pix,
-		const QColorGroup &g, bool sunken)
+		const TQColorGroup &g, bool sunken)
 {
-    QPainter p;
+    TQPainter p;
     int w = pix->width();
     int h = pix->height();
     int x2 = w-1;
     int y2 = h-1;
 
-	bool highcolor = useGradients && (QPixmap::defaultDepth() > 8);
-	QColor c = g.background();
+	bool highcolor = useGradients && (TQPixmap::defaultDepth() > 8);
+	TQColor c = g.background();
 
 	// Fill the background with a gradient if possible
 	if (highcolor)
@@ -528,9 +528,9 @@ void KDEDefaultHandler::drawButtonBackground(KPixmap *pix,
     p.drawLine(2, x2-2, y2-2, x2-2);
 }
 
-QValueList< KDEDefaultHandler::BorderSize > KDEDefaultHandler::borderSizes() const
+TQValueList< KDEDefaultHandler::BorderSize > KDEDefaultHandler::borderSizes() const
 { // the list must be sorted
-  return QValueList< BorderSize >() << BorderNormal << BorderLarge <<
+  return TQValueList< BorderSize >() << BorderNormal << BorderLarge <<
       BorderVeryLarge <<  BorderHuge << BorderVeryHuge << BorderOversized;
 }
 
@@ -560,7 +560,7 @@ bool KDEDefaultHandler::supports( Ability ability )
 KDEDefaultButton::KDEDefaultButton(ButtonType type, KDEDefaultClient *parent, const char *name)
 	: KCommonDecorationButton(type, parent, name)
 {
-    setBackgroundMode( QWidget::NoBackground );
+    setBackgroundMode( TQWidget::NoBackground );
 
 	isMouseOver = false;
 	deco 		= NULL;
@@ -619,13 +619,13 @@ void KDEDefaultButton::setBitmap(const unsigned char *bitmap)
 	deco = 0;
 
 	if (bitmap) {
-		deco = new QBitmap(10, 10, bitmap, true);
+		deco = new TQBitmap(10, 10, bitmap, true);
 		deco->setMask( *deco );
 	}
 }
 
 
-void KDEDefaultButton::drawButton(QPainter *p)
+void KDEDefaultButton::drawButton(TQPainter *p)
 {
 	if (!KDEDefault_initialized)
 		return;
@@ -660,14 +660,14 @@ void KDEDefaultButton::drawButton(QPainter *p)
 		// This is for sticky and menu buttons
 		KPixmap* grad = active ? aUpperGradient : iUpperGradient;
 		if (!grad) {
-			QColor c = KDecoration::options()->color(KDecoration::ColorTitleBar, active);
+			TQColor c = KDecoration::options()->color(KDecoration::ColorTitleBar, active);
 			p->fillRect(0, 0, width(), height(), c );
 		} else
 		 	p->drawPixmap( 0, 0, *grad, 0,1, width(), height() );
 
 	} else {
 		// Draw a plain background for menus or sticky buttons on RHS
-		QColor c = KDecoration::options()->color(KDecoration::ColorFrame, active);
+		TQColor c = KDecoration::options()->color(KDecoration::ColorFrame, active);
 		p->fillRect(0, 0, width(), height(), c);
 	}
 
@@ -698,7 +698,7 @@ void KDEDefaultButton::drawButton(QPainter *p)
 			else
 				btnpix = isOn() ? *ipinDownPix : *ipinUpPix;
 		} else
-			btnpix = decoration()->icon().pixmap( QIconSet::Small, QIconSet::Normal );
+			btnpix = decoration()->icon().pixmap( TQIconSet::Small, TQIconSet::Normal );
 
 		// Intensify the image if required
 		if (isMouseOver) {
@@ -717,19 +717,19 @@ void KDEDefaultButton::drawButton(QPainter *p)
 }
 
 
-void KDEDefaultButton::enterEvent(QEvent *e)
+void KDEDefaultButton::enterEvent(TQEvent *e)
 {
 	isMouseOver=true;
 	repaint(false);
-	QButton::enterEvent(e);
+	TQButton::enterEvent(e);
 }
 
 
-void KDEDefaultButton::leaveEvent(QEvent *e)
+void KDEDefaultButton::leaveEvent(TQEvent *e)
 {
 	isMouseOver=false;
 	repaint(false);
-	QButton::leaveEvent(e);
+	TQButton::leaveEvent(e);
 }
 
 
@@ -741,17 +741,17 @@ KDEDefaultClient::KDEDefaultClient( KDecorationBridge* b, KDecorationFactory* f 
 {
 }
 
-QString KDEDefaultClient::visibleName() const
+TQString KDEDefaultClient::visibleName() const
 {
 	return i18n("KDE2");
 }
 
-QString KDEDefaultClient::defaultButtonsLeft() const
+TQString KDEDefaultClient::defaultButtonsLeft() const
 {
 	return "MS";
 }
 
-QString KDEDefaultClient::defaultButtonsRight() const
+TQString KDEDefaultClient::defaultButtonsRight() const
 {
 	return "HIAX";
 }
@@ -871,20 +871,20 @@ bool KDEDefaultClient::mustDrawHandle() const
     }
 }
 
-void KDEDefaultClient::paintEvent( QPaintEvent* )
+void KDEDefaultClient::paintEvent( TQPaintEvent* )
 {
 	if (!KDEDefault_initialized)
 		return;
 
-	QColorGroup g;
+	TQColorGroup g;
 	int offset;
 
 	KPixmap* upperGradient = isActive() ? aUpperGradient : iUpperGradient;
 
-    QPainter p(widget());
+    TQPainter p(widget());
 
     // Obtain widget bounds.
-    QRect r(widget()->rect());
+    TQRect r(widget()->rect());
     int x = r.x();
     int y = r.y();
     int x2 = r.width() - 1;
@@ -938,8 +938,8 @@ void KDEDefaultClient::paintEvent( QPaintEvent* )
     p.drawLine(x+1, y2-1, x2-1, y2-1);
 
 	p.setPen(options()->color(ColorFrame, isActive()));
-	QPointArray a;
-	QBrush brush( options()->color(ColorFrame, isActive()), Qt::SolidPattern );
+	TQPointArray a;
+	TQBrush brush( options()->color(ColorFrame, isActive()), Qt::SolidPattern );
 	p.setBrush( brush );                       // use solid, yellow brush
     a.setPoints( 4, x+2,             leftFrameStart+borderWidth-4,
 	                x+borderWidth-2, leftFrameStart,
@@ -956,18 +956,18 @@ void KDEDefaultClient::paintEvent( QPaintEvent* )
 		if(w > 50)
 		{
 			qDrawShadePanel(&p, x+1, y2-grabBorderWidth+2, 2*borderWidth+12, grabBorderWidth-2,
-							g, false, 1, &g.brush(QColorGroup::Mid));
+							g, false, 1, &g.brush(TQColorGroup::Mid));
 			qDrawShadePanel(&p, x+2*borderWidth+13, y2-grabBorderWidth+2, w-4*borderWidth-26, grabBorderWidth-2,
 							g, false, 1, isActive() ?
-							&g.brush(QColorGroup::Background) :
-							&g.brush(QColorGroup::Mid));
+							&g.brush(TQColorGroup::Background) :
+							&g.brush(TQColorGroup::Mid));
 			qDrawShadePanel(&p, x2-2*borderWidth-12, y2-grabBorderWidth+2, 2*borderWidth+12, grabBorderWidth-2,
-							g, false, 1, &g.brush(QColorGroup::Mid));
+							g, false, 1, &g.brush(TQColorGroup::Mid));
 		} else
 			qDrawShadePanel(&p, x+1, y2-grabBorderWidth+2, w-2, grabBorderWidth-2,
 							g, false, 1, isActive() ?
-							&g.brush(QColorGroup::Background) :
-							&g.brush(QColorGroup::Mid));
+							&g.brush(TQColorGroup::Background) :
+							&g.brush(TQColorGroup::Mid));
 		offset = grabBorderWidth;
 	} else
 		{
@@ -984,13 +984,13 @@ void KDEDefaultClient::paintEvent( QPaintEvent* )
 	r = titleRect();
 
     // Obtain titlebar blend colours
-    QColor c1 = options()->color(ColorTitleBar, isActive() );
-    QColor c2 = options()->color(ColorFrame, isActive() );
+    TQColor c1 = options()->color(ColorTitleBar, isActive() );
+    TQColor c2 = options()->color(ColorFrame, isActive() );
 
 	// Fill with frame color behind RHS buttons
 	p.fillRect( rightOffset, y+2, x2-rightOffset-1, titleHeight+1, c2);
 
-    QPainter p2( titleBuffer, this );
+    TQPainter p2( titleBuffer, this );
 
 	// Draw the titlebar gradient
 	if (upperGradient)
@@ -1000,7 +1000,7 @@ void KDEDefaultClient::paintEvent( QPaintEvent* )
 
     // Draw the title text on the pixmap, and with a smaller font
     // for toolwindows than the default.
-    QFont fnt = options()->font(true);
+    TQFont fnt = options()->font(true);
 
     if ( isToolWindow() )
        fnt.setPointSize( fnt.pointSize()-2 );  // Shrink font by 2pt
@@ -1010,7 +1010,7 @@ void KDEDefaultClient::paintEvent( QPaintEvent* )
 	// Draw the titlebar stipple if active and available
 	if (isActive() && titlePix)
 	{
-		QFontMetrics fm(fnt);
+		TQFontMetrics fm(fnt);
 		int captionWidth = fm.width(caption());
 		if (caption().isRightToLeft())
 			p2.drawTiledPixmap( r.x(), 0, r.width()-captionWidth-4,
@@ -1037,23 +1037,23 @@ void KDEDefaultClient::paintEvent( QPaintEvent* )
 #endif
 }
 
-QRegion KDEDefaultClient::cornerShape(WindowCorner corner)
+TQRegion KDEDefaultClient::cornerShape(WindowCorner corner)
 {
 	switch (corner) {
 		case WC_TopLeft:
-			return QRect(0, 0, 1, 1);
+			return TQRect(0, 0, 1, 1);
 
 		case WC_TopRight:
-			return QRect(width()-1, 0, 1, 1);
+			return TQRect(width()-1, 0, 1, 1);
 
 		case WC_BottomLeft:
-			return QRect(0, height()-1, 1, 1);
+			return TQRect(0, height()-1, 1, 1);
 
 		case WC_BottomRight:
-			return QRect(width()-1, height()-1, 1, 1);
+			return TQRect(width()-1, height()-1, 1, 1);
 
 		default:
-			return QRegion();
+			return TQRegion();
 	}
 }
 

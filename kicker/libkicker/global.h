@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __pglobal_h__
 #define __pglobal_h__
 
-#include <qiconset.h>
-#include <qmap.h>
+#include <tqiconset.h>
+#include <tqmap.h>
 
 #include <kpanelapplet.h>
 #include <kpanelextension.h>
@@ -52,23 +52,23 @@ KDE_EXPORT int maxButtonDim();
  * Tint the image to reflect the current color scheme
  * Used, for instance, by KMenu side bar
  */
-KDE_EXPORT void colorize(QImage& image);
+KDE_EXPORT void colorize(TQImage& image);
 
 /**
  * Blend a color rectangle on a painter
  */
-KDE_EXPORT void drawBlendedRect(QPainter *p, const QRect &r, const QColor &color = Qt::black, int alpha = 0x40);
+KDE_EXPORT void drawBlendedRect(TQPainter *p, const TQRect &r, const TQColor &color = Qt::black, int alpha = 0x40);
 
 /**
  * Blend two colours together to get a colour halfway in between
  */
-KDE_EXPORT QColor blendColors(const QColor& c1, const QColor& c2);
+KDE_EXPORT TQColor blendColors(const TQColor& c1, const TQColor& c2);
 
 /**
  * Create or copy .desktop files for use in kicker safely and easily
  */
-KDE_EXPORT QString copyDesktopFile(const KURL&url);
-KDE_EXPORT QString newDesktopFile(const KURL&url);
+KDE_EXPORT TQString copyDesktopFile(const KURL&url);
+KDE_EXPORT TQString newDesktopFile(const KURL&url);
 
 
 /**
@@ -80,7 +80,7 @@ KDE_EXPORT QString newDesktopFile(const KURL&url);
  * This function checks whether that is the case and returns either the
  * original menu or the sub-menu when appropriate.
  */
-KDE_EXPORT QPopupMenu *reduceMenu(QPopupMenu *);
+KDE_EXPORT TQPopupMenu *reduceMenu(TQPopupMenu *);
 
 
 /**
@@ -88,16 +88,16 @@ KDE_EXPORT QPopupMenu *reduceMenu(QPopupMenu *);
  * direction, the size of the menu, the widget geometry, and a optional
  * point in the local coordinates of the widget.
  */
-KDE_EXPORT QPoint popupPosition(KPanelApplet::Direction d,
-                                const QWidget* popup,
-                                const QWidget* source,
-                                const QPoint& offset = QPoint(0, 0));
+KDE_EXPORT TQPoint popupPosition(KPanelApplet::Direction d,
+                                const TQWidget* popup,
+                                const TQWidget* source,
+                                const TQPoint& offset = TQPoint(0, 0));
 
 /**
  * Calculate an acceptable inverse of the given color wich will be used
  * as the shadow color.
  */
-KDE_EXPORT QColor shadowColor(const QColor& c);
+KDE_EXPORT TQColor shadowColor(const TQColor& c);
 
 /**
  * Get an appropriate for a menu in Plasma. As the user may set this size
@@ -105,7 +105,7 @@ KDE_EXPORT QColor shadowColor(const QColor& c);
  * @param icon the name of icon requested
  * @return the icon set for the requested icon
  */
-KDE_EXPORT QIconSet menuIconSet(const QString& icon);
+KDE_EXPORT TQIconSet menuIconSet(const TQString& icon);
 
 }
 

@@ -126,14 +126,14 @@ void TEPty::setErase(char erase)
 /*!
     start the client program.
 */
-int TEPty::run(const char* _pgm, QStrList & _args, const char* _term, ulong winid, bool _addutmp,
+int TEPty::run(const char* _pgm, TQStrList & _args, const char* _term, ulong winid, bool _addutmp,
                const char* _konsole_dcop, const char* _konsole_dcop_session)
 {
   clearArguments();
 
   setBinaryExecutable(_pgm);
 
-  QStrListIterator it( _args );
+  TQStrListIterator it( _args );
   for (; it.current(); ++it )
     arguments.append(it.current());
 
@@ -143,7 +143,7 @@ int TEPty::run(const char* _pgm, QStrList & _args, const char* _term, ulong wini
      setEnvironment("KONSOLE_DCOP",_konsole_dcop);
   if (_konsole_dcop_session && _konsole_dcop_session[0])
      setEnvironment("KONSOLE_DCOP_SESSION", _konsole_dcop_session);
-  setEnvironment("WINDOWID", QString::number(winid));
+  setEnvironment("WINDOWID", TQString::number(winid));
 
   setUsePty(All, _addutmp);
 
@@ -171,12 +171,12 @@ void TEPty::setWriteable(bool writeable)
 TEPty::TEPty()
 {
   m_bufferFull = false;
-  connect(this, SIGNAL(receivedStdout(KProcess *, char *, int )),
-	  this, SLOT(dataReceived(KProcess *,char *, int)));
-  connect(this, SIGNAL(processExited(KProcess *)),
-          this, SLOT(donePty()));
-  connect(this, SIGNAL(wroteStdin(KProcess *)),
-          this, SLOT(writeReady()));
+  connect(this, TQT_SIGNAL(receivedStdout(KProcess *, char *, int )),
+	  this, TQT_SLOT(dataReceived(KProcess *,char *, int)));
+  connect(this, TQT_SIGNAL(processExited(KProcess *)),
+          this, TQT_SLOT(donePty()));
+  connect(this, TQT_SIGNAL(wroteStdin(KProcess *)),
+          this, TQT_SLOT(writeReady()));
 
   setUsePty(All, false); // utmp will be overridden later
 }

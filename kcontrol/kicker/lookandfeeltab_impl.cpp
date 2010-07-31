@@ -18,10 +18,10 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qradiobutton.h>
-#include <qregexp.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqradiobutton.h>
+#include <tqregexp.h>
 
 #include <kcolorbutton.h>
 #include <kdebug.h>
@@ -44,25 +44,25 @@
 #include <iostream>
 using namespace std;
 
-LookAndFeelTab::LookAndFeelTab( QWidget *parent, const char* name )
+LookAndFeelTab::LookAndFeelTab( TQWidget *parent, const char* name )
   : LookAndFeelTabBase(parent, name),
     m_advDialog(0)
 {
-    connect(m_kmenuTile, SIGNAL(activated(int)), SIGNAL(changed()));
-    connect(m_desktopTile, SIGNAL(activated(int)), SIGNAL(changed()));
-    connect(m_browserTile, SIGNAL(activated(int)), SIGNAL(changed()));
-    connect(m_urlTile, SIGNAL(activated(int)), SIGNAL(changed()));
-    connect(m_windowListTile, SIGNAL(activated(int)), SIGNAL(changed()));
+    connect(m_kmenuTile, TQT_SIGNAL(activated(int)), TQT_SIGNAL(changed()));
+    connect(m_desktopTile, TQT_SIGNAL(activated(int)), TQT_SIGNAL(changed()));
+    connect(m_browserTile, TQT_SIGNAL(activated(int)), TQT_SIGNAL(changed()));
+    connect(m_urlTile, TQT_SIGNAL(activated(int)), TQT_SIGNAL(changed()));
+    connect(m_windowListTile, TQT_SIGNAL(activated(int)), TQT_SIGNAL(changed()));
 
-    connect(m_kmenuTile, SIGNAL(activated(int)), SLOT(kmenuTileChanged(int)));
-    connect(m_desktopTile, SIGNAL(activated(int)), SLOT(desktopTileChanged(int)));
-    connect(m_browserTile, SIGNAL(activated(int)), SLOT(browserTileChanged(int)));
-    connect(m_urlTile, SIGNAL(activated(int)), SLOT(urlTileChanged(int)));
-    connect(m_windowListTile, SIGNAL(activated(int)), SLOT(wlTileChanged(int)));
+    connect(m_kmenuTile, TQT_SIGNAL(activated(int)), TQT_SLOT(kmenuTileChanged(int)));
+    connect(m_desktopTile, TQT_SIGNAL(activated(int)), TQT_SLOT(desktopTileChanged(int)));
+    connect(m_browserTile, TQT_SIGNAL(activated(int)), TQT_SLOT(browserTileChanged(int)));
+    connect(m_urlTile, TQT_SIGNAL(activated(int)), TQT_SLOT(urlTileChanged(int)));
+    connect(m_windowListTile, TQT_SIGNAL(activated(int)), TQT_SLOT(wlTileChanged(int)));
 
-    connect(kcfg_ColorizeBackground, SIGNAL(toggled(bool)), SLOT(browseTheme()));
+    connect(kcfg_ColorizeBackground, TQT_SIGNAL(toggled(bool)), TQT_SLOT(browseTheme()));
 
-    connect(kcfg_BackgroundTheme->lineEdit(), SIGNAL(lostFocus()), SLOT(browseTheme()));
+    connect(kcfg_BackgroundTheme->lineEdit(), TQT_SIGNAL(lostFocus()), TQT_SLOT(browseTheme()));
     kcfg_BackgroundTheme->setFilter(KImageIO::pattern(KImageIO::Reading));
     kcfg_BackgroundTheme->setCaption(i18n("Select Image File"));
 
@@ -74,12 +74,12 @@ void LookAndFeelTab::browseTheme()
     browseTheme(kcfg_BackgroundTheme->url());
 }
 
-void LookAndFeelTab::browseTheme(const QString& newtheme)
+void LookAndFeelTab::browseTheme(const TQString& newtheme)
 {
     if (newtheme.isEmpty())
     {
         kcfg_BackgroundTheme->clear();
-        m_backgroundLabel->setPixmap(QPixmap());
+        m_backgroundLabel->setPixmap(TQPixmap());
         emit changed();
         return;
     }
@@ -92,7 +92,7 @@ void LookAndFeelTab::launchAdvancedDialog()
     if (!m_advDialog)
     {
         m_advDialog = new advancedDialog(this, "advancedDialog");
-        connect(m_advDialog, SIGNAL(finished()), this, SLOT(finishAdvancedDialog()));
+        connect(m_advDialog, TQT_SIGNAL(finished()), this, TQT_SLOT(finishAdvancedDialog()));
         m_advDialog->show();
     }
     m_advDialog->setActiveWindow();
@@ -114,13 +114,13 @@ void LookAndFeelTab::enableTransparency(bool useTransparency)
     kcfg_ColorizeBackground->setDisabled(useTransparency || !useBgTheme);
 }
 
-void LookAndFeelTab::previewBackground(const QString& themepath, bool isNew)
+void LookAndFeelTab::previewBackground(const TQString& themepath, bool isNew)
 {
-    QString theme = themepath;
+    TQString theme = themepath;
     if (theme[0] != '/')
         theme = locate("data", "kicker/" + theme);
 
-    QImage tmpImg(theme);
+    TQImage tmpImg(theme);
     if(!tmpImg.isNull())
     {
         tmpImg = tmpImg.smoothScale(m_backgroundLabel->contentsRect().width(),
@@ -144,7 +144,7 @@ void LookAndFeelTab::previewBackground(const QString& themepath, bool isNew)
                        i18n("Error loading theme image file.\n\n%1\n%2")
                             .arg(theme, themepath));
     kcfg_BackgroundTheme->clear();
-    m_backgroundLabel->setPixmap(QPixmap());
+    m_backgroundLabel->setPixmap(TQPixmap());
 }
 
 void LookAndFeelTab::load()
@@ -161,7 +161,7 @@ void LookAndFeelTab::load(bool useDefaults)
     config.setGroup("General");
 
     bool use_theme = kcfg_UseBackgroundTheme->isChecked();
-    QString theme = kcfg_BackgroundTheme->lineEdit()->text().stripWhiteSpace();
+    TQString theme = kcfg_BackgroundTheme->lineEdit()->text().stripWhiteSpace();
 
     bool transparent = kcfg_Transparent->isChecked();
 
@@ -174,7 +174,7 @@ void LookAndFeelTab::load(bool useDefaults)
         previewBackground(theme, false);
     }
 
-    QString tile;
+    TQString tile;
     config.setGroup("buttons");
 
     kmenuTileChanged(m_kmenuTile->currentItem());
@@ -319,22 +319,22 @@ void LookAndFeelTab::fillTileCombos()
   m_tilename.clear();
   m_tilename << "" << "Colorize";
 
-  QStringList list = KGlobal::dirs()->findAllResources("tiles","*_tiny_up.png");
+  TQStringList list = KGlobal::dirs()->findAllResources("tiles","*_tiny_up.png");
   int minHeight = 0;
 
-  for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
+  for (TQStringList::Iterator it = list.begin(); it != list.end(); ++it)
   {
-    QString tile = (*it);
-    QPixmap pix(tile);
-    QFileInfo fi(tile);
+    TQString tile = (*it);
+    TQPixmap pix(tile);
+    TQFileInfo fi(tile);
     tile = fi.fileName();
     tile.truncate(tile.find("_tiny_up.png"));
     m_tilename << tile;
 
     // Transform tile to words with title case
     // The same is done when generating messages for translation
-    QStringList words = QStringList::split(QRegExp("[_ ]"), tile);
-    for (QStringList::iterator w = words.begin(); w != words.end(); ++w)
+    TQStringList words = TQStringList::split(TQRegExp("[_ ]"), tile);
+    for (TQStringList::iterator w = words.begin(); w != words.end(); ++w)
       (*w)[0] = (*w)[0].upper();
     tile = i18n(words.join(" ").utf8());
 

@@ -20,8 +20,8 @@
 #define __RANDRPASSIVEPOPUP_H__
 
 #include <kpassivepopup.h>
-#include <qvaluelist.h>
-#include <qtimer.h>
+#include <tqvaluelist.h>
+#include <tqtimer.h>
 #include <X11/Xlib.h>
 
 class KRandrPassivePopup
@@ -29,19 +29,19 @@ class KRandrPassivePopup
     {
     Q_OBJECT
     public:
-	static KRandrPassivePopup *message( const QString &caption, const QString &text,
-	    const QPixmap &icon, QWidget *parent, const char *name=0, int timeout = -1 );
+	static KRandrPassivePopup *message( const TQString &caption, const TQString &text,
+	    const TQPixmap &icon, TQWidget *parent, const char *name=0, int timeout = -1 );
     protected:
-	virtual bool eventFilter( QObject* o, QEvent* e );
+	virtual bool eventFilter( TQObject* o, TQEvent* e );
 	virtual bool x11Event( XEvent* e );
     private slots:
 	void slotPositionSelf();
     private:
-        KRandrPassivePopup( QWidget *parent=0, const char *name=0, WFlags f=0 );
-	void startWatchingWidget( QWidget* w );
-	QValueList< QWidget* > watched_widgets;
-	QValueList< Window > watched_windows;
-	QTimer update_timer;
+        KRandrPassivePopup( TQWidget *parent=0, const char *name=0, WFlags f=0 );
+	void startWatchingWidget( TQWidget* w );
+	TQValueList< TQWidget* > watched_widgets;
+	TQValueList< Window > watched_windows;
+	TQTimer update_timer;
     };
 
 #endif

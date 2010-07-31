@@ -33,7 +33,7 @@ class DecoBenchApplication : public KApplication
 {
 	Q_OBJECT
 public:
-	DecoBenchApplication(const QString &library, Tests tests, int count);
+	DecoBenchApplication(const TQString &library, Tests tests, int count);
 	~DecoBenchApplication();
 
 public slots:

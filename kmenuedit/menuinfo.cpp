@@ -20,7 +20,7 @@
 #include "menuinfo.h"
 #include "menufile.h"
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <kdesktopfile.h>
 #include <khotkeys.h>
@@ -30,10 +30,10 @@
 // MenuFolderInfo
 //
 
-static QStringList *s_allShortcuts = 0;
-static QStringList *s_newShortcuts = 0;
-static QStringList *s_freeShortcuts = 0;
-static QStringList *s_deletedApps = 0;
+static TQStringList *s_allShortcuts = 0;
+static TQStringList *s_newShortcuts = 0;
+static TQStringList *s_freeShortcuts = 0;
+static TQStringList *s_deletedApps = 0;
 
 // Add separator
 void MenuFolderInfo::add(MenuSeparatorInfo *info, bool initial)
@@ -76,7 +76,7 @@ bool MenuFolderInfo::takeRecursive(MenuFolderInfo *info)
 }
 
 // Recursively update all fullIds
-void MenuFolderInfo::updateFullId(const QString &parentId)
+void MenuFolderInfo::updateFullId(const TQString &parentId)
 {
    fullId = parentId + id;
 
@@ -103,12 +103,12 @@ void MenuFolderInfo::take(MenuEntryInfo *entry)
 
 
 // Return a unique sub-menu caption inspired by @p caption
-QString MenuFolderInfo::uniqueMenuCaption(const QString &caption)
+TQString MenuFolderInfo::uniqueMenuCaption(const TQString &caption)
 {
-   QRegExp r("(.*)(?=-\\d+)");
-   QString cap = (r.search(caption) > -1) ? r.cap(1) : caption;
+   TQRegExp r("(.*)(?=-\\d+)");
+   TQString cap = (r.search(caption) > -1) ? r.cap(1) : caption;
 
-   QString result = caption;
+   TQString result = caption;
 
    for(int n = 1; ++n; )
    {
@@ -125,18 +125,18 @@ QString MenuFolderInfo::uniqueMenuCaption(const QString &caption)
       if (ok)
          return result;
 
-      result = cap + QString("-%1").arg(n);
+      result = cap + TQString("-%1").arg(n);
    }
-   return QString::null; // Never reached
+   return TQString::null; // Never reached
 }
 
 // Return a unique item caption inspired by @p caption
-QString MenuFolderInfo::uniqueItemCaption(const QString &caption, const QString &exclude)
+TQString MenuFolderInfo::uniqueItemCaption(const TQString &caption, const TQString &exclude)
 {
-   QRegExp r("(.*)(?=-\\d+)");
-   QString cap = (r.search(caption) > -1) ? r.cap(1) : caption;
+   TQRegExp r("(.*)(?=-\\d+)");
+   TQString cap = (r.search(caption) > -1) ? r.cap(1) : caption;
 
-   QString result = caption;
+   TQString result = caption;
 
    for(int n = 1; ++n; )
    {
@@ -144,7 +144,7 @@ QString MenuFolderInfo::uniqueItemCaption(const QString &caption, const QString 
       if (result == exclude)
          ok = false;
       MenuEntryInfo *entryInfo;
-      for(QPtrListIterator<MenuEntryInfo> it(entries);
+      for(TQPtrListIterator<MenuEntryInfo> it(entries);
           ok && (entryInfo = it.current()); ++it)
       {
          if (entryInfo->caption == result)
@@ -153,15 +153,15 @@ QString MenuFolderInfo::uniqueItemCaption(const QString &caption, const QString 
       if (ok)
          return result;
 
-      result = cap + QString("-%1").arg(n);
+      result = cap + TQString("-%1").arg(n);
    }
-   return QString::null; // Never reached
+   return TQString::null; // Never reached
 }
 
 // Return a list of existing submenu ids
-QStringList MenuFolderInfo::existingMenuIds()
+TQStringList MenuFolderInfo::existingMenuIds()
 {
-   QStringList result;
+   TQStringList result;
    for(MenuFolderInfo *subFolderInfo = subFolders.first();
        subFolderInfo; subFolderInfo = subFolders.next())
    {
@@ -180,7 +180,7 @@ void MenuFolderInfo::save(MenuFile *menuFile)
    if (s_deletedApps)
    {
       // Remove hotkeys for applications that have been deleted
-      for(QStringList::ConstIterator it = s_deletedApps->begin();
+      for(TQStringList::ConstIterator it = s_deletedApps->begin();
           it != s_deletedApps->end(); ++it)
       {
          KHotKeys::menuEntryDeleted(*it);
@@ -191,7 +191,7 @@ void MenuFolderInfo::save(MenuFile *menuFile)
 
    if (dirty)
    {
-      QString local = KDesktopFile::locateLocal(directoryFile);
+      TQString local = KDesktopFile::locateLocal(directoryFile);
 
       KConfig *df = 0;
       if (directoryFile != local)
@@ -223,7 +223,7 @@ void MenuFolderInfo::save(MenuFile *menuFile)
 
    // Save entries
    MenuEntryInfo *entryInfo;
-   for(QPtrListIterator<MenuEntryInfo> it(entries);
+   for(TQPtrListIterator<MenuEntryInfo> it(entries);
        (entryInfo = it.current()); ++it)
    {
       if (entryInfo->needInsertion())
@@ -245,7 +245,7 @@ bool MenuFolderInfo::hasDirt()
 
    // Check entries
    MenuEntryInfo *entryInfo;
-   for(QPtrListIterator<MenuEntryInfo> it(entries);
+   for(TQPtrListIterator<MenuEntryInfo> it(entries);
        (entryInfo = it.current()); ++it)
    {
       if (entryInfo->dirty) return true;
@@ -268,7 +268,7 @@ KService::Ptr MenuFolderInfo::findServiceShortcut(const KShortcut&cut)
 
    // Check entries
    MenuEntryInfo *entryInfo;
-   for(QPtrListIterator<MenuEntryInfo> it(entries);
+   for(TQPtrListIterator<MenuEntryInfo> it(entries);
        (entryInfo = it.current()); ++it)
    {
       if (entryInfo->shortCut == cut)
@@ -288,7 +288,7 @@ void MenuFolderInfo::setInUse(bool inUse)
 
    // Propagate to entries
    MenuEntryInfo *entryInfo;
-   for(QPtrListIterator<MenuEntryInfo> it(entries);
+   for(TQPtrListIterator<MenuEntryInfo> it(entries);
        (entryInfo = it.current()); ++it)
    {
       entryInfo->setInUse(inUse);
@@ -320,7 +320,7 @@ void MenuEntryInfo::setDirty()
 
    dirty = true;
 
-   QString local = locateLocal("xdgdata-apps", service->menuId());
+   TQString local = locateLocal("xdgdata-apps", service->menuId());
    if (local != service->desktopEntryPath())
    {
       KDesktopFile *oldDf = desktopFile();
@@ -354,7 +354,7 @@ void MenuEntryInfo::save()
    }
 }
 
-void MenuEntryInfo::setCaption(const QString &_caption)
+void MenuEntryInfo::setCaption(const TQString &_caption)
 {
    if (caption == _caption)
       return;
@@ -363,7 +363,7 @@ void MenuEntryInfo::setCaption(const QString &_caption)
    desktopFile()->writeEntry("Name", caption);
 }
 
-void MenuEntryInfo::setDescription(const QString &_description)
+void MenuEntryInfo::setDescription(const TQString &_description)
 {
     if (description == _description)
         return;
@@ -372,7 +372,7 @@ void MenuEntryInfo::setDescription(const QString &_description)
     desktopFile()->writeEntry("GenericName", description);
 }
 
-void MenuEntryInfo::setIcon(const QString &_icon)
+void MenuEntryInfo::setIcon(const TQString &_icon)
 {
    if (icon == _icon)
       return;
@@ -409,7 +409,7 @@ static void freeShortcut(const KShortcut &shortCut)
 {
    if (!isEmpty(shortCut))
    {
-      QString shortcutKey = shortCut.toString();
+      TQString shortcutKey = shortCut.toString();
       if (s_newShortcuts)
          s_newShortcuts->remove(shortcutKey);
       
@@ -424,7 +424,7 @@ static void allocateShortcut(const KShortcut &shortCut)
 {
    if (!isEmpty(shortCut))
    {
-      QString shortcutKey = shortCut.toString();
+      TQString shortcutKey = shortCut.toString();
       if (s_freeShortcuts)
           s_freeShortcuts->remove(shortcutKey);
 
@@ -483,11 +483,11 @@ bool MenuEntryInfo::isShortcutAvailable(const KShortcut &_shortcut)
    if (shortCut == _shortcut)
       return true;
       
-   QString shortcutKey = _shortcut.toString();
+   TQString shortcutKey = _shortcut.toString();
    bool available = true;
    if (!s_allShortcuts)
    {
-      s_allShortcuts = new QStringList(KHotKeys::allShortCuts());
+      s_allShortcuts = new TQStringList(KHotKeys::allShortCuts());
    }
    available = !s_allShortcuts->contains(shortcutKey);
    if (available && s_newShortcuts)

@@ -32,7 +32,7 @@ namespace KHC {
   class PluginTraverser : public DocEntryTraverser
   {
     public:
-      PluginTraverser( Navigator *navigator, QListView *parent );
+      PluginTraverser( Navigator *navigator, TQListView *parent );
       PluginTraverser( Navigator *navigator, NavigatorItem *parent );
 
       virtual void process( DocEntry *entry );
@@ -40,7 +40,7 @@ namespace KHC {
       virtual DocEntryTraverser *createChild( DocEntry *entry );
 
   private:
-    QListView *mListView;
+    TQListView *mListView;
     NavigatorItem *mParentItem;
     NavigatorItem *mCurrentItem;
 

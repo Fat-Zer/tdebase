@@ -24,14 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <qbuffer.h>
+#include <tqbuffer.h>
 
 #include "paneldrag.h"
 
 #define PANELDRAG_BUFSIZE sizeof(BaseContainer*) + sizeof(pid_t)
 
-PanelDrag::PanelDrag(BaseContainer* container, QWidget* dragSource)
-    : QDragObject(dragSource, 0)
+PanelDrag::PanelDrag(BaseContainer* container, TQWidget* dragSource)
+    : TQDragObject(dragSource, 0)
 {
     pid_t source_pid = getpid();
 
@@ -44,9 +44,9 @@ PanelDrag::~PanelDrag()
 {
 }
 
-bool PanelDrag::decode(const QMimeSource* e, BaseContainer** container)
+bool PanelDrag::decode(const TQMimeSource* e, BaseContainer** container)
 {
-    QByteArray a = e->encodedData("application/basecontainerptr");
+    TQByteArray a = e->encodedData("application/basecontainerptr");
 
     if (a.size() != PANELDRAG_BUFSIZE)
     {
@@ -55,25 +55,25 @@ bool PanelDrag::decode(const QMimeSource* e, BaseContainer** container)
 
     pid_t target_pid = getpid();
     pid_t source_pid;
-    memcpy(&source_pid, a.data() + sizeof(QObject*), sizeof(pid_t));
+    memcpy(&source_pid, a.data() + sizeof(TQObject*), sizeof(pid_t));
 
     if (source_pid == target_pid)
     {
-        memcpy(container, a.data(), sizeof(QObject*));
+        memcpy(container, a.data(), sizeof(TQObject*));
         return true;
     }
 
     return false;
 }
 
-bool PanelDrag::canDecode(const QMimeSource *e)
+bool PanelDrag::canDecode(const TQMimeSource *e)
 {
     if (!e->provides("application/basecontainerptr"))
     {
         return false;
     }
 
-    QByteArray a = e->encodedData("application/basecontainerptr");
+    TQByteArray a = e->encodedData("application/basecontainerptr");
     if (a.size() != PANELDRAG_BUFSIZE)
     {
         return false;
@@ -91,15 +91,15 @@ bool PanelDrag::canDecode(const QMimeSource *e)
     return true;
 }
 
-QByteArray PanelDrag::encodedData(const char * mimeType) const
+TQByteArray PanelDrag::encodedData(const char * mimeType) const
 {
-    if (QString("application/basecontainerptr") == mimeType &&
+    if (TQString("application/basecontainerptr") == mimeType &&
         a.size() == PANELDRAG_BUFSIZE)
     {
         return a;
     }
 
-    return QByteArray();
+    return TQByteArray();
 }
 
 const char * PanelDrag::format(int i) const
@@ -113,12 +113,12 @@ const char * PanelDrag::format(int i) const
 }
 
 
-AppletInfoDrag::AppletInfoDrag(const AppletInfo& info, QWidget *dragSource)
-    : QDragObject(dragSource, 0)
+AppletInfoDrag::AppletInfoDrag(const AppletInfo& info, TQWidget *dragSource)
+    : TQDragObject(dragSource, 0)
 {
-    QBuffer buff(a);
+    TQBuffer buff(a);
     buff.open(IO_WriteOnly);
-    QDataStream s(&buff);
+    TQDataStream s(&buff);
     s << info.desktopFile() << info.configFile() << info.type();
 }
 
@@ -136,17 +136,17 @@ const char * AppletInfoDrag::format(int i) const
     return 0;
 }
 
-QByteArray AppletInfoDrag::encodedData(const char* mimeType) const
+TQByteArray AppletInfoDrag::encodedData(const char* mimeType) const
 {
-    if (QString("application/appletinfo") == mimeType)
+    if (TQString("application/appletinfo") == mimeType)
     {
         return a;
     }
 
-    return QByteArray();
+    return TQByteArray();
 }
 
-bool AppletInfoDrag::canDecode(const QMimeSource * e)
+bool AppletInfoDrag::canDecode(const TQMimeSource * e)
 {
     if (!e->provides("application/appletinfo"))
     {
@@ -156,21 +156,21 @@ bool AppletInfoDrag::canDecode(const QMimeSource * e)
     return true;
 }
 
-bool AppletInfoDrag::decode(const QMimeSource* e, AppletInfo& container)
+bool AppletInfoDrag::decode(const TQMimeSource* e, AppletInfo& container)
 {
-    QByteArray a = e->encodedData("application/appletinfo");
+    TQByteArray a = e->encodedData("application/appletinfo");
 
     if (a.isEmpty())
     {
         return false;
     }
 
-    QBuffer buff(a);
+    TQBuffer buff(a);
     buff.open(IO_ReadOnly);
-    QDataStream s(&buff);
+    TQDataStream s(&buff);
 
-    QString desktopFile;
-    QString configFile;
+    TQString desktopFile;
+    TQString configFile;
     int type;
     s >> desktopFile >> configFile >> type;
     AppletInfo info(desktopFile, configFile, (AppletInfo::AppletType)type);

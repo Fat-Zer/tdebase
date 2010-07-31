@@ -24,7 +24,7 @@ Boston, MA 02110-1301, USA.
 
 
 #include <kapplication.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <bgrender.h>
 
@@ -42,7 +42,7 @@ class MyApplication : public KApplication
 
   private:
 	KVirtualBGRenderer renderer;
-	QTimer timer;
+	TQTimer timer;
 };
 
 #endif

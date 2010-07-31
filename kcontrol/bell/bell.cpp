@@ -19,11 +19,11 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -40,7 +40,7 @@
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_bell(QWidget *parent, const char *)
+  KDE_EXPORT KCModule *create_bell(TQWidget *parent, const char *)
   {
     return new KBellConfig(parent, "kcmbell");
   }
@@ -64,27 +64,27 @@ extern "C"
   }
 }
 
-KBellConfig::KBellConfig(QWidget *parent, const char *name):
+KBellConfig::KBellConfig(TQWidget *parent, const char *name):
     KCModule(parent, name)
 {
-  QBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   int row = 0;
-  QGroupBox *box = new QGroupBox( i18n("Bell Settings"), this );
+  TQGroupBox *box = new TQGroupBox( i18n("Bell Settings"), this );
   box->setColumnLayout( 0, Qt::Horizontal );
   layout->addWidget(box);
   layout->addStretch();
-  QGridLayout *grid = new QGridLayout(box->layout(), KDialog::spacingHint());
+  TQGridLayout *grid = new TQGridLayout(box->layout(), KDialog::spacingHint());
   grid->setColStretch(0, 0);
   grid->setColStretch(1, 1);
   grid->addColSpacing(0, 30);
 
-  m_useBell = new QCheckBox( i18n("&Use system bell instead of system notification" ), box );
-  QWhatsThis::add(m_useBell, i18n("You can use the standard system bell (PC speaker) or a "
+  m_useBell = new TQCheckBox( i18n("&Use system bell instead of system notification" ), box );
+  TQWhatsThis::add(m_useBell, i18n("You can use the standard system bell (PC speaker) or a "
 				  "more sophisticated system notification, see the "
 				  "\"System Notifications\" control module for the "
 				  "\"Something Special Happened in the Program\" event."));
-  connect(m_useBell, SIGNAL( toggled( bool )), SLOT( useBell( bool )));
+  connect(m_useBell, TQT_SIGNAL( toggled( bool )), TQT_SLOT( useBell( bool )));
   row++;
   grid->addMultiCellWidget(m_useBell, row, row, 0, 1);
 
@@ -99,7 +99,7 @@ KBellConfig::KBellConfig(QWidget *parent, const char *name):
   m_volume->setSuffix("%");
   m_volume->setSteps(5,25);
   grid->addWidget(m_volume, ++row, 1);
-  QWhatsThis::add( m_volume, i18n("Here you can customize the volume of the system bell. For further"
+  TQWhatsThis::add( m_volume, i18n("Here you can customize the volume of the system bell. For further"
     " customization of the bell, see the \"Accessibility\" control module.") );
 
   m_pitch = new KIntNumInput(m_volume, 800, box);
@@ -108,7 +108,7 @@ KBellConfig::KBellConfig(QWidget *parent, const char *name):
   m_pitch->setSuffix(i18n(" Hz"));
   m_pitch->setSteps(40,200);
   grid->addWidget(m_pitch, ++row, 1);
-  QWhatsThis::add( m_pitch, i18n("Here you can customize the pitch of the system bell. For further"
+  TQWhatsThis::add( m_pitch, i18n("Here you can customize the pitch of the system bell. For further"
     " customization of the bell, see the \"Accessibility\" control module.") );
 
   m_duration = new KIntNumInput(m_pitch, 100, box);
@@ -117,20 +117,20 @@ KBellConfig::KBellConfig(QWidget *parent, const char *name):
   m_duration->setSuffix(i18n(" msec"));
   m_duration->setSteps(20,100);
   grid->addWidget(m_duration, ++row, 1);
-  QWhatsThis::add( m_duration, i18n("Here you can customize the duration of the system bell. For further"
+  TQWhatsThis::add( m_duration, i18n("Here you can customize the duration of the system bell. For further"
     " customization of the bell, see the \"Accessibility\" control module.") );
 
-  QBoxLayout *boxLayout = new QHBoxLayout();
-  m_testButton = new QPushButton(i18n("&Test"), box, "test");
+  TQBoxLayout *boxLayout = new TQHBoxLayout();
+  m_testButton = new TQPushButton(i18n("&Test"), box, "test");
   boxLayout->addWidget(m_testButton, 0, AlignRight);
   grid->addLayout( boxLayout, ++row, 1 );
-  connect( m_testButton, SIGNAL(clicked()), SLOT(ringBell()));
-  QWhatsThis::add( m_testButton, i18n("Click \"Test\" to hear how the system bell will sound using your changed settings.") );
+  connect( m_testButton, TQT_SIGNAL(clicked()), TQT_SLOT(ringBell()));
+  TQWhatsThis::add( m_testButton, i18n("Click \"Test\" to hear how the system bell will sound using your changed settings.") );
 
   // watch for changes
-  connect(m_volume, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(m_pitch, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(m_duration, SIGNAL(valueChanged(int)), SLOT(changed()));
+  connect(m_volume, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(m_pitch, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(m_duration, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   
   KAboutData *about =
     new KAboutData(I18N_NOOP("kcmbell"), I18N_NOOP("KDE Bell Control Module"),

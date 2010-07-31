@@ -21,34 +21,34 @@
 
 #include <klocale.h>
 #include <kmimetype.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
 #include <klistview.h>
 #include <kfiledetailview.h>
 
 class MediumTypeItem : public QCheckListItem
 {
 public:
-	MediumTypeItem(QListView *parent, const QString name,
-	               const QString mimetype)
-		: QCheckListItem(parent, name, CheckBox),
+	MediumTypeItem(TQListView *parent, const TQString name,
+	               const TQString mimetype)
+		: TQCheckListItem(parent, name, CheckBox),
 		  mMimeType(mimetype) { }
 
-	const QString &mimeType() const { return mMimeType; }
+	const TQString &mimeType() const { return mMimeType; }
 
 private:
-	QString mMimeType;
+	TQString mMimeType;
 };
 
 class MediumItem : public QCheckListItem
 {
 public:
-	MediumItem(QListView *parent, const QString name,
+	MediumItem(TQListView *parent, const TQString name,
 	           const KFileItem medium)
-		: QCheckListItem(parent, name, CheckBox),
+		: TQCheckListItem(parent, name, CheckBox),
 		  mMedium(medium) { }
 
-	const QString itemURL() const { return mMedium.url().url(); }
+	const TQString itemURL() const { return mMedium.url().url(); }
 
 private:
 	KFileItem mMedium;
@@ -56,27 +56,27 @@ private:
 
 
 
-PreferencesDialog::PreferencesDialog(KFileItemList media, QWidget *parent,
+PreferencesDialog::PreferencesDialog(KFileItemList media, TQWidget *parent,
                                      const char *name)
 	: KDialogBase(Tabbed, i18n("Media Applet Preferences"), Ok|Cancel|Default,
 	              Ok, parent, name, true),
 	  mMedia(media)
 {
-	QVBox *types_page = addVBoxPage( i18n("Medium Types") );
+	TQVBox *types_page = addVBoxPage( i18n("Medium Types") );
 	mpMediumTypesListView = new KListView(types_page);
 
 	//mpMediumTypesListView->setFullWidth(true);
 	mpMediumTypesListView->addColumn( i18n("Types to Display") );
-	QWhatsThis::add(mpMediumTypesListView, i18n("Deselect the medium types which you do not want to see in the applet"));
+	TQWhatsThis::add(mpMediumTypesListView, i18n("Deselect the medium types which you do not want to see in the applet"));
 
 
 
-	QVBox *media_page = addVBoxPage( i18n("Media") );
+	TQVBox *media_page = addVBoxPage( i18n("Media") );
 	mpMediaListView = new KListView(media_page);
 
 	//mpMediaListView->setFullWidth(true);
 	mpMediaListView->addColumn( i18n("Media to Display") );
-	QWhatsThis::add(mpMediaListView, i18n("Deselect the media which you do not want to see in the applet"));
+	TQWhatsThis::add(mpMediaListView, i18n("Deselect the media which you do not want to see in the applet"));
 
 	slotDefault();
 }
@@ -87,7 +87,7 @@ PreferencesDialog::~PreferencesDialog()
 
 void PreferencesDialog::slotDefault()
 {
-	QStringList defaultExclude;
+	TQStringList defaultExclude;
 
 	defaultExclude << "media/hdd_mounted";
 	defaultExclude << "media/hdd_unmounted";
@@ -97,12 +97,12 @@ void PreferencesDialog::slotDefault()
 	defaultExclude << "media/smb_unmounted";
 
 	setExcludedMediumTypes(defaultExclude);
-	setExcludedMedia(QStringList());
+	setExcludedMedia(TQStringList());
 }
 
-QStringList PreferencesDialog::excludedMediumTypes()
+TQStringList PreferencesDialog::excludedMediumTypes()
 {
-	QStringList excludedTypes;
+	TQStringList excludedTypes;
 
 	for(MediumTypeItem *it=static_cast<MediumTypeItem *>(mpMediumTypesListView->firstChild());
 	    it; it=static_cast<MediumTypeItem *>(it->nextSibling()))
@@ -113,13 +113,13 @@ QStringList PreferencesDialog::excludedMediumTypes()
 	return excludedTypes;
 }
 
-void PreferencesDialog::setExcludedMediumTypes(QStringList excludedTypesList)
+void PreferencesDialog::setExcludedMediumTypes(TQStringList excludedTypesList)
 {
 	mpMediumTypesListView->clear();
 	mpMediumTypesListView->setRootIsDecorated(false);
 	KMimeType::List mimetypes = KMimeType::allMimeTypes();
 
-	QValueListIterator<KMimeType::Ptr> it(mimetypes.begin());
+	TQValueListIterator<KMimeType::Ptr> it(mimetypes.begin());
 
 	for(; it != mimetypes.end(); ++it)
 	{
@@ -132,9 +132,9 @@ void PreferencesDialog::setExcludedMediumTypes(QStringList excludedTypesList)
 	}
 }
 
-QStringList PreferencesDialog::excludedMedia()
+TQStringList PreferencesDialog::excludedMedia()
 {
-	QStringList excluded;
+	TQStringList excluded;
 
 	for(MediumItem *it=static_cast<MediumItem *>(mpMediaListView->firstChild());
 	    it; it=static_cast<MediumItem *>(it->nextSibling()))
@@ -145,7 +145,7 @@ QStringList PreferencesDialog::excludedMedia()
 	return excluded;
 }
 
-void PreferencesDialog::setExcludedMedia(QStringList excludedList)
+void PreferencesDialog::setExcludedMedia(TQStringList excludedList)
 {
 	mpMediaListView->clear();
 	mpMediaListView->setRootIsDecorated(false);

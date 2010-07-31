@@ -422,7 +422,7 @@ void TEScreen::resizeImage(int new_lines, int new_columns)
   // make new image
 
   ca* newimg = new ca[(new_lines+1)*new_columns];
-  QBitArray newwrapped(new_lines+1);
+  TQBitArray newwrapped(new_lines+1);
   clearSelection();
 
   // clear new image
@@ -599,9 +599,9 @@ ca* TEScreen::getCookedImage()
   return merged;
 }
 
-QBitArray TEScreen::getCookedLineWrapped()
+TQBitArray TEScreen::getCookedLineWrapped()
 {
-  QBitArray result(lines);
+  TQBitArray result(lines);
 
   for (int y = 0; (y < lines) && (y < (hist->getLines()-histCursor)); y++)
     result[y]=hist->isWrappedLine(y+histCursor);
@@ -775,12 +775,12 @@ void TEScreen::ShowCharacter(unsigned short c)
   }
 }
 
-void TEScreen::compose(QString compose)
+void TEScreen::compose(TQString compose)
 {
   if (lastPos == -1)
      return;
      
-  QChar c(image[lastPos].c);
+  TQChar c(image[lastPos].c);
   compose.prepend(c);
   compose.compose();
   image[lastPos].c = compose[0].unicode();
@@ -1175,22 +1175,22 @@ static bool isSpace(UINT16 c)
      return false;
   if ((c == 32) || (c == 0))
      return true;
-  QChar qc(c);
+  TQChar qc(c);
   return qc.isSpace();
 }
 
-QString TEScreen::getSelText(bool preserve_line_breaks)
+TQString TEScreen::getSelText(bool preserve_line_breaks)
 {
-  QString result;
-  QTextOStream stream(&result);
+  TQString result;
+  TQTextOStream stream(&result);
   getSelText(preserve_line_breaks, &stream);
   return result;
 }
 
 
-static QString makeString(int *m, int d, bool stripTrailingSpaces)
+static TQString makeString(int *m, int d, bool stripTrailingSpaces)
 {
-  QChar* qc = new QChar[d];
+  TQChar* qc = new QChar[d];
 
   int last_space = -1;
   int j = 0;
@@ -1215,12 +1215,12 @@ static QString makeString(int *m, int d, bool stripTrailingSpaces)
       j = last_space;
     }
 
-  QString res(qc, j);
+  TQString res(qc, j);
   delete [] qc;
   return res;
 }
 
-void TEScreen::getSelText(bool preserve_line_breaks, QTextStream *stream)
+void TEScreen::getSelText(bool preserve_line_breaks, TQTextStream *stream)
 {
   if (sel_begin == -1)
      return; // Selection got clear while selecting.
@@ -1446,7 +1446,7 @@ void TEScreen::getSelText(bool preserve_line_breaks, QTextStream *stream)
   delete [] m;
 }
 
-void TEScreen::streamHistory(QTextStream* stream) {
+void TEScreen::streamHistory(TQTextStream* stream) {
   sel_begin = 0;
   sel_BR = sel_begin;
   sel_TL = sel_begin;
@@ -1455,7 +1455,7 @@ void TEScreen::streamHistory(QTextStream* stream) {
   clearSelection();
 }
 
-QString TEScreen::getHistoryLine(int no)
+TQString TEScreen::getHistoryLine(int no)
 {
   sel_begin = loc(0,no);
   sel_TL = sel_begin;

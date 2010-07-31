@@ -21,9 +21,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qfile.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <tqfile.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdebug.h>
 #include <kpanelextension.h>
 #include <kaboutdata.h>
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 
 #include "appletinfo.h"
 #include "extensiondebugger.h"
@@ -51,7 +51,7 @@ static KCmdLineOptions options[] =
 KPanelExtension* loadExtension(const AppletInfo& info)
 {
     KLibLoader* loader = KLibLoader::self();
-    KLibrary* lib = loader->library(QFile::encodeName(info.library()));
+    KLibrary* lib = loader->library(TQFile::encodeName(info.library()));
 
     if (!lib)
     {
@@ -60,8 +60,8 @@ KPanelExtension* loadExtension(const AppletInfo& info)
         return 0;
     }
 
-    KPanelExtension* (*init_ptr)(QWidget *, const QString&);
-    init_ptr = (KPanelExtension* (*)(QWidget *, const QString&))lib->symbol( "init" );
+    KPanelExtension* (*init_ptr)(TQWidget *, const TQString&);
+    init_ptr = (KPanelExtension* (*)(TQWidget *, const TQString&))lib->symbol( "init" );
 
     if (!init_ptr)
     {
@@ -91,7 +91,7 @@ int main( int argc, char ** argv )
     KGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
 				     "kicker/extensions");
 
-    QString df;
+    TQString df;
 
     // parse cmdline args
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -101,19 +101,19 @@ int main( int argc, char ** argv )
         KCmdLineArgs::usage(i18n("No desktop file specified") );
 
 
-    QCString desktopFile = QCString( args->arg(0) );
+    TQCString desktopFile = TQCString( args->arg(0) );
 
     // try simple path first
-    QFileInfo finfo( desktopFile );
+    TQFileInfo finfo( desktopFile );
     if ( finfo.exists() ) {
 	df = finfo.absFilePath();
     } else {
 	// locate desktop file
-	df = KGlobal::dirs()->findResource("extensions", QString(desktopFile));
+	df = KGlobal::dirs()->findResource("extensions", TQString(desktopFile));
     }
 
     // does the config file exist?
-    if (!QFile::exists(df)) {
+    if (!TQFile::exists(df)) {
 	kdError() << "Failed to locate extension desktop file: " << desktopFile << endl;
 	return 1;
     }
@@ -129,7 +129,7 @@ int main( int argc, char ** argv )
     ExtensionContainer *container = new ExtensionContainer( extension );
     container->show();
 
-    QObject::connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );
+    TQObject::connect( &a, TQT_SIGNAL( lastWindowClosed() ), &a, TQT_SLOT( quit() ) );
 
     int result = a.exec();
 
@@ -137,19 +137,19 @@ int main( int argc, char ** argv )
     return result;
 }
 
-ExtensionContainer::ExtensionContainer( KPanelExtension *extension, QWidget *parent, const char *name )
-    : QWidget( parent, name ), m_extension( extension )
+ExtensionContainer::ExtensionContainer( KPanelExtension *extension, TQWidget *parent, const char *name )
+    : TQWidget( parent, name ), m_extension( extension )
 {
-    ( new QVBoxLayout( this ) )->setAutoAdd( true );
+    ( new TQVBoxLayout( this ) )->setAutoAdd( true );
 
-    QPushButton *configButton = new QPushButton( i18n( "Configure..." ), this );
-    connect( configButton, SIGNAL( clicked() ),
-             this, SLOT( showPreferences() ) );
+    TQPushButton *configButton = new TQPushButton( i18n( "Configure..." ), this );
+    connect( configButton, TQT_SIGNAL( clicked() ),
+             this, TQT_SLOT( showPreferences() ) );
 
-    m_extension->reparent( this, QPoint( 0, 0 ) );
+    m_extension->reparent( this, TQPoint( 0, 0 ) );
 }
 
-void ExtensionContainer::resizeEvent( QResizeEvent * )
+void ExtensionContainer::resizeEvent( TQResizeEvent * )
 {
     m_extension->setGeometry( 0, 0, width(), height() );
 }

@@ -17,10 +17,10 @@
 #include "action_list_widget.h"
 
 #include <assert.h>
-#include <qpopupmenu.h>
-#include <qpushbutton.h>
-#include <qheader.h>
-#include <qlineedit.h>
+#include <tqpopupmenu.h>
+#include <tqpushbutton.h>
+#include <tqheader.h>
+#include <tqlineedit.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -39,16 +39,16 @@ namespace KHotKeys
 
 // Action_list_widget
 
-Action_list_widget::Action_list_widget( QWidget* parent_P, const char* name_P )
+Action_list_widget::Action_list_widget( TQWidget* parent_P, const char* name_P )
     : Action_list_widget_ui( parent_P, name_P ), selected_item( NULL )
     {
-    QPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
+    TQPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
     popup->insertItem( i18n( "Command/URL..." ), TYPE_COMMAND_URL_ACTION );
     popup->insertItem( i18n( "K-Menu Entry..." ), TYPE_MENUENTRY_ACTION );
     popup->insertItem( i18n( "DCOP Call..." ), TYPE_DCOP_ACTION );
     popup->insertItem( i18n( "Keyboard Input..." ), TYPE_KEYBOARD_INPUT_ACTION );
     popup->insertItem( i18n( "Activate Window..." ), TYPE_ACTIVATE_WINDOW_ACTION );
-    connect( popup, SIGNAL( activated( int )), SLOT( new_selected( int )));
+    connect( popup, TQT_SIGNAL( activated( int )), TQT_SLOT( new_selected( int )));
     new_button->setPopup( popup );
     actions_listview->header()->hide();
     actions_listview->addColumn( "" );
@@ -58,20 +58,20 @@ Action_list_widget::Action_list_widget( QWidget* parent_P, const char* name_P )
     modify_button->setEnabled( false );
     delete_button->setEnabled( false );
     clear_data();
-    connect( actions_listview, SIGNAL( doubleClicked ( QListViewItem *, const QPoint &, int ) ),
-             this, SLOT( modify_pressed() ) );
+    connect( actions_listview, TQT_SIGNAL( doubleClicked ( TQListViewItem *, const TQPoint &, int ) ),
+             this, TQT_SLOT( modify_pressed() ) );
 
     // KHotKeys::Module::changed()
-    connect( new_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( copy_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( modify_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( delete_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( comment_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( new_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( copy_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( modify_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( delete_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( comment_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
 
 Action_list_widget::~Action_list_widget()
@@ -105,7 +105,7 @@ Action_list* Action_list_widget::get_data( Action_data* data_P ) const
     {
 // CHECKME TODO hmm, tady to bude chtit asi i children :(
     Action_list* list = new Action_list( comment_lineedit->text());
-    for( QListViewItem* pos = actions_listview->firstChild();
+    for( TQListViewItem* pos = actions_listview->firstChild();
          pos != NULL;
          pos = pos->nextSibling())
         list->append( static_cast< Action_list_item* >( pos )->action()->copy( data_P ));
@@ -168,7 +168,7 @@ void Action_list_widget::modify_pressed()
         edit_listview_item( selected_item );
     }
 
-void Action_list_widget::current_changed( QListViewItem* item_P )
+void Action_list_widget::current_changed( TQListViewItem* item_P )
     {
 //    if( item_P == selected_item )
 //        return;
@@ -180,7 +180,7 @@ void Action_list_widget::current_changed( QListViewItem* item_P )
     }
 
 Action_list_item* Action_list_widget::create_listview_item( Action* action_P,
-    QListView* parent1_P, QListViewItem* parent2_P, QListViewItem* after_P, bool copy_P )
+    TQListView* parent1_P, TQListViewItem* parent2_P, TQListViewItem* after_P, bool copy_P )
     {
     Action* new_win = copy_P ? action_P->copy( NULL ) : action_P;
 // CHECKME uz by nemelo byt treba
@@ -229,9 +229,9 @@ void Action_list_widget::edit_listview_item( Action_list_item* item_P )
 
 // Action_list_item
 
-QString Action_list_item::text( int column_P ) const
+TQString Action_list_item::text( int column_P ) const
     {
-    return column_P == 0 ? action()->description() : QString::null;
+    return column_P == 0 ? action()->description() : TQString::null;
     }
 
 Action_list_item::~Action_list_item()

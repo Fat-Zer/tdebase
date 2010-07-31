@@ -18,34 +18,34 @@
 #include <kstandarddirs.h>
 #include <kprogress.h>
 
-#include <qcheckbox.h>
-#include <qdesktopwidget.h>
-#include <qlabel.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qwidget.h>
-#include <qtimer.h>
+#include <tqcheckbox.h>
+#include <tqdesktopwidget.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
 
 #include "objkstheme.h"
 #include "themeengine.h"
 #include "themelegacy.h"
 #include "themelegacy.moc"
 
-DefaultConfig::DefaultConfig( QWidget *parent, KConfig *config )
+DefaultConfig::DefaultConfig( TQWidget *parent, KConfig *config )
     :ThemeEngineConfig( parent, config )
 {
-  mConfig->setGroup( QString("KSplash Theme: Default") );
-  QVBox *hbox = new QVBox( this );
-  mFlash = new QCheckBox( i18n("Icons flash while they are starting"), hbox );
+  mConfig->setGroup( TQString("KSplash Theme: Default") );
+  TQVBox *hbox = new TQVBox( this );
+  mFlash = new TQCheckBox( i18n("Icons flash while they are starting"), hbox );
   mFlash->setChecked( mConfig->readBoolEntry("Icons Flashing",true) );
-  mAlwaysShow = new QCheckBox( i18n("Always show progress bar"), hbox );
+  mAlwaysShow = new TQCheckBox( i18n("Always show progress bar"), hbox );
   mAlwaysShow->setChecked( mConfig->readBoolEntry("Always Show Progress",true) );
 }
 
 void DefaultConfig::save()
 {
   kdDebug() << "DefaultConfig::save()" << endl;
-  mConfig->setGroup( QString("KSplash Theme: Default") );
+  mConfig->setGroup( TQString("KSplash Theme: Default") );
   mConfig->writeEntry( "Icons Flashing", mFlash->isChecked() );
   mConfig->writeEntry( "Always Show Progress", mAlwaysShow->isChecked() );
   mConfig->sync();
@@ -53,7 +53,7 @@ void DefaultConfig::save()
 
 #define BIDI 0
 
-ThemeDefault::ThemeDefault( QWidget *parent, const char *name, const QStringList &args )
+ThemeDefault::ThemeDefault( TQWidget *parent, const char *name, const TQStringList &args )
     :ThemeEngine( parent, name, args )
 {
 
@@ -65,10 +65,10 @@ ThemeDefault::ThemeDefault( QWidget *parent, const char *name, const QStringList
 
   if( mIconsFlashing )
   {
-    mFlashTimer = new QTimer( this );
-    connect( mFlashTimer, SIGNAL(timeout()), this, SLOT(flash()) );
-    mFlashPixmap1 = new QPixmap();
-    mFlashPixmap2 = new QPixmap();
+    mFlashTimer = new TQTimer( this );
+    connect( mFlashTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(flash()) );
+    mFlashPixmap1 = new TQPixmap();
+    mFlashPixmap2 = new TQPixmap();
 
   }
   else
@@ -87,30 +87,30 @@ ThemeDefault::~ThemeDefault()
 
 void ThemeDefault::_initUi()
 {
-  QString resource_prefix;
+  TQString resource_prefix;
 
-  QVBox *vbox = new QVBox( this );
+  TQVBox *vbox = new TQVBox( this );
   vbox->setBackgroundMode(NoBackground);
 
 
-  QString activePix, inactivePix;
+  TQString activePix, inactivePix;
 #if BIDI
-  if ( QApplication::reverseLayout() )
+  if ( TQApplication::reverseLayout() )
   {
-      activePix = _findPicture(QString("splash_active_bar_bidi.png"));
-      inactivePix = _findPicture(QString("splash_inactive_bar_bidi.png"));
+      activePix = _findPicture(TQString("splash_active_bar_bidi.png"));
+      inactivePix = _findPicture(TQString("splash_inactive_bar_bidi.png"));
   }
   else
 #endif
   {
-    activePix = _findPicture(QString("splash_active_bar.png"));
-    inactivePix = _findPicture(QString("splash_inactive_bar.png"));
+    activePix = _findPicture(TQString("splash_active_bar.png"));
+    inactivePix = _findPicture(TQString("splash_inactive_bar.png"));
   }
   kdDebug() << "Inactive pixmap: " << inactivePix << endl;
   kdDebug() << "Active pixmap:   " <<   activePix << endl;
 
-  mActivePixmap = new QPixmap( activePix );
-  mInactivePixmap = new QPixmap( inactivePix );
+  mActivePixmap = new TQPixmap( activePix );
+  mInactivePixmap = new TQPixmap( inactivePix );
 
   if (mActivePixmap->isNull())
   {
@@ -123,44 +123,44 @@ void ThemeDefault::_initUi()
     mInactivePixmap->fill(Qt::black);
   }
 
-  QPixmap tlimage( _findPicture(QString("splash_top.png")) );
+  TQPixmap tlimage( _findPicture(TQString("splash_top.png")) );
   if (tlimage.isNull())
   {
     tlimage.resize(200,100);
     tlimage.fill(Qt::blue);
   }
-  QLabel *top_label = new QLabel( vbox );
+  TQLabel *top_label = new TQLabel( vbox );
   top_label->setPixmap( tlimage );
   top_label->setFixedSize( tlimage.width(), tlimage.height() );
   top_label->setBackgroundMode(NoBackground);
 
-  mBarLabel = new QLabel( vbox );
+  mBarLabel = new TQLabel( vbox );
   mBarLabel->setPixmap(*mInactivePixmap);
   mBarLabel->setBackgroundMode(NoBackground);
 
-  QPixmap blimage( _findPicture(QString("splash_bottom.png")) );
+  TQPixmap blimage( _findPicture(TQString("splash_bottom.png")) );
   if (blimage.isNull())
   {
     blimage.resize(200,100);
     blimage.fill(Qt::black);
   }
-  QLabel *bottom_label = new QLabel( vbox );
+  TQLabel *bottom_label = new TQLabel( vbox );
   bottom_label->setPaletteBackgroundPixmap( blimage );
 
   
-      mLabel = new QLabel( bottom_label );
-      mLabel->setBackgroundOrigin( QWidget::ParentOrigin );
+      mLabel = new TQLabel( bottom_label );
+      mLabel->setBackgroundOrigin( TQWidget::ParentOrigin );
       mLabel->setPaletteForegroundColor( mLabelForeground );
       mLabel->setPaletteBackgroundPixmap( blimage );
-      QFont f(mLabel->font());
+      TQFont f(mLabel->font());
       f.setBold(TRUE);
       mLabel->setFont(f);
 
       mProgressBar = new KProgress( mLabel );
       int h, s, v;
       mLabelForeground.getHsv( &h, &s, &v );
-      mProgressBar->setPalette( QPalette( v > 128 ? black : white ));
-      mProgressBar->setBackgroundOrigin( QWidget::ParentOrigin );
+      mProgressBar->setPalette( TQPalette( v > 128 ? black : white ));
+      mProgressBar->setBackgroundOrigin( TQWidget::ParentOrigin );
       mProgressBar->setPaletteBackgroundPixmap( blimage );
 
       bottom_label->setFixedWidth( QMAX(blimage.width(),tlimage.width()) );
@@ -171,7 +171,7 @@ void ThemeDefault::_initUi()
 
       mProgressBar->setFixedSize( 120, mLabel->height() );
       
-      if (QApplication::reverseLayout()){
+      if (TQApplication::reverseLayout()){
             mProgressBar->move( 2, 0 );   
 //	    mLabel->move( mProgressBar->width() + 4, 0);
       }
@@ -186,7 +186,7 @@ void ThemeDefault::_initUi()
   setFixedHeight( mInactivePixmap->height() +
                   top_label->height() + bottom_label->height() );
 
-  const QRect rect = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
+  const TQRect rect = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
   // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
   // kdDebug() << "ThemeDefault::_initUi" << rect << endl;
 
@@ -204,10 +204,10 @@ void ThemeDefault::_readSettings()
   if( !cfg )
     return;
 
-  cfg->setGroup( QString("KSplash Theme: %1").arg(mTheme->theme()) );
+  cfg->setGroup( TQString("KSplash Theme: %1").arg(mTheme->theme()) );
 
   mIconsFlashing = cfg->readBoolEntry( "Icons Flashing", true );
-  QColor df(Qt::white);
+  TQColor df(Qt::white);
   mLabelForeground = cfg->readColorEntry( "Label Foreground", &df );
 }
 
@@ -245,16 +245,16 @@ void ThemeDefault::slotUpdateState()
  * does NOT support our "Restoring Session..." state. We will need
  * to reflect that somehow.
  */
-QPixmap ThemeDefault::updateBarPixmap( int state )
+TQPixmap ThemeDefault::updateBarPixmap( int state )
 {
   int offs;
 
-  QPixmap x;
+  TQPixmap x;
   if( !mActivePixmap ) return( x );
 #if BIDI
 
 
-  if( QApplication::reverseLayout() )
+  if( TQApplication::reverseLayout() )
     {
       if ( state > 7 ) 
 	return (  x );
@@ -267,10 +267,10 @@ QPixmap ThemeDefault::updateBarPixmap( int state )
   else if (state == 6)
     offs -= 8;
 
-  QPixmap tmp(*mActivePixmap);
-  QPainter p(&tmp);
+  TQPixmap tmp(*mActivePixmap);
+  TQPainter p(&tmp);
 #if BIDI
-  if ( QApplication::reverseLayout() )
+  if ( TQApplication::reverseLayout() )
     p.drawPixmap(0, 0, *mInactivePixmap, 0, 0, tmp.width()-offs );
   else
 #endif
@@ -282,28 +282,28 @@ void ThemeDefault::flash()
 {
   if( !mIconsFlashing )
     return;
-  QPixmap *swap = mFlashPixmap1;
+  TQPixmap *swap = mFlashPixmap1;
   mFlashPixmap1 = mFlashPixmap2;
   mFlashPixmap2 = swap;
   mBarLabel->setPixmap(*mFlashPixmap2);
 }
 
-QString ThemeDefault::_findPicture( const QString &pic )
+TQString ThemeDefault::_findPicture( const TQString &pic )
 {
   // Don't use ObjKsTheme::locateThemeData here for compatibility reasons.
-  QString f = pic;
+  TQString f = pic;
   if (mTheme->loColor())
-    f = QString("locolor/")+f;
+    f = TQString("locolor/")+f;
   //kdDebug() << "Searching for " << f << endl;
   //kdDebug() << "Theme directory: " << mTheme->themeDir() << endl;
   //kdDebug() << "Theme name:      " << mTheme->theme() << endl;
-  QString p = QString::null;
+  TQString p = TQString::null;
   if ((p = locate("appdata",mTheme->themeDir()+f)).isEmpty())
     if ((p = locate("appdata",mTheme->themeDir()+"pics/"+f)).isEmpty())
-      if ((p = locate("appdata", QString("pics/")+mTheme->theme()+"/"+f)).isEmpty())
+      if ((p = locate("appdata", TQString("pics/")+mTheme->theme()+"/"+f)).isEmpty())
         if ((p = locate("appdata",f)).isEmpty())
-          if ((p = locate("appdata",QString("pics/")+f)).isEmpty())
-            if ((p = locate("data",QString("pics/")+f)).isEmpty()) {
+          if ((p = locate("appdata",TQString("pics/")+f)).isEmpty())
+            if ((p = locate("data",TQString("pics/")+f)).isEmpty()) {
               ; // No more places to search
             }
   return p;

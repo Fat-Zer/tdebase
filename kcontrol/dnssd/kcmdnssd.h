@@ -21,7 +21,7 @@
 #ifndef _KCMDNSSD_H_
 #define _KCMDNSSD_H_
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #include <configdialog.h>
 #include <kaboutdata.h>
@@ -32,7 +32,7 @@ class KCMDnssd: public ConfigDialog
 	Q_OBJECT
 
 public:
-	KCMDnssd( QWidget *parent=0, const char *name=0, const QStringList& = QStringList() );
+	KCMDnssd( TQWidget *parent=0, const char *name=0, const TQStringList& = TQStringList() );
 	~KCMDnssd();
 	virtual void save();
 	virtual void load();
@@ -42,7 +42,7 @@ private slots:
 private: 
 	void loadMdnsd();
 	bool saveMdnsd();
-	QMap<QString,QString> mdnsdLines;
+	TQMap<TQString,TQString> mdnsdLines;
 	bool m_wdchanged;
 	KSimpleConfig* domain;
 	bool m_enableZeroconfChanged;

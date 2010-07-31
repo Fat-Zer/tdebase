@@ -139,13 +139,13 @@ public: // these are all `Screen' operations
     void ShowCharacter(unsigned short c);
     
     // Do composition with last shown character
-    void compose(QString compose);
+    void compose(TQString compose);
     
     //
     void resizeImage(int new_lines, int new_columns);
     //
     ca*  getCookedImage();
-    QBitArray getCookedLineWrapped();
+    TQBitArray getCookedLineWrapped();
 
     /*! return the number of lines. */
     int  getLines()   { return lines; }
@@ -171,10 +171,10 @@ public: // these are all `Screen' operations
     void setBusySelecting(bool busy) { sel_busy = busy; }
     bool testIsSelected(const int x,const int y);
 
-    QString getSelText(bool preserve_line_breaks);
-    void getSelText(bool preserve_line_breaks, QTextStream* stream);
-    void streamHistory(QTextStream* stream);
-    QString getHistoryLine(int no);
+    TQString getSelText(bool preserve_line_breaks);
+    void getSelText(bool preserve_line_breaks, TQTextStream* stream);
+    void streamHistory(TQTextStream* stream);
+    TQString getHistoryLine(int no);
 
     void checkSelection(int from, int to);
 
@@ -208,7 +208,7 @@ private: // helper
     int lines;
     int columns;
     ca *image; // [lines][columns]
-    QBitArray line_wrapped; // [lines]
+    TQBitArray line_wrapped; // [lines]
 
     // history buffer ---------------
 

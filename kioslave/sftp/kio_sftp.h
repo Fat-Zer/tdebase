@@ -17,9 +17,9 @@
 #ifndef __kio_sftp_h__
 #define __kio_sftp_h__
 
-#include <qstring.h>
-#include <qcstring.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqobject.h>
 
 #include <kurl.h>
 #include <kio/global.h>
@@ -37,9 +37,9 @@ class sftpProtocol : public KIO::SlaveBase
 {
 
 public:
-  sftpProtocol(const QCString &pool_socket, const QCString &app_socket);
+  sftpProtocol(const TQCString &pool_socket, const TQCString &app_socket);
   virtual ~sftpProtocol();
-  virtual void setHost(const QString& h, int port, const QString& user, const QString& pass);
+  virtual void setHost(const TQString& h, int port, const TQString& user, const TQString& pass);
   virtual void get(const KURL& url);
   virtual void listDir(const KURL& url) ;
   virtual void mimetype(const KURL& url);
@@ -50,7 +50,7 @@ public:
   virtual void slave_status();
   virtual void del(const KURL &url, bool isfile);
   virtual void chmod(const KURL& url, int permissions);
-  virtual void symlink(const QString& target, const KURL& dest, bool overwrite);
+  virtual void symlink(const TQString& target, const KURL& dest, bool overwrite);
   virtual void rename(const KURL& src, const KURL& dest, bool overwrite);
   virtual void mkdir(const KURL&url, int permissions);
   virtual void openConnection();
@@ -60,7 +60,7 @@ private: // Private variables
   bool mConnected;
 
   /** Host we are connected to. */
-  QString mHost;
+  TQString mHost;
 
   /** Port we are connected to. */
   int mPort;
@@ -69,10 +69,10 @@ private: // Private variables
   KSshProcess ssh;
 
   /** Username to use when connecting */
-  QString mUsername;
+  TQString mUsername;
 
   /** User's password */
-  QString mPassword;
+  TQString mPassword;
 
   /** Message id of the last sftp packet we sent. */
   unsigned int mMsgId;
@@ -87,11 +87,11 @@ private: // Private variables
   {
     int code;
     KIO::filesize_t size;
-    QString text;
+    TQString text;
   };
 
 private: // private methods
-  bool getPacket(QByteArray& msg);
+  bool getPacket(TQByteArray& msg);
 
    /* Type is a sftp packet type found in .sftp.h'.
    * Example: SSH2_FXP_READLINK, SSH2_FXP_RENAME, etc.
@@ -107,15 +107,15 @@ private: // private methods
   int sftpRealPath(const KURL& url, KURL& newUrl);
 
   /** Send an sftp packet to stdin of the ssh process. */
-  bool putPacket(QByteArray& p);
+  bool putPacket(TQByteArray& p);
   /** Process SSH_FXP_STATUS packets. */
-  void processStatus(Q_UINT8, const QString& message = QString::null);
+  void processStatus(Q_UINT8, const TQString& message = TQString::null);
   /** Process SSH_FXP_STATUS packes and return the result. */
-  Status doProcessStatus(Q_UINT8, const QString& message = QString::null);
+  Status doProcessStatus(Q_UINT8, const TQString& message = TQString::null);
   /** Opens a directory handle for url.path. Returns true if succeeds. */
-  int sftpOpenDirectory(const KURL& url, QByteArray& handle);
+  int sftpOpenDirectory(const KURL& url, TQByteArray& handle);
   /** Closes a directory or file handle. */
-  int sftpClose(const QByteArray& handle);
+  int sftpClose(const TQByteArray& handle);
   /** Send a sftp command to rename a file or directoy. */
   int sftpRename(const KURL& src, const KURL& dest);
   /** Set a files attributes. */
@@ -123,19 +123,19 @@ private: // private methods
   /** Sends a sftp command to remove a file or directory. */
   int sftpRemove(const KURL& url, bool isfile);
   /** Creates a symlink named dest to target. */
-  int sftpSymLink(const QString& target, const KURL& dest);
+  int sftpSymLink(const TQString& target, const KURL& dest);
   /** Get directory listings. */
-  int sftpReadDir(const QByteArray& handle, const KURL& url);
+  int sftpReadDir(const TQByteArray& handle, const KURL& url);
   /** Retrieves the destination of a link. */
-  int sftpReadLink(const KURL& url, QString& target);
+  int sftpReadLink(const KURL& url, TQString& target);
   /** Stats a file. */
   int sftpStat(const KURL& url, sftpFileAttr& attr);
   /** No descriptions */
-  int sftpOpen(const KURL& url, const Q_UINT32 pflags, const sftpFileAttr& attr, QByteArray& handle);
+  int sftpOpen(const KURL& url, const Q_UINT32 pflags, const sftpFileAttr& attr, TQByteArray& handle);
   /** No descriptions */
-  int sftpRead(const QByteArray& handle, KIO::filesize_t offset, Q_UINT32 len, QByteArray& data);
+  int sftpRead(const TQByteArray& handle, KIO::filesize_t offset, Q_UINT32 len, TQByteArray& data);
   /** No descriptions */
-  int sftpWrite(const QByteArray& handle, KIO::filesize_t offset, const QByteArray& data);
+  int sftpWrite(const TQByteArray& handle, KIO::filesize_t offset, const TQByteArray& data);
   
   /** Performs faster upload when the source is a local file... */
   void sftpCopyPut(const KURL& src, const KURL& dest, int mode, bool overwrite);

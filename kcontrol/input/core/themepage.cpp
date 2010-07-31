@@ -31,11 +31,11 @@
 #include <klistview.h>
 #include <kdialog.h>
 
-#include <qlayout.h>
-#include <qdir.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqdir.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
+#include <tqlabel.h>
 
 #include "themepage.h"
 #include "themepage.moc"
@@ -49,15 +49,15 @@ namespace {
 }
 
 
-ThemePage::ThemePage( QWidget* parent, const char* name )
-	: QWidget( parent, name )
+ThemePage::ThemePage( TQWidget* parent, const char* name )
+	: TQWidget( parent, name )
 {
-	QBoxLayout *layout = new QVBoxLayout( this );
+	TQBoxLayout *layout = new TQVBoxLayout( this );
 	layout->setAutoAdd( true );
 	layout->setMargin( KDialog::marginHint() );
 	layout->setSpacing( KDialog::spacingHint() );
 
-	new QLabel( i18n("Select the cursor theme you want to use:"), this );
+	new TQLabel( i18n("Select the cursor theme you want to use:"), this );
 
 	// Create the theme list view
 	listview = new KListView( this );
@@ -66,8 +66,8 @@ ThemePage::ThemePage( QWidget* parent, const char* name )
 	listview->addColumn( i18n("Name") );
 	listview->addColumn( i18n("Description") );
 
-	connect( listview, SIGNAL(selectionChanged(QListViewItem*)),
-			SLOT(selectionChanged(QListViewItem*)) );
+	connect( listview, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+			TQT_SLOT(selectionChanged(TQListViewItem*)) );
 
 	insertThemes();
 }
@@ -78,7 +78,7 @@ ThemePage::~ThemePage()
 }
 
 
-void ThemePage::selectionChanged( QListViewItem *item )
+void ThemePage::selectionChanged( TQListViewItem *item )
 {
 	selectedTheme = item->text( DirColumn );
 	emit changed( selectedTheme != currentTheme );
@@ -130,7 +130,7 @@ void ThemePage::load( bool useDefaults )
 		currentTheme = whiteCursor ? "SmallWhite" : "SmallBlack";
 
 	selectedTheme = currentTheme;
-	QListViewItem *item = listview->findItem( currentTheme, DirColumn );
+	TQListViewItem *item = listview->findItem( currentTheme, DirColumn );
 	item->setSelected( true );
 }
 
@@ -147,22 +147,22 @@ void ThemePage::insertThemes()
 
 	item = new KListViewItem( listview, i18n("Small black"),
 			i18n("Small black cursors"), "SmallBlack" );
-	item->setPixmap( 0, QPixmap( arrow_small_black_xpm ) );
+	item->setPixmap( 0, TQPixmap( arrow_small_black_xpm ) );
 	listview->insertItem( item );
 
 	item = new KListViewItem( listview, i18n("Large black"),
 			i18n("Large black cursors"), "LargeBlack" );
-	item->setPixmap( 0, QPixmap( arrow_large_black_xpm ) );
+	item->setPixmap( 0, TQPixmap( arrow_large_black_xpm ) );
 	listview->insertItem( item );
 
 	item = new KListViewItem( listview, i18n("Small white"),
 			i18n("Small white cursors"), "SmallWhite" );
-	item->setPixmap( 0, QPixmap( arrow_small_white_xpm ) );
+	item->setPixmap( 0, TQPixmap( arrow_small_white_xpm ) );
 	listview->insertItem( item );
 
 	item = new KListViewItem( listview, i18n("Large white"),
 			i18n("Large white cursors"), "LargeWhite" );
-	item->setPixmap( 0, QPixmap( arrow_large_white_xpm ) );
+	item->setPixmap( 0, TQPixmap( arrow_large_white_xpm ) );
 	listview->insertItem( item );
 }
 
@@ -179,8 +179,8 @@ void ThemePage::fixCursorFile()
 	// Run mkfontdir to update fonts.dir in that dir.
 
 	KGlobal::dirs()->addResourceType( "font", "share/fonts/" );
-	KIO::mkdir( KURL::fromPathOrURL(QDir::homeDirPath() + "/.fonts/kde-override") );
-	QString overrideDir = QDir::homeDirPath() + "/.fonts/kde-override/";
+	KIO::mkdir( KURL::fromPathOrURL(TQDir::homeDirPath() + "/.fonts/kde-override") );
+	TQString overrideDir = TQDir::homeDirPath() + "/.fonts/kde-override/";
 
 	KURL installedFont;
 	installedFont.setPath( overrideDir + "cursor.pcf.gz" );
@@ -200,7 +200,7 @@ void ThemePage::fixCursorFile()
 		KIO::NetAccess::file_copy( source, installedFont, -1, true );
 	}
 
-	QString cmd = KGlobal::dirs()->findExe( "mkfontdir" );
+	TQString cmd = KGlobal::dirs()->findExe( "mkfontdir" );
 	if ( !cmd.isEmpty() )
 	{
 		KProcess p;

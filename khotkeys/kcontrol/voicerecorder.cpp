@@ -8,8 +8,8 @@
  
 ****************************************************************************/
 
-#include <qcolor.h>
-#include <qevent.h>
+#include <tqcolor.h>
+#include <tqevent.h>
 
 #include "voicerecorder.h"
 #include "soundrecorder.h"
@@ -20,8 +20,8 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <ktempfile.h>
-#include <qlabel.h>
-#include <qpainter.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
 #include <kmessagebox.h>
 #include <klibloader.h>
 #include <kstandarddirs.h>
@@ -45,14 +45,14 @@ bool VoiceRecorder::init( KLibrary* lib )
     return arts_play != NULL;
 }
 
-VoiceRecorder::VoiceRecorder(const Sound& sound_P, const QString &voiceId, QWidget *parent, const char *name)
+VoiceRecorder::VoiceRecorder(const Sound& sound_P, const TQString &voiceId, TQWidget *parent, const char *name)
 	: Voice_input_widget_ui(parent, name) , _recorder( SoundRecorder::create(this)) , _state(sNotModified), _tempFile(0L) ,  _voiceId(voiceId)
 {
 	_sound=sound_P;
 	buttonPlay->setEnabled(sound_P.size() > 50);
 	buttonStop->setEnabled(false);
 
-	connect (_recorder , SIGNAL(recorded(const Sound& )) , this , SLOT(slotSoundRecorded(const Sound& ) ));
+	connect (_recorder , TQT_SIGNAL(recorded(const Sound& )) , this , TQT_SLOT(slotSoundRecorded(const Sound& ) ));
 
 	//if(voiceid_P.isEmpty())
 	emit recorded(false);
@@ -89,14 +89,14 @@ void VoiceRecorder::slotPlayPressed()
             return;
 	/*if(!_modified)
 	{
-		QString fileName = locateLocal( "appdata", _original_voiuceid +  ".wav"  );
+		TQString fileName = locateLocal( "appdata", _original_voiuceid +  ".wav"  );
                 arts_play( fileName );
 	}
 	else
 	{*/
 	if(!_tempFile)
 	{
-		_tempFile=new KTempFile(QString::null,".wav");
+		_tempFile=new KTempFile(TQString::null,".wav");
 		_tempFile->setAutoDelete(true);
 	}
 	_sound.save(_tempFile->name());
@@ -118,7 +118,7 @@ void VoiceRecorder::slotSoundRecorded(const Sound &sound)
 	bool correct=drawSound()  &&  sound.size()>50;
 	if(correct)
 	{
-		QString vm=voice_handler->isNewSoundFarEnough( VoiceSignature(sound), _voiceId);
+		TQString vm=voice_handler->isNewSoundFarEnough( VoiceSignature(sound), _voiceId);
 		if(!vm.isNull())
 		{
 			KMessageBox::sorry (this, i18n("The word you recorded is too close to the existing reference '%1'. Please record another word.").arg(vm) );
@@ -140,14 +140,14 @@ void VoiceRecorder::slotSoundRecorded(const Sound &sound)
 {
 	if(voiceId().isEmpty())
 		return VoiceSignature();
-	QString fileName = locateLocal( "appdata", voiceId() +  ".wav"  );
+	TQString fileName = locateLocal( "appdata", voiceId() +  ".wav"  );
 	_sound.save( fileName );
 	return VoiceSignature(_sound);
 }*/
 
 bool VoiceRecorder::drawSound()
 {
-	label->setText(QString::null);
+	label->setText(TQString::null);
 	uint length=_sound.size();
 
 	if(length < 2)
@@ -155,20 +155,20 @@ bool VoiceRecorder::drawSound()
 
 	int width=label->width();
 	int height=label->height();
-	QPixmap pix(width,height);
-	pix.fill(QColor(255,255,255));
-	QPainter p;
+	TQPixmap pix(width,height);
+	pix.fill(TQColor(255,255,255));
+	TQPainter p;
 	p.begin(&pix);
 
-	p.setPen(QPen(QColor("green"),1));
+	p.setPen(TQPen(TQColor("green"),1));
 	p.drawLine(0,height/2,width,height/2);
 	
-	p.setPen(QPen(QColor("red"),1));
+	p.setPen(TQPen(TQColor("red"),1));
 	
 	uint lx=0;
 	uint ly=height/2;
 
-	/***     DRAW THE SIGNAL     ******/
+	/***     DRAW THE TQT_SIGNAL     ******/
 	for(uint f=1; f<length; f++)
 	{
 		uint nx=f*width/length;
@@ -179,7 +179,7 @@ bool VoiceRecorder::drawSound()
 
 	unsigned int start=0 , stop=0;
 	bool res=KHotKeys::VoiceSignature::window(_sound,&start,&stop);
-	p.setPen(QPen(QColor("blue"),1));
+	p.setPen(TQPen(TQColor("blue"),1));
 	if(res)
 	{
 		p.drawLine(start*width/length ,0,start*width/length  ,height);

@@ -21,7 +21,7 @@ class Info_tab
     {
     Q_OBJECT
     public:
-        Info_tab( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Info_tab( TQWidget* parent_P = NULL, const char* name_P = NULL );
     public slots:
         void clear_data();
     };

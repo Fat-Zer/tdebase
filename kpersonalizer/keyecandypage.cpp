@@ -14,15 +14,15 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include <qpushbutton.h>
-#include <qbuttongroup.h>
-#include <qlabel.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qslider.h>
-#include <qcolor.h>
-#include <qsettings.h>
-#include <qfont.h>
+#include <tqpushbutton.h>
+#include <tqbuttongroup.h>
+#include <tqlabel.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqslider.h>
+#include <tqcolor.h>
+#include <tqsettings.h>
+#include <tqfont.h>
 
 #include <ksimpleconfig.h>
 #include <kglobal.h>
@@ -45,7 +45,7 @@
 #include "ksysinfo.h"
 #include "keyecandypage.h"
 
-KEyeCandyPage::KEyeCandyPage(QWidget *parent, const char *name ) : KEyeCandyPageDlg(parent,name) {
+KEyeCandyPage::KEyeCandyPage(TQWidget *parent, const char *name ) : KEyeCandyPageDlg(parent,name) {
 
 	kwinconf = new KConfig("kwinrc", false, true);
 	kwineventconf = new KConfig("kwin.eventsrc", false, false);
@@ -68,61 +68,61 @@ KEyeCandyPage::KEyeCandyPage(QWidget *parent, const char *name ) : KEyeCandyPage
 	klv_features->setFullWidth (true);
 
 	// Level 1
-	desktop_wallpaper = new QCheckListItem(klv_features, i18n("Desktop Wallpaper"),
-				QCheckListItem::CheckBox);
-	desktop_window_effects= new QCheckListItem(klv_features, i18n("Window Moving/Resizing Effects"),
-				QCheckListItem::CheckBox);
-	desktop_window_moving_contents= new QCheckListItem(klv_features, i18n("Display Contents in Moving/Resizing Windows"),
-				QCheckListItem::CheckBox);
+	desktop_wallpaper = new TQCheckListItem(klv_features, i18n("Desktop Wallpaper"),
+				TQCheckListItem::CheckBox);
+	desktop_window_effects= new TQCheckListItem(klv_features, i18n("Window Moving/Resizing Effects"),
+				TQCheckListItem::CheckBox);
+	desktop_window_moving_contents= new TQCheckListItem(klv_features, i18n("Display Contents in Moving/Resizing Windows"),
+				TQCheckListItem::CheckBox);
 	// Level 2
-	backgrounds_konqueror= new QCheckListItem(klv_features, i18n("File Manager Background Picture"),
-				QCheckListItem::CheckBox);
-	backgrounds_panel= new QCheckListItem(klv_features, i18n("Panel Background Picture"),
-				QCheckListItem::CheckBox);
+	backgrounds_konqueror= new TQCheckListItem(klv_features, i18n("File Manager Background Picture"),
+				TQCheckListItem::CheckBox);
+	backgrounds_panel= new TQCheckListItem(klv_features, i18n("Panel Background Picture"),
+				TQCheckListItem::CheckBox);
 	// Level 3
-	icon_zooming_panel = new QCheckListItem(klv_features, i18n("Panel Icon Popups"),
-				QCheckListItem::CheckBox);
-	icon_effect_gamma = new QCheckListItem(klv_features, i18n("Icon Highlighting"),
-				QCheckListItem::CheckBox);
-	icon_mng_animation = new QCheckListItem(klv_features, i18n("File Manager Icon Animation"),
-				QCheckListItem::CheckBox);
+	icon_zooming_panel = new TQCheckListItem(klv_features, i18n("Panel Icon Popups"),
+				TQCheckListItem::CheckBox);
+	icon_effect_gamma = new TQCheckListItem(klv_features, i18n("Icon Highlighting"),
+				TQCheckListItem::CheckBox);
+	icon_mng_animation = new TQCheckListItem(klv_features, i18n("File Manager Icon Animation"),
+				TQCheckListItem::CheckBox);
 
-	sound_scheme = new QCheckListItem(klv_features, i18n("Sound Theme"),
-				QCheckListItem::CheckBox);
+	sound_scheme = new TQCheckListItem(klv_features, i18n("Sound Theme"),
+				TQCheckListItem::CheckBox);
 
 	// Level 4
 	///////////////////////////////////////////////////////////////////////////////////
 	/// DEPENDEND ON RESOLUTION; DEFAULT: DON`T USE IN LEVELS
-	icon_effect_size_desktop = new QCheckListItem(klv_features, i18n("Large Desktop Icons"),
-				QCheckListItem::CheckBox);
-	icon_effect_size_panel = new QCheckListItem(klv_features, i18n("Large Panel Icons"),
-				QCheckListItem::CheckBox);
+	icon_effect_size_desktop = new TQCheckListItem(klv_features, i18n("Large Desktop Icons"),
+				TQCheckListItem::CheckBox);
+	icon_effect_size_panel = new TQCheckListItem(klv_features, i18n("Large Panel Icons"),
+				TQCheckListItem::CheckBox);
 	/// DEPENDEND ON RESOLUTION; DEFAULT: DON`T USE IN LEVELS
 	///////////////////////////////////////////////////////////////////////////////////
-	antialiasing_fonts = new QCheckListItem(klv_features, i18n("Smoothed Fonts "
-				"(Antialiasing)"), QCheckListItem::CheckBox);
+	antialiasing_fonts = new TQCheckListItem(klv_features, i18n("Smoothed Fonts "
+				"(Antialiasing)"), TQCheckListItem::CheckBox);
 
 	// Level 5
-	preview_images = new QCheckListItem(klv_features, i18n("Preview Images"),
-				QCheckListItem::CheckBox);
-	pushbutton_icons = new QCheckListItem(klv_features, i18n("Icons on Buttons"),
-				QCheckListItem::CheckBox);
+	preview_images = new TQCheckListItem(klv_features, i18n("Preview Images"),
+				TQCheckListItem::CheckBox);
+	pushbutton_icons = new TQCheckListItem(klv_features, i18n("Icons on Buttons"),
+				TQCheckListItem::CheckBox);
 
 	// Level 6
-	animated_combo = new QCheckListItem(klv_features, i18n("Animated Combo Boxes"),
-				QCheckListItem::CheckBox);
+	animated_combo = new TQCheckListItem(klv_features, i18n("Animated Combo Boxes"),
+				TQCheckListItem::CheckBox);
 
 	// Level 7
-	fading_tooltips = new QCheckListItem(klv_features, i18n("Fading Tooltips"), QCheckListItem::CheckBox);
+	fading_tooltips = new TQCheckListItem(klv_features, i18n("Fading Tooltips"), TQCheckListItem::CheckBox);
 
 	// Level 8
-	preview_text = new QCheckListItem(klv_features, i18n("Preview Text Files"),
-				QCheckListItem::CheckBox);
+	preview_text = new TQCheckListItem(klv_features, i18n("Preview Text Files"),
+				TQCheckListItem::CheckBox);
 	// Level 9
-	fading_menus= new QCheckListItem(klv_features, i18n("Fading Menus"),
-				QCheckListItem::CheckBox);
-	preview_other = new QCheckListItem(klv_features, i18n("Preview Other Files"),
-				QCheckListItem::CheckBox);
+	fading_menus= new TQCheckListItem(klv_features, i18n("Fading Menus"),
+				TQCheckListItem::CheckBox);
+	preview_other = new TQCheckListItem(klv_features, i18n("Preview Other Files"),
+				TQCheckListItem::CheckBox);
 
 	getUserDefaults();	// get user's current settings
 	setDefaults();		// set the initial level on the slider and checkboxes
@@ -191,10 +191,10 @@ void KEyeCandyPage::slotEyeCandySliderMoved(int value){
 		// Level 4
 		icon_mng_animation->setOn(true);
 		if(osStyle=="mac" || osStyle=="CDE"){
-			for (int i = 0; i < QApplication::desktop()->numScreens(); i++) {
-				if(QApplication::desktop()->screenGeometry(i).width() >= 1024)
+			for (int i = 0; i < TQApplication::desktop()->numScreens(); i++) {
+				if(TQApplication::desktop()->screenGeometry(i).width() >= 1024)
 					icon_effect_size_desktop->setOn(true); // enable 48x48 icons by default if a screen size is wider than 1024
-				if(QApplication::desktop()->screenGeometry(i).width() >= 1280)
+				if(TQApplication::desktop()->screenGeometry(i).width() >= 1280)
 					icon_effect_size_panel->setOn(true);
 			}
 		}
@@ -217,10 +217,10 @@ void KEyeCandyPage::slotEyeCandySliderMoved(int value){
 		// Level 8
 		preview_text->setOn(true);
 		// icon-size (now for all selections)
-		for (int i = 0; i < QApplication::desktop()->numScreens(); i++) {
-			if(QApplication::desktop()->screenGeometry(i).width() >= 1024)
+		for (int i = 0; i < TQApplication::desktop()->numScreens(); i++) {
+			if(TQApplication::desktop()->screenGeometry(i).width() >= 1024)
 				icon_effect_size_desktop->setOn(true);
-			if(QApplication::desktop()->screenGeometry(i).width() >= 1280)
+			if(TQApplication::desktop()->screenGeometry(i).width() >= 1280)
 				icon_effect_size_panel->setOn(true);
 		}
 	}
@@ -252,7 +252,7 @@ void KEyeCandyPage::enableDesktopWallpaper(bool enable, bool user){
 			//here we change the kdesktop font color to white as it fits better
 			// to the KDE34png.png gray background
 			kdesktopconf->setGroup("FMSettings");
-			kdesktopconf->writeEntry("NormalTextColor", QColor("#FFFFFF") );
+			kdesktopconf->writeEntry("NormalTextColor", TQColor("#FFFFFF") );
 			kdesktopconf->setGroup("Desktop0");
 		}
 		else{
@@ -359,7 +359,7 @@ void KEyeCandyPage::enableBackgroundsKonqueror(bool enable){
 			konqbgimage="kde4ever.png";
 		konquerorconf->writePathEntry("BgImage", konqbgimage);
 	} else
-		konquerorconf->writePathEntry("BgImage", QString::null);
+		konquerorconf->writePathEntry("BgImage", TQString::null);
 }
 //----------------------------BACKGROUNDS-------------------------------------------------
 
@@ -406,8 +406,8 @@ void KEyeCandyPage::enableIconMngAnimation(bool enable) {
 
 /** No descriptions */
 void KEyeCandyPage::enableIconEffectSizePanel(bool enable){
-	QByteArray data;
-	QDataStream stream( data, IO_WriteOnly );
+	TQByteArray data;
+	TQDataStream stream( data, IO_WriteOnly );
 
 	if(enable)
 		stream << 56;
@@ -486,8 +486,8 @@ and ask them here, set the according string list here.
 kdesktoprc's stringlist holds the preview-types wich are supposed to be shown, while konquiconviewrc's
 one holds the types, wich are NOT supposed to be shown. We need to take care of that here, too.*/
 void KEyeCandyPage::enablePreview(bool currSettings){
-	QStringList desktopPreviews;
-	QStringList konquerorNoPreviews;
+	TQStringList desktopPreviews;
+	TQStringList konquerorNoPreviews;
 	KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
 	for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it) {
 		if(prevOther){
@@ -595,12 +595,12 @@ void KEyeCandyPage::enableAntialiasingFonts(bool enable, bool reset){
 	if (!reset){
 		if ( ( (sys->isXfromXFreeInc() && (sys->getXRelease() > 40000000)) || sys->isXfromXOrg() )
 		     && sys->getRenderSupport()) {
-			QSettings().writeEntry("/qt/useXft", enable);
-			QSettings().writeEntry("/qt/enableXft", enable);
+			TQSettings().writeEntry("/qt/useXft", enable);
+			TQSettings().writeEntry("/qt/enableXft", enable);
 		}
 	} else {
-		QSettings().writeEntry("/qt/useXft", b_useXft);
-		QSettings().writeEntry("/qt/enableXft", b_enableXft);
+		TQSettings().writeEntry("/qt/useXft", b_useXft);
+		TQSettings().writeEntry("/qt/enableXft", b_enableXft);
 	}
 }
 //----------------------------OTHER STUFF-------------------------------------------------
@@ -625,7 +625,7 @@ void KEyeCandyPage::save(bool currSettings){
 	kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
 	// set the display options (style effects)
 	KIPC::sendMessageAll(KIPC::SettingsChanged);
-	QApplication::syncX();
+	TQApplication::syncX();
 	// kicker stuff: Iconzooming etc.
 	kapp->dcopClient()->send( "kicker", "Panel", "configure()", "" );
 	// Icon stuff
@@ -672,16 +672,16 @@ void KEyeCandyPage::setDefaults(){
 
 /** retrieves the user's local values. In case he doesn't have these set, use the default values of KDE, level 4. */
 void KEyeCandyPage::getUserDefaults(){
-	QByteArray replydata;
-	QByteArray data;
-	QCString replytype;
+	TQByteArray replydata;
+	TQByteArray data;
+	TQCString replytype;
 	kapp->dcopClient()->call( "kicker", "Panel", "panelSize()",data, replytype, replydata);
-	QDataStream stream( replydata, IO_ReadOnly );
+	TQDataStream stream( replydata, IO_ReadOnly );
 	stream >> panelsize;
 
 	// Wallpaper-User-Defaults
 	kdesktopconf->setGroup("FMSettings");
-	QColor tempcolor=KGlobalSettings::textColor();
+	TQColor tempcolor=KGlobalSettings::textColor();
 	desktopTextColor = kdesktopconf->readColorEntry("NormalTextColor", &tempcolor );
 	kdesktopconf->setGroup("Background Common");
 	st_UserWallpaper.CommonDesktop = kdesktopconf->readBoolEntry("CommonDesktop", true);
@@ -695,8 +695,8 @@ void KEyeCandyPage::getUserDefaults(){
 	KGlobal::config()->setGroup("KDE");
 
 	// Font-User-Defaults
-	b_useXft=QSettings().readBoolEntry("/qt/useXft");
-	b_enableXft=QSettings().readBoolEntry("/qt/enableXft");
+	b_useXft=TQSettings().readBoolEntry("/qt/useXft");
+	b_enableXft=TQSettings().readBoolEntry("/qt/enableXft");
 
 	KGlobal::config()->setGroup("PanelIcons");
 	st_UserGamma.EffectPanel=KGlobal::config()->readEntry("ActiveEffect", "none");
@@ -845,7 +845,7 @@ void KEyeCandyPage::saveCheckState(bool currSettings){ // currSettings= true -> 
 
 /** to be connected to the OS page. changes default values of features according
 	to the desktop selection*/
-void KEyeCandyPage::slotPresetSlider(const QString& style){
+void KEyeCandyPage::slotPresetSlider(const TQString& style){
 	osStyle=style;
 	slotEyeCandySliderMoved( sld_effects-> value());  //apply changes (slider is not moved)
 }

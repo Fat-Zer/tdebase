@@ -26,8 +26,8 @@
 #include "konq_events.h"
 #include "konq_settingsxt.h"
 
-#include <qfileinfo.h>
-#include <qptrlist.h>
+#include <tqfileinfo.h>
+#include <tqptrlist.h>
 
 #include <kaccelgen.h>
 #include <kstandarddirs.h>
@@ -44,7 +44,7 @@
 
 // #define DEBUG_VIEWMGR
 
-template class QPtrList<KonqView>;
+template class TQPtrList<KonqView>;
 
 KonqViewManager::KonqViewManager( KonqMainWindow *mainWindow )
  : KParts::PartManager( mainWindow )
@@ -56,12 +56,12 @@ KonqViewManager::KonqViewManager( KonqMainWindow *mainWindow )
   m_bProfileListDirty = true;
   m_bLoadingProfile = false;
 
-  m_activePartChangedTimer = new QTimer(this);
-  connect(m_activePartChangedTimer, SIGNAL(timeout()), this, SLOT(emitActivePartChanged()));
-  connect( this, SIGNAL( activePartChanged ( KParts::Part * ) ), this, SLOT( slotActivePartChanged ( KParts::Part * ) ) );
+  m_activePartChangedTimer = new TQTimer(this);
+  connect(m_activePartChangedTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(emitActivePartChanged()));
+  connect( this, TQT_SIGNAL( activePartChanged ( KParts::Part * ) ), this, TQT_SLOT( slotActivePartChanged ( KParts::Part * ) ) );
 }
 
-KonqView* KonqViewManager::Initialize( const QString &serviceType, const QString &serviceName )
+KonqView* KonqViewManager::Initialize( const TQString &serviceType, const TQString &serviceName )
 {
   //kdDebug(1202) << "KonqViewManager::Initialize()" << endl;
   KService::Ptr service;
@@ -93,8 +93,8 @@ KonqViewManager::~KonqViewManager()
 }
 
 KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
-                                       const QString &serviceType,
-                                       const QString &serviceName,
+                                       const TQString &serviceType,
+                                       const TQString &serviceName,
                                        bool newOneFirst, bool forceAutoEmbed )
 {
 #ifdef DEBUG_VIEWMGR
@@ -118,7 +118,7 @@ KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
   KonqFrameContainerBase* parentContainer = splitFrame->parentContainer();
 
   bool moveNewContainer = false;
-  QValueList<int> splitterSizes;
+  TQValueList<int> splitterSizes;
   int index= -1;
 
   if (parentContainer->frameType()=="Container") {
@@ -135,13 +135,13 @@ KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
   parentContainer->widget()->setUpdatesEnabled( false );
 
   //kdDebug(1202) << "Move out child" << endl;
-  QPoint pos = splitFrame->widget()->pos();
+  TQPoint pos = splitFrame->widget()->pos();
   parentContainer->removeChildFrame( splitFrame );
   splitFrame->widget()->reparent( m_pMainWindow, pos );
 
   //kdDebug(1202) << "Create new Container" << endl;
   KonqFrameContainer *newContainer = new KonqFrameContainer( orientation, parentContainer->widget(), parentContainer );
-  connect(newContainer,SIGNAL(ctrlTabPressed()),m_pMainWindow,SLOT(slotCtrlTabPressed()));
+  connect(newContainer,TQT_SIGNAL(ctrlTabPressed()),m_pMainWindow,TQT_SLOT(slotCtrlTabPressed()));
 
   parentContainer->insertChildFrame( newContainer, index );
   if ( moveNewContainer ) {
@@ -170,7 +170,7 @@ KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
     newContainer->swapChildren();
   }
 
-  QValueList<int> newSplitterSizes;
+  TQValueList<int> newSplitterSizes;
   newSplitterSizes << 50 << 50;
   newContainer->setSizes( newSplitterSizes );
 
@@ -203,8 +203,8 @@ KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
 }
 
 KonqView* KonqViewManager::splitWindow( Qt::Orientation orientation,
-                                        const QString &serviceType,
-                                        const QString &serviceName,
+                                        const TQString &serviceType,
+                                        const TQString &serviceName,
                                         bool newOneFirst )
 {
   kdDebug(1202) << "KonqViewManager::splitWindow(default)" << endl;
@@ -214,7 +214,7 @@ KonqView* KonqViewManager::splitWindow( Qt::Orientation orientation,
     return 0L;
 
   KURL url = m_pMainWindow->currentView()->url();
-  QString locationBarURL = m_pMainWindow->currentView()->locationBarURL();
+  TQString locationBarURL = m_pMainWindow->currentView()->locationBarURL();
 
   KService::Ptr service;
   KTrader::OfferList partServiceOffers, appServiceOffers;
@@ -229,11 +229,11 @@ KonqView* KonqViewManager::splitWindow( Qt::Orientation orientation,
   mainFrame->widget()->setUpdatesEnabled( false );
 
   //kdDebug(1202) << "Move out child" << endl;
-  QPoint pos = mainFrame->widget()->pos();
+  TQPoint pos = mainFrame->widget()->pos();
   m_pMainWindow->removeChildFrame( mainFrame );
 
   KonqFrameContainer *newContainer = new KonqFrameContainer( orientation, m_pMainWindow, 0L);
-  connect(newContainer,SIGNAL(ctrlTabPressed()),m_pMainWindow,SLOT(slotCtrlTabPressed()));
+  connect(newContainer,TQT_SIGNAL(ctrlTabPressed()),m_pMainWindow,TQT_SLOT(slotCtrlTabPressed()));
 
   m_pMainWindow->insertChildFrame( newContainer );
 
@@ -273,7 +273,7 @@ void KonqViewManager::convertDocContainer()
   KonqFrameContainerBase* parentContainer = m_pDocContainer->parentContainer();
 
   bool moveNewContainer = false;
-  QValueList<int> splitterSizes;
+  TQValueList<int> splitterSizes;
   if (parentContainer->frameType()=="Container") {
     moveNewContainer = (static_cast<KonqFrameContainer*>(parentContainer)->idAfter( m_pDocContainer->widget() ) != 0);
     splitterSizes = static_cast<KonqFrameContainer*>(parentContainer)->sizes();
@@ -282,13 +282,13 @@ void KonqViewManager::convertDocContainer()
   parentContainer->widget()->setUpdatesEnabled( false );
 
   //kdDebug(1202) << "Move out child" << endl;
-  QPoint pos = m_pDocContainer->widget()->pos();
+  TQPoint pos = m_pDocContainer->widget()->pos();
   parentContainer->removeChildFrame( m_pDocContainer );
   m_pDocContainer->widget()->reparent( m_pMainWindow, pos );
 
   KonqFrameTabs* newContainer = new KonqFrameTabs( parentContainer->widget() , parentContainer, this);
   parentContainer->insertChildFrame( newContainer );
-  connect( newContainer, SIGNAL(ctrlTabPressed()), m_pMainWindow, SLOT(slotCtrlTabPressed()) );
+  connect( newContainer, TQT_SIGNAL(ctrlTabPressed()), m_pMainWindow, TQT_SLOT(slotCtrlTabPressed()) );
 
   m_pDocContainer->widget()->reparent( newContainer, pos );
   newContainer->insertChildFrame( m_pDocContainer );
@@ -307,7 +307,7 @@ void KonqViewManager::convertDocContainer()
   m_pDocContainer = newContainer;
 }
 
-KonqView* KonqViewManager::addTab(const QString &serviceType, const QString &serviceName, bool passiveMode, bool openAfterCurrentPage  )
+KonqView* KonqViewManager::addTab(const TQString &serviceType, const TQString &serviceName, bool passiveMode, bool openAfterCurrentPage  )
 {
 #ifdef DEBUG_VIEWMGR
   kdDebug(1202) << "------------- KonqViewManager::addTab starting -------------" << endl;
@@ -423,12 +423,12 @@ void KonqViewManager::duplicateTab( KonqFrameBase* tab, bool openAfterCurrentPag
   KConfig config( tempFile.name() );
   config.setGroup( "View Profile" );
 
-  QString prefix = QString::fromLatin1( currentFrame->frameType() ) + QString::number(0);
+  TQString prefix = TQString::fromLatin1( currentFrame->frameType() ) + TQString::number(0);
   config.writeEntry( "RootItem", prefix );
   prefix.append( '_' );
   currentFrame->saveConfig( &config, prefix, true, 0L, 0, 1);
 
-  QString rootItem = config.readEntry( "RootItem", "empty" );
+  TQString rootItem = config.readEntry( "RootItem", "empty" );
 
   if (rootItem.isNull() || rootItem == "empty") return;
 
@@ -493,10 +493,10 @@ void KonqViewManager::breakOffTab( KonqFrameBase* tab )
   KConfig config( tempFile.name() );
   config.setGroup( "View Profile" );
 
-  QString prefix = QString::fromLatin1( currentFrame->frameType() ) + QString::number(0);
+  TQString prefix = TQString::fromLatin1( currentFrame->frameType() ) + TQString::number(0);
   config.writeEntry( "RootItem", prefix );
   prefix.append( '_' );
-  config.writeEntry( QString::fromLatin1( "docContainer" ).prepend( prefix ), true );
+  config.writeEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), true );
   currentFrame->saveConfig( &config, prefix, true, 0L, 0, 1);
 
   KonqMainWindow *mainWindow = new KonqMainWindow( KURL(), false );
@@ -567,8 +567,8 @@ void KonqViewManager::removeTab( KonqFrameBase* tab )
 
   tabContainer->removeChildFrame(currentFrame);
 
-  QPtrList<KonqView> viewList;
-  QPtrListIterator<KonqView> it( viewList );
+  TQPtrList<KonqView> viewList;
+  TQPtrListIterator<KonqView> it( viewList );
 
   currentFrame->listViews( &viewList );
 
@@ -598,8 +598,8 @@ void KonqViewManager::reloadAllTabs( )
 
   KonqFrameTabs* tabContainer = static_cast<KonqFrameTabs*>(m_pDocContainer);
 
-  QPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
-  QPtrListIterator<KonqFrameBase> it( frameList );
+  TQPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
+  TQPtrListIterator<KonqFrameBase> it( frameList );
 
   for ( it.toFirst(); it != 0L; ++it )
   {
@@ -630,8 +630,8 @@ void KonqViewManager::removeOtherTabs( KonqFrameBase* tab )
     return;
   }
 
-  QPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
-  QPtrListIterator<KonqFrameBase> it( frameList );
+  TQPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
+  TQPtrListIterator<KonqFrameBase> it( frameList );
 
   for ( it.toFirst(); it != 0L; ++it )
   {
@@ -728,8 +728,8 @@ void KonqViewManager::updatePixmaps()
 
   KonqFrameTabs* tabContainer = static_cast<KonqFrameTabs*>(m_pDocContainer);
 
-  QPtrList<KonqView> viewList;
-  QPtrListIterator<KonqView> it( viewList );
+  TQPtrList<KonqView> viewList;
+  TQPtrListIterator<KonqView> it( viewList );
 
   tabContainer->listViews( &viewList );
   for ( it.toFirst(); it != 0L; ++it )
@@ -762,7 +762,7 @@ void KonqViewManager::removeView( KonqView *view )
     setActivePart( 0L, true );
 
     int index = -1;
-    QValueList<int> splitterSizes;
+    TQValueList<int> splitterSizes;
     bool moveOtherChild = false;
 
     if (grandParentContainer->frameType()=="Tabs")
@@ -788,7 +788,7 @@ void KonqViewManager::removeView( KonqView *view )
     static_cast<KonqFrameContainer*>(parentContainer)->setAboutToBeDeleted();
 
     //kdDebug(1202) << "--- Reparenting otherFrame to m_pMainWindow " << m_pMainWindow << endl;
-    QPoint pos = otherFrame->widget()->pos();
+    TQPoint pos = otherFrame->widget()->pos();
     otherFrame->reparentFrame( m_pMainWindow, pos );
 
     //kdDebug(1202) << "--- Removing otherFrame from parentContainer" << endl;
@@ -884,7 +884,7 @@ void KonqViewManager::slotPassiveModePartDeleted()
   // Passive mode parts aren't registered to the part manager,
   // so we have to handle suicidal ones ourselves
   KParts::ReadOnlyPart * part = const_cast<KParts::ReadOnlyPart *>( static_cast<const KParts::ReadOnlyPart *>( sender() ) );
-  disconnect( part, SIGNAL( destroyed() ), this, SLOT( slotPassiveModePartDeleted() ) );
+  disconnect( part, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotPassiveModePartDeleted() ) );
   kdDebug(1202) << "KonqViewManager::slotPassiveModePartDeleted part=" << part << endl;
   KonqView * view = m_pMainWindow->childView( part );
   kdDebug(1202) << "view=" << view << endl;
@@ -918,13 +918,13 @@ void KonqViewManager::clear()
 
   if (m_pMainWindow->childFrame() == 0L) return;
 
-  QPtrList<KonqView> viewList;
+  TQPtrList<KonqView> viewList;
 
   m_pMainWindow->listViews( &viewList );
 
   kdDebug(1202) << viewList.count() << " items" << endl;
 
-  QPtrListIterator<KonqView> it( viewList );
+  TQPtrListIterator<KonqView> it( viewList );
   for ( it.toFirst(); it.current(); ++it ) {
     m_pMainWindow->removeChildView( it.current() );
     kdDebug(1202) << "Deleting " << it.current() << endl;
@@ -981,8 +981,8 @@ KonqView *KonqViewManager::chooseNextView( KonqView *view )
   return 0L; // no next view found
 }
 
-KonqViewFactory KonqViewManager::createView( const QString &serviceType,
-                                          const QString &serviceName,
+KonqViewFactory KonqViewManager::createView( const TQString &serviceType,
+                                          const TQString &serviceName,
                                           KService::Ptr &service,
                                           KTrader::OfferList &partServiceOffers,
                                           KTrader::OfferList &appServiceOffers,
@@ -994,7 +994,7 @@ KonqViewFactory KonqViewManager::createView( const QString &serviceType,
   if( serviceType.isEmpty() && m_pMainWindow->currentView() ) {
     //clone current view
     KonqView *cv = m_pMainWindow->currentView();
-    QString _serviceType, _serviceName;
+    TQString _serviceType, _serviceName;
     if ( cv->service()->desktopEntryName() == "konq_sidebartng" ) {
       _serviceType = "text/html";
     }
@@ -1020,13 +1020,13 @@ KonqView *KonqViewManager::setupView( KonqFrameContainerBase *parentContainer,
                                       const KService::Ptr &service,
                                       const KTrader::OfferList &partServiceOffers,
                                       const KTrader::OfferList &appServiceOffers,
-                                      const QString &serviceType,
+                                      const TQString &serviceType,
                                       bool passiveMode,
                                       bool openAfterCurrentPage )
 {
   kdDebug(1202) << "KonqViewManager::setupView passiveMode=" << passiveMode << endl;
 
-  QString sType = serviceType;
+  TQString sType = serviceType;
 
   if ( sType.isEmpty() )
     sType = m_pMainWindow->currentView()->serviceType();
@@ -1040,8 +1040,8 @@ KonqView *KonqViewManager::setupView( KonqFrameContainerBase *parentContainer,
                               m_pMainWindow, service, partServiceOffers, appServiceOffers, sType, passiveMode );
   //kdDebug(1202) << "KonqView created - v=" << v << " v->part()=" << v->part() << endl;
 
-  QObject::connect( v, SIGNAL( sigPartChanged( KonqView *, KParts::ReadOnlyPart *, KParts::ReadOnlyPart * ) ),
-                    m_pMainWindow, SLOT( slotPartChanged( KonqView *, KParts::ReadOnlyPart *, KParts::ReadOnlyPart * ) ) );
+  TQObject::connect( v, TQT_SIGNAL( sigPartChanged( KonqView *, KParts::ReadOnlyPart *, KParts::ReadOnlyPart * ) ),
+                    m_pMainWindow, TQT_SLOT( slotPartChanged( KonqView *, KParts::ReadOnlyPart *, KParts::ReadOnlyPart * ) ) );
 
   m_pMainWindow->insertChildView( v );
 
@@ -1065,7 +1065,7 @@ KonqView *KonqViewManager::setupView( KonqFrameContainerBase *parentContainer,
   else
   {
     // Passive views aren't registered, but we still want to detect the suicidal ones
-    connect( v->part(), SIGNAL( destroyed() ), this, SLOT( slotPassiveModePartDeleted() ) );
+    connect( v->part(), TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotPassiveModePartDeleted() ) );
   }
 
   //kdDebug(1202) << "KonqViewManager::setupView done" << endl;
@@ -1074,14 +1074,14 @@ KonqView *KonqViewManager::setupView( KonqFrameContainerBase *parentContainer,
 
 ///////////////// Profile stuff ////////////////
 
-void KonqViewManager::saveViewProfile( const QString & fileName, const QString & profileName, bool saveURLs, bool saveWindowSize )
+void KonqViewManager::saveViewProfile( const TQString & fileName, const TQString & profileName, bool saveURLs, bool saveWindowSize )
 {
 
-  QString path = locateLocal( "data", QString::fromLatin1( "konqueror/profiles/" ) +
+  TQString path = locateLocal( "data", TQString::fromLatin1( "konqueror/profiles/" ) +
                                           fileName, KGlobal::instance() );
 
-  if ( QFile::exists( path ) )
-    QFile::remove( path );
+  if ( TQFile::exists( path ) )
+    TQFile::remove( path );
 
   KSimpleConfig cfg( path );
   cfg.setGroup( "Profile" );
@@ -1096,8 +1096,8 @@ void KonqViewManager::saveViewProfile( KConfig & cfg, bool saveURLs, bool saveWi
 {
   //kdDebug(1202) << "KonqViewManager::saveViewProfile" << endl;
   if( m_pMainWindow->childFrame() != 0L ) {
-    QString prefix = QString::fromLatin1( m_pMainWindow->childFrame()->frameType() )
-                     + QString::number(0);
+    TQString prefix = TQString::fromLatin1( m_pMainWindow->childFrame()->frameType() )
+                     + TQString::number(0);
     cfg.writeEntry( "RootItem", prefix );
     prefix.append( '_' );
     m_pMainWindow->saveConfig( &cfg, prefix, saveURLs, m_pDocContainer, 0, 1);
@@ -1115,14 +1115,14 @@ void KonqViewManager::saveViewProfile( KConfig & cfg, bool saveURLs, bool saveWi
   // setAutoSaveSetting( "KongMainWindow", false ). The false is important,
   // we do not want this call save size settings in the profile, because we
   // do it ourselves. Save in a separate group than the rest of the profile.
-  QString savedGroup = cfg.group();
+  TQString savedGroup = cfg.group();
   m_pMainWindow->saveMainWindowSettings( &cfg, "Main Window Settings" );
   cfg.setGroup( savedGroup );
 
   cfg.sync();
 }
 
-void KonqViewManager::loadViewProfile( const QString & path, const QString & filename,
+void KonqViewManager::loadViewProfile( const TQString & path, const TQString & filename,
                                        const KURL & forcedURL, const KonqOpenURLRequest &req,
                                        bool resetWindow, bool openURL )
 {
@@ -1132,7 +1132,7 @@ void KonqViewManager::loadViewProfile( const QString & path, const QString & fil
   loadViewProfile( cfg, filename, forcedURL, req, resetWindow, openURL );
 }
 
-void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
+void KonqViewManager::loadViewProfile( KConfig &cfg, const TQString & filename,
                                        const KURL & forcedURL, const KonqOpenURLRequest &req,
                                        bool resetWindow, bool openURL )
 {
@@ -1151,13 +1151,13 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
       }
 
       KonqView *originalView = m_pMainWindow->currentView();
-      QPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
-      QPtrListIterator<KonqFrameBase> it( frameList );
+      TQPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
+      TQPtrListIterator<KonqFrameBase> it( frameList );
       for ( it.toFirst(); it != 0L; ++it )
       {
           KonqView *view = it.current()->activeChildView();
           if (view && view->part() && (view->part()->metaObject()->findProperty("modified") != -1)) {
-            QVariant prop = view->part()->property("modified");
+            TQVariant prop = view->part()->property("modified");
             if (prop.isValid() && prop.toBool()) {
                 showTab( view );
                 if ( KMessageBox::warningContinueCancel( 0,
@@ -1176,7 +1176,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
   {
       KonqView *view = m_pMainWindow->currentView();
       if (view && view->part() && (view->part()->metaObject()->findProperty("modified") != -1)) {
-        QVariant prop = view->part()->property("modified");
+        TQVariant prop = view->part()->property("modified");
         if (prop.isValid() && prop.toBool())
             if ( KMessageBox::warningContinueCancel( 0,
                i18n("This page contains changes that have not been submitted.\nLoading a profile will discard these changes."),
@@ -1189,7 +1189,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
 
   m_currentProfile = filename;
   m_currentProfileText = cfg.readPathEntry("Name",filename);
-  m_profileHomeURL = cfg.readEntry("HomeURL", QString::null);
+  m_profileHomeURL = cfg.readEntry("HomeURL", TQString::null);
 
   m_pMainWindow->currentProfileChanged();
   KURL defaultURL;
@@ -1198,7 +1198,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
 
   clear();
 
-  QString rootItem = cfg.readEntry( "RootItem", "empty" );
+  TQString rootItem = cfg.readEntry( "RootItem", "empty" );
 
   //kdDebug(1202) << "KonqViewManager::loadViewProfile : loading RootItem " << rootItem << 
   //" forcedURL " << forcedURL.url() << endl;
@@ -1289,7 +1289,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
          if( m_pMainWindow->isFullScreen())
              m_pMainWindow->showNormal();
 
-         QSize size = readConfigSize( cfg, m_pMainWindow );
+         TQSize size = readConfigSize( cfg, m_pMainWindow );
          if ( size.isValid() )
              m_pMainWindow->resize( size );
          else  // no size in the profile; use last known size
@@ -1306,7 +1306,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
   // so that the window doesn't try to change the size stored in the Profile group.
   // (If applyMainWindowSettings finds a "Width" or "Height" entry, it
   // sets them to 0,0)
-  QString savedGroup = cfg.group();
+  TQString savedGroup = cfg.group();
   m_pMainWindow->applyMainWindowSettings( &cfg, "Main Window Settings" );
   cfg.setGroup( savedGroup );
 
@@ -1317,7 +1317,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const QString & filename,
   //kdDebug(1202) << "KonqViewManager::loadViewProfile done" << endl;
 }
 
-void KonqViewManager::setActivePart( KParts::Part *part, QWidget * )
+void KonqViewManager::setActivePart( KParts::Part *part, TQWidget * )
 {
     setActivePart( part, false );
 }
@@ -1401,17 +1401,17 @@ void KonqViewManager::emitActivePartChanged()
 }
 
 
-QSize KonqViewManager::readConfigSize( KConfig &cfg, QWidget *widget )
+TQSize KonqViewManager::readConfigSize( KConfig &cfg, TQWidget *widget )
 {
     bool ok;
 
-    QString widthStr = cfg.readEntry( "Width" );
-    QString heightStr = cfg.readEntry( "Height" );
+    TQString widthStr = cfg.readEntry( "Width" );
+    TQString heightStr = cfg.readEntry( "Height" );
 
     int width = -1;
     int height = -1;
 
-    QRect geom = KGlobalSettings::desktopGeometry(widget);
+    TQRect geom = KGlobalSettings::desktopGeometry(widget);
 
     if ( widthStr.contains( '%' ) == 1 )
     {
@@ -1443,13 +1443,13 @@ QSize KonqViewManager::readConfigSize( KConfig &cfg, QWidget *widget )
             height = -1;
     }
 
-    return QSize( width, height );
+    return TQSize( width, height );
 }
 
 void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
-                                const QString &name, const KURL & defaultURL, bool openURL, bool openAfterCurrentPage )
+                                const TQString &name, const KURL & defaultURL, bool openURL, bool openAfterCurrentPage )
 {
-  QString prefix;
+  TQString prefix;
   if( name != "InitialView" )
     prefix = name + '_';
 
@@ -1457,16 +1457,16 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
 
   if( name.startsWith("View") || name == "empty" ) {
     //load view config
-    QString serviceType;
-    QString serviceName;
+    TQString serviceType;
+    TQString serviceName;
     if ( name == "empty" ) {
         // An empty profile is an empty KHTML part. Makes all KHTML actions available, avoids crashes,
         // makes it easy to DND a URL onto it, and makes it fast to load a website from there.
         serviceType = "text/html";
         serviceName = "html";
     } else {
-        serviceType = cfg.readEntry( QString::fromLatin1( "ServiceType" ).prepend( prefix ), "inode/directory");
-        serviceName = cfg.readEntry( QString::fromLatin1( "ServiceName" ).prepend( prefix ) );
+        serviceType = cfg.readEntry( TQString::fromLatin1( "ServiceType" ).prepend( prefix ), "inode/directory");
+        serviceName = cfg.readEntry( TQString::fromLatin1( "ServiceName" ).prepend( prefix ) );
     }
     //kdDebug(1202) << "KonqViewManager::loadItem: ServiceType " << serviceType << " " << serviceName << endl;
 
@@ -1480,17 +1480,17 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
       return; //ugh..
     }
 
-    bool passiveMode = cfg.readBoolEntry( QString::fromLatin1( "PassiveMode" ).prepend( prefix ), false );
+    bool passiveMode = cfg.readBoolEntry( TQString::fromLatin1( "PassiveMode" ).prepend( prefix ), false );
 
     //kdDebug(1202) << "KonqViewManager::loadItem: Creating View Stuff" << endl;
     KonqView *childView = setupView( parent, viewFactory, service, partServiceOffers, appServiceOffers, serviceType, passiveMode, openAfterCurrentPage );
 
-    if (!childView->isFollowActive()) childView->setLinkedView( cfg.readBoolEntry( QString::fromLatin1( "LinkedView" ).prepend( prefix ), false ) );
-    childView->setToggleView( cfg.readBoolEntry( QString::fromLatin1( "ToggleView" ).prepend( prefix ), false ) );
-    if( !cfg.readBoolEntry( QString::fromLatin1( "ShowStatusBar" ).prepend( prefix ), true ) )
+    if (!childView->isFollowActive()) childView->setLinkedView( cfg.readBoolEntry( TQString::fromLatin1( "LinkedView" ).prepend( prefix ), false ) );
+    childView->setToggleView( cfg.readBoolEntry( TQString::fromLatin1( "ToggleView" ).prepend( prefix ), false ) );
+    if( !cfg.readBoolEntry( TQString::fromLatin1( "ShowStatusBar" ).prepend( prefix ), true ) )
       childView->frame()->statusbar()->hide();
 
-    if (cfg.readBoolEntry( QString::fromLatin1( "docContainer" ).prepend( prefix ), false ))
+    if (cfg.readBoolEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), false ))
       m_pDocContainer = childView->frame();
 
     if (!m_pDocContainer)
@@ -1532,11 +1532,11 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
       }
     }
     KonqConfigEvent ev( &cfg, prefix+"_", false/*load*/);
-    QApplication::sendEvent( childView->part(), &ev );
+    TQApplication::sendEvent( childView->part(), &ev );
 
     childView->frame()->show();
 
-    QString key = QString::fromLatin1( "URL" ).prepend( prefix );
+    TQString key = TQString::fromLatin1( "URL" ).prepend( prefix );
     if ( openURL )
     {
       KURL url;
@@ -1544,13 +1544,13 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
       //kdDebug(1202) << "KonqViewManager::loadItem: key " << key << endl;
       if ( cfg.hasKey( key ) )
       {
-        QString u = cfg.readPathEntry( key );
+        TQString u = cfg.readPathEntry( key );
         if ( u.isEmpty() )
-          u = QString::fromLatin1("about:blank");
+          u = TQString::fromLatin1("about:blank");
         url = u;
       }
       else if(key == "empty_URL")
-        url = QString::fromLatin1("about:blank");
+        url = TQString::fromLatin1("about:blank");
       else
         url = defaultURL;
 
@@ -1567,13 +1567,13 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
       //else kdDebug(1202) << "KonqViewManager::loadItem: url is empty" << endl;
     }
     // Do this after opening the URL, so that it's actually possible to open it :)
-    childView->setLockedLocation( cfg.readBoolEntry( QString::fromLatin1( "LockedLocation" ).prepend( prefix ), false ) );
+    childView->setLockedLocation( cfg.readBoolEntry( TQString::fromLatin1( "LockedLocation" ).prepend( prefix ), false ) );
   }
   else if( name.startsWith("Container") ) {
     //kdDebug(1202) << "KonqViewManager::loadItem Item is Container" << endl;
 
     //load container config
-    QString ostr = cfg.readEntry( QString::fromLatin1( "Orientation" ).prepend( prefix ) );
+    TQString ostr = cfg.readEntry( TQString::fromLatin1( "Orientation" ).prepend( prefix ) );
     //kdDebug(1202) << "Orientation: " << ostr << endl;
     Qt::Orientation o;
     if( ostr == "Vertical" )
@@ -1585,13 +1585,13 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
       o = Qt::Horizontal;
     }
 
-    QValueList<int> sizes =
-        cfg.readIntListEntry( QString::fromLatin1( "SplitterSizes" ).prepend( prefix ));
+    TQValueList<int> sizes =
+        cfg.readIntListEntry( TQString::fromLatin1( "SplitterSizes" ).prepend( prefix ));
 
-    int index = cfg.readNumEntry( QString::fromLatin1( "activeChildIndex" ).prepend(prefix), -1 );
+    int index = cfg.readNumEntry( TQString::fromLatin1( "activeChildIndex" ).prepend(prefix), -1 );
 
-    QStrList childList;
-    if( cfg.readListEntry( QString::fromLatin1( "Children" ).prepend( prefix ), childList ) < 2 )
+    TQStrList childList;
+    if( cfg.readListEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), childList ) < 2 )
     {
       kdWarning() << "Profile Loading Error: Less than two children in " << name << endl;
       // fallback to defaults
@@ -1600,7 +1600,7 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
     else
     {
       KonqFrameContainer *newContainer = new KonqFrameContainer( o, parent->widget(), parent );
-      connect(newContainer,SIGNAL(ctrlTabPressed()),m_pMainWindow,SLOT(slotCtrlTabPressed()));
+      connect(newContainer,TQT_SIGNAL(ctrlTabPressed()),m_pMainWindow,TQT_SLOT(slotCtrlTabPressed()));
       
       int tabindex = -1;
       if(openAfterCurrentPage && parent->frameType() == "Tabs") // Need to honor it, if possible      
@@ -1608,7 +1608,7 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
       parent->insertChildFrame( newContainer, tabindex );
 
 
-      if (cfg.readBoolEntry( QString::fromLatin1( "docContainer" ).prepend( prefix ), false ))
+      if (cfg.readBoolEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), false ))
         m_pDocContainer = newContainer;
 
       loadItem( cfg, newContainer, childList.at(0), defaultURL, openURL );
@@ -1629,18 +1629,18 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
     //kdDebug(1202) << "KonqViewManager::loadItem: Item is a Tabs" << endl;
 
     KonqFrameTabs *newContainer = new KonqFrameTabs( parent->widget(), parent, this );
-    connect(newContainer,SIGNAL(ctrlTabPressed()),m_pMainWindow,SLOT(slotCtrlTabPressed()));
+    connect(newContainer,TQT_SIGNAL(ctrlTabPressed()),m_pMainWindow,TQT_SLOT(slotCtrlTabPressed()));
 
     parent->insertChildFrame( newContainer );
     m_pDocContainer = newContainer;
 
-    int index = cfg.readNumEntry( QString::fromLatin1( "activeChildIndex" ).prepend(prefix), 0 );
+    int index = cfg.readNumEntry( TQString::fromLatin1( "activeChildIndex" ).prepend(prefix), 0 );
 
-    QStringList childList = cfg.readListEntry( QString::fromLatin1( "Children" ).prepend( prefix ) );
-    for ( QStringList::Iterator it = childList.begin(); it != childList.end(); ++it )
+    TQStringList childList = cfg.readListEntry( TQString::fromLatin1( "Children" ).prepend( prefix ) );
+    for ( TQStringList::Iterator it = childList.begin(); it != childList.end(); ++it )
     {
         loadItem( cfg, newContainer, *it, defaultURL, openURL );
-        QWidget* currentPage = newContainer->currentPage();
+        TQWidget* currentPage = newContainer->currentPage();
         if (currentPage != 0L) {
           KonqView* activeChildView = dynamic_cast<KonqFrameBase*>(currentPage)->activeChildView();
           if (activeChildView != 0L) {
@@ -1667,16 +1667,16 @@ void KonqViewManager::setProfiles( KActionMenu *profiles )
 
   if ( m_pamProfiles )
   {
-    connect( m_pamProfiles->popupMenu(), SIGNAL( activated( int ) ),
-             this, SLOT( slotProfileActivated( int ) ) );
-    connect( m_pamProfiles->popupMenu(), SIGNAL( aboutToShow() ),
-             this, SLOT( slotProfileListAboutToShow() ) );
+    connect( m_pamProfiles->popupMenu(), TQT_SIGNAL( activated( int ) ),
+             this, TQT_SLOT( slotProfileActivated( int ) ) );
+    connect( m_pamProfiles->popupMenu(), TQT_SIGNAL( aboutToShow() ),
+             this, TQT_SLOT( slotProfileListAboutToShow() ) );
   }
   //KonqMainWindow::enableAllActions will call it anyway
   //profileListDirty();
 }
 
-void KonqViewManager::showProfileDlg( const QString & preselectProfile )
+void KonqViewManager::showProfileDlg( const TQString & preselectProfile )
 {
   KonqProfileDlg dlg( this, preselectProfile, m_pMainWindow );
   dlg.exec();
@@ -1685,7 +1685,7 @@ void KonqViewManager::showProfileDlg( const QString & preselectProfile )
 
 void KonqViewManager::slotProfileDlg()
 {
-  showProfileDlg( QString::null );
+  showProfileDlg( TQString::null );
 }
 
 void KonqViewManager::profileListDirty( bool broadcast )
@@ -1696,21 +1696,21 @@ void KonqViewManager::profileListDirty( bool broadcast )
     m_bProfileListDirty = true;
 #if 0
   // There's always one profile at least, now...
-  QStringList profiles = KonqFactory::instance()->dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
+  TQStringList profiles = KonqFactory::instance()->dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
   if ( m_pamProfiles )
       m_pamProfiles->setEnabled( profiles.count() > 0 );
 #endif
     return;
   }
 
-  kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "updateProfileList()", QByteArray() );
+  kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "updateProfileList()", TQByteArray() );
 }
 
 void KonqViewManager::slotProfileActivated( int id )
 {
 
-  QMap<QString, QString>::ConstIterator iter = m_mapProfileNames.begin();
-  QMap<QString, QString>::ConstIterator end = m_mapProfileNames.end();
+  TQMap<TQString, TQString>::ConstIterator iter = m_mapProfileNames.begin();
+  TQMap<TQString, TQString>::ConstIterator end = m_mapProfileNames.end();
 
   for(int i=0; iter != end; ++iter, ++i) {
     if( i == id ) {
@@ -1727,18 +1727,18 @@ void KonqViewManager::slotProfileListAboutToShow()
   if ( !m_pamProfiles || !m_bProfileListDirty )
     return;
 
-  QPopupMenu *popup = m_pamProfiles->popupMenu();
+  TQPopupMenu *popup = m_pamProfiles->popupMenu();
   popup->clear();
 
   // Fetch profiles
   m_mapProfileNames = KonqProfileDlg::readAllProfiles();
 
   // Generate accelerators
-  QStringList accel_strings;
+  TQStringList accel_strings;
   KAccelGen::generateFromKeys(m_mapProfileNames, accel_strings);
 
   // Store menu items
-  QValueListIterator<QString> iter = accel_strings.begin();
+  TQValueListIterator<TQString> iter = accel_strings.begin();
   for( int id = 0;
        iter != accel_strings.end();
        ++iter, ++id ) {
@@ -1752,10 +1752,10 @@ void KonqViewManager::setLoading( KonqView *view, bool loading )
 {
   KonqFrameContainerBase* parentContainer = view->frame()->parentContainer();
   if ( parentContainer->frameType() == "Tabs" ) {
-    QColor color;
+    TQColor color;
     KonqFrameTabs* konqframetabs = static_cast<KonqFrameTabs*>( parentContainer );
     if ( loading )
-      color = QColor( (KGlobalSettings::linkColor().red()  + KGlobalSettings::inactiveTextColor().red())/2,
+      color = TQColor( (KGlobalSettings::linkColor().red()  + KGlobalSettings::inactiveTextColor().red())/2,
                       (KGlobalSettings::linkColor().green()+ KGlobalSettings::inactiveTextColor().green())/2,
                       (KGlobalSettings::linkColor().blue() + KGlobalSettings::inactiveTextColor().blue())/2 );
     else
@@ -1776,8 +1776,8 @@ void KonqViewManager::showHTML(bool b)
 
   KonqFrameTabs* tabContainer = static_cast<KonqFrameTabs*>(m_pDocContainer);
 
-  QPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
-  QPtrListIterator<KonqFrameBase> it( frameList );
+  TQPtrList<KonqFrameBase> frameList = *tabContainer->childFrameList();
+  TQPtrListIterator<KonqFrameBase> it( frameList );
 
   for ( it.toFirst(); it != 0L; ++it )
   {
@@ -1802,16 +1802,16 @@ void KonqViewManager::printSizeInfo( KonqFrameBase* frame,
                                      KonqFrameContainerBase* parent,
                                      const char* msg )
 {
-  QRect r;
+  TQRect r;
   r = frame->widget()->geometry();
   qDebug("Child size %s : x: %d, y: %d, w: %d, h: %d", msg, r.x(),r.y(),r.width(),r.height() );
 
   if ( parent->frameType() == "Container" )
   {
-  QValueList<int> sizes;
+  TQValueList<int> sizes;
     sizes = static_cast<KonqFrameContainer*>(parent)->sizes();
   printf( "Parent sizes %s :", msg );
-  QValueList<int>::ConstIterator it;
+  TQValueList<int>::ConstIterator it;
   for( it = sizes.begin(); it != sizes.end(); ++it )
     printf( " %d", (*it) );
   printf("\n");
@@ -1823,8 +1823,8 @@ void KonqViewManager::printFullHierarchy( KonqFrameContainerBase * container )
   kdDebug(1202) << "currentView=" << m_pMainWindow->currentView() << endl;
   kdDebug(1202) << "docContainer=" << m_pDocContainer << endl;
 
-  if (container) container->printFrameInfo(QString::null);
-  else m_pMainWindow->printFrameInfo(QString::null);
+  if (container) container->printFrameInfo(TQString::null);
+  else m_pMainWindow->printFrameInfo(TQString::null);
 }
 #endif
 

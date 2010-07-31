@@ -20,17 +20,17 @@
 #include "SensorLoggerDlg.h"
 #include "SensorLoggerDlgWidget.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <klocale.h>
 
-SensorLoggerDlg::SensorLoggerDlg( QWidget *parent, const char *name )
+SensorLoggerDlg::SensorLoggerDlg( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "Sensor Logger" ),
       Ok|Cancel, Ok, true )
 {
-  QWidget *main = new QWidget( this );
+  TQWidget *main = new TQWidget( this );
 
-  QVBoxLayout *topLayout = new QVBoxLayout( main, 0, KDialog::spacingHint() );
+  TQVBoxLayout *topLayout = new TQVBoxLayout( main, 0, KDialog::spacingHint() );
 
   m_loggerWidget = new SensorLoggerDlgWidget( main, "m_loggerWidget" );
   topLayout->addWidget( m_loggerWidget );
@@ -39,7 +39,7 @@ SensorLoggerDlg::SensorLoggerDlg( QWidget *parent, const char *name )
   setMainWidget( main );
 }
 
-QString SensorLoggerDlg::fileName() const
+TQString SensorLoggerDlg::fileName() const
 {
   return m_loggerWidget->fileName();
 }
@@ -69,7 +69,7 @@ double SensorLoggerDlg::upperLimit() const
   return m_loggerWidget->upperLimit();
 }
 
-void SensorLoggerDlg::setFileName( const QString &url )
+void SensorLoggerDlg::setFileName( const TQString &url )
 {
   m_loggerWidget->setFileName( url );
 }

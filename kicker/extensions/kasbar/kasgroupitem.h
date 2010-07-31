@@ -59,7 +59,7 @@
 #ifndef KASGROUPITEM_H
 #define KASGROUPITEM_H
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include <taskmanager.h>
 #include "kasitem.h"
 
@@ -87,14 +87,14 @@ public:
    void setGroupType( uint type ) { groupType_ = type; }
 
    /** Reimplemented to paint the item. */
-   virtual void paint( QPainter *p );
+   virtual void paint( TQPainter *p );
 
    KasTasker *kasbar() const;
 
    Task::Ptr task( uint i ) { return items.at( i ); }
    int taskCount() const { return items.count(); }
 
-   QPixmap icon();
+   TQPixmap icon();
   
 public slots:
    void addTask( Task::Ptr t );
@@ -102,8 +102,8 @@ public slots:
 
    void ungroup();
 
-   void showGroupMenuAt( QMouseEvent *ev );   
-   void showGroupMenuAt( const QPoint &p );
+   void showGroupMenuAt( TQMouseEvent *ev );   
+   void showGroupMenuAt( const TQPoint &p );
 
    void updateIcon();
 
@@ -114,7 +114,7 @@ protected:
    virtual KasPopup *createPopup();
 
 private:
-   QString title_;
+   TQString title_;
    Task::List items;
    uint groupType_;
    KasTasker *bar;

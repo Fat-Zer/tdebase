@@ -1,18 +1,18 @@
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qtabwidget.h>
-#include <qvgroupbox.h>
-#include <qpushbutton.h>
-#include <qlistview.h>
-#include <qheader.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qlineedit.h>
-#include <qlistview.h>
-#include <qbuttongroup.h>
-#include <qspinbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqtabwidget.h>
+#include <tqvgroupbox.h>
+#include <tqpushbutton.h>
+#include <tqlistview.h>
+#include <tqheader.h>
+#include <tqwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqlineedit.h>
+#include <tqlistview.h>
+#include <tqbuttongroup.h>
+#include <tqspinbox.h>
 
 #include <kkeydialog.h>
 #include <kglobal.h>
@@ -45,31 +45,31 @@ enum {
  DST_LAYOUT_COLUMN_COUNT = 6
 };
 
-static const QString DEFAULT_VARIANT_NAME("<default>");
+static const TQString DEFAULT_VARIANT_NAME("<default>");
 
 
 class OptionListItem : public QCheckListItem
 {
 	public:
 
-		OptionListItem(  OptionListItem *parent, const QString &text, Type tt,
-						 const QString &optionName );
-		OptionListItem(  QListView *parent, const QString &text, Type tt,
-						 const QString &optionName );
+		OptionListItem(  OptionListItem *parent, const TQString &text, Type tt,
+						 const TQString &optionName );
+		OptionListItem(  TQListView *parent, const TQString &text, Type tt,
+						 const TQString &optionName );
 		~OptionListItem() {}
 
-		QString optionName() const { return m_OptionName; }
+		TQString optionName() const { return m_OptionName; }
 
-		OptionListItem *findChildItem(  const QString& text );
+		OptionListItem *findChildItem(  const TQString& text );
 
 	protected:
-		QString m_OptionName;
+		TQString m_OptionName;
 };
 
 
-static QString lookupLocalized(const QDict<char> &dict, const QString& text)
+static TQString lookupLocalized(const TQDict<char> &dict, const TQString& text)
 {
-  QDictIterator<char> it(dict);
+  TQDictIterator<char> it(dict);
   while (it.current())
     {
       if ( i18n(it.current()) == text )
@@ -77,12 +77,12 @@ static QString lookupLocalized(const QDict<char> &dict, const QString& text)
       ++it;
     }
 
-  return QString::null;
+  return TQString::null;
 }
 
-static QListViewItem* copyLVI(const QListViewItem* src, QListView* parent)
+static TQListViewItem* copyLVI(const TQListViewItem* src, TQListView* parent)
 {
-    QListViewItem* ret = new QListViewItem(parent);
+    TQListViewItem* ret = new TQListViewItem(parent);
 	for(int i = 0; i < SRC_LAYOUT_COLUMN_COUNT; i++)
     {
         ret->setText(i, src->text(i));
@@ -94,46 +94,46 @@ static QListViewItem* copyLVI(const QListViewItem* src, QListView* parent)
 }
 
 
-LayoutConfig::LayoutConfig(QWidget *parent, const char *name)
+LayoutConfig::LayoutConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name), 
     m_rules(NULL)
 {
-  QVBoxLayout *main = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *main = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   widget = new LayoutConfigWidget(this, "widget");
   main->addWidget(widget);
 
-  connect( widget->chkEnable, SIGNAL( toggled( bool )), this, SLOT(changed()));
-  connect( widget->chkShowSingle, SIGNAL( toggled( bool )), this, SLOT(changed()));
-  connect( widget->chkShowFlag, SIGNAL( toggled( bool )), this, SLOT(changed()));
-  connect( widget->comboModel, SIGNAL(activated(int)), this, SLOT(changed()));
+  connect( widget->chkEnable, TQT_SIGNAL( toggled( bool )), this, TQT_SLOT(changed()));
+  connect( widget->chkShowSingle, TQT_SIGNAL( toggled( bool )), this, TQT_SLOT(changed()));
+  connect( widget->chkShowFlag, TQT_SIGNAL( toggled( bool )), this, TQT_SLOT(changed()));
+  connect( widget->comboModel, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
 
-  connect( widget->listLayoutsSrc, SIGNAL(doubleClicked(QListViewItem*,const QPoint&, int)),
-									this, SLOT(add()));
-  connect( widget->btnAdd, SIGNAL(clicked()), this, SLOT(add()));
-  connect( widget->btnRemove, SIGNAL(clicked()), this, SLOT(remove()));
+  connect( widget->listLayoutsSrc, TQT_SIGNAL(doubleClicked(TQListViewItem*,const TQPoint&, int)),
+									this, TQT_SLOT(add()));
+  connect( widget->btnAdd, TQT_SIGNAL(clicked()), this, TQT_SLOT(add()));
+  connect( widget->btnRemove, TQT_SIGNAL(clicked()), this, TQT_SLOT(remove()));
 
-  connect( widget->comboVariant, SIGNAL(activated(int)), this, SLOT(changed()));
-  connect( widget->comboVariant, SIGNAL(activated(int)), this, SLOT(variantChanged()));
-  connect( widget->listLayoutsDst, SIGNAL(selectionChanged(QListViewItem *)),
-		this, SLOT(layoutSelChanged(QListViewItem *)));
+  connect( widget->comboVariant, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
+  connect( widget->comboVariant, TQT_SIGNAL(activated(int)), this, TQT_SLOT(variantChanged()));
+  connect( widget->listLayoutsDst, TQT_SIGNAL(selectionChanged(TQListViewItem *)),
+		this, TQT_SLOT(layoutSelChanged(TQListViewItem *)));
 
-  connect( widget->editDisplayName, SIGNAL(textChanged(const QString&)), this, SLOT(displayNameChanged(const QString&)));
+  connect( widget->editDisplayName, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(displayNameChanged(const TQString&)));
 
-  connect( widget->chkLatin, SIGNAL(clicked()), this, SLOT(changed()));
-  connect( widget->chkLatin, SIGNAL(clicked()), this, SLOT(latinChanged()));
+  connect( widget->chkLatin, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+  connect( widget->chkLatin, TQT_SIGNAL(clicked()), this, TQT_SLOT(latinChanged()));
 
   widget->btnUp->setIconSet(SmallIconSet("1uparrow"));
-  connect( widget->btnUp, SIGNAL(clicked()), this, SLOT(changed()));
-  connect( widget->btnUp, SIGNAL(clicked()), this, SLOT(moveUp()));
+  connect( widget->btnUp, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+  connect( widget->btnUp, TQT_SIGNAL(clicked()), this, TQT_SLOT(moveUp()));
   widget->btnDown->setIconSet(SmallIconSet("1downarrow"));
-  connect( widget->btnDown, SIGNAL(clicked()), this, SLOT(changed()));
-  connect( widget->btnDown, SIGNAL(clicked()), this, SLOT(moveDown()));
+  connect( widget->btnDown, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+  connect( widget->btnDown, TQT_SIGNAL(clicked()), this, TQT_SLOT(moveDown()));
 
-  connect( widget->grpSwitching, SIGNAL( clicked( int ) ), SLOT(changed()));
+  connect( widget->grpSwitching, TQT_SIGNAL( clicked( int ) ), TQT_SLOT(changed()));
 
-  connect( widget->chkEnableSticky, SIGNAL(toggled(bool)), this, SLOT(changed()));
-  connect( widget->spinStickyDepth, SIGNAL(valueChanged(int)), this, SLOT(changed()));
+  connect( widget->chkEnableSticky, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(changed()));
+  connect( widget->spinStickyDepth, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
 
   widget->listLayoutsSrc->setColumnText(LAYOUT_COLUMN_FLAG, "");
   widget->listLayoutsDst->setColumnText(LAYOUT_COLUMN_FLAG, "");
@@ -145,16 +145,16 @@ LayoutConfig::LayoutConfig(QWidget *parent, const char *name)
 
   widget->listLayoutsDst->header()->setResizeEnabled(FALSE, LAYOUT_COLUMN_INCLUDE);
   widget->listLayoutsDst->header()->setResizeEnabled(FALSE, LAYOUT_COLUMN_DISPLAY_NAME);
-  widget->listLayoutsDst->setColumnWidthMode(LAYOUT_COLUMN_INCLUDE, QListView::Manual);
+  widget->listLayoutsDst->setColumnWidthMode(LAYOUT_COLUMN_INCLUDE, TQListView::Manual);
   widget->listLayoutsDst->setColumnWidth(LAYOUT_COLUMN_INCLUDE, 0);
 //  widget->listLayoutsDst->setColumnWidth(LAYOUT_COLUMN_DISPLAY_NAME, 0);
   
   widget->listLayoutsDst->setSorting(-1);
 #if 0
-  widget->listLayoutsDst->setResizeMode(QListView::LastColumn);
-  widget->listLayoutsSrc->setResizeMode(QListView::LastColumn);
+  widget->listLayoutsDst->setResizeMode(TQListView::LastColumn);
+  widget->listLayoutsSrc->setResizeMode(TQListView::LastColumn);
 #endif
-  widget->listLayoutsDst->setResizeMode(QListView::LastColumn);
+  widget->listLayoutsDst->setResizeMode(TQListView::LastColumn);
 
   //Read rules - we _must_ read _before_ creating xkb-options comboboxes
   loadRules();
@@ -185,19 +185,19 @@ void LayoutConfig::initUI() {
 	
 	widget->comboModel->setCurrentText(i18n(modelName));
 
-	QValueList<LayoutUnit> otherLayouts = m_kxkbConfig.m_layouts;
+	TQValueList<LayoutUnit> otherLayouts = m_kxkbConfig.m_layouts;
 	widget->listLayoutsDst->clear();
 // to optimize we should have gone from it.end to it.begin
-	QValueList<LayoutUnit>::ConstIterator it;
+	TQValueList<LayoutUnit>::ConstIterator it;
 	for (it = otherLayouts.begin(); it != otherLayouts.end(); ++it ) {
-		QListViewItemIterator src_it( widget->listLayoutsSrc );
+		TQListViewItemIterator src_it( widget->listLayoutsSrc );
 		LayoutUnit layoutUnit = *it;
 		
 		for ( ; src_it.current(); ++src_it ) {
-			QListViewItem* srcItem = src_it.current();
+			TQListViewItem* srcItem = src_it.current();
 			
 			if ( layoutUnit.layout == src_it.current()->text(LAYOUT_COLUMN_MAP) ) {	// check if current config knows about this layout
-				QListViewItem* newItem = copyLVI(srcItem, widget->listLayoutsDst);
+				TQListViewItem* newItem = copyLVI(srcItem, widget->listLayoutsDst);
 				
 				newItem->setText(LAYOUT_COLUMN_VARIANT, layoutUnit.variant);
 				newItem->setText(LAYOUT_COLUMN_INCLUDE, layoutUnit.includeGroup);
@@ -241,19 +241,19 @@ void LayoutConfig::initUI() {
 	widget->optionsFrame->setEnabled( m_kxkbConfig.m_useKxkb );
 
 	// display xkb options
-	QStringList options = QStringList::split(',', m_kxkbConfig.m_options);
-	for (QStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
+	TQStringList options = TQStringList::split(',', m_kxkbConfig.m_options);
+	for (TQStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
 	{
-		QString option = *it;
-		QString optionKey = option.mid(0, option.find(':'));
-		QString optionName = m_rules->options()[option];
+		TQString option = *it;
+		TQString optionKey = option.mid(0, option.find(':'));
+		TQString optionName = m_rules->options()[option];
 		OptionListItem *item = m_optionGroups[i18n(optionKey.latin1())];
 		
 		if (item != NULL) {
 			OptionListItem *child = item->findChildItem( option );
 
 			if ( child )
-				child->setState( QCheckListItem::On );
+				child->setState( TQCheckListItem::On );
 			else
 				kdDebug() << "load: Unknown option: " << option << endl;
 		}
@@ -269,20 +269,20 @@ void LayoutConfig::initUI() {
 
 void LayoutConfig::save()
 {
-	QString model = lookupLocalized(m_rules->models(), widget->comboModel->currentText());
+	TQString model = lookupLocalized(m_rules->models(), widget->comboModel->currentText());
 	m_kxkbConfig.m_model = model;
 
 	m_kxkbConfig.m_enableXkbOptions = widget->chkEnableOptions->isChecked();
 	m_kxkbConfig.m_resetOldOptions = widget->checkResetOld->isChecked();
 	m_kxkbConfig.m_options = createOptionString();
 
-	QListViewItem *item = widget->listLayoutsDst->firstChild();
-	QValueList<LayoutUnit> layouts;
+	TQListViewItem *item = widget->listLayoutsDst->firstChild();
+	TQValueList<LayoutUnit> layouts;
 	while (item) {
-		QString layout = item->text(LAYOUT_COLUMN_MAP);
-		QString variant = item->text(LAYOUT_COLUMN_VARIANT);
-		QString includes = item->text(LAYOUT_COLUMN_INCLUDE);
-		QString displayName = item->text(LAYOUT_COLUMN_DISPLAY_NAME);
+		TQString layout = item->text(LAYOUT_COLUMN_MAP);
+		TQString variant = item->text(LAYOUT_COLUMN_VARIANT);
+		TQString includes = item->text(LAYOUT_COLUMN_INCLUDE);
+		TQString displayName = item->text(LAYOUT_COLUMN_DISPLAY_NAME);
 		
 		LayoutUnit layoutUnit(layout, variant);
 		layoutUnit.includeGroup = includes;
@@ -345,13 +345,13 @@ void LayoutConfig::updateStickyLimit()
 
 void LayoutConfig::add()
 {
-    QListViewItem* sel = widget->listLayoutsSrc->selectedItem();
+    TQListViewItem* sel = widget->listLayoutsSrc->selectedItem();
     if( sel == 0 )
 		return;
 
     // Create a copy of the sel widget, as one might add the same layout more
     // than one time, with different variants.
-    QListViewItem* toadd = copyLVI(sel, widget->listLayoutsDst);
+    TQListViewItem* toadd = copyLVI(sel, widget->listLayoutsDst);
 
     widget->listLayoutsDst->insertItem(toadd);
     if( widget->listLayoutsDst->childCount() > 1 )
@@ -366,8 +366,8 @@ void LayoutConfig::add()
 
 void LayoutConfig::remove() 
 {
-    QListViewItem* sel = widget->listLayoutsDst->selectedItem();
-    QListViewItem* newSel = 0;
+    TQListViewItem* sel = widget->listLayoutsDst->selectedItem();
+    TQListViewItem* newSel = 0;
 
     if( sel == 0 )
         return;
@@ -389,7 +389,7 @@ void LayoutConfig::remove()
 
 void LayoutConfig::moveUp()
 {
-    QListViewItem* sel = widget->listLayoutsDst->selectedItem();
+    TQListViewItem* sel = widget->listLayoutsDst->selectedItem();
     if( sel == 0 || sel->itemAbove() == 0 )
 		return;
 
@@ -404,7 +404,7 @@ void LayoutConfig::moveUp()
 
 void LayoutConfig::moveDown()
 {
-    QListViewItem* sel = widget->listLayoutsDst->selectedItem();
+    TQListViewItem* sel = widget->listLayoutsDst->selectedItem();
     if( sel == 0 || sel->itemBelow() == 0 )
 	return;
 
@@ -413,37 +413,37 @@ void LayoutConfig::moveDown()
 
 void LayoutConfig::variantChanged()
 {
-    QListViewItem* selLayout = widget->listLayoutsDst->selectedItem();
+    TQListViewItem* selLayout = widget->listLayoutsDst->selectedItem();
     if( selLayout == NULL ) {
       widget->comboVariant->clear();
       widget->comboVariant->setEnabled(false);
       return;
     }
 
-	QString selectedVariant = widget->comboVariant->currentText();
+	TQString selectedVariant = widget->comboVariant->currentText();
 	if( selectedVariant == DEFAULT_VARIANT_NAME )
 		selectedVariant = "";
 	selLayout->setText(LAYOUT_COLUMN_VARIANT, selectedVariant);
 }
 
 // helper
-LayoutUnit LayoutConfig::getLayoutUnitKey(QListViewItem *sel)
+LayoutUnit LayoutConfig::getLayoutUnitKey(TQListViewItem *sel)
 {
-	QString kbdLayout = sel->text(LAYOUT_COLUMN_MAP);
-	QString kbdVariant = sel->text(LAYOUT_COLUMN_VARIANT);
+	TQString kbdLayout = sel->text(LAYOUT_COLUMN_MAP);
+	TQString kbdVariant = sel->text(LAYOUT_COLUMN_VARIANT);
 	return LayoutUnit(kbdLayout, kbdVariant);
 }
 
-void LayoutConfig::displayNameChanged(const QString& newDisplayName)
+void LayoutConfig::displayNameChanged(const TQString& newDisplayName)
 {
-	QListViewItem* selLayout = widget->listLayoutsDst->selectedItem();
+	TQListViewItem* selLayout = widget->listLayoutsDst->selectedItem();
 	if( selLayout == NULL )
 		return;
 	
 	const LayoutUnit layoutUnitKey = getLayoutUnitKey( selLayout );
 	LayoutUnit& layoutUnit = *m_kxkbConfig.m_layouts.find(layoutUnitKey);
 	
-	QString oldName = selLayout->text(LAYOUT_COLUMN_DISPLAY_NAME);
+	TQString oldName = selLayout->text(LAYOUT_COLUMN_DISPLAY_NAME);
 	 
 	if( oldName.isEmpty() )
 		oldName = KxkbConfig::getDefaultDisplayName( layoutUnit );
@@ -458,21 +458,21 @@ void LayoutConfig::displayNameChanged(const QString& newDisplayName)
 
 /** will update flag with label if layout label has been edited
 */
-void LayoutConfig::updateIndicator(QListViewItem* selLayout)
+void LayoutConfig::updateIndicator(TQListViewItem* selLayout)
 {
 }
 
 
 void LayoutConfig::latinChanged()
 {
-    QListViewItem* selLayout = widget->listLayoutsDst->selectedItem();
+    TQListViewItem* selLayout = widget->listLayoutsDst->selectedItem();
     if (  !selLayout ) {
       widget->chkLatin->setChecked( false );
       widget->chkLatin->setEnabled( false );
       return;
     }
 
-	QString include;
+	TQString include;
 	if( widget->chkLatin->isChecked() )
 		include = "us";
     else
@@ -483,7 +483,7 @@ void LayoutConfig::latinChanged()
 	kdDebug() << "layout " << layoutUnitKey.toPair() << ", inc: " << include << endl;
 }
 
-void LayoutConfig::layoutSelChanged(QListViewItem *sel)
+void LayoutConfig::layoutSelChanged(TQListViewItem *sel)
 {
     widget->comboVariant->clear();
     widget->comboVariant->setEnabled( sel != NULL );
@@ -497,7 +497,7 @@ void LayoutConfig::layoutSelChanged(QListViewItem *sel)
 
 
 	LayoutUnit layoutUnitKey = getLayoutUnitKey(sel);
-	QString kbdLayout = layoutUnitKey.layout;
+	TQString kbdLayout = layoutUnitKey.layout;
 
 	// TODO: need better algorithm here for determining if needs us group
     if (  ! m_rules->isSingleGroup(kbdLayout) 
@@ -505,7 +505,7 @@ void LayoutConfig::layoutSelChanged(QListViewItem *sel)
         widget->chkLatin->setEnabled( false );
     }
     else {
-		QString inc = sel->text(LAYOUT_COLUMN_INCLUDE);
+		TQString inc = sel->text(LAYOUT_COLUMN_INCLUDE);
 		if ( inc.startsWith("us") || inc.startsWith("en") ) {
             widget->chkLatin->setChecked(true);
         }
@@ -514,14 +514,14 @@ void LayoutConfig::layoutSelChanged(QListViewItem *sel)
         }
     }
 
-	QStringList vars = m_rules->getAvailableVariants(kbdLayout);
+	TQStringList vars = m_rules->getAvailableVariants(kbdLayout);
 	kdDebug() << "layout " << kbdLayout << " has " << vars.count() << " variants" << endl;
     
 	if( vars.count() > 0 ) {
 		vars.prepend(DEFAULT_VARIANT_NAME);
 		widget->comboVariant->insertStringList(vars);
 	
-		QString variant = sel->text(LAYOUT_COLUMN_VARIANT);
+		TQString variant = sel->text(LAYOUT_COLUMN_VARIANT);
 		if( variant != NULL && variant.isEmpty() == false ) {
 			widget->comboVariant->setCurrentText(variant);
 		}
@@ -532,25 +532,25 @@ void LayoutConfig::layoutSelChanged(QListViewItem *sel)
     updateLayoutCommand();
 }
 
-QWidget* LayoutConfig::makeOptionsTab()
+TQWidget* LayoutConfig::makeOptionsTab()
 {
-  QListView *listView = widget->listOptions;
+  TQListView *listView = widget->listOptions;
 
   listView->setMinimumHeight(150);
   listView->setSortColumn( -1 );
   listView->setColumnText( 0, i18n( "Options" ) );
   listView->clear();
 
-  connect(listView, SIGNAL(clicked(QListViewItem *)), SLOT(changed()));
-  connect(listView, SIGNAL(clicked(QListViewItem *)), SLOT(updateOptionsCommand()));
+  connect(listView, TQT_SIGNAL(clicked(TQListViewItem *)), TQT_SLOT(changed()));
+  connect(listView, TQT_SIGNAL(clicked(TQListViewItem *)), TQT_SLOT(updateOptionsCommand()));
 
-  connect(widget->chkEnableOptions, SIGNAL(toggled(bool)), SLOT(changed()));
+  connect(widget->chkEnableOptions, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
 
-  connect(widget->checkResetOld, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(widget->checkResetOld, SIGNAL(toggled(bool)), SLOT(updateOptionsCommand()));
+  connect(widget->checkResetOld, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(widget->checkResetOld, TQT_SIGNAL(toggled(bool)), TQT_SLOT(updateOptionsCommand()));
 
   //Create controllers for all options
-  QDictIterator<char> it(m_rules->options());
+  TQDictIterator<char> it(m_rules->options());
   OptionListItem *parent;
   for (; it.current(); ++it)
   {
@@ -559,14 +559,14 @@ QWidget* LayoutConfig::makeOptionsTab()
       if( it.currentKey() == "ctrl" || it.currentKey() == "caps"
           || it.currentKey() == "altwin" ) {
         parent = new OptionListItem(listView, i18n( it.current() ),
-            QCheckListItem::RadioButtonController, it.currentKey());
+            TQCheckListItem::RadioButtonController, it.currentKey());
         OptionListItem *item = new OptionListItem(parent, i18n( "None" ),
-            QCheckListItem::RadioButton, "none");
-        item->setState(QCheckListItem::On);
+            TQCheckListItem::RadioButton, "none");
+        item->setState(TQCheckListItem::On);
       }
       else {
         parent = new OptionListItem(listView, i18n( it.current() ),
-            QCheckListItem::CheckBoxController, it.currentKey());
+            TQCheckListItem::CheckBoxController, it.currentKey());
       }
       parent->setOpen(true);
       m_optionGroups.insert(i18n(it.currentKey().local8Bit()), parent);
@@ -576,7 +576,7 @@ QWidget* LayoutConfig::makeOptionsTab()
   it.toFirst();
   for( ; it.current(); ++it)
   {
-    QString key = it.currentKey();
+    TQString key = it.currentKey();
     int pos = key.find(':');
     if (pos >= 0)
     {
@@ -585,14 +585,14 @@ QWidget* LayoutConfig::makeOptionsTab()
         parent = m_optionGroups["misc"];
       if (parent != NULL) {
       // workaroung for mistake in rules file for xkb options in XFree 4.2.0
-        QString text(it.current());
+        TQString text(it.current());
         text = text.replace( "Cap$", "Caps." );
-        if( parent->type() == QCheckListItem::RadioButtonController )
+        if( parent->type() == TQCheckListItem::RadioButtonController )
             new OptionListItem(parent, i18n(text.utf8()),
-                QCheckListItem::RadioButton, key);
+                TQCheckListItem::RadioButton, key);
         else
             new OptionListItem(parent, i18n(text.utf8()),
-                QCheckListItem::CheckBox, key);
+                TQCheckListItem::CheckBox, key);
       }
     }
   }
@@ -604,8 +604,8 @@ QWidget* LayoutConfig::makeOptionsTab()
 
 void LayoutConfig::updateOptionsCommand()
 {
-  QString setxkbmap;
-  QString options = createOptionString();
+  TQString setxkbmap;
+  TQString options = createOptionString();
 
   if( !options.isEmpty() ) {
     setxkbmap = "setxkbmap -option "; //-rules " + m_rule
@@ -618,13 +618,13 @@ void LayoutConfig::updateOptionsCommand()
 
 void LayoutConfig::updateLayoutCommand()
 {
-  QString setxkbmap;
-  QString layoutDisplayName;
-  QListViewItem* sel = widget->listLayoutsDst->selectedItem();
+  TQString setxkbmap;
+  TQString layoutDisplayName;
+  TQListViewItem* sel = widget->listLayoutsDst->selectedItem();
 
   if( sel != NULL ) {
-    QString kbdLayout = sel->text(LAYOUT_COLUMN_MAP);
-    QString variant = widget->comboVariant->currentText();
+    TQString kbdLayout = sel->text(LAYOUT_COLUMN_MAP);
+    TQString variant = widget->comboVariant->currentText();
 	if( variant == DEFAULT_VARIANT_NAME )
 		variant = "";
 
@@ -640,9 +640,9 @@ void LayoutConfig::updateLayoutCommand()
 	layoutDisplayName = sel->text(LAYOUT_COLUMN_DISPLAY_NAME);
 	if( layoutDisplayName.isEmpty() ) {
 		int count = 0;
-		QListViewItem *item = widget->listLayoutsDst->firstChild();
+		TQListViewItem *item = widget->listLayoutsDst->firstChild();
 		while (item) {
-			QString layout_ = item->text(LAYOUT_COLUMN_MAP);
+			TQString layout_ = item->text(LAYOUT_COLUMN_MAP);
 			if( layout_ == kbdLayout )
 				++count;
 			item = item->nextSibling();
@@ -680,8 +680,8 @@ void LayoutConfig::loadRules()
     delete m_rules;
     m_rules = new XkbRules();
 
-    QStringList modelsList;
-    QDictIterator<char> it(m_rules->models());
+    TQStringList modelsList;
+    TQDictIterator<char> it(m_rules->models());
     while (it.current()) {
         modelsList.append(i18n(it.current()));
         ++it;
@@ -695,35 +695,35 @@ void LayoutConfig::loadRules()
 	// fill in the additional layouts
 	widget->listLayoutsSrc->clear();
 	widget->listLayoutsDst->clear();
-	QDictIterator<char> it2(m_rules->layouts());
+	TQDictIterator<char> it2(m_rules->layouts());
 	
 	while (it2.current())
 	{
-		QString layout = it2.currentKey();
-		QString layoutName = it2.current();
-		QListViewItem *item = new QListViewItem(widget->listLayoutsSrc);
+		TQString layout = it2.currentKey();
+		TQString layoutName = it2.current();
+		TQListViewItem *item = new TQListViewItem(widget->listLayoutsSrc);
 		
 		item->setPixmap(LAYOUT_COLUMN_FLAG, LayoutIcon::getInstance().findPixmap(layout, true));
 		item->setText(LAYOUT_COLUMN_NAME, i18n(layoutName.latin1()));
 		item->setText(LAYOUT_COLUMN_MAP, layout);
 		++it2;
 	}
-	widget->listLayoutsSrc->setSorting(LAYOUT_COLUMN_NAME);	// from Qt3 QListView sorts by language
+	widget->listLayoutsSrc->setSorting(LAYOUT_COLUMN_NAME);	// from Qt3 TQListView sorts by language
 	
 	//TODO: reset options and xkb options
 }
 
 
-QString LayoutConfig::createOptionString()
+TQString LayoutConfig::createOptionString()
 {
-  QString options;
-  for (QDictIterator<char> it(m_rules->options()); it.current(); ++it)
+  TQString options;
+  for (TQDictIterator<char> it(m_rules->options()); it.current(); ++it)
   {
-    QString option(it.currentKey());
+    TQString option(it.currentKey());
 
     if (option.contains(':')) {
 
-      QString optionKey = option.mid(0, option.find(':'));
+      TQString optionKey = option.mid(0, option.find(':'));
       OptionListItem *item = m_optionGroups[optionKey];
 
       if( !item ) {
@@ -735,8 +735,8 @@ QString LayoutConfig::createOptionString()
       OptionListItem *child = item->findChildItem( option );
 
       if ( child ) {
-        if ( child->state() == QCheckListItem::On ) {
-          QString selectedName = child->optionName();
+        if ( child->state() == TQCheckListItem::On ) {
+          TQString selectedName = child->optionName();
           if ( !selectedName.isEmpty() && selectedName != "none" ) {
             if (!options.isEmpty())
               options.append(',');
@@ -763,19 +763,19 @@ void LayoutConfig::defaults()
 }
 
 
-OptionListItem::OptionListItem( OptionListItem *parent, const QString &text,
-								Type tt, const QString &optionName )
-	: QCheckListItem( parent, text, tt ), m_OptionName( optionName )
+OptionListItem::OptionListItem( OptionListItem *parent, const TQString &text,
+								Type tt, const TQString &optionName )
+	: TQCheckListItem( parent, text, tt ), m_OptionName( optionName )
 {
 }
 
-OptionListItem::OptionListItem( QListView *parent, const QString &text,
-								Type tt, const QString &optionName )
-	: QCheckListItem( parent, text, tt ), m_OptionName( optionName )
+OptionListItem::OptionListItem( TQListView *parent, const TQString &text,
+								Type tt, const TQString &optionName )
+	: TQCheckListItem( parent, text, tt ), m_OptionName( optionName )
 {
 }
 
-OptionListItem * OptionListItem::findChildItem( const QString& optionName )
+OptionListItem * OptionListItem::findChildItem( const TQString& optionName )
 {
 	OptionListItem *child = static_cast<OptionListItem *>( firstChild() );
 
@@ -792,12 +792,12 @@ OptionListItem * OptionListItem::findChildItem( const QString& optionName )
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_keyboard_layout(QWidget *parent, const char *)
+	KDE_EXPORT KCModule *create_keyboard_layout(TQWidget *parent, const char *)
 	{
 		return new LayoutConfig(parent, "kcmlayout");
 	}
 	
-	KDE_EXPORT KCModule *create_keyboard(QWidget *parent, const char *)
+	KDE_EXPORT KCModule *create_keyboard(TQWidget *parent, const char *)
 	{
 		return new KeyboardConfig(parent, "kcmlayout");
 	}

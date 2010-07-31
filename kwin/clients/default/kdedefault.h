@@ -13,9 +13,9 @@
 #ifndef _KDE_DEFAULT_H
 #define _KDE_DEFAULT_H
 
-#include <qbutton.h>
-#include <qbitmap.h>
-#include <qdatetime.h>
+#include <tqbutton.h>
+#include <tqbitmap.h>
+#include <tqdatetime.h>
 #include <kpixmap.h>
 #include <kcommondecoration.h>
 #include <kdecorationfactory.h>
@@ -35,7 +35,7 @@ class KDEDefaultHandler: public KDecorationFactory
 		~KDEDefaultHandler();
                 KDecoration* createDecoration( KDecorationBridge* b );
 		bool reset( unsigned long changed );
-		virtual QValueList< BorderSize > borderSizes() const;
+		virtual TQValueList< BorderSize > borderSizes() const;
 		virtual bool supports( Ability ability );
 
 	private:
@@ -43,11 +43,11 @@ class KDEDefaultHandler: public KDecorationFactory
 		void createPixmaps();
 		void freePixmaps();
 		void drawButtonBackground(KPixmap *pix,
-				const QColorGroup &g, bool sunken);
+				const TQColorGroup &g, bool sunken);
 };
 
 
-// class KDEDefaultButton : public QButton, public KDecorationDefines
+// class KDEDefaultButton : public TQButton, public KDecorationDefines
 class KDEDefaultButton : public KCommonDecorationButton
 {
 	public:
@@ -59,12 +59,12 @@ class KDEDefaultButton : public KCommonDecorationButton
 		void setBitmap(const unsigned char *bitmap);
 
 	protected:
-		void enterEvent(QEvent *);
-		void leaveEvent(QEvent *);
-		void drawButton(QPainter *p);
-		void drawButtonLabel(QPainter*) {;}
+		void enterEvent(TQEvent *);
+		void leaveEvent(TQEvent *);
+		void drawButton(TQPainter *p);
+		void drawButtonLabel(TQPainter*) {;}
 
-		QBitmap* deco;
+		TQBitmap* deco;
 		bool    large;
 		bool	isMouseOver;
 };
@@ -76,20 +76,20 @@ class KDEDefaultClient : public KCommonDecoration
 		KDEDefaultClient( KDecorationBridge* b, KDecorationFactory* f );
 		~KDEDefaultClient() {;}
 
-		virtual QString visibleName() const;
-		virtual QString defaultButtonsLeft() const;
-		virtual QString defaultButtonsRight() const;
+		virtual TQString visibleName() const;
+		virtual TQString defaultButtonsLeft() const;
+		virtual TQString defaultButtonsRight() const;
 		virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
 		virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
 		virtual KCommonDecorationButton *createButton(ButtonType type);
 
-		virtual QRegion cornerShape(WindowCorner corner);
+		virtual TQRegion cornerShape(WindowCorner corner);
 
 		void init();
 		void reset( unsigned long changed );
 
 	protected:
-		void paintEvent( QPaintEvent* );
+		void paintEvent( TQPaintEvent* );
 
 	private:
 		bool mustDrawHandle() const;

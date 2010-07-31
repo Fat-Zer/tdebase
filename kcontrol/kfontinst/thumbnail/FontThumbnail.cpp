@@ -28,9 +28,9 @@
 
 #include "FontThumbnail.h"
 #include "KfiConstants.h"
-#include <qimage.h>
-#include <qbitmap.h>
-#include <qpainter.h>
+#include <tqimage.h>
+#include <tqbitmap.h>
+#include <tqpainter.h>
 #include <kiconloader.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
@@ -52,9 +52,9 @@ CFontThumbnail::CFontThumbnail()
     KGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
 }
 
-bool CFontThumbnail::create(const QString &path, int width, int height, QImage &img)
+bool CFontThumbnail::create(const TQString &path, int width, int height, TQImage &img)
 {
-    QPixmap pix;
+    TQPixmap pix;
 
     if(itsEngine.draw(KURL(path), width, height, pix, 0, true))
     {

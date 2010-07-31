@@ -23,8 +23,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <time.h>
 
-#include <qregexp.h>
-#include <qstringlist.h>
+#include <tqregexp.h>
+#include <tqstringlist.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -63,17 +63,17 @@ void RecentlyLaunchedApps::init()
 
     configChanged();
 
-    QStringList recentApps = KickerSettings::recentAppsStat();
+    TQStringList recentApps = KickerSettings::recentAppsStat();
 
-    for (QStringList::ConstIterator it = recentApps.begin(); 
+    for (TQStringList::ConstIterator it = recentApps.begin(); 
          it != recentApps.end(); ++it )
     {
-        QRegExp re( "(\\d*) (\\d*) (.*)" );
+        TQRegExp re( "(\\d*) (\\d*) (.*)" );
         if (re.search(*it) != -1)
         {
             int nCount = re.cap(1).toInt();
             long lTime = re.cap(2).toLong();
-            QString szPath = re.cap(3);
+            TQString szPath = re.cap(3);
             m_appInfos.append(RecentlyLaunchedAppInfo(
                 szPath, nCount, time_t(lTime)));
         }
@@ -91,12 +91,12 @@ void RecentlyLaunchedApps::configChanged()
 
 void RecentlyLaunchedApps::save()
 {
-    QStringList recentApps;
+    TQStringList recentApps;
 
-    for (QValueList<RecentlyLaunchedAppInfo>::const_iterator it = 
+    for (TQValueList<RecentlyLaunchedAppInfo>::const_iterator it = 
             m_appInfos.constBegin(); it != m_appInfos.constEnd(); ++it)
     {
-        recentApps.append(QString("%1 %2 %3").arg((*it).getLaunchCount())
+        recentApps.append(TQString("%1 %2 %3").arg((*it).getLaunchCount())
                                              .arg((*it).getLastLaunchTime())
                                              .arg((*it).getDesktopPath()));
     }
@@ -105,17 +105,17 @@ void RecentlyLaunchedApps::save()
     KickerSettings::writeConfig();
 }
 
-void RecentlyLaunchedApps::appLaunched(const QString& strApp)
+void RecentlyLaunchedApps::appLaunched(const TQString& strApp)
 {
     // Inform other applications (like the quickstarter applet)
     // that an application was started
-    QByteArray params;
-    QDataStream stream(params, IO_WriteOnly);
+    TQByteArray params;
+    TQDataStream stream(params, IO_WriteOnly);
     stream << launchDCOPSignalSource() << strApp;
     KApplication::kApplication()->dcopClient()->emitDCOPSignal("appLauncher",
-        "serviceStartedByStorageId(QString,QString)", params);
+        "serviceStartedByStorageId(TQString,TQString)", params);
 
-    for (QValueList<RecentlyLaunchedAppInfo>::iterator it = m_appInfos.begin();
+    for (TQValueList<RecentlyLaunchedAppInfo>::iterator it = m_appInfos.begin();
          it != m_appInfos.end(); ++it)
     {
         if ((*it).getDesktopPath() == strApp)
@@ -131,13 +131,13 @@ void RecentlyLaunchedApps::appLaunched(const QString& strApp)
     qHeapSort(m_appInfos);
 }
 
-void RecentlyLaunchedApps::getRecentApps(QStringList& recentApps)
+void RecentlyLaunchedApps::getRecentApps(TQStringList& recentApps)
 {
     recentApps.clear();
 
     int maximumNum = KickerSettings::numVisibleEntries();
     int i = 0;
-    for (QValueList<RecentlyLaunchedAppInfo>::const_iterator it =
+    for (TQValueList<RecentlyLaunchedAppInfo>::const_iterator it =
             m_appInfos.constBegin();
          it != m_appInfos.constEnd() && i < maximumNum;
          ++it, ++i)
@@ -146,9 +146,9 @@ void RecentlyLaunchedApps::getRecentApps(QStringList& recentApps)
     }
 }
 
-void RecentlyLaunchedApps::removeItem( const QString& strName )
+void RecentlyLaunchedApps::removeItem( const TQString& strName )
 {
-    for (QValueList<RecentlyLaunchedAppInfo>::iterator it = m_appInfos.begin();
+    for (TQValueList<RecentlyLaunchedAppInfo>::iterator it = m_appInfos.begin();
          it != m_appInfos.end(); ++it)
     {
         if ((*it).getDesktopPath() == strName)
@@ -164,7 +164,7 @@ void RecentlyLaunchedApps::clearRecentApps()
     m_appInfos.clear();
 }
 
-QString RecentlyLaunchedApps::caption() const
+TQString RecentlyLaunchedApps::caption() const
 {
     return KickerSettings::recentVsOften() ?
            i18n("Recently Used Applications") :

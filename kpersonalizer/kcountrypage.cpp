@@ -15,9 +15,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qstringlist.h>
-#include <qlabel.h>
-#include <qmap.h>
+#include <tqstringlist.h>
+#include <tqlabel.h>
+#include <tqmap.h>
 
 #include <kapplication.h>
 #include <ksimpleconfig.h>
@@ -33,12 +33,12 @@
 
 #include "kcountrypage.h"
 
-KCountryPage::KCountryPage(QWidget *parent, const char *name ) : KCountryPageDlg(parent,name) {
+KCountryPage::KCountryPage(TQWidget *parent, const char *name ) : KCountryPageDlg(parent,name) {
 
 	px_introSidebar->setPixmap(UserIcon("step1.png"));
 
-	connect(cb_country, SIGNAL(activated(const QString &)), SLOT(setLangForCountry(const QString &)));
-	connect(cb_language, SIGNAL(activated(const QString &)), SLOT(setLanguageChanged()));
+	connect(cb_country, TQT_SIGNAL(activated(const TQString &)), TQT_SLOT(setLangForCountry(const TQString &)));
+	connect(cb_language, TQT_SIGNAL(activated(const TQString &)), TQT_SLOT(setLanguageChanged()));
 
 	// naturally, the language is not changed on startup
 	b_savedLanguageChanged = false;
@@ -76,20 +76,20 @@ KCountryPage::~KCountryPage(){
 
 void KCountryPage::loadCountryList(KLanguageButton *combo) {
 
-	QString sub = QString::fromLatin1("l10n/");
+	TQString sub = TQString::fromLatin1("l10n/");
 
 	// clear the list
 	combo->clear();
 
-	QStringList regionfiles = KGlobal::dirs()->findAllResources("locale", sub + "*.desktop");
-	QMap<QString,QString> regionnames;
+	TQStringList regionfiles = KGlobal::dirs()->findAllResources("locale", sub + "*.desktop");
+	TQMap<TQString,TQString> regionnames;
 
-	for ( QStringList::ConstIterator it = regionfiles.begin(); it != regionfiles.end(); ++it ) {
+	for ( TQStringList::ConstIterator it = regionfiles.begin(); it != regionfiles.end(); ++it ) {
 		KSimpleConfig entry(*it);
-		entry.setGroup(QString::fromLatin1("KCM Locale"));
-		QString name = entry.readEntry(QString::fromLatin1("Name"), i18n("without name"));
+		entry.setGroup(TQString::fromLatin1("KCM Locale"));
+		TQString name = entry.readEntry(TQString::fromLatin1("Name"), i18n("without name"));
 
-		QString tag = *it;
+		TQString tag = *it;
 		int index;
 
 		index = tag.findRev('/');
@@ -103,43 +103,43 @@ void KCountryPage::loadCountryList(KLanguageButton *combo) {
 		regionnames.insert(name, tag);
 	}
 
-	for ( QMap<QString,QString>::ConstIterator mit = regionnames.begin(); mit != regionnames.end(); ++mit ) {
+	for ( TQMap<TQString,TQString>::ConstIterator mit = regionnames.begin(); mit != regionnames.end(); ++mit ) {
 		combo->insertSubmenu( mit.key(), '-' + mit.data(), sub );
 	}
 
 	// add all languages to the list
-	QStringList countrylist = KGlobal::dirs()->findAllResources("locale", sub + "*/entry.desktop");
+	TQStringList countrylist = KGlobal::dirs()->findAllResources("locale", sub + "*/entry.desktop");
 	countrylist.sort();
 
-	for ( QStringList::ConstIterator it = countrylist.begin(); it != countrylist.end(); ++it ) {
+	for ( TQStringList::ConstIterator it = countrylist.begin(); it != countrylist.end(); ++it ) {
 		KSimpleConfig entry(*it);
-		entry.setGroup(QString::fromLatin1("KCM Locale"));
-		QString name = entry.readEntry(QString::fromLatin1("Name"), i18n("without name"));
-		QString submenu = '-' + entry.readEntry("Region");
+		entry.setGroup(TQString::fromLatin1("KCM Locale"));
+		TQString name = entry.readEntry(TQString::fromLatin1("Name"), i18n("without name"));
+		TQString submenu = '-' + entry.readEntry("Region");
 
-		QString tag = *it;
+		TQString tag = *it;
 		int index = tag.findRev('/');
 		tag.truncate(index);
 		index = tag.findRev('/');
 		tag = tag.mid(index+1);
 
-		QPixmap flag( locate( "locale", QString::fromLatin1("l10n/%1/flag.png").arg(tag) ) );
-		QIconSet icon( flag );
+		TQPixmap flag( locate( "locale", TQString::fromLatin1("l10n/%1/flag.png").arg(tag) ) );
+		TQIconSet icon( flag );
 		combo->insertItem( icon, name, tag, submenu );
 	}
 }
 
 void KCountryPage::fillLanguageMenu(KLanguageButton *combo) {
 	combo->clear();
-	QString submenu; // we are working on this menu
-	QStringList langlist = flang->getLangList();
-	QMap<QString,QString> langmap = flang->getLangMap();
-	QStringList::ConstIterator it;
+	TQString submenu; // we are working on this menu
+	TQStringList langlist = flang->getLangList();
+	TQMap<TQString,TQString> langmap = flang->getLangMap();
+	TQStringList::ConstIterator it;
 	for ( it = langlist.begin(); it != langlist.end(); ++it ) {
 		if ((*it).isNull()) {
 			combo->insertSeparator();
-			submenu = QString::fromLatin1("all");
-			combo->insertSubmenu(i18n("All"), submenu, QString::null);
+			submenu = TQString::fromLatin1("all");
+			combo->insertSubmenu(i18n("All"), submenu, TQString::null);
 			continue;
 		}
 		combo->insertItem(langmap[(*it)], (*it), submenu );
@@ -151,43 +151,43 @@ bool KCountryPage::save(KLanguageButton *comboCountry, KLanguageButton *comboLan
 	kdDebug() << "KCountryPage::save()" << endl;
 	KConfigBase *config = KGlobal::config();
 
-	config->setGroup(QString::fromLatin1("Locale"));
-	config->writeEntry(QString::fromLatin1("Country"), comboCountry->current(), true, true);
-	config->writeEntry(QString::fromLatin1("Language"), comboLang->current(), true, true);
+	config->setGroup(TQString::fromLatin1("Locale"));
+	config->writeEntry(TQString::fromLatin1("Country"), comboCountry->current(), true, true);
+	config->writeEntry(TQString::fromLatin1("Language"), comboLang->current(), true, true);
 	config->sync();
 
 	// only make the system reload the language, if the selected one deferes from the old saved one.
 	if (b_savedLanguageChanged) {
 		// Tell kdesktop about the new language
-		QCString replyType; QByteArray replyData;
-		QByteArray data, da;
-		QDataStream stream( data, IO_WriteOnly );
+		TQCString replyType; TQByteArray replyData;
+		TQByteArray data, da;
+		TQDataStream stream( data, IO_WriteOnly );
 		stream << comboLang->current();
 		if ( !kapp->dcopClient()->isAttached() )
 			kapp->dcopClient()->attach();
 		// ksycoca needs to be rebuilt
 		KProcess proc;
-		proc << QString::fromLatin1("kbuildsycoca");
+		proc << TQString::fromLatin1("kbuildsycoca");
 		proc.start(KProcess::DontCare);
 		kdDebug() << "KLocaleConfig::save : sending signal to kdesktop" << endl;
 		// inform kicker and kdeskop about the new language
-		kapp->dcopClient()->send( "kicker", "Panel", "restart()", QString::null);
+		kapp->dcopClient()->send( "kicker", "Panel", "restart()", TQString::null);
 		// call, not send, so that we know it's done before coming back
 		// (we both access kdeglobals...)
-		kapp->dcopClient()->call( "kdesktop", "KDesktopIface", "languageChanged(QString)", data, replyType, replyData );
+		kapp->dcopClient()->call( "kdesktop", "KDesktopIface", "languageChanged(TQString)", data, replyType, replyData );
 	}
 	// KPersonalizer::next() probably waits for a return-value
 	return true;
 }
 
-void KCountryPage::setLangForCountry(const QString &country) {
+void KCountryPage::setLangForCountry(const TQString &country) {
 	KSimpleConfig ent(locate("locale", "l10n/" + country + "/entry.desktop"), true);
-	ent.setGroup(QString::fromLatin1("KCM Locale"));
-	langs = ent.readListEntry(QString::fromLatin1("Languages"));
+	ent.setGroup(TQString::fromLatin1("KCM Locale"));
+	langs = ent.readListEntry(TQString::fromLatin1("Languages"));
 
-	QString lang = QString::fromLatin1("en_US");
+	TQString lang = TQString::fromLatin1("en_US");
 	// use the first INSTALLED langauge in the list, or default to C
-	for ( QStringList::Iterator it = langs.begin(); it != langs.end(); ++it ) {
+	for ( TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it ) {
 		if (cb_language->contains(*it)) {
 			lang = *it;
 			break;

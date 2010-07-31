@@ -1,8 +1,8 @@
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qvbuttongroup.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqvbuttongroup.h>
+#include <tqwhatsthis.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -16,102 +16,102 @@
 #include "filetypedetails.h"
 #include "typeslistitem.h"
 
-FileTypeDetails::FileTypeDetails( QWidget * parent, const char * name )
-  : QTabWidget( parent, name ), m_item( 0L )
+FileTypeDetails::FileTypeDetails( TQWidget * parent, const char * name )
+  : TQTabWidget( parent, name ), m_item( 0L )
 {
-  QString wtstr;
+  TQString wtstr;
   // First tab - General
-  QWidget * firstWidget = new QWidget(this);
-  QVBoxLayout *firstLayout = new QVBoxLayout(firstWidget,KDialog::marginHint(),
+  TQWidget * firstWidget = new TQWidget(this);
+  TQVBoxLayout *firstLayout = new TQVBoxLayout(firstWidget,KDialog::marginHint(),
                                        KDialog::spacingHint());
 
-  QHBoxLayout *hBox = new QHBoxLayout(0L, 0, KDialog::spacingHint());
+  TQHBoxLayout *hBox = new TQHBoxLayout(0L, 0, KDialog::spacingHint());
   firstLayout->addLayout(hBox, 1);
 
   iconButton = new KIconButton(firstWidget);
   iconButton->setIconType(KIcon::Desktop, KIcon::MimeType);
-  connect(iconButton, SIGNAL(iconChanged(QString)), SLOT(updateIcon(QString)));
+  connect(iconButton, TQT_SIGNAL(iconChanged(TQString)), TQT_SLOT(updateIcon(TQString)));
 
   iconButton->setFixedSize(70, 70);
   hBox->addWidget(iconButton);
 
-  QWhatsThis::add( iconButton, i18n("This button displays the icon associated"
+  TQWhatsThis::add( iconButton, i18n("This button displays the icon associated"
     " with the selected file type. Click on it to choose a different icon.") );
 
-  QGroupBox *gb = new QGroupBox(i18n("Filename Patterns"), firstWidget);
+  TQGroupBox *gb = new TQGroupBox(i18n("Filename Patterns"), firstWidget);
   hBox->addWidget(gb);
 
-  QGridLayout *grid = new QGridLayout(gb, 3, 2, KDialog::marginHint(),
+  TQGridLayout *grid = new TQGridLayout(gb, 3, 2, KDialog::marginHint(),
                                       KDialog::spacingHint());
   grid->addRowSpacing(0, fontMetrics().lineSpacing());
 
-  extensionLB = new QListBox(gb);
-  connect(extensionLB, SIGNAL(highlighted(int)), SLOT(enableExtButtons(int)));
+  extensionLB = new TQListBox(gb);
+  connect(extensionLB, TQT_SIGNAL(highlighted(int)), TQT_SLOT(enableExtButtons(int)));
   grid->addMultiCellWidget(extensionLB, 1, 2, 0, 0);
   grid->setRowStretch(0, 0);
   grid->setRowStretch(1, 1);
   grid->setRowStretch(2, 0);
 
-  QWhatsThis::add( extensionLB, i18n("This box contains a list of patterns that can be"
+  TQWhatsThis::add( extensionLB, i18n("This box contains a list of patterns that can be"
     " used to identify files of the selected type. For example, the pattern *.txt is"
     " associated with the file type 'text/plain'; all files ending in '.txt' are recognized"
     " as plain text files.") );
 
-  addExtButton = new QPushButton(i18n("Add..."), gb);
+  addExtButton = new TQPushButton(i18n("Add..."), gb);
   addExtButton->setEnabled(false);
-  connect(addExtButton, SIGNAL(clicked()),
-          this, SLOT(addExtension()));
+  connect(addExtButton, TQT_SIGNAL(clicked()),
+          this, TQT_SLOT(addExtension()));
   grid->addWidget(addExtButton, 1, 1);
 
-  QWhatsThis::add( addExtButton, i18n("Add a new pattern for the selected file type.") );
+  TQWhatsThis::add( addExtButton, i18n("Add a new pattern for the selected file type.") );
 
-  removeExtButton = new QPushButton(i18n("Remove"), gb);
+  removeExtButton = new TQPushButton(i18n("Remove"), gb);
   removeExtButton->setEnabled(false);
-  connect(removeExtButton, SIGNAL(clicked()),
-          this, SLOT(removeExtension()));
+  connect(removeExtButton, TQT_SIGNAL(clicked()),
+          this, TQT_SLOT(removeExtension()));
   grid->addWidget(removeExtButton, 2, 1);
 
-  QWhatsThis::add( removeExtButton, i18n("Remove the selected filename pattern.") );
+  TQWhatsThis::add( removeExtButton, i18n("Remove the selected filename pattern.") );
 
-  gb = new QGroupBox(i18n("Description"), firstWidget);
+  gb = new TQGroupBox(i18n("Description"), firstWidget);
   firstLayout->addWidget(gb);
 
   gb->setColumnLayout(1, Qt::Horizontal);
   description = new KLineEdit(gb);
-  connect(description, SIGNAL(textChanged(const QString &)),
-          SLOT(updateDescription(const QString &)));
+  connect(description, TQT_SIGNAL(textChanged(const TQString &)),
+          TQT_SLOT(updateDescription(const TQString &)));
 
   wtstr = i18n("You can enter a short description for files of the selected"
     " file type (e.g. 'HTML Page'). This description will be used by applications"
     " like Konqueror to display directory content.");
-  QWhatsThis::add( gb, wtstr );
-  QWhatsThis::add( description, wtstr );
+  TQWhatsThis::add( gb, wtstr );
+  TQWhatsThis::add( description, wtstr );
 
   serviceListWidget = new KServiceListWidget( KServiceListWidget::SERVICELIST_APPLICATIONS, firstWidget );
-  connect( serviceListWidget, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
+  connect( serviceListWidget, TQT_SIGNAL(changed(bool)), this, TQT_SIGNAL(changed(bool)));
   firstLayout->addWidget(serviceListWidget, 5);
 
   // Second tab - Embedding
-  QWidget * secondWidget = new QWidget(this);
-  QVBoxLayout *secondLayout = new QVBoxLayout(secondWidget, KDialog::marginHint(),
+  TQWidget * secondWidget = new TQWidget(this);
+  TQVBoxLayout *secondLayout = new TQVBoxLayout(secondWidget, KDialog::marginHint(),
                                        KDialog::spacingHint());
 
-  m_autoEmbed = new QVButtonGroup( i18n("Left Click Action"), secondWidget );
+  m_autoEmbed = new TQVButtonGroup( i18n("Left Click Action"), secondWidget );
   m_autoEmbed->layout()->setSpacing( KDialog::spacingHint() );
   secondLayout->addWidget( m_autoEmbed, 1 );
 
-  m_autoEmbed->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)3, (QSizePolicy::SizeType)0, m_autoEmbed->sizePolicy().hasHeightForWidth() ) );
+  m_autoEmbed->setSizePolicy( TQSizePolicy( (TQSizePolicy::SizeType)3, (TQSizePolicy::SizeType)0, m_autoEmbed->sizePolicy().hasHeightForWidth() ) );
 
   // The order of those three items is very important. If you change it, fix typeslistitem.cpp !
-  new QRadioButton( i18n("Show file in embedded viewer"), m_autoEmbed );
-  new QRadioButton( i18n("Show file in separate viewer"), m_autoEmbed );
-  m_rbGroupSettings = new QRadioButton( i18n("Use settings for '%1' group"), m_autoEmbed );
-  connect(m_autoEmbed, SIGNAL( clicked( int ) ), SLOT( slotAutoEmbedClicked( int ) ));
+  new TQRadioButton( i18n("Show file in embedded viewer"), m_autoEmbed );
+  new TQRadioButton( i18n("Show file in separate viewer"), m_autoEmbed );
+  m_rbGroupSettings = new TQRadioButton( i18n("Use settings for '%1' group"), m_autoEmbed );
+  connect(m_autoEmbed, TQT_SIGNAL( clicked( int ) ), TQT_SLOT( slotAutoEmbedClicked( int ) ));
 
-  m_chkAskSave = new QCheckBox( i18n("Ask whether to save to disk instead"), m_autoEmbed);
-  connect(m_chkAskSave, SIGNAL( toggled(bool) ), SLOT( slotAskSaveToggled(bool) ));
+  m_chkAskSave = new TQCheckBox( i18n("Ask whether to save to disk instead"), m_autoEmbed);
+  connect(m_chkAskSave, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( slotAskSaveToggled(bool) ));
 
-  QWhatsThis::add( m_autoEmbed, i18n("Here you can configure what the Konqueror file manager"
+  TQWhatsThis::add( m_autoEmbed, i18n("Here you can configure what the Konqueror file manager"
     " will do when you click on a file of this type. Konqueror can display the file in"
     " an embedded viewer or start up a separate application. If set to 'Use settings for G group',"
     " Konqueror will behave according to the settings of the group G this type belongs to,"
@@ -121,7 +121,7 @@ FileTypeDetails::FileTypeDetails( QWidget * parent, const char * name )
 
   embedServiceListWidget = new KServiceListWidget( KServiceListWidget::SERVICELIST_SERVICES, secondWidget );
   embedServiceListWidget->setMinimumHeight( serviceListWidget->sizeHint().height() );
-  connect( embedServiceListWidget, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
+  connect( embedServiceListWidget, TQT_SIGNAL(changed(bool)), this, TQT_SIGNAL(changed(bool)));
   secondLayout->addWidget(embedServiceListWidget, 3);
 
   addTab( firstWidget, i18n("&General") );
@@ -133,7 +133,7 @@ void FileTypeDetails::updateRemoveButton()
     removeExtButton->setEnabled(extensionLB->count()>0);
 }
 
-void FileTypeDetails::updateIcon(QString icon)
+void FileTypeDetails::updateIcon(TQString icon)
 {
   if (!m_item)
     return;
@@ -143,7 +143,7 @@ void FileTypeDetails::updateIcon(QString icon)
   emit changed(true);
 }
 
-void FileTypeDetails::updateDescription(const QString &desc)
+void FileTypeDetails::updateDescription(const TQString &desc)
 {
   if (!m_item)
     return;
@@ -159,11 +159,11 @@ void FileTypeDetails::addExtension()
     return;
 
   bool ok;
-  QString ext = KInputDialog::getText( i18n( "Add New Extension" ),
+  TQString ext = KInputDialog::getText( i18n( "Add New Extension" ),
     i18n( "Extension:" ), "*.", &ok, this );
   if (ok) {
     extensionLB->insertItem(ext);
-    QStringList patt = m_item->patterns();
+    TQStringList patt = m_item->patterns();
     patt += ext;
     m_item->setPatterns(patt);
     updateRemoveButton();
@@ -177,7 +177,7 @@ void FileTypeDetails::removeExtension()
     return;
   if ( !m_item )
     return;
-  QStringList patt = m_item->patterns();
+  TQStringList patt = m_item->patterns();
   patt.remove(extensionLB->text(extensionLB->currentItem()));
   m_item->setPatterns(patt);
   extensionLB->removeItem(extensionLB->currentItem());
@@ -210,9 +210,9 @@ void FileTypeDetails::updateAskSave()
     button = embedParent ? 0 : 1;
   }
 
-  QString mimeType = m_item->name();
+  TQString mimeType = m_item->name();
 
-  QString dontAskAgainName;
+  TQString dontAskAgainName;
 
   if (button == 0) // Embedded
     dontAskAgainName = "askEmbedOrSave"+mimeType;
@@ -271,7 +271,7 @@ void FileTypeDetails::setTypeItem( TypesListItem * tlitem )
     iconButton->setIcon(tlitem->icon());
   else
     iconButton->resetIcon();
-  description->setText(tlitem ? tlitem->comment() : QString::null);
+  description->setText(tlitem ? tlitem->comment() : TQString::null);
   if ( tlitem )
     m_rbGroupSettings->setText( i18n("Use settings for '%1' group").arg( tlitem->majorType() ) );
   extensionLB->clear();

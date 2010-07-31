@@ -1,11 +1,11 @@
 #ifndef DOCMETAINFO_H
 #define DOCMETAINFO_H
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qdir.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
+#include <tqdir.h>
+#include <tqmap.h>
 
 #include "docentry.h"
 
@@ -29,7 +29,7 @@ class DocMetaInfo
 
     void scanMetaInfo( bool force = false );
 
-    DocEntry *addDocEntry( const QString &fileName );
+    DocEntry *addDocEntry( const TQString &fileName );
 
     void addDocEntry( DocEntry * );
 
@@ -44,11 +44,11 @@ class DocMetaInfo
     void endProcess( DocEntry *entry, DocEntryTraverser *traverser );
     void endTraverseEntries( DocEntryTraverser * );
 
-    static QString languageName( const QString &langcode );
+    static TQString languageName( const TQString &langcode );
 
   protected:
-    DocEntry *scanMetaInfoDir( const QString &filename, DocEntry *parent );
-    DocEntry *addDirEntry( const QDir &dir, DocEntry *parent );
+    DocEntry *scanMetaInfoDir( const TQString &filename, DocEntry *parent );
+    DocEntry *addDirEntry( const TQDir &dir, DocEntry *parent );
     void traverseEntry( DocEntry *, DocEntryTraverser * );
 
   private:
@@ -63,9 +63,9 @@ class DocMetaInfo
 
     DocEntry mRootEntry;
 
-    QStringList mLanguages;
+    TQStringList mLanguages;
 
-    QMap<QString,QString> mLanguageNames;
+    TQMap<TQString,TQString> mLanguageNames;
 
     HTMLSearch *mHtmlSearch;
 

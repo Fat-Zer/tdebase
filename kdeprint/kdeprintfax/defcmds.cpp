@@ -19,10 +19,10 @@
 
 #include "defcmds.h"
 
-#include <qregexp.h>
+#include <tqregexp.h>
 #include <kstandarddirs.h>
 
-QString defaultCommand(const QString& cmd)
+TQString defaultCommand(const TQString& cmd)
 {
 	QString	str(cmd);
 	QRegExp	r("%exe_(\\w+)");

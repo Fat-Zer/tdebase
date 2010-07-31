@@ -9,10 +9,10 @@
 #ifndef __B2CLIENT_H
 #define __B2CLIENT_H
 
-#include <qvariant.h>
-#include <qdatetime.h>
-#include <qbutton.h>
-#include <qbitmap.h>
+#include <tqvariant.h>
+#include <tqdatetime.h>
+#include <tqbutton.h>
+#include <tqbitmap.h>
 #include <kpixmap.h>
 #include <kdecoration.h>
 #include <kdecorationfactory.h>
@@ -28,31 +28,31 @@ class B2Client;
 class B2Button : public QButton
 {
 public:
-    B2Button(B2Client *_client=0, QWidget *parent=0, const QString& tip=NULL, const int realizeBtns = LeftButton);
+    B2Button(B2Client *_client=0, TQWidget *parent=0, const TQString& tip=NULL, const int realizeBtns = LeftButton);
     ~B2Button() {};
 
-    void setBg(const QColor &c){bg = c;}
+    void setBg(const TQColor &c){bg = c;}
     void setPixmaps(KPixmap *pix, KPixmap *pixDown, KPixmap *iPix,
                     KPixmap *iPixDown);
     void setPixmaps(int button_id);
     void setToggle(){setToggleType(Toggle);}
     void setActive(bool on){setOn(on);}
     void setUseMiniIcon(){useMiniIcon = true;}
-    QSize sizeHint() const;
-    QSizePolicy sizePolicy() const;
+    TQSize sizeHint() const;
+    TQSizePolicy sizePolicy() const;
 protected:
-    virtual void drawButton(QPainter *p);
-    void drawButtonLabel(QPainter *){;}
+    virtual void drawButton(TQPainter *p);
+    void drawButtonLabel(TQPainter *){;}
 
-    void mousePressEvent( QMouseEvent* e );
-    void mouseReleaseEvent( QMouseEvent* e );
+    void mousePressEvent( TQMouseEvent* e );
+    void mouseReleaseEvent( TQMouseEvent* e );
 private:
-    void enterEvent(QEvent *e);
-    void leaveEvent(QEvent *e);
+    void enterEvent(TQEvent *e);
+    void leaveEvent(TQEvent *e);
     
     bool useMiniIcon;
     KPixmap *icon[6];
-    QColor bg; //only use one color (the rest is pixmap) so forget QPalette ;)
+    TQColor bg; //only use one color (the rest is pixmap) so forget TQPalette ;)
 
 public:
     B2Client* client;
@@ -69,23 +69,23 @@ public:
     ~B2Titlebar(){;}
     bool isFullyObscured() const {return isfullyobscured;}
     void recalcBuffer();
-    QSpacerItem *captionSpacer;
+    TQSpacerItem *captionSpacer;
 protected:
-    void paintEvent( QPaintEvent* );
+    void paintEvent( TQPaintEvent* );
     bool x11Event(XEvent *e);
-    void mouseDoubleClickEvent( QMouseEvent * );
-    void wheelEvent(QWheelEvent *);
-    void mousePressEvent( QMouseEvent * );
-    void mouseReleaseEvent( QMouseEvent * );
-    void mouseMoveEvent(QMouseEvent *);
-    void resizeEvent(QResizeEvent *ev);
+    void mouseDoubleClickEvent( TQMouseEvent * );
+    void wheelEvent(TQWheelEvent *);
+    void mousePressEvent( TQMouseEvent * );
+    void mouseReleaseEvent( TQMouseEvent * );
+    void mouseMoveEvent(TQMouseEvent *);
+    void resizeEvent(TQResizeEvent *ev);
 private:
-    void drawTitlebar(QPainter &p, bool state);
+    void drawTitlebar(TQPainter &p, bool state);
 
     B2Client *client;
-    QString oldTitle;
+    TQString oldTitle;
     KPixmap titleBuffer;
-    QPoint moveOffset;
+    TQPoint moveOffset;
     bool set_x11mask;
     bool isfullyobscured;
     bool shift_move;
@@ -103,12 +103,12 @@ public:
     void titleMoveAbs(int new_ofs);
     void titleMoveRel(int xdiff);
     // transparent stuff
-    virtual bool drawbound(const QRect& geom, bool clear);
+    virtual bool drawbound(const TQRect& geom, bool clear);
 protected:
-    void resizeEvent( QResizeEvent* );
-    void paintEvent( QPaintEvent* );
-    void showEvent( QShowEvent* );
-    void windowWrapperShowEvent( QShowEvent* );
+    void resizeEvent( TQResizeEvent* );
+    void paintEvent( TQPaintEvent* );
+    void showEvent( TQShowEvent* );
+    void windowWrapperShowEvent( TQShowEvent* );
     void captionChange();
     void desktopChange();
     void shadeChange();
@@ -116,11 +116,11 @@ protected:
     void maximizeChange();
     void iconChange();
     void doShape();
-    Position mousePosition( const QPoint& p ) const;
-    void resize(const QSize&);
+    Position mousePosition( const TQPoint& p ) const;
+    void resize(const TQSize&);
     void borders(int &, int &, int &, int &) const;
-    QSize minimumSize() const;
-    bool eventFilter(QObject *, QEvent *);
+    TQSize minimumSize() const;
+    bool eventFilter(TQObject *, TQEvent *);
 private slots:
     void menuButtonPressed();
     //void slotReset();
@@ -128,8 +128,8 @@ private slots:
     void shadeButtonClicked();
     void resizeButtonPressed();
 private:
-    void addButtons(const QString& s, const QString tips[],
-                    B2Titlebar* tb, QBoxLayout* titleLayout);
+    void addButtons(const TQString& s, const TQString tips[],
+                    B2Titlebar* tb, TQBoxLayout* titleLayout);
     void positionButtons();
     void calcHiddenButtons();
     bool mustDrawHandle() const;
@@ -137,20 +137,20 @@ private:
     enum ButtonType{BtnMenu=0, BtnSticky, BtnIconify, BtnMax, BtnClose,
         BtnHelp, BtnShade, BtnResize, BtnCount};
     B2Button* button[BtnCount];
-    QGridLayout *g;
+    TQGridLayout *g;
     // Border spacers
-    QSpacerItem *topSpacer; 
-    QSpacerItem *bottomSpacer; 
-    QSpacerItem *leftSpacer;
-    QSpacerItem *rightSpacer;
+    TQSpacerItem *topSpacer; 
+    TQSpacerItem *bottomSpacer; 
+    TQSpacerItem *leftSpacer;
+    TQSpacerItem *rightSpacer;
     B2Titlebar *titlebar;
     int bar_x_ofs;
     int in_unobs;
-    QTime time;
+    TQTime time;
     bool resizable;
 };
 
-class B2ClientFactory : public QObject, public KDecorationFactory
+class B2ClientFactory : public TQObject, public KDecorationFactory
 {
 public:
     B2ClientFactory();
@@ -158,7 +158,7 @@ public:
     virtual KDecoration *createDecoration(KDecorationBridge *);
     virtual bool reset(unsigned long changed);
     virtual bool supports( Ability ability );
-    QValueList< B2ClientFactory::BorderSize > borderSizes() const;
+    TQValueList< B2ClientFactory::BorderSize > borderSizes() const;
 };
 
 }

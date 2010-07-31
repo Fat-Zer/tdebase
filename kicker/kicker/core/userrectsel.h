@@ -24,9 +24,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __userrectsel_h__
 #define __userrectsel_h__
 
-#include <qwidget.h>
-#include <qvaluevector.h>
-#include <qcolor.h>
+#include <tqwidget.h>
+#include <tqvaluevector.h>
+#include <tqcolor.h>
 
 #include <kpanelextension.h>
 
@@ -47,7 +47,7 @@ class UserRectSel : public QWidget
                 {
                 }
 
-                PanelStrut(const QRect& rect, int XineramaScreen,
+                PanelStrut(const TQRect& rect, int XineramaScreen,
                            KPanelExtension::Position pos,
                            KPanelExtension::Alignment alignment)
                     : m_rect(rect),
@@ -69,29 +69,29 @@ class UserRectSel : public QWidget
                     return !(*this == rhs);
                 }
 
-                QRect m_rect;
+                TQRect m_rect;
                 int m_screen;
                 KPanelExtension::Position m_pos;
                 KPanelExtension::Alignment m_alignment;
         };
 
-        typedef QValueVector<PanelStrut> RectList;
-        static PanelStrut select(const RectList& rects, const QPoint& _offset, const QColor& color);
+        typedef TQValueVector<PanelStrut> RectList;
+        static PanelStrut select(const RectList& rects, const TQPoint& _offset, const TQColor& color);
 
     protected:
-        void mouseReleaseEvent(QMouseEvent *);
-        void mouseMoveEvent(QMouseEvent *);
+        void mouseReleaseEvent(TQMouseEvent *);
+        void mouseMoveEvent(TQMouseEvent *);
 
     private:
-        UserRectSel(const RectList& rects, const QPoint& _offset, const QColor& color);
+        UserRectSel(const RectList& rects, const TQPoint& _offset, const TQColor& color);
         ~UserRectSel();
         void paintCurrent();
 
         const RectList rectangles;
         PanelStrut current;
-        QPoint offset;
-        QWidget *_frame[8];
-        QColor _color;
+        TQPoint offset;
+        TQWidget *_frame[8];
+        TQColor _color;
 
         friend class ShutUpCompiler;
 };

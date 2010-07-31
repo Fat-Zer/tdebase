@@ -32,24 +32,24 @@ class KProcess;
 class KrashConfig;
 class KTempFile;
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class BackTrace : public QObject
 {
   Q_OBJECT
 
 public:
-  BackTrace(const KrashConfig *krashconf, QObject *parent,
+  BackTrace(const KrashConfig *krashconf, TQObject *parent,
             const char *name = 0);
   ~BackTrace();
 
   void start();
 
 signals:
-  void append(const QString &str); // Just the new text
+  void append(const TQString &str); // Just the new text
 
   void someError();
-  void done(const QString &); // replaces whole text
+  void done(const TQString &); // replaces whole text
 
 protected slots:
   void slotProcessExited(KProcess * proc);
@@ -61,6 +61,6 @@ private:
   KProcess *m_proc;
   const KrashConfig *m_krashconf;
   KTempFile *m_temp;
-  QString m_strBt;
+  TQString m_strBt;
 };
 #endif

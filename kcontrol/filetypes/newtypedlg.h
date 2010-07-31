@@ -1,8 +1,8 @@
 #ifndef _NEWTYPEDLG_H
 #define _NEWTYPEDLG_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <kdialogbase.h>
 
 class KLineEdit;
@@ -16,13 +16,13 @@ class QComboBox;
 class NewTypeDialog : public KDialogBase
 {
 public:
-  NewTypeDialog(QStringList groups, QWidget *parent = 0, 
+  NewTypeDialog(TQStringList groups, TQWidget *parent = 0, 
 		const char *name = 0);
-  QString group() const;
-  QString text() const;
+  TQString group() const;
+  TQString text() const;
 private:
   KLineEdit *typeEd;
-  QComboBox *groupCombo;
+  TQComboBox *groupCombo;
 };
 
 #endif

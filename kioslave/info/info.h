@@ -1,7 +1,7 @@
 #ifndef __info_h__
 #define __info_h__
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kio/slavebase.h>
 
@@ -11,7 +11,7 @@ class InfoProtocol : public KIO::SlaveBase
 {
 public:
 
-    InfoProtocol( const QCString &pool, const QCString &app );
+    InfoProtocol( const TQCString &pool, const TQCString &app );
     virtual ~InfoProtocol();
 
     virtual void get( const KURL& url );
@@ -21,16 +21,16 @@ public:
 protected:
 
     void decodeURL( const KURL &url );
-    void decodePath( QString path );
+    void decodePath( TQString path );
 
 private:
 
-    QString   m_page;
-    QString   m_node;
+    TQString   m_page;
+    TQString   m_node;
 
-    QString   m_perl;
-    QString   m_infoScript;
-    QString   m_infoConf;
+    TQString   m_perl;
+    TQString   m_infoScript;
+    TQString   m_infoConf;
 };
 
 #endif // __info_h__

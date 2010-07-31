@@ -44,8 +44,8 @@ class ThemeStandard: public ThemeEngine
 {
   Q_OBJECT
 public:
-  ThemeStandard( QWidget *, const char*, const QStringList& );
-  //inline const ThemeEngineConfig *config( QWidget *p, KConfig *kc ) { return 0L; }
+  ThemeStandard( TQWidget *, const char*, const TQStringList& );
+  //inline const ThemeEngineConfig *config( TQWidget *p, KConfig *kc ) { return 0L; }
 
 public slots:
   inline void slotUpdateProgress( int i )
@@ -56,14 +56,14 @@ public slots:
   {
     if( mStatus ) mStatus->slotUpdateSteps( i );
   }
-  inline void slotSetText( const QString& s )
+  inline void slotSetText( const TQString& s )
   {
     if( mStatus ) mStatus->slotSetMessage( s );
   }
-  void slotSetPixmap( const QString& );
+  void slotSetPixmap( const TQString& );
 
 private:
-  void showEvent( QShowEvent * );
+  void showEvent( TQShowEvent * );
   void _readSettings();
   void _initUi();
 
@@ -77,17 +77,17 @@ private:
   bool mSbAtTop;
   bool mSbVisible;
   bool mSbPbVisible;
-  QString mSbFontName;
+  TQString mSbFontName;
   int mSbFontSz;
   bool mSbFontBold;
   bool mSbFontItalic;
-  QFont mSbFont;
-  QColor mSbFg;
-  QColor mSbBg;
-  QString mSbIcon;
+  TQFont mSbFont;
+  TQColor mSbFg;
+  TQColor mSbBg;
+  TQString mSbIcon;
   bool mIconsVisible;
   bool mIconsJumping;
-  QString mSplashScreen;
+  TQString mSplashScreen;
 };
 
 #endif

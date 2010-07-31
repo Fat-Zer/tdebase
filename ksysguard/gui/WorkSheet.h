@@ -24,7 +24,7 @@
 #ifndef KSG_WORKSHEET_H
 #define KSG_WORKSHEET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <SensorDisplay.h>
 
@@ -42,35 +42,35 @@ class QStringList;
   layout. The number of columns can not be changed. Displays are added by
   dragging a sensor from the sensor browser over the WorkSheet.
  */
-class WorkSheet : public QWidget, public KSGRD::SensorBoard
+class WorkSheet : public TQWidget, public KSGRD::SensorBoard
 {
   Q_OBJECT
 
   public:
-    WorkSheet( QWidget* parent, const char *name = 0 );
-    WorkSheet( uint rows, uint columns, uint interval, QWidget* parent,
+    WorkSheet( TQWidget* parent, const char *name = 0 );
+    WorkSheet( uint rows, uint columns, uint interval, TQWidget* parent,
                const char *name = 0  );
     ~WorkSheet();
 
-    bool load( const QString &fileName );
-    bool save( const QString &fileName );
+    bool load( const TQString &fileName );
+    bool save( const TQString &fileName );
 
     void cut();
     void copy();
     void paste();
 
-    void setFileName( const QString &fileName );
-    const QString& fileName() const;
+    void setFileName( const TQString &fileName );
+    const TQString& fileName() const;
 
     bool modified() const;
 
-    void setTitle( const QString &title );
-    QString title() const;
+    void setTitle( const TQString &title );
+    TQString title() const;
 
-    KSGRD::SensorDisplay* addDisplay( const QString &hostname,
-                                      const QString &monitor,
-                                      const QString &sensorType,
-                                      const QString &sensorDescr,
+    KSGRD::SensorDisplay* addDisplay( const TQString &hostname,
+                                      const TQString &monitor,
+                                      const TQString &sensorType,
+                                      const TQString &sensorDescr,
                                       uint rows, uint columns );
     //Returns the sensor at position row,column.
     //Return NULL if invalid row or column
@@ -86,24 +86,24 @@ class WorkSheet : public QWidget, public KSGRD::SensorBoard
     void applyStyle();
 
   signals:
-    void sheetModified( QWidget *sheet );
-    void titleChanged( QWidget *sheet );
+    void sheetModified( TQWidget *sheet );
+    void titleChanged( TQWidget *sheet );
 
   protected:
-    virtual QSize sizeHint() const;
-    void dragEnterEvent( QDragEnterEvent* );
-    void dropEvent( QDropEvent* );
-    void customEvent( QCustomEvent* );
+    virtual TQSize sizeHint() const;
+    void dragEnterEvent( TQDragEnterEvent* );
+    void dropEvent( TQDropEvent* );
+    void customEvent( TQCustomEvent* );
 
   private:
     void removeDisplay( KSGRD::SensorDisplay *display );
 
-    bool replaceDisplay( uint row, uint column, QDomElement& element );
+    bool replaceDisplay( uint row, uint column, TQDomElement& element );
 
     void replaceDisplay( uint row, uint column,
                          KSGRD::SensorDisplay* display = 0 );
 
-    void collectHosts( QStringList &list );
+    void collectHosts( TQStringList &list );
 
     void createGrid( uint rows, uint columns );
 
@@ -113,16 +113,16 @@ class WorkSheet : public QWidget, public KSGRD::SensorBoard
 
     void fixTabOrder();
 
-    QString currentDisplayAsXML();
+    TQString currentDisplayAsXML();
 
     bool mModified;
 
     uint mRows;
     uint mColumns;
 
-    QGridLayout* mGridLayout;
-    QString mFileName;
-    QString mTitle;
+    TQGridLayout* mGridLayout;
+    TQString mFileName;
+    TQString mTitle;
 
     /**
       This two dimensional array stores the pointers to the sensor displays

@@ -28,11 +28,11 @@
 #define __NS_PLUGINLOADER_H__
 
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdict.h>
-#include <qobject.h>
-#include <qwidget.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
+#include <tqobject.h>
+#include <tqwidget.h>
 #include <qxembed.h>
 
 #include "NSPluginClassIface_stub.h"
@@ -48,28 +48,28 @@ class NSPluginInstance : public EMBEDCLASS
   Q_OBJECT
 
 public:
-    NSPluginInstance(QWidget *parent);
-    void init( const QCString& app, const QCString& obj );
+    NSPluginInstance(TQWidget *parent);
+    void init( const TQCString& app, const TQCString& obj );
     ~NSPluginInstance();
 public: // wrappers
-    void javascriptResult( int id, QString result ) { stub->javascriptResult( id, result ); }
+    void javascriptResult( int id, TQString result ) { stub->javascriptResult( id, result ); }
 
 private slots:
     void loadPlugin();
     void doLoadPlugin();
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    void showEvent  (QShowEvent *);
+    void resizeEvent(TQResizeEvent *event);
+    void showEvent  (TQShowEvent *);
     void windowChanged(WId w);
-    virtual void focusInEvent( QFocusEvent* event );
-    virtual void focusOutEvent( QFocusEvent* event );
+    virtual void focusInEvent( TQFocusEvent* event );
+    virtual void focusOutEvent( TQFocusEvent* event );
     class NSPluginLoader *_loader;
     bool shown;
     bool inited;
     int resize_count;
-    QPushButton *_button;
-    QGridLayout *_layout;
+    TQPushButton *_button;
+    TQGridLayout *_layout;
     NSPluginInstanceIface_stub* stub;
 private: // wrappers
     void displayPlugin();
@@ -86,11 +86,11 @@ public:
   NSPluginLoader();
   ~NSPluginLoader();
 
-  NSPluginInstance *newInstance(QWidget *parent,
-                                QString url, QString mimeType, bool embed,
-                                QStringList argn, QStringList argv,
-                                QString appId, QString callbackId, bool reload,
-                                bool doPost, QByteArray postData);
+  NSPluginInstance *newInstance(TQWidget *parent,
+                                TQString url, TQString mimeType, bool embed,
+                                TQStringList argn, TQStringList argv,
+                                TQString appId, TQString callbackId, bool reload,
+                                bool doPost, TQByteArray postData);
 
   static NSPluginLoader *instance();
   void release();
@@ -98,23 +98,23 @@ public:
 protected:
   void scanPlugins();
 
-  QString lookup(const QString &mimeType);
-  QString lookupMimeType(const QString &url);
+  TQString lookup(const TQString &mimeType);
+  TQString lookupMimeType(const TQString &url);
 
   bool loadViewer();
   void unloadViewer();
 
 protected slots:
-  void applicationRegistered( const QCString& appId );
+  void applicationRegistered( const TQCString& appId );
   void processTerminated( KProcess *proc );
 
 private:
-  QStringList _searchPaths;
-  QDict<QString> _mapping, _filetype;
+  TQStringList _searchPaths;
+  TQDict<TQString> _mapping, _filetype;
 
   KProcess *_process;
   bool _running;
-  QCString _dcopid;
+  TQCString _dcopid;
   NSPluginViewerIface_stub *_viewer;
   bool _useArtsdsp;
 

@@ -16,7 +16,7 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qapplication.h>
+#include <tqapplication.h>
 
 #include <kdebug.h>
 #include <kdesktopfile.h>
@@ -25,9 +25,9 @@
 #include "extensionInfo.h"
 
 
-ExtensionInfo::ExtensionInfo(const QString& desktopFile,
-                             const QString& configFile,
-                             const QString& configPath)
+ExtensionInfo::ExtensionInfo(const TQString& desktopFile,
+                             const TQString& configFile,
+                             const TQString& configPath)
     : _configFile(configFile),
       _configPath(configPath),
       _desktopFile(desktopFile)
@@ -73,13 +73,13 @@ void ExtensionInfo::load()
         }
 
         kdDebug()<<"BEFORE X-KDE-PanelExt-Positions parsing"<<endl;
-        QStringList allowedPos;
+        TQStringList allowedPos;
         allowedPos << "BOTTOM" << "TOP" << "LEFT" << "RIGHT" << "BOTTOM";
         allowedPos= df.readListEntry("X-KDE-PanelExt-Positions", allowedPos);
 
         for (unsigned int i=0;i<allowedPos.count();i++)
         {
-            QString pos = allowedPos[i].upper();
+            TQString pos = allowedPos[i].upper();
             kdDebug() << pos << endl;
             if (pos == "LEFT")
             {
@@ -170,7 +170,7 @@ void ExtensionInfo::configChanged()
         _orig_position = _position = position;
     }
 
-    int alignment = c.readNumEntry ("Alignment", QApplication::reverseLayout() ? 2 : 0);
+    int alignment = c.readNumEntry ("Alignment", TQApplication::reverseLayout() ? 2 : 0);
     if (alignment != _alignment && alignment != _orig_alignment)
     {
         _orig_alignment = _alignment = alignment;
@@ -197,8 +197,8 @@ void ExtensionInfo::setDefaults()
 {
     // defaults
     _position       = 3;
-    _alignment      = QApplication::reverseLayout() ? 2 : 0;
-    _xineramaScreen = QApplication::desktop()->primaryScreen();
+    _alignment      = TQApplication::reverseLayout() ? 2 : 0;
+    _xineramaScreen = TQApplication::desktop()->primaryScreen();
     _size           = 2;
     _showLeftHB     = false;
     _showRightHB    = true;

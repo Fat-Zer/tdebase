@@ -35,9 +35,9 @@ void HTMLSearch::setupDocEntry( KHC::DocEntry *entry )
 //  entry->dump();
 }
 
-QString HTMLSearch::defaultSearch( KHC::DocEntry *entry )
+TQString HTMLSearch::defaultSearch( KHC::DocEntry *entry )
 {
-  QString htsearch = "cgi:";
+  TQString htsearch = "cgi:";
   htsearch += mConfig->readPathEntry( "htsearch" );
   htsearch += "?words=%k&method=and&format=-desc&config=";
   htsearch += entry->identifier();
@@ -45,15 +45,15 @@ QString HTMLSearch::defaultSearch( KHC::DocEntry *entry )
   return htsearch;
 }
 
-QString HTMLSearch::defaultIndexer( KHC::DocEntry * )
+TQString HTMLSearch::defaultIndexer( KHC::DocEntry * )
 {
-  QString indexer = mConfig->readPathEntry( "indexer" );
+  TQString indexer = mConfig->readPathEntry( "indexer" );
   indexer += " --indexdir=%i %f";
 
   return indexer;
 }
 
-QString HTMLSearch::defaultIndexTestFile( KHC::DocEntry *entry )
+TQString HTMLSearch::defaultIndexTestFile( KHC::DocEntry *entry )
 {
   return entry->identifier() + ".exists";
 }

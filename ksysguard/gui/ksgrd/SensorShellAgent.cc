@@ -45,8 +45,8 @@ SensorShellAgent::~SensorShellAgent()
   }
 }
 	
-bool SensorShellAgent::start( const QString &host, const QString &shell,
-                              const QString &command, int )
+bool SensorShellAgent::start( const TQString &host, const TQString &shell,
+                              const TQString &command, int )
 {
   mRetryCount = 3;
   mDaemon = new KProcess;
@@ -55,16 +55,16 @@ bool SensorShellAgent::start( const QString &host, const QString &shell,
   mShell = shell;
   mCommand = command;
 
-  connect( mDaemon, SIGNAL( processExited( KProcess* ) ),
-           SLOT( daemonExited( KProcess* ) ) );
-  connect( mDaemon, SIGNAL( receivedStdout( KProcess*, char*, int ) ),
-           SLOT( msgRcvd( KProcess*, char*, int ) ) );
-  connect( mDaemon, SIGNAL( receivedStderr( KProcess*, char*, int ) ),
-           SLOT( errMsgRcvd( KProcess*, char*, int ) ) );
-  connect( mDaemon, SIGNAL( wroteStdin( KProcess* ) ),
-           SLOT( msgSent( KProcess* ) ) );
+  connect( mDaemon, TQT_SIGNAL( processExited( KProcess* ) ),
+           TQT_SLOT( daemonExited( KProcess* ) ) );
+  connect( mDaemon, TQT_SIGNAL( receivedStdout( KProcess*, char*, int ) ),
+           TQT_SLOT( msgRcvd( KProcess*, char*, int ) ) );
+  connect( mDaemon, TQT_SIGNAL( receivedStderr( KProcess*, char*, int ) ),
+           TQT_SLOT( errMsgRcvd( KProcess*, char*, int ) ) );
+  connect( mDaemon, TQT_SIGNAL( wroteStdin( KProcess* ) ),
+           TQT_SLOT( msgSent( KProcess* ) ) );
 
-  QString cmd;
+  TQString cmd;
   if ( !command.isEmpty() )
     cmd =  command;
   else
@@ -80,7 +80,7 @@ bool SensorShellAgent::start( const QString &host, const QString &shell,
   return true;
 }
 
-void SensorShellAgent::hostInfo( QString &shell, QString &command,
+void SensorShellAgent::hostInfo( TQString &shell, TQString &command,
                                  int &port) const
 {
   shell = mShell;
@@ -101,7 +101,7 @@ void SensorShellAgent::msgRcvd( KProcess*, char *buffer, int buflen )
   if ( !buffer || buflen == 0 )
     return;
   mRetryCount = 3; //we recieved an answer, so reset our retry count back to 3
-  QString aux = QString::fromLocal8Bit( buffer, buflen );
+  TQString aux = TQString::fromLocal8Bit( buffer, buflen );
 
   processAnswer( aux );
 }
@@ -111,7 +111,7 @@ void SensorShellAgent::errMsgRcvd( KProcess*, char *buffer, int buflen )
   if ( !buffer || buflen == 0 )
     return;
 
-  QString buf = QString::fromLocal8Bit( buffer, buflen );
+  TQString buf = TQString::fromLocal8Bit( buffer, buflen );
 
   kdDebug(1215) << "SensorShellAgent: Warning, received text over stderr!"
                 << endl << buf << endl;

@@ -20,7 +20,7 @@
   Boston, MA 02110-1301, USA.
 */
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #include <kconfig.h>
 
@@ -48,17 +48,17 @@ WebClient::~WebClient()
   // Empty.
 }
 
-QString WebClient::visibleName() const
+TQString WebClient::visibleName() const
 {
     return i18n("Web");
 }
 
-QString WebClient::defaultButtonsLeft() const
+TQString WebClient::defaultButtonsLeft() const
 {
     return "S";
 }
 
-QString WebClient::defaultButtonsRight() const
+TQString WebClient::defaultButtonsRight() const
 {
     return "HIAX";
 }
@@ -156,7 +156,7 @@ WebClient::init()
 {
   // title height
   const int textVMargin   = 2;
-  QFontMetrics fm(options()->font(isActive(), isToolWindow()));
+  TQFontMetrics fm(options()->font(isActive(), isToolWindow()));
 
   // border size
   switch(options()->preferredBorderSize( factory())) {
@@ -201,7 +201,7 @@ WebClient::reset( unsigned long changed )
     // font has changed -- update title height
     // title height
     const int textVMargin   = 2;
-    QFontMetrics fm(options()->font(isActive(), isToolWindow()));
+    TQFontMetrics fm(options()->font(isActive(), isToolWindow()));
     titleHeight_ = QMAX(QMAX(14, fm.height() + textVMargin * 2), borderSize_);
     if (0 != titleHeight_ % 2)
       titleHeight_ += 1;
@@ -213,7 +213,7 @@ WebClient::reset( unsigned long changed )
 }
 
   void
-WebClient::paintEvent(QPaintEvent * pe)
+WebClient::paintEvent(TQPaintEvent * pe)
 {
   int r_x, r_y, r_x2, r_y2;
   widget()->rect().coords(&r_x, &r_y, &r_x2, &r_y2);
@@ -223,12 +223,12 @@ WebClient::paintEvent(QPaintEvent * pe)
   const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
   const int ttlHeight = layoutMetric(LM_TitleHeight);
   const int titleEdgeBottomBottom = r_y+titleEdgeTop+ttlHeight+titleEdgeBottom-1;
-  QRect titleRect = QRect(r_x+titleEdgeLeft+buttonsLeftWidth(), r_y+titleEdgeTop,
+  TQRect titleRect = TQRect(r_x+titleEdgeLeft+buttonsLeftWidth(), r_y+titleEdgeTop,
             r_x2-titleEdgeRight-buttonsRightWidth()-(r_x+titleEdgeLeft+buttonsLeftWidth()),
             titleEdgeBottomBottom-(r_y+titleEdgeTop) );
   titleRect.setTop(1);
 
-  QPainter p(widget());
+  TQPainter p(widget());
 
   p.setPen(Qt::black);
   p.setBrush(options()->colorGroup(ColorFrame, isActive()).background());
@@ -291,38 +291,38 @@ void WebClient::updateWindowShape()
   if (!shape_)
     return;
 
-  QRegion mask(0, 0, width(), height());
+  TQRegion mask(0, 0, width(), height());
 
   int r(width());
   int b(height());
 
   // Remove top-left corner.
 
-  mask -= QRegion(0, 0, 5, 1);
-  mask -= QRegion(0, 1, 3, 1);
-  mask -= QRegion(0, 2, 2, 1);
-  mask -= QRegion(0, 3, 1, 2);
+  mask -= TQRegion(0, 0, 5, 1);
+  mask -= TQRegion(0, 1, 3, 1);
+  mask -= TQRegion(0, 2, 2, 1);
+  mask -= TQRegion(0, 3, 1, 2);
 
   // Remove top-right corner.
 
-  mask -= QRegion(r - 5, 0, 5, 1);
-  mask -= QRegion(r - 3, 1, 3, 1);
-  mask -= QRegion(r - 2, 2, 2, 1);
-  mask -= QRegion(r - 1, 3, 1, 2);
+  mask -= TQRegion(r - 5, 0, 5, 1);
+  mask -= TQRegion(r - 3, 1, 3, 1);
+  mask -= TQRegion(r - 2, 2, 2, 1);
+  mask -= TQRegion(r - 1, 3, 1, 2);
 
   // Remove bottom-left corner.
 
-  mask -= QRegion(0, b - 5, 1, 3);
-  mask -= QRegion(0, b - 3, 2, 1);
-  mask -= QRegion(0, b - 2, 3, 1);
-  mask -= QRegion(0, b - 1, 5, 1);
+  mask -= TQRegion(0, b - 5, 1, 3);
+  mask -= TQRegion(0, b - 3, 2, 1);
+  mask -= TQRegion(0, b - 2, 3, 1);
+  mask -= TQRegion(0, b - 1, 5, 1);
 
   // Remove bottom-right corner.
 
-  mask -= QRegion(r - 5, b - 1, 5, 1);
-  mask -= QRegion(r - 3, b - 2, 3, 1);
-  mask -= QRegion(r - 2, b - 3, 2, 1);
-  mask -= QRegion(r - 1, b - 5, 1, 2);
+  mask -= TQRegion(r - 5, b - 1, 5, 1);
+  mask -= TQRegion(r - 3, b - 2, 3, 1);
+  mask -= TQRegion(r - 2, b - 3, 2, 1);
+  mask -= TQRegion(r - 1, b - 5, 1, 2);
 
   setMask(mask);
 }
@@ -372,9 +372,9 @@ bool WebFactory::supports( Ability ability )
     };
 }
 
-QValueList< WebFactory::BorderSize > WebFactory::borderSizes() const
+TQValueList< WebFactory::BorderSize > WebFactory::borderSizes() const
 { // the list must be sorted
-  return QValueList< BorderSize >() << BorderNormal << BorderLarge <<
+  return TQValueList< BorderSize >() << BorderNormal << BorderLarge <<
       BorderVeryLarge <<  BorderHuge << BorderVeryHuge << BorderOversized;
 }
 

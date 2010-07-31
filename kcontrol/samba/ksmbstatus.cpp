@@ -22,7 +22,7 @@
 #include <string.h>
 #include <time.h>
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -32,10 +32,10 @@
 
 
 #define Before(ttf,in) in.left(in.find(ttf))
-#define After(ttf,in)  (in.contains(ttf)?QString(in.mid(in.find(ttf)+QString(ttf).length())):QString(""))
+#define After(ttf,in)  (in.contains(ttf)?TQString(in.mid(in.find(ttf)+TQString(ttf).length())):TQString(""))
 
-NetMon::NetMon( QWidget * parent, KConfig *config, const char * name )
-   : QWidget(parent, name)
+NetMon::NetMon( TQWidget * parent, KConfig *config, const char * name )
+   : TQWidget(parent, name)
    ,configFile(config)
    ,showmountProc(0)
    ,strShare("")
@@ -49,12 +49,12 @@ NetMon::NetMon( QWidget * parent, KConfig *config, const char * name )
    ,iMachine(0)
    ,iPid(0)
 {
-    QBoxLayout *topLayout = new QVBoxLayout(this, KDialog::marginHint(),
+    TQBoxLayout *topLayout = new TQVBoxLayout(this, KDialog::marginHint(),
         KDialog::spacingHint());
     topLayout->setAutoAdd(true);
 
-    list=new QListView(this,"Hello");
-    version=new QLabel(this);
+    list=new TQListView(this,"Hello");
+    version=new TQLabel(this);
 
     list->setAllColumnsShowFocus(true);
     list->setMinimumSize(425,200);
@@ -68,22 +68,22 @@ NetMon::NetMon( QWidget * parent, KConfig *config, const char * name )
     list->addColumn(i18n("PID"));
     list->addColumn(i18n("Open Files"));
 
-    timer = new QTimer(this);
+    timer = new TQTimer(this);
     timer->start(15000);
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    TQObject::connect(timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(update()));
     update();
 }
 
 void NetMon::processNFSLine(char *bufline, int)
 {
-   QCString line(bufline);
+   TQCString line(bufline);
    if (line.contains(":/"))
-      new QListViewItem(list,"NFS",After(":",line),Before(":/",line));
+      new TQListViewItem(list,"NFS",After(":",line),Before(":/",line));
 }
 
 void NetMon::processSambaLine(char *bufline, int)
 {
-   QCString line(bufline);
+   TQCString line(bufline);
    rownumber++;
    if (rownumber == 2)
       version->setText(bufline); // second line = samba version
@@ -107,7 +107,7 @@ void NetMon::processSambaLine(char *bufline, int)
 
       line=line.mid(iMachine,line.length());
       strMachine=line;
-      new QListViewItem(list,"SMB",strShare,strMachine, strUser,strGroup,strPid/*,strSince*/);
+      new TQListViewItem(list,"SMB",strShare,strMachine, strUser,strGroup,strPid/*,strSince*/);
    }
    else if (readingpart==connexions)
       readingpart=locked_files;
@@ -167,7 +167,7 @@ void NetMon::update()
    list->clear();
    /* Re-read the Contents ... */
 
-   QString path(::getenv("PATH"));
+   TQString path(::getenv("PATH"));
    path += "/bin:/sbin:/usr/bin:/usr/sbin";
 
    rownumber=0;
@@ -175,8 +175,8 @@ void NetMon::update()
    nrpid=0;
    process->setEnvironment("PATH", path);
    connect(process,
-           SIGNAL(receivedStdout(KProcess *, char *, int)),
-           SLOT(slotReceivedData(KProcess *, char *, int)));
+           TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+           TQT_SLOT(slotReceivedData(KProcess *, char *, int)));
    *process << "smbstatus";
    if (!process->start(KProcess::Block,KProcess::Stdout))
       version->setText(i18n("Error: Unable to run smbstatus"));
@@ -185,11 +185,11 @@ void NetMon::update()
    else
    {
       // ok -> count the number of locked files for each pid
-      for (QListViewItem *row=list->firstChild();row!=0;row=row->itemBelow())
+      for (TQListViewItem *row=list->firstChild();row!=0;row=row->itemBelow())
       {
 //         cerr<<"NetMon::update: this should be the pid: "<<row->text(5)<<endl;
          int pid=row->text(5).toInt();
-         row->setText(6,QString("%1").arg((lo)[pid]));
+         row->setText(6,TQString("%1").arg((lo)[pid]));
       }
    }
    delete process;
@@ -200,12 +200,12 @@ void NetMon::update()
    showmountProc=new KProcess();
    showmountProc->setEnvironment("PATH", path);
    *showmountProc<<"showmount"<<"-a"<<"localhost";
-   connect(showmountProc,SIGNAL(receivedStdout(KProcess *, char *, int)),SLOT(slotReceivedData(KProcess *, char *, int)));
+   connect(showmountProc,TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),TQT_SLOT(slotReceivedData(KProcess *, char *, int)));
    //without this timer showmount hangs up to 5 minutes
    //if the portmapper daemon isn't running
-   QTimer::singleShot(5000,this,SLOT(killShowmount()));
+   TQTimer::singleShot(5000,this,TQT_SLOT(killShowmount()));
    //kdDebug()<<"starting kill timer with 5 seconds"<<endl;
-   connect(showmountProc,SIGNAL(processExited(KProcess*)),this,SLOT(killShowmount()));
+   connect(showmountProc,TQT_SIGNAL(processExited(KProcess*)),this,TQT_SLOT(killShowmount()));
    if (!showmountProc->start(KProcess::NotifyOnExit,KProcess::Stdout)) // run showmount
    {
       delete showmountProc;

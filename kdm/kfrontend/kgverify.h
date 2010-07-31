@@ -29,17 +29,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "kgreeterplugin.h"
 #include "kfdialog.h"
 
-#include <qlayout.h>
-#include <qtimer.h>
-#include <qvaluevector.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
+#include <tqvaluevector.h>
 
 #include <sys/time.h>
 #include <time.h>
 
 // helper class, nuke when qt supports suspend()/resume()
-class QXTimer : public QObject {
+class QXTimer : public TQObject {
 	Q_OBJECT
-	typedef QObject inherited;
+	typedef TQObject inherited;
 
   public:
 	QXTimer();
@@ -55,7 +55,7 @@ class QXTimer : public QObject {
 	void slotTimeout();
 
   private:
-	QTimer timer;
+	TQTimer timer;
 	struct timeval stv;
 	long left;
 };
@@ -67,7 +67,7 @@ class KGVerifyHandler {
 	virtual void verifyOk() = 0;
 	virtual void verifyFailed() = 0;
 	virtual void verifyRetry() = 0;
-	virtual void verifySetUser( const QString &user ) = 0;
+	virtual void verifySetUser( const TQString &user ) = 0;
 	virtual void updateStatus( bool fail, bool caps, int left ); // for themed only
 };
 
@@ -83,29 +83,29 @@ struct GreeterPluginHandle {
 	kgreeterplugin_info *info;
 };
 
-typedef QValueVector<int> PluginList;
+typedef TQValueVector<int> PluginList;
 
-class KGVerify : public QObject, public KGreeterPluginHandler {
+class KGVerify : public TQObject, public KGreeterPluginHandler {
 	Q_OBJECT
-	typedef QObject inherited;
+	typedef TQObject inherited;
 
   public:
 	KGVerify( KGVerifyHandler *handler, KdmThemer *themer,
-	          QWidget *parent, QWidget *predecessor,
-	          const QString &fixedEntity, const PluginList &pluginList,
+	          TQWidget *parent, TQWidget *predecessor,
+	          const TQString &fixedEntity, const PluginList &pluginList,
 	          KGreeterPlugin::Function func, KGreeterPlugin::Context ctx );
 	virtual ~KGVerify();
-	QPopupMenu *getPlugMenu();
-	void loadUsers( const QStringList &users );
-	void presetEntity( const QString &entity, int field );
-	QString getEntity() const;
-	void setUser( const QString &user );
+	TQPopupMenu *getPlugMenu();
+	void loadUsers( const TQStringList &users );
+	void presetEntity( const TQString &entity, int field );
+	TQString getEntity() const;
+	void setUser( const TQString &user );
 	/* virtual */ void selectPlugin( int id );
 	bool entitiesLocal() const;
 	bool entitiesFielded() const;
 	bool entityPresettable() const;
 	bool isClassic() const;
-	QString pluginName() const;
+	TQString pluginName() const;
 	void setEnabled( bool on );
 	void abort();
 	void suspend();
@@ -115,42 +115,42 @@ class KGVerify : public QObject, public KGreeterPluginHandler {
 
 	int coreLock;
 
-	static bool handleFailVerify( QWidget *parent );
-	static PluginList init( const QStringList &plugins );
+	static bool handleFailVerify( TQWidget *parent );
+	static PluginList init( const TQStringList &plugins );
 	static void done();
 
   public slots:
 	void start();
 
   protected:
-	bool eventFilter( QObject *, QEvent * );
-	void MsgBox( QMessageBox::Icon typ, const QString &msg );
+	bool eventFilter( TQObject *, TQEvent * );
+	void MsgBox( TQMessageBox::Icon typ, const TQString &msg );
 	void setTimer();
 	void updateLockStatus();
 	virtual void updateStatus() = 0;
 	void handleVerify();
 
 	QXTimer timer;
-	QString fixedEntity, presEnt, curUser;
+	TQString fixedEntity, presEnt, curUser;
 	PluginList pluginList;
 	KGVerifyHandler *handler;
 	KdmThemer *themer;
-	QWidget *parent, *predecessor;
+	TQWidget *parent, *predecessor;
 	KGreeterPlugin *greet;
-	QPopupMenu *plugMenu;
+	TQPopupMenu *plugMenu;
 	int curPlugin, presFld, timedLeft, deadTicks;
-	QCString pName;
+	TQCString pName;
 	KGreeterPlugin::Function func;
 	KGreeterPlugin::Context ctx;
 	bool capsLocked;
 	bool enabled, running, suspended, failed, delayed, cont;
 	bool authTok, isClear, timeable;
 
-	static void VMsgBox( QWidget *parent, const QString &user, QMessageBox::Icon type, const QString &mesg );
-	static void VErrBox( QWidget *parent, const QString &user, const char *msg );
-	static void VInfoBox( QWidget *parent, const QString &user, const char *msg );
+	static void VMsgBox( TQWidget *parent, const TQString &user, TQMessageBox::Icon type, const TQString &mesg );
+	static void VErrBox( TQWidget *parent, const TQString &user, const char *msg );
+	static void VInfoBox( TQWidget *parent, const TQString &user, const char *msg );
 
-	static QValueVector<GreeterPluginHandle> greetPlugins;
+	static TQValueVector<GreeterPluginHandle> greetPlugins;
 
   private:
 	bool applyPreset();
@@ -166,12 +166,12 @@ class KGVerify : public QObject, public KGreeterPluginHandler {
   public: // from KGreetPluginHandler
 	virtual void gplugReturnText( const char *text, int tag );
 	virtual void gplugReturnBinary( const char *data );
-	virtual void gplugSetUser( const QString &user );
+	virtual void gplugSetUser( const TQString &user );
 	virtual void gplugStart();
 	virtual void gplugActivity();
-	virtual void gplugMsgBox( QMessageBox::Icon type, const QString &text );
+	virtual void gplugMsgBox( TQMessageBox::Icon type, const TQString &text );
 
-	static QVariant getConf( void *ctx, const char *key, const QVariant &dflt );
+	static TQVariant getConf( void *ctx, const char *key, const TQVariant &dflt );
 };
 
 class KGStdVerify : public KGVerify {
@@ -179,20 +179,20 @@ class KGStdVerify : public KGVerify {
 	typedef KGVerify inherited;
 
   public:
-	KGStdVerify( KGVerifyHandler *handler, QWidget *parent,
-	             QWidget *predecessor, const QString &fixedEntity,
+	KGStdVerify( KGVerifyHandler *handler, TQWidget *parent,
+	             TQWidget *predecessor, const TQString &fixedEntity,
 	             const PluginList &pluginList,
 	             KGreeterPlugin::Function func, KGreeterPlugin::Context ctx );
 	virtual ~KGStdVerify();
-	QLayout *getLayout() const { return grid; }
+	TQLayout *getLayout() const { return grid; }
 	void selectPlugin( int id );
 
   protected:
 	void updateStatus();
 
   private:
-	QGridLayout *grid;
-	QLabel *failedLabel;
+	TQGridLayout *grid;
+	TQLabel *failedLabel;
 	int failedLabelState;
 
   private slots:
@@ -205,8 +205,8 @@ class KGThemedVerify : public KGVerify {
 
   public:
 	KGThemedVerify( KGVerifyHandler *handler, KdmThemer *themer,
-	                QWidget *parent, QWidget *predecessor,
-	                const QString &fixedEntity,
+	                TQWidget *parent, TQWidget *predecessor,
+	                const TQString &fixedEntity,
 	                const PluginList &pluginList,
 	                KGreeterPlugin::Function func,
 	                KGreeterPlugin::Context ctx );
@@ -225,7 +225,7 @@ class KGChTok : public FDialog, public KGVerifyHandler {
 	typedef FDialog inherited;
 
   public:
-	KGChTok( QWidget *parent, const QString &user,
+	KGChTok( TQWidget *parent, const TQString &user,
 	         const PluginList &pluginList, int curPlugin,
 	         KGreeterPlugin::Function func, KGreeterPlugin::Context ctx );
 	~KGChTok();
@@ -242,7 +242,7 @@ class KGChTok : public FDialog, public KGVerifyHandler {
 	virtual void verifyOk();
 	virtual void verifyFailed();
 	virtual void verifyRetry();
-	virtual void verifySetUser( const QString &user );
+	virtual void verifySetUser( const TQString &user );
 };
 
 #endif /* KGVERIFY_H */

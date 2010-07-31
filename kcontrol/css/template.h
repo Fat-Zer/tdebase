@@ -2,18 +2,18 @@
 #define __TEMPLATE_H__
 
 
-#include <qstring.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqmap.h>
 
 class CSSTemplate
 {
 public:
 
-  CSSTemplate(QString fname) : _filename(fname) {};
-  bool expand(QString destname, const QMap<QString,QString> &dict);
+  CSSTemplate(TQString fname) : _filename(fname) {};
+  bool expand(TQString destname, const TQMap<TQString,TQString> &dict);
 
 protected:
-  QString _filename;
+  TQString _filename;
 
 };
 

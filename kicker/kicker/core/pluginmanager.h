@@ -24,9 +24,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __PLUGIN_MANAGER_H__
 #define __PLUGIN_MANAGER_H__
 
-#include <qmap.h>
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqmap.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 #include <kdemacros.h>
 #include <kstaticdeleter.h>
 
@@ -49,19 +49,19 @@ public:
     static AppletInfo::List builtinButtons(bool sort = true, AppletInfo::List* list = 0);
     static AppletInfo::List specialButtons(bool sort = true, AppletInfo::List* list = 0);
 
-    AppletContainer* createAppletContainer(const QString& desktopFile,
+    AppletContainer* createAppletContainer(const TQString& desktopFile,
                                            bool isStartup,
-                                           const QString& configFile,
-                                           QPopupMenu* opMenu,
-                                           QWidget* parent,
+                                           const TQString& configFile,
+                                           TQPopupMenu* opMenu,
+                                           TQWidget* parent,
                                            bool isImmutable = false);
-    ExtensionContainer* createExtensionContainer(const QString& desktopFile,
+    ExtensionContainer* createExtensionContainer(const TQString& desktopFile,
                                                  bool isStartup,
-                                                 const QString& configFile,
-                                                 const QString& extensionId);
+                                                 const TQString& configFile,
+                                                 const TQString& extensionId);
 
-    KPanelApplet* loadApplet(const AppletInfo& info, QWidget* parent);
-    KPanelExtension* loadExtension(const AppletInfo& info, QWidget* parent);
+    KPanelApplet* loadApplet(const AppletInfo& info, TQWidget* parent);
+    KPanelExtension* loadExtension(const AppletInfo& info, TQWidget* parent);
 
     bool hasInstance(const AppletInfo&) const;
 
@@ -69,13 +69,13 @@ public slots:
     void clearUntrustedLists();
 
 protected:
-    static AppletInfo::List plugins(const QStringList& desktopFiles,
+    static AppletInfo::List plugins(const TQStringList& desktopFiles,
                                     AppletInfo::AppletType,
                                     bool sort,
                                     AppletInfo::List* list);
 
 private slots:
-    void slotPluginDestroyed(QObject* plugin);
+    void slotPluginDestroyed(TQObject* plugin);
 
 private:
     friend class KStaticDeleter<PluginManager>;
@@ -84,23 +84,23 @@ private:
 
     AppletInfo::Dict _dict;
     static PluginManager* m_self;
-    QStringList m_untrustedApplets;
-    QStringList m_untrustedExtensions;
+    TQStringList m_untrustedApplets;
+    TQStringList m_untrustedExtensions;
 };
 
 class LibUnloader : public QObject
 {
     Q_OBJECT
 public:
-    static void unload( const QString &libName );
+    static void unload( const TQString &libName );
 
 private slots:
     void unload();
 
 private:
-    LibUnloader( const QString &libName, QObject *parent );
+    LibUnloader( const TQString &libName, TQObject *parent );
 
-    QString _libName;
+    TQString _libName;
 };
 
 #endif

@@ -24,9 +24,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __containerarea_h__
 #define __containerarea_h__
 
-#include <qpixmap.h>
-#include <qptrlist.h>
-#include <qtimer.h>
+#include <tqpixmap.h>
+#include <tqptrlist.h>
+#include <tqtimer.h>
 
 #include <appletinfo.h>
 
@@ -48,7 +48,7 @@ class ContainerArea : public Panner
     Q_OBJECT
 
 public:
-    ContainerArea( KConfig* config, QWidget* parent, QPopupMenu* opMenu, const char* name = 0 );
+    ContainerArea( KConfig* config, TQWidget* parent, TQPopupMenu* opMenu, const char* name = 0 );
     ~ContainerArea();
 
     void initialize(bool useDefaultConfig);
@@ -56,24 +56,24 @@ public:
     KPanelApplet::Direction popupDirection() const;
     bool isImmutable() const;
 
-    const QWidget* addButton(const AppletInfo& info);
-    const QWidget* addKMenuButton();
-    const QWidget* addDesktopButton();
-    const QWidget* addWindowListButton();
-    const QWidget* addBookmarksButton();
-    const QWidget* addServiceButton(const QString& desktopFile);
-    const QWidget* addURLButton(const QString &url);
-    const QWidget* addBrowserButton();
-    const QWidget* addBrowserButton(const QString &startDir,
-                            const QString& icon = QString("kdisknav"));
-    const QWidget* addServiceMenuButton(const QString& relPath);
-    const QWidget* addNonKDEAppButton();
-    const QWidget* addNonKDEAppButton(const QString &name,
-                                      const QString &description,
-                                      const QString &filePath,
-                                      const QString &icon,
-                                      const QString &cmdLine, bool inTerm);
-    const QWidget* addExtensionButton(const QString& desktopFile);
+    const TQWidget* addButton(const AppletInfo& info);
+    const TQWidget* addKMenuButton();
+    const TQWidget* addDesktopButton();
+    const TQWidget* addWindowListButton();
+    const TQWidget* addBookmarksButton();
+    const TQWidget* addServiceButton(const TQString& desktopFile);
+    const TQWidget* addURLButton(const TQString &url);
+    const TQWidget* addBrowserButton();
+    const TQWidget* addBrowserButton(const TQString &startDir,
+                            const TQString& icon = TQString("kdisknav"));
+    const TQWidget* addServiceMenuButton(const TQString& relPath);
+    const TQWidget* addNonKDEAppButton();
+    const TQWidget* addNonKDEAppButton(const TQString &name,
+                                      const TQString &description,
+                                      const TQString &filePath,
+                                      const TQString &icon,
+                                      const TQString &cmdLine, bool inTerm);
+    const TQWidget* addExtensionButton(const TQString& desktopFile);
     AppletContainer* addApplet(const AppletInfo& info,
                                bool isImmutable = false,
                                int insertionIndex = -1);
@@ -84,11 +84,11 @@ public:
     int widthForHeight(int height) const;
     int heightForWidth(int width) const;
 
-    const QPixmap* completeBackgroundPixmap() const;
+    const TQPixmap* completeBackgroundPixmap() const;
 
-    BaseContainer::List containers(const QString& type) const;
-    int containerCount(const QString& type) const;
-    QStringList listContainers() const;
+    BaseContainer::List containers(const TQString& type) const;
+    int containerCount(const TQString& type) const;
+    TQStringList listContainers() const;
     bool canAddContainers() const;
 
 signals:
@@ -108,25 +108,25 @@ public slots:
     void addAppletDialogDone();
 
 protected:
-    QString createUniqueId(const QString& appletType) const;
+    TQString createUniqueId(const TQString& appletType) const;
     void completeContainerAddition(BaseContainer* container,
                                    int insertionIndex = -1);
 
-    bool eventFilter(QObject*, QEvent*);
-    void mouseMoveEvent(QMouseEvent*);
-    void mouseReleaseEvent(QMouseEvent *);
-    void dragEnterEvent(QDragEnterEvent*);
-    void dragMoveEvent(QDragMoveEvent*);
-    void dragLeaveEvent(QDragLeaveEvent*);
-    void dropEvent(QDropEvent*);
-    void resizeEvent(QResizeEvent*);
-    void viewportResizeEvent(QResizeEvent*);
+    bool eventFilter(TQObject*, TQEvent*);
+    void mouseMoveEvent(TQMouseEvent*);
+    void mouseReleaseEvent(TQMouseEvent *);
+    void dragEnterEvent(TQDragEnterEvent*);
+    void dragMoveEvent(TQDragMoveEvent*);
+    void dragLeaveEvent(TQDragLeaveEvent*);
+    void dropEvent(TQDropEvent*);
+    void resizeEvent(TQResizeEvent*);
+    void viewportResizeEvent(TQResizeEvent*);
 
     void defaultContainerConfig();
-    void loadContainers(const QStringList& containers);
+    void loadContainers(const TQStringList& containers);
     void saveContainerConfig(bool layoutOnly = false);
 
-    QRect availableSpaceFollowing(BaseContainer*);
+    TQRect availableSpaceFollowing(BaseContainer*);
     void moveDragIndicator(int pos);
 
     void scrollTo(BaseContainer*);
@@ -138,7 +138,7 @@ protected:
 
 protected slots:
     void autoScroll();
-    void updateBackground(const QPixmap&);
+    void updateBackground(const TQPixmap&);
     void setBackground();
     void immutabilityChanged(bool);
     void updateContainersBackground();
@@ -154,21 +154,21 @@ private:
     DragIndicator*  _dragIndicator;
     BaseContainer*  _dragMoveAC;
     QPoint	    _dragMoveOffset;
-    QPopupMenu*     m_opMenu;
+    TQPopupMenu*     m_opMenu;
     KRootPixmap*    _rootPixmap;
     bool            _transparent;
     bool            _useBgTheme;
     bool            _bgSet;
-    QPixmap         _completeBg;
-    QTimer          _autoScrollTimer;
+    TQPixmap         _completeBg;
+    TQTimer          _autoScrollTimer;
     bool            m_canAddContainers;
     bool            m_immutable;
     bool            m_updateBackgroundsCalled;
 
-    QWidget*             m_contents;
+    TQWidget*             m_contents;
     ContainerAreaLayout* m_layout;
     AddAppletDialog*     m_addAppletDialog;
-    QMap< QWidget*, QRect > m_cachedGeometry;
+    TQMap< TQWidget*, TQRect > m_cachedGeometry;
 };
 
 
@@ -177,18 +177,18 @@ class DragIndicator : public QWidget
     Q_OBJECT
 
 public:
-    DragIndicator(QWidget* parent = 0, const char* name = 0);
+    DragIndicator(TQWidget* parent = 0, const char* name = 0);
     ~DragIndicator() {}
 
-    QSize preferredSize() const { return _preferredSize; }
-    void setPreferredSize(const QSize& size) { _preferredSize = size; }
+    TQSize preferredSize() const { return _preferredSize; }
+    void setPreferredSize(const TQSize& size) { _preferredSize = size; }
 
 protected:
-    void paintEvent(QPaintEvent*);
-    void mousePressEvent(QMouseEvent*);
+    void paintEvent(TQPaintEvent*);
+    void mousePressEvent(TQMouseEvent*);
 
 private:
-    QSize _preferredSize;
+    TQSize _preferredSize;
 };
 
 #endif

@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __MINIPAGERBUTTON_H
 #define __MINIPAGERBUTTON_H
 
-#include <qbutton.h>
+#include <tqbutton.h>
 
 #include "taskmanager.h"
 #include "kickertip.h"
@@ -35,18 +35,18 @@ class KMiniPager;
 class KSharedPixmap;
 class QLineEdit;
 
-class KMiniPagerButton : public QButton, public KickerTip::Client
+class KMiniPagerButton : public TQButton, public KickerTip::Client
 {
     Q_OBJECT
 public:
-    KMiniPagerButton(int desk, bool useViewports, const QPoint& viewport,
+    KMiniPagerButton(int desk, bool useViewports, const TQPoint& viewport,
             KMiniPager *parent=0, const char *name=0);
     ~KMiniPagerButton();
 
     int desktop() { return m_desktop; }
 
-    QString desktopName() { return m_desktopName; }
-    void setDesktopName( QString name ) { m_desktopName = name; }
+    TQString desktopName() { return m_desktopName; }
+    void setDesktopName( TQString name ) { m_desktopName = name; }
 
     void rename();
     void backgroundChanged();
@@ -56,22 +56,22 @@ public:
 
 signals:
     void buttonSelected( int desk );
-    void showMenu( const QPoint&, int );
+    void showMenu( const TQPoint&, int );
 
 protected:
-    void drawButton(QPainter *);
-    void enterEvent(QEvent*);
-    void leaveEvent(QEvent*);
-    void resizeEvent(QResizeEvent *ev);
-    void mousePressEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void dragEnterEvent(QDragEnterEvent* e);
-    void dragLeaveEvent(QDragLeaveEvent* e);
+    void drawButton(TQPainter *);
+    void enterEvent(TQEvent*);
+    void leaveEvent(TQEvent*);
+    void resizeEvent(TQResizeEvent *ev);
+    void mousePressEvent(TQMouseEvent *);
+    void mouseReleaseEvent(TQMouseEvent *);
+    void mouseMoveEvent(TQMouseEvent *);
+    void dragEnterEvent(TQDragEnterEvent* e);
+    void dragLeaveEvent(TQDragLeaveEvent* e);
     void enabledChange( bool oldEnabled );
-    void dropEvent(QDropEvent* e);
+    void dropEvent(TQDropEvent* e);
 
-    bool eventFilter(QObject*, QEvent*);
+    bool eventFilter(TQObject*, TQEvent*);
     void updateKickerTip(KickerTip::Data &data);
 
 private slots:
@@ -83,20 +83,20 @@ private slots:
 
 private:
     void loadBgPixmap();
-    QRect mapGeometryToViewport(const KWin::WindowInfo&) const;
-    QPoint mapPointToViewport(const QPoint&) const;
+    TQRect mapGeometryToViewport(const KWin::WindowInfo&) const;
+    TQPoint mapPointToViewport(const TQPoint&) const;
 
     KMiniPager* m_pager;
     int m_desktop;
     bool m_useViewports;
-    QString m_desktopName;
-    QPoint m_viewport;
+    TQString m_desktopName;
+    TQPoint m_viewport;
 
-    QTimer m_updateCompressor;
-    QTimer m_dragSwitchTimer;
+    TQTimer m_updateCompressor;
+    TQTimer m_dragSwitchTimer;
     Task::Ptr m_dragging;
 
-    QLineEdit* m_lineEdit;
+    TQLineEdit* m_lineEdit;
 
     KSharedPixmap *m_sharedPixmap;
     KPixmap *m_bgPixmap;

@@ -21,9 +21,9 @@
 
 */
 
-#include <qdom.h>
-#include <qimage.h>
-#include <qtooltip.h>
+#include <tqdom.h>
+#include <tqimage.h>
+#include <tqtooltip.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -36,8 +36,8 @@
 
 #include "FancyPlotter.h"
 
-FancyPlotter::FancyPlotter( QWidget* parent, const char* name,
-                            const QString &title, double, double,
+FancyPlotter::FancyPlotter( TQWidget* parent, const char* name,
+                            const TQString &title, double, double,
                             bool nf, bool isApplet)
   : KSGRD::SensorDisplay( parent, name, title, nf, isApplet )
 {
@@ -97,10 +97,10 @@ void FancyPlotter::configureSettings()
 
   mSettingsDialog->setBackgroundColor( mPlotter->backgroundColor() );
 
-  QValueList< QStringList > list;
+  TQValueList< TQStringList > list;
   for ( uint i = 0; i < mBeams; ++i ) {
-    QStringList entry;
-    entry << QString::number(i);
+    TQStringList entry;
+    entry << TQString::number(i);
     entry << sensors().at( i )->hostName();
     entry << KSGRD::SensorMgr->translateSensor( sensors().at( i )->name() );
     entry << KSGRD::SensorMgr->translateUnit( sensors().at( i )->unit() );
@@ -111,9 +111,9 @@ void FancyPlotter::configureSettings()
   }
   mSettingsDialog->setSensors( list );
 
-  connect( mSettingsDialog, SIGNAL( applyClicked() ), SLOT( applySettings() ) );
-  connect( mSettingsDialog, SIGNAL( okClicked() ), SLOT( applySettings() ) );
-  connect( mSettingsDialog, SIGNAL( finished() ), SLOT( killDialog() ) );
+  connect( mSettingsDialog, TQT_SIGNAL( applyClicked() ), TQT_SLOT( applySettings() ) );
+  connect( mSettingsDialog, TQT_SIGNAL( okClicked() ), TQT_SLOT( applySettings() ) );
+  connect( mSettingsDialog, TQT_SIGNAL( finished() ), TQT_SLOT( killDialog() ) );
 
   mSettingsDialog->show(); 
 }
@@ -143,7 +143,7 @@ void FancyPlotter::applySettings()
 
   if ( mPlotter->horizontalScale() != mSettingsDialog->horizontalScale() ) {
     mPlotter->setHorizontalScale( mSettingsDialog->horizontalScale() );
-    // Can someone think of a useful QResizeEvent to pass?
+    // Can someone think of a useful TQResizeEvent to pass?
     // It doesn't really matter anyway because it's not used.
     emit resizeEvent( 0 );
   }
@@ -164,23 +164,23 @@ void FancyPlotter::applySettings()
   mPlotter->setBackgroundColor( mSettingsDialog->backgroundColor() );
 
 
-  QValueList<int> orderOfSensors = mSettingsDialog->order();
-  QValueList<int> deletedSensors = mSettingsDialog->deleted();
+  TQValueList<int> orderOfSensors = mSettingsDialog->order();
+  TQValueList<int> deletedSensors = mSettingsDialog->deleted();
   mSettingsDialog->clearDeleted();
   mSettingsDialog->resetOrder();
-  QValueList< int >::Iterator itDelete;
+  TQValueList< int >::Iterator itDelete;
   for ( itDelete = deletedSensors.begin(); itDelete != deletedSensors.end(); ++itDelete )
     removeSensor(*itDelete);
 
-  QValueList< int >::Iterator itOrder;
+  TQValueList< int >::Iterator itOrder;
   mPlotter->reorderBeams(orderOfSensors);
   reorderSensors(orderOfSensors);
 
-  QValueList< QStringList > list = mSettingsDialog->sensors();
-  QValueList< QStringList >::Iterator it;
+  TQValueList< TQStringList > list = mSettingsDialog->sensors();
+  TQValueList< TQStringList >::Iterator it;
 
   for ( uint i = 0; i < sensors().count(); ++i )
-        mPlotter->beamColors()[ i ] = QColor( list[i][ 5 ] );
+        mPlotter->beamColors()[ i ] = TQColor( list[i][ 5 ] );
 
   mPlotter->repaint();
   setModified( true );
@@ -200,22 +200,22 @@ void FancyPlotter::applyStyle()
   setModified( true );
 }
 
-bool FancyPlotter::addSensor( const QString &hostName, const QString &name,
-                              const QString &type, const QString &title )
+bool FancyPlotter::addSensor( const TQString &hostName, const TQString &name,
+                              const TQString &type, const TQString &title )
 {
   return addSensor( hostName, name, type, title,
                     KSGRD::Style->sensorColor( mBeams ) );
 }
 
-bool FancyPlotter::addSensor( const QString &hostName, const QString &name,
-                              const QString &type, const QString &title,
-                              const QColor &color )
+bool FancyPlotter::addSensor( const TQString &hostName, const TQString &name,
+                              const TQString &type, const TQString &title,
+                              const TQColor &color )
 {
   if ( type != "integer" && type != "float" )
     return false;
 
   if ( mBeams > 0 && hostName != sensors().at( 0 )->hostName() ) {
-    KMessageBox::sorry( this, QString( "All sensors of this display need "
+    KMessageBox::sorry( this, TQString( "All sensors of this display need "
                                        "to be from the host %1!" )
                         .arg( sensors().at( 0 )->hostName() ) );
 
@@ -235,15 +235,15 @@ bool FancyPlotter::addSensor( const QString &hostName, const QString &name,
 
   ++mBeams;
 
-  QString tooltip;
+  TQString tooltip;
   for ( uint i = 0; i < mBeams; ++i ) {
-    tooltip += QString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
+    tooltip += TQString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
                                    .arg( sensors().at( mBeams - i - 1 )->hostName() )
                                    .arg( sensors().at( mBeams - i - 1  )->name() );
   }
 
-  QToolTip::remove( mPlotter );
-  QToolTip::add( mPlotter, tooltip );
+  TQToolTip::remove( mPlotter );
+  TQToolTip::add( mPlotter, tooltip );
 
   return true;
 }
@@ -260,20 +260,20 @@ bool FancyPlotter::removeSensor( uint pos )
   mBeams--;
   KSGRD::SensorDisplay::removeSensor( pos );
 
-  QString tooltip;
+  TQString tooltip;
   for ( uint i = 0; i < mBeams; ++i ) {
-    tooltip += QString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
+    tooltip += TQString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
                                    .arg( sensors().at( mBeams - i - 1 )->hostName() )
                                    .arg( sensors().at( mBeams - i - 1  )->name() );
   }
 
-  QToolTip::remove( mPlotter );
-  QToolTip::add( mPlotter, tooltip );
+  TQToolTip::remove( mPlotter );
+  TQToolTip::add( mPlotter, tooltip );
 
   return true;
 }
 
-void FancyPlotter::resizeEvent( QResizeEvent* )
+void FancyPlotter::resizeEvent( TQResizeEvent* )
 {
   if ( noFrame() )
     mPlotter->setGeometry( 0, 0, width(), height() );
@@ -281,7 +281,7 @@ void FancyPlotter::resizeEvent( QResizeEvent* )
     frame()->setGeometry( 0, 0, width(), height() );
 }
 
-QSize FancyPlotter::sizeHint()
+TQSize FancyPlotter::sizeHint()
 {
   if ( noFrame() )
     return mPlotter->sizeHint();
@@ -289,7 +289,7 @@ QSize FancyPlotter::sizeHint()
     return frame()->sizeHint();
 }
 
-void FancyPlotter::answerReceived( int id, const QString &answer )
+void FancyPlotter::answerReceived( int id, const TQString &answer )
 {
   if ( (uint)id < mBeams ) {
     if ( id != (int)mSampleBuf.count() ) {
@@ -323,7 +323,7 @@ void FancyPlotter::answerReceived( int id, const QString &answer )
   }
 }
 
-bool FancyPlotter::restoreSettings( QDomElement &element )
+bool FancyPlotter::restoreSettings( TQDomElement &element )
 {
   /* autoRage was added after KDE 2.x and was brokenly emulated by
    * min == 0.0 and max == 0.0. Since we have to be able to read old
@@ -354,14 +354,14 @@ bool FancyPlotter::restoreSettings( QDomElement &element )
   mPlotter->setShowLabels( element.attribute( "labels", "1" ).toUInt() );
   mPlotter->setShowTopBar( element.attribute( "topBar", "0" ).toUInt() );
   mPlotter->setFontSize( element.attribute( "fontSize",
-                   QString( "%1" ).arg( KSGRD::Style->fontSize() ) ).toUInt() );
+                   TQString( "%1" ).arg( KSGRD::Style->fontSize() ) ).toUInt() );
 
   mPlotter->setBackgroundColor( restoreColor( element, "bColor",
                                    KSGRD::Style->backgroundColor() ) );
 
-  QDomNodeList dnList = element.elementsByTagName( "beam" );
+  TQDomNodeList dnList = element.elementsByTagName( "beam" );
   for ( uint i = 0; i < dnList.count(); ++i ) {
-    QDomElement el = dnList.item( i ).toElement();
+    TQDomElement el = dnList.item( i ).toElement();
     addSensor( el.attribute( "hostName" ), el.attribute( "sensorName" ),
                ( el.attribute( "sensorType" ).isEmpty() ? "integer" :
                el.attribute( "sensorType" ) ), "", restoreColor( el, "color",
@@ -378,7 +378,7 @@ bool FancyPlotter::restoreSettings( QDomElement &element )
   return true;
 }
 
-bool FancyPlotter::saveSettings( QDomDocument &doc, QDomElement &element,
+bool FancyPlotter::saveSettings( TQDomDocument &doc, TQDomElement &element,
                                  bool save )
 {
   element.setAttribute( "min", mPlotter->minValue() );
@@ -403,7 +403,7 @@ bool FancyPlotter::saveSettings( QDomDocument &doc, QDomElement &element,
   saveColor( element, "bColor", mPlotter->backgroundColor() );
 
   for ( uint i = 0; i < mBeams; ++i ) {
-    QDomElement beam = doc.createElement( "beam" );
+    TQDomElement beam = doc.createElement( "beam" );
     element.appendChild( beam );
     beam.setAttribute( "hostName", sensors().at( i )->hostName() );
     beam.setAttribute( "sensorName", sensors().at( i )->name() );
@@ -430,11 +430,11 @@ FPSensorProperties::FPSensorProperties()
 {
 }
 
-FPSensorProperties::FPSensorProperties( const QString &hostName,
-                                        const QString &name,
-                                        const QString &type,
-                                        const QString &description,
-                                        const QColor &color )
+FPSensorProperties::FPSensorProperties( const TQString &hostName,
+                                        const TQString &name,
+                                        const TQString &type,
+                                        const TQString &description,
+                                        const TQColor &color )
   : KSGRD::SensorProperties( hostName, name, type, description ),
     mColor( color )
 {
@@ -444,12 +444,12 @@ FPSensorProperties::~FPSensorProperties()
 {
 }
 
-void FPSensorProperties::setColor( const QColor &color )
+void FPSensorProperties::setColor( const TQColor &color )
 {
   mColor = color;
 }
 
-QColor FPSensorProperties::color() const
+TQColor FPSensorProperties::color() const
 {
   return mColor;
 }

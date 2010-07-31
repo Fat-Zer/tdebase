@@ -16,9 +16,9 @@
  *
  */
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -46,7 +46,7 @@
 #define MF_SEPARATOR    "Separator"
 #define MF_MERGE        "Merge"
 
-MenuFile::MenuFile(const QString &file)
+MenuFile::MenuFile(const TQString &file)
  : m_fileName(file), m_bDirty(false)
 {
    load();
@@ -61,7 +61,7 @@ bool MenuFile::load()
    if (m_fileName.isEmpty())
       return false;
 
-   QFile file( m_fileName );
+   TQFile file( m_fileName );
    if (!file.open( IO_ReadOnly ))
    {
       kdWarning() << "Could not read " << m_fileName << endl;
@@ -69,7 +69,7 @@ bool MenuFile::load()
       return false;
    }
    
-   QString errorMsg;
+   TQString errorMsg;
    int errorRow;
    int errorCol;
    if ( !m_doc.setContent( &file, &errorMsg, &errorRow, &errorCol ) ) {
@@ -85,14 +85,14 @@ bool MenuFile::load()
 
 void MenuFile::create()
 {
-   QDomImplementation impl;
-   QDomDocumentType docType = impl.createDocumentType( MF_MENU, MF_PUBLIC_ID, MF_SYSTEM_ID );
-   m_doc = impl.createDocument(QString::null, MF_MENU, docType);
+   TQDomImplementation impl;
+   TQDomDocumentType docType = impl.createDocumentType( MF_MENU, MF_PUBLIC_ID, MF_SYSTEM_ID );
+   m_doc = impl.createDocument(TQString::null, MF_MENU, docType);
 }
 
 bool MenuFile::save()
 {
-   QFile file( m_fileName );
+   TQFile file( m_fileName );
    
    if (!file.open( IO_WriteOnly ))
    {
@@ -100,8 +100,8 @@ bool MenuFile::save()
       m_error = i18n("Could not write to %1").arg(m_fileName);
       return false;
    }
-   QTextStream stream( &file );
-   stream.setEncoding(QTextStream::UnicodeUTF8);
+   TQTextStream stream( &file );
+   stream.setEncoding(TQTextStream::UnicodeUTF8);
    
    stream << m_doc.toString();
 
@@ -119,10 +119,10 @@ bool MenuFile::save()
    return true;
 }
 
-QDomElement MenuFile::findMenu(QDomElement elem, const QString &menuName, bool create)
+TQDomElement MenuFile::findMenu(TQDomElement elem, const TQString &menuName, bool create)
 {
-   QString menuNodeName;
-   QString subMenuName; 
+   TQString menuNodeName;
+   TQString subMenuName; 
    int i = menuName.find('/');
    if (i >= 0)
    {
@@ -139,18 +139,18 @@ QDomElement MenuFile::findMenu(QDomElement elem, const QString &menuName, bool c
    if (menuNodeName.isEmpty())
       return elem;
 
-   QDomNode n = elem.firstChild();
+   TQDomNode n = elem.firstChild();
    while( !n.isNull() )
    {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       if (e.tagName() == MF_MENU)
       {
-         QString name;
+         TQString name;
 
-         QDomNode n2 = e.firstChild();
+         TQDomNode n2 = e.firstChild();
          while ( !n2.isNull() )
          {
-            QDomElement e2 = n2.toElement();
+            TQDomElement e2 = n2.toElement();
             if (!e2.isNull() && e2.tagName() == MF_NAME)
             {
                name = e2.text();
@@ -171,11 +171,11 @@ QDomElement MenuFile::findMenu(QDomElement elem, const QString &menuName, bool c
    }
 
    if (!create)
-      return QDomElement();
+      return TQDomElement();
       
    // Create new node.
-   QDomElement newElem = m_doc.createElement(MF_MENU);
-   QDomElement newNameElem = m_doc.createElement(MF_NAME);
+   TQDomElement newElem = m_doc.createElement(MF_MENU);
+   TQDomElement newNameElem = m_doc.createElement(MF_NAME);
    newNameElem.appendChild(m_doc.createTextNode(menuNodeName));
    newElem.appendChild(newNameElem);
    elem.appendChild(newElem);
@@ -186,10 +186,10 @@ QDomElement MenuFile::findMenu(QDomElement elem, const QString &menuName, bool c
       return findMenu(newElem, subMenuName, create);
 }
    
-static QString entryToDirId(const QString &path)
+static TQString entryToDirId(const TQString &path)
 {
    // See also KDesktopFile::locateLocal
-   QString local;
+   TQString local;
    if (path.startsWith("/"))
    {
       // XDG Desktop menu items come with absolute paths, we need to
@@ -205,13 +205,13 @@ static QString entryToDirId(const QString &path)
    return local;                                                                                           
 }
 
-static void purgeIncludesExcludes(QDomElement elem, const QString &appId, QDomElement &excludeNode, QDomElement &includeNode)
+static void purgeIncludesExcludes(TQDomElement elem, const TQString &appId, TQDomElement &excludeNode, TQDomElement &includeNode)
 {
    // Remove any previous includes/excludes of appId
-   QDomNode n = elem.firstChild();
+   TQDomNode n = elem.firstChild();
    while( !n.isNull() )
    {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       bool bIncludeNode = (e.tagName() == MF_INCLUDE);
       bool bExcludeNode = (e.tagName() == MF_EXCLUDE);
       if (bIncludeNode)
@@ -220,11 +220,11 @@ static void purgeIncludesExcludes(QDomElement elem, const QString &appId, QDomEl
          excludeNode = e;
       if (bIncludeNode || bExcludeNode)
       {
-         QDomNode n2 = e.firstChild();
+         TQDomNode n2 = e.firstChild();
          while ( !n2.isNull() )
          {
-            QDomNode next = n2.nextSibling();
-            QDomElement e2 = n2.toElement();
+            TQDomNode next = n2.nextSibling();
+            TQDomElement e2 = n2.toElement();
             if (!e2.isNull() && e2.tagName() == MF_FILENAME)
             {
                if (e2.text() == appId)
@@ -240,14 +240,14 @@ static void purgeIncludesExcludes(QDomElement elem, const QString &appId, QDomEl
    }
 }
 
-static void purgeDeleted(QDomElement elem)
+static void purgeDeleted(TQDomElement elem)
 {
    // Remove any previous includes/excludes of appId
-   QDomNode n = elem.firstChild();
+   TQDomNode n = elem.firstChild();
    while( !n.isNull() )
    {
-      QDomNode next = n.nextSibling();
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomNode next = n.nextSibling();
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       if ((e.tagName() == MF_DELETED) || 
           (e.tagName() == MF_NOTDELETED))
       {
@@ -257,14 +257,14 @@ static void purgeDeleted(QDomElement elem)
    }
 }
 
-static void purgeLayout(QDomElement elem)
+static void purgeLayout(TQDomElement elem)
 {
    // Remove any previous includes/excludes of appId
-   QDomNode n = elem.firstChild();
+   TQDomNode n = elem.firstChild();
    while( !n.isNull() )
    {
-      QDomNode next = n.nextSibling();
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomNode next = n.nextSibling();
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       if (e.tagName() == MF_LAYOUT)
       {
          elem.removeChild(e);
@@ -273,16 +273,16 @@ static void purgeLayout(QDomElement elem)
    }
 }
 
-void MenuFile::addEntry(const QString &menuName, const QString &menuId)
+void MenuFile::addEntry(const TQString &menuName, const TQString &menuId)
 {
    m_bDirty = true;   
 
    m_removedEntries.remove(menuId);
 
-   QDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
+   TQDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
 
-   QDomElement excludeNode;
-   QDomElement includeNode;
+   TQDomElement excludeNode;
+   TQDomElement includeNode;
 
    purgeIncludesExcludes(elem, menuId, excludeNode, includeNode);
 
@@ -292,58 +292,58 @@ void MenuFile::addEntry(const QString &menuName, const QString &menuId)
       elem.appendChild(includeNode);
    }
    
-   QDomElement fileNode = m_doc.createElement(MF_FILENAME);
+   TQDomElement fileNode = m_doc.createElement(MF_FILENAME);
    fileNode.appendChild(m_doc.createTextNode(menuId));
    includeNode.appendChild(fileNode);
 }
 
-void MenuFile::setLayout(const QString &menuName, const QStringList &layout)
+void MenuFile::setLayout(const TQString &menuName, const TQStringList &layout)
 {
    m_bDirty = true;   
 
-   QDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
+   TQDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
 
    purgeLayout(elem);
 
-   QDomElement layoutNode = m_doc.createElement(MF_LAYOUT);
+   TQDomElement layoutNode = m_doc.createElement(MF_LAYOUT);
    elem.appendChild(layoutNode);
 
-   for(QStringList::ConstIterator it = layout.begin();
+   for(TQStringList::ConstIterator it = layout.begin();
        it != layout.end(); ++it)
    {
-      QString li = *it;
+      TQString li = *it;
       if (li == ":S")
       {
          layoutNode.appendChild(m_doc.createElement(MF_SEPARATOR));
       }
       else if (li == ":M")
       {
-         QDomElement mergeNode = m_doc.createElement(MF_MERGE);
+         TQDomElement mergeNode = m_doc.createElement(MF_MERGE);
          mergeNode.setAttribute("type", "menus");
          layoutNode.appendChild(mergeNode);
       }
       else if (li == ":F")
       {
-         QDomElement mergeNode = m_doc.createElement(MF_MERGE);
+         TQDomElement mergeNode = m_doc.createElement(MF_MERGE);
          mergeNode.setAttribute("type", "files");
          layoutNode.appendChild(mergeNode);
       }
       else if (li == ":A")
       {
-         QDomElement mergeNode = m_doc.createElement(MF_MERGE);
+         TQDomElement mergeNode = m_doc.createElement(MF_MERGE);
          mergeNode.setAttribute("type", "all");
          layoutNode.appendChild(mergeNode);
       }
       else if (li.endsWith("/"))
       {
          li.truncate(li.length()-1);
-         QDomElement menuNode = m_doc.createElement(MF_MENUNAME);
+         TQDomElement menuNode = m_doc.createElement(MF_MENUNAME);
          menuNode.appendChild(m_doc.createTextNode(li));
          layoutNode.appendChild(menuNode);
       }
       else
       {
-         QDomElement fileNode = m_doc.createElement(MF_FILENAME);
+         TQDomElement fileNode = m_doc.createElement(MF_FILENAME);
          fileNode.appendChild(m_doc.createTextNode(li));
          layoutNode.appendChild(fileNode);
       }
@@ -351,16 +351,16 @@ void MenuFile::setLayout(const QString &menuName, const QStringList &layout)
 }
 
 
-void MenuFile::removeEntry(const QString &menuName, const QString &menuId)
+void MenuFile::removeEntry(const TQString &menuName, const TQString &menuId)
 {
    m_bDirty = true;
    
    m_removedEntries.append(menuId);
    
-   QDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
+   TQDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
 
-   QDomElement excludeNode;
-   QDomElement includeNode;
+   TQDomElement excludeNode;
+   TQDomElement includeNode;
 
    purgeIncludesExcludes(elem, menuId, excludeNode, includeNode);
 
@@ -370,35 +370,35 @@ void MenuFile::removeEntry(const QString &menuName, const QString &menuId)
       elem.appendChild(excludeNode);
    }
    
-   QDomElement fileNode = m_doc.createElement(MF_FILENAME);
+   TQDomElement fileNode = m_doc.createElement(MF_FILENAME);
    fileNode.appendChild(m_doc.createTextNode(menuId));
    excludeNode.appendChild(fileNode);
 }
 
-void MenuFile::addMenu(const QString &menuName, const QString &menuFile)
+void MenuFile::addMenu(const TQString &menuName, const TQString &menuFile)
 {
    m_bDirty = true;
-   QDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
+   TQDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
 
-   QDomElement dirElem = m_doc.createElement(MF_DIRECTORY);
+   TQDomElement dirElem = m_doc.createElement(MF_DIRECTORY);
    dirElem.appendChild(m_doc.createTextNode(entryToDirId(menuFile)));
    elem.appendChild(dirElem);
 }
 
-void MenuFile::moveMenu(const QString &oldMenu, const QString &newMenu)
+void MenuFile::moveMenu(const TQString &oldMenu, const TQString &newMenu)
 {
    m_bDirty = true;
 
    // Undelete the new menu
-   QDomElement elem = findMenu(m_doc.documentElement(), newMenu, true);
+   TQDomElement elem = findMenu(m_doc.documentElement(), newMenu, true);
    purgeDeleted(elem);
    elem.appendChild(m_doc.createElement(MF_NOTDELETED));
 
 // TODO: GET RID OF COMMON PART, IT BREAKS STUFF
    // Find common part
-   QStringList oldMenuParts = QStringList::split('/', oldMenu);
-   QStringList newMenuParts = QStringList::split('/', newMenu);
-   QString commonMenuName;
+   TQStringList oldMenuParts = TQStringList::split('/', oldMenu);
+   TQStringList newMenuParts = TQStringList::split('/', newMenu);
+   TQString commonMenuName;
    uint max = QMIN(oldMenuParts.count(), newMenuParts.count());
    uint i = 0;
    for(; i < max; i++)
@@ -407,14 +407,14 @@ void MenuFile::moveMenu(const QString &oldMenu, const QString &newMenu)
          break;
       commonMenuName += '/' + oldMenuParts[i];
    }
-   QString oldMenuName;
+   TQString oldMenuName;
    for(uint j = i; j < oldMenuParts.count(); j++)
    {
       if (i != j)
          oldMenuName += '/';
       oldMenuName += oldMenuParts[j];
    }
-   QString newMenuName;
+   TQString newMenuName;
    for(uint j = i; j < newMenuParts.count(); j++)
    {
       if (i != j)
@@ -427,8 +427,8 @@ void MenuFile::moveMenu(const QString &oldMenu, const QString &newMenu)
    elem = findMenu(m_doc.documentElement(), commonMenuName, true);
 
    // Add instructions for moving
-   QDomElement moveNode = m_doc.createElement(MF_MOVE);
-   QDomElement node = m_doc.createElement(MF_OLD);
+   TQDomElement moveNode = m_doc.createElement(MF_MOVE);
+   TQDomElement node = m_doc.createElement(MF_OLD);
    node.appendChild(m_doc.createTextNode(oldMenuName));
    moveNode.appendChild(node);
    node = m_doc.createElement(MF_NEW);
@@ -437,11 +437,11 @@ void MenuFile::moveMenu(const QString &oldMenu, const QString &newMenu)
    elem.appendChild(moveNode);
 }
 
-void MenuFile::removeMenu(const QString &menuName)
+void MenuFile::removeMenu(const TQString &menuName)
 {
    m_bDirty = true;
 
-   QDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
+   TQDomElement elem = findMenu(m_doc.documentElement(), menuName, true);
 
    purgeDeleted(elem);
    elem.appendChild(m_doc.createElement(MF_DELETED));
@@ -451,15 +451,15 @@ void MenuFile::removeMenu(const QString &menuName)
     * Returns a unique menu-name for a new menu under @p menuName 
     * inspired by @p newMenu
     */
-QString MenuFile::uniqueMenuName(const QString &menuName, const QString &newMenu, const QStringList & excludeList)
+TQString MenuFile::uniqueMenuName(const TQString &menuName, const TQString &newMenu, const TQStringList & excludeList)
 {
-   QDomElement elem = findMenu(m_doc.documentElement(), menuName, false);
+   TQDomElement elem = findMenu(m_doc.documentElement(), menuName, false);
       
-   QString result = newMenu;
+   TQString result = newMenu;
    if (result.endsWith("/"))
        result.truncate(result.length()-1);
        
-   QRegExp r("(.*)(?=-\\d+)");
+   TQRegExp r("(.*)(?=-\\d+)");
    result = (r.search(result) > -1) ? r.cap(1) : result;
      
    int trunc = result.length(); // Position of trailing '/'
@@ -472,9 +472,9 @@ QString MenuFile::uniqueMenuName(const QString &menuName, const QString &newMenu
          return result;
          
       result.truncate(trunc);
-      result.append(QString("-%1/").arg(n));
+      result.append(TQString("-%1/").arg(n));
    }
-   return QString::null; // Never reached
+   return TQString::null; // Never reached
 }
 
 void MenuFile::performAction(const ActionAtom *atom)
@@ -499,7 +499,7 @@ void MenuFile::performAction(const ActionAtom *atom)
    }
 }
 
-MenuFile::ActionAtom *MenuFile::pushAction(MenuFile::ActionType action, const QString &arg1, const QString &arg2)
+MenuFile::ActionAtom *MenuFile::pushAction(MenuFile::ActionType action, const TQString &arg1, const TQString &arg2)
 {
    ActionAtom *atom = new ActionAtom;
    atom->action = action;
@@ -530,9 +530,9 @@ bool MenuFile::performAllActions()
    
    // Entries that have been removed from the menu are added to .hidden
    // so that they don't re-appear in Lost & Found
-   QStringList removed = m_removedEntries;
+   TQStringList removed = m_removedEntries;
    m_removedEntries.clear();
-   for(QStringList::ConstIterator it = removed.begin();
+   for(TQStringList::ConstIterator it = removed.begin();
        it != removed.end(); ++it)
    {
       addEntry("/.hidden/", *it);

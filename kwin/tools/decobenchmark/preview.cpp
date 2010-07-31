@@ -25,8 +25,8 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kglobal.h>
-#include <qlabel.h>
-#include <qstyle.h>
+#include <tqlabel.h>
+#include <tqstyle.h>
 #include <kiconloader.h>
 
 #include <X11/Xlib.h>
@@ -37,8 +37,8 @@
 
 // FRAME the preview doesn't update to reflect the changes done in the kcm
 
-KDecorationPreview::KDecorationPreview( KDecorationPlugins* plugin, QWidget* parent, const char* name )
-    :   QWidget( parent, name ),
+KDecorationPreview::KDecorationPreview( KDecorationPlugins* plugin, TQWidget* parent, const char* name )
+    :   TQWidget( parent, name ),
     m_plugin(plugin)
 {
     options = new KDecorationPreviewOptions;
@@ -74,7 +74,7 @@ void KDecorationPreview::performRepaintTest(int n)
 void KDecorationPreview::performCaptionTest(int n)
 {
     kdDebug() << "start " << n << " caption changes..." << endl;
-    QString caption = "Deco Benchmark %1";
+    TQString caption = "Deco Benchmark %1";
     positionPreviews(0);
     for (int i = 0; i < n; ++i) {
         bridge->setCaption(caption.arg(i) );
@@ -127,15 +127,15 @@ void KDecorationPreview::positionPreviews(int shrink)
     if ( !deco )
         return;
 
-    QSize size = QSize(width()-2*10-shrink, height()-2*10-shrink)/*.expandedTo(deco->minimumSize()*/;
+    TQSize size = TQSize(width()-2*10-shrink, height()-2*10-shrink)/*.expandedTo(deco->minimumSize()*/;
 
-    QRect geometry(QPoint(10, 10), size);
+    TQRect geometry(TQPoint(10, 10), size);
     deco->widget()->setGeometry(geometry);
 }
 
-void KDecorationPreview::setPreviewMask( const QRegion& reg, int mode )
+void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode )
 {
-    QWidget *widget = deco->widget();
+    TQWidget *widget = deco->widget();
 
     // FRAME duped from client.cpp
     if( mode == Unsorted )
@@ -145,7 +145,7 @@ void KDecorationPreview::setPreviewMask( const QRegion& reg, int mode )
         }
     else
         {
-        QMemArray< QRect > rects = reg.rects();
+        TQMemArray< TQRect > rects = reg.rects();
         XRectangle* xrects = new XRectangle[ rects.count() ];
         for( unsigned int i = 0;
              i < rects.count();
@@ -162,28 +162,28 @@ void KDecorationPreview::setPreviewMask( const QRegion& reg, int mode )
         }
 }
 
-QRect KDecorationPreview::windowGeometry( bool active ) const
+TQRect KDecorationPreview::windowGeometry( bool active ) const
 {
-    QWidget *widget = deco->widget();
+    TQWidget *widget = deco->widget();
     return widget->geometry();
 }
 
-QRegion KDecorationPreview::unobscuredRegion( bool active, const QRegion& r ) const
+TQRegion KDecorationPreview::unobscuredRegion( bool active, const TQRegion& r ) const
 {
         return r;
 }
 
-KDecorationPreviewBridge::KDecorationPreviewBridge( KDecorationPreview* p, bool a, const QString &c )
+KDecorationPreviewBridge::KDecorationPreviewBridge( KDecorationPreview* p, bool a, const TQString &c )
     :   preview( p ), active( a ), m_caption( c )
 {
 }
 
-void KDecorationPreviewBridge::setCaption(const QString &c)
+void KDecorationPreviewBridge::setCaption(const TQString &c)
 {
     m_caption = c;
 }
 
-QWidget* KDecorationPreviewBridge::initialParentWidget() const
+TQWidget* KDecorationPreviewBridge::initialParentWidget() const
     {
     return preview;
     }
@@ -273,25 +273,25 @@ NET::WindowType KDecorationPreviewBridge::windowType( unsigned long ) const
     return NET::Normal;
     }
 
-QIconSet KDecorationPreviewBridge::icon() const
+TQIconSet KDecorationPreviewBridge::icon() const
     {
     return SmallIconSet( "xapp" );
     }
 
-QString KDecorationPreviewBridge::caption() const
+TQString KDecorationPreviewBridge::caption() const
 {
     return m_caption;
 }
 
-void KDecorationPreviewBridge::processMousePressEvent( QMouseEvent* )
+void KDecorationPreviewBridge::processMousePressEvent( TQMouseEvent* )
     {
     }
 
-void KDecorationPreviewBridge::showWindowMenu( const QRect &)
+void KDecorationPreviewBridge::showWindowMenu( const TQRect &)
     {
     }
 
-void KDecorationPreviewBridge::showWindowMenu( QPoint )
+void KDecorationPreviewBridge::showWindowMenu( TQPoint )
     {
     }
 
@@ -299,7 +299,7 @@ void KDecorationPreviewBridge::performWindowOperation( WindowOperation )
     {
     }
 
-void KDecorationPreviewBridge::setMask( const QRegion& reg, int mode )
+void KDecorationPreviewBridge::setMask( const TQRegion& reg, int mode )
     {
     preview->setPreviewMask( reg, mode );
     }
@@ -309,22 +309,22 @@ bool KDecorationPreviewBridge::isPreview() const
     return false;
     }
 
-QRect KDecorationPreviewBridge::geometry() const
+TQRect KDecorationPreviewBridge::geometry() const
     {
     return preview->windowGeometry( active );
     }
 
-QRect KDecorationPreviewBridge::iconGeometry() const
+TQRect KDecorationPreviewBridge::iconGeometry() const
     {
-    return QRect();
+    return TQRect();
     }
 
-QRegion KDecorationPreviewBridge::unobscuredRegion( const QRegion& r ) const
+TQRegion KDecorationPreviewBridge::unobscuredRegion( const TQRegion& r ) const
     {
     return preview->unobscuredRegion( active, r );
     }
 
-QWidget* KDecorationPreviewBridge::workspaceWidget() const
+TQWidget* KDecorationPreviewBridge::workspaceWidget() const
     {
     return preview;
     }

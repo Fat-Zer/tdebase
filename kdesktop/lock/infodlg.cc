@@ -25,18 +25,18 @@
 #include <dcopref.h>
 #include <kmessagebox.h>
 
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qmessagebox.h>
-#include <qsimplerichtext.h>
-#include <qlabel.h>
-#include <qstringlist.h>
-#include <qfontmetrics.h>
-#include <qstyle.h>
-#include <qapplication.h>
-#include <qlistview.h>
-#include <qheader.h>
-#include <qcheckbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqmessagebox.h>
+#include <tqsimplerichtext.h>
+#include <tqlabel.h>
+#include <tqstringlist.h>
+#include <tqfontmetrics.h>
+#include <tqstyle.h>
+#include <tqapplication.h>
+#include <tqlistview.h>
+#include <tqheader.h>
+#include <tqcheckbox.h>
 
 #include <ctype.h>
 #include <unistd.h>
@@ -59,28 +59,28 @@
 // Simple dialog for displaying an unlock status or recurring error message
 //
 InfoDlg::InfoDlg(LockProcess *parent)
-    : QDialog(parent, "information dialog", true, WX11BypassWM),
+    : TQDialog(parent, "information dialog", true, WX11BypassWM),
       mUnlockingFailed(false)
 {
-    frame = new QFrame( this );
-    frame->setFrameStyle( QFrame::Panel | QFrame::Raised );
+    frame = new TQFrame( this );
+    frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
     frame->setLineWidth( 2 );
 
-    mpixLabel = new QLabel( frame, "pixlabel" );
+    mpixLabel = new TQLabel( frame, "pixlabel" );
     mpixLabel->setPixmap(DesktopIcon("unlock"));
 
     KUser user;
 
-    mStatusLabel = new QLabel( "<b> </b>", frame );
-    mStatusLabel->setAlignment( QLabel::AlignCenter );
+    mStatusLabel = new TQLabel( "<b> </b>", frame );
+    mStatusLabel->setAlignment( TQLabel::AlignCenter );
 
-    QVBoxLayout *unlockDialogLayout = new QVBoxLayout( this );
+    TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
 
-    QHBoxLayout *layStatus = new QHBoxLayout( 0, 0, KDialog::spacingHint());
+    TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
     layStatus->addWidget( mStatusLabel );
 
-    frameLayout = new QGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+    frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
     frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, AlignTop );
     frameLayout->addLayout( layStatus, 1, 1 );
 
@@ -92,7 +92,7 @@ InfoDlg::~InfoDlg()
     hide();
 }
 
-void InfoDlg::updateLabel(QString &txt)
+void InfoDlg::updateLabel(TQString &txt)
 {
     mStatusLabel->setPaletteForegroundColor(Qt::black);
     mStatusLabel->setText("<b>" + txt + "</b>");
@@ -125,8 +125,8 @@ void InfoDlg::setErrorIcon()
 
 void InfoDlg::show()
 {
-    QDialog::show();
-    QApplication::flushX();
+    TQDialog::show();
+    TQApplication::flushX();
 }
 
 #include "infodlg.moc"

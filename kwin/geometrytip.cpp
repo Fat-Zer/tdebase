@@ -14,12 +14,12 @@ namespace KWinInternal
 {
 
 GeometryTip::GeometryTip( const XSizeHints* xSizeHints, bool save_under ):
-    QLabel(NULL, "kwingeometry" )
+    TQLabel(NULL, "kwingeometry" )
     {
     setMargin(1);
     setIndent(0);
     setLineWidth(1);
-    setFrameStyle( QFrame::Raised | QFrame::StyledPanel );
+    setFrameStyle( TQFrame::Raised | TQFrame::StyledPanel );
     setAlignment( AlignCenter | AlignTop );
     sizeHints = xSizeHints;
     if( save_under )
@@ -34,7 +34,7 @@ GeometryTip::~GeometryTip()
     {
     }
 
-void GeometryTip::setGeometry( const QRect& geom )
+void GeometryTip::setGeometry( const TQRect& geom )
     {
     int w = geom.width();
     int h = geom.height();
@@ -49,7 +49,7 @@ void GeometryTip::setGeometry( const QRect& geom )
         }
 
     h = QMAX( h, 0 ); // in case of isShade() and PBaseSize
-    QString pos;
+    TQString pos;
     pos.sprintf( "%+d,%+d<br>(<b>%d&nbsp;x&nbsp;%d</b>)",
                      geom.x(), geom.y(), w, h );
     setText( pos );

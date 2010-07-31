@@ -20,7 +20,7 @@
 
 #include <kpixmap.h>
 
-#include <qhbox.h>
+#include <tqhbox.h>
 
 /**
  * @short Displays an icon on the screen.
@@ -43,10 +43,10 @@ public:
     VTopRight = 13
   };
 
-  WndIcon( unsigned int, unsigned int, unsigned int, int, const KPixmap&, const QString&, Position, bool, bool );
+  WndIcon( unsigned int, unsigned int, unsigned int, int, const KPixmap&, const TQString&, Position, bool, bool );
 
 signals:
-  void setStatusText( const QString& );
+  void setStatusText( const TQString& );
 
 public slots:
   void show();
@@ -55,10 +55,10 @@ public slots:
   void slotJump();
 
 private:
-  QPoint determinePosition();
+  TQPoint determinePosition();
 
 protected:
-  QString mStatusText;
+  TQString mStatusText;
   Position mIconPos;
   int mXineramaScreen;
   int mPosX, mPosY, mGroundX, mGroundY;

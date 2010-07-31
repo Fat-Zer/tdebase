@@ -141,11 +141,11 @@ bool performTransiencyCheck()
     return ret;
     }
 
-static QString transiencyCheckStartBt;
+static TQString transiencyCheckStartBt;
 static const Client* transiencyCheckClient;
 static int transiencyCheck = 0;
 
-static void startTransiencyCheck( const QString& bt, const Client* c, bool ne )
+static void startTransiencyCheck( const TQString& bt, const Client* c, bool ne )
     {
     if( ++transiencyCheck == 1 )
         {
@@ -171,7 +171,7 @@ static void checkTransiency()
 class TransiencyChecker
     {
     public:
-        TransiencyChecker( const QString& bt, const Client*c ) { startTransiencyCheck( bt, c, false ); }
+        TransiencyChecker( const TQString& bt, const Client*c ) { startTransiencyCheck( bt, c, false ); }
         ~TransiencyChecker() { checkTransiency(); }
     };
 
@@ -220,30 +220,30 @@ Group::~Group()
     delete leader_info;
     }
 
-QPixmap Group::icon() const
+TQPixmap Group::icon() const
     {
     if( leader_client != NULL )
         return leader_client->icon();
     else if( leader_wid != None )
         {
-        QPixmap ic;
+        TQPixmap ic;
         Client::readIcons( leader_wid, &ic, NULL );
         return ic;
         }
-    return QPixmap();
+    return TQPixmap();
     }
 
-QPixmap Group::miniIcon() const
+TQPixmap Group::miniIcon() const
     {
     if( leader_client != NULL )
         return leader_client->miniIcon();
     else if( leader_wid != None )
         {
-        QPixmap ic;
+        TQPixmap ic;
         Client::readIcons( leader_wid, NULL, &ic );
         return ic;
         }
-    return QPixmap();
+    return TQPixmap();
     }
 
 void Group::addMember( Client* member_P )

@@ -21,7 +21,7 @@
 #ifndef _JOYDEVICE_H_
 #define _JOYDEVICE_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <sys/types.h>
 #undef __STRICT_ANSI__
@@ -55,24 +55,24 @@ class JoyDevice
     };
 
     // devicefile to use, e.g. "/dev/js0"
-    JoyDevice(const QString &devicefile);
+    JoyDevice(const TQString &devicefile);
     ~JoyDevice();
 
     // returns one of the error-codes from above
     ErrorCode open();
 
     // return descriptive error text for given error code
-    QString errText(ErrorCode code) const;
+    TQString errText(ErrorCode code) const;
 
     int fd() const { return joyFd; }
     void close();
     ErrorCode restoreCorr();
 
     // return devicefilename from constructor
-    const QString &device() const { return devName; }
+    const TQString &device() const { return devName; }
 
     // descriptive text for this device read from the driver
-    QString text() const { return descr; }
+    TQString text() const { return descr; }
 
     int numButtons() const { return buttons; }
     int numAxes() const { return axes; }
@@ -94,8 +94,8 @@ class JoyDevice
     ErrorCode applyCalibration();
 
   private:
-    QString devName;  // device filename
-    QString descr;    // descriptive text
+    TQString devName;  // device filename
+    TQString descr;    // descriptive text
     int joyFd;
 
     int buttons;

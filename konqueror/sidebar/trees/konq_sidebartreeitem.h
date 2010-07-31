@@ -20,8 +20,8 @@
 #ifndef konq_treeitem_h
 #define konq_treeitem_h
 
-#include <qlistview.h>
-#include <qstringlist.h>
+#include <tqlistview.h>
+#include <tqstringlist.h>
 #include <kurl.h>
 
 class QPainter;
@@ -48,14 +48,14 @@ public:
     virtual ~KonqSidebarTreeItem();
 
     // Whether the item accepts a drop consisting in those @p formats
-    virtual bool acceptsDrops( const QStrList & ) { return false; }
+    virtual bool acceptsDrops( const TQStrList & ) { return false; }
 
     // Handle a drop on this item. If you didn't want it, you shouln't
     // have return true in acceptsDrops :)
-    virtual void drop( QDropEvent * ) {}
+    virtual void drop( TQDropEvent * ) {}
 
     // Create a drag object from this item.
-    virtual QDragObject * dragObject( QWidget * parent, bool move = false ) = 0;
+    virtual TQDragObject * dragObject( TQWidget * parent, bool move = false ) = 0;
 
     virtual void middleButtonClicked();
     virtual void rightButtonPressed() = 0;
@@ -65,17 +65,17 @@ public:
     virtual void del() {}
     virtual void shred() {}
     virtual void rename() {}
-    virtual void rename( const QString& ) {}
+    virtual void rename( const TQString& ) {}
 
     // The URL to open when this link is clicked
     virtual KURL externalURL() const = 0;
 
     // The mimetype to use when this link is clicked
-    // If unknown, return QString::null, konq will determine the mimetype itself
-    virtual QString externalMimeType() const { return QString::null; }
+    // If unknown, return TQString::null, konq will determine the mimetype itself
+    virtual TQString externalMimeType() const { return TQString::null; }
 
     // overwrite this if you want a tooltip shown on your item
-    virtual QString toolTipText() const { return QString::null; }
+    virtual TQString toolTipText() const { return TQString::null; }
 
     // Called when this item is selected
     // Reimplement, and call tree()->part()->extension()->enableActions(...)
@@ -100,10 +100,10 @@ public:
     // returns the tree inside which this item is
     KonqSidebarTree *tree() const;
 
-    virtual QString key( int column, bool ) const { return text( column ).lower(); }
+    virtual TQString key( int column, bool ) const { return text( column ).lower(); }
 
     // List of alternative names (URLs) this entry is known under
-    QStringList alias;
+    TQStringList alias;
 protected:
     // Create an item at the toplevel - only for toplevel items -> protected
     KonqSidebarTreeItem( KonqSidebarTree *parent, KonqSidebarTreeTopLevelItem *topLevelItem );

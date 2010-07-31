@@ -20,7 +20,7 @@ public:
     KDEpasswd1Dialog();
     ~KDEpasswd1Dialog();
 
-    static int getPassword(QCString &password);
+    static int getPassword(TQCString &password);
 
 protected:
     bool checkPassword(const char *password);
@@ -33,7 +33,7 @@ class KDEpasswd2Dialog
     Q_OBJECT
 
 public:
-    KDEpasswd2Dialog(const char *oldpass, QCString user);
+    KDEpasswd2Dialog(const char *oldpass, TQCString user);
     ~KDEpasswd2Dialog();
 
 protected:
@@ -41,7 +41,7 @@ protected:
     
 private:
     const char *m_Pass;
-    QCString m_User;
+    TQCString m_User;
 };
     
 

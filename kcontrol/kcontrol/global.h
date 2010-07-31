@@ -22,9 +22,9 @@
 
 #include <kicontheme.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 
 enum IndexViewMode {Icon, Tree};
 
@@ -36,41 +36,41 @@ public:
 
   static bool isInfoCenter() { return _infocenter; }
   static bool root() { return _root; }
-  static QStringList types() { return _types; }
-  static QString userName() { return _uname; }
-  static QString hostName() { return _hname; }
-  static QString kdeVersion() { return _kdeversion; }
-  static QString systemName() { return _isystem; }
-  static QString systemRelease() { return _irelease; }
-  static QString systemVersion() { return _iversion; }
-  static QString systemMachine() { return _imachine; }
+  static TQStringList types() { return _types; }
+  static TQString userName() { return _uname; }
+  static TQString hostName() { return _hname; }
+  static TQString kdeVersion() { return _kdeversion; }
+  static TQString systemName() { return _isystem; }
+  static TQString systemRelease() { return _irelease; }
+  static TQString systemVersion() { return _iversion; }
+  static TQString systemMachine() { return _imachine; }
   static IndexViewMode viewMode() { return _viewmode; }
   static KIcon::StdSizes iconSize() { return _iconsize; }
-  static QString baseGroup();
+  static TQString baseGroup();
 
   static void setIsInfoCenter(bool b) { _infocenter = b; }
   static void setRoot(bool r) { _root = r; }
-  static void setType(const QCString& s);
-  static void setUserName(const QString& n){ _uname = n; }
-  static void setHostName(const QString& n){ _hname = n; }
-  static void setKDEVersion(const QString& n){ _kdeversion = n; }
-  static void setSystemName(const QString& n){ _isystem = n; }
-  static void setSystemRelease(const QString& n){ _irelease = n; }
-  static void setSystemVersion(const QString& n){ _iversion = n; }
-  static void setSystemMachine(const QString& n){ _imachine = n; }
+  static void setType(const TQCString& s);
+  static void setUserName(const TQString& n){ _uname = n; }
+  static void setHostName(const TQString& n){ _hname = n; }
+  static void setKDEVersion(const TQString& n){ _kdeversion = n; }
+  static void setSystemName(const TQString& n){ _isystem = n; }
+  static void setSystemRelease(const TQString& n){ _irelease = n; }
+  static void setSystemVersion(const TQString& n){ _iversion = n; }
+  static void setSystemMachine(const TQString& n){ _imachine = n; }
   static void setViewMode(IndexViewMode m) { _viewmode = m; }
   static void setIconSize(KIcon::StdSizes s) { _iconsize = s; }
 
-  static void repairAccels( QWidget * tw );
+  static void repairAccels( TQWidget * tw );
 
 private:
   static bool _root;
   static bool _infocenter;
-  static QStringList _types;
-  static QString _uname, _hname, _isystem, _irelease, _iversion, _imachine, _kdeversion;
+  static TQStringList _types;
+  static TQString _uname, _hname, _isystem, _irelease, _iversion, _imachine, _kdeversion;
   static IndexViewMode _viewmode;
   static KIcon::StdSizes _iconsize;
-  static QString _baseGroup;
+  static TQString _baseGroup;
 };
 
 #endif

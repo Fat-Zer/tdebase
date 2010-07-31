@@ -1,9 +1,9 @@
-#include <qwindowdefs.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qregexp.h>
-#include <qstringlist.h>
-#include <qdir.h>
+#include <tqwindowdefs.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
+#include <tqstringlist.h>
+#include <tqdir.h>
 
 #include <kstandarddirs.h>
 #include <kglobal.h>
@@ -26,7 +26,7 @@ XkbRules::XkbRules(bool layoutsOnly):
 		return;
    	}
 
-	QString rulesFile = X11Helper::findXkbRulesFile(X11_DIR, qt_xdisplay());
+	TQString rulesFile = X11Helper::findXkbRulesFile(X11_DIR, qt_xdisplay());
 	
 	if( rulesFile.isEmpty() ) {
   		kdError() << "Cannot find rules file in " << X11_DIR << endl;
@@ -40,7 +40,7 @@ XkbRules::XkbRules(bool layoutsOnly):
 }
 
 
-void XkbRules::loadRules(QString file, bool layoutsOnly)
+void XkbRules::loadRules(TQString file, bool layoutsOnly)
 {
 	RulesInfo* rules = X11Helper::loadRules(file, layoutsOnly);
 
@@ -79,7 +79,7 @@ void XkbRules::loadRules(QString file, bool layoutsOnly)
 // 	}
 // }
 
-bool XkbRules::isSingleGroup(const QString& layout)
+bool XkbRules::isSingleGroup(const TQString& layout)
 {
 	  return X11Helper::areSingleGroupsSupported()
 			  && !m_oldLayouts.contains(layout)
@@ -88,7 +88,7 @@ bool XkbRules::isSingleGroup(const QString& layout)
 
 
 // check $oldlayouts and $nonlatin groups for XFree 4.3 and later
-void XkbRules::loadOldLayouts(QString rulesFile)
+void XkbRules::loadOldLayouts(TQString rulesFile)
 {
 	OldLayouts* oldLayoutsStruct = X11Helper::loadOldLayouts( rulesFile );
 	m_oldLayouts = oldLayoutsStruct->oldLayouts;
@@ -97,13 +97,13 @@ void XkbRules::loadOldLayouts(QString rulesFile)
 
 // for multi-group layouts in XFree 4.2 and older
 //    or if layout is present in $oldlayout or $nonlatin groups
-void XkbRules::loadGroups(QString file)
+void XkbRules::loadGroups(TQString file)
 {
-  QFile f(file);
+  TQFile f(file);
   if (f.open(IO_ReadOnly))
     {
-      QTextStream ts(&f);
-      QString locale;
+      TQTextStream ts(&f);
+      TQString locale;
       unsigned int grp;
 
       while (!ts.eof()) {
@@ -121,7 +121,7 @@ void XkbRules::loadGroups(QString file)
 }
 
 unsigned int 
-XkbRules::getDefaultGroup(const QString& layout, const QString& includeGroup)
+XkbRules::getDefaultGroup(const TQString& layout, const TQString& includeGroup)
 {
 // check for new one-group layouts in XFree 4.3 and older
     if( isSingleGroup(layout) ) {
@@ -131,23 +131,23 @@ XkbRules::getDefaultGroup(const QString& layout, const QString& includeGroup)
 			return 0;
     }
     
-    QMap<QString, unsigned int>::iterator it = m_initialGroups.find(layout);
+    TQMap<TQString, unsigned int>::iterator it = m_initialGroups.find(layout);
     return it == m_initialGroups.end() ? 0 : it.data();
 }
 
 
 QStringList
-XkbRules::getAvailableVariants(const QString& layout)
+XkbRules::getAvailableVariants(const TQString& layout)
 {
     if( layout.isEmpty() || !layouts().find(layout) )
-	return QStringList();
+	return TQStringList();
 
-    QStringList* result1 = m_varLists[layout];
+    TQStringList* result1 = m_varLists[layout];
     if( result1 )
         return *result1;
 
     bool oldLayouts = m_oldLayouts.contains(layout);
-    QStringList* result = X11Helper::getVariants(layout, X11_DIR, oldLayouts);
+    TQStringList* result = X11Helper::getVariants(layout, X11_DIR, oldLayouts);
 
     m_varLists.insert(layout, result);
 

@@ -36,10 +36,10 @@ class WindowListButton : public PanelPopupButton
     Q_OBJECT
 
 public:
-    WindowListButton( QWidget* parent );
+    WindowListButton( TQWidget* parent );
 
 protected:
-    virtual QString tileName() { return "WindowList"; }
+    virtual TQString tileName() { return "WindowList"; }
     virtual void initPopup();
 
     KWindowListMenu* topMenu;

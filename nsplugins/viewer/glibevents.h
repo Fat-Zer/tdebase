@@ -20,8 +20,8 @@
 #ifndef GLIBEVENTS_H
 #define GLIBEVENTS_H
 
-#include <qwidget.h>
-#include <qtimer.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
 
 #include <glib.h>
 
@@ -35,7 +35,7 @@ class GlibEvents
     private slots:
         void process();
     private:
-        QTimer timer;
+        TQTimer timer;
     };
 
 #endif

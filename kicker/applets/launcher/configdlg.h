@@ -34,7 +34,7 @@ class ConfigDlg : public KConfigDialog
     Q_OBJECT
 
 public:
-    ConfigDlg(QWidget *parent, const char *name, Prefs *config, int autoSize,
+    ConfigDlg(TQWidget *parent, const char *name, Prefs *config, int autoSize,
         KConfigDialog::DialogType dialogType, int dialogButtons);
 
 protected:
@@ -49,7 +49,7 @@ private:
     ConfigDlgBase *m_ui;
     Prefs* m_settings;
     int m_autoSize;
-    QString m_oldIconDimText;
+    TQString m_oldIconDimText;
 };
 
 #endif

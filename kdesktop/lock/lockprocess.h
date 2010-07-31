@@ -14,11 +14,11 @@
 #include <kprocess.h>
 #include <kpixmap.h>
 
-#include <qwidget.h>
-#include <qtimer.h>
-#include <qvaluestack.h>
-#include <qmessagebox.h>
-#include <qpixmap.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
+#include <tqvaluestack.h>
+#include <tqmessagebox.h>
+#include <tqpixmap.h>
 
 #include <X11/Xlib.h>
 
@@ -53,11 +53,11 @@ public:
 
     bool dontLock();
 
-    void setChildren(QValueList<int> children) { child_sockets = children; }
+    void setChildren(TQValueList<int> children) { child_sockets = children; }
     void setParent(int fd) { mParent = fd; }
 
-    void msgBox( QMessageBox::Icon type, const QString &txt );
-    int execDialog( QDialog* dlg );
+    void msgBox( TQMessageBox::Icon type, const TQString &txt );
+    int execDialog( TQDialog* dlg );
 
 public slots:
     void quitSaver();
@@ -70,7 +70,7 @@ public slots:
 
 protected:
     virtual bool x11Event(XEvent *);
-    virtual void timerEvent(QTimerEvent *);
+    virtual void timerEvent(TQTimerEvent *);
 
 private slots:
     void hackExited(KProcess *);
@@ -92,7 +92,7 @@ private:
     bool grabMouse();
     bool grabInput();
     void ungrabInput();
-    void cantLock(const QString &reason);
+    void cantLock(const TQString &reason);
     bool startSaver();
     void stopSaver();
     bool startHack();
@@ -104,7 +104,7 @@ private:
     void lockXF86();
     void unlockXF86();
     void resume( bool force );
-    static QVariant getConf(void *ctx, const char *key, const QVariant &dflt);
+    static TQVariant getConf(void *ctx, const char *key, const TQVariant &dflt);
 
     bool        mLocked;
     int         mLockGrace;
@@ -113,30 +113,30 @@ private:
     KProcess    mHackProc;
     int         mRootWidth;
     int         mRootHeight;
-    QString     mSaverExec;
-    QString     mSaver;
+    TQString     mSaverExec;
+    TQString     mSaver;
     bool        mOpenGLVisual;
     bool        child_saver;
-    QValueList<int> child_sockets;
+    TQValueList<int> child_sockets;
     int         mParent;
     bool        mUseBlankOnly;
     bool        mSuspended;
-    QTimer      mSuspendTimer;
+    TQTimer      mSuspendTimer;
     bool        mVisibility;
     bool        mDPMSDepend;
-    QTimer      mCheckDPMS;
-    QValueStack< QWidget* > mDialogs;
+    TQTimer      mCheckDPMS;
+    TQValueStack< TQWidget* > mDialogs;
     bool        mRestoreXF86Lock;
     bool        mForbidden;
-    QStringList mPlugins, mPluginOptions;
-    QString     mMethod;
+    TQStringList mPlugins, mPluginOptions;
+    TQString     mMethod;
     GreeterPluginHandle greetPlugin;
-    QPixmap     mSavedScreen;
+    TQPixmap     mSavedScreen;
     int         mAutoLogoutTimerId;
     int         mAutoLogoutTimeout;
     bool        mAutoLogout;
     bool        mInfoMessageDisplayed;
-    QDialog     *currentDialog;
+    TQDialog     *currentDialog;
     bool        mDialogControlLock;
     bool        mForceReject;
 
@@ -145,7 +145,7 @@ private:
     bool        mPipeOpen_out;
     int         mPipe_fd_out;
 
-    QTimer      *resizeTimer;
+    TQTimer      *resizeTimer;
     unsigned int  mkeyCode;
 };
 

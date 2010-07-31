@@ -45,27 +45,27 @@ KonqMainWindowIface::~KonqMainWindowIface()
   delete m_dcopActionProxy;
 }
 
-void KonqMainWindowIface::openURL( QString url )
+void KonqMainWindowIface::openURL( TQString url )
 {
   m_pMainWindow->openFilteredURL( url );
 }
 
-void KonqMainWindowIface::newTab( QString url )
+void KonqMainWindowIface::newTab( TQString url )
 {
   m_pMainWindow->openFilteredURL( url, true );
 }
 
-void KonqMainWindowIface::openURL( QString url, bool tempFile )
+void KonqMainWindowIface::openURL( TQString url, bool tempFile )
 {
   m_pMainWindow->openFilteredURL( url, false, tempFile );
 }
 
-void KonqMainWindowIface::newTab( QString url, bool tempFile )
+void KonqMainWindowIface::newTab( TQString url, bool tempFile )
 {
   m_pMainWindow->openFilteredURL( url, true, tempFile );
 }
 
-void KonqMainWindowIface::newTabASN( QString url, const QCString& startup_id, bool tempFile )
+void KonqMainWindowIface::newTabASN( TQString url, const TQCString& startup_id, bool tempFile )
 {
   KStartupInfo::setNewStartupId( m_pMainWindow, startup_id );
   m_pMainWindow->openFilteredURL( url, true, tempFile );
@@ -129,7 +129,7 @@ DCOPRef KonqMainWindowIface::part(int viewNumber)
   return (*it)->dcopObject()->part();
 }
 
-DCOPRef KonqMainWindowIface::action( const QCString &name )
+DCOPRef KonqMainWindowIface::action( const TQCString &name )
 {
   return DCOPRef( kapp->dcopClient()->appId(), m_dcopActionProxy->actionObjectId( name ) );
 }
@@ -137,16 +137,16 @@ DCOPRef KonqMainWindowIface::action( const QCString &name )
 QCStringList KonqMainWindowIface::actions()
 {
   QCStringList res;
-  QValueList<KAction *> lst = m_dcopActionProxy->actions();
-  QValueList<KAction *>::ConstIterator it = lst.begin();
-  QValueList<KAction *>::ConstIterator end = lst.end();
+  TQValueList<KAction *> lst = m_dcopActionProxy->actions();
+  TQValueList<KAction *>::ConstIterator it = lst.begin();
+  TQValueList<KAction *>::ConstIterator end = lst.end();
   for (; it != end; ++it )
     res.append( (*it)->name() );
 
   return res;
 }
 
-QMap<QCString,DCOPRef> KonqMainWindowIface::actionMap()
+TQMap<TQCString,DCOPRef> KonqMainWindowIface::actionMap()
 {
   return m_dcopActionProxy->actionMap();
 }
@@ -156,7 +156,7 @@ QCStringList KonqMainWindowIface::functionsDynamic()
     return DCOPObject::functionsDynamic() + KDCOPPropertyProxy::functions( m_pMainWindow );
 }
 
-bool KonqMainWindowIface::processDynamic( const QCString &fun, const QByteArray &data, QCString &replyType, QByteArray &replyData )
+bool KonqMainWindowIface::processDynamic( const TQCString &fun, const TQByteArray &data, TQCString &replyType, TQByteArray &replyData )
 {
     if ( KDCOPPropertyProxy::isPropertyRequest( fun, m_pMainWindow ) )
         return KDCOPPropertyProxy::processPropertyRequest( fun, data, replyType, replyData, m_pMainWindow );

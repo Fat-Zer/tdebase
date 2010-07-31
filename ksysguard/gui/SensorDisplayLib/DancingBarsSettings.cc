@@ -29,50 +29,50 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <qcheckbox.h>
-#include <qframe.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqframe.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
 
 #include "DancingBarsSettings.h"
 
-DancingBarsSettings::DancingBarsSettings( QWidget* parent, const char* name )
+DancingBarsSettings::DancingBarsSettings( TQWidget* parent, const char* name )
   : KDialogBase( Tabbed, i18n( "Edit BarGraph Preferences" ), 
     Ok | Apply | Cancel, Ok, parent, name, true, true )
 {
   // Range page
-  QFrame *page = addPage( i18n( "Range" ) );
-  QGridLayout *pageLayout = new QGridLayout( page, 3, 1, 0, spacingHint() );
+  TQFrame *page = addPage( i18n( "Range" ) );
+  TQGridLayout *pageLayout = new TQGridLayout( page, 3, 1, 0, spacingHint() );
 
-  QGroupBox *groupBox = new QGroupBox( 0, Qt::Vertical, i18n( "Title" ), page );
-  QGridLayout *boxLayout = new QGridLayout( groupBox->layout(), 1, 1 );
+  TQGroupBox *groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Title" ), page );
+  TQGridLayout *boxLayout = new TQGridLayout( groupBox->layout(), 1, 1 );
 
   mTitle = new KLineEdit( groupBox );
-  QWhatsThis::add( mTitle, i18n( "Enter the title of the display here." ) );
+  TQWhatsThis::add( mTitle, i18n( "Enter the title of the display here." ) );
   boxLayout->addWidget( mTitle, 0, 0 );
 
   pageLayout->addWidget( groupBox, 0, 0 );
 
-  groupBox = new QGroupBox( 0, Qt::Vertical, i18n( "Display Range" ), page );
-  boxLayout = new QGridLayout( groupBox->layout(), 1, 5 );
+  groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Display Range" ), page );
+  boxLayout = new TQGridLayout( groupBox->layout(), 1, 5 );
   boxLayout->setColStretch( 2, 1 );
 
-  QLabel *label = new QLabel( i18n( "Minimum value:" ), groupBox );
+  TQLabel *label = new TQLabel( i18n( "Minimum value:" ), groupBox );
   boxLayout->addWidget( label, 0, 0 );
 
   mMinValue = new KDoubleSpinBox( 0, 100, 0.5, 0, 2, groupBox );
-  QWhatsThis::add( mMinValue, i18n( "Enter the minimum value for the display here. If both values are 0, automatic range detection is enabled." ) );
+  TQWhatsThis::add( mMinValue, i18n( "Enter the minimum value for the display here. If both values are 0, automatic range detection is enabled." ) );
   boxLayout->addWidget( mMinValue, 0, 1 );
   label->setBuddy( mMinValue );
 
-  label = new QLabel( i18n( "Maximum value:" ), groupBox );
+  label = new TQLabel( i18n( "Maximum value:" ), groupBox );
   boxLayout->addWidget( label, 0, 3 );
 
   mMaxValue = new KDoubleSpinBox( 0, 10000, 0.5, 100, 2, groupBox );
-  QWhatsThis::add( mMaxValue, i18n( "Enter the maximum value for the display here. If both values are 0, automatic range detection is enabled." ) );
+  TQWhatsThis::add( mMaxValue, i18n( "Enter the maximum value for the display here. If both values are 0, automatic range detection is enabled." ) );
   boxLayout->addWidget( mMaxValue, 0, 4 );
   label->setBuddy( mMaxValue );
 
@@ -82,17 +82,17 @@ DancingBarsSettings::DancingBarsSettings( QWidget* parent, const char* name )
 
   // Alarm page
   page = addPage( i18n( "Alarms" ) );
-  pageLayout = new QGridLayout( page, 3, 1, 0, spacingHint() );
+  pageLayout = new TQGridLayout( page, 3, 1, 0, spacingHint() );
 
-  groupBox = new QGroupBox( 0, Qt::Vertical, i18n( "Alarm for Minimum Value" ), page );
-  boxLayout = new QGridLayout( groupBox->layout(), 1, 4 );
+  groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Alarm for Minimum Value" ), page );
+  boxLayout = new TQGridLayout( groupBox->layout(), 1, 4 );
   boxLayout->setColStretch( 1, 1 );
 
-  mUseLowerLimit = new QCheckBox( i18n( "Enable alarm" ), groupBox );
-  QWhatsThis::add( mUseLowerLimit, i18n( "Enable the minimum value alarm." ) );
+  mUseLowerLimit = new TQCheckBox( i18n( "Enable alarm" ), groupBox );
+  TQWhatsThis::add( mUseLowerLimit, i18n( "Enable the minimum value alarm." ) );
   boxLayout->addWidget( mUseLowerLimit, 0, 0 );
 
-  label = new QLabel( i18n( "Lower limit:" ), groupBox );
+  label = new TQLabel( i18n( "Lower limit:" ), groupBox );
   boxLayout->addWidget( label, 0, 2 );
 
   mLowerLimit = new KDoubleSpinBox( 0, 100, 0.5, 0, 2, groupBox );
@@ -102,15 +102,15 @@ DancingBarsSettings::DancingBarsSettings( QWidget* parent, const char* name )
 
   pageLayout->addWidget( groupBox, 0, 0 );
 
-  groupBox = new QGroupBox( 0, Qt::Vertical, i18n( "Alarm for Maximum Value" ), page );
-  boxLayout = new QGridLayout( groupBox->layout(), 1, 4 );
+  groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Alarm for Maximum Value" ), page );
+  boxLayout = new TQGridLayout( groupBox->layout(), 1, 4 );
   boxLayout->setColStretch( 1, 1 );
 
-  mUseUpperLimit = new QCheckBox( i18n( "Enable alarm" ), groupBox );
-  QWhatsThis::add( mUseUpperLimit, i18n( "Enable the maximum value alarm." ) );
+  mUseUpperLimit = new TQCheckBox( i18n( "Enable alarm" ), groupBox );
+  TQWhatsThis::add( mUseUpperLimit, i18n( "Enable the maximum value alarm." ) );
   boxLayout->addWidget( mUseUpperLimit, 0, 0 );
 
-  label = new QLabel( i18n( "Upper limit:" ), groupBox );
+  label = new TQLabel( i18n( "Upper limit:" ), groupBox );
   boxLayout->addWidget( label, 0, 2 );
 
   mUpperLimit = new KDoubleSpinBox( 0, 100, 0.5, 0, 2, groupBox );
@@ -124,34 +124,34 @@ DancingBarsSettings::DancingBarsSettings( QWidget* parent, const char* name )
 
   // Look page
   page = addPage( i18n( "Look" ) );
-  pageLayout = new QGridLayout( page, 5, 2, 0, spacingHint() );
+  pageLayout = new TQGridLayout( page, 5, 2, 0, spacingHint() );
 
-  label = new QLabel( i18n( "Normal bar color:" ), page );
+  label = new TQLabel( i18n( "Normal bar color:" ), page );
   pageLayout->addWidget( label, 0, 0 );
 
   mForegroundColor = new KColorButton( page );
   pageLayout->addWidget( mForegroundColor, 0, 1 );
   label->setBuddy( mForegroundColor );  
 
-  label = new QLabel( i18n( "Out-of-range color:" ), page );
+  label = new TQLabel( i18n( "Out-of-range color:" ), page );
   pageLayout->addWidget( label, 1, 0 );
 
   mAlarmColor = new KColorButton( page );
   pageLayout->addWidget( mAlarmColor, 1, 1 );
   label->setBuddy( mAlarmColor );  
 
-  label = new QLabel( i18n( "Background color:" ), page );
+  label = new TQLabel( i18n( "Background color:" ), page );
   pageLayout->addWidget( label, 2, 0 );
 
   mBackgroundColor = new KColorButton( page );
   pageLayout->addWidget( mBackgroundColor, 2, 1 );
   label->setBuddy( mBackgroundColor );  
 
-  label = new QLabel( i18n( "Font size:" ), page );
+  label = new TQLabel( i18n( "Font size:" ), page );
   pageLayout->addWidget( label, 3, 0 );
 
   mFontSize = new KIntNumInput( 9, page );
-  QWhatsThis::add( mFontSize, i18n( "This determines the size of the font used to print a label underneath the bars. Bars are automatically suppressed if text becomes too large, so it is advisable to use a small font size here." ) );
+  TQWhatsThis::add( mFontSize, i18n( "This determines the size of the font used to print a label underneath the bars. Bars are automatically suppressed if text becomes too large, so it is advisable to use a small font size here." ) );
   pageLayout->addWidget( mFontSize, 3, 1 );
   label->setBuddy( mFontSize );  
 
@@ -159,7 +159,7 @@ DancingBarsSettings::DancingBarsSettings( QWidget* parent, const char* name )
 
   // Sensor page
   page = addPage( i18n( "Sensors" ) );
-  pageLayout = new QGridLayout( page, 3, 2, 0, spacingHint() );
+  pageLayout = new TQGridLayout( page, 3, 2, 0, spacingHint() );
   pageLayout->setRowStretch( 2, 1 );
 
   mSensorView = new KListView( page );
@@ -171,25 +171,25 @@ DancingBarsSettings::DancingBarsSettings( QWidget* parent, const char* name )
   mSensorView->setAllColumnsShowFocus( true );
   pageLayout->addMultiCellWidget( mSensorView, 0, 2, 0, 0 );
 
-  mEditButton = new QPushButton( i18n( "Edit..." ), page );
+  mEditButton = new TQPushButton( i18n( "Edit..." ), page );
   mEditButton->setEnabled( false );
-  QWhatsThis::add( mEditButton, i18n( "Push this button to configure the label." ) );
+  TQWhatsThis::add( mEditButton, i18n( "Push this button to configure the label." ) );
   pageLayout->addWidget( mEditButton, 0, 1 );
 
-  mRemoveButton = new QPushButton( i18n( "Delete" ), page );
+  mRemoveButton = new TQPushButton( i18n( "Delete" ), page );
   mRemoveButton->setEnabled( false );
-  QWhatsThis::add( mRemoveButton, i18n( "Push this button to delete the sensor." ) );
+  TQWhatsThis::add( mRemoveButton, i18n( "Push this button to delete the sensor." ) );
   pageLayout->addWidget( mRemoveButton, 1, 1 );
 
-  connect( mUseLowerLimit, SIGNAL( toggled( bool ) ),
-           mLowerLimit, SLOT( setEnabled( bool ) ) );
-  connect( mUseUpperLimit, SIGNAL( toggled( bool ) ),
-           mUpperLimit, SLOT( setEnabled( bool ) ) );
+  connect( mUseLowerLimit, TQT_SIGNAL( toggled( bool ) ),
+           mLowerLimit, TQT_SLOT( setEnabled( bool ) ) );
+  connect( mUseUpperLimit, TQT_SIGNAL( toggled( bool ) ),
+           mUpperLimit, TQT_SLOT( setEnabled( bool ) ) );
 
-  connect( mSensorView, SIGNAL( selectionChanged( QListViewItem* ) ),
-           SLOT( selectionChanged( QListViewItem* ) ) );
-  connect( mEditButton, SIGNAL( clicked() ), SLOT( editSensor() ) );
-  connect( mRemoveButton, SIGNAL( clicked() ), SLOT( removeSensor() ) );
+  connect( mSensorView, TQT_SIGNAL( selectionChanged( TQListViewItem* ) ),
+           TQT_SLOT( selectionChanged( TQListViewItem* ) ) );
+  connect( mEditButton, TQT_SIGNAL( clicked() ), TQT_SLOT( editSensor() ) );
+  connect( mRemoveButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removeSensor() ) );
 
   KAcceleratorManager::manage( this );
 
@@ -200,12 +200,12 @@ DancingBarsSettings::~DancingBarsSettings()
 {
 }
 
-void DancingBarsSettings::setTitle( const QString& title )
+void DancingBarsSettings::setTitle( const TQString& title )
 {
   mTitle->setText( title );
 }
 
-QString DancingBarsSettings::title() const
+TQString DancingBarsSettings::title() const
 {
   return mTitle->text();
 }
@@ -270,32 +270,32 @@ double DancingBarsSettings::upperLimit() const
   return mUpperLimit->value();
 }
 
-void DancingBarsSettings::setForegroundColor( const QColor &color )
+void DancingBarsSettings::setForegroundColor( const TQColor &color )
 {
   mForegroundColor->setColor( color );
 }
 
-QColor DancingBarsSettings::foregroundColor() const
+TQColor DancingBarsSettings::foregroundColor() const
 {
   return mForegroundColor->color();
 }
 
-void DancingBarsSettings::setAlarmColor( const QColor &color )
+void DancingBarsSettings::setAlarmColor( const TQColor &color )
 {
   mAlarmColor->setColor( color );
 }
 
-QColor DancingBarsSettings::alarmColor() const
+TQColor DancingBarsSettings::alarmColor() const
 {
   return mAlarmColor->color();
 }
 
-void DancingBarsSettings::setBackgroundColor( const QColor &color )
+void DancingBarsSettings::setBackgroundColor( const TQColor &color )
 {
   mBackgroundColor->setColor( color );
 }
 
-QColor DancingBarsSettings::backgroundColor() const
+TQColor DancingBarsSettings::backgroundColor() const
 {
   return mBackgroundColor->color();
 }
@@ -310,13 +310,13 @@ int DancingBarsSettings::fontSize() const
   return mFontSize->value();
 }
 
-void DancingBarsSettings::setSensors( const QValueList< QStringList > &list )
+void DancingBarsSettings::setSensors( const TQValueList< TQStringList > &list )
 {
   mSensorView->clear();
 
-  QValueList< QStringList >::ConstIterator it;
+  TQValueList< TQStringList >::ConstIterator it;
   for ( it = list.begin(); it != list.end(); ++it ) {
-    new QListViewItem( mSensorView,
+    new TQListViewItem( mSensorView,
                        (*it)[ 0 ],   // host name
                        (*it)[ 1 ],   // sensor name
                        (*it)[ 2 ],   // footer title
@@ -325,13 +325,13 @@ void DancingBarsSettings::setSensors( const QValueList< QStringList > &list )
   }
 }
 
-QValueList< QStringList > DancingBarsSettings::sensors() const
+TQValueList< TQStringList > DancingBarsSettings::sensors() const
 {
-  QValueList< QStringList > list;
+  TQValueList< TQStringList > list;
 
-  QListViewItemIterator it( mSensorView );
+  TQListViewItemIterator it( mSensorView );
   while ( it.current() && !it.current()->text( 0 ).isEmpty() ) {
-    QStringList entry;
+    TQStringList entry;
     entry << it.current()->text( 0 );
     entry << it.current()->text( 1 );
     entry << it.current()->text( 2 );
@@ -347,13 +347,13 @@ QValueList< QStringList > DancingBarsSettings::sensors() const
 
 void DancingBarsSettings::editSensor()
 {
-  QListViewItem *lvi = mSensorView->currentItem();
+  TQListViewItem *lvi = mSensorView->currentItem();
 
   if ( !lvi )
     return;
 
   bool ok;
-  QString str = KInputDialog::getText( i18n( "Label of Bar Graph" ),
+  TQString str = KInputDialog::getText( i18n( "Label of Bar Graph" ),
     i18n( "Enter new label:" ), lvi->text( 2 ), &ok, this );
   if ( ok )
     lvi->setText( 2, str );
@@ -361,7 +361,7 @@ void DancingBarsSettings::editSensor()
 
 void DancingBarsSettings::removeSensor()
 {
-  QListViewItem *lvi = mSensorView->currentItem();
+  TQListViewItem *lvi = mSensorView->currentItem();
 
   if ( lvi ) {
     /* Before we delete the currently selected item, we determine a
@@ -369,7 +369,7 @@ void DancingBarsSettings::removeSensor()
      * items can be deleted without forcing the user to select a new
      * item between the deletes. If all items are deleted, the buttons
      * are disabled again. */
-    QListViewItem* newSelected = 0;
+    TQListViewItem* newSelected = 0;
     if ( lvi->itemBelow() ) {
       lvi->itemBelow()->setSelected( true );
       newSelected = lvi->itemBelow();
@@ -386,7 +386,7 @@ void DancingBarsSettings::removeSensor()
   }
 }
 
-void DancingBarsSettings::selectionChanged( QListViewItem* lvi )
+void DancingBarsSettings::selectionChanged( TQListViewItem* lvi )
 {
   bool state = ( lvi != 0 );
 

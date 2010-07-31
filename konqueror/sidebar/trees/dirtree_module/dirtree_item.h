@@ -21,7 +21,7 @@
 
 #include "konq_sidebartreeitem.h"
 #include <kurl.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 class QDropEvent;
 class KFileItem;
 
@@ -36,11 +36,11 @@ public:
 
     virtual void setOpen( bool open );
 
-    virtual void paintCell( QPainter *_painter, const QColorGroup & _cg, int _column, int _width, int _alignment );
+    virtual void paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment );
 
-    virtual bool acceptsDrops( const QStrList & formats );
-    virtual void drop( QDropEvent * ev );
-    virtual QDragObject * dragObject( QWidget * parent, bool move = false );
+    virtual bool acceptsDrops( const TQStrList & formats );
+    virtual void drop( TQDropEvent * ev );
+    virtual TQDragObject * dragObject( TQWidget * parent, bool move = false );
 
     virtual void middleButtonClicked();
     virtual void rightButtonPressed();
@@ -50,12 +50,12 @@ public:
     virtual void del();
     virtual void shred();
     virtual void rename(); // start a rename operation
-    void rename( const QString & name ); // do the actual renaming
+    void rename( const TQString & name ); // do the actual renaming
 
     // The URL to open when this link is clicked
     virtual KURL externalURL() const;
-    virtual QString externalMimeType() const;
-    virtual QString toolTipText() const;
+    virtual TQString externalMimeType() const;
+    virtual TQString toolTipText() const;
 
     virtual void itemSelected();
 
@@ -63,7 +63,7 @@ public:
 
     bool hasStandardIcon();
 
-    QString id;
+    TQString id;
 
 private:
     void delOperation( int method );

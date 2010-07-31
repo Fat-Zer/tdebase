@@ -26,11 +26,11 @@
 #define _ReniceDlg_h_
 
 #include <kdialogbase.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlcdnumber.h>
-#include <qpushbutton.h>
-#include <qslider.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlcdnumber.h>
+#include <tqpushbutton.h>
+#include <tqslider.h>
 
 class KIntNumInput;
 
@@ -43,18 +43,18 @@ class ReniceDlg : public KDialogBase
 	Q_OBJECT
 
 public:
-	ReniceDlg(QWidget* parent, const char* name, int currentPPrio, int pid);
+	ReniceDlg(TQWidget* parent, const char* name, int currentPPrio, int pid);
 
 public slots:
 	void slotOk();
 	void slotCancel();
 
 private:
-	QBoxLayout* vLay;
-	QBoxLayout* butLay;
-	QBoxLayout* sldLay;
+	TQBoxLayout* vLay;
+	TQBoxLayout* butLay;
+	TQBoxLayout* sldLay;
 
-	QLabel* message;
+	TQLabel* message;
 	KIntNumInput* input;
 };
 

@@ -23,59 +23,59 @@
 
 #include <sys/systeminfo.h>
 
-bool GetInfo_CPU( QListView *lBox )
+bool GetInfo_CPU( TQListView *lBox )
 {
-      QString str;
+      TQString str;
       char buf[256];
 
       sysinfo(SI_ARCHITECTURE, buf, sizeof(buf));
-      str = QString::fromLocal8Bit(buf);
-      new QListViewItem(lBox, str);
+      str = TQString::fromLocal8Bit(buf);
+      new TQListViewItem(lBox, str);
       return true;
 }
 
 
-bool GetInfo_IRQ( QListView * )
+bool GetInfo_IRQ( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_DMA( QListView * )
+bool GetInfo_DMA( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_PCI( QListView * )
+bool GetInfo_PCI( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_IO_Ports( QListView * )
+bool GetInfo_IO_Ports( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Sound( QListView * )
+bool GetInfo_Sound( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Devices( QListView * )
+bool GetInfo_Devices( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_SCSI( QListView * )
+bool GetInfo_SCSI( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Partitions( QListView * )
+bool GetInfo_Partitions( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_XServer_and_Video( QListView *lBox )
+bool GetInfo_XServer_and_Video( TQListView *lBox )
 {
 	return GetInfo_XServer_Generic( lBox );
 }

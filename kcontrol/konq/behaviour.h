@@ -37,7 +37,7 @@ class KBehaviourOptions : public KCModule
 {
   Q_OBJECT
 public:
-  KBehaviourOptions(KConfig *config, QString group, QWidget *parent=0, const char *name=0);
+  KBehaviourOptions(KConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
     ~KBehaviourOptions();
   virtual void load();
   virtual void load( bool useDefaults );
@@ -51,25 +51,25 @@ protected slots:
 private:
 
   KConfig *g_pConfig;
-  QString groupname;
+  TQString groupname;
 
-  QCheckBox *cbNewWin;
-  QCheckBox *cbListProgress;
+  TQCheckBox *cbNewWin;
+  TQCheckBox *cbListProgress;
 
-  QLabel *winPixmap;
+  TQLabel *winPixmap;
 
   KURLRequester *homeURL;
 
-  QVButtonGroup *bgOneProcess;
-  //QLabel *fileTips;
-  //QSpinBox  *sbToolTip;
-  QCheckBox *cbShowTips;
-  QCheckBox *cbShowPreviewsInTips;
-  QCheckBox *cbRenameDirectlyIcon;
+  TQVButtonGroup *bgOneProcess;
+  //TQLabel *fileTips;
+  //TQSpinBox  *sbToolTip;
+  TQCheckBox *cbShowTips;
+  TQCheckBox *cbShowPreviewsInTips;
+  TQCheckBox *cbRenameDirectlyIcon;
 
-  QCheckBox *cbMoveToTrash;
-  QCheckBox *cbDelete;
-  QCheckBox *cbShowDeleteCommand;
+  TQCheckBox *cbMoveToTrash;
+  TQCheckBox *cbDelete;
+  TQCheckBox *cbShowDeleteCommand;
 };
 
 #endif		// __BEHAVIOUR_H__

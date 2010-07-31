@@ -34,16 +34,16 @@ class NaughtyConfigDialog : public KDialogBase
 
     NaughtyConfigDialog
       (
-       const QStringList & items,
+       const TQStringList & items,
        uint interval,
        uint threshold,
-       QWidget * parent = 0,
+       TQWidget * parent = 0,
        const char * name = 0
       );
 
     ~NaughtyConfigDialog();
 
-    QStringList ignoreList() const;
+    TQStringList ignoreList() const;
     uint updateInterval() const;
     uint threshold() const;
 

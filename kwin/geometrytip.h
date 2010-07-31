@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_GEOMETRY_TIP_H
 #define KWIN_GEOMETRY_TIP_H
 
-#include <qlabel.h>
+#include <tqlabel.h>
 #include "client.h"
 
 namespace KWinInternal
@@ -23,7 +23,7 @@ class GeometryTip: public QLabel
     public:
         GeometryTip( const XSizeHints* xSizeHints, bool save_under );
         ~GeometryTip();
-        void setGeometry( const QRect& geom );
+        void setGeometry( const TQRect& geom );
 
     private:
         const XSizeHints* sizeHints;

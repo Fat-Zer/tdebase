@@ -28,16 +28,16 @@
 #include <kconfig.h>
 #include <stdlib.h>
 
-QStringList getSearchPaths()
+TQStringList getSearchPaths()
 {
-    QStringList searchPaths;
+    TQStringList searchPaths;
 
     KConfig *config = new KConfig("kcmnspluginrc", false);
     config->setGroup("Misc");
 
     // setup default paths
     if ( !config->hasKey("scanPaths") ) {
-        QStringList paths;
+        TQStringList paths;
         // keep sync with kdebase/kcontrol/konqhtml
         paths.append("$HOME/.mozilla/plugins");
         paths.append("$HOME/.netscape/plugins");
@@ -67,8 +67,8 @@ QStringList getSearchPaths()
     delete config;
 
     // append environment variable NPX_PLUGIN_PATH
-    QStringList envs = QStringList::split(':', getenv("NPX_PLUGIN_PATH"));
-    QStringList::Iterator it;
+    TQStringList envs = TQStringList::split(':', getenv("NPX_PLUGIN_PATH"));
+    TQStringList::Iterator it;
     for (it = envs.begin(); it != envs.end(); ++it)
         searchPaths.append(*it);
 

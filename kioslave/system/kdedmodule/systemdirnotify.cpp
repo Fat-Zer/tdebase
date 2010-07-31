@@ -26,7 +26,7 @@
 
 #include <kdirnotify_stub.h>
 
-#include <qdir.h>
+#include <tqdir.h>
 
 SystemDirNotify::SystemDirNotify()
 : mInited( false )
@@ -41,21 +41,21 @@ void SystemDirNotify::init()
 	KGlobal::dirs()->addResourceType("system_entries",
 		KStandardDirs::kde_default("data") + "systemview");
 
-	QStringList names_found;
-	QStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList names_found;
+	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
 
-	QStringList::ConstIterator dirpath = dirList.begin();
-	QStringList::ConstIterator end = dirList.end();
+	TQStringList::ConstIterator dirpath = dirList.begin();
+	TQStringList::ConstIterator end = dirList.end();
 	for(; dirpath!=end; ++dirpath)
 	{
-		QDir dir = *dirpath;
+		TQDir dir = *dirpath;
 		if (!dir.exists()) continue;
 
-		QStringList filenames
-			= dir.entryList( QDir::Files | QDir::Readable );
+		TQStringList filenames
+			= dir.entryList( TQDir::Files | TQDir::Readable );
 
-		QStringList::ConstIterator name = filenames.begin();
-		QStringList::ConstIterator endf = filenames.end();
+		TQStringList::ConstIterator name = filenames.begin();
+		TQStringList::ConstIterator endf = filenames.end();
 
 		for(; name!=endf; ++name)
 		{
@@ -63,7 +63,7 @@ void SystemDirNotify::init()
 			{
 				KDesktopFile desktop(*dirpath+*name, true);
 
-				QString system_name = *name;
+				TQString system_name = *name;
 				system_name.truncate(system_name.length()-8);
 
 				KURL system_url("system:/"+system_name);
@@ -90,8 +90,8 @@ KURL SystemDirNotify::toSystemURL(const KURL &url)
 	kdDebug() << "SystemDirNotify::toSystemURL(" << url << ")" << endl;
 
 	init();
-	QMap<KURL,KURL>::const_iterator it = m_urlMap.begin();
-	QMap<KURL,KURL>::const_iterator end = m_urlMap.end();
+	TQMap<KURL,KURL>::const_iterator it = m_urlMap.begin();
+	TQMap<KURL,KURL>::const_iterator end = m_urlMap.end();
 
 	for (; it!=end; ++it)
 	{
@@ -99,7 +99,7 @@ KURL SystemDirNotify::toSystemURL(const KURL &url)
 
 		if ( base.isParentOf(url) )
 		{
-			QString path = KURL::relativePath(base.path(),
+			TQString path = KURL::relativePath(base.path(),
 			                                  url.path());
 			KURL result = it.data();
 			result.addPath(path);

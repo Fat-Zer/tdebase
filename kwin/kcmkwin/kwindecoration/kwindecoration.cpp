@@ -28,17 +28,17 @@
 */
 
 #include <assert.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qgroupbox.h>
-#include <qcheckbox.h>
-#include <qtabwidget.h>
-#include <qvbox.h>
-#include <qlabel.h>
-#include <qfile.h>
-#include <qslider.h>
+#include <tqdir.h>
+#include <tqfileinfo.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqtabwidget.h>
+#include <tqvbox.h>
+#include <tqlabel.h>
+#include <tqfile.h>
+#include <tqslider.h>
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -59,10 +59,10 @@
 
 // KCModule plugin interface
 // =========================
-typedef KGenericFactory<KWinDecorationModule, QWidget> KWinDecoFactory;
+typedef KGenericFactory<KWinDecorationModule, TQWidget> KWinDecoFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_kwindecoration, KWinDecoFactory("kcmkwindecoration") )
 
-KWinDecorationModule::KWinDecorationModule(QWidget* parent, const char* name, const QStringList &)
+KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, const TQStringList &)
 	: DCOPObject("KWinClientDecoration"),
 	  KCModule(KWinDecoFactory::instance(), parent, name),
           kwinConfig("kwinrc"),
@@ -71,28 +71,28 @@ KWinDecorationModule::KWinDecorationModule(QWidget* parent, const char* name, co
 	kwinConfig.setGroup("Style");
         plugins = new KDecorationPreviewPlugins( &kwinConfig );
 
-	QVBoxLayout* layout = new QVBoxLayout(this, 0, KDialog::spacingHint()); 
+	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, KDialog::spacingHint()); 
 
 // Save this for later...
-//	cbUseMiniWindows = new QCheckBox( i18n( "Render mini &titlebars for all windows"), checkGroup );
-//	QWhatsThis::add( cbUseMiniWindows, i18n( "Note that this option is not available on all styles yet!" ) );
+//	cbUseMiniWindows = new TQCheckBox( i18n( "Render mini &titlebars for all windows"), checkGroup );
+//	TQWhatsThis::add( cbUseMiniWindows, i18n( "Note that this option is not available on all styles yet!" ) );
 
-	tabWidget = new QTabWidget( this );
+	tabWidget = new TQTabWidget( this );
 	layout->addWidget( tabWidget );
 
 	// Page 1 (General Options)
-	QWidget *pluginPage = new QWidget( tabWidget );
+	TQWidget *pluginPage = new TQWidget( tabWidget );
 
-	QVBoxLayout* pluginLayout = new QVBoxLayout(pluginPage, KDialog::marginHint(), KDialog::spacingHint());
+	TQVBoxLayout* pluginLayout = new TQVBoxLayout(pluginPage, KDialog::marginHint(), KDialog::spacingHint());
 
 	// decoration chooser
 	decorationList = new KComboBox( pluginPage );
-	QString whatsThis = i18n("Select the window decoration. This is the look and feel of both "
+	TQString whatsThis = i18n("Select the window decoration. This is the look and feel of both "
                              "the window borders and the window handle.");
-	QWhatsThis::add(decorationList, whatsThis);
+	TQWhatsThis::add(decorationList, whatsThis);
 	pluginLayout->addWidget(decorationList);
 
-	QGroupBox *pluginSettingsGrp = new QGroupBox( i18n("Decoration Options"), pluginPage );
+	TQGroupBox *pluginSettingsGrp = new TQGroupBox( i18n("Decoration Options"), pluginPage );
 	pluginSettingsGrp->setColumnLayout( 0, Vertical );
 	pluginSettingsGrp->setFlat( true );
 	pluginSettingsGrp->layout()->setMargin( 0 );
@@ -102,33 +102,33 @@ KWinDecorationModule::KWinDecorationModule(QWidget* parent, const char* name, co
 	pluginLayout->addStretch();
 
 	// Border size chooser
-	lBorder = new QLabel (i18n("B&order size:"), pluginSettingsGrp);
-	cBorder = new QComboBox(pluginSettingsGrp);
+	lBorder = new TQLabel (i18n("B&order size:"), pluginSettingsGrp);
+	cBorder = new TQComboBox(pluginSettingsGrp);
 	lBorder->setBuddy(cBorder);
-	QWhatsThis::add( cBorder, i18n( "Use this combobox to change the border size of the decoration." ));
+	TQWhatsThis::add( cBorder, i18n( "Use this combobox to change the border size of the decoration." ));
 	lBorder->hide();
 	cBorder->hide();
-	QHBoxLayout *borderSizeLayout = new QHBoxLayout(pluginSettingsGrp->layout() );
+	TQHBoxLayout *borderSizeLayout = new TQHBoxLayout(pluginSettingsGrp->layout() );
 	borderSizeLayout->addWidget(lBorder);
 	borderSizeLayout->addWidget(cBorder);
 	borderSizeLayout->addStretch();
 
-	pluginConfigWidget = new QVBox(pluginSettingsGrp);
+	pluginConfigWidget = new TQVBox(pluginSettingsGrp);
 	pluginSettingsGrp->layout()->add( pluginConfigWidget );
 
 	// Page 2 (Button Selector)
-	QWidget* buttonPage = new QWidget( tabWidget );
-	QVBoxLayout* buttonLayout = new QVBoxLayout(buttonPage, KDialog::marginHint(), KDialog::spacingHint());
+	TQWidget* buttonPage = new TQWidget( tabWidget );
+	TQVBoxLayout* buttonLayout = new TQVBoxLayout(buttonPage, KDialog::marginHint(), KDialog::spacingHint());
 
-	cbShowToolTips = new QCheckBox(
+	cbShowToolTips = new TQCheckBox(
 			i18n("&Show window button tooltips"), buttonPage );
-	QWhatsThis::add( cbShowToolTips,
+	TQWhatsThis::add( cbShowToolTips,
 			i18n(  "Enabling this checkbox will show window button tooltips. "
 				   "If this checkbox is off, no window button tooltips will be shown."));
 
-	cbUseCustomButtonPositions = new QCheckBox(
+	cbUseCustomButtonPositions = new TQCheckBox(
 			i18n("Use custom titlebar button &positions"), buttonPage );
-	QWhatsThis::add( cbUseCustomButtonPositions,
+	TQWhatsThis::add( cbUseCustomButtonPositions,
 			i18n(  "The appropriate settings can be found in the \"Buttons\" Tab; "
 				   "please note that this option is not available on all styles yet." ) );
 
@@ -138,20 +138,20 @@ KWinDecorationModule::KWinDecorationModule(QWidget* parent, const char* name, co
 	// Add nifty dnd button modification widgets
 	buttonPositionWidget = new ButtonPositionWidget(buttonPage, "button_position_widget");
 	buttonPositionWidget->setDecorationFactory(plugins->factory() );
-	QHBoxLayout* buttonControlLayout = new QHBoxLayout(buttonLayout);
+	TQHBoxLayout* buttonControlLayout = new TQHBoxLayout(buttonLayout);
 	buttonControlLayout->addSpacing(20);
 	buttonControlLayout->addWidget(buttonPositionWidget);
 // 	buttonLayout->addStretch();
 
 	// preview
-	QVBoxLayout* previewLayout = new QVBoxLayout(layout, KDialog::spacingHint() );
+	TQVBoxLayout* previewLayout = new TQVBoxLayout(layout, KDialog::spacingHint() );
 	previewLayout->setMargin( KDialog::marginHint() );
 
 	preview = new KDecorationPreview( this );
 	previewLayout->addWidget(preview);
 
-	preview->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	tabWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+	preview->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+	tabWidget->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
 
 	// Load all installed decorations into memory
 	// Set up the decoration lists and other UI settings
@@ -163,17 +163,17 @@ KWinDecorationModule::KWinDecorationModule(QWidget* parent, const char* name, co
 	tabWidget->insertTab( pluginPage, i18n("&Window Decoration") );
 	tabWidget->insertTab( buttonPage, i18n("&Buttons") );
 
-	connect( buttonPositionWidget, SIGNAL(changed()), this, SLOT(slotButtonsChanged()) ); // update preview etc.
-	connect( buttonPositionWidget, SIGNAL(changed()), this, SLOT(slotSelectionChanged()) ); // emit changed()...
-	connect( decorationList, SIGNAL(activated(const QString&)), SLOT(slotSelectionChanged()) );
-	connect( decorationList, SIGNAL(activated(const QString&)),
-								SLOT(slotChangeDecoration(const QString&)) );
-	connect( cbUseCustomButtonPositions, SIGNAL(clicked()), SLOT(slotSelectionChanged()) );
-	connect(cbUseCustomButtonPositions, SIGNAL(toggled(bool)), buttonPositionWidget, SLOT(setEnabled(bool)));
-	connect(cbUseCustomButtonPositions, SIGNAL(toggled(bool)), this, SLOT(slotButtonsChanged()) );
-	connect( cbShowToolTips, SIGNAL(clicked()), SLOT(slotSelectionChanged()) );
-	connect( cBorder, SIGNAL( activated( int )), SLOT( slotBorderChanged( int )));
-//	connect( cbUseMiniWindows, SIGNAL(clicked()), SLOT(slotSelectionChanged()) );
+	connect( buttonPositionWidget, TQT_SIGNAL(changed()), this, TQT_SLOT(slotButtonsChanged()) ); // update preview etc.
+	connect( buttonPositionWidget, TQT_SIGNAL(changed()), this, TQT_SLOT(slotSelectionChanged()) ); // emit changed()...
+	connect( decorationList, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT(slotSelectionChanged()) );
+	connect( decorationList, TQT_SIGNAL(activated(const TQString&)),
+								TQT_SLOT(slotChangeDecoration(const TQString&)) );
+	connect( cbUseCustomButtonPositions, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
+	connect(cbUseCustomButtonPositions, TQT_SIGNAL(toggled(bool)), buttonPositionWidget, TQT_SLOT(setEnabled(bool)));
+	connect(cbUseCustomButtonPositions, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotButtonsChanged()) );
+	connect( cbShowToolTips, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
+	connect( cBorder, TQT_SIGNAL( activated( int )), TQT_SLOT( slotBorderChanged( int )));
+//	connect( cbUseMiniWindows, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
 
 	// Allow kwin dcop signal to update our selection list
 	connectDCOPSignal("kwin", 0, "dcopResetAllClients()", "dcopUpdateClientList()", false);
@@ -199,20 +199,20 @@ KWinDecorationModule::~KWinDecorationModule()
 // And insert these into a DecorationInfo structure
 void KWinDecorationModule::findDecorations()
 {
-	QStringList dirList = KGlobal::dirs()->findDirs("data", "kwin");
-	QStringList::ConstIterator it;
+	TQStringList dirList = KGlobal::dirs()->findDirs("data", "kwin");
+	TQStringList::ConstIterator it;
 
 	for (it = dirList.begin(); it != dirList.end(); it++)
 	{
-		QDir d(*it);
+		TQDir d(*it);
 		if (d.exists())
 			for (QFileInfoListIterator it(*d.entryInfoList()); it.current(); ++it)
 			{
-				QString filename(it.current()->absFilePath());
+				TQString filename(it.current()->absFilePath());
 				if (KDesktopFile::isDesktopFile(filename))
 				{
 					KDesktopFile desktopFile(filename);
-					QString libName = desktopFile.readEntry("X-KDE-Library");
+					TQString libName = desktopFile.readEntry("X-KDE-Library");
 
 					if (!libName.isEmpty() && libName.startsWith( "kwin3_" ))
 					{
@@ -230,10 +230,10 @@ void KWinDecorationModule::findDecorations()
 // Fills the decorationList with a list of available kwin decorations
 void KWinDecorationModule::createDecorationList()
 {
-	QValueList<DecorationInfo>::ConstIterator it;
+	TQValueList<DecorationInfo>::ConstIterator it;
 
 	// Sync with kwin hardcoded KDE2 style which has no desktop item
-    QStringList decorationNames;
+    TQStringList decorationNames;
 	decorationNames.append( i18n("KDE 2") );
 	for (it = decorations.begin(); it != decorations.end(); ++it)
 	{
@@ -245,7 +245,7 @@ void KWinDecorationModule::createDecorationList()
 
 
 // Reset the decoration plugin to what the user just selected
-void KWinDecorationModule::slotChangeDecoration( const QString & text)
+void KWinDecorationModule::slotChangeDecoration( const TQString & text)
 {
 	KConfig kwinConfig("kwinrc");
 	kwinConfig.setGroup("Style");
@@ -272,10 +272,10 @@ static const char* const border_names[ KDecorationDefines::BordersCount ] =
     I18N_NOOP( "Oversized" )
     };
 
-int KWinDecorationModule::borderSizeToIndex( BorderSize size, QValueList< BorderSize > sizes )
+int KWinDecorationModule::borderSizeToIndex( BorderSize size, TQValueList< BorderSize > sizes )
 {
         int pos = 0;
-        for( QValueList< BorderSize >::ConstIterator it = sizes.begin();
+        for( TQValueList< BorderSize >::ConstIterator it = sizes.begin();
              it != sizes.end();
              ++it, ++pos )
             if( size <= *it )
@@ -284,9 +284,9 @@ int KWinDecorationModule::borderSizeToIndex( BorderSize size, QValueList< Border
 }
 
 KDecorationDefines::BorderSize KWinDecorationModule::indexToBorderSize( int index,
-    QValueList< BorderSize > sizes )
+    TQValueList< BorderSize > sizes )
 {
-        QValueList< BorderSize >::ConstIterator it = sizes.begin();
+        TQValueList< BorderSize >::ConstIterator it = sizes.begin();
         for(;
              it != sizes.end();
              ++it, --index )
@@ -300,7 +300,7 @@ void KWinDecorationModule::slotBorderChanged( int size )
         if( lBorder->isHidden())
             return;
         emit KCModule::changed( true );
-        QValueList< BorderSize > sizes;
+        TQValueList< BorderSize > sizes;
         if( plugins->factory() != NULL )
             sizes = plugins->factory()->borderSizes();
         assert( sizes.count() >= 2 );
@@ -316,11 +316,11 @@ void KWinDecorationModule::slotButtonsChanged()
 	preview->setTempButtons(plugins, cbUseCustomButtonPositions->isChecked(), buttonPositionWidget->buttonsLeft(), buttonPositionWidget->buttonsRight() );
 }
 
-QString KWinDecorationModule::decorationName( QString& libName )
+TQString KWinDecorationModule::decorationName( TQString& libName )
 {
-	QString decoName;
+	TQString decoName;
 
-	QValueList<DecorationInfo>::Iterator it;
+	TQValueList<DecorationInfo>::Iterator it;
 	for( it = decorations.begin(); it != decorations.end(); ++it )
 		if ( (*it).libraryName == libName )
 		{
@@ -332,13 +332,13 @@ QString KWinDecorationModule::decorationName( QString& libName )
 }
 
 
-QString KWinDecorationModule::decorationLibName( const QString& name )
+TQString KWinDecorationModule::decorationLibName( const TQString& name )
 {
-	QString libName;
+	TQString libName;
 
 	// Find the corresponding library name to that of
 	// the current plugin name
-	QValueList<DecorationInfo>::Iterator it;
+	TQValueList<DecorationInfo>::Iterator it;
 	for( it = decorations.begin(); it != decorations.end(); ++it )
 		if ( (*it).name == name )
 		{
@@ -355,14 +355,14 @@ QString KWinDecorationModule::decorationLibName( const QString& name )
 
 // Loads/unloads and inserts the decoration config plugin into the
 // pluginConfigWidget, allowing for dynamic configuration of decorations
-void KWinDecorationModule::resetPlugin( KConfig* conf, const QString& currentDecoName )
+void KWinDecorationModule::resetPlugin( KConfig* conf, const TQString& currentDecoName )
 {
 	// Config names are "kwin_icewm_config"
 	// for "kwin3_icewm" kwin client
 
-	QString oldName = styleToConfigLib( oldLibraryName );
+	TQString oldName = styleToConfigLib( oldLibraryName );
 
-	QString currentName;
+	TQString currentName;
 	if (!currentDecoName.isEmpty())
 		currentName = decorationLibName( currentDecoName ); // Use what the user selected
 	else
@@ -391,23 +391,23 @@ void KWinDecorationModule::resetPlugin( KConfig* conf, const QString& currentDec
 
 	// Free the old library if possible
 	if (!oldLibraryName.isNull())
-		loader->unloadLibrary( QFile::encodeName(oldName) );
+		loader->unloadLibrary( TQFile::encodeName(oldName) );
 
-	KLibrary* library = loader->library( QFile::encodeName(currentName) );
+	KLibrary* library = loader->library( TQFile::encodeName(currentName) );
 	if (library != NULL)
 	{
 		void* alloc_ptr = library->symbol("allocate_config");
 
 		if (alloc_ptr != NULL)
 		{
-			allocatePlugin = (QObject* (*)(KConfig* conf, QWidget* parent))alloc_ptr;
-			pluginObject = (QObject*)(allocatePlugin( conf, pluginConfigWidget ));
+			allocatePlugin = (TQObject* (*)(KConfig* conf, TQWidget* parent))alloc_ptr;
+			pluginObject = (TQObject*)(allocatePlugin( conf, pluginConfigWidget ));
 
 			// connect required signals and slots together...
-			connect( pluginObject, SIGNAL(changed()), this, SLOT(slotSelectionChanged()) );
-			connect( this, SIGNAL(pluginLoad(KConfig*)), pluginObject, SLOT(load(KConfig*)) );
-			connect( this, SIGNAL(pluginSave(KConfig*)), pluginObject, SLOT(save(KConfig*)) );
-			connect( this, SIGNAL(pluginDefaults()), pluginObject, SLOT(defaults()) );
+			connect( pluginObject, TQT_SIGNAL(changed()), this, TQT_SLOT(slotSelectionChanged()) );
+			connect( this, TQT_SIGNAL(pluginLoad(KConfig*)), pluginObject, TQT_SLOT(load(KConfig*)) );
+			connect( this, TQT_SIGNAL(pluginSave(KConfig*)), pluginObject, TQT_SLOT(save(KConfig*)) );
+			connect( this, TQT_SIGNAL(pluginDefaults()), pluginObject, TQT_SLOT(defaults()) );
 			pluginConfigWidget->show();
 			return;
 		}
@@ -431,8 +431,8 @@ void KWinDecorationModule::readConfig( KConfig* conf )
 
 	oldLibraryName = currentLibraryName;
 	currentLibraryName = conf->readEntry("PluginLib",
-					((QPixmap::defaultDepth() > 8) ? "kwin_plastik" : "kwin_quartz"));
-	QString decoName = decorationName( currentLibraryName );
+					((TQPixmap::defaultDepth() > 8) ? "kwin_plastik" : "kwin_quartz"));
+	TQString decoName = decorationName( currentLibraryName );
 
 	// If we are using the "default" kde client, use the "default" entry.
 	if (decoName.isEmpty())
@@ -472,8 +472,8 @@ void KWinDecorationModule::readConfig( KConfig* conf )
 // Writes the selected user configuration to the kwin config file
 void KWinDecorationModule::writeConfig( KConfig* conf )
 {
-	QString name = decorationList->currentText();
-	QString libName = decorationLibName( name );
+	TQString name = decorationList->currentText();
+	TQString libName = decorationLibName( name );
 
 	KConfig kwinConfig("kwinrc");
 	kwinConfig.setGroup("Style");
@@ -558,7 +558,7 @@ void KWinDecorationModule::defaults()
 
 void KWinDecorationModule::checkSupportedBorderSizes()
 {
-        QValueList< BorderSize > sizes;
+        TQValueList< BorderSize > sizes;
         if( plugins->factory() != NULL )
             sizes = plugins->factory()->borderSizes();
 	if( sizes.count() < 2 ) {
@@ -566,7 +566,7 @@ void KWinDecorationModule::checkSupportedBorderSizes()
 		cBorder->hide();
 	} else {
 		cBorder->clear();
-		for (QValueList<BorderSize>::const_iterator it = sizes.begin(); it != sizes.end(); ++it) {
+		for (TQValueList<BorderSize>::const_iterator it = sizes.begin(); it != sizes.end(); ++it) {
 			BorderSize size = *it;
 			cBorder->insertItem(i18n(border_names[size]), borderSizeToIndex(size,sizes) );
 		}
@@ -578,7 +578,7 @@ void KWinDecorationModule::checkSupportedBorderSizes()
 	}
 }
 
-QString KWinDecorationModule::styleToConfigLib( QString& styleLib )
+TQString KWinDecorationModule::styleToConfigLib( TQString& styleLib )
 {
         if( styleLib.startsWith( "kwin3_" ))
             return "kwin_" + styleLib.mid( 6 ) + "_config";
@@ -586,7 +586,7 @@ QString KWinDecorationModule::styleToConfigLib( QString& styleLib )
             return styleLib + "_config";
 }
 
-QString KWinDecorationModule::quickHelp() const
+TQString KWinDecorationModule::quickHelp() const
 {
 	return i18n( "<h1>Window Manager Decoration</h1>"
 		"<p>This module allows you to choose the window border decorations, "
@@ -602,7 +602,7 @@ QString KWinDecorationModule::quickHelp() const
 void KWinDecorationModule::resetKWin()
 {
 	bool ok = kapp->dcopClient()->send("kwin*", "KWinInterface",
-                        "reconfigure()", QByteArray());
+                        "reconfigure()", TQByteArray());
 	if (!ok)
 		kdDebug() << "kcmkwindecoration: Could not reconfigure kwin" << endl;
 }

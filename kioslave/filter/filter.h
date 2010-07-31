@@ -24,14 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __filter_h__
 #define __filter_h__
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kio/global.h>
 #include <kio/slavebase.h>
 
-class FilterProtocol : public QObject, public KIO::SlaveBase
+class FilterProtocol : public TQObject, public KIO::SlaveBase
 {
 public:
-  FilterProtocol( const QCString & protocol, const QCString &pool, const QCString &app );
+  FilterProtocol( const TQCString & protocol, const TQCString &pool, const TQCString &app );
 
   virtual void get( const KURL &url );
   virtual void put( const KURL &url, int _mode, bool _overwrite,

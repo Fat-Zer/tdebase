@@ -31,12 +31,12 @@ class KBrowserOptions : public KCModule
 {
   Q_OBJECT
 public:
-  KBrowserOptions(KConfig *config, QString group, QWidget *parent=0, const char *name=0);
+  KBrowserOptions(KConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
 
   virtual void load();
   virtual void save();
   virtual void defaults();
-  virtual QString quickHelp() const;
+  virtual TQString quickHelp() const;
 
 private:
    
@@ -44,7 +44,7 @@ private:
   KCModule *behavior;
   KCModule *previews;
   KCModule *kuick;
-  QTabWidget *m_tab;
+  TQTabWidget *m_tab;
 };
 
 #endif

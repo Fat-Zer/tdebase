@@ -26,8 +26,8 @@ DEALINGS IN THE SOFTWARE.
 
 #include <kconfig.h>
 #include <kglobalsettings.h>
-#include <qpalette.h>
-#include <qapplication.h>
+#include <tqpalette.h>
+#include <tqapplication.h>
 #include <assert.h>
 
 KDecorationOptionsPrivate::KDecorationOptionsPrivate()
@@ -66,17 +66,17 @@ void KDecorationOptionsPrivate::defaultKWinSettings()
 unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
     {
     unsigned long changed = 0;
-    QString old_group = config->group();
+    TQString old_group = config->group();
     config->setGroup( "WM" );
 
 // SettingColors
-    QColor old_colors[NUM_COLORS*2];
+    TQColor old_colors[NUM_COLORS*2];
     for( int i = 0;
          i < NUM_COLORS*2;
          ++i )
         old_colors[ i ] = colors[ i ];
         
-    QPalette pal = QApplication::palette();
+    TQPalette pal = TQApplication::palette();
     // normal colors
     colors[ColorFrame] = pal.active().background();
     colors[ColorFrame] = config->readColorEntry("frame", &colors[ColorFrame]);
@@ -84,7 +84,7 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
     colors[ColorHandle] = config->readColorEntry("handle", &colors[ColorHandle]);
 
     // full button configuration (background, blend, and foreground
-    if(QPixmap::defaultDepth() > 8)
+    if(TQPixmap::defaultDepth() > 8)
         colors[ColorButtonBg] = colors[ColorFrame].light(130);
     else
         colors[ColorButtonBg] = colors[ColorFrame];
@@ -93,7 +93,7 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
     colors[ColorTitleBar] = pal.active().highlight();
     colors[ColorTitleBar] = config->readColorEntry("activeBackground",
                                               &colors[ColorTitleBar]);
-    if(QPixmap::defaultDepth() > 8)
+    if(TQPixmap::defaultDepth() > 8)
         colors[ColorTitleBlend] = colors[ ColorTitleBar ].dark(110);
     else
         colors[ColorTitleBlend] = colors[ ColorTitleBar ];
@@ -110,7 +110,7 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
     colors[ColorTitleBar+NUM_COLORS] = config->
         readColorEntry("inactiveBackground", &colors[ColorTitleBar+NUM_COLORS]);
 
-    if(QPixmap::defaultDepth() > 8)
+    if(TQPixmap::defaultDepth() > 8)
         colors[ColorTitleBlend+NUM_COLORS] = colors[ ColorTitleBar+NUM_COLORS ].dark(110);
     else
         colors[ColorTitleBlend+NUM_COLORS] = colors[ ColorTitleBar+NUM_COLORS ];
@@ -118,7 +118,7 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
         config->readColorEntry("inactiveBlend", &colors[ColorTitleBlend+NUM_COLORS]);
 
     // full button configuration
-    if(QPixmap::defaultDepth() > 8)
+    if(TQPixmap::defaultDepth() > 8)
         colors[ColorButtonBg+NUM_COLORS] = colors[ColorFrame+NUM_COLORS].light(130);
     else
         colors[ColorButtonBg+NUM_COLORS] = colors[ColorFrame+NUM_COLORS];
@@ -140,12 +140,12 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
             changed |= SettingColors;
 
 // SettingFont
-    QFont old_activeFont = activeFont;
-    QFont old_inactiveFont = inactiveFont;
-    QFont old_activeFontSmall = activeFontSmall;
-    QFont old_inactiveFontSmall = inactiveFontSmall;
+    TQFont old_activeFont = activeFont;
+    TQFont old_inactiveFont = inactiveFont;
+    TQFont old_activeFontSmall = activeFontSmall;
+    TQFont old_inactiveFontSmall = inactiveFontSmall;
 
-    QFont activeFontGuess = KGlobalSettings::windowTitleFont();
+    TQFont activeFontGuess = KGlobalSettings::windowTitleFont();
 
     activeFont = config->readFontEntry("activeFont", &activeFontGuess);
     inactiveFont = config->readFontEntry("inactiveFont", &activeFont);
@@ -163,8 +163,8 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
 
     config->setGroup( "Style" );
 // SettingsButtons        
-    QString old_title_buttons_left = title_buttons_left;
-    QString old_title_buttons_right = title_buttons_right;
+    TQString old_title_buttons_left = title_buttons_left;
+    TQString old_title_buttons_right = title_buttons_right;
     bool old_custom_button_positions = custom_button_positions;
     custom_button_positions = config->readBoolEntry("CustomButtonPositions", false);
     if (custom_button_positions)
@@ -224,9 +224,9 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
     }
 
 KDecorationDefines::BorderSize KDecorationOptionsPrivate::findPreferredBorderSize( BorderSize size,
-    QValueList< BorderSize > sizes ) const
+    TQValueList< BorderSize > sizes ) const
     {
-    for( QValueList< BorderSize >::ConstIterator it = sizes.begin();
+    for( TQValueList< BorderSize >::ConstIterator it = sizes.begin();
          it != sizes.end();
          ++it )
         if( size <= *it ) // size is either a supported size, or *it is the closest larger supported

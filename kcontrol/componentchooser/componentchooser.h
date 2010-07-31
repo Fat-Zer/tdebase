@@ -21,8 +21,8 @@
 #include "emailclientconfig_ui.h"
 #include "terminalemulatorconfig_ui.h"
 #include "browserconfig_ui.h"
-#include <qdict.h>
-#include <qstring.h>
+#include <tqdict.h>
+#include <tqstring.h>
 
 #include <kservice.h>
 
@@ -48,17 +48,17 @@ class CfgComponent: public ComponentConfig_UI,public CfgPlugin
 {
 Q_OBJECT
 public:
-	CfgComponent(QWidget *parent);
+	CfgComponent(TQWidget *parent);
 	virtual ~CfgComponent();
 	virtual void load(KConfig *cfg);
 	virtual void save(KConfig *cfg);
 	virtual void defaults();
 
 protected:
-	QDict<QString>  m_lookupDict,m_revLookupDict;
+	TQDict<TQString>  m_lookupDict,m_revLookupDict;
 
 protected slots:
-	void slotComponentChanged(const QString&);
+	void slotComponentChanged(const TQString&);
 signals:
 	void changed(bool);
 };
@@ -68,7 +68,7 @@ class CfgEmailClient: public EmailClientConfig_UI,public CfgPlugin
 {
 Q_OBJECT
 public:
-	CfgEmailClient(QWidget *parent);
+	CfgEmailClient(TQWidget *parent);
 	virtual ~CfgEmailClient();
 	virtual void load(KConfig *cfg);
 	virtual void save(KConfig *cfg);
@@ -88,7 +88,7 @@ class CfgTerminalEmulator: public TerminalEmulatorConfig_UI,public CfgPlugin
 {
 Q_OBJECT
 public:
-	CfgTerminalEmulator(QWidget *parent);
+	CfgTerminalEmulator(TQWidget *parent);
 	virtual ~CfgTerminalEmulator();
 	virtual void load(KConfig *cfg);
 	virtual void save(KConfig *cfg);
@@ -106,7 +106,7 @@ class CfgBrowser: public BrowserConfig_UI,public CfgPlugin
 {
 Q_OBJECT
 public:
-	CfgBrowser(QWidget *parent);
+	CfgBrowser(TQWidget *parent);
 	virtual ~CfgBrowser();
 	virtual void load(KConfig *cfg);
 	virtual void save(KConfig *cfg);
@@ -119,7 +119,7 @@ protected slots:
 signals:
 	void changed(bool);
 private:
-	QString m_browserExec;
+	TQString m_browserExec;
 	KService::Ptr m_browserService;	
 };
 
@@ -130,20 +130,20 @@ class ComponentChooser : public ComponentChooser_UI
 Q_OBJECT
 
 public:
-	ComponentChooser(QWidget *parent=0, const char *name=0);
+	ComponentChooser(TQWidget *parent=0, const char *name=0);
 	virtual ~ComponentChooser();
 	void load();
 	void save();
 	void restoreDefault();
 
 private:
-	QString latestEditedService;
+	TQString latestEditedService;
 	bool somethingChanged;
-	QWidget *configWidget;
-	QVBoxLayout *myLayout;
+	TQWidget *configWidget;
+	TQVBoxLayout *myLayout;
 protected slots:
 	void emitChanged(bool);
-	void slotServiceSelected(QListBoxItem *);
+	void slotServiceSelected(TQListBoxItem *);
 
 signals:
 	void changed(bool);

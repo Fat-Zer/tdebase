@@ -27,11 +27,11 @@ namespace KIO { class Job; }
 typedef TrashImpl::TrashedFileInfo TrashedFileInfo;
 typedef TrashImpl::TrashedFileInfoList TrashedFileInfoList;
 
-class TrashProtocol : public QObject, public KIO::SlaveBase
+class TrashProtocol : public TQObject, public KIO::SlaveBase
 {
     Q_OBJECT
 public:
-    TrashProtocol( const QCString& protocol, const QCString &pool, const QCString &app);
+    TrashProtocol( const TQCString& protocol, const TQCString &pool, const TQCString &app);
     virtual ~TrashProtocol();
     virtual void stat(const KURL& url);
     virtual void listDir(const KURL& url);
@@ -47,25 +47,25 @@ public:
      * 2 : migrate old (pre-kde-3.4) trash contents
      * 3 : restore a file to its original location. Args: KURL trashURL.
      */
-    virtual void special( const QByteArray & data );
+    virtual void special( const TQByteArray & data );
 
 private slots:
-    void slotData( KIO::Job*, const QByteArray& );
-    void slotMimetype( KIO::Job*, const QString& );
+    void slotData( KIO::Job*, const TQByteArray& );
+    void slotMimetype( KIO::Job*, const TQString& );
     void jobFinished( KIO::Job* job );
 
 private:
     typedef enum CopyOrMove { Copy, Move };
     void copyOrMove( const KURL& src, const KURL& dest, bool overwrite, CopyOrMove action );
     void createTopLevelDirEntry(KIO::UDSEntry& entry);
-    bool createUDSEntry( const QString& physicalPath, const QString& fileName, const QString& url,
+    bool createUDSEntry( const TQString& physicalPath, const TQString& fileName, const TQString& url,
                          KIO::UDSEntry& entry, const TrashedFileInfo& info );
     void listRoot();
     void restore( const KURL& trashURL );
 
     TrashImpl impl;
-    QString m_userName;
-    QString m_groupName;
+    TQString m_userName;
+    TQString m_groupName;
 };
 
 #endif

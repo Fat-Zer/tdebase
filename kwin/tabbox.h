@@ -12,9 +12,9 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_TABBOX_H
 #define KWIN_TABBOX_H
 
-#include <qframe.h>
-#include <qtimer.h>
-#include <qvaluelist.h>
+#include <tqframe.h>
+#include <tqtimer.h>
+#include <tqvaluelist.h>
 #include "utils.h"
 
 class QLabel;
@@ -56,9 +56,9 @@ class TabBox : public QFrame
         void reconfigure();
 
     protected:
-        void showEvent( QShowEvent* );
-        void hideEvent( QHideEvent* );
-        void drawContents( QPainter * );
+        void showEvent( TQShowEvent* );
+        void hideEvent( TQHideEvent* );
+        void drawContents( TQPainter * );
 
     private:
         void createClientList(ClientList &list, int desktop /*-1 = all*/, Client *start, bool chain);
@@ -72,8 +72,8 @@ class TabBox : public QFrame
         int desk;
         int lineHeight;
         bool showMiniIcon;
-        QTimer delayedShowTimer;
-        QString no_tasks;
+        TQTimer delayedShowTimer;
+        TQString no_tasks;
         bool options_traverse_all;
         Window outline_left, outline_right, outline_top, outline_bottom;
     };

@@ -21,10 +21,10 @@
 #define __konq_settings_h__
 
 class KConfig;
-#include <qcolor.h>
-#include <qstring.h>
-#include <qfont.h>
-#include <qmap.h>
+#include <tqcolor.h>
+#include <tqstring.h>
+#include <tqfont.h>
+#include <tqmap.h>
 
 #include <libkonq_export.h>
 
@@ -72,7 +72,7 @@ public:
   // Use settings (and mimetype definition files)
   // to find whether to embed a certain service type or not
   // Only makes sense in konqueror.
-  bool shouldEmbed( const QString & serviceType ) const;
+  bool shouldEmbed( const TQString & serviceType ) const;
 
   // Behaviour settings
   bool wordWrapText() const { return m_bWordWrapText; }
@@ -81,7 +81,7 @@ public:
   bool underlineLink() const { return m_underlineLink; }
   bool fileSizeInBytes() const { return m_fileSizeInBytes; }
   bool alwaysNewWin() const { return m_alwaysNewWin; }
-  const QString & homeURL() const { return m_homeURL; }
+  const TQString & homeURL() const { return m_homeURL; }
 
   bool showFileTips() const {return m_showFileTips; }
   bool showPreviewsInFileTips() const;
@@ -89,16 +89,16 @@ public:
     bool renameIconDirectly() const;
 
   // Font settings
-  const QFont& standardFont() const { return m_standardFont; }
+  const TQFont& standardFont() const { return m_standardFont; }
 
   // Color settings
-  const QColor& normalTextColor() const { return m_normalTextColor; }
-  const QColor& highlightedTextColor() const { return m_highlightedTextColor; }
-  const QColor& itemTextBackground() const { return m_itemTextBackground; }
+  const TQColor& normalTextColor() const { return m_normalTextColor; }
+  const TQColor& highlightedTextColor() const { return m_highlightedTextColor; }
+  const TQColor& itemTextBackground() const { return m_itemTextBackground; }
 
   int textPreviewIconTransparency() const { return m_iconTransparency; }
 
-  int caseSensitiveCompare( const QString& a, const QString& b ) const;
+  int caseSensitiveCompare( const TQString& a, const TQString& b ) const;
 
 private:
 
@@ -109,18 +109,18 @@ private:
   bool m_alwaysNewWin;
   bool m_bTreeFollow;
 
-  QMap<QString, QString> m_embedMap;
+  TQMap<TQString, TQString> m_embedMap;
 
-  QFont m_standardFont;
+  TQFont m_standardFont;
 
-  QColor m_normalTextColor;
-  QColor m_highlightedTextColor;
-  QColor m_itemTextBackground;
+  TQColor m_normalTextColor;
+  TQColor m_highlightedTextColor;
+  TQColor m_itemTextBackground;
 
   bool m_bWordWrapText;
   int m_iconTextHeight;
 
-  QString m_homeURL;
+  TQString m_homeURL;
   bool m_showFileTips;
   int  m_numFileTips;
 

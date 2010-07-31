@@ -47,15 +47,15 @@
 
 #include <ktexteditor/encodinginterface.h>
 
-#include <qobjectlist.h>
-#include <qstringlist.h>
-#include <qfileinfo.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
+#include <tqobjectlist.h>
+#include <tqstringlist.h>
+#include <tqfileinfo.h>
+#include <tqtoolbutton.h>
+#include <tqtooltip.h>
 //END Includes
 
 KateViewManager::KateViewManager (KateMainWindow *parent)
- : QObject  (parent),
+ : TQObject  (parent),
   showFullPath(false), m_mainWindow(parent)
 {
   // while init
@@ -71,7 +71,7 @@ KateViewManager::KateViewManager (KateMainWindow *parent)
 
   m_viewManager = new Kate::ViewManager (this);
   m_currentContainer=0;
- connect(m_mainWindow->tabWidget(),SIGNAL(currentChanged(QWidget*)),this,SLOT(tabChanged(QWidget*)));
+ connect(m_mainWindow->tabWidget(),TQT_SIGNAL(currentChanged(TQWidget*)),this,TQT_SLOT(tabChanged(TQWidget*)));
  slotNewTab();
  tabChanged(m_mainWindow->tabWidget()->currentPage());
 
@@ -94,67 +94,67 @@ void KateViewManager::setupActions ()
   /**
    * tabbing
    */
-  a=new KAction ( i18n("New Tab"),"tab_new", 0, this, SLOT(slotNewTab()),
+  a=new KAction ( i18n("New Tab"),"tab_new", 0, this, TQT_SLOT(slotNewTab()),
                   m_mainWindow->actionCollection(), "view_new_tab" );
 
-  m_closeTab = new KAction ( i18n("Close Current Tab"),"tab_remove",0,this,SLOT(slotCloseTab()),
+  m_closeTab = new KAction ( i18n("Close Current Tab"),"tab_remove",0,this,TQT_SLOT(slotCloseTab()),
                              m_mainWindow->actionCollection(),"view_close_tab");
 
   m_activateNextTab
       = new KAction( i18n( "Activate Next Tab" ),
-                     QApplication::reverseLayout() ? KStdAccel::tabPrev() : KStdAccel::tabNext(),
-                     this, SLOT( activateNextTab() ), m_mainWindow->actionCollection(), "view_next_tab" );
+                     TQApplication::reverseLayout() ? KStdAccel::tabPrev() : KStdAccel::tabNext(),
+                     this, TQT_SLOT( activateNextTab() ), m_mainWindow->actionCollection(), "view_next_tab" );
 
   m_activatePrevTab
       = new KAction( i18n( "Activate Previous Tab" ),
-                     QApplication::reverseLayout() ? KStdAccel::tabNext() : KStdAccel::tabPrev(),
-                     this, SLOT( activatePrevTab() ), m_mainWindow->actionCollection(), "view_prev_tab" );
+                     TQApplication::reverseLayout() ? KStdAccel::tabNext() : KStdAccel::tabPrev(),
+                     this, TQT_SLOT( activatePrevTab() ), m_mainWindow->actionCollection(), "view_prev_tab" );
 
   /**
    * view splitting
    */
-  a=new KAction ( i18n("Split Ve&rtical"), "view_right", CTRL+SHIFT+Key_L, this, SLOT(
+  a=new KAction ( i18n("Split Ve&rtical"), "view_right", CTRL+SHIFT+Key_L, this, TQT_SLOT(
                   slotSplitViewSpaceVert() ), m_mainWindow->actionCollection(), "view_split_vert");
 
   a->setWhatsThis(i18n("Split the currently active view vertically into two views."));
 
-  a=new KAction ( i18n("Split &Horizontal"), "view_bottom", CTRL+SHIFT+Key_T, this, SLOT(
+  a=new KAction ( i18n("Split &Horizontal"), "view_bottom", CTRL+SHIFT+Key_T, this, TQT_SLOT(
                   slotSplitViewSpaceHoriz() ), m_mainWindow->actionCollection(), "view_split_horiz");
 
   a->setWhatsThis(i18n("Split the currently active view horizontally into two views."));
 
   m_closeView = new KAction ( i18n("Cl&ose Current View"), "view_remove", CTRL+SHIFT+Key_R, this,
-                    SLOT( slotCloseCurrentViewSpace() ), m_mainWindow->actionCollection(),
+                    TQT_SLOT( slotCloseCurrentViewSpace() ), m_mainWindow->actionCollection(),
                     "view_close_current_space" );
 
   m_closeView->setWhatsThis(i18n("Close the currently active splitted view"));
 
   goNext=new KAction(i18n("Next View"),Key_F8,this,
-                     SLOT(activateNextView()),m_mainWindow->actionCollection(),"go_next");
+                     TQT_SLOT(activateNextView()),m_mainWindow->actionCollection(),"go_next");
 
   goNext->setWhatsThis(i18n("Make the next split view the active one."));
 
-  goPrev=new KAction(i18n("Previous View"),SHIFT+Key_F8, this, SLOT(activatePrevView()),m_mainWindow->actionCollection(),"go_prev");
+  goPrev=new KAction(i18n("Previous View"),SHIFT+Key_F8, this, TQT_SLOT(activatePrevView()),m_mainWindow->actionCollection(),"go_prev");
 
   goPrev->setWhatsThis(i18n("Make the previous split view the active one."));
 
   /**
    * buttons for tabbing
    */
-  QToolButton *b = new QToolButton( m_mainWindow->tabWidget() );
-  connect( b, SIGNAL( clicked() ),
-             this, SLOT( slotNewTab() ) );
+  TQToolButton *b = new TQToolButton( m_mainWindow->tabWidget() );
+  connect( b, TQT_SIGNAL( clicked() ),
+             this, TQT_SLOT( slotNewTab() ) );
   b->setIconSet( SmallIcon( "tab_new" ) );
   b->adjustSize();
-  QToolTip::add(b, i18n("Open a new tab"));
+  TQToolTip::add(b, i18n("Open a new tab"));
   m_mainWindow->tabWidget()->setCornerWidget( b, TopLeft );
 
-  b = m_closeTabButton = new QToolButton( m_mainWindow->tabWidget() );
-  connect( b, SIGNAL( clicked() ),
-            this, SLOT( slotCloseTab() ) );
+  b = m_closeTabButton = new TQToolButton( m_mainWindow->tabWidget() );
+  connect( b, TQT_SIGNAL( clicked() ),
+            this, TQT_SLOT( slotCloseTab() ) );
   b->setIconSet( SmallIcon( "tab_remove" ) );
   b->adjustSize();
-  QToolTip::add(b, i18n("Close the current tab"));
+  TQToolTip::add(b, i18n("Close the current tab"));
   m_mainWindow->tabWidget()->setCornerWidget( b, TopRight );
 }
 
@@ -167,7 +167,7 @@ void KateViewManager::updateViewSpaceActions ()
   goPrev->setEnabled (m_currentContainer->viewSpaceCount() > 1);
 }
 
-void KateViewManager::tabChanged(QWidget* widget) {
+void KateViewManager::tabChanged(TQWidget* widget) {
   KateViewSpaceContainer *container=static_cast<KateViewSpaceContainer*>(widget->qt_cast("KateViewSpaceContainer"));
   Q_ASSERT(container);
   m_currentContainer=container;
@@ -199,8 +199,8 @@ void KateViewManager::slotNewTab()
   m_viewSpaceContainerList.append(container);
   m_mainWindow->tabWidget()->addTab (container, "");
 
-  connect(container,SIGNAL(viewChanged()),this,SIGNAL(viewChanged()));
-  connect(container,SIGNAL(viewChanged()),m_viewManager,SIGNAL(viewChanged()));
+  connect(container,TQT_SIGNAL(viewChanged()),this,TQT_SIGNAL(viewChanged()));
+  connect(container,TQT_SIGNAL(viewChanged()),m_viewManager,TQT_SIGNAL(viewChanged()));
 
   if (!m_init)
   {
@@ -371,8 +371,8 @@ void KateViewManager::slotDocumentOpen ()
   if (cv) {
     KEncodingFileDialog::Result r=KEncodingFileDialog::getOpenURLsAndEncoding(
       (cv ? KTextEditor::encodingInterface(cv->document())->encoding() : Kate::Document::defaultEncoding()),
-       (cv ? cv->document()->url().url() : QString::null),
-       QString::null,m_mainWindow,i18n("Open File"));
+       (cv ? cv->document()->url().url() : TQString::null),
+       TQString::null,m_mainWindow,i18n("Open File"));
 
     uint lastID = 0;
     for (KURL::List::Iterator i=r.URLs.begin(); i != r.URLs.end(); ++i)
@@ -403,7 +403,7 @@ void KateViewManager::slotDocumentClose ()
   KateDocManager::self()->closeDocument (activeView()->getDoc());
 }
 
-uint KateViewManager::openURL (const KURL &url, const QString& encoding, bool activate, bool isTempFile )
+uint KateViewManager::openURL (const KURL &url, const TQString& encoding, bool activate, bool isTempFile )
 {
   uint id = 0;
   Kate::Document *doc = KateDocManager::self()->openURL (url, encoding, &id, isTempFile );
@@ -419,7 +419,7 @@ uint KateViewManager::openURL (const KURL &url, const QString& encoding, bool ac
 
 void KateViewManager::openURL (const KURL &url)
 {
-  openURL (url, QString::null);
+  openURL (url, TQString::null);
 }
 
 void KateViewManager::removeViewSpace (KateViewSpace *viewspace)
@@ -463,42 +463,42 @@ void KateViewManager::setShowFullPath( bool enable )
  * session config functions
  */
 // FIXME 3.0 - make those config goups more streamlined: "objN:objN..."
-void KateViewManager::saveViewConfiguration(KConfig *config,const QString& grp)
+void KateViewManager::saveViewConfiguration(KConfig *config,const TQString& grp)
 {
   // Use the same group name for view configuration as usual for sessions.
   // (When called by session manager grp is a 1-based index for the main window)
-  QString group = grp;
+  TQString group = grp;
   bool ok = false;
   int n = group.toInt( &ok );
   if ( ok )
-    group = QString( "MainWindow%1" ).arg( n-1 );
+    group = TQString( "MainWindow%1" ).arg( n-1 );
 
   config->setGroup(group);
   config->writeEntry("ViewSpaceContainers",m_viewSpaceContainerList.count());
   config->writeEntry("Active ViewSpaceContainer", m_mainWindow->tabWidget()->currentPageIndex());
   for (uint i=0;i<m_viewSpaceContainerList.count();i++) {
-    m_viewSpaceContainerList.at(i)->saveViewConfiguration(config,group+QString(":ViewSpaceContainer-%1:").arg(i));
+    m_viewSpaceContainerList.at(i)->saveViewConfiguration(config,group+TQString(":ViewSpaceContainer-%1:").arg(i));
   }
 }
 
-void KateViewManager::restoreViewConfiguration (KConfig *config, const QString& grp)
+void KateViewManager::restoreViewConfiguration (KConfig *config, const TQString& grp)
 {
   // Use the same group name for view configuration as usual for sessions.
   // (When called by session manager grp is a 1-based index for the main window)
-  QString group = grp;
+  TQString group = grp;
   bool ok = false;
   int n = group.toInt( &ok );
   if ( ok )
-    group = QString( "MainWindow%1" ).arg( n-1 );
+    group = TQString( "MainWindow%1" ).arg( n-1 );
 
   config->setGroup(group);
   uint tabCount=config->readNumEntry("ViewSpaceContainers",0);
   int activeOne=config->readNumEntry("Active ViewSpaceContainer",0);
   if (tabCount==0) return;
-  m_viewSpaceContainerList.at(0)->restoreViewConfiguration(config,group+QString(":ViewSpaceContainer-0:"));
+  m_viewSpaceContainerList.at(0)->restoreViewConfiguration(config,group+TQString(":ViewSpaceContainer-0:"));
   for (uint i=1;i<tabCount;i++) {
     slotNewTab();
-    m_viewSpaceContainerList.at(i)->restoreViewConfiguration(config,group+QString(":ViewSpaceContainer-%1:").arg(i));
+    m_viewSpaceContainerList.at(i)->restoreViewConfiguration(config,group+TQString(":ViewSpaceContainer-%1:").arg(i));
   }
 
   if (activeOne != m_mainWindow->tabWidget()->currentPageIndex())

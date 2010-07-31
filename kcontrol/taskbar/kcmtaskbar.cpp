@@ -16,11 +16,11 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qtimer.h>
-#include <qvaluelist.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
+#include <tqvaluelist.h>
 
 #include <dcopclient.h>
 
@@ -31,7 +31,7 @@
 #include <kgenericfactory.h>
 #include <kwin.h>
 #include <kcolorbutton.h>
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #define protected public
 #include "kcmtaskbarui.h"
@@ -41,10 +41,10 @@
 #include "kcmtaskbar.h"
 #include "kcmtaskbar.moc"
 
-typedef KGenericFactory<TaskbarConfig, QWidget > TaskBarFactory;
+typedef KGenericFactory<TaskbarConfig, TQWidget > TaskBarFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_taskbar, TaskBarFactory("kcmtaskbar") )
 
-TaskbarAppearance::TaskbarAppearance(QString name,
+TaskbarAppearance::TaskbarAppearance(TQString name,
                                      bool drawButtons,
                                      bool haloText,
                                      bool showButtonOnHover)
@@ -77,10 +77,10 @@ void TaskbarAppearance::alterSettings() const
 }
 
 // These are the strings that are actually stored in the config file.
-const QStringList& TaskbarConfig::actionList()
+const TQStringList& TaskbarConfig::actionList()
 {
-    static QStringList list(
-            QStringList() << I18N_NOOP("Show Task List") << I18N_NOOP("Show Operations Menu")
+    static TQStringList list(
+            TQStringList() << I18N_NOOP("Show Task List") << I18N_NOOP("Show Operations Menu")
             << I18N_NOOP("Activate, Raise or Minimize Task")
             << I18N_NOOP("Activate Task") << I18N_NOOP("Raise Task")
             << I18N_NOOP("Lower Task") << I18N_NOOP("Minimize Task")
@@ -90,38 +90,38 @@ const QStringList& TaskbarConfig::actionList()
 }
 
 // Get a translated version of the above string list.
-QStringList TaskbarConfig::i18nActionList()
+TQStringList TaskbarConfig::i18nActionList()
 {
-   QStringList i18nList;
-   for( QStringList::ConstIterator it = actionList().begin(); it != actionList().end(); ++it ) {
+   TQStringList i18nList;
+   for( TQStringList::ConstIterator it = actionList().begin(); it != actionList().end(); ++it ) {
       i18nList << i18n((*it).latin1());
    }
    return i18nList;
 }
 
 // These are the strings that are actually stored in the config file.
-const QStringList& TaskbarConfig::groupModeList()
+const TQStringList& TaskbarConfig::groupModeList()
 {
-    static QStringList list(
-            QStringList() << I18N_NOOP("Never") << I18N_NOOP("When Taskbar Full")
+    static TQStringList list(
+            TQStringList() << I18N_NOOP("Never") << I18N_NOOP("When Taskbar Full")
             << I18N_NOOP("Always"));
     return list;
 }
 
 // Get a translated version of the above string list.
-QStringList TaskbarConfig::i18nGroupModeList()
+TQStringList TaskbarConfig::i18nGroupModeList()
 {
-   QStringList i18nList;
-   for( QStringList::ConstIterator it = groupModeList().begin(); it != groupModeList().end(); ++it ) {
+   TQStringList i18nList;
+   for( TQStringList::ConstIterator it = groupModeList().begin(); it != groupModeList().end(); ++it ) {
       i18nList << i18n((*it).latin1());
    }
    return i18nList;
 }
 
-TaskbarConfig::TaskbarConfig(QWidget *parent, const char* name, const QStringList&)
+TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringList&)
   : KCModule(TaskBarFactory::instance(), parent, name)
 {
-    QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
     m_widget = new TaskbarConfigUI(this);
     layout->addWidget(m_widget);
 
@@ -137,8 +137,8 @@ TaskbarConfig::TaskbarConfig(QWidget *parent, const char* name, const QStringLis
         m_widget->appearance->insertItem((*it).name());
     }
 
-    connect(m_widget->appearance, SIGNAL(activated(int)),
-            this, SLOT(appearanceChanged(int)));
+    connect(m_widget->appearance, TQT_SIGNAL(activated(int)),
+            this, TQT_SLOT(appearanceChanged(int)));
     addConfig(TaskBarSettings::self(), m_widget);
 
     setQuickHelp(i18n("<h1>Taskbar</h1> You can configure the taskbar here."
@@ -146,15 +146,15 @@ TaskbarConfig::TaskbarConfig(QWidget *parent, const char* name, const QStringLis
                 " windows at once or only those on the current desktop."
                 " You can also configure whether or not the Window List button will be displayed."));
 
-    QStringList list = i18nActionList();
+    TQStringList list = i18nActionList();
     m_widget->kcfg_LeftButtonAction->insertStringList(list);
     m_widget->kcfg_MiddleButtonAction->insertStringList(list);
     m_widget->kcfg_RightButtonAction->insertStringList(list);
     m_widget->kcfg_GroupTasks->insertStringList(i18nGroupModeList());
 
-    connect(m_widget->kcfg_GroupTasks, SIGNAL(activated(int)),
-            this, SLOT(slotUpdateComboBox()));
-    connect(m_widget->kcfg_UseCustomColors, SIGNAL(stateChanged(int)), this, SLOT(slotUpdateCustomColors()));
+    connect(m_widget->kcfg_GroupTasks, TQT_SIGNAL(activated(int)),
+            this, TQT_SLOT(slotUpdateComboBox()));
+    connect(m_widget->kcfg_UseCustomColors, TQT_SIGNAL(stateChanged(int)), this, TQT_SLOT(slotUpdateCustomColors()));
 
     slotUpdateCustomColors();
     updateAppearanceCombo();
@@ -166,12 +166,12 @@ TaskbarConfig::TaskbarConfig(QWidget *parent, const char* name, const QStringLis
         m_widget->spacer2->changeSize(0, 0);
     }
 
-    if (!QApplication::desktop()->isVirtualDesktop() ||
-        QApplication::desktop()->numScreens() == 1) // No Ximerama
+    if (!TQApplication::desktop()->isVirtualDesktop() ||
+        TQApplication::desktop()->numScreens() == 1) // No Ximerama
     {
         m_widget->showAllScreens->hide();
     }
-    connect( m_widget->showAllScreens, SIGNAL( stateChanged( int )), SLOT( changed()));
+    connect( m_widget->showAllScreens, TQT_SIGNAL( stateChanged( int )), TQT_SLOT( changed()));
 
     KAboutData *about = new KAboutData(I18N_NOOP("kcmtaskbar"),
                                        I18N_NOOP("KDE Taskbar Control Module"),
@@ -184,7 +184,7 @@ TaskbarConfig::TaskbarConfig(QWidget *parent, const char* name, const QStringLis
     setAboutData(about);
 
     load();
-    QTimer::singleShot(0, this, SLOT(notChanged()));
+    TQTimer::singleShot(0, this, TQT_SLOT(notChanged()));
 }
 
 void TaskbarConfig::slotUpdateCustomColors()
@@ -212,7 +212,7 @@ void TaskbarConfig::slotUpdateComboBox()
     }
     else
     {
-        QString action = i18nActionList()[pos];
+        TQString action = i18nActionList()[pos];
         m_widget->kcfg_LeftButtonAction->changeItem(action,pos);
         m_widget->kcfg_MiddleButtonAction->changeItem(action,pos);
         m_widget->kcfg_RightButtonAction->changeItem(action,pos);
@@ -274,7 +274,7 @@ void TaskbarConfig::save()
 
     KCModule::save();
 
-    QByteArray data;
+    TQByteArray data;
     kapp->dcopClient()->emitDCOPSignal("kdeTaskBarConfigChanged()", data);
 }
 

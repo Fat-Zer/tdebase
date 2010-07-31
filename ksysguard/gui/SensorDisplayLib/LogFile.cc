@@ -21,11 +21,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-#include <qpushbutton.h>
-#include <qregexp.h>
+#include <tqpushbutton.h>
+#include <tqregexp.h>
 
-#include <qfile.h>
-#include <qlistbox.h>
+#include <tqfile.h>
+#include <tqlistbox.h>
 
 #include <kfontdialog.h>
 #include <kdebug.h>
@@ -36,10 +36,10 @@
 
 #include "LogFile.moc"
 
-LogFile::LogFile(QWidget *parent, const char *name, const QString& title)
+LogFile::LogFile(TQWidget *parent, const char *name, const TQString& title)
 	: KSGRD::SensorDisplay(parent, name, title)
 {
-	monitor = new QListBox(this);
+	monitor = new TQListBox(this);
 	Q_CHECK_PTR(monitor);
 
 	setMinimumSize(50, 25);
@@ -51,20 +51,20 @@ LogFile::LogFile(QWidget *parent, const char *name, const QString& title)
 
 LogFile::~LogFile(void)
 {
-	sendRequest(sensors().at(0)->hostName(), QString("logfile_unregister %1" ).arg(logFileID), 43);
+	sendRequest(sensors().at(0)->hostName(), TQString("logfile_unregister %1" ).arg(logFileID), 43);
 }
 
 bool
-LogFile::addSensor(const QString& hostName, const QString& sensorName, const QString& sensorType, const QString& title)
+LogFile::addSensor(const TQString& hostName, const TQString& sensorName, const TQString& sensorType, const TQString& title)
 {
 	if (sensorType != "logfile")
 		return (false);
 
 	registerSensor(new KSGRD::SensorProperties(hostName, sensorName, sensorType, title));
 
-	QString sensorID = sensorName.right(sensorName.length() - (sensorName.findRev("/") + 1));
+	TQString sensorID = sensorName.right(sensorName.length() - (sensorName.findRev("/") + 1));
 
-	sendRequest(sensors().at(0)->hostName(), QString("logfile_register %1" ).arg(sensorID), 42);
+	sendRequest(sensors().at(0)->hostName(), TQString("logfile_register %1" ).arg(sensorID), 42);
 
 	if (title.isEmpty())
 		setTitle(sensors().at(0)->hostName() + ":" + sensorID);
@@ -79,7 +79,7 @@ LogFile::addSensor(const QString& hostName, const QString& sensorName, const QSt
 
 void LogFile::configureSettings(void)
 {
-	QColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->colorGroup();
 
 	lfs = new LogFileSettings(this);
 	Q_CHECK_PTR(lfs);
@@ -92,16 +92,16 @@ void LogFile::configureSettings(void)
 	lfs->ruleList->insertStringList(filterRules);
 	lfs->title->setText(title());
 
-	connect(lfs->okButton, SIGNAL(clicked()), lfs, SLOT(accept()));
-	connect(lfs->applyButton, SIGNAL(clicked()), this, SLOT(applySettings()));
-	connect(lfs->cancelButton, SIGNAL(clicked()), lfs, SLOT(reject()));
+	connect(lfs->okButton, TQT_SIGNAL(clicked()), lfs, TQT_SLOT(accept()));
+	connect(lfs->applyButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(applySettings()));
+	connect(lfs->cancelButton, TQT_SIGNAL(clicked()), lfs, TQT_SLOT(reject()));
 
-	connect(lfs->fontButton, SIGNAL(clicked()), this, SLOT(settingsFontSelection()));
-	connect(lfs->addButton, SIGNAL(clicked()), this, SLOT(settingsAddRule()));
-	connect(lfs->deleteButton, SIGNAL(clicked()), this, SLOT(settingsDeleteRule()));
-	connect(lfs->changeButton, SIGNAL(clicked()), this, SLOT(settingsChangeRule()));
-	connect(lfs->ruleList, SIGNAL(selected(int)), this, SLOT(settingsRuleListSelected(int)));
-	connect(lfs->ruleText, SIGNAL(returnPressed()), this, SLOT(settingsAddRule()));
+	connect(lfs->fontButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(settingsFontSelection()));
+	connect(lfs->addButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(settingsAddRule()));
+	connect(lfs->deleteButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(settingsDeleteRule()));
+	connect(lfs->changeButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(settingsChangeRule()));
+	connect(lfs->ruleList, TQT_SIGNAL(selected(int)), this, TQT_SLOT(settingsRuleListSelected(int)));
+	connect(lfs->ruleText, TQT_SIGNAL(returnPressed()), this, TQT_SLOT(settingsAddRule()));
 
 	if (lfs->exec()) {
 		applySettings();
@@ -113,7 +113,7 @@ void LogFile::configureSettings(void)
 
 void LogFile::settingsFontSelection()
 {
-	QFont tmpFont = lfs->fontButton->font();
+	TQFont tmpFont = lfs->fontButton->font();
 
 	if (KFontDialog::getFont(tmpFont) == KFontDialog::Accepted) {
 		lfs->fontButton->setFont(tmpFont);
@@ -147,11 +147,11 @@ void LogFile::settingsRuleListSelected(int index)
 
 void LogFile::applySettings(void)
 {
-	QColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->colorGroup();
 
-	cgroup.setColor(QColorGroup::Text, lfs->fgColor->color());
-	cgroup.setColor(QColorGroup::Base, lfs->bgColor->color());
-	monitor->setPalette(QPalette(cgroup, cgroup, cgroup));
+	cgroup.setColor(TQColorGroup::Text, lfs->fgColor->color());
+	cgroup.setColor(TQColorGroup::Base, lfs->bgColor->color());
+	monitor->setPalette(TQPalette(cgroup, cgroup, cgroup));
 	monitor->setFont(lfs->fontButton->font());
 
 	filterRules.clear();
@@ -166,33 +166,33 @@ void LogFile::applySettings(void)
 void
 LogFile::applyStyle()
 {
-	QColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->colorGroup();
 
-	cgroup.setColor(QColorGroup::Text, KSGRD::Style->firstForegroundColor());
-	cgroup.setColor(QColorGroup::Base, KSGRD::Style->backgroundColor());
-	monitor->setPalette(QPalette(cgroup, cgroup, cgroup));
+	cgroup.setColor(TQColorGroup::Text, KSGRD::Style->firstForegroundColor());
+	cgroup.setColor(TQColorGroup::Base, KSGRD::Style->backgroundColor());
+	monitor->setPalette(TQPalette(cgroup, cgroup, cgroup));
 
 	setModified(true);
 }
 
 bool
-LogFile::restoreSettings(QDomElement& element)
+LogFile::restoreSettings(TQDomElement& element)
 {
-	QFont font;
-	QColorGroup cgroup = monitor->colorGroup();
+	TQFont font;
+	TQColorGroup cgroup = monitor->colorGroup();
 
-	cgroup.setColor(QColorGroup::Text, restoreColor(element, "textColor", Qt::green));
-	cgroup.setColor(QColorGroup::Base, restoreColor(element, "backgroundColor", Qt::black));
-	monitor->setPalette(QPalette(cgroup, cgroup, cgroup));
+	cgroup.setColor(TQColorGroup::Text, restoreColor(element, "textColor", Qt::green));
+	cgroup.setColor(TQColorGroup::Base, restoreColor(element, "backgroundColor", Qt::black));
+	monitor->setPalette(TQPalette(cgroup, cgroup, cgroup));
 
 	addSensor(element.attribute("hostName"), element.attribute("sensorName"), (element.attribute("sensorType").isEmpty() ? "logfile" : element.attribute("sensorType")), element.attribute("title"));
 
 	font.fromString( element.attribute( "font" ) );
 	monitor->setFont(font);
 
-	QDomNodeList dnList = element.elementsByTagName("filter");
+	TQDomNodeList dnList = element.elementsByTagName("filter");
 	for (uint i = 0; i < dnList.count(); i++) {
-		QDomElement element = dnList.item(i).toElement();
+		TQDomElement element = dnList.item(i).toElement();
 		filterRules.append(element.attribute("rule"));
 	}
 
@@ -204,7 +204,7 @@ LogFile::restoreSettings(QDomElement& element)
 }
 
 bool
-LogFile::saveSettings(QDomDocument& doc, QDomElement& element, bool save)
+LogFile::saveSettings(TQDomDocument& doc, TQDomElement& element, bool save)
 {
 	element.setAttribute("hostName", sensors().at(0)->hostName());
 	element.setAttribute("sensorName", sensors().at(0)->name());
@@ -215,10 +215,10 @@ LogFile::saveSettings(QDomDocument& doc, QDomElement& element, bool save)
 	saveColor(element, "textColor", monitor->colorGroup().text());
 	saveColor(element, "backgroundColor", monitor->colorGroup().base());
 
-	for (QStringList::Iterator it = filterRules.begin();
+	for (TQStringList::Iterator it = filterRules.begin();
 		 it != filterRules.end(); it++)
 	{
-		QDomElement filter = doc.createElement("filter");
+		TQDomElement filter = doc.createElement("filter");
 		filter.setAttribute("rule", (*it));
 		element.appendChild(filter);
 	}
@@ -235,11 +235,11 @@ void
 LogFile::updateMonitor()
 {
 	sendRequest(sensors().at(0)->hostName(),
-				QString("%1 %2" ).arg(sensors().at(0)->name()).arg(logFileID), 19);
+				TQString("%1 %2" ).arg(sensors().at(0)->name()).arg(logFileID), 19);
 }
 
 void
-LogFile::answerReceived(int id, const QString& answer)
+LogFile::answerReceived(int id, const TQString& answer)
 {
 	/* We received something, so the sensor is probably ok. */
 	sensorError(id, false);
@@ -255,10 +255,10 @@ LogFile::answerReceived(int id, const QString& answer)
 
 				monitor->insertItem(lines[i], -1);
 
-				for (QStringList::Iterator it = filterRules.begin(); it != filterRules.end(); it++) {
-					QRegExp *expr = new QRegExp((*it).latin1());
+				for (TQStringList::Iterator it = filterRules.begin(); it != filterRules.end(); it++) {
+					TQRegExp *expr = new TQRegExp((*it).latin1());
 					if (expr->search(lines[i].latin1()) != -1) {
-						KNotifyClient::event(winId(), "pattern_match", QString("rule '%1' matched").arg((*it).latin1()));
+						KNotifyClient::event(winId(), "pattern_match", TQString("rule '%1' matched").arg((*it).latin1()));
 					}
 					delete expr;
 				}
@@ -278,7 +278,7 @@ LogFile::answerReceived(int id, const QString& answer)
 }
 
 void
-LogFile::resizeEvent(QResizeEvent*)
+LogFile::resizeEvent(TQResizeEvent*)
 {
 	frame()->setGeometry(0, 0, this->width(), this->height());
 	monitor->setGeometry(10, 20, this->width() - 20, this->height() - 30);

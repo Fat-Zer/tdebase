@@ -28,12 +28,12 @@
 
 #include <kapplication.h>
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qradiobutton.h>
-#include <qtimer.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqradiobutton.h>
+#include <tqtimer.h>
 
 #include <kcmodule.h>
 #include <knuminput.h>
@@ -52,7 +52,7 @@ class KArtsModule : public KCModule
 
 public:
 
-  KArtsModule(QWidget *parent=0, const char *name=0);
+  KArtsModule(TQWidget *parent=0, const char *name=0);
   ~KArtsModule();
   void saveParams( void );
 
@@ -75,18 +75,18 @@ private:
 
   void updateWidgets ();
   void calculateLatency();
-  QString createArgs(bool netTrans,bool duplex, int fragmentCount,
+  TQString createArgs(bool netTrans,bool duplex, int fragmentCount,
                      int fragmentSize,
-                     const QString &deviceName,
-                     int rate, int bits, const QString &audioIO,
-                     const QString &addOptions, bool autoSuspend,
+                     const TQString &deviceName,
+                     int rate, int bits, const TQString &audioIO,
+                     const TQString &addOptions, bool autoSuspend,
                      int suspendTime);
   int userSavedChanges();
 
-  QCheckBox *startServer, *startRealtime, *networkTransparent,
+  TQCheckBox *startServer, *startRealtime, *networkTransparent,
   			*fullDuplex, *customDevice, *customRate, *autoSuspend;
-  QLineEdit *deviceName;
-  QSpinBox *samplingRate;
+  TQLineEdit *deviceName;
+  TQSpinBox *samplingRate;
   KIntNumInput *suspendTime;
   generalTab *general;
   hardwareTab *hardware;
@@ -100,14 +100,14 @@ private:
 
   class AudioIOElement {
   public:
-	  AudioIOElement(const QString &name, const QString &fullName)
+	  AudioIOElement(const TQString &name, const TQString &fullName)
 		  : name(name), fullName(fullName) {;}
-	  QString name;
-	  QString fullName;
+	  TQString name;
+	  TQString fullName;
   };
 
   void initAudioIOList();
-  QPtrList<AudioIOElement> audioIOList;
+  TQPtrList<AudioIOElement> audioIOList;
 
   void restartServer();
   bool realtimeIsPossible();
@@ -119,13 +119,13 @@ class KStartArtsProgressDialog : public KProgressDialog
    Q_OBJECT
 public:
    KStartArtsProgressDialog(KArtsModule *parent, const char *name,
-                          const QString &caption, const QString &text);
+                          const TQString &caption, const TQString &text);
 public slots:   
    void slotProgress();
    void slotFinished();
 
 private:
-   QTimer m_timer;
+   TQTimer m_timer;
    int m_timeStep;
    KArtsModule *m_module;
    bool m_shutdown;

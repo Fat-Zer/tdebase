@@ -21,7 +21,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -48,7 +48,7 @@ o Pre-set scheme   <Remove Scheme>
 
 Global Shortcuts
 */
-KeyModule::KeyModule( QWidget *parent, const char *name )
+KeyModule::KeyModule( TQWidget *parent, const char *name )
 : KCModule( parent, name )
 {
     setQuickHelp( i18n("<h1>Keyboard Shortcuts</h1> Using shortcuts you can configure certain actions to be"
@@ -69,22 +69,22 @@ KeyModule::~KeyModule()
 
 void KeyModule::initGUI()
 {
-	m_pTab = new QTabWidget( this );
-	QVBoxLayout *l = new QVBoxLayout(this);
+	m_pTab = new TQTabWidget( this );
+	TQVBoxLayout *l = new TQVBoxLayout(this);
 	l->addWidget(m_pTab);
 
 	m_pShortcuts = new ShortcutsModule( this );
 	m_pTab->addTab( m_pShortcuts, i18n("Shortcut Schemes") );
-	connect( m_pShortcuts, SIGNAL(changed(bool)), SIGNAL(changed(bool)) );
+	connect( m_pShortcuts, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)) );
 
 	m_pCommandShortcuts = new CommandShortcutsModule ( this );
 	m_pTab->addTab( m_pCommandShortcuts, i18n("Command Shortcuts") );
-	connect( m_pCommandShortcuts, SIGNAL(changed(bool)), SIGNAL(changed(bool)) );
-    connect( m_pTab, SIGNAL(currentChanged(QWidget*)), m_pCommandShortcuts, SLOT(showing(QWidget*)) );
+	connect( m_pCommandShortcuts, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)) );
+    connect( m_pTab, TQT_SIGNAL(currentChanged(TQWidget*)), m_pCommandShortcuts, TQT_SLOT(showing(TQWidget*)) );
 
 	m_pModifiers = new ModifiersModule( this );
 	m_pTab->addTab( m_pModifiers, i18n("Modifier Keys") );
-	connect( m_pModifiers, SIGNAL(changed(bool)), SIGNAL(changed(bool)) );
+	connect( m_pModifiers, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)) );
 }
 
 void KeyModule::load()
@@ -120,7 +120,7 @@ void KeyModule::defaults()
 	m_pModifiers->defaults();
 }
 
-void KeyModule::resizeEvent( QResizeEvent * )
+void KeyModule::resizeEvent( TQResizeEvent * )
 {
 	m_pTab->setGeometry( 0, 0, width(), height() );
 }
@@ -129,7 +129,7 @@ void KeyModule::resizeEvent( QResizeEvent * )
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_keys(QWidget *parent, const char * /*name*/)
+  KDE_EXPORT KCModule *create_keys(TQWidget *parent, const char * /*name*/)
   {
 	// What does this do?  Why not insert klipper and kxkb, too? --ellis, 2002/01/15
 	KGlobal::locale()->insertCatalogue("kwin");
@@ -154,7 +154,7 @@ extern "C"
 
 	/*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
 	KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
-	QString fourMods = KGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
+	TQString fourMods = KGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
 	KAccel::useFourModifierKeys( fourMods == "true" );
 	bool bUseFourModifierKeys = KAccel::useFourModifierKeys();
 	KGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );

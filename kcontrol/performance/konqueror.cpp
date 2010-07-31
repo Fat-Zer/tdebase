@@ -20,23 +20,23 @@
 
 #include <dcopref.h>
 #include <kconfig.h>
-#include <qwhatsthis.h>
-#include <qradiobutton.h>
-#include <qspinbox.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqradiobutton.h>
+#include <tqspinbox.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
 #include <klocale.h>
 
 namespace KCMPerformance
 {
 
-Konqueror::Konqueror( QWidget* parent_P )
+Konqueror::Konqueror( TQWidget* parent_P )
     : Konqueror_ui( parent_P )
     {
-    QWhatsThis::add( rb_never_reuse,
+    TQWhatsThis::add( rb_never_reuse,
         i18n( "Disables the minimization of memory usage and allows you "
               "to make each browsing activity independent from the others" ));
-    QWhatsThis::add( rb_file_browsing_reuse,
+    TQWhatsThis::add( rb_file_browsing_reuse,
         i18n( "With this option activated, only one instance of Konqueror "
               "used for file browsing will exist in the memory of your computer "
               "at any moment, "
@@ -44,43 +44,43 @@ Konqueror::Konqueror( QWidget* parent_P )
               "thus reducing resource requirements."
               "<p>Be aware that this also means that, if something goes wrong, "
               "all your file browsing windows will be closed simultaneously" ));
-    QWhatsThis::add( rb_always_reuse,
+    TQWhatsThis::add( rb_always_reuse,
         i18n( "With this option activated, only one instance of Konqueror "
               "will exist in the memory of your computer at any moment, "
               "no matter how many browsing windows you open, "
               "thus reducing resource requirements."
               "<p>Be aware that this also means that, if something goes wrong, "
               "all your browsing windows will be closed simultaneously." ));
-    connect( rb_never_reuse, SIGNAL( clicked()), SIGNAL( changed()));
-    connect( rb_file_browsing_reuse, SIGNAL( clicked()), SIGNAL( changed()));
-    connect( rb_always_reuse, SIGNAL( clicked()), SIGNAL( changed()));
+    connect( rb_never_reuse, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
+    connect( rb_file_browsing_reuse, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
+    connect( rb_always_reuse, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
     rb_file_browsing_reuse->setChecked( true );
 
-    QString tmp =
+    TQString tmp =
         i18n( "If non-zero, this option allows keeping Konqueror instances "
               "in memory after all their windows have been closed, up to the "
               "number specified in this option."
               "<p>When a new Konqueror instance is needed, one of these preloaded "
               "instances will be reused instead, improving responsiveness at "
               "the expense of the memory required by the preloaded instances." );
-    QWhatsThis::add( sb_preload_count, tmp );
-    QWhatsThis::add( lb_preload_count, tmp );
-    QWhatsThis::add( cb_preload_on_startup,
+    TQWhatsThis::add( sb_preload_count, tmp );
+    TQWhatsThis::add( lb_preload_count, tmp );
+    TQWhatsThis::add( cb_preload_on_startup,
         i18n( "If enabled, an instance of Konqueror will be preloaded after the ordinary KDE "
               "startup sequence."
               "<p>This will make the first Konqueror window open faster, but "
               "at the expense of longer KDE startup times (but you will be able to work "
               "while it is loading, so you may not even notice that it is taking longer)." ));
-    QWhatsThis::add( cb_always_have_preloaded,
+    TQWhatsThis::add( cb_always_have_preloaded,
         i18n( "If enabled, KDE will always try to have one preloaded Konqueror instance ready; "
               "preloading a new instance in the background whenever there is not one available, "
               "so that windows will always open quickly."
               "<p><b>Warning:</b> In some cases, it is actually possible that this will "
               "reduce perceived performance." ));
-    connect( sb_preload_count, SIGNAL( valueChanged( int )), SLOT( preload_count_changed( int )));
-    connect( sb_preload_count, SIGNAL( valueChanged( int )), SIGNAL( changed()));
-    connect( cb_preload_on_startup, SIGNAL( clicked()), SIGNAL( changed()));
-    connect( cb_always_have_preloaded, SIGNAL( clicked()), SIGNAL( changed()));
+    connect( sb_preload_count, TQT_SIGNAL( valueChanged( int )), TQT_SLOT( preload_count_changed( int )));
+    connect( sb_preload_count, TQT_SIGNAL( valueChanged( int )), TQT_SIGNAL( changed()));
+    connect( cb_preload_on_startup, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
+    connect( cb_always_have_preloaded, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
     defaults();
     }
 

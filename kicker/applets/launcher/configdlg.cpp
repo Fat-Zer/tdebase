@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 
-#include <qcombobox.h>
+#include <tqcombobox.h>
 #include <klocale.h>
 #include <kdebug.h>
 
@@ -30,7 +30,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "configdlg.h"
 #include "configdlgbase.h"
 
-ConfigDlg::ConfigDlg(QWidget *parent, const char *name, Prefs *config,
+ConfigDlg::ConfigDlg(TQWidget *parent, const char *name, Prefs *config,
                      int autoSize, KConfigDialog::DialogType dialogType,
                      int dialogButtons) :
     KConfigDialog(parent, name, config, dialogType, dialogButtons),
@@ -44,11 +44,11 @@ ConfigDlg::ConfigDlg(QWidget *parent, const char *name, Prefs *config,
     m_ui->iconDim->insertItem(i18n("Automatic"));
     for (int n=0; n<int(m_settings->iconDimChoices().size()); ++n)
     {
-        m_ui->iconDim->insertItem(QString::number(
+        m_ui->iconDim->insertItem(TQString::number(
             m_settings->iconDimChoices()[n]));
     }
-    connect(m_ui->iconDim, SIGNAL(textChanged(const QString&)),
-            this, SLOT(updateButtons()));
+    connect(m_ui->iconDim, TQT_SIGNAL(textChanged(const TQString&)),
+            this, TQT_SLOT(updateButtons()));
     updateWidgets();
     m_oldIconDimText = m_ui->iconDim->currentText();
     updateButtons();
@@ -83,7 +83,7 @@ void ConfigDlg::updateWidgets()
     }
     else
     {
-        m_ui->iconDim->setEditText(QString::number(m_settings->iconDim()));
+        m_ui->iconDim->setEditText(TQString::number(m_settings->iconDim()));
     }
 }
 

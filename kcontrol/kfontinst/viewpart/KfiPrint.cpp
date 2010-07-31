@@ -28,13 +28,13 @@
 
 #include "KfiPrint.h"
 #include "FcEngine.h"
-#include <qpainter.h>
-#include <qpaintdevicemetrics.h>
-#include <qsettings.h>
-#include <qstringlist.h>
+#include <tqpainter.h>
+#include <tqpaintdevicemetrics.h>
+#include <tqsettings.h>
+#include <tqstringlist.h>
 #include <kprinter.h>
-#include <qapplication.h>
-#include <qeventloop.h>
+#include <tqapplication.h>
+#include <tqeventloop.h>
 #ifdef HAVE_LOCALE_H
 #include <locale.h>
 #endif
@@ -70,13 +70,13 @@ static bool sufficientSpace(int y, int titleFontHeight, const int *sizes, int pa
     return (y+required)<pageHeight;
 }
 
-bool printable(const QString &mime)
+bool printable(const TQString &mime)
 {
     return "application/x-font-type1"==mime || "application/x-font-ttf"==mime || "application/x-font-otf"==mime ||
            "application/x-font-ttc"==mime || "application/x-font-ghostscript"==mime;
 }
 
-void printItems(const QStringList &items, int size, QWidget *parent, CFcEngine &engine)
+void printItems(const TQStringList &items, int size, TQWidget *parent, CFcEngine &engine)
 {
 #ifdef HAVE_LOCALE_H
     char *oldLocale=setlocale(LC_NUMERIC, "C"),
@@ -88,13 +88,13 @@ void printItems(const QStringList &items, int size, QWidget *parent, CFcEngine &
 
     if(printer.setup(parent))
     {
-        QPainter   painter;
-        QFont      sans("sans", 12, QFont::Bold);
-        QSettings  settings;
+        TQPainter   painter;
+        TQFont      sans("sans", 12, TQFont::Bold);
+        TQSettings  settings;
         bool       entryExists,
                    embedFonts,
                    set=false;
-        QString    str(engine.getPreviewString());
+        TQString    str(engine.getPreviewString());
 
         //
         // Cehck whether the user has enabled font embedding...
@@ -107,7 +107,7 @@ void printItems(const QStringList &items, int size, QWidget *parent, CFcEngine &
         printer.setResolution(72);
         painter.begin(&printer);
 
-        QPaintDeviceMetrics metrics(painter.device());
+        TQPaintDeviceMetrics metrics(painter.device());
         int                 margin=(int)((2/2.54)*metrics.logicalDpiY()), // 2 cm margins
                             pageWidth=metrics.width()-(2*margin),
                             pageHeight=metrics.height()-(2*margin),
@@ -122,7 +122,7 @@ void printItems(const QStringList &items, int size, QWidget *parent, CFcEngine &
         painter.setClipping(true);
         painter.setClipRect(margin, margin, pageWidth, pageHeight);
 
-        QStringList::ConstIterator it(items.begin()),
+        TQStringList::ConstIterator it(items.begin()),
                                    end(items.end());
 
         for(; it!=end; ++it)
@@ -130,7 +130,7 @@ void printItems(const QStringList &items, int size, QWidget *parent, CFcEngine &
             unsigned int s=0;
 
             painter.setFont(sans);
-            QApplication::eventLoop()->processEvents(QEventLoop::ExcludeUserInput, 0);
+            TQApplication::eventLoop()->processEvents(TQEventLoop::ExcludeUserInput, 0);
 
             if(!firstFont && !sufficientSpace(y, painter.fontMetrics().height(), sizes, pageHeight, size))
             {

@@ -19,7 +19,7 @@
 #ifndef __kcmtaskbar_h__
 #define __kcmtaskbar_h__
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include <kcmodule.h>
 
@@ -28,20 +28,20 @@ class TaskbarConfigUI;
 class TaskbarAppearance
 {
     public:
-        typedef QValueList<TaskbarAppearance> List;
+        typedef TQValueList<TaskbarAppearance> List;
 
         TaskbarAppearance();
-        TaskbarAppearance(QString name,
+        TaskbarAppearance(TQString name,
                           bool drawButtons,
                           bool haloText,
                           bool showButtonOnHover);
 
         bool matchesSettings() const;
         void alterSettings() const;
-        QString name() const { return m_name; }
+        TQString name() const { return m_name; }
 
     private:
-        QString m_name;
+        TQString m_name;
         bool m_drawButtons;
         bool m_haloText;
         bool m_showButtonOnHover;
@@ -52,8 +52,8 @@ class TaskbarConfig : public KCModule
     Q_OBJECT
 
 public:
-    TaskbarConfig(QWidget *parent = 0, const char* name = 0,
-                  const QStringList &list = QStringList());
+    TaskbarConfig(TQWidget *parent = 0, const char* name = 0,
+                  const TQStringList &list = TQStringList());
 
 public slots:
     void load();
@@ -69,10 +69,10 @@ protected slots:
 private:
     TaskbarAppearance::List m_appearances;
     void updateAppearanceCombo();
-    static const QStringList& actionList();
-    static QStringList i18nActionList();
-    static const QStringList& groupModeList();
-    static QStringList i18nGroupModeList();
+    static const TQStringList& actionList();
+    static TQStringList i18nActionList();
+    static const TQStringList& groupModeList();
+    static TQStringList i18nGroupModeList();
     TaskbarConfigUI *m_widget;
 };
 

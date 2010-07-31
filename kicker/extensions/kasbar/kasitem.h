@@ -60,10 +60,10 @@ class QPainter;
 class QMouseEvent;
 class KasPopup;
 
-#include <qobject.h>
-#include <qguardedptr.h>
-#include <qpoint.h>
-#include <qvaluevector.h>
+#include <tqobject.h>
+#include <tqguardedptr.h>
+#include <tqpoint.h>
+#include <tqvaluevector.h>
 
 #include <kdemacros.h>
 
@@ -81,7 +81,7 @@ class KDE_EXPORT KasItem : public QObject
 public:
     friend class KasBar;
 
-    typedef QValueVector<QPixmap> PixmapList;
+    typedef TQValueVector<TQPixmap> PixmapList;
 
     /** The states that a window can be in. */
     enum WindowState {
@@ -98,12 +98,12 @@ public:
     int extent() const { return kas->itemExtent(); }
 
     /** Returns the text that will be displayed in the title. */
-    QString text() const { return title; }
+    TQString text() const { return title; }
 
     /** Returns the position of this item. */
-    QPoint pos() const { return pos_; }
-    void setPos( const QPoint &p ) { pos_ = p; }
-    void setPos( int x, int y ) { pos_ = QPoint( x, y ); }
+    TQPoint pos() const { return pos_; }
+    void setPos( const TQPoint &p ) { pos_ = p; }
+    void setPos( int x, int y ) { pos_ = TQPoint( x, y ); }
 
     /** Returns the progress so far. This will -1 if the item is not displaying progress info. */
     int progress() const { return prog; }
@@ -147,27 +147,27 @@ public:
     // Drawing Methods
     //
 
-    /** Translates the QPainter then calls paintItem(). */
-    void paint( QPainter *p, int x, int y );
+    /** Translates the TQPainter then calls paintItem(). */
+    void paint( TQPainter *p, int x, int y );
 
     /**
      * Subclasses should reimplement this method to paint themselves. The painter is setup so
      * that the item is always at 0, 0.
      */
-    virtual void paint( QPainter *p );
+    virtual void paint( TQPainter *p );
 
     /** Draw a standard frame for the item. */
-    void paintFrame( QPainter *p );
+    void paintFrame( TQPainter *p );
 
     /** Paint the background. */
-    void paintBackground( QPainter *p );
+    void paintBackground( TQPainter *p );
 
     /** Draw the label for the item. */
-    void paintLabel( QPainter *p );
+    void paintLabel( TQPainter *p );
 
-    void paintIcon( QPainter *p );
+    void paintIcon( TQPainter *p );
 
-    void paintModified( QPainter *p );
+    void paintModified( TQPainter *p );
 
 public slots:
     void repaint();
@@ -175,8 +175,8 @@ public slots:
     void update();
 
     void setActive( bool yes );
-    void setText( const QString &title );
-    void setIcon( const QPixmap &icon );
+    void setText( const TQString &title );
+    void setIcon( const TQPixmap &icon );
     void setProgress( int percent );
     void setShowFrame( bool yes );
     void setModified( bool yes );
@@ -206,43 +206,43 @@ public slots:
     virtual void dragOverAction() {}
 
 signals:
-    void leftButtonClicked( QMouseEvent *ev );
-    void middleButtonClicked( QMouseEvent *ev );
-    void rightButtonClicked( QMouseEvent *ev );
+    void leftButtonClicked( TQMouseEvent *ev );
+    void middleButtonClicked( TQMouseEvent *ev );
+    void rightButtonClicked( TQMouseEvent *ev );
 
 protected:
     KasResources *resources() { return kas->resources(); }
 
     /** Gets the font metrics from the parent. */
-    QFontMetrics fontMetrics() const { return kas->fontMetrics(); }
+    TQFontMetrics fontMetrics() const { return kas->fontMetrics(); }
 
     /** Gets the color group from the parent. */
-    const QColorGroup &colorGroup() const { return kas->colorGroup(); }
+    const TQColorGroup &colorGroup() const { return kas->colorGroup(); }
 
     /** Factory method that creates a popup widget for the item. */
     virtual KasPopup *createPopup();
 
     /** Draw a label with an arrow, the parameters specify the position and size of the arrow. */
-    void paintArrowLabel( QPainter *p, int arrowSize, bool arrowOnLeft );
+    void paintArrowLabel( TQPainter *p, int arrowSize, bool arrowOnLeft );
 
     /** Paints a progress graph. */
-    void paintProgress( QPainter *p, int percent );
+    void paintProgress( TQPainter *p, int percent );
 
-    void paintStateIcon( QPainter *p, uint state );
+    void paintStateIcon( TQPainter *p, uint state );
 
-    void paintAttention( QPainter *p );
+    void paintAttention( TQPainter *p );
 
-    void paintAnimation( QPainter *p );
+    void paintAnimation( TQPainter *p );
 
     //
     // Event Handlers
     //
 
     /** Called when the item receives a mouse event. */
-    virtual void mousePressEvent( QMouseEvent * ) {}
+    virtual void mousePressEvent( TQMouseEvent * ) {}
 
     /** Called when the item receives a mouse event. */
-    virtual void mouseReleaseEvent( QMouseEvent * );
+    virtual void mouseReleaseEvent( TQMouseEvent * );
 
     /** Called when the mouse enters the item. */
     virtual void mouseEnter();
@@ -258,13 +258,13 @@ protected:
 
 private:
     KasBar *kas;
-    QGuardedPtr<KasPopup> pop;
-    QTimer *popupTimer;
-    QTimer *dragTimer;
+    TQGuardedPtr<KasPopup> pop;
+    TQTimer *popupTimer;
+    TQTimer *dragTimer;
 
-    QPoint pos_;
-    QString title;
-    QPixmap pix;
+    TQPoint pos_;
+    TQString title;
+    TQPixmap pix;
     bool mouseOver;
     bool activated;
     bool customPopup;

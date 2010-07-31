@@ -1,5 +1,5 @@
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 
 #include <klocale.h>
@@ -10,35 +10,35 @@
 #include "progressdialog.moc"
 
 
-ProgressDialog::ProgressDialog(QWidget *parent, const char *name)
+ProgressDialog::ProgressDialog(TQWidget *parent, const char *name)
   : KDialogBase(KDialogBase::Plain, i18n("Generating Index"), Cancel, Cancel,
 		parent, name, false)
 {
-  QGridLayout *grid = new QGridLayout(plainPage(), 5,3, spacingHint());
+  TQGridLayout *grid = new TQGridLayout(plainPage(), 5,3, spacingHint());
   
-  QLabel *l = new QLabel(i18n("Scanning for files"), plainPage());
+  TQLabel *l = new TQLabel(i18n("Scanning for files"), plainPage());
   grid->addMultiCellWidget(l, 0,0, 1,2);
   
-  filesScanned = new QLabel(plainPage());
+  filesScanned = new TQLabel(plainPage());
   grid->addWidget(filesScanned, 1,2);
   setFilesScanned(0);
 
-  check1 = new QLabel(plainPage());
+  check1 = new TQLabel(plainPage());
   grid->addWidget(check1, 0,0);
 
-  l = new QLabel(i18n("Extracting search terms"), plainPage());
+  l = new TQLabel(i18n("Extracting search terms"), plainPage());
   grid->addMultiCellWidget(l, 2,2, 1,2);
   
   bar = new KProgress(plainPage());
   grid->addWidget(bar, 3,2);
 
-  check2 = new QLabel(plainPage());
+  check2 = new TQLabel(plainPage());
   grid->addWidget(check2, 2,0);
 
-  l = new QLabel(i18n("Generating index..."), plainPage());
+  l = new TQLabel(i18n("Generating index..."), plainPage());
   grid->addMultiCellWidget(l, 4,4, 1,2);
 
-  check3 = new QLabel(plainPage());
+  check3 = new TQLabel(plainPage());
   grid->addWidget(check3, 4,0);
 
   setState(0);
@@ -67,8 +67,8 @@ void ProgressDialog::setFilesDigged(int n)
 
 void ProgressDialog::setState(int n)
 {
-  QPixmap unchecked = QPixmap(locate("data", "khelpcenter/pics/unchecked.xpm"));
-  QPixmap checked = QPixmap(locate("data", "khelpcenter/pics/checked.xpm"));
+  TQPixmap unchecked = TQPixmap(locate("data", "khelpcenter/pics/unchecked.xpm"));
+  TQPixmap checked = TQPixmap(locate("data", "khelpcenter/pics/checked.xpm"));
 
   check1->setPixmap( n > 0 ? checked : unchecked);  
   check2->setPixmap( n > 1 ? checked : unchecked);  

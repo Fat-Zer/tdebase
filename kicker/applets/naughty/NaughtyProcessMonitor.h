@@ -21,7 +21,7 @@
 #ifndef NAUGHTY_PROCESS_MONITOR_H
 #define NAUGHTY_PROCESS_MONITOR_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class NaughtyProcessMonitorPrivate;
 
@@ -35,7 +35,7 @@ class NaughtyProcessMonitor : public QObject
       (
        uint interval,
        uint triggerLevel,
-       QObject * parent = 0,
+       TQObject * parent = 0,
        const char * name = 0
       );
 
@@ -50,9 +50,9 @@ class NaughtyProcessMonitor : public QObject
     void setInterval(uint);
 
     virtual uint cpuLoad() const;
-    virtual QValueList<ulong> pidList() const;
+    virtual TQValueList<ulong> pidList() const;
     virtual bool getLoad(ulong pid, uint & load) const;
-    virtual QString processName(ulong pid) const;
+    virtual TQString processName(ulong pid) const;
     virtual bool canKill(ulong pid) const;
     virtual bool kill(ulong pid) const;
 
@@ -63,7 +63,7 @@ class NaughtyProcessMonitor : public QObject
   signals:
 
     void load(uint);
-    void runawayProcess(ulong pid, const QString & name);
+    void runawayProcess(ulong pid, const TQString & name);
 
   private:
 

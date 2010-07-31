@@ -32,9 +32,9 @@
 
 #include <stdlib.h>
 
-#include <qclipboard.h>
-#include <qpopupmenu.h>
-#include <qpainter.h>
+#include <tqclipboard.h>
+#include <tqpopupmenu.h>
+#include <tqpainter.h>
 
 #include <klocale.h>
 #include <dcopclient.h>
@@ -80,160 +80,160 @@ void KEBApp::createActions() {
 
     // save and quit should probably not be in the toplevel???
     (void) KStdAction::quit(
-        this, SLOT( close() ), actionCollection());
-    KStdAction::keyBindings(guiFactory(), SLOT(configureShortcuts()), actionCollection());
+        this, TQT_SLOT( close() ), actionCollection());
+    KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()), actionCollection());
     (void) KStdAction::configureToolbars(
-        this, SLOT( slotConfigureToolbars() ), actionCollection());
+        this, TQT_SLOT( slotConfigureToolbars() ), actionCollection());
 
     if (m_browser) {
         (void) KStdAction::open(
-            actn, SLOT( slotLoad() ), actionCollection());
+            actn, TQT_SLOT( slotLoad() ), actionCollection());
         (void) KStdAction::saveAs(
-            actn, SLOT( slotSaveAs() ), actionCollection());
+            actn, TQT_SLOT( slotSaveAs() ), actionCollection());
     }
 
-    (void) KStdAction::cut(actn, SLOT( slotCut() ), actionCollection());
-    (void) KStdAction::copy(actn, SLOT( slotCopy() ), actionCollection());
-    (void) KStdAction::paste(actn, SLOT( slotPaste() ), actionCollection());
-    (void) KStdAction::print(actn, SLOT( slotPrint() ), actionCollection());
+    (void) KStdAction::cut(actn, TQT_SLOT( slotCut() ), actionCollection());
+    (void) KStdAction::copy(actn, TQT_SLOT( slotCopy() ), actionCollection());
+    (void) KStdAction::paste(actn, TQT_SLOT( slotPaste() ), actionCollection());
+    (void) KStdAction::print(actn, TQT_SLOT( slotPrint() ), actionCollection());
 
     // settings menu
     (void) new KToggleAction(
         i18n("&Show Netscape Bookmarks in Konqueror"), 0,
-        actn, SLOT( slotShowNS() ), actionCollection(),
+        actn, TQT_SLOT( slotShowNS() ), actionCollection(),
         "settings_showNS");
 
     // actions
     (void) new KAction(
         i18n("&Delete"), "editdelete", Key_Delete,
-        actn, SLOT( slotDelete() ), actionCollection(), "delete");
+        actn, TQT_SLOT( slotDelete() ), actionCollection(), "delete");
     (void) new KAction(
         i18n("Rename"), "text", Key_F2,
-        actn, SLOT( slotRename() ), actionCollection(), "rename");
+        actn, TQT_SLOT( slotRename() ), actionCollection(), "rename");
     (void) new KAction(
         i18n("C&hange URL"), "text", Key_F3,
-        actn, SLOT( slotChangeURL() ), actionCollection(), "changeurl");
+        actn, TQT_SLOT( slotChangeURL() ), actionCollection(), "changeurl");
     (void) new KAction(
         i18n("C&hange Comment"), "text", Key_F4,
-        actn, SLOT( slotChangeComment() ), actionCollection(), "changecomment");
+        actn, TQT_SLOT( slotChangeComment() ), actionCollection(), "changecomment");
     (void) new KAction(
         i18n("Chan&ge Icon..."), "icons", 0,
-        actn, SLOT( slotChangeIcon() ), actionCollection(), "changeicon");
+        actn, TQT_SLOT( slotChangeIcon() ), actionCollection(), "changeicon");
     (void) new KAction(
         i18n("Update Favicon"), 0,
-        actn, SLOT( slotUpdateFavIcon() ), actionCollection(), "updatefavicon");
+        actn, TQT_SLOT( slotUpdateFavIcon() ), actionCollection(), "updatefavicon");
     (void) new KAction(
         i18n("Recursive Sort"), 0,
-        actn, SLOT( slotRecursiveSort() ), actionCollection(), "recursivesort");
+        actn, TQT_SLOT( slotRecursiveSort() ), actionCollection(), "recursivesort");
     (void) new KAction(
         i18n("&New Folder..."), "folder_new", CTRL+Key_N,
-        actn, SLOT( slotNewFolder() ), actionCollection(), "newfolder");
+        actn, TQT_SLOT( slotNewFolder() ), actionCollection(), "newfolder");
     (void) new KAction(
         i18n("&New Bookmark"), "www", 0,
-        actn, SLOT( slotNewBookmark() ), actionCollection(), "newbookmark");
+        actn, TQT_SLOT( slotNewBookmark() ), actionCollection(), "newbookmark");
     (void) new KAction(
         i18n("&Insert Separator"), CTRL+Key_I,
-        actn, SLOT( slotInsertSeparator() ), actionCollection(),
+        actn, TQT_SLOT( slotInsertSeparator() ), actionCollection(),
         "insertseparator");
     (void) new KAction(
         i18n("&Sort Alphabetically"), 0,
-        actn, SLOT( slotSort() ), actionCollection(), "sort");
+        actn, TQT_SLOT( slotSort() ), actionCollection(), "sort");
     (void) new KAction(
         i18n("Set as T&oolbar Folder"), "bookmark_toolbar", 0,
-        actn, SLOT( slotSetAsToolbar() ), actionCollection(), "setastoolbar");
+        actn, TQT_SLOT( slotSetAsToolbar() ), actionCollection(), "setastoolbar");
     (void) new KAction(
         i18n("Show in T&oolbar"), "bookmark_toolbar", 0,
-        actn, SLOT( slotShowInToolbar() ), actionCollection(), "showintoolbar");
+        actn, TQT_SLOT( slotShowInToolbar() ), actionCollection(), "showintoolbar");
     (void) new KAction(
         i18n("Hide in T&oolbar"), "bookmark_toolbar", 0,
-        actn, SLOT( slotHideInToolbar() ), actionCollection(), "hideintoolbar");
+        actn, TQT_SLOT( slotHideInToolbar() ), actionCollection(), "hideintoolbar");
     (void) new KAction(
         i18n("&Expand All Folders"), 0,
-        actn, SLOT( slotExpandAll() ), actionCollection(), "expandall");
+        actn, TQT_SLOT( slotExpandAll() ), actionCollection(), "expandall");
     (void) new KAction(
         i18n("Collapse &All Folders"), 0,
-        actn, SLOT( slotCollapseAll() ), actionCollection(), "collapseall" );
+        actn, TQT_SLOT( slotCollapseAll() ), actionCollection(), "collapseall" );
     (void) new KAction(
         i18n("&Open in Konqueror"), "fileopen", 0,
-        actn, SLOT( slotOpenLink() ), actionCollection(), "openlink" );
+        actn, TQT_SLOT( slotOpenLink() ), actionCollection(), "openlink" );
     (void) new KAction(
         i18n("Check &Status"), "bookmark", 0,
-        actn, SLOT( slotTestSelection() ), actionCollection(), "testlink" );
+        actn, TQT_SLOT( slotTestSelection() ), actionCollection(), "testlink" );
 
     (void) new KAction(
         i18n("Check Status: &All"), 0,
-        actn, SLOT( slotTestAll() ), actionCollection(), "testall" );
+        actn, TQT_SLOT( slotTestAll() ), actionCollection(), "testall" );
     (void) new KAction(
         i18n("Update All &Favicons"), 0,
-        actn, SLOT( slotUpdateAllFavIcons() ), actionCollection(),
+        actn, TQT_SLOT( slotUpdateAllFavIcons() ), actionCollection(),
         "updateallfavicons" );
     (void) new KAction(
         i18n("Cancel &Checks"), 0,
-        actn, SLOT( slotCancelAllTests() ), actionCollection(), "canceltests" );
+        actn, TQT_SLOT( slotCancelAllTests() ), actionCollection(), "canceltests" );
     (void) new KAction(
         i18n("Cancel &Favicon Updates"), 0,
-        actn, SLOT( slotCancelFavIconUpdates() ), actionCollection(),
+        actn, TQT_SLOT( slotCancelFavIconUpdates() ), actionCollection(),
         "cancelfaviconupdates" );
     (void) new KAction(
         i18n("Import &Netscape Bookmarks..."), "netscape", 0,
-        actn, SLOT( slotImport() ), actionCollection(), "importNS");
+        actn, TQT_SLOT( slotImport() ), actionCollection(), "importNS");
     (void) new KAction(
         i18n("Import &Opera Bookmarks..."), "opera", 0,
-        actn, SLOT( slotImport() ), actionCollection(), "importOpera");
+        actn, TQT_SLOT( slotImport() ), actionCollection(), "importOpera");
     (void) new KAction(
         i18n("Import All &Crash Sessions as Bookmarks..."), 0,
-        actn, SLOT( slotImport() ), actionCollection(), "importCrashes");
+        actn, TQT_SLOT( slotImport() ), actionCollection(), "importCrashes");
     (void) new KAction(
         i18n("Import &Galeon Bookmarks..."), 0,
-        actn, SLOT( slotImport() ), actionCollection(), "importGaleon");
+        actn, TQT_SLOT( slotImport() ), actionCollection(), "importGaleon");
     (void) new KAction(
         i18n("Import &KDE2/KDE3 Bookmarks..."), 0,
-        actn, SLOT( slotImport() ), actionCollection(), "importKDE2");
+        actn, TQT_SLOT( slotImport() ), actionCollection(), "importKDE2");
     (void) new KAction(
         i18n("Import &IE Bookmarks..."), 0,
-        actn, SLOT( slotImport() ), actionCollection(), "importIE");
+        actn, TQT_SLOT( slotImport() ), actionCollection(), "importIE");
     (void) new KAction(
         i18n("Import &Mozilla Bookmarks..."), "mozilla", 0,
-        actn, SLOT( slotImport() ), actionCollection(), "importMoz");
+        actn, TQT_SLOT( slotImport() ), actionCollection(), "importMoz");
     (void) new KAction(
         i18n("Export to &Netscape Bookmarks"), "netscape", 0,
-        actn, SLOT( slotExportNS() ), actionCollection(), "exportNS");
+        actn, TQT_SLOT( slotExportNS() ), actionCollection(), "exportNS");
     (void) new KAction(
         i18n("Export to &Opera Bookmarks..."), "opera", 0,
-        actn, SLOT( slotExportOpera() ), actionCollection(), "exportOpera");
+        actn, TQT_SLOT( slotExportOpera() ), actionCollection(), "exportOpera");
     (void) new KAction(
         i18n("Export to &HTML Bookmarks..."), "html", 0,
-        actn, SLOT( slotExportHTML() ), actionCollection(), "exportHTML");
+        actn, TQT_SLOT( slotExportHTML() ), actionCollection(), "exportHTML");
     (void) new KAction(
         i18n("Export to &IE Bookmarks..."), 0,
-        actn, SLOT( slotExportIE() ), actionCollection(), "exportIE");
+        actn, TQT_SLOT( slotExportIE() ), actionCollection(), "exportIE");
     (void) new KAction(
         i18n("Export to &Mozilla Bookmarks..."), "mozilla", 0,
-        actn, SLOT( slotExportMoz() ), actionCollection(), "exportMoz");
+        actn, TQT_SLOT( slotExportMoz() ), actionCollection(), "exportMoz");
 }
 
 void ActionsImpl::slotLoad() {
-    QString bookmarksFile
-        = KFileDialog::getOpenFileName(QString::null, "*.xml", KEBApp::self());
+    TQString bookmarksFile
+        = KFileDialog::getOpenFileName(TQString::null, "*.xml", KEBApp::self());
     if (bookmarksFile.isNull())
         return;
-    KEBApp::self()->m_caption = QString::null;
+    KEBApp::self()->m_caption = TQString::null;
     KEBApp::self()->m_bookmarksFilename = bookmarksFile;
     KEBApp::self()->construct();
 }
 
 void ActionsImpl::slotSaveAs() {
     KEBApp::self()->bkInfo()->commitChanges();
-    QString saveFilename
-        = KFileDialog::getSaveFileName(QString::null, "*.xml", KEBApp::self());
+    TQString saveFilename
+        = KFileDialog::getSaveFileName(TQString::null, "*.xml", KEBApp::self());
     if (!saveFilename.isEmpty())
         CurrentMgr::self()->saveAs(saveFilename);
 }
 
-void CurrentMgr::doExport(ExportType type, const QString & _path) {
+void CurrentMgr::doExport(ExportType type, const TQString & _path) {
     if(KEBApp::self())
         KEBApp::self()->bkInfo()->commitChanges();
-    QString path(_path);
+    TQString path(_path);
     // TODO - add a factory and make all this use the base class
     if (type == OperaExport) {
         if (path.isNull())
@@ -245,7 +245,7 @@ void CurrentMgr::doExport(ExportType type, const QString & _path) {
     } else if (type == HTMLExport) {
         if (path.isNull())
             path = KFileDialog::getSaveFileName(
-                        QDir::homeDirPath(),
+                        TQDir::homeDirPath(),
                         i18n("*.html|HTML Bookmark Listing") );
         HTMLExporter exporter;
         exporter.write(mgr()->root(), path);
@@ -274,7 +274,7 @@ void CurrentMgr::doExport(ExportType type, const QString & _path) {
 void KEBApp::setActionsEnabled(SelcAbilities sa) {
     KActionCollection * coll = actionCollection();
 
-    QStringList toEnable;
+    TQStringList toEnable;
 
     if (sa.multiSelect || (sa.singleSelect && !sa.root))
         toEnable << "edit_copy";
@@ -314,7 +314,7 @@ void KEBApp::setActionsEnabled(SelcAbilities sa) {
         }
     }
 
-    for ( QStringList::Iterator it = toEnable.begin();
+    for ( TQStringList::Iterator it = toEnable.begin();
             it != toEnable.end(); ++it )
     {
         coll->action((*it).ascii())->setEnabled(true);
@@ -342,7 +342,7 @@ void ActionsImpl::slotCopy() {
     KEBApp::self()->bkInfo()->commitChanges();
     // this is not a command, because it can't be undone
     Q_ASSERT(ListView::self()->selectedItemsMap().count() != 0);
-    QValueList<KBookmark> bookmarks
+    TQValueList<KBookmark> bookmarks
         = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
     KBookmarkDrag* data = KBookmarkDrag::newDrag(bookmarks, 0 /* not this ! */);
     kapp->clipboard()->setData(data, QClipboard::Clipboard);
@@ -363,8 +363,8 @@ void ActionsImpl::slotPaste() {
 void ActionsImpl::slotNewFolder() {
     KEBApp::self()->bkInfo()->commitChanges();
     bool ok;
-    QString str = KInputDialog::getText( i18n( "Create New Bookmark Folder" ),
-            i18n( "New folder:" ), QString::null, &ok );
+    TQString str = KInputDialog::getText( i18n( "Create New Bookmark Folder" ),
+            i18n( "New folder:" ), TQString::null, &ok );
     if (!ok)
         return;
 
@@ -379,7 +379,7 @@ void ActionsImpl::slotNewBookmark() {
     // TODO - make a setCurrentItem(Command *) which uses finaladdress interface
     CreateCommand * cmd = new CreateCommand(
                                 ListView::self()->userAddress(),
-                                QString::null, "www", KURL("http://"));
+                                TQString::null, "www", KURL("http://"));
     CmdHistory::self()->addCommand(cmd);
 }
 
@@ -421,32 +421,32 @@ void ActionsImpl::slotExportMoz() {
 
 /* -------------------------------------- */
 
-static QCString s_appId, s_objId;
+static TQCString s_appId, s_objId;
 static KParts::ReadOnlyPart *s_part;
 
 void ActionsImpl::slotPrint() {
     KEBApp::self()->bkInfo()->commitChanges();
     s_part = KParts::ComponentFactory
                         ::createPartInstanceFromQuery<KParts::ReadOnlyPart>(
-                                "text/html", QString::null);
-    s_part->setProperty("pluginsEnabled", QVariant(false, 1));
-    s_part->setProperty("javaScriptEnabled", QVariant(false, 1));
-    s_part->setProperty("javaEnabled", QVariant(false, 1));
+                                "text/html", TQString::null);
+    s_part->setProperty("pluginsEnabled", TQVariant(false, 1));
+    s_part->setProperty("javaScriptEnabled", TQVariant(false, 1));
+    s_part->setProperty("javaEnabled", TQVariant(false, 1));
 
     // doc->openStream( "text/html", KURL() );
-    // doc->writeStream( QCString( "<HTML><BODY>FOO</BODY></HTML>" ) );
+    // doc->writeStream( TQCString( "<HTML><BODY>FOO</BODY></HTML>" ) );
     // doc->closeStream();
 
     HTMLExporter exporter;
     KTempFile tmpf(locateLocal("tmp", "print_bookmarks"), ".html");
-    QTextStream *tstream = tmpf.textStream();
-    tstream->setEncoding(QTextStream::Unicode);
+    TQTextStream *tstream = tmpf.textStream();
+    tstream->setEncoding(TQTextStream::Unicode);
     (*tstream) << exporter.toString(CurrentMgr::self()->mgr()->root(), true);
     tmpf.close();
 
     s_appId = kapp->dcopClient()->appId();
     s_objId = s_part->property("dcopObjectId").toString().latin1();
-    connect(s_part, SIGNAL(completed()), this, SLOT(slotDelayedPrint()));
+    connect(s_part, TQT_SIGNAL(completed()), this, TQT_SLOT(slotDelayedPrint()));
 
     s_part->openURL(KURL( tmpf.name() ));
 }
@@ -508,21 +508,21 @@ void ActionsImpl::slotUpdateFavIcon() {
 class KBookmarkGroupList : private KBookmarkGroupTraverser {
 public:
     KBookmarkGroupList(KBookmarkManager *);
-    QValueList<KBookmark> getList(const KBookmarkGroup &);
+    TQValueList<KBookmark> getList(const KBookmarkGroup &);
 private:
     virtual void visit(const KBookmark &) { ; }
     virtual void visitEnter(const KBookmarkGroup &);
     virtual void visitLeave(const KBookmarkGroup &) { ; }
 private:
     KBookmarkManager *m_manager;
-    QValueList<KBookmark> m_list;
+    TQValueList<KBookmark> m_list;
 };
 
 KBookmarkGroupList::KBookmarkGroupList( KBookmarkManager *manager ) {
     m_manager = manager;
 }
 
-QValueList<KBookmark> KBookmarkGroupList::getList( const KBookmarkGroup &grp ) {
+TQValueList<KBookmark> KBookmarkGroupList::getList( const KBookmarkGroup &grp ) {
     traverse(grp);
     return m_list;
 }
@@ -537,9 +537,9 @@ void ActionsImpl::slotRecursiveSort() {
     Q_ASSERT(bk.isGroup());
     KEBMacroCommand *mcmd = new KEBMacroCommand(i18n("Recursive Sort"));
     KBookmarkGroupList lister(CurrentMgr::self()->mgr());
-    QValueList<KBookmark> bookmarks = lister.getList(bk.toGroup());
+    TQValueList<KBookmark> bookmarks = lister.getList(bk.toGroup());
     bookmarks << bk.toGroup();
-    for (QValueListConstIterator<KBookmark> it = bookmarks.begin(); it != bookmarks.end(); ++it) {
+    for (TQValueListConstIterator<KBookmark> it = bookmarks.begin(); it != bookmarks.end(); ++it) {
         SortCommand *cmd = new SortCommand("", (*it).address());
         cmd->execute();
         mcmd->addCommand(cmd);
@@ -565,8 +565,8 @@ void ActionsImpl::slotDelete() {
 
 void ActionsImpl::slotOpenLink() {
     KEBApp::self()->bkInfo()->commitChanges();
-    QValueList<KBookmark> bks = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
-    QValueListIterator<KBookmark> it;
+    TQValueList<KBookmark> bks = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
+    TQValueListIterator<KBookmark> it;
     for (it = bks.begin(); it != bks.end(); ++it) {
         if ((*it).isGroup() || (*it).isSeparator())
             continue;
@@ -601,14 +601,14 @@ void ActionsImpl::slotSetAsToolbar() {
 
 void ActionsImpl::slotShowInToolbar() {
     KEBApp::self()->bkInfo()->commitChanges();
-    QValueList<KBookmark> bks = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
+    TQValueList<KBookmark> bks = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
     KEBMacroCommand *mcmd = CmdGen::setShownInToolbar(bks, true);
     CmdHistory::self()->addCommand(mcmd);
 }
 
 void ActionsImpl::slotHideInToolbar() {
     KEBApp::self()->bkInfo()->commitChanges();
-    QValueList<KBookmark> bks = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
+    TQValueList<KBookmark> bks = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
     KEBMacroCommand *mcmd = CmdGen::setShownInToolbar(bks, false);
     CmdHistory::self()->addCommand(mcmd);
 }
@@ -617,7 +617,7 @@ void ActionsImpl::slotChangeIcon() {
     KEBApp::self()->bkInfo()->commitChanges();
     KBookmark bk = ListView::self()->firstSelected()->bookmark();
     KIconDialog dlg(KEBApp::self());
-    QString newIcon = dlg.selectIcon(KIcon::Small, KIcon::FileSystem);
+    TQString newIcon = dlg.selectIcon(KIcon::Small, KIcon::FileSystem);
     if (newIcon.isEmpty())
         return;
     EditCommand *cmd = new EditCommand(

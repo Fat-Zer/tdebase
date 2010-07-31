@@ -23,7 +23,7 @@
 #ifndef KNIFTYCONFIG_H
 #define KNIFTYCONFIG_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class QButtonGroup;
 class QGroupBox;
@@ -34,7 +34,7 @@ class PlastikConfig : public QObject
 {
     Q_OBJECT
 public:
-    PlastikConfig(KConfig* config, QWidget* parent);
+    PlastikConfig(KConfig* config, TQWidget* parent);
     ~PlastikConfig();
 
 signals:

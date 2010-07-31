@@ -30,14 +30,14 @@
 #include <klocale.h>
 #include <kprocio.h>
 
-#include <qdom.h>
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqdom.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 
 using namespace KHC;
 
-ScrollKeeperTreeBuilder::ScrollKeeperTreeBuilder( QObject *parent, const char *name )
-	: QObject( parent, name )
+ScrollKeeperTreeBuilder::ScrollKeeperTreeBuilder( TQObject *parent, const char *name )
+	: TQObject( parent, name )
 {
 	loadConfig();
 }
@@ -54,27 +54,27 @@ void ScrollKeeperTreeBuilder::loadConfig()
 NavigatorItem *ScrollKeeperTreeBuilder::build( NavigatorItem *parent,
                                                NavigatorItem *after )
 {
-  QString lang = KGlobal::locale()->language();
+  TQString lang = KGlobal::locale()->language();
 
   kdDebug(1400) << "ScrollKeeper language: " << lang << endl;
 
   KProcIO proc;
   proc << "scrollkeeper-get-content-list";
   proc << lang;
-  connect(&proc,SIGNAL(readReady(KProcIO *)),SLOT(getContentsList(KProcIO *)));
+  connect(&proc,TQT_SIGNAL(readReady(KProcIO *)),TQT_SLOT(getContentsList(KProcIO *)));
   if (!proc.start(KProcess::Block)) {
     kdDebug(1400) << "Could not execute scrollkeeper-get-content-list" << endl;
     return 0;
   }
 
-  if (!QFile::exists(mContentsList)) {
+  if (!TQFile::exists(mContentsList)) {
     kdDebug(1400) << "Scrollkeeper contents file '" << mContentsList
       << "' does not exist." << endl;
     return 0;
   }
 
-  QDomDocument doc("ScrollKeeperContentsList");
-  QFile f(mContentsList);
+  TQDomDocument doc("ScrollKeeperContentsList");
+  TQFile f(mContentsList);
   if ( !f.open( IO_ReadOnly ) )
     return 0;
   if ( !doc.setContent( &f ) ) {
@@ -86,13 +86,13 @@ NavigatorItem *ScrollKeeperTreeBuilder::build( NavigatorItem *parent,
   // Create top-level item
   mItems.append(parent);
 
-  QDomElement docElem = doc.documentElement();
+  TQDomElement docElem = doc.documentElement();
 
   NavigatorItem *result = 0;
 
-  QDomNode n = docElem.firstChild();
+  TQDomNode n = docElem.firstChild();
   while( !n.isNull() ) {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     if( !e.isNull() ) {
       if (e.tagName() == "sect") {
         NavigatorItem *createdItem;
@@ -108,7 +108,7 @@ NavigatorItem *ScrollKeeperTreeBuilder::build( NavigatorItem *parent,
 
 void ScrollKeeperTreeBuilder::getContentsList( KProcIO *proc )
 {
-  QString filename;
+  TQString filename;
   proc->readln( filename, true );
 
   mContentsList = filename;
@@ -116,7 +116,7 @@ void ScrollKeeperTreeBuilder::getContentsList( KProcIO *proc )
 
 int ScrollKeeperTreeBuilder::insertSection( NavigatorItem *parent,
                                             NavigatorItem *after,
-                                            const QDomNode &sectNode,
+                                            const TQDomNode &sectNode,
                                             NavigatorItem *&sectItem )
 {
   DocEntry *entry = new DocEntry( "", "", "contents2" );
@@ -126,9 +126,9 @@ int ScrollKeeperTreeBuilder::insertSection( NavigatorItem *parent,
 
   int numDocs = 0;  // Number of docs created in this section
 
-  QDomNode n = sectNode.firstChild();
+  TQDomNode n = sectNode.firstChild();
   while( !n.isNull() ) {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     if( !e.isNull() ) {
       if ( e.tagName() == "title" ) {
         entry->setName( e.text() );
@@ -154,18 +154,18 @@ int ScrollKeeperTreeBuilder::insertSection( NavigatorItem *parent,
 }
 
 void ScrollKeeperTreeBuilder::insertDoc( NavigatorItem *parent,
-                                         const QDomNode &docNode )
+                                         const TQDomNode &docNode )
 {
   DocEntry *entry = new DocEntry( "", "", "document2" );
   NavigatorItem *docItem = new NavigatorItem( entry, parent );
   docItem->setAutoDeleteDocEntry( true );
   mItems.append( docItem );
 
-  QString url;
+  TQString url;
 
-  QDomNode n = docNode.firstChild();
+  TQDomNode n = docNode.firstChild();
   while( !n.isNull() ) {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     if( !e.isNull() ) {
       if ( e.tagName() == "doctitle" ) {
         entry->setName( e.text() );
@@ -173,14 +173,14 @@ void ScrollKeeperTreeBuilder::insertDoc( NavigatorItem *parent,
       } else if ( e.tagName() == "docsource" ) {
         url.append( e.text() );
       } else if ( e.tagName() == "docformat" ) {
-        QString mimeType = e.text();
+        TQString mimeType = e.text();
         if ( mimeType == "text/html") {
           // Let the HTML part figure out how to get the doc
         } else if ( mimeType == "text/xml" ) {
           if ( url.left( 5 ) == "file:" ) url = url.mid( 5 );
           url.prepend( "ghelp:" );
 #if 0
-          url.replace( QRegExp( ".xml$" ), ".html" );
+          url.replace( TQRegExp( ".xml$" ), ".html" );
 #endif
         } else if ( mimeType == "text/sgml" ) {
           // GNOME docs use this type. We don't have a real viewer for this.

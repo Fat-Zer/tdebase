@@ -48,7 +48,7 @@ KrashConfig :: ~KrashConfig()
   delete m_aboutData;
 }
 
-ASYNC KrashConfig :: registerDebuggingApplication(const QString& launchName)
+ASYNC KrashConfig :: registerDebuggingApplication(const TQString& launchName)
 {
   emit newDebuggingApplication( launchName );
 }
@@ -69,7 +69,7 @@ void KrashConfig :: readConfig()
   if ( !args->getOption( "apppath" ).isEmpty() )
     m_execname.prepend( args->getOption( "apppath" ) + '/' );
 
-  QCString programname = args->getOption("programname");
+  TQCString programname = args->getOption("programname");
   if (programname.isEmpty())
     programname.setStr(I18N_NOOP("unknown"));
   // leak some memory... Well. It's only done once anyway :-)
@@ -80,7 +80,7 @@ void KrashConfig :: readConfig()
                                0, 0, 0, 0, 0,
                                args->getOption("bugaddress"));
 
-  QCString startup_id( args->getOption( "startupid" ));
+  TQCString startup_id( args->getOption( "startupid" ));
   if (!startup_id.isEmpty())
   { // stop startup notification
     KStartupInfoId id;
@@ -92,13 +92,13 @@ void KrashConfig :: readConfig()
   config->setGroup("drkonqi");
 
   // maybe we should check if it's relative?
-  QString configname = config->readEntry("ConfigName",
-                                         QString::fromLatin1("enduser"));
+  TQString configname = config->readEntry("ConfigName",
+                                         TQString::fromLatin1("enduser"));
 
-  QString debuggername = config->readEntry("Debugger",
-                                           QString::fromLatin1("gdb"));
+  TQString debuggername = config->readEntry("Debugger",
+                                           TQString::fromLatin1("gdb"));
 
-  KConfig debuggers(QString::fromLatin1("debuggers/%1rc").arg(debuggername),
+  KConfig debuggers(TQString::fromLatin1("debuggers/%1rc").arg(debuggername),
                     true, false, "appdata");
 
   debuggers.setGroup("General");
@@ -112,7 +112,7 @@ void KrashConfig :: readConfig()
   m_neededInValidBacktraceRegExp = debuggers.readEntry("NeededInValidBacktraceRegExp");
   m_kcrashRegExp = debuggers.readEntry("KCrashRegExp");
 
-  KConfig preset(QString::fromLatin1("presets/%1rc").arg(configname),
+  KConfig preset(TQString::fromLatin1("presets/%1rc").arg(configname),
                  true, false, "appdata");
 
   preset.setGroup("ErrorDescription");
@@ -135,10 +135,10 @@ void KrashConfig :: readConfig()
 
   bool b = preset.readBoolEntry("SignalDetails", true);
 
-  QString str = QString::number(m_signalnum);
+  TQString str = TQString::number(m_signalnum);
   // use group unknown if signal not found
   if (!preset.hasGroup(str))
-    str = QString::fromLatin1("unknown");
+    str = TQString::fromLatin1("unknown");
   preset.setGroup(str);
   m_signalName = preset.readEntry("Name");
   if (b)
@@ -146,16 +146,16 @@ void KrashConfig :: readConfig()
 }
 
 // replace some of the strings
-void KrashConfig :: expandString(QString &str, bool shell, const QString &tempFile) const
+void KrashConfig :: expandString(TQString &str, bool shell, const TQString &tempFile) const
 {
-  QMap<QString,QString> map;
-  map[QString::fromLatin1("appname")] = QString::fromLatin1(appName());
-  map[QString::fromLatin1("execname")] = startedByKdeinit() ? QString::fromLatin1("kdeinit") : m_execname;
-  map[QString::fromLatin1("signum")] = QString::number(signalNumber());
-  map[QString::fromLatin1("signame")] = signalName();
-  map[QString::fromLatin1("progname")] = programName();
-  map[QString::fromLatin1("pid")] = QString::number(pid());
-  map[QString::fromLatin1("tempfile")] = tempFile;
+  TQMap<TQString,TQString> map;
+  map[TQString::fromLatin1("appname")] = TQString::fromLatin1(appName());
+  map[TQString::fromLatin1("execname")] = startedByKdeinit() ? TQString::fromLatin1("kdeinit") : m_execname;
+  map[TQString::fromLatin1("signum")] = TQString::number(signalNumber());
+  map[TQString::fromLatin1("signame")] = signalName();
+  map[TQString::fromLatin1("progname")] = programName();
+  map[TQString::fromLatin1("pid")] = TQString::number(pid());
+  map[TQString::fromLatin1("tempfile")] = tempFile;
   if (shell)
     str = KMacroExpander::expandMacrosShellQuote( str, map );
   else

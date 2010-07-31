@@ -22,8 +22,8 @@
 
 #include "searchengine.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
 namespace KIO {
 class Job;
@@ -41,34 +41,34 @@ class SearchJob
     KProcess *mProcess;
     KIO::Job *mKioJob;
     
-    QString mCmd;
+    TQString mCmd;
     
-    QString mResult;
-    QString mError;
+    TQString mResult;
+    TQString mError;
 };
 
 class SearchHandler : public QObject
 {
     Q_OBJECT
   public:
-    static SearchHandler *initFromFile( const QString &filename );
+    static SearchHandler *initFromFile( const TQString &filename );
 
-    void search( DocEntry *, const QStringList &words,
+    void search( DocEntry *, const TQStringList &words,
       int maxResults = 10,
       SearchEngine::Operation operation = SearchEngine::And );
 
-    QString indexCommand( const QString &identifier );
+    TQString indexCommand( const TQString &identifier );
 
-    QStringList documentTypes() const;
+    TQStringList documentTypes() const;
 
     bool checkPaths() const;
 
   signals:
-    void searchFinished( SearchHandler *, DocEntry *, const QString & );
-    void searchError( SearchHandler *, DocEntry *, const QString & );
+    void searchFinished( SearchHandler *, DocEntry *, const TQString & );
+    void searchError( SearchHandler *, DocEntry *, const TQString & );
 
   protected:
-    bool checkBinary( const QString &cmd ) const;
+    bool checkBinary( const TQString &cmd ) const;
 
   protected slots:
     void searchStdout( KProcess *proc, char *buffer, int buflen );
@@ -76,20 +76,20 @@ class SearchHandler : public QObject
     void searchExited( KProcess *proc ); 
 
     void slotJobResult( KIO::Job *job );
-    void slotJobData( KIO::Job *, const QByteArray &data );
+    void slotJobData( KIO::Job *, const TQByteArray &data );
 
   private:
     SearchHandler();
 
-    QString mLang;
+    TQString mLang;
 
-    QString mSearchCommand;
-    QString mSearchUrl;
-    QString mIndexCommand;
-    QStringList mDocumentTypes;
+    TQString mSearchCommand;
+    TQString mSearchUrl;
+    TQString mIndexCommand;
+    TQStringList mDocumentTypes;
 
-    QMap<KProcess *,SearchJob *> mProcessJobs;
-    QMap<KIO::Job *,SearchJob *> mKioJobs;
+    TQMap<KProcess *,SearchJob *> mProcessJobs;
+    TQMap<KIO::Job *,SearchJob *> mKioJobs;
 };
 
 }

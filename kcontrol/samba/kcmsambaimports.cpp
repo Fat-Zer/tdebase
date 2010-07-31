@@ -23,20 +23,20 @@
 #include "kcmsambaimports.h"
 #include "kcmsambaimports.moc"
 
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <kdialog.h>
 
 #include <stdio.h>
 
-ImportsView::ImportsView(QWidget * parent, KConfig *config, const char * name )
-   : QWidget (parent, name)
+ImportsView::ImportsView(TQWidget * parent, KConfig *config, const char * name )
+   : TQWidget (parent, name)
    ,configFile(config)
    ,list(this)
 {
-    QBoxLayout *topLayout = new QVBoxLayout(this, KDialog::marginHint(),
+    TQBoxLayout *topLayout = new TQVBoxLayout(this, KDialog::marginHint(),
         KDialog::spacingHint());
     topLayout->setAutoAdd(true);
 
@@ -47,7 +47,7 @@ ImportsView::ImportsView(QWidget * parent, KConfig *config, const char * name )
     list.addColumn(i18n("Resource"), 200);
     list.addColumn(i18n("Mounted Under"), 190);
 
-    QWhatsThis::add( this, i18n("This list shows the Samba and NFS shared"
+    TQWhatsThis::add( this, i18n("This list shows the Samba and NFS shared"
       " resources mounted on your system from other hosts. The \"Type\""
       " column tells you whether the mounted resource is a Samba or an NFS"
       " type of resource. The \"Resource\" column shows the descriptive name"
@@ -56,7 +56,7 @@ ImportsView::ImportsView(QWidget * parent, KConfig *config, const char * name )
       " resource is mounted.") );
  
     timer.start(10000);
-    QObject::connect(&timer, SIGNAL(timeout()), this, SLOT(updateList()));
+    TQObject::connect(&timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(updateList()));
     updateList();
 }
 
@@ -65,7 +65,7 @@ void ImportsView::updateList()
    list.clear();
    char *e;
    char buf[250];
-   QCString s(""),strSource, strMount, strType;
+   TQCString s(""),strSource, strMount, strType;
    FILE *f=popen("mount","r");
    if (f==0) return;
    do
@@ -85,7 +85,7 @@ void ImportsView::updateList()
             int pos(strMount.find(" type "));
             if (pos==-1) pos=strMount.find(" read/");
             strMount=strMount.left(pos);
-            new QListViewItem(&list,strType,strSource,strMount);
+            new TQListViewItem(&list,strType,strSource,strMount);
          };
       };
    }

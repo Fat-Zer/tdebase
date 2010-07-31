@@ -11,9 +11,9 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #ifndef KWIN_POPUPINFO_H
 #define KWIN_POPUPINFO_H
-#include <qwidget.h>
-#include <qtimer.h>
-#include <qvaluelist.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
+#include <tqvaluelist.h>
 
 namespace KWinInternal
 {
@@ -29,20 +29,20 @@ class PopupInfo : public QWidget
 
         void reset();
         void hide();
-        void showInfo(QString infoString);
+        void showInfo(TQString infoString);
 
         void reconfigure();
 
     protected:
-        void paintEvent( QPaintEvent* );
+        void paintEvent( TQPaintEvent* );
         void paintContents();
 
     private:
-        QTimer m_delayedHideTimer;
+        TQTimer m_delayedHideTimer;
         int m_delayTime;
         bool m_show;
         bool m_shown;
-        QString m_infoString;
+        TQString m_infoString;
         Workspace* workspace;
     };
 

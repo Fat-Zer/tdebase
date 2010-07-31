@@ -24,11 +24,11 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <qptrlist.h>
-#include <qfile.h>
-#include <qdatastream.h>
-#include <qregexp.h>
-#include <qtimer.h>
+#include <tqptrlist.h>
+#include <tqfile.h>
+#include <tqdatastream.h>
+#include <tqregexp.h>
+#include <tqtimer.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -41,7 +41,7 @@
 #include "widgets.h"
 
 #include <klocale.h>
-#include <qdialog.h>
+#include <tqdialog.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <kfiledialog.h>
@@ -108,24 +108,24 @@ class WinIdEmbedder: public QObject
 {
 public:
     WinIdEmbedder(bool printID, WId winId):
-        QObject(qApp), print(printID), id(winId)
+        TQObject(qApp), print(printID), id(winId)
     {
         if (qApp)
             qApp->installEventFilter(this);
     }
 protected:
-    bool eventFilter(QObject *o, QEvent *e);
+    bool eventFilter(TQObject *o, TQEvent *e);
 private:
     bool print;
     WId id;
 };
 
-bool WinIdEmbedder::eventFilter(QObject *o, QEvent *e)
+bool WinIdEmbedder::eventFilter(TQObject *o, TQEvent *e)
 {
-    if (e->type() == QEvent::Show && o->isWidgetType()
+    if (e->type() == TQEvent::Show && o->isWidgetType()
         && o->inherits("KDialog"))
     {
-        QWidget *w = static_cast<QWidget*>(o);
+        TQWidget *w = static_cast<TQWidget*>(o);
         if (print)
             cout << "winId: " << w->winId() << endl;
 #ifdef Q_WS_X11
@@ -135,17 +135,17 @@ bool WinIdEmbedder::eventFilter(QObject *o, QEvent *e)
         deleteLater(); // WinIdEmbedder is not needed anymore after the first dialog was shown
         return false;
     }
-    return QObject::eventFilter(o, e);
+    return TQObject::eventFilter(o, e);
 }
 
-static void outputStringList(QStringList list, bool separateOutput)
+static void outputStringList(TQStringList list, bool separateOutput)
 {
     if ( separateOutput) {
-	for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+	for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
 	    cout << (*it).local8Bit().data() << endl;
 	}
     } else {
-	for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+	for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
 	    cout << (*it).local8Bit().data() << " ";
 	}
 	cout << endl;
@@ -154,16 +154,16 @@ static void outputStringList(QStringList list, bool separateOutput)
 
 static int directCommand(KCmdLineArgs *args)
 {
-    QString title;
+    TQString title;
     bool separateOutput = FALSE;
     bool printWId = args->isSet("print-winid");
     bool embed = args->isSet("embed");
-    QString defaultEntry;
+    TQString defaultEntry;
 
     // --title text
     KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt"); // --title is a qt option
     if(qtargs->isSet("title")) {
-      title = QFile::decodeName(qtargs->getOption("title"));
+      title = TQFile::decodeName(qtargs->getOption("title"));
     }
 
     // --separate-output
@@ -185,7 +185,7 @@ static int directCommand(KCmdLineArgs *args)
 
     // --yesno and other message boxes
     KMessageBox::DialogType type = (KMessageBox::DialogType) 0;
-    QCString option;
+    TQCString option;
     if (args->isSet("yesno")) {
         option = "yesno";
         type = KMessageBox::QuestionYesNo;
@@ -223,11 +223,11 @@ static int directCommand(KCmdLineArgs *args)
     {
         KConfig* dontagaincfg = NULL;
         // --dontagain
-        QString dontagain; // QString::null
+        TQString dontagain; // TQString::null
         if (args->isSet("dontagain"))
         {
-          QString value = args->getOption("dontagain");
-          QStringList values = QStringList::split( ':', value );
+          TQString value = args->getOption("dontagain");
+          TQStringList values = TQStringList::split( ':', value );
           if( values.count() == 2 )
           {
             dontagaincfg = new KConfig( values[ 0 ] );
@@ -239,11 +239,11 @@ static int directCommand(KCmdLineArgs *args)
         }
         int ret;
 
-        QString text = QString::fromLocal8Bit(args->getOption( option ));
+        TQString text = TQString::fromLocal8Bit(args->getOption( option ));
         int pos;
-        while ((pos = text.find( QString::fromLatin1("\\n") )) >= 0)
+        while ((pos = text.find( TQString::fromLatin1("\\n") )) >= 0)
         {
-            text.replace(pos, 2, QString::fromLatin1("\n"));
+            text.replace(pos, 2, TQString::fromLatin1("\n"));
         }
 
         if ( type == KMessageBox::WarningContinueCancel ) {
@@ -264,13 +264,13 @@ static int directCommand(KCmdLineArgs *args)
     // --inputbox text [init]
     if (args->isSet("inputbox"))
     {
-      QString result;
-      QString init;
+      TQString result;
+      TQString init;
 
       if (args->count() > 0)
-          init = QString::fromLocal8Bit(args->arg(0));
+          init = TQString::fromLocal8Bit(args->arg(0));
 
-      bool retcode = Widgets::inputBox(0, title, QString::fromLocal8Bit(args->getOption("inputbox")), init, result);
+      bool retcode = Widgets::inputBox(0, title, TQString::fromLocal8Bit(args->getOption("inputbox")), init, result);
       cout << result.local8Bit().data() << endl;
       return retcode ? 0 : 1;
     }
@@ -279,8 +279,8 @@ static int directCommand(KCmdLineArgs *args)
     // --password text
     if (args->isSet("password"))
     {
-      QCString result;
-      bool retcode = Widgets::passwordBox(0, title, QString::fromLocal8Bit(args->getOption("password")), result);
+      TQCString result;
+      bool retcode = Widgets::passwordBox(0, title, TQString::fromLocal8Bit(args->getOption("password")), result);
       cout << result.data() << endl;
       return retcode ? 0 : 1;
     }
@@ -290,19 +290,19 @@ static int directCommand(KCmdLineArgs *args)
       {
         int duration = 0;
         if (args->count() > 0)
-            duration = 1000 * QString::fromLocal8Bit(args->arg(0)).toInt();
+            duration = 1000 * TQString::fromLocal8Bit(args->arg(0)).toInt();
         if (duration == 0)
             duration = 10000;
 	KPassivePopup *popup = KPassivePopup::message( KPassivePopup::Balloon, // style
 						       title,
-						       QString::fromLocal8Bit( args->getOption("passivepopup") ),
+						       TQString::fromLocal8Bit( args->getOption("passivepopup") ),
 						       0, // icon
-						       (QWidget*)0UL, // parent
+						       (TQWidget*)0UL, // parent
 						       0, // name
 						       duration );
-	QTimer *timer = new QTimer();
-	QObject::connect( timer, SIGNAL( timeout() ), kapp, SLOT( quit() ) );
-	QObject::connect( popup, SIGNAL( clicked() ), kapp, SLOT( quit() ) );
+	TQTimer *timer = new TQTimer();
+	TQObject::connect( timer, TQT_SIGNAL( timeout() ), kapp, TQT_SLOT( quit() ) );
+	TQObject::connect( popup, TQT_SIGNAL( clicked() ), kapp, TQT_SLOT( quit() ) );
 	timer->start( duration, TRUE );
 
 #ifdef Q_WS_X11	
@@ -314,7 +314,7 @@ static int directCommand(KCmdLineArgs *args)
 		x = KApplication::desktop()->width()  + x - w;
 	    if ( (m & YNegative) )
 		y = KApplication::desktop()->height() + y - h;
-	    popup->setAnchor( QPoint(x, y) );
+	    popup->setAnchor( TQPoint(x, y) );
 	}
 #endif
 	kapp->exec();
@@ -328,11 +328,11 @@ static int directCommand(KCmdLineArgs *args)
         int h = 0;
 
         if (args->count() == 2) {
-            w = QString::fromLocal8Bit(args->arg(0)).toInt();
-            h = QString::fromLocal8Bit(args->arg(1)).toInt();
+            w = TQString::fromLocal8Bit(args->arg(0)).toInt();
+            h = TQString::fromLocal8Bit(args->arg(1)).toInt();
         }
 
-        return Widgets::textBox(0, w, h, title, QString::fromLocal8Bit(args->getOption("textbox")));
+        return Widgets::textBox(0, w, h, title, TQString::fromLocal8Bit(args->getOption("textbox")));
     }
 
     // --textinputbox file [width] [height]
@@ -342,19 +342,19 @@ static int directCommand(KCmdLineArgs *args)
       int h = 200;
 
       if (args->count() == 4) {
-	w = QString::fromLocal8Bit(args->arg(2)).toInt();
-	h = QString::fromLocal8Bit(args->arg(3)).toInt();
+	w = TQString::fromLocal8Bit(args->arg(2)).toInt();
+	h = TQString::fromLocal8Bit(args->arg(3)).toInt();
       }
 
-      QStringList list;
-      list.append(QString::fromLocal8Bit(args->getOption("textinputbox")));
+      TQStringList list;
+      list.append(TQString::fromLocal8Bit(args->getOption("textinputbox")));
 
       if (args->count() >= 1) {
 	for (int i = 0; i < args->count(); i++)
-	  list.append(QString::fromLocal8Bit(args->arg(i)));
+	  list.append(TQString::fromLocal8Bit(args->arg(i)));
       }
 
-      QCString result;
+      TQCString result;
       int ret = Widgets::textInputBox(0, w, h, title, list, result);
       cout << result.data() << endl;
       return ret;
@@ -362,16 +362,16 @@ static int directCommand(KCmdLineArgs *args)
 
     // --combobox <text> [tag item] [tag item] ..."
     if (args->isSet("combobox")) {
-        QStringList list;
+        TQStringList list;
         if (args->count() >= 2) {
             for (int i = 0; i < args->count(); i++) {
-                list.append(QString::fromLocal8Bit(args->arg(i)));
+                list.append(TQString::fromLocal8Bit(args->arg(i)));
             }
-            QString text = QString::fromLocal8Bit(args->getOption("combobox"));
+            TQString text = TQString::fromLocal8Bit(args->getOption("combobox"));
 	    if (args->isSet("default")) {
 	        defaultEntry = args->getOption("default");
 	    }
-            QString result;
+            TQString result;
 	    bool retcode = Widgets::comboBox(0, title, text, list, defaultEntry, result);
             cout << result.local8Bit().data() << endl;
             return retcode ? 0 : 1;
@@ -381,16 +381,16 @@ static int directCommand(KCmdLineArgs *args)
 
     // --menu text [tag item] [tag item] ...
     if (args->isSet("menu")) {
-        QStringList list;
+        TQStringList list;
         if (args->count() >= 2) {
             for (int i = 0; i < args->count(); i++) {
-                list.append(QString::fromLocal8Bit(args->arg(i)));
+                list.append(TQString::fromLocal8Bit(args->arg(i)));
             }
-            QString text = QString::fromLocal8Bit(args->getOption("menu"));
+            TQString text = TQString::fromLocal8Bit(args->getOption("menu"));
 	    if (args->isSet("default")) {
 	        defaultEntry = args->getOption("default");
 	    }
-            QString result;
+            TQString result;
             bool retcode = Widgets::listBox(0, title, text, list, defaultEntry, result);
             if (1 == retcode) { // OK was selected
 	        cout << result.local8Bit().data() << endl;
@@ -402,14 +402,14 @@ static int directCommand(KCmdLineArgs *args)
 
     // --checklist text [tag item status] [tag item status] ...
     if (args->isSet("checklist")) {
-        QStringList list;
+        TQStringList list;
         if (args->count() >= 3) {
             for (int i = 0; i < args->count(); i++) {
-                list.append(QString::fromLocal8Bit(args->arg(i)));
+                list.append(TQString::fromLocal8Bit(args->arg(i)));
             }
 
-            QString text = QString::fromLocal8Bit(args->getOption("checklist"));
-            QStringList result;
+            TQString text = TQString::fromLocal8Bit(args->getOption("checklist"));
+            TQStringList result;
 
             bool retcode = Widgets::checkList(0, title, text, list, separateOutput, result);
 
@@ -425,14 +425,14 @@ static int directCommand(KCmdLineArgs *args)
 
     // --radiolist text width height menuheight [tag item status]
     if (args->isSet("radiolist")) {
-        QStringList list;
+        TQStringList list;
         if (args->count() >= 3) {
             for (int i = 0; i < args->count(); i++) {
-                list.append(QString::fromLocal8Bit(args->arg(i)));
+                list.append(TQString::fromLocal8Bit(args->arg(i)));
             }
 
-            QString text = QString::fromLocal8Bit(args->getOption("radiolist"));
-            QString result;
+            TQString text = TQString::fromLocal8Bit(args->getOption("radiolist"));
+            TQString result;
             bool retcode = Widgets::radioBox(0, title, text, list, result);
             cout << result.local8Bit().data() << endl;
             exit( retcode ? 0 : 1 );
@@ -442,11 +442,11 @@ static int directCommand(KCmdLineArgs *args)
 
     // getopenfilename [startDir] [filter]
     if (args->isSet("getopenfilename")) {
-        QString startDir;
-        QString filter;
-        startDir = QString::fromLocal8Bit(args->getOption("getopenfilename"));
+        TQString startDir;
+        TQString filter;
+        startDir = TQString::fromLocal8Bit(args->getOption("getopenfilename"));
         if (args->count() >= 1)  {
-            filter = QString::fromLocal8Bit(args->arg(0));
+            filter = TQString::fromLocal8Bit(args->arg(0));
         }
 	KFileDialog dlg(startDir, filter, 0, "filedialog", true);
 	dlg.setOperationMode( KFileDialog::Opening );
@@ -462,13 +462,13 @@ static int directCommand(KCmdLineArgs *args)
 	dlg.exec();
 	
         if (args->isSet("multiple")) {
-	    QStringList result = dlg.selectedFiles();
+	    TQStringList result = dlg.selectedFiles();
 	    if ( !result.isEmpty() ) {
 		outputStringList( result, separateOutput );
 		return 0;
 	    }
 	} else {
-	    QString result = dlg.selectedFile();
+	    TQString result = dlg.selectedFile();
 	    if (!result.isEmpty())  {
 		cout << result.local8Bit().data() << endl;
 		return 0;
@@ -481,19 +481,19 @@ static int directCommand(KCmdLineArgs *args)
     // getsaveurl [startDir] [filter]
     // getsavefilename [startDir] [filter]
     if ( (args->isSet("getsavefilename") ) || (args->isSet("getsaveurl") ) ) {
-        QString startDir;
-        QString filter;
+        TQString startDir;
+        TQString filter;
 	if ( args->isSet("getsavefilename") ) {
-	    startDir = QString::fromLocal8Bit(args->getOption("getsavefilename"));
+	    startDir = TQString::fromLocal8Bit(args->getOption("getsavefilename"));
 	} else {
-	    startDir = QString::fromLocal8Bit(args->getOption("getsaveurl"));
+	    startDir = TQString::fromLocal8Bit(args->getOption("getsaveurl"));
 	}
         if (args->count() >= 1)  {
-            filter = QString::fromLocal8Bit(args->arg(0));
+            filter = TQString::fromLocal8Bit(args->arg(0));
         }
 	// copied from KFileDialog::getSaveFileName(), so we can add geometry
 	bool specialDir = ( startDir.at(0) == ':' );
-	KFileDialog dlg( specialDir ? startDir : QString::null, filter, 0, "filedialog", true );
+	KFileDialog dlg( specialDir ? startDir : TQString::null, filter, 0, "filedialog", true );
 	if ( !specialDir )
 	    dlg.setSelection( startDir );
 	dlg.setOperationMode( KFileDialog::Saving );
@@ -510,7 +510,7 @@ static int directCommand(KCmdLineArgs *args)
 		return 0;
 	    }
 	} else { // getsavefilename
-	    QString result = dlg.selectedFile();
+	    TQString result = dlg.selectedFile();
 	    if (!result.isEmpty())  {
 		KRecentDocument::add(result);
 		cout << result.local8Bit().data() << endl;
@@ -522,11 +522,11 @@ static int directCommand(KCmdLineArgs *args)
 
     // getexistingdirectory [startDir]
     if (args->isSet("getexistingdirectory")) {
-        QString startDir;
-        startDir = QString::fromLocal8Bit(args->getOption("getexistingdirectory"));
-	QString result;
+        TQString startDir;
+        startDir = TQString::fromLocal8Bit(args->getOption("getexistingdirectory"));
+	TQString result;
 #ifdef Q_WS_WIN
-	result = QFileDialog::getExistingDirectory(startDir, 0, "getExistingDirectory",
+	result = TQFileDialog::getExistingDirectory(startDir, 0, "getExistingDirectory",
 							   title, true, true);
 #else
 	KURL url;
@@ -539,7 +539,7 @@ static int directCommand(KCmdLineArgs *args)
 	if ( !title.isNull() )
 	    myDialog.setCaption( title );
 
-	if ( myDialog.exec() == QDialog::Accepted )
+	if ( myDialog.exec() == TQDialog::Accepted )
 	    url =  myDialog.url();
 
 	if ( url.isValid() )
@@ -554,11 +554,11 @@ static int directCommand(KCmdLineArgs *args)
 
     // getopenurl [startDir] [filter]
     if (args->isSet("getopenurl")) {
-        QString startDir;
-        QString filter;
-        startDir = QString::fromLocal8Bit(args->getOption("getopenurl"));
+        TQString startDir;
+        TQString filter;
+        startDir = TQString::fromLocal8Bit(args->getOption("getopenurl"));
         if (args->count() >= 1)  {
-            filter = QString::fromLocal8Bit(args->arg(0));
+            filter = TQString::fromLocal8Bit(args->arg(0));
         }
 	KFileDialog dlg(startDir, filter, 0, "filedialog", true);
 	dlg.setOperationMode( KFileDialog::Opening );
@@ -591,35 +591,35 @@ static int directCommand(KCmdLineArgs *args)
 
     // geticon [group] [context]
     if (args->isSet("geticon")) {
-        QString groupStr, contextStr;
-        groupStr = QString::fromLocal8Bit(args->getOption("geticon"));
+        TQString groupStr, contextStr;
+        groupStr = TQString::fromLocal8Bit(args->getOption("geticon"));
         if (args->count() >= 1)  {
-            contextStr = QString::fromLocal8Bit(args->arg(0));
+            contextStr = TQString::fromLocal8Bit(args->arg(0));
         }
         KIcon::Group group = KIcon::NoGroup;
-        if ( groupStr == QString::fromLatin1( "Desktop" ) )
+        if ( groupStr == TQString::fromLatin1( "Desktop" ) )
             group = KIcon::Desktop;
-        else if ( groupStr == QString::fromLatin1( "Toolbar" ) )
+        else if ( groupStr == TQString::fromLatin1( "Toolbar" ) )
             group = KIcon::Toolbar;
-        else if ( groupStr == QString::fromLatin1( "MainToolbar" ) )
+        else if ( groupStr == TQString::fromLatin1( "MainToolbar" ) )
             group = KIcon::MainToolbar;
-        else if ( groupStr == QString::fromLatin1( "Small" ) )
+        else if ( groupStr == TQString::fromLatin1( "Small" ) )
             group = KIcon::Small;
-        else if ( groupStr == QString::fromLatin1( "Panel" ) )
+        else if ( groupStr == TQString::fromLatin1( "Panel" ) )
             group = KIcon::Panel;
-        else if ( groupStr == QString::fromLatin1( "User" ) )
+        else if ( groupStr == TQString::fromLatin1( "User" ) )
             group = KIcon::User;
         KIcon::Context context = KIcon::Any;
         // From kicontheme.cpp
-        if ( contextStr == QString::fromLatin1( "Devices" ) )
+        if ( contextStr == TQString::fromLatin1( "Devices" ) )
             context = KIcon::Device;
-        else if ( contextStr == QString::fromLatin1( "MimeTypes" ) )
+        else if ( contextStr == TQString::fromLatin1( "MimeTypes" ) )
             context = KIcon::MimeType;
-        else if ( contextStr == QString::fromLatin1( "FileSystems" ) )
+        else if ( contextStr == TQString::fromLatin1( "FileSystems" ) )
             context = KIcon::FileSystem;
-        else if ( contextStr == QString::fromLatin1( "Applications" ) )
+        else if ( contextStr == TQString::fromLatin1( "Applications" ) )
             context = KIcon::Application;
-        else if ( contextStr == QString::fromLatin1( "Actions" ) )
+        else if ( contextStr == TQString::fromLatin1( "Actions" ) )
             context = KIcon::Action;
 
 	KIconDialog dlg(0, "icon dialog");
@@ -629,7 +629,7 @@ static int directCommand(KCmdLineArgs *args)
 	    dlg.setCaption(title);
 	Widgets::handleXGeometry(&dlg);
 
-	QString result = dlg.openDialog();
+	TQString result = dlg.openDialog();
 
         if (!result.isEmpty())  {
             cout << result.local8Bit().data() << endl;
@@ -647,10 +647,10 @@ static int directCommand(KCmdLineArgs *args)
        close(1);
 
        int totalsteps = 100;
-       QString text = QString::fromLocal8Bit(args->getOption("progressbar"));
+       TQString text = TQString::fromLocal8Bit(args->getOption("progressbar"));
 
        if (args->count() == 1)
-           totalsteps = QString::fromLocal8Bit(args->arg(0)).toInt();
+           totalsteps = TQString::fromLocal8Bit(args->arg(0)).toInt();
 
        return Widgets::progressBar(0, title, text, totalsteps) ? 1 : 0;
     }

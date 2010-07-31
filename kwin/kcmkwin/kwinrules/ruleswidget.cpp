@@ -21,17 +21,17 @@
 #include <klineedit.h>
 #include <krestrictedline.h>
 #include <kcombobox.h>
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <kpushbutton.h>
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <kwinmodule.h>
 #include <klocale.h>
-#include <qregexp.h>
-#include <qwhatsthis.h>
+#include <tqregexp.h>
+#include <tqwhatsthis.h>
 #include <assert.h>
 #include <kmessagebox.h>
-#include <qtabwidget.h>
-#include <qtimer.h>
+#include <tqtabwidget.h>
+#include <tqtimer.h>
 
 #include "../../rules.h"
 
@@ -41,19 +41,19 @@ namespace KWinInternal
 {
 
 #define SETUP( var, type ) \
-    connect( enable_##var, SIGNAL( toggled( bool )), rule_##var, SLOT( setEnabled( bool ))); \
-    connect( enable_##var, SIGNAL( toggled( bool )), this, SLOT( updateEnable##var())); \
-    connect( rule_##var, SIGNAL( activated( int )), this, SLOT( updateEnable##var())); \
-    QWhatsThis::add( enable_##var, enableDesc ); \
-    QWhatsThis::add( rule_##var, type##RuleDesc );
+    connect( enable_##var, TQT_SIGNAL( toggled( bool )), rule_##var, TQT_SLOT( setEnabled( bool ))); \
+    connect( enable_##var, TQT_SIGNAL( toggled( bool )), this, TQT_SLOT( updateEnable##var())); \
+    connect( rule_##var, TQT_SIGNAL( activated( int )), this, TQT_SLOT( updateEnable##var())); \
+    TQWhatsThis::add( enable_##var, enableDesc ); \
+    TQWhatsThis::add( rule_##var, type##RuleDesc );
 
-RulesWidget::RulesWidget( QWidget* parent, const char* name )
+RulesWidget::RulesWidget( TQWidget* parent, const char* name )
 : RulesWidgetBase( parent, name )
 , detect_dlg( NULL )
     {
-    QString enableDesc =
+    TQString enableDesc =
         i18n( "Enable this checkbox to alter this window property for the specified window(s)." );
-    QString setRuleDesc =
+    TQString setRuleDesc =
         i18n( "Specify how the window property should be affected:<ul>"
               "<li><em>Do Not Affect:</em> The window property will not be affected and therefore"
               " the default handling for it will be used. Specifying this will block more generic"
@@ -68,7 +68,7 @@ RulesWidget::RulesWidget( QWidget* parent, const char* name )
               "<li><em>Force temporarily:</em> The window property will be forced to the given value"
               " until it is hidden (this action will be deleted after the window is hidden).</li>"
               "</ul>" );
-    QString forceRuleDesc =
+    TQString forceRuleDesc =
         i18n( "Specify how the window property should be affected:<ul>"
               "<li><em>Do Not Affect:</em> The window property will not be affected and therefore"
               " the default handling for it will be used. Specifying this will block more generic"
@@ -113,7 +113,7 @@ RulesWidget::RulesWidget( QWidget* parent, const char* name )
     for( i = 1;
          i <= module.numberOfDesktops();
          ++i )
-        desktop->insertItem( QString::number( i ).rightJustify( 2 ) + ":" + module.desktopName( i ));
+        desktop->insertItem( TQString::number( i ).rightJustify( 2 ) + ":" + module.desktopName( i ));
     desktop->insertItem( i18n( "All Desktops" ));
     }
 
@@ -202,45 +202,45 @@ static const Rules::ForceRule combo_to_force_rule[] =
     ( Rules::ForceRule )Rules::ForceTemporarily
     };
 
-static QString positionToStr( const QPoint& p )
+static TQString positionToStr( const TQPoint& p )
     {
     if( p == invalidPoint )
-        return QString::null;
-    return QString::number( p.x()) + "," + QString::number( p.y());
+        return TQString::null;
+    return TQString::number( p.x()) + "," + TQString::number( p.y());
     }
 
-static QPoint strToPosition( const QString& str )
+static TQPoint strToPosition( const TQString& str )
     {            // two numbers, with + or -, separated by any of , x X :
-    QRegExp reg( "\\s*([+-]?[0-9]*)\\s*[,xX:]\\s*([+-]?[0-9]*)\\s*" );
+    TQRegExp reg( "\\s*([+-]?[0-9]*)\\s*[,xX:]\\s*([+-]?[0-9]*)\\s*" );
     if( !reg.exactMatch( str ))
         return invalidPoint;
-    return QPoint( reg.cap( 1 ).toInt(), reg.cap( 2 ).toInt());
+    return TQPoint( reg.cap( 1 ).toInt(), reg.cap( 2 ).toInt());
     }
 
-static QString sizeToStr( const QSize& s )
+static TQString sizeToStr( const TQSize& s )
     {
     if( !s.isValid())
-        return QString::null;
-    return QString::number( s.width()) + "," + QString::number( s.height());
+        return TQString::null;
+    return TQString::number( s.width()) + "," + TQString::number( s.height());
     }
 
-static QSize strToSize( const QString& str )
+static TQSize strToSize( const TQString& str )
     {            // two numbers, with + or -, separated by any of , x X :
-    QRegExp reg( "\\s*([+-]?[0-9]*)\\s*[,xX:]\\s*([+-]?[0-9]*)\\s*" );
+    TQRegExp reg( "\\s*([+-]?[0-9]*)\\s*[,xX:]\\s*([+-]?[0-9]*)\\s*" );
     if( !reg.exactMatch( str ))
-        return QSize();
-    return QSize( reg.cap( 1 ).toInt(), reg.cap( 2 ).toInt());
+        return TQSize();
+    return TQSize( reg.cap( 1 ).toInt(), reg.cap( 2 ).toInt());
     }
 
 //used for opacity settings
-static QString intToStr( const int& s )
+static TQString intToStr( const int& s )
     {
     if( s < 1 || s > 100 )
-        return QString::null;
-    return QString::number(s);
+        return TQString::null;
+    return TQString::number(s);
     }
  
-static int strToInt( const QString& str )
+static int strToInt( const TQString& str )
     {
     int tmp = str.toInt();
     if( tmp < 1 || tmp > 100 )
@@ -550,7 +550,7 @@ void RulesWidget::detectClicked()
     {
     assert( detect_dlg == NULL );
     detect_dlg = new DetectDialog;
-    connect( detect_dlg, SIGNAL( detectionDone( bool )), this, SLOT( detected( bool )));
+    connect( detect_dlg, TQT_SIGNAL( detectionDone( bool )), this, TQT_SLOT( detected( bool )));
     detect_dlg->detect( 0 );
     }
 
@@ -682,11 +682,11 @@ void RulesWidget::shortcutEditClicked()
     {
     EditShortcutDialog dlg( topLevelWidget());
     dlg.setShortcut( shortcut->text());
-    if( dlg.exec() == QDialog::Accepted )
+    if( dlg.exec() == TQDialog::Accepted )
         shortcut->setText( dlg.shortcut());
     }
 
-RulesDialog::RulesDialog( QWidget* parent, const char* name )
+RulesDialog::RulesDialog( TQWidget* parent, const char* name )
 : KDialogBase( parent, name, true, i18n( "Edit Window-Specific Settings" ), Ok | Cancel )
     {
     widget = new RulesWidget( this );
@@ -702,14 +702,14 @@ Rules* RulesDialog::edit( Rules* r, WId window, bool show_hints )
     if( window != 0 )
         widget->prepareWindowSpecific( window );
     if( show_hints )
-        QTimer::singleShot( 0, this, SLOT( displayHints()));
+        TQTimer::singleShot( 0, this, TQT_SLOT( displayHints()));
     exec();
     return rules;
     }
 
 void RulesDialog::displayHints()
     {
-    QString str = "<qt><p>";
+    TQString str = "<qt><p>";
     str += i18n( "This configuration dialog allows altering settings only for the selected window"
                  " or application. Find the setting you want to affect, enable the setting using the checkbox,"
                  " select in what way the setting should be affected and to which value." );
@@ -717,7 +717,7 @@ void RulesDialog::displayHints()
     str += "</p><p>" + i18n( "Consult the documentation for more details." );
 #endif
     str += "</p></qt>";
-    KMessageBox::information( this, str, QString::null, "displayhints" );
+    KMessageBox::information( this, str, TQString::null, "displayhints" );
     }
 
 void RulesDialog::accept()
@@ -728,7 +728,7 @@ void RulesDialog::accept()
     KDialogBase::accept();
     }
 
-EditShortcut::EditShortcut( QWidget* parent, const char* name )
+EditShortcut::EditShortcut( TQWidget* parent, const char* name )
 : EditShortcutBase( parent, name )
     {
     }
@@ -736,7 +736,7 @@ EditShortcut::EditShortcut( QWidget* parent, const char* name )
 void EditShortcut::editShortcut()
     {
     ShortcutDialog dlg( KShortcut( shortcut->text()), topLevelWidget());
-    if( dlg.exec() == QDialog::Accepted )
+    if( dlg.exec() == TQDialog::Accepted )
         shortcut->setText( dlg.shortcut().toString());
     }
 
@@ -745,24 +745,24 @@ void EditShortcut::clearShortcut()
     shortcut->setText( "" );
     }
 
-EditShortcutDialog::EditShortcutDialog( QWidget* parent, const char* name )
+EditShortcutDialog::EditShortcutDialog( TQWidget* parent, const char* name )
 : KDialogBase( parent, name, true, i18n( "Edit Shortcut" ), Ok | Cancel )
     {
     widget = new EditShortcut( this );
     setMainWidget( widget );
     }
 
-void EditShortcutDialog::setShortcut( const QString& cut )
+void EditShortcutDialog::setShortcut( const TQString& cut )
     {
     widget->shortcut->setText( cut );
     }
 
-QString EditShortcutDialog::shortcut() const
+TQString EditShortcutDialog::shortcut() const
     {
     return widget->shortcut->text();
     }
 
-ShortcutDialog::ShortcutDialog( const KShortcut& cut, QWidget* parent, const char* name )
+ShortcutDialog::ShortcutDialog( const KShortcut& cut, TQWidget* parent, const char* name )
     : KShortcutDialog( cut, false /*TODO???*/, parent, name )
     {
     }

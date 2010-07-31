@@ -43,23 +43,23 @@ public:
     // The URL to open when this link is clicked
     virtual KURL externalURL() const { return m_entry->url; }
     const KURL& url() const { return m_entry->url; } // a faster one
-    virtual QString toolTipText() const;
+    virtual TQString toolTipText() const;
 
-    QString host() const { return m_entry->url.host(); }
-    QString path() const { return m_entry->url.path(); }
+    TQString host() const { return m_entry->url.host(); }
+    TQString path() const { return m_entry->url.path(); }
 
-    const QDateTime& lastVisited() const { return m_entry->lastVisited; }
+    const TQDateTime& lastVisited() const { return m_entry->lastVisited; }
 
     void update( const KonqHistoryEntry *entry );
     const KonqHistoryEntry *entry() const { return m_entry; }
 
-    virtual QDragObject * dragObject( QWidget * parent, bool move = false );
+    virtual TQDragObject * dragObject( TQWidget * parent, bool move = false );
 
-    virtual QString key( int column, bool ascending ) const;
+    virtual TQString key( int column, bool ascending ) const;
 
     static void setSettings( KonqSidebarHistorySettings *s ) { s_settings = s; }
 
-    virtual void paintCell( QPainter *, const QColorGroup & cg, int column, 
+    virtual void paintCell( TQPainter *, const TQColorGroup & cg, int column, 
 			    int width, int alignment );
 
 private:
@@ -85,25 +85,25 @@ public:
 
     virtual void setOpen( bool open );
 
-    virtual QString key( int column, bool ascending ) const;
+    virtual TQString key( int column, bool ascending ) const;
 
     void itemUpdated( KonqSidebarHistoryItem *item );
 
     bool hasFavIcon() const { return m_hasFavIcon; }
-    void setFavIcon( const QPixmap& pix );
+    void setFavIcon( const TQPixmap& pix );
 
-    virtual QDragObject * dragObject( QWidget *, bool );
+    virtual TQDragObject * dragObject( TQWidget *, bool );
     virtual void itemSelected();
 
     // we don't support the following of KonqSidebarTreeItem
-    bool acceptsDrops( const QStrList& ) { return false; }
-    virtual void drop( QDropEvent * ) {}
+    bool acceptsDrops( const TQStrList& ) { return false; }
+    virtual void drop( TQDropEvent * ) {}
     virtual KURL externalURL() const { return KURL(); }
     
 private:
     bool m_hasFavIcon;
     const KURL m_url;
-    QDateTime m_lastVisited;
+    TQDateTime m_lastVisited;
 
 };
 

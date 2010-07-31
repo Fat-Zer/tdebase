@@ -18,14 +18,14 @@
 */
 #ifndef _konqsidebarplugin_h_
 #define _konqsidebarplugin_h_
-#include <qwidget.h>
-#include <qobject.h>
+#include <tqwidget.h>
+#include <tqobject.h>
 #include <kurl.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kparts/part.h>
 #include <kparts/browserextension.h>
 #include <kio/job.h>
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 #include <kfileitem.h>
 
 class KonqSidebarPluginPrivate;
@@ -34,16 +34,16 @@ class KDE_EXPORT KonqSidebarPlugin : public QObject
 {
 	Q_OBJECT
 	public:
-		KonqSidebarPlugin(KInstance *instance,QObject *parent,QWidget *widgetParent,QString &desktopName_, const char* name=0);
+		KonqSidebarPlugin(KInstance *instance,TQObject *parent,TQWidget *widgetParent,TQString &desktopName_, const char* name=0);
 		~KonqSidebarPlugin();
-		virtual QWidget *getWidget()=0;
-		virtual void *provides(const QString &)=0;
+		virtual TQWidget *getWidget()=0;
+		virtual void *provides(const TQString &)=0;
 		KInstance *parentInstance();
 	protected:
 		virtual void handleURL(const KURL &url)=0;
 		virtual void handlePreview(const KFileItemList & items);
 		virtual void handlePreviewOnMouseOver(const KFileItem &items); //not used yet, perhaps in KDE 3.1
-		QString desktopName;
+		TQString desktopName;
 		KInstance* m_parentInstance;
 
 	private:
@@ -53,8 +53,8 @@ class KDE_EXPORT KonqSidebarPlugin : public QObject
 		void requestURL(KURL&);
 		void started(KIO::Job *);
 		void completed();
-		void setIcon(const QString& icon);
-		void setCaption(const QString& caption);
+		void setIcon(const TQString& icon);
+		void setCaption(const TQString& caption);
 
 
 	protected:
@@ -67,7 +67,7 @@ class KDE_EXPORT KonqSidebarPlugin : public QObject
 	  void openPreviewOnMouseOver(const KFileItem& item); // not used yet, perhaps KDE 3.1
 	/*
 		if your plugin supports a setup dialog, instead (replaces the url menu entry in the popup) (not supported yet)
-			void setup(QWidget *parent);
+			void setup(TQWidget *parent);
 
 	 */
 
@@ -79,16 +79,16 @@ class KDE_EXPORT KonqSidebarPlugin : public QObject
 
 		void enableAction( const char * name, bool enabled );
 
-		void popupMenu( const QPoint &global, const KFileItemList &items );
-  		void popupMenu( KXMLGUIClient *client, const QPoint &global, const KFileItemList &items );
-		void popupMenu( const QPoint &global, const KURL &url,
-			const QString &mimeType, mode_t mode = (mode_t)-1 );
+		void popupMenu( const TQPoint &global, const KFileItemList &items );
+  		void popupMenu( KXMLGUIClient *client, const TQPoint &global, const KFileItemList &items );
+		void popupMenu( const TQPoint &global, const KURL &url,
+			const TQString &mimeType, mode_t mode = (mode_t)-1 );
 		void popupMenu( KXMLGUIClient *client,
-			const QPoint &global, const KURL &url,
-			const QString &mimeType, mode_t mode = (mode_t)-1 );
+			const TQPoint &global, const KURL &url,
+			const TQString &mimeType, mode_t mode = (mode_t)-1 );
 
-		void showError(QString &);	//for later extension
-		void showMessage(QString &);	//for later extension
+		void showError(TQString &);	//for later extension
+		void showMessage(TQString &);	//for later extension
 
 	*/
 

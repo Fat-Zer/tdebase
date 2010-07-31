@@ -29,7 +29,7 @@ class advancedTabDialog : public KDialogBase
     Q_OBJECT
 
     public:
-        advancedTabDialog(QWidget* parent, KConfig *config, const char* name);
+        advancedTabDialog(TQWidget* parent, KConfig *config, const char* name);
         ~advancedTabDialog();
 
     protected slots:

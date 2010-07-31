@@ -23,15 +23,15 @@ using namespace std;
 #include <pwd.h>
 #include <sys/types.h>
 
-#include <qdir.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qregexp.h>
-#include <qsettings.h>
-#include <qstyle.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpainter.h>
+#include <tqregexp.h>
+#include <tqsettings.h>
+#include <tqstyle.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -69,51 +69,51 @@ extern "C"
     }
 };
 
-TOMFactory::TOMFactory(QObject *parent, const char *name)
+TOMFactory::TOMFactory(TQObject *parent, const char *name)
 : KLibFactory(parent, name)
 {
 }
 
-QObject* TOMFactory::createObject(QObject *parent, const char *name, const char*, const QStringList&)
+TQObject* TOMFactory::createObject(TQObject *parent, const char *name, const char*, const TQStringList&)
 {
-    return new TOM((QWidget*)parent, name);
+    return new TOM((TQWidget*)parent, name);
 }
 
-#include <qmenudata.h>
+#include <tqmenudata.h>
 /*
  * TODO: switch the backgroundmode when translucency turns on/off
  * TODO: catch font changes too?
  */
-class runMenuWidget : public QWidget, public QMenuItem
+class runMenuWidget : public TQWidget, public QMenuItem
 {
     public:
         runMenuWidget(KPopupMenu* parent, int index)
-            : QWidget (parent),
+            : TQWidget (parent),
               m_menu(parent),
               m_index(index)
         {
             setFocusPolicy(StrongFocus);
 
-            QHBoxLayout* runLayout = new QHBoxLayout(this);
+            TQHBoxLayout* runLayout = new TQHBoxLayout(this);
             textRect = fontMetrics().boundingRect(i18n("Run:"));
             runLayout->setSpacing(KDialog::spacingHint());
             runLayout->addSpacing((KDialog::spacingHint() * 3) + KIcon::SizeMedium + textRect.width());
             icon = DesktopIcon("run", KIcon::SizeMedium);
-            /*QLabel* l1 = new QLabel(this);
-            QPixmap foo = DesktopIcon("run", KIcon::SizeMedium);
+            /*TQLabel* l1 = new TQLabel(this);
+            TQPixmap foo = DesktopIcon("run", KIcon::SizeMedium);
             cout << "foo is: " << foo.width() << " by " << foo.height() << endl;
             l1->setPixmap(foo);
             runLayout->addWidget(l1);*/
-            /*QLabel* l2 = new QLabel(i18n("&Run: "), this);
+            /*TQLabel* l2 = new TQLabel(i18n("&Run: "), this);
             l2->setBackgroundMode(Qt::X11ParentRelative, Qt::X11ParentRelative);
             l2->setBuddy(this);
             runLayout->addWidget(l2);*/
             m_runEdit = new KHistoryCombo(this);
-            m_runEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+            m_runEdit->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Preferred);
             runLayout->addWidget(m_runEdit, 10);
             runLayout->addSpacing(KDialog::spacingHint());
 
-            QSettings settings;
+            TQSettings settings;
             if (settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled") != "Disabled")
             {
                 setBackgroundMode(Qt::X11ParentRelative, Qt::X11ParentRelative);
@@ -138,18 +138,18 @@ class runMenuWidget : public QWidget, public QMenuItem
         ~runMenuWidget() {}
 
 
-        void paintEvent(QPaintEvent * /*e*/)
+        void paintEvent(TQPaintEvent * /*e*/)
         {
-            QPainter p(this);
-            QRect r(rect());
+            TQPainter p(this);
+            TQRect r(rect());
             // ew, nasty hack. may result in coredumps due to horrid C-style cast???
-            kapp->style().drawControl(QStyle::CE_PopupMenuItem, &p, m_menu, r, palette().active(), QStyle::Style_Enabled,
-                                      QStyleOption(static_cast<QMenuItem*>(this), 0, KIcon::SizeMedium ));
+            kapp->style().drawControl(TQStyle::CE_PopupMenuItem, &p, m_menu, r, palette().active(), TQStyle::Style_Enabled,
+                                      TQStyleOption(static_cast<TQMenuItem*>(this), 0, KIcon::SizeMedium ));
             p.drawPixmap(KDialog::spacingHint(), 1, icon);
             p.drawText((KDialog::spacingHint() * 2) + KIcon::SizeMedium, textRect.height() + ((height() - textRect.height()) / 2), i18n("Run:"));
         }
 
-        void focusInEvent (QFocusEvent* e)
+        void focusInEvent (TQFocusEvent* e)
         {
             if (!e || e->gotFocus())
             {
@@ -158,7 +158,7 @@ class runMenuWidget : public QWidget, public QMenuItem
             }
         }
 
-        void enterEvent(QEvent*)
+        void enterEvent(TQEvent*)
         {
             focusInEvent(0);
         }
@@ -166,12 +166,12 @@ class runMenuWidget : public QWidget, public QMenuItem
     private:
         KPopupMenu* m_menu;
         KHistoryCombo* m_runEdit;
-        QPixmap icon;
-        QRect textRect;
+        TQPixmap icon;
+        TQRect textRect;
         int m_index;
 };
 
-TOM::TOM(QWidget *parent, const char *name)
+TOM::TOM(TQWidget *parent, const char *name)
     : KPanelMenu(parent, name),
       m_maxIndex(0)
 {
@@ -199,7 +199,7 @@ TOM::~TOM()
     slotClear();
 }
 
-void TOM::initializeRecentApps(QPopupMenu* menu)
+void TOM::initializeRecentApps(TQPopupMenu* menu)
 {
     /*
      * TODO: make this real
@@ -217,7 +217,7 @@ void TOM::initializeRecentDocs()
 {
     m_recentDocsMenu->clear();
     m_recentDocsMenu->insertItem(SmallIconSet("history_clear"), i18n("Clear History"),
-                                 this, SLOT(clearRecentDocHistory()));
+                                 this, TQT_SLOT(clearRecentDocHistory()));
     m_recentDocsMenu->insertSeparator();
 
     m_recentDocURLs = KRecentDocument::recentDocuments();
@@ -229,7 +229,7 @@ void TOM::initializeRecentDocs()
     }
 
     int id = 0;
-    for (QStringList::ConstIterator it = m_recentDocURLs.begin();
+    for (TQStringList::ConstIterator it = m_recentDocURLs.begin();
          it != m_recentDocURLs.end();
          ++it)
     {
@@ -258,8 +258,8 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
         return 0;
     }
 
-    QString name = config.readEntry("Name", i18n("Unknown"));
-    QString icon = config.readEntry("Icon");
+    TQString name = config.readEntry("Name", i18n("Unknown"));
+    TQString icon = config.readEntry("Icon");
     int numTasks = config.readNumEntry("NumTasks", 0);
 
     if (numTasks < 1)
@@ -272,7 +272,7 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
     {
         taskGroup = new KPopupMenu(this);
 
-        if (icon != QString::null)
+        if (icon != TQString::null)
         {
             insertItem(DesktopIcon(icon, KIcon::SizeMedium), name, taskGroup);
         }
@@ -289,7 +289,7 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
     int foundTasks = 0;
     for (int i = 0; i < numTasks; ++i)
     {
-        QString groupName = QString("Task%1").arg(i);
+        TQString groupName = TQString("Task%1").arg(i);
 
         if (config.hasGroup(groupName))
         {
@@ -300,10 +300,10 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
                 continue;
             }
 
-            QString name = config.readEntry("Name");
+            TQString name = config.readEntry("Name");
             // in case the name contains an ampersand, double 'em up
             name.replace("&", "&&");
-            QString desktopfile = config.readPathEntry("DesktopFile");
+            TQString desktopfile = config.readPathEntry("DesktopFile");
             KService::Ptr pService = KService::serviceByDesktopPath(desktopfile);
 
             if (!pService)
@@ -316,12 +316,12 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
                 }
             }
 
-            QString execName = pService->name();
-            QString icon = pService->icon();
+            TQString execName = pService->name();
+            TQString icon = pService->icon();
 
             if (m_detailedTaskEntries && !execName.isEmpty())
             {
-                QString tmp = i18n("%1 (%2)");
+                TQString tmp = i18n("%1 (%2)");
 
                 if (m_detailedNamesFirst)
                 {
@@ -341,7 +341,7 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
             else
             {
        
-		QIconSet iconset = BarIconSet(icon, 22);
+		TQIconSet iconset = BarIconSet(icon, 22);
 		if (iconset.isNull())
 		    taskGroup->insertItem(name, m_maxIndex);
 		else
@@ -365,13 +365,13 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
         return 0;
     }
 
-    connect(taskGroup, SIGNAL(activated(int)), this, SLOT(runTask(int)));
+    connect(taskGroup, TQT_SIGNAL(activated(int)), this, TQT_SLOT(runTask(int)));
     // so we have an actual task group menu with tasks, let's add it
 
     if (inSubMenu)
     {
-        QObject::connect(taskGroup, SIGNAL(aboutToShowContextMenu(KPopupMenu*, int, QPopupMenu*)),
-                         this, SLOT(contextualizeRMBmenu(KPopupMenu*, int, QPopupMenu*)));
+        TQObject::connect(taskGroup, TQT_SIGNAL(aboutToShowContextMenu(KPopupMenu*, int, TQPopupMenu*)),
+                         this, TQT_SLOT(contextualizeRMBmenu(KPopupMenu*, int, TQPopupMenu*)));
 
         m_submenus.append(taskGroup);
 
@@ -382,14 +382,14 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
         {
             taskGroup->insertSeparator();
             taskGroup->insertItem("Modify These Tasks", configureMenuID);
-            QPopupMenu* rmbMenu = taskGroup->contextMenu();
+            TQPopupMenu* rmbMenu = taskGroup->contextMenu();
             rmbMenu->setFont(m_largerFont);
             KPopupTitle* title = new KPopupTitle();
             title->setText(i18n("%1 Menu Editor").arg(name));
             rmbMenu->insertItem(title, contextMenuTitleID);
             rmbMenu->insertItem(i18n("Add This Task to Panel"));
             rmbMenu->insertItem(i18n("Modify This Task..."));
-            rmbMenu->insertItem(i18n("Remove This Task..."), this, SLOT(removeTask()));
+            rmbMenu->insertItem(i18n("Remove This Task..."), this, TQT_SLOT(removeTask()));
             rmbMenu->insertItem(i18n("Insert New Task..."));
         }
     }
@@ -428,27 +428,27 @@ void TOM::initialize()
 
     /*if (!loadSidePixmap())
     {
-      m_sidePixmap = m_sideTilePixmap = QPixmap();
+      m_sidePixmap = m_sideTilePixmap = TQPixmap();
     }
     else
     {
-      connect(kapp, SIGNAL(kdisplayPaletteChanged()), SLOT(paletteChanged()));
+      connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
     }*/
 
     // TASKS
     insertTitle(i18n("Tasks"), contextMenuTitleID);
 
-    QStringList dirs = KGlobal::dirs()->findDirs("data", "kicker/tom/");
-    QStringList::ConstIterator dIt = dirs.begin();
-    QStringList::ConstIterator dEnd = dirs.end();
+    TQStringList dirs = KGlobal::dirs()->findDirs("data", "kicker/tom/");
+    TQStringList::ConstIterator dIt = dirs.begin();
+    TQStringList::ConstIterator dEnd = dirs.end();
 
     for (; dIt != dEnd; ++dIt )
     {
-        QDir dir(*dIt);
+        TQDir dir(*dIt);
 
-        QStringList entries = dir.entryList("*rc", QDir::Files);
-        QStringList::ConstIterator eIt = entries.begin();
-        QStringList::ConstIterator eEnd = entries.end();
+        TQStringList entries = dir.entryList("*rc", TQDir::Files);
+        TQStringList::ConstIterator eIt = entries.begin();
+        TQStringList::ConstIterator eEnd = entries.end();
 
         for (; eIt != eEnd; ++eIt )
         {
@@ -457,7 +457,7 @@ void TOM::initialize()
         }
     }
 
-    PanelServiceMenu* moreApps = new PanelServiceMenu(QString::null, QString::null, this, "More Applications");
+    PanelServiceMenu* moreApps = new PanelServiceMenu(TQString::null, TQString::null, this, "More Applications");
     moreApps->setFont(m_largerFont);
     insertItem(DesktopIcon("misc", KIcon::SizeMedium), i18n("More Applications"), moreApps);
     m_submenus.append(moreApps);
@@ -472,9 +472,9 @@ void TOM::initialize()
     // DESTINATIONS
     insertTitle(i18n("Destinations"), destMenuTitleID);
     int numDests = 0;
-    QString destinationsConfig = locate("appdata", "tom/destinations");
+    TQString destinationsConfig = locate("appdata", "tom/destinations");
 
-    if (!destinationsConfig.isEmpty() && QFile::exists(destinationsConfig))
+    if (!destinationsConfig.isEmpty() && TQFile::exists(destinationsConfig))
     {
         KConfig config(destinationsConfig);
         numDests = appendTaskGroup(config, false);
@@ -486,7 +486,7 @@ void TOM::initialize()
     }
     else if (kapp->authorize("run_command"))
     {
-        insertItem(DesktopIcon("run", KIcon::SizeMedium), i18n("Run Command..."), this, SLOT(runCommand()));
+        insertItem(DesktopIcon("run", KIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
     }
 
     // RECENTLY USED ITEMS
@@ -494,8 +494,8 @@ void TOM::initialize()
 
     m_recentDocsMenu = new KPopupMenu(this, "recentDocs");
     m_recentDocsMenu->setFont(m_largerFont);
-    connect(m_recentDocsMenu, SIGNAL(aboutToShow()), this, SLOT(initializeRecentDocs()));
-    connect(m_recentDocsMenu, SIGNAL(activated(int)), this, SLOT(openRecentDocument(int)));
+    connect(m_recentDocsMenu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(initializeRecentDocs()));
+    connect(m_recentDocsMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(openRecentDocument(int)));
     insertItem(DesktopIcon("document", KIcon::SizeMedium), i18n("Recent Documents"), m_recentDocsMenu);
     m_submenus.append(m_recentDocsMenu);
 
@@ -512,16 +512,16 @@ void TOM::initialize()
     // if we have no destinations, put the run command here
     if (numDests == 0 && kapp->authorize("run_command"))
     {
-        insertItem(DesktopIcon("run", KIcon::SizeMedium), i18n("Run Command..."), this, SLOT(runCommand()));
+        insertItem(DesktopIcon("run", KIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
     }
 
 
     KConfig* config = KGlobal::config();
-    QStringList menu_ext = config->readListEntry("Extensions");
+    TQStringList menu_ext = config->readListEntry("Extensions");
     if (!menu_ext.isEmpty())
     {
         bool needSeparator = false;
-        for (QStringList::ConstIterator it = menu_ext.begin(); it != menu_ext.end(); ++it)
+        for (TQStringList::ConstIterator it = menu_ext.begin(); it != menu_ext.end(); ++it)
         {
             MenuInfo info(*it);
             if (!info.isValid())
@@ -546,11 +546,11 @@ void TOM::initialize()
     }
 
 
-    QString username;
+    TQString username;
     struct passwd *userInfo = getpwuid(getuid());
     if (userInfo)
     {
-        username = QString::fromLocal8Bit(userInfo->pw_gecos);
+        username = TQString::fromLocal8Bit(userInfo->pw_gecos);
         if (username.find(',') != -1)
         {
             // Remove everything from and including first comma
@@ -559,12 +559,12 @@ void TOM::initialize()
 
         if (username.isEmpty())
         {
-            username = QString::fromLocal8Bit(userInfo->pw_name);
+            username = TQString::fromLocal8Bit(userInfo->pw_name);
         }
     }
 
     insertItem(DesktopIcon("exit", KIcon::SizeMedium),
-               i18n("Logout %1").arg(username), this, SLOT(logout()));
+               i18n("Logout %1").arg(username), this, TQT_SLOT(logout()));
 }
 
 void TOM::reload()
@@ -573,7 +573,7 @@ void TOM::reload()
     initialize();
 }
 
-void TOM::contextualizeRMBmenu(KPopupMenu* menu, int menuItem, QPopupMenu* ctxMenu)
+void TOM::contextualizeRMBmenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu)
 {
     if (menuItem == configureMenuID)
     {
@@ -582,7 +582,7 @@ void TOM::contextualizeRMBmenu(KPopupMenu* menu, int menuItem, QPopupMenu* ctxMe
     }
 
     ctxMenu->removeItem(contextMenuTitleID);
-    QString text = menu->text(menuItem);
+    TQString text = menu->text(menuItem);
     int parens = text.find('(') - 1;
     if (parens > 0)
     {
@@ -608,7 +608,7 @@ void TOM::slotExec(int /* id */)
 void TOM::removeTask()
 {
     // TODO: write this change out to the appropriate config file
-    QString task = KPopupMenu::contextMenuFocus()->text(KPopupMenu::contextMenuFocusItem());
+    TQString task = KPopupMenu::contextMenuFocus()->text(KPopupMenu::contextMenuFocusItem());
     if (KMessageBox::warningContinueCancel(this,
                                   i18n("<qt>Are you sure you want to remove the <strong>%1</strong> task?<p>"
                                         "<em>Tip: You can restore the task after it has been removed by selecting the &quot;Modify These Tasks&quot; entry</em></qt>").arg(task),
@@ -629,12 +629,12 @@ void TOM::removeTask()
 bool TOM::loadSidePixmap()
 {
   KConfig *config = KGlobal::config();
-  QColor color = palette().active().highlight();
-  QImage image;
+  TQColor color = palette().active().highlight();
+  TQImage image;
 
   config->setGroup("WM");
-  QColor activeTitle = config->readColorEntry("activeBackground", &color);
-  QColor inactiveTitle = config->readColorEntry("inactiveBackground", &color);
+  TQColor activeTitle = config->readColorEntry("activeBackground", &color);
+  TQColor inactiveTitle = config->readColorEntry("inactiveBackground", &color);
 
   config->setGroup("KMenu");
   if (!config->readBoolEntry("Usem_sidePixmap", true))
@@ -667,8 +667,8 @@ bool TOM::loadSidePixmap()
   }
   color.setRgb(r, g, b);
 
-  QString sideName = config->readEntry("SideName", "kside.png");
-  QString sideTileName = config->readEntry("SideTileName", "kside_tile.png");
+  TQString sideName = config->readEntry("SideName", "kside.png");
+  TQString sideTileName = config->readEntry("SideTileName", "kside_tile.png");
 
   image.load(locate("data", "kicker/pics/" + sideName));
 
@@ -699,8 +699,8 @@ bool TOM::loadSidePixmap()
   if (m_sideTilePixmap.height() < 100)
   {
     int tiles = (int)(100 / m_sideTilePixmap.height()) + 1;
-    QPixmap preTiledPixmap(m_sideTilePixmap.width(), m_sideTilePixmap.height() * tiles);
-    QPainter p(&preTiledPixmap);
+    TQPixmap preTiledPixmap(m_sideTilePixmap.width(), m_sideTilePixmap.height() * tiles);
+    TQPainter p(&preTiledPixmap);
     p.drawTiledPixmap(preTiledPixmap.rect(), m_sideTilePixmap);
     m_sideTilePixmap = preTiledPixmap;
   }
@@ -711,15 +711,15 @@ bool TOM::loadSidePixmap()
 void TOM::paletteChanged()
 {
     if (!loadSidePixmap())
-        m_sidePixmap = m_sideTilePixmap = QPixmap();
+        m_sidePixmap = m_sideTilePixmap = TQPixmap();
 }
 
-void TOM::setMinimumSize(const QSize & s)
+void TOM::setMinimumSize(const TQSize & s)
 {
     KPanelMenu::setMinimumSize(s.width() + m_sidePixmap.width(), s.height());
 }
 
-void TOM::setMaximumSize(const QSize & s)
+void TOM::setMaximumSize(const TQSize & s)
 {
     KPanelMenu::setMaximumSize(s.width() + m_sidePixmap.width(), s.height());
 }
@@ -734,33 +734,33 @@ void TOM::setMaximumSize(int w, int h)
     KPanelMenu::setMaximumSize(w + m_sidePixmap.width(), h);
 }
 
-QRect TOM::sideImageRect()
+TQRect TOM::sideImageRect()
 {
-    return QStyle::visualRect( QRect( frameWidth(), frameWidth(), m_sidePixmap.width(),
+    return TQStyle::visualRect( TQRect( frameWidth(), frameWidth(), m_sidePixmap.width(),
                                       height() - 2*frameWidth() ), this );
 }
 
-void TOM::resizeEvent(QResizeEvent * e)
+void TOM::resizeEvent(TQResizeEvent * e)
 {
-    setFrameRect( QStyle::visualRect( QRect( m_sidePixmap.width(), 0,
+    setFrameRect( TQStyle::visualRect( TQRect( m_sidePixmap.width(), 0,
                                       width() - m_sidePixmap.width(), height() ), this ) );
 }
 
-void TOM::paintEvent(QPaintEvent * e)
+void TOM::paintEvent(TQPaintEvent * e)
 {
     if (m_sidePixmap.isNull()) {
         KPanelMenu::paintEvent(e);
         return;
     }
 
-    QPainter p(this);
+    TQPainter p(this);
 
-    style().drawPrimitive( QStyle::PE_PanelPopup, &p,
-                           QRect( 0, 0, width(), height() ),
-                           colorGroup(), QStyle::Style_Default,
-                           QStyleOption( frameWidth(), 0 ) );
+    style().drawPrimitive( TQStyle::PE_PanelPopup, &p,
+                           TQRect( 0, 0, width(), height() ),
+                           colorGroup(), TQStyle::Style_Default,
+                           TQStyleOption( frameWidth(), 0 ) );
 
-    QRect r = sideImageRect();
+    TQRect r = sideImageRect();
     r.setBottom( r.bottom() - m_sidePixmap.height() );
     p.drawTiledPixmap( r, m_sideTilePixmap );
 
@@ -771,40 +771,40 @@ void TOM::paintEvent(QPaintEvent * e)
     drawContents( &p );
 }
 
-QMouseEvent TOM::translateMouseEvent( QMouseEvent* e )
+TQMouseEvent TOM::translateMouseEvent( TQMouseEvent* e )
 {
-    QRect side = sideImageRect();
+    TQRect side = sideImageRect();
 
     if ( !side.contains( e->pos() ) )
         return *e;
 
-    QPoint newpos( e->pos() );
-    QApplication::reverseLayout() ?
+    TQPoint newpos( e->pos() );
+    TQApplication::reverseLayout() ?
         newpos.setX( newpos.x() - side.width() ) :
         newpos.setX( newpos.x() + side.width() );
-    QPoint newglobal( e->globalPos() );
-    QApplication::reverseLayout() ?
+    TQPoint newglobal( e->globalPos() );
+    TQApplication::reverseLayout() ?
         newglobal.setX( newpos.x() - side.width() ) :
         newglobal.setX( newpos.x() + side.width() );
 
-    return QMouseEvent( e->type(), newpos, newglobal, e->button(), e->state() );
+    return TQMouseEvent( e->type(), newpos, newglobal, e->button(), e->state() );
 }
 
-void TOM::mousePressEvent(QMouseEvent * e)
+void TOM::mousePressEvent(TQMouseEvent * e)
 {
-    QMouseEvent newEvent = translateMouseEvent(e);
+    TQMouseEvent newEvent = translateMouseEvent(e);
     KPanelMenu::mousePressEvent( &newEvent );
 }
 
-void TOM::mouseReleaseEvent(QMouseEvent *e)
+void TOM::mouseReleaseEvent(TQMouseEvent *e)
 {
-    QMouseEvent newEvent = translateMouseEvent(e);
+    TQMouseEvent newEvent = translateMouseEvent(e);
     KPanelMenu::mouseReleaseEvent( &newEvent );
 }
 
-void TOM::mouseMoveEvent(QMouseEvent *e)
+void TOM::mouseMoveEvent(TQMouseEvent *e)
 {
-    QMouseEvent newEvent = translateMouseEvent(e);
+    TQMouseEvent newEvent = translateMouseEvent(e);
     KPanelMenu::mouseMoveEvent( &newEvent );
 }*/
 
@@ -812,8 +812,8 @@ extern int kicker_screen_number;
 
 void TOM::runCommand()
 {
-    QByteArray data;
-    QCString appname( "kdesktop" );
+    TQByteArray data;
+    TQCString appname( "kdesktop" );
     if ( kicker_screen_number )
         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
 
@@ -828,7 +828,7 @@ void TOM::runTask(int id)
 
     kapp->propagateSessionManager();
     KApplication::startServiceByDesktopPath(m_tasks[id]->desktopEntryPath(),
-      QStringList(), 0, 0, 0, "", true);
+      TQStringList(), 0, 0, 0, "", true);
 }
 
 void TOM::clearRecentDocHistory()

@@ -53,11 +53,11 @@
 */
 #include <math.h>
 
-#include <qbitmap.h>
-#include <qcursor.h>
-#include <qpainter.h>
-#include <qmemarray.h>
-#include <qtimer.h>
+#include <tqbitmap.h>
+#include <tqcursor.h>
+#include <tqpainter.h>
+#include <tqmemarray.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -76,11 +76,11 @@ static const int LARGE_EXTENT = 68;
 static const int HUGE_EXTENT = 84;
 static const int ENORMOUS_EXTENT = 148;
 
-KasBar::KasBar( Orientation o, QWidget *parent, const char *name, WFlags f )
-   : QWidget( parent, name, f ),
+KasBar::KasBar( Orientation o, TQWidget *parent, const char *name, WFlags f )
+   : TQWidget( parent, name, f ),
      master_(0),
      orient( o ),
-     direction_( o == Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom ),
+     direction_( o == Horizontal ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom ),
      itemUnderMouse_( 0 ),
      boxesPerLine_(10), // Temp value
      inDrag( false ),
@@ -102,14 +102,14 @@ KasBar::KasBar( Orientation o, QWidget *parent, const char *name, WFlags f )
     setMouseTracking( true );
     setMaxBoxes( 0 );
 
-    connect( this, SIGNAL( configChanged() ), SLOT( repaint() ) );
+    connect( this, TQT_SIGNAL( configChanged() ), TQT_SLOT( repaint() ) );
 }
 
-KasBar::KasBar( Orientation o, KasBar *master, QWidget *parent, const char *name, WFlags f )
-   : QWidget( parent, name, f ),
+KasBar::KasBar( Orientation o, KasBar *master, TQWidget *parent, const char *name, WFlags f )
+   : TQWidget( parent, name, f ),
      master_(master),
      orient( o ),
-     direction_( o == Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom ),
+     direction_( o == Horizontal ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom ),
      itemUnderMouse_( 0 ),
      boxesPerLine_(10), // Temp value
      inDrag( false ),
@@ -130,7 +130,7 @@ KasBar::KasBar( Orientation o, KasBar *master, QWidget *parent, const char *name
     items.setAutoDelete( true );
     setMouseTracking( true );
     setMaxBoxes( 0 );
-    connect( master_, SIGNAL( configChanged() ), SLOT( repaint() ) );
+    connect( master_, TQT_SIGNAL( configChanged() ), TQT_SLOT( repaint() ) );
 }
 
 KasBar::~KasBar()
@@ -145,15 +145,15 @@ KasResources *KasBar::resources()
 
     if ( isTopLevel() ) {
 	res = new KasResources( this );
-	connect( res, SIGNAL( changed() ), SIGNAL( configChanged() ) );
-	connect( this, SIGNAL( itemSizeChanged(int) ), res, SLOT( itemSizeChanged() ) );
+	connect( res, TQT_SIGNAL( changed() ), TQT_SIGNAL( configChanged() ) );
+	connect( this, TQT_SIGNAL( itemSizeChanged(int) ), res, TQT_SLOT( itemSizeChanged() ) );
 	return res;
     }
 
     return master_->resources();
 }
 
-KasBar *KasBar::createChildBar( Orientation o, QWidget *parent, const char *name )
+KasBar *KasBar::createChildBar( Orientation o, TQWidget *parent, const char *name )
 {
     KasBar *child = new KasBar( o, this, parent, name );
     child->rereadMaster();
@@ -218,8 +218,8 @@ void KasBar::setTransparent( bool enable )
        kdDebug(1345) << "KasBar: Enabling transparency" << endl;
 
        rootPix = new KRootPixmap( this );
-       connect( rootPix, SIGNAL( backgroundUpdated(const QPixmap &) ),
-		this, SLOT( setBackground(const QPixmap &) ) );
+       connect( rootPix, TQT_SIGNAL( backgroundUpdated(const TQPixmap &) ),
+		this, TQT_SLOT( setBackground(const TQPixmap &) ) );
 
        rootPix->setCustomPainting( true );
 
@@ -259,7 +259,7 @@ void KasBar::setTint( bool enable )
    }
 }
 
-void KasBar::setTint( double amount, QColor color )
+void KasBar::setTint( double amount, TQColor color )
 {
    tintAmount_ = amount;
    tintColour_ = color;
@@ -273,7 +273,7 @@ void KasBar::setTint( double amount, QColor color )
    }
 }
 
-void KasBar::setTintColor( const QColor &c )
+void KasBar::setTintColor( const TQColor &c )
 {
    setTint( tintAmount_, c );
 }
@@ -303,7 +303,7 @@ void KasBar::setBoxesPerLine( int count )
    updateLayout();
 }
 
-void KasBar::setDetachedPosition( const QPoint &pos )
+void KasBar::setDetachedPosition( const TQPoint &pos )
 {
     if ( detachedPos == pos )
 	return;
@@ -317,7 +317,7 @@ void KasBar::setDirection( Direction dir )
     if ( direction_ == dir )
 	return;
 
-    if ( ( dir == QBoxLayout::LeftToRight ) || ( dir == QBoxLayout::RightToLeft ) )
+    if ( ( dir == TQBoxLayout::LeftToRight ) || ( dir == TQBoxLayout::RightToLeft ) )
 	orient = Horizontal;
     else
 	orient = Vertical;
@@ -333,29 +333,29 @@ void KasBar::setOrientation( Orientation o )
 	return;
 
     if ( o == Horizontal )
-	setDirection( QBoxLayout::LeftToRight );
+	setDirection( TQBoxLayout::LeftToRight );
     else
-	setDirection( QBoxLayout::TopToBottom );
+	setDirection( TQBoxLayout::TopToBottom );
 }
 
 void KasBar::toggleOrientation()
 {
     switch( direction_ ) {
-	case QBoxLayout::LeftToRight:
-	    setDirection( QBoxLayout::RightToLeft );
+	case TQBoxLayout::LeftToRight:
+	    setDirection( TQBoxLayout::RightToLeft );
 	    break;
-	case QBoxLayout::RightToLeft:
-	    setDirection( QBoxLayout::TopToBottom );
+	case TQBoxLayout::RightToLeft:
+	    setDirection( TQBoxLayout::TopToBottom );
 	    break;
-	case QBoxLayout::TopToBottom:
-	    setDirection( QBoxLayout::BottomToTop );
+	case TQBoxLayout::TopToBottom:
+	    setDirection( TQBoxLayout::BottomToTop );
 	    break;
-	case QBoxLayout::BottomToTop:
-	    setDirection( QBoxLayout::LeftToRight );
+	case TQBoxLayout::BottomToTop:
+	    setDirection( TQBoxLayout::LeftToRight );
 	    break;
 	default:
 	    kdWarning() << "toggleOrientation got an odd direction: " << (uint) direction_ << endl;
-	    setDirection( QBoxLayout::LeftToRight );
+	    setDirection( TQBoxLayout::LeftToRight );
 	    break;
     }
 }
@@ -375,7 +375,7 @@ void KasBar::setDetached( bool detach )
     emit detachedChanged( detached );
 }
 
-QSize KasBar::sizeHint( Orientation o,  QSize sz )
+TQSize KasBar::sizeHint( Orientation o,  TQSize sz )
 {
     if ( o == Horizontal )
 	setBoxesPerLine( sz.width() / itemExtent() );
@@ -395,7 +395,7 @@ QSize KasBar::sizeHint( Orientation o,  QSize sz )
    if( r*c < items.count() ) // remainders
       ++r;
 
-   QSize s;
+   TQSize s;
    if( o == Horizontal ) {
       s.setWidth( c*itemExtent() );
       s.setHeight( r*itemExtent() );
@@ -433,11 +433,11 @@ void KasBar::updateLayout()
    if( r*c < items.count() ) // remainders
       ++r;
 
-   QSize sz;
+   TQSize sz;
    if ( orient == Horizontal )
-       sz = QSize( c * itemExtent(), r * itemExtent() );
+       sz = TQSize( c * itemExtent(), r * itemExtent() );
    else
-       sz = QSize( r * itemExtent(), c * itemExtent() );
+       sz = TQSize( r * itemExtent(), c * itemExtent() );
 
    if ( sz != size() ) {
        resize( sz );
@@ -445,32 +445,32 @@ void KasBar::updateLayout()
 
    setUpdatesEnabled( updates );
 
-   QWidget *top = topLevelWidget();
-   QRegion mask;
+   TQWidget *top = topLevelWidget();
+   TQRegion mask;
 
    KasItem *i;
    if ( orient == Horizontal ) {
        for ( i = items.first(); i; i = items.next() ) {
 	   int x = (items.at() % c) * itemExtent();
 
-	   if ( direction_ == QBoxLayout::RightToLeft )
+	   if ( direction_ == TQBoxLayout::RightToLeft )
 	       x = width() - x - itemExtent();
 
 	   i->setPos( x, (items.at() / c) * itemExtent() );
 	   i->update();
-	   mask = mask.unite( QRegion( QRect( i->pos(), QSize(itemExtent(),itemExtent()) ) ) );
+	   mask = mask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
        }
    }
    else {
        for ( i = items.first(); i; i = items.next() ) {
 	   int y = (items.at() / r) * itemExtent();
 
-	   if ( direction_ == QBoxLayout::BottomToTop )
+	   if ( direction_ == TQBoxLayout::BottomToTop )
 	       y = height() - y - itemExtent();
 
 	   i->setPos( (items.at() % r) * itemExtent(), y );
 	   i->update();
-	   mask = mask.unite( QRegion( QRect( i->pos(), QSize(itemExtent(),itemExtent()) ) ) );
+	   mask = mask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
        }
    }
 
@@ -526,7 +526,7 @@ void KasBar::clear()
    updateLayout();
 }
 
-void KasBar::mousePressEvent(QMouseEvent *ev)
+void KasBar::mousePressEvent(TQMouseEvent *ev)
 {
    KasItem *i = itemAt( ev->pos() );
    if ( i )
@@ -535,7 +535,7 @@ void KasBar::mousePressEvent(QMouseEvent *ev)
    pressPos = ev->globalPos();
 }
 
-void KasBar::mouseReleaseEvent(QMouseEvent *ev)
+void KasBar::mouseReleaseEvent(TQMouseEvent *ev)
 {
    if ( !inDrag ) {
        KasItem *i = itemAt( ev->pos() );
@@ -547,16 +547,16 @@ void KasBar::mouseReleaseEvent(QMouseEvent *ev)
        emit configChanged();
    }
 
-   pressPos = QPoint();
+   pressPos = TQPoint();
    inDrag = false;
 }
 
 void KasBar::updateMouseOver()
 {
-    updateMouseOver( mapFromGlobal( QCursor::pos() ) );
+    updateMouseOver( mapFromGlobal( TQCursor::pos() ) );
 }
 
-void KasBar::updateMouseOver( QPoint pos )
+void KasBar::updateMouseOver( TQPoint pos )
 {
    KasItem *i = itemAt(pos);
 
@@ -573,10 +573,10 @@ void KasBar::updateMouseOver( QPoint pos )
    itemUnderMouse_ = i;
 }
 
-void KasBar::mouseMoveEvent(QMouseEvent *ev)
+void KasBar::mouseMoveEvent(TQMouseEvent *ev)
 {
     if ( detached && (!pressPos.isNull()) ) {
-	QPoint moved = ev->globalPos() - pressPos;
+	TQPoint moved = ev->globalPos() - pressPos;
 
 	if ( !inDrag ) {
 	    if ( moved.manhattanLength() > 6 ) {
@@ -598,7 +598,7 @@ void KasBar::mouseMoveEvent(QMouseEvent *ev)
     }
 }
 
-void KasBar::dragMoveEvent ( QDragMoveEvent *ev )
+void KasBar::dragMoveEvent ( TQDragMoveEvent *ev )
 {
    KasItem *i = itemAt( ev->pos() );
    if ( itemUnderMouse_ != i ) {
@@ -610,23 +610,23 @@ void KasBar::dragMoveEvent ( QDragMoveEvent *ev )
    }
 }
 
-void KasBar::paintEvent(QPaintEvent *ev)
+void KasBar::paintEvent(TQPaintEvent *ev)
 {
-   QPainter q( this );
+   TQPainter q( this );
    q.drawPixmap( ev->rect().topLeft(), offscreen, ev->rect() );
 }
 
-void KasBar::resizeEvent(QResizeEvent *ev)
+void KasBar::resizeEvent(TQResizeEvent *ev)
 {
     offscreen.resize( ev->size() );
-    QPainter p( &offscreen );
-    paintBackground( &p, QRect(QPoint(0,0),size()) );
-    QWidget::resizeEvent(ev);
+    TQPainter p( &offscreen );
+    paintBackground( &p, TQRect(TQPoint(0,0),size()) );
+    TQWidget::resizeEvent(ev);
     emit layoutChanged();
 }
 
 
-QPoint KasBar::itemPos( KasItem *i )
+TQPoint KasBar::itemPos( KasItem *i )
 {
     return i->pos();
 }
@@ -638,12 +638,12 @@ void KasBar::updateItem( KasItem *i )
     if ( !isShown() )
 	return;
 
-    QPainter p( &offscreen );
-    QPoint pos = i->pos();
+    TQPainter p( &offscreen );
+    TQPoint pos = i->pos();
 
-    paintBackground( &p, QRect( pos, QSize( itemExtent(), itemExtent() ) ) );
+    paintBackground( &p, TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
     i->paint( &p, pos.x(), pos.y() );
-    update( QRect( pos, QSize( itemExtent(), itemExtent() ) ) );
+    update( TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
 }
 
 void KasBar::repaintItem(KasItem *i, bool erase )
@@ -653,22 +653,22 @@ void KasBar::repaintItem(KasItem *i, bool erase )
     if ( !isShown() )
 	return;
 
-    QPainter p( &offscreen );
-    QPoint pos = i->pos();
+    TQPainter p( &offscreen );
+    TQPoint pos = i->pos();
 
-    paintBackground( &p, QRect( pos, QSize( itemExtent(), itemExtent() ) ) );
+    paintBackground( &p, TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
     i->paint( &p, pos.x(), pos.y() );
-    repaint( QRect( pos, QSize( itemExtent(), itemExtent()  ) ), transparent_ || erase );
+    repaint( TQRect( pos, TQSize( itemExtent(), itemExtent()  ) ), transparent_ || erase );
 }
 
-KasItem* KasBar::itemAt(const QPoint &p)
+KasItem* KasBar::itemAt(const TQPoint &p)
 {
    KasItem *i;
-   QRect cr;
+   TQRect cr;
 
    for (i = items.first(); i; i = items.next()) {
        cr.setTopLeft( i->pos() );
-       cr.setSize( QSize( itemExtent(), itemExtent() ) );
+       cr.setSize( TQSize( itemExtent(), itemExtent() ) );
 
        if(cr.contains(p))
 	   return i;
@@ -677,12 +677,12 @@ KasItem* KasBar::itemAt(const QPoint &p)
    return 0;
 }
 
-void KasBar::setBackground( const QPixmap &newBg )
+void KasBar::setBackground( const TQPixmap &newBg )
 {
     bg = newBg;
 
-    QPainter p( &offscreen );
-    paintBackground( &p, QRect(QPoint(0,0),size()) );
+    TQPainter p( &offscreen );
+    paintBackground( &p, TQRect(TQPoint(0,0),size()) );
 
     updateLayout();
 }
@@ -701,7 +701,7 @@ void KasBar::setPaintInactiveFrames( bool enable )
     update();
 }
 
-void KasBar::paintBackground( QPainter *p, const QRect &r )
+void KasBar::paintBackground( TQPainter *p, const TQRect &r )
 {
     // If we're transparent
     if ( transparent_ ) {
@@ -719,8 +719,8 @@ void KasBar::addTestItems()
    i->setText( "Animated" );
    i->setIcon( KGlobal::iconLoader()->loadIcon( "icons", KIcon::NoGroup, KIcon::SizeMedium ) );
    i->setAnimation( resources()->startupAnimation() );
-   QTimer *aniTimer = new QTimer( i );
-   connect( aniTimer, SIGNAL( timeout() ), i, SLOT( advanceAnimation() ) );
+   TQTimer *aniTimer = new TQTimer( i );
+   connect( aniTimer, TQT_SIGNAL( timeout() ), i, TQT_SLOT( advanceAnimation() ) );
    aniTimer->start( 100 );
    i->setShowAnimation( true );
 

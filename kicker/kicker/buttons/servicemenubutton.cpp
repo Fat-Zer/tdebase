@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 #include <kconfig.h>
 #include <kservicegroup.h>
@@ -32,21 +32,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "servicemenubutton.h"
 #include "servicemenubutton.moc"
 
-ServiceMenuButton::ServiceMenuButton( const QString& relPath, QWidget* parent )
+ServiceMenuButton::ServiceMenuButton( const TQString& relPath, TQWidget* parent )
   : PanelPopupButton( parent, "ServiceMenuButton" )
   , topMenu( 0 )
 {
     initialize( relPath );
 }
 
-ServiceMenuButton::ServiceMenuButton( const KConfigGroup& config, QWidget* parent )
+ServiceMenuButton::ServiceMenuButton( const KConfigGroup& config, TQWidget* parent )
   : PanelPopupButton( parent, "ServiceMenuButton" )
   , topMenu( 0 )
 {
     initialize( config.readPathEntry("RelPath") );
 }
 
-void ServiceMenuButton::initialize( const QString& relPath )
+void ServiceMenuButton::initialize( const TQString& relPath )
 {
     KServiceGroup::Ptr group = KServiceGroup::group( relPath );
 
@@ -56,13 +56,13 @@ void ServiceMenuButton::initialize( const QString& relPath )
         return;
     }
 
-    QString caption = group->caption();
+    TQString caption = group->caption();
     if (caption.isEmpty())
     {
         caption = i18n("Applications");
     }
 
-    QString comment = group->comment();
+    TQString comment = group->comment();
     if (comment.isEmpty())
     {
         comment = caption;
@@ -70,7 +70,7 @@ void ServiceMenuButton::initialize( const QString& relPath )
 
     topMenu = new PanelServiceMenu(caption, relPath);
     setPopup(topMenu);
-    QToolTip::add(this, comment);
+    TQToolTip::add(this, comment);
     setTitle(caption);
     setIcon(group->icon());
 }

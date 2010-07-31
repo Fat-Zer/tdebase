@@ -21,7 +21,7 @@
 #define PROPERTIESPAGE_H
 
 #include "propertiespagegui.h"
-#include <qmap.h>
+#include <tqmap.h>
 
 class QCheckBox;
 class Medium;
@@ -31,15 +31,15 @@ class PropertiesPage : public PropertiesPageGUI
   Q_OBJECT
 
 public:
-  PropertiesPage(QWidget* parent, const QString &_id);
+  PropertiesPage(TQWidget* parent, const TQString &_id);
   virtual ~PropertiesPage();
 
   bool save();
 
 protected:
 
-  QMap<QString,QString> options;
-  QString id;
+  TQMap<TQString,TQString> options;
+  TQString id;
 
 };
 

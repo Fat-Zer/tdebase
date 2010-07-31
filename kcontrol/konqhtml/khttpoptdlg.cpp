@@ -1,37 +1,37 @@
 // File khttpoptdlg.cpp by Jacek Konieczny <jajcus@zeus.posl.gliwice.pl>
 // Port to KControl by David Faure <faure@kde.org>
 
-#include <qlayout.h> //CT
+#include <tqlayout.h> //CT
 
 #include <klocale.h>
 #include <kglobal.h>
 #include "khttpoptdlg.h"
 
 
-KHTTPOptions::KHTTPOptions(KConfig *config, QString group, QWidget *parent, const char *name)
+KHTTPOptions::KHTTPOptions(KConfig *config, TQString group, TQWidget *parent, const char *name)
   : KCModule( parent, name ), m_pConfig(config), m_groupname(group)
 {
-  QVBoxLayout *lay = new QVBoxLayout(this, 10, 5);
+  TQVBoxLayout *lay = new TQVBoxLayout(this, 10, 5);
 
-  lay->addWidget( new QLabel(i18n("Accept languages:"), this) );
+  lay->addWidget( new TQLabel(i18n("Accept languages:"), this) );
 
-  le_languages = new QLineEdit(this);
+  le_languages = new TQLineEdit(this);
   lay->addWidget( le_languages );
-  connect(le_languages, SIGNAL(textChanged(const QString&)),
-	  this, SLOT(slotChanged()));
+  connect(le_languages, TQT_SIGNAL(textChanged(const TQString&)),
+	  this, TQT_SLOT(slotChanged()));
 
   lay->addSpacing(10);
-  lay->addWidget( new QLabel(i18n("Accept character sets:"), this) );
+  lay->addWidget( new TQLabel(i18n("Accept character sets:"), this) );
 
-  le_charsets = new QLineEdit(this);
+  le_charsets = new TQLineEdit(this);
   lay->addWidget( le_charsets );
-  connect(le_charsets, SIGNAL(textChanged(const QString&)),
-	  this, SLOT(slotChanged()));
+  connect(le_charsets, TQT_SIGNAL(textChanged(const TQString&)),
+	  this, TQT_SLOT(slotChanged()));
 
   lay->addStretch(10);
 
-  // defaultCharsets = QString("utf-8 ")+klocale->charset()+" iso-8859-1";
-  defaultCharsets = QString("utf-8 ")+" iso-8859-1"; // TODO
+  // defaultCharsets = TQString("utf-8 ")+klocale->charset()+" iso-8859-1";
+  defaultCharsets = TQString("utf-8 ")+" iso-8859-1"; // TODO
 
   // finaly read the options
   load();
@@ -44,7 +44,7 @@ void KHTTPOptions::load()
 
 void KHTTPOptions::load( bool useDefaults )
 {
-  QString tmp;
+  TQString tmp;
   
   m_pConfig->setReadDefaults( useDefaults );
 

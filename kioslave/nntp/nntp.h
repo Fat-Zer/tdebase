@@ -11,7 +11,7 @@
 #ifndef _NNTP_H
 #define _NNTP_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kio/global.h>
 #include <kio/tcpslavebase.h>
 
@@ -30,15 +30,15 @@ class NNTPProtocol:public KIO::TCPSlaveBase
   /** Default Constructor
    * @param isSSL is a true or false to indicate whether ssl is to be used
    */
-  NNTPProtocol ( const QCString & pool, const QCString & app, bool isSSL );
+  NNTPProtocol ( const TQCString & pool, const TQCString & app, bool isSSL );
   virtual ~NNTPProtocol();
 
   virtual void get(const KURL& url );
   virtual void put( const KURL& url, int permissions, bool overwrite, bool resume );
   virtual void stat(const KURL& url );
   virtual void listDir(const KURL& url );
-  virtual void setHost(const QString& host, int port,
-        const QString& user, const QString& pass);
+  virtual void setHost(const TQString& host, int port,
+        const TQString& user, const TQString& pass);
 
   /**
     *  Special command: 1 = post article
@@ -47,7 +47,7 @@ class NNTPProtocol:public KIO::TCPSlaveBase
     *  as in RFC850. It's not checked for correctness here.
     *  @deprecated use put() for posting
     */
-  virtual void special(const QByteArray& data);
+  virtual void special(const TQByteArray& data);
 
  protected:
 
@@ -55,7 +55,7 @@ class NNTPProtocol:public KIO::TCPSlaveBase
     *  Send a command to the server. Returns the response code and
     *  the response line
     */
-  int sendCommand( const QString &cmd );
+  int sendCommand( const TQString &cmd );
 
   /**
     *  Attempt to properly shut down the NNTP connection by sending
@@ -76,7 +76,7 @@ class NNTPProtocol:public KIO::TCPSlaveBase
 
 
  private:
-   QString mHost, mUser, mPass;
+   TQString mHost, mUser, mPass;
    bool postingAllowed, opened;
    char readBuffer[MAX_PACKET_LEN];
    ssize_t readBufferLen;
@@ -86,7 +86,7 @@ class NNTPProtocol:public KIO::TCPSlaveBase
     * all available groups.
     * @param since Date as specified in RFC 977 for the NEWGROUPS command
     */
-   void fetchGroups( const QString &since );
+   void fetchGroups( const TQString &since );
    /**
     * Fetch message listing from the given newsgroup.
     * This will use RFC2980 XOVER if available, plain RFC977 STAT/NEXT
@@ -95,7 +95,7 @@ class NNTPProtocol:public KIO::TCPSlaveBase
     * @param first Serial number of the first message, 0 lists all messages.
     * @return true on sucess, false otherwise.
     */
-   bool fetchGroup ( QString &group, unsigned long first = 0 );
+   bool fetchGroup ( TQString &group, unsigned long first = 0 );
    /**
     * Fetch message listing from the current group using RFC977 STAT/NEXT
     * commands.
@@ -115,10 +115,10 @@ class NNTPProtocol:public KIO::TCPSlaveBase
     */
    bool fetchGroupXOVER( unsigned long first, bool &notSupported );
    /// creates an UDSEntry with file information used in stat and listDir
-   void fillUDSEntry ( KIO::UDSEntry & entry, const QString & name, long size,
+   void fillUDSEntry ( KIO::UDSEntry & entry, const TQString & name, long size,
                        bool postingAllowed, bool is_article );
    /// error  handling for unexpected responses
-   void unexpected_response ( int res_code, const QString & command );
+   void unexpected_response ( int res_code, const TQString & command );
    /**
      * grabs the response line from the server. used after most send_cmd calls. max
      * length for the returned string ( char *data ) is 4096 characters including

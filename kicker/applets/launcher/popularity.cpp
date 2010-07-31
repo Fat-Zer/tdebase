@@ -48,7 +48,7 @@ public:
         // gets also  1-falloff added to its popularity.
         double falloff;
         // popularity values for each service
-        map<QString, double> vals;
+        map<TQString, double> vals;
         // accumulated popularity of the unknown programs
         // started before the statistic started
         double iniVal;
@@ -56,7 +56,7 @@ public:
     
     struct Popularity
     {
-        QString service;
+        TQString service;
         double popularity;
         bool operator<(const Popularity& p) const
         { 
@@ -70,7 +70,7 @@ public:
 
     vector<SingleFalloffHistory> m_stats;
     vector<Popularity> m_servicesByPopularity;
-    map<QString, int> m_serviceRanks;
+    map<TQString, int> m_serviceRanks;
     double m_historyHorizon;
 };
 
@@ -86,13 +86,13 @@ PopularityStatistics::~PopularityStatistics()
     delete d;
 }
 
-void PopularityStatistics::useService(const QString& service)
+void PopularityStatistics::useService(const TQString& service)
 {
     vector<PopularityStatisticsImpl::SingleFalloffHistory>::iterator 
         it(d->m_stats.begin()), end(d->m_stats.end());
     for (; it != end; ++it)
     {
-        map<QString, double>::iterator valIt;
+        map<TQString, double>::iterator valIt;
         bool found(false);
         for (valIt = it->vals.begin(); valIt != it->vals.end(); ++valIt)
         {
@@ -113,19 +113,19 @@ void PopularityStatistics::useService(const QString& service)
     d->updateServiceRanks();
 }
 
-void PopularityStatistics::moveToTop(const QStringList& newTopServiceList)
+void PopularityStatistics::moveToTop(const TQStringList& newTopServiceList)
 {
     vector<PopularityStatisticsImpl::SingleFalloffHistory>::iterator 
     histIt(d->m_stats.begin()), histEnd(d->m_stats.end());
     for (; histIt != histEnd; ++histIt)
     {
-        set<QString> newTopServices;
+        set<TQString> newTopServices;
         for (uint n=0; n<newTopServiceList.size(); ++n)
             newTopServices.insert(newTopServiceList[n]);
 
         // Sort by popularity
         vector<PopularityStatisticsImpl::Popularity> ranking;
-        map<QString, double>::iterator valIt;
+        map<TQString, double>::iterator valIt;
         for (valIt = histIt->vals.begin(); valIt != histIt->vals.end(); ++valIt)
         {
             PopularityStatisticsImpl::Popularity pop;
@@ -137,7 +137,7 @@ void PopularityStatistics::moveToTop(const QStringList& newTopServiceList)
         
         // Get the new positions of each service in the ranking.
         // We don't touch the popularity values in the ranking.
-        list<QString> topServiceList, bottomServiceList;
+        list<TQString> topServiceList, bottomServiceList;
         vector<PopularityStatisticsImpl::Popularity>:: iterator rankIt;
         for (rankIt = ranking.begin(); rankIt != ranking.end(); ++rankIt)
         {
@@ -160,16 +160,16 @@ void PopularityStatistics::moveToTop(const QStringList& newTopServiceList)
             newTopServices.erase(newTopServices.begin());
         }
         
-        list<QString> newServiceList;
+        list<TQString> newServiceList;
         copy(topServiceList.begin(), topServiceList.end(),
-            back_insert_iterator<list<QString> >(newServiceList)); 
+            back_insert_iterator<list<TQString> >(newServiceList)); 
         copy(bottomServiceList.begin(), bottomServiceList.end(),
-            back_insert_iterator<list<QString> >(newServiceList)); 
+            back_insert_iterator<list<TQString> >(newServiceList)); 
         
         // Merge the old list of service popularities
         // with the new ordering of the services
         histIt->vals.clear();
-        list<QString>::iterator servIt;
+        list<TQString>::iterator servIt;
         uint serviceIndex = 0;
         //kdDebug() << endl;
         
@@ -207,12 +207,12 @@ void PopularityStatistics::moveToTop(const QStringList& newTopServiceList)
 /*v
 Old version - moves everything else one position up
 and 'service' to the bottom
-void PopularityStatistics::moveToBottom(const QString& service)
+void PopularityStatistics::moveToBottom(const TQString& service)
 {
     // Moves a service to the bottom of the ranking
     // by moving everything else to the top
     d->updateServiceRanks();
-    QStringList allButOneServices;
+    TQStringList allButOneServices;
     vector<PopularityStatisticsImpl::Popularity>::iterator 
         it(d->m_servicesByPopularity.begin()),
         end(d->m_servicesByPopularity.end());
@@ -224,7 +224,7 @@ void PopularityStatistics::moveToBottom(const QString& service)
     moveToTop(allButOneServices);
 }*/
 
-void PopularityStatistics::moveToBottom(const QString& service)
+void PopularityStatistics::moveToBottom(const TQString& service)
 {
     vector<PopularityStatisticsImpl::SingleFalloffHistory>::iterator 
         it(d->m_stats.begin()), end(d->m_stats.end());
@@ -237,12 +237,12 @@ void PopularityStatistics::moveToBottom(const QString& service)
     d->updateServiceRanks();
 }
 
-QString PopularityStatistics::serviceByRank(int n) const
+TQString PopularityStatistics::serviceByRank(int n) const
 {
     if (n >= 0 && n < int(d->m_servicesByPopularity.size()))
         return d->m_servicesByPopularity[n].service;
     else
-        return QString();
+        return TQString();
 }
 
 double PopularityStatistics::popularityByRank(int n) const
@@ -253,7 +253,7 @@ double PopularityStatistics::popularityByRank(int n) const
         return 0.0;
 }
 
-int PopularityStatistics::rankByService(const QString service)
+int PopularityStatistics::rankByService(const TQString service)
 {
     if (d->m_serviceRanks.find(service) != d->m_serviceRanks.end())
     {
@@ -264,16 +264,16 @@ int PopularityStatistics::rankByService(const QString service)
 
 void PopularityStatistics::writeConfig(Prefs* prefs) const
 {
-    QStringList serviceNames, serviceHistories;
+    TQStringList serviceNames, serviceHistories;
     int limit = prefs->serviceCacheSize();
     //kdDebug() << "popularityData: writeConfig" << endl;
     for (int n=0; n<int(d->m_servicesByPopularity.size()) && n<limit; ++n)
     {
         PopularityStatisticsImpl::Popularity pop = d->m_servicesByPopularity[n];
-        QStringList historyData;
+        TQStringList historyData;
         for (int i=0; i<int(d->m_stats.size()); ++i)
         {
-            historyData << QString::number(d->m_stats[i].vals[pop.service]);
+            historyData << TQString::number(d->m_stats[i].vals[pop.service]);
         }
         serviceNames << pop.service;
         serviceHistories << historyData.join("/");
@@ -286,13 +286,13 @@ void PopularityStatistics::writeConfig(Prefs* prefs) const
 void PopularityStatistics::readConfig(Prefs* prefs)
 {
     int n = 0;
-    QStringList serviceNames = prefs->serviceNames();
-    QStringList histories = prefs->serviceHistories();
+    TQStringList serviceNames = prefs->serviceNames();
+    TQStringList histories = prefs->serviceHistories();
     for (n = std::min(serviceNames.size(), histories.size())-1; n>=0; --n)
     {
-        QString serviceName = serviceNames[n];
-        QStringList serviceHistory =
-            QStringList::split("/", histories[n]);
+        TQString serviceName = serviceNames[n];
+        TQStringList serviceHistory =
+            TQStringList::split("/", histories[n]);
         for (int i=min(serviceHistory.size(), d->m_stats.size())-1; i>=0; --i)
         {
             d->m_stats[i].vals[serviceName] = serviceHistory[i].toDouble();
@@ -301,7 +301,7 @@ void PopularityStatistics::readConfig(Prefs* prefs)
     
     for (int i=0; i<int(d->m_stats.size()); ++i)
     {
-        map<QString, double>::iterator valIt;
+        map<TQString, double>::iterator valIt;
         double valSum = 0;
         for (valIt = d->m_stats[i].vals.begin(); 
              valIt != d->m_stats[i].vals.end(); ++valIt)
@@ -356,7 +356,7 @@ void PopularityStatisticsImpl::normalizeHistory(SingleFalloffHistory& h)
 {
     //kdDebug() << "Normalize history" << endl;
     double sum = h.iniVal;
-    map<QString, double>::iterator it;
+    map<TQString, double>::iterator it;
     for (it = h.vals.begin(); it != h.vals.end(); ++it)
     {
         sum += it->second;
@@ -375,7 +375,7 @@ void PopularityStatisticsImpl::updateServiceRanks()
 
     vector<SingleFalloffHistory>::iterator 
         it(m_stats.begin()), end(m_stats.end());
-    map<QString, double> serviceValSum, serviceValWeightSum;
+    map<TQString, double> serviceValSum, serviceValWeightSum;
     int numStats = m_stats.size();
     for (int statIndex = 0; it != end; ++it, ++statIndex)
     {
@@ -387,7 +387,7 @@ void PopularityStatisticsImpl::updateServiceRanks()
             continue;
         }
 
-        map<QString, double>::iterator valIt;
+        map<TQString, double>::iterator valIt;
         /*double valSum = 0;
         for (valIt = it->vals.begin(); valIt != it->vals.end(); ++valIt)
         {
@@ -402,7 +402,7 @@ void PopularityStatisticsImpl::updateServiceRanks()
     }
     
     m_servicesByPopularity.clear();
-    map<QString, double>::iterator sIt;
+    map<TQString, double>::iterator sIt;
     for (sIt = serviceValWeightSum.begin(); 
          sIt != serviceValWeightSum.end(); ++sIt)
     {
@@ -417,7 +417,7 @@ void PopularityStatisticsImpl::updateServiceRanks()
     for (uint n = 0; n < m_servicesByPopularity.size(); ++n)
     {
         m_serviceRanks[m_servicesByPopularity[n].service] = n;
-        /*kdDebug() << QString("Rank %1: %2 %3").arg(n)
+        /*kdDebug() << TQString("Rank %1: %2 %3").arg(n)
             .arg(m_servicesByPopularity[n].popularity)
             .arg(m_servicesByPopularity[n].service) << endl;*/
     }

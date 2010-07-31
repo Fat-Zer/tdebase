@@ -23,7 +23,7 @@
 #include "konq_operations.h"
 #include "konq_settings.h"
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #include <kurldrag.h>
 #include <kiconeffect.h>
@@ -38,14 +38,14 @@
  */
 struct KFileIVI::Private
 {
-    QIconSet icons; // Icon states (cached to prevent re-applying icon effects
+    TQIconSet icons; // Icon states (cached to prevent re-applying icon effects
 		    // every time)
-    QPixmap  thumb; // Raw unprocessed thumbnail
-    QString m_animatedIcon; // Name of animation
+    TQPixmap  thumb; // Raw unprocessed thumbnail
+    TQString m_animatedIcon; // Name of animation
     bool m_animated;        // Animation currently running ?
 	KIVDirectoryOverlay* m_directoryOverlay;
-	QPixmap m_overlay;
-	QString m_overlayName;
+	TQPixmap m_overlay;
+	TQString m_overlayName;
 };
 
 KFileIVI::KFileIVI( KonqIconViewWidget *iconview, KFileItem* fileitem, int size )
@@ -60,13 +60,13 @@ KFileIVI::KFileIVI( KonqIconViewWidget *iconview, KFileItem* fileitem, int size 
     setDropEnabled( S_ISDIR( m_fileitem->mode() ) );
 
     // Cache entry for the icon effects
-    d->icons.reset( *pixmap(), QIconSet::Large );
+    d->icons.reset( *pixmap(), TQIconSet::Large );
     d->m_animated = false;
 
     // iconName() requires the mimetype to be known
     if ( fileitem->isMimeTypeKnown() )
     {
-        QString icon = fileitem->iconName();
+        TQString icon = fileitem->iconName();
         if ( !icon.isEmpty() )
             setMouseOverAnimation( icon );
         else
@@ -83,27 +83,27 @@ KFileIVI::~KFileIVI()
 
 void KFileIVI::invalidateThumb( int state, bool redraw )
 {
-    QIconSet::Mode mode;
+    TQIconSet::Mode mode;
     switch( state )
     {
 	case KIcon::DisabledState:
-	    mode = QIconSet::Disabled;
+	    mode = TQIconSet::Disabled;
 	    break;
 	case KIcon::ActiveState:
-	    mode = QIconSet::Active;
+	    mode = TQIconSet::Active;
 	    break;
 	case KIcon::DefaultState:
 	default:
-	    mode = QIconSet::Normal;
+	    mode = TQIconSet::Normal;
 	    break;
     }
-    d->icons = QIconSet();
+    d->icons = TQIconSet();
     d->icons.setPixmap( KGlobal::iconLoader()->iconEffect()->
 			apply( d->thumb, KIcon::Desktop, state ),
-			QIconSet::Large, mode );
+			TQIconSet::Large, mode );
     m_state = state;
 
-    QIconViewItem::setPixmap( d->icons.pixmap( QIconSet::Large, mode ),
+    TQIconViewItem::setPixmap( d->icons.pixmap( TQIconSet::Large, mode ),
 			      false, redraw );
 }
 
@@ -117,7 +117,7 @@ void KFileIVI::setIcon( int size, int state, bool recalc, bool redraw )
       m_state = state;
 
     if ( d->m_overlayName.isNull() )
-        d->m_overlay = QPixmap();
+        d->m_overlay = TQPixmap();
     else {
         int halfSize;
         if (m_size == 0) {
@@ -131,7 +131,7 @@ void KFileIVI::setIcon( int size, int state, bool recalc, bool redraw )
     setPixmapDirect(m_fileitem->pixmap( m_size, m_state ) , recalc, redraw );
 }
 
-void KFileIVI::setOverlay( const QString& iconName )
+void KFileIVI::setOverlay( const TQString& iconName )
 {
     d->m_overlayName = iconName;
 
@@ -150,7 +150,7 @@ KIVDirectoryOverlay* KFileIVI::setShowDirectoryOverlay( bool show )
     } else {
         delete d->m_directoryOverlay;
         d->m_directoryOverlay = 0;
-        setOverlay(QString());
+        setOverlay(TQString());
         return 0;
     }
 }
@@ -160,31 +160,31 @@ bool KFileIVI::showDirectoryOverlay(  )
     return (bool)d->m_directoryOverlay;
 }
 
-void KFileIVI::setPixmapDirect( const QPixmap& pixmap, bool recalc, bool redraw )
+void KFileIVI::setPixmapDirect( const TQPixmap& pixmap, bool recalc, bool redraw )
 {
-    QIconSet::Mode mode;
+    TQIconSet::Mode mode;
     switch( m_state )
     {
 	case KIcon::DisabledState:
-	    mode = QIconSet::Disabled;
+	    mode = TQIconSet::Disabled;
 	    break;
 	case KIcon::ActiveState:
-	    mode = QIconSet::Active;
+	    mode = TQIconSet::Active;
 	    break;
 	case KIcon::DefaultState:
 	default:
-	    mode = QIconSet::Normal;
+	    mode = TQIconSet::Normal;
 	    break;
     }
 
     // We cannot just reset() the iconset here, because setIcon can be
     // called with any state and not just normal state. So we just
     // create a dummy empty iconset as base object.
-    d->icons = QIconSet();
-    d->icons.setPixmap( pixmap, QIconSet::Large, mode );
+    d->icons = TQIconSet();
+    d->icons.setPixmap( pixmap, TQIconSet::Large, mode );
 
     updatePixmapSize();
-    QIconViewItem::setPixmap( d->icons.pixmap( QIconSet::Large, mode ),
+    TQIconViewItem::setPixmap( d->icons.pixmap( TQIconSet::Large, mode ),
 			      recalc, redraw );
 }
 
@@ -199,23 +199,23 @@ void KFileIVI::setDisabled( bool disabled )
     }
 }
 
-void KFileIVI::setThumbnailPixmap( const QPixmap & pixmap )
+void KFileIVI::setThumbnailPixmap( const TQPixmap & pixmap )
 {
     m_bThumbnail = true;
     d->thumb = pixmap;
-    // QIconSet::reset() doesn't seem to clear the other generated pixmaps,
-    // so we just create a blank QIconSet here
-    d->icons = QIconSet();
+    // TQIconSet::reset() doesn't seem to clear the other generated pixmaps,
+    // so we just create a blank TQIconSet here
+    d->icons = TQIconSet();
     d->icons.setPixmap( KGlobal::iconLoader()->iconEffect()->
 		    apply( pixmap, KIcon::Desktop, KIcon::DefaultState ),
-		    QIconSet::Large, QIconSet::Normal );
+		    TQIconSet::Large, TQIconSet::Normal );
 
     m_state = KIcon::DefaultState;
 
     // Recalc when setting this pixmap!
     updatePixmapSize();
-    QIconViewItem::setPixmap( d->icons.pixmap( QIconSet::Large,
-			      QIconSet::Normal ), true );
+    TQIconViewItem::setPixmap( d->icons.pixmap( TQIconSet::Large,
+			      TQIconSet::Normal ), true );
 }
 
 void KFileIVI::setActive( bool active )
@@ -228,18 +228,18 @@ void KFileIVI::setActive( bool active )
 
 void KFileIVI::setEffect( int state )
 {
-    QIconSet::Mode mode;
+    TQIconSet::Mode mode;
     switch( state )
     {
 	case KIcon::DisabledState:
-	    mode = QIconSet::Disabled;
+	    mode = TQIconSet::Disabled;
 	    break;
 	case KIcon::ActiveState:
-	    mode = QIconSet::Active;
+	    mode = TQIconSet::Active;
 	    break;
 	case KIcon::DefaultState:
 	default:
-	    mode = QIconSet::Normal;
+	    mode = TQIconSet::Normal;
 	    break;
     }
     // Do not update if the fingerprint is identical (prevents flicker)!
@@ -264,17 +264,17 @@ void KFileIVI::setEffect( int state )
 	// save memory. Do this now when needed
 	if( m_bThumbnail )
 	{
-	    if( d->icons.isGenerated( QIconSet::Large, mode ) )
+	    if( d->icons.isGenerated( TQIconSet::Large, mode ) )
 		d->icons.setPixmap( effect->apply( d->thumb, KIcon::Desktop, state ),
-				    QIconSet::Large, mode );
+				    TQIconSet::Large, mode );
 	}
 	else
 	{
-	    if( d->icons.isGenerated( QIconSet::Large, mode ) )
+	    if( d->icons.isGenerated( TQIconSet::Large, mode ) )
 		d->icons.setPixmap( m_fileitem->pixmap( m_size, state ),
-				    QIconSet::Large, mode );
+				    TQIconSet::Large, mode );
 	}
-	QIconViewItem::setPixmap( d->icons.pixmap( QIconSet::Large, mode ) );
+	TQIconViewItem::setPixmap( d->icons.pixmap( TQIconSet::Large, mode ) );
     }
     m_state = state;
 }
@@ -287,7 +287,7 @@ void KFileIVI::refreshIcon( bool redraw )
 
 void KFileIVI::invalidateThumbnail()
 {
-    d->thumb = QPixmap();
+    d->thumb = TQPixmap();
 }
 
 bool KFileIVI::isThumbnailInvalid() const
@@ -295,7 +295,7 @@ bool KFileIVI::isThumbnailInvalid() const
     return d->thumb.isNull();
 }
 
-bool KFileIVI::acceptDrop( const QMimeSource *mime ) const
+bool KFileIVI::acceptDrop( const TQMimeSource *mime ) const
 {
     if ( mime->provides( "text/uri-list" ) ) // We're dragging URLs
     {
@@ -314,16 +314,16 @@ bool KFileIVI::acceptDrop( const QMimeSource *mime ) const
                 return true;
         }
     }
-    return QIconViewItem::acceptDrop( mime );
+    return TQIconViewItem::acceptDrop( mime );
 }
 
-void KFileIVI::setKey( const QString &key )
+void KFileIVI::setKey( const TQString &key )
 {
-    QString theKey = key;
+    TQString theKey = key;
 
-    QVariant sortDirProp = iconView()->property( "sortDirectoriesFirst" );
+    TQVariant sortDirProp = iconView()->property( "sortDirectoriesFirst" );
 
-    bool isdir = ( S_ISDIR( m_fileitem->mode() ) && ( !sortDirProp.isValid() || ( sortDirProp.type() == QVariant::Bool && sortDirProp.toBool() ) ) );
+    bool isdir = ( S_ISDIR( m_fileitem->mode() ) && ( !sortDirProp.isValid() || ( sortDirProp.type() == TQVariant::Bool && sortDirProp.toBool() ) ) );
 
     // The order is: .dir (0), dir (1), .file (2), file (3)
     int sortChar = isdir ? 1 : 3;
@@ -333,12 +333,12 @@ void KFileIVI::setKey( const QString &key )
     if ( !iconView()->sortDirection() ) // reverse sorting
         sortChar = 3 - sortChar;
 
-    theKey.prepend( QChar( sortChar + '0' ) );
+    theKey.prepend( TQChar( sortChar + '0' ) );
 
-    QIconViewItem::setKey( theKey );
+    TQIconViewItem::setKey( theKey );
 }
 
-void KFileIVI::dropped( QDropEvent *e, const QValueList<QIconDragItem> & )
+void KFileIVI::dropped( TQDropEvent *e, const TQValueList<TQIconDragItem> & )
 {
     KonqOperations::doDrop( item(), item()->url(), e, iconView() );
 }
@@ -359,16 +359,16 @@ void KFileIVI::returnPressed()
 }
 
 
-void KFileIVI::paintItem( QPainter *p, const QColorGroup &c )
+void KFileIVI::paintItem( TQPainter *p, const TQColorGroup &c )
 {
-    QColorGroup cg = updateColors(c);
+    TQColorGroup cg = updateColors(c);
     paintFontUpdate( p );
 
     //*** TEMPORARY CODE - MUST BE MADE CONFIGURABLE FIRST - Martijn
     // SET UNDERLINE ON HOVER ONLY
     /*if ( ( ( KonqIconViewWidget* ) iconView() )->m_pActiveItem == this )
     {
-        QFont f( p->font() );
+        TQFont f( p->font() );
         f.setUnderline( TRUE );
         p->setFont( f );
     }*/
@@ -378,28 +378,28 @@ void KFileIVI::paintItem( QPainter *p, const QColorGroup &c )
 
 }
 
-void KFileIVI::paintOverlay( QPainter *p ) const
+void KFileIVI::paintOverlay( TQPainter *p ) const
 {
     if ( !d->m_overlay.isNull() ) {
-        QRect rect = pixmapRect(true);
+        TQRect rect = pixmapRect(true);
         p->drawPixmap(x() + rect.x() , y() + pixmapRect().height() - d->m_overlay.height(), d->m_overlay);
     }
 }
 
-void KFileIVI::paintFontUpdate( QPainter *p ) const
+void KFileIVI::paintFontUpdate( TQPainter *p ) const
 {
     if ( m_fileitem->isLink() )
     {
-        QFont f( p->font() );
+        TQFont f( p->font() );
         f.setItalic( TRUE );
         p->setFont( f );
     }
 }
 
-QColorGroup KFileIVI::updateColors( const QColorGroup &c ) const
+TQColorGroup KFileIVI::updateColors( const TQColorGroup &c ) const
 {
-    QColorGroup cg( c );
-    cg.setColor( QColorGroup::Text, static_cast<KonqIconViewWidget*>(iconView())->itemColor() );
+    TQColorGroup cg( c );
+    cg.setColor( TQColorGroup::Text, static_cast<KonqIconViewWidget*>(iconView())->itemColor() );
     return cg;
 }
 
@@ -415,7 +415,7 @@ bool KFileIVI::move( int x, int y )
 	if ( y > iconView()->viewport()->height() - ( height() + 5 ) )
 	    y = iconView()->viewport()->height() - ( height() + 5 );
     }
-    return QIconViewItem::move( x, y );
+    return TQIconViewItem::move( x, y );
 }
 
 bool KFileIVI::hasAnimation() const
@@ -423,7 +423,7 @@ bool KFileIVI::hasAnimation() const
     return !d->m_animatedIcon.isEmpty() && !m_bThumbnail;
 }
 
-void KFileIVI::setMouseOverAnimation( const QString& movieFileName )
+void KFileIVI::setMouseOverAnimation( const TQString& movieFileName )
 {
     if ( !movieFileName.isEmpty() )
     {
@@ -432,7 +432,7 @@ void KFileIVI::setMouseOverAnimation( const QString& movieFileName )
     }
 }
 
-QString KFileIVI::mouseOverAnimation() const
+TQString KFileIVI::mouseOverAnimation() const
 {
     return d->m_animatedIcon;
 }
@@ -447,7 +447,7 @@ void KFileIVI::setAnimated( bool a )
     d->m_animated = a;
 }
 
-int KFileIVI::compare( QIconViewItem *i ) const
+int KFileIVI::compare( TQIconViewItem *i ) const
 {
     KonqIconViewWidget* view = static_cast<KonqIconViewWidget*>(iconView());
     if ( view->caseInsensitiveSort() )
@@ -465,10 +465,10 @@ void KFileIVI::updatePixmapSize()
 
     if ( view && view->canPreview( item() ) ) {
         int previewSize = view->previewIconSize( size );
-        setPixmapSize( QSize( previewSize, previewSize ) );
+        setPixmapSize( TQSize( previewSize, previewSize ) );
     }
     else {
-        QSize pixSize = QSize( size, size );
+        TQSize pixSize = TQSize( size, size );
         if ( pixSize != pixmapSize() )
             setPixmapSize( pixSize );
     }

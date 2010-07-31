@@ -19,7 +19,7 @@
 #define __KCMCSS_H__
 
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #include <kcmodule.h>
 
@@ -35,7 +35,7 @@ class CSSConfig : public KCModule
 
 public:
 	  
-  CSSConfig(QWidget *parent = 0L, const char *name = 0L, const QStringList &list =QStringList() );
+  CSSConfig(TQWidget *parent = 0L, const char *name = 0L, const TQStringList &list =TQStringList() );
 
   void load();
   void load( bool useDefaults );
@@ -49,7 +49,7 @@ public slots:
 
 private:
 
-  QMap<QString,QString> cssDict();
+  TQMap<TQString,TQString> cssDict();
 
   CSSConfigDialog *configDialog;
   CSSCustomDialog *customDialog;

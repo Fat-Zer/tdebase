@@ -20,8 +20,8 @@
 #ifndef __konq_textviewitem_h__
 #define __konq_textviewitem_h__
 
-#include <qlistview.h>
-#include <qstring.h>
+#include <tqlistview.h>
+#include <tqstring.h>
 #include <kio/global.h>
 #include <klocale.h>
 #include "konq_listviewitems.h"
@@ -53,12 +53,12 @@ class KonqTextViewItem : public KonqBaseListViewItem
        */
       KonqTextViewItem( KonqTextViewWidget *_parent, KFileItem* _fileitem );
       virtual ~KonqTextViewItem() {/*cerr<<"~KonqTextViewItem: "<<text(1)<<endl;*/ };
-      virtual int compare( QListViewItem* i, int col, bool ascending ) const;
-//      virtual QString key( int _column, bool asc) const;
+      virtual int compare( TQListViewItem* i, int col, bool ascending ) const;
+//      virtual TQString key( int _column, bool asc) const;
       /** Call this before destroying the text view (decreases reference count
        * on the view)*/
-      virtual void paintCell( QPainter *_painter, const QColorGroup & _cg, int _column, int _width, int _alignment );
-//      virtual void paintFocus( QPainter *_painter, const QColorGroup & _cg, const QRect & r );
+      virtual void paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment );
+//      virtual void paintFocus( TQPainter *_painter, const TQColorGroup & _cg, const TQRect & r );
       virtual void updateContents();
 
    protected:

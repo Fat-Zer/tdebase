@@ -16,10 +16,10 @@
 
 #include "menuentry_widget.h"
 
-#include <qpushbutton.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qgroupbox.h>
+#include <tqpushbutton.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
 
 #include <kdebug.h>
 
@@ -32,13 +32,13 @@
 namespace KHotKeys
 {
 
-Menuentry_widget::Menuentry_widget( QWidget* parent_P, const char* name_P )
+Menuentry_widget::Menuentry_widget( TQWidget* parent_P, const char* name_P )
     : Menuentry_widget_ui( parent_P, name_P )
     {
     clear_data();
     // KHotKeys::Module::changed()
-    connect( menuentry_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( menuentry_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
 
 void Menuentry_widget::clear_data()

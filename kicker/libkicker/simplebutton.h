@@ -21,8 +21,8 @@
 #ifndef SIMPLEBUTTON_H
 #define SIMPLEBUTTON_H
 
-#include <qbutton.h>
-#include <qpixmap.h>
+#include <tqbutton.h>
+#include <tqpixmap.h>
 
 #include <kdemacros.h>
 
@@ -31,20 +31,20 @@ class KDE_EXPORT SimpleButton : public QButton
     Q_OBJECT
 
     public:
-        SimpleButton(QWidget *parent, const char *name = 0);
-        void setPixmap(const QPixmap &pix);
+        SimpleButton(TQWidget *parent, const char *name = 0);
+        void setPixmap(const TQPixmap &pix);
         void setOrientation(Qt::Orientation orientaton);
-        QSize sizeHint() const;
-        QSize minimumSizeHint() const;
+        TQSize sizeHint() const;
+        TQSize minimumSizeHint() const;
 
     protected:
-        void drawButton( QPainter *p );
-        void drawButtonLabel( QPainter *p );
+        void drawButton( TQPainter *p );
+        void drawButtonLabel( TQPainter *p );
         void generateIcons();
 
-        void enterEvent( QEvent *e );
-        void leaveEvent( QEvent *e );
-        void resizeEvent( QResizeEvent *e );
+        void enterEvent( TQEvent *e );
+        void leaveEvent( TQEvent *e );
+        void resizeEvent( TQResizeEvent *e );
 
     protected slots:
         virtual void slotSettingsChanged( int category );
@@ -52,9 +52,9 @@ class KDE_EXPORT SimpleButton : public QButton
 
     private:
         bool m_highlight;
-        QPixmap m_normalIcon;
-        QPixmap m_activeIcon;
-        QPixmap m_disabledIcon;
+        TQPixmap m_normalIcon;
+        TQPixmap m_activeIcon;
+        TQPixmap m_disabledIcon;
         Qt::Orientation m_orientation;
         class SimpleButtonPrivate;
         SimpleButtonPrivate* d;
@@ -65,14 +65,14 @@ class KDE_EXPORT SimpleArrowButton: public SimpleButton
     Q_OBJECT
     
     public:
-        SimpleArrowButton(QWidget *parent = 0, Qt::ArrowType arrow = Qt::UpArrow, const char *name = 0);
+        SimpleArrowButton(TQWidget *parent = 0, Qt::ArrowType arrow = Qt::UpArrow, const char *name = 0);
         virtual ~SimpleArrowButton() {};
-        QSize sizeHint() const;
+        TQSize sizeHint() const;
     
     protected:
-        virtual void enterEvent( QEvent *e );
-        virtual void leaveEvent( QEvent *e );
-        virtual void drawButton(QPainter *p);
+        virtual void enterEvent( TQEvent *e );
+        virtual void leaveEvent( TQEvent *e );
+        virtual void drawButton(TQPainter *p);
         Qt::ArrowType arrowType() const;
     
     public slots:

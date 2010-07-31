@@ -17,7 +17,7 @@ class KCookiesMain : public KCModule
 {
     Q_OBJECT
 public:
-    KCookiesMain(QWidget *parent = 0L);
+    KCookiesMain(TQWidget *parent = 0L);
     ~KCookiesMain();
 
     KCookiesPolicies* policyDlg() { return policies; }
@@ -25,11 +25,11 @@ public:
     virtual void load();
     virtual void save();
     virtual void defaults();
-    virtual QString quickHelp() const;
+    virtual TQString quickHelp() const;
 
 private:
 
-    QTabWidget* tab;
+    TQTabWidget* tab;
     KCookiesPolicies* policies;
     KCookiesManagement* management;
 };

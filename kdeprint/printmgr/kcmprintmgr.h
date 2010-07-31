@@ -27,10 +27,10 @@ class KMMainView;
 class KCMPrintMgr : public KCModule
 {
 public:
-	KCMPrintMgr(QWidget *parent, const char *name, const QStringList &);
+	KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList &);
 	~KCMPrintMgr();
 
-	QString quickHelp() const;
+	TQString quickHelp() const;
 
 private:
 	KMMainView	*m_mainview;

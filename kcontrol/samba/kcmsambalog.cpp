@@ -21,9 +21,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qfile.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqfile.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <kmessagebox.h>
 #include <kdialog.h>
@@ -34,8 +34,8 @@
 
 #define LOG_SCREEN_XY_OFFSET 10
 
-LogView::LogView(QWidget *parent,KConfig *config, const char *name)
-: QWidget (parent, name)
+LogView::LogView(TQWidget *parent,KConfig *config, const char *name)
+: TQWidget (parent, name)
 ,configFile(config)
 ,filesCount(0)
 ,connectionsCount(0)
@@ -48,50 +48,50 @@ LogView::LogView(QWidget *parent,KConfig *config, const char *name)
 ,showFileClose(i18n("Show closed files"),this)
 ,updateButton(i18n("&Update"),this)
 {
-   QVBoxLayout *mainLayout=new QVBoxLayout(this, KDialog::marginHint(),
+   TQVBoxLayout *mainLayout=new TQVBoxLayout(this, KDialog::marginHint(),
        KDialog::spacingHint());
-   QHBoxLayout *leLayout=new QHBoxLayout(mainLayout);
+   TQHBoxLayout *leLayout=new TQHBoxLayout(mainLayout);
    leLayout->addWidget(&label);
    leLayout->addWidget(&logFileName,1);
    mainLayout->addWidget(&viewHistory,1);
-   QGridLayout *subLayout=new QGridLayout(mainLayout,2,2);
+   TQGridLayout *subLayout=new TQGridLayout(mainLayout,2,2);
    subLayout->addWidget(&showConnOpen,0,0);
    subLayout->addWidget(&showConnClose,1,0);
    subLayout->addWidget(&showFileOpen,0,1);
    subLayout->addWidget(&showFileClose,1,1);
    mainLayout->addWidget(&updateButton,0,Qt::AlignLeft);
 
-   QWhatsThis::add( &logFileName, i18n("This page presents the contents of"
+   TQWhatsThis::add( &logFileName, i18n("This page presents the contents of"
      " your samba log file in a friendly layout. Check that the correct log"
      " file for your computer is listed here. If you need to, correct the name"
      " or location of the log file, and then click the \"Update\" button.") );
 
-   QWhatsThis::add( &showConnOpen, i18n("Check this option if you want to"
+   TQWhatsThis::add( &showConnOpen, i18n("Check this option if you want to"
      " view the details for connections opened to your computer.") );
 
-   QWhatsThis::add( &showConnClose, i18n("Check this option if you want to"
+   TQWhatsThis::add( &showConnClose, i18n("Check this option if you want to"
      " view the events when connections to your computer were closed.") );
 
-   QWhatsThis::add( &showFileOpen, i18n("Check this option if you want to"
+   TQWhatsThis::add( &showFileOpen, i18n("Check this option if you want to"
      " see the files which were opened on your computer by remote users."
      " Note that file open/close events are not logged unless the samba"
      " log level is set to at least 2 (you cannot set the log level"
      " using this module).") );
 
-   QWhatsThis::add( &showFileClose, i18n("Check this option if you want to"
+   TQWhatsThis::add( &showFileClose, i18n("Check this option if you want to"
      " see the events when files opened by remote users were closed."
      " Note that file open/close events are not logged unless the samba"
      " log level is set to at least 2 (you cannot set the log level"
      " using this module).") );
 
-   QWhatsThis::add( &updateButton, i18n("Click here to refresh the information"
+   TQWhatsThis::add( &updateButton, i18n("Click here to refresh the information"
      " on this page. The log file (shown above) will be read to obtain the"
      " events logged by samba.") );
 
    logFileName.setURL("/var/log/samba.log");
 
    viewHistory.setAllColumnsShowFocus(TRUE);
-   viewHistory.setFocusPolicy(QWidget::ClickFocus);
+   viewHistory.setFocusPolicy(TQWidget::ClickFocus);
    viewHistory.setShowSortIndicator(true);
 
    viewHistory.addColumn(i18n("Date & Time"),130);
@@ -99,7 +99,7 @@ LogView::LogView(QWidget *parent,KConfig *config, const char *name)
    viewHistory.addColumn(i18n("Service/File"),210);
    viewHistory.addColumn(i18n("Host/User"),150);
 
-   QWhatsThis::add( &viewHistory, i18n("This list shows details of the events"
+   TQWhatsThis::add( &viewHistory, i18n("This list shows details of the events"
      " logged by samba. Note that events at the file level are not logged"
      " unless you have configured the log level for samba to 2 or greater.<p>"
      " As with many other lists in KDE, you can click on a column heading"
@@ -113,7 +113,7 @@ LogView::LogView(QWidget *parent,KConfig *config, const char *name)
    showFileOpen.setChecked(FALSE);
    showFileClose.setChecked(FALSE);
 
-   connect(&updateButton,SIGNAL(clicked()),this,SLOT(updateList()));
+   connect(&updateButton,TQT_SIGNAL(clicked()),this,TQT_SLOT(updateList()));
    emit contentsChanged(&viewHistory,0,0);
 
    label.setMinimumSize(label.sizeHint());
@@ -158,10 +158,10 @@ void LogView::saveSettings()
 //caution ! high optimized code :-)
 void LogView::updateList()
 {
-   QFile logFile(logFileName.url());
+   TQFile logFile(logFileName.url());
    if (logFile.open(IO_ReadOnly))
    {
-      QApplication::setOverrideCursor(waitCursor);
+      TQApplication::setOverrideCursor(waitCursor);
       viewHistory.clear();
       filesCount=0;
       connectionsCount=0;
@@ -242,11 +242,11 @@ void LogView::updateList()
       };
       logFile.close();
       emit contentsChanged(&viewHistory, filesCount, connectionsCount);
-      QApplication::restoreOverrideCursor();
+      TQApplication::restoreOverrideCursor();
    }
    else
    {
-      QString tmp = i18n("Could not open file %1").arg(logFileName.url());
+      TQString tmp = i18n("Could not open file %1").arg(logFileName.url());
       KMessageBox::error(this,tmp);
    };
 }

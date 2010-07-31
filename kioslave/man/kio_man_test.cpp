@@ -1,6 +1,6 @@
 
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "kio_man.h"
 
@@ -14,7 +14,7 @@ class kio_man_test : public  MANProtocol
   Q_OBJECT
 
 public:
-  kio_man_test(const QCString &pool_socket, const QCString &app_socket);
+  kio_man_test(const TQCString &pool_socket, const TQCString &app_socket);
 
 protected:
   virtual void data(int);

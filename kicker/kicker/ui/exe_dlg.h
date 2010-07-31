@@ -31,25 +31,25 @@ class PanelExeDialog : public KDialogBase
 {
     Q_OBJECT
 public:
-    PanelExeDialog(const QString& title, const QString& description,
-                   const QString &path, const QString &pixmap=QString::null,
-                   const QString &cmd=QString::null, bool inTerm=false,
-                   QWidget *parent=0, const char *name=0);
-    QString iconPath() const;
-    QString command() const;
-    QString commandLine() const;
-    QString title() const;
-    QString description() const;
+    PanelExeDialog(const TQString& title, const TQString& description,
+                   const TQString &path, const TQString &pixmap=TQString::null,
+                   const TQString &cmd=TQString::null, bool inTerm=false,
+                   TQWidget *parent=0, const char *name=0);
+    TQString iconPath() const;
+    TQString command() const;
+    TQString commandLine() const;
+    TQString title() const;
+    TQString description() const;
     bool useTerminal() const;
 
 signals:
     void updateSettings(PanelExeDialog*);
 
 protected slots:
-    void slotSelect(const QString& exec);
-    void slotTextChanged(const QString &);
+    void slotSelect(const TQString& exec);
+    void slotTextChanged(const TQString &);
     void slotReturnPressed();
-    void slotIconChanged(QString);
+    void slotIconChanged(TQString);
     void slotOk();
 
 protected:
@@ -57,8 +57,8 @@ protected:
     void updateIcon();
 
     NonKDEButtonSettings* ui;
-    QString m_icon;
-    QMap<QString, QString> m_partialPath2full;
+    TQString m_icon;
+    TQMap<TQString, TQString> m_partialPath2full;
     bool m_iconChanged;
 };
 

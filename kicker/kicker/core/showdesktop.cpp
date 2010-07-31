@@ -40,7 +40,7 @@ ShowDesktop* ShowDesktop::the()
 }
 
 ShowDesktop::ShowDesktop()
-  : QObject(),
+  : TQObject(),
     m_showingDesktop(false)
 {
     // This feature is implemented in KWin. Keep old code in Kicker for the case
@@ -49,8 +49,8 @@ ShowDesktop::ShowDesktop()
     m_wmSupport = i.isSupported( NET::WM2ShowingDesktop );
     if( m_wmSupport )
     {
-        connect( Kicker::the()->kwinModule(), SIGNAL( showingDesktopChanged( bool )),
-            SLOT( showingDesktopChanged( bool )));
+        connect( Kicker::the()->kwinModule(), TQT_SIGNAL( showingDesktopChanged( bool )),
+            TQT_SLOT( showingDesktopChanged( bool )));
         showingDesktopChanged( m_showingDesktop = Kicker::the()->kwinModule()->showingDesktop());
     }
 }
@@ -133,8 +133,8 @@ void ShowDesktop::showDesktop( bool b )
         m_activeWindow = Kicker::the()->kwinModule()->activeWindow();
         m_iconifiedList.clear();
 
-        const QValueList<WId> windows = Kicker::the()->kwinModule()->windows();
-        for (QValueList<WId>::ConstIterator it = windows.begin();
+        const TQValueList<WId> windows = Kicker::the()->kwinModule()->windows();
+        for (TQValueList<WId>::ConstIterator it = windows.begin();
              it != windows.end();
              ++it)
         {
@@ -153,7 +153,7 @@ void ShowDesktop::showDesktop( bool b )
 
         // find first, hide later, otherwise transients may get minimized
         // with the window they're transient for
-        for (QValueVector<WId>::Iterator it = m_iconifiedList.begin();
+        for (TQValueVector<WId>::Iterator it = m_iconifiedList.begin();
              it != m_iconifiedList.end();
              ++it)
         {
@@ -161,23 +161,23 @@ void ShowDesktop::showDesktop( bool b )
         }
 
         // on desktop changes or when a window is deiconified, we abort the show desktop mode
-        connect(Kicker::the()->kwinModule(), SIGNAL(currentDesktopChanged(int)),
-                SLOT(slotCurrentDesktopChanged(int)));
-        connect(Kicker::the()->kwinModule(), SIGNAL(windowChanged(WId,unsigned int)),
-                SLOT(slotWindowChanged(WId,unsigned int)));
-        connect(Kicker::the()->kwinModule(), SIGNAL(windowAdded(WId)),
-                SLOT(slotWindowAdded(WId)));
+        connect(Kicker::the()->kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+                TQT_SLOT(slotCurrentDesktopChanged(int)));
+        connect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+                TQT_SLOT(slotWindowChanged(WId,unsigned int)));
+        connect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+                TQT_SLOT(slotWindowAdded(WId)));
     }
     else
     {
-        disconnect(Kicker::the()->kwinModule(), SIGNAL(currentDesktopChanged(int)),
-                   this, SLOT(slotCurrentDesktopChanged(int)));
-        disconnect(Kicker::the()->kwinModule(), SIGNAL(windowChanged(WId,unsigned int)),
-                   this, SLOT(slotWindowChanged(WId,unsigned int)));
-        disconnect(Kicker::the()->kwinModule(), SIGNAL(windowAdded(WId)),
-                   this, SLOT(slotWindowAdded(WId)));
+        disconnect(Kicker::the()->kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+                   this, TQT_SLOT(slotCurrentDesktopChanged(int)));
+        disconnect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+                   this, TQT_SLOT(slotWindowChanged(WId,unsigned int)));
+        disconnect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+                   this, TQT_SLOT(slotWindowAdded(WId)));
 
-        for (QValueVector<WId>::ConstIterator it = m_iconifiedList.begin();
+        for (TQValueVector<WId>::ConstIterator it = m_iconifiedList.begin();
              it != m_iconifiedList.end();
              ++it)
         {

@@ -16,8 +16,8 @@
 #ifndef __fish_h__
 #define __fish_h__
 
-#include <qstring.h>
-#include <qcstring.h>
+#include <tqstring.h>
+#include <tqcstring.h>
 
 
 #include <kurl.h>
@@ -32,7 +32,7 @@
 class fishProtocol : public KIO::SlaveBase
 {
 public:
-  fishProtocol(const QCString &pool_socket, const QCString &app_socket);
+  fishProtocol(const TQCString &pool_socket, const TQCString &app_socket);
   virtual ~fishProtocol();
 
   /**
@@ -48,7 +48,7 @@ It is set to false if the connection becomes closed.
   */
   void shutdownConnection(bool forced=false);
   /** sets connection information for subsequent commands */
-  void setHost(const QString & host, int port, const QString & user, const QString & pass);
+  void setHost(const TQString & host, int port, const TQString & user, const TQString & pass);
   /** Forced close of the connection */
   void closeConnection();
   /** get a file */
@@ -56,7 +56,7 @@ It is set to false if the connection becomes closed.
   /** put a file */
   void put(const KURL& url, int permissions, bool overwrite, bool resume);
   /** aborts command sequence and calls error() */
-  void error(int type, const QString &detail);
+  void error(int type, const TQString &detail);
   /** executes next command in sequence or calls finished() if all is done */
   void finished();
   /** stat a file */
@@ -70,7 +70,7 @@ It is set to false if the connection becomes closed.
   /** rename a file */
   void rename(const KURL& src, const KURL& dest, bool overwrite);
   /** create a symlink */
-  void symlink(const QString& target, const KURL& dest, bool overwrite);
+  void symlink(const TQString& target, const KURL& dest, bool overwrite);
   /** change file permissions */
   void chmod(const KURL& url, int permissions);
   /** copies a file */
@@ -80,7 +80,7 @@ It is set to false if the connection becomes closed.
   /** removes a file or directory */
   void del(const KURL &u, bool isfile);
   /** special like background execute */
-  void special( const QByteArray &data );
+  void special( const TQByteArray &data );
 
 private: // Private attributes
   /** the SSH process used to communicate with the remote end */
@@ -98,7 +98,7 @@ private: // Private attributes
   /**  // FIXME: just a workaround for konq deficiencies */
   bool isStat;
   /**  // FIXME: just a workaround for konq deficiencies */
-  QString redirectUser, redirectPass;
+  TQString redirectUser, redirectPass;
 
 protected: // Protected attributes
   /** for LIST/STAT */
@@ -110,32 +110,32 @@ protected: // Protected attributes
   /** for LIST/STAT */
   KIO::UDSAtom mimeAtom;
   /** for LIST/STAT */
-  QString thisFn;
+  TQString thisFn;
   /** for STAT */
-  QString wantedFn;
-  QString statPath;
+  TQString wantedFn;
+  TQString statPath;
   /** url of current request */
   KURL url;
   /** true if connection is logged in successfully */
   bool isLoggedIn;
   /** host name of current connection */
-  QString connectionHost;
+  TQString connectionHost;
   /** user name of current connection */
-  QString connectionUser;
+  TQString connectionUser;
   /** port of current connection */
   int connectionPort;
   /** password of current connection */
-  QString connectionPassword;
+  TQString connectionPassword;
   /** AuthInfo object used for logging in */
   KIO::AuthInfo connectionAuth;
   /** number of lines received, == 0 -> everything went ok */
   int errorCount;
   /** queue for lines to be sent */
-  QStringList qlist;
+  TQStringList qlist;
   /** queue for commands to be sent */
-  QStringList commandList;
+  TQStringList commandList;
   /** queue for commands to be sent */
-  QValueList<int> commandCodes;
+  TQValueList<int> commandCodes;
   /** bytes still to be read in raw mode */
   KIO::fileoffset_t rawRead;
   /** bytes still to be written in raw mode */
@@ -163,9 +163,9 @@ protected: // Protected attributes
   /** true if this is the first login attempt (== use cached password) */
   bool firstLogin;
   /** write buffer */
-  QByteArray rawData;
+  TQByteArray rawData;
   /** buffer for storing bytes used for MimeMagic */
-  QByteArray mimeBuffer;
+  TQByteArray mimeBuffer;
   /** whther the mimetype has been sent already */
   bool mimeTypeSent;
   /** number of bytes read so far */
@@ -192,9 +192,9 @@ protected: // Protected methods
   /** builds each FISH request and sets the error counter */
   bool sendCommand(fish_command_type cmd, ...);
   /** checks response string for result code, converting 000 and 001 appropriately */
-  int handleResponse(const QString &str);
+  int handleResponse(const TQString &str);
   /** parses a ls -l time spec */
-  int makeTimeFromLs(const QString &dayStr, const QString &monthStr, const QString &timeyearStr);
+  int makeTimeFromLs(const TQString &dayStr, const TQString &monthStr, const TQString &timeyearStr);
   /** executes a chain of commands */
   void run();
   /** creates the subprocess */
@@ -202,9 +202,9 @@ protected: // Protected methods
   /** writes one chunk of data to stdin of child process */
   void writeChild(const char *buf, KIO::fileoffset_t len);
   /** parses response from server and acts accordingly */
-  void manageConnection(const QString &line);
+  void manageConnection(const TQString &line);
   /** writes to process */
-  void writeStdin(const QString &line);
+  void writeStdin(const TQString &line);
 };
 
 

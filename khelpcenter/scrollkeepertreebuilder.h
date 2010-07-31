@@ -20,8 +20,8 @@
 #ifndef KHC_SCROLLKEEPERTREEBUILDER_H
 #define KHC_SCROLLKEEPERTREEBUILDER_H
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 
 #include "navigatoritem.h"
 
@@ -35,7 +35,7 @@ class ScrollKeeperTreeBuilder : public QObject
 {
   Q_OBJECT
   public:
-    ScrollKeeperTreeBuilder( QObject *parent, const char *name = 0 );
+    ScrollKeeperTreeBuilder( TQObject *parent, const char *name = 0 );
 
     NavigatorItem *build( NavigatorItem *parent, NavigatorItem *after );
 
@@ -45,12 +45,12 @@ class ScrollKeeperTreeBuilder : public QObject
   private:
     void loadConfig();
     int insertSection( NavigatorItem *parent, NavigatorItem *after,
-                       const QDomNode &sectNode, NavigatorItem *&created );
-    void insertDoc( NavigatorItem *parent, const QDomNode &docNode );
+                       const TQDomNode &sectNode, NavigatorItem *&created );
+    void insertDoc( NavigatorItem *parent, const TQDomNode &docNode );
 
     bool mShowEmptyDirs;
-    QString mContentsList;
-    QPtrList<NavigatorItem> mItems;
+    TQString mContentsList;
+    TQPtrList<NavigatorItem> mItems;
 };
 
 }

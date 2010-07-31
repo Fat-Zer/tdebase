@@ -31,9 +31,9 @@ class PrintPart : public KParts::ReadOnlyPart
 {
 	Q_OBJECT
 public:
-	PrintPart(QWidget *parentWidget, const char *widgetName,
-		  QObject *parent, const char *name,
-		  const QStringList & );
+	PrintPart(TQWidget *parentWidget, const char *widgetName,
+		  TQObject *parent, const char *name,
+		  const TQStringList & );
 	virtual ~PrintPart();
 
 	static KAboutData *createAboutData();

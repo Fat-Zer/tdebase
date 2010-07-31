@@ -45,14 +45,14 @@ class KLocaleApplication : public KCModule
   Q_OBJECT
 
 public:
-  KLocaleApplication(QWidget *parent, const char *name, const QStringList &);
+  KLocaleApplication(TQWidget *parent, const char *name, const TQStringList &);
   virtual ~KLocaleApplication();
 
   virtual void load();
   virtual void load(bool useDefault);
   virtual void save();
   virtual void defaults();
-  virtual QString quickHelp() const;
+  virtual TQString quickHelp() const;
 
 signals:
   void languageChanged();
@@ -68,20 +68,20 @@ public slots:
 private:
   KLocale *m_locale;
 
-  QTabWidget          *m_tab;
+  TQTabWidget          *m_tab;
   KLocaleConfig       *m_localemain;
   KLocaleConfigNumber *m_localenum;
   KLocaleConfigMoney  *m_localemon;
   KLocaleConfigTime   *m_localetime;
   KLocaleConfigOther  *m_localeother;
 
-  QGroupBox           *m_gbox;
+  TQGroupBox           *m_gbox;
   KLocaleSample       *m_sample;
 
   KConfig * m_globalConfig;
   KConfig * m_nullConfig;
 };
 
-typedef KGenericFactory<KLocaleApplication, QWidget > KLocaleFactory;
+typedef KGenericFactory<KLocaleApplication, TQWidget > KLocaleFactory;
 
 #endif

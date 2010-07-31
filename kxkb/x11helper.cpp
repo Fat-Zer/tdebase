@@ -1,10 +1,10 @@
-#include <qdir.h>
-#include <qstring.h>
-#include <qwindowdefs.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdict.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqstring.h>
+#include <tqwindowdefs.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 
@@ -52,10 +52,10 @@ static const char* rulesFileList[] =
 static const int X11_DIR_COUNT = ARRAY_SIZE(X11DirList);
 static const int X11_RULES_COUNT = ARRAY_SIZE(rulesFileList);
 
-const QString X11Helper::X11_WIN_CLASS_ROOT = "<root>";
-const QString X11Helper::X11_WIN_CLASS_UNKNOWN = "<unknown>";
+const TQString X11Helper::X11_WIN_CLASS_ROOT = "<root>";
+const TQString X11Helper::X11_WIN_CLASS_UNKNOWN = "<unknown>";
 
-static const QRegExp NON_CLEAN_LAYOUT_REGEXP("[^a-z]");
+static const TQRegExp NON_CLEAN_LAYOUT_REGEXP("[^a-z]");
 
 bool X11Helper::m_layoutsClean = true;
 
@@ -64,11 +64,11 @@ X11Helper::findX11Dir()
 {
 	for(int ii=0; ii<X11_DIR_COUNT; ii++) {
 		const char* xDir = X11DirList[ii];
-		if( xDir != NULL && QDir(QString(xDir) + "xkb").exists() ) {
+		if( xDir != NULL && TQDir(TQString(xDir) + "xkb").exists() ) {
 //			for(int jj=0; jj<X11_RULES_COUNT; jj++) {
 //				
 //			}
-			return QString(xDir);
+			return TQString(xDir);
 	    }
 	
 //	  if( X11_DIR.isEmpty() ) {
@@ -79,24 +79,24 @@ X11Helper::findX11Dir()
 }
 
 const QString
-X11Helper::findXkbRulesFile(QString x11Dir, Display *dpy)
+X11Helper::findXkbRulesFile(TQString x11Dir, Display *dpy)
 {
-	QString rulesFile;
+	TQString rulesFile;
 	XkbRF_VarDefsRec vd;
 	char *tmp = NULL;
 
 	if (XkbRF_GetNamesProp(dpy, &tmp, &vd) && tmp != NULL ) {
 // 			kdDebug() << "namesprop " << tmp  << endl;
-	  	rulesFile = x11Dir + QString("xkb/rules/%1").arg(tmp);
+	  	rulesFile = x11Dir + TQString("xkb/rules/%1").arg(tmp);
 // 			kdDebug() << "rulesF " << rulesFile  << endl;
 	}
 	else {
     // old way
     	for(int ii=0; ii<X11_RULES_COUNT; ii++) {
     		const char* ruleFile = rulesFileList[ii];
-     		QString xruleFilePath = x11Dir + ruleFile;
+     		TQString xruleFilePath = x11Dir + ruleFile;
 //  			kdDebug() << "trying " << xruleFilePath << endl;
-		    if( QFile(xruleFilePath).exists() ) {
+		    if( TQFile(xruleFilePath).exists() ) {
 				rulesFile = xruleFilePath;
 			break;
 		    }
@@ -107,9 +107,9 @@ X11Helper::findXkbRulesFile(QString x11Dir, Display *dpy)
 }
 
 RulesInfo*
-X11Helper::loadRules(const QString& file, bool layoutsOnly) 
+X11Helper::loadRules(const TQString& file, bool layoutsOnly) 
 {
-	XkbRF_RulesPtr xkbRules = XkbRF_Load(QFile::encodeName(file).data(), "", true, true);
+	XkbRF_RulesPtr xkbRules = XkbRF_Load(TQFile::encodeName(file).data(), "", true, true);
 
 	if (xkbRules == NULL) {
 // throw Exception
@@ -119,7 +119,7 @@ X11Helper::loadRules(const QString& file, bool layoutsOnly)
 	RulesInfo* rulesInfo = new RulesInfo();
 
 	for (int i = 0; i < xkbRules->layouts.num_desc; ++i) {
-		QString layoutName(xkbRules->layouts.desc[i].name);
+		TQString layoutName(xkbRules->layouts.desc[i].name);
 		rulesInfo->layouts.replace( layoutName, qstrdup( xkbRules->layouts.desc[i].desc ) );
 
 		if( m_layoutsClean == true
@@ -147,12 +147,12 @@ X11Helper::loadRules(const QString& file, bool layoutsOnly)
      rulesInfo->options.replace("compose", "Compose Key Position");
    }
 
-  for(QDictIterator<char> it(rulesInfo->options) ; it.current() != NULL; ++it ) {
-	  QString option(it.currentKey());
+  for(TQDictIterator<char> it(rulesInfo->options) ; it.current() != NULL; ++it ) {
+	  TQString option(it.currentKey());
 	  int columnPos = option.find(":");
 	  
 	  if( columnPos != -1 ) {
-		  QString group = option.mid(0, columnPos);
+		  TQString group = option.mid(0, columnPos);
 		  if( rulesInfo->options.find(group) == NULL ) {
 			  rulesInfo->options.replace(group, group.latin1());
 			  kdDebug() << "Added missing option group: " << group << endl;
@@ -170,19 +170,19 @@ X11Helper::loadRules(const QString& file, bool layoutsOnly)
 
 // check $oldlayouts and $nonlatin groups for XFree 4.3 and later
 OldLayouts*
-X11Helper::loadOldLayouts(const QString& rulesFile)
+X11Helper::loadOldLayouts(const TQString& rulesFile)
 {
   static const char* oldLayoutsTag = "! $oldlayouts";
   static const char* nonLatinLayoutsTag = "! $nonlatin";
-  QStringList m_oldLayouts;
-  QStringList m_nonLatinLayouts;
+  TQStringList m_oldLayouts;
+  TQStringList m_nonLatinLayouts;
   
-  QFile f(rulesFile);
+  TQFile f(rulesFile);
   
   if (f.open(IO_ReadOnly))
     {
-      QTextStream ts(&f);
-      QString line;
+      TQTextStream ts(&f);
+      TQString line;
 
       while (!ts.eof()) {
 	  line = ts.readLine().simplifyWhiteSpace();
@@ -195,7 +195,7 @@ X11Helper::loadOldLayouts(const QString& rulesFile)
 		line = line.left(line.length()-1) + ts.readLine();
 	    line = line.simplifyWhiteSpace();
 
-	    m_oldLayouts = QStringList::split(QRegExp("\\s"), line);
+	    m_oldLayouts = TQStringList::split(TQRegExp("\\s"), line);
 //	    kdDebug() << "oldlayouts " << m_oldLayouts.join("|") << endl;
 	    if( !m_nonLatinLayouts.empty() )
 	      break;
@@ -210,7 +210,7 @@ X11Helper::loadOldLayouts(const QString& rulesFile)
 		line = line.left(line.length()-1) + ts.readLine();
 	    line = line.simplifyWhiteSpace();
 
-	    m_nonLatinLayouts = QStringList::split(QRegExp("\\s"), line);
+	    m_nonLatinLayouts = TQStringList::split(TQRegExp("\\s"), line);
 //	    kdDebug() << "nonlatin " << m_nonLatinLayouts.join("|") << endl;
 	    if( !m_oldLayouts.empty() )
 	      break;
@@ -233,27 +233,27 @@ X11Helper::loadOldLayouts(const QString& rulesFile)
     tries to find "xkb_symbols"
     also checks whether previous line contains "hidden" to skip it
 */
-QStringList*
-X11Helper::getVariants(const QString& layout, const QString& x11Dir, bool oldLayouts)
+TQStringList*
+X11Helper::getVariants(const TQString& layout, const TQString& x11Dir, bool oldLayouts)
 {
-  QStringList* result = new QStringList();
+  TQStringList* result = new TQStringList();
 
-  QString file = x11Dir + "xkb/symbols/";
+  TQString file = x11Dir + "xkb/symbols/";
   // workaround for XFree 4.3 new directory for one-group layouts
-  if( QDir(file+"pc").exists() && !oldLayouts )
+  if( TQDir(file+"pc").exists() && !oldLayouts )
     file += "pc/";
     
   file += layout;
 
 //  kdDebug() << "reading variants from " << file << endl;
   
-  QFile f(file);
+  TQFile f(file);
   if (f.open(IO_ReadOnly))
     {
-      QTextStream ts(&f);
+      TQTextStream ts(&f);
 
-      QString line;
-      QString prev_line;
+      TQString line;
+      TQString prev_line;
 
       while (!ts.eof()) {
     	  prev_line = line;
@@ -284,7 +284,7 @@ X11Helper::getVariants(const QString& layout, const QString& x11Dir, bool oldLay
 	return result;
 }
 
-QString 
+TQString 
 X11Helper::getWindowClass(WId winId, Display* dpy)
 {
   unsigned long nitems_ret, bytes_after_ret;
@@ -292,7 +292,7 @@ X11Helper::getWindowClass(WId winId, Display* dpy)
   Atom     type_ret;
   int      format_ret;
   Window w = (Window)winId;	// suppose WId == Window
-  QString  property;
+  TQString  property;
 
   if( winId == X11Helper::UNKNOWN_WINDOW_ID ) {
 	  kdDebug() << "Got window class for " << winId << ": '" << X11_WIN_CLASS_ROOT << "'" << endl;
@@ -303,7 +303,7 @@ X11Helper::getWindowClass(WId winId, Display* dpy)
   if((XGetWindowProperty(dpy, w, XA_WM_CLASS, 0L, 256L, 0, XA_STRING,
 			&type_ret, &format_ret, &nitems_ret,
 			&bytes_after_ret, &prop_ret) == Success) && (type_ret != None)) {
-    property = QString::fromLocal8Bit(reinterpret_cast<char*>(prop_ret));
+    property = TQString::fromLocal8Bit(reinterpret_cast<char*>(prop_ret));
     XFree(prop_ret);
   }
   else {

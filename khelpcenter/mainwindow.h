@@ -1,7 +1,7 @@
 #ifndef __mainwindow_h__
 #define __mainwindow_h__
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include <kmainwindow.h>
 #include <kio/job.h>
@@ -31,14 +31,14 @@ class MainWindow : public KMainWindow, public DCOPObject
     ~MainWindow();
 
   k_dcop:
-    void openUrl( const QString &url );
-    void openUrl( const QString &url, const QCString& startup_id );
+    void openUrl( const TQString &url );
+    void openUrl( const TQString &url, const TQCString& startup_id );
     void showHome();
     void lastSearch();
 
   public slots:
     void print();
-    void statusBarMessage(const QString &m);
+    void statusBarMessage(const TQString &m);
     void slotShowHome();
     void slotLastSearch();
     void showSearchStderr();
@@ -50,7 +50,7 @@ class MainWindow : public KMainWindow, public DCOPObject
     /**
       Show document corresponding to given URL in viewer part.
     */
-    void viewUrl( const QString & );
+    void viewUrl( const TQString & );
 
     /**
       Open document corresponding to given URL, i.e. show it in the viewer part
@@ -77,7 +77,7 @@ class MainWindow : public KMainWindow, public DCOPObject
   private slots:
     void slotGlossSelected(const GlossaryEntry &entry);
     void slotStarted(KIO::Job *job);
-    void slotInfoMessage(KIO::Job *, const QString &);
+    void slotInfoMessage(KIO::Job *, const TQString &);
     void goInternalUrl( const KURL & );
     /**
       This function is called when the user clicks on a link in the viewer part.
@@ -93,7 +93,7 @@ class MainWindow : public KMainWindow, public DCOPObject
 private:
     void updateZoomActions();
 
-    QSplitter *mSplitter;
+    TQSplitter *mSplitter;
     View *mDoc;
     Navigator *mNavigator;
 

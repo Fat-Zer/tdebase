@@ -17,10 +17,10 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#include <qregexp.h>
-#include <qstyle.h>
-#include <qpixmap.h>
-#include <qimage.h>
+#include <tqregexp.h>
+#include <tqstyle.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
 
 #include <kstringhandler.h>
 #include <klocale.h>
@@ -33,14 +33,14 @@
 
 
 PopupProxy::PopupProxy( KlipperPopup* parent, const char* name, int menu_height, int menu_width )
-    : QObject( parent, name ),
+    : TQObject( parent, name ),
       proxy_for_menu( parent ),
       spillPointer( parent->history()->youngest() ),
       m_menu_height( menu_height ),
       m_menu_width( menu_width ),
       nextItemNumber( 0 )
 {
-    connect( parent->history(), SIGNAL( changed() ), SLOT( slotHistoryChanged() ) );
+    connect( parent->history(), TQT_SIGNAL( changed() ), TQT_SLOT( slotHistoryChanged() ) );
 }
 
 void PopupProxy::slotHistoryChanged() {
@@ -61,7 +61,7 @@ void PopupProxy::deleteMoreMenus() {
     }
 }
 
-int PopupProxy::buildParent( int index, const QRegExp& filter ) {
+int PopupProxy::buildParent( int index, const TQRegExp& filter ) {
     deleteMoreMenus();
     // Start from top of  history (again)
     spillPointer = parent()->history()->youngest();
@@ -75,7 +75,7 @@ int PopupProxy::buildParent( int index, const QRegExp& filter ) {
 }
 
 KlipperPopup* PopupProxy::parent() {
-    return static_cast<KlipperPopup*>( QObject::parent() );
+    return static_cast<KlipperPopup*>( TQObject::parent() );
 }
 
 void PopupProxy::slotAboutToShow() {
@@ -89,17 +89,17 @@ void PopupProxy::tryInsertItem( HistoryItem const * const item,
 
     // Insert item
     int id = -1;
-    QPixmap image( item->image() );
+    TQPixmap image( item->image() );
     if ( image.isNull() ) {
         // Squeeze text strings so that do not take up the entire screen (or more)
-        QString text( KStringHandler::cPixelSqueeze(item->text().simplifyWhiteSpace(),
+        TQString text( KStringHandler::cPixelSqueeze(item->text().simplifyWhiteSpace(),
                                                     proxy_for_menu->fontMetrics(),
                                                     m_menu_width).replace( "&", "&&" ) );
         id = proxy_for_menu->insertItem( text, -1, index );
     } else {
-        const QSize max_size( m_menu_width,m_menu_height/4 );
+        const TQSize max_size( m_menu_width,m_menu_height/4 );
         if ( image.height() > max_size.height() || image.width() > max_size.width() ) {
-            image.convertFromImage( image.convertToImage().smoothScale( max_size, QImage::ScaleMin ) );
+            image.convertFromImage( image.convertToImage().smoothScale( max_size, TQImage::ScaleMin ) );
         }
         id = proxy_for_menu->insertItem( image,  -1,  index );
     }
@@ -107,18 +107,18 @@ void PopupProxy::tryInsertItem( HistoryItem const * const item,
 
     // Determine height of a menu item.
     Q_ASSERT( id != -1 ); // Be sure that the item was inserted.
-    QMenuItem* mi = proxy_for_menu->findItem( id );
-    int fontheight = QFontMetrics( proxy_for_menu->fontMetrics()  ).height();
-    int itemheight = proxy_for_menu->style().sizeFromContents(QStyle::CT_PopupMenuItem,
+    TQMenuItem* mi = proxy_for_menu->findItem( id );
+    int fontheight = TQFontMetrics( proxy_for_menu->fontMetrics()  ).height();
+    int itemheight = proxy_for_menu->style().sizeFromContents(TQStyle::CT_PopupMenuItem,
                                                               proxy_for_menu,
-                                                              QSize( 0, fontheight ),
-                                                              QStyleOption(mi,10,0) ).height();
+                                                              TQSize( 0, fontheight ),
+                                                              TQStyleOption(mi,10,0) ).height();
     // Test if there was enough space
     remainingHeight -= itemheight;
     History* history = parent()->history();
     proxy_for_menu->connectItem(  id,
                                   history,
-                                  SLOT( slotMoveToTop( int ) ) );
+                                  TQT_SLOT( slotMoveToTop( int ) ) );
     proxy_for_menu->setItemParameter(  id,  nextItemNumber );
 
 }
@@ -152,7 +152,7 @@ int PopupProxy::insertFromSpill( int index ) {
     if ( spillPointer.current() ) {
         KPopupMenu* moreMenu = new KPopupMenu( proxy_for_menu, "a more menu" );
         proxy_for_menu->insertItem( i18n( "&More" ),  moreMenu, -1, index );
-        connect( moreMenu, SIGNAL( aboutToShow() ), SLOT( slotAboutToShow() ) );
+        connect( moreMenu, TQT_SIGNAL( aboutToShow() ), TQT_SLOT( slotAboutToShow() ) );
         proxy_for_menu = moreMenu;
     }
 

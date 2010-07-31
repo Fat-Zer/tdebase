@@ -30,8 +30,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kwin.h>
 #include <netwm.h>
 
-DatePicker::DatePicker(QWidget *parent, const QDate& date, Prefs* _prefs)
-    : QVBox( parent, 0,
+DatePicker::DatePicker(TQWidget *parent, const TQDate& date, Prefs* _prefs)
+    : TQVBox( parent, 0,
              _prefs->calendarFullWindow()
                 ? (WType_TopLevel | WDestructiveClose |
                    WStyle_StaysOnTop)
@@ -43,11 +43,11 @@ DatePicker::DatePicker(QWidget *parent, const QDate& date, Prefs* _prefs)
     if (prefs->calendarFullWindow())
     {
         KWin::setType(winId(), NET::Utility);
-        setFrameStyle(QFrame::NoFrame);
+        setFrameStyle(TQFrame::NoFrame);
     }
     else
     {
-        setFrameStyle(QFrame::PopupPanel | QFrame::Raised);
+        setFrameStyle(TQFrame::PopupPanel | TQFrame::Raised);
     }
 
     KWin::setOnAllDesktops(handle(), true);
@@ -59,15 +59,15 @@ DatePicker::DatePicker(QWidget *parent, const QDate& date, Prefs* _prefs)
     setIcon(SmallIcon("date"));
 }
 
-void DatePicker::closeEvent(QCloseEvent* e)
+void DatePicker::closeEvent(TQCloseEvent* e)
 {
     prefs->setCalendarSize(size());
-    QVBox::closeEvent(e);
+    TQVBox::closeEvent(e);
 }
 
-void DatePicker::keyPressEvent(QKeyEvent *e)
+void DatePicker::keyPressEvent(TQKeyEvent *e)
 {
-    QVBox::keyPressEvent(e);
+    TQVBox::keyPressEvent(e);
 
     if (e->key() == Qt::Key_Escape)
     {
@@ -75,12 +75,12 @@ void DatePicker::keyPressEvent(QKeyEvent *e)
     }
 }
 
-bool DatePicker::setDate(const QDate& date)
+bool DatePicker::setDate(const TQDate& date)
 {
     return picker->setDate(date);
 }
 
-QDate DatePicker::date()
+TQDate DatePicker::date()
 {
     return picker->date();
 }

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qtextstream.h>
+#include <tqtextstream.h>
 
 #include <kbookmarkimporter.h>
 #include <kmimetype.h>
@@ -16,20 +16,20 @@
 #include "konsolebookmarkhandler.h"
 
 KonsoleBookmarkHandler::KonsoleBookmarkHandler( KonsoleMenu *konsole, bool )
-    : QObject( konsole, "KonsoleBookmarkHandler" ),
+    : TQObject( konsole, "KonsoleBookmarkHandler" ),
       KBookmarkOwner(),
       m_konsole( konsole ),
       m_importStream( 0L )
 {
     m_menu = new KPopupMenu( konsole, "bookmark menu" );
 
-    QString file = locate( "data", "konsole/bookmarks.xml" );
+    TQString file = locate( "data", "konsole/bookmarks.xml" );
     if ( file.isEmpty() )
         file = locateLocal( "data", "konsole/bookmarks.xml" );
 
     // import old bookmarks
     if ( !KStandardDirs::exists( file ) ) {
-        QString oldFile = locate( "data", "kfile/bookmarks.html" );
+        TQString oldFile = locate( "data", "kfile/bookmarks.html" );
         if ( !oldFile.isEmpty() )
             importOldBookmarks( oldFile, file );
     }
@@ -38,20 +38,20 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( KonsoleMenu *konsole, bool )
     manager->setUpdate( true );
     manager->setShowNSBookmarks( false );
 
-    connect( manager, SIGNAL( changed(const QString &, const QString &) ),
-             SLOT( slotBookmarksChanged(const QString &, const QString &) ) );
+    connect( manager, TQT_SIGNAL( changed(const TQString &, const TQString &) ),
+             TQT_SLOT( slotBookmarksChanged(const TQString &, const TQString &) ) );
     m_bookmarkMenu = new KonsoleBookmarkMenu( manager, this, m_menu,
                              NULL, false, /*Not toplevel*/
 			     false /*No 'Add Bookmark'*/ );
 }
 
-QString KonsoleBookmarkHandler::currentURL() const
+TQString KonsoleBookmarkHandler::currentURL() const
 {
     return m_konsole->baseURL().url();
 }
 
-void KonsoleBookmarkHandler::importOldBookmarks( const QString& path,
-                                                 const QString& destinationPath )
+void KonsoleBookmarkHandler::importOldBookmarks( const TQString& path,
+                                                 const TQString& destinationPath )
 {
     KSaveFile file( destinationPath );
     if ( file.status() != 0 )
@@ -62,13 +62,13 @@ void KonsoleBookmarkHandler::importOldBookmarks( const QString& path,
 
     KNSBookmarkImporter importer( path );
     connect( &importer,
-             SIGNAL( newBookmark( const QString&, const QCString&, const QString& )),
-             SLOT( slotNewBookmark( const QString&, const QCString&, const QString& )));
+             TQT_SIGNAL( newBookmark( const TQString&, const TQCString&, const TQString& )),
+             TQT_SLOT( slotNewBookmark( const TQString&, const TQCString&, const TQString& )));
     connect( &importer,
-             SIGNAL( newFolder( const QString&, bool, const QString& )),
-             SLOT( slotNewFolder( const QString&, bool, const QString& )));
-    connect( &importer, SIGNAL( newSeparator() ), SLOT( newSeparator() ));
-    connect( &importer, SIGNAL( endMenu() ), SLOT( endMenu() ));
+             TQT_SIGNAL( newFolder( const TQString&, bool, const TQString& )),
+             TQT_SLOT( slotNewFolder( const TQString&, bool, const TQString& )));
+    connect( &importer, TQT_SIGNAL( newSeparator() ), TQT_SLOT( newSeparator() ));
+    connect( &importer, TQT_SIGNAL( endMenu() ), TQT_SLOT( endMenu() ));
 
     importer.parseNSBookmarks( false );
 
@@ -78,24 +78,24 @@ void KonsoleBookmarkHandler::importOldBookmarks( const QString& path,
     m_importStream = 0L;
 }
 
-void KonsoleBookmarkHandler::slotNewBookmark( const QString& /*text*/,
-                                            const QCString& url,
-                                            const QString& additionalInfo )
+void KonsoleBookmarkHandler::slotNewBookmark( const TQString& /*text*/,
+                                            const TQCString& url,
+                                            const TQString& additionalInfo )
 {
     *m_importStream << "<bookmark icon=\"" << KMimeType::iconForURL( KURL( url ) );
-    *m_importStream << "\" href=\"" << QString::fromUtf8(url) << "\">\n";
-    *m_importStream << "<title>" << (additionalInfo.isEmpty() ? QString::fromUtf8(url) : additionalInfo) << "</title>\n</bookmark>\n";
+    *m_importStream << "\" href=\"" << TQString::fromUtf8(url) << "\">\n";
+    *m_importStream << "<title>" << (additionalInfo.isEmpty() ? TQString::fromUtf8(url) : additionalInfo) << "</title>\n</bookmark>\n";
 }
 
-void KonsoleBookmarkHandler::slotNewFolder( const QString& text, bool /*open*/,
-                                          const QString& /*additionalInfo*/ )
+void KonsoleBookmarkHandler::slotNewFolder( const TQString& text, bool /*open*/,
+                                          const TQString& /*additionalInfo*/ )
 {
     *m_importStream << "<folder icon=\"bookmark_folder\">\n<title=\"";
     *m_importStream << text << "\">\n";
 }
 
-void KonsoleBookmarkHandler::slotBookmarksChanged( const QString &,
-                                                   const QString & )
+void KonsoleBookmarkHandler::slotBookmarksChanged( const TQString &,
+                                                   const TQString & )
 {
     // This is called when someone changes bookmarks in konsole....
     m_bookmarkMenu->slotBookmarksChanged("");

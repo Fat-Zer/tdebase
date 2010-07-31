@@ -36,19 +36,19 @@ class MultiMeter : public KSGRD::SensorDisplay
 	Q_OBJECT
 
 public:
-	MultiMeter(QWidget* parent = 0, const char* name = 0,
-			   const QString& = QString::null, double min = 0, double max = 0, bool nf = false, bool isApplet = false);
+	MultiMeter(TQWidget* parent = 0, const char* name = 0,
+			   const TQString& = TQString::null, double min = 0, double max = 0, bool nf = false, bool isApplet = false);
 	virtual ~MultiMeter()
 	{
 	}
 
-	bool addSensor(const QString& hostName, const QString& sensorName,
-				const QString& sensorType, const QString& sensorDescr);
-	void answerReceived(int id, const QString& answer);
-	void resizeEvent(QResizeEvent*);
+	bool addSensor(const TQString& hostName, const TQString& sensorName,
+				const TQString& sensorType, const TQString& sensorDescr);
+	void answerReceived(int id, const TQString& answer);
+	void resizeEvent(TQResizeEvent*);
 
-	bool restoreSettings(QDomElement& element);
-	bool saveSettings(QDomDocument& doc, QDomElement& element, bool save = true);
+	bool restoreSettings(TQDomElement& element);
+	bool saveSettings(TQDomDocument& doc, TQDomElement& element, bool save = true);
 
 	virtual bool hasSettingsDialog() const
 	{
@@ -62,12 +62,12 @@ public slots:
 	void applyStyle();
 
 private:
-	void setDigitColor(const QColor& col);
-	void setBackgroundColor(const QColor& col);
+	void setDigitColor(const TQColor& col);
+	void setBackgroundColor(const TQColor& col);
 
-	QLCDNumber* lcd;
-	QColor normalDigitColor;
-	QColor alarmDigitColor;
+	TQLCDNumber* lcd;
+	TQColor normalDigitColor;
+	TQColor alarmDigitColor;
 
 	MultiMeterSettings* mms;
 	bool lowerLimitActive;

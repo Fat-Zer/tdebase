@@ -24,7 +24,7 @@
 
 #include <kapplication.h>
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 class KateSessionManager;
 class KateAppDCOPIface;
@@ -75,7 +75,7 @@ class KDE_EXPORT KateApp : public KApplication
      * @param fullVersion should full version be returned?
      * @return Kate version
      */
-    static QString kateVersion (bool fullVersion = true);
+    static TQString kateVersion (bool fullVersion = true);
 
   /**
    * kate init
@@ -140,7 +140,7 @@ class KDE_EXPORT KateApp : public KApplication
      * @param sgroup session group for this window
      * @return new constructed main window
      */
-    KateMainWindow *newMainWindow (KConfig *sconfig = 0, const QString &sgroup = "");
+    KateMainWindow *newMainWindow (KConfig *sconfig = 0, const TQString &sgroup = "");
 
     /**
      * removes the mainwindow given, DOES NOT DELETE IT
@@ -180,7 +180,7 @@ class KDE_EXPORT KateApp : public KApplication
      * @param isTempFile if set to true and the file is a local file, it will be deleted when the document is closed.
      * @return success
      */
-    bool openURL (const KURL &url, const QString &encoding, bool isTempFile );
+    bool openURL (const KURL &url, const TQString &encoding, bool isTempFile );
 
     /**
      * position cursor in current active view
@@ -196,7 +196,7 @@ class KDE_EXPORT KateApp : public KApplication
      * @param text text to fill in the new doc/view
      * @return success
      */
-    bool openInput (const QString &text);
+    bool openInput (const TQString &text);
 
   private:
     /**
@@ -227,7 +227,7 @@ class KDE_EXPORT KateApp : public KApplication
     /**
      * known main windows
      */
-    QValueList<KateMainWindow*> m_mainWindows;
+    TQValueList<KateMainWindow*> m_mainWindows;
 
     /**
      * dcop interface

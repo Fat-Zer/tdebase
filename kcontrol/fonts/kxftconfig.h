@@ -24,15 +24,15 @@
 #include "config.h"
 #endif
 
-#include <qstringlist.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstringlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 #include <stdio.h>
 #include <fstream>
 #include <time.h>
 
 #ifdef HAVE_FONTCONFIG
-#include <qdom.h>
+#include <tqdom.h>
 #endif
 
 class KXftConfig
@@ -61,12 +61,12 @@ class KXftConfig
     struct Item
     {
 #ifdef HAVE_FONTCONFIG
-        Item(QDomNode &n) : node(n), toBeRemoved(false) {}
+        Item(TQDomNode &n) : node(n), toBeRemoved(false) {}
         Item()            : toBeRemoved(false)          {}
         virtual void reset()                            { node.clear(); toBeRemoved=false; }
         bool         added()                            { return node.isNull(); }
 
-        QDomNode node;
+        TQDomNode node;
 #else
         Item(char *s, char *e) : start(s), end(e), toBeRemoved(false) {}
         virtual void reset()                                          { start=end=NULL; toBeRemoved=false; }
@@ -82,13 +82,13 @@ class KXftConfig
     struct ListItem : public Item
     {
 #ifdef HAVE_FONTCONFIG
-        ListItem(const QString &st, QDomNode &n) : Item(n), str(st) {}
-        ListItem(const QString &st)              : str(st)          {}
+        ListItem(const TQString &st, TQDomNode &n) : Item(n), str(st) {}
+        ListItem(const TQString &st)              : str(st)          {}
 #else
-        ListItem(const QString &st, char *s=NULL, char *e=NULL) : Item(s, e), str(st) {}
+        ListItem(const TQString &st, char *s=NULL, char *e=NULL) : Item(s, e), str(st) {}
 #endif
 
-        QString str;
+        TQString str;
     };
 
     struct SubPixel : public Item
@@ -103,7 +103,7 @@ class KXftConfig
         };
 
 #ifdef HAVE_FONTCONFIG
-        SubPixel(Type t, QDomNode &n) : Item(n), type(t) {}
+        SubPixel(Type t, TQDomNode &n) : Item(n), type(t) {}
         SubPixel(Type t=None)         : type(t)          {}
 #else
         SubPixel(Type t=None, char *s=NULL, char *e=NULL) : Item(s, e), type(t) {}
@@ -116,7 +116,7 @@ class KXftConfig
     struct Exclude : public Item
     {
 #ifdef HAVE_FONTCONFIG
-        Exclude(double f, double t, QDomNode &n) : Item(n), from(f), to(t) {}
+        Exclude(double f, double t, TQDomNode &n) : Item(n), from(f), to(t) {}
         Exclude(double f=0, double t=0)          : from(f), to(t)          {}
 #else
         Exclude(double f=0, double t=0, char *s=NULL, char *e=NULL) : Item(s, e), from(f), to(t) {}
@@ -139,7 +139,7 @@ class KXftConfig
             Full
         };
 
-        Hint(Style s, QDomNode &n) : Item(n), style(s) {}
+        Hint(Style s, TQDomNode &n) : Item(n), style(s) {}
         Hint(Style s=NotSet)       : style(s)          {}
 
         void reset() { Item::reset(); style=NotSet; }
@@ -149,7 +149,7 @@ class KXftConfig
 
     struct Hinting : public Item
     {
-        Hinting(bool s, QDomNode &n) : Item(n), set(s) {}
+        Hinting(bool s, TQDomNode &n) : Item(n), set(s) {}
         Hinting(bool s=true)         : set(s)          {}
 
         void reset() { Item::reset(); set=true; }
@@ -159,7 +159,7 @@ class KXftConfig
 
     struct AntiAliasing : public Item
     {
-        AntiAliasing(bool s, QDomNode &n) : Item(n), set(s) {}
+        AntiAliasing(bool s, TQDomNode &n) : Item(n), set(s) {}
         AntiAliasing(bool s=true)         : set(s)          {}
 
         void reset() { Item::reset(); set=true; }
@@ -170,8 +170,8 @@ class KXftConfig
 
     public:
 
-    static QString contractHome(QString path);
-    static QString expandHome(QString path);
+    static TQString contractHome(TQString path);
+    static TQString expandHome(TQString path);
 
     //
     // Constructor
@@ -193,38 +193,38 @@ class KXftConfig
     void        setSubPixelType(SubPixel::Type type);  // SubPixel::None => turn off sub-pixel hinting
     bool        getExcludeRange(double &from, double &to);
     void        setExcludeRange(double from, double to); // from:0, to:0 => turn off exclude range
-    void        addDir(const QString &d);
-    void        removeDir(const QString &d);
+    void        addDir(const TQString &d);
+    void        removeDir(const TQString &d);
     void        clearDirs()                          { clearList(m_dirs); }
-    QStringList getDirs()                            { return getList(m_dirs); }
+    TQStringList getDirs()                            { return getList(m_dirs); }
 #ifdef HAVE_FONTCONFIG
     bool        getHintStyle(Hint::Style &style);
     void        setHintStyle(Hint::Style style);
 #else
-    void        addSymbolFamily(const QString &f)    { addItem(m_symbolFamilies, f); }
-    void        removeSymbolFamily(const QString &f) { removeItem(m_symbolFamilies, f); }
+    void        addSymbolFamily(const TQString &f)    { addItem(m_symbolFamilies, f); }
+    void        removeSymbolFamily(const TQString &f) { removeItem(m_symbolFamilies, f); }
     void        clearSymbolFamilies()                { clearList(m_symbolFamilies); }
-    QStringList getSymbolFamilies()                  { return getList(m_symbolFamilies); }
+    TQStringList getSymbolFamilies()                  { return getList(m_symbolFamilies); }
 #endif
     void        setAntiAliasing(bool set);
     bool        getAntiAliasing() const;
     bool        changed()                            { return m_madeChanges; }
-    static QString description(SubPixel::Type t);
+    static TQString description(SubPixel::Type t);
     static const char * toStr(SubPixel::Type t);
 #ifdef HAVE_FONTCONFIG
-    static QString description(Hint::Style s);
+    static TQString description(Hint::Style s);
     static const char * toStr(Hint::Style s);
 #endif
-    bool        hasDir(const QString &d);
+    bool        hasDir(const TQString &d);
 
     private:
 
-    ListItem *  findItem(QPtrList<ListItem> &list, const QString &i);
-    void        clearList(QPtrList<ListItem> &list);
-    static QStringList getList(QPtrList<ListItem> &list);
-    void        addItem(QPtrList<ListItem> &list, const QString &i);
-    void        removeItem(QPtrList<ListItem> &list, ListItem *item);
-    void        removeItem(QPtrList<ListItem> &list, const QString &i) { removeItem(list, findItem(list, i)); }
+    ListItem *  findItem(TQPtrList<ListItem> &list, const TQString &i);
+    void        clearList(TQPtrList<ListItem> &list);
+    static TQStringList getList(TQPtrList<ListItem> &list);
+    void        addItem(TQPtrList<ListItem> &list, const TQString &i);
+    void        removeItem(TQPtrList<ListItem> &list, ListItem *item);
+    void        removeItem(TQPtrList<ListItem> &list, const TQString &i) { removeItem(list, findItem(list, i)); }
     void        readContents();
 #ifdef HAVE_FONTCONFIG
     void        applyDirs();
@@ -237,11 +237,11 @@ class KXftConfig
     void        setHinting(bool set);
     void        applyHinting();
     void        applyExcludeRange(bool pixel);
-    void        removeItems(QPtrList<ListItem> &list);
+    void        removeItems(TQPtrList<ListItem> &list);
 #else
-    void        outputDir(std::ofstream &f, const QString &str);
+    void        outputDir(std::ofstream &f, const TQString &str);
     void        outputNewDirs(std::ofstream &f);
-    void        outputSymbolFamily(std::ofstream &f, const QString &str);
+    void        outputSymbolFamily(std::ofstream &f, const TQString &str);
     void        outputNewSymbolFamilies(std::ofstream &f);
     void        outputSubPixelType(std::ofstream &f, bool ifNew);
     void        outputExcludeRange(std::ofstream &f, bool ifNew, bool pixel);
@@ -258,13 +258,13 @@ class KXftConfig
     AntiAliasing       m_antiAliasing;
     bool               aliasingEnabled();
 #else
-    QPtrList<ListItem> m_symbolFamilies;
+    TQPtrList<ListItem> m_symbolFamilies;
 #endif
-    QPtrList<ListItem> m_dirs;
-    QString            m_file;
+    TQPtrList<ListItem> m_dirs;
+    TQString            m_file;
     int                m_required;
 #ifdef HAVE_FONTCONFIG
-    QDomDocument       m_doc;
+    TQDomDocument       m_doc;
 #else
     int                m_size;
     char               *m_data;

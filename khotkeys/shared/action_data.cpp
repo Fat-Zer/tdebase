@@ -25,8 +25,8 @@ namespace KHotKeys
 
 // Action_data_base
 
-Action_data_base::Action_data_base( Action_data_group* parent_P, const QString& name_P,
-    const QString& comment_P, Condition_list* conditions_P, bool enabled_P )
+Action_data_base::Action_data_base( Action_data_group* parent_P, const TQString& name_P,
+    const TQString& comment_P, Condition_list* conditions_P, bool enabled_P )
     : _parent( parent_P ), _conditions( conditions_P ), _name( name_P ), _comment( comment_P ),
         _enabled( enabled_P )
     {
@@ -39,7 +39,7 @@ Action_data_base::Action_data_base( Action_data_group* parent_P, const QString& 
 Action_data_base::Action_data_base( KConfig& cfg_P, Action_data_group* parent_P )
     : _parent( parent_P )
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     _name = cfg_P.readEntry( "Name" );
     _comment = cfg_P.readEntry( "Comment" );
     _enabled = cfg_P.readBoolEntry( "Enabled", true );
@@ -64,7 +64,7 @@ void Action_data_base::cfg_write( KConfig& cfg_P ) const
     cfg_P.writeEntry( "Name", name());
     cfg_P.writeEntry( "Comment", comment());
     cfg_P.writeEntry( "Enabled", enabled( true ));
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Conditions" );
     assert( conditions() != NULL );
     conditions()->cfg_write( cfg_P );
@@ -74,7 +74,7 @@ void Action_data_base::cfg_write( KConfig& cfg_P ) const
 
 Action_data_base* Action_data_base::create_cfg_read( KConfig& cfg_P, Action_data_group* parent_P )
     {
-    QString type = cfg_P.readEntry( "Type" );
+    TQString type = cfg_P.readEntry( "Type" );
     if( type == "ACTION_DATA_GROUP" )
         {
         if( cfg_P.readBoolEntry( "AllowMerge", false ))
@@ -169,7 +169,7 @@ void Action_data_group::update_triggers()
 Action_data::Action_data( KConfig& cfg_P, Action_data_group* parent_P )
     : Action_data_base( cfg_P, parent_P )
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Triggers" );
     _triggers = new Trigger_list( cfg_P, this );
     cfg_P.setGroup( save_cfg_group + "Actions" );
@@ -188,7 +188,7 @@ Action_data::~Action_data()
 void Action_data::cfg_write( KConfig& cfg_P ) const
     {
     Action_data_base::cfg_write( cfg_P );
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Triggers" );
     triggers()->cfg_write( cfg_P );
     cfg_P.setGroup( save_cfg_group + "Actions" );
@@ -286,8 +286,8 @@ void Generic_action_data::cfg_write( KConfig& cfg_P ) const
 // Command_url_shortcut_action_data
 
 Command_url_shortcut_action_data::Command_url_shortcut_action_data( Action_data_group* parent_P,
-    const QString& name_P, const QString& comment_P,
-    const KShortcut& shortcut_P, const QString& command_url_P, bool enabled_P )
+    const TQString& name_P, const TQString& comment_P,
+    const KShortcut& shortcut_P, const TQString& command_url_P, bool enabled_P )
     : Simple_action_data< Shortcut_trigger, Command_url_action >( parent_P, name_P,
         comment_P, enabled_P )
     {
@@ -306,8 +306,8 @@ void Simple_action_data< Shortcut_trigger, Command_url_action >
 // Menuentry_shortcut_action_data
 
 Menuentry_shortcut_action_data::Menuentry_shortcut_action_data( Action_data_group* parent_P,
-    const QString& name_P, const QString& comment_P,
-    const KShortcut& shortcut_P, const QString& menuentry_P, bool enabled_P )
+    const TQString& name_P, const TQString& comment_P,
+    const KShortcut& shortcut_P, const TQString& menuentry_P, bool enabled_P )
     : Simple_action_data< Shortcut_trigger, Menuentry_action >( parent_P, name_P,
         comment_P, enabled_P )
     {

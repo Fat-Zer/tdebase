@@ -21,7 +21,7 @@
 #ifndef __actionsimpl_h
 #define __actionsimpl_h
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class ActionsImpl : public QObject
 {

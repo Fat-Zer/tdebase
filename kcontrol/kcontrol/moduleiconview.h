@@ -29,28 +29,28 @@ class ModuleIconItem : public KListViewItem
 {
 
 public:
-  ModuleIconItem(QListView *parent, const QString& text, const QPixmap& pm, ConfigModule *m = 0)
+  ModuleIconItem(TQListView *parent, const TQString& text, const TQPixmap& pm, ConfigModule *m = 0)
 	: KListViewItem(parent, text)
-	, _tag(QString::null)
+	, _tag(TQString::null)
 	, _module(m)
 	{
 	  setPixmap(0, pm);
 	}
 
   void setConfigModule(ConfigModule* m) { _module = m; }
-  void setTag(const QString& t) { _tag = t; }
+  void setTag(const TQString& t) { _tag = t; }
   void setOrderNo(int order)
   {
-    QString s;
+    TQString s;
     setText(1, s.sprintf( "%02d", order ) );
   }
 
   ConfigModule* module() { return _module; }
-  QString tag() { return _tag; }
+  TQString tag() { return _tag; }
 
 
 private:
-  QString       _tag;
+  TQString       _tag;
   ConfigModule *_module;
 };
 
@@ -59,7 +59,7 @@ class ModuleIconView : public KListView
   Q_OBJECT
 
 public:
-  ModuleIconView(ConfigModuleList *list, QWidget * parent = 0, const char * name = 0);
+  ModuleIconView(ConfigModuleList *list, TQWidget * parent = 0, const char * name = 0);
   
   void makeSelected(ConfigModule* module);
   void makeVisible(ConfigModule *module);
@@ -69,14 +69,14 @@ signals:
   void moduleSelected(ConfigModule*);
 
 protected slots:
-  void slotItemSelected(QListViewItem*);
+  void slotItemSelected(TQListViewItem*);
 
 protected:
-  void keyPressEvent(QKeyEvent *);
-  QPixmap loadIcon( const QString &name );
+  void keyPressEvent(TQKeyEvent *);
+  TQPixmap loadIcon( const TQString &name );
   
 private:
-  QString           _path; 
+  TQString           _path; 
   ConfigModuleList *_modules;
 
 };

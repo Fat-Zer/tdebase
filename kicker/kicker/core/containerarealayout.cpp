@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <assert.h>
 #include <math.h>
 
-#include <qapplication.h>
+#include <tqapplication.h>
 #include <kdebug.h>
 #include <kglobal.h>
 
@@ -41,20 +41,20 @@ class ContainerAreaLayoutIterator : public QGLayoutIterator
         {
         }
 
-        QLayoutItem* current()
+        TQLayoutItem* current()
         {
             return m_idx < int(m_list->count()) ? (*m_list->at(m_idx))->item : 0;
         }
 
-        QLayoutItem* next()
+        TQLayoutItem* next()
         {
             m_idx++;
             return current();
         }
 
-        QLayoutItem* takeCurrent()
+        TQLayoutItem* takeCurrent()
         {
-            QLayoutItem* item = 0;
+            TQLayoutItem* item = 0;
             ContainerAreaLayout::ItemList::iterator b = m_list->at(m_idx);
             if (b != m_list->end())
             {
@@ -128,12 +128,12 @@ Qt::Orientation ContainerAreaLayoutItem::orientation() const
     return m_layout->orientation();
 }
 
-QRect ContainerAreaLayoutItem::geometryR() const
+TQRect ContainerAreaLayoutItem::geometryR() const
 {
     return m_layout->transform(geometry());
 }
 
-void ContainerAreaLayoutItem::setGeometryR(const QRect& r)
+void ContainerAreaLayoutItem::setGeometryR(const TQRect& r)
 {
     setGeometry(m_layout->transform(r));
 }
@@ -178,7 +178,7 @@ int ContainerAreaLayoutItem::leftR() const
 {
     if (orientation() == Horizontal)
     {
-        if (QApplication::reverseLayout())
+        if (TQApplication::reverseLayout())
             return m_layout->geometry().right() - geometry().right();
         else
             return geometry().left();
@@ -193,7 +193,7 @@ int ContainerAreaLayoutItem::rightR() const
 {
     if (orientation() == Horizontal)
     {
-        if (QApplication::reverseLayout())
+        if (TQApplication::reverseLayout())
             return m_layout->geometry().right() - geometry().left();
         else
             return geometry().right();
@@ -205,19 +205,19 @@ int ContainerAreaLayoutItem::rightR() const
 }
 
 
-ContainerAreaLayout::ContainerAreaLayout(QWidget* parent)
-    : QLayout(parent),
+ContainerAreaLayout::ContainerAreaLayout(TQWidget* parent)
+    : TQLayout(parent),
       m_orientation(Horizontal),
       m_stretchEnabled(true)
 {
 }
 
-void ContainerAreaLayout::addItem(QLayoutItem* item)
+void ContainerAreaLayout::addItem(TQLayoutItem* item)
 {
     m_items.append(new ContainerAreaLayoutItem(item, this));
 }
 
-void ContainerAreaLayout::insertIntoFreeSpace(QWidget* widget, QPoint insertionPoint)
+void ContainerAreaLayout::insertIntoFreeSpace(TQWidget* widget, TQPoint insertionPoint)
 {
     if (!widget)
     {
@@ -247,7 +247,7 @@ void ContainerAreaLayout::insertIntoFreeSpace(QWidget* widget, QPoint insertionP
     if (nextIt == m_items.end())
     {
         // first item in!
-        item->setGeometryR(QRect(insertionPoint.x(), insertionPoint.y(), widget->width(), widget->height()));
+        item->setGeometryR(TQRect(insertionPoint.x(), insertionPoint.y(), widget->width(), widget->height()));
         updateFreeSpaceValues();
         return;
     }
@@ -311,7 +311,7 @@ void ContainerAreaLayout::insertIntoFreeSpace(QWidget* widget, QPoint insertionP
         }
     }
 
-    QRect geom = item->geometryR();
+    TQRect geom = item->geometryR();
     geom.moveLeft(insPos);
     item->setGeometryR(geom);
     widget->setGeometry(transform(geom)); // widget isn't shown, layout not active yet
@@ -341,13 +341,13 @@ void ContainerAreaLayout::insertIntoFreeSpace(QWidget* widget, QPoint insertionP
     updateFreeSpaceValues();
 }
 
-QStringList ContainerAreaLayout::listItems() const
+TQStringList ContainerAreaLayout::listItems() const
 {
-    QStringList items;
+    TQStringList items;
     for (ItemList::const_iterator it = m_items.constBegin();
          it != m_items.constEnd(); ++it)
     {
-        QLayoutItem* item = (*it)->item;
+        TQLayoutItem* item = (*it)->item;
         BaseContainer* container = dynamic_cast<BaseContainer*>(item->widget());
 
         if (!container)
@@ -374,7 +374,7 @@ QStringList ContainerAreaLayout::listItems() const
     return items;
 }
 
-QWidget* ContainerAreaLayout::widgetAt(int index) const
+TQWidget* ContainerAreaLayout::widgetAt(int index) const
 {
     if (index < 0 || index >= (int)m_items.count())
     {
@@ -384,46 +384,46 @@ QWidget* ContainerAreaLayout::widgetAt(int index) const
     return m_items[index]->item->widget();
 }
 
-QSize ContainerAreaLayout::sizeHint() const
+TQSize ContainerAreaLayout::sizeHint() const
 {
     const int size = KickerLib::sizeValue(KPanelExtension::SizeNormal);
 
     if (orientation() == Horizontal)
     {
-        return QSize(widthForHeight(size), size);
+        return TQSize(widthForHeight(size), size);
     }
     else
     {
-        return QSize(size, heightForWidth(size));
+        return TQSize(size, heightForWidth(size));
     }
 }
 
-QSize ContainerAreaLayout::minimumSize() const
+TQSize ContainerAreaLayout::minimumSize() const
 {
     const int size = KickerLib::sizeValue(KPanelExtension::SizeTiny);
 
     if (orientation() == Horizontal)
     {
-        return QSize(widthForHeight(size), size);
+        return TQSize(widthForHeight(size), size);
     }
     else
     {
-        return QSize(size, heightForWidth(size));
+        return TQSize(size, heightForWidth(size));
     }
 }
 
-QLayoutIterator ContainerAreaLayout::iterator()
+TQLayoutIterator ContainerAreaLayout::iterator()
 {
-    return QLayoutIterator(new ContainerAreaLayoutIterator(&m_items));
+    return TQLayoutIterator(new ContainerAreaLayoutIterator(&m_items));
 }
 
-void ContainerAreaLayout::setGeometry(const QRect& rect)
+void ContainerAreaLayout::setGeometry(const TQRect& rect)
 {
     //RESEARCH: when can we short curcuit this?
     //          maybe a dirty flag to be set when we have containers
     //          that needs laying out?
 
-    QLayout::setGeometry(rect);
+    TQLayout::setGeometry(rect);
 
     float totalFreeSpace = kMax(0, widthR() - widthForHeightR(heightR()));
     int occupiedSpace = 0;
@@ -453,7 +453,7 @@ void ContainerAreaLayout::setGeometry(const QRect& rect)
                 w = widthR() - pos;
             }
         }
-        cur->setGeometryR(QRect(pos, 0, w, heightR()));
+        cur->setGeometryR(TQRect(pos, 0, w, heightR()));
     }
 }
 
@@ -520,10 +520,10 @@ int ContainerAreaLayout::distanceToPreviousItem(ItemList::const_iterator it) con
                   cur->leftR() - leftR();
 }
 
-void ContainerAreaLayout::moveContainerSwitch(QWidget* container, int distance)
+void ContainerAreaLayout::moveContainerSwitch(TQWidget* container, int distance)
 {
     const bool horizontal    = orientation() == Horizontal;
-    const bool reverseLayout = QApplication::reverseLayout();
+    const bool reverseLayout = TQApplication::reverseLayout();
 
     if (horizontal && reverseLayout)
         distance = - distance;
@@ -566,7 +566,7 @@ void ContainerAreaLayout::moveContainerSwitch(QWidget* container, int distance)
             break;
 
         // Move 'next' to the other side of 'moving'.
-        QRect geom = next->geometryR();
+        TQRect geom = next->geometryR();
         if (forward)
             geom.moveLeft(geom.left() - moving->widthR());
         else
@@ -630,7 +630,7 @@ void ContainerAreaLayout::moveContainerSwitch(QWidget* container, int distance)
     }
 
     // Move the container to its new position and prevent it from moving outside the panel.
-    QRect geom = moving->geometryR();
+    TQRect geom = moving->geometryR();
     distance = kClamp(newPos, 0, widthR() - moving->widthR());
     geom.moveLeft(distance);
     moving->setGeometryR(geom);
@@ -645,7 +645,7 @@ void ContainerAreaLayout::moveContainerSwitch(QWidget* container, int distance)
             if(AppletContainer* applet = dynamic_cast<AppletContainer*>(container))
                 if( applet->info().desktopFile() == "menuapplet.desktop" )
                 {
-                    QRect geom = (*it)->geometryR();
+                    TQRect geom = (*it)->geometryR();
                     if( prev != m_items.constEnd())
                         geom.moveLeft( (*prev)->rightR() + 1 );
                     else
@@ -657,10 +657,10 @@ void ContainerAreaLayout::moveContainerSwitch(QWidget* container, int distance)
     updateFreeSpaceValues();
 }
 
-int ContainerAreaLayout::moveContainerPush(QWidget* a, int distance)
+int ContainerAreaLayout::moveContainerPush(TQWidget* a, int distance)
 {
     const bool horizontal    = orientation() == Horizontal;
-    const bool reverseLayout = QApplication::reverseLayout();
+    const bool reverseLayout = TQApplication::reverseLayout();
 
     // Get the iterator 'it' pointing to the layoutitem representing 'a'.
     ItemList::const_iterator it = m_items.constBegin();
@@ -721,20 +721,20 @@ int ContainerAreaLayout::moveContainerPushRecursive(ItemList::const_iterator it,
     moved = forward ? kMin(distance, available)
                     : kMax(distance, available);
 
-    QRect geom = cur->geometryR();
+    TQRect geom = cur->geometryR();
     geom.moveLeft(geom.left() + moved);
     cur->setGeometryR(geom);
 
     return moved;
 }
 
-QRect ContainerAreaLayout::transform(const QRect& r) const
+TQRect ContainerAreaLayout::transform(const TQRect& r) const
 {
     if (orientation() == Horizontal)
     {
-        if (QApplication::reverseLayout())
+        if (TQApplication::reverseLayout())
         {
-            QRect t = r;
+            TQRect t = r;
             t.moveLeft(geometry().right() - r.right());
             return t;
         }
@@ -745,7 +745,7 @@ QRect ContainerAreaLayout::transform(const QRect& r) const
     }
     else
     {
-        return QRect(r.y(), r.x(), r.height(), r.width());
+        return TQRect(r.y(), r.x(), r.height(), r.width());
     }
 }
 

@@ -18,31 +18,31 @@
 
 */
 
-#include <qheader.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qbitmap.h>
+#include <tqheader.h>
+#include <tqimage.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kservicegroup.h>
 #include <kdebug.h>
-#include <qwhatsthis.h>
-#include <qbitmap.h>
+#include <tqwhatsthis.h>
+#include <tqbitmap.h>
 
 #include "moduletreeview.h"
 #include "moduletreeview.moc"
 #include "modules.h"
 #include "global.h"
 
-static QPixmap appIcon(const QString &iconName)
+static TQPixmap appIcon(const TQString &iconName)
 {
-     QString path;
-     QPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, &path, true);
+     TQString path;
+     TQPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, &path, true);
      // make sure they are not larger than KIcon::SizeSmall
      if (normal.width() > KIcon::SizeSmall || normal.height() > KIcon::SizeSmall)
      {
-         QImage tmp = normal.convertToImage();
+         TQImage tmp = normal.convertToImage();
          tmp = tmp.smoothScale(KIcon::SizeSmall, KIcon::SizeSmall);
          normal.convertFromImage(tmp);
      }
@@ -53,11 +53,11 @@ class ModuleTreeWhatsThis : public QWhatsThis
 {
 public:
     ModuleTreeWhatsThis( ModuleTreeView* tree)
-        : QWhatsThis( tree ), treeView( tree ) {}
+        : TQWhatsThis( tree ), treeView( tree ) {}
     ~ModuleTreeWhatsThis(){};
 
 
-    QString text( const QPoint & p) {
+    TQString text( const TQPoint & p) {
         ModuleTreeItem* i = (ModuleTreeItem*)  treeView->itemAt( p );
         if ( i && i->module() )  {
             return i->module()->comment();
@@ -71,60 +71,60 @@ private:
     ModuleTreeView* treeView;
 };
 
-ModuleTreeView::ModuleTreeView(ConfigModuleList *list, QWidget * parent, const char * name)
+ModuleTreeView::ModuleTreeView(ConfigModuleList *list, TQWidget * parent, const char * name)
   : KListView(parent, name)
   , _modules(list)
 {
-  addColumn(QString::null);
-  setColumnWidthMode (0, QListView::Maximum);
+  addColumn(TQString::null);
+  setColumnWidthMode (0, TQListView::Maximum);
   setAllColumnsShowFocus(true);
-  setResizeMode(QListView::AllColumns);
+  setResizeMode(TQListView::AllColumns);
   setRootIsDecorated(true);
   setHScrollBarMode(AlwaysOff);
   header()->hide();
 
   new ModuleTreeWhatsThis( this );
 
-  connect(this, SIGNAL(clicked(QListViewItem*)),
-                  this, SLOT(slotItemSelected(QListViewItem*)));
+  connect(this, TQT_SIGNAL(clicked(TQListViewItem*)),
+                  this, TQT_SLOT(slotItemSelected(TQListViewItem*)));
 }
 
 void ModuleTreeView::fill()
 {
   clear();
 
-  QStringList subMenus = _modules->submenus(KCGlobal::baseGroup());
-  for(QStringList::ConstIterator it = subMenus.begin();
+  TQStringList subMenus = _modules->submenus(KCGlobal::baseGroup());
+  for(TQStringList::ConstIterator it = subMenus.begin();
       it != subMenus.end(); ++it)
   {
-     QString path = *it;
+     TQString path = *it;
      ModuleTreeItem*  menu = new ModuleTreeItem(this);
      menu->setGroup(path);
      fill(menu, path);
   }
 
   ConfigModule *module;
-  QPtrList<ConfigModule> moduleList = _modules->modules(KCGlobal::baseGroup());
+  TQPtrList<ConfigModule> moduleList = _modules->modules(KCGlobal::baseGroup());
   for (module=moduleList.first(); module != 0; module=moduleList.next())
   {
      new ModuleTreeItem(this, module);
   }
 }
 
-void ModuleTreeView::fill(ModuleTreeItem *parent, const QString &parentPath)
+void ModuleTreeView::fill(ModuleTreeItem *parent, const TQString &parentPath)
 {
-  QStringList subMenus = _modules->submenus(parentPath);
-  for(QStringList::ConstIterator it = subMenus.begin();
+  TQStringList subMenus = _modules->submenus(parentPath);
+  for(TQStringList::ConstIterator it = subMenus.begin();
       it != subMenus.end(); ++it)
   {
-     QString path = *it;
+     TQString path = *it;
      ModuleTreeItem*  menu = new ModuleTreeItem(parent);
      menu->setGroup(path);
      fill(menu, path);
   }
 
   ConfigModule *module;
-  QPtrList<ConfigModule> moduleList = _modules->modules(parentPath);
+  TQPtrList<ConfigModule> moduleList = _modules->modules(parentPath);
   for (module=moduleList.first(); module != 0; module=moduleList.next())
   {
      new ModuleTreeItem(parent, module);
@@ -133,10 +133,10 @@ void ModuleTreeView::fill(ModuleTreeItem *parent, const QString &parentPath)
 
 
 
-QSize ModuleTreeView::sizeHint() const
+TQSize ModuleTreeView::sizeHint() const
 {
-    return QListView::sizeHint().boundedTo( 
-	QSize( fontMetrics().maxWidth()*35, QWIDGETSIZE_MAX) );
+    return TQListView::sizeHint().boundedTo( 
+	TQSize( fontMetrics().maxWidth()*35, QWIDGETSIZE_MAX) );
 }
 
 void ModuleTreeView::makeSelected(ConfigModule *module)
@@ -162,7 +162,7 @@ void ModuleTreeView::updateItem(ModuleTreeItem *item, ConfigModule *module)
 }
 
 /*
-void ModuleTreeView::expandItem(QListViewItem *item, QPtrList<QListViewItem> *parentList)
+void ModuleTreeView::expandItem(TQListViewItem *item, TQPtrList<TQListViewItem> *parentList)
 {
   while (item)
     {
@@ -176,14 +176,14 @@ void ModuleTreeView::expandItem(QListViewItem *item, QPtrList<QListViewItem> *pa
 */
 void ModuleTreeView::makeVisible(ConfigModule *module)
 {
-  QString path = _modules->findModule(module);
+  TQString path = _modules->findModule(module);
   if (path.startsWith(KCGlobal::baseGroup()))
      path = path.mid(KCGlobal::baseGroup().length());
 
-  QStringList groups = QStringList::split('/', path);
+  TQStringList groups = TQStringList::split('/', path);
 
   ModuleTreeItem *item = 0;
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for (it=groups.begin(); it != groups.end(); ++it)
   {
      if (item)
@@ -209,7 +209,7 @@ void ModuleTreeView::makeVisible(ConfigModule *module)
     ensureItemVisible(item);
 }
 
-void ModuleTreeView::slotItemSelected(QListViewItem* item)
+void ModuleTreeView::slotItemSelected(TQListViewItem* item)
 {
   if (!item) return;
 
@@ -228,9 +228,9 @@ void ModuleTreeView::slotItemSelected(QListViewItem* item)
   /*
   else
     {
-      QPtrList<QListViewItem> parents;
+      TQPtrList<TQListViewItem> parents;
 
-      QListViewItem* i = item;
+      TQListViewItem* i = item;
       while(i)
         {
           parents.append(i);
@@ -238,19 +238,19 @@ void ModuleTreeView::slotItemSelected(QListViewItem* item)
         }
 
       //int oy1 = item->itemPos();
-      //int oy2 = mapFromGlobal(QCursor::pos()).y();
+      //int oy2 = mapFromGlobal(TQCursor::pos()).y();
       //int offset = oy2 - oy1;
 
       expandItem(firstChild(), &parents);
 
-      //int x =mapFromGlobal(QCursor::pos()).x();
+      //int x =mapFromGlobal(TQCursor::pos()).x();
       //int y = item->itemPos() + offset;
-      //QCursor::setPos(mapToGlobal(QPoint(x, y)));
+      //TQCursor::setPos(mapToGlobal(TQPoint(x, y)));
     }
   */
 }
 
-void ModuleTreeView::keyPressEvent(QKeyEvent *e)
+void ModuleTreeView::keyPressEvent(TQKeyEvent *e)
 {
   if (!currentItem()) return;
 
@@ -258,7 +258,7 @@ void ModuleTreeView::keyPressEvent(QKeyEvent *e)
      || e->key() == Key_Enter
         || e->key() == Key_Space)
     {
-      //QCursor::setPos(mapToGlobal(QPoint(10, currentItem()->itemPos()+5)));
+      //TQCursor::setPos(mapToGlobal(TQPoint(10, currentItem()->itemPos()+5)));
       slotItemSelected(currentItem());
     }
   else
@@ -266,10 +266,10 @@ void ModuleTreeView::keyPressEvent(QKeyEvent *e)
 }
 
 
-ModuleTreeItem::ModuleTreeItem(QListViewItem *parent, ConfigModule *module)
-  : QListViewItem(parent)
+ModuleTreeItem::ModuleTreeItem(TQListViewItem *parent, ConfigModule *module)
+  : TQListViewItem(parent)
   , _module(module)
-  , _tag(QString::null)
+  , _tag(TQString::null)
   , _maxChildIconWidth(0)
 {
   if (_module)
@@ -280,10 +280,10 @@ ModuleTreeItem::ModuleTreeItem(QListViewItem *parent, ConfigModule *module)
         }
 }
 
-ModuleTreeItem::ModuleTreeItem(QListView *parent, ConfigModule *module)
-  : QListViewItem(parent)
+ModuleTreeItem::ModuleTreeItem(TQListView *parent, ConfigModule *module)
+  : TQListViewItem(parent)
   , _module(module)
-  , _tag(QString::null)
+  , _tag(TQString::null)
   , _maxChildIconWidth(0)
 {
   if (_module)
@@ -294,21 +294,21 @@ ModuleTreeItem::ModuleTreeItem(QListView *parent, ConfigModule *module)
         }
 }
 
-ModuleTreeItem::ModuleTreeItem(QListViewItem *parent, const QString& text)
-  : QListViewItem(parent, " " + text)
+ModuleTreeItem::ModuleTreeItem(TQListViewItem *parent, const TQString& text)
+  : TQListViewItem(parent, " " + text)
   , _module(0)
-  , _tag(QString::null)
+  , _tag(TQString::null)
   , _maxChildIconWidth(0)
   {}
 
-ModuleTreeItem::ModuleTreeItem(QListView *parent, const QString& text)
-  : QListViewItem(parent, " " + text)
+ModuleTreeItem::ModuleTreeItem(TQListView *parent, const TQString& text)
+  : TQListViewItem(parent, " " + text)
   , _module(0)
-  , _tag(QString::null)
+  , _tag(TQString::null)
   , _maxChildIconWidth(0)
   {}
 
-void ModuleTreeItem::setPixmap(int column, const QPixmap& pm)
+void ModuleTreeItem::setPixmap(int column, const TQPixmap& pm)
 {
   if (!pm.isNull())
   {
@@ -317,7 +317,7 @@ void ModuleTreeItem::setPixmap(int column, const QPixmap& pm)
       p->regChildIconWidth(pm.width());
   }
 
-  QListViewItem::setPixmap(column, pm);
+  TQListViewItem::setPixmap(column, pm);
 }
 
 void ModuleTreeItem::regChildIconWidth(int width)
@@ -326,7 +326,7 @@ void ModuleTreeItem::regChildIconWidth(int width)
     _maxChildIconWidth = width;
 }
 
-void ModuleTreeItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int align )
+void ModuleTreeItem::paintCell( TQPainter * p, const TQColorGroup & cg, int column, int width, int align )
 {
   if (!pixmap(0))
   {
@@ -339,23 +339,23 @@ void ModuleTreeItem::paintCell( QPainter * p, const QColorGroup & cg, int column
 
     if (offset > 0)
     {
-      QPixmap pixmap(offset, offset);
+      TQPixmap pixmap(offset, offset);
       pixmap.fill(Qt::color0);
       pixmap.setMask(pixmap.createHeuristicMask());
-      QBitmap mask( pixmap.size(), true );
+      TQBitmap mask( pixmap.size(), true );
       pixmap.setMask( mask );
-      QListViewItem::setPixmap(0, pixmap);
+      TQListViewItem::setPixmap(0, pixmap);
     }
   }
 
-  QListViewItem::paintCell( p, cg, column, width, align );
+  TQListViewItem::paintCell( p, cg, column, width, align );
 }
 
 
-void ModuleTreeItem::setGroup(const QString &path)
+void ModuleTreeItem::setGroup(const TQString &path)
 {
   KServiceGroup::Ptr group = KServiceGroup::group(path);
-  QString defName = path.left(path.length()-1);
+  TQString defName = path.left(path.length()-1);
   int pos = defName.findRev('/');
   if (pos >= 0)
      defName = defName.mid(pos+1);

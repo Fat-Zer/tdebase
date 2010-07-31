@@ -21,21 +21,21 @@
 
 #include <unistd.h>
 
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include <dcopclient.h>
 #include <klocale.h>
 
 #include "filteropts.h"
 
-FilterOptions::FilterOptions(QWidget *parent, const char *name)
+FilterOptions::FilterOptions(TQWidget *parent, const char *name)
     		  :KCModule(parent, name)
 {
 
-    QGridLayout *lay = new QGridLayout(this, 1, 1, 10, 5);
+    TQGridLayout *lay = new TQGridLayout(this, 1, 1, 10, 5);
 
-    lay->addWidget(new QLabel(i18n("Under construction..."), this), 0, 0);
+    lay->addWidget(new TQLabel(i18n("Under construction..."), this), 0, 0);
     lay->activate();
 
 }

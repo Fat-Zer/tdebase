@@ -4,8 +4,8 @@
 
 #include <kcmodule.h>
 
-#include <qstring.h>
-#include <qlistview.h>
+#include <tqstring.h>
+#include <tqlistview.h>
 
 #include "kxkbconfig.h"
 
@@ -19,7 +19,7 @@ class LayoutConfig : public KCModule
   Q_OBJECT
 
 public:
-  LayoutConfig(QWidget *parent = 0L, const char *name = 0L);
+  LayoutConfig(TQWidget *parent = 0L, const char *name = 0L);
   virtual ~LayoutConfig();
 
   void load();
@@ -28,16 +28,16 @@ public:
   void initUI();
 
 protected:
-  QString createOptionString();
-  void updateIndicator(QListViewItem* selLayout);
+  TQString createOptionString();
+  void updateIndicator(TQListViewItem* selLayout);
 
 protected slots:
   void moveUp();
   void moveDown();
   void variantChanged();
-  void displayNameChanged(const QString& name);
+  void displayNameChanged(const TQString& name);
   void latinChanged();
-  void layoutSelChanged(QListViewItem *);
+  void layoutSelChanged(TQListViewItem *);
   void loadRules();
   void updateLayoutCommand();
   void updateOptionsCommand();
@@ -51,11 +51,11 @@ private:
 
   XkbRules *m_rules;
   KxkbConfig m_kxkbConfig;
-  QDict<OptionListItem> m_optionGroups;
+  TQDict<OptionListItem> m_optionGroups;
 
-  QWidget* makeOptionsTab();
+  TQWidget* makeOptionsTab();
   void updateStickyLimit();
-  static LayoutUnit getLayoutUnitKey(QListViewItem *sel);
+  static LayoutUnit getLayoutUnitKey(TQListViewItem *sel);
 };
 
 

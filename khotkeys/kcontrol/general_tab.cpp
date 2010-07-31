@@ -16,9 +16,9 @@
 
 #include "general_tab.h"
 
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -33,7 +33,7 @@
 namespace KHotKeys
 {
 
-General_tab::General_tab( QWidget* parent_P, const char* name_P )
+General_tab::General_tab( TQWidget* parent_P, const char* name_P )
     : General_tab_ui( parent_P, name_P )
     {
     for( Tab_widget::action_type_t i = Tab_widget::TYPE_FIRST;
@@ -73,22 +73,22 @@ General_tab::General_tab( QWidget* parent_P, const char* name_P )
             }
     clear_data();
     // KHotKeys::Module::changed()
-    connect( action_name_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( disable_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( comment_multilineedit, SIGNAL( textChanged()),
-        module, SLOT( changed()));
-    connect( action_type_combo, SIGNAL( activated( int )),
-        module, SLOT( changed()));
+    connect( action_name_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( disable_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( comment_multilineedit, TQT_SIGNAL( textChanged()),
+        module, TQT_SLOT( changed()));
+    connect( action_type_combo, TQT_SIGNAL( activated( int )),
+        module, TQT_SLOT( changed()));
     }
     
 void General_tab::clear_data()
     {
-    disconnect( action_name_lineedit, SIGNAL( textChanged( const QString& )),
-        this, SLOT( action_name_changed( const QString& )));
-    disconnect( action_type_combo, SIGNAL( activated( int )),
-        this, SIGNAL( action_type_changed( int ))); // CHECKME neodpoji to sloty od nej ?
+    disconnect( action_name_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        this, TQT_SLOT( action_name_changed( const TQString& )));
+    disconnect( action_type_combo, TQT_SIGNAL( activated( int )),
+        this, TQT_SIGNAL( action_type_changed( int ))); // CHECKME neodpoji to sloty od nej ?
     action_name_lineedit->clear();
     disable_checkbox->setChecked( false );
     disable_checkbox->setText( i18n( "&Disable" ));
@@ -113,20 +113,20 @@ void General_tab::set_data( const Action_data* data_P )
     comment_multilineedit->setText( data_P->comment());
     action_type_combo->setCurrentItem( Tab_widget::type( data_P ));
 //    module->set_action_type( data_P->type());
-    connect( action_name_lineedit, SIGNAL( textChanged( const QString& )),
-        SLOT( action_name_changed( const QString& )));
-    connect( action_type_combo, SIGNAL( activated( int )),
-        SIGNAL( action_type_changed( int )));
+    connect( action_name_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        TQT_SLOT( action_name_changed( const TQString& )));
+    connect( action_type_combo, TQT_SIGNAL( activated( int )),
+        TQT_SIGNAL( action_type_changed( int )));
     }
 
-void General_tab::get_data( QString& name_O, QString& comment_O, bool& enabled_O )
+void General_tab::get_data( TQString& name_O, TQString& comment_O, bool& enabled_O )
     {
     name_O = action_name_lineedit->text();
     comment_O = comment_multilineedit->text();
     enabled_O = !disable_checkbox->isChecked();
     }
     
-void General_tab::action_name_changed( const QString& name_P )
+void General_tab::action_name_changed( const TQString& name_P )
     {
     module->action_name_changed( name_P );
     }

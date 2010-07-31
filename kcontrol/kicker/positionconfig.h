@@ -27,7 +27,7 @@ class PositionConfig : public KCModule
     Q_OBJECT
 
 public:
-    PositionConfig(QWidget *parent = 0, const char *name = 0);
+    PositionConfig(TQWidget *parent = 0, const char *name = 0);
 
     void load();
     void save();

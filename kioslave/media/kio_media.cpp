@@ -25,7 +25,7 @@
 #include <dcopclient.h>
 #include <kcmdlineargs.h>
 
-#include <qeventloop.h>
+#include <tqeventloop.h>
 
 #include "kio_media.h"
 
@@ -57,12 +57,12 @@ extern "C" {
 }
 
 
-MediaProtocol::MediaProtocol(const QCString &protocol,
-                             const QCString &pool, const QCString &app)
+MediaProtocol::MediaProtocol(const TQCString &protocol,
+                             const TQCString &pool, const TQCString &app)
 	: ForwardingSlaveBase(protocol, pool, app)
 {
-	connect( &m_impl, SIGNAL( warning( const QString & ) ),
-	         this, SLOT( slotWarning( const QString & ) ) );
+	connect( &m_impl, TQT_SIGNAL( warning( const TQString & ) ),
+	         this, TQT_SLOT( slotWarning( const TQString & ) ) );
 }
 
 MediaProtocol::~MediaProtocol()
@@ -71,7 +71,7 @@ MediaProtocol::~MediaProtocol()
 
 bool MediaProtocol::rewriteURL(const KURL &url, KURL &newUrl)
 {
-	QString name, path;
+	TQString name, path;
 
 	if ( !m_impl.parseURL(url, name, path) )
 	{
@@ -94,7 +94,7 @@ void MediaProtocol::put(const KURL &url, int permissions,
 {
 	kdDebug(1219) << "MediaProtocol::put: " << url << endl;
 
-	QString name, path;
+	TQString name, path;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( ok && path.isEmpty() )
@@ -112,9 +112,9 @@ void MediaProtocol::rename(const KURL &src, const KURL &dest, bool overwrite)
 	kdDebug(1219) << "MediaProtocol::rename: " << src << ", " << dest << ", "
 	          << overwrite << endl;
 
-	QString src_name, src_path;
+	TQString src_name, src_path;
 	bool ok = m_impl.parseURL(src, src_name, src_path);
-	QString dest_name, dest_path;
+	TQString dest_name, dest_path;
 	ok &= m_impl.parseURL(dest, dest_name, dest_path);
 
 	if ( ok && src_path.isEmpty() && dest_path.isEmpty()
@@ -139,7 +139,7 @@ void MediaProtocol::mkdir(const KURL &url, int permissions)
 {
 	kdDebug(1219) << "MediaProtocol::mkdir: " << url << endl;
 
-	QString name, path;
+	TQString name, path;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( ok && path.isEmpty() )
@@ -156,7 +156,7 @@ void MediaProtocol::del(const KURL &url, bool isFile)
 {
 	kdDebug(1219) << "MediaProtocol::del: " << url << endl;
 
-	QString name, path;
+	TQString name, path;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( ok && path.isEmpty() )
@@ -172,7 +172,7 @@ void MediaProtocol::del(const KURL &url, bool isFile)
 void MediaProtocol::stat(const KURL &url)
 {
 	kdDebug(1219) << "MediaProtocol::stat: " << url << endl;
-	QString path = url.path();
+	TQString path = url.path();
 	if( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
@@ -183,7 +183,7 @@ void MediaProtocol::stat(const KURL &url)
 		return;
 	}
 
-	QString name;
+	TQString name;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( !ok )
@@ -223,7 +223,7 @@ void MediaProtocol::listDir(const KURL &url)
 		return;
 	}
 
-	QString name, path;
+	TQString name, path;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( !ok )
@@ -267,7 +267,7 @@ void MediaProtocol::listRoot()
 	finished();
 }
 
-void MediaProtocol::slotWarning( const QString &msg )
+void MediaProtocol::slotWarning( const TQString &msg )
 {
 	warning( msg );
 }

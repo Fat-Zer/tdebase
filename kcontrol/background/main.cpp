@@ -15,7 +15,7 @@
  * License. See the file "COPYING" for the exact licensing terms.
  */
 
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kconfig.h>
@@ -32,7 +32,7 @@
 #include <X11/Xlib.h>
 
 /**** DLL Interface ****/
-typedef KGenericFactory<KBackground, QWidget> KBackGndFactory;
+typedef KGenericFactory<KBackground, TQWidget> KBackGndFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_background, KBackGndFactory("kcmbackground"))
 
 /**** KBackground ****/
@@ -41,20 +41,20 @@ KBackground::~KBackground( )
     delete m_pConfig;
 }
 
-KBackground::KBackground(QWidget *parent, const char *name, const QStringList &/* */)
+KBackground::KBackground(TQWidget *parent, const char *name, const TQStringList &/* */)
     : KCModule(KBackGndFactory::instance(), parent, name)
 {
     int screen_number = 0;
     if (qt_xdisplay())
 	screen_number = DefaultScreen(qt_xdisplay());
-    QCString configname;
+    TQCString configname;
     if (screen_number == 0)
 	configname = "kdesktoprc";
     else
 	configname.sprintf("kdesktop-screen-%drc", screen_number);
     m_pConfig = new KConfig(configname, false, false);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(this);
     m_base = new BGDialog(this, m_pConfig);
     setQuickHelp( m_base->quickHelp());
     layout->add(m_base);
@@ -65,7 +65,7 @@ KBackground::KBackground(QWidget *parent, const char *name, const QStringList &/
     // reparenting that is done.
     setAcceptDrops(true);
 
-    connect(m_base, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+    connect(m_base, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
     KAboutData *about =
     new KAboutData(I18N_NOOP("kcmbackground"), I18N_NOOP("KDE Background Control Module"),
@@ -107,7 +107,7 @@ void KBackground::save()
     int screen_number = 0;
     if (qt_xdisplay())
 	screen_number = DefaultScreen(qt_xdisplay());
-    QCString appname;
+    TQCString appname;
     if (screen_number == 0)
 	appname = "kdesktop";
     else

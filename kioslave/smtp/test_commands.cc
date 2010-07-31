@@ -1,9 +1,9 @@
 #include <kio/global.h>
 #include <kdebug.h>
 
-#include <qstring.h>
-#include <qcstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
 
 //#include <iostream>
 //using std::cout;
@@ -25,19 +25,19 @@ public:
   bool usesSSL;
   bool usesTLS;
   int lastErrorCode;
-  QString lastErrorMessage;
+  TQString lastErrorMessage;
   int lastMessageBoxCode;
-  QString lastMessageBoxText;
-  QByteArray nextData;
+  TQString lastMessageBoxText;
+  TQByteArray nextData;
   int nextDataReturnCode;
-  QStringList caps;
+  TQStringList caps;
   KIO::MetaData metadata;
 
   void clear() {
     startTLSReturnCode = 1;
     usesSSL = usesTLS = false;
     lastErrorCode = lastMessageBoxCode = 0;
-    lastErrorMessage = lastMessageBoxText = QString::null;
+    lastErrorMessage = lastMessageBoxText = TQString::null;
     nextData.resize( 0 );
     nextDataReturnCode = -1;
     caps.clear();
@@ -56,17 +56,17 @@ public:
   bool usingSSL() const { return usesSSL; }
   bool usingTLS() const { return usesTLS; }
   bool haveCapability( const char * cap ) const { return caps.contains( cap ); }
-  void error( int id, const QString & msg ) {
+  void error( int id, const TQString & msg ) {
     lastErrorCode = id;
     lastErrorMessage = msg;
   }
-  void messageBox( int id, const QString & msg, const QString & ) {
+  void messageBox( int id, const TQString & msg, const TQString & ) {
     lastMessageBoxCode = id;
     lastMessageBoxText = msg;
   }
   void dataReq() { /* noop */ }
-  int readData( QByteArray & ba ) { ba = nextData; return nextDataReturnCode; }
-  QString metaData( const QString & key ) const { return metadata[key]; }
+  int readData( TQByteArray & ba ) { ba = nextData; return nextDataReturnCode; }
+  TQString metaData( const TQString & key ) const { return metadata[key]; }
 
 };
 
@@ -236,7 +236,7 @@ int main( int, char** ) {
   //
 
   smtp.clear();
-  QStrIList mechs;
+  TQStrIList mechs;
   mechs.append( "PLAIN" );
   smtp.metadata["sasl"] = "PLAIN";
   AuthCommand auth( &smtp, mechs, "user", "pass" );

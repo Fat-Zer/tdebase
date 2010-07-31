@@ -11,9 +11,9 @@
 // Big changes to accommodate per-domain settings
 // (c) Leo Savernik 2002-2003
 
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qvgroupbox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqvgroupbox.h>
 #include <kconfig.h>
 #include <klistview.h>
 #include <kdebug.h>
@@ -34,42 +34,42 @@
 
 // == class KJavaScriptOptions =====
 
-KJavaScriptOptions::KJavaScriptOptions( KConfig* config, QString group, QWidget *parent,
+KJavaScriptOptions::KJavaScriptOptions( KConfig* config, TQString group, TQWidget *parent,
 										const char *name ) :
   KCModule( parent, name ),
   _removeJavaScriptDomainAdvice(false),
    m_pConfig( config ), m_groupname( group ),
-  js_global_policies(config,group,true,QString::null),
+  js_global_policies(config,group,true,TQString::null),
   _removeECMADomainSettings(false)
 {
-  QVBoxLayout* toplevel = new QVBoxLayout( this, 10, 5 );
+  TQVBoxLayout* toplevel = new TQVBoxLayout( this, 10, 5 );
 
   // the global checkbox
-  QGroupBox* globalGB = new QGroupBox( 2, Vertical, i18n( "Global Settings" ), this );
+  TQGroupBox* globalGB = new TQGroupBox( 2, Vertical, i18n( "Global Settings" ), this );
   toplevel->addWidget( globalGB );
 
-  enableJavaScriptGloballyCB = new QCheckBox( i18n( "Ena&ble JavaScript globally" ), globalGB );
-  QWhatsThis::add( enableJavaScriptGloballyCB, i18n("Enables the execution of scripts written in ECMA-Script "
+  enableJavaScriptGloballyCB = new TQCheckBox( i18n( "Ena&ble JavaScript globally" ), globalGB );
+  TQWhatsThis::add( enableJavaScriptGloballyCB, i18n("Enables the execution of scripts written in ECMA-Script "
         "(also known as JavaScript) that can be contained in HTML pages. "
         "Note that, as with any browser, enabling scripting languages can be a security problem.") );
-  connect( enableJavaScriptGloballyCB, SIGNAL( clicked() ), SLOT( changed() ) );
-  connect( enableJavaScriptGloballyCB, SIGNAL( clicked() ), this, SLOT( slotChangeJSEnabled() ) );
+  connect( enableJavaScriptGloballyCB, TQT_SIGNAL( clicked() ), TQT_SLOT( changed() ) );
+  connect( enableJavaScriptGloballyCB, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChangeJSEnabled() ) );
 
-  reportErrorsCB = new QCheckBox( i18n( "Report &errors" ), globalGB );
-  QWhatsThis::add( reportErrorsCB, i18n("Enables the reporting of errors that occur when JavaScript "
+  reportErrorsCB = new TQCheckBox( i18n( "Report &errors" ), globalGB );
+  TQWhatsThis::add( reportErrorsCB, i18n("Enables the reporting of errors that occur when JavaScript "
 	"code is executed.") );
-  connect( reportErrorsCB, SIGNAL( clicked() ), SLOT( changed() ) );
+  connect( reportErrorsCB, TQT_SIGNAL( clicked() ), TQT_SLOT( changed() ) );
 
-  jsDebugWindow = new QCheckBox( i18n( "Enable debu&gger" ), globalGB );
-  QWhatsThis::add( jsDebugWindow, i18n( "Enables builtin JavaScript debugger." ) );
-  connect( jsDebugWindow, SIGNAL( clicked() ), SLOT( changed() ) );
+  jsDebugWindow = new TQCheckBox( i18n( "Enable debu&gger" ), globalGB );
+  TQWhatsThis::add( jsDebugWindow, i18n( "Enables builtin JavaScript debugger." ) );
+  connect( jsDebugWindow, TQT_SIGNAL( clicked() ), TQT_SLOT( changed() ) );
 
   // the domain-specific listview
   domainSpecific = new JSDomainListView(m_pConfig,m_groupname,this,this);
-  connect(domainSpecific,SIGNAL(changed(bool)),SLOT(changed()));
+  connect(domainSpecific,TQT_SIGNAL(changed(bool)),TQT_SLOT(changed()));
   toplevel->addWidget( domainSpecific, 2 );
 
-  QWhatsThis::add( domainSpecific, i18n("Here you can set specific JavaScript policies for any particular "
+  TQWhatsThis::add( domainSpecific, i18n("Here you can set specific JavaScript policies for any particular "
                                           "host or domain. To add a new policy, simply click the <i>New...</i> "
                                           "button and supply the necessary information requested by the "
                                           "dialog box. To change an existing policy, click on the <i>Change...</i> "
@@ -79,17 +79,17 @@ KJavaScriptOptions::KJavaScriptOptions( KConfig* config, QString group, QWidget 
                                           "button allows you to easily share your policies with other people by allowing "
                                           "you to save and retrieve them from a zipped file.") );
 
-  QString wtstr = i18n("This box contains the domains and hosts you have set "
+  TQString wtstr = i18n("This box contains the domains and hosts you have set "
                        "a specific JavaScript policy for. This policy will be used "
                        "instead of the default policy for enabling or disabling JavaScript on pages sent by these "
                        "domains or hosts. <p>Select a policy and use the controls on "
                        "the right to modify it.");
-  QWhatsThis::add( domainSpecific->listView(), wtstr );
+  TQWhatsThis::add( domainSpecific->listView(), wtstr );
 
-  QWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
+  TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
                                         "the JavaScript policies. These policies will be merged "
                                         "with the existing ones. Duplicate entries are ignored.") );
-  QWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the JavaScript policy to a zipped "
+  TQWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the JavaScript policy to a zipped "
                                         "file. The file, named <b>javascript_policy.tgz</b>, will be "
                                         "saved to a location of your choice." ) );
 
@@ -97,7 +97,7 @@ KJavaScriptOptions::KJavaScriptOptions( KConfig* config, QString group, QWidget 
   js_policies_frame = new JSPoliciesFrame(&js_global_policies,
   		i18n("Global JavaScript Policies"),this);
   toplevel->addWidget(js_policies_frame);
-  connect(js_policies_frame, SIGNAL(changed()), SLOT(changed()));
+  connect(js_policies_frame, TQT_SIGNAL(changed()), TQT_SLOT(changed()));
 
   // Finally do the loading
   load();
@@ -165,8 +165,8 @@ void KJavaScriptOptions::slotChangeJSEnabled() {
 
 // == class JSDomainListView =====
 
-JSDomainListView::JSDomainListView(KConfig *config,const QString &group,
-	KJavaScriptOptions *options, QWidget *parent,const char *name)
+JSDomainListView::JSDomainListView(KConfig *config,const TQString &group,
+	KJavaScriptOptions *options, TQWidget *parent,const char *name)
 	: DomainListView(config,i18n( "Do&main-Specific" ), parent, name),
 	group(group), options(options) {
 }
@@ -174,20 +174,20 @@ JSDomainListView::JSDomainListView(KConfig *config,const QString &group,
 JSDomainListView::~JSDomainListView() {
 }
 
-void JSDomainListView::updateDomainListLegacy(const QStringList &domainConfig)
+void JSDomainListView::updateDomainListLegacy(const TQStringList &domainConfig)
 {
     domainSpecificLV->clear();
     JSPolicies pol(config,group,false);
     pol.defaults();
-    for (QStringList::ConstIterator it = domainConfig.begin();
+    for (TQStringList::ConstIterator it = domainConfig.begin();
          it != domainConfig.end(); ++it) {
-      QString domain;
+      TQString domain;
       KHTMLSettings::KJavaScriptAdvice javaAdvice;
       KHTMLSettings::KJavaScriptAdvice javaScriptAdvice;
       KHTMLSettings::splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
       if (javaScriptAdvice != KHTMLSettings::KJavaScriptDunno) {
-        QListViewItem *index =
-          new QListViewItem( domainSpecificLV, domain,
+        TQListViewItem *index =
+          new TQListViewItem( domainSpecificLV, domain,
                 i18n(KHTMLSettings::adviceToStr(javaScriptAdvice)) );
 
         pol.setDomain(domain);
@@ -200,7 +200,7 @@ void JSDomainListView::updateDomainListLegacy(const QStringList &domainConfig)
 void JSDomainListView::setupPolicyDlg(PushButton trigger,PolicyDialog &pDlg,
 		Policies *pol) {
   JSPolicies *jspol = static_cast<JSPolicies *>(pol);
-  QString caption;
+  TQString caption;
   switch (trigger) {
     case AddButton:
       caption = i18n( "New JavaScript Policy" );

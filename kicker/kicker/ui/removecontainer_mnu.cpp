@@ -36,15 +36,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "containerarea.h"
 
 RemoveContainerMenu::RemoveContainerMenu( ContainerArea* cArea,
-					  QWidget *parent, const char *name)
-    : QPopupMenu( parent, name ), containerArea( cArea )
+					  TQWidget *parent, const char *name)
+    : TQPopupMenu( parent, name ), containerArea( cArea )
 {
     appletId = insertItem(i18n("&Applet"),
                           new PanelRemoveAppletMenu(containerArea, this));
     buttonId = insertItem(i18n("Appli&cation"),
                           new PanelRemoveButtonMenu( containerArea, this ) );
     adjustSize();
-    connect( this, SIGNAL( aboutToShow() ), SLOT( slotAboutToShow() ) );
+    connect( this, TQT_SIGNAL( aboutToShow() ), TQT_SLOT( slotAboutToShow() ) );
 }
 
 RemoveContainerMenu::~RemoveContainerMenu()

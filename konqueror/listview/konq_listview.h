@@ -27,9 +27,9 @@
 #include <konq_dirpart.h>
 #include <kmimetyperesolver.h>
 
-#include <qvaluelist.h>
-#include <qlistview.h>
-#include <qstringlist.h>
+#include <tqvaluelist.h>
+#include <tqlistview.h>
+#include <tqstringlist.h>
 
 #include <konq_propsview.h>
 #include "konq_listviewwidget.h"
@@ -44,7 +44,7 @@ public:
   KonqListViewFactory();
   virtual ~KonqListViewFactory();
 
-  virtual KParts::Part* createPartObject( QWidget *parentWidget, const char *, QObject *parent, const char *name, const char*, const QStringList &args );
+  virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *, TQObject *parent, const char *name, const char*, const TQStringList &args );
 
   static KInstance *instance();
   static KonqPropsView *defaultViewProps();
@@ -65,7 +65,7 @@ class KonqListView : public KonqDirPart
   Q_OBJECT
   Q_PROPERTY( bool supportsUndo READ supportsUndo )
 public:
-  KonqListView( QWidget *parentWidget, QObject *parent, const char *name, const QString& mode );
+  KonqListView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode );
   virtual ~KonqListView();
 
   virtual const KFileItem * currentItem();
@@ -75,8 +75,8 @@ public:
 
   bool supportsUndo() const { return true; }
 
-  virtual void saveState( QDataStream &stream );
-  virtual void restoreState( QDataStream &stream );
+  virtual void saveState( TQDataStream &stream );
+  virtual void restoreState( TQDataStream &stream );
 
   // "Cut" icons : disable those whose URL is in lst, enable the others
   virtual void disableIcons( const KURL::List & lst );
@@ -86,7 +86,7 @@ public:
   //int iconSize() { return m_pListView->iconSize(); }
   void determineIcon( KonqBaseListViewItem * item );
 
-  QPtrList<KonqBaseListViewItem> & lstPendingMimeIconItems() { return m_mimeTypeResolver->m_lstPendingMimeIconItems; }
+  TQPtrList<KonqBaseListViewItem> & lstPendingMimeIconItems() { return m_mimeTypeResolver->m_lstPendingMimeIconItems; }
   void listingComplete();
 
   virtual void newIconSize( int );
@@ -145,7 +145,7 @@ private:
 
   KonqBaseListViewWidget *m_pListView;
   KMimeTypeResolver<KonqBaseListViewItem,KonqListView> *m_mimeTypeResolver;
-  QTimer *m_headerTimer;
+  TQTimer *m_headerTimer;
 
   KAction *m_paSelect;
   KAction *m_paUnselect;
@@ -195,7 +195,7 @@ class ListViewBrowserExtension : public KonqDirPartBrowserExtension
 
       void reparseConfiguration();
       void setSaveViewPropertiesLocally( bool value );
-      void setNameFilter( const QString &nameFilter );
+      void setNameFilter( const TQString &nameFilter );
       // void refreshMimeTypes is missing
 
       void properties();

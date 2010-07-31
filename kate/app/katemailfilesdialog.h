@@ -23,7 +23,7 @@
 
 #include <kdialogbase.h>
 #include <kurl.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class QString;
 class QStringList;
@@ -38,21 +38,21 @@ class KateMainWindow;
 class KateMailDialog : public KDialogBase {
   Q_OBJECT
   public:
-    KateMailDialog( QWidget *parent=0,
+    KateMailDialog( TQWidget *parent=0,
                           KateMainWindow *mainwin=0 );
     ~KateMailDialog() {};
 
     /**
         @return a list of the selected docs.
     */
-    QPtrList<Kate::Document> selectedDocs();
+    TQPtrList<Kate::Document> selectedDocs();
   private slots:
     void slotShowButton();
   private:
     class KListView *list;
-    class QLabel *lInfo;
+    class TQLabel *lInfo;
     KateMainWindow *mainWindow;
-    class QVBox *mw;
+    class TQVBox *mw;
 
 };
 

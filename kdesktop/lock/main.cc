@@ -76,7 +76,7 @@ int main( int argc, char **argv )
 
     bool child = false;
     int parent_connection = 0; // socket to the parent saver
-    QValueList<int> child_sockets;
+    TQValueList<int> child_sockets;
 
     if (KGlobalSettings::isMultiHead())
     {
@@ -91,7 +91,7 @@ int main( int argc, char **argv )
         int number_of_screens = ScreenCount(dpy);
         starting_screen = kdesktop_screen_number = DefaultScreen(dpy);
         int pos;
-        QCString display_name = XDisplayString(dpy);
+        TQCString display_name = XDisplayString(dpy);
         XCloseDisplay(dpy);
         kdDebug() << "screen " << number_of_screens << " " << kdesktop_screen_number << " " << display_name << " " << starting_screen << endl;
         dpy = 0;
@@ -99,7 +99,7 @@ int main( int argc, char **argv )
         if ((pos = display_name.findRev('.')) != -1)
             display_name.remove(pos, 10);
 
-        QCString env;
+        TQCString env;
         if (number_of_screens != 1) {
             for (int i = 0; i < number_of_screens; i++) {
                 if (i != starting_screen) {

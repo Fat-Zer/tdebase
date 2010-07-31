@@ -29,19 +29,19 @@ class KListBoxDialog : public KDialogBase
 
 public:
 
-  KListBoxDialog(QString text, QWidget *parent=0);
+  KListBoxDialog(TQString text, TQWidget *parent=0);
   ~KListBoxDialog() {};
 
-  QListBox &getTable() { return *table; };
+  TQListBox &getTable() { return *table; };
 
-  void insertItem( const QString& text );
-  void setCurrentItem ( const QString& text );
+  void insertItem( const TQString& text );
+  void setCurrentItem ( const TQString& text );
   int currentItem();
 
 protected:
 
-  QListBox *table;
-  QLabel *label;
+  TQListBox *table;
+  TQLabel *label;
 
 };
 

@@ -40,17 +40,17 @@
 #include <kpixmapeffect.h>
 #include <kpixmap.h>
 
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcursor.h>
-#include <qtimer.h>
-#include <qfile.h>
-#include <qsocketnotifier.h>
-#include <qvaluevector.h>
-#include <qtooltip.h>
+#include <tqframe.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcursor.h>
+#include <tqtimer.h>
+#include <tqfile.h>
+#include <tqsocketnotifier.h>
+#include <tqvaluevector.h>
+#include <tqtooltip.h>
 
-#include <qdatetime.h>
+#include <tqdatetime.h>
 
 #include <stdlib.h>
 #include <assert.h>
@@ -125,7 +125,7 @@ static void segv_handler(int)
 // starting screensaver hacks, and password entry.f
 //
 LockProcess::LockProcess(bool child, bool useBlankOnly)
-    : QWidget(0L, "saver window", WX11BypassWM),
+    : TQWidget(0L, "saver window", WX11BypassWM),
       mOpenGLVisual(0),
       child_saver(child),
       mParent(0),
@@ -155,8 +155,8 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     mRootWidth = rootAttr.width;
     mRootHeight = rootAttr.height;
     { // trigger creation of QToolTipManager, it does XSelectInput() on the root window
-    QWidget w;
-    QToolTip::add( &w, "foo" );
+    TQWidget w;
+    TQToolTip::add( &w, "foo" );
     }
     XSelectInput( qt_xdisplay(), qt_xrootwin(),
         SubstructureNotifyMask | rootAttr.your_event_mask );
@@ -167,7 +167,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
                                     "System/ScreenSavers/");
 
     // Add KDE specific screensaver path
-    QString relPath="System/ScreenSavers/";
+    TQString relPath="System/ScreenSavers/";
     KServiceGroup::Ptr servGroup = KServiceGroup::baseGroup( "screensavers");
     if (servGroup)
     {
@@ -182,15 +182,15 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     gXA_VROOT = XInternAtom (qt_xdisplay(), "__SWM_VROOT", False);
     gXA_SCREENSAVER_VERSION = XInternAtom (qt_xdisplay(), "_SCREENSAVER_VERSION", False);
 
-    connect(&mHackProc, SIGNAL(processExited(KProcess *)),
-                        SLOT(hackExited(KProcess *)));
+    connect(&mHackProc, TQT_SIGNAL(processExited(KProcess *)),
+                        TQT_SLOT(hackExited(KProcess *)));
 
-    connect(&mSuspendTimer, SIGNAL(timeout()), SLOT(suspend()));
+    connect(&mSuspendTimer, TQT_SIGNAL(timeout()), TQT_SLOT(suspend()));
 
-    QStringList dmopt =
-        QStringList::split(QChar(','),
-                            QString::fromLatin1( ::getenv( "XDM_MANAGED" )));
-    for (QStringList::ConstIterator it = dmopt.begin(); it != dmopt.end(); ++it)
+    TQStringList dmopt =
+        TQStringList::split(TQChar(','),
+                            TQString::fromLatin1( ::getenv( "XDM_MANAGED" )));
+    for (TQStringList::ConstIterator it = dmopt.begin(); it != dmopt.end(); ++it)
         if ((*it).startsWith("method="))
             mMethod = (*it).mid(7);
 
@@ -203,7 +203,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
         DPMSInfo(qt_xdisplay(), &state, &on);
         if (on)
         {
-            connect(&mCheckDPMS, SIGNAL(timeout()), SLOT(checkDPMSActive()));
+            connect(&mCheckDPMS, TQT_SIGNAL(timeout()), TQT_SLOT(checkDPMSActive()));
             // we can save CPU if we stop it as quickly as possible
             // but we waste CPU if we check too often -> so take 10s
             mCheckDPMS.start(10000);
@@ -212,7 +212,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
 #endif
 
 #if (QT_VERSION-0 >= 0x030200) // XRANDR support
-  connect( kapp->desktop(), SIGNAL( resized( int )), SLOT( desktopResized()));
+  connect( kapp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized()));
 #endif
 
     greetPlugin.library = 0;
@@ -250,7 +250,7 @@ static void sighup_handler(int)
     ::write( signal_pipe[1], &tmp, 1);
 }
 
-void LockProcess::timerEvent(QTimerEvent *ev)
+void LockProcess::timerEvent(TQTimerEvent *ev)
 {
 	if (mAutoLogout && ev->timerId() == mAutoLogoutTimerId)
 	{
@@ -271,7 +271,7 @@ void LockProcess::setupPipe()
     mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
     if (mPipe_fd > -1) {
         mPipeOpen = true;
-        QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
+        TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
     }
 
     mknod(FIFO_FILE_OUT, S_IFIFO|0600, 0);
@@ -287,7 +287,7 @@ void LockProcess::checkPipe()
 {
     char readbuf[128];
     int numread;
-    QString to_display;
+    TQString to_display;
     const char * pin_entry;
 
     if (mPipeOpen == true) {
@@ -318,7 +318,7 @@ void LockProcess::checkPipe()
                 }
                 mDialogControlLock = false;
                 // Display info message dialog
-                QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
+                TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
                 inDlg.updateLabel(to_display);
                 inDlg.setUnlockIcon();
@@ -339,7 +339,7 @@ void LockProcess::checkPipe()
                 }
                 mDialogControlLock = false;
                 // Display info message dialog
-                QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
+                TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
                 InfoDlg inDlg( this );
                 inDlg.updateLabel(to_display);
                 if (readbuf[0] == 'K') inDlg.setKDEIcon();
@@ -363,7 +363,7 @@ void LockProcess::checkPipe()
                 }
                 mDialogControlLock = false;
                 // Display query dialog
-                QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
+                TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
                 QueryDlg qryDlg( this );
                 qryDlg.updateLabel(to_display);
                 qryDlg.setUnlockIcon();
@@ -381,7 +381,7 @@ void LockProcess::checkPipe()
                 return;
             }
         }
-        QTimer::singleShot( PIPE_CHECK_INTERVAL, this, SLOT(checkPipe()) );
+        TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
     }
 }
 
@@ -414,9 +414,9 @@ void LockProcess::setupSignals()
     sigaction(SIGHUP, &act, 0L);
 
     pipe(signal_pipe);
-    QSocketNotifier* notif = new QSocketNotifier(signal_pipe[0],
-	QSocketNotifier::Read, this );
-    connect( notif, SIGNAL(activated(int)), SLOT(signalPipeSignal()));
+    TQSocketNotifier* notif = new TQSocketNotifier(signal_pipe[0],
+	TQSocketNotifier::Read, this );
+    connect( notif, TQT_SIGNAL(activated(int)), TQT_SLOT(signalPipeSignal()));
 }
 
 
@@ -444,7 +444,7 @@ bool LockProcess::lock()
         mBusy = true;
         if (startLock())
         {
-            QTimer::singleShot(1000, this, SLOT(slotDeadTimePassed()));
+            TQTimer::singleShot(1000, this, TQT_SLOT(slotDeadTimePassed()));
             return true;
         }
         stopSaver();
@@ -464,7 +464,7 @@ bool LockProcess::defaultSave()
     mLocked = false;
     if (startSaver()) {
         if (mLockGrace >= 0)
-            QTimer::singleShot(mLockGrace, this, SLOT(startLock()));
+            TQTimer::singleShot(mLockGrace, this, TQT_SLOT(startLock()));
         return true;
     }
     return false;
@@ -527,7 +527,7 @@ void LockProcess::configure()
 
     mPlugins = KDesktopSettings::pluginsUnlock();
     if (mPlugins.isEmpty())
-        mPlugins = QStringList("classic");
+        mPlugins = TQStringList("classic");
     mPluginOptions = KDesktopSettings::pluginOptions();
 }
 
@@ -539,15 +539,15 @@ void LockProcess::readSaver()
 {
     if (!mSaver.isEmpty())
     {
-        QString file = locate("scrsav", mSaver);
+        TQString file = locate("scrsav", mSaver);
 
 	bool opengl = kapp->authorize("opengl_screensavers");
 	bool manipulatescreen = kapp->authorize("manipulatescreen_screensavers");
         KDesktopFile config(file, true);
 	if (config.readEntry("X-KDE-Type").utf8())
 	{
-		QString saverType = config.readEntry("X-KDE-Type").utf8();
-		QStringList saverTypes = QStringList::split(";", saverType);
+		TQString saverType = config.readEntry("X-KDE-Type").utf8();
+		TQStringList saverTypes = TQStringList::split(";", saverType);
 		for (uint i = 0; i < saverTypes.count(); i++)
 		{
 			if ((saverTypes[i] == "ManipulateScreen") && !manipulatescreen)
@@ -652,7 +652,7 @@ void LockProcess::createSaverWindow()
 
     // set NoBackground so that the saver can capture the current
     // screen state if necessary
-    setBackgroundMode(QWidget::NoBackground);
+    setBackgroundMode(TQWidget::NoBackground);
 
     setCursor( blankCursor );
     setGeometry(0, 0, mRootWidth, mRootHeight);
@@ -677,8 +677,8 @@ void LockProcess::desktopResized()
     // This slot needs to be able to execute very rapidly so as to prevent the user's desktop from ever
     // being displayed, so we finish the hack restarting/display prettying operations in a separate timed slot
     if (resizeTimer == NULL) {
-        resizeTimer = new QTimer( this );
-        connect( resizeTimer, SIGNAL(timeout()), this, SLOT(doDesktopResizeFinish()) );
+        resizeTimer = new TQTimer( this );
+        connect( resizeTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(doDesktopResizeFinish()) );
     }
     resizeTimer->start( 100, TRUE ); // 100 millisecond single shot timer; should allow display switching operations to finish before hack is started
 }
@@ -817,7 +817,7 @@ void LockProcess::removeVRoot(Window win)
 //
 bool LockProcess::grabKeyboard()
 {
-    int rv = XGrabKeyboard( qt_xdisplay(), QApplication::desktop()->winId(),
+    int rv = XGrabKeyboard( qt_xdisplay(), TQApplication::desktop()->winId(),
         True, GrabModeAsync, GrabModeAsync, CurrentTime );
 
     return (rv == GrabSuccess);
@@ -832,7 +832,7 @@ bool LockProcess::grabKeyboard()
 //
 bool LockProcess::grabMouse()
 {
-    int rv = XGrabPointer( qt_xdisplay(), QApplication::desktop()->winId(),
+    int rv = XGrabPointer( qt_xdisplay(), TQApplication::desktop()->winId(),
             True, GRABEVENTS, GrabModeAsync, GrabModeAsync, None,
             blankCursor.handle(), CurrentTime );
 
@@ -898,8 +898,8 @@ bool LockProcess::startSaver()
     saveVRoot();
 
     if (mParent) {
-        QSocketNotifier *notifier = new QSocketNotifier(mParent, QSocketNotifier::Read, this, "notifier");
-        connect(notifier, SIGNAL( activated (int)), SLOT( quitSaver()));
+        TQSocketNotifier *notifier = new TQSocketNotifier(mParent, TQSocketNotifier::Read, this, "notifier");
+        connect(notifier, TQT_SIGNAL( activated (int)), TQT_SLOT( quitSaver()));
     }
     createSaverWindow();
     move(0, 0);
@@ -929,26 +929,26 @@ void LockProcess::stopSaver()
             DM().setLock( false );
         ungrabInput();
         const char *out = "GOAWAY!";
-        for (QValueList<int>::ConstIterator it = child_sockets.begin(); it != child_sockets.end(); ++it)
+        for (TQValueList<int>::ConstIterator it = child_sockets.begin(); it != child_sockets.end(); ++it)
             write(*it, out, sizeof(out));
     }
 }
 
 // private static
-QVariant LockProcess::getConf(void *ctx, const char *key, const QVariant &dflt)
+TQVariant LockProcess::getConf(void *ctx, const char *key, const TQVariant &dflt)
 {
     LockProcess *that = (LockProcess *)ctx;
-    QString fkey = QString::fromLatin1( key ) + '=';
-    for (QStringList::ConstIterator it = that->mPluginOptions.begin();
+    TQString fkey = TQString::fromLatin1( key ) + '=';
+    for (TQStringList::ConstIterator it = that->mPluginOptions.begin();
          it != that->mPluginOptions.end(); ++it)
         if ((*it).startsWith( fkey ))
             return (*it).mid( fkey.length() );
     return dflt;
 }
 
-void LockProcess::cantLock( const QString &txt)
+void LockProcess::cantLock( const TQString &txt)
 {
-    msgBox( QMessageBox::Critical, i18n("Will not lock the session, as unlocking would be impossible:\n") + txt );
+    msgBox( TQMessageBox::Critical, i18n("Will not lock the session, as unlocking would be impossible:\n") + txt );
 }
 
 #if 0 // placeholders for later
@@ -962,9 +962,9 @@ i18n("<i>kcheckpass</i> is unable to operate. Possibly it is not SetUID root.");
 //
 bool LockProcess::startLock()
 {
-    for (QStringList::ConstIterator it = mPlugins.begin(); it != mPlugins.end(); ++it) {
+    for (TQStringList::ConstIterator it = mPlugins.begin(); it != mPlugins.end(); ++it) {
         GreeterPluginHandle plugin;
-        QString path = KLibLoader::self()->findLibrary(
+        TQString path = KLibLoader::self()->findLibrary(
                     ((*it)[0] == '/' ? *it : "kgreet_" + *it ).latin1() );
         if (path.isEmpty()) {
             kdWarning(1204) << "GreeterPlugin " << *it << " does not exist" << endl;
@@ -1018,10 +1018,10 @@ bool LockProcess::startHack()
 
     mHackProc.clearArguments();
 
-    QTextStream ts(&mSaverExec, IO_ReadOnly);
-    QString word;
+    TQTextStream ts(&mSaverExec, IO_ReadOnly);
+    TQString word;
     ts >> word;
-    QString path = KStandardDirs::findExe(word);
+    TQString path = KStandardDirs::findExe(word);
 
     if (!path.isEmpty())
     {
@@ -1089,8 +1089,8 @@ void LockProcess::suspend()
     if(!mSuspended)
     {
         mHackProc.kill(SIGSTOP);
-        QApplication::syncX();
-        mSavedScreen = QPixmap::grabWindow( winId());
+        TQApplication::syncX();
+        mSavedScreen = TQPixmap::grabWindow( winId());
     }
     mSuspended = true;
 }
@@ -1103,7 +1103,7 @@ void LockProcess::resume( bool force )
     {
         XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
         bitBlt( this, 0, 0, &mSavedScreen );
-        QApplication::syncX();
+        TQApplication::syncX();
         mHackProc.kill(SIGCONT);
     }
     mSuspended = false;
@@ -1124,7 +1124,7 @@ bool LockProcess::checkPass()
 
         int ret = execDialog( &passDlg );
         if (mForceReject == true) {
-            ret = QDialog::Rejected;
+            ret = TQDialog::Rejected;
         }
         mForceReject = false;
 
@@ -1138,7 +1138,7 @@ bool LockProcess::checkPass()
                 SubstructureNotifyMask | rootAttr.your_event_mask );
         }
 
-        return ret == QDialog::Accepted;
+        return ret == TQDialog::Accepted;
     }
     else {
         return 0;
@@ -1161,13 +1161,13 @@ static void fakeFocusIn( WId window )
     XSendEvent( qt_xdisplay(), window, False, NoEventMask, &ev );
 }
 
-int LockProcess::execDialog( QDialog *dlg )
+int LockProcess::execDialog( TQDialog *dlg )
 {
     currentDialog=dlg;
     dlg->adjustSize();
 
-    QRect rect = dlg->geometry();
-    rect.moveCenter(KGlobalSettings::desktopGeometry(QCursor::pos()).center());
+    TQRect rect = dlg->geometry();
+    rect.moveCenter(KGlobalSettings::desktopGeometry(TQCursor::pos()).center());
     dlg->move( rect.topLeft() );
 
     if (mDialogs.isEmpty())
@@ -1193,14 +1193,14 @@ int LockProcess::execDialog( QDialog *dlg )
 
 void LockProcess::preparePopup()
 {
-    QWidget *dlg = (QWidget *)sender();
+    TQWidget *dlg = (TQWidget *)sender();
     mDialogs.prepend( dlg );
     fakeFocusIn( dlg->winId() );
 }
 
 void LockProcess::cleanupPopup()
 {
-    QWidget *dlg = (QWidget *)sender();
+    TQWidget *dlg = (TQWidget *)sender();
     mDialogs.remove( dlg );
     fakeFocusIn( mDialogs.first()->winId() );
 }
@@ -1208,7 +1208,7 @@ void LockProcess::cleanupPopup()
 void LockProcess::doFunctionKeyBroadcast() {
     // Provide a clean, pretty display switch by hiding the password dialog here
     mBusy=true;
-    QTimer::singleShot(1000, this, SLOT(slotDeadTimePassed()));
+    TQTimer::singleShot(1000, this, TQT_SLOT(slotDeadTimePassed()));
     if (mkeyCode == XKeysymToKeycode(qt_xdisplay(), XF86XK_Display)) {
         while (mDialogControlLock == true) sleep(1);
         mDialogControlLock = true;
@@ -1244,7 +1244,7 @@ bool LockProcess::x11Event(XEvent *event)
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioRaiseVolume)) || \
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioLowerVolume))) {
             mkeyCode = event->xkey.keycode;
-            QTimer::singleShot( 100, this, SLOT(doFunctionKeyBroadcast()) );
+            TQTimer::singleShot( 100, this, TQT_SLOT(doFunctionKeyBroadcast()) );
             return true;
         }
     }
@@ -1330,7 +1330,7 @@ void LockProcess::stayOnTop()
         // and stack others below it
         Window* stack = new Window[ mDialogs.count() + 1 ];
         int count = 0;
-        for( QValueList< QWidget* >::ConstIterator it = mDialogs.begin();
+        for( TQValueList< TQWidget* >::ConstIterator it = mDialogs.begin();
              it != mDialogs.end();
              ++it )
             stack[ count++ ] = (*it)->winId();
@@ -1404,23 +1404,23 @@ void LockProcess::unlockXF86()
 }
 #endif
 
-void LockProcess::msgBox( QMessageBox::Icon type, const QString &txt )
+void LockProcess::msgBox( TQMessageBox::Icon type, const TQString &txt )
 {
-    QDialog box( 0, "messagebox", true, WX11BypassWM );
-    QFrame *winFrame = new QFrame( &box );
-    winFrame->setFrameStyle( QFrame::WinPanel | QFrame::Raised );
+    TQDialog box( 0, "messagebox", true, WX11BypassWM );
+    TQFrame *winFrame = new TQFrame( &box );
+    winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
     winFrame->setLineWidth( 2 );
-    QLabel *label1 = new QLabel( winFrame );
-    label1->setPixmap( QMessageBox::standardIcon( type ) );
-    QLabel *label2 = new QLabel( txt, winFrame );
+    TQLabel *label1 = new TQLabel( winFrame );
+    label1->setPixmap( TQMessageBox::standardIcon( type ) );
+    TQLabel *label2 = new TQLabel( txt, winFrame );
     KPushButton *button = new KPushButton( KStdGuiItem::ok(), winFrame );
     button->setDefault( true );
-    button->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    connect( button, SIGNAL( clicked() ), &box, SLOT( accept() ) );
+    button->setSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
+    connect( button, TQT_SIGNAL( clicked() ), &box, TQT_SLOT( accept() ) );
 
-    QVBoxLayout *vbox = new QVBoxLayout( &box );
+    TQVBoxLayout *vbox = new TQVBoxLayout( &box );
     vbox->addWidget( winFrame );
-    QGridLayout *grid = new QGridLayout( winFrame, 2, 2, 10 );
+    TQGridLayout *grid = new TQGridLayout( winFrame, 2, 2, 10 );
     grid->addWidget( label1, 0, 0, Qt::AlignCenter );
     grid->addWidget( label2, 0, 1, Qt::AlignCenter );
     grid->addMultiCellWidget( button, 1,1, 0,1, Qt::AlignCenter );

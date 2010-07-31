@@ -61,9 +61,9 @@ using KioSMTP::TransactionState;
 #include <kio/slaveinterface.h>
 #include <klocale.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 
 #include <memory>
 using std::auto_ptr;
@@ -117,7 +117,7 @@ int kdemain(int argc, char **argv)
   return 0;
 }
 
-SMTPProtocol::SMTPProtocol(const QCString & pool, const QCString & app,
+SMTPProtocol::SMTPProtocol(const TQCString & pool, const TQCString & app,
                            bool useSSL)
 :  TCPSlaveBase(useSSL ? 465 : 25, 
                 useSSL ? "smtps" : "smtp", 
@@ -157,8 +157,8 @@ void SMTPProtocol::closeConnection() {
   smtp_close();
 }
 
-void SMTPProtocol::special( const QByteArray & aData ) {
-  QDataStream s( aData, IO_ReadOnly );
+void SMTPProtocol::special( const TQByteArray & aData ) {
+  TQDataStream s( aData, IO_ReadOnly );
   int what;
   s >> what;
   if ( what == 'c' ) {
@@ -208,9 +208,9 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
       m_sPass = mset.getSetting(KEMailSettings::OutServerPass);
 
       if (m_sUser.isEmpty())
-        m_sUser = QString::null;
+        m_sUser = TQString::null;
       if (m_sPass.isEmpty())
-        m_sPass = QString::null;
+        m_sPass = TQString::null;
       open_url.setUser(m_sUser);
       open_url.setPass(m_sPass);
       m_sServer = open_url.host();
@@ -229,7 +229,7 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
   // and then format accordingly (either: emailaddress@host.com or
   // Real Name <emailaddress@host.com>)
   if ( !request.hasFromAddress() ) {
-    const QString from = mset.getSetting( KEMailSettings::EmailAddress );
+    const TQString from = mset.getSetting( KEMailSettings::EmailAddress );
     if ( !from.isNull() )
       request.setFromAddress( from );
     else if ( request.emitHeaders() ) {
@@ -259,8 +259,8 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
 
   // Loop through our To and CC recipients, and send the proper
   // SMTP commands, for the benefit of the server.
-  QStringList recipients = request.recipients();
-  for ( QStringList::const_iterator it = recipients.begin() ; it != recipients.end() ; ++it )
+  TQStringList recipients = request.recipients();
+  for ( TQStringList::const_iterator it = recipients.begin() ; it != recipients.end() ; ++it )
     queueCommand( new RcptToCommand( this, (*it).latin1() ) );
 
   queueCommand( Command::DATA );
@@ -275,8 +275,8 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
 }
 
 
-void SMTPProtocol::setHost(const QString & host, int port,
-                           const QString & user, const QString & pass)
+void SMTPProtocol::setHost(const TQString & host, int port,
+                           const TQString & user, const TQString & pass)
 {
   m_sServer = host;
   m_iPort = port;
@@ -284,7 +284,7 @@ void SMTPProtocol::setHost(const QString & host, int port,
   m_sPass = pass;
 }
 
-bool SMTPProtocol::sendCommandLine( const QCString & cmdline ) {
+bool SMTPProtocol::sendCommandLine( const TQCString & cmdline ) {
   //kdDebug( cmdline.length() < 4096, 7112) << "C: " << cmdline.data();
   //kdDebug( cmdline.length() >= 4096, 7112) << "C: <" << cmdline.length() << " bytes>" << endl;
   kdDebug( 7112) << "C: <" << cmdline.length() << " bytes>" << endl;
@@ -319,7 +319,7 @@ Response SMTPProtocol::getResponse( bool * ok ) {
       return response;
     }
 
-    kdDebug(7112) << "S: " << QCString( buf, recv_len + 1 ).data();
+    kdDebug(7112) << "S: " << TQCString( buf, recv_len + 1 ).data();
     // ...and parse lines...
     response.parseLine( buf, recv_len );
 
@@ -344,7 +344,7 @@ bool SMTPProtocol::executeQueuedCommands( TransactionState * ts ) {
   kdDebug( canPipelineCommands(), 7112 ) << "using pipelining" << endl;
 
   while( !mPendingCommandQueue.isEmpty() ) {
-    QCString cmdline = collectPipelineCommands( ts );
+    TQCString cmdline = collectPipelineCommands( ts );
     if ( ts->failedFatally() ) {
       smtp_close( false ); // _hard_ shutdown
       return false;
@@ -369,10 +369,10 @@ bool SMTPProtocol::executeQueuedCommands( TransactionState * ts ) {
   return true;
 }
 
-QCString SMTPProtocol::collectPipelineCommands( TransactionState * ts ) {
+TQCString SMTPProtocol::collectPipelineCommands( TransactionState * ts ) {
   assert( ts );
 
-  QCString cmdLine;
+  TQCString cmdLine;
   unsigned int cmdLine_len = 0;
 
   while ( mPendingCommandQueue.head() ) {
@@ -394,7 +394,7 @@ QCString SMTPProtocol::collectPipelineCommands( TransactionState * ts ) {
       break;
 
     while ( !cmd->isComplete() && !cmd->needsResponse() ) {
-      const QCString currentCmdLine = cmd->nextCommandLine( ts );
+      const TQCString currentCmdLine = cmd->nextCommandLine( ts );
       if ( ts->failedFatally() )
 	return cmdLine;
       const unsigned int currentCmdLine_len = currentCmdLine.length();
@@ -464,7 +464,7 @@ bool SMTPProtocol::execute( Command * cmd, TransactionState * ts )
 
   do {
     while ( !cmd->isComplete() && !cmd->needsResponse() ) {
-      const QCString cmdLine = cmd->nextCommandLine( ts );
+      const TQCString cmdLine = cmd->nextCommandLine( ts );
       if ( ts && ts->failedFatally() ) {
 	smtp_close( false );
 	return false;
@@ -495,7 +495,7 @@ bool SMTPProtocol::execute( Command * cmd, TransactionState * ts )
   return true;
 }
 
-bool SMTPProtocol::smtp_open(const QString& fakeHostname)
+bool SMTPProtocol::smtp_open(const TQString& fakeHostname)
 {
   if (m_opened && 
       m_iOldPort == port(m_iPort) &&
@@ -527,7 +527,7 @@ bool SMTPProtocol::smtp_open(const QString& fakeHostname)
   }
   else
   { 
-    QString tmpPort;
+    TQString tmpPort;
     KSocketAddress* addr = KExtendedSocket::localAddress(m_iSock);
     // perform name lookup. NI_NAMEREQD means: don't return a numeric
     // value (we need to know when we get have the IP address, so we
@@ -592,7 +592,7 @@ bool SMTPProtocol::authenticate()
   authInfo.password = m_sPass;
   authInfo.prompt = i18n("Username and password for your SMTP account:");
   
-  QStringList strList;
+  TQStringList strList;
 
   if (!metaData("sasl").isEmpty())
     strList.append(metaData("sasl").latin1());
@@ -609,7 +609,7 @@ bool SMTPProtocol::authenticate()
 void SMTPProtocol::parseFeatures( const Response & ehloResponse ) {
   mCapabilities = Capabilities::fromResponse( ehloResponse );
 
-  QString category = usingTLS() ? "TLS" : usingSSL() ? "SSL" : "PLAIN" ;
+  TQString category = usingTLS() ? "TLS" : usingSSL() ? "SSL" : "PLAIN" ;
   setMetaData( category + " AUTH METHODS", mCapabilities.authMethodMetaData() );
   setMetaData( category + " CAPABILITIES", mCapabilities.asMetaDataString() );
 #ifndef NDEBUG
@@ -628,9 +628,9 @@ void SMTPProtocol::smtp_close( bool nice ) {
     execute( Command::QUIT );
   kdDebug( 7112 ) << "closing connection" << endl;
   closeDescriptor();
-  m_sOldServer = QString::null;
-  m_sOldUser = QString::null;
-  m_sOldPass = QString::null;
+  m_sOldServer = TQString::null;
+  m_sOldUser = TQString::null;
+  m_sOldPass = TQString::null;
   
   mCapabilities.clear();
   mPendingCommandQueue.clear();
@@ -641,7 +641,7 @@ void SMTPProtocol::smtp_close( bool nice ) {
 
 void SMTPProtocol::stat(const KURL & url)
 {
-  QString path = url.path();
+  TQString path = url.path();
   error(KIO::ERR_DOES_NOT_EXIST, url.path());
 }
 

@@ -27,10 +27,10 @@
 #include <kmacroexpander.h>
 #include <kdebug.h>
 
-#include <qdatetime.h>
-#include <qpainter.h>
-#include <qfontmetrics.h>
-#include <qtimer.h>
+#include <tqdatetime.h>
+#include <tqpainter.h>
+#include <tqfontmetrics.h>
+#include <tqtimer.h>
 
 #include <unistd.h>
 #include <sys/utsname.h>
@@ -38,7 +38,7 @@
 # include <sys/systeminfo.h>
 #endif
 
-KdmLabel::KdmLabel( KdmItem *parent, const QDomNode &node, const char *name )
+KdmLabel::KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name )
     : KdmItem( parent, node, name )
 {
 	itemType = "label";
@@ -49,23 +49,23 @@ KdmLabel::KdmLabel( KdmItem *parent, const QDomNode &node, const char *name )
 	label.prelight.present = false;
 	label.maximumWidth = -1;
 
-	const QString locale = KGlobal::locale()->language();
+	const TQString locale = KGlobal::locale()->language();
 
 	// Read LABEL ID
-	QDomNode n = node;
-	QDomElement elLab = n.toElement();
+	TQDomNode n = node;
+	TQDomElement elLab = n.toElement();
 	// ID types: clock, pam-error, pam-message, pam-prompt,
 	//  pam-warning, timed-label
 	label.id = elLab.attribute( "id", "" );
 	label.hasId = !(label.id).isEmpty();
 
 	// Read LABEL TAGS
-	QDomNodeList childList = node.childNodes();
+	TQDomNodeList childList = node.childNodes();
 	bool stockUsed = false;
 	for (uint nod = 0; nod < childList.count(); nod++) {
-		QDomNode child = childList.item( nod );
-		QDomElement el = child.toElement();
-		QString tagName = el.tagName();
+		TQDomNode child = childList.item( nod );
+		TQDomElement el = child.toElement();
+		TQString tagName = el.tagName();
 
 		if (tagName == "pos")
 			label.maximumWidth = el.attribute( "max-width", "-1" ).toInt();
@@ -83,7 +83,7 @@ KdmLabel::KdmLabel( KdmItem *parent, const QDomNode &node, const char *name )
 		} else if (tagName == "text" && el.attributes().count() == 0 && !stockUsed) {
 			label.text = el.text();
 		} else if (tagName == "text" && !stockUsed) {
-			QString lang = el.attribute( "xml:lang", "" );
+			TQString lang = el.attribute( "xml:lang", "" );
 			if (lang == locale)
 				label.text = el.text();
 		} else if (tagName == "stock") {
@@ -95,15 +95,15 @@ KdmLabel::KdmLabel( KdmItem *parent, const QDomNode &node, const char *name )
 	// Check if this is a timer label
 	label.isTimer = label.text.find( "%c" ) >= 0;
 	if (label.isTimer) {
-		timer = new QTimer( this );
+		timer = new TQTimer( this );
 		timer->start( 1000 );
-		connect( timer, SIGNAL(timeout()), SLOT(update()) );
+		connect( timer, TQT_SIGNAL(timeout()), TQT_SLOT(update()) );
 	}
 	cText = lookupText( label.text );
 }
 
 void
-KdmLabel::setText( const QString &txt )
+KdmLabel::setText( const TQString &txt )
 {
 	label.text = txt;
 	update();
@@ -119,7 +119,7 @@ KdmLabel::sizeHint()
 	else if (state == Sprelight && label.prelight.present)
 		l = &label.prelight;
 	// get the hint from font metrics
-	QSize hint = QFontMetrics( l->font ).size( AlignLeft | SingleLine, cText );
+	TQSize hint = TQFontMetrics( l->font ).size( AlignLeft | SingleLine, cText );
 	// clip the result using the max-width label(pos) parameter
 	if (label.maximumWidth > 0 && hint.width() > label.maximumWidth)
 		hint.setWidth( label.maximumWidth );
@@ -127,7 +127,7 @@ KdmLabel::sizeHint()
 }
 
 void
-KdmLabel::drawContents( QPainter *p, const QRect &/*r*/  )
+KdmLabel::drawContents( TQPainter *p, const TQRect &/*r*/  )
 {
 	// choose the correct label class
 	struct LabelStruct::LabelClass *l = &label.normal;
@@ -157,7 +157,7 @@ KdmLabel::statusChanged()
 void
 KdmLabel::update()
 {
-	QString text = lookupText( label.text );
+	TQString text = lookupText( label.text );
 	if (text != cText) {
 		cText = text;
 		needUpdate();
@@ -186,10 +186,10 @@ static const struct {
 };
 
 QString
-KdmLabel::lookupStock( const QString &stock )
+KdmLabel::lookupStock( const TQString &stock )
 {
 	//FIXME add key accels!
-	QString type( stock.lower() );
+	TQString type( stock.lower() );
 
 	for (uint i = 0; i < sizeof(stocks)/sizeof(stocks[0]); i++)
 		if (type == stocks[i].type)
@@ -200,30 +200,30 @@ KdmLabel::lookupStock( const QString &stock )
 }
 
 QString
-KdmLabel::lookupText( const QString &t )
+KdmLabel::lookupText( const TQString &t )
 {
-	QString text = t;
+	TQString text = t;
 
 	text.replace( '_', '&' );
 //	text.remove( '_' ); // FIXME add key accels, remove underscores for now
 
-	QMap<QChar,QString> m;
+	TQMap<TQChar,TQString> m;
 	struct utsname uts;
 	uname( &uts );
-	m['n'] = QString::fromLocal8Bit( uts.nodename );
+	m['n'] = TQString::fromLocal8Bit( uts.nodename );
 	char buf[256];
 	buf[sizeof(buf) - 1] = '\0';
-	m['h'] = gethostname( buf, sizeof(buf) - 1 ) ? "localhost" : QString::fromLocal8Bit( buf );
+	m['h'] = gethostname( buf, sizeof(buf) - 1 ) ? "localhost" : TQString::fromLocal8Bit( buf );
 #ifdef HAVE_GETDOMAINNAME
-	m['o'] = getdomainname( buf, sizeof(buf) - 1 ) ? "localdomain" : QString::fromLocal8Bit( buf );
+	m['o'] = getdomainname( buf, sizeof(buf) - 1 ) ? "localdomain" : TQString::fromLocal8Bit( buf );
 #elif defined(HAVE_SYSINFO)
-	m['o'] = (unsigned)sysinfo( SI_SRPC_DOMAIN, buf, sizeof(buf) ) > sizeof(buf) ? "localdomain" : QString::fromLocal8Bit( buf );
+	m['o'] = (unsigned)sysinfo( SI_SRPC_DOMAIN, buf, sizeof(buf) ) > sizeof(buf) ? "localdomain" : TQString::fromLocal8Bit( buf );
 #endif
-	m['d'] = QString::number( KThemedGreeter::timedDelay );
+	m['d'] = TQString::number( KThemedGreeter::timedDelay );
 	m['s'] = KThemedGreeter::timedUser;
 	// xgettext:no-c-format
 	KGlobal::locale()->setDateFormat( i18n("date format", "%a %d %B") );
-	m['c'] = KGlobal::locale()->formatDateTime( QDateTime::currentDateTime(), false, false );
+	m['c'] = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(), false, false );
 
 	return KMacroExpander::expandMacros( text, m );
 }

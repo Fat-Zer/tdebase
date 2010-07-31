@@ -24,13 +24,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __extensionop_mnu_h__
 #define __extensionop_mnu_h__
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 class PanelExtensionOpMenu : public QPopupMenu
 {
 public:
     enum OpButton{Move = 9900, Remove = 9901, Help = 9902, About = 9903, Preferences = 9904, ReportBug = 9905, Shade = 9906 };
-    PanelExtensionOpMenu(const QString& extension, int actions, QWidget *parent=0, const char *name=0);
+    PanelExtensionOpMenu(const TQString& extension, int actions, TQWidget *parent=0, const char *name=0);
 };
 
 #endif

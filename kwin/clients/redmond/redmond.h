@@ -18,7 +18,7 @@
 #ifndef __KDE_REDMOND_H
 #define __KDE_REDMOND_H
 
-#include <qbitmap.h>
+#include <tqbitmap.h>
 #include <kpixmap.h>
 #include <kcommondecoration.h>
 #include <kdecorationfactory.h>
@@ -33,15 +33,15 @@ class RedmondButton : public KCommonDecorationButton
 public:
 	RedmondButton(ButtonType type, RedmondDeco *parent, const char *name);
 	void setBitmap(const unsigned char *bitmap);
-	void setPixmap(const QPixmap &p);
+	void setPixmap(const TQPixmap &p);
 	void reset(unsigned long changed);
 
 protected:
-	virtual void drawButton(QPainter *p);
-	void drawButtonLabel(QPainter *){;}
+	virtual void drawButton(TQPainter *p);
+	void drawButtonLabel(TQPainter *){;}
 
-	QBitmap  deco;
-	QPixmap  pix;
+	TQBitmap  deco;
+	TQPixmap  pix;
 	bool     miniBtn;
 };
 
@@ -52,9 +52,9 @@ public:
 	RedmondDeco(KDecorationBridge *, KDecorationFactory *);
 	~RedmondDeco() {;}
 
-	virtual QString visibleName() const;
-	virtual QString defaultButtonsLeft() const;
-	virtual QString defaultButtonsRight() const;
+	virtual TQString visibleName() const;
+	virtual TQString defaultButtonsLeft() const;
+	virtual TQString defaultButtonsRight() const;
 	virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
 	virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
 	virtual KCommonDecorationButton *createButton(ButtonType type);
@@ -64,13 +64,13 @@ public:
 protected:
     virtual void reset( unsigned long changed );
 
-	void paintEvent(QPaintEvent*);
+	void paintEvent(TQPaintEvent*);
 
 private:
 	int            titleHeight;
 };
 
-class RedmondDecoFactory : public QObject, public KDecorationFactory
+class RedmondDecoFactory : public TQObject, public KDecorationFactory
 {
    Q_OBJECT
 public:
@@ -79,7 +79,7 @@ public:
 	virtual KDecoration *createDecoration(KDecorationBridge *);
 	virtual bool reset(unsigned long);
 	virtual bool supports( Ability ability );
-	virtual QValueList< BorderSize > borderSizes() const;
+	virtual TQValueList< BorderSize > borderSizes() const;
 private:
 	void readConfig();
 };

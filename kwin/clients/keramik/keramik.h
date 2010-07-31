@@ -24,7 +24,7 @@
 #ifndef __KERAMIK_H
 #define __KERAMIK_H
 
-#include <qbutton.h>
+#include <tqbutton.h>
 #include <kdecoration.h>
 #include <kdecorationfactory.h>
 
@@ -60,7 +60,7 @@ namespace Keramik {
 			KeramikHandler();
 			~KeramikHandler();
 
-			virtual QValueList< BorderSize > borderSizes() const;
+			virtual TQValueList< BorderSize > borderSizes() const;
 			virtual bool reset( unsigned long changed );
                         virtual KDecoration* createDecoration( KDecorationBridge* );
 			virtual bool supports( Ability ability );
@@ -77,36 +77,36 @@ namespace Keramik {
 			int grabBarHeight() const
 				{ return activeTiles[GrabBarCenter]->height(); }
 
-			const QPixmap *roundButton() const  { return titleButtonRound; }
-			const QPixmap *squareButton() const { return titleButtonSquare; }
-			const QBitmap *buttonDeco( ButtonDeco deco ) const
+			const TQPixmap *roundButton() const  { return titleButtonRound; }
+			const TQPixmap *squareButton() const { return titleButtonSquare; }
+			const TQBitmap *buttonDeco( ButtonDeco deco ) const
 				{ return buttonDecos[ deco ]; }
 
-			inline const QPixmap *tile( TilePixmap tilePix, bool active ) const;
+			inline const TQPixmap *tile( TilePixmap tilePix, bool active ) const;
 
 		private:
 			void readConfig();
 			void createPixmaps();
 			void destroyPixmaps();
 
-			void addWidth  (int width,  QPixmap *&pix, bool left, QPixmap *bottomPix);
-			void addHeight (int height, QPixmap *&pix);
-			void flip( QPixmap *&, QPixmap *& );
-			void pretile( QPixmap *&, int, Qt::Orientation );
-			QPixmap *composite( QImage *, QImage * );
-			QImage  *loadImage( const QString &, const QColor & );
-			QPixmap *loadPixmap( const QString &, const QColor & );
+			void addWidth  (int width,  TQPixmap *&pix, bool left, TQPixmap *bottomPix);
+			void addHeight (int height, TQPixmap *&pix);
+			void flip( TQPixmap *&, TQPixmap *& );
+			void pretile( TQPixmap *&, int, Qt::Orientation );
+			TQPixmap *composite( TQImage *, TQImage * );
+			TQImage  *loadImage( const TQString &, const TQColor & );
+			TQPixmap *loadPixmap( const TQString &, const TQColor & );
 
 			bool showIcons:1, shadowedText:1,
 				smallCaptionBubbles:1, largeGrabBars:1;
 			SettingsCache *settings_cache;
 			KeramikImageDb *imageDb;
 
-			QPixmap *activeTiles[ NumTiles ];
-			QPixmap *inactiveTiles[ NumTiles ];
-			QBitmap *buttonDecos[ NumButtonDecos ];
+			TQPixmap *activeTiles[ NumTiles ];
+			TQPixmap *inactiveTiles[ NumTiles ];
+			TQBitmap *buttonDecos[ NumButtonDecos ];
 
-			QPixmap *titleButtonRound, *titleButtonSquare;
+			TQPixmap *titleButtonRound, *titleButtonSquare;
 
 	}; // class KeramikHandler
 
@@ -114,17 +114,17 @@ namespace Keramik {
 	class KeramikButton : public QButton
 	{
 		public:
-			KeramikButton( KeramikClient *, const char *, Button, const QString &, const int realizeBtns = LeftButton );
+			KeramikButton( KeramikClient *, const char *, Button, const TQString &, const int realizeBtns = LeftButton );
 			~KeramikButton();
 
 			ButtonState lastButton() const { return lastbutton; }
 
 		private:
-			void enterEvent( QEvent * );
-			void leaveEvent( QEvent * );
-			void mousePressEvent( QMouseEvent * );
-			void mouseReleaseEvent( QMouseEvent * );
-			void drawButton( QPainter * );
+			void enterEvent( TQEvent * );
+			void leaveEvent( TQEvent * );
+			void mousePressEvent( TQMouseEvent * );
+			void mouseReleaseEvent( TQMouseEvent * );
+			void drawButton( TQPainter * );
 
 		private:
 			KeramikClient *client;
@@ -145,11 +145,11 @@ namespace Keramik {
 			~KeramikClient();
                         virtual void init();
 			virtual void reset( unsigned long changed );
-			virtual Position mousePosition( const QPoint& p ) const;
+			virtual Position mousePosition( const TQPoint& p ) const;
 		    	virtual void borders( int& left, int& right, int& top, int& bottom ) const;
-			virtual void resize( const QSize& s );
-			virtual QSize minimumSize() const;
-			virtual bool eventFilter( QObject* o, QEvent* e );
+			virtual void resize( const TQSize& s );
+			virtual TQSize minimumSize() const;
+			virtual bool eventFilter( TQObject* o, TQEvent* e );
 			virtual void activeChange();
 			virtual void captionChange();
                         virtual void maximizeChange();
@@ -158,14 +158,14 @@ namespace Keramik {
 
 		private:
 			void createLayout();
-			void addButtons( QBoxLayout*, const QString & );
+			void addButtons( TQBoxLayout*, const TQString & );
 			void updateMask(); // FRAME
 			void updateCaptionBuffer();
 			void iconChange();
-			void resizeEvent( QResizeEvent *); // FRAME
-			void paintEvent( QPaintEvent *); // FRAME
-			void mouseDoubleClickEvent( QMouseEvent * ); // FRAME
-			void wheelEvent( QWheelEvent *); //FRAME
+			void resizeEvent( TQResizeEvent *); // FRAME
+			void paintEvent( TQPaintEvent *); // FRAME
+			void mouseDoubleClickEvent( TQMouseEvent * ); // FRAME
+			void wheelEvent( TQWheelEvent *); //FRAME
 			int width() const { return widget()->width(); }
 			int height() const { return widget()->height(); }
 
@@ -185,11 +185,11 @@ namespace Keramik {
 			void keepBelowChange( bool );
 
 		private:
-			QSpacerItem   *topSpacer, *titlebar;
+			TQSpacerItem   *topSpacer, *titlebar;
 			KeramikButton *button[ NumButtons ];
-			QRect          captionRect;
-			QPixmap        captionBuffer;
-			QPixmap       *activeIcon, *inactiveIcon;
+			TQRect          captionRect;
+			TQPixmap        captionBuffer;
+			TQPixmap       *activeIcon, *inactiveIcon;
 			bool           captionBufferDirty:1, maskDirty:1;
 			bool           largeCaption:1, largeTitlebar:1;
 	}; // class KeramikClient

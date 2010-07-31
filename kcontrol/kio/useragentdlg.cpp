@@ -22,14 +22,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qvbox.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
-#include <qvbuttongroup.h>
+#include <tqvbox.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqlineedit.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
+#include <tqvbuttongroup.h>
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -46,32 +46,32 @@
 #include "useragentdlg.h"
 #include "useragentdlg_ui.h"
 
-UserAgentDlg::UserAgentDlg( QWidget * parent )
+UserAgentDlg::UserAgentDlg( TQWidget * parent )
              :KCModule( parent, "kcmkio" )
 {
-  QVBoxLayout *mainLayout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *mainLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   dlg = new UserAgentDlgUI (this);
   mainLayout->addWidget(dlg);
 
   dlg->lvDomainPolicyList->setSorting(0);
 
-  connect( dlg->cbSendUAString, SIGNAL(clicked()), SLOT(configChanged()) );
+  connect( dlg->cbSendUAString, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()) );
 
-  connect( dlg->gbDefaultId, SIGNAL(clicked(int)),
-           SLOT(changeDefaultUAModifiers(int)));
+  connect( dlg->gbDefaultId, TQT_SIGNAL(clicked(int)),
+           TQT_SLOT(changeDefaultUAModifiers(int)));
 
-  connect( dlg->lvDomainPolicyList, SIGNAL(selectionChanged()),
-           SLOT(selectionChanged()) );
-  connect( dlg->lvDomainPolicyList, SIGNAL(doubleClicked (QListViewItem *)),
-           SLOT(changePressed()) );
-  connect( dlg->lvDomainPolicyList, SIGNAL( returnPressed ( QListViewItem * ) ),
-           SLOT( changePressed() ));
+  connect( dlg->lvDomainPolicyList, TQT_SIGNAL(selectionChanged()),
+           TQT_SLOT(selectionChanged()) );
+  connect( dlg->lvDomainPolicyList, TQT_SIGNAL(doubleClicked (TQListViewItem *)),
+           TQT_SLOT(changePressed()) );
+  connect( dlg->lvDomainPolicyList, TQT_SIGNAL( returnPressed ( TQListViewItem * ) ),
+           TQT_SLOT( changePressed() ));
 
-  connect( dlg->pbNew, SIGNAL(clicked()), SLOT( addPressed() ) );
-  connect( dlg->pbChange, SIGNAL( clicked() ), SLOT( changePressed() ) );
-  connect( dlg->pbDelete, SIGNAL( clicked() ), SLOT( deletePressed() ) );
-  connect( dlg->pbDeleteAll, SIGNAL( clicked() ), SLOT( deleteAllPressed() ) );
+  connect( dlg->pbNew, TQT_SIGNAL(clicked()), TQT_SLOT( addPressed() ) );
+  connect( dlg->pbChange, TQT_SIGNAL( clicked() ), TQT_SLOT( changePressed() ) );
+  connect( dlg->pbDelete, TQT_SIGNAL( clicked() ), TQT_SLOT( deletePressed() ) );
+  connect( dlg->pbDeleteAll, TQT_SIGNAL( clicked() ), TQT_SLOT( deleteAllPressed() ) );
 
   load();
 }
@@ -90,23 +90,23 @@ void UserAgentDlg::load()
   m_config = new KConfig("kio_httprc", false, false);
   m_provider = new FakeUASProvider();
 
-  QStringList list = m_config->groupList();
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+  TQStringList list = m_config->groupList();
+  for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
   {
       if ( (*it) == "<default>")
          continue;
-      QString domain = *it;
+      TQString domain = *it;
       m_config->setGroup(*it);
-      QString agentStr = m_config->readEntry("UserAgent");
+      TQString agentStr = m_config->readEntry("UserAgent");
       if (!agentStr.isEmpty())
       {
-         QString realName = m_provider->aliasStr(agentStr);
-         (void) new QListViewItem( dlg->lvDomainPolicyList, domain.lower(), realName, agentStr );
+         TQString realName = m_provider->aliasStr(agentStr);
+         (void) new TQListViewItem( dlg->lvDomainPolicyList, domain.lower(), realName, agentStr );
       }
   }
 
   // Update buttons and checkboxes...
-  m_config->setGroup(QString::null);
+  m_config->setGroup(TQString::null);
   bool b = m_config->readBoolEntry("SendUserAgent", true);
   dlg->cbSendUAString->setChecked( b );
   m_ua_keys = m_config->readEntry("UserAgentKeys", DEFAULT_USER_AGENT_KEYS).lower();
@@ -148,28 +148,28 @@ void UserAgentDlg::defaults()
 
 void UserAgentDlg::save()
 {
-  QStringList deleteList;
+  TQStringList deleteList;
 
   // This is tricky because we have to take care to delete entries
   // as well.
-  QStringList list = m_config->groupList();
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+  TQStringList list = m_config->groupList();
+  for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
   {
       if ( (*it) == "<default>")
          continue;
-      QString domain = *it;
+      TQString domain = *it;
       m_config->setGroup(*it);
       if (m_config->hasKey("UserAgent"))
          deleteList.append(*it);
   }
 
-  QListViewItem* it = dlg->lvDomainPolicyList->firstChild();
+  TQListViewItem* it = dlg->lvDomainPolicyList->firstChild();
   while(it)
   {
-    QString domain = it->text(0);
+    TQString domain = it->text(0);
     if (domain[0] == '.')
       domain = domain.mid(1);
-    QString userAgent = it->text(2);
+    TQString userAgent = it->text(2);
     m_config->setGroup(domain);
     m_config->writeEntry("UserAgent", userAgent);
     deleteList.remove(domain);
@@ -177,7 +177,7 @@ void UserAgentDlg::save()
     it = it->nextSibling();
   }
 
-  m_config->setGroup(QString::null);
+  m_config->setGroup(TQString::null);
   m_config->writeEntry("SendUserAgent", dlg->cbSendUAString->isChecked());
   m_config->writeEntry("UserAgentKeys", m_ua_keys );
   m_config->sync();
@@ -187,7 +187,7 @@ void UserAgentDlg::save()
   {
      // Remove entries from local file.
      KSimpleConfig cfg("kio_httprc");
-     for ( QStringList::Iterator it = deleteList.begin();
+     for ( TQStringList::Iterator it = deleteList.begin();
            it != deleteList.end(); ++it )
      {
         cfg.setGroup(*it);
@@ -198,12 +198,12 @@ void UserAgentDlg::save()
 
      m_config->reparseConfiguration();
      // Check everything is gone, reset to blank otherwise.
-     for ( QStringList::Iterator it = deleteList.begin();
+     for ( TQStringList::Iterator it = deleteList.begin();
            it != deleteList.end(); ++it )
      {
         m_config->setGroup(*it);
         if (m_config->hasKey("UserAgent"))
-           m_config->writeEntry("UserAgent", QString::null);
+           m_config->writeEntry("UserAgent", TQString::null);
      }
      m_config->sync();
   }
@@ -213,16 +213,16 @@ void UserAgentDlg::save()
   emit changed( false );
 }
 
-bool UserAgentDlg::handleDuplicate( const QString& site,
-                                        const QString& identity,
-                                        const QString& alias )
+bool UserAgentDlg::handleDuplicate( const TQString& site,
+                                        const TQString& identity,
+                                        const TQString& alias )
 {
-  QListViewItem* item = dlg->lvDomainPolicyList->firstChild();
+  TQListViewItem* item = dlg->lvDomainPolicyList->firstChild();
   while ( item != 0 )
   {
     if ( item->text(0) == site )
     {
-      QString msg = i18n("<qt><center>Found an existing identification for"
+      TQString msg = i18n("<qt><center>Found an existing identification for"
                          "<br/><b>%1</b><br/>"
                          "Do you want to replace it?</center>"
                          "</qt>").arg(site);
@@ -247,11 +247,11 @@ void UserAgentDlg::addPressed()
 {
   UAProviderDlg pdlg ( i18n("Add Identification"), this, m_provider );
 
-  if ( pdlg.exec() == QDialog::Accepted )
+  if ( pdlg.exec() == TQDialog::Accepted )
   {
     if ( !handleDuplicate( pdlg.siteName(), pdlg.identity(), pdlg.alias() ) )
     {
-      QListViewItem* index = new QListViewItem( dlg->lvDomainPolicyList,
+      TQListViewItem* index = new TQListViewItem( dlg->lvDomainPolicyList,
                                                 pdlg.siteName(),
                                                 pdlg.identity(),
                                                 pdlg.alias() );
@@ -266,18 +266,18 @@ void UserAgentDlg::changePressed()
 {
   UAProviderDlg pdlg ( i18n("Modify Identification"), this, m_provider );
 
-  QListViewItem *index = dlg->lvDomainPolicyList->currentItem();
+  TQListViewItem *index = dlg->lvDomainPolicyList->currentItem();
 
   if(!index)
     return;
 
-  QString old_site = index->text(0);
+  TQString old_site = index->text(0);
   pdlg.setSiteName( old_site );
   pdlg.setIdentity( index->text(1) );
 
-  if ( pdlg.exec() == QDialog::Accepted )
+  if ( pdlg.exec() == TQDialog::Accepted )
   {
-    QString new_site = pdlg.siteName();
+    TQString new_site = pdlg.siteName();
     if ( new_site == old_site ||
          !handleDuplicate( new_site, pdlg.identity(), pdlg.alias() ) )
     {
@@ -291,8 +291,8 @@ void UserAgentDlg::changePressed()
 
 void UserAgentDlg::deletePressed()
 {
-  QListViewItem* item;
-  QListViewItem* nextItem = 0;
+  TQListViewItem* item;
+  TQListViewItem* nextItem = 0;
 
   item = dlg->lvDomainPolicyList->firstChild ();
 
@@ -353,7 +353,7 @@ void UserAgentDlg::changeDefaultUAModifiers( int )
 
   dlg->cbOSVersion->setEnabled(m_ua_keys.contains('o'));
 
-  QString modVal = KProtocolManager::defaultUserAgent( m_ua_keys );
+  TQString modVal = KProtocolManager::defaultUserAgent( m_ua_keys );
   if ( dlg->leDefaultId->text() != modVal )
   {
     dlg->leDefaultId->setSqueezedText(modVal);
@@ -363,7 +363,7 @@ void UserAgentDlg::changeDefaultUAModifiers( int )
 
 void UserAgentDlg::selectionChanged ()
 {
-  QListViewItem* item;
+  TQListViewItem* item;
 
   d_itemsSelected = 0;
   item = dlg->lvDomainPolicyList->firstChild ();
@@ -378,7 +378,7 @@ void UserAgentDlg::selectionChanged ()
   updateButtons ();
 }
 
-QString UserAgentDlg::quickHelp() const
+TQString UserAgentDlg::quickHelp() const
 {
   return i18n( "<h1>Browser Identification</h1> "
                "The browser-identification module allows you to have full "

@@ -22,10 +22,10 @@
 #define __KDMAPPEAR_H__
 
 
-#include <qdir.h>
-#include <qimage.h>
-#include <qfileinfo.h>
-#include <qpushbutton.h>
+#include <tqdir.h>
+#include <tqimage.h>
+#include <tqfileinfo.h>
+#include <tqpushbutton.h>
 
 #include <kcolorbutton.h>
 #include <kurl.h>
@@ -47,27 +47,27 @@ class KDMAppearanceWidget : public QWidget
 	Q_OBJECT
 
 public:
-	KDMAppearanceWidget(QWidget *parent, const char *name=0);
+	KDMAppearanceWidget(TQWidget *parent, const char *name=0);
 
 	void load();
 	void save();
 	void defaults();
 	void makeReadOnly();
-	QString quickHelp() const;
+	TQString quickHelp() const;
 
 	void loadColorSchemes(KBackedComboBox *combo);
 	void loadGuiStyles(KBackedComboBox *combo);
 	void loadLanguageList(KLanguageButton *combo);
 
-	bool eventFilter(QObject *, QEvent *);
+	bool eventFilter(TQObject *, TQEvent *);
 
 signals:
 	void changed( bool state );
 
 protected:
-	void iconLoaderDragEnterEvent(QDragEnterEvent *event);
-	void iconLoaderDropEvent(QDropEvent *event);
-	bool setLogo(QString logo);
+	void iconLoaderDragEnterEvent(TQDragEnterEvent *event);
+	void iconLoaderDropEvent(TQDropEvent *event);
+	bool setLogo(TQString logo);
 
 private slots:
 	void slotAreaRadioClicked(int id);
@@ -76,15 +76,15 @@ private slots:
 
 private:
 	enum { KdmNone, KdmClock, KdmLogo };
-	QLabel      *logoLabel;
-	QPushButton *logobutton;
+	TQLabel      *logoLabel;
+	TQPushButton *logobutton;
 	KLineEdit    *greetstr_lined;
-	QString      logopath;
-	QRadioButton *noneRadio;
-	QRadioButton *clockRadio;
-	QRadioButton *logoRadio;
-	QLineEdit    *xLineEdit;
-	QLineEdit    *yLineEdit;
+	TQString      logopath;
+	TQRadioButton *noneRadio;
+	TQRadioButton *clockRadio;
+	TQRadioButton *logoRadio;
+	TQLineEdit    *xLineEdit;
+	TQLineEdit    *yLineEdit;
 	KBackedComboBox    *guicombo;
 	KBackedComboBox    *colcombo;
 	KBackedComboBox    *echocombo;

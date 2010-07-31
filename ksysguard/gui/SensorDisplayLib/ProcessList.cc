@@ -35,10 +35,10 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <qbitmap.h>
-#include <qheader.h>
-#include <qimage.h>
-#include <qpopupmenu.h>
+#include <tqbitmap.h>
+#include <tqheader.h>
+#include <tqimage.h>
+#include <tqpopupmenu.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -57,9 +57,9 @@
 //extern const char* timeKey(const char* text);
 //extern const char* floatKey(const char* text);
 
-QDict<QString> ProcessList::aliases;
+TQDict<TQString> ProcessList::aliases;
 
-int ProcessLVI::compare( QListViewItem *item, int col, bool ascending ) const
+int ProcessLVI::compare( TQListViewItem *item, int col, bool ascending ) const
 {
   int type = ((ProcessList*)listView())->columnType( col );
 
@@ -100,133 +100,133 @@ int ProcessLVI::compare( QListViewItem *item, int col, bool ascending ) const
   return key( col, ascending ).localeAwareCompare( item->key( col, ascending ) );
 }
 
-ProcessList::ProcessList(QWidget *parent, const char* name)
+ProcessList::ProcessList(TQWidget *parent, const char* name)
 	: KListView(parent, name)
 {
 	iconCache.setAutoDelete(true);
 
 	columnDict.setAutoDelete(true);
 	columnDict.insert("running",
-					  new QString(i18n("process status", "running")));
+					  new TQString(i18n("process status", "running")));
 	columnDict.insert("sleeping",
-					  new QString(i18n("process status", "sleeping")));
+					  new TQString(i18n("process status", "sleeping")));
 	columnDict.insert("disk sleep",
-					  new QString(i18n("process status", "disk sleep")));
-	columnDict.insert("zombie", new QString(i18n("process status", "zombie")));
+					  new TQString(i18n("process status", "disk sleep")));
+	columnDict.insert("zombie", new TQString(i18n("process status", "zombie")));
 	columnDict.insert("stopped",
-					  new QString(i18n("process status", "stopped")));
-	columnDict.insert("paging", new QString(i18n("process status", "paging")));
-	columnDict.insert("idle", new QString(i18n("process status", "idle")));
+					  new TQString(i18n("process status", "stopped")));
+	columnDict.insert("paging", new TQString(i18n("process status", "paging")));
+	columnDict.insert("idle", new TQString(i18n("process status", "idle")));
 
 	if (aliases.isEmpty())
 	{
 #ifdef Q_OS_LINUX
-		aliases.insert("init", new QString("penguin"));
+		aliases.insert("init", new TQString("penguin"));
 #else
-		aliases.insert("init", new QString("system"));
+		aliases.insert("init", new TQString("system"));
 #endif
 		/* kernel stuff */
-		aliases.insert("bdflush", new QString("kernel"));
-		aliases.insert("dhcpcd", new QString("kernel"));
-		aliases.insert("kapm-idled", new QString("kernel"));
-		aliases.insert("keventd", new QString("kernel"));
-		aliases.insert("khubd", new QString("kernel"));
-		aliases.insert("klogd", new QString("kernel"));
-		aliases.insert("kreclaimd", new QString("kernel"));
-		aliases.insert("kreiserfsd", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU0", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU1", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU2", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU3", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU4", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU5", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU6", new QString("kernel"));
-		aliases.insert("ksoftirqd_CPU7", new QString("kernel"));
-		aliases.insert("kswapd", new QString("kernel"));
-		aliases.insert("kupdated", new QString("kernel"));
-		aliases.insert("mdrecoveryd", new QString("kernel"));
-		aliases.insert("scsi_eh_0", new QString("kernel"));
-		aliases.insert("scsi_eh_1", new QString("kernel"));
-		aliases.insert("scsi_eh_2", new QString("kernel"));
-		aliases.insert("scsi_eh_3", new QString("kernel"));
-		aliases.insert("scsi_eh_4", new QString("kernel"));
-		aliases.insert("scsi_eh_5", new QString("kernel"));
-		aliases.insert("scsi_eh_6", new QString("kernel"));
-		aliases.insert("scsi_eh_7", new QString("kernel"));
+		aliases.insert("bdflush", new TQString("kernel"));
+		aliases.insert("dhcpcd", new TQString("kernel"));
+		aliases.insert("kapm-idled", new TQString("kernel"));
+		aliases.insert("keventd", new TQString("kernel"));
+		aliases.insert("khubd", new TQString("kernel"));
+		aliases.insert("klogd", new TQString("kernel"));
+		aliases.insert("kreclaimd", new TQString("kernel"));
+		aliases.insert("kreiserfsd", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU0", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU1", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU2", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU3", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU4", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU5", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU6", new TQString("kernel"));
+		aliases.insert("ksoftirqd_CPU7", new TQString("kernel"));
+		aliases.insert("kswapd", new TQString("kernel"));
+		aliases.insert("kupdated", new TQString("kernel"));
+		aliases.insert("mdrecoveryd", new TQString("kernel"));
+		aliases.insert("scsi_eh_0", new TQString("kernel"));
+		aliases.insert("scsi_eh_1", new TQString("kernel"));
+		aliases.insert("scsi_eh_2", new TQString("kernel"));
+		aliases.insert("scsi_eh_3", new TQString("kernel"));
+		aliases.insert("scsi_eh_4", new TQString("kernel"));
+		aliases.insert("scsi_eh_5", new TQString("kernel"));
+		aliases.insert("scsi_eh_6", new TQString("kernel"));
+		aliases.insert("scsi_eh_7", new TQString("kernel"));
 		/* daemon and other service providers */
-		aliases.insert("artsd", new QString("daemon"));
-		aliases.insert("atd", new QString("daemon"));
-		aliases.insert("automount", new QString("daemon"));
-		aliases.insert("cardmgr", new QString("daemon"));
-		aliases.insert("cron", new QString("daemon"));
-		aliases.insert("cupsd", new QString("daemon"));
-		aliases.insert("in.identd", new QString("daemon"));
-		aliases.insert("lpd", new QString("daemon"));
-		aliases.insert("mingetty", new QString("daemon"));
-		aliases.insert("nscd", new QString("daemon"));
-		aliases.insert("portmap", new QString("daemon"));
-		aliases.insert("rpc.statd", new QString("daemon"));
-		aliases.insert("rpciod", new QString("daemon"));
-		aliases.insert("sendmail", new QString("daemon"));
-		aliases.insert("sshd", new QString("daemon"));
-		aliases.insert("syslogd", new QString("daemon"));
-		aliases.insert("usbmgr", new QString("daemon"));
-		aliases.insert("wwwoffled", new QString("daemon"));
-		aliases.insert("xntpd", new QString("daemon"));
-		aliases.insert("ypbind", new QString("daemon"));
+		aliases.insert("artsd", new TQString("daemon"));
+		aliases.insert("atd", new TQString("daemon"));
+		aliases.insert("automount", new TQString("daemon"));
+		aliases.insert("cardmgr", new TQString("daemon"));
+		aliases.insert("cron", new TQString("daemon"));
+		aliases.insert("cupsd", new TQString("daemon"));
+		aliases.insert("in.identd", new TQString("daemon"));
+		aliases.insert("lpd", new TQString("daemon"));
+		aliases.insert("mingetty", new TQString("daemon"));
+		aliases.insert("nscd", new TQString("daemon"));
+		aliases.insert("portmap", new TQString("daemon"));
+		aliases.insert("rpc.statd", new TQString("daemon"));
+		aliases.insert("rpciod", new TQString("daemon"));
+		aliases.insert("sendmail", new TQString("daemon"));
+		aliases.insert("sshd", new TQString("daemon"));
+		aliases.insert("syslogd", new TQString("daemon"));
+		aliases.insert("usbmgr", new TQString("daemon"));
+		aliases.insert("wwwoffled", new TQString("daemon"));
+		aliases.insert("xntpd", new TQString("daemon"));
+		aliases.insert("ypbind", new TQString("daemon"));
 		/* kde applications */
-		aliases.insert("appletproxy", new QString("kdeapp"));
-		aliases.insert("dcopserver", new QString("kdeapp"));
-		aliases.insert("kcookiejar", new QString("kdeapp"));
-		aliases.insert("kde", new QString("kdeapp"));
-		aliases.insert("kded", new QString("kdeapp"));
-		aliases.insert("kdeinit", new QString("kdeapp"));
-		aliases.insert("kdesktop", new QString("kdeapp"));
-		aliases.insert("kdesud", new QString("kdeapp"));
-		aliases.insert("kdm", new QString("kdeapp"));
-		aliases.insert("khotkeys", new QString("kdeapp"));
-		aliases.insert("kio_file", new QString("kdeapp"));
-		aliases.insert("kio_uiserver", new QString("kdeapp"));
-		aliases.insert("klauncher", new QString("kdeapp"));
-		aliases.insert("ksmserver", new QString("kdeapp"));
-		aliases.insert("kwrapper", new QString("kdeapp"));
-		aliases.insert("kwrited", new QString("kdeapp"));
-		aliases.insert("kxmlrpcd", new QString("kdeapp"));
-		aliases.insert("startkde", new QString("kdeapp"));
+		aliases.insert("appletproxy", new TQString("kdeapp"));
+		aliases.insert("dcopserver", new TQString("kdeapp"));
+		aliases.insert("kcookiejar", new TQString("kdeapp"));
+		aliases.insert("kde", new TQString("kdeapp"));
+		aliases.insert("kded", new TQString("kdeapp"));
+		aliases.insert("kdeinit", new TQString("kdeapp"));
+		aliases.insert("kdesktop", new TQString("kdeapp"));
+		aliases.insert("kdesud", new TQString("kdeapp"));
+		aliases.insert("kdm", new TQString("kdeapp"));
+		aliases.insert("khotkeys", new TQString("kdeapp"));
+		aliases.insert("kio_file", new TQString("kdeapp"));
+		aliases.insert("kio_uiserver", new TQString("kdeapp"));
+		aliases.insert("klauncher", new TQString("kdeapp"));
+		aliases.insert("ksmserver", new TQString("kdeapp"));
+		aliases.insert("kwrapper", new TQString("kdeapp"));
+		aliases.insert("kwrited", new TQString("kdeapp"));
+		aliases.insert("kxmlrpcd", new TQString("kdeapp"));
+		aliases.insert("startkde", new TQString("kdeapp"));
 		/* other processes */
-		aliases.insert("bash", new QString("shell"));
-		aliases.insert("cat", new QString("tools"));
-		aliases.insert("egrep", new QString("tools"));
-		aliases.insert("emacs", new QString("wordprocessing"));
-		aliases.insert("fgrep", new QString("tools"));
-		aliases.insert("find", new QString("tools"));
-		aliases.insert("grep", new QString("tools"));
-		aliases.insert("ksh", new QString("shell"));
-		aliases.insert("screen", new QString("openterm"));
-		aliases.insert("sh", new QString("shell"));
-		aliases.insert("sort", new QString("tools"));
-		aliases.insert("ssh", new QString("shell"));
-		aliases.insert("su", new QString("tools"));
-		aliases.insert("tcsh", new QString("shell"));
-		aliases.insert("tee", new QString("tools"));
-		aliases.insert("vi", new QString("wordprocessing"));
+		aliases.insert("bash", new TQString("shell"));
+		aliases.insert("cat", new TQString("tools"));
+		aliases.insert("egrep", new TQString("tools"));
+		aliases.insert("emacs", new TQString("wordprocessing"));
+		aliases.insert("fgrep", new TQString("tools"));
+		aliases.insert("find", new TQString("tools"));
+		aliases.insert("grep", new TQString("tools"));
+		aliases.insert("ksh", new TQString("shell"));
+		aliases.insert("screen", new TQString("openterm"));
+		aliases.insert("sh", new TQString("shell"));
+		aliases.insert("sort", new TQString("tools"));
+		aliases.insert("ssh", new TQString("shell"));
+		aliases.insert("su", new TQString("tools"));
+		aliases.insert("tcsh", new TQString("shell"));
+		aliases.insert("tee", new TQString("tools"));
+		aliases.insert("vi", new TQString("wordprocessing"));
 	}
 
 	/* The filter mode is controlled by a combo box of the parent. If
 	 * the mode is changed we get a signal. */
-	connect(parent, SIGNAL(setFilterMode(int)),
-			this, SLOT(setFilterMode(int)));
+	connect(parent, TQT_SIGNAL(setFilterMode(int)),
+			this, TQT_SLOT(setFilterMode(int)));
 
 	/* We need to catch this signal to show various popup menues. */
 	connect(this,
-			SIGNAL(rightButtonPressed(QListViewItem*, const QPoint&, int)),
+			TQT_SIGNAL(rightButtonPressed(TQListViewItem*, const TQPoint&, int)),
 			this,
-			SLOT(handleRMBPressed(QListViewItem*, const QPoint&, int)));
+			TQT_SLOT(handleRMBPressed(TQListViewItem*, const TQPoint&, int)));
 
 	/* Since Qt does not tell us the sorting details we have to do our
 	 * own bookkeping, so we can save and restore the sorting
 	 * settings. */
-	connect(header(), SIGNAL(clicked(int)), this, SLOT(sortingChanged(int)));
+	connect(header(), TQT_SIGNAL(clicked(int)), this, TQT_SLOT(sortingChanged(int)));
 
 	treeViewEnabled = false;
 	openAll = true;
@@ -243,18 +243,18 @@ ProcessList::ProcessList(QWidget *parent, const char* name)
 	setAllColumnsShowFocus(true);
 	setTreeStepSize(17);
 	setSorting(sortColumn, increasing);
-	setSelectionMode(QListView::Extended);
+	setSelectionMode(TQListView::Extended);
 
 	// Create popup menu for RMB clicks on table header
-	headerPM = new QPopupMenu();
+	headerPM = new TQPopupMenu();
 	headerPM->insertItem(i18n("Remove Column"), HEADER_REMOVE);
 	headerPM->insertItem(i18n("Add Column"), HEADER_ADD);
 	headerPM->insertItem(i18n("Help on Column"), HEADER_HELP);
 
-	connect(header(), SIGNAL(sizeChange(int, int, int)),
-			this, SLOT(sizeChanged(int, int, int)));
-	connect(header(), SIGNAL(indexChange(int, int, int)),
-			this, SLOT(indexChanged(int, int, int)));
+	connect(header(), TQT_SIGNAL(sizeChange(int, int, int)),
+			this, TQT_SLOT(sizeChanged(int, int, int)));
+	connect(header(), TQT_SIGNAL(indexChange(int, int, int)),
+			this, TQT_SLOT(indexChanged(int, int, int)));
 
 	killSupported = false;
 	setModified(false);
@@ -265,34 +265,34 @@ ProcessList::~ProcessList()
 	delete(headerPM);
 }
 
-const QValueList<int>&
+const TQValueList<int>&
 ProcessList::getSelectedPIds()
 {
 	selectedPIds.clear();
 	// iterate through all selected visible items of the listview
-	QListViewItemIterator it(this, QListViewItemIterator::Visible | QListViewItemIterator::Selected );
+	TQListViewItemIterator it(this, TQListViewItemIterator::Visible | TQListViewItemIterator::Selected );
 	for ( ; it.current(); ++it )
 		selectedPIds.append(it.current()->text(1).toInt());
 
 	return (selectedPIds);
 }
 
-const QStringList&
+const TQStringList&
 ProcessList::getSelectedAsStrings()
 {
 	selectedAsStrings.clear();
 	// iterate through all selected visible items of the listview
-	QListViewItemIterator it(this, QListViewItemIterator::Visible | QListViewItemIterator::Selected );
-	QString spaces;
+	TQListViewItemIterator it(this, TQListViewItemIterator::Visible | TQListViewItemIterator::Selected );
+	TQString spaces;
 	for ( ; it.current(); ++it ) {
-		spaces.fill(QChar(' '), 7 - it.current()->text(1).length());
+		spaces.fill(TQChar(' '), 7 - it.current()->text(1).length());
 		selectedAsStrings.append("(PID: " + it.current()->text(1) + ")" + spaces + " " + it.current()->text(0));
 	}	
 
 	return (selectedAsStrings);
 }
 bool
-ProcessList::update(const QString& list)
+ProcessList::update(const TQString& list)
 {
 	/* Disable painting to avoid flickering effects,
 	 * especially when in tree view mode.
@@ -312,7 +312,7 @@ ProcessList::update(const QString& list)
 #if 0
 			// This is needed for debugging only.
 			kdDebug(1215) << list << endl;
-			QString l;
+			TQString l;
 			for (uint j = 0; j < line->count(); j++)
 				l += (*line)[j] + "|";
 			kdDebug(1215) << "Incomplete ps line:" << l << endl;
@@ -336,7 +336,7 @@ ProcessList::update(const QString& list)
 	else
 		buildList();
 
-	QListViewItemIterator it( this );
+	TQListViewItemIterator it( this );
 	while ( it.current() ) {
 		if ( itemPos( it.current() ) == currItemPos ) {
 			setCurrentItem( it.current() );
@@ -378,12 +378,12 @@ ProcessList::setTreeView(bool tv)
 }
 
 bool
-ProcessList::load(QDomElement& el)
+ProcessList::load(TQDomElement& el)
 {
-	QDomNodeList dnList = el.elementsByTagName("column");
+	TQDomNodeList dnList = el.elementsByTagName("column");
 	for (uint i = 0; i < dnList.count(); ++i)
 	{
-		QDomElement lel = dnList.item(i).toElement();
+		TQDomElement lel = dnList.item(i).toElement();
 		if (savedWidth.count() <= i)
 			savedWidth.append(lel.attribute("savedWidth").toInt());
 		else
@@ -404,11 +404,11 @@ ProcessList::load(QDomElement& el)
 }
 
 bool
-ProcessList::save(QDomDocument& doc, QDomElement& display)
+ProcessList::save(TQDomDocument& doc, TQDomElement& display)
 {
 	for (int i = 0; i < columns(); ++i)
 	{
-		QDomElement col = doc.createElement("column");
+		TQDomElement col = doc.createElement("column");
 		display.appendChild(col);
 		col.setAttribute("currentWidth", columnWidth(i));
 		col.setAttribute("savedWidth", savedWidth[i]);
@@ -475,7 +475,7 @@ void
 ProcessList::buildList()
 {
 	/* Get the first process in the list, check whether it matches the
-	 * filter and append it to QListView widget if so. */
+	 * filter and append it to TQListView widget if so. */
 	while (!pl.isEmpty())
 	{
 		KSGRD::SensorPSLine* p = pl.first();
@@ -553,7 +553,7 @@ ProcessList::isLeafProcess(int pid)
 }
 
 void
-ProcessList::extendTree(QPtrList<KSGRD::SensorPSLine>* pl, ProcessLVI* parent, int ppid)
+ProcessList::extendTree(TQPtrList<KSGRD::SensorPSLine>* pl, ProcessLVI* parent, int ppid)
 {
 	KSGRD::SensorPSLine* ps;
 
@@ -599,13 +599,13 @@ ProcessList::extendTree(QPtrList<KSGRD::SensorPSLine>* pl, ProcessLVI* parent, i
 void
 ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 {
-	QString name = p->name();
+	TQString name = p->name();
 	if (aliases[name])
 		name = *aliases[name];
 
 	/* Get icon from icon list that might be appropriate for a process
 	 * with this name. */
-	QPixmap pix;
+	TQPixmap pix;
 	if (!iconCache[name])
 	{
 		pix = KGlobal::iconLoader()->loadIcon(name, KIcon::Small,
@@ -621,7 +621,7 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 			 * scale the pixmaps already appropriately. Since I got a bug
 			 * report claiming that it doesn't work with GNOME apps I've
 			 * added this safeguard. */
-			QImage img;
+			TQImage img;
 			img = pix;
 			img.smoothScale(16, 16);
 			pix = img;
@@ -629,17 +629,17 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 		/* We copy the icon into a 24x16 pixmap to add a 4 pixel margin on
 		 * the left and right side. In tree view mode we use the original
 		 * icon. */
-		QPixmap icon(24, 16, pix.depth());
+		TQPixmap icon(24, 16, pix.depth());
 		if (!treeViewEnabled)
 		{
 			icon.fill();
 			bitBlt(&icon, 4, 0, &pix, 0, 0, pix.width(), pix.height());
-			QBitmap mask(24, 16, true);
+			TQBitmap mask(24, 16, true);
 			bitBlt(&mask, 4, 0, pix.mask(), 0, 0, pix.width(), pix.height());
 			icon.setMask(mask);
 			pix = icon;
 		}
-		iconCache.insert(name, new QPixmap(pix));
+		iconCache.insert(name, new TQPixmap(pix));
 	}
 	else
 		pix = *(iconCache[name]);
@@ -668,7 +668,7 @@ ProcessList::updateMetaInfo(void)
 	selectedPIds.clear();
 	closedSubTrees.clear();
 
-	QListViewItemIterator it(this);
+	TQListViewItemIterator it(this);
 
 	// iterate through all items of the listview
 	for ( ; it.current(); ++it )
@@ -679,7 +679,7 @@ ProcessList::updateMetaInfo(void)
 			closedSubTrees.append(it.current()->text(1).toInt());
 	}
 
-	/* In list view mode all list items are set to closed by QListView.
+	/* In list view mode all list items are set to closed by TQListView.
 	 * If the tree view is now selected, all item will be closed. This is
 	 * annoying. So we use the openAll flag to force all trees to open when
 	 * the treeViewEnbled flag was set to true. */
@@ -699,9 +699,9 @@ ProcessList::removeColumns(void)
 }
 
 void
-ProcessList::addColumn(const QString& label, const QString& type)
+ProcessList::addColumn(const TQString& label, const TQString& type)
 {
-	QListView::addColumn(label);
+	TQListView::addColumn(label);
 	uint col = columns() - 1;
 	if (type == "s" || type == "S")
 		setColumnAlignment(col, AlignLeft);
@@ -721,7 +721,7 @@ ProcessList::addColumn(const QString& label, const QString& type)
 	mColumnTypes.append(type);
 
 	/* Just use some sensible default values as initial setting. */
-	QFontMetrics fm = fontMetrics();
+	TQFontMetrics fm = fontMetrics();
 	setColumnWidth(col, fm.width(label) + 10);
 
 	if (currentWidth.count() - 1 == col)
@@ -746,7 +746,7 @@ ProcessList::addColumn(const QString& label, const QString& type)
 					setColumnWidth(i, currentWidth[i]);
 			}
 			setColumnWidthMode(i, currentWidth[i] == 0 ?
-							   QListView::Manual : QListView::Maximum);
+							   TQListView::Manual : TQListView::Maximum);
 			header()->moveSection(i, index[i]);
 		}
 		setSorting(sortColumn, increasing);
@@ -754,7 +754,7 @@ ProcessList::addColumn(const QString& label, const QString& type)
 }
 
 void
-ProcessList::handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col)
+ProcessList::handleRMBPressed(TQListViewItem* lvi, const TQPoint& p, int col)
 {
 	if (!lvi)
 		return;
@@ -768,13 +768,13 @@ ProcessList::handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col)
 
 	int currentNiceValue = 0;
 	for (int i = 0; i < columns(); ++i)
-		if (QString::compare(header()->label(i), i18n("Nice")) == 0)
+		if (TQString::compare(header()->label(i), i18n("Nice")) == 0)
 			currentNiceValue = lvi->text(i).toInt();
 
-	QPopupMenu processPM;
+	TQPopupMenu processPM;
   if (columnWidth(col) != 0)
   	processPM.insertItem(i18n("Hide Column"), 5);
-	QPopupMenu* hiddenPM = new QPopupMenu(&processPM);
+	TQPopupMenu* hiddenPM = new TQPopupMenu(&processPM);
 	for (int i = 0; i < columns(); ++i)
 		if (columnWidth(i) == 0)
 			hiddenPM->insertItem(header()->label(i), i + 100);
@@ -786,7 +786,7 @@ ProcessList::handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col)
 	processPM.insertItem(i18n("Select All Processes"), 1);
 	processPM.insertItem(i18n("Unselect All Processes"), 2);
 
-	QPopupMenu* signalPM = new QPopupMenu(&processPM);
+	TQPopupMenu* signalPM = new TQPopupMenu(&processPM);
 	if (killSupported && lvi->isSelected())
 	{
 		processPM.insertSeparator();
@@ -839,7 +839,7 @@ ProcessList::handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col)
 		selectAllChilds(currentPId, id & 1);
 		break;
 	case 5:
-		setColumnWidthMode(col, QListView::Manual);
+		setColumnWidthMode(col, TQListView::Manual);
 		savedWidth[col] = columnWidth(col);
 		setColumnWidth(col, 0);
 		setModified(true);
@@ -861,7 +861,7 @@ ProcessList::handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col)
 			/* we go through list to get all task also
 			   when update interval is paused */
 			selectedPIds.clear();
-			QListViewItemIterator it(this, QListViewItemIterator::Visible | QListViewItemIterator::Selected);
+			TQListViewItemIterator it(this, TQListViewItemIterator::Visible | TQListViewItemIterator::Selected);
 
 			// iterate through all selected visible items of the listview
 			for ( ; it.current(); ++it )
@@ -869,16 +869,16 @@ ProcessList::handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col)
 				selectedPIds.append(it.current()->text(1).toInt());
 			}
 
-			QString msg = i18n("Do you really want to send signal %1 to the selected process?", 
+			TQString msg = i18n("Do you really want to send signal %1 to the selected process?", 
 					"Do you really want to send signal %1 to the %n selected processes?",
 					selectedPIds.count())
 				.arg(signalPM->text(id));
 			int answ;
-			switch(answ = KMessageBox::questionYesNo(this, msg, QString::null, i18n("Send"), KStdGuiItem::cancel()))
+			switch(answ = KMessageBox::questionYesNo(this, msg, TQString::null, i18n("Send"), KStdGuiItem::cancel()))
 			{
 			case KMessageBox::Yes:
 			{
-				QValueList<int>::Iterator it;
+				TQValueList<int>::Iterator it;
 				for (it = selectedPIds.begin(); it != selectedPIds.end(); ++it)
 					emit (killProcess(*it, id));
 				break;
@@ -891,7 +891,7 @@ ProcessList::handleRMBPressed(QListViewItem* lvi, const QPoint& p, int col)
 		{
 			/* IDs >= 100 are used for hidden columns. */
 			int col = id - 100;
-			setColumnWidthMode(col, QListView::Maximum);
+			setColumnWidthMode(col, TQListView::Maximum);
 			setColumnWidth(col, savedWidth[col]);
 			setModified(true);
 		}
@@ -903,7 +903,7 @@ ProcessList::selectAllItems(bool select)
 {
 	selectedPIds.clear();
 
-	QListViewItemIterator it(this, QListViewItemIterator::Visible);
+	TQListViewItemIterator it(this, TQListViewItemIterator::Visible);
 
 	// iterate through all items of the listview
 	for ( ; it.current(); ++it )
@@ -918,7 +918,7 @@ ProcessList::selectAllItems(bool select)
 void
 ProcessList::selectAllChilds(int pid, bool select)
 {
-	QListViewItemIterator it(this, QListViewItemIterator::Visible );
+	TQListViewItemIterator it(this, TQListViewItemIterator::Visible );
 
 	// iterate through all items of the listview
 	for ( ; it.current(); ++it )

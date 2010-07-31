@@ -27,9 +27,9 @@
 	be copied to kde/applnk/Settings/Information !!
 */
 
-#include <qheader.h>
-#include <qwhatsthis.h>
-#include <qlayout.h>
+#include <tqheader.h>
+#include <tqwhatsthis.h>
+#include <tqlayout.h>
 
 #include <kglobalsettings.h>
 #include <kiconloader.h>
@@ -45,16 +45,16 @@
    DEFAULT_ERRORSTRING will be used...
 */
 
-static QString *GetInfo_ErrorString;	/* should always point to:
+static TQString *GetInfo_ErrorString;	/* should always point to:
 					    KInfoListWidget::ErrorString */
 static bool	sorting_allowed;	/* is sorting allowed by user ? */
 
 
 
 #if defined(__linux__)
-# define DEFAULT_ERRORSTRING QString::null /* i18n("Maybe the proc-filesystem is not enabled in Linux-Kernel.") */
+# define DEFAULT_ERRORSTRING TQString::null /* i18n("Maybe the proc-filesystem is not enabled in Linux-Kernel.") */
 #elif defined(__hpux)
-# define DEFAULT_ERRORSTRING QString::null
+# define DEFAULT_ERRORSTRING TQString::null
 #else
 #define DEFAULT_ERRORSTRING  i18n("Maybe this system is not completely supported yet :-(")
 #endif
@@ -71,16 +71,16 @@ static bool	sorting_allowed;	/* is sorting allowed by user ? */
 
 #define HEXDIGITS (sizeof(int)*8/4)	/* 4 Bytes = 32 Bits = 8 Hex-Digits */
 
-static const QString Value( int val, int numbers=1 )
+static const TQString Value( int val, int numbers=1 )
 {
   return KGlobal::locale()->formatNumber(val, 0).rightJustify(numbers);
 }
 
-static const QString HexStr(unsigned long val, int digits )
+static const TQString HexStr(unsigned long val, int digits )
 {
-    QString hexstr;
+    TQString hexstr;
     int i;
-    hexstr = QString::fromLatin1("0x%1").arg(val, digits, 16/*=HEX*/);
+    hexstr = TQString::fromLatin1("0x%1").arg(val, digits, 16/*=HEX*/);
     for (i=hexstr.length()-1; i>0; --i)
      if (hexstr[i]==' ')
          hexstr[i] = '0';
@@ -119,7 +119,7 @@ static struct _event_table {
     { 0L, 0 }};
 
 
-static QListViewItem* XServer_fill_screen_info( QListViewItem *lBox, QListViewItem *last,
+static TQListViewItem* XServer_fill_screen_info( TQListViewItem *lBox, TQListViewItem *last,
 	    Display *dpy, int scr, int default_scr)
 {
     unsigned	width, height;
@@ -128,7 +128,7 @@ static QListViewItem* XServer_fill_screen_info( QListViewItem *lBox, QListViewIt
 		ndepths,
 		*depths;
     Screen 	*s = ScreenOfDisplay(dpy,scr);  /* opaque structure */
-    QListViewItem *item;
+    TQListViewItem *item;
 
     /*
      * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
@@ -141,19 +141,19 @@ static QListViewItem* XServer_fill_screen_info( QListViewItem *lBox, QListViewIt
     xres = ((double)(DisplayWidth(dpy,scr) *25.4)/DisplayWidthMM(dpy,scr) );
     yres = ((double)(DisplayHeight(dpy,scr)*25.4)/DisplayHeightMM(dpy,scr));
 
-    item = new QListViewItem(lBox,last, i18n("Screen # %1").arg((int)scr,-1),
-		(scr==default_scr) ? i18n("(Default Screen)") : QString::null );
+    item = new TQListViewItem(lBox,last, i18n("Screen # %1").arg((int)scr,-1),
+		(scr==default_scr) ? i18n("(Default Screen)") : TQString::null );
     item->setExpandable(true);
     if (scr==default_scr)
 	item->setOpen(true);
-    last = new QListViewItem(item, i18n("Dimensions"),
+    last = new TQListViewItem(item, i18n("Dimensions"),
 		i18n("%1 x %2 Pixel (%3 x %4 mm)")
 		.arg( (int)DisplayWidth(dpy,scr) )
 		.arg( (int)DisplayHeight(dpy,scr) )
 		.arg( (int)DisplayWidthMM(dpy,scr) )
 		.arg( (int)DisplayHeightMM (dpy,scr) ));
 
-    last = new QListViewItem(item, last, i18n("Resolution"),
+    last = new TQListViewItem(item, last, i18n("Resolution"),
 		i18n("%1 x %2 dpi")
 		.arg( (int)(xres+0.5) )
 		.arg( (int)(yres+0.5) ));
@@ -162,39 +162,39 @@ static QListViewItem* XServer_fill_screen_info( QListViewItem *lBox, QListViewIt
     depths  = 0;
     depths = XListDepths (dpy, scr, &ndepths);
     if (depths) {
-	QString txt;
+	TQString txt;
 
         for (i = 0; i < ndepths; i++) {
             txt = txt + Value(depths[i]);
             if (i < ndepths - 1)
-                txt = txt + QString::fromLatin1(", ");
+                txt = txt + TQString::fromLatin1(", ");
         }
 
-        last = new QListViewItem(item, last, i18n("Depths (%1)").arg(ndepths,-1), txt);
+        last = new TQListViewItem(item, last, i18n("Depths (%1)").arg(ndepths,-1), txt);
         XFree((char *) depths);
     }
 
-    last = new QListViewItem(item, last, i18n("Root Window ID"),
+    last = new TQListViewItem(item, last, i18n("Root Window ID"),
 		HexStr((unsigned long)RootWindow(dpy,scr),HEXDIGITS));
-    last = new QListViewItem(item, last, i18n("Depth of Root Window"),
+    last = new TQListViewItem(item, last, i18n("Depth of Root Window"),
 		(DisplayPlanes (dpy, scr) == 1)
 		?	i18n("%1 plane").arg(DisplayPlanes(dpy,scr))   /*singular*/
 		:	i18n("%1 planes").arg(DisplayPlanes(dpy,scr)));/*plural*/
-    last = new QListViewItem(item, last, i18n("Number of Colormaps"),
+    last = new TQListViewItem(item, last, i18n("Number of Colormaps"),
 		i18n("minimum %1, maximum %2")
 		    .arg((int)MinCmapsOfScreen(s)).arg((int)MaxCmapsOfScreen(s)));
-    last = new QListViewItem(item, last, i18n("Default Colormap"),
+    last = new TQListViewItem(item, last, i18n("Default Colormap"),
 		Value((int)DefaultColormap(dpy,scr)));
-    last = new QListViewItem(item, last, i18n("Default Number of Colormap Cells"),
+    last = new TQListViewItem(item, last, i18n("Default Number of Colormap Cells"),
 		Value((int)DisplayCells(dpy, scr)));
-    last = new QListViewItem(item, last, i18n("Preallocated Pixels"),
+    last = new TQListViewItem(item, last, i18n("Preallocated Pixels"),
 		i18n("Black %1, White %2")
 		.arg(KGlobal::locale()->formatNumber(BlackPixel(dpy,scr), 0))
 		.arg(KGlobal::locale()->formatNumber(WhitePixel(dpy,scr), 0)));
 
-    QString YES(i18n("Yes"));
-    QString NO(i18n("No"));
-    last = new QListViewItem(item, last, i18n("Options"),
+    TQString YES(i18n("Yes"));
+    TQString NO(i18n("No"));
+    last = new TQListViewItem(item, last, i18n("Options"),
 		i18n("backing-store: %1, save-unders: %2")
 		.arg( (DoesBackingStore(s) == NotUseful) ? NO :
 		      ((DoesBackingStore(s) == Always) ? YES : i18n("When mapped")) )
@@ -202,17 +202,17 @@ static QListViewItem* XServer_fill_screen_info( QListViewItem *lBox, QListViewIt
 
     XQueryBestSize (dpy, CursorShape, RootWindow(dpy,scr), 65535, 65535,
 		    &width, &height);
-    last = new QListViewItem(item, last, i18n("Largest Cursor"),
+    last = new TQListViewItem(item, last, i18n("Largest Cursor"),
 		(width == 65535 && height == 65535)
-		? i18n("unlimited") : QString::fromLatin1("%1 x %2").arg(width).arg(height));
+		? i18n("unlimited") : TQString::fromLatin1("%1 x %2").arg(width).arg(height));
 
-    last = new QListViewItem(item, last, i18n("Current Input Event Mask"),
+    last = new TQListViewItem(item, last, i18n("Current Input Event Mask"),
 		HexStr((unsigned long)EventMaskOfScreen(s),HEXDIGITS));
     item = last;
     struct _event_table *etp;
     for (etp=event_table; etp->name; etp++) {
 	if (EventMaskOfScreen(s) & etp->value)
-	    item = new QListViewItem(last, item,
+	    item = new TQListViewItem(last, item,
 		i18n("Event = %1").arg(HexStr(etp->value,HEXDIGITS)),
 		etp->name );
     }
@@ -220,19 +220,19 @@ static QListViewItem* XServer_fill_screen_info( QListViewItem *lBox, QListViewIt
     return item;
 }
 
-static const QString Order( int order )
+static const TQString Order( int order )
 {
     if (order==LSBFirst) return i18n("LSBFirst"); else
     if (order==MSBFirst) return i18n("MSBFirst"); else
 	return i18n("Unknown Order %1").arg(order);
 }
 
-static const QString BitString( unsigned long n )
+static const TQString BitString( unsigned long n )
 {
     return i18n("1 Bit", "%n Bits", n); // singular & plural form of "%d Bit"
 }
 
-static const QString ByteString( unsigned long n )
+static const TQString ByteString( unsigned long n )
 {
     /* explanation in BR #52640 (http://bugs.kde.org/show_bug.cgi?id=52640) */
     if (n == 1)
@@ -242,7 +242,7 @@ static const QString ByteString( unsigned long n )
 		.arg(KGlobal::locale()->formatNumber(n,0));
 }
 
-static bool GetInfo_XServer_Generic( QListView *lBox )
+static bool GetInfo_XServer_Generic( TQListView *lBox )
 {
     /* Many parts of this source are taken from the X11-program "xdpyinfo" */
 
@@ -252,8 +252,8 @@ static bool GetInfo_XServer_Generic( QListView *lBox )
     Display *dpy;
     XPixmapFormatValues *pmf;
 
-    QString str,txt;
-    QListViewItem *last, *item, *next;
+    TQString str,txt;
+    TQListViewItem *last, *item, *next;
 
     dpy = XOpenDisplay(0);
     if (!dpy)
@@ -263,24 +263,24 @@ static bool GetInfo_XServer_Generic( QListView *lBox )
     lBox->addColumn(i18n("Value") );
     sorting_allowed = false;
 
-    next = new QListViewItem(lBox, i18n("Server Information"));
+    next = new TQListViewItem(lBox, i18n("Server Information"));
     next->setPixmap(0, SmallIcon("kcmx"));
     next->setOpen(true);
     next->setSelectable(false);
     next->setExpandable(false);
 
-    last = new QListViewItem(next, i18n("Name of the Display"),
+    last = new TQListViewItem(next, i18n("Name of the Display"),
 		DisplayString(dpy));
 
-    last = new QListViewItem(next, last, i18n("Vendor String"), QString::fromLatin1(ServerVendor(dpy)));
-    last = new QListViewItem(next, last, i18n("Vendor Release Number"),
+    last = new TQListViewItem(next, last, i18n("Vendor String"), TQString::fromLatin1(ServerVendor(dpy)));
+    last = new TQListViewItem(next, last, i18n("Vendor Release Number"),
 		Value((int)VendorRelease(dpy)));
 
-    last = new QListViewItem(next, last, i18n("Version Number"),
-		QString::fromLatin1("%1.%2").arg((int)ProtocolVersion(dpy))
+    last = new TQListViewItem(next, last, i18n("Version Number"),
+		TQString::fromLatin1("%1.%2").arg((int)ProtocolVersion(dpy))
     		                  .arg((int)ProtocolRevision(dpy)));
 
-    last = item = new QListViewItem(next, last, i18n("Available Screens"));
+    last = item = new TQListViewItem(next, last, i18n("Available Screens"));
     last->setOpen(true);
     last->setExpandable(true);
     for (i=0; i<ScreenCount(dpy); i++) {
@@ -288,22 +288,22 @@ static bool GetInfo_XServer_Generic( QListView *lBox )
 	if (i==0) item->setOpen(true);
     }
 
-    last = new QListViewItem( next, last, i18n("Supported Extensions") );
+    last = new TQListViewItem( next, last, i18n("Supported Extensions") );
     item = last;
 
     int extCount;
     char **extensions = XListExtensions( dpy, &extCount );
     for ( i = 0; i < extCount; i++ ) {
-       item = new QListViewItem( last, item, QString::fromLatin1( extensions[i] ) );
+       item = new TQListViewItem( last, item, TQString::fromLatin1( extensions[i] ) );
     }
     XFreeExtensionList( extensions );
 
     pmf = XListPixmapFormats(dpy, &n);
-    last = item = new QListViewItem(next, last, i18n("Supported Pixmap Formats"));
+    last = item = new TQListViewItem(next, last, i18n("Supported Pixmap Formats"));
     if (pmf) {
 	last->setExpandable(true);
 	for (i=0; i<n; i++) {
-	    item = new QListViewItem(last, item,
+	    item = new TQListViewItem(last, item,
 			i18n("Pixmap Format #%1").arg(i+1),
 			i18n("%1 BPP, Depth: %2, Scanline padding: %3")
 				.arg(pmf[i].bits_per_pixel)
@@ -315,21 +315,21 @@ static bool GetInfo_XServer_Generic( QListView *lBox )
 
     req_size = XExtendedMaxRequestSize(dpy);
     if (!req_size) req_size = XMaxRequestSize(dpy);
-    last = new QListViewItem(next, last, i18n("Maximum Request Size"),
+    last = new TQListViewItem(next, last, i18n("Maximum Request Size"),
 		ByteString(req_size*4));
-    last = new QListViewItem(next, last, i18n("Motion Buffer Size"),
+    last = new TQListViewItem(next, last, i18n("Motion Buffer Size"),
 		ByteString(XDisplayMotionBufferSize(dpy)));
 
-    last = item = new QListViewItem(next, last, i18n("Bitmap"));
+    last = item = new TQListViewItem(next, last, i18n("Bitmap"));
     last->setExpandable(true);
-    item = new QListViewItem(last, item, i18n("Unit"),
+    item = new TQListViewItem(last, item, i18n("Unit"),
 		Value(BitmapUnit(dpy)) );
-    item = new QListViewItem(last, item, i18n("Order"),
+    item = new TQListViewItem(last, item, i18n("Order"),
 		Order(BitmapBitOrder(dpy)));
-    item = new QListViewItem(last, item, i18n("Padding"),
+    item = new TQListViewItem(last, item, i18n("Padding"),
 		Value(BitmapPad(dpy)));
 
-    last = new QListViewItem(next, last, i18n("Image Byte Order"),
+    last = new TQListViewItem(next, last, i18n("Image Byte Order"),
 		Order(ImageByteOrder(dpy)));
 
     XCloseDisplay (dpy);
@@ -356,7 +356,7 @@ void KInfoListWidget::load()
         retrieve-function. If the function wants the widget to show
         another string, then it change *GetInfo_ErrorString ! */
     ErrorString = i18n("No information available about %1.").arg(title)
-		    + QString::fromLatin1("\n\n") + DEFAULT_ERRORSTRING;
+		    + TQString::fromLatin1("\n\n") + DEFAULT_ERRORSTRING;
     GetInfo_ErrorString = &ErrorString;  /* save the address of ErrorString */
 
     sorting_allowed = true; 	/* the functions may set that */
@@ -387,7 +387,7 @@ void KInfoListWidget::load()
 }
 
 
-QString KInfoListWidget::quickHelp() const
+TQString KInfoListWidget::quickHelp() const
 {
   return i18n("<h1>System Information</h1>"
 	" All the information modules return information about a certain"
@@ -397,8 +397,8 @@ QString KInfoListWidget::quickHelp() const
 }
 
 
-KInfoListWidget::KInfoListWidget(const QString &_title, QWidget *parent, const char *name,
-                                 bool _getlistbox(QListView *lbox))
+KInfoListWidget::KInfoListWidget(const TQString &_title, TQWidget *parent, const char *name,
+                                 bool _getlistbox(TQListView *lbox))
     : KCModule(parent, name),
       title(_title)
 {
@@ -414,16 +414,16 @@ KInfoListWidget::KInfoListWidget(const QString &_title, QWidget *parent, const c
     setButtons(KCModule::Help);
     getlistbox 	= _getlistbox;
     GetInfo_ErrorString = 0;
-    QHBoxLayout *layout = new QHBoxLayout(this, 0, KDialog::spacingHint());
-    widgetStack = new QWidgetStack(this);
+    TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+    widgetStack = new TQWidgetStack(this);
     layout->addWidget(widgetStack);
-    lBox 	= new QListView(widgetStack);
+    lBox 	= new TQListView(widgetStack);
     widgetStack->addWidget(lBox, 0);
     lBox->setMinimumSize(200,120);
     lBox->setFont(KGlobalSettings::generalFont()); /* default font */
     lBox->setAllColumnsShowFocus(true);
-    QWhatsThis::add( lBox, i18n( "This list displays system information on the selected category." ) );
-    NoInfoText  = new QLabel(widgetStack);
+    TQWhatsThis::add( lBox, i18n( "This list displays system information on the selected category." ) );
+    NoInfoText  = new TQLabel(widgetStack);
     widgetStack->addWidget(NoInfoText, 1);
     NoInfoText->setAlignment(AlignCenter | WordBreak);
     widgetStack->raiseWidget(NoInfoText);
@@ -433,24 +433,24 @@ KInfoListWidget::KInfoListWidget(const QString &_title, QWidget *parent, const c
 
 
 /* Helper-function to read output from an external program */
-static int GetInfo_ReadfromPipe( QListView *lBox, const char *FileName, bool WithEmptyLines = true )
+static int GetInfo_ReadfromPipe( TQListView *lBox, const char *FileName, bool WithEmptyLines = true )
 {
     FILE *pipe;
-    QListViewItem* olditem = 0L;
-    QString s;
+    TQListViewItem* olditem = 0L;
+    TQString s;
 
     if ((pipe = popen(FileName, "r")) == NULL) {
 	pclose(pipe);
 	return 0;
     }
 
-    QTextStream t(pipe, IO_ReadOnly);
+    TQTextStream t(pipe, IO_ReadOnly);
 
     while (!t.atEnd()) {
 	s = t.readLine();
 	if (!WithEmptyLines && s.length()==0)
 		continue;
-       	olditem = new QListViewItem(lBox, olditem, s);
+       	olditem = new TQListViewItem(lBox, olditem, s);
     }
 
     pclose(pipe);

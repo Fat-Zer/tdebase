@@ -31,9 +31,9 @@
 
 #include "backendbase.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqstring.h>
 
 #include <config.h>
 
@@ -49,7 +49,7 @@ namespace KIO {
   class Job;
 }
 
-class HALBackend : public QObject, public BackendBase
+class HALBackend : public TQObject, public BackendBase
 {
 Q_OBJECT
 
@@ -57,7 +57,7 @@ public:
 	/**
 	* Constructor
 	*/
-	HALBackend(MediaList &list, QObject* parent);
+	HALBackend(MediaList &list, TQObject* parent);
 
 	/**
 	* Destructor
@@ -78,15 +78,15 @@ public:
 	*/
 	bool ListDevices();
 
-	QStringList mountoptions(const QString &id);
+	TQStringList mountoptions(const TQString &id);
 
-	bool setMountoptions(const QString &id, const QStringList &options);
+	bool setMountoptions(const TQString &id, const TQStringList &options);
 
-	QString mount(const QString &id);
-	QString mount(const Medium *medium);
-	QString unmount(const QString &id);
-	QString decrypt(const QString &id, const QString &password);
-	QString undecrypt(const QString &id);
+	TQString mount(const TQString &id);
+	TQString mount(const Medium *medium);
+	TQString unmount(const TQString &id);
+	TQString decrypt(const TQString &id, const TQString &password);
+	TQString undecrypt(const TQString &id);
 
 private:
 	/**
@@ -142,10 +142,10 @@ private:
 	void setFloppyMountState( Medium* medium );
 	bool setFstabProperties(Medium* medium);
 	void setCameraProperties(Medium* medium);
-	QString generateName(const QString &devNode);
-	static QString isInFstab(const Medium *medium);
-	static QString listUsingProcesses(const Medium *medium);
-	static QString killUsingProcesses(const Medium *medium);
+	TQString generateName(const TQString &devNode);
+	static TQString isInFstab(const Medium *medium);
+	static TQString listUsingProcesses(const Medium *medium);
+	static TQString killUsingProcesses(const Medium *medium);
 
 private slots:
 	void slotResult(KIO::Job *job);
@@ -207,7 +207,7 @@ private:
 	/**
 	* Object for the kded module
 	*/
-	QObject* m_parent;
+	TQObject* m_parent;
 
 	DBusConnection *dbus_connection;
 
@@ -222,10 +222,10 @@ private:
 		// [out] KIO::Error if an error occured during operation. Otherwise, 0
 		int error;
 		// [out] Error message to be displayed to the user
-		QString errorMessage;
+		TQString errorMessage;
 	};
 
-	QMap<KIO::Job *, struct mount_job_data*> mount_jobs;
+	TQMap<KIO::Job *, struct mount_job_data*> mount_jobs;
 };
 
 #endif /* _HALBACKEND_H_ */

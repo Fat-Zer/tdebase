@@ -24,24 +24,24 @@
 #include <klocale.h>
 #include <kapplication.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 HTMLExporter::HTMLExporter() 
     : m_out(&m_string, IO_WriteOnly) {
 }
 
-void HTMLExporter::write(const KBookmarkGroup &grp, const QString &filename, bool showAddress) {
-    QFile file(filename);
+void HTMLExporter::write(const KBookmarkGroup &grp, const TQString &filename, bool showAddress) {
+    TQFile file(filename);
     if (!file.open(IO_WriteOnly)) {
         kdError(7043) << "Can't write to file " << filename << endl;
         return;
     }
-    QTextStream tstream(&file);
-    tstream.setEncoding(QTextStream::UnicodeUTF8);
+    TQTextStream tstream(&file);
+    tstream.setEncoding(TQTextStream::UnicodeUTF8);
     tstream << toString(grp, showAddress);
 }
 
-QString HTMLExporter::toString(const KBookmarkGroup &grp, bool showAddress)
+TQString HTMLExporter::toString(const KBookmarkGroup &grp, bool showAddress)
 {
     m_showAddress = showAddress;
     traverse(grp);

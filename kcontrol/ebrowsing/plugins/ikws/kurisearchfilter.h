@@ -34,13 +34,13 @@ class KURISearchFilter : public KURIFilterPlugin, public DCOPObject
     Q_OBJECT
     K_DCOP
 public:
-    KURISearchFilter(QObject *parent = 0, const char *name = 0, 
-                     const QStringList &args = QStringList() );
+    KURISearchFilter(TQObject *parent = 0, const char *name = 0, 
+                     const TQStringList &args = TQStringList() );
     ~KURISearchFilter();
 
     virtual bool filterURI( KURIFilterData& ) const;
-    virtual KCModule *configModule(QWidget *parent = 0, const char *name = 0) const;
-    virtual QString configName() const;
+    virtual KCModule *configModule(TQWidget *parent = 0, const char *name = 0) const;
+    virtual TQString configName() const;
 
 k_dcop:
     virtual void configure();

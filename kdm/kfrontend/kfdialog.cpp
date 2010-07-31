@@ -29,24 +29,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qapplication.h>
-#include <qcursor.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqapplication.h>
+#include <tqcursor.h>
 
-FDialog::FDialog( QWidget *parent, bool framed )
+FDialog::FDialog( TQWidget *parent, bool framed )
 	: inherited( parent, 0, true/*, framed ? 0 : WStyle_NoBorder*/ )
 {
 	if (framed) {
-		winFrame = new QFrame( this, 0, WNoAutoErase );
-		winFrame->setFrameStyle( QFrame::WinPanel | QFrame::Raised );
+		winFrame = new TQFrame( this, 0, WNoAutoErase );
+		winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
 		winFrame->setLineWidth( 2 );
 	} else
 		winFrame = 0;
 }
 
 void
-FDialog::resizeEvent( QResizeEvent *e )
+FDialog::resizeEvent( TQResizeEvent *e )
 {
 	inherited::resizeEvent( e );
 	if (winFrame) {
@@ -58,14 +58,14 @@ FDialog::resizeEvent( QResizeEvent *e )
 void
 FDialog::adjustGeometry()
 {
-	QDesktopWidget *dsk = qApp->desktop();
+	TQDesktopWidget *dsk = qApp->desktop();
 
 	if (_greeterScreen < 0)
 		_greeterScreen = _greeterScreen == -2 ?
-			dsk->screenNumber( QPoint( dsk->width() - 1, 0 ) ) :
-			dsk->screenNumber( QPoint( 0, 0 ) );
+			dsk->screenNumber( TQPoint( dsk->width() - 1, 0 ) ) :
+			dsk->screenNumber( TQPoint( 0, 0 ) );
 
-	QRect scr = dsk->screenGeometry( _greeterScreen );
+	TQRect scr = dsk->screenGeometry( _greeterScreen );
 	if (!winFrame)
 		setFixedSize( scr.size() );
 	else {
@@ -76,11 +76,11 @@ FDialog::adjustGeometry()
 	if (parentWidget())
 		return;
 
-	QRect grt( rect() );
+	TQRect grt( rect() );
 	if (winFrame) {
 		unsigned x = 50, y = 50;
 		sscanf( _greeterPos, "%u,%u", &x, &y );
-		grt.moveCenter( QPoint( scr.x() + scr.width() * x / 100,
+		grt.moveCenter( TQPoint( scr.x() + scr.width() * x / 100,
 		                        scr.y() + scr.height() * y / 100 ) );
 		int di;
 		if ((di = scr.right() - grt.right()) < 0)
@@ -94,13 +94,13 @@ FDialog::adjustGeometry()
 		setGeometry( grt );
 	}
 
-	if (dsk->screenNumber( QCursor::pos() ) != _greeterScreen)
-		QCursor::setPos( grt.center() );
+	if (dsk->screenNumber( TQCursor::pos() ) != _greeterScreen)
+		TQCursor::setPos( grt.center() );
 }
 
 struct WinList {
 	struct WinList *next;
-	QWidget *win;
+	TQWidget *win;
 };
 
 int
@@ -125,24 +125,24 @@ FDialog::exec()
 }
 
 void
-FDialog::box( QWidget *parent, QMessageBox::Icon type, const QString &text )
+FDialog::box( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
 {
 	KFMsgBox dlg( parent, type, text.stripWhiteSpace() );
 	dlg.exec();
 }
 
-KFMsgBox::KFMsgBox( QWidget *parent, QMessageBox::Icon type, const QString &text )
+KFMsgBox::KFMsgBox( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
 	: inherited( parent )
 {
-	QLabel *label1 = new QLabel( this );
-	label1->setPixmap( QMessageBox::standardIcon( type ) );
-	QLabel *label2 = new QLabel( text, this );
+	TQLabel *label1 = new TQLabel( this );
+	label1->setPixmap( TQMessageBox::standardIcon( type ) );
+	TQLabel *label2 = new TQLabel( text, this );
 	KPushButton *button = new KPushButton( KStdGuiItem::ok(), this );
 	button->setDefault( true );
-	button->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-	connect( button, SIGNAL(clicked()), SLOT(accept()) );
+	button->setSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
+	connect( button, TQT_SIGNAL(clicked()), TQT_SLOT(accept()) );
 
-	QGridLayout *grid = new QGridLayout( this, 2, 2, 10 );
+	TQGridLayout *grid = new TQGridLayout( this, 2, 2, 10 );
 	grid->addWidget( label1, 0, 0, Qt::AlignCenter );
 	grid->addWidget( label2, 0, 1, Qt::AlignCenter );
 	grid->addMultiCellWidget( button, 1,1, 0,1, Qt::AlignCenter );

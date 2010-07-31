@@ -48,10 +48,10 @@ public:
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */
-  JavaPolicies(KConfig* config, const QString &group, bool global,
-  		const QString &domain = QString::null);
+  JavaPolicies(KConfig* config, const TQString &group, bool global,
+  		const TQString &domain = TQString::null);
 
-  /** empty constructur to make QMap happy
+  /** empty constructur to make TQMap happy
    * don't use for constructing a policies instance.
    * @internal
    */
@@ -65,13 +65,13 @@ public:
 class JavaDomainListView : public DomainListView {
   Q_OBJECT
 public:
-  JavaDomainListView(KConfig *config,const QString &group,KJavaOptions *opt,
-  		QWidget *parent,const char *name = 0);
+  JavaDomainListView(KConfig *config,const TQString &group,KJavaOptions *opt,
+  		TQWidget *parent,const char *name = 0);
   virtual ~JavaDomainListView();
 
   /** remnant for importing pre KDE 3.2 settings
     */
-  void updateDomainListLegacy(const QStringList &domainConfig);
+  void updateDomainListLegacy(const TQStringList &domainConfig);
 
 protected:
   virtual JavaPolicies *createPolicies();
@@ -80,7 +80,7 @@ protected:
   		Policies *copy);
 
 private:
-  QString group;
+  TQString group;
   KJavaOptions *options;
 };
 
@@ -89,7 +89,7 @@ class KJavaOptions : public KCModule
     Q_OBJECT
 
 public:
-    KJavaOptions( KConfig* config, QString group, QWidget* parent = 0, const char* name = 0 );
+    KJavaOptions( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
 
     virtual void load();
     virtual void load( bool useDefaults );
@@ -105,15 +105,15 @@ private slots:
 private:
 
     KConfig* m_pConfig;
-    QString  m_groupname;
+    TQString  m_groupname;
     JavaPolicies java_global_policies;
 
-    QCheckBox*     enableJavaGloballyCB;
-    QCheckBox*     javaSecurityManagerCB;
-    QCheckBox*     useKioCB;
-    QCheckBox*     enableShutdownCB;
+    TQCheckBox*     enableJavaGloballyCB;
+    TQCheckBox*     javaSecurityManagerCB;
+    TQCheckBox*     useKioCB;
+    TQCheckBox*     enableShutdownCB;
     KIntNumInput*  serverTimeoutSB;
-    QLineEdit*     addArgED;
+    TQLineEdit*     addArgED;
     KURLRequester* pathED;
     bool           _removeJavaDomainSettings;
 

@@ -11,8 +11,8 @@
 #ifndef _GESTURES_H_
 #define _GESTURES_H_
 
-#include <qwidget.h>
-#include <qtimer.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
 
 #include <X11/Xlib.h>
 #include <fixx11h.h>
@@ -63,25 +63,25 @@ class KDE_EXPORT Stroke
     };
 
 class KDE_EXPORT Gesture
-    : public QWidget // not QObject because of x11EventFilter()
+    : public TQWidget // not TQObject because of x11EventFilter()
     {
     Q_OBJECT
     public:
-        Gesture( bool enabled_P, QObject* parent_P );
+        Gesture( bool enabled_P, TQObject* parent_P );
         virtual ~Gesture();
         void enable( bool enable_P );
         void set_mouse_button( unsigned int button_P );
         void set_timeout( int time_P );
         void set_exclude( Windowdef_list* windows_P );
-        void register_handler( QObject* receiver_P, const char* slot_P );
-        void unregister_handler( QObject* receiver_P, const char* slot_P );
+        void register_handler( TQObject* receiver_P, const char* slot_P );
+        void unregister_handler( TQObject* receiver_P, const char* slot_P );
     protected:
 	virtual bool x11Event( XEvent* ev_P );
     private slots:
         void stroke_timeout();
         void active_window_changed( WId window_P );
     signals:
-        void handle_gesture( const QString &gesture, WId window );
+        void handle_gesture( const TQString &gesture, WId window );
     private:
         void update_grab();
         void grab_mouse( bool grab_P );
@@ -89,27 +89,27 @@ class KDE_EXPORT Gesture
         bool _enabled;
         Stroke stroke;
         int start_x, start_y;
-        QTimer nostroke_timer;
+        TQTimer nostroke_timer;
         bool recording;
         unsigned int button;
         int timeout;
         WId gesture_window;
         Windowdef_list* exclude;
-        QMap< QObject*, bool > handlers; // bool is just a dummy
+        TQMap< TQObject*, bool > handlers; // bool is just a dummy
     };
 
-// Gesture class must be QWidget derived because of x11Event()
-// but it should be QObject owned -> use a QObject proxy that will delete it
+// Gesture class must be TQWidget derived because of x11Event()
+// but it should be TQObject owned -> use a TQObject proxy that will delete it
 class DeleteObject
     : public QObject
     {
     Q_OBJECT
     public:
-        DeleteObject( QWidget* widget_P, QObject* parent_P )
-            : QObject( parent_P ), widget( widget_P ) {}
+        DeleteObject( TQWidget* widget_P, TQObject* parent_P )
+            : TQObject( parent_P ), widget( widget_P ) {}
         virtual ~DeleteObject() { delete widget; }
     private:
-        QWidget* widget;
+        TQWidget* widget;
     };
     
 

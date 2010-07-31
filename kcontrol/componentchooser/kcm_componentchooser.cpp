@@ -13,7 +13,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kaboutdata.h>
 #include <kglobal.h>
@@ -22,12 +22,12 @@
 #include "kcm_componentchooser.moc"
 
 
-KCMComponentChooser::KCMComponentChooser( QWidget *parent, const char *name ):
+KCMComponentChooser::KCMComponentChooser( TQWidget *parent, const char *name ):
 	KCModule(parent,name) {
 
-	(new QVBoxLayout(this))->setAutoAdd(true);
+	(new TQVBoxLayout(this))->setAutoAdd(true);
 	m_chooser=new ComponentChooser(this,"ComponentChooser");
-	connect(m_chooser,SIGNAL(changed(bool)),this,SIGNAL(changed(bool)));
+	connect(m_chooser,TQT_SIGNAL(changed(bool)),this,TQT_SIGNAL(changed(bool)));
 	setButtons( Help | Apply );
 
 	KAboutData *about =
@@ -55,7 +55,7 @@ void KCMComponentChooser::defaults(){
 
 extern "C"
 {
-    KDE_EXPORT KCModule *create_componentchooser( QWidget *parent, const char * )
+    KDE_EXPORT KCModule *create_componentchooser( TQWidget *parent, const char * )
     {
         KGlobal::locale()->insertCatalogue("kcmcomponentchooser");
         return new KCMComponentChooser( parent, "kcmcomponentchooser" );

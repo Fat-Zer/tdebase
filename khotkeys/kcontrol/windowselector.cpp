@@ -18,7 +18,7 @@
 
 #include "voices.h"
 
-#include <qcursor.h>
+#include <tqcursor.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <X11/Xlib.h>
@@ -27,14 +27,14 @@
 namespace KHotKeys
 {
 
-WindowSelector::WindowSelector( QObject* receiver_P, const char* slot_P )
+WindowSelector::WindowSelector( TQObject* receiver_P, const char* slot_P )
     {
-    connect( this, SIGNAL( selected_signal( WId )), receiver_P, slot_P );
+    connect( this, TQT_SIGNAL( selected_signal( WId )), receiver_P, slot_P );
     }
 
 void WindowSelector::select()
     {
-    kapp->desktop()->grabMouse( QCursor( crossCursor ));
+    kapp->desktop()->grabMouse( TQCursor( crossCursor ));
     kapp->installX11EventFilter( this );
     }
 

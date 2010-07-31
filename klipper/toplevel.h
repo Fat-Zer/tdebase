@@ -24,10 +24,10 @@
 #include <kapplication.h>
 #include <kglobalaccel.h>
 #include <kpopupmenu.h>
-#include <qmap.h>
-#include <qpixmap.h>
+#include <tqmap.h>
+#include <tqpixmap.h>
 #include <dcopobject.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 class QClipboard;
 class KToggleAction;
@@ -41,21 +41,21 @@ class QMimeSource;
 class HistoryItem;
 class KlipperSessionManaged;
 
-class KlipperWidget : public QWidget, public DCOPObject
+class KlipperWidget : public TQWidget, public DCOPObject
 {
   Q_OBJECT
   K_DCOP
 
 k_dcop:
-    QString getClipboardContents();
-    void setClipboardContents(QString s);
+    TQString getClipboardContents();
+    void setClipboardContents(TQString s);
     void clearClipboardContents();
     void clearClipboardHistory();
-    QStringList getClipboardHistoryMenu();
-    QString getClipboardHistoryItem(int i);
+    TQStringList getClipboardHistoryMenu();
+    TQString getClipboardHistoryItem(int i);
 
 public:
-    KlipperWidget( QWidget *parent, KConfig* config );
+    KlipperWidget( TQWidget *parent, KConfig* config );
     ~KlipperWidget();
 
     virtual void adjustSize();
@@ -86,8 +86,8 @@ protected:
      */
     enum SelectionMode { Clipboard = 2, Selection = 4 };
 
-    void paintEvent(QPaintEvent *);
-    void mousePressEvent(QMouseEvent *);
+    void paintEvent(TQPaintEvent *);
+    void mousePressEvent(TQMouseEvent *);
     void readProperties(KConfig *);
     void readConfiguration(KConfig *);
 
@@ -106,9 +106,9 @@ protected:
      * @returns the contents of the selection or, if empty, the contents of
      * the clipboard.
      */
-    QString clipboardContents( bool *isSelection = 0L );
+    TQString clipboardContents( bool *isSelection = 0L );
 
-    void removeFromHistory( const QString& text );
+    void removeFromHistory( const TQString& text );
     void setEmptyClipboard();
 
     void clipboardSignalArrived( bool selectionMode );
@@ -122,7 +122,7 @@ protected:
     /**
      * Enter clipboard data in the history.
      */
-    void applyClipChanges( const QMimeSource& data );
+    void applyClipChanges( const TQMimeSource& data );
 
     void setClipboard( const HistoryItem& item, int mode );
     bool ignoreClipboardChanges() const;
@@ -132,7 +132,7 @@ protected:
 
 protected slots:
     void slotPopupMenu();
-    void showPopupMenu( QPopupMenu * );
+    void showPopupMenu( TQPopupMenu * );
     void slotRepeatAction();
     void setURLGrabberEnabled( bool );
     void toggleURLGrabber();
@@ -160,10 +160,10 @@ private:
 
     QClipboard *clip;
 
-    QTime *hideTimer;
-    QTime *showTimer;
+    TQTime *hideTimer;
+    TQTime *showTimer;
 
-    QMimeSource* m_lastClipdata;
+    TQMimeSource* m_lastClipdata;
     int m_lastClipboard;
     int m_lastSelection;
     History* m_history;
@@ -172,8 +172,8 @@ private:
     KAction* clearHistoryAction;
     KAction* configureAction;
     KAction* quitAction;
-    QPixmap m_pixmap;
-    QPixmap m_scaledpixmap;
+    TQPixmap m_pixmap;
+    TQPixmap m_scaledpixmap;
     int m_iconOrigWidth;
     int m_iconOrigHeight;
     bool bPopupAtMouse :1;
@@ -197,11 +197,11 @@ private:
     int locklevel;
 
     URLGrabber *myURLGrabber;
-    QString m_lastURLGrabberTextSelection;
-    QString m_lastURLGrabberTextClipboard;
+    TQString m_lastURLGrabberTextSelection;
+    TQString m_lastURLGrabberTextClipboard;
     KConfig* m_config;
-    QTimer m_overflowClearTimer;
-    QTimer m_pendingCheckTimer;
+    TQTimer m_overflowClearTimer;
+    TQTimer m_pendingCheckTimer;
     bool m_pendingContentsCheck;
     ClipboardPoll* poll;
     static KAboutData* about_data;
@@ -218,7 +218,7 @@ k_dcop:
     int newInstance();
     void quitProcess(); // not ASYNC
 public:
-    Klipper( QWidget* parent = NULL );
+    Klipper( TQWidget* parent = NULL );
 };
 
 #endif

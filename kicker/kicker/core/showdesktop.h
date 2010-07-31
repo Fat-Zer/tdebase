@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class KWinModule;
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 /**
  * Singleton class that handles desktop access (minimizing all windows)
@@ -56,7 +56,7 @@ private:
     ShowDesktop();
 
     bool              m_showingDesktop;
-    QValueVector<WId> m_iconifiedList;
+    TQValueVector<WId> m_iconifiedList;
     WId               m_activeWindow;
     bool              m_wmSupport;
 };

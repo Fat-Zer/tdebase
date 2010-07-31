@@ -24,16 +24,16 @@
 
 #include <kdebug.h>
 
-#include <qdom.h>
-#include <qrect.h>
+#include <tqdom.h>
+#include <tqrect.h>
 
-KdmLayoutFixed::KdmLayoutFixed( const QDomNode &/*node*/ )
+KdmLayoutFixed::KdmLayoutFixed( const TQDomNode &/*node*/ )
 {
 	//Parsing FIXED parameters on 'node' [NONE!]
 }
 
 void
-KdmLayoutFixed::update( const QRect &parentGeometry, bool force )
+KdmLayoutFixed::update( const TQRect &parentGeometry, bool force )
 {
 	kdDebug() << "KdmLayoutFixed::update " << parentGeometry << endl;
 
@@ -43,15 +43,15 @@ KdmLayoutFixed::update( const QRect &parentGeometry, bool force )
 		return;
 	}
 	// For each child in list I ask their hinted size and set it!
-	for (QValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it)
+	for (TQValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it)
 		(*it)->setGeometry( (*it)->placementHint( parentGeometry ), force );
 }
 
-KdmLayoutBox::KdmLayoutBox( const QDomNode &node )
+KdmLayoutBox::KdmLayoutBox( const TQDomNode &node )
 {
 	//Parsing BOX parameters
-	QDomNode n = node;
-	QDomElement el = n.toElement();
+	TQDomNode n = node;
+	TQDomElement el = n.toElement();
 	box.isVertical = el.attribute( "orientation", "vertical" ) != "horizontal";
 	box.xpadding = el.attribute( "xpadding", "0" ).toInt();
 	box.ypadding = el.attribute( "ypadding", "0" ).toInt();
@@ -62,7 +62,7 @@ KdmLayoutBox::KdmLayoutBox( const QDomNode &node )
 }
 
 void
-KdmLayoutBox::update( const QRect &parentGeometry, bool force )
+KdmLayoutBox::update( const TQRect &parentGeometry, bool force )
 {
 	kdDebug() << this << " update " << parentGeometry << endl;
 
@@ -78,7 +78,7 @@ KdmLayoutBox::update( const QRect &parentGeometry, bool force )
 //	kdDebug() << this << " hintedSize " << hintedSize << endl;
 
 	//XXX why was this asymmetric? it broke things big time.
-	QRect childrenRect = /*box.isVertical ? QRect( parentGeometry.topLeft(), hintedSize ) :*/ parentGeometry;
+	TQRect childrenRect = /*box.isVertical ? TQRect( parentGeometry.topLeft(), hintedSize ) :*/ parentGeometry;
 	// Begin cutting the parent rectangle to attach children on the right place
 	childrenRect.addCoords( box.xpadding, box.ypadding, -box.xpadding, -box.ypadding );
 
@@ -87,21 +87,21 @@ KdmLayoutBox::update( const QRect &parentGeometry, bool force )
 	// For each child in list ...
 	if (box.homogeneous) {
 		int ccnt = 0;
-		for (QValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it)
+		for (TQValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it)
 			if (!(*it)->isExplicitlyHidden())
 				ccnt++;
 		int height = (childrenRect.height() - (ccnt - 1) * box.spacing) / ccnt;
 		int width = (childrenRect.width() - (ccnt - 1) * box.spacing) / ccnt;
 
-		for (QValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it) {
+		for (TQValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it) {
 			if ((*it)->isExplicitlyHidden())
 				continue;
 			if (box.isVertical) {
-				QRect temp( childrenRect.left(), childrenRect.top(), childrenRect.width(), height );
+				TQRect temp( childrenRect.left(), childrenRect.top(), childrenRect.width(), height );
 				(*it)->setGeometry( temp, force );
 				childrenRect.setTop( childrenRect.top() + height + box.spacing );
 			} else {
-				QRect temp( childrenRect.left(), childrenRect.top(), width, childrenRect.height() );
+				TQRect temp( childrenRect.left(), childrenRect.top(), width, childrenRect.height() );
 				kdDebug() << "placement " << *it << " " << temp << " " << (*it)->placementHint( temp ) << endl;
 				temp = (*it)->placementHint( temp );
 				(*it)->setGeometry( temp, force );
@@ -109,11 +109,11 @@ KdmLayoutBox::update( const QRect &parentGeometry, bool force )
 			}
 		}
 	} else {
-		for (QValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it) {
+		for (TQValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it) {
 			if ((*it)->isExplicitlyHidden())
 				continue;
 
-			QRect temp = childrenRect, itemRect;
+			TQRect temp = childrenRect, itemRect;
 			if (box.isVertical) {
 				temp.setHeight( 0 );
 				itemRect = (*it)->placementHint( temp );
@@ -140,8 +140,8 @@ KdmLayoutBox::sizeHint()
 {
 	// Sum up area taken by children
 	int w = 0, h = 0;
-	for (QValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it) {
-		QSize s = (*it)->placementHint( QRect() ).size();
+	for (TQValueList<KdmItem *>::ConstIterator it = m_children.begin(); it != m_children.end(); ++it) {
+		TQSize s = (*it)->placementHint( TQRect() ).size();
 		if (box.isVertical) {
 			if (s.width() > w)
 				w = s.width();
@@ -162,6 +162,6 @@ KdmLayoutBox::sizeHint()
 		w += box.spacing * (m_children.count() - 1);
 
 	// Make hint at least equal to minimum size (if set)
-	return QSize( w < box.minwidth ? box.minwidth : w,
+	return TQSize( w < box.minwidth ? box.minwidth : w,
 		      h < box.minheight ? box.minheight : h );
 }

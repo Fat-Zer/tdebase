@@ -21,7 +21,7 @@
 #ifndef __treeview_h__
 #define __treeview_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <klistview.h>
 
 class QPopupMenu;
@@ -32,19 +32,19 @@ class AppTreeItem : public KListViewItem
 {
 
 public:
-    AppTreeItem(QListViewItem *parent, const QString& storageId);
-    AppTreeItem(QListViewItem *parent, QListViewItem *after, const QString& storageId);
-    AppTreeItem(QListView *parent, const QString& storageId);
-    AppTreeItem(QListView *parent, QListViewItem* after, const QString& storageId);
+    AppTreeItem(TQListViewItem *parent, const TQString& storageId);
+    AppTreeItem(TQListViewItem *parent, TQListViewItem *after, const TQString& storageId);
+    AppTreeItem(TQListView *parent, const TQString& storageId);
+    AppTreeItem(TQListView *parent, TQListViewItem* after, const TQString& storageId);
 
-    QString storageId() const { return m_storageId; }
-    void setDirectoryPath(const QString& path) { m_directoryPath = path; }
+    TQString storageId() const { return m_storageId; }
+    void setDirectoryPath(const TQString& path) { m_directoryPath = path; }
 
-    QString name() const { return m_name; }
-    void setName(const QString &name);
+    TQString name() const { return m_name; }
+    void setName(const TQString &name);
 
-    QString accel() const { return m_accel; }
-    void setAccel(const QString &accel);
+    TQString accel() const { return m_accel; }
+    void setAccel(const TQString &accel);
 
     bool isDirectory() const { return !m_directoryPath.isEmpty(); }
 
@@ -52,10 +52,10 @@ public:
 
 private:
     bool m_init : 1;
-    QString m_storageId;
-    QString m_name;
-    QString m_directoryPath;
-    QString m_accel;
+    TQString m_storageId;
+    TQString m_name;
+    TQString m_directoryPath;
+    TQString m_accel;
 };
 
 class AppTreeView : public KListView
@@ -63,21 +63,21 @@ class AppTreeView : public KListView
     friend class AppTreeItem;
     Q_OBJECT
 public:
-    AppTreeView(QWidget *parent=0, const char *name=0);
+    AppTreeView(TQWidget *parent=0, const char *name=0);
     ~AppTreeView();
     void fill();
 
 signals:
-    void entrySelected(const QString&, const QString &, bool);
+    void entrySelected(const TQString&, const TQString &, bool);
 
 protected slots:
-    void itemSelected(QListViewItem *);
+    void itemSelected(TQListViewItem *);
 
 protected:
-    void fillBranch(const QString& relPath, AppTreeItem* parent);
+    void fillBranch(const TQString& relPath, AppTreeItem* parent);
 
-    QStringList fileList(const QString& relativePath);
-    QStringList dirList(const QString& relativePath);
+    TQStringList fileList(const TQString& relativePath);
+    TQStringList dirList(const TQString& relativePath);
 };
 
 

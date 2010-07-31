@@ -18,10 +18,10 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qbuttongroup.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
+#include <tqbuttongroup.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
 
 #include <kcolorbutton.h>
 #include <kcombobox.h>
@@ -35,72 +35,72 @@
 #include "konq_bgnddlg.h"
 
 
-KonqBgndDialog::KonqBgndDialog( QWidget* parent,
-                                const QString& pixmapFile,
-                                const QColor& theColor,
-                                const QColor& defaultColor )
+KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
+                                const TQString& pixmapFile,
+                                const TQColor& theColor,
+                                const TQColor& defaultColor )
  : KDialogBase( parent, "KonqBgndDialog", false,
                 i18n("Background Settings"), Ok|Cancel, Ok, true )
 {
-    QWidget* page = new QWidget( this );
+    TQWidget* page = new TQWidget( this );
     setMainWidget( page );
-    QVBoxLayout* mainLayout = new QVBoxLayout( page, 0, KDialog::spacingHint() );
+    TQVBoxLayout* mainLayout = new TQVBoxLayout( page, 0, KDialog::spacingHint() );
 
-    m_buttonGroup = new QButtonGroup( i18n("Background"), page );
+    m_buttonGroup = new TQButtonGroup( i18n("Background"), page );
     m_buttonGroup->setColumnLayout( 0, Qt::Vertical );
     m_buttonGroup->layout()->setMargin( KDialog::marginHint() );
     m_buttonGroup->layout()->setSpacing( KDialog::spacingHint() );
-    QGridLayout* groupLayout = new QGridLayout( m_buttonGroup->layout() );
+    TQGridLayout* groupLayout = new TQGridLayout( m_buttonGroup->layout() );
     groupLayout->setAlignment( Qt::AlignTop );
     mainLayout->addWidget( m_buttonGroup );
 
-    connect( m_buttonGroup, SIGNAL( clicked(int) ),
-             this, SLOT( slotBackgroundModeChanged() ) );
+    connect( m_buttonGroup, TQT_SIGNAL( clicked(int) ),
+             this, TQT_SLOT( slotBackgroundModeChanged() ) );
 
     // color
-    m_radioColor = new QRadioButton( i18n("Co&lor:"), m_buttonGroup );
+    m_radioColor = new TQRadioButton( i18n("Co&lor:"), m_buttonGroup );
     groupLayout->addWidget( m_radioColor, 0, 0 );
     m_buttonColor = new KColorButton( theColor, defaultColor, m_buttonGroup );
-    m_buttonColor->setSizePolicy( QSizePolicy::Preferred,
-                                QSizePolicy::Minimum );
+    m_buttonColor->setSizePolicy( TQSizePolicy::Preferred,
+                                TQSizePolicy::Minimum );
     groupLayout->addWidget( m_buttonColor, 0, 1 );
 
-    connect( m_buttonColor, SIGNAL( changed( const QColor& ) ),
-             this, SLOT( slotColorChanged() ) );
+    connect( m_buttonColor, TQT_SIGNAL( changed( const TQColor& ) ),
+             this, TQT_SLOT( slotColorChanged() ) );
 
     // picture
-    m_radioPicture = new QRadioButton( i18n("&Picture:"), m_buttonGroup );
+    m_radioPicture = new TQRadioButton( i18n("&Picture:"), m_buttonGroup );
     groupLayout->addWidget( m_radioPicture, 1, 0 );
     m_comboPicture = new KURLComboRequester( m_buttonGroup );
     groupLayout->addMultiCellWidget( m_comboPicture, 1, 1, 1, 2 );
     initPictures();
 
-    connect( m_comboPicture->comboBox(), SIGNAL( activated( int ) ),
-	     this, SLOT( slotPictureChanged() ) );
-    connect( m_comboPicture, SIGNAL( urlSelected(const QString &) ),
-             this, SLOT( slotPictureChanged() ) );
+    connect( m_comboPicture->comboBox(), TQT_SIGNAL( activated( int ) ),
+	     this, TQT_SLOT( slotPictureChanged() ) );
+    connect( m_comboPicture, TQT_SIGNAL( urlSelected(const TQString &) ),
+             this, TQT_SLOT( slotPictureChanged() ) );
 
-    QSpacerItem* spacer1 = new QSpacerItem( 0, 0, QSizePolicy::Expanding,
-                                            QSizePolicy::Minimum );
+    TQSpacerItem* spacer1 = new TQSpacerItem( 0, 0, TQSizePolicy::Expanding,
+                                            TQSizePolicy::Minimum );
     groupLayout->addItem( spacer1, 0, 2 );
 
     // preview title
-    QHBoxLayout* hlay = new QHBoxLayout( mainLayout, KDialog::spacingHint() );
+    TQHBoxLayout* hlay = new TQHBoxLayout( mainLayout, KDialog::spacingHint() );
     //mainLayout->addLayout( hlay );
-    QLabel* lbl = new QLabel( i18n("Preview"), page );
+    TQLabel* lbl = new TQLabel( i18n("Preview"), page );
     hlay->addWidget( lbl );
-    QFrame* frame = new QFrame( page );
-    frame->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    frame->setFrameShape( QFrame::HLine );
-    frame->setFrameShadow( QFrame::Sunken );
+    TQFrame* frame = new TQFrame( page );
+    frame->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Minimum );
+    frame->setFrameShape( TQFrame::HLine );
+    frame->setFrameShadow( TQFrame::Sunken );
     hlay->addWidget( frame );
 
     // preview frame
-    m_preview = new QFrame( page );
-    m_preview->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    m_preview = new TQFrame( page );
+    m_preview->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
     m_preview->setMinimumSize( 370, 180 );
-    m_preview->setFrameShape( QFrame::Panel );
-    m_preview->setFrameShadow( QFrame::Raised );
+    m_preview->setFrameShape( TQFrame::Panel );
+    m_preview->setFrameShadow( TQFrame::Raised );
     mainLayout->addWidget( m_preview );
 
     if ( !pixmapFile.isEmpty() ) {
@@ -120,12 +120,12 @@ KonqBgndDialog::~KonqBgndDialog()
 {
 }
 
-QColor KonqBgndDialog::color() const
+TQColor KonqBgndDialog::color() const
 {
     if ( m_radioColor->isChecked() )
         return m_buttonColor->color();
 
-    return QColor();
+    return TQColor();
 }
 
 void KonqBgndDialog::initPictures()
@@ -134,12 +134,12 @@ void KonqBgndDialog::initPictures()
         KGlobal::dirs()->kde_default("data") + "konqueror/tiles/");
     kdDebug(1203) << KGlobal::dirs()->kde_default("data") + "konqueror/tiles/" << endl;
 
-    QStringList list = KGlobal::dirs()->findAllResources("tiles");
+    TQStringList list = KGlobal::dirs()->findAllResources("tiles");
 
     if ( list.isEmpty() )
         m_comboPicture->comboBox()->insertItem( i18n("None") );
     else {
-        QStringList::ConstIterator it;
+        TQStringList::ConstIterator it;
         for ( it = list.begin(); it != list.end(); it++ )
             m_comboPicture->comboBox()->insertItem(
                 ( (*it).at(0) == '/' ) ?    // if absolute path
@@ -148,7 +148,7 @@ void KonqBgndDialog::initPictures()
     }
 }
 
-void KonqBgndDialog::loadPicture( const QString& fileName )
+void KonqBgndDialog::loadPicture( const TQString& fileName )
 {
     int i ;
     for ( i = 0; i < m_comboPicture->comboBox()->count(); i++ ) {
@@ -169,13 +169,13 @@ void KonqBgndDialog::loadPicture( const QString& fileName )
 void KonqBgndDialog::slotPictureChanged()
 {
     m_pixmapFile = m_comboPicture->comboBox()->currentText();
-    QString file = locate( "tiles", m_pixmapFile );
+    TQString file = locate( "tiles", m_pixmapFile );
     if ( file.isEmpty() )
         file = locate("wallpaper", m_pixmapFile); // add fallback for compatibility
     if ( file.isEmpty() ) {
         kdWarning(1203) << "Couldn't locate wallpaper " << m_pixmapFile << endl;
         m_preview->unsetPalette();
-        m_pixmap = QPixmap();
+        m_pixmap = TQPixmap();
         m_pixmapFile = "";
     }
     else {

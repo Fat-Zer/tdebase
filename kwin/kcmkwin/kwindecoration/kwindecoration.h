@@ -53,8 +53,8 @@ class KDecorationPreview;
 // Stores themeName and its corresponding library Name
 struct DecorationInfo
 {
-	QString name;
-	QString libraryName;
+	TQString name;
+	TQString libraryName;
 };
 
 
@@ -63,14 +63,14 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 	Q_OBJECT
 
 	public:
-		KWinDecorationModule(QWidget* parent, const char* name, const QStringList &);
+		KWinDecorationModule(TQWidget* parent, const char* name, const TQStringList &);
 		~KWinDecorationModule();
 
 		virtual void load();
 		virtual void save();
 		virtual void defaults();
 
-		QString quickHelp() const;
+		TQString quickHelp() const;
 
 		virtual void dcopUpdateClientList();
 
@@ -82,7 +82,7 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 	protected slots:
 		// Allows us to turn "save" on
 		void slotSelectionChanged();
-		void slotChangeDecoration( const QString &  );
+		void slotChangeDecoration( const TQString &  );
 		void slotBorderChanged( int );
 		void slotButtonsChanged();
 
@@ -92,41 +92,41 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		void findDecorations();
 		void createDecorationList();
 		void updateSelection();
-		QString decorationLibName( const QString& name );
-		QString decorationName ( QString& libName );
-		static QString styleToConfigLib( QString& styleLib );
-		void resetPlugin( KConfig* conf, const QString& currentDecoName = QString::null );
+		TQString decorationLibName( const TQString& name );
+		TQString decorationName ( TQString& libName );
+		static TQString styleToConfigLib( TQString& styleLib );
+		void resetPlugin( KConfig* conf, const TQString& currentDecoName = TQString::null );
 		void resetKWin();
 		void checkSupportedBorderSizes();
-		static int borderSizeToIndex( BorderSize size, QValueList< BorderSize > sizes );
-		static BorderSize indexToBorderSize( int index, QValueList< BorderSize > sizes );
+		static int borderSizeToIndex( BorderSize size, TQValueList< BorderSize > sizes );
+		static BorderSize indexToBorderSize( int index, TQValueList< BorderSize > sizes );
 
-		QTabWidget* tabWidget;
+		TQTabWidget* tabWidget;
 
 		// Page 1
 		KComboBox* decorationList;
-		QValueList<DecorationInfo> decorations;
+		TQValueList<DecorationInfo> decorations;
 
 		KDecorationPreview* preview;
 		KDecorationPlugins* plugins;
 		KConfig kwinConfig;
 
-		QCheckBox* cbUseCustomButtonPositions;
-	//	QCheckBox* cbUseMiniWindows;
-		QCheckBox* cbShowToolTips;
-		QLabel*    lBorder;
-		QComboBox* cBorder;
+		TQCheckBox* cbUseCustomButtonPositions;
+	//	TQCheckBox* cbUseMiniWindows;
+		TQCheckBox* cbShowToolTips;
+		TQLabel*    lBorder;
+		TQComboBox* cBorder;
 		BorderSize border_size;
 
-		QObject* pluginObject;
-		QWidget* pluginConfigWidget;
-		QString  currentLibraryName;
-		QString  oldLibraryName;
-		QObject* (*allocatePlugin)( KConfig* conf, QWidget* parent );
+		TQObject* pluginObject;
+		TQWidget* pluginConfigWidget;
+		TQString  currentLibraryName;
+		TQString  oldLibraryName;
+		TQObject* (*allocatePlugin)( KConfig* conf, TQWidget* parent );
 
 		// Page 2
 		ButtonPositionWidget *buttonPositionWidget;
-		QVBox*	 buttonPage;
+		TQVBox*	 buttonPage;
 };
 
 

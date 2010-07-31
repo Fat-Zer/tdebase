@@ -24,9 +24,9 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include <qdom.h>
-#include <qlcdnumber.h>
-#include <qtooltip.h>
+#include <tqdom.h>
+#include <tqlcdnumber.h>
+#include <tqtooltip.h>
 
 #include <kdebug.h>
 
@@ -36,8 +36,8 @@
 #include "MultiMeter.moc"
 #include "MultiMeterSettings.h"
 
-MultiMeter::MultiMeter(QWidget* parent, const char* name,
-				   const QString& title, double, double, bool nf, bool isApplet)
+MultiMeter::MultiMeter(TQWidget* parent, const char* name,
+				   const TQString& title, double, double, bool nf, bool isApplet)
 	: KSGRD::SensorDisplay(parent, name, title, nf, isApplet)
 {
 	setShowUnit( true );
@@ -47,14 +47,14 @@ MultiMeter::MultiMeter(QWidget* parent, const char* name,
 	normalDigitColor = KSGRD::Style->firstForegroundColor();
 	alarmDigitColor = KSGRD::Style->alarmColor();
 	if (noFrame())
-		lcd = new QLCDNumber(this, "meterLCD");
+		lcd = new TQLCDNumber(this, "meterLCD");
 	else
-		lcd = new QLCDNumber(frame(), "meterLCD");
+		lcd = new TQLCDNumber(frame(), "meterLCD");
 	Q_CHECK_PTR(lcd);
-	lcd->setSegmentStyle(QLCDNumber::Filled);
+	lcd->setSegmentStyle(TQLCDNumber::Filled);
 	setDigitColor(KSGRD::Style->backgroundColor());
-	lcd->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,
-					   QSizePolicy::Expanding, false));
+	lcd->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,
+					   TQSizePolicy::Expanding, false));
 
 	setBackgroundColor(KSGRD::Style->backgroundColor());
 	/* All RMB clicks to the lcd widget will be handled by 
@@ -68,8 +68,8 @@ MultiMeter::MultiMeter(QWidget* parent, const char* name,
 }
 
 bool
-MultiMeter::addSensor(const QString& hostName, const QString& sensorName,
-					const QString& sensorType, const QString& title)
+MultiMeter::addSensor(const TQString& hostName, const TQString& sensorName,
+					const TQString& sensorType, const TQString& title)
 {
 	if (sensorType != "integer" && sensorType != "float")
 		return (false);
@@ -80,15 +80,15 @@ MultiMeter::addSensor(const QString& hostName, const QString& sensorName,
 	 * requests we use 100 for info requests. */
 	sendRequest(hostName, sensorName + "?", 100);
 
-	QToolTip::remove(lcd);
-	QToolTip::add(lcd, QString("%1:%2").arg(hostName).arg(sensorName));
+	TQToolTip::remove(lcd);
+	TQToolTip::add(lcd, TQString("%1:%2").arg(hostName).arg(sensorName));
 
 	setModified(true);
 	return (true);
 }
 
 void
-MultiMeter::answerReceived(int id, const QString& answer)
+MultiMeter::answerReceived(int id, const TQString& answer)
 {
 	/* We received something, so the sensor is probably ok. */
 	sensorError(id, false);
@@ -131,7 +131,7 @@ MultiMeter::answerReceived(int id, const QString& answer)
 }
 
 void
-MultiMeter::resizeEvent(QResizeEvent*)
+MultiMeter::resizeEvent(TQResizeEvent*)
 {
 	if (noFrame())
 		lcd->setGeometry(0, 0, width(), height());
@@ -140,7 +140,7 @@ MultiMeter::resizeEvent(QResizeEvent*)
 }
 
 bool
-MultiMeter::restoreSettings(QDomElement& element)
+MultiMeter::restoreSettings(TQDomElement& element)
 {
 	lowerLimitActive = element.attribute("lowerLimitActive").toInt();
 	lowerLimit = element.attribute("lowerLimit").toLong();
@@ -164,7 +164,7 @@ MultiMeter::restoreSettings(QDomElement& element)
 }
 
 bool
-MultiMeter::saveSettings(QDomDocument& doc, QDomElement& element, bool save)
+MultiMeter::saveSettings(TQDomDocument& doc, TQDomElement& element, bool save)
 {
 	element.setAttribute("hostName", sensors().at(0)->hostName());
 	element.setAttribute("sensorName", sensors().at(0)->name());
@@ -202,7 +202,7 @@ MultiMeter::configureSettings()
 	mms->setAlarmDigitColor(alarmDigitColor);
 	mms->setMeterBackgroundColor(lcd->backgroundColor());
 
-	connect(mms, SIGNAL(applyClicked()), SLOT(applySettings()));
+	connect(mms, TQT_SIGNAL(applyClicked()), TQT_SLOT(applySettings()));
 
 	if (mms->exec())
 		applySettings();
@@ -239,20 +239,20 @@ MultiMeter::applyStyle()
 }
 
 void
-MultiMeter::setDigitColor(const QColor& col)
+MultiMeter::setDigitColor(const TQColor& col)
 {
-	QPalette p = lcd->palette();
-	p.setColor(QColorGroup::Foreground, col);
+	TQPalette p = lcd->palette();
+	p.setColor(TQColorGroup::Foreground, col);
 	lcd->setPalette(p);
 }
 
 void
-MultiMeter::setBackgroundColor(const QColor& col)
+MultiMeter::setBackgroundColor(const TQColor& col)
 {
 	lcd->setBackgroundColor(col);
 
-	QPalette p = lcd->palette();
-	p.setColor(QColorGroup::Light, col);
-	p.setColor(QColorGroup::Dark, col);
+	TQPalette p = lcd->palette();
+	p.setColor(TQColorGroup::Light, col);
+	p.setColor(TQColorGroup::Dark, col);
 	lcd->setPalette(p);
 }

@@ -20,8 +20,8 @@
 #define __swallow_h__
 
 
-#include <qevent.h>
-#include <qptrlist.h>
+#include <tqevent.h>
+#include <tqptrlist.h>
 #include <qxembed.h>
 
 #include <kpanelapplet.h>
@@ -34,20 +34,20 @@ class KWinModule;
 class SwallowApp;
 
 typedef struct _SwallowCommand {
-    QString cmdline;
-    QString title;
+    TQString cmdline;
+    TQString title;
 } SwallowCommand;
 
-typedef QPtrList<SwallowCommand> SwallowCommandList;
-typedef QPtrListIterator<SwallowCommand> SwallowCommandListIterator;
-typedef QPtrList<SwallowApp> SwallowAppList;
+typedef TQPtrList<SwallowCommand> SwallowCommandList;
+typedef TQPtrListIterator<SwallowCommand> SwallowCommandListIterator;
+typedef TQPtrList<SwallowApp> SwallowAppList;
 
 class SwallowApplet : public KPanelApplet
 {
     Q_OBJECT
 
 public:
-    SwallowApplet( const QString& configFile, QWidget *parent,
+    SwallowApplet( const TQString& configFile, TQWidget *parent,
                           const char *name = 0L );
     ~SwallowApplet();
 
@@ -81,7 +81,7 @@ private:
     static KWinModule *wModule;
 
     SwallowCommandList * m_swcList;
-    QBoxLayout *m_layout;
+    TQBoxLayout *m_layout;
 
 };
 
@@ -91,7 +91,7 @@ class SwallowApp : public QXEmbed
     Q_OBJECT
 	
 public:
-    SwallowApp( const SwallowCommand * swc, QWidget* parent = 0,
+    SwallowApp( const SwallowCommand * swc, TQWidget* parent = 0,
 		const char* name = 0);
     ~SwallowApp();
 
@@ -106,7 +106,7 @@ protected slots:
 
 private:
     KProcess   	*process;
-    QString  	winTitle;
+    TQString  	winTitle;
     float 	wh_ratio;
 
 };

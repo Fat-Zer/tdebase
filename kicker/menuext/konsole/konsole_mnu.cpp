@@ -27,8 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #include <sys/stat.h>
 
-#include <qdir.h>
-#include <qfileinfo.h>
+#include <tqdir.h>
+#include <tqfileinfo.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 K_EXPORT_KICKER_MENUEXT(konsole, KonsoleMenu)
 
-KonsoleMenu::KonsoleMenu(QWidget *parent, const char *name, const QStringList& /* args */)
+KonsoleMenu::KonsoleMenu(TQWidget *parent, const char *name, const TQStringList& /* args */)
     : KPanelMenu("", parent, name),
       m_profileMenu(0),
       m_bookmarksSession(0),
@@ -58,8 +58,8 @@ KonsoleMenu::~KonsoleMenu()
 }
 
 static void insertItemSorted(KPopupMenu *menu,
-                             const QIconSet &iconSet,
-                             const QString &txt, int id)
+                             const TQIconSet &iconSet,
+                             const TQString &txt, int id)
 {
   const int defaultId = 1; // The id of the 'new' item.
   int index = menu->indexOf(defaultId);
@@ -96,17 +96,17 @@ void KonsoleMenu::initialize()
 
     setInitialized(true);
 
-    QStringList list = KGlobal::dirs()->findAllResources("data",
+    TQStringList list = KGlobal::dirs()->findAllResources("data",
                                                          "konsole/*.desktop",
                                                           false, true);
 
-    QString defaultShell = locate("data", "konsole/shell.desktop");
+    TQString defaultShell = locate("data", "konsole/shell.desktop");
     list.prepend(defaultShell);
 
     int id = 1;
 
     sessionList.clear();
-    for (QStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
+    for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
     {
         if ((*it == defaultShell) && (id != 1))
         {
@@ -115,10 +115,10 @@ void KonsoleMenu::initialize()
 
         KSimpleConfig conf(*it, true /* read only */);
         conf.setDesktopGroup();
-        QString text = conf.readEntry("Name");
+        TQString text = conf.readEntry("Name");
 
         // try to locate the binary
-        QString exec= conf.readPathEntry("Exec");
+        TQString exec= conf.readPathEntry("Exec");
         if (exec.startsWith("su -c \'"))
         {
              exec = exec.mid(7,exec.length()-8);
@@ -126,7 +126,7 @@ void KonsoleMenu::initialize()
 
         exec = KRun::binaryName(exec, false);
         exec = KShell::tildeExpand(exec);
-        QString pexec = KGlobal::dirs()->findExe(exec);
+        TQString pexec = KGlobal::dirs()->findExe(exec);
         if (text.isEmpty() ||
             conf.readEntry("Type") != "KonsoleApplication" ||
             (!exec.isEmpty() && pexec.isEmpty()))
@@ -135,7 +135,7 @@ void KonsoleMenu::initialize()
         }
         insertItemSorted(this, SmallIconSet(conf.readEntry("Icon", "konsole")),
                                             text, id++);
-        QFileInfo fi(*it);
+        TQFileInfo fi(*it);
         sessionList.append(fi.baseName(true));
 
         if (id == 2)
@@ -150,27 +150,27 @@ void KonsoleMenu::initialize()
     insertItem(SmallIconSet("keditbookmarks"),
                i18n("New Session at Bookmark"), m_bookmarksSession);
     connect(m_bookmarkHandlerSession,
-            SIGNAL(openURL(const QString&, const QString&)),
-            SLOT(newSession(const QString&, const QString&)));
+            TQT_SIGNAL(openURL(const TQString&, const TQString&)),
+            TQT_SLOT(newSession(const TQString&, const TQString&)));
 
 
     screenList.clear();
-    QCString screenDir = getenv("SCREENDIR");
+    TQCString screenDir = getenv("SCREENDIR");
 
     if (screenDir.isEmpty())
     {
-        screenDir = QFile::encodeName(QDir::homeDirPath()) + "/.screen/";
+        screenDir = TQFile::encodeName(TQDir::homeDirPath()) + "/.screen/";
     }
 
-    QStringList sessions;
-    // Can't use QDir as it doesn't support FIFOs :(
+    TQStringList sessions;
+    // Can't use TQDir as it doesn't support FIFOs :(
     DIR *dir = opendir(screenDir);
     if (dir)
     {
         struct dirent *entry;
         while ((entry = readdir(dir)))
         {
-            QCString path = screenDir + "/" + entry->d_name;
+            TQCString path = screenDir + "/" + entry->d_name;
             struct stat st;
             if (stat(path, &st) != 0)
             {
@@ -182,7 +182,7 @@ void KonsoleMenu::initialize()
                 (fd = open(path, O_WRONLY | O_NONBLOCK)) != -1)
             {
                 ::close(fd);
-                screenList.append(QFile::decodeName(entry->d_name));
+                screenList.append(TQFile::decodeName(entry->d_name));
                 insertItem(SmallIconSet("konsole"),
                            i18n("Screen is a program controlling screens!",
                                 "Screen at %1").arg(entry->d_name), id);
@@ -197,16 +197,16 @@ void KonsoleMenu::initialize()
 
     delete m_profileMenu;
     m_profileMenu = new KPopupMenu(this);
-    QStringList profiles = KGlobal::dirs()->findAllResources("data",
+    TQStringList profiles = KGlobal::dirs()->findAllResources("data",
                                                            "konsole/profiles/*",
                                                            false, true );
     m_profiles.resize(profiles.count());
-    QStringList::ConstIterator pEnd = profiles.end();
-    for (QStringList::ConstIterator pIt = profiles.begin(); pIt != pEnd; ++pIt)
+    TQStringList::ConstIterator pEnd = profiles.end();
+    for (TQStringList::ConstIterator pIt = profiles.begin(); pIt != pEnd; ++pIt)
     {
-        QFileInfo info(*pIt);
-        QString profileName = KIO::decodeFileName(info.baseName());
-        QString niceName = profileName;
+        TQFileInfo info(*pIt);
+        TQString profileName = KIO::decodeFileName(info.baseName());
+        TQString niceName = profileName;
         KSimpleConfig cfg(*pIt, true);
         if (cfg.hasGroup("Profile"))
         {
@@ -229,11 +229,11 @@ void KonsoleMenu::initialize()
         // we don't have any profiles, disable the menu
         setItemEnabled(profileID, false);
     }
-    connect(m_profileMenu, SIGNAL(activated(int)), SLOT(launchProfile(int)));
+    connect(m_profileMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(launchProfile(int)));
 
     insertSeparator();
     insertItem(SmallIconSet("reload"),
-               i18n("Reload Sessions"), this, SLOT(reinitialize()));
+               i18n("Reload Sessions"), this, TQT_SLOT(reinitialize()));
 }
 
 void KonsoleMenu::slotExec(int id)
@@ -245,7 +245,7 @@ void KonsoleMenu::slotExec(int id)
 
     --id;
     kapp->propagateSessionManager();
-    QStringList args;
+    TQStringList args;
     if (static_cast<unsigned int>(id) < sessionList.count())
     {
         args << "--type";
@@ -271,7 +271,7 @@ void KonsoleMenu::launchProfile(int id)
 
     --id;
     // this is a session, not a bookmark, so execute that instead
-   QStringList args;
+   TQStringList args;
    args << "--profile" << m_profiles[id];
    kapp->kdeinitExec("konsole", args);
 }
@@ -283,9 +283,9 @@ KURL KonsoleMenu::baseURL() const
     return url;
 }
 
-void KonsoleMenu::newSession(const QString& sURL, const QString& title)
+void KonsoleMenu::newSession(const TQString& sURL, const TQString& title)
 {
-    QStringList args;
+    TQStringList args;
 
     KURL url = KURL(sURL);
     if ((url.protocol() == "file") && (url.hasPath()))
@@ -297,8 +297,8 @@ void KonsoleMenu::newSession(const QString& sURL, const QString& title)
     }
     else if ((!url.protocol().isEmpty()) && (url.hasHost()))
     {
-        QString protocol = url.protocol();
-        QString host = url.host();
+        TQString protocol = url.protocol();
+        TQString host = url.host();
         args << "-T" << title;
         args << "-e" << protocol.latin1(); /* argv[0] == command to run. */
         if (url.hasUser()) {

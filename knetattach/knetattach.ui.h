@@ -13,14 +13,14 @@
 void KNetAttach::init()
 {
     setIcon(SmallIcon("knetattach"));
-    disconnect(finishButton(), SIGNAL(clicked()), (QDialog*)this, SLOT(accept()));
-    connect(finishButton(), SIGNAL(clicked()), this, SLOT(finished()));
+    disconnect(finishButton(), TQT_SIGNAL(clicked()), (TQDialog*)this, TQT_SLOT(accept()));
+    connect(finishButton(), TQT_SIGNAL(clicked()), this, TQT_SLOT(finished()));
     finishButton()->setText(i18n("Save && C&onnect"));
     //setResizeMode(Fixed); FIXME: make the wizard fixed-geometry
     setFinishEnabled(_folderParameters, false);
     KConfig recent("krecentconnections", true, false);
     recent.setGroup("General");
-    QStringList idx = recent.readListEntry("Index");
+    TQStringList idx = recent.readListEntry("Index");
     if (idx.isEmpty()) {
 	_recent->setEnabled(false);
 	if (_recent->isChecked()) {
@@ -32,9 +32,9 @@ void KNetAttach::init()
     }
 }
 
-void KNetAttach::setInformationText( const QString &type )
+void KNetAttach::setInformationText( const TQString &type )
 {
-    QString text;
+    TQString text;
     
     if (type=="WebFolder") {
 	text = i18n("Enter a name for this <i>WebFolder</i> as well as a server address, port and folder path to use and press the <b>Save & Connect</b> button.");
@@ -49,7 +49,7 @@ void KNetAttach::setInformationText( const QString &type )
     _informationText->setText(text);
 }
 
-void KNetAttach::showPage( QWidget *page )
+void KNetAttach::showPage( TQWidget *page )
 {
     if (page == _folderType) {
     } else if (page == _folderParameters) {
@@ -78,7 +78,7 @@ void KNetAttach::showPage( QWidget *page )
 	    KConfig recent("krecentconnections", true, false);
 	    if (!recent.hasGroup(_recentConnectionName->currentText())) {
 		recent.setGroup("General");
-		QStringList idx = recent.readListEntry("Index");
+		TQStringList idx = recent.readListEntry("Index");
 		if (idx.isEmpty()) {
 		    _recent->setEnabled(false);
 		    if (_recent->isChecked()) {
@@ -112,7 +112,7 @@ void KNetAttach::showPage( QWidget *page )
 	updateParametersPageStatus();
     }
 
-    QWizard::showPage(page);
+    TQWizard::showPage(page);
 }
 
 
@@ -149,9 +149,9 @@ void KNetAttach::finished()
 
     url.setHost(_host->text().stripWhiteSpace());
     url.setUser(_user->text().stripWhiteSpace());
-    QString path = _path->text().stripWhiteSpace();
+    TQString path = _path->text().stripWhiteSpace();
     if (!path.startsWith("/")) {
-	path = QString("/") + path;
+	path = TQString("/") + path;
     }
     url.setPath(path);
    _folderParameters->setEnabled(false);
@@ -166,13 +166,13 @@ void KNetAttach::finished()
 
     kapp->invokeBrowser(url.url());
 
-    QString name = _connectionName->text().stripWhiteSpace();
+    TQString name = _connectionName->text().stripWhiteSpace();
 
     if (_createIcon->isChecked()) {
 	KGlobal::dirs()->addResourceType("remote_entries",
 		KStandardDirs::kde_default("data") + "remoteview");
 
-	QString path = KGlobal::dirs()->saveLocation("remote_entries");
+	TQString path = KGlobal::dirs()->saveLocation("remote_entries");
 	path += name + ".desktop";
 	KSimpleConfig desktopFile(path, false);
 	desktopFile.setGroup("Desktop Entry");
@@ -188,7 +188,7 @@ void KNetAttach::finished()
     if (!name.isEmpty()) {
 	KConfig recent("krecentconnections", false, false);
 	recent.setGroup("General");
-	QStringList idx = recent.readListEntry("Index");
+	TQStringList idx = recent.readListEntry("Index");
 	recent.deleteGroup(name); // erase anything stale
 	if (idx.contains(name)) {
 	    idx.remove(name);
@@ -196,7 +196,7 @@ void KNetAttach::finished()
 	    recent.writeEntry("Index", idx);
 	    recent.setGroup(name);
 	} else {
-	    QString last;
+	    TQString last;
 	    if (!idx.isEmpty()) {
 		last = idx.last();
 		idx.pop_back();
@@ -214,7 +214,7 @@ void KNetAttach::finished()
 	recent.sync();
     }
 
-    QDialog::accept();
+    TQDialog::accept();
 }
 
 
@@ -241,7 +241,7 @@ bool KNetAttach::doConnectionTest(const KURL& url)
 }
 
 
-bool KNetAttach::updateForProtocol(const QString& protocol)
+bool KNetAttach::updateForProtocol(const TQString& protocol)
 {
     _type = protocol;
     if (protocol == "WebFolder") {

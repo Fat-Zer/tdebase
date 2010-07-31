@@ -15,9 +15,9 @@
 
 #include <kiconloader.h>
 
-#include <qcolor.h>
-#include <qfont.h>
-#include <qwidget.h>
+#include <tqcolor.h>
+#include <tqfont.h>
+#include <tqwidget.h>
 
 /*
  * class PreviewRedmond: Provides a sneak peek at how certain Redmond
@@ -30,57 +30,57 @@ class PreviewRedmond: public QWidget
   Q_OBJECT
 public:
 
-  PreviewRedmond( QWidget* );
+  PreviewRedmond( TQWidget* );
 
-  inline void setWelcomeString( const QString& s )
+  inline void setWelcomeString( const TQString& s )
   {
     m_welcomeString = s;
     _updateCache();
   }
-  inline void setUserString( const QString& s )
+  inline void setUserString( const TQString& s )
   {
     m_userString = s;
     _updateCache();
   }
 
-  inline void setWelcomeFont( const QFont& f )
+  inline void setWelcomeFont( const TQFont& f )
   {
     m_welcomeFont = f;
     _updateCache();
   }
-  inline void setUserFont( const QFont& f )
+  inline void setUserFont( const TQFont& f )
   {
     m_userFont = f;
     _updateCache();
   }
-  inline void setStatusFont( const QFont& f )
+  inline void setStatusFont( const TQFont& f )
   {
     m_statusFont = f;
     _updateCache();
   }
 
-  inline void setWelcomeColor( const QColor& c )
+  inline void setWelcomeColor( const TQColor& c )
   {
     m_welcomeColor = c;
     _updateCache();
   }
-  inline void setWelcomeShadowColor( const QColor& c )
+  inline void setWelcomeShadowColor( const TQColor& c )
   {
     m_welcomeShadowColor = c;
     _updateCache();
   }
-  inline void setUserColor( const QColor& c )
+  inline void setUserColor( const TQColor& c )
   {
     m_userColor = c;
     _updateCache();
   }
-  inline void setStatusColor( const QColor& c )
+  inline void setStatusColor( const TQColor& c )
   {
     m_statusColor = c;
     _updateCache();
   }
 
-  inline void setIcon( const QString& s )
+  inline void setIcon( const TQString& s )
   {
     m_icon = DesktopIcon( s );
     _updateCache();
@@ -88,15 +88,15 @@ public:
 
 protected:
   void _updateCache();
-  void paintEvent( QPaintEvent* );
-  void resizeEvent( QResizeEvent* );
+  void paintEvent( TQPaintEvent* );
+  void resizeEvent( TQResizeEvent* );
 
-  QPixmap m_cache;
+  TQPixmap m_cache;
 
-  QString m_welcomeString, m_userString;
-  QFont m_welcomeFont, m_userFont, m_statusFont;
-  QColor m_welcomeColor, m_welcomeShadowColor, m_userColor, m_statusColor;
-  QPixmap m_icon;
+  TQString m_welcomeString, m_userString;
+  TQFont m_welcomeFont, m_userFont, m_statusFont;
+  TQColor m_welcomeColor, m_welcomeShadowColor, m_userColor, m_statusColor;
+  TQPixmap m_icon;
 
   bool m_showWelcomeString, m_showUserString, m_showUserIcon, m_showStatusString;
 };

@@ -21,9 +21,9 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qsettings.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqsettings.h>
 #include <kdialog.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -32,28 +32,28 @@ DEALINGS IN THE SOFTWARE.
 
 extern "C"
 {
-	KDE_EXPORT QWidget* allocate_kstyle_config(QWidget* parent)
+	KDE_EXPORT TQWidget* allocate_kstyle_config(TQWidget* parent)
 	{
 		return new KeramikStyleConfig(parent);
 	}
 }
 
-KeramikStyleConfig::KeramikStyleConfig(QWidget* parent): QWidget(parent)
+KeramikStyleConfig::KeramikStyleConfig(TQWidget* parent): TQWidget(parent)
 {
 	//Should have no margins here, the dialog provides them
-	QVBoxLayout* layout = new QVBoxLayout(this, 0, 0);
+	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
 	KGlobal::locale()->insertCatalogue("kstyle_keramik_config");
 
-	//highlightLineEdits = new QCheckBox(i18n("Highlight active lineedits"), this);
-	highlightScrollBar = new QCheckBox(i18n("Highlight scroll bar handles"), this);
-	animateProgressBar = new QCheckBox(i18n("Animate progress bars"), this);
+	//highlightLineEdits = new TQCheckBox(i18n("Highlight active lineedits"), this);
+	highlightScrollBar = new TQCheckBox(i18n("Highlight scroll bar handles"), this);
+	animateProgressBar = new TQCheckBox(i18n("Animate progress bars"), this);
 
 	//layout->add(highlightLineEdits);
 	layout->add(highlightScrollBar);
 	layout->add(animateProgressBar);
 	layout->addStretch(1);
 
-	QSettings s;
+	TQSettings s;
 	//origHlLineEdit = s.readBoolEntry("/keramik/Settings/highlightLineEdits", false);
 	//highlightLineEdits->setChecked(origHlLineEdit);
 
@@ -63,9 +63,9 @@ KeramikStyleConfig::KeramikStyleConfig(QWidget* parent): QWidget(parent)
 	origAnimProgressBar = s.readBoolEntry("/keramik/Settings/animateProgressBar", false);
 	animateProgressBar->setChecked(origAnimProgressBar);
 	
-	//connect(highlightLineEdits, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(highlightScrollBar, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(animateProgressBar, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
+	//connect(highlightLineEdits, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(highlightScrollBar, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(animateProgressBar, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
 }
 
 KeramikStyleConfig::~KeramikStyleConfig()
@@ -76,7 +76,7 @@ KeramikStyleConfig::~KeramikStyleConfig()
 
 void KeramikStyleConfig::save()
 {
-	QSettings s;
+	TQSettings s;
 	//s.writeEntry("/keramik/Settings/highlightLineEdits", highlightLineEdits->isChecked());
 	s.writeEntry("/keramik/Settings/highlightScrollBar", highlightScrollBar->isChecked());
 	s.writeEntry("/keramik/Settings/animateProgressBar", animateProgressBar->isChecked());

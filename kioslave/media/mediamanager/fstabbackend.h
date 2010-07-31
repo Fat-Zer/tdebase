@@ -21,15 +21,15 @@
 
 #include "backendbase.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
 
 #ifdef Q_OS_FREEBSD
-#include <qtimer.h>
+#include <tqtimer.h>
 #endif
 
-class FstabBackend : public QObject, public BackendBase
+class FstabBackend : public TQObject, public BackendBase
 {
 Q_OBJECT
 
@@ -37,31 +37,31 @@ public:
 	FstabBackend(MediaList &list, bool networkSharesOnly = false);
 	virtual ~FstabBackend();
 
-	static void guess(const QString &devNode, const QString &mountPoint,
-                          const QString &fsType, bool mounted,
-                          QString &mimeType, QString &iconName,
-	                  QString &label);
+	static void guess(const TQString &devNode, const TQString &mountPoint,
+                          const TQString &fsType, bool mounted,
+                          TQString &mimeType, TQString &iconName,
+	                  TQString &label);
 
-	QString mount(const QString &id);
-	QString unmount(const QString &id);
+	TQString mount(const TQString &id);
+	TQString unmount(const TQString &id);
 
 private slots:
-	void slotDirty(const QString &path);
+	void slotDirty(const TQString &path);
 	void handleFstabChange(bool allowNotification = true);
 	void handleMtabChange(bool allowNotification = true);
 
 private:
-	static QString generateId(const QString &devNode,
-	                          const QString &mountPoint);
-	static QString generateName(const QString &devNode,
-	                            const QString &fsType);
+	static TQString generateId(const TQString &devNode,
+	                          const TQString &mountPoint);
+	static TQString generateName(const TQString &devNode,
+	                            const TQString &fsType);
 
 	bool m_networkSharesOnly;
-	QStringList m_mtabIds;
-        QMap<QString, QString> m_mtabEntries;
-	QStringList m_fstabIds;
+	TQStringList m_mtabIds;
+        TQMap<TQString, TQString> m_mtabEntries;
+	TQStringList m_fstabIds;
 #ifdef Q_OS_FREEBSD
-	QTimer m_mtabTimer;
+	TQTimer m_mtabTimer;
 #endif
 };
 

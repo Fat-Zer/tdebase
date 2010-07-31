@@ -23,44 +23,44 @@
 #include "kcmsambastatistics.h"
 #include "kcmsambastatistics.moc"
 
-#include <qlayout.h>
-#include <qlistview.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qregexp.h>
+#include <tqlayout.h>
+#include <tqlistview.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqpushbutton.h>
+#include <tqregexp.h>
 
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kdialog.h>
 
-StatisticsView::StatisticsView(QWidget *parent,KConfig *config, const char *name)
-   :QWidget (parent, name)
+StatisticsView::StatisticsView(TQWidget *parent,KConfig *config, const char *name)
+   :TQWidget (parent, name)
    ,configFile(config)
    ,dataList(0)
    ,connectionsCount(0)
    ,filesCount(0)
    ,calcCount(0)
 {
-  viewStatistics = new QListView( this );
-  connectionsL = new QLabel( i18n( "Connections: 0" ), this );
-  filesL = new QLabel( i18n( "File accesses: 0" ), this );
-  eventCb = new QComboBox( false, this );
-  eventL = new QLabel( eventCb, i18n( "Event: " ), this );
-  serviceLe = new QLineEdit( this );
-  serviceL = new QLabel( serviceLe, i18n( "Service/File:" ), this );
-  hostLe = new QLineEdit( this );
-  hostL = new QLabel( hostLe, i18n( "Host/User:" ), this );
-  calcButton = new QPushButton( i18n( "&Search" ), this );
-  clearButton = new QPushButton( i18n( "Clear Results" ), this );
-  expandedInfoCb = new QCheckBox( i18n( "Show expanded service info" ), this );
-  expandedUserCb = new QCheckBox( i18n( "Show expanded host info" ), this );
+  viewStatistics = new TQListView( this );
+  connectionsL = new TQLabel( i18n( "Connections: 0" ), this );
+  filesL = new TQLabel( i18n( "File accesses: 0" ), this );
+  eventCb = new TQComboBox( false, this );
+  eventL = new TQLabel( eventCb, i18n( "Event: " ), this );
+  serviceLe = new TQLineEdit( this );
+  serviceL = new TQLabel( serviceLe, i18n( "Service/File:" ), this );
+  hostLe = new TQLineEdit( this );
+  hostL = new TQLabel( hostLe, i18n( "Host/User:" ), this );
+  calcButton = new TQPushButton( i18n( "&Search" ), this );
+  clearButton = new TQPushButton( i18n( "Clear Results" ), this );
+  expandedInfoCb = new TQCheckBox( i18n( "Show expanded service info" ), this );
+  expandedUserCb = new TQCheckBox( i18n( "Show expanded host info" ), this );
 
    viewStatistics->setAllColumnsShowFocus(TRUE);
-   viewStatistics->setFocusPolicy(QWidget::ClickFocus);
+   viewStatistics->setFocusPolicy(TQWidget::ClickFocus);
    viewStatistics->setShowSortIndicator(true);
    
    viewStatistics->addColumn(i18n("Nr"),30);
@@ -93,14 +93,14 @@ StatisticsView::StatisticsView(QWidget *parent,KConfig *config, const char *name
    expandedInfoCb->setMinimumSize(expandedInfoCb->sizeHint());
    expandedUserCb->setMinimumSize(expandedUserCb->sizeHint());
    
-   QVBoxLayout *topLayout=new QVBoxLayout(this, KDialog::marginHint(),
+   TQVBoxLayout *topLayout=new TQVBoxLayout(this, KDialog::marginHint(),
       KDialog::spacingHint());
    topLayout->addWidget(viewStatistics,1);
-   QGridLayout *subLayout=new QGridLayout(topLayout,4,3);
+   TQGridLayout *subLayout=new TQGridLayout(topLayout,4,3);
    subLayout->setColStretch(1,1);
    subLayout->setColStretch(2,1);
    
-   QHBoxLayout *twoButtonsLayout=new QHBoxLayout;
+   TQHBoxLayout *twoButtonsLayout=new QHBoxLayout;
    twoButtonsLayout->addWidget(calcButton,1);
    twoButtonsLayout->addWidget(clearButton,1);
    
@@ -116,12 +116,12 @@ StatisticsView::StatisticsView(QWidget *parent,KConfig *config, const char *name
    subLayout->addWidget(expandedInfoCb,3,1);
    subLayout->addWidget(expandedUserCb,3,2);
 
-   connect(clearButton,SIGNAL(clicked()),this,SLOT(clearStatistics()));
-   connect(calcButton,SIGNAL(clicked()),this,SLOT(calculate()));
+   connect(clearButton,TQT_SIGNAL(clicked()),this,TQT_SLOT(clearStatistics()));
+   connect(calcButton,TQT_SIGNAL(clicked()),this,TQT_SLOT(calculate()));
    setListInfo(0,0,0);
 }
 
-void StatisticsView::setListInfo(QListView *list, int nrOfFiles, int nrOfConnections)
+void StatisticsView::setListInfo(TQListView *list, int nrOfFiles, int nrOfConnections)
 {
    dataList=list;
    filesCount=nrOfFiles;
@@ -134,7 +134,7 @@ void StatisticsView::setListInfo(QListView *list, int nrOfFiles, int nrOfConnect
 void StatisticsView::calculate()
 {
    if (dataList==0) return;
-   QApplication::setOverrideCursor(waitCursor);
+   TQApplication::setOverrideCursor(waitCursor);
    int connCount(0);
    if (eventCb->currentText()==i18n("Connection"))
       connCount=1;
@@ -142,16 +142,16 @@ void StatisticsView::calculate()
    if ((expandedInfoCb->isChecked()) || (expandedUserCb->isChecked()))
    {
       SambaLog sLog;
-      QRegExp rService(serviceLe->text(),FALSE,TRUE);
-      QRegExp rHost(hostLe->text(),FALSE,TRUE);
-      QString item2, item3;
-      QListViewItem* item=dataList->firstChild();
+      TQRegExp rService(serviceLe->text(),FALSE,TRUE);
+      TQRegExp rHost(hostLe->text(),FALSE,TRUE);
+      TQString item2, item3;
+      TQListViewItem* item=dataList->firstChild();
       while (item!=0)
       {
          if (connCount)
          {
-            if ((QString(item->text(1)).contains(i18n("CONNECTION OPENED")))
-                && (QString(item->text(2)).contains(rService)) && (QString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("CONNECTION OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
             {
                if (expandedInfoCb->isChecked()) item2=item->text(2);
                else item2=serviceLe->text();
@@ -163,8 +163,8 @@ void StatisticsView::calculate()
          }
          else
          {
-            if ((QString(item->text(1)).contains(i18n("FILE OPENED")))
-                && (QString(item->text(2)).contains(rService)) && (QString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("FILE OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
             {
                if (expandedInfoCb->isChecked()) item2=item->text(2);
                else item2=serviceLe->text();
@@ -181,11 +181,11 @@ void StatisticsView::calculate()
          for (SmallLogItem *tmpStr=tmpItem->accessed.first();tmpStr!=0;tmpStr=tmpItem->accessed.next())
          {
             calcCount++;
-            QString number("");
+            TQString number("");
             number.sprintf("%6d",calcCount);
-            QString hits("");
+            TQString hits("");
             hits.sprintf("%7d",tmpStr->count);
-            new QListViewItem(viewStatistics,number,eventCb->currentText(),tmpItem->name,tmpStr->name,hits);
+            new TQListViewItem(viewStatistics,number,eventCb->currentText(),tmpItem->name,tmpStr->name,hits);
          };
       };
    }
@@ -194,32 +194,32 @@ void StatisticsView::calculate()
    {
       calcCount++;
       int count(0);
-      QRegExp rService(serviceLe->text(),FALSE,TRUE);
-      QRegExp rHost(hostLe->text(),FALSE,TRUE);
-      QListViewItem* item=dataList->firstChild();
+      TQRegExp rService(serviceLe->text(),FALSE,TRUE);
+      TQRegExp rHost(hostLe->text(),FALSE,TRUE);
+      TQListViewItem* item=dataList->firstChild();
       while (item!=0)
       {
          if (connCount)
          {
-            if ((QString(item->text(1)).contains(i18n("CONNECTION OPENED")))
-                && (QString(item->text(2)).contains(rService)) && (QString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("CONNECTION OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
                count++;
          }
          else
          {
-            if ((QString(item->text(1)).contains(i18n("FILE OPENED")))
-                && (QString(item->text(2)).contains(rService)) && (QString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("FILE OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
                count++;
          };
          item=item->nextSibling();
       };
-      QString number("");
+      TQString number("");
       number.sprintf("%6d",calcCount);
-      QString hits("");
+      TQString hits("");
       hits.sprintf("%7d",count);
-      new QListViewItem(viewStatistics,number,eventCb->currentText(),serviceLe->text(),hostLe->text(),hits);
+      new TQListViewItem(viewStatistics,number,eventCb->currentText(),serviceLe->text(),hostLe->text(),hits);
    };
-   QApplication::restoreOverrideCursor();
+   TQApplication::restoreOverrideCursor();
 }
 
 void StatisticsView::clearStatistics()
@@ -240,7 +240,7 @@ void SambaLog::printItems()
    kdDebug() << "------ end of printing ------" << endl << endl;
 }
 
-LogItem* SambaLog::itemInList(QString name)
+LogItem* SambaLog::itemInList(TQString name)
 {
    LogItem* tmpItem(items.first());
    LogItem* foundItem(0);
@@ -252,7 +252,7 @@ LogItem* SambaLog::itemInList(QString name)
    return foundItem;
 }
 
-void SambaLog::addItem(QString share, QString user)
+void SambaLog::addItem(TQString share, TQString user)
 {
    //cout<<"            adding connection: -"<<share<<"-   -"<<user<<"-"<<endl;
    LogItem* tmp(itemInList(share));
@@ -267,7 +267,7 @@ void SambaLog::addItem(QString share, QString user)
    };
 }
 
-SmallLogItem* LogItem::itemInList(QString name)
+SmallLogItem* LogItem::itemInList(TQString name)
 {
    SmallLogItem* tmpItem(accessed.first());
    SmallLogItem* foundItem(0);
@@ -279,7 +279,7 @@ SmallLogItem* LogItem::itemInList(QString name)
    return foundItem;
 }
 
-void LogItem::addItem (QString host)
+void LogItem::addItem (TQString host)
 {
    SmallLogItem* tmp(itemInList(host));
    if (tmp!=0)

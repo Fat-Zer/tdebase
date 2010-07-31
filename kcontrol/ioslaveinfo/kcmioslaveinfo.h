@@ -24,8 +24,8 @@
 #ifndef kcmioslaveinfo_h_included
 #define kcmioslaveinfo_h_included
 
-#include <qlistbox.h>
-#include <qstring.h>
+#include <tqlistbox.h>
+#include <tqstring.h>
 
 #include <kaboutdata.h>
 #include <kcmodule.h>
@@ -42,19 +42,19 @@ class KCMIOSlaveInfo : public KCModule
 {
     Q_OBJECT
 public:
-    KCMIOSlaveInfo(QWidget *parent = 0L, const char *name = 0L, const QStringList &lits=QStringList() );
+    KCMIOSlaveInfo(TQWidget *parent = 0L, const char *name = 0L, const TQStringList &lits=TQStringList() );
 
 protected:
     KListBox *m_ioslavesLb;
     KTextBrowser *m_info;
-    QCString helpData;
+    TQCString helpData;
     KIO::Job *m_tfj;
 
 protected slots:
 
-    void showInfo(const QString& protocol);
-    void showInfo(QListBoxItem *item);
-    void slaveHelp( KIO::Job *, const QByteArray &data);
+    void showInfo(const TQString& protocol);
+    void showInfo(TQListBoxItem *item);
+    void slaveHelp( KIO::Job *, const TQByteArray &data);
     void slotResult( KIO::Job * );
 
 };

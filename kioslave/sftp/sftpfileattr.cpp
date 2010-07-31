@@ -21,8 +21,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <qstring.h>
-#include <qdatastream.h>
+#include <tqstring.h>
+#include <tqdatastream.h>
 
 #include <kio/global.h>
 #include <kremoteencoding.h>
@@ -123,7 +123,7 @@ UDSEntry sftpFileAttr::entry() {
 }
 
 /** Use to output the file attributes to a sftp packet */
-QDataStream& operator<< (QDataStream& s, const sftpFileAttr& fa) {
+TQDataStream& operator<< (TQDataStream& s, const sftpFileAttr& fa) {
     s << (Q_UINT32)fa.mFlags;
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_SIZE )
@@ -148,7 +148,7 @@ QDataStream& operator<< (QDataStream& s, const sftpFileAttr& fa) {
 
 
 /** Use to read a file attribute from a sftp packet */
-QDataStream& operator>> (QDataStream& s, sftpFileAttr& fa) {
+TQDataStream& operator>> (TQDataStream& s, sftpFileAttr& fa) {
 
     // XXX Add some error checking in here in case
     //     we get a bad sftp packet.
@@ -156,7 +156,7 @@ QDataStream& operator>> (QDataStream& s, sftpFileAttr& fa) {
     fa.clear();
 
     if( fa.mDirAttrs ) {
-        QCString fn;
+        TQCString fn;
         s >> fn;
         fn.truncate( fn.size() );
 
@@ -203,7 +203,7 @@ QDataStream& operator>> (QDataStream& s, sftpFileAttr& fa) {
 /** Parse longname for the owner and group names. */
 void sftpFileAttr::getUserGroupNames(){
     // Get the name of the owner and group of the file from longname.
-    QString user, group;
+    TQString user, group;
     if( mLongname.isEmpty() ) {
         // do not have the user name so use the user id instead
         user.setNum(mUid);
@@ -214,7 +214,7 @@ void sftpFileAttr::getUserGroupNames(){
         int i = 0;
         int l = mLongname.length();
 
-        QString longName = mEncoding->decode( mLongname );
+        TQString longName = mEncoding->decode( mLongname );
 
         kdDebug(7120) << "Decoded:  " << longName << endl;
 
@@ -285,10 +285,10 @@ void sftpFileAttr::clear(){
     clearFileSize();
     clearPermissions();
     clearExtensions();
-    mFilename = QString::null;
-    mGroupName =  QString::null;
-    mUserName = QString::null;
-    mLinkDestination = QString::null;
+    mFilename = TQString::null;
+    mGroupName =  TQString::null;
+    mUserName = TQString::null;
+    mLinkDestination = TQString::null;
     mFlags = 0;
     mLongname = "\0";
     mLinkType = 0;

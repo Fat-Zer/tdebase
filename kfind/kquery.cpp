@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kfilemetainfo.h>
@@ -12,8 +12,8 @@
 
 #include "kquery.h"
 
-KQuery::KQuery(QObject *parent, const char * name)
-  : QObject(parent, name),
+KQuery::KQuery(TQObject *parent, const char * name)
+  : TQObject(parent, name),
     m_sizemode(0), m_sizeboundary1(0), m_sizeboundary2(0),
     m_timeFrom(0), m_timeTo(0),
     job(0), m_insideCheckEntries(false), m_result(0)
@@ -21,9 +21,9 @@ KQuery::KQuery(QObject *parent, const char * name)
   m_regexps.setAutoDelete(true);
   m_fileItems.setAutoDelete(true);
   processLocate = new KProcess(this);
-  connect(processLocate,SIGNAL(receivedStdout(KProcess*, char*, int)),this,SLOT(slotreceivedSdtout(KProcess*,char*,int)));
-  connect(processLocate,SIGNAL(receivedStderr(KProcess*, char*, int)),this,SLOT(slotreceivedSdterr(KProcess*,char*,int)));
-  connect(processLocate,SIGNAL(processExited(KProcess*)),this,SLOT(slotendProcessLocate(KProcess*)));
+  connect(processLocate,TQT_SIGNAL(receivedStdout(KProcess*, char*, int)),this,TQT_SLOT(slotreceivedSdtout(KProcess*,char*,int)));
+  connect(processLocate,TQT_SIGNAL(receivedStderr(KProcess*, char*, int)),this,TQT_SLOT(slotreceivedSdterr(KProcess*,char*,int)));
+  connect(processLocate,TQT_SIGNAL(processExited(KProcess*)),this,TQT_SLOT(slotendProcessLocate(KProcess*)));
 
   // Files with these mime types can be ignored, even if
   // findFormatByFileContent() in some cases may claim that
@@ -87,10 +87,10 @@ void KQuery::start()
   else
     job = KIO::listDir( m_url, false );
 
-  connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
-	  SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
-  connect(job, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
-  connect(job, SIGNAL(canceled(KIO::Job *)), SLOT(slotCanceled(KIO::Job *)));
+  connect(job, TQT_SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
+	  TQT_SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
+  connect(job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(slotResult(KIO::Job *)));
+  connect(job, TQT_SIGNAL(canceled(KIO::Job *)), TQT_SLOT(slotCanceled(KIO::Job *)));
 }
 
 void KQuery::slotResult( KIO::Job * _job )
@@ -129,7 +129,7 @@ void KQuery::checkEntries()
   if (m_insideCheckEntries)
      return;
   m_insideCheckEntries=true;
-  metaKeyRx=new QRegExp(m_metainfokey,true,true);
+  metaKeyRx=new TQRegExp(m_metainfokey,true,true);
   KFileItem * file = 0;
   while ((file=m_fileItems.dequeue()))
   {
@@ -143,13 +143,13 @@ void KQuery::checkEntries()
 }
 
 /* List of files found using slocate */
-void KQuery::slotListEntries( QStringList  list )
+void KQuery::slotListEntries( TQStringList  list )
 {
   KFileItem * file = 0;
-  metaKeyRx=new QRegExp(m_metainfokey,true,true);
+  metaKeyRx=new TQRegExp(m_metainfokey,true,true);
 
-  QStringList::Iterator it = list.begin();
-  QStringList::Iterator end = list.end();
+  TQStringList::Iterator it = list.begin();
+  TQStringList::Iterator end = list.end();
 
   for (; it != end; ++it)
   {
@@ -164,7 +164,7 @@ void KQuery::slotListEntries( QStringList  list )
 /* Check if file meets the find's requirements*/
 void KQuery::processQuery( KFileItem* file)
 {
-  QRegExp *filename_match;
+  TQRegExp *filename_match;
 
     if ( file->name() == "." || file->name() == ".." )
       return;
@@ -250,21 +250,21 @@ void KQuery::processQuery( KFileItem* file)
     if ((!m_metainfo.isEmpty())  && (!m_metainfokey.isEmpty()))
     {
        bool foundmeta=false;
-       QString filename = file->url().path();
+       TQString filename = file->url().path();
 
        if(filename.startsWith("/dev/"))
           return;
 
        KFileMetaInfo metadatas(filename);
        KFileMetaInfoItem metaitem;
-       QStringList metakeys;
-       QString strmetakeycontent;
+       TQStringList metakeys;
+       TQString strmetakeycontent;
 
        if(metadatas.isEmpty())
           return;
 
        metakeys=metadatas.supportedKeys();
-       for ( QStringList::Iterator it = metakeys.begin(); it != metakeys.end(); ++it )
+       for ( TQStringList::Iterator it = metakeys.begin(); it != metakeys.end(); ++it )
        {
           if (!metaKeyRx->exactMatch(*it))
              continue;
@@ -281,7 +281,7 @@ void KQuery::processQuery( KFileItem* file)
     }
 
     // match contents...
-    QString matchingLine;
+    TQString matchingLine;
     if (!m_context.isEmpty())
     {
 
@@ -296,11 +296,11 @@ void KQuery::processQuery( KFileItem* file)
 
        // FIXME: doesn't work with non local files
 
-       QString filename;
-       QTextStream* stream=0;
-       QFile qf;
-       QRegExp xmlTags;
-       QByteArray zippedXmlFileContent;
+       TQString filename;
+       TQTextStream* stream=0;
+       TQFile qf;
+       TQRegExp xmlTags;
+       TQByteArray zippedXmlFileContent;
 
        // KWord's and OpenOffice.org's files are zipped...
        if( ooo_mimetypes.findIndex(file->mimetype()) != -1 ||
@@ -326,8 +326,8 @@ void KQuery::processQuery( KFileItem* file)
            zippedXmlFileContent = zipfileEntry->data();
            xmlTags.setPattern("<.*>");
            xmlTags.setMinimal(true);
-           stream = new QTextStream(zippedXmlFileContent, IO_ReadOnly);
-           stream->setEncoding(QTextStream::UnicodeUTF8);
+           stream = new TQTextStream(zippedXmlFileContent, IO_ReadOnly);
+           stream->setEncoding(TQTextStream::UnicodeUTF8);
            isZippedOfficeDocument = true;
          } else {
            kdWarning() << "Cannot open supposed ZIP file " << file->url() << endl;
@@ -348,13 +348,13 @@ void KQuery::processQuery( KFileItem* file)
             return;
          qf.setName(filename);
          qf.open(IO_ReadOnly);
-         stream=new QTextStream(&qf);
-         stream->setEncoding(QTextStream::Locale);
+         stream=new TQTextStream(&qf);
+         stream->setEncoding(TQTextStream::Locale);
        }
 
        while ( ! stream->atEnd() )
        {
-          QString str = stream->readLine();
+          TQString str = stream->readLine();
           matchingLineNumber++;
 
           if (str.isNull()) break;
@@ -365,7 +365,7 @@ void KQuery::processQuery( KFileItem* file)
           {
              if (m_regexp.search(str)>=0)
              {
-                matchingLine=QString::number(matchingLineNumber)+": "+str;
+                matchingLine=TQString::number(matchingLineNumber)+": "+str;
                 found = true;
                 break;
              }
@@ -375,7 +375,7 @@ void KQuery::processQuery( KFileItem* file)
              if ((!str.isNull()) && (!m_context.isNull())) {
                  if (str.find(m_context, 0, m_casesensitive) != -1)
                  {
-                    matchingLine=QString::number(matchingLineNumber)+": "+str;
+                    matchingLine=TQString::number(matchingLineNumber)+": "+str;
                     found = true;
                     break;
                  }
@@ -394,7 +394,7 @@ void KQuery::processQuery( KFileItem* file)
     emit addFile(file,matchingLine);
 }
 
-void KQuery::setContext(const QString & context, bool casesensitive,
+void KQuery::setContext(const TQString & context, bool casesensitive,
   bool search_binary, bool useRegexp)
 {
   m_context = context;
@@ -407,13 +407,13 @@ void KQuery::setContext(const QString & context, bool casesensitive,
      m_regexp.setPattern(m_context);
 }
 
-void KQuery::setMetaInfo(const QString &metainfo, const QString &metainfokey)
+void KQuery::setMetaInfo(const TQString &metainfo, const TQString &metainfokey)
 {
   m_metainfo=metainfo;
   m_metainfokey=metainfokey;
 }
 
-void KQuery::setMimeType(const QStringList &mimetype)
+void KQuery::setMimeType(const TQStringList &mimetype)
 {
   m_mimetype = mimetype;
 }
@@ -436,28 +436,28 @@ void KQuery::setTimeRange(time_t from, time_t to)
   m_timeTo = to;
 }
 
-void KQuery::setUsername(QString username)
+void KQuery::setUsername(TQString username)
 {
    m_username = username;
 }
 
-void KQuery::setGroupname(QString groupname)
+void KQuery::setGroupname(TQString groupname)
 {
    m_groupname = groupname;
 }
 
 
-void KQuery::setRegExp(const QString &regexp, bool caseSensitive)
+void KQuery::setRegExp(const TQString &regexp, bool caseSensitive)
 {
-  QRegExp *regExp;
-  QRegExp sep(";");
-  QStringList strList=QStringList::split( sep, regexp, false);
-//  QRegExp globChars ("[\\*\\?\\[\\]]", TRUE,  FALSE);
+  TQRegExp *regExp;
+  TQRegExp sep(";");
+  TQStringList strList=TQStringList::split( sep, regexp, false);
+//  TQRegExp globChars ("[\\*\\?\\[\\]]", TRUE,  FALSE);
 
   m_regexps.clear();
 //  m_regexpsContainsGlobs.clear();
-  for ( QStringList::ConstIterator it = strList.begin(); it != strList.end(); ++it ) {
-    regExp = new QRegExp((*it),caseSensitive,true);
+  for ( TQStringList::ConstIterator it = strList.begin(); it != strList.end(); ++it ) {
+    regExp = new TQRegExp((*it),caseSensitive,true);
 //    m_regexpsContainsGlobs.append(regExp->pattern().contains(globChars));
     m_regexps.append(regExp);
   }
@@ -480,7 +480,7 @@ void KQuery::setUseFileIndex(bool useLocate)
 
 void KQuery::slotreceivedSdterr(KProcess* ,char* str,int)
 {
-  KMessageBox::error(NULL, QString(str), i18n("Error while using locate"));
+  KMessageBox::error(NULL, TQString(str), i18n("Error while using locate"));
 }
 
 void KQuery::slotreceivedSdtout(KProcess*,char* str,int l)
@@ -496,8 +496,8 @@ void KQuery::slotreceivedSdtout(KProcess*,char* str,int l)
 
 void KQuery::slotendProcessLocate(KProcess*)
 {
-  QString qstr;
-  QStringList strlist;
+  TQString qstr;
+  TQStringList strlist;
   int i,j,k;
 
   if((bufferLocateLength==0)||(bufferLocate==NULL))

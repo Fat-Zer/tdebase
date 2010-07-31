@@ -51,7 +51,7 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -74,7 +74,7 @@
 
 extern "C"
 {
-   KDE_EXPORT KPanelExtension *init( QWidget *parent, const QString& configFile )
+   KDE_EXPORT KPanelExtension *init( TQWidget *parent, const TQString& configFile )
    {
       KGlobal::locale()->insertCatalogue("kasbarextension");
       return new KasBarExtension( configFile,
@@ -84,10 +84,10 @@ extern "C"
    }
 }
 
-KasBarExtension::KasBarExtension( const QString& configFile,
+KasBarExtension::KasBarExtension( const TQString& configFile,
                                   Type type,
                                   int actions,
-                                  QWidget *parent, const char *name )
+                                  TQWidget *parent, const char *name )
     : KPanelExtension( configFile, type, actions, parent, name ),
       detached_( false )
 {
@@ -97,8 +97,8 @@ KasBarExtension::KasBarExtension( const QString& configFile,
 //    setBackgroundMode( NoBackground );
     kasbar = new KasTasker( orientation(), this, name );
 
-    connect( kasbar, SIGNAL( layoutChanged() ), this, SIGNAL( updateLayout() ) );
-    connect( kasbar, SIGNAL( detachedChanged(bool) ), this, SLOT( setDetached(bool) ) );
+    connect( kasbar, TQT_SIGNAL( layoutChanged() ), this, TQT_SIGNAL( updateLayout() ) );
+    connect( kasbar, TQT_SIGNAL( detachedChanged(bool) ), this, TQT_SLOT( setDetached(bool) ) );
 
     kasbar->setConfig( config() );
     kasbar->readConfig();
@@ -127,7 +127,7 @@ void KasBarExtension::setDetached( bool detach )
 	resize( detachedSize() );
     }
     else {
-	kasbar->reparent( this, QPoint(0,0), true );
+	kasbar->reparent( this, TQPoint(0,0), true );
 	kasbar->setOrientation( orientation() );
 
 	updateGeometry();
@@ -137,23 +137,23 @@ void KasBarExtension::setDetached( bool detach )
     emit updateLayout();
 }
 
-void KasBarExtension::showEvent( QShowEvent */*se*/ )
+void KasBarExtension::showEvent( TQShowEvent */*se*/ )
 {
     updateGeometry();
     resize( kasbar->size() );
     repaint( true );
 }
 
-QSize KasBarExtension::detachedSize()
+TQSize KasBarExtension::detachedSize()
 {
     if ( orientation() == Vertical )
-	return QSize( kasbar->itemExtent()/2, 0 );
+	return TQSize( kasbar->itemExtent()/2, 0 );
     else
-	return QSize( 0, kasbar->itemExtent()/2 );
+	return TQSize( 0, kasbar->itemExtent()/2 );
 
 }
 
-QSize KasBarExtension::sizeHint(Position p, QSize maxSize ) const
+TQSize KasBarExtension::sizeHint(Position p, TQSize maxSize ) const
 {
    Orientation o = Horizontal;
 
@@ -162,9 +162,9 @@ QSize KasBarExtension::sizeHint(Position p, QSize maxSize ) const
 
    if ( detached_ ) {
        if ( o == Vertical )
-	   return QSize( kasbar->itemExtent()/2, 0 );
+	   return TQSize( kasbar->itemExtent()/2, 0 );
        else
-	   return QSize( 0, kasbar->itemExtent()/2 );
+	   return TQSize( 0, kasbar->itemExtent()/2 );
    }
 
    return kasbar->sizeHint( o, maxSize );

@@ -15,7 +15,7 @@ void MultiMeterSettingsWidget::init()
   m_title->setFocus();
 }
 
-QString MultiMeterSettingsWidget::title()
+TQString MultiMeterSettingsWidget::title()
 {
     return m_title->text();
 }
@@ -51,25 +51,25 @@ double MultiMeterSettingsWidget::upperLimit()
 }
 
 
-QColor MultiMeterSettingsWidget::normalDigitColor()
+TQColor MultiMeterSettingsWidget::normalDigitColor()
 {
     return m_normalDigitColor->color();
 }
 
 
-QColor MultiMeterSettingsWidget::alarmDigitColor()
+TQColor MultiMeterSettingsWidget::alarmDigitColor()
 {
     return m_alarmDigitColor->color();
 }
 
 
-QColor MultiMeterSettingsWidget::meterBackgroundColor()
+TQColor MultiMeterSettingsWidget::meterBackgroundColor()
 {
     return m_backgroundColor->color();
 }
 
 
-void MultiMeterSettingsWidget::setTitle( const QString &s )
+void MultiMeterSettingsWidget::setTitle( const TQString &s )
 {
     m_title->setText(s);
 }
@@ -89,7 +89,7 @@ void MultiMeterSettingsWidget::setLowerLimitActive( bool b )
 
 void MultiMeterSettingsWidget::setLowerLimit( double d )
 {
-    m_lowerLimit->setText(QString("%1").arg(d));
+    m_lowerLimit->setText(TQString("%1").arg(d));
 }
 
 
@@ -101,23 +101,23 @@ void MultiMeterSettingsWidget::setUpperLimitActive( bool b )
 
 void MultiMeterSettingsWidget::setUpperLimit( double d )
 {
-    m_upperLimit->setText(QString("%1").arg(d));
+    m_upperLimit->setText(TQString("%1").arg(d));
 }
 
 
-void MultiMeterSettingsWidget::setNormalDigitColor( const QColor &c )
+void MultiMeterSettingsWidget::setNormalDigitColor( const TQColor &c )
 {
     m_normalDigitColor->setColor(c);
 }
 
 
-void MultiMeterSettingsWidget::setAlarmDigitColor( const QColor &c )
+void MultiMeterSettingsWidget::setAlarmDigitColor( const TQColor &c )
 {
     m_alarmDigitColor->setColor(c);
 }
 
 
-void MultiMeterSettingsWidget::setMeterBackgroundColor( const QColor &c )
+void MultiMeterSettingsWidget::setMeterBackgroundColor( const TQColor &c )
 {
     m_backgroundColor->setColor(c);
 }

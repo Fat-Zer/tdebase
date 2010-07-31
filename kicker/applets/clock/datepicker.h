@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DATEPICKER_H
 #define __DATEPICKER_H
 
-#include <qvbox.h>
-#include <qdatetime.h>
+#include <tqvbox.h>
+#include <tqdatetime.h>
 
 class KDatePicker;
 class Prefs;
@@ -33,13 +33,13 @@ class Prefs;
 class DatePicker : public QVBox
 {
     public:
-        DatePicker(QWidget*, const QDate&, Prefs* _prefs);
-        bool setDate(const QDate& date);
-        QDate date();
+        DatePicker(TQWidget*, const TQDate&, Prefs* _prefs);
+        bool setDate(const TQDate& date);
+        TQDate date();
 
     protected:
-        void closeEvent(QCloseEvent* e);
-        void keyPressEvent(QKeyEvent *e);
+        void closeEvent(TQCloseEvent* e);
+        void keyPressEvent(TQKeyEvent *e);
 
     private:
         KDatePicker *picker;

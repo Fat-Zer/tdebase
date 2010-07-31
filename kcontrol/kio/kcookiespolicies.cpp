@@ -22,15 +22,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-#include <qheader.h>
-#include <qvbox.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qtoolbutton.h>
-#include <qvbuttongroup.h>
+#include <tqheader.h>
+#include <tqvbox.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqtoolbutton.h>
+#include <tqvbuttongroup.h>
 
 #include <kiconloader.h>
 #include <kidna.h>
@@ -46,18 +46,18 @@
 #include "kcookiespolicies.h"
 #include "kcookiespoliciesdlg_ui.h"
 
-KCookiesPolicies::KCookiesPolicies(QWidget *parent)
+KCookiesPolicies::KCookiesPolicies(TQWidget *parent)
                  :KCModule(parent, "kcmkio")
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this, 0, 0);
+    TQVBoxLayout *mainLayout = new TQVBoxLayout(this, 0, 0);
 
     dlg = new KCookiesPolicyDlgUI (this);
     dlg->lvDomainPolicy->header()->setStretchEnabled(true, 0);
     dlg->lvDomainPolicy->setColumnWidthMode(0, KListView::Manual);
     dlg->lvDomainPolicy->setColumnWidthMode(1, KListView::Maximum);
-    dlg->tbClearSearchLine->setIconSet(SmallIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
+    dlg->tbClearSearchLine->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
     dlg->kListViewSearchLine->setListView(dlg->lvDomainPolicy);
-    QValueList<int> columns;
+    TQValueList<int> columns;
     columns.append(0);
     dlg->kListViewSearchLine->setSearchColumns(columns);
 
@@ -107,7 +107,7 @@ void KCookiesPolicies::autoAcceptSessionCookies ( bool enable )
   dlg->gbDomainSpecific->setEnabled( !enable );
 }
 
-void KCookiesPolicies::addNewPolicy(const QString& domain)
+void KCookiesPolicies::addNewPolicy(const TQString& domain)
 {
   PolicyDlg pdlg (i18n("New Cookie Policy"), this);
   pdlg.setEnableHostEdit (true, domain);
@@ -119,13 +119,13 @@ void KCookiesPolicies::addNewPolicy(const QString& domain)
 
   if (pdlg.exec() && !pdlg.domain().isEmpty())
   {
-    QString domain = KIDNA::toUnicode(pdlg.domain());
+    TQString domain = KIDNA::toUnicode(pdlg.domain());
     int advice = pdlg.advice();
 
     if ( !handleDuplicate(domain, advice) )
     {
       const char* strAdvice = KCookieAdvice::adviceToStr(advice);
-      QListViewItem* index = new QListViewItem (dlg->lvDomainPolicy,
+      TQListViewItem* index = new TQListViewItem (dlg->lvDomainPolicy,
                                                 domain, i18n(strAdvice));
       m_pDomainPolicy.insert (index, strAdvice);
       configChanged();
@@ -136,17 +136,17 @@ void KCookiesPolicies::addNewPolicy(const QString& domain)
 
 void KCookiesPolicies::addPressed()
 {
-  addNewPolicy (QString::null);
+  addNewPolicy (TQString::null);
 }
 
 void KCookiesPolicies::changePressed()
 {
-  QListViewItem* index = dlg->lvDomainPolicy->currentItem();
+  TQListViewItem* index = dlg->lvDomainPolicy->currentItem();
 
   if (!index)
     return;
 
-  QString oldDomain = index->text(0);
+  TQString oldDomain = index->text(0);
 
   PolicyDlg pdlg (i18n("Change Cookie Policy"), this);
   pdlg.setPolicy (KCookieAdvice::strToAdvice(m_pDomainPolicy[index]));
@@ -154,7 +154,7 @@ void KCookiesPolicies::changePressed()
 
   if( pdlg.exec() && !pdlg.domain().isEmpty())
   {
-    QString newDomain = KIDNA::toUnicode(pdlg.domain());
+    TQString newDomain = KIDNA::toUnicode(pdlg.domain());
     int advice = pdlg.advice();
     if (newDomain == oldDomain || !handleDuplicate(newDomain, advice))
     {
@@ -166,14 +166,14 @@ void KCookiesPolicies::changePressed()
   }
 }
 
-bool KCookiesPolicies::handleDuplicate( const QString& domain, int advice )
+bool KCookiesPolicies::handleDuplicate( const TQString& domain, int advice )
 {
-  QListViewItem* item = dlg->lvDomainPolicy->firstChild();
+  TQListViewItem* item = dlg->lvDomainPolicy->firstChild();
   while ( item != 0 )
   {
     if ( item->text(0) == domain )
     {
-      QString msg = i18n("<qt>A policy already exists for"
+      TQString msg = i18n("<qt>A policy already exists for"
                          "<center><b>%1</b></center>"
                          "Do you want to replace it?</qt>").arg(domain);
       int res = KMessageBox::warningContinueCancel(this, msg,
@@ -197,8 +197,8 @@ bool KCookiesPolicies::handleDuplicate( const QString& domain, int advice )
 
 void KCookiesPolicies::deletePressed()
 {
-  QListViewItem* nextItem = 0L;
-  QListViewItem* item = dlg->lvDomainPolicy->firstChild ();
+  TQListViewItem* nextItem = 0L;
+  TQListViewItem* item = dlg->lvDomainPolicy->firstChild ();
 
   while (item != 0L)
   {
@@ -241,21 +241,21 @@ void KCookiesPolicies::updateButtons()
   dlg->pbDeleteAll->setEnabled ( hasItems );
 }
 
-void KCookiesPolicies::updateDomainList(const QStringList &domainConfig)
+void KCookiesPolicies::updateDomainList(const TQStringList &domainConfig)
 {
   dlg->lvDomainPolicy->clear();
 
-  QStringList::ConstIterator it = domainConfig.begin();
+  TQStringList::ConstIterator it = domainConfig.begin();
   for (; it != domainConfig.end(); ++it)
   {
-    QString domain;
+    TQString domain;
     KCookieAdvice::Value advice = KCookieAdvice::Dunno;
 
     splitDomainAdvice(*it, domain, advice);
 
     if (!domain.isEmpty())
     {
-        QListViewItem* index = new QListViewItem( dlg->lvDomainPolicy, KIDNA::toUnicode(domain),
+        TQListViewItem* index = new TQListViewItem( dlg->lvDomainPolicy, KIDNA::toUnicode(domain),
                                                   i18n(KCookieAdvice::adviceToStr(advice)) );
         m_pDomainPolicy[index] = KCookieAdvice::adviceToStr(advice);
     }
@@ -264,7 +264,7 @@ void KCookiesPolicies::updateDomainList(const QStringList &domainConfig)
 
 void KCookiesPolicies::selectionChanged ()
 {
-  QListViewItem* item = dlg->lvDomainPolicy->firstChild ();
+  TQListViewItem* item = dlg->lvDomainPolicy->firstChild ();
 
   d_itemsSelected = 0;
 
@@ -323,40 +323,40 @@ void KCookiesPolicies::load()
   }
 
   // Connect the main swicth :) Enable/disable cookie support
-  connect( dlg->cbEnableCookies, SIGNAL( toggled(bool) ),
-           SLOT( cookiesEnabled(bool) ) );
-  connect( dlg->cbEnableCookies, SIGNAL( toggled(bool) ),
-           SLOT( configChanged() ) );
+  connect( dlg->cbEnableCookies, TQT_SIGNAL( toggled(bool) ),
+           TQT_SLOT( cookiesEnabled(bool) ) );
+  connect( dlg->cbEnableCookies, TQT_SIGNAL( toggled(bool) ),
+           TQT_SLOT( configChanged() ) );
 
   // Connect the preference check boxes...
-  connect ( dlg->cbRejectCrossDomainCookies, SIGNAL(clicked()),
-            SLOT(configChanged()));
-  connect ( dlg->cbAutoAcceptSessionCookies, SIGNAL(toggled(bool)),
-            SLOT(configChanged()));
-  connect ( dlg->cbIgnoreCookieExpirationDate, SIGNAL(toggled(bool)),
-            SLOT(configChanged()));
+  connect ( dlg->cbRejectCrossDomainCookies, TQT_SIGNAL(clicked()),
+            TQT_SLOT(configChanged()));
+  connect ( dlg->cbAutoAcceptSessionCookies, TQT_SIGNAL(toggled(bool)),
+            TQT_SLOT(configChanged()));
+  connect ( dlg->cbIgnoreCookieExpirationDate, TQT_SIGNAL(toggled(bool)),
+            TQT_SLOT(configChanged()));
 
-  connect ( dlg->cbAutoAcceptSessionCookies, SIGNAL(toggled(bool)),
-            SLOT(autoAcceptSessionCookies(bool)));
-  connect ( dlg->cbIgnoreCookieExpirationDate, SIGNAL(toggled(bool)),
-            SLOT(ignoreCookieExpirationDate(bool)));
+  connect ( dlg->cbAutoAcceptSessionCookies, TQT_SIGNAL(toggled(bool)),
+            TQT_SLOT(autoAcceptSessionCookies(bool)));
+  connect ( dlg->cbIgnoreCookieExpirationDate, TQT_SIGNAL(toggled(bool)),
+            TQT_SLOT(ignoreCookieExpirationDate(bool)));
 
   // Connect the default cookie policy radio buttons...
-  connect(dlg->bgDefault, SIGNAL(clicked(int)), SLOT(configChanged()));
+  connect(dlg->bgDefault, TQT_SIGNAL(clicked(int)), TQT_SLOT(configChanged()));
 
   // Connect signals from the domain specific policy listview.
-  connect( dlg->lvDomainPolicy, SIGNAL(selectionChanged()),
-           SLOT(selectionChanged()) );
-  connect( dlg->lvDomainPolicy, SIGNAL(doubleClicked (QListViewItem *)),
-           SLOT(changePressed() ) );
-  connect( dlg->lvDomainPolicy, SIGNAL(returnPressed ( QListViewItem * )),
-           SLOT(changePressed() ) );
+  connect( dlg->lvDomainPolicy, TQT_SIGNAL(selectionChanged()),
+           TQT_SLOT(selectionChanged()) );
+  connect( dlg->lvDomainPolicy, TQT_SIGNAL(doubleClicked (TQListViewItem *)),
+           TQT_SLOT(changePressed() ) );
+  connect( dlg->lvDomainPolicy, TQT_SIGNAL(returnPressed ( TQListViewItem * )),
+           TQT_SLOT(changePressed() ) );
 
   // Connect the buttons...
-  connect( dlg->pbNew, SIGNAL(clicked()), SLOT( addPressed() ) );
-  connect( dlg->pbChange, SIGNAL( clicked() ), SLOT( changePressed() ) );
-  connect( dlg->pbDelete, SIGNAL( clicked() ), SLOT( deletePressed() ) );
-  connect( dlg->pbDeleteAll, SIGNAL( clicked() ), SLOT( deleteAllPressed() ) );
+  connect( dlg->pbNew, TQT_SIGNAL(clicked()), TQT_SLOT( addPressed() ) );
+  connect( dlg->pbChange, TQT_SIGNAL( clicked() ), TQT_SLOT( changePressed() ) );
+  connect( dlg->pbDelete, TQT_SIGNAL( clicked() ), TQT_SLOT( deletePressed() ) );
+  connect( dlg->pbDeleteAll, TQT_SIGNAL( clicked() ), TQT_SLOT( deleteAllPressed() ) );
 }
 
 void KCookiesPolicies::save()
@@ -377,7 +377,7 @@ void KCookiesPolicies::save()
   state = dlg->cbIgnoreCookieExpirationDate->isChecked();
   cfg.writeEntry( "IgnoreExpirationDate", state );
 
-  QString advice;
+  TQString advice;
   if (dlg->rbPolicyAccept->isChecked())
       advice = KCookieAdvice::adviceToStr(KCookieAdvice::Accept);
   else if (dlg->rbPolicyReject->isChecked())
@@ -387,12 +387,12 @@ void KCookiesPolicies::save()
 
   cfg.writeEntry("CookieGlobalAdvice", advice);
 
-  QStringList domainConfig;
-  QListViewItem *at = dlg->lvDomainPolicy->firstChild();
+  TQStringList domainConfig;
+  TQListViewItem *at = dlg->lvDomainPolicy->firstChild();
 
   while( at )
   {
-    domainConfig.append(QString::fromLatin1("%1:%2").arg(KIDNA::toAscii(at->text(0))).arg(m_pDomainPolicy[at]));
+    domainConfig.append(TQString::fromLatin1("%1:%2").arg(KIDNA::toAscii(at->text(0))).arg(m_pDomainPolicy[at]));
     at = at->nextSibling();
   }
 
@@ -431,7 +431,7 @@ void KCookiesPolicies::defaults()
   updateButtons();
 }
 
-void KCookiesPolicies::splitDomainAdvice (const QString& cfg, QString &domain,
+void KCookiesPolicies::splitDomainAdvice (const TQString& cfg, TQString &domain,
                                           KCookieAdvice::Value &advice)
 {
   int sepPos = cfg.findRev(':');
@@ -444,7 +444,7 @@ void KCookiesPolicies::splitDomainAdvice (const QString& cfg, QString &domain,
   advice = KCookieAdvice::strToAdvice( cfg.mid( sepPos+1 ) );
 }
 
-QString KCookiesPolicies::quickHelp() const
+TQString KCookiesPolicies::quickHelp() const
 {
   return i18n("<h1>Cookies</h1> Cookies contain information that Konqueror"
               " (or any other KDE application using the HTTP protocol) stores"

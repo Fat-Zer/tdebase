@@ -27,7 +27,7 @@ class MenuConfig : public KCModule
     Q_OBJECT
 
 public:
-    MenuConfig(QWidget *parent = 0, const char *name = 0);
+    MenuConfig(TQWidget *parent = 0, const char *name = 0);
 
     void load();
     void save();

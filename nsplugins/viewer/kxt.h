@@ -46,11 +46,11 @@
 #ifndef KXT_H
 #define KXT_H
 
-#include <qglobal.h>
+#include <tqglobal.h>
 #if QT_VERSION < 0x030100
 
 #include <kapplication.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <X11/Intrinsic.h>
 
 class KXtApplication : public KApplication {
@@ -59,20 +59,20 @@ class KXtApplication : public KApplication {
 
 public:
     KXtApplication(int& argc, char** argv,
-	const QCString& rAppName, bool allowStyles=true, bool GUIenabled=true,
+	const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true,
 	XrmOptionDescRec *options=0, int num_options=0, char** resources=0);
-    KXtApplication(Display*, int& argc, char** argv, const QCString& rAppName,
+    KXtApplication(Display*, int& argc, char** argv, const TQCString& rAppName,
                    bool allowStyles=true, bool GUIenabled=true);
     ~KXtApplication();
 };
 
-class KXtWidget : public QWidget {
+class KXtWidget : public TQWidget {
     Q_OBJECT
     Widget xtw;
     Widget xtparent;
     bool   need_reroot;
     void init(const char* name, WidgetClass widget_class,
-		    Widget parent, QWidget* qparent,
+		    Widget parent, TQWidget* qparent,
 		    ArgList args, Cardinal num_args,
 		    bool managed);
     friend void qwidget_realize( Widget widget, XtValueMask* mask,
@@ -81,7 +81,7 @@ class KXtWidget : public QWidget {
 public:
     KXtWidget(const char* name, Widget parent, bool managed=FALSE);
     KXtWidget(const char* name, WidgetClass widget_class,
-	      QWidget *parent=0, ArgList args=0, Cardinal num_args=0,
+	      TQWidget *parent=0, ArgList args=0, Cardinal num_args=0,
 	      bool managed=FALSE);
     ~KXtWidget();
 
@@ -90,8 +90,8 @@ public:
     void setActiveWindow();
 
 protected:
-    void moveEvent( QMoveEvent* );
-    void resizeEvent( QResizeEvent* );
+    void moveEvent( TQMoveEvent* );
+    void resizeEvent( TQResizeEvent* );
     bool x11Event( XEvent * );
 };
 

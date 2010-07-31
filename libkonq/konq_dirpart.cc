@@ -38,21 +38,21 @@
 #include <kurifilter.h>
 #include <kglobalsettings.h>
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qfile.h>
-#include <qguardedptr.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
+#include <tqfile.h>
+#include <tqguardedptr.h>
 #include <assert.h>
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 class KonqDirPart::KonqDirPartPrivate
 {
 public:
     KonqDirPartPrivate() : dirLister( 0 ) {}
-    QStringList mimeFilters;
+    TQStringList mimeFilters;
     KToggleAction *aEnormousIcons;
     KToggleAction *aSmallMediumIcons;
-    QValueVector<int> iconSize;
+    TQValueVector<int> iconSize;
             
     KDirLister* dirLister;
     bool dirSizeDirty;
@@ -67,13 +67,13 @@ void KonqDirPart::KonqDirPartPrivate::findAvailableIconSizes(void)
     KIconTheme *root = KGlobal::instance()->iconLoader()->theme();
     iconSize.resize(1);
     if (root) {
-	QValueList<int> avSizes = root->querySizes(KIcon::Desktop);
+	TQValueList<int> avSizes = root->querySizes(KIcon::Desktop);
         kdDebug(1203) << "The icon theme handles the sizes:" << avSizes << endl;
 	qHeapSort(avSizes);
 	int oldSize = -1;
 	if (avSizes.count() < 10) {
 	    // Fixed or threshold type icons
-	    QValueListConstIterator<int> i;
+	    TQValueListConstIterator<int> i;
 	    for (i = avSizes.begin(); i != avSizes.end(); i++) {
 		// Skip duplicated values (sanity check)
 		if (*i != oldSize) iconSize.append(*i);
@@ -83,7 +83,7 @@ void KonqDirPart::KonqDirPartPrivate::findAvailableIconSizes(void)
 	    // Scalable icons.
 	    const int progression[] = {16, 22, 32, 48, 64, 96, 128, 192, 256};
 
-	    QValueListConstIterator<int> j = avSizes.begin();
+	    TQValueListConstIterator<int> j = avSizes.begin();
 	    for (uint i = 0; i < 9; i++) {
 		while (j++ != avSizes.end()) {
 		    if (*j >= progression[i]) {
@@ -124,7 +124,7 @@ int KonqDirPart::KonqDirPartPrivate::nearestIconSizeError(int size)
     return QABS(size - findNearestIconSize(size));
 }
 
-KonqDirPart::KonqDirPart( QObject *parent, const char *name )
+KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
             :KParts::ReadOnlyPart( parent, name ),
     m_pProps( 0L ),
     m_findPart( 0L )
@@ -133,12 +133,12 @@ KonqDirPart::KonqDirPart( QObject *parent, const char *name )
     resetCount();
     //m_bMultipleItemsSelected = false;
 
-    connect( QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(slotClipboardDataChanged()) );
+    connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()), this, TQT_SLOT(slotClipboardDataChanged()) );
 
     actionCollection()->setHighlightingEnabled( true );
 
-    m_paIncIconSize = new KAction( i18n( "Enlarge Icons" ), "viewmag+", 0, this, SLOT( slotIncIconSize() ), actionCollection(), "incIconSize" );
-    m_paDecIconSize = new KAction( i18n( "Shrink Icons" ), "viewmag-", 0, this, SLOT( slotDecIconSize() ), actionCollection(), "decIconSize" );
+    m_paIncIconSize = new KAction( i18n( "Enlarge Icons" ), "viewmag+", 0, this, TQT_SLOT( slotIncIconSize() ), actionCollection(), "incIconSize" );
+    m_paDecIconSize = new KAction( i18n( "Shrink Icons" ), "viewmag-", 0, this, TQT_SLOT( slotDecIconSize() ), actionCollection(), "decIconSize" );
 
     m_paDefaultIcons = new KRadioAction( i18n( "&Default Size" ), 0, actionCollection(), "modedefault" );
     d->aEnormousIcons = new KRadioAction( i18n( "&Huge" ), 0,
@@ -158,17 +158,17 @@ KonqDirPart::KonqDirPart( QObject *parent, const char *name )
     d->aSmallMediumIcons->setExclusiveGroup( "ViewMode" );
     m_paSmallIcons->setExclusiveGroup( "ViewMode" );
 
-    connect( m_paDefaultIcons, SIGNAL( toggled( bool ) ), this, SLOT( slotIconSizeToggled( bool ) ) );
-    connect( d->aEnormousIcons, SIGNAL( toggled( bool ) ),
-	    this, SLOT( slotIconSizeToggled( bool ) ) );
-    connect( m_paHugeIcons, SIGNAL( toggled( bool ) ), this, SLOT( slotIconSizeToggled( bool ) ) );
-    connect( m_paLargeIcons, SIGNAL( toggled( bool ) ), this, SLOT( slotIconSizeToggled( bool ) ) );
-    connect( m_paMediumIcons, SIGNAL( toggled( bool ) ), this, SLOT( slotIconSizeToggled( bool ) ) );
-    connect( d->aSmallMediumIcons, SIGNAL( toggled( bool ) ),
-	    this, SLOT( slotIconSizeToggled( bool ) ) );
-    connect( m_paSmallIcons, SIGNAL( toggled( bool ) ), this, SLOT( slotIconSizeToggled( bool ) ) );
+    connect( m_paDefaultIcons, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotIconSizeToggled( bool ) ) );
+    connect( d->aEnormousIcons, TQT_SIGNAL( toggled( bool ) ),
+	    this, TQT_SLOT( slotIconSizeToggled( bool ) ) );
+    connect( m_paHugeIcons, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotIconSizeToggled( bool ) ) );
+    connect( m_paLargeIcons, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotIconSizeToggled( bool ) ) );
+    connect( m_paMediumIcons, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotIconSizeToggled( bool ) ) );
+    connect( d->aSmallMediumIcons, TQT_SIGNAL( toggled( bool ) ),
+	    this, TQT_SLOT( slotIconSizeToggled( bool ) ) );
+    connect( m_paSmallIcons, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotIconSizeToggled( bool ) ) );
 
-    connect( kapp, SIGNAL(iconChanged(int)), SLOT(slotIconChanged(int)) );
+    connect( kapp, TQT_SIGNAL(iconChanged(int)), TQT_SLOT(slotIconChanged(int)) );
 #if 0
     // Extract 6 icon sizes from the icon theme.
     // Use 16,22,32,48,64,128 as default.
@@ -186,13 +186,13 @@ KonqDirPart::KonqDirPart( QObject *parent, const char *name )
     KIconTheme *root = KGlobal::instance()->iconLoader()->theme();
     if (root)
     {
-      QValueList<int> avSizes = root->querySizes(KIcon::Desktop);
+      TQValueList<int> avSizes = root->querySizes(KIcon::Desktop);
       kdDebug(1203) << "the icon theme handles the following sizes:" << avSizes << endl;
       if (avSizes.count() < 10) {
 	// Use the icon sizes supplied by the theme.
 	// If avSizes contains more than 10 entries, assume a scalable
 	// icon theme.
-	QValueList<int>::Iterator it;
+	TQValueList<int>::Iterator it;
 	for (i=1, it=avSizes.begin(); (it!=avSizes.end()) && (i<7); it++, i++)
 	{
 	  d->iconSize[i] = *it;
@@ -219,7 +219,7 @@ KonqDirPart::KonqDirPart( QObject *parent, const char *name )
     m_iIconSize[4] = KIcon::SizeHuge;
     // ... up to here
 
-    KAction *a = new KAction( i18n( "Configure Background..." ), "background", 0, this, SLOT( slotBackgroundSettings() ),
+    KAction *a = new KAction( i18n( "Configure Background..." ), "background", 0, this, TQT_SLOT( slotBackgroundSettings() ),
                               actionCollection(), "bgsettings" );
 
     a->setToolTip( i18n( "Allows choosing of background settings for this view" ) );
@@ -254,9 +254,9 @@ void KonqDirPart::adjustIconSizes()
     }
 }
 
-void KonqDirPart::setMimeFilter (const QStringList& mime)
+void KonqDirPart::setMimeFilter (const TQStringList& mime)
 {
-    QString u = url().url();
+    TQString u = url().url();
 
     if ( u.isEmpty () )
         return;
@@ -267,23 +267,23 @@ void KonqDirPart::setMimeFilter (const QStringList& mime)
         d->mimeFilters = mime;
 }
 
-QStringList KonqDirPart::mimeFilter() const
+TQStringList KonqDirPart::mimeFilter() const
 {
     return d->mimeFilters;
 }
 
-QScrollView * KonqDirPart::scrollWidget()
+TQScrollView * KonqDirPart::scrollWidget()
 {
-    return static_cast<QScrollView *>(widget());
+    return static_cast<TQScrollView *>(widget());
 }
 
 void KonqDirPart::slotBackgroundSettings()
 {
-    QColor bgndColor = m_pProps->bgColor( widget() );
-    QColor defaultColor = KGlobalSettings::baseColor();
+    TQColor bgndColor = m_pProps->bgColor( widget() );
+    TQColor defaultColor = KGlobalSettings::baseColor();
     // dlg must be created on the heap as widget() can get deleted while dlg.exec(),
     // trying to delete dlg as its child then (#124210) - Frank Osterfeld
-    QGuardedPtr<KonqBgndDialog> dlg = new KonqBgndDialog( widget(), 
+    TQGuardedPtr<KonqBgndDialog> dlg = new KonqBgndDialog( widget(), 
                                               m_pProps->bgPixmapFile(),
                                               bgndColor,
                                               defaultColor );
@@ -313,7 +313,7 @@ void KonqDirPart::lmbClicked( KFileItem * fileItem )
     if ( !fileItem->isReadable() )
     {
         // No permissions or local file that doesn't exist - need to find out which
-        if ( ( !fileItem->isLocalFile() ) || QFile::exists( url.path() ) )
+        if ( ( !fileItem->isLocalFile() ) || TQFile::exists( url.path() ) )
         {
             KMessageBox::error( widget(), i18n("<p>You do not have enough permissions to read <b>%1</b></p>").arg(url.prettyURL()) );
             return;
@@ -369,17 +369,17 @@ void KonqDirPart::mmbClicked( KFileItem * fileItem )
     }
 }
 
-void KonqDirPart::saveState( QDataStream& stream )
+void KonqDirPart::saveState( TQDataStream& stream )
 {
     stream << m_nameFilter;
 }
 
-void KonqDirPart::restoreState( QDataStream& stream )
+void KonqDirPart::restoreState( TQDataStream& stream )
 {
     stream >> m_nameFilter;
 }
 
-void KonqDirPart::saveFindState( QDataStream& stream )
+void KonqDirPart::saveFindState( TQDataStream& stream )
 {
     // assert only doable in KDE4.
     //assert( m_findPart ); // test done by caller.
@@ -397,7 +397,7 @@ void KonqDirPart::saveFindState( QDataStream& stream )
     ext->saveState( stream );
 }
 
-void KonqDirPart::restoreFindState( QDataStream& stream )
+void KonqDirPart::restoreFindState( TQDataStream& stream )
 {
     // Restore our own URL
     stream >> m_url;
@@ -418,7 +418,7 @@ void KonqDirPart::slotClipboardDataChanged()
     // This is very related to KDIconView::slotClipboardDataChanged
 
     KURL::List lst;
-    QMimeSource *data = QApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) && data->provides( "text/uri-list" ) )
         if ( KonqDrag::decodeIsCutSelection( data ) )
             (void) KURLDrag::decode( data, lst );
@@ -430,7 +430,7 @@ void KonqDirPart::slotClipboardDataChanged()
 
 void KonqDirPart::updatePasteAction() // KDE4: merge into method above
 {
-    QString actionText = KIO::pasteActionText();
+    TQString actionText = KIO::pasteActionText();
     bool paste = !actionText.isEmpty();
     if ( paste )
       emit m_extension->setActionText( "paste", actionText );
@@ -475,7 +475,7 @@ void KonqDirPart::emitTotalCount()
         d->dirSizeDirty = false;
     }
 
-    QString summary =
+    TQString summary =
         KIO::itemsSummaryString(m_lFileCount + m_lDirCount,
                                 m_lFileCount,
                                 m_lDirCount,
@@ -484,7 +484,7 @@ void KonqDirPart::emitTotalCount()
     bool bShowsResult = false;
     if (m_findPart)
     {
-        QVariant prop = m_findPart->property( "showsResult" );
+        TQVariant prop = m_findPart->property( "showsResult" );
         bShowsResult = prop.isValid() && prop.toBool();
     }
     //kdDebug(1203) << "KonqDirPart::emitTotalCount bShowsResult=" << bShowsResult << endl;
@@ -527,7 +527,7 @@ void KonqDirPart::emitCounts( const KFileItemList & lst, bool selectionChanged )
         emitCounts( lst );
 
     // Yes, the caller could do that too :)
-    // But this bool could also be used to cache the QString for the last
+    // But this bool could also be used to cache the TQString for the last
     // selection, as long as selectionChanged is false.
     // Not sure it's worth it though.
     // MiB: no, I don't think it's worth it. Especially regarding the
@@ -650,25 +650,25 @@ void KonqDirPart::setFindPart( KParts::ReadOnlyPart * part )
 {
     assert(part);
     m_findPart = part;
-    connect( m_findPart, SIGNAL( started() ),
-             this, SLOT( slotStarted() ) );
-    connect( m_findPart, SIGNAL( started() ),
-             this, SLOT( slotStartAnimationSearching() ) );
-    connect( m_findPart, SIGNAL( clear() ),
-             this, SLOT( slotClear() ) );
-    connect( m_findPart, SIGNAL( newItems( const KFileItemList & ) ),
-             this, SLOT( slotNewItems( const KFileItemList & ) ) );
-    connect( m_findPart, SIGNAL( finished() ), // can't name it completed, it conflicts with a KROP signal
-             this, SLOT( slotCompleted() ) );
-    connect( m_findPart, SIGNAL( finished() ),
-             this, SLOT( slotStopAnimationSearching() ) );
-    connect( m_findPart, SIGNAL( canceled() ),
-             this, SLOT( slotCanceled() ) );
-    connect( m_findPart, SIGNAL( canceled() ),
-             this, SLOT( slotStopAnimationSearching() ) );
+    connect( m_findPart, TQT_SIGNAL( started() ),
+             this, TQT_SLOT( slotStarted() ) );
+    connect( m_findPart, TQT_SIGNAL( started() ),
+             this, TQT_SLOT( slotStartAnimationSearching() ) );
+    connect( m_findPart, TQT_SIGNAL( clear() ),
+             this, TQT_SLOT( slotClear() ) );
+    connect( m_findPart, TQT_SIGNAL( newItems( const KFileItemList & ) ),
+             this, TQT_SLOT( slotNewItems( const KFileItemList & ) ) );
+    connect( m_findPart, TQT_SIGNAL( finished() ), // can't name it completed, it conflicts with a KROP signal
+             this, TQT_SLOT( slotCompleted() ) );
+    connect( m_findPart, TQT_SIGNAL( finished() ),
+             this, TQT_SLOT( slotStopAnimationSearching() ) );
+    connect( m_findPart, TQT_SIGNAL( canceled() ),
+             this, TQT_SLOT( slotCanceled() ) );
+    connect( m_findPart, TQT_SIGNAL( canceled() ),
+             this, TQT_SLOT( slotStopAnimationSearching() ) );
 
-    connect( m_findPart, SIGNAL( findClosed() ),
-             this, SLOT( slotFindClosed() ) );
+    connect( m_findPart, TQT_SIGNAL( findClosed() ),
+             this, TQT_SLOT( slotFindClosed() ) );
 
     emit findOpened( this );
 
@@ -702,7 +702,7 @@ void KonqDirPart::slotStopAnimationSearching()
   completed();
 }
 
-void KonqDirPartBrowserExtension::saveState( QDataStream &stream )
+void KonqDirPartBrowserExtension::saveState( TQDataStream &stream )
 {
     m_dirPart->saveState( stream );
     bool hasFindPart = m_dirPart->findPart();
@@ -715,7 +715,7 @@ void KonqDirPartBrowserExtension::saveState( QDataStream &stream )
     }
 }
 
-void KonqDirPartBrowserExtension::restoreState( QDataStream &stream )
+void KonqDirPartBrowserExtension::restoreState( TQDataStream &stream )
 {
     m_dirPart->restoreState( stream );
     bool hasFindPart;

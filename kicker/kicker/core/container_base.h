@@ -24,9 +24,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __container_base_h__
 #define __container_base_h__
 
-#include <qwidget.h>
-#include <qpoint.h>
-#include <qvaluelist.h>
+#include <tqwidget.h>
+#include <tqpoint.h>
+#include <tqvaluelist.h>
 
 #include <kpanelextension.h>
 #include <kpanelapplet.h>
@@ -39,14 +39,14 @@ class BaseContainer : public QWidget
     Q_OBJECT
 
 public:
-    typedef QValueList<BaseContainer*> List;
-    typedef QValueListIterator<BaseContainer*> Iterator;
-    typedef QValueListConstIterator<BaseContainer*> ConstIterator;
+    typedef TQValueList<BaseContainer*> List;
+    typedef TQValueListIterator<BaseContainer*> Iterator;
+    typedef TQValueListConstIterator<BaseContainer*> ConstIterator;
 
-    BaseContainer( QPopupMenu* appletOpMenu, QWidget* parent = 0, const char * name = 0 );
+    BaseContainer( TQPopupMenu* appletOpMenu, TQWidget* parent = 0, const char * name = 0 );
     ~BaseContainer();
 
-    virtual void reparent(QWidget * parent, WFlags f, const QPoint & p, bool showIt = false);
+    virtual void reparent(TQWidget * parent, WFlags f, const TQPoint & p, bool showIt = false);
 
     virtual int widthForHeight(int height) const = 0;
     virtual int heightForWidth(int width)  const = 0;
@@ -66,8 +66,8 @@ public:
     double freeSpace() const { return _fspace; }
     void setFreeSpace(double f) { _fspace = f; }
 
-    QString appletId() const { return _aid; }
-    void setAppletId(const QString& s) { _aid = s; }
+    TQString appletId() const { return _aid; }
+    void setAppletId(const TQString& s) { _aid = s; }
 
     virtual int actions() const { return _actions; }
 
@@ -77,7 +77,7 @@ public:
 
     virtual void setBackground() {}
 
-    QPopupMenu* opMenu();
+    TQPopupMenu* opMenu();
     void clearOpMenu();
 
     void loadConfiguration( KConfigGroup& );
@@ -86,11 +86,11 @@ public:
     void configure(KPanelExtension::Orientation, KPanelApplet::Direction);
     virtual void configure() {}
 
-    QPoint moveOffset() const { return _moveOffset; }
+    TQPoint moveOffset() const { return _moveOffset; }
 
-    virtual QString appletType() const = 0;
-    virtual QString icon() const { return "unknown"; }
-    virtual QString visibleName() const = 0;
+    virtual TQString appletType() const = 0;
+    virtual TQString icon() const { return "unknown"; }
+    virtual TQString visibleName() const = 0;
 
 public slots:
     virtual void slotRemoved(KConfig* config);
@@ -113,21 +113,21 @@ protected:
                                       bool /* layoutOnly */ ) const {}
     virtual void alignmentChange(KPanelExtension::Alignment) {}
 
-    virtual QPopupMenu* createOpMenu() = 0;
-    QPopupMenu *appletOpMenu() const { return _appletOpMnu; }
+    virtual TQPopupMenu* createOpMenu() = 0;
+    TQPopupMenu *appletOpMenu() const { return _appletOpMnu; }
 
     KPanelApplet::Direction _dir;
     KPanelExtension::Orientation _orient;
     KPanelExtension::Alignment _alignment;
     double             _fspace;
-    QPoint             _moveOffset;
-    QString            _aid;
+    TQPoint             _moveOffset;
+    TQString            _aid;
     int                _actions;
     bool               m_immutable;
 
 private:
-    QPopupMenu        *_opMnu;
-    QPopupMenu        *_appletOpMnu;
+    TQPopupMenu        *_opMnu;
+    TQPopupMenu        *_appletOpMnu;
 };
 
 #endif

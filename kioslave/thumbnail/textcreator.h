@@ -20,7 +20,7 @@
 #ifndef _TEXTCREATOR_H_
 #define _TEXTCREATOR_H_
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include <kio/thumbcreator.h>
 
 class KPixmapSplitter;
@@ -30,14 +30,14 @@ class TextCreator : public ThumbCreator
 public:
     TextCreator();
     virtual ~TextCreator();
-    virtual bool create(const QString &path, int width, int height, QImage &img);
+    virtual bool create(const TQString &path, int width, int height, TQImage &img);
     virtual Flags flags() const;
 
 private:
     KPixmapSplitter *m_splitter;
     char *m_data;
     int m_dataSize;
-    QPixmap m_pixmap;
+    TQPixmap m_pixmap;
 };
 
 #endif

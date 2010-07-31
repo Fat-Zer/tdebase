@@ -34,13 +34,13 @@ class KeyboardConfig : public KCModule
 {
   Q_OBJECT
 public:
-  KeyboardConfig( QWidget *parent=0, const char* name=0);
+  KeyboardConfig( TQWidget *parent=0, const char* name=0);
 
   void save();
   void load();
   void defaults();
 
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
   static void init_keyboard();
   

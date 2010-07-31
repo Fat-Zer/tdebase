@@ -19,9 +19,9 @@
 
 #include "notifierserviceaction.h"
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
 #include <kstddirs.h>
 #include <kdesktopfile.h>
 #include <klocale.h>
@@ -37,11 +37,11 @@ NotifierServiceAction::NotifierServiceAction()
 	m_service.m_strExec = "konqueror %u";
 }
 
-QString NotifierServiceAction::id() const
+TQString NotifierServiceAction::id() const
 {
 	if (m_filePath.isEmpty() || m_service.m_strName.isEmpty())
 	{
-		return QString();
+		return TQString();
 	}
 	else
 	{
@@ -49,13 +49,13 @@ QString NotifierServiceAction::id() const
 	}
 }
 
-void NotifierServiceAction::setIconName( const QString &icon )
+void NotifierServiceAction::setIconName( const TQString &icon )
 {
 	m_service.m_strIcon = icon;
 	NotifierAction::setIconName( icon );
 }
 
-void NotifierServiceAction::setLabel( const QString &label )
+void NotifierServiceAction::setLabel( const TQString &label )
 {
 	m_service.m_strName = label;
 	NotifierAction::setLabel( label );
@@ -84,12 +84,12 @@ KDEDesktopMimeType::Service NotifierServiceAction::service() const
 	return m_service;
 }
 
-void NotifierServiceAction::setFilePath(const QString &filePath)
+void NotifierServiceAction::setFilePath(const TQString &filePath)
 {
 	m_filePath = filePath;
 }
 
-QString NotifierServiceAction::filePath() const
+TQString NotifierServiceAction::filePath() const
 {
 	return m_filePath;
 }
@@ -98,18 +98,18 @@ void NotifierServiceAction::updateFilePath()
 {
 	if ( !m_filePath.isEmpty() ) return;
 	
-	QString action_name = m_service.m_strName;
+	TQString action_name = m_service.m_strName;
 	action_name.replace(   " ", "_" );
 	
-	QDir actions_dir( locateLocal( "data", "konqueror/servicemenus/", true ) );
+	TQDir actions_dir( locateLocal( "data", "konqueror/servicemenus/", true ) );
 
-	QString filename = actions_dir.absFilePath( action_name + ".desktop" );
+	TQString filename = actions_dir.absFilePath( action_name + ".desktop" );
 	
 	int counter = 1;
-	while ( QFile::exists( filename ) )
+	while ( TQFile::exists( filename ) )
 	{
 		filename = actions_dir.absFilePath( action_name
-		                                  + QString::number( counter )
+		                                  + TQString::number( counter )
 		                                  + ".desktop" );
 		counter++;
 	}
@@ -117,19 +117,19 @@ void NotifierServiceAction::updateFilePath()
 	m_filePath = filename;
 }
 
-void NotifierServiceAction::setMimetypes(const QStringList &mimetypes)
+void NotifierServiceAction::setMimetypes(const TQStringList &mimetypes)
 {
 	m_mimetypes = mimetypes;
 }
 
-QStringList NotifierServiceAction::mimetypes()
+TQStringList NotifierServiceAction::mimetypes()
 {
 	return m_mimetypes;
 }
 
 bool NotifierServiceAction::isWritable() const
 {
-	QFileInfo info( m_filePath );
+	TQFileInfo info( m_filePath );
 
 	if ( info.exists() )
 	{
@@ -137,30 +137,30 @@ bool NotifierServiceAction::isWritable() const
 	}
 	else
 	{
-		info = QFileInfo( info.dirPath() );
+		info = TQFileInfo( info.dirPath() );
 		return info.isWritable();
 	}
 }
 
-bool NotifierServiceAction::supportsMimetype(const QString &mimetype) const
+bool NotifierServiceAction::supportsMimetype(const TQString &mimetype) const
 {
 	return m_mimetypes.contains(mimetype);
 }
 
 void NotifierServiceAction::save() const
 {
-	QFile::remove( m_filePath );
+	TQFile::remove( m_filePath );
 	KDesktopFile desktopFile(m_filePath);
 
-	desktopFile.setGroup(QString("Desktop Action ") + m_service.m_strName);
-	desktopFile.writeEntry(QString("Icon"), m_service.m_strIcon);
-	desktopFile.writeEntry(QString("Name"), m_service.m_strName);
-	desktopFile.writeEntry(QString("Exec"), m_service.m_strExec);
+	desktopFile.setGroup(TQString("Desktop Action ") + m_service.m_strName);
+	desktopFile.writeEntry(TQString("Icon"), m_service.m_strIcon);
+	desktopFile.writeEntry(TQString("Name"), m_service.m_strName);
+	desktopFile.writeEntry(TQString("Exec"), m_service.m_strExec);
 
 	desktopFile.setDesktopGroup();
 
-	desktopFile.writeEntry(QString("ServiceTypes"), m_mimetypes, ",");
-	desktopFile.writeEntry(QString("Actions"),
-	                       QStringList(m_service.m_strName),";");
+	desktopFile.writeEntry(TQString("ServiceTypes"), m_mimetypes, ",");
+	desktopFile.writeEntry(TQString("Actions"),
+	                       TQStringList(m_service.m_strName),";");
 }
 

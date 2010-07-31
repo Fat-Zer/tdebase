@@ -7,15 +7,15 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #ifndef SHUTDOWNDLG_H
 #define SHUTDOWNDLG_H
 
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qdatetime.h>
-#include <qdialog.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
+#include <tqdatetime.h>
+#include <tqdialog.h>
 #include <kpushbutton.h>
-#include <qpushbutton.h>
-#include <qframe.h>
+#include <tqpushbutton.h>
+#include <tqframe.h>
 #include <kguiitem.h>
-#include <qtoolbutton.h>
+#include <tqtoolbutton.h>
 
 class QPushButton;
 class QVButtonGroup;
@@ -54,15 +54,15 @@ private:
     static KSMShutdownFeedback * s_pSelf;
     KSMShutdownFeedback();
     int m_currentY;
-    QPixmap m_root;
+    TQPixmap m_root;
     void fadeBack( void );
     float  m_grayOpacity;
     float  m_compensation;
     bool   m_fadeBackwards;
     bool   m_readDelayComplete;
-    QImage m_unfadedImage;
-    QImage m_grayImage;
-    QTime  m_fadeTime;
+    TQImage m_unfadedImage;
+    TQImage m_grayImage;
+    TQTime  m_fadeTime;
     int    m_rowsDone;
     KPixmapIO m_pmio;
 
@@ -75,7 +75,7 @@ class KSMShutdownDlg : public QDialog
     Q_OBJECT
 
 public:
-    static bool confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, QString& bopt );
+    static bool confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bopt );
 
 public slots:
     void slotLogout();
@@ -89,11 +89,11 @@ protected:
     ~KSMShutdownDlg();
 
 private:
-    KSMShutdownDlg( QWidget* parent, bool maysd, KApplication::ShutdownType sdtype );
+    KSMShutdownDlg( TQWidget* parent, bool maysd, KApplication::ShutdownType sdtype );
     KApplication::ShutdownType m_shutdownType;
-    QString m_bootOption;
-    QPopupMenu *targets;
-    QStringList rebootOptions;
+    TQString m_bootOption;
+    TQPopupMenu *targets;
+    TQStringList rebootOptions;
     LibHalContext* m_halCtx;
     DBusConnection *m_dbusConn;
     bool m_lockOnResume;
@@ -105,8 +105,8 @@ class KSMDelayedPushButton : public KPushButton
 
 public:
 
-  KSMDelayedPushButton( const KGuiItem &item, QWidget *parent, const char *name = 0 );
-  void setPopup( QPopupMenu *pop);
+  KSMDelayedPushButton( const KGuiItem &item, TQWidget *parent, const char *name = 0 );
+  void setPopup( TQPopupMenu *pop);
 
 private slots:
   void slotTimeout();
@@ -114,8 +114,8 @@ private slots:
   void slotReleased();
 
 private:
-  QPopupMenu *pop;
-  QTimer *popt;
+  TQPopupMenu *pop;
+  TQTimer *popt;
 };
 
 class KSMPushButton : public KPushButton
@@ -124,11 +124,11 @@ class KSMPushButton : public KPushButton
 
 public:
 
-  KSMPushButton( const KGuiItem &item, QWidget *parent, const char *name = 0 );
+  KSMPushButton( const KGuiItem &item, TQWidget *parent, const char *name = 0 );
 
 protected:
-  virtual void keyPressEvent(QKeyEvent*e);
-  virtual void keyReleaseEvent(QKeyEvent*e);
+  virtual void keyPressEvent(TQKeyEvent*e);
+  virtual void keyReleaseEvent(TQKeyEvent*e);
 
 private:
 
@@ -144,12 +144,12 @@ class FlatButton : public QToolButton
 
  public:
 
-  FlatButton( QWidget *parent = 0, const char *name = 0 );
+  FlatButton( TQWidget *parent = 0, const char *name = 0 );
   ~FlatButton();
 
  protected:
-  virtual void keyPressEvent(QKeyEvent*e);
-  virtual void keyReleaseEvent(QKeyEvent*e);
+  virtual void keyPressEvent(TQKeyEvent*e);
+  virtual void keyReleaseEvent(TQKeyEvent*e);
 
  private slots:
   
@@ -157,8 +157,8 @@ class FlatButton : public QToolButton
   void init();
   
   bool m_pressed;
-  QString m_text;
-  QPixmap m_pixmap;
+  TQString m_text;
+  TQPixmap m_pixmap;
  
 };
 

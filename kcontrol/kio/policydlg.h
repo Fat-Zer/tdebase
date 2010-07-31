@@ -19,7 +19,7 @@
 #ifndef _POLICYDLG_H
 #define _POLICYDLG_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdialogbase.h>
 
@@ -47,16 +47,16 @@ public:
     }
   }
 
-  static KCookieAdvice::Value strToAdvice (const QString& advice)
+  static KCookieAdvice::Value strToAdvice (const TQString& advice)
   {
     if (advice.isEmpty())
       return KCookieAdvice::Dunno;
 
-    if (advice.find (QString::fromLatin1("accept"), 0, false) == 0)
+    if (advice.find (TQString::fromLatin1("accept"), 0, false) == 0)
       return KCookieAdvice::Accept;
-    else if (advice.find (QString::fromLatin1("reject"), 0, false) == 0)
+    else if (advice.find (TQString::fromLatin1("reject"), 0, false) == 0)
       return KCookieAdvice::Reject;
-    else if (advice.find (QString::fromLatin1("ask"), 0, false) == 0)
+    else if (advice.find (TQString::fromLatin1("ask"), 0, false) == 0)
       return KCookieAdvice::Ask;
 
     return KCookieAdvice::Dunno;
@@ -68,18 +68,18 @@ class PolicyDlg : public KDialogBase
   Q_OBJECT
 
 public:
-  PolicyDlg (const QString& caption, QWidget *parent = 0,
+  PolicyDlg (const TQString& caption, TQWidget *parent = 0,
                     const char *name = 0);
   ~PolicyDlg (){};
 
   int advice() const;
-  QString domain() const;
+  TQString domain() const;
 
-  void setEnableHostEdit( bool, const QString& host = QString::null );
+  void setEnableHostEdit( bool, const TQString& host = TQString::null );
   void setPolicy (int policy);
 
 protected slots:
-  void slotTextChanged( const QString& );
+  void slotTextChanged( const TQString& );
 
 private:
   PolicyDlgUI* m_dlgUI;

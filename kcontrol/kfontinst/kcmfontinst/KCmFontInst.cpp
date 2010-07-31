@@ -34,11 +34,11 @@
 #include "KfiPrint.h"
 #include "FcEngine.h"
 #endif
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpainter.h>
-#include <qpaintdevicemetrics.h>
-#include <qsettings.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
+#include <tqpaintdevicemetrics.h>
+#include <tqsettings.h>
 #include <kaboutdata.h>
 #include <kgenericfactory.h>
 #include <kdiroperator.h>
@@ -59,7 +59,7 @@
 #include <kdirlister.h>
 #include <kpushbutton.h>
 #include <kguiitem.h>
-#include <qsplitter.h>
+#include <tqsplitter.h>
 
 #define CFG_GROUP          "Main Settings"
 #define CFG_LISTVIEW       "ListView"
@@ -68,13 +68,13 @@
 #define CFG_SHOW_BITMAP    "ShowBitmap"
 #define CFG_FONT_SIZE      "FontSize"
 
-typedef KGenericFactory<KFI::CKCmFontInst, QWidget> FontInstallFactory;
+typedef KGenericFactory<KFI::CKCmFontInst, TQWidget> FontInstallFactory;
 K_EXPORT_COMPONENT_FACTORY(kcm_fontinst, FontInstallFactory("kcmfontinst"))
 
 namespace KFI
 {
 
-CKCmFontInst::CKCmFontInst(QWidget *parent, const char *, const QStringList&)
+CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
             : KCModule(parent, "kfontinst"),
 #ifdef HAVE_XFT
               itsPreview(NULL),
@@ -97,25 +97,25 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const char *, const QStringList&)
     itsEmbeddedAdmin=Misc::root() && (NULL==appName || strcmp("kcontrol", appName) &&
                      KCmdLineArgs::parsedArgs()->isSet("embed"));
 
-    itsStatusLabel = new QLabel(this);
-    itsStatusLabel->setFrameShape(QFrame::Panel);
-    itsStatusLabel->setFrameShadow(QFrame::Sunken);
+    itsStatusLabel = new TQLabel(this);
+    itsStatusLabel->setFrameShape(TQFrame::Panel);
+    itsStatusLabel->setFrameShadow(TQFrame::Sunken);
     itsStatusLabel->setLineWidth(1);
 
     itsConfig.setGroup(CFG_GROUP);
 
-    QFrame      *fontsFrame;
+    TQFrame      *fontsFrame;
 #ifdef HAVE_XFT
     KLibFactory *factory=KLibLoader::self()->factory("libkfontviewpart");
 
     if(factory)
     {
-        itsSplitter=new QSplitter(this);
-        fontsFrame=new QFrame(itsSplitter),
+        itsSplitter=new TQSplitter(this);
+        fontsFrame=new TQFrame(itsSplitter),
         itsPreview=(KParts::ReadOnlyPart *)factory->create(itsSplitter, "kcmfontinst", "KParts::ReadOnlyPart");
-        itsSplitter->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        itsSplitter->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
 
-        QValueList<int> sizes(itsConfig.readIntListEntry(CFG_SPLITTER_SIZES));
+        TQValueList<int> sizes(itsConfig.readIntListEntry(CFG_SPLITTER_SIZES));
 
         if(2!=sizes.count())
         {
@@ -128,37 +128,37 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const char *, const QStringList&)
     else
     {
 #endif
-        fontsFrame=new QFrame(this);
-        fontsFrame->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        fontsFrame=new TQFrame(this);
+        fontsFrame->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
 #ifdef HAVE_XFT
     }
 #endif
 
-    QGridLayout *fontsLayout=new QGridLayout(fontsFrame, 1, 1, 0, 1);
-    QVBoxLayout *layout=new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQGridLayout *fontsLayout=new TQGridLayout(fontsFrame, 1, 1, 0, 1);
+    TQVBoxLayout *layout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
     KToolBar    *toolbar=new KToolBar(this);
     bool        showBitmap(itsConfig.readBoolEntry(CFG_SHOW_BITMAP, false));
 
     fontsFrame->setLineWidth(0);
-    toolbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+    toolbar->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum);
     toolbar->setMovingEnabled(false);
 
-    QString previousPath=itsConfig.readEntry(CFG_PATH);
+    TQString previousPath=itsConfig.readEntry(CFG_PATH);
 
-    itsDirOp = new KDirOperator(Misc::root() ? QString("fonts:/") : QString("fonts:/")+i18n(KFI_KIO_FONTS_USER),
+    itsDirOp = new KDirOperator(Misc::root() ? TQString("fonts:/") : TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER),
                                 fontsFrame);
     itsDirOp->setViewConfig(&itsConfig, "ListView Settings");
-    itsDirOp->setMinimumSize(QSize(96, 64));
+    itsDirOp->setMinimumSize(TQSize(96, 64));
     setMimeTypes(showBitmap);
     itsDirOp->dirLister()->setMainWindow(this);
-    itsDirOp->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    itsDirOp->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
     fontsLayout->addMultiCellWidget(itsDirOp, 0, 0, 0, 1);
 
     KPushButton *button=new KPushButton(KGuiItem(i18n("Add Fonts..."), "newfont"), fontsFrame);
-    connect(button, SIGNAL(clicked()), SLOT(addFonts()));
-    button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    connect(button, TQT_SIGNAL(clicked()), TQT_SLOT(addFonts()));
+    button->setSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Minimum);
     fontsLayout->addWidget(button, 1, 0);
-    fontsLayout->addItem(new QSpacerItem(4, 4, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    fontsLayout->addItem(new TQSpacerItem(4, 4, TQSizePolicy::Expanding, TQSizePolicy::Minimum));
 
     layout->addWidget(toolbar);
 #ifdef HAVE_XFT
@@ -181,15 +181,15 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const char *, const QStringList&)
 
     itsViewMenuAct=dynamic_cast<KActionMenu *>(itsDirOp->actionCollection()->action("view menu"));
     topMnu->popupMenu()->clear();
-    connect(topMnu->popupMenu(), SIGNAL(aboutToShow()), SLOT(setupMenu()));
+    connect(topMnu->popupMenu(), TQT_SIGNAL(aboutToShow()), TQT_SLOT(setupMenu()));
     if((act=itsDirOp->actionCollection()->action("up")))
-        act->disconnect(SIGNAL(activated()), itsDirOp, SLOT(cdUp()));
+        act->disconnect(TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(cdUp()));
     if((act=itsDirOp->actionCollection()->action("home")))
-        act->disconnect(SIGNAL(activated()), itsDirOp, SLOT(home()));
+        act->disconnect(TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(home()));
     if((act=itsDirOp->actionCollection()->action("back")))
-        act->disconnect(SIGNAL(activated()), itsDirOp, SLOT(back()));
+        act->disconnect(TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(back()));
     if((act=itsDirOp->actionCollection()->action("forward")))
-        act->disconnect(SIGNAL(activated()), itsDirOp, SLOT(forward()));
+        act->disconnect(TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(forward()));
 
     if((act=itsDirOp->actionCollection()->action("reload")))
         act->plug(toolbar);
@@ -198,26 +198,26 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const char *, const QStringList&)
 
     if((itsIconAct=dynamic_cast<KRadioAction *>(itsDirOp->actionCollection()->action("short view"))))
     {
-        disconnect(itsIconAct, SIGNAL(activated()), itsDirOp, SLOT(slotSimpleView()));
-        connect(itsIconAct, SIGNAL(activated()), SLOT(iconView()));
+        disconnect(itsIconAct, TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(slotSimpleView()));
+        connect(itsIconAct, TQT_SIGNAL(activated()), TQT_SLOT(iconView()));
         itsIconAct->plug(toolbar);
     }
 
     if((itsListAct=dynamic_cast<KRadioAction *>(itsDirOp->actionCollection()->action("detailed view"))))
     {
-        disconnect(itsListAct, SIGNAL(activated()), itsDirOp, SLOT(slotDetailedView()));
-        connect(itsListAct, SIGNAL(activated()), SLOT(listView()));
+        disconnect(itsListAct, TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(slotDetailedView()));
+        connect(itsListAct, TQT_SIGNAL(activated()), TQT_SLOT(listView()));
         itsListAct->plug(toolbar);
     }
 
-    itsShowBitmapAct=new KToggleAction(i18n("Show Bitmap Fonts"), "font_bitmap", 0, this, SLOT(filterFonts()), 
+    itsShowBitmapAct=new KToggleAction(i18n("Show Bitmap Fonts"), "font_bitmap", 0, this, TQT_SLOT(filterFonts()), 
                                        itsDirOp->actionCollection(), "showbitmap");
     itsShowBitmapAct->setChecked(showBitmap);
     itsShowBitmapAct->plug(toolbar);
 
     toolbar->insertLineSeparator();
 
-    act=new KAction(i18n("Add Fonts..."), "newfont", 0, this, SLOT(addFonts()), itsDirOp->actionCollection(), "addfonts");
+    act=new KAction(i18n("Add Fonts..."), "newfont", 0, this, TQT_SLOT(addFonts()), itsDirOp->actionCollection(), "addfonts");
     act->plug(toolbar);
     topMnu->insert(act);
 
@@ -226,24 +226,24 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const char *, const QStringList&)
         itsDeleteAct->plug(toolbar);
         itsDeleteAct->setEnabled(false);
         topMnu->insert(itsDeleteAct);
-        disconnect(itsDeleteAct, SIGNAL(activated()), itsDirOp, SLOT(deleteSelected()));
-        connect(itsDeleteAct, SIGNAL(activated()), this, SLOT(removeFonts()));
+        disconnect(itsDeleteAct, TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(deleteSelected()));
+        connect(itsDeleteAct, TQT_SIGNAL(activated()), this, TQT_SLOT(removeFonts()));
     }
 
     toolbar->insertLineSeparator();
-    act=new KAction(i18n("Configure..."), "configure", 0, this, SLOT(configure()), itsDirOp->actionCollection(), "configure");
+    act=new KAction(i18n("Configure..."), "configure", 0, this, TQT_SLOT(configure()), itsDirOp->actionCollection(), "configure");
     act->plug(toolbar);
 #ifdef HAVE_XFT
     toolbar->insertLineSeparator();
-    act=new KAction(i18n("Print..."), "fileprint", 0, this, SLOT(print()), itsDirOp->actionCollection(), "print");
+    act=new KAction(i18n("Print..."), "fileprint", 0, this, TQT_SLOT(print()), itsDirOp->actionCollection(), "print");
     act->plug(toolbar);
 #endif
 
     if( (itsSepDirsAct=itsDirOp->actionCollection()->action("separate dirs")) &&
         (itsShowHiddenAct=itsDirOp->actionCollection()->action("show hidden")))
     {
-        //disconnect(itsViewMenuAct->popupMenu(), SIGNAL(aboutToShow()), itsDirOp, SLOT(insertViewDependentActions()));
-        connect(itsViewMenuAct->popupMenu(), SIGNAL(aboutToShow()), SLOT(setupViewMenu()));
+        //disconnect(itsViewMenuAct->popupMenu(), TQT_SIGNAL(aboutToShow()), itsDirOp, TQT_SLOT(insertViewDependentActions()));
+        connect(itsViewMenuAct->popupMenu(), TQT_SIGNAL(aboutToShow()), TQT_SLOT(setupViewMenu()));
         setupViewMenu();
     }
 
@@ -266,12 +266,12 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const char *, const QStringList&)
 
     itsDirOp->dirLister()->setShowingDotFiles(true);
 
-    connect(itsDirOp, SIGNAL(fileHighlighted(const KFileItem *)), SLOT(fileHighlighted(const KFileItem *)));
-    connect(itsDirOp, SIGNAL(finishedLoading()), SLOT(loadingFinished()));
-    connect(itsDirOp, SIGNAL(dropped(const KFileItem *, QDropEvent *, const KURL::List &)),
-                      SLOT(dropped(const KFileItem *, QDropEvent *, const KURL::List &)));
-    connect(itsDirOp->dirLister(), SIGNAL(infoMessage(const QString &)), SLOT(infoMessage(const QString &)));
-    connect(itsDirOp, SIGNAL(updateInformation(int, int)), SLOT(updateInformation(int, int)));
+    connect(itsDirOp, TQT_SIGNAL(fileHighlighted(const KFileItem *)), TQT_SLOT(fileHighlighted(const KFileItem *)));
+    connect(itsDirOp, TQT_SIGNAL(finishedLoading()), TQT_SLOT(loadingFinished()));
+    connect(itsDirOp, TQT_SIGNAL(dropped(const KFileItem *, TQDropEvent *, const KURL::List &)),
+                      TQT_SLOT(dropped(const KFileItem *, TQDropEvent *, const KURL::List &)));
+    connect(itsDirOp->dirLister(), TQT_SIGNAL(infoMessage(const TQString &)), TQT_SLOT(infoMessage(const TQString &)));
+    connect(itsDirOp, TQT_SIGNAL(updateInformation(int, int)), TQT_SLOT(updateInformation(int, int)));
 }
 
 CKCmFontInst::~CKCmFontInst()
@@ -288,7 +288,7 @@ CKCmFontInst::~CKCmFontInst()
 
 void CKCmFontInst::setMimeTypes(bool showBitmap)
 {
-    QStringList mimeTypes;
+    TQStringList mimeTypes;
 
     mimeTypes << "application/x-font-ttf"
               << "application/x-font-otf"
@@ -311,7 +311,7 @@ void CKCmFontInst::filterFonts()
         itsConfig.sync();
 }
 
-QString CKCmFontInst::quickHelp() const
+TQString CKCmFontInst::quickHelp() const
 {
     return Misc::root()
                ? i18n("<h1>Font Installer</h1><p> This module allows you to"
@@ -398,13 +398,13 @@ void CKCmFontInst::fileHighlighted(const KFileItem *item)
 
 void CKCmFontInst::loadingFinished()
 {
-    QListView *lView=dynamic_cast<QListView *>(itsDirOp->view());
+    TQListView *lView=dynamic_cast<TQListView *>(itsDirOp->view());
 
     if(lView)
         lView->sort();
     else
     {
-        QIconView *iView=dynamic_cast<QIconView *>(itsDirOp->view());
+        TQIconView *iView=dynamic_cast<TQIconView *>(itsDirOp->view());
 
         if(iView)
             iView->sort();
@@ -414,7 +414,7 @@ void CKCmFontInst::loadingFinished()
 
 void CKCmFontInst::addFonts()
 {
-    KURL::List list=KFileDialog::getOpenURLs(QString::null, "application/x-font-ttf application/x-font-otf "
+    KURL::List list=KFileDialog::getOpenURLs(TQString::null, "application/x-font-ttf application/x-font-otf "
                                                             "application/x-font-ttc application/x-font-type1 "
                                                             "application/x-font-pcf application/x-font-bdf",
                                                             //"application/x-font-snf application/x-font-speedo",
@@ -431,7 +431,7 @@ void CKCmFontInst::removeFonts()
     else
     {
         KURL::List            urls;
-        QStringList           files;
+        TQStringList           files;
         KFileItemListIterator it(*(itsDirOp->selectedItems()));
 
         for(; it.current(); ++it)
@@ -464,7 +464,7 @@ void CKCmFontInst::removeFonts()
         if(doIt)
         {
             KIO::DeleteJob *job = KIO::del(urls, false, true);
-            connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(delResult(KIO::Job *)));
+            connect(job, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(delResult(KIO::Job *)));
             job->setWindow(this);
             job->setAutoErrorHandlingEnabled(true, this);
         }
@@ -508,8 +508,8 @@ void CKCmFontInst::print()
         {
             static const int constSizes[]={0, 12, 18, 24, 36, 48};
     
-            QStringList       items;
-            QValueVector<int> sizes;
+            TQStringList       items;
+            TQValueVector<int> sizes;
             CFcEngine         engine;
 
             if(dlg.outputAll())
@@ -537,18 +537,18 @@ void CKCmFontInst::print()
 #endif
 }
 
-void CKCmFontInst::dropped(const KFileItem *i, QDropEvent *, const KURL::List &urls)
+void CKCmFontInst::dropped(const KFileItem *i, TQDropEvent *, const KURL::List &urls)
 {
     if(urls.count())
         addFonts(urls, i && i->isDir() ?  i->url() : itsDirOp->url());
 }
 
-void CKCmFontInst::infoMessage(const QString &msg)
+void CKCmFontInst::infoMessage(const TQString &msg)
 {
     itsStatusLabel->setText(msg);
 }
 
-static QString family(const QString &name)
+static TQString family(const TQString &name)
 {
     int commaPos=name.find(',');
 
@@ -558,8 +558,8 @@ static QString family(const QString &name)
 void CKCmFontInst::updateInformation(int, int fonts)
 {
     KIO::filesize_t size=0;
-    QString         text(i18n("One Font", "%n Fonts", fonts));
-    QStringList     families;
+    TQString         text(i18n("One Font", "%n Fonts", fonts));
+    TQStringList     families;
 
     if(fonts>0)
     {
@@ -567,7 +567,7 @@ void CKCmFontInst::updateInformation(int, int fonts)
 
         for (item=itsDirOp->view()->firstFileItem(); item; item=itsDirOp->view()->nextItem(item))
         {
-            QString fam(family(item->text()));
+            TQString fam(family(item->text()));
 
             size+=item->size();
             if(-1==families.findIndex(fam))
@@ -590,8 +590,8 @@ void CKCmFontInst::delResult(KIO::Job *job)
     //
     // To speed up font deletion, we dont rescan font list each time - so after this has completed, we need
     // to refresh font list before updating the directory listing...
-    QByteArray  packedArgs;
-    QDataStream stream(packedArgs, IO_WriteOnly);
+    TQByteArray  packedArgs;
+    TQDataStream stream(packedArgs, IO_WriteOnly);
 
     stream << KFI::SPECIAL_RESCAN;
 
@@ -636,7 +636,7 @@ void CKCmFontInst::addFonts(const KURL::List &src, const KURL &dest)
         }
 
         KIO::CopyJob *job=KIO::copy(copy, dest, true);
-        connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(jobResult(KIO::Job *)));
+        connect(job, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(jobResult(KIO::Job *)));
         job->setWindow(this);
         job->setAutoErrorHandlingEnabled(true, this);
     }

@@ -25,7 +25,7 @@
 #include <kurl.h>
 #include <kuser.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class HomeImpl : public QObject
 {
@@ -33,11 +33,11 @@ Q_OBJECT
 
 public:
 	HomeImpl();
-	bool parseURL(const KURL &url, QString &name, QString &path) const;
-	bool realURL(const QString &name, const QString &path, KURL &url);
+	bool parseURL(const KURL &url, TQString &name, TQString &path) const;
+	bool realURL(const TQString &name, const TQString &path, KURL &url);
 		
-	bool statHome(const QString &name, KIO::UDSEntry &entry);
-	bool listHomes(QValueList<KIO::UDSEntry> &list);
+	bool statHome(const TQString &name, KIO::UDSEntry &entry);
+	bool listHomes(TQValueList<KIO::UDSEntry> &list);
 	
 	void createTopLevelEntry(KIO::UDSEntry &entry) const;
 

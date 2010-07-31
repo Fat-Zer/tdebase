@@ -11,7 +11,7 @@
 #ifndef __PLUGINOPTS_H__
 #define __PLUGINOPTS_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "domainlistview.h"
 #include "policies.h"
@@ -44,8 +44,8 @@ public:
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */
-  PluginPolicies(KConfig* config, const QString &group, bool global,
-  		const QString &domain = QString::null);
+  PluginPolicies(KConfig* config, const TQString &group, bool global,
+  		const TQString &domain = TQString::null);
 
   virtual ~PluginPolicies();
 };
@@ -55,8 +55,8 @@ public:
 class PluginDomainListView : public DomainListView {
   Q_OBJECT
 public:
-  PluginDomainListView(KConfig *config,const QString &group,KPluginOptions *opt,
-  		QWidget *parent,const char *name = 0);
+  PluginDomainListView(KConfig *config,const TQString &group,KPluginOptions *opt,
+  		TQWidget *parent,const char *name = 0);
   virtual ~PluginDomainListView();
 
 protected:
@@ -66,28 +66,28 @@ protected:
   		Policies *copy);
 
 private:
-  QString group;
+  TQString group;
   KPluginOptions *options;
 };
 
 /**
  * dialog for embedding a PluginDomainListView widget
  */
-class PluginDomainDialog : public QWidget {
+class PluginDomainDialog : public TQWidget {
   Q_OBJECT
 public:
 
-  PluginDomainDialog(QWidget *parent);
+  PluginDomainDialog(TQWidget *parent);
   virtual ~PluginDomainDialog();
 
-  void setMainWidget(QWidget *widget);
+  void setMainWidget(TQWidget *widget);
 
 private slots:
   virtual void slotClose();
 
 private:
   PluginDomainListView *domainSpecific;
-  QBoxLayout *thisLayout;
+  TQBoxLayout *thisLayout;
 };
 
 class KPluginOptions : public KCModule
@@ -95,14 +95,14 @@ class KPluginOptions : public KCModule
     Q_OBJECT
 
 public:
-    KPluginOptions( KConfig* config, QString group, QWidget* parent = 0, const char* name = 0 );
+    KPluginOptions( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
 	~KPluginOptions();
 
     virtual void load();
     virtual void load( bool useDefaults );
     virtual void save();
     virtual void defaults();
-    QString quickHelp() const;
+    TQString quickHelp() const;
 
 private slots:
     void slotChanged();
@@ -112,9 +112,9 @@ private slots:
 private:
 
     KConfig* m_pConfig;
-    QString  m_groupname;
+    TQString  m_groupname;
 
-    QCheckBox *enablePluginsGloballyCB, *enableHTTPOnly, *enableUserDemand;
+    TQCheckBox *enablePluginsGloballyCB, *enableHTTPOnly, *enableUserDemand;
 
 
  protected slots:
@@ -129,10 +129,10 @@ private:
  private:
   NSConfigWidget *m_widget;
   bool m_changed;
-  QProgressDialog *m_progress;
+  TQProgressDialog *m_progress;
   KProcIO* m_nspluginscan;
-  QSlider *priority;
-  QLabel *priorityLabel;
+  TQSlider *priority;
+  TQLabel *priorityLabel;
   PluginPolicies global_policies;
   PluginDomainListView *domainSpecific;
   KDialogBase *domainSpecificDlg;
@@ -148,8 +148,8 @@ private:
   void dirRemove();
   void dirUp();
   void dirDown();
-  void dirEdited(const QString &);
-  void dirSelect( QListBoxItem * );
+  void dirEdited(const TQString &);
+  void dirSelect( TQListBoxItem * );
 
 /******************************************************************************/
  protected:

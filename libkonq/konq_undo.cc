@@ -86,21 +86,21 @@ public:
 };
 
 KonqCommandRecorder::KonqCommandRecorder( KonqCommand::Type op, const KURL::List &src, const KURL &dst, KIO::Job *job )
-  : QObject( job, "konqcmdrecorder" )
+  : TQObject( job, "konqcmdrecorder" )
 {
   d = new KonqCommandRecorderPrivate;
   d->m_cmd.m_type = op;
   d->m_cmd.m_valid = true;
   d->m_cmd.m_src = src;
   d->m_cmd.m_dst = dst;
-  connect( job, SIGNAL( result( KIO::Job * ) ),
-           this, SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+           this, TQT_SLOT( slotResult( KIO::Job * ) ) );
 
   if ( op != KonqCommand::MKDIR ) {
-      connect( job, SIGNAL( copyingDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ),
-               this, SLOT( slotCopyingDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ) );
-      connect( job, SIGNAL( copyingLinkDone( KIO::Job *, const KURL &, const QString &, const KURL & ) ),
-               this, SLOT( slotCopyingLinkDone( KIO::Job *, const KURL &, const QString &, const KURL & ) ) );
+      connect( job, TQT_SIGNAL( copyingDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ),
+               this, TQT_SLOT( slotCopyingDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ) );
+      connect( job, TQT_SIGNAL( copyingLinkDone( KIO::Job *, const KURL &, const TQString &, const KURL & ) ),
+               this, TQT_SLOT( slotCopyingLinkDone( KIO::Job *, const KURL &, const TQString &, const KURL & ) ) );
   }
 
   KonqUndoManager::incRef();
@@ -134,8 +134,8 @@ void KonqCommandRecorder::slotCopyingDone( KIO::Job *job, const KURL &from, cons
   {
       Q_ASSERT( from.isLocalFile() );
       Q_ASSERT( to.protocol() == "trash" );
-      QMap<QString, QString> metaData = job->metaData();
-      QMap<QString, QString>::ConstIterator it = metaData.find( "trashURL-" + from.path() );
+      TQMap<TQString, TQString> metaData = job->metaData();
+      TQMap<TQString, TQString>::ConstIterator it = metaData.find( "trashURL-" + from.path() );
       if ( it != metaData.end() ) {
           // Update URL
           op.m_dst = it.data();
@@ -145,7 +145,7 @@ void KonqCommandRecorder::slotCopyingDone( KIO::Job *job, const KURL &from, cons
   d->m_cmd.m_opStack.prepend( op );
 }
 
-void KonqCommandRecorder::slotCopyingLinkDone( KIO::Job *, const KURL &from, const QString &target, const KURL &to )
+void KonqCommandRecorder::slotCopyingLinkDone( KIO::Job *, const KURL &from, const TQString &target, const KURL &to )
 {
   KonqBasicOperation op;
   op.m_valid = true;
@@ -181,10 +181,10 @@ public:
   KonqCommand m_current;
   KIO::Job *m_currentJob;
   UndoState m_undoState;
-  QValueStack<KURL> m_dirStack;
-  QValueStack<KURL> m_dirCleanupStack;
-  QValueStack<KURL> m_fileCleanupStack;
-  QValueList<KURL> m_dirsToUpdate;
+  TQValueStack<KURL> m_dirStack;
+  TQValueStack<KURL> m_dirCleanupStack;
+  TQValueStack<KURL> m_fileCleanupStack;
+  TQValueList<KURL> m_dirsToUpdate;
 
   bool m_lock;
 
@@ -247,7 +247,7 @@ bool KonqUndoManager::undoAvailable() const
   return ( d->m_commands.count() > 0 ) && !d->m_lock;
 }
 
-QString KonqUndoManager::undoText() const
+TQString KonqUndoManager::undoText() const
 {
   if ( d->m_commands.count() == 0 )
     return i18n( "Und&o" );
@@ -266,7 +266,7 @@ QString KonqUndoManager::undoText() const
   else
     assert( false );
   /* NOTREACHED */
-  return QString::null;
+  return TQString::null;
 }
 
 void KonqUndoManager::undo()
@@ -276,11 +276,11 @@ void KonqUndoManager::undo()
 
   d->m_current = cmd;
 
-  QValueList<KonqBasicOperation>& opStack = d->m_current.m_opStack;
+  TQValueList<KonqBasicOperation>& opStack = d->m_current.m_opStack;
 
   // Let's first ask for confirmation if we need to delete any file (#99898)
   KURL::List fileCleanupStack;
-  QValueList<KonqBasicOperation>::Iterator it = opStack.begin();
+  TQValueList<KonqBasicOperation>::Iterator it = opStack.begin();
   for ( ; it != opStack.end() ; ++it ) {
       if ( !(*it).m_directory && !(*it).m_link && d->m_current.m_type == KonqCommand::COPY ) {
           fileCleanupStack.append( (*it).m_dst );
@@ -304,7 +304,7 @@ void KonqUndoManager::undo()
   broadcastLock();
 
   it = opStack.begin();
-  QValueList<KonqBasicOperation>::Iterator end = opStack.end();
+  TQValueList<KonqBasicOperation>::Iterator end = opStack.end();
   while ( it != end )
   {
     if ( (*it).m_directory && !(*it).m_renamed )
@@ -411,8 +411,8 @@ void KonqUndoManager::undoStep()
       undoRemovingDirectories();
 
   if ( d->m_currentJob )
-    connect( d->m_currentJob, SIGNAL( result( KIO::Job * ) ),
-             this, SLOT( slotResult( KIO::Job * ) ) );
+    connect( d->m_currentJob, TQT_SIGNAL( result( KIO::Job * ) ),
+             this, TQT_SLOT( slotResult( KIO::Job * ) ) );
 }
 
 void KonqUndoManager::undoMakingDirectories()
@@ -523,7 +523,7 @@ void KonqUndoManager::undoRemovingDirectories()
           d->m_undoJob = 0;
       }
       KDirNotify_stub allDirNotify( "*", "KDirNotify*" );
-      QValueList<KURL>::ConstIterator it = d->m_dirsToUpdate.begin();
+      TQValueList<KURL>::ConstIterator it = d->m_dirsToUpdate.begin();
       for( ; it != d->m_dirsToUpdate.end(); ++it ) {
           kdDebug() << "Notifying FilesAdded for " << *it << endl;
           allDirNotify.FilesAdded( *it );
@@ -637,26 +637,26 @@ bool KonqUndoManager::initializeFromKDesky()
   return true;
 }
 
-QDataStream &operator<<( QDataStream &stream, const KonqBasicOperation &op )
+TQDataStream &operator<<( TQDataStream &stream, const KonqBasicOperation &op )
 {
     stream << op.m_valid << op.m_directory << op.m_renamed << op.m_link
            << op.m_src << op.m_dst << op.m_target;
   return stream;
 }
-QDataStream &operator>>( QDataStream &stream, KonqBasicOperation &op )
+TQDataStream &operator>>( TQDataStream &stream, KonqBasicOperation &op )
 {
   stream >> op.m_valid >> op.m_directory >> op.m_renamed >> op.m_link
          >> op.m_src >> op.m_dst >> op.m_target;
   return stream;
 }
 
-QDataStream &operator<<( QDataStream &stream, const KonqCommand &cmd )
+TQDataStream &operator<<( TQDataStream &stream, const KonqCommand &cmd )
 {
   stream << cmd.m_valid << (Q_INT8)cmd.m_type << cmd.m_opStack << cmd.m_src << cmd.m_dst;
   return stream;
 }
 
-QDataStream &operator>>( QDataStream &stream, KonqCommand &cmd )
+TQDataStream &operator>>( TQDataStream &stream, KonqCommand &cmd )
 {
   Q_INT8 type;
   stream >> cmd.m_valid >> type >> cmd.m_opStack >> cmd.m_src >> cmd.m_dst;

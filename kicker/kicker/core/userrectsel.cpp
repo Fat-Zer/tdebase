@@ -21,14 +21,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qapplication.h>
-#include <qpainter.h>
+#include <tqapplication.h>
+#include <tqpainter.h>
 
 #include "userrectsel.h"
 #include "userrectsel.moc"
 
-UserRectSel::UserRectSel(const RectList& rects, const QPoint& _offset, const QColor& color)
-  : QWidget(0, 0, WStyle_Customize | WX11BypassWM),
+UserRectSel::UserRectSel(const RectList& rects, const TQPoint& _offset, const TQColor& color)
+  : TQWidget(0, 0, WStyle_Customize | WX11BypassWM),
     rectangles(rects),
     offset(_offset)
 {
@@ -44,7 +44,7 @@ UserRectSel::~UserRectSel()
         delete _frame[i];
 }
 
-void UserRectSel::mouseReleaseEvent(QMouseEvent * e)
+void UserRectSel::mouseReleaseEvent(TQMouseEvent * e)
 {
     if (e->button() == LeftButton)
     {
@@ -52,11 +52,11 @@ void UserRectSel::mouseReleaseEvent(QMouseEvent * e)
     }
 }
 
-void UserRectSel::mouseMoveEvent(QMouseEvent * e)
+void UserRectSel::mouseMoveEvent(TQMouseEvent * e)
 {
     PanelStrut nearest = current;
     int diff = -1;
-    QPoint p = e->globalPos(); // + offset;
+    TQPoint p = e->globalPos(); // + offset;
     for (RectList::const_iterator it = rectangles.constBegin();
          it != rectangles.constEnd();
          ++it)
@@ -88,12 +88,12 @@ void UserRectSel::paintCurrent()
     {
         for (i = 0; i < 4; i++)
         {
-            _frame[i] = new QWidget(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WX11BypassWM);
+            _frame[i] = new TQWidget(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WX11BypassWM);
             _frame[i]->setPaletteBackgroundColor(Qt::black);
         }
         for (i = 4; i < 8; i++)
         {
-            _frame[i] = new QWidget(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WX11BypassWM);
+            _frame[i] = new TQWidget(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WX11BypassWM);
             _frame[i]->setPaletteBackgroundColor(_color);
         }
     }
@@ -132,7 +132,7 @@ void UserRectSel::paintCurrent()
     
 }
 
-UserRectSel::PanelStrut UserRectSel::select(const RectList& rects, const QPoint& offset, const QColor& color)
+UserRectSel::PanelStrut UserRectSel::select(const RectList& rects, const TQPoint& offset, const TQColor& color)
 {
     UserRectSel sel(rects, offset, color);
     sel.show();

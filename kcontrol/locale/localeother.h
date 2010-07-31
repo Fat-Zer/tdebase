@@ -24,7 +24,7 @@
 #ifndef __KLOCALECONFIGOTHER_H__
 #define __KLOCALECONFIGOTHER_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QLabel;
 class QComboBox;
@@ -36,7 +36,7 @@ class KLocaleConfigOther : public QWidget
   Q_OBJECT
 
 public:
-  KLocaleConfigOther(KLocale *locale, QWidget *parent = 0, const char *name = 0);
+  KLocaleConfigOther(KLocale *locale, TQWidget *parent = 0, const char *name = 0);
   virtual ~KLocaleConfigOther();
 
   void save();
@@ -61,10 +61,10 @@ private slots:
 private:
   KLocale *m_locale;
 
-  QLabel *m_labMeasureSystem;
-  QComboBox *m_combMeasureSystem;
-  QLabel *m_labPageSize;
-  QComboBox *m_combPageSize;
+  TQLabel *m_labMeasureSystem;
+  TQComboBox *m_combMeasureSystem;
+  TQLabel *m_labPageSize;
+  TQComboBox *m_combPageSize;
 };
 
 #endif

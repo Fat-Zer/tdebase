@@ -21,12 +21,12 @@
 
 #include "konq_tabs.h"
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qptrlist.h>
-#include <qpopupmenu.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
+#include <tqptrlist.h>
+#include <tqpopupmenu.h>
+#include <tqtoolbutton.h>
+#include <tqtooltip.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -43,9 +43,9 @@
 #include <kaccelmanager.h>
 #include <konq_pixmapprovider.h>
 #include <kstdaccel.h>
-#include <qtabbar.h>
-#include <qwhatsthis.h>
-#include <qstyle.h>
+#include <tqtabbar.h>
+#include <tqwhatsthis.h>
+#include <tqstyle.h>
 
 #define DUPLICATE_ID 3
 #define RELOAD_ID 4
@@ -55,14 +55,14 @@
 
 //###################################################################
 
-KonqFrameTabs::KonqFrameTabs(QWidget* parent, KonqFrameContainerBase* parentContainer,
+KonqFrameTabs::KonqFrameTabs(TQWidget* parent, KonqFrameContainerBase* parentContainer,
                              KonqViewManager* viewManager, const char * name)
   : KTabWidget(parent, name), m_rightWidget(0), m_leftWidget(0), m_alwaysTabBar(false),
     m_closeOtherTabsId(0)
 {
   KAcceleratorManager::setNoAccel(this);
 
-  QWhatsThis::add( tabBar(), i18n( "This bar contains the list of currently open tabs. Click on a tab to make it "
+  TQWhatsThis::add( tabBar(), i18n( "This bar contains the list of currently open tabs. Click on a tab to make it "
 			  "active. The option to show a close button instead of the website icon in the left "
 			  "corner of the tab is configurable. You can also use keyboard shortcuts to "
 			  "navigate through tabs. The text on the tab is the title of the website "
@@ -71,53 +71,53 @@ KonqFrameTabs::KonqFrameTabs(QWidget* parent, KonqFrameContainerBase* parentCont
   //kdDebug(1202) << "KonqFrameTabs::KonqFrameTabs()" << endl;
 
   m_pParentContainer = parentContainer;
-  m_pChildFrameList = new QPtrList<KonqFrameBase>;
+  m_pChildFrameList = new TQPtrList<KonqFrameBase>;
   m_pChildFrameList->setAutoDelete(false);
   m_pActiveChild = 0L;
   m_pViewManager = viewManager;
 
-  connect( this, SIGNAL( currentChanged ( QWidget * ) ),
-           this, SLOT( slotCurrentChanged( QWidget* ) ) );
+  connect( this, TQT_SIGNAL( currentChanged ( TQWidget * ) ),
+           this, TQT_SLOT( slotCurrentChanged( TQWidget* ) ) );
 
-  m_pPopupMenu = new QPopupMenu( this );
+  m_pPopupMenu = new TQPopupMenu( this );
   m_pPopupMenu->insertItem( SmallIcon( "tab_new" ),
                             i18n("&New Tab"),
                             m_pViewManager->mainWindow(),
-                            SLOT( slotAddTab() ),
+                            TQT_SLOT( slotAddTab() ),
                             m_pViewManager->mainWindow()->action("newtab")->shortcut() );
   m_pPopupMenu->insertItem( SmallIconSet( "reload" ),
                             i18n( "&Reload Tab" ),
                             m_pViewManager->mainWindow(),
-                            SLOT( slotReloadPopup() ),
+                            TQT_SLOT( slotReloadPopup() ),
                             m_pViewManager->mainWindow()->action("reload")->shortcut(), RELOAD_ID );
   m_pPopupMenu->insertItem( SmallIconSet( "tab_duplicate" ),
                             i18n("&Duplicate Tab"),
                             m_pViewManager->mainWindow(),
-                            SLOT( slotDuplicateTabPopup() ),
+                            TQT_SLOT( slotDuplicateTabPopup() ),
                             m_pViewManager->mainWindow()->action("duplicatecurrenttab")->shortcut(), 
                             DUPLICATE_ID );
   m_pPopupMenu->insertItem( SmallIconSet( "tab_breakoff" ),
                             i18n("D&etach Tab"),
                             m_pViewManager->mainWindow(),
-                            SLOT( slotBreakOffTabPopup() ),
+                            TQT_SLOT( slotBreakOffTabPopup() ),
                             m_pViewManager->mainWindow()->action("breakoffcurrenttab")->shortcut(),
                             BREAKOFF_ID );
   m_pPopupMenu->insertSeparator();
-  m_pSubPopupMenuTab = new QPopupMenu( this );
+  m_pSubPopupMenuTab = new TQPopupMenu( this );
   m_pPopupMenu->insertItem( i18n("Other Tabs" ), m_pSubPopupMenuTab, OTHERTABS_ID );
-  connect( m_pSubPopupMenuTab, SIGNAL( activated ( int ) ),
-           this, SLOT( slotSubPopupMenuTabActivated( int ) ) );
+  connect( m_pSubPopupMenuTab, TQT_SIGNAL( activated ( int ) ),
+           this, TQT_SLOT( slotSubPopupMenuTabActivated( int ) ) );
   m_pPopupMenu->insertSeparator();
   m_pPopupMenu->insertItem( SmallIconSet( "tab_remove" ),
                             i18n("&Close Tab"),
                             m_pViewManager->mainWindow(),
-                            SLOT( slotRemoveTabPopup() ),
+                            TQT_SLOT( slotRemoveTabPopup() ),
                             m_pViewManager->mainWindow()->action("removecurrenttab")->shortcut(),
                             CLOSETAB_ID );
-  connect( this, SIGNAL( contextMenu( QWidget *, const QPoint & ) ),
-           SLOT(slotContextMenu( QWidget *, const QPoint & ) ) );
-  connect( this, SIGNAL( contextMenu( const QPoint & ) ),
-           SLOT(slotContextMenu( const QPoint & ) ) );
+  connect( this, TQT_SIGNAL( contextMenu( TQWidget *, const TQPoint & ) ),
+           TQT_SLOT(slotContextMenu( TQWidget *, const TQPoint & ) ) );
+  connect( this, TQT_SIGNAL( contextMenu( const TQPoint & ) ),
+           TQT_SLOT(slotContextMenu( const TQPoint & ) ) );
 
   m_MouseMiddleClickClosesTab = KonqSettings::mouseMiddleClickClosesTab();
 
@@ -130,49 +130,49 @@ KonqFrameTabs::KonqFrameTabs(QWidget* parent, KonqFrameContainerBase* parentCont
     setHoverCloseButton( KonqSettings::hoverCloseButton() );
   setTabCloseActivatePrevious( KonqSettings::tabCloseActivatePrevious() );
   if (KonqSettings::tabPosition()=="Bottom")
-    setTabPosition(QTabWidget::Bottom);
-  connect( this, SIGNAL( closeRequest( QWidget * )), SLOT(slotCloseRequest( QWidget * )));
-  connect( this, SIGNAL( removeTabPopup() ),
-           m_pViewManager->mainWindow(), SLOT( slotRemoveTabPopup() ) );
+    setTabPosition(TQTabWidget::Bottom);
+  connect( this, TQT_SIGNAL( closeRequest( TQWidget * )), TQT_SLOT(slotCloseRequest( TQWidget * )));
+  connect( this, TQT_SIGNAL( removeTabPopup() ),
+           m_pViewManager->mainWindow(), TQT_SLOT( slotRemoveTabPopup() ) );
 
   if ( KonqSettings::addTabButton() ) {
-    m_leftWidget = new QToolButton( this );
-    connect( m_leftWidget, SIGNAL( clicked() ),
-             m_pViewManager->mainWindow(), SLOT( slotAddTab() ) );
+    m_leftWidget = new TQToolButton( this );
+    connect( m_leftWidget, TQT_SIGNAL( clicked() ),
+             m_pViewManager->mainWindow(), TQT_SLOT( slotAddTab() ) );
     m_leftWidget->setIconSet( SmallIcon( "tab_new" ) );
     m_leftWidget->adjustSize();
-    QToolTip::add(m_leftWidget, i18n("Open a new tab"));
+    TQToolTip::add(m_leftWidget, i18n("Open a new tab"));
     setCornerWidget( m_leftWidget, TopLeft );
   }
   if ( KonqSettings::closeTabButton() ) {
-    m_rightWidget = new QToolButton( this );
-    connect( m_rightWidget, SIGNAL( clicked() ),
-             m_pViewManager->mainWindow(), SLOT( slotRemoveTab() ) );
+    m_rightWidget = new TQToolButton( this );
+    connect( m_rightWidget, TQT_SIGNAL( clicked() ),
+             m_pViewManager->mainWindow(), TQT_SLOT( slotRemoveTab() ) );
     m_rightWidget->setIconSet( SmallIconSet( "tab_remove" ) );
     m_rightWidget->adjustSize();
-    QToolTip::add(m_rightWidget, i18n("Close the current tab"));
+    TQToolTip::add(m_rightWidget, i18n("Close the current tab"));
     setCornerWidget( m_rightWidget, TopRight );
   }
 
   setAutomaticResizeTabs( true );
   setTabReorderingEnabled( true );
-  connect( this, SIGNAL( movedTab( int, int ) ),
-           SLOT( slotMovedTab( int, int ) ) );
-  connect( this, SIGNAL( mouseMiddleClick() ),
-           SLOT( slotMouseMiddleClick() ) );
-  connect( this, SIGNAL( mouseMiddleClick( QWidget * ) ),
-           SLOT( slotMouseMiddleClick( QWidget * ) ) );
-  connect( this, SIGNAL( mouseDoubleClick() ),
-           m_pViewManager->mainWindow(), SLOT( slotAddTab() ) );
+  connect( this, TQT_SIGNAL( movedTab( int, int ) ),
+           TQT_SLOT( slotMovedTab( int, int ) ) );
+  connect( this, TQT_SIGNAL( mouseMiddleClick() ),
+           TQT_SLOT( slotMouseMiddleClick() ) );
+  connect( this, TQT_SIGNAL( mouseMiddleClick( TQWidget * ) ),
+           TQT_SLOT( slotMouseMiddleClick( TQWidget * ) ) );
+  connect( this, TQT_SIGNAL( mouseDoubleClick() ),
+           m_pViewManager->mainWindow(), TQT_SLOT( slotAddTab() ) );
 
-  connect( this, SIGNAL( testCanDecode(const QDragMoveEvent *, bool & )),
-           SLOT( slotTestCanDecode(const QDragMoveEvent *, bool & ) ) );
-  connect( this, SIGNAL( receivedDropEvent( QDropEvent * )),
-           SLOT( slotReceivedDropEvent( QDropEvent * ) ) );
-  connect( this, SIGNAL( receivedDropEvent( QWidget *, QDropEvent * )),
-           SLOT( slotReceivedDropEvent( QWidget *, QDropEvent * ) ) );
-  connect( this, SIGNAL( initiateDrag( QWidget * )),
-           SLOT( slotInitiateDrag( QWidget * ) ) );
+  connect( this, TQT_SIGNAL( testCanDecode(const TQDragMoveEvent *, bool & )),
+           TQT_SLOT( slotTestCanDecode(const TQDragMoveEvent *, bool & ) ) );
+  connect( this, TQT_SIGNAL( receivedDropEvent( TQDropEvent * )),
+           TQT_SLOT( slotReceivedDropEvent( TQDropEvent * ) ) );
+  connect( this, TQT_SIGNAL( receivedDropEvent( TQWidget *, TQDropEvent * )),
+           TQT_SLOT( slotReceivedDropEvent( TQWidget *, TQDropEvent * ) ) );
+  connect( this, TQT_SIGNAL( initiateDrag( TQWidget * )),
+           TQT_SLOT( slotInitiateDrag( TQWidget * ) ) );
 }
 
 KonqFrameTabs::~KonqFrameTabs()
@@ -183,29 +183,29 @@ KonqFrameTabs::~KonqFrameTabs()
 }
 
 void KonqFrameTabs::listViews( ChildViewList *viewList ) {
-  for( QPtrListIterator<KonqFrameBase> it( *m_pChildFrameList ); *it; ++it )
+  for( TQPtrListIterator<KonqFrameBase> it( *m_pChildFrameList ); *it; ++it )
     it.current()->listViews(viewList);
 }
 
-void KonqFrameTabs::saveConfig( KConfig* config, const QString &prefix, bool saveURLs,
+void KonqFrameTabs::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs,
                                 KonqFrameBase* docContainer, int id, int depth )
 {
   //write children
-  QStringList strlst;
+  TQStringList strlst;
   int i = 0;
-  QString newPrefix;
+  TQString newPrefix;
   for (KonqFrameBase* it = m_pChildFrameList->first(); it; it = m_pChildFrameList->next())
     {
-      newPrefix = QString::fromLatin1( it->frameType() ) + "T" + QString::number(i);
+      newPrefix = TQString::fromLatin1( it->frameType() ) + "T" + TQString::number(i);
       strlst.append( newPrefix );
       newPrefix.append( '_' );
       it->saveConfig( config, newPrefix, saveURLs, docContainer, id, depth + i );
       i++;
     }
 
-  config->writeEntry( QString::fromLatin1( "Children" ).prepend( prefix ), strlst );
+  config->writeEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), strlst );
 
-  config->writeEntry( QString::fromLatin1( "activeChildIndex" ).prepend( prefix ),
+  config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ),
                       currentPageIndex() );
 }
 
@@ -222,10 +222,10 @@ void KonqFrameTabs::copyHistory( KonqFrameBase *other )
     }
 }
 
-void KonqFrameTabs::printFrameInfo( const QString& spaces )
+void KonqFrameTabs::printFrameInfo( const TQString& spaces )
 {
   kdDebug(1202) << spaces << "KonqFrameTabs " << this << " visible="
-                << QString("%1").arg(isVisible()) << " activeChild="
+                << TQString("%1").arg(isVisible()) << " activeChild="
                 << m_pActiveChild << endl;
 
   if (!m_pActiveChild)
@@ -242,21 +242,21 @@ void KonqFrameTabs::printFrameInfo( const QString& spaces )
   }
 }
 
-void KonqFrameTabs::reparentFrame( QWidget* parent, const QPoint & p, bool showIt )
+void KonqFrameTabs::reparentFrame( TQWidget* parent, const TQPoint & p, bool showIt )
 {
-  QWidget::reparent( parent, p, showIt );
+  TQWidget::reparent( parent, p, showIt );
 }
 
-void KonqFrameTabs::setTitle( const QString &title , QWidget* sender)
+void KonqFrameTabs::setTitle( const TQString &title , TQWidget* sender)
 {
   // kdDebug(1202) << "KonqFrameTabs::setTitle( " << title << " , " << sender << " )" << endl;
   setTabLabel( sender,title );
 }
 
-void KonqFrameTabs::setTabIcon( const KURL &url, QWidget* sender )
+void KonqFrameTabs::setTabIcon( const KURL &url, TQWidget* sender )
 {
   //kdDebug(1202) << "KonqFrameTabs::setTabIcon( " << url << " , " << sender << " )" << endl;
-  QIconSet iconSet;
+  TQIconSet iconSet;
   if (m_permanentCloseButtons)
     iconSet =  SmallIcon( "fileclose" );
   else
@@ -319,7 +319,7 @@ void KonqFrameTabs::removeChildFrame( KonqFrameBase * frame )
   //kdDebug(1202) << "KonqFrameTabs::RemoveChildFrame finished" << endl;
 }
 
-void KonqFrameTabs::slotCurrentChanged( QWidget* newPage )
+void KonqFrameTabs::slotCurrentChanged( TQWidget* newPage )
 {
   setTabColor( newPage, KGlobalSettings::textColor() );
   KonqFrameBase* currentFrame = dynamic_cast<KonqFrameBase*>(newPage);
@@ -357,7 +357,7 @@ void KonqFrameTabs::slotMovedTab( int from, int to )
   }
 }
 
-void KonqFrameTabs::slotContextMenu( const QPoint &p )
+void KonqFrameTabs::slotContextMenu( const TQPoint &p )
 {
   refreshSubPopupMenuTab();
   
@@ -371,7 +371,7 @@ void KonqFrameTabs::slotContextMenu( const QPoint &p )
   m_pPopupMenu->exec( p );
 }
 
-void KonqFrameTabs::slotContextMenu( QWidget *w, const QPoint &p )
+void KonqFrameTabs::slotContextMenu( TQWidget *w, const TQPoint &p )
 {
   refreshSubPopupMenuTab();
   
@@ -398,7 +398,7 @@ void KonqFrameTabs::refreshSubPopupMenuTab()
     m_pSubPopupMenuTab->insertItem( SmallIcon( "reload_all_tabs" ),
                                     i18n( "&Reload All Tabs" ),
                                     m_pViewManager->mainWindow(),
-                                    SLOT( slotReloadAllTabs() ),
+                                    TQT_SLOT( slotReloadAllTabs() ),
                                     m_pViewManager->mainWindow()->action("reload_all_tabs")->shortcut() );
     m_pSubPopupMenuTab->insertSeparator();
     for (KonqFrameBase* it = m_pChildFrameList->first(); it; it = m_pChildFrameList->next())
@@ -406,11 +406,11 @@ void KonqFrameTabs::refreshSubPopupMenuTab()
         KonqFrame* frame = dynamic_cast<KonqFrame *>(it);
         if ( frame && frame->activeChildView() )
         {
-            QString title = frame->title().stripWhiteSpace();
+            TQString title = frame->title().stripWhiteSpace();
             if ( title.isEmpty() )
                 title = frame->activeChildView()->url().url();
             title = KStringHandler::csqueeze( title, 50 );
-            m_pSubPopupMenuTab->insertItem( QIconSet( KonqPixmapProvider::self()->pixmapFor( frame->activeChildView()->url().url() ) ), title, i );
+            m_pSubPopupMenuTab->insertItem( TQIconSet( KonqPixmapProvider::self()->pixmapFor( frame->activeChildView()->url().url() ) ), title, i );
 
         }
         i++;
@@ -420,11 +420,11 @@ void KonqFrameTabs::refreshSubPopupMenuTab()
       m_pSubPopupMenuTab->insertItem( SmallIconSet( "tab_remove_other" ),
 				      i18n( "Close &Other Tabs" ),
 				      m_pViewManager->mainWindow(),
-				      SLOT( slotRemoveOtherTabsPopup() ),
+				      TQT_SLOT( slotRemoveOtherTabsPopup() ),
 				      m_pViewManager->mainWindow()->action("removeothertabs")->shortcut() );
 }
 
-void KonqFrameTabs::slotCloseRequest( QWidget *w )
+void KonqFrameTabs::slotCloseRequest( TQWidget *w )
 {
   if ( m_pChildFrameList->count() > 1 ) {
     // Yes, I know this is an unchecked dynamic_cast - I'm casting sideways in a class hierarchy and it could crash one day, but I haven't checked setWorkingTab so I don't know if it can handle nulls.
@@ -440,18 +440,18 @@ void KonqFrameTabs::slotSubPopupMenuTabActivated( int _id)
 
 void KonqFrameTabs::slotMouseMiddleClick()
 {
-  QApplication::clipboard()->setSelectionMode( QClipboard::Selection );
-  KURL filteredURL ( KonqMisc::konqFilteredURL( this, QApplication::clipboard()->text() ) );
+  TQApplication::clipboard()->setSelectionMode( QClipboard::Selection );
+  KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::clipboard()->text() ) );
   if ( !filteredURL.isEmpty() ) {
-    KonqView* newView = m_pViewManager->addTab(QString::null, QString::null, false, false);
+    KonqView* newView = m_pViewManager->addTab(TQString::null, TQString::null, false, false);
     if (newView == 0L) return;
-    m_pViewManager->mainWindow()->openURL( newView, filteredURL, QString::null );
+    m_pViewManager->mainWindow()->openURL( newView, filteredURL, TQString::null );
     m_pViewManager->showTab( newView );
     m_pViewManager->mainWindow()->focusLocationBar();
   }
 }
 
-void KonqFrameTabs::slotMouseMiddleClick( QWidget *w )
+void KonqFrameTabs::slotMouseMiddleClick( TQWidget *w )
 {
   if ( m_MouseMiddleClickClosesTab ) {
     if ( m_pChildFrameList->count() > 1 ) {
@@ -461,8 +461,8 @@ void KonqFrameTabs::slotMouseMiddleClick( QWidget *w )
     }
   }
   else {
-  QApplication::clipboard()->setSelectionMode( QClipboard::Selection );
-  KURL filteredURL ( KonqMisc::konqFilteredURL( this, QApplication::clipboard()->text() ) );
+  TQApplication::clipboard()->setSelectionMode( QClipboard::Selection );
+  KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::clipboard()->text() ) );
   if ( !filteredURL.isEmpty() ) {
     KonqFrameBase* frame = dynamic_cast<KonqFrameBase*>(w);
     if (frame) {
@@ -472,25 +472,25 @@ void KonqFrameTabs::slotMouseMiddleClick( QWidget *w )
   }
 }
 
-void KonqFrameTabs::slotTestCanDecode(const QDragMoveEvent *e, bool &accept /* result */)
+void KonqFrameTabs::slotTestCanDecode(const TQDragMoveEvent *e, bool &accept /* result */)
 {
   accept = KURLDrag::canDecode( e );
 }
 
-void KonqFrameTabs::slotReceivedDropEvent( QDropEvent *e )
+void KonqFrameTabs::slotReceivedDropEvent( TQDropEvent *e )
 {
   KURL::List lstDragURLs;
   bool ok = KURLDrag::decode( e, lstDragURLs );
   if ( ok && lstDragURLs.first().isValid() ) {
-    KonqView* newView = m_pViewManager->addTab(QString::null, QString::null, false, false);
+    KonqView* newView = m_pViewManager->addTab(TQString::null, TQString::null, false, false);
     if (newView == 0L) return;
-    m_pViewManager->mainWindow()->openURL( newView, lstDragURLs.first(), QString::null );
+    m_pViewManager->mainWindow()->openURL( newView, lstDragURLs.first(), TQString::null );
     m_pViewManager->showTab( newView );
     m_pViewManager->mainWindow()->focusLocationBar();
   }
 }
 
-void KonqFrameTabs::slotReceivedDropEvent( QWidget *w, QDropEvent *e )
+void KonqFrameTabs::slotReceivedDropEvent( TQWidget *w, TQDropEvent *e )
 {
   KURL::List lstDragURLs;
   bool ok = KURLDrag::decode( e, lstDragURLs );
@@ -502,7 +502,7 @@ void KonqFrameTabs::slotReceivedDropEvent( QWidget *w, QDropEvent *e )
   }
 }
 
-void KonqFrameTabs::slotInitiateDrag( QWidget *w )
+void KonqFrameTabs::slotInitiateDrag( TQWidget *w )
 {
   KonqFrameBase* frame = dynamic_cast<KonqFrameBase*>( w );
   if (frame) {

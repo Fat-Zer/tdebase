@@ -19,8 +19,8 @@
 
 #include "main.h"
 
-#include <qtabwidget.h>
-#include <qlayout.h>
+#include <tqtabwidget.h>
+#include <tqlayout.h>
 
 #include <klocale.h>
 #include <kaboutdata.h>
@@ -32,16 +32,16 @@
 #include "managermodule.h"
 
 
-typedef KGenericFactory<MediaModule, QWidget> MediaFactory;
+typedef KGenericFactory<MediaModule, TQWidget> MediaFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_media, MediaFactory( "kcmmedia" ) )
 
 
-MediaModule::MediaModule( QWidget *parent, const char *name, const QStringList& )
+MediaModule::MediaModule( TQWidget *parent, const char *name, const TQStringList& )
 	: KCModule(MediaFactory::instance(), parent, name )
 {
 	KGlobal::locale()->insertCatalogue("kio_media");
-	QVBoxLayout *layout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
-	QTabWidget *tab = new QTabWidget( this );
+	TQVBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
+	TQTabWidget *tab = new TQTabWidget( this );
 	
 	layout->addWidget( tab );
 
@@ -49,13 +49,13 @@ MediaModule::MediaModule( QWidget *parent, const char *name, const QStringList& 
 	
 	m_notifierModule = new NotifierModule( this, "notifier" );
 	tab->addTab( m_notifierModule, i18n( "&Notifications" ) );
-	connect( m_notifierModule, SIGNAL( changed( bool ) ),
-	         this, SLOT( moduleChanged( bool ) ) );
+	connect( m_notifierModule, TQT_SIGNAL( changed( bool ) ),
+	         this, TQT_SLOT( moduleChanged( bool ) ) );
 
 	m_managerModule = new ManagerModule( this, "manager" );
 	tab->addTab( m_managerModule, i18n( "&Advanced" ) );
-	connect( m_managerModule, SIGNAL( changed( bool ) ),
-	         this, SLOT( moduleChanged( bool ) ) );
+	connect( m_managerModule, TQT_SIGNAL( changed( bool ) ),
+	         this, TQT_SLOT( moduleChanged( bool ) ) );
 
 
 
@@ -95,7 +95,7 @@ void MediaModule::moduleChanged( bool state )
 	emit changed( state );
 }
 
-QString MediaModule::quickHelp() const
+TQString MediaModule::quickHelp() const
 {
 	return i18n("FIXME : Write me...");
 }

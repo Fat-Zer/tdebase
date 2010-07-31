@@ -31,7 +31,7 @@
 #include <dcopref.h>
 #include <kdebug.h>
 
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <stdlib.h>
 
@@ -58,7 +58,7 @@ static KCmdLineOptions options[] =
 extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 {
   // here we go, construct the Kate version
-  QString kateVersion = KateApp::kateVersion();
+  TQString kateVersion = KateApp::kateVersion();
 
   KAboutData aboutData ("kate", I18N_NOOP("Kate"), kateVersion.latin1(),
                         I18N_NOOP( "Kate - Advanced Text Editor" ), KAboutData::License_LGPL_V2,
@@ -117,7 +117,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     QCStringList allClients = client.registeredApplications();
 
     // search for a kate app client, use the first found
-    QCString kateApp;
+    TQCString kateApp;
 
     if ( args->isSet("start") )
     {
@@ -126,8 +126,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
         if (allClients[i] == "kate" || allClients[i].left(5) == "kate-")
         {
           DCOPRef ref( allClients[i], "KateApplication" );
-          QString s = ref.call( "session" );
-          if ( QString(args->getOption("start")) == s )
+          TQString s = ref.call( "session" );
+          if ( TQString(args->getOption("start")) == s )
           {
             kateApp = allClients[i];
             break;
@@ -137,7 +137,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     }
     else if ( (args->isSet("pid")) || (::getenv("KATE_PID") !=0 ) )
     {
-      QCString tryApp;
+      TQCString tryApp;
       if ( args->isSet("pid") )
         tryApp = args->getOption("pid");
       else
@@ -168,9 +168,9 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
       DCOPRef kRef (kateApp, "KateApplication");
 
       if (args->isSet ("start"))
-        kRef.call( "activateSession", QString (args->getOption("start")) );
+        kRef.call( "activateSession", TQString (args->getOption("start")) );
 
-      QString enc = args->isSet("encoding") ? args->getOption("encoding") : QCString("");
+      TQString enc = args->isSet("encoding") ? args->getOption("encoding") : TQCString("");
 
       bool tempfileSet = KCmdLineArgs::isTempFileSet();
 
@@ -179,16 +179,16 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 
       if( args->isSet( "stdin" ) )
       {
-        QTextIStream input(stdin);
+        TQTextIStream input(stdin);
 
         // set chosen codec
-        QTextCodec *codec = args->isSet("encoding") ? QTextCodec::codecForName(args->getOption("encoding")) : 0;
+        TQTextCodec *codec = args->isSet("encoding") ? TQTextCodec::codecForName(args->getOption("encoding")) : 0;
 
         if (codec)
           input.setCodec (codec);
 
-        QString line;
-        QString text;
+        TQString line;
+        TQString text;
 
         do
         {
@@ -222,8 +222,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
       // wants to see that document.
       // ### what to do about the infamous focus stealing prevention?
       uint mwn = kRef.call("activeMainWindowNumber");
-      QCString smwn;
-      DCOPRef wRef( kateApp, QCString( "__KateMainWindow#") + smwn.setNum(mwn) );
+      TQCString smwn;
+      DCOPRef wRef( kateApp, TQCString( "__KateMainWindow#") + smwn.setNum(mwn) );
       if ( wRef.call("minimized") )
       {
         if ( wRef.call( "maximized" ) )

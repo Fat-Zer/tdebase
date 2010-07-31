@@ -22,7 +22,7 @@
 #define RECORDER_ARTS_H
 
 #include "soundrecorder.h"
-#include <qmemarray.h>
+#include <tqmemarray.h>
 #include "sound.h"
 
 class  KAudioRecordStream ;
@@ -40,7 +40,7 @@ class SoundRecorderArts : public SoundRecorder
 {
 Q_OBJECT
 public:
-    SoundRecorderArts(QObject *parent = 0, const char *name = 0);
+    SoundRecorderArts(TQObject *parent = 0, const char *name = 0);
     virtual ~SoundRecorderArts();
 
     virtual void start();
@@ -49,12 +49,12 @@ public:
     virtual Sound sound();
 
 private slots:
-    void slotDataReceived(QByteArray &data);
+    void slotDataReceived(TQByteArray &data);
     void slotEmitSignal();
 
 private:
-    QByteArray m_data;
-    QObject *m_dis;
+    TQByteArray m_data;
+    TQObject *m_dis;
     KArtsServer *m_server;
     KAudioRecordStream *m_recStream;
 };

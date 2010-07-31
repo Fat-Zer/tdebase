@@ -20,7 +20,7 @@
 #ifndef SHELLCOMMANDDIALOG_H
 #define SHELLCOMMANDDIALOG_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kpushbutton.h>
 #include <kdialog.h>
@@ -31,7 +31,7 @@ class KShellCommandDialog:public KDialog
 {
    Q_OBJECT
    public:
-      KShellCommandDialog(const QString& title, const QString& command, QWidget* parent=0, bool modal=false);
+      KShellCommandDialog(const TQString& title, const TQString& command, TQWidget* parent=0, bool modal=false);
       virtual ~KShellCommandDialog();
       //blocking
       int executeCommand();

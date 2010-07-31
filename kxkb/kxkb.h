@@ -26,10 +26,10 @@ DESCRIPTION
 #define __K_XKB_H__
 
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdict.h>
-#include <qptrqueue.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
+#include <tqptrqueue.h>
 
 #include <kuniqueapplication.h>
 
@@ -60,9 +60,9 @@ public:
 
 	bool setLayout(const LayoutUnit& layoutUnit, int group=-1);
 k_dcop:
-	bool setLayout(const QString& layoutPair);
-	QString getCurrentLayout() { return m_currentLayout.toPair(); }
-	QStringList getLayoutsList() { return kxkbConfig.getLayoutStringList(); }
+	bool setLayout(const TQString& layoutPair);
+	TQString getCurrentLayout() { return m_currentLayout.toPair(); }
+	TQStringList getLayoutsList() { return kxkbConfig.getLayoutStringList(); }
 	void forceSetXKBMap( bool set );
 
 protected slots:

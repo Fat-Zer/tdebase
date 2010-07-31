@@ -21,14 +21,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qcursor.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qstyle.h>
-#include <qpixmapcache.h>
-#include <qtimer.h>
-#include <qtooltip.h>
-#include <qimage.h>
+#include <tqcursor.h>
+#include <tqlayout.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
+#include <tqpixmapcache.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
+#include <tqimage.h>
 
 #include <kpushbutton.h>
 #include <kapplication.h>
@@ -43,7 +43,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "applethandle.h"
 
 AppletHandle::AppletHandle(AppletContainer* parent)
-    : QWidget(parent),
+    : TQWidget(parent),
       m_applet(parent),
       m_menuButton(0),
       m_drawHandle(false),
@@ -52,7 +52,7 @@ AppletHandle::AppletHandle(AppletContainer* parent)
 {
     setBackgroundOrigin(AncestorOrigin);
     setMinimumSize(widthForHeight(0), heightForWidth(0));
-    m_layout = new QBoxLayout(this, QBoxLayout::BottomToTop, 0, 0);
+    m_layout = new TQBoxLayout(this, TQBoxLayout::BottomToTop, 0, 0);
 
     m_dragBar = new AppletHandleDrag(this);
     m_dragBar->installEventFilter(this);
@@ -64,25 +64,25 @@ AppletHandle::AppletHandle(AppletContainer* parent)
         m_menuButton->installEventFilter(this);
         m_layout->addWidget(m_menuButton);
 
-        connect(m_menuButton, SIGNAL(pressed()),
-                this, SLOT(menuButtonPressed()));
-        QToolTip::add(m_menuButton, i18n("%1 menu").arg(parent->info().name()));
+        connect(m_menuButton, TQT_SIGNAL(pressed()),
+                this, TQT_SLOT(menuButtonPressed()));
+        TQToolTip::add(m_menuButton, i18n("%1 menu").arg(parent->info().name()));
     }
 
-    QToolTip::add(this, i18n("%1 applet handle").arg(parent->info().name()));
+    TQToolTip::add(this, i18n("%1 applet handle").arg(parent->info().name()));
     resetLayout();
 }
 
 int AppletHandle::heightForWidth( int /* w */ ) const
 {
-    int size = style().pixelMetric(QStyle::PM_DockWindowHandleExtent, this);
+    int size = style().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
 
     return size;
 }
 
 int AppletHandle::widthForHeight( int /* h */ ) const
 {
-    int size = style().pixelMetric(QStyle::PM_DockWindowHandleExtent, this);
+    int size = style().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
 
     return size;
 }
@@ -101,19 +101,19 @@ void AppletHandle::setPopupDirection(KPanelApplet::Direction d)
     switch (m_popupDirection)
     {
         case KPanelApplet::Up:
-            m_layout->setDirection(QBoxLayout::BottomToTop);
+            m_layout->setDirection(TQBoxLayout::BottomToTop);
             a = Qt::UpArrow;
             break;
         case KPanelApplet::Down:
-            m_layout->setDirection(QBoxLayout::TopToBottom);
+            m_layout->setDirection(TQBoxLayout::TopToBottom);
             a = Qt::DownArrow;
             break;
         case KPanelApplet::Left:
-            m_layout->setDirection(QBoxLayout::RightToLeft);
+            m_layout->setDirection(TQBoxLayout::RightToLeft);
             a = Qt::LeftArrow;
             break;
         case KPanelApplet::Right:
-            m_layout->setDirection(QBoxLayout::LeftToRight);
+            m_layout->setDirection(TQBoxLayout::LeftToRight);
             a = Qt::RightArrow;
             break;
     }
@@ -150,9 +150,9 @@ void AppletHandle::setFadeOutHandle(bool fadeOut)
     {
         if (!m_handleHoverTimer)
         {
-            m_handleHoverTimer = new QTimer(this);
-            connect(m_handleHoverTimer, SIGNAL(timeout()),
-                    this, SLOT(checkHandleHover()));
+            m_handleHoverTimer = new TQTimer(this);
+            connect(m_handleHoverTimer, TQT_SIGNAL(timeout()),
+                    this, TQT_SLOT(checkHandleHover()));
             m_applet->installEventFilter(this);
         }
     }
@@ -166,13 +166,13 @@ void AppletHandle::setFadeOutHandle(bool fadeOut)
     resetLayout();
 }
 
-bool AppletHandle::eventFilter(QObject *o, QEvent *e)
+bool AppletHandle::eventFilter(TQObject *o, TQEvent *e)
 {
     if (o == parent())
     {
         switch (e->type())
         {
-            case QEvent::Enter:
+            case TQEvent::Enter:
             {
                 m_drawHandle = true;
                 resetLayout();
@@ -184,14 +184,14 @@ bool AppletHandle::eventFilter(QObject *o, QEvent *e)
                 break;
             }
 
-            case QEvent::Leave:
+            case TQEvent::Leave:
             {
                 if (m_menuButton && m_menuButton->isOn())
                 {
                     break;
                 }
 
-                QWidget* w = dynamic_cast<QWidget*>(o);
+                TQWidget* w = dynamic_cast<TQWidget*>(o);
 
                 bool nowDrawIt = false;
                 if (w)
@@ -199,7 +199,7 @@ bool AppletHandle::eventFilter(QObject *o, QEvent *e)
                     // a hack for applets that have out-of-process
                     // elements (e.g the systray) so that the handle
                     // doesn't flicker when moving over those elements
-                    if (w->rect().contains(w->mapFromGlobal(QCursor::pos())))
+                    if (w->rect().contains(w->mapFromGlobal(TQCursor::pos())))
                     {
                         nowDrawIt = true;
                     }
@@ -222,13 +222,13 @@ bool AppletHandle::eventFilter(QObject *o, QEvent *e)
                 break;
         }
 
-        return QWidget::eventFilter( o, e );
+        return TQWidget::eventFilter( o, e );
     }
     else if (o == m_dragBar)
     {
-        if (e->type() == QEvent::MouseButtonPress)
+        if (e->type() == TQEvent::MouseButtonPress)
         {
-            QMouseEvent* ev = static_cast<QMouseEvent*>(e);
+            TQMouseEvent* ev = static_cast<TQMouseEvent*>(e);
             if (ev->button() == LeftButton || ev->button() == MidButton)
             {
                 emit moveApplet(m_applet->mapFromGlobal(ev->globalPos()));
@@ -236,9 +236,9 @@ bool AppletHandle::eventFilter(QObject *o, QEvent *e)
         }
     }
 
-    if (m_menuButton && e->type() == QEvent::MouseButtonPress)
+    if (m_menuButton && e->type() == TQEvent::MouseButtonPress)
     {
-        QMouseEvent* ev = static_cast<QMouseEvent*>(e);
+        TQMouseEvent* ev = static_cast<TQMouseEvent*>(e);
         if (ev->button() == RightButton)
         {
             if (!m_menuButton->isDown())
@@ -251,7 +251,7 @@ bool AppletHandle::eventFilter(QObject *o, QEvent *e)
         }
     }
 
-    return QWidget::eventFilter(o, e);    // standard event processing
+    return TQWidget::eventFilter(o, e);    // standard event processing
 }
 
 void AppletHandle::menuButtonPressed()
@@ -263,7 +263,7 @@ void AppletHandle::menuButtonPressed()
 
     emit showAppletMenu();
 
-    if (!onMenuButton(QCursor::pos()))
+    if (!onMenuButton(TQCursor::pos()))
     {
         toggleMenuButtonOff();
     }
@@ -274,7 +274,7 @@ void AppletHandle::checkHandleHover()
     if (!m_handleHoverTimer ||
         (m_menuButton && m_menuButton->isOn()) ||
         m_applet->geometry().contains(m_applet->mapToParent(
-                                      m_applet->mapFromGlobal(QCursor::pos()))))
+                                      m_applet->mapFromGlobal(TQCursor::pos()))))
     {
         return;
     }
@@ -284,7 +284,7 @@ void AppletHandle::checkHandleHover()
     resetLayout();
 }
 
-bool AppletHandle::onMenuButton(const QPoint& point) const
+bool AppletHandle::onMenuButton(const TQPoint& point) const
 {
     return m_menuButton && (childAt(mapFromGlobal(point)) == m_menuButton);
 }
@@ -300,78 +300,78 @@ void AppletHandle::toggleMenuButtonOff()
 }
 
 AppletHandleDrag::AppletHandleDrag(AppletHandle* parent)
-    : QWidget(parent),
+    : TQWidget(parent),
       m_parent(parent),
       m_inside(false)
 {
    setBackgroundOrigin( AncestorOrigin );
 }
 
-QSize AppletHandleDrag::minimumSizeHint() const
+TQSize AppletHandleDrag::minimumSizeHint() const
 {
-    int wh = style().pixelMetric(QStyle::PM_DockWindowHandleExtent, this);
+    int wh = style().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
 
     if (m_parent->orientation() == Horizontal)
     {
-        return QSize(wh, 0);
+        return TQSize(wh, 0);
     }
 
-    return QSize(0, wh);
+    return TQSize(0, wh);
 }
 
-QSizePolicy AppletHandleDrag::sizePolicy() const
+TQSizePolicy AppletHandleDrag::sizePolicy() const
 {
     if (m_parent->orientation() == Horizontal)
     {
-        return QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Preferred );
+        return TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Preferred );
     }
 
-    return QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed );
+    return TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Fixed );
 }
 
-void AppletHandleDrag::enterEvent( QEvent *e )
+void AppletHandleDrag::enterEvent( TQEvent *e )
 {
     m_inside = true;
-    QWidget::enterEvent( e );
+    TQWidget::enterEvent( e );
     update();
 }
 
-void AppletHandleDrag::leaveEvent( QEvent *e )
+void AppletHandleDrag::leaveEvent( TQEvent *e )
 {
     m_inside = false;
-    QWidget::enterEvent( e );
+    TQWidget::enterEvent( e );
     update();
 }
 
-void AppletHandleDrag::paintEvent(QPaintEvent *)
+void AppletHandleDrag::paintEvent(TQPaintEvent *)
 {
-    QPainter p(this);
+    TQPainter p(this);
     
     if (!KickerSettings::transparent())
     {
         if (paletteBackgroundPixmap())
         {
-            QPoint offset = backgroundOffset();
+            TQPoint offset = backgroundOffset();
             int ox = offset.x();
             int oy = offset.y();
             p.drawTiledPixmap( 0, 0, width(), height(),*paletteBackgroundPixmap(), ox, oy);
         }
         
-        QStyle::SFlags flags = QStyle::Style_Default;
-        flags |= QStyle::Style_Enabled;
+        TQStyle::SFlags flags = TQStyle::Style_Default;
+        flags |= TQStyle::Style_Enabled;
         if (m_parent->orientation() == Horizontal)
         {
-            flags |= QStyle::Style_Horizontal;
+            flags |= TQStyle::Style_Horizontal;
         }
     
-        QRect r = rect();
+        TQRect r = rect();
     
-        style().drawPrimitive(QStyle::PE_DockWindowHandle, &p, r,
+        style().drawPrimitive(TQStyle::PE_DockWindowHandle, &p, r,
                             colorGroup(), flags);
     }
     else
     {
-        KickerLib::drawBlendedRect(&p, QRect(0, 0, width(), height()), paletteForegroundColor(), m_inside ? 0x40 : 0x20);
+        KickerLib::drawBlendedRect(&p, TQRect(0, 0, width(), height()), paletteForegroundColor(), m_inside ? 0x40 : 0x20);
     }
 }
 
@@ -381,22 +381,22 @@ AppletHandleButton::AppletHandleButton(AppletHandle *parent)
 {
 }
 
-QSize AppletHandleButton::minimumSizeHint() const
+TQSize AppletHandleButton::minimumSizeHint() const
 {
-    int height = style().pixelMetric(QStyle::PM_DockWindowHandleExtent, this);
+    int height = style().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
     int width = height;
 
     if (m_parent->orientation() == Horizontal)
     {
-        return QSize(width, height);
+        return TQSize(width, height);
     }
 
-    return QSize(height, width);
+    return TQSize(height, width);
 }
 
-QSizePolicy AppletHandleButton::sizePolicy() const
+TQSizePolicy AppletHandleButton::sizePolicy() const
 {
-    return QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+    return TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 }
 
 #include "applethandle.moc"

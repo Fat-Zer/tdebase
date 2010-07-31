@@ -25,17 +25,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "tasklmbmenu.h"
 #include "tasklmbmenu.moc"
 
-#include <qpainter.h>
-#include <qstyle.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
 
 #include <kdebug.h>
 #include <kglobalsettings.h>
 
 #include "global.h"
 
-TaskMenuItem::TaskMenuItem(const QString &text,
+TaskMenuItem::TaskMenuItem(const TQString &text,
                            bool active, bool minimized, bool attention)
-  : QCustomMenuItem(),
+  : TQCustomMenuItem(),
     m_text(text),
     m_isActive(active),
     m_isMinimized(minimized),
@@ -48,13 +48,13 @@ TaskMenuItem::~TaskMenuItem()
 {
 }
 
-void TaskMenuItem::paint(QPainter *p, const QColorGroup &cg,
+void TaskMenuItem::paint(TQPainter *p, const TQColorGroup &cg,
                          bool highlighted, bool /*enabled*/,
                          int x, int y, int w, int h )
 {
     if (m_isActive)
     {
-        QFont font = p->font();
+        TQFont font = p->font();
         font.setBold(true);
         p->setFont(font);
     }
@@ -65,7 +65,7 @@ void TaskMenuItem::paint(QPainter *p, const QColorGroup &cg,
     }
     else if (m_isMinimized)
     {
-        p->setPen(QPen(KickerLib::blendColors(cg.background(), cg.text())));
+        p->setPen(TQPen(KickerLib::blendColors(cg.background(), cg.text())));
     }
     else if (m_demandsAttention && !m_attentionState)
     {
@@ -75,21 +75,21 @@ void TaskMenuItem::paint(QPainter *p, const QColorGroup &cg,
     p->drawText(x, y, w, h, AlignAuto|AlignVCenter|DontClip|ShowPrefix, m_text);
 }
 
-QSize TaskMenuItem::sizeHint()
+TQSize TaskMenuItem::sizeHint()
 {
-    QFont font = QFont();
+    TQFont font = TQFont();
     if (m_isActive)
     {
         font.setBold(true);
     }
-    return QFontMetrics(font).size(AlignAuto|AlignVCenter|DontClip|ShowPrefix,
+    return TQFontMetrics(font).size(AlignAuto|AlignVCenter|DontClip|ShowPrefix,
                                    m_text);
 }
 
 /*****************************************************************************/
 
-TaskLMBMenu::TaskLMBMenu(const Task::List& tasks, QWidget *parent, const char *name)
-  : QPopupMenu(parent, name),
+TaskLMBMenu::TaskLMBMenu(const Task::List& tasks, TQWidget *parent, const char *name)
+  : TQPopupMenu(parent, name),
     m_tasks(tasks),
     m_lastDragId(-1),
     m_attentionState(false)
@@ -98,8 +98,8 @@ TaskLMBMenu::TaskLMBMenu(const Task::List& tasks, QWidget *parent, const char *n
 
     setAcceptDrops(true); // Always enabled to activate task during drag&drop.
 
-    m_dragSwitchTimer = new QTimer(this, "DragSwitchTimer");
-    connect(m_dragSwitchTimer, SIGNAL(timeout()), SLOT(dragSwitch()));
+    m_dragSwitchTimer = new TQTimer(this, "DragSwitchTimer");
+    connect(m_dragSwitchTimer, TQT_SIGNAL(timeout()), TQT_SLOT(dragSwitch()));
 }
 
 void TaskLMBMenu::fillMenu()
@@ -111,14 +111,14 @@ void TaskLMBMenu::fillMenu()
     {
         Task::Ptr t = (*it);
 
-        QString text = t->visibleName().replace("&", "&&");
+        TQString text = t->visibleName().replace("&", "&&");
 
         TaskMenuItem *menuItem = new TaskMenuItem(text,
                                                   t->isActive(),
                                                   t->isIconified(),
                                                   t->demandsAttention());
-        int id = insertItem(QIconSet(t->pixmap()), menuItem);
-        connectItem(id, t, SLOT(activateRaiseOrIconify()));
+        int id = insertItem(TQIconSet(t->pixmap()), menuItem);
+        connectItem(id, t, TQT_SLOT(activateRaiseOrIconify()));
         setItemChecked(id, t->isActive());
 
         if (t->demandsAttention())
@@ -130,8 +130,8 @@ void TaskLMBMenu::fillMenu()
 
     if (m_attentionState)
     {
-        m_attentionTimer = new QTimer(this, "AttentionTimer");
-        connect(m_attentionTimer, SIGNAL(timeout()), SLOT(attentionTimeout()));
+        m_attentionTimer = new TQTimer(this, "AttentionTimer");
+        connect(m_attentionTimer, TQT_SIGNAL(timeout()), TQT_SLOT(attentionTimeout()));
         m_attentionTimer->start(500, true);
     }
 }
@@ -140,7 +140,7 @@ void TaskLMBMenu::attentionTimeout()
 {
     m_attentionState = !m_attentionState;
 
-    for (QValueList<TaskMenuItem*>::const_iterator it = m_attentionMap.constBegin();
+    for (TQValueList<TaskMenuItem*>::const_iterator it = m_attentionMap.constBegin();
          it != m_attentionMap.constEnd();
          ++it)
     {
@@ -152,7 +152,7 @@ void TaskLMBMenu::attentionTimeout()
     m_attentionTimer->start(500, true);
 }
 
-void TaskLMBMenu::dragEnterEvent( QDragEnterEvent* e )
+void TaskLMBMenu::dragEnterEvent( TQDragEnterEvent* e )
 {
     // ignore task drags
     if (TaskDrag::canDecode(e))
@@ -173,20 +173,20 @@ void TaskLMBMenu::dragEnterEvent( QDragEnterEvent* e )
         m_dragSwitchTimer->start(1000, true);
     }
 
-    QPopupMenu::dragEnterEvent( e );
+    TQPopupMenu::dragEnterEvent( e );
 }
 
-void TaskLMBMenu::dragLeaveEvent( QDragLeaveEvent* e )
+void TaskLMBMenu::dragLeaveEvent( TQDragLeaveEvent* e )
 {
     m_dragSwitchTimer->stop();
     m_lastDragId = -1;
 
-    QPopupMenu::dragLeaveEvent(e);
+    TQPopupMenu::dragLeaveEvent(e);
 
     hide();
 }
 
-void TaskLMBMenu::dragMoveEvent( QDragMoveEvent* e )
+void TaskLMBMenu::dragMoveEvent( TQDragMoveEvent* e )
 {
     // ignore task drags
     if (TaskDrag::canDecode(e))
@@ -207,7 +207,7 @@ void TaskLMBMenu::dragMoveEvent( QDragMoveEvent* e )
         m_dragSwitchTimer->start(1000, true);
     }
 
-    QPopupMenu::dragMoveEvent(e);
+    TQPopupMenu::dragMoveEvent(e);
 }
 
 void TaskLMBMenu::dragSwitch()
@@ -227,7 +227,7 @@ void TaskLMBMenu::dragSwitch()
     }
 }
 
-void TaskLMBMenu::mousePressEvent( QMouseEvent* e )
+void TaskLMBMenu::mousePressEvent( TQMouseEvent* e )
 {
     if (e->button() == LeftButton)
     {
@@ -235,28 +235,28 @@ void TaskLMBMenu::mousePressEvent( QMouseEvent* e )
     }
     else
     {
-        m_dragStartPos = QPoint();
+        m_dragStartPos = TQPoint();
     }
 
-    QPopupMenu::mousePressEvent(e);
+    TQPopupMenu::mousePressEvent(e);
 }
 
-void TaskLMBMenu::mouseReleaseEvent(QMouseEvent* e)
+void TaskLMBMenu::mouseReleaseEvent(TQMouseEvent* e)
 {
-    m_dragStartPos = QPoint();
-    QPopupMenu::mouseReleaseEvent(e);
+    m_dragStartPos = TQPoint();
+    TQPopupMenu::mouseReleaseEvent(e);
 }
 
-void TaskLMBMenu::mouseMoveEvent(QMouseEvent* e)
+void TaskLMBMenu::mouseMoveEvent(TQMouseEvent* e)
 {
     if (m_dragStartPos.isNull())
     {
-        QPopupMenu::mouseMoveEvent(e);
+        TQPopupMenu::mouseMoveEvent(e);
         return;
     }
 
     int delay = KGlobalSettings::dndEventDelay();
-    QPoint newPos(e->pos());
+    TQPoint newPos(e->pos());
 
     if ((m_dragStartPos - newPos).manhattanLength() > delay)
     {
@@ -276,6 +276,6 @@ void TaskLMBMenu::mouseMoveEvent(QMouseEvent* e)
         }
     }
 
-    QPopupMenu::mouseMoveEvent(e);
+    TQPopupMenu::mouseMoveEvent(e);
 }
 

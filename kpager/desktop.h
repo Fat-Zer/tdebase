@@ -25,8 +25,8 @@
 #ifndef __DESKTOP_H
 #define __DESKTOP_H
 
-#include <qwidget.h>
-#include <qintdict.h>
+#include <tqwidget.h>
+#include <tqintdict.h>
 #include <kwin.h>
 
 class KSharedPixmap;
@@ -40,7 +40,7 @@ class Desktop : public QWidget
     Q_OBJECT
 
 public:
-  Desktop( int desk, QString desktopName, QWidget *parent=0,
+  Desktop( int desk, TQString desktopName, TQWidget *parent=0,
 		const char *name=0);
   ~Desktop();
 
@@ -65,16 +65,16 @@ public:
   virtual int deskWidth() const { return width(); };
   virtual int deskHeight() const { return height(); };
 
-  void startDrag(const QPoint &point);
-  void dragEnterEvent(QDragEnterEvent *ev);
-  void dragMoveEvent(QDragMoveEvent *);
-  void dropEvent(QDropEvent *ev);
-  void convertRectS2P(QRect &r);
+  void startDrag(const TQPoint &point);
+  void dragEnterEvent(TQDragEnterEvent *ev);
+  void dragMoveEvent(TQDragMoveEvent *);
+  void dropEvent(TQDropEvent *ev);
+  void convertRectS2P(TQRect &r);
   void convertCoordP2S(int &x, int &y);
 
 	static void removeCachedPixmap(int nWin) { m_windowPixmaps.remove(nWin); };
 
-  QSize sizeHint() const;
+  TQSize sizeHint() const;
 
   /**
    * active is a bool that specifies if the frame is the active
@@ -89,41 +89,41 @@ public slots:
   void loadBgPixmap();
 
 protected:
-  void mousePressEvent( QMouseEvent *ev );
-  void mouseMoveEvent( QMouseEvent *ev );
-  void mouseReleaseEvent( QMouseEvent *ev );
+  void mousePressEvent( TQMouseEvent *ev );
+  void mouseMoveEvent( TQMouseEvent *ev );
+  void mouseReleaseEvent( TQMouseEvent *ev );
   
-  void paintEvent( QPaintEvent *ev );
+  void paintEvent( TQPaintEvent *ev );
 
-  KWin::WindowInfo *windowAtPosition (const QPoint &p, QPoint *internalpos);
+  KWin::WindowInfo *windowAtPosition (const TQPoint &p, TQPoint *internalpos);
 
   bool shouldPaintWindow( KWin::WindowInfo *info );
 
   int m_desk;
-  QString m_name;
+  TQString m_name;
   KSharedPixmap *m_bgPixmap;
   bool m_bgDirty;
-  QPixmap *m_bgSmallPixmap;
-  static QPixmap *m_bgCommonSmallPixmap;
+  TQPixmap *m_bgSmallPixmap;
+  static TQPixmap *m_bgCommonSmallPixmap;
   static bool m_isCommon;
-  static QIntDict<QPixmap> m_windowPixmaps;
-  static QMap<int,bool> m_windowPixmapsDirty;
+  static TQIntDict<TQPixmap> m_windowPixmaps;
+  static TQMap<int,bool> m_windowPixmapsDirty;
   WindowTransparentMode m_transparentMode;
 
-  QPixmap *paintNewWindow(const KWin::WindowInfo *info);
+  TQPixmap *paintNewWindow(const KWin::WindowInfo *info);
 
-  void paintWindow(QPainter &p, const KWin::WindowInfo *info,
+  void paintWindow(TQPainter &p, const KWin::WindowInfo *info,
 			bool onDesktop=true);
-  void paintWindowPlain(QPainter &p, const KWin::WindowInfo *info,
+  void paintWindowPlain(TQPainter &p, const KWin::WindowInfo *info,
 			bool onDesktop=true);
-  void paintWindowIcon(QPainter &p, const KWin::WindowInfo *info,
+  void paintWindowIcon(TQPainter &p, const KWin::WindowInfo *info,
 			bool onDesktop=true);
-  void paintWindowPixmap(QPainter &p, const KWin::WindowInfo *info,
+  void paintWindowPixmap(TQPainter &p, const KWin::WindowInfo *info,
 			bool onDesktop=true);
 
 private:
   class KPager* pager() const;
-    QPoint pressPos;
+    TQPoint pressPos;
 
 };
 

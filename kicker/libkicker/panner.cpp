@@ -21,11 +21,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qstyle.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqtimer.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -35,8 +35,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "panner.h"
 #include "panner.moc"
 
-Panner::Panner( QWidget* parent, const char* name )
-    : QWidget( parent, name ),
+Panner::Panner( TQWidget* parent, const char* name )
+    : TQWidget( parent, name ),
       _luSB(0),
       _rdSB(0),
       _cwidth(0), _cheight(0),
@@ -45,17 +45,17 @@ Panner::Panner( QWidget* parent, const char* name )
     KGlobal::locale()->insertCatalogue("libkicker");
     setBackgroundOrigin( AncestorOrigin );
 
-    _updateScrollButtonsTimer = new QTimer(this);
-    connect(_updateScrollButtonsTimer, SIGNAL(timeout()), this, SLOT(reallyUpdateScrollButtons()));
+    _updateScrollButtonsTimer = new TQTimer(this);
+    connect(_updateScrollButtonsTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(reallyUpdateScrollButtons()));
 
-    _clipper = new QWidget(this);
+    _clipper = new TQWidget(this);
     _clipper->setBackgroundOrigin(AncestorOrigin);
     _clipper->installEventFilter( this );
-    _viewport = new QWidget(_clipper);
+    _viewport = new TQWidget(_clipper);
     _viewport->setBackgroundOrigin(AncestorOrigin);
     
     // layout
-    _layout = new QBoxLayout(this, QBoxLayout::LeftToRight);
+    _layout = new TQBoxLayout(this, TQBoxLayout::LeftToRight);
     _layout->addWidget(_clipper, 1);
     setOrientation(Horizontal);
 }
@@ -78,8 +78,8 @@ void Panner::createScrollButtons()
     _luSB->setMinimumSize(12, 12);
     _luSB->hide();
     _layout->addWidget(_luSB);
-    connect(_luSB, SIGNAL(pressed()), SLOT(startScrollLeftUp()));
-    connect(_luSB, SIGNAL(released()), SLOT(stopScroll()));
+    connect(_luSB, TQT_SIGNAL(pressed()), TQT_SLOT(startScrollLeftUp()));
+    connect(_luSB, TQT_SIGNAL(released()), TQT_SLOT(stopScroll()));
 
     // right/down scroll button
     _rdSB = new SimpleArrowButton(this);
@@ -88,8 +88,8 @@ void Panner::createScrollButtons()
     _rdSB->setMinimumSize(12, 12);
     _rdSB->hide();
     _layout->addWidget(_rdSB);
-    connect(_rdSB, SIGNAL(pressed()), SLOT(startScrollRightDown()));
-    connect(_rdSB, SIGNAL(released()), SLOT(stopScroll()));
+    connect(_rdSB, TQT_SIGNAL(pressed()), TQT_SLOT(startScrollRightDown()));
+    connect(_rdSB, TQT_SIGNAL(released()), TQT_SLOT(stopScroll()));
 
     // set up the buttons
     setupButtons();
@@ -103,13 +103,13 @@ void Panner::setupButtons()
         {
             _luSB->setArrowType(Qt::LeftArrow);
             _rdSB->setArrowType(Qt::RightArrow);
-            _luSB->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding));
-            _rdSB->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding));
-            QToolTip::add(_luSB, i18n("Scroll left"));
-            QToolTip::add(_rdSB, i18n("Scroll right"));
+            _luSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
+            _rdSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
+            TQToolTip::add(_luSB, i18n("Scroll left"));
+            TQToolTip::add(_rdSB, i18n("Scroll right"));
             setMinimumSize(24, 0);
         }
-        _layout->setDirection(QBoxLayout::LeftToRight);
+        _layout->setDirection(TQBoxLayout::LeftToRight);
     }
     else
     {
@@ -117,13 +117,13 @@ void Panner::setupButtons()
         {
             _luSB->setArrowType(Qt::UpArrow);
             _rdSB->setArrowType(Qt::DownArrow);
-            _luSB->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum));
-            _rdSB->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum));
-            QToolTip::add(_luSB, i18n("Scroll up"));
-            QToolTip::add(_rdSB, i18n("Scroll down"));
+            _luSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
+            _rdSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
+            TQToolTip::add(_luSB, i18n("Scroll up"));
+            TQToolTip::add(_rdSB, i18n("Scroll down"));
             setMinimumSize(0, 24);
         }
-        _layout->setDirection(QBoxLayout::TopToBottom);
+        _layout->setDirection(TQBoxLayout::TopToBottom);
     }
 
     if (isVisible())
@@ -141,9 +141,9 @@ void Panner::setOrientation(Orientation o)
     reallyUpdateScrollButtons();
 }
 
-void Panner::resizeEvent( QResizeEvent* )
+void Panner::resizeEvent( TQResizeEvent* )
 {
-    //QScrollView::resizeEvent( e );
+    //TQScrollView::resizeEvent( e );
     //updateScrollButtons();
 }
 
@@ -169,8 +169,8 @@ void Panner::scrollLeftUp()
 
 void Panner::startScrollRightDown()
 {
-    _scrollTimer = new QTimer(this);
-    connect(_scrollTimer, SIGNAL(timeout()), SLOT(scrollRightDown()));
+    _scrollTimer = new TQTimer(this);
+    connect(_scrollTimer, TQT_SIGNAL(timeout()), TQT_SLOT(scrollRightDown()));
     _scrollTimer->start(50);
     _step = 8;
     scrollRightDown();
@@ -178,8 +178,8 @@ void Panner::startScrollRightDown()
 
 void Panner::startScrollLeftUp()
 {
-    _scrollTimer = new QTimer(this);
-    connect(_scrollTimer, SIGNAL(timeout()), SLOT(scrollLeftUp()));
+    _scrollTimer = new TQTimer(this);
+    connect(_scrollTimer, TQT_SIGNAL(timeout()), TQT_SLOT(scrollLeftUp()));
     _scrollTimer->start(50);
     _step = 8;
     scrollLeftUp();
@@ -258,26 +258,26 @@ void Panner::resizeContents( int w, int h )
     updateScrollButtons();
 }
 
-QPoint Panner::contentsToViewport( const QPoint& p ) const
+TQPoint Panner::contentsToViewport( const TQPoint& p ) const
 {
-    return QPoint(p.x() - contentsX() - _clipper->x(), p.y() - contentsY() - _clipper->y());
+    return TQPoint(p.x() - contentsX() - _clipper->x(), p.y() - contentsY() - _clipper->y());
 }
 
-QPoint Panner::viewportToContents( const QPoint& vp ) const
+TQPoint Panner::viewportToContents( const TQPoint& vp ) const
 {
-    return QPoint(vp.x() + contentsX() + _clipper->x(), vp.y() + contentsY() + _clipper->y());
+    return TQPoint(vp.x() + contentsX() + _clipper->x(), vp.y() + contentsY() + _clipper->y());
 }
 
 void Panner::contentsToViewport( int x, int y, int& vx, int& vy ) const
 {
-    const QPoint v = contentsToViewport(QPoint(x,y));
+    const TQPoint v = contentsToViewport(TQPoint(x,y));
     vx = v.x();
     vy = v.y();
 }
 
 void Panner::viewportToContents( int vx, int vy, int& x, int& y ) const
 {
-    const QPoint c = viewportToContents(QPoint(vx,vy));
+    const TQPoint c = viewportToContents(TQPoint(vx,vy));
     x = c.x();
     y = c.y();
 }
@@ -334,33 +334,33 @@ void Panner::ensureVisible( int x, int y, int xmargin, int ymargin )
     setContentsPos( -cx, -cy );
 }
 
-bool Panner::eventFilter( QObject *obj, QEvent *e )
+bool Panner::eventFilter( TQObject *obj, TQEvent *e )
 {
     if ( obj == _viewport || obj == _clipper ) 
     {
         switch ( e->type() ) 
         {
-            case QEvent::Resize:
-                viewportResizeEvent((QResizeEvent *)e);
+            case TQEvent::Resize:
+                viewportResizeEvent((TQResizeEvent *)e);
                 break;
-            case QEvent::MouseButtonPress:
-                viewportMousePressEvent( (QMouseEvent*)e );
-                if ( ((QMouseEvent*)e)->isAccepted() )
+            case TQEvent::MouseButtonPress:
+                viewportMousePressEvent( (TQMouseEvent*)e );
+                if ( ((TQMouseEvent*)e)->isAccepted() )
                     return true;
                 break;
-            case QEvent::MouseButtonRelease:
-                viewportMouseReleaseEvent( (QMouseEvent*)e );
-                if ( ((QMouseEvent*)e)->isAccepted() )
+            case TQEvent::MouseButtonRelease:
+                viewportMouseReleaseEvent( (TQMouseEvent*)e );
+                if ( ((TQMouseEvent*)e)->isAccepted() )
                     return true;
                 break;
-            case QEvent::MouseButtonDblClick:
-                viewportMouseDoubleClickEvent( (QMouseEvent*)e );
-                if ( ((QMouseEvent*)e)->isAccepted() )
+            case TQEvent::MouseButtonDblClick:
+                viewportMouseDoubleClickEvent( (TQMouseEvent*)e );
+                if ( ((TQMouseEvent*)e)->isAccepted() )
                     return true;
                 break;
-            case QEvent::MouseMove:
-                viewportMouseMoveEvent( (QMouseEvent*)e );
-                if ( ((QMouseEvent*)e)->isAccepted() )
+            case TQEvent::MouseMove:
+                viewportMouseMoveEvent( (TQMouseEvent*)e );
+                if ( ((TQMouseEvent*)e)->isAccepted() )
                     return true;
                 break;
             default:
@@ -368,29 +368,29 @@ bool Panner::eventFilter( QObject *obj, QEvent *e )
         }
     }
     
-    return QWidget::eventFilter( obj, e );  // always continue with standard event processing
+    return TQWidget::eventFilter( obj, e );  // always continue with standard event processing
 }
 
-void Panner::viewportResizeEvent( QResizeEvent* )
+void Panner::viewportResizeEvent( TQResizeEvent* )
 {
 }
 
-void Panner::viewportMousePressEvent( QMouseEvent* e)
-{
-    e->ignore();
-}
-
-void Panner::viewportMouseReleaseEvent( QMouseEvent* e )
+void Panner::viewportMousePressEvent( TQMouseEvent* e)
 {
     e->ignore();
 }
 
-void Panner::viewportMouseDoubleClickEvent( QMouseEvent* e )
+void Panner::viewportMouseReleaseEvent( TQMouseEvent* e )
 {
     e->ignore();
 }
 
-void Panner::viewportMouseMoveEvent( QMouseEvent* e )
+void Panner::viewportMouseDoubleClickEvent( TQMouseEvent* e )
+{
+    e->ignore();
+}
+
+void Panner::viewportMouseMoveEvent( TQMouseEvent* e )
 {
     e->ignore();
 }

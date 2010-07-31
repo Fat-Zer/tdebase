@@ -21,9 +21,9 @@
 #ifndef __COMMAND_SHORTCUTS_MODULE_H
 #define __COMMAND_SHORTCUTS_MODULE_H
 
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 #include <kshortcut.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class AppTreeView;
 class AppTreeItem;
@@ -32,32 +32,32 @@ class QRadioButton;
 class KKeyButton;
 class QListViewItem;
 
-typedef QPtrList<AppTreeItem> treeItemList;
-typedef QPtrListIterator<AppTreeItem> treeItemListIterator;
+typedef TQPtrList<AppTreeItem> treeItemList;
+typedef TQPtrListIterator<AppTreeItem> treeItemListIterator;
 
 class CommandShortcutsModule : public QWidget
 {
     Q_OBJECT
     public:
-        CommandShortcutsModule( QWidget *parent = 0, const char *name = 0 );
+        CommandShortcutsModule( TQWidget *parent = 0, const char *name = 0 );
         ~CommandShortcutsModule();
 
         void load();
         void save();
         void defaults();
-        QString quickHelp() const;
+        TQString quickHelp() const;
 
     signals:
         void changed( bool );
 
     public slots:
-        void showing(QWidget*);
+        void showing(TQWidget*);
 
     protected slots:
-        void commandSelected(const QString&, const QString &, bool);
+        void commandSelected(const TQString&, const TQString &, bool);
         void shortcutChanged(const KShortcut& shortcut);
         void shortcutRadioToggled(bool remove);
-        void commandDoubleClicked(QListViewItem *item, const QPoint &, int);
+        void commandDoubleClicked(TQListViewItem *item, const TQPoint &, int);
         void launchMenuEditor();
 
     protected:
@@ -65,9 +65,9 @@ class CommandShortcutsModule : public QWidget
 
     private:
         AppTreeView* m_tree;
-        QButtonGroup* m_shortcutBox;
-        QRadioButton* m_noneRadio;
-        QRadioButton* m_customRadio;
+        TQButtonGroup* m_shortcutBox;
+        TQRadioButton* m_noneRadio;
+        TQRadioButton* m_customRadio;
         KKeyButton* m_shortcutButton;
         treeItemList m_changedItems;
 };

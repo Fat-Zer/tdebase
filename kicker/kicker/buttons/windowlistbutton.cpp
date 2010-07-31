@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 #include <kwindowlistmenu.h>
 #include <klocale.h>
@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "windowlistbutton.h"
 #include "windowlistbutton.moc"
 
-WindowListButton::WindowListButton( QWidget* parent )
+WindowListButton::WindowListButton( TQWidget* parent )
   : PanelPopupButton( parent, "WindowListButton" )
   , topMenu( 0 )
 {
@@ -37,7 +37,7 @@ WindowListButton::WindowListButton( QWidget* parent )
     setPopup(topMenu);
 
     setTitle(i18n("Window List"));
-    QToolTip::add(this, i18n("Window list"));
+    TQToolTip::add(this, i18n("Window list"));
     setIcon("window_list");
 }
 

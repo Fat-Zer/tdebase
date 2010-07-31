@@ -9,15 +9,15 @@
 
 #include "config.h"
 #include <kglobal.h>
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 #include <kdialog.h>
 #include <klocale.h>
-#include <qpixmap.h>
-#include <qvbox.h>
+#include <tqpixmap.h>
+#include <tqvbox.h>
 
 extern "C"
 {
-	KDE_EXPORT QObject* allocate_config( KConfig* conf, QWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
 	{
 		return(new KDEDefaultConfig(conf, parent));
 	}
@@ -26,33 +26,33 @@ extern "C"
 // NOTE:
 // 'conf' is a pointer to the kwindecoration modules open kwin config,
 //		  and is by default set to the "Style" group.
-// 'parent' is the parent of the QObject, which is a VBox inside the
+// 'parent' is the parent of the TQObject, which is a VBox inside the
 //		  Configure tab in kwindecoration
 
-KDEDefaultConfig::KDEDefaultConfig( KConfig* conf, QWidget* parent )
-	: QObject( parent )
+KDEDefaultConfig::KDEDefaultConfig( KConfig* conf, TQWidget* parent )
+	: TQObject( parent )
 {
 	KGlobal::locale()->insertCatalogue("kwin_clients");
-	highcolor = QPixmap::defaultDepth() > 8;
-	gb = new QVBox( parent );
+	highcolor = TQPixmap::defaultDepth() > 8;
+	gb = new TQVBox( parent );
         gb->setSpacing( KDialog::spacingHint() );
 
-	cbShowStipple = new QCheckBox( i18n("Draw titlebar &stipple effect"), gb );
-	QWhatsThis::add( cbShowStipple, 
+	cbShowStipple = new TQCheckBox( i18n("Draw titlebar &stipple effect"), gb );
+	TQWhatsThis::add( cbShowStipple, 
 		i18n("When selected, active titlebars are drawn "
 		 "with a stipple (dotted) effect; otherwise, they are "
 		 "drawn without the stipple."));
 
-	cbShowGrabBar = new QCheckBox( i18n("Draw g&rab bar below windows"), gb );
-	QWhatsThis::add( cbShowGrabBar, 
+	cbShowGrabBar = new TQCheckBox( i18n("Draw g&rab bar below windows"), gb );
+	TQWhatsThis::add( cbShowGrabBar, 
 		i18n("When selected, decorations are drawn with a \"grab bar\" "
 		"below windows; otherwise, no grab bar is drawn."));
 
 	// Only show the gradient checkbox for highcolor displays
 	if (highcolor)
 	{
-		cbUseGradients = new QCheckBox( i18n("Draw &gradients"), gb );
-		QWhatsThis::add( cbUseGradients, 
+		cbUseGradients = new TQCheckBox( i18n("Draw &gradients"), gb );
+		TQWhatsThis::add( cbUseGradients, 
 			i18n("When selected, decorations are drawn with gradients "
 			"for high-color displays; otherwise, no gradients are drawn.") );
 	}
@@ -61,13 +61,13 @@ KDEDefaultConfig::KDEDefaultConfig( KConfig* conf, QWidget* parent )
 	load( conf );
 
 	// Ensure we track user changes properly
-	connect( cbShowStipple, SIGNAL(clicked()), 
-			 this, SLOT(slotSelectionChanged()) );
-	connect( cbShowGrabBar, SIGNAL(clicked()), 
-			 this, SLOT(slotSelectionChanged()) );
+	connect( cbShowStipple, TQT_SIGNAL(clicked()), 
+			 this, TQT_SLOT(slotSelectionChanged()) );
+	connect( cbShowGrabBar, TQT_SIGNAL(clicked()), 
+			 this, TQT_SLOT(slotSelectionChanged()) );
 	if (highcolor)
-		connect( cbUseGradients, SIGNAL(clicked()), 
-				 this, SLOT(slotSelectionChanged()) );
+		connect( cbUseGradients, TQT_SIGNAL(clicked()), 
+				 this, TQT_SLOT(slotSelectionChanged()) );
 
 	// Make the widgets visible in kwindecoration
 	gb->show();

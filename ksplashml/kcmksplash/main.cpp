@@ -12,8 +12,8 @@
 #include "config.h"
 #endif
 
-#include <qlayout.h>
-#include <qtabwidget.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
 
 #include <kaboutdata.h>
 #include <kcmodule.h>
@@ -26,10 +26,10 @@
 class KSplashThemeMgr : public KCModule
 {
 public:
-  KSplashThemeMgr( QWidget *parent, const char *name, const QStringList &/*unused*/);
+  KSplashThemeMgr( TQWidget *parent, const char *name, const TQStringList &/*unused*/);
   ~KSplashThemeMgr();
 
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
   virtual void init();
   virtual void save();
@@ -40,26 +40,26 @@ private:
   SplashInstaller *mInstaller;
 };
 
-typedef KGenericFactory< KSplashThemeMgr, QWidget > KSplashThemeMgrFactory;
+typedef KGenericFactory< KSplashThemeMgr, TQWidget > KSplashThemeMgrFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_ksplashthemes, KSplashThemeMgrFactory("ksplashthemes") )
 
 // -----------------------------------------------------------------------------------------
 
-KSplashThemeMgr::KSplashThemeMgr( QWidget *parent, const char *name, const QStringList &)
+KSplashThemeMgr::KSplashThemeMgr( TQWidget *parent, const char *name, const TQStringList &)
   : KCModule( KSplashThemeMgrFactory::instance(), parent, name ), mInstaller(new SplashInstaller(this))
 {
   init();
 
 #if 0
-  QHBoxLayout *box = new QHBoxLayout(this);
-  QTabWidget *tab = new QTabWidget(this); // There will be more tabs in the future.
+  TQHBoxLayout *box = new TQHBoxLayout(this);
+  TQTabWidget *tab = new TQTabWidget(this); // There will be more tabs in the future.
   box->addWidget(tab);
   tab->addTab( mInstaller, i18n("&Theme Installer") );
 #else
-  QHBoxLayout *box = new QHBoxLayout(this, 0, 0);
+  TQHBoxLayout *box = new TQHBoxLayout(this, 0, 0);
   box->addWidget(mInstaller);
 #endif
-  connect( mInstaller, SIGNAL(changed(bool)), SIGNAL(changed(bool)) );
+  connect( mInstaller, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)) );
   KAboutData *about = new KAboutData( "kcmksplash"
                                       ,I18N_NOOP("KDE splash screen theme manager")
                                       ,"0.1"
@@ -79,7 +79,7 @@ KSplashThemeMgr::~KSplashThemeMgr()
   // Do not delete the installer as it is now owned by the tab widget.
 }
 
-QString KSplashThemeMgr::quickHelp() const
+TQString KSplashThemeMgr::quickHelp() const
 {
   return i18n("<h1>Splash Screen Theme Manager </h1> Install and view splash screen themes.");
 }

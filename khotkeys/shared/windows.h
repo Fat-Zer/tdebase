@@ -13,9 +13,9 @@
 
 #include <sys/types.h>
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include <netwm_def.h>
 
@@ -39,10 +39,10 @@ class KDE_EXPORT Windows
     {
     Q_OBJECT
     public:
-        Windows( bool enable_signals_P, QObject* parent_P );
+        Windows( bool enable_signals_P, TQObject* parent_P );
         virtual ~Windows();
-        QString get_window_class( WId id_P );
-        QString get_window_role( WId id_P );
+        TQString get_window_class( WId id_P );
+        TQString get_window_role( WId id_P );
         WId active_window();
         void set_action_window( WId window );
         WId action_window();
@@ -70,42 +70,42 @@ class KDE_EXPORT Windows
 struct KDE_EXPORT Window_data
     {
     Window_data( WId id_P );
-    QString title; // _NET_WM_NAME or WM_NAME
-    QString role; // WM_WINDOW_ROLE
-    QString wclass; // WM_CLASS
+    TQString title; // _NET_WM_NAME or WM_NAME
+    TQString role; // WM_WINDOW_ROLE
+    TQString wclass; // WM_CLASS
     NET::WindowType type;
     };
     
 class KDE_EXPORT Windowdef
     {
     public:
-        Windowdef( const QString& comment_P );
+        Windowdef( const TQString& comment_P );
         Windowdef( KConfig& cfg_P );
         virtual ~Windowdef();
-        const QString& comment() const;
+        const TQString& comment() const;
         virtual bool match( const Window_data& window_P ) = 0;
         static Windowdef* create_cfg_read( KConfig& cfg_P/*, Action_data_base* data_P*/ );
         virtual void cfg_write( KConfig& cfg_P ) const = 0;
         virtual Windowdef* copy( /*Action_data_base* data_P*/ ) const = 0;
-        virtual const QString description() const = 0;
+        virtual const TQString description() const = 0;
     private:
-        QString _comment;
+        TQString _comment;
     KHOTKEYS_DISABLE_COPY( Windowdef ); // CHECKME asi pak udelat i pro vsechny potomky, at se nezapomene
     };
 
 class KDE_EXPORT Windowdef_list
-    : public QPtrList< Windowdef >
+    : public TQPtrList< Windowdef >
     {
     public:
-        Windowdef_list( const QString& comment_P );
+        Windowdef_list( const TQString& comment_P );
         Windowdef_list( KConfig& cfg_P/*, Action_data_base* data_P*/ );
         void cfg_write( KConfig& cfg_P ) const;
         bool match( const Window_data& window_P ) const;
         Windowdef_list* copy( /*Action_data_base* data_P*/ ) const;
-        typedef QPtrListIterator< Windowdef > Iterator;
-        const QString& comment() const;
+        typedef TQPtrListIterator< Windowdef > Iterator;
+        const TQString& comment() const;
     private:
-        QString _comment;
+        TQString _comment;
     KHOTKEYS_DISABLE_COPY( Windowdef_list );
     };
 
@@ -133,32 +133,32 @@ class KDE_EXPORT Windowdef_simple
 //            WINDOW_TYPE_MENU       = ( 1 << NET::Menu ),
             WINDOW_TYPE_DIALOG     = ( 1 << NET::Dialog )
             };
-        Windowdef_simple( const QString& comment_P, const QString& title_P,
-            substr_type_t title_type_P, const QString& wclass_P, substr_type_t wclass_type_P,
-            const QString& role_P, substr_type_t role_type_P, int window_types_P );
+        Windowdef_simple( const TQString& comment_P, const TQString& title_P,
+            substr_type_t title_type_P, const TQString& wclass_P, substr_type_t wclass_type_P,
+            const TQString& role_P, substr_type_t role_type_P, int window_types_P );
         Windowdef_simple( KConfig& cfg_P );
         virtual bool match( const Window_data& window_P );
         virtual void cfg_write( KConfig& cfg_P ) const;
-        const QString& title() const;
+        const TQString& title() const;
         substr_type_t title_match_type() const;
-        const QString& wclass() const;
+        const TQString& wclass() const;
         substr_type_t wclass_match_type() const;
-        const QString& role() const;
+        const TQString& role() const;
         substr_type_t role_match_type() const;
         int window_types() const;
         bool type_match( window_type_t type_P ) const;
         bool type_match( NET::WindowType type_P ) const;
         virtual Windowdef* copy( /*Action_data_base* data_P*/ ) const;
-        virtual const QString description() const;
+        virtual const TQString description() const;
     protected:
-        bool is_substr_match( const QString& str1_P, const QString& str2_P,
+        bool is_substr_match( const TQString& str1_P, const TQString& str2_P,
             substr_type_t type_P );
     private:
-        QString _title; 
+        TQString _title; 
         substr_type_t title_type;
-        QString _wclass;
+        TQString _wclass;
         substr_type_t wclass_type;
-        QString _role;
+        TQString _role;
         substr_type_t role_type;
         int _window_types;
     };
@@ -170,13 +170,13 @@ class KDE_EXPORT Windowdef_simple
 // Windowdef
 
 inline
-Windowdef::Windowdef( const QString& comment_P )
+Windowdef::Windowdef( const TQString& comment_P )
     : _comment( comment_P )
     {
     }
     
 inline
-const QString& Windowdef::comment() const
+const TQString& Windowdef::comment() const
     {
     return _comment;
     }
@@ -189,14 +189,14 @@ Windowdef::~Windowdef()
 // Windowdef_list
 
 inline
-Windowdef_list::Windowdef_list( const QString& comment_P )
-    : QPtrList< Windowdef >(), _comment( comment_P )
+Windowdef_list::Windowdef_list( const TQString& comment_P )
+    : TQPtrList< Windowdef >(), _comment( comment_P )
     {
     setAutoDelete( true );
     }
 
 inline
-const QString& Windowdef_list::comment() const
+const TQString& Windowdef_list::comment() const
     {
     return _comment;
     }
@@ -204,7 +204,7 @@ const QString& Windowdef_list::comment() const
 // Windowdef_simple
 
 inline
-const QString& Windowdef_simple::title() const
+const TQString& Windowdef_simple::title() const
     {
     return _title;
     }
@@ -216,7 +216,7 @@ Windowdef_simple::substr_type_t Windowdef_simple::title_match_type() const
     }
     
 inline
-const QString& Windowdef_simple::wclass() const
+const TQString& Windowdef_simple::wclass() const
     {
     return _wclass;
     }
@@ -228,7 +228,7 @@ Windowdef_simple::substr_type_t Windowdef_simple::wclass_match_type() const
     }
     
 inline
-const QString& Windowdef_simple::role() const
+const TQString& Windowdef_simple::role() const
     {
     return _role;
     }

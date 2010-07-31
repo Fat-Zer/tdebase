@@ -55,11 +55,11 @@ KonqRun::~KonqRun()
     m_pView->setRun(0L);
 }
 
-void KonqRun::foundMimeType( const QString & _type )
+void KonqRun::foundMimeType( const TQString & _type )
 {
   //kdDebug(1202) << "KonqRun::foundMimeType " << _type << " m_req=" << m_req.debug() << endl;
 
-  QString mimeType = _type; // this ref comes from the job, we lose it when using KIO again
+  TQString mimeType = _type; // this ref comes from the job, we lose it when using KIO again
 
   m_bFoundMimeType = true;
 
@@ -150,8 +150,8 @@ void KonqRun::init()
     // (in case it goes to scanFile, this will be done below)
     KIO::StatJob *job = dynamic_cast<KIO::StatJob*>( m_job );
     if ( job && !job->error() && m_pView ) {
-        connect( job, SIGNAL( infoMessage( KIO::Job*, const QString& ) ),
-                 m_pView, SLOT( slotInfoMessage(KIO::Job*, const QString& ) ) );
+        connect( job, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString& ) ),
+                 m_pView, TQT_SLOT( slotInfoMessage(KIO::Job*, const TQString& ) ) );
     }
 }
 
@@ -162,11 +162,11 @@ void KonqRun::scanFile()
     // BrowserRun changes
     KIO::TransferJob *job = dynamic_cast<KIO::TransferJob*>( m_job );
     if ( job && !job->error() ) {
-        connect( job, SIGNAL( redirection( KIO::Job *, const KURL& )),
-                 SLOT( slotRedirection( KIO::Job *, const KURL& ) ));
+        connect( job, TQT_SIGNAL( redirection( KIO::Job *, const KURL& )),
+                 TQT_SLOT( slotRedirection( KIO::Job *, const KURL& ) ));
         if ( m_pView && m_pView->service()->desktopEntryName() != "konq_sidebartng") {
-            connect( job, SIGNAL( infoMessage( KIO::Job*, const QString& ) ),
-                     m_pView, SLOT( slotInfoMessage(KIO::Job*, const QString& ) ) );
+            connect( job, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString& ) ),
+                     m_pView, TQT_SLOT( slotInfoMessage(KIO::Job*, const TQString& ) ) );
 	}
     }
 }

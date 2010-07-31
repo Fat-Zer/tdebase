@@ -17,9 +17,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qhbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include <klocale.h>
 #include <kstdguiitem.h>
@@ -28,15 +28,15 @@
 #include "kshellcmddialog.h"
 #include "kshellcmdexecutor.h"
 
-KShellCommandDialog::KShellCommandDialog(const QString& title, const QString& command, QWidget* parent, bool modal)
+KShellCommandDialog::KShellCommandDialog(const TQString& title, const TQString& command, TQWidget* parent, bool modal)
    :KDialog(parent,"p",modal)
 {
-   QVBoxLayout * box=new QVBoxLayout (this,marginHint(),spacingHint());
+   TQVBoxLayout * box=new TQVBoxLayout (this,marginHint(),spacingHint());
 
-   QLabel *label=new QLabel(title,this);
+   TQLabel *label=new TQLabel(title,this);
    m_shell=new KShellCommandExecutor(command,this);
 
-   QHBox *buttonsBox=new QHBox(this);
+   TQHBox *buttonsBox=new TQHBox(this);
    buttonsBox->setSpacing(spacingHint());
 
    cancelButton= new KPushButton(KStdGuiItem::cancel(), buttonsBox);
@@ -54,9 +54,9 @@ KShellCommandDialog::KShellCommandDialog(const QString& title, const QString& co
 
    m_shell->setFocus();
 
-   connect(cancelButton, SIGNAL(clicked()), m_shell, SLOT(slotFinished()));
-   connect(m_shell, SIGNAL(finished()), this, SLOT(disableStopButton()));
-   connect(closeButton,SIGNAL(clicked()), this, SLOT(slotClose()));
+   connect(cancelButton, TQT_SIGNAL(clicked()), m_shell, TQT_SLOT(slotFinished()));
+   connect(m_shell, TQT_SIGNAL(finished()), this, TQT_SLOT(disableStopButton()));
+   connect(closeButton,TQT_SIGNAL(clicked()), this, TQT_SLOT(slotClose()));
 }
 
 KShellCommandDialog::~KShellCommandDialog()

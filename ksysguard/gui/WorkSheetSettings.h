@@ -34,7 +34,7 @@ class WorkSheetSettings : public KDialogBase
   Q_OBJECT
 
   public:
-    WorkSheetSettings( QWidget* parent = 0, const char* name = 0 );
+    WorkSheetSettings( TQWidget* parent = 0, const char* name = 0 );
     ~WorkSheetSettings();
 
     void setRows( int rows );
@@ -46,8 +46,8 @@ class WorkSheetSettings : public KDialogBase
     void setInterval( int interval );
     int interval() const;
 
-    void setSheetTitle( const QString &title );
-    QString sheetTitle() const;
+    void setSheetTitle( const TQString &title );
+    TQString sheetTitle() const;
 
   private:
     KLineEdit* mSheetTitle;

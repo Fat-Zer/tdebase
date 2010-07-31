@@ -11,9 +11,9 @@
 #include "voice_settings_tab.h"
 
 #include <klocale.h>
-#include <qcombobox.h>
+#include <tqcombobox.h>
 #include <knuminput.h>
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <kkeybutton.h>
 #include <kkeydialog.h>
 
@@ -23,10 +23,10 @@
 namespace KHotKeys
 {
 
-Voice_settings_tab::Voice_settings_tab( QWidget* parent_P, const char* name_P )
+Voice_settings_tab::Voice_settings_tab( TQWidget* parent_P, const char* name_P )
     : Voice_settings_tab_ui( parent_P, name_P )
     {
-		connect( keyButton , SIGNAL(capturedShortcut (const KShortcut &)) , this, SLOT(slotCapturedKey( const KShortcut& )));
+		connect( keyButton , TQT_SIGNAL(capturedShortcut (const KShortcut &)) , this, TQT_SLOT(slotCapturedKey( const KShortcut& )));
     }
 
 void Voice_settings_tab::read_data()

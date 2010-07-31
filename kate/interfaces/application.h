@@ -19,7 +19,7 @@
 #ifndef _KATE_APPLICATION_INCLUDE_
 #define _KATE_APPLICATION_INCLUDE_
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kurl.h>
 
 namespace Kate

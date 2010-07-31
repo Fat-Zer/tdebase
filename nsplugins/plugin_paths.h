@@ -1,8 +1,8 @@
 #ifndef PLUGIN_PATHS_H
 #define PLUGIN_PATHS_H
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
-extern QStringList getSearchPaths();
+extern TQStringList getSearchPaths();
 
 #endif

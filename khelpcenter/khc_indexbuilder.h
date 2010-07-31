@@ -23,8 +23,8 @@
 
 #include <kuniqueapplication.h>
 
-#include <qobject.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqtimer.h>
 
 class KProcess;
 
@@ -34,10 +34,10 @@ class IndexBuilder : public QObject
 {
     Q_OBJECT
   public:
-    IndexBuilder(const QString& cmdFile);
+    IndexBuilder(const TQString& cmdFile);
 
     void sendProgressSignal();
-    void sendErrorSignal( const QString &error );
+    void sendErrorSignal( const TQString &error );
     void quit();
 
     void processCmdQueue();
@@ -49,9 +49,9 @@ class IndexBuilder : public QObject
     void slotReceivedStderr( KProcess *, char *buffer, int buflen );
 
   private:
-    QString m_cmdFile;
-    QTimer mTimer;
-    QStringList mCmdQueue;
+    TQString m_cmdFile;
+    TQTimer mTimer;
+    TQStringList mCmdQueue;
 };
 
 }

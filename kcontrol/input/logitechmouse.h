@@ -22,11 +22,11 @@
 #ifndef __LOGITECHMOUSE_H__
 #define __LOGITECHMOUSE_H__
 
-#include <qdialog.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <tqdialog.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqradiobutton.h>
+#include <tqbuttongroup.h>
 
 #include <kconfig.h>
 
@@ -49,7 +49,7 @@ class LogitechMouse : public LogitechMouseBase
     Q_OBJECT
 
 public:
-    LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlags, QWidget* parent = 0, const char* name = 0 );
+    LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlags, TQWidget* parent = 0, const char* name = 0 );
     ~LogitechMouse();
     void applyChanges();
     void save(KConfig *config);
@@ -67,14 +67,14 @@ private:
     void setLogitechTo400();
     void setLogitechTo800();
 
-    QString cordlessName();
+    TQString cordlessName();
     Q_UINT8 resolution();
     void updateResolution();
     Q_UINT8 batteryLevel();
     Q_UINT8 channel();
     bool isDualChannelCapable();
 
-    QTimer *doUpdate;
+    TQTimer *doUpdate;
 
     struct usb_dev_handle *m_usbDeviceHandle;
     bool m_connectStatus; // true if the CONNECT button on the mouse is pressed
@@ -85,7 +85,7 @@ private:
                      // CONNECT button on the receiver was pressed
     Q_UINT8 m_batteryLevel;
     Q_UINT8 m_channel;
-    Q_UINT8 m_cordlessNameIndex; // this gets convered into a QString in cordlessName()
+    Q_UINT8 m_cordlessNameIndex; // this gets convered into a TQString in cordlessName()
     Q_UINT16 m_cordlessSecurity;
     Q_UINT16 m_useSecondChannel;
     Q_UINT8 m_caseShape;

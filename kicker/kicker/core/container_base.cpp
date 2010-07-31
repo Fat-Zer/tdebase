@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 #include <kglobal.h>
 #include <kconfig.h>
@@ -34,14 +34,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "container_base.h"
 #include "container_base.moc"
 
-BaseContainer::BaseContainer( QPopupMenu* appletOpMenu, QWidget* parent, const char * name )
-  : QWidget( parent, name )
+BaseContainer::BaseContainer( TQPopupMenu* appletOpMenu, TQWidget* parent, const char * name )
+  : TQWidget( parent, name )
   , _dir(KPanelApplet::Up)
   , _orient(Horizontal)
   , _alignment(KPanelExtension::LeftTop)
   , _fspace(0)
-  , _moveOffset(QPoint(0,0))
-  , _aid(QString::null)
+  , _moveOffset(TQPoint(0,0))
+  , _aid(TQString::null)
   , _actions(0)
   , m_immutable(false)
   , _opMnu(0)
@@ -53,10 +53,10 @@ BaseContainer::~BaseContainer()
     delete _opMnu;
 }
 
-void BaseContainer::reparent(QWidget* parent, WFlags f, const QPoint& p, bool showIt)
+void BaseContainer::reparent(TQWidget* parent, WFlags f, const TQPoint& p, bool showIt)
 {
     emit takeme(this);
-    QWidget::reparent(parent, f, p, showIt);
+    TQWidget::reparent(parent, f, p, showIt);
 }
 
 bool BaseContainer::isImmutable() const
@@ -121,7 +121,7 @@ void BaseContainer::setAlignment(KPanelExtension::Alignment a)
     alignmentChange(a);
 }
 
-QPopupMenu* BaseContainer::opMenu()
+TQPopupMenu* BaseContainer::opMenu()
 {
     if (_opMnu == 0)
     {

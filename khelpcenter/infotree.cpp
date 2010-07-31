@@ -32,8 +32,8 @@
 #include <kstandarddirs.h>
 #include <kurl.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <stdlib.h>  // for getenv()
 
@@ -42,7 +42,7 @@ using namespace KHC;
 class InfoCategoryItem : public NavigatorItem
 {
   public:
-    InfoCategoryItem( NavigatorItem *parent, const QString &text );
+    InfoCategoryItem( NavigatorItem *parent, const TQString &text );
 	
     virtual void setOpen( bool open );
 };
@@ -50,10 +50,10 @@ class InfoCategoryItem : public NavigatorItem
 class InfoNodeItem : public NavigatorItem
 {
   public:
-    InfoNodeItem( InfoCategoryItem *parent, const QString &text );
+    InfoNodeItem( InfoCategoryItem *parent, const TQString &text );
 };
 
-InfoCategoryItem::InfoCategoryItem( NavigatorItem *parent, const QString &text )
+InfoCategoryItem::InfoCategoryItem( NavigatorItem *parent, const TQString &text )
   : NavigatorItem( new DocEntry( text ), parent )
 {
   setAutoDeleteDocEntry( true );
@@ -69,14 +69,14 @@ void InfoCategoryItem::setOpen( bool open )
   else setPixmap( 0, SmallIcon( "contents2" ) );
 }
 
-InfoNodeItem::InfoNodeItem( InfoCategoryItem *parent, const QString &text )
+InfoNodeItem::InfoNodeItem( InfoCategoryItem *parent, const TQString &text )
   : NavigatorItem( new DocEntry( text ), parent )
 {
   setAutoDeleteDocEntry( true );
 //  kdDebug( 1400 ) << "Created info node item: " << text << endl;
 }
 
-InfoTree::InfoTree( QObject *parent, const char *name )
+InfoTree::InfoTree( TQObject *parent, const char *name )
   : TreeBuilder( parent, name ),
     m_parentItem( 0 )
 {
@@ -97,7 +97,7 @@ void InfoTree::build( NavigatorItem *parent )
 
   KConfig *cfg = kapp->config();
   cfg->setGroup( "Info pages" );
-  QStringList infoDirFiles = cfg->readListEntry( "Search paths" );
+  TQStringList infoDirFiles = cfg->readListEntry( "Search paths" );
   // Default paths taken fron kdebase/kioslave/info/kde-info2html.conf
   if ( infoDirFiles.isEmpty() ) { 
     infoDirFiles << "/usr/share/info";
@@ -110,35 +110,35 @@ void InfoTree::build( NavigatorItem *parent )
     infoDirFiles << "/usr/X11R6/lib/xemacs/info";
   }
 
-  QString infoPath = ::getenv( "INFOPATH" );
+  TQString infoPath = ::getenv( "INFOPATH" );
   if ( !infoPath.isEmpty() )
-    infoDirFiles += QStringList::split( ':', infoPath );
+    infoDirFiles += TQStringList::split( ':', infoPath );
 
-  QStringList::ConstIterator it = infoDirFiles.begin();
-  QStringList::ConstIterator end = infoDirFiles.end();
+  TQStringList::ConstIterator it = infoDirFiles.begin();
+  TQStringList::ConstIterator end = infoDirFiles.end();
   for ( ; it != end; ++it ) {
-    QString infoDirFileName = *it + "/dir";
-    if ( QFile::exists( infoDirFileName ) )
+    TQString infoDirFileName = *it + "/dir";
+    if ( TQFile::exists( infoDirFileName ) )
       parseInfoDirFile( infoDirFileName );
   }
 
   m_alphabItem->sortChildItems( 0, true /* ascending */ );
 }
 
-void InfoTree::parseInfoDirFile( const QString &infoDirFileName )
+void InfoTree::parseInfoDirFile( const TQString &infoDirFileName )
 {
   kdDebug( 1400 ) << "Parsing info dir file " << infoDirFileName << endl;
 
-  QFile infoDirFile( infoDirFileName );
+  TQFile infoDirFile( infoDirFileName );
   if ( !infoDirFile.open( IO_ReadOnly ) )
     return;
 
-  QTextStream stream( &infoDirFile );
+  TQTextStream stream( &infoDirFile );
   // Skip introduction blurb.
   while ( !stream.eof() && !stream.readLine().startsWith( "* Menu:" ) );
 
   while ( !stream.eof() ) {
-    QString s = stream.readLine();
+    TQString s = stream.readLine();
     if ( s.stripWhiteSpace().isEmpty() )
       continue;
 
@@ -151,8 +151,8 @@ void InfoTree::parseInfoDirFile( const QString &infoDirFileName )
         const int closeBrace = s.find( ")", openBrace );
         const int dot = s.find( ".", closeBrace );
 
-        QString appName = s.mid( 2, colon - 2 );
-        QString url = "info:/" + s.mid( openBrace + 1, closeBrace - openBrace - 1 );
+        TQString appName = s.mid( 2, colon - 2 );
+        TQString url = "info:/" + s.mid( openBrace + 1, closeBrace - openBrace - 1 );
         if ( dot - closeBrace > 1 )
           url += "/" + s.mid( closeBrace + 1, dot - closeBrace - 1 );
         else
@@ -162,7 +162,7 @@ void InfoTree::parseInfoDirFile( const QString &infoDirFileName )
         item->entry()->setUrl( url );
 
         InfoCategoryItem *alphabSection = 0;
-        for ( QListViewItem* it=m_alphabItem->firstChild(); it; it=it->nextSibling() ) {
+        for ( TQListViewItem* it=m_alphabItem->firstChild(); it; it=it->nextSibling() ) {
           if ( it->text( 0 ) == appName[ 0 ].upper() ) {
             alphabSection = static_cast<InfoCategoryItem *>( it );
             break;

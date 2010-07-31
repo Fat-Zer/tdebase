@@ -34,7 +34,7 @@
 #define INFO_XSERVER_AVAILABLE
 
 
-bool GetInfo_CPU( QListView *lBox ) {
+bool GetInfo_CPU( TQListView *lBox ) {
 
 	kstat_ctl_t	*kctl;
 	kstat_t		*ksp;
@@ -114,7 +114,7 @@ bool GetInfo_CPU( QListView *lBox ) {
 		}
 		kdata = (kstat_named_t *) kstat_data_lookup( ksp, "state" );
 		if( kdata != NULL ) {
-			state = QString( kdata->value.c );
+			state = TQString( kdata->value.c );
 		} else {
 			state = "???";
 		}
@@ -124,11 +124,11 @@ bool GetInfo_CPU( QListView *lBox ) {
 			if( (timetxt = ctime( (time_t *) &state_begin )) != NULL ) {
 				ptr = strrchr( timetxt, '\n' );
 				*ptr = '\0';
-				state += " since " + QString( timetxt );
+				state += " since " + TQString( timetxt );
 			}
 		}
 
-		new QListViewItem( lBox, inst, cputype, fputype, mhz, state );
+		new TQListViewItem( lBox, inst, cputype, fputype, mhz, state );
 	}
 
 	// sorting_allowed = true;
@@ -137,31 +137,31 @@ bool GetInfo_CPU( QListView *lBox ) {
 	return true;
 }
 
-bool GetInfo_IRQ( QListView * ) {
+bool GetInfo_IRQ( TQListView * ) {
 	return false;
 }
 
-bool GetInfo_DMA( QListView * ) {
+bool GetInfo_DMA( TQListView * ) {
 	return false;
 }
 
-bool GetInfo_PCI( QListView * ) {
+bool GetInfo_PCI( TQListView * ) {
 	return false;
 }
 
-bool GetInfo_IO_Ports( QListView * ) {
+bool GetInfo_IO_Ports( TQListView * ) {
 	return false;
 }
 
-bool GetInfo_Sound( QListView * ) {
+bool GetInfo_Sound( TQListView * ) {
 	return false;
 }
 
-bool GetInfo_SCSI( QListView * ) {
+bool GetInfo_SCSI( TQListView * ) {
 	return false;
 }
 
-bool GetInfo_Partitions( QListView *lBox ) {
+bool GetInfo_Partitions( TQListView *lBox ) {
 
 	FILE		*mnttab;
 	struct mnttab	mnt;
@@ -268,14 +268,14 @@ bool GetInfo_Partitions( QListView *lBox ) {
 			*ptr = '\0';
 		}
 		
-		new QListViewItem(
+		new TQListViewItem(
 			lBox,
 			mnt.mnt_special,
 			mnt.mnt_mountp,
 			mnt.mnt_fstype,
 			total,
 			avail,
-			QString( timetxt ),
+			TQString( timetxt ),
 			mnt.mnt_mntopts
 		);
 	}
@@ -287,7 +287,7 @@ bool GetInfo_Partitions( QListView *lBox ) {
 	return true;
 }
 
-bool GetInfo_XServer_and_Video( QListView *lBox ) {
+bool GetInfo_XServer_and_Video( TQListView *lBox ) {
 	return GetInfo_XServer_Generic( lBox );
 }
 
@@ -313,7 +313,7 @@ bool GetInfo_XServer_and_Video( QListView *lBox ) {
  *  mktree() -- break up the device path and place its components
  *		into the tree widget
  */
-QListViewItem *mktree( QListViewItem *top, const char *path ) {
+TQListViewItem *mktree( TQListViewItem *top, const char *path ) {
 
 	QListViewItem	*parent,
 			*previous,
@@ -348,7 +348,7 @@ QListViewItem *mktree( QListViewItem *top, const char *path ) {
 			/*
 			 *  we haven't found the node, create a new one
 			 */
-			result = new QListViewItem( parent,
+			result = new TQListViewItem( parent,
 					previous,
 					token );
 		} else {
@@ -453,21 +453,21 @@ int dump_minor_node( di_node_t node, di_minor_t minor, void *arg ) {
 	char		*type;
 	dev_t		dev;
 
-	item = new QListViewItem( (QListViewItem *) arg,
+	item = new TQListViewItem( (TQListViewItem *) arg,
 			di_minor_name( minor ));
 	item->setExpandable( true );
 	item->setOpen( false );
-	new QListViewItem( item, i18n( "Spectype:" ),
+	new TQListViewItem( item, i18n( "Spectype:" ),
 		(di_minor_spectype( minor ) == S_IFCHR)
 			? i18n( "character special" )
 			: i18n( "block special" ));
 	type = di_minor_nodetype( minor );
-	new QListViewItem( item, i18n( "Nodetype:" ),
+	new TQListViewItem( item, i18n( "Nodetype:" ),
 		(type == NULL) ? "NULL" : type );
 
 	if( (dev = di_minor_devt( minor )) != DDI_DEV_T_NONE ) {
 		majmin.sprintf( "%ld/%ld", major( dev ), minor( dev ));
-		new QListViewItem( item, i18n( "Major/Minor:" ), majmin );
+		new TQListViewItem( item, i18n( "Major/Minor:" ), majmin );
 	}
 
 	if( di_minor_next( node, minor ) == DI_MINOR_NIL )
@@ -479,7 +479,7 @@ int dump_minor_node( di_node_t node, di_minor_t minor, void *arg ) {
 /*
  *  propvalue() -- return the property value
  */
-QString propvalue( di_prop_t prop ) {
+TQString propvalue( di_prop_t prop ) {
 
 	int	type;
 	int	i, n;
@@ -518,7 +518,7 @@ QString propvalue( di_prop_t prop ) {
 				result = "(error)";
 			} else {
 				for( i = 0; i < n; i++ ) {
-					QString tmp;
+					TQString tmp;
 					tmp.setNum( intp[i] );
 					result += tmp;
 					result += " ";
@@ -542,7 +542,7 @@ QString propvalue( di_prop_t prop ) {
 				}
 				result = "0x";
 				for( i = 0; i < n; i++ ) {
-					QString tmp;
+					TQString tmp;
 					unsigned byte = (unsigned) bytep[i];
 					tmp.sprintf( "%2.2x", byte );
 					result += tmp;
@@ -562,7 +562,7 @@ QString propvalue( di_prop_t prop ) {
  */
 int dump_node( di_node_t node, void *arg ) {
 
-	QListViewItem	*top = (QListViewItem *) arg,
+	QListViewItem	*top = (TQListViewItem *) arg,
 			*parent,
 			*previous;
 	char		*path;
@@ -578,7 +578,7 @@ int dump_node( di_node_t node, void *arg ) {
 	 *  if this is the root node ("/"), initialize the tree
 	 */
 	if( strlen( path ) == 1 ) {
-		top->setText( 0, QString( di_binding_name( node )));
+		top->setText( 0, TQString( di_binding_name( node )));
 		top->setPixmap( 0, SmallIcon( "kcmdevices" ));
 		top->setOpen( true );
 		top->setSelectable( false );
@@ -605,12 +605,12 @@ int dump_node( di_node_t node, void *arg ) {
 	 *  node name and physical device path
 	 */
 	drivername = di_driver_name( node );
-	previous = new QListViewItem( parent,
+	previous = new TQListViewItem( parent,
 		i18n( "Driver Name:" ),
 		(drivername == NULL)
 			? i18n( "(driver not attached)" )
 			: drivername );
-	previous = new QListViewItem( parent, previous,
+	previous = new TQListViewItem( parent, previous,
 		i18n( "Binding Name:" ), di_binding_name( node ));
 
 	n = di_compatible_names( node, &names );
@@ -624,17 +624,17 @@ int dump_node( di_node_t node, void *arg ) {
 		}
 	}
 
-	previous = new QListViewItem( parent, previous,
+	previous = new TQListViewItem( parent, previous,
 		i18n( "Compatible Names:" ), compatnames );
 
-	previous = new QListViewItem( parent, previous,
-		i18n( "Physical Path:" ), QString( path ));
+	previous = new TQListViewItem( parent, previous,
+		i18n( "Physical Path:" ), TQString( path ));
 
 	/*
 	 *  dump the node's property list (if any)
 	 */
 	if( (prop = di_prop_next( node, DI_PROP_NIL )) != DI_PROP_NIL ) {
-		previous = new QListViewItem( parent, previous, i18n( "Properties" ));
+		previous = new TQListViewItem( parent, previous, i18n( "Properties" ));
 		previous->setExpandable( true );
 		previous->setOpen( false );
 		do {
@@ -643,12 +643,12 @@ int dump_node( di_node_t node, void *arg ) {
 			 */
 			QListViewItem	*tmp,
 					*prev;
-			tmp = new QListViewItem( previous, di_prop_name( prop ));
+			tmp = new TQListViewItem( previous, di_prop_name( prop ));
 			tmp->setExpandable( true );
 			tmp->setOpen( false );
-			prev = new QListViewItem( tmp, i18n( "Type:" ),
+			prev = new TQListViewItem( tmp, i18n( "Type:" ),
 				prop_type_str( prop ));
-			new QListViewItem( tmp, prev, i18n( "Value:" ),
+			new TQListViewItem( tmp, prev, i18n( "Value:" ),
 				propvalue( prop ));
 		} while( (prop = di_prop_next( node, prop )) != DI_PROP_NIL );
 	}
@@ -657,7 +657,7 @@ int dump_node( di_node_t node, void *arg ) {
 	 *  if there are minor nodes, expand the tree appropriately
 	 */
 	if( di_minor_next( node, DI_MINOR_NIL ) != DI_MINOR_NIL ) {
-		previous = new QListViewItem( parent, previous, i18n( "Minor Nodes" ));
+		previous = new TQListViewItem( parent, previous, i18n( "Minor Nodes" ));
 		previous->setExpandable( true );
 		previous->setOpen( false );
 		di_walk_minor( node, NULL, 0, previous, dump_minor_node );
@@ -666,7 +666,7 @@ int dump_node( di_node_t node, void *arg ) {
 	return( DI_WALK_CONTINUE );
 }
 
-bool GetInfo_Devices( QListView *lBox ) {
+bool GetInfo_Devices( TQListView *lBox ) {
 
 	QListViewItem		*top;
 	di_node_t		root_node;
@@ -685,7 +685,7 @@ bool GetInfo_Devices( QListView *lBox ) {
 	lBox->addColumn( i18n( "Device Information" ));
 	lBox->addColumn( i18n( "Value" ));
 
-	top = new QListViewItem( lBox );
+	top = new TQListViewItem( lBox );
 
 	/*
 	 *  traverse the device tree
@@ -699,7 +699,7 @@ bool GetInfo_Devices( QListView *lBox ) {
 }
 
 #else /* ! HAVE_LIBDEVINFO_H */
-bool GetInfo_Devices( QListView * ) {
+bool GetInfo_Devices( TQListView * ) {
 	return false;
 }
 #endif /* ! HAVE_LIBDEVINFO_H */

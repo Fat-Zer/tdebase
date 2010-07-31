@@ -20,7 +20,7 @@
 #ifndef __KDMFONT_H__
 #define __KDMFONT_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KFontRequester;
 class QCheckBox;
@@ -30,7 +30,7 @@ class KDMFontWidget : public QWidget
 	Q_OBJECT
 
 public:
-	KDMFontWidget(QWidget *parent=0, const char *name=0);
+	KDMFontWidget(TQWidget *parent=0, const char *name=0);
 
         void load();
         void save();

@@ -28,7 +28,7 @@
 #include <kdialogbase.h>
 #include <kate/document.h>
 #include <kmacroexpander.h>
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 /**
  * The external tools action
@@ -57,7 +57,7 @@ class KateExternalToolsMenuAction : public KActionMenu
 
   Q_OBJECT
   public:
-    KateExternalToolsMenuAction( const QString &text=QString::null, QObject *parent=0, const char* name=0, class KateMainWindow *mw=0 );
+    KateExternalToolsMenuAction( const TQString &text=TQString::null, TQObject *parent=0, const char* name=0, class KateMainWindow *mw=0 );
     ~KateExternalToolsMenuAction() {};
 
     /**
@@ -82,10 +82,10 @@ class KateExternalToolAction : public KAction, public KWordMacroExpander
 {
   Q_OBJECT
   public:
-    KateExternalToolAction( QObject *parent, const char *name, class KateExternalTool *t );
+    KateExternalToolAction( TQObject *parent, const char *name, class KateExternalTool *t );
     ~KateExternalToolAction();
   protected:
-    virtual bool expandMacro( const QString &str, QStringList &ret );
+    virtual bool expandMacro( const TQString &str, TQStringList &ret );
 
   private slots:
     void slotRun();
@@ -100,30 +100,30 @@ class KateExternalToolAction : public KAction, public KWordMacroExpander
 class KateExternalTool
 {
   public:
-    KateExternalTool( const QString &name=QString::null,
-                      const QString &command=QString::null,
-                      const QString &icon=QString::null,
-                      const QString &tryexec=QString::null,
-                      const QStringList &mimetypes=QStringList(),
-                      const QString &acname=QString::null,
-                      const QString &cmdname=QString::null,
+    KateExternalTool( const TQString &name=TQString::null,
+                      const TQString &command=TQString::null,
+                      const TQString &icon=TQString::null,
+                      const TQString &tryexec=TQString::null,
+                      const TQStringList &mimetypes=TQStringList(),
+                      const TQString &acname=TQString::null,
+                      const TQString &cmdname=TQString::null,
                       int save=0 );
     ~KateExternalTool() {};
 
-    QString name; ///< The name used in the menu.
-    QString command; ///< The command to execute.
-    QString icon; ///< the icon to use in the menu.
-    QString tryexec; ///< The name or path of the executable.
-    QStringList mimetypes; ///< Optional list of mimetypes for which this action is valid.
+    TQString name; ///< The name used in the menu.
+    TQString command; ///< The command to execute.
+    TQString icon; ///< the icon to use in the menu.
+    TQString tryexec; ///< The name or path of the executable.
+    TQStringList mimetypes; ///< Optional list of mimetypes for which this action is valid.
     bool hasexec; ///< This is set by the constructor by calling checkExec(), if a value is present.
-    QString acname; ///< The name for the action. This is generated first time the action is is created.
-    QString cmdname; ///< The name for the commandline.
+    TQString acname; ///< The name for the action. This is generated first time the action is is created.
+    TQString cmdname; ///< The name for the commandline.
     int save; ///< We can save documents prior to activating the tool command: 0 = nothing, 1 = current document, 2 = all documents.
 
     /**
      * @return true if mimetypes is empty, or the @p mimetype matches.
      */
-    bool valid( const QString &mimetype ) const;
+    bool valid( const TQString &mimetype ) const;
     /**
      * @return true if "tryexec" exists and has the executable bit set, or is
      * empty.
@@ -132,7 +132,7 @@ class KateExternalTool
     bool checkExec();
 
   private:
-    QString m_exec; ///< The fully qualified path of the executable.
+    TQString m_exec; ///< The fully qualified path of the executable.
 };
 
 /**
@@ -144,7 +144,7 @@ class KateExternalToolsConfigWidget : public Kate::ConfigPage
 {
   Q_OBJECT
   public:
-    KateExternalToolsConfigWidget( QWidget *parent, const char* name);
+    KateExternalToolsConfigWidget( TQWidget *parent, const char* name);
     virtual ~KateExternalToolsConfigWidget();
 
     virtual void apply();
@@ -164,12 +164,12 @@ class KateExternalToolsConfigWidget : public Kate::ConfigPage
     void slotSelectionChanged();
 
   private:
-    QPixmap blankIcon();
+    TQPixmap blankIcon();
 
-    QStringList m_removed;
+    TQStringList m_removed;
 
     class KListBox *lbTools;
-    class QPushButton *btnNew, *btnRemove, *btnEdit, *btnMoveUp, *btnMoveDwn;
+    class TQPushButton *btnNew, *btnRemove, *btnEdit, *btnMoveUp, *btnMoveDwn;
 
     class KConfig *config;
 
@@ -186,13 +186,13 @@ class KateExternalToolsConfigWidget : public Kate::ConfigPage
     static KateExternalToolsCommand *self();
     void reload();
   public:
-    virtual QStringList cmds ();
-    virtual bool exec (Kate::View *view, const QString &cmd, QString &msg);
-    virtual bool help (Kate::View *view, const QString &cmd, QString &msg);
+    virtual TQStringList cmds ();
+    virtual bool exec (Kate::View *view, const TQString &cmd, TQString &msg);
+    virtual bool help (Kate::View *view, const TQString &cmd, TQString &msg);
   private:
     static KateExternalToolsCommand *s_self;
-    QStringList m_list;
-    QMap<QString,QString> m_map;
+    TQStringList m_list;
+    TQMap<TQString,TQString> m_map;
     bool m_inited;
  };
 
@@ -206,12 +206,12 @@ class KateExternalToolServiceEditor : public KDialogBase
   public:
 
     KateExternalToolServiceEditor( KateExternalTool *tool=0,
-    				   QWidget *parent=0, const char *name=0 );
+    				   TQWidget *parent=0, const char *name=0 );
 
-    class QLineEdit *leName, *leExecutable, *leMimetypes,*leCmdLine;
-    class QTextEdit *teCommand;
+    class TQLineEdit *leName, *leExecutable, *leMimetypes,*leCmdLine;
+    class TQTextEdit *teCommand;
     class KIconButton *btnIcon;
-    class QComboBox *cmbSave;
+    class TQComboBox *cmbSave;
 
   private slots:
     /**

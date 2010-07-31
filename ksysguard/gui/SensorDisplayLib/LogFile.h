@@ -26,10 +26,10 @@
 class QFile;
 class QListBox;
 
-#include <qdom.h>
-#include <qpopupmenu.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqpopupmenu.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <SensorDisplay.h>
 
@@ -39,22 +39,22 @@ class LogFile : public KSGRD::SensorDisplay
 {
 	Q_OBJECT
 public:
-	LogFile(QWidget *parent = 0, const char *name = 0, const QString& title = 0);
+	LogFile(TQWidget *parent = 0, const char *name = 0, const TQString& title = 0);
 	~LogFile(void);
 
-	bool addSensor(const QString& hostName, const QString& sensorName,
-				   const QString& sensorType, const QString& sensorDescr);
-	void answerReceived(int id, const QString& answer);
-	void resizeEvent(QResizeEvent*);
+	bool addSensor(const TQString& hostName, const TQString& sensorName,
+				   const TQString& sensorType, const TQString& sensorDescr);
+	void answerReceived(int id, const TQString& answer);
+	void resizeEvent(TQResizeEvent*);
 
-	bool restoreSettings(QDomElement& element);
-	bool saveSettings(QDomDocument& doc, QDomElement& element, bool save = true);
+	bool restoreSettings(TQDomElement& element);
+	bool saveSettings(TQDomDocument& doc, TQDomElement& element, bool save = true);
 
 	void updateMonitor(void);
 
 	void configureSettings(void);
 
-	virtual void timerEvent(QTimerEvent*)
+	virtual void timerEvent(TQTimerEvent*)
 	{
 		updateMonitor();
 	}
@@ -76,8 +76,8 @@ public slots:
 
 private:
 	LogFileSettings* lfs;
-	QListBox* monitor;
-	QStringList filterRules;
+	TQListBox* monitor;
+	TQStringList filterRules;
 
 	unsigned long logFileID;
 };

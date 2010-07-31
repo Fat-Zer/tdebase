@@ -27,12 +27,12 @@ class ZModemDialog : public KDialogBase
 {
   Q_OBJECT
 public:
-  ZModemDialog(QWidget *parent, bool modal, const QString &caption);
+  ZModemDialog(TQWidget *parent, bool modal, const TQString &caption);
   
   /**
    * Adds a line of text to the progress window
    */
-  void addProgressText(const QString &);
+  void addProgressText(const TQString &);
 
   /**
    * To indicate the process is finished.
@@ -43,7 +43,7 @@ public slots:
   void slotClose();
   
 private:
-  QTextEdit *textEdit;
+  TQTextEdit *textEdit;
 };
 
 #endif

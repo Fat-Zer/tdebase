@@ -21,10 +21,10 @@
 #define __konq_listviewitems_h__
 
 #include <klistview.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kicontheme.h>
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 // for mode_t
 #include <sys/types.h>
@@ -52,7 +52,7 @@ class KonqBaseListViewItem : public KListViewItem
       virtual void updateContents() = 0;
       virtual void setDisabled( bool disabled ) { m_bDisabled = disabled; }
       virtual void setActive  ( bool active   ) { m_bActive   = active;   }
-      virtual int compare( QListViewItem* i, int col, bool ascending ) const;
+      virtual int compare( TQListViewItem* i, int col, bool ascending ) const;
       
       int state() const 
       {
@@ -64,7 +64,7 @@ class KonqBaseListViewItem : public KListViewItem
       }
 
       /** For KonqMimeTypeResolver */
-      QRect rect() const;
+      TQRect rect() const;
       
    protected:
       short int sortChar;
@@ -106,18 +106,18 @@ class KonqListViewItem : public KonqBaseListViewItem
 
       virtual ~KonqListViewItem();
 
-      virtual void paintCell( QPainter *_painter, const QColorGroup & cg,
+      virtual void paintCell( TQPainter *_painter, const TQColorGroup & cg,
                               int column, int width, int alignment );
-      virtual void paintFocus( QPainter * _painter, const QColorGroup & cg, const QRect & r );
+      virtual void paintFocus( TQPainter * _painter, const TQColorGroup & cg, const TQRect & r );
       virtual void updateContents();
       virtual void setDisabled( bool disabled );
       virtual void setActive  ( bool active   );
 
-      virtual void setPixmap( int column, const QPixmap & pm );
-      virtual const QPixmap * pixmap( int column ) const;
+      virtual void setPixmap( int column, const TQPixmap & pm );
+      virtual const TQPixmap * pixmap( int column ) const;
 
 private:
-      QValueVector<QPixmap *> m_pixmaps;
+      TQValueVector<TQPixmap *> m_pixmaps;
 };
 
 #endif

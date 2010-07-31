@@ -17,7 +17,7 @@ enum CrashType { Crash, Malloc, Div0, Assert };
 void do_crash()
 {
   KCmdLineArgs *args = 0;
-  QCString type = args->arg(0);
+  TQCString type = args->arg(0);
   printf("result = %s\n", type.data());
 }
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
   KApplication app(false, false);
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-  QCString type = args->count() ? args->arg(0) : "";
+  TQCString type = args->count() ? args->arg(0) : "";
   int crashtype = Crash;
   if (type == "malloc")
     crashtype = Malloc;

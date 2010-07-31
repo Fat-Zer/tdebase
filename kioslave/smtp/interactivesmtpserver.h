@@ -34,20 +34,20 @@
     your version.
 */
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 
-static QString err2str( int err ) {
+static TQString err2str( int err ) {
   switch ( err ) {
-  case QSocket::ErrConnectionRefused: return "Connection refused";
-  case QSocket::ErrHostNotFound: return "Host not found";
-  case QSocket::ErrSocketRead: return "Failed to read from socket";
+  case TQSocket::ErrConnectionRefused: return "Connection refused";
+  case TQSocket::ErrHostNotFound: return "Host not found";
+  case TQSocket::ErrSocketRead: return "Failed to read from socket";
   default: return "Unknown error";
   }
 }
 
 
-static QString escape( QString s ) {
+static TQString escape( TQString s ) {
   return s
     .replace( '&', "&amp;" )
     .replace( '>', "&gt;" )
@@ -57,7 +57,7 @@ static QString escape( QString s ) {
 }
 
 
-static QString trim( const QString & s ) {
+static TQString trim( const TQString & s ) {
   if ( s.endsWith( "\r\n" ) )
     return s.left( s.length() - 2 );
   if ( s.endsWith( "\r" ) || s.endsWith( "\n" ) )
@@ -66,21 +66,21 @@ static QString trim( const QString & s ) {
 }
 
 
-class InteractiveSMTPServerWindow : public QWidget {
+class InteractiveSMTPServerWindow : public TQWidget {
   Q_OBJECT
 public:
-  InteractiveSMTPServerWindow( QSocket * socket, QWidget * parent=0, const char * name=0, WFlags f=0 );
+  InteractiveSMTPServerWindow( TQSocket * socket, TQWidget * parent=0, const char * name=0, WFlags f=0 );
   ~InteractiveSMTPServerWindow();
 
 public slots:
   void slotSendResponse();
-  void slotDisplayClient( const QString & s ) {
+  void slotDisplayClient( const TQString & s ) {
     mTextEdit->append( "C:" + escape(s) );
   }
-  void slotDisplayServer( const QString & s ) {
+  void slotDisplayServer( const TQString & s ) {
     mTextEdit->append( "S:" + escape(s) );
   }
-  void slotDisplayMeta( const QString & s ) {
+  void slotDisplayMeta( const TQString & s ) {
     mTextEdit->append( "<font color=\"red\">" + escape(s) + "</font>" );
   }
   void slotReadyRead() {
@@ -88,7 +88,7 @@ public slots:
       slotDisplayClient( trim( mSocket->readLine() ) );
   }
   void slotError( int err ) {
-    slotDisplayMeta( QString( "E: %1 (%2)" ).arg( err2str( err ) ).arg( err ) );
+    slotDisplayMeta( TQString( "E: %1 (%2)" ).arg( err2str( err ) ).arg( err ) );
   }
   void slotConnectionClosed() {
     slotDisplayMeta( "Connection closed by peer" );
@@ -97,20 +97,20 @@ public slots:
     mSocket->close();
   }
 private:
-  QSocket * mSocket;
-  QTextEdit * mTextEdit;
-  QLineEdit * mLineEdit;
+  TQSocket * mSocket;
+  TQTextEdit * mTextEdit;
+  TQLineEdit * mLineEdit;
 };
 
-class InteractiveSMTPServer : public QServerSocket {
+class InteractiveSMTPServer : public TQServerSocket {
   Q_OBJECT
 public:
-  InteractiveSMTPServer( QObject * parent=0 );
+  InteractiveSMTPServer( TQObject * parent=0 );
   ~InteractiveSMTPServer() {}
 
   /*! \reimp */
   void newConnection( int fd ) {
-    QSocket * socket = new QSocket();
+    TQSocket * socket = new TQSocket();
     socket->setSocket( fd );
     InteractiveSMTPServerWindow * w = new InteractiveSMTPServerWindow( socket );
     w->show();

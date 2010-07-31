@@ -2,25 +2,25 @@
 #define ADVANCEDDIALOG_H
 
 #include <kdialogbase.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kconfig.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qgroupbox.h>
-#include <qobject.h>
-#include <qcheckbox.h>
-#include <qslider.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqgroupbox.h>
+#include <tqobject.h>
+#include <tqcheckbox.h>
+#include <tqslider.h>
 
 #include "advanceddialogimpl.h"
 
 class AdvancedDialog : public AdvancedDialogImpl
 {
 public:
-	AdvancedDialog(QWidget *parent = 0, const char *name = 0);
+	AdvancedDialog(TQWidget *parent = 0, const char *name = 0);
 	~AdvancedDialog();
-	void setMode(QComboBox *box, int i);
-	int mode(QComboBox *box);
+	void setMode(TQComboBox *box, int i);
+	int mode(TQComboBox *box);
 };
 
 /* =================================================================================================== */
@@ -29,7 +29,7 @@ class KScreenSaverAdvancedDialog : public KDialogBase
 {
     Q_OBJECT
 public:
-    KScreenSaverAdvancedDialog(QWidget *parent, const char* name = 0);
+    KScreenSaverAdvancedDialog(TQWidget *parent, const char* name = 0);
       
 public slots:
     void slotOk();
@@ -44,11 +44,11 @@ protected slots:
 private:
     void readSettings();
                      
-    QCheckBox *m_topLeftCorner;
-    QCheckBox *m_bottomLeftCorner;
-    QCheckBox *m_topRightCorner;
-    QCheckBox *m_bottomRightCorner;
-    QSlider   *mPrioritySlider;
+    TQCheckBox *m_topLeftCorner;
+    TQCheckBox *m_bottomLeftCorner;
+    TQCheckBox *m_topRightCorner;
+    TQCheckBox *m_bottomRightCorner;
+    TQSlider   *mPrioritySlider;
                                           
     bool mChanged;
     int  mPriority;

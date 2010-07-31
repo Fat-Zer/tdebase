@@ -32,7 +32,7 @@ class KBellConfig : public KCModule
   Q_OBJECT
 
  public:
-  KBellConfig(QWidget *parent, const char *name);
+  KBellConfig(TQWidget *parent, const char *name);
 
   void load();
   void load( bool useDefaults );
@@ -44,11 +44,11 @@ class KBellConfig : public KCModule
   void useBell( bool );
 
  private:
-  QPushButton  *m_testButton;
+  TQPushButton  *m_testButton;
   KIntNumInput *m_volume;
   KIntNumInput *m_pitch;
   KIntNumInput *m_duration;
-  QCheckBox    *m_useBell;
+  TQCheckBox    *m_useBell;
 };
 
 #endif

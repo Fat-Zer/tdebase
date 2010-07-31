@@ -28,12 +28,12 @@
 
 #include <stdlib.h>
 
-static bool check(const QString& txt, QString a, QString b)
+static bool check(const TQString& txt, TQString a, TQString b)
 {
     if (a.isEmpty())
-        a = QString::null;
+        a = TQString::null;
     if (b.isEmpty())
-        b = QString::null;
+        b = TQString::null;
     if (a == b) {
         kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
     }

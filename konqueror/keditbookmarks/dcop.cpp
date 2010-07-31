@@ -26,9 +26,9 @@
 
 #include <stdlib.h>
 
-#include <qclipboard.h>
-#include <qpopupmenu.h>
-#include <qpainter.h>
+#include <tqclipboard.h>
+#include <tqpopupmenu.h>
+#include <tqpainter.h>
 
 #include <klocale.h>
 #include <kbookmarkmanager.h>
@@ -38,13 +38,13 @@
 
 
 KBookmarkEditorIface::KBookmarkEditorIface()
-    : QObject(), DCOPObject("KBookmarkEditor") {
-    // connect(KBookmarkNotifier_stub, SIGNAL( updatedAccessMetadata(QString,QString) ), 
-    //         this,                   SLOT( slotDcopUpdatedAccessMetadata(QString,QString) ));
-    connectDCOPSignal(0, "KBookmarkNotifier", "updatedAccessMetadata(QString,QString)", "slotDcopUpdatedAccessMetadata(QString,QString)", false);
+    : TQObject(), DCOPObject("KBookmarkEditor") {
+    // connect(KBookmarkNotifier_stub, TQT_SIGNAL( updatedAccessMetadata(TQString,TQString) ), 
+    //         this,                   TQT_SLOT( slotDcopUpdatedAccessMetadata(TQString,TQString) ));
+    connectDCOPSignal(0, "KBookmarkNotifier", "updatedAccessMetadata(TQString,TQString)", "slotDcopUpdatedAccessMetadata(TQString,TQString)", false);
 }
 
-void KBookmarkEditorIface::slotDcopUpdatedAccessMetadata(QString filename, QString url) {
+void KBookmarkEditorIface::slotDcopUpdatedAccessMetadata(TQString filename, TQString url) {
     // evil hack, konqi gets updates by way of historymgr,
     // therefore konqi does'nt want "save" notification,
     // unfortunately to stop konqi getting it is difficult

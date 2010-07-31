@@ -15,7 +15,7 @@ class KDEsuDialog
     Q_OBJECT
 
 public:
-    KDEsuDialog(QCString user, QCString auth_user, bool enableKeep, const QString& icon , bool withIgnoreButton=false);
+    KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep, const TQString& icon , bool withIgnoreButton=false);
     ~KDEsuDialog();
 
     enum ResultCodes { AsUser = 10 };
@@ -25,7 +25,7 @@ protected:
     void slotUser1();
     
 private:
-    QCString m_User;
+    TQCString m_User;
 };
     
 

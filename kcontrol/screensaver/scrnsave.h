@@ -9,7 +9,7 @@
 #ifndef __SCRNSAVE_H__
 #define __SCRNSAVE_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kcmodule.h>
 
 #include "kssmonitor.h"
@@ -35,7 +35,7 @@ class KScreenSaver : public KCModule
 {
     Q_OBJECT
 public:
-    KScreenSaver(QWidget *parent, const char *name, const QStringList &);
+    KScreenSaver(TQWidget *parent, const char *name, const TQStringList &);
     ~KScreenSaver();
 
     virtual void load();
@@ -48,7 +48,7 @@ public:
 
 protected slots:
     void slotEnable( bool );
-    void slotScreenSaver( QListViewItem* );
+    void slotScreenSaver( TQListViewItem* );
     void slotSetup();
     void slotAdvanced();
     void slotTest();
@@ -68,9 +68,9 @@ protected:
     void getSaverNames();
     void setMonitor();
     void setDefaults();
-    void resizeEvent( QResizeEvent * );
-    void mousePressEvent(QMouseEvent *);
-    void keyPressEvent(QKeyEvent *);
+    void resizeEvent( TQResizeEvent * );
+    void mousePressEvent(TQMouseEvent *);
+    void keyPressEvent(TQKeyEvent *);
 
 protected:
     TestWin     *mTestWin;
@@ -78,22 +78,22 @@ protected:
     KProcess    *mSetupProc;
     KProcess    *mPreviewProc;
     KSSMonitor  *mMonitor;
-    QPushButton *mSetupBt;
-    QPushButton *mTestBt;
-    QListView   *mSaverListView;
+    TQPushButton *mSetupBt;
+    TQPushButton *mTestBt;
+    TQListView   *mSaverListView;
     QSpinBox	*mWaitEdit;
-    QSpinBox    *mWaitLockEdit;
-    QCheckBox   *mLockCheckBox;
-    QCheckBox   *mStarsCheckBox;
-    QCheckBox   *mEnabledCheckBox;
-    QLabel      *mMonitorLabel;
-    QLabel      *mActivateLbl;
-    QLabel      *mLockLbl;
-    QStringList mSaverFileList;
+    TQSpinBox    *mWaitLockEdit;
+    TQCheckBox   *mLockCheckBox;
+    TQCheckBox   *mStarsCheckBox;
+    TQCheckBox   *mEnabledCheckBox;
+    TQLabel      *mMonitorLabel;
+    TQLabel      *mActivateLbl;
+    TQLabel      *mLockLbl;
+    TQStringList mSaverFileList;
     SaverList   mSaverList;
-    QTimer      *mLoadTimer;
-    QGroupBox   *mSaverGroup;
-    QGroupBox   *mSettingsGroup;
+    TQTimer      *mLoadTimer;
+    TQGroupBox   *mSaverGroup;
+    TQGroupBox   *mSettingsGroup;
 
     int         mSelected;
     int         mPrevSelected;
@@ -106,7 +106,7 @@ protected:
     int         mLockTimeout;
     bool        mLock;
     bool        mEnabled;
-    QString     mSaver;
+    TQString     mSaver;
     bool        mImmutable;
 };
 

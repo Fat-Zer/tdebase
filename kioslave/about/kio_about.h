@@ -20,7 +20,7 @@
 #ifndef __kio_about_h__
 #define __kio_about_h__
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <kio/global.h>
 #include <kio/slavebase.h>
@@ -29,7 +29,7 @@
 class AboutProtocol : public KIO::SlaveBase
 {
 public:
-    AboutProtocol(const QCString &pool_socket, const QCString &app_socket);
+    AboutProtocol(const TQCString &pool_socket, const TQCString &app_socket);
     virtual ~AboutProtocol();
 
     virtual void get(const KURL& url);

@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __extensionmanager_h__
 #define __extensionmanager_h__
 
-#include <qvaluelist.h>
-#include <qobject.h>
+#include <tqvaluelist.h>
+#include <tqobject.h>
 
 #include "container_extension.h"
 
@@ -39,20 +39,20 @@ public:
     static ExtensionManager* the();
 
     void configureMenubar(bool duringInit);
-    void addExtension( const QString &desktopFile );
-    bool isMainPanel(const QWidget* panel) const;
-    bool isMenuBar(const QWidget* panel) const;
+    void addExtension( const TQString &desktopFile );
+    bool isMainPanel(const TQWidget* panel) const;
+    bool isMenuBar(const TQWidget* panel) const;
     void addContainer( ExtensionContainer* );
     void removeAllContainers();
     ExtensionList containers() const { return _containers; }
 
     KPanelExtension::Position initialPanelPosition(KPanelExtension::Position preferred);
-    QRect workArea(int XineramaScreen, const ExtensionContainer* container);
+    TQRect workArea(int XineramaScreen, const ExtensionContainer* container);
     int nextPanelOrder();
 
     // return the space available for all icons on the desktop
     // subtracts all panels from XineramaScreen's geometry
-    QRect desktopIconsArea(int xineramaScreen) const;
+    TQRect desktopIconsArea(int xineramaScreen) const;
 
 public slots:
     void removeContainer( ExtensionContainer* );
@@ -60,14 +60,14 @@ public slots:
     void extensionSizeChanged(ExtensionContainer *);
 
 signals:
-    void desktopIconsAreaChanged(const QRect &, int xineramaScreen);
+    void desktopIconsAreaChanged(const TQRect &, int xineramaScreen);
 
 protected:
     friend class Kicker;
 
     ExtensionManager();
     ~ExtensionManager();
-    QString uniqueId();
+    TQString uniqueId();
     void saveContainerConfig();
     bool shouldExclude(int XineramaScreen,
                        const ExtensionContainer* container,
@@ -79,7 +79,7 @@ protected slots:
 
 private:
     void migrateMenubar();
-    void reduceArea(QRect &area, const ExtensionContainer *panel) const;
+    void reduceArea(TQRect &area, const ExtensionContainer *panel) const;
 
     ExtensionList _containers;
     ExtensionContainer* m_menubarPanel;

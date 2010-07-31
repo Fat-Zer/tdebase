@@ -28,14 +28,14 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqspinbox.h>
 
 using namespace KHC;
 
-FontDialog::FontDialog( QWidget *parent, const char *name )
+FontDialog::FontDialog( TQWidget *parent, const char *name )
 	: KDialogBase( parent, name, true, i18n( "Font Configuration" ),
 	               Ok | Cancel )
 {
@@ -56,20 +56,20 @@ void FontDialog::slotOk()
 
 void FontDialog::setupFontSizesBox()
 {
-	QGroupBox *gb = new QGroupBox( i18n( "Sizes" ), mainWidget() );
+	TQGroupBox *gb = new TQGroupBox( i18n( "Sizes" ), mainWidget() );
 
-	QGridLayout *layout = new QGridLayout( gb );
+	TQGridLayout *layout = new TQGridLayout( gb );
 	layout->setSpacing( KDialog::spacingHint() );
 	layout->setMargin( KDialog::marginHint() * 2 );
 
-	QLabel *lMinFontSize = new QLabel( i18n( "M&inimum font size:" ), gb );
+	TQLabel *lMinFontSize = new TQLabel( i18n( "M&inimum font size:" ), gb );
 	layout->addWidget( lMinFontSize, 0, 0 );
 	m_minFontSize = new KIntNumInput( gb );
 	layout->addWidget( m_minFontSize, 0, 1 );
 	m_minFontSize->setRange( 1, 20 );
 	lMinFontSize->setBuddy( m_minFontSize );
 
-	QLabel *lMedFontSize = new QLabel( i18n( "M&edium font size:" ), gb );
+	TQLabel *lMedFontSize = new TQLabel( i18n( "M&edium font size:" ), gb );
 	layout->addWidget( lMedFontSize, 1, 0 );
 	m_medFontSize = new KIntNumInput( gb );
 	layout->addWidget( m_medFontSize, 1, 1 );
@@ -79,43 +79,43 @@ void FontDialog::setupFontSizesBox()
 
 void FontDialog::setupFontTypesBox()
 {
-	QGroupBox *gb = new QGroupBox( i18n( "Fonts" ), mainWidget() );
+	TQGroupBox *gb = new TQGroupBox( i18n( "Fonts" ), mainWidget() );
 
-	QGridLayout *layout = new QGridLayout( gb );
+	TQGridLayout *layout = new TQGridLayout( gb );
 	layout->setSpacing( KDialog::spacingHint() );
 	layout->setMargin( KDialog::marginHint() * 2 );
 
-	QLabel *lStandardFont = new QLabel( i18n( "S&tandard font:" ), gb );
+	TQLabel *lStandardFont = new TQLabel( i18n( "S&tandard font:" ), gb );
 	layout->addWidget( lStandardFont, 0, 0 );
 	m_standardFontCombo = new KFontCombo( gb );
 	layout->addWidget( m_standardFontCombo, 0, 1 );
 	lStandardFont->setBuddy( m_standardFontCombo );
 
-	QLabel *lFixedFont = new QLabel( i18n( "F&ixed font:" ), gb );
+	TQLabel *lFixedFont = new TQLabel( i18n( "F&ixed font:" ), gb );
 	layout->addWidget( lFixedFont, 1, 0 );
 	m_fixedFontCombo = new KFontCombo( gb );
 	layout->addWidget( m_fixedFontCombo, 1, 1 );
 	lFixedFont->setBuddy( m_fixedFontCombo );
 
-	QLabel *lSerifFont = new QLabel( i18n( "S&erif font:" ), gb );
+	TQLabel *lSerifFont = new TQLabel( i18n( "S&erif font:" ), gb );
 	layout->addWidget( lSerifFont, 2, 0 );
 	m_serifFontCombo = new KFontCombo( gb );
 	layout->addWidget( m_serifFontCombo, 2, 1 );
 	lSerifFont->setBuddy( m_serifFontCombo );
 
-	QLabel *lSansSerifFont = new QLabel( i18n( "S&ans serif font:" ), gb );
+	TQLabel *lSansSerifFont = new TQLabel( i18n( "S&ans serif font:" ), gb );
 	layout->addWidget( lSansSerifFont, 3, 0 );
 	m_sansSerifFontCombo = new KFontCombo( gb );
 	layout->addWidget( m_sansSerifFontCombo, 3, 1 );
 	lSansSerifFont->setBuddy( m_sansSerifFontCombo );
 
-	QLabel *lItalicFont = new QLabel( i18n( "&Italic font:" ), gb );
+	TQLabel *lItalicFont = new TQLabel( i18n( "&Italic font:" ), gb );
 	layout->addWidget( lItalicFont, 4, 0 );
 	m_italicFontCombo = new KFontCombo( gb );
 	layout->addWidget( m_italicFontCombo, 4, 1 );
 	lItalicFont->setBuddy( m_italicFontCombo );
 
-	QLabel *lFantasyFont = new QLabel( i18n( "&Fantasy font:" ), gb );
+	TQLabel *lFantasyFont = new TQLabel( i18n( "&Fantasy font:" ), gb );
 	layout->addWidget( lFantasyFont, 5, 0 );
 	m_fantasyFontCombo = new KFontCombo( gb );
 	layout->addWidget( m_fantasyFontCombo, 5, 1 );
@@ -124,24 +124,24 @@ void FontDialog::setupFontTypesBox()
 
 void FontDialog::setupFontEncodingBox()
 {
-	QGroupBox *gb = new QGroupBox( i18n( "Encoding" ), mainWidget() );
+	TQGroupBox *gb = new TQGroupBox( i18n( "Encoding" ), mainWidget() );
 
-	QGridLayout *layout = new QGridLayout( gb );
+	TQGridLayout *layout = new TQGridLayout( gb );
 	layout->setSpacing( KDialog::spacingHint() );
 	layout->setMargin( KDialog::marginHint() * 2 );
 
-	QLabel *lDefaultEncoding = new QLabel( i18n( "&Default encoding:" ), gb );
+	TQLabel *lDefaultEncoding = new TQLabel( i18n( "&Default encoding:" ), gb );
 	layout->addWidget( lDefaultEncoding, 0, 0 );
 	m_defaultEncoding = new KComboBox( false, gb );
 	layout->addWidget( m_defaultEncoding, 0, 1 );
-	QStringList encodings = KGlobal::charsets()->availableEncodingNames();
+	TQStringList encodings = KGlobal::charsets()->availableEncodingNames();
 	encodings.prepend( i18n( "Use Language Encoding" ) );
 	m_defaultEncoding->insertStringList( encodings );
 	lDefaultEncoding->setBuddy( m_defaultEncoding );
 
-	QLabel *lFontSizeAdjustement = new QLabel( i18n( "&Font size adjustment:" ), gb );
+	TQLabel *lFontSizeAdjustement = new TQLabel( i18n( "&Font size adjustment:" ), gb );
 	layout->addWidget( lFontSizeAdjustement, 1, 0 );
-	m_fontSizeAdjustement = new QSpinBox( -5, 5, 1, gb );
+	m_fontSizeAdjustement = new TQSpinBox( -5, 5, 1, gb );
 	layout->addWidget( m_fontSizeAdjustement, 1, 1 );
 	lFontSizeAdjustement->setBuddy( m_fontSizeAdjustement );
 }
@@ -155,7 +155,7 @@ void FontDialog::load()
 		m_minFontSize->setValue( cfg->readNumEntry( "MinimumFontSize", HTML_DEFAULT_MIN_FONT_SIZE ) );
 		m_medFontSize->setValue( cfg->readNumEntry( "MediumFontSize", 10 ) );
 
-		QStringList fonts = cfg->readListEntry( "Fonts" );
+		TQStringList fonts = cfg->readListEntry( "Fonts" );
 		if ( fonts.isEmpty() )
 			fonts << KGlobalSettings::generalFont().family()
 			      << KGlobalSettings::fixedFont().family()
@@ -189,19 +189,19 @@ void FontDialog::save()
 		cfg->writeEntry( "MinimumFontSize", m_minFontSize->value() );
 		cfg->writeEntry( "MediumFontSize", m_medFontSize->value() );
 
-		QStringList fonts;
+		TQStringList fonts;
 		fonts << m_standardFontCombo->currentText()
 		      << m_fixedFontCombo->currentText()
 		      << m_serifFontCombo->currentText()
 		      << m_sansSerifFontCombo->currentText()
 		      << m_italicFontCombo->currentText()
 		      << m_fantasyFontCombo->currentText()
-		      << QString::number( m_fontSizeAdjustement->value() );
+		      << TQString::number( m_fontSizeAdjustement->value() );
 
 		cfg->writeEntry( "Fonts", fonts );
 
 		if ( m_defaultEncoding->currentText() == i18n( "Use Language Encoding" ) )
-			cfg->writeEntry( "DefaultEncoding", QString::null );
+			cfg->writeEntry( "DefaultEncoding", TQString::null );
 		else
 			cfg->writeEntry( "DefaultEncoding", m_defaultEncoding->currentText() );
 	}

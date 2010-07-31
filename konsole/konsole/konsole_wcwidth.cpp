@@ -209,7 +209,7 @@ int konsole_wcwidth_cjk(Q_UINT16 ucs)
 }
 
 // single byte char: +1, multi byte char: +2
-int string_width( const QString &txt )
+int string_width( const TQString &txt )
 {
   int w = 0;
 

@@ -24,7 +24,7 @@ class PluginMgr
         PluginMgr();
         virtual bool provides( Requirement );
     protected:
-        virtual void error( const QString& error_msg );
+        virtual void error( const TQString& error_msg );
     };
 
 } // namespace

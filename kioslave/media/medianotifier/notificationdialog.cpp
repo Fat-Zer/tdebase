@@ -18,31 +18,31 @@
 */
 
 #include "notificationdialog.h"
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <krun.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kio/global.h>
 #include <klistbox.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqpushbutton.h>
 
 #include "actionlistboxitem.h"
 #include "notificationdialogview.h"
 
 NotificationDialog::NotificationDialog( KFileItem medium, NotifierSettings *settings,
-                                        QWidget* parent, const char* name )
+                                        TQWidget* parent, const char* name )
 	: KDialogBase( parent, name, false, i18n( "Medium Detected" ), Ok|Cancel|User1, Ok, true),
 	  m_medium(medium), m_settings( settings )
 {
 	setCaption( KIO::decodeFileName(m_medium.name()) );
 	clearWState( WState_Polished );
 
-	QWidget *page = new QWidget( this );
+	TQWidget *page = new TQWidget( this );
 	setMainWidget(page);
-	QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+	TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, spacingHint() );
 
 	m_view = new NotificationDialogView( page );
 
@@ -53,30 +53,30 @@ NotificationDialog::NotificationDialog( KFileItem medium, NotifierSettings *sett
 
 	updateActionsListBox();
 
-	resize( QSize(400,400).expandedTo( minimumSizeHint() ) );
+	resize( TQSize(400,400).expandedTo( minimumSizeHint() ) );
 
 
 	m_actionWatcher = new KDirWatch();
-	QString services_dir
+	TQString services_dir
 		= locateLocal( "data", "konqueror/servicemenus", true );
 	m_actionWatcher->addDir( services_dir );
 
 	setButtonText( User1, i18n("Configure...") );
 
-	connect( m_actionWatcher, SIGNAL( dirty( const QString & ) ),
-	         this, SLOT( slotActionsChanged( const QString & ) ) );
-	connect( this , SIGNAL( okClicked() ),
-	         this, SLOT( slotOk() ) );
-	connect( this, SIGNAL( user1Clicked() ),
-	         this, SLOT( slotConfigure() ) );
-	connect( m_view->actionsList, SIGNAL( doubleClicked ( QListBoxItem*, const QPoint & ) ),
-	         this, SLOT( slotOk() ) );
+	connect( m_actionWatcher, TQT_SIGNAL( dirty( const TQString & ) ),
+	         this, TQT_SLOT( slotActionsChanged( const TQString & ) ) );
+	connect( this , TQT_SIGNAL( okClicked() ),
+	         this, TQT_SLOT( slotOk() ) );
+	connect( this, TQT_SIGNAL( user1Clicked() ),
+	         this, TQT_SLOT( slotConfigure() ) );
+	connect( m_view->actionsList, TQT_SIGNAL( doubleClicked ( TQListBoxItem*, const TQPoint & ) ),
+	         this, TQT_SLOT( slotOk() ) );
 
-	connect( this, SIGNAL( finished() ),
-	         this, SLOT( delayedDestruct() ) );
+	connect( this, TQT_SIGNAL( finished() ),
+	         this, TQT_SLOT( delayedDestruct() ) );
 
 	m_actionWatcher->startScan();
-	QPushButton * btn = actionButton( Ok );
+	TQPushButton * btn = actionButton( Ok );
 	btn->setFocus();
 }
 
@@ -90,11 +90,11 @@ void NotificationDialog::updateActionsListBox()
 {
 	m_view->actionsList->clear();
 
-	QValueList<NotifierAction*> actions
+	TQValueList<NotifierAction*> actions
 		= m_settings->actionsForMimetype( m_medium.mimetype() );
 
-	QValueList<NotifierAction*>::iterator it = actions.begin();
-	QValueList<NotifierAction*>::iterator end = actions.end();
+	TQValueList<NotifierAction*>::iterator it = actions.begin();
+	TQValueList<NotifierAction*>::iterator end = actions.end();
 
 	for ( ; it!=end; ++it )
 	{
@@ -106,7 +106,7 @@ void NotificationDialog::updateActionsListBox()
 }
 
 
-void NotificationDialog::slotActionsChanged(const QString &/*dir*/)
+void NotificationDialog::slotActionsChanged(const TQString &/*dir*/)
 {
 	m_settings->reload();
 	updateActionsListBox();
@@ -114,7 +114,7 @@ void NotificationDialog::slotActionsChanged(const QString &/*dir*/)
 
 void NotificationDialog::slotOk()
 {
-	QListBoxItem *item = m_view->actionsList->selectedItem();
+	TQListBoxItem *item = m_view->actionsList->selectedItem();
 
 	if ( item != 0L )
 	{
@@ -136,7 +136,7 @@ void NotificationDialog::launchAction( NotifierAction *action )
 
 	action->execute(m_medium);
 
-	QDialog::accept();
+	TQDialog::accept();
 }
 
 void NotificationDialog::slotConfigure()

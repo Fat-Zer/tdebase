@@ -20,8 +20,8 @@
 #ifndef __konq_listviewwidget_h__
 #define __konq_listviewwidget_h__
 
-#include <qvaluelist.h>
-#include <qvaluevector.h>
+#include <tqvaluelist.h>
+#include <tqvaluevector.h>
 
 #include <kurl.h>
 #include <kfileitem.h>
@@ -55,15 +55,15 @@ class ColumnInfo
 {
 public:
    ColumnInfo();
-   void setData( const QString& n, const QString& desktopName, int kioUds,
+   void setData( const TQString& n, const TQString& desktopName, int kioUds,
                  KToggleAction *someAction, int theWith = -1 );
-   void setData( const QString& n, const QString& desktopName, int kioUds /* UDS_EXTRA */,
-                 QVariant::Type type, KToggleAction *someAction, int theWith = -1 );
+   void setData( const TQString& n, const TQString& desktopName, int kioUds /* UDS_EXTRA */,
+                 TQVariant::Type type, KToggleAction *someAction, int theWith = -1 );
    int displayInColumn;
-   QString name;
-   QString desktopFileName;
+   TQString name;
+   TQString desktopFileName;
    int udsId;
-   QVariant::Type type; // only used if udsId == UDS_EXTRA
+   TQVariant::Type type; // only used if udsId == UDS_EXTRA
    bool displayThisOne;
    KToggleAction *toggleThisOne;
    int width;
@@ -81,7 +81,7 @@ class KonqBaseListViewWidget : public KListView
 
    Q_OBJECT
 public:
-   KonqBaseListViewWidget( KonqListView *parent, QWidget *parentWidget );
+   KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget );
    virtual ~KonqBaseListViewWidget();
    unsigned int NumberOfAtoms;
 
@@ -108,40 +108,40 @@ public:
 
    virtual bool openURL( const KURL &url );
 
-   void selectedItems( QPtrList<KonqBaseListViewItem> *_list );
+   void selectedItems( TQPtrList<KonqBaseListViewItem> *_list );
    KFileItemList visibleFileItems();
    KFileItemList selectedFileItems();
    KURL::List selectedUrls( bool mostLocal = false );
 
    /** @return the KonqListViewDir which handles the directory _url */
-   //virtual KonqListViewDir *findDir ( const QString & _url );
+   //virtual KonqListViewDir *findDir ( const TQString & _url );
 
    /**
     * @return the Properties instance for this view. Used by the items.
     */
    KonqPropsView *props() const;
 
-   //QPtrList<ColumnInfo> *columnConfigInfo() { return &confColumns; };
-   QValueVector<ColumnInfo>& columnConfigInfo() { return confColumns; };
-   QString sortedByColumn;
+   //TQPtrList<ColumnInfo> *columnConfigInfo() { return &confColumns; };
+   TQValueVector<ColumnInfo>& columnConfigInfo() { return confColumns; };
+   TQString sortedByColumn;
 
    virtual void setShowIcons( bool enable ) { m_showIcons = enable; }
    virtual bool showIcons() { return m_showIcons; }
 
-   void setItemFont( const QFont &f ) { m_itemFont = f; }
-   QFont itemFont() const { return m_itemFont; }
-   void setItemColor( const QColor &c ) { m_itemColor = c; }
-   QColor itemColor() const { return m_itemColor; }
+   void setItemFont( const TQFont &f ) { m_itemFont = f; }
+   TQFont itemFont() const { return m_itemFont; }
+   void setItemColor( const TQColor &c ) { m_itemColor = c; }
+   TQColor itemColor() const { return m_itemColor; }
    int iconSize() const { return props()->iconSize(); }
 
    void setAscending( bool b ) { m_bAscending = b; }
    bool ascending() const { return m_bAscending; }
    bool caseInsensitiveSort() const;
 
-   virtual void paintEmptyArea( QPainter *p, const QRect &r );
+   virtual void paintEmptyArea( TQPainter *p, const TQRect &r );
 
-   virtual void saveState( QDataStream & );
-   virtual void restoreState( QDataStream & );
+   virtual void saveState( TQDataStream & );
+   virtual void restoreState( TQDataStream & );
 
    virtual void disableIcons( const KURL::List& lst );
 
@@ -154,16 +154,16 @@ signals:
 public slots:
    //virtual void slotOnItem( KonqBaseListViewItem* _item );
    // The '2' was added to differentiate it from KListView::slotMouseButtonClicked()
-   void slotMouseButtonClicked2( int _button, QListViewItem *_item, const QPoint& pos, int );
-   virtual void slotExecuted( QListViewItem *_item );
-   void slotItemRenamed( QListViewItem *, const QString &, int );
+   void slotMouseButtonClicked2( int _button, TQListViewItem *_item, const TQPoint& pos, int );
+   virtual void slotExecuted( TQListViewItem *_item );
+   void slotItemRenamed( TQListViewItem *, const TQString &, int );
 
 protected slots:
    void slotAutoScroll();
 
    // from QListView
-   virtual void slotReturnPressed( QListViewItem *_item );
-   virtual void slotCurrentChanged( QListViewItem *_item ) { slotOnItem( _item ); }
+   virtual void slotReturnPressed( TQListViewItem *_item );
+   virtual void slotCurrentChanged( TQListViewItem *_item ) { slotOnItem( _item ); }
 
    // slots connected to the directory lister
    virtual void slotStarted();
@@ -174,7 +174,7 @@ protected slots:
    virtual void slotDeleteItem( KFileItem * );
    virtual void slotRefreshItems( const KFileItemList & );
    virtual void slotRedirection( const KURL & );
-   void slotPopupMenu( QListViewItem *, const QPoint&, int );
+   void slotPopupMenu( TQListViewItem *, const TQPoint&, int );
 
    // forces a repaint on column size changes / branch expansion
    // when there is a background pixmap
@@ -199,54 +199,54 @@ protected:
    void initConfig();
 
    virtual void startDrag();
-   virtual void viewportDragMoveEvent( QDragMoveEvent *_ev );
-   virtual void viewportDragEnterEvent( QDragEnterEvent *_ev );
-   virtual void viewportDragLeaveEvent( QDragLeaveEvent *_ev );
-   virtual void viewportDropEvent( QDropEvent *_ev );
-   virtual void viewportPaintEvent( QPaintEvent *e );
-   virtual void viewportResizeEvent( QResizeEvent *e );
+   virtual void viewportDragMoveEvent( TQDragMoveEvent *_ev );
+   virtual void viewportDragEnterEvent( TQDragEnterEvent *_ev );
+   virtual void viewportDragLeaveEvent( TQDragLeaveEvent *_ev );
+   virtual void viewportDropEvent( TQDropEvent *_ev );
+   virtual void viewportPaintEvent( TQPaintEvent *e );
+   virtual void viewportResizeEvent( TQResizeEvent *e );
 
-   virtual void drawRubber( QPainter * );
-   virtual void contentsMousePressEvent( QMouseEvent *e );
-   virtual void contentsMouseReleaseEvent( QMouseEvent *e );
-   virtual void contentsMouseMoveEvent( QMouseEvent *e );
-   virtual void contentsWheelEvent( QWheelEvent * e );
+   virtual void drawRubber( TQPainter * );
+   virtual void contentsMousePressEvent( TQMouseEvent *e );
+   virtual void contentsMouseReleaseEvent( TQMouseEvent *e );
+   virtual void contentsMouseMoveEvent( TQMouseEvent *e );
+   virtual void contentsWheelEvent( TQWheelEvent * e );
 
-   virtual void leaveEvent( QEvent *e );
+   virtual void leaveEvent( TQEvent *e );
 
    /** Common method for slotCompleted and slotCanceled */
    virtual void setComplete();
 
    //the second parameter is set to true when the menu shortcut is pressed,
    //so the position of the mouse pointer doesn't matter when using keyboard, aleXXX
-   virtual void popupMenu( const QPoint& _global, bool alwaysForSelectedFiles = false );
+   virtual void popupMenu( const TQPoint& _global, bool alwaysForSelectedFiles = false );
 
    //this one is called only by KListView, and this is friend anyways (Alex)
    //KDirLister *dirLister() const { return m_dirLister; }
 
 protected:
-   int executeArea( QListViewItem *_item );
+   int executeArea( TQListViewItem *_item );
 
    /** The directory lister for this URL */
    KDirLister *m_dirLister;
 
-   //QPtrList<ColumnInfo> confColumns;
+   //TQPtrList<ColumnInfo> confColumns;
    // IMO there is really no need for an advanced data structure
    //we have a fixed number of members,
    //it consumes less memory and access should be faster (Alex)
    // This might not be the case for ever... we should introduce custom fields in kio (David)
-   QValueVector<ColumnInfo> confColumns;
+   TQValueVector<ColumnInfo> confColumns;
 
    KonqBaseListViewItem *m_dragOverItem;
    KonqBaseListViewItem *m_activeItem;
-   QPtrList<KonqBaseListViewItem> *m_selected;
-   QTimer *m_scrollTimer;
+   TQPtrList<KonqBaseListViewItem> *m_selected;
+   TQTimer *m_scrollTimer;
 
-   QFont m_itemFont;
-   QColor m_itemColor;
+   TQFont m_itemFont;
+   TQColor m_itemColor;
 
-   QRect *m_rubber;
-   QPixmap *m_backrubber;
+   TQRect *m_rubber;
+   TQPixmap *m_backrubber;
    
    bool m_bTopLevelComplete:1;
    bool m_showIcons:1;
@@ -261,9 +261,9 @@ protected:
 
    KURL m_url;
 
-   QString m_itemToGoTo;
-   QStringList m_itemsToSelect;
-   QTimer *m_backgroundTimer;
+   TQString m_itemToGoTo;
+   TQStringList m_itemsToSelect;
+   TQTimer *m_backgroundTimer;
 
    KonqFileTip *m_fileTip;
 };

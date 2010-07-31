@@ -91,7 +91,7 @@ class KDE_EXPORT KasTasker : public KasBar
 
 public:
     /** Create a KasTasker widget. */
-    KasTasker( Orientation o, QWidget* parent = 0, const char* name = 0, WFlags f = 0 );
+    KasTasker( Orientation o, TQWidget* parent = 0, const char* name = 0, WFlags f = 0 );
 
     /**
      * Create a KasTasker widget that is slaved to another KasTasker. The
@@ -99,7 +99,7 @@ public:
      * not connect to the signals of the TaskManager.
      */
     KasTasker( Orientation o, KasTasker *master,
-	       QWidget *parent=0, const char *name=0, WFlags f=0 );
+	       TQWidget *parent=0, const char *name=0, WFlags f=0 );
 
     /** Cleans up. */
     virtual ~KasTasker();
@@ -107,7 +107,7 @@ public:
     /** Factory method that returns the default menu for items in the bar. */
     virtual KPopupMenu *contextMenu();
 
-    virtual KasTasker *createChildBar( Orientation o, QWidget *parent, const char *name=0 );
+    virtual KasTasker *createChildBar( Orientation o, TQWidget *parent, const char *name=0 );
 
     /**
      * Returns true if this is the top KasTasker. Note that it is possible for

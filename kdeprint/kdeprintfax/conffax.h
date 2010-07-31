@@ -21,14 +21,14 @@
 #ifndef CONFFAX_H
 #define CONFFAX_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QComboBox;
 
 class ConfFax : public QWidget
 {
 public:
-	ConfFax(QWidget *parent = 0, const char *name = 0);
+	ConfFax(TQWidget *parent = 0, const char *name = 0);
 
 	void load();
 	void save();

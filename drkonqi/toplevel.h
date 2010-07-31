@@ -41,22 +41,22 @@ class Toplevel : public KDialogBase
   Q_OBJECT
 
 public:
-  Toplevel(KrashConfig *krash, QWidget *parent = 0, const char * name = 0);
+  Toplevel(KrashConfig *krash, TQWidget *parent = 0, const char * name = 0);
   ~Toplevel();
 
 private:
   // helper methods
-  QString generateText() const;
+  TQString generateText() const;
 
 protected slots:
   void slotUser1();
   void slotUser2();
-  void slotNewDebuggingApp(const QString& launchName);
+  void slotNewDebuggingApp(const TQString& launchName);
   void slotUser3();
 
 protected slots:
   void slotBacktraceSomeError();
-  void slotBacktraceDone(const QString &);
+  void slotBacktraceDone(const TQString &);
 
 private:
   KrashConfig *m_krashconf;

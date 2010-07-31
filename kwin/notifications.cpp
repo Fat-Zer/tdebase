@@ -17,9 +17,9 @@ License. See the file "COPYING" for the exact licensing terms.
 namespace KWinInternal
 {
 
-QString Notify::eventToName( Event e )
+TQString Notify::eventToName( Event e )
     {
-    QString event;
+    TQString event;
     switch ( e ) 
         {
         case Activate:
@@ -85,7 +85,7 @@ QString Notify::eventToName( Event e )
         default:
             if ((e > DesktopChange) && (e <= DesktopChange+20))
             {
-            event = QString("desktop%1").arg(e-DesktopChange);
+            event = TQString("desktop%1").arg(e-DesktopChange);
             }
         break;
         }
@@ -93,14 +93,14 @@ QString Notify::eventToName( Event e )
     }
 
 static bool forgetIt = FALSE;
-QValueList< Notify::EventData > Notify::pending_events;
+TQValueList< Notify::EventData > Notify::pending_events;
 
-bool Notify::raise( Event e, const QString& message, Client* c )
+bool Notify::raise( Event e, const TQString& message, Client* c )
     {
     if ( forgetIt )
         return false; // no connection was possible, don't try each time
 
-    QString event = eventToName( e );
+    TQString event = eventToName( e );
     if ( !event )
         return false;
 
@@ -135,7 +135,7 @@ void Notify::sendPendingEvents()
 
 bool Notify::makeDemandAttention( Event e )
     {
-    QString event = eventToName( e );
+    TQString event = eventToName( e );
     if( !event )
         return false;
     int rep = KNotifyClient::getPresentation( event );

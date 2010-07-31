@@ -18,23 +18,23 @@
 #ifndef __menutab_impl_h__
 #define __menutab_impl_h__
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
 #include "menutab.h"
 
-class kSubMenuItem : public QObject, public QCheckListItem
+class kSubMenuItem : public TQObject, public QCheckListItem
 {
     Q_OBJECT
 
     public:
-        kSubMenuItem(QListView* parent, 
-                     const QString& visibleName,
-                     const QString& desktopFile,
-                     const QPixmap& icon,
+        kSubMenuItem(TQListView* parent, 
+                     const TQString& visibleName,
+                     const TQString& desktopFile,
+                     const TQPixmap& icon,
                      bool checked);
         ~kSubMenuItem() {}
 
-        QString desktopFile();
+        TQString desktopFile();
 
     signals:
         void toggled(bool);
@@ -42,7 +42,7 @@ class kSubMenuItem : public QObject, public QCheckListItem
     protected:
         void stateChange(bool state);
 
-        QString m_desktopFile;
+        TQString m_desktopFile;
 };
 
 class MenuTab : public MenuTabBase
@@ -50,7 +50,7 @@ class MenuTab : public MenuTabBase
     Q_OBJECT
 
 public:
-    MenuTab( QWidget *parent=0, const char* name=0 );
+    MenuTab( TQWidget *parent=0, const char* name=0 );
 
     void load();
     void load( bool useDefaults );
@@ -68,7 +68,7 @@ public slots:
 protected:
     kSubMenuItem *m_bookmarkMenu;
     kSubMenuItem *m_quickBrowserMenu;
-    QString m_kmenu_icon;
+    TQString m_kmenu_icon;
     bool m_kmenu_button_changed;
 };
 

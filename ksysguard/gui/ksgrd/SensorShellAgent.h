@@ -21,9 +21,9 @@
 #ifndef KSG_SENSORSHELLAGENT_H
 #define KSG_SENSORSHELLAGENT_H
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqguardedptr.h>
 
 #include <SensorAgent.h>
 
@@ -51,10 +51,10 @@ class SensorShellAgent : public SensorAgent
     SensorShellAgent( SensorManager *sm );
     ~SensorShellAgent();
 
-    bool start( const QString &host, const QString &shell,
-                const QString &command = "", int port = -1 );
+    bool start( const TQString &host, const TQString &shell,
+                const TQString &command = "", int port = -1 );
 
-    void hostInfo( QString &shell, QString &command, int &port) const;
+    void hostInfo( TQString &shell, TQString &command, int &port) const;
 
   private slots:
     void msgSent( KProcess* );
@@ -66,9 +66,9 @@ class SensorShellAgent : public SensorAgent
     bool writeMsg( const char *msg, int len );
     bool txReady();
 
-    QGuardedPtr<KProcess> mDaemon;
-    QString mShell;
-    QString mCommand;
+    TQGuardedPtr<KProcess> mDaemon;
+    TQString mShell;
+    TQString mCommand;
     int mRetryCount;
 };
 

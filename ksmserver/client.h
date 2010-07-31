@@ -9,18 +9,18 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 
 // needed to avoid clash with INT8 defined in X11/Xmd.h on solaris
 #define QT_CLEAN_NAMESPACE 1
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qsocketnotifier.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
-#include <qcstring.h>
-#include <qdict.h>
-#include <qptrqueue.h>
-#include <qptrdict.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqsocketnotifier.h>
+#include <tqptrlist.h>
+#include <tqvaluelist.h>
+#include <tqcstring.h>
+#include <tqdict.h>
+#include <tqptrqueue.h>
+#include <tqptrdict.h>
 #include <kapplication.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <dcopobject.h>
 
 #include "server2.h"
@@ -42,14 +42,14 @@ public:
     uint waitForPhase2 : 1;
     uint wasPhase2 : 1;
 
-    QPtrList<SmProp> properties;
+    TQPtrList<SmProp> properties;
     SmProp* property( const char* name ) const;
 
-    QString program() const;
-    QStringList restartCommand() const;
-    QStringList discardCommand() const;
+    TQString program() const;
+    TQStringList restartCommand() const;
+    TQStringList discardCommand() const;
     int restartStyleHint() const;
-    QString userId() const;
+    TQString userId() const;
     const char* clientId() { return id ? id : ""; }
 
 private:

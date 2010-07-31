@@ -23,7 +23,7 @@
 
 #include <config.h>
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kaboutdata.h>
 #include <kgenericfactory.h>
@@ -47,10 +47,10 @@
 #include <pwd.h>
 #include <grp.h>
 
-typedef KGenericFactory<KDModule, QWidget> KDMFactory;
+typedef KGenericFactory<KDModule, TQWidget> KDMFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_kdm, KDMFactory("kdmconfig") )
 
-KURL *decodeImgDrop(QDropEvent *e, QWidget *wdg)
+KURL *decodeImgDrop(TQDropEvent *e, TQWidget *wdg)
 {
     KURL::List uris;
 
@@ -61,10 +61,10 @@ KURL *decodeImgDrop(QDropEvent *e, QWidget *wdg)
 	if( KImageIO::canRead(KImageIO::type(url->fileName())) )
 	    return url;
 
-	QStringList qs = QStringList::split('\n', KImageIO::pattern());
+	TQStringList qs = TQStringList::split('\n', KImageIO::pattern());
 	qs.remove(qs.begin());
 
-	QString msg = i18n( "%1 "
+	TQString msg = i18n( "%1 "
 			    "does not appear to be an image file.\n"
 			    "Please use files with these extensions:\n"
 			    "%2")
@@ -78,7 +78,7 @@ KURL *decodeImgDrop(QDropEvent *e, QWidget *wdg)
 
 KSimpleConfig *config;
 
-KDModule::KDModule(QWidget *parent, const char *name, const QStringList &)
+KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KDMFactory::instance(), parent, name)
   , minshowuid(0)
   , maxshowuid(0)
@@ -123,17 +123,17 @@ KDModule::KDModule(QWidget *parent, const char *name, const QStringList &)
 
   KGlobal::locale()->insertCatalogue("kcmbackground");
 
-  QStringList sl;
-  QMap<gid_t,QStringList> tgmap;
-  QMap<gid_t,QStringList>::Iterator tgmapi;
-  QMap<gid_t,QStringList>::ConstIterator tgmapci;
-  QMap<QString, QPair<int,QStringList> >::Iterator umapi;
+  TQStringList sl;
+  TQMap<gid_t,TQStringList> tgmap;
+  TQMap<gid_t,TQStringList>::Iterator tgmapi;
+  TQMap<gid_t,TQStringList>::ConstIterator tgmapci;
+  TQMap<TQString, QPair<int,TQStringList> >::Iterator umapi;
 
   struct passwd *ps;
   for (setpwent(); (ps = getpwent()); ) {
-    QString un( QFile::decodeName( ps->pw_name ) );
+    TQString un( TQFile::decodeName( ps->pw_name ) );
     if (usermap.find( un ) == usermap.end()) {
-      usermap.insert( un, QPair<int,QStringList>( ps->pw_uid, sl ) );
+      usermap.insert( un, QPair<int,TQStringList>( ps->pw_uid, sl ) );
       if ((tgmapi = tgmap.find( ps->pw_gid )) != tgmap.end())
         (*tgmapi).append( un );
       else
@@ -144,22 +144,22 @@ KDModule::KDModule(QWidget *parent, const char *name, const QStringList &)
 
   struct group *grp;
   for (setgrent(); (grp = getgrent()); ) {
-    QString gn( QFile::decodeName( grp->gr_name ) );
+    TQString gn( TQFile::decodeName( grp->gr_name ) );
     bool delme = false;
     if ((tgmapi = tgmap.find( grp->gr_gid )) != tgmap.end()) {
       if ((*tgmapi).count() == 1 && (*tgmapi).first() == gn)
         delme = true;
       else
-        for (QStringList::ConstIterator it = (*tgmapi).begin();
+        for (TQStringList::ConstIterator it = (*tgmapi).begin();
              it != (*tgmapi).end(); ++it)
           usermap[*it].second.append( gn );
       tgmap.remove( tgmapi );
     }
     if (!*grp->gr_mem ||
-        (delme && !grp->gr_mem[1] && gn == QFile::decodeName( *grp->gr_mem )))
+        (delme && !grp->gr_mem[1] && gn == TQFile::decodeName( *grp->gr_mem )))
       continue;
     do {
-      QString un( QFile::decodeName( *grp->gr_mem ) );
+      TQString un( TQFile::decodeName( *grp->gr_mem ) );
       if ((umapi = usermap.find( un )) != usermap.end()) {
         if ((*umapi).second.find( gn ) == (*umapi).second.end())
 	  (*umapi).second.append( gn );
@@ -173,10 +173,10 @@ KDModule::KDModule(QWidget *parent, const char *name, const QStringList &)
     kdWarning() << "user(s) '" << tgmapci.data().join(",")
 	<< "' have unknown GID " << tgmapci.key() << endl;
 
-  config = new KSimpleConfig( QString::fromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
+  config = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
 
-  QVBoxLayout *top = new QVBoxLayout(this);
-  tab = new QTabWidget(this);
+  TQVBoxLayout *top = new TQVBoxLayout(this);
+  tab = new TQTabWidget(this);
 
   // *****
   // _don't_ add a theme configurator until the theming engine is _really_ done!!
@@ -184,34 +184,34 @@ KDModule::KDModule(QWidget *parent, const char *name, const QStringList &)
 
   appearance = new KDMAppearanceWidget(this);
   tab->addTab(appearance, i18n("A&ppearance"));
-  connect(appearance, SIGNAL(changed(bool)), SIGNAL( changed(bool)));
+  connect(appearance, TQT_SIGNAL(changed(bool)), TQT_SIGNAL( changed(bool)));
 
   font = new KDMFontWidget(this);
   tab->addTab(font, i18n("&Font"));
-  connect(font, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+  connect(font, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
   background = new KBackground(this);
   tab->addTab(background, i18n("&Background"));
-  connect(background, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+  connect(background, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
   sessions = new KDMSessionsWidget(this);
   tab->addTab(sessions, i18n("&Shutdown"));
-  connect(sessions, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+  connect(sessions, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
   users = new KDMUsersWidget(this, 0);
   tab->addTab(users, i18n("&Users"));
-  connect(users, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
-  connect(users, SIGNAL(setMinMaxUID(int,int)), SLOT(slotMinMaxUID(int,int)));
-  connect(this, SIGNAL(addUsers(const QMap<QString,int> &)), users, SLOT(slotAddUsers(const QMap<QString,int> &)));
-  connect(this, SIGNAL(delUsers(const QMap<QString,int> &)), users, SLOT(slotDelUsers(const QMap<QString,int> &)));
-  connect(this, SIGNAL(clearUsers()), users, SLOT(slotClearUsers()));
+  connect(users, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
+  connect(users, TQT_SIGNAL(setMinMaxUID(int,int)), TQT_SLOT(slotMinMaxUID(int,int)));
+  connect(this, TQT_SIGNAL(addUsers(const TQMap<TQString,int> &)), users, TQT_SLOT(slotAddUsers(const TQMap<TQString,int> &)));
+  connect(this, TQT_SIGNAL(delUsers(const TQMap<TQString,int> &)), users, TQT_SLOT(slotDelUsers(const TQMap<TQString,int> &)));
+  connect(this, TQT_SIGNAL(clearUsers()), users, TQT_SLOT(slotClearUsers()));
 
   convenience = new KDMConvenienceWidget(this, 0);
   tab->addTab(convenience, i18n("Con&venience"));
-  connect(convenience, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
-  connect(this, SIGNAL(addUsers(const QMap<QString,int> &)), convenience, SLOT(slotAddUsers(const QMap<QString,int> &)));
-  connect(this, SIGNAL(delUsers(const QMap<QString,int> &)), convenience, SLOT(slotDelUsers(const QMap<QString,int> &)));
-  connect(this, SIGNAL(clearUsers()), convenience, SLOT(slotClearUsers()));
+  connect(convenience, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
+  connect(this, TQT_SIGNAL(addUsers(const TQMap<TQString,int> &)), convenience, TQT_SLOT(slotAddUsers(const TQMap<TQString,int> &)));
+  connect(this, TQT_SIGNAL(delUsers(const TQMap<TQString,int> &)), convenience, TQT_SLOT(slotDelUsers(const TQMap<TQString,int> &)));
+  connect(this, TQT_SIGNAL(clearUsers()), convenience, TQT_SLOT(slotClearUsers()));
 
   load();
   if (getuid() != 0 || !config->checkConfigFilesWritable( true )) {
@@ -272,10 +272,10 @@ void KDModule::propagateUsers()
 {
   groupmap.clear();
   emit clearUsers();
-  QMap<QString,int> lusers;
-  QMapConstIterator<QString, QPair<int,QStringList> > it;
-  QStringList::ConstIterator jt;
-  QMap<QString,int>::Iterator gmapi;
+  TQMap<TQString,int> lusers;
+  TQMapConstIterator<TQString, QPair<int,TQStringList> > it;
+  TQStringList::ConstIterator jt;
+  TQMap<TQString,int>::Iterator gmapi;
   for (it = usermap.begin(); it != usermap.end(); ++it) {
     int uid = it.data().first;
     if (!uid || (uid >= minshowuid && uid <= maxshowuid)) {
@@ -295,10 +295,10 @@ void KDModule::propagateUsers()
 void KDModule::slotMinMaxUID(int min, int max)
 {
   if (updateOK) {
-    QMap<QString,int> alusers, dlusers;
-    QMapConstIterator<QString, QPair<int,QStringList> > it;
-    QStringList::ConstIterator jt;
-    QMap<QString,int>::Iterator gmapi;
+    TQMap<TQString,int> alusers, dlusers;
+    TQMapConstIterator<TQString, QPair<int,TQStringList> > it;
+    TQStringList::ConstIterator jt;
+    TQMap<TQString,int>::Iterator gmapi;
     for (it = usermap.begin(); it != usermap.end(); ++it) {
       int uid = it.data().first;
       if (!uid) continue;

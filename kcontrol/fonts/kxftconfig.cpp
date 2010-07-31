@@ -23,14 +23,14 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <qregexp.h>
-#include <qfile.h>
-#include <qpaintdevice.h>
+#include <tqregexp.h>
+#include <tqfile.h>
+#include <tqpaintdevice.h>
 #include <klocale.h>
 #include <klargefile.h>
-#include <qdir.h>
-#include <qsettings.h>
-#include <qfont.h>
+#include <tqdir.h>
+#include <tqsettings.h>
+#include <tqfont.h>
 
 #ifdef HAVE_FONTCONFIG
 #include <stdarg.h>
@@ -41,40 +41,40 @@
 
 using namespace std;
 
-QString KXftConfig::contractHome(QString path)
+TQString KXftConfig::contractHome(TQString path)
 {
     if (!path.isEmpty() && '/'==path[0])
     {
-        QString home(QDir::homeDirPath());
+        TQString home(TQDir::homeDirPath());
 
         if(path.startsWith(home))
         {
             unsigned int len = home.length();
 
             if(path.length() == len || path[len] == '/')
-                return path.replace(0, len, QString::fromLatin1("~"));
+                return path.replace(0, len, TQString::fromLatin1("~"));
         }
     }
 
     return path;
 }
 
-QString KXftConfig::expandHome(QString path)
+TQString KXftConfig::expandHome(TQString path)
 {
     if(!path.isEmpty() && '~'==path[0])
-        return 1==path.length() ? QDir::homeDirPath() : path.replace(0, 1, QDir::homeDirPath());
+        return 1==path.length() ? TQDir::homeDirPath() : path.replace(0, 1, TQDir::homeDirPath());
 
     return path;
 }
 
 static int point2Pixel(double point)
 {
-    return (int)(((point*QPaintDevice::x11AppDpiY())/72.0)+0.5);
+    return (int)(((point*TQPaintDevice::x11AppDpiY())/72.0)+0.5);
 }
 
 static int pixel2Point(double pixel)
 {
-    return (int)(((pixel*72.0)/(double)QPaintDevice::x11AppDpiY())+0.5);
+    return (int)(((pixel*72.0)/(double)TQPaintDevice::x11AppDpiY())+0.5);
 }
 
 static bool equal(double d1, double d2)
@@ -82,11 +82,11 @@ static bool equal(double d1, double d2)
     return (fabs(d1 - d2) < 0.0001);
 }
 
-static QString dirSyntax(const QString &d)
+static TQString dirSyntax(const TQString &d)
 {
     if(!d.isNull())
     {
-        QString ds(d);
+        TQString ds(d);
 
         ds.replace("//", "/");
 
@@ -101,11 +101,11 @@ static QString dirSyntax(const QString &d)
     return d;
 }
 
-static QString xDirSyntax(const QString &d)
+static TQString xDirSyntax(const TQString &d)
 {
     if(!d.isNull())
     {
-        QString ds(d);
+        TQString ds(d);
         int     slashPos=ds.findRev('/');
  
         if(slashPos==(((int)ds.length())-1))
@@ -116,32 +116,32 @@ static QString xDirSyntax(const QString &d)
     return d;
 }
 
-static bool check(const QString &path, unsigned int fmt, bool checkW=false)
+static bool check(const TQString &path, unsigned int fmt, bool checkW=false)
 {
     KDE_struct_stat info;
-    QCString        pathC(QFile::encodeName(path));
+    TQCString        pathC(TQFile::encodeName(path));
 
     return 0==KDE_lstat(pathC, &info) && (info.st_mode&S_IFMT)==fmt && (!checkW || 0==::access(pathC, W_OK));
 }
 
-inline bool fExists(const QString &p)
+inline bool fExists(const TQString &p)
 {
     return check(p, S_IFREG, false);
 }
 
-inline bool dWritable(const QString &p)
+inline bool dWritable(const TQString &p)
 {
     return check(p, S_IFDIR, true);
 }
 
-inline bool dExists(const QString &p)
+inline bool dExists(const TQString &p)
 {
     return check(p, S_IFDIR, false);
 }
 
-static QString getDir(const QString &f)
+static TQString getDir(const TQString &f)
 {
-    QString d(f);
+    TQString d(f);
 
     int slashPos=d.findRev('/');
 
@@ -151,16 +151,16 @@ static QString getDir(const QString &f)
     return dirSyntax(d);
 }
 
-static time_t getTimeStamp(const QString &item)
+static time_t getTimeStamp(const TQString &item)
 {
     KDE_struct_stat info;
 
-    return !item.isNull() && 0==KDE_lstat(QFile::encodeName(item), &info) ? info.st_mtime : 0;
+    return !item.isNull() && 0==KDE_lstat(TQFile::encodeName(item), &info) ? info.st_mtime : 0;
 }
 
 #ifdef HAVE_FONTCONFIG
 
-inline QString fileSyntax(const QString &f) { return xDirSyntax(f); }
+inline TQString fileSyntax(const TQString &f) { return xDirSyntax(f); }
 //
 // Obtain location of config file to use.
 //
@@ -174,20 +174,20 @@ inline QString fileSyntax(const QString &f) { return xDirSyntax(f); }
 //     $HOME/<...>/.fonts.conf
 //     $HOME/<...>/fonts.conf
 //
-QString getConfigFile(bool system)
+TQString getConfigFile(bool system)
 {
 #if (FC_VERSION>=20300)
     static const char * constKdeRootFcFile="00kde.conf";
 #endif
 
     FcStrList   *list=FcConfigGetConfigFiles(FcConfigGetCurrent());
-    QStringList files;
+    TQStringList files;
     FcChar8     *file;
-    QString     home(dirSyntax(QDir::homeDirPath()));
+    TQString     home(dirSyntax(TQDir::homeDirPath()));
 
     while((file=FcStrListNext(list)))
     {
-        QString f((const char *)file);
+        TQString f((const char *)file);
 
         if(fExists(f))
         {
@@ -195,7 +195,7 @@ QString getConfigFile(bool system)
                 files.append(f);
         }
 #if (FC_VERSION>=20300)
-        if(system && dExists(f) && (-1!=f.find(QRegExp("/conf\\.d/?$")) || -1!=f.find(QRegExp("/conf\\.d?$"))) )
+        if(system && dExists(f) && (-1!=f.find(TQRegExp("/conf\\.d/?$")) || -1!=f.find(TQRegExp("/conf\\.d?$"))) )
             return dirSyntax(f)+constKdeRootFcFile;   // This ones good enough for me!
 #endif
     }
@@ -204,11 +204,11 @@ QString getConfigFile(bool system)
     // Go through list of files, looking for the preferred one...
     if(files.count())
     {
-        QStringList::Iterator it(files.begin()),
+        TQStringList::Iterator it(files.begin()),
                               end(files.end());
 
         for(; it!=end; ++it)
-            if(-1!=(*it).find(QRegExp(system ? "/local\\.conf$" : "/\\.?fonts\\.conf$")))
+            if(-1!=(*it).find(TQRegExp(system ? "/local\\.conf$" : "/\\.?fonts\\.conf$")))
                 return *it;
         return files.front();  // Just return the 1st one...
     }
@@ -216,7 +216,7 @@ QString getConfigFile(bool system)
         return system ? "/etc/fonts/local.conf" : fileSyntax(home+"/.fonts.conf"); // Hmmm... no known files?
 }
 
-static QString getEntry(QDomElement element, const char *type, unsigned int numAttributes, ...)
+static TQString getEntry(TQDomElement element, const char *type, unsigned int numAttributes, ...)
 {
     if(numAttributes==element.attributes().length())
     {
@@ -239,11 +239,11 @@ static QString getEntry(QDomElement element, const char *type, unsigned int numA
 
         if(ok)
         {
-            QDomNode n=element.firstChild();
+            TQDomNode n=element.firstChild();
 
             if(!n.isNull())
             {
-                QDomElement e = n.toElement();
+                TQDomElement e = n.toElement();
 
                 if(!e.isNull() && type==e.tagName())
                     return e.text();
@@ -251,7 +251,7 @@ static QString getEntry(QDomElement element, const char *type, unsigned int numA
         }
     }
 
-    return QString::null;
+    return TQString::null;
 }
 
 static KXftConfig::SubPixel::Type strToType(const char *str)
@@ -379,7 +379,7 @@ static bool readNum(char **ptr, double *num)
     return false;
 }
 
-static KXftConfig::ListItem * getFirstItem(QPtrList<KXftConfig::ListItem> &list)
+static KXftConfig::ListItem * getFirstItem(TQPtrList<KXftConfig::ListItem> &list)
 {
     KXftConfig::ListItem *cur;
 
@@ -390,7 +390,7 @@ static KXftConfig::ListItem * getFirstItem(QPtrList<KXftConfig::ListItem> &list)
 }
 #endif
 
-static KXftConfig::ListItem * getLastItem(QPtrList<KXftConfig::ListItem> &list)
+static KXftConfig::ListItem * getLastItem(TQPtrList<KXftConfig::ListItem> &list)
 {
     KXftConfig::ListItem *cur;
 
@@ -401,16 +401,16 @@ static KXftConfig::ListItem * getLastItem(QPtrList<KXftConfig::ListItem> &list)
 }
 
 #ifndef HAVE_FONTCONFIG
-static const QString defaultPath("/usr/X11R6/lib/X11/XftConfig");
-static const QString defaultUserFile(".xftconfig");
+static const TQString defaultPath("/usr/X11R6/lib/X11/XftConfig");
+static const TQString defaultUserFile(".xftconfig");
 static const char *  constSymEnc="\"glyphs-fontspecific\"";
 
-static const QString constConfigFiles[]=
+static const TQString constConfigFiles[]=
 {
     defaultPath,
 
     "/etc/X11/XftConfig",
-    QString::null
+    TQString::null
 };
 #endif
 
@@ -441,7 +441,7 @@ KXftConfig::KXftConfig(int required, bool system)
             m_file=defaultPath;
     }
     else
-        m_file= QString(QDir::homeDirPath()+"/"+defaultUserFile);
+        m_file= TQString(TQDir::homeDirPath()+"/"+defaultUserFile);
 #endif
 #ifndef HAVE_FONTCONFIG
     m_symbolFamilies.setAutoDelete(true);
@@ -475,7 +475,7 @@ bool KXftConfig::reset()
     m_subPixel.reset();
 
 #ifdef HAVE_FONTCONFIG
-    QFile f(m_file);
+    TQFile f(m_file);
 
     if(f.open(IO_ReadOnly))
     {
@@ -493,7 +493,7 @@ bool KXftConfig::reset()
     if(m_doc.documentElement().isNull())
         m_doc.appendChild(m_doc.createElement("fontconfig"));
 #else
-    QFile f(m_file);
+    TQFile f(m_file);
 
     m_size=0;
     delete [] m_data;
@@ -563,8 +563,8 @@ bool KXftConfig::apply()
         if(fExists(m_file) && getTimeStamp(m_file)!=m_time)
         {
             KXftConfig            newConfig(m_required, m_system);
-            QStringList           list;
-            QStringList::Iterator it;
+            TQStringList           list;
+            TQStringList::Iterator it;
 
             if(m_required&Dirs)
             {
@@ -607,7 +607,7 @@ bool KXftConfig::apply()
             }
     
 #ifdef HAVE_FONTCONFIG
-            FcAtomic *atomic=FcAtomicCreate((const unsigned char *)((const char *)(QFile::encodeName(m_file))));
+            FcAtomic *atomic=FcAtomicCreate((const unsigned char *)((const char *)(TQFile::encodeName(m_file))));
     
             ok=false;
             if(atomic)
@@ -642,7 +642,7 @@ bool KXftConfig::apply()
                         const char qtDocTypeLine[] = "<!DOCTYPE fontconfig>";
                         const char docTypeLine[]   = "<!DOCTYPE fontconfig SYSTEM \"fonts.dtd\">";
     
-                        QString str(m_doc.toString());
+                        TQString str(m_doc.toString());
                         int     idx;
     
                         if(0!=str.find("<?xml"))
@@ -671,7 +671,7 @@ bool KXftConfig::apply()
                 FcAtomicDestroy(atomic);
             }
 #else
-            std::ofstream f(QFile::encodeName(m_file));
+            std::ofstream f(TQFile::encodeName(m_file));
     
             if(f)
             {
@@ -852,22 +852,22 @@ void KXftConfig::setExcludeRange(double from, double to)
     }
 }
 
-void KXftConfig::addDir(const QString &d)
+void KXftConfig::addDir(const TQString &d)
 {
-    QString dir(dirSyntax(d));
+    TQString dir(dirSyntax(d));
 
     if(dExists(dir) && !hasDir(dir))
         addItem(m_dirs, dir);
 }
 
-void KXftConfig::removeDir(const QString &d)
+void KXftConfig::removeDir(const TQString &d)
 {
-    QString dir(dirSyntax(d));
+    TQString dir(dirSyntax(d));
 
     removeItem(m_dirs, dir);
 }
 
-QString KXftConfig::description(SubPixel::Type t)
+TQString KXftConfig::description(SubPixel::Type t)
 {
     switch(t)
     {
@@ -904,7 +904,7 @@ const char * KXftConfig::toStr(SubPixel::Type t)
 }
 
 #ifdef HAVE_FONTCONFIG
-QString KXftConfig::description(Hint::Style s)
+TQString KXftConfig::description(Hint::Style s)
 {
     switch(s)
     {
@@ -939,9 +939,9 @@ const char * KXftConfig::toStr(Hint::Style s)
 }
 #endif
 
-bool KXftConfig::hasDir(const QString &d)
+bool KXftConfig::hasDir(const TQString &d)
 {
-    QString dir(dirSyntax(d));
+    TQString dir(dirSyntax(d));
 
 #ifdef HAVE_FONTCONFIG
     ListItem *item;
@@ -956,7 +956,7 @@ bool KXftConfig::hasDir(const QString &d)
 #endif
 }
 
-KXftConfig::ListItem * KXftConfig::findItem(QPtrList<ListItem> &list, const QString &i)
+KXftConfig::ListItem * KXftConfig::findItem(TQPtrList<ListItem> &list, const TQString &i)
 {   
     ListItem *item;
 
@@ -967,7 +967,7 @@ KXftConfig::ListItem * KXftConfig::findItem(QPtrList<ListItem> &list, const QStr
     return item;
 }
 
-void KXftConfig::clearList(QPtrList<ListItem> &list)
+void KXftConfig::clearList(TQPtrList<ListItem> &list)
 {
     ListItem *item;
 
@@ -975,9 +975,9 @@ void KXftConfig::clearList(QPtrList<ListItem> &list)
         removeItem(list, item);
 }
 
-QStringList KXftConfig::getList(QPtrList<ListItem> &list)
+TQStringList KXftConfig::getList(TQPtrList<ListItem> &list)
 {
-    QStringList res;
+    TQStringList res;
     ListItem    *item;
 
     for(item=list.first(); item; item=list.next())
@@ -987,7 +987,7 @@ QStringList KXftConfig::getList(QPtrList<ListItem> &list)
     return res;
 }
 
-void KXftConfig::addItem(QPtrList<ListItem> &list, const QString &i)
+void KXftConfig::addItem(TQPtrList<ListItem> &list, const TQString &i)
 {
     ListItem *item=findItem(list, i);
 
@@ -1004,7 +1004,7 @@ void KXftConfig::addItem(QPtrList<ListItem> &list, const QString &i)
         item->toBeRemoved=false;
 }
 
-void KXftConfig::removeItem(QPtrList<ListItem> &list, ListItem *item)
+void KXftConfig::removeItem(TQPtrList<ListItem> &list, ListItem *item)
 {
     if(item)
     {
@@ -1019,11 +1019,11 @@ void KXftConfig::removeItem(QPtrList<ListItem> &list, ListItem *item)
 void KXftConfig::readContents()
 {
 #ifdef HAVE_FONTCONFIG
-    QDomNode n = m_doc.documentElement().firstChild();
+    TQDomNode n = m_doc.documentElement().firstChild();
 
     while(!n.isNull())
     {
-        QDomElement e = n.toElement();
+        TQDomElement e = n.toElement();
 
         if(!e.isNull())
             if("dir"==e.tagName())
@@ -1033,14 +1033,14 @@ void KXftConfig::readContents()
             }
             else if("match"==e.tagName())
             {
-                QString str;
+                TQString str;
 
                 switch(e.childNodes().count())
                 {
                     case 1:
                         if(m_required&SubPixelType && "font"==e.attribute("target"))
                         {
-                            QDomElement ene=e.firstChild().toElement();
+                            TQDomElement ene=e.firstChild().toElement();
 
                             if(!ene.isNull() && "edit"==ene.tagName())
                                 if(!(str=getEntry(ene, "const", 2, "name", "rgba", "mode", "assign")).isNull())
@@ -1069,8 +1069,8 @@ void KXftConfig::readContents()
                         if(m_required&ExcludeRange && "font"==e.attribute("target"))  // CPD: Is target "font" or "pattern" ????
                         {
                             bool     foundFalse=false;
-                            QDomNode en=e.firstChild();
-                            QString  family;
+                            TQDomNode en=e.firstChild();
+                            TQString  family;
                             double   from=-1.0,
                                      to=-1.0,
                                      pixelFrom=-1.0,
@@ -1078,7 +1078,7 @@ void KXftConfig::readContents()
 
                             while(!en.isNull())
                             {
-                                QDomElement ene=en.toElement();
+                                TQDomElement ene=en.toElement();
 
                                 if(!ene.isNull())
                                     if("test"==ene.tagName())
@@ -1263,8 +1263,8 @@ void KXftConfig::applyDirs()
     for(item=m_dirs.first(); item; item=m_dirs.next())
         if(!item->toBeRemoved && item->node.isNull())
         {
-            QDomElement newNode = m_doc.createElement("dir");
-            QDomText    text    = m_doc.createTextNode(contractHome(xDirSyntax(item->str)));
+            TQDomElement newNode = m_doc.createElement("dir");
+            TQDomText    text    = m_doc.createTextNode(contractHome(xDirSyntax(item->str)));
 
             newNode.appendChild(text);
 
@@ -1277,10 +1277,10 @@ void KXftConfig::applyDirs()
 
 void KXftConfig::applySubPixelType()
 {
-    QDomElement matchNode = m_doc.createElement("match"),
+    TQDomElement matchNode = m_doc.createElement("match"),
                 typeNode  = m_doc.createElement("const"),
                 editNode  = m_doc.createElement("edit");
-    QDomText    typeText  = m_doc.createTextNode(toStr(m_subPixel.type));
+    TQDomText    typeText  = m_doc.createTextNode(toStr(m_subPixel.type));
 
     matchNode.setAttribute("target", "font");
     editNode.setAttribute("mode", "assign");
@@ -1309,10 +1309,10 @@ void KXftConfig::applyHintStyle()
     }
     else
     {
-        QDomElement matchNode = m_doc.createElement("match"),
+        TQDomElement matchNode = m_doc.createElement("match"),
                     typeNode  = m_doc.createElement("const"),
                     editNode  = m_doc.createElement("edit");
-        QDomText    typeText  = m_doc.createTextNode(toStr(m_hint.style));
+        TQDomText    typeText  = m_doc.createTextNode(toStr(m_hint.style));
 
         matchNode.setAttribute("target", "font");
         editNode.setAttribute("mode", "assign");
@@ -1330,10 +1330,10 @@ void KXftConfig::applyHintStyle()
 
 void KXftConfig::applyHinting()
 {
-    QDomElement matchNode = m_doc.createElement("match"),
+    TQDomElement matchNode = m_doc.createElement("match"),
                 typeNode  = m_doc.createElement("bool"),
                 editNode  = m_doc.createElement("edit");
-    QDomText    typeText  = m_doc.createTextNode(m_hinting.set ? "true" : "false");
+    TQDomText    typeText  = m_doc.createTextNode(m_hinting.set ? "true" : "false");
 
     matchNode.setAttribute("target", "font");
     editNode.setAttribute("mode", "assign");
@@ -1362,20 +1362,20 @@ void KXftConfig::applyExcludeRange(bool pixel)
     }
     else
     {
-        QString     fromString,
+        TQString     fromString,
                     toString;
 
         fromString.setNum(range.from);
         toString.setNum(range.to);
 
-        QDomElement matchNode    = m_doc.createElement("match"),
+        TQDomElement matchNode    = m_doc.createElement("match"),
                     fromTestNode = m_doc.createElement("test"),
                     fromNode     = m_doc.createElement("double"),
                     toTestNode   = m_doc.createElement("test"),
                     toNode       = m_doc.createElement("double"),
                     editNode     = m_doc.createElement("edit"),
                     boolNode     = m_doc.createElement("bool");
-        QDomText    fromText     = m_doc.createTextNode(fromString),
+        TQDomText    fromText     = m_doc.createTextNode(fromString),
                     toText       = m_doc.createTextNode(toString),
                     boolText     = m_doc.createTextNode("false");
 
@@ -1405,17 +1405,17 @@ void KXftConfig::applyExcludeRange(bool pixel)
     }
 }
 
-void KXftConfig::removeItems(QPtrList<ListItem> &list)
+void KXftConfig::removeItems(TQPtrList<ListItem> &list)
 {
     ListItem    *item;
-    QDomElement docElem = m_doc.documentElement();
+    TQDomElement docElem = m_doc.documentElement();
 
     for(item=list.first(); item; item=list.next())
         if(item->toBeRemoved && !item->node.isNull())
             docElem.removeChild(item->node);
 }
 #else
-void KXftConfig::outputDir(std::ofstream &f, const QString &str)
+void KXftConfig::outputDir(std::ofstream &f, const TQString &str)
 {
     f << "dir \"" << contractHome(xDirSyntax(str)).local8Bit() << "\"" << endl;
 }
@@ -1430,7 +1430,7 @@ void KXftConfig::outputNewDirs(std::ofstream &f)
     m_dirs.clear();
 }
 
-void KXftConfig::outputSymbolFamily(std::ofstream &f, const QString &str)
+void KXftConfig::outputSymbolFamily(std::ofstream &f, const TQString &str)
 {
     f << "match any family == \"" << str.local8Bit() << "\" edit encoding = " << constSymEnc << ';' << endl;
 }
@@ -1491,10 +1491,10 @@ void KXftConfig::setAntiAliasing( bool set )
 
 void KXftConfig::applyAntiAliasing()
 {
-    QDomElement matchNode = m_doc.createElement("match"),
+    TQDomElement matchNode = m_doc.createElement("match"),
                 typeNode  = m_doc.createElement("bool"),
                 editNode  = m_doc.createElement("edit");
-    QDomText    typeText  = m_doc.createTextNode(m_antiAliasing.set ? "true" : "false");
+    TQDomText    typeText  = m_doc.createTextNode(m_antiAliasing.set ? "true" : "false");
 
     matchNode.setAttribute("target", "font");
     editNode.setAttribute("mode", "assign");
@@ -1530,14 +1530,14 @@ bool KXftConfig::aliasingEnabled()
 
 void KXftConfig::setAntiAliasing( bool set )
 {
-  QSettings().writeEntry("/qt/useXft", set);
+  TQSettings().writeEntry("/qt/useXft", set);
   if (set)
-    QSettings().writeEntry("/qt/enableXft", set);
+    TQSettings().writeEntry("/qt/enableXft", set);
 }
 
 bool KXftConfig::getAntiAliasing() const
 {
-  return QSettings().readBoolEntry("/qt/useXft");
+  return TQSettings().readBoolEntry("/qt/useXft");
 }
 
 

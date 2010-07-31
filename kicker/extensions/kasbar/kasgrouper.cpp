@@ -116,7 +116,7 @@ KasItem *KasGrouper::maybeAddToGroup( Task::Ptr t )
 {
    KasItem *item = 0;
 
-   QString taskClass = t->className().lower();
+   TQString taskClass = t->className().lower();
 
    for ( uint i = 0; (!item) && (i < kasbar->itemCount()); i++ ) {
       KasItem *ei = kasbar->itemAt( i );
@@ -125,8 +125,8 @@ KasItem *KasGrouper::maybeAddToGroup( Task::Ptr t )
 
 	 KasTaskItem *eti = static_cast<KasTaskItem *> (ei);
 
-	 // NB This calls Task::className() not QObject::className()
-	 QString currClass = eti->task()->className().lower();
+	 // NB This calls Task::className() not TQObject::className()
+	 TQString currClass = eti->task()->className().lower();
 
 	 if ( Task::idMatch( currClass, taskClass ) ) {
 	    KasGroupItem *egi = kasbar->convertToGroup( eti->task() );
@@ -140,8 +140,8 @@ KasItem *KasGrouper::maybeAddToGroup( Task::Ptr t )
 
 	  for ( int i = 0; i < egi->taskCount(); i++ ) {
 
-	      // NB This calls Task::className() not QObject::className()
-	      QString currClass = egi->task( i )->className().lower();
+	      // NB This calls Task::className() not TQObject::className()
+	      TQString currClass = egi->task( i )->className().lower();
 	     
 	      if ( Task::idMatch( currClass, taskClass ) ) {
 		  egi->addTask( t );

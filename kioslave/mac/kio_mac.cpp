@@ -22,8 +22,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfig.h>
-#include <qstring.h>
-#include <qregexp.h>
+#include <tqstring.h>
+#include <tqregexp.h>
 
 #include <sys/stat.h>
 #include <stdlib.h>
@@ -43,11 +43,11 @@ extern "C" {
     }
 }
 
-MacProtocol::MacProtocol(const QCString &pool, const QCString &app)
-                                             : QObject(), SlaveBase("mac", pool, app) {
-/*  logFile = new QFile("/home/jr/logfile");
+MacProtocol::MacProtocol(const TQCString &pool, const TQCString &app)
+                                             : TQObject(), SlaveBase("mac", pool, app) {
+/*  logFile = new TQFile("/home/jr/logfile");
     logFile->open(IO_ReadWrite | IO_Append);
-    logStream = new QTextStream(logFile);
+    logStream = new TQTextStream(logFile);
     *logStream << "Start Macprotocol()" << endl;
     */
 }
@@ -66,10 +66,10 @@ MacProtocol::~MacProtocol() {
 
 //get() called when a file is to be read
 void MacProtocol::get(const KURL& url) {
-    QString path = prepareHP(url);  //mount and change to correct directory - return the filename
-    QString query = url.query();
-    QString mode("-");
-    QString mime;
+    TQString path = prepareHP(url);  //mount and change to correct directory - return the filename
+    TQString query = url.query();
+    TQString mode("-");
+    TQString mime;
     processedBytes = 0;
 
     //Find out the size and if it's a text file
@@ -105,8 +105,8 @@ void MacProtocol::get(const KURL& url) {
     *myKProcess << "hpcopy" << mode << path << "-";
 
     //data is now sent directly from the slot
-    connect(myKProcess, SIGNAL(receivedStdout(KProcess *, char *, int)),
-            this, SLOT(slotSetDataStdOutput(KProcess *, char *, int)));
+    connect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+            this, TQT_SLOT(slotSetDataStdOutput(KProcess *, char *, int)));
 
     myKProcess->start(KProcess::Block, KProcess::All);
 
@@ -119,13 +119,13 @@ void MacProtocol::get(const KURL& url) {
     //clean up
     delete myKProcess; myKProcess = 0;
     //finish
-    data(QByteArray());
+    data(TQByteArray());
     finished();
 }
 
 //listDir() called when the user is looking at a directory
 void MacProtocol::listDir(const KURL& url) {
-    QString filename = prepareHP(url);
+    TQString filename = prepareHP(url);
 
     if (filename.isNull()) {
         error(ERR_CANNOT_LAUNCH_PROCESS, i18n("No filename was found"));
@@ -133,9 +133,9 @@ void MacProtocol::listDir(const KURL& url) {
         myKProcess = new KProcess();
         *myKProcess << "hpls" << "-la" << filename;
 
-        standardOutputStream = QString::null;
-        connect(myKProcess, SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        standardOutputStream = TQString::null;
+        connect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 
         myKProcess->start(KProcess::Block, KProcess::All);
 
@@ -146,13 +146,13 @@ void MacProtocol::listDir(const KURL& url) {
 
         //clean up
         delete myKProcess; myKProcess = 0;
-        disconnect(myKProcess, SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        disconnect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 
         UDSEntry entry;
         if (!standardOutputStream.isEmpty()) {
-            QTextStream in(&standardOutputStream, IO_ReadOnly);
-            QString line = in.readLine(); //throw away top file which shows current directory
+            TQTextStream in(&standardOutputStream, IO_ReadOnly);
+            TQString line = in.readLine(); //throw away top file which shows current directory
             line = in.readLine();
 
             while (line != NULL) {
@@ -180,8 +180,8 @@ void MacProtocol::stat(const KURL& url) {
 //doStat(), does all the work that stat() needs
 //it's been separated out so it can be called from get() which
 //also need information
-QValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
-    QString filename = prepareHP(url);
+TQValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
+    TQString filename = prepareHP(url);
 
     if (filename.isNull()) {
         error(ERR_SLAVE_DEFINED, i18n("No filename was found in the URL"));
@@ -190,9 +190,9 @@ QValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
 
         *myKProcess << "hpls" << "-ld" << filename;
 
-        standardOutputStream = QString::null;
-        connect(myKProcess, SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        standardOutputStream = TQString::null;
+        connect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 
         myKProcess->start(KProcess::Block, KProcess::All);
 
@@ -203,8 +203,8 @@ QValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
 
         //clean up
         delete myKProcess; myKProcess = 0;
-        disconnect(myKProcess, SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        disconnect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 
         if (standardOutputStream.isEmpty()) {
             filename.replace("\\ ", " "); //get rid of escapes
@@ -215,7 +215,7 @@ QValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
             error(ERR_DOES_NOT_EXIST, filename);
         } else {
             //remove trailing \n
-            QString line = standardOutputStream.left(standardOutputStream.length()-1);
+            TQString line = standardOutputStream.left(standardOutputStream.length()-1);
             UDSEntry entry = makeUDS(line);
             return entry;
         }
@@ -225,23 +225,23 @@ QValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
             return entry;
     }//if filename == null
 
-    return QValueList<KIO::UDSAtom>();
+    return TQValueList<KIO::UDSAtom>();
 }
 
 //prepareHP() called from get() listDir() and stat()
 //(re)mounts the partition and changes to the appropriate directory
-QString MacProtocol::prepareHP(const KURL& url) {
-    QString path = url.path(-1);
+TQString MacProtocol::prepareHP(const KURL& url) {
+    TQString path = url.path(-1);
     if (path.left(1) == "/") {
         path = path.mid(1); // strip leading slash
     }
 
     //find out if a device has been specified in the query e.g. ?dev=/dev/fd0
     //or in the config file (query device entries are saved to config file)
-    QString device;
+    TQString device;
     KConfig* config = new KConfig("macrc");
 
-    QString query = url.query();
+    TQString query = url.query();
     int modepos = query.find("dev=");
     if (modepos == -1) {
         //no device specified, read from config or go with #define PARTITION
@@ -256,9 +256,9 @@ QString MacProtocol::prepareHP(const KURL& url) {
     //first we run just hpmount and check the output to see if it's version 1.0.2 or 1.0.4
     myKProcess = new KProcess();
     *myKProcess << "hpmount";
-    standardOutputStream = QString::null;
-    connect(myKProcess, SIGNAL(receivedStderr(KProcess *, char *, int)),
-            this, SLOT(slotGetStdOutput(KProcess *, char *, int)));
+    standardOutputStream = TQString::null;
+    connect(myKProcess, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
+            this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 
     myKProcess->start(KProcess::Block, KProcess::All);
 
@@ -269,8 +269,8 @@ QString MacProtocol::prepareHP(const KURL& url) {
     }
 
     delete myKProcess; myKProcess = 0;
-    disconnect(myKProcess, SIGNAL(receivedStderr(KProcess *, char *, int)),
-            this, SLOT(slotGetStdOutput(KProcess *, char *, int)));
+    disconnect(myKProcess, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
+            this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 
     //now mount the drive
     myKProcess = new KProcess();
@@ -304,7 +304,7 @@ QString MacProtocol::prepareHP(const KURL& url) {
     path.replace(")", "\\)");
 
     //then change to the right directory
-    int s;  QString dir;
+    int s;  TQString dir;
     s = path.find('/');
     while (s != -1) {
         dir = path.left(s);
@@ -333,13 +333,13 @@ QString MacProtocol::prepareHP(const KURL& url) {
 //makeUDS()  takes a line of output from hpls -l and converts it into
 // one of these UDSEntrys to return
 //called from listDir() and stat()
-QValueList<KIO::UDSAtom> MacProtocol::makeUDS(const QString& _line) {
-    QString line(_line);
+TQValueList<KIO::UDSAtom> MacProtocol::makeUDS(const TQString& _line) {
+    TQString line(_line);
     UDSEntry entry;
 
     //is it a file or a directory
-    QRegExp dirRE("^d. +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +(.*)");
-    QRegExp fileRE("^([f|F]). +(....)/(....) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +(.*)");
+    TQRegExp dirRE("^d. +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +(.*)");
+    TQRegExp fileRE("^([f|F]). +(....)/(....) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +(.*)");
     if (dirRE.exactMatch(line)) {
         UDSAtom atom;
         atom.m_uds = KIO::UDS_NAME;
@@ -365,7 +365,7 @@ QValueList<KIO::UDSAtom> MacProtocol::makeUDS(const QString& _line) {
         entry.append(atom);
 
         atom.m_uds = KIO::UDS_SIZE;
-        QString theSize(fileRE.cap(4)); //TODO: this is data size, what about  resource size?
+        TQString theSize(fileRE.cap(4)); //TODO: this is data size, what about  resource size?
         atom.m_long = theSize.toLong();
         entry.append(atom);
 
@@ -374,7 +374,7 @@ QValueList<KIO::UDSAtom> MacProtocol::makeUDS(const QString& _line) {
         entry.append(atom);
 
         atom.m_uds = KIO::UDS_ACCESS;
-        if (QString(fileRE.cap(1)) == QString("F")) { //if locked then read only
+        if (TQString(fileRE.cap(1)) == TQString("F")) { //if locked then read only
             atom.m_long = 0444;
         } else {
             atom.m_long = 0644;
@@ -382,13 +382,13 @@ QValueList<KIO::UDSAtom> MacProtocol::makeUDS(const QString& _line) {
         entry.append(atom);
 
         atom.m_uds = KIO::UDS_MIME_TYPE;
-        QString mimetype = getMimetype(fileRE.cap(2),fileRE.cap(3));
+        TQString mimetype = getMimetype(fileRE.cap(2),fileRE.cap(3));
         atom.m_str = mimetype.local8Bit();
         entry.append(atom);
 
         // Is it a file or a link/alias, just make aliases link to themselves
-        if (QString(fileRE.cap(2)) == QString("adrp") ||
-            QString(fileRE.cap(2)) == QString("fdrp")) {
+        if (TQString(fileRE.cap(2)) == TQString("adrp") ||
+            TQString(fileRE.cap(2)) == TQString("fdrp")) {
             atom.m_uds = KIO::UDS_FILE_TYPE;
             atom.m_long = S_IFREG;
             entry.append(atom);
@@ -413,7 +413,7 @@ QValueList<KIO::UDSAtom> MacProtocol::makeUDS(const QString& _line) {
 //slotGetStdOutput() grabs output from the hp commands
 // and adds it to the buffer
 void MacProtocol::slotGetStdOutput(KProcess*, char *s, int len) {
-  standardOutputStream += QString::fromLocal8Bit(s, len);
+  standardOutputStream += TQString::fromLocal8Bit(s, len);
 }
 
 //slotSetDataStdOutput() is used during hpcopy to give
@@ -421,7 +421,7 @@ void MacProtocol::slotGetStdOutput(KProcess*, char *s, int len) {
 void MacProtocol::slotSetDataStdOutput(KProcess*, char *s, int len) {
     processedBytes += len;
     processedSize(processedBytes);
-    QByteArray array;
+    TQByteArray array;
     array.setRawData(s, len);
     data(array);
     array.resetRawData(s, len);
@@ -429,7 +429,7 @@ void MacProtocol::slotSetDataStdOutput(KProcess*, char *s, int len) {
 
 //makeTime() takes in the date output from hpls -l
 //and returns as good a timestamp as we're going to get
-int MacProtocol::makeTime(QString mday, QString mon, QString third) {
+int MacProtocol::makeTime(TQString mday, TQString mon, TQString third) {
     int year; int month; int day;
     int hour; int minute;
 
@@ -453,17 +453,17 @@ int MacProtocol::makeTime(QString mday, QString mon, QString third) {
 
     //if the file is recent (last 12 months) hpls gives us the time,
     // otherwise it only prints the year
-    QRegExp hourMin("(..):(..)");
+    TQRegExp hourMin("(..):(..)");
     if (hourMin.exactMatch(third)) {
-        QDate currentDate(QDate::currentDate());
+        TQDate currentDate(TQDate::currentDate());
 
         if (month > currentDate.month()) {
             year = currentDate.year() - 1;
         } else {
             year = currentDate.year();
         }
-        QString h(hourMin.cap(1));
-        QString m(hourMin.cap(2));
+        TQString h(hourMin.cap(1));
+        TQString m(hourMin.cap(2));
         hour = h.toInt();
         minute = m.toInt();
     } else {
@@ -475,87 +475,87 @@ int MacProtocol::makeTime(QString mday, QString mon, QString third) {
     day = mday.toInt();
 
     //check it's valid
-    if ( (!QDate::isValid(year, month, day)) || (!QTime::isValid(hour, minute, 0) ) ) {
+    if ( (!TQDate::isValid(year, month, day)) || (!TQTime::isValid(hour, minute, 0) ) ) {
         error(ERR_INTERNAL, i18n("Could not parse a valid date from hpls"));
     }
 
     //put it together and work it out
-    QDate fileDate(year, month, day);
-    QTime fileTime(hour, minute);
-    QDateTime fileDateTime(fileDate, fileTime);
+    TQDate fileDate(year, month, day);
+    TQTime fileTime(hour, minute);
+    TQDateTime fileDateTime(fileDate, fileTime);
 
     return fileDateTime.toTime_t();
 }
 
-QString MacProtocol::getMimetype(QString type, QString app) {
-    if (type == QString("TEXT") && app == QString("ttxt")) {
-        return QString("text/plain");
-    } else if (type == QString("TEXT") && app == QString("udog")) {
-        return QString("text/html");
-    } else if (type == QString("svgs")) {
-        return QString("text/xml");
-    } else if (type == QString("ZIP ")) {
-        return QString("application/zip");
-    } else if (type == QString("pZip")) {
-        return QString("application/zip");
-    } else if (type == QString("APPL")) {
-        return QString("application/x-executable");
-    } else if (type == QString("MooV")) {
-        return QString("video/quicktime");
-    } else if (type == QString("TEXT") && app == QString("MSWD")) {
-        return QString("application/vnd.ms-word");
-    } else if (type == QString("PDF ")) {
-        return QString("application/pdf");
-    } else if (app == QString("CARO")) {
-        return QString("application/pdf");
-    } else if (type == QString("SIT5")) {
-        return QString("application/x-stuffit");
-    } else if (type == QString("SITD")) {
-        return QString("application/x-stuffit");
-    } else if (type == QString("SIT!")) {
-        return QString("application/x-stuffit");
-    } else if (app == QString("SIT!")) {
-        return QString("application/x-stuffit");
-    } else if (type == QString("RTFf")) {
-        return QString("text/rtf");
-    } else if (type == QString("GIFf")) {
-        return QString("image/gif");
-    } else if (type == QString("JPEG")) {
-        return QString("image/jpeg");
-    } else if (type == QString("PNGf")) {
-        return QString("image/png");
-    } else if (type == QString("XBMm")) {
-        return QString("image/x-xbm");
-    } else if (type == QString("EPSF")) {
-        return QString("image/x-epsf");
-    } else if (type == QString("TIFF")) {
-        return QString("image/tiff");
-    } else if (type == QString("PICT")) {
-        return QString("image/pict");
-    } else if (type == QString("TPIC")) {
-        return QString("image/x-targa");
-    } else if (type == QString("ULAW")) {
-        return QString("audio/basic");
-    } else if (type == QString("AIFF")) {
-        return QString("audio/x-aiff");
-    } else if (type == QString("WAVE")) {
-        return QString("audio/x-wav");
-    } else if (type == QString("FFIL") && app == QString("DMOV")) {
-        return QString("application/x-font");
-    } else if (type == QString("XLS3")) {
-        return QString("application/vnd.ms-excel");
-    } else if (type == QString("XLS4")) {
-        return QString("application/vnd.ms-excel");
-    } else if (type == QString("XLS5")) {
-        return QString("application/vnd.ms-excel");
-    } else if (app == QString("MSWD")) {
-        return QString("application/vnd.ms-word");
-    } else if (type == QString("TEXT")) {
-        return QString("text/plain");
-    } else if (app == QString("ttxt")) {
-        return QString("text/plain");
+TQString MacProtocol::getMimetype(TQString type, TQString app) {
+    if (type == TQString("TEXT") && app == TQString("ttxt")) {
+        return TQString("text/plain");
+    } else if (type == TQString("TEXT") && app == TQString("udog")) {
+        return TQString("text/html");
+    } else if (type == TQString("svgs")) {
+        return TQString("text/xml");
+    } else if (type == TQString("ZIP ")) {
+        return TQString("application/zip");
+    } else if (type == TQString("pZip")) {
+        return TQString("application/zip");
+    } else if (type == TQString("APPL")) {
+        return TQString("application/x-executable");
+    } else if (type == TQString("MooV")) {
+        return TQString("video/quicktime");
+    } else if (type == TQString("TEXT") && app == TQString("MSWD")) {
+        return TQString("application/vnd.ms-word");
+    } else if (type == TQString("PDF ")) {
+        return TQString("application/pdf");
+    } else if (app == TQString("CARO")) {
+        return TQString("application/pdf");
+    } else if (type == TQString("SIT5")) {
+        return TQString("application/x-stuffit");
+    } else if (type == TQString("SITD")) {
+        return TQString("application/x-stuffit");
+    } else if (type == TQString("SIT!")) {
+        return TQString("application/x-stuffit");
+    } else if (app == TQString("SIT!")) {
+        return TQString("application/x-stuffit");
+    } else if (type == TQString("RTFf")) {
+        return TQString("text/rtf");
+    } else if (type == TQString("GIFf")) {
+        return TQString("image/gif");
+    } else if (type == TQString("JPEG")) {
+        return TQString("image/jpeg");
+    } else if (type == TQString("PNGf")) {
+        return TQString("image/png");
+    } else if (type == TQString("XBMm")) {
+        return TQString("image/x-xbm");
+    } else if (type == TQString("EPSF")) {
+        return TQString("image/x-epsf");
+    } else if (type == TQString("TIFF")) {
+        return TQString("image/tiff");
+    } else if (type == TQString("PICT")) {
+        return TQString("image/pict");
+    } else if (type == TQString("TPIC")) {
+        return TQString("image/x-targa");
+    } else if (type == TQString("ULAW")) {
+        return TQString("audio/basic");
+    } else if (type == TQString("AIFF")) {
+        return TQString("audio/x-aiff");
+    } else if (type == TQString("WAVE")) {
+        return TQString("audio/x-wav");
+    } else if (type == TQString("FFIL") && app == TQString("DMOV")) {
+        return TQString("application/x-font");
+    } else if (type == TQString("XLS3")) {
+        return TQString("application/vnd.ms-excel");
+    } else if (type == TQString("XLS4")) {
+        return TQString("application/vnd.ms-excel");
+    } else if (type == TQString("XLS5")) {
+        return TQString("application/vnd.ms-excel");
+    } else if (app == TQString("MSWD")) {
+        return TQString("application/vnd.ms-word");
+    } else if (type == TQString("TEXT")) {
+        return TQString("text/plain");
+    } else if (app == TQString("ttxt")) {
+        return TQString("text/plain");
     }
-    return QString("application/octet-stream");
+    return TQString("application/octet-stream");
 }
 
 

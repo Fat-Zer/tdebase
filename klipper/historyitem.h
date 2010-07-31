@@ -19,7 +19,7 @@
 */
 #ifndef _HISTORYITEM_H_
 #define _HISTORYITEM_H_
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 class QString;
 class QMimeSource;
@@ -39,24 +39,24 @@ public:
      * An image would be returned as a descriptive
      * text, such as 32x43 image.
      */
-    virtual QString text() const = 0;
+    virtual TQString text() const = 0;
 
     /**
      * Return the current item as text
      * A text would be returned as a null pixmap,
      * which is also the default implementation
      */
-    inline virtual const QPixmap& image() const;
+    inline virtual const TQPixmap& image() const;
 
     /**
-     * Returns QMimeSource suitable for QClipboard::setData().
+     * Returns TQMimeSource suitable for QClipboard::setData().
      */
-    virtual QMimeSource* mimeSource() const = 0;
+    virtual TQMimeSource* mimeSource() const = 0;
 
     /**
      * Write object on datastream
      */
-    virtual void write( QDataStream& stream ) const = 0;
+    virtual void write( TQDataStream& stream ) const = 0;
 
     /**
      * Equality.
@@ -67,24 +67,24 @@ public:
      * Create an HistoryItem from MimeSources (i.e., clipboard data)
      * returns null if create fails (e.g, unsupported mimetype)
      */
-    static HistoryItem* create( const QMimeSource& aSource );
+    static HistoryItem* create( const TQMimeSource& aSource );
 
     /**
      * Create an HistoryItem from MimeSources (i.e., clipboard data)
      * returns null if creation fails. In this case, the datastream
      * is left in an undefined state.
      */
-    static HistoryItem* create( QDataStream& aSource );
+    static HistoryItem* create( TQDataStream& aSource );
 };
 
 inline
-const QPixmap& HistoryItem::image() const {
-    static QPixmap nullPixmap;
+const TQPixmap& HistoryItem::image() const {
+    static TQPixmap nullPixmap;
     return nullPixmap;
 }
 
 inline
-QDataStream& operator<<( QDataStream& lhs, HistoryItem const * const rhs ) {
+TQDataStream& operator<<( TQDataStream& lhs, HistoryItem const * const rhs ) {
     if ( rhs ) {
         rhs->write( lhs );
     }

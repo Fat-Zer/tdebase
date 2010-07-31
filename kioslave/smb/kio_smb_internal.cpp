@@ -31,7 +31,7 @@
 #include "kio_smb.h"
 #include "kio_smb_internal.h"
 
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <kconfig.h>
 #include <kglobal.h>
@@ -57,14 +57,14 @@ SMBUrl::SMBUrl(const KURL& kurl)
 
 
 //-----------------------------------------------------------------------
-void SMBUrl::addPath(const QString &filedir)
+void SMBUrl::addPath(const TQString &filedir)
 {
     KURL::addPath(filedir);
     updateCache();
 }
 
 //-----------------------------------------------------------------------
-bool SMBUrl::cd(const QString &filedir)
+bool SMBUrl::cd(const TQString &filedir)
 {
     if (!KURL::cd(filedir))
         return false;
@@ -83,7 +83,7 @@ void SMBUrl::updateCache()
     if (KURL::url() == "smb:/")
         m_surl = "smb://";
     else {
-        QString surl = "smb://";
+        TQString surl = "smb://";
         if (KURL::hasUser()) {
             surl += KURL::encode_string(KURL::user(), 106);
             if (KURL::hasPass()) {

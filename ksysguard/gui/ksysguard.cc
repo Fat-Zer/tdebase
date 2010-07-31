@@ -75,7 +75,7 @@ TopLevel::TopLevel( const char *name )
   mDontSaveSession = false;
   mTimerId = -1;
 
-  mSplitter = new QSplitter( this );
+  mSplitter = new TQSplitter( this );
   mSplitter->setOrientation( Horizontal );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
   setCentralWidget( mSplitter );
@@ -83,16 +83,16 @@ TopLevel::TopLevel( const char *name )
   mSensorBrowser = new SensorBrowser( mSplitter, KSGRD::SensorMgr );
   
   mServiceBrowser = new DNSSD::ServiceBrowser("_ksysguard._tcp", 0, true);
-  connect(mServiceBrowser,SIGNAL(serviceAdded(DNSSD::RemoteService::Ptr)),this,
-  	SLOT(serviceAdded(DNSSD::RemoteService::Ptr)));
+  connect(mServiceBrowser,TQT_SIGNAL(serviceAdded(DNSSD::RemoteService::Ptr)),this,
+  	TQT_SLOT(serviceAdded(DNSSD::RemoteService::Ptr)));
 
   mWorkSpace = new Workspace( mSplitter );
-  connect( mWorkSpace, SIGNAL( announceRecentURL( const KURL& ) ),
-           SLOT( registerRecentURL( const KURL& ) ) );
-  connect( mWorkSpace, SIGNAL( setCaption( const QString&, bool ) ),
-           SLOT( setCaption( const QString&, bool ) ) );
-  connect( KSGRD::Style, SIGNAL( applyStyleToWorksheet() ), mWorkSpace,
-           SLOT( applyStyle() ) );
+  connect( mWorkSpace, TQT_SIGNAL( announceRecentURL( const KURL& ) ),
+           TQT_SLOT( registerRecentURL( const KURL& ) ) );
+  connect( mWorkSpace, TQT_SIGNAL( setCaption( const TQString&, bool ) ),
+           TQT_SLOT( setCaption( const TQString&, bool ) ) );
+  connect( KSGRD::Style, TQT_SIGNAL( applyStyleToWorksheet() ), mWorkSpace,
+           TQT_SLOT( applyStyle() ) );
 
   /* Create the status bar. It displays some information about the
    * number of processes and the memory consumption of the local
@@ -106,39 +106,39 @@ TopLevel::TopLevel( const char *name )
 
   // create actions for menue entries
   new KAction( i18n( "&New Worksheet..." ), "tab_new", 0, mWorkSpace,
-		   SLOT( newWorkSheet() ), actionCollection(), "new_worksheet" );
+		   TQT_SLOT( newWorkSheet() ), actionCollection(), "new_worksheet" );
   
   new KAction( i18n( "Import Worksheet..." ), "fileopen", 0, mWorkSpace,
-		   SLOT( loadWorkSheet() ), actionCollection(), "import_worksheet" );
+		   TQT_SLOT( loadWorkSheet() ), actionCollection(), "import_worksheet" );
   
   mActionOpenRecent = new KRecentFilesAction( i18n( "&Import Recent Worksheet" ),"fileopen", 0,
-		   mWorkSpace, SLOT( loadWorkSheet( const KURL& ) ), actionCollection(), "recent_import_worksheet" );	
+		   mWorkSpace, TQT_SLOT( loadWorkSheet( const KURL& ) ), actionCollection(), "recent_import_worksheet" );	
   
   new KAction( i18n( "&Remove Worksheet" ), "tab_remove", 0, mWorkSpace,
-		   SLOT( deleteWorkSheet() ), actionCollection(), "remove_worksheet" );
+		   TQT_SLOT( deleteWorkSheet() ), actionCollection(), "remove_worksheet" );
 
   new KAction( i18n( "&Export Worksheet..." ), "filesaveas", 0, mWorkSpace,
-		   SLOT( saveWorkSheetAs() ), actionCollection(), "export_worksheet" );
+		   TQT_SLOT( saveWorkSheetAs() ), actionCollection(), "export_worksheet" );
    
-  KStdAction::quit( this, SLOT( close() ), actionCollection() );
+  KStdAction::quit( this, TQT_SLOT( close() ), actionCollection() );
 
   new KAction( i18n( "C&onnect Host..." ), "connect_established", 0, this,
-               SLOT( connectHost() ), actionCollection(), "connect_host" );
+               TQT_SLOT( connectHost() ), actionCollection(), "connect_host" );
   new KAction( i18n( "D&isconnect Host" ), "connect_no", 0, this,
-               SLOT( disconnectHost() ), actionCollection(), "disconnect_host" );
+               TQT_SLOT( disconnectHost() ), actionCollection(), "disconnect_host" );
 
-//  KStdAction::cut( mWorkSpace, SLOT( cut() ), actionCollection() );
-//  KStdAction::copy( mWorkSpace, SLOT( copy() ), actionCollection() );
-//  KStdAction::paste( mWorkSpace, SLOT( paste() ), actionCollection() );
+//  KStdAction::cut( mWorkSpace, TQT_SLOT( cut() ), actionCollection() );
+//  KStdAction::copy( mWorkSpace, TQT_SLOT( copy() ), actionCollection() );
+//  KStdAction::paste( mWorkSpace, TQT_SLOT( paste() ), actionCollection() );
   new KAction( i18n( "&Worksheet Properties" ), "configure", 0, mWorkSpace,
-               SLOT( configure() ), actionCollection(), "configure_sheet" );
+               TQT_SLOT( configure() ), actionCollection(), "configure_sheet" );
 
   new KAction( i18n( "Load Standard Sheets" ), "revert",
-               0, this, SLOT( resetWorkSheets() ),
+               0, this, TQT_SLOT( resetWorkSheets() ),
                actionCollection(), "revert_all_worksheets"  );
 
   new KAction( i18n( "Configure &Style..." ), "colorize", 0, this,
-               SLOT( editStyle() ), actionCollection(), "configure_style" );
+               TQT_SLOT( editStyle() ), actionCollection(), "configure_style" );
 
   // TODO remove resize and fix so sizeHints() determines default size.
   if (!initialGeometrySet())
@@ -165,10 +165,10 @@ void TopLevel::resetWorkSheets()
   KStandardDirs* kstd = KGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
 
-  QString workDir = kstd->saveLocation( "data", "ksysguard" );
+  TQString workDir = kstd->saveLocation( "data", "ksysguard" );
 
-  QString file = kstd->findResource( "data", "SystemLoad.sgrd" );
-  QString newFile = workDir + "/" + i18n( "System Load" ) + ".sgrd";
+  TQString file = kstd->findResource( "data", "SystemLoad.sgrd" );
+  TQString newFile = workDir + "/" + i18n( "System Load" ) + ".sgrd";
   if ( !file.isEmpty() )
     mWorkSpace->restoreWorkSheet( file, newFile );
 
@@ -190,30 +190,30 @@ void TopLevel::showOnCurrentDesktop()
   KWin::forceActiveWindow( winId() );
 }
 
-void TopLevel::loadWorkSheet( const QString &fileName )
+void TopLevel::loadWorkSheet( const TQString &fileName )
 {
   mWorkSpace->loadWorkSheet( KURL( fileName ) );
 }
 
-void TopLevel::removeWorkSheet( const QString &fileName )
+void TopLevel::removeWorkSheet( const TQString &fileName )
 {
   mWorkSpace->deleteWorkSheet( fileName );
 }
 
-QStringList TopLevel::listSensors( const QString &hostName )
+TQStringList TopLevel::listSensors( const TQString &hostName )
 {
   return mSensorBrowser->listSensors( hostName );
 }
 
-QStringList TopLevel::listHosts()
+TQStringList TopLevel::listHosts()
 {
   return mSensorBrowser->listHosts();
 }
 
-QString TopLevel::readIntegerSensor( const QString &sensorLocator )
+TQString TopLevel::readIntegerSensor( const TQString &sensorLocator )
 {
-  QString host = sensorLocator.left( sensorLocator.find( ':' ) );
-  QString sensor = sensorLocator.right( sensorLocator.length() -
+  TQString host = sensorLocator.left( sensorLocator.find( ':' ) );
+  TQString sensor = sensorLocator.right( sensorLocator.length() -
                                         sensorLocator.find( ':' ) - 1 );
 
   DCOPClientTransaction *dcopTransaction = kapp->dcopClient()->beginTransaction();
@@ -222,15 +222,15 @@ QString TopLevel::readIntegerSensor( const QString &sensorLocator )
   KSGRD::SensorMgr->engage( host, "", "ksysguardd" );
   KSGRD::SensorMgr->sendRequest( host, sensor, (KSGRD::SensorClient*)this, 133 );
 
-  return QString::null;
+  return TQString::null;
 }
 
-QStringList TopLevel::readListSensor( const QString& sensorLocator )
+TQStringList TopLevel::readListSensor( const TQString& sensorLocator )
 {
-  QStringList retval;
+  TQStringList retval;
 
-  QString host = sensorLocator.left( sensorLocator.find( ':' ) );
-  QString sensor = sensorLocator.right( sensorLocator.length() -
+  TQString host = sensorLocator.left( sensorLocator.find( ':' ) );
+  TQString sensor = sensorLocator.right( sensorLocator.length() -
                                         sensorLocator.find( ':' ) - 1 );
 
   DCOPClientTransaction *dcopTransaction = kapp->dcopClient()->beginTransaction();
@@ -274,7 +274,7 @@ void TopLevel::showRequestedSheets()
 {
   toolBar( "mainToolBar" )->hide();
 
-  QValueList<int> sizes;
+  TQValueList<int> sizes;
   sizes.append( 0 );
   sizes.append( 100 );
   mSplitter->setSizes( sizes );
@@ -293,7 +293,7 @@ void TopLevel::initStatusBar()
   
   KToggleAction *sb = dynamic_cast<KToggleAction*>(action("options_show_statusbar"));
   if (sb)
-     connect(sb, SIGNAL(toggled(bool)), this, SLOT(updateStatusBar()));
+     connect(sb, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(updateStatusBar()));
 }
 
 void TopLevel::updateStatusBar()
@@ -319,8 +319,8 @@ void TopLevel::editToolbars()
 {
   saveMainWindowSettings( kapp->config() );
   KEditToolbar dlg( actionCollection() );
-  connect( &dlg, SIGNAL( newToolbarConfig() ), this,
-           SLOT( slotNewToolbarConfig() ) );
+  connect( &dlg, TQT_SIGNAL( newToolbarConfig() ), this,
+           TQT_SLOT( slotNewToolbarConfig() ) );
 
   dlg.exec();
 }
@@ -336,18 +336,18 @@ void TopLevel::editStyle()
   KSGRD::Style->configure();
 }
 
-void TopLevel::customEvent( QCustomEvent *e )
+void TopLevel::customEvent( TQCustomEvent *e )
 {
-  if ( e->type() == QEvent::User ) {
+  if ( e->type() == TQEvent::User ) {
     /* Due to the asynchronous communication between ksysguard and its
      * back-ends, we sometimes need to show message boxes that were
      * triggered by objects that have died already. */
-    KMessageBox::error( this, *((QString*)e->data()) );
-    delete (QString*)e->data();
+    KMessageBox::error( this, *((TQString*)e->data()) );
+    delete (TQString*)e->data();
   }
 }
 
-void TopLevel::timerEvent( QTimerEvent* )
+void TopLevel::timerEvent( TQTimerEvent* )
 {
   if ( statusBar()->isVisibleTo( this ) ) {
     /* Request some info about the memory status. The requested
@@ -385,7 +385,7 @@ void TopLevel::readProperties( KConfig *cfg )
   if ( cfg->readBoolEntry( "isMinimized" ) == true )
     showMinimized();
 
-  QValueList<int> sizes = cfg->readIntListEntry( "SplitterSizeList" );
+  TQValueList<int> sizes = cfg->readIntListEntry( "SplitterSizeList" );
   if ( sizes.isEmpty() ) {
     // start with a 30/70 ratio
     sizes.append( 30 );
@@ -417,10 +417,10 @@ void TopLevel::saveProperties( KConfig *cfg )
   mWorkSpace->saveProperties( cfg );
 }
 
-void TopLevel::answerReceived( int id, const QString &answer )
+void TopLevel::answerReceived( int id, const TQString &answer )
 {
-  QString s;
-  static QString unit;
+  TQString s;
+  static TQString unit;
   static long mUsed = 0;
   static long mFree = 0;
   static long sUsed = 0;
@@ -432,7 +432,7 @@ void TopLevel::answerReceived( int id, const QString &answer )
       // singular vs. plural works :/
       //
       // To use pluralForms, though, you need to convert to
-      // an integer, not use the QString straight.
+      // an integer, not use the TQString straight.
       s = i18n( "1 Process", "%n Processes", answer.toInt() );
       statusBar()->changeItem( s, 0 );
       break;
@@ -465,9 +465,9 @@ void TopLevel::answerReceived( int id, const QString &answer )
     }
 
     case 133: {
-      QCString replyType = "QString";
-      QByteArray replyData;
-      QDataStream reply( replyData, IO_WriteOnly );
+      TQCString replyType = "TQString";
+      TQByteArray replyData;
+      TQDataStream reply( replyData, IO_WriteOnly );
       reply << answer;
 
       DCOPClientTransaction *dcopTransaction = mDCopFIFO.last();
@@ -477,10 +477,10 @@ void TopLevel::answerReceived( int id, const QString &answer )
     }
 
     case 134: {
-      QStringList resultList;
-      QCString replyType = "QStringList";
-      QByteArray replyData;
-      QDataStream reply( replyData, IO_WriteOnly );
+      TQStringList resultList;
+      TQCString replyType = "TQStringList";
+      TQByteArray replyData;
+      TQDataStream reply( replyData, IO_WriteOnly );
 
       KSGRD::SensorTokenizer lines( answer, '\n' );
 
@@ -497,9 +497,9 @@ void TopLevel::answerReceived( int id, const QString &answer )
   }
 }
 
-void TopLevel::setSwapInfo( long used, long free, const QString &unit )
+void TopLevel::setSwapInfo( long used, long free, const TQString &unit )
 {
-  QString msg;
+  TQString msg;
   if ( used == 0 && free == 0 ) // no swap available
     msg = i18n( "No swap space available" );
   else {
@@ -602,7 +602,7 @@ int main( int argc, char** argv )
       // run the application
       result = app->exec();
     } else {
-      QByteArray data;
+      TQByteArray data;
       app->dcopClient()->send( "ksysguard_taskmanager", "KSysGuardIface",
                                "showOnCurrentDesktop()", data );
     }

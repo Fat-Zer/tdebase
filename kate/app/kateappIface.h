@@ -49,7 +49,7 @@ class KateAppDCOPIface : public DCOPObject
      * @param encoding encoding name
      * @return success
      */
-    bool openURL (KURL url, QString encoding);
+    bool openURL (KURL url, TQString encoding);
 
     /**
      * Like the above, but adds an option to let the documentManager know
@@ -57,7 +57,7 @@ class KateAppDCOPIface : public DCOPObject
      * @p isTempFile should be set to true with the --tempfile option set ONLY,
      * files opened with this set to true will be deleted when closed.
      */
-    bool openURL(KURL url, QString encoding, bool isTempFile);
+    bool openURL(KURL url, TQString encoding, bool isTempFile);
 
     /**
      * set cursor of active view in active main window
@@ -73,19 +73,19 @@ class KateAppDCOPIface : public DCOPObject
      * @param text text to fill in the new doc/view
      * @return success
      */
-    bool openInput (QString text);
+    bool openInput (TQString text);
 
     /**
      * activate a given session
      * @param session session name
      * @return success
      */
-    bool activateSession (QString session);
+    bool activateSession (TQString session);
 
     /**
      * @return the name of the active session
      */
-    const QString & session() const;
+    const TQString & session() const;
 
   private:
     KateApp *m_app;

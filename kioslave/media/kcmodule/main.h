@@ -27,12 +27,12 @@ class MediaModule : public KCModule
 	Q_OBJECT
 
 public:
-	MediaModule( QWidget *parent, const char *name, const QStringList& );
+	MediaModule( TQWidget *parent, const char *name, const TQStringList& );
 
 	virtual void load();
 	virtual void save();
 	virtual void defaults();
-	virtual QString quickHelp() const;
+	virtual TQString quickHelp() const;
 
 protected slots:
 	void moduleChanged( bool state );

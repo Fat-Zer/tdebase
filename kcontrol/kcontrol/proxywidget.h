@@ -32,7 +32,7 @@ class KCModule;
 class KAboutData;
 
 #include "dockcontainer.h"
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
 class ProxyView;
 
@@ -42,10 +42,10 @@ class ProxyWidget : public QWidget
 
 public:
 
-  ProxyWidget(KCModule *client, QString title, const char *name=0, bool run_as_root = false);
+  ProxyWidget(KCModule *client, TQString title, const char *name=0, bool run_as_root = false);
   ~ProxyWidget();
 
-  QString quickHelp() const;
+  TQString quickHelp() const;
   const KAboutData *aboutData() const;
 
 public slots:
@@ -71,8 +71,8 @@ signals:
 
 private:
 
-  QPushButton *_handbook, *_default, *_apply, *_reset, *_root;
-  QFrame      *_sep;
+  TQPushButton *_handbook, *_default, *_apply, *_reset, *_root;
+  TQFrame      *_sep;
   KCModule    *_client;
     ProxyView *view;
 

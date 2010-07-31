@@ -17,13 +17,13 @@
 
 #include <unistd.h>
 
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qfile.h>
-#include <qtimer.h>
-#include <qcursor.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqfile.h>
+#include <tqtimer.h>
+#include <tqcursor.h>
 
 #include <ksimpleconfig.h>
 #include <kglobal.h>
@@ -53,7 +53,7 @@
 
 bool KPersonalizer::before_session = false;
 
-KPersonalizer::KPersonalizer(QWidget *parent, const char *name)
+KPersonalizer::KPersonalizer(TQWidget *parent, const char *name)
 	: KWizard(parent, name, true) {
 
 	// first, reset the startup from true (see desktop file in share/autostart) to false
@@ -65,34 +65,34 @@ KPersonalizer::KPersonalizer(QWidget *parent, const char *name)
 
 	countrypage= new KCountryPage(this);
 	addPage( countrypage, i18n( "Step 1: Introduction" ) );
-	setHelpEnabled(QWizard::page(0), false);
+	setHelpEnabled(TQWizard::page(0), false);
 
 	ospage= new KOSPage(this);
 	addPage(ospage, i18n( "Step 2: I want it my Way..." ) );
-	setHelpEnabled(QWizard::page(1), false);
+	setHelpEnabled(TQWizard::page(1), false);
 
 	eyecandy= new KEyeCandyPage(this);
 	addPage( eyecandy, i18n( "Step 3: Eyecandy-O-Meter" ) );
-	setHelpEnabled(QWizard::page(2), false);
+	setHelpEnabled(TQWizard::page(2), false);
 
 	stylepage= new KStylePage(this);
 	addPage( stylepage, i18n( "Step 4: Everybody loves Themes" ) );
-	setHelpEnabled(QWizard::page(3), false);
+	setHelpEnabled(TQWizard::page(3), false);
 
 	refinepage=new KRefinePage(this);
 	addPage( refinepage, i18n( "Step 5: Time to Refine" ) );
-	setHelpEnabled(QWizard::page(4), false);
+	setHelpEnabled(TQWizard::page(4), false);
 
 	cancelButton()->setText(i18n("S&kip Wizard"));
 
-	setFinishEnabled(QWizard::page(4), true);
+	setFinishEnabled(TQWizard::page(4), true);
 
 	locale = new KLocale("kpersonalizer");
 	locale->setLanguage(KLocale::defaultLanguage());
 
-	connect(ospage, SIGNAL(selectedOS(const QString&)), stylepage, SLOT(presetStyle(const QString&)));
-	connect(ospage, SIGNAL(selectedOS(const QString&)), eyecandy, SLOT(slotPresetSlider(const QString&)));
-	connect(refinepage->pb_kcontrol, SIGNAL(clicked()), this, SLOT(accept()));
+	connect(ospage, TQT_SIGNAL(selectedOS(const TQString&)), stylepage, TQT_SLOT(presetStyle(const TQString&)));
+	connect(ospage, TQT_SIGNAL(selectedOS(const TQString&)), eyecandy, TQT_SLOT(slotPresetSlider(const TQString&)));
+	connect(refinepage->pb_kcontrol, TQT_SIGNAL(clicked()), this, TQT_SLOT(accept()));
 
 	setPosition();
 
@@ -114,23 +114,23 @@ void KPersonalizer::next() {
 				delayedRestart();
 		} else {
 			(void)countrypage->save(countrypage->cb_country, countrypage->cb_language);
-			QWizard::next();
+			TQWizard::next();
 		}
 	}
 	else if(currentPage()==ospage){
 		os_dirty=true;  // set the dirty flag, changes done that need reverting
 		ospage->save();
-		QWizard::next();
+		TQWizard::next();
 	}
 	else if(currentPage()==eyecandy){
 		eye_dirty=true;  // set the dirty flag, changes done that need reverting
 		eyecandy->save();
-		QTimer::singleShot(0, this, SLOT(slotNext()));
+		TQTimer::singleShot(0, this, TQT_SLOT(slotNext()));
 	}
 	else if(currentPage()==stylepage){
 		style_dirty=true;  // set the dirty flag, changes done that need reverting
 		stylepage->save();
-		QWizard::next();
+		TQWizard::next();
 	}
 	if(currentPage()==refinepage) {
 		finishButton()->setFocus();
@@ -138,16 +138,16 @@ void KPersonalizer::next() {
 }
 
 void KPersonalizer::slotNext() {
-    QWizard::next();
+    TQWizard::next();
     stylepage->switchPrevStyle();  // We need to update the preview-widget, after the page changed
 }
 
 void KPersonalizer::back() {
-	QWizard::back();
+	TQWizard::back();
 }
 
 bool KPersonalizer::askClose(){
-	QString text;
+	TQString text;
 	if (currentPage()==countrypage) {
 		text = i18n("<p>Are you sure you want to quit the Desktop Settings Wizard?</p>"
 		            "<p>The Desktop Settings Wizard helps you to configure the KDE desktop to your personal liking.</p>"
@@ -166,7 +166,7 @@ bool KPersonalizer::askClose(){
 	}
 }
 
-/** the cancel button is connected to the reject() slot of QDialog,
+/** the cancel button is connected to the reject() slot of TQDialog,
  *  so we have to reimplement this here to add a dialogbox to ask if we
  *  really want to quit the wizard.
  */
@@ -176,7 +176,7 @@ void KPersonalizer::reject(){
 	}
 }
 
-void KPersonalizer::closeEvent(QCloseEvent* e){
+void KPersonalizer::closeEvent(TQCloseEvent* e){
 	if ( askClose() )
 		exit(0);
 	else
@@ -215,7 +215,7 @@ void KPersonalizer::slotRestart() {
 }
 
 void KPersonalizer::delayedRestart() {
-	QTimer::singleShot(0, this, SLOT(slotRestart()));
+	TQTimer::singleShot(0, this, TQT_SLOT(slotRestart()));
 }
 
 /** this session is restarted, so we want to start with ospage */
@@ -230,13 +230,13 @@ void KPersonalizer::setBeforeSession(){
 	before_session = true;
 }
 
-/** there seems to be a bug in QWizard, that makes this evil hack necessary */
+/** there seems to be a bug in TQWizard, that makes this evil hack necessary */
 void KPersonalizer::setPosition() {
-	QSize hint = countrypage->sizeHint();
-	QSize os_size = ospage->sizeHint();
-	QSize candy_size = eyecandy->sizeHint();
-	QSize style_size = stylepage->sizeHint();
-	QSize refine_size = refinepage->sizeHint();
+	TQSize hint = countrypage->sizeHint();
+	TQSize os_size = ospage->sizeHint();
+	TQSize candy_size = eyecandy->sizeHint();
+	TQSize style_size = stylepage->sizeHint();
+	TQSize refine_size = refinepage->sizeHint();
 
 	// get the width of the broadest child-widget
 	if ( hint.width() < os_size.width() )
@@ -259,7 +259,7 @@ void KPersonalizer::setPosition() {
 		hint.setHeight(refine_size.height());
 
 	// set the position
-	QRect rect = KGlobalSettings::desktopGeometry(QCursor::pos());
+	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
 	int w = rect.x() + (rect.width() - hint.width())/2 - 9;
 	int h = rect.y() + (rect.height() - hint.height())/2;
 	move(w, h);

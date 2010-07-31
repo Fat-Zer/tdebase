@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "updater.h"
 
@@ -36,7 +36,7 @@
 #include <kparts/componentfactory.h>
 #include <kparts/browserextension.h>
 
-FavIconUpdater::FavIconUpdater(QObject *parent, const char *name)
+FavIconUpdater::FavIconUpdater(TQObject *parent, const char *name)
     : KonqFavIconMgr(parent, name) {
     m_part = 0;
     m_webGrabber = 0;
@@ -58,7 +58,7 @@ void FavIconUpdater::timerDone() {
 }
 
 void FavIconUpdater::downloadIcon(const KBookmark &bk) {
-    QString favicon = KonqFavIconMgr::iconForURL(bk.url().url());
+    TQString favicon = KonqFavIconMgr::iconForURL(bk.url().url());
     if (!favicon.isNull()) {
         // kdDebug() << "downloadIcon() - favicon" << favicon << endl;
         bk.internalElement().setAttribute("icon", favicon);
@@ -90,17 +90,17 @@ void FavIconUpdater::downloadIconActual(const KBookmark &bk) {
     if (!m_part) {
         KParts::ReadOnlyPart *part 
             = KParts::ComponentFactory
-            ::createPartInstanceFromQuery<KParts::ReadOnlyPart>("text/html", QString::null);
+            ::createPartInstanceFromQuery<KParts::ReadOnlyPart>("text/html", TQString::null);
 
-        part->setProperty("pluginsEnabled", QVariant(false, 1));
-        part->setProperty("javaScriptEnabled", QVariant(false, 1));
-        part->setProperty("javaEnabled", QVariant(false, 1));
-        part->setProperty("autoloadImages", QVariant(false, 1));
+        part->setProperty("pluginsEnabled", TQVariant(false, 1));
+        part->setProperty("javaScriptEnabled", TQVariant(false, 1));
+        part->setProperty("javaEnabled", TQVariant(false, 1));
+        part->setProperty("autoloadImages", TQVariant(false, 1));
 
-        connect(part, SIGNAL( canceled(const QString &) ),
-                this, SLOT( slotCompleted() ));
-        connect(part, SIGNAL( completed() ),
-                this, SLOT( slotCompleted() ));
+        connect(part, TQT_SIGNAL( canceled(const TQString &) ),
+                this, TQT_SLOT( slotCompleted() ));
+        connect(part, TQT_SIGNAL( completed() ),
+                this, TQT_SLOT( slotCompleted() ));
 
         KParts::BrowserExtension *ext = KParts::BrowserExtension::childObject(part);
         assert(ext);
@@ -108,16 +108,16 @@ void FavIconUpdater::downloadIconActual(const KBookmark &bk) {
         m_browserIface = new FavIconBrowserInterface(this, "browseriface");
         ext->setBrowserInterface(m_browserIface);
 
-        connect(ext, SIGNAL( setIconURL(const KURL &) ),
-                this, SLOT( setIconURL(const KURL &) ));
+        connect(ext, TQT_SIGNAL( setIconURL(const KURL &) ),
+                this, TQT_SLOT( setIconURL(const KURL &) ));
 
         m_part = part;
     }
     
     if (!m_timer) {
         // Timeout to stop the updating hanging
-      m_timer = new QTimer(this);
-      connect( m_timer, SIGNAL(timeout()), this, SLOT(timerDone()) );
+      m_timer = new TQTimer(this);
+      connect( m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(timerDone()) );
     }
     m_timer->start(15000,false);
     m_webGrabber = new FavIconWebGrabber(m_part, bk.url());
@@ -128,7 +128,7 @@ void FavIconUpdater::setIconURL(const KURL &iconURL) {
     setIconForURL(m_bk.url(), iconURL);
 }
 
-void FavIconUpdater::notifyChange(bool isHost, QString hostOrURL, QString iconName) {
+void FavIconUpdater::notifyChange(bool isHost, TQString hostOrURL, TQString iconName) {
     // kdDebug() << "FavIconUpdater::notifyChange()" << endl;
 
     Q_UNUSED(isHost);
@@ -150,21 +150,21 @@ FavIconWebGrabber::FavIconWebGrabber(KParts::ReadOnlyPart *part, const KURL &url
 //     the use of KIO rather than directly using KHTML is to allow silently abort on error
 
     KIO::Job *job = KIO::get(m_url, false, false);
-    job->addMetaData( QString("cookies"), QString("none") );
-    connect(job, SIGNAL( result( KIO::Job *)),
-            this, SLOT( slotFinished(KIO::Job *) ));
-    connect(job, SIGNAL( mimetype( KIO::Job *, const QString &) ),
-            this, SLOT( slotMimetype(KIO::Job *, const QString &) ));
+    job->addMetaData( TQString("cookies"), TQString("none") );
+    connect(job, TQT_SIGNAL( result( KIO::Job *)),
+            this, TQT_SLOT( slotFinished(KIO::Job *) ));
+    connect(job, TQT_SIGNAL( mimetype( KIO::Job *, const TQString &) ),
+            this, TQT_SLOT( slotMimetype(KIO::Job *, const TQString &) ));
 }
 
-void FavIconWebGrabber::slotMimetype(KIO::Job *job, const QString & /*type*/) {
+void FavIconWebGrabber::slotMimetype(KIO::Job *job, const TQString & /*type*/) {
     KIO::SimpleJob *sjob = static_cast<KIO::SimpleJob *>(job);
     m_url = sjob->url(); // allow for redirection
     sjob->putOnHold();
 
     // kdDebug() << "FavIconWebGrabber::slotMimetype " << m_url << "\n";
    
-    // QString typeLocal = typeUncopied; // local copy
+    // TQString typeLocal = typeUncopied; // local copy
     // kdDebug() << "slotMimetype : " << typeLocal << endl;
     // TODO - what to do if typeLocal is not text/html ??
 

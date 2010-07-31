@@ -36,11 +36,11 @@ public:
   FakeUASProvider();
   ~FakeUASProvider(){};
 
-  StatusCode createNewUAProvider( const QString& );
-  QString aliasStr( const QString& );
-  QString agentStr( const QString& );
-  QStringList userAgentStringList();
-  QStringList userAgentAliasList();
+  StatusCode createNewUAProvider( const TQString& );
+  TQString aliasStr( const TQString& );
+  TQString agentStr( const TQString& );
+  TQStringList userAgentStringList();
+  TQStringList userAgentAliasList();
   bool isListDirty() const { return m_bIsDirty; }
   void setListDirty( bool dirty ) { m_bIsDirty = dirty; }
 
@@ -50,8 +50,8 @@ protected:
 
 private:
   KTrader::OfferList m_providers;
-  QStringList m_lstIdentity;
-  QStringList m_lstAlias;
+  TQStringList m_lstIdentity;
+  TQStringList m_lstAlias;
   bool m_bIsDirty;
 };
 #endif

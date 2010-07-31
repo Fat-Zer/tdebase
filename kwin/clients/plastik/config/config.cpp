@@ -20,12 +20,12 @@
   Boston, MA 02110-1301, USA.
  */
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqslider.h>
+#include <tqspinbox.h>
+#include <tqwhatsthis.h>
 
 #include <kconfig.h>
 #include <klocale.h>
@@ -34,8 +34,8 @@
 #include "config.h"
 #include "configdialog.h"
 
-PlastikConfig::PlastikConfig(KConfig* config, QWidget* parent)
-    : QObject(parent), m_config(0), m_dialog(0)
+PlastikConfig::PlastikConfig(KConfig* config, TQWidget* parent)
+    : TQObject(parent), m_config(0), m_dialog(0)
 {
     // create the configuration object
     m_config = new KConfig("kwinplastikrc");
@@ -49,16 +49,16 @@ PlastikConfig::PlastikConfig(KConfig* config, QWidget* parent)
     load(config);
 
     // setup the connections
-    connect(m_dialog->titleAlign, SIGNAL(clicked(int)),
-            this, SIGNAL(changed()));
-    connect(m_dialog->animateButtons, SIGNAL(toggled(bool)),
-            this, SIGNAL(changed()));
-    connect(m_dialog->menuClose, SIGNAL(toggled(bool)),
-            this, SIGNAL(changed()));
-    connect(m_dialog->titleShadow, SIGNAL(toggled(bool)),
-            this, SIGNAL(changed()));
-    connect(m_dialog->coloredBorder, SIGNAL(toggled(bool)),
-            this, SIGNAL(changed()));
+    connect(m_dialog->titleAlign, TQT_SIGNAL(clicked(int)),
+            this, TQT_SIGNAL(changed()));
+    connect(m_dialog->animateButtons, TQT_SIGNAL(toggled(bool)),
+            this, TQT_SIGNAL(changed()));
+    connect(m_dialog->menuClose, TQT_SIGNAL(toggled(bool)),
+            this, TQT_SIGNAL(changed()));
+    connect(m_dialog->titleShadow, TQT_SIGNAL(toggled(bool)),
+            this, TQT_SIGNAL(changed()));
+    connect(m_dialog->coloredBorder, TQT_SIGNAL(toggled(bool)),
+            this, TQT_SIGNAL(changed()));
 }
 
 PlastikConfig::~PlastikConfig()
@@ -72,8 +72,8 @@ void PlastikConfig::load(KConfig*)
     m_config->setGroup("General");
 
 
-    QString value = m_config->readEntry("TitleAlignment", "AlignLeft");
-    QRadioButton *button = (QRadioButton*)m_dialog->titleAlign->child(value.latin1());
+    TQString value = m_config->readEntry("TitleAlignment", "AlignLeft");
+    TQRadioButton *button = (TQRadioButton*)m_dialog->titleAlign->child(value.latin1());
     if (button) button->setChecked(true);
     bool animateButtons = m_config->readBoolEntry("AnimateButtons", true);
     m_dialog->animateButtons->setChecked(animateButtons);
@@ -89,8 +89,8 @@ void PlastikConfig::save(KConfig*)
 {
     m_config->setGroup("General");
 
-    QRadioButton *button = (QRadioButton*)m_dialog->titleAlign->selected();
-    if (button) m_config->writeEntry("TitleAlignment", QString(button->name()));
+    TQRadioButton *button = (TQRadioButton*)m_dialog->titleAlign->selected();
+    if (button) m_config->writeEntry("TitleAlignment", TQString(button->name()));
     m_config->writeEntry("AnimateButtons", m_dialog->animateButtons->isChecked() );
     m_config->writeEntry("CloseOnMenuDoubleClick", m_dialog->menuClose->isChecked() );
     m_config->writeEntry("TitleShadow", m_dialog->titleShadow->isChecked() );
@@ -100,8 +100,8 @@ void PlastikConfig::save(KConfig*)
 
 void PlastikConfig::defaults()
 {
-    QRadioButton *button =
-        (QRadioButton*)m_dialog->titleAlign->child("AlignLeft");
+    TQRadioButton *button =
+        (TQRadioButton*)m_dialog->titleAlign->child("AlignLeft");
     if (button) button->setChecked(true);
     m_dialog->animateButtons->setChecked(true);
     m_dialog->menuClose->setChecked(false);
@@ -115,7 +115,7 @@ void PlastikConfig::defaults()
 
 extern "C"
 {
-    KDE_EXPORT QObject* allocate_config(KConfig* config, QWidget* parent) {
+    KDE_EXPORT TQObject* allocate_config(KConfig* config, TQWidget* parent) {
         return (new PlastikConfig(config, parent));
     }
 }

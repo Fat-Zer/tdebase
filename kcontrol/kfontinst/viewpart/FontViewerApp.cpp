@@ -43,14 +43,14 @@ namespace KFI
 {
 
 CFontViewerAppMainWindow::CFontViewerAppMainWindow()
-                        : KParts::MainWindow((QWidget *)0L)
+                        : KParts::MainWindow((TQWidget *)0L)
 {
     KLibFactory *factory=KLibLoader::self()->factory("libkfontviewpart");
 
     if(factory)
     {
-        KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-        KStdAction::quit(kapp, SLOT(quit()), actionCollection());
+        KStdAction::open(this, TQT_SLOT(fileOpen()), actionCollection());
+        KStdAction::quit(kapp, TQT_SLOT(quit()), actionCollection());
 
         itsPreview=(KParts::ReadOnlyPart *)factory->create(this, "fontvier", "KParts::ReadOnlyPart");
 
@@ -71,7 +71,7 @@ CFontViewerAppMainWindow::CFontViewerAppMainWindow()
         if(!openURL.isEmpty())
             itsPreview->openURL(openURL);
 
-        QSize             defSize(450, 380);
+        TQSize             defSize(450, 380);
         KConfigGroupSaver saver(kapp->config(), CFG_GROUP);
 
         resize(kapp->config()->readSizeEntry(CFG_SIZE_KEY, &defSize));
@@ -90,7 +90,7 @@ CFontViewerAppMainWindow::~CFontViewerAppMainWindow()
 
 void CFontViewerAppMainWindow::fileOpen()
 {
-    KURL url(KFileDialog::getOpenURL(QString::null, "application/x-font-ttf application/x-font-otf "
+    KURL url(KFileDialog::getOpenURL(TQString::null, "application/x-font-ttf application/x-font-otf "
                                                     "application/x-font-ttc application/x-font-type1 "
                                                     "application/x-font-bdf application/x-font-pcf ",
                                      this, i18n("Select Font to View")));

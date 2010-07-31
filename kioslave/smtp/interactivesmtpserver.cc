@@ -33,30 +33,30 @@
 
 #include <config.h>
 
-#include <qserversocket.h>
-#include <qsocket.h>
-#include <qwidget.h>
-#include <qapplication.h>
-#include <qhostaddress.h>
-#include <qtextedit.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qstring.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <tqserversocket.h>
+#include <tqsocket.h>
+#include <tqwidget.h>
+#include <tqapplication.h>
+#include <tqhostaddress.h>
+#include <tqtextedit.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqstring.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
 
 #include <cassert>
 
 #include "interactivesmtpserver.h"
 
-static const QHostAddress localhost( 0x7f000001 ); // 127.0.0.1
+static const TQHostAddress localhost( 0x7f000001 ); // 127.0.0.1
 
 InteractiveSMTPServerWindow::~InteractiveSMTPServerWindow() {
     if ( mSocket ) {
         mSocket->close();
-        if ( mSocket->state() == QSocket::Closing )
-            connect( mSocket, SIGNAL(delayedCloseFinished()),
-                     mSocket, SLOT(deleteLater()) );
+        if ( mSocket->state() == TQSocket::Closing )
+            connect( mSocket, TQT_SIGNAL(delayedCloseFinished()),
+                     mSocket, TQT_SLOT(deleteLater()) );
         else
             mSocket->deleteLater();
         mSocket = 0;
@@ -65,20 +65,20 @@ InteractiveSMTPServerWindow::~InteractiveSMTPServerWindow() {
 
 void InteractiveSMTPServerWindow::slotSendResponse()
 {
-        const QString line = mLineEdit->text();
+        const TQString line = mLineEdit->text();
     mLineEdit->clear();
-    QTextStream s( mSocket );
+    TQTextStream s( mSocket );
     s << line + "\r\n";
     slotDisplayServer( line );
 }
 
-InteractiveSMTPServer::InteractiveSMTPServer( QObject* parent )
-    : QServerSocket( localhost, 2525, 1, parent )
+InteractiveSMTPServer::InteractiveSMTPServer( TQObject* parent )
+    : TQServerSocket( localhost, 2525, 1, parent )
 {
 }
 
 int main( int argc, char * argv[] ) {
-  QApplication app( argc, argv );
+  TQApplication app( argc, argv );
 
   InteractiveSMTPServer server;
 
@@ -88,37 +88,37 @@ int main( int argc, char * argv[] ) {
 };
 
 
-InteractiveSMTPServerWindow::InteractiveSMTPServerWindow( QSocket * socket, QWidget * parent, const char * name, WFlags f )
-  : QWidget( parent, name, f ), mSocket( socket )
+InteractiveSMTPServerWindow::InteractiveSMTPServerWindow( TQSocket * socket, TQWidget * parent, const char * name, WFlags f )
+  : TQWidget( parent, name, f ), mSocket( socket )
 {
-  QPushButton * but;
+  TQPushButton * but;
   assert( socket );
 
-  QVBoxLayout * vlay = new QVBoxLayout( this, 6 );
+  TQVBoxLayout * vlay = new TQVBoxLayout( this, 6 );
 
-  mTextEdit = new QTextEdit( this );
-  mTextEdit->setTextFormat( QTextEdit::LogText );
+  mTextEdit = new TQTextEdit( this );
+  mTextEdit->setTextFormat( TQTextEdit::LogText );
   vlay->addWidget( mTextEdit, 1 );
 
-  QHBoxLayout * hlay = new QHBoxLayout( vlay );
+  TQHBoxLayout * hlay = new TQHBoxLayout( vlay );
 
-  mLineEdit = new QLineEdit( this );
-  but = new QPushButton( "&Send", this );
-  hlay->addWidget( new QLabel( mLineEdit, "&Response:", this ) );
+  mLineEdit = new TQLineEdit( this );
+  but = new TQPushButton( "&Send", this );
+  hlay->addWidget( new TQLabel( mLineEdit, "&Response:", this ) );
   hlay->addWidget( mLineEdit, 1 );
   hlay->addWidget( but );
 
-  connect( mLineEdit, SIGNAL(returnPressed()), SLOT(slotSendResponse()) );
-  connect( but, SIGNAL(clicked()), SLOT(slotSendResponse()) );
+  connect( mLineEdit, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotSendResponse()) );
+  connect( but, TQT_SIGNAL(clicked()), TQT_SLOT(slotSendResponse()) );
 
-  but = new QPushButton( "&Close Connection", this );
+  but = new TQPushButton( "&Close Connection", this );
   vlay->addWidget( but );
 
-  connect( but, SIGNAL(clicked()), SLOT(slotConnectionClosed()) );
+  connect( but, TQT_SIGNAL(clicked()), TQT_SLOT(slotConnectionClosed()) );
 
-  connect( socket, SIGNAL(connectionClosed()), SLOT(slotConnectionClosed()) );
-  connect( socket, SIGNAL(error(int)), SLOT(slotError(int)) );
-  connect( socket, SIGNAL(readyRead()), SLOT(slotReadyRead()) );
+  connect( socket, TQT_SIGNAL(connectionClosed()), TQT_SLOT(slotConnectionClosed()) );
+  connect( socket, TQT_SIGNAL(error(int)), TQT_SLOT(slotError(int)) );
+  connect( socket, TQT_SIGNAL(readyRead()), TQT_SLOT(slotReadyRead()) );
 
   mLineEdit->setText( "220 hi there" );
   mLineEdit->setFocus();

@@ -18,20 +18,20 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdebug.h>
 
 #include "historyimageitem.h"
 
-HistoryImageItem::HistoryImageItem( const QPixmap& data )
+HistoryImageItem::HistoryImageItem( const TQPixmap& data )
     : HistoryItem(),  m_data( data )
 {
 }
 
-QString HistoryImageItem::text() const {
+TQString HistoryImageItem::text() const {
     if ( m_text.isNull() ) {
-        m_text = QString( "%1x%2x%3 %4" )
+        m_text = TQString( "%1x%2x%3 %4" )
                  .arg( m_data.width() )
                  .arg( m_data.height() )
                .arg( m_data.depth() );
@@ -41,6 +41,6 @@ QString HistoryImageItem::text() const {
 }
 
 /* virtual */
-void HistoryImageItem::write( QDataStream& stream ) const {
-    stream << QString( "image" ) << m_data;
+void HistoryImageItem::write( TQDataStream& stream ) const {
+    stream << TQString( "image" ) << m_data;
 }

@@ -21,12 +21,12 @@
 
 #include "konq_factory.h"
 
-#include <qguardedptr.h>
-#include <qcolor.h>
-#include <qwidget.h>
-#include <qsplitter.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
+#include <tqguardedptr.h>
+#include <tqcolor.h>
+#include <tqwidget.h>
+#include <tqsplitter.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
 
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
@@ -66,10 +66,10 @@ class KonqCheckBox : public QCheckBox
 {
     Q_OBJECT // for classname
 public:
-    KonqCheckBox(QWidget *parent=0, const char *name=0)
-      :QCheckBox( parent, name ) {}
+    KonqCheckBox(TQWidget *parent=0, const char *name=0)
+      :TQCheckBox( parent, name ) {}
 protected:
-    void drawButton( QPainter * );
+    void drawButton( TQPainter * );
 };
 
 
@@ -107,10 +107,10 @@ class KonqFrameStatusBar : public KStatusBar
       void slotConnectToNewView(KonqView *, KParts::ReadOnlyPart *oldOne,KParts::ReadOnlyPart *newOne);
       void slotLoadingProgress( int percent );
       void slotSpeedProgress( int bytesPerSecond );
-      void slotDisplayStatusText(const QString& text);
+      void slotDisplayStatusText(const TQString& text);
 
       void slotClear();
-      void message ( const QString & message );
+      void message ( const TQString & message );
 
    signals:
       /**
@@ -124,9 +124,9 @@ class KonqFrameStatusBar : public KStatusBar
       void linkedViewClicked( bool mode );
 
    protected:
-      virtual bool eventFilter(QObject*,QEvent *);
-      virtual void resizeEvent( QResizeEvent* );
-      virtual void mousePressEvent( QMouseEvent* );
+      virtual bool eventFilter(TQObject*,TQEvent *);
+      virtual void resizeEvent( TQResizeEvent* );
+      virtual void mousePressEvent( TQMouseEvent* );
       /**
        * Brings up the context menu for this frame
        */
@@ -135,44 +135,44 @@ class KonqFrameStatusBar : public KStatusBar
       /**
        * Takes care of the statusbars size
        **/
-      virtual void fontChange(const QFont &oldFont);
+      virtual void fontChange(const TQFont &oldFont);
 
    private:
       KonqFrame* m_pParentKonqFrame;
-      QCheckBox *m_pLinkedViewCheckBox;
+      TQCheckBox *m_pLinkedViewCheckBox;
       KProgress *m_progressBar;
       KSqueezedTextLabel *m_pStatusLabel;
-      QLabel* m_led;
-      QString m_savedMessage;
+      TQLabel* m_led;
+      TQString m_savedMessage;
 };
 
 
-typedef QPtrList<KonqView> ChildViewList;
+typedef TQPtrList<KonqView> ChildViewList;
 
 class KonqFrameBase
 {
  public:
   virtual ~KonqFrameBase() {}
 
-  virtual void saveConfig( KConfig* config, const QString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0) = 0;
+  virtual void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0) = 0;
 
   virtual void copyHistory( KonqFrameBase *other ) = 0;
 
-  virtual void printFrameInfo( const QString& spaces );
+  virtual void printFrameInfo( const TQString& spaces );
 
-  virtual void reparentFrame( QWidget* parent,
-                              const QPoint & p, bool showIt=FALSE ) = 0;
+  virtual void reparentFrame( TQWidget* parent,
+                              const TQPoint & p, bool showIt=FALSE ) = 0;
 
   virtual KonqFrameContainerBase* parentContainer() { return m_pParentContainer; }
   virtual void setParentContainer(KonqFrameContainerBase* parent) { m_pParentContainer = parent; }
 
-  virtual void setTitle( const QString &title , QWidget* sender) = 0;
-  virtual void setTabIcon( const KURL &url, QWidget* sender ) = 0;
+  virtual void setTitle( const TQString &title , TQWidget* sender) = 0;
+  virtual void setTabIcon( const KURL &url, TQWidget* sender ) = 0;
 
-  virtual QWidget* widget() = 0;
+  virtual TQWidget* widget() = 0;
 
   virtual void listViews( ChildViewList *viewList ) = 0;
-  virtual QCString frameType() = 0;
+  virtual TQCString frameType() = 0;
 
   virtual void activateChild() = 0;
 
@@ -196,12 +196,12 @@ protected:
  * widget of the layout
  */
 
-class KonqFrame : public QWidget, public KonqFrameBase
+class KonqFrame : public TQWidget, public KonqFrameBase
 {
   Q_OBJECT
 
 public:
-  KonqFrame( QWidget* parent, KonqFrameContainerBase *parentContainer = 0L,
+  KonqFrame( TQWidget* parent, KonqFrameContainerBase *parentContainer = 0L,
              const char *name = 0L );
   virtual ~KonqFrame();
 
@@ -215,7 +215,7 @@ public:
    * Filters the CTRL+Tab event from the views and emits ctrlTabPressed to
    make KonqMainWindow switch to the next view
    */
-  virtual bool eventFilter(QObject*obj,QEvent *ev);
+  virtual bool eventFilter(TQObject*obj,TQEvent *ev);
 
   /**
    * Inserts the part's widget and the statusbar into the layout
@@ -226,7 +226,7 @@ public:
    * Inserts a widget at the top of the part's widget, in the layout
    * (used for the find functionality)
    */
-  void insertTopWidget( QWidget * widget );
+  void insertTopWidget( TQWidget * widget );
 
   /**
    * Returns the part that is currently connected to the Frame.
@@ -242,22 +242,22 @@ public:
   void setView( KonqView* child );
   virtual void listViews( ChildViewList *viewList );
 
-  virtual void saveConfig( KConfig* config, const QString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
+  virtual void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
   virtual void copyHistory( KonqFrameBase *other );
 
-  virtual void printFrameInfo( const QString& spaces );
+  virtual void printFrameInfo( const TQString& spaces );
 
-  virtual void setTitle( const QString &title, QWidget* sender );
-  virtual void setTabIcon( const KURL &url, QWidget* sender );
+  virtual void setTitle( const TQString &title, TQWidget* sender );
+  virtual void setTabIcon( const KURL &url, TQWidget* sender );
 
-  virtual void reparentFrame(QWidget * parent,
-                     const QPoint & p, bool showIt=FALSE );
+  virtual void reparentFrame(TQWidget * parent,
+                     const TQPoint & p, bool showIt=FALSE );
 
   //virtual KonqFrameContainerBase* parentContainer();
-  virtual QWidget* widget() { return this; }
-  virtual QCString frameType() { return QCString("View"); }
+  virtual TQWidget* widget() { return this; }
+  virtual TQCString frameType() { return TQCString("View"); }
 
-  QVBoxLayout *layout()const { return m_pLayout; }
+  TQVBoxLayout *layout()const { return m_pLayout; }
 
   KonqFrameStatusBar *statusbar() const { return m_pStatusBar; }
 
@@ -265,7 +265,7 @@ public:
 
   KonqView* activeChildView() { return m_pView; }
 
-  QString title() const { return m_title; }
+  TQString title() const { return m_title; }
 
 public slots:
 
@@ -282,19 +282,19 @@ public slots:
   void slotRemoveView();
 
 protected:
-  virtual void paintEvent( QPaintEvent* );
+  virtual void paintEvent( TQPaintEvent* );
 
-  QVBoxLayout *m_pLayout;
-  QGuardedPtr<KonqView> m_pView;
+  TQVBoxLayout *m_pLayout;
+  TQGuardedPtr<KonqView> m_pView;
 
-  QGuardedPtr<KParts::ReadOnlyPart> m_pPart;
+  TQGuardedPtr<KParts::ReadOnlyPart> m_pPart;
 
   KonqViewManager* m_pViewManager;
 
   KSeparator *m_separator;
   KonqFrameStatusBar* m_pStatusBar;
 
-  QString m_title;
+  TQString m_title;
 };
 
 class KonqFrameContainerBase : public KonqFrameBase
@@ -312,12 +312,12 @@ public:
   virtual void removeChildFrame( KonqFrameBase * frame ) = 0;
 
   //inherited
-  virtual void printFrameInfo( const QString& spaces );
+  virtual void printFrameInfo( const TQString& spaces );
 
-  virtual QCString frameType() { return QCString("ContainerBase"); }
+  virtual TQCString frameType() { return TQCString("ContainerBase"); }
 
-  virtual void reparentFrame(QWidget * parent,
-                             const QPoint & p, bool showIt=FALSE ) = 0;
+  virtual void reparentFrame(TQWidget * parent,
+                             const TQPoint & p, bool showIt=FALSE ) = 0;
 
   virtual KonqFrameBase* activeChild() { return m_pActiveChild; }
 
@@ -344,35 +344,35 @@ protected:
  * KonqFrameContainers or, as leaves, KonqFrames.
  */
 
-class KonqFrameContainer : public QSplitter, public KonqFrameContainerBase
+class KonqFrameContainer : public TQSplitter, public KonqFrameContainerBase
 {
   Q_OBJECT
   friend class KonqFrame; //for emitting ctrlTabPressed() only, aleXXX
 public:
   KonqFrameContainer( Orientation o,
-                      QWidget* parent,
+                      TQWidget* parent,
                       KonqFrameContainerBase* parentContainer,
                       const char * name = 0);
   virtual ~KonqFrameContainer();
 
   virtual void listViews( ChildViewList *viewList );
 
-  virtual void saveConfig( KConfig* config, const QString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
+  virtual void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
   virtual void copyHistory( KonqFrameBase *other );
 
   KonqFrameBase* firstChild() { return m_pFirstChild; }
   KonqFrameBase* secondChild() { return m_pSecondChild; }
   KonqFrameBase* otherChild( KonqFrameBase* child );
 
-  virtual void printFrameInfo( const QString& spaces );
+  virtual void printFrameInfo( const TQString& spaces );
 
   void swapChildren();
 
-  virtual void setTitle( const QString &title, QWidget* sender );
-  virtual void setTabIcon( const KURL &url, QWidget* sender );
+  virtual void setTitle( const TQString &title, TQWidget* sender );
+  virtual void setTabIcon( const KURL &url, TQWidget* sender );
 
-  virtual QWidget* widget() { return this; }
-  virtual QCString frameType() { return QCString("Container"); }
+  virtual TQWidget* widget() { return this; }
+  virtual TQCString frameType() { return TQCString("Container"); }
 
   /**
    * Call this after inserting a new frame into the splitter.
@@ -384,16 +384,16 @@ public:
   void removeChildFrame( KonqFrameBase * frame );
 
   //inherited
-  virtual void reparentFrame(QWidget * parent,
-                             const QPoint & p, bool showIt=FALSE );
+  virtual void reparentFrame(TQWidget * parent,
+                             const TQPoint & p, bool showIt=FALSE );
 
   //make this one public
-  int idAfter( QWidget* w ){ return QSplitter::idAfter( w ); }
+  int idAfter( TQWidget* w ){ return TQSplitter::idAfter( w ); }
 
   void setAboutToBeDeleted() { m_bAboutToBeDeleted = true; }
 
   //inherited
-  virtual void childEvent( QChildEvent * );
+  virtual void childEvent( TQChildEvent * );
 
 signals:
   void ctrlTabPressed();

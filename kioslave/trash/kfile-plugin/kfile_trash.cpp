@@ -23,16 +23,16 @@
 #include <kgenericfactory.h>
 #include <kdebug.h>
 
-#include <qfile.h>
-#include <qstringlist.h>
-#include <qdatetime.h>
+#include <tqfile.h>
+#include <tqstringlist.h>
+#include <tqdatetime.h>
 
 typedef KGenericFactory<KTrashPlugin> TrashFactory;
 
 K_EXPORT_COMPONENT_FACTORY(kfile_trash, TrashFactory("kfile_trash"))
 
-KTrashPlugin::KTrashPlugin(QObject *parent, const char *name,
-        const QStringList &args) : KFilePlugin(parent, name, args)
+KTrashPlugin::KTrashPlugin(TQObject *parent, const char *name,
+        const TQStringList &args) : KFilePlugin(parent, name, args)
 {
     KGlobal::locale()->insertCatalogue( "kio_trash" );
 
@@ -44,7 +44,7 @@ KTrashPlugin::KTrashPlugin(QObject *parent, const char *name,
     (void)impl.init();
 }
 
-void KTrashPlugin::makeMimeTypeInfo(const QString& mimeType)
+void KTrashPlugin::makeMimeTypeInfo(const TQString& mimeType)
 {
     KFileMimeTypeInfo* info = addMimeTypeInfo( mimeType );
 
@@ -52,8 +52,8 @@ void KTrashPlugin::makeMimeTypeInfo(const QString& mimeType)
             addGroupInfo(info, "General", i18n("General"));
 
     KFileMimeTypeInfo::ItemInfo* item;
-    item = addItemInfo(group, "OriginalPath", i18n("Original Path"), QVariant::String);
-    item = addItemInfo(group, "DateOfDeletion", i18n("Date of Deletion"), QVariant::DateTime);
+    item = addItemInfo(group, "OriginalPath", i18n("Original Path"), TQVariant::String);
+    item = addItemInfo(group, "DateOfDeletion", i18n("Date of Deletion"), TQVariant::DateTime);
 }
 
 bool KTrashPlugin::readInfo(KFileMetaInfo& info, uint)
@@ -63,7 +63,7 @@ bool KTrashPlugin::readInfo(KFileMetaInfo& info, uint)
     if ( url.protocol()=="system"
       && url.path().startsWith("/trash") )
     {
-        QString path = url.path();
+        TQString path = url.path();
         path.remove(0, 6);
         url.setProtocol("trash");
         url.setPath(path);
@@ -74,8 +74,8 @@ bool KTrashPlugin::readInfo(KFileMetaInfo& info, uint)
         return false;
 
     int trashId;
-    QString fileId;
-    QString relativePath;
+    TQString fileId;
+    TQString relativePath;
     if ( !TrashImpl::parseURL( url, trashId, fileId, relativePath ) )
         return false;
 

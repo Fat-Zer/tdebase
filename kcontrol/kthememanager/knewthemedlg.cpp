@@ -19,17 +19,17 @@
 #include "knewthemedlg.h"
 #include "newthemewidget.h"
 
-#include <qlineedit.h>
-#include <qtextedit.h>
+#include <tqlineedit.h>
+#include <tqtextedit.h>
 
 #include <klocale.h>
 
-KNewThemeDlg::KNewThemeDlg( QWidget * parent, const char * name )
+KNewThemeDlg::KNewThemeDlg( TQWidget * parent, const char * name )
     : KDialogBase(parent, name, true, i18n("New Theme"), Ok|Cancel, Ok)
 {
     m_base = new NewThemeWidget( this, "new_theme_base" );
     setMainWidget( m_base );
-    connect( m_base->leName, SIGNAL( textChanged ( const QString & ) ), this, SLOT( slotThemeNameChanged( const QString & ) ) );
+    connect( m_base->leName, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotThemeNameChanged( const TQString & ) ) );
     slotThemeNameChanged( m_base->leName->text() );
 }
 
@@ -38,57 +38,57 @@ KNewThemeDlg::~KNewThemeDlg()
     delete m_base;
 }
 
-void KNewThemeDlg::slotThemeNameChanged( const QString &_text )
+void KNewThemeDlg::slotThemeNameChanged( const TQString &_text )
 {
      enableButtonOK( !_text.isEmpty() );
 }
 
-QString KNewThemeDlg::getName() const
+TQString KNewThemeDlg::getName() const
 {
     return m_base->leName->text();
 }
 
-QString KNewThemeDlg::getAuthor() const
+TQString KNewThemeDlg::getAuthor() const
 {
     return m_base->leAuthor->text();
 }
 
-QString KNewThemeDlg::getEmail() const
+TQString KNewThemeDlg::getEmail() const
 {
     return m_base->leEmail->text();
 }
 
-QString KNewThemeDlg::getHomepage() const
+TQString KNewThemeDlg::getHomepage() const
 {
     return m_base->leHomepage->text();
 }
 
-QString KNewThemeDlg::getComment() const
+TQString KNewThemeDlg::getComment() const
 {
     return m_base->teComment->text();
 }
 
-QString KNewThemeDlg::getVersion() const
+TQString KNewThemeDlg::getVersion() const
 {
     return m_base->leVersion->text();
 }
 
-void KNewThemeDlg::setAuthor( const QString & author )
+void KNewThemeDlg::setAuthor( const TQString & author )
 {
     m_base->leAuthor->setText( author );
 }
 
-void KNewThemeDlg::setEmail( const QString & email )
+void KNewThemeDlg::setEmail( const TQString & email )
 {
     m_base->leEmail->setText( email );
 }
 
-void KNewThemeDlg::setVersion( const QString & version )
+void KNewThemeDlg::setVersion( const TQString & version )
 {
     m_base->leVersion->setText( version );
 }
 
-void KNewThemeDlg::setName( const QString & name )
+void KNewThemeDlg::setName( const TQString & name )
 {
     m_base->leName->setText( name );
 }

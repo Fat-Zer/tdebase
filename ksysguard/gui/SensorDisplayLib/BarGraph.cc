@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <string.h>
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -33,8 +33,8 @@
 
 #include "BarGraph.h"
 
-BarGraph::BarGraph( QWidget *parent, const char *name )
-  : QWidget( parent, name )
+BarGraph::BarGraph( TQWidget *parent, const char *name )
+  : TQWidget( parent, name )
 {
   // paintEvent covers whole widget so we use no background to avoid flicker
   setBackgroundMode( NoBackground );
@@ -52,15 +52,15 @@ BarGraph::BarGraph( QWidget *parent, const char *name )
 
   // Anything smaller than this does not make sense.
   setMinimumSize( 16, 16 );
-  setSizePolicy( QSizePolicy( QSizePolicy::Expanding,
-                 QSizePolicy::Expanding, false ) );
+  setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding,
+                 TQSizePolicy::Expanding, false ) );
 }
 
 BarGraph::~BarGraph()
 {
 }
 
-bool BarGraph::addBar( const QString &footer )
+bool BarGraph::addBar( const TQString &footer )
 {
   samples.resize( bars + 1 );
   samples[ bars++ ] = 0.0;
@@ -84,7 +84,7 @@ bool BarGraph::removeBar( uint idx )
   return true;
 }
 
-void BarGraph::updateSamples( const QMemArray<double> &newSamples )
+void BarGraph::updateSamples( const TQMemArray<double> &newSamples )
 {
   samples = newSamples;
   update();
@@ -96,22 +96,22 @@ void BarGraph::changeRange( double min, double max )
   maxValue = max;
 }
 
-void BarGraph::paintEvent( QPaintEvent* )
+void BarGraph::paintEvent( TQPaintEvent* )
 {
   int w = width();
   int h = height();
 
-  QPixmap pm( w, h );
-  QPainter p;
+  TQPixmap pm( w, h );
+  TQPainter p;
   p.begin( &pm, this );
-  p.setFont( QFont( p.font().family(), fontSize ) );
-  QFontMetrics fm( p.font() );
+  p.setFont( TQFont( p.font().family(), fontSize ) );
+  TQFontMetrics fm( p.font() );
 
   pm.fill( backgroundColor );
 
   /* Draw white line along the bottom and the right side of the
    * widget to create a 3D like look. */
-  p.setPen( QColor( colorGroup().light() ) );
+  p.setPen( TQColor( colorGroup().light() ) );
   p.drawLine( 0, h - 1, w - 1, h - 1 );
   p.drawLine( w - 1, 0, w - 1, h - 1 );
 
@@ -165,7 +165,7 @@ void BarGraph::paintEvent( QPaintEvent* )
                     footers[ b ] );
         p.drawText( b * barWidth + 3, h - fm.lineSpacing() - 2,
                     barWidth - 2 * 3, fm.lineSpacing(), Qt::AlignCenter,
-                    QString( "%1" ).arg( samples[ b ] ) );
+                    TQString( "%1" ).arg( samples[ b ] ) );
       }
     }
   }

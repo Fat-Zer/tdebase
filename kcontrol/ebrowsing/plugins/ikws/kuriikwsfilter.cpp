@@ -38,7 +38,7 @@
 typedef KGenericFactory<KAutoWebSearch> KAutoWebSearchFactory;
 K_EXPORT_COMPONENT_FACTORY (libkuriikwsfilter, KAutoWebSearchFactory("kcmkurifilt"))
 
-KAutoWebSearch::KAutoWebSearch(QObject *parent, const char *name, const QStringList&)
+KAutoWebSearch::KAutoWebSearch(TQObject *parent, const char *name, const TQStringList&)
                :KURIFilterPlugin(parent, name ? name : "kuriikwsfilter", 1.0),
                 DCOPObject("KURIIKWSFilterIface")
 {
@@ -64,7 +64,7 @@ bool KAutoWebSearch::filterURI( KURIFilterData &data ) const
   KURL u = data.uri();
   if ( u.pass().isEmpty() )
   {
-    QString result = KURISearchFilterEngine::self()->autoWebSearchQuery( data.typedString() );
+    TQString result = KURISearchFilterEngine::self()->autoWebSearchQuery( data.typedString() );
     if( !result.isEmpty() )
     {
       if ( KURISearchFilterEngine::self()->verbose() )

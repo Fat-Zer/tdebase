@@ -22,18 +22,18 @@
 #include <kaction.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
-#include <qmessagebox.h>
+#include <tqmessagebox.h>
 #include <klocale.h>
-#include <qstring.h>
-#include <qtimer.h>
+#include <tqstring.h>
+#include <tqtimer.h>
 #include <kspeech.h>
-#include <qbuffer.h>
+#include <tqbuffer.h>
 
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <ktrader.h>
 
-KHTMLPluginKTTSD::KHTMLPluginKTTSD( QObject* parent, const char* name, const QStringList& )
+KHTMLPluginKTTSD::KHTMLPluginKTTSD( TQObject* parent, const char* name, const TQStringList& )
     : Plugin( parent, name )
 {
     // If KTTSD is not installed, hide action.
@@ -42,7 +42,7 @@ KHTMLPluginKTTSD::KHTMLPluginKTTSD( QObject* parent, const char* name, const QSt
     {
         (void) new KAction( i18n("&Speak Text"),
             "kttsd", 0,
-            this, SLOT(slotReadOut()),
+            this, TQT_SLOT(slotReadOut()),
             actionCollection(), "tools_kttsd" );
     }
     else
@@ -57,7 +57,7 @@ void KHTMLPluginKTTSD::slotReadOut()
 {
     // The parent is assumed to be a KHTMLPart
     if ( !parent()->inherits("KHTMLPart") )
-       QMessageBox::warning( 0, i18n( "Cannot Read source" ),
+       TQMessageBox::warning( 0, i18n( "Cannot Read source" ),
                                 i18n( "You cannot read anything except web pages with\n"
                                       "this plugin, sorry." ));
     else
@@ -66,34 +66,34 @@ void KHTMLPluginKTTSD::slotReadOut()
         DCOPClient *client = kapp->dcopClient();
         if (!client->isApplicationRegistered("kttsd"))
         {
-            QString error;
-            if (kapp->startServiceByDesktopName("kttsd", QStringList(), &error))
-                QMessageBox::warning(0, i18n( "Starting KTTSD Failed"), error );
+            TQString error;
+            if (kapp->startServiceByDesktopName("kttsd", TQStringList(), &error))
+                TQMessageBox::warning(0, i18n( "Starting KTTSD Failed"), error );
         }
 
         // Find out if KTTSD supports xhtml (rich speak).
-        QByteArray  data;
-        QBuffer     dataBuf(data);
-        QDataStream arg;
+        TQByteArray  data;
+        TQBuffer     dataBuf(data);
+        TQDataStream arg;
         dataBuf.open(IO_WriteOnly);
         arg.setDevice(&dataBuf);
         arg << "" << KSpeech::mtHtml;
-        QCString    replyType;
-        QByteArray  replyData;
+        TQCString    replyType;
+        TQByteArray  replyData;
         bool supportsXhtml = false;
-        if ( !client->call("kttsd", "KSpeech", "supportsMarkup(QString,uint)",
+        if ( !client->call("kttsd", "KSpeech", "supportsMarkup(TQString,uint)",
             data, replyType, replyData, true) )
-            QMessageBox::warning( 0, i18n( "DCOP Call Failed" ),
+            TQMessageBox::warning( 0, i18n( "DCOP Call Failed" ),
                                      i18n( "The DCOP call supportsMarkup failed." ));
         else
         {
-            QDataStream reply(replyData, IO_ReadOnly);
+            TQDataStream reply(replyData, IO_ReadOnly);
             reply >> supportsXhtml;
         }
 
         KHTMLPart *part = (KHTMLPart *) parent();
 
-        QString query;
+        TQString query;
         if (supportsXhtml)
         {
             kdDebug() << "KTTS claims to support rich speak (XHTML to SSML)." << endl;
@@ -120,15 +120,15 @@ void KHTMLPluginKTTSD::slotReadOut()
 
         dataBuf.at(0);  // reset data
         arg << query << "";
-        if ( !client->call("kttsd", "KSpeech", "setText(QString,QString)",
+        if ( !client->call("kttsd", "KSpeech", "setText(TQString,TQString)",
             data, replyType, replyData, true) )
-            QMessageBox::warning( 0, i18n( "DCOP Call Failed" ),
+            TQMessageBox::warning( 0, i18n( "DCOP Call Failed" ),
                                      i18n( "The DCOP call setText failed." ));
         dataBuf.at(0);
         arg << 0;
         if ( !client->call("kttsd", "KSpeech", "startText(uint)",
             data, replyType, replyData, true) )
-            QMessageBox::warning( 0, i18n( "DCOP Call Failed" ),
+            TQMessageBox::warning( 0, i18n( "DCOP Call Failed" ),
                                      i18n( "The DCOP call startText failed." ));
     }
 }

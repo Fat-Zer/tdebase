@@ -21,19 +21,19 @@
 
 #include <krun.h>
 #include <kiconloader.h>
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 #include "global.h"
 
 K_EXPORT_KICKER_MENUEXT(systemmenu, SystemMenu)
 
 
-SystemMenu::SystemMenu(QWidget *parent, const char *name,
-                       const QStringList &/*args*/)
+SystemMenu::SystemMenu(TQWidget *parent, const char *name,
+                       const TQStringList &/*args*/)
   : KPanelMenu( parent, name)
 {
-    connect( &m_dirLister, SIGNAL( completed() ),
-             this, SLOT( slotCompleted() ) );
+    connect( &m_dirLister, TQT_SIGNAL( completed() ),
+             this, TQT_SLOT( slotCompleted() ) );
 
     m_dirLister.openURL(KURL("system:/"));
 }
@@ -42,8 +42,8 @@ SystemMenu::~SystemMenu()
 {
 }
 
-void SystemMenu::append(const QString &icon, const KURL &url,
-                        const QString &label)
+void SystemMenu::append(const TQString &icon, const KURL &url,
+                        const TQString &label)
 {
     int id = insertItem(KickerLib::menuIconSet(icon), label);
     m_urlMap.insert(id, url);
@@ -68,9 +68,9 @@ void SystemMenu::initialize()
 
     for (; it!=end; ++it)
     {
-        QString icon = (*it)->iconName();
+        TQString icon = (*it)->iconName();
         KURL url = (*it)->url();
-        QString name = (*it)->name();
+        TQString name = (*it)->name();
         append(icon, url, name);
     }
 }

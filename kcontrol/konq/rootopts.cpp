@@ -14,12 +14,12 @@
 
 #include <config.h>
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqvgroupbox.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 
@@ -43,10 +43,10 @@
 
 //-----------------------------------------------------------------------------
 
-DesktopPathConfig::DesktopPathConfig(QWidget *parent, const char * )
+DesktopPathConfig::DesktopPathConfig(TQWidget *parent, const char * )
     : KCModule( parent, "kcmkonq" )
 {
-  QLabel * tmpLabel;
+  TQLabel * tmpLabel;
 
 #undef RO_LASTROW
 #undef RO_LASTCOL
@@ -54,7 +54,7 @@ DesktopPathConfig::DesktopPathConfig(QWidget *parent, const char * )
 #define RO_LASTCOL 2
 
   int row = 0;
-  QGridLayout *lay = new QGridLayout(this, RO_LASTROW+1, RO_LASTCOL+1,
+  TQGridLayout *lay = new TQGridLayout(this, RO_LASTROW+1, RO_LASTCOL+1,
       0, KDialog::spacingHint());
 
   lay->setRowStretch(RO_LASTROW,10); // last line grows
@@ -71,48 +71,48 @@ DesktopPathConfig::DesktopPathConfig(QWidget *parent, const char * )
 
   // Desktop Paths
   row++;
-  tmpLabel = new QLabel(i18n("Des&ktop path:"), this);
+  tmpLabel = new TQLabel(i18n("Des&ktop path:"), this);
   lay->addWidget(tmpLabel, row, 0);
   urDesktop = new KURLRequester(this);
   urDesktop->setMode( KFile::Directory );
   tmpLabel->setBuddy( urDesktop );
   lay->addMultiCellWidget(urDesktop, row, row, 1, RO_LASTCOL);
-  connect(urDesktop, SIGNAL(textChanged(const QString &)), this, SLOT(changed()));
-  QString wtstr = i18n("This folder contains all the files"
+  connect(urDesktop, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
+  TQString wtstr = i18n("This folder contains all the files"
                        " which you see on your desktop. You can change the location of this"
                        " folder if you want to, and the contents will move automatically"
                        " to the new location as well.");
-  QWhatsThis::add( tmpLabel, wtstr );
-  QWhatsThis::add( urDesktop, wtstr );
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urDesktop, wtstr );
 
   row++;
-  tmpLabel = new QLabel(i18n("A&utostart path:"), this);
+  tmpLabel = new TQLabel(i18n("A&utostart path:"), this);
   lay->addWidget(tmpLabel, row, 0);
   urAutostart = new KURLRequester(this);
   urAutostart->setMode( KFile::Directory );
   tmpLabel->setBuddy( urAutostart );
   lay->addMultiCellWidget(urAutostart, row, row, 1, RO_LASTCOL);
-  connect(urAutostart, SIGNAL(textChanged(const QString &)), this, SLOT(changed()));
+  connect(urAutostart, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
   wtstr = i18n("This folder contains applications or"
                " links to applications (shortcuts) that you want to have started"
                " automatically whenever KDE starts. You can change the location of this"
                " folder if you want to, and the contents will move automatically"
                " to the new location as well.");
-  QWhatsThis::add( tmpLabel, wtstr );
-  QWhatsThis::add( urAutostart, wtstr );
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urAutostart, wtstr );
 
   row++;
-  tmpLabel = new QLabel(i18n("D&ocuments path:"), this);
+  tmpLabel = new TQLabel(i18n("D&ocuments path:"), this);
   lay->addWidget(tmpLabel, row, 0);
   urDocument = new KURLRequester(this);
   urDocument->setMode( KFile::Directory );
   tmpLabel->setBuddy( urDocument );
   lay->addMultiCellWidget(urDocument, row, row, 1, RO_LASTCOL);
-  connect(urDocument, SIGNAL(textChanged(const QString &)), this, SLOT(changed()));
+  connect(urDocument, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
   wtstr = i18n("This folder will be used by default to "
                "load or save documents from or to.");
-  QWhatsThis::add( tmpLabel, wtstr );
-  QWhatsThis::add( urDocument, wtstr );
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urDocument, wtstr );
 
   // -- Bottom --
   Q_ASSERT( row == RO_LASTROW-1 ); // if it fails here, check the row++ and RO_LASTROW above
@@ -133,10 +133,10 @@ void DesktopPathConfig::load( bool useDefaults )
     config.setGroup("Paths");
     urAutostart->setURL( config.readPathEntry( "Autostart" , KGlobalSettings::autostartPath() ));
 
-    KConfig xdguserconfig( QDir::homeDirPath()+"/.config/user-dirs.dirs" );
+    KConfig xdguserconfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
      
-    urDesktop->setURL( xdguserconfig.readPathEntry( "XDG_DESKTOP_DIR" , QDir::homeDirPath() + "/Desktop" ).remove(  "\"" ));
-    urDocument->setURL( xdguserconfig.readPathEntry( "XDG_DOCUMENTS_DIR", QDir::homeDirPath()).remove(  "\"" ));
+    urDesktop->setURL( xdguserconfig.readPathEntry( "XDG_DESKTOP_DIR" , TQDir::homeDirPath() + "/Desktop" ).remove(  "\"" ));
+    urDocument->setURL( xdguserconfig.readPathEntry( "XDG_DOCUMENTS_DIR", TQDir::homeDirPath()).remove(  "\"" ));
     
     emit changed( useDefaults );
 }
@@ -149,7 +149,7 @@ void DesktopPathConfig::defaults()
 void DesktopPathConfig::save()
 {
     KConfig *config = KGlobal::config();
-    KConfig *xdgconfig = new KConfig( QDir::homeDirPath()+"/.config/user-dirs.dirs" );
+    KConfig *xdgconfig = new KConfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
     KConfigGroupSaver cgs( config, "Paths" );
 
     bool pathChanged = false;
@@ -178,7 +178,7 @@ void DesktopPathConfig::save()
         // * Not inside destination -> move first
         // !!!
         kdDebug() << "desktopURL=" << desktopURL.url() << endl;
-        QString urlDesktop = urDesktop->url();
+        TQString urlDesktop = urDesktop->url();
         if ( !urlDesktop.endsWith( "/" ))
             urlDesktop+="/";
 
@@ -227,8 +227,8 @@ void DesktopPathConfig::save()
     if ( !newDocumentURL.equals( documentURL, true ) )
     {
         bool pathOk = true;
-        QString path = urDocument->url();
-        if (!QDir(path).exists())
+        TQString path = urDocument->url();
+        if (!TQDir(path).exists())
         {
             if (!KStandardDirs::makeDir(path))
             {
@@ -257,10 +257,10 @@ void DesktopPathConfig::save()
     // Tell kdesktop about the new config file
     if ( !kapp->dcopClient()->isAttached() )
        kapp->dcopClient()->attach();
-    QByteArray data;
+    TQByteArray data;
 
     int konq_screen_number = KApplication::desktop()->primaryScreen();
-    QCString appname;
+    TQCString appname;
     if (konq_screen_number == 0)
         appname = "kdesktop";
     else
@@ -268,7 +268,7 @@ void DesktopPathConfig::save()
     kapp->dcopClient()->send( appname, "KDesktopIface", "configure()", data );
 }
 
-bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const QString & type )
+bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const TQString & type )
 {
     if (!src.isLocalFile() || !dest.isLocalFile())
         return true;
@@ -278,14 +278,14 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const QStr
                               arg(type).arg(src.path()).arg(dest.path()), i18n("Confirmation Required"),i18n("Move"),KStdGuiItem::cancel() )
             == KMessageBox::Yes )
     {
-        bool destExists = QFile::exists(dest.path());
+        bool destExists = TQFile::exists(dest.path());
         if (destExists)
         {
             m_copyToDest = dest;
             m_copyFromSrc = src;
             KIO::ListJob* job = KIO::listDir( src );
-            connect( job, SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
-                     this, SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList& ) ) );
+            connect( job, TQT_SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
+                     this, TQT_SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList& ) ) );
             qApp->enter_loop();
 
             if (m_ok)
@@ -296,7 +296,7 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const QStr
         else
         {
             KIO::Job * job = KIO::move( src, dest );
-            connect( job, SIGNAL( result( KIO::Job * ) ), this, SLOT( slotResult( KIO::Job * ) ) );
+            connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
             // wait for job
             qApp->enter_loop();
         }
@@ -324,7 +324,7 @@ void DesktopPathConfig::slotEntries( KIO::Job * job, const KIO::UDSEntryList& li
         }
 
         KIO::Job * moveJob = KIO::move( file.url(), m_copyToDest );
-        connect( moveJob, SIGNAL( result( KIO::Job * ) ), this, SLOT( slotResult( KIO::Job * ) ) );
+        connect( moveJob, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
         qApp->enter_loop();
     }
     qApp->exit_loop();

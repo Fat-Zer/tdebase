@@ -25,7 +25,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <qdir.h>
+#include <tqdir.h>
 #include <kinstance.h>
 
 class KonqDirPart;
@@ -33,9 +33,9 @@ class KonqDirPart;
 typedef KParts::GenericFactory<KFindPart> KFindFactory;
 K_EXPORT_COMPONENT_FACTORY( libkfindpart, KFindFactory )
 
-KFindPart::KFindPart( QWidget * parentWidget, const char *widgetName, 
-	              QObject *parent, const char *name ,
-		      const QStringList & /*args*/ )
+KFindPart::KFindPart( TQWidget * parentWidget, const char *widgetName, 
+	              TQObject *parent, const char *name ,
+		      const TQStringList & /*args*/ )
     : KonqDirPart (parent, name )/*KParts::ReadOnlyPart*/
 {
     setInstance( KFindFactory::instance() );
@@ -46,25 +46,25 @@ KFindPart::KFindPart( QWidget * parentWidget, const char *widgetName,
     m_kfindWidget = new Kfind( parentWidget, widgetName );
     m_kfindWidget->setMaximumHeight(m_kfindWidget->minimumSizeHint().height());
     const KFileItem *item = ((KonqDirPart*)parent)->currentItem();
-    kdDebug() << "Kfind: currentItem:  " << ( item ? item->url().path().local8Bit() : QString("null") ) << endl;
-    QDir d;
+    kdDebug() << "Kfind: currentItem:  " << ( item ? item->url().path().local8Bit() : TQString("null") ) << endl;
+    TQDir d;
   	if( item && d.exists( item->url().path() ))
 	  	m_kfindWidget->setURL( item->url() );
 
     setWidget( m_kfindWidget );
 
-    connect( m_kfindWidget, SIGNAL(started()),
-             this, SLOT(slotStarted()) );
-    connect( m_kfindWidget, SIGNAL(destroyMe()),
-             this, SLOT(slotDestroyMe()) );
-    connect(m_kfindWidget->dirlister,SIGNAL(deleteItem(KFileItem*)), this, SLOT(removeFile(KFileItem*)));
-    connect(m_kfindWidget->dirlister,SIGNAL(newItems(const KFileItemList&)), this, SLOT(newFiles(const KFileItemList&)));
+    connect( m_kfindWidget, TQT_SIGNAL(started()),
+             this, TQT_SLOT(slotStarted()) );
+    connect( m_kfindWidget, TQT_SIGNAL(destroyMe()),
+             this, TQT_SLOT(slotDestroyMe()) );
+    connect(m_kfindWidget->dirlister,TQT_SIGNAL(deleteItem(KFileItem*)), this, TQT_SLOT(removeFile(KFileItem*)));
+    connect(m_kfindWidget->dirlister,TQT_SIGNAL(newItems(const KFileItemList&)), this, TQT_SLOT(newFiles(const KFileItemList&)));
     //setXMLFile( "kfind.rc" );
     query = new KQuery(this);
-    connect(query, SIGNAL(addFile(const KFileItem *, const QString&)),
-            SLOT(addFile(const KFileItem *, const QString&)));
-    connect(query, SIGNAL(result(int)),
-            SLOT(slotResult(int)));
+    connect(query, TQT_SIGNAL(addFile(const KFileItem *, const TQString&)),
+            TQT_SLOT(addFile(const KFileItem *, const TQString&)));
+    connect(query, TQT_SIGNAL(result(int)),
+            TQT_SLOT(slotResult(int)));
 
     m_kfindWidget->setQuery(query);
     m_bShowsResult = false;
@@ -96,7 +96,7 @@ void KFindPart::slotStarted()
     emit clear();
 }
 
-void KFindPart::addFile(const KFileItem *item, const QString& /*matchingLine*/)
+void KFindPart::addFile(const KFileItem *item, const TQString& /*matchingLine*/)
 {
     // item is deleted by caller
     // we need to clone it
@@ -173,7 +173,7 @@ void KFindPart::slotDestroyMe()
   emit findClosed();
 }
 
-void KFindPart::saveState( QDataStream& stream )
+void KFindPart::saveState( TQDataStream& stream )
 {
   KonqDirPart::saveState(stream); 
 
@@ -188,7 +188,7 @@ void KFindPart::saveState( QDataStream& stream )
   }
 }
 
-void KFindPart::restoreState( QDataStream& stream )
+void KFindPart::restoreState( TQDataStream& stream )
 {
   KonqDirPart::restoreState(stream); 
   int nbitems;

@@ -25,14 +25,14 @@
 // widgets moves (needed because after a resolution switch Kicker will
 // reposition itself, causing normal KPassivePopup to stay at weird places)
 
-KRandrPassivePopup::KRandrPassivePopup( QWidget *parent, const char *name, WFlags f )
+KRandrPassivePopup::KRandrPassivePopup( TQWidget *parent, const char *name, WFlags f )
     : KPassivePopup( parent, name, f )
     {
-    connect( &update_timer, SIGNAL( timeout()), SLOT( slotPositionSelf()));
+    connect( &update_timer, TQT_SIGNAL( timeout()), TQT_SLOT( slotPositionSelf()));
     }
     
-KRandrPassivePopup* KRandrPassivePopup::message( const QString &caption, const QString &text,
-    const QPixmap &icon, QWidget *parent, const char *name, int timeout )
+KRandrPassivePopup* KRandrPassivePopup::message( const TQString &caption, const TQString &text,
+    const TQPixmap &icon, TQWidget *parent, const char *name, int timeout )
     {
     KRandrPassivePopup *pop = new KRandrPassivePopup( parent, name );
     pop->setAutoDelete( true );
@@ -43,7 +43,7 @@ KRandrPassivePopup* KRandrPassivePopup::message( const QString &caption, const Q
     return pop;
     }
 
-void KRandrPassivePopup::startWatchingWidget( QWidget* widget_P )
+void KRandrPassivePopup::startWatchingWidget( TQWidget* widget_P )
     {
     static Atom wm_state = XInternAtom( qt_xdisplay() , "WM_STATE", False );
     Window win = widget_P->winId();
@@ -60,7 +60,7 @@ void KRandrPassivePopup::startWatchingWidget( QWidget* widget_P )
 	    break;
 	win = parent;
 	
-	QWidget* widget = QWidget::find( win );
+	TQWidget* widget = TQWidget::find( win );
 	if( widget != NULL )
 	    {
 	    widget->installEventFilter( this );
@@ -91,11 +91,11 @@ void KRandrPassivePopup::startWatchingWidget( QWidget* widget_P )
 	kapp->installX11EventFilter( this );
     }
     	
-bool KRandrPassivePopup::eventFilter( QObject* o, QEvent* e )
+bool KRandrPassivePopup::eventFilter( TQObject* o, TQEvent* e )
     {
-    if( e->type() == QEvent::Move && o->isWidgetType()
-	&& watched_widgets.contains( static_cast< QWidget* >( o )))
-        QTimer::singleShot( 0, this, SLOT( slotPositionSelf()));
+    if( e->type() == TQEvent::Move && o->isWidgetType()
+	&& watched_widgets.contains( static_cast< TQWidget* >( o )))
+        TQTimer::singleShot( 0, this, TQT_SLOT( slotPositionSelf()));
     return false;
     }
 

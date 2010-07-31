@@ -27,12 +27,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "addextension_mnu.h"
 #include "addextension_mnu.moc"
 
-PanelAddExtensionMenu::PanelAddExtensionMenu(QWidget *parent, const char *name)
-    : QPopupMenu(parent, name)
+PanelAddExtensionMenu::PanelAddExtensionMenu(TQWidget *parent, const char *name)
+    : TQPopupMenu(parent, name)
 {
     setCheckable(true);
-    connect(this, SIGNAL(activated(int)), SLOT(slotExec(int)));
-    connect(this, SIGNAL(aboutToShow()), SLOT(slotAboutToShow()));
+    connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
+    connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 }
 
 void PanelAddExtensionMenu::slotAboutToShow()

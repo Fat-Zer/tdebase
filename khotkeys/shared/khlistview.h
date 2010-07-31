@@ -11,7 +11,7 @@
 #ifndef _KHLISTVIEW_H_
 #define _KHLISTVIEW_H_
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <klistview.h>
 #include <kdemacros.h>
@@ -25,27 +25,27 @@ class KDE_EXPORT KHListView
     Q_OBJECT
     Q_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )
     public:
-        KHListView( QWidget* parent_P, const char* name_P = NULL );
+        KHListView( TQWidget* parent_P, const char* name_P = NULL );
         virtual void clear();
-        virtual void insertItem( QListViewItem* item_P );
+        virtual void insertItem( TQListViewItem* item_P );
         virtual void clearSelection();
         bool forceSelect() const;
         void setForceSelect( bool force_P );
     signals:
-        void current_changed( QListViewItem* item_P );
+        void current_changed( TQListViewItem* item_P );
     protected:
-        virtual void contentsDropEvent (QDropEvent*);
+        virtual void contentsDropEvent (TQDropEvent*);
     private slots:
-        void slot_selection_changed( QListViewItem* item_P );
+        void slot_selection_changed( TQListViewItem* item_P );
         void slot_selection_changed();
-        void slot_current_changed( QListViewItem* item_P );
+        void slot_current_changed( TQListViewItem* item_P );
         void slot_insert_select();
     private:
-        QListViewItem* saved_current_item;
+        TQListViewItem* saved_current_item;
         bool in_clear;
         bool ignore;
         bool force_select;
-        QTimer insert_select_timer;
+        TQTimer insert_select_timer;
     };
 
 //***************************************************************************

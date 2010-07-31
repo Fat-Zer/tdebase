@@ -21,8 +21,8 @@
 #ifndef CONFSYSTEM_H
 #define CONFSYSTEM_H
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 
 class QLineEdit;
 class QComboBox;
@@ -31,7 +31,7 @@ class ConfSystem : public QWidget
 {
 	Q_OBJECT
 public:
-	ConfSystem(QWidget *parent = 0, const char *name = 0);
+	ConfSystem(TQWidget *parent = 0, const char *name = 0);
 
 	void load();
 	void save();

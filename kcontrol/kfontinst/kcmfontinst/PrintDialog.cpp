@@ -27,27 +27,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PrintDialog.h"
-#include <qlayout.h>
-#include <qframe.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqframe.h>
+#include <tqlabel.h>
 #include <klocale.h>
 
 namespace KFI
 {
 
-CPrintDialog::CPrintDialog(QWidget *parent)
+CPrintDialog::CPrintDialog(TQWidget *parent)
             : KDialogBase(Plain, i18n("Print Font Samples"), Ok|Cancel, Ok, parent, NULL, true, false)
 {
-    QFrame      *page=plainPage();
-    QGridLayout *layout=new QGridLayout(page, 1, 1, 0, spacingHint());
+    TQFrame      *page=plainPage();
+    TQGridLayout *layout=new TQGridLayout(page, 1, 1, 0, spacingHint());
 
-    layout->addWidget(new QLabel(i18n("Output:"), page), 0, 0);
-    itsOutput=new QComboBox(page);
+    layout->addWidget(new TQLabel(i18n("Output:"), page), 0, 0);
+    itsOutput=new TQComboBox(page);
     itsOutput->insertItem(i18n("All Fonts"), 0);
     itsOutput->insertItem(i18n("Selected Fonts"), 1);
     layout->addWidget(itsOutput, 0, 1);
-    layout->addWidget(new QLabel(i18n("Font size:"), page), 1, 0);
-    itsSize=new QComboBox(page);
+    layout->addWidget(new TQLabel(i18n("Font size:"), page), 1, 0);
+    itsSize=new TQComboBox(page);
     itsSize->insertItem(i18n("Waterfall"), 0);
     itsSize->insertItem(i18n("12pt"), 1);
     itsSize->insertItem(i18n("18pt"), 2);
@@ -55,7 +55,7 @@ CPrintDialog::CPrintDialog(QWidget *parent)
     itsSize->insertItem(i18n("36pt"), 4);
     itsSize->insertItem(i18n("48pt"), 5);
     layout->addWidget(itsSize, 1, 1);
-    layout->addItem(new QSpacerItem(2, 2), 2, 1);
+    layout->addItem(new TQSpacerItem(2, 2), 2, 1);
 }
 
 bool CPrintDialog::exec(bool select, int size)
@@ -68,7 +68,7 @@ bool CPrintDialog::exec(bool select, int size)
     else
         itsOutput->setCurrentItem(1);
     itsSize->setCurrentItem(size);
-    return QDialog::Accepted==QDialog::exec();
+    return TQDialog::Accepted==TQDialog::exec();
 }
 
 }

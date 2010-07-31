@@ -19,15 +19,15 @@
 #ifndef _MEDIUM_H_
 #define _MEDIUM_H_
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <kurl.h>
-#include <qmap.h>
+#include <tqmap.h>
 
 class Medium
 {
 public:
-	typedef QValueList<const Medium> List;
+	typedef TQValueList<const Medium> List;
 
 	static const uint ID = 0;
 	static const uint NAME = 1;
@@ -44,51 +44,51 @@ public:
 	static const uint ENCRYPTED = 12;
 	static const uint CLEAR_DEVICE_UDI = 13;
 	static const uint PROPERTIES_COUNT = 14;
-	static const QString SEPARATOR;
+	static const TQString SEPARATOR;
 
-	Medium(const QString &id, const QString &name);
-	static const Medium create(const QStringList &properties);
-	static List createList(const QStringList &properties);
+	Medium(const TQString &id, const TQString &name);
+	static const Medium create(const TQStringList &properties);
+	static List createList(const TQStringList &properties);
 
-	const QStringList &properties() const { return m_properties; }
+	const TQStringList &properties() const { return m_properties; }
 
-	QString id() const { return m_properties[ID]; }
-	QString name() const { return m_properties[NAME]; }
-	QString label() const { return m_properties[LABEL]; }
-	QString userLabel() const { return m_properties[USER_LABEL]; }
+	TQString id() const { return m_properties[ID]; }
+	TQString name() const { return m_properties[NAME]; }
+	TQString label() const { return m_properties[LABEL]; }
+	TQString userLabel() const { return m_properties[USER_LABEL]; }
 	bool isMountable() const { return m_properties[MOUNTABLE]=="true"; }
-	QString deviceNode() const { return m_properties[DEVICE_NODE]; }
-	QString mountPoint() const { return m_properties[MOUNT_POINT]; }
-	QString fsType() const { return m_properties[FS_TYPE]; }
+	TQString deviceNode() const { return m_properties[DEVICE_NODE]; }
+	TQString mountPoint() const { return m_properties[MOUNT_POINT]; }
+	TQString fsType() const { return m_properties[FS_TYPE]; }
 	bool isMounted() const { return m_properties[MOUNTED]=="true"; }
-	QString baseURL() const { return m_properties[BASE_URL]; }
-	QString mimeType() const { return m_properties[MIME_TYPE]; }
-	QString iconName() const { return m_properties[ICON_NAME]; }
+	TQString baseURL() const { return m_properties[BASE_URL]; }
+	TQString mimeType() const { return m_properties[MIME_TYPE]; }
+	TQString iconName() const { return m_properties[ICON_NAME]; }
  	bool isEncrypted() const { return m_properties[ENCRYPTED]=="true"; };
- 	QString clearDeviceUdi() const { return m_properties[CLEAR_DEVICE_UDI]; };
+ 	TQString clearDeviceUdi() const { return m_properties[CLEAR_DEVICE_UDI]; };
 
 	bool needMounting() const;
  	bool needDecryption() const;
 	KURL prettyBaseURL() const;
-	QString prettyLabel() const;
+	TQString prettyLabel() const;
 
-	void setName(const QString &name);
-	void setLabel(const QString &label);
-	void setUserLabel(const QString &label);
+	void setName(const TQString &name);
+	void setLabel(const TQString &label);
+	void setUserLabel(const TQString &label);
  	void setEncrypted(bool state);
 
 	bool mountableState(bool mounted);
-	void mountableState(const QString &deviceNode,
-	                    const QString &mountPoint,
-	                    const QString &fsType, bool mounted);
- 	void mountableState(const QString &deviceNode,
- 	                    const QString &clearDeviceUdi,
- 	                    const QString &mountPoint,
- 	                    const QString &fsType, bool mounted);
-	void unmountableState(const QString &baseURL = QString::null);
+	void mountableState(const TQString &deviceNode,
+	                    const TQString &mountPoint,
+	                    const TQString &fsType, bool mounted);
+ 	void mountableState(const TQString &deviceNode,
+ 	                    const TQString &clearDeviceUdi,
+ 	                    const TQString &mountPoint,
+ 	                    const TQString &fsType, bool mounted);
+	void unmountableState(const TQString &baseURL = TQString::null);
 
-	void setMimeType(const QString &mimeType);
-	void setIconName(const QString &iconName);
+	void setMimeType(const TQString &mimeType);
+	void setIconName(const TQString &iconName);
 	void setHalMounted(bool flag) const { m_halmounted = flag; }
 	bool halMounted() const { return m_halmounted; }
 
@@ -96,21 +96,21 @@ private:
 	Medium();
 	void loadUserLabel();
 
-	QStringList m_properties;
+	TQStringList m_properties;
 	mutable bool m_halmounted;
 	
-friend class QValueListNode<const Medium>;
+friend class TQValueListNode<const Medium>;
 };
 
 namespace MediaManagerUtils {
-  static inline QMap<QString,QString> splitOptions(const QStringList & options) 
+  static inline TQMap<TQString,TQString> splitOptions(const TQStringList & options) 
     {
-      QMap<QString,QString> valids;
+      TQMap<TQString,TQString> valids;
 
-      for (QStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
+      for (TQStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
 	{
-	  QString key = (*it).left((*it).find('='));
-	  QString value = (*it).mid((*it).find('=') + 1);
+	  TQString key = (*it).left((*it).find('='));
+	  TQString value = (*it).mid((*it).find('=') + 1);
 	  valids[key] = value;
 	}
       return valids;

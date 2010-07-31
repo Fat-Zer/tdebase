@@ -29,16 +29,16 @@
 
 #include <config.h>
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qpainter.h>
-#include <qradiobutton.h>
-#include <qslider.h>
-#include <qtimer.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qapplication.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
+#include <tqradiobutton.h>
+#include <tqslider.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
+#include <tqapplication.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -66,7 +66,7 @@
 
 #define NR_PREDEF_PATTERNS 6
 
-BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
+BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
   : BGDialog_UI(parent, "BGDialog")
 {
    m_pGlobals = new KGlobalBackgroundSettings(_config);
@@ -77,20 +77,20 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
    KWinModule *m_kwin;
    m_kwin = new KWinModule(this);
    m_curDesk = m_kwin->currentDesktop();
-   QSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+   TQSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
    m_useViewports = s.width() * s.height() > 1;
    
    m_numDesks = m_multidesktop ? KWin::numberOfDesktops() : 1;
    m_numViewports = s.width() * s.height();
-   m_numScreens = QApplication::desktop()->numScreens();
+   m_numScreens = TQApplication::desktop()->numScreens();
    
-   QCString multiHead = getenv("KDE_MULTIHEAD");
+   TQCString multiHead = getenv("KDE_MULTIHEAD");
    if (multiHead.lower() == "true") 
    {
       m_numScreens = 1;
    }
    
-   QPoint vx(m_kwin->currentViewport(m_kwin->currentDesktop()));
+   TQPoint vx(m_kwin->currentViewport(m_kwin->currentDesktop()));
    int t_eViewport = (vx.x() * vx.y());
    if (t_eViewport < 1) {
       t_eViewport = 1;
@@ -101,7 +101,7 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
    m_desk = m_multidesktop ? (m_useViewports ? (((m_desk - 1) * m_numViewports) + t_eViewport) : m_desk) : m_desk;
    m_numDesks = m_multidesktop ? (m_useViewports ? (m_numDesks * m_numViewports) : m_numDesks) : m_numDesks;
    
-   m_screen = QApplication::desktop()->screenNumber(this);
+   m_screen = TQApplication::desktop()->screenNumber(this);
    if (m_screen >= (int)m_numScreens)
       m_screen = m_numScreens-1;
    
@@ -124,62 +124,62 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
       m_eScreen = 0;
    }
    
-   connect(m_buttonIdentifyScreens, SIGNAL(clicked()), SLOT(slotIdentifyScreens()));
+   connect(m_buttonIdentifyScreens, TQT_SIGNAL(clicked()), TQT_SLOT(slotIdentifyScreens()));
 
    // preview monitor
    m_pMonitorArrangement = new BGMonitorArrangement(m_screenArrangement, "monitor arrangement");
-   connect(m_pMonitorArrangement, SIGNAL(imageDropped(const QString &)), SLOT(slotImageDropped(const QString &)));
+   connect(m_pMonitorArrangement, TQT_SIGNAL(imageDropped(const TQString &)), TQT_SLOT(slotImageDropped(const TQString &)));
    if( m_multidesktop)
    {
        // desktop
-       connect(m_comboDesktop, SIGNAL(activated(int)),
-	       SLOT(slotSelectDesk(int)));
+       connect(m_comboDesktop, TQT_SIGNAL(activated(int)),
+	       TQT_SLOT(slotSelectDesk(int)));
    }
    if (m_numScreens > 1)
    {
-       connect(m_comboScreen, SIGNAL(activated(int)),
-               SLOT(slotSelectScreen(int)));
+       connect(m_comboScreen, TQT_SIGNAL(activated(int)),
+               TQT_SLOT(slotSelectScreen(int)));
    }
 
    // background image settings
-   QIconSet iconSet = SmallIconSet(QString::fromLatin1("fileopen"));
-   QPixmap pixMap = iconSet.pixmap( QIconSet::Small, QIconSet::Normal );
+   TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("fileopen"));
+   TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
    m_urlWallpaperButton->setIconSet( iconSet );
    m_urlWallpaperButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
-   QToolTip::add(m_urlWallpaperButton, i18n("Open file dialog"));
+   TQToolTip::add(m_urlWallpaperButton, i18n("Open file dialog"));
 
-   connect(m_buttonGroupBackground, SIGNAL(clicked(int)),
-           SLOT(slotWallpaperTypeChanged(int)));
-   connect(m_urlWallpaperBox, SIGNAL(activated(int)),
-           SLOT(slotWallpaper(int)));
-   connect(m_urlWallpaperButton, SIGNAL(clicked()),
-           SLOT(slotWallpaperSelection()));
-   connect(m_comboWallpaperPos, SIGNAL(activated(int)),
-           SLOT(slotWallpaperPos(int)));
-   connect(m_buttonSetupWallpapers, SIGNAL(clicked()),
-           SLOT(slotSetupMulti()));
+   connect(m_buttonGroupBackground, TQT_SIGNAL(clicked(int)),
+           TQT_SLOT(slotWallpaperTypeChanged(int)));
+   connect(m_urlWallpaperBox, TQT_SIGNAL(activated(int)),
+           TQT_SLOT(slotWallpaper(int)));
+   connect(m_urlWallpaperButton, TQT_SIGNAL(clicked()),
+           TQT_SLOT(slotWallpaperSelection()));
+   connect(m_comboWallpaperPos, TQT_SIGNAL(activated(int)),
+           TQT_SLOT(slotWallpaperPos(int)));
+   connect(m_buttonSetupWallpapers, TQT_SIGNAL(clicked()),
+           TQT_SLOT(slotSetupMulti()));
 
    // set up the background colour stuff
-   connect(m_colorPrimary, SIGNAL(changed(const QColor &)),
-           SLOT(slotPrimaryColor(const QColor &)));
-   connect(m_colorSecondary, SIGNAL(changed(const QColor &)),
-           SLOT(slotSecondaryColor(const QColor &)));
-   connect(m_comboPattern, SIGNAL(activated(int)),
-           SLOT(slotPattern(int)));
+   connect(m_colorPrimary, TQT_SIGNAL(changed(const TQColor &)),
+           TQT_SLOT(slotPrimaryColor(const TQColor &)));
+   connect(m_colorSecondary, TQT_SIGNAL(changed(const TQColor &)),
+           TQT_SLOT(slotSecondaryColor(const TQColor &)));
+   connect(m_comboPattern, TQT_SIGNAL(activated(int)),
+           TQT_SLOT(slotPattern(int)));
 
    // blend
-   connect(m_comboBlend, SIGNAL(activated(int)), SLOT(slotBlendMode(int)));
-   connect(m_sliderBlend, SIGNAL(valueChanged(int)),
-           SLOT(slotBlendBalance(int)));
-   connect(m_cbBlendReverse, SIGNAL(toggled(bool)),
-           SLOT(slotBlendReverse(bool)));
+   connect(m_comboBlend, TQT_SIGNAL(activated(int)), TQT_SLOT(slotBlendMode(int)));
+   connect(m_sliderBlend, TQT_SIGNAL(valueChanged(int)),
+           TQT_SLOT(slotBlendBalance(int)));
+   connect(m_cbBlendReverse, TQT_SIGNAL(toggled(bool)),
+           TQT_SLOT(slotBlendReverse(bool)));
 
    // advanced options
-   connect(m_buttonAdvanced, SIGNAL(clicked()),
-           SLOT(slotAdvanced()));
+   connect(m_buttonAdvanced, TQT_SIGNAL(clicked()),
+           TQT_SLOT(slotAdvanced()));
 
-   connect(m_buttonGetNew, SIGNAL(clicked()),
-           SLOT(slotGetNewStuff()));
+   connect(m_buttonGetNew, TQT_SIGNAL(clicked()),
+           TQT_SLOT(slotGetNewStuff()));
 
    // renderers
    m_renderer.resize(m_numDesks+1);
@@ -196,19 +196,19 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
          // Setup the merged-screen renderer
          KBackgroundRenderer * r = new KBackgroundRenderer(eDesk, 0, false, _config);
          m_renderer[i].insert( 0, r );
-         connect( r, SIGNAL(imageDone(int,int)), SLOT(slotPreviewDone(int,int)) );
+         connect( r, TQT_SIGNAL(imageDone(int,int)), TQT_SLOT(slotPreviewDone(int,int)) );
          
          // Setup the common-screen renderer
          r = new KBackgroundRenderer(eDesk, 0, true, _config);
          m_renderer[i].insert( 1, r );
-         connect( r, SIGNAL(imageDone(int,int)), SLOT(slotPreviewDone(int,int)) );
+         connect( r, TQT_SIGNAL(imageDone(int,int)), TQT_SLOT(slotPreviewDone(int,int)) );
          
          // Setup the remaining renderers for each screen
          for (unsigned j=0; j < m_numScreens; ++j )
          {
             r = new KBackgroundRenderer(eDesk, j, true, _config);
             m_renderer[i].insert( j+2, r );
-            connect( r, SIGNAL(imageDone(int,int)), SLOT(slotPreviewDone(int,int)) );
+            connect( r, TQT_SIGNAL(imageDone(int,int)), TQT_SLOT(slotPreviewDone(int,int)) );
          }
       }
    }
@@ -223,14 +223,14 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
       // set up the common desktop renderer
       KBackgroundRenderer * r = new KBackgroundRenderer(0, 0, false, _config);
       m_renderer[0].insert(0, r);
-      connect(r, SIGNAL(imageDone(int,int)), SLOT(slotPreviewDone(int,int)));
+      connect(r, TQT_SIGNAL(imageDone(int,int)), TQT_SLOT(slotPreviewDone(int,int)));
 
       // set up all the other desktop renderers
       for (unsigned i = 0; i < m_numDesks; ++i)
       {
          r = new KBackgroundRenderer(i, 0, false, _config);
          m_renderer[i+1].insert(0, r);
-         connect(r, SIGNAL(imageDone(int,int)), SLOT(slotPreviewDone(int,int)));
+         connect(r, TQT_SIGNAL(imageDone(int,int)), TQT_SLOT(slotPreviewDone(int,int)));
       }
    }
 
@@ -257,7 +257,7 @@ BGDialog::BGDialog(QWidget* parent, KConfig* _config, bool _multidesktop)
    updateUI();
 
 #if (QT_VERSION-0 >= 0x030200)
-   connect( qApp->desktop(), SIGNAL( resized( int )), SLOT( desktopResized())); // RANDR support
+   connect( qApp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized())); // RANDR support
 #endif
 }
 
@@ -380,7 +380,7 @@ void BGDialog::defaults()
    eRenderer()->setWallpaper( eRenderer()->wallpaper() );
 }
 
-QString BGDialog::quickHelp() const
+TQString BGDialog::quickHelp() const
 {
    return i18n("<h1>Background</h1> This module allows you to control the"
       " appearance of the virtual desktops. KDE offers a variety of options"
@@ -405,23 +405,23 @@ void BGDialog::slotIdentifyScreens()
    // Taken from PositionTab::showIdentify in kdebase/kcontrol/kicker/positiontab_impl.cpp
    for(unsigned s = 0; s < m_numScreens; s++)
    {
-      QLabel *screenLabel = new QLabel(0,"Screen Identify", WDestructiveClose | WStyle_Customize | WX11BypassWM);
+      TQLabel *screenLabel = new TQLabel(0,"Screen Identify", WDestructiveClose | WStyle_Customize | WX11BypassWM);
 
-      QFont identifyFont(KGlobalSettings::generalFont());
+      TQFont identifyFont(KGlobalSettings::generalFont());
       identifyFont.setPixelSize(100);
       screenLabel->setFont(identifyFont);
 
-      screenLabel->setFrameStyle(QFrame::Panel);
-      screenLabel->setFrameShadow(QFrame::Plain);
+      screenLabel->setFrameStyle(TQFrame::Panel);
+      screenLabel->setFrameShadow(TQFrame::Plain);
 
       screenLabel->setAlignment(Qt::AlignCenter);
       screenLabel->setNum(int(s + 1));
         // BUGLET: we should not allow the identification to be entered again
         //         until the timer fires.
-      QTimer::singleShot(1500, screenLabel, SLOT(close()));
+      TQTimer::singleShot(1500, screenLabel, TQT_SLOT(close()));
 
-      QPoint screenCenter(QApplication::desktop()->screenGeometry(s).center());
-      QRect targetGeometry(QPoint(0,0),screenLabel->sizeHint());
+      TQPoint screenCenter(TQApplication::desktop()->screenGeometry(s).center());
+      TQRect targetGeometry(TQPoint(0,0),screenLabel->sizeHint());
       targetGeometry.moveCenter(screenCenter);
 
       screenLabel->setGeometry(targetGeometry);
@@ -448,7 +448,7 @@ void BGDialog::initUI()
    
    // Screens
    for (unsigned i = 0; i < m_numScreens; ++i)
-      m_comboScreen->insertItem( i18n("Screen %1").arg(QString::number(i+1)) );
+      m_comboScreen->insertItem( i18n("Screen %1").arg(TQString::number(i+1)) );
 
    // Patterns
    m_comboPattern->insertItem(i18n("Single Color"));
@@ -460,7 +460,7 @@ void BGDialog::initUI()
 
    m_patterns = KBackgroundPattern::list();
    m_patterns.sort(); // Defined order
-   QStringList::Iterator it;
+   TQStringList::Iterator it;
    for (it=m_patterns.begin(); it != m_patterns.end(); ++it)
    {
       KBackgroundPattern pat(*it);
@@ -497,20 +497,20 @@ void BGDialog::initUI()
 void BGDialog::loadWallpaperFilesList() {
 
    // Wallpapers
-   // the following QMap is lower cased names mapped to cased names and URLs
+   // the following TQMap is lower cased names mapped to cased names and URLs
    // this way we get case insensitive sorting
-   QMap<QString, QPair<QString, QString> > papers;
+   TQMap<TQString, QPair<TQString, TQString> > papers;
 
    //search for .desktop files before searching for images without .desktop files
-   QStringList lst = m_pDirs->findAllResources("wallpaper", "*desktop", false, true);
-   QStringList files;
-   for (QStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it)
+   TQStringList lst = m_pDirs->findAllResources("wallpaper", "*desktop", false, true);
+   TQStringList files;
+   for (TQStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it)
    {
       KSimpleConfig fileConfig(*it);
       fileConfig.setGroup("Wallpaper");
 
-      QString imageCaption = fileConfig.readEntry("Name");
-      QString fileName = fileConfig.readEntry("File");
+      TQString imageCaption = fileConfig.readEntry("Name");
+      TQString fileName = fileConfig.readEntry("File");
 
       if (imageCaption.isEmpty())
       {
@@ -520,15 +520,15 @@ void BGDialog::loadWallpaperFilesList() {
       }
 
       // avoid name collisions
-      QString rs = imageCaption;
-      QString lrs = rs.lower();
+      TQString rs = imageCaption;
+      TQString lrs = rs.lower();
       for (int n = 1; papers.find(lrs) != papers.end(); ++n)
       {
-         rs = imageCaption + " (" + QString::number(n) + ')';
+         rs = imageCaption + " (" + TQString::number(n) + ')';
          lrs = rs.lower();
       }
       int slash = (*it).findRev('/') + 1;
-      QString directory = (*it).left(slash);
+      TQString directory = (*it).left(slash);
       bool canLoadScaleable = false;
 #ifdef HAVE_LIBART
       canLoadScaleable = true;
@@ -541,13 +541,13 @@ void BGDialog::loadWallpaperFilesList() {
 
    //now find any wallpapers that don't have a .desktop file
    lst = m_pDirs->findAllResources("wallpaper", "*", false, true);
-   for (QStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it)
+   for (TQStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it)
    {
       if ( !(*it).endsWith(".desktop") && files.grep(*it).empty() ) {
          // First try to see if we have a comment describing the image.  If we do
          // just use the first line of said comment.
          KFileMetaInfo metaInfo(*it);
-         QString imageCaption;
+         TQString imageCaption;
 
          if (metaInfo.isValid() && metaInfo.item("Comment").isValid())
             imageCaption = metaInfo.item("Comment").string().section('\n', 0, 0);
@@ -568,11 +568,11 @@ void BGDialog::loadWallpaperFilesList() {
          }
 
          // avoid name collisions
-         QString rs = imageCaption;
-         QString lrs = rs.lower();
+         TQString rs = imageCaption;
+         TQString lrs = rs.lower();
          for (int n = 1; papers.find(lrs) != papers.end(); ++n)
          {
-            rs = imageCaption + " (" + QString::number(n) + ')';
+            rs = imageCaption + " (" + TQString::number(n) + ')';
             lrs = rs.lower();
          }
          papers[lrs] = qMakePair(rs, *it);
@@ -583,7 +583,7 @@ void BGDialog::loadWallpaperFilesList() {
    comboWallpaper->clear();
    m_wallpaper.clear();
    int i = 0;
-   for (QMap<QString, QPair<QString, QString> >::Iterator it = papers.begin();
+   for (TQMap<TQString, QPair<TQString, TQString> >::Iterator it = papers.begin();
         it != papers.end();
         ++it)
    {
@@ -593,7 +593,7 @@ void BGDialog::loadWallpaperFilesList() {
    }
 }
 
-void BGDialog::setWallpaper(const QString &s)
+void BGDialog::setWallpaper(const TQString &s)
 {
    KComboBox *comboWallpaper = m_urlWallpaperBox;
    comboWallpaper->blockSignals(true);
@@ -601,7 +601,7 @@ void BGDialog::setWallpaper(const QString &s)
    if (m_wallpaper.find(s) == m_wallpaper.end())
    {
       int i = comboWallpaper->count();
-      QString imageCaption;
+      TQString imageCaption;
       int slash = s.findRev('/') + 1;
       int endDot = s.findRev('.');
 
@@ -628,13 +628,13 @@ void BGDialog::setWallpaper(const QString &s)
 
 void BGDialog::slotWallpaperSelection()
 {
-   KFileDialog dlg( QString::null, QString::null, this,
+   KFileDialog dlg( TQString::null, TQString::null, this,
                     "file dialog", true );
 
    KImageFilePreview* previewWidget = new KImageFilePreview(&dlg);
    dlg.setPreviewWidget(previewWidget);
 
-   QStringList mimeTypes = KImageIO::mimeTypes( KImageIO::Reading ); 
+   TQStringList mimeTypes = KImageIO::mimeTypes( KImageIO::Reading ); 
 #ifdef HAVE_LIBART
    mimeTypes += "image/svg+xml";
 #endif
@@ -643,8 +643,8 @@ void BGDialog::slotWallpaperSelection()
    dlg.setCaption( i18n("Select Wallpaper") );
 
    int j = m_urlWallpaperBox->currentItem();
-   QString uri;
-   for(QMap<QString,int>::ConstIterator it = m_wallpaper.begin();
+   TQString uri;
+   for(TQMap<TQString,int>::ConstIterator it = m_wallpaper.begin();
        it != m_wallpaper.end();
        ++it)
    {
@@ -659,7 +659,7 @@ void BGDialog::slotWallpaperSelection()
       dlg.setSelection( uri );
    }
 
-   if ( dlg.exec() == QDialog::Accepted )
+   if ( dlg.exec() == TQDialog::Accepted )
    {
       setWallpaper(dlg.selectedFile());
 
@@ -819,7 +819,7 @@ void BGDialog::slotPreviewDone(int desk_done, int screen_done)
    r->saveCacheFile();
 
    KPixmap pm;
-   if (QPixmap::defaultDepth() < 15)
+   if (TQPixmap::defaultDepth() < 15)
       pm.convertFromImage(r->image(), KPixmap::LowColor);
    else
       pm.convertFromImage(r->image());
@@ -839,7 +839,7 @@ void BGDialog::slotPreviewDone(int desk_done, int screen_done)
    }
 }
 
-void BGDialog::slotImageDropped(const QString &uri)
+void BGDialog::slotImageDropped(const TQString &uri)
 {
    setWallpaper(uri);
 
@@ -911,8 +911,8 @@ void BGDialog::slotWallpaperTypeChanged(int i)
          r->setMultiWallpaperMode(KBackgroundSettings::NoMultiRandom);
 
       int j = m_urlWallpaperBox->currentItem();
-      QString path;
-      for(QMap<QString,int>::ConstIterator it = m_wallpaper.begin();
+      TQString path;
+      for(TQMap<TQString,int>::ConstIterator it = m_wallpaper.begin();
           it != m_wallpaper.end();
           ++it)
       {
@@ -929,7 +929,7 @@ void BGDialog::slotWallpaperTypeChanged(int i)
          // If the image is greater than 800x600 default to using scaled mode,
          // otherwise default to tiled.
 
-         QSize s = metaInfo.item("Dimensions").value().toSize();
+         TQSize s = metaInfo.item("Dimensions").value().toSize();
          if (s.width() >= 800 && s.height() >= 600)
             m_wallpaperPos = KBackgroundSettings::Scaled;
          else
@@ -997,7 +997,7 @@ void BGDialog::slotSetupMulti()
     KBackgroundRenderer *r = eRenderer();
 
     BGMultiWallpaperDialog dlg(r, topLevelWidget());
-    if (dlg.exec() == QDialog::Accepted) {
+    if (dlg.exec() == TQDialog::Accepted) {
         r->stop();
         m_slideShowRandom = r->multiWallpaperMode();
         r->setWallpaperMode(m_wallpaperPos);
@@ -1008,7 +1008,7 @@ void BGDialog::slotSetupMulti()
     }
 }
 
-void BGDialog::slotPrimaryColor(const QColor &color)
+void BGDialog::slotPrimaryColor(const TQColor &color)
 {
    KBackgroundRenderer *r = eRenderer();
 
@@ -1023,7 +1023,7 @@ void BGDialog::slotPrimaryColor(const QColor &color)
    emit changed(true);
 }
 
-void BGDialog::slotSecondaryColor(const QColor &color)
+void BGDialog::slotSecondaryColor(const TQColor &color)
 {
    KBackgroundRenderer *r = eRenderer();
 

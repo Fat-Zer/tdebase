@@ -50,7 +50,7 @@
 #include <kmenubar.h>
 #include <kmessagebox.h>
 #include <kuser.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "krootwm.h"
 #include "kdiconview.h"
@@ -66,9 +66,9 @@
 
 KRootWm * KRootWm::s_rootWm = 0;
 
-extern QCString kdesktop_name, kicker_name, kwin_name;
+extern TQCString kdesktop_name, kicker_name, kwin_name;
 
-KRootWm::KRootWm(KDesktop* _desktop) : QObject(_desktop)
+KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop)
 {
   s_rootWm = this;
   m_actionCollection = new KActionCollection(_desktop, this, "KRootWm::m_actionCollection");
@@ -85,10 +85,10 @@ KRootWm::KRootWm(KDesktop* _desktop) : QObject(_desktop)
   if (m_bDesktopEnabled && kapp->authorize("editable_desktop_icons"))
   {
      menuNew = new KNewMenu( m_actionCollection, "new_menu" );
-     connect(menuNew->popupMenu(), SIGNAL( aboutToShow() ),
-             this, SLOT( slotFileNewAboutToShow() ) );
-     connect( menuNew, SIGNAL( activated() ),
-              m_pDesktop->iconView(), SLOT( slotNewMenuActivated() ) );
+     connect(menuNew->popupMenu(), TQT_SIGNAL( aboutToShow() ),
+             this, TQT_SLOT( slotFileNewAboutToShow() ) );
+     connect( menuNew, TQT_SIGNAL( activated() ),
+              m_pDesktop->iconView(), TQT_SLOT( slotNewMenuActivated() ) );
   }
 
   if (kapp->authorizeKAction("bookmarks"))
@@ -110,8 +110,8 @@ KRootWm::KRootWm(KDesktop* _desktop) : QObject(_desktop)
   // so we create them here
   desktopMenu = new QPopupMenu;
   windowListMenu = new KWindowListMenu;
-  connect( windowListMenu, SIGNAL( aboutToShow() ),
-           this, SLOT( slotWindowListAboutToShow() ) );
+  connect( windowListMenu, TQT_SIGNAL( aboutToShow() ),
+           this, TQT_SLOT( slotWindowListAboutToShow() ) );
 
   // Create the actions
 #if 0
@@ -130,77 +130,77 @@ KRootWm::KRootWm(KDesktop* _desktop) : QObject(_desktop)
 
   if (kapp->authorize("run_command"))
   {
-     new KAction(i18n("Run Command..."), "run", 0, m_pDesktop, SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
+     new KAction(i18n("Run Command..."), "run", 0, m_pDesktop, TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
   }
   if (!KGlobal::config()->isImmutable())
   {
-     new KAction(i18n("Configure Desktop..."), "configure", 0, this, SLOT( slotConfigureDesktop() ),
+     new KAction(i18n("Configure Desktop..."), "configure", 0, this, TQT_SLOT( slotConfigureDesktop() ),
                  m_actionCollection, "configdesktop" );
-     new KAction(i18n("Disable Desktop Menu"), 0, this, SLOT( slotToggleDesktopMenu() ),
+     new KAction(i18n("Disable Desktop Menu"), 0, this, TQT_SLOT( slotToggleDesktopMenu() ),
                  m_actionCollection, "togglemenubar" );
   }
 
-  new KAction(i18n("Unclutter Windows"), 0, this, SLOT( slotUnclutterWindows() ),
+  new KAction(i18n("Unclutter Windows"), 0, this, TQT_SLOT( slotUnclutterWindows() ),
               m_actionCollection, "unclutter" );
-  new KAction(i18n("Cascade Windows"), 0, this, SLOT( slotCascadeWindows() ),
+  new KAction(i18n("Cascade Windows"), 0, this, TQT_SLOT( slotCascadeWindows() ),
               m_actionCollection, "cascade" );
 
   // arrange menu actions
   if (m_bDesktopEnabled && kapp->authorize("editable_desktop_icons"))
   {
-     new KAction(i18n("By Name (Case Sensitive)"), 0, this, SLOT( slotArrangeByNameCS() ),
+     new KAction(i18n("By Name (Case Sensitive)"), 0, this, TQT_SLOT( slotArrangeByNameCS() ),
                  m_actionCollection, "sort_ncs");
-     new KAction(i18n("By Name (Case Insensitive)"), 0, this, SLOT( slotArrangeByNameCI() ),
+     new KAction(i18n("By Name (Case Insensitive)"), 0, this, TQT_SLOT( slotArrangeByNameCI() ),
                  m_actionCollection, "sort_nci");
-     new KAction(i18n("By Size"), 0, this, SLOT( slotArrangeBySize() ),
+     new KAction(i18n("By Size"), 0, this, TQT_SLOT( slotArrangeBySize() ),
                  m_actionCollection, "sort_size");
-     new KAction(i18n("By Type"), 0, this, SLOT( slotArrangeByType() ),
+     new KAction(i18n("By Type"), 0, this, TQT_SLOT( slotArrangeByType() ),
                  m_actionCollection, "sort_type");
-     new KAction(i18n("By Date"), 0, this, SLOT( slotArrangeByDate() ),
+     new KAction(i18n("By Date"), 0, this, TQT_SLOT( slotArrangeByDate() ),
                  m_actionCollection, "sort_date");
 
      KToggleAction *aSortDirsFirst = new KToggleAction( i18n("Directories First"), 0, m_actionCollection, "sort_directoriesfirst" );
-     connect( aSortDirsFirst, SIGNAL( toggled( bool ) ),
-              this, SLOT( slotToggleDirFirst( bool ) ) );
+     connect( aSortDirsFirst, TQT_SIGNAL( toggled( bool ) ),
+              this, TQT_SLOT( slotToggleDirFirst( bool ) ) );
      new KAction(i18n("Line Up Horizontally"), 0,
-                 this, SLOT( slotLineupIconsHoriz() ),
+                 this, TQT_SLOT( slotLineupIconsHoriz() ),
                  m_actionCollection, "lineupHoriz" );
      new KAction(i18n("Line Up Vertically"), 0,
-                 this, SLOT( slotLineupIconsVert() ),
+                 this, TQT_SLOT( slotLineupIconsVert() ),
                  m_actionCollection, "lineupVert" );
      KToggleAction *aAutoAlign = new KToggleAction(i18n("Align to Grid"), 0,
                  m_actionCollection, "realign" );
-     connect( aAutoAlign, SIGNAL( toggled( bool ) ),
-              this, SLOT( slotToggleAutoAlign( bool ) ) );
+     connect( aAutoAlign, TQT_SIGNAL( toggled( bool ) ),
+              this, TQT_SLOT( slotToggleAutoAlign( bool ) ) );
      KToggleAction *aLockIcons = new KToggleAction(i18n("Lock in Place"), 0, m_actionCollection, "lock_icons");
-     connect( aLockIcons, SIGNAL( toggled( bool ) ),
-              this, SLOT( slotToggleLockIcons( bool ) ) );
+     connect( aLockIcons, TQT_SIGNAL( toggled( bool ) ),
+              this, TQT_SLOT( slotToggleLockIcons( bool ) ) );
   }
   if (m_bDesktopEnabled)
   {
-     new KAction(i18n("Refresh Desktop"), "desktop", 0, this, SLOT( slotRefreshDesktop() ),
+     new KAction(i18n("Refresh Desktop"), "desktop", 0, this, TQT_SLOT( slotRefreshDesktop() ),
                  m_actionCollection, "refresh" );
   }
   // Icons in sync with kicker
   if (kapp->authorize("lock_screen"))
   {
-      new KAction(i18n("Lock Session"), "lock", 0, this, SLOT( slotLock() ),
+      new KAction(i18n("Lock Session"), "lock", 0, this, TQT_SLOT( slotLock() ),
                   m_actionCollection, "lock" );
   }
   if (kapp->authorize("logout"))
   {
       new KAction(i18n("Log Out \"%1\"...").arg(KUser().loginName()), "exit", 0,
-                  this, SLOT( slotLogout() ), m_actionCollection, "logout" );
+                  this, TQT_SLOT( slotLogout() ), m_actionCollection, "logout" );
   }
 
   if (kapp->authorize("start_new_session") && DM().isSwitchable())
   {
       new KAction(i18n("Start New Session"), "fork", 0, this,
-                  SLOT( slotNewSession() ), m_actionCollection, "newsession" );
+                  TQT_SLOT( slotNewSession() ), m_actionCollection, "newsession" );
       if (kapp->authorize("lock_screen"))
       {
           new KAction(i18n("Lock Current && Start New Session"), "lock", 0, this,
-                      SLOT( slotLockNNewSession() ), m_actionCollection, "lockNnewsession" );
+                      TQT_SLOT( slotLockNNewSession() ), m_actionCollection, "lockNnewsession" );
       }
   }
 
@@ -226,7 +226,7 @@ void KRootWm::initConfig()
   // read configuration for clicks on root window
   static const char * const s_choices[choiceCount] = { "", "WindowListMenu", "DesktopMenu", "AppMenu", "CustomMenu1", "CustomMenu2", "BookmarksMenu" };
   leftButtonChoice = middleButtonChoice = rightButtonChoice = NOTHING;
-  QString s = KDesktopSettings::left();
+  TQString s = KDesktopSettings::left();
   for ( int c = 0 ; c < choiceCount ; c ++ )
     if (s == s_choices[c])
       { leftButtonChoice = (menuChoice) c; break; }
@@ -279,8 +279,8 @@ void KRootWm::buildMenus()
     }
 
     // create Arrange menu
-    QPopupMenu *pArrangeMenu = 0;
-    QPopupMenu *pLineupMenu = 0;
+    TQPopupMenu *pArrangeMenu = 0;
+    TQPopupMenu *pLineupMenu = 0;
     KAction *action;
     help = new KHelpMenu(0, 0, false);
     help->menu()->removeItem( KHelpMenu::menuAboutApp );
@@ -307,8 +307,8 @@ void KRootWm::buildMenus()
     if (m_actionCollection->action("newsession"))
     {
         sessionsMenu = new QPopupMenu;
-        connect( sessionsMenu, SIGNAL(aboutToShow()), SLOT(slotPopulateSessions()) );
-        connect( sessionsMenu, SIGNAL(activated(int)), SLOT(slotSessionActivated(int)) );
+        connect( sessionsMenu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotPopulateSessions()) );
+        connect( sessionsMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSessionActivated(int)) );
     }
 
     if (menuBar) {
@@ -415,7 +415,7 @@ void KRootWm::buildMenus()
 
     if (m_bDesktopEnabled && m_actionCollection->action("realign"))
     {
-       QPopupMenu* pIconOperationsMenu = new QPopupMenu;
+       TQPopupMenu* pIconOperationsMenu = new QPopupMenu;
 
        pIconOperationsMenu->insertItem(i18n("Sort Icons"), pArrangeMenu);
        pIconOperationsMenu->insertSeparator();
@@ -430,7 +430,7 @@ void KRootWm::buildMenus()
        desktopMenu->insertItem(SmallIconSet("icons"), i18n("Icons"), pIconOperationsMenu);
     }
 
-    QPopupMenu* pWindowOperationsMenu = new QPopupMenu;
+    TQPopupMenu* pWindowOperationsMenu = new QPopupMenu;
     m_actionCollection->action("cascade")->plug( pWindowOperationsMenu );
     m_actionCollection->action("unclutter")->plug( pWindowOperationsMenu );
     desktopMenu->insertItem(SmallIconSet("window_list"), i18n("Windows"), pWindowOperationsMenu);
@@ -472,7 +472,7 @@ void KRootWm::buildMenus()
         desktopMenu->removeItem(lastSep);
     }
 
-    connect( desktopMenu, SIGNAL( aboutToShow() ), this, SLOT( slotFileNewAboutToShow() ) );
+    connect( desktopMenu, TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotFileNewAboutToShow() ) );
 
     if (menuBar) {
         menuBar->insertItem(i18n("File"), file);
@@ -529,7 +529,7 @@ void KRootWm::slotWindowListAboutToShow()
   windowListMenu->init();
 }
 
-void KRootWm::activateMenu( menuChoice choice, const QPoint& global )
+void KRootWm::activateMenu( menuChoice choice, const TQPoint& global )
 {
   switch ( choice )
   {
@@ -574,7 +574,7 @@ void KRootWm::activateMenu( menuChoice choice, const QPoint& global )
   }
 }
 
-void KRootWm::mousePressed( const QPoint& _global, int _button )
+void KRootWm::mousePressed( const TQPoint& _global, int _button )
 {
     if (!desktopMenu) return; // initialisation not yet done
     switch ( _button ) {
@@ -599,38 +599,38 @@ void KRootWm::mousePressed( const QPoint& _global, int _button )
 void KRootWm::slotWindowList() {
 //  kdDebug() << "KRootWm::slotWindowList" << endl;
 // Popup at the center of the screen, this is from keyboard shortcut.
-  QDesktopWidget* desktop = KApplication::desktop();
-  QRect r;
+  TQDesktopWidget* desktop = KApplication::desktop();
+  TQRect r;
   if (desktop->numScreens() < 2)
       r = desktop->geometry();
   else
-      r = desktop->screenGeometry( desktop->screenNumber(QCursor::pos()));
+      r = desktop->screenGeometry( desktop->screenNumber(TQCursor::pos()));
   windowListMenu->init();
-  disconnect( windowListMenu, SIGNAL( aboutToShow() ),
-           this, SLOT( slotWindowListAboutToShow() ) ); // avoid calling init() twice
+  disconnect( windowListMenu, TQT_SIGNAL( aboutToShow() ),
+           this, TQT_SLOT( slotWindowListAboutToShow() ) ); // avoid calling init() twice
   // windowListMenu->rect() is not valid before showing, use sizeHint()
-  windowListMenu->popup(r.center() - QRect( QPoint( 0, 0 ), windowListMenu->sizeHint()).center());
+  windowListMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), windowListMenu->sizeHint()).center());
   windowListMenu->selectActiveWindow(); // make the popup more useful
-  connect( windowListMenu, SIGNAL( aboutToShow() ),
-           this, SLOT( slotWindowListAboutToShow() ) );
+  connect( windowListMenu, TQT_SIGNAL( aboutToShow() ),
+           this, TQT_SLOT( slotWindowListAboutToShow() ) );
 }
 
 void KRootWm::slotSwitchUser() {
 //  kdDebug() << "KRootWm::slotSwitchUser" << endl;
   if (!sessionsMenu)
     return;
-  QDesktopWidget* desktop = KApplication::desktop();
-  QRect r;
+  TQDesktopWidget* desktop = KApplication::desktop();
+  TQRect r;
   if (desktop->numScreens() < 2)
       r = desktop->geometry();
   else
-      r = desktop->screenGeometry( desktop->screenNumber(QCursor::pos()));
+      r = desktop->screenGeometry( desktop->screenNumber(TQCursor::pos()));
   slotPopulateSessions();
-  disconnect( sessionsMenu, SIGNAL( aboutToShow() ),
-           this, SLOT( slotPopulateSessions() ) ); // avoid calling init() twice
-  sessionsMenu->popup(r.center() - QRect( QPoint( 0, 0 ), sessionsMenu->sizeHint()).center());
-  connect( sessionsMenu, SIGNAL( aboutToShow() ),
-           SLOT( slotPopulateSessions() ) );
+  disconnect( sessionsMenu, TQT_SIGNAL( aboutToShow() ),
+           this, TQT_SLOT( slotPopulateSessions() ) ); // avoid calling init() twice
+  sessionsMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), sessionsMenu->sizeHint()).center());
+  connect( sessionsMenu, TQT_SIGNAL( aboutToShow() ),
+           TQT_SLOT( slotPopulateSessions() ) );
 }
 
 void KRootWm::slotArrangeByNameCS()
@@ -681,14 +681,14 @@ void KRootWm::slotArrangeByType()
 void KRootWm::slotLineupIconsHoriz() {
     if (m_bDesktopEnabled)
     {
-        m_pDesktop->iconView()->lineupIcons(QIconView::LeftToRight);
+        m_pDesktop->iconView()->lineupIcons(TQIconView::LeftToRight);
     }
 }
 
 void KRootWm::slotLineupIconsVert()  {
     if (m_bDesktopEnabled)
     {
-        m_pDesktop->iconView()->lineupIcons(QIconView::TopToBottom);
+        m_pDesktop->iconView()->lineupIcons(TQIconView::TopToBottom);
     }
 }
 
@@ -716,8 +716,8 @@ void KRootWm::slotRefreshDesktop() {
     }
 }
 
-QStringList KRootWm::configModules() {
-  QStringList args;
+TQStringList KRootWm::configModules() {
+  TQStringList args;
   args << "kde-background.desktop" << "kde-desktopbehavior.desktop"  << "kde-desktop.desktop"
 	  << "kde-screensaver.desktop" << "kde-display.desktop";
   return args;
@@ -726,11 +726,11 @@ QStringList KRootWm::configModules() {
 void KRootWm::slotConfigureDesktop() {
   if (!m_configDialog)
   {
-    m_configDialog = new KCMultiDialog( (QWidget*)0, "configureDialog" );
-    connect(m_configDialog, SIGNAL(finished()), this, SLOT(slotConfigClosed()));
+    m_configDialog = new KCMultiDialog( (TQWidget*)0, "configureDialog" );
+    connect(m_configDialog, TQT_SIGNAL(finished()), this, TQT_SLOT(slotConfigClosed()));
 
-    QStringList modules = configModules();
-    for (QStringList::const_iterator it = modules.constBegin(); it != modules.constEnd(); ++it)
+    TQStringList modules = configModules();
+    for (TQStringList::const_iterator it = modules.constBegin(); it != modules.constEnd(); ++it)
     {
       if (kapp->authorizeControlModule(*it))
       {
@@ -755,7 +755,7 @@ void KRootWm::slotToggleDesktopMenu()
     KDesktopSettings::setShowMenubar( !(m_bShowMenuBar && menuBar) );
     KDesktopSettings::writeConfig();
 
-    QByteArray data;
+    TQByteArray data;
     kapp->dcopClient()->send( kdesktop_name, "KDesktopIface", "configure()", data);
     // for the standalone menubar setting
     kapp->dcopClient()->send( "menuapplet*", "menuapplet", "configure()", data );

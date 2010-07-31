@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __addapplet_mnu_h__
 #define __addapplet_mnu_h__
 
-#include <qvaluelist.h>
-#include <qpopupmenu.h>
+#include <tqvaluelist.h>
+#include <tqpopupmenu.h>
 
 #include "appletinfo.h"
 
@@ -36,7 +36,7 @@ class PanelAddAppletMenu : public QPopupMenu
     Q_OBJECT
 
 public:
-    PanelAddAppletMenu(ContainerArea *cArea, QWidget *parent=0, const char *name=0);
+    PanelAddAppletMenu(ContainerArea *cArea, TQWidget *parent=0, const char *name=0);
 
 protected slots:
     virtual void slotExec(int id);

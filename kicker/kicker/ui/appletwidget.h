@@ -25,8 +25,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _appletwidget_h_
 #define _appletwidget_h_
 
-#include <qpoint.h>
-#include <qvaluelist.h>
+#include <tqpoint.h>
+#include <tqvaluelist.h>
 
 #include <klocale.h>
 #include <kdialogbase.h>
@@ -39,11 +39,11 @@ class AppletWidget: public AppletItem
     Q_OBJECT
 
     public:
-        typedef QValueList<AppletWidget*> List;
+        typedef TQValueList<AppletWidget*> List;
 
-        AppletWidget(const AppletInfo& info, bool odd, QWidget *parent);
+        AppletWidget(const AppletInfo& info, bool odd, TQWidget *parent);
         const AppletInfo& info() const { return m_appletInfo; }
-        virtual bool eventFilter(QObject* watched, QEvent* e);
+        virtual bool eventFilter(TQObject* watched, TQEvent* e);
 
         void setSelected(bool selected);
         void setOdd(bool odd);
@@ -54,18 +54,18 @@ class AppletWidget: public AppletItem
         void doubleClicked(AppletWidget*);
 
     protected:
-        void keyPressEvent(QKeyEvent *e);
-        void mousePressEvent(QMouseEvent *e);
-        void mouseMoveEvent(QMouseEvent *e);
-        void mouseReleaseEvent(QMouseEvent *e);
-        void mouseDoubleClickEvent(QMouseEvent *e);
-        void focusInEvent(QFocusEvent* e);
+        void keyPressEvent(TQKeyEvent *e);
+        void mousePressEvent(TQMouseEvent *e);
+        void mouseMoveEvent(TQMouseEvent *e);
+        void mouseReleaseEvent(TQMouseEvent *e);
+        void mouseDoubleClickEvent(TQMouseEvent *e);
+        void focusInEvent(TQFocusEvent* e);
 
     private:
         AppletInfo m_appletInfo;
         bool m_odd;
         bool m_selected;
-        QPoint m_dragStart;
+        TQPoint m_dragStart;
 };
 
 #endif

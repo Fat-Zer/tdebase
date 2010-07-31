@@ -32,7 +32,7 @@
 
 extern "C"
 {
-    KDE_EXPORT KPanelApplet* init(QWidget *parent, const QString& configFile)
+    KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
         KGlobal::locale()->insertCatalogue("klipper");
         int actions = KPanelApplet::Preferences | KPanelApplet::About | KPanelApplet::Help;
@@ -40,13 +40,13 @@ extern "C"
     }
 }
 
-KlipperApplet::KlipperApplet(const QString& configFile, Type t, int actions,
-                         QWidget *parent, const char *name)
+KlipperApplet::KlipperApplet(const TQString& configFile, Type t, int actions,
+                         TQWidget *parent, const char *name)
     : KPanelApplet(configFile, t, actions, parent, name)
 {
     KlipperWidget::createAboutData();
     move( 0, 0 );
-    setBackgroundMode(QWidget::X11ParentRelative);
+    setBackgroundMode(TQWidget::X11ParentRelative);
     widget = new KlipperAppletWidget( this );
     setCustomMenu(widget->history()->popup());
     centerWidget();
@@ -70,7 +70,7 @@ int KlipperApplet::heightForWidth(int) const
     return widget->height();
 }
 
-void KlipperApplet::resizeEvent( QResizeEvent* ev )
+void KlipperApplet::resizeEvent( TQResizeEvent* ev )
 {
     widget->adjustSize();
     KPanelApplet::resizeEvent( ev );
@@ -91,7 +91,7 @@ void KlipperApplet::preferences()
 
 void KlipperApplet::help()
 {
-    kapp->invokeHelp(QString::null, QString::fromLatin1("klipper"));
+    kapp->invokeHelp(TQString::null, TQString::fromLatin1("klipper"));
 }
 
 void KlipperApplet::about()
@@ -100,7 +100,7 @@ void KlipperApplet::about()
     about.exec();
 }
 
-KlipperAppletWidget::KlipperAppletWidget( QWidget* parent )
+KlipperAppletWidget::KlipperAppletWidget( TQWidget* parent )
 // init() is called first, before KlipperWidget is called with ( parent, kconfig )
     : KlipperWidget( ( init(), parent ), new KConfig( "klipperrc" ))
 {
@@ -112,8 +112,8 @@ KlipperAppletWidget::KlipperAppletWidget( QWidget* parent )
 void KlipperAppletWidget::init()
 {
     // if there's klipper process running, quit it
-    QByteArray arg1, arg2;
-    QCString str;
+    TQByteArray arg1, arg2;
+    TQCString str;
     // call() - wait for finishing
     kapp->dcopClient()->call("klipper", "klipper", "quitProcess()", arg1, str, arg2 );
     // register ourselves, so if klipper process is started,

@@ -1,8 +1,8 @@
 #ifndef __KWMTHEMECLIENT_H
 #define __KWMTHEMECLIENT_H
 
-#include <qbutton.h>
-#include <qtoolbutton.h>
+#include <tqbutton.h>
+#include <tqtoolbutton.h>
 #include <kpixmap.h>
 #include <kdecoration.h>
 #include <kdecorationfactory.h>
@@ -16,10 +16,10 @@ namespace KWMTheme {
 class MyButton : public QToolButton
 {
 public:
-    MyButton(QWidget *parent=0, const char *name=0)
-        : QToolButton(parent, name){setAutoRaise(true);setCursor( arrowCursor ); }
+    MyButton(TQWidget *parent=0, const char *name=0)
+        : TQToolButton(parent, name){setAutoRaise(true);setCursor( arrowCursor ); }
 protected:
-    void drawButtonLabel(QPainter *p);
+    void drawButtonLabel(TQPainter *p);
 };
 
 class KWMThemeClient : public KDecoration
@@ -29,34 +29,34 @@ public:
     KWMThemeClient( KDecorationBridge* b, KDecorationFactory* f );
     ~KWMThemeClient(){;}
     void init();
-    void resize( const QSize& s );
-    QSize minimumSize() const;
+    void resize( const TQSize& s );
+    TQSize minimumSize() const;
     void borders( int& left, int& right, int& top, int& bottom ) const;
 protected:
     void doShape();
-    void drawTitle(QPainter &p);
-    void resizeEvent( QResizeEvent* );
-    void paintEvent( QPaintEvent* );
-    void showEvent( QShowEvent* );
-    void mouseDoubleClickEvent( QMouseEvent * );
-    bool eventFilter( QObject* o, QEvent* e );
+    void drawTitle(TQPainter &p);
+    void resizeEvent( TQResizeEvent* );
+    void paintEvent( TQPaintEvent* );
+    void showEvent( TQShowEvent* );
+    void mouseDoubleClickEvent( TQMouseEvent * );
+    bool eventFilter( TQObject* o, TQEvent* e );
     void captionChange();
     void desktopChange();
     void maximizeChange();
     void iconChange();
     void activeChange();
     void shadeChange() {};
-    Position mousePosition(const QPoint &) const;
+    Position mousePosition(const TQPoint &) const;
 protected slots:
     //void slotReset();
     void menuButtonPressed();
     void slotMaximize();
 private:
-    QPixmap buffer;
+    TQPixmap buffer;
     KPixmap *aGradient, *iGradient;
     MyButton *maxBtn, *stickyBtn, *mnuBtn;
-    QSpacerItem *titlebar;
-    QGridLayout* layout;
+    TQSpacerItem *titlebar;
+    TQGridLayout* layout;
 };
 
 class KWMThemeFactory : public KDecorationFactory

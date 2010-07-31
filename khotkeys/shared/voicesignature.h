@@ -21,8 +21,8 @@
 #define SIGNATURE_H
 
 
-#include <qmemarray.h>
-#include <qmap.h>
+#include <tqmemarray.h>
+#include <tqmap.h>
 #include <kdemacros.h>
 
 class Sound;
@@ -73,9 +73,9 @@ public:
 	VoiceSignature(){}
 	~VoiceSignature();
 
-	QMap<int, QMap<int, double> > data;
+	TQMap<int, TQMap<int, double> > data;
 	
-	static QMap<int, QMap<int, double> > pond;
+	static TQMap<int, TQMap<int, double> > pond;
 
 	static float diff(const VoiceSignature &s1, const VoiceSignature &s2);
 
@@ -84,11 +84,11 @@ public:
 	static int size2();
 
 
-	static QMemArray<double> fft(const Sound& sound, unsigned int start, unsigned int stop);
+	static TQMemArray<double> fft(const Sound& sound, unsigned int start, unsigned int stop);
 	static bool window(const Sound& sound, unsigned int *start, unsigned int *stop);
 
-	void write(KConfigBase *cfg, const QString &key) const;
-	void read(KConfigBase *cfg, const QString &key);
+	void write(KConfigBase *cfg, const TQString &key) const;
+	void read(KConfigBase *cfg, const TQString &key);
 	
 	inline bool isNull() const
 	{

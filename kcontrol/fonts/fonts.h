@@ -8,7 +8,7 @@
 #ifndef FONTS_H
 #define FONTS_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kcmodule.h>
 #include <kdialogbase.h>
@@ -27,24 +27,24 @@ class FontUseItem : public KFontRequester
   Q_OBJECT
 
 public:
-    FontUseItem(QWidget * parent, const QString &name, const QString &grp, 
-        const QString &key, const QString &rc, const QFont &default_fnt, 
+    FontUseItem(TQWidget * parent, const TQString &name, const TQString &grp, 
+        const TQString &key, const TQString &rc, const TQFont &default_fnt, 
         bool fixed = false);
 
     void readFont( bool useDefaults );
     void writeFont();
     void setDefault();
-    void applyFontDiff(const QFont &fnt, int fontDiffFlags);
+    void applyFontDiff(const TQFont &fnt, int fontDiffFlags);
 
-    const QString& rcFile() { return _rcfile; }
-    const QString& rcGroup() { return _rcgroup; }
-    const QString& rcKey() { return _rckey; }
+    const TQString& rcFile() { return _rcfile; }
+    const TQString& rcGroup() { return _rcgroup; }
+    const TQString& rcKey() { return _rckey; }
 
 private:
-    QString _rcfile;
-    QString _rcgroup;
-    QString _rckey;
-    QFont _default;
+    TQString _rcfile;
+    TQString _rcgroup;
+    TQString _rckey;
+    TQFont _default;
 };
 
 class FontAASettings : public KDialogBase
@@ -53,7 +53,7 @@ class FontAASettings : public KDialogBase
 
 public:
 
-    FontAASettings(QWidget *parent);
+    FontAASettings(TQWidget *parent);
 
     bool save( bool useAA );
     bool load();
@@ -74,15 +74,15 @@ protected slots:
 
 private:
 
-    QCheckBox *excludeRange;
-    QCheckBox *useSubPixel;
+    TQCheckBox *excludeRange;
+    TQCheckBox *useSubPixel;
     KDoubleNumInput *excludeFrom;
     KDoubleNumInput *excludeTo;
-    QComboBox *subPixelType;
+    TQComboBox *subPixelType;
 #ifdef HAVE_FONTCONFIG
-    QComboBox *hintingStyle;
+    TQComboBox *hintingStyle;
 #endif
-    QLabel    *excludeToLabel;
+    TQLabel    *excludeToLabel;
     bool      changesMade;
 };
 
@@ -94,7 +94,7 @@ class KFonts : public KCModule
     Q_OBJECT
 
 public:
-    KFonts(QWidget *parent, const char *name, const QStringList &);
+    KFonts(TQWidget *parent, const char *name, const TQStringList &);
     ~KFonts();
 
     virtual void load();
@@ -113,10 +113,10 @@ private:
     enum DPISetting { DPINone, DPI96, DPI120 };
     AASetting useAA, useAA_original;
     DPISetting dpi_original;
-    QComboBox *cbAA;
-    QComboBox* comboForceDpi;
-    QPushButton *aaSettingsButton;
-    QPtrList <FontUseItem> fontUseList;
+    TQComboBox *cbAA;
+    TQComboBox* comboForceDpi;
+    TQPushButton *aaSettingsButton;
+    TQPtrList <FontUseItem> fontUseList;
     FontAASettings *aaSettings;
 };
 

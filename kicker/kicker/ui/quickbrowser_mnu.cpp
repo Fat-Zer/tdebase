@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qdir.h>
+#include <tqdir.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "quickbrowser_mnu.h"
 #include "quickbrowser_mnu.moc"
 
-PanelQuickBrowser::PanelQuickBrowser(QWidget *parent, const char *name)
+PanelQuickBrowser::PanelQuickBrowser(TQWidget *parent, const char *name)
   : KPanelMenu("", parent, name) {}
 
 void PanelQuickBrowser::initialize()
@@ -43,17 +43,17 @@ void PanelQuickBrowser::initialize()
 
     KURL url;
     
-    url.setPath(QDir::homeDirPath());
+    url.setPath(TQDir::homeDirPath());
     if (kapp->authorizeURLAction("list", KURL(), url))
         insertItem(SmallIcon("kfm_home"), i18n("&Home Folder"),
                new PanelBrowserMenu(url.path(), this));
                
-    url.setPath(QDir::rootDirPath());
+    url.setPath(TQDir::rootDirPath());
     if (kapp->authorizeURLAction("list", KURL(), url))
         insertItem(SmallIcon("folder_red"), i18n("&Root Folder"),
                new PanelBrowserMenu(url.path(), this));
                
-    url.setPath(QDir::rootDirPath() + "etc");
+    url.setPath(TQDir::rootDirPath() + "etc");
     if (kapp->authorizeURLAction("list", KURL(), url))
         insertItem(SmallIcon("folder_yellow"), i18n("System &Configuration"),
                new PanelBrowserMenu(url.path(), this));

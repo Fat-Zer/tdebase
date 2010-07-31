@@ -23,10 +23,10 @@
 
 #include "TEWidget.h"
 #include "TEScreen.h"
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <stdio.h>
-#include <qtextcodec.h>
-#include <qguardedptr.h>
+#include <tqtextcodec.h>
+#include <tqguardedptr.h>
 #include <keytrans.h>
 
 enum { NOTIFYNORMAL=0, NOTIFYBELL=1, NOTIFYACTIVITY=2, NOTIFYSILENCE=3 };
@@ -41,21 +41,21 @@ public:
   ~TEmulation();
 
 public:
-  QSize imageSize();
+  TQSize imageSize();
   virtual void setHistory(const HistoryType&);
-  const QTextCodec *codec() { return m_codec; }
-  void setCodec(const QTextCodec *);
+  const TQTextCodec *codec() { return m_codec; }
+  void setCodec(const TQTextCodec *);
   virtual const HistoryType& history();
-  virtual void streamHistory(QTextStream*);
+  virtual void streamHistory(TQTextStream*);
 
   virtual void findTextBegin();
-  virtual bool findTextNext( const QString &str, bool forward, bool caseSensitive, bool regExp );
+  virtual bool findTextNext( const TQString &str, bool forward, bool caseSensitive, bool regExp );
 
 public slots: // signals incoming from TEWidget
 
   virtual void onImageSizeChange(int lines, int columns);
   virtual void onHistoryCursorChange(int cursor);
-  virtual void onKeyPress(QKeyEvent*);
+  virtual void onKeyPress(TQKeyEvent*);
  
   virtual void clearSelection();
   virtual void copySelection();
@@ -102,16 +102,16 @@ public:
   void setColumns(int columns);
 
   void setKeymap(int no);
-  void setKeymap(const QString &id);
+  void setKeymap(const TQString &id);
   int keymapNo();
-  QString keymap();
+  TQString keymap();
 
   virtual void clearEntireScreen() =0;
   virtual void reset() =0;
 
 protected:
 
-  QGuardedPtr<TEWidget> gui;
+  TQGuardedPtr<TEWidget> gui;
   TEScreen* scr;         // referes to one `screen'
   TEScreen* screen[2];   // 0 = primary, 1 = alternate
   void setScreen(int n); // set `scr' to `screen[n]'
@@ -121,8 +121,8 @@ protected:
 
   void setCodec(int c); // codec number, 0 = locale, 1=utf8
 
-  const QTextCodec* m_codec;
-  QTextDecoder* decoder;
+  const TQTextCodec* m_codec;
+  TQTextDecoder* decoder;
 
   KeyTrans* keytrans;
 
@@ -140,8 +140,8 @@ private:
 
 private:
 
-  QTimer bulk_timer1;
-  QTimer bulk_timer2;
+  TQTimer bulk_timer1;
+  TQTimer bulk_timer2;
   
   int    m_findPos;
 };

@@ -22,7 +22,7 @@
 
 #include <kdirnotify.h>
 #include <kpanelmenu.h>
-#include <qmap.h>
+#include <tqmap.h>
 
 class RemoteMenu : public KPanelMenu, public KDirNotify
 {
@@ -30,8 +30,8 @@ class RemoteMenu : public KPanelMenu, public KDirNotify
     K_DCOP
 
     public:
-        RemoteMenu(QWidget *parent, const char *name,
-                   const QStringList & /*args*/);
+        RemoteMenu(TQWidget *parent, const char *name,
+                   const TQStringList & /*args*/);
         ~RemoteMenu();
 
     k_dcop:
@@ -47,7 +47,7 @@ class RemoteMenu : public KPanelMenu, public KDirNotify
         void slotExec(int id);
 
     private:
-        QMap<int, QString> m_desktopMap;
+        TQMap<int, TQString> m_desktopMap;
 };
 
 #endif

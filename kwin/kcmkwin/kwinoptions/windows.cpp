@@ -23,15 +23,15 @@
 
 #include <config.h>
 
-#include <qdir.h>
-#include <qlayout.h>
-#include <qslider.h>
-#include <qwhatsthis.h>
-#include <qvbuttongroup.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qlabel.h>
-#include <qcombobox.h>
+#include <tqdir.h>
+#include <tqlayout.h>
+#include <tqslider.h>
+#include <tqwhatsthis.h>
+#include <tqvbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
 #include <kmessagebox.h>
 
 #include <kactivelabel.h>
@@ -44,7 +44,7 @@
 #include <dcopclient.h>
 #include <kglobal.h>
 #include <kprocess.h>
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -101,19 +101,19 @@ KFocusConfig::~KFocusConfig ()
 }
 
 // removed the LCD display over the slider - this is not good GUI design :) RNolden 051701
-KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, QWidget * parent, const char *)
+KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, TQWidget * parent, const char *)
     : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
-    QString wtstr;
-    QBoxLayout *lay = new QVBoxLayout (this, 0, KDialog::spacingHint());
+    TQString wtstr;
+    TQBoxLayout *lay = new TQVBoxLayout (this, 0, KDialog::spacingHint());
 
-    //iTLabel = new QLabel(i18n("  Allowed overlap:\n"
+    //iTLabel = new TQLabel(i18n("  Allowed overlap:\n"
     //                         "(% of desktop space)"),
     //             plcBox);
     //iTLabel->setAlignment(AlignTop|AlignHCenter);
     //pLay->addWidget(iTLabel,1,1);
 
-    //interactiveTrigger = new QSpinBox(0, 500, 1, plcBox);
+    //interactiveTrigger = new TQSpinBox(0, 500, 1, plcBox);
     //pLay->addWidget(interactiveTrigger,1,2);
 
     //pLay->addRowSpacing(2,KDialog::spacingHint());
@@ -121,16 +121,16 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, QWidget * parent
     //lay->addWidget(plcBox);
 
     // focus policy
-    fcsBox = new QButtonGroup(i18n("Focus"),this);
+    fcsBox = new TQButtonGroup(i18n("Focus"),this);
     fcsBox->setColumnLayout( 0, Qt::Horizontal );
 
-    QBoxLayout *fLay = new QVBoxLayout(fcsBox->layout(),
+    TQBoxLayout *fLay = new TQVBoxLayout(fcsBox->layout(),
         KDialog::spacingHint());
 
-    QBoxLayout *cLay = new QHBoxLayout(fLay);
-    QLabel *fLabel = new QLabel(i18n("&Policy:"), fcsBox);
+    TQBoxLayout *cLay = new TQHBoxLayout(fLay);
+    TQLabel *fLabel = new TQLabel(i18n("&Policy:"), fcsBox);
     cLay->addWidget(fLabel, 0);
-    focusCombo =  new QComboBox(false, fcsBox);
+    focusCombo =  new TQComboBox(false, fcsBox);
     focusCombo->insertItem(i18n("Click to Focus"), CLICK_TO_FOCUS);
     focusCombo->insertItem(i18n("Focus Follows Mouse"), FOCUS_FOLLOWS_MOUSE);
     focusCombo->insertItem(i18n("Focus Under Mouse"), FOCUS_UNDER_MOUSE);
@@ -158,15 +158,15 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, QWidget * parent
                                       " features such as the Alt+Tab walk through windows dialog in the KDE mode"
                                       " from working properly."
                          );
-    QWhatsThis::add( focusCombo, wtstr);
-    QWhatsThis::add(fLabel, wtstr);
+    TQWhatsThis::add( focusCombo, wtstr);
+    TQWhatsThis::add(fLabel, wtstr);
 
-    connect(focusCombo, SIGNAL(activated(int)), this, SLOT(setAutoRaiseEnabled()) );
+    connect(focusCombo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setAutoRaiseEnabled()) );
 
     // autoraise delay
-    autoRaiseOn = new QCheckBox(i18n("Auto &raise"), fcsBox);
+    autoRaiseOn = new TQCheckBox(i18n("Auto &raise"), fcsBox);
     fLay->addWidget(autoRaiseOn);
-    connect(autoRaiseOn,SIGNAL(toggled(bool)), this, SLOT(autoRaiseOnTog(bool)));
+    connect(autoRaiseOn,TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(autoRaiseOnTog(bool)));
 
     autoRaise = new KIntNumInput(500, fcsBox);
     autoRaise->setLabel(i18n("Dela&y:"), Qt::AlignVCenter|Qt::AlignLeft);
@@ -175,11 +175,11 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, QWidget * parent
     autoRaise->setSuffix(i18n(" msec"));
     fLay->addWidget(autoRaise);
 
-    connect(focusCombo, SIGNAL(activated(int)), this, SLOT(setDelayFocusEnabled()) );
+    connect(focusCombo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setDelayFocusEnabled()) );
 
-    delayFocusOn = new QCheckBox(i18n("Delay focus"), fcsBox);
+    delayFocusOn = new TQCheckBox(i18n("Delay focus"), fcsBox);
     fLay->addWidget(delayFocusOn);
-    connect(delayFocusOn,SIGNAL(toggled(bool)), this, SLOT(delayFocusOnTog(bool)));
+    connect(delayFocusOn,TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(delayFocusOnTog(bool)));
 
     delayFocus = new KIntNumInput(500, fcsBox);
     delayFocus->setLabel(i18n("Dela&y:"), Qt::AlignVCenter|Qt::AlignLeft);
@@ -188,45 +188,45 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, QWidget * parent
     delayFocus->setSuffix(i18n(" msec"));
     fLay->addWidget(delayFocus);
 
-    clickRaiseOn = new QCheckBox(i18n("C&lick raise active window"), fcsBox);
-    connect(clickRaiseOn,SIGNAL(toggled(bool)), this, SLOT(clickRaiseOnTog(bool)));
+    clickRaiseOn = new TQCheckBox(i18n("C&lick raise active window"), fcsBox);
+    connect(clickRaiseOn,TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(clickRaiseOnTog(bool)));
     fLay->addWidget(clickRaiseOn);
 
 //     fLay->addColSpacing(0,QMAX(autoRaiseOn->sizeHint().width(),
 //                                clickRaiseOn->sizeHint().width()) + 15);
 
-    QWhatsThis::add( autoRaiseOn, i18n("When this option is enabled, a window in the background will automatically"
+    TQWhatsThis::add( autoRaiseOn, i18n("When this option is enabled, a window in the background will automatically"
                                        " come to the front when the mouse pointer has been over it for some time.") );
     wtstr = i18n("This is the delay after which the window that the mouse pointer is over will automatically"
                  " come to the front.");
-    QWhatsThis::add( autoRaise, wtstr );
+    TQWhatsThis::add( autoRaise, wtstr );
 
-    QWhatsThis::add( clickRaiseOn, i18n("When this option is enabled, the active window will be brought to the"
+    TQWhatsThis::add( clickRaiseOn, i18n("When this option is enabled, the active window will be brought to the"
                                         " front when you click somewhere into the window contents. To change"
                                         " it for inactive windows, you need to change the settings"
                                         " in the Actions tab.") );
 
-    QWhatsThis::add( delayFocusOn, i18n("When this option is enabled, there will be a delay after which the"
+    TQWhatsThis::add( delayFocusOn, i18n("When this option is enabled, there will be a delay after which the"
                                         " window the mouse pointer is over will become active (receive focus).") );
-    QWhatsThis::add( delayFocus, i18n("This is the delay after which the window the mouse pointer is over"
+    TQWhatsThis::add( delayFocus, i18n("This is the delay after which the window the mouse pointer is over"
                                        " will automatically receive focus.") );
 
-    separateScreenFocus = new QCheckBox( i18n( "S&eparate screen focus" ), fcsBox );
+    separateScreenFocus = new TQCheckBox( i18n( "S&eparate screen focus" ), fcsBox );
     fLay->addWidget( separateScreenFocus );
     wtstr = i18n( "When this option is enabled, focus operations are limited only to the active Xinerama screen" );
-    QWhatsThis::add( separateScreenFocus, wtstr );
+    TQWhatsThis::add( separateScreenFocus, wtstr );
 
-    activeMouseScreen = new QCheckBox( i18n( "Active &mouse screen" ), fcsBox );
+    activeMouseScreen = new TQCheckBox( i18n( "Active &mouse screen" ), fcsBox );
     fLay->addWidget( activeMouseScreen );
     wtstr = i18n( "When this option is enabled, active Xinerama screen (where for example new windows appear)"
                   " is the screen with the mouse pointer. When disabled, the active Xinerama screen is the screen"
                   " with the focused window. This option is by default disabled for Click to focus and"
                   " enabled for other focus policies." );
-    QWhatsThis::add( activeMouseScreen, wtstr );
-    connect(focusCombo, SIGNAL(activated(int)), this, SLOT(updateActiveMouseScreen()));
+    TQWhatsThis::add( activeMouseScreen, wtstr );
+    connect(focusCombo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(updateActiveMouseScreen()));
 
-    if (!QApplication::desktop()->isVirtualDesktop() ||
-        QApplication::desktop()->numScreens() == 1) // No Ximerama 
+    if (!TQApplication::desktop()->isVirtualDesktop() ||
+        TQApplication::desktop()->numScreens() == 1) // No Ximerama 
     {
         separateScreenFocus->hide();
         activeMouseScreen->hide();
@@ -234,11 +234,11 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, QWidget * parent
 
     lay->addWidget(fcsBox);
 
-    kbdBox = new QButtonGroup(i18n("Navigation"), this);
+    kbdBox = new TQButtonGroup(i18n("Navigation"), this);
     kbdBox->setColumnLayout( 0, Qt::Horizontal );
-    QVBoxLayout *kLay = new QVBoxLayout(kbdBox->layout(), KDialog::spacingHint());
+    TQVBoxLayout *kLay = new TQVBoxLayout(kbdBox->layout(), KDialog::spacingHint());
 
-    altTabPopup = new QCheckBox( i18n("Show window list while switching windows"), kbdBox );
+    altTabPopup = new TQCheckBox( i18n("Show window list while switching windows"), kbdBox );
     kLay->addWidget( altTabPopup );
 
     wtstr = i18n("Hold down the Alt key and press the Tab key repeatedly to walk"
@@ -250,45 +250,45 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, QWidget * parent
                  "Otherwise, the focus is passed to a new window each time Tab"
                  " is pressed, with no popup widget.  In addition, the previously"
                  " activated window will be sent to the back in this mode.");
-    QWhatsThis::add( altTabPopup, wtstr );
-    connect(focusCombo, SIGNAL(activated(int)), this, SLOT(updateAltTabMode()));
+    TQWhatsThis::add( altTabPopup, wtstr );
+    connect(focusCombo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(updateAltTabMode()));
 
-    traverseAll = new QCheckBox( i18n( "&Traverse windows on all desktops" ), kbdBox );
+    traverseAll = new TQCheckBox( i18n( "&Traverse windows on all desktops" ), kbdBox );
     kLay->addWidget( traverseAll );
 
     wtstr = i18n( "Leave this option disabled if you want to limit walking through"
                   " windows to the current desktop." );
-    QWhatsThis::add( traverseAll, wtstr );
+    TQWhatsThis::add( traverseAll, wtstr );
 
-    rollOverDesktops = new QCheckBox( i18n("Desktop navi&gation wraps around"), kbdBox );
+    rollOverDesktops = new TQCheckBox( i18n("Desktop navi&gation wraps around"), kbdBox );
     kLay->addWidget(rollOverDesktops);
 
     wtstr = i18n( "Enable this option if you want keyboard or active desktop border navigation beyond"
                   " the edge of a desktop to take you to the opposite edge of the new desktop." );
-    QWhatsThis::add( rollOverDesktops, wtstr );
+    TQWhatsThis::add( rollOverDesktops, wtstr );
 
-    showPopupinfo = new QCheckBox( i18n("Popup desktop name on desktop &switch"), kbdBox );
+    showPopupinfo = new TQCheckBox( i18n("Popup desktop name on desktop &switch"), kbdBox );
     kLay->addWidget(showPopupinfo);
 
     wtstr = i18n( "Enable this option if you wish to see the current desktop"
                   " name popup whenever the current desktop is changed." );
-    QWhatsThis::add( showPopupinfo, wtstr );
+    TQWhatsThis::add( showPopupinfo, wtstr );
 
     lay->addWidget(kbdBox);
 
     lay->addStretch();
 
     // Any changes goes to slotChanged()
-    connect(focusCombo, SIGNAL(activated(int)), SLOT(changed()));
-    connect(fcsBox, SIGNAL(clicked(int)), SLOT(changed()));
-    connect(autoRaise, SIGNAL(valueChanged(int)), SLOT(changed()));
-    connect(delayFocus, SIGNAL(valueChanged(int)), SLOT(changed()));
-    connect(separateScreenFocus, SIGNAL(clicked()), SLOT(changed()));
-    connect(activeMouseScreen, SIGNAL(clicked()), SLOT(changed()));
-    connect(altTabPopup, SIGNAL(clicked()), SLOT(changed()));
-    connect(traverseAll, SIGNAL(clicked()), SLOT(changed()));
-    connect(rollOverDesktops, SIGNAL(clicked()), SLOT(changed()));
-    connect(showPopupinfo, SIGNAL(clicked()), SLOT(changed()));
+    connect(focusCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+    connect(fcsBox, TQT_SIGNAL(clicked(int)), TQT_SLOT(changed()));
+    connect(autoRaise, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+    connect(delayFocus, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+    connect(separateScreenFocus, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(activeMouseScreen, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(altTabPopup, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(traverseAll, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(rollOverDesktops, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(showPopupinfo, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 
     load();
 }
@@ -425,7 +425,7 @@ void KFocusConfig::setShowPopupinfo(bool a) {
 
 void KFocusConfig::load( void )
 {
-    QString key;
+    TQString key;
 
     config->setGroup( "Windows" );
 
@@ -564,34 +564,34 @@ KAdvancedConfig::~KAdvancedConfig ()
         delete config;
 }
 
-KAdvancedConfig::KAdvancedConfig (bool _standAlone, KConfig *_config, QWidget *parent, const char *)
+KAdvancedConfig::KAdvancedConfig (bool _standAlone, KConfig *_config, TQWidget *parent, const char *)
     : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
-    QString wtstr;
-    QBoxLayout *lay = new QVBoxLayout (this, 0, KDialog::spacingHint());
+    TQString wtstr;
+    TQBoxLayout *lay = new TQVBoxLayout (this, 0, KDialog::spacingHint());
 
-    //iTLabel = new QLabel(i18n("  Allowed overlap:\n"
+    //iTLabel = new TQLabel(i18n("  Allowed overlap:\n"
     //                         "(% of desktop space)"),
     //             plcBox);
     //iTLabel->setAlignment(AlignTop|AlignHCenter);
     //pLay->addWidget(iTLabel,1,1);
 
-    //interactiveTrigger = new QSpinBox(0, 500, 1, plcBox);
+    //interactiveTrigger = new TQSpinBox(0, 500, 1, plcBox);
     //pLay->addWidget(interactiveTrigger,1,2);
 
     //pLay->addRowSpacing(2,KDialog::spacingHint());
 
     //lay->addWidget(plcBox);
 
-    shBox = new QVButtonGroup(i18n("Shading"), this);
+    shBox = new TQVButtonGroup(i18n("Shading"), this);
 
-    animateShade = new QCheckBox(i18n("Anima&te"), shBox);
-    QWhatsThis::add(animateShade, i18n("Animate the action of reducing the window to its titlebar (shading)"
+    animateShade = new TQCheckBox(i18n("Anima&te"), shBox);
+    TQWhatsThis::add(animateShade, i18n("Animate the action of reducing the window to its titlebar (shading)"
                                        " as well as the expansion of a shaded window") );
 
-    shadeHoverOn = new QCheckBox(i18n("&Enable hover"), shBox);
+    shadeHoverOn = new TQCheckBox(i18n("&Enable hover"), shBox);
 
-    connect(shadeHoverOn, SIGNAL(toggled(bool)), this, SLOT(shadeHoverChanged(bool)));
+    connect(shadeHoverOn, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(shadeHoverChanged(bool)));
 
     shadeHover = new KIntNumInput(500, shBox);
     shadeHover->setLabel(i18n("Dela&y:"), Qt::AlignVCenter|Qt::AlignLeft);
@@ -599,49 +599,49 @@ KAdvancedConfig::KAdvancedConfig (bool _standAlone, KConfig *_config, QWidget *p
     shadeHover->setSteps(100, 100);
     shadeHover->setSuffix(i18n(" msec"));
 
-    QWhatsThis::add(shadeHoverOn, i18n("If Shade Hover is enabled, a shaded window will un-shade automatically "
+    TQWhatsThis::add(shadeHoverOn, i18n("If Shade Hover is enabled, a shaded window will un-shade automatically "
                                        "when the mouse pointer has been over the title bar for some time."));
 
     wtstr = i18n("Sets the time in milliseconds before the window unshades "
                 "when the mouse pointer goes over the shaded window.");
-    QWhatsThis::add(shadeHover, wtstr);
+    TQWhatsThis::add(shadeHover, wtstr);
 
     lay->addWidget(shBox);
 
     // Any changes goes to slotChanged()
-    connect(animateShade, SIGNAL(toggled(bool)), SLOT(changed()));
-    connect(shadeHoverOn, SIGNAL(toggled(bool)), SLOT(changed()));
-    connect(shadeHover, SIGNAL(valueChanged(int)), SLOT(changed()));
+    connect(animateShade, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+    connect(shadeHoverOn, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+    connect(shadeHover, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
 
-    electricBox = new QVButtonGroup(i18n("Active Desktop Borders"), this);
+    electricBox = new TQVButtonGroup(i18n("Active Desktop Borders"), this);
     electricBox->setMargin(15);
 
-    QWhatsThis::add( electricBox, i18n("If this option is enabled, moving the mouse to a screen border"
+    TQWhatsThis::add( electricBox, i18n("If this option is enabled, moving the mouse to a screen border"
        " will change your desktop. This is e.g. useful if you want to drag windows from one desktop"
        " to the other.") );
-    active_disable = new QRadioButton(i18n("D&isabled"), electricBox);
-    active_move    = new QRadioButton(i18n("Only &when moving windows"), electricBox);
-    active_always  = new QRadioButton(i18n("A&lways enabled"), electricBox);
+    active_disable = new TQRadioButton(i18n("D&isabled"), electricBox);
+    active_move    = new TQRadioButton(i18n("Only &when moving windows"), electricBox);
+    active_always  = new TQRadioButton(i18n("A&lways enabled"), electricBox);
 
     delays = new KIntNumInput(10, electricBox);
     delays->setRange(0, MAX_EDGE_RES, 50, true);
     delays->setSuffix(i18n(" msec"));
     delays->setLabel(i18n("Desktop &switch delay:"));
-    QWhatsThis::add( delays, i18n("Here you can set a delay for switching desktops using the active"
+    TQWhatsThis::add( delays, i18n("Here you can set a delay for switching desktops using the active"
        " borders feature. Desktops will be switched after the mouse has been pushed against a screen border"
        " for the specified number of milliseconds.") );
 
-    connect( electricBox, SIGNAL(clicked(int)), this, SLOT(setEBorders()));
+    connect( electricBox, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(setEBorders()));
 
     // Any changes goes to slotChanged()
-    connect(electricBox, SIGNAL(clicked(int)), SLOT(changed()));
-    connect(delays, SIGNAL(valueChanged(int)), SLOT(changed()));
+    connect(electricBox, TQT_SIGNAL(clicked(int)), TQT_SLOT(changed()));
+    connect(delays, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
 
     lay->addWidget(electricBox);
 
-    QHBoxLayout* focusStealingLayout = new QHBoxLayout( lay,KDialog::spacingHint());
-    QLabel* focusStealingLabel = new QLabel( i18n( "Focus stealing prevention level:" ), this );
-    focusStealing = new QComboBox( this );
+    TQHBoxLayout* focusStealingLayout = new TQHBoxLayout( lay,KDialog::spacingHint());
+    TQLabel* focusStealingLabel = new TQLabel( i18n( "Focus stealing prevention level:" ), this );
+    focusStealing = new TQComboBox( this );
     focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "None" ));
     focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Low" ));
     focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Normal" ));
@@ -669,16 +669,16 @@ KAdvancedConfig::KAdvancedConfig (bool _standAlone, KConfig *_config, QWidget *p
                   "<p>Windows that are prevented from stealing focus are marked as demanding attention, "
                   "which by default means their taskbar entry will be highlighted. This can be changed "
                   "in the Notifications control module.</p>" );
-    QWhatsThis::add( focusStealing, wtstr );
-    QWhatsThis::add( focusStealingLabel, wtstr );
-    connect(focusStealing, SIGNAL(activated(int)), SLOT(changed()));
+    TQWhatsThis::add( focusStealing, wtstr );
+    TQWhatsThis::add( focusStealingLabel, wtstr );
+    connect(focusStealing, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
     
-    hideUtilityWindowsForInactive = new QCheckBox( i18n( "Hide utility windows for inactive applications" ), this );
-    QWhatsThis::add( hideUtilityWindowsForInactive,
+    hideUtilityWindowsForInactive = new TQCheckBox( i18n( "Hide utility windows for inactive applications" ), this );
+    TQWhatsThis::add( hideUtilityWindowsForInactive,
         i18n( "When turned on, utility windows (tool windows, torn-off menus,...) of inactive applications will be"
               " hidden and will be shown only when the application becomes active. Note that applications"
               " have to mark the windows with the proper window type for this feature to work." ));
-    connect(hideUtilityWindowsForInactive, SIGNAL(toggled(bool)), SLOT(changed()));
+    connect(hideUtilityWindowsForInactive, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
     lay->addWidget( hideUtilityWindowsForInactive );
 
     lay->addStretch();
@@ -822,85 +822,85 @@ KMovingConfig::~KMovingConfig ()
         delete config;
 }
 
-KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, QWidget *parent, const char *)
+KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, TQWidget *parent, const char *)
     : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
-    QString wtstr;
-    QBoxLayout *lay = new QVBoxLayout (this, 0, KDialog::spacingHint());
+    TQString wtstr;
+    TQBoxLayout *lay = new TQVBoxLayout (this, 0, KDialog::spacingHint());
 
-    windowsBox = new QButtonGroup(i18n("Windows"), this);
+    windowsBox = new TQButtonGroup(i18n("Windows"), this);
     windowsBox->setColumnLayout( 0, Qt::Horizontal );
 
-    QBoxLayout *wLay = new QVBoxLayout (windowsBox->layout(), KDialog::spacingHint());
+    TQBoxLayout *wLay = new TQVBoxLayout (windowsBox->layout(), KDialog::spacingHint());
 
-    QBoxLayout *bLay = new QVBoxLayout;
+    TQBoxLayout *bLay = new QVBoxLayout;
     wLay->addLayout(bLay);
 
-    opaque = new QCheckBox(i18n("Di&splay content in moving windows"), windowsBox);
+    opaque = new TQCheckBox(i18n("Di&splay content in moving windows"), windowsBox);
     bLay->addWidget(opaque);
-    QWhatsThis::add( opaque, i18n("Enable this option if you want a window's content to be fully shown"
+    TQWhatsThis::add( opaque, i18n("Enable this option if you want a window's content to be fully shown"
                                   " while moving it, instead of just showing a window 'skeleton'. The result may not be satisfying"
                                   " on slow machines without graphic acceleration.") );
 
-    resizeOpaqueOn = new QCheckBox(i18n("Display content in &resizing windows"), windowsBox);
+    resizeOpaqueOn = new TQCheckBox(i18n("Display content in &resizing windows"), windowsBox);
     bLay->addWidget(resizeOpaqueOn);
-    QWhatsThis::add( resizeOpaqueOn, i18n("Enable this option if you want a window's content to be shown"
+    TQWhatsThis::add( resizeOpaqueOn, i18n("Enable this option if you want a window's content to be shown"
                                           " while resizing it, instead of just showing a window 'skeleton'. The result may not be satisfying"
                                           " on slow machines.") );
 
-    geometryTipOn = new QCheckBox(i18n("Display window &geometry when moving or resizing"), windowsBox);
+    geometryTipOn = new TQCheckBox(i18n("Display window &geometry when moving or resizing"), windowsBox);
     bLay->addWidget(geometryTipOn);
-    QWhatsThis::add(geometryTipOn, i18n("Enable this option if you want a window's geometry to be displayed"
+    TQWhatsThis::add(geometryTipOn, i18n("Enable this option if you want a window's geometry to be displayed"
                                         " while it is being moved or resized. The window position relative"
                                         " to the top-left corner of the screen is displayed together with"
                                         " its size."));
 
-    QGridLayout *rLay = new QGridLayout(2,3);
+    TQGridLayout *rLay = new TQGridLayout(2,3);
     bLay->addLayout(rLay);
     rLay->setColStretch(0,0);
     rLay->setColStretch(1,1);
 
-    minimizeAnimOn = new QCheckBox(i18n("Animate minimi&ze and restore"),
+    minimizeAnimOn = new TQCheckBox(i18n("Animate minimi&ze and restore"),
                                    windowsBox);
-    QWhatsThis::add( minimizeAnimOn, i18n("Enable this option if you want an animation shown when"
+    TQWhatsThis::add( minimizeAnimOn, i18n("Enable this option if you want an animation shown when"
                                           " windows are minimized or restored." ) );
     rLay->addWidget(minimizeAnimOn,0,0);
 
-    minimizeAnimSlider = new QSlider(0,10,10,0,QSlider::Horizontal, windowsBox);
+    minimizeAnimSlider = new TQSlider(0,10,10,0,TQSlider::Horizontal, windowsBox);
     minimizeAnimSlider->setSteps(1, 1);
-    // QSlider::Below clashes with a X11/X.h #define
+    // TQSlider::Below clashes with a X11/X.h #define
     #undef Below
-    minimizeAnimSlider->setTickmarks(QSlider::Below);
+    minimizeAnimSlider->setTickmarks(TQSlider::Below);
     rLay->addMultiCellWidget(minimizeAnimSlider,0,0,1,2);
 
-    connect(minimizeAnimOn, SIGNAL(toggled(bool)), this, SLOT(setMinimizeAnim(bool)));
-    connect(minimizeAnimSlider, SIGNAL(valueChanged(int)), this, SLOT(setMinimizeAnimSpeed(int)));
+    connect(minimizeAnimOn, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(setMinimizeAnim(bool)));
+    connect(minimizeAnimSlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(setMinimizeAnimSpeed(int)));
 
-    minimizeAnimSlowLabel= new QLabel(i18n("Slow"),windowsBox);
+    minimizeAnimSlowLabel= new TQLabel(i18n("Slow"),windowsBox);
     minimizeAnimSlowLabel->setAlignment(Qt::AlignTop|Qt::AlignLeft);
     rLay->addWidget(minimizeAnimSlowLabel,1,1);
 
-    minimizeAnimFastLabel= new QLabel(i18n("Fast"),windowsBox);
+    minimizeAnimFastLabel= new TQLabel(i18n("Fast"),windowsBox);
     minimizeAnimFastLabel->setAlignment(Qt::AlignTop|Qt::AlignRight);
     rLay->addWidget(minimizeAnimFastLabel,1,2);
 
     wtstr = i18n("Here you can set the speed of the animation shown when windows are"
                  " minimized and restored. ");
-    QWhatsThis::add( minimizeAnimSlider, wtstr );
-    QWhatsThis::add( minimizeAnimSlowLabel, wtstr );
-    QWhatsThis::add( minimizeAnimFastLabel, wtstr );
+    TQWhatsThis::add( minimizeAnimSlider, wtstr );
+    TQWhatsThis::add( minimizeAnimSlowLabel, wtstr );
+    TQWhatsThis::add( minimizeAnimFastLabel, wtstr );
 
-    moveResizeMaximized = new QCheckBox( i18n("Allow moving and resizing o&f maximized windows"), windowsBox);
+    moveResizeMaximized = new TQCheckBox( i18n("Allow moving and resizing o&f maximized windows"), windowsBox);
     bLay->addWidget(moveResizeMaximized);
-    QWhatsThis::add(moveResizeMaximized, i18n("When enabled, this feature activates the border of maximized windows"
+    TQWhatsThis::add(moveResizeMaximized, i18n("When enabled, this feature activates the border of maximized windows"
                                               " and allows you to move or resize them,"
                                               " just like for normal windows"));
 
-    QBoxLayout *vLay = new QHBoxLayout(bLay);
+    TQBoxLayout *vLay = new TQHBoxLayout(bLay);
 
-    QLabel *plcLabel = new QLabel(i18n("&Placement:"),windowsBox);
+    TQLabel *plcLabel = new TQLabel(i18n("&Placement:"),windowsBox);
 
-    placementCombo = new QComboBox(false, windowsBox);
+    placementCombo = new TQComboBox(false, windowsBox);
     placementCombo->insertItem(i18n("Smart"), SMART_PLACEMENT);
     placementCombo->insertItem(i18n("Maximizing"), MAXIMIZING_PLACEMENT);
     placementCombo->insertItem(i18n("Cascade"), CASCADE_PLACEMENT);
@@ -926,8 +926,8 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, QWidget *paren
                  " <li><em>Zero-Cornered</em> will place the window in the top-left corner</li>"
                  "</ul>") ;
 
-    QWhatsThis::add( plcLabel, wtstr);
-    QWhatsThis::add( placementCombo, wtstr);
+    TQWhatsThis::add( plcLabel, wtstr);
+    TQWhatsThis::add( placementCombo, wtstr);
 
     plcLabel->setBuddy(placementCombo);
     vLay->addWidget(plcLabel, 0);
@@ -937,13 +937,13 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, QWidget *paren
 
     lay->addWidget(windowsBox);
 
-    //iTLabel = new QLabel(i18n("  Allowed overlap:\n"
+    //iTLabel = new TQLabel(i18n("  Allowed overlap:\n"
     //                         "(% of desktop space)"),
     //             plcBox);
     //iTLabel->setAlignment(AlignTop|AlignHCenter);
     //pLay->addWidget(iTLabel,1,1);
 
-    //interactiveTrigger = new QSpinBox(0, 500, 1, plcBox);
+    //interactiveTrigger = new TQSpinBox(0, 500, 1, plcBox);
     //pLay->addWidget(interactiveTrigger,1,2);
 
     //pLay->addRowSpacing(2,KDialog::spacingHint());
@@ -952,7 +952,7 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, QWidget *paren
 
 
     //CT 15mar98 - add EdgeResistance, BorderAttractor, WindowsAttractor config
-    MagicBox = new QVButtonGroup(i18n("Snap Zones"), this);
+    MagicBox = new TQVButtonGroup(i18n("Snap Zones"), this);
     MagicBox->setMargin(15);
 
     BrdrSnap = new KIntNumInput(10, MagicBox);
@@ -960,7 +960,7 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, QWidget *paren
     BrdrSnap->setRange( 0, MAX_BRDR_SNAP);
     BrdrSnap->setLabel(i18n("&Border snap zone:"));
     BrdrSnap->setSteps(1,10);
-    QWhatsThis::add( BrdrSnap, i18n("Here you can set the snap zone for screen borders, i.e."
+    TQWhatsThis::add( BrdrSnap, i18n("Here you can set the snap zone for screen borders, i.e."
                                     " the 'strength' of the magnetic field which will make windows snap to the border when"
                                     " moved near it.") );
 
@@ -969,12 +969,12 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, QWidget *paren
     WndwSnap->setRange( 0, MAX_WNDW_SNAP);
     WndwSnap->setLabel(i18n("&Window snap zone:"));
     BrdrSnap->setSteps(1,10);
-    QWhatsThis::add( WndwSnap, i18n("Here you can set the snap zone for windows, i.e."
+    TQWhatsThis::add( WndwSnap, i18n("Here you can set the snap zone for windows, i.e."
                                     " the 'strength' of the magnetic field which will make windows snap to each other when"
                                     " they're moved near another window.") );
 
-    OverlapSnap=new QCheckBox(i18n("Snap windows onl&y when overlapping"),MagicBox);
-    QWhatsThis::add( OverlapSnap, i18n("Here you can set that windows will be only"
+    OverlapSnap=new TQCheckBox(i18n("Snap windows onl&y when overlapping"),MagicBox);
+    TQWhatsThis::add( OverlapSnap, i18n("Here you can set that windows will be only"
                                        " snapped if you try to overlap them, i.e. they will not be snapped if the windows"
                                        " comes only near another window or border.") );
 
@@ -984,18 +984,18 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, QWidget *paren
     load();
 
     // Any changes goes to slotChanged()
-    connect( opaque, SIGNAL(clicked()), SLOT(changed()));
-    connect( resizeOpaqueOn, SIGNAL(clicked()), SLOT(changed()));
-    connect( geometryTipOn, SIGNAL(clicked()), SLOT(changed()));
-    connect( minimizeAnimOn, SIGNAL(clicked() ), SLOT(changed()));
-    connect( minimizeAnimSlider, SIGNAL(valueChanged(int)), SLOT(changed()));
-    connect( moveResizeMaximized, SIGNAL(toggled(bool)), SLOT(changed()));
-    connect( placementCombo, SIGNAL(activated(int)), SLOT(changed()));
-    connect( BrdrSnap, SIGNAL(valueChanged(int)), SLOT(changed()));
-    connect( BrdrSnap, SIGNAL(valueChanged(int)), SLOT(slotBrdrSnapChanged(int)));
-    connect( WndwSnap, SIGNAL(valueChanged(int)), SLOT(changed()));
-    connect( WndwSnap, SIGNAL(valueChanged(int)), SLOT(slotWndwSnapChanged(int)));
-    connect( OverlapSnap, SIGNAL(clicked()), SLOT(changed()));
+    connect( opaque, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect( resizeOpaqueOn, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect( geometryTipOn, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect( minimizeAnimOn, TQT_SIGNAL(clicked() ), TQT_SLOT(changed()));
+    connect( minimizeAnimSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+    connect( moveResizeMaximized, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+    connect( placementCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+    connect( BrdrSnap, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+    connect( BrdrSnap, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotBrdrSnapChanged(int)));
+    connect( WndwSnap, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+    connect( WndwSnap, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotWndwSnapChanged(int)));
+    connect( OverlapSnap, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 
     // To get suffix to BrdrSnap and WndwSnap inputs with default values.
     slotBrdrSnapChanged(BrdrSnap->value());
@@ -1080,7 +1080,7 @@ void KMovingConfig::slotWndwSnapChanged(int value) {
 
 void KMovingConfig::load( void )
 {
-    QString key;
+    TQString key;
 
     config->setGroup( "Windows" );
 
@@ -1192,7 +1192,7 @@ void KMovingConfig::save( void )
 //   else if (v == MANUAL_PLACEMENT)
 //     config->writeEntry(KWIN_PLACEMENT, "Manual");
 //   else if (v == INTERACTIVE_PLACEMENT) {
-//       QString tmpstr = QString("Interactive,%1").arg(interactiveTrigger->value());
+//       TQString tmpstr = TQString("Interactive,%1").arg(interactiveTrigger->value());
 //       config->writeEntry(KWIN_PLACEMENT, tmpstr);
 //   }
     else
@@ -1266,12 +1266,12 @@ KTranslucencyConfig::~KTranslucencyConfig ()
         kompmgr->detach();
 }
 
-KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, QWidget *parent, const char *)
+KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQWidget *parent, const char *)
     : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
   kompmgr = 0L;
   resetKompmgr_ = FALSE;
-  QVBoxLayout *lay = new QVBoxLayout (this);
+  TQVBoxLayout *lay = new TQVBoxLayout (this);
   kompmgrAvailable_ = kompmgrAvailable();
   if (!kompmgrAvailable_){
   KActiveLabel *label = new KActiveLabel(i18n("<qt><b>It seems that alpha channel support is not available.</b><br><br>"
@@ -1289,41 +1289,41 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, QW
   }
   else
   {
-  QTabWidget *tabW = new QTabWidget(this);
-  QWidget *tGroup = new QWidget(tabW);
-  QVBoxLayout *vLay = new QVBoxLayout (tGroup,KDialog::marginHint(), KDialog::spacingHint());
+  TQTabWidget *tabW = new TQTabWidget(this);
+  TQWidget *tGroup = new TQWidget(tabW);
+  TQVBoxLayout *vLay = new TQVBoxLayout (tGroup,KDialog::marginHint(), KDialog::spacingHint());
   vLay->addSpacing(11); // to get the proper gb top offset
   
-  onlyDecoTranslucent = new QCheckBox(i18n("Apply translucency only to decoration"),tGroup);
+  onlyDecoTranslucent = new TQCheckBox(i18n("Apply translucency only to decoration"),tGroup);
   vLay->addWidget(onlyDecoTranslucent);
   
   vLay->addSpacing(11);
   
-  QGridLayout *gLay = new QGridLayout(vLay,4,2,KDialog::spacingHint());
+  TQGridLayout *gLay = new TQGridLayout(vLay,4,2,KDialog::spacingHint());
   gLay->setColStretch(1,1);
 
-  activeWindowTransparency = new QCheckBox(i18n("Active windows:"),tGroup);
+  activeWindowTransparency = new TQCheckBox(i18n("Active windows:"),tGroup);
   gLay->addWidget(activeWindowTransparency,0,0);
   activeWindowOpacity = new KIntNumInput(100, tGroup);
   activeWindowOpacity->setRange(0,100);
   activeWindowOpacity->setSuffix("%");
   gLay->addWidget(activeWindowOpacity,0,1);
 
-  inactiveWindowTransparency = new QCheckBox(i18n("Inactive windows:"),tGroup);
+  inactiveWindowTransparency = new TQCheckBox(i18n("Inactive windows:"),tGroup);
   gLay->addWidget(inactiveWindowTransparency,1,0);
   inactiveWindowOpacity = new KIntNumInput(100, tGroup);
   inactiveWindowOpacity->setRange(0,100);
   inactiveWindowOpacity->setSuffix("%");
   gLay->addWidget(inactiveWindowOpacity,1,1);
 
-  movingWindowTransparency = new QCheckBox(i18n("Moving windows:"),tGroup);
+  movingWindowTransparency = new TQCheckBox(i18n("Moving windows:"),tGroup);
   gLay->addWidget(movingWindowTransparency,2,0);
   movingWindowOpacity = new KIntNumInput(100, tGroup);
   movingWindowOpacity->setRange(0,100);
   movingWindowOpacity->setSuffix("%");
   gLay->addWidget(movingWindowOpacity,2,1);
 
-  dockWindowTransparency = new QCheckBox(i18n("Dock windows:"),tGroup);
+  dockWindowTransparency = new TQCheckBox(i18n("Dock windows:"),tGroup);
   gLay->addWidget(dockWindowTransparency,3,0);
   dockWindowOpacity = new KIntNumInput(100, tGroup);
   dockWindowOpacity->setRange(0,100);
@@ -1332,80 +1332,80 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, QW
   
   vLay->addSpacing(11);
 
-  keepAboveAsActive = new QCheckBox(i18n("Treat 'keep above' windows as active ones"),tGroup);
+  keepAboveAsActive = new TQCheckBox(i18n("Treat 'keep above' windows as active ones"),tGroup);
   vLay->addWidget(keepAboveAsActive);
 
-  disableARGB = new QCheckBox(i18n("Disable ARGB windows (ignores window alpha maps, fixes gtk1 apps)"),tGroup);
+  disableARGB = new TQCheckBox(i18n("Disable ARGB windows (ignores window alpha maps, fixes gtk1 apps)"),tGroup);
   vLay->addWidget(disableARGB);
 
   vLay->addStretch();
   tabW->addTab(tGroup, i18n("Opacity"));
 
-  QWidget *sGroup = new QWidget(tabW);
+  TQWidget *sGroup = new TQWidget(tabW);
 //   sGroup->setCheckable(TRUE);
-  QVBoxLayout *vLay2 = new QVBoxLayout (sGroup,11,6);
+  TQVBoxLayout *vLay2 = new TQVBoxLayout (sGroup,11,6);
   vLay2->addSpacing(11); // to get the proper gb top offset
-  useShadows = new QCheckBox(i18n("Use shadows"),sGroup);
+  useShadows = new TQCheckBox(i18n("Use shadows"),sGroup);
   vLay2->addWidget(useShadows);
   
   vLay2->addSpacing(11);
 
-  QGridLayout *gLay2 = new QGridLayout(vLay2,6,2);
+  TQGridLayout *gLay2 = new TQGridLayout(vLay2,6,2);
   gLay2->setColStretch(1,1);
 
-  QLabel *label1 = new QLabel(i18n("Active window size:"),sGroup);
+  TQLabel *label1 = new TQLabel(i18n("Active window size:"),sGroup);
   gLay2->addWidget(label1,0,0);
   activeWindowShadowSize = new KIntNumInput(12,sGroup);
   activeWindowShadowSize->setRange(0,32);
 //   activeWindowShadowSize->setSuffix("px");
   gLay2->addWidget(activeWindowShadowSize,0,1);
 
-  QLabel *label2 = new QLabel(i18n("Inactive window size:"),sGroup);
+  TQLabel *label2 = new TQLabel(i18n("Inactive window size:"),sGroup);
   gLay2->addWidget(label2,1,0);
   inactiveWindowShadowSize = new KIntNumInput(6,sGroup);
   inactiveWindowShadowSize->setRange(0,32);
 //   inactiveWindowShadowSize->setSuffix("px");
   gLay2->addWidget(inactiveWindowShadowSize,1,1);
 
-  QLabel *label3 = new QLabel(i18n("Dock window size:"),sGroup);
+  TQLabel *label3 = new TQLabel(i18n("Dock window size:"),sGroup);
   gLay2->addWidget(label3,2,0);
   dockWindowShadowSize = new KIntNumInput(6,sGroup);
   dockWindowShadowSize->setRange(0,32);
 //   dockWindowShadowSize->setSuffix("px");
   gLay2->addWidget(dockWindowShadowSize,2,1);
 
-  QLabel *label4 = new QLabel(i18n("Vertical offset:"),sGroup);
+  TQLabel *label4 = new TQLabel(i18n("Vertical offset:"),sGroup);
   gLay2->addWidget(label4,3,0);
   shadowTopOffset = new KIntNumInput(80,sGroup);
   shadowTopOffset->setSuffix("%");
   shadowTopOffset->setRange(-200,200);
   gLay2->addWidget(shadowTopOffset,3,1);
 
-  QLabel *label5 = new QLabel(i18n("Horizontal offset:"),sGroup);
+  TQLabel *label5 = new TQLabel(i18n("Horizontal offset:"),sGroup);
   gLay2->addWidget(label5,4,0);
   shadowLeftOffset = new KIntNumInput(0,sGroup);
   shadowLeftOffset->setSuffix("%");
   shadowLeftOffset->setRange(-200,200);
   gLay2->addWidget(shadowLeftOffset,4,1);
 
-  QLabel *label6 = new QLabel(i18n("Shadow color:"),sGroup);
+  TQLabel *label6 = new TQLabel(i18n("Shadow color:"),sGroup);
   gLay2->addWidget(label6,5,0);
   shadowColor = new KColorButton(Qt::black,sGroup);
   gLay2->addWidget(shadowColor,5,1);
   gLay2->setColStretch(1,1);
   vLay2->addSpacing(11);
-  removeShadowsOnMove = new QCheckBox(i18n("Remove shadows on move"),sGroup);
+  removeShadowsOnMove = new TQCheckBox(i18n("Remove shadows on move"),sGroup);
   vLay2->addWidget(removeShadowsOnMove);
-  removeShadowsOnResize = new QCheckBox(i18n("Remove shadows on resize"),sGroup);
+  removeShadowsOnResize = new TQCheckBox(i18n("Remove shadows on resize"),sGroup);
   vLay2->addWidget(removeShadowsOnResize);
   vLay2->addStretch();
   tabW->addTab(sGroup, i18n("Shadows"));
 
-  QWidget *eGroup = new QWidget(this);
-  QVBoxLayout *vLay3 = new QVBoxLayout (eGroup,11,6);
+  TQWidget *eGroup = new TQWidget(this);
+  TQVBoxLayout *vLay3 = new TQVBoxLayout (eGroup,11,6);
 
-  fadeInWindows = new QCheckBox(i18n("Fade-in windows (including popups)"),eGroup);
-  fadeOnOpacityChange = new QCheckBox(i18n("Fade between opacity changes"),eGroup);
+  fadeInWindows = new TQCheckBox(i18n("Fade-in windows (including popups)"),eGroup);
+  fadeOnOpacityChange = new TQCheckBox(i18n("Fade between opacity changes"),eGroup);
   fadeInSpeed = new KIntNumInput(100, eGroup);
   fadeInSpeed->setRange(1,100);
   fadeInSpeed->setLabel(i18n("Fade-in speed:"));
@@ -1420,69 +1420,69 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, QW
 
   tabW->addTab(eGroup, i18n("Effects"));
 
-  useTranslucency = new QCheckBox(i18n("Use translucency/shadows"),this);
+  useTranslucency = new TQCheckBox(i18n("Use translucency/shadows"),this);
   lay->addWidget(useTranslucency);
   lay->addWidget(tabW);
 
-  connect(useTranslucency, SIGNAL(toggled(bool)), tabW, SLOT(setEnabled(bool)));
+  connect(useTranslucency, TQT_SIGNAL(toggled(bool)), tabW, TQT_SLOT(setEnabled(bool)));
 
-  connect(activeWindowTransparency, SIGNAL(toggled(bool)), activeWindowOpacity, SLOT(setEnabled(bool)));
-  connect(inactiveWindowTransparency, SIGNAL(toggled(bool)), inactiveWindowOpacity, SLOT(setEnabled(bool)));
-  connect(movingWindowTransparency, SIGNAL(toggled(bool)), movingWindowOpacity, SLOT(setEnabled(bool)));
-  connect(dockWindowTransparency, SIGNAL(toggled(bool)), dockWindowOpacity, SLOT(setEnabled(bool)));
+  connect(activeWindowTransparency, TQT_SIGNAL(toggled(bool)), activeWindowOpacity, TQT_SLOT(setEnabled(bool)));
+  connect(inactiveWindowTransparency, TQT_SIGNAL(toggled(bool)), inactiveWindowOpacity, TQT_SLOT(setEnabled(bool)));
+  connect(movingWindowTransparency, TQT_SIGNAL(toggled(bool)), movingWindowOpacity, TQT_SLOT(setEnabled(bool)));
+  connect(dockWindowTransparency, TQT_SIGNAL(toggled(bool)), dockWindowOpacity, TQT_SLOT(setEnabled(bool)));
 
-  connect(useTranslucency, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(onlyDecoTranslucent, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(activeWindowTransparency, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(inactiveWindowTransparency, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(movingWindowTransparency, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(dockWindowTransparency, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(keepAboveAsActive, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(disableARGB, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(useShadows, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(removeShadowsOnResize, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(removeShadowsOnMove, SIGNAL(toggled(bool)), SLOT(changed()));
+  connect(useTranslucency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(onlyDecoTranslucent, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(activeWindowTransparency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(inactiveWindowTransparency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(movingWindowTransparency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(dockWindowTransparency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(keepAboveAsActive, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(disableARGB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(removeShadowsOnResize, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(removeShadowsOnMove, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
 
-  connect(activeWindowOpacity, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(inactiveWindowOpacity, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(movingWindowOpacity, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(dockWindowOpacity, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(dockWindowShadowSize, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(activeWindowShadowSize, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(inactiveWindowShadowSize, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(shadowTopOffset, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(shadowLeftOffset, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(shadowColor, SIGNAL(changed(const QColor&)), SLOT(changed()));
-  connect(fadeInWindows, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(fadeOnOpacityChange, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(fadeInSpeed, SIGNAL(valueChanged(int)), SLOT(changed()));
-  connect(fadeOutSpeed, SIGNAL(valueChanged(int)), SLOT(changed()));
+  connect(activeWindowOpacity, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(inactiveWindowOpacity, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(movingWindowOpacity, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(dockWindowOpacity, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(dockWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(activeWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(shadowLeftOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(changed()));
+  connect(fadeInWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(fadeOnOpacityChange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(fadeOutSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
 
-  connect(useShadows, SIGNAL(toggled(bool)), dockWindowShadowSize, SLOT(setEnabled(bool)));
-  connect(useShadows, SIGNAL(toggled(bool)), activeWindowShadowSize, SLOT(setEnabled(bool)));
-  connect(useShadows, SIGNAL(toggled(bool)), inactiveWindowShadowSize, SLOT(setEnabled(bool)));
-  connect(useShadows, SIGNAL(toggled(bool)), shadowTopOffset, SLOT(setEnabled(bool)));
-  connect(useShadows, SIGNAL(toggled(bool)), shadowLeftOffset, SLOT(setEnabled(bool)));
-  connect(useShadows, SIGNAL(toggled(bool)), shadowColor, SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), dockWindowShadowSize, TQT_SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), activeWindowShadowSize, TQT_SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), inactiveWindowShadowSize, TQT_SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowTopOffset, TQT_SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowLeftOffset, TQT_SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowColor, TQT_SLOT(setEnabled(bool)));
 
   load();
 
   tabW->setEnabled(useTranslucency->isChecked());
 
-  connect(useTranslucency, SIGNAL(toggled(bool)), this, SLOT(showWarning(bool)));
+  connect(useTranslucency, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(showWarning(bool)));
 
   // handle kompmgr restarts if necessary
-  connect(useTranslucency, SIGNAL(toggled(bool)), SLOT(resetKompmgr()));
-  connect(disableARGB, SIGNAL(toggled(bool)), SLOT(resetKompmgr()));
-  connect(useShadows, SIGNAL(toggled(bool)), SLOT(resetKompmgr()));
-  connect(inactiveWindowShadowSize, SIGNAL(valueChanged(int)), SLOT(resetKompmgr()));
-  connect(shadowTopOffset, SIGNAL(valueChanged(int)), SLOT(resetKompmgr()));
-  connect(shadowLeftOffset, SIGNAL(valueChanged(int)), SLOT(resetKompmgr()));
-  connect(shadowColor, SIGNAL(changed(const QColor&)), SLOT(resetKompmgr()));
-  connect(fadeInWindows, SIGNAL(toggled(bool)), SLOT(resetKompmgr()));
-  connect(fadeOnOpacityChange, SIGNAL(toggled(bool)), SLOT(resetKompmgr()));
-  connect(fadeInSpeed, SIGNAL(valueChanged(int)), SLOT(resetKompmgr()));
-  connect(fadeOutSpeed, SIGNAL(valueChanged(int)), SLOT(resetKompmgr()));
+  connect(useTranslucency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(disableARGB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
+  connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
+  connect(shadowLeftOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
+  connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(resetKompmgr()));
+  connect(fadeInWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(fadeOnOpacityChange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
+  connect(fadeOutSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
 
   }
 }
@@ -1524,7 +1524,7 @@ void KTranslucencyConfig::load( void )
   movingWindowOpacity->setEnabled(movingWindowTransparency->isChecked());
   dockWindowOpacity->setEnabled(dockWindowTransparency->isChecked());
 
-  KConfig conf_(QDir::homeDirPath() + "/.xcompmgrrc");
+  KConfig conf_(TQDir::homeDirPath() + "/.xcompmgrrc");
   conf_.setGroup("xcompmgr");
   
   disableARGB->setChecked(conf_.readBoolEntry("DisableARGB",FALSE));
@@ -1538,14 +1538,14 @@ void KTranslucencyConfig::load( void )
   activeWindowShadowSize->setValue((int)(ass*ss/100.0));
   inactiveWindowShadowSize->setValue((int)(iss*ss/100.0));
 
-  QString hex = conf_.readEntry("ShadowColor","#000000");
+  TQString hex = conf_.readEntry("ShadowColor","#000000");
   uint r, g, b;
   r = g = b = 256;
 
   if (sscanf(hex.latin1(), "0x%02x%02x%02x", &r, &g, &b)!=3 || r > 255 || g > 255 || b > 255)
     shadowColor->setColor(Qt::black);
   else
-    shadowColor->setColor(QColor(r,g,b));
+    shadowColor->setColor(TQColor(r,g,b));
 
   fadeInWindows->setChecked(conf_.readBoolEntry("FadeWindows",TRUE));
   fadeOnOpacityChange->setChecked(conf_.readBoolEntry("FadeTrans",FALSE));
@@ -1587,7 +1587,7 @@ void KTranslucencyConfig::save( void )
   config->writeEntry("OnlyDecoTranslucent", onlyDecoTranslucent->isChecked());
   config->writeEntry("ResetKompmgr",resetKompmgr_);
 
-  KConfig *conf_ = new KConfig(QDir::homeDirPath() + "/.xcompmgrrc");
+  KConfig *conf_ = new KConfig(TQDir::homeDirPath() + "/.xcompmgrrc");
   conf_->setGroup("xcompmgr");
 
   conf_->writeEntry("Compmode",useShadows->isChecked()?"CompClientShadows":"");
@@ -1598,7 +1598,7 @@ void KTranslucencyConfig::save( void )
 
   int r, g, b;
   shadowColor->color().rgb( &r, &g, &b );
-  QString hex;
+  TQString hex;
   hex.sprintf("0x%02X%02X%02X", r,g,b);
   conf_->writeEntry("ShadowColor",hex);
   conf_->writeEntry("ShadowRadius",(activeWindowShadowSize->value() + inactiveWindowShadowSize->value()) / 2);

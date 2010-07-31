@@ -1,9 +1,9 @@
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qdatetime.h>
-#include <qdrawutil.h>
-#include <qlcdnumber.h>
-#include <qtimer.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqdatetime.h>
+#include <tqdrawutil.h>
+#include <tqlcdnumber.h>
+#include <tqtimer.h>
 
 #include <kdatepicker.h>
 #include <kglobal.h>
@@ -26,11 +26,11 @@
 class LCD : public QLCDNumber
 {
 public:
-    LCD( QWidget *parent, const char *name=0 )
-	: QLCDNumber(parent,name) {}
+    LCD( TQWidget *parent, const char *name=0 )
+	: TQLCDNumber(parent,name) {}
     ~LCD() {}
 
-    void draw( QPainter *p ) { drawContents(p); }
+    void draw( TQPainter *p ) { drawContents(p); }
 };
 
 KasClockItem::KasClockItem( KasBar *parent )
@@ -38,23 +38,23 @@ KasClockItem::KasClockItem( KasBar *parent )
 {
     setCustomPopup( true );
 
-    QTimer *t = new QTimer( this );
-    connect( t, SIGNAL( timeout() ), SLOT( updateTime() ) );
+    TQTimer *t = new TQTimer( this );
+    connect( t, TQT_SIGNAL( timeout() ), TQT_SLOT( updateTime() ) );
     t->start( 1000 );
 
     lcd = new LCD( parent );
     lcd->hide();
 
-    lcd->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    lcd->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum );
     lcd->setBackgroundMode( NoBackground );
-    lcd->setFrameStyle( QFrame::NoFrame );
-    lcd->setSegmentStyle( QLCDNumber::Flat );
+    lcd->setFrameStyle( TQFrame::NoFrame );
+    lcd->setSegmentStyle( TQLCDNumber::Flat );
     lcd->setNumDigits( 5 );
     lcd->setAutoMask( true );
     updateTime();
 
-    connect( this, SIGNAL(leftButtonClicked(QMouseEvent *)), SLOT(togglePopup()) );
-    connect( this, SIGNAL(rightButtonClicked(QMouseEvent *)), SLOT(showMenuAt(QMouseEvent *) ) );
+    connect( this, TQT_SIGNAL(leftButtonClicked(TQMouseEvent *)), TQT_SLOT(togglePopup()) );
+    connect( this, TQT_SIGNAL(rightButtonClicked(TQMouseEvent *)), TQT_SLOT(showMenuAt(TQMouseEvent *) ) );
 }
 
 KasClockItem::~KasClockItem()
@@ -75,17 +75,17 @@ KasPopup *KasClockItem::createPopup()
 
 void KasClockItem::updateTime()
 {
-    setText( KGlobal::locale()->formatDate( QDate::currentDate(), true /* shortFormat */ ) );
-    lcd->display( KGlobal::locale()->formatTime( QTime::currentTime(), false /* includeSecs */, false /* isDuration */) );
+    setText( KGlobal::locale()->formatDate( TQDate::currentDate(), true /* shortFormat */ ) );
+    lcd->display( KGlobal::locale()->formatTime( TQTime::currentTime(), false /* includeSecs */, false /* isDuration */) );
     
     update();
 }
 
-void KasClockItem::paint( QPainter *p )
+void KasClockItem::paint( TQPainter *p )
 {
     KasItem::paint( p );
 
-    lcd->setGeometry( QRect( 0, 0, extent(), extent()-15 ) );
+    lcd->setGeometry( TQRect( 0, 0, extent(), extent()-15 ) );
 
     p->save();
     p->translate( 3, 15 );
@@ -100,13 +100,13 @@ void KasClockItem::paint( QPainter *p )
     p->restore();
 }
 
-void KasClockItem::showMenuAt( QMouseEvent *ev )
+void KasClockItem::showMenuAt( TQMouseEvent *ev )
 {
     hidePopup();
     showMenuAt( ev->globalPos() );
 }
 
-void KasClockItem::showMenuAt( QPoint p )
+void KasClockItem::showMenuAt( TQPoint p )
 {
     mouseLeave();
     kasbar()->updateMouseOver();

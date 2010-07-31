@@ -1,11 +1,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qvbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqtimer.h>
+#include <tqpainter.h>
+#include <tqvbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include <kdialogbase.h>
 #include <kmessagebox.h>
@@ -96,10 +96,10 @@ KAccessApp::KAccessApp(bool allowStyles, bool GUIenabled)
                                                  overlay(0), wm(0, KWinModule::INFO_DESKTOP)
 {
   _activeWindow = wm.activeWindow();
-  connect(&wm, SIGNAL(activeWindowChanged(WId)), this, SLOT(activeWindowChanged(WId)));
+  connect(&wm, TQT_SIGNAL(activeWindowChanged(WId)), this, TQT_SLOT(activeWindowChanged(WId)));
 
-  artsBellTimer = new QTimer( this );
-  connect( artsBellTimer, SIGNAL( timeout() ), SLOT( slotArtsBellTimeout() ));
+  artsBellTimer = new TQTimer( this );
+  connect( artsBellTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotArtsBellTimeout() ));
 
   features = 0;
   requestedFeatures = 0;
@@ -132,7 +132,7 @@ void KAccessApp::readSettings()
   _artsBellFile = config->readPathEntry("ArtsBellFile");
   _visibleBell = config->readBoolEntry("VisibleBell", false);
   _visibleBellInvert = config->readBoolEntry("VisibleBellInvert", false);
-  QColor def(Qt::red);
+  TQColor def(Qt::red);
   _visibleBellColor = config->readColorEntry("VisibleBellColor", &def);
   _visibleBellPause = config->readNumEntry("VisibleBellPause", 500);
 
@@ -361,10 +361,10 @@ bool KAccessApp::x11EventFilter(XEvent *event)
 }
 
 
-void VisualBell::paintEvent(QPaintEvent *event)
+void VisualBell::paintEvent(TQPaintEvent *event)
 {
-  QWidget::paintEvent(event);
-  QTimer::singleShot(_pause, this, SLOT(hide()));
+  TQWidget::paintEvent(event);
+  TQTimer::singleShot(_pause, this, TQT_SLOT(hide()));
 }
 
 
@@ -438,10 +438,10 @@ void KAccessApp::xkbBellNotify(XkbBellNotifyEvent *event)
 
       if (_visibleBellInvert)
         {
-	  QPixmap screen = QPixmap::grabWindow(id, 0, 0, window.size.width, window.size.height);
-	  QPixmap invert(window.size.width, window.size.height);
-	  QPainter p(&invert);
-	  p.setRasterOp(QPainter::NotCopyROP);
+	  TQPixmap screen = TQPixmap::grabWindow(id, 0, 0, window.size.width, window.size.height);
+	  TQPixmap invert(window.size.width, window.size.height);
+	  TQPainter p(&invert);
+	  p.setRasterOp(TQPainter::NotCopyROP);
 	  p.drawPixmap(0, 0, screen);
 	  overlay->setBackgroundPixmap(invert);
 	}
@@ -462,7 +462,7 @@ void KAccessApp::xkbBellNotify(XkbBellNotifyEvent *event)
   }
 }
 
-QString mouseKeysShortcut (Display *display) {
+TQString mouseKeysShortcut (Display *display) {
   // Calculate the keycode
   KeySym sym = XK_MouseKeys_Enable;
   KeyCode code = XKeysymToKeycode(display, sym);
@@ -513,7 +513,7 @@ QString mouseKeysShortcut (Display *display) {
   ev.xkey.keycode = code;
   ev.xkey.state = 0;
   KKey key = KKey(KKeyNative(&ev));
-  QString keyname = key.toString();
+  TQString keyname = key.toString();
 
   unsigned int AltMask   = KKeyNative::modX(KKey::ALT);
   unsigned int WinMask   = KKeyNative::modX(KKey::WIN);
@@ -565,33 +565,33 @@ void KAccessApp::createDialogContents() {
             0, "AccessXWarning", true, true,
             KStdGuiItem::cont(), KStdGuiItem::cancel());
 
-      QVBox *topcontents = new QVBox (dialog);
+      TQVBox *topcontents = new TQVBox (dialog);
       topcontents->setSpacing(KDialog::spacingHint()*2);
       topcontents->setMargin(KDialog::marginHint());
 
-      QWidget *contents = new QWidget(topcontents);
-      QHBoxLayout * lay = new QHBoxLayout(contents);
+      TQWidget *contents = new TQWidget(topcontents);
+      TQHBoxLayout * lay = new TQHBoxLayout(contents);
       lay->setSpacing(KDialog::spacingHint());
 
-      QLabel *label1 = new QLabel( contents);
-      QPixmap pixmap = KApplication::kApplication()->iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup, KIcon::SizeMedium, KIcon::DefaultState, 0, true);
+      TQLabel *label1 = new TQLabel( contents);
+      TQPixmap pixmap = KApplication::kApplication()->iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup, KIcon::SizeMedium, KIcon::DefaultState, 0, true);
       if (pixmap.isNull())
-         pixmap = QMessageBox::standardIcon(QMessageBox::Warning);
+         pixmap = TQMessageBox::standardIcon(TQMessageBox::Warning);
       label1->setPixmap(pixmap);
 
       lay->addWidget( label1, 0, Qt::AlignCenter );
       lay->addSpacing(KDialog::spacingHint());
 
-      QVBoxLayout * vlay = new QVBoxLayout(lay);
+      TQVBoxLayout * vlay = new TQVBoxLayout(lay);
 
-      featuresLabel = new QLabel( "", contents );
+      featuresLabel = new TQLabel( "", contents );
       featuresLabel->setAlignment( WordBreak|AlignVCenter );
       vlay->addWidget( featuresLabel );
       vlay->addStretch();
 
-      QHBoxLayout * hlay = new QHBoxLayout(vlay);
+      TQHBoxLayout * hlay = new TQHBoxLayout(vlay);
 
-      QLabel *showModeLabel = new QLabel( i18n("&When a gesture was used:"), contents );
+      TQLabel *showModeLabel = new TQLabel( i18n("&When a gesture was used:"), contents );
       hlay->addWidget( showModeLabel );
 
       showModeCombobox = new KComboBox (contents);
@@ -605,9 +605,9 @@ void KAccessApp::createDialogContents() {
       dialog->setMainWidget(topcontents);
       dialog->enableButtonSeparator(false);
 
-      connect (dialog, SIGNAL(yesClicked()), this, SLOT(yesClicked()));
-      connect (dialog, SIGNAL(noClicked()), this, SLOT(noClicked()));
-      connect (dialog, SIGNAL(closeClicked()), this, SLOT(dialogClosed()));
+      connect (dialog, TQT_SIGNAL(yesClicked()), this, TQT_SLOT(yesClicked()));
+      connect (dialog, TQT_SIGNAL(noClicked()), this, TQT_SLOT(noClicked()));
+      connect (dialog, TQT_SIGNAL(closeClicked()), this, TQT_SLOT(dialogClosed()));
    }
 }
 
@@ -634,8 +634,8 @@ void KAccessApp::xkbControlsNotify(XkbControlsNotifyEvent *event)
         enabled  = requestedFeatures & ~features;
         disabled = features & ~requestedFeatures;
 
-        QStringList enabledFeatures;
-        QStringList disabledFeatures;
+        TQStringList enabledFeatures;
+        TQStringList disabledFeatures;
 
         if (enabled & XkbStickyKeysMask)
            enabledFeatures << i18n("Sticky keys");
@@ -657,7 +657,7 @@ void KAccessApp::xkbControlsNotify(XkbControlsNotifyEvent *event)
         else if (disabled & XkbMouseKeysMask)
            disabledFeatures << i18n("Mouse keys");
 
-        QString question;
+        TQString question;
         switch (enabledFeatures.count()) {
            case 0: switch (disabledFeatures.count()) {
               case 1: question = i18n("Do you really want to deactivate \"%1\"?")
@@ -723,7 +723,7 @@ void KAccessApp::xkbControlsNotify(XkbControlsNotifyEvent *event)
                  .arg(enabledFeatures[2]).arg(enabledFeatures[3]);
            break;
         }
-        QString explanation;
+        TQString explanation;
         if (enabledFeatures.count()+disabledFeatures.count() == 1) {
            explanation = i18n("An application has requested to change this setting.");
 
@@ -733,7 +733,7 @@ void KAccessApp::xkbControlsNotify(XkbControlsNotifyEvent *event)
               else if ((enabled | disabled) == XkbStickyKeysMask)
                  explanation = i18n("You pressed the Shift key 5 consecutive times or an application has requested to change this setting.");
               else if ((enabled | disabled) == XkbMouseKeysMask) {
-                 QString shortcut = mouseKeysShortcut(qt_xdisplay());
+                 TQString shortcut = mouseKeysShortcut(qt_xdisplay());
                  if (!shortcut.isEmpty() && !shortcut.isNull())
                     explanation = i18n("You pressed %1 or an application has requested to change this setting.").arg(shortcut);
               }

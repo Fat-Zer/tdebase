@@ -14,11 +14,11 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <qtextstream.h>
-#include <qlayout.h>
-#include <qframe.h>
-#include <qcheckbox.h>
-#include <qwidget.h>
+#include <tqtextstream.h>
+#include <tqlayout.h>
+#include <tqframe.h>
+#include <tqcheckbox.h>
+#include <tqwidget.h>
 
 #include <kapplication.h>
 #include <kstandarddirs.h>
@@ -96,10 +96,10 @@ int main(int argc, char *argv[])
 	KGlobal::dirs()->addResourceType("scrsav",
 			KGlobal::dirs()->kde_default("apps") +
 			"System/ScreenSavers/");
-	QStringList tempSaverFileList = KGlobal::dirs()->findAllResources("scrsav",
+	TQStringList tempSaverFileList = KGlobal::dirs()->findAllResources("scrsav",
 			"*.desktop", false, true);
 
-	QStringList saverFileList;
+	TQStringList saverFileList;
 
 	KConfig type("krandom.kssrc");
 	type.setGroup("Settings");
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 		if(!saver.tryExec())
 			continue;
 		kdDebug() << "read X-KDE-Type" << endl;
-		QString saverType = saver.readEntry("X-KDE-Type");
+		TQString saverType = saver.readEntry("X-KDE-Type");
 
 		if (saverType.isEmpty()) // no X-KDE-Type defined so must be OK
 		{
@@ -122,8 +122,8 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			QStringList saverTypes = QStringList::split(";", saverType);
-			for (QStringList::ConstIterator it =  saverTypes.begin(); it != saverTypes.end(); ++it )
+			TQStringList saverTypes = TQStringList::split(";", saverType);
+			for (TQStringList::ConstIterator it =  saverTypes.begin(); it != saverTypes.end(); ++it )
 			{
 				kdDebug() << "saverTypes is "<< *it << endl;
 				if (*it == "ManipulateScreen")
@@ -155,11 +155,11 @@ int main(int argc, char *argv[])
 
 	KRandomSequence rnd;
 	int indx = rnd.getLong(saverFileList.count());
-	QString filename = *(saverFileList.at(indx));
+	TQString filename = *(saverFileList.at(indx));
 
 	KDesktopFile config(filename, true);
 
-	QString cmd;
+	TQString cmd;
 	if (windowId && config.hasActionGroup("InWindow"))
 	{
 		config.setActionGroup("InWindow");
@@ -170,10 +170,10 @@ int main(int argc, char *argv[])
 	}
 	cmd = config.readPathEntry("Exec");
 
-	QTextStream ts(&cmd, IO_ReadOnly);
-	QString word;
+	TQTextStream ts(&cmd, IO_ReadOnly);
+	TQString word;
 	ts >> word;
-	QString exeFile = KStandardDirs::findExe(word);
+	TQString exeFile = KStandardDirs::findExe(word);
 
 	if (!exeFile.isEmpty())
 	{
@@ -211,18 +211,18 @@ int main(int argc, char *argv[])
 }
 
 
-KRandomSetup::KRandomSetup( QWidget *parent, const char *name )
+KRandomSetup::KRandomSetup( TQWidget *parent, const char *name )
 	: KDialogBase( parent, name, true, i18n( "Setup Random Screen Saver" ),
 			Ok|Cancel, Ok, true )
 {
 
-	QFrame *main = makeMainWidget();
-	QGridLayout *grid = new QGridLayout(main, 4, 2, 0, spacingHint() );
+	TQFrame *main = makeMainWidget();
+	TQGridLayout *grid = new TQGridLayout(main, 4, 2, 0, spacingHint() );
 
-	openGL = new QCheckBox( i18n("Use OpenGL screen savers"), main );
+	openGL = new TQCheckBox( i18n("Use OpenGL screen savers"), main );
 	grid->addWidget(openGL, 0, 0);
 
-	manipulateScreen = new QCheckBox(i18n("Use screen savers that manipulate the screen"), main);
+	manipulateScreen = new TQCheckBox(i18n("Use screen savers that manipulate the screen"), main);
 	grid->addWidget(manipulateScreen, 1, 0);
 
 	setMinimumSize( sizeHint() );

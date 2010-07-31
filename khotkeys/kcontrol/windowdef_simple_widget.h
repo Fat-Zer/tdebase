@@ -24,10 +24,10 @@ class Windowdef_simple_widget
     {
     Q_OBJECT
     public:
-        Windowdef_simple_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Windowdef_simple_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void set_data( const Windowdef_simple* data_P );
         Windowdef_simple* get_data() const;
-        void set_autodetect( QObject* obj_P, const char* slot_P );
+        void set_autodetect( TQObject* obj_P, const char* slot_P );
     public slots:
         void clear_data();
     protected:

@@ -52,12 +52,12 @@
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
 
-#include <qcheckbox.h>
-#include <qgrid.h>
-#include <qvbox.h>
-#include <qlabel.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqcheckbox.h>
+#include <tqgrid.h>
+#include <tqvbox.h>
+#include <tqlabel.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kdeversion.h>
 #include <klocale.h>
@@ -83,7 +83,7 @@
 #define Icon(x) KGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeMedium )
 #define LargeIcon(x) KGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeLarge )
 
-KasAboutDialog::KasAboutDialog( QWidget *parent )
+KasAboutDialog::KasAboutDialog( TQWidget *parent )
    : KDialogBase( KDialogBase::IconList, i18n("About Kasbar"),
 		  KDialogBase::Ok,
 		  KDialogBase::Ok,
@@ -110,10 +110,10 @@ KasAboutDialog::~KasAboutDialog()
 
 void KasAboutDialog::addDemoBar()
 {
-   QHBox *box = new QHBox( this );
+   TQHBox *box = new TQHBox( this );
 
    box->setLineWidth(2);
-   box->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+   box->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
 
    box->setSpacing( spacingHint() );
    box->setMargin( marginHint() );
@@ -129,7 +129,7 @@ void KasAboutDialog::addDemoBar()
    KasPopup *pop = new KasPopup( ci );
    ci->setPopup( pop );
    ci->setCustomPopup( true );
-   connect( ci, SIGNAL(leftButtonClicked(QMouseEvent *)), ci, SLOT(togglePopup()) );
+   connect( ci, TQT_SIGNAL(leftButtonClicked(TQMouseEvent *)), ci, TQT_SLOT(togglePopup()) );
 
    KasBar *groupbar = bar->createChildBar( ( bar->orientation() == Horizontal ) ? Vertical : Horizontal, pop );
    KasItem *i = 0;
@@ -150,10 +150,10 @@ void KasAboutDialog::addDemoBar()
 
 void KasAboutDialog::addInfoPage()
 {
-   QVBox *aboutPage = addVBoxPage( i18n("About"), i18n("About Kasbar"), Icon( "appearance" ) );
+   TQVBox *aboutPage = addVBoxPage( i18n("About"), i18n("About Kasbar"), Icon( "appearance" ) );
    aboutPage->setSpacing( spacingHint() );
 
-   new QLabel( i18n( "<qt><body>"
+   new TQLabel( i18n( "<qt><body>"
 		     "<h2>Kasbar Version: %1</h2>"
 		     "<b>KDE Version:</b> %2"
 		     "</body></qt>" )
@@ -176,12 +176,12 @@ void KasAboutDialog::addInfoPage()
 			 "</body></html>" )
 		   .arg( HOMEPAGE_URL ).arg( HOMEPAGE_URL ) );
 
-   text5->setWordWrap( QTextEdit::WidgetWidth );
+   text5->setWordWrap( TQTextEdit::WidgetWidth );
 }
 
 void KasAboutDialog::addAuthorsPage()
 {
-   QVBox *authorsPage = addVBoxPage( i18n("Authors"),
+   TQVBox *authorsPage = addVBoxPage( i18n("Authors"),
 				     i18n("Kasbar Authors"), 
 				     Icon( "kuser" ) );
 
@@ -206,28 +206,28 @@ void KasAboutDialog::addAuthorsPage()
 
      "</html>" ) );
 
-   text->setWordWrap( QTextEdit::WidgetWidth );
+   text->setWordWrap( TQTextEdit::WidgetWidth );
 }
 
 void KasAboutDialog::addBSDPage()
 {
-   QVBox *bsdLicense = addVBoxPage( i18n("BSD License"), QString::null, Icon( "filefind" ) );
+   TQVBox *bsdLicense = addVBoxPage( i18n("BSD License"), TQString::null, Icon( "filefind" ) );
 
-   new QLabel( i18n( "Kasbar may be used under the terms of either the BSD license, "
+   new TQLabel( i18n( "Kasbar may be used under the terms of either the BSD license, "
 		     "or the GNU Public License." ), bsdLicense );
 
    KTextBrowser *text2 = new KTextBrowser( bsdLicense );
    text2->setText( "Some text of unsurpassed tediousness goes here." );
-   text2->setWordWrap( QTextEdit::NoWrap );
+   text2->setWordWrap( TQTextEdit::NoWrap );
 
-   QString bsdFile = locate("data", "LICENSES/BSD");
+   TQString bsdFile = locate("data", "LICENSES/BSD");
    if ( !bsdFile.isEmpty() ) {
-     QString result;
-     QFile file( bsdFile );
+     TQString result;
+     TQFile file( bsdFile );
 
      if ( file.open( IO_ReadOnly ) )
      {
-        QTextStream str(&file);
+        TQTextStream str(&file);
         result += str.read();
      }
 
@@ -237,23 +237,23 @@ void KasAboutDialog::addBSDPage()
 
 void KasAboutDialog::addGPLPage()
 {
-   QVBox *gplPage = addVBoxPage( i18n("GPL License"), QString::null, Icon( "filefind" ) );
+   TQVBox *gplPage = addVBoxPage( i18n("GPL License"), TQString::null, Icon( "filefind" ) );
 
-   new QLabel( i18n( "Kasbar may be used under the terms of either the BSD license, "
+   new TQLabel( i18n( "Kasbar may be used under the terms of either the BSD license, "
 		     "or the GNU Public License." ), gplPage );
 
    KTextBrowser *text3 = new KTextBrowser( gplPage );
    text3->setText( "Some more text of unsurpassed tediousness goes here." );
-   text3->setWordWrap( QTextEdit::NoWrap );
+   text3->setWordWrap( TQTextEdit::NoWrap );
 
-   QString gplFile = locate("data", "LICENSES/GPL_V2");
+   TQString gplFile = locate("data", "LICENSES/GPL_V2");
    if ( !gplFile.isEmpty() ) {
-     QString result;
-     QFile file( gplFile );
+     TQString result;
+     TQFile file( gplFile );
 
      if ( file.open( IO_ReadOnly ) )
      {
-        QTextStream str(&file);
+        TQTextStream str(&file);
         result += str.read();
      }
 

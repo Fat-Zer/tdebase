@@ -16,8 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlayout.h>
-#include <qtabwidget.h>
+#include <tqlayout.h>
+#include <tqtabwidget.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -28,12 +28,12 @@
 
 extern "C"
 {
-    KDE_EXPORT KCModule* create_performance( QWidget* parent_P, const char* name_P )
+    KDE_EXPORT KCModule* create_performance( TQWidget* parent_P, const char* name_P )
     {
     return new KCMPerformance::Config( parent_P, name_P );
     }
 
-    KDE_EXPORT KCModule* create_konqueror( QWidget* parent_P, const char* name_P )
+    KDE_EXPORT KCModule* create_konqueror( TQWidget* parent_P, const char* name_P )
     {
     return new KCMPerformance::KonquerorConfig( parent_P, name_P );
     }
@@ -42,21 +42,21 @@ extern "C"
 namespace KCMPerformance
 {
 
-Config::Config( QWidget* parent_P, const char* )
+Config::Config( TQWidget* parent_P, const char* )
     : KCModule( parent_P, "kcmperformance" )
     {
     setQuickHelp( i18n( "<h1>KDE Performance</h1>"
         " You can configure settings that improve KDE performance here." ));
     
-    QVBoxLayout *topLayout = new QVBoxLayout( this );
-    QTabWidget* tabs = new QTabWidget( this );
+    TQVBoxLayout *topLayout = new TQVBoxLayout( this );
+    TQTabWidget* tabs = new TQTabWidget( this );
     konqueror_widget = new Konqueror( tabs );
     konqueror_widget->layout()->setMargin( KDialog::marginHint() );
-    connect( konqueror_widget, SIGNAL( changed()), SLOT( changed()));
+    connect( konqueror_widget, TQT_SIGNAL( changed()), TQT_SLOT( changed()));
     tabs->addTab( konqueror_widget, i18n( "Konqueror" ));
     system_widget = new SystemWidget( tabs );
     system_widget->layout()->setMargin( KDialog::marginHint() );
-    connect( system_widget, SIGNAL( changed()), SLOT( changed()));
+    connect( system_widget, TQT_SIGNAL( changed()), TQT_SLOT( changed()));
     tabs->addTab( system_widget, i18n( "System" ));
     topLayout->add( tabs );
     load();
@@ -85,7 +85,7 @@ void Config::defaults()
 		 load( true );
     }
 
-KonquerorConfig::KonquerorConfig( QWidget* parent_P, const char* )
+KonquerorConfig::KonquerorConfig( TQWidget* parent_P, const char* )
     : KCModule( parent_P, "kcmperformance" )
     {
     setQuickHelp( i18n( "<h1>Konqueror Performance</h1>"
@@ -93,9 +93,9 @@ KonquerorConfig::KonquerorConfig( QWidget* parent_P, const char* )
         " These include options for reusing already running instances"
         " and for keeping instances preloaded." ));
 
-    QVBoxLayout *topLayout = new QVBoxLayout( this );
+    TQVBoxLayout *topLayout = new TQVBoxLayout( this );
     widget = new Konqueror( this );
-    connect( widget, SIGNAL( changed()), SLOT( changed()));
+    connect( widget, TQT_SIGNAL( changed()), TQT_SLOT( changed()));
     topLayout->add( widget );
     load();
     }

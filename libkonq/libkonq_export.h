@@ -25,7 +25,7 @@
 #include <kdemacros.h>
 
 /* needed, because e.g. Q_OS_UNIX is so frequently used */
-#include <qglobal.h>
+#include <tqglobal.h>
 
 #ifdef Q_WS_WIN
 

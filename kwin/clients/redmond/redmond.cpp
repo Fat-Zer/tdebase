@@ -14,16 +14,16 @@
 
 #include "redmond.h"
 
-#include <qdrawutil.h>
-#include <qdatetime.h>
+#include <tqdrawutil.h>
+#include <tqdatetime.h>
 #include <kpixmapeffect.h>
 #include <kimageeffect.h>
 #include <kdrawutil.h>
 #include <klocale.h>
 
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qapplication.h>
+#include <tqbitmap.h>
+#include <tqimage.h>
+#include <tqapplication.h>
 
 namespace Redmond {
 
@@ -87,8 +87,8 @@ static KPixmap *iMiniBtnPix1;
 static KPixmap *miniBtnDownPix1;
 static KPixmap *iMiniBtnDownPix1;
 
-static QPixmap *defaultMenuPix;
-static QColor  *btnForeground;
+static TQPixmap *defaultMenuPix;
+static TQColor  *btnForeground;
 static bool    pixmaps_created = false;
 
 static int toolTitleHeight;
@@ -100,9 +100,9 @@ static inline const KDecorationOptions *options()
    return KDecoration::options();
 }
 
-static void drawButtonFrame( KPixmap *pix, const QColorGroup &g, bool sunken )
+static void drawButtonFrame( KPixmap *pix, const TQColorGroup &g, bool sunken )
 {
-    QPainter p;
+    TQPainter p;
     int x2 = pix->width() - 1;
     int y2 = pix->height() - 1;
     p.begin(pix);
@@ -136,7 +136,7 @@ static void create_pixmaps ()
 
     pixmaps_created = true;
 
-    bool highcolor = QPixmap::defaultDepth() > 8;
+    bool highcolor = TQPixmap::defaultDepth() > 8;
 
     btnPix1 = new KPixmap;
     btnDownPix1 = new KPixmap;
@@ -146,11 +146,11 @@ static void create_pixmaps ()
     miniBtnDownPix1 = new KPixmap;
     iMiniBtnPix1 = new KPixmap;
     iMiniBtnDownPix1 = new KPixmap;
-    defaultMenuPix = new QPixmap(kdelogo);
+    defaultMenuPix = new TQPixmap(kdelogo);
 
     // buttons (active/inactive, sunken/unsunken)
-	QColorGroup g = options()->colorGroup(KDecoration::ColorButtonBg, true);
-    QColor c = g.background();
+	TQColorGroup g = options()->colorGroup(KDecoration::ColorButtonBg, true);
+    TQColor c = g.background();
     btnPix1->resize(normalTitleHeight, normalTitleHeight-2);
     btnDownPix1->resize(normalTitleHeight, normalTitleHeight-2);
     iBtnPix1->resize(normalTitleHeight, normalTitleHeight-2);
@@ -210,9 +210,9 @@ static void create_pixmaps ()
 
     // Make sure button pixmaps contrast with the current colour scheme.
     if (qGray(options()->color(KDecoration::ColorButtonBg, true).rgb()) > 127)
-        btnForeground = new QColor(Qt::black);
+        btnForeground = new TQColor(Qt::black);
     else
-        btnForeground = new QColor(Qt::white);
+        btnForeground = new TQColor(Qt::white);
 }
 
 void delete_pixmaps()
@@ -257,7 +257,7 @@ void RedmondButton::reset(unsigned long changed)
 				break;
 			case MenuButton:
 			{
-				QPixmap miniIcon = decoration()->icon().pixmap(QIconSet::Small, QIconSet::Normal);
+				TQPixmap miniIcon = decoration()->icon().pixmap(TQIconSet::Small, TQIconSet::Normal);
 				if (!miniIcon.isNull()) {
 					setPixmap(miniIcon);
 				} else {
@@ -280,16 +280,16 @@ void RedmondButton::setBitmap(const unsigned char *bitmap)
 	pix.resize(0, 0);
 
 	if (bitmap)
-		deco = QBitmap(10, 10, bitmap, true);
+		deco = TQBitmap(10, 10, bitmap, true);
 	else {
-		deco = QBitmap(10,10);
+		deco = TQBitmap(10,10);
 		deco.fill(Qt::color0);
 	}
 	deco.setMask(deco);
 }
 
 
-void RedmondButton::setPixmap( const QPixmap &p )
+void RedmondButton::setPixmap( const TQPixmap &p )
 {
 	deco.resize(0, 0);
 	pix = p;
@@ -298,7 +298,7 @@ void RedmondButton::setPixmap( const QPixmap &p )
 }
 
 
-void RedmondButton::drawButton(QPainter *p)
+void RedmondButton::drawButton(TQPainter *p)
 {
 	if ( pix.isNull() ) {
 		if ( decoration()->isActive() ) {
@@ -327,7 +327,7 @@ void RedmondButton::drawButton(QPainter *p)
 		}
 
 		if ( type()==MenuButton && height() < 16) {
-			QPixmap tmpPix;
+			TQPixmap tmpPix;
 
 		 // Smooth scale the menu button pixmap
 			tmpPix.convertFromImage(
@@ -348,17 +348,17 @@ RedmondDeco::RedmondDeco(KDecorationBridge *b, KDecorationFactory *f)
 {
 }
 
-QString RedmondDeco::visibleName() const
+TQString RedmondDeco::visibleName() const
 {
     return i18n("Redmond");
 }
 
-QString RedmondDeco::defaultButtonsLeft() const
+TQString RedmondDeco::defaultButtonsLeft() const
 {
     return "M";
 }
 
-QString RedmondDeco::defaultButtonsRight() const
+TQString RedmondDeco::defaultButtonsRight() const
 {
     return "HIA_X";
 }
@@ -463,19 +463,19 @@ void RedmondDeco::reset( unsigned long changed )
 	KCommonDecoration::reset(changed);
 }
 
-void RedmondDeco::paintEvent( QPaintEvent* )
+void RedmondDeco::paintEvent( TQPaintEvent* )
 {
-    bool hicolor = QPixmap::defaultDepth() > 8;
+    bool hicolor = TQPixmap::defaultDepth() > 8;
     int fontoffset = 1;
 
     // Modify borderWith used by titlebar to 0, when maximized and not move or resize able
     bool border = !(maximizeMode()==MaximizeFull && !options()->moveResizeMaximizedWindows());
     int modBorderWidth = border ? borderWidth : 0;
 
-    QPainter p(widget());
+    TQPainter p(widget());
 
     // Obtain widget bounds.
-    QRect r(widget()->rect());
+    TQRect r(widget()->rect());
     int x = r.x();
     int y = r.y();
     int x2 = r.width()-1;
@@ -485,7 +485,7 @@ void RedmondDeco::paintEvent( QPaintEvent* )
 
     // Draw part of the frame that is the frame color
     // ==============================================
-    QColorGroup g = options()->colorGroup(KDecoration::ColorFrame, isActive());
+    TQColorGroup g = options()->colorGroup(KDecoration::ColorFrame, isActive());
     p.setPen( g.background() );
     p.drawLine( x, y, x2-1, y );
     p.drawLine( x, y, x, y2-1 );
@@ -520,15 +520,15 @@ void RedmondDeco::paintEvent( QPaintEvent* )
     // Draw the title bar.
     // ===================
     r = titleRect();
-//     QFontMetrics fm(options()->font(true));
+//     TQFontMetrics fm(options()->font(true));
 
     // Obtain blend colours.
-    QColor c1 = options()->color(KDecoration::ColorTitleBar, isActive() );
-    QColor c2 = options()->color(KDecoration::ColorTitleBlend, isActive() );
+    TQColor c1 = options()->color(KDecoration::ColorTitleBar, isActive() );
+    TQColor c2 = options()->color(KDecoration::ColorTitleBlend, isActive() );
 
-	QFont fnt = options()->font(true, isToolWindow() );
+	TQFont fnt = options()->font(true, isToolWindow() );
 	if (isToolWindow() ) {
-		fnt.setWeight( QFont::Normal );
+		fnt.setWeight( TQFont::Normal );
 		fontoffset = 0;
 	}
 
@@ -547,13 +547,13 @@ void RedmondDeco::paintEvent( QPaintEvent* )
         } else {
             // This enables dithering on 15 and 16bit displays, preventing
             // some pretty horrible banding effects
-            QImage image = KImageEffect::gradient(titleBuffer->size(), c1, c2,
+            TQImage image = KImageEffect::gradient(titleBuffer->size(), c1, c2,
                                     KImageEffect::HorizontalGradient);
 
             titleBuffer->convertFromImage(image, Qt::OrderedDither);
         }
 
-        QPainter p2( titleBuffer, this );
+        TQPainter p2( titleBuffer, this );
 
         // Since drawing the gradient is (relatively) slow, it is best
         // to draw the title text on the pixmap.
@@ -583,10 +583,10 @@ void RedmondDeco::paintEvent( QPaintEvent* )
 }
 
 void RedmondDecoFactory::readConfig() {
-	normalTitleHeight = QFontMetrics(options()->font(true)).height();
-	QFont toolFont = options()->font(true, true);
-	toolFont.setWeight(QFont::Normal);
-	toolTitleHeight = QFontMetrics(toolFont).height();
+	normalTitleHeight = TQFontMetrics(options()->font(true)).height();
+	TQFont toolFont = options()->font(true, true);
+	toolFont.setWeight(TQFont::Normal);
+	toolTitleHeight = TQFontMetrics(toolFont).height();
 	switch(options()->preferredBorderSize(this)) {
 	case BorderLarge:
 		borderWidth = 8;
@@ -670,9 +670,9 @@ bool RedmondDecoFactory::supports( Ability ability )
 	}
 }
 
-QValueList< RedmondDecoFactory::BorderSize > RedmondDecoFactory::borderSizes() const
+TQValueList< RedmondDecoFactory::BorderSize > RedmondDecoFactory::borderSizes() const
 { // the list must be sorted
-  return QValueList< BorderSize >() << BorderNormal << BorderLarge <<
+  return TQValueList< BorderSize >() << BorderNormal << BorderLarge <<
       BorderVeryLarge <<  BorderHuge << BorderVeryHuge << BorderOversized;
 }
 

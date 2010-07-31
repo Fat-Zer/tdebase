@@ -24,11 +24,11 @@
 #ifndef __SHORTCUTS_MODULE_H
 #define __SHORTCUTS_MODULE_H
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qtabwidget.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqtabwidget.h>
 #include "kaccelaction.h"
 #include <kcombobox.h>
 #include <kkeydialog.h>
@@ -37,13 +37,13 @@ class ShortcutsModule : public QWidget
 {
 	Q_OBJECT
  public:
-	ShortcutsModule( QWidget *parent = 0, const char *name = 0 );
+	ShortcutsModule( TQWidget *parent = 0, const char *name = 0 );
 	~ShortcutsModule();
 
 	void load();
 	void save();
 	void defaults();
-	QString quickHelp() const;
+	TQString quickHelp() const;
 
  protected:
 	void initGUI();
@@ -51,7 +51,7 @@ class ShortcutsModule : public QWidget
 	void createActionsSequence();
 	void readSchemeNames();
 	void saveScheme();
-	void resizeEvent(QResizeEvent *e);
+	void resizeEvent(TQResizeEvent *e);
 
  signals:
 	void changed( bool );
@@ -65,16 +65,16 @@ class ShortcutsModule : public QWidget
 	void slotUseRmWinKeysClicked();
 
  private:
-	QTabWidget* m_pTab;
-	QRadioButton *m_prbPre, *m_prbNew;
+	TQTabWidget* m_pTab;
+	TQRadioButton *m_prbPre, *m_prbNew;
 	KComboBox* m_pcbSchemes;
-	QPushButton* m_pbtnSave, * m_pbtnRemove;
+	TQPushButton* m_pbtnSave, * m_pbtnRemove;
 	int m_nSysSchemes;
-	QStringList m_rgsSchemeFiles;
+	TQStringList m_rgsSchemeFiles;
 	KAccelActions m_actionsGeneral, m_actionsSequence;//, m_actionsApplication;
 	KShortcutList* m_pListGeneral, * m_pListSequence, * m_pListApplication;
 	KKeyChooser* m_pkcGeneral, * m_pkcSequence, * m_pkcApplication;
-	QCheckBox* m_useRmWinKeys;
+	TQCheckBox* m_useRmWinKeys;
 	bool m_bUseRmWinKeys;
 };
 

@@ -31,7 +31,7 @@
 
 #include <kdebug.h>
 
-Program::Program(const QStringList &args)
+Program::Program(const TQStringList &args)
 :m_pid(0)
 ,mArgs(args)
 ,mStarted(false)
@@ -135,7 +135,7 @@ bool Program::start()
       char **arglist=(char**)malloc((mArgs.count()+1)*sizeof(char*));
       int c=0;
 
-      for (QStringList::Iterator it=mArgs.begin(); it!=mArgs.end(); ++it)
+      for (TQStringList::Iterator it=mArgs.begin(); it!=mArgs.end(); ++it)
       {
          arglist[c]=(char*)malloc((*it).length()+1);
          strcpy(arglist[c], (*it).latin1());

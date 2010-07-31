@@ -46,7 +46,7 @@ void Trigger::cfg_write( KConfig& cfg_P ) const
 
 Trigger* Trigger::create_cfg_read( KConfig& cfg_P, Action_data* data_P )
     {
-    QString type = cfg_P.readEntry( "Type" );
+    TQString type = cfg_P.readEntry( "Type" );
     if( type == "SHORTCUT" || type == "SINGLE_SHORTCUT" )
         return new Shortcut_trigger( cfg_P, data_P );
     if( type == "WINDOW" )
@@ -63,17 +63,17 @@ Trigger* Trigger::create_cfg_read( KConfig& cfg_P, Action_data* data_P )
 // Trigger_list
 
 Trigger_list::Trigger_list( KConfig& cfg_P, Action_data* data_P )
-    : QPtrList< Trigger >()
+    : TQPtrList< Trigger >()
     {
     setAutoDelete( true );
     _comment = cfg_P.readEntry( "Comment" );
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int cnt = cfg_P.readNumEntry( "TriggersCount", 0 );
     for( int i = 0;
          i < cnt;
          ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         Trigger* trigger = Trigger::create_cfg_read( cfg_P, data_P );
         if( trigger )
             append( trigger );
@@ -84,13 +84,13 @@ Trigger_list::Trigger_list( KConfig& cfg_P, Action_data* data_P )
 void Trigger_list::cfg_write( KConfig& cfg_P ) const
     {
     cfg_P.writeEntry( "Comment", comment());
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int i = 0;
     for( Iterator it( *this );
          it;
          ++it, ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         it.current()->cfg_write( cfg_P );
         }
     cfg_P.setGroup( save_cfg_group );
@@ -147,7 +147,7 @@ Shortcut_trigger* Shortcut_trigger::copy( Action_data* data_P ) const
     return new Shortcut_trigger( data_P ? data_P : data, shortcut());
     }
 
-const QString Shortcut_trigger::description() const
+const TQString Shortcut_trigger::description() const
     {
     // CHECKME vice mods
     return i18n( "Shortcut trigger: " ) + _shortcut.toString();
@@ -179,7 +179,7 @@ Window_trigger::Window_trigger( KConfig& cfg_P, Action_data* data_P )
     : Trigger( cfg_P, data_P ), active( false )
     {
 //    kdDebug( 1217 ) << "Window_trigger" << endl;
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Windows" );
     _windows = new Windowdef_list( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -197,13 +197,13 @@ Window_trigger::~Window_trigger()
 void Window_trigger::init()
     {
     kdDebug( 1217 ) << "Window_trigger::init()" << endl;
-    connect( windows_handler, SIGNAL( window_added( WId )), this, SLOT( window_added( WId )));
-    connect( windows_handler, SIGNAL( window_removed( WId )), this, SLOT( window_removed( WId )));
+    connect( windows_handler, TQT_SIGNAL( window_added( WId )), this, TQT_SLOT( window_added( WId )));
+    connect( windows_handler, TQT_SIGNAL( window_removed( WId )), this, TQT_SLOT( window_removed( WId )));
     if( window_actions & ( WINDOW_ACTIVATES | WINDOW_DEACTIVATES /*| WINDOW_DISAPPEARS*/ ))
-        connect( windows_handler, SIGNAL( active_window_changed( WId )),
-            this, SLOT( active_window_changed( WId )));
-    connect( windows_handler, SIGNAL( window_changed( WId, unsigned int )),
-        this, SLOT( window_changed( WId, unsigned int )));
+        connect( windows_handler, TQT_SIGNAL( active_window_changed( WId )),
+            this, TQT_SLOT( active_window_changed( WId )));
+    connect( windows_handler, TQT_SIGNAL( window_changed( WId, unsigned int )),
+        this, TQT_SLOT( window_changed( WId, unsigned int )));
     }
 
 void Window_trigger::activate( bool activate_P )
@@ -293,7 +293,7 @@ void Window_trigger::window_changed( WId window_P, unsigned int dirty_P )
 void Window_trigger::cfg_write( KConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Windows" );
     windows()->cfg_write( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -313,14 +313,14 @@ Trigger* Window_trigger::copy( Action_data* data_P ) const
     return ret;
     }
 
-const QString Window_trigger::description() const
+const TQString Window_trigger::description() const
     {
     return i18n( "Window trigger: " ) + windows()->comment();
     }
 
 // Gesture_trigger
 
-Gesture_trigger::Gesture_trigger( Action_data* data_P, const QString &gesturecode_P )
+Gesture_trigger::Gesture_trigger( Action_data* data_P, const TQString &gesturecode_P )
     : Trigger( data_P ), _gesturecode( gesturecode_P )
     {
     }
@@ -333,7 +333,7 @@ Gesture_trigger::Gesture_trigger( KConfig& cfg_P, Action_data* data_P )
 
 Gesture_trigger::~Gesture_trigger()
     {
-    gesture_handler->unregister_handler( this, SLOT( handle_gesture( const QString&, WId )));
+    gesture_handler->unregister_handler( this, TQT_SLOT( handle_gesture( const TQString&, WId )));
     }
 
 void Gesture_trigger::cfg_write( KConfig& cfg_P ) const
@@ -349,12 +349,12 @@ Trigger* Gesture_trigger::copy( Action_data* data_P ) const
     return new Gesture_trigger( data_P ? data_P : data, gesturecode());
     }
 
-const QString Gesture_trigger::description() const
+const TQString Gesture_trigger::description() const
     {
     return i18n( "Gesture trigger: " ) + gesturecode();
     }
 
-void Gesture_trigger::handle_gesture( const QString &gesture_P, WId window_P )
+void Gesture_trigger::handle_gesture( const TQString &gesture_P, WId window_P )
     {
     if( gesturecode() == gesture_P )
         {
@@ -366,15 +366,15 @@ void Gesture_trigger::handle_gesture( const QString &gesture_P, WId window_P )
 void Gesture_trigger::activate( bool activate_P )
     {
     if( activate_P )
-        gesture_handler->register_handler( this, SLOT( handle_gesture( const QString&, WId )));
+        gesture_handler->register_handler( this, TQT_SLOT( handle_gesture( const TQString&, WId )));
     else
-        gesture_handler->unregister_handler( this, SLOT( handle_gesture( const QString&, WId )));
+        gesture_handler->unregister_handler( this, TQT_SLOT( handle_gesture( const TQString&, WId )));
     }
 
 
 // Voice_trigger
 
-	Voice_trigger::Voice_trigger( Action_data* data_P, const QString &Voicecode_P, const VoiceSignature& signature1_P, const VoiceSignature& signature2_P )
+	Voice_trigger::Voice_trigger( Action_data* data_P, const TQString &Voicecode_P, const VoiceSignature& signature1_P, const VoiceSignature& signature2_P )
 	: Trigger( data_P ), _voicecode( Voicecode_P )
     {
 		_voicesignature[0]=signature1_P;
@@ -409,7 +409,7 @@ Trigger* Voice_trigger::copy( Action_data* data_P ) const
 	return new Voice_trigger( data_P ? data_P : data, voicecode(), voicesignature(1) , voicesignature(2) );
     }
 
-const QString Voice_trigger::description() const
+const TQString Voice_trigger::description() const
     {
     return i18n( "Voice trigger: " ) + voicecode();
     }

@@ -21,7 +21,7 @@
 #ifndef __applettab_impl_h__
 #define __applettab_impl_h__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include "applettab.h"
 
 class QGroupBox;
@@ -36,22 +36,22 @@ class AppletTab : public AppletTabBase
   Q_OBJECT
 
  public:
-  AppletTab( QWidget *parent=0, const char* name=0 );
+  AppletTab( TQWidget *parent=0, const char* name=0 );
 
   void load();
   void load(bool useDefaults);
   void save();
   void defaults();
 
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
  signals:
   void changed();
 
  protected slots:
   void level_changed(int level);
-  void trusted_selection_changed(QListViewItem *);
-  void available_selection_changed(QListViewItem *);
+  void trusted_selection_changed(TQListViewItem *);
+  void available_selection_changed(TQListViewItem *);
   void add_clicked();
   void remove_clicked();
 
@@ -61,7 +61,7 @@ class AppletTab : public AppletTabBase
   void updateAddRemoveButton();
   
  private:
-  QStringList   available, l_available, l_trusted;
+  TQStringList   available, l_available, l_trusted;
 };
 
 #endif

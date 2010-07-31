@@ -40,7 +40,7 @@ class KPersonalizer : public KWizard {
 	Q_OBJECT
 public:
 	/** construtor */
-	KPersonalizer(QWidget* parent=0, const char *name=0);
+	KPersonalizer(TQWidget* parent=0, const char *name=0);
 	/** destructor */
 	~KPersonalizer();
 
@@ -57,7 +57,7 @@ public:
 public slots: // Public slots
 	/** calls all save functions after resetting all features/ OS/ theme selections to KDE default */
 	void setDefaults();
-	/** the cancel button is connected to the reject() slot of QDialog,
+	/** the cancel button is connected to the reject() slot of TQDialog,
 	*  so we have to reimplement this here to add a dialogbox to
 	*  ask if we really want to quit the wizard.
 	*/
@@ -66,7 +66,7 @@ public slots: // Public slots
 	* Calls applySettings() to save the current selection.
 	*/
 	void accept();
-	/** We need this to use it in a QTimer */
+	/** We need this to use it in a TQTimer */
 	void slotNext();
 
 private:
@@ -89,7 +89,7 @@ protected slots: // Public slots
 
 protected: // Protected methods
 	// the close button on the titlebar sets e->accept() which we don´t want.
-	virtual void closeEvent(QCloseEvent*);
+	virtual void closeEvent(TQCloseEvent*);
 	bool askClose();
 };
 

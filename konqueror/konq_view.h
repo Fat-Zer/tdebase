@@ -23,12 +23,12 @@
 #include "konq_mainwindow.h"
 #include "konq_factory.h"
 
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qguardedptr.h>
-#include <qcstring.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqguardedptr.h>
+#include <tqcstring.h>
 
 #include <ktrader.h>
 
@@ -45,15 +45,15 @@ namespace KParts
 struct HistoryEntry
 {
   KURL url;
-  QString locationBarURL; // can be different from url when showing a index.html
-  QString title;
-  QByteArray buffer;
-  QString strServiceType;
-  QString strServiceName;
-  QByteArray postData;
-  QString postContentType;
+  TQString locationBarURL; // can be different from url when showing a index.html
+  TQString title;
+  TQByteArray buffer;
+  TQString strServiceType;
+  TQString strServiceName;
+  TQByteArray postData;
+  TQString postContentType;
   bool doPost;
-  QString pageReferrer;
+  TQString pageReferrer;
   KonqMainWindow::PageSecurity pageSecurity;
 };
 
@@ -84,7 +84,7 @@ public:
             const KService::Ptr &service,
             const KTrader::OfferList &partServiceOffers,
             const KTrader::OfferList &appServiceOffers,
-            const QString &serviceType,
+            const TQString &serviceType,
             bool passiveMode);
 
   ~KonqView();
@@ -98,8 +98,8 @@ public:
    * @param tempFile whether to delete the file after use
    */
   void openURL( const KURL &url,
-                const QString & locationBarURL,
-                const QString &nameFilter = QString::null,
+                const TQString & locationBarURL,
+                const TQString &nameFilter = TQString::null,
                 bool tempFile = false );
 
   /**
@@ -110,8 +110,8 @@ public:
    * @param serviceName allows to enforce a particular service to be chosen,
    *        @see KonqFactory.
    */
-  bool changeViewMode( const QString &serviceType,
-                       const QString &serviceName = QString::null,
+  bool changeViewMode( const TQString &serviceType,
+                       const TQString &serviceName = TQString::null,
                        bool forceAutoEmbed = false );
 
   /**
@@ -154,7 +154,7 @@ public:
   /**
    * @return the history of this view
    */
-  const QPtrList<HistoryEntry> & history() { return m_lstHistory; }
+  const TQPtrList<HistoryEntry> & history() { return m_lstHistory; }
 
   /**
    * @return the HistoryEntry at postion @p pos
@@ -190,16 +190,16 @@ public:
    * Get view's location bar URL, i.e. the one that the view signals
    * It can be different from url(), for instance if we display a index.html
    */
-  QString locationBarURL() const { return m_sLocationBarURL; }
+  TQString locationBarURL() const { return m_sLocationBarURL; }
 
   /**
    * Get the URL that was typed to get the current URL.
    */
-  QString typedURL() const { return m_sTypedURL; }
+  TQString typedURL() const { return m_sTypedURL; }
   /**
    * Set the URL that was typed to get the current URL.
    */
-  void setTypedURL( const QString & u ) { m_sTypedURL = u; }
+  void setTypedURL( const TQString & u ) { m_sTypedURL = u; }
 
   /**
    * Return the security state of page in view
@@ -228,14 +228,14 @@ public:
   /**
    * @return the servicetype this view is currently displaying
    */
-  QString serviceType() const { return m_serviceType; }
+  TQString serviceType() const { return m_serviceType; }
 
   /**
    * @return the servicetypes this view is capable to display
    */
-  QStringList serviceTypes() const { return m_service->serviceTypes(); }
+  TQStringList serviceTypes() const { return m_service->serviceTypes(); }
 
-  bool supportsServiceType( const QString &serviceType ) const;
+  bool supportsServiceType( const TQString &serviceType ) const;
 
   // True if "Use index.html" is set (->the view doesn't necessarily show HTML!)
   bool allowHTML() const { return m_bAllowHTML; }
@@ -279,7 +279,7 @@ public:
   void setService( const KService::Ptr &s ) { m_service = s; }
   KService::Ptr service() { return m_service; }
 
-  QString caption() const { return m_caption; }
+  TQString caption() const { return m_caption; }
 
   KTrader::OfferList partServiceOffers() { return m_partServiceOffers; }
   KTrader::OfferList appServiceOffers() { return m_appServiceOffers; }
@@ -289,11 +289,11 @@ public:
   // return true if the method was found, false if the execution failed
   bool callExtensionMethod( const char *methodName );
   bool callExtensionBoolMethod( const char *methodName, bool value );
-  bool callExtensionStringMethod( const char *methodName, QString value );
+  bool callExtensionStringMethod( const char *methodName, TQString value );
   bool callExtensionURLMethod( const char *methodName, const KURL& value );
 
-  void setViewName( const QString &name );
-  QString viewName() const;
+  void setViewName( const TQString &name );
+  TQString viewName() const;
 
   // True to enable the context popup menu
   void enablePopupMenu( bool b );
@@ -303,7 +303,7 @@ public:
 
   void disableScrolling();
 
-  QStringList frameNames() const;
+  TQStringList frameNames() const;
 
   KonqViewIface * dcopObject();
 
@@ -316,12 +316,12 @@ public:
   // Returns false in case the reload must be cancelled.
   bool prepareReload( KParts::URLArgs& args );
 
-  // overload for the QString version
+  // overload for the TQString version
   void setLocationBarURL( const KURL& locationBarURL );
 
-  static QStringList childFrameNames( KParts::ReadOnlyPart *part );
+  static TQStringList childFrameNames( KParts::ReadOnlyPart *part );
 
-  static KParts::BrowserHostExtension *hostExtension( KParts::ReadOnlyPart *part, const QString &name );
+  static KParts::BrowserHostExtension *hostExtension( KParts::ReadOnlyPart *part, const TQString &name );
 
 signals:
 
@@ -346,7 +346,7 @@ public slots:
    * and updates the main view if this view is the current one
    * May be different from url e.g. if using "allowHTML".
    */
-  void setLocationBarURL( const QString & locationBarURL );
+  void setLocationBarURL( const TQString & locationBarURL );
   /**
    * get an icon for the URL from the BrowserExtension
    */
@@ -354,20 +354,20 @@ public slots:
 
   void setTabIcon( const KURL &url );
 
-  void setCaption( const QString & caption );
+  void setCaption( const TQString & caption );
 
   void setPageSecurity( int );
 
   // connected to the KROP's KIO::Job
   // but also to KonqRun's job
-  void slotInfoMessage( KIO::Job *, const QString &msg );
+  void slotInfoMessage( KIO::Job *, const TQString &msg );
 
 protected slots:
   // connected to the KROP's KIO::Job
   void slotStarted( KIO::Job * job );
   void slotCompleted();
   void slotCompleted( bool );
-  void slotCanceled( const QString & errMsg );
+  void slotCanceled( const TQString & errMsg );
   void slotPercent( KIO::Job *, unsigned long percent );
   void slotSpeed( KIO::Job *, unsigned long bytesPerSecond );
 
@@ -378,7 +378,7 @@ protected slots:
   void slotMouseOverInfo( const KFileItem* item );
   void slotOpenURLNotify();
   void slotEnableAction( const char * name, bool enabled );
-  void slotSetActionText( const char* name, const QString& text );
+  void slotSetActionText( const char* name, const TQString& text );
   void slotMoveTopLevelWidget( int x, int y );
   void slotResizeTopLevelWidget( int w, int h );
   void slotRequestFocus(KParts::ReadOnlyPart*);
@@ -414,35 +414,35 @@ private:
 
   void finishedWithCurrentURL();
 
-  virtual bool eventFilter( QObject *obj, QEvent *e );
+  virtual bool eventFilter( TQObject *obj, TQEvent *e );
 
 ////////////////// private members ///////////////
 
   KParts::ReadOnlyPart *m_pPart;
 
-  QString m_sLocationBarURL;
-  QString m_sTypedURL;
+  TQString m_sLocationBarURL;
+  TQString m_sTypedURL;
   KonqMainWindow::PageSecurity m_pageSecurity;
 
   /**
    * The full history (back + current + forward)
    * The current position in the history is m_lstHistory.current()
    */
-  QPtrList<HistoryEntry> m_lstHistory;
+  TQPtrList<HistoryEntry> m_lstHistory;
 
   /**
    * The post data that _resulted_ in this page.
    * e.g. when submitting a form, and the result is an image, this data will be
    * set (and saved/restored) when the image is being viewed. Necessary for reload.
    */
-  QByteArray m_postData;
-  QString m_postContentType;
+  TQByteArray m_postData;
+  TQString m_postContentType;
   bool m_doPost;
 
   /**
    * The referrer that was used to obtain this page.
    */
-  QString m_pageReferrer;
+  TQString m_pageReferrer;
 
   KonqMainWindow *m_pMainWindow;
   KonqRun *m_pRun;
@@ -468,9 +468,9 @@ private:
   KTrader::OfferList m_partServiceOffers;
   KTrader::OfferList m_appServiceOffers;
   KService::Ptr m_service;
-  QString m_serviceType;
-  QString m_caption;
-  QString m_tempFile;
+  TQString m_serviceType;
+  TQString m_caption;
+  TQString m_tempFile;
   KonqViewIface * m_dcopObject;
   KonqBrowserInterface *m_browserIface;
   int m_randID;

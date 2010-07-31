@@ -2,7 +2,7 @@
 #ifndef __KDesktopIface_h__
 #define __KDesktopIface_h__
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <dcopobject.h>
 #include <dcopref.h>
 
@@ -44,7 +44,7 @@ k_dcop:
     /**
      * @return the urls of selected icons
      */
-    virtual QStringList selectedURLs() = 0;
+    virtual TQStringList selectedURLs() = 0;
 
     /**
      * Re-read KDesktop's configuration
@@ -58,7 +58,7 @@ k_dcop:
      * Display the "Run Command" dialog (minicli) and prefill
      * @since 3.4
      */
-    virtual void popupExecuteCommand(const QString& command) = 0;
+    virtual void popupExecuteCommand(const TQString& command) = 0;
     /**
      * Get the background dcop interface (KBackgroundIface)
      */
@@ -106,7 +106,7 @@ k_dcop:
      * slot for kicker; called when the number or size of panels change the available
      * space for desktop icons
      */
-    virtual void desktopIconsAreaChanged(const QRect &area, int screen) = 0;
+    virtual void desktopIconsAreaChanged(const TQRect &area, int screen) = 0;
 };
 
 #endif

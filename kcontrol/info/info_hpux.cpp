@@ -25,9 +25,9 @@
 #include <sys/vfs.h>
 #include <fstab.h>
 #include <stdlib.h>
-#include <qfile.h>
-#include <qfontmetrics.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqfontmetrics.h>
+#include <tqtextstream.h>
 
 
 #define INFO_CPU_AVAILABLE
@@ -306,12 +306,12 @@ static const struct _type_LOOKUPTABLE PA_LOOKUPTABLE[] = {
 
 // Value() is defined in info.cpp !!!
 
-static bool Find_in_LOOKUPTABLE( QListView *lBox, char *machine )
+static bool Find_in_LOOKUPTABLE( TQListView *lBox, char *machine )
 {	char *Machine;
 	int  len;
 	const struct _type_LOOKUPTABLE *Entry = PA_LOOKUPTABLE;
-	QString str;
-    QListViewItem* olditem = 0;
+	TQString str;
+    TQListViewItem* olditem = 0;
     
 	
 	Machine = machine;	// machine is like: "9000/715/D"
@@ -328,10 +328,10 @@ static bool Find_in_LOOKUPTABLE( QListView *lBox, char *machine )
 	while (Entry->Name[0])
 	{	if (strncmp(Entry->Name,Machine,len)==0)
 		{
-            olditem = new QListViewItem(lBox, olditem, i18n("PA-RISC Processor"),
-                                        QString(PA_NAME[Entry->parisc_name]));
-            olditem = new QListViewItem(lBox, olditem, i18n("PA-RISC Revision"),
-                                        QString("PA-RISC ") + QString(PA_REVISION[Entry->parisc_rev]));
+            olditem = new TQListViewItem(lBox, olditem, i18n("PA-RISC Processor"),
+                                        TQString(PA_NAME[Entry->parisc_name]));
+            olditem = new TQListViewItem(lBox, olditem, i18n("PA-RISC Revision"),
+                                        TQString("PA-RISC ") + TQString(PA_REVISION[Entry->parisc_rev]));
 		    return true;
 		}
 		else
@@ -348,17 +348,17 @@ static bool Find_in_LOOKUPTABLE( QListView *lBox, char *machine )
 */
 
 
-bool GetInfo_CPU( QListView *lBox )
+bool GetInfo_CPU( TQListView *lBox )
 {
   FILE *pipe;
-  QFile *model;
+  TQFile *model;
      
   struct pst_dynamic	psd;
   struct pst_static	pst;
   struct pst_processor	pro;
   struct utsname	info;
-  QString str,str2;
-  QListViewItem* olditem = 0;
+  TQString str,str2;
+  TQListViewItem* olditem = 0;
   int	maxwidth,i;
 			
   if((pstat_getstatic(&pst, sizeof(pst), (size_t)1, 0) == -1) ||
@@ -373,31 +373,31 @@ bool GetInfo_CPU( QListView *lBox )
   
   uname(&info);
   
-  olditem = new QListViewItem(lBox, olditem, i18n("Machine"), info.machine);
+  olditem = new TQListViewItem(lBox, olditem, i18n("Machine"), info.machine);
   
-  model = new QFile(INFO_CPU_MODEL);  
+  model = new TQFile(INFO_CPU_MODEL);  
   if (model->exists()) 
   {	if ((pipe = popen(INFO_CPU_MODEL, "r"))) 
-	{	QTextStream *t = new QTextStream(pipe, IO_ReadOnly);
+	{	TQTextStream *t = new TQTextStream(pipe, IO_ReadOnly);
 		str = t->readLine();
-        olditem = new QListViewItem(lBox, olditem, i18n("Model"), str);
+        olditem = new TQListViewItem(lBox, olditem, i18n("Model"), str);
 		delete t;
 	}
 	delete pipe;
   }
   delete model;
   
-  olditem = new QListViewItem(lBox, olditem, i18n("Machine Identification Number"),
-                              strlen(info.__idnumber) ? QString(info.__idnumber) : i18n("(none)") );    
+  olditem = new TQListViewItem(lBox, olditem, i18n("Machine Identification Number"),
+                              strlen(info.__idnumber) ? TQString(info.__idnumber) : i18n("(none)") );    
 
   if (psd.psd_proc_cnt<=0)
       psd.psd_proc_cnt=1; // Minimum one CPU !
   
-  olditem = new QListViewItem(lBox, olditem, i18n("Number of Active Processors"),
+  olditem = new TQListViewItem(lBox, olditem, i18n("Number of Active Processors"),
                               Value(psd.psd_proc_cnt));
   
   pstat_getprocessor( &pro, sizeof(pro), 1, 0 );
-  olditem = new QListViewItem(lBox, olditem, i18n("CPU Clock"),
+  olditem = new TQListViewItem(lBox, olditem, i18n("CPU Clock"),
                               Value(pro.psp_iticksperclktick/10000) + " " + i18n("MHz"));
   
   switch(sysconf(_SC_CPU_VERSION))
@@ -420,39 +420,39 @@ bool GetInfo_CPU( QListView *lBox )
 	default:		str2 = i18n("(unknown)"); 	break;
   }
 
-  olditem = new QListViewItem(lBox, olditem, i18n("CPU Architecture"), str2);
+  olditem = new TQListViewItem(lBox, olditem, i18n("CPU Architecture"), str2);
   
   Find_in_LOOKUPTABLE( lBox, info.machine );// try to get extended Information.
 
   for (i=PS_PA83_FPU; i<=PS_PA89_FPU; ++i) {
       if ((1<<(i-1)) & pro.psp_coprocessor.psc_present) {
-          str = QString( (i==PS_PA83_FPU) ? "PS_PA83_FPU":"PS_PA89_FPU" )
-              + QString(" (")
-              + QString(((1<<(i-1))&pro.psp_coprocessor.psc_enabled) ? 
+          str = TQString( (i==PS_PA83_FPU) ? "PS_PA83_FPU":"PS_PA89_FPU" )
+              + TQString(" (")
+              + TQString(((1<<(i-1))&pro.psp_coprocessor.psc_enabled) ? 
                         i18n("enabled") : i18n("disabled")	)
-              + QString(")");
+              + TQString(")");
 
-          olditem = new QListViewItem(lBox, olditem, i18n("Numerical Coprocessor (FPU)"), str);
+          olditem = new TQListViewItem(lBox, olditem, i18n("Numerical Coprocessor (FPU)"), str);
       }
   }// for(coprocessor..)
   
   str = Value(((pst.physical_memory*pst.page_size)/1024/1024)) 
-      + QString(" ")
+      + TQString(" ")
       + i18n("MB");	// Mega-Byte
-  olditem = new QListViewItem(lBox, olditem, i18n("Total Physical Memory"), str);
+  olditem = new TQListViewItem(lBox, olditem, i18n("Total Physical Memory"), str);
 
-  str = Value(pst.page_size) + QString(" ") + i18n("Bytes");
-  olditem = new QListViewItem(lBox, olditem, i18n("Size of One Page"), str);
+  str = Value(pst.page_size) + TQString(" ") + i18n("Bytes");
+  olditem = new TQListViewItem(lBox, olditem, i18n("Size of One Page"), str);
   
   return true;
 }
 
-bool GetInfo_ReadfromFile( QListView *lBox, const char *Name )
+bool GetInfo_ReadfromFile( TQListView *lBox, const char *Name )
 {
   char buf[2048];
 
-  QFile *file = new QFile(Name);
-  QListViewItem* olditem = 0;
+  TQFile *file = new TQFile(Name);
+  TQListViewItem* olditem = 0;
 
   if(!file->open(IO_ReadOnly)) {
     delete file; 
@@ -461,7 +461,7 @@ bool GetInfo_ReadfromFile( QListView *lBox, const char *Name )
   
   while (file->readLine(buf,sizeof(buf)-1) >= 0) 
   {	if (strlen(buf))
-      olditem = new QListViewItem(lBox, olditem, QString::fromLocal8Bit(buf));
+      olditem = new TQListViewItem(lBox, olditem, TQString::fromLocal8Bit(buf));
   }
   
   file->close();
@@ -470,23 +470,23 @@ bool GetInfo_ReadfromFile( QListView *lBox, const char *Name )
 }
 
 
-bool GetInfo_IRQ( QListView * )
+bool GetInfo_IRQ( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_DMA( QListView * )
+bool GetInfo_DMA( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_PCI( QListView *lBox )
+bool GetInfo_PCI( TQListView *lBox )
 {	
     return(	GetInfo_ReadfromFile(lBox,INFO_PCI)    + 
 		GetInfo_ReadfromFile(lBox,INFO_PCI_EISA) );
 }
 
-bool GetInfo_IO_Ports( QListView *lBox )
+bool GetInfo_IO_Ports( TQListView *lBox )
 {
 	if (GetInfo_ReadfromPipe( lBox, INFO_IOPORTS_1, false ))
 	    return true;
@@ -495,12 +495,12 @@ bool GetInfo_IO_Ports( QListView *lBox )
 }
 
 
-bool GetInfo_Devices( QListView *lBox )
+bool GetInfo_Devices( TQListView *lBox )
 {
 	return GetInfo_ReadfromPipe( lBox, INFO_DEVICES, false );
 }
 
-bool GetInfo_SCSI( QListView *lBox )
+bool GetInfo_SCSI( TQListView *lBox )
 {	
     return GetInfo_Devices( lBox );
 }
@@ -554,17 +554,17 @@ static int get_fs_usage (char *path, long *l_total, long *l_avail)
 
 // Some Ideas taken from garbazo from his source in info_fbsd.cpp
 
-bool GetInfo_Partitions (QListView *lbox)
+bool GetInfo_Partitions (TQListView *lbox)
 {
 	#define NUMCOLS 5
-	QString Title[NUMCOLS];
+	TQString Title[NUMCOLS];
 	int n;
 	
 	struct fstab *fstab_ent;
 	struct statvfs svfs;
 	long total,avail;
-	QString str;
-	QString MB(i18n("MB")+ "  ");	// International Text for MB=Mega-Byte
+	TQString str;
+	TQString MB(i18n("MB")+ "  ");	// International Text for MB=Mega-Byte
 
 	if (setfsent() != 1) // Try to open fstab 
 	    return false;
@@ -589,16 +589,16 @@ bool GetInfo_Partitions (QListView *lbox)
 			svfs.f_basetype[0] = 0;
 
         if(svfs.f_basetype[0]) {
-            new QListViewItem(lbox, QString(fstab_ent->fs_spec),
-                              QString(fstab_ent->fs_file) + QString("  "),
-                              (svfs.f_basetype[0] ? QString(svfs.f_basetype) : i18n("n/a")),
+            new TQListViewItem(lbox, TQString(fstab_ent->fs_spec),
+                              TQString(fstab_ent->fs_file) + TQString("  "),
+                              (svfs.f_basetype[0] ? TQString(svfs.f_basetype) : i18n("n/a")),
                               Value((total+512)/1024,6) + MB,
                               Value((avail+512)/1024,6) + MB);
         }
         else {
-            new QListViewItem(lbox, QString(fstab_ent->fs_spec),
-                              QString(fstab_ent->fs_file) + QString("  "),
-                              (svfs.f_basetype[0] ? QString(svfs.f_basetype) : i18n("n/a")));
+            new TQListViewItem(lbox, TQString(fstab_ent->fs_spec),
+                              TQString(fstab_ent->fs_file) + TQString("  "),
+                              (svfs.f_basetype[0] ? TQString(svfs.f_basetype) : i18n("n/a")));
         }
 
 	}
@@ -608,7 +608,7 @@ bool GetInfo_Partitions (QListView *lbox)
 }
 
 
-bool GetInfo_XServer_and_Video( QListView *lBox )
+bool GetInfo_XServer_and_Video( TQListView *lBox )
 {	
     lBox = lBox;
     return GetInfo_XServer_Generic( lBox );
@@ -620,7 +620,7 @@ bool GetInfo_XServer_and_Video( QListView *lBox )
 
 #ifndef HAVE_ALIB_H
 
-bool GetInfo_Sound( QListView *lBox )
+bool GetInfo_Sound( TQListView *lBox )
 {	lBox = lBox;
 	*GetInfo_ErrorString = i18n("Audio-Support (Alib) was disabled during configuration and compile-time.");
 	return false;
@@ -640,15 +640,15 @@ static const char formatNames[6][15] = {
 #endif
 
 
-bool GetInfo_Sound( QListView *lBox )
+bool GetInfo_Sound( TQListView *lBox )
 {	
     Audio	*audio;
     long	status;
     char	server[80];
     int		i;
 
-    QString 	str,str2;
-    QListViewItem* olditem = 0;
+    TQString 	str,str2;
+    TQListViewItem* olditem = 0;
 
     // server = Hostname....
     server[0] = 0;    
@@ -661,120 +661,120 @@ bool GetInfo_Sound( QListView *lBox )
     lBox->addColumn(i18n("Information") );
     lBox->addColumn(i18n("Value") );
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Audio Name"), QString(audio->audio_name));
-    olditem = new QListViewItem(lBox, olditem, i18n("Vendor"), QString(audio->vendor));
-    olditem = new QListViewItem(lBox, olditem, i18n("Alib Version"),     
-                                Value(audio->alib_major_version) + QString(".") +
+    olditem = new TQListViewItem(lBox, olditem, i18n("Audio Name"), TQString(audio->audio_name));
+    olditem = new TQListViewItem(lBox, olditem, i18n("Vendor"), TQString(audio->vendor));
+    olditem = new TQListViewItem(lBox, olditem, i18n("Alib Version"),     
+                                Value(audio->alib_major_version) + TQString(".") +
                                 Value(audio->alib_minor_version));
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Protocol Revision"), 
-                                Value(audio->proto_major_version) + QString(".") +
+    olditem = new TQListViewItem(lBox, olditem, i18n("Protocol Revision"), 
+                                Value(audio->proto_major_version) + TQString(".") +
                                 Value(audio->proto_minor_version));
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Vendor Number"), 
+    olditem = new TQListViewItem(lBox, olditem, i18n("Vendor Number"), 
                                 Value(audio->vnumber));
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Release"),
+    olditem = new TQListViewItem(lBox, olditem, i18n("Release"),
                                 Value(audio->release));
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Byte Order"),
-                                QString((audio->byte_order==ALSBFirst)? i18n("ALSBFirst (LSB)"):
+    olditem = new TQListViewItem(lBox, olditem, i18n("Byte Order"),
+                                TQString((audio->byte_order==ALSBFirst)? i18n("ALSBFirst (LSB)"):
                                         ((audio->byte_order==AMSBFirst)? i18n("AMSBFirst (MSB)"):
                                          i18n("Invalid Byteorder.")) ));
     
-    olditem = new QListViewItem(lBox, olditem, i18n("Bit Order"),
-                                QString((audio->sound_bit_order==ALeastSignificant)? 
+    olditem = new TQListViewItem(lBox, olditem, i18n("Bit Order"),
+                                TQString((audio->sound_bit_order==ALeastSignificant)? 
                                         i18n("ALeastSignificant (LSB)") :
                                         ((audio->sound_bit_order==AMostSignificant) ? 
                                          i18n("AMostSignificant (MSB)"):i18n("Invalid Bitorder.")) ));
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Data Formats"));
+    olditem = new TQListViewItem(lBox, olditem, i18n("Data Formats"));
     for ( i = 0;  i < audio->n_data_format; i++ ) {
         if (audio->data_format_list[i] <= ADFLin8Offset)
-            new QListViewItem(olditem, QString(formatNames[audio->data_format_list[i]]));
+            new TQListViewItem(olditem, TQString(formatNames[audio->data_format_list[i]]));
     }
     olditem->setOpen(true);
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Sampling Rates"));
+    olditem = new TQListViewItem(lBox, olditem, i18n("Sampling Rates"));
     for ( i = 0;  i < audio->n_sampling_rate; i++ ) {
-        new QListViewItem(olditem, Value(audio->sampling_rate_list[i]));
+        new TQListViewItem(olditem, Value(audio->sampling_rate_list[i]));
     }
     olditem->setOpen(true);
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Input Sources"));
+    olditem = new TQListViewItem(lBox, olditem, i18n("Input Sources"));
     if ( audio->input_sources & AMonoMicrophoneMask )
-        new QListViewItem(olditem, i18n("Mono-Microphone"));
+        new TQListViewItem(olditem, i18n("Mono-Microphone"));
     if ( audio->input_sources & AMonoAuxiliaryMask )
-        new QListViewItem(olditem, i18n("Mono-Auxiliary"));
+        new TQListViewItem(olditem, i18n("Mono-Auxiliary"));
     if ( audio->input_sources & ALeftMicrophoneMask )
-        new QListViewItem(olditem, i18n("Left-Microphone"));
+        new TQListViewItem(olditem, i18n("Left-Microphone"));
     if ( audio->input_sources & ARightMicrophoneMask )
-        new QListViewItem(olditem, i18n("Right-Microphone"));
+        new TQListViewItem(olditem, i18n("Right-Microphone"));
     if ( audio->input_sources & ALeftAuxiliaryMask )
-        new QListViewItem(olditem, i18n("Left-Auxiliary"));
+        new TQListViewItem(olditem, i18n("Left-Auxiliary"));
     if ( audio->input_sources & ARightAuxiliaryMask )
-        new QListViewItem(olditem, i18n("Right-Auxiliary"));
+        new TQListViewItem(olditem, i18n("Right-Auxiliary"));
     olditem->setOpen(true);
 
-    olditem = new QListViewItem(lBox, olditem,i18n("Input Channels"));
+    olditem = new TQListViewItem(lBox, olditem,i18n("Input Channels"));
     if ( audio->input_channels & AMonoInputChMask )
-        new QListViewItem(olditem, i18n("Mono-Channel"));
+        new TQListViewItem(olditem, i18n("Mono-Channel"));
     if ( audio->input_channels & ALeftInputChMask )
-        new QListViewItem(olditem, i18n("Left-Channel"));
+        new TQListViewItem(olditem, i18n("Left-Channel"));
     if ( audio->input_channels & ARightInputChMask )
-        new QListViewItem(olditem, i18n("Right-Channel"));
+        new TQListViewItem(olditem, i18n("Right-Channel"));
     olditem->setOpen(true);
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Output Destinations"));
+    olditem = new TQListViewItem(lBox, olditem, i18n("Output Destinations"));
     if ( audio->output_destinations & AMonoIntSpeakerMask )
-        new QListViewItem(olditem, i18n("Mono-InternalSpeaker"));
+        new TQListViewItem(olditem, i18n("Mono-InternalSpeaker"));
     if ( audio->output_destinations & AMonoJackMask )
-        new QListViewItem(olditem, i18n("Mono-Jack"));
+        new TQListViewItem(olditem, i18n("Mono-Jack"));
     if ( audio->output_destinations & ALeftIntSpeakerMask )
-        new QListViewItem(olditem, i18n("Left-InternalSpeaker"));
+        new TQListViewItem(olditem, i18n("Left-InternalSpeaker"));
     if ( audio->output_destinations & ARightIntSpeakerMask )
-        new QListViewItem(olditem, i18n("Right-InternalSpeaker"));
+        new TQListViewItem(olditem, i18n("Right-InternalSpeaker"));
     if ( audio->output_destinations & ALeftJackMask )
-        new QListViewItem(olditem, i18n("Left-Jack"));
+        new TQListViewItem(olditem, i18n("Left-Jack"));
     if ( audio->output_destinations & ARightJackMask )
-        new QListViewItem(olditem, i18n("Right-Jack"));
+        new TQListViewItem(olditem, i18n("Right-Jack"));
     olditem->setOpen(true);
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Output Channels"));
+    olditem = new TQListViewItem(lBox, olditem, i18n("Output Channels"));
     if ( audio->output_channels & AMonoOutputChMask )
-        new QListViewItem(olditem, i18n("Mono-Channel")); 
+        new TQListViewItem(olditem, i18n("Mono-Channel")); 
     if ( audio->output_channels & ALeftOutputChMask )
-        new QListViewItem(olditem, i18n("Left-Channel"));
+        new TQListViewItem(olditem, i18n("Left-Channel"));
     if ( audio->output_channels & ARightOutputChMask )
-        new QListViewItem(olditem, i18n("Right-Channel"));
+        new TQListViewItem(olditem, i18n("Right-Channel"));
     olditem->setOpen(true);
 
 
-    olditem = new QListViewItem(lBox, olditem, i18n("Gain"));
-    new QListViewItem(olditem, i18n("Input Gain Limits"), 
+    olditem = new TQListViewItem(lBox, olditem, i18n("Gain"));
+    new TQListViewItem(olditem, i18n("Input Gain Limits"), 
                                 Value(audio->max_input_gain));
-    new QListViewItem(olditem,i18n("Output Gain Limits"),
-                                Value(audio->min_output_gain) + QString(" ") 
+    new TQListViewItem(olditem,i18n("Output Gain Limits"),
+                                Value(audio->min_output_gain) + TQString(" ") 
                                 + Value(audio->max_output_gain));
-    new QListViewItem(olditem, i18n("Monitor Gain Limits"),
-                                Value(audio->min_monitor_gain) + QString(" ")
+    new TQListViewItem(olditem, i18n("Monitor Gain Limits"),
+                                Value(audio->min_monitor_gain) + TQString(" ")
                                 + Value(audio->max_monitor_gain));
-    new QListViewItem(olditem, i18n("Gain Restricted"),    
+    new TQListViewItem(olditem, i18n("Gain Restricted"),    
                                 Value(audio->gm_gain_restricted));
     olditem->setOpen(true);
     
 
-    olditem = new QListViewItem(lBox, olditem,i18n("Lock"),
+    olditem = new TQListViewItem(lBox, olditem,i18n("Lock"),
                                 Value(audio->lock));
-    olditem = new QListViewItem(lBox, olditem, i18n("Queue Length"),
+    olditem = new TQListViewItem(lBox, olditem, i18n("Queue Length"),
                                 Value(audio->qlen));
-    olditem = new QListViewItem(lBox, olditem, i18n("Block Size"),
+    olditem = new TQListViewItem(lBox, olditem, i18n("Block Size"),
                                 Value(audio->block_size));
-    olditem = new QListViewItem(lBox, olditem, i18n("Stream Port (decimal)"),
+    olditem = new TQListViewItem(lBox, olditem, i18n("Stream Port (decimal)"),
                                 Value(audio->stream_port));
-    olditem = new QListViewItem(lBox, olditem, i18n("Ev Buffer Size"),
+    olditem = new TQListViewItem(lBox, olditem, i18n("Ev Buffer Size"),
                                 Value(audio->ev_buf_size));
-    olditem = new QListViewItem(lBox, olditem, i18n("Ext Number"),
+    olditem = new TQListViewItem(lBox, olditem, i18n("Ext Number"),
                                 Value(audio->ext_number));
 
     ACloseAudio( audio, &status );

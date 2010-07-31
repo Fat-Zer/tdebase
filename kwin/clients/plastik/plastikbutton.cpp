@@ -22,12 +22,12 @@
 
 // #include <kwin/options.h>
 
-#include <qbitmap.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <tqbitmap.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "plastikbutton.h"
 #include "plastikbutton.moc"
@@ -50,8 +50,8 @@ PlastikButton::PlastikButton(ButtonType type, PlastikClient *parent, const char 
 
     // no need to reset here as the button will be resetted on first resize.
 
-    animTmr = new QTimer(this);
-    connect(animTmr, SIGNAL(timeout() ), this, SLOT(animate() ) );
+    animTmr = new TQTimer(this);
+    connect(animTmr, TQT_SIGNAL(timeout() ), this, TQT_SLOT(animate() ) );
     animProgress = 0;
 }
 
@@ -143,43 +143,43 @@ void PlastikButton::animate()
     repaint(false);
 }
 
-void PlastikButton::enterEvent(QEvent *e)
+void PlastikButton::enterEvent(TQEvent *e)
 {
-    QButton::enterEvent(e);
+    TQButton::enterEvent(e);
 
     hover = true;
     animate();
 }
 
-void PlastikButton::leaveEvent(QEvent *e)
+void PlastikButton::leaveEvent(TQEvent *e)
 {
-    QButton::leaveEvent(e);
+    TQButton::leaveEvent(e);
 
     hover = false;
     animate();
 }
 
-void PlastikButton::drawButton(QPainter *painter)
+void PlastikButton::drawButton(TQPainter *painter)
 {
-    QRect r(0,0,width(),height());
+    TQRect r(0,0,width(),height());
 
     bool active = m_client->isActive();
     KPixmap tempKPixmap;
 
-    QColor highlightColor;
+    TQColor highlightColor;
     if(type() == CloseButton) {
-        highlightColor = QColor(255,64,0);
+        highlightColor = TQColor(255,64,0);
     } else {
         highlightColor = Qt::white;
     }
 
-    QColor contourTop = alphaBlendColors(Handler()->getColor(TitleGradient2, active),
+    TQColor contourTop = alphaBlendColors(Handler()->getColor(TitleGradient2, active),
             Qt::black, 215);
-    QColor contourBottom = alphaBlendColors(Handler()->getColor(TitleGradient3, active),
+    TQColor contourBottom = alphaBlendColors(Handler()->getColor(TitleGradient3, active),
             Qt::black, 215);
-    QColor sourfaceTop = alphaBlendColors(Handler()->getColor(TitleGradient2, active),
+    TQColor sourfaceTop = alphaBlendColors(Handler()->getColor(TitleGradient2, active),
             Qt::white, 210);
-    QColor sourfaceBottom = alphaBlendColors(Handler()->getColor(TitleGradient3, active),
+    TQColor sourfaceBottom = alphaBlendColors(Handler()->getColor(TitleGradient3, active),
             Qt::white, 210);
 
     int highlightAlpha = static_cast<int>(255-((60/static_cast<double>(ANIMATIONSTEPS))*
@@ -196,9 +196,9 @@ void PlastikButton::drawButton(QPainter *painter)
         sourfaceBottom = alphaBlendColors(sourfaceBottom, Qt::black, 200);
     }
 
-    QPixmap buffer;
+    TQPixmap buffer;
     buffer.resize(width(), height());
-    QPainter bP(&buffer);
+    TQPainter bP(&buffer);
 
     // fake the titlebar background
     bP.drawTiledPixmap(0, 0, width(), width(), m_client->getTitleBarTile(active) );
@@ -251,7 +251,7 @@ void PlastikButton::drawButton(QPainter *painter)
 
     if (type() == MenuButton)
     {
-        QPixmap menuIcon(m_client->icon().pixmap( QIconSet::Small, QIconSet::Normal));
+        TQPixmap menuIcon(m_client->icon().pixmap( TQIconSet::Small, TQIconSet::Normal));
         if (width() < menuIcon.width() || height() < menuIcon.height() ) {
             menuIcon.convertFromImage( menuIcon.convertToImage().smoothScale(width(), height()));
         }
@@ -260,7 +260,7 @@ void PlastikButton::drawButton(QPainter *painter)
     else
     {
         int dX,dY;
-        const QBitmap &icon = Handler()->buttonBitmap(m_iconType, size(), decoration()->isToolWindow() );
+        const TQBitmap &icon = Handler()->buttonBitmap(m_iconType, size(), decoration()->isToolWindow() );
         dX = r.x()+(r.width()-icon.width())/2;
         dY = r.y()+(r.height()-icon.height())/2;
         if (isDown() ) {
@@ -268,11 +268,11 @@ void PlastikButton::drawButton(QPainter *painter)
         }
 
         if(!isDown() && Handler()->titleShadow() ) {
-            QColor shadowColor;
+            TQColor shadowColor;
             if (qGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
-                shadowColor = QColor(255, 255, 255);
+                shadowColor = TQColor(255, 255, 255);
             else
-                shadowColor = QColor(0,0,0);
+                shadowColor = TQColor(0,0,0);
             bP.setPen(alphaBlendColors(sourfaceTop, shadowColor, 180) );
             bP.drawPixmap(dX+1, dY+1, icon);
         }
@@ -285,18 +285,18 @@ void PlastikButton::drawButton(QPainter *painter)
     painter->drawPixmap(0, 0, buffer);
 }
 
-QBitmap IconEngine::icon(ButtonIcon icon, int size)
+TQBitmap IconEngine::icon(ButtonIcon icon, int size)
 {
     if (size%2 == 0)
         --size;
 
-    QBitmap bitmap(size,size);
+    TQBitmap bitmap(size,size);
     bitmap.fill(Qt::color0);
-    QPainter p(&bitmap);
+    TQPainter p(&bitmap);
 
     p.setPen(Qt::color1);
 
-    QRect r = bitmap.rect();
+    TQRect r = bitmap.rect();
 
     // line widths
     int lwTitleBar = 1;
@@ -554,7 +554,7 @@ QBitmap IconEngine::icon(ButtonIcon icon, int size)
     return bitmap;
 }
 
-void IconEngine::drawObject(QPainter &p, Object object, int x, int y, int length, int lineWidth)
+void IconEngine::drawObject(TQPainter &p, Object object, int x, int y, int length, int lineWidth)
 {
     switch(object) {
         case DiagonalLine:

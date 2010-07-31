@@ -11,10 +11,10 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_RULES_H
 #define KWIN_RULES_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <netwm_def.h>
-#include <qrect.h>
-#include <qvaluevector.h>
+#include <tqrect.h>
+#include <tqvaluevector.h>
 #include <kdebug.h>
 
 #include "placement.h"
@@ -36,19 +36,19 @@ class WindowRules
     : public KDecorationDefines
     {
     public:
-        WindowRules( const QValueVector< Rules* >& rules );
+        WindowRules( const TQValueVector< Rules* >& rules );
         WindowRules();
         void update( Client* );
         void discardTemporary();
         bool contains( const Rules* rule ) const;
         void remove( Rules* rule );
         Placement::Policy checkPlacement( Placement::Policy placement ) const;
-        QRect checkGeometry( QRect rect, bool init = false ) const;
-        // use 'invalidPoint' with checkPosition, unlike QSize() and QRect(), QPoint() is a valid point
-        QPoint checkPosition( QPoint pos, bool init = false ) const;
-        QSize checkSize( QSize s, bool init = false ) const;
-        QSize checkMinSize( QSize s ) const;
-        QSize checkMaxSize( QSize s ) const;
+        TQRect checkGeometry( TQRect rect, bool init = false ) const;
+        // use 'invalidPoint' with checkPosition, unlike TQSize() and TQRect(), TQPoint() is a valid point
+        TQPoint checkPosition( TQPoint pos, bool init = false ) const;
+        TQSize checkSize( TQSize s, bool init = false ) const;
+        TQSize checkMinSize( TQSize s ) const;
+        TQSize checkMaxSize( TQSize s ) const;
         int checkOpacityActive(int s) const;
         int checkOpacityInactive(int s) const;
         bool checkIgnoreGeometry( bool ignore ) const;
@@ -68,13 +68,13 @@ class WindowRules
         Options::MoveResizeMode checkMoveResizeMode( Options::MoveResizeMode mode ) const;
         bool checkCloseable( bool closeable ) const;
         bool checkStrictGeometry( bool strict ) const;
-        QString checkShortcut( QString s, bool init = false ) const;
+        TQString checkShortcut( TQString s, bool init = false ) const;
         bool checkDisableGlobalShortcuts( bool disable ) const;
         bool checkIgnorePosition( bool ignore ) const; // obsolete
     private:
         MaximizeMode checkMaximizeVert( MaximizeMode mode, bool init ) const;
         MaximizeMode checkMaximizeHoriz( MaximizeMode mode, bool init ) const;
-        QValueVector< Rules* > rules;
+        TQValueVector< Rules* > rules;
     };
 #endif
 
@@ -84,7 +84,7 @@ class Rules
     public:
         Rules();
         Rules( KConfig& );
-        Rules( const QString&, bool temporary );
+        Rules( const TQString&, bool temporary );
         void write( KConfig& ) const;
         bool isEmpty() const;
 #ifndef KCMRULES
@@ -94,12 +94,12 @@ class Rules
         bool isTemporary() const;
         bool discardTemporary( bool force ); // removes if temporary and forced or too old
         bool applyPlacement( Placement::Policy& placement ) const;
-        bool applyGeometry( QRect& rect, bool init ) const;
-        // use 'invalidPoint' with applyPosition, unlike QSize() and QRect(), QPoint() is a valid point
-        bool applyPosition( QPoint& pos, bool init ) const;
-        bool applySize( QSize& s, bool init ) const;
-        bool applyMinSize( QSize& s ) const;
-        bool applyMaxSize( QSize& s ) const;
+        bool applyGeometry( TQRect& rect, bool init ) const;
+        // use 'invalidPoint' with applyPosition, unlike TQSize() and TQRect(), TQPoint() is a valid point
+        bool applyPosition( TQPoint& pos, bool init ) const;
+        bool applySize( TQSize& s, bool init ) const;
+        bool applyMinSize( TQSize& s ) const;
+        bool applyMaxSize( TQSize& s ) const;
         bool applyOpacityActive(int& s) const;
         bool applyOpacityInactive(int& s) const;
         bool applyIgnoreGeometry( bool& ignore ) const;
@@ -120,16 +120,16 @@ class Rules
         bool applyMoveResizeMode( Options::MoveResizeMode& mode ) const;
         bool applyCloseable( bool& closeable ) const;
         bool applyStrictGeometry( bool& strict ) const;
-        bool applyShortcut( QString& shortcut, bool init ) const;
+        bool applyShortcut( TQString& shortcut, bool init ) const;
         bool applyDisableGlobalShortcuts( bool& disable ) const;
         bool applyIgnorePosition( bool& ignore ) const; // obsolete
     private:
 #endif
         bool matchType( NET::WindowType match_type ) const;
-        bool matchWMClass( const QCString& match_class, const QCString& match_name ) const;
-        bool matchRole( const QCString& match_role ) const;
-        bool matchTitle( const QString& match_title ) const;
-        bool matchClientMachine( const QCString& match_machine ) const;
+        bool matchWMClass( const TQCString& match_class, const TQCString& match_name ) const;
+        bool matchRole( const TQCString& match_role ) const;
+        bool matchTitle( const TQString& match_title ) const;
+        bool matchClientMachine( const TQCString& match_machine ) const;
         // All these values are saved to the cfg file, and are also used in kstart!
         enum
             {
@@ -161,9 +161,9 @@ class Rules
             LastStringMatch = RegExpMatch
             };
         void readFromCfg( KConfig& cfg );
-        static SetRule readSetRule( KConfig&, const QString& key );
-        static ForceRule readForceRule( KConfig&, const QString& key );
-        static NET::WindowType readType( KConfig&, const QString& key );
+        static SetRule readSetRule( KConfig&, const TQString& key );
+        static ForceRule readForceRule( KConfig&, const TQString& key );
+        static NET::WindowType readType( KConfig&, const TQString& key );
 #ifndef KCMRULES
         static bool checkSetRule( SetRule rule, bool init );
         static bool checkForceRule( ForceRule rule );
@@ -171,28 +171,28 @@ class Rules
         static bool checkForceStop( ForceRule rule );
 #endif
         int temporary_state; // e.g. for kstart
-        QString description;
-        QCString wmclass;
+        TQString description;
+        TQCString wmclass;
         StringMatch wmclassmatch;
         bool wmclasscomplete;
-        QCString windowrole;
+        TQCString windowrole;
         StringMatch windowrolematch;
-        QString title; // TODO "caption" ?
+        TQString title; // TODO "caption" ?
         StringMatch titlematch;
-        QCString extrarole;
+        TQCString extrarole;
         StringMatch extrarolematch;
-        QCString clientmachine;
+        TQCString clientmachine;
         StringMatch clientmachinematch;
         unsigned long types; // types for matching
         Placement::Policy placement;
         ForceRule placementrule;
-        QPoint position;
+        TQPoint position;
         SetRule positionrule;
-        QSize size;
+        TQSize size;
         SetRule sizerule;
-        QSize minsize;
+        TQSize minsize;
         ForceRule minsizerule;
-        QSize maxsize;
+        TQSize maxsize;
         ForceRule maxsizerule;
         int opacityactive;
         ForceRule opacityactiverule;
@@ -234,7 +234,7 @@ class Rules
         ForceRule closeablerule;
         bool strictgeometry;
         ForceRule strictgeometryrule;
-        QString shortcut;
+        TQString shortcut;
         SetRule shortcutrule;
         bool disableglobalshortcuts;
         ForceRule disableglobalshortcutsrule;
@@ -273,7 +273,7 @@ bool Rules::checkForceStop( ForceRule rule )
     }
 
 inline
-WindowRules::WindowRules( const QValueVector< Rules* >& r )
+WindowRules::WindowRules( const TQValueVector< Rules* >& r )
     : rules( r )
     {
     }
@@ -292,7 +292,7 @@ bool WindowRules::contains( const Rules* rule ) const
 inline
 void WindowRules::remove( Rules* rule )
     {
-    QValueVector< Rules* >::Iterator pos = qFind( rules.begin(), rules.end(), rule );
+    TQValueVector< Rules* >::Iterator pos = qFind( rules.begin(), rules.end(), rule );
     if( pos != rules.end())
         rules.erase( pos );
     }

@@ -46,7 +46,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <unistd.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -100,7 +100,7 @@ void KSMServer::performLegacySessionSave()
 	wm_protocols = atoms[ 1 ];
 	wm_client_leader = atoms[ 2 ];
     }
-    for ( QValueList<WId>::ConstIterator it = module.windows().begin();
+    for ( TQValueList<WId>::ConstIterator it = module.windows().begin();
 	  it != module.windows().end(); ++it) {
         WId leader = windowWmClientLeader( *it );
         if (!legacyWindows.contains(leader) && windowSessionId( *it, leader ).isEmpty()) {
@@ -160,7 +160,7 @@ void KSMServer::performLegacySessionSave()
     }
     // Wait for change in WM_COMMAND with timeout
     XFlush(newdisplay);
-    QTime start = QTime::currentTime();
+    TQTime start = TQTime::currentTime();
     while (awaiting_replies > 0) {
         if (XPending(newdisplay)) {
             /* Process pending event */
@@ -224,9 +224,9 @@ void KSMServer::storeLegacySession( KConfig* config )
                 continue;
             if ( !(*it).wmCommand.isEmpty() && !(*it).wmClientMachine.isEmpty() ) {
                 count++;
-                QString n = QString::number(count);
-                config->writeEntry( QString("command")+n, (*it).wmCommand );
-                config->writeEntry( QString("clientMachine")+n, (*it).wmClientMachine );
+                TQString n = TQString::number(count);
+                config->writeEntry( TQString("command")+n, (*it).wmCommand );
+                config->writeEntry( TQString("clientMachine")+n, (*it).wmClientMachine );
             }
         }
     }
@@ -245,12 +245,12 @@ void KSMServer::restoreLegacySession( KConfig* config )
 	KConfigGroupSaver saver( config, sessionGroup );
 	int count =  config->readNumEntry( "count", 0 );
 	for ( int i = 1; i <= count; i++ ) {
-    	    QString n = QString::number(i);
-    	    if ( config->readEntry( QString("program")+n ) != wm )
+    	    TQString n = TQString::number(i);
+    	    if ( config->readEntry( TQString("program")+n ) != wm )
                 continue;
-    	    QStringList restartCommand =
-                config->readListEntry( QString("restartCommand")+n );
-	    for( QStringList::ConstIterator it = restartCommand.begin();
+    	    TQStringList restartCommand =
+                config->readListEntry( TQString("restartCommand")+n );
+	    for( TQStringList::ConstIterator it = restartCommand.begin();
 		 it != restartCommand.end();
 		 ++it ) {
 		if( (*it) == "-session" ) {
@@ -270,26 +270,26 @@ void KSMServer::restoreLegacySessionInternal( KConfig* config, char sep )
 {
     int count = config->readNumEntry( "count" );
     for ( int i = 1; i <= count; i++ ) {
-        QString n = QString::number(i);
-        QStringList wmCommand = config->readListEntry( QString("command")+n, sep );
+        TQString n = TQString::number(i);
+        TQStringList wmCommand = config->readListEntry( TQString("command")+n, sep );
         if( wmCommand.isEmpty())
             continue;
         if( isWM( wmCommand.first()))
             continue;
         startApplication( wmCommand,
-                          config->readEntry( QString("clientMachine")+n ),
-                          config->readEntry( QString("userId")+n ));
+                          config->readEntry( TQString("clientMachine")+n ),
+                          config->readEntry( TQString("userId")+n ));
     }
 }
     
-static QCString getQCStringProperty(WId w, Atom prop)
+static TQCString getQCStringProperty(WId w, Atom prop)
 {
     Atom type;
     int format, status;
     unsigned long nitems = 0;
     unsigned long extra = 0;
     unsigned char *data = 0;
-    QCString result = "";
+    TQCString result = "";
     status = XGetWindowProperty( qt_xdisplay(), w, prop, 0, 10000,
                                  FALSE, XA_STRING, &type, &format,
                                  &nitems, &extra, &data );
@@ -301,14 +301,14 @@ static QCString getQCStringProperty(WId w, Atom prop)
     return result;
 }
 
-static QStringList getQStringListProperty(WId w, Atom prop)
+static TQStringList getQStringListProperty(WId w, Atom prop)
 {
     Atom type;
     int format, status;
     unsigned long nitems = 0;
     unsigned long extra = 0;
     unsigned char *data = 0;
-    QStringList result;
+    TQStringList result;
 
     status = XGetWindowProperty( qt_xdisplay(), w, prop, 0, 10000,
                                  FALSE, XA_STRING, &type, &format,
@@ -317,7 +317,7 @@ static QStringList getQStringListProperty(WId w, Atom prop)
 	if (!data)
 	    return result;
         for (int i=0; i<(int)nitems; i++) {
-            result << QString::fromLatin1( (const char*)data + i );
+            result << TQString::fromLatin1( (const char*)data + i );
             while(data[i]) i++;
         }
         XFree(data);
@@ -325,30 +325,30 @@ static QStringList getQStringListProperty(WId w, Atom prop)
     return result;
 }
 
-QStringList KSMServer::windowWmCommand(WId w)
+TQStringList KSMServer::windowWmCommand(WId w)
 {
-    QStringList ret = getQStringListProperty(w, XA_WM_COMMAND);
+    TQStringList ret = getQStringListProperty(w, XA_WM_COMMAND);
     // hacks here
     if( ret.count() == 1 ) {
-        QString command = ret.first();
+        TQString command = ret.first();
         // Mozilla is launched using wrapper scripts, so it's launched using "mozilla",
         // but the actual binary is "mozilla-bin" or "<path>/mozilla-bin", and that's what
         // will be also in WM_COMMAND - using this "mozilla-bin" doesn't work at all though
         if( command.endsWith( "mozilla-bin" ))
-            return QStringList() << "mozilla";
+            return TQStringList() << "mozilla";
         if( command.endsWith( "firefox-bin" ))
-            return QStringList() << "firefox";
+            return TQStringList() << "firefox";
         if( command.endsWith( "thunderbird-bin" ))
-            return QStringList() << "thunderbird";
+            return TQStringList() << "thunderbird";
         if( command.endsWith( "sunbird-bin" ))
-            return QStringList() << "sunbird";
+            return TQStringList() << "sunbird";
     }
     return ret;
 }
 
-QString KSMServer::windowWmClientMachine(WId w)
+TQString KSMServer::windowWmClientMachine(WId w)
 {
-    QCString result = getQCStringProperty(w, XA_WM_CLIENT_MACHINE);
+    TQCString result = getQCStringProperty(w, XA_WM_CLIENT_MACHINE);
     if (result.isEmpty()) {
         result = "localhost";
     } else {
@@ -365,7 +365,7 @@ QString KSMServer::windowWmClientMachine(WId w)
             }
         }
     }
-    return QString::fromLatin1(result);
+    return TQString::fromLatin1(result);
 }
 
 WId KSMServer::windowWmClientLeader(WId w)
@@ -393,9 +393,9 @@ WId KSMServer::windowWmClientLeader(WId w)
   taken either from its window or from the leader window.
  */
 extern Atom qt_sm_client_id;
-QCString KSMServer::windowSessionId(WId w, WId leader)
+TQCString KSMServer::windowSessionId(WId w, WId leader)
 {
-    QCString result = getQCStringProperty(w, qt_sm_client_id);
+    TQCString result = getQCStringProperty(w, qt_sm_client_id);
     if (result.isEmpty() && leader != (WId)None && leader != w)
 	result = getQCStringProperty(leader, qt_sm_client_id);
     return result;

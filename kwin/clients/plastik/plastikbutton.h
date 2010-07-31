@@ -23,8 +23,8 @@
 #ifndef PLASTIKBUTTON_H
 #define PLASTIKBUTTON_H
 
-#include <qbutton.h>
-#include <qimage.h>
+#include <tqbutton.h>
+#include <tqimage.h>
 #include "plastik.h"
 
 #include <kcommondecoration.h>
@@ -49,30 +49,30 @@ protected slots:
     void animate();
 
 private:
-    void enterEvent(QEvent *e);
-    void leaveEvent(QEvent *e);
-    void drawButton(QPainter *painter);
+    void enterEvent(TQEvent *e);
+    void leaveEvent(TQEvent *e);
+    void drawButton(TQPainter *painter);
 
 private:
     PlastikClient *m_client;
     ButtonIcon m_iconType;
     bool hover;
 
-    QTimer *animTmr;
+    TQTimer *animTmr;
     uint animProgress;
 };
 
 /**
  * This class creates bitmaps which can be used as icons on buttons. The icons
  * are "hardcoded".
- * Over the previous "Gimp->xpm->QImage->recolor->SmoothScale->QPixmap" solution
+ * Over the previous "Gimp->xpm->QImage->recolor->SmoothScale->TQPixmap" solution
  * it has the important advantage that icons are more scalable and at the same
  * time sharp and not blurred.
  */
 class IconEngine
 {
     public:
-        static QBitmap icon(ButtonIcon icon, int size);
+        static TQBitmap icon(ButtonIcon icon, int size);
 
     private:
         enum Object {
@@ -82,7 +82,7 @@ class IconEngine
             CrossDiagonalLine
         };
 
-        static void drawObject(QPainter &p, Object object, int x, int y, int length, int lineWidth);
+        static void drawObject(TQPainter &p, Object object, int x, int y, int length, int lineWidth);
 };
 
 } // namespace KWinPlastik

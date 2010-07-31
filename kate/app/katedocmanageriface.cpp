@@ -83,7 +83,7 @@ DCOPRef KateDocManagerDCOPIface::documentWithID (uint id)
   return DCOPRef (obj);
 }
 
-DCOPRef KateDocManagerDCOPIface::openURL (KURL url, QString encoding)
+DCOPRef KateDocManagerDCOPIface::openURL (KURL url, TQString encoding)
 {
   Kate::Document *doc = m_dm->openURL (url, encoding);
 

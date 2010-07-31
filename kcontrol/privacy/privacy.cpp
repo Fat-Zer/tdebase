@@ -18,13 +18,13 @@
   *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   */
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qptrlist.h>
-#include <qpushbutton.h>
-#include <qtabwidget.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqptrlist.h>
+#include <tqpushbutton.h>
+#include <tqtabwidget.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include <kaboutdata.h>
 #include <kconfig.h>
@@ -37,7 +37,7 @@
 
 #include "privacy.h"
 
-Privacy::Privacy(QWidget *parent, const char *name)
+Privacy::Privacy(TQWidget *parent, const char *name)
     : KCModule(parent, name)
 {
   setQuickHelp( i18n("The privacy module allows a user to erase traces which KDE leaves on "
@@ -56,10 +56,10 @@ Privacy::Privacy(QWidget *parent, const char *name)
 
   m_privacymanager = new KPrivacyManager();
 
-  QBoxLayout *top = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQBoxLayout *top = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   // add this once the P3P stuff is finished
-  //QTabWidget *privacyTabs = new QTabWidget(this, "privacytabs");
+  //TQTabWidget *privacyTabs = new TQTabWidget(this, "privacytabs");
 
   cleaningDialog = new KCMPrivacyDialog(this);
   //p3pSettings    = new KPrivacySettings(this);
@@ -78,7 +78,7 @@ Privacy::Privacy(QWidget *parent, const char *name)
 
   sw->setRootIsDecorated(true);
   sw->setTooltipColumn(1);
-  sw->setColumnWidthMode(0, QListView::Maximum);
+  sw->setColumnWidthMode(0, TQListView::Maximum);
 
 
 
@@ -88,29 +88,29 @@ Privacy::Privacy(QWidget *parent, const char *name)
   generalCLI->setOpen(true);
   webbrowsingCLI->setOpen(true);
 
-  clearThumbnails = new QCheckListItem(generalCLI,
-      i18n("Thumbnail Cache"),QCheckListItem::CheckBox);
-  clearRunCommandHistory = new QCheckListItem(generalCLI,
-      i18n("Run Command History"),QCheckListItem::CheckBox);
-  clearAllCookies = new QCheckListItem(webbrowsingCLI,
-      i18n("Cookies"),QCheckListItem::CheckBox);
-  clearSavedClipboardContents = new QCheckListItem(generalCLI,
-      i18n("Saved Clipboard Contents"),QCheckListItem::CheckBox);
-  clearWebHistory = new QCheckListItem(webbrowsingCLI,
-      i18n("Web History"),QCheckListItem::CheckBox);
-  clearWebCache = new QCheckListItem(webbrowsingCLI,
-      i18n("Web Cache"),QCheckListItem::CheckBox);
-  clearFormCompletion = new QCheckListItem(webbrowsingCLI,
-      i18n("Form Completion Entries"),QCheckListItem::CheckBox);
-  clearRecentDocuments = new QCheckListItem(generalCLI,
-      i18n("Recent Documents"),QCheckListItem::CheckBox);
-  clearQuickStartMenu = new QCheckListItem(generalCLI,
-      i18n("Quick Start Menu"),QCheckListItem::CheckBox);
-  clearFavIcons = new QCheckListItem(webbrowsingCLI,
-      i18n("Favorite Icons"),QCheckListItem::CheckBox);
+  clearThumbnails = new TQCheckListItem(generalCLI,
+      i18n("Thumbnail Cache"),TQCheckListItem::CheckBox);
+  clearRunCommandHistory = new TQCheckListItem(generalCLI,
+      i18n("Run Command History"),TQCheckListItem::CheckBox);
+  clearAllCookies = new TQCheckListItem(webbrowsingCLI,
+      i18n("Cookies"),TQCheckListItem::CheckBox);
+  clearSavedClipboardContents = new TQCheckListItem(generalCLI,
+      i18n("Saved Clipboard Contents"),TQCheckListItem::CheckBox);
+  clearWebHistory = new TQCheckListItem(webbrowsingCLI,
+      i18n("Web History"),TQCheckListItem::CheckBox);
+  clearWebCache = new TQCheckListItem(webbrowsingCLI,
+      i18n("Web Cache"),TQCheckListItem::CheckBox);
+  clearFormCompletion = new TQCheckListItem(webbrowsingCLI,
+      i18n("Form Completion Entries"),TQCheckListItem::CheckBox);
+  clearRecentDocuments = new TQCheckListItem(generalCLI,
+      i18n("Recent Documents"),TQCheckListItem::CheckBox);
+  clearQuickStartMenu = new TQCheckListItem(generalCLI,
+      i18n("Quick Start Menu"),TQCheckListItem::CheckBox);
+  clearFavIcons = new TQCheckListItem(webbrowsingCLI,
+      i18n("Favorite Icons"),TQCheckListItem::CheckBox);
 
-  QWhatsThis::add(sw, i18n("Check all cleanup actions you would like to perform. These will be executed by pressing the button below"));
-  QWhatsThis::add(cleaningDialog->cleanupButton, i18n("Immediately performs the cleanup actions selected above"));
+  TQWhatsThis::add(sw, i18n("Check all cleanup actions you would like to perform. These will be executed by pressing the button below"));
+  TQWhatsThis::add(cleaningDialog->cleanupButton, i18n("Immediately performs the cleanup actions selected above"));
 
   clearThumbnails->setText(1, i18n("Clears all cached thumbnails"));
   clearRunCommandHistory->setText(1, i18n("Clears the history of commands run through the Run Command tool on the desktop"));
@@ -123,7 +123,7 @@ Privacy::Privacy(QWidget *parent, const char *name)
   clearQuickStartMenu->setText(1, i18n("Clears the entries from the list of recently started applications"));
   clearFavIcons->setText(1, i18n("Clears the FavIcons cached from visited websites"));
 
-  connect(sw, SIGNAL(selectionChanged()), SLOT(changed()));
+  connect(sw, TQT_SIGNAL(selectionChanged()), TQT_SLOT(changed()));
 
   // store all entries in a list for easy access later on
   checklist.append(clearThumbnails);
@@ -137,9 +137,9 @@ Privacy::Privacy(QWidget *parent, const char *name)
   checklist.append(clearQuickStartMenu);
   checklist.append(clearFavIcons);
 
-  connect(cleaningDialog->cleanupButton, SIGNAL(clicked()), SLOT(cleanup()));
-  connect(cleaningDialog->selectAllButton, SIGNAL(clicked()), SLOT(selectAll()));
-  connect(cleaningDialog->selectNoneButton, SIGNAL(clicked()), SLOT(selectNone()));
+  connect(cleaningDialog->cleanupButton, TQT_SIGNAL(clicked()), TQT_SLOT(cleanup()));
+  connect(cleaningDialog->selectAllButton, TQT_SIGNAL(clicked()), TQT_SLOT(selectAll()));
+  connect(cleaningDialog->selectNoneButton, TQT_SIGNAL(clicked()), TQT_SLOT(selectNone()));
 
   load();
 }
@@ -227,7 +227,7 @@ void Privacy::save()
 
 void Privacy::selectAll()
 {
-  QCheckListItem *item;
+  TQCheckListItem *item;
 
   for ( item  = checklist.first(); item; item = checklist.next() )
     item->setOn(true);
@@ -237,7 +237,7 @@ void Privacy::selectAll()
 
 void Privacy::selectNone()
 {
-  QCheckListItem *item;
+  TQCheckListItem *item;
 
   for ( item  = checklist.first(); item; item = checklist.next() )
     item->setOn(false);
@@ -253,14 +253,14 @@ void Privacy::cleanup()
   cleaningDialog->statusTextEdit->clear();
   cleaningDialog->statusTextEdit->setText(i18n("Starting cleanup..."));
 
-  QCheckListItem *item;
+  TQCheckListItem *item;
   bool error = false;
 
   for ( item  = checklist.first(); item; item = checklist.next() )
   {
     if(item->isOn())
     {
-      QString statusText = i18n("Clearing %1...").arg(item->text());
+      TQString statusText = i18n("Clearing %1...").arg(item->text());
       cleaningDialog->statusTextEdit->append(statusText);
 
       if(item == clearThumbnails)
@@ -295,7 +295,7 @@ void Privacy::cleanup()
 
       if(error)
       {
-        QString errorText =  i18n("Clearing of %1 failed").arg(item->text());
+        TQString errorText =  i18n("Clearing of %1 failed").arg(item->text());
         cleaningDialog->statusTextEdit->append(errorText);
       }
     }
@@ -309,7 +309,7 @@ void Privacy::cleanup()
 extern "C"
 {
 
-  KDE_EXPORT KCModule *create_privacy(QWidget *parent, const char * /*name*/)
+  KDE_EXPORT KCModule *create_privacy(TQWidget *parent, const char * /*name*/)
   {
     KGlobal::locale()->insertCatalogue("privacy");
     return new Privacy(parent, "Privacy");

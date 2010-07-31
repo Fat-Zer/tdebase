@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qdir.h>
-#include <qpixmap.h>
+#include <tqdir.h>
+#include <tqpixmap.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -49,26 +49,26 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define CICON(a) (*_icons)[a]
 
-QMap<QString, QPixmap> *PanelBrowserMenu::_icons = 0;
+TQMap<TQString, TQPixmap> *PanelBrowserMenu::_icons = 0;
 
-PanelBrowserMenu::PanelBrowserMenu(QString path, QWidget *parent, const char *name, int startid)
+PanelBrowserMenu::PanelBrowserMenu(TQString path, TQWidget *parent, const char *name, int startid)
     : KPanelMenu(path, parent, name)
     , _mimecheckTimer(0)
     , _startid(startid)
     , _dirty(false)
     , _filesOnly(false)
 {
-    _lastpress = QPoint(-1, -1);
+    _lastpress = TQPoint(-1, -1);
     setAcceptDrops(true); // Should depend on permissions of path.
 
     // we are not interested for dirty events on files inside the
     // directory (see slotClearIfNeeded)
-    connect( &_dirWatch, SIGNAL(dirty(const QString&)),
-             this, SLOT(slotClearIfNeeded(const QString&)) );
-    connect( &_dirWatch, SIGNAL(created(const QString&)),
-             this, SLOT(slotClear()) );
-    connect( &_dirWatch, SIGNAL(deleted(const QString&)),
-             this, SLOT(slotClear()) );
+    connect( &_dirWatch, TQT_SIGNAL(dirty(const TQString&)),
+             this, TQT_SLOT(slotClearIfNeeded(const TQString&)) );
+    connect( &_dirWatch, TQT_SIGNAL(created(const TQString&)),
+             this, TQT_SLOT(slotClear()) );
+    connect( &_dirWatch, TQT_SIGNAL(deleted(const TQString&)),
+             this, TQT_SLOT(slotClear()) );
 
     kdDebug() << "PanelBrowserMenu Constructor " << path << endl;
 }
@@ -78,7 +78,7 @@ PanelBrowserMenu::~PanelBrowserMenu()
     kdDebug() << "PanelBrowserMenu Destructor " << path() << endl;
 }
 
-void PanelBrowserMenu::slotClearIfNeeded(const QString& p)
+void PanelBrowserMenu::slotClearIfNeeded(const TQString& p)
 {
     if (p == path())
         slotClear();
@@ -86,7 +86,7 @@ void PanelBrowserMenu::slotClearIfNeeded(const QString& p)
 
 void PanelBrowserMenu::initialize()
 {
-    _lastpress = QPoint(-1, -1);
+    _lastpress = TQPoint(-1, -1);
 
     // don't change menu if already visible
     if (isVisible())
@@ -113,13 +113,13 @@ void PanelBrowserMenu::initialize()
     _filemap.clear();
     _mimemap.clear();
 
-    int filter = QDir::Dirs | QDir::Files;
+    int filter = TQDir::Dirs | TQDir::Files;
     if (KickerSettings::showHiddenFiles())
     {
-        filter |= QDir::Hidden;
+        filter |= TQDir::Hidden;
     }
 
-    QDir dir(path(), QString::null, QDir::DirsFirst | QDir::Name | QDir::IgnoreCase, filter);
+    TQDir dir(path(), TQString::null, TQDir::DirsFirst | TQDir::Name | TQDir::IgnoreCase, filter);
 
     // does the directory exist?
     if (!dir.exists()) {
@@ -148,9 +148,9 @@ void PanelBrowserMenu::initialize()
     // only the first part menu got them
     if(_startid == 0 && !_filesOnly) {
        insertTitle(path());
-       insertItem(CICON("kfm"), i18n("Open in File Manager"), this, SLOT(slotOpenFileManager()));
+       insertItem(CICON("kfm"), i18n("Open in File Manager"), this, TQT_SLOT(slotOpenFileManager()));
         if (kapp->authorize("shell_access"))
-            insertItem(CICON("terminal"), i18n("Open in Terminal"), this, SLOT(slotOpenTerminal()));
+            insertItem(CICON("terminal"), i18n("Open in Terminal"), this, TQT_SLOT(slotOpenTerminal()));
     }
 
 
@@ -171,24 +171,24 @@ void PanelBrowserMenu::initialize()
         // bump id
         run_id++;
 
-        QFileInfo *fi = it.current();
+        TQFileInfo *fi = it.current();
         // handle directories
         if (fi->isDir())
         {
-            QString name = fi->fileName();
+            TQString name = fi->fileName();
 
             // ignore . and .. entries
             if (name == "." || name == "..") continue;
 
-            QPixmap icon;
-            QString path = fi->absFilePath();
+            TQPixmap icon;
+            TQString path = fi->absFilePath();
 
             // parse .directory if it does exist
-            if (QFile::exists(path + "/.directory")) {
+            if (TQFile::exists(path + "/.directory")) {
 
                 KSimpleConfig c(path + "/.directory", true);
                 c.setDesktopGroup();
-                QString iconPath = c.readEntry("Icon");
+                TQString iconPath = c.readEntry("Icon");
 
                 if ( iconPath.startsWith("./") )
                     iconPath = path + '/' + iconPath.mid(2);
@@ -225,11 +225,11 @@ void PanelBrowserMenu::initialize()
         // handle files
         else if(fi->isFile())
         {
-            QString name = fi->fileName();
-            QString title = KIO::decodeFileName(name);
+            TQString name = fi->fileName();
+            TQString title = KIO::decodeFileName(name);
 
-            QPixmap icon;
-            QString path = fi->absFilePath();
+            TQPixmap icon;
+            TQString path = fi->absFilePath();
 
             bool mimecheck = false;
 
@@ -240,13 +240,13 @@ void PanelBrowserMenu::initialize()
                 c.setDesktopGroup();
                 title = c.readEntry("Name", title);
 
-                QString s = c.readEntry("Icon");
+                TQString s = c.readEntry("Icon");
                 if(!_icons->contains(s)) {
                     icon  = KGlobal::iconLoader()->loadIcon(s, KIcon::Small, KIcon::SizeSmall,
                                                             KIcon::DefaultState, 0, true);
 
                     if(icon.isNull()) {
-                        QString type = c.readEntry("Type", "Application");
+                        TQString type = c.readEntry("Type", "Application");
                         if (type == "Directory")
                             icon = CICON("folder");
                         else if (type == "Mimetype")
@@ -312,7 +312,7 @@ void PanelBrowserMenu::initialize()
 
     adjustSize();
 
-    QString dirname = path();
+    TQString dirname = path();
 
     int maxlen = contentsRect().width() - 40;
     if(item_count == 0)
@@ -329,17 +329,17 @@ void PanelBrowserMenu::initialize()
     if(_mimemap.count() > 0) {
 
         if(!_mimecheckTimer)
-            _mimecheckTimer = new QTimer(this);
+            _mimecheckTimer = new TQTimer(this);
 
-        connect(_mimecheckTimer, SIGNAL(timeout()), SLOT(slotMimeCheck()));
+        connect(_mimecheckTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotMimeCheck()));
         _mimecheckTimer->start(0);
     }
 }
 
-void PanelBrowserMenu::append(const QPixmap &pixmap, const QString &title, const QString &file, bool mimecheck)
+void PanelBrowserMenu::append(const TQPixmap &pixmap, const TQString &title, const TQString &file, bool mimecheck)
 {
     // avoid &'s being converted to accelerators
-    QString newTitle = title;
+    TQString newTitle = title;
     newTitle = KStringHandler::cEmSqueeze( newTitle, fontMetrics(), 20 );
     newTitle.replace("&", "&&");
 
@@ -354,10 +354,10 @@ void PanelBrowserMenu::append(const QPixmap &pixmap, const QString &title, const
         _mimemap.insert(id, true);
 }
 
-void PanelBrowserMenu::append(const QPixmap &pixmap, const QString &title, PanelBrowserMenu *subMenu)
+void PanelBrowserMenu::append(const TQPixmap &pixmap, const TQString &title, PanelBrowserMenu *subMenu)
 {
     // avoid &'s being converted to accelerators
-    QString newTitle = title;
+    TQString newTitle = title;
     newTitle = KStringHandler::cEmSqueeze( newTitle, fontMetrics(), 20 );
     newTitle.replace("&", "&&");
 
@@ -367,18 +367,18 @@ void PanelBrowserMenu::append(const QPixmap &pixmap, const QString &title, Panel
     _subMenus.append(subMenu);
 }
 
-void PanelBrowserMenu::mousePressEvent(QMouseEvent *e)
+void PanelBrowserMenu::mousePressEvent(TQMouseEvent *e)
 {
-    QPopupMenu::mousePressEvent(e);
+    TQPopupMenu::mousePressEvent(e);
     _lastpress = e->pos();
 }
 
-void PanelBrowserMenu::mouseMoveEvent(QMouseEvent *e)
+void PanelBrowserMenu::mouseMoveEvent(TQMouseEvent *e)
 {
-    QPopupMenu::mouseMoveEvent(e);
+    TQPopupMenu::mouseMoveEvent(e);
 
     if (!(e->state() & LeftButton)) return;
-    if(_lastpress == QPoint(-1, -1)) return;
+    if(_lastpress == TQPoint(-1, -1)) return;
 
     // DND delay
     if((_lastpress - e->pos()).manhattanLength() < 12) return;
@@ -388,14 +388,14 @@ void PanelBrowserMenu::mouseMoveEvent(QMouseEvent *e)
     if(!_filemap.contains(id)) return;
 
     // reset _lastpress
-    _lastpress = QPoint(-1, -1);
+    _lastpress = TQPoint(-1, -1);
 
     // start drag
     KURL url;
     url.setPath(path() + "/" + _filemap[id]);
     KURL::List files(url);
     KURLDrag *d = new KURLDrag(files, this);
-    connect(d, SIGNAL(destroyed()), this, SLOT(slotDragObjectDestroyed()));
+    connect(d, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDragObjectDestroyed()));
     d->setPixmap(iconSet(id)->pixmap());
     d->drag();
 }
@@ -408,7 +408,7 @@ void PanelBrowserMenu::slotDragObjectDestroyed()
     }
 }
 
-void PanelBrowserMenu::dragEnterEvent( QDragEnterEvent *ev )
+void PanelBrowserMenu::dragEnterEvent( TQDragEnterEvent *ev )
 {
     if (KURLDrag::canDecode(ev))
     {
@@ -417,16 +417,16 @@ void PanelBrowserMenu::dragEnterEvent( QDragEnterEvent *ev )
     KPanelMenu::dragEnterEvent(ev);
 }
 
-void PanelBrowserMenu::dragMoveEvent(QDragMoveEvent *ev)
+void PanelBrowserMenu::dragMoveEvent(TQDragMoveEvent *ev)
 {
-    QMouseEvent mev(QEvent::MouseMove, ev->pos(), Qt::NoButton, Qt::LeftButton);
-    QPopupMenu::mouseMoveEvent(&mev);
+    TQMouseEvent mev(TQEvent::MouseMove, ev->pos(), Qt::NoButton, Qt::LeftButton);
+    TQPopupMenu::mouseMoveEvent(&mev);
 }
 
-void PanelBrowserMenu::dropEvent( QDropEvent *ev )
+void PanelBrowserMenu::dropEvent( TQDropEvent *ev )
 {
     KURL u( path() );
-    KFileItem item( u, QString::fromLatin1( "inode/directory" ),  KFileItem::Unknown );
+    KFileItem item( u, TQString::fromLatin1( "inode/directory" ),  KFileItem::Unknown );
     KonqOperations::doDrop( &item, u, ev, this );
     KPanelMenu::dropEvent(ev);
     // ### TODO: Update list
@@ -441,14 +441,14 @@ void PanelBrowserMenu::slotExec(int id)
     KURL url;
     url.setPath(path() + "/" + _filemap[id]);
     new KRun(url, 0, true); // will delete itself
-    _lastpress = QPoint(-1, -1);
+    _lastpress = TQPoint(-1, -1);
 }
 
 void PanelBrowserMenu::slotOpenTerminal()
 {
     KConfig * config = kapp->config();
     config->setGroup("General");
-    QString term = config->readPathEntry("TerminalApplication", "konsole");
+    TQString term = config->readPathEntry("TerminalApplication", "konsole");
 
     KProcess proc;
     proc << term;
@@ -467,7 +467,7 @@ void PanelBrowserMenu::slotOpenFileManager()
 void PanelBrowserMenu::slotMimeCheck()
 {
     // get the first map entry
-    QMap<int, bool>::Iterator it = _mimemap.begin();
+    TQMap<int, bool>::Iterator it = _mimemap.begin();
 
     // no mime types left to check -> stop timer
     if(it == _mimemap.end()) {
@@ -478,7 +478,7 @@ void PanelBrowserMenu::slotMimeCheck()
     }
 
     int id = it.key();
-    QString file = _filemap[id];
+    TQString file = _filemap[id];
 
     _mimemap.remove(it);
 
@@ -486,18 +486,18 @@ void PanelBrowserMenu::slotMimeCheck()
     url.setPath( path() + '/' + file );
 
 //    KMimeType::Ptr mt = KMimeType::findByURL(url, 0, true, false);
-//    QString icon(mt->icon(url, true));
-    QString icon = KMimeType::iconForURL( url );
+//    TQString icon(mt->icon(url, true));
+    TQString icon = KMimeType::iconForURL( url );
 //    kdDebug() << url.url() << ": " << icon << endl;
 
     file = KStringHandler::cEmSqueeze( file, fontMetrics(), 20 );
     file.replace("&", "&&");
 
     if(!_icons->contains(icon)) {
-        QPixmap pm = SmallIcon(icon);
+        TQPixmap pm = SmallIcon(icon);
         if( pm.height() > 16 )
         {
-            QPixmap cropped( 16, 16 );
+            TQPixmap cropped( 16, 16 );
             copyBlt( &cropped, 0, 0, &pm, 0, 0, 16, 16 );
             pm = cropped;
         }
@@ -521,7 +521,7 @@ void PanelBrowserMenu::slotClear()
     }
     KPanelMenu::slotClear();
 
-    for (QValueVector<PanelBrowserMenu*>::iterator it = _subMenus.begin();
+    for (TQValueVector<PanelBrowserMenu*>::iterator it = _subMenus.begin();
          it != _subMenus.end();
          ++it)
     {
@@ -536,7 +536,7 @@ void PanelBrowserMenu::initIconMap()
 
 //    kdDebug() << "PanelBrowserMenu::initIconMap" << endl;
 
-    _icons = new QMap<QString, QPixmap>;
+    _icons = new TQMap<TQString, TQPixmap>;
 
     _icons->insert("folder", SmallIcon("folder"));
     _icons->insert("unknown", SmallIcon("mime_empty"));

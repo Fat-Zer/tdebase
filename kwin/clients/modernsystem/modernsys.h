@@ -1,7 +1,7 @@
 #ifndef __MODSYSTEMCLIENT_H
 #define __MODSYSTEMCLIENT_H
 
-#include <qbitmap.h>
+#include <tqbitmap.h>
 #include <kpixmap.h>
 #include <kcommondecoration.h>
 #include <kdecorationfactory.h>
@@ -21,9 +21,9 @@ public:
     virtual void reset(unsigned long changed);
 protected:
 
-    virtual void drawButton(QPainter *p);
-    void drawButtonLabel(QPainter *){;}
-    QBitmap deco;
+    virtual void drawButton(TQPainter *p);
+    void drawButtonLabel(TQPainter *){;}
+    TQBitmap deco;
 };
 
 class ModernSys : public KCommonDecoration
@@ -32,9 +32,9 @@ public:
     ModernSys( KDecorationBridge* b, KDecorationFactory* f );
     ~ModernSys(){;}
 
-    virtual QString visibleName() const;
-    virtual QString defaultButtonsLeft() const;
-    virtual QString defaultButtonsRight() const;
+    virtual TQString visibleName() const;
+    virtual TQString defaultButtonsLeft() const;
+    virtual TQString defaultButtonsRight() const;
     virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
     virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
     virtual KCommonDecorationButton *createButton(ButtonType type);
@@ -44,17 +44,17 @@ public:
 
     void init();
 protected:
-    void drawRoundFrame(QPainter &p, int x, int y, int w, int h);
-    void paintEvent( QPaintEvent* );
+    void drawRoundFrame(TQPainter &p, int x, int y, int w, int h);
+    void paintEvent( TQPaintEvent* );
     void recalcTitleBuffer();
     void reset( unsigned long );
 private:
-    QPixmap titleBuffer;
-    QString oldTitle;
+    TQPixmap titleBuffer;
+    TQString oldTitle;
     bool reverse;
 };
 
-class ModernSysFactory : public QObject, public KDecorationFactory
+class ModernSysFactory : public TQObject, public KDecorationFactory
 {
 public:
     ModernSysFactory();
@@ -62,7 +62,7 @@ public:
     virtual KDecoration* createDecoration( KDecorationBridge* );
     virtual bool reset( unsigned long changed );
     virtual bool supports( Ability ability );
-    QValueList< BorderSize > borderSizes() const;
+    TQValueList< BorderSize > borderSizes() const;
 private:
     void read_config();
 };

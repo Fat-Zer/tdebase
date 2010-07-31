@@ -43,8 +43,8 @@ class KSysGuardApplet : public KPanelApplet, public KSGRD::SensorBoard
 	Q_OBJECT
 
   public:
-    KSysGuardApplet( const QString& configFile, Type type = Normal,
-                     int actions = 0, QWidget *parent = 0,
+    KSysGuardApplet( const TQString& configFile, Type type = Normal,
+                     int actions = 0, TQWidget *parent = 0,
                      const char *name = 0 );
     virtual ~KSysGuardApplet();
 
@@ -54,10 +54,10 @@ class KSysGuardApplet : public KPanelApplet, public KSGRD::SensorBoard
     virtual void preferences();
 
   protected:
-    void resizeEvent( QResizeEvent* );
-    void dragEnterEvent( QDragEnterEvent* );
-    void dropEvent( QDropEvent* );
-    void customEvent( QCustomEvent* );
+    void resizeEvent( TQResizeEvent* );
+    void dragEnterEvent( TQDragEnterEvent* );
+    void dropEvent( TQDropEvent* );
+    void customEvent( TQCustomEvent* );
     
 
   private slots:
@@ -68,18 +68,18 @@ class KSysGuardApplet : public KPanelApplet, public KSGRD::SensorBoard
   private:
     void layout();
     void resizeDocks( uint newDockCount );
-    void addEmptyDisplay( QWidget **dock, uint pos );
+    void addEmptyDisplay( TQWidget **dock, uint pos );
 
     bool load();
     bool save();
 
-    int findDock( const QPoint& );
+    int findDock( const TQPoint& );
     void removeDisplay( KSGRD::SensorDisplay* );
 
     double mSizeRatio;
     uint mDockCount;
     KSGAppletSettings* mSettingsDlg;
-    QWidget** mDockList;
+    TQWidget** mDockList;
 };
 
 #endif

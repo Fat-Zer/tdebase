@@ -37,7 +37,7 @@ class GreeterApp : public KApplication {
 	virtual bool x11EventFilter( XEvent * );
 
   protected:
-	virtual void timerEvent( QTimerEvent * );
+	virtual void timerEvent( TQTimerEvent * );
 
   signals:
     void activity();

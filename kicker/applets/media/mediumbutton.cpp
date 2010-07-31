@@ -19,13 +19,13 @@
 
 #include "mediumbutton.h"
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qpainter.h>
-#include <qdrawutil.h>
-#include <qpopupmenu.h>
-#include <qstyle.h>
-#include <qtooltip.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
+#include <tqpainter.h>
+#include <tqdrawutil.h>
+#include <tqpopupmenu.h>
+#include <tqstyle.h>
+#include <tqtooltip.h>
 
 #include <kmessagebox.h>
 #include <kmimetype.h>
@@ -44,13 +44,13 @@
 #include <konq_popupmenu.h>
 #include <konq_drag.h>
 
-MediumButton::MediumButton(QWidget *parent, const KFileItem &fileItem)
+MediumButton::MediumButton(TQWidget *parent, const KFileItem &fileItem)
     : PanelPopupButton(parent), mActions(this, this), mFileItem(fileItem)
 {
-    KAction *a = KStdAction::paste(this, SLOT(slotPaste()),
+    KAction *a = KStdAction::paste(this, TQT_SLOT(slotPaste()),
                                     &mActions, "pasteto");
     a->setShortcut(0);
-    a = KStdAction::copy(this, SLOT(slotCopy()), &mActions, "copy");
+    a = KStdAction::copy(this, TQT_SLOT(slotCopy()), &mActions, "copy");
     a->setShortcut(0);
     
     setBackgroundOrigin(AncestorOrigin);
@@ -63,18 +63,18 @@ MediumButton::MediumButton(QWidget *parent, const KFileItem &fileItem)
     
     refreshType();
     
-    connect(&mOpenTimer, SIGNAL(timeout()), SLOT(slotDragOpen()));
+    connect(&mOpenTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotDragOpen()));
     
     // Activate this code only if we find a way to have both an
     // action and a popup menu for the same kicker button
-    //connect(this, SIGNAL(clicked()), this, SLOT(slotClicked()));
+    //connect(this, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotClicked()));
     
-    setPopup(new QPopupMenu());
+    setPopup(new TQPopupMenu());
 }
 
 MediumButton::~MediumButton()
 {
-    QPopupMenu *menu = popup();
+    TQPopupMenu *menu = popup();
     setPopup(0);
     delete menu;
 }
@@ -94,7 +94,7 @@ void MediumButton::setFileItem(const KFileItem &fileItem)
 
 void MediumButton::initPopup()
 {
-    QPopupMenu *old_popup = popup();
+    TQPopupMenu *old_popup = popup();
     
     KFileItemList items;
     items.append(&mFileItem);
@@ -122,7 +122,7 @@ void MediumButton::initPopup()
 void MediumButton::refreshType()
 {
     KMimeType::Ptr mime = mFileItem.determineMimeType();
-    QToolTip::add(this, mime->comment());
+    TQToolTip::add(this, mime->comment());
     setIcon(mFileItem.iconName());
 }
 
@@ -144,10 +144,10 @@ void MediumButton::slotCopy()
 {
     KonqDrag * obj = KonqDrag::newDrag(mFileItem.url(), false);
     
-    QApplication::clipboard()->setData( obj );
+    TQApplication::clipboard()->setData( obj );
 }
 
-void MediumButton::dragEnterEvent(QDragEnterEvent* e)
+void MediumButton::dragEnterEvent(TQDragEnterEvent* e)
 {
     if (mFileItem.isWritable())
     {
@@ -156,14 +156,14 @@ void MediumButton::dragEnterEvent(QDragEnterEvent* e)
     }
 }
 
-void MediumButton::dragLeaveEvent(QDragLeaveEvent* e)
+void MediumButton::dragLeaveEvent(TQDragLeaveEvent* e)
 {
     mOpenTimer.stop();
     
     PanelPopupButton::dragLeaveEvent( e );
 }
 
-void MediumButton::dropEvent(QDropEvent *e)
+void MediumButton::dropEvent(TQDropEvent *e)
 {
     mOpenTimer.stop();
     
@@ -175,7 +175,7 @@ void MediumButton::slotDragOpen()
     mFileItem.run();
 }
 
-QString MediumButton::tileName()
+TQString MediumButton::tileName()
 {
     return mFileItem.text();
 }

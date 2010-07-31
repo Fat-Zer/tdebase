@@ -24,10 +24,10 @@
 #ifndef KSG_SENSORDISPLAY_H
 #define KSG_SENSORDISPLAY_H
 
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qvaluelist.h>
-#include <qwidget.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqvaluelist.h>
+#include <tqwidget.h>
 
 #include <knotifyclient.h>
 
@@ -48,7 +48,7 @@ class SensorProperties;
   more sensors in any form. It must be inherited by all displays that
   should be inserted into the work sheet.
  */
-class SensorDisplay : public QWidget, public SensorClient
+class SensorDisplay : public TQWidget, public SensorClient
 {
   Q_OBJECT
 
@@ -56,8 +56,8 @@ class SensorDisplay : public QWidget, public SensorClient
     /**
       Constructor.
      */
-    SensorDisplay( QWidget *parent = 0, const char *name = 0, 
-                   const QString& title = 0, bool nf = false, bool isApplet = false );
+    SensorDisplay( TQWidget *parent = 0, const char *name = 0, 
+                   const TQString& title = 0, bool nf = false, bool isApplet = false );
 
     /**
       Destructor.
@@ -67,22 +67,22 @@ class SensorDisplay : public QWidget, public SensorClient
     /**
       Sets the title of the display.
      */
-    void setTitle( const QString &title );
+    void setTitle( const TQString &title );
 
     /**
       Returns the title of the display.
      */
-    QString title() const;
+    TQString title() const;
 
     /**
       Sets the unit of the display.
      */
-    void setUnit( const QString &unit );
+    void setUnit( const TQString &unit );
 
     /**
       Returns the unit of the display.
      */
-    QString unit() const;
+    TQString unit() const;
 
     /**
       Sets whether the unit string should be displayed at the top
@@ -123,17 +123,17 @@ class SensorDisplay : public QWidget, public SensorClient
     /**
       This method appends all hosts of the display to @ref list.
      */
-    void hosts( QStringList& list );
+    void hosts( TQStringList& list );
 
     /**
       Sets the widget on which the error icon can be drawn.
      */
-    void setPlotterWidget( QWidget *plotter );
+    void setPlotterWidget( TQWidget *plotter );
 
     /**
       Returns the widget on which the error icon can be drawn.
      */
-    QWidget *plotterWidget() const;
+    TQWidget *plotterWidget() const;
 
     /**
       Add a sensor to the display.
@@ -143,8 +143,8 @@ class SensorDisplay : public QWidget, public SensorClient
       @param type The type of the sensor.
       @param description A short description of the sensor.
      */
-    virtual bool addSensor( const QString &hostName, const QString &name,
-                            const QString &type, const QString &description );
+    virtual bool addSensor( const TQString &hostName, const TQString &name,
+                            const TQString &type, const TQString &description );
 
     /**
       Removes the sensor from the display, that is at the position
@@ -158,7 +158,7 @@ class SensorDisplay : public QWidget, public SensorClient
       a request to a sensor since it performs an appropriate error
       handling by removing the display of necessary.
      */
-    void sendRequest( const QString &hostName, const QString &cmd, int id );
+    void sendRequest( const TQString &hostName, const TQString &cmd, int id );
 
     /**
       Raises the configure dialog to setup the update interval.
@@ -180,12 +180,12 @@ class SensorDisplay : public QWidget, public SensorClient
     /**
       Reimplement this method to setup the display from config data.
      */
-    virtual bool restoreSettings( QDomElement& );
+    virtual bool restoreSettings( TQDomElement& );
 
     /**
       Reimplement this method to save the displays config data.
      */
-    virtual bool saveSettings( QDomDocument&, QDomElement&, bool = true );
+    virtual bool saveSettings( TQDomDocument&, TQDomElement&, bool = true );
 
     /**
       Reimplement this method to catch error messages from the SensorManager.
@@ -237,32 +237,32 @@ class SensorDisplay : public QWidget, public SensorClient
     void modified( bool modified );
 
   protected:
-    virtual bool eventFilter( QObject*, QEvent* );
-    virtual void resizeEvent( QResizeEvent* );
-    virtual void timerEvent( QTimerEvent* );
+    virtual bool eventFilter( TQObject*, TQEvent* );
+    virtual void resizeEvent( TQResizeEvent* );
+    virtual void timerEvent( TQTimerEvent* );
 
     void registerSensor( SensorProperties *sp );
     void unregisterSensor( uint pos );
 
-    QColor restoreColor( QDomElement &element, const QString &attr,
-                         const QColor& fallback );
-    void saveColor( QDomElement &element, const QString &attr,
-                    const QColor &color );
+    TQColor restoreColor( TQDomElement &element, const TQString &attr,
+                         const TQColor& fallback );
+    void saveColor( TQDomElement &element, const TQString &attr,
+                    const TQColor &color );
 
-    virtual QString additionalWhatsThis();
+    virtual TQString additionalWhatsThis();
 
     void setSensorOk( bool ok );
 
     bool modified() const;
     bool timerOn() const;
 
-    QWidget *frame();
+    TQWidget *frame();
 
 //    void setNoFrame( bool value );
     bool noFrame() const;
 
-    void reorderSensors(const QValueList<int> &orderOfSensors);
-    QPtrList<SensorProperties> &sensors();
+    void reorderSensors(const TQValueList<int> &orderOfSensors);
+    TQPtrList<SensorProperties> &sensors();
 
   private:
     void updateWhatsThis();
@@ -277,49 +277,49 @@ class SensorDisplay : public QWidget, public SensorClient
     int mUpdateInterval;
 
     // The frame around the other widgets.
-    QGroupBox* mFrame;
+    TQGroupBox* mFrame;
 
-    QPtrList<SensorProperties> mSensors;
+    TQPtrList<SensorProperties> mSensors;
 
-    QString mTitle;
-    QString mUnit;
+    TQString mTitle;
+    TQString mUnit;
 
-    QWidget* mErrorIndicator;
-    QWidget* mPlotterWdg;
+    TQWidget* mErrorIndicator;
+    TQWidget* mPlotterWdg;
 };
 
 class SensorProperties
 {
   public:
     SensorProperties();
-    SensorProperties( const QString &hostName, const QString &name,
-                      const QString &type, const QString &description );
+    SensorProperties( const TQString &hostName, const TQString &name,
+                      const TQString &type, const TQString &description );
     ~SensorProperties();
 
-    void setHostName( const QString &hostName );
-    QString hostName() const;
+    void setHostName( const TQString &hostName );
+    TQString hostName() const;
 
-    void setName( const QString &name );
-    QString name() const;
+    void setName( const TQString &name );
+    TQString name() const;
 
-    void setType( const QString &type );
-    QString type() const;
+    void setType( const TQString &type );
+    TQString type() const;
 
-    void setDescription( const QString &description );
-    QString description() const;
+    void setDescription( const TQString &description );
+    TQString description() const;
 
-    void setUnit( const QString &unit );
-    QString unit() const;
+    void setUnit( const TQString &unit );
+    TQString unit() const;
 
     void setIsOk( bool value );
     bool isOk() const;
 
   private:
-    QString mHostName;
-    QString mName;
-    QString mType;
-    QString mDescription;
-    QString mUnit;
+    TQString mHostName;
+    TQString mName;
+    TQString mType;
+    TQString mDescription;
+    TQString mUnit;
 
     /* This flag indicates whether the communication to the sensor is
      * ok or not. */

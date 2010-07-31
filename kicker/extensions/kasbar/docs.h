@@ -40,23 +40,23 @@ class QObject
 {
 };
 
-class QWidget : public QObject
+class TQWidget : public QObject
 {
 };
 
-class QDialog : public QWidget
+class TQDialog : public QWidget
 {
 };
 
-class QFrame : public QWidget
+class TQFrame : public QWidget
 {
 };
 
-class QHBox : public QFrame
+class TQHBox : public QFrame
 {
 };
 
-class QLCDNumber : public QFrame
+class TQLCDNumber : public QFrame
 {
 };
 

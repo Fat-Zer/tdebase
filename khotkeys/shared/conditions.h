@@ -11,9 +11,9 @@
 #ifndef _CONDITIONS_H_
 #define _CONDITIONS_H_
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 #include "khotkeysglobal.h"
 #include "windows.h"
@@ -39,7 +39,7 @@ class KDE_EXPORT Condition
         virtual bool match() const = 0;
         virtual void updated() const; // called when the condition changes
         virtual void cfg_write( KConfig& cfg_P ) const = 0;
-        virtual const QString description() const = 0;
+        virtual const TQString description() const = 0;
         virtual Condition* copy( Condition_list_base* parent_P ) const = 0;
         const Condition_list_base* parent() const;
         Condition_list_base* parent();
@@ -50,18 +50,18 @@ class KDE_EXPORT Condition
     };
         
 class KDE_EXPORT Condition_list_base
-    : public Condition, public QPtrList< Condition > // inheritance ?
+    : public Condition, public TQPtrList< Condition > // inheritance ?
     {
     typedef Condition base;
     public:
         Condition_list_base( Condition_list_base* parent_P );
-        Condition_list_base( const QPtrList< Condition >& children_P,
+        Condition_list_base( const TQPtrList< Condition >& children_P,
             Condition_list_base* parent_P );
         Condition_list_base( KConfig& cfg_P, Condition_list_base* parent_P );
         virtual ~Condition_list_base();
         virtual void cfg_write( KConfig& cfg_P ) const;
         virtual bool accepts_children() const;
-        typedef QPtrListIterator< Condition > Iterator;
+        typedef TQPtrListIterator< Condition > Iterator;
     };
 
 class KDE_EXPORT Condition_list
@@ -69,23 +69,23 @@ class KDE_EXPORT Condition_list
     {
     typedef Condition_list_base base;
     public:
-        Condition_list( const QString& comment_P, Action_data_base* data_P );
+        Condition_list( const TQString& comment_P, Action_data_base* data_P );
         Condition_list( KConfig& cfg_P, Action_data_base* data_P );
         void cfg_write( KConfig& cfg_P ) const;
         Condition_list* copy( Action_data_base* data_P ) const;
         virtual bool match() const;
-        const QString& comment() const;
+        const TQString& comment() const;
         void set_data( Action_data_base* data_P );
         virtual void updated() const;
         virtual Condition_list* copy( Condition_list_base* parent_P ) const;
-        virtual const QString description() const;
+        virtual const TQString description() const;
     private:
-        QString _comment;
+        TQString _comment;
         Action_data_base* data;
     };
 
 class KDE_EXPORT Active_window_condition
-    : public QObject, public Condition
+    : public TQObject, public Condition
     {
     Q_OBJECT
     typedef Condition base;
@@ -101,7 +101,7 @@ class KDE_EXPORT Active_window_condition
 #else
         virtual Condition* copy( Condition_list_base* parent_P ) const;
 #endif
-        virtual const QString description() const;
+        virtual const TQString description() const;
     public slots:
         void active_window_changed( WId );
     private:
@@ -112,7 +112,7 @@ class KDE_EXPORT Active_window_condition
     };
             
 class KDE_EXPORT Existing_window_condition
-    : public QObject, public Condition
+    : public TQObject, public Condition
     {
     Q_OBJECT
     typedef Condition base;
@@ -128,7 +128,7 @@ class KDE_EXPORT Existing_window_condition
 #else
         virtual Condition* copy( Condition_list_base* parent_P ) const;
 #endif
-        virtual const QString description() const;
+        virtual const TQString description() const;
     public slots:
         void window_added( WId w_P );
         void window_removed( WId w_P );
@@ -149,7 +149,7 @@ class KDE_EXPORT Not_condition
         virtual bool match() const;
         virtual void cfg_write( KConfig& cfg_P ) const;
         virtual Not_condition* copy( Condition_list_base* parent_P ) const;
-        virtual const QString description() const;
+        virtual const TQString description() const;
         const Condition* condition() const;
         virtual bool accepts_children() const;
     };
@@ -164,7 +164,7 @@ class KDE_EXPORT And_condition
         virtual bool match() const;
         virtual void cfg_write( KConfig& cfg_P ) const;
         virtual And_condition* copy( Condition_list_base* parent_P ) const;
-        virtual const QString description() const;
+        virtual const TQString description() const;
     };
             
 class KDE_EXPORT Or_condition
@@ -177,7 +177,7 @@ class KDE_EXPORT Or_condition
         virtual bool match() const;
         virtual void cfg_write( KConfig& cfg_P ) const;
         virtual Or_condition* copy( Condition_list_base* parent_P ) const;
-        virtual const QString description() const;
+        virtual const TQString description() const;
     };
             
 //***************************************************************************
@@ -202,27 +202,27 @@ Condition_list_base* Condition::parent()
 
 inline
 Condition_list_base::Condition_list_base( Condition_list_base* parent_P )
-    : Condition( parent_P ), QPtrList< Condition >()
+    : Condition( parent_P ), TQPtrList< Condition >()
     {
     }
 
 inline
-Condition_list_base::Condition_list_base( const QPtrList< Condition >& children_P,
+Condition_list_base::Condition_list_base( const TQPtrList< Condition >& children_P,
     Condition_list_base* parent_P )
-    : Condition( parent_P ), QPtrList< Condition >( children_P )
+    : Condition( parent_P ), TQPtrList< Condition >( children_P )
     {
     }
 
 // Condition_list
 
 inline
-Condition_list::Condition_list( const QString& comment_P, Action_data_base* data_P )
+Condition_list::Condition_list( const TQString& comment_P, Action_data_base* data_P )
     : Condition_list_base( NULL ), _comment( comment_P ), data( data_P )
     {
     }
 
 inline
-const QString& Condition_list::comment() const
+const TQString& Condition_list::comment() const
     {
     return _comment;
     }

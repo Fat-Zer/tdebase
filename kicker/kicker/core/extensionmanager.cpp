@@ -59,7 +59,7 @@ ExtensionManager* ExtensionManager::the()
 }
 
 ExtensionManager::ExtensionManager()
-    : QObject(0, "ExtensionManager"),
+    : TQObject(0, "ExtensionManager"),
       m_menubarPanel(0),
       m_mainPanel(0),
       m_panelCounter(-1)
@@ -108,7 +108,7 @@ void ExtensionManager::initialize()
         m_mainPanel = pm->createExtensionContainer(
                             "childpanelextension.desktop",
                             true,
-                            QString(kapp->aboutData()->appName()) + "rc",
+                            TQString(kapp->aboutData()->appName()) + "rc",
                             "Main Panel");
     }
 
@@ -130,14 +130,14 @@ void ExtensionManager::initialize()
 
     // read extension list
     config->setGroup("General");
-    QStringList elist = config->readListEntry("Extensions2");
+    TQStringList elist = config->readListEntry("Extensions2");
 
     // now restore the extensions
-    QStringList::iterator itEnd = elist.end();
-    for (QStringList::iterator it = elist.begin(); it !=  elist.end(); ++it)
+    TQStringList::iterator itEnd = elist.end();
+    for (TQStringList::iterator it = elist.begin(); it !=  elist.end(); ++it)
     {
         // extension id
-        QString extensionId(*it);
+        TQString extensionId(*it);
 
         // create a matching applet container
         if (extensionId.find("Extension") == -1)
@@ -168,9 +168,9 @@ void ExtensionManager::initialize()
     }
 
     pm->clearUntrustedLists();
-    connect(Kicker::the(), SIGNAL(configurationChanged()), SLOT(configurationChanged()));
+    connect(Kicker::the(), TQT_SIGNAL(configurationChanged()), TQT_SLOT(configurationChanged()));
     DCOPRef r( "ksmserver", "ksmserver" );
-    r.send( "resumeStartup", QCString( "kicker" ));
+    r.send( "resumeStartup", TQCString( "kicker" ));
 }
 
 void ExtensionManager::configureMenubar(bool duringInit)
@@ -187,7 +187,7 @@ void ExtensionManager::configureMenubar(bool duringInit)
 
         if (duringInit)
         {
-            AppletInfo menubarInfo("menuapplet.desktop", QString::null, AppletInfo::Applet);
+            AppletInfo menubarInfo("menuapplet.desktop", TQString::null, AppletInfo::Applet);
             if (PluginManager::the()->hasInstance(menubarInfo))
             {
                 // it's already there, in the main panel!
@@ -211,7 +211,7 @@ void ExtensionManager::configureMenubar(bool duringInit)
         updateMenubar();
 
         m_menubarPanel->show();
-        connect(kapp, SIGNAL(kdisplayFontChanged()), SLOT(updateMenubar()));
+        connect(kapp, TQT_SIGNAL(kdisplayFontChanged()), TQT_SLOT(updateMenubar()));
     }
     else if (m_menubarPanel)
     {
@@ -253,11 +253,11 @@ void ExtensionManager::migrateMenubar()
         return;
     }
 
-    QStringList elist = config->readListEntry("Extensions2");
-    QStringList::iterator itEnd = elist.end();
-    for (QStringList::iterator it = elist.begin(); it !=  elist.end(); ++it)
+    TQStringList elist = config->readListEntry("Extensions2");
+    TQStringList::iterator itEnd = elist.end();
+    for (TQStringList::iterator it = elist.begin(); it !=  elist.end(); ++it)
     {
-        QString extensionId(*it);
+        TQString extensionId(*it);
 
         if (extensionId.find("Extension") == -1)
         {
@@ -271,18 +271,18 @@ void ExtensionManager::migrateMenubar()
         }
 
         config->setGroup(extensionId);
-        QString extension = config->readPathEntry("ConfigFile");
+        TQString extension = config->readPathEntry("ConfigFile");
         KConfig extensionConfig(locate("config", extension));
         extensionConfig.setGroup("General");
 
         if (extensionConfig.hasKey("Applets2"))
         {
-            QStringList containers = extensionConfig.readListEntry("Applets2");
-            QStringList::iterator cit = containers.begin();
-            QStringList::iterator citEnd = containers.end();
+            TQStringList containers = extensionConfig.readListEntry("Applets2");
+            TQStringList::iterator cit = containers.begin();
+            TQStringList::iterator citEnd = containers.end();
             for (; cit != citEnd; ++cit)
             {
-                QString appletId(*cit);
+                TQString appletId(*cit);
 
                 // is there a config group for this applet?
                 if (!extensionConfig.hasGroup(appletId))
@@ -291,14 +291,14 @@ void ExtensionManager::migrateMenubar()
                 }
 
                 KConfigGroup group(&extensionConfig, appletId.latin1());
-                QString appletType = appletId.left(appletId.findRev('_'));
+                TQString appletType = appletId.left(appletId.findRev('_'));
 
                 if (appletType == "Applet")
                 {
-                    QString appletFile = group.readPathEntry("DesktopFile");
+                    TQString appletFile = group.readPathEntry("DesktopFile");
                     if (appletFile.find("menuapplet.desktop") != -1)
                     {
-                        QString menubarConfig = locate("config", extension);
+                        TQString menubarConfig = locate("config", extension);
                         KIO::NetAccess::copy(menubarConfig,
                                              locateLocal("config",
                                              "kicker_menubarpanelrc"), 0);
@@ -325,7 +325,7 @@ void ExtensionManager::saveContainerConfig()
     KConfig *config = KGlobal::config();
 
     // build the extension list
-    QStringList elist;
+    TQStringList elist;
     ExtensionList::iterator itEnd = _containers.end();
     for (ExtensionList::iterator it = _containers.begin(); it != itEnd; ++it)
     {
@@ -378,22 +378,22 @@ void ExtensionManager::updateMenubar()
                                  m_menubarPanel->xineramaScreen());
 }
 
-bool ExtensionManager::isMainPanel(const QWidget* panel) const
+bool ExtensionManager::isMainPanel(const TQWidget* panel) const
 {
     return m_mainPanel == panel;
 }
 
-bool ExtensionManager::isMenuBar(const QWidget* panel) const
+bool ExtensionManager::isMenuBar(const TQWidget* panel) const
 {
     return m_menubarPanel == panel;
 }
 
-void ExtensionManager::addExtension( const QString& desktopFile )
+void ExtensionManager::addExtension( const TQString& desktopFile )
 {
     PluginManager* pm = PluginManager::the();
     ExtensionContainer *e = pm->createExtensionContainer(desktopFile,
                                                          false, // is not startup
-                                                         QString::null, // no config
+                                                         TQString::null, // no config
                                                          uniqueId());
     
 
@@ -422,8 +422,8 @@ void ExtensionManager::addContainer(ExtensionContainer* e)
 
     _containers.append(e);
 
-    connect(e, SIGNAL(removeme(ExtensionContainer*)),
-            this, SLOT(removeContainer(ExtensionContainer*)));
+    connect(e, TQT_SIGNAL(removeme(ExtensionContainer*)),
+            this, TQT_SLOT(removeContainer(ExtensionContainer*)));
 
     emit desktopIconsAreaChanged(desktopIconsArea(e->xineramaScreen()),
                                  e->xineramaScreen());
@@ -457,10 +457,10 @@ void ExtensionManager::removeAllContainers()
     saveContainerConfig();
 }
 
-QString ExtensionManager::uniqueId()
+TQString ExtensionManager::uniqueId()
 {
-    QString idBase = "Extension_%1";
-    QString newId;
+    TQString idBase = "Extension_%1";
+    TQString newId;
     int i = 0;
     bool unique = false;
 
@@ -621,14 +621,14 @@ bool ExtensionManager::shouldExclude(int XineramaScreen,
     return true;
 }
 
-QRect ExtensionManager::workArea(int XineramaScreen, const ExtensionContainer* extension)
+TQRect ExtensionManager::workArea(int XineramaScreen, const ExtensionContainer* extension)
 {
     if (!extension)
     {
         return Kicker::the()->kwinModule()->workArea(XineramaScreen);
     }
 
-    QValueList<WId> list;
+    TQValueList<WId> list;
 
     ExtensionList::iterator itEnd = _containers.end();
     ExtensionList::iterator it = _containers.begin();
@@ -672,7 +672,7 @@ QRect ExtensionManager::workArea(int XineramaScreen, const ExtensionContainer* e
         }
     }
 
-    QRect workArea;
+    TQRect workArea;
     if ((XineramaScreen == XineramaAllScreens) || (kapp->desktop()->numScreens() < 2))
     {
          /* special value for all screens */
@@ -681,7 +681,7 @@ QRect ExtensionManager::workArea(int XineramaScreen, const ExtensionContainer* e
     else
     {
         workArea = Kicker::the()->kwinModule()->workArea(list, XineramaScreen)
-                   .intersect(QApplication::desktop()->screenGeometry(XineramaScreen));
+                   .intersect(TQApplication::desktop()->screenGeometry(XineramaScreen));
     }
 
     return workArea;
@@ -693,7 +693,7 @@ int ExtensionManager::nextPanelOrder()
     return m_panelCounter;
 }
 
-void ExtensionManager::reduceArea(QRect &area, const ExtensionContainer *extension) const
+void ExtensionManager::reduceArea(TQRect &area, const ExtensionContainer *extension) const
 {
     if (!extension ||
         extension->hideMode() == ExtensionContainer::AutomaticHide ||
@@ -702,10 +702,10 @@ void ExtensionManager::reduceArea(QRect &area, const ExtensionContainer *extensi
         return;
     }
 
-    QRect geom = extension->initialGeometry(extension->position(), extension->alignment(),
+    TQRect geom = extension->initialGeometry(extension->position(), extension->alignment(),
                                             extension->xineramaScreen());
 
-    // reduce given area (QRect) to the space not covered by the given extension
+    // reduce given area (TQRect) to the space not covered by the given extension
     // As simplification: the length of the extension is not taken into account
     // which means that even a small extension e.g. on the left side of the desktop
     // will remove the available area with its with
@@ -736,12 +736,12 @@ void ExtensionManager::reduceArea(QRect &area, const ExtensionContainer *extensi
     }
 }
 
-QRect ExtensionManager::desktopIconsArea(int screen) const
+TQRect ExtensionManager::desktopIconsArea(int screen) const
 {
     // This is pretty broken, mixes Xinerama and non-Xinerama multihead
     // and generally doesn't seem to be required anyway => ignore screen.
-//    QRect area = QApplication::desktop()->screenGeometry(screen);
-    QRect area = QApplication::desktop()->geometry();
+//    TQRect area = TQApplication::desktop()->screenGeometry(screen);
+    TQRect area = TQApplication::desktop()->geometry();
 
     reduceArea(area, m_mainPanel);
     reduceArea(area, m_menubarPanel);

@@ -1,53 +1,53 @@
 #ifndef DOCENTRY_H
 #define DOCENTRY_H
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 namespace KHC {
 
 class DocEntry
 {
   public:
-    typedef QValueList<DocEntry *> List;
+    typedef TQValueList<DocEntry *> List;
 
     DocEntry();
     
-    DocEntry( const QString &name, const QString &url = QString::null,
-              const QString &icon = QString::null );
+    DocEntry( const TQString &name, const TQString &url = TQString::null,
+              const TQString &icon = TQString::null );
     
-    void setName( const QString & );
-    QString name() const;
+    void setName( const TQString & );
+    TQString name() const;
     
-    void setSearch( const QString & );
-    QString search() const;
+    void setSearch( const TQString & );
+    TQString search() const;
     
-    void setIcon( const QString & );
-    QString icon() const;
+    void setIcon( const TQString & );
+    TQString icon() const;
     
-    void setUrl( const QString & );
-    QString url() const;
+    void setUrl( const TQString & );
+    TQString url() const;
 
-    void setInfo( const QString & );
-    QString info() const;
+    void setInfo( const TQString & );
+    TQString info() const;
 
-    void setLang( const QString & );
-    QString lang() const;
+    void setLang( const TQString & );
+    TQString lang() const;
     
-    void setIdentifier( const QString & );
-    QString identifier() const;
+    void setIdentifier( const TQString & );
+    TQString identifier() const;
 
-    void setIndexer( const QString & );
-    QString indexer() const;
+    void setIndexer( const TQString & );
+    TQString indexer() const;
 
-    void setIndexTestFile( const QString & );
-    QString indexTestFile() const;
+    void setIndexTestFile( const TQString & );
+    TQString indexTestFile() const;
 
     void setWeight( int );
     int weight() const;
 
-    void setSearchMethod( const QString & );
-    QString searchMethod() const;
+    void setSearchMethod( const TQString & );
+    TQString searchMethod() const;
 
     void enableSearch( bool enabled );
     bool searchEnabled() const;
@@ -55,15 +55,15 @@ class DocEntry
     void setSearchEnabledDefault( bool enabled );
     bool searchEnabledDefault() const;
 
-    void setDocumentType( const QString & );
-    QString documentType() const;
+    void setDocumentType( const TQString & );
+    TQString documentType() const;
 
     void setDirectory( bool );
     bool isDirectory() const;
 
-    bool readFromFile( const QString &fileName );
+    bool readFromFile( const TQString &fileName );
 
-    bool indexExists( const QString &indexDir );
+    bool indexExists( const TQString &indexDir );
 
     bool docExists() const;
 
@@ -78,7 +78,7 @@ class DocEntry
     void setNextSibling( DocEntry * );
     DocEntry *nextSibling();
 
-    QString khelpcenterSpecial() const;
+    TQString khelpcenterSpecial() const;
 
     bool isSearchable();
     
@@ -88,23 +88,23 @@ class DocEntry
     void init();
 
   private:
-    QString mName;
-    QString mSearch;
-    QString mIcon;
-    QString mUrl;
-    QString mInfo;
-    QString mLang;
-    mutable QString mIdentifier;
-    QString mIndexer;
-    QString mIndexTestFile;
+    TQString mName;
+    TQString mSearch;
+    TQString mIcon;
+    TQString mUrl;
+    TQString mInfo;
+    TQString mLang;
+    mutable TQString mIdentifier;
+    TQString mIndexer;
+    TQString mIndexTestFile;
     int mWeight;
-    QString mSearchMethod;
+    TQString mSearchMethod;
     bool mSearchEnabled;
     bool mSearchEnabledDefault;
-    QString mDocumentType;
+    TQString mDocumentType;
     bool mDirectory;
 
-    QString mKhelpcenterSpecial;
+    TQString mKhelpcenterSpecial;
 
     List mChildren;
     DocEntry *mParent;

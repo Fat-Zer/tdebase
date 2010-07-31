@@ -33,7 +33,7 @@ class Privacy: public KCModule
     Q_OBJECT
 
 public:
-    Privacy( QWidget *parent=0, const char *name=0 );
+    Privacy( TQWidget *parent=0, const char *name=0 );
     ~Privacy();
 
     virtual void load();
@@ -51,22 +51,22 @@ private:
     KPrivacySettings  *p3pSettings;
     KPrivacyManager *m_privacymanager;
 
-    QPtrList<QCheckListItem> checklist;
+    TQPtrList<TQCheckListItem> checklist;
 
     KListViewItem *generalCLI;
     KListViewItem *webbrowsingCLI;
 
-    QCheckListItem *clearThumbnails;	
-    QCheckListItem *clearRunCommandHistory;
-    QCheckListItem *clearAllCookies;
-    QCheckListItem *clearSavedClipboardContents;
-    QCheckListItem *clearWebHistory;
-    QCheckListItem *clearWebCache;
-    QCheckListItem *clearFormCompletion;
-    QCheckListItem *clearRecentDocuments;
-    QCheckListItem *clearQuickStartMenu;
-    QCheckListItem *clearFavIcons;
-    //QCheckListItem *clearFileDialogHistory;
+    TQCheckListItem *clearThumbnails;	
+    TQCheckListItem *clearRunCommandHistory;
+    TQCheckListItem *clearAllCookies;
+    TQCheckListItem *clearSavedClipboardContents;
+    TQCheckListItem *clearWebHistory;
+    TQCheckListItem *clearWebCache;
+    TQCheckListItem *clearFormCompletion;
+    TQCheckListItem *clearRecentDocuments;
+    TQCheckListItem *clearQuickStartMenu;
+    TQCheckListItem *clearFavIcons;
+    //TQCheckListItem *clearFileDialogHistory;
 
 
 };

@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __browser_mnu_h__
 #define __browser_mnu_h__
 
-#include <qmap.h>
-#include <qvaluevector.h>
+#include <tqmap.h>
+#include <tqvaluevector.h>
 #include <kpanelmenu.h>
 #include <kdirwatch.h>
 
@@ -34,11 +34,11 @@ class PanelBrowserMenu : public KPanelMenu
     Q_OBJECT
 
 public:
-    PanelBrowserMenu(QString path, QWidget *parent = 0, const char *name = 0, int startid = 0);
+    PanelBrowserMenu(TQString path, TQWidget *parent = 0, const char *name = 0, int startid = 0);
   ~PanelBrowserMenu();
 
-    void append(const QPixmap &pixmap, const QString &title, const QString &filename, bool mimecheck);
-    void append(const QPixmap &pixmap, const QString &title, PanelBrowserMenu *subMenu);
+    void append(const TQPixmap &pixmap, const TQString &title, const TQString &filename, bool mimecheck);
+    void append(const TQPixmap &pixmap, const TQString &title, PanelBrowserMenu *subMenu);
 
 public slots:
     void initialize();
@@ -48,24 +48,24 @@ protected slots:
     void slotOpenTerminal();
     void slotOpenFileManager();
     void slotMimeCheck();
-    void slotClearIfNeeded(const QString&);
+    void slotClearIfNeeded(const TQString&);
     void slotClear();
     void slotDragObjectDestroyed();
 
 protected:
-    void mousePressEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void dropEvent(QDropEvent *ev);
-    void dragEnterEvent(QDragEnterEvent *ev);
-    void dragMoveEvent(QDragMoveEvent *);
+    void mousePressEvent(TQMouseEvent *);
+    void mouseMoveEvent(TQMouseEvent *);
+    void dropEvent(TQDropEvent *ev);
+    void dragEnterEvent(TQDragEnterEvent *ev);
+    void dragMoveEvent(TQDragMoveEvent *);
     void initIconMap();
 
-    QPoint             _lastpress;
-    QMap<int, QString> _filemap;
-    QMap<int, bool>    _mimemap;
-    QTimer            *_mimecheckTimer;
+    TQPoint             _lastpress;
+    TQMap<int, TQString> _filemap;
+    TQMap<int, bool>    _mimemap;
+    TQTimer            *_mimecheckTimer;
     KDirWatch          _dirWatch;
-    QValueVector<PanelBrowserMenu*> _subMenus;
+    TQValueVector<PanelBrowserMenu*> _subMenus;
 
     int                _startid;
     bool               _dirty;
@@ -75,7 +75,7 @@ protected:
     // entries are not inserted in the menu and its submenus.
     bool               _filesOnly;
 
-    static QMap<QString, QPixmap> *_icons;
+    static TQMap<TQString, TQPixmap> *_icons;
 };
 
 #endif

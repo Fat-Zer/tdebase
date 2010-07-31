@@ -21,16 +21,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
 
-#include <qcheckbox.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qlineedit.h>
-#include <qvbox.h>
+#include <tqcheckbox.h>
+#include <tqdir.h>
+#include <tqfileinfo.h>
+#include <tqlineedit.h>
+#include <tqvbox.h>
 
 #include <kicondialog.h>
 #include <kmessagebox.h>
@@ -45,16 +45,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "exe_dlg.h"
 #include "nonKDEButtonSettings.h"
 
-PanelExeDialog::PanelExeDialog(const QString& title, const QString& description,
-                               const QString &path, const QString &icon,
-                               const QString &cmd, bool inTerm,
-                               QWidget *parent, const char *name)
+PanelExeDialog::PanelExeDialog(const TQString& title, const TQString& description,
+                               const TQString &path, const TQString &icon,
+                               const TQString &cmd, bool inTerm,
+                               TQWidget *parent, const char *name)
     : KDialogBase(parent, name, false, i18n("Non-KDE Application Configuration"), Ok|Cancel, Ok, true),
       m_icon(icon.isEmpty() ? "exec" : icon),
       m_iconChanged(false)
 {
     setCaption(i18n("Non-KDE Application Configuration"));
-    QFileInfo fi(path);
+    TQFileInfo fi(path);
 
     ui = new NonKDEButtonSettings(makeVBoxMainWidget());
     fillCompletion();
@@ -68,14 +68,14 @@ PanelExeDialog::PanelExeDialog(const QString& title, const QString& description,
 
     updateIcon();
 
-    connect(ui->m_exec, SIGNAL(urlSelected(const QString &)),
-            this, SLOT(slotSelect(const QString &)));
-    connect(ui->m_exec, SIGNAL(textChanged(const QString &)),
-            this, SLOT(slotTextChanged(const QString &)));
-    connect(ui->m_exec, SIGNAL(returnPressed()),
-            this, SLOT(slotReturnPressed()));
-    connect(ui->m_icon, SIGNAL(iconChanged(QString)),
-            this, SLOT(slotIconChanged(QString)));
+    connect(ui->m_exec, TQT_SIGNAL(urlSelected(const TQString &)),
+            this, TQT_SLOT(slotSelect(const TQString &)));
+    connect(ui->m_exec, TQT_SIGNAL(textChanged(const TQString &)),
+            this, TQT_SLOT(slotTextChanged(const TQString &)));
+    connect(ui->m_exec, TQT_SIGNAL(returnPressed()),
+            this, TQT_SLOT(slotReturnPressed()));
+    connect(ui->m_icon, TQT_SIGNAL(iconChanged(TQString)),
+            this, TQT_SLOT(slotIconChanged(TQString)));
 
     // leave decent space for the commandline
     resize(sizeHint().width() > 300 ? sizeHint().width() : 300,
@@ -94,27 +94,27 @@ bool PanelExeDialog::useTerminal() const
     return ui->m_inTerm->isChecked();
 }
 
-QString PanelExeDialog::title() const
+TQString PanelExeDialog::title() const
 {
     return ui->m_title->text();
 }
 
-QString PanelExeDialog::description() const
+TQString PanelExeDialog::description() const
 {
     return ui->m_description->text();
 }
 
-QString PanelExeDialog::commandLine() const
+TQString PanelExeDialog::commandLine() const
 {
     return ui->m_commandLine->text();
 }
 
-QString PanelExeDialog::iconPath() const
+TQString PanelExeDialog::iconPath() const
 {
     return ui->m_icon->icon();
 }
 
-QString PanelExeDialog::command() const
+TQString PanelExeDialog::command() const
 {
     return ui->m_exec->url();
 }
@@ -128,19 +128,19 @@ void PanelExeDialog::updateIcon()
 void PanelExeDialog::fillCompletion()
 {
     KCompletion *comp = ui->m_exec->completionObject();
-    QStringList exePaths = KStandardDirs::systemPaths();
+    TQStringList exePaths = KStandardDirs::systemPaths();
 
-    for (QStringList::ConstIterator it = exePaths.begin(); it != exePaths.end(); it++)
+    for (TQStringList::ConstIterator it = exePaths.begin(); it != exePaths.end(); it++)
     {
-        QDir d( (*it) );
-        d.setFilter( QDir::Files | QDir::Executable );
+        TQDir d( (*it) );
+        d.setFilter( TQDir::Files | TQDir::Executable );
 
         const QFileInfoList *list = d.entryInfoList();
         if (!list)
             continue;
 
         QFileInfoListIterator it2( *list );
-        QFileInfo *fi;
+        TQFileInfo *fi;
 
         while ( (fi = it2.current()) != 0 ) {
             m_partialPath2full.insert(fi->fileName(), fi->filePath(), false);
@@ -151,20 +151,20 @@ void PanelExeDialog::fillCompletion()
     }
 }
 
-void PanelExeDialog::slotIconChanged(QString)
+void PanelExeDialog::slotIconChanged(TQString)
 {
     m_iconChanged = true;
 }
 
-void PanelExeDialog::slotTextChanged(const QString &str)
+void PanelExeDialog::slotTextChanged(const TQString &str)
 {
     if (m_iconChanged)
     {
         return;
     }
 
-    QString exeLocation = str;
-    QMap<QString, QString>::iterator it = m_partialPath2full.find(str);
+    TQString exeLocation = str;
+    TQMap<TQString, TQString>::iterator it = m_partialPath2full.find(str);
 
     if (it != m_partialPath2full.end())
         exeLocation = it.data();
@@ -178,12 +178,12 @@ void PanelExeDialog::slotReturnPressed()
         ui->m_exec->setURL(m_partialPath2full[ui->m_exec->url()]);
 }
 
-void PanelExeDialog::slotSelect(const QString& exec)
+void PanelExeDialog::slotSelect(const TQString& exec)
 {
     if ( exec.isEmpty() )
         return;
 
-    QFileInfo fi(exec);
+    TQFileInfo fi(exec);
     if (!fi.isExecutable())
     {
         if(KMessageBox::warningYesNo(0, i18n("The selected file is not executable.\n"

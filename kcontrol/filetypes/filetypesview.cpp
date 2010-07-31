@@ -1,10 +1,10 @@
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qtimer.h>
-#include <qwhatsthis.h>
-#include <qwidgetstack.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqtimer.h>
+#include <tqwhatsthis.h>
+#include <tqwidgetstack.h>
 
 #include <dcopclient.h>
 
@@ -24,7 +24,7 @@
 #include "filetypesview.h"
 #include <ksycoca.h>
 
-FileTypesView::FileTypesView(QWidget *p, const char *name)
+FileTypesView::FileTypesView(TQWidget *p, const char *name)
   : KCModule(p, name)
 {
   m_konqConfig = KSharedConfig::openConfig("konquerorrc", false, false);
@@ -50,30 +50,30 @@ FileTypesView::FileTypesView(QWidget *p, const char *name)
     " MIME-type by directly examining the contents of the file."));
 
   setButtons(Help | Apply | Cancel | Ok);
-  QString wtstr;
+  TQString wtstr;
 
-  QHBoxLayout *l = new QHBoxLayout(this, 0, KDialog::marginHint());
-  QGridLayout *leftLayout = new QGridLayout(0, 4, 3);
+  TQHBoxLayout *l = new TQHBoxLayout(this, 0, KDialog::marginHint());
+  TQGridLayout *leftLayout = new TQGridLayout(0, 4, 3);
   leftLayout->setSpacing( KDialog::spacingHint() );
   leftLayout->setColStretch(1, 1);
 
   l->addLayout( leftLayout );
 
-  QLabel *patternFilterLBL = new QLabel(i18n("F&ind filename pattern:"), this);
+  TQLabel *patternFilterLBL = new TQLabel(i18n("F&ind filename pattern:"), this);
   leftLayout->addMultiCellWidget(patternFilterLBL, 0, 0, 0, 2);
 
   patternFilterLE = new KLineEdit(this);
   patternFilterLBL->setBuddy( patternFilterLE );
   leftLayout->addMultiCellWidget(patternFilterLE, 1, 1, 0, 2);
 
-  connect(patternFilterLE, SIGNAL(textChanged(const QString &)),
-          this, SLOT(slotFilter(const QString &)));
+  connect(patternFilterLE, TQT_SIGNAL(textChanged(const TQString &)),
+          this, TQT_SLOT(slotFilter(const TQString &)));
 
   wtstr = i18n("Enter a part of a filename pattern. Only file types with a "
                "matching file pattern will appear in the list.");
 
-  QWhatsThis::add( patternFilterLE, wtstr );
-  QWhatsThis::add( patternFilterLBL, wtstr );
+  TQWhatsThis::add( patternFilterLE, wtstr );
+  TQWhatsThis::add( patternFilterLBL, wtstr );
 
   typesLV = new KListView(this);
   typesLV->setRootIsDecorated(true);
@@ -81,60 +81,60 @@ FileTypesView::FileTypesView(QWidget *p, const char *name)
 
   typesLV->addColumn(i18n("Known Types"));
   leftLayout->addMultiCellWidget(typesLV, 2, 2, 0, 2);
-  connect(typesLV, SIGNAL(selectionChanged(QListViewItem *)),
-          this, SLOT(updateDisplay(QListViewItem *)));
-  connect(typesLV, SIGNAL(doubleClicked(QListViewItem *)),
-          this, SLOT(slotDoubleClicked(QListViewItem *)));
+  connect(typesLV, TQT_SIGNAL(selectionChanged(TQListViewItem *)),
+          this, TQT_SLOT(updateDisplay(TQListViewItem *)));
+  connect(typesLV, TQT_SIGNAL(doubleClicked(TQListViewItem *)),
+          this, TQT_SLOT(slotDoubleClicked(TQListViewItem *)));
 
-  QWhatsThis::add( typesLV, i18n("Here you can see a hierarchical list of"
+  TQWhatsThis::add( typesLV, i18n("Here you can see a hierarchical list of"
     " the file types which are known on your system. Click on the '+' sign"
     " to expand a category, or the '-' sign to collapse it. Select a file type"
     " (e.g. text/html for HTML files) to view/edit the information for that"
     " file type using the controls on the right.") );
 
-  QPushButton *addTypeB = new QPushButton(i18n("Add..."), this);
-  connect(addTypeB, SIGNAL(clicked()), SLOT(addType()));
+  TQPushButton *addTypeB = new TQPushButton(i18n("Add..."), this);
+  connect(addTypeB, TQT_SIGNAL(clicked()), TQT_SLOT(addType()));
   leftLayout->addWidget(addTypeB, 3, 0);
 
-  QWhatsThis::add( addTypeB, i18n("Click here to add a new file type.") );
+  TQWhatsThis::add( addTypeB, i18n("Click here to add a new file type.") );
 
-  m_removeTypeB = new QPushButton(i18n("&Remove"), this);
-  connect(m_removeTypeB, SIGNAL(clicked()), SLOT(removeType()));
+  m_removeTypeB = new TQPushButton(i18n("&Remove"), this);
+  connect(m_removeTypeB, TQT_SIGNAL(clicked()), TQT_SLOT(removeType()));
   leftLayout->addWidget(m_removeTypeB, 3, 2);
   m_removeTypeB->setEnabled(false);
 
-  QWhatsThis::add( m_removeTypeB, i18n("Click here to remove the selected file type.") );
+  TQWhatsThis::add( m_removeTypeB, i18n("Click here to remove the selected file type.") );
 
   // For the right panel, prepare a widget stack
-  m_widgetStack = new QWidgetStack(this);
+  m_widgetStack = new TQWidgetStack(this);
 
   l->addWidget( m_widgetStack );
 
   // File Type Details
   m_details = new FileTypeDetails( m_widgetStack );
-  connect( m_details, SIGNAL( changed(bool) ),
-           this, SLOT( setDirty(bool) ) );
-  connect( m_details, SIGNAL( embedMajor(const QString &, bool &) ),
-           this, SLOT( slotEmbedMajor(const QString &, bool &)));
+  connect( m_details, TQT_SIGNAL( changed(bool) ),
+           this, TQT_SLOT( setDirty(bool) ) );
+  connect( m_details, TQT_SIGNAL( embedMajor(const TQString &, bool &) ),
+           this, TQT_SLOT( slotEmbedMajor(const TQString &, bool &)));
   m_widgetStack->addWidget( m_details, 1 /*id*/ );
 
   // File Group Details
   m_groupDetails = new FileGroupDetails( m_widgetStack );
-  connect( m_groupDetails, SIGNAL( changed(bool) ),
-           this, SLOT( setDirty(bool) ) );
+  connect( m_groupDetails, TQT_SIGNAL( changed(bool) ),
+           this, TQT_SLOT( setDirty(bool) ) );
   m_widgetStack->addWidget( m_groupDetails, 2 /*id*/ );
 
   // Widget shown on startup
-  m_emptyWidget = new QLabel( i18n("Select a file type by name or by extension"), m_widgetStack);
+  m_emptyWidget = new TQLabel( i18n("Select a file type by name or by extension"), m_widgetStack);
   m_emptyWidget->setAlignment(AlignCenter);
 
   m_widgetStack->addWidget( m_emptyWidget, 3 /*id*/ );
 
   m_widgetStack->raiseWidget( m_emptyWidget );
 
-  QTimer::singleShot( 0, this, SLOT( init() ) ); // this takes some time
+  TQTimer::singleShot( 0, this, TQT_SLOT( init() ) ); // this takes some time
 
-  connect( KSycoca::self(), SIGNAL( databaseChanged() ), SLOT( slotDatabaseChanged() ) );
+  connect( KSycoca::self(), TQT_SIGNAL( databaseChanged() ), TQT_SLOT( slotDatabaseChanged() ) );
 }
 
 FileTypesView::~FileTypesView()
@@ -171,14 +171,14 @@ void FileTypesView::readFileTypes()
 
     TypesListItem *groupItem;
     KMimeType::List mimetypes = KMimeType::allMimeTypes();
-    QValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
+    TQValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
     for (; it2 != mimetypes.end(); ++it2) {
-	QString mimetype = (*it2)->name();
+	TQString mimetype = (*it2)->name();
 	int index = mimetype.find("/");
-	QString maj = mimetype.left(index);
-	QString min = mimetype.right(mimetype.length() - index+1);
+	TQString maj = mimetype.left(index);
+	TQString min = mimetype.right(mimetype.length() - index+1);
 
-	QMapIterator<QString,TypesListItem*> mit = m_majorMap.find( maj );
+	TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.find( maj );
 	if ( mit == m_majorMap.end() ) {
 	    groupItem = new TypesListItem( typesLV, maj );
 	    m_majorMap.insert( maj, groupItem );
@@ -193,10 +193,10 @@ void FileTypesView::readFileTypes()
 
 }
 
-void FileTypesView::slotEmbedMajor(const QString &major, bool &embed)
+void FileTypesView::slotEmbedMajor(const TQString &major, bool &embed)
 {
     TypesListItem *groupItem;
-    QMapIterator<QString,TypesListItem*> mit = m_majorMap.find( major );
+    TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.find( major );
     if ( mit == m_majorMap.end() )
         return;
         
@@ -205,11 +205,11 @@ void FileTypesView::slotEmbedMajor(const QString &major, bool &embed)
     embed = (groupItem->autoEmbed() == 0);
 }
 
-void FileTypesView::slotFilter(const QString & patternFilter)
+void FileTypesView::slotFilter(const TQString & patternFilter)
 {
     // one of the few ways to clear a listview without destroying the
-    // listviewitems and without making QListView crash.
-    QListViewItem *item;
+    // listviewitems and without making TQListView crash.
+    TQListViewItem *item;
     while ( (item = typesLV->firstChild()) ) {
 	while ( item->firstChild() )
 	    item->takeItem( item->firstChild() );
@@ -218,13 +218,13 @@ void FileTypesView::slotFilter(const QString & patternFilter)
     }
 
     // insert all items and their group that match the filter
-    QPtrListIterator<TypesListItem> it( m_itemList );
+    TQPtrListIterator<TypesListItem> it( m_itemList );
     while ( it.current() ) {
 	if ( patternFilter.isEmpty() ||
 	     !((*it)->patterns().grep( patternFilter, false )).isEmpty() ) {
 
 	    TypesListItem *group = m_majorMap[ (*it)->majorType() ];
-	    // QListView makes sure we don't insert a group-item more than once
+	    // TQListView makes sure we don't insert a group-item more than once
 	    typesLV->insertItem( group );
 	    group->insertItem( *it );
 	}
@@ -234,8 +234,8 @@ void FileTypesView::slotFilter(const QString & patternFilter)
 
 void FileTypesView::addType()
 {
-  QStringList allGroups;
-  QMapIterator<QString,TypesListItem*> it = m_majorMap.begin();
+  TQStringList allGroups;
+  TQMapIterator<TQString,TypesListItem*> it = m_majorMap.begin();
   while ( it != m_majorMap.end() ) {
       allGroups.append( it.key() );
       ++it;
@@ -244,13 +244,13 @@ void FileTypesView::addType()
   NewTypeDialog m(allGroups, this);
 
   if (m.exec()) {
-    QListViewItemIterator it(typesLV);
-    QString loc = m.group() + "/" + m.text() + ".desktop";
+    TQListViewItemIterator it(typesLV);
+    TQString loc = m.group() + "/" + m.text() + ".desktop";
     loc = locateLocal("mime", loc);
     KMimeType::Ptr mimetype = new KMimeType(loc,
                                             m.group() + "/" + m.text(),
-                                            QString(), QString(),
-                                            QStringList());
+                                            TQString(), TQString(),
+                                            TQStringList());
 
     TypesListItem *group = m_majorMap[ m.group() ];
     if ( !group )
@@ -261,7 +261,7 @@ void FileTypesView::addType()
     }
 
     // find out if our group has been filtered out -> insert if necessary
-    QListViewItem *item = typesLV->firstChild();
+    TQListViewItem *item = typesLV->firstChild();
     bool insert = true;
     while ( item ) {
 	if ( item == group ) {
@@ -297,7 +297,7 @@ void FileTypesView::removeType()
   if ( current->isEssential() )
       return;
 
-  QListViewItem *li = current->itemAbove();
+  TQListViewItem *li = current->itemAbove();
   if (!li)
       li = current->itemBelow();
   if (!li)
@@ -312,13 +312,13 @@ void FileTypesView::removeType()
       typesLV->setSelected(li, true);
 }
 
-void FileTypesView::slotDoubleClicked(QListViewItem *item)
+void FileTypesView::slotDoubleClicked(TQListViewItem *item)
 {
   if ( !item ) return;
   item->setOpen( !item->isOpen() );
 }
 
-void FileTypesView::updateDisplay(QListViewItem *item)
+void FileTypesView::updateDisplay(TQListViewItem *item)
 {
   if (!item)
   {
@@ -348,12 +348,12 @@ void FileTypesView::updateDisplay(QListViewItem *item)
     setDirty(false);
 }
 
-bool FileTypesView::sync( QValueList<TypesListItem *>& itemsModified )
+bool FileTypesView::sync( TQValueList<TypesListItem *>& itemsModified )
 {
   bool didIt = false;
   // first, remove those items which we are asked to remove.
-  QStringList::Iterator it(removedList.begin());
-  QString loc;
+  TQStringList::Iterator it(removedList.begin());
+  TQString loc;
 
   for (; it != removedList.end(); ++it) {
     didIt = true;
@@ -370,7 +370,7 @@ bool FileTypesView::sync( QValueList<TypesListItem *>& itemsModified )
 
   // now go through all entries and sync those which are dirty.
   // don't use typesLV, it may be filtered
-  QMapIterator<QString,TypesListItem*> it1 = m_majorMap.begin();
+  TQMapIterator<TQString,TypesListItem*> it1 = m_majorMap.begin();
   while ( it1 != m_majorMap.end() ) {
     TypesListItem *tli = *it1;
     if (tli->isDirty()) {
@@ -381,7 +381,7 @@ bool FileTypesView::sync( QValueList<TypesListItem *>& itemsModified )
     }
     ++it1;
   }
-  QPtrListIterator<TypesListItem> it2( m_itemList );
+  TQPtrListIterator<TypesListItem> it2( m_itemList );
   while ( it2.current() ) {
     TypesListItem *tli = *it2;
     if (tli->isDirty()) {
@@ -422,9 +422,9 @@ void FileTypesView::slotDatabaseChanged()
     // our 'copies' to be in sync with it. Not important for OK, but
     // important for Apply (how to differentiate those 2?).
     // See BR 35071.
-    QValueList<TypesListItem *>::Iterator it = m_itemsModified.begin();
+    TQValueList<TypesListItem *>::Iterator it = m_itemsModified.begin();
     for( ; it != m_itemsModified.end(); ++it ) {
-        QString name = (*it)->name();
+        TQString name = (*it)->name();
         if ( removedList.find( name ) == removedList.end() ) // if not deleted meanwhile
             (*it)->refresh();
     }

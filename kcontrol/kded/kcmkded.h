@@ -19,7 +19,7 @@
 #ifndef KCMKDED_H
 #define KCMKDED_H
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
 #include <kcmodule.h>
 
@@ -32,7 +32,7 @@ class KDEDConfig : public KCModule
 {
 Q_OBJECT
 public:
-	KDEDConfig(QWidget* parent, const char* name= 0L, const QStringList& foo = QStringList());
+	KDEDConfig(TQWidget* parent, const char* name= 0L, const TQStringList& foo = TQStringList());
 	~KDEDConfig() {};
 
 	void       load();
@@ -45,31 +45,31 @@ protected slots:
 	void slotStartService();
 	void slotStopService();
 	void slotServiceRunningToggled();
-	void slotEvalItem(QListViewItem *item);
-	void slotItemChecked(QCheckListItem *item);
+	void slotEvalItem(TQListViewItem *item);
+	void slotItemChecked(TQCheckListItem *item);
 	void getServiceStatus();
 
-        bool autoloadEnabled(KConfig *config, const QString &filename);
-        void setAutoloadEnabled(KConfig *config, const QString &filename, bool b);
+        bool autoloadEnabled(KConfig *config, const TQString &filename);
+        void setAutoloadEnabled(KConfig *config, const TQString &filename, bool b);
 
 private:
 	KListView *_lvLoD;
 	KListView *_lvStartup;
-	QPushButton *_pbStart;
-	QPushButton *_pbStop;
+	TQPushButton *_pbStart;
+	TQPushButton *_pbStop;
 	
-	QString RUNNING;
-	QString NOT_RUNNING;
+	TQString RUNNING;
+	TQString NOT_RUNNING;
 };
 
-class CheckListItem : public QObject, public QCheckListItem
+class CheckListItem : public TQObject, public QCheckListItem
 {
 	Q_OBJECT
 public:
-	CheckListItem(QListView* parent, const QString &text);
+	CheckListItem(TQListView* parent, const TQString &text);
 	~CheckListItem() { }
 signals:
-	void changed(QCheckListItem*);
+	void changed(TQCheckListItem*);
 protected:
 	virtual void stateChange(bool);
 };

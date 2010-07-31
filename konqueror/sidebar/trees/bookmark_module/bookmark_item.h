@@ -34,7 +34,7 @@ public:
     virtual ~KonqSidebarBookmarkItem() {}
 
     // Create a drag object from this item.
-    virtual QDragObject * dragObject( QWidget * parent, bool move = false );
+    virtual TQDragObject * dragObject( TQWidget * parent, bool move = false );
 
     virtual void middleButtonClicked();
     virtual void rightButtonPressed();
@@ -45,12 +45,12 @@ public:
     virtual KURL externalURL() const;
 
     // overwrite this if you want a tooltip shown on your item
-    virtual QString toolTipText() const;
+    virtual TQString toolTipText() const;
 
     // Called when this item is selected
     virtual void itemSelected();
 
-    virtual QString key( int column, bool /*ascending*/ ) const;
+    virtual TQString key( int column, bool /*ascending*/ ) const;
 
     virtual KBookmark &bookmark();
 

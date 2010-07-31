@@ -18,11 +18,11 @@
 
 #include <kglobal.h>
 
-#include <qwidget.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qstring.h>
-#include <qcursor.h>
+#include <tqwidget.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqstring.h>
+#include <tqcursor.h>
 
 #include <kglobal.h>
 
@@ -91,7 +91,7 @@ class PreviewCursor
 		PreviewCursor();
 		~PreviewCursor();
 
-		void load( const QString &, const QString & );
+		void load( const TQString &, const TQString & );
 		const Picture picture() const { return m_pict; }
 		const Cursor handle() const   { return m_handle; }
 		const int width() const  { return m_width; }
@@ -113,9 +113,9 @@ PreviewCursor::PreviewCursor() :
 }
 
 
-void PreviewCursor::load( const QString &name, const QString &theme )
+void PreviewCursor::load( const TQString &name, const TQString &theme )
 {
-	Display *dpy = QPaintDevice::x11AppDisplay();
+	Display *dpy = TQPaintDevice::x11AppDisplay();
 
 	if ( m_pict ) XRenderFreePicture( dpy, m_pict );
 	if ( m_handle ) XFreeCursor( dpy, m_handle );
@@ -176,14 +176,14 @@ void PreviewCursor::load( const QString &name, const QString &theme )
 
 PreviewCursor::~PreviewCursor()
 {
-	if ( m_handle ) XFreeCursor( QPaintDevice::x11AppDisplay(), m_handle );
-	if ( m_pict ) XRenderFreePicture( QPaintDevice::x11AppDisplay(), m_pict );
+	if ( m_handle ) XFreeCursor( TQPaintDevice::x11AppDisplay(), m_handle );
+	if ( m_pict ) XRenderFreePicture( TQPaintDevice::x11AppDisplay(), m_pict );
 }
 
 
 Picture PreviewCursor::createPicture( const XcursorImage* image ) const
 {
-	Display *dpy = QPaintDevice::x11AppDisplay();
+	Display *dpy = TQPaintDevice::x11AppDisplay();
 
 	XImage ximage;
 	ximage.width            = image->width;
@@ -221,7 +221,7 @@ Picture PreviewCursor::createPicture( const XcursorImage* image ) const
 void PreviewCursor::cropCursorImage( XcursorImage *&image ) const
 {
 	// Calculate the auto-crop rectangle
-	QRect r( QPoint( image->width, image->height ), QPoint() );
+	TQRect r( TQPoint( image->width, image->height ), TQPoint() );
 	XcursorPixel *pixels = image->pixels;
 	for ( int y = 0; y < int(image->height); y++ ) {
 		for ( int x = 0; x < int(image->width); x++ ) {
@@ -262,8 +262,8 @@ void PreviewCursor::cropCursorImage( XcursorImage *&image ) const
 
 
 
-PreviewWidget::PreviewWidget( QWidget *parent, const char *name )
-		: QWidget( parent, name )
+PreviewWidget::PreviewWidget( TQWidget *parent, const char *name )
+		: TQWidget( parent, name )
 {
 	cursors = new PreviewCursor* [ numCursors ];
 	for ( int i = 0; i < numCursors; i++ )
@@ -284,7 +284,7 @@ PreviewWidget::~PreviewWidget()
 }
 
 
-void PreviewWidget::setTheme( const QString &theme )
+void PreviewWidget::setTheme( const TQString &theme )
 {
 	setUpdatesEnabled( false );
 
@@ -307,11 +307,11 @@ void PreviewWidget::setTheme( const QString &theme )
 }
 
 
-void PreviewWidget::paintEvent( QPaintEvent * )
+void PreviewWidget::paintEvent( TQPaintEvent * )
 {
-	QPixmap buffer( size() );
-	QPainter p( &buffer );
-	p.fillRect( rect(), colorGroup().brush( QColorGroup::Background ) );
+	TQPixmap buffer( size() );
+	TQPainter p( &buffer );
+	p.fillRect( rect(), colorGroup().brush( TQColorGroup::Background ) );
 	Picture dest;
 
 	if ( !qt_has_xft || !qt_use_xrender ) {
@@ -339,7 +339,7 @@ void PreviewWidget::paintEvent( QPaintEvent * )
 }
 
 
-void PreviewWidget::mouseMoveEvent( QMouseEvent *e )
+void PreviewWidget::mouseMoveEvent( TQMouseEvent *e )
 {
 	int pos = e->x() / ( width() / numCursors );
 

@@ -36,17 +36,17 @@
 #include <kio/global.h>
 #include <klocale.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 namespace KioSMTP {
 
-  void TransactionState::setFailedFatally( int code, const QString & msg ) {
+  void TransactionState::setFailedFatally( int code, const TQString & msg ) {
     mFailed = mFailedFatally = true;
     mErrorCode = code;
     mErrorMessage = msg;
   }
 
-  void TransactionState::setMailFromFailed( const QString & addr, const Response & r ) {
+  void TransactionState::setMailFromFailed( const TQString & addr, const Response & r ) {
     setFailed();
     mErrorCode = KIO::ERR_NO_CONTENT;
     if ( addr.isEmpty() )
@@ -86,17 +86,17 @@ namespace KioSMTP {
     return KIO::ERR_INTERNAL;
   }
 
-  QString TransactionState::errorMessage() const {
+  TQString TransactionState::errorMessage() const {
     if ( !failed() )
-      return QString::null;
+      return TQString::null;
 
     if ( !mErrorMessage.isEmpty() )
       return mErrorMessage;
 
     if ( haveRejectedRecipients() ) {
-      QString msg = i18n("Message sending failed since the following recipients were rejected by the server:\n"
+      TQString msg = i18n("Message sending failed since the following recipients were rejected by the server:\n"
 			 "%1");
-      QStringList recip;
+      TQStringList recip;
       for ( RejectedRecipientList::const_iterator it = mRejectedRecipients.begin() ;
 	    it != mRejectedRecipients.end() ; ++it )
 	recip.push_back( (*it).recipient + " (" + (*it).reason + ')' );

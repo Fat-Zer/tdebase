@@ -45,17 +45,17 @@ namespace KioSMTP {
   Request Request::fromURL( const KURL & url ) {
     Request request;
 
-    const QStringList query = QStringList::split( '&', url.query().mid(1) );
+    const TQStringList query = TQStringList::split( '&', url.query().mid(1) );
 #ifndef NDEBUG
     kdDebug(7112) << "Parsing request from query:\n" + query.join("\n" ) << endl;
 #endif
-    for ( QStringList::const_iterator it = query.begin() ; it != query.end() ; ++it ) {
+    for ( TQStringList::const_iterator it = query.begin() ; it != query.end() ; ++it ) {
       int equalsPos = (*it).find( '=' );
       if ( equalsPos <= 0 )
 	continue;
 
-      const QString key = (*it).left( equalsPos ).lower();
-      const QString value = KURL::decode_string( (*it).mid( equalsPos + 1 ) );
+      const TQString key = (*it).left( equalsPos ).lower();
+      const TQString value = KURL::decode_string( (*it).mid( equalsPos + 1 ) );
 
       if ( key == "to" )
 	request.addTo( value );
@@ -87,11 +87,11 @@ namespace KioSMTP {
     return request;
   }
 
-  QCString Request::heloHostnameCString() const {
+  TQCString Request::heloHostnameCString() const {
     return KIDNA::toAsciiCString( heloHostname() );
   }
 
-  static bool isUsAscii( const QString & s ) {
+  static bool isUsAscii( const TQString & s ) {
     for ( uint i = 0 ; i < s.length() ; ++i )
       if ( s[i].unicode() > 127 ) return false;
     return true;
@@ -100,7 +100,7 @@ namespace KioSMTP {
 
 
   static inline bool isSpecial( char ch ) {
-    static const QCString specials = "()<>[]:;@\\,.\"";
+    static const TQCString specials = "()<>[]:;@\\,.\"";
     return specials.find( ch ) >= 0;
   }
 
@@ -112,17 +112,17 @@ namespace KioSMTP {
 
 
 
-  static inline QCString rfc2047Encode( const QString & s ) {
-    QCString r = KCodecs::base64Encode( s.stripWhiteSpace().utf8(), false );
+  static inline TQCString rfc2047Encode( const TQString & s ) {
+    TQCString r = KCodecs::base64Encode( s.stripWhiteSpace().utf8(), false );
     return "=?utf-8?b?" + r + "?=" ; // use base64 since that always gives a valid encoded-word
   }
 
 
 
-  static QCString quote( const QString & s ) {
+  static TQCString quote( const TQString & s ) {
     assert( isUsAscii( s ) );
 
-    QCString r( s.length() * 2 );
+    TQCString r( s.length() * 2 );
     bool needsQuotes = false;
 
     unsigned int j = 0;
@@ -145,19 +145,19 @@ namespace KioSMTP {
 
 
 
-  static QCString formatFromAddress( const QString & fromRealName, const QString & fromAddress ) {
+  static TQCString formatFromAddress( const TQString & fromRealName, const TQString & fromAddress ) {
     if ( fromRealName.isEmpty() )
       return fromAddress.latin1(); // no real name: return "joe@user.org"
 
     // return "Joe User <joe@user.org>", "\"User, Joe\" <joe@user.org>"
     // or "=?utf-8?q?Joe_User?= <joe@user.org>", depending on real name's nature.
-    QCString r = isUsAscii( fromRealName ) ? quote( fromRealName ) : rfc2047Encode( fromRealName );
+    TQCString r = isUsAscii( fromRealName ) ? quote( fromRealName ) : rfc2047Encode( fromRealName );
     return r + " <" + fromAddress.latin1() + '>';
   }
 
 
 
-  static QCString formatSubject( QString s ) {
+  static TQCString formatSubject( TQString s ) {
     if ( isUsAscii( s ) )
       return s.remove( '\n' ).latin1(); // don't break header folding,
 					// so remove any line break
@@ -168,21 +168,21 @@ namespace KioSMTP {
 
 
 
-  QCString Request::headerFields( const QString & fromRealName ) const {
+  TQCString Request::headerFields( const TQString & fromRealName ) const {
     if ( !emitHeaders() )
       return 0;
 
     assert( hasFromAddress() ); // should have been checked for by
 				// caller (MAIL FROM comes before DATA)
 
-    QCString result = "From: " + formatFromAddress( fromRealName, fromAddress() ) + "\r\n";
+    TQCString result = "From: " + formatFromAddress( fromRealName, fromAddress() ) + "\r\n";
 
     if ( !subject().isEmpty() )
       result += "Subject: " + formatSubject( subject() ) + "\r\n";
     if ( !to().empty() )
-      result += QCString( "To: " ) + to().join( ",\r\n\t" /* line folding */ ).latin1() + "\r\n";
+      result += TQCString( "To: " ) + to().join( ",\r\n\t" /* line folding */ ).latin1() + "\r\n";
     if ( !cc().empty() )
-      result += QCString( "Cc: " ) + cc().join( ",\r\n\t" /* line folding */ ).latin1() + "\r\n";
+      result += TQCString( "Cc: " ) + cc().join( ",\r\n\t" /* line folding */ ).latin1() + "\r\n";
     return result;
   }
 

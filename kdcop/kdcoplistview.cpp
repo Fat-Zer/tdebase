@@ -7,12 +7,12 @@
 #include "kdcoplistview.h"
 #include "kdcoplistview.moc"
 #include <kdebug.h>
-#include <qdragobject.h>
-#include <qstringlist.h>
-#include <qregexp.h>
+#include <tqdragobject.h>
+#include <tqstringlist.h>
+#include <tqregexp.h>
 
 
-KDCOPListView::KDCOPListView ( QWidget *parent, const char *name)
+KDCOPListView::KDCOPListView ( TQWidget *parent, const char *name)
     : KListView(parent, name)
 {
 	kdDebug() << "Building new list." << endl;
@@ -25,21 +25,21 @@ KDCOPListView::~KDCOPListView ()
 
 }
 
-QDragObject *KDCOPListView::dragObject()
+TQDragObject *KDCOPListView::dragObject()
 {
 	kdDebug() << "Drag object called... " << endl;
 	if(!currentItem())
 		return 0;
 	else
-		return new QTextDrag(encode(this->selectedItem()), this);
+		return new TQTextDrag(encode(this->selectedItem()), this);
 }
 
-void KDCOPListView::setMode( const QString &theMode )
+void KDCOPListView::setMode( const TQString &theMode )
 {
 	mode = theMode;
 }
 
-QString KDCOPListView::encode(QListViewItem *theCode)
+TQString KDCOPListView::encode(TQListViewItem *theCode)
 {
 	DCOPBrowserItem * item = static_cast<DCOPBrowserItem *>(theCode);
 
@@ -49,18 +49,18 @@ QString KDCOPListView::encode(QListViewItem *theCode)
 	DCOPBrowserFunctionItem * fitem =
 	static_cast<DCOPBrowserFunctionItem *>(item);
 
-	QString function = QString::fromUtf8(fitem->function());
-	QString application = QString::fromUtf8(fitem->app());
-	QString object = QString::fromUtf8(fitem->object());
+	TQString function = TQString::fromUtf8(fitem->function());
+	TQString application = TQString::fromUtf8(fitem->app());
+	TQString object = TQString::fromUtf8(fitem->object());
 
 	kdDebug() << function << endl;
-	QString returnType = function.section(' ', 0,0);
-	QString returnCode = "";
-	QString normalisedSignature;
-	QStringList types;
-	QStringList names;
+	TQString returnType = function.section(' ', 0,0);
+	TQString returnCode = "";
+	TQString normalisedSignature;
+	TQStringList types;
+	TQStringList names;
 
-	QString unNormalisedSignature(function);
+	TQString unNormalisedSignature(function);
 
 	int s = unNormalisedSignature.find(' ');
 
@@ -81,9 +81,9 @@ QString KDCOPListView::encode(QListViewItem *theCode)
 	}
 	if (left > 0 && left + 1 < right - 1)
 	{
-		types = QStringList::split
+		types = TQStringList::split
 		(',', unNormalisedSignature.mid(left + 1, right - left - 1));
-		for (QStringList::Iterator it = types.begin(); it != types.end(); ++it)
+		for (TQStringList::Iterator it = types.begin(); it != types.end(); ++it)
 		{
 			(*it) = (*it).stripWhiteSpace();
 			int s = (*it).find(' ');
@@ -97,16 +97,16 @@ QString KDCOPListView::encode(QListViewItem *theCode)
 
 	if ( mode == "C++")
 	{
-		QString args;
+		TQString args;
 		for( unsigned int i = 0; i < names.count(); i++)
 		{
 			args += types[i] + " " + names[i] + ";\n";
 		}
-		QString dcopRef = "DCOPRef m_" + application + object
+		TQString dcopRef = "DCOPRef m_" + application + object
 			+ "(\""+ application + "\",\"" + object +"\");\n";
 
-		QString stringNames = names.join(",");
-		QString stringTypes = types.join(",");
+		TQString stringNames = names.join(",");
+		TQString stringTypes = types.join(",");
 		if( returnType != "void")
 			returnType += " return" + returnType + " =";
 		else
@@ -128,7 +128,7 @@ QString KDCOPListView::encode(QListViewItem *theCode)
 	}
 	else if (mode == "Python")
 	{
-		QString setup;
+		TQString setup;
 		setup = "m_"
 			+ application + object
 			+ " = dcop.DCOPObject( \""
@@ -150,8 +150,8 @@ QString KDCOPListView::encode(QListViewItem *theCode)
 	return returnCode;
 }
 
-QString KDCOPListView::getCurrentCode() const
+TQString KDCOPListView::getCurrentCode() const
 {
 	// fixing warning
-	return QString::null;
+	return TQString::null;
 }

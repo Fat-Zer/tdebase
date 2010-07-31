@@ -45,12 +45,12 @@
 
 #include <iostream.h>
 
-#include <qdict.h>
-#include <qfile.h>
-#include <qfontmetrics.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qtextstream.h>
+#include <tqdict.h>
+#include <tqfile.h>
+#include <tqfontmetrics.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqtextstream.h>
 
 #include <kdebug.h>
 
@@ -63,10 +63,10 @@
 
 #include <machine/limits.h>
 
-bool GetInfo_CPU (QListView *lBox)
+bool GetInfo_CPU (TQListView *lBox)
 {
 
-	QString cpustring;
+	TQString cpustring;
 
         kern_return_t ret;
         struct host_basic_info basic_info;
@@ -81,37 +81,37 @@ bool GetInfo_CPU (QListView *lBox)
 		kdDebug() << "got Host Info: (" << basic_info.avail_cpus << ") CPUs available" << endl;
         	const NXArchInfo *archinfo;
         	archinfo=NXGetArchInfoFromCpuType(basic_info.cpu_type, basic_info.cpu_subtype);
-		new QListViewItem(lBox, i18n("Kernel is configured for %1 CPUs").arg(basic_info.max_cpus));
+		new TQListViewItem(lBox, i18n("Kernel is configured for %1 CPUs").arg(basic_info.max_cpus));
 		for (int i = 1; i <= basic_info.avail_cpus; i++) {
 			cpustring = i18n("CPU %1: %2").arg(i).arg(archinfo->description);
-			new QListViewItem(lBox, cpustring);
+			new TQListViewItem(lBox, cpustring);
 		}
 		return true;
 	}
 	return false;
 }
 
-bool GetInfo_IRQ (QListView *)
+bool GetInfo_IRQ (TQListView *)
 {
 	return false;
 }
 
-bool GetInfo_DMA (QListView *)
+bool GetInfo_DMA (TQListView *)
 {
 	return false;
 }
 
-bool GetInfo_PCI (QListView *)
+bool GetInfo_PCI (TQListView *)
 {
 	return false;
 }
 
-bool GetInfo_IO_Ports (QListView *)
+bool GetInfo_IO_Ports (TQListView *)
 {
 	return false;
 }
 
-bool GetInfo_Sound (QListView *lBox)
+bool GetInfo_Sound (TQListView *lBox)
 {
 #ifdef HAVE_COREAUDIO
 #define kMaxStringSize 1024
@@ -137,7 +137,7 @@ bool GetInfo_Sound (QListView *lBox)
 			kdDebug() << "get device name failed, status = " << (int)status << endl;
 			return false;
 		}
-		new QListViewItem(lBox, i18n("Device Name: %1").arg(deviceName));
+		new TQListViewItem(lBox, i18n("Device Name: %1").arg(deviceName));
 
 		/* Manufacturer */
 		status = AudioDeviceGetProperty(gOutputDeviceID, 1, 0, kAudioDevicePropertyDeviceManufacturer, &propertySize, manufacturer);
@@ -145,7 +145,7 @@ bool GetInfo_Sound (QListView *lBox)
 			kdDebug() << "get manufacturer failed, status = " << (int)status << endl;
 			return false;
 		}
-		new QListViewItem(lBox, i18n("Manufacturer: %1").arg(manufacturer));
+		new TQListViewItem(lBox, i18n("Manufacturer: %1").arg(manufacturer));
 		return true;
 	} else {
 		return false;
@@ -155,22 +155,22 @@ bool GetInfo_Sound (QListView *lBox)
 #endif
 }
 
-bool GetInfo_SCSI (QListView *lbox)
+bool GetInfo_SCSI (TQListView *lbox)
 {
 	return false;
 }
 
-bool GetInfo_Partitions (QListView *lbox)
+bool GetInfo_Partitions (TQListView *lbox)
 {
 	return false;
 }
 
-bool GetInfo_XServer_and_Video (QListView *lBox)
+bool GetInfo_XServer_and_Video (TQListView *lBox)
 {
 	return GetInfo_XServer_Generic( lBox );
 }
 
-bool GetInfo_Devices (QListView *lbox)
+bool GetInfo_Devices (TQListView *lbox)
 {
 	return false;
 }

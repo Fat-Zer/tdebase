@@ -28,7 +28,7 @@ NotifierNothingAction::NotifierNothingAction()
 	setLabel(i18n("Do Nothing"));
 }
 
-QString NotifierNothingAction::id() const
+TQString NotifierNothingAction::id() const
 {
 	return "#NothinAction";
 }

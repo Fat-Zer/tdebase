@@ -17,10 +17,10 @@
 #include "condition_list_widget.h"
 
 #include <assert.h>
-#include <qpushbutton.h>
-#include <qheader.h>
-#include <qlineedit.h>
-#include <qpopupmenu.h>
+#include <tqpushbutton.h>
+#include <tqheader.h>
+#include <tqlineedit.h>
+#include <tqpopupmenu.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -39,20 +39,20 @@ namespace KHotKeys
 
 // Condition_list_widget
 
-Condition_list_widget::Condition_list_widget( QWidget* parent_P, const char* name_P )
+Condition_list_widget::Condition_list_widget( TQWidget* parent_P, const char* name_P )
     : Condition_list_widget_ui( parent_P, name_P ), selected_item( NULL )
     {
     conditions.setAutoDelete( true );
-    QPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
+    TQPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
     popup->insertItem( i18n( "Active Window..." ), TYPE_ACTIVE_WINDOW );
     popup->insertItem( i18n( "Existing Window..." ), TYPE_EXISTING_WINDOW );
     popup->insertItem( i18n( "Not_condition", "Not" ), TYPE_NOT );
     popup->insertItem( i18n( "And_condition", "And" ), TYPE_AND );
     popup->insertItem( i18n( "Or_condition", "Or" ), TYPE_OR );
-    connect( conditions_listview, SIGNAL( doubleClicked ( QListViewItem *, const QPoint &, int ) ),
-             this, SLOT( modify_pressed() ) );
+    connect( conditions_listview, TQT_SIGNAL( doubleClicked ( TQListViewItem *, const TQPoint &, int ) ),
+             this, TQT_SLOT( modify_pressed() ) );
 
-    connect( popup, SIGNAL( activated( int )), SLOT( new_selected( int )));
+    connect( popup, TQT_SIGNAL( activated( int )), TQT_SLOT( new_selected( int )));
     new_button->setPopup( popup );
     conditions_listview->header()->hide();
     conditions_listview->addColumn( "" );
@@ -64,16 +64,16 @@ Condition_list_widget::Condition_list_widget( QWidget* parent_P, const char* nam
     delete_button->setEnabled( false );
     clear_data();
     // KHotKeys::Module::changed()
-    connect( new_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( copy_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( modify_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( delete_button, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( comment_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( new_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( copy_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( modify_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( delete_button, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( comment_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
 
 Condition_list_widget::~Condition_list_widget()
@@ -106,7 +106,7 @@ void Condition_list_widget::set_data( const Condition_list* data_P )
     }
 
 void Condition_list_widget::insert_listview_items( const Condition_list_base* parent_P,
-    QListView* parent1_P, Condition_list_item* parent2_P )
+    TQListView* parent1_P, Condition_list_item* parent2_P )
     {
     Condition_list_item* prev = NULL;
     for( Condition_list_base::Iterator it( *parent_P );
@@ -132,10 +132,10 @@ Condition_list* Condition_list_widget::get_data( Action_data_base* data_P ) cons
     }
 
 void Condition_list_widget::get_listview_items( Condition_list_base* list_P,
-    QListViewItem* first_item_P ) const
+    TQListViewItem* first_item_P ) const
     {
     list_P->clear();
-    for( QListViewItem* pos = first_item_P;
+    for( TQListViewItem* pos = first_item_P;
          pos != NULL;
          pos = pos->nextSibling())
         {
@@ -156,7 +156,7 @@ void Condition_list_widget::new_selected( int type_P )
         if( tmp && tmp->accepts_children())
             {
             int ret = KMessageBox::questionYesNoCancel( NULL,
-                i18n( "A group is selected.\nAdd the new condition in this selected group?" ), QString::null, i18n("Add in Group"), i18n("Ignore Group"));
+                i18n( "A group is selected.\nAdd the new condition in this selected group?" ), TQString::null, i18n("Add in Group"), i18n("Ignore Group"));
             if( ret == KMessageBox::Cancel )
                 return;
             else if( ret == KMessageBox::Yes )
@@ -239,7 +239,7 @@ void Condition_list_widget::modify_pressed()
     edit_listview_item( selected_item );
     }
 
-void Condition_list_widget::current_changed( QListViewItem* item_P )
+void Condition_list_widget::current_changed( TQListViewItem* item_P )
     {
 //    if( item_P == selected_item )
 //        return;
@@ -263,7 +263,7 @@ void Condition_list_widget::current_changed( QListViewItem* item_P )
     }
 
 Condition_list_item* Condition_list_widget::create_listview_item( Condition* condition_P,
-    QListView* parent1_P, Condition_list_item* parent2_P, QListViewItem* after_P, bool copy_P )
+    TQListView* parent1_P, Condition_list_item* parent2_P, TQListViewItem* after_P, bool copy_P )
     {
 #ifdef KHOTKEYS_DEBUG
     kdDebug( 1217 ) << "Condition_list_widget::create_listview_item():" << endl;
@@ -339,9 +339,9 @@ void Condition_list_widget::edit_listview_item( Condition_list_item* item_P )
 
 // Condition_list_item
 
-QString Condition_list_item::text( int column_P ) const
+TQString Condition_list_item::text( int column_P ) const
     {
-    return column_P == 0 ? condition()->description() : QString::null;
+    return column_P == 0 ? condition()->description() : TQString::null;
     }
 
 // Active_window_condition_dialog

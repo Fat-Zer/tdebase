@@ -11,8 +11,8 @@
 #ifndef _CONDITIONS_LIST_WIDGET_H_
 #define _CONDITIONS_LIST_WIDGET_H_
 
-#include <qlistview.h>
-#include <qptrlist.h>
+#include <tqlistview.h>
+#include <tqptrlist.h>
 
 #include <kdialogbase.h>
 
@@ -32,15 +32,15 @@ class Condition_list_widget
     {
     Q_OBJECT
     public:
-        Condition_list_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Condition_list_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         virtual ~Condition_list_widget();
         void set_data( const Condition_list* data_P );
         Condition_list* get_data( Action_data_base* data_P ) const;
     public slots:
         void clear_data();
     protected:
-        Condition_list_item* create_listview_item( Condition* condition_P, QListView* parent1_P,
-            Condition_list_item* parent2_P, QListViewItem* after_P, bool copy_P );
+        Condition_list_item* create_listview_item( Condition* condition_P, TQListView* parent1_P,
+            Condition_list_item* parent2_P, TQListViewItem* after_P, bool copy_P );
         void edit_listview_item( Condition_list_item* item_P );
         enum type_t { TYPE_ACTIVE_WINDOW, TYPE_EXISTING_WINDOW, TYPE_NOT, TYPE_AND, TYPE_OR };
     protected slots:
@@ -48,13 +48,13 @@ class Condition_list_widget
         virtual void copy_pressed();
         virtual void delete_pressed();
         virtual void modify_pressed();
-        virtual void current_changed( QListViewItem* item_P );
+        virtual void current_changed( TQListViewItem* item_P );
     private:
         void insert_listview_items( const Condition_list_base* parent_P,
-            QListView* parent1_P, Condition_list_item* parent2_P );
-        void get_listview_items( Condition_list_base* list_P, QListViewItem* first_item_P ) const;
+            TQListView* parent1_P, Condition_list_item* parent2_P );
+        void get_listview_items( Condition_list_base* list_P, TQListViewItem* first_item_P ) const;
         Condition_list_item* selected_item;
-        QPtrList< Condition > conditions;
+        TQPtrList< Condition > conditions;
     };
 
 typedef Condition_list_widget Condition_list_tab;
@@ -63,12 +63,12 @@ class Condition_list_item
     : public QListViewItem
     {
     public:
-        Condition_list_item( QListView* parent_P, Condition* condition_P );
-        Condition_list_item( QListViewItem* parent_P, Condition* condition_P );
-        Condition_list_item( QListView* parent_P, QListViewItem* after_P, Condition* condition_P );
-        Condition_list_item( QListViewItem* parent_P, QListViewItem* after_P,
+        Condition_list_item( TQListView* parent_P, Condition* condition_P );
+        Condition_list_item( TQListViewItem* parent_P, Condition* condition_P );
+        Condition_list_item( TQListView* parent_P, TQListViewItem* after_P, Condition* condition_P );
+        Condition_list_item( TQListViewItem* parent_P, TQListViewItem* after_P,
             Condition* condition_P );
-        virtual QString text( int column_P ) const;
+        virtual TQString text( int column_P ) const;
         Condition* condition() const;
         void set_condition( Condition* condition_P );
     protected:
@@ -116,28 +116,28 @@ class Existing_window_condition_dialog
 // Condition_list_item
 
 inline
-Condition_list_item::Condition_list_item( QListView* parent_P, Condition* condition_P )
-    : QListViewItem( parent_P ), _condition( condition_P )
+Condition_list_item::Condition_list_item( TQListView* parent_P, Condition* condition_P )
+    : TQListViewItem( parent_P ), _condition( condition_P )
     {
     }
     
 inline
-Condition_list_item::Condition_list_item( QListViewItem* parent_P, Condition* condition_P )
-    : QListViewItem( parent_P ), _condition( condition_P )
+Condition_list_item::Condition_list_item( TQListViewItem* parent_P, Condition* condition_P )
+    : TQListViewItem( parent_P ), _condition( condition_P )
     {
     }
 
 inline
-Condition_list_item::Condition_list_item( QListView* parent_P, QListViewItem* after_P,
+Condition_list_item::Condition_list_item( TQListView* parent_P, TQListViewItem* after_P,
     Condition* condition_P )
-    : QListViewItem( parent_P, after_P ), _condition( condition_P )
+    : TQListViewItem( parent_P, after_P ), _condition( condition_P )
     {
     }
 
 inline
-Condition_list_item::Condition_list_item( QListViewItem* parent_P, QListViewItem* after_P,
+Condition_list_item::Condition_list_item( TQListViewItem* parent_P, TQListViewItem* after_P,
     Condition* condition_P )
-    : QListViewItem( parent_P, after_P ), _condition( condition_P )
+    : TQListViewItem( parent_P, after_P ), _condition( condition_P )
     {
     }
 

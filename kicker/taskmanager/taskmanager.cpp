@@ -21,10 +21,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qapplication.h>
-#include <qcursor.h>
-#include <qimage.h>
-#include <qtimer.h>
+#include <tqapplication.h>
+#include <tqcursor.h>
+#include <tqimage.h>
+#include <tqtimer.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -54,28 +54,28 @@ TaskManager* TaskManager::the()
 }
 
 TaskManager::TaskManager()
-    : QObject(),
+    : TQObject(),
       _active(0),
       _startup_info(0),
       m_winModule(new KWinModule()),
       m_trackGeometry(false)
 {
     KGlobal::locale()->insertCatalogue("libtaskmanager");
-    connect(m_winModule, SIGNAL(windowAdded(WId)),
-            this,        SLOT(windowAdded(WId)));
-    connect(m_winModule, SIGNAL(windowRemoved(WId)),
-            this,        SLOT(windowRemoved(WId)));
-    connect(m_winModule, SIGNAL(activeWindowChanged(WId)),
-            this,        SLOT(activeWindowChanged(WId)));
-    connect(m_winModule, SIGNAL(currentDesktopChanged(int)),
-            this,        SLOT(currentDesktopChanged(int)));
-    connect(m_winModule, SIGNAL(windowChanged(WId,unsigned int)),
-            this,        SLOT(windowChanged(WId,unsigned int)));
+    connect(m_winModule, TQT_SIGNAL(windowAdded(WId)),
+            this,        TQT_SLOT(windowAdded(WId)));
+    connect(m_winModule, TQT_SIGNAL(windowRemoved(WId)),
+            this,        TQT_SLOT(windowRemoved(WId)));
+    connect(m_winModule, TQT_SIGNAL(activeWindowChanged(WId)),
+            this,        TQT_SLOT(activeWindowChanged(WId)));
+    connect(m_winModule, TQT_SIGNAL(currentDesktopChanged(int)),
+            this,        TQT_SLOT(currentDesktopChanged(int)));
+    connect(m_winModule, TQT_SIGNAL(windowChanged(WId,unsigned int)),
+            this,        TQT_SLOT(windowChanged(WId,unsigned int)));
 
     // register existing windows
-    const QValueList<WId> windows = m_winModule->windows();
-    QValueList<WId>::ConstIterator end(windows.end());
-    for (QValueList<WId>::ConstIterator it = windows.begin(); it != end; ++it)
+    const TQValueList<WId> windows = m_winModule->windows();
+    TQValueList<WId>::ConstIterator end(windows.end());
+    for (TQValueList<WId>::ConstIterator it = windows.begin(); it != end; ++it)
     {
         windowAdded(*it);
     }
@@ -99,14 +99,14 @@ void TaskManager::configure_startup()
         return;
     _startup_info = new KStartupInfo( KStartupInfo::CleanOnCantDetect, this );
     connect( _startup_info,
-        SIGNAL( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )),
-        SLOT( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )));
+        TQT_SIGNAL( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )),
+        TQT_SLOT( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )));
     connect( _startup_info,
-        SIGNAL( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )),
-        SLOT( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )));
+        TQT_SIGNAL( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )),
+        TQT_SLOT( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )));
     connect( _startup_info,
-        SIGNAL( gotRemoveStartup( const KStartupInfoId&, const KStartupInfoData& )),
-        SLOT( killStartup( const KStartupInfoId& )));
+        TQT_SIGNAL( gotRemoveStartup( const KStartupInfoId&, const KStartupInfoData& )),
+        TQT_SLOT( killStartup( const KStartupInfoId& )));
     c.setGroup( "TaskbarButtonSettings" );
     _startup_info->setTimeout( c.readUnsignedNumEntry( "Timeout", 30 ));
 }
@@ -114,7 +114,7 @@ void TaskManager::configure_startup()
 #ifdef THUMBNAILING_POSSIBLE
 void TaskManager::setXCompositeEnabled(bool state)
 {
-    Display *dpy = QPaintDevice::x11AppDisplay();
+    Display *dpy = TQPaintDevice::x11AppDisplay();
 
     if (!state)
     {
@@ -227,9 +227,9 @@ Task::Ptr TaskManager::findTask(WId w)
     return 0;
 }
 
-Task::Ptr TaskManager::findTask(int desktop, const QPoint& p)
+Task::Ptr TaskManager::findTask(int desktop, const TQPoint& p)
 {
-    QValueList<WId> list = winModule()->stackingOrder();
+    TQValueList<WId> list = winModule()->stackingOrder();
 
     Task::Ptr task = 0;
     int currentIndex = -1;
@@ -544,7 +544,7 @@ void TaskManager::killStartup(Startup::Ptr s)
     emit startupRemoved(s);
 }
 
-QString TaskManager::desktopName(int desk) const
+TQString TaskManager::desktopName(int desk) const
 {
     return m_winModule->desktopName(desk);
 }
@@ -561,8 +561,8 @@ bool TaskManager::isOnTop(const Task* task)
         return false;
     }
 
-    QValueList<WId>::ConstIterator begin(m_winModule->stackingOrder().constBegin());
-    QValueList<WId>::ConstIterator it = m_winModule->stackingOrder().fromLast();
+    TQValueList<WId>::ConstIterator begin(m_winModule->stackingOrder().constBegin());
+    TQValueList<WId>::ConstIterator it = m_winModule->stackingOrder().fromLast();
     do
     {
         Task::Dict::iterator taskItEnd = m_tasksByWId.end();
@@ -602,14 +602,14 @@ bool TaskManager::isOnScreen(int screen, const WId wid)
 
     // for window decos that fudge a bit and claim to extend beyond the
     // edge of the screen, we just contract a bit.
-    QRect window = wi.frameGeometry();
-    QRect desktop = QApplication::desktop()->screenGeometry(screen);
+    TQRect window = wi.frameGeometry();
+    TQRect desktop = TQApplication::desktop()->screenGeometry(screen);
     desktop.addCoords(5, 5, -5, -5);
     return window.intersects(desktop);
 }
 
-Task::Task(WId win, QObject *parent, const char *name)
-  : QObject(parent, name),
+Task::Task(WId win, TQObject *parent, const char *name)
+  : TQObject(parent, name),
     _active(false),
     _win(win),
     m_frameId(win),
@@ -657,7 +657,7 @@ Task::~Task()
 #ifdef THUMBNAILING_POSSIBLE
     if (m_windowPixmap)
     {
-        XFreePixmap(QPaintDevice::x11AppDisplay(), m_windowPixmap);
+        XFreePixmap(TQPaintDevice::x11AppDisplay(), m_windowPixmap);
     }
 #endif // THUMBNAILING_POSSIBLE
 }
@@ -676,7 +676,7 @@ void Task::findWindowFrameId()
     target_win = _win;
     for (;;)
     {
-        if (!XQueryTree(QPaintDevice::x11AppDisplay(), target_win, &root,
+        if (!XQueryTree(TQPaintDevice::x11AppDisplay(), target_win, &root,
                         &parent, &children, &nchildren))
         {
             break;
@@ -728,7 +728,7 @@ void Task::refreshIcon()
 
 void Task::refresh(unsigned int dirty)
 {
-    QString name = visibleName();
+    TQString name = visibleName();
     _info = KWin::windowInfo(_win, 0, NET::WM2AllowedActions);
 
     if (dirty != NET::WMName || name != visibleName())
@@ -804,9 +804,9 @@ bool Task::isOnTop() const
 
 bool Task::isModified() const
 {
-  static QString modStr = QString::fromUtf8("[") +
+  static TQString modStr = TQString::fromUtf8("[") +
                           i18n("modified") +
-                          QString::fromUtf8("]");
+                          TQString::fromUtf8("]");
   int modStrPos = _info.visibleName().find(modStr);
 
   return ( modStrPos != -1 );
@@ -859,31 +859,31 @@ void Task::removeTransient(WId w)
     _transients_demanding_attention.remove(w);
 }
 
-QString Task::className()
+TQString Task::className()
 {
     XClassHint hint;
     if(XGetClassHint(qt_xdisplay(), _win, &hint)) {
-        QString nh( hint.res_name );
+        TQString nh( hint.res_name );
         XFree( hint.res_name );
         XFree( hint.res_class );
         return nh;
     }
-    return QString::null;
+    return TQString::null;
 }
 
-QString Task::classClass()
+TQString Task::classClass()
 {
     XClassHint hint;
     if(XGetClassHint(qt_xdisplay(), _win, &hint)) {
-        QString ch( hint.res_class );
+        TQString ch( hint.res_class );
         XFree( hint.res_name );
         XFree( hint.res_class );
         return ch;
     }
-    return QString::null;
+    return TQString::null;
 }
 
-QPixmap Task::icon( int width, int height, bool allowResize )
+TQPixmap Task::icon( int width, int height, bool allowResize )
 {
   if ( (width == _lastWidth)
        && (height == _lastHeight)
@@ -891,7 +891,7 @@ QPixmap Task::icon( int width, int height, bool allowResize )
        && (!_lastIcon.isNull()) )
     return _lastIcon;
 
-  QPixmap newIcon = KWin::icon( _win, width, height, allowResize );
+  TQPixmap newIcon = KWin::icon( _win, width, height, allowResize );
   if ( !newIcon.isNull() ) {
     _lastIcon = newIcon;
     _lastWidth = width;
@@ -902,9 +902,9 @@ QPixmap Task::icon( int width, int height, bool allowResize )
   return newIcon;
 }
 
-QPixmap Task::bestIcon( int size, bool &isStaticIcon )
+TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
 {
-  QPixmap pixmap;
+  TQPixmap pixmap;
   isStaticIcon = false;
 
   switch( size ) {
@@ -979,7 +979,7 @@ QPixmap Task::bestIcon( int size, bool &isStaticIcon )
   return pixmap;
 }
 
-bool Task::idMatch( const QString& id1, const QString& id2 )
+bool Task::idMatch( const TQString& id1, const TQString& id2 )
 {
   if ( id1.isEmpty() || id2.isEmpty() )
     return false;
@@ -1009,8 +1009,8 @@ void Task::move()
         KWin::deIconifyWindow(_win);
     }
 
-    QRect geom = _info.geometry();
-    QCursor::setPos(geom.center());
+    TQRect geom = _info.geometry();
+    TQCursor::setPos(geom.center());
 
     NETRootInfo ri(qt_xdisplay(), NET::WMMoveResize);
     ri.moveResizeRequest(_win, geom.center().x(),
@@ -1032,8 +1032,8 @@ void Task::resize()
         KWin::deIconifyWindow(_win);
     }
 
-    QRect geom = _info.geometry();
-    QCursor::setPos(geom.bottomRight());
+    TQRect geom = _info.geometry();
+    TQCursor::setPos(geom.bottomRight());
 
     NETRootInfo ri(qt_xdisplay(), NET::WMMoveResize);
     ri.moveResizeRequest(_win, geom.bottomRight().x(),
@@ -1269,7 +1269,7 @@ void Task::toggleShaded()
     setShaded( !isShaded() );
 }
 
-void Task::publishIconGeometry(QRect rect)
+void Task::publishIconGeometry(TQRect rect)
 {
     if (rect == m_iconGeometry)
     {
@@ -1305,15 +1305,15 @@ void Task::updateThumbnail()
     // by the thumbnail generation. This makes things much smoother
     // on slower machines.
     //
-    QWidget *rootWin = qApp->desktop();
-    QRect geom = _info.geometry();
-    _grab = QPixmap::grabWindow(rootWin->winId(),
+    TQWidget *rootWin = qApp->desktop();
+    TQRect geom = _info.geometry();
+    _grab = TQPixmap::grabWindow(rootWin->winId(),
                                 geom.x(), geom.y(),
                                 geom.width(), geom.height());
 
     if (!_grab.isNull())
     {
-       QTimer::singleShot(200, this, SLOT(generateThumbnail()));
+       TQTimer::singleShot(200, this, TQT_SLOT(generateThumbnail()));
     }
 }
 
@@ -1322,7 +1322,7 @@ void Task::generateThumbnail()
    if ( _grab.isNull() )
       return;
 
-   QImage img = _grab.convertToImage();
+   TQImage img = _grab.convertToImage();
 
    double width = img.width();
    double height = img.height();
@@ -1337,14 +1337,14 @@ void Task::generateThumbnail()
 }
 
 #ifdef THUMBNAILING_POSSIBLE
-QPixmap Task::thumbnail(int maxDimension)
+TQPixmap Task::thumbnail(int maxDimension)
 {
     if (!TaskManager::xCompositeEnabled() || !m_windowPixmap)
     {
-        return QPixmap();
+        return TQPixmap();
     }
 
-    Display *dpy = QPaintDevice::x11AppDisplay();
+    Display *dpy = TQPaintDevice::x11AppDisplay();
 
     XWindowAttributes winAttr;
     XGetWindowAttributes(dpy, m_frameId, &winAttr);
@@ -1374,12 +1374,12 @@ QPixmap Task::thumbnail(int maxDimension)
     int thumbnailWidth = (int)(winAttr.width * factor);
     int thumbnailHeight = (int)(winAttr.height * factor);
 
-    QPixmap thumbnail(thumbnailWidth, thumbnailHeight);
-    thumbnail.fill(QApplication::palette().active().background());
+    TQPixmap thumbnail(thumbnailWidth, thumbnailHeight);
+    thumbnail.fill(TQApplication::palette().active().background());
 
-#if 0 // QImage::smoothScale() scaling
-    QPixmap full(winAttr.width, winAttr.height);
-    full.fill(QApplication::palette().active().background());
+#if 0 // TQImage::smoothScale() scaling
+    TQPixmap full(winAttr.width, winAttr.height);
+    full.fill(TQApplication::palette().active().background());
 
     bool hasAlpha = format->type == PictTypeDirect && format->direct.alphaMask;
 
@@ -1394,7 +1394,7 @@ QPixmap Task::thumbnail(int maxDimension)
                      winAttr.width, winAttr.height);
 
     KPixmapIO io;
-    QImage image = io.convertToImage(full);
+    TQImage image = io.convertToImage(full);
     thumbnail = io.convertToPixmap(image.smoothScale(thumbnailWidth,
                                                      thumbnailHeight));
 #else // XRENDER scaling
@@ -1408,7 +1408,7 @@ QPixmap Task::thumbnail(int maxDimension)
     XRenderSetPictureTransform(dpy, picture, &transformation);
     XRenderSetPictureFilter(dpy, picture, FilterBest, 0, 0);
 
-    XRenderComposite(QPaintDevice::x11AppDisplay(),
+    XRenderComposite(TQPaintDevice::x11AppDisplay(),
                      PictOpOver, // we're filtering, alpha values are probable
                      picture, // src
                      None, // mask
@@ -1423,9 +1423,9 @@ QPixmap Task::thumbnail(int maxDimension)
     return thumbnail;
 }
 #else // THUMBNAILING_POSSIBLE
-QPixmap Task::thumbnail(int /* maxDimension */)
+TQPixmap Task::thumbnail(int /* maxDimension */)
 {
-    return QPixmap();
+    return TQPixmap();
 }
 #endif // THUMBNAILING_POSSIBLE
 
@@ -1438,7 +1438,7 @@ void Task::updateWindowPixmap()
         return;
     }
 
-    Display *dpy = QPaintDevice::x11AppDisplay();
+    Display *dpy = TQPaintDevice::x11AppDisplay();
 
     if (m_windowPixmap)
     {
@@ -1453,8 +1453,8 @@ void Task::updateWindowPixmap()
 }
 
 Startup::Startup(const KStartupInfoId& id, const KStartupInfoData& data,
-                 QObject * parent, const char *name)
-    : QObject(parent, name), _id(id), _data(data)
+                 TQObject * parent, const char *name)
+    : TQObject(parent, name), _id(id), _data(data)
 {
 }
 
@@ -1473,11 +1473,11 @@ int TaskManager::currentDesktop() const
     return m_winModule->currentDesktop();
 }
 
-TaskDrag::TaskDrag(const Task::List& tasks, QWidget* source, const char* name)
-  : QStoredDrag("taskbar/task", source, name)
+TaskDrag::TaskDrag(const Task::List& tasks, TQWidget* source, const char* name)
+  : TQStoredDrag("taskbar/task", source, name)
 {
-    QByteArray data;
-    QDataStream stream(data, IO_WriteOnly);
+    TQByteArray data;
+    TQDataStream stream(data, IO_WriteOnly);
 
     Task::List::const_iterator itEnd = tasks.constEnd();
     for (Task::List::const_iterator it = tasks.constBegin(); it != itEnd; ++it)
@@ -1492,19 +1492,19 @@ TaskDrag::~TaskDrag()
 {
 }
 
-bool TaskDrag::canDecode(const QMimeSource* e)
+bool TaskDrag::canDecode(const TQMimeSource* e)
 {
     return e->provides("taskbar/task");
 }
 
-Task::List TaskDrag::decode( const QMimeSource* e )
+Task::List TaskDrag::decode( const TQMimeSource* e )
 {
-    QByteArray data(e->encodedData("taskbar/task"));
+    TQByteArray data(e->encodedData("taskbar/task"));
     Task::List tasks;
 
     if (data.size())
     {
-        QDataStream stream(data, IO_ReadOnly);
+        TQDataStream stream(data, IO_ReadOnly);
         while (!stream.atEnd())
         {
             WId id;

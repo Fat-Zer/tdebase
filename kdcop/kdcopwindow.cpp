@@ -26,26 +26,26 @@
 #include <kcolorbutton.h>
 #include <klistviewsearchline.h>
 
-#include <qtimer.h>
-#include <qwidgetstack.h>
-#include <qlabel.h>
-#include <qsplitter.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
-#include <qvalidator.h>
-#include <qpushbutton.h>
-#include <qkeycode.h>
-#include <qpixmap.h>
-#include <qcursor.h>
-#include <qsize.h>
-#include <qrect.h>
-#include <qclipboard.h>
-#include <qdatetime.h>
+#include <tqtimer.h>
+#include <tqwidgetstack.h>
+#include <tqlabel.h>
+#include <tqsplitter.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqlineedit.h>
+#include <tqvalidator.h>
+#include <tqpushbutton.h>
+#include <tqkeycode.h>
+#include <tqpixmap.h>
+#include <tqcursor.h>
+#include <tqsize.h>
+#include <tqrect.h>
+#include <tqclipboard.h>
+#include <tqdatetime.h>
 #include <dcopref.h>
-#include <qvbox.h>
-#include <qimage.h>
-#include <qheader.h>
+#include <tqvbox.h>
+#include <tqimage.h>
+#include <tqheader.h>
 
 #include <kdebug.h>
 #include <kkeydialog.h>
@@ -63,14 +63,14 @@ class DCOPBrowserFunctionItem;
 class KMultiIntEdit : public QVBox
 {
 public:
-	KMultiIntEdit(QWidget *parent , const char * name=0) : QVBox(parent,name) {}
-	void addField(int key, const QString & caption  )
+	KMultiIntEdit(TQWidget *parent , const char * name=0) : TQVBox(parent,name) {}
+	void addField(int key, const TQString & caption  )
 	{
-		QHBox *l=new QHBox(this);
-		new QLabel(caption + ": ", l);
+		TQHBox *l=new TQHBox(this);
+		new TQLabel(caption + ": ", l);
 		KLineEdit* e = new KLineEdit( l );
 		m_widgets.insert(key, e ) ;
-        	e->setValidator( new QIntValidator( e ) );
+        	e->setValidator( new TQIntValidator( e ) );
 	}
 	int field(int key)
 	{
@@ -80,21 +80,21 @@ public:
 	}
 
 private:
-	QMap<int,KLineEdit*> m_widgets;
+	TQMap<int,KLineEdit*> m_widgets;
 };
 
 //------------------------------
 
 DCOPBrowserItem::DCOPBrowserItem
-(QListView * parent, DCOPBrowserItem::Type type)
-  : QListViewItem(parent),
+(TQListView * parent, DCOPBrowserItem::Type type)
+  : TQListViewItem(parent),
     type_(type)
 {
 }
 
 DCOPBrowserItem::DCOPBrowserItem
-(QListViewItem * parent, DCOPBrowserItem::Type type)
-  :  QListViewItem(parent),
+(TQListViewItem * parent, DCOPBrowserItem::Type type)
+  :  TQListViewItem(parent),
      type_(type)
 {
 }
@@ -108,13 +108,13 @@ DCOPBrowserItem::type() const
 // ------------------------------------------------------------------------
 
 DCOPBrowserApplicationItem::DCOPBrowserApplicationItem
-(QListView * parent, const QCString & app)
+(TQListView * parent, const TQCString & app)
   : DCOPBrowserItem(parent, Application),
     app_(app)
 {
   setExpandable(true);
-  setText(0, QString::fromUtf8(app_));
-  setPixmap(0,  KGlobal::iconLoader()->loadIcon( QString::fromLatin1( "exec" ), KIcon::Small ));
+  setText(0, TQString::fromUtf8(app_));
+  setPixmap(0,  KGlobal::iconLoader()->loadIcon( TQString::fromLatin1( "exec" ), KIcon::Small ));
 
 
 	/* Get the icon:  we use the icon from a mainwindow in that class.
@@ -127,21 +127,21 @@ DCOPBrowserApplicationItem::DCOPBrowserApplicationItem
 	 * All calls are async to don't block the GUI if the clients does not reply immediatly
 	 */
 
-	QRegExp rx( "([^\\-]+)");  // remove the possible processus id
+	TQRegExp rx( "([^\\-]+)");  // remove the possible processus id
 	rx.search(app_);           //   konqueror-123  => konqueror-mainwindow#1
-	QString mainWindowName= rx.cap(1) + "-mainwindow#1" ;
+	TQString mainWindowName= rx.cap(1) + "-mainwindow#1" ;
 
-	QByteArray data;
-	int callId=kapp->dcopClient()->callAsync( app_, mainWindowName.utf8(), "icon()", data, this, SLOT(retreiveIcon(int, const QCString&, const QByteArray&)));
+	TQByteArray data;
+	int callId=kapp->dcopClient()->callAsync( app_, mainWindowName.utf8(), "icon()", data, this, TQT_SLOT(retreiveIcon(int, const TQCString&, const TQByteArray&)));
 
 	if(!callId)
 	{
 		//maybe there is another mainwindow registered with another name.
-		QByteArray data;
-		QDataStream arg(data, IO_WriteOnly);
-		arg << QCString( "MainWindow" );
+		TQByteArray data;
+		TQDataStream arg(data, IO_WriteOnly);
+		arg << TQCString( "MainWindow" );
 
-		kapp->dcopClient()->callAsync( app_, "qt", "find(QCString)", data, this, SLOT(slotGotWindowName(int, const QCString&, const QByteArray& )));
+		kapp->dcopClient()->callAsync( app_, "qt", "find(TQCString)", data, this, TQT_SLOT(slotGotWindowName(int, const TQCString&, const TQByteArray& )));
 	}
 }
 
@@ -178,31 +178,31 @@ DCOPBrowserApplicationItem::populate()
   KApplication::restoreOverrideCursor();
 }
 
-void DCOPBrowserApplicationItem::slotGotWindowName(int /*callId*/, const QCString& /*replyType*/, const QByteArray &replyData)
+void DCOPBrowserApplicationItem::slotGotWindowName(int /*callId*/, const TQCString& /*replyType*/, const TQByteArray &replyData)
 {
-	QDataStream reply(replyData, IO_ReadOnly);
+	TQDataStream reply(replyData, IO_ReadOnly);
 	QCStringList mainswindows;
 	reply >> mainswindows;
-	QStringList sl=QStringList::split("/",mainswindows.first() );
+	TQStringList sl=TQStringList::split("/",mainswindows.first() );
 	if(sl.count() >= 1)
 	{
-		QString mainWindowName=sl[1];
+		TQString mainWindowName=sl[1];
 		if(!mainWindowName.isEmpty())
 		{
-			QByteArray data;
+			TQByteArray data;
 			kapp->dcopClient()->callAsync( app_, mainWindowName.utf8(), "icon()", data,
-				this, SLOT(retreiveIcon(int, const QCString&, const QByteArray&)));
+				this, TQT_SLOT(retreiveIcon(int, const TQCString&, const TQByteArray&)));
 		}
 	}
 }
 
-void DCOPBrowserApplicationItem::retreiveIcon(int /*callId*/,const QCString& /*replyType*/, const QByteArray &replyData)
+void DCOPBrowserApplicationItem::retreiveIcon(int /*callId*/,const TQCString& /*replyType*/, const TQByteArray &replyData)
 {
-	QDataStream reply(replyData, IO_ReadOnly);
-	QPixmap returnQPixmap;
+	TQDataStream reply(replyData, IO_ReadOnly);
+	TQPixmap returnQPixmap;
 	reply >> returnQPixmap;
 	if(!returnQPixmap.isNull())
-		setPixmap(0, QPixmap(returnQPixmap.convertToImage().smoothScale(16,16)) );
+		setPixmap(0, TQPixmap(returnQPixmap.convertToImage().smoothScale(16,16)) );
 	else
 		kdDebug() << "Unable to retreive the icon" << endl;
 }
@@ -212,8 +212,8 @@ void DCOPBrowserApplicationItem::retreiveIcon(int /*callId*/,const QCString& /*r
 DCOPBrowserInterfaceItem::DCOPBrowserInterfaceItem
 (
  DCOPBrowserApplicationItem * parent,
- const QCString & app,
- const QCString & object,
+ const TQCString & app,
+ const TQCString & object,
  bool def
 )
   : DCOPBrowserItem(parent, Interface),
@@ -223,9 +223,9 @@ DCOPBrowserInterfaceItem::DCOPBrowserInterfaceItem
   setExpandable(true);
 
   if (def)
-    setText(0, i18n("%1 (default)").arg(QString::fromUtf8(object_)));
+    setText(0, i18n("%1 (default)").arg(TQString::fromUtf8(object_)));
   else
-    setText(0, QString::fromUtf8(object_));
+    setText(0, TQString::fromUtf8(object_));
 }
 
   void
@@ -258,9 +258,9 @@ DCOPBrowserInterfaceItem::populate()
 DCOPBrowserFunctionItem::DCOPBrowserFunctionItem
 (
  DCOPBrowserInterfaceItem * parent,
- const QCString & app,
- const QCString & object,
- const QCString & function
+ const TQCString & app,
+ const TQCString & object,
+ const TQCString & function
 )
   : DCOPBrowserItem(parent, Function),
     app_(app),
@@ -268,7 +268,7 @@ DCOPBrowserFunctionItem::DCOPBrowserFunctionItem
     function_(function)
 {
   setExpandable(false);
-  setText(0, QString::fromUtf8(function_));
+  setText(0, TQString::fromUtf8(function_));
 }
 
   void
@@ -279,7 +279,7 @@ DCOPBrowserFunctionItem::setOpen(bool o)
 
 // ------------------------------------------------------------------------
 
-KDCOPWindow::KDCOPWindow(QWidget *parent, const char * name)
+KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
   : KMainWindow(parent, name)
 {
   dcopClient = kapp->dcopClient();
@@ -299,25 +299,25 @@ KDCOPWindow::KDCOPWindow(QWidget *parent, const char * name)
   connect
     (
      mainView->lv,
-     SIGNAL(doubleClicked(QListViewItem *)),
-     SLOT(slotCallFunction(QListViewItem *))
+     TQT_SIGNAL(doubleClicked(TQListViewItem *)),
+     TQT_SLOT(slotCallFunction(TQListViewItem *))
     );
 
   connect
     (
      mainView->lv,
-     SIGNAL(currentChanged(QListViewItem *)),
-     SLOT(slotCurrentChanged(QListViewItem *))
+     TQT_SIGNAL(currentChanged(TQListViewItem *)),
+     TQT_SLOT(slotCurrentChanged(TQListViewItem *))
     );
 
 
   // set up the actions
-  KStdAction::quit( this, SLOT( close() ), actionCollection() );
-  KStdAction::copy( this, SLOT( slotCopy()), actionCollection() );
-  KStdAction::keyBindings( guiFactory(), SLOT( configureShortcuts() ), actionCollection() );
+  KStdAction::quit( this, TQT_SLOT( close() ), actionCollection() );
+  KStdAction::copy( this, TQT_SLOT( slotCopy()), actionCollection() );
+  KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ), actionCollection() );
 
 
-  (void) new KAction( i18n( "&Reload" ), "reload", KStdAccel::shortcut(KStdAccel::Reload), this, SLOT( slotReload() ), actionCollection(), "reload" );
+  (void) new KAction( i18n( "&Reload" ), "reload", KStdAccel::shortcut(KStdAccel::Reload), this, TQT_SLOT( slotReload() ), actionCollection(), "reload" );
 
   exeaction =
     new KAction
@@ -326,7 +326,7 @@ KDCOPWindow::KDCOPWindow(QWidget *parent, const char * name)
       "exec",
      CTRL + Key_E,
      this,
-     SLOT(slotCallFunction()),
+     TQT_SLOT(slotCallFunction()),
      actionCollection(),
      "execute"
     );
@@ -337,37 +337,37 @@ KDCOPWindow::KDCOPWindow(QWidget *parent, const char * name)
   langmode = new KSelectAction ( i18n("Language Mode"),
   		CTRL + Key_M,
 		this,
-		SLOT(slotMode()),
+		TQT_SLOT(slotMode()),
 		actionCollection(),
 		"langmode");
   langmode->setEditable(false);
-  langmode->setItems(QStringList::split(",", "Shell,C++,Python"));
+  langmode->setItems(TQStringList::split(",", "Shell,C++,Python"));
   langmode->setToolTip(i18n("Set the current language export."));
   langmode->setCurrentItem(0);
   slotMode();
   connect
     (
      dcopClient,
-     SIGNAL(applicationRegistered(const QCString &)),
-     SLOT(slotApplicationRegistered(const QCString &))
+     TQT_SIGNAL(applicationRegistered(const TQCString &)),
+     TQT_SLOT(slotApplicationRegistered(const TQCString &))
     );
 
   connect
     (
      dcopClient,
-     SIGNAL(applicationRemoved(const QCString &)),
-     SLOT(slotApplicationUnregistered(const QCString &))
+     TQT_SIGNAL(applicationRemoved(const TQCString &)),
+     TQT_SLOT(slotApplicationUnregistered(const TQCString &))
     );
 
   dcopClient->setNotifications(true);
   createGUI();
   setCaption(i18n("DCOP Browser"));
 	mainView->lb_replyData->hide();
-  QTimer::singleShot(0, this, SLOT(slotFillApplications()));
+  TQTimer::singleShot(0, this, TQT_SLOT(slotFillApplications()));
 }
 
 
-void KDCOPWindow::slotCurrentChanged( QListViewItem* i )
+void KDCOPWindow::slotCurrentChanged( TQListViewItem* i )
 {
   DCOPBrowserItem* item = (DCOPBrowserItem*)i;
 
@@ -388,7 +388,7 @@ void KDCOPWindow::slotReload()
   slotFillApplications();
 }
 
-void KDCOPWindow::slotCallFunction( QListViewItem* it )
+void KDCOPWindow::slotCallFunction( TQListViewItem* it )
 {
   if(it == 0)
     return;
@@ -400,10 +400,10 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
   DCOPBrowserFunctionItem * fitem =
     static_cast<DCOPBrowserFunctionItem *>(item);
 
-  QString unNormalisedSignature = QString::fromUtf8(fitem->function());
-  QString normalisedSignature;
-  QStringList types;
-  QStringList names;
+  TQString unNormalisedSignature = TQString::fromUtf8(fitem->function());
+  TQString normalisedSignature;
+  TQStringList types;
+  TQStringList names;
 
   if (!getParameters(unNormalisedSignature, normalisedSignature, types, names))
   {
@@ -413,26 +413,26 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
     return;
   }
 
-  QByteArray data;
-  QByteArray replyData;
+  TQByteArray data;
+  TQByteArray replyData;
 
-  QCString replyType;
+  TQCString replyType;
 
-  QDataStream arg(data, IO_WriteOnly);
+  TQDataStream arg(data, IO_WriteOnly);
 
   KDialogBase mydialog( this, "KDCOP Parameter Entry", true,
-    QString::null, KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true );
+    TQString::null, KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true );
 
   mydialog.setCaption
     ( i18n("Call Function %1").arg( fitem->function() ) );
 
-  QFrame *frame = mydialog.makeMainWidget();
+  TQFrame *frame = mydialog.makeMainWidget();
 
-  QLabel* h1 = new QLabel( i18n( "Name" ), frame );
-  QLabel* h2 = new QLabel( i18n( "Type" ), frame );
-  QLabel* h3 = new QLabel( i18n( "Value" ), frame );
+  TQLabel* h1 = new TQLabel( i18n( "Name" ), frame );
+  TQLabel* h2 = new TQLabel( i18n( "Type" ), frame );
+  TQLabel* h3 = new TQLabel( i18n( "Value" ), frame );
 
-  QGridLayout* grid = new QGridLayout( frame, types.count() + 2, 3,
+  TQGridLayout* grid = new TQGridLayout( frame, types.count() + 2, 3,
     0, KDialog::spacingHint() );
 
   grid->addWidget( h1, 0, 0 );
@@ -445,154 +445,154 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
   {
     int i = 0;
 
-    QPtrList<QWidget> wl;
+    TQPtrList<TQWidget> wl;
 
-    for (QStringList::ConstIterator it = types.begin(); it != types.end(); ++it)
+    for (TQStringList::ConstIterator it = types.begin(); it != types.end(); ++it)
     {
       i++;
 
-      const QString type = *it;
+      const TQString type = *it;
 
-      const QString name = i-1 < (int)names.count() ? names[i-1] : QString::null;
+      const TQString name = i-1 < (int)names.count() ? names[i-1] : TQString::null;
 
       if( type == "int" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "int", frame );
+        TQLabel* l = new TQLabel( "int", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new QIntValidator( e ) );
+        e->setValidator( new TQIntValidator( e ) );
       }
       else if ( type == "unsigned"  || type == "uint" || type == "unsigned int"
              || type == "Q_UINT32" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "unsigned int", frame );
+        TQLabel* l = new TQLabel( "unsigned int", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
 
-        QIntValidator* iv = new QIntValidator( e );
+        TQIntValidator* iv = new TQIntValidator( e );
         iv->setBottom( 0 );
         e->setValidator( iv );
       }
       else if ( type == "long" || type == "long int" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "long", frame );
+        TQLabel* l = new TQLabel( "long", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new QIntValidator( e ) );
+        e->setValidator( new TQIntValidator( e ) );
       }
       else if ( type == "ulong" || type == "unsigned long" || type == "unsigned long int"
              || type == "Q_UINT64" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "unsigned long", frame );
+        TQLabel* l = new TQLabel( "unsigned long", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new QIntValidator( e ) );
+        e->setValidator( new TQIntValidator( e ) );
       }
       else if ( type == "short" || type == "short int" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "long", frame );
+        TQLabel* l = new TQLabel( "long", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new QIntValidator( e ) );
+        e->setValidator( new TQIntValidator( e ) );
       }
       else if ( type == "ushort" || type == "unsigned short" || type == "unsigned short int"  )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "unsigned short", frame );
+        TQLabel* l = new TQLabel( "unsigned short", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new QIntValidator( e ) );
+        e->setValidator( new TQIntValidator( e ) );
       }
       else if ( type == "float" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "float", frame );
+        TQLabel* l = new TQLabel( "float", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new QDoubleValidator( e ) );
+        e->setValidator( new TQDoubleValidator( e ) );
       }
       else if ( type == "double" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "double", frame );
+        TQLabel* l = new TQLabel( "double", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new QDoubleValidator( e ) );
+        e->setValidator( new TQDoubleValidator( e ) );
       }
       else if ( type == "bool" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "bool", frame );
+        TQLabel* l = new TQLabel( "bool", frame );
         grid->addWidget( l, i, 1 );
-        QCheckBox* c = new QCheckBox( frame );
+        TQCheckBox* c = new TQCheckBox( frame );
         grid->addWidget( c, i, 2 );
         wl.append( c );
       }
-      else if ( type == "QString" )
+      else if ( type == "TQString" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QString", frame );
+        TQLabel* l = new TQLabel( "TQString", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if ( type == "QCString" )
+      else if ( type == "TQCString" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QString", frame );
+        TQLabel* l = new TQLabel( "TQString", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if ( type == "QStringList" )
+      else if ( type == "TQStringList" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QStringList", frame );
+        TQLabel* l = new TQLabel( "TQStringList", frame );
         grid->addWidget( l, i, 1 );
         KEditListBox* e = new KEditListBox ( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if ( type == "QValueList<QCString>" )
+      else if ( type == "TQValueList<TQCString>" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QValueList<QCString>", frame );
+        TQLabel* l = new TQLabel( "TQValueList<TQCString>", frame );
         grid->addWidget( l, i, 1 );
         KEditListBox* e = new KEditListBox ( frame );
         grid->addWidget( e, i, 2 );
@@ -600,29 +600,29 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
       }
       else if ( type == "KURL" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "KURL", frame );
+        TQLabel* l = new TQLabel( "KURL", frame );
         grid->addWidget( l, i, 1 );
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if ( type == "QColor" )
+      else if ( type == "TQColor" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QColor", frame );
+        TQLabel* l = new TQLabel( "TQColor", frame );
         grid->addWidget( l, i, 1 );
         KColorButton* e = new KColorButton( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if ( type == "QSize" )
+      else if ( type == "TQSize" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QSize", frame );
+        TQLabel* l = new TQLabel( "TQSize", frame );
         grid->addWidget( l, i, 1 );
         KMultiIntEdit* e = new KMultiIntEdit( frame );
         e->addField( 1, i18n("Width") );
@@ -630,11 +630,11 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if ( type == "QPoint" )
+      else if ( type == "TQPoint" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QPoint", frame );
+        TQLabel* l = new TQLabel( "TQPoint", frame );
         grid->addWidget( l, i, 1 );
         KMultiIntEdit* e = new KMultiIntEdit( frame );
         e->addField( 1, i18n("X") );
@@ -642,11 +642,11 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if ( type == "QRect" )
+      else if ( type == "TQRect" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QRect", frame );
+        TQLabel* l = new TQLabel( "TQRect", frame );
         grid->addWidget( l, i, 1 );
         KMultiIntEdit* e = new KMultiIntEdit( frame );
         e->addField( 1, i18n("Left") );
@@ -656,11 +656,11 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
         grid->addWidget( e, i, 2 );
         wl.append( e );
       }
-      else if( type == "QPixmap" )
+      else if( type == "TQPixmap" )
       {
-        QLabel* n = new QLabel( name, frame );
+        TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
-        QLabel* l = new QLabel( "QPixmap", frame );
+        TQLabel* l = new TQLabel( "TQPixmap", frame );
         grid->addWidget( l, i, 1 );
         KURLRequester* e = new KURLRequester( frame );
         grid->addWidget( e, i, 2 );
@@ -680,16 +680,16 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
 
     int ret = mydialog.exec();
 
-    if (QDialog::Accepted != ret)
+    if (TQDialog::Accepted != ret)
       return;
 
     // extract the arguments
 
     i = 0;
 
-    for (QStringList::ConstIterator it = types.begin(); it != types.end(); ++it)
+    for (TQStringList::ConstIterator it = types.begin(); it != types.end(); ++it)
     {
-      QString type = *it;
+      TQString type = *it;
 
       if ( type == "int" )
       {
@@ -739,59 +739,59 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
       }
       else if( type == "bool" )
       {
-        QCheckBox* c = (QCheckBox*)wl.at( i );
+        TQCheckBox* c = (TQCheckBox*)wl.at( i );
         arg << c->isChecked();
       }
-      else if( type == "QCString" )
+      else if( type == "TQCString" )
       {
         KLineEdit* e = (KLineEdit*)wl.at( i );
-        arg << QCString( e->text().local8Bit() );
+        arg << TQCString( e->text().local8Bit() );
       }
-      else if( type == "QString" )
+      else if( type == "TQString" )
       {
         KLineEdit* e = (KLineEdit*)wl.at( i );
         arg << e->text();
       }
-      else if( type == "QStringList" )
+      else if( type == "TQStringList" )
       {
         KEditListBox* e = (KEditListBox*)wl.at( i );
         arg << e->items();
       }
-      else if( type == "QValueList<QCString>" )
+      else if( type == "TQValueList<TQCString>" )
       {
         KEditListBox* e = (KEditListBox*)wl.at( i );
         for (int i = 0; i < e->count(); i++)
-          arg << QCString( e->text(i).local8Bit() );
+          arg << TQCString( e->text(i).local8Bit() );
       }
       else if( type == "KURL" )
       {
         KLineEdit* e = (KLineEdit*)wl.at( i );
         arg << KURL( e->text() );
       }
-      else if( type == "QColor" )
+      else if( type == "TQColor" )
       {
        KColorButton* e = (KColorButton*)wl.at( i );
        arg << e->color();
       }
-      else if( type == "QSize" )
+      else if( type == "TQSize" )
       {
        KMultiIntEdit* e = (KMultiIntEdit*)wl.at( i );
-       arg << QSize(e->field(1) , e->field(2)) ;
+       arg << TQSize(e->field(1) , e->field(2)) ;
       }
-      else if( type == "QPoint" )
+      else if( type == "TQPoint" )
       {
        KMultiIntEdit* e = (KMultiIntEdit*)wl.at( i );
-       arg << QPoint(e->field(1) , e->field(2)) ;
+       arg << TQPoint(e->field(1) , e->field(2)) ;
       }
-      else if( type == "QRect" )
+      else if( type == "TQRect" )
       {
        KMultiIntEdit* e = (KMultiIntEdit*)wl.at( i );
-       arg << QRect(e->field(1) , e->field(2) , e->field(3) , e->field(4)) ;
+       arg << TQRect(e->field(1) , e->field(2) , e->field(3) , e->field(4)) ;
       }
-      else if( type == "QPixmap" )
+      else if( type == "TQPixmap" )
       {
        KURLRequester* e= (KURLRequester*)wl.at( i );
-       arg << QPixmap(e->url());
+       arg << TQPixmap(e->url());
       }
       else
       {
@@ -832,7 +832,7 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
 
     statusBar()->message(i18n("DCOP call failed"));
 
-    QString msg = i18n("<p>DCOP call failed.</p>%1");
+    TQString msg = i18n("<p>DCOP call failed.</p>%1");
 
     bool appRegistered = dcopClient->isApplicationRegistered(fitem->app());
 
@@ -864,10 +864,10 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
   }
   else
   {
-    QString coolSignature =
-      QString::fromUtf8(fitem->app())
+    TQString coolSignature =
+      TQString::fromUtf8(fitem->app())
       + "."
-      + QString::fromUtf8(fitem->object())
+      + TQString::fromUtf8(fitem->object())
       + "."
       + normalisedSignature ;
 
@@ -875,19 +875,19 @@ void KDCOPWindow::slotCallFunction( QListViewItem* it )
 
     if (replyType != "void" && replyType != "ASYNC" && !replyType.isEmpty() )
     {
-      QDataStream reply(replyData, IO_ReadOnly);
+      TQDataStream reply(replyData, IO_ReadOnly);
       if (demarshal(replyType, reply, mainView->lb_replyData))
 	{
       mainView->l_replyType->setText
         (
          i18n("<strong>%1</strong>")
-         .arg(QString::fromUtf8(replyType))
+         .arg(TQString::fromUtf8(replyType))
         );
 	mainView->lb_replyData->show();
 	}
 	else
 	{
-	        mainView->l_replyType->setText(i18n("Unknown type %1.").arg(QString::fromUtf8(replyType)));
+	        mainView->l_replyType->setText(i18n("Unknown type %1.").arg(TQString::fromUtf8(replyType)));
       		mainView->lb_replyData->hide();
 	}
     }
@@ -905,7 +905,7 @@ void KDCOPWindow::slotFillApplications()
   KApplication::setOverrideCursor(waitCursor);
 
   QCStringList apps = dcopClient->registeredApplications();
-  QCString appId = dcopClient->appId();
+  TQCString appId = dcopClient->appId();
 
   mainView->lv->clear();
 
@@ -922,25 +922,25 @@ void KDCOPWindow::slotFillApplications()
 
 bool KDCOPWindow::demarshal
 (
- QCString &   replyType,
- QDataStream & reply,
+ TQCString &   replyType,
+ TQDataStream & reply,
  QListBox	*theList
 )
 {
-  QStringList ret;
-  QPixmap pret;
+  TQStringList ret;
+  TQPixmap pret;
   bool isValid = true;
   theList->clear();
   ret.clear();
 
-  if ( replyType == "QVariant" )
+  if ( replyType == "TQVariant" )
   {
     // read data type from stream
     Q_INT32 type;
     reply >> type;
 
     // change replyType to real typename
-    replyType = QVariant::typeToName( (QVariant::Type)type );
+    replyType = TQVariant::typeToName( (TQVariant::Type)type );
 
     // demarshal data with a recursive call
     return demarshal(replyType, reply, theList);
@@ -949,66 +949,66 @@ bool KDCOPWindow::demarshal
   {
     int i;
     reply >> i;
-    ret << QString::number(i);
+    ret << TQString::number(i);
   }
   else if ( replyType == "uint" || replyType == "unsigned int"
          || replyType == "Q_UINT32" )
   {
     uint i;
     reply >> i;
-    ret << QString::number(i);
+    ret << TQString::number(i);
   }
   else if ( replyType == "long" || replyType == "long int" )
   {
     long l;
     reply >> l;
-    ret << QString::number(l);
+    ret << TQString::number(l);
   }
   else if ( replyType == "ulong" || replyType == "unsigned long" || replyType == "unsigned long int" )
   {
     ulong l;
     reply >> l;
-    ret << QString::number(l);
+    ret << TQString::number(l);
   }
   else if ( replyType == "Q_UINT64" )
   {
     Q_UINT64 i;
     reply >> i;
-    ret << QString::number(i);
+    ret << TQString::number(i);
   }
   else if ( replyType == "float" )
   {
     float f;
     reply >> f;
-    ret << QString::number(f);
+    ret << TQString::number(f);
   }
   else if ( replyType == "double" )
   {
     double d;
     reply >> d;
-    ret << QString::number(d);
+    ret << TQString::number(d);
   }
   else if (replyType == "bool")
   {
     bool b;
     reply >> b;
-    ret << (b ? QString::fromUtf8("true") : QString::fromUtf8("false"));
+    ret << (b ? TQString::fromUtf8("true") : TQString::fromUtf8("false"));
   }
-  else if (replyType == "QString")
+  else if (replyType == "TQString")
   {
-    QString s;
+    TQString s;
     reply >> s;
     ret << s;
   }
-  else if (replyType == "QStringList")
+  else if (replyType == "TQStringList")
   {
     reply >> ret;
   }
-  else if (replyType == "QCString")
+  else if (replyType == "TQCString")
   {
-    QCString r;
+    TQCString r;
     reply >> r;
-    ret << QString::fromUtf8(r);
+    ret << TQString::fromUtf8(r);
   }
   else if (replyType == "QCStringList")
   {
@@ -1024,67 +1024,67 @@ bool KDCOPWindow::demarshal
     reply >> r;
     ret << r.prettyURL();
   }
-  else if (replyType == "QSize")
+  else if (replyType == "TQSize")
   {
-    QSize r;
+    TQSize r;
     reply >> r;
-    ret << QString::number(r.width()) + "x" + QString::number(r.height());
+    ret << TQString::number(r.width()) + "x" + TQString::number(r.height());
   }
-  else if (replyType == "QPoint")
+  else if (replyType == "TQPoint")
   {
-    QPoint r;
+    TQPoint r;
     reply >> r;
-    ret << "(" + QString::number(r.x()) + "," + QString::number(r.y()) + ")";
+    ret << "(" + TQString::number(r.x()) + "," + TQString::number(r.y()) + ")";
   }
-  else if (replyType == "QRect")
+  else if (replyType == "TQRect")
   {
-    QRect r;
+    TQRect r;
     reply >> r;
-    ret << QString::number(r.x()) + "x" + QString::number(r.y()) + "+" + QString::number(r.height()) + "+" + QString::number(r.width());
+    ret << TQString::number(r.x()) + "x" + TQString::number(r.y()) + "+" + TQString::number(r.height()) + "+" + TQString::number(r.width());
   }
-  else if (replyType == "QFont")
+  else if (replyType == "TQFont")
   {
-	QFont r;
+	TQFont r;
 	reply >> r;
 	ret << r.rawName();
   }
-  else if (replyType == "QCursor")
+  else if (replyType == "TQCursor")
   {
-	QCursor r;
+	TQCursor r;
 	reply >> r;
 	//theList->insertItem(r, 1);
-	ret << "Cursor #" + QString::number(r.shape());
+	ret << "Cursor #" + TQString::number(r.shape());
   }
-  else if (replyType == "QPixmap")
+  else if (replyType == "TQPixmap")
   {
-	QPixmap r;
+	TQPixmap r;
 	reply >> r;
 	theList->insertItem(r, 1);
   }
-  else if (replyType == "QColor")
+  else if (replyType == "TQColor")
   {
-	QColor r;
+	TQColor r;
 	reply >> r;
-	QString color = r.name();
-	QPixmap p(15,15);
+	TQString color = r.name();
+	TQPixmap p(15,15);
 	p.fill(r);
 	theList->insertItem(p,color, 1);
   }
-  else if (replyType == "QDateTime")
+  else if (replyType == "TQDateTime")
   {
-  	QDateTime r;
+  	TQDateTime r;
 	reply >> r;
 	ret << r.toString();
   }
-  else if (replyType == "QDate")
+  else if (replyType == "TQDate")
   {
-  	QDate r;
+  	TQDate r;
 	reply >> r;
 	ret << r.toString();
   }
-  else if (replyType == "QTime")
+  else if (replyType == "TQTime")
   {
-  	QTime r;
+  	TQTime r;
 	reply >> r;
 	ret << r.toString();
   }
@@ -1093,12 +1093,12 @@ bool KDCOPWindow::demarshal
 	DCOPRef r;
 	reply >> r;
 	if (!r.app().isEmpty() && !r.obj().isEmpty())
-	  ret << QString("DCOPRef(%1, %2)").arg(r.app(), r.obj());
+	  ret << TQString("DCOPRef(%1, %2)").arg(r.app(), r.obj());
   }
   else
   {
     ret <<
-      i18n("Do not know how to demarshal %1").arg(QString::fromUtf8(replyType));
+      i18n("Do not know how to demarshal %1").arg(TQString::fromUtf8(replyType));
 	isValid = false;
   }
 
@@ -1108,9 +1108,9 @@ bool KDCOPWindow::demarshal
 }
 
   void
-KDCOPWindow::slotApplicationRegistered(const QCString & appName)
+KDCOPWindow::slotApplicationRegistered(const TQCString & appName)
 {
-  QListViewItemIterator it(mainView->lv);
+  TQListViewItemIterator it(mainView->lv);
 
   for (; it.current(); ++it)
   {
@@ -1121,7 +1121,7 @@ KDCOPWindow::slotApplicationRegistered(const QCString & appName)
       return;
   }
 
-  QCString appId = dcopClient->appId();
+  TQCString appId = dcopClient->appId();
 
   if (appName != appId && appName.left(9) != "anonymous")
   {
@@ -1130,9 +1130,9 @@ KDCOPWindow::slotApplicationRegistered(const QCString & appName)
 }
 
   void
-KDCOPWindow::slotApplicationUnregistered(const QCString & appName)
+KDCOPWindow::slotApplicationUnregistered(const TQCString & appName)
 {
-  QListViewItemIterator it(mainView->lv);
+  TQListViewItemIterator it(mainView->lv);
 
   for (; it.current(); ++it)
   {
@@ -1150,13 +1150,13 @@ KDCOPWindow::slotApplicationUnregistered(const QCString & appName)
   bool
 KDCOPWindow::getParameters
 (
- const QString  & _unNormalisedSignature,
- QString        & normalisedSignature,
- QStringList    & types,
- QStringList    & names
+ const TQString  & _unNormalisedSignature,
+ TQString        & normalisedSignature,
+ TQStringList    & types,
+ TQStringList    & names
 )
 {
-  QString unNormalisedSignature(_unNormalisedSignature);
+  TQString unNormalisedSignature(_unNormalisedSignature);
 
   int s = unNormalisedSignature.find(' ');
 
@@ -1176,16 +1176,16 @@ KDCOPWindow::getParameters
     return false;
   }
 
-  QStringList intTypes;
+  TQStringList intTypes;
   intTypes << "int" << "unsigned" << "long" << "bool" ;
 
   if (left > 0 && left + 1 < right - 1)
   {
     types =
-      QStringList::split
+      TQStringList::split
       (',', unNormalisedSignature.mid(left + 1, right - left - 1));
 
-    for (QStringList::Iterator it = types.begin(); it != types.end(); ++it)
+    for (TQStringList::Iterator it = types.begin(); it != types.end(); ++it)
     {
       (*it) = (*it).simplifyWhiteSpace();
 
@@ -1211,18 +1211,18 @@ void KDCOPWindow::slotCopy()
 	// below list view.  If there is nothing selected from
 	// the below menu then tell the tree to copy its current
 	// selection as text.
-	QClipboard *clipboard = QApplication::clipboard();
+	QClipboard *clipboard = TQApplication::clipboard();
 	if (mainView->lb_replyData->count()!= 0)
 	{
 
 		//if (!mainView->lb_replyData->pixmap(mainView->lb_replyData->currentItem())->isNull())
 		//{
 			kdDebug() << "Is pixmap" << endl;
-		//	QPixmap p;
+		//	TQPixmap p;
 		// 	p = *mainView->lb_replyData->pixmap(mainView->lb_replyData->currentItem());
 		//	clipboard->setPixmap(p);
 		//}
-		QString t = mainView->lb_replyData->text(mainView->lb_replyData->currentItem());
+		TQString t = mainView->lb_replyData->text(mainView->lb_replyData->currentItem());
 		if (!t.isNull())
 			clipboard->setText(t);
 	}

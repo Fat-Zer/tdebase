@@ -29,10 +29,10 @@
 #include "SettingsDialog.h"
 #include "KfiConstants.h"
 #include "Misc.h"
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
@@ -42,20 +42,20 @@
 namespace KFI
 {
 
-CSettingsDialog::CSettingsDialog(QWidget *parent)
+CSettingsDialog::CSettingsDialog(TQWidget *parent)
                : KDialogBase(parent, "settingsdialog", true, i18n("Settings"),
                              KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
 {
-    QVBox *page = makeVBoxMainWidget();
+    TQVBox *page = makeVBoxMainWidget();
 
-    itsDoX=new QCheckBox(i18n("Configure fonts for legacy X applications"), page);
-    QWhatsThis::add(itsDoX, i18n("<p>Modern applications use a system called \"FontConfig\" to obtain the list of fonts. "
+    itsDoX=new TQCheckBox(i18n("Configure fonts for legacy X applications"), page);
+    TQWhatsThis::add(itsDoX, i18n("<p>Modern applications use a system called \"FontConfig\" to obtain the list of fonts. "
                                  "Older applications, such as OpenOffice 1.x, GIMP 1.x, etc. use the previous \"core X fonts\" mechanism for "
                                  "this.</p><p>Selecting this option will inform the installer to create the necessary files so that these "
                                  "older applications can use the fonts you install.</p><p>Please note, however, that this will slow down "
                                  "the installation process.<p>"));
-    itsDoGs=new QCheckBox(i18n("Configure fonts for Ghostscript"), page);
-    QWhatsThis::add(itsDoGs, i18n("<p>When printing, most applications create what is know as PostScript. This is then sent to a special "
+    itsDoGs=new TQCheckBox(i18n("Configure fonts for Ghostscript"), page);
+    TQWhatsThis::add(itsDoGs, i18n("<p>When printing, most applications create what is know as PostScript. This is then sent to a special "
                                   "application, named Ghostscript, which can interpret the PostScript and send the appropriate instructions "
                                   "to your printer. If your application does not embed whatever fonts it uses into the PostScript, then "
                                   "Ghostscript needs to be informed as to which fonts you have installed, and where they are located.</p>"
@@ -83,10 +83,10 @@ void CSettingsDialog::slotOk()
     if( ((!oldDoX && itsDoX->isChecked()) || (!oldDoGs && itsDoGs->isChecked())) &&
         KMessageBox::Yes==KMessageBox::questionYesNo(this, i18n("You have enabled a previously disabled option. Would you like the config "
                                                                 "files updated now? (Normally they are only updated upon installing, or "
-                                                                "removing, a font.)"), QString::null, i18n("Update"),i18n("Do Not Update")))
+                                                                "removing, a font.)"), TQString::null, i18n("Update"),i18n("Do Not Update")))
     {
-        QByteArray  packedArgs;
-        QDataStream stream(packedArgs, IO_WriteOnly);
+        TQByteArray  packedArgs;
+        TQDataStream stream(packedArgs, IO_WriteOnly);
 
         stream << KFI::SPECIAL_RECONFIG;
 

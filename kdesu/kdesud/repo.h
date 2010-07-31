@@ -8,8 +8,8 @@
 #define __Repo_h_included__
 
 
-#include <qmap.h>
-#include <qcstring.h>
+#include <tqmap.h>
+#include <tqcstring.h>
 
 
 /**
@@ -17,8 +17,8 @@
  */
 struct Data_entry 
 {
-    QCString value;
-    QCString group;
+    TQCString value;
+    TQCString group;
     unsigned int timeout;
 };
 
@@ -37,31 +37,31 @@ public:
     int expire();
 
     /** Add a data element */
-    void add(const QCString& key, Data_entry& data);
+    void add(const TQCString& key, Data_entry& data);
 
     /** Delete a data element. */
-    int remove(const QCString& key);
+    int remove(const TQCString& key);
 
     /** Delete all data entries having the given group.  */
-    int removeGroup(const QCString& group);
+    int removeGroup(const TQCString& group);
 
     /** Delete all data entries based on key. */
-    int removeSpecialKey(const QCString& key );
+    int removeSpecialKey(const TQCString& key );
 
     /** Checks for the existence of the specified group. */
-    int hasGroup(const QCString &group) const;
+    int hasGroup(const TQCString &group) const;
 
     /** Return a data value.  */
-    QCString find(const QCString& key) const;
+    TQCString find(const TQCString& key) const;
 
     /** Returns the key values for the given group. */
-    QCString findKeys(const QCString& group, const char *sep= "-") const;
+    TQCString findKeys(const TQCString& group, const char *sep= "-") const;
 
 private:
 
-    QMap<QCString,Data_entry> repo;
-    typedef QMap<QCString,Data_entry>::Iterator RepoIterator;
-    typedef QMap<QCString,Data_entry>::ConstIterator RepoCIterator;
+    TQMap<TQCString,Data_entry> repo;
+    typedef TQMap<TQCString,Data_entry>::Iterator RepoIterator;
+    typedef TQMap<TQCString,Data_entry>::ConstIterator RepoCIterator;
     unsigned head_time;
 };
 

@@ -1,5 +1,5 @@
-#include <qfile.h>
-#include <qdir.h>
+#include <tqfile.h>
+#include <tqdir.h>
 #include <kapplication.h>
 #include <ksimpleconfig.h>
 #include <kglobal.h>
@@ -17,10 +17,10 @@ static KCmdLineOptions options[] =
     KCmdLineLastOption
 };
 
-void copy(const QString &src, const QString &dest)
+void copy(const TQString &src, const TQString &dest)
 {
-    QFile copyInput(src);
-    QFile copyOutput(dest);
+    TQFile copyInput(src);
+    TQFile copyOutput(dest);
     if(!copyInput.open(IO_ReadOnly)){
         kdWarning() << "Couldn't open " << src << endl;
         return;
@@ -48,25 +48,25 @@ int main(int argc, char **argv)
         return(1);
     }
 
-    QString srcStr = QString(QFile::decodeName(args->arg(0)));
-    QFile f(srcStr);
-    QString tmpStr;
+    TQString srcStr = TQString(TQFile::decodeName(args->arg(0)));
+    TQFile f(srcStr);
+    TQString tmpStr;
 
     if(!f.exists()){
         kdWarning() << "Specified theme config file doesn't exist!" << endl;
         return(2);
     }
 
-    QStringList appDirs = KGlobal::dirs()->findDirs("data", "kwin");
-    QString localDirStr = *(appDirs.end());
+    TQStringList appDirs = KGlobal::dirs()->findDirs("data", "kwin");
+    TQString localDirStr = *(appDirs.end());
     if(localDirStr.isEmpty()){
         localDirStr = KGlobal::dirs()->saveLocation("data", "kwin");
     }
     localDirStr += "/pics/";
-    if(!QFile::exists(localDirStr))
-        QDir().mkdir(localDirStr);
+    if(!TQFile::exists(localDirStr))
+        TQDir().mkdir(localDirStr);
 
-    QFileInfo fi(f);
+    TQFileInfo fi(f);
     KSimpleConfig input(fi.absFilePath());
     srcStr = fi.dirPath(true) + "/";
     KConfig *output = KGlobal::config();

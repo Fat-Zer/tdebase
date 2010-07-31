@@ -25,32 +25,32 @@
 
 #include "konq_faviconmgr.moc"
 
-KonqFavIconMgr::KonqFavIconMgr(QObject *parent, const char *name)
-    : QObject(parent, name),
+KonqFavIconMgr::KonqFavIconMgr(TQObject *parent, const char *name)
+    : TQObject(parent, name),
       DCOPObject("KonqFavIconMgr")
 {
     connectDCOPSignal("kded", "favicons",
-        "iconChanged(bool, QString, QString)",
-        "notifyChange(bool, QString, QString)", false);
+        "iconChanged(bool, TQString, TQString)",
+        "notifyChange(bool, TQString, TQString)", false);
 }
 
-QString KonqFavIconMgr::iconForURL(const QString &url)
+TQString KonqFavIconMgr::iconForURL(const TQString &url)
 {
     return KMimeType::favIconForURL( KURL(url) );
 }
 
 void KonqFavIconMgr::setIconForURL(const KURL &url, const KURL &iconURL)
 {
-    QByteArray data;
-    QDataStream str(data, IO_WriteOnly);
+    TQByteArray data;
+    TQDataStream str(data, IO_WriteOnly);
     str << url << iconURL;
     kapp->dcopClient()->send("kded", "favicons", "setIconForURL(KURL, KURL)", data);
 }
 
 void KonqFavIconMgr::downloadHostIcon(const KURL &url)
 {
-    QByteArray data;
-    QDataStream str(data, IO_WriteOnly);
+    TQByteArray data;
+    TQDataStream str(data, IO_WriteOnly);
     str << url;
     kapp->dcopClient()->send("kded", "favicons", "downloadHostIcon(KURL)", data);
 }

@@ -9,13 +9,13 @@
 
 #include "config.h"
 #include <kglobal.h>
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 
 
 extern "C"
 {
-	KDE_EXPORT QObject* allocate_config( KConfig* conf, QWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
 	{
 		return(new QuartzConfig(conf, parent));
 	}
@@ -26,31 +26,31 @@ extern "C"
  * 'conf' 	is a pointer to the kwindecoration modules open kwin config,
  *			and is by default set to the "Style" group.
  *
- * 'parent'	is the parent of the QObject, which is a VBox inside the
+ * 'parent'	is the parent of the TQObject, which is a VBox inside the
  *			Configure tab in kwindecoration
  */
 
-QuartzConfig::QuartzConfig( KConfig* conf, QWidget* parent )
-	: QObject( parent )
+QuartzConfig::QuartzConfig( KConfig* conf, TQWidget* parent )
+	: TQObject( parent )
 {
 	quartzConfig = new KConfig("kwinquartzrc");
 	KGlobal::locale()->insertCatalogue("kwin_clients");
-	gb = new QVBox( parent );
-	cbColorBorder = new QCheckBox( 
+	gb = new TQVBox( parent );
+	cbColorBorder = new TQCheckBox( 
 						i18n("Draw window frames using &titlebar colors"), gb );
-	QWhatsThis::add( cbColorBorder, 
+	TQWhatsThis::add( cbColorBorder, 
 						i18n("When selected, the window decoration borders "
 						"are drawn using the titlebar colors; otherwise, they are "
 						"drawn using normal border colors instead.") );
-	cbExtraSmall = new QCheckBox( i18n("Quartz &extra slim"), gb );
-	QWhatsThis::add( cbExtraSmall,
+	cbExtraSmall = new TQCheckBox( i18n("Quartz &extra slim"), gb );
+	TQWhatsThis::add( cbExtraSmall,
 		i18n("Quartz window decorations with extra-small title bar.") );
 	// Load configuration options
 	load( conf );
 
 	// Ensure we track user changes properly
-	connect( cbColorBorder, SIGNAL(clicked()), this, SLOT(slotSelectionChanged()) );
-	connect( cbExtraSmall,  SIGNAL(clicked()), this, SLOT(slotSelectionChanged()) );
+	connect( cbColorBorder, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSelectionChanged()) );
+	connect( cbExtraSmall,  TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSelectionChanged()) );
 
 	// Make the widgets visible in kwindecoration
 	gb->show();

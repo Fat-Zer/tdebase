@@ -36,8 +36,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include <qfile.h>
-#include <qimage.h>
+#include <tqfile.h>
+#include <tqimage.h>
 
 #include <kdemacros.h>
 
@@ -53,19 +53,19 @@ extern "C"
     }
 }
 
-bool DjVuCreator::create(const QString &path, int width, int height, QImage &img)
+bool DjVuCreator::create(const TQString &path, int width, int height, TQImage &img)
 {
   int output[2];
-  QByteArray data(1024);
+  TQByteArray data(1024);
   bool ok = false;
 
   if (pipe(output) == -1)
     return false;
   
   const char* argv[8];
-  QCString sizearg, fnamearg;
+  TQCString sizearg, fnamearg;
   sizearg.sprintf("%dx%d", width, height);
-  fnamearg = QFile::encodeName( path );
+  fnamearg = TQFile::encodeName( path );
   argv[0] = "ddjvu";
   argv[1] = "-page";
   argv[2] = "1";

@@ -24,9 +24,9 @@
 #include <kwin.h>
 #include <dcopclient.h>
 
-#include <qdir.h>
-#include <qpixmap.h>
-#include <qtimer.h>
+#include <tqdir.h>
+#include <tqpixmap.h>
+#include <tqtimer.h>
 
 #include "objkstheme.h"
 #include "wndmain.h"
@@ -38,11 +38,11 @@
 // KSplash::KSplash(): This is a hidden object. Its sole purpose
 // is to manage the other objects, which are presented on the screen.
 KSplash::KSplash(const char *name)
-    : DCOPObject( name ),  QWidget( 0, name, WStyle_Customize|WStyle_NoBorder|WX11BypassWM ),
+    : DCOPObject( name ),  TQWidget( 0, name, WStyle_Customize|WStyle_NoBorder|WX11BypassWM ),
       mState( 0 ), mMaxProgress( 0 ), mStep( 0 )
 {
   hide(); // We never show this object.
-  mThemeLibName = QString::null;
+  mThemeLibName = TQString::null;
   mSessMgrCalled = false;
   mTimeToGo = false;
 
@@ -58,23 +58,23 @@ KSplash::KSplash(const char *name)
   if ( config->readBoolEntry( "CloseOnClick", TRUE ) )
     mThemeEngine->installEventFilter( this );
 
-  connect( mThemeEngine, SIGNAL(destroyed()), this, SLOT(close()) );
-  connect( this, SIGNAL(stepsChanged(int)), SLOT(slotUpdateSteps(int)) );
-  connect( this, SIGNAL(progressChanged(int)), SLOT(slotUpdateProgress(int)) );
+  connect( mThemeEngine, TQT_SIGNAL(destroyed()), this, TQT_SLOT(close()) );
+  connect( this, TQT_SIGNAL(stepsChanged(int)), TQT_SLOT(slotUpdateSteps(int)) );
+  connect( this, TQT_SIGNAL(progressChanged(int)), TQT_SLOT(slotUpdateProgress(int)) );
 
   if( mKsTheme->testing() )
   {
     slotUpdateSteps(7);
-    QTimer::singleShot( 1000, this, SLOT(slotExec()));
+    TQTimer::singleShot( 1000, this, TQT_SLOT(slotExec()));
   }
   else
-    QTimer::singleShot( 100, this, SLOT(initDcop()));
+    TQTimer::singleShot( 100, this, TQT_SLOT(initDcop()));
 
   // Make sure we don't stay up forever.
   if (!mKsTheme->managedMode())
   {
-    close_timer = new QTimer( this );
-    connect( close_timer, SIGNAL( timeout() ), this, SLOT( close() ) );
+    close_timer = new TQTimer( this );
+    connect( close_timer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( close() ) );
     close_timer->start( 60000, TRUE );
   }
 }
@@ -122,7 +122,7 @@ void KSplash::prepareSplashScreen()
   mThemeEngine->show();
 }
 
-void KSplash::slotInsertAction( const QString& pix, const QString& msg )
+void KSplash::slotInsertAction( const TQString& pix, const TQString& msg )
 {
   Action *a = new Action;
   a->ItemText = msg;
@@ -132,14 +132,14 @@ void KSplash::slotInsertAction( const QString& pix, const QString& msg )
 
 void KSplash::slotExec()
 {
-  QTimer::singleShot( 200, this, SLOT(nextIcon()));
+  TQTimer::singleShot( 200, this, TQT_SLOT(nextIcon()));
 }
 
 void KSplash::nextIcon()
 {
   if( !mCurrentAction || mTimeToGo )
   {
-    QTimer::singleShot( 1000, this, SLOT(close()));
+    TQTimer::singleShot( 1000, this, TQT_SLOT(close()));
     return;
   }
 
@@ -153,12 +153,12 @@ void KSplash::nextIcon()
   }
 
   if( mKsTheme->testing() )
-    QTimer::singleShot( 1000, this, SLOT(nextIcon()));
+    TQTimer::singleShot( 1000, this, TQT_SLOT(nextIcon()));
 }
 
 void KSplash::initDcop()
 {
-  disconnect( kapp->dcopClient(), SIGNAL( attachFailed(const QString&) ), kapp, SLOT( dcopFailure(const QString&) ) );
+  disconnect( kapp->dcopClient(), TQT_SIGNAL( attachFailed(const TQString&) ), kapp, TQT_SLOT( dcopFailure(const TQString&) ) );
 
   if ( kapp->dcopClient()->isAttached() )
     return;
@@ -172,7 +172,7 @@ void KSplash::initDcop()
   }
   else
   {
-    QTimer::singleShot( 100, this, SLOT(initDcop()) );
+    TQTimer::singleShot( 100, this, TQT_SLOT(initDcop()) );
   }
 }
 
@@ -191,7 +191,7 @@ void KSplash::updateState( unsigned int state )
 }
 
 // For KDE startup only.
-void KSplash::upAndRunning( QString s )
+void KSplash::upAndRunning( TQString s )
 {
 // This code is written to match ksmserver. Touch it without knowing
 // what you are doing and prepare to bite the dust.
@@ -245,7 +245,7 @@ void KSplash::upAndRunning( QString s )
     //if(!mSessMgrCalled) emit nextIcon();
     mTimeToGo = true;
     close_timer->stop();
-    QTimer::singleShot( 1000, this, SLOT(close()));
+    TQTimer::singleShot( 1000, this, TQT_SLOT(close()));
   }
   else
   {
@@ -279,9 +279,9 @@ void KSplash::setProgress(int step)
  * name of the process being started, and (c) a description of what the
  * process is handling. Some examples:
  *
- * programStarted( QString("desktop"), QString("kdesktop"), QString("Preparing your desktop..."));
+ * programStarted( TQString("desktop"), TQString("kdesktop"), TQString("Preparing your desktop..."));
  */
-void KSplash::programStarted( QString icon, QString name, QString desc )
+void KSplash::programStarted( TQString icon, TQString name, TQString desc )
 {
   if (mTimeToGo)
     return;
@@ -305,26 +305,26 @@ void KSplash::setStartupItemCount( int count )
 void KSplash::startupComplete()
 {
   mTimeToGo = true;
-  QTimer::singleShot( 1000, this, SLOT(close()));
+  TQTimer::singleShot( 1000, this, TQT_SLOT(close()));
 }
 
 void KSplash::close()
 {
-  QWidget::close();
+  TQWidget::close();
 }
 
 void KSplash::hide()
 {
-  QWidget::hide();
+  TQWidget::hide();
 }
 
 void KSplash::show()
 {
-  QWidget::show();
+  TQWidget::show();
 }
 
 // Guaranteed to return a valid theme.
-void KSplash::loadTheme( const QString& theme )
+void KSplash::loadTheme( const TQString& theme )
 {
   mKsTheme = new ObjKsTheme( theme );
   // kdDebug() << "KSplash::loadTheme: " << theme << " : "<< mKsTheme->themeEngine() << endl;
@@ -339,37 +339,37 @@ void KSplash::loadTheme( const QString& theme )
   mKsTheme = mThemeEngine->ksTheme();
 }
 
-ThemeEngine *KSplash::_loadThemeEngine( const QString& pluginName, const QString& theme )
+ThemeEngine *KSplash::_loadThemeEngine( const TQString& pluginName, const TQString& theme )
 {
   // Since we may be called before the DCOP server is active, we cannot use the KTrader framework for obtaining plugins. In its
   // place, we use the following naive heuristic to locate plugins. If we are not in managed mode, and we are not in testing mode
   // either, we assume that we have been called by startkde. In this case, we simply try to load the library whose name should
   // conform to the following specification:
-  //       QString("ksplash") + pluginName.lower()
+  //       TQString("ksplash") + pluginName.lower()
   // The object should be called as follows:
-  //       QString("Theme") + pluginName
+  //       TQString("Theme") + pluginName
   KLibFactory *factory = 0L;
-  QString libName;
-  QString objName;
+  TQString libName;
+  TQString objName;
   // Replace this test by a "nodcop" command line option.
   if ( /*!mKsTheme->managedMode() ||*/ !KCmdLineArgs::parsedArgs()->isSet( "dcop" ) )
   {
-    libName = QString("ksplash%1").arg(pluginName.lower());
-    objName = QString("Theme%1").arg(pluginName);
+    libName = TQString("ksplash%1").arg(pluginName.lower());
+    objName = TQString("Theme%1").arg(pluginName);
     // kdDebug() << "*KSplash::_loadThemeEngine: Loading " << objName << " from " << libName << endl;
-    // libname.latin1() instead of QFile::encodeName() because these are not user-modifiable files.
+    // libname.latin1() instead of TQFile::encodeName() because these are not user-modifiable files.
     if ( (factory = KLibLoader::self()->factory ( libName.latin1() )) )
       mThemeLibName = libName;
   }
   else
   {
     // Fancier way of locating plugins.
-    KService::List list= KTrader::self()->query("KSplash/Plugin", QString("[X-KSplash-PluginName] == '%1'").arg(pluginName));
+    KService::List list= KTrader::self()->query("KSplash/Plugin", TQString("[X-KSplash-PluginName] == '%1'").arg(pluginName));
     KService::Ptr ptr;
     if (!list.isEmpty())
     {
       ptr = list.first();
-      // libname.latin1() instead of QFile::encodeName() because these are not user-modifiable files.
+      // libname.latin1() instead of TQFile::encodeName() because these are not user-modifiable files.
       if( (factory = KLibLoader::self()->factory( ptr->library().latin1() )) )
       {
         mThemeLibName = ptr->library();
@@ -379,7 +379,7 @@ ThemeEngine *KSplash::_loadThemeEngine( const QString& pluginName, const QString
   }
   if (factory)
   {
-    QStringList themeTitle;
+    TQStringList themeTitle;
     themeTitle << theme;
     return static_cast<ThemeEngine *>(factory->create(this, "theme", objName.latin1(), themeTitle));
   }
@@ -387,13 +387,13 @@ ThemeEngine *KSplash::_loadThemeEngine( const QString& pluginName, const QString
     return 0L;
 }
 
-void KSplash::slotSetText( const QString& s )
+void KSplash::slotSetText( const TQString& s )
 {
   if( mThemeEngine )
     mThemeEngine->slotSetText( s );
 }
 
-void KSplash::slotSetPixmap( const QString& px )
+void KSplash::slotSetPixmap( const TQString& px )
 {
   if( mThemeEngine )
     mThemeEngine->slotSetPixmap( px );
@@ -409,16 +409,16 @@ void KSplash::slotUpdateProgress( int )
 // ??
 }
 
-QPtrList<Action> KSplash::actionList()
+TQPtrList<Action> KSplash::actionList()
 {
   return mActionList;
 }
 
-bool KSplash::eventFilter( QObject *o, QEvent *e )
+bool KSplash::eventFilter( TQObject *o, TQEvent *e )
 {
-  if ( ( e->type() == QEvent::MouseButtonRelease ) && ( o == mThemeEngine ) )
+  if ( ( e->type() == TQEvent::MouseButtonRelease ) && ( o == mThemeEngine ) )
   {
-    QTimer::singleShot( 0, this, SLOT(close()));
+    TQTimer::singleShot( 0, this, TQT_SLOT(close()));
     return TRUE;
   }
   else

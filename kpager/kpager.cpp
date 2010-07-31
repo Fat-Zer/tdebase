@@ -36,11 +36,11 @@
 #include "config.h"
 #include "kpager.h"
 
-#include <qintdict.h>
-#include <qptrlist.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qtimer.h>
+#include <tqintdict.h>
+#include <tqptrlist.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kglobalsettings.h>
@@ -54,12 +54,12 @@
 #include <kwinmodule.h>
 #include <netwm.h>
 #include "desktop.h"
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
 #include <assert.h>
 
-KPagerMainWindow::KPagerMainWindow(QWidget *parent, const char *name)
+KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
 	: DCOPObject("KPagerIface"), KMainWindow(parent, name)
 {
     m_reallyClose=false;
@@ -110,8 +110,8 @@ KPagerMainWindow::KPagerMainWindow(QWidget *parent, const char *name)
     XSetWMHints(x11Display(), winId(), hints);
     XFree(reinterpret_cast<char *>(hints));
 
-    timeout=new QTimer(this,"timeoutToQuit");
-    connect(timeout,SIGNAL(timeout()),this, SLOT(reallyClose()));
+    timeout=new TQTimer(this,"timeoutToQuit");
+    connect(timeout,TQT_SIGNAL(timeout()),this, TQT_SLOT(reallyClose()));
 }
 
 KPagerMainWindow::~KPagerMainWindow()
@@ -141,7 +141,7 @@ bool KPagerMainWindow::queryClose()
     return false;
 }
 
-void KPagerMainWindow::showEvent( QShowEvent *ev )
+void KPagerMainWindow::showEvent( TQShowEvent *ev )
 {
   timeout->stop();
   KMainWindow::showEvent(ev); 
@@ -178,7 +178,7 @@ void KPagerMainWindow::toggleShow(int x, int y)
 }
 
 KPager::KPager(KPagerMainWindow *parent, const char *name)
-	: QFrame (parent, name, WStyle_Customize | WStyle_NoBorder | WStyle_Tool)
+	: TQFrame (parent, name, WStyle_Customize | WStyle_NoBorder | WStyle_Tool)
     , m_layout(0)
     , m_mnu(0)
     , m_smnu(0)
@@ -190,8 +190,8 @@ KPager::KPager(KPagerMainWindow *parent, const char *name)
     m_winmodule=new KWinModule(this);
     m_currentDesktop=m_winmodule->currentDesktop();
 
-    m_grabWinTimer=new QTimer(this,"grabWinTimer");
-    connect(m_grabWinTimer, SIGNAL(timeout()), this, SLOT(slotGrabWindows()));
+    m_grabWinTimer=new TQTimer(this,"grabWinTimer");
+    connect(m_grabWinTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotGrabWindows()));
 
     KPagerConfigDialog::initConfiguration();
 
@@ -208,31 +208,31 @@ KPager::KPager(KPagerMainWindow *parent, const char *name)
 
     m_layoutType=static_cast<enum KPager::LayoutTypes>( KPagerConfigDialog::m_layoutType );
 
-    connect( m_winmodule, SIGNAL( activeWindowChanged(WId)),
-             SLOT(slotActiveWindowChanged(WId)));
-    connect( m_winmodule, SIGNAL( windowAdded(WId) ),
-             SLOT( slotWindowAdded(WId) ) );
-    connect( m_winmodule, SIGNAL( windowRemoved(WId) ),
-             SLOT( slotWindowRemoved(WId) ) );
-    connect( m_winmodule, SIGNAL( windowChanged(WId,unsigned int) ),
-             SLOT( slotWindowChanged(WId,unsigned int) ) );
-    connect( m_winmodule, SIGNAL( stackingOrderChanged() ),
-             SLOT( slotStackingOrderChanged() ) );
-    connect( m_winmodule, SIGNAL( desktopNamesChanged() ),
-             SLOT( slotDesktopNamesChanged() ) );
-    connect( m_winmodule, SIGNAL( numberOfDesktopsChanged(int) ),
-             SLOT( slotNumberOfDesktopsChanged(int) ) );
-    connect( m_winmodule, SIGNAL( currentDesktopChanged(int)),
-             SLOT( slotCurrentDesktopChanged(int) ) );
-    connect(kapp, SIGNAL(backgroundChanged(int)),
-            SLOT(slotBackgroundChanged(int)));
+    connect( m_winmodule, TQT_SIGNAL( activeWindowChanged(WId)),
+             TQT_SLOT(slotActiveWindowChanged(WId)));
+    connect( m_winmodule, TQT_SIGNAL( windowAdded(WId) ),
+             TQT_SLOT( slotWindowAdded(WId) ) );
+    connect( m_winmodule, TQT_SIGNAL( windowRemoved(WId) ),
+             TQT_SLOT( slotWindowRemoved(WId) ) );
+    connect( m_winmodule, TQT_SIGNAL( windowChanged(WId,unsigned int) ),
+             TQT_SLOT( slotWindowChanged(WId,unsigned int) ) );
+    connect( m_winmodule, TQT_SIGNAL( stackingOrderChanged() ),
+             TQT_SLOT( slotStackingOrderChanged() ) );
+    connect( m_winmodule, TQT_SIGNAL( desktopNamesChanged() ),
+             TQT_SLOT( slotDesktopNamesChanged() ) );
+    connect( m_winmodule, TQT_SIGNAL( numberOfDesktopsChanged(int) ),
+             TQT_SLOT( slotNumberOfDesktopsChanged(int) ) );
+    connect( m_winmodule, TQT_SIGNAL( currentDesktopChanged(int)),
+             TQT_SLOT( slotCurrentDesktopChanged(int) ) );
+    connect(kapp, TQT_SIGNAL(backgroundChanged(int)),
+            TQT_SLOT(slotBackgroundChanged(int)));
 
-    QFont defFont(KGlobalSettings::generalFont().family(), 10, QFont::Bold);
+    TQFont defFont(KGlobalSettings::generalFont().family(), 10, TQFont::Bold);
     defFont = cfg->readFontEntry("Font", &defFont);
     setFont(defFont);
 
-    m_prefs_action = KStdAction::preferences(this, SLOT(configureDialog()), parent->actionCollection());
-    m_quit_action = KStdAction::quit(kapp, SLOT(quit()), parent->actionCollection());
+    m_prefs_action = KStdAction::preferences(this, TQT_SLOT(configureDialog()), parent->actionCollection());
+    m_quit_action = KStdAction::quit(kapp, TQT_SLOT(quit()), parent->actionCollection());
 
     updateLayout();
 }
@@ -242,7 +242,7 @@ KPager::~KPager()
 
 }
 
-const QString KPager::lWidth()
+const TQString KPager::lWidth()
 {
     switch (m_layoutType) {
 	case (Classical) :  return "layoutClassicalWidth";break;
@@ -252,7 +252,7 @@ const QString KPager::lWidth()
     return "Width";
 }
 
-const QString KPager::lHeight()
+const TQString KPager::lHeight()
 {
     switch (m_layoutType) {
 	case (Classical) :  return "layoutClassicalHeight";break;
@@ -271,12 +271,12 @@ void KPager::updateLayout()
 
     switch (m_layoutType)
     {
-        case (Classical) :  m_layout=new QGridLayout(this, 2, 0); break;
-        case (Horizontal) : m_layout=new QGridLayout(this, 0, 1); break;
-        case (Vertical) :   m_layout=new QGridLayout(this, 1, 0); break;
+        case (Classical) :  m_layout=new TQGridLayout(this, 2, 0); break;
+        case (Horizontal) : m_layout=new TQGridLayout(this, 0, 1); break;
+        case (Vertical) :   m_layout=new TQGridLayout(this, 1, 0); break;
     };
 
-    QValueList <Desktop *>::Iterator it;
+    TQValueList <Desktop *>::Iterator it;
     int i,j;
     i=j=0;
     int ndesks=0;
@@ -305,11 +305,11 @@ void KPager::updateLayout()
 
 }
 
-void KPager::showPopupMenu( WId wid, QPoint pos)
+void KPager::showPopupMenu( WId wid, TQPoint pos)
 {
     if (wid <= 0) {
 	if(!m_smnu) {
-	    m_smnu = new QPopupMenu(this);
+	    m_smnu = new TQPopupMenu(this);
 	    m_prefs_action->plug(m_smnu);
 	    m_quit_action->plug(m_smnu);
 	}
@@ -321,20 +321,20 @@ void KPager::showPopupMenu( WId wid, QPoint pos)
         if (!m_mnu) {
             m_mnu = new KPopupMenu(this);
 
-            m_mnu->insertTitle( QString::fromUtf8("KPager"), 1);
+            m_mnu->insertTitle( TQString::fromUtf8("KPager"), 1);
             m_mnu->setCheckable(true);
-            connect(m_mnu, SIGNAL(aboutToShow()), SLOT(clientPopupAboutToShow()));
-            connect(m_mnu, SIGNAL(activated(int)), SLOT(clientPopupActivated(int)));
+            connect(m_mnu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(clientPopupAboutToShow()));
+            connect(m_mnu, TQT_SIGNAL(activated(int)), TQT_SLOT(clientPopupActivated(int)));
 
-            m_dmnu = new QPopupMenu(m_mnu);
+            m_dmnu = new TQPopupMenu(m_mnu);
             m_dmnu->setCheckable(true);
-            connect(m_dmnu, SIGNAL(aboutToShow()), SLOT(desktopPopupAboutToShow()));
-            connect(m_dmnu, SIGNAL(activated(int)), SLOT(sendToDesktop(int)));
+            connect(m_dmnu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(desktopPopupAboutToShow()));
+            connect(m_dmnu, TQT_SIGNAL(activated(int)), TQT_SLOT(sendToDesktop(int)));
 
             m_mnu->insertItem( i18n("Mi&nimize"), IconifyOp );
             m_mnu->insertItem( i18n("Ma&ximize"), MaximizeOp );
             if (m_showStickyOption)
-                m_mnu->insertItem( QString("&Sticky"), StickyOp );  // Add translation
+                m_mnu->insertItem( TQString("&Sticky"), StickyOp );  // Add translation
             m_mnu->insertSeparator();
 
             m_mnu->insertItem(i18n("&To Desktop"), m_dmnu );
@@ -357,8 +357,8 @@ void KPager::configureDialog()
     {
         m_layoutType=static_cast<enum KPager::LayoutTypes>(KPagerConfigDialog::m_layoutType);
 	KConfig *cfg=KGlobal::config();
-	int nWd = (parent() ? ((QWidget *)parent())->width() : width());
-	int nHg = (parent() ? ((QWidget *)parent())->width() : width());
+	int nWd = (parent() ? ((TQWidget *)parent())->width() : width());
+	int nHg = (parent() ? ((TQWidget *)parent())->width() : width());
 
 	cfg->setGroup("KPager");
 
@@ -373,7 +373,7 @@ void KPager::configureDialog()
 	cfg->writeEntry("windowDragging",KPagerConfigDialog::m_windowDragging);
 
         updateLayout();
-        for( QValueList <Desktop *>::Iterator it = m_desktops.begin(); it != m_desktops.end(); ++it )
+        for( TQValueList <Desktop *>::Iterator it = m_desktops.begin(); it != m_desktops.end(); ++it )
             (*it)->repaint();
     }
 }
@@ -494,8 +494,8 @@ void KPager::slotDesktopNamesChanged()
 {
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
-        QToolTip::remove(m_desktops[i-1]);
-        QToolTip::add(m_desktops[i-1], kwin()->desktopName(i));
+        TQToolTip::remove(m_desktops[i-1]);
+        TQToolTip::add(m_desktops[i-1], kwin()->desktopName(i));
     }
 
     update();
@@ -507,7 +507,7 @@ void KPager::slotNumberOfDesktopsChanged(int ndesktops)
     unsigned int nDesktops=static_cast<unsigned int>(ndesktops);
     if (nDesktops<m_desktops.count())
     {
-        QValueList <Desktop *>::Iterator it;
+        TQValueList <Desktop *>::Iterator it;
         for ( int i=m_desktops.count()-nDesktops; i > 0; i--)
         {
             it = m_desktops.fromLast();
@@ -581,7 +581,7 @@ void KPager::clientPopupAboutToShow()
     m_mnu->setItemChecked(MaximizeOp, m_winfo.state() & NET::Max);
     if (m_showStickyOption)   // Add translation
         m_mnu->changeItem(StickyOp,
-                          (m_winfo.onAllDesktops()) ? QString("Un&sticky"):QString("&Sticky"));
+                          (m_winfo.onAllDesktops()) ? TQString("Un&sticky"):TQString("&Sticky"));
 }
 
 void KPager::desktopPopupAboutToShow()
@@ -597,7 +597,7 @@ void KPager::desktopPopupAboutToShow()
 
     int id;
     for ( int i = 1; i <= m_winmodule->numberOfDesktops(); i++ ) {
-        id = m_dmnu->insertItem( QString("&")+QString::number(i )+QString(" ")
+        id = m_dmnu->insertItem( TQString("&")+TQString::number(i )+TQString(" ")
                                  + m_winmodule->desktopName(i), i );
         if ( m_winfo.desktop() == i )
             m_dmnu->setItemChecked( id, TRUE );
@@ -641,7 +641,7 @@ void KPager::clientPopupActivated( int id )
 
 void KPager::redrawDesktops()
 {
-    QValueList <Desktop *>::Iterator it;
+    TQValueList <Desktop *>::Iterator it;
     for( it = m_desktops.begin(); it != m_desktops.end(); ++it )
         (*it)->repaint();
 }
@@ -652,12 +652,12 @@ void KPager::slotGrabWindows()
     m_desktops[m_currentDesktop-1]->repaint();
 }
 
-QSize KPager::sizeHint() const
+TQSize KPager::sizeHint() const
 {
     int n=m_desktops.count();
     int w=-1,h=-1;
 
-    QSize size=m_desktops[0]->sizeHint();
+    TQSize size=m_desktops[0]->sizeHint();
     int wDsk=size.width();
     int hDsk=size.height();
     switch (m_layoutType)
@@ -666,7 +666,7 @@ QSize KPager::sizeHint() const
         case (Horizontal) : w=wDsk*n; h=hDsk;break;
         case (Vertical) :   w=wDsk; h=hDsk*n;break;
     };
-    return QSize(w,h);
+    return TQSize(w,h);
 }
 
 const KPager::LayoutTypes KPager::c_defLayout=KPager::Horizontal;

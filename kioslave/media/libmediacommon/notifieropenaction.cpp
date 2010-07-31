@@ -28,7 +28,7 @@ NotifierOpenAction::NotifierOpenAction()
 	setLabel(i18n("Open in New Window"));
 }
 
-QString NotifierOpenAction::id() const
+TQString NotifierOpenAction::id() const
 {
 	return "#OpenAction";
 }
@@ -38,7 +38,7 @@ void NotifierOpenAction::execute(KFileItem &medium)
 	medium.run();
 }
 
-bool NotifierOpenAction::supportsMimetype( const QString &mimetype ) const
+bool NotifierOpenAction::supportsMimetype( const TQString &mimetype ) const
 {
 	return !mimetype.contains( "blank" ) && !mimetype.contains( "encrypted" );
 }

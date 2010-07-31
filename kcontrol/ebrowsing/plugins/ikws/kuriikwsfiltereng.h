@@ -25,8 +25,8 @@
 #ifndef __KURISearchFILTERENGINE_H__
 #define __KURISearchFILTERENGINE_H__
 
-#include <qvaluelist.h>
-#include <qstringlist.h>
+#include <tqvaluelist.h>
+#include <tqstringlist.h>
 
 #include <kservice.h>
 
@@ -36,16 +36,16 @@ class KURL;
 class KURISearchFilterEngine
 {
 public:
-  typedef QMap <QString, QString> SubstMap;
+  typedef TQMap <TQString, TQString> SubstMap;
   
   KURISearchFilterEngine();
   ~KURISearchFilterEngine() {};
 
-  QCString name() const;
+  TQCString name() const;
   
-  QString webShortcutQuery (const QString&) const;
+  TQString webShortcutQuery (const TQString&) const;
   
-  QString autoWebSearchQuery (const QString&) const;
+  TQString autoWebSearchQuery (const TQString&) const;
   
   bool verbose() const { return m_bVerbose; }
 
@@ -54,23 +54,23 @@ public:
   static KURISearchFilterEngine *self();
 
 protected:
-  QString formatResult (const QString& url, const QString& cset1, const QString& cset2,
-                        const QString& query, bool isMalformed) const;
+  TQString formatResult (const TQString& url, const TQString& cset1, const TQString& cset2,
+                        const TQString& query, bool isMalformed) const;
   
-  QString formatResult (const QString& url, const QString& cset1, const QString& cset2,
-                        const QString& query, bool isMalformed, SubstMap& map) const;
+  TQString formatResult (const TQString& url, const TQString& cset1, const TQString& cset2,
+                        const TQString& query, bool isMalformed, SubstMap& map) const;
 
 private:
-  QStringList modifySubstitutionMap (SubstMap& map, const QString& query) const;  
+  TQStringList modifySubstitutionMap (SubstMap& map, const TQString& query) const;  
   
-  QString substituteQuery (const QString& url, SubstMap &map, 
-                           const QString& userquery, const int encodingMib) const;
+  TQString substituteQuery (const TQString& url, SubstMap &map, 
+                           const TQString& userquery, const int encodingMib) const;
   
   bool m_bVerbose;  
   bool m_bWebShortcutsEnabled;
   char m_cKeywordDelimiter;
 
-  QString m_defaultSearchEngine;
+  TQString m_defaultSearchEngine;
   static KURISearchFilterEngine *s_pSelf;
 };
 

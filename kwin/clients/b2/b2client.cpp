@@ -11,9 +11,9 @@
  */
 
 #include "b2client.h"
-#include <qapplication.h>
-#include <qlayout.h>
-#include <qdrawutil.h>
+#include <tqapplication.h>
+#include <tqlayout.h>
+#include <tqdrawutil.h>
 #include <kpixmapeffect.h>
 #include <kimageeffect.h>
 #include <kicontheme.h>
@@ -21,9 +21,9 @@
 #include <kdrawutil.h>
 #include <klocale.h>
 #include <kconfig.h>
-#include <qbitmap.h>
-#include <qlabel.h>
-#include <qtooltip.h>
+#include <tqbitmap.h>
+#include <tqlabel.h>
+#include <tqtooltip.h>
 
 #include <X11/Xlib.h>
 
@@ -99,7 +99,7 @@ static void read_config(B2ClientFactory *f)
 {
     // Force button size to be in a reasonable range.
     // If the frame width is large, the button size must be large too.
-    buttonSize = (QFontMetrics(options()->font(true)).height() + 1) & 0x3e;
+    buttonSize = (TQFontMetrics(options()->font(true)).height() + 1) & 0x3e;
     if (buttonSize < 16) buttonSize = 16;
 
     KConfig conf("kwinb2rc");
@@ -108,7 +108,7 @@ static void read_config(B2ClientFactory *f)
     do_draw_handle = conf.readBoolEntry("DrawGrabHandle", true);
     drawSmallBorders = !options()->moveResizeMaximizedWindows();
 
-    QString opString = conf.readEntry("MenuButtonDoubleClickOperation", "NoOp");
+    TQString opString = conf.readEntry("MenuButtonDoubleClickOperation", "NoOp");
     if (opString == "Close") {
         menu_dbl_click_op = B2::CloseOp;
     } else if (opString == "Minimize") {
@@ -140,15 +140,15 @@ static void read_config(B2ClientFactory *f)
     }
 }
 
-static void drawB2Rect(KPixmap *pix, const QColor &primary, bool down)
+static void drawB2Rect(KPixmap *pix, const TQColor &primary, bool down)
 {
-    QPainter p(pix);
-    QColor hColor = primary.light(150);
-    QColor lColor = primary.dark(150);
+    TQPainter p(pix);
+    TQColor hColor = primary.light(150);
+    TQColor lColor = primary.dark(150);
 
     if (down) qSwap(hColor, lColor);
 
-    if (QPixmap::defaultDepth() > 8) {
+    if (TQPixmap::defaultDepth() > 8) {
 	KPixmapEffect::gradient(*pix, hColor, lColor, 
 		KPixmapEffect::DiagonalGradient);
     }
@@ -166,7 +166,7 @@ static void drawB2Rect(KPixmap *pix, const QColor &primary, bool down)
 
 }
 
-QPixmap* kwin_get_menu_pix_hack()
+TQPixmap* kwin_get_menu_pix_hack()
 {
     //return menu_pix;  FIXME
     return PIXMAP_A(P_MENU);
@@ -200,27 +200,27 @@ static void create_pixmaps()
 
     // there seems to be no way to load X bitmaps from data properly, so
     // we need to create new ones for each mask :P
-    QBitmap pinupMask(16, 16, pinup_mask_bits, true);
+    TQBitmap pinupMask(16, 16, pinup_mask_bits, true);
     PIXMAP_A(P_PINUP)->setMask(pinupMask);
     PIXMAP_I(P_PINUP)->setMask(pinupMask);
-    QBitmap pindownMask(16, 16, pindown_mask_bits, true);
+    TQBitmap pindownMask(16, 16, pindown_mask_bits, true);
     PIXMAP_AD(P_PINUP)->setMask(pindownMask);
     PIXMAP_ID(P_PINUP)->setMask(pindownMask);
 
-    QBitmap menuMask(16, 16, menu_mask_bits, true);
+    TQBitmap menuMask(16, 16, menu_mask_bits, true);
     for (i = 0; i < NumStates; i++) 
 	pixmap[P_MENU * NumStates + i]->setMask(menuMask);
 
-    QBitmap helpMask(16, 16, help_mask_bits, true);
+    TQBitmap helpMask(16, 16, help_mask_bits, true);
     for (i = 0; i < NumStates; i++) 
 	pixmap[P_HELP * NumStates + i]->setMask(helpMask);
 
-    QBitmap normalizeMask(16, 16, true);
+    TQBitmap normalizeMask(16, 16, true);
     // draw normalize icon mask
-    QPainter mask;
+    TQPainter mask;
     mask.begin(&normalizeMask);
 
-    QBrush one(Qt::color1);
+    TQBrush one(Qt::color1);
     mask.fillRect(normalizeMask.width() - 12, normalizeMask.height() - 12, 
 		  12, 12, one);
     mask.fillRect(0, 0, 10, 10, one);
@@ -229,7 +229,7 @@ static void create_pixmaps()
     for (i = 0; i < NumStates; i++) 
 	pixmap[P_NORMALIZE * NumStates + i]->setMask(normalizeMask);
     
-    QBitmap shadeMask(bsize, bsize, true);
+    TQBitmap shadeMask(bsize, bsize, true);
     mask.begin(&shadeMask);
     mask.fillRect(0, 0, bsize, 6, one);
     mask.end();
@@ -311,10 +311,10 @@ bool B2ClientFactory::supports( Ability ability )
     };
 }
 
-QValueList< B2ClientFactory::BorderSize > B2ClientFactory::borderSizes() const
+TQValueList< B2ClientFactory::BorderSize > B2ClientFactory::borderSizes() const
 {
     // the list must be sorted
-    return QValueList< BorderSize >() << BorderTiny << BorderNormal <<
+    return TQValueList< BorderSize >() << BorderTiny << BorderNormal <<
 	BorderLarge << BorderVeryLarge << BorderHuge;
 }
 
@@ -342,7 +342,7 @@ B2Client::B2Client(KDecorationBridge *b, KDecorationFactory *f)
 
 void B2Client::init()
 {
-    const QString tips[] = {
+    const TQString tips[] = {
 	i18n("Menu"), 
 	isOnAllDesktops() ? 
 	    i18n("Not on all desktops") : i18n("On all desktops"), 
@@ -364,35 +364,35 @@ void B2Client::init()
     for (int i = 0; i < BtnCount; i++)
         button[i] = NULL;
 
-    g = new QGridLayout(widget(), 3, 3);
+    g = new TQGridLayout(widget(), 3, 3);
     // Left and right border width
 
-    leftSpacer = new QSpacerItem(thickness, 16,
-	    QSizePolicy::Fixed, QSizePolicy::Expanding);
-    rightSpacer = new QSpacerItem(thickness, 16,
-	    QSizePolicy::Fixed, QSizePolicy::Expanding);
+    leftSpacer = new TQSpacerItem(thickness, 16,
+	    TQSizePolicy::Fixed, TQSizePolicy::Expanding);
+    rightSpacer = new TQSpacerItem(thickness, 16,
+	    TQSizePolicy::Fixed, TQSizePolicy::Expanding);
 
     g->addItem(leftSpacer, 1, 0);
     g->addItem(rightSpacer, 1, 2);
 
     // Top border height
-    topSpacer = new QSpacerItem(10, buttonSize + 4,
-	    QSizePolicy::Expanding, QSizePolicy::Fixed);
+    topSpacer = new TQSpacerItem(10, buttonSize + 4,
+	    TQSizePolicy::Expanding, TQSizePolicy::Fixed);
     g->addItem(topSpacer, 0, 1);
     
     // Bottom border height. 
-    bottomSpacer = new QSpacerItem(10, 
+    bottomSpacer = new TQSpacerItem(10, 
 		thickness + (mustDrawHandle() ? 4 : 0), 
-		QSizePolicy::Expanding, QSizePolicy::Fixed);
+		TQSizePolicy::Expanding, TQSizePolicy::Fixed);
     g->addItem(bottomSpacer, 2, 1);
     if (isPreview()) {
-	QLabel *previewLabel = new QLabel(
+	TQLabel *previewLabel = new TQLabel(
 		i18n("<b><center>B II preview</center></b>"), 
 		widget());
         g->addWidget(previewLabel, 1, 1);
 	
     } else {
-	g->addItem(new QSpacerItem(0, 0), 1, 1);
+	g->addItem(new TQSpacerItem(0, 0), 1, 1);
     }
 
     // titlebar
@@ -402,8 +402,8 @@ void B2Client::init()
     titlebar->setMinimumWidth(buttonSize + 4);
     titlebar->setFixedHeight(buttonSize + 4);
 
-    QBoxLayout *titleLayout = new QBoxLayout(titlebar, 
-	    QBoxLayout::LeftToRight, 0, 1, 0);
+    TQBoxLayout *titleLayout = new TQBoxLayout(titlebar, 
+	    TQBoxLayout::LeftToRight, 0, 1, 0);
     titleLayout->addSpacing(3);
 
     if (options()->customButtonPositions()) {
@@ -418,8 +418,8 @@ void B2Client::init()
 
     titleLayout->addSpacing(3);
 
-    QColor c = options()->colorGroup(KDecoration::ColorTitleBar, isActive()).
-        color(QColorGroup::Button);
+    TQColor c = options()->colorGroup(KDecoration::ColorTitleBar, isActive()).
+        color(TQColorGroup::Button);
 
     for (int i = 0; i < BtnCount; i++) {
         if (button[i])
@@ -432,8 +432,8 @@ void B2Client::init()
     titlebar->installEventFilter(this);
 }
 
-void B2Client::addButtons(const QString& s, const QString tips[],
-                          B2Titlebar* tb, QBoxLayout* titleLayout)
+void B2Client::addButtons(const TQString& s, const TQString tips[],
+                          B2Titlebar* tb, TQBoxLayout* titleLayout)
 {
     if (s.length() <= 0)
 	return;
@@ -446,8 +446,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 			LeftButton | RightButton);
 		button[BtnMenu]->setPixmaps(P_MENU);
 		button[BtnMenu]->setUseMiniIcon();
-		connect(button[BtnMenu], SIGNAL(pressed()),
-			this, SLOT(menuButtonPressed()));
+		connect(button[BtnMenu], TQT_SIGNAL(pressed()),
+			this, TQT_SLOT(menuButtonPressed()));
 		titleLayout->addWidget(button[BtnMenu]);
 	    }
 	    break;
@@ -457,8 +457,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 		button[BtnSticky]->setPixmaps(P_PINUP);
 		button[BtnSticky]->setToggle();
 		button[BtnSticky]->setDown(isOnAllDesktops());
-		connect(button[BtnSticky], SIGNAL(clicked()),
-			this, SLOT(toggleOnAllDesktops()));
+		connect(button[BtnSticky], TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(toggleOnAllDesktops()));
 		titleLayout->addWidget(button[BtnSticky]);
 	    }
 	    break;
@@ -466,8 +466,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 	    if (providesContextHelp() && (!button[BtnHelp])) {
 		button[BtnHelp] = new B2Button(this, tb, tips[BtnHelp]);
 		button[BtnHelp]->setPixmaps(P_HELP);
-		connect(button[BtnHelp], SIGNAL(clicked()),
-			this, SLOT(showContextHelp()));
+		connect(button[BtnHelp], TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(showContextHelp()));
 		titleLayout->addWidget(button[BtnHelp]);
 	    }
 	    break;
@@ -475,8 +475,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 	    if (isMinimizable() && (!button[BtnIconify])) {
 		button[BtnIconify] = new B2Button(this, tb,tips[BtnIconify]);
 		button[BtnIconify]->setPixmaps(P_ICONIFY);
-		connect(button[BtnIconify], SIGNAL(clicked()),
-			this, SLOT(minimize()));
+		connect(button[BtnIconify], TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(minimize()));
 		titleLayout->addWidget(button[BtnIconify]);
 	    }
 	    break;
@@ -486,8 +486,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 			LeftButton | MidButton | RightButton);
 		button[BtnMax]->setPixmaps(maximizeMode() == MaximizeFull ?
 			P_NORMALIZE : P_MAX);
-		connect(button[BtnMax], SIGNAL(clicked()),
-			this, SLOT(maxButtonClicked()));
+		connect(button[BtnMax], TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(maxButtonClicked()));
 		titleLayout->addWidget(button[BtnMax]);
 	    }
 	    break;
@@ -495,8 +495,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 	    if (isCloseable() && !button[BtnClose]) {
 		button[BtnClose] = new B2Button(this, tb, tips[BtnClose]);
 		button[BtnClose]->setPixmaps(P_CLOSE);
-		connect(button[BtnClose], SIGNAL(clicked()),
-			this, SLOT(closeWindow()));
+		connect(button[BtnClose], TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(closeWindow()));
 		titleLayout->addWidget(button[BtnClose]);
 	    }
 	    break;
@@ -504,8 +504,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 	    if (isShadeable() && !button[BtnShade]) {
 		button[BtnShade] = new B2Button(this, tb, tips[BtnShade]);
 		button[BtnShade]->setPixmaps(P_SHADE);
-		connect(button[BtnShade], SIGNAL(clicked()),
-			this, SLOT(shadeButtonClicked()));
+		connect(button[BtnShade], TQT_SIGNAL(clicked()),
+			this, TQT_SLOT(shadeButtonClicked()));
 		titleLayout->addWidget(button[BtnShade]);
 	    }
 	    break;
@@ -513,8 +513,8 @@ void B2Client::addButtons(const QString& s, const QString tips[],
 	    if (resizable && !button[BtnResize]) {
 		button[BtnResize] = new B2Button(this, tb, tips[BtnResize]);
 		button[BtnResize]->setPixmaps(P_RESIZE);
-		connect(button[BtnResize], SIGNAL(pressed()),
-			this, SLOT(resizeButtonPressed()));
+		connect(button[BtnResize], TQT_SIGNAL(pressed()),
+			this, TQT_SLOT(resizeButtonPressed()));
 		titleLayout->addWidget(button[BtnResize]);
 	    }
 	    break;
@@ -575,7 +575,7 @@ void B2Client::calcHiddenButtons()
     }
 }
 
-void B2Client::resizeEvent(QResizeEvent * /*e*/)
+void B2Client::resizeEvent(TQResizeEvent * /*e*/)
 {
     calcHiddenButtons();
     titlebar->layout()->activate();
@@ -598,14 +598,14 @@ void B2Client::captionChange()
     titlebar->repaint(false);
 }
 
-void B2Client::paintEvent(QPaintEvent* e)
+void B2Client::paintEvent(TQPaintEvent* e)
 {
-    QPainter p(widget());
+    TQPainter p(widget());
 
     KDecoration::ColorType frameColorGroup = colored_frame ?
 	KDecoration::ColorTitleBar : KDecoration::ColorFrame;
 
-    QRect t = titlebar->geometry();
+    TQRect t = titlebar->geometry();
 
     // Frame height, this is used a lot of times
     int fHeight = height() - t.height();
@@ -614,8 +614,8 @@ void B2Client::paintEvent(QPaintEvent* e)
     int bb = mustDrawHandle() ? 4 : 0;
     int bDepth = thickness + bb;
 
-    QColorGroup fillColor = options()->colorGroup(frameColorGroup, isActive());
-    QBrush fillBrush(options()->color(frameColorGroup, isActive()));
+    TQColorGroup fillColor = options()->colorGroup(frameColorGroup, isActive());
+    TQBrush fillBrush(options()->color(frameColorGroup, isActive()));
 
     // outer frame rect
     p.drawRect(0, t.bottom() - thickness + 1, 
@@ -690,7 +690,7 @@ void B2Client::paintEvent(QPaintEvent* e)
      */
     if (titlebar->isFullyObscured()) {
         /* We first see, if our repaint contained the titlebar area */
-	QRegion reg(QRect(0, 0, width(), buttonSize + 4));
+	TQRegion reg(TQRect(0, 0, width(), buttonSize + 4));
 	reg = reg.intersect(e->region());
 	if (!reg.isEmpty())
 	    unobscureTitlebar();
@@ -699,49 +699,49 @@ void B2Client::paintEvent(QPaintEvent* e)
 
 void B2Client::doShape()
 {
-    QRect t = titlebar->geometry();
-    QRegion mask(widget()->rect());
+    TQRect t = titlebar->geometry();
+    TQRegion mask(widget()->rect());
     // top to the tilebar right
     if (bar_x_ofs) {
 	// left from bar
-	mask -= QRect(0, 0, bar_x_ofs, t.height() - thickness); 
+	mask -= TQRect(0, 0, bar_x_ofs, t.height() - thickness); 
 	// top left point
-	mask -= QRect(0, t.height() - thickness, 1, 1); 
+	mask -= TQRect(0, t.height() - thickness, 1, 1); 
     }
     if (t.right() < width() - 1) {
-	mask -= QRect(width() - 1,
+	mask -= TQRect(width() - 1,
 		t.height() - thickness, 1, 1); //top right point
-	mask -= QRect(t.right() + 1, 0,
+	mask -= TQRect(t.right() + 1, 0,
 		width() - t.right() - 1, t.height() - thickness);
     }
     // bottom right point
-    mask -= QRect(width() - 1, height() - 1, 1, 1); 
+    mask -= TQRect(width() - 1, height() - 1, 1, 1); 
     if (mustDrawHandle()) {
 	// bottom left point
-	mask -= QRect(0, height() - 5, 1, 1); 
+	mask -= TQRect(0, height() - 5, 1, 1); 
 	// handle left point
-	mask -= QRect(width() - 40, height() - 1, 1, 1);
+	mask -= TQRect(width() - 40, height() - 1, 1, 1);
 	// bottom left 
-	mask -= QRect(0, height() - 4, width() - 40, 4);
+	mask -= TQRect(0, height() - 4, width() - 40, 4);
     } else {
 	// bottom left point
-	mask -= QRect(0, height() - 1, 1, 1); 
+	mask -= TQRect(0, height() - 1, 1, 1); 
     }
 
     setMask(mask);
 }
 
-void B2Client::showEvent(QShowEvent *)
+void B2Client::showEvent(TQShowEvent *)
 {
     calcHiddenButtons();
     positionButtons();
     doShape();
 }
 
-KDecoration::Position B2Client::mousePosition(const QPoint& p) const
+KDecoration::Position B2Client::mousePosition(const TQPoint& p) const
 {
     const int range = 16;
-    QRect t = titlebar->geometry();
+    TQRect t = titlebar->geometry();
     t.setHeight(buttonSize + 4 - thickness);
     int ly = t.bottom();
     int lx = t.right();
@@ -809,8 +809,8 @@ void B2Client::desktopChange()
     bool on = isOnAllDesktops();
     if (B2Button *b = button[BtnSticky]) {
         b->setDown(on);
-	QToolTip::remove(b);
-	QToolTip::add(b, 
+	TQToolTip::remove(b);
+	TQToolTip::add(b, 
 		on ? i18n("Not on all desktops") : i18n("On all desktops"));
     }
 }
@@ -821,12 +821,12 @@ void B2Client::maximizeChange()
     if (button[BtnMax]) {
         button[BtnMax]->setPixmaps(m ? P_NORMALIZE : P_MAX);
         button[BtnMax]->repaint();
-	QToolTip::remove(button[BtnMax]);
-	QToolTip::add(button[BtnMax],
+	TQToolTip::remove(button[BtnMax]);
+	TQToolTip::add(button[BtnMax],
 		m ? i18n("Restore") : i18n("Maximize"));
     }
     bottomSpacer->changeSize(10, thickness + (mustDrawHandle() ? 4 : 0),
-	    QSizePolicy::Expanding, QSizePolicy::Minimum);
+	    TQSizePolicy::Expanding, TQSizePolicy::Minimum);
 
     g->activate();
     doShape();
@@ -838,8 +838,8 @@ void B2Client::activeChange()
     widget()->repaint(false);
     titlebar->repaint(false);
 
-    QColor c = options()->colorGroup(
-	    KDecoration::ColorTitleBar, isActive()).color(QColorGroup::Button);
+    TQColor c = options()->colorGroup(
+	    KDecoration::ColorTitleBar, isActive()).color(TQColorGroup::Button);
 
     for (int i = 0; i < BtnCount; i++)
         if (button[i]) {
@@ -851,23 +851,23 @@ void B2Client::activeChange()
 void B2Client::shadeChange()
 {
     bottomSpacer->changeSize(10, thickness + (mustDrawHandle() ? 4 : 0),
-	    QSizePolicy::Expanding, QSizePolicy::Minimum);
+	    TQSizePolicy::Expanding, TQSizePolicy::Minimum);
     g->activate();
     doShape();
     if (B2Button *b = button[BtnShade]) {
-	QToolTip::remove(b);
-	QToolTip::add(b, isSetShade() ? i18n("Unshade") : i18n("Shade"));
+	TQToolTip::remove(b);
+	TQToolTip::add(b, isSetShade() ? i18n("Unshade") : i18n("Shade"));
     }
 }
 
-QSize B2Client::minimumSize() const
+TQSize B2Client::minimumSize() const
 {
     int left, right, top, bottom;
     borders(left, right, top, bottom);
-    return QSize(left + right + 2 * buttonSize, top + bottom);
+    return TQSize(left + right + 2 * buttonSize, top + bottom);
 }
 
-void B2Client::resize(const QSize& s)
+void B2Client::resize(const TQSize& s)
 {
     widget()->resize(s);
 }
@@ -884,15 +884,15 @@ void B2Client::menuButtonPressed()
     static B2Client *lastClient = NULL;
     
     bool dbl = (lastClient == this && 
-	        time.elapsed() <= QApplication::doubleClickInterval());
+	        time.elapsed() <= TQApplication::doubleClickInterval());
     lastClient = this;
     time.start();
     if (!dbl) {
 	KDecorationFactory* f = factory();
-	QRect menuRect = button[BtnMenu]->rect();
-	QPoint menuTop = button[BtnMenu]->mapToGlobal(menuRect.topLeft());
-	QPoint menuBottom = button[BtnMenu]->mapToGlobal(menuRect.bottomRight());
-	showWindowMenu(QRect(menuTop, menuBottom));
+	TQRect menuRect = button[BtnMenu]->rect();
+	TQPoint menuTop = button[BtnMenu]->mapToGlobal(menuRect.topLeft());
+	TQPoint menuBottom = button[BtnMenu]->mapToGlobal(menuRect.bottomRight());
+	showWindowMenu(TQRect(menuTop, menuBottom));
 	if (!f->exists(this)) // 'this' was destroyed
 	    return;
 	button[BtnMenu]->setDown(false);
@@ -924,7 +924,7 @@ void B2Client::unobscureTitlebar()
 	return;
     }
     in_unobs = 1;
-    QRegion reg(QRect(0,0,width(), buttonSize + 4));
+    TQRegion reg(TQRect(0,0,width(), buttonSize + 4));
     reg = unobscuredRegion(reg);
     if (!reg.isEmpty()) {
         // there is at least _one_ pixel from our title area, which is not
@@ -939,8 +939,8 @@ void B2Client::unobscureTitlebar()
 static void redraw_pixmaps()
 {
     int i;
-    QColorGroup aGrp = options()->colorGroup(KDecoration::ColorButtonBg, true);
-    QColorGroup iGrp = options()->colorGroup(KDecoration::ColorButtonBg, false);
+    TQColorGroup aGrp = options()->colorGroup(KDecoration::ColorButtonBg, true);
+    TQColorGroup iGrp = options()->colorGroup(KDecoration::ColorButtonBg, false);
 
     // close
     drawB2Rect(PIXMAP_A(P_CLOSE), aGrp.button(), false);
@@ -958,7 +958,7 @@ static void redraw_pixmaps()
 	bool is_act = (i < 2);
 	bool is_down = ((i & 1) == 1);
 	KPixmap *pix = pixmap[P_SHADE * NumStates + i];
-	QColor color = is_act ? aGrp.button() : iGrp.button();
+	TQColor color = is_act ? aGrp.button() : iGrp.button();
 	drawB2Rect(&thinBox, color, is_down);
 	pix->fill(Qt::black);
 	bitBlt(pix, 0, 0, &thinBox, 
@@ -1004,7 +1004,7 @@ static void redraw_pixmaps()
     }
 
 
-    QPainter p;
+    TQPainter p;
     // x for close + menu + help
     for (int j = 0; j < 3; j++) {
         int pix;
@@ -1043,7 +1043,7 @@ static void redraw_pixmaps()
 
     // Apply the hilight effect to the 'Hover' icons
     KIconEffect ie;
-    QPixmap hilighted;
+    TQPixmap hilighted;
     for (i = 0; i < P_NUM_BUTTON_TYPES; i++) {
 	int offset = i * NumStates;
 	hilighted = ie.apply(*pixmap[offset + Norm], 
@@ -1057,8 +1057,8 @@ static void redraw_pixmaps()
 
     
     // Create the titlebar gradients
-    if (QPixmap::defaultDepth() > 8) {
-	QColor titleColor[4] = {
+    if (TQPixmap::defaultDepth() > 8) {
+	TQColor titleColor[4] = {
 	    options()->color(KDecoration::ColorTitleBar, true),
             options()->color(KDecoration::ColorFrame, true),
 
@@ -1090,13 +1090,13 @@ static void redraw_pixmaps()
 
 void B2Client::positionButtons()
 {
-    QFontMetrics fm(options()->font(isActive()));
-    QString cap = caption();
+    TQFontMetrics fm(options()->font(isActive()));
+    TQString cap = caption();
     if (cap.length() < 5) // make sure the titlebar has sufficiently wide
         cap = "XXXXX";    // area for dragging the window
     int textLen = fm.width(cap);
 
-    QRect t = titlebar->captionSpacer->geometry();
+    TQRect t = titlebar->captionSpacer->geometry();
     int titleWidth = titlebar->width() - t.width() + textLen + 2;
     if (titleWidth > width()) titleWidth = width();
 
@@ -1106,24 +1106,24 @@ void B2Client::positionButtons()
 
 // Transparent bound stuff.
 
-static QRect *visible_bound;
-static QPointArray bound_shape;
+static TQRect *visible_bound;
+static TQPointArray bound_shape;
 
-bool B2Client::drawbound(const QRect& geom, bool clear)
+bool B2Client::drawbound(const TQRect& geom, bool clear)
 {
     if (clear) {
 	if (!visible_bound) return true;
     }
 
     if (!visible_bound) {
-	visible_bound = new QRect(geom);
-	QRect t = titlebar->geometry();
+	visible_bound = new TQRect(geom);
+	TQRect t = titlebar->geometry();
 	int frameTop = geom.top() + t.bottom();
 	int barLeft = geom.left() + bar_x_ofs;
 	int barRight = barLeft + t.width() - 1;
 	if (barRight > geom.right()) barRight = geom.right();
         // line width is 5 pixels, so compensate for the 2 outer pixels (#88657)
-        QRect g = geom;
+        TQRect g = geom;
         g.setLeft( g.left() + 2 );
         g.setTop( g.top() + 2 );
         g.setRight( g.right() - 2 );
@@ -1144,8 +1144,8 @@ bool B2Client::drawbound(const QRect& geom, bool clear)
     } else {
 	*visible_bound = geom;
     }
-    QPainter p(workspaceWidget());
-    p.setPen(QPen(Qt::white, 5));
+    TQPainter p(workspaceWidget());
+    p.setPen(TQPen(Qt::white, 5));
     p.setRasterOp(Qt::XorROP);
     p.drawPolygon(bound_shape);
 
@@ -1156,28 +1156,28 @@ bool B2Client::drawbound(const QRect& geom, bool clear)
     return true;
 }
 
-bool B2Client::eventFilter(QObject *o, QEvent *e)
+bool B2Client::eventFilter(TQObject *o, TQEvent *e)
 {
     if (o != widget())
 	return false;
     switch (e->type()) {
-    case QEvent::Resize:
-	resizeEvent(static_cast< QResizeEvent* >(e));
+    case TQEvent::Resize:
+	resizeEvent(static_cast< TQResizeEvent* >(e));
 	return true;
-    case QEvent::Paint:
-	paintEvent(static_cast< QPaintEvent* >(e));
+    case TQEvent::Paint:
+	paintEvent(static_cast< TQPaintEvent* >(e));
 	return true;
-    case QEvent::MouseButtonDblClick:
-	titlebar->mouseDoubleClickEvent(static_cast< QMouseEvent* >(e));
+    case TQEvent::MouseButtonDblClick:
+	titlebar->mouseDoubleClickEvent(static_cast< TQMouseEvent* >(e));
 	return true;
-    case QEvent::Wheel:
-	titlebar->wheelEvent(static_cast< QWheelEvent* >(e));
+    case TQEvent::Wheel:
+	titlebar->wheelEvent(static_cast< TQWheelEvent* >(e));
 	return true;
-    case QEvent::MouseButtonPress:
-	processMousePressEvent(static_cast< QMouseEvent* >(e));
+    case TQEvent::MouseButtonPress:
+	processMousePressEvent(static_cast< TQMouseEvent* >(e));
 	return true;
-    case QEvent::Show:
-	showEvent(static_cast< QShowEvent* >(e));
+    case TQEvent::Show:
+	showEvent(static_cast< TQShowEvent* >(e));
 	return true;
     default:
 	break;
@@ -1187,9 +1187,9 @@ bool B2Client::eventFilter(QObject *o, QEvent *e)
 
 // =====================================
 
-B2Button::B2Button(B2Client *_client, QWidget *parent, 
-	const QString& tip, const int realizeBtns)
-   : QButton(parent, 0), hover(false)
+B2Button::B2Button(B2Client *_client, TQWidget *parent, 
+	const TQString& tip, const int realizeBtns)
+   : TQButton(parent, 0), hover(false)
 {
     setBackgroundMode(NoBackground);
     setCursor(arrowCursor);
@@ -1197,21 +1197,21 @@ B2Button::B2Button(B2Client *_client, QWidget *parent,
     client = _client;
     useMiniIcon = false;
     setFixedSize(buttonSize, buttonSize);
-    QToolTip::add(this, tip);
+    TQToolTip::add(this, tip);
 }
 
 
-QSize B2Button::sizeHint() const
+TQSize B2Button::sizeHint() const
 {
-    return QSize(buttonSize, buttonSize);
+    return TQSize(buttonSize, buttonSize);
 }
 
-QSizePolicy B2Button::sizePolicy() const
+TQSizePolicy B2Button::sizePolicy() const
 {
-    return(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+    return(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
 }
 
-void B2Button::drawButton(QPainter *p)
+void B2Button::drawButton(TQPainter *p)
 {
     KPixmap* gradient = titleGradient[client->isActive() ? 0 : 1];
     if (gradient) {
@@ -1220,8 +1220,8 @@ void B2Button::drawButton(QPainter *p)
 	p->fillRect(rect(), bg);
     }
     if (useMiniIcon) {
-        QPixmap miniIcon = client->icon().pixmap(QIconSet::Small,
-		client->isActive() ? QIconSet::Normal : QIconSet::Disabled);
+        TQPixmap miniIcon = client->icon().pixmap(TQIconSet::Small,
+		client->isActive() ? TQIconSet::Normal : TQIconSet::Disabled);
         p->drawPixmap((width() - miniIcon.width()) / 2,
                       (height() - miniIcon.height()) / 2, miniIcon);
     } else {
@@ -1255,48 +1255,48 @@ void B2Button::setPixmaps(int button_id)
     repaint(false);
 }
 
-void B2Button::mousePressEvent(QMouseEvent * e)
+void B2Button::mousePressEvent(TQMouseEvent * e)
 {
     last_button = e->button();
-    QMouseEvent me(e->type(), e->pos(), e->globalPos(), 
+    TQMouseEvent me(e->type(), e->pos(), e->globalPos(), 
 	    (e->button() & realizeButtons) ? LeftButton : NoButton, 
 	    e->state());
-    QButton::mousePressEvent(&me);
+    TQButton::mousePressEvent(&me);
 }
 
-void B2Button::mouseReleaseEvent(QMouseEvent * e)
+void B2Button::mouseReleaseEvent(TQMouseEvent * e)
 {
     last_button = e->button();
-    QMouseEvent me(e->type(), e->pos(), e->globalPos(), 
+    TQMouseEvent me(e->type(), e->pos(), e->globalPos(), 
 	    (e->button() & realizeButtons) ? LeftButton : NoButton, 
 	    e->state());
-    QButton::mouseReleaseEvent(&me);
+    TQButton::mouseReleaseEvent(&me);
 }
 
-void B2Button::enterEvent(QEvent *e)
+void B2Button::enterEvent(TQEvent *e)
 {
     hover = true;
     repaint(false);
-    QButton::enterEvent(e);
+    TQButton::enterEvent(e);
 }
 
-void B2Button::leaveEvent(QEvent *e)
+void B2Button::leaveEvent(TQEvent *e)
 {
     hover = false;
     repaint(false);
-    QButton::leaveEvent(e);
+    TQButton::leaveEvent(e);
 }
 
 // =====================================
 
 B2Titlebar::B2Titlebar(B2Client *parent)
-    : QWidget(parent->widget(), 0, WStyle_Customize | WRepaintNoErase),
+    : TQWidget(parent->widget(), 0, WStyle_Customize | WRepaintNoErase),
       client(parent),
       set_x11mask(false), isfullyobscured(false), shift_move(false)
 {
     setBackgroundMode(NoBackground);
-    captionSpacer = new QSpacerItem(buttonSize, buttonSize + 4,
-	    QSizePolicy::Expanding, QSizePolicy::Fixed);
+    captionSpacer = new TQSpacerItem(buttonSize, buttonSize + 4,
+	    TQSizePolicy::Expanding, TQSizePolicy::Fixed);
 }
 
 bool B2Titlebar::x11Event(XEvent *e)
@@ -1326,14 +1326,14 @@ bool B2Titlebar::x11Event(XEvent *e)
     default:
 	break;
     }
-    return QWidget::x11Event(e);
+    return TQWidget::x11Event(e);
 }
 
-void B2Titlebar::drawTitlebar(QPainter &p, bool state)
+void B2Titlebar::drawTitlebar(TQPainter &p, bool state)
 {
     KPixmap* gradient = titleGradient[state ? 0 : 1];
 
-    QRect t = rect();
+    TQRect t = rect();
     // black titlebar frame
     p.setPen(Qt::black);
     p.drawLine(0, 0, 0, t.bottom());
@@ -1341,9 +1341,9 @@ void B2Titlebar::drawTitlebar(QPainter &p, bool state)
     p.drawLine(t.right(), 0, t.right(), t.bottom());
 
     // titlebar fill
-    const QColorGroup cg =
+    const TQColorGroup cg =
 	options()->colorGroup(KDecoration::ColorTitleBar, state);
-    QBrush brush(cg.background());
+    TQBrush brush(cg.background());
     if (gradient) brush.setPixmap(*gradient);
     qDrawShadeRect(&p, 1, 1, t.right() - 1, t.height() - 1,
 		   cg, false, 1, 0, &brush);
@@ -1359,43 +1359,43 @@ void B2Titlebar::recalcBuffer()
 {
     titleBuffer.resize(width(), height());
 
-    QPainter p(&titleBuffer);
+    TQPainter p(&titleBuffer);
     drawTitlebar(p, true);
     oldTitle = caption();
 }
 
-void B2Titlebar::resizeEvent(QResizeEvent *)
+void B2Titlebar::resizeEvent(TQResizeEvent *)
 {
     recalcBuffer();
     repaint(false);
 }
 
 
-void B2Titlebar::paintEvent(QPaintEvent *)
+void B2Titlebar::paintEvent(TQPaintEvent *)
 {
     if(client->isActive())
         bitBlt(this, 0, 0, &titleBuffer, 0, 0, titleBuffer.width(),
                titleBuffer.height(), Qt::CopyROP, true);
     else {
-        QPainter p(this);
+        TQPainter p(this);
 	drawTitlebar(p, false);
     }
 }
 
-void B2Titlebar::mouseDoubleClickEvent(QMouseEvent *e)
+void B2Titlebar::mouseDoubleClickEvent(TQMouseEvent *e)
 {
     if (e->button() == LeftButton && e->y() < height()) {
 	client->titlebarDblClickOperation();
     }
 }
 
-void B2Titlebar::wheelEvent(QWheelEvent *e)
+void B2Titlebar::wheelEvent(TQWheelEvent *e)
 {
     if (client->isSetShade() || rect().contains(e->pos())) 
 	client->titlebarMouseWheelOperation( e->delta());
 }
 
-void B2Titlebar::mousePressEvent(QMouseEvent * e)
+void B2Titlebar::mousePressEvent(TQMouseEvent * e)
 {
     shift_move = e->state() & ShiftButton;
     if (shift_move) {
@@ -1405,13 +1405,13 @@ void B2Titlebar::mousePressEvent(QMouseEvent * e)
     }
 }
 
-void B2Titlebar::mouseReleaseEvent(QMouseEvent * e)
+void B2Titlebar::mouseReleaseEvent(TQMouseEvent * e)
 {
     if (shift_move) shift_move = false;
     else e->ignore();
 }
 
-void B2Titlebar::mouseMoveEvent(QMouseEvent * e)
+void B2Titlebar::mouseMoveEvent(TQMouseEvent * e)
 {
     if (shift_move) {
 	int oldx = mapFromGlobal(moveOffset).x();

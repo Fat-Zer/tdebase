@@ -23,7 +23,7 @@ class KBackground: public KCModule
     Q_OBJECT
 
 public:
-    KBackground(QWidget *parent, const char *name, const QStringList &);
+    KBackground(TQWidget *parent, const char *name, const TQStringList &);
     ~KBackground();
 
     virtual void load();

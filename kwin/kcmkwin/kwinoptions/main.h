@@ -25,7 +25,7 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 #include <kcmodule.h>
 
 class KConfig;
@@ -41,13 +41,13 @@ class KWinOptions : public KCModule
 
 public:
 
-  KWinOptions(QWidget *parent, const char *name);
+  KWinOptions(TQWidget *parent, const char *name);
   virtual ~KWinOptions();
 
   void load();
   void save();
   void defaults();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 
 protected slots:
@@ -57,7 +57,7 @@ protected slots:
 
 private:
 
-  QTabWidget   *tab;
+  TQTabWidget   *tab;
 
   KFocusConfig *mFocus;
   KTitleBarActionsConfig *mTitleBarActions;
@@ -75,7 +75,7 @@ class KActionsOptions : public KCModule
 
 public:
 
-  KActionsOptions(QWidget *parent, const char *name);
+  KActionsOptions(TQWidget *parent, const char *name);
   virtual ~KActionsOptions();
 
   void load();
@@ -89,7 +89,7 @@ protected slots:
 
 private:
 
-  QTabWidget   *tab;
+  TQTabWidget   *tab;
 
   KTitleBarActionsConfig *mTitleBarActions;
   KWindowActionsConfig *mWindowActions;

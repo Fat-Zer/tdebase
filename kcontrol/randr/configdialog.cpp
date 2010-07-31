@@ -17,13 +17,13 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qvbuttongroup.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlistview.h>
+#include <tqpushbutton.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
+#include <tqvbuttongroup.h>
 #include <assert.h>
 
 #include <kiconloader.h>
@@ -42,9 +42,9 @@ ConfigDialog::ConfigDialog(KGlobalAccel *accel,
                     Ok, 0L, "config dialog" )
 {
     if ( isApplet )
-        setHelp( QString::null, "krandrtray" );
+        setHelp( TQString::null, "krandrtray" );
 
-    QFrame *w = 0L; // the parent for the widgets
+    TQFrame *w = 0L; // the parent for the widgets
 
     w = addVBoxPage( i18n("Global &Shortcuts") );
     keysWidget = new KKeyChooser( accel, w );
@@ -60,8 +60,8 @@ void ConfigDialog::show()
 {
     if ( !isVisible() ) {
 	KWinModule module(0, KWinModule::INFO_DESKTOP);
-	QSize s1 = sizeHint();
-	QSize s2 = module.workArea().size();
+	TQSize s1 = sizeHint();
+	TQSize s2 = module.workArea().size();
 	int w = s1.width();
 	int h = s1.height();
 

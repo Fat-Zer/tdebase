@@ -24,11 +24,11 @@
 #include "confsystem.h"
 #include "conffilters.h"
 
-#include <qvbox.h>
+#include <tqvbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
-ConfigDlg::ConfigDlg(QWidget *parent, const char *name)
+ConfigDlg::ConfigDlg(TQWidget *parent, const char *name)
 : KDialogBase(IconList, i18n("Configuration"), Ok|Cancel, Ok, parent, name, true)
 {
 	QVBox	*page1 = addVBoxPage(i18n("Personal"), i18n("Personal Settings"), DesktopIcon("kdmconfig"));
@@ -62,7 +62,7 @@ void ConfigDlg::save()
 	m_filters->save();
 }
 
-bool ConfigDlg::configure(QWidget *parent)
+bool ConfigDlg::configure(TQWidget *parent)
 {
 	ConfigDlg	dlg(parent);
 	dlg.load();

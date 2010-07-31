@@ -25,17 +25,17 @@
 
 class KHTMLPart;
 
-class HTMLCreator : public QObject, public ThumbCreator
+class HTMLCreator : public TQObject, public ThumbCreator
 {
     Q_OBJECT
 public:
     HTMLCreator();
     virtual ~HTMLCreator();
-    virtual bool create(const QString &path, int width, int height, QImage &img);
+    virtual bool create(const TQString &path, int width, int height, TQImage &img);
     virtual Flags flags() const;
 
 protected:
-    virtual void timerEvent(QTimerEvent *);
+    virtual void timerEvent(TQTimerEvent *);
 
 private slots:
     void slotCompleted();

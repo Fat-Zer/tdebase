@@ -24,10 +24,10 @@
 #include <kdirlister.h>
 #include <kdebug.h>
 
-template class QDict<KonqListViewDir>;
+template class TQDict<KonqListViewDir>;
 
 
-KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, QWidget *parentWidget)
+KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, TQWidget *parentWidget)
    : KonqBaseListViewWidget( parent, parentWidget )
 {
    kdDebug(1202) << "+KonqTreeViewWidget" << endl;
@@ -35,12 +35,12 @@ KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, QWidget *parentWid
    setRootIsDecorated( true );
    setTreeStepSize( 20 );
 
-   connect( m_dirLister, SIGNAL( completed( const KURL & ) ),
-            this, SLOT( slotCompleted( const KURL & ) ) );
-   connect( m_dirLister, SIGNAL( clear( const KURL & ) ),
-            this, SLOT( slotClear( const KURL & ) ) );
-   connect( m_dirLister, SIGNAL( redirection( const KURL &, const KURL & ) ),
-            this, SLOT( slotRedirection( const KURL &, const KURL & ) ) );
+   connect( m_dirLister, TQT_SIGNAL( completed( const KURL & ) ),
+            this, TQT_SLOT( slotCompleted( const KURL & ) ) );
+   connect( m_dirLister, TQT_SIGNAL( clear( const KURL & ) ),
+            this, TQT_SLOT( slotClear( const KURL & ) ) );
+   connect( m_dirLister, TQT_SIGNAL( redirection( const KURL &, const KURL & ) ),
+            this, TQT_SLOT( slotRedirection( const KURL &, const KURL & ) ) );
 }
 
 KonqTreeViewWidget::~KonqTreeViewWidget()
@@ -59,7 +59,7 @@ bool KonqTreeViewWidget::openURL( const KURL &url )
 
    if ( m_pBrowserView->extension()->urlArgs().reload )
    {
-      QDictIterator<KonqListViewDir> it( m_dictSubDirs );
+      TQDictIterator<KonqListViewDir> it( m_dictSubDirs );
       for (; it.current(); ++it )
          if ( it.current()->isOpen() )
             m_urlsToReload.append( it.current()->url( -1 ) );
@@ -75,11 +75,11 @@ bool KonqTreeViewWidget::openURL( const KURL &url )
    return KonqBaseListViewWidget::openURL( url );
 }
 
-void KonqTreeViewWidget::saveState( QDataStream &stream )
+void KonqTreeViewWidget::saveState( TQDataStream &stream )
 {
-    QStringList openDirList;
+    TQStringList openDirList;
 
-    QDictIterator<KonqListViewDir> it( m_dictSubDirs );
+    TQDictIterator<KonqListViewDir> it( m_dictSubDirs );
     for (; it.current(); ++it )
     {
         if ( it.current()->isOpen() )
@@ -90,7 +90,7 @@ void KonqTreeViewWidget::saveState( QDataStream &stream )
     KonqBaseListViewWidget::saveState( stream );
 }
 
-void KonqTreeViewWidget::restoreState( QDataStream &stream )
+void KonqTreeViewWidget::restoreState( TQDataStream &stream )
 {
     stream >> m_urlsToOpen;
     KonqBaseListViewWidget::restoreState( stream );
@@ -148,7 +148,7 @@ void KonqTreeViewWidget::slotClear( const KURL & _url )
    if ( item )
    {
       // search all subdirs of _url (item)
-      QDictIterator<KonqListViewDir> it( m_dictSubDirs );
+      TQDictIterator<KonqListViewDir> it( m_dictSubDirs );
       while ( it.current() )
       {
          if ( !_url.equals( it.currentKey(), true )
@@ -168,7 +168,7 @@ void KonqTreeViewWidget::slotClear( const KURL & _url )
       // the following code.
 
       // delete all child items, their fileitems are no longer valid
-      QListViewItem *child;
+      TQListViewItem *child;
       while ( (child = item->firstChild()) )
          delete child;
 
@@ -192,7 +192,7 @@ void KonqTreeViewWidget::slotNewItems( const KFileItemList &entries )
     if (!entries.count())
         return;
     // Find parent item - it's the same for all the items
-    QPtrListIterator<KFileItem> kit( entries );
+    TQPtrListIterator<KFileItem> kit( entries );
     KURL dir( (*kit)->url().upURL() );
 
     KonqListViewDir *parentDir = 0L;
@@ -201,7 +201,7 @@ void KonqTreeViewWidget::slotNewItems( const KFileItemList &entries )
 
     if ( !parentDir )   // hack for zeroconf://domain/type/service listed in zeroconf:/type/ dir
     {
-    	dir.setHost( QString::null );
+    	dir.setHost( TQString::null );
 	parentDir = m_dictSubDirs[ dir.url(-1) ];
     }
 
@@ -246,7 +246,7 @@ void KonqTreeViewWidget::slotNewItems( const KFileItemList &entries )
         }
         
         if ( !m_itemsToSelect.isEmpty() ) {
-           QStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
+           TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
            if ( tsit != m_itemsToSelect.end() ) {
               m_itemsToSelect.remove( tsit );
               setSelected( fileItem ? fileItem : dirItem, true );
@@ -258,7 +258,7 @@ void KonqTreeViewWidget::slotNewItems( const KFileItemList &entries )
 
         if ( dirItem )
         {
-            QString u = (*kit)->url().url( 0 );
+            TQString u = (*kit)->url().url( 0 );
             if ( m_urlsToOpen.remove( u ) )
                 dirItem->open( true, false );
             else if ( m_urlsToReload.remove( u ) )
@@ -280,7 +280,7 @@ void KonqTreeViewWidget::slotNewItems( const KFileItemList &entries )
 
 void KonqTreeViewWidget::slotDeleteItem( KFileItem *_fileItem )
 {
-    QString url = _fileItem->url().url(-1);
+    TQString url = _fileItem->url().url(-1);
 
     // Check if this item is in m_dictSubDirs, and if yes, then remove it
     slotClear( _fileItem->url() );

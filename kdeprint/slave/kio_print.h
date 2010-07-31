@@ -22,19 +22,19 @@
 
 #include <kio/slavebase.h>
 #include <kio/global.h>
-#include <qstring.h>
-#include <qbuffer.h>
+#include <tqstring.h>
+#include <tqbuffer.h>
 
 class KMPrinter;
 namespace KIO {
 	class Job;
 }
 
-class KIO_Print : public QObject, public KIO::SlaveBase
+class KIO_Print : public TQObject, public KIO::SlaveBase
 {
 	Q_OBJECT
 public:
-	KIO_Print(const QCString& pool, const QCString& app);
+	KIO_Print(const TQCString& pool, const TQCString& app);
 
 	void listDir(const KURL& url);
 	void get(const KURL& url);
@@ -42,7 +42,7 @@ public:
 
 protected slots:
 	void slotResult( KIO::Job* );
-	void slotData( KIO::Job*, const QByteArray& );
+	void slotData( KIO::Job*, const TQByteArray& );
 	void slotTotalSize( KIO::Job*, KIO::filesize_t );
 	void slotProcessedSize( KIO::Job*, KIO::filesize_t );
 
@@ -55,16 +55,16 @@ private:
 	void showClassInfo(KMPrinter*);
 	void showPrinterInfo(KMPrinter*);
 	void showSpecialInfo(KMPrinter*);
-	void showData(const QString&);
-	QString locateData(const QString&);
+	void showData(const TQString&);
+	TQString locateData(const TQString&);
 	void showJobs(KMPrinter *p = 0, bool completed = false);
 	void showDriver(KMPrinter*);
 
-	bool loadTemplate(const QString& filename, QString& buffer);
+	bool loadTemplate(const TQString& filename, TQString& buffer);
 
-	QBuffer m_httpBuffer;
+	TQBuffer m_httpBuffer;
 	int     m_httpError;
-	QString m_httpErrorTxt;
+	TQString m_httpErrorTxt;
 };
 
 #endif

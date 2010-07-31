@@ -8,7 +8,7 @@
 #ifndef __WIDGETCANVAS_H__
 #define __WIDGETCANVAS_H__
 
-#include <qmap.h>
+#include <tqmap.h>
 #include <kapplication.h>
 
 #define MAX_HOTSPOTS   28
@@ -51,10 +51,10 @@ class HotSpot
 {
 public:
     HotSpot() {}
-    HotSpot( const QRect &r, int num )
+    HotSpot( const TQRect &r, int num )
 	: rect(r), number(num) {}
 
-    QRect rect;
+    TQRect rect;
     int number;
 };
 
@@ -63,57 +63,57 @@ class WidgetCanvas : public QWidget
     Q_OBJECT
 
 public:
-    WidgetCanvas( QWidget *parent=0, const char *name=0 );
+    WidgetCanvas( TQWidget *parent=0, const char *name=0 );
     void drawSampleWidgets();
-    void resetTitlebarPixmaps(const QColor &active,
-			      const QColor &inactive);
-    void addToolTip( int area, const QString & );
-    QPixmap smplw;
+    void resetTitlebarPixmaps(const TQColor &active,
+			      const TQColor &inactive);
+    void addToolTip( int area, const TQString & );
+    TQPixmap smplw;
     
-    QColor iaTitle;
-    QColor iaTxt;
-    QColor iaBlend;
-    QColor iaFrame;
-    QColor iaHandle;
-    QColor aTitle;
-    QColor aTxt;
-    QColor aBlend;
-    QColor aFrame;
-    QColor aHandle;
-    QColor back;
-    QColor txt;
-    QColor select;
-    QColor selectTxt;
-    QColor window;
-    QColor windowTxt;
-    QColor button;
-    QColor buttonTxt;
-    QColor aTitleBtn;
-    QColor iTitleBtn;
-    QColor link;
-    QColor visitedLink;
-    QColor alternateBackground;
+    TQColor iaTitle;
+    TQColor iaTxt;
+    TQColor iaBlend;
+    TQColor iaFrame;
+    TQColor iaHandle;
+    TQColor aTitle;
+    TQColor aTxt;
+    TQColor aBlend;
+    TQColor aFrame;
+    TQColor aHandle;
+    TQColor back;
+    TQColor txt;
+    TQColor select;
+    TQColor selectTxt;
+    TQColor window;
+    TQColor windowTxt;
+    TQColor button;
+    TQColor buttonTxt;
+    TQColor aTitleBtn;
+    TQColor iTitleBtn;
+    TQColor link;
+    TQColor visitedLink;
+    TQColor alternateBackground;
 
     int contrast;
     bool shadeSortColumn;
 
 signals:
     void widgetSelected( int );
-    void colorDropped( int, const QColor&);
+    void colorDropped( int, const TQColor&);
 	
 protected:
-	void redrawPopup(const QColorGroup &cg);
+	void redrawPopup(const TQColorGroup &cg);
 	
-    virtual void paintEvent( QPaintEvent * );
-    virtual void mousePressEvent( QMouseEvent * );
-    virtual void mouseMoveEvent( QMouseEvent * );
-    virtual void resizeEvent( QResizeEvent * );
-    virtual void showEvent( QShowEvent * );
-    virtual void dropEvent( QDropEvent *);
-    virtual void dragEnterEvent( QDragEnterEvent *);
-    void paletteChange( const QPalette & );
+    virtual void paintEvent( TQPaintEvent * );
+    virtual void mousePressEvent( TQMouseEvent * );
+    virtual void mouseMoveEvent( TQMouseEvent * );
+    virtual void resizeEvent( TQResizeEvent * );
+    virtual void showEvent( TQShowEvent * );
+    virtual void dropEvent( TQDropEvent *);
+    virtual void dragEnterEvent( TQDragEnterEvent *);
+    void paletteChange( const TQPalette & );
 
-    QMap<int,QString> tips;
+    TQMap<int,TQString> tips;
     HotSpot hotspots[MAX_HOTSPOTS];
     int currentHotspot;
 };

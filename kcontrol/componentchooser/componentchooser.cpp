@@ -19,11 +19,11 @@
 #include "componentchooser.h"
 #include "componentchooser.moc"
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qwidgetstack.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqwidgetstack.h>
 
 #include <dcopclient.h>
 
@@ -41,23 +41,23 @@
 class MyListBoxItem: public QListBoxText
 {
 public:
-	MyListBoxItem(const QString& text, const QString &file):QListBoxText(text),File(file){}
+	MyListBoxItem(const TQString& text, const TQString &file):TQListBoxText(text),File(file){}
 	virtual ~MyListBoxItem(){;}
-	QString File;
+	TQString File;
 };
 
 
 //BEGIN  General kpart based Component selection
 
-CfgComponent::CfgComponent(QWidget *parent):ComponentConfig_UI(parent),CfgPlugin(){
+CfgComponent::CfgComponent(TQWidget *parent):ComponentConfig_UI(parent),CfgPlugin(){
 	m_lookupDict.setAutoDelete(true);
 	m_revLookupDict.setAutoDelete(true);
-	connect(ComponentSelector,SIGNAL(activated(const QString&)),this,SLOT(slotComponentChanged(const QString&)));
+	connect(ComponentSelector,TQT_SIGNAL(activated(const TQString&)),this,TQT_SLOT(slotComponentChanged(const TQString&)));
 }
 
 CfgComponent::~CfgComponent(){}
 
-void CfgComponent::slotComponentChanged(const QString&) {
+void CfgComponent::slotComponentChanged(const TQString&) {
 	emit changed(true);
 }
 
@@ -66,7 +66,7 @@ void CfgComponent::save(KConfig *cfg) {
 		if (!m_lookupDict[ComponentSelector->currentText()])
 			return;
 
-		QString ServiceTypeToConfigure=cfg->readEntry("ServiceTypeToConfigure");
+		TQString ServiceTypeToConfigure=cfg->readEntry("ServiceTypeToConfigure");
 		KConfig *store = new KConfig(cfg->readPathEntry("storeInFile","null"));
 		store->setGroup(cfg->readEntry("valueSection"));
 		store->writePathEntry(cfg->readEntry("valueName","kcm_componenchooser_null"),*m_lookupDict[ComponentSelector->currentText()]);
@@ -81,24 +81,24 @@ void CfgComponent::load(KConfig *cfg) {
 	m_lookupDict.clear();
 	m_revLookupDict.clear();
 
-	QString ServiceTypeToConfigure=cfg->readEntry("ServiceTypeToConfigure");
+	TQString ServiceTypeToConfigure=cfg->readEntry("ServiceTypeToConfigure");
 
-	QString MimeTypeOfInterest=cfg->readEntry("MimeTypeOfInterest");
+	TQString MimeTypeOfInterest=cfg->readEntry("MimeTypeOfInterest");
 	KTrader::OfferList offers = KTrader::self()->query(MimeTypeOfInterest, "'"+ServiceTypeToConfigure+"' in ServiceTypes");
 
 	for (KTrader::OfferList::Iterator tit = offers.begin(); tit != offers.end(); ++tit)
         {
 		ComponentSelector->insertItem((*tit)->name());
-		m_lookupDict.insert((*tit)->name(),new QString((*tit)->desktopEntryName()));
-		m_revLookupDict.insert((*tit)->desktopEntryName(),new QString((*tit)->name()));
+		m_lookupDict.insert((*tit)->name(),new TQString((*tit)->desktopEntryName()));
+		m_revLookupDict.insert((*tit)->desktopEntryName(),new TQString((*tit)->name()));
 	}
 
 	KConfig *store = new KConfig(cfg->readPathEntry("storeInFile","null"));
         store->setGroup(cfg->readEntry("valueSection"));
-	QString setting=store->readEntry(cfg->readEntry("valueName","kcm_componenchooser_null"));
+	TQString setting=store->readEntry(cfg->readEntry("valueName","kcm_componenchooser_null"));
         delete store;
 	if (setting.isEmpty()) setting=cfg->readEntry("defaultImplementation");
-	QString *tmp=m_revLookupDict[setting];
+	TQString *tmp=m_revLookupDict[setting];
 	if (tmp)
 		for (int i=0;i<ComponentSelector->count();i++)
 			if ((*tmp)==ComponentSelector->text(i))
@@ -122,12 +122,12 @@ void CfgComponent::defaults()
 
 
 //BEGIN Email client config
-CfgEmailClient::CfgEmailClient(QWidget *parent):EmailClientConfig_UI(parent),CfgPlugin(){
+CfgEmailClient::CfgEmailClient(TQWidget *parent):EmailClientConfig_UI(parent),CfgPlugin(){
 	pSettings = new KEMailSettings();
 
-	connect(kmailCB, SIGNAL(toggled(bool)), SLOT(configChanged()) );
-	connect(txtEMailClient, SIGNAL(textChanged(const QString&)), SLOT(configChanged()) );
-	connect(chkRunTerminal, SIGNAL(clicked()), SLOT(configChanged()) );
+	connect(kmailCB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(configChanged()) );
+	connect(txtEMailClient, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(configChanged()) );
+	connect(chkRunTerminal, TQT_SIGNAL(clicked()), TQT_SLOT(configChanged()) );
 }
 
 CfgEmailClient::~CfgEmailClient() {
@@ -141,7 +141,7 @@ void CfgEmailClient::defaults()
 
 void CfgEmailClient::load(KConfig *)
 {
-	QString emailClient = pSettings->getSetting(KEMailSettings::ClientProgram);
+	TQString emailClient = pSettings->getSetting(KEMailSettings::ClientProgram);
 	bool useKMail = (emailClient.isEmpty());
 
 	kmailCB->setChecked(useKMail);
@@ -162,16 +162,16 @@ void CfgEmailClient::configChanged()
 void CfgEmailClient::selectEmailClient()
 {
 	KURL::List urlList;
-	KOpenWithDlg dlg(urlList, i18n("Select preferred email client:"), QString::null, this);
+	KOpenWithDlg dlg(urlList, i18n("Select preferred email client:"), TQString::null, this);
 	// hide "Do not &close when command exits" here, we don't need it for a mail client
 	dlg.hideNoCloseOnExit();
-	if (dlg.exec() != QDialog::Accepted) return;
-	QString client = dlg.text();
+	if (dlg.exec() != TQDialog::Accepted) return;
+	TQString client = dlg.text();
 
 	// get the preferred Terminal Application 
-	KConfigGroup confGroup( KGlobal::config(), QString::fromLatin1("General") );
-	QString preferredTerminal = confGroup.readPathEntry("TerminalApplication", QString::fromLatin1("konsole"));
-	preferredTerminal += QString::fromLatin1(" -e ");
+	KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+	TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
+	preferredTerminal += TQString::fromLatin1(" -e ");
 	
 	int len = preferredTerminal.length();
 	bool b = client.left(len) == preferredTerminal;
@@ -188,7 +188,7 @@ void CfgEmailClient::save(KConfig *)
 {
 	if (kmailCB->isChecked())
 	{
-		pSettings->setSetting(KEMailSettings::ClientProgram, QString::null);
+		pSettings->setSetting(KEMailSettings::ClientProgram, TQString::null);
 		pSettings->setSetting(KEMailSettings::ClientTerminal, "false");
 	}
 	else
@@ -198,11 +198,11 @@ void CfgEmailClient::save(KConfig *)
 	}
 
 	// insure proper permissions -- contains sensitive data
-	QString cfgName(KGlobal::dirs()->findResource("config", "emails"));
+	TQString cfgName(KGlobal::dirs()->findResource("config", "emails"));
 	if (!cfgName.isEmpty())
-		::chmod(QFile::encodeName(cfgName), 0600);
+		::chmod(TQFile::encodeName(cfgName), 0600);
 
-	kapp->dcopClient()->emitDCOPSignal("KDE_emailSettingsChanged()", QByteArray());
+	kapp->dcopClient()->emitDCOPSignal("KDE_emailSettingsChanged()", TQByteArray());
 
 	emit changed(false);
 }
@@ -214,10 +214,10 @@ void CfgEmailClient::save(KConfig *)
 
 //BEGIN Terminal Emulator Configuration
 
-CfgTerminalEmulator::CfgTerminalEmulator(QWidget *parent):TerminalEmulatorConfig_UI(parent),CfgPlugin(){
-	connect(terminalLE,SIGNAL(textChanged(const QString &)), this, SLOT(configChanged()));
-	connect(terminalCB,SIGNAL(toggled(bool)),this,SLOT(configChanged()));
-	connect(otherCB,SIGNAL(toggled(bool)),this,SLOT(configChanged()));
+CfgTerminalEmulator::CfgTerminalEmulator(TQWidget *parent):TerminalEmulatorConfig_UI(parent),CfgPlugin(){
+	connect(terminalLE,TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(configChanged()));
+	connect(terminalCB,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(configChanged()));
+	connect(otherCB,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(configChanged()));
 }
 
 CfgTerminalEmulator::~CfgTerminalEmulator() {
@@ -237,7 +237,7 @@ void CfgTerminalEmulator::defaults()
 void CfgTerminalEmulator::load(KConfig *) {
 	KConfig *config = new KConfig("kdeglobals", true);
 	config->setGroup("General");
-	QString terminal = config->readPathEntry("TerminalApplication","konsole");
+	TQString terminal = config->readPathEntry("TerminalApplication","konsole");
 	if (terminal == "konsole")
 	{
 	   terminalLE->setText("xterm");
@@ -262,7 +262,7 @@ void CfgTerminalEmulator::save(KConfig *) {
 	delete config;
 
 	KIPC::sendMessageAll(KIPC::SettingsChanged);
-	kapp->dcopClient()->send("klauncher", "klauncher","reparseConfiguration()", QString::null);
+	kapp->dcopClient()->send("klauncher", "klauncher","reparseConfiguration()", TQString::null);
 
 	emit changed(false);
 }
@@ -270,11 +270,11 @@ void CfgTerminalEmulator::save(KConfig *) {
 void CfgTerminalEmulator::selectTerminalApp()
 {
 	KURL::List urlList;
-	KOpenWithDlg dlg(urlList, i18n("Select preferred terminal application:"), QString::null, this);
+	KOpenWithDlg dlg(urlList, i18n("Select preferred terminal application:"), TQString::null, this);
 	// hide "Run in &terminal" here, we don't need it for a Terminal Application
 	dlg.hideRunInTerminal();
-	if (dlg.exec() != QDialog::Accepted) return;
-	QString client = dlg.text();
+	if (dlg.exec() != TQDialog::Accepted) return;
+	TQString client = dlg.text();
 
 	if (!client.isEmpty())
 	{
@@ -286,10 +286,10 @@ void CfgTerminalEmulator::selectTerminalApp()
 
 //BEGIN Browser Configuration
 
-CfgBrowser::CfgBrowser(QWidget *parent) : BrowserConfig_UI(parent),CfgPlugin(){
-        connect(lineExec,SIGNAL(textChanged(const QString &)),this,SLOT(configChanged()));
-	connect(radioKIO,SIGNAL(toggled(bool)),this,SLOT(configChanged()));
-	connect(radioExec,SIGNAL(toggled(bool)),this,SLOT(configChanged()));
+CfgBrowser::CfgBrowser(TQWidget *parent) : BrowserConfig_UI(parent),CfgPlugin(){
+        connect(lineExec,TQT_SIGNAL(textChanged(const TQString &)),this,TQT_SLOT(configChanged()));
+	connect(radioKIO,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(configChanged()));
+	connect(radioExec,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(configChanged()));
 }
 
 CfgBrowser::~CfgBrowser() {
@@ -309,7 +309,7 @@ void CfgBrowser::defaults()
 void CfgBrowser::load(KConfig *) {
 	KConfig *config = new KConfig("kdeglobals", true);
 	config->setGroup("General");
-	QString exec = config->readEntry("BrowserApplication");
+	TQString exec = config->readEntry("BrowserApplication");
 	if (exec.isEmpty())
 	{
 	   radioKIO->setChecked(true);
@@ -330,7 +330,7 @@ void CfgBrowser::load(KConfig *) {
 	      if (m_browserService)
   	         m_browserExec = m_browserService->desktopEntryName();
   	      else
-  	         m_browserExec = QString::null;
+  	         m_browserExec = TQString::null;
 	   }
 	}
 	
@@ -344,7 +344,7 @@ void CfgBrowser::save(KConfig *) {
 
 	KConfig *config = new KConfig("kdeglobals");
 	config->setGroup("General");
-	QString exec;
+	TQString exec;
 	if (radioExec->isChecked())
 	{
 	   exec = lineExec->text();
@@ -365,8 +365,8 @@ void CfgBrowser::save(KConfig *) {
 void CfgBrowser::selectBrowser()
 {
 	KURL::List urlList;
-	KOpenWithDlg dlg(urlList, i18n("Select preferred Web browser application:"), QString::null, this);
-	if (dlg.exec() != QDialog::Accepted) return;
+	KOpenWithDlg dlg(urlList, i18n("Select preferred Web browser application:"), TQString::null, this);
+	if (dlg.exec() != TQDialog::Accepted) return;
 	m_browserService = dlg.service();
 	if (m_browserService)
 	   m_browserExec = m_browserService->desktopEntryName();
@@ -378,16 +378,16 @@ void CfgBrowser::selectBrowser()
 
 //END Terminal Emulator Configuration
 
-ComponentChooser::ComponentChooser(QWidget *parent, const char *name):
+ComponentChooser::ComponentChooser(TQWidget *parent, const char *name):
 	ComponentChooser_UI(parent,name), configWidget(0) {
 
 	ComponentChooser_UILayout->setRowStretch(1, 1);
 	somethingChanged=false;
 	latestEditedService="";
 
-	QStringList dummy;
-	QStringList services=KGlobal::dirs()->findAllResources( "data","kcm_componentchooser/*.desktop",false,true,dummy);
-	for (QStringList::Iterator it=services.begin();it!=services.end();++it)
+	TQStringList dummy;
+	TQStringList services=KGlobal::dirs()->findAllResources( "data","kcm_componentchooser/*.desktop",false,true,dummy);
+	for (TQStringList::Iterator it=services.begin();it!=services.end();++it)
 	{
 		KSimpleConfig cfg(*it);
 		ServiceChooser->insertItem(new MyListBoxItem(cfg.readEntry("Name",i18n("Unknown")),(*it)));
@@ -395,17 +395,17 @@ ComponentChooser::ComponentChooser(QWidget *parent, const char *name):
 	}
 	ServiceChooser->setFixedWidth(ServiceChooser->sizeHint().width());
 	ServiceChooser->sort();
-	connect(ServiceChooser,SIGNAL(highlighted(QListBoxItem*)),this,SLOT(slotServiceSelected(QListBoxItem*)));
+	connect(ServiceChooser,TQT_SIGNAL(highlighted(TQListBoxItem*)),this,TQT_SLOT(slotServiceSelected(TQListBoxItem*)));
 	ServiceChooser->setSelected(0,true);
 	slotServiceSelected(ServiceChooser->item(0));
 
 }
 
-void ComponentChooser::slotServiceSelected(QListBoxItem* it) {
+void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	if (!it) return;
 
 	if (somethingChanged) {
-		if (KMessageBox::questionYesNo(this,i18n("<qt>You changed the default component of your choice. Do you want to save that change now?</qt>"),QString::null,KStdGuiItem::save(),KStdGuiItem::discard())==KMessageBox::Yes) save();
+		if (KMessageBox::questionYesNo(this,i18n("<qt>You changed the default component of your choice. Do you want to save that change now?</qt>"),TQString::null,KStdGuiItem::save(),KStdGuiItem::discard())==KMessageBox::Yes) save();
 	}
 	KSimpleConfig cfg(static_cast<MyListBoxItem*>(it)->File);
 
@@ -413,8 +413,8 @@ void ComponentChooser::slotServiceSelected(QListBoxItem* it) {
 	ComponentDescription->setMinimumSize(ComponentDescription->sizeHint());
 
 
-	QString cfgType=cfg.readEntry("configurationType");
-	QWidget *newConfigWidget = 0;
+	TQString cfgType=cfg.readEntry("configurationType");
+	TQWidget *newConfigWidget = 0;
 	if (cfgType.isEmpty() || (cfgType=="component"))
 	{
 		if (!(configWidget && configWidget->qt_cast("CfgComponent")))
@@ -460,7 +460,7 @@ void ComponentChooser::slotServiceSelected(QListBoxItem* it) {
 		configContainer->removeWidget(configWidget);
 		delete configWidget;
 		configWidget=newConfigWidget;
-		connect(configWidget,SIGNAL(changed(bool)),this,SLOT(emitChanged(bool)));
+		connect(configWidget,TQT_SIGNAL(changed(bool)),this,TQT_SLOT(emitChanged(bool)));
 	        configContainer->setMinimumSize(configWidget->sizeHint());
 	}
 	

@@ -24,8 +24,8 @@
 #ifndef _ListView_h_
 #define _ListView_h_
 
-#include <qlistview.h>
-#include <qpainter.h>
+#include <tqlistview.h>
+#include <tqpainter.h>
 
 #include <SensorDisplay.h>
 
@@ -41,15 +41,15 @@ class PrivateListView : public QListView
 public:
   enum ColumnType { Text, Int, Float, Time, DiskStat };
 
-	PrivateListView(QWidget *parent = 0, const char *name = 0);
+	PrivateListView(TQWidget *parent = 0, const char *name = 0);
 	
-	void addColumn(const QString& label, const QString& type);
+	void addColumn(const TQString& label, const TQString& type);
 	void removeColumns(void);
-	void update(const QString& answer);
+	void update(const TQString& answer);
 	int columnType( uint pos ) const;
 
 private:
-  QStringList mColumnTypes;
+  TQStringList mColumnTypes;
 };
 
 class PrivateListViewItem : public QListViewItem
@@ -57,43 +57,43 @@ class PrivateListViewItem : public QListViewItem
 public:
 	PrivateListViewItem(PrivateListView *parent = 0);
 
-	void paintCell(QPainter *p, const QColorGroup &, int column, int width, int alignment) {
-		QColorGroup cgroup = _parent->colorGroup();
-		QListViewItem::paintCell(p, cgroup, column, width, alignment);
-		p->setPen(cgroup.color(QColorGroup::Link));
+	void paintCell(TQPainter *p, const TQColorGroup &, int column, int width, int alignment) {
+		TQColorGroup cgroup = _parent->colorGroup();
+		TQListViewItem::paintCell(p, cgroup, column, width, alignment);
+		p->setPen(cgroup.color(TQColorGroup::Link));
 		p->drawLine(0, height() - 1, width - 1, height() - 1);
 	}
 
-	void paintFocus(QPainter *, const QColorGroup, const QRect) {}
+	void paintFocus(TQPainter *, const TQColorGroup, const TQRect) {}
 
-	virtual int compare( QListViewItem*, int column, bool ascending ) const;
+	virtual int compare( TQListViewItem*, int column, bool ascending ) const;
 
 private:
-	QWidget *_parent;
+	TQWidget *_parent;
 };	
 
 class ListView : public KSGRD::SensorDisplay
 {
 	Q_OBJECT
 public:
-	ListView(QWidget* parent = 0, const char* name = 0,
-			const QString& = QString::null, int min = 0, int max = 0);
+	ListView(TQWidget* parent = 0, const char* name = 0,
+			const TQString& = TQString::null, int min = 0, int max = 0);
 	~ListView() {}
 
-	bool addSensor(const QString& hostName, const QString& sensorName, const QString& sensorType, const QString& sensorDescr);
-	void answerReceived(int id, const QString& answer);
-	void resizeEvent(QResizeEvent*);
+	bool addSensor(const TQString& hostName, const TQString& sensorName, const TQString& sensorType, const TQString& sensorDescr);
+	void answerReceived(int id, const TQString& answer);
+	void resizeEvent(TQResizeEvent*);
 	void updateList();
 
-	bool restoreSettings(QDomElement& element);
-	bool saveSettings(QDomDocument& doc, QDomElement& element, bool save = true);
+	bool restoreSettings(TQDomElement& element);
+	bool saveSettings(TQDomDocument& doc, TQDomElement& element, bool save = true);
 
 	virtual bool hasSettingsDialog() const
 	{
 		return (true);
 	}
 
-	virtual void timerEvent(QTimerEvent*)
+	virtual void timerEvent(TQTimerEvent*)
 	{
 		updateList();
 	}

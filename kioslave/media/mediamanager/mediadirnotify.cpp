@@ -36,10 +36,10 @@ KURL::List MediaDirNotify::toMediaURL(const KURL &url)
 
 	KURL::List result;
 	
-	const QPtrList<Medium> list = m_mediaList.list();
+	const TQPtrList<Medium> list = m_mediaList.list();
 
-	QPtrList<Medium>::const_iterator it = list.begin();
-	QPtrList<Medium>::const_iterator end = list.end();
+	TQPtrList<Medium>::const_iterator it = list.begin();
+	TQPtrList<Medium>::const_iterator end = list.end();
 
 	for (; it!=end; ++it)
 	{
@@ -48,7 +48,7 @@ KURL::List MediaDirNotify::toMediaURL(const KURL &url)
 
 		if ( base.isParentOf(url) )
 		{
-			QString path = KURL::relativePath(base.path(),
+			TQString path = KURL::relativePath(base.path(),
 			                                  url.path());
 
 			KURL new_url("media:/"+m->name()+"/"+path );

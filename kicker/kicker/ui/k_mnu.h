@@ -25,8 +25,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __k_mnu_h__
 
 #include <dcopobject.h>
-#include <qintdict.h>
-#include <qpixmap.h>
+#include <tqintdict.h>
+#include <tqpixmap.h>
 
 #include "service_mnu.h"
 
@@ -42,7 +42,7 @@ class PanelKMenu : public PanelServiceMenu, public DCOPObject
     K_DCOP
 
 k_dcop:
-    void slotServiceStartedByStorageId(QString starter, QString desktopPath);
+    void slotServiceStartedByStorageId(TQString starter, TQString desktopPath);
 
 public:
     PanelKMenu();
@@ -51,9 +51,9 @@ public:
     int insertClientMenu(KickerClientMenu *p);
     void removeClientMenu(int id);
 
-    virtual QSize sizeHint() const;
-    virtual void setMinimumSize(const QSize &);
-    virtual void setMaximumSize(const QSize &);
+    virtual TQSize sizeHint() const;
+    virtual void setMinimumSize(const TQSize &);
+    virtual void setMaximumSize(const TQSize &);
     virtual void setMinimumSize(int, int);
     virtual void setMaximumSize(int, int);
     virtual void showMenu();
@@ -78,25 +78,25 @@ protected slots:
     void updateRecent();
 
 protected:
-    QRect sideImageRect();
-    QMouseEvent translateMouseEvent(QMouseEvent* e);
-    void resizeEvent(QResizeEvent *);
-    void paintEvent(QPaintEvent *);
-    void mousePressEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
+    TQRect sideImageRect();
+    TQMouseEvent translateMouseEvent(TQMouseEvent* e);
+    void resizeEvent(TQResizeEvent *);
+    void paintEvent(TQPaintEvent *);
+    void mousePressEvent(TQMouseEvent *);
+    void mouseReleaseEvent(TQMouseEvent *);
+    void mouseMoveEvent(TQMouseEvent *);
     bool loadSidePixmap();
     void doNewSession(bool lock);
     void createRecentMenuItems();
     virtual void clearSubmenus();
 
 private:
-    QPopupMenu                 *sessionsMenu;
-    QPixmap                     sidePixmap;
-    QPixmap                     sideTilePixmap;
+    TQPopupMenu                 *sessionsMenu;
+    TQPixmap                     sidePixmap;
+    TQPixmap                     sideTilePixmap;
     int                         client_id;
     bool                        delay_init;
-    QIntDict<KickerClientMenu>  clients;
+    TQIntDict<KickerClientMenu>  clients;
     KBookmarkMenu              *bookmarkMenu;
     KActionCollection          *actionCollection;
     KBookmarkOwner             *bookmarkOwner;

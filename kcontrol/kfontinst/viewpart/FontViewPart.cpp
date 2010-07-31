@@ -32,18 +32,18 @@
 #include "KfiConstants.h"
 #include "KfiPrint.h"
 #include <klocale.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qframe.h>
-#include <qfile.h>
-#include <qlabel.h>
-#include <qpainter.h>
-#include <qpaintdevicemetrics.h>
-#include <qvalidator.h>
-#include <qregexp.h>
-#include <qsettings.h>
-#include <qstringlist.h>
-#include <qtimer.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqframe.h>
+#include <tqfile.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
+#include <tqpaintdevicemetrics.h>
+#include <tqvalidator.h>
+#include <tqregexp.h>
+#include <tqsettings.h>
+#include <tqstringlist.h>
+#include <tqtimer.h>
 #include <kio/netaccess.h>
 #include <kinstance.h>
 #include <kmessagebox.h>
@@ -58,40 +58,40 @@
 static KURL getDest(const KURL &url, bool system)
 {
     return KURL(KFI::Misc::root()
-                  ? QString("fonts:/") + url.fileName()
-                  : QString("fonts:/") + QString(system ? i18n(KFI_KIO_FONTS_SYS) : i18n(KFI_KIO_FONTS_USER))
-                                       + QChar('/') + url.fileName());
+                  ? TQString("fonts:/") + url.fileName()
+                  : TQString("fonts:/") + TQString(system ? i18n(KFI_KIO_FONTS_SYS) : i18n(KFI_KIO_FONTS_USER))
+                                       + TQChar('/') + url.fileName());
 }
 
 namespace KFI
 {
 
-CFontViewPart::CFontViewPart(QWidget *parent, const char *name)
+CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
 {
     bool kcm=0==strcmp(name, "kcmfontinst");
 
-    itsFrame=new QFrame(parent, "frame");
+    itsFrame=new TQFrame(parent, "frame");
 
-    QFrame *previewFrame=new QFrame(itsFrame);
+    TQFrame *previewFrame=new TQFrame(itsFrame);
 
-    itsToolsFrame=new QFrame(itsFrame);
+    itsToolsFrame=new TQFrame(itsFrame);
 
-    QVBoxLayout *layout=new QVBoxLayout(itsFrame, kcm ? 0 : KDialog::marginHint(), kcm ? 0 : KDialog::spacingHint());
-    QGridLayout *previewLayout=new QGridLayout(previewFrame, 1, 1, 1, 1);
-    QHBoxLayout *toolsLayout=new QHBoxLayout(itsToolsFrame, 0, KDialog::spacingHint());
+    TQVBoxLayout *layout=new TQVBoxLayout(itsFrame, kcm ? 0 : KDialog::marginHint(), kcm ? 0 : KDialog::spacingHint());
+    TQGridLayout *previewLayout=new TQGridLayout(previewFrame, 1, 1, 1, 1);
+    TQHBoxLayout *toolsLayout=new TQHBoxLayout(itsToolsFrame, 0, KDialog::spacingHint());
 
-    itsFrame->setFrameShape(QFrame::NoFrame);
-    itsFrame->setFocusPolicy(QWidget::ClickFocus);
-    itsToolsFrame->setFrameShape(QFrame::NoFrame);
-    previewFrame->setFrameShadow(kcm ? QFrame::Sunken : QFrame::Raised);
-    previewFrame->setFrameShape(QFrame::Panel);
+    itsFrame->setFrameShape(TQFrame::NoFrame);
+    itsFrame->setFocusPolicy(TQWidget::ClickFocus);
+    itsToolsFrame->setFrameShape(TQFrame::NoFrame);
+    previewFrame->setFrameShadow(kcm ? TQFrame::Sunken : TQFrame::Raised);
+    previewFrame->setFrameShape(TQFrame::Panel);
     setInstance(new KInstance("kfontview"));
 
     itsPreview=new CFontPreview(previewFrame, "FontViewPart::Preview");
-    itsPreview->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    itsFaceLabel=new QLabel(i18n("Face:"), itsToolsFrame);
+    itsPreview->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+    itsFaceLabel=new TQLabel(i18n("Face:"), itsToolsFrame);
     itsFaceSelector=new KIntNumInput(1, itsToolsFrame);
-    itsInstallButton=new QPushButton(i18n("Install..."), itsToolsFrame, "button");
+    itsInstallButton=new TQPushButton(i18n("Install..."), itsToolsFrame, "button");
     itsInstallButton->hide();
     previewLayout->addWidget(itsPreview, 0, 0);
     layout->addWidget(previewFrame);
@@ -100,17 +100,17 @@ CFontViewPart::CFontViewPart(QWidget *parent, const char *name)
     toolsLayout->addWidget(itsFaceSelector);
     itsFaceLabel->hide();
     itsFaceSelector->hide();
-    toolsLayout->addItem(new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum));
+    toolsLayout->addItem(new TQSpacerItem(5, 5, TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum));
     toolsLayout->addWidget(itsInstallButton);
     itsToolsFrame->hide();
-    connect(itsPreview, SIGNAL(status(bool)), SLOT(previewStatus(bool)));
-    connect(itsInstallButton, SIGNAL(clicked()), SLOT(install()));
-    connect(itsFaceSelector, SIGNAL(valueChanged(int)), itsPreview, SLOT(showFace(int)));
+    connect(itsPreview, TQT_SIGNAL(status(bool)), TQT_SLOT(previewStatus(bool)));
+    connect(itsInstallButton, TQT_SIGNAL(clicked()), TQT_SLOT(install()));
+    connect(itsFaceSelector, TQT_SIGNAL(valueChanged(int)), itsPreview, TQT_SLOT(showFace(int)));
 
     itsChangeTextAction=new KAction(i18n("Change Text..."), "text", KShortcut(),
-                                    this, SLOT(changeText()), actionCollection(), "changeText");
+                                    this, TQT_SLOT(changeText()), actionCollection(), "changeText");
     itsChangeTextAction->setEnabled(false);
-    itsPrintAction=KStdAction::print(this, SLOT(print()), actionCollection(), "print");
+    itsPrintAction=KStdAction::print(this, TQT_SLOT(print()), actionCollection(), "print");
     itsPrintAction->setEnabled(false);
 
     setXMLFile("kfontviewpart.rc");
@@ -143,7 +143,7 @@ bool CFontViewPart::openFile()
 {
     // NOTE: Cant do the real open here, as dont seem to be able to use KIO::NetAccess functions during initial start-up.
     // Bug report 111535 indicates that calling "konqueror <font>" crashes.
-    QTimer::singleShot(0, this, SLOT(timeout()));
+    TQTimer::singleShot(0, this, TQT_SLOT(timeout()));
     return true;
 }
 
@@ -164,17 +164,17 @@ void CFontViewPart::timeout()
         // Not from fonts:/, so try to see if font is already installed...
         if(Misc::root())
         {
-            destUrl=QString("fonts:/")+itsPreview->engine().getName(m_url);
+            destUrl=TQString("fonts:/")+itsPreview->engine().getName(m_url);
             itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
         }
         else
         {
-            destUrl=QString("fonts:/")+i18n(KFI_KIO_FONTS_SYS)+QChar('/')+itsPreview->engine().getName(m_url);
+            destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')+itsPreview->engine().getName(m_url);
             if(KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget()))
                 itsShowInstallButton=false;
             else
             {
-                destUrl=QString("fonts:/")+i18n(KFI_KIO_FONTS_USER)+QChar('/')+itsPreview->engine().getName(m_url);
+                destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER)+TQChar('/')+itsPreview->engine().getName(m_url);
                 itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
             }
         }
@@ -255,8 +255,8 @@ void CFontViewPart::install()
 void CFontViewPart::changeText()
 {
     bool             status;
-    QRegExpValidator validator(QRegExp(".*"), 0L);
-    QString          oldStr(itsPreview->engine().getPreviewString()),
+    TQRegExpValidator validator(TQRegExp(".*"), 0L);
+    TQString          oldStr(itsPreview->engine().getPreviewString()),
                      newStr(KInputDialog::getText(i18n("Preview String"), i18n("Please enter new string:"),
                                                   oldStr, &status, itsFrame,
                                                   "preview string dialog", &validator));
@@ -270,7 +270,7 @@ void CFontViewPart::changeText()
 
 void CFontViewPart::print()
 {
-    QStringList items;
+    TQStringList items;
 
     items.append(itsPreview->engine().getName(m_url));
 

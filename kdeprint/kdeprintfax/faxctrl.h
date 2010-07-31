@@ -21,9 +21,9 @@
 #ifndef FAXCTRL_H
 #define FAXCTRL_H
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include "kdeprintfax.h"
 
@@ -34,17 +34,17 @@ class FaxCtrl : public QObject
 {
 	Q_OBJECT
 public:
-	FaxCtrl(QWidget *parent = 0, const char *name = 0);
+	FaxCtrl(TQWidget *parent = 0, const char *name = 0);
 	~FaxCtrl();
 
 	bool send(KdeprintFax *f);
 	bool abort();
-	void viewLog(QWidget *parent = 0);
-	QString faxSystem();
-	QString faxCommand();
+	void viewLog(TQWidget *parent = 0);
+	TQString faxSystem();
+	TQString faxCommand();
 
 signals:
-	void message(const QString&);
+	void message(const TQString&);
 	void faxSent(bool);
 
 protected slots:
@@ -59,8 +59,8 @@ protected slots:
 protected:
 	void filter();
 	void sendFax();
-	void addLog(const QString&, bool = false);
-	void addLogTitle( const QString& );
+	void addLog(const TQString&, bool = false);
+	void addLogTitle( const TQString& );
 
 private:
 	KProcess	*m_process;

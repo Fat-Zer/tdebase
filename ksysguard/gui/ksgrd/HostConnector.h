@@ -34,19 +34,19 @@ class HostConnector : public KDialogBase
   Q_OBJECT
 
   public:
-    HostConnector( QWidget *parent, const char *name = 0 );
+    HostConnector( TQWidget *parent, const char *name = 0 );
     ~HostConnector();
 
-    void setHostNames( const QStringList &list );
-    QStringList hostNames() const;
+    void setHostNames( const TQStringList &list );
+    TQStringList hostNames() const;
 
-    void setCommands( const QStringList &list );
-    QStringList commands() const;
+    void setCommands( const TQStringList &list );
+    TQStringList commands() const;
 
-    void setCurrentHostName( const QString &hostName );
+    void setCurrentHostName( const TQString &hostName );
 
-    QString currentHostName() const;
-    QString currentCommand() const;
+    TQString currentHostName() const;
+    TQString currentCommand() const;
     int port() const;
 
     bool useSsh() const;
@@ -56,19 +56,19 @@ class HostConnector : public KDialogBase
 
   protected slots:
     virtual void slotHelp();
-    void slotHostNameChanged( const QString &_text );
+    void slotHostNameChanged( const TQString &_text );
   private:
     KComboBox *mCommands;
     KComboBox *mHostNames;
 
-    QLabel *mHostNameLabel;
+    TQLabel *mHostNameLabel;
 
-    QRadioButton *mUseSsh;
-    QRadioButton *mUseRsh;
-    QRadioButton *mUseDaemon;
-    QRadioButton *mUseCustom;
+    TQRadioButton *mUseSsh;
+    TQRadioButton *mUseRsh;
+    TQRadioButton *mUseDaemon;
+    TQRadioButton *mUseCustom;
 
-    QSpinBox *mPort;
+    TQSpinBox *mPort;
 };
 
 #endif

@@ -48,12 +48,12 @@ class ChooserDlg : public KGDialog {
 	void reject();
 
   private:
-	QString recvStr();
-	QListViewItem *findItem( int id );
+	TQString recvStr();
+	TQListViewItem *findItem( int id );
 
-	QListView *host_view;
-	QLineEdit *iline;
-	QSocketNotifier *sn;
+	TQListView *host_view;
+	TQLineEdit *iline;
+	TQSocketNotifier *sn;
 };
 
 #endif /* KCHOOSER_H */

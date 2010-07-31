@@ -33,8 +33,8 @@
 #define __KIOSMTP_COMMAND_H__
 
 
-#include <qstring.h>
-#include <qcstring.h>
+#include <tqstring.h>
+#include <tqcstring.h>
 
 #ifdef HAVE_LIBSASL2
 extern "C" {
@@ -101,11 +101,11 @@ namespace KioSMTP {
 
     static Command * createSimpleCommand( int which, SMTPProtocol * smtp );
 
-    virtual QCString nextCommandLine( TransactionState * ts=0 ) = 0;
+    virtual TQCString nextCommandLine( TransactionState * ts=0 ) = 0;
     /* Reimplement this if your @ref #nextCommandLine() implementation
        changes state other than @ref mComplete. The default
        implementation just resets @ref mComplete to false. */
-    virtual void ungetCommandLine( const QCString & cmdLine, TransactionState * ts=0 );
+    virtual void ungetCommandLine( const TQCString & cmdLine, TransactionState * ts=0 );
     /* Reimplement this if your command need more sophisicated
        response processing than just checking for @ref
        Response::isOk(). The default implementation sets @ref
@@ -152,16 +152,16 @@ namespace KioSMTP {
 
   class EHLOCommand : public Command {
   public:
-    EHLOCommand( SMTPProtocol * smtp, const QString & hostname )
+    EHLOCommand( SMTPProtocol * smtp, const TQString & hostname )
       : Command( smtp, CloseConnectionOnError|OnlyLastInPipeline ),
 	mEHLONotSupported( false ),
 	mHostname( hostname.stripWhiteSpace() ) {}
 
-    QCString nextCommandLine( TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
     bool processResponse( const Response & response, TransactionState * );
   private:
     bool mEHLONotSupported;
-    QString mHostname;
+    TQString mHostname;
   };
 
   class StartTLSCommand : public Command {
@@ -169,18 +169,18 @@ namespace KioSMTP {
     StartTLSCommand( SMTPProtocol * smtp )
       : Command( smtp, CloseConnectionOnError|OnlyLastInPipeline ) {}
 
-    QCString nextCommandLine( TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
     bool processResponse( const Response & response, TransactionState * );
   };
 
   class AuthCommand : public Command {
   public:
     AuthCommand( SMTPProtocol * smtp, const char *mechanisms,
-      const QString &aFQDN, KIO::AuthInfo &ai );
+      const TQString &aFQDN, KIO::AuthInfo &ai );
     ~AuthCommand();
     bool doNotExecute( const TransactionState * ts ) const;
-    QCString nextCommandLine( TransactionState * );
-    void ungetCommandLine( const QCString & cmdLine, TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
+    void ungetCommandLine( const TQCString & cmdLine, TransactionState * );
     bool processResponse( const Response & response, TransactionState * );
   private:
     bool saslInteract( void *in );
@@ -194,34 +194,34 @@ namespace KioSMTP {
     bool mOneStep;
 
     KIO::AuthInfo *mAi;
-    QCString mLastChallenge;
-    QCString mUngetSASLResponse;
+    TQCString mLastChallenge;
+    TQCString mUngetSASLResponse;
     bool mFirstTime;
   };
 
   class MailFromCommand : public Command {
   public:
-    MailFromCommand( SMTPProtocol * smtp, const QCString & addr,
+    MailFromCommand( SMTPProtocol * smtp, const TQCString & addr,
 		     bool eightBit=false, unsigned int size=0  )
       : Command( smtp ), mAddr( addr ), m8Bit( eightBit ), mSize( size ) {}
 
-    QCString nextCommandLine( TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
     bool processResponse( const Response & response, TransactionState * );
   private:
-    QCString mAddr;
+    TQCString mAddr;
     bool m8Bit;
     unsigned int mSize;
   };
 
   class RcptToCommand : public Command {
   public:
-    RcptToCommand( SMTPProtocol * smtp, const QCString & addr )
+    RcptToCommand( SMTPProtocol * smtp, const TQCString & addr )
       : Command( smtp ), mAddr( addr ) {}
 
-    QCString nextCommandLine( TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
     bool processResponse( const Response & response, TransactionState * );
   private:
-    QCString mAddr;
+    TQCString mAddr;
   };
 
   /** Handles only the initial intermediate response and compltetes at
@@ -231,25 +231,25 @@ namespace KioSMTP {
     DataCommand( SMTPProtocol * smtp )
       : Command( smtp, OnlyLastInPipeline ) {}
 
-    QCString nextCommandLine( TransactionState * );
-    void ungetCommandLine( const QCString & cmd, TransactionState * ts );
+    TQCString nextCommandLine( TransactionState * );
+    void ungetCommandLine( const TQCString & cmd, TransactionState * ts );
     bool processResponse( const Response & response, TransactionState * );
   };
 
   /** Handles the data transfer following a successful DATA command */
   class TransferCommand : public Command {
   public:
-    TransferCommand( SMTPProtocol * smtp, const QCString & initialBuffer )
+    TransferCommand( SMTPProtocol * smtp, const TQCString & initialBuffer )
       : Command( smtp, OnlyFirstInPipeline ),
 	mUngetBuffer( initialBuffer ), mLastChar( '\n' ), mWasComplete( false ) {}
 
     bool doNotExecute( const TransactionState * ts ) const;
-    QCString nextCommandLine( TransactionState * );
-    void ungetCommandLine( const QCString & cmd, TransactionState * ts );
+    TQCString nextCommandLine( TransactionState * );
+    void ungetCommandLine( const TQCString & cmd, TransactionState * ts );
     bool processResponse( const Response & response, TransactionState * );
   private:
-    QCString prepare( const QByteArray & ba );
-    QCString mUngetBuffer;
+    TQCString prepare( const TQByteArray & ba );
+    TQCString mUngetBuffer;
     char mLastChar;
     bool mWasComplete; // ... before ungetting
   };
@@ -259,7 +259,7 @@ namespace KioSMTP {
     NoopCommand( SMTPProtocol * smtp )
       : Command( smtp, OnlyLastInPipeline ) {}
 
-    QCString nextCommandLine( TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
   };
 
   class RsetCommand : public Command {
@@ -267,7 +267,7 @@ namespace KioSMTP {
     RsetCommand( SMTPProtocol * smtp )
       : Command( smtp, CloseConnectionOnError ) {}
 
-    QCString nextCommandLine( TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
   };
 
   class QuitCommand : public Command {
@@ -275,7 +275,7 @@ namespace KioSMTP {
     QuitCommand( SMTPProtocol * smtp )
       : Command( smtp, CloseConnectionOnError|OnlyLastInPipeline ) {}
 
-    QCString nextCommandLine( TransactionState * );
+    TQCString nextCommandLine( TransactionState * );
   };
 
 } // namespace KioSMTP

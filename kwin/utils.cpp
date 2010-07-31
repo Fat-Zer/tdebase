@@ -183,14 +183,14 @@ bool KWinSelectionOwner::genericReply( Atom target_P, Atom property_P, Window re
 Atom KWinSelectionOwner::xa_version = None;
 
 
-QCString getStringProperty(WId w, Atom prop, char separator)
+TQCString getStringProperty(WId w, Atom prop, char separator)
     {
     Atom type;
     int format, status;
     unsigned long nitems = 0;
     unsigned long extra = 0;
     unsigned char *data = 0;
-    QCString result = "";
+    TQCString result = "";
     KXErrorHandler handler; // ignore errors
     status = XGetWindowProperty( qt_xdisplay(), w, prop, 0, 10000,
                                  FALSE, XA_STRING, &type, &format,
@@ -256,7 +256,7 @@ static Bool update_x_time_predicate( Display*, XEvent* event, XPointer )
 */
 void updateXTime()
     {
-    static QWidget* w = 0;
+    static TQWidget* w = 0;
     if ( !w )
         w = new QWidget;
     long data = 1;
@@ -302,7 +302,7 @@ bool grabbedXServer()
 
 #endif
 
-bool isLocalMachine( const QCString& host )
+bool isLocalMachine( const TQCString& host )
     {
 #ifdef HOST_NAME_MAX
     char hostnamebuf[HOST_NAME_MAX];

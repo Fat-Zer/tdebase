@@ -67,7 +67,7 @@
 
 #include <kstandarddirs.h>
 #include <klocale.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
 /*
  * The following are tables of string and regexps we match
@@ -82,10 +82,10 @@
  * so that is matched last. We use these generic version strings
  * so we can do a best effor to  support unknown ssh versions.
  */
-QRegExp KSshProcess::versionStrs[] = {
-    QRegExp("OpenSSH_3\\.[6-9]|OpenSSH_[1-9]*[4-9]\\.[0-9]"),
-    QRegExp("OpenSSH"),
-    QRegExp("SSH Secure Shell")
+TQRegExp KSshProcess::versionStrs[] = {
+    TQRegExp("OpenSSH_3\\.[6-9]|OpenSSH_[1-9]*[4-9]\\.[0-9]"),
+    TQRegExp("OpenSSH"),
+    TQRegExp("SSH Secure Shell")
 };
 
 const char * const KSshProcess::passwordPrompt[] = {
@@ -118,10 +118,10 @@ const char* const KSshProcess::tryAgainMsg[] = {
     "adjfhjsdhfdsjfsjdfhuefeufeuefe"
 };
 
-QRegExp KSshProcess::hostKeyMissingMsg[] = {
-    QRegExp("The authenticity of host|No (DSA|RSA) host key is known for"),
-    QRegExp("The authenticity of host|No (DSA|RSA) host key is known for"),
-    QRegExp("Host key not found from database")
+TQRegExp KSshProcess::hostKeyMissingMsg[] = {
+    TQRegExp("The authenticity of host|No (DSA|RSA) host key is known for"),
+    TQRegExp("The authenticity of host|No (DSA|RSA) host key is known for"),
+    TQRegExp("Host key not found from database")
 };
 
 const char* const KSshProcess::continuePrompt[] = {
@@ -136,16 +136,16 @@ const char* const KSshProcess::hostKeyChangedMsg[] = {
     "WARNING: HOST IDENTIFICATION HAS CHANGED!"
 };
 
-QRegExp KSshProcess::keyFingerprintMsg[] = {
-    QRegExp("..(:..){15}"),
-    QRegExp("..(:..){15}"),
-    QRegExp(".....(-.....){10}")
+TQRegExp KSshProcess::keyFingerprintMsg[] = {
+    TQRegExp("..(:..){15}"),
+    TQRegExp("..(:..){15}"),
+    TQRegExp(".....(-.....){10}")
 };
 
-QRegExp KSshProcess::knownHostsFileMsg[] = {
-    QRegExp("Add correct host key in (.*) to get rid of this message."),
-    QRegExp("Add correct host key in (.*) to get rid of this message."),
-    QRegExp("Add correct host key to \"(.*)\"")
+TQRegExp KSshProcess::knownHostsFileMsg[] = {
+    TQRegExp("Add correct host key in (.*) to get rid of this message."),
+    TQRegExp("Add correct host key in (.*) to get rid of this message."),
+    TQRegExp("Add correct host key to \"(.*)\"")
 };
 
 
@@ -164,10 +164,10 @@ const char* const KSshProcess::changeHostKeyOnDiskPrompt[] = {
 // quit.  The later if StrictHostKeyChecking is "no".
 // The former if StrictHostKeyChecking is
 // "yes" or explicitly set to "ask".
-QRegExp KSshProcess::hostKeyVerifyFailedMsg[] = {
-    QRegExp("Host key verification failed\\."),
-    QRegExp("Host key verification failed\\."),
-    QRegExp("Disconnected; key exchange or algorithm? negotiation failed \\(Key exchange failed\\.\\)\\.")
+TQRegExp KSshProcess::hostKeyVerifyFailedMsg[] = {
+    TQRegExp("Host key verification failed\\."),
+    TQRegExp("Host key verification failed\\."),
+    TQRegExp("Disconnected; key exchange or algorithm? negotiation failed \\(Key exchange failed\\.\\)\\.")
 };
 
 const char * const KSshProcess::connectionClosedMsg[] = {
@@ -206,14 +206,14 @@ void KSshProcess::removeSignalHandlers() {
 KSshProcess::KSshProcess() 
             : mVersion(UNKNOWN_VER), mConnected(false), 
         mRunning(false), mConnectState(0) {
-    mSshPath = KStandardDirs::findExe(QString::fromLatin1("ssh"));
+    mSshPath = KStandardDirs::findExe(TQString::fromLatin1("ssh"));
     kdDebug(KSSHPROC) << "KSshProcess::KSshProcess(): ssh path [" << 
 		mSshPath << "]" << endl;
         
 	installSignalHandlers();
 }
 
-KSshProcess::KSshProcess(QString pathToSsh)
+KSshProcess::KSshProcess(TQString pathToSsh)
             : mSshPath(pathToSsh), mVersion(UNKNOWN_VER), mConnected(false),
     mRunning(false), mConnectState(0)  {
 	installSignalHandlers();
@@ -225,7 +225,7 @@ KSshProcess::~KSshProcess(){
     while(waitpid(-1, NULL, WNOHANG) > 0);
 }
 
-bool KSshProcess::setSshPath(QString pathToSsh) {
+bool KSshProcess::setSshPath(TQString pathToSsh) {
     mSshPath = pathToSsh;
     version();
     if( mVersion == UNKNOWN_VER )
@@ -235,7 +235,7 @@ bool KSshProcess::setSshPath(QString pathToSsh) {
 }
 
 KSshProcess::SshVersion KSshProcess::version() {
-    QString cmd;
+    TQString cmd;
     cmd = mSshPath+" -V 2>&1";
 
     // Get version string from ssh client.
@@ -259,7 +259,7 @@ KSshProcess::SshVersion KSshProcess::version() {
         kdError(KSSHPROC) << "KSshProcess::version(): pclose failed." << endl;
     }
     buf[len] = '\0';
-    QString ver;
+    TQString ver;
     ver = buf;
     kdDebug(KSSHPROC) << "KSshProcess::version(): "
         "got version string [" << ver << "]" << endl;
@@ -285,14 +285,14 @@ KSshProcess::SshVersion KSshProcess::version() {
     return mVersion;
 }
 /*
-QString KSshProcess::versionStr() {
+TQString KSshProcess::versionStr() {
     if( mVersion == UNKNOWN_VER ) {
         version();
         if( mVersion == UNKNOWN_VER )
-            return QString::null;
+            return TQString::null;
     }
 
-    return QString::fromLatin1(versionStrs[mVersion]);
+    return TQString::fromLatin1(versionStrs[mVersion]);
 }
 */
 
@@ -300,9 +300,9 @@ bool KSshProcess::setOptions(const SshOptList& opts) {
     kdDebug(KSSHPROC) << "KSshProcess::setOptions()" << endl;
     mArgs.clear();
     SshOptListConstIterator it;
-    QString cmd, subsystem;
-    mPassword = mUsername = mHost = QString::null;
-    QCString tmp;
+    TQString cmd, subsystem;
+    mPassword = mUsername = mHost = TQString::null;
+    TQCString tmp;
     for(it = opts.begin(); it != opts.end(); ++it) {
         //kdDebug(KSSHPROC) << "opt.opt = " << (*it).opt << endl;
         //kdDebug(KSSHPROC) << "opt.str = " << (*it).str << endl;
@@ -340,7 +340,7 @@ bool KSshProcess::setOptions(const SshOptList& opts) {
         case SSH_PROTOCOL:
             if( mVersion <= OPENSSH ) {
                 tmp = "Protocol=";
-                tmp += QString::number((*it).num).latin1();
+                tmp += TQString::number((*it).num).latin1();
                 mArgs.append("-o");
                 mArgs.append(tmp);
             }
@@ -445,14 +445,14 @@ bool KSshProcess::setOptions(const SshOptList& opts) {
 }
 
 void KSshProcess::printArgs() {
-    QValueListIterator<QCString> it;
+    TQValueListIterator<TQCString> it;
     for( it = mArgs.begin(); it != mArgs.end(); ++it) {
         kdDebug(KSSHPROC) << "arg: " << *it << endl;
     }
 }
 
 
-int KSshProcess::error(QString& msg) {
+int KSshProcess::error(TQString& msg) {
     kdDebug(KSSHPROC) << "KSshProcess::error()" << endl;
     kdDebug() << mErrorMsg << endl;
     msg = mErrorMsg;
@@ -539,15 +539,15 @@ void KSshProcess::acceptHostKey(bool accept) {
     mAcceptHostKey = accept;
 }
 
-void KSshProcess::setPassword(QString password) {
+void KSshProcess::setPassword(TQString password) {
     kdDebug(KSSHPROC) << "KSshProcess::setPassword(password:xxxxxxxx)" << endl;
     mPassword = password;
 }
 
-QString KSshProcess::getLine() {
-    static QStringList buffer;
-    QString line = QString::null;
-    QCString ptyLine, errLine;
+TQString KSshProcess::getLine() {
+    static TQStringList buffer;
+    TQString line = TQString::null;
+    TQCString ptyLine, errLine;
 
     if( buffer.empty() ) {
         // PtyProcess buffers lines.  First check that there
@@ -559,11 +559,11 @@ QString KSshProcess::getLine() {
         // If PtyProcess did have something for us, get it and
         // place it in our line buffer.
         if( ! ptyLine.isEmpty() ) {
-            buffer.prepend(QString(ptyLine));
+            buffer.prepend(TQString(ptyLine));
         }
 
         if( ! errLine.isEmpty() ) {
-            buffer.prepend(QString(errLine));
+            buffer.prepend(TQString(errLine));
         }
 
         // If we still don't have anything in our buffer so there must
@@ -602,13 +602,13 @@ QString KSshProcess::getLine() {
                 kdDebug(KSSHPROC) << "KSshProcess::connect(): " <<
                     "timed out waiting for a response" << endl;
                 mError = ERR_TIMED_OUT;
-                return QString::null;
+                return TQString::null;
             }
             else if( ret == -1 ) {
                 kdDebug(KSSHPROC) << "KSshProcess::connect(): "
                     << "select error: " << strerror(errno) << endl;
                 mError = ERR_INTERNAL;
-                return QString::null;
+                return TQString::null;
             }
     
             // We are not respecting any type of order in which the
@@ -616,14 +616,14 @@ QString KSshProcess::getLine() {
             // had data on it first.
             if( FD_ISSET(ptyfd, &rfds) ) {
                 ptyLine = ssh.readLineFromPty(false);
-                buffer.prepend(QString(ptyLine));
+                buffer.prepend(TQString(ptyLine));
                 //kdDebug(KSSHPROC) << "KSshProcess::getLine(): "
                 //    "line from pty -" << ptyLine  << endl;
             }
             
             if( FD_ISSET(errfd, &rfds) ) {
                 errLine = ssh.readLineFromStderr(false);
-                buffer.prepend(QString(errLine));
+                buffer.prepend(TQString(errLine));
                 //kdDebug(KSSHPROC) << "KSshProcess::getLine(): "
                 //    "line from err -" << errLine << endl;
             }
@@ -720,8 +720,8 @@ bool KSshProcess::connect() {
         kdDebug(KSSHPROC) << "KSshProcess::connect(): "
             << "Connect state " << stateStr(mConnectState) << endl;
         
-        QString line;      // a line from ssh
-        QString msgBuf;    // buffer for important messages from ssh
+        TQString line;      // a line from ssh
+        TQString msgBuf;    // buffer for important messages from ssh
                            // which are to be returned to the user
         
         switch(mConnectState) {
@@ -733,8 +733,8 @@ bool KSshProcess::connect() {
         case STATE_START:
             // reset some key values to safe values
             mAcceptHostKey = false;
-            mKeyFingerprint = QString::null;
-            mKnownHostsFile = QString::null;
+            mKeyFingerprint = TQString::null;
+            mKnownHostsFile = TQString::null;
             
             if( mArgs.isEmpty() ) {
                 kdDebug(KSSHPROC) << "KSshProcess::connect(): ssh options "
@@ -776,7 +776,7 @@ bool KSshProcess::connect() {
                     i18n("Error encountered while talking to ssh.");
                 mConnectState = STATE_FATAL;
             }
-            else if( line.find(QString::fromLatin1(passwordPrompt[mVersion]), 0, false) != -1 ) {
+            else if( line.find(TQString::fromLatin1(passwordPrompt[mVersion]), 0, false) != -1 ) {
                 mConnectState = STATE_TRY_PASSWD;
             }
             else if( line.find(passphrasePrompt[mVersion]) != -1 ) {
@@ -824,7 +824,7 @@ bool KSshProcess::connect() {
         // STATE_TRY_PASSWD:
         // If we have password send it to the ssh process, else
         // set error ERR_NEED_PASSWD and return false to the caller.
-        // The caller then must then call KSshProcess::setPassword(QString)
+        // The caller then must then call KSshProcess::setPassword(TQString)
         // before calling KSshProcess::connect() again.
         //
         // Almost exactly liek STATE_TRY_PASSPHRASE.  Check there if you
@@ -839,11 +839,11 @@ bool KSshProcess::connect() {
                 ssh.writeLine(mPassword.latin1());
                 
                 // Overwrite the password so it isn't in memory.
-                mPassword.fill(QChar('X'));
+                mPassword.fill(TQChar('X'));
                 
                 // Set the password to null so we will request another
                 // password if this one fails.
-                mPassword = QString::null;
+                mPassword = TQString::null;
                 
                 mConnectState = STATE_WAIT_PROMPT;
             }
@@ -862,7 +862,7 @@ bool KSshProcess::connect() {
         // STATE_TRY_KEY_PASSPHRASE:
         // If we have passphrase send it to the ssh process, else
         // set error ERR_NEED_PASSPHRASE and return false to the caller.
-        // The caller then must then call KSshProcess::setPassword(QString)
+        // The caller then must then call KSshProcess::setPassword(TQString)
         // before calling KSshProcess::connect() again.
         //
         // Almost exactly like STATE_TRY_PASSWD. The only difference is 
@@ -878,11 +878,11 @@ bool KSshProcess::connect() {
                 ssh.writeLine(mPassword.latin1());
                 
                 // Overwrite the password so it isn't in memory.
-                mPassword.fill(QChar('X'));
+                mPassword.fill(TQChar('X'));
                 
                 // Set the password to null so we will request another
                 // password if this one fails.
-                mPassword = QString::null;
+                mPassword = TQString::null;
                 
                 mConnectState = STATE_WAIT_PROMPT;
             }

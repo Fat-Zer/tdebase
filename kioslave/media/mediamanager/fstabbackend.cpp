@@ -33,7 +33,7 @@
 #define CDC_CD_R                0x2000  /* drive is a CD-R */
 #define CDC_CD_RW               0x4000  /* drive is a CD-RW */
 #define CDC_DVD                 0x8000  /* drive is a DVD */
-#include <qfile.h>
+#include <tqfile.h>
 #endif
 
 #include <klocale.h>
@@ -56,13 +56,13 @@
 
 
 FstabBackend::FstabBackend(MediaList &list, bool networkSharesOnly)
-	: QObject(), BackendBase(list), m_networkSharesOnly(networkSharesOnly)
+	: TQObject(), BackendBase(list), m_networkSharesOnly(networkSharesOnly)
 {
 	KDirWatch::self()->addFile(MTAB);
 	KDirWatch::self()->addFile(FSTAB);
 
-	connect( KDirWatch::self(), SIGNAL( dirty(const QString&) ),
-	         this, SLOT( slotDirty(const QString&) ) );
+	connect( KDirWatch::self(), TQT_SIGNAL( dirty(const TQString&) ),
+	         this, TQT_SLOT( slotDirty(const TQString&) ) );
 
 	handleFstabChange(false);
 	handleMtabChange(false);
@@ -70,16 +70,16 @@ FstabBackend::FstabBackend(MediaList &list, bool networkSharesOnly)
 	KDirWatch::self()->startScan();
 
 #ifdef Q_OS_FREEBSD
-	connect( &m_mtabTimer, SIGNAL( timeout() ),
-	         this, SLOT( handleMtabChange() ) );
+	connect( &m_mtabTimer, TQT_SIGNAL( timeout() ),
+	         this, TQT_SLOT( handleMtabChange() ) );
 	m_mtabTimer.start(250);
 #endif
 }
 
 FstabBackend::~FstabBackend()
 {
-	QStringList::iterator it = m_mtabIds.begin();
-	QStringList::iterator end = m_mtabIds.end();
+	TQStringList::iterator it = m_mtabIds.begin();
+	TQStringList::iterator end = m_mtabIds.end();
 
 	for (; it!=end; ++it)
 	{
@@ -97,27 +97,27 @@ FstabBackend::~FstabBackend()
         KDirWatch::self()->removeFile(MTAB);
 }
 
-QString FstabBackend::mount( const QString &_udi )
+TQString FstabBackend::mount( const TQString &_udi )
 {
     const Medium* medium = m_mediaList.findById(_udi);
     if (!medium)
         return i18n("No such medium: %1").arg(_udi);
     KIO::Job* job = KIO::mount( false, 0, medium->deviceNode(), medium->mountPoint());
     KIO::NetAccess::synchronousRun( job, 0 );
-    return QString::null;
+    return TQString::null;
 }
 
-QString FstabBackend::unmount( const QString &_udi )
+TQString FstabBackend::unmount( const TQString &_udi )
 {
     const Medium* medium = m_mediaList.findById(_udi);
     if (!medium)
         return i18n("No such medium: %1").arg(_udi);
     KIO::Job* job = KIO::unmount( medium->mountPoint(),  false);
     KIO::NetAccess::synchronousRun( job, 0 );
-    return QString::null;
+    return TQString::null;
 }
 
-void FstabBackend::slotDirty(const QString &path)
+void FstabBackend::slotDirty(const TQString &path)
 {
 	if (path==MTAB)
 	{
@@ -169,7 +169,7 @@ bool inExclusionPattern(KMountPoint *mount, bool networkSharesOnly)
 
 void FstabBackend::handleMtabChange(bool allowNotification)
 {
-	QStringList new_mtabIds;
+	TQStringList new_mtabIds;
 	KMountPoint::List mtab = KMountPoint::currentMountPoints();
 
 	KMountPoint::List::iterator it = mtab.begin();
@@ -177,28 +177,28 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 
 	for (; it!=end; ++it)
 	{
-		QString dev = (*it)->mountedFrom();
-		QString mp = (*it)->mountPoint();
-		QString fs = (*it)->mountType();
+		TQString dev = (*it)->mountedFrom();
+		TQString mp = (*it)->mountPoint();
+		TQString fs = (*it)->mountType();
 
 		if ( ::inExclusionPattern(*it, m_networkSharesOnly) ) continue;
 
 		/* Did we know this already before ? If yes, then
 		   nothing has changed, do not stat the mount point. Avoids
 		   hang if network shares are stalling */
-		QString mtabEntry = dev + "*" + mp + "*" + fs;
+		TQString mtabEntry = dev + "*" + mp + "*" + fs;
 		if(m_mtabEntries.contains(mtabEntry)) {
 		        new_mtabIds += m_mtabEntries[mtabEntry];
 			continue;
 		}
 
-		QString id = generateId(dev, mp);
+		TQString id = generateId(dev, mp);
 		new_mtabIds+=id;
 		m_mtabEntries[mtabEntry] = id;
 
 		if ( !m_mtabIds.contains(id) && m_fstabIds.contains(id) )
 		{
-			QString mime, icon, label;
+			TQString mime, icon, label;
 			guess(dev, mp, fs, true, mime, icon, label);
 			m_mediaList.changeMediumState(id, true, false,
 			                              mime, icon, label);
@@ -206,13 +206,13 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 #if 0
 		else if ( !m_mtabIds.contains(id) )
 		{
-			QString name = generateName(dev, fs);
+			TQString name = generateName(dev, fs);
 
 			Medium *m = new Medium(id, name);
 
 			m->mountableState(dev, mp, fs, true);
 
-			QString mime, icon, label;
+			TQString mime, icon, label;
 			guess(dev, mp, fs, true, mime, icon, label);
 
 			m->setMimeType(mime);
@@ -224,8 +224,8 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 #endif
 	}
 
-	QStringList::iterator it2 = m_mtabIds.begin();
-	QStringList::iterator end2 = m_mtabIds.end();
+	TQStringList::iterator it2 = m_mtabIds.begin();
+	TQStringList::iterator end2 = m_mtabIds.end();
 
 	for (; it2!=end2; ++it2)
 	{
@@ -233,15 +233,15 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 		{
 			const Medium *medium = m_mediaList.findById(*it2);
 
-			QString dev = medium->deviceNode();
-			QString mp = medium->mountPoint();
-			QString fs = medium->fsType();
+			TQString dev = medium->deviceNode();
+			TQString mp = medium->mountPoint();
+			TQString fs = medium->fsType();
 
 
-			QString mtabEntry = dev + "*" + mp + "*" + fs;
+			TQString mtabEntry = dev + "*" + mp + "*" + fs;
 			m_mtabEntries.remove(mtabEntry);
 
-			QString mime, icon, label;
+			TQString mime, icon, label;
 			guess(dev, mp, fs, false, mime, icon, label);
 
 			m_mediaList.changeMediumState(*it2, false, false,
@@ -260,7 +260,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 
 void FstabBackend::handleFstabChange(bool allowNotification)
 {
-	QStringList new_fstabIds;
+	TQStringList new_fstabIds;
 	KMountPoint::List fstab = KMountPoint::possibleMountPoints();
 
 	KMountPoint::List::iterator it = fstab.begin();
@@ -268,24 +268,24 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 
 	for (; it!=end; ++it)
 	{
-		QString dev = (*it)->mountedFrom();
-		QString mp = (*it)->mountPoint();
-		QString fs = (*it)->mountType();
+		TQString dev = (*it)->mountedFrom();
+		TQString mp = (*it)->mountPoint();
+		TQString fs = (*it)->mountType();
 
 		if ( ::inExclusionPattern(*it, m_networkSharesOnly) ) continue;
 
-		QString id = generateId(dev, mp);
+		TQString id = generateId(dev, mp);
 		new_fstabIds+=id;
 
 		if ( !m_fstabIds.contains(id) )
 		{
-			QString name = generateName(dev, fs);
+			TQString name = generateName(dev, fs);
 
 			Medium *m = new Medium(id, name);
 
 			m->mountableState(dev, mp, fs, false);
 
-			QString mime, icon, label;
+			TQString mime, icon, label;
 			guess(dev, mp, fs, false, mime, icon, label);
 
 			m->setMimeType(mime);
@@ -296,8 +296,8 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 		}
 	}
 
-	QStringList::iterator it2 = m_fstabIds.begin();
-	QStringList::iterator end2 = m_fstabIds.end();
+	TQStringList::iterator it2 = m_fstabIds.begin();
+	TQStringList::iterator end2 = m_fstabIds.end();
 
 	for (; it2!=end2; ++it2)
 	{
@@ -310,18 +310,18 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 	m_fstabIds = new_fstabIds;
 }
 
-QString FstabBackend::generateId(const QString &devNode,
-                                 const QString &mountPoint)
+TQString FstabBackend::generateId(const TQString &devNode,
+                                 const TQString &mountPoint)
 {
-	QString d = KStandardDirs::realFilePath(devNode);
-	QString m = KStandardDirs::realPath(mountPoint);
+	TQString d = KStandardDirs::realFilePath(devNode);
+	TQString m = KStandardDirs::realPath(mountPoint);
 
 	return "/org/kde/mediamanager/fstab/"
 	      +d.replace("/", "")
 	      +m.replace("/", "");
 }
 
-QString FstabBackend::generateName(const QString &devNode, const QString &fsType)
+TQString FstabBackend::generateName(const TQString &devNode, const TQString &fsType)
 {
 	KURL url( devNode );
 
@@ -335,19 +335,19 @@ QString FstabBackend::generateName(const QString &devNode, const QString &fsType
 	}
 }
 
-void FstabBackend::guess(const QString &devNode, const QString &mountPoint,
-                         const QString &fsType, bool mounted,
-                         QString &mimeType, QString &iconName, QString &label)
+void FstabBackend::guess(const TQString &devNode, const TQString &mountPoint,
+                         const TQString &fsType, bool mounted,
+                         TQString &mimeType, TQString &iconName, TQString &label)
 {
 	enum { UNKNOWN, CD, CDWRITER, DVD, DVDWRITER } devType = UNKNOWN;
 #ifdef __linux__
 	// Guessing device types by mount point is not exactly accurate...
 	// Do something accurate first, and fall back if necessary.
-	int device=open(QFile::encodeName(devNode), O_RDONLY|O_NONBLOCK);
+	int device=open(TQFile::encodeName(devNode), O_RDONLY|O_NONBLOCK);
 	if(device>=0)
 	{
 		bool isCd=false;
-		QString devname=devNode.section('/', -1);
+		TQString devname=devNode.section('/', -1);
 		if(devname.startsWith("scd") || devname.startsWith("sr"))
 		{
 			// SCSI CD/DVD drive
@@ -358,10 +358,10 @@ void FstabBackend::guess(const QString &devNode, const QString &mountPoint,
 			// IDE device -- we can't tell if this is a
 			// CD/DVD drive or harddisk by just looking at the
 			// filename
-			QFile m(QString("/proc/ide/") + devname + "/media");
+			TQFile m(TQString("/proc/ide/") + devname + "/media");
 			if(m.open(IO_ReadOnly))
 			{
-				QString buf;
+				TQString buf;
 				m.readLine(buf, 1024);
 				if(buf.contains("cdrom"))
 					isCd=true;
@@ -469,7 +469,7 @@ void FstabBackend::guess(const QString &devNode, const QString &mountPoint,
 	}
 	else
 	{
-		QString tmp = devNode;
+		TQString tmp = devNode;
 		if ( tmp.startsWith("/dev/") )
 		{
 			tmp = tmp.mid(5);
@@ -477,7 +477,7 @@ void FstabBackend::guess(const QString &devNode, const QString &mountPoint,
 		label+= " (" + tmp + ")";
 	}
 	mimeType+= (mounted ? "_mounted" : "_unmounted");
-	iconName = QString::null;
+	iconName = TQString::null;
 }
 
 #include "fstabbackend.moc"

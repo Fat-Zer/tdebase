@@ -27,9 +27,9 @@
 #include <kdesktopfile.h>
 #include <kservice.h>
 
-#include <qpixmap.h>
-#include <qdir.h>
-#include <qtimer.h>
+#include <tqpixmap.h>
+#include <tqdir.h>
+#include <tqtimer.h>
 
 #include "kickerSettings.h"
 
@@ -38,16 +38,16 @@
 K_EXPORT_KICKER_MENUEXT(remotemenu, RemoteMenu)
 
 
-RemoteMenu::RemoteMenu(QWidget *parent, const char *name,
-                       const QStringList &/*args*/)
+RemoteMenu::RemoteMenu(TQWidget *parent, const char *name,
+                       const TQStringList &/*args*/)
   : KPanelMenu(parent, name), KDirNotify()
 {
     KGlobal::dirs()->addResourceType("remote_entries",
     KStandardDirs::kde_default("data") + "remoteview");
 
-    QString path = KGlobal::dirs()->saveLocation("remote_entries");
+    TQString path = KGlobal::dirs()->saveLocation("remote_entries");
 
-    QDir dir = path;
+    TQDir dir = path;
     if (!dir.exists())
     {
         dir.cdUp();
@@ -68,35 +68,35 @@ void RemoteMenu::initialize()
     }
 
     id = insertItem(SmallIcon("wizard"), i18n("Add Network Folder"));
-    connectItem(id, this, SLOT(startWizard()));
+    connectItem(id, this, TQT_SLOT(startWizard()));
     id = insertItem(SmallIcon("kfm"), i18n("Manage Network Folders"));
-    connectItem(id, this, SLOT(openRemoteDir()));
+    connectItem(id, this, TQT_SLOT(openRemoteDir()));
 
     insertSeparator();
 
     m_desktopMap.clear();
-    QStringList names_found;
-    QStringList dirList = KGlobal::dirs()->resourceDirs("remote_entries");
+    TQStringList names_found;
+    TQStringList dirList = KGlobal::dirs()->resourceDirs("remote_entries");
 
-    QStringList::ConstIterator dirpath = dirList.begin();
-    QStringList::ConstIterator end = dirList.end();
+    TQStringList::ConstIterator dirpath = dirList.begin();
+    TQStringList::ConstIterator end = dirList.end();
     for(; dirpath!=end; ++dirpath)
     {
-        QDir dir = *dirpath;
+        TQDir dir = *dirpath;
         if (!dir.exists()) continue;
 
-        QStringList filenames
-            = dir.entryList( QDir::Files | QDir::Readable );
+        TQStringList filenames
+            = dir.entryList( TQDir::Files | TQDir::Readable );
 
-        QStringList::ConstIterator name = filenames.begin();
-        QStringList::ConstIterator endf = filenames.end();
+        TQStringList::ConstIterator name = filenames.begin();
+        TQStringList::ConstIterator endf = filenames.end();
 
         for(; name!=endf; ++name)
         {
             if (!names_found.contains(*name))
             {
                 names_found.append(*name);
-                QString filename = *dirpath+*name;
+                TQString filename = *dirpath+*name;
                 KDesktopFile desktop(filename);
                 id = insertItem(SmallIcon(desktop.readIcon()), desktop.readName());
                 m_desktopMap[id] = filename;

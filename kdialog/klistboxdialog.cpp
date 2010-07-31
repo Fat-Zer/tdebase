@@ -17,34 +17,34 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
-#include <qlabel.h>
-#include <qlistbox.h>
-#include <qvbox.h>
+#include <tqlabel.h>
+#include <tqlistbox.h>
+#include <tqvbox.h>
 
 #include "klistboxdialog.h"
 #include "klistboxdialog.moc"
 
 #include "klocale.h"
 
-KListBoxDialog::KListBoxDialog(QString text, QWidget *parent)
-    : KDialogBase( parent, 0, true, QString::null, Ok|Cancel, Ok, true )
+KListBoxDialog::KListBoxDialog(TQString text, TQWidget *parent)
+    : KDialogBase( parent, 0, true, TQString::null, Ok|Cancel, Ok, true )
 {
-  QVBox *page = makeVBoxMainWidget();
+  TQVBox *page = makeVBoxMainWidget();
 
-  label = new QLabel(text, page);
+  label = new TQLabel(text, page);
   label->setAlignment(AlignCenter);
 
-  table = new QListBox(page);
+  table = new TQListBox(page);
   table->setFocus();
 }
 
-void KListBoxDialog::insertItem(const QString& item)
+void KListBoxDialog::insertItem(const TQString& item)
 {
   table->insertItem(item);
   table->setCurrentItem(0);
 }
 
-void KListBoxDialog::setCurrentItem(const QString& item)
+void KListBoxDialog::setCurrentItem(const TQString& item)
 {
   for ( int i=0; i < (int) table->count(); i++ ) {
     if ( table->text(i) == item ) {

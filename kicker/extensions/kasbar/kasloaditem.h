@@ -19,17 +19,17 @@ public:
     KasLoadItem( KasBar *parent );
     virtual ~KasLoadItem();
 
-    void paint( QPainter *p );
+    void paint( TQPainter *p );
 
 public slots:
     void updateDisplay();
-    void showMenuAt( QMouseEvent *ev );
-    void showMenuAt( QPoint p );
+    void showMenuAt( TQMouseEvent *ev );
+    void showMenuAt( TQPoint p );
 
 private:
-    QValueList<double> valuesOne;
-    QValueList<double> valuesFive;
-    QValueList<double> valuesFifteen;
+    TQValueList<double> valuesOne;
+    TQValueList<double> valuesFive;
+    TQValueList<double> valuesFifteen;
 };
 
 #endif // KASLOADITEM_H

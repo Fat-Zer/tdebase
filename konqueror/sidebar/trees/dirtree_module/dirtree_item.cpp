@@ -25,13 +25,13 @@
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kuserprofile.h>
-#include <qapplication.h>
-#include <qclipboard.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
 #include <kio/paste.h>
-#include <qfile.h>
-#include <qpainter.h>
+#include <tqfile.h>
+#include <tqpainter.h>
 #include <kiconloader.h>
-#include <qcursor.h>
+#include <tqcursor.h>
 
 #define MYMODULE static_cast<KonqSidebarDirTreeModule*>(module())
 
@@ -64,7 +64,7 @@ void KonqSidebarDirTreeItem::reset()
         KURL url = m_fileItem->url();
         if ( url.isLocalFile() )
         {
-            QCString path( QFile::encodeName(url.path()));
+            TQCString path( TQFile::encodeName(url.path()));
             struct stat buff;
             if ( ::stat( path.data(), &buff ) != -1 )
             {
@@ -108,15 +108,15 @@ bool KonqSidebarDirTreeItem::hasStandardIcon()
     return m_fileItem->iconName() == "folder";
 }
 
-void KonqSidebarDirTreeItem::paintCell( QPainter *_painter, const QColorGroup & _cg, int _column, int _width, int _alignment )
+void KonqSidebarDirTreeItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment )
 {
     if (m_fileItem->isLink())
     {
-        QFont f( _painter->font() );
+        TQFont f( _painter->font() );
         f.setItalic( TRUE );
         _painter->setFont( f );
     }
-    QListViewItem::paintCell( _painter, _cg, _column, _width, _alignment );
+    TQListViewItem::paintCell( _painter, _cg, _column, _width, _alignment );
 }
 
 KURL KonqSidebarDirTreeItem::externalURL() const
@@ -124,27 +124,27 @@ KURL KonqSidebarDirTreeItem::externalURL() const
     return m_fileItem->url();
 }
 
-QString KonqSidebarDirTreeItem::externalMimeType() const
+TQString KonqSidebarDirTreeItem::externalMimeType() const
 {
     if (m_fileItem->isMimeTypeKnown())
         return m_fileItem->mimetype();
     else
-        return QString::null;
+        return TQString::null;
 }
 
-bool KonqSidebarDirTreeItem::acceptsDrops( const QStrList & formats )
+bool KonqSidebarDirTreeItem::acceptsDrops( const TQStrList & formats )
 {
     if ( formats.contains("text/uri-list") )
         return m_fileItem->acceptsDrops();
     return false;
 }
 
-void KonqSidebarDirTreeItem::drop( QDropEvent * ev )
+void KonqSidebarDirTreeItem::drop( TQDropEvent * ev )
 {
     KonqOperations::doDrop( m_fileItem, externalURL(), ev, tree() );
 }
 
-QDragObject * KonqSidebarDirTreeItem::dragObject( QWidget * parent, bool move )
+TQDragObject * KonqSidebarDirTreeItem::dragObject( TQWidget * parent, bool move )
 {
     KURL::List lst;
     lst.append( m_fileItem->url() );
@@ -162,7 +162,7 @@ void KonqSidebarDirTreeItem::itemSelected()
     if ( m_fileItem->url().directory(false) == KGlobalSettings::trashPath() )
         bInTrash = true;
 
-    QMimeSource *data = QApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     bool paste = ( data->encodedData( data->format() ).size() != 0 );
 
     tree()->enableActions( true, true, paste, true && !bInTrash, true, true );
@@ -190,14 +190,14 @@ void KonqSidebarDirTreeItem::rightButtonPressed()
 {
     KFileItemList lstItems;
     lstItems.append( m_fileItem );
-    emit tree()->popupMenu( QCursor::pos(), lstItems );
+    emit tree()->popupMenu( TQCursor::pos(), lstItems );
 }
 
 void KonqSidebarDirTreeItem::paste()
 {
     // move or not move ?
     bool move = false;
-    QMimeSource *data = QApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) ) {
         move = KonqDrag::decodeIsCutSelection( data );
         kdDebug(1201) << "move (from clipboard data) = " << move << endl;
@@ -229,7 +229,7 @@ void KonqSidebarDirTreeItem::delOperation( int method )
     KonqOperations::del(tree(), method, lst);
 }
 
-QString KonqSidebarDirTreeItem::toolTipText() const
+TQString KonqSidebarDirTreeItem::toolTipText() const
 {
     return m_fileItem->url().pathOrURL();
 }
@@ -239,7 +239,7 @@ void KonqSidebarDirTreeItem::rename()
     tree()->rename( this, 0 );
 }
 
-void KonqSidebarDirTreeItem::rename( const QString & name )
+void KonqSidebarDirTreeItem::rename( const TQString & name )
 {
     KonqOperations::rename( tree(), m_fileItem->url(), name );
 }

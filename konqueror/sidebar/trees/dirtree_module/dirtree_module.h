@@ -21,9 +21,9 @@
 
 #include <konq_sidebartreemodule.h>
 #include <kfileitem.h>
-#include <qpixmap.h>
-#include <qdict.h>
-#include <qptrdict.h>
+#include <tqpixmap.h>
+#include <tqdict.h>
+#include <tqptrdict.h>
 
 class KDirLister;
 class KonqSidebarTree;
@@ -31,7 +31,7 @@ class KonqSidebarTreeItem;
 class KonqSidebarDirTreeItem;
 class KonqPropsView;
 
-class KonqSidebarDirTreeModule : public QObject, public KonqSidebarTreeModule
+class KonqSidebarDirTreeModule : public TQObject, public KonqSidebarTreeModule
 {
     Q_OBJECT
 public:
@@ -64,10 +64,10 @@ private:
     // URL -> item
     // Each KonqSidebarDirTreeItem is indexed on item->id() and
     // all item->alias'es
-    QDict<KonqSidebarTreeItem> m_dictSubDirs;
+    TQDict<KonqSidebarTreeItem> m_dictSubDirs;
 
     // KFileItem -> item
-    QPtrDict<KonqSidebarTreeItem> m_ptrdictSubDirs;
+    TQPtrDict<KonqSidebarTreeItem> m_ptrdictSubDirs;
 
     KDirLister * m_dirLister;
 

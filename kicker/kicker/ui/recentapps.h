@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __recentapps_h__
 #define __recentapps_h__
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 class RecentlyLaunchedApps;
 
@@ -37,7 +37,7 @@ public:
         m_lastLaunchTime = 0;
     }
 
-    RecentlyLaunchedAppInfo(const QString& desktopPath, int nLaunchCount, time_t lastLaunchTime)
+    RecentlyLaunchedAppInfo(const TQString& desktopPath, int nLaunchCount, time_t lastLaunchTime)
     {
         m_desktopPath = desktopPath;
         m_launchCount = nLaunchCount;
@@ -59,7 +59,7 @@ public:
                m_launchCount > rhs.m_launchCount;
     }
 
-    QString getDesktopPath() const { return m_desktopPath; }
+    TQString getDesktopPath() const { return m_desktopPath; }
     int getLaunchCount() const { return m_launchCount; };
     time_t getLastLaunchTime() const { return m_lastLaunchTime; };
     void increaseLaunchCount() { m_launchCount++; };
@@ -67,7 +67,7 @@ public:
     void setLastLaunchTime(time_t lastLaunch) { m_lastLaunchTime = lastLaunch; };
 
 private:
-    QString m_desktopPath;
+    TQString m_desktopPath;
     int m_launchCount;
     time_t m_lastLaunchTime;
 };
@@ -80,19 +80,19 @@ public:
     void configChanged();
     void save();
     void clearRecentApps();
-    void appLaunched(const QString & strApp);
-    void getRecentApps(QStringList & RecentApps);
-    void removeItem(const QString &strName);
-    QString caption() const;
+    void appLaunched(const TQString & strApp);
+    void getRecentApps(TQStringList & RecentApps);
+    void removeItem(const TQString &strName);
+    TQString caption() const;
 
     int m_nNumMenuItems;
     bool m_bNeedToUpdate;
 
 private:
-    QString launchDCOPSignalSource() { return "kmenu"; }
+    TQString launchDCOPSignalSource() { return "kmenu"; }
     RecentlyLaunchedApps();
 
-    QValueList<RecentlyLaunchedAppInfo> m_appInfos;
+    TQValueList<RecentlyLaunchedAppInfo> m_appInfos;
     bool m_bInitialised;
 };
 

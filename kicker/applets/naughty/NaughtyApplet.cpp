@@ -22,9 +22,9 @@
 #include "NaughtyProcessMonitor.h"
 #include "NaughtyConfigDialog.h"
 
-#include <qmessagebox.h>
-#include <qtoolbutton.h>
-#include <qlayout.h>
+#include <tqmessagebox.h>
+#include <tqtoolbutton.h>
+#include <tqlayout.h>
 
 #include <kiconloader.h>
 #include <kglobal.h>
@@ -34,11 +34,11 @@
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kmessagebox.h>
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 extern "C"
 {
-  KDE_EXPORT KPanelApplet*  init(QWidget * parent, const QString & configFile)
+  KDE_EXPORT KPanelApplet*  init(TQWidget * parent, const TQString & configFile)
   {
     KGlobal::locale()->insertCatalogue("naughtyapplet");
 
@@ -55,10 +55,10 @@ extern "C"
 
 NaughtyApplet::NaughtyApplet
 (
- const QString & configFile,
+ const TQString & configFile,
  Type t,
  int actions,
- QWidget * parent,
+ TQWidget * parent,
  const char * name
 )
   : KPanelApplet(configFile, t, actions, parent, name)
@@ -69,27 +69,27 @@ NaughtyApplet::NaughtyApplet
   button_ = new SimpleButton(this);
   button_->setFixedSize(20, 20);
 
-  QVBoxLayout * layout = new QVBoxLayout(this);
+  TQVBoxLayout * layout = new TQVBoxLayout(this);
   layout->addWidget(button_);
 
   monitor_ = new NaughtyProcessMonitor(2, 20, this);
 
   connect
     (
-     button_,   SIGNAL(clicked()),
-     this,      SLOT(slotPreferences())
+     button_,   TQT_SIGNAL(clicked()),
+     this,      TQT_SLOT(slotPreferences())
     );
 
   connect
     (
-     monitor_,  SIGNAL(runawayProcess(ulong, const QString &)),
-     this,      SLOT(slotWarn(ulong, const QString &))
+     monitor_,  TQT_SIGNAL(runawayProcess(ulong, const TQString &)),
+     this,      TQT_SLOT(slotWarn(ulong, const TQString &))
     );
 
   connect
     (
-     monitor_,  SIGNAL(load(uint)),
-     this,      SLOT(slotLoad(uint))
+     monitor_,  TQT_SIGNAL(load(uint)),
+     this,      TQT_SLOT(slotLoad(uint))
     );
 
   loadSettings();
@@ -103,17 +103,17 @@ NaughtyApplet::~NaughtyApplet()
 }
 
   void
-NaughtyApplet::slotWarn(ulong pid, const QString & name)
+NaughtyApplet::slotWarn(ulong pid, const TQString & name)
 {
   if (ignoreList_.contains(name))
     return;
 
-  QString s = i18n("A program called '%1' is slowing down the others "
+  TQString s = i18n("A program called '%1' is slowing down the others "
                    "on your machine. It may have a bug that is causing "
                    "this, or it may just be busy.\n"
                    "Would you like to try to stop the program?");
 
-  int retval = KMessageBox::warningYesNo(this, s.arg(name), QString::null, i18n("Stop"), i18n("Keep Running"));
+  int retval = KMessageBox::warningYesNo(this, s.arg(name), TQString::null, i18n("Stop"), i18n("Keep Running"));
 
   if (KMessageBox::Yes == retval)
     monitor_->kill(pid);
@@ -121,7 +121,7 @@ NaughtyApplet::slotWarn(ulong pid, const QString & name)
   {
     s = i18n("In future, should busy programs called '%1' be ignored?");
 
-    retval = KMessageBox::questionYesNo(this, s.arg(name), QString::null, i18n("Ignore"), i18n("Do Not Ignore"));
+    retval = KMessageBox::questionYesNo(this, s.arg(name), TQString::null, i18n("Ignore"), i18n("Do Not Ignore"));
 
     if (KMessageBox::Yes == retval)
     {
@@ -187,9 +187,9 @@ NaughtyApplet::preferences()
      this
     );
 
-  QDialog::DialogCode retval = QDialog::DialogCode(d.exec());
+  TQDialog::DialogCode retval = TQDialog::DialogCode(d.exec());
 
-  if (QDialog::Accepted == retval)
+  if (TQDialog::Accepted == retval)
   {
     ignoreList_ = d.ignoreList();
     monitor_->setInterval(d.updateInterval());

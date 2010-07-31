@@ -44,8 +44,8 @@ namespace {
 // #define DEBUG_EVENTS__
 
 #ifdef DEBUG_EVENTS__
-kdbgstream& operator<<( kdbgstream& stream,  const QKeyEvent& e ) {
-    stream << "(QKeyEvent(text=" << e.text() << ",key=" << e.key() << ( e.isAccepted()?",accepted":",ignored)" ) << ",count=" << e.count();
+kdbgstream& operator<<( kdbgstream& stream,  const TQKeyEvent& e ) {
+    stream << "(TQKeyEvent(text=" << e.text() << ",key=" << e.key() << ( e.isAccepted()?",accepted":",ignored)" ) << ",count=" << e.count();
     if ( e.state() & Qt::AltButton ) {
         stream << ",ALT";
     }
@@ -74,18 +74,18 @@ kdbgstream& operator<<( kdbgstream& stream,  const QKeyEvent& e ) {
  */
 class KLineEditBlackKey : public KLineEdit {
 public:
-    KLineEditBlackKey(const QString& string, QWidget* parent, const char* name )
+    KLineEditBlackKey(const TQString& string, TQWidget* parent, const char* name )
         : KLineEdit( string, parent, name )
         {}
 
-    KLineEditBlackKey( QWidget* parent, const char* name )
+    KLineEditBlackKey( TQWidget* parent, const char* name )
         : KLineEdit( parent, name )
         {}
 
     ~KLineEditBlackKey() {
     }
 protected:
-    virtual void keyPressEvent( QKeyEvent* e ) {
+    virtual void keyPressEvent( TQKeyEvent* e ) {
         KLineEdit::keyPressEvent( e );
         e->accept();
 
@@ -93,7 +93,7 @@ protected:
 
 };
 
-KlipperPopup::KlipperPopup( History* history, QWidget* parent, const char* name )
+KlipperPopup::KlipperPopup( History* history, TQWidget* parent, const char* name )
     : KPopupMenu( parent, name ),
       m_dirty( true ),
       QSempty( i18n( "<empty clipboard>" ) ),
@@ -106,14 +106,14 @@ KlipperPopup::KlipperPopup( History* history, QWidget* parent, const char* name 
       n_history_items( 0 )
 {
     KWin::WindowInfo i = KWin::windowInfo( winId(), NET::WMGeometry );
-    QRect g = i.geometry();
-    QRect screen = KGlobalSettings::desktopGeometry(g.center());
+    TQRect g = i.geometry();
+    TQRect screen = KGlobalSettings::desktopGeometry(g.center());
     int menu_height = ( screen.height() ) * 3/4;
     int menu_width = ( screen.width() )  * 1/3;
 
     m_popupProxy = new PopupProxy( this, "popup_proxy", menu_height, menu_width );
 
-    connect( this, SIGNAL( aboutToShow() ), SLOT( slotAboutToShow() ) );
+    connect( this, TQT_SIGNAL( aboutToShow() ), TQT_SLOT( slotAboutToShow() ) );
 }
 
 KlipperPopup::~KlipperPopup() {
@@ -146,15 +146,15 @@ void KlipperPopup::buildFromScratch() {
     m_filterWidget = new KLineEditBlackKey( this, "Klipper filter widget" );
     insertTitle( SmallIcon( "klipper" ), i18n("Klipper - Clipboard Tool"));
     m_filterWidgetId = insertItem( m_filterWidget, m_filterWidgetId, 1 );
-    m_filterWidget->setFocusPolicy( QWidget::NoFocus );
+    m_filterWidget->setFocusPolicy( TQWidget::NoFocus );
     setItemVisible( m_filterWidgetId,  false );
     m_filterWidget->hide();
-    QString lastGroup;
+    TQString lastGroup;
 
     // Bit of a hack here. It would be better of KHelpMenu could be an action.
     //    Insert Help-menu at the butttom of the "default" group.
-    QString group;
-    QString defaultGroup( "default" );
+    TQString group;
+    TQString defaultGroup( "default" );
     for ( KAction* action = m_actions.first(); action; action = m_actions.next() ) {
         group = action->group();
         if ( group != lastGroup ) {
@@ -173,7 +173,7 @@ void KlipperPopup::buildFromScratch() {
 
 }
 
-void KlipperPopup::rebuild( const QString& filter ) {
+void KlipperPopup::rebuild( const TQString& filter ) {
 
     bool from_scratch = ( count() == 0 );
     if ( from_scratch ) {
@@ -184,11 +184,11 @@ void KlipperPopup::rebuild( const QString& filter ) {
         }
     }
 
-    QRegExp filterexp( filter );
+    TQRegExp filterexp( filter );
     if ( filterexp.isValid() ) {
         m_filterWidget->setPaletteForegroundColor( paletteForegroundColor() );
     } else {
-        m_filterWidget->setPaletteForegroundColor( QColor( "red" ) );
+        m_filterWidget->setPaletteForegroundColor( TQColor( "red" ) );
     }
     n_history_items = m_popupProxy->buildParent( TOP_HISTORY_ITEM_INDEX, filterexp );
 
@@ -221,12 +221,12 @@ void KlipperPopup::plugAction( KAction* action ) {
 
 
 /* virtual */
-void KlipperPopup::keyPressEvent( QKeyEvent* e ) {
+void KlipperPopup::keyPressEvent( TQKeyEvent* e ) {
     // If alt-something is pressed, select a shortcut
     // from the menu. Do this by sending a keyPress
     // without the alt-modifier to the superobject.
     if ( e->state() & Qt::AltButton ) {
-        QKeyEvent ke( QEvent::KeyPress,
+        TQKeyEvent ke( TQEvent::KeyPress,
                       e->key(),
                       e->ascii(),
                       e->state() ^ Qt::AltButton,
@@ -273,8 +273,8 @@ void KlipperPopup::keyPressEvent( QKeyEvent* e ) {
 #ifdef DEBUG_EVENTS__
         kdDebug() << "Passing this event down to child (KLineEdit): " << e << endl;
 #endif
-	QString lastString = m_filterWidget->text();
-        QApplication::sendEvent( m_filterWidget, e );
+	TQString lastString = m_filterWidget->text();
+        TQApplication::sendEvent( m_filterWidget, e );
         if ( m_filterWidget->text().isEmpty() ) {
             if ( isItemVisible( m_filterWidgetId ) )
             {

@@ -17,7 +17,7 @@
 #include "windows.h"
 
 #include <assert.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -37,18 +37,18 @@ namespace KHotKeys
 
 // Windows
 
-Windows::Windows( bool enable_signal_P, QObject* parent_P )
-    : QObject( parent_P ), signals_enabled( enable_signal_P ),
+Windows::Windows( bool enable_signal_P, TQObject* parent_P )
+    : TQObject( parent_P ), signals_enabled( enable_signal_P ),
         kwin_module( new KWinModule( this )), _action_window( 0 )
     {
     assert( windows_handler == NULL );
     windows_handler = this;
     if( signals_enabled )
         {
-        connect( kwin_module, SIGNAL( windowAdded( WId )), SLOT( window_added_slot( WId )));
-        connect( kwin_module, SIGNAL( windowRemoved( WId )), SLOT( window_removed_slot( WId )));
-        connect( kwin_module, SIGNAL( activeWindowChanged( WId )),
-            SLOT( active_window_changed_slot( WId )));
+        connect( kwin_module, TQT_SIGNAL( windowAdded( WId )), TQT_SLOT( window_added_slot( WId )));
+        connect( kwin_module, TQT_SIGNAL( windowRemoved( WId )), TQT_SLOT( window_removed_slot( WId )));
+        connect( kwin_module, TQT_SIGNAL( activeWindowChanged( WId )),
+            TQT_SLOT( active_window_changed_slot( WId )));
         }
     }
 
@@ -91,18 +91,18 @@ void Windows::window_changed_slot( WId window_P, unsigned int flags_P )
         emit window_changed( window_P, flags_P );
     }
 
-QString Windows::get_window_role( WId id_P )
+TQString Windows::get_window_role( WId id_P )
     {
     // TODO this is probably just a hack
     return KWin::readNameProperty( id_P, qt_window_role );
     }
 
-QString Windows::get_window_class( WId id_P )
+TQString Windows::get_window_class( WId id_P )
     {
     XClassHint hints_ret;
     if( XGetClassHint( qt_xdisplay(), id_P, &hints_ret ) == 0 ) // 0 means error
 	return "";
-    QString ret( hints_ret.res_name );
+    TQString ret( hints_ret.res_name );
     ret += ' ';
     ret += hints_ret.res_class;
     XFree( hints_ret.res_name );
@@ -127,7 +127,7 @@ void Windows::set_action_window( WId window_P )
 
 WId Windows::find_window( const Windowdef_list* window_P )
     {
-    for( QValueList< WId >::ConstIterator it = kwin_module->windows().begin();
+    for( TQValueList< WId >::ConstIterator it = kwin_module->windows().begin();
          it != kwin_module->windows().end();
          ++it )
         {
@@ -214,7 +214,7 @@ Windowdef::Windowdef( KConfig& cfg_P )
 
 Windowdef* Windowdef::create_cfg_read( KConfig& cfg_P )
     {
-    QString type = cfg_P.readEntry( "Type" );
+    TQString type = cfg_P.readEntry( "Type" );
     if( type == "SIMPLE" )
         return new Windowdef_simple( cfg_P );
     kdWarning( 1217 ) << "Unknown Windowdef type read from cfg file\n";
@@ -224,17 +224,17 @@ Windowdef* Windowdef::create_cfg_read( KConfig& cfg_P )
 // Windowdef_list
 
 Windowdef_list::Windowdef_list( KConfig& cfg_P )
-    : QPtrList< Windowdef >()
+    : TQPtrList< Windowdef >()
     {
     setAutoDelete( true );
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     _comment = cfg_P.readEntry( "Comment" );
     int cnt = cfg_P.readNumEntry( "WindowsCount", 0 );
     for( int i = 0;
          i < cnt;
          ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         Windowdef* window = Windowdef::create_cfg_read( cfg_P );
         if( window )
             append( window );
@@ -244,13 +244,13 @@ Windowdef_list::Windowdef_list( KConfig& cfg_P )
 
 void Windowdef_list::cfg_write( KConfig& cfg_P ) const
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int i = 0;
     for( Iterator it( *this );
          it;
          ++it, ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         it.current()->cfg_write( cfg_P );
         }
     cfg_P.setGroup( save_cfg_group );
@@ -283,9 +283,9 @@ bool Windowdef_list::match( const Window_data& window_P ) const
 
 // Windowdef_simple
 
-Windowdef_simple::Windowdef_simple( const QString& comment_P, const QString& title_P,
-    substr_type_t title_type_P, const QString& wclass_P, substr_type_t wclass_type_P,
-    const QString& role_P, substr_type_t role_type_P, int window_types_P )
+Windowdef_simple::Windowdef_simple( const TQString& comment_P, const TQString& title_P,
+    substr_type_t title_type_P, const TQString& wclass_P, substr_type_t wclass_type_P,
+    const TQString& role_P, substr_type_t role_type_P, int window_types_P )
     : Windowdef( comment_P ), _title( title_P ), title_type( title_type_P ),
     _wclass( wclass_P ), wclass_type( wclass_type_P ), _role( role_P ),
     role_type( role_type_P ), _window_types( window_types_P )
@@ -331,7 +331,7 @@ bool Windowdef_simple::match( const Window_data& window_P )
     return true;
     }
 
-bool Windowdef_simple::is_substr_match( const QString& str1_P, const QString& str2_P,
+bool Windowdef_simple::is_substr_match( const TQString& str1_P, const TQString& str2_P,
     substr_type_t type_P )
     {
     switch( type_P )
@@ -344,7 +344,7 @@ bool Windowdef_simple::is_substr_match( const QString& str1_P, const QString& st
           return str1_P == str2_P;
         case REGEXP :
             {
-            QRegExp rg( str2_P );
+            TQRegExp rg( str2_P );
           return rg.search( str1_P ) >= 0;
             }
         case CONTAINS_NOT :
@@ -353,7 +353,7 @@ bool Windowdef_simple::is_substr_match( const QString& str1_P, const QString& st
           return str1_P != str2_P;
         case REGEXP_NOT :
             {
-            QRegExp rg( str2_P );
+            TQRegExp rg( str2_P );
           return rg.search( str1_P ) < 0;
             }
         }
@@ -366,7 +366,7 @@ Windowdef* Windowdef_simple::copy() const
         wclass_match_type(), role(), role_match_type(), window_types());
     }
 
-const QString Windowdef_simple::description() const
+const TQString Windowdef_simple::description() const
     {
     return i18n( "Window simple: " ) + comment();
     }

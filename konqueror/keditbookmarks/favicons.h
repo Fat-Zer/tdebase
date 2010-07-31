@@ -34,13 +34,13 @@ public:
    static FavIconsItrHolder* self() { 
       if (!s_self) { s_self = new FavIconsItrHolder(); }; return s_self; 
    }
-   void addAffectedBookmark( const QString & address );
+   void addAffectedBookmark( const TQString & address );
 protected:
    virtual void doItrListChanged();
 private:
    FavIconsItrHolder();
    static FavIconsItrHolder *s_self;
-   QString m_affectedBookmark;
+   TQString m_affectedBookmark;
 };
 
 class FavIconUpdater;
@@ -50,7 +50,7 @@ class FavIconsItr : public BookmarkIterator
    Q_OBJECT
 
 public:
-   FavIconsItr(QValueList<KBookmark> bks);
+   FavIconsItr(TQValueList<KBookmark> bks);
    ~FavIconsItr();
    virtual FavIconsItrHolder* holder() const { return FavIconsItrHolder::self(); }
 

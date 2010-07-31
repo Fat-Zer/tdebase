@@ -24,14 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __containerarealayout_h__
 #define __containerarealayout_h__
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 class ContainerAreaLayout;
 
 class ContainerAreaLayoutItem : public Qt
 {
     public:
-        ContainerAreaLayoutItem(QLayoutItem* i, ContainerAreaLayout* layout)
+        ContainerAreaLayoutItem(TQLayoutItem* i, ContainerAreaLayout* layout)
             : item(i),
               m_freeSpaceRatio(0.0),
               m_layout(layout)
@@ -45,9 +45,9 @@ class ContainerAreaLayoutItem : public Qt
 
         bool isStretch() const;
 
-        QRect geometry() const
+        TQRect geometry() const
         { return item->geometry(); }
-        void setGeometry(const QRect& geometry)
+        void setGeometry(const TQRect& geometry)
         { item->setGeometry(geometry); }
 
         double freeSpaceRatio() const;
@@ -56,15 +56,15 @@ class ContainerAreaLayoutItem : public Qt
         Orientation orientation() const;
 
         // Relative geometry
-        QRect geometryR() const;
-        void setGeometryR(const QRect&);
+        TQRect geometryR() const;
+        void setGeometryR(const TQRect&);
         int widthForHeightR(int w) const;
         int widthR() const;
         int heightR() const;
         int leftR() const;
         int rightR() const;
 
-        QLayoutItem* item;
+        TQLayoutItem* item;
 
     private:
         double m_freeSpaceRatio;
@@ -75,18 +75,18 @@ class ContainerAreaLayout : public QLayout
 {
     public:
         typedef ContainerAreaLayoutItem Item;
-        typedef QValueList<Item*> ItemList;
+        typedef TQValueList<Item*> ItemList;
 
-        ContainerAreaLayout(QWidget* parent);
+        ContainerAreaLayout(TQWidget* parent);
 
-        void addItem(QLayoutItem* item);
-        void insertIntoFreeSpace(QWidget* item, QPoint insertionPoint);
-        QStringList listItems() const;
-        QWidget* widgetAt(int index) const;
-        QSize sizeHint() const;
-        QSize minimumSize() const;
-        QLayoutIterator iterator();
-        void setGeometry(const QRect& rect);
+        void addItem(TQLayoutItem* item);
+        void insertIntoFreeSpace(TQWidget* item, TQPoint insertionPoint);
+        TQStringList listItems() const;
+        TQWidget* widgetAt(int index) const;
+        TQSize sizeHint() const;
+        TQSize minimumSize() const;
+        TQLayoutIterator iterator();
+        void setGeometry(const TQRect& rect);
 
         Orientation orientation() const { return m_orientation; }
         void setOrientation(Orientation o) { m_orientation = o; }
@@ -97,11 +97,11 @@ class ContainerAreaLayout : public QLayout
 
         void setStretchEnabled(bool enable);
 
-        void moveContainerSwitch(QWidget* container, int distance);
-        int moveContainerPush(QWidget* container, int distance);
+        void moveContainerSwitch(TQWidget* container, int distance);
+        int moveContainerPush(TQWidget* container, int distance);
 
         // Relative geometry
-        QRect transform(const QRect&) const;
+        TQRect transform(const TQRect&) const;
         int widthForHeightR(int w) const;
         int widthR() const;
         int heightR() const;

@@ -15,8 +15,8 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qlayout.h>
-#include <qtimer.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -28,10 +28,10 @@
 #include "positionconfig.h"
 #include "positionconfig.moc"
 
-PositionConfig::PositionConfig(QWidget *parent, const char *name)
+PositionConfig::PositionConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(this);
     m_widget = new PositionTab(this);
     layout->addWidget(m_widget);
     layout->addStretch();
@@ -41,13 +41,13 @@ PositionConfig::PositionConfig(QWidget *parent, const char *name)
 
     //addConfig(KickerSettings::self(), m_widget);
 
-    connect(m_widget, SIGNAL(changed()),
-            this, SLOT(changed()));
-    connect(KickerConfig::the(), SIGNAL(aboutToNotifyKicker()),
-            this, SLOT(aboutToNotifyKicker()));
+    connect(m_widget, TQT_SIGNAL(changed()),
+            this, TQT_SLOT(changed()));
+    connect(KickerConfig::the(), TQT_SIGNAL(aboutToNotifyKicker()),
+            this, TQT_SLOT(aboutToNotifyKicker()));
 
     load();
-    QTimer::singleShot(0, this, SLOT(notChanged()));
+    TQTimer::singleShot(0, this, TQT_SLOT(notChanged()));
 }
 
 void PositionConfig::notChanged()
@@ -90,5 +90,5 @@ void PositionConfig::defaults()
     // KConfigDialogManager may queue an changed(false) signal,
     // so we make sure, that the module is labeled as changed,
     // while we manage some of the widgets ourselves
-    QTimer::singleShot(0, this, SLOT(changed()));
+    TQTimer::singleShot(0, this, TQT_SLOT(changed()));
 }

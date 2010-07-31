@@ -39,7 +39,7 @@ class ButtonContainer : public BaseContainer
     Q_OBJECT
 
 public:
-    ButtonContainer(QPopupMenu* opMenu, QWidget* parent = 0);
+    ButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
 
     virtual bool isValid() const;
     virtual bool isAMenu() const { return false; }
@@ -51,7 +51,7 @@ public:
 
     virtual void configure();
 
-    bool eventFilter (QObject *, QEvent *);
+    bool eventFilter (TQObject *, TQEvent *);
     virtual void completeMoveOperation();
 
     PanelButton* button() const { return _button; }
@@ -64,29 +64,29 @@ protected slots:
     void slotMenuClosed();
     void removeRequested();
     void hideRequested(bool);
-    void dragButton(const KURL::List urls, const QPixmap icon);
-    void dragButton(const QPixmap icon);
+    void dragButton(const KURL::List urls, const TQPixmap icon);
+    void dragButton(const TQPixmap icon);
 
 protected:
     virtual void doSaveConfiguration( KConfigGroup&, bool layoutOnly ) const;
     void embedButton(PanelButton* p);
-    QPopupMenu* createOpMenu();
+    TQPopupMenu* createOpMenu();
     void checkImmutability(const KConfigGroup&);
 
 protected:
     PanelButton  *_button;
-    QLayout      *_layout;
-    QPoint        _oldpos;
+    TQLayout      *_layout;
+    TQPoint        _oldpos;
 };
 
 class KMenuButtonContainer : public ButtonContainer
 {
 public:
-    KMenuButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    KMenuButtonContainer(QPopupMenu* opMenu, QWidget* parent = 0);
-    virtual QString appletType() const { return "KMenuButton"; }
-    virtual QString icon() const { return "kmenu"; }
-    virtual QString visibleName() const { return i18n("K Menu"); }
+    KMenuButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    KMenuButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
+    virtual TQString appletType() const { return "KMenuButton"; }
+    virtual TQString icon() const { return "kmenu"; }
+    virtual TQString visibleName() const { return i18n("K Menu"); }
 
     virtual int heightForWidth( int width )  const;
     bool isAMenu() const { return true; }
@@ -95,99 +95,99 @@ public:
 class DesktopButtonContainer : public ButtonContainer
 {
 public:
-    DesktopButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    DesktopButtonContainer(QPopupMenu* opMenu, QWidget* parent = 0);
-    QString appletType() const { return "DesktopButton"; }
-    virtual QString icon() const { return "desktop"; }
-    virtual QString visibleName() const { return i18n("Desktop Access"); }
+    DesktopButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    DesktopButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
+    TQString appletType() const { return "DesktopButton"; }
+    virtual TQString icon() const { return "desktop"; }
+    virtual TQString visibleName() const { return i18n("Desktop Access"); }
 };
 
 class ServiceButtonContainer : public ButtonContainer
 {
 public:
-    ServiceButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    ServiceButtonContainer(const KService::Ptr & service,  QPopupMenu* opMenu,QWidget* parent = 0);
-    ServiceButtonContainer(const QString& desktopFile,  QPopupMenu* opMenu,QWidget* parent = 0);
-    QString appletType() const { return "ServiceButton"; }
-    virtual QString icon() const;
-    virtual QString visibleName() const;
+    ServiceButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    ServiceButtonContainer(const KService::Ptr & service,  TQPopupMenu* opMenu,TQWidget* parent = 0);
+    ServiceButtonContainer(const TQString& desktopFile,  TQPopupMenu* opMenu,TQWidget* parent = 0);
+    TQString appletType() const { return "ServiceButton"; }
+    virtual TQString icon() const;
+    virtual TQString visibleName() const;
 };
 
 class URLButtonContainer : public ButtonContainer
 {
 public:
-    URLButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    URLButtonContainer(const QString& url, QPopupMenu* opMenu, QWidget* parent = 0);
-    QString appletType() const { return "URLButton"; }
-    virtual QString icon() const;
-    virtual QString visibleName() const;
+    URLButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    URLButtonContainer(const TQString& url, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    TQString appletType() const { return "URLButton"; }
+    virtual TQString icon() const;
+    virtual TQString visibleName() const;
 };
 
 class BrowserButtonContainer : public ButtonContainer
 {
 public:
-    BrowserButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    BrowserButtonContainer(const QString& startDir, QPopupMenu* opMenu, const QString& icon = "kdisknav", QWidget* parent = 0);
-    QString appletType() const { return "BrowserButton"; }
-    virtual QString icon() const { return "kdisknav"; }
-    virtual QString visibleName() const { return i18n("Quick Browser"); }
+    BrowserButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    BrowserButtonContainer(const TQString& startDir, TQPopupMenu* opMenu, const TQString& icon = "kdisknav", TQWidget* parent = 0);
+    TQString appletType() const { return "BrowserButton"; }
+    virtual TQString icon() const { return "kdisknav"; }
+    virtual TQString visibleName() const { return i18n("Quick Browser"); }
     bool isAMenu() const { return true; }
 };
 
 class ServiceMenuButtonContainer : public ButtonContainer
 {
 public:
-    ServiceMenuButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    ServiceMenuButtonContainer(const QString& relPath, QPopupMenu* opMenu, QWidget* parent = 0);
-    QString appletType() const { return "ServiceMenuButton"; }
-    virtual QString icon() const;
-    virtual QString visibleName() const;
+    ServiceMenuButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    ServiceMenuButtonContainer(const TQString& relPath, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    TQString appletType() const { return "ServiceMenuButton"; }
+    virtual TQString icon() const;
+    virtual TQString visibleName() const;
     bool isAMenu() const { return true; }
 };
 
 class WindowListButtonContainer : public ButtonContainer
 {
 public:
-    WindowListButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    WindowListButtonContainer(QPopupMenu* opMenu, QWidget* parent = 0);
-    QString appletType() const { return "WindowListButton"; }
-    virtual QString icon() const { return "window_list"; }
-    virtual QString visibleName() const { return i18n("Windowlist"); }
+    WindowListButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    WindowListButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
+    TQString appletType() const { return "WindowListButton"; }
+    virtual TQString icon() const { return "window_list"; }
+    virtual TQString visibleName() const { return i18n("Windowlist"); }
     bool isAMenu() const { return true; }
 };
 
 class BookmarksButtonContainer : public ButtonContainer
 {
 public:
-    BookmarksButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget* parent = 0);
-    BookmarksButtonContainer(QPopupMenu* opMenu, QWidget* parent = 0);
-    QString appletType() const { return "BookmarksButton"; }
-    virtual QString icon() const { return "bookmark"; }
-    virtual QString visibleName() const { return i18n("Bookmarks"); }
+    BookmarksButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    BookmarksButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
+    TQString appletType() const { return "BookmarksButton"; }
+    virtual TQString icon() const { return "bookmark"; }
+    virtual TQString visibleName() const { return i18n("Bookmarks"); }
     bool isAMenu() const { return true; }
 };
 
 class NonKDEAppButtonContainer : public ButtonContainer
 {
 public:
-    NonKDEAppButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget *parent=0);
-    NonKDEAppButtonContainer(const QString &name, const QString &description,
-                             const QString &filePath, const QString &icon,
-                             const QString &cmdLine, bool inTerm,
-                             QPopupMenu* opMenu, QWidget* parent = 0);
-    QString appletType() const { return "ExecButton"; }
-    virtual QString icon() const { return "exec"; }
-    virtual QString visibleName() const { return i18n("Non-KDE Application"); }
+    NonKDEAppButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent=0);
+    NonKDEAppButtonContainer(const TQString &name, const TQString &description,
+                             const TQString &filePath, const TQString &icon,
+                             const TQString &cmdLine, bool inTerm,
+                             TQPopupMenu* opMenu, TQWidget* parent = 0);
+    TQString appletType() const { return "ExecButton"; }
+    virtual TQString icon() const { return "exec"; }
+    virtual TQString visibleName() const { return i18n("Non-KDE Application"); }
 };
 
 class ExtensionButtonContainer : public ButtonContainer
 {
 public:
-    ExtensionButtonContainer(const KConfigGroup& config, QPopupMenu* opMenu, QWidget *parent=0);
-    ExtensionButtonContainer(const QString& desktopFile, QPopupMenu* opMenu, QWidget *parent= 0);
-    QString appletType() const { return "ExtensionButton"; }
-    virtual QString icon() const;
-    virtual QString visibleName() const;
+    ExtensionButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent=0);
+    ExtensionButtonContainer(const TQString& desktopFile, TQPopupMenu* opMenu, TQWidget *parent= 0);
+    TQString appletType() const { return "ExtensionButton"; }
+    virtual TQString icon() const;
+    virtual TQString visibleName() const;
     bool isAMenu() const { return true; }
 };
 

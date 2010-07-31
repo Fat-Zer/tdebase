@@ -16,11 +16,11 @@
 
 #include "command_url_widget.h"
 
-#include <qpushbutton.h>
-#include <qlineedit.h>
+#include <tqpushbutton.h>
+#include <tqlineedit.h>
 #include <klineedit.h>
-#include <qcheckbox.h>
-#include <qgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
 #include <kurlrequester.h>
 
 #include <actions.h>
@@ -32,13 +32,13 @@
 namespace KHotKeys
 {
 
-Command_url_widget::Command_url_widget( QWidget* parent_P, const char* name_P )
+Command_url_widget::Command_url_widget( TQWidget* parent_P, const char* name_P )
     : Command_url_widget_ui( parent_P, name_P )
     {
     clear_data();
     // KHotKeys::Module::changed()
-    connect( command_url_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( command_url_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
 
 void Command_url_widget::clear_data()

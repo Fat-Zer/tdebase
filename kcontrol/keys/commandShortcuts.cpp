@@ -21,11 +21,11 @@
 #include "commandShortcuts.h"
 #include "treeview.h"
 
-#include <qbuttongroup.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
 
 #include <kactivelabel.h>
 #include <kapplication.h>
@@ -36,8 +36,8 @@
 #include <klocale.h>
 
 static bool treeFilled = false;
-CommandShortcutsModule::CommandShortcutsModule( QWidget *parent, const char *name )
-: QWidget( parent, name )
+CommandShortcutsModule::CommandShortcutsModule( TQWidget *parent, const char *name )
+: TQWidget( parent, name )
 {
     treeFilled = false;
     initGUI();
@@ -68,7 +68,7 @@ void CommandShortcutsModule::defaults()
     m_tree->fill();
 }
 
-QString CommandShortcutsModule::quickHelp() const
+TQString CommandShortcutsModule::quickHelp() const
 {
   return i18n("<h1>Command Shortcuts</h1> Using key bindings you can configure applications "
     "and commands to be triggered when you press a key or a combination of keys.");
@@ -76,62 +76,62 @@ QString CommandShortcutsModule::quickHelp() const
 
 void CommandShortcutsModule::initGUI()
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this, KDialog::marginHint());
+    TQVBoxLayout* mainLayout = new TQVBoxLayout(this, KDialog::marginHint());
     mainLayout->addSpacing( KDialog::marginHint() );
 
     KActiveLabel* label = new KActiveLabel(this);
     label->setText(i18n("<qt>Below is a list of known commands which you may assign keyboard shortcuts to. "
                         "To edit, add or remove entries from this list use the "
                         "<a href=\"launchMenuEditor\">KDE menu editor</a>.</qt>"));
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    disconnect(label, SIGNAL(linkClicked(const QString &)), label, SLOT(openLink(const QString &)));
-    connect(label, SIGNAL(linkClicked(const QString &)), this, SLOT(launchMenuEditor()));
+    label->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Minimum);
+    disconnect(label, TQT_SIGNAL(linkClicked(const TQString &)), label, TQT_SLOT(openLink(const TQString &)));
+    connect(label, TQT_SIGNAL(linkClicked(const TQString &)), this, TQT_SLOT(launchMenuEditor()));
     mainLayout->addWidget(label);
 
     m_tree = new AppTreeView(this, "appTreeView");
-    m_tree->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    m_tree->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
     mainLayout->setStretchFactor(m_tree, 10);
     mainLayout->addWidget(m_tree);
-    QWhatsThis::add(m_tree,
+    TQWhatsThis::add(m_tree,
                     i18n("This is a list of all the desktop applications and commands "
                          "currently defined on this system. Click to select a command to "
                          "assign a keyboard shortcut to. Complete management of these "
                          "entries can be done via the menu editor program."));
-    connect(m_tree, SIGNAL(entrySelected(const QString&, const QString &, bool)),
-            this, SLOT(commandSelected(const QString&, const QString &, bool)));
-    connect(m_tree, SIGNAL(doubleClicked(QListViewItem *, const QPoint &, int)),
-            this, SLOT(commandDoubleClicked(QListViewItem *, const QPoint &, int)));
-    m_shortcutBox = new QButtonGroup(i18n("Shortcut for Selected Command"), this);
+    connect(m_tree, TQT_SIGNAL(entrySelected(const TQString&, const TQString &, bool)),
+            this, TQT_SLOT(commandSelected(const TQString&, const TQString &, bool)));
+    connect(m_tree, TQT_SIGNAL(doubleClicked(TQListViewItem *, const TQPoint &, int)),
+            this, TQT_SLOT(commandDoubleClicked(TQListViewItem *, const TQPoint &, int)));
+    m_shortcutBox = new TQButtonGroup(i18n("Shortcut for Selected Command"), this);
     mainLayout->addWidget(m_shortcutBox);
-    QHBoxLayout* buttonLayout = new QHBoxLayout(m_shortcutBox, KDialog::marginHint() * 2);
+    TQHBoxLayout* buttonLayout = new TQHBoxLayout(m_shortcutBox, KDialog::marginHint() * 2);
     buttonLayout->addSpacing( KDialog::marginHint() );
 
-    m_noneRadio = new QRadioButton(i18n("no key", "&None"), m_shortcutBox);
-    QWhatsThis::add(m_noneRadio, i18n("The selected command will not be associated with any key."));
+    m_noneRadio = new TQRadioButton(i18n("no key", "&None"), m_shortcutBox);
+    TQWhatsThis::add(m_noneRadio, i18n("The selected command will not be associated with any key."));
     buttonLayout->addWidget(m_noneRadio);
-    m_customRadio = new QRadioButton(i18n("C&ustom"), m_shortcutBox);
-    QWhatsThis::add(m_customRadio,
+    m_customRadio = new TQRadioButton(i18n("C&ustom"), m_shortcutBox);
+    TQWhatsThis::add(m_customRadio,
                     i18n("If this option is selected you can create a customized key binding for the"
                          " selected command using the button to the right.") );
     buttonLayout->addWidget(m_customRadio);
     m_shortcutButton = new KKeyButton(m_shortcutBox);
-    QWhatsThis::add(m_shortcutButton,
+    TQWhatsThis::add(m_shortcutButton,
                     i18n("Use this button to choose a new shortcut key. Once you click it, "
                          "you can press the key-combination which you would like to be assigned "
                          "to the currently selected command."));
     buttonLayout->addSpacing(KDialog::spacingHint() * 2);
     buttonLayout->addWidget(m_shortcutButton);
-    connect(m_shortcutButton, SIGNAL(capturedShortcut(const KShortcut&)),
-            this, SLOT(shortcutChanged(const KShortcut&)));
-    connect(m_customRadio, SIGNAL(toggled(bool)), m_shortcutButton, SLOT(setEnabled(bool)));
-    connect(m_noneRadio, SIGNAL(toggled(bool)), this, SLOT(shortcutRadioToggled(bool)));
+    connect(m_shortcutButton, TQT_SIGNAL(capturedShortcut(const KShortcut&)),
+            this, TQT_SLOT(shortcutChanged(const KShortcut&)));
+    connect(m_customRadio, TQT_SIGNAL(toggled(bool)), m_shortcutButton, TQT_SLOT(setEnabled(bool)));
+    connect(m_noneRadio, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(shortcutRadioToggled(bool)));
     buttonLayout->addStretch(1);
 }
 
 void CommandShortcutsModule::launchMenuEditor()
 {
     if ( KApplication::startServiceByDesktopName( "kmenuedit",
-                                                  QString::null /*url*/,
+                                                  TQString::null /*url*/,
                                                   0 /*error*/,
                                                   0 /*dcopservice*/,
                                                   0 /*pid*/,
@@ -156,8 +156,8 @@ void CommandShortcutsModule::shortcutRadioToggled(bool remove)
 
     if (remove)
     {
-        m_shortcutButton->setShortcut(QString::null, false);
-        item->setAccel(QString::null);
+        m_shortcutButton->setShortcut(TQString::null, false);
+        item->setAccel(TQString::null);
         if (m_changedItems.findRef(item) == -1)
         {
             m_changedItems.append(item);
@@ -178,7 +178,7 @@ void CommandShortcutsModule::shortcutChanged(const KShortcut& shortcut)
         return;
     }
 
-    QString accel = shortcut.toString();
+    TQString accel = shortcut.toString();
     bool hasAccel = !accel.isEmpty();
     m_noneRadio->blockSignals(true);
     m_noneRadio->setChecked(!hasAccel);
@@ -194,7 +194,7 @@ void CommandShortcutsModule::shortcutChanged(const KShortcut& shortcut)
     emit changed( true );
 }
 
-void CommandShortcutsModule::showing(QWidget* w)
+void CommandShortcutsModule::showing(TQWidget* w)
 {
     if (w != this || treeFilled)
     {
@@ -213,7 +213,7 @@ void CommandShortcutsModule::showing(QWidget* w)
     treeFilled = true;
 }
 
-void CommandShortcutsModule::commandSelected(const QString& /* path */, const QString & accel, bool isDirectory)
+void CommandShortcutsModule::commandSelected(const TQString& /* path */, const TQString & accel, bool isDirectory)
 {
     m_noneRadio->blockSignals(true);
     m_shortcutBox->setEnabled(!isDirectory);
@@ -227,7 +227,7 @@ void CommandShortcutsModule::commandSelected(const QString& /* path */, const QS
     m_noneRadio->blockSignals(false);
 }
 
-void CommandShortcutsModule::commandDoubleClicked(QListViewItem *item, const QPoint &, int)
+void CommandShortcutsModule::commandDoubleClicked(TQListViewItem *item, const TQPoint &, int)
 {
     if (!item)
     {

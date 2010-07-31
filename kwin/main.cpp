@@ -101,7 +101,7 @@ Application::Application( )
         fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
         ::exit(1);
         }
-    connect( &owner, SIGNAL( lostOwnership()), SLOT( lostSelection()));
+    connect( &owner, TQT_SIGNAL( lostOwnership()), TQT_SLOT( lostSelection()));
     
     // if there was already kwin running, it saved its configuration after loosing the selection -> reread
     config()->reparseConfiguration();
@@ -124,11 +124,11 @@ Application::Application( )
     syncX(); // trigger possible errors, there's still a chance to abort
 
     DCOPRef ref( "kded", "kded" );
-    ref.send( "unloadModule", QCString( "kdetrayproxy" ));
+    ref.send( "unloadModule", TQCString( "kdetrayproxy" ));
     
     initting = FALSE; // startup done, we are up and running now.
        
-    dcopClient()->send( "ksplash", "", "upAndRunning(QString)", QString("wm started"));
+    dcopClient()->send( "ksplash", "", "upAndRunning(TQString)", TQString("wm started"));
     XEvent e;
     e.xclient.type = ClientMessage;
     e.xclient.message_type = XInternAtom( qt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
@@ -146,7 +146,7 @@ Application::~Application()
         {
         XSetInputFocus( qt_xdisplay(), PointerRoot, RevertToPointerRoot, qt_x_time );
         DCOPRef ref( "kded", "kded" );
-        if( !ref.send( "loadModule", QCString( "kdetrayproxy" )))
+        if( !ref.send( "loadModule", TQCString( "kdetrayproxy" )))
             kdWarning( 176 ) << "Loading of kdetrayproxy failed." << endl;
         }
     delete options;
@@ -158,7 +158,7 @@ void Application::lostSelection()
     // remove windowmanager privileges
     XSelectInput(qt_xdisplay(), qt_xrootwin(), PropertyChangeMask );
     DCOPRef ref( "kded", "kded" );
-    if( !ref.send( "loadModule", QCString( "kdetrayproxy" )))
+    if( !ref.send( "loadModule", TQCString( "kdetrayproxy" )))
         kdWarning( 176 ) << "Loading of kdetrayproxy failed." << endl;
     quit();
     }
@@ -172,7 +172,7 @@ bool Application::x11EventFilter( XEvent *e )
     
 static void sighandler(int) 
     {
-    QApplication::exit();
+    TQApplication::exit();
     }
 
 
@@ -206,7 +206,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
         // we only do the multihead fork if we are not restored by the session
 	// manager, since the session manager will register multiple kwins,
         // one for each screen...
-        QCString multiHead = getenv("KDE_MULTIHEAD");
+        TQCString multiHead = getenv("KDE_MULTIHEAD");
         if (multiHead.lower() == "true") 
             {
 
@@ -221,14 +221,14 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
             int number_of_screens = ScreenCount( dpy );
             KWinInternal::screen_number = DefaultScreen( dpy );
             int pos; // temporarily needed to reconstruct DISPLAY var if multi-head
-            QCString display_name = XDisplayString( dpy );
+            TQCString display_name = XDisplayString( dpy );
             XCloseDisplay( dpy );
             dpy = 0;
 
             if ((pos = display_name.findRev('.')) != -1 )
                 display_name.remove(pos,10); // 10 is enough to be sure we removed ".s"
 
-            QCString envir;
+            TQCString envir;
             if (number_of_screens != 1) 
                 {
                 for (int i = 0; i < number_of_screens; i++ ) 
@@ -285,7 +285,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
 
     fcntl(ConnectionNumber(qt_xdisplay()), F_SETFD, 1);
 
-    QCString appname;
+    TQCString appname;
     if (KWinInternal::screen_number == 0)
         appname = "kwin";
     else

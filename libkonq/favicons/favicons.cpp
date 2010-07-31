@@ -20,11 +20,11 @@
 #include <string.h>
 #include <time.h>
 
-#include <qbuffer.h>
-#include <qfile.h>
-#include <qcache.h>
-#include <qimage.h>
-#include <qtimer.h>
+#include <tqbuffer.h>
+#include <tqfile.h>
+#include <tqcache.h>
+#include <tqimage.h>
+#include <tqtimer.h>
 
 #include <kdatastream.h> // DO NOT REMOVE, otherwise bool marshalling breaks
 #include <kicontheme.h>
@@ -41,20 +41,20 @@ struct FaviconsModulePrivate
 
     struct DownloadInfo
     {
-        QString hostOrURL;
+        TQString hostOrURL;
         bool isHost;
-        QByteArray iconData;
+        TQByteArray iconData;
     };
-    QMap<KIO::Job *, DownloadInfo> downloads;
-    QStringList failedDownloads;
+    TQMap<KIO::Job *, DownloadInfo> downloads;
+    TQStringList failedDownloads;
     KSimpleConfig *config;
-    QPtrList<KIO::Job> killJobs;
+    TQPtrList<KIO::Job> killJobs;
     KIO::MetaData metaData;
-    QString faviconsDir;
-    QCache<QString> faviconsCache;
+    TQString faviconsDir;
+    TQCache<TQString> faviconsCache;
 };
 
-FaviconsModule::FaviconsModule(const QCString &obj)
+FaviconsModule::FaviconsModule(const TQCString &obj)
     : KDEDModule(obj)
 {
     // create our favicons folder so that KIconLoader knows about it
@@ -76,7 +76,7 @@ FaviconsModule::~FaviconsModule()
     delete d;
 }
 
-QString removeSlash(QString result) 
+TQString removeSlash(TQString result) 
 {
     for (unsigned int i = result.length() - 1; i > 0; --i)
         if (result[i] != '/')
@@ -89,15 +89,15 @@ QString removeSlash(QString result)
 }
 
 
-QString FaviconsModule::iconForURL(const KURL &url)
+TQString FaviconsModule::iconForURL(const KURL &url)
 {
     if (url.host().isEmpty())
-        return QString::null;
+        return TQString::null;
 
-    QString icon;
-    QString simplifiedURL = simplifyURL(url);
+    TQString icon;
+    TQString simplifiedURL = simplifyURL(url);
 
-    QString *iconURL = d->faviconsCache.find( removeSlash(simplifiedURL) );
+    TQString *iconURL = d->faviconsCache.find( removeSlash(simplifiedURL) );
     if (iconURL)
         icon = *iconURL;
     else
@@ -110,44 +110,44 @@ QString FaviconsModule::iconForURL(const KURL &url)
         
     icon = "favicons/" + icon;
 
-    if (QFile::exists(d->faviconsDir+icon+".png"))
+    if (TQFile::exists(d->faviconsDir+icon+".png"))
         return icon;
 
-    return QString::null;
+    return TQString::null;
 }
 
-QString FaviconsModule::simplifyURL(const KURL &url)
+TQString FaviconsModule::simplifyURL(const KURL &url)
 {
     // splat any = in the URL so it can be safely used as a config key
-    QString result = url.host() + url.path();
+    TQString result = url.host() + url.path();
     for (unsigned int i = 0; i < result.length(); ++i)
         if (result[i] == '=')
             result[i] = '_';
     return result;
 }
 
-QString FaviconsModule::iconNameFromURL(const KURL &iconURL)
+TQString FaviconsModule::iconNameFromURL(const KURL &iconURL)
 {
     if (iconURL.path() == "/favicon.ico")
        return iconURL.host();
 
-    QString result = simplifyURL(iconURL);
+    TQString result = simplifyURL(iconURL);
     // splat / so it can be safely used as a file name
     for (unsigned int i = 0; i < result.length(); ++i)
         if (result[i] == '/')
             result[i] = '_';
 
-    QString ext = result.right(4);
+    TQString ext = result.right(4);
     if (ext == ".ico" || ext == ".png" || ext == ".xpm")
         result.remove(result.length() - 4, 4);
 
     return result;
 }
 
-bool FaviconsModule::isIconOld(const QString &icon)
+bool FaviconsModule::isIconOld(const TQString &icon)
 {
     struct stat st;
-    if (stat(QFile::encodeName(icon), &st) != 0)
+    if (stat(TQFile::encodeName(icon), &st) != 0)
         return true; // Trigger a new download on error
 
     return (time(0) - st.st_mtime) > 604800; // arbitrary value (one week)
@@ -155,12 +155,12 @@ bool FaviconsModule::isIconOld(const QString &icon)
 
 void FaviconsModule::setIconForURL(const KURL &url, const KURL &iconURL)
 {
-    QString simplifiedURL = simplifyURL(url);
+    TQString simplifiedURL = simplifyURL(url);
 
-    d->faviconsCache.insert(removeSlash(simplifiedURL), new QString(iconURL.url()) );
+    d->faviconsCache.insert(removeSlash(simplifiedURL), new TQString(iconURL.url()) );
 
-    QString iconName = "favicons/" + iconNameFromURL(iconURL);
-    QString iconFile = d->faviconsDir + iconName + ".png";
+    TQString iconName = "favicons/" + iconNameFromURL(iconURL);
+    TQString iconFile = d->faviconsDir + iconName + ".png";
 
     if (!isIconOld(iconFile)) {
         emit iconChanged(false, simplifiedURL, iconName);
@@ -172,37 +172,37 @@ void FaviconsModule::setIconForURL(const KURL &url, const KURL &iconURL)
 
 void FaviconsModule::downloadHostIcon(const KURL &url)
 {
-    QString iconFile = d->faviconsDir + "favicons/" + url.host() + ".png";
+    TQString iconFile = d->faviconsDir + "favicons/" + url.host() + ".png";
     if (!isIconOld(iconFile))
         return;
 
     startDownload(url.host(), true, KURL(url, "/favicon.ico"));
 }
 
-void FaviconsModule::startDownload(const QString &hostOrURL, bool isHost, const KURL &iconURL)
+void FaviconsModule::startDownload(const TQString &hostOrURL, bool isHost, const KURL &iconURL)
 {
     if (d->failedDownloads.contains(iconURL.url()))
         return;
 
     KIO::Job *job = KIO::get(iconURL, false, false);
     job->addMetaData(d->metaData);
-    connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)), SLOT(slotData(KIO::Job *, const QByteArray &)));
-    connect(job, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
-    connect(job, SIGNAL(infoMessage(KIO::Job *, const QString &)), SLOT(slotInfoMessage(KIO::Job *, const QString &)));
+    connect(job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)), TQT_SLOT(slotData(KIO::Job *, const TQByteArray &)));
+    connect(job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(slotResult(KIO::Job *)));
+    connect(job, TQT_SIGNAL(infoMessage(KIO::Job *, const TQString &)), TQT_SLOT(slotInfoMessage(KIO::Job *, const TQString &)));
     FaviconsModulePrivate::DownloadInfo download;
     download.hostOrURL = hostOrURL;
     download.isHost = isHost;
     d->downloads.insert(job, download);
 }
 
-void FaviconsModule::slotData(KIO::Job *job, const QByteArray &data)
+void FaviconsModule::slotData(KIO::Job *job, const TQByteArray &data)
 {
     FaviconsModulePrivate::DownloadInfo &download = d->downloads[job];
     unsigned int oldSize = download.iconData.size();
     if (oldSize > 0x10000)
     {
         d->killJobs.append(job);
-        QTimer::singleShot(0, this, SLOT(slotKill()));
+        TQTimer::singleShot(0, this, TQT_SLOT(slotKill()));
     }
     download.iconData.resize(oldSize + data.size());
     memcpy(download.iconData.data() + oldSize, data.data(), data.size());
@@ -213,12 +213,12 @@ void FaviconsModule::slotResult(KIO::Job *job)
     FaviconsModulePrivate::DownloadInfo download = d->downloads[job];
     d->downloads.remove(job);
     KURL iconURL = static_cast<KIO::TransferJob *>(job)->url();
-    QString iconName;
+    TQString iconName;
     if (!job->error())
     {
-        QBuffer buffer(download.iconData);
+        TQBuffer buffer(download.iconData);
         buffer.open(IO_ReadOnly);
-        QImageIO io;
+        TQImageIO io;
         io.setIODevice(&buffer);
         io.setParameters("size=16");
         // Check here too, the job might have had no error, but the downloaded
@@ -243,7 +243,7 @@ void FaviconsModule::slotResult(KIO::Job *job)
             io.setFileName(d->faviconsDir + iconName + ".png");
             io.setFormat("PNG");
             if (!io.write())
-                iconName = QString::null;
+                iconName = TQString::null;
             else if (!download.isHost)
                 d->config->writeEntry( removeSlash(download.hostOrURL), iconURL.url());
         }
@@ -254,7 +254,7 @@ void FaviconsModule::slotResult(KIO::Job *job)
     emit iconChanged(download.isHost, download.hostOrURL, iconName);
 }
 
-void FaviconsModule::slotInfoMessage(KIO::Job *job, const QString &msg)
+void FaviconsModule::slotInfoMessage(KIO::Job *job, const TQString &msg)
 {
     emit infoMessage(static_cast<KIO::TransferJob *>( job )->url(), msg);
 }
@@ -265,7 +265,7 @@ void FaviconsModule::slotKill()
 }
 
 extern "C" {
-    KDE_EXPORT KDEDModule *create_favicons(const QCString &obj)
+    KDE_EXPORT KDEDModule *create_favicons(const TQCString &obj)
     {
         KImageIO::registerFormats();
         return new FaviconsModule(obj);

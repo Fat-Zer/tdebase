@@ -19,10 +19,10 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kpixmapeffect.h>
-#include <qbitmap.h>
-#include <qdrawutil.h>
-#include <qimage.h>
-#include <qapplication.h>
+#include <tqbitmap.h>
+#include <tqdrawutil.h>
+#include <tqimage.h>
+#include <tqapplication.h>
 
 #include "quartz.h"
 
@@ -208,7 +208,7 @@ void QuartzHandler::readConfig()
 
 	// A small hack to make the on all desktops button look nicer
 	onAllDesktopsButtonOnLeft = KDecoration::options()->titleButtonsLeft().contains( 'S' );
-        if ( QApplication::reverseLayout() )
+        if ( TQApplication::reverseLayout() )
             onAllDesktopsButtonOnLeft = !onAllDesktopsButtonOnLeft;
 	switch(options()->preferredBorderSize(this)) {
 	case BorderLarge:
@@ -232,13 +232,13 @@ void QuartzHandler::readConfig()
 		borderWidth = extraSlim?2:4;
 	}
 
-	normalTitleHeight = QFontMetrics(options()->font(true)).height();
+	normalTitleHeight = TQFontMetrics(options()->font(true)).height();
 	int nTH_limit=extraSlim?14:18;
-	normalTitleHeight = QFontMetrics(options()->font(true)).height()-(extraSlim?1:0);
+	normalTitleHeight = TQFontMetrics(options()->font(true)).height()-(extraSlim?1:0);
 	if (normalTitleHeight < nTH_limit) normalTitleHeight = nTH_limit;
 	if (normalTitleHeight < borderWidth) normalTitleHeight = borderWidth;
 
-	toolTitleHeight = QFontMetrics(options()->font(true, true)).height();
+	toolTitleHeight = TQFontMetrics(options()->font(true, true)).height();
 	if (toolTitleHeight < 12) toolTitleHeight = 12;
 	if (toolTitleHeight < borderWidth) toolTitleHeight = borderWidth;
 }
@@ -246,9 +246,9 @@ void QuartzHandler::readConfig()
 
 // This does the colour transition magic. (You say "Oh, is that it?")
 // This may be made configurable at a later stage
-void QuartzHandler::drawBlocks( KPixmap *pi, KPixmap &p, const QColor &c1, const QColor &c2 )
+void QuartzHandler::drawBlocks( KPixmap *pi, KPixmap &p, const TQColor &c1, const TQColor &c2 )
 {
-	QPainter px;
+	TQPainter px;
 
 	px.begin( pi );
 
@@ -291,10 +291,10 @@ void QuartzHandler::drawBlocks( KPixmap *pi, KPixmap &p, const QColor &c1, const
 void QuartzHandler::createPixmaps()
 {
     // Obtain titlebar blend colours, and create the block stuff on pixmaps.
-    QColorGroup g2 = options()->colorGroup(ColorTitleBlend, true);
-    QColor c2 = g2.background();
+    TQColorGroup g2 = options()->colorGroup(ColorTitleBlend, true);
+    TQColor c2 = g2.background();
     g2 = options()->colorGroup(ColorTitleBar, true );
-    QColor c = g2.background().light(130);
+    TQColor c = g2.background().light(130);
 
 	titleBlocks = new KPixmap();
     titleBlocks->resize( normalTitleHeight*25/18, normalTitleHeight );
@@ -310,8 +310,8 @@ void QuartzHandler::createPixmaps()
     drawBlocks( ititleBlocks, *ititleBlocks, c, c2 );
 
 	// Set the on all desktops pin pixmaps;
-	QColorGroup g;
-	QPainter p;
+	TQColorGroup g;
+	TQPainter p;
 
 	g = options()->colorGroup( onAllDesktopsButtonOnLeft ? ColorTitleBar : ColorTitleBlend, true );
 	c = onAllDesktopsButtonOnLeft ? g.background().light(130) : g.background();
@@ -370,9 +370,9 @@ void QuartzHandler::freePixmaps()
 }
 
 
-QValueList< QuartzHandler::BorderSize > QuartzHandler::borderSizes() const
+TQValueList< QuartzHandler::BorderSize > QuartzHandler::borderSizes() const
 { // the list must be sorted
-  return QValueList< BorderSize >() << BorderNormal << BorderLarge <<
+  return TQValueList< BorderSize >() << BorderNormal << BorderLarge <<
       BorderVeryLarge <<  BorderHuge << BorderVeryHuge << BorderOversized;
 }
 
@@ -381,7 +381,7 @@ QuartzButton::QuartzButton(ButtonType type, QuartzClient *parent, const char *na
     : KCommonDecorationButton(type, parent, name)
 {
     // Eliminate any possible background flicker
-    setBackgroundMode( QWidget::NoBackground );
+    setBackgroundMode( TQWidget::NoBackground );
 
 	deco = 0;
 }
@@ -435,19 +435,19 @@ void QuartzButton::setBitmap(const unsigned char *bitmap)
 	deco = 0;
 
 	if (bitmap) {
-		deco = new QBitmap(10, 10, bitmap, true);
+		deco = new TQBitmap(10, 10, bitmap, true);
 		deco->setMask( *deco );
 		repaint( false );
 	}
 }
 
-void QuartzButton::drawButton(QPainter *p)
+void QuartzButton::drawButton(TQPainter *p)
 {
 	// Never paint if the pixmaps have not been created
 	if (!quartz_initialized)
 		return;
 
-	QColor c;
+	TQColor c;
 
 	if (isLeft() )
 		c = KDecoration::options()->color(KDecoration::ColorTitleBar, decoration()->isActive()).light(130);
@@ -469,7 +469,7 @@ void QuartzButton::drawButton(QPainter *p)
 		p->drawPixmap(isDown() ? xOff+1: xOff, isDown() ? yOff+1 : yOff, *deco);
 	} else
 		{
-			QPixmap btnpix;
+			TQPixmap btnpix;
 			int Offset = 0;
 
 			if (type() == OnAllDesktopsButton)
@@ -484,12 +484,12 @@ void QuartzButton::drawButton(QPainter *p)
 					btnpix = isOn() ? *ipinDownPix : *ipinUpPix;
 
 			} else
-				btnpix = decoration()->icon().pixmap( QIconSet::Small, QIconSet::Normal);
+				btnpix = decoration()->icon().pixmap( TQIconSet::Small, TQIconSet::Normal);
 
 			// Shrink the miniIcon for tiny titlebars.
 			if ( height() < 16)
 			{
-				QPixmap tmpPix;
+				TQPixmap tmpPix;
 
 				// Smooth scale the image
 				tmpPix.convertFromImage( btnpix.convertToImage().smoothScale(height(), height()));
@@ -508,17 +508,17 @@ QuartzClient::QuartzClient(KDecorationBridge* bridge, KDecorationFactory* factor
 {
 }
 
-QString QuartzClient::visibleName() const
+TQString QuartzClient::visibleName() const
 {
 	return i18n("Quartz");
 }
 
-QString QuartzClient::defaultButtonsLeft() const
+TQString QuartzClient::defaultButtonsLeft() const
 {
 	return "M";
 }
 
-QString QuartzClient::defaultButtonsRight() const
+TQString QuartzClient::defaultButtonsRight() const
 {
 	return "HIAX";
 }
@@ -652,7 +652,7 @@ void QuartzClient::reset( unsigned long changed )
 
 
 // Quartz Paint magic goes here.
-void QuartzClient::paintEvent( QPaintEvent* )
+void QuartzClient::paintEvent( TQPaintEvent* )
 {
 	// Never paint if the pixmaps have not been created
 	if (!quartz_initialized)
@@ -660,11 +660,11 @@ void QuartzClient::paintEvent( QPaintEvent* )
 
 	const bool maxFull = (maximizeMode()==MaximizeFull) && !options()->moveResizeMaximizedWindows();
 
-	QColorGroup g;
-    QPainter p(widget());
+	TQColorGroup g;
+    TQPainter p(widget());
 
     // Obtain widget bounds.
-    QRect r(widget()->rect());
+    TQRect r(widget()->rect());
     int x = r.x();
     int y = r.y();
     int x2 = r.width() - 1;
@@ -688,7 +688,7 @@ void QuartzClient::paintEvent( QPaintEvent* )
     p.drawLine( x, y2, x2, y2 );
 
     // Fill out the border edges
-	QColor frameColor;
+	TQColor frameColor;
 	if ( coloredFrame)
 		frameColor = g.background().light(130);
 	else
@@ -730,19 +730,19 @@ void QuartzClient::paintEvent( QPaintEvent* )
     const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
     const int ttlHeight = layoutMetric(LM_TitleHeight);
     const int titleEdgeBottomBottom = r_y+titleEdgeTop+ttlHeight+titleEdgeBottom-1;
-    r = QRect(r_x+titleEdgeLeft+buttonsLeftWidth(), r_y+titleEdgeTop,
+    r = TQRect(r_x+titleEdgeLeft+buttonsLeftWidth(), r_y+titleEdgeTop,
               r_x2-titleEdgeRight-buttonsRightWidth()-(r_x+titleEdgeLeft+buttonsLeftWidth()),
               titleEdgeBottomBottom-(r_y+titleEdgeTop) );
 
     // Obtain titlebar blend colours
-    QColor c1 = options()->color(ColorTitleBar, isActive() ).light(130);
-    QColor c2 = options()->color(ColorTitleBlend, isActive() );
+    TQColor c1 = options()->color(ColorTitleBar, isActive() ).light(130);
+    TQColor c2 = options()->color(ColorTitleBlend, isActive() );
 
     // Create a disposable pixmap buffer for the titlebar
     KPixmap* titleBuffer = new KPixmap;
     titleBuffer->resize( maxFull?w-2:(w-2*(borderSize-1)), titleHeight );
 
-    QPainter p2( titleBuffer, this );
+    TQPainter p2( titleBuffer, this );
 
 	// subtract titleBlocks pixmap width and some
 	int rightoffset = r.x()+r.width()-titleBlocks->width()-borderSize;
@@ -758,12 +758,12 @@ void QuartzClient::paintEvent( QPaintEvent* )
 
 	// Draw the title text on the pixmap, and with a smaller font
 	// for toolwindows than the default.
-	QFont fnt;
+	TQFont fnt;
 	if ( largeButtons ) {
 		fnt = options()->font(true, false); // font not small
 	} else {
 		fnt = options()->font(true, true); // font small
-		fnt.setWeight( QFont::Normal ); // and disable bold
+		fnt.setWeight( TQFont::Normal ); // and disable bold
 	}
     p2.setFont( fnt );
 

@@ -56,15 +56,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <limits.h>
 #endif
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qdatastream.h>
-#include <qptrstack.h>
-#include <qpushbutton.h>
-#include <qmessagebox.h>
-#include <qguardedptr.h>
-#include <qtimer.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqdatastream.h>
+#include <tqptrstack.h>
+#include <tqpushbutton.h>
+#include <tqmessagebox.h>
+#include <tqguardedptr.h>
+#include <tqtimer.h>
+#include <tqregexp.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -138,7 +138,7 @@ void KSMServer::shutdown( KApplication::ShutdownConfirm confirm,
         sdmode = KApplication::ShutdownModeInteractive;
 
     dialogActive = true;
-    QString bopt;
+    TQString bopt;
     if ( !logoutConfirmed ) {
         KSMShutdownFeedback::start(); // make the screen gray
         logoutConfirmed =
@@ -160,7 +160,7 @@ void KSMServer::shutdown( KApplication::ShutdownConfirm confirm,
         saveSession = ( config->readEntry( "loginMode", "restorePreviousLogout" ) == "restorePreviousLogout" );
 
         if ( saveSession )
-            sessionGroup = QString("Session: ") + SESSION_PREVIOUS_LOGOUT;
+            sessionGroup = TQString("Session: ") + SESSION_PREVIOUS_LOGOUT;
 
         // Set the real desktop background to black so that exit looks
         // clean regardless of what was on "our" desktop.
@@ -215,7 +215,7 @@ void KSMServer::saveCurrentSession()
         return;
 
     if ( currentSession().isEmpty() || currentSession() == SESSION_PREVIOUS_LOGOUT )
-        sessionGroup = QString("Session: ") + SESSION_BY_USER;
+        sessionGroup = TQString("Session: ") + SESSION_BY_USER;
 
     state = Checkpoint;
     wmPhase1WaitingCount = 0;
@@ -237,7 +237,7 @@ void KSMServer::saveCurrentSession()
         completeShutdownOrCheckpoint();
 }
 
-void KSMServer::saveCurrentSessionAs( QString session )
+void KSMServer::saveCurrentSessionAs( TQString session )
 {
     if ( state != Idle || dialogActive )
         return;
@@ -253,7 +253,7 @@ void KSMServer::saveYourselfDone( KSMClient* client, bool success )
         // a shutdown was cancelled and the client is finished saving
         // only now. Discard the saved state in order to avoid
         // the saved data building up.
-        QStringList discard = client->discardCommand();
+        TQStringList discard = client->discardCommand();
         if( !discard.isEmpty())
             executeCommand( discard );
         return;
@@ -352,7 +352,7 @@ void KSMServer::cancelShutdown( KSMClient* c )
         SmsShutdownCancelled( c->connection() );
         if( c->saveYourselfDone ) {
             // Discard also saved state.
-            QStringList discard = c->discardCommand();
+            TQStringList discard = c->discardCommand();
             if( !discard.isEmpty())
                 executeCommand( discard );
         }
@@ -419,8 +419,8 @@ void KSMServer::completeShutdownOrCheckpoint()
     if ( state == Shutdown ) {
         bool waitForKNotify = true;
         if( !kapp->dcopClient()->connectDCOPSignal( "knotify", "",
-            "notifySignal(QString,QString,QString,QString,QString,int,int,int,int)",
-            "ksmserver", "notifySlot(QString,QString,QString,QString,QString,int,int,int,int)", false )) {
+            "notifySignal(TQString,TQString,TQString,TQString,TQString,int,int,int,int)",
+            "ksmserver", "notifySlot(TQString,TQString,TQString,TQString,TQString,int,int,int,int)", false )) {
             waitForKNotify = false;
         }
         if( !kapp->dcopClient()->connectDCOPSignal( "knotify", "",
@@ -461,7 +461,7 @@ void KSMServer::startKilling()
     kdDebug( 1218 ) << " We killed all clients. We have now clients.count()=" <<
        clients.count() << endl;
     completeKilling();
-    QTimer::singleShot( 10000, this, SLOT( timeoutQuit() ) );
+    TQTimer::singleShot( 10000, this, TQT_SLOT( timeoutQuit() ) );
 }
 
 void KSMServer::completeKilling()
@@ -494,7 +494,7 @@ void KSMServer::killWM()
     }
     if( iswm ) {
         completeKillingWM();
-        QTimer::singleShot( 5000, this, SLOT( timeoutWMQuit() ) );
+        TQTimer::singleShot( 5000, this, TQT_SLOT( timeoutWMQuit() ) );
     }
     else
         killingCompleted();
@@ -517,7 +517,7 @@ void KSMServer::killingCompleted()
 }
 
 // called when KNotify performs notification for logout (not when sound is finished though)
-void KSMServer::notifySlot(QString event ,QString app,QString,QString,QString,int present,int,int,int)
+void KSMServer::notifySlot(TQString event ,TQString app,TQString,TQString,TQString,int present,int,int,int)
 {
     if( state != WaitingForKNotify )
         return;

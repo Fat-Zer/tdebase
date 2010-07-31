@@ -40,7 +40,7 @@ class CSettingsDialog : public KDialogBase
 {
     public:
 
-    CSettingsDialog(QWidget *parent);
+    CSettingsDialog(TQWidget *parent);
 
     private slots:
 
@@ -48,7 +48,7 @@ class CSettingsDialog : public KDialogBase
 
     private:
 
-    QCheckBox *itsDoX,
+    TQCheckBox *itsDoX,
               *itsDoGs;
 };
 

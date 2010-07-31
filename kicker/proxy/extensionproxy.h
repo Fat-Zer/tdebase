@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __extensionproxy_h__
 #define __extensionproxy_h__
 
-#include <qcstring.h>
-#include <qobject.h>
+#include <tqcstring.h>
+#include <tqobject.h>
 
 #include <dcopobject.h>
 
@@ -33,29 +33,29 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class KPanelExtension;
 
-class ExtensionProxy : public QObject, DCOPObject
+class ExtensionProxy : public TQObject, DCOPObject
 {
     Q_OBJECT
 
 public:
-    ExtensionProxy(QObject* parent, const char* name = 0);
+    ExtensionProxy(TQObject* parent, const char* name = 0);
     ~ExtensionProxy();
 
-    void loadExtension(const QCString& desktopFile, const QCString& configFile);
+    void loadExtension(const TQCString& desktopFile, const TQCString& configFile);
     KPanelExtension* loadExtension(const AppletInfo& info);
-    void dock(const QCString& callbackID);
+    void dock(const TQCString& callbackID);
 
-    bool process(const QCString &fun, const QByteArray &data,
-		 QCString& replyType, QByteArray &replyData);
+    bool process(const TQCString &fun, const TQByteArray &data,
+		 TQCString& replyType, TQByteArray &replyData);
 
 protected slots:
     void slotUpdateLayout();
-    void slotApplicationRemoved(const QCString&);
+    void slotApplicationRemoved(const TQCString&);
 
 private:
     AppletInfo          *_info;
     KPanelExtension     *_extension;
-    QCString             _callbackID;
+    TQCString             _callbackID;
 };
 
 #endif

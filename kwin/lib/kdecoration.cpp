@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 #include "kdecoration.h"
 
 #include <kdebug.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 #include <kglobal.h>
 #include <assert.h>
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
@@ -60,10 +60,10 @@ const KDecorationOptions* KDecoration::options()
 void KDecoration::createMainWidget( WFlags flags )
     {
     // FRAME check flags?
-    setMainWidget( new QWidget( initialParentWidget(), "decoration widget", initialWFlags() | flags ));
+    setMainWidget( new TQWidget( initialParentWidget(), "decoration widget", initialWFlags() | flags ));
     }
 
-void KDecoration::setMainWidget( QWidget* w )
+void KDecoration::setMainWidget( TQWidget* w )
     {
     assert( w_ == NULL );
     w_ = w;
@@ -71,7 +71,7 @@ void KDecoration::setMainWidget( QWidget* w )
     widget()->resize( geometry().size());
     }
 
-QWidget* KDecoration::initialParentWidget() const
+TQWidget* KDecoration::initialParentWidget() const
     {
     return bridge_->initialParentWidget();
     }
@@ -161,27 +161,27 @@ NET::WindowType KDecoration::windowType( unsigned long supported_types ) const
     return bridge_->windowType( supported_types );
     }
 
-QIconSet KDecoration::icon() const
+TQIconSet KDecoration::icon() const
     {
     return bridge_->icon();
     }
     
-QString KDecoration::caption() const
+TQString KDecoration::caption() const
     {
     return bridge_->caption();
     }
 
-void KDecoration::processMousePressEvent( QMouseEvent* e )
+void KDecoration::processMousePressEvent( TQMouseEvent* e )
     {
     return bridge_->processMousePressEvent( e );
     }
 
-void KDecoration::showWindowMenu( const QRect &pos )
+void KDecoration::showWindowMenu( const TQRect &pos )
     {
     bridge_->showWindowMenu( pos );
     }
     
-void KDecoration::showWindowMenu( QPoint pos )
+void KDecoration::showWindowMenu( TQPoint pos )
     {
     bridge_->showWindowMenu( pos );
     }
@@ -191,14 +191,14 @@ void KDecoration::performWindowOperation( WindowOperation op )
     bridge_->performWindowOperation( op );
     }
 
-void KDecoration::setMask( const QRegion& reg, int mode )
+void KDecoration::setMask( const TQRegion& reg, int mode )
     {
     bridge_->setMask( reg, mode );
     }
     
 void KDecoration::clearMask()
     {
-    bridge_->setMask( QRegion(), 0 );
+    bridge_->setMask( TQRegion(), 0 );
     }
     
 bool KDecoration::isPreview() const
@@ -206,22 +206,22 @@ bool KDecoration::isPreview() const
     return bridge_->isPreview();
     }
     
-QRect KDecoration::geometry() const
+TQRect KDecoration::geometry() const
     {
     return bridge_->geometry();
     }
     
-QRect KDecoration::iconGeometry() const
+TQRect KDecoration::iconGeometry() const
     {
     return bridge_->iconGeometry();
     }
 
-QRegion KDecoration::unobscuredRegion( const QRegion& r ) const
+TQRegion KDecoration::unobscuredRegion( const TQRegion& r ) const
     {
     return bridge_->unobscuredRegion( r );
     }
 
-QWidget* KDecoration::workspaceWidget() const
+TQWidget* KDecoration::workspaceWidget() const
     {
     return bridge_->workspaceWidget();
     }
@@ -294,7 +294,7 @@ void KDecoration::setKeepBelow( bool set )
     bridge_->setKeepBelow( set );
     }
 
-bool KDecoration::drawbound( const QRect&, bool )
+bool KDecoration::drawbound( const TQRect&, bool )
     {
     return false;
     }
@@ -328,7 +328,7 @@ void KDecoration::ungrabXServer()
     bridge_->grabXServer( false );
     }
     
-KDecoration::Position KDecoration::mousePosition( const QPoint& p ) const
+KDecoration::Position KDecoration::mousePosition( const TQPoint& p ) const
 {
     const int range = 16;
     int bleft, bright, btop, bbottom;
@@ -375,12 +375,12 @@ KDecorationOptions::~KDecorationOptions()
     KDecoration::options_ = NULL;
     }
 
-const QColor& KDecorationOptions::color(ColorType type, bool active) const
+const TQColor& KDecorationOptions::color(ColorType type, bool active) const
 {
     return(d->colors[type + (active ? 0 : NUM_COLORS)]);
 }
 
-const QFont& KDecorationOptions::font(bool active, bool small) const
+const TQFont& KDecorationOptions::font(bool active, bool small) const
 {
     if ( small )
         return(active ? d->activeFontSmall : d->inactiveFontSmall);
@@ -388,14 +388,14 @@ const QFont& KDecorationOptions::font(bool active, bool small) const
         return(active ? d->activeFont : d->inactiveFont);
 }
 
-const QColorGroup& KDecorationOptions::colorGroup(ColorType type, bool active) const
+const TQColorGroup& KDecorationOptions::colorGroup(ColorType type, bool active) const
 {
     int idx = type + (active ? 0 : NUM_COLORS);
     if(d->cg[idx])
         return(*d->cg[idx]);
-    d->cg[idx] = new QColorGroup(Qt::black, d->colors[idx], d->colors[idx].light(150),
+    d->cg[idx] = new TQColorGroup(Qt::black, d->colors[idx], d->colors[idx].light(150),
                               d->colors[idx].dark(), d->colors[idx].dark(120),
-                              Qt::black, QApplication::palette().active().
+                              Qt::black, TQApplication::palette().active().
                               base());
     return(*d->cg[idx]);
 }
@@ -405,12 +405,12 @@ bool KDecorationOptions::customButtonPositions() const
     return d->custom_button_positions;
 }
 
-QString KDecorationOptions::titleButtonsLeft() const
+TQString KDecorationOptions::titleButtonsLeft() const
 {
     return d->title_buttons_left;
 }
 
-QString KDecorationOptions::titleButtonsRight() const
+TQString KDecorationOptions::titleButtonsRight() const
 {
     return d->title_buttons_right;
 }

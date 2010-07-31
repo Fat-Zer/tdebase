@@ -23,11 +23,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qapplication.h>
-#include <qpainter.h>
-#include <qsimplerichtext.h>
-#include <qtimer.h>
-#include <qtooltip.h>
+#include <tqapplication.h>
+#include <tqpainter.h>
+#include <tqsimplerichtext.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 
 #include <kdialog.h>
 
@@ -46,7 +46,7 @@ int KickerTip::m_tippingEnabled = 1;
 
 void KickerTip::Client::updateKickerTip() const
 {
-    if (KickerTip::the()->isTippingFor(dynamic_cast<const QWidget*>(this)) &&
+    if (KickerTip::the()->isTippingFor(dynamic_cast<const TQWidget*>(this)) &&
         KickerTip::the()->isVisible())
     {
         KickerTip::the()->display();
@@ -63,8 +63,8 @@ KickerTip* KickerTip::the()
     return m_self;
 }
 
-KickerTip::KickerTip(QWidget * parent)
-    : QWidget(parent, "animtt",WX11BypassWM),
+KickerTip::KickerTip(TQWidget * parent)
+    : TQWidget(parent, "animtt",WX11BypassWM),
       m_richText(0),
       m_mimeFactory(0),
       m_dissolveSize(0),
@@ -78,7 +78,7 @@ KickerTip::KickerTip(QWidget * parent)
     setBackgroundMode(NoBackground);
     resize(0, 0);
     hide();
-    connect(&m_frameTimer, SIGNAL(timeout()), SLOT(internalUpdate()));
+    connect(&m_frameTimer, TQT_SIGNAL(timeout()), TQT_SLOT(internalUpdate()));
 }
 
 KickerTip::~KickerTip()
@@ -104,7 +104,7 @@ void KickerTip::display()
         }
     }
 
-    QWidget *widget = const_cast<QWidget*>(m_tippingFor);
+    TQWidget *widget = const_cast<TQWidget*>(m_tippingFor);
     KickerTip::Client *client = dynamic_cast<KickerTip::Client*>(widget);
 
     if (!client)
@@ -116,7 +116,7 @@ void KickerTip::display()
     // richtext area are freed but the mimefactory is ready to be added to in 
     // the call to updateKickerTip
     delete m_mimeFactory;
-    m_mimeFactory = new QMimeSourceFactory();
+    m_mimeFactory = new TQMimeSourceFactory();
 
     // Declare interchange object and define defaults.
     Data data;
@@ -136,8 +136,8 @@ void KickerTip::display()
     }
 
     delete m_richText;
-    m_richText = new QSimpleRichText("<qt><h3>" + data.message + "</h3><p>" +
-                                     data.subtext + "</p></qt>", font(), QString::null, 0,
+    m_richText = new TQSimpleRichText("<qt><h3>" + data.message + "</h3><p>" +
+                                     data.subtext + "</p></qt>", font(), TQString::null, 0,
                                      m_mimeFactory);
     m_richText->setWidth(640);
     m_direction = data.direction;
@@ -148,7 +148,7 @@ void KickerTip::display()
     }
     else if (KickerSettings::mouseOversShowText())
     {
-        m_icon = QPixmap();
+        m_icon = TQPixmap();
     }
     else
     {
@@ -167,8 +167,8 @@ void KickerTip::display()
     // close the message window after given mS
     if (data.duration > 0)
     {
-        disconnect(&m_timer, SIGNAL(timeout()), 0, 0);
-        connect(&m_timer, SIGNAL(timeout()), SLOT(hide()));
+        disconnect(&m_timer, TQT_SIGNAL(timeout()), 0, 0);
+        connect(&m_timer, TQT_SIGNAL(timeout()), TQT_SLOT(hide()));
         m_timer.start(data.duration, true);
     }
     else
@@ -180,7 +180,7 @@ void KickerTip::display()
     show();
 }
 
-void KickerTip::paintEvent(QPaintEvent * e)
+void KickerTip::paintEvent(TQPaintEvent * e)
 {
     if (m_dirty)
     {
@@ -188,23 +188,23 @@ void KickerTip::paintEvent(QPaintEvent * e)
         m_dirty = false;
     }
 
-    QPainter p(this);
+    TQPainter p(this);
     p.drawPixmap(e->rect().topLeft(), m_pixmap, e->rect());
 }
 
-void KickerTip::mousePressEvent(QMouseEvent * /*e*/)
+void KickerTip::mousePressEvent(TQMouseEvent * /*e*/)
 {
-    QToolTip::setGloballyEnabled(m_toolTipsEnabled);
+    TQToolTip::setGloballyEnabled(m_toolTipsEnabled);
     hide();
 }
 
-static void drawRoundRect(QPainter &p, const QRect &r)
+static void drawRoundRect(TQPainter &p, const TQRect &r)
 {
     static int line[8] = { 1, 3, 4, 5, 6, 7, 7, 8 };
     static int border[8] = { 1, 2, 1, 1, 1, 1, 1, 1 };
     int xl, xr, y1, y2;
-    QPen pen = p.pen();
-    bool drawBorder = pen.style() != QPen::NoPen;
+    TQPen pen = p.pen();
+    bool drawBorder = pen.style() != TQPen::NoPen;
     
     if (r.width() < 16 || r.height() < 16)
     {
@@ -272,7 +272,7 @@ static void drawRoundRect(QPainter &p, const QRect &r)
 
 void KickerTip::plainMask()
 {
-    QPainter maskPainter(&m_mask);
+    TQPainter maskPainter(&m_mask);
 
     m_mask.fill(Qt::black);
 
@@ -286,7 +286,7 @@ void KickerTip::plainMask()
 
 void KickerTip::dissolveMask()
 {
-    QPainter maskPainter(&m_mask);
+    TQPainter maskPainter(&m_mask);
 
     m_mask.fill(Qt::black);
 
@@ -339,7 +339,7 @@ void KickerTip::displayInternal()
     }
 
     // determine text rectangle
-    QRect textRect(0, 0, 0, 0);
+    TQRect textRect(0, 0, 0, 0);
     if (KickerSettings::mouseOversShowText())
     {
         textRect.setWidth(m_richText->widthUsed());
@@ -382,11 +382,11 @@ void KickerTip::displayInternal()
     }
 
     // draw background
-    QPainter bufferPainter(&m_pixmap);
+    TQPainter bufferPainter(&m_pixmap);
     bufferPainter.setPen(colorGroup().foreground());
     bufferPainter.setBrush(colorGroup().background());
     //bufferPainter.drawRoundRect(0, 0, width, height, 1600 / width, 1600 / height);
-    drawRoundRect(bufferPainter, QRect(0, 0, width, height));
+    drawRoundRect(bufferPainter, TQRect(0, 0, width, height));
 
     // draw icon if present
     if (!m_icon.isNull())
@@ -400,10 +400,10 @@ void KickerTip::displayInternal()
     if (KickerSettings::mouseOversShowText())
     {
         // draw text shadow
-        QColorGroup cg = colorGroup();
-        cg.setColor(QColorGroup::Text, cg.background().dark(115));
-        int shadowOffset = QApplication::reverseLayout() ? -1 : 1;
-        m_richText->draw(&bufferPainter, textX + shadowOffset, textY + 1, QRect(), cg);
+        TQColorGroup cg = colorGroup();
+        cg.setColor(TQColorGroup::Text, cg.background().dark(115));
+        int shadowOffset = TQApplication::reverseLayout() ? -1 : 1;
+        m_richText->draw(&bufferPainter, textX + shadowOffset, textY + 1, TQRect(), cg);
 
         // draw text
         cg = colorGroup();
@@ -411,39 +411,39 @@ void KickerTip::displayInternal()
     }
 }
 
-void KickerTip::tipFor(const QWidget* w)
+void KickerTip::tipFor(const TQWidget* w)
 {
     if (m_tippingFor)
     {
-        disconnect(m_tippingFor, SIGNAL(destroyed(QObject*)),
-                   this, SLOT(tipperDestroyed(QObject*)));
+        disconnect(m_tippingFor, TQT_SIGNAL(destroyed(TQObject*)),
+                   this, TQT_SLOT(tipperDestroyed(TQObject*)));
     }
 
     m_tippingFor = w;
 
     if (m_tippingFor)
     {
-        connect(m_tippingFor, SIGNAL(destroyed(QObject*)),
-                this, SLOT(tipperDestroyed(QObject*)));
+        connect(m_tippingFor, TQT_SIGNAL(destroyed(TQObject*)),
+                this, TQT_SLOT(tipperDestroyed(TQObject*)));
     }
 }
 
-void KickerTip::untipFor(const QWidget* w)
+void KickerTip::untipFor(const TQWidget* w)
 {
     if (isTippingFor(w))
         hide();
 }
 
-bool KickerTip::isTippingFor(const QWidget* w) const
+bool KickerTip::isTippingFor(const TQWidget* w) const
 {
     return m_tippingFor == w;
 }
 
-void KickerTip::tipperDestroyed(QObject* o)
+void KickerTip::tipperDestroyed(TQObject* o)
 {
     // we can't do a dynamic cast because we are in the process of dieing
     // so static it is.
-    untipFor(static_cast<QWidget*>(o));
+    untipFor(static_cast<TQWidget*>(o));
 }
 
 void KickerTip::internalUpdate()
@@ -479,10 +479,10 @@ void KickerTip::hide()
     tipFor(0);
     m_timer.stop();
     m_frameTimer.stop();
-    QWidget::hide();
+    TQWidget::hide();
 }
 
-bool KickerTip::eventFilter(QObject *object, QEvent *event)
+bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
 {
     if (!tippingEnabled())
     {
@@ -494,11 +494,11 @@ bool KickerTip::eventFilter(QObject *object, QEvent *event)
         return false;
     }
 
-    QWidget *widget = static_cast<QWidget*>(object);
+    TQWidget *widget = static_cast<TQWidget*>(object);
 
     switch (event->type())
     {
-        case QEvent::Enter:
+        case TQEvent::Enter:
             if (!KickerSettings::showMouseOverEffects())
             {
                 return false;
@@ -508,13 +508,13 @@ bool KickerTip::eventFilter(QObject *object, QEvent *event)
                 !qApp->activePopupWidget() &&
                 !isTippingFor(widget))
             {
-                m_toolTipsEnabled = QToolTip::isGloballyEnabled();
-                QToolTip::setGloballyEnabled(false);
+                m_toolTipsEnabled = TQToolTip::isGloballyEnabled();
+                TQToolTip::setGloballyEnabled(false);
 
                 tipFor(widget);
                 m_timer.stop();
-                disconnect(&m_timer, SIGNAL(timeout()), 0, 0);
-                connect(&m_timer, SIGNAL(timeout()), SLOT(display()));
+                disconnect(&m_timer, TQT_SIGNAL(timeout()), 0, 0);
+                connect(&m_timer, TQT_SIGNAL(timeout()), TQT_SLOT(display()));
 
                 // delay to avoid false starts
                 // e.g. when the user quickly zooms their mouse over
@@ -529,22 +529,22 @@ bool KickerTip::eventFilter(QObject *object, QEvent *event)
                 }
             }
             break;
-        case QEvent::Leave:
-            QToolTip::setGloballyEnabled(m_toolTipsEnabled);
+        case TQEvent::Leave:
+            TQToolTip::setGloballyEnabled(m_toolTipsEnabled);
 
             m_timer.stop();
 
             if (isTippingFor(widget) && isVisible())
             {
-                disconnect(&m_timer, SIGNAL(timeout()), 0, 0);
-                connect(&m_timer, SIGNAL(timeout()), SLOT(hide()));
+                disconnect(&m_timer, TQT_SIGNAL(timeout()), 0, 0);
+                connect(&m_timer, TQT_SIGNAL(timeout()), TQT_SLOT(hide()));
                 m_timer.start(KickerSettings::mouseOversHideDelay(), true);
             }
 
             tipFor(0);
             break;
-        case QEvent::MouseButtonPress:
-            QToolTip::setGloballyEnabled(m_toolTipsEnabled);
+        case TQEvent::MouseButtonPress:
+            TQToolTip::setGloballyEnabled(m_toolTipsEnabled);
             hide();
         default:
             break;

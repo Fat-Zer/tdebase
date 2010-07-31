@@ -2,7 +2,7 @@
 #define __konq_events_h__
 
 #include <kparts/event.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <libkonq_export.h>
 
 namespace KParts
@@ -12,7 +12,7 @@ namespace KParts
 
 class KConfig;
 class KFileItem;
-typedef QPtrList<KFileItem> KFileItemList;
+typedef TQPtrList<KFileItem> KFileItemList;
 
 class LIBKONQ_EXPORT KonqFileSelectionEvent : public KParts::Event
 {
@@ -22,7 +22,7 @@ public:
   KFileItemList selection() const { return m_selection; }
   KParts::ReadOnlyPart *part() const { return m_part; }
 
-  static bool test( const QEvent *event ) { return KParts::Event::test( event, s_fileItemSelectionEventName ); }
+  static bool test( const TQEvent *event ) { return KParts::Event::test( event, s_fileItemSelectionEventName ); }
 
 private:
   static const char *s_fileItemSelectionEventName;
@@ -39,7 +39,7 @@ public:
   const KFileItem* item() const { return m_item; }
   KParts::ReadOnlyPart *part() const { return m_part; }
 
-  static bool test( const QEvent *event ) { return KParts::Event::test( event, s_fileItemMouseOverEventName ); }
+  static bool test( const TQEvent *event ) { return KParts::Event::test( event, s_fileItemMouseOverEventName ); }
 
 private:
   static const char *s_fileItemMouseOverEventName;
@@ -51,19 +51,19 @@ private:
 class LIBKONQ_EXPORT KonqConfigEvent : public KParts::Event
 {
 public:
-  KonqConfigEvent( KConfig *config, const QString &prefix, bool save ) : KParts::Event( s_configEventName ), m_config( config ), m_prefix( prefix ), m_save( save ) {}
+  KonqConfigEvent( KConfig *config, const TQString &prefix, bool save ) : KParts::Event( s_configEventName ), m_config( config ), m_prefix( prefix ), m_save( save ) {}
 
   KConfig * config() const { return m_config; }
-  QString prefix() const { return m_prefix; }
+  TQString prefix() const { return m_prefix; }
   bool save() const { return m_save; }
 
-  static bool test( const QEvent *event ) { return KParts::Event::test( event, s_configEventName ); }
+  static bool test( const TQEvent *event ) { return KParts::Event::test( event, s_configEventName ); }
 
 private:
   static const char *s_configEventName;
 
   KConfig *m_config;
-  QString m_prefix;
+  TQString m_prefix;
   bool m_save;
 };
 

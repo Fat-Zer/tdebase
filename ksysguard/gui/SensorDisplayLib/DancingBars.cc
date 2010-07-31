@@ -21,13 +21,13 @@
 
 */
 
-#include <qcheckbox.h>
-#include <qdom.h>
-#include <qlineedit.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtooltip.h>
+#include <tqcheckbox.h>
+#include <tqdom.h>
+#include <tqlineedit.h>
+#include <tqlistview.h>
+#include <tqpushbutton.h>
+#include <tqspinbox.h>
+#include <tqtooltip.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -40,12 +40,12 @@
 
 #include "DancingBars.h"
 
-DancingBars::DancingBars( QWidget *parent, const char *name, const QString &title,
+DancingBars::DancingBars( TQWidget *parent, const char *name, const TQString &title,
                           int, int, bool noFrame_, bool isApplet )
   : KSGRD::SensorDisplay( parent, name, title, noFrame_, isApplet )
 {
   mBars = 0;
-  mFlags = QBitArray(100);
+  mFlags = TQBitArray(100);
   mFlags.fill( false );
 
   if ( noFrame() )
@@ -91,9 +91,9 @@ void DancingBars::configureSettings()
   mSettingsDialog->setBackgroundColor( mPlotter->backgroundColor );
   mSettingsDialog->setFontSize( mPlotter->fontSize );
 
-  QValueList< QStringList > list;
+  TQValueList< TQStringList > list;
   for ( uint i = mBars - 1; i < mBars; i-- ) {
-    QStringList entry;
+    TQStringList entry;
     entry << sensors().at( i )->hostName();
     entry << KSGRD::SensorMgr->translateSensor( sensors().at( i )->name() );
     entry << mPlotter->footers[ i ];
@@ -104,7 +104,7 @@ void DancingBars::configureSettings()
   }
   mSettingsDialog->setSensors( list );
 
-  connect( mSettingsDialog, SIGNAL( applyClicked() ), SLOT( applySettings() ) );
+  connect( mSettingsDialog, TQT_SIGNAL( applyClicked() ), TQT_SLOT( applySettings() ) );
 
   if ( mSettingsDialog->exec() )
     applySettings();
@@ -129,8 +129,8 @@ void DancingBars::applySettings()
   mPlotter->backgroundColor = mSettingsDialog->backgroundColor();
   mPlotter->fontSize = mSettingsDialog->fontSize();
 
-  QValueList< QStringList > list = mSettingsDialog->sensors();
-  QValueList< QStringList >::Iterator it;
+  TQValueList< TQStringList > list = mSettingsDialog->sensors();
+  TQValueList< TQStringList >::Iterator it;
 
   for ( uint i = 0; i < sensors().count(); i++ ) {
     bool found = false;
@@ -162,8 +162,8 @@ void DancingBars::applyStyle()
   setModified( true );
 }
 
-bool DancingBars::addSensor( const QString &hostName, const QString &name,
-                             const QString &type, const QString &title )
+bool DancingBars::addSensor( const TQString &hostName, const TQString &name,
+                             const TQString &type, const TQString &title )
 {
   if ( type != "integer" && type != "float" )
     return false;
@@ -182,14 +182,14 @@ bool DancingBars::addSensor( const QString &hostName, const QString &name,
   ++mBars;
   mSampleBuffer.resize( mBars );
 
-  QString tooltip;
+  TQString tooltip;
   for ( uint i = 0; i < mBars; ++i ) {
-    tooltip += QString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
+    tooltip += TQString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
                                    .arg( sensors().at( i )->hostName() )
                                    .arg( sensors().at( i )->name() );
   }
-  QToolTip::remove( mPlotter );
-  QToolTip::add( mPlotter, tooltip );
+  TQToolTip::remove( mPlotter );
+  TQToolTip::add( mPlotter, tooltip );
 
   return true;
 }
@@ -206,24 +206,24 @@ bool DancingBars::removeSensor( uint pos )
   mBars--;
   KSGRD::SensorDisplay::removeSensor( pos );
 
-  QString tooltip;
+  TQString tooltip;
   for ( uint i = 0; i < mBars; ++i ) {
-    tooltip += QString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
+    tooltip += TQString( "%1%2:%3" ).arg( i != 0 ? "\n" : "" )
                                    .arg( sensors().at( i )->hostName() )
                                    .arg( sensors().at( i )->name() );
   }
-  QToolTip::remove( mPlotter );
-  QToolTip::add( mPlotter, tooltip );
+  TQToolTip::remove( mPlotter );
+  TQToolTip::add( mPlotter, tooltip );
 
   return true;
 }
 
-void DancingBars::updateSamples( const QMemArray<double> &samples )
+void DancingBars::updateSamples( const TQMemArray<double> &samples )
 {
   mPlotter->updateSamples( samples );
 }
 
-void DancingBars::resizeEvent( QResizeEvent* )
+void DancingBars::resizeEvent( TQResizeEvent* )
 {
   if ( noFrame() )
     mPlotter->setGeometry( 0, 0, width(), height() );
@@ -231,7 +231,7 @@ void DancingBars::resizeEvent( QResizeEvent* )
     frame()->setGeometry( 0, 0, width(), height() );
 }
 
-QSize DancingBars::sizeHint()
+TQSize DancingBars::sizeHint()
 {
   if ( noFrame() )
     return ( mPlotter->sizeHint() );
@@ -239,7 +239,7 @@ QSize DancingBars::sizeHint()
     return ( frame()->sizeHint() );
 }
 
-void DancingBars::answerReceived( int id, const QString &answer )
+void DancingBars::answerReceived( int id, const TQString &answer )
 {
   /* We received something, so the sensor is probably ok. */
   sensorError( id, false );
@@ -276,7 +276,7 @@ void DancingBars::answerReceived( int id, const QString &answer )
 	}
 }
 
-bool DancingBars::restoreSettings( QDomElement &element )
+bool DancingBars::restoreSettings( TQDomElement &element )
 {
   SensorDisplay::restoreSettings( element );
 
@@ -294,12 +294,12 @@ bool DancingBars::restoreSettings( QDomElement &element )
                                        KSGRD::Style->alarmColor() );
   mPlotter->backgroundColor = restoreColor( element, "backgroundColor",
                                             KSGRD::Style->backgroundColor() );
-  mPlotter->fontSize = element.attribute( "fontSize", QString( "%1" ).arg(
+  mPlotter->fontSize = element.attribute( "fontSize", TQString( "%1" ).arg(
                                           KSGRD::Style->fontSize() ) ).toInt();
 
-  QDomNodeList dnList = element.elementsByTagName( "beam" );
+  TQDomNodeList dnList = element.elementsByTagName( "beam" );
   for ( uint i = 0; i < dnList.count(); ++i ) {
-    QDomElement el = dnList.item( i ).toElement();
+    TQDomElement el = dnList.item( i ).toElement();
     addSensor( el.attribute( "hostName" ), el.attribute( "sensorName" ),
                ( el.attribute( "sensorType" ).isEmpty() ? "integer" :
                el.attribute( "sensorType" ) ), el.attribute( "sensorDescr" ) );
@@ -310,7 +310,7 @@ bool DancingBars::restoreSettings( QDomElement &element )
   return true;
 }
 
-bool DancingBars::saveSettings( QDomDocument &doc, QDomElement &element,
+bool DancingBars::saveSettings( TQDomDocument &doc, TQDomElement &element,
                                 bool save )
 {
   element.setAttribute( "min", mPlotter->getMin() );
@@ -329,7 +329,7 @@ bool DancingBars::saveSettings( QDomDocument &doc, QDomElement &element,
   element.setAttribute( "fontSize", mPlotter->fontSize );
 
   for ( uint i = 0; i < mBars; ++i ) {
-    QDomElement beam = doc.createElement( "beam" );
+    TQDomElement beam = doc.createElement( "beam" );
     element.appendChild( beam );
     beam.setAttribute( "hostName", sensors().at( i )->hostName() );
     beam.setAttribute( "sensorName", sensors().at( i )->name() );

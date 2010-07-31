@@ -20,16 +20,16 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include <qregexp.h>
-#include <qlayout.h>
+#include <tqregexp.h>
+#include <tqlayout.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kfiledialog.h>
 #include <kurlrequester.h>
 
-#include <qwhatsthis.h>
-#include <qvgroupbox.h>
+#include <tqwhatsthis.h>
+#include <tqvgroupbox.h>
 #include <kdebug.h>
 
 #include <kapplication.h>
@@ -38,38 +38,38 @@
 
 #include "plugin_paths.h"
 
-static QDateTime lastChanged( QString dir )
+static TQDateTime lastChanged( TQString dir )
 {
-    QDateTime t = QFileInfo( dir ).lastModified();
+    TQDateTime t = TQFileInfo( dir ).lastModified();
     if( t.isNull())
         return t;
-    QStringList subdirs = QDir( dir ).entryList();
-    for( QStringList::ConstIterator it = subdirs.begin();
+    TQStringList subdirs = TQDir( dir ).entryList();
+    for( TQStringList::ConstIterator it = subdirs.begin();
          it != subdirs.end();
          ++it )
     {
         if( *it == "." || *it == ".." )
             continue;
-        QDateTime t2 = lastChanged( *it );
+        TQDateTime t2 = lastChanged( *it );
         if( !t2.isNull() && t2 > t )
             t = t2;
     }
     return t;
 }
 
-static bool checkSearchPathTimestamps( QStringList paths, QStringList timestamps )
+static bool checkSearchPathTimestamps( TQStringList paths, TQStringList timestamps )
 {
-    QStringList currentTimestamps;
+    TQStringList currentTimestamps;
     bool changed = false;
-    QStringList::ConstIterator t = timestamps.begin();
-    for( QStringList::ConstIterator it = paths.begin();
+    TQStringList::ConstIterator t = timestamps.begin();
+    for( TQStringList::ConstIterator it = paths.begin();
          it != paths.end();
          ++it, ++t )
     {
-        QDateTime current = lastChanged( *it );
+        TQDateTime current = lastChanged( *it );
         // store non-existent directory as "N" string rather than empty string, KConfig
         // has a bug with storing a list of empty items
-        if( *t == "N" ? !current.isNull() : current != QDateTime::fromString( *t, Qt::ISODate ))
+        if( *t == "N" ? !current.isNull() : current != TQDateTime::fromString( *t, Qt::ISODate ))
             changed = true;
         currentTimestamps.append( current.isNull() ? "N" : current.toString( Qt::ISODate ));
     }
@@ -98,9 +98,9 @@ extern "C"
         // check if plugins have changed, as just ignoring everything and requiring the user
         // to trigger the check manually is not reasonable - that probably actually obsoletes
         // both options
-            QStringList searchPaths = getSearchPaths();
-            QStringList lastSearchPaths = config->readListEntry( "lastSearchPaths" );
-            QStringList lastTimestamps = config->readListEntry ( "lastSearchTimestamps" );
+            TQStringList searchPaths = getSearchPaths();
+            TQStringList lastSearchPaths = config->readListEntry( "lastSearchPaths" );
+            TQStringList lastTimestamps = config->readListEntry ( "lastSearchTimestamps" );
             if( searchPaths != lastSearchPaths || lastTimestamps.count() != lastSearchPaths.count())
             { // count changed, set empty timestamps, still call checkSearchPathTimestamps()
               // in order to save the current timestamps for the next time

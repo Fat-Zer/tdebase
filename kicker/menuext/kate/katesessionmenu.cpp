@@ -32,18 +32,18 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 
-#include <qvalidator.h>
+#include <tqvalidator.h>
 
-class Validator : public QValidator {
+class Validator : public TQValidator {
   public:
-    Validator( QObject *parent ) : QValidator( parent, 0 ) {}
+    Validator( TQObject *parent ) : TQValidator( parent, 0 ) {}
     ~Validator() {}
-    virtual QValidator::State validate( QString &, int & ) const { return QValidator::Acceptable; }
+    virtual TQValidator::State validate( TQString &, int & ) const { return TQValidator::Acceptable; }
 };
 
 K_EXPORT_KICKER_MENUEXT(kate, KateSessionMenu)
 
-KateSessionMenu::KateSessionMenu( QWidget *parent, const char *name, const QStringList& )
+KateSessionMenu::KateSessionMenu( TQWidget *parent, const char *name, const TQStringList& )
   : KPanelMenu( parent, name ),
     m_parent( parent )
 {
@@ -76,8 +76,8 @@ void KateSessionMenu::initialize()
 
   insertSeparator();
 
-  QStringList list = KGlobal::dirs()->findAllResources( "data", "kate/sessions/*.katesession", false, true);
-  for (QStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
+  TQStringList list = KGlobal::dirs()->findAllResources( "data", "kate/sessions/*.katesession", false, true);
+  for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
   {
     KSimpleConfig config( *it, true );
     config.setGroup( "General" );
@@ -86,14 +86,14 @@ void KateSessionMenu::initialize()
 
   m_sessions.sort();
 
-  for ( QStringList::ConstIterator it1 = m_sessions.begin(); it1 != m_sessions.end(); ++it1 )
+  for ( TQStringList::ConstIterator it1 = m_sessions.begin(); it1 != m_sessions.end(); ++it1 )
   {
     insertItem( *it1, id++ );
   }
 
   // means for updating, to let the user manually update if he/she added new sessions.
   insertSeparator();
-  insertItem( SmallIconSet("reload"), i18n("Reload Session List"), this, SLOT(reinitialize()) );
+  insertItem( SmallIconSet("reload"), i18n("Reload Session List"), this, TQT_SLOT(reinitialize()) );
 }
 
 void KateSessionMenu::slotExec( int id )
@@ -101,7 +101,7 @@ void KateSessionMenu::slotExec( int id )
   if ( id < 0 )
     return;
 
-  QStringList args;
+  TQStringList args;
   if ( id > 0 )
     args << "--start";
 
@@ -109,9 +109,9 @@ void KateSessionMenu::slotExec( int id )
   if ( id == 1 )
   {
     bool ok (false);
-    QString name = KInputDialog::getText( i18n("Session Name"),
+    TQString name = KInputDialog::getText( i18n("Session Name"),
                                           i18n("Please enter a name for the new session"),
-                                          QString::null,
+                                          TQString::null,
                                           &ok, 0, 0, new Validator( m_parent ) );
     if ( ! ok )
       return;

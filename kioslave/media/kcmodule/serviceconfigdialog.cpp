@@ -23,20 +23,20 @@
 #include <klineedit.h>
 #include <kactionselector.h>
 #include <kicondialog.h>
-#include <qlistbox.h>
+#include <tqlistbox.h>
 #include <kservice.h>
 #include <kopenwith.h>
 #include <kpushbutton.h>
 #include <kiconloader.h>
-#include <qpixmap.h>
-#include <qiconset.h>
+#include <tqpixmap.h>
+#include <tqiconset.h>
 
 
 #include "mimetypelistboxitem.h"
 
 ServiceConfigDialog::ServiceConfigDialog(NotifierServiceAction *action,
-                                         const QStringList &mimetypesList,
-                                         QWidget* parent, const char* name)
+                                         const TQStringList &mimetypesList,
+                                         TQWidget* parent, const char* name)
 	: KDialogBase(parent, name, true, i18n("Edit Service"), Ok|Cancel, Ok, true),
 	  m_action(action)
 {
@@ -46,22 +46,22 @@ ServiceConfigDialog::ServiceConfigDialog(NotifierServiceAction *action,
 	m_view->labelEdit->setText( m_action->label() );
 	m_view->commandEdit->setText( m_action->service().m_strExec );
 
-	QIconSet iconSet = SmallIconSet("configure");
-	QPixmap pixMap = iconSet.pixmap( QIconSet::Small, QIconSet::Normal );
+	TQIconSet iconSet = SmallIconSet("configure");
+	TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
 	m_view->commandButton->setIconSet( iconSet );
 	m_view->commandButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
 	
 	m_iconChanged = false;
 
-	QStringList all_mimetypes = mimetypesList;
-	QStringList action_mimetypes = action->mimetypes();
+	TQStringList all_mimetypes = mimetypesList;
+	TQStringList action_mimetypes = action->mimetypes();
 
-	QStringList::iterator it = all_mimetypes.begin();
-	QStringList::iterator end = all_mimetypes.end();
+	TQStringList::iterator it = all_mimetypes.begin();
+	TQStringList::iterator end = all_mimetypes.end();
 
 	for (  ; it!=end; ++it )
 	{
-		QListBox *list;
+		TQListBox *list;
 		
 		if ( action_mimetypes.contains( *it ) )
 		{
@@ -78,10 +78,10 @@ ServiceConfigDialog::ServiceConfigDialog(NotifierServiceAction *action,
 	setMainWidget(m_view);
 	setCaption( m_action->label() );
 
-	connect( m_view->iconButton, SIGNAL( iconChanged(QString) ),
-	         this, SLOT( slotIconChanged() ) );
-	connect( m_view->commandButton, SIGNAL( clicked() ),
-	         this, SLOT( slotCommand() ) );
+	connect( m_view->iconButton, TQT_SIGNAL( iconChanged(TQString) ),
+	         this, TQT_SLOT( slotIconChanged() ) );
+	connect( m_view->commandButton, TQT_SIGNAL( clicked() ),
+	         this, TQT_SLOT( slotCommand() ) );
 }
 
 bool operator==( KDEDesktopMimeType::Service s1, KDEDesktopMimeType::Service s2 )
@@ -103,12 +103,12 @@ void ServiceConfigDialog::slotOk()
 	service.m_strIcon = m_view->iconButton->icon();
 	service.m_strExec = m_view->commandEdit->text();
 
-	QStringList mimetypes;
+	TQStringList mimetypes;
 	
 	uint list_count = m_view->mimetypesSelector->selectedListBox()->count();
 	for( uint i=0; i < list_count; ++i )
 	{
-		QListBoxItem *item = m_view->mimetypesSelector->selectedListBox()->item(i);
+		TQListBoxItem *item = m_view->mimetypesSelector->selectedListBox()->item(i);
 		MimetypeListBoxItem *mime_item = static_cast<MimetypeListBoxItem*>( item );
 		mimetypes.append( mime_item->mimetype() );
 	}
@@ -134,7 +134,7 @@ void ServiceConfigDialog::slotCommand()
 {
 	KOpenWithDlg d(this);
 	int value = d.exec();
-	if ( value == QDialog::Accepted )
+	if ( value == TQDialog::Accepted )
 	{
 		KService::Ptr service = d.service();
 		if ( service != 0L )

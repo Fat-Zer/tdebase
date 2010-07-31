@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _menuinfo_h_
 #define _menuinfo_h_
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdemacros.h>
 
@@ -34,19 +34,19 @@ class QWidget;
 class KDE_EXPORT MenuInfo
 {
 public:
-    MenuInfo(const QString& desktopFile);
+    MenuInfo(const TQString& desktopFile);
 
-    QString name() const    { return name_; }
-    QString comment() const { return comment_; }
-    QString icon() const    { return icon_; }
-    QString library() const { return library_; }
-    QString desktopFile() const { return desktopfile_; }
+    TQString name() const    { return name_; }
+    TQString comment() const { return comment_; }
+    TQString icon() const    { return icon_; }
+    TQString library() const { return library_; }
+    TQString desktopFile() const { return desktopfile_; }
     bool isValid() const    { return !name_.isEmpty(); }
 
-    KPanelMenu* load(QWidget *parent = 0, const char *name = 0);
+    KPanelMenu* load(TQWidget *parent = 0, const char *name = 0);
 
 private:
-    QString name_, comment_, icon_, library_, desktopfile_;
+    TQString name_, comment_, icon_, library_, desktopfile_;
 };
 
 #endif

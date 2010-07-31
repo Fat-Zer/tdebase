@@ -16,10 +16,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -34,8 +34,8 @@
 #include "searchprovider.h"
 
 SearchProviderDialog::SearchProviderDialog(SearchProvider *provider,
-                                           QWidget *parent, const char *name)
-                     :KDialogBase(parent, name, true, QString::null, Ok|Cancel),
+                                           TQWidget *parent, const char *name)
+                     :KDialogBase(parent, name, true, TQString::null, Ok|Cancel),
                       m_provider(provider)
 {
     m_dlg = new SearchProviderDlgUI (this);
@@ -45,12 +45,12 @@ SearchProviderDialog::SearchProviderDialog(SearchProvider *provider,
 
     m_dlg->leQuery->setMinimumWidth(kapp->fontMetrics().maxWidth() * 40);
 
-    connect(m_dlg->leName, SIGNAL(textChanged(const QString &)), SLOT(slotChanged()));
-    connect(m_dlg->leQuery, SIGNAL(textChanged(const QString &)), SLOT(slotChanged()));
-    connect(m_dlg->leShortcut, SIGNAL(textChanged(const QString &)), SLOT(slotChanged()));
+    connect(m_dlg->leName, TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT(slotChanged()));
+    connect(m_dlg->leQuery, TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT(slotChanged()));
+    connect(m_dlg->leShortcut, TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT(slotChanged()));
 
     // Data init
-    QStringList charsets = KGlobal::charsets()->availableEncodingNames();
+    TQStringList charsets = KGlobal::charsets()->availableEncodingNames();
     charsets.prepend(i18n("Default"));
     m_dlg->cbCharset->insertStringList(charsets);
 
@@ -86,15 +86,15 @@ void SearchProviderDialog::slotOk()
             i18n("The URI does not contain a \\{...} placeholder for the user query.\n"
                  "This means that the same page is always going to be visited, "
                  "regardless of what the user types."),
-            QString::null, i18n("Keep It")) == KMessageBox::Cancel)
+            TQString::null, i18n("Keep It")) == KMessageBox::Cancel)
         return;
 
     if (!m_provider)
         m_provider = new SearchProvider;
     m_provider->setName(m_dlg->leName->text().stripWhiteSpace());
     m_provider->setQuery(m_dlg->leQuery->text().stripWhiteSpace());
-    m_provider->setKeys(QStringList::split(",", m_dlg->leShortcut->text().stripWhiteSpace()));
-    m_provider->setCharset(m_dlg->cbCharset->currentItem() ? m_dlg->cbCharset->currentText() : QString::null);
+    m_provider->setKeys(TQStringList::split(",", m_dlg->leShortcut->text().stripWhiteSpace()));
+    m_provider->setCharset(m_dlg->cbCharset->currentItem() ? m_dlg->cbCharset->currentText() : TQString::null);
     KDialog::accept();
 }
 

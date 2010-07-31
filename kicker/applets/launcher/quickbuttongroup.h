@@ -7,7 +7,7 @@
 #ifndef __quickbuttongroup_h__
 #define __quickbuttongroup_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <functional>
 #include "easyvector.h"
 #include "quickbutton.h"
@@ -17,7 +17,7 @@ class QuickButtonGroup: virtual public EasyVector< QuickButton* > {
 public:
     QuickButtonGroup(const EasyVector< QuickButton* > &kv):EasyVector< QuickButton* >(kv){};
     QuickButtonGroup():EasyVector< QuickButton* >(){};
-    Index findDescriptor(const QString &desc);
+    Index findDescriptor(const TQString &desc);
 
     void show();
     void hide();
@@ -27,7 +27,7 @@ public:
     void setUpdatesEnabled(bool enable);
 };
 
-QuickButtonGroup::Index QuickButtonGroup::findDescriptor(const QString &desc)
+QuickButtonGroup::Index QuickButtonGroup::findDescriptor(const TQString &desc)
 {   return findProperty(desc, std::mem_fun(&QuickButton::url));}
 
 inline void QuickButtonGroup::setUpdatesEnabled(bool enable)
@@ -38,10 +38,10 @@ inline void QuickButtonGroup::setUpdatesEnabled(bool enable)
 }
 
 inline void QuickButtonGroup::show()
-{   std::for_each(begin(),end(),std::mem_fun(&QWidget::show));}
+{   std::for_each(begin(),end(),std::mem_fun(&TQWidget::show));}
 
 inline void QuickButtonGroup::hide()
-{   std::for_each(begin(),end(),std::mem_fun(&QWidget::hide));}
+{   std::for_each(begin(),end(),std::mem_fun(&TQWidget::hide));}
 
 inline void QuickButtonGroup::setDragging(bool drag)
 {   std::for_each(begin(),end(),std::bind2nd(std::mem_fun(&QuickButton::setDragging),drag));}

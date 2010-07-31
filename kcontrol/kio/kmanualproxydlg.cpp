@@ -19,12 +19,12 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqspinbox.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -42,7 +42,7 @@
 #include "kmanualproxydlg.h"
 
 
-KManualProxyDlg::KManualProxyDlg( QWidget* parent, const char* name )
+KManualProxyDlg::KManualProxyDlg( TQWidget* parent, const char* name )
                 :KProxyDialogBase( parent, name, true,
                                    i18n("Manual Proxy Configuration") )
 {
@@ -50,7 +50,7 @@ KManualProxyDlg::KManualProxyDlg( QWidget* parent, const char* name )
     setMainWidget( mDlg );
 
     mDlg->pbCopyDown->setPixmap( BarIcon("down", KIcon::SizeSmall) );
-    QSizePolicy sizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed,
+    TQSizePolicy sizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed,
                             mDlg->pbCopyDown->sizePolicy().hasHeightForWidth() );
     mDlg->pbCopyDown->setSizePolicy( sizePolicy );
 
@@ -63,19 +63,19 @@ void KManualProxyDlg::init()
     mDlg->sbHttps->setRange( 0, MAX_PORT_VALUE );
     mDlg->sbFtp->setRange( 0, MAX_PORT_VALUE );
 
-    connect( mDlg->pbNew, SIGNAL( clicked() ), SLOT( newPressed() ) );
-    connect( mDlg->pbChange, SIGNAL( clicked() ), SLOT( changePressed() ) );
-    connect( mDlg->pbDelete, SIGNAL( clicked() ), SLOT( deletePressed() ) );
-    connect( mDlg->pbDeleteAll, SIGNAL( clicked() ), SLOT( deleteAllPressed() ) );
+    connect( mDlg->pbNew, TQT_SIGNAL( clicked() ), TQT_SLOT( newPressed() ) );
+    connect( mDlg->pbChange, TQT_SIGNAL( clicked() ), TQT_SLOT( changePressed() ) );
+    connect( mDlg->pbDelete, TQT_SIGNAL( clicked() ), TQT_SLOT( deletePressed() ) );
+    connect( mDlg->pbDeleteAll, TQT_SIGNAL( clicked() ), TQT_SLOT( deleteAllPressed() ) );
 
-    connect( mDlg->lbExceptions, SIGNAL(selectionChanged()), SLOT(updateButtons()) );
-    connect( mDlg->lbExceptions, SIGNAL(doubleClicked (QListBoxItem *)), SLOT(changePressed()));
+    connect( mDlg->lbExceptions, TQT_SIGNAL(selectionChanged()), TQT_SLOT(updateButtons()) );
+    connect( mDlg->lbExceptions, TQT_SIGNAL(doubleClicked (TQListBoxItem *)), TQT_SLOT(changePressed()));
 
-    connect( mDlg->cbSameProxy, SIGNAL( toggled(bool) ), SLOT( sameProxy(bool) ) );
-    connect( mDlg->pbCopyDown, SIGNAL( clicked() ), SLOT( copyDown() ) );
+    connect( mDlg->cbSameProxy, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( sameProxy(bool) ) );
+    connect( mDlg->pbCopyDown, TQT_SIGNAL( clicked() ), TQT_SLOT( copyDown() ) );
 
-    connect( mDlg->leHttp, SIGNAL(textChanged(const QString&)), SLOT(textChanged(const QString&)) );
-    connect( mDlg->sbHttp, SIGNAL(valueChanged(int)), SLOT(valueChanged (int)) );
+    connect( mDlg->leHttp, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(textChanged(const TQString&)) );
+    connect( mDlg->sbHttp, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(valueChanged (int)) );
 }
 
 void KManualProxyDlg::setProxyData( const KProxyData &data )
@@ -142,7 +142,7 @@ void KManualProxyDlg::setProxyData( const KProxyData &data )
       }
     }
 
-    QStringList::ConstIterator it = data.noProxyFor.begin();
+    TQStringList::ConstIterator it = data.noProxyFor.begin();
     for( ; it != data.noProxyFor.end(); ++it )
     {
       // "no_proxy" is a keyword used by the environment variable
@@ -182,7 +182,7 @@ const KProxyData KManualProxyDlg::data() const
 
     if ( mDlg->lbExceptions->count() )
     {
-        QListBoxItem* item = mDlg->lbExceptions->firstItem();
+        TQListBoxItem* item = mDlg->lbExceptions->firstItem();
         for( ; item != 0L; item = item->next() )
             data.noProxyFor << item->text();
     }
@@ -210,7 +210,7 @@ void KManualProxyDlg::sameProxy( bool enable )
       mOldHttpsPort = mDlg->sbHttps->value();
 
       int port = mDlg->sbHttp->value();
-      QString text = mDlg->leHttp->text();
+      TQString text = mDlg->leHttp->text();
 
       mDlg->leFtp->setText (text);
       mDlg->leHttps->setText (text);
@@ -276,7 +276,7 @@ bool KManualProxyDlg::validate()
     return (count > 0);
 }
 
-void KManualProxyDlg::textChanged(const QString& text)
+void KManualProxyDlg::textChanged(const TQString& text)
 {
     if (!mDlg->cbSameProxy->isChecked())
         return;
@@ -332,17 +332,17 @@ void KManualProxyDlg::slotOk()
     }
 }
 
-bool KManualProxyDlg::handleDuplicate( const QString& site )
+bool KManualProxyDlg::handleDuplicate( const TQString& site )
 {
-    QListBoxItem* item = mDlg->lbExceptions->firstItem();
+    TQListBoxItem* item = mDlg->lbExceptions->firstItem();
     while ( item != 0 )
     {
         if ( item->text().findRev( site ) != -1 &&
              item != mDlg->lbExceptions->selectedItem() )
         {
-            QString msg = i18n("You entered a duplicate address. "
+            TQString msg = i18n("You entered a duplicate address. "
                                "Please try again.");
-            QString details = i18n("<qt><center><b>%1</b></center> "
+            TQString details = i18n("<qt><center><b>%1</b></center> "
                                    "is already in the list.</qt>").arg(site);
             KMessageBox::detailedError( this, msg, details, i18n("Duplicate Entry") );
             return true;
@@ -355,14 +355,14 @@ bool KManualProxyDlg::handleDuplicate( const QString& site )
 
 void KManualProxyDlg::newPressed()
 {
-  QString result;
+  TQString result;
   if( getException(result, i18n("New Exception")) && !handleDuplicate(result) )
     mDlg->lbExceptions->insertItem( result );
 }
 
 void KManualProxyDlg::changePressed()
 {
-  QString result;
+  TQString result;
   if( getException( result, i18n("Change Exception"), 
                     mDlg->lbExceptions->currentText() ) &&
       !handleDuplicate( result ) )
@@ -392,11 +392,11 @@ void KManualProxyDlg::updateButtons()
     mDlg->pbChange->setEnabled( itemSelected );
 }
 
-QString KManualProxyDlg::urlFromInput(const KLineEdit* edit, 
-                                      const QSpinBox* spin) const
+TQString KManualProxyDlg::urlFromInput(const KLineEdit* edit, 
+                                      const TQSpinBox* spin) const
 {
   if (!edit)
-    return QString::null;
+    return TQString::null;
     
   KURL u( edit->text() );
   
@@ -406,11 +406,11 @@ QString KManualProxyDlg::urlFromInput(const KLineEdit* edit,
   return u.url();
 }
 
-bool KManualProxyDlg::isValidURL( const QString& _url, KURL* result ) const
+bool KManualProxyDlg::isValidURL( const TQString& _url, KURL* result ) const
 {
     KURL url (_url);
     
-    QStringList filters;
+    TQStringList filters;
     filters << "kshorturifilter" << "localdomainurifilter";
     
     // If the typed URL is malformed, and the filters cannot filter it
@@ -419,7 +419,7 @@ bool KManualProxyDlg::isValidURL( const QString& _url, KURL* result ) const
         !url.hasHost() )
       return false;
       
-    QString host (url.host());
+    TQString host (url.host());
     
     // We only check for a relevant subset of characters that are 
     // not allowed in <authority> component of a URL.
@@ -432,11 +432,11 @@ bool KManualProxyDlg::isValidURL( const QString& _url, KURL* result ) const
     return true;
 }
 
-void KManualProxyDlg::showErrorMsg( const QString& caption, 
-                                    const QString& message )
+void KManualProxyDlg::showErrorMsg( const TQString& caption, 
+                                    const TQString& message )
 {
-  QString cap( caption );
-  QString msg( message );
+  TQString cap( caption );
+  TQString msg( message );
    
   if ( cap.isNull() )
     cap = i18n("Invalid Entry");
@@ -444,7 +444,7 @@ void KManualProxyDlg::showErrorMsg( const QString& caption,
   if ( msg.isNull() )
     msg = i18n("The address you have entered is not valid.");
   
-  QString details = i18n("<qt>Make sure none of the addresses or URLs you "
+  TQString details = i18n("<qt>Make sure none of the addresses or URLs you "
                           "specified contain invalid or wildcard characters "
                           "such as spaces, asterisks (*), or question marks(?).<p>"
                           "<u>Examples of VALID entries:</u><br/>"
@@ -457,11 +457,11 @@ void KManualProxyDlg::showErrorMsg( const QString& caption,
   KMessageBox::detailedError( this, msg, details, cap );
 }
 
-bool KManualProxyDlg::getException ( QString& result,
-                                     const QString& caption, 
-                                     const QString& value )
+bool KManualProxyDlg::getException ( TQString& result,
+                                     const TQString& caption, 
+                                     const TQString& value )
 {
-    QString label;
+    TQString label;
     
     // Specify the appropriate message...
     if ( mDlg->cbReverseProxy->isChecked() )
@@ -471,7 +471,7 @@ bool KManualProxyDlg::getException ( QString& result,
       label = i18n("Enter the address or URL that should be excluded from "
                    "using the above proxy settings:");
     
-    QString whatsThis = i18n("<qt>Enter a valid address or url.<p>"
+    TQString whatsThis = i18n("<qt>Enter a valid address or url.<p>"
                             "<b><u>NOTE:</u></b> Wildcard matching such as "
                             "<code>*.kde.org</code> is not supported. If you want "
                             "to match any host in the <code>.kde.org</code> domain, "
@@ -480,7 +480,7 @@ bool KManualProxyDlg::getException ( QString& result,
                             
     bool ok;
     result = KInputDialog::text( caption, label, value, &ok, 0, 0, 0, 
-                                QString::null, whatsThis );
+                                TQString::null, whatsThis );
     
     // If the user pressed cancel, do nothing...
     if (!ok)

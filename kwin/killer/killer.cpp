@@ -51,11 +51,11 @@ int main( int argc, char* argv[] )
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-    QCString hostname = args->getOption( "hostname" );
+    TQCString hostname = args->getOption( "hostname" );
     bool pid_ok = false;
     pid_t pid = args->getOption( "pid" ).toULong( &pid_ok );
-    QString caption = QString::fromUtf8( args->getOption( "windowname" ));
-    QString appname = QString::fromLatin1( args->getOption( "applicationname" ));
+    TQString caption = TQString::fromUtf8( args->getOption( "windowname" ));
+    TQString appname = TQString::fromLatin1( args->getOption( "applicationname" ));
     bool id_ok = false;
     Window id = args->getOption( "wid" ).toULong( &id_ok );
     bool time_ok = false;
@@ -67,13 +67,13 @@ int main( int argc, char* argv[] )
 	KCmdLineArgs::usage( i18n( "This helper utility is not supposed to be called directly." ));
 	return 1;
         }
-    QString question = i18n(
+    TQString question = i18n(
 	"<qt>Window with title \"<b>%2</b>\" is not responding. "
 	"This window belongs to application <b>%1</b> (PID=%3, hostname=%4).<p>"
 	"Do you wish to terminate this application? (All unsaved data in this application will be lost.)</qt>" )
 	.arg( appname ).arg( caption ).arg( pid ).arg( hostname );
     app.updateUserTimestamp( timestamp );
-    if( KMessageBox::warningYesNoWId( id, question, QString::null, i18n("Terminate"), i18n("Keep Running") ) == KMessageBox::Yes )
+    if( KMessageBox::warningYesNoWId( id, question, TQString::null, i18n("Terminate"), i18n("Keep Running") ) == KMessageBox::Yes )
         {    
 	if( hostname != "localhost" )
             {

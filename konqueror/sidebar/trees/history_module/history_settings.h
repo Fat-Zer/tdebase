@@ -20,12 +20,12 @@
 #ifndef HISTORY_SETTINGS_H
 #define HISTORY_SETTINGS_H
 
-#include <qfont.h>
-#include <qobject.h>
+#include <tqfont.h>
+#include <tqobject.h>
 
 #include <dcopobject.h>
 
-class KonqSidebarHistorySettings : public QObject, public DCOPObject
+class KonqSidebarHistorySettings : public TQObject, public DCOPObject
 {
     K_DCOP
     Q_OBJECT
@@ -33,7 +33,7 @@ class KonqSidebarHistorySettings : public QObject, public DCOPObject
 public:
     enum { MINUTES, DAYS };
 
-    KonqSidebarHistorySettings( QObject *parent, const char *name );
+    KonqSidebarHistorySettings( TQObject *parent, const char *name );
     virtual ~KonqSidebarHistorySettings();
 
     void readSettings(bool global);
@@ -47,8 +47,8 @@ public:
 
     bool m_detailedTips;
 
-    QFont m_fontYoungerThan;
-    QFont m_fontOlderThan;
+    TQFont m_fontYoungerThan;
+    TQFont m_fontOlderThan;
 
 signals:
     void settingsChanged();

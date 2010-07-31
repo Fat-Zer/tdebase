@@ -39,14 +39,14 @@ class BookmarksButton : public PanelPopupButton
     Q_OBJECT
 
 public:
-    BookmarksButton(QWidget* parent);
+    BookmarksButton(TQWidget* parent);
     ~BookmarksButton();
 
     void loadConfig(const KConfigGroup& config);
     virtual void properties();
 
 protected:
-    virtual QString tileName() { return "WindowList"; }
+    virtual TQString tileName() { return "WindowList"; }
     virtual void initPopup();
 
     KPopupMenu*          bookmarkParent;

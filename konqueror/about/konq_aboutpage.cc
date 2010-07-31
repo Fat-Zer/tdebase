@@ -1,6 +1,6 @@
 #include "konq_aboutpage.h"
 
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -16,19 +16,19 @@
 #include <kconfig.h>
 
 #include <assert.h>
-#include <qfile.h>
-#include <qdir.h>
+#include <tqfile.h>
+#include <tqdir.h>
 
 K_EXPORT_COMPONENT_FACTORY( konq_aboutpage, KonqAboutPageFactory )
 
 KInstance *KonqAboutPageFactory::s_instance = 0;
-QString *KonqAboutPageFactory::s_launch_html = 0;
-QString *KonqAboutPageFactory::s_intro_html = 0;
-QString *KonqAboutPageFactory::s_specs_html = 0;
-QString *KonqAboutPageFactory::s_tips_html = 0;
-QString *KonqAboutPageFactory::s_plugins_html = 0;
+TQString *KonqAboutPageFactory::s_launch_html = 0;
+TQString *KonqAboutPageFactory::s_intro_html = 0;
+TQString *KonqAboutPageFactory::s_specs_html = 0;
+TQString *KonqAboutPageFactory::s_tips_html = 0;
+TQString *KonqAboutPageFactory::s_plugins_html = 0;
 
-KonqAboutPageFactory::KonqAboutPageFactory( QObject *parent, const char *name )
+KonqAboutPageFactory::KonqAboutPageFactory( TQObject *parent, const char *name )
     : KParts::Factory( parent, name )
 {
     s_instance = new KInstance( "konqaboutpage" );
@@ -50,9 +50,9 @@ KonqAboutPageFactory::~KonqAboutPageFactory()
     s_plugins_html = 0;
 }
 
-KParts::Part *KonqAboutPageFactory::createPartObject( QWidget *parentWidget, const char *widgetName,
-                                                      QObject *parent, const char *name,
-                                                      const char *, const QStringList & )
+KParts::Part *KonqAboutPageFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
+                                                      TQObject *parent, const char *name,
+                                                      const char *, const TQStringList & )
 {
     //KonqFrame *frame = dynamic_cast<KonqFrame *>( parentWidget );
     //if ( !frame ) return 0;
@@ -61,32 +61,32 @@ KParts::Part *KonqAboutPageFactory::createPartObject( QWidget *parentWidget, con
                               parentWidget, widgetName, parent, name );
 }
 
-QString KonqAboutPageFactory::loadFile( const QString& file )
+TQString KonqAboutPageFactory::loadFile( const TQString& file )
 {
-    QString res;
+    TQString res;
     if ( file.isEmpty() )
 	return res;
 
-    QFile f( file );
+    TQFile f( file );
 
     if ( !f.open( IO_ReadOnly ) )
 	return res;
 
-    QTextStream t( &f );
+    TQTextStream t( &f );
 
     res = t.read();
 
     // otherwise all embedded objects are referenced as about:/...
-    QString basehref = QString::fromLatin1("<BASE HREF=\"file:") +
+    TQString basehref = TQString::fromLatin1("<BASE HREF=\"file:") +
 		       file.left( file.findRev( '/' )) +
-		       QString::fromLatin1("/\">\n");
-    QRegExp reg("<head>");
+		       TQString::fromLatin1("/\">\n");
+    TQRegExp reg("<head>");
     reg.setCaseSensitive(FALSE);
     res.replace(reg, "<head>\n\t" + basehref);
     return res;
 }
 
-QString KonqAboutPageFactory::launch()
+TQString KonqAboutPageFactory::launch()
 {
   // FIXME: only regenerate launch page if kuriikwsfilterrc changed.
 	/*
@@ -94,21 +94,21 @@ QString KonqAboutPageFactory::launch()
     return *s_launch_html;
 	*/
 
-  QString res = loadFile( locate( "data", "konqueror/about/launch.html" ));
+  TQString res = loadFile( locate( "data", "konqueror/about/launch.html" ));
   if ( res.isEmpty() )
     return res;
 
   KIconLoader *iconloader = KGlobal::iconLoader();
   int iconSize = iconloader->currentSize(KIcon::Desktop);
-  QString home_icon_path = iconloader->iconPath("kfm_home", KIcon::Desktop );
-  QString storage_icon_path = iconloader->iconPath("system", KIcon::Desktop );
-  QString remote_icon_path = iconloader->iconPath("network", KIcon::Desktop );
-  QString wastebin_icon_path = iconloader->iconPath("trashcan_full", KIcon::Desktop );
-  QString applications_icon_path = iconloader->iconPath("kmenu", KIcon::Desktop );
-  QString settings_icon_path = iconloader->iconPath("kcontrol", KIcon::Desktop );
-  QString help_icon_path = iconloader->iconPath("khelpcenter", KIcon::Desktop );
-  QString home_folder = QDir::homeDirPath();
-  QString continue_icon_path = QApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+  TQString home_icon_path = iconloader->iconPath("kfm_home", KIcon::Desktop );
+  TQString storage_icon_path = iconloader->iconPath("system", KIcon::Desktop );
+  TQString remote_icon_path = iconloader->iconPath("network", KIcon::Desktop );
+  TQString wastebin_icon_path = iconloader->iconPath("trashcan_full", KIcon::Desktop );
+  TQString applications_icon_path = iconloader->iconPath("kmenu", KIcon::Desktop );
+  TQString settings_icon_path = iconloader->iconPath("kcontrol", KIcon::Desktop );
+  TQString help_icon_path = iconloader->iconPath("khelpcenter", KIcon::Desktop );
+  TQString home_folder = TQDir::homeDirPath();
+  TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
 
   res = res.arg( locate( "data", "kdeui/about/kde_infopage.css" ) );
   if ( kapp->reverseLayout() )
@@ -117,15 +117,15 @@ QString KonqAboutPageFactory::launch()
     res = res.arg( "" );
 
   // Try to split page in three. If it succeeds, insert the default search into the middle part.
-  QStringList parts = QStringList::split( "<!--search bar splitter-->", res );
+  TQStringList parts = TQStringList::split( "<!--search bar splitter-->", res );
   if ( parts.count() == 3 ) {
     KConfig config( "kuriikwsfilterrc", true /*read-only*/, false /*no KDE globals*/ );
     config.setGroup( "General" );
-    QString name = config.readEntry("DefaultSearchEngine");
+    TQString name = config.readEntry("DefaultSearchEngine");
     KService::Ptr service =
-        KService::serviceByDesktopPath(QString("searchproviders/%1.desktop").arg(name));
+        KService::serviceByDesktopPath(TQString("searchproviders/%1.desktop").arg(name));
     if ( service ) {
-      QString searchBar = parts[1];
+      TQString searchBar = parts[1];
       searchBar = searchBar
           .arg( iconSize ).arg( iconSize )
           .arg( service->name() )
@@ -176,24 +176,24 @@ QString KonqAboutPageFactory::launch()
       ;
   i18n("Search the Web");//i18n for possible future use
 
-  s_launch_html = new QString( res );
+  s_launch_html = new TQString( res );
 
   return res;
 }
 
-QString KonqAboutPageFactory::intro()
+TQString KonqAboutPageFactory::intro()
 {
     if ( s_intro_html )
         return *s_intro_html;
 
-    QString res = loadFile( locate( "data", "konqueror/about/intro.html" ));
+    TQString res = loadFile( locate( "data", "konqueror/about/intro.html" ));
     if ( res.isEmpty() )
 	return res;
 
     KIconLoader *iconloader = KGlobal::iconLoader();
-    QString back_icon_path = QApplication::reverseLayout()?iconloader->iconPath("forward", KIcon::Small ):iconloader->iconPath("back", KIcon::Small );
-    QString gohome_icon_path = iconloader->iconPath("gohome", KIcon::Small );
-    QString continue_icon_path = QApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+    TQString back_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("forward", KIcon::Small ):iconloader->iconPath("back", KIcon::Small );
+    TQString gohome_icon_path = iconloader->iconPath("gohome", KIcon::Small );
+    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
 
     res = res.arg( locate( "data", "kdeui/about/kde_infopage.css" ) );
     if ( kapp->reverseLayout() )
@@ -234,19 +234,19 @@ QString KonqAboutPageFactory::intro()
 	;
 
 
-    s_intro_html = new QString( res );
+    s_intro_html = new TQString( res );
 
     return res;
 }
 
-QString KonqAboutPageFactory::specs()
+TQString KonqAboutPageFactory::specs()
 {
     if ( s_specs_html )
         return *s_specs_html;
 
     KIconLoader *iconloader = KGlobal::iconLoader();
-    QString res = loadFile( locate( "data", "konqueror/about/specs.html" ));
-    QString continue_icon_path = QApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+    TQString res = loadFile( locate( "data", "konqueror/about/specs.html" ));
+    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
     if ( res.isEmpty() )
 	return res;
 
@@ -316,36 +316,36 @@ QString KonqAboutPageFactory::specs()
 
           ;
 
-    s_specs_html = new QString( res );
+    s_specs_html = new TQString( res );
 
     return res;
 }
 
-QString KonqAboutPageFactory::tips()
+TQString KonqAboutPageFactory::tips()
 {
     if ( s_tips_html )
         return *s_tips_html;
 
-    QString res = loadFile( locate( "data", "konqueror/about/tips.html" ));
+    TQString res = loadFile( locate( "data", "konqueror/about/tips.html" ));
     if ( res.isEmpty() )
 	return res;
 
     KIconLoader *iconloader = KGlobal::iconLoader();
-    QString viewmag_icon_path =
+    TQString viewmag_icon_path =
 	    iconloader->iconPath("viewmag", KIcon::Small );
-    QString history_icon_path =
+    TQString history_icon_path =
 	    iconloader->iconPath("history", KIcon::Small );
-    QString openterm_icon_path =
+    TQString openterm_icon_path =
 	    iconloader->iconPath("openterm", KIcon::Small );
-    QString locationbar_erase_rtl_icon_path =
+    TQString locationbar_erase_rtl_icon_path =
 	    iconloader->iconPath("clear_left", KIcon::Small );
-    QString locationbar_erase_icon_path =
+    TQString locationbar_erase_icon_path =
 	    iconloader->iconPath("locationbar_erase", KIcon::Small );
-    QString window_fullscreen_icon_path =
+    TQString window_fullscreen_icon_path =
 	    iconloader->iconPath("window_fullscreen", KIcon::Small );
-    QString view_left_right_icon_path =
+    TQString view_left_right_icon_path =
 	    iconloader->iconPath("view_left_right", KIcon::Small );
-    QString continue_icon_path = QApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
 
     res = res.arg( locate( "data", "kdeui/about/kde_infopage.css" ) );
     if ( kapp->reverseLayout() )
@@ -372,7 +372,7 @@ QString KonqAboutPageFactory::tips()
 	  .arg( i18n( "When you want to paste a new address into the Location toolbar you might want to "
 		      "clear the current entry by pressing the black arrow with the white cross "
 		      "<img width='16' height='16' src=\"%1\"> in the toolbar.")
-              .arg(QApplication::reverseLayout() ? locationbar_erase_rtl_icon_path : locationbar_erase_icon_path))
+              .arg(TQApplication::reverseLayout() ? locationbar_erase_rtl_icon_path : locationbar_erase_icon_path))
 	  .arg( i18n( "To create a link on your desktop pointing to the current page, "
 		      "simply drag the \"Location\" label that is to the left of the Location toolbar, drop it on to "
 		      "the desktop, and choose \"Link\"." ) )
@@ -401,18 +401,18 @@ QString KonqAboutPageFactory::tips()
           ;
 
 
-    s_tips_html = new QString( res );
+    s_tips_html = new TQString( res );
 
     return res;
 }
 
 
-QString KonqAboutPageFactory::plugins()
+TQString KonqAboutPageFactory::plugins()
 {
     if ( s_plugins_html )
         return *s_plugins_html;
 
-    QString res = loadFile( locate( "data", kapp->reverseLayout() ? "konqueror/about/plugins_rtl.html" : "konqueror/about/plugins.html" ))
+    TQString res = loadFile( locate( "data", kapp->reverseLayout() ? "konqueror/about/plugins_rtl.html" : "konqueror/about/plugins.html" ))
                   .arg(i18n("Installed Plugins"))
                   .arg(i18n("<td>Plugin</td><td>Description</td><td>File</td><td>Types</td>"))
                   .arg(i18n("Installed"))
@@ -420,19 +420,19 @@ QString KonqAboutPageFactory::plugins()
     if ( res.isEmpty() )
 	return res;
 
-    s_plugins_html = new QString( res );
+    s_plugins_html = new TQString( res );
 
     return res;
 }
 
 
 KonqAboutPage::KonqAboutPage( //KonqMainWindow *
-                              QWidget *parentWidget, const char *widgetName,
-                              QObject *parent, const char *name )
+                              TQWidget *parentWidget, const char *widgetName,
+                              TQObject *parent, const char *name )
     : KHTMLPart( parentWidget, widgetName, parent, name, BrowserViewGUI )
 {
     //m_mainWindow = mainWindow;
-    QTextCodec* codec = KGlobal::locale()->codecForEncoding();
+    TQTextCodec* codec = KGlobal::locale()->codecForEncoding();
     if (codec)
 	setCharset(codec->name(), true);
     else
@@ -453,9 +453,9 @@ bool KonqAboutPage::openURL( const KURL &u )
 	if ( u.url() == "about:plugins" )
 		serve( KonqAboutPageFactory::plugins(), "plugins" );
 	else if ( !u.query().isEmpty() ) {
-		QMap< QString, QString > queryItems = u.queryItems( 0 );
-		QMap< QString, QString >::ConstIterator query = queryItems.begin();
-		QString newUrl;
+		TQMap< TQString, TQString > queryItems = u.queryItems( 0 );
+		TQMap< TQString, TQString >::ConstIterator query = queryItems.begin();
+		TQString newUrl;
 		if (query.key() == "strigi") {
 		  newUrl = KURIFilter::self()->filteredURI( query.key() + ":?q=" + query.data() );
 		} else {
@@ -473,66 +473,66 @@ bool KonqAboutPage::openFile()
     return true;
 }
 
-void KonqAboutPage::saveState( QDataStream &stream )
+void KonqAboutPage::saveState( TQDataStream &stream )
 {
     stream << m_htmlDoc;
     stream << m_what;
 }
 
-void KonqAboutPage::restoreState( QDataStream &stream )
+void KonqAboutPage::restoreState( TQDataStream &stream )
 {
     stream >> m_htmlDoc;
     stream >> m_what;
     serve( m_htmlDoc, m_what );
 }
 
-void KonqAboutPage::serve( const QString& html, const QString& what )
+void KonqAboutPage::serve( const TQString& html, const TQString& what )
 {
     m_what = what;
-    begin( KURL( QString("about:%1").arg(what) ) );
+    begin( KURL( TQString("about:%1").arg(what) ) );
     write( html );
     end();
     m_htmlDoc = html;
 }
 
-void KonqAboutPage::urlSelected( const QString &url, int button, int state, const QString &target, KParts::URLArgs _args )
+void KonqAboutPage::urlSelected( const TQString &url, int button, int state, const TQString &target, KParts::URLArgs _args )
 {
     KURL u( url );
     if ( u.protocol() == "exec" )
     {
-        QStringList args = QStringList::split( QChar( ' ' ), url.mid( 6 ) );
-        QString executable = args[ 0 ];
+        TQStringList args = TQStringList::split( TQChar( ' ' ), url.mid( 6 ) );
+        TQString executable = args[ 0 ];
         args.remove( args.begin() );
         KApplication::kdeinitExec( executable, args );
         return;
     }
 
-    if ( url == QString::fromLatin1("launch.html") )
+    if ( url == TQString::fromLatin1("launch.html") )
     {
         emit browserExtension()->openURLNotify();
 	serve( KonqAboutPageFactory::launch(), "konqueror" );
         return;
     }
-    else if ( url == QString::fromLatin1("intro.html") )
+    else if ( url == TQString::fromLatin1("intro.html") )
     {
         emit browserExtension()->openURLNotify();
         serve( KonqAboutPageFactory::intro(), "konqueror" );
         return;
     }
-    else if ( url == QString::fromLatin1("specs.html") )
+    else if ( url == TQString::fromLatin1("specs.html") )
     {
         emit browserExtension()->openURLNotify();
 	serve( KonqAboutPageFactory::specs(), "konqueror" );
         return;
     }
-    else if ( url == QString::fromLatin1("tips.html") )
+    else if ( url == TQString::fromLatin1("tips.html") )
     {
         emit browserExtension()->openURLNotify();
         serve( KonqAboutPageFactory::tips(), "konqueror" );
         return;
     }
 
-    else if ( url == QString::fromLatin1("config:/disable_overview") )
+    else if ( url == TQString::fromLatin1("config:/disable_overview") )
     {
 	if ( KMessageBox::questionYesNo( widget(),
 					 i18n("Do you want to disable showing "
@@ -540,10 +540,10 @@ void KonqAboutPage::urlSelected( const QString &url, int button, int state, cons
 					 i18n("Faster Startup?"),i18n("Disable"),i18n("Keep") )
 	     == KMessageBox::Yes )
 	{
-	    QString profile = locateLocal("data", "konqueror/profiles/webbrowsing");
+	    TQString profile = locateLocal("data", "konqueror/profiles/webbrowsing");
 	    KSaveFile file( profile );
 	    if ( file.status() == 0 ) {
-		QCString content = "[Profile]\n"
+		TQCString content = "[Profile]\n"
 			           "Name=Web-Browser";
 		fputs( content.data(), file.fstream() );
 		file.close();

@@ -22,12 +22,12 @@
   DEALINGS IN THE SOFTWARE.
  */
 
-#include <qapplication.h>
-#include <qcursor.h>
-#include <qdatetime.h>
-#include <qlabel.h>
-#include <qtooltip.h>
-#include <qwidget.h>
+#include <tqapplication.h>
+#include <tqcursor.h>
+#include <tqdatetime.h>
+#include <tqlabel.h>
+#include <tqtooltip.h>
+#include <tqwidget.h>
 
 #include <kdebug.h>
 
@@ -118,8 +118,8 @@ void KCommonDecoration::init()
 
     resetLayout();
 
-    connect(this, SIGNAL(keepAboveChanged(bool) ), SLOT(keepAboveChange(bool) ) );
-    connect(this, SIGNAL(keepBelowChanged(bool) ), SLOT(keepBelowChange(bool) ) );
+    connect(this, TQT_SIGNAL(keepAboveChanged(bool) ), TQT_SLOT(keepAboveChange(bool) ) );
+    connect(this, TQT_SIGNAL(keepBelowChanged(bool) ), TQT_SLOT(keepBelowChange(bool) ) );
 
     updateCaption();
 }
@@ -132,9 +132,9 @@ void KCommonDecoration::reset( unsigned long changed )
     }
 }
 
-QRegion KCommonDecoration::cornerShape(WindowCorner)
+TQRegion KCommonDecoration::cornerShape(WindowCorner)
 {
-    return QRegion();
+    return TQRegion();
 }
 
 void KCommonDecoration::updateCaption()
@@ -157,7 +157,7 @@ void KCommonDecoration::borders( int& left, int& right, int& top, int& bottom ) 
 
 void KCommonDecoration::updateLayout() const
 {
-    QRect r = widget()->rect();
+    TQRect r = widget()->rect();
     int r_x, r_y, r_x2, r_y2;
     r.coords(&r_x, &r_y, &r_x2, &r_y2);
 
@@ -182,7 +182,7 @@ void KCommonDecoration::updateLayout() const
     // resize buttons...
     for (int n=0; n<NumButtons; n++) {
         if (m_button[n]) {
-            QSize newSize = QSize(layoutMetric(LM_ButtonWidth, true, m_button[n]),
+            TQSize newSize = TQSize(layoutMetric(LM_ButtonWidth, true, m_button[n]),
                                   layoutMetric(LM_ButtonHeight, true, m_button[n]) );
             if (newSize != m_button[n]->size() )
                 m_button[n]->setSize(newSize);
@@ -262,7 +262,7 @@ void KCommonDecoration::resetLayout()
 
     // shown instead of the window contents in decoration previews
     if(isPreview() ) {
-        m_previewWidget = new QLabel(i18n("%1 is the name of window decoration style", "<center><b>%1 preview</b></center>").arg(visibleName() ), widget());
+        m_previewWidget = new TQLabel(i18n("%1 is the name of window decoration style", "<center><b>%1 preview</b></center>").arg(visibleName() ), widget());
         m_previewWidget->show();
     }
 
@@ -316,7 +316,7 @@ int KCommonDecoration::buttonContainerWidth(const ButtonContainer &btnContainer,
     return w;
 }
 
-void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString& s, bool isLeft)
+void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const TQString& s, bool isLeft)
 {
     if (s.length() > 0) {
         for (unsigned n=0; n < s.length(); n++) {
@@ -328,8 +328,8 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       if (!btn) break;
                       btn->setTipText(i18n("Menu") );
                       btn->setRealizeButtons(LeftButton|RightButton);
-                      connect(btn, SIGNAL(pressed()), SLOT(menuButtonPressed()));
-                      connect(btn, SIGNAL(released()), this, SLOT(menuButtonReleased()));
+                      connect(btn, TQT_SIGNAL(pressed()), TQT_SLOT(menuButtonPressed()));
+                      connect(btn, TQT_SIGNAL(released()), this, TQT_SLOT(menuButtonReleased()));
 
                       m_button[MenuButton] = btn;
                   }
@@ -342,7 +342,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn->setTipText(oad?i18n("Not on all desktops"):i18n("On all desktops") );
                       btn->setToggleButton(true);
                       btn->setOn( oad );
-                      connect(btn, SIGNAL(clicked()), SLOT(toggleOnAllDesktops()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(toggleOnAllDesktops()));
 
                       m_button[OnAllDesktopsButton] = btn;
                   }
@@ -352,7 +352,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn = createButton(HelpButton);
                       if (!btn) break;
                       btn->setTipText(i18n("Help") );
-                      connect(btn, SIGNAL(clicked()), SLOT(showContextHelp()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(showContextHelp()));
 
                       m_button[HelpButton] = btn;
                   }
@@ -362,7 +362,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn = createButton(MinButton);
                       if (!btn) break;
                       btn->setTipText(i18n("Minimize") );
-                      connect(btn, SIGNAL(clicked()), SLOT(minimize()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(minimize()));
 
                       m_button[MinButton] = btn;
                   }
@@ -376,7 +376,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn->setTipText(max?i18n("Restore"):i18n("Maximize") );
                       btn->setToggleButton(true);
                       btn->setOn( max );
-                      connect(btn, SIGNAL(clicked()), SLOT(slotMaximize()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(slotMaximize()));
 
                       m_button[MaxButton] = btn;
                   }
@@ -386,7 +386,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn = createButton(CloseButton);
                       if (!btn) break;
                       btn->setTipText(i18n("Close") );
-                      connect(btn, SIGNAL(clicked()), SLOT(closeWindow()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(closeWindow()));
 
                       m_button[CloseButton] = btn;
                   }
@@ -399,7 +399,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn->setTipText(above?i18n("Do not keep above others"):i18n("Keep above others") );
                       btn->setToggleButton(true);
                       btn->setOn( above );
-                      connect(btn, SIGNAL(clicked()), SLOT(slotKeepAbove()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(slotKeepAbove()));
 
                       m_button[AboveButton] = btn;
                   }
@@ -412,7 +412,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn->setTipText(below?i18n("Do not keep below others"):i18n("Keep below others") );
                       btn->setToggleButton(true);
                       btn->setOn( below );
-                      connect(btn, SIGNAL(clicked()), SLOT(slotKeepBelow()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(slotKeepBelow()));
 
                       m_button[BelowButton] = btn;
                   }
@@ -425,7 +425,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
                       btn->setTipText(shaded?i18n("Unshade"):i18n("Shade") );
                       btn->setToggleButton(true);
                       btn->setOn( shaded );
-                      connect(btn, SIGNAL(clicked()), SLOT(slotShade()));
+                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(slotShade()));
 
                       m_button[ShadeButton] = btn;
                   }
@@ -437,7 +437,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
 
             if (btn) {
                 btn->setLeft(isLeft);
-                btn->setSize(QSize(layoutMetric(LM_ButtonWidth, true, btn),layoutMetric(LM_ButtonHeight, true, btn)) );
+                btn->setSize(TQSize(layoutMetric(LM_ButtonWidth, true, btn),layoutMetric(LM_ButtonHeight, true, btn)) );
                 btn->show();
                 btnContainer.append(btn);
             }
@@ -492,17 +492,17 @@ void KCommonDecoration::show()
     widget()->show();
 }
 
-void KCommonDecoration::resize( const QSize& s )
+void KCommonDecoration::resize( const TQSize& s )
 {
     widget()->resize( s );
 }
 
-QSize KCommonDecoration::minimumSize() const
+TQSize KCommonDecoration::minimumSize() const
 {
     const int minWidth = QMAX(layoutMetric(LM_TitleEdgeLeft), layoutMetric(LM_BorderLeft))
             +QMAX(layoutMetric(LM_TitleEdgeRight), layoutMetric(LM_BorderRight))
             +layoutMetric(LM_TitleBorderLeft)+layoutMetric(LM_TitleBorderRight);
-    return QSize(minWidth,
+    return TQSize(minWidth,
                  layoutMetric(LM_TitleEdgeTop)+layoutMetric(LM_TitleHeight)
                          +layoutMetric(LM_TitleEdgeBottom)
                          +layoutMetric(LM_BorderBottom) );
@@ -623,19 +623,19 @@ void KCommonDecoration::slotKeepBelow()
 
 void KCommonDecoration::menuButtonPressed()
 {
-    static QTime* t = NULL;
+    static TQTime* t = NULL;
     static KCommonDecoration* lastClient = NULL;
     if (t == NULL)
         t = new QTime;
-    bool dbl = (lastClient==this && t->elapsed() <= QApplication::doubleClickInterval());
+    bool dbl = (lastClient==this && t->elapsed() <= TQApplication::doubleClickInterval());
     lastClient = this;
     t->start();
     if (!dbl || !decorationBehaviour(DB_MenuClose) ) {
-        QRect menuRect = m_button[MenuButton]->rect();
-        QPoint menutop = m_button[MenuButton]->mapToGlobal(menuRect.topLeft());
-        QPoint menubottom = m_button[MenuButton]->mapToGlobal(menuRect.bottomRight())+QPoint(0,2);
+        TQRect menuRect = m_button[MenuButton]->rect();
+        TQPoint menutop = m_button[MenuButton]->mapToGlobal(menuRect.topLeft());
+        TQPoint menubottom = m_button[MenuButton]->mapToGlobal(menuRect.bottomRight())+TQPoint(0,2);
         KDecorationFactory* f = factory();
-        showWindowMenu(QRect(menutop, menubottom));
+        showWindowMenu(TQRect(menutop, menubottom));
         if( !f->exists( this )) // 'this' was deleted
             return;
         m_button[MenuButton]->setDown(false);
@@ -650,7 +650,7 @@ void KCommonDecoration::menuButtonReleased()
         closeWindow();
 }
 
-void KCommonDecoration::resizeEvent(QResizeEvent */*e*/)
+void KCommonDecoration::resizeEvent(TQResizeEvent */*e*/)
 {
     if (decorationBehaviour(DB_ButtonHide) )
         calcHiddenButtons();
@@ -663,9 +663,9 @@ void KCommonDecoration::resizeEvent(QResizeEvent */*e*/)
 //     widget()->update();
 }
 
-void KCommonDecoration::moveWidget(int x, int y, QWidget *widget) const
+void KCommonDecoration::moveWidget(int x, int y, TQWidget *widget) const
 {
-    QPoint p = widget->pos();
+    TQPoint p = widget->pos();
     int oldX = p.y();
     int oldY = p.x();
 
@@ -673,9 +673,9 @@ void KCommonDecoration::moveWidget(int x, int y, QWidget *widget) const
         widget->move(x,y);
 }
 
-void KCommonDecoration::resizeWidget(int w, int h, QWidget *widget) const
+void KCommonDecoration::resizeWidget(int w, int h, TQWidget *widget) const
 {
-    QSize s = widget->size();
+    TQSize s = widget->size();
     int oldW = s.width();
     int oldH = s.height();
 
@@ -683,7 +683,7 @@ void KCommonDecoration::resizeWidget(int w, int h, QWidget *widget) const
         widget->resize(w,h);
 }
 
-void KCommonDecoration::mouseDoubleClickEvent(QMouseEvent *e)
+void KCommonDecoration::mouseDoubleClickEvent(TQMouseEvent *e)
 {
     if( e->button() != LeftButton )
         return;
@@ -695,19 +695,19 @@ void KCommonDecoration::mouseDoubleClickEvent(QMouseEvent *e)
         titlebarDblClickOperation();
 }
 
-void KCommonDecoration::wheelEvent(QWheelEvent *e)
+void KCommonDecoration::wheelEvent(TQWheelEvent *e)
 {
     int tb = layoutMetric(LM_TitleEdgeTop)+layoutMetric(LM_TitleHeight)+layoutMetric(LM_TitleEdgeBottom);
     if (isSetShade() || e->pos().y() <= tb )
         titlebarMouseWheelOperation( e->delta());
 }
 
-KCommonDecoration::Position KCommonDecoration::mousePosition(const QPoint &point) const
+KCommonDecoration::Position KCommonDecoration::mousePosition(const TQPoint &point) const
 {
     const int corner = 18+3*layoutMetric(LM_BorderBottom, false)/2;
     Position pos = PositionCenter;
 
-    QRect r = widget()->rect();
+    TQRect r = widget()->rect();
     int r_x, r_y, r_x2, r_y2;
     r.coords(&r_x, &r_y, &r_x2, &r_y2);
     int p_x = point.x();
@@ -778,12 +778,12 @@ void KCommonDecoration::updateWindowShape()
 
     bool tl=true,tr=true,bl=true,br=true; // is there a transparent rounded corner in top-left? etc
 
-    QDesktopWidget *desktop=KApplication::desktop();
+    TQDesktopWidget *desktop=KApplication::desktop();
     // no transparent rounded corners if this window corner lines up with a screen corner
     for(int screen=0; screen < desktop->numScreens(); ++screen)
     {
-        QRect fullscreen(desktop->screenGeometry(screen));
-        QRect window = geometry();
+        TQRect fullscreen(desktop->screenGeometry(screen));
+        TQRect window = geometry();
 
         if(window.topLeft()    == fullscreen.topLeft() ) tl = false;
         if(window.topRight()   == fullscreen.topRight() ) tr = false;
@@ -791,7 +791,7 @@ void KCommonDecoration::updateWindowShape()
         if(window.bottomRight()== fullscreen.bottomRight() ) br = false;
     }
 
-    QRegion mask(0, 0, w, h);
+    TQRegion mask(0, 0, w, h);
 
     // Remove top-left corner.
     if(tl)
@@ -817,26 +817,26 @@ void KCommonDecoration::updateWindowShape()
     setMask( mask );
 }
 
-bool KCommonDecoration::eventFilter( QObject* o, QEvent* e )
+bool KCommonDecoration::eventFilter( TQObject* o, TQEvent* e )
 {
     if( o != widget())
         return false;
     switch( e->type())
     {
-        case QEvent::Resize:
-            resizeEvent(static_cast<QResizeEvent*>(e) );
+        case TQEvent::Resize:
+            resizeEvent(static_cast<TQResizeEvent*>(e) );
             return true;
-        case QEvent::Paint:
-            paintEvent( static_cast< QPaintEvent* >( e ));
+        case TQEvent::Paint:
+            paintEvent( static_cast< TQPaintEvent* >( e ));
             return true;
-        case QEvent::MouseButtonDblClick:
-            mouseDoubleClickEvent( static_cast< QMouseEvent* >( e ));
+        case TQEvent::MouseButtonDblClick:
+            mouseDoubleClickEvent( static_cast< TQMouseEvent* >( e ));
             return true;
-        case QEvent::MouseButtonPress:
-            processMousePressEvent( static_cast< QMouseEvent* >( e ));
+        case TQEvent::MouseButtonPress:
+            processMousePressEvent( static_cast< TQMouseEvent* >( e ));
             return true;
-        case QEvent::Wheel:
-            wheelEvent( static_cast< QWheelEvent* >( e ));
+        case TQEvent::Wheel:
+            wheelEvent( static_cast< TQWheelEvent* >( e ));
             return true;
         default:
             return false;
@@ -853,7 +853,7 @@ bool KCommonDecoration::isToolWindow() const
     return ((type==NET::Toolbar)||(type==NET::Utility)||(type==NET::Menu));
 }
 
-QRect KCommonDecoration::titleRect() const
+TQRect KCommonDecoration::titleRect() const
 {
     int r_x, r_y, r_x2, r_y2;
     widget()->rect().coords(&r_x, &r_y, &r_x2, &r_y2);
@@ -865,14 +865,14 @@ QRect KCommonDecoration::titleRect() const
     const int titleBorderRight = layoutMetric(LM_TitleBorderRight);
     const int ttlHeight = layoutMetric(LM_TitleHeight);
     const int titleEdgeBottomBottom = r_y+titleEdgeTop+ttlHeight+titleEdgeBottom-1;
-    return QRect(r_x+titleEdgeLeft+buttonsLeftWidth()+titleBorderLeft, r_y+titleEdgeTop,
+    return TQRect(r_x+titleEdgeLeft+buttonsLeftWidth()+titleBorderLeft, r_y+titleEdgeTop,
               r_x2-titleEdgeRight-buttonsRightWidth()-titleBorderRight-(r_x+titleEdgeLeft+buttonsLeftWidth()+titleBorderLeft),
               titleEdgeBottomBottom-(r_y+titleEdgeTop) );
 }
 
 
 KCommonDecorationButton::KCommonDecorationButton(ButtonType type, KCommonDecoration *parent, const char *name)
-    : QButton(parent->widget(), name),
+    : TQButton(parent->widget(), name),
         m_decoration(parent),
         m_type(type),
         m_realizeButtons(LeftButton),
@@ -911,7 +911,7 @@ void KCommonDecorationButton::setRealizeButtons(int btns)
     m_realizeButtons = btns;
 }
 
-void KCommonDecorationButton::setSize(const QSize &s)
+void KCommonDecorationButton::setSize(const TQSize &s)
 {
     if (!m_size.isValid() || s != size() ) {
         m_size = s;
@@ -921,46 +921,46 @@ void KCommonDecorationButton::setSize(const QSize &s)
     }
 }
 
-QSize KCommonDecorationButton::sizeHint() const
+TQSize KCommonDecorationButton::sizeHint() const
 {
     return m_size;
 }
 
-void KCommonDecorationButton::setTipText(const QString &tip) {
-    QToolTip::remove(this );
-    QToolTip::add(this, tip );
+void KCommonDecorationButton::setTipText(const TQString &tip) {
+    TQToolTip::remove(this );
+    TQToolTip::add(this, tip );
 }
 
 void KCommonDecorationButton::setToggleButton(bool toggle)
 {
-    QButton::setToggleButton(toggle);
+    TQButton::setToggleButton(toggle);
     reset(ToggleChange);
 }
 
 void KCommonDecorationButton::setOn(bool on)
 {
     if (on != isOn() ) {
-        QButton::setOn(on);
+        TQButton::setOn(on);
         reset(StateChange);
     }
 }
 
-void KCommonDecorationButton::mousePressEvent(QMouseEvent* e)
+void KCommonDecorationButton::mousePressEvent(TQMouseEvent* e)
 {
     m_lastMouse = e->button();
     // pass on event after changing button to LeftButton
-    QMouseEvent me(e->type(), e->pos(), e->globalPos(),
+    TQMouseEvent me(e->type(), e->pos(), e->globalPos(),
                    (e->button()&m_realizeButtons)?LeftButton:NoButton, e->state());
 
-    QButton::mousePressEvent(&me);
+    TQButton::mousePressEvent(&me);
 }
 
-void KCommonDecorationButton::mouseReleaseEvent(QMouseEvent* e)
+void KCommonDecorationButton::mouseReleaseEvent(TQMouseEvent* e)
 {
     m_lastMouse = e->button();
     // pass on event after changing button to LeftButton
-    QMouseEvent me(e->type(), e->pos(), e->globalPos(),
+    TQMouseEvent me(e->type(), e->pos(), e->globalPos(),
                    (e->button()&m_realizeButtons)?LeftButton:NoButton, e->state());
 
-    QButton::mouseReleaseEvent(&me);
+    TQButton::mouseReleaseEvent(&me);
 }

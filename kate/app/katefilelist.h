@@ -27,9 +27,9 @@
 
 #include <klistview.h>
 
-#include <qtooltip.h>
-#include <qcolor.h>
-#include <qptrlist.h>
+#include <tqtooltip.h>
+#include <tqcolor.h>
+#include <tqptrlist.h>
 
 #define RTTI_KateFileListItem 1001
 
@@ -41,7 +41,7 @@ class KSelectAction;
 class KateFileListItem : public QListViewItem
 {
   public:
-    KateFileListItem( QListView *lv,
+    KateFileListItem( TQListView *lv,
 		      Kate::Document *doc );
     ~KateFileListItem();
 
@@ -60,12 +60,12 @@ class KateFileListItem : public QListViewItem
     void setEditHistPos( int p ) { m_edithistpos = p; }
 
   protected:
-    virtual const QPixmap *pixmap ( int column ) const;
-    void paintCell( QPainter *painter, const QColorGroup & cg, int column, int width, int align );
+    virtual const TQPixmap *pixmap ( int column ) const;
+    void paintCell( TQPainter *painter, const TQColorGroup & cg, int column, int width, int align );
     /**
      * Reimplemented so we can sort by a number of different document properties.
      */
-    int compare ( QListViewItem * i, int col, bool ascending ) const;
+    int compare ( TQListViewItem * i, int col, bool ascending ) const;
 
   private:
     Kate::Document *doc;
@@ -81,7 +81,7 @@ class KateFileList : public KListView
   friend class KFLConfigPage;
 
   public:
-    KateFileList (KateMainWindow *main, KateViewManager *_viewManager, QWidget * parent = 0, const char * name = 0 );
+    KateFileList (KateMainWindow *main, KateViewManager *_viewManager, TQWidget * parent = 0, const char * name = 0 );
     ~KateFileList ();
 
     int sortType () const { return m_sort; };
@@ -93,21 +93,21 @@ class KateFileList : public KListView
       sortByURL = 2
     };
 
-    QString tooltip( QListViewItem *item, int );
+    TQString tooltip( TQListViewItem *item, int );
 
     uint histCount() const { return m_viewHistory.count(); }
     uint editHistCount() const { return m_editHistory.count(); }
-    QColor editShade() const { return m_editShade; }
-    QColor viewShade() const { return m_viewShade; }
+    TQColor editShade() const { return m_editShade; }
+    TQColor viewShade() const { return m_viewShade; }
     bool shadingEnabled() { return m_enableBgShading; }
 
-    void readConfig( class KConfig *config, const QString &group );
-    void writeConfig( class KConfig *config, const QString &group );
+    void readConfig( class KConfig *config, const TQString &group );
+    void writeConfig( class KConfig *config, const TQString &group );
 
     /**
      * reimplemented to remove the item from the history stacks
      */
-    void takeItem( QListViewItem * );
+    void takeItem( TQListViewItem * );
 
   public slots:
     void setSortType (int s);
@@ -117,25 +117,25 @@ class KateFileList : public KListView
   private slots:
     void slotDocumentCreated (Kate::Document *doc);
     void slotDocumentDeleted (uint documentNumber);
-    void slotActivateView( QListViewItem *item );
+    void slotActivateView( TQListViewItem *item );
     void slotModChanged (Kate::Document *doc);
     void slotModifiedOnDisc (Kate::Document *doc, bool b, unsigned char reason);
     void slotNameChanged (Kate::Document *doc);
     void slotViewChanged ();
-    void slotMenu ( QListViewItem *item, const QPoint &p, int col );
+    void slotMenu ( TQListViewItem *item, const TQPoint &p, int col );
 
   protected:
-    virtual void keyPressEvent( QKeyEvent *e );
+    virtual void keyPressEvent( TQKeyEvent *e );
     /**
      * Reimplemented to force Single mode for real:
      * don't let a mouse click outside items deselect.
      */
-    virtual void contentsMousePressEvent( QMouseEvent *e );
+    virtual void contentsMousePressEvent( TQMouseEvent *e );
     /**
      * Reimplemented to make sure the first (and only) column is at least
      * the width of the viewport
      */
-    virtual void resizeEvent( QResizeEvent *e );
+    virtual void resizeEvent( TQResizeEvent *e );
 
   private:
     void setupActions ();
@@ -152,10 +152,10 @@ class KateFileList : public KListView
     KAction* windowPrev;
     KSelectAction* sortAction;
 
-    QPtrList<KateFileListItem> m_viewHistory;
-    QPtrList<KateFileListItem> m_editHistory;
+    TQPtrList<KateFileListItem> m_viewHistory;
+    TQPtrList<KateFileListItem> m_editHistory;
 
-    QColor m_viewShade, m_editShade;
+    TQColor m_viewShade, m_editShade;
     bool m_enableBgShading;
 
     class ToolTip *m_tooltip;
@@ -164,7 +164,7 @@ class KateFileList : public KListView
 class KFLConfigPage : public Kate::ConfigPage {
   Q_OBJECT
   public:
-    KFLConfigPage( QWidget* parent=0, const char *name=0, KateFileList *fl=0 );
+    KFLConfigPage( TQWidget* parent=0, const char *name=0, KateFileList *fl=0 );
     virtual ~KFLConfigPage() {};
 
     virtual void apply();
@@ -177,10 +177,10 @@ class KFLConfigPage : public Kate::ConfigPage {
     void slotMyChanged();
 
   private:
-    class QCheckBox *cbEnableShading;
+    class TQCheckBox *cbEnableShading;
     class KColorButton *kcbViewShade, *kcbEditShade;
-    class QLabel *lEditShade, *lViewShade, *lSort;
-    class QComboBox *cmbSort;
+    class TQLabel *lEditShade, *lViewShade, *lSort;
+    class TQComboBox *cmbSort;
     KateFileList *m_filelist;
 
     bool m_changed;

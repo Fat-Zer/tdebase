@@ -35,8 +35,8 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 namespace KFI
 {
@@ -99,18 +99,18 @@ class CFontEngine
     ~CFontEngine()                              { closeFont(); }
 
     static EType   getType(const char *fname);
-    static QString weightStr(EWeight w);
-    static QString italicStr(EItalic i)         { return ITALIC_NONE==i ? "r" : ITALIC_ITALIC==i ? "i" : "o"; }
+    static TQString weightStr(EWeight w);
+    static TQString italicStr(EItalic i)         { return ITALIC_NONE==i ? "r" : ITALIC_ITALIC==i ? "i" : "o"; }
 
     //
     // General functions - these should be used instead of specfic ones below...
     //
-    bool            openFont(const QString &file, int face=0);
+    bool            openFont(const TQString &file, int face=0);
     void            closeFont();
 
     //
-    const QString & getFamilyName()   { return itsFamily; }
-    const QString & getPsName()       { return itsPsName; }
+    const TQString & getFamilyName()   { return itsFamily; }
+    const TQString & getPsName()       { return itsPsName; }
     EWeight         getWeight()       { return itsWeight; }
     EItalic         getItalic()       { return itsItalic; }
     EType           getType()         { return itsType; }
@@ -121,7 +121,7 @@ class CFontEngine
 
     private:
 
-    bool            openFontFt(const QString &file);
+    bool            openFontFt(const TQString &file);
     void            closeFaceFt();
 
     private:
@@ -129,7 +129,7 @@ class CFontEngine
     EWeight itsWeight;
     EType   itsType;
     EItalic itsItalic;
-    QString itsFamily,
+    TQString itsFamily,
             itsPsName,
             itsPath;
     int     itsNumFaces,

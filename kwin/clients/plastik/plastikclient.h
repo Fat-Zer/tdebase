@@ -37,35 +37,35 @@ public:
     PlastikClient(KDecorationBridge* bridge, KDecorationFactory* factory);
     ~PlastikClient();
 
-    virtual QString visibleName() const;
-    virtual QString defaultButtonsLeft() const;
-    virtual QString defaultButtonsRight() const;
+    virtual TQString visibleName() const;
+    virtual TQString defaultButtonsLeft() const;
+    virtual TQString defaultButtonsRight() const;
     virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
     virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
-    virtual QRegion cornerShape(WindowCorner corner);
+    virtual TQRegion cornerShape(WindowCorner corner);
     virtual KCommonDecorationButton *createButton(ButtonType type);
 
     virtual void init();
     virtual void reset( unsigned long changed );
 
-    virtual void paintEvent(QPaintEvent *e);
+    virtual void paintEvent(TQPaintEvent *e);
     virtual void updateCaption();
 
-    const QPixmap &getTitleBarTile(bool active) const;
+    const TQPixmap &getTitleBarTile(bool active) const;
 
 private:
-    QRect captionRect() const;
+    TQRect captionRect() const;
 
-    const QPixmap &captionPixmap() const;
+    const TQPixmap &captionPixmap() const;
     void clearCaptionPixmaps();
 
-    mutable QPixmap *m_captionPixmaps[2];
+    mutable TQPixmap *m_captionPixmaps[2];
 
-    QRect m_captionRect;
-    QString oldCaption;
+    TQRect m_captionRect;
+    TQString oldCaption;
 
     // settings...
-    QFont s_titleFont;
+    TQFont s_titleFont;
 };
 
 } // KWinPlastik

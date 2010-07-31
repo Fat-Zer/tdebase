@@ -20,7 +20,7 @@
 #ifndef __konqdirpart_h
 #define __konqdirpart_h
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kparts/part.h>
 #include <kparts/browserextension.h>
 #include <kfileitem.h>
@@ -43,7 +43,7 @@ class LIBKONQ_EXPORT KonqDirPart: public KParts::ReadOnlyPart
     friend class KonqDirPartBrowserExtension;
 
 public:
-    KonqDirPart( QObject *parent, const char *name );
+    KonqDirPart( TQObject *parent, const char *name );
 
     virtual ~KonqDirPart();
 
@@ -62,10 +62,10 @@ public:
     void setDirLister( KDirLister* lister );
     // TODO KDE4 create the KDirLister here and simplify the parts?
 
-    QScrollView * scrollWidget();
+    TQScrollView * scrollWidget();
 
-    virtual void saveState( QDataStream &stream );
-    virtual void restoreState( QDataStream &stream );
+    virtual void saveState( TQDataStream &stream );
+    virtual void restoreState( TQDataStream &stream );
 
     /** Called when LMB'ing an item in a directory view.
      * @param fileItem must be set
@@ -76,11 +76,11 @@ public:
      * @param fileItem if 0 it means we MMB'ed the background. */
     void mmbClicked( KFileItem * fileItem );
 
-    void setNameFilter( const QString & nameFilter ) { m_nameFilter = nameFilter; }
+    void setNameFilter( const TQString & nameFilter ) { m_nameFilter = nameFilter; }
 
-    QString nameFilter() const { return m_nameFilter; }
+    TQString nameFilter() const { return m_nameFilter; }
 
-    void setFilesToSelect( const QStringList & filesToSelect ) { m_filesToSelect = filesToSelect; }
+    void setFilesToSelect( const TQStringList & filesToSelect ) { m_filesToSelect = filesToSelect; }
 
     /**
      * Sets per directory mime-type based filtering.
@@ -96,13 +96,13 @@ public:
      *
      * @param filter mime-type(s) to filter directory by.
      */
-    void setMimeFilter (const QStringList& filters);
+    void setMimeFilter (const TQStringList& filters);
 
     /**
      * Completely clears the internally stored list of mime filters
      * set by call to @ref #setMimeFilter.
      */
-    QStringList mimeFilter() const;
+    TQStringList mimeFilter() const;
 
 
     KonqPropsView * props() const { return m_pProps; }
@@ -294,8 +294,8 @@ protected:
 
 protected:
 
-    QString m_nameFilter;
-    QStringList m_filesToSelect;
+    TQString m_nameFilter;
+    TQStringList m_filesToSelect;
 
     KonqPropsView * m_pProps;
 
@@ -317,8 +317,8 @@ protected:
     uint m_lDirCount;
 
 private:
-    void saveFindState( QDataStream& );
-    void restoreFindState( QDataStream& );
+    void saveFindState( TQDataStream& );
+    void restoreFindState( TQDataStream& );
 
     void adjustIconSizes();
 
@@ -341,8 +341,8 @@ public:
      * you should probably override KonqDirPart::saveState
      * and KonqDirPart::restoreState, not the following methods.
      */
-    virtual void saveState( QDataStream &stream );
-    virtual void restoreState( QDataStream &stream );
+    virtual void saveState( TQDataStream &stream );
+    virtual void restoreState( TQDataStream &stream );
 
 private:
     KonqDirPart* m_dirPart;

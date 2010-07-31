@@ -29,9 +29,9 @@ class FilterDlg : public KDialogBase
 {
   	Q_OBJECT
 public:
-	FilterDlg(QWidget *parent = 0, const char *name = 0);
+	FilterDlg(TQWidget *parent = 0, const char *name = 0);
 
-	static bool doIt(QWidget *parent = 0, QString* mime = 0, QString *cmd = 0);
+	static bool doIt(TQWidget *parent = 0, TQString* mime = 0, TQString *cmd = 0);
 protected slots:
     void slotTextFilterChanged();
 private:

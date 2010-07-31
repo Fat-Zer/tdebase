@@ -21,15 +21,15 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qdatetime.h>
-#include <qfile.h>
-#include <qintdict.h>
-#include <qpainter.h>
-#include <qtooltip.h>
-#include <qmime.h>
-#include <qdragobject.h>
+#include <tqclipboard.h>
+#include <tqcursor.h>
+#include <tqdatetime.h>
+#include <tqfile.h>
+#include <tqintdict.h>
+#include <tqpainter.h>
+#include <tqtooltip.h>
+#include <tqmime.h>
+#include <tqdragobject.h>
 
 #include <kaboutdata.h>
 #include <kaction.h>
@@ -126,8 +126,8 @@ extern bool qt_qclipboard_bailout_hack;
 static void ensureGlobalSyncOff(KConfig* config);
 
 // config == kapp->config for process, otherwise applet
-KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
-    : QWidget( parent )
+KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
+    : TQWidget( parent )
     , DCOPObject( "klipper" )
     , m_overflowCounter( 0 )
     , locklevel( 0 )
@@ -144,14 +144,14 @@ KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
     setBackgroundMode( X11ParentRelative );
     clip = kapp->clipboard();
 
-    connect( &m_overflowClearTimer, SIGNAL( timeout()), SLOT( slotClearOverflow()));
+    connect( &m_overflowClearTimer, TQT_SIGNAL( timeout()), TQT_SLOT( slotClearOverflow()));
     m_overflowClearTimer.start( 1000 );
-    connect( &m_pendingCheckTimer, SIGNAL( timeout()), SLOT( slotCheckPending()));
+    connect( &m_pendingCheckTimer, TQT_SIGNAL( timeout()), TQT_SLOT( slotCheckPending()));
 
     m_history = new History( this, "main_history" );
 
     // we need that collection, otherwise KToggleAction is not happy :}
-    QString defaultGroup( "default" );
+    TQString defaultGroup( "default" );
     KActionCollection *collection = new KActionCollection( this, "my collection" );
     toggleURLGrabAction = new KToggleAction( collection, "toggleUrlGrabAction" );
     toggleURLGrabAction->setEnabled( true );
@@ -160,16 +160,16 @@ KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
                                       "history_clear",
                                       0,
                                       history(),
-                                      SLOT( slotClear() ),
+                                      TQT_SLOT( slotClear() ),
                                       collection,
                                       "clearHistoryAction" );
-    connect( clearHistoryAction, SIGNAL( activated() ), SLOT( slotClearClipboard() ) );
+    connect( clearHistoryAction, TQT_SIGNAL( activated() ), TQT_SLOT( slotClearClipboard() ) );
     clearHistoryAction->setGroup( defaultGroup );
     configureAction = new KAction( i18n("&Configure Klipper..."),
                                    "configure",
                                    0,
                                    this,
-                                   SLOT( slotConfigure() ),
+                                   TQT_SLOT( slotConfigure() ),
                                    collection,
                                    "configureAction" );
     configureAction->setGroup( defaultGroup );
@@ -177,7 +177,7 @@ KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
                               "exit",
                               0,
                               this,
-                              SLOT( slotQuit() ),
+                              TQT_SLOT( slotQuit() ),
                               collection,
                               "quitAction" );
     quitAction->setGroup( "exit" );
@@ -186,15 +186,15 @@ KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
     readConfiguration( kc );
     setURLGrabberEnabled( bURLGrabber );
 
-    hideTimer = new QTime();
-    showTimer = new QTime();
+    hideTimer = new TQTime();
+    showTimer = new TQTime();
 
     readProperties(m_config);
-    connect(kapp, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)));
+    connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
 
     poll = new ClipboardPoll( this );
-    connect( poll, SIGNAL( clipboardChanged( bool ) ),
-             this, SLOT( newClipData( bool ) ) );
+    connect( poll, TQT_SIGNAL( clipboardChanged( bool ) ),
+             this, TQT_SLOT( newClipData( bool ) ) );
 
     m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
     m_iconOrigWidth = width();
@@ -209,13 +209,13 @@ KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
     globalKeys->updateConnections();
     toggleURLGrabAction->setShortcut(globalKeys->shortcut("Enable/Disable Clipboard Actions"));
 
-    connect( toggleURLGrabAction, SIGNAL( toggled( bool )),
-             this, SLOT( setURLGrabberEnabled( bool )));
+    connect( toggleURLGrabAction, TQT_SIGNAL( toggled( bool )),
+             this, TQT_SLOT( setURLGrabberEnabled( bool )));
 
     KlipperPopup* popup = history()->popup();
-    connect ( history(),  SIGNAL( topChanged() ), SLOT( slotHistoryTopChanged() ) );
-    connect( popup, SIGNAL( aboutToHide() ), SLOT( slotStartHideTimer() ) );
-    connect( popup, SIGNAL( aboutToShow() ), SLOT( slotStartShowTimer() ) );
+    connect ( history(),  TQT_SIGNAL( topChanged() ), TQT_SLOT( slotHistoryTopChanged() ) );
+    connect( popup, TQT_SIGNAL( aboutToHide() ), TQT_SLOT( slotStartHideTimer() ) );
+    connect( popup, TQT_SIGNAL( aboutToShow() ), TQT_SLOT( slotStartShowTimer() ) );
 
     popup->plugAction( toggleURLGrabAction );
     popup->plugAction( clearHistoryAction );
@@ -224,7 +224,7 @@ KlipperWidget::KlipperWidget( QWidget *parent, KConfig* config )
         popup->plugAction( quitAction );
     }
 
-    QToolTip::add( this, i18n("Klipper - clipboard tool") );
+    TQToolTip::add( this, i18n("Klipper - clipboard tool") );
 }
 
 KlipperWidget::~KlipperWidget()
@@ -244,13 +244,13 @@ void KlipperWidget::adjustSize()
 }
 
 // DCOP
-QString KlipperWidget::getClipboardContents()
+TQString KlipperWidget::getClipboardContents()
 {
     return getClipboardHistoryItem(0);
 }
 
 // DCOP - don't call from Klipper itself
-void KlipperWidget::setClipboardContents(QString s)
+void KlipperWidget::setClipboardContents(TQString s)
 {
     Ignore lock( locklevel );
     updateTimestamp();
@@ -276,7 +276,7 @@ void KlipperWidget::clearClipboardHistory()
 }
 
 
-void KlipperWidget::mousePressEvent(QMouseEvent *e)
+void KlipperWidget::mousePressEvent(TQMouseEvent *e)
 {
     if ( e->button() != LeftButton && e->button() != RightButton )
         return;
@@ -289,12 +289,12 @@ void KlipperWidget::mousePressEvent(QMouseEvent *e)
     }
 }
 
-void KlipperWidget::paintEvent(QPaintEvent *)
+void KlipperWidget::paintEvent(TQPaintEvent *)
 {
-    QPainter p(this);
+    TQPainter p(this);
     // Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
     if ((m_iconOrigWidth != width()) || (m_iconOrigHeight != height())) {
-        QImage newIcon;
+        TQImage newIcon;
         m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
         newIcon = m_pixmap;
         newIcon = newIcon.smoothScale(width(), height());
@@ -318,29 +318,29 @@ void KlipperWidget::slotStartShowTimer()
     showTimer->start();
 }
 
-void KlipperWidget::showPopupMenu( QPopupMenu *menu )
+void KlipperWidget::showPopupMenu( TQPopupMenu *menu )
 {
     Q_ASSERT( menu != 0L );
 
-    QSize size = menu->sizeHint(); // geometry is not valid until it's shown
+    TQSize size = menu->sizeHint(); // geometry is not valid until it's shown
     if (bPopupAtMouse) {
-        QPoint g = QCursor::pos();
+        TQPoint g = TQCursor::pos();
         if ( size.height() < g.y() )
-            menu->popup(QPoint( g.x(), g.y() - size.height()));
+            menu->popup(TQPoint( g.x(), g.y() - size.height()));
         else
-            menu->popup(QPoint(g.x(), g.y()));
+            menu->popup(TQPoint(g.x(), g.y()));
     } else {
         KWin::WindowInfo i = KWin::windowInfo( winId(), NET::WMGeometry );
-        QRect g = i.geometry();
-        QRect screen = KGlobalSettings::desktopGeometry(g.center());
+        TQRect g = i.geometry();
+        TQRect screen = KGlobalSettings::desktopGeometry(g.center());
 
         if ( g.x()-screen.x() > screen.width()/2 &&
              g.y()-screen.y() + size.height() > screen.height() )
-            menu->popup(QPoint( g.x(), g.y() - size.height()));
+            menu->popup(TQPoint( g.x(), g.y() - size.height()));
         else
-            menu->popup(QPoint( g.x() + width(), g.y() + height()));
+            menu->popup(TQPoint( g.x() + width(), g.y() + height()));
 
-        //      menu->exec(mapToGlobal(QPoint( width()/2, height()/2 )));
+        //      menu->exec(mapToGlobal(TQPoint( width()/2, height()/2 )));
     }
 }
 
@@ -348,8 +348,8 @@ bool KlipperWidget::loadHistory() {
     static const char* const failed_load_warning =
         "Failed to load history resource. Clipboard history cannot be read.";
     // don't use "appdata", klipper is also a kicker applet
-    QString history_file_name = ::locateLocal( "data", "klipper/history2.lst" );
-    QFile history_file( history_file_name );
+    TQString history_file_name = ::locateLocal( "data", "klipper/history2.lst" );
+    TQFile history_file( history_file_name );
     bool oldfile = false;
     if ( !history_file.exists() ) { // backwards compatibility
         oldfile = true;
@@ -367,13 +367,13 @@ bool KlipperWidget::loadHistory() {
         kdWarning() << failed_load_warning << ": " << history_file.errorString() << endl;
         return false;
     }
-    QDataStream file_stream( &history_file );
+    TQDataStream file_stream( &history_file );
     if( file_stream.atEnd()) {
         kdWarning() << failed_load_warning << endl;
         return false;
     }
-    QDataStream* history_stream = &file_stream;
-    QByteArray data;
+    TQDataStream* history_stream = &file_stream;
+    TQByteArray data;
     if( !oldfile ) {
         Q_UINT32 crc;
         file_stream >> crc >> data;
@@ -382,7 +382,7 @@ bool KlipperWidget::loadHistory() {
             return false;
         }
         
-        history_stream = new QDataStream( data, IO_ReadOnly );
+        history_stream = new TQDataStream( data, IO_ReadOnly );
     }
     char* version;
     *history_stream >> version;
@@ -392,7 +392,7 @@ bool KlipperWidget::loadHistory() {
     // youngest-first to keep the most important clipboard
     // items at the top, but the history is created oldest
     // first.
-    QPtrList<HistoryItem> reverseList;
+    TQPtrList<HistoryItem> reverseList;
     for ( HistoryItem* item = HistoryItem::create( *history_stream );
           item;
           item = HistoryItem::create( *history_stream ) )
@@ -423,7 +423,7 @@ void KlipperWidget::saveHistory() {
     static const char* const failed_save_warning =
         "Failed to save history. Clipboard history cannot be saved.";
     // don't use "appdata", klipper is also a kicker applet
-    QString history_file_name( ::locateLocal( "data", "klipper/history2.lst" ) );
+    TQString history_file_name( ::locateLocal( "data", "klipper/history2.lst" ) );
     if ( history_file_name.isNull() || history_file_name.isEmpty() ) {
         kdWarning() << failed_save_warning << endl;
         return;
@@ -433,8 +433,8 @@ void KlipperWidget::saveHistory() {
         kdWarning() << failed_save_warning << endl;
         return;
     }
-    QByteArray data;
-    QDataStream history_stream( data, IO_WriteOnly );
+    TQByteArray data;
+    TQDataStream history_stream( data, IO_WriteOnly );
     history_stream << klipper_version; // const char*
     for (  const HistoryItem* item = history()->first(); item; item = history()->next() ) {
         history_stream << item;
@@ -445,7 +445,7 @@ void KlipperWidget::saveHistory() {
 
 void KlipperWidget::readProperties(KConfig *kc)
 {
-    QStringList dataList;
+    TQStringList dataList;
 
     history()->slotClear();
 
@@ -456,7 +456,7 @@ void KlipperWidget::readProperties(KConfig *kc)
             KConfigGroupSaver groupSaver(kc, "General");
             dataList = kc->readListEntry("ClipboardData");
 
-            for (QStringList::ConstIterator it = dataList.end();
+            for (TQStringList::ConstIterator it = dataList.end();
                  it != dataList.begin();
              )
             {
@@ -560,7 +560,7 @@ void KlipperWidget::slotConfigure()
     dlg->setSynchronize( bSynchronize );
     dlg->setNoActionsFor( myURLGrabber->avoidWindows() );
 
-    if ( dlg->exec() == QDialog::Accepted ) {
+    if ( dlg->exec() == TQDialog::Accepted ) {
         bKeepContents = dlg->keepContents();
         bPopupAtMouse = dlg->popupAtMousePos();
         bReplayActionInHistory = dlg->replayActionInHistory();
@@ -626,10 +626,10 @@ void KlipperWidget::slotRepeatAction()
 {
     if ( !myURLGrabber ) {
         myURLGrabber = new URLGrabber( m_config );
-        connect( myURLGrabber, SIGNAL( sigPopup( QPopupMenu * )),
-                 SLOT( showPopupMenu( QPopupMenu * )) );
-        connect( myURLGrabber, SIGNAL( sigDisablePopup() ),
-                 this, SLOT( disableURLGrabber() ) );
+        connect( myURLGrabber, TQT_SIGNAL( sigPopup( TQPopupMenu * )),
+                 TQT_SLOT( showPopupMenu( TQPopupMenu * )) );
+        connect( myURLGrabber, TQT_SIGNAL( sigDisablePopup() ),
+                 this, TQT_SLOT( disableURLGrabber() ) );
     }
 
     const HistoryStringItem* top = dynamic_cast<const HistoryStringItem*>( history()->first() );
@@ -645,8 +645,8 @@ void KlipperWidget::setURLGrabberEnabled( bool enable )
       KConfig *kc = m_config;
       kc->setGroup("General");
       kc->writeEntry("URLGrabberEnabled", bURLGrabber);
-      m_lastURLGrabberTextSelection = QString();
-      m_lastURLGrabberTextClipboard = QString();
+      m_lastURLGrabberTextSelection = TQString();
+      m_lastURLGrabberTextClipboard = TQString();
     }
 
     toggleURLGrabAction->setChecked( enable );
@@ -661,10 +661,10 @@ void KlipperWidget::setURLGrabberEnabled( bool enable )
         toggleURLGrabAction->setText(i18n("&Actions Enabled"));
         if ( !myURLGrabber ) {
             myURLGrabber = new URLGrabber( m_config );
-            connect( myURLGrabber, SIGNAL( sigPopup( QPopupMenu * )),
-                     SLOT( showPopupMenu( QPopupMenu * )) );
-            connect( myURLGrabber, SIGNAL( sigDisablePopup() ),
-                     this, SLOT( disableURLGrabber() ) );
+            connect( myURLGrabber, TQT_SIGNAL( sigPopup( TQPopupMenu * )),
+                     TQT_SLOT( showPopupMenu( TQPopupMenu * )) );
+            connect( myURLGrabber, TQT_SIGNAL( sigDisablePopup() ),
+                     this, TQT_SLOT( disableURLGrabber() ) );
         }
     }
 }
@@ -701,17 +701,17 @@ void KlipperWidget::slotClearClipboard()
 
 
 //XXX: Should die, and the DCOP signal handled sensible.
-QString KlipperWidget::clipboardContents( bool * /*isSelection*/ )
+TQString KlipperWidget::clipboardContents( bool * /*isSelection*/ )
 {
     kdWarning() << "Obsolete function called. Please fix" << endl;
 
 #if 0
     bool selection = true;
-    QMimeSource* data = clip->data(QClipboard::Selection);
+    TQMimeSource* data = clip->data(QClipboard::Selection);
 
     if ( data->serialNumber() == m_lastSelection )
     {
-        QString clipContents = clip->text(QClipboard::Clipboard);
+        TQString clipContents = clip->text(QClipboard::Clipboard);
         if ( clipContents != m_lastClipboard )
         {
             contents = clipContents;
@@ -729,7 +729,7 @@ QString KlipperWidget::clipboardContents( bool * /*isSelection*/ )
     return 0;
 }
 
-void KlipperWidget::applyClipChanges( const QMimeSource& clipData )
+void KlipperWidget::applyClipChanges( const TQMimeSource& clipData )
 {
     if ( locklevel )
         return;
@@ -804,7 +804,7 @@ void KlipperWidget::slotCheckPending()
 
 void KlipperWidget::checkClipData( bool selectionMode )
 {
-    if ( ignoreClipboardChanges() ) // internal to klipper, ignoring QSpinBox selections
+    if ( ignoreClipboardChanges() ) // internal to klipper, ignoring TQSpinBox selections
     {
         // keep our old clipboard, thanks
         // This won't quite work, but it's close enough for now.
@@ -851,7 +851,7 @@ void KlipperWidget::checkClipData( bool selectionMode )
         qDebug( "    format: %s", format);
     }
 #endif
-    QMimeSource* data = clip->data( selectionMode ? QClipboard::Selection : QClipboard::Clipboard );
+    TQMimeSource* data = clip->data( selectionMode ? QClipboard::Selection : QClipboard::Clipboard );
     if ( !data ) {
         kdWarning("No data in clipboard. This not not supposed to happen." );
         return;
@@ -879,14 +879,14 @@ void KlipperWidget::checkClipData( bool selectionMode )
     if ( selectionMode && bIgnoreSelection )
         return;
         
-    if( selectionMode && bSelectionTextOnly && !QTextDrag::canDecode( data ))
+    if( selectionMode && bSelectionTextOnly && !TQTextDrag::canDecode( data ))
         return;
 
     if( KURLDrag::canDecode( data ))
         ; // ok
-    else if( QTextDrag::canDecode( data ))
+    else if( TQTextDrag::canDecode( data ))
         ; // ok
-    else if( QImageDrag::canDecode( data ))
+    else if( TQImageDrag::canDecode( data ))
     {
 // Limit mimetypes that are tracked by Klipper (this is basically a workaround
 // for #109032). Can't add UI in 3.5 because of string freeze, and I'm not sure
@@ -906,14 +906,14 @@ void KlipperWidget::checkClipData( bool selectionMode )
     else
         m_lastClipboard = data->serialNumber();
 
-    QString& lastURLGrabberText = selectionMode
+    TQString& lastURLGrabberText = selectionMode
         ? m_lastURLGrabberTextSelection : m_lastURLGrabberTextClipboard;
-    if( QTextDrag::canDecode( data ))
+    if( TQTextDrag::canDecode( data ))
     {
         if ( bURLGrabber && myURLGrabber )
         {
-            QString text;
-            QTextDrag::decode( data, text );
+            TQString text;
+            TQTextDrag::decode( data, text );
             // Make sure URLGrabber doesn't repeat all the time if klipper reads the same
             // text all the time (e.g. because XFixes is not available and the application
             // has broken TIMESTAMP target). Using most recent history item may not always
@@ -928,10 +928,10 @@ void KlipperWidget::checkClipData( bool selectionMode )
             }
         }
         else
-            lastURLGrabberText = QString();
+            lastURLGrabberText = TQString();
     }
     else
-        lastURLGrabberText = QString();
+        lastURLGrabberText = TQString();
 
     if (changed) {
         applyClipChanges( *data );
@@ -981,23 +981,23 @@ void KlipperWidget::slotClearOverflow()
     m_overflowCounter = 0;
 }
 
-QStringList KlipperWidget::getClipboardHistoryMenu()
+TQStringList KlipperWidget::getClipboardHistoryMenu()
 {
-    QStringList menu;
+    TQStringList menu;
     for ( const HistoryItem* item = history()->first(); item; item = history()->next() ) {
         menu << item->text();
     }
     return menu;
 }
 
-QString KlipperWidget::getClipboardHistoryItem(int i)
+TQString KlipperWidget::getClipboardHistoryItem(int i)
 {
     for ( const HistoryItem* item = history()->first(); item; item = history()->next() , i-- ) {
         if ( i == 0 ) {
             return item->text();
         }
     }
-    return QString::null;
+    return TQString::null;
 
 }
 
@@ -1008,13 +1008,13 @@ QString KlipperWidget::getClipboardHistoryItem(int i)
 //
 bool KlipperWidget::ignoreClipboardChanges() const
 {
-    QWidget *focusWidget = qApp->focusWidget();
+    TQWidget *focusWidget = qApp->focusWidget();
     if ( focusWidget )
     {
-        if ( focusWidget->inherits( "QSpinBox" ) ||
+        if ( focusWidget->inherits( "TQSpinBox" ) ||
              (focusWidget->parentWidget() &&
-              focusWidget->inherits("QLineEdit") &&
-              focusWidget->parentWidget()->inherits("QSpinWidget")) )
+              focusWidget->inherits("TQLineEdit") &&
+              focusWidget->parentWidget()->inherits("TQSpinWidget")) )
         {
             return true;
         }
@@ -1030,7 +1030,7 @@ bool KlipperWidget::ignoreClipboardChanges() const
 // Therefore, qt_x_time needs to be updated to current X server timestamp.
 
 // Call KApplication::updateUserTime() only from functions that are
-// called from outside (DCOP), or from QTimer timeout !
+// called from outside (DCOP), or from TQTimer timeout !
 
 extern Time qt_x_time;
 extern Time qt_x_user_time;
@@ -1076,7 +1076,7 @@ void KlipperWidget::updateTimestamp()
     Time& time = ( strcmp( qVersion(), "3.3.1" ) == 0
                 || strcmp( qVersion(), "3.3.0" ) == 0 )
                 ? qt_x_user_time : qt_x_time;
-    static QWidget* w = 0;
+    static TQWidget* w = 0;
     if ( !w )
         w = new QWidget;
     unsigned char data[ 1 ];
@@ -1140,7 +1140,7 @@ KAboutData* KlipperWidget::aboutData()
   return about_data;
 }
 
-Klipper::Klipper( QWidget* parent )
+Klipper::Klipper( TQWidget* parent )
     : KlipperWidget( parent, kapp->config())
 {
 }

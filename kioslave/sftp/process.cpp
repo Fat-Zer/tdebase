@@ -43,9 +43,9 @@
 #include <sys/select.h>		// Needed on some systems.
 #endif
 
-#include <qglobal.h>
-#include <qcstring.h>
-#include <qfile.h>
+#include <tqglobal.h>
+#include <tqcstring.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -99,10 +99,10 @@ MyPtyProcess::~MyPtyProcess()
  */
 
 
-QCString MyPtyProcess::readLineFrom(int fd, QCString& inbuf, bool block)
+TQCString MyPtyProcess::readLineFrom(int fd, TQCString& inbuf, bool block)
 {
     int pos;
-    QCString ret;
+    TQCString ret;
 
     if (!inbuf.isEmpty())
     {
@@ -172,7 +172,7 @@ QCString MyPtyProcess::readLineFrom(int fd, QCString& inbuf, bool block)
     return ret;
 }
 
-void MyPtyProcess::writeLine(QCString line, bool addnl)
+void MyPtyProcess::writeLine(TQCString line, bool addnl)
 {
     if (!line.isEmpty())
 	write(m_Fd, line, line.length());
@@ -180,7 +180,7 @@ void MyPtyProcess::writeLine(QCString line, bool addnl)
 	write(m_Fd, "\n", 1);
 }
 
-void MyPtyProcess::unreadLineFrom(QCString inbuf, QCString line, bool addnl)
+void MyPtyProcess::unreadLineFrom(TQCString inbuf, TQCString line, bool addnl)
 {
     if (addnl)
 	line += '\n';
@@ -193,7 +193,7 @@ void MyPtyProcess::unreadLineFrom(QCString inbuf, QCString line, bool addnl)
  * Fork and execute the command. This returns in the parent.
  */
 
-int MyPtyProcess::exec(QCString command, QCStringList args)
+int MyPtyProcess::exec(TQCString command, QCStringList args)
 {
   kdDebug(PTYPROC) << "MyPtyProcess::exec(): " << command << endl;// << ", args = " << args << endl;
 
@@ -259,18 +259,18 @@ int MyPtyProcess::exec(QCString command, QCStringList args)
 	    _exit(1);
 
     // From now on, terminal output goes through the tty.
-    QCString path;
+    TQCString path;
     if (command.contains('/'))
 	    path = command;
     else 
     {
-	    QString file = KStandardDirs::findExe(command);
+	    TQString file = KStandardDirs::findExe(command);
     	if (file.isEmpty())
 	    {
 	        kdError(PTYPROC) << k_lineinfo << command << " not found\n";
     	    _exit(1);
 	    }
-    	path = QFile::encodeName(file);
+    	path = TQFile::encodeName(file);
     }
 
     int i;
@@ -393,7 +393,7 @@ int MyPtyProcess::waitForChild()
 
 	if (ret) 
 	{
-	    QCString line = readLine(false);
+	    TQCString line = readLine(false);
 	    while (!line.isNull()) 
 	    {
 		if (!m_Exit.isEmpty() && !qstrnicmp(line, m_Exit, m_Exit.length()))

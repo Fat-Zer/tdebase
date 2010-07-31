@@ -20,8 +20,8 @@
 
 #include <stdlib.h>
 
-#include <qlayout.h>
-#include <qstringlist.h>
+#include <tqlayout.h>
+#include <tqstringlist.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -40,9 +40,9 @@
 #include "swallow.h"
 #include "prefwidget.h"
 
-template class QPtrList<SwallowApp>;
-typedef QPtrListIterator<SwallowApp> SwallowAppListIterator;
-template class QPtrList<SwallowCommand>;
+template class TQPtrList<SwallowApp>;
+typedef TQPtrListIterator<SwallowApp> SwallowAppListIterator;
+template class TQPtrList<SwallowCommand>;
 
 
 // init static variables
@@ -53,14 +53,14 @@ SwallowApplet * SwallowApplet::self = 0L;
 
 extern "C"
 {
-    KDE_EXPORT KPanelApplet* init(QWidget *parent, const QString& configFile) {
+    KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile) {
 	return new SwallowApplet(configFile, parent, "kswallow applet");
     }
 }
 
 
-SwallowApplet::SwallowApplet( const QString& configFile,
-			      QWidget *parent, const char *name )
+SwallowApplet::SwallowApplet( const TQString& configFile,
+			      TQWidget *parent, const char *name )
     : KPanelApplet( configFile, Normal, Preferences, parent, name )
 {
     resize( 30, 30 );
@@ -74,9 +74,9 @@ SwallowApplet::SwallowApplet( const QString& configFile,
     appList = new SwallowAppList;
     appList->setAutoDelete( true );
 
-    QBoxLayout::Direction d = (orientation() == Horizontal) ?
-			     QBoxLayout::LeftToRight : QBoxLayout::TopToBottom;
-    m_layout = new QBoxLayout( this, d, 0, 2 ); // make stretch configurable?
+    TQBoxLayout::Direction d = (orientation() == Horizontal) ?
+			     TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom;
+    m_layout = new TQBoxLayout( this, d, 0, 2 ); // make stretch configurable?
     m_layout->setAutoAdd( false );
 
     // read the config file and start all the configured apps
@@ -116,8 +116,8 @@ SwallowCommandList* SwallowApplet::readConfig()
     kc->setGroup("General");
     int count = kc->readNumEntry("Number of apps");
     kdDebug() << "*** Registered " << count << " App(s) to be swallow'ed!" << endl;
-    QString group = "SwallowApp %1";
-    QString title, cmd;
+    TQString group = "SwallowApp %1";
+    TQString title, cmd;
     ushort errors = 0;
     SwallowCommand *swc = 0L;
 
@@ -140,7 +140,7 @@ SwallowCommandList* SwallowApplet::readConfig()
     }
 
     if ( errors > 0 ) {
-	QString entry = (errors == 1) ? i18n("entry") : i18n("entries");
+	TQString entry = (errors == 1) ? i18n("entry") : i18n("entries");
 	if ( KMessageBox::questionYesNo(0L, i18n("I found %1 invalid/incomplete %2\nin the configuration file.\n\nBoth the window title and the commandline\n of the to be swallowed application\nare required.\n\n.Do you want to correct this?").arg(errors).arg(entry), i18n("Configuration Error"),i18n("Correct"),i18n("Ignore Error")) == KMessageBox::Yes)
 	    preferences();
     }
@@ -157,8 +157,8 @@ void SwallowApplet::createApps( SwallowCommandList* list )
     while ( (it.current()) ) {
 	app = new SwallowApp( it.current(), this );
 	app->hide();
-	connect( app, SIGNAL( embedded(SwallowApp *)),
-		 SLOT( embedded(SwallowApp *)));
+	connect( app, TQT_SIGNAL( embedded(SwallowApp *)),
+		 TQT_SLOT( embedded(SwallowApp *)));
 	appList->append( app );
 	++it;
 	kapp->processEvents();
@@ -179,8 +179,8 @@ void SwallowApplet::embedded( SwallowApp *app )
     kdDebug() << "--> ratio: " << app->sizeRatio() << endl;
     kdDebug() << "**** " << app << " is embedded now, with (" << app->width() << ", " << app->height() << ")" << endl;
 
-    disconnect( app, SIGNAL( embedded(SwallowApp *)),
-		this, SLOT( embedded(SwallowApp *)));
+    disconnect( app, TQT_SIGNAL( embedded(SwallowApp *)),
+		this, TQT_SLOT( embedded(SwallowApp *)));
 
     embeddedList->append( app );
 
@@ -236,9 +236,9 @@ int SwallowApplet::heightForWidth(int)
 void SwallowApplet::layoutApps()
 {
     if ( KPanelApplet::orientation() == Horizontal )
-	m_layout->setDirection( QBoxLayout::LeftToRight );
+	m_layout->setDirection( TQBoxLayout::LeftToRight );
     else
-	m_layout->setDirection( QBoxLayout::TopToBottom );
+	m_layout->setDirection( TQBoxLayout::TopToBottom );
 }
 
 
@@ -255,7 +255,7 @@ void SwallowApplet::removeApplet( SwallowApp *app )
 ///////////////////////////////////////////////////////////////////
 
 
-static void parseCommand(KProcess *proc, QString cmd)
+static void parseCommand(KProcess *proc, TQString cmd)
 {
     int pos;
 
@@ -269,7 +269,7 @@ static void parseCommand(KProcess *proc, QString cmd)
 }
 
 
-SwallowApp::SwallowApp(const SwallowCommand *swc, QWidget* parent,
+SwallowApp::SwallowApp(const SwallowCommand *swc, TQWidget* parent,
                        const char* /* name */)
     : QXEmbed( parent )
 {
@@ -278,8 +278,8 @@ SwallowApp::SwallowApp(const SwallowCommand *swc, QWidget* parent,
     QXEmbed::initialize();
 
     winTitle = swc->title;
-    connect(SwallowApplet::winModule(), SIGNAL(windowAdded(WId)),
-	    this, SLOT(windowAdded(WId)));
+    connect(SwallowApplet::winModule(), TQT_SIGNAL(windowAdded(WId)),
+	    this, TQT_SLOT(windowAdded(WId)));
 
     if (!swc->cmdline.isEmpty()) {
 	KProcess *process = new KProcess;
@@ -287,10 +287,10 @@ SwallowApp::SwallowApp(const SwallowCommand *swc, QWidget* parent,
 
 	// move window out of sight
 	//	*process << "-geometry";
-	//	*process << QString("32x32+%1+%2").arg(kapp->desktop()->width()).arg(kapp->desktop()->height());
+	//	*process << TQString("32x32+%1+%2").arg(kapp->desktop()->width()).arg(kapp->desktop()->height());
 
-	connect(process, SIGNAL(processExited(KProcess*)),
-		this, SLOT(processExited(KProcess*)));
+	connect(process, TQT_SIGNAL(processExited(KProcess*)),
+		this, TQT_SLOT(processExited(KProcess*)));
 
 	process->start();
     }
@@ -320,7 +320,7 @@ void SwallowApp::windowAdded(WId win)
     if (winTitle == names[0]) {
 	kdDebug()<< "embedding window with title: "<<winTitle.latin1() << endl;
 
-    QRect r = KWin::windowInfo(win).geometry();
+    TQRect r = KWin::windowInfo(win).geometry();
 	int h = r.height();
 	if ( h == 0 ) h = 1;
 	wh_ratio = (float) r.width() / (float) h;
@@ -330,8 +330,8 @@ void SwallowApp::windowAdded(WId win)
 	embed(win);
 	XReparentWindow(qt_xdisplay(), win, winId(), 0, 0);
 
-	disconnect(SwallowApplet::winModule(), SIGNAL(windowAdded(WId)),
-		   this, SLOT(windowAdded(WId)));
+	disconnect(SwallowApplet::winModule(), TQT_SIGNAL(windowAdded(WId)),
+		   this, TQT_SLOT(windowAdded(WId)));
 
 	emit embedded( this );
     }

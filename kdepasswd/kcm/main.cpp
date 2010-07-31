@@ -20,15 +20,15 @@
  *
  */
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qbuttongroup.h>
-#include <qevent.h>
-#include <qpixmap.h>
-#include <qcstring.h>
-#include <qstringlist.h>
-#include <qlayout.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqbuttongroup.h>
+#include <tqevent.h>
+#include <tqpixmap.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
+#include <tqlayout.h>
 
 #include <kpushbutton.h>
 #include <kguiitem.h>
@@ -52,31 +52,31 @@
 #include "chfacedlg.h"
 #include "main.h" 
 
-typedef KGenericFactory<KCMUserAccount, QWidget> Factory;
+typedef KGenericFactory<KCMUserAccount, TQWidget> Factory;
 K_EXPORT_COMPONENT_FACTORY( kcm_useraccount, Factory("useraccount") )
 
-KCMUserAccount::KCMUserAccount( QWidget *parent, const char *name,
-	const QStringList &)
+KCMUserAccount::KCMUserAccount( TQWidget *parent, const char *name,
+	const TQStringList &)
 	: KCModule( parent, name)
 {
-	QVBoxLayout *topLayout = new QVBoxLayout(this);
+	TQVBoxLayout *topLayout = new TQVBoxLayout(this);
 	_mw = new MainWidget(this);
 	topLayout->addWidget( _mw );
 
-	connect( _mw->btnChangeFace, SIGNAL(clicked()), SLOT(slotFaceButtonClicked()));
-	connect( _mw->btnChangePassword, SIGNAL(clicked()), SLOT(slotChangePassword()));
+	connect( _mw->btnChangeFace, TQT_SIGNAL(clicked()), TQT_SLOT(slotFaceButtonClicked()));
+	connect( _mw->btnChangePassword, TQT_SIGNAL(clicked()), TQT_SLOT(slotChangePassword()));
 	_mw->btnChangePassword->setGuiItem( KGuiItem( i18n("Change &Password..."), "password" ));
 	
-	connect( _mw->leRealname, SIGNAL(textChanged(const QString&)), SLOT(changed()));
-	connect( _mw->leOrganization, SIGNAL(textChanged(const QString&)), SLOT(changed()));
-	connect( _mw->leEmail, SIGNAL(textChanged(const QString&)), SLOT(changed()));
-	connect( _mw->leSMTP, SIGNAL(textChanged(const QString&)), SLOT(changed()));
+	connect( _mw->leRealname, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(changed()));
+	connect( _mw->leOrganization, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(changed()));
+	connect( _mw->leEmail, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(changed()));
+	connect( _mw->leSMTP, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(changed()));
 
 	_ku = new KUser();
 	_kes = new KEMailSettings();
 
 	_mw->lblUsername->setText( _ku->loginName() );
-	_mw->lblUID->setText( QString().number(_ku->uid()) );
+	_mw->lblUID->setText( TQString().number(_ku->uid()) );
 
 	KAboutData *about = new KAboutData(I18N_NOOP("kcm_useraccount"), 
 		I18N_NOOP("Password & User Information"), 0, 0,
@@ -108,7 +108,7 @@ KCMUserAccount::KCMUserAccount( QWidget *parent, const char *name,
 void KCMUserAccount::slotChangePassword()
 {
 	KProcess *proc = new KProcess;
-	QString bin = KGlobal::dirs()->findExe("kdepasswd");
+	TQString bin = KGlobal::dirs()->findExe("kdepasswd");
 	if ( !bin )
 	{
 		kdDebug() << "kcm_useraccount: kdepasswd was not found." << endl;
@@ -146,22 +146,22 @@ void KCMUserAccount::load()
 	_mw->leOrganization->setText( _kes->getSetting( KEMailSettings::Organization ));
 	_mw->leSMTP->setText( _kes->getSetting( KEMailSettings::OutServer ));
 
-	QString _userPicsDir = KCFGUserAccount::faceDir() +  
+	TQString _userPicsDir = KCFGUserAccount::faceDir() +  
 		KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces/";
 
-	QString fs = KCFGUserAccount::faceSource();
-	if (fs == QString::fromLatin1("UserOnly"))
+	TQString fs = KCFGUserAccount::faceSource();
+	if (fs == TQString::fromLatin1("UserOnly"))
 		_facePerm = userOnly;
-	else if (fs == QString::fromLatin1("PreferUser"))
+	else if (fs == TQString::fromLatin1("PreferUser"))
 		_facePerm = userFirst;
-	else if (fs == QString::fromLatin1("PreferAdmin"))
+	else if (fs == TQString::fromLatin1("PreferAdmin"))
 		_facePerm = adminFirst;
 	else
 		_facePerm = adminOnly; // Admin Only
 
 	if ( _facePerm == adminFirst )
 	{ 	// If the administrator's choice takes preference
-		_facePixmap = QPixmap( _userPicsDir + _ku->loginName() + ".face.icon" );
+		_facePixmap = TQPixmap( _userPicsDir + _ku->loginName() + ".face.icon" );
 
 		if ( _facePixmap.isNull() )
 			_facePerm = userFirst;
@@ -172,23 +172,23 @@ void KCMUserAccount::load()
 	if ( _facePerm >= userFirst )
 	{
 		// If the user's choice takes preference
-		_facePixmap = QPixmap( KCFGUserAccount::faceFile() );
+		_facePixmap = TQPixmap( KCFGUserAccount::faceFile() );
 
 		// The user has no face, should we check for the admin's setting?
 		if ( _facePixmap.isNull() && _facePerm == userFirst )
-			_facePixmap = QPixmap( _userPicsDir + _ku->loginName() + ".face.icon" );
+			_facePixmap = TQPixmap( _userPicsDir + _ku->loginName() + ".face.icon" );
 
 		if ( _facePixmap.isNull() )
-			_facePixmap = QPixmap( _userPicsDir + KCFGUserAccount::defaultFile() );
+			_facePixmap = TQPixmap( _userPicsDir + KCFGUserAccount::defaultFile() );
 
 		_mw->btnChangeFace->setPixmap( _facePixmap );
 	}
 	else if ( _facePerm <= adminOnly )
 	{
 		// Admin only
-		_facePixmap = QPixmap( _userPicsDir + _ku->loginName() + ".face.icon" );
+		_facePixmap = TQPixmap( _userPicsDir + _ku->loginName() + ".face.icon" );
 		if ( _facePixmap.isNull() )
-			_facePixmap = QPixmap( _userPicsDir + KCFGUserAccount::defaultFile() );
+			_facePixmap = TQPixmap( _userPicsDir + KCFGUserAccount::defaultFile() );
 		_mw->btnChangeFace->setPixmap( _facePixmap );
 	}
 
@@ -209,7 +209,7 @@ void KCMUserAccount::save()
 	/* Save realname to /etc/passwd */
 	if ( _mw->leRealname->isModified() )
 	{
-		QCString password;
+		TQCString password;
 		int ret = KPasswordDialog::getPassword( password, i18n("Please enter "
 			"your password in order to save your settings:"));
 
@@ -247,7 +247,7 @@ void KCMUserAccount::save()
 
 }
 
-void KCMUserAccount::changeFace(const QPixmap &pix)
+void KCMUserAccount::changeFace(const TQPixmap &pix)
 {
   if ( _facePerm < userFirst )
     return; // If the user isn't allowed to change their face, don't!
@@ -273,7 +273,7 @@ void KCMUserAccount::slotFaceButtonClicked()
   ChFaceDlg* pDlg = new ChFaceDlg( KGlobal::dirs()->resourceDirs("data").last() +
 	"/kdm/pics/users/" );
 
-  if ( pDlg->exec() == QDialog::Accepted && !pDlg->getFaceImage().isNull() )
+  if ( pDlg->exec() == TQDialog::Accepted && !pDlg->getFaceImage().isNull() )
       changeFace( pDlg->getFaceImage() );
 
   delete pDlg;
@@ -284,16 +284,16 @@ void KCMUserAccount::slotFaceButtonClicked()
  * The function was called after checking event type and 
  * the code is now below that if statement
  */
-bool KCMUserAccount::eventFilter(QObject *, QEvent *e)
+bool KCMUserAccount::eventFilter(TQObject *, TQEvent *e)
 {
-	if (e->type() == QEvent::DragEnter)
+	if (e->type() == TQEvent::DragEnter)
 		{
-		QDragEnterEvent *ee = (QDragEnterEvent *) e;
+		TQDragEnterEvent *ee = (TQDragEnterEvent *) e;
 		ee->accept( KURLDrag::canDecode(ee) );
 		return true;
 	}
 
-	if (e->type() == QEvent::Drop)
+	if (e->type() == TQEvent::Drop)
 	{
 		if ( _facePerm < userFirst )
 		{
@@ -302,12 +302,12 @@ bool KCMUserAccount::eventFilter(QObject *, QEvent *e)
 			return true;
 		}
 
-		KURL *url = decodeImgDrop( (QDropEvent *) e, this);
+		KURL *url = decodeImgDrop( (TQDropEvent *) e, this);
 		if (url)
 		{
-			QString pixPath;
+			TQString pixPath;
 			KIO::NetAccess::download(*url, pixPath, this);
-			changeFace( QPixmap( pixPath ) );
+			changeFace( TQPixmap( pixPath ) );
 			KIO::NetAccess::removeTempFile(pixPath);
 			delete url;
 		}
@@ -316,7 +316,7 @@ bool KCMUserAccount::eventFilter(QObject *, QEvent *e)
 	return false;
 }
 
-inline KURL *KCMUserAccount::decodeImgDrop(QDropEvent *e, QWidget *wdg)
+inline KURL *KCMUserAccount::decodeImgDrop(TQDropEvent *e, TQWidget *wdg)
 {
   KURL::List uris;
 
@@ -328,10 +328,10 @@ inline KURL *KCMUserAccount::decodeImgDrop(QDropEvent *e, QWidget *wdg)
     if( KImageIO::canRead(KImageIO::type(url->fileName())) )
       return url;
 
-    QStringList qs = QStringList::split('\n', KImageIO::pattern());
+    TQStringList qs = TQStringList::split('\n', KImageIO::pattern());
     qs.remove(qs.begin());
 
-    QString msg = i18n( "%1 does not appear to be an image file.\n"
+    TQString msg = i18n( "%1 does not appear to be an image file.\n"
 			  "Please use files with these extensions:\n"
 			  "%2").arg(url->fileName()).arg(qs.join("\n"));
     KMessageBox::sorry( wdg, msg);

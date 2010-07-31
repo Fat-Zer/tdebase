@@ -24,8 +24,8 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 
-#include <qdir.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqfile.h>
 
 #include <stdlib.h>
 
@@ -33,11 +33,11 @@
 
 #define DBG_CODE 1213
 
-void copyFile( const QString &inFileName, const QString &outFileName )
+void copyFile( const TQString &inFileName, const TQString &outFileName )
 {
-  QFile inFile( inFileName );
+  TQFile inFile( inFileName );
   if ( inFile.open( IO_ReadOnly ) ) {
-    QFile outFile( outFileName );
+    TQFile outFile( outFileName );
     if ( outFile.open( IO_WriteOnly ) ) {
       outFile.writeBlock( inFile.readAll() );
       outFile.close();
@@ -47,13 +47,13 @@ void copyFile( const QString &inFileName, const QString &outFileName )
   }
 }
 
-bool scanDesktopFile( QPtrList<AppLnkCache> &appCache, const QString &templ,
-                      QString destDir )
+bool scanDesktopFile( TQPtrList<AppLnkCache> &appCache, const TQString &templ,
+                      TQString destDir )
 {
   KDesktopFile desktop( templ, true );
 
   // find out where to put the .desktop files
-  QString destName;
+  TQString destName;
   if ( destDir.isNull() )
     destDir = KGlobal::dirs()->saveLocation( "apps" );
   else
@@ -74,7 +74,7 @@ bool scanDesktopFile( QPtrList<AppLnkCache> &appCache, const QString &templ,
   }
 
   // determine for which executable to look
-  QString exec = desktop.readPathEntry( "TryExec" );
+  TQString exec = desktop.readPathEntry( "TryExec" );
   if ( exec.isEmpty() )
     exec = desktop.readPathEntry( "Exec" );
   pos = exec.find( ' ' );
@@ -82,8 +82,8 @@ bool scanDesktopFile( QPtrList<AppLnkCache> &appCache, const QString &templ,
     exec = exec.left( pos );
 
   // try to locate the binary
-  QString pexec = KGlobal::dirs()->findExe( exec, 
-                 QString( ::getenv( "PATH" ) ) + ":/usr/X11R6/bin:/usr/games" );
+  TQString pexec = KGlobal::dirs()->findExe( exec, 
+                 TQString( ::getenv( "PATH" ) ) + ":/usr/X11R6/bin:/usr/games" );
   if ( pexec.isEmpty() ) {
     kdDebug(DBG_CODE) << "looking for " << exec.local8Bit()
                       << "\t\tnot found" << endl;
@@ -103,22 +103,22 @@ bool scanDesktopFile( QPtrList<AppLnkCache> &appCache, const QString &templ,
   return true;
 }
 
-void createDesktopFiles( QPtrList<AppLnkCache> &appCache, int &added )
+void createDesktopFiles( TQPtrList<AppLnkCache> &appCache, int &added )
 {
   AppLnkCache* cache;
   for ( cache = appCache.first(); cache; cache = appCache.next() ) {
     if ( cache->item == 0 || ( cache->item && cache->item->isOn() ) ) {
       added++;
 
-      QString destDir = cache->destDir;
-      QString destName = cache->destName;
-      QString templ = cache->templ;
+      TQString destDir = cache->destDir;
+      TQString destName = cache->destName;
+      TQString templ = cache->templ;
 
       destDir += "/";
-      QDir d;
+      TQDir d;
       int pos = -1;
       while ( ( pos = destDir.find( '/', pos + 1 ) ) >= 0 ) {
-        QString path = destDir.left( pos + 1 );
+        TQString path = destDir.left( pos + 1 );
         d = path;
         if ( !d.exists() )
           d.mkdir( path );
@@ -130,7 +130,7 @@ void createDesktopFiles( QPtrList<AppLnkCache> &appCache, int &added )
   }
 }
 
-void decorateDirs( QString destDir )
+void decorateDirs( TQString destDir )
 {
   // find out where to put the .directory files
   if ( destDir.isNull() )
@@ -138,19 +138,19 @@ void decorateDirs( QString destDir )
   else
     destDir += "/";
 
-  QStringList dirs = KGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.directory", true );
+  TQStringList dirs = KGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.directory", true );
 
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   for ( it = dirs.begin(); it != dirs.end(); ++it ) {
     // find out the name of the file to store
-    QString destName = *it;
+    TQString destName = *it;
     int pos = destName.find( "kappfinder/apps/" );
     if ( pos > 0 )
       destName = destName.mid( pos + strlen( "kappfinder/apps/" ) );
 
     destName = destDir + "/" + destName;
 
-    if ( !QFile::exists( destName ) ) {	
+    if ( !TQFile::exists( destName ) ) {	
       kdDebug(DBG_CODE) << "Copy " << *it << " to " << destName << endl;
       copyFile( *it, destName );
     }

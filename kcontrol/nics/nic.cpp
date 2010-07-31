@@ -35,11 +35,11 @@
 #include <kgenericfactory.h>
 #include <kglobal.h>
 
-#include <qlayout.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qtabwidget.h>
-#include <qtimer.h>
+#include <tqlayout.h>
+#include <tqlistview.h>
+#include <tqpushbutton.h>
+#include <tqtabwidget.h>
+#include <tqtimer.h>
 
 #include "nic.h"
 
@@ -64,31 +64,31 @@
 	#include <ifaddrs.h>
 	#include <netdb.h>
 
-	QString flags_tos (unsigned int flags);
+	TQString flags_tos (unsigned int flags);
 #endif
 
-typedef KGenericFactory<KCMNic, QWidget> KCMNicFactory;
+typedef KGenericFactory<KCMNic, TQWidget> KCMNicFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_nic, KCMNicFactory("kcmnic"))
 
 struct MyNIC
 {
-   QString name;
-   QString addr;
-   QString netmask;
-   QString state;
-   QString type;
-   QString HWaddr;
+   TQString name;
+   TQString addr;
+   TQString netmask;
+   TQString state;
+   TQString type;
+   TQString HWaddr;
 };
 
-typedef QPtrList<MyNIC> NICList;
+typedef TQPtrList<MyNIC> NICList;
 
 NICList* findNICs();
 
-KCMNic::KCMNic(QWidget *parent, const char * name, const QStringList &)
+KCMNic::KCMNic(TQWidget *parent, const char * name, const TQStringList &)
    :KCModule(KCMNicFactory::instance(), parent,name)
 {
-   QVBoxLayout *box=new QVBoxLayout(this, 0, KDialog::spacingHint());
-   m_list=new QListView(this);
+   TQVBoxLayout *box=new TQVBoxLayout(this, 0, KDialog::spacingHint());
+   m_list=new TQListView(this);
    box->addWidget(m_list);
    m_list->addColumn(i18n("Name"));
    m_list->addColumn(i18n("IP Address"));
@@ -97,14 +97,14 @@ KCMNic::KCMNic(QWidget *parent, const char * name, const QStringList &)
    m_list->addColumn(i18n("State"));
    m_list->addColumn(i18n("HWaddr"));
    m_list->setAllColumnsShowFocus(true);
-   QHBoxLayout *hbox=new QHBoxLayout(box);
-   m_updateButton=new QPushButton(i18n("&Update"),this);
+   TQHBoxLayout *hbox=new TQHBoxLayout(box);
+   m_updateButton=new TQPushButton(i18n("&Update"),this);
    hbox->addWidget(m_updateButton);
    hbox->addStretch(1);
-   QTimer* timer=new QTimer(this);
+   TQTimer* timer=new TQTimer(this);
    timer->start(60000);
-   connect(m_updateButton,SIGNAL(clicked()),this,SLOT(update()));
-   connect(timer,SIGNAL(timeout()),this,SLOT(update()));
+   connect(m_updateButton,TQT_SIGNAL(clicked()),this,TQT_SLOT(update()));
+   connect(timer,TQT_SIGNAL(timeout()),this,TQT_SLOT(update()));
    update();
    KAboutData *about =
    new KAboutData(I18N_NOOP("kcminfo"),
@@ -123,17 +123,17 @@ void KCMNic::update()
    NICList *nics=findNICs();
    nics->setAutoDelete(true);
    for (MyNIC* tmp=nics->first(); tmp!=0; tmp=nics->next())
-      new QListViewItem(m_list,tmp->name, tmp->addr, tmp->netmask, tmp->type, tmp->state, tmp->HWaddr);
+      new TQListViewItem(m_list,tmp->name, tmp->addr, tmp->netmask, tmp->type, tmp->state, tmp->HWaddr);
    delete nics;
 }
 
-static QString HWaddr2String( char *hwaddr )
+static TQString HWaddr2String( char *hwaddr )
 {
-   QString ret;
+   TQString ret;
    int i;
    for (i=0; i<6; i++, hwaddr++) {
 	int v = (*hwaddr & 0xff);
-	QString num = QString("%1").arg(v,0,16);
+	TQString num = TQString("%1").arg(v,0,16);
 	if (num.length() < 2)
 		num.prepend("0");
 	if (i>0)
@@ -145,8 +145,8 @@ static QString HWaddr2String( char *hwaddr )
 
 NICList* findNICs()
 {
-   QString upMessage(   i18n("State of network card is connected",    "Up") );
-   QString downMessage( i18n("State of network card is disconnected", "Down") );
+   TQString upMessage(   i18n("State of network card is connected",    "Up") );
+   TQString downMessage( i18n("State of network card is disconnected", "Down") );
 
    NICList* nl=new NICList;
    nl->setAutoDelete(true);
@@ -289,30 +289,30 @@ NICList* findNICs()
 
 
 #if defined(HAVE_GETNAMEINFO) && defined(HAVE_GETIFADDRS)
-QString flags_tos (unsigned int flags)
+TQString flags_tos (unsigned int flags)
 {
-  QString tmp;
+  TQString tmp;
   if (flags & IFF_POINTOPOINT) {
     tmp +=  i18n("Point to Point");
   }
 
   if (flags & IFF_BROADCAST) {
     if (tmp.length()) {
-      tmp += QString::fromLatin1(", ");
+      tmp += TQString::fromLatin1(", ");
     }
     tmp += i18n("Broadcast");
   }
   
   if (flags & IFF_MULTICAST) {
     if (tmp.length()) {
-      tmp += QString::fromLatin1(", ");
+      tmp += TQString::fromLatin1(", ");
     }
     tmp += i18n("Multicast");
   }
   
   if (flags & IFF_LOOPBACK) {
     if (tmp.length()) {
-      tmp += QString::fromLatin1(", ");
+      tmp += TQString::fromLatin1(", ");
     }
     tmp += i18n("Loopback");
   }

@@ -21,12 +21,12 @@
 #ifndef DEFCMDS_H
 #define DEFCMDS_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #define efax_default_cmd    "%exe_fax %user_{NAME=\"@@\"} %dev_{DEV=@@} PAGE=%page %from_{FROM=\"@@\"} %res_{?\?-l} send %number %files"
 #define hylafax_default_cmd "%exe_sendfax %cover_{?\?-n} %server_h %res_{-m?\?-l} %subject_r %time_a %enterprise_x %comment_c %email_f %from_W %page_s -d %name_{@@@}%number %files"
 #define mgetty_default_cmd  "%exe_faxspool %user_F %email_f %name_D %time_t %number %files %res_{?\?-n} %cover_{?\?-C -}"
 
-QString defaultCommand(const QString& cmd);
+TQString defaultCommand(const TQString& cmd);
 
 #endif

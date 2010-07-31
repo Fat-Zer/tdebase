@@ -69,12 +69,12 @@ DCOPRef KateAppDCOPIface::mainWindow (uint n)
   return DCOPRef ();
 }
 
-bool KateAppDCOPIface::openURL (KURL url, QString encoding)
+bool KateAppDCOPIface::openURL (KURL url, TQString encoding)
 {
   return m_app->openURL (url, encoding, false);
 }
 
-bool KateAppDCOPIface::openURL (KURL url, QString encoding, bool isTempFile)
+bool KateAppDCOPIface::openURL (KURL url, TQString encoding, bool isTempFile)
 {
   return m_app->openURL (url, encoding, isTempFile);
 }
@@ -84,19 +84,19 @@ bool KateAppDCOPIface::setCursor (int line, int column)
   return m_app->setCursor (line, column);
 }
 
-bool KateAppDCOPIface::openInput (QString text)
+bool KateAppDCOPIface::openInput (TQString text)
 {
   return m_app->openInput (text);
 }
 
-bool KateAppDCOPIface::activateSession (QString session)
+bool KateAppDCOPIface::activateSession (TQString session)
 {
   m_app->sessionManager()->activateSession (m_app->sessionManager()->giveSession (session));
 
   return true;
 }
 
-const QString & KateAppDCOPIface::session() const
+const TQString & KateAppDCOPIface::session() const
 {
   return m_app->sessionManager()->activeSession()->sessionName();
 }

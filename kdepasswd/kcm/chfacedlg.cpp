@@ -25,14 +25,14 @@
  * @author Braden MacDonald
  */
 
-#include <qstring.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qpushbutton.h>
-#include <qdir.h>
-#include <qcheckbox.h>
+#include <tqstring.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
+#include <tqpushbutton.h>
+#include <tqdir.h>
+#include <tqcheckbox.h>
 
 #include <kdialogbase.h>
 #include <klocale.h>
@@ -52,35 +52,35 @@
 /**
  * TODO: It would be nice if the widget were in a .ui
  */
-ChFaceDlg::ChFaceDlg(const QString& picsdir, QWidget *parent, const char *name, bool modal)
+ChFaceDlg::ChFaceDlg(const TQString& picsdir, TQWidget *parent, const char *name, bool modal)
   : KDialogBase( parent, name, modal, i18n("Change your Face"), Ok|Cancel, Ok, true )
 {
-  QWidget *page = new QWidget(this);
+  TQWidget *page = new TQWidget(this);
   setMainWidget( page );
 
-  QVBoxLayout *top = new QVBoxLayout(page, 0, spacingHint());
+  TQVBoxLayout *top = new TQVBoxLayout(page, 0, spacingHint());
 
-  QLabel *header = new QLabel( i18n("Select a new face:"), page );
+  TQLabel *header = new TQLabel( i18n("Select a new face:"), page );
   top->addWidget( header );
 
   m_FacesWidget = new KIconView( page );
-  m_FacesWidget->setSelectionMode( QIconView::Single );
+  m_FacesWidget->setSelectionMode( TQIconView::Single );
   m_FacesWidget->setItemsMovable( false );
   m_FacesWidget->setMinimumSize( 400, 200 );
 
-  connect( m_FacesWidget, SIGNAL( selectionChanged( QIconViewItem * ) ), SLOT( slotFaceWidgetSelectionChanged( QIconViewItem * ) ) );
+  connect( m_FacesWidget, TQT_SIGNAL( selectionChanged( TQIconViewItem * ) ), TQT_SLOT( slotFaceWidgetSelectionChanged( TQIconViewItem * ) ) );
 
-  connect( m_FacesWidget, SIGNAL( doubleClicked( QIconViewItem *, const QPoint & ) ), SLOT( slotOk() ) );
+  connect( m_FacesWidget, TQT_SIGNAL( doubleClicked( TQIconViewItem *, const TQPoint & ) ), TQT_SLOT( slotOk() ) );
 
   top->addWidget( m_FacesWidget );
 
   // Buttons to get more pics
-  QHBoxLayout * morePics = new QHBoxLayout( 0, 0, spacingHint() );
-  QPushButton *browseBtn = new QPushButton( i18n("Custom &Image..."), page );
-  connect( browseBtn, SIGNAL( clicked() ), SLOT( slotGetCustomImage() ) );
+  TQHBoxLayout * morePics = new TQHBoxLayout( 0, 0, spacingHint() );
+  TQPushButton *browseBtn = new TQPushButton( i18n("Custom &Image..."), page );
+  connect( browseBtn, TQT_SIGNAL( clicked() ), TQT_SLOT( slotGetCustomImage() ) );
   morePics->addWidget( browseBtn );
 #if 0
-  QPushButton *acquireBtn = new QPushButton( i18n("&Acquire Image..."), page );
+  TQPushButton *acquireBtn = new TQPushButton( i18n("&Acquire Image..."), page );
   acquireBtn->setEnabled( false );
   morePics->addWidget( acquireBtn );
 #endif
@@ -88,36 +88,36 @@ ChFaceDlg::ChFaceDlg(const QString& picsdir, QWidget *parent, const char *name, 
   top->addLayout( morePics );
 
   // Filling the icon view
-  QDir facesDir( picsdir );
+  TQDir facesDir( picsdir );
   if ( facesDir.exists() )
   {
-    QStringList picslist = facesDir.entryList( QDir::Files );
-    for ( QStringList::Iterator it = picslist.begin(); it != picslist.end(); ++it )
-      new QIconViewItem( m_FacesWidget, (*it).section(".",0,0), QPixmap( picsdir + *it ) );
+    TQStringList picslist = facesDir.entryList( TQDir::Files );
+    for ( TQStringList::Iterator it = picslist.begin(); it != picslist.end(); ++it )
+      new TQIconViewItem( m_FacesWidget, (*it).section(".",0,0), TQPixmap( picsdir + *it ) );
   }
   facesDir.setPath( KCFGUserAccount::userFaceDir() );
   if ( facesDir.exists() )
   {
-    QStringList picslist = facesDir.entryList( QDir::Files );
-    for ( QStringList::Iterator it = picslist.begin(); it != picslist.end(); ++it )
-      new QIconViewItem( m_FacesWidget, "/"+(*it) == KCFGUserAccount::customFaceFile() ? 
+    TQStringList picslist = facesDir.entryList( TQDir::Files );
+    for ( TQStringList::Iterator it = picslist.begin(); it != picslist.end(); ++it )
+      new TQIconViewItem( m_FacesWidget, "/"+(*it) == KCFGUserAccount::customFaceFile() ? 
 		      i18n("(Custom)") : (*it).section(".",0,0),
-                      QPixmap( KCFGUserAccount::userFaceDir() + *it ) );
+                      TQPixmap( KCFGUserAccount::userFaceDir() + *it ) );
   }
 
-  m_FacesWidget->setResizeMode( QIconView::Adjust );
+  m_FacesWidget->setResizeMode( TQIconView::Adjust );
   //m_FacesWidget->setGridX( FACE_PIX_SIZE - 10 );
   m_FacesWidget->arrangeItemsInGrid();
 
   enableButtonOK( false );
-  //connect( this, SIGNAL( okClicked() ), SLOT( slotSaveCustomImage() ) );
+  //connect( this, TQT_SIGNAL( okClicked() ), TQT_SLOT( slotSaveCustomImage() ) );
 
   resize( 420, 400 );
 }
 
-void ChFaceDlg::addCustomPixmap( QString imPath, bool saveCopy )
+void ChFaceDlg::addCustomPixmap( TQString imPath, bool saveCopy )
 {
-  QImage pix( imPath );
+  TQImage pix( imPath );
   // TODO: save pix to TMPDIR/userinfo-tmp,
   // then scale and copy *that* to ~/.faces
 
@@ -128,24 +128,24 @@ void ChFaceDlg::addCustomPixmap( QString imPath, bool saveCopy )
   }
   if ( (pix.width() > KCFGUserAccount::faceSize())
 	|| (pix.height() > KCFGUserAccount::faceSize()) )
-    pix = pix.scale( KCFGUserAccount::faceSize(), KCFGUserAccount::faceSize(), QImage::ScaleMin );// Should be no bigger than certain size.
+    pix = pix.scale( KCFGUserAccount::faceSize(), KCFGUserAccount::faceSize(), TQImage::ScaleMin );// Should be no bigger than certain size.
 
   if ( saveCopy )
   {
     // If we should save a copy:
-    QDir userfaces( KCFGUserAccount::userFaceDir() );
+    TQDir userfaces( KCFGUserAccount::userFaceDir() );
     if ( !userfaces.exists( ) )
       userfaces.mkdir( userfaces.absPath() );
 
     pix.save( userfaces.absPath() + "/.userinfo-tmp" , "PNG" );
-    KonqOperations::copy( this, KonqOperations::COPY, KURL::List( KURL( userfaces.absPath() + "/.userinfo-tmp" ) ), KURL( userfaces.absPath() + "/" + QFileInfo(imPath).fileName().section(".",0,0) ) );
+    KonqOperations::copy( this, KonqOperations::COPY, KURL::List( KURL( userfaces.absPath() + "/.userinfo-tmp" ) ), KURL( userfaces.absPath() + "/" + TQFileInfo(imPath).fileName().section(".",0,0) ) );
 #if 0
   if ( !pix.save( userfaces.absPath() + "/" + imPath , "PNG" ) )
     KMessageBox::sorry(this, i18n("There was an error saving the image:\n%1").arg( userfaces.absPath() ) );
 #endif
   }
 
-  QIconViewItem* newface = new QIconViewItem( m_FacesWidget, QFileInfo(imPath).fileName().section(".",0,0) , pix );
+  TQIconViewItem* newface = new TQIconViewItem( m_FacesWidget, TQFileInfo(imPath).fileName().section(".",0,0) , pix );
   newface->setKey( KCFGUserAccount::customKey() );// Add custom items to end
   m_FacesWidget->ensureItemVisible( newface );
   m_FacesWidget->setCurrentItem( newface );
@@ -153,9 +153,9 @@ void ChFaceDlg::addCustomPixmap( QString imPath, bool saveCopy )
 
 void ChFaceDlg::slotGetCustomImage(  )
 {
-  QCheckBox* checkWidget = new QCheckBox( i18n("&Save copy in custom faces folder for future use"), 0 );
+  TQCheckBox* checkWidget = new TQCheckBox( i18n("&Save copy in custom faces folder for future use"), 0 );
 
-  KFileDialog *dlg = new KFileDialog( QDir::homeDirPath(), KImageIO::pattern( KImageIO::Reading ),
+  KFileDialog *dlg = new KFileDialog( TQDir::homeDirPath(), KImageIO::pattern( KImageIO::Reading ),
                   this, 0, true, checkWidget);
 
   dlg->setOperationMode( KFileDialog::Opening );
@@ -164,7 +164,7 @@ void ChFaceDlg::slotGetCustomImage(  )
 
   KImageFilePreview *ip = new KImageFilePreview( dlg );
   dlg->setPreviewWidget( ip );
-  if (dlg->exec() == QDialog::Accepted)
+  if (dlg->exec() == TQDialog::Accepted)
       addCustomPixmap( dlg->selectedFile(), checkWidget->isChecked() );
   // Because we give it a parent we have to close it ourselves.
   dlg->close(true);
@@ -175,7 +175,7 @@ void ChFaceDlg::slotSaveCustomImage()
 {
   if ( m_FacesWidget->currentItem()->key() ==  USER_CUSTOM_KEY)
   {
-    QDir userfaces( QDir::homeDirPath() + USER_FACES_DIR );
+    TQDir userfaces( TQDir::homeDirPath() + USER_FACES_DIR );
     if ( !userfaces.exists( ) )
       userfaces.mkdir( userfaces.absPath() );
 

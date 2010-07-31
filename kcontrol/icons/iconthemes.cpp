@@ -21,10 +21,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qfileinfo.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <tqfileinfo.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -51,21 +51,21 @@
 
 #include "iconthemes.h"
 
-IconThemesConfig::IconThemesConfig(QWidget *parent, const char *name)
+IconThemesConfig::IconThemesConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-  QVBoxLayout *topLayout = new QVBoxLayout(this, KDialog::marginHint(),
+  TQVBoxLayout *topLayout = new TQVBoxLayout(this, KDialog::marginHint(),
                                            KDialog::spacingHint());
 
-  QFrame *m_preview=new QFrame(this);
+  TQFrame *m_preview=new TQFrame(this);
   m_preview->setMinimumHeight(50);
 
-  QHBoxLayout *lh2=new QHBoxLayout( m_preview );
-  m_previewExec=new QLabel(m_preview);
+  TQHBoxLayout *lh2=new TQHBoxLayout( m_preview );
+  m_previewExec=new TQLabel(m_preview);
   m_previewExec->setPixmap(DesktopIcon("exec"));
-  m_previewFolder=new QLabel(m_preview);
+  m_previewFolder=new TQLabel(m_preview);
   m_previewFolder->setPixmap(DesktopIcon("folder"));
-  m_previewDocument=new QLabel(m_preview);
+  m_previewDocument=new TQLabel(m_preview);
   m_previewDocument->setPixmap(DesktopIcon("document"));
 
   lh2->addStretch(10);
@@ -82,21 +82,21 @@ IconThemesConfig::IconThemesConfig(QWidget *parent, const char *name)
   m_iconThemes->addColumn(i18n("Description"));
   m_iconThemes->setAllColumnsShowFocus( true );
   m_iconThemes->setFullWidth(true);
-  connect(m_iconThemes,SIGNAL(selectionChanged(QListViewItem *)),
-		SLOT(themeSelected(QListViewItem *)));
+  connect(m_iconThemes,TQT_SIGNAL(selectionChanged(TQListViewItem *)),
+		TQT_SLOT(themeSelected(TQListViewItem *)));
 
-  QPushButton *installButton=new QPushButton( i18n("Install New Theme..."),
+  TQPushButton *installButton=new TQPushButton( i18n("Install New Theme..."),
 	this, "InstallNewTheme");
-  connect(installButton,SIGNAL(clicked()),SLOT(installNewTheme()));
-  m_removeButton=new QPushButton( i18n("Remove Theme"),
+  connect(installButton,TQT_SIGNAL(clicked()),TQT_SLOT(installNewTheme()));
+  m_removeButton=new TQPushButton( i18n("Remove Theme"),
 	this, "RemoveTheme");
-  connect(m_removeButton,SIGNAL(clicked()),SLOT(removeSelectedTheme()));
+  connect(m_removeButton,TQT_SIGNAL(clicked()),TQT_SLOT(removeSelectedTheme()));
 
   topLayout->addWidget(
-	new QLabel(i18n("Select the icon theme you want to use:"), this));
+	new TQLabel(i18n("Select the icon theme you want to use:"), this));
   topLayout->addWidget(m_preview);
   topLayout->addWidget(m_iconThemes);
-  QHBoxLayout *lg = new QHBoxLayout(topLayout, KDialog::spacingHint());
+  TQHBoxLayout *lg = new TQHBoxLayout(topLayout, KDialog::spacingHint());
   lg->addWidget(installButton);
   lg->addWidget(m_removeButton);
 
@@ -111,9 +111,9 @@ IconThemesConfig::~IconThemesConfig()
 {
 }
 
-QListViewItem *IconThemesConfig::iconThemeItem(const QString &name)
+TQListViewItem *IconThemesConfig::iconThemeItem(const TQString &name)
 {
-  QListViewItem *item;
+  TQListViewItem *item;
   for ( item=m_iconThemes->firstChild(); item ; item=item->nextSibling() )
     if (m_themeNames[item->text(0)]==name) return item;
 
@@ -124,10 +124,10 @@ void IconThemesConfig::loadThemes()
 {
   m_iconThemes->clear();
   m_themeNames.clear();
-  QStringList themelist(KIconTheme::list());
-  QString name;
-  QString tname;
-  QStringList::Iterator it;
+  TQStringList themelist(KIconTheme::list());
+  TQString name;
+  TQString tname;
+  TQStringList::Iterator it;
   for (it=themelist.begin(); it != themelist.end(); ++it)
   {
     KIconTheme icontheme(*it);
@@ -139,9 +139,9 @@ void IconThemesConfig::loadThemes()
 
  //  Just in case we have duplicated icon theme names on separate directories
     for (int i=2; m_themeNames.find(tname)!=m_themeNames.end() ; i++)
-        tname=QString("%1-%2").arg(name).arg(i);
+        tname=TQString("%1-%2").arg(name).arg(i);
 
-    m_iconThemes->insertItem(new QListViewItem(m_iconThemes,name,
+    m_iconThemes->insertItem(new TQListViewItem(m_iconThemes,name,
 		icontheme.description()));
 
     m_themeNames.insert(name,*it);
@@ -151,17 +151,17 @@ void IconThemesConfig::loadThemes()
 
 void IconThemesConfig::installNewTheme()
 {
-  KURL themeURL = KURLRequesterDlg::getURL(QString::null, this,
+  KURL themeURL = KURLRequesterDlg::getURL(TQString::null, this,
                                            i18n("Drag or Type Theme URL"));
   kdDebug() << themeURL.prettyURL() << endl;
 
   if (themeURL.url().isEmpty()) return;
 
-  QString themeTmpFile;
+  TQString themeTmpFile;
   // themeTmpFile contains the name of the downloaded file
 
   if (!KIO::NetAccess::download(themeURL, themeTmpFile, this)) {
-    QString sorryText;
+    TQString sorryText;
     if (themeURL.isLocalFile())
        sorryText = i18n("Unable to find the icon theme archive %1.");
     else
@@ -171,9 +171,9 @@ void IconThemesConfig::installNewTheme()
     return;
   }
 
-  QStringList themesNames = findThemeDirs(themeTmpFile);
+  TQStringList themesNames = findThemeDirs(themeTmpFile);
   if (themesNames.isEmpty()) {
-    QString invalidArch(i18n("The file is not a valid icon theme archive."));
+    TQString invalidArch(i18n("The file is not a valid icon theme archive."));
     KMessageBox::error(this, invalidArch);
 
     KIO::NetAccess::removeTempFile(themeTmpFile);
@@ -182,8 +182,8 @@ void IconThemesConfig::installNewTheme()
 
   if (!installThemes(themesNames, themeTmpFile)) {
     //FIXME: make me able to know what is wrong....
-    // QStringList instead of bool?
-    QString somethingWrong =
+    // TQStringList instead of bool?
+    TQString somethingWrong =
         i18n("A problem occurred during the installation process; "
              "however, most of the themes in the archive have been installed");
     KMessageBox::error(this, somethingWrong);
@@ -194,19 +194,19 @@ void IconThemesConfig::installNewTheme()
   KGlobal::instance()->newIconLoader();
   loadThemes();
 
-  QListViewItem *item=iconThemeItem(KIconTheme::current());
+  TQListViewItem *item=iconThemeItem(KIconTheme::current());
   m_iconThemes->setSelected(item, true);
   updateRemoveButton();
 }
 
-bool IconThemesConfig::installThemes(const QStringList &themes, const QString &archiveName)
+bool IconThemesConfig::installThemes(const TQStringList &themes, const TQString &archiveName)
 {
   bool everythingOk = true;
-  QString localThemesDir(locateLocal("icon", "./"));
+  TQString localThemesDir(locateLocal("icon", "./"));
 
   KProgressDialog progressDiag(this, "themeinstallprogress",
                                i18n("Installing icon themes"),
-                               QString::null,
+                               TQString::null,
                                true);
   progressDiag.setAutoClose(true);
   progressDiag.progressBar()->setTotalSteps(themes.count());
@@ -219,7 +219,7 @@ bool IconThemesConfig::installThemes(const QStringList &themes, const QString &a
   const KArchiveDirectory* rootDir = archive.directory();
 
   KArchiveDirectory* currentTheme;
-  for (QStringList::ConstIterator it = themes.begin();
+  for (TQStringList::ConstIterator it = themes.begin();
        it != themes.end();
        ++it) {
     progressDiag.setLabel(
@@ -248,9 +248,9 @@ bool IconThemesConfig::installThemes(const QStringList &themes, const QString &a
   return everythingOk;
 }
 
-QStringList IconThemesConfig::findThemeDirs(const QString &archiveName)
+TQStringList IconThemesConfig::findThemeDirs(const TQString &archiveName)
 {
-  QStringList foundThemes;
+  TQStringList foundThemes;
 
   KTar archive(archiveName);
   archive.open(IO_ReadOnly);
@@ -260,8 +260,8 @@ QStringList IconThemesConfig::findThemeDirs(const QString &archiveName)
   KArchiveDirectory* subDir = 0L;
 
   // iterate all the dirs looking for an index.theme or index.desktop file
-  QStringList entries = themeDir->entries();
-  for (QStringList::Iterator it = entries.begin();
+  TQStringList entries = themeDir->entries();
+  for (TQStringList::Iterator it = entries.begin();
        it != entries.end();
        ++it) {
     possibleDir = const_cast<KArchiveEntry*>(themeDir->entry(*it));
@@ -279,11 +279,11 @@ QStringList IconThemesConfig::findThemeDirs(const QString &archiveName)
 
 void IconThemesConfig::removeSelectedTheme()
 {
-  QListViewItem *selected = m_iconThemes->selectedItem();
+  TQListViewItem *selected = m_iconThemes->selectedItem();
   if (!selected)
      return;
 
-  QString question=i18n("<qt>Are you sure you want to remove the "
+  TQString question=i18n("<qt>Are you sure you want to remove the "
         "<strong>%1</strong> icon theme?<br>"
         "<br>"
         "This will delete the files installed by this theme.</qt>").
@@ -298,15 +298,15 @@ void IconThemesConfig::removeSelectedTheme()
 
   // delete the index file before the async KIO::del so loadThemes() will
   // ignore that dir.
-  unlink(QFile::encodeName(icontheme.dir()+"/index.theme").data());
-  unlink(QFile::encodeName(icontheme.dir()+"/index.desktop").data());
+  unlink(TQFile::encodeName(icontheme.dir()+"/index.theme").data());
+  unlink(TQFile::encodeName(icontheme.dir()+"/index.desktop").data());
   KIO::del(KURL( icontheme.dir() ));
 
   KGlobal::instance()->newIconLoader();
 
   loadThemes();
 
-  QListViewItem *item=0L;
+  TQListViewItem *item=0L;
   //Fallback to the default if we've deleted the current theme
   if (!deletingCurrentTheme)
      item=iconThemeItem(KIconTheme::current());
@@ -322,12 +322,12 @@ void IconThemesConfig::removeSelectedTheme()
 
 void IconThemesConfig::updateRemoveButton()
 {
-  QListViewItem *selected = m_iconThemes->selectedItem();
+  TQListViewItem *selected = m_iconThemes->selectedItem();
   bool enabled = false;
   if (selected)
   {
     KIconTheme icontheme(m_themeNames[selected->text(0)]);
-    QFileInfo fi(icontheme.dir());
+    TQFileInfo fi(icontheme.dir());
     enabled = fi.isWritable();
     // Don't let users remove the current theme.
     if(m_themeNames[selected->text(0)] == KIconTheme::current() || 
@@ -337,12 +337,12 @@ void IconThemesConfig::updateRemoveButton()
   m_removeButton->setEnabled(enabled);
 }
 
-void IconThemesConfig::themeSelected(QListViewItem *item)
+void IconThemesConfig::themeSelected(TQListViewItem *item)
 {
 #ifdef HAVE_LIBART
   KSVGIconEngine engine;
 #endif 
-  QString dirName(m_themeNames[item->text(0)]);
+  TQString dirName(m_themeNames[item->text(0)]);
   KIconTheme icontheme(dirName);
   if (!icontheme.isValid()) kdDebug() << "notvalid\n";
 
@@ -363,7 +363,7 @@ void IconThemesConfig::themeSelected(QListViewItem *item)
 #endif
   }
   else
-          m_previewExec->setPixmap(QPixmap(icon.path));
+          m_previewExec->setPixmap(TQPixmap(icon.path));
 
   icon=icontheme.iconPath("folder.png",size,KIcon::MatchBest);
   if (!icon.isValid()) {
@@ -379,7 +379,7 @@ void IconThemesConfig::themeSelected(QListViewItem *item)
 #endif
   }
   else
-  	  m_previewFolder->setPixmap(QPixmap(icon.path));
+  	  m_previewFolder->setPixmap(TQPixmap(icon.path));
 
   icon=icontheme.iconPath("txt.png",size,KIcon::MatchBest);
   if (!icon.isValid()) {
@@ -395,7 +395,7 @@ void IconThemesConfig::themeSelected(QListViewItem *item)
 #endif
   }
   else  
-	  m_previewDocument->setPixmap(QPixmap(icon.path));
+	  m_previewDocument->setPixmap(TQPixmap(icon.path));
   
   emit changed(true);
   m_bChanged = true;
@@ -415,7 +415,7 @@ void IconThemesConfig::save()
 {
   if (!m_bChanged)
      return;
-  QListViewItem *selected = m_iconThemes->selectedItem();
+  TQListViewItem *selected = m_iconThemes->selectedItem();
   if (!selected)
      return;
 

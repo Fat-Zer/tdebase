@@ -12,9 +12,9 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_CLIENT_H
 #define KWIN_CLIENT_H
 
-#include <qframe.h>
-#include <qvbox.h>
-#include <qpixmap.h>
+#include <tqframe.h>
+#include <tqvbox.h>
+#include <tqpixmap.h>
 #include <netwm.h>
 #include <kdebug.h>
 #include <assert.h>
@@ -43,7 +43,7 @@ class WinInfo;
 class SessionInfo;
 class Bridge;
 
-class Client : public QObject, public KDecorationDefines
+class Client : public TQObject, public KDecorationDefines
     {
     Q_OBJECT
     public:
@@ -76,21 +76,21 @@ class Client : public QObject, public KDecorationDefines
         void applyWindowRules();
         void updateWindowRules();
 
-        QRect geometry() const;
-        QSize size() const;
-        QSize minSize() const;
-        QSize maxSize() const;
-        QPoint pos() const;
-        QRect rect() const;
+        TQRect geometry() const;
+        TQSize size() const;
+        TQSize minSize() const;
+        TQSize maxSize() const;
+        TQPoint pos() const;
+        TQRect rect() const;
         int x() const;
         int y() const;
         int width() const;
         int height() const;
-        QPoint clientPos() const; // inside of geometry()
-        QSize clientSize() const;
+        TQPoint clientPos() const; // inside of geometry()
+        TQSize clientSize() const;
 
         bool windowEvent( XEvent* e );
-        virtual bool eventFilter( QObject* o, QEvent* e );
+        virtual bool eventFilter( TQObject* o, TQEvent* e );
 
         bool manage( Window w, bool isMapped );
 
@@ -103,11 +103,11 @@ class Client : public QObject, public KDecorationDefines
             SizemodeFixedH, // try not to affect height
             SizemodeMax // try not to make it larger in either direction
             };
-        QSize adjustedSize( const QSize&, Sizemode mode = SizemodeAny ) const;
-        QSize adjustedSize() const;
+        TQSize adjustedSize( const TQSize&, Sizemode mode = SizemodeAny ) const;
+        TQSize adjustedSize() const;
 
-        QPixmap icon() const;
-        QPixmap miniIcon() const;
+        TQPixmap icon() const;
+        TQPixmap miniIcon() const;
 
         bool isActive() const;
         void setActive( bool, bool updateOpacity = true );
@@ -132,7 +132,7 @@ class Client : public QObject, public KDecorationDefines
 
         bool isMinimized() const;
         bool isMaximizable() const;
-        QRect geometryRestore() const;
+        TQRect geometryRestore() const;
         MaximizeMode maximizeModeRestore() const;
         MaximizeMode maximizeMode() const;
         bool isMinimizable() const;
@@ -142,7 +142,7 @@ class Client : public QObject, public KDecorationDefines
         bool isFullScreen() const;
         bool isFullScreenable( bool fullscreen_hack = false ) const;
         bool userCanSetFullScreen() const;
-        QRect geometryFSRestore() const { return geom_fs_restore; } // only for session saving
+        TQRect geometryFSRestore() const { return geom_fs_restore; } // only for session saving
         int fullScreenMode() const { return fullscreen_mode; } // only for session saving
 
         bool isUserNoBorder() const;
@@ -194,8 +194,8 @@ class Client : public QObject, public KDecorationDefines
         void takeFocus( allowed_t );
         void demandAttention( bool set = true );
 
-        void setMask( const QRegion& r, int mode = X::Unsorted );
-        QRegion mask() const;
+        void setMask( const TQRegion& r, int mode = X::Unsorted );
+        TQRegion mask() const;
 
         void updateDecoration( bool check_workspace_pos, bool force = false );
         void checkBorderSizes();
@@ -205,16 +205,16 @@ class Client : public QObject, public KDecorationDefines
         void updateShape();
 
         void setGeometry( int x, int y, int w, int h, ForceGeometry_t force = NormalGeometrySet );
-        void setGeometry( const QRect& r, ForceGeometry_t force = NormalGeometrySet );
+        void setGeometry( const TQRect& r, ForceGeometry_t force = NormalGeometrySet );
         void move( int x, int y, ForceGeometry_t force = NormalGeometrySet );
-        void move( const QPoint & p, ForceGeometry_t force = NormalGeometrySet );
+        void move( const TQPoint & p, ForceGeometry_t force = NormalGeometrySet );
         // plainResize() simply resizes
         void plainResize( int w, int h, ForceGeometry_t force = NormalGeometrySet );
-        void plainResize( const QSize& s, ForceGeometry_t force = NormalGeometrySet );
+        void plainResize( const TQSize& s, ForceGeometry_t force = NormalGeometrySet );
         // resizeWithChecks() resizes according to gravity, and checks workarea position
         void resizeWithChecks( int w, int h, ForceGeometry_t force = NormalGeometrySet );
-        void resizeWithChecks( const QSize& s, ForceGeometry_t force = NormalGeometrySet );
-        void keepInArea( QRect area, bool partial = false );
+        void resizeWithChecks( const TQSize& s, ForceGeometry_t force = NormalGeometrySet );
+        void keepInArea( TQRect area, bool partial = false );
 
         void growHorizontal();
         void shrinkHorizontal();
@@ -223,20 +223,20 @@ class Client : public QObject, public KDecorationDefines
 
         bool providesContextHelp() const;
         KShortcut shortcut() const;
-        void setShortcut( const QString& cut );
+        void setShortcut( const TQString& cut );
 
-        bool performMouseCommand( Options::MouseCommand, QPoint globalPos, bool handled = false );
+        bool performMouseCommand( Options::MouseCommand, TQPoint globalPos, bool handled = false );
 
-        QCString windowRole() const;
-        QCString sessionId();
-        QCString resourceName() const;
-        QCString resourceClass() const;
-        QCString wmCommand();
-        QCString wmClientMachine( bool use_localhost ) const;
+        TQCString windowRole() const;
+        TQCString sessionId();
+        TQCString resourceName() const;
+        TQCString resourceClass() const;
+        TQCString wmCommand();
+        TQCString wmClientMachine( bool use_localhost ) const;
         Window   wmClientLeader() const;
         pid_t pid() const;
 
-        QRect adjustedClientArea( const QRect& desktop, const QRect& area ) const;
+        TQRect adjustedClientArea( const TQRect& desktop, const TQRect& area ) const;
 
         Colormap colormap() const;
 
@@ -245,14 +245,14 @@ class Client : public QObject, public KDecorationDefines
     // hides a client - basically like minimize, but without effects, it's simply hidden
         void hideClient( bool hide );
 
-        QString caption( bool full = true ) const;
+        TQString caption( bool full = true ) const;
         void updateCaption();
 
         void keyPressEvent( uint key_code ); // FRAME ??
         void updateMouseGrab();
         Window moveResizeGrabWindow() const;
 
-        const QPoint calculateGravitation( bool invert, int gravity = 0 ) const; // FRAME public?
+        const TQPoint calculateGravitation( bool invert, int gravity = 0 ) const; // FRAME public?
 
         void NETMoveResize( int x_root, int y_root, NET::Direction direction );
         void NETMoveResizeWindow( int flags, int x, int y, int width, int height );
@@ -260,10 +260,10 @@ class Client : public QObject, public KDecorationDefines
         
         void gotPing( Time timestamp );
 
-        static QCString staticWindowRole(WId);
-        static QCString staticSessionId(WId);
-        static QCString staticWmCommand(WId);
-        static QCString staticWmClientMachine(WId);
+        static TQCString staticWindowRole(WId);
+        static TQCString staticSessionId(WId);
+        static TQCString staticWmCommand(WId);
+        static TQCString staticWmClientMachine(WId);
         static Window   staticWmClientLeader(WId);
 
         void checkWorkspacePosition();
@@ -277,7 +277,7 @@ class Client : public QObject, public KDecorationDefines
 
         static bool resourceMatch( const Client* c1, const Client* c2 );
         static bool belongToSameApplication( const Client* c1, const Client* c2, bool active_hack = false );
-        static void readIcons( Window win, QPixmap* icon, QPixmap* miniicon );
+        static void readIcons( Window win, TQPixmap* icon, TQPixmap* miniicon );
 
         void minimize( bool avoid_animation = false );
         void unminimize( bool avoid_animation = false );
@@ -315,22 +315,22 @@ class Client : public QObject, public KDecorationDefines
 
     private:
         friend class Bridge; // FRAME
-        virtual void processMousePressEvent( QMouseEvent* e );
+        virtual void processMousePressEvent( TQMouseEvent* e );
 
     private: // TODO cleanup the order of things in the .h file
     // use Workspace::createClient()
         virtual ~Client(); // use destroyClient() or releaseWindow()
 
-        Position mousePosition( const QPoint& ) const;
+        Position mousePosition( const TQPoint& ) const;
         void setCursor( Position m );
-        void setCursor( const QCursor& c );
+        void setCursor( const TQCursor& c );
 
         void  animateMinimizeOrUnminimize( bool minimize );
-        QPixmap animationPixmap( int w );
+        TQPixmap animationPixmap( int w );
     // transparent stuff
-        void drawbound( const QRect& geom );
+        void drawbound( const TQRect& geom );
         void clearbound();
-        void doDrawbound( const QRect& geom, bool clear );
+        void doDrawbound( const TQRect& geom, bool clear );
 
     // handlers for X11 events
         bool mapRequestEvent( XMapRequestEvent* e );
@@ -363,11 +363,11 @@ class Client : public QObject, public KDecorationDefines
         bool isNormalState() const;
         bool isManaged() const; // returns false if this client is not yet managed
         void updateAllowedActions( bool force = false );
-        QSize sizeForClientSize( const QSize&, Sizemode mode = SizemodeAny, bool noframe = false ) const;
+        TQSize sizeForClientSize( const TQSize&, Sizemode mode = SizemodeAny, bool noframe = false ) const;
         void changeMaximize( bool horizontal, bool vertical, bool adjust );
         void checkMaximizeGeometry();
-        int checkFullScreenHack( const QRect& geom ) const; // 0 - none, 1 - one xinerama screen, 2 - full area
-        void updateFullScreenHack( const QRect& geom );
+        int checkFullScreenHack( const TQRect& geom ) const; // 0 - none, 1 - one xinerama screen, 2 - full area
+        void updateFullScreenHack( const TQRect& geom );
         void getWmNormalHints();
         void getMotifHints();
         void getIcons();
@@ -375,14 +375,14 @@ class Client : public QObject, public KDecorationDefines
         void getWmClientMachine();
         void fetchName();
         void fetchIconicName();
-        QString readName() const;
-        void setCaption( const QString& s, bool force = false );
+        TQString readName() const;
+        void setCaption( const TQString& s, bool force = false );
         bool hasTransientInternal( const Client* c, bool indirect, ConstClientList& set ) const;
         void finishWindowRules();
         void setShortcutInternal( const KShortcut& cut );
 
         void updateWorkareaDiffs();
-        void checkDirection( int new_diff, int old_diff, QRect& rect, const QRect& area );
+        void checkDirection( int new_diff, int old_diff, TQRect& rect, const TQRect& area );
         static int computeWorkareaDiff( int left, int right, int a_left, int a_right );
         void configureRequest( int value_mask, int rx, int ry, int rw, int rh, int gravity, bool from_tool );
         NETExtendedStrut strut() const;
@@ -398,7 +398,7 @@ class Client : public QObject, public KDecorationDefines
         void grabButton( int mod );
         void ungrabButton( int mod );
         void resetMaximize();
-        void resizeDecoration( const QSize& s );
+        void resizeDecoration( const TQSize& s );
         void setDecoHashProperty(uint topHeight, uint rightWidth, uint bottomHeight, uint leftWidth);
         void unsetDecoHashProperty();
 
@@ -445,10 +445,10 @@ class Client : public QObject, public KDecorationDefines
             }
 
         Position mode;
-        QPoint moveOffset;
-        QPoint invertedMoveOffset;
-        QRect moveResizeGeom;
-        QRect initialMoveResizeGeom;
+        TQPoint moveOffset;
+        TQPoint invertedMoveOffset;
+        TQRect moveResizeGeom;
+        TQRect initialMoveResizeGeom;
         XSizeHints  xSizeHint;
         void sendSyntheticConfigureNotify();
         int mapping_state;
@@ -495,43 +495,43 @@ class Client : public QObject, public KDecorationDefines
         void getWMHints();
         void readIcons();
         void getWindowProtocols();
-        QPixmap icon_pix;
-        QPixmap miniicon_pix;
-        QCursor cursor;
+        TQPixmap icon_pix;
+        TQPixmap miniicon_pix;
+        TQCursor cursor;
     // FullScreenHack - non-NETWM fullscreen (noborder,size of desktop)
     // DON'T reorder - saved to config files !!!
         enum FullScreenMode { FullScreenNone, FullScreenNormal, FullScreenHack };
         FullScreenMode fullscreen_mode;
         MaximizeMode max_mode;
-        QRect geom_restore;
-        QRect geom_fs_restore;
+        TQRect geom_restore;
+        TQRect geom_fs_restore;
         MaximizeMode maxmode_restore;
         int workarea_diff_x, workarea_diff_y;
         WinInfo* info;
-        QTimer* autoRaiseTimer;
-        QTimer* shadeHoverTimer;
+        TQTimer* autoRaiseTimer;
+        TQTimer* shadeHoverTimer;
         Colormap cmap;
-        QCString resource_name;
-        QCString resource_class;
-        QCString client_machine;
-        QString cap_normal, cap_iconic, cap_suffix;
+        TQCString resource_name;
+        TQCString resource_class;
+        TQCString client_machine;
+        TQString cap_normal, cap_iconic, cap_suffix;
         WId wmClientLeaderWin;
-        QCString window_role;
+        TQCString window_role;
         Group* in_group;
         Window window_group;
         Layer in_layer;
-        QTimer* ping_timer;
+        TQTimer* ping_timer;
         KProcess* process_killer;
         Time ping_timestamp;
         Time user_time;
         unsigned long allowed_actions;
-        QRect frame_geometry;
-        QSize client_size;
+        TQRect frame_geometry;
+        TQSize client_size;
         int postpone_geometry_updates; // >0 - new geometry is remembered, but not actually set
         bool pending_geometry_update;
         bool shade_geometry_change;
         int border_left, border_right, border_top, border_bottom;
-        QRegion _mask;
+        TQRegion _mask;
         static bool check_active_modal; // see Client::checkActiveModal()
         KShortcut _shortcut;
         friend struct FetchNameInternalPredicate;
@@ -547,7 +547,7 @@ class Client : public QObject, public KDecorationDefines
         uint rule_opacity_inactive; //dto.
         //int shadeOriginalHeight;
         bool isBMP_;
-        QTimer* demandAttentionKNotifyTimer;
+        TQTimer* demandAttentionKNotifyTimer;
 
         friend bool performTransiencyCheck();
     };
@@ -651,12 +651,12 @@ inline int Client::mappingState() const
     return mapping_state;
     }
 
-inline QCString Client::resourceName() const
+inline TQCString Client::resourceName() const
     {
     return resource_name; // it is always lowercase
     }
 
-inline QCString Client::resourceClass() const
+inline TQCString Client::resourceClass() const
     {
     return resource_class; // it is always lowercase
     }
@@ -714,17 +714,17 @@ ShadeMode Client::shadeMode() const
     return shade_mode;
     }
 
-inline QPixmap Client::icon() const
+inline TQPixmap Client::icon() const
     {
     return icon_pix;
     }
 
-inline QPixmap Client::miniIcon() const
+inline TQPixmap Client::miniIcon() const
     {
     return miniicon_pix;
     }
 
-inline QRect Client::geometryRestore() const
+inline TQRect Client::geometryRestore() const
     {
     return geom_restore;
     }
@@ -810,22 +810,22 @@ inline bool Client::isManaged() const
     return mapping_state != WithdrawnState;
     }
 
-inline QCString Client::windowRole() const
+inline TQCString Client::windowRole() const
     {
     return window_role;
     }
 
-inline QRect Client::geometry() const
+inline TQRect Client::geometry() const
     {
     return frame_geometry;
     }
 
-inline QSize Client::size() const
+inline TQSize Client::size() const
     {
     return frame_geometry.size();
     }
 
-inline QPoint Client::pos() const
+inline TQPoint Client::pos() const
     {
     return frame_geometry.topLeft();
     }
@@ -850,37 +850,37 @@ inline int Client::height() const
     return frame_geometry.height();
     }
 
-inline QRect Client::rect() const
+inline TQRect Client::rect() const
     {
-    return QRect( 0, 0, width(), height());
+    return TQRect( 0, 0, width(), height());
     }
 
-inline QPoint Client::clientPos() const
+inline TQPoint Client::clientPos() const
     {
-    return QPoint( border_left, border_top );
+    return TQPoint( border_left, border_top );
     }
 
-inline QSize Client::clientSize() const
+inline TQSize Client::clientSize() const
     {
     return client_size;
     }
 
-inline void Client::setGeometry( const QRect& r, ForceGeometry_t force )
+inline void Client::setGeometry( const TQRect& r, ForceGeometry_t force )
     {
     setGeometry( r.x(), r.y(), r.width(), r.height(), force );
     }
 
-inline void Client::move( const QPoint & p, ForceGeometry_t force )
+inline void Client::move( const TQPoint & p, ForceGeometry_t force )
     {
     move( p.x(), p.y(), force );
     }
 
-inline void Client::plainResize( const QSize& s, ForceGeometry_t force )
+inline void Client::plainResize( const TQSize& s, ForceGeometry_t force )
     {
     plainResize( s.width(), s.height(), force );
     }
 
-inline void Client::resizeWithChecks( const QSize& s, ForceGeometry_t force )
+inline void Client::resizeWithChecks( const TQSize& s, ForceGeometry_t force )
     {
     resizeWithChecks( s.width(), s.height(), force );
     }

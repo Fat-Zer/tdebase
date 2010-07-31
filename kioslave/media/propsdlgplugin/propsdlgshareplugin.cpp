@@ -17,11 +17,11 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qstring.h>
-#include <qvbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qtimer.h>
+#include <tqstring.h>
+#include <tqvbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqtimer.h>
 
 #include <kgenericfactory.h>
 #include <kdebug.h>
@@ -50,7 +50,7 @@ class PropsDlgSharePlugin::Private
 };
 
 PropsDlgSharePlugin::PropsDlgSharePlugin( KPropertiesDialog *dlg,
-					  const char *, const QStringList & )
+					  const char *, const TQStringList & )
   : KPropsDlgPlugin(dlg), d(0)
 {
   if (properties->items().count() != 1)
@@ -65,15 +65,15 @@ PropsDlgSharePlugin::PropsDlgSharePlugin( KPropertiesDialog *dlg,
   if ( !reply.isValid() )
     return;
 
-  QVBox* vbox = properties->addVBoxPage(i18n("&Mounting"));
+  TQVBox* vbox = properties->addVBoxPage(i18n("&Mounting"));
 
   d = new Private();
 
   d->page = new PropertiesPage(vbox, Medium::create(reply).id());
-  connect(d->page, SIGNAL(changed()),
-	  SLOT(slotChanged()));
+  connect(d->page, TQT_SIGNAL(changed()),
+	  TQT_SLOT(slotChanged()));
 
-  //  QTimer::singleShot(100, this, SLOT(slotChanged()));
+  //  TQTimer::singleShot(100, this, TQT_SLOT(slotChanged()));
 
 }
 

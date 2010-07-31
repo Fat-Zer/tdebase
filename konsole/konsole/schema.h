@@ -41,8 +41,8 @@
 #ifndef SCHEMA_include
 #define SCHEMA_include
 
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include "TECommon.h"
 
@@ -68,7 +68,7 @@ public:
 	* If the given pathname does not exist, a ColorSchema
 	* with the same settings as the default schema is returned.
 	*/
-	ColorSchema(const QString& pathname);
+	ColorSchema(const TQString& pathname);
     ~ColorSchema();
 	/**
 	* Construct a color schema from the given config file.
@@ -83,7 +83,7 @@ public:
 	*/
 	ColorSchema();
 
-	QString relPath() const { return fRelPath; } ;
+	TQString relPath() const { return fRelPath; } ;
 
 	/**
 	* Check if the schema file whose pathname was given
@@ -101,21 +101,21 @@ public:
 	* Writes a ColorSchema to a config file with the
 	* given name.
 	*/
-	void writeConfig(const QString& filename) const;
+	void writeConfig(const TQString& filename) const;
 
 	/**
 	* Returns the (non-i18n) name of the i'th color,
-	* or QString::null if i is not a color name. This
+	* or TQString::null if i is not a color name. This
 	* should be used as a group name to store the
 	* information about the i'th color.
 	*/
-	static QString colorName(int i);
+	static TQString colorName(int i);
 
 	/**
 	* Update the timestamp in the color schema indicating
 	* when the schema's file whas last checked and read.
 	*/
-	void updateLastRead(const QDateTime& dt);
+	void updateLastRead(const TQDateTime& dt);
 
 
 protected:
@@ -137,19 +137,19 @@ protected:
 	* under the given name (ie. in the group name).
 	*/
 	void writeConfigColor(KConfig& c,
-		const QString& name,
+		const TQString& name,
 		const ColorEntry& e) const;
 	/**
 	* Read a single ColorEntry from the config file.
 	*/
 	void readConfigColor(KConfig& c,
-		const QString& name,
+		const TQString& name,
 		ColorEntry& e) ;
 
    public:
       int numb()                       {if (!m_fileRead) rereadSchemaFile();return m_numb;};
-      const QString& title()           {if (!m_fileRead) rereadSchemaFile();return m_title;};
-      const QString& imagePath()       {if (!m_fileRead) rereadSchemaFile();return m_imagePath;};
+      const TQString& title()           {if (!m_fileRead) rereadSchemaFile();return m_title;};
+      const TQString& imagePath()       {if (!m_fileRead) rereadSchemaFile();return m_imagePath;};
       int alignment()                  {if (!m_fileRead) rereadSchemaFile();return m_alignment;};
       const ColorEntry* table()        {if (!m_fileRead) rereadSchemaFile();return m_table;};
       bool useTransparency()           {if (!m_fileRead) rereadSchemaFile();return m_useTransparency;};
@@ -157,38 +157,38 @@ protected:
       int tr_r()                       {if (!m_fileRead) rereadSchemaFile();return m_tr_r;};
       int tr_g()                       {if (!m_fileRead) rereadSchemaFile();return m_tr_g;};
       int tr_b()                       {if (!m_fileRead) rereadSchemaFile();return m_tr_b;};
-      QDateTime* getLastRead()   {return lastRead;};	// Time last checked for updates
+      TQDateTime* getLastRead()   {return lastRead;};	// Time last checked for updates
 
    private:
       int        m_numb;
       int	     m_tr_r, m_tr_g, m_tr_b;
       int        m_alignment;
-      QString    m_title;
-      QString    m_imagePath;
+      TQString    m_title;
+      TQString    m_imagePath;
       ColorEntry m_table[TABLE_COLORS];
       bool       m_useTransparency:1;
       bool       m_fileRead:1;
       double     m_tr_x;
-      QString    fRelPath;	// File name of schema file
+      TQString    fRelPath;	// File name of schema file
       QDateTime	*lastRead;	// Time last checked for updates
       static int	serial;		// Serial number so that every
       // ColorSchema has a unique number.
 };
 
-class ColorSchemaList : protected QPtrList<ColorSchema>
+class ColorSchemaList : protected TQPtrList<ColorSchema>
 {
 public:
 	/**
 	* The following functions are redeclared public since
 	* they're needed, but we still want to inherit protected
-	* from QPtrList to prevent unsightly -- and perhaps dangerous --
+	* from TQPtrList to prevent unsightly -- and perhaps dangerous --
 	* tampering with the ColorSchemaList.
 	*/
-	uint count() const { return QPtrList<ColorSchema>::count(); } ;
+	uint count() const { return TQPtrList<ColorSchema>::count(); } ;
 	const ColorSchema *at(unsigned int i)
-		{ return QPtrList<ColorSchema>::at(i); } ;
+		{ return TQPtrList<ColorSchema>::at(i); } ;
 
-   void sort() {QPtrList<ColorSchema>::sort();};
+   void sort() {TQPtrList<ColorSchema>::sort();};
 
 	ColorSchemaList();
    virtual ~ColorSchemaList();
@@ -206,20 +206,20 @@ public:
 	* Returns the color schema read from the given path,
 	* or NULL if no color schema with the given path is found.
 	*/
-	ColorSchema *find(const QString & path);
+	ColorSchema *find(const TQString & path);
 	/**
 	* Returns the serial number of the color schema
 	* with the given serial number, or NULL if there is none.
 	*/
 	ColorSchema *find(int);
-	ColorSchema *findAny(const QString& path)
+	ColorSchema *findAny(const TQString& path)
 	{
 		ColorSchema *p = find(path);
 		if (p) return p;
 		return defaultSchema;
 	} ;
 protected:
-   virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+   virtual int compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2);
 
 private:
 	/**
@@ -229,8 +229,8 @@ private:
 	* can still be found, and deleteOldSchema's does the
 	* actual removal of schema's without a config file.
 	*/
-	bool updateAllSchemaTimes(const QDateTime&);
-	bool deleteOldSchemas(const QDateTime&);
+	bool updateAllSchemaTimes(const TQDateTime&);
+	bool deleteOldSchemas(const TQDateTime&);
 
 	/**
 	* This isn't really used, but it could be. A newly

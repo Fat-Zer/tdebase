@@ -51,7 +51,7 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <qapplication.h>
+#include <tqapplication.h>
 
 #include "kasitem.h"
 #include "kasbar.h"
@@ -60,7 +60,7 @@
 #include "kaspopup.moc"
 
 KasPopup::KasPopup( KasItem *item, const char *name )
-    : QHBox( 0, name, WStyle_Customize | WStyle_StaysOnTop | WStyle_Tool | WStyle_NoBorder | WX11BypassWM ),
+    : TQHBox( 0, name, WStyle_Customize | WStyle_StaysOnTop | WStyle_Tool | WStyle_NoBorder | WX11BypassWM ),
       item_( item ),
       kasbar_( item->kasbar() )
 {
@@ -79,17 +79,17 @@ void KasPopup::show()
 {
    emit aboutToShow();
    positionSelf();
-   QWidget::show();
+   TQWidget::show();
    emit shown();
 }
 
-QPoint KasPopup::calcPosition( KasItem *item, int w, int h )
+TQPoint KasPopup::calcPosition( KasItem *item, int w, int h )
 {
    KasBar *kasbar = item->kasbar();
-   QPoint pos = kasbar->itemPos( item );
+   TQPoint pos = kasbar->itemPos( item );
 
    if ( ( pos.x() < 0 ) && ( pos.y() < 0 ) )
-      return QPoint();
+      return TQPoint();
 
    pos = kasbar->mapToGlobal( pos );
    int x = pos.x();
@@ -114,7 +114,7 @@ QPoint KasPopup::calcPosition( KasItem *item, int w, int h )
          y = y - h + kasbar->itemExtent();
    }
 
-   return QPoint( x, y );
+   return TQPoint( x, y );
 }
 
 

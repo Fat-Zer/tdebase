@@ -36,15 +36,15 @@ class ServiceMenuButton : public PanelPopupButton
     Q_OBJECT
 
 public:
-    ServiceMenuButton( const QString& relPath, QWidget* parent );
-    ServiceMenuButton( const KConfigGroup& config, QWidget* parent );
+    ServiceMenuButton( const TQString& relPath, TQWidget* parent );
+    ServiceMenuButton( const KConfigGroup& config, TQWidget* parent );
 
     void saveConfig( KConfigGroup& config ) const;
 
 protected:
-    void initialize( const QString& relPath );
-    virtual QString tileName() { return "Browser"; }
-    virtual QString defaultIcon() const { return "folder"; }
+    void initialize( const TQString& relPath );
+    virtual TQString tileName() { return "Browser"; }
+    virtual TQString defaultIcon() const { return "folder"; }
     virtual void startDrag();
     virtual void initPopup();
 

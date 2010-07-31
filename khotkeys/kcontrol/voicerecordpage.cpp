@@ -8,9 +8,9 @@
  
 ****************************************************************************/
 
-#include <qwidget.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <tqwidget.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
 #include <klineedit.h>
 #include <kstandarddirs.h>
 
@@ -25,29 +25,29 @@
 namespace KHotKeys
 {
 
-VoiceRecordPage::VoiceRecordPage( const QString &voiceid_P, QWidget *parent, const char *name)
-	: QVBox(parent, name) , _original_voiceId(voiceid_P)
+VoiceRecordPage::VoiceRecordPage( const TQString &voiceid_P, TQWidget *parent, const char *name)
+	: TQVBox(parent, name) , _original_voiceId(voiceid_P)
    {
 	  _message = i18n("Enter a code for the sound (e.g. the word you are saying) and record the same word twice.");
 
-    _label = new QLabel(_message, this, "label");
-    _label->setAlignment(QLabel::AlignLeft | QLabel::WordBreak |
-                        QLabel::AlignVCenter);
+    _label = new TQLabel(_message, this, "label");
+    _label->setAlignment(TQLabel::AlignLeft | TQLabel::WordBreak |
+                        TQLabel::AlignVCenter);
 	
 	_lineEdit = new KLineEdit( this );
 	_lineEdit->setText(voiceid_P);
 
 	
 	Sound s;
-	if(voiceid_P!=QString::null)
+	if(voiceid_P!=TQString::null)
 	{
-		QString fileName = locateLocal( "data", "khotkeys/" + voiceid_P +  "1.wav"  );
+		TQString fileName = locateLocal( "data", "khotkeys/" + voiceid_P +  "1.wav"  );
 		s.load(fileName);
 	}
 	_recorder1 = new VoiceRecorder(s, voiceid_P, this, "recorder");
-	if(voiceid_P!=QString::null)
+	if(voiceid_P!=TQString::null)
 	{
-		QString fileName = locateLocal( "data", "khotkeys/" + voiceid_P +  "2.wav"  );
+		TQString fileName = locateLocal( "data", "khotkeys/" + voiceid_P +  "2.wav"  );
 		s.load(fileName);
 	}
 	_recorder2 = new VoiceRecorder(s, voiceid_P, this, "recorder");
@@ -55,13 +55,13 @@ VoiceRecordPage::VoiceRecordPage( const QString &voiceid_P, QWidget *parent, con
     //_recorder->setMinimumHeight(150);
     //setStretchFactor(_recorder, 1);
 
-    QWidget *spacer = new QWidget(this, "spacer");
+    TQWidget *spacer = new TQWidget(this, "spacer");
     setStretchFactor(spacer, 1);
 
 
-	connect(_recorder1, SIGNAL(recorded(bool)) , this, SLOT(slotChanged()));
-	connect(_recorder2, SIGNAL(recorded(bool)) , this, SLOT(slotChanged()));
-	connect(_lineEdit , SIGNAL( textChanged (const QString&)) , this , SLOT(slotChanged()));
+	connect(_recorder1, TQT_SIGNAL(recorded(bool)) , this, TQT_SLOT(slotChanged()));
+	connect(_recorder2, TQT_SIGNAL(recorded(bool)) , this, TQT_SLOT(slotChanged()));
+	connect(_lineEdit , TQT_SIGNAL( textChanged (const TQString&)) , this , TQT_SLOT(slotChanged()));
 
 
     }
@@ -98,7 +98,7 @@ void VoiceRecordPage::slotChanged()
 				||  (_recorder1->state()==VoiceRecorder::sModified && _recorder2->state()==VoiceRecorder::sModified )   )  );
     }
 
-QString VoiceRecordPage::getVoiceId() const
+TQString VoiceRecordPage::getVoiceId() const
    {
 	   return _lineEdit->text();
    }
@@ -106,7 +106,7 @@ QString VoiceRecordPage::getVoiceId() const
 VoiceSignature VoiceRecordPage::getVoiceSignature(int ech) const
    {
 	   VoiceRecorder *recorder= (ech==1) ? _recorder1 : _recorder2 ;
-	   QString fileName = locateLocal( "data", "khotkeys/" + getVoiceId() + QString::number(ech) +  ".wav"  );
+	   TQString fileName = locateLocal( "data", "khotkeys/" + getVoiceId() + TQString::number(ech) +  ".wav"  );
 	   Sound s=recorder->sound();
 	   s.save(fileName);
 	   return VoiceSignature(s);

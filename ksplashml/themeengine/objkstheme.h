@@ -14,8 +14,8 @@
 
 #include <kcmdlineargs.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 class KConfig;
 /**
@@ -30,38 +30,38 @@ class KDE_EXPORT ObjKsTheme : public QObject
 {
   Q_OBJECT
 public:
-  explicit ObjKsTheme( const QString& );
+  explicit ObjKsTheme( const TQString& );
   virtual ~ObjKsTheme();
 
   void loadCmdLineArgs( KCmdLineArgs * );
 
-  QString theme() const      { return( mActiveTheme ); }
-  QString themeEngine() const { return( mThemeEngine ); }
+  TQString theme() const      { return( mActiveTheme ); }
+  TQString themeEngine() const { return( mThemeEngine ); }
   KConfig *themeConfig() const { return( mThemeConfig ); }
-  QString themeDir() const   { return( mThemeDir );    }
+  TQString themeDir() const   { return( mThemeDir );    }
   bool loColor() const       { return( mLoColor );     }
   bool testing() const       { return( mTesting );     }
   bool managedMode() const   { return( mManagedMode ); }
-  QString icon( int i ) { return (m_icons[i-1].isNull()?(QString::null):m_icons[i-1]); }
-  QString text( int i ) { return (m_text[i-1].isNull()?(QString::null):m_text[i-1]);   }
-  QString locateThemeData( const QString &resource );
+  TQString icon( int i ) { return (m_icons[i-1].isNull()?(TQString::null):m_icons[i-1]); }
+  TQString text( int i ) { return (m_text[i-1].isNull()?(TQString::null):m_text[i-1]);   }
+  TQString locateThemeData( const TQString &resource );
   int xineramaScreen() const { return mXineramaScreen; }
 
 protected:
-  bool loadThemeRc( const QString&, bool );
-  bool loadLocalConfig( const QString&, bool );
-  bool loadKConfig( KConfig *, const QString&, bool );
+  bool loadThemeRc( const TQString&, bool );
+  bool loadLocalConfig( const TQString&, bool );
+  bool loadKConfig( KConfig *, const TQString&, bool );
 
 private:
-  QString mActiveTheme, mThemeDir;
+  TQString mActiveTheme, mThemeDir;
   KConfig *mThemeConfig;
 
   int mXineramaScreen;
   bool mLoColor, mTesting, mManagedMode;
-  QString mThemeEngine;
-  QString mThemePrefix;
+  TQString mThemeEngine;
+  TQString mThemePrefix;
 
-  QStringList m_icons, m_text;
+  TQStringList m_icons, m_text;
 
   class ObjKsThemePrivate;
   ObjKsThemePrivate *d;

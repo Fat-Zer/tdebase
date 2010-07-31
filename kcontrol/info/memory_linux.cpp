@@ -1,7 +1,7 @@
 #include <sys/sysinfo.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 void KMemoryWidget::update()
 {
@@ -23,7 +23,7 @@ void KMemoryWidget::update()
   Memory_Info[SWAP_MEM]     = MEMORY(info.totalswap) * mem_unit; // total size of all swap-partitions
   Memory_Info[FREESWAP_MEM] = MEMORY(info.freeswap)  * mem_unit; // free memory in swap-partitions
   
-  QFile file("/proc/meminfo");
+  TQFile file("/proc/meminfo");
   if (file.open(IO_ReadOnly)) {
 	char buf[512];
 	while (file.readLine(buf, sizeof(buf) - 1) > 0) {

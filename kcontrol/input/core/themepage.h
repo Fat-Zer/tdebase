@@ -27,7 +27,7 @@ class ThemePage : public QWidget
 	Q_OBJECT
 
 	public:
-		ThemePage( QWidget* parent = 0, const char* name = 0 );
+		ThemePage( TQWidget* parent = 0, const char* name = 0 );
 		~ThemePage();
 
 		// Called by the KCM
@@ -40,14 +40,14 @@ class ThemePage : public QWidget
 		void changed( bool );
 
 	private slots:
-		void selectionChanged( QListViewItem * );
+		void selectionChanged( TQListViewItem * );
 
 	private:
 		void insertThemes();
 		void fixCursorFile();
 
 		KListView *listview;
-		QString currentTheme, selectedTheme;
+		TQString currentTheme, selectedTheme;
 };
 
 #endif // __THEMEPAGE_H

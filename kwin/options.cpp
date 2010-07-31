@@ -13,13 +13,13 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #ifndef KCMRULES
 
-#include <qpalette.h>
-#include <qpixmap.h>
+#include <tqpalette.h>
+#include <tqpixmap.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 #include "client.h"
 
@@ -56,7 +56,7 @@ unsigned long Options::updateSettings()
     show_geometry_tip = config->readBoolEntry("GeometryTip", false);
     tabboxOutline = config->readBoolEntry("TabboxOutline", true);
 
-    QString val;
+    TQString val;
 
     val = config->readEntry ("FocusPolicy", "ClickToFocus");
     focusPolicy = ClickToFocus; // what a default :-)
@@ -137,11 +137,11 @@ unsigned long Options::updateSettings()
     ignoreFocusStealingClasses = config->readListEntry("IgnoreFocusStealingClasses");
     // Qt3.2 and older had resource class all lowercase, but Qt3.3 has it capitalized
     // therefore Client::resourceClass() forces lowercase, force here lowercase as well
-    for( QStringList::Iterator it = ignorePositionClasses.begin();
+    for( TQStringList::Iterator it = ignorePositionClasses.begin();
          it != ignorePositionClasses.end();
          ++it )
         (*it) = (*it).lower();
-    for( QStringList::Iterator it = ignoreFocusStealingClasses.begin();
+    for( TQStringList::Iterator it = ignoreFocusStealingClasses.begin();
          it != ignoreFocusStealingClasses.end();
          ++it )
         (*it) = (*it).lower();
@@ -209,7 +209,7 @@ unsigned long Options::updateSettings()
     if( desktop_topmenu )
         topmenus = true;
         
-    QToolTip::setGloballyEnabled( d->show_tooltips );
+    TQToolTip::setGloballyEnabled( d->show_tooltips );
 
     return changed;
     }
@@ -219,7 +219,7 @@ unsigned long Options::updateSettings()
 // if the window is moved out of the workspace (e.g. if the user moves a window
 // by the titlebar, and moves it too high beneath Kicker at the top edge, they
 // may not be able to move it back, unless they know about Alt+LMB)
-Options::WindowOperation Options::windowOperation(const QString &name, bool restricted )
+Options::WindowOperation Options::windowOperation(const TQString &name, bool restricted )
     {
     if (name == "Move")
         return restricted ? MoveOp : UnrestrictedMoveOp;
@@ -246,9 +246,9 @@ Options::WindowOperation Options::windowOperation(const QString &name, bool rest
     return NoOp;
     }
 
-Options::MouseCommand Options::mouseCommand(const QString &name, bool restricted )
+Options::MouseCommand Options::mouseCommand(const TQString &name, bool restricted )
     {
-    QString lowerName = name.lower();
+    TQString lowerName = name.lower();
     if (lowerName == "raise") return MouseRaise;
     if (lowerName == "lower") return MouseLower;
     if (lowerName == "operations menu") return MouseOperationsMenu;
@@ -268,9 +268,9 @@ Options::MouseCommand Options::mouseCommand(const QString &name, bool restricted
     return MouseNothing;
     }
 
-Options::MouseWheelCommand Options::mouseWheelCommand(const QString &name)
+Options::MouseWheelCommand Options::mouseWheelCommand(const TQString &name)
     {
-    QString lowerName = name.lower();
+    TQString lowerName = name.lower();
     if (lowerName == "raise/lower") return MouseWheelRaiseLower;
     if (lowerName == "shade/unshade") return MouseWheelShadeUnshade;
     if (lowerName == "maximize/restore") return MouseWheelMaximizeRestore;
@@ -297,7 +297,7 @@ int Options::electricBorderDelay()
 
 bool Options::checkIgnoreFocusStealing( const Client* c )
     {
-    return ignoreFocusStealingClasses.contains(QString::fromLatin1(c->resourceClass()));
+    return ignoreFocusStealingClasses.contains(TQString::fromLatin1(c->resourceClass()));
     }
 
 Options::MouseCommand Options::wheelToMouseCommand( MouseWheelCommand com, int delta )
@@ -322,7 +322,7 @@ Options::MouseCommand Options::wheelToMouseCommand( MouseWheelCommand com, int d
     }
 #endif
 
-Options::MoveResizeMode Options::stringToMoveResizeMode( const QString& s )
+Options::MoveResizeMode Options::stringToMoveResizeMode( const TQString& s )
     {
     return s == "Opaque" ? Opaque : Transparent;
     }

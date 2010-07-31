@@ -23,12 +23,12 @@
 #ifndef kcmsambalog_h_included
 #define kcmsambalog_h_included
  
-#include <qlabel.h>
-#include <qcstring.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
-#include <qlistview.h>
-#include <qevent.h>
+#include <tqlabel.h>
+#include <tqcstring.h>
+#include <tqcheckbox.h>
+#include <tqpushbutton.h>
+#include <tqlistview.h>
+#include <tqevent.h>
 #include <kconfig.h>
 
 #include <kurlrequester.h>
@@ -39,7 +39,7 @@ class LogView: public QWidget
 {
    Q_OBJECT
    public:
-      LogView(QWidget *parent=0, KConfig *config=0, const char *name=0);
+      LogView(TQWidget *parent=0, KConfig *config=0, const char *name=0);
       virtual ~LogView() {};
       void saveSettings();
       void loadSettings();
@@ -47,26 +47,26 @@ class LogView: public QWidget
       KConfig *configFile;
       int filesCount, connectionsCount;
       KURLRequester logFileName;
-      QLabel label;
-      QListView viewHistory;
-      QCheckBox showConnOpen, showConnClose, showFileOpen, showFileClose;
-      QPushButton updateButton;
+      TQLabel label;
+      TQListView viewHistory;
+      TQCheckBox showConnOpen, showConnClose, showFileOpen, showFileClose;
+      TQPushButton updateButton;
    private slots:
       void updateList();
    signals:
-      void contentsChanged(QListView* list, int nrOfFiles, int nrOfConnections);
+      void contentsChanged(TQListView* list, int nrOfFiles, int nrOfConnections);
 };
 
 class QListViewItemX:public QListViewItem
 {
    public:
       //a faster constructor saves a lot time
-      QListViewItemX( QListView * parent,
+      QListViewItemX( TQListView * parent,
                       const char *c0,     const char *c1 = 0,
                       const char *c2 = 0, const char *c3 = 0,
                       const char *c4 = 0, const char *c5 = 0,
                       const char *c6 = 0, const char *c7 = 0 )
-         :QListViewItem(parent)
+         :TQListViewItem(parent)
       {
          setText( 0, c0 );
          setText( 1, c1 );

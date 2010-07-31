@@ -18,15 +18,15 @@
     02110-1301  USA.
 */
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 #include <stdlib.h>
 #include <iostream>
 #include <iomanip>
 
 using namespace std;
 
-static Q_UINT32 charVal(QChar val)
+static Q_UINT32 charVal(TQChar val)
 {
     if (val == ' ')
         return 0;
@@ -34,9 +34,9 @@ static Q_UINT32 charVal(QChar val)
         return 1;
 }
 
-static Q_UINT32 readGlyphLine(QTextStream& input)
+static Q_UINT32 readGlyphLine(TQTextStream& input)
 {
-    QString line = input.readLine();
+    TQString line = input.readLine();
     while (line.length() < 5)
         line += ' ';
 
@@ -48,7 +48,7 @@ static Q_UINT32 readGlyphLine(QTextStream& input)
     return val;
 }
 
-static Q_UINT32 readGlyph(QTextStream& input)
+static Q_UINT32 readGlyph(TQTextStream& input)
 {
     return readGlyphLine(input) |
             (readGlyphLine(input) << 5) |
@@ -64,13 +64,13 @@ int main(int argc, char **argv)
         qWarning("usage: fontembedder font.src > font.h");
         exit(1);
     }
-    QFile inFile(argv[1]);
+    TQFile inFile(argv[1]);
     if (!inFile.open(IO_ReadOnly))
     {
         qFatal("Can not open %s", argv[1]);
     }
 
-    QTextStream input(&inFile);
+    TQTextStream input(&inFile);
 
     Q_UINT32 glyphStates[128];
     for (int i = 0; i < 128; ++i)
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 
     while (!input.atEnd())
     {
-        QString line = input.readLine();
+        TQString line = input.readLine();
         line = line.stripWhiteSpace();
         if (line.isEmpty())
             continue; //Skip empty lines

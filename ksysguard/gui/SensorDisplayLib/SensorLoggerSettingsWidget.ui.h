@@ -8,49 +8,49 @@
 *****************************************************************************/
 
 
-QString SensorLoggerSettingsWidget::title()
+TQString SensorLoggerSettingsWidget::title()
 {
     return m_title->text();
 }
 
 
-QColor SensorLoggerSettingsWidget::foregroundColor()
+TQColor SensorLoggerSettingsWidget::foregroundColor()
 {
     return m_foregroundColor->color();
 }
 
 
-QColor SensorLoggerSettingsWidget::backgroundColor()
+TQColor SensorLoggerSettingsWidget::backgroundColor()
 {
     return m_backgroundColor->color();
 }
 
 
-QColor SensorLoggerSettingsWidget::alarmColor()
+TQColor SensorLoggerSettingsWidget::alarmColor()
 {
     return m_alarmColor->color();
 }
 
 
-void SensorLoggerSettingsWidget::setTitle( const QString &t )
+void SensorLoggerSettingsWidget::setTitle( const TQString &t )
 {
     m_title->setText(t);
 }
 
 
-void SensorLoggerSettingsWidget::setForegroundColor( const QColor &c )
+void SensorLoggerSettingsWidget::setForegroundColor( const TQColor &c )
 {
     m_foregroundColor->setColor(c);
 }
 
 
-void SensorLoggerSettingsWidget::setBackgroundColor( const QColor &c )
+void SensorLoggerSettingsWidget::setBackgroundColor( const TQColor &c )
 {
     m_backgroundColor->setColor(c);
 }
 
 
-void SensorLoggerSettingsWidget::setAlarmColor( const QColor &c )
+void SensorLoggerSettingsWidget::setAlarmColor( const TQColor &c )
 {
     m_alarmColor->setColor(c);
 }

@@ -19,7 +19,7 @@
 #ifndef _KATE_DOCKVIEW_BASE_H_
 #define _KATE_DOCKVIEW_BASE_H_
 
-#include <qvbox.h>
+#include <tqvbox.h>
 
 /** 
 * Namespace collecting as much of the internal Kate classes as we 
@@ -50,50 +50,50 @@ namespace Kate
 */
 
 
-class DockViewBase : public QVBox {
+class DockViewBase : public TQVBox {
   Q_OBJECT
   public:
   /**
       Create a KateDockViewBase.
   */
-  DockViewBase( QWidget *parent=0, const char *name=0 );
+  DockViewBase( TQWidget *parent=0, const char *name=0 );
   
   /**
       Create a KateDockViewBase with the title prefix @p prefix
       and the title @p title.
   */
-  DockViewBase( const QString &prefix, const QString &title, QWidget *parent=0, const char *name=0 );
+  DockViewBase( const TQString &prefix, const TQString &title, TQWidget *parent=0, const char *name=0 );
   
   ~DockViewBase();
   
   /**
       Set the title prefix to @p prefix.
   */
-  void setTitlePrefix( const QString &prefix );
+  void setTitlePrefix( const TQString &prefix );
   
   /**
       @return The title prefix.
   */
-  QString titlePrefix() const;
+  TQString titlePrefix() const;
   
   /**
       Set the title to @p title 
   */
-  void setTitle( const QString &title );
+  void setTitle( const TQString &title );
   
   /**
      Convenience method, sets both the prefix and title
   */
-  void setTitle( const QString &prefix, const QString &title );
+  void setTitle( const TQString &prefix, const TQString &title );
   
   /**
       @return the title of the KateDockViewBase
   */
-  QString title() const;
+  TQString title() const;
   
   private:
   /** Private initialization */
-  void init( const QString &, const QString &);
+  void init( const TQString &, const TQString &);
   class DockViewBasePrivate *d;
 };
 

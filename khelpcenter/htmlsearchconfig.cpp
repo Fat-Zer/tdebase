@@ -18,8 +18,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -35,74 +35,74 @@
 
 namespace KHC {
 
-HtmlSearchConfig::HtmlSearchConfig(QWidget *parent, const char *name)
-  : QWidget(parent, name)
+HtmlSearchConfig::HtmlSearchConfig(TQWidget *parent, const char *name)
+  : TQWidget(parent, name)
 {
-  QVBoxLayout *vbox = new QVBoxLayout(this, 5);
+  TQVBoxLayout *vbox = new TQVBoxLayout(this, 5);
 
 
-  QGroupBox *gb = new QGroupBox(i18n("ht://dig"), this);
+  TQGroupBox *gb = new TQGroupBox(i18n("ht://dig"), this);
   vbox->addWidget(gb);
 
-  QGridLayout *grid = new QGridLayout(gb, 3,2, 6,6);
+  TQGridLayout *grid = new TQGridLayout(gb, 3,2, 6,6);
 
   grid->addRowSpacing(0, gb->fontMetrics().lineSpacing());
 
-  QLabel *l = new QLabel(i18n("The fulltext search feature makes use of the "
+  TQLabel *l = new TQLabel(i18n("The fulltext search feature makes use of the "
                   "ht://dig HTML search engine. "
                   "You can get ht://dig at the"), gb);
-  l->setAlignment(QLabel::WordBreak);
+  l->setAlignment(TQLabel::WordBreak);
   l->setMinimumSize(l->sizeHint());
   grid->addMultiCellWidget(l, 1, 1, 0, 1);
-  QWhatsThis::add( gb, i18n( "Information about where to get the ht://dig package." ) );
+  TQWhatsThis::add( gb, i18n( "Information about where to get the ht://dig package." ) );
 
   KURLLabel *url = new KURLLabel(gb);
   url->setURL("http://www.htdig.org");
   url->setText(i18n("ht://dig home page"));
-  url->setAlignment(QLabel::AlignHCenter);
+  url->setAlignment(TQLabel::AlignHCenter);
   grid->addMultiCellWidget(url, 2,2, 0, 1);
-  connect(url, SIGNAL(leftClickedURL(const QString&)),
-      this, SLOT(urlClicked(const QString&)));
+  connect(url, TQT_SIGNAL(leftClickedURL(const TQString&)),
+      this, TQT_SLOT(urlClicked(const TQString&)));
 
-  gb = new QGroupBox(i18n("Program Locations"), this);
+  gb = new TQGroupBox(i18n("Program Locations"), this);
 
   vbox->addWidget(gb);
-  grid = new QGridLayout(gb, 4,2, 6,6);
+  grid = new TQGridLayout(gb, 4,2, 6,6);
   grid->addRowSpacing(0, gb->fontMetrics().lineSpacing());
 
   mHtsearchUrl = new KURLRequester(gb);
-  l = new QLabel(mHtsearchUrl, i18n("htsearch:"), gb);
+  l = new TQLabel(mHtsearchUrl, i18n("htsearch:"), gb);
   l->setBuddy( mHtsearchUrl );
   grid->addWidget(l, 1,0);
   grid->addWidget(mHtsearchUrl, 1,1);
-  connect( mHtsearchUrl->lineEdit(), SIGNAL( textChanged( const QString & ) ),
-           SIGNAL( changed() ) );
-  QString wtstr = i18n( "Enter the URL of the htsearch CGI program." );
-  QWhatsThis::add( mHtsearchUrl, wtstr );
-  QWhatsThis::add( l, wtstr );
+  connect( mHtsearchUrl->lineEdit(), TQT_SIGNAL( textChanged( const TQString & ) ),
+           TQT_SIGNAL( changed() ) );
+  TQString wtstr = i18n( "Enter the URL of the htsearch CGI program." );
+  TQWhatsThis::add( mHtsearchUrl, wtstr );
+  TQWhatsThis::add( l, wtstr );
 
   mIndexerBin = new KURLRequester(gb);
-  l = new QLabel(mIndexerBin, i18n("Indexer:"), gb);
+  l = new TQLabel(mIndexerBin, i18n("Indexer:"), gb);
   l->setBuddy( mIndexerBin );
   grid->addWidget(l, 2,0);
   grid->addWidget(mIndexerBin, 2,1);
-  connect( mIndexerBin->lineEdit(), SIGNAL( textChanged( const QString & ) ),
-           SIGNAL( changed() ) );
+  connect( mIndexerBin->lineEdit(), TQT_SIGNAL( textChanged( const TQString & ) ),
+           TQT_SIGNAL( changed() ) );
   wtstr = i18n( "Enter the path to your htdig indexer program here." );
-  QWhatsThis::add( mIndexerBin, wtstr );
-  QWhatsThis::add( l, wtstr );
+  TQWhatsThis::add( mIndexerBin, wtstr );
+  TQWhatsThis::add( l, wtstr );
 
   mDbDir = new KURLRequester(gb);
   mDbDir->setMode( KFile::Directory | KFile::LocalOnly );
-  l = new QLabel(mDbDir, i18n("htdig database:"), gb);
+  l = new TQLabel(mDbDir, i18n("htdig database:"), gb);
   l->setBuddy( mDbDir );
   grid->addWidget(l, 3,0);
   grid->addWidget(mDbDir, 3,1);
-  connect( mDbDir->lineEdit(), SIGNAL( textChanged( const QString & ) ),
-           SIGNAL( changed() ) );
+  connect( mDbDir->lineEdit(), TQT_SIGNAL( textChanged( const TQString & ) ),
+           TQT_SIGNAL( changed() ) );
   wtstr = i18n( "Enter the path to the htdig database folder." );
-  QWhatsThis::add( mDbDir, wtstr );
-  QWhatsThis::add( l, wtstr );
+  TQWhatsThis::add( mDbDir, wtstr );
+  TQWhatsThis::add( l, wtstr );
 }
 
 HtmlSearchConfig::~HtmlSearchConfig()
@@ -142,7 +142,7 @@ void HtmlSearchConfig::defaults()
     mDbDir->lineEdit()->setText("/opt/www/htdig/db/" );
 }
 
-void HtmlSearchConfig::urlClicked(const QString &url)
+void HtmlSearchConfig::urlClicked(const TQString &url)
 {
   kapp->invokeBrowser(url);
 }

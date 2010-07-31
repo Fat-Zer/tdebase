@@ -21,7 +21,7 @@
 #define __KDMSESS_H__
 
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class QComboBox;
 class QCheckBox;
@@ -33,7 +33,7 @@ class KDMSessionsWidget : public QWidget
 	Q_OBJECT
 
 public:
-	KDMSessionsWidget(QWidget *parent=0, const char *name=0);
+	KDMSessionsWidget(TQWidget *parent=0, const char *name=0);
 
 	void load();
 	void save();
@@ -49,8 +49,8 @@ protected slots:
 	void changed();
 
 private:
-	void readSD (QComboBox *, QString);
-	void writeSD (QComboBox *);
+	void readSD (TQComboBox *, TQString);
+	void writeSD (TQComboBox *);
 
 	QComboBox	*sdlcombo, *sdrcombo;
 	QLabel		*sdllabel, *sdrlabel;

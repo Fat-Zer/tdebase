@@ -46,7 +46,7 @@ class PrivateApplication
     KateApp *app;
   };
 
-Application::Application (void *application) : QObject ((KateApp *) application)
+Application::Application (void *application) : TQObject ((KateApp *) application)
 {
   d = new PrivateApplication;
   d->app = (KateApp *) application;

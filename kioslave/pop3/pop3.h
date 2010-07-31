@@ -33,7 +33,7 @@
 
 #include <stdio.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kio/tcpslavebase.h>
 
@@ -41,13 +41,13 @@
 
 class POP3Protocol:public KIO::TCPSlaveBase {
 public:
-  POP3Protocol(const QCString & pool, const QCString & app, bool SSL);
+  POP3Protocol(const TQCString & pool, const TQCString & app, bool SSL);
   virtual ~ POP3Protocol();
 
-  virtual void setHost(const QString & host, int port,
-                       const QString & user, const QString & pass);
+  virtual void setHost(const TQString & host, int port,
+                       const TQString & user, const TQString & pass);
 
-  virtual void special(const QByteArray & aData);
+  virtual void special(const TQByteArray & aData);
   virtual void get(const KURL & url);
   virtual void stat(const KURL & url);
   virtual void del(const KURL & url, bool isfile);
@@ -122,10 +122,10 @@ protected:
   int m_cmd;
   unsigned short int m_iOldPort;
   struct timeval m_tTimeout;
-  QString m_sOldServer, m_sOldPass, m_sOldUser;
-  QString m_sServer, m_sPass, m_sUser;
+  TQString m_sOldServer, m_sOldPass, m_sOldUser;
+  TQString m_sServer, m_sPass, m_sUser;
   bool m_try_apop, m_try_sasl, opened, supports_apop;
-  QString m_sError;
+  TQString m_sError;
   char readBuffer[MAX_PACKET_LEN];
   ssize_t readBufferLen;
 };

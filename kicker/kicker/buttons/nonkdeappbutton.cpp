@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
-#include <qdragobject.h>
+#include <tqtooltip.h>
+#include <tqdragobject.h>
 
 #include <kconfig.h>
 #include <kdesktopfile.h>
@@ -47,11 +47,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // this is one of the two constructors. gets called when creating a new button
 // e.g. via the "non-KDE Application" dialog, not one that was saved and then
 // restored.
-NonKDEAppButton::NonKDEAppButton(const QString& name,
-                                 const QString& description,
-                                 const QString& filePath, const QString& icon,
-                                 const QString &cmdLine, bool inTerm,
-                                 QWidget* parent)
+NonKDEAppButton::NonKDEAppButton(const TQString& name,
+                                 const TQString& description,
+                                 const TQString& filePath, const TQString& icon,
+                                 const TQString &cmdLine, bool inTerm,
+                                 TQWidget* parent)
   : PanelButton(parent, "NonKDEAppButton") // call our superclass's constructor
 {
     // call the initialization method
@@ -61,11 +61,11 @@ NonKDEAppButton::NonKDEAppButton(const QString& name,
     // to the slotExec() slot
     // we do this here instead of in initialize(...) since initialize(...) may
     // get called later, e.g after reconfiguring it
-    connect(this, SIGNAL(clicked()), SLOT(slotExec()));
+    connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(slotExec()));
 }
 
 // this constructor is used when restoring a button, usually at startup
-NonKDEAppButton::NonKDEAppButton( const KConfigGroup& config, QWidget* parent )
+NonKDEAppButton::NonKDEAppButton( const KConfigGroup& config, TQWidget* parent )
   : PanelButton(parent, "NonKDEAppButton") // call our superclass's constructor
 {
     // call the initialization method, this time with values from a config file
@@ -77,13 +77,13 @@ NonKDEAppButton::NonKDEAppButton( const KConfigGroup& config, QWidget* parent )
                config.readBoolEntry("RunInTerminal"));
 
     // see comment on connect in above constructor
-    connect(this, SIGNAL(clicked()), SLOT(slotExec()));
+    connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(slotExec()));
 }
 
-void NonKDEAppButton::initialize(const QString& name,
-                                 const QString& description,
-                                 const QString& filePath, const QString& icon,
-                                 const QString &cmdLine, bool inTerm )
+void NonKDEAppButton::initialize(const TQString& name,
+                                 const TQString& description,
+                                 const TQString& filePath, const TQString& icon,
+                                 const TQString &cmdLine, bool inTerm )
 {
     // and now we actually set up most of the member variables with the
     // values passed in here. by doing this all in an initialize() method
@@ -98,8 +98,8 @@ void NonKDEAppButton::initialize(const QString& name,
     // now we set the buttons tooltip, title and icon using the appropriate
     // set*() methods from the PanelButton class from which we subclass
 
-    // assign the name or the description to a QString called tooltip
-    QString tooltip = description.isEmpty() ? nameStr : descStr;
+    // assign the name or the description to a TQString called tooltip
+    TQString tooltip = description.isEmpty() ? nameStr : descStr;
 
     if (tooltip.isEmpty())
     {
@@ -123,7 +123,7 @@ void NonKDEAppButton::initialize(const QString& name,
     }
 
     // set the tooltip
-    QToolTip::add(this, tooltip);
+    TQToolTip::add(this, tooltip);
 
     // set the icon
     setIcon(iconStr);
@@ -142,7 +142,7 @@ void NonKDEAppButton::saveConfig( KConfigGroup& config ) const
     config.writePathEntry("CommandLine", cmdStr);
 }
 
-void NonKDEAppButton::dragEnterEvent(QDragEnterEvent *ev)
+void NonKDEAppButton::dragEnterEvent(TQDragEnterEvent *ev)
 {
     // when something is dragged onto this button, we'll accept it
     // if we aren't dragged onto ourselves, and if it's a URL
@@ -159,11 +159,11 @@ void NonKDEAppButton::dragEnterEvent(QDragEnterEvent *ev)
     PanelButton::dragEnterEvent(ev);
 }
 
-void NonKDEAppButton::dropEvent(QDropEvent *ev)
+void NonKDEAppButton::dropEvent(TQDropEvent *ev)
 {
     // something has been droped on us!
     KURL::List fileList;
-    QString execStr;
+    TQString execStr;
     if (KURLDrag::decode(ev, fileList))
     {
         // according to KURLDrag, we've successfully retrieved
@@ -205,7 +205,7 @@ void NonKDEAppButton::slotExec()
     runCommand();
 }
 
-void NonKDEAppButton::runCommand(const QString& execStr)
+void NonKDEAppButton::runCommand(const TQString& execStr)
 {
     // run our command! this method is used both by the drag 'n drop
     // facilities as well as when the button is activated (usualy w/a click)
@@ -225,7 +225,7 @@ void NonKDEAppButton::runCommand(const QString& execStr)
         // get merged into the application config automagically for us
         KConfig *config = KGlobal::config();
         config->setGroup("misc");
-        QString termStr = config->readPathEntry("Terminal", "konsole");
+        TQString termStr = config->readPathEntry("Terminal", "konsole");
 
         // and now we run the darn thing and store how we fared in result
         result = KRun::runCommand(termStr + " -e " + pathStr + " " +
@@ -269,7 +269,7 @@ void NonKDEAppButton::properties()
 {
     // the user has requested to configure this button
     // this method gets called by the ButtonContainer that houses the button
-    // see ButtonContainer::eventFilter(QObject *o, QEvent *e), where the
+    // see ButtonContainer::eventFilter(TQObject *o, TQEvent *e), where the
     // context menu is created and dealt with.
 
     // so we create a new config dialog ....
@@ -278,8 +278,8 @@ void NonKDEAppButton::properties()
 
     // ... connect the signal it emits when it has data for us to save
     // to our updateSettings slot (see above) ...
-    connect(dlg, SIGNAL(updateSettings(PanelExeDialog*)), this,
-            SLOT(updateSettings(PanelExeDialog*)));
+    connect(dlg, TQT_SIGNAL(updateSettings(PanelExeDialog*)), this,
+            TQT_SLOT(updateSettings(PanelExeDialog*)));
 
     // ... and then show it to the user
     dlg->show();

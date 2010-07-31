@@ -30,7 +30,7 @@ class KeramikStyleConfig: public QWidget
 {
 	Q_OBJECT
 public:
-	KeramikStyleConfig(QWidget* parent);
+	KeramikStyleConfig(TQWidget* parent);
 	~KeramikStyleConfig();
 
 	//This signal and the next two slots are the plugin
@@ -49,9 +49,9 @@ protected slots:
 protected:
 	//We store settings directly in widgets to
 	//avoid the hassle of sync'ing things
-	//QCheckBox* highlightLineEdits;
-	QCheckBox* animateProgressBar;
-	QCheckBox* highlightScrollBar;
+	//TQCheckBox* highlightLineEdits;
+	TQCheckBox* animateProgressBar;
+	TQCheckBox* highlightScrollBar;
 
 	//Original settings, for accurate dirtiness tracking
 	//bool       origHlLineEdit;

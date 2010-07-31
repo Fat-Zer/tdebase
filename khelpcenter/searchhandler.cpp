@@ -40,7 +40,7 @@ SearchHandler::SearchHandler()
   mLang = KGlobal::locale()->language().left( 2 );
 }
 
-SearchHandler *SearchHandler::initFromFile( const QString &filename )
+SearchHandler *SearchHandler::initFromFile( const TQString &filename )
 {
   SearchHandler *handler = new SearchHandler;
 
@@ -54,14 +54,14 @@ SearchHandler *SearchHandler::initFromFile( const QString &filename )
   return handler;
 }
 
-QStringList SearchHandler::documentTypes() const
+TQStringList SearchHandler::documentTypes() const
 {
   return mDocumentTypes;
 }
 
-QString SearchHandler::indexCommand( const QString &identifier )
+TQString SearchHandler::indexCommand( const TQString &identifier )
 {
-  QString cmd = mIndexCommand;
+  TQString cmd = mIndexCommand;
   cmd.replace( "%i", identifier );
   cmd.replace( "%d", Prefs::indexDirectory() );
   cmd.replace( "%l", mLang );
@@ -79,9 +79,9 @@ bool SearchHandler::checkPaths() const
   return true;
 }
 
-bool SearchHandler::checkBinary( const QString &cmd ) const
+bool SearchHandler::checkBinary( const TQString &cmd ) const
 {
-  QString binary;
+  TQString binary;
 
   int pos = cmd.find( ' ' );
   if ( pos < 0 ) binary = cmd;
@@ -90,36 +90,36 @@ bool SearchHandler::checkBinary( const QString &cmd ) const
   return !KStandardDirs::findExe( binary ).isEmpty();
 }
 
-void SearchHandler::search( DocEntry *entry, const QStringList &words,
+void SearchHandler::search( DocEntry *entry, const TQStringList &words,
   int maxResults,
   SearchEngine::Operation operation )
 {
   kdDebug() << "SearchHandler::search(): " << entry->identifier() << endl;
 
   if ( !mSearchCommand.isEmpty() ) {
-    QString cmdString = SearchEngine::substituteSearchQuery( mSearchCommand,
+    TQString cmdString = SearchEngine::substituteSearchQuery( mSearchCommand,
       entry->identifier(), words, maxResults, operation, mLang );
 
     kdDebug() << "SearchHandler::search() CMD: " << cmdString << endl;
 
     KProcess *proc = new KProcess();
 
-    QStringList cmd = QStringList::split( " ", cmdString );
-    QStringList::ConstIterator it;
+    TQStringList cmd = TQStringList::split( " ", cmdString );
+    TQStringList::ConstIterator it;
     for( it = cmd.begin(); it != cmd.end(); ++it ) {
-      QString arg = *it;
+      TQString arg = *it;
       if ( arg.left( 1 ) == "\"" && arg.right( 1 ) =="\"" ) {
         arg = arg.mid( 1, arg.length() - 2 );
       }
       *proc << arg.utf8();
     }
 
-    connect( proc, SIGNAL( receivedStdout( KProcess *, char *, int ) ),
-             SLOT( searchStdout( KProcess *, char *, int ) ) );
-    connect( proc, SIGNAL( receivedStderr( KProcess *, char *, int ) ),
-             SLOT( searchStderr( KProcess *, char *, int ) ) );
-    connect( proc, SIGNAL( processExited( KProcess * ) ),
-             SLOT( searchExited( KProcess * ) ) );
+    connect( proc, TQT_SIGNAL( receivedStdout( KProcess *, char *, int ) ),
+             TQT_SLOT( searchStdout( KProcess *, char *, int ) ) );
+    connect( proc, TQT_SIGNAL( receivedStderr( KProcess *, char *, int ) ),
+             TQT_SLOT( searchStderr( KProcess *, char *, int ) ) );
+    connect( proc, TQT_SIGNAL( processExited( KProcess * ) ),
+             TQT_SLOT( searchExited( KProcess * ) ) );
 
     SearchJob *searchJob = new SearchJob;
     searchJob->mEntry = entry;
@@ -129,27 +129,27 @@ void SearchHandler::search( DocEntry *entry, const QStringList &words,
     mProcessJobs.insert( proc, searchJob );
 
     if ( !proc->start( KProcess::NotifyOnExit, KProcess::All ) ) {
-      QString txt = i18n("Error executing search command '%1'.").arg( cmdString );
+      TQString txt = i18n("Error executing search command '%1'.").arg( cmdString );
       emit searchFinished( this, entry, txt );
     }
   } else if ( !mSearchUrl.isEmpty() ) {
-    QString urlString = SearchEngine::substituteSearchQuery( mSearchUrl,
+    TQString urlString = SearchEngine::substituteSearchQuery( mSearchUrl,
       entry->identifier(), words, maxResults, operation, mLang );
   
     kdDebug() << "SearchHandler::search() URL: " << urlString << endl;
   
     KIO::TransferJob *job = KIO::get( KURL( urlString ) );
-    connect( job, SIGNAL( result( KIO::Job * ) ),
-             SLOT( slotJobResult( KIO::Job * ) ) );
-    connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-             SLOT( slotJobData( KIO::Job *, const QByteArray & ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+             TQT_SLOT( slotJobResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
+             TQT_SLOT( slotJobData( KIO::Job *, const TQByteArray & ) ) );
 
     SearchJob *searchJob = new SearchJob;
     searchJob->mEntry = entry;
     searchJob->mKioJob = job;
     mKioJobs.insert( job, searchJob );
   } else {
-    QString txt = i18n("No search command or URL specified.");
+    TQString txt = i18n("No search command or URL specified.");
     emit searchFinished( this, entry, txt );
     return;
   }
@@ -160,13 +160,13 @@ void SearchHandler::searchStdout( KProcess *proc, char *buffer, int len )
   if ( !buffer || len == 0 )
     return;
 
-  QString bufferStr;
+  TQString bufferStr;
   char *p;
   p = (char*) malloc( sizeof(char) * ( len + 1 ) );
   p = strncpy( p, buffer, len );
   p[len] = '\0';
 
-  QMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
+  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     (*it)->mResult += bufferStr.fromUtf8( p );
   }
@@ -179,9 +179,9 @@ void SearchHandler::searchStderr( KProcess *proc, char *buffer, int len )
   if ( !buffer || len == 0 )
     return;
 
-  QMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
+  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
-    (*it)->mError += QString::fromUtf8( buffer, len );
+    (*it)->mError += TQString::fromUtf8( buffer, len );
   }
 }
 
@@ -189,11 +189,11 @@ void SearchHandler::searchExited( KProcess *proc )
 {
 //  kdDebug() << "SearchHandler::searchExited()" << endl;
 
-  QString result;
-  QString error;
+  TQString result;
+  TQString error;
   DocEntry *entry = 0;
 
-  QMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
+  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     SearchJob *j = *it;
     entry = j->mEntry;
@@ -215,10 +215,10 @@ void SearchHandler::searchExited( KProcess *proc )
 
 void SearchHandler::slotJobResult( KIO::Job *job )
 {
-  QString result;
+  TQString result;
   DocEntry *entry = 0;
 
-  QMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
+  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
   if ( it != mKioJobs.end() ) {
     SearchJob *j = *it;
 
@@ -236,11 +236,11 @@ void SearchHandler::slotJobResult( KIO::Job *job )
   }
 }
  
-void SearchHandler::slotJobData( KIO::Job *job, const QByteArray &data )
+void SearchHandler::slotJobData( KIO::Job *job, const TQByteArray &data )
 {
 //  kdDebug() << "SearchHandler::slotJobData()" << endl;
 
-  QMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
+  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
   if ( it != mKioJobs.end() ) {
     (*it)->mResult += data.data();
   }

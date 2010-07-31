@@ -34,15 +34,15 @@ class ExtensionButton : public PanelPopupButton
     Q_OBJECT
 
 public:
-    ExtensionButton( const QString& desktopFile, QWidget* parent );
-    ExtensionButton( const KConfigGroup& config, QWidget* parent );
+    ExtensionButton( const TQString& desktopFile, TQWidget* parent );
+    ExtensionButton( const KConfigGroup& config, TQWidget* parent );
     ~ExtensionButton();
 
     void saveConfig( KConfigGroup& config ) const;
 
 protected:
-    void initialize( const QString& desktopFile );
-    virtual QString tileName() { return "URL"; }
+    void initialize( const TQString& desktopFile );
+    virtual TQString tileName() { return "URL"; }
     virtual void initPopup();
 
     MenuInfo*      info;

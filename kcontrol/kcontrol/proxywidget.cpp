@@ -20,7 +20,7 @@
 #include <unistd.h> // for getuid()
 
 #include <kpushbutton.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kcmodule.h>
@@ -29,25 +29,25 @@
 #include <kstdguiitem.h>
 #include <dcopclient.h>
 
-#include <qwhatsthis.h>
-#include <qlabel.h>
+#include <tqwhatsthis.h>
+#include <tqlabel.h>
 
 #include "global.h"
 #include "proxywidget.h"
 #include "proxywidget.moc"
 
 #include <kdebug.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 class WhatsThis : public QWhatsThis
 {
 public:
     WhatsThis( ProxyWidget* parent )
-    : QWhatsThis( parent ), proxy( parent ) {}
+    : TQWhatsThis( parent ), proxy( parent ) {}
     ~WhatsThis(){};
 
 
-    QString text( const QPoint &  ) {
+    TQString text( const TQPoint &  ) {
     if ( !proxy->quickHelp().isEmpty() )
         return proxy->quickHelp();
     else
@@ -60,7 +60,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void setVisible(QPushButton *btn, bool vis)
+static void setVisible(TQPushButton *btn, bool vis)
 {
   if (vis)
     btn->show();
@@ -75,21 +75,21 @@ static void setVisible(QPushButton *btn, bool vis)
 class RootInfoWidget : public QLabel
 {
 public:
-    RootInfoWidget(QWidget *parent, const char *name);
-    void setRootMsg(const QString& s) { setText(s); }
+    RootInfoWidget(TQWidget *parent, const char *name);
+    void setRootMsg(const TQString& s) { setText(s); }
 };
 
-RootInfoWidget::RootInfoWidget(QWidget *parent, const char *name = 0)
-    : QLabel(parent, name)
+RootInfoWidget::RootInfoWidget(TQWidget *parent, const char *name = 0)
+    : TQLabel(parent, name)
 {
-    setFrameShape(QFrame::Box);
-    setFrameShadow(QFrame::Raised);
+    setFrameShape(TQFrame::Box);
+    setFrameShadow(TQFrame::Raised);
 
     setText(i18n("<b>Changes in this module require root access.</b><br>"
                       "Click the \"Administrator Mode\" button to "
                       "allow modifications in this module."));
 
-	QWhatsThis::add(this, i18n("This module requires special permissions, probably "
+	TQWhatsThis::add(this, i18n("This module requires special permissions, probably "
                               "for system-wide modifications; therefore, it is "
                               "required that you provide the root password to be "
                               "able to change the module's properties.  If you "
@@ -103,12 +103,12 @@ RootInfoWidget::RootInfoWidget(QWidget *parent, const char *name = 0)
 class ProxyView : public QScrollView
 {
 public:
-    ProxyView(KCModule *client, const QString& title, QWidget *parent, bool run_as_root, const char *name);
+    ProxyView(KCModule *client, const TQString& title, TQWidget *parent, bool run_as_root, const char *name);
 
 private:
-    virtual void resizeEvent(QResizeEvent *);
+    virtual void resizeEvent(TQResizeEvent *);
 
-    QWidget *contentWidget;
+    TQWidget *contentWidget;
     KCModule    *client;
     bool scroll;
 };
@@ -116,82 +116,82 @@ private:
 class ProxyContentWidget : public QWidget
 {
 public:
-    ProxyContentWidget( QWidget* parent ) : QWidget( parent ) {}
+    ProxyContentWidget( TQWidget* parent ) : TQWidget( parent ) {}
     ~ProxyContentWidget(){}
 
     // this should be really done by qscrollview in AutoOneFit mode!
-    QSize sizeHint() const { return minimumSizeHint(); }
+    TQSize sizeHint() const { return minimumSizeHint(); }
 };
 
 
-ProxyView::ProxyView(KCModule *_client, const QString&, QWidget *parent, bool run_as_root, const char *name)
-    : QScrollView(parent, name), client(_client)
+ProxyView::ProxyView(KCModule *_client, const TQString&, TQWidget *parent, bool run_as_root, const char *name)
+    : TQScrollView(parent, name), client(_client)
 {
-  setResizePolicy(QScrollView::AutoOneFit);
+  setResizePolicy(TQScrollView::AutoOneFit);
   setFrameStyle( NoFrame );
   contentWidget = new ProxyContentWidget( viewport() );
 
-  QVBoxLayout* vbox = new QVBoxLayout( contentWidget );
+  TQVBoxLayout* vbox = new TQVBoxLayout( contentWidget );
 
   if (run_as_root && _client->useRootOnlyMsg()) // notify the user
   {
       RootInfoWidget *infoBox = new RootInfoWidget(contentWidget);
       vbox->addWidget( infoBox );
-      QString msg = _client->rootOnlyMsg();
+      TQString msg = _client->rootOnlyMsg();
       if (!msg.isEmpty())
 	      infoBox->setRootMsg(msg);
       vbox->setSpacing(KDialog::spacingHint());
   }
-  client->reparent(contentWidget,0,QPoint(0,0),true);
+  client->reparent(contentWidget,0,TQPoint(0,0),true);
   vbox->addWidget( client );
   vbox->activate(); // make sure we have a proper minimumSizeHint
   addChild(contentWidget);
 }
 
-void ProxyView::resizeEvent(QResizeEvent *e)
+void ProxyView::resizeEvent(TQResizeEvent *e)
 {
-    QScrollView::resizeEvent(e);
+    TQScrollView::resizeEvent(e);
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-ProxyWidget::ProxyWidget(KCModule *client, QString title, const char *name,
+ProxyWidget::ProxyWidget(KCModule *client, TQString title, const char *name,
              bool run_as_root)
-  : QWidget(0, name)
+  : TQWidget(0, name)
   , _client(client)
 {
  setCaption(title);
 
  if (getuid()==0 ) {
 	 // Make root modules look as similar as possible...
-	 QCString replyType;
-	 QByteArray replyData;
+	 TQCString replyType;
+	 TQByteArray replyData;
 	 
-	 if (kapp->dcopClient()->call("kcontrol", "moduleIface", "getPalette()", QByteArray(),
+	 if (kapp->dcopClient()->call("kcontrol", "moduleIface", "getPalette()", TQByteArray(),
 				 replyType, replyData))
-		 if ( replyType == "QPalette") {
-			 QDataStream reply( replyData, IO_ReadOnly );
-			 QPalette pal;
+		 if ( replyType == "TQPalette") {
+			 TQDataStream reply( replyData, IO_ReadOnly );
+			 TQPalette pal;
 			 reply >> pal;
 			 setPalette(pal);
 		 }
 /* // Doesn't work ...
-	 if (kapp->dcopClient()->call("kcontrol", "moduleIface", "getStyle()", QByteArray(),
+	 if (kapp->dcopClient()->call("kcontrol", "moduleIface", "getStyle()", TQByteArray(),
 				 replyType, replyData))
-		 if ( replyType == "QString") {
-			 QDataStream reply( replyData, IO_ReadOnly );
-			 QString style; 
+		 if ( replyType == "TQString") {
+			 TQDataStream reply( replyData, IO_ReadOnly );
+			 TQString style; 
 			 reply >> style;
 			 setStyle(style);
 		 }
 */	 
-	 if (kapp->dcopClient()->call("kcontrol", "moduleIface", "getFont()", QByteArray(),
+	 if (kapp->dcopClient()->call("kcontrol", "moduleIface", "getFont()", TQByteArray(),
 				 replyType, replyData))
-		 if ( replyType == "QFont") {
-			 QDataStream reply( replyData, IO_ReadOnly );
-			 QFont font;
+		 if ( replyType == "TQFont") {
+			 TQDataStream reply( replyData, IO_ReadOnly );
+			 TQFont font;
 			 reply >> font;
 			 setFont(font);
 		 }
@@ -200,8 +200,8 @@ ProxyWidget::ProxyWidget(KCModule *client, QString title, const char *name,
   view = new ProxyView(client, title, this, run_as_root, "proxyview");
   (void) new WhatsThis( this );
 
-  connect(_client, SIGNAL(changed(bool)), SLOT(clientChanged(bool)));
-  connect(_client, SIGNAL(quickHelpChanged()), SIGNAL(quickHelpChanged()));
+  connect(_client, TQT_SIGNAL(changed(bool)), TQT_SLOT(clientChanged(bool)));
+  connect(_client, TQT_SIGNAL(quickHelpChanged()), TQT_SIGNAL(quickHelpChanged()));
 
   _sep = new KSeparator(KSeparator::HLine, this);
 
@@ -225,18 +225,18 @@ ProxyWidget::ProxyWidget(KCModule *client, QString title, const char *name,
   _apply->setEnabled( false );
   _reset->setEnabled( false );
 
-  connect(_handbook, SIGNAL(clicked()), SLOT(handbookClicked()));
-  connect(_default, SIGNAL(clicked()), SLOT(defaultClicked()));
-  connect(_apply, SIGNAL(clicked()), SLOT(applyClicked()));
-  connect(_reset, SIGNAL(clicked()), SLOT(resetClicked()));
-  connect(_root, SIGNAL(clicked()), SLOT(rootClicked()));
+  connect(_handbook, TQT_SIGNAL(clicked()), TQT_SLOT(handbookClicked()));
+  connect(_default, TQT_SIGNAL(clicked()), TQT_SLOT(defaultClicked()));
+  connect(_apply, TQT_SIGNAL(clicked()), TQT_SLOT(applyClicked()));
+  connect(_reset, TQT_SIGNAL(clicked()), TQT_SLOT(resetClicked()));
+  connect(_root, TQT_SIGNAL(clicked()), TQT_SLOT(rootClicked()));
 
-  QVBoxLayout *top = new QVBoxLayout(this, KDialog::marginHint(), 
+  TQVBoxLayout *top = new TQVBoxLayout(this, KDialog::marginHint(), 
       KDialog::spacingHint());
   top->addWidget(view);
   top->addWidget(_sep);
 
-  QHBoxLayout *buttons = new QHBoxLayout(top, 4);
+  TQHBoxLayout *buttons = new TQHBoxLayout(top, 4);
   buttons->addWidget(_handbook);
   buttons->addWidget(_default);
   if (run_as_root) 
@@ -259,7 +259,7 @@ ProxyWidget::~ProxyWidget()
   delete _client;
 }
 
-QString ProxyWidget::quickHelp() const
+TQString ProxyWidget::quickHelp() const
 {
   if (_client)
     return _client->quickHelp();
@@ -272,7 +272,7 @@ void ProxyWidget::handbookClicked()
   if (getuid()!=0)
 	  emit handbookRequest();
   else
-     kapp->dcopClient()->send("kcontrol", "moduleIface", "invokeHandbook()", QByteArray());
+     kapp->dcopClient()->send("kcontrol", "moduleIface", "invokeHandbook()", TQByteArray());
 }
 
 void ProxyWidget::helpClicked()
@@ -280,7 +280,7 @@ void ProxyWidget::helpClicked()
   if (getuid()!=0)
          emit helpRequest();
   else
-     kapp->dcopClient()->send("kcontrol", "moduleIface", "invokeHelp()", QByteArray());
+     kapp->dcopClient()->send("kcontrol", "moduleIface", "invokeHelp()", TQByteArray());
 }
 
 void ProxyWidget::defaultClicked()

@@ -17,11 +17,11 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#include <qmime.h>
-#include <qdragobject.h>
-#include <qmap.h>
-#include <qstring.h>
-#include <qpixmap.h>
+#include <tqmime.h>
+#include <tqdragobject.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
 #include <kurldrag.h>
 
 #include <kdebug.h>
@@ -39,7 +39,7 @@ HistoryItem::~HistoryItem() {
 
 }
 
-HistoryItem* HistoryItem::create( const QMimeSource& aSource )
+HistoryItem* HistoryItem::create( const TQMimeSource& aSource )
 {
 #if 0
     int i=0;
@@ -49,36 +49,36 @@ HistoryItem* HistoryItem::create( const QMimeSource& aSource )
 #endif
     if( KURLDrag::canDecode( &aSource )) {
         KURL::List urls;
-        QMap<QString,QString> metaData;
+        TQMap<TQString,TQString> metaData;
         if( KURLDrag::decode( &aSource, urls, metaData )) {
             // this is from KonqDrag (libkonq)
-            QByteArray a = aSource.encodedData( "application/x-kde-cutselection" );
+            TQByteArray a = aSource.encodedData( "application/x-kde-cutselection" );
             bool cut = !a.isEmpty() && (a.at(0) == '1'); // true if 1
             return new HistoryURLItem( urls, metaData, cut );
         }
     }
-    if ( QTextDrag::canDecode( &aSource ) ) {
-        QString text;
-        if( QTextDrag::decode( &aSource, text ))
+    if ( TQTextDrag::canDecode( &aSource ) ) {
+        TQString text;
+        if( TQTextDrag::decode( &aSource, text ))
             return text.isNull() ? 0 : new HistoryStringItem( text );
     }
-    if ( QImageDrag::canDecode( &aSource ) ) {
-        QPixmap image;
-        if( QImageDrag::decode( &aSource, image ))
+    if ( TQImageDrag::canDecode( &aSource ) ) {
+        TQPixmap image;
+        if( TQImageDrag::decode( &aSource, image ))
             return image.isNull() ? 0 : new HistoryImageItem( image );
     }
     return 0; // Failed.
 }
 
-HistoryItem* HistoryItem::create( QDataStream& aSource ) {
+HistoryItem* HistoryItem::create( TQDataStream& aSource ) {
     if ( aSource.atEnd() ) {
         return 0;
     }
-    QString type;
+    TQString type;
     aSource >> type;
     if ( type == "url" ) {
         KURL::List urls;
-        QMap< QString, QString > metaData;
+        TQMap< TQString, TQString > metaData;
         int cut;
         aSource >> urls;
         aSource >> metaData;
@@ -86,12 +86,12 @@ HistoryItem* HistoryItem::create( QDataStream& aSource ) {
         return new HistoryURLItem( urls, metaData, cut );
     }
     if ( type == "string" ) {
-        QString text;
+        TQString text;
         aSource >> text;
         return new HistoryStringItem( text );
     }
     if ( type == "image" ) {
-        QPixmap image;
+        TQPixmap image;
         aSource >> image;
         return new HistoryImageItem( image );
     }

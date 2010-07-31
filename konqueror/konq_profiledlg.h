@@ -22,8 +22,8 @@
 
 #include <kdialogbase.h>
 
-#include <qlistview.h>
-#include <qmap.h>
+#include <tqlistview.h>
+#include <tqmap.h>
 
 class KonqViewManager;
 class QListViewItem;
@@ -33,22 +33,22 @@ class QLineEdit;
 class KPushButton;
 class KListView;
 
-typedef QMap<QString, QString> KonqProfileMap;
+typedef TQMap<TQString, TQString> KonqProfileMap;
 
 class KonqProfileItem : public QListViewItem
 {
 public:
-  KonqProfileItem( KListView *, const QString & );
+  KonqProfileItem( KListView *, const TQString & );
   ~KonqProfileItem() {}
 
-  QString m_profileName;
+  TQString m_profileName;
 };
 
 class KonqProfileDlg : public KDialogBase
 {
   Q_OBJECT
 public:
-  KonqProfileDlg( KonqViewManager *manager, const QString &preselectProfile, QWidget *parent = 0L );
+  KonqProfileDlg( KonqViewManager *manager, const TQString &preselectProfile, TQWidget *parent = 0L );
   ~KonqProfileDlg();
 
   /**
@@ -61,21 +61,21 @@ protected slots:
   virtual void slotUser1(); // User1 is "Rename Profile" button
   virtual void slotUser2(); // User2 is "Delete Profile" button
   virtual void slotUser3(); // User3 is Save button
-  void slotTextChanged( const QString & );
-  void slotSelectionChanged( QListViewItem * item );
+  void slotTextChanged( const TQString & );
+  void slotSelectionChanged( TQListViewItem * item );
 
-  void slotItemRenamed( QListViewItem * );
+  void slotItemRenamed( TQListViewItem * );
 
 private:
-  void loadAllProfiles(const QString & = QString::null);
+  void loadAllProfiles(const TQString & = TQString::null);
   KonqViewManager *m_pViewManager;
 
   KonqProfileMap m_mapEntries;
 
-  QLineEdit *m_pProfileNameLineEdit;
+  TQLineEdit *m_pProfileNameLineEdit;
 
-  QCheckBox *m_cbSaveURLs;
-  QCheckBox *m_cbSaveSize;
+  TQCheckBox *m_cbSaveURLs;
+  TQCheckBox *m_cbSaveSize;
 
   KListView *m_pListView;
 };

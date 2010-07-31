@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __taskbarcontainer_h__
 #define __taskbarcontainer_h__
 
-#include <qframe.h>
+#include <tqframe.h>
 
 #include <dcopobject.h>
 #include <kpanelapplet.h>
@@ -35,20 +35,20 @@ class SimpleButton;
 class KWindowListMenu;
 class TaskBar;
 
-class KDE_EXPORT TaskBarContainer : public QFrame, public DCOPObject
+class KDE_EXPORT TaskBarContainer : public TQFrame, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
 
 public:
-    TaskBarContainer( bool enableFrame, QWidget* parent = 0, const char* name = 0 );
+    TaskBarContainer( bool enableFrame, TQWidget* parent = 0, const char* name = 0 );
     ~TaskBarContainer();
 
     void orientationChange( Orientation );
     void popupDirectionChange( KPanelApplet::Direction );
     void preferences();
     //FIXME: don't use Position, use Orientation
-    QSize sizeHint( KPanelExtension::Position, QSize maxSize ) const;
+    TQSize sizeHint( KPanelExtension::Position, TQSize maxSize ) const;
     void setBackground();
 
 k_dcop:
@@ -66,7 +66,7 @@ protected slots:
 private:
     KPanelApplet::Direction      direction;
     bool                         showWindowListButton;
-    QBoxLayout *                 layout;
+    TQBoxLayout *                 layout;
     TaskBar *                    taskBar;
     SimpleButton *               windowListButton;
     KWindowListMenu *            windowListMenu;

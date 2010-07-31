@@ -23,8 +23,8 @@
 
 #include <kdialogbase.h>
 
-#include <qstring.h>
-#include <qcolor.h>
+#include <tqstring.h>
+#include <tqcolor.h>
 
 class SensorLoggerSettingsWidget;
 
@@ -34,17 +34,17 @@ class SensorLoggerSettings : public KDialogBase
 
   public:
 
-    SensorLoggerSettings( QWidget *parent=0, const char *name=0 );
+    SensorLoggerSettings( TQWidget *parent=0, const char *name=0 );
 
-    QString title();
-    QColor foregroundColor();
-    QColor backgroundColor();
-    QColor alarmColor();
+    TQString title();
+    TQColor foregroundColor();
+    TQColor backgroundColor();
+    TQColor alarmColor();
 
-    void setTitle( const QString & );
-    void setForegroundColor( const QColor & );
-    void setBackgroundColor( const QColor & );
-    void setAlarmColor( const QColor & );
+    void setTitle( const TQString & );
+    void setForegroundColor( const TQColor & );
+    void setBackgroundColor( const TQColor & );
+    void setAlarmColor( const TQColor & );
 
   private:
 

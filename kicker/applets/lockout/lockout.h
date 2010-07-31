@@ -1,8 +1,8 @@
 #ifndef LOCKOUT_H
 #define LOCKOUT_H
 
-#include <qevent.h>
-#include <qstring.h>
+#include <tqevent.h>
+#include <tqstring.h>
 #include <kpanelapplet.h>
 
 #include "simplebutton.h"
@@ -15,20 +15,20 @@ class Lockout : public KPanelApplet
     Q_OBJECT
 
 public:
-    Lockout( const QString& configFile,
-	     QWidget *parent = 0, const char *name = 0 );
+    Lockout( const TQString& configFile,
+	     TQWidget *parent = 0, const char *name = 0 );
     ~Lockout();
 
     int widthForHeight(int height) const;
     int heightForWidth(int width) const;
 
 protected:
-    virtual void mousePressEvent( QMouseEvent * );
-    virtual void mouseMoveEvent( QMouseEvent * );
-    virtual void mouseReleaseEvent( QMouseEvent * );
-    virtual void mouseDoubleClickEvent( QMouseEvent * );
+    virtual void mousePressEvent( TQMouseEvent * );
+    virtual void mouseMoveEvent( TQMouseEvent * );
+    virtual void mouseReleaseEvent( TQMouseEvent * );
+    virtual void mouseDoubleClickEvent( TQMouseEvent * );
 
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter( TQObject *, TQEvent * );
 
 private slots:
     void lock();
@@ -40,11 +40,11 @@ private slots:
     void slotIconChanged();
 
 private:
-    void propagateMouseEvent( QMouseEvent * );
+    void propagateMouseEvent( TQMouseEvent * );
     void checkLayout( int height ) const;
 
     SimpleButton *lockButton, *logoutButton;
-    QBoxLayout *layout;
+    TQBoxLayout *layout;
 
     bool bTransparent;
 };

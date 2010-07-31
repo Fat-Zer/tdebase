@@ -31,7 +31,7 @@
 
 // Qt
 #include <dcopclient.h>
-#include <qsocketnotifier.h>
+#include <tqsocketnotifier.h>
 
 // KDE 
 #include <kuniqueapplication.h>
@@ -61,7 +61,7 @@
    - add client complements.
 */
 
-KWrited::KWrited() : QTextEdit()
+KWrited::KWrited() : TQTextEdit()
 {
   int pref_width, pref_height;
 
@@ -71,17 +71,17 @@ KWrited::KWrited() : QTextEdit()
   setMinimumWidth(pref_width);
   setMinimumHeight(pref_height);
   setReadOnly(true);
-  setFocusPolicy(QWidget::NoFocus);
-  setWordWrap(QTextEdit::WidgetWidth);
+  setFocusPolicy(TQWidget::NoFocus);
+  setWordWrap(TQTextEdit::WidgetWidth);
   setTextFormat(Qt::PlainText);
 
   pty = new KPty();
   pty->open();
   pty->login(KUser().loginName().local8Bit().data(), getenv("DISPLAY"));
-  QSocketNotifier *sn = new QSocketNotifier(pty->masterFd(), QSocketNotifier::Read, this);
-  connect(sn, SIGNAL(activated(int)), this, SLOT(block_in(int)));
+  TQSocketNotifier *sn = new TQSocketNotifier(pty->masterFd(), TQSocketNotifier::Read, this);
+  connect(sn, TQT_SIGNAL(activated(int)), this, TQT_SLOT(block_in(int)));
 
-  QString txt = i18n("KWrited - Listening on Device %1").arg(pty->ttyName());
+  TQString txt = i18n("KWrited - Listening on Device %1").arg(pty->ttyName());
   setCaption(txt);
   
   kdDebug() << txt << endl;
@@ -100,7 +100,7 @@ void KWrited::block_in(int fd)
   if (len <= 0)
      return;
 
-  insert( QString::fromLocal8Bit( buf, len ).remove('\r') );
+  insert( TQString::fromLocal8Bit( buf, len ).remove('\r') );
   show();
   raise();
 }
@@ -110,18 +110,18 @@ void KWrited::clearText()
    clear();
 }
 
-QPopupMenu *KWrited::createPopupMenu( const QPoint &pos )
+TQPopupMenu *KWrited::createPopupMenu( const TQPoint &pos )
 {
-   QPopupMenu *menu = QTextEdit::createPopupMenu( pos );
+   TQPopupMenu *menu = TQTextEdit::createPopupMenu( pos );
 
    menu->insertItem( i18n( "Clear Messages" ),
-                     this, SLOT( clearText() ), 
+                     this, TQT_SLOT( clearText() ), 
                      0, -1, 0 );
 
    return menu;
 }
 
-KWritedModule::KWritedModule( const QCString& obj )
+KWritedModule::KWritedModule( const TQCString& obj )
     : KDEDModule( obj )
 {
     KGlobal::locale()->insertCatalogue("konsole");
@@ -135,7 +135,7 @@ KWritedModule::~KWritedModule()
 }
 
 extern "C"
-KDE_EXPORT KDEDModule* create_kwrited( const QCString& obj )
+KDE_EXPORT KDEDModule* create_kwrited( const TQCString& obj )
     {
     return new KWritedModule( obj );
     }

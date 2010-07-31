@@ -34,7 +34,7 @@
 #include <voices.h>
 
 extern "C" 
-KDE_EXPORT KDEDModule *create_khotkeys( const QCString& obj )
+KDE_EXPORT KDEDModule *create_khotkeys( const TQCString& obj )
     {
     return new KHotKeys::KHotKeysModule( obj );
     }
@@ -44,7 +44,7 @@ namespace KHotKeys
 
 // KhotKeysModule
 
-KHotKeysModule::KHotKeysModule( const QCString& obj )
+KHotKeysModule::KHotKeysModule( const TQCString& obj )
     : KDEDModule( obj )
     {
     for( int i = 0;
@@ -53,8 +53,8 @@ KHotKeysModule::KHotKeysModule( const QCString& obj )
         {
         if( kapp->dcopClient()->isApplicationRegistered( "khotkeys" ))
             {
-            QByteArray data, replyData;
-            QCString reply;
+            TQByteArray data, replyData;
+            TQCString reply;
             // wait for it to finish
             kapp->dcopClient()->call( "khotkeys*", "khotkeys", "quit()", data, reply, replyData );
             sleep( 1 );

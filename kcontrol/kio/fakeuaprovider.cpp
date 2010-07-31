@@ -27,16 +27,16 @@
 #include "fakeuaprovider.h"
 
 #define UA_PTOS(x) (*it)->property(x).toString()
-#define QFL(x) QString::fromLatin1(x)
+#define QFL(x) TQString::fromLatin1(x)
 
 FakeUASProvider::FakeUASProvider()
 {
    m_bIsDirty = true;
 }
 
-FakeUASProvider::StatusCode FakeUASProvider::createNewUAProvider( const QString& uaStr )
+FakeUASProvider::StatusCode FakeUASProvider::createNewUAProvider( const TQString& uaStr )
 {
-  QStringList split;
+  TQStringList split;
   int pos = (uaStr).find("::");
 
   if ( pos == -1 )
@@ -50,7 +50,7 @@ FakeUASProvider::StatusCode FakeUASProvider::createNewUAProvider( const QString&
   }
   else
   {
-    split = QStringList::split("::", uaStr);
+    split = TQStringList::split("::", uaStr);
   }
 
   if ( m_lstIdentity.contains(split[1]) )
@@ -76,7 +76,7 @@ void FakeUASProvider::loadFromDesktopFiles()
 
 void FakeUASProvider::parseDescription()
 {
-  QString tmp;
+  TQString tmp;
 
   KTrader::OfferList::ConstIterator it = m_providers.begin();
   KTrader::OfferList::ConstIterator lastItem = m_providers.end();
@@ -90,24 +90,24 @@ void FakeUASProvider::parseDescription()
       struct utsname utsn;
       uname( &utsn );
 
-      tmp.replace( QFL("appSysName"), QString(utsn.sysname) );
-      tmp.replace( QFL("appSysRelease"), QString(utsn.release) );
-      tmp.replace( QFL("appMachineType"), QString(utsn.machine) );
+      tmp.replace( QFL("appSysName"), TQString(utsn.sysname) );
+      tmp.replace( QFL("appSysRelease"), TQString(utsn.release) );
+      tmp.replace( QFL("appMachineType"), TQString(utsn.machine) );
 
-      QStringList languageList = KGlobal::locale()->languageList();
+      TQStringList languageList = KGlobal::locale()->languageList();
       if ( languageList.count() )
       {
-        QStringList::Iterator it = languageList.find( QString::fromLatin1("C") );
+        TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
         if( it != languageList.end() )
         {
-          if( languageList.contains( QString::fromLatin1("en") ) > 0 )
+          if( languageList.contains( TQString::fromLatin1("en") ) > 0 )
             languageList.remove( it );
           else
-            (*it) = QString::fromLatin1("en");
+            (*it) = TQString::fromLatin1("en");
         }
       }
 
-      tmp.replace( QFL("appLanguage"), QString("%1").arg(languageList.join(", ")) );
+      tmp.replace( QFL("appLanguage"), TQString("%1").arg(languageList.join(", ")) );
       tmp.replace( QFL("appPlatform"), QFL("X11") );
     }
 
@@ -117,12 +117,12 @@ void FakeUASProvider::parseDescription()
 
     m_lstIdentity << tmp;
 
-    tmp = QString("%1 %2").arg(UA_PTOS("X-KDE-UA-SYSNAME")).arg(UA_PTOS("X-KDE-UA-SYSRELEASE"));
+    tmp = TQString("%1 %2").arg(UA_PTOS("X-KDE-UA-SYSNAME")).arg(UA_PTOS("X-KDE-UA-SYSRELEASE"));
     if ( tmp.stripWhiteSpace().isEmpty() )
-      tmp = QString("%1 %2").arg(UA_PTOS("X-KDE-UA-"
+      tmp = TQString("%1 %2").arg(UA_PTOS("X-KDE-UA-"
                     "NAME")).arg(UA_PTOS("X-KDE-UA-VERSION"));
     else
-      tmp = QString("%1 %2 on %3").arg(UA_PTOS("X-KDE-UA-"
+      tmp = TQString("%1 %2 on %3").arg(UA_PTOS("X-KDE-UA-"
                     "NAME")).arg(UA_PTOS("X-KDE-UA-VERSION")).arg(tmp);
 
     m_lstAlias << tmp;
@@ -131,44 +131,44 @@ void FakeUASProvider::parseDescription()
   m_bIsDirty = false;
 }
 
-QString FakeUASProvider::aliasStr( const QString& name )
+TQString FakeUASProvider::aliasStr( const TQString& name )
 {
   int id = userAgentStringList().findIndex(name);
   if ( id == -1 )
-    return QString::null;
+    return TQString::null;
   else
     return m_lstAlias[id];
 }
 
-QString FakeUASProvider::agentStr( const QString& name )
+TQString FakeUASProvider::agentStr( const TQString& name )
 {
   int id = userAgentAliasList().findIndex(name);
   if ( id == -1 )
-    return QString::null;
+    return TQString::null;
   else
     return m_lstIdentity[id];
 }
 
 
-QStringList FakeUASProvider::userAgentStringList()
+TQStringList FakeUASProvider::userAgentStringList()
 {
   if ( m_bIsDirty )
   {
     loadFromDesktopFiles();
     if ( !m_providers.count() )
-      return QStringList();
+      return TQStringList();
     parseDescription();
   }
   return m_lstIdentity;
 }
 
-QStringList FakeUASProvider::userAgentAliasList ()
+TQStringList FakeUASProvider::userAgentAliasList ()
 {
   if ( m_bIsDirty )
   {
     loadFromDesktopFiles();
     if ( !m_providers.count() )
-      return QStringList();
+      return TQStringList();
     parseDescription();
   }
   return m_lstAlias;

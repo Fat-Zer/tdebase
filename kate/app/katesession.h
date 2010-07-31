@@ -26,8 +26,8 @@
 #include <ksharedptr.h>
 #include <kaction.h>
 
-#include <qobject.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
 
 class KateSessionManager;
 
@@ -52,7 +52,7 @@ class KateSession  : public KShared
      * @param name session name
      * @param manager pointer to the manager
      */
-    KateSession (KateSessionManager *manager, const QString &fileName, const QString &name);
+    KateSession (KateSessionManager *manager, const TQString &fileName, const TQString &name);
 
     /**
      * init the session object, after construction or create
@@ -68,19 +68,19 @@ class KateSession  : public KShared
      * session filename, absolute, calculated out of relative filename + session dir
      * @return absolute path to session file
      */
-    QString sessionFile () const;
+    TQString sessionFile () const;
 
     /**
      * relative session filename
      * @return relative filename for this session
      */
-    const QString &sessionFileRelative () const { return m_sessionFileRel; }
+    const TQString &sessionFileRelative () const { return m_sessionFileRel; }
 
     /**
      * session name
      * @return name for this session
      */
-    const QString &sessionName () const { return m_sessionName; }
+    const TQString &sessionName () const { return m_sessionName; }
 
     /**
      * is this a valid session? if not, don't use any session if this is
@@ -94,14 +94,14 @@ class KateSession  : public KShared
      * @param force force to create new file
      * @return true if created, false if no creation needed
      */
-    bool create (const QString &name, bool force = false);
+    bool create (const TQString &name, bool force = false);
 
     /**
      * rename this session
      * @param name new name
      * @return success
      */
-    bool rename (const QString &name);
+    bool rename (const TQString &name);
 
     /**
      * config to read
@@ -130,12 +130,12 @@ class KateSession  : public KShared
      * session filename, in local location we can write to
      * relative filename to the session dirs :)
      */
-    QString m_sessionFileRel;
+    TQString m_sessionFileRel;
 
     /**
      * session name, extracted from the file, to display to the user
      */
-    QString m_sessionName;
+    TQString m_sessionName;
 
     /**
      * number of document of this session
@@ -158,14 +158,14 @@ class KateSession  : public KShared
     KSimpleConfig *m_writeConfig;
 };
 
-typedef QValueList<KateSession::Ptr> KateSessionList;
+typedef TQValueList<KateSession::Ptr> KateSessionList;
 
 class KateSessionManager : public QObject
 {
   Q_OBJECT
 
   public:
-    KateSessionManager(QObject *parent);
+    KateSessionManager(TQObject *parent);
     ~KateSessionManager();
 
     /**
@@ -195,14 +195,14 @@ class KateSessionManager : public QObject
      * create a new session
      * @param name session name
      */
-    KateSession::Ptr createSession (const QString &name);
+    KateSession::Ptr createSession (const TQString &name);
 
     /**
      * return session with given name
      * if no existing session matches, create new one with this name
      * @param name session name
      */
-    KateSession::Ptr giveSession (const QString &name);
+    KateSession::Ptr giveSession (const TQString &name);
 
     /**
      * save current session
@@ -224,7 +224,7 @@ class KateSessionManager : public QObject
      * session dir
      * @return global session dir
      */
-    inline const QString &sessionsDir () const { return m_sessionsDir; }
+    inline const TQString &sessionsDir () const { return m_sessionsDir; }
 
     /**
      * initial session chooser, on app start
@@ -260,7 +260,7 @@ class KateSessionManager : public QObject
     void sessionManage ();
 
   private slots:
-    void dirty (const QString &path);
+    void dirty (const TQString &path);
 
   public:
     /**
@@ -272,7 +272,7 @@ class KateSessionManager : public QObject
     /**
      * absolute path to dir in home dir where to store the sessions
      */
-    QString m_sessionsDir;
+    TQString m_sessionsDir;
 
     /**
      * list of current available sessions
@@ -290,7 +290,7 @@ class KateSessionChooser : public KDialogBase
   Q_OBJECT
 
   public:
-    KateSessionChooser (QWidget *parent, const QString &lastSession);
+    KateSessionChooser (TQWidget *parent, const TQString &lastSession);
     ~KateSessionChooser ();
 
     KateSession::Ptr selectedSession ();
@@ -298,7 +298,7 @@ class KateSessionChooser : public KDialogBase
     bool reopenLastSession ();
 
     enum {
-      resultQuit = QDialog::Rejected,
+      resultQuit = TQDialog::Rejected,
       resultOpen,
       resultNew,
       resultNone
@@ -327,7 +327,7 @@ class KateSessionChooser : public KDialogBase
 
   private:
     KListView *m_sessions;
-    QCheckBox *m_useLast;
+    TQCheckBox *m_useLast;
 };
 
 class KateSessionOpenDialog : public KDialogBase
@@ -335,7 +335,7 @@ class KateSessionOpenDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    KateSessionOpenDialog (QWidget *parent);
+    KateSessionOpenDialog (TQWidget *parent);
     ~KateSessionOpenDialog ();
 
     KateSession::Ptr selectedSession ();
@@ -365,7 +365,7 @@ class KateSessionManageDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    KateSessionManageDialog (QWidget *parent);
+    KateSessionManageDialog (TQWidget *parent);
     ~KateSessionManageDialog ();
 
   protected slots:
@@ -406,7 +406,7 @@ class KateSessionsAction : public KActionMenu
   Q_OBJECT
 
   public:
-    KateSessionsAction(const QString& text, QObject* parent = 0, const char* name = 0);
+    KateSessionsAction(const TQString& text, TQObject* parent = 0, const char* name = 0);
     ~KateSessionsAction (){;};
 
   public  slots:

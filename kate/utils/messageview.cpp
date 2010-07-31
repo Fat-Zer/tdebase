@@ -19,22 +19,22 @@
 #include "messageview.h"
 #include "messageview.moc"
 
-#include <qtextbrowser.h>
+#include <tqtextbrowser.h>
 
-Kate::MessageView::MessageView( QWidget *parent, const char *name )
+Kate::MessageView::MessageView( TQWidget *parent, const char *name )
   : Kate::DockViewBase( parent, name )
 {
-  m_view = new QTextBrowser( this );
+  m_view = new TQTextBrowser( this );
   // m_view->setFormat( Qt::richText ); // should be!!
-  connect( m_view, SIGNAL( linkClicked( const QString & ) ), 
-           SIGNAL( linkClicked( const QString & ) ) );
+  connect( m_view, TQT_SIGNAL( linkClicked( const TQString & ) ), 
+           TQT_SIGNAL( linkClicked( const TQString & ) ) );
 }
 
 Kate::MessageView::~MessageView()
 {
 }
 
-void Kate::MessageView::addMessage( const QString &msg )
+void Kate::MessageView::addMessage( const TQString &msg )
 {
   m_view->append( msg );
   m_view->scrollToBottom();

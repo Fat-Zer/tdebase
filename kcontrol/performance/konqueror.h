@@ -29,7 +29,7 @@ class Konqueror
     {
     Q_OBJECT
     public:
-        Konqueror( QWidget* parent_P = NULL );
+        Konqueror( TQWidget* parent_P = NULL );
         void load(bool useDefaults);
         void save();
         void defaults();
@@ -38,7 +38,7 @@ class Konqueror
     private slots:
 	void preload_count_changed( int );
     private:
-        QString allowed_parts;
+        TQString allowed_parts;
     };
 
 }  // namespace 

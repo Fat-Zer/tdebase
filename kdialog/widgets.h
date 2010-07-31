@@ -21,22 +21,22 @@
 #ifndef _WIDGETS_H_
 #define _WIDGETS_H_
 
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
 namespace Widgets
 {
-    bool inputBox(QWidget *parent, const QString& title, const QString& text, const QString& init, QString &result);
-    bool passwordBox(QWidget *parent, const QString& title, const QString& text, QCString &result);
-    int textBox(QWidget *parent, int width, int height, const QString& title, const QString& file);
-    int textInputBox(QWidget *parent, int width, int height, const QString& title, const QStringList& args, QCString &result);
-    bool listBox(QWidget *parent, const QString& title, const QString& text, const QStringList& args, const QString &defaultEntry, QString &result);
-    bool checkList(QWidget *parent, const QString& title, const QString& text, const QStringList& args, bool separateOutput, QStringList &result);
-    bool radioBox(QWidget *parent, const QString& title, const QString& text, const QStringList& args, QString &result);
-    bool comboBox(QWidget *parent, const QString& title, const QString& text, const QStringList& args, const QString& defaultEntry, QString &result);
-    bool progressBar(QWidget *parent, const QString& title, const QString& text, int totalSteps);
+    bool inputBox(TQWidget *parent, const TQString& title, const TQString& text, const TQString& init, TQString &result);
+    bool passwordBox(TQWidget *parent, const TQString& title, const TQString& text, TQCString &result);
+    int textBox(TQWidget *parent, int width, int height, const TQString& title, const TQString& file);
+    int textInputBox(TQWidget *parent, int width, int height, const TQString& title, const TQStringList& args, TQCString &result);
+    bool listBox(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, const TQString &defaultEntry, TQString &result);
+    bool checkList(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, bool separateOutput, TQStringList &result);
+    bool radioBox(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, TQString &result);
+    bool comboBox(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, const TQString& defaultEntry, TQString &result);
+    bool progressBar(TQWidget *parent, const TQString& title, const TQString& text, int totalSteps);
 
-    void handleXGeometry(QWidget * dlg);
+    void handleXGeometry(TQWidget * dlg);
 
 }
 

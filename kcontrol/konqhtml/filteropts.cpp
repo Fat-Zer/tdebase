@@ -23,23 +23,23 @@
 #include <kfiledialog.h>
 #include <dcopclient.h>
 
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qregexp.h>
+#include <tqlayout.h>
+#include <tqlistbox.h>
+#include <tqpushbutton.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
+#include <tqvbox.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqregexp.h>
 
 #include "filteropts.h"
 #include "filteropts.moc"
 
-KCMFilter::KCMFilter(KConfig *config, QString group,
-                     QWidget *parent, const char * )
+KCMFilter::KCMFilter(KConfig *config, TQString group,
+                     TQWidget *parent, const char * )
     : KCModule( parent, "kcmkonqhtml" ),
       mConfig( config ),
       mGroupname( group ),
@@ -47,53 +47,53 @@ KCMFilter::KCMFilter(KConfig *config, QString group,
 {
     setButtons(Default|Apply);
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *topLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
-    mEnableCheck = new QCheckBox(i18n("Enable filters"), this);
+    mEnableCheck = new TQCheckBox(i18n("Enable filters"), this);
     topLayout->addWidget( mEnableCheck );
 
-    mKillCheck = new QCheckBox(i18n("Hide filtered images"), this);
+    mKillCheck = new TQCheckBox(i18n("Hide filtered images"), this);
     topLayout->addWidget( mKillCheck );
 
-    QGroupBox *topBox = new QGroupBox( 1, Horizontal, i18n("URL Expressions to Filter"), this );
+    TQGroupBox *topBox = new TQGroupBox( 1, Horizontal, i18n("URL Expressions to Filter"), this );
     topLayout->addWidget( topBox );
 
-    mListBox = new QListBox( topBox );
-    mListBox->setSelectionMode(QListBox::Extended);
-    new QLabel( i18n("Expression (e.g. http://www.site.com/ad/*):"), topBox);
-    mString = new QLineEdit( topBox );
+    mListBox = new TQListBox( topBox );
+    mListBox->setSelectionMode(TQListBox::Extended);
+    new TQLabel( i18n("Expression (e.g. http://www.site.com/ad/*):"), topBox);
+    mString = new TQLineEdit( topBox );
 
-    QHBox *buttonBox = new QHBox( topBox );
+    TQHBox *buttonBox = new TQHBox( topBox );
     buttonBox->setSpacing( KDialog::spacingHint() );
 
-    mInsertButton = new QPushButton( i18n("Insert"), buttonBox );
-    connect( mInsertButton, SIGNAL( clicked() ), SLOT( insertFilter() ) );
-    mUpdateButton = new QPushButton( i18n("Update"), buttonBox );
-    connect( mUpdateButton, SIGNAL( clicked() ), SLOT( updateFilter() ) );
-    mRemoveButton = new QPushButton( i18n("Remove"), buttonBox );
-    connect( mRemoveButton, SIGNAL( clicked() ), SLOT( removeFilter() ) );
+    mInsertButton = new TQPushButton( i18n("Insert"), buttonBox );
+    connect( mInsertButton, TQT_SIGNAL( clicked() ), TQT_SLOT( insertFilter() ) );
+    mUpdateButton = new TQPushButton( i18n("Update"), buttonBox );
+    connect( mUpdateButton, TQT_SIGNAL( clicked() ), TQT_SLOT( updateFilter() ) );
+    mRemoveButton = new TQPushButton( i18n("Remove"), buttonBox );
+    connect( mRemoveButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removeFilter() ) );
 
-    mImportButton = new QPushButton(i18n("Import..."),buttonBox);
-    connect( mImportButton, SIGNAL( clicked() ), SLOT( importFilters() ) );
-    mExportButton = new QPushButton(i18n("Export..."),buttonBox);
-    connect( mExportButton, SIGNAL( clicked() ), SLOT( exportFilters() ) );
+    mImportButton = new TQPushButton(i18n("Import..."),buttonBox);
+    connect( mImportButton, TQT_SIGNAL( clicked() ), TQT_SLOT( importFilters() ) );
+    mExportButton = new TQPushButton(i18n("Export..."),buttonBox);
+    connect( mExportButton, TQT_SIGNAL( clicked() ), TQT_SLOT( exportFilters() ) );
 
-    connect( mEnableCheck, SIGNAL( clicked()), this, SLOT( slotEnableChecked()));
-    connect( mKillCheck, SIGNAL( clicked()), this, SLOT( slotKillChecked()));
-    connect( mListBox, SIGNAL( selectionChanged ()),this, SLOT( slotItemSelected()));
+    connect( mEnableCheck, TQT_SIGNAL( clicked()), this, TQT_SLOT( slotEnableChecked()));
+    connect( mKillCheck, TQT_SIGNAL( clicked()), this, TQT_SLOT( slotKillChecked()));
+    connect( mListBox, TQT_SIGNAL( selectionChanged ()),this, TQT_SLOT( slotItemSelected()));
 
 /*
  * Whats this items
  */
-    QWhatsThis::add( mEnableCheck, i18n("Enable or disable AdBlocK filters. When enabled a set of expressions "
+    TQWhatsThis::add( mEnableCheck, i18n("Enable or disable AdBlocK filters. When enabled a set of expressions "
                                         "to be blocked should be defined in the filter list for blocking to "
                                         "take effect."));
-    QWhatsThis::add( mKillCheck, i18n("When enabled blocked images will be removed from the page completely "
+    TQWhatsThis::add( mKillCheck, i18n("When enabled blocked images will be removed from the page completely "
                                       "otherwise a placeholder 'blocked' image will be used."));
-    QWhatsThis::add( mListBox, i18n("This is the list of URL filters that will be applied to all linked "
+    TQWhatsThis::add( mListBox, i18n("This is the list of URL filters that will be applied to all linked "
                                     "images and frames. The filters are processed in order so place "
                                     "more generic filters towards the top of the list."));
-    QWhatsThis::add( mString, i18n("Enter an expression to filter. Expressions can be defined as either "
+    TQWhatsThis::add( mString, i18n("Enter an expression to filter. Expressions can be defined as either "
                                    "a filename style wildcard e.g. http://www.site.com/ads* or as a full "
                                    "regular expression by surrounding the string with '/' e.g. "
                                    " //(ad|banner)\\./"));
@@ -154,15 +154,15 @@ void KCMFilter::updateButton()
 
 void KCMFilter::importFilters()
 {
-    QString inFile = KFileDialog::getOpenFileName();
+    TQString inFile = KFileDialog::getOpenFileName();
     if (inFile.length() > 0)
     {
-        QFile f(inFile);
+        TQFile f(inFile);
         if ( f.open( IO_ReadOnly ) )
         {
-            QTextStream ts( &f );
-            QStringList paths;
-            QString line;
+            TQTextStream ts( &f );
+            TQStringList paths;
+            TQString line;
             while (!ts.atEnd())
             {
                 line = ts.readLine();
@@ -175,14 +175,14 @@ void KCMFilter::importFilters()
                 {
                     if (line.length()>2 && line[0]=='/' && line[line.length()-1] == '/')
                     {
-                        QString inside = line.mid(1, line.length()-2);
-                        QRegExp rx(inside);
+                        TQString inside = line.mid(1, line.length()-2);
+                        TQRegExp rx(inside);
                         if (!rx.isValid())
                             continue;
                     }
                     else
                     {
-                        QRegExp rx(line);
+                        TQRegExp rx(line);
                         rx.setWildcard(true);
                         if (!rx.isValid())
                             continue;
@@ -202,14 +202,14 @@ void KCMFilter::importFilters()
 
 void KCMFilter::exportFilters()
 {
-  QString outFile = KFileDialog::getSaveFileName();
+  TQString outFile = KFileDialog::getSaveFileName();
   if (outFile.length() > 0)
   {
-    QFile f(outFile);
+    TQFile f(outFile);
     if ( f.open( IO_WriteOnly ) )
     {
-      QTextStream ts( &f );
-      ts.setEncoding( QTextStream::UnicodeUTF8 );
+      TQTextStream ts( &f );
+      ts.setEncoding( TQTextStream::UnicodeUTF8 );
       ts << "[AdBlock]" << endl;
 
       uint i;
@@ -237,13 +237,13 @@ void KCMFilter::save()
     uint i;
     for( i = 0; i < mListBox->count(); ++i )
     {
-        QString key = "Filter-" + QString::number(i);
+        TQString key = "Filter-" + TQString::number(i);
         mConfig->writeEntry(key, mListBox->text(i));
     }
     mConfig->writeEntry("Count",mListBox->count());
 
     mConfig->sync();
-    DCOPClient::mainClient()->send("konqueror*","KonquerorIface","reparseConfiguration()",QByteArray());
+    DCOPClient::mainClient()->send("konqueror*","KonquerorIface","reparseConfiguration()",TQByteArray());
 
 }
 void KCMFilter::load()
@@ -253,7 +253,7 @@ void KCMFilter::load()
 
 void KCMFilter::load( bool useDefaults )
 {
-    QStringList paths;
+    TQStringList paths;
 
 	 mConfig->setReadDefaults( useDefaults );
 
@@ -261,12 +261,12 @@ void KCMFilter::load( bool useDefaults )
     mEnableCheck->setChecked( mConfig->readBoolEntry("Enabled",false));
     mKillCheck->setChecked( mConfig->readBoolEntry("Shrink",false));
 
-    QMap<QString,QString> entryMap = mConfig->entryMap( mGroupname );
-    QMap<QString,QString>::ConstIterator it;
+    TQMap<TQString,TQString> entryMap = mConfig->entryMap( mGroupname );
+    TQMap<TQString,TQString>::ConstIterator it;
     int num = mConfig->readNumEntry("Count",0);
     for (int i=0; i<num; ++i)
     {
-        QString key = "Filter-" + QString::number(i);
+        TQString key = "Filter-" + TQString::number(i);
         it = entryMap.find(key);
         if (it != entryMap.end())
             paths.append(it.data());
@@ -319,7 +319,7 @@ void KCMFilter::updateFilter()
     updateButton();
 }
 
-QString KCMFilter::quickHelp() const
+TQString KCMFilter::quickHelp() const
 {
     return i18n("<h1>Konqueror AdBlocK</h1> Konqueror AdBlocK allows you to create a list of filters"
                 " that are checked against linked images and frames. URL's that match are either discarded or"

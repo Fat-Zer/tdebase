@@ -19,10 +19,10 @@
 
 #include <assert.h>
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 
@@ -40,16 +40,16 @@
 
 //-----------------------------------------------------------------------------
 
-KonqFontOptions::KonqFontOptions(KConfig *config, QString group, bool desktop, QWidget *parent, const char* /*name*/)
+KonqFontOptions::KonqFontOptions(KConfig *config, TQString group, bool desktop, TQWidget *parent, const char* /*name*/)
     : KCModule( parent, "kcmkonq" ), g_pConfig(config), groupname(group), m_bDesktop(desktop)
 {
-    QLabel *label;
-    QString wtstr;
+    TQLabel *label;
+    TQString wtstr;
     int row = 0;
 
     int LASTLINE = m_bDesktop ? 8 : 10; // this can be different :)
 #define LASTCOLUMN 2
-    QGridLayout *lay = new QGridLayout(this,LASTLINE+1,LASTCOLUMN+1, 0,
+    TQGridLayout *lay = new TQGridLayout(this,LASTLINE+1,LASTCOLUMN+1, 0,
         KDialog::spacingHint());
     lay->setRowStretch(LASTLINE,10);
     lay->setColStretch(LASTCOLUMN,10);
@@ -57,132 +57,132 @@ KonqFontOptions::KonqFontOptions(KConfig *config, QString group, bool desktop, Q
     row++;
 
     m_pStandard = new KFontCombo( this );
-    label = new QLabel( m_pStandard, i18n("&Standard font:"), this );
+    label = new TQLabel( m_pStandard, i18n("&Standard font:"), this );
     lay->addWidget(label,row,0);
     lay->addMultiCellWidget(m_pStandard,row,row,1,1);
 
     wtstr = i18n("This is the font used to display text in Konqueror windows.");
-    QWhatsThis::add( label, wtstr );
-    QWhatsThis::add( m_pStandard, wtstr );
+    TQWhatsThis::add( label, wtstr );
+    TQWhatsThis::add( m_pStandard, wtstr );
 
     row++;
-    connect( m_pStandard, SIGNAL( activated(const QString&) ),
-             SLOT( slotStandardFont(const QString&) ) );
-    connect( m_pStandard, SIGNAL( activated(const QString&) ),
-             SLOT(changed() ) );
-    connect( m_pStandard, SIGNAL( textChanged(const QString&) ),
-             SLOT( slotStandardFont(const QString&) ) );
-    connect( m_pStandard, SIGNAL( textChanged(const QString&) ),
-             SLOT(changed() ) );
+    connect( m_pStandard, TQT_SIGNAL( activated(const TQString&) ),
+             TQT_SLOT( slotStandardFont(const TQString&) ) );
+    connect( m_pStandard, TQT_SIGNAL( activated(const TQString&) ),
+             TQT_SLOT(changed() ) );
+    connect( m_pStandard, TQT_SIGNAL( textChanged(const TQString&) ),
+             TQT_SLOT( slotStandardFont(const TQString&) ) );
+    connect( m_pStandard, TQT_SIGNAL( textChanged(const TQString&) ),
+             TQT_SLOT(changed() ) );
 
-    m_pSize = new QSpinBox( 4,18,1,this );
-    label = new QLabel( m_pSize, i18n("Font si&ze:"), this );
+    m_pSize = new TQSpinBox( 4,18,1,this );
+    label = new TQLabel( m_pSize, i18n("Font si&ze:"), this );
     lay->addWidget(label,row,0);
     lay->addMultiCellWidget(m_pSize,row,row,1,1);
 
-    connect( m_pSize, SIGNAL( valueChanged(int) ),
-             this, SLOT( slotFontSize(int) ) );
+    connect( m_pSize, TQT_SIGNAL( valueChanged(int) ),
+             this, TQT_SLOT( slotFontSize(int) ) );
     row+=2;
 
     wtstr = i18n("This is the font size used to display text in Konqueror windows.");
-    QWhatsThis::add( label, wtstr );
-    QWhatsThis::add( m_pSize, wtstr );
-    int hAlign = QApplication::reverseLayout() ? AlignRight : AlignLeft;
+    TQWhatsThis::add( label, wtstr );
+    TQWhatsThis::add( m_pSize, wtstr );
+    int hAlign = TQApplication::reverseLayout() ? AlignRight : AlignLeft;
 
     //
 #define COLOR_BUTTON_COL 1
     m_pNormalText = new KColorButton( normalTextColor, this );
-    label = new QLabel( m_pNormalText, i18n("Normal te&xt color:"), this );
+    label = new TQLabel( m_pNormalText, i18n("Normal te&xt color:"), this );
     lay->addWidget(label,row,0);
     lay->addWidget(m_pNormalText,row,COLOR_BUTTON_COL,hAlign);
 
     wtstr = i18n("This is the color used to display text in Konqueror windows.");
-    QWhatsThis::add( label, wtstr );
-    QWhatsThis::add( m_pNormalText, wtstr );
+    TQWhatsThis::add( label, wtstr );
+    TQWhatsThis::add( m_pNormalText, wtstr );
 
-    connect( m_pNormalText, SIGNAL( changed( const QColor & ) ),
-             SLOT( slotNormalTextColorChanged( const QColor & ) ) );
+    connect( m_pNormalText, TQT_SIGNAL( changed( const TQColor & ) ),
+             TQT_SLOT( slotNormalTextColorChanged( const TQColor & ) ) );
 
     /*
     row++;
-    label = new QLabel( i18n("Highlighted text color:"), this );
+    label = new TQLabel( i18n("Highlighted text color:"), this );
     lay->addWidget(label,row,0);
 
     m_pHighlightedText = new KColorButton( highlightedTextColor, this );
     lay->addWidget(m_pHighlightedText,row,COLOR_BUTTON_COL,hAlign);
 
     wtstr = i18n("This is the color used to display selected text in Konqueror windows.");
-    QWhatsThis::add( label, wtstr );
-    QWhatsThis::add( m_pHighlightedText, wtstr );
+    TQWhatsThis::add( label, wtstr );
+    TQWhatsThis::add( m_pHighlightedText, wtstr );
 
-    connect( m_pHighlightedText, SIGNAL( changed( const QColor & ) ),
-             SLOT( slotHighlightedTextColorChanged( const QColor & ) ) );
+    connect( m_pHighlightedText, TQT_SIGNAL( changed( const TQColor & ) ),
+             TQT_SLOT( slotHighlightedTextColorChanged( const TQColor & ) ) );
     */
 
     row++;
 
     if ( m_bDesktop )
     {
-        m_cbTextBackground = new QCheckBox( i18n("&Text background color:"), this );
+        m_cbTextBackground = new TQCheckBox( i18n("&Text background color:"), this );
         lay->addWidget(m_cbTextBackground,row,0);
-        connect( m_cbTextBackground, SIGNAL( clicked() ),
-                 SLOT( slotTextBackgroundClicked() ) );
+        connect( m_cbTextBackground, TQT_SIGNAL( clicked() ),
+                 TQT_SLOT( slotTextBackgroundClicked() ) );
 
         m_pTextBackground = new KColorButton( textBackgroundColor, this );
         lay->addWidget(m_pTextBackground,row,COLOR_BUTTON_COL,hAlign);
 
         wtstr = i18n("This is the color used behind the text for the icons on the desktop.");
-        QWhatsThis::add( label, wtstr );
-        QWhatsThis::add( m_pTextBackground, wtstr );
+        TQWhatsThis::add( label, wtstr );
+        TQWhatsThis::add( m_pTextBackground, wtstr );
 
-        connect( m_pTextBackground, SIGNAL( changed( const QColor & ) ),
-                 SLOT( slotTextBackgroundColorChanged( const QColor & ) ) );
+        connect( m_pTextBackground, TQT_SIGNAL( changed( const TQColor & ) ),
+                 TQT_SLOT( slotTextBackgroundColorChanged( const TQColor & ) ) );
 
         row++;
     }
     else
     {
-        m_pNbLines = new QSpinBox( 1, 10, 1, this );
-        QLabel* label = new QLabel( m_pNbLines, i18n("H&eight for icon text:"), this );
+        m_pNbLines = new TQSpinBox( 1, 10, 1, this );
+        TQLabel* label = new TQLabel( m_pNbLines, i18n("H&eight for icon text:"), this );
         lay->addWidget( label, row, 0 );
         lay->addWidget( m_pNbLines, row, 1 );
-        connect( m_pNbLines, SIGNAL( valueChanged(int) ),
-                 this, SLOT( changed() ) );
-        connect( m_pNbLines, SIGNAL( valueChanged(int) ),
-                 SLOT( slotPNbLinesChanged(int)) );
+        connect( m_pNbLines, TQT_SIGNAL( valueChanged(int) ),
+                 this, TQT_SLOT( changed() ) );
+        connect( m_pNbLines, TQT_SIGNAL( valueChanged(int) ),
+                 TQT_SLOT( slotPNbLinesChanged(int)) );
 
-        QString thwt = i18n("This is the maximum number of lines that can be"
+        TQString thwt = i18n("This is the maximum number of lines that can be"
                             " used to draw icon text. Long file names are"
                             " truncated at the end of the last line.");
-        QWhatsThis::add( label, thwt );
-        QWhatsThis::add( m_pNbLines, thwt );
+        TQWhatsThis::add( label, thwt );
+        TQWhatsThis::add( m_pNbLines, thwt );
 
         row++;
 
         // width for the items in multicolumn icon view
-        m_pNbWidth = new QSpinBox( 1, 100000, 1, this );
+        m_pNbWidth = new TQSpinBox( 1, 100000, 1, this );
 
-        label = new QLabel( m_pNbWidth, i18n("&Width for icon text:"), this );
+        label = new TQLabel( m_pNbWidth, i18n("&Width for icon text:"), this );
         lay->addWidget( label, row, 0 );
         lay->addWidget( m_pNbWidth, row, 1 );
-        connect( m_pNbWidth, SIGNAL( valueChanged(int) ),
-                 this, SLOT( changed() ) );
-        connect( m_pNbWidth, SIGNAL( valueChanged(int) ),
-                 SLOT( slotPNbWidthChanged(int)) );
+        connect( m_pNbWidth, TQT_SIGNAL( valueChanged(int) ),
+                 this, TQT_SLOT( changed() ) );
+        connect( m_pNbWidth, TQT_SIGNAL( valueChanged(int) ),
+                 TQT_SLOT( slotPNbWidthChanged(int)) );
 
         thwt = i18n( "This is the maximum width for the icon text when konqueror "
                      "is used in multi column view mode." );
-        QWhatsThis::add( label, thwt );
-        QWhatsThis::add( m_pNbWidth, thwt );
+        TQWhatsThis::add( label, thwt );
+        TQWhatsThis::add( m_pNbWidth, thwt );
 
         row++;
     }
 
-    cbUnderline = new QCheckBox(i18n("&Underline filenames"), this);
+    cbUnderline = new TQCheckBox(i18n("&Underline filenames"), this);
     lay->addMultiCellWidget(cbUnderline,row,row,0,LASTCOLUMN,hAlign);
-    connect(cbUnderline, SIGNAL(clicked()), this, SLOT(changed()));
+    connect(cbUnderline, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    QWhatsThis::add( cbUnderline, i18n("Checking this option will result in filenames"
+    TQWhatsThis::add( cbUnderline, i18n("Checking this option will result in filenames"
                                        " being underlined, so that they look like links on a web page. Note:"
                                        " to complete the analogy, make sure that single click activation is"
                                        " enabled in the mouse control module.") );
@@ -191,11 +191,11 @@ KonqFontOptions::KonqFontOptions(KConfig *config, QString group, bool desktop, Q
     {
         row++;
 
-        m_pSizeInBytes = new QCheckBox(i18n("Display file sizes in b&ytes"), this);
+        m_pSizeInBytes = new TQCheckBox(i18n("Display file sizes in b&ytes"), this);
         lay->addMultiCellWidget( m_pSizeInBytes,row,row,0,LASTCOLUMN,hAlign );
-        connect( m_pSizeInBytes, SIGNAL(clicked()), this, SLOT(changed()) );
+        connect( m_pSizeInBytes, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()) );
 
-        QWhatsThis::add( m_pSizeInBytes, i18n("Checking this option will result in file sizes"
+        TQWhatsThis::add( m_pSizeInBytes, i18n("Checking this option will result in file sizes"
                                               " being displayed in bytes. Otherwise file sizes are"
                                               " being displayed in kilobytes or megabytes if appropriate.") );
     }
@@ -213,7 +213,7 @@ void KonqFontOptions::slotFontSize(int i)
     changed();
 }
 
-void KonqFontOptions::slotStandardFont(const QString& n )
+void KonqFontOptions::slotStandardFont(const TQString& n )
 {
     m_stdName = n;
 }
@@ -239,12 +239,12 @@ void KonqFontOptions::load( bool useDefaults )
 
 	 g_pConfig->setGroup(groupname);
 
-    QFont stdFont = g_pConfig->readFontEntry( "StandardFont" );
+    TQFont stdFont = g_pConfig->readFontEntry( "StandardFont" );
     m_stdName = stdFont.family();
     m_fSize = stdFont.pointSize();
-    // we have to use QFontInfo, in case the font was specified with a pixel size
+    // we have to use TQFontInfo, in case the font was specified with a pixel size
     if ( m_fSize == -1 )
-        m_fSize = QFontInfo(stdFont).pointSize();
+        m_fSize = TQFontInfo(stdFont).pointSize();
 
     normalTextColor = KGlobalSettings::textColor();
     normalTextColor = g_pConfig->readColorEntry( "NormalTextColor", &normalTextColor );
@@ -308,13 +308,13 @@ void KonqFontOptions::save()
 {
     g_pConfig->setGroup(groupname);
 
-    QFont stdFont( m_stdName, m_fSize );
+    TQFont stdFont( m_stdName, m_fSize );
     g_pConfig->writeEntry( "StandardFont", stdFont );
 
     g_pConfig->writeEntry( "NormalTextColor", normalTextColor );
     //g_pConfig->writeEntry( "HighlightedTextColor", highlightedTextColor );
     if ( m_bDesktop )
-        g_pConfig->writeEntry( "ItemTextBackground", m_cbTextBackground->isChecked() ? textBackgroundColor : QColor());
+        g_pConfig->writeEntry( "ItemTextBackground", m_cbTextBackground->isChecked() ? textBackgroundColor : TQColor());
     else
     {
         g_pConfig->writeEntry( "TextHeight", m_pNbLines->value() );
@@ -329,14 +329,14 @@ void KonqFontOptions::save()
 
     // Send signal to konqueror
     // Warning. In case something is added/changed here, keep kfmclient in sync
-    QByteArray data;
+    TQByteArray data;
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
     kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
 
     // Tell kdesktop about the new config file
     int konq_screen_number = KApplication::desktop()->primaryScreen();
-    QCString appname;
+    TQCString appname;
     if (konq_screen_number == 0)
         appname = "kdesktop";
     else
@@ -350,7 +350,7 @@ void KonqFontOptions::slotTextBackgroundClicked()
     changed();
 }
 
-void KonqFontOptions::slotNormalTextColorChanged( const QColor &col )
+void KonqFontOptions::slotNormalTextColorChanged( const TQColor &col )
 {
     if ( normalTextColor != col )
     {
@@ -360,7 +360,7 @@ void KonqFontOptions::slotNormalTextColorChanged( const QColor &col )
 }
 
 /*
-void KonqFontOptions::slotHighlightedTextColorChanged( const QColor &col )
+void KonqFontOptions::slotHighlightedTextColorChanged( const TQColor &col )
 {
     if ( highlightedTextColor != col )
     {
@@ -370,7 +370,7 @@ void KonqFontOptions::slotHighlightedTextColorChanged( const QColor &col )
 }
 */
 
-void KonqFontOptions::slotTextBackgroundColorChanged( const QColor &col )
+void KonqFontOptions::slotTextBackgroundColorChanged( const TQColor &col )
 {
     if ( textBackgroundColor != col )
     {
@@ -379,7 +379,7 @@ void KonqFontOptions::slotTextBackgroundColorChanged( const QColor &col )
     }
 }
 
-QString KonqFontOptions::quickHelp() const
+TQString KonqFontOptions::quickHelp() const
 {
     return i18n("<h1>Appearance</h1> You can configure how Konqueror looks as a file manager here.");
 }

@@ -18,7 +18,7 @@
 #ifndef __WNDSTATUS_H__
 #define __WNDSTATUS_H__
 
-#include <qhbox.h>
+#include <tqhbox.h>
 
 class QLabel;
 class KProgress;
@@ -29,22 +29,22 @@ class WndStatus:
 {
   Q_OBJECT
 public:
-  WndStatus( QPalette,
+  WndStatus( TQPalette,
              int, // Xinerama screen
              bool, // At top?
              bool, // Progress indicator visible?
-             const QFont&, // Status bar font
-             const QColor&, const QColor &, // Foreground/Background color
-             const QString& // Icon
+             const TQFont&, // Status bar font
+             const TQColor&, const TQColor &, // Foreground/Background color
+             const TQString& // Icon
            );
 
 public slots:
-  void slotSetMessage( const QString& );
+  void slotSetMessage( const TQString& );
   void slotUpdateProgress( int );
   void slotUpdateSteps( int );
 
 protected:
-  QLabel *m_label;
+  TQLabel *m_label;
   KProgress *m_progress;
 };
 #endif

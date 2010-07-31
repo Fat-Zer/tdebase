@@ -19,11 +19,11 @@
 
 */
 
-#include <qbuttongroup.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -33,13 +33,13 @@
 
 // == class JSPolicies ==
 
-JSPolicies::JSPolicies(KConfig* config,const QString &group,
-		bool global,const QString &domain) :
+JSPolicies::JSPolicies(KConfig* config,const TQString &group,
+		bool global,const TQString &domain) :
 	Policies(config,group,global,domain,"javascript.","EnableJavaScript") {
 }
 
-JSPolicies::JSPolicies() : Policies(0,QString::null,false,
-	QString::null,QString::null,QString::null) {
+JSPolicies::JSPolicies() : Policies(0,TQString::null,false,
+	TQString::null,TQString::null,TQString::null) {
 }
 
 JSPolicies::~JSPolicies() {
@@ -48,7 +48,7 @@ JSPolicies::~JSPolicies() {
 void JSPolicies::load() {
   Policies::load();
 
-  QString key;
+  TQString key;
 
 //  enableJavaScriptDebugCB->setChecked( m_pConfig->readBoolEntry("EnableJavaScriptDebug",false));
 //  enableDebugOutputCB->setChecked( m_pConfig->readBoolEntry("EnableJSDebugOutput") );
@@ -89,7 +89,7 @@ void JSPolicies::defaults() {
 void JSPolicies::save() {
   Policies::save();
 
-  QString key;
+  TQString key;
   key = prefix + "WindowOpenPolicy";
   if (window_open != INHERIT_POLICY)
     config->writeEntry(key, window_open);
@@ -125,9 +125,9 @@ void JSPolicies::save() {
 
 // == class JSPoliciesFrame ==
 
-JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const QString &title,
-		QWidget* parent) :
-	QGroupBox(title, parent, "jspoliciesframe"),
+JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
+		TQWidget* parent) :
+	TQGroupBox(title, parent, "jspoliciesframe"),
 	policies(policies) {
 
   bool is_per_domain = !policies->isGlobal();
@@ -135,57 +135,57 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const QString &title,
   setColumnLayout(0, Qt::Vertical);
   layout()->setSpacing(0);
   layout()->setMargin(0);
-  QGridLayout *this_layout = new QGridLayout(layout(),5,10+is_per_domain*2);
+  TQGridLayout *this_layout = new TQGridLayout(layout(),5,10+is_per_domain*2);
   this_layout->setAlignment(Qt::AlignTop);
   this_layout->setSpacing(3);
   this_layout->setMargin(11);
 
-  QString wtstr;	// what's this description
+  TQString wtstr;	// what's this description
   int colIdx;		// column index
 
   // === window.open ================================
   colIdx = 0;
-  QLabel *label = new QLabel(i18n("Open new windows:"),this);
+  TQLabel *label = new TQLabel(i18n("Open new windows:"),this);
   this_layout->addWidget(label,0,colIdx++);
 
-  js_popup = new QButtonGroup(this);
+  js_popup = new TQButtonGroup(this);
   js_popup->setExclusive(true);
   js_popup->setHidden(true);
 
-  QRadioButton* policy_btn;
+  TQRadioButton* policy_btn;
   if (is_per_domain) {
-    policy_btn = new QRadioButton(i18n("Use global"), this);
-    QWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
+    policy_btn = new TQRadioButton(i18n("Use global"), this);
+    TQWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
     js_popup->insert(policy_btn,INHERIT_POLICY);
     this_layout->addWidget(policy_btn,0,colIdx++);
-    this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+    this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
   }/*end if*/
 
-  policy_btn = new QRadioButton(i18n("Allow"), this);
-  QWhatsThis::add(policy_btn,i18n("Accept all popup window requests."));
+  policy_btn = new TQRadioButton(i18n("Allow"), this);
+  TQWhatsThis::add(policy_btn,i18n("Accept all popup window requests."));
   js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenAllow);
   this_layout->addWidget(policy_btn,0,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
-  policy_btn = new QRadioButton(i18n("Ask"), this);
-  QWhatsThis::add(policy_btn,i18n("Prompt every time a popup window is requested."));
+  policy_btn = new TQRadioButton(i18n("Ask"), this);
+  TQWhatsThis::add(policy_btn,i18n("Prompt every time a popup window is requested."));
   js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenAsk);
   this_layout->addWidget(policy_btn,0,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
-  policy_btn = new QRadioButton(i18n("Deny"), this);
-  QWhatsThis::add(policy_btn,i18n("Reject all popup window requests."));
+  policy_btn = new TQRadioButton(i18n("Deny"), this);
+  TQWhatsThis::add(policy_btn,i18n("Reject all popup window requests."));
   js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenDeny);
   this_layout->addWidget(policy_btn,0,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
-  policy_btn = new QRadioButton(i18n("Smart"), this);
-  QWhatsThis::add(policy_btn, i18n("Accept popup window requests only when "
+  policy_btn = new TQRadioButton(i18n("Smart"), this);
+  TQWhatsThis::add(policy_btn, i18n("Accept popup window requests only when "
                                    "links are activated through an explicit "
                                    "mouse click or keyboard operation."));
   js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenSmart);
   this_layout->addWidget(policy_btn,0,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
   wtstr = i18n("If you disable this, Konqueror will stop "
                "interpreting the <i>window.open()</i> "
@@ -196,116 +196,116 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const QString &title,
                "also break certain sites that require <i>"
                "window.open()</i> for proper operation. Use "
                "this feature carefully.");
-  QWhatsThis::add(label, wtstr);
-  connect(js_popup, SIGNAL(clicked(int)), SLOT(setWindowOpenPolicy(int)));
+  TQWhatsThis::add(label, wtstr);
+  connect(js_popup, TQT_SIGNAL(clicked(int)), TQT_SLOT(setWindowOpenPolicy(int)));
 
   // === window.resizeBy/resizeTo ================================
   colIdx = 0;
-  label = new QLabel(i18n("Resize window:"),this);
+  label = new TQLabel(i18n("Resize window:"),this);
   this_layout->addWidget(label,1,colIdx++);
 
-  js_resize = new QButtonGroup(this);
+  js_resize = new TQButtonGroup(this);
   js_resize->setExclusive(true);
   js_resize->setHidden(true);
 
   if (is_per_domain) {
-    policy_btn = new QRadioButton(i18n("Use global"), this);
-    QWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
+    policy_btn = new TQRadioButton(i18n("Use global"), this);
+    TQWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
     js_resize->insert(policy_btn,INHERIT_POLICY);
     this_layout->addWidget(policy_btn,1,colIdx++);
-    this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+    this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
   }/*end if*/
 
-  policy_btn = new QRadioButton(i18n("Allow"), this);
-  QWhatsThis::add(policy_btn,i18n("Allow scripts to change the window size."));
+  policy_btn = new TQRadioButton(i18n("Allow"), this);
+  TQWhatsThis::add(policy_btn,i18n("Allow scripts to change the window size."));
   js_resize->insert(policy_btn,KHTMLSettings::KJSWindowResizeAllow);
   this_layout->addWidget(policy_btn,1,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
-  policy_btn = new QRadioButton(i18n("Ignore"), this);
-  QWhatsThis::add( policy_btn,i18n("Ignore attempts of scripts to change the window size. "
+  policy_btn = new TQRadioButton(i18n("Ignore"), this);
+  TQWhatsThis::add( policy_btn,i18n("Ignore attempts of scripts to change the window size. "
   				"The web page will <i>think</i> it changed the "
 				"size but the actual window is not affected."));
   js_resize->insert(policy_btn,KHTMLSettings::KJSWindowResizeIgnore);
   this_layout->addWidget(policy_btn,1,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
   wtstr = i18n("Some websites change the window size on their own by using "
   		"<i>window.resizeBy()</i> or <i>window.resizeTo()</i>. "
 		"This option specifies the treatment of such "
 		"attempts.");
-  QWhatsThis::add(label, wtstr);
-  connect(js_resize, SIGNAL(clicked(int)), SLOT(setWindowResizePolicy(int)));
+  TQWhatsThis::add(label, wtstr);
+  connect(js_resize, TQT_SIGNAL(clicked(int)), TQT_SLOT(setWindowResizePolicy(int)));
 
   // === window.moveBy/moveTo ================================
   colIdx = 0;
-  label = new QLabel(i18n("Move window:"),this);
+  label = new TQLabel(i18n("Move window:"),this);
   this_layout->addWidget(label,2,colIdx++);
 
-  js_move = new QButtonGroup(this);
+  js_move = new TQButtonGroup(this);
   js_move->setExclusive(true);
   js_move->setHidden(true);
 
   if (is_per_domain) {
-    policy_btn = new QRadioButton(i18n("Use global"), this);
-    QWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
+    policy_btn = new TQRadioButton(i18n("Use global"), this);
+    TQWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
     js_move->insert(policy_btn,INHERIT_POLICY);
     this_layout->addWidget(policy_btn,2,colIdx++);
-    this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+    this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
   }/*end if*/
 
-  policy_btn = new QRadioButton(i18n("Allow"), this);
-  QWhatsThis::add(policy_btn,i18n("Allow scripts to change the window position."));
+  policy_btn = new TQRadioButton(i18n("Allow"), this);
+  TQWhatsThis::add(policy_btn,i18n("Allow scripts to change the window position."));
   js_move->insert(policy_btn,KHTMLSettings::KJSWindowMoveAllow);
   this_layout->addWidget(policy_btn,2,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
-  policy_btn = new QRadioButton(i18n("Ignore"), this);
-  QWhatsThis::add(policy_btn,i18n("Ignore attempts of scripts to change the window position. "
+  policy_btn = new TQRadioButton(i18n("Ignore"), this);
+  TQWhatsThis::add(policy_btn,i18n("Ignore attempts of scripts to change the window position. "
   				"The web page will <i>think</i> it moved the "
 				"window but the actual position is not affected."));
   js_move->insert(policy_btn,KHTMLSettings::KJSWindowMoveIgnore);
   this_layout->addWidget(policy_btn,2,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
   wtstr = i18n("Some websites change the window position on their own by using "
   		"<i>window.moveBy()</i> or <i>window.moveTo()</i>. "
 		"This option specifies the treatment of such "
 		"attempts.");
-  QWhatsThis::add(label, wtstr);
-  connect(js_move, SIGNAL(clicked(int)), SLOT(setWindowMovePolicy(int)));
+  TQWhatsThis::add(label, wtstr);
+  connect(js_move, TQT_SIGNAL(clicked(int)), TQT_SLOT(setWindowMovePolicy(int)));
 
   // === window.focus ================================
   colIdx = 0;
-  label = new QLabel(i18n("Focus window:"),this);
+  label = new TQLabel(i18n("Focus window:"),this);
   this_layout->addWidget(label,3,colIdx++);
 
-  js_focus = new QButtonGroup(this);
+  js_focus = new TQButtonGroup(this);
   js_focus->setExclusive(true);
   js_focus->setHidden(true);
 
   if (is_per_domain) {
-    policy_btn = new QRadioButton(i18n("Use global"), this);
-    QWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
+    policy_btn = new TQRadioButton(i18n("Use global"), this);
+    TQWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
     js_focus->insert(policy_btn,INHERIT_POLICY);
     this_layout->addWidget(policy_btn,3,colIdx++);
-    this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+    this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
   }/*end if*/
 
-  policy_btn = new QRadioButton(i18n("Allow"), this);
-  QWhatsThis::add( policy_btn,i18n("Allow scripts to focus the window.") );
+  policy_btn = new TQRadioButton(i18n("Allow"), this);
+  TQWhatsThis::add( policy_btn,i18n("Allow scripts to focus the window.") );
   js_focus->insert(policy_btn,KHTMLSettings::KJSWindowFocusAllow);
   this_layout->addWidget(policy_btn,3,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
-  policy_btn = new QRadioButton(i18n("Ignore"), this);
-  QWhatsThis::add( policy_btn,i18n("Ignore attempts of scripts to focus the window. "
+  policy_btn = new TQRadioButton(i18n("Ignore"), this);
+  TQWhatsThis::add( policy_btn,i18n("Ignore attempts of scripts to focus the window. "
   				"The web page will <i>think</i> it brought "
 				"the focus to the window but the actual "
 				"focus will remain unchanged.") );
   js_focus->insert(policy_btn,KHTMLSettings::KJSWindowFocusIgnore);
   this_layout->addWidget(policy_btn,3,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
   wtstr = i18n("Some websites set the focus to their browser window on their "
   		"own by using <i>window.focus()</i>. This usually leads to "
@@ -313,68 +313,68 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const QString &title,
 		"action the user was dedicated to at that time. "
 		"This option specifies the treatment of such "
 		"attempts.");
-  QWhatsThis::add(label, wtstr);
-  connect(js_focus, SIGNAL(clicked(int)), SLOT(setWindowFocusPolicy(int)));
+  TQWhatsThis::add(label, wtstr);
+  connect(js_focus, TQT_SIGNAL(clicked(int)), TQT_SLOT(setWindowFocusPolicy(int)));
 
   // === window.status ================================
   colIdx = 0;
-  label = new QLabel(i18n("Modify status bar text:"),this);
+  label = new TQLabel(i18n("Modify status bar text:"),this);
   this_layout->addWidget(label,4,colIdx++);
 
-  js_statusbar = new QButtonGroup(this);
+  js_statusbar = new TQButtonGroup(this);
   js_statusbar->setExclusive(true);
   js_statusbar->setHidden(true);
 
   if (is_per_domain) {
-    policy_btn = new QRadioButton(i18n("Use global"), this);
-    QWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
+    policy_btn = new TQRadioButton(i18n("Use global"), this);
+    TQWhatsThis::add(policy_btn,i18n("Use setting from global policy."));
     js_statusbar->insert(policy_btn,INHERIT_POLICY);
     this_layout->addWidget(policy_btn,4,colIdx++);
-    this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+    this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
   }/*end if*/
 
-  policy_btn = new QRadioButton(i18n("Allow"), this);
-  QWhatsThis::add(policy_btn,i18n("Allow scripts to change the text of the status bar."));
+  policy_btn = new TQRadioButton(i18n("Allow"), this);
+  TQWhatsThis::add(policy_btn,i18n("Allow scripts to change the text of the status bar."));
   js_statusbar->insert(policy_btn,KHTMLSettings::KJSWindowStatusAllow);
   this_layout->addWidget(policy_btn,4,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
-  policy_btn = new QRadioButton(i18n("Ignore"), this);
-  QWhatsThis::add( policy_btn,i18n("Ignore attempts of scripts to change the status bar text. "
+  policy_btn = new TQRadioButton(i18n("Ignore"), this);
+  TQWhatsThis::add( policy_btn,i18n("Ignore attempts of scripts to change the status bar text. "
   				"The web page will <i>think</i> it changed "
 				"the text but the actual text will remain "
 				"unchanged.") );
   js_statusbar->insert(policy_btn,KHTMLSettings::KJSWindowStatusIgnore);
   this_layout->addWidget(policy_btn,4,colIdx++);
-  this_layout->addItem(new QSpacerItem(10,0),0,colIdx++);
+  this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
   wtstr = i18n("Some websites change the status bar text by setting "
   		"<i>window.status</i> or <i>window.defaultStatus</i>, "
 		"thus sometimes preventing displaying the real URLs of hyperlinks. "
 		"This option specifies the treatment of such "
 		"attempts.");
-  QWhatsThis::add(label, wtstr);
-  connect(js_statusbar, SIGNAL(clicked(int)), SLOT(setWindowStatusPolicy(int)));
+  TQWhatsThis::add(label, wtstr);
+  connect(js_statusbar, TQT_SIGNAL(clicked(int)), TQT_SLOT(setWindowStatusPolicy(int)));
 }
 
 JSPoliciesFrame::~JSPoliciesFrame() {
 }
 
 void JSPoliciesFrame::refresh() {
-  QRadioButton *button;
-  button = static_cast<QRadioButton *>(js_popup->find(
+  TQRadioButton *button;
+  button = static_cast<TQRadioButton *>(js_popup->find(
   		policies->window_open));
   if (button != 0) button->setChecked(true);
-  button = static_cast<QRadioButton *>(js_resize->find(
+  button = static_cast<TQRadioButton *>(js_resize->find(
   		policies->window_resize));
   if (button != 0) button->setChecked(true);
-  button = static_cast<QRadioButton *>(js_move->find(
+  button = static_cast<TQRadioButton *>(js_move->find(
   		policies->window_move));
   if (button != 0) button->setChecked(true);
-  button = static_cast<QRadioButton *>(js_focus->find(
+  button = static_cast<TQRadioButton *>(js_focus->find(
   		policies->window_focus));
   if (button != 0) button->setChecked(true);
-  button = static_cast<QRadioButton *>(js_statusbar->find(
+  button = static_cast<TQRadioButton *>(js_statusbar->find(
   		policies->window_status));
   if (button != 0) button->setChecked(true);
 }

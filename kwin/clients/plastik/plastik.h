@@ -23,7 +23,7 @@
 #ifndef PLASTIK_H
 #define PLASTIK_H
 
-#include <qfont.h>
+#include <tqfont.h>
 
 #include <kdecoration.h>
 #include <kdecorationfactory.h>
@@ -71,7 +71,7 @@ enum ButtonIcon {
     NumButtonIcons
 };
 
-class PlastikHandler: public QObject, public KDecorationFactory
+class PlastikHandler: public TQObject, public KDecorationFactory
 {
     Q_OBJECT
 public:
@@ -82,26 +82,26 @@ public:
     virtual KDecoration* createDecoration( KDecorationBridge* );
     virtual bool supports( Ability ability );
 
-    const QPixmap &pixmap(Pixmaps type, bool active, bool toolWindow);
-    const QBitmap &buttonBitmap(ButtonIcon type, const QSize &size, bool toolWindow);
+    const TQPixmap &pixmap(Pixmaps type, bool active, bool toolWindow);
+    const TQBitmap &buttonBitmap(ButtonIcon type, const TQSize &size, bool toolWindow);
 
     int  titleHeight() { return m_titleHeight; }
     int  titleHeightTool() { return m_titleHeightTool; }
-    const QFont &titleFont() { return m_titleFont; }
-    const QFont &titleFontTool() { return m_titleFontTool; }
+    const TQFont &titleFont() { return m_titleFont; }
+    const TQFont &titleFontTool() { return m_titleFontTool; }
     bool titleShadow() { return m_titleShadow; }
     int  borderSize() { return m_borderSize; }
     bool animateButtons() { return m_animateButtons; }
     bool menuClose() { return m_menuClose; }
     Qt::AlignmentFlags titleAlign() { return m_titleAlign; }
     bool reverseLayout() { return m_reverse; }
-    QColor getColor(KWinPlastik::ColorType type, const bool active = true);
+    TQColor getColor(KWinPlastik::ColorType type, const bool active = true);
 
-    QValueList< PlastikHandler::BorderSize >  borderSizes() const;
+    TQValueList< PlastikHandler::BorderSize >  borderSizes() const;
 private:
     void readConfig();
 
-    void pretile(QPixmap *&pix, int size, Qt::Orientation dir) const;
+    void pretile(TQPixmap *&pix, int size, Qt::Orientation dir) const;
 
     bool m_coloredBorder;
     bool m_titleShadow;
@@ -111,13 +111,13 @@ private:
     int  m_borderSize;
     int  m_titleHeight;
     int  m_titleHeightTool;
-    QFont m_titleFont;
-    QFont m_titleFontTool;
+    TQFont m_titleFont;
+    TQFont m_titleFontTool;
     Qt::AlignmentFlags m_titleAlign;
 
     // pixmap cache
-    QPixmap *m_pixmaps[2][2][NumPixmaps]; // button pixmaps have normal+pressed state...
-    QBitmap *m_bitmaps[2][NumButtonIcons];
+    TQPixmap *m_pixmaps[2][2][NumPixmaps]; // button pixmaps have normal+pressed state...
+    TQBitmap *m_bitmaps[2][NumButtonIcons];
 };
 
 PlastikHandler* Handler();

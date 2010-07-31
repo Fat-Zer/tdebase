@@ -33,18 +33,18 @@
 #include <ktempfile.h>
 #include <kpushbutton.h>
 
-#include <qlabel.h>
-#include <qlistview.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
-#include <qvbox.h>
+#include <tqlabel.h>
+#include <tqlistview.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
+#include <tqvbox.h>
 
 class KateDocItem : public QCheckListItem
 {
   public:
-    KateDocItem( Kate::Document *doc, const QString &status, KListView *lv )
-  : QCheckListItem( lv, doc->url().prettyURL(), CheckBox ),
+    KateDocItem( Kate::Document *doc, const TQString &status, KListView *lv )
+  : TQCheckListItem( lv, doc->url().prettyURL(), CheckBox ),
         document( doc )
     {
       setText( 1, status );
@@ -57,7 +57,7 @@ class KateDocItem : public QCheckListItem
 };
 
 
-KateMwModOnHdDialog::KateMwModOnHdDialog( DocVector docs, QWidget *parent, const char *name )
+KateMwModOnHdDialog::KateMwModOnHdDialog( DocVector docs, TQWidget *parent, const char *name )
   : KDialogBase( parent, name, true, i18n("Documents Modified on Disk"),
                  User1|User2|User3, User3, false,
                  KGuiItem (i18n("&Ignore"), "fileclose"),
@@ -74,16 +74,16 @@ KateMwModOnHdDialog::KateMwModOnHdDialog( DocVector docs, QWidget *parent, const
       "Reloads the selected documents from disk and closes the dialog if there "
       "are no more unhandled documents.") );
 
-  QVBox *w = makeVBoxMainWidget();
+  TQVBox *w = makeVBoxMainWidget();
   w->setSpacing( KDialog::spacingHint() );
 
-  QHBox *lo1 = new QHBox( w );
+  TQHBox *lo1 = new TQHBox( w );
 
   // dialog text
-  QLabel *icon = new QLabel( lo1 );
+  TQLabel *icon = new TQLabel( lo1 );
   icon->setPixmap( DesktopIcon("messagebox_warning") );
 
-  QLabel *t = new QLabel( i18n(
+  TQLabel *t = new TQLabel( i18n(
       "<qt>The documents listed below has changed on disk.<p>Select one "
       "or more at the time and press an action button until the list is empty.</qt>"), lo1 );
   lo1->setStretchFactor( t, 1000 );
@@ -92,26 +92,26 @@ KateMwModOnHdDialog::KateMwModOnHdDialog( DocVector docs, QWidget *parent, const
   lvDocuments = new KListView( w );
   lvDocuments->addColumn( i18n("Filename") );
   lvDocuments->addColumn( i18n("Status on Disk") );
-  lvDocuments->setSelectionMode( QListView::Single );
+  lvDocuments->setSelectionMode( TQListView::Single );
 
-  QStringList l;
+  TQStringList l;
   l << "" << i18n("Modified") << i18n("Created") << i18n("Deleted");
   for ( uint i=0; i < docs.size(); i++ )
     new KateDocItem( docs[i], l[ (uint)KateDocManager::self()->documentInfo( docs[i] )->modifiedOnDiscReason ], lvDocuments );
 
-  connect( lvDocuments, SIGNAL(selectionChanged()), this, SLOT(slotSelectionChanged()) );
+  connect( lvDocuments, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotSelectionChanged()) );
 
   // diff button
-  QHBox *lo2 = new QHBox ( w );
-  QWidget *d = new QWidget (lo2);
+  TQHBox *lo2 = new TQHBox ( w );
+  TQWidget *d = new TQWidget (lo2);
   lo2->setStretchFactor (d, 2);
   btnDiff = new KPushButton( KGuiItem (i18n("&View Difference"), "edit"), lo2 );
 
-  QWhatsThis::add( btnDiff, i18n(
+  TQWhatsThis::add( btnDiff, i18n(
       "Calculates the difference between the the editor contents and the disk "
       "file for the selected document, and shows the difference with the "
       "default application. Requires diff(1).") );
-  connect( btnDiff, SIGNAL(clicked()), this, SLOT(slotDiff()) );
+  connect( btnDiff, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotDiff()) );
 
   slotSelectionChanged();
   m_tmpfile = 0;
@@ -139,8 +139,8 @@ void KateMwModOnHdDialog::slotUser3()
 void KateMwModOnHdDialog::handleSelected( int action )
 {
   // collect all items we can remove
-  QValueList<QListViewItem *> itemsToDelete;
-  for ( QListViewItemIterator it ( lvDocuments );  it.current(); ++it )
+  TQValueList<TQListViewItem *> itemsToDelete;
+  for ( TQListViewItemIterator it ( lvDocuments );  it.current(); ++it )
   {
     KateDocItem *item = static_cast<KateDocItem *>(it.current());
     
@@ -216,8 +216,8 @@ void KateMwModOnHdDialog::slotDiff()
   KProcIO *p = new KProcIO();
   p->setComm( KProcess::All );
   *p << "diff" << "-u" << "-" <<  doc->url().path();
-  connect( p, SIGNAL(processExited(KProcess*)), this, SLOT(slotPDone(KProcess*)) );
-  connect( p, SIGNAL(readReady(KProcIO*)), this, SLOT(slotPRead(KProcIO*)) );
+  connect( p, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotPDone(KProcess*)) );
+  connect( p, TQT_SIGNAL(readReady(KProcIO*)), this, TQT_SLOT(slotPRead(KProcIO*)) );
 
   setCursor( WaitCursor );
 
@@ -236,7 +236,7 @@ void KateMwModOnHdDialog::slotPRead( KProcIO *p)
   if ( ! m_tmpfile )
     m_tmpfile = new KTempFile();
   // put all the data we have in it
-  QString stmp;
+  TQString stmp;
   bool dataRead = false;
   while ( p->readln( stmp, false ) > -1 ) {
     *m_tmpfile->textStream() << stmp << endl;

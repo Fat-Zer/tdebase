@@ -32,8 +32,8 @@
 
 #include <dcopobject.h>
 
-#include <qstring.h>
-#include <qcstring.h>
+#include <tqstring.h>
+#include <tqcstring.h>
 #include <kaboutdata.h>
 
 /**
@@ -47,18 +47,18 @@ class KrashDCOPInterface : virtual public DCOPObject
 public:
 
 k_dcop:
-  virtual QString programName() const = 0;
-  virtual QCString appName() const = 0;
+  virtual TQString programName() const = 0;
+  virtual TQCString appName() const = 0;
   virtual int signalNumber() const = 0;
   virtual int pid() const = 0;
   virtual bool startedByKdeinit() const = 0;
   virtual bool safeMode() const = 0;
-  virtual QString signalName() const = 0;
-  virtual QString signalText() const = 0;
-  virtual QString whatToDoText() const = 0;
-  virtual QString errorDescriptionText() const = 0;
+  virtual TQString signalName() const = 0;
+  virtual TQString signalText() const = 0;
+  virtual TQString whatToDoText() const = 0;
+  virtual TQString errorDescriptionText() const = 0;
 
-  virtual ASYNC registerDebuggingApplication(const QString& launchName) = 0;
+  virtual ASYNC registerDebuggingApplication(const TQString& launchName) = 0;
 
 k_dcop_signals:
   void acceptDebuggingApplication();

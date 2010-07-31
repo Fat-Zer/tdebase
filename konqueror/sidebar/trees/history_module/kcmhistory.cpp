@@ -20,11 +20,11 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
 
 #include <dcopclient.h>
 #include <dcopref.h>
@@ -45,10 +45,10 @@
 #include "kcmhistory.h"
 #include "history_settings.h"
 
-typedef KGenericFactory<HistorySidebarConfig, QWidget > KCMHistoryFactory;
+typedef KGenericFactory<HistorySidebarConfig, TQWidget > KCMHistoryFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_history, KCMHistoryFactory("kcmhistory") )
 
-HistorySidebarConfig::HistorySidebarConfig( QWidget *parent, const char* name, const QStringList & )
+HistorySidebarConfig::HistorySidebarConfig( TQWidget *parent, const char* name, const TQStringList & )
     : KCModule (KCMHistoryFactory::instance(), parent, name)
 {
     KGlobal::locale()->insertCatalogue("konqueror");
@@ -56,7 +56,7 @@ HistorySidebarConfig::HistorySidebarConfig( QWidget *parent, const char* name, c
     m_settings = new KonqSidebarHistorySettings( 0, "history settings" );
     m_settings->readSettings( false );
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *topLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
     dialog = new KonqSidebarHistoryDlg(this);
 
     dialog->spinEntries->setRange( 0, INT_MAX, 1, false );
@@ -75,33 +75,33 @@ HistorySidebarConfig::HistorySidebarConfig( QWidget *parent, const char* name, c
     dialog->comboOlder->insertItem( i18n("Days"),
                                     KonqSidebarHistorySettings::DAYS );
 
-    connect( dialog->cbExpire, SIGNAL( toggled( bool )),
-	     dialog->spinExpire, SLOT( setEnabled( bool )));
-    connect( dialog->spinExpire, SIGNAL( valueChanged( int )),
-	     this, SLOT( slotExpireChanged( int )));
+    connect( dialog->cbExpire, TQT_SIGNAL( toggled( bool )),
+	     dialog->spinExpire, TQT_SLOT( setEnabled( bool )));
+    connect( dialog->spinExpire, TQT_SIGNAL( valueChanged( int )),
+	     this, TQT_SLOT( slotExpireChanged( int )));
 
-    connect( dialog->spinNewer, SIGNAL( valueChanged( int )),
-	     SLOT( slotNewerChanged( int )));
-    connect( dialog->spinOlder, SIGNAL( valueChanged( int )),
-	     SLOT( slotOlderChanged( int )));
+    connect( dialog->spinNewer, TQT_SIGNAL( valueChanged( int )),
+	     TQT_SLOT( slotNewerChanged( int )));
+    connect( dialog->spinOlder, TQT_SIGNAL( valueChanged( int )),
+	     TQT_SLOT( slotOlderChanged( int )));
 
-    connect( dialog->btnFontNewer, SIGNAL( clicked() ),
-             SLOT( slotGetFontNewer() ));
-    connect( dialog->btnFontOlder, SIGNAL( clicked() ),
-             SLOT( slotGetFontOlder() ));
-    connect( dialog->btnClearHistory, SIGNAL( clicked() ),
-             SLOT( slotClearHistory() ));
+    connect( dialog->btnFontNewer, TQT_SIGNAL( clicked() ),
+             TQT_SLOT( slotGetFontNewer() ));
+    connect( dialog->btnFontOlder, TQT_SIGNAL( clicked() ),
+             TQT_SLOT( slotGetFontOlder() ));
+    connect( dialog->btnClearHistory, TQT_SIGNAL( clicked() ),
+             TQT_SLOT( slotClearHistory() ));
 
-    connect( dialog->cbDetailedTips, SIGNAL( toggled( bool )),
-             SLOT( configChanged() ));
-    connect( dialog->cbExpire, SIGNAL( toggled( bool )),
-             SLOT( configChanged() ));
-    connect( dialog->spinEntries, SIGNAL( valueChanged( int )),
-             SLOT( configChanged() ));
-    connect( dialog->comboNewer, SIGNAL( activated( int )),
-             SLOT( configChanged() ));
-    connect( dialog->comboOlder, SIGNAL( activated( int )),
-             SLOT( configChanged() ));
+    connect( dialog->cbDetailedTips, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( configChanged() ));
+    connect( dialog->cbExpire, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( configChanged() ));
+    connect( dialog->spinEntries, TQT_SIGNAL( valueChanged( int )),
+             TQT_SLOT( configChanged() ));
+    connect( dialog->comboNewer, TQT_SIGNAL( activated( int )),
+             TQT_SLOT( configChanged() ));
+    connect( dialog->comboOlder, TQT_SIGNAL( activated( int )),
+             TQT_SLOT( configChanged() ));
 
     dialog->show();
     topLayout->add(dialog);
@@ -152,17 +152,17 @@ void HistorySidebarConfig::save()
     config.writeEntry( "Maximum of History entries", count );
     config.writeEntry( "Maximum age of History entries", age );
 
-    QByteArray dataAge;
-    QDataStream streamAge( dataAge, IO_WriteOnly );
+    TQByteArray dataAge;
+    TQDataStream streamAge( dataAge, IO_WriteOnly );
     streamAge << age << "foo";
     kapp->dcopClient()->send( "konqueror*", "KonqHistoryManager",
-			      "notifyMaxAge(Q_UINT32, QCString)", dataAge );
+			      "notifyMaxAge(Q_UINT32, TQCString)", dataAge );
 
-    QByteArray dataCount;
-    QDataStream streamCount( dataCount, IO_WriteOnly );
+    TQByteArray dataCount;
+    TQDataStream streamCount( dataCount, IO_WriteOnly );
     streamCount << count << "foo";
     kapp->dcopClient()->send( "konqueror*", "KonqHistoryManager",
-			      "notifyMaxCount(Q_UINT32, QCString)", dataCount );
+			      "notifyMaxCount(Q_UINT32, TQCString)", dataCount );
 
     m_settings->m_valueYoungerThan = dialog->spinNewer->value();
     m_settings->m_valueOlderThan   = dialog->spinOlder->value();
@@ -194,14 +194,14 @@ void HistorySidebarConfig::defaults()
 
     dialog->cbDetailedTips->setChecked( true );
 
-    m_fontNewer = QFont();
+    m_fontNewer = TQFont();
     m_fontNewer.setItalic( true );
-    m_fontOlder = QFont();
+    m_fontOlder = TQFont();
 
     emit changed(true);
 }
 
-QString HistorySidebarConfig::quickHelp() const
+TQString HistorySidebarConfig::quickHelp() const
 {
     return i18n("<h1>History Sidebar</h1>"
                 " You can configure the history sidebar here.");

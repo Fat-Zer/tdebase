@@ -29,26 +29,26 @@ namespace KHC {
 class NavigatorAppItem : public NavigatorItem
 {
   public:
-    NavigatorAppItem( DocEntry *entry, QListView *parent,
-                      const QString &relPath );
-    NavigatorAppItem( DocEntry *entry, QListViewItem *parent,
-                      const QString &relPath );
+    NavigatorAppItem( DocEntry *entry, TQListView *parent,
+                      const TQString &relPath );
+    NavigatorAppItem( DocEntry *entry, TQListViewItem *parent,
+                      const TQString &relPath );
 
-    NavigatorAppItem( DocEntry *entry, QListView *parent,
-                      QListViewItem *after );
-    NavigatorAppItem( DocEntry *entry, QListViewItem *parent,
-                      QListViewItem *after );
+    NavigatorAppItem( DocEntry *entry, TQListView *parent,
+                      TQListViewItem *after );
+    NavigatorAppItem( DocEntry *entry, TQListViewItem *parent,
+                      TQListViewItem *after );
 
-    void setRelpath( const QString & );
+    void setRelpath( const TQString & );
 
     virtual void setOpen(bool);
     void populate( bool recursive = false );
 
   protected:
-    QString documentationURL( KService *s );
+    TQString documentationURL( KService *s );
 
   private:
-    QString mRelpath;
+    TQString mRelpath;
     bool mPopulated;
 };
 

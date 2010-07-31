@@ -27,9 +27,9 @@ class KonqExtendedBookmarkOwner : public KExtendedBookmarkOwner
 public:
   KonqExtendedBookmarkOwner(KonqMainWindow *);
   // for KBookmarkOwner
-  virtual void openBookmarkURL( const QString & _url );
-  virtual QString currentTitle() const;
-  virtual QString currentURL() const;
+  virtual void openBookmarkURL( const TQString & _url );
+  virtual TQString currentTitle() const;
+  virtual TQString currentURL() const;
 public slots:
   // for KExtendedBookmarkOwner
   void slotFillBookmarksList( KExtendedBookmarkOwner::QStringPairList & list );

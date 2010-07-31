@@ -1,10 +1,10 @@
 #include <string.h>
 #include <errno.h>
 
-#include <qstring.h>
-#include <qmap.h>
-#include <qfile.h>
-#include <qdir.h>
+#include <tqstring.h>
+#include <tqmap.h>
+#include <tqfile.h>
+#include <tqdir.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -21,17 +21,17 @@
 #include "extension.h"
 
 
-QMap<QString, FILE*> XKBExtension::fileCache;	//TODO: move to class?
+TQMap<TQString, FILE*> XKBExtension::fileCache;	//TODO: move to class?
 
 
-static QString getLayoutKey(const QString& layout, const QString& variant)
+static TQString getLayoutKey(const TQString& layout, const TQString& variant)
 {
 	return layout + "." + variant;
 }
 
-QString XKBExtension::getPrecompiledLayoutFilename(const QString& layoutKey)
+TQString XKBExtension::getPrecompiledLayoutFilename(const TQString& layoutKey)
 {
-	QString compiledLayoutFileName = m_tempDir + layoutKey + ".xkm";
+	TQString compiledLayoutFileName = m_tempDir + layoutKey + ".xkm";
 	return compiledLayoutFileName;
 }
 
@@ -41,7 +41,7 @@ XKBExtension::XKBExtension(Display *d)
 		d = qt_xdisplay();
 	m_dpy = d;
 	
-//	QStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );
+//	TQStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );
 //	m_tempDir = dirs.count() == 0 ? "/tmp/" : dirs[0];
 	m_tempDir = locateLocal("tmp", "");
 }
@@ -81,9 +81,9 @@ bool XKBExtension::init()
 
 void XKBExtension::reset()
 {
-	for(QMap<QString, FILE*>::ConstIterator it = fileCache.begin(); it != fileCache.end(); it++) {
+	for(TQMap<TQString, FILE*>::ConstIterator it = fileCache.begin(); it != fileCache.end(); it++) {
 		fclose(*it);
-//		remove( QFile::encodeName(getPrecompiledLayoutFileName(*it)) );
+//		remove( TQFile::encodeName(getPrecompiledLayoutFileName(*it)) );
 	}
 	fileCache.clear();
 }
@@ -94,12 +94,12 @@ XKBExtension::~XKBExtension()
 		deletePrecompiledLayouts();*/
 }
 
-bool XKBExtension::setXkbOptions(const QString& options, bool resetOld)
+bool XKBExtension::setXkbOptions(const TQString& options, bool resetOld)
 {
     if (options.isEmpty())
         return true;
 
-    QString exe = KGlobal::dirs()->findExe("setxkbmap");
+    TQString exe = KGlobal::dirs()->findExe("setxkbmap");
     if (exe.isEmpty())
         return false;
 
@@ -114,15 +114,15 @@ bool XKBExtension::setXkbOptions(const QString& options, bool resetOld)
     return p.normalExit() && (p.exitStatus() == 0);
 }
 
-bool XKBExtension::setLayout(const QString& model,
-		const QString& layout, const QString& variant,
-		const QString& includeGroup, bool useCompiledLayouts)
+bool XKBExtension::setLayout(const TQString& model,
+		const TQString& layout, const TQString& variant,
+		const TQString& includeGroup, bool useCompiledLayouts)
 {
 	if( useCompiledLayouts == false ) {
 		return setLayoutInternal( model, layout, variant, includeGroup );
 	}
 	
-	const QString layoutKey = getLayoutKey(layout, variant);
+	const TQString layoutKey = getLayoutKey(layout, variant);
 	
 	bool res;
 	if( fileCache.contains(layoutKey) ) {
@@ -143,21 +143,21 @@ bool XKBExtension::setLayout(const QString& model,
 }
 
 // private
-bool XKBExtension::setLayoutInternal(const QString& model,
-		const QString& layout, const QString& variant,
-		const QString& includeGroup)
+bool XKBExtension::setLayoutInternal(const TQString& model,
+		const TQString& layout, const TQString& variant,
+		const TQString& includeGroup)
 {
     if ( layout.isEmpty() )
         return false;
 
-	QString exe = KGlobal::dirs()->findExe("setxkbmap");
+	TQString exe = KGlobal::dirs()->findExe("setxkbmap");
 	if( exe.isEmpty() ) {
 		kdError() << "Can't find setxkbmap" << endl;
 		return false;
 	}
 
-    QString fullLayout = layout;
-    QString fullVariant = variant;
+    TQString fullLayout = layout;
+    TQString fullVariant = variant;
 	if( includeGroup.isEmpty() == false ) {
         fullLayout = includeGroup;
         fullLayout += ",";
@@ -185,7 +185,7 @@ bool XKBExtension::setLayoutInternal(const QString& model,
     pXmodmap.start(KProcess::Block); 
 
     KProcess pXmodmapHome;
-    pXmodmapHome << "/usr/bin/xmodmap" << QDir::home().path() + "/.Xmodmap";
+    pXmodmapHome << "/usr/bin/xmodmap" << TQDir::home().path() + "/.Xmodmap";
     pXmodmapHome.start(KProcess::Block); 
 
     return p.normalExit() && (p.exitStatus() == 0);
@@ -210,14 +210,14 @@ unsigned int XKBExtension::getGroup() const
  * @param[in] fileName file to store compiled layout to
  * @return true if no problem, false otherwise
  */
-bool XKBExtension::compileCurrentLayout(const QString &layoutKey)
+bool XKBExtension::compileCurrentLayout(const TQString &layoutKey)
 {
     XkbFileInfo result;
     memset(&result, 0, sizeof(result));
     result.type = XkmKeymapFile;
     XkbReadFromServer(m_dpy, XkbAllMapComponentsMask, XkbAllMapComponentsMask, &result);
 	 
-	const QString fileName = getPrecompiledLayoutFilename(layoutKey);
+	const TQString fileName = getPrecompiledLayoutFilename(layoutKey);
 
 	kdDebug() << "compiling layout " << this << " cache size: " << fileCache.count() << endl;
 	if( fileCache.contains(layoutKey) ) {
@@ -227,7 +227,7 @@ bool XKBExtension::compileCurrentLayout(const QString &layoutKey)
 		fileCache.remove(fileName);
 	}
 
-	FILE *output = fopen(QFile::encodeName(fileName), "w");
+	FILE *output = fopen(TQFile::encodeName(fileName), "w");
 		
     if ( output == NULL )
     {
@@ -243,7 +243,7 @@ bool XKBExtension::compileCurrentLayout(const QString &layoutKey)
 	}
 	
 	fclose(output);	// TODO: can we change mode w/out reopening?
-	FILE *input = fopen(QFile::encodeName(fileName), "r");
+	FILE *input = fopen(TQFile::encodeName(fileName), "r");
 	fileCache[ layoutKey ] = input;
 
 	XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
@@ -255,7 +255,7 @@ bool XKBExtension::compileCurrentLayout(const QString &layoutKey)
  *	and sets it as current
  * TODO: cache layout in memory rather than in file
  */
-bool XKBExtension::setCompiledLayout(const QString &layoutKey)
+bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
 {
 	FILE *input = NULL;
 	
@@ -265,10 +265,10 @@ bool XKBExtension::setCompiledLayout(const QString &layoutKey)
 	
 	if( input == NULL ) {
 		kdWarning() << "setCompiledLayout trying to reopen xkb file" << endl;	// should never happen
-		const QString fileName = getPrecompiledLayoutFilename(layoutKey);
-		input = fopen(QFile::encodeName(fileName), "r");
+		const TQString fileName = getPrecompiledLayoutFilename(layoutKey);
+		input = fopen(TQFile::encodeName(fileName), "r");
 		
-		// 	FILE *input = fopen(QFile::encodeName(fileName), "r");
+		// 	FILE *input = fopen(TQFile::encodeName(fileName), "r");
 		if ( input == NULL ) {
 			kdDebug() << "Unable to open " << fileName << ": " << strerror(errno) << endl;
 			fileCache.remove(layoutKey);
@@ -323,11 +323,11 @@ bool XKBExtension::setCompiledLayout(const QString &layoutKey)
 // Deletes the precompiled layouts stored in temporary files
 // void XKBExtension::deletePrecompiledLayouts()
 // {
-// 	QMapConstIterator<LayoutUnit, QString> it, end;
+// 	TQMapConstIterator<LayoutUnit, TQString> it, end;
 // 	end = m_compiledLayoutFileNames.end();
 // 	for (it = m_compiledLayoutFileNames.begin(); it != end; ++it)
 // 	{
-// 		unlink(QFile::encodeName(it.data()));
+// 		unlink(TQFile::encodeName(it.data()));
 // 	}
 // 	m_compiledLayoutFileNames.clear();
 // }

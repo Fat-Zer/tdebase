@@ -19,9 +19,9 @@
 
 */
 
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
 
 #include <kconfig.h>
 #include <klistview.h>
@@ -32,13 +32,13 @@
 #include "policies.h"
 #include "policydlg.h"
 
-DomainListView::DomainListView(KConfig *config,const QString &title,
-		QWidget *parent,const char *name) :
-	QGroupBox(title, parent, name), config(config) {
+DomainListView::DomainListView(KConfig *config,const TQString &title,
+		TQWidget *parent,const char *name) :
+	TQGroupBox(title, parent, name), config(config) {
   setColumnLayout(0, Qt::Vertical);
   layout()->setSpacing(0);
   layout()->setMargin(0);
-  QGridLayout* thisLayout = new QGridLayout(layout());
+  TQGridLayout* thisLayout = new TQGridLayout(layout());
   thisLayout->setAlignment(Qt::AlignTop);
   thisLayout->setSpacing(KDialog::spacingHint());
   thisLayout->setMargin(KDialog::marginHint());
@@ -46,44 +46,44 @@ DomainListView::DomainListView(KConfig *config,const QString &title,
   domainSpecificLV = new KListView(this);
   domainSpecificLV->addColumn(i18n("Host/Domain"));
   domainSpecificLV->addColumn(i18n("Policy"), 100);
-  connect(domainSpecificLV,SIGNAL(doubleClicked(QListViewItem *)), SLOT(changePressed()));
-  connect(domainSpecificLV,SIGNAL(returnPressed(QListViewItem *)), SLOT(changePressed()));
-  connect(domainSpecificLV, SIGNAL( executed( QListViewItem *)), SLOT( updateButton()));
-  connect(domainSpecificLV, SIGNAL(selectionChanged()), SLOT(updateButton()));
+  connect(domainSpecificLV,TQT_SIGNAL(doubleClicked(TQListViewItem *)), TQT_SLOT(changePressed()));
+  connect(domainSpecificLV,TQT_SIGNAL(returnPressed(TQListViewItem *)), TQT_SLOT(changePressed()));
+  connect(domainSpecificLV, TQT_SIGNAL( executed( TQListViewItem *)), TQT_SLOT( updateButton()));
+  connect(domainSpecificLV, TQT_SIGNAL(selectionChanged()), TQT_SLOT(updateButton()));
   thisLayout->addMultiCellWidget(domainSpecificLV, 0, 5, 0, 0);
 
-  addDomainPB = new QPushButton(i18n("&New..."), this);
+  addDomainPB = new TQPushButton(i18n("&New..."), this);
   thisLayout->addWidget(addDomainPB, 0, 1);
-  connect(addDomainPB, SIGNAL(clicked()), SLOT(addPressed()));
+  connect(addDomainPB, TQT_SIGNAL(clicked()), TQT_SLOT(addPressed()));
 
-  changeDomainPB = new QPushButton( i18n("Chan&ge..."), this);
+  changeDomainPB = new TQPushButton( i18n("Chan&ge..."), this);
   thisLayout->addWidget(changeDomainPB, 1, 1);
-  connect(changeDomainPB, SIGNAL(clicked()), this, SLOT(changePressed()));
+  connect(changeDomainPB, TQT_SIGNAL(clicked()), this, TQT_SLOT(changePressed()));
 
-  deleteDomainPB = new QPushButton(i18n("De&lete"), this);
+  deleteDomainPB = new TQPushButton(i18n("De&lete"), this);
   thisLayout->addWidget(deleteDomainPB, 2, 1);
-  connect(deleteDomainPB, SIGNAL(clicked()), this, SLOT(deletePressed()));
+  connect(deleteDomainPB, TQT_SIGNAL(clicked()), this, TQT_SLOT(deletePressed()));
 
-  importDomainPB = new QPushButton(i18n("&Import..."), this);
+  importDomainPB = new TQPushButton(i18n("&Import..."), this);
   thisLayout->addWidget(importDomainPB, 3, 1);
-  connect(importDomainPB, SIGNAL(clicked()), this, SLOT(importPressed()));
+  connect(importDomainPB, TQT_SIGNAL(clicked()), this, TQT_SLOT(importPressed()));
   importDomainPB->setEnabled(false);
   importDomainPB->hide();
 
-  exportDomainPB = new QPushButton(i18n("&Export..."), this);
+  exportDomainPB = new TQPushButton(i18n("&Export..."), this);
   thisLayout->addWidget(exportDomainPB, 4, 1);
-  connect(exportDomainPB, SIGNAL(clicked()), this, SLOT(exportPressed()));
+  connect(exportDomainPB, TQT_SIGNAL(clicked()), this, TQT_SLOT(exportPressed()));
   exportDomainPB->setEnabled(false);
   exportDomainPB->hide();
 
-  QSpacerItem* spacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+  TQSpacerItem* spacer = new TQSpacerItem(20, 20, TQSizePolicy::Minimum, TQSizePolicy::Expanding);
   thisLayout->addItem(spacer, 5, 1);
 
-  QWhatsThis::add( addDomainPB, i18n("Click on this button to manually add a host or domain "
+  TQWhatsThis::add( addDomainPB, i18n("Click on this button to manually add a host or domain "
                                        "specific policy.") );
-  QWhatsThis::add( changeDomainPB, i18n("Click on this button to change the policy for the "
+  TQWhatsThis::add( changeDomainPB, i18n("Click on this button to change the policy for the "
                                           "host or domain selected in the list box.") );
-  QWhatsThis::add( deleteDomainPB, i18n("Click on this button to delete the policy for the "
+  TQWhatsThis::add( deleteDomainPB, i18n("Click on this button to delete the policy for the "
                                           "host or domain selected in the list box.") );
   updateButton();
 }
@@ -98,7 +98,7 @@ DomainListView::~DomainListView() {
 
 void DomainListView::updateButton()
 {
-    QListViewItem *index = domainSpecificLV->currentItem();
+    TQListViewItem *index = domainSpecificLV->currentItem();
     bool enable = ( index != 0 );
     changeDomainPB->setEnabled( enable );
     deleteDomainPB->setEnabled( enable );
@@ -113,7 +113,7 @@ void DomainListView::addPressed()
     PolicyDialog pDlg(pol, this);
     setupPolicyDlg(AddButton,pDlg,pol);
     if( pDlg.exec() ) {
-        QListViewItem* index = new QListViewItem( domainSpecificLV, pDlg.domain(),
+        TQListViewItem* index = new TQListViewItem( domainSpecificLV, pDlg.domain(),
                                                   pDlg.featureEnabledPolicyText() );
 	pol->setDomain(pDlg.domain());
         domainPolicies.insert(index, pol);
@@ -127,7 +127,7 @@ void DomainListView::addPressed()
 
 void DomainListView::changePressed()
 {
-    QListViewItem *index = domainSpecificLV->currentItem();
+    TQListViewItem *index = domainSpecificLV->currentItem();
     if ( index == 0 )
     {
         KMessageBox::information( 0, i18n("You must first select a policy to be changed." ) );
@@ -156,7 +156,7 @@ void DomainListView::changePressed()
 
 void DomainListView::deletePressed()
 {
-    QListViewItem *index = domainSpecificLV->currentItem();
+    TQListViewItem *index = domainSpecificLV->currentItem();
     if ( index == 0 )
     {
         KMessageBox::information( 0, i18n("You must first select a policy to delete." ) );
@@ -183,37 +183,37 @@ void DomainListView::exportPressed()
   // PENDING(kalle) Implement this.
 }
 
-void DomainListView::initialize(const QStringList &domainList)
+void DomainListView::initialize(const TQStringList &domainList)
 {
     domainSpecificLV->clear();
     domainPolicies.clear();
 //    JavaPolicies pol(m_pConfig,m_groupname,false);
-    for (QStringList::ConstIterator it = domainList.begin();
+    for (TQStringList::ConstIterator it = domainList.begin();
          it != domainList.end(); ++it) {
-      QString domain = *it;
+      TQString domain = *it;
       Policies *pol = createPolicies();
       pol->setDomain(domain);
       pol->load();
 
-      QString policy;
+      TQString policy;
       if (pol->isFeatureEnabledPolicyInherited())
         policy = i18n("Use Global");
       else if (pol->isFeatureEnabled())
         policy = i18n("Accept");
       else
         policy = i18n("Reject");
-      QListViewItem *index =
-        new QListViewItem( domainSpecificLV, domain, policy );
+      TQListViewItem *index =
+        new TQListViewItem( domainSpecificLV, domain, policy );
 
       domainPolicies[index] = pol;
     }
 }
 
-void DomainListView::save(const QString &group, const QString &domainListKey) {
-    QStringList domainList;
+void DomainListView::save(const TQString &group, const TQString &domainListKey) {
+    TQStringList domainList;
     DomainPolicyMap::Iterator it = domainPolicies.begin();
     for (; it != domainPolicies.end(); ++it) {
-    	QListViewItem *current = it.key();
+    	TQListViewItem *current = it.key();
 	Policies *pol = it.data();
 	pol->save();
 	domainList.append(current->text(0));

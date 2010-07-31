@@ -24,25 +24,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef _KDM_CLOCK_H_
 #define _KDM_CLOCK_H_
 
-#include <qframe.h>
+#include <tqframe.h>
 
-class KdmClock : public QFrame {
+class KdmClock : public TQFrame {
 	Q_OBJECT
-	typedef QFrame inherited;
+	typedef TQFrame inherited;
 
   public:
-	KdmClock( QWidget *parent=0, const char *name=0 );
+	KdmClock( TQWidget *parent=0, const char *name=0 );
 
   protected:
-	virtual void showEvent( QShowEvent * );
-	virtual void paintEvent( QPaintEvent * );
+	virtual void showEvent( TQShowEvent * );
+	virtual void paintEvent( TQPaintEvent * );
 
   private slots:
 	void timeout();
 
   private:
-	QBrush mBackgroundBrush;
-	QFont  mFont;
+	TQBrush mBackgroundBrush;
+	TQFont  mFont;
 	bool   mSecond;
 	bool   mDigital;
 	bool   mDate;

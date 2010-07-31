@@ -8,17 +8,17 @@
 
 #include <config.h>
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qdir.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qsettings.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqdir.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqsettings.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 
@@ -126,18 +126,18 @@ static const char *aa_vbgr_xpm[]={
 static const char** aaPixmaps[]={ aa_rgb_xpm, aa_bgr_xpm, aa_vrgb_xpm, aa_vbgr_xpm };
 
 /**** DLL Interface ****/
-typedef KGenericFactory<KFonts, QWidget> FontFactory;
+typedef KGenericFactory<KFonts, TQWidget> FontFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_fonts, FontFactory("kcmfonts") )
 
 /**** FontUseItem ****/
 
 FontUseItem::FontUseItem(
-  QWidget * parent,
-  const QString &name,
-  const QString &grp,
-  const QString &key,
-  const QString &rc,
-  const QFont &default_fnt,
+  TQWidget * parent,
+  const TQString &name,
+  const TQString &grp,
+  const TQString &key,
+  const TQString &rc,
+  const TQFont &default_fnt,
   bool f
 )
   : KFontRequester(parent, 0L, f),
@@ -172,7 +172,7 @@ void FontUseItem::readFont( bool useDefaults )
   config->setReadDefaults( useDefaults );
 
   config->setGroup(_rcgroup);
-  QFont tmpFnt(_default);
+  TQFont tmpFnt(_default);
   setFont( config->readFontEntry(_rckey, &tmpFnt), isFixedOnly() );
   if (deleteme) delete config;
 }
@@ -194,9 +194,9 @@ void FontUseItem::writeFont()
   }
 }
 
-void FontUseItem::applyFontDiff( const QFont &fnt, int fontDiffFlags )
+void FontUseItem::applyFontDiff( const TQFont &fnt, int fontDiffFlags )
 {
-  QFont _font( font() );
+  TQFont _font( font() );
 
   if (fontDiffFlags & KFontChooser::FontDiffSize) {
     _font.setPointSize( fnt.pointSize() );
@@ -215,36 +215,36 @@ void FontUseItem::applyFontDiff( const QFont &fnt, int fontDiffFlags )
 
 /**** FontAASettings ****/
 
-FontAASettings::FontAASettings(QWidget *parent)
+FontAASettings::FontAASettings(TQWidget *parent)
               : KDialogBase(parent, "FontAASettings", true, i18n("Configure Anti-Alias Settings"), Ok|Cancel, Ok, true),
                 changesMade(false)
 {
-  QWidget     *mw=new QWidget(this);
-  QGridLayout *layout=new QGridLayout(mw, 1, 1, 0, KDialog::spacingHint());
+  TQWidget     *mw=new TQWidget(this);
+  TQGridLayout *layout=new TQGridLayout(mw, 1, 1, 0, KDialog::spacingHint());
 
-  excludeRange=new QCheckBox(i18n("E&xclude range:"), mw),
+  excludeRange=new TQCheckBox(i18n("E&xclude range:"), mw),
   layout->addWidget(excludeRange, 0, 0);
   excludeFrom=new KDoubleNumInput(0, 72, 8.0, 1, 1, mw),
   excludeFrom->setSuffix(i18n(" pt"));
   layout->addWidget(excludeFrom, 0, 1);
-  excludeToLabel=new QLabel(i18n(" to "), mw);
+  excludeToLabel=new TQLabel(i18n(" to "), mw);
   layout->addWidget(excludeToLabel, 0, 2);
   excludeTo=new KDoubleNumInput(0, 72, 15.0, 1, 1, mw);
   excludeTo->setSuffix(i18n(" pt"));
   layout->addWidget(excludeTo, 0, 3);
 
-  useSubPixel=new QCheckBox(i18n("&Use sub-pixel hinting:"), mw);
+  useSubPixel=new TQCheckBox(i18n("&Use sub-pixel hinting:"), mw);
   layout->addWidget(useSubPixel, 1, 0);
 
-  QWhatsThis::add(useSubPixel, i18n("If you have a TFT or LCD screen you"
+  TQWhatsThis::add(useSubPixel, i18n("If you have a TFT or LCD screen you"
        " can further improve the quality of displayed fonts by selecting"
        " this option.<br>Sub-pixel hinting is also known as ClearType(tm).<br>"
        "<br><b>This will not work with CRT monitors.</b>"));
 
-  subPixelType=new QComboBox(false, mw);
+  subPixelType=new TQComboBox(false, mw);
   layout->addMultiCellWidget(subPixelType, 1, 1, 1, 3);
 
-  QWhatsThis::add(subPixelType, i18n("In order for sub-pixel hinting to"
+  TQWhatsThis::add(subPixelType, i18n("In order for sub-pixel hinting to"
        " work correctly you need to know how the sub-pixels of your display"
        " are aligned.<br>"
        " On TFT or LCD displays a single pixel is actually composed of"
@@ -252,31 +252,31 @@ FontAASettings::FontAASettings(QWidget *parent)
        " have a linear ordering of RGB sub-pixel, some have BGR."));
 
   for(int t=KXftConfig::SubPixel::None+1; t<=KXftConfig::SubPixel::Vbgr; ++t)
-    subPixelType->insertItem(QPixmap(aaPixmaps[t-1]), KXftConfig::description((KXftConfig::SubPixel::Type)t));
+    subPixelType->insertItem(TQPixmap(aaPixmaps[t-1]), KXftConfig::description((KXftConfig::SubPixel::Type)t));
 
 #ifdef HAVE_FONTCONFIG
-  QLabel *hintingLabel=new QLabel(i18n("Hinting style: "), mw);
+  TQLabel *hintingLabel=new TQLabel(i18n("Hinting style: "), mw);
   layout->addWidget(hintingLabel, 2, 0);
-  hintingStyle=new QComboBox(false, mw);
+  hintingStyle=new TQComboBox(false, mw);
   layout->addMultiCellWidget(hintingStyle, 2, 2, 1, 3);
   for(int s=KXftConfig::Hint::NotSet+1; s<=KXftConfig::Hint::Full; ++s)
     hintingStyle->insertItem(KXftConfig::description((KXftConfig::Hint::Style)s));
 
-  QString hintingText(i18n("Hinting is a process used to enhance the quality of fonts at small sizes."));
-  QWhatsThis::add(hintingStyle, hintingText);
-  QWhatsThis::add(hintingLabel, hintingText);
+  TQString hintingText(i18n("Hinting is a process used to enhance the quality of fonts at small sizes."));
+  TQWhatsThis::add(hintingStyle, hintingText);
+  TQWhatsThis::add(hintingLabel, hintingText);
 #endif
   load();
   enableWidgets();
   setMainWidget(mw);
 
-  connect(excludeRange, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(useSubPixel, SIGNAL(toggled(bool)), SLOT(changed()));
-  connect(excludeFrom, SIGNAL(valueChanged(double)), SLOT(changed()));
-  connect(excludeTo, SIGNAL(valueChanged(double)), SLOT(changed()));
-  connect(subPixelType, SIGNAL(activated(const QString &)), SLOT(changed()));
+  connect(excludeRange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(useSubPixel, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(excludeFrom, TQT_SIGNAL(valueChanged(double)), TQT_SLOT(changed()));
+  connect(excludeTo, TQT_SIGNAL(valueChanged(double)), TQT_SLOT(changed()));
+  connect(subPixelType, TQT_SIGNAL(activated(const TQString &)), TQT_SLOT(changed()));
 #ifdef HAVE_FONTCONFIG
-  connect(hintingStyle, SIGNAL(activated(const QString &)), SLOT(changed()));
+  connect(hintingStyle, TQT_SIGNAL(activated(const TQString &)), TQT_SLOT(changed()));
 #endif
 }
 
@@ -375,7 +375,7 @@ bool FontAASettings::save( bool useAA )
 
   xft.setHintStyle(hStyle);
 
-  QString hs(KXftConfig::toStr(hStyle));
+  TQString hs(KXftConfig::toStr(hStyle));
 
   if(!hs.isEmpty() && hs!=kglobals.readEntry("XftHintStyle"))
   {
@@ -492,12 +492,12 @@ int FontAASettings::exec()
 
 /**** KFonts ****/
 
-static QCString desktopConfigName()
+static TQCString desktopConfigName()
 {
   int desktop=0;
   if (qt_xdisplay())
     desktop = DefaultScreen(qt_xdisplay());
-  QCString name;
+  TQCString name;
   if (desktop == 0)
     name = "kdesktoprc";
   else
@@ -506,10 +506,10 @@ static QCString desktopConfigName()
   return name;
 }
 
-KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
+KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
     :   KCModule(FontFactory::instance(), parent, name)
 {
-  QStringList nameGroupKeyRc;
+  TQStringList nameGroupKeyRc;
 
   nameGroupKeyRc
     << i18n("General")        << "General"    << "font"         << ""
@@ -520,15 +520,15 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
     << i18n("Taskbar")        << "General"    << "taskbarFont"  << ""
     << i18n("Desktop")        << "FMSettings" << "StandardFont" << desktopConfigName();
 
-  QValueList<QFont> defaultFontList;
+  TQValueList<TQFont> defaultFontList;
 
   // Keep in sync with kdelibs/kdecore/kglobalsettings.cpp
 
-  QFont f0("Sans Serif", 10);
-  QFont f1("Monospace", 10);
-  QFont f2("Sans Serif", 10);
-  QFont f3("Sans Serif", 10, QFont::Bold);
-  QFont f4("Sans Serif", 10);
+  TQFont f0("Sans Serif", 10);
+  TQFont f1("Monospace", 10);
+  TQFont f2("Sans Serif", 10);
+  TQFont f3("Sans Serif", 10, TQFont::Bold);
+  TQFont f4("Sans Serif", 10);
 
   f0.setPointSize(10);
   f1.setPointSize(10);
@@ -538,7 +538,7 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
 
   defaultFontList << f0 << f1 << f2 << f0 << f3 << f4 << f0;
 
-  QValueList<bool> fixedList;
+  TQValueList<bool> fixedList;
 
   fixedList
     <<  false
@@ -549,7 +549,7 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
     <<  false
     <<  false;
 
-  QStringList quickHelpList;
+  TQStringList quickHelpList;
 
   quickHelpList
     << i18n("Used for normal text (e.g. button labels, list items).")
@@ -560,29 +560,29 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
     << i18n("Used by the taskbar.")
     << i18n("Used for desktop icons.");
 
-  QVBoxLayout * layout =
-    new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout * layout =
+    new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
-  QGridLayout * fontUseLayout =
-    new QGridLayout(layout, nameGroupKeyRc.count() / 4, 3);
+  TQGridLayout * fontUseLayout =
+    new TQGridLayout(layout, nameGroupKeyRc.count() / 4, 3);
 
   fontUseLayout->setColStretch(0, 0);
   fontUseLayout->setColStretch(1, 1);
   fontUseLayout->setColStretch(2, 0);
 
-  QValueList<QFont>::ConstIterator defaultFontIt(defaultFontList.begin());
-  QValueList<bool>::ConstIterator fixedListIt(fixedList.begin());
-  QStringList::ConstIterator quickHelpIt(quickHelpList.begin());
-  QStringList::ConstIterator it(nameGroupKeyRc.begin());
+  TQValueList<TQFont>::ConstIterator defaultFontIt(defaultFontList.begin());
+  TQValueList<bool>::ConstIterator fixedListIt(fixedList.begin());
+  TQStringList::ConstIterator quickHelpIt(quickHelpList.begin());
+  TQStringList::ConstIterator it(nameGroupKeyRc.begin());
 
   unsigned int count = 0;
 
   while (it != nameGroupKeyRc.end()) {
 
-    QString name = *it; it++;
-    QString group = *it; it++;
-    QString key = *it; it++;
-    QString file = *it; it++;
+    TQString name = *it; it++;
+    TQString group = *it; it++;
+    TQString key = *it; it++;
+    TQString file = *it; it++;
 
     FontUseItem * i =
       new FontUseItem(
@@ -596,10 +596,10 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
       );
 
     fontUseList.append(i);
-    connect(i, SIGNAL(fontSelected(const QFont &)), SLOT(fontSelected()));
+    connect(i, TQT_SIGNAL(fontSelected(const TQFont &)), TQT_SLOT(fontSelected()));
 
-    QLabel * fontUse = new QLabel(name+":", this);
-    QWhatsThis::add(fontUse, *quickHelpIt++);
+    TQLabel * fontUse = new TQLabel(name+":", this);
+    TQWhatsThis::add(fontUse, *quickHelpIt++);
 
     fontUseLayout->addWidget(fontUse, count, 0);
     fontUseLayout->addWidget(i, count, 1);
@@ -607,40 +607,40 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
     ++count;
   }
 
-   QHBoxLayout *hblay = new QHBoxLayout(layout, KDialog::spacingHint());
+   TQHBoxLayout *hblay = new TQHBoxLayout(layout, KDialog::spacingHint());
    hblay->addStretch();
-   QPushButton * fontAdjustButton = new QPushButton(i18n("Ad&just All Fonts..."), this);
-   QWhatsThis::add(fontAdjustButton, i18n("Click to change all fonts"));
+   TQPushButton * fontAdjustButton = new TQPushButton(i18n("Ad&just All Fonts..."), this);
+   TQWhatsThis::add(fontAdjustButton, i18n("Click to change all fonts"));
    hblay->addWidget( fontAdjustButton );
-   connect(fontAdjustButton, SIGNAL(clicked()), SLOT(slotApplyFontDiff()));
+   connect(fontAdjustButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotApplyFontDiff()));
 
    layout->addSpacing(KDialog::spacingHint());
 
-   QGridLayout* lay = new QGridLayout(layout, 2, 4, KDialog::spacingHint());
+   TQGridLayout* lay = new TQGridLayout(layout, 2, 4, KDialog::spacingHint());
    lay->setColStretch( 3, 10 );
-   QLabel* label = new QLabel( i18n( "Use a&nti-aliasing:" ), this );
+   TQLabel* label = new TQLabel( i18n( "Use a&nti-aliasing:" ), this );
    lay->addWidget( label, 0, 0 );
-   cbAA = new QComboBox( this );
+   cbAA = new TQComboBox( this );
    cbAA->insertItem( i18n( "Enabled" )); // change AASetting type if order changes
    cbAA->insertItem( i18n( "System settings" ));
    cbAA->insertItem( i18n( "Disabled" ));
-   QWhatsThis::add(cbAA, i18n("If this option is selected, KDE will smooth the edges of curves in "
+   TQWhatsThis::add(cbAA, i18n("If this option is selected, KDE will smooth the edges of curves in "
                               "fonts."));
-   aaSettingsButton = new QPushButton( i18n( "Configure..." ), this);
-   connect(aaSettingsButton, SIGNAL(clicked()), SLOT(slotCfgAa()));
+   aaSettingsButton = new TQPushButton( i18n( "Configure..." ), this);
+   connect(aaSettingsButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotCfgAa()));
    label->setBuddy( cbAA );
    lay->addWidget( cbAA, 0, 1 );
    lay->addWidget( aaSettingsButton, 0, 2 );
-   connect(cbAA, SIGNAL(activated(int)), SLOT(slotUseAntiAliasing()));
+   connect(cbAA, TQT_SIGNAL(activated(int)), TQT_SLOT(slotUseAntiAliasing()));
 
-   label = new QLabel( i18n( "Force fonts DPI:" ), this );
+   label = new TQLabel( i18n( "Force fonts DPI:" ), this );
    lay->addWidget( label, 1, 0 );
-   comboForceDpi = new QComboBox( this );
+   comboForceDpi = new TQComboBox( this );
    label->setBuddy( comboForceDpi );
    comboForceDpi->insertItem( i18n( "Disabled" )); // change DPISetti ng type if order changes
    comboForceDpi->insertItem( i18n( "96 DPI" ));
    comboForceDpi->insertItem( i18n( "120 DPI" ));
-   QString whatsthis = i18n(
+   TQString whatsthis = i18n(
        "<p>This option forces a specific DPI value for fonts. It may be useful"
        " when the real DPI of the hardware is not detected properly and it"
        " is also often misused when poor quality fonts are used that do not"
@@ -651,8 +651,8 @@ KFonts::KFonts(QWidget *parent, const char *name, const QStringList &)
        " ServerLocalArgs= in $KDEDIR/share/config/kdm/kdmrc). When fonts do not render"
        " properly with real DPI value better fonts should be used or configuration"
        " of font hinting should be checked.</p>" );
-   QWhatsThis::add(comboForceDpi, whatsthis);
-   connect( comboForceDpi, SIGNAL( activated( int )), SLOT( changed()));
+   TQWhatsThis::add(comboForceDpi, whatsthis);
+   connect( comboForceDpi, TQT_SIGNAL( activated( int )), TQT_SLOT( changed()));
    lay->addWidget( comboForceDpi, 1, 1 );
 
    layout->addStretch(1);
@@ -727,17 +727,17 @@ void KFonts::save()
   if( dpi == DPINone && dpi_original != DPINone ) {
       KProcIO proc;
       proc << "xrdb" << "-quiet" << "-remove" << "-nocpp";
-      proc.writeStdin( QCString( "Xft.dpi" ), true );
+      proc.writeStdin( TQCString( "Xft.dpi" ), true );
       proc.closeWhenDone();
       proc.start( KProcess::Block );
   }
 
   // KDE-1.x support
-  KSimpleConfig* config = new KSimpleConfig( QDir::homeDirPath() + "/.kderc" );
+  KSimpleConfig* config = new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
   config->setGroup( "General" );
   for ( FontUseItem* i = fontUseList.first(); i; i = fontUseList.next() ) {
       if("font"==i->rcKey())
-          QSettings().writeEntry("/qt/font", i->font().toString());
+          TQSettings().writeEntry("/qt/font", i->font().toString());
       kdDebug(1208) << "write entry " <<  i->rcKey() << endl;
       config->writeEntry( i->rcKey(), i->font() );
   }
@@ -772,7 +772,7 @@ void KFonts::save()
 
 void KFonts::slotApplyFontDiff()
 {
-  QFont font = QFont(fontUseList.first()->font());
+  TQFont font = TQFont(fontUseList.first()->font());
   int fontDiffFlags = 0;
   int ret = KFontDialog::getFontDiff(font,fontDiffFlags);
 

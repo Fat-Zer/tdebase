@@ -17,13 +17,13 @@
 #include "input.h"
 
 #include <assert.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kglobalaccel.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kdeversion.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <kkeynative.h>
 
 #include "khotkeysglobal.h"
@@ -38,8 +38,8 @@ namespace KHotKeys
 
 // Kbd
 
-Kbd::Kbd( bool grabbing_enabled_P, QObject* parent_P )
-    : QObject( parent_P )
+Kbd::Kbd( bool grabbing_enabled_P, TQObject* parent_P )
+    : TQObject( parent_P )
     {
     assert( keyboard_handler == NULL );
     keyboard_handler = this;
@@ -77,7 +77,7 @@ void Kbd::activate_receiver( Kbd_receiver* receiver_P )
     if( rcv.active )
         return;
     rcv.active = true;
-    for( QValueList< KShortcut >::ConstIterator it( rcv.shortcuts.begin());
+    for( TQValueList< KShortcut >::ConstIterator it( rcv.shortcuts.begin());
          it != rcv.shortcuts.end();
          ++it )
         grab_shortcut( *it );
@@ -89,7 +89,7 @@ void Kbd::deactivate_receiver( Kbd_receiver* receiver_P )
     if( !rcv.active )
         return;
     rcv.active = false;
-    for( QValueList< KShortcut >::ConstIterator it( rcv.shortcuts.begin());
+    for( TQValueList< KShortcut >::ConstIterator it( rcv.shortcuts.begin());
          it != rcv.shortcuts.end();
          ++it )
         ungrab_shortcut( *it );
@@ -104,14 +104,14 @@ void Kbd::grab_shortcut( const KShortcut& shortcut_P )
         grabs[ shortcut_P ] = 1;
 #if 0
         // CHECKME ugly ugly hack
-        QString name = ' ' + QString::number( keycode_P );
+        TQString name = ' ' + TQString::number( keycode_P );
         kga->insertItem( "", name, keycode_P );
-        kga->connectItem( name, this, SLOT( key_slot( int )));
+        kga->connectItem( name, this, TQT_SLOT( key_slot( int )));
 #endif
-        QString name = ' ' + shortcut_P.toStringInternal();
-        kga->insert( name, name, QString::null, shortcut_P, shortcut_P,
-            this, SLOT( key_slot( QString )));
-        QTimer::singleShot( 0, this, SLOT( update_connections()));
+        TQString name = ' ' + shortcut_P.toStringInternal();
+        kga->insert( name, name, TQString::null, shortcut_P, shortcut_P,
+            this, TQT_SLOT( key_slot( TQString )));
+        TQTimer::singleShot( 0, this, TQT_SLOT( update_connections()));
         }
     }
     
@@ -123,13 +123,13 @@ void Kbd::ungrab_shortcut( const KShortcut& shortcut_P )
         {
 #if 0
         // CHECKME workaround for KGlobalAccel::disconnectItem() not working
-        kga->setItemEnabled( ' ' + QString::number( keycode_P ), false );
-        // kga->disconnectItem( ' ' + QString::number( keycode_P ), NULL, NULL );
-        kga->removeItem( ' ' + QString::number( keycode_P ));
+        kga->setItemEnabled( ' ' + TQString::number( keycode_P ), false );
+        // kga->disconnectItem( ' ' + TQString::number( keycode_P ), NULL, NULL );
+        kga->removeItem( ' ' + TQString::number( keycode_P ));
 #endif
         kga->remove( ' ' + shortcut_P.toStringInternal());
         grabs.remove( shortcut_P );
-        QTimer::singleShot( 0, this, SLOT( update_connections()));
+        TQTimer::singleShot( 0, this, TQT_SLOT( update_connections()));
         }
     }
 
@@ -138,13 +138,13 @@ void Kbd::update_connections()
     kga->updateConnections();
     }
     
-void Kbd::key_slot( QString key_P )
+void Kbd::key_slot( TQString key_P )
     {
     kdDebug( 1217 ) << "Key pressed:" << key_P << endl;
     KShortcut shortcut( key_P );
     if( !grabs.contains( shortcut ))
         return;
-    for( QMap< Kbd_receiver*, Receiver_data >::ConstIterator it = receivers.begin();
+    for( TQMap< Kbd_receiver*, Receiver_data >::ConstIterator it = receivers.begin();
          it != receivers.end();
          ++it )
         if( ( *it ).shortcuts.contains( shortcut ) && ( *it ).active

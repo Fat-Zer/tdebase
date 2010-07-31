@@ -22,7 +22,7 @@
 
 #include <klocale.h>
 
-MultiMeterSettings::MultiMeterSettings( QWidget *parent, const char *name )
+MultiMeterSettings::MultiMeterSettings( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "Multimeter Settings" ),
       Ok|Apply|Cancel, Ok, true )
 {
@@ -30,7 +30,7 @@ MultiMeterSettings::MultiMeterSettings( QWidget *parent, const char *name )
   setMainWidget( m_settingsWidget );
 }
 
-QString MultiMeterSettings::title()
+TQString MultiMeterSettings::title()
 {
   return m_settingsWidget->title();
 }
@@ -60,22 +60,22 @@ double MultiMeterSettings::upperLimit()
   return m_settingsWidget->upperLimit();
 }
 
-QColor MultiMeterSettings::normalDigitColor()
+TQColor MultiMeterSettings::normalDigitColor()
 {
   return m_settingsWidget->normalDigitColor();
 }
 
-QColor MultiMeterSettings::alarmDigitColor()
+TQColor MultiMeterSettings::alarmDigitColor()
 {
   return m_settingsWidget->alarmDigitColor();
 }
 
-QColor MultiMeterSettings::meterBackgroundColor()
+TQColor MultiMeterSettings::meterBackgroundColor()
 {
   return m_settingsWidget->meterBackgroundColor();
 }
 
-void MultiMeterSettings::setTitle( const QString &title )
+void MultiMeterSettings::setTitle( const TQString &title )
 {
   m_settingsWidget->setTitle( title );
 }
@@ -105,17 +105,17 @@ void MultiMeterSettings::setUpperLimit( double limit )
   m_settingsWidget->setUpperLimit( limit );
 }
 
-void MultiMeterSettings::setNormalDigitColor( const QColor &c )
+void MultiMeterSettings::setNormalDigitColor( const TQColor &c )
 {
   m_settingsWidget->setNormalDigitColor( c );
 }
 
-void MultiMeterSettings::setAlarmDigitColor( const QColor &c )
+void MultiMeterSettings::setAlarmDigitColor( const TQColor &c )
 {
   m_settingsWidget->setAlarmDigitColor( c );
 }
 
-void MultiMeterSettings::setMeterBackgroundColor( const QColor &c )
+void MultiMeterSettings::setMeterBackgroundColor( const TQColor &c )
 {
   m_settingsWidget->setMeterBackgroundColor( c );
 }

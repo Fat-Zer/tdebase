@@ -22,7 +22,7 @@
 #ifndef __POLICIES_H__
 #define __POLICIES_H__
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class KConfig;
 
@@ -54,9 +54,9 @@ public:
    * @param feature_key key of the "feature enabled" policy. The final
    *	key the policy is stored under will be prefix + featureKey.
    */
-  Policies(KConfig* config, const QString &group, bool global,
-  		const QString &domain, const QString &prefix,
-		const QString &feature_key);
+  Policies(KConfig* config, const TQString &group, bool global,
+  		const TQString &domain, const TQString &prefix,
+		const TQString &feature_key);
 
   virtual ~Policies();
 
@@ -70,7 +70,7 @@ public:
   /** sets a new domain for this policy
    * @param domain domain name, will be converted to lowercase
    */
-  void setDomain(const QString &domain);
+  void setDomain(const TQString &domain);
 
   /**
    * Returns whether the "feature enabled" policy is inherited.
@@ -124,10 +124,10 @@ protected:
 
   bool is_global;
   KConfig *config;
-  QString groupname;
-  QString domain;
-  QString prefix;
-  QString feature_key;
+  TQString groupname;
+  TQString domain;
+  TQString prefix;
+  TQString feature_key;
 };
 
 #endif		// __POLICIES_H__

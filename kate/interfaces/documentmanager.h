@@ -19,7 +19,7 @@
 #ifndef _KATE_DOCMANAGER_INCLUDE_
 #define _KATE_DOCMANAGER_INCLUDE_
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kurl.h>
 
 namespace Kate
@@ -61,7 +61,7 @@ class KDE_EXPORT DocumentManager : public QObject
     /** open a document and return a pointer to the document, if you specify a pointer != 0 to the id parameter
      * you will get the document id returned too
      */
-    class Document *openURL(const KURL&url,const QString &encoding=QString::null,uint *id =0);
+    class Document *openURL(const KURL&url,const TQString &encoding=TQString::null,uint *id =0);
     /** close a document by pointer
      */
     bool closeDocument(class Document *document);

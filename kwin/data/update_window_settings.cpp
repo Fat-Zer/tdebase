@@ -17,16 +17,16 @@ License. See the file "COPYING" for the exact licensing terms.
 
 struct SessionInfo
     {
-    QCString sessionId;
-    QCString windowRole;
-    QCString wmCommand;
-    QCString wmClientMachine;
-    QCString resourceName;
-    QCString resourceClass;
+    TQCString sessionId;
+    TQCString windowRole;
+    TQCString wmCommand;
+    TQCString wmClientMachine;
+    TQCString resourceName;
+    TQCString resourceClass;
 
-    QRect geometry;
-    QRect restore;
-    QRect fsrestore;
+    TQRect geometry;
+    TQRect restore;
+    TQRect fsrestore;
     int maximized;
     int fullscreen;
     int desktop;
@@ -43,7 +43,7 @@ struct SessionInfo
     bool fake; // fake session, i.e. 'save window settings', not SM restored
     };
 
-QPtrList<SessionInfo> fakeSession;
+TQPtrList<SessionInfo> fakeSession;
 
 static const char* const window_type_names[] = 
     {
@@ -69,28 +69,28 @@ void loadFakeSessionInfo( KConfig* config )
     int count =  config->readNumEntry( "count" );
     for ( int i = 1; i <= count; i++ ) 
         {
-        QString n = QString::number(i);
+        TQString n = TQString::number(i);
         SessionInfo* info = new SessionInfo;
         fakeSession.append( info );
-        info->windowRole = config->readEntry( QString("windowRole")+n ).latin1();
-        info->resourceName = config->readEntry( QString("resourceName")+n ).latin1();
-        info->resourceClass = config->readEntry( QString("resourceClass")+n ).lower().latin1();
-        info->wmClientMachine = config->readEntry( QString("clientMachine")+n ).latin1();
-        info->geometry = config->readRectEntry( QString("geometry")+n );
-        info->restore = config->readRectEntry( QString("restore")+n );
-        info->fsrestore = config->readRectEntry( QString("fsrestore")+n );
-        info->maximized = config->readNumEntry( QString("maximize")+n, 0 );
-        info->fullscreen = config->readNumEntry( QString("fullscreen")+n, 0 );
-        info->desktop = config->readNumEntry( QString("desktop")+n, 0 );
-        info->minimized = config->readBoolEntry( QString("iconified")+n, FALSE );
-        info->onAllDesktops = config->readBoolEntry( QString("sticky")+n, FALSE );
-        info->shaded = config->readBoolEntry( QString("shaded")+n, FALSE );
-        info->keepAbove = config->readBoolEntry( QString("staysOnTop")+n, FALSE  );
-        info->keepBelow = config->readBoolEntry( QString("keepBelow")+n, FALSE  );
-        info->skipTaskbar = config->readBoolEntry( QString("skipTaskbar")+n, FALSE  );
-        info->skipPager = config->readBoolEntry( QString("skipPager")+n, FALSE  );
-        info->userNoBorder = config->readBoolEntry( QString("userNoBorder")+n, FALSE  );
-        info->windowType = txtToWindowType( config->readEntry( QString("windowType")+n ).latin1());
+        info->windowRole = config->readEntry( TQString("windowRole")+n ).latin1();
+        info->resourceName = config->readEntry( TQString("resourceName")+n ).latin1();
+        info->resourceClass = config->readEntry( TQString("resourceClass")+n ).lower().latin1();
+        info->wmClientMachine = config->readEntry( TQString("clientMachine")+n ).latin1();
+        info->geometry = config->readRectEntry( TQString("geometry")+n );
+        info->restore = config->readRectEntry( TQString("restore")+n );
+        info->fsrestore = config->readRectEntry( TQString("fsrestore")+n );
+        info->maximized = config->readNumEntry( TQString("maximize")+n, 0 );
+        info->fullscreen = config->readNumEntry( TQString("fullscreen")+n, 0 );
+        info->desktop = config->readNumEntry( TQString("desktop")+n, 0 );
+        info->minimized = config->readBoolEntry( TQString("iconified")+n, FALSE );
+        info->onAllDesktops = config->readBoolEntry( TQString("sticky")+n, FALSE );
+        info->shaded = config->readBoolEntry( TQString("shaded")+n, FALSE );
+        info->keepAbove = config->readBoolEntry( TQString("staysOnTop")+n, FALSE  );
+        info->keepBelow = config->readBoolEntry( TQString("keepBelow")+n, FALSE  );
+        info->skipTaskbar = config->readBoolEntry( TQString("skipTaskbar")+n, FALSE  );
+        info->skipPager = config->readBoolEntry( TQString("skipPager")+n, FALSE  );
+        info->userNoBorder = config->readBoolEntry( TQString("userNoBorder")+n, FALSE  );
+        info->windowType = txtToWindowType( config->readEntry( TQString("windowType")+n ).latin1());
         info->active = false;
         info->fake = true;
         }
@@ -106,7 +106,7 @@ void writeRules( KConfig& cfg )
         if( info->resourceName.isEmpty() && info->resourceClass.isEmpty())
             continue;
         ++pos;
-        cfg.setGroup( QString::number( pos ));
+        cfg.setGroup( TQString::number( pos ));
         cfg.writeEntry( "description", ( const char* ) ( info->resourceClass + " (KDE3.2)" ));
         cfg.writeEntry( "wmclass", ( const char* )( info->resourceName + ' ' + info->resourceClass ));
         cfg.writeEntry( "wmclasscomplete", true );

@@ -6,22 +6,22 @@
 
 #include "history_settings.h"
 
-KonqSidebarHistorySettings::KonqSidebarHistorySettings( QObject *parent, const char *name )
-    : QObject( parent, name ),
+KonqSidebarHistorySettings::KonqSidebarHistorySettings( TQObject *parent, const char *name )
+    : TQObject( parent, name ),
       DCOPObject( "KonqSidebarHistorySettings" )
 {
     m_fontOlderThan.setItalic( true ); // default
 }
 
 KonqSidebarHistorySettings::KonqSidebarHistorySettings()
-    : QObject(),
+    : TQObject(),
       DCOPObject( "KonqSidebarHistorySettings" )
 {
     m_fontOlderThan.setItalic( true ); // default
 }
 
 KonqSidebarHistorySettings::KonqSidebarHistorySettings( const KonqSidebarHistorySettings& s )
-    : QObject(),
+    : TQObject(),
       DCOPObject( "KonqSidebarHistorySettings" )
 {
     m_valueYoungerThan = s.m_valueYoungerThan;
@@ -43,7 +43,7 @@ KonqSidebarHistorySettings::~KonqSidebarHistorySettings()
 void KonqSidebarHistorySettings::readSettings(bool global)
 {
     KConfig *config;
-    QString oldgroup;
+    TQString oldgroup;
 
     if (global) {
       config = KGlobal::config();
@@ -56,9 +56,9 @@ void KonqSidebarHistorySettings::readSettings(bool global)
     m_valueYoungerThan = config->readNumEntry("Value youngerThan", 1 );
     m_valueOlderThan = config->readNumEntry("Value olderThan", 2 );
 
-    QString minutes = QString::fromLatin1("minutes");
-    QString days = QString::fromLatin1("days");
-    QString metric = config->readEntry("Metric youngerThan", days );
+    TQString minutes = TQString::fromLatin1("minutes");
+    TQString days = TQString::fromLatin1("days");
+    TQString metric = config->readEntry("Metric youngerThan", days );
     m_metricYoungerThan = (metric == days) ? DAYS : MINUTES;
     metric = config->readEntry("Metric olderThan", days );
     m_metricOlderThan = (metric == days) ? DAYS : MINUTES;
@@ -83,8 +83,8 @@ void KonqSidebarHistorySettings::applySettings()
     config->writeEntry("Value youngerThan", m_valueYoungerThan );
     config->writeEntry("Value olderThan", m_valueOlderThan );
 
-    QString minutes = QString::fromLatin1("minutes");
-    QString days = QString::fromLatin1("days");
+    TQString minutes = TQString::fromLatin1("minutes");
+    TQString days = TQString::fromLatin1("days");
     config->writeEntry("Metric youngerThan", m_metricYoungerThan == DAYS ?
 			  days : minutes );
     config->writeEntry("Metric olderThan", m_metricOlderThan == DAYS ?
@@ -99,7 +99,7 @@ void KonqSidebarHistorySettings::applySettings()
 
     // notify konqueror instances about the new configuration
     kapp->dcopClient()->send( "konqueror*", "KonqSidebarHistorySettings",
-			      "notifySettingsChanged()", QByteArray() );
+			      "notifySettingsChanged()", TQByteArray() );
 }
 
 void KonqSidebarHistorySettings::notifySettingsChanged()

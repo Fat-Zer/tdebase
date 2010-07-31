@@ -1,19 +1,19 @@
 #ifndef __KDE_MODSYSTEMCONFIG_H
 #define __KDE_MODSYSTEMCONFIG_H
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qvbox.h>
-#include <qslider.h>
-#include <qlabel.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
+#include <tqvbox.h>
+#include <tqslider.h>
+#include <tqlabel.h>
 
 class ModernSysConfig : public QObject
 {
 	Q_OBJECT
 
 	public:
-		ModernSysConfig(KConfig* conf, QWidget* parent);
+		ModernSysConfig(KConfig* conf, TQWidget* parent);
 		~ModernSysConfig();
 
 	// These public signals/slots work similar to KCM modules
@@ -32,8 +32,8 @@ class ModernSysConfig : public QObject
 		KConfig   	*clientrc;
 		QWidget		*mainw;
 		QVBoxLayout	*vbox;
-		QWidget         *handleBox;
-		QCheckBox 	*cbShowHandle;
+		TQWidget         *handleBox;
+		TQCheckBox 	*cbShowHandle;
 		QVBox		*sliderBox;
 		QSlider		*handleSizeSlider;
 		QHBox		*hbox;

@@ -20,7 +20,7 @@
 #ifndef __kcustommenu_h__
 #define __kcustommenu_h__
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kservice.h>
 
 /*
@@ -34,7 +34,7 @@ public:
    /**
     * Create a custome menu described by @p configfile.
     */
-   KCustomMenu(const QString &configfile, QWidget *parent=0);
+   KCustomMenu(const TQString &configfile, TQWidget *parent=0);
 
    /**
     * Destructor

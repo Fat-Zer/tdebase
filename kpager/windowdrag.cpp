@@ -25,12 +25,12 @@
 
 #include "windowdrag.h"
 
-PagerWindowDrag::PagerWindowDrag(WId w,int deltax,int deltay, int origdesk,QWidget *parent)
-    : QStoredDrag("application/x-kpager",parent,"windowdrag")
+PagerWindowDrag::PagerWindowDrag(WId w,int deltax,int deltay, int origdesk,TQWidget *parent)
+    : TQStoredDrag("application/x-kpager",parent,"windowdrag")
 {
-    QString tmp;
+    TQString tmp;
     tmp.sprintf("%d %d %d %d", static_cast<int>(w), deltax, deltay, origdesk);
-    QByteArray data;
+    TQByteArray data;
     data.setRawData(tmp.latin1(),tmp.length()+1);
 
     setEncodedData(data);
@@ -41,14 +41,14 @@ PagerWindowDrag::~PagerWindowDrag()
 {
 }
 
-bool PagerWindowDrag::canDecode (QDragMoveEvent *e)
+bool PagerWindowDrag::canDecode (TQDragMoveEvent *e)
 {
     return e->provides("application/x-kpager");
 }
 
-bool PagerWindowDrag::decode( QDropEvent *e, WId &w,int &deltax,int &deltay,int &origdesk)
+bool PagerWindowDrag::decode( TQDropEvent *e, WId &w,int &deltax,int &deltay,int &origdesk)
 {
-    QByteArray data=e->data("application/x-kpager");
+    TQByteArray data=e->data("application/x-kpager");
     if (data.size())
 	{
 	    char *tmp=data.data();

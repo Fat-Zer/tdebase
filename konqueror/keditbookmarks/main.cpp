@@ -59,13 +59,13 @@ static KCmdLineOptions options[] = {
     KCmdLineLastOption
 };
 
-static void continueInWindow(QString _wname) {
-    QCString wname = _wname.latin1();
+static void continueInWindow(TQString _wname) {
+    TQCString wname = _wname.latin1();
     int id = -1;
 
     QCStringList apps = kapp->dcopClient()->registeredApplications();
     for (QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it) {
-        QCString &clientId = *it;
+        TQCString &clientId = *it;
 
         if (qstrncmp(clientId, wname, wname.length()) != 0)
             continue;
@@ -83,8 +83,8 @@ static void continueInWindow(QString _wname) {
 }
 
 // TODO - make this register() or something like that and move dialog into main
-static int askUser(KApplication &app, QString filename, bool &readonly) {
-    QCString requestedName("keditbookmarks");
+static int askUser(KApplication &app, TQString filename, bool &readonly) {
+    TQCString requestedName("keditbookmarks");
 
     if (!filename.isEmpty())
         requestedName += "-" + filename.utf8();
@@ -138,9 +138,9 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
 
     bool gotArg = (args->count() == 1);
 
-    QString filename = gotArg
-        ? QString::fromLatin1(args->arg(0))
-        : locateLocal("data", QString::fromLatin1("konqueror/bookmarks.xml"));
+    TQString filename = gotArg
+        ? TQString::fromLatin1(args->arg(0))
+        : locateLocal("data", TQString::fromLatin1("konqueror/bookmarks.xml"));
 
     if (!isGui) {
         CurrentMgr::self()->createManager(filename);
@@ -161,12 +161,12 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
             // TODO - maybe an xbel export???
             if (got > 1) // got == 0 isn't possible as !isGui is dependant on "export.*"
                 KCmdLineArgs::usage(I18N_NOOP("You may only specify a single --export option."));
-            QString path = QString::fromLocal8Bit(args->getOption(arg2));
+            TQString path = TQString::fromLocal8Bit(args->getOption(arg2));
             CurrentMgr::self()->doExport(exportType, path);
         } else if (importType) {
             if (got > 1) // got == 0 isn't possible as !isGui is dependant on "import.*"
                 KCmdLineArgs::usage(I18N_NOOP("You may only specify a single --import option."));
-            QString path = QString::fromLocal8Bit(args->getOption(arg2));
+            TQString path = TQString::fromLocal8Bit(args->getOption(arg2));
             ImportCommand *importer = ImportCommand::importerFactory(importType);
             importer->import(path, true);
             importer->execute();
@@ -176,19 +176,19 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
         return 0; // error flag on exit?, 1?
     }
 
-    QString address = args->isSet("address")
-        ? QString::fromLocal8Bit(args->getOption("address"))
-        : QString("/0");
+    TQString address = args->isSet("address")
+        ? TQString::fromLocal8Bit(args->getOption("address"))
+        : TQString("/0");
 
-    QString caption = args->isSet("customcaption")
-        ? QString::fromLocal8Bit(args->getOption("customcaption"))
-        : QString::null;
+    TQString caption = args->isSet("customcaption")
+        ? TQString::fromLocal8Bit(args->getOption("customcaption"))
+        : TQString::null;
 
     args->clear();
 
     bool readonly = false; // passed by ref
 
-    if (askUser(app, (gotArg ? filename : QString::null), readonly)) {
+    if (askUser(app, (gotArg ? filename : TQString::null), readonly)) {
         KEBApp *toplevel = new KEBApp(filename, readonly, address, browser, caption);
         toplevel->show();
         app.setMainWidget(toplevel);

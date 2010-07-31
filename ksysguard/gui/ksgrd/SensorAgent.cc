@@ -55,7 +55,7 @@ SensorAgent::~SensorAgent()
 {
 }
 
-bool SensorAgent::sendRequest( const QString &req, SensorClient *client, int id )
+bool SensorAgent::sendRequest( const TQString &req, SensorClient *client, int id )
 {
   /* The request is registered with the FIFO so that the answer can be
    * routed back to the requesting client. */
@@ -70,7 +70,7 @@ bool SensorAgent::sendRequest( const QString &req, SensorClient *client, int id 
   return false;
 }
 
-void SensorAgent::processAnswer( const QString &buffer )
+void SensorAgent::processAnswer( const TQString &buffer )
 {
 #if SA_TRACE
   kdDebug(1215) << "<- " << buffer << endl;
@@ -89,7 +89,7 @@ void SensorAgent::processAnswer( const QString &buffer )
                            .arg( mHostName )
                            .arg( mErrorBuffer ) );
         }
-        mErrorBuffer = QString::null;
+        mErrorBuffer = TQString::null;
       }
     } else if ( mState == 0 ) // receiving to answerBuffer
       mAnswerBuffer += buffer[ i ];
@@ -112,7 +112,7 @@ void SensorAgent::processAnswer( const QString &buffer )
 #if SA_TRACE
       kdDebug(1215) << "Daemon now online!" << endl;
 #endif
-      mAnswerBuffer = QString::null;
+      mAnswerBuffer = TQString::null;
       break;
     }
 	
@@ -121,7 +121,7 @@ void SensorAgent::processAnswer( const QString &buffer )
     if ( !req ) {
       kdDebug(1215)	<< "ERROR: Received answer but have no pending "
                     << "request! : " << mAnswerBuffer.left( end ) << endl;
-      mAnswerBuffer = QString::null;
+      mAnswerBuffer = TQString::null;
     } else {		
       if ( !req->client() ) {
         /* The client has disappeared before receiving the answer
@@ -161,7 +161,7 @@ void SensorAgent::executeCommand()
                   << "/" << mProcessingFIFO.count() << ")" << endl;
 #endif
     // send request to daemon
-    QString cmdWithNL = req->request() + "\n";
+    TQString cmdWithNL = req->request() + "\n";
     if ( writeMsg( cmdWithNL.ascii(), cmdWithNL.length() ) )
       mTransmitting = true;
     else
@@ -207,18 +207,18 @@ bool SensorAgent::transmitting() const
   return mTransmitting;
 }
 
-void SensorAgent::setHostName( const QString &hostName )
+void SensorAgent::setHostName( const TQString &hostName )
 {
   mHostName = hostName;
 }
 
-const QString &SensorAgent::hostName() const
+const TQString &SensorAgent::hostName() const
 {
   return mHostName;
 }
 
 
-SensorRequest::SensorRequest( const QString &request, SensorClient *client, int id )
+SensorRequest::SensorRequest( const TQString &request, SensorClient *client, int id )
   : mRequest( request ), mClient( client ), mId( id )
 {
 }
@@ -227,12 +227,12 @@ SensorRequest::~SensorRequest()
 {
 }
 
-void SensorRequest::setRequest( const QString &request )
+void SensorRequest::setRequest( const TQString &request )
 {
   mRequest = request;
 }
 
-QString SensorRequest::request() const
+TQString SensorRequest::request() const
 {
   return mRequest;
 }

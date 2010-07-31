@@ -42,10 +42,10 @@
 #include <ksimpleconfig.h>
 #include <kstartupinfo.h>
 
-#include <qfile.h>
-#include <qtimer.h>
-#include <qdir.h>
-#include <qtextcodec.h>
+#include <tqfile.h>
+#include <tqtimer.h>
+#include <tqdir.h>
+#include <tqtextcodec.h>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -81,7 +81,7 @@ KateApp::KateApp (KCmdLineArgs *args)
   m_obj = new KateAppDCOPIface (this);
 
   kdDebug()<<"Setting KATE_PID: '"<<getpid()<<"'"<<endl;
-  ::setenv( "KATE_PID", QString("%1").arg(getpid()).latin1(), 1 );
+  ::setenv( "KATE_PID", TQString("%1").arg(getpid()).latin1(), 1 );
 
   // handle restore different
   if (isRestored())
@@ -129,10 +129,10 @@ Kate::Application *KateApp::application ()
  * Has always been the Kate Versioning Scheme:
  * KDE X.Y.Z contains Kate X-1.Y.Z
  */
-QString KateApp::kateVersion (bool fullVersion)
+TQString KateApp::kateVersion (bool fullVersion)
 {
-  return fullVersion ? QString ("%1.%2.%3").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor()).arg(KDE::versionRelease())
-           : QString ("%1.%2").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor());
+  return fullVersion ? TQString ("%1.%2.%3").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor()).arg(KDE::versionRelease())
+           : TQString ("%1.%2").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor());
 }
 
 void KateApp::restoreKate ()
@@ -142,7 +142,7 @@ void KateApp::restoreKate ()
 
   // activate again correct session!!!
   sessionConfig()->setGroup("General");
-  QString lastSession (sessionConfig()->readEntry ("Last Session", "default.katesession"));
+  TQString lastSession (sessionConfig()->readEntry ("Last Session", "default.katesession"));
   sessionManager()->activateSession (new KateSession (sessionManager(), lastSession, ""), false, false, false);
 
   m_docManager->restoreDocumentList (sessionConfig());
@@ -151,7 +151,7 @@ void KateApp::restoreKate ()
 
   // restore all windows ;)
   for (int n=1; KMainWindow::canBeRestored(n); n++)
-    newMainWindow(sessionConfig(), QString ("%1").arg(n));
+    newMainWindow(sessionConfig(), TQString ("%1").arg(n));
 
   // oh, no mainwindow, create one, should not happen, but make sure ;)
   if (mainWindows() == 0)
@@ -166,7 +166,7 @@ bool KateApp::startupKate ()
   // user specified session to open
   if (m_args->isSet ("start"))
   {
-    sessionManager()->activateSession (sessionManager()->giveSession (QString::fromLocal8Bit(m_args->getOption("start"))), false, false);
+    sessionManager()->activateSession (sessionManager()->giveSession (TQString::fromLocal8Bit(m_args->getOption("start"))), false, false);
   }
   else
   {
@@ -186,7 +186,7 @@ bool KateApp::startupKate ()
   // notify about start
   KStartupInfo::setNewStartupId( activeMainWindow(), startupId());
 
-  QTextCodec *codec = m_args->isSet("encoding") ? QTextCodec::codecForName(m_args->getOption("encoding")) : 0;
+  TQTextCodec *codec = m_args->isSet("encoding") ? TQTextCodec::codecForName(m_args->getOption("encoding")) : 0;
 
   bool tempfileSet = KCmdLineArgs::isTempFileSet();
 
@@ -195,7 +195,7 @@ bool KateApp::startupKate ()
   for (int z=0; z<m_args->count(); z++)
   {
     // this file is no local dir, open it, else warn
-    bool noDir = !m_args->url(z).isLocalFile() || !QDir (m_args->url(z).path()).exists();
+    bool noDir = !m_args->url(z).isLocalFile() || !TQDir (m_args->url(z).path()).exists();
 
     if (noDir)
     {
@@ -203,7 +203,7 @@ bool KateApp::startupKate ()
       if (codec)
         id = activeMainWindow()->viewManager()->openURL( m_args->url(z), codec->name(), false, tempfileSet );
       else
-        id = activeMainWindow()->viewManager()->openURL( m_args->url(z), QString::null, false, tempfileSet );
+        id = activeMainWindow()->viewManager()->openURL( m_args->url(z), TQString::null, false, tempfileSet );
     }
     else
       KMessageBox::sorry( activeMainWindow(),
@@ -215,14 +215,14 @@ bool KateApp::startupKate ()
   // handle stdin input
   if( m_args->isSet( "stdin" ) )
   {
-    QTextIStream input(stdin);
+    TQTextIStream input(stdin);
 
     // set chosen codec
     if (codec)
       input.setCodec (codec);
 
-    QString line;
-    QString text;
+    TQString line;
+    TQString text;
 
     do
     {
@@ -295,19 +295,19 @@ KateSessionManager *KateApp::sessionManager ()
   return m_sessionManager;
 }
 
-bool KateApp::openURL (const KURL &url, const QString &encoding, bool isTempFile)
+bool KateApp::openURL (const KURL &url, const TQString &encoding, bool isTempFile)
 {
   KateMainWindow *mainWindow = activeMainWindow ();
 
   if (!mainWindow)
     return false;
 
-  QTextCodec *codec = encoding.isEmpty() ? 0 : QTextCodec::codecForName(encoding.latin1());
+  TQTextCodec *codec = encoding.isEmpty() ? 0 : TQTextCodec::codecForName(encoding.latin1());
 
   kdDebug () << "OPEN URL "<< encoding << endl;
 
   // this file is no local dir, open it, else warn
-  bool noDir = !url.isLocalFile() || !QDir (url.path()).exists();
+  bool noDir = !url.isLocalFile() || !TQDir (url.path()).exists();
 
   if (noDir)
   {
@@ -315,7 +315,7 @@ bool KateApp::openURL (const KURL &url, const QString &encoding, bool isTempFile
     if (codec)
       mainWindow->viewManager()->openURL( url, codec->name(), true, isTempFile );
     else
-      mainWindow->viewManager()->openURL( url, QString::null, true, isTempFile );
+      mainWindow->viewManager()->openURL( url, TQString::null, true, isTempFile );
   }
   else
     KMessageBox::sorry( mainWindow,
@@ -336,7 +336,7 @@ bool KateApp::setCursor (int line, int column)
   return true;
 }
 
-bool KateApp::openInput (const QString &text)
+bool KateApp::openInput (const TQString &text)
 {
   activeMainWindow()->viewManager()->openURL( "", "", true );
 
@@ -348,7 +348,7 @@ bool KateApp::openInput (const QString &text)
   return true;
 }
 
-KateMainWindow *KateApp::newMainWindow (KConfig *sconfig, const QString &sgroup)
+KateMainWindow *KateApp::newMainWindow (KConfig *sconfig, const TQString &sgroup)
 {
   KateMainWindow *mainWindow = new KateMainWindow (sconfig, sgroup);
   m_mainWindows.push_back (mainWindow);

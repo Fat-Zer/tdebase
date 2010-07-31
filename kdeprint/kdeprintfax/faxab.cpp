@@ -20,11 +20,11 @@
 
 #include "faxab.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <kpushbutton.h>
 #include <klistview.h>
-#include <qheader.h>
+#include <tqheader.h>
 #include <klocale.h>
 #include <kabc/stdaddressbook.h>
 #include <kmessagebox.h>
@@ -34,26 +34,26 @@
 #include <kglobal.h>
 #include <kconfig.h>
 
-FaxAB::FaxAB(QWidget *parent, const char *name)
+FaxAB::FaxAB(TQWidget *parent, const char *name)
 : KDialog(parent, name, true)
 {
 	m_list = new KListView( this );
 	m_list->addColumn( i18n( "Name" ) );
 	m_list->addColumn( i18n( "Fax Number" ) );
 	m_list->header()->setStretchEnabled( true, 0 );
-	QLabel	*m_listlabel = new QLabel(i18n("Entries:"), this);
+	QLabel	*m_listlabel = new TQLabel(i18n("Entries:"), this);
 	m_ok = new KPushButton(KStdGuiItem::ok(), this);
 	QPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
 	QPushButton	*m_ab = new KPushButton(KGuiItem(i18n("&Edit Addressbook"), "contents"), this);
-	connect(m_ok, SIGNAL(clicked()), SLOT(accept()));
-	connect(m_cancel, SIGNAL(clicked()), SLOT(reject()));
-	connect(m_ab, SIGNAL(clicked()), SLOT(slotEditAb()));
+	connect(m_ok, TQT_SIGNAL(clicked()), TQT_SLOT(accept()));
+	connect(m_cancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
+	connect(m_ab, TQT_SIGNAL(clicked()), TQT_SLOT(slotEditAb()));
 	m_ok->setDefault(true);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 10, 10);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 10);
 	l0->addWidget( m_listlabel );
 	l0->addWidget( m_list );
-	QHBoxLayout	*l2 = new QHBoxLayout(0, 0, 10);
+	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
 	l0->addLayout(l2, 0);
 	l2->addWidget(m_ab, 0);
 	l2->addStretch(1);
@@ -62,11 +62,11 @@ FaxAB::FaxAB(QWidget *parent, const char *name)
 
 	KConfig *conf = KGlobal::config();
 	conf->setGroup( "General" );
-	QSize defsize( 400, 200 );
+	TQSize defsize( 400, 200 );
 	resize( conf->readSizeEntry( "ABSize", &defsize ) );
 
 	initialize();
-	connect(KABC::StdAddressBook::self(), SIGNAL(addressBookChanged(AddressBook*)), SLOT(slotAbChanged(AddressBook*)));
+	connect(KABC::StdAddressBook::self(), TQT_SIGNAL(addressBookChanged(AddressBook*)), TQT_SLOT(slotAbChanged(AddressBook*)));
 }
 
 FaxAB::~FaxAB()
@@ -86,7 +86,7 @@ void FaxAB::initialize()
 	{
 		KABC::PhoneNumber::List	numbers = (*it).phoneNumbers();
 		KABC::PhoneNumber::List faxNumbers;
-		for (QValueList<KABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
+		for (TQValueList<KABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
 		{
 			if (((*nit).type() & KABC::PhoneNumber::Fax) && !(*nit).number().isEmpty())
 				faxNumbers << ( *nit );
@@ -102,7 +102,7 @@ void FaxAB::initialize()
 					entry.m_name = ( *it ).formattedName();
 				else
 				{
-					QString key = ( *it ).familyName();
+					TQString key = ( *it ).familyName();
 					if ( !( *it ).givenName().isEmpty() )
 					{
 						if ( !key.isEmpty() )
@@ -119,9 +119,9 @@ void FaxAB::initialize()
 
 	if (m_entries.count() > 0)
 	{
-		for (QMap<QString,FaxABEntry>::ConstIterator it=m_entries.begin(); it!=m_entries.end(); ++it)
+		for (TQMap<TQString,FaxABEntry>::ConstIterator it=m_entries.begin(); it!=m_entries.end(); ++it)
 		{
-			QCheckListItem *item = new QCheckListItem( m_list, it.key(), QCheckListItem::CheckBox );
+			TQCheckListItem *item = new TQCheckListItem( m_list, it.key(), TQCheckListItem::CheckBox );
 			item->setText( 1, ( *it ).m_number.number() );
 			item->setText( 2, ( *it ).m_enterprise );
 		}
@@ -142,7 +142,7 @@ void FaxAB::slotAbChanged(AddressBook*)
 	initialize();
 }
 
-bool FaxAB::getEntry(QStringList& number, QStringList& name, QStringList& enterprise, QWidget *parent)
+bool FaxAB::getEntry(TQStringList& number, TQStringList& name, TQStringList& enterprise, TQWidget *parent)
 {
 	FaxAB	kab(parent);
 	if (!kab.isValid())
@@ -152,7 +152,7 @@ bool FaxAB::getEntry(QStringList& number, QStringList& name, QStringList& enterp
 	}
 	if (kab.exec())
 	{
-		QListViewItemIterator it( kab.m_list, QListViewItemIterator::Checked );
+		TQListViewItemIterator it( kab.m_list, TQListViewItemIterator::Checked );
 		while ( it.current() )
 		{
 			number << it.current()->text( 1 );
@@ -174,18 +174,18 @@ bool FaxAB::getEntry(QStringList& number, QStringList& name, QStringList& enterp
 	return false;
 }
 
-bool FaxAB::getEntryByNumber(const QString& number, QString& name, QString& enterprise)
+bool FaxAB::getEntryByNumber(const TQString& number, TQString& name, TQString& enterprise)
 {
 	KABC::AddressBook *bk = KABC::StdAddressBook::self();
 	for (KABC::AddressBook::Iterator it=bk->begin(); it!=bk->end(); ++it)
 	{
 		KABC::PhoneNumber::List	numbers = (*it).phoneNumbers();
 		QStringList	filteredNumbers;
-		for (QValueList<KABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
+		for (TQValueList<KABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
 		{
 			if (((*nit).type() & KABC::PhoneNumber::Fax) )
 			{
-				QString strippedNumber;
+				TQString strippedNumber;
 				for (uint i = 0; i < (*nit).number().length(); ++i)
 					if ((*nit).number()[i].isDigit() || ( *nit ).number()[ i ] == '+')
 						strippedNumber.append((*nit).number()[i]);

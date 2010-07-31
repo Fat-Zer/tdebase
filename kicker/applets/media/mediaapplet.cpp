@@ -33,7 +33,7 @@
 
 extern "C"
 {
-    KDE_EXPORT KPanelApplet* init( QWidget *parent, const QString configFile)
+    KDE_EXPORT KPanelApplet* init( TQWidget *parent, const TQString configFile)
     {
         KGlobal::locale()->insertCatalogue("mediaapplet");
         return new MediaApplet(configFile, KPanelApplet::Normal,
@@ -42,7 +42,7 @@ extern "C"
     }
 }
 
-MediaApplet::MediaApplet(const QString& configFile, Type type, int actions, QWidget *parent, const char *name)
+MediaApplet::MediaApplet(const TQString& configFile, Type type, int actions, TQWidget *parent, const char *name)
     : KPanelApplet(configFile, type, actions, parent, name),
     mButtonSizeSum(0)
 {
@@ -57,18 +57,18 @@ MediaApplet::MediaApplet(const QString& configFile, Type type, int actions, QWid
     
     mpDirLister = new KDirLister();
     
-    connect( mpDirLister, SIGNAL( clear() ),
-            this, SLOT( slotClear() ) );
-    connect( mpDirLister, SIGNAL( started(const KURL&) ),
-            this, SLOT( slotStarted(const KURL&) ) );
-    connect( mpDirLister, SIGNAL( completed() ),
-            this, SLOT( slotCompleted() ) );
-    connect( mpDirLister, SIGNAL( newItems( const KFileItemList & ) ),
-            this, SLOT( slotNewItems( const KFileItemList & ) ) );
-    connect( mpDirLister, SIGNAL( deleteItem( KFileItem * ) ),
-            this, SLOT( slotDeleteItem( KFileItem * ) ) );
-    connect( mpDirLister, SIGNAL( refreshItems( const KFileItemList & ) ),
-            this, SLOT( slotRefreshItems( const KFileItemList & ) ) );
+    connect( mpDirLister, TQT_SIGNAL( clear() ),
+            this, TQT_SLOT( slotClear() ) );
+    connect( mpDirLister, TQT_SIGNAL( started(const KURL&) ),
+            this, TQT_SLOT( slotStarted(const KURL&) ) );
+    connect( mpDirLister, TQT_SIGNAL( completed() ),
+            this, TQT_SLOT( slotCompleted() ) );
+    connect( mpDirLister, TQT_SIGNAL( newItems( const KFileItemList & ) ),
+            this, TQT_SLOT( slotNewItems( const KFileItemList & ) ) );
+    connect( mpDirLister, TQT_SIGNAL( deleteItem( KFileItem * ) ),
+            this, TQT_SLOT( slotDeleteItem( KFileItem * ) ) );
+    connect( mpDirLister, TQT_SIGNAL( refreshItems( const KFileItemList & ) ),
+            this, TQT_SLOT( slotRefreshItems( const KFileItemList & ) ) );
     
     reloadList();
 }
@@ -135,7 +135,7 @@ int MediaApplet::heightForWidth( int /*width*/ ) const
     return mButtonSizeSum;
 }
 
-void MediaApplet::resizeEvent( QResizeEvent *)
+void MediaApplet::resizeEvent( TQResizeEvent *)
 {
     arrangeButtons();
 }
@@ -323,7 +323,7 @@ void MediaApplet::slotRefreshItems(const KFileItemList &entries)
     {
         kdDebug()<<"MediaApplet::slotRefreshItems:"<<(*it.current()).url().url()<<endl;
     
-        QString mimetype = (*it.current()).mimetype();
+        TQString mimetype = (*it.current()).mimetype();
         bool found = false;
     
         kdDebug()<<"mimetype="<<mimetype<<endl;
@@ -423,7 +423,7 @@ void MediaApplet::reloadList()
     mpDirLister->openURL(KURL("media:/"));
 }
 
-void MediaApplet::mousePressEvent(QMouseEvent *e)
+void MediaApplet::mousePressEvent(TQMouseEvent *e)
 {
     if(e->button()==RightButton)
     {

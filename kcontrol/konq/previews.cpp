@@ -19,10 +19,10 @@
 // File previews configuration
 //
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 
@@ -42,12 +42,12 @@
 class PreviewCheckListItem : public QCheckListItem
 {
   public:
-    PreviewCheckListItem( QListView *parent, const QString &text )
-      : QCheckListItem( parent, text, CheckBoxController )
+    PreviewCheckListItem( TQListView *parent, const TQString &text )
+      : TQCheckListItem( parent, text, CheckBoxController )
     {}
 
-    PreviewCheckListItem( QListViewItem *parent, const QString &text )
-      : QCheckListItem( parent, text, CheckBox )
+    PreviewCheckListItem( TQListViewItem *parent, const TQString &text )
+      : TQCheckListItem( parent, text, CheckBox )
     {}
 
   protected:
@@ -57,12 +57,12 @@ class PreviewCheckListItem : public QCheckListItem
     }
 };
 
-KPreviewOptions::KPreviewOptions( QWidget *parent, const char */*name*/ )
+KPreviewOptions::KPreviewOptions( TQWidget *parent, const char */*name*/ )
     : KCModule( parent, "kcmkonq" )
 {
-    QVBoxLayout *lay = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *lay = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
-    lay->addWidget( new QLabel( i18n("<p>Allow previews, \"Folder Icons Reflect Contents\", and "
+    lay->addWidget( new TQLabel( i18n("<p>Allow previews, \"Folder Icons Reflect Contents\", and "
                                      "retrieval of meta-data on protocols:</p>"), this ) );
 
     setQuickHelp( i18n("<h1>Preview Options</h1> Here you can modify the behavior "
@@ -81,7 +81,7 @@ KPreviewOptions::KPreviewOptions( QWidget *parent, const char */*name*/ )
     listView->addColumn( i18n( "Select Protocols" ) );
     listView->setFullWidth( true );
 
-    QHBoxLayout *hbox = new QHBoxLayout( lay );
+    TQHBoxLayout *hbox = new TQHBoxLayout( lay );
     hbox->addWidget( listView );
     hbox->addStretch();
 
@@ -90,9 +90,9 @@ KPreviewOptions::KPreviewOptions( QWidget *parent, const char */*name*/ )
     PreviewCheckListItem *inetItems = new PreviewCheckListItem( listView,
         i18n( "Internet Protocols" ) );
 
-    QStringList protocolList = KProtocolInfo::protocols();
+    TQStringList protocolList = KProtocolInfo::protocols();
     protocolList.sort();
-    QStringList::Iterator it = protocolList.begin();
+    TQStringList::Iterator it = protocolList.begin();
 
     KURL url;
     url.setPath("/");
@@ -102,7 +102,7 @@ KPreviewOptions::KPreviewOptions( QWidget *parent, const char */*name*/ )
         url.setProtocol( *it );
         if ( KProtocolInfo::supportsListing( url ) )
         {
-            QCheckListItem *item;
+            TQCheckListItem *item;
             if ( KProtocolInfo::protocolClass( *it ) == ":local" )
                 item = new PreviewCheckListItem( localItems, ( *it ) );
             else
@@ -115,13 +115,13 @@ KPreviewOptions::KPreviewOptions( QWidget *parent, const char */*name*/ )
     listView->setOpen( localItems, true );
     listView->setOpen( inetItems, true );
 
-    QWhatsThis::add( listView,
+    TQWhatsThis::add( listView,
                      i18n("This option makes it possible to choose when the file previews, "
                           "smart folder icons, and meta-data in the File Manager should be activated.\n"
                           "In the list of protocols that appear, select which ones are fast "
                           "enough for you to allow previews to be generated.") );
 
-    QLabel *label = new QLabel( i18n( "&Maximum file size:" ), this );
+    TQLabel *label = new TQLabel( i18n( "&Maximum file size:" ), this );
     lay->addWidget( label );
 
     m_maxSize = new KDoubleNumInput( this );
@@ -130,24 +130,24 @@ KPreviewOptions::KPreviewOptions( QWidget *parent, const char */*name*/ )
     m_maxSize->setPrecision( 1 );
     label->setBuddy( m_maxSize );
     lay->addWidget( m_maxSize );
-    connect( m_maxSize, SIGNAL( valueChanged(double) ), SLOT( changed() ) );
+    connect( m_maxSize, TQT_SIGNAL( valueChanged(double) ), TQT_SLOT( changed() ) );
 
-    m_boostSize = new QCheckBox(i18n("&Increase size of previews relative to icons"), this);
-    connect( m_boostSize, SIGNAL( toggled(bool) ), SLOT( changed() ) );
+    m_boostSize = new TQCheckBox(i18n("&Increase size of previews relative to icons"), this);
+    connect( m_boostSize, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( changed() ) );
     lay->addWidget(m_boostSize);
 
-    m_useFileThumbnails = new QCheckBox(i18n("&Use thumbnails embedded in files"), this);
-    connect( m_useFileThumbnails, SIGNAL( toggled(bool) ), SLOT( changed() ) );
+    m_useFileThumbnails = new TQCheckBox(i18n("&Use thumbnails embedded in files"), this);
+    connect( m_useFileThumbnails, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( changed() ) );
 
     lay->addWidget(m_useFileThumbnails);
 
-    QWhatsThis::add( m_useFileThumbnails,
+    TQWhatsThis::add( m_useFileThumbnails,
                 i18n("Select this to use thumbnails that are found inside some "
                 "file types (e.g. JPEG). This will increase speed and reduce "
                 "disk usage. Deselect it if you have files that have been processed "
                 "by programs which create inaccurate thumbnails, such as ImageMagick.") );
 
-    lay->addWidget( new QWidget(this), 10 );
+    lay->addWidget( new TQWidget(this), 10 );
 
     load();
 }
@@ -160,10 +160,10 @@ void KPreviewOptions::load(bool useDefaults)
     // *** load and apply to GUI ***
     KGlobal::config()->setReadDefaults(useDefaults);
     KConfigGroup group( KGlobal::config(), "PreviewSettings" );
-    QPtrListIterator<QCheckListItem> it( m_items );
+    TQPtrListIterator<TQCheckListItem> it( m_items );
 
     for ( ; it.current() ; ++it ) {
-        QString protocol( it.current()->text() );
+        TQString protocol( it.current()->text() );
         if ( ( protocol == "file" ) && ( !group.hasKey ( protocol ) ) )
           // file should be enabled in case is not defined because if not so
           // than preview's lost when size is changed from default one
@@ -192,9 +192,9 @@ void KPreviewOptions::defaults()
 void KPreviewOptions::save()
 {
     KConfigGroup group( KGlobal::config(), "PreviewSettings" );
-    QPtrListIterator<QCheckListItem> it( m_items );
+    TQPtrListIterator<TQCheckListItem> it( m_items );
     for ( ; it.current() ; ++it ) {
-        QString protocol( it.current()->text() );
+        TQString protocol( it.current()->text() );
         group.writeEntry( protocol, it.current()->isOn(), true, true );
     }
     // config key is in bytes, numinput is in MB
@@ -205,7 +205,7 @@ void KPreviewOptions::save()
 
     // Send signal to konqueror
     // Warning. In case something is added/changed here, keep kfmclient in sync
-    QByteArray data;
+    TQByteArray data;
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
     kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );

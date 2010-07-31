@@ -54,7 +54,7 @@ namespace Kate
 unsigned int Plugin::globalPluginNumber = 0;
 unsigned int PluginViewInterface::globalPluginViewInterfaceNumber = 0;
 
-Plugin::Plugin( Application *application, const char *name ) : QObject (application, name )
+Plugin::Plugin( Application *application, const char *name ) : TQObject (application, name )
 {
   globalPluginNumber++;
   myPluginNumber = globalPluginNumber;
@@ -89,7 +89,7 @@ unsigned int PluginViewInterface::pluginViewInterfaceNumber () const
   return myPluginViewInterfaceNumber;
 }
 
-Plugin *createPlugin ( const char* libname, Application *application, const char *name, const QStringList &args )
+Plugin *createPlugin ( const char* libname, Application *application, const char *name, const TQStringList &args )
 {
   return KParts::ComponentFactory::createInstanceFromLibrary<Plugin>( libname, application, name, args);
 }

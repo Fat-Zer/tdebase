@@ -25,8 +25,8 @@
 #include <time.h>
 #include <config.h>
 
-#include <qlabel.h>
-#include <qfile.h>
+#include <tqlabel.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -46,15 +46,15 @@
 #include <sys/stat.h>
 #endif
 
-Tzone::Tzone(QWidget * parent, const char *name)
-  : QVGroupBox(parent, name)
+Tzone::Tzone(TQWidget * parent, const char *name)
+  : TQVGroupBox(parent, name)
 {
     setTitle(i18n("To change the timezone, select your area from the list below"));
 
     tzonelist = new KTimezoneWidget(this, "ComboBox_1", &m_zoneDb);
-    connect( tzonelist, SIGNAL(selectionChanged()), SLOT(handleZoneChange()) );
+    connect( tzonelist, TQT_SIGNAL(selectionChanged()), TQT_SLOT(handleZoneChange()) );
 
-    m_local = new QLabel(this);
+    m_local = new TQLabel(this);
 
     load();
 
@@ -71,8 +71,8 @@ void Tzone::load()
 
 void Tzone::currentZone()
 {
-    QString localZone(i18n("Current local timezone: %1 (%2)"));
-    QCString result(100);
+    TQString localZone(i18n("Current local timezone: %1 (%2)"));
+    TQCString result(100);
 
     time_t now = time(0);
     tzset();
@@ -84,33 +84,33 @@ void Tzone::currentZone()
 // on non-Solaris systems which do not use /etc/timezone?
 void Tzone::save()
 {
-    QStringList selectedZones(tzonelist->selection());
+    TQStringList selectedZones(tzonelist->selection());
 
     if (selectedZones.count() > 0)
     {
       // Find untranslated selected zone
-      QString selectedzone(selectedZones[0]);
+      TQString selectedzone(selectedZones[0]);
 
 #if defined(USE_SOLARIS)	// MARCO
 
         KTempFile tf( locateLocal( "tmp", "kde-tzone" ) );
         tf.setAutoDelete( true );
-        QTextStream *ts = tf.textStream();
+        TQTextStream *ts = tf.textStream();
 
 # ifndef INITFILE
 #  define INITFILE	"/etc/default/init"
 # endif
 
-        QFile fTimezoneFile(INITFILE);
+        TQFile fTimezoneFile(INITFILE);
         bool updatedFile = false;
 
         if (tf.status() == 0 && fTimezoneFile.open(IO_ReadOnly))
         {
             bool found = false;
 
-            QTextStream is(&fTimezoneFile);
+            TQTextStream is(&fTimezoneFile);
 
-            for (QString line = is.readLine(); !line.isNull();
+            for (TQString line = is.readLine(); !line.isNull();
                  line = is.readLine())
             {
                 if (line.find("TZ=") == 0)
@@ -140,9 +140,9 @@ void Tzone::save()
 
             if (fTimezoneFile.open(IO_WriteOnly | IO_Truncate))
             {
-                QTextStream os(&fTimezoneFile);
+                TQTextStream os(&fTimezoneFile);
 
-                for (QString line = ts->readLine(); !line.isNull();
+                for (TQString line = ts->readLine(); !line.isNull();
                      line = ts->readLine())
                 {
                     os << line << endl;
@@ -156,22 +156,22 @@ void Tzone::save()
         }
 
 
-        QString val = selectedzone;
+        TQString val = selectedzone;
 #else
-        QFile fTimezoneFile("/etc/timezone");
+        TQFile fTimezoneFile("/etc/timezone");
 
         if (fTimezoneFile.open(IO_WriteOnly | IO_Truncate) )
         {
-            QTextStream t(&fTimezoneFile);
+            TQTextStream t(&fTimezoneFile);
             t << selectedzone;
             fTimezoneFile.close();
         }
 
-        QString tz = "/usr/share/zoneinfo/" + selectedzone;
+        TQString tz = "/usr/share/zoneinfo/" + selectedzone;
 
         kdDebug() << "Set time zone " << tz << endl;
 
-	if (!QFile::remove("/etc/localtime"))
+	if (!TQFile::remove("/etc/localtime"))
 	{
 		//After the KDE 3.2 release, need to add an error message
 	}
@@ -180,7 +180,7 @@ void Tzone::save()
 			KMessageBox::error( 0,  i18n("Error setting new timezone."),
                         		    i18n("Timezone Error"));
 
-        QString val = ":" + tz;
+        TQString val = ":" + tz;
 #endif // !USE_SOLARIS
 
         setenv("TZ", val.ascii(), 1);

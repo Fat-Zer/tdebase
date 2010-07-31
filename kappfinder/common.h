@@ -22,22 +22,22 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include <qlistview.h>
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqlistview.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 class AppLnkCache
 {
   public:
-    QString destDir;
-    QString destName;
-    QString templ;
-    QCheckListItem *item;
+    TQString destDir;
+    TQString destName;
+    TQString templ;
+    TQCheckListItem *item;
 };
 
-bool scanDesktopFile( QPtrList<AppLnkCache> &appCache, const QString &templ,
-                      QString destDir = QString::null );
-void createDesktopFiles( QPtrList<AppLnkCache> &appCache, int &added );
-void decorateDirs( QString destDir = QString::null );
+bool scanDesktopFile( TQPtrList<AppLnkCache> &appCache, const TQString &templ,
+                      TQString destDir = TQString::null );
+void createDesktopFiles( TQPtrList<AppLnkCache> &appCache, int &added );
+void decorateDirs( TQString destDir = TQString::null );
 
 #endif

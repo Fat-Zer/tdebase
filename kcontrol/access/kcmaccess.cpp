@@ -11,16 +11,16 @@
 
 #include <dcopref.h>
 
-#include <qtabwidget.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
-#include <qslider.h>
-#include <qspinbox.h>
+#include <tqtabwidget.h>
+#include <tqlayout.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqlineedit.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
+#include <tqslider.h>
+#include <tqspinbox.h>
 
 
 #include <kcombobox.h>
@@ -43,7 +43,7 @@
 
 
 ExtendedIntNumInput::ExtendedIntNumInput
-				(QWidget* parent, const char* name)
+				(TQWidget* parent, const char* name)
 	: KIntNumInput(parent, name)
 {
 }
@@ -55,10 +55,10 @@ void ExtendedIntNumInput::setRange(int min, int max, int step, bool slider) {
 	KIntNumInput::setRange (min,max,step, slider);
 
 	if (slider) {
-		disconnect(m_slider, SIGNAL(valueChanged(int)),
-					  m_spin, SLOT(setValue(int)));
-		disconnect(m_spin, SIGNAL(valueChanged(int)),
-					  this, SLOT(spinValueChanged(int)));
+		disconnect(m_slider, TQT_SIGNAL(valueChanged(int)),
+					  m_spin, TQT_SLOT(setValue(int)));
+		disconnect(m_spin, TQT_SIGNAL(valueChanged(int)),
+					  this, TQT_SLOT(spinValueChanged(int)));
 
 		this->min = min;
 		this->max = max;
@@ -72,10 +72,10 @@ void ExtendedIntNumInput::setRange(int min, int max, int step, bool slider) {
 		double logVal = alpha * (log(value())-log(min));
 		m_slider->setValue ((int)floor (0.5 + logVal));
 
-		connect(m_slider, SIGNAL(valueChanged(int)),
-				  this, SLOT(slotSliderValueChanged(int)));
-		connect(m_spin, SIGNAL(valueChanged(int)),
-				  this, SLOT(slotSpinValueChanged(int)));
+		connect(m_slider, TQT_SIGNAL(valueChanged(int)),
+				  this, TQT_SLOT(slotSliderValueChanged(int)));
+		connect(m_spin, TQT_SIGNAL(valueChanged(int)),
+				  this, TQT_SLOT(slotSpinValueChanged(int)));
 	}
 }
 
@@ -109,7 +109,7 @@ static bool needToRunKAccessDaemon( KConfig *config )
 	return true;
 }
 
-QString mouseKeysShortcut (Display *display) {
+TQString mouseKeysShortcut (Display *display) {
   // Calculate the keycode
   KeySym sym = XK_MouseKeys_Enable;
   KeyCode code = XKeysymToKeycode(display, sym);
@@ -159,7 +159,7 @@ QString mouseKeysShortcut (Display *display) {
   ev.xkey.keycode = code;
   ev.xkey.state = 0;
   KKey key = KKey(KKeyNative(&ev));
-  QString keyname = key.toString();
+  TQString keyname = key.toString();
 
   unsigned int AltMask   = KKeyNative::modX(KKey::ALT);
   unsigned int WinMask   = KKeyNative::modX(KKey::WIN);
@@ -197,7 +197,7 @@ QString mouseKeysShortcut (Display *display) {
   if ((modifiers & ShiftMask) != 0)
     keyname = KKey::modFlagLabel(KKey::SHIFT) + "+" + keyname;
 
-  QString result;
+  TQString result;
   if ((modifiers & ScrollMask) != 0)
     if ((modifiers & LockMask) != 0)
       if ((modifiers & NumMask) != 0)
@@ -221,7 +221,7 @@ QString mouseKeysShortcut (Display *display) {
   return result.arg(keyname);
 }
 
-KAccessConfig::KAccessConfig(QWidget *parent, const char *)
+KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
   : KCModule(parent, "kcmaccess")
 {
 
@@ -234,89 +234,89 @@ KAccessConfig::KAccessConfig(QWidget *parent, const char *)
 
   setAboutData( about );
 
-  QVBoxLayout *main = new QVBoxLayout(this, 0, KDialogBase::spacingHint());
-  QTabWidget *tab = new QTabWidget(this);
+  TQVBoxLayout *main = new TQVBoxLayout(this, 0, KDialogBase::spacingHint());
+  TQTabWidget *tab = new TQTabWidget(this);
   main->addWidget(tab);
 
   // bell settings ---------------------------------------
-  QWidget *bell = new QWidget(this);
+  TQWidget *bell = new TQWidget(this);
 
-  QVBoxLayout *vbox = new QVBoxLayout(bell, KDialogBase::marginHint(),
+  TQVBoxLayout *vbox = new TQVBoxLayout(bell, KDialogBase::marginHint(),
       KDialogBase::spacingHint());
 
-  QGroupBox *grp = new QGroupBox(i18n("Audible Bell"), bell);
+  TQGroupBox *grp = new TQGroupBox(i18n("Audible Bell"), bell);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  QVBoxLayout *vvbox = new QVBoxLayout(grp->layout(),
+  TQVBoxLayout *vvbox = new TQVBoxLayout(grp->layout(),
       KDialogBase::spacingHint());
 
-  systemBell = new QCheckBox(i18n("Use &system bell"), grp);
+  systemBell = new TQCheckBox(i18n("Use &system bell"), grp);
   vvbox->addWidget(systemBell);
-  customBell = new QCheckBox(i18n("Us&e customized bell"), grp);
+  customBell = new TQCheckBox(i18n("Us&e customized bell"), grp);
   vvbox->addWidget(customBell);
-  QWhatsThis::add( systemBell, i18n("If this option is checked, the default system bell will be used. See the"
+  TQWhatsThis::add( systemBell, i18n("If this option is checked, the default system bell will be used. See the"
     " \"System Bell\" control module for how to customize the system bell."
     " Normally, this is just a \"beep\".") );
-  QWhatsThis::add( customBell, i18n("Check this option if you want to use a customized bell, playing"
+  TQWhatsThis::add( customBell, i18n("Check this option if you want to use a customized bell, playing"
     " a sound file. If you do this, you will probably want to turn off the system bell.<p> Please note"
     " that on slow machines this may cause a \"lag\" between the event causing the bell and the sound being played.") );
 
-  QHBoxLayout *hbox = new QHBoxLayout(vvbox, KDialogBase::spacingHint());
+  TQHBoxLayout *hbox = new TQHBoxLayout(vvbox, KDialogBase::spacingHint());
   hbox->addSpacing(24);
-  soundEdit = new QLineEdit(grp);
-  soundLabel = new QLabel(soundEdit, i18n("Sound &to play:"), grp);
+  soundEdit = new TQLineEdit(grp);
+  soundLabel = new TQLabel(soundEdit, i18n("Sound &to play:"), grp);
   hbox->addWidget(soundLabel);
   hbox->addWidget(soundEdit);
-  soundButton = new QPushButton(i18n("Browse..."), grp);
+  soundButton = new TQPushButton(i18n("Browse..."), grp);
   hbox->addWidget(soundButton);
-  QString wtstr = i18n("If the option \"Use customized bell\" is enabled, you can choose a sound file here."
+  TQString wtstr = i18n("If the option \"Use customized bell\" is enabled, you can choose a sound file here."
     " Click \"Browse...\" to choose a sound file using the file dialog.");
-  QWhatsThis::add( soundEdit, wtstr );
-  QWhatsThis::add( soundLabel, wtstr );
-  QWhatsThis::add( soundButton, wtstr );
+  TQWhatsThis::add( soundEdit, wtstr );
+  TQWhatsThis::add( soundLabel, wtstr );
+  TQWhatsThis::add( soundButton, wtstr );
 
-  connect(soundButton, SIGNAL(clicked()), this, SLOT(selectSound()));
+  connect(soundButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(selectSound()));
 
-  connect(customBell, SIGNAL(clicked()), this, SLOT(checkAccess()));
+  connect(customBell, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
 
-  connect(systemBell, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(customBell, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(soundEdit, SIGNAL(textChanged(const QString&)), this, SLOT(configChanged()));
+  connect(systemBell, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(customBell, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(soundEdit, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(configChanged()));
 
   // -----------------------------------------------------
 
   // visible bell ----------------------------------------
-  grp = new QGroupBox(i18n("Visible Bell"), bell);
+  grp = new TQGroupBox(i18n("Visible Bell"), bell);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  vvbox = new QVBoxLayout(grp->layout(), KDialog::spacingHint());
+  vvbox = new TQVBoxLayout(grp->layout(), KDialog::spacingHint());
 
-  visibleBell = new QCheckBox(i18n("&Use visible bell"), grp);
+  visibleBell = new TQCheckBox(i18n("&Use visible bell"), grp);
   vvbox->addWidget(visibleBell);
-  QWhatsThis::add( visibleBell, i18n("This option will turn on the \"visible bell\", i.e. a visible"
+  TQWhatsThis::add( visibleBell, i18n("This option will turn on the \"visible bell\", i.e. a visible"
     " notification shown every time that normally just a bell would occur. This is especially useful"
     " for deaf people.") );
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  invertScreen = new QRadioButton(i18n("I&nvert screen"), grp);
+  invertScreen = new TQRadioButton(i18n("I&nvert screen"), grp);
   hbox->addWidget(invertScreen);
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
-  QWhatsThis::add( invertScreen, i18n("All screen colors will be inverted for the amount of time specified below.") );
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
+  TQWhatsThis::add( invertScreen, i18n("All screen colors will be inverted for the amount of time specified below.") );
   hbox->addSpacing(24);
-  flashScreen = new QRadioButton(i18n("F&lash screen"), grp);
+  flashScreen = new TQRadioButton(i18n("F&lash screen"), grp);
   hbox->addWidget(flashScreen);
-  QWhatsThis::add( flashScreen, i18n("The screen will turn to a custom color for the amount of time specified below.") );
+  TQWhatsThis::add( flashScreen, i18n("The screen will turn to a custom color for the amount of time specified below.") );
   hbox->addSpacing(12);
   colorButton = new KColorButton(grp);
   colorButton->setFixedWidth(colorButton->sizeHint().height()*2);
   hbox->addWidget(colorButton);
   hbox->addStretch();
-  QWhatsThis::add( colorButton, i18n("Click here to choose the color used for the \"flash screen\" visible bell.") );
+  TQWhatsThis::add( colorButton, i18n("Click here to choose the color used for the \"flash screen\" visible bell.") );
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
 
   durationSlider = new ExtendedIntNumInput(grp);
@@ -324,18 +324,18 @@ KAccessConfig::KAccessConfig(QWidget *parent, const char *)
   durationSlider->setLabel(i18n("Duration:"));
   durationSlider->setSuffix(i18n(" msec"));
   hbox->addWidget(durationSlider);
-  QWhatsThis::add( durationSlider, i18n("Here you can customize the duration of the \"visible bell\" effect being shown.") );
+  TQWhatsThis::add( durationSlider, i18n("Here you can customize the duration of the \"visible bell\" effect being shown.") );
 
-  connect(invertScreen, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(flashScreen, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(visibleBell, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(visibleBell, SIGNAL(clicked()), this, SLOT(checkAccess()));
-  connect(colorButton, SIGNAL(clicked()), this, SLOT(changeFlashScreenColor()));
+  connect(invertScreen, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(flashScreen, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(visibleBell, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(visibleBell, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
+  connect(colorButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(changeFlashScreenColor()));
 
-  connect(invertScreen, SIGNAL(clicked()), this, SLOT(invertClicked()));
-  connect(flashScreen, SIGNAL(clicked()), this, SLOT(flashClicked()));
+  connect(invertScreen, TQT_SIGNAL(clicked()), this, TQT_SLOT(invertClicked()));
+  connect(flashScreen, TQT_SIGNAL(clicked()), this, TQT_SLOT(flashClicked()));
 
-  connect(durationSlider, SIGNAL(valueChanged(int)), this, SLOT(configChanged()));
+  connect(durationSlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(configChanged()));
 
   vbox->addStretch();
 
@@ -345,82 +345,82 @@ KAccessConfig::KAccessConfig(QWidget *parent, const char *)
 
 
   // modifier key settings -------------------------------
-  QWidget *modifiers = new QWidget(this);
+  TQWidget *modifiers = new TQWidget(this);
 
-  vbox = new QVBoxLayout(modifiers, KDialog::marginHint(), KDialog::spacingHint());
+  vbox = new TQVBoxLayout(modifiers, KDialog::marginHint(), KDialog::spacingHint());
 
-  grp = new QGroupBox(i18n("S&ticky Keys"), modifiers);
+  grp = new TQGroupBox(i18n("S&ticky Keys"), modifiers);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  vvbox = new QVBoxLayout(grp->layout(), KDialog::spacingHint());
+  vvbox = new TQVBoxLayout(grp->layout(), KDialog::spacingHint());
 
-  stickyKeys = new QCheckBox(i18n("Use &sticky keys"), grp);
+  stickyKeys = new TQCheckBox(i18n("Use &sticky keys"), grp);
   vvbox->addWidget(stickyKeys);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  stickyKeysLock = new QCheckBox(i18n("&Lock sticky keys"), grp);
+  stickyKeysLock = new TQCheckBox(i18n("&Lock sticky keys"), grp);
   hbox->addWidget(stickyKeysLock);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  stickyKeysAutoOff = new QCheckBox(i18n("Turn sticky keys off when two keys are pressed simultaneously"), grp);
+  stickyKeysAutoOff = new TQCheckBox(i18n("Turn sticky keys off when two keys are pressed simultaneously"), grp);
   hbox->addWidget(stickyKeysAutoOff);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  stickyKeysBeep = new QCheckBox(i18n("Use system bell whenever a modifier gets latched, locked or unlocked"), grp);
+  stickyKeysBeep = new TQCheckBox(i18n("Use system bell whenever a modifier gets latched, locked or unlocked"), grp);
   hbox->addWidget(stickyKeysBeep);
 
-  grp = new QGroupBox(i18n("Locking Keys"), modifiers);
+  grp = new TQGroupBox(i18n("Locking Keys"), modifiers);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  vvbox = new QVBoxLayout(grp->layout(), KDialog::spacingHint());
+  vvbox = new TQVBoxLayout(grp->layout(), KDialog::spacingHint());
 
-  toggleKeysBeep = new QCheckBox(i18n("Use system bell whenever a locking key gets activated or deactivated"), grp);
+  toggleKeysBeep = new TQCheckBox(i18n("Use system bell whenever a locking key gets activated or deactivated"), grp);
   vvbox->addWidget(toggleKeysBeep);
 
-  kNotifyModifiers = new QCheckBox(i18n("Use KDE's system notification mechanism whenever a modifier or locking key changes its state"), grp);
+  kNotifyModifiers = new TQCheckBox(i18n("Use KDE's system notification mechanism whenever a modifier or locking key changes its state"), grp);
   vvbox->addWidget(kNotifyModifiers);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addStretch(1);
-  kNotifyModifiersButton = new QPushButton(i18n("Configure System Notification..."), grp);
-  kNotifyModifiersButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  kNotifyModifiersButton = new TQPushButton(i18n("Configure System Notification..."), grp);
+  kNotifyModifiersButton->setSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed);
   hbox->addWidget(kNotifyModifiersButton);
 
-  connect(stickyKeys, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(stickyKeysLock, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(stickyKeysAutoOff, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(stickyKeys, SIGNAL(clicked()), this, SLOT(checkAccess()));
+  connect(stickyKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(stickyKeysLock, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(stickyKeysAutoOff, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(stickyKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
 
-  connect(stickyKeysBeep, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(toggleKeysBeep, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(kNotifyModifiers, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(kNotifyModifiers, SIGNAL(clicked()), this, SLOT(checkAccess()));
-  connect(kNotifyModifiersButton, SIGNAL(clicked()), this, SLOT(configureKNotify()));
+  connect(stickyKeysBeep, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(toggleKeysBeep, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(kNotifyModifiers, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(kNotifyModifiers, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
+  connect(kNotifyModifiersButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(configureKNotify()));
 
   vbox->addStretch();
 
   tab->addTab(modifiers, i18n("&Modifier Keys"));
 
   // key filter settings ---------------------------------
-  QWidget *filters = new QWidget(this);
+  TQWidget *filters = new TQWidget(this);
 
-  vbox = new QVBoxLayout(filters, KDialog::marginHint(), KDialog::spacingHint());
+  vbox = new TQVBoxLayout(filters, KDialog::marginHint(), KDialog::spacingHint());
 
-  grp = new QGroupBox(i18n("Slo&w Keys"), filters);
+  grp = new TQGroupBox(i18n("Slo&w Keys"), filters);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  vvbox = new QVBoxLayout(grp->layout(), KDialog::spacingHint());
+  vvbox = new TQVBoxLayout(grp->layout(), KDialog::spacingHint());
 
-  slowKeys = new QCheckBox(i18n("&Use slow keys"), grp);
+  slowKeys = new TQCheckBox(i18n("&Use slow keys"), grp);
   vvbox->addWidget(slowKeys);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   slowKeysDelay = new ExtendedIntNumInput(grp);
   slowKeysDelay->setSuffix(i18n(" msec"));
@@ -428,31 +428,31 @@ KAccessConfig::KAccessConfig(QWidget *parent, const char *)
   slowKeysDelay->setLabel(i18n("Acceptance dela&y:"));
   hbox->addWidget(slowKeysDelay);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  slowKeysPressBeep = new QCheckBox(i18n("&Use system bell whenever a key is pressed"), grp);
+  slowKeysPressBeep = new TQCheckBox(i18n("&Use system bell whenever a key is pressed"), grp);
   hbox->addWidget(slowKeysPressBeep);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  slowKeysAcceptBeep = new QCheckBox(i18n("&Use system bell whenever a key is accepted"), grp);
+  slowKeysAcceptBeep = new TQCheckBox(i18n("&Use system bell whenever a key is accepted"), grp);
   hbox->addWidget(slowKeysAcceptBeep);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  slowKeysRejectBeep = new QCheckBox(i18n("&Use system bell whenever a key is rejected"), grp);
+  slowKeysRejectBeep = new TQCheckBox(i18n("&Use system bell whenever a key is rejected"), grp);
   hbox->addWidget(slowKeysRejectBeep);
 
-  grp = new QGroupBox(i18n("Bounce Keys"), filters);
+  grp = new TQGroupBox(i18n("Bounce Keys"), filters);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  vvbox = new QVBoxLayout(grp->layout(), KDialog::spacingHint());
+  vvbox = new TQVBoxLayout(grp->layout(), KDialog::spacingHint());
 
-  bounceKeys = new QCheckBox(i18n("Use bou&nce keys"), grp);
+  bounceKeys = new TQCheckBox(i18n("Use bou&nce keys"), grp);
   vvbox->addWidget(bounceKeys);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   bounceKeysDelay = new ExtendedIntNumInput(grp);
   bounceKeysDelay->setSuffix(i18n(" msec"));
@@ -460,56 +460,56 @@ KAccessConfig::KAccessConfig(QWidget *parent, const char *)
   bounceKeysDelay->setLabel(i18n("D&ebounce time:"));
   hbox->addWidget(bounceKeysDelay);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
-  bounceKeysRejectBeep = new QCheckBox(i18n("Use the system bell whenever a key is rejected"), grp);
+  bounceKeysRejectBeep = new TQCheckBox(i18n("Use the system bell whenever a key is rejected"), grp);
   hbox->addWidget(bounceKeysRejectBeep);
 
-  connect(slowKeysDelay, SIGNAL(valueChanged(int)), this, SLOT(configChanged()));
-  connect(slowKeys, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(slowKeys, SIGNAL(clicked()), this, SLOT(checkAccess()));
+  connect(slowKeysDelay, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(configChanged()));
+  connect(slowKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(slowKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
 
-  connect(slowKeysPressBeep, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(slowKeysAcceptBeep, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(slowKeysRejectBeep, SIGNAL(clicked()), this, SLOT(configChanged()));
+  connect(slowKeysPressBeep, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(slowKeysAcceptBeep, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(slowKeysRejectBeep, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
 
-  connect(bounceKeysDelay, SIGNAL(valueChanged(int)), this, SLOT(configChanged()));
-  connect(bounceKeys, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(bounceKeysRejectBeep, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(bounceKeys, SIGNAL(clicked()), this, SLOT(checkAccess()));
+  connect(bounceKeysDelay, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(configChanged()));
+  connect(bounceKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(bounceKeysRejectBeep, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(bounceKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
 
   vbox->addStretch();
 
   tab->addTab(filters, i18n("&Keyboard Filters"));
 
   // gestures --------------------------------------------
-  QWidget *features = new QWidget(this);
+  TQWidget *features = new TQWidget(this);
 
-  vbox = new QVBoxLayout(features, KDialog::marginHint(), KDialog::spacingHint());
+  vbox = new TQVBoxLayout(features, KDialog::marginHint(), KDialog::spacingHint());
 
-  grp = new QGroupBox(i18n("Activation Gestures"), features);
+  grp = new TQGroupBox(i18n("Activation Gestures"), features);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  vvbox = new QVBoxLayout(grp->layout(), KDialog::spacingHint());
+  vvbox = new TQVBoxLayout(grp->layout(), KDialog::spacingHint());
 
-  gestures = new QCheckBox(i18n("Use gestures for activating sticky keys and slow keys"), grp);
+  gestures = new TQCheckBox(i18n("Use gestures for activating sticky keys and slow keys"), grp);
   vvbox->addWidget(gestures);
-  QString shortcut = mouseKeysShortcut(this->x11Display());
+  TQString shortcut = mouseKeysShortcut(this->x11Display());
   if (shortcut.isEmpty())
-	  QWhatsThis::add (gestures, i18n("Here you can activate keyboard gestures that turn on the following features: \n"
+	  TQWhatsThis::add (gestures, i18n("Here you can activate keyboard gestures that turn on the following features: \n"
 			  "Sticky keys: Press Shift key 5 consecutive times\n"
 					  "Slow keys: Hold down Shift for 8 seconds"));
   else
-	  QWhatsThis::add (gestures, i18n("Here you can activate keyboard gestures that turn on the following features: \n"
+	  TQWhatsThis::add (gestures, i18n("Here you can activate keyboard gestures that turn on the following features: \n"
 			  "Mouse Keys: %1\n"
 					  "Sticky keys: Press Shift key 5 consecutive times\n"
 					  "Slow keys: Hold down Shift for 8 seconds").arg(shortcut));
 
-  timeout = new QCheckBox(i18n("Turn sticky keys and slow keys off after a certain period of inactivity"), grp);
+  timeout = new TQCheckBox(i18n("Turn sticky keys and slow keys off after a certain period of inactivity"), grp);
   vvbox->addWidget(timeout);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   timeoutDelay = new KIntNumInput(grp);
   timeoutDelay->setSuffix(i18n(" min"));
@@ -517,37 +517,37 @@ KAccessConfig::KAccessConfig(QWidget *parent, const char *)
   timeoutDelay->setLabel(i18n("Timeout:"));
   hbox->addWidget(timeoutDelay);
 
-  grp = new QGroupBox(i18n("Notification"), features);
+  grp = new TQGroupBox(i18n("Notification"), features);
   grp->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(grp);
 
-  vvbox = new QVBoxLayout(grp->layout(), KDialog::spacingHint());
+  vvbox = new TQVBoxLayout(grp->layout(), KDialog::spacingHint());
 
-  accessxBeep = new QCheckBox(i18n("Use the system bell whenever a gesture is used to turn an accessibility feature on or off"), grp);
+  accessxBeep = new TQCheckBox(i18n("Use the system bell whenever a gesture is used to turn an accessibility feature on or off"), grp);
   vvbox->addWidget(accessxBeep);
 
-  gestureConfirmation = new QCheckBox(i18n("Show a confirmation dialog whenever a keyboard accessibility feature is turned on or off"), grp);
+  gestureConfirmation = new TQCheckBox(i18n("Show a confirmation dialog whenever a keyboard accessibility feature is turned on or off"), grp);
   vvbox->addWidget(gestureConfirmation);
-  QWhatsThis::add (gestureConfirmation, i18n("If this option is checked, KDE will show a confirmation dialog whenever a keyboard accessibility feature is turned on or off.\nBe sure you know what you are doing if you uncheck it, as the keyboard accessibility settings will then always be applied without confirmation.") );
+  TQWhatsThis::add (gestureConfirmation, i18n("If this option is checked, KDE will show a confirmation dialog whenever a keyboard accessibility feature is turned on or off.\nBe sure you know what you are doing if you uncheck it, as the keyboard accessibility settings will then always be applied without confirmation.") );
 
-  kNotifyAccessX = new QCheckBox(i18n("Use KDE's system notification mechanism whenever a keyboard accessibility feature is turned on or off"), grp);
+  kNotifyAccessX = new TQCheckBox(i18n("Use KDE's system notification mechanism whenever a keyboard accessibility feature is turned on or off"), grp);
   vvbox->addWidget(kNotifyAccessX);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addStretch(1);
-  kNotifyAccessXButton = new QPushButton(i18n("Configure System Notification..."), grp);
-  kNotifyAccessXButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  kNotifyAccessXButton = new TQPushButton(i18n("Configure System Notification..."), grp);
+  kNotifyAccessXButton->setSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed);
   hbox->addWidget(kNotifyAccessXButton);
 
-  connect(gestures, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(timeout, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(timeout, SIGNAL(clicked()), this, SLOT(checkAccess()));
-  connect(timeoutDelay, SIGNAL(valueChanged(int)), this, SLOT(configChanged()));
-  connect(accessxBeep, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(gestureConfirmation, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(kNotifyAccessX, SIGNAL(clicked()), this, SLOT(configChanged()));
-  connect(kNotifyAccessX, SIGNAL(clicked()), this, SLOT(checkAccess()));
-  connect(kNotifyAccessXButton, SIGNAL(clicked()), this, SLOT(configureKNotify()));
+  connect(gestures, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(timeout, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(timeout, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
+  connect(timeoutDelay, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(configChanged()));
+  connect(accessxBeep, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(gestureConfirmation, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(kNotifyAccessX, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
+  connect(kNotifyAccessX, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
+  connect(kNotifyAccessXButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(configureKNotify()));
 
   vbox->addStretch();
 
@@ -578,12 +578,12 @@ void KAccessConfig::changeFlashScreenColor()
 
 void KAccessConfig::selectSound()
 {
-  QStringList list = KGlobal::dirs()->findDirs("sound", "");
-  QString start;
+  TQStringList list = KGlobal::dirs()->findDirs("sound", "");
+  TQString start;
   if (list.count()>0)
     start = list[0];
   // TODO: Why only wav's? How can I find out what artsd supports?
-  QString fname = KFileDialog::getOpenFileName(start, i18n("*.wav|WAV Files"));
+  TQString fname = KFileDialog::getOpenFileName(start, i18n("*.wav|WAV Files"));
   if (!fname.isEmpty())
     soundEdit->setText(fname);
 }
@@ -614,7 +614,7 @@ void KAccessConfig::load( bool useDefaults )
   visibleBell->setChecked(config->readBoolEntry("VisibleBell", false));
   invertScreen->setChecked(config->readBoolEntry("VisibleBellInvert", true));
   flashScreen->setChecked(!invertScreen->isChecked());
-  QColor def(Qt::red);
+  TQColor def(Qt::red);
   colorButton->setColor(config->readColorEntry("VisibleBellColor", &def));
 
   durationSlider->setValue(config->readNumEntry("VisibleBellPause", 500));
@@ -783,7 +783,7 @@ void KAccessConfig::checkAccess()
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_access(QWidget *parent, const char *name)
+  KDE_EXPORT KCModule *create_access(TQWidget *parent, const char *name)
   {
     return new KAccessConfig(parent, name);
   }

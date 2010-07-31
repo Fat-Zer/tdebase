@@ -13,8 +13,8 @@
 #include <iostream>
 
 
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 
 
 #include <kstandarddirs.h>
@@ -26,11 +26,11 @@
 USBDB::USBDB()
 {
 #ifndef USBIDS_FILE
-  QString db = "/usr/share/hwdata/usb.ids"; /* on Fedora */
-  if (!QFile::exists(db))
+  TQString db = "/usr/share/hwdata/usb.ids"; /* on Fedora */
+  if (!TQFile::exists(db))
 	db = locate("data", "kcmusb/usb.ids");
 #else
-  QString db = USBIDS_FILE;
+  TQString db = USBIDS_FILE;
 #endif
   if (db.isEmpty())
     return;
@@ -38,19 +38,19 @@ USBDB::USBDB()
   _classes.setAutoDelete(true);
   _ids.setAutoDelete(true);
 
-  QFile f(db);
+  TQFile f(db);
 
   if (f.open(IO_ReadOnly))
     {
-      QTextStream ts(&f);
+      TQTextStream ts(&f);
 
-      QString line, name;
+      TQString line, name;
       int id=0, subid=0, protid=0;
-      QRegExp vendor("[0-9a-fA-F]+ ");
-      QRegExp product("\\s+[0-9a-fA-F]+ ");
-      QRegExp cls("C [0-9a-fA-F][0-9a-fA-F]");
-      QRegExp subclass("\\s+[0-9a-fA-F][0-9a-fA-F]  ");
-      QRegExp prot("\\s+[0-9a-fA-F][0-9a-fA-F]  ");
+      TQRegExp vendor("[0-9a-fA-F]+ ");
+      TQRegExp product("\\s+[0-9a-fA-F]+ ");
+      TQRegExp cls("C [0-9a-fA-F][0-9a-fA-F]");
+      TQRegExp subclass("\\s+[0-9a-fA-F][0-9a-fA-F]  ");
+      TQRegExp prot("\\s+[0-9a-fA-F][0-9a-fA-F]  ");
       while (!ts.eof())
 	{
 	  line = ts.readLine();
@@ -65,34 +65,34 @@ USBDB::USBDB()
 	    {
 	      id = line.mid(2,2).toInt(0, 16);
 	      name = line.mid(4).stripWhiteSpace();
-	      _classes.insert(QString("%1").arg(id), new QString(name));
+	      _classes.insert(TQString("%1").arg(id), new TQString(name));
 	    }
 	  else if (prot.search(line) == 0 && prot.matchedLength() > 5)
 	    {
 	      line = line.stripWhiteSpace();
 	      protid = line.left(2).toInt(0, 16);
 	      name = line.mid(4).stripWhiteSpace();
-	      _classes.insert(QString("%1-%2-%3").arg(id).arg(subid).arg(protid), new QString(name));
+	      _classes.insert(TQString("%1-%2-%3").arg(id).arg(subid).arg(protid), new TQString(name));
 	    }
 	  else if (subclass.search(line) == 0 && subclass.matchedLength() > 4)
 	    {
 	      line = line.stripWhiteSpace();
 	      subid = line.left(2).toInt(0, 16);
 	      name = line.mid(4).stripWhiteSpace();
-	      _classes.insert(QString("%1-%2").arg(id).arg(subid), new QString(name));
+	      _classes.insert(TQString("%1-%2").arg(id).arg(subid), new TQString(name));
 	    }
 	  else if (vendor.search(line) == 0 && vendor.matchedLength() == 5)
 	    {
 	      id = line.left(4).toInt(0,16);
 	      name = line.mid(6);
-	      _ids.insert(QString("%1").arg(id), new QString(name));
+	      _ids.insert(TQString("%1").arg(id), new TQString(name));
 	    }
 	  else if (product.search(line) == 0 && product.matchedLength() > 5 )
 	    {
 	      line = line.stripWhiteSpace();
 	      subid = line.left(4).toInt(0,16);
 	      name = line.mid(6);
-	      _ids.insert(QString("%1-%2").arg(id).arg(subid), new QString(name));
+	      _ids.insert(TQString("%1-%2").arg(id).arg(subid), new TQString(name));
 	    }
 
 	}
@@ -102,49 +102,49 @@ USBDB::USBDB()
 }
 
 
-QString USBDB::vendor(int id)
+TQString USBDB::vendor(int id)
 {
-  QString *s = _ids[QString("%1").arg(id)];
+  TQString *s = _ids[TQString("%1").arg(id)];
   if ((id!= 0) && s)
     {
       return *s;
     }
-  return QString::null;
+  return TQString::null;
 }
 
 
-QString USBDB::device(int vendor, int id)
+TQString USBDB::device(int vendor, int id)
 {
-  QString *s = _ids[QString("%1-%2").arg(vendor).arg(id)];
+  TQString *s = _ids[TQString("%1-%2").arg(vendor).arg(id)];
   if ((id != 0) && (vendor != 0) && s)
     return *s;
-  return QString::null;
+  return TQString::null;
 }
 
 
-QString USBDB::cls(int cls)
+TQString USBDB::cls(int cls)
 {
-  QString *s = _classes[QString("%1").arg(cls)];
+  TQString *s = _classes[TQString("%1").arg(cls)];
   if (s)
     return *s;
-  return QString::null;
+  return TQString::null;
 }
 
 
-QString USBDB::subclass(int cls, int sub)
+TQString USBDB::subclass(int cls, int sub)
 {
-  QString *s = _classes[QString("%1-%2").arg(cls).arg(sub)];
+  TQString *s = _classes[TQString("%1-%2").arg(cls).arg(sub)];
   if (s)
     return *s;
-  return QString::null;
+  return TQString::null;
 }
 
 
-QString USBDB::protocol(int cls, int sub, int prot)
+TQString USBDB::protocol(int cls, int sub, int prot)
 {
-  QString *s = _classes[QString("%1-%2-%2").arg(cls).arg(sub).arg(prot)];
+  TQString *s = _classes[TQString("%1-%2-%2").arg(cls).arg(sub).arg(prot)];
   if (s)
     return *s;
-  return QString::null;
+  return TQString::null;
 }
 

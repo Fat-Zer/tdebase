@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -30,8 +30,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "client_mnu.h"
 #include "client_mnu.moc"
 
-KickerClientMenu::KickerClientMenu( QWidget * parent, const char *name )
-    : QPopupMenu( parent, name), DCOPObject( name )
+KickerClientMenu::KickerClientMenu( TQWidget * parent, const char *name )
+    : TQPopupMenu( parent, name), DCOPObject( name )
 {
 }
 
@@ -41,33 +41,33 @@ KickerClientMenu::~KickerClientMenu()
 
 void KickerClientMenu::clear()
 {
-    QPopupMenu::clear();
+    TQPopupMenu::clear();
 }
 
-void KickerClientMenu::insertItem( QPixmap icon, QString text, int id )
+void KickerClientMenu::insertItem( TQPixmap icon, TQString text, int id )
 {
-    int globalid = QPopupMenu::insertItem( icon, text, this, SLOT( slotActivated(int) ) );
+    int globalid = TQPopupMenu::insertItem( icon, text, this, TQT_SLOT( slotActivated(int) ) );
     setItemParameter( globalid, id );
 }
 
-void KickerClientMenu::insertItem( QString text, int id )
+void KickerClientMenu::insertItem( TQString text, int id )
 {
-    int globalid = QPopupMenu::insertItem( text, this, SLOT( slotActivated(int) ) );
+    int globalid = TQPopupMenu::insertItem( text, this, TQT_SLOT( slotActivated(int) ) );
     setItemParameter( globalid, id );
 }
 
-QCString KickerClientMenu::insertMenu( QPixmap icon, QString text, int id )
+TQCString KickerClientMenu::insertMenu( TQPixmap icon, TQString text, int id )
 {
-    QString subname("%1-submenu%2");
-    QCString subid = subname.arg(objId()).arg(id).local8Bit();
+    TQString subname("%1-submenu%2");
+    TQCString subid = subname.arg(objId()).arg(id).local8Bit();
     KickerClientMenu *sub = new KickerClientMenu(this, subid);
-    int globalid = QPopupMenu::insertItem( icon, text, sub, id);
+    int globalid = TQPopupMenu::insertItem( icon, text, sub, id);
     setItemParameter( globalid, id );
 
     return subid;
 }
 
-void KickerClientMenu::connectDCOPSignal( QCString signal, QCString appId, QCString objId )
+void KickerClientMenu::connectDCOPSignal( TQCString signal, TQCString appId, TQCString objId )
 {
     // very primitive right now
     if ( signal == "activated(int)" ) {
@@ -78,48 +78,48 @@ void KickerClientMenu::connectDCOPSignal( QCString signal, QCString appId, QCStr
     }
 }
 
-bool KickerClientMenu::process(const QCString &fun, const QByteArray &data,
-			       QCString &replyType, QByteArray &replyData)
+bool KickerClientMenu::process(const TQCString &fun, const TQByteArray &data,
+			       TQCString &replyType, TQByteArray &replyData)
 {
     if ( fun == "clear()" ) {
 	clear();
 	replyType = "void";
 	return true;
     }
-    else if ( fun == "insertItem(QPixmap,QString,int)" ) {
-	QDataStream dataStream( data, IO_ReadOnly );
-	QPixmap icon;
-	QString text;
+    else if ( fun == "insertItem(TQPixmap,TQString,int)" ) {
+	TQDataStream dataStream( data, IO_ReadOnly );
+	TQPixmap icon;
+	TQString text;
 	int id;
 	dataStream >> icon >> text >> id;
 	insertItem( icon, text, id );
 	replyType = "void";
 	return true;
     }
-    else if ( fun == "insertMenu(QPixmap,QString,int)" ) {
-	QDataStream dataStream( data, IO_ReadOnly );
-	QPixmap icon;
-	QString text;
+    else if ( fun == "insertMenu(TQPixmap,TQString,int)" ) {
+	TQDataStream dataStream( data, IO_ReadOnly );
+	TQPixmap icon;
+	TQString text;
 	int id;
 	dataStream >> icon >> text >> id;
-	QCString ref = insertMenu( icon, text, id );
-	replyType = "QCString";
-	QDataStream replyStream( replyData, IO_WriteOnly );
+	TQCString ref = insertMenu( icon, text, id );
+	replyType = "TQCString";
+	TQDataStream replyStream( replyData, IO_WriteOnly );
 	replyStream << ref;
 	return true;
     }
-    else if ( fun == "insertItem(QString,int)" ) {
-	QDataStream dataStream( data, IO_ReadOnly );
-	QString text;
+    else if ( fun == "insertItem(TQString,int)" ) {
+	TQDataStream dataStream( data, IO_ReadOnly );
+	TQString text;
 	int id;
 	dataStream >> text >> id;
 	insertItem( text, id );
 	replyType = "void";
 	return true;
     }
-    else if ( fun == "connectDCOPSignal(QCString,QCString,QCString)" ) {
-	QDataStream dataStream( data, IO_ReadOnly );
-	QCString signal, appId, objId;
+    else if ( fun == "connectDCOPSignal(TQCString,TQCString,TQCString)" ) {
+	TQDataStream dataStream( data, IO_ReadOnly );
+	TQCString signal, appId, objId;
 	dataStream >> signal >> appId >> objId;
 	connectDCOPSignal( signal, appId, objId );
 	replyType = "void";
@@ -131,8 +131,8 @@ bool KickerClientMenu::process(const QCString &fun, const QByteArray &data,
 void KickerClientMenu::slotActivated(int id)
 {
     if ( !app.isEmpty()  ) {
-	QByteArray data;
-	QDataStream dataStream( data, IO_WriteOnly );
+	TQByteArray data;
+	TQDataStream dataStream( data, IO_WriteOnly );
 	dataStream << id;
 	kapp->dcopClient()->send( app, obj, "activated(int)", data );
     }

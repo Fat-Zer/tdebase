@@ -20,8 +20,8 @@
 #ifndef __basictab_h__
 #define __basictab_h__
 
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
 #include <klineedit.h>
 
@@ -43,7 +43,7 @@ class BasicTab : public QWidget
     Q_OBJECT
 
 public:
-    BasicTab( QWidget *parent=0, const char *name=0 );
+    BasicTab( TQWidget *parent=0, const char *name=0 );
 
     void apply();
 signals:
@@ -73,10 +73,10 @@ protected:
     KKeyButton   *_keyEdit;
     KURLRequester *_execEdit, *_pathEdit;
     KLineEdit    *_termOptEdit, *_uidEdit;
-    QCheckBox    *_terminalCB, *_uidCB, *_launchCB, *_systrayCB;
+    TQCheckBox    *_terminalCB, *_uidCB, *_launchCB, *_systrayCB;
     KIconButton  *_iconButton;
-    QGroupBox    *_path_group, *_term_group, *_uid_group, *general_group_keybind;
-    QLabel *_termOptLabel, *_uidLabel, *_pathLabel, *_nameLabel, *_commentLabel, *_execLabel;
+    TQGroupBox    *_path_group, *_term_group, *_uid_group, *general_group_keybind;
+    TQLabel *_termOptLabel, *_uidLabel, *_pathLabel, *_nameLabel, *_commentLabel, *_execLabel;
     QLabel	*_descriptionLabel;
 
     MenuFolderInfo *_menuFolderInfo;

@@ -1,5 +1,5 @@
-#include <qdir.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqfile.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -53,9 +53,9 @@ int main( int argc, char ** argv )
   if (args->count() > 0)
     url = args->url(0);
   if (url.isEmpty())
-    url = QDir::currentDirPath();
+    url = TQDir::currentDirPath();
   if (url.isEmpty())
-    url = QDir::homeDirPath();
+    url = TQDir::homeDirPath();
   args->clear();
 
   KfindDlg kfinddlg(url, 0, "dialog");

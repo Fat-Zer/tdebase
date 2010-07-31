@@ -21,7 +21,7 @@
 #define _NOTIFIERSERVICEACTION_H_
 
 #include <kmimetype.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "notifieraction.h"
 
@@ -29,23 +29,23 @@ class NotifierServiceAction : public NotifierAction
 {
 public:
 	NotifierServiceAction();
-	virtual QString id() const;
+	virtual TQString id() const;
 	virtual void execute(KFileItem &item);
 
-	virtual void setIconName( const QString &icon );
-	virtual void setLabel( const QString &label );
+	virtual void setIconName( const TQString &icon );
+	virtual void setLabel( const TQString &label );
 	
 	void setService(KDEDesktopMimeType::Service service);
 	KDEDesktopMimeType::Service service() const;
 	
-	void setFilePath(const QString &filePath);
-	QString filePath() const;
+	void setFilePath(const TQString &filePath);
+	TQString filePath() const;
 	
-	void setMimetypes(const QStringList &mimetypes);
-	QStringList mimetypes();
+	void setMimetypes(const TQStringList &mimetypes);
+	TQStringList mimetypes();
 	
 	virtual bool isWritable() const;
-	virtual bool supportsMimetype(const QString &mimetype) const;
+	virtual bool supportsMimetype(const TQString &mimetype) const;
 
 	void save() const;
 
@@ -53,8 +53,8 @@ private:
 	void updateFilePath();
 
 	KDEDesktopMimeType::Service m_service;
-	QString m_filePath;
-	QStringList m_mimetypes;
+	TQString m_filePath;
+	TQStringList m_mimetypes;
 };
 
 #endif

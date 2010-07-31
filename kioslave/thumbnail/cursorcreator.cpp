@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qimage.h>
-#include <qfile.h>
+#include <tqimage.h>
+#include <tqfile.h>
 
 #include <kdemacros.h>
 
@@ -35,16 +35,16 @@ extern "C"
     }
 }
 
-bool CursorCreator::create( const QString &path, int width, int height, QImage &img )
+bool CursorCreator::create( const TQString &path, int width, int height, TQImage &img )
 {
     XcursorImage *cursor = XcursorFilenameLoadImage(
-		    QFile::encodeName( path ).data(),
+		    TQFile::encodeName( path ).data(),
 		    width > height ? height : width );
 
     if ( cursor ) {
-    	img = QImage( reinterpret_cast<uchar *>( cursor->pixels ),
+    	img = TQImage( reinterpret_cast<uchar *>( cursor->pixels ),
 			cursor->width, cursor->height, 32,
-			NULL, 0, QImage::BigEndian );
+			NULL, 0, TQImage::BigEndian );
 	img.setAlphaBuffer( true );
 
 	// Convert the image to non-premultiplied alpha

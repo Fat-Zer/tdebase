@@ -13,8 +13,8 @@ License. See the file "COPYING" for the exact licensing terms.
 #define KWIN_NOTIFICATIONS_H
 
 #include <stdlib.h>
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 namespace KWinInternal
 {
@@ -50,18 +50,18 @@ class Notify
             DesktopChange = 100
             };
 
-        static bool raise( Event, const QString& message = QString::null, Client* c = NULL );
+        static bool raise( Event, const TQString& message = TQString::null, Client* c = NULL );
         static bool makeDemandAttention( Event );
         static void sendPendingEvents();
     private:
-        static QString eventToName( Event );
+        static TQString eventToName( Event );
         struct EventData
             {
-            QString event;
-            QString message;
+            TQString event;
+            TQString message;
             long window;
             };
-        static QValueList< EventData > pending_events;
+        static TQValueList< EventData > pending_events;
     };
 
 } // namespace

@@ -20,13 +20,13 @@
 
 #include "kdeprintfax.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <kapplication.h>
 
-QString debugFlag;
+TQString debugFlag;
 int oneShotFlag = false;
 
 static const char description[] =
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
   for (int i=0;i<args->count();i++)
   	w->addURL(args->url(i));
 
-	QString phone = args->getOption( "phone" );
+	TQString phone = args->getOption( "phone" );
 	if( !phone.isEmpty() ) {
 		w->setPhone( phone );
 	}

@@ -16,15 +16,15 @@ class KDCOPListView : public KListView
   Q_OBJECT
 
   public:
-  	KDCOPListView ( QWidget * parent = 0, const char * name = 0 );
+  	KDCOPListView ( TQWidget * parent = 0, const char * name = 0 );
 	virtual ~KDCOPListView();
-  	QDragObject *dragObject();
-	void setMode(const QString &mode);
-	QString getCurrentCode() const;
+  	TQDragObject *dragObject();
+	void setMode(const TQString &mode);
+	TQString getCurrentCode() const;
 
   private:
-  	QString encode(QListViewItem *code);
-	QString mode;
+  	TQString encode(TQListViewItem *code);
+	TQString mode;
 
 };
 
@@ -34,8 +34,8 @@ class DCOPBrowserItem : public QListViewItem
 
     enum Type { Application, Interface, Function };
 
-    DCOPBrowserItem(QListView * parent, Type type);
-    DCOPBrowserItem(QListViewItem * parent, Type type);
+    DCOPBrowserItem(TQListView * parent, Type type);
+    DCOPBrowserItem(TQListViewItem * parent, Type type);
 
     virtual ~DCOPBrowserItem() {}
 
@@ -46,15 +46,15 @@ class DCOPBrowserItem : public QListViewItem
     Type type_;
 };
 
-class DCOPBrowserApplicationItem : public QObject, public DCOPBrowserItem
+class DCOPBrowserApplicationItem : public TQObject, public DCOPBrowserItem
 {
  Q_OBJECT
   public:
 
-    DCOPBrowserApplicationItem(QListView * parent, const QCString & app);
+    DCOPBrowserApplicationItem(TQListView * parent, const TQCString & app);
     virtual ~DCOPBrowserApplicationItem() {}
 
-    QCString app() const { return app_; }
+    TQCString app() const { return app_; }
 
     virtual void setOpen(bool o);
 
@@ -64,31 +64,31 @@ class DCOPBrowserApplicationItem : public QObject, public DCOPBrowserItem
 
   private:
 
-    QCString app_;
+    TQCString app_;
   private slots:
   /**
    * Theses two slots are used to get the icon of the application
    */
-    void retreiveIcon(int callId, const QCString& replyType, const QByteArray &replyData);
-	void slotGotWindowName(int callId, const QCString& replyType, const QByteArray &replyData);
+    void retreiveIcon(int callId, const TQCString& replyType, const TQByteArray &replyData);
+	void slotGotWindowName(int callId, const TQCString& replyType, const TQByteArray &replyData);
 };
 
-class DCOPBrowserInterfaceItem : public QObject, public DCOPBrowserItem
+class DCOPBrowserInterfaceItem : public TQObject, public DCOPBrowserItem
 {
   public:
 
     DCOPBrowserInterfaceItem
     (
      DCOPBrowserApplicationItem * parent,
-     const QCString & app,
-     const QCString & object,
+     const TQCString & app,
+     const TQCString & object,
      bool def
     );
 
     virtual ~DCOPBrowserInterfaceItem() {}
 
-    QCString app() const { return app_; }
-    QCString object() const { return object_; }
+    TQCString app() const { return app_; }
+    TQCString object() const { return object_; }
 
     virtual void setOpen(bool o);
 
@@ -98,8 +98,8 @@ class DCOPBrowserInterfaceItem : public QObject, public DCOPBrowserItem
 
   private:
 
-    QCString app_;
-    QCString object_;
+    TQCString app_;
+    TQCString object_;
 };
 
 
@@ -110,24 +110,24 @@ class DCOPBrowserFunctionItem : public DCOPBrowserItem
     DCOPBrowserFunctionItem
     (
      DCOPBrowserInterfaceItem * parent,
-     const QCString & app,
-     const QCString & object,
-     const QCString & function
+     const TQCString & app,
+     const TQCString & object,
+     const TQCString & function
     );
 
     virtual ~DCOPBrowserFunctionItem() {}
 
-    QCString app() const { return app_; }
-    QCString object() const { return object_; }
-    QCString function() const { return function_; }
+    TQCString app() const { return app_; }
+    TQCString object() const { return object_; }
+    TQCString function() const { return function_; }
 
     virtual void setOpen(bool o);
 
   private:
 
-    QCString app_;
-    QCString object_;
-    QCString function_;
+    TQCString app_;
+    TQCString object_;
+    TQCString function_;
 };
 
 #endif

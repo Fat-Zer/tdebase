@@ -19,7 +19,7 @@
 #ifndef _KATE_MAINWINDOW_INCLUDE_
 #define _KATE_MAINWINDOW_INCLUDE_
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kxmlguifactory.h>
 #include <kurl.h>
@@ -48,10 +48,10 @@ class KDE_EXPORT MainWindow : public QObject
   public :
     /**
      * Access the widget (in the middle of the 4 sidebars) in which the editor
-     * component and the KateTabBar are embedded. This widget is a QVBox, so
+     * component and the KateTabBar are embedded. This widget is a TQVBox, so
      * other child widgets can be embedded unter the editor widget.
      */
-    class QWidget *centralWidget() const;
+    class TQWidget *centralWidget() const;
     class ToolViewManager *toolViewManager() const;
 
   private:

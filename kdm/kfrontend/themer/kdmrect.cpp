@@ -25,12 +25,12 @@
 #include <kimageeffect.h>
 #include <kdebug.h>
 
-#include <qimage.h>
-#include <qpainter.h>
-#include <qwidget.h>
-#include <qlayout.h>
+#include <tqimage.h>
+#include <tqpainter.h>
+#include <tqwidget.h>
+#include <tqlayout.h>
 
-KdmRect::KdmRect( KdmItem *parent, const QDomNode &node, const char *name )
+KdmRect::KdmRect( KdmItem *parent, const TQDomNode &node, const char *name )
     : KdmItem( parent, node, name )
 {
 	itemType = "rect";
@@ -46,28 +46,28 @@ KdmRect::KdmRect( KdmItem *parent, const QDomNode &node, const char *name )
 		return;
 
 	// Read RECT ID
-	QDomNode n = node;
-	QDomElement elRect = n.toElement();
+	TQDomNode n = node;
+	TQDomElement elRect = n.toElement();
 
 	// Read RECT TAGS
-	QDomNodeList childList = node.childNodes();
+	TQDomNodeList childList = node.childNodes();
 	for (uint nod = 0; nod < childList.count(); nod++) {
-		QDomNode child = childList.item( nod );
-		QDomElement el = child.toElement();
-		QString tagName = el.tagName();
+		TQDomNode child = childList.item( nod );
+		TQDomElement el = child.toElement();
+		TQString tagName = el.tagName();
 
 		if (tagName == "normal") {
-			parseColor( el.attribute( "color", QString::null ), rect.normal.color );
+			parseColor( el.attribute( "color", TQString::null ), rect.normal.color );
 			rect.normal.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 			parseFont( el.attribute( "font", "Sans 14" ), rect.normal.font );
 		} else if (tagName == "active") {
 			rect.active.present = true;
-			parseColor( el.attribute( "color", QString::null ), rect.active.color );
+			parseColor( el.attribute( "color", TQString::null ), rect.active.color );
 			rect.active.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 			parseFont( el.attribute( "font", "Sans 14" ), rect.active.font );
 		} else if (tagName == "prelight") {
 			rect.prelight.present = true;
-			parseColor( el.attribute( "color", QString::null ), rect.prelight.color );
+			parseColor( el.attribute( "color", TQString::null ), rect.prelight.color );
 			rect.prelight.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 			parseFont( el.attribute( "font", "Sans 14" ), rect.prelight.font );
 		} else if (tagName == "border")
@@ -76,7 +76,7 @@ KdmRect::KdmRect( KdmItem *parent, const QDomNode &node, const char *name )
 }
 
 void
-KdmRect::drawContents( QPainter *p, const QRect &r )
+KdmRect::drawContents( TQPainter *p, const TQRect &r )
 {
 	// choose the correct rect class
 	RectStruct::RectClass *rClass = &rect.normal;
@@ -89,13 +89,13 @@ KdmRect::drawContents( QPainter *p, const QRect &r )
 		return;
 
 	if (rClass->alpha == 1)
-		p->fillRect( area, QBrush( rClass->color ) );
+		p->fillRect( area, TQBrush( rClass->color ) );
 	else {
-		QRect backRect = r;
+		TQRect backRect = r;
 		backRect.moveBy( area.x(), area.y() );
-		QPixmap backPixmap( backRect.size() );
-		bitBlt( &backPixmap, QPoint( 0, 0 ), p->device(), backRect );
-		QImage backImage = backPixmap.convertToImage();
+		TQPixmap backPixmap( backRect.size() );
+		bitBlt( &backPixmap, TQPoint( 0, 0 ), p->device(), backRect );
+		TQImage backImage = backPixmap.convertToImage();
 		KImageEffect::blend( rClass->color, backImage, rClass->alpha );
 		p->drawImage( backRect.x(), backRect.y(), backImage );
 		//  area.moveBy(1,1);
@@ -116,35 +116,35 @@ KdmRect::statusChanged()
 
 /*
 void
-KdmRect::setAttribs( QWidget *widget )
+KdmRect::setAttribs( TQWidget *widget )
 {
 	widget->setFont( rect.normal.font );
 }
 
 void
-KdmRect::recursiveSetAttribs( QLayoutItem *li )
+KdmRect::recursiveSetAttribs( TQLayoutItem *li )
 {
-    QWidget *w;
-    QLayout *l;
+    TQWidget *w;
+    TQLayout *l;
 
     if ((w = li->widget()))
 	setAttribs( w );
     else if ((l = li->layout())) {
-	QLayoutIterator it = l->iterator();
-	for (QLayoutItem *itm = it.current(); itm; itm = ++it)
+	TQLayoutIterator it = l->iterator();
+	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 	     recursiveSetAttribs( itm );
     }
 }
 
 void
-KdmRect::setWidget( QWidget *widget )
+KdmRect::setWidget( TQWidget *widget )
 {
 	KdmItem::setWidget( widget );
 	setAttribs( widget );
 }
 
 void
-KdmRect::setLayoutItem( QLayoutItem *item )
+KdmRect::setLayoutItem( TQLayoutItem *item )
 {
 	KdmItem::setLayoutItem( item );
 	recursiveSetAttribs( item );

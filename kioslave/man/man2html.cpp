@@ -130,11 +130,11 @@
 
 #include <stdio.h>
 
-#include <qvaluestack.h>
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qmap.h>
-#include <qdatetime.h>
+#include <tqvaluestack.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqmap.h>
+#include <tqdatetime.h>
 
 #ifdef SIMPLE_MAN2HTML
 # include <stdlib.h>
@@ -144,7 +144,7 @@
 # define kdDebug(x) cerr
 # define kdWarning(x) cerr << "WARNING "
 #else
-# include <qtextcodec.h>
+# include <tqtextcodec.h>
 # include <kdebug.h>
 # include <kdeversion.h>
 #endif
@@ -233,7 +233,7 @@ public:
     StringDefinition( int len, const char* cstr ) : m_length( len ), m_output( cstr ) {}
 public:
     int m_length; ///< Length of output text
-    QCString m_output; ///< Defined string
+    TQCString m_output; ///< Defined string
 };
 
 /**
@@ -255,19 +255,19 @@ class NumberDefinition
 /**
  * Map of character definitions
  */
-static QMap<QCString,StringDefinition> s_characterDefinitionMap;
+static TQMap<TQCString,StringDefinition> s_characterDefinitionMap;
 
 /**
  * Map of string variable and macro definitions
  * \note String variables and macros are the same thing!
  */
-static QMap<QCString,StringDefinition> s_stringDefinitionMap;
+static TQMap<TQCString,StringDefinition> s_stringDefinitionMap;
 
 /**
  * Map of number registers
  * \note Intern number registers (starting with a dot are not handled here)
  */
-static QMap<QCString,NumberDefinition> s_numberDefinitionMap;
+static TQMap<TQCString,NumberDefinition> s_numberDefinitionMap;
 
 static void fill_old_character_definitions( void );
 
@@ -319,7 +319,7 @@ static void InitStringDefinitions( void )
     // \*S "Change to default font size"
 #ifndef SIMPLE_MAN2HTML
     // Special KDE KIO man:
-    const QCString kdeversion(KDE_VERSION_STRING);
+    const TQCString kdeversion(KDE_VERSION_STRING);
     s_stringDefinitionMap.insert( ".KDE_VERSION_STRING", StringDefinition( kdeversion.length(), kdeversion ) );
 #endif
 }
@@ -332,7 +332,7 @@ static void InitNumberDefinitions( void )
 {
     // As the date number registers are more for end-users, better choose local time.
     // Groff seems to support Gregorian dates only
-    QDate today( QDate::currentDate( Qt::LocalTime ) );
+    TQDate today( TQDate::currentDate( Qt::LocalTime ) );
     s_numberDefinitionMap.insert( "year", today.year() ); // Y2K-correct year
     s_numberDefinitionMap.insert( "yr", today.year() - 1900 ); // Y2K-incorrect year
     s_numberDefinitionMap.insert( "mo", today.month() );
@@ -639,13 +639,13 @@ static int curpos=0;
 static char *scan_troff(char *c, bool san, char **result);
 static char *scan_troff_mandoc(char *c, bool san, char **result);
 
-static QValueList<char*> s_argumentList;
+static TQValueList<char*> s_argumentList;
 
-static QCString htmlPath, cssPath;
+static TQCString htmlPath, cssPath;
 
-static QCString s_dollarZero; // Value of $0
+static TQCString s_dollarZero; // Value of $0
 
-void setResourcePath(const QCString& _htmlPath, const QCString& _cssPath)
+void setResourcePath(const TQCString& _htmlPath, const TQCString& _cssPath)
 {
     htmlPath=_htmlPath;
     cssPath=_cssPath;
@@ -657,7 +657,7 @@ static void fill_old_character_definitions( void )
     {
         const int nr = standardchar[i].nr;
         const char temp[3] = { nr / 256, nr % 256, 0 };
-        QCString name( temp );
+        TQCString name( temp );
         s_characterDefinitionMap.insert( name, StringDefinition( standardchar[i].slen, standardchar[i].st ) );
     }
 }
@@ -733,11 +733,11 @@ static void add_links(char *c)
 
             if (g!=c) {
 
-                QCString dir;
-                QCString file(g, h - g + 1);
+                TQCString dir;
+                TQCString file(g, h - g + 1);
                 file = file.stripWhiteSpace();
                 for (int index = 0; includedirs[index]; index++) {
-                    QCString str = QCString(includedirs[index]) + "/" + file;
+                    TQCString str = TQCString(includedirs[index]) + "/" + file;
                     if (!access(str, R_OK)) {
                         dir = includedirs[index];
                         break;
@@ -751,7 +751,7 @@ static void add_links(char *c)
                     output_real(c);
                     *g=t;*h=0;
 
-                    QCString str;
+                    TQCString str;
                     str.sprintf("<A HREF=\"file:%s/%s\">%s</A>&gt;", dir.data(), file.data(), file.data());
                     output_real(str.data());
                     c=f+6;
@@ -817,8 +817,8 @@ static void add_links(char *c)
 		}
 		if (isalnum(*h)) {
 		    char t,sec, *e;
-                    QString subsec; // ### TODO avoid using QString, as we do not know the encoding
-                    QString fstr(f); // ### TODO avoid using QString, as we do not know the encoding
+                    TQString subsec; // ### TODO avoid using TQString, as we do not know the encoding
+                    TQString fstr(f); // ### TODO avoid using TQString, as we do not know the encoding
 		    e=h+1;
 		    sec=f[1];
 		    subsec=f[2];
@@ -836,7 +836,7 @@ static void add_links(char *c)
 		    *h=t;
 		    t=*e;
 		    *e='\0';
-                    QCString str;
+                    TQCString str;
 		    if (subsec.isEmpty())
                         str.sprintf("<A HREF=\"man:%s(%c)\">%s</A>", h, sec, h);
 		    else
@@ -863,7 +863,7 @@ static void add_links(char *c)
 		t=*f; *f='\0';
                 output_real(c);
 		*f=t; t=*g;*g='\0';
-                QCString str;
+                TQCString str;
                 str.sprintf("<A HREF=\"%s://%s\">%s</A>", ((j==3)?"ftp":"http"), f, f);
                 output_real(str.data());
 		*g=t;
@@ -895,7 +895,7 @@ static void add_links(char *c)
 		*g='\0';
                 output_real(c);
 		*g=t;t=*h;*h='\0';
-                QCString str;
+                TQCString str;
                 str.sprintf("<A HREF=\"mailto:%s\">%s</A>", g, g);
                 output_real(str.data());
 		*h=t;
@@ -920,7 +920,7 @@ static void add_links(char *c)
 		*g='\0';
                 output_real(c);
 		*g=t; t=*h; *h='\0';
-                QCString str;
+                TQCString str;
                 str.sprintf("<A HREF=\"%s\">%s</A>", g, g);
                 output_real(str.data());
 		*h=t;
@@ -947,7 +947,7 @@ static void add_links(char *c)
     output_real(c);
 }
 
-static QCString current_font;
+static TQCString current_font;
 static int current_size=0;
 static int fillout=1;
 
@@ -1007,10 +1007,10 @@ static void out_html(const char *c)
   delete [] c3;
 }
 
-static QCString set_font( const QCString& name )
+static TQCString set_font( const TQCString& name )
 {
     // Every font but R (Regular) creates <span> elements
-    QCString markup;
+    TQCString markup;
     if ( current_font != "R" && !current_font.isEmpty() )
         markup += "</span>";
     const uint len = name.length();
@@ -1075,18 +1075,18 @@ static QCString set_font( const QCString& name )
 }
 
 /// \deprecated
-static QCString set_font( const char ch )
+static TQCString set_font( const char ch )
 #ifndef SIMPLE_MAN2HTML
         KDE_DEPRECATED;
 
-static QCString set_font( const char ch )
+static TQCString set_font( const char ch )
 #endif
 {
-    const QCString name = &ch;
+    const TQCString name = &ch;
     return set_font( name );
 }
 
-static QCString change_to_size(int nr)
+static TQCString change_to_size(int nr)
 {
     switch (nr)
     {
@@ -1097,8 +1097,8 @@ static QCString change_to_size(int nr)
     }
     if ( nr == current_size )
         return "";
-    const QCString font ( current_font );
-    QCString markup;
+    const TQCString font ( current_font );
+    TQCString markup;
     markup = set_font("R");
     if (current_size)
         markup += "</FONT>";
@@ -1128,21 +1128,21 @@ static int intresult=0;
 static bool skip_escape=false;
 static bool single_escape=false;
 
-static char *scan_escape_direct( char *c, QCString& cstr );
+static char *scan_escape_direct( char *c, TQCString& cstr );
 
 /**
  * scan a named character
  * param c position
 */
-static QCString scan_named_character( char*& c )
+static TQCString scan_named_character( char*& c )
 {
-    QCString name;
+    TQCString name;
     if ( *c == '(' )
     {
         // \*(ab  Name of two characters
         if ( c[1] == escapesym )
         {
-            QCString cstr;
+            TQCString cstr;
             c = scan_escape_direct( c+2, cstr );
             // ### HACK: as we convert characters too early to HTML, we need to support more than 2 characters here and assume that all characters passed by the variable are to be used.
             name = cstr;
@@ -1164,7 +1164,7 @@ static QCString scan_named_character( char*& c )
         {
             if ( *c == escapesym )
             {
-                QCString cstr;
+                TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
                 const int result = cstr.find(']');
                 if ( result == -1 )
@@ -1196,7 +1196,7 @@ static QCString scan_named_character( char*& c )
         {
             if ( *c == escapesym )
             {
-                QCString cstr;
+                TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
                 const int result = cstr.find('\'');
                 if ( result == -1 )
@@ -1223,7 +1223,7 @@ static QCString scan_named_character( char*& c )
     // Note: characters with a one character length name doe not exist, as they would collide with other escapes
     
     // Now we have the name, let us find it between the string names
-    QMap<QCString,StringDefinition>::iterator it=s_characterDefinitionMap.find(name);
+    TQMap<TQCString,StringDefinition>::iterator it=s_characterDefinitionMap.find(name);
     if (it==s_characterDefinitionMap.end())
     {
         kdDebug(7107) << "EXCEPTION: cannot find character with name: " << name << endl;
@@ -1237,15 +1237,15 @@ static QCString scan_named_character( char*& c )
     }
 }
 
-static QCString scan_named_string(char*& c)
+static TQCString scan_named_string(char*& c)
 {
-    QCString name;
+    TQCString name;
     if ( *c == '(' )
     {
         // \*(ab  Name of two characters
         if ( c[1] == escapesym )
         {
-            QCString cstr;
+            TQCString cstr;
             c = scan_escape_direct( c+2, cstr );
             kdDebug(7107) << "\\(" << cstr << endl;
             // ### HACK: as we convert characters too early to HTML, we need to support more than 2 characters here and assume that all characters passed by the variable are to be used.
@@ -1268,7 +1268,7 @@ static QCString scan_named_string(char*& c)
         {
             if ( *c == escapesym )
             {
-                QCString cstr;
+                TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
                 const int result = cstr.find(']');
                 if ( result == -1 )
@@ -1299,7 +1299,7 @@ static QCString scan_named_string(char*& c)
         c++;
     }
     // Now we have the name, let us find it between the string names
-    QMap<QCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
     if (it==s_stringDefinitionMap.end())
     {
         kdDebug(7107) << "EXCEPTION: cannot find string with name: " << name << endl;
@@ -1313,7 +1313,7 @@ static QCString scan_named_string(char*& c)
     }
 }
 
-static QCString scan_dollar_parameter(char*& c)
+static TQCString scan_dollar_parameter(char*& c)
 {
     unsigned int argno = 0; // No dollar argument number yet!
     if ( *c == '0' )
@@ -1367,8 +1367,8 @@ static QCString scan_dollar_parameter(char*& c)
     else if ( ( *c == '*' ) || ( *c == '@' ) )
     {
         const bool quote = ( *c == '@' );
-        QValueList<char*>::const_iterator it = s_argumentList.begin();
-        QCString param;
+        TQValueList<char*>::const_iterator it = s_argumentList.begin();
+        TQCString param;
         bool space = false;
         for ( ; it != s_argumentList.end(); ++it )
         {
@@ -1406,7 +1406,7 @@ static QCString scan_dollar_parameter(char*& c)
 }
 
 /// return the value of read-only number registers
-static int read_only_number_register( const QCString& name )
+static int read_only_number_register( const TQCString& name )
 {
     // Internal read-only variables
     if ( name == ".$" )
@@ -1459,7 +1459,7 @@ static int scan_number_register( char*& c)
         case '-': sign = -1; c++; break;
         default: break;
     }
-    QCString name;
+    TQCString name;
     if ( *c == '[' )
     {
         c++;
@@ -1514,7 +1514,7 @@ static int scan_number_register( char*& c)
     }
     else
     {
-        QMap< QCString, NumberDefinition >::iterator it = s_numberDefinitionMap.find( name );
+        TQMap< TQCString, NumberDefinition >::iterator it = s_numberDefinitionMap.find( name );
         if ( it == s_numberDefinitionMap.end() )
         {
             return 0; // Undefined variable
@@ -1528,15 +1528,15 @@ static int scan_number_register( char*& c)
 }
 
 /// get and set font
-static QCString scan_named_font( char*& c )
+static TQCString scan_named_font( char*& c )
 {
-    QCString name;
+    TQCString name;
     if ( *c == '(' )
     {
         // \f(ab  Name of two characters
         if ( c[1] == escapesym )
         {
-            QCString cstr;
+            TQCString cstr;
             c = scan_escape_direct( c+2, cstr );
             kdDebug(7107) << "\\(" << cstr << endl;
             // ### HACK: as we convert characters too early to HTML, we need to support more than 2 characters here and assume that all characters passed by the variable are to be used.
@@ -1558,7 +1558,7 @@ static QCString scan_named_font( char*& c )
         {
             if ( *c == escapesym )
             {
-                QCString cstr;
+                TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
                 const int result = cstr.find(']');
                 if ( result == -1 )
@@ -1617,9 +1617,9 @@ static QCString scan_named_font( char*& c )
         return "";
 }
 
-static QCString scan_number_code( char*& c )
+static TQCString scan_number_code( char*& c )
 {
-    QCString number;
+    TQCString number;
     if ( *c != '\'' )
         return "";
     while ( *c && ( *c != '\n' ) && ( *c != '\'' ) )
@@ -1647,7 +1647,7 @@ static QCString scan_number_code( char*& c )
 // ### TODO known missing escapes from groff(7):
 // ### TODO \& \! \) \: \R
 
-static char *scan_escape_direct( char *c, QCString& cstr )
+static char *scan_escape_direct( char *c, TQCString& cstr )
 {
     bool exoutputp;
     bool exskipescape;
@@ -1682,7 +1682,7 @@ static char *scan_escape_direct( char *c, QCString& cstr )
             c--;
         }
         else
-            cstr = QCString( c, 1 );
+            cstr = TQCString( c, 1 );
         break;
     }
     case 'k': c++; if (*c=='(') c+=2; // ### FIXME \k[REG] exists too
@@ -1807,7 +1807,7 @@ static char *scan_escape_direct( char *c, QCString& cstr )
 	if (*++c) c++; // c += 2
         if (sscanf(c, "%d", &i) != 1) // (### FIXME ugly!)
 		break;
-        QCString temp;
+        TQCString temp;
         temp.sprintf( "%d", i ); // Skip over number (### FIXME ugly!)
         c += temp.length();
 	switch(i) {
@@ -1831,7 +1831,7 @@ static char *scan_escape_direct( char *c, QCString& cstr )
 
 static char *scan_escape(char *c)
 {
-    QCString cstr;
+    TQCString cstr;
     char* result = scan_escape_direct( c, cstr );
     if ( !skip_escape )
         out_html(cstr);
@@ -1916,7 +1916,7 @@ public:
     TABLEROW *prev, *next;
 
 private:
-    QPtrList<TABLEITEM> items;
+    TQPtrList<TABLEITEM> items;
 };
 
 TABLEITEM::TABLEITEM(TABLEROW *row) : contents(0), _parent(row) {
@@ -1927,7 +1927,7 @@ TABLEITEM::TABLEITEM(TABLEROW *row) : contents(0), _parent(row) {
 TABLEROW *TABLEROW::copyLayout() const {
     TABLEROW *newrow = new TABLEROW();
 
-    QPtrListIterator<TABLEITEM> it(items);
+    TQPtrListIterator<TABLEITEM> it(items);
     for ( ; it.current(); ++it) {
         TABLEITEM *newitem = new TABLEITEM(newrow);
         newitem->copyLayout(it.current());
@@ -2063,7 +2063,7 @@ static char *scan_table(char *c)
     char *g;
     int center=0, expand=0, box=0, border=0, linesize=1;
     int i,j,maxcol=0, finished=0;
-    QCString oldfont;
+    TQCString oldfont;
     int oldsize,oldfillout;
     char itemsep='\t';
     TABLEROW *layout=NULL, *currow;
@@ -2775,8 +2775,8 @@ static void request_while( char*& c, int j, bool mdoc )
     char* newline = skip_till_newline( c );
     const char oldchar = *newline;
     *newline = 0;
-    // We store the full .while stuff into a QCString as if it would be a macro
-    const QCString macro = c ;
+    // We store the full .while stuff into a TQCString as if it would be a macro
+    const TQCString macro = c ;
     kdDebug(7107) << "'Macro' of .while" << endl << macro << endl;
     // Prepare for continuing after .while loop end
     *newline = oldchar;
@@ -3039,7 +3039,7 @@ static int get_request(char *req, int len)
 // &%(#@ c programs !!!
 //static int ifelseval=0;
 // If/else can be nested!
-static QValueStack<int> s_ifelseval;
+static TQValueStack<int> s_ifelseval;
 
 // Process a (mdoc) request involving quotes
 static char* process_quote(char* c, int j, const char* open, const char* close)
@@ -3088,7 +3088,7 @@ static bool is_identifier_char( const char c )
     return false;
 }
 
-static QCString scan_identifier( char*& c )
+static TQCString scan_identifier( char*& c )
 {
     char* h = c; // help pointer
     // ### TODO Groff seems to eat nearly everything as identifier name (info:/groff/Identifiers)
@@ -3096,7 +3096,7 @@ static QCString scan_identifier( char*& c )
         ++h;
     const char tempchar = *h;
     *h = 0;
-    const QCString name = c;
+    const TQCString name = c;
     *h = tempchar;
     if ( name.isEmpty() )
     {
@@ -3140,7 +3140,7 @@ static char *scan_request(char *c)
     else
     {
         int nlen = 0;
-        QCString macroName;
+        TQCString macroName;
         while (c[nlen] && (c[nlen] != ' ') && (c[nlen] != '\t') && (c[nlen] != '\n') && (c[nlen] != escapesym))
         {
             macroName+=c[nlen];
@@ -3149,11 +3149,11 @@ static char *scan_request(char *c)
         int j = nlen;
         while (c[j] && c[j]==' ' || c[j]=='\t') j++;
         /* search macro database of self-defined macros */
-        QMap<QCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(macroName);
+        TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(macroName);
         if (it!=s_stringDefinitionMap.end())
         {
             kdDebug(7107) << "CALLING MACRO: " << macroName << endl;
-            const QCString oldDollarZero = s_dollarZero; // Previous value of $0
+            const TQCString oldDollarZero = s_dollarZero; // Previous value of $0
             s_dollarZero = macroName;
             sl=fill_words(c+j, wordlist, &words, true, &c);
             *sl='\0';
@@ -3176,7 +3176,7 @@ static char *scan_request(char *c)
                 char* work = new char [length+2];
                 work[0] = '\n'; // The macro must start after an end of line to allow a request on first line
                 qstrncpy(work+1,(*it).m_output.data(),length+1);
-                const QValueList<char*> oldArgumentList( s_argumentList );
+                const TQValueList<char*> oldArgumentList( s_argumentList );
                 s_argumentList.clear();
                 for ( i = 0 ; i < max_wordlist; i++ )
                 {
@@ -3233,7 +3233,7 @@ static char *scan_request(char *c)
                         ++c;
                         break;
                     }
-                    const QCString name ( scan_identifier( c ) );
+                    const TQCString name ( scan_identifier( c ) );
                     while (*c && *c!='\n') c++;
                     c++;
                     h=c;
@@ -3241,7 +3241,7 @@ static char *scan_request(char *c)
                     *c='\0';
                     char* result=0;
                     scan_troff(h,0,&result);
-                    QMap<QCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -3267,7 +3267,7 @@ static char *scan_request(char *c)
                     kdDebug(7107) << "start .ds/.as" << endl;
                     int oldcurpos=curpos;
                     c+=j;
-                    const QCString name( scan_identifier( c) );
+                    const TQCString name( scan_identifier( c) );
                     if ( name.isEmpty() )
                         break;
                     while (*c && isspace(*c)) c++;
@@ -3276,7 +3276,7 @@ static char *scan_request(char *c)
                     curpos=0;
                     char* result=0;
                     c=scan_troff(c,1,&result);
-                    QMap<QCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -3424,7 +3424,7 @@ static char *scan_request(char *c)
                     h = skip_till_newline( c );
                     const char oldChar = *h;
                     *h = 0;
-                    const QCString name = c;
+                    const TQCString name = c;
                     // ### TODO: name might contain a variable
                     if ( name.isEmpty() )
                         out_html( set_font( "P" ) ); // Previous font
@@ -4075,7 +4075,7 @@ static char *scan_request(char *c)
 #else
                             // kio_man transforms from local to UTF-8
                             out_html("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=");
-                            out_html(QTextCodec::codecForLocale()->mimeName());
+                            out_html(TQTextCodec::codecForLocale()->mimeName());
                             out_html("\">\n");
 #endif
                             out_html("<TITLE>");
@@ -4163,13 +4163,13 @@ static char *scan_request(char *c)
                 {
                     kdDebug(7107) << "start .rm/.rn" << endl;
                     c+=j;
-                    const QCString name( scan_identifier( c ) );
+                    const TQCString name( scan_identifier( c ) );
                     if ( name.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty origin string to remove/rename: " << endl;
                             break;
                     }
-                    QCString name2;
+                    TQCString name2;
                     if ( !mode )
                     {
                         while (*c && isspace(*c) && *c!='\n') ++c;
@@ -4181,7 +4181,7 @@ static char *scan_request(char *c)
                         }
                     }
                     c=skip_till_newline(c);
-                    QMap<QCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to rename or remove: " << name << endl;
@@ -4216,7 +4216,7 @@ static char *scan_request(char *c)
                 {
                     kdDebug(7107) << "start .nr" << endl;
                     c += j;
-                    const QCString name( scan_identifier( c ) );
+                    const TQCString name( scan_identifier( c ) );
                     if ( name.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty name for register variable" << endl;
@@ -4240,7 +4240,7 @@ static char *scan_request(char *c)
                         c=scan_expression( c, &increment );
                     }
                     c = skip_till_newline( c );
-                    QMap <QCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
+                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
                     if ( it == s_numberDefinitionMap.end() )
                     {
                         if ( sign < 1 )
@@ -4277,9 +4277,9 @@ static char *scan_request(char *c)
                     c = nameStart;
                     while (*c && (*c != ' ') && (*c != '\n')) c++;
                     *c = '\0';
-                    const QCString name(nameStart);
+                    const TQCString name(nameStart);
     
-                    QCString endmacro;
+                    TQCString endmacro;
                     if (words == 1)
                     {
                         endmacro="..";
@@ -4297,7 +4297,7 @@ static char *scan_request(char *c)
                     while (*c && qstrncmp(c,endmacro,length))
                         c=skip_till_newline(c);
 
-                    QCString macro;
+                    TQCString macro;
                     while (sl!=c)
                     {
                         if (sl[0]=='\\' && sl[1]=='\\')
@@ -4310,7 +4310,7 @@ static char *scan_request(char *c)
                         sl++;
                     }
 
-                    QMap<QCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -5069,14 +5069,14 @@ static char *scan_request(char *c)
                     // Be careful: unlike .rn, the destination is first, origin is second
                     kdDebug(7107) << "start .als" << endl;
                     c+=j;
-                    const QCString name ( scan_identifier( c ) );
+                    const TQCString name ( scan_identifier( c ) );
                     if ( name.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty destination string to alias" << endl;
                             break;
                     }
                     while (*c && isspace(*c) && *c!='\n') ++c;
-                    const QCString name2 ( scan_identifier ( c ) );
+                    const TQCString name2 ( scan_identifier ( c ) );
                     if ( name2.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty origin string to alias" << endl;
@@ -5090,7 +5090,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     // Second parametr is origin (unlike in .rn)
-                    QMap<QCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name2);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name2);
                     if (it==s_stringDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to make alias: " << name2 << endl;
@@ -5107,14 +5107,14 @@ static char *scan_request(char *c)
                 {
                     kdDebug(7107) << "start .rr" << endl;
                     c += j;
-                    const QCString name ( scan_identifier( c ) );
+                    const TQCString name ( scan_identifier( c ) );
                     if ( name.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty origin string to remove/rename: " << endl;
                             break;
                     }
                     c = skip_till_newline( c );
-                    QMap <QCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
+                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
                     if ( it == s_numberDefinitionMap.end() )
                     {
                             kdDebug(7107) << "EXCEPTION: trying to remove inexistant number register: " << endl;
@@ -5130,21 +5130,21 @@ static char *scan_request(char *c)
                 {
                     kdDebug(7107) << "start .rnn" << endl;
                     c+=j;
-                    const QCString name ( scan_identifier ( c ) );
+                    const TQCString name ( scan_identifier ( c ) );
                     if ( name.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty origin to remove/rename number register" << endl;
                             break;
                     }
                     while (*c && isspace(*c) && *c!='\n') ++c;
-                    const QCString name2 ( scan_identifier ( c ) );
+                    const TQCString name2 ( scan_identifier ( c ) );
                     if ( name2.isEmpty() )
                     {
                         kdDebug(7107) << "EXCEPTION: empty destination to rename number register " << endl;
                         break;
                     }
                     c = skip_till_newline( c );
-                    QMap<QCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name);
+                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name);
                     if (it==s_numberDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find number register to rename: " << name << endl;
@@ -5167,14 +5167,14 @@ static char *scan_request(char *c)
                     // Be careful: unlike .rnn, the destination is first, origin is second
                     kdDebug(7107) << "start .aln" << endl;
                     c+=j;
-                    const QCString name ( scan_identifier( c ) );
+                    const TQCString name ( scan_identifier( c ) );
                     if ( name.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty destination number register to alias" << endl;
                             break;
                     }
                     while (*c && isspace(*c) && *c!='\n') ++c;
-                    const QCString name2 ( scan_identifier( c ) );
+                    const TQCString name2 ( scan_identifier( c ) );
                     if ( name2.isEmpty() )
                     {
                             kdDebug(7107) << "EXCEPTION: empty origin number register to alias" << endl;
@@ -5188,7 +5188,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     // Second parametr is origin (unlike in .rnn)
-                    QMap<QCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name2);
+                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name2);
                     if (it==s_numberDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to make alias: " << name2 << endl;
@@ -5208,7 +5208,7 @@ static char *scan_request(char *c)
                     while (*h && *h!='\n' && isdigit(*h) ) ++h;
                     const char tempchar = *h;
                     *h = 0;
-                    const QCString number = c;
+                    const TQCString number = c;
                     *h = tempchar;
                     c = skip_till_newline( h );
                     unsigned int result = 1; // Numbers of shifts to do

@@ -21,11 +21,11 @@
 #define MEDIUMBUTTON_H
 
 #include <panelbutton.h>
-#include <qpoint.h>
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qcursor.h>
-#include <qtimer.h>
+#include <tqpoint.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
+#include <tqcursor.h>
+#include <tqtimer.h>
 #include <kfileitem.h>
 #include <kpanelapplet.h>
 #include <kactioncollection.h>
@@ -35,19 +35,19 @@ class MediumButton : public PanelPopupButton
 Q_OBJECT
 
 public:
-	MediumButton(QWidget *parent, const KFileItem &fileItem);
+	MediumButton(TQWidget *parent, const KFileItem &fileItem);
 	~MediumButton();
 	const KFileItem &fileItem() const;
 	void setFileItem(const KFileItem &fileItem);
 	void setPanelPosition(KPanelApplet::Position position);
 
 protected:
-	QString tileName();
+	TQString tileName();
 	void refreshType();
 	void initPopup();
-	void dragEnterEvent( QDragEnterEvent* );
-	void dragLeaveEvent( QDragLeaveEvent* );
-	void dropEvent(QDropEvent *e);
+	void dragEnterEvent( TQDragEnterEvent* );
+	void dragLeaveEvent( TQDragLeaveEvent* );
+	void dropEvent(TQDropEvent *e);
 
 protected slots:
 	// Activate this code only if we find a way to have both an
@@ -60,7 +60,7 @@ protected slots:
 private:
 	KActionCollection mActions;
 	KFileItem mFileItem;
-	QTimer mOpenTimer;
+	TQTimer mOpenTimer;
 };
 
 #endif

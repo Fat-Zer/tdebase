@@ -13,10 +13,10 @@
 #endif
 
 
-FlowGridManager::FlowGridManager(QSize p_item_size,
-                                 QSize p_space_size,
-                                 QSize p_border_size,
-                                 QSize p_frame_size,
+FlowGridManager::FlowGridManager(TQSize p_item_size,
+                                 TQSize p_space_size,
+                                 TQSize p_border_size,
+                                 TQSize p_frame_size,
                                  Qt::Orientation orient,
                                  int num_items,
                                  Slack slack_x,Slack slack_y)
@@ -42,25 +42,25 @@ void FlowGridManager::setNumItems(int num_items)
         return;
     _numItems=num_items; _dirty=true;
 }
-void FlowGridManager::setItemSize(QSize p_item_size)
+void FlowGridManager::setItemSize(TQSize p_item_size)
 {   if (_pItemSize==p_item_size)
         return;
     _pItemSize=p_item_size; _dirty=true;
 }
 
-void FlowGridManager::setSpaceSize(QSize p_space_size)
+void FlowGridManager::setSpaceSize(TQSize p_space_size)
 {   if (_pSpaceSize==p_space_size)
         return;
     _pSpaceSize=p_space_size; _dirty=true;
 }
 
-void FlowGridManager::setBorderSize(QSize p_border_size)
+void FlowGridManager::setBorderSize(TQSize p_border_size)
 {   if (_pBorderSize==p_border_size)
         return;
     _pBorderSize=p_border_size; _dirty=true;
 }
 
-void FlowGridManager::setFrameSize(QSize p_frame_size)
+void FlowGridManager::setFrameSize(TQSize p_frame_size)
 {   if (_pFrameSize==p_frame_size)
         return;
     _pFrameSize=p_frame_size;
@@ -93,25 +93,25 @@ void FlowGridManager::setConserveSpace(bool conserve)
 
 
 // get members
-QSize  FlowGridManager::itemSize() const
+TQSize  FlowGridManager::itemSize() const
 {   _checkReconfigure();  return _itemSize;}
 
-QSize  FlowGridManager::spaceSize() const
+TQSize  FlowGridManager::spaceSize() const
 {   _checkReconfigure();  return _spaceSize;}
 
-QSize  FlowGridManager::borderSize() const
+TQSize  FlowGridManager::borderSize() const
 {   _checkReconfigure();  return _borderSize;}
 
-QSize  FlowGridManager::gridDim() const
+TQSize  FlowGridManager::gridDim() const
 {   _checkReconfigure();  return _gridDim;}
 
-QSize  FlowGridManager::gridSpacing() const
+TQSize  FlowGridManager::gridSpacing() const
 {   _checkReconfigure();  return _gridSpacing;}
 
-QSize  FlowGridManager::frameSize() const
+TQSize  FlowGridManager::frameSize() const
 {   _checkReconfigure();  return _frameSize;}
 
-QPoint FlowGridManager::origin() const
+TQPoint FlowGridManager::origin() const
 {   _checkReconfigure();  return _origin;}
 
 Qt::Orientation FlowGridManager::orientation() const
@@ -131,21 +131,21 @@ bool FlowGridManager::conserveSpace() const
 bool FlowGridManager::isValid() const
 {   _checkReconfigure();  return _valid;}
 
-QPoint FlowGridManager::posAtCell(int x,int y) const
+TQPoint FlowGridManager::posAtCell(int x,int y) const
 {  _checkReconfigure();
-    return _origin+QPoint(_gridSpacing.width()*x,_gridSpacing.height()*y);
+    return _origin+TQPoint(_gridSpacing.width()*x,_gridSpacing.height()*y);
 }
 
-QPoint FlowGridManager::pos(int i) const
+TQPoint FlowGridManager::pos(int i) const
 {   return posAtCell(cell(i).x(),cell(i).y());
 }
 
-QPoint FlowGridManager::cell(int index) const
+TQPoint FlowGridManager::cell(int index) const
 {   _checkReconfigure();
     //assert((index>=0) && (index<_gridDim.width()*_gridDim.height()));
     int x=index % _gridDim.width(),
         y=index / _gridDim.width();
-    return QPoint(x,y);
+    return TQPoint(x,y);
 }
 
 
@@ -153,7 +153,7 @@ QPoint FlowGridManager::cell(int index) const
 
 // return height if orientation is Horizontal
 // return width if orientation is Vertical
-int FlowGridManager::_getHH(QSize size) const
+int FlowGridManager::_getHH(TQSize size) const
 {  if (_orientation==Qt::Horizontal)
         return size.height();
     return size.width();
@@ -161,17 +161,17 @@ int FlowGridManager::_getHH(QSize size) const
 
 // return height if orientation is Vertical
 // return width if orientation is Horizontal
-int FlowGridManager::_getWH(QSize size) const
+int FlowGridManager::_getWH(TQSize size) const
 {  if (_orientation==Qt::Horizontal)
         return size.width();
     return size.height();
 }
 
 // swap horizontal and vertical if orientation is Vertical, otherwise return arg
-QSize FlowGridManager::_swapHV(QSize hv) const
+TQSize FlowGridManager::_swapHV(TQSize hv) const
 {  if (_orientation==Qt::Horizontal)
         return hv;
-    QSize temp=hv;
+    TQSize temp=hv;
     temp.transpose();
     return temp;
 }
@@ -187,22 +187,22 @@ int FlowGridManager::_slack(int nitems,int length,int item,int space,int border)
 
 void FlowGridManager::_clear() const
 {
-    _borderSize=QSize(0,0);
-    _spaceSize=QSize(0,0);
-    _itemSize=QSize(0,0);
-    _gridDim=QSize(0,0);
-    _gridSpacing=QSize(0,0);
-    _origin=QPoint(0,0);
-    _frameSize=QSize(0,0);
+    _borderSize=TQSize(0,0);
+    _spaceSize=TQSize(0,0);
+    _itemSize=TQSize(0,0);
+    _gridDim=TQSize(0,0);
+    _gridSpacing=TQSize(0,0);
+    _origin=TQPoint(0,0);
+    _frameSize=TQSize(0,0);
 
     _dirty=false;
     _valid=false;
 }
 
 
-int FlowGridManager::indexNearest(QPoint p) const
+int FlowGridManager::indexNearest(TQPoint p) const
 {  if (!isValid()) return -1;
-   QPoint c=(p-_origin)-QPoint(_spaceSize.width(),_spaceSize.height())/2;
+   TQPoint c=(p-_origin)-TQPoint(_spaceSize.width(),_spaceSize.height())/2;
    int x=c.x()/_gridSpacing.width(),
        y=c.y()/_gridSpacing.height();
    int i= x+y*_gridDim.width();
@@ -254,20 +254,20 @@ void FlowGridManager::_reconfigure() const
     iSlack=slack/2;
     pBorderHeight+=iSlack;
     if (_conserveSpace) {
-        _itemSize=_swapHV(QSize(_getWH(_pItemSize),pItemHeight));
-        _spaceSize=_swapHV(QSize(_getWH(_pSpaceSize),pSpaceHeight));
-        _borderSize=_swapHV(QSize(_getWH(_pBorderSize),pBorderHeight));
+        _itemSize=_swapHV(TQSize(_getWH(_pItemSize),pItemHeight));
+        _spaceSize=_swapHV(TQSize(_getWH(_pSpaceSize),pSpaceHeight));
+        _borderSize=_swapHV(TQSize(_getWH(_pBorderSize),pBorderHeight));
     }
     else {
-        _itemSize=_swapHV(QSize(pItemHeight,pItemHeight));
-        _spaceSize=_swapHV(QSize(pSpaceHeight,pSpaceHeight));
-        _borderSize=_swapHV(QSize(pBorderHeight,pBorderHeight));
+        _itemSize=_swapHV(TQSize(pItemHeight,pItemHeight));
+        _spaceSize=_swapHV(TQSize(pSpaceHeight,pSpaceHeight));
+        _borderSize=_swapHV(TQSize(pBorderHeight,pBorderHeight));
     }
-    _gridDim=_swapHV(QSize(numspans,spanlen));
+    _gridDim=_swapHV(TQSize(numspans,spanlen));
 
     _gridSpacing=_itemSize+_spaceSize;
-    _origin=QPoint(_borderSize.width(),_borderSize.height());
-    _frameSize=2*_borderSize+QSize(_gridDim.width()*_gridSpacing.width()-_spaceSize.width(),
+    _origin=TQPoint(_borderSize.width(),_borderSize.height());
+    _frameSize=2*_borderSize+TQSize(_gridDim.width()*_gridSpacing.width()-_spaceSize.width(),
                               _gridDim.height()*_gridSpacing.height()-_spaceSize.height());
 
     _dirty=false;

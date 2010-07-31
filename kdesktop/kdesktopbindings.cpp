@@ -1,13 +1,13 @@
 #ifndef NOSLOTS
 # define DEF( name, key3, key4, fnSlot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4, this, SLOT(fnSlot) )
+   keys->insert( name, i18n(name), TQString::null, key3, key4, this, TQT_SLOT(fnSlot) )
 # define DEF2( name, key3, key4, receiver, slot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4, receiver, slot );
+   keys->insert( name, i18n(name), TQString::null, key3, key4, receiver, slot );
 #else
 # define DEF( name, key3, key4, fnSlot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4 )
+   keys->insert( name, i18n(name), TQString::null, key3, key4 )
 # define DEF2( name, key3, key4, receiver, slot ) \
-   keys->insert( name, i18n(name), QString::null, key3, key4 )
+   keys->insert( name, i18n(name), TQString::null, key3, key4 )
 #endif
 #define WIN KKey::QtWIN
 
@@ -28,7 +28,7 @@
 	if (kapp->authorize("lock_screen"))
 	{
 #endif
-		DEF2( I18N_NOOP("Lock Session"), ALT+CTRL+Qt::Key_L, WIN+Qt::Key_ScrollLock, KRootWm::self(), SLOT(slotLock()) );
+		DEF2( I18N_NOOP("Lock Session"), ALT+CTRL+Qt::Key_L, WIN+Qt::Key_ScrollLock, KRootWm::self(), TQT_SLOT(slotLock()) );
 #ifndef NOSLOTS
 	}
 	if (kapp->authorize("logout"))

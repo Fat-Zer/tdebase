@@ -764,7 +764,7 @@ main( int argc ATTR_UNUSED, char **argv )
 
 	init_config();
 
-	/* for QSettings */
+	/* for TQSettings */
 	srand( time( 0 ) );
 	for (i = 0; i < 10000; i++) {
 		sprintf( qtrc, "/tmp/%010d", rand() );

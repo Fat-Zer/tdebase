@@ -57,17 +57,17 @@
 #include <kparts/event.h>
 #include <kmenubar.h>
 
-#include <qdropsite.h>
-#include <qdragobject.h>
-#include <qvbox.h>
-#include <qtextcodec.h>
-#include <qlayout.h>
+#include <tqdropsite.h>
+#include <tqdragobject.h>
+#include <tqvbox.h>
+#include <tqtextcodec.h>
+#include <tqlayout.h>
 
 // StatusBar field IDs
 #define KWRITE_ID_GEN 1
 
-QPtrList<KTextEditor::Document> KWrite::docList;
-QPtrList<KWrite> KWrite::winList;
+TQPtrList<KTextEditor::Document> KWrite::docList;
+TQPtrList<KWrite> KWrite::winList;
 
 KWrite::KWrite (KTextEditor::Document *doc)
     : m_view(0),
@@ -96,11 +96,11 @@ KWrite::KWrite (KTextEditor::Document *doc)
 
   setAcceptDrops(true);
 
-  connect(m_view,SIGNAL(newStatus()),this,SLOT(newCaption()));
-  connect(m_view,SIGNAL(viewStatusMsg(const QString &)),this,SLOT(newStatus(const QString &)));
-  connect(m_view->document(),SIGNAL(fileNameChanged()),this,SLOT(newCaption()));
-  connect(m_view->document(),SIGNAL(fileNameChanged()),this,SLOT(slotFileNameChanged()));
-  connect(m_view,SIGNAL(dropEventPass(QDropEvent *)),this,SLOT(slotDropEvent(QDropEvent *)));
+  connect(m_view,TQT_SIGNAL(newStatus()),this,TQT_SLOT(newCaption()));
+  connect(m_view,TQT_SIGNAL(viewStatusMsg(const TQString &)),this,TQT_SLOT(newStatus(const TQString &)));
+  connect(m_view->document(),TQT_SIGNAL(fileNameChanged()),this,TQT_SLOT(newCaption()));
+  connect(m_view->document(),TQT_SIGNAL(fileNameChanged()),this,TQT_SLOT(slotFileNameChanged()));
+  connect(m_view,TQT_SIGNAL(dropEventPass(TQDropEvent *)),this,TQT_SLOT(slotDropEvent(TQDropEvent *)));
 
   setXMLFile( "kwriteui.rc" );
   createShellGUI( true );
@@ -108,11 +108,11 @@ KWrite::KWrite (KTextEditor::Document *doc)
 
   // install a working kate part popup dialog thingy
   if (static_cast<Kate::View*>(m_view->qt_cast("Kate::View")))
-    static_cast<Kate::View*>(m_view->qt_cast("Kate::View"))->installPopup ((QPopupMenu*)(factory()->container("ktexteditor_popup", this)) );
+    static_cast<Kate::View*>(m_view->qt_cast("Kate::View"))->installPopup ((TQPopupMenu*)(factory()->container("ktexteditor_popup", this)) );
 
   // init with more usefull size, stolen from konq :)
   if (!initialGeometrySet())
-    resize( QSize(700, 480).expandedTo(minimumSizeHint()));
+    resize( TQSize(700, 480).expandedTo(minimumSizeHint()));
 
   // call it as last thing, must be sure everything is already set up ;)
   setAutoSaveSettings ();
@@ -139,41 +139,41 @@ KWrite::~KWrite()
 
 void KWrite::setupActions()
 {
-  KStdAction::close( this, SLOT(slotFlush()), actionCollection(), "file_close" )->setWhatsThis(i18n("Use this to close the current document"));
+  KStdAction::close( this, TQT_SLOT(slotFlush()), actionCollection(), "file_close" )->setWhatsThis(i18n("Use this to close the current document"));
 
   // setup File menu
-  KStdAction::print(this, SLOT(printDlg()), actionCollection())->setWhatsThis(i18n("Use this command to print the current document"));
-  KStdAction::openNew( this, SLOT(slotNew()), actionCollection(), "file_new" )->setWhatsThis(i18n("Use this command to create a new document"));
-  KStdAction::open( this, SLOT( slotOpen() ), actionCollection(), "file_open" )->setWhatsThis(i18n("Use this command to open an existing document for editing"));
+  KStdAction::print(this, TQT_SLOT(printDlg()), actionCollection())->setWhatsThis(i18n("Use this command to print the current document"));
+  KStdAction::openNew( this, TQT_SLOT(slotNew()), actionCollection(), "file_new" )->setWhatsThis(i18n("Use this command to create a new document"));
+  KStdAction::open( this, TQT_SLOT( slotOpen() ), actionCollection(), "file_open" )->setWhatsThis(i18n("Use this command to open an existing document for editing"));
 
-  m_recentFiles = KStdAction::openRecent(this, SLOT(slotOpen(const KURL&)),
+  m_recentFiles = KStdAction::openRecent(this, TQT_SLOT(slotOpen(const KURL&)),
                                          actionCollection());
   m_recentFiles->setWhatsThis(i18n("This lists files which you have opened recently, and allows you to easily open them again."));
 
-  KAction *a=new KAction(i18n("&New Window"), "window_new", 0, this, SLOT(newView()),
+  KAction *a=new KAction(i18n("&New Window"), "window_new", 0, this, TQT_SLOT(newView()),
               actionCollection(), "view_new_view");
   a->setWhatsThis(i18n("Create another view containing the current document"));
 
-  a=new KAction(i18n("Choose Editor..."),0,this,SLOT(changeEditor()),
+  a=new KAction(i18n("Choose Editor..."),0,this,TQT_SLOT(changeEditor()),
 		actionCollection(),"settings_choose_editor");
   a->setWhatsThis(i18n("Override the system wide setting for the default editing component"));
 
-  KStdAction::quit(this, SLOT(close()), actionCollection())->setWhatsThis(i18n("Close the current document view"));
+  KStdAction::quit(this, TQT_SLOT(close()), actionCollection())->setWhatsThis(i18n("Close the current document view"));
 
   // setup Settings menu
   setStandardToolBarMenuEnabled(true);
 
-  m_paShowStatusBar = KStdAction::showStatusbar(this, SLOT(toggleStatusBar()), actionCollection(), "settings_show_statusbar");
+  m_paShowStatusBar = KStdAction::showStatusbar(this, TQT_SLOT(toggleStatusBar()), actionCollection(), "settings_show_statusbar");
   m_paShowStatusBar->setWhatsThis(i18n("Use this command to show or hide the view's statusbar"));
 
-  m_paShowPath = new KToggleAction(i18n("Sho&w Path"), 0, this, SLOT(newCaption()),
+  m_paShowPath = new KToggleAction(i18n("Sho&w Path"), 0, this, TQT_SLOT(newCaption()),
                     actionCollection(), "set_showPath");
   m_paShowPath->setCheckedState(i18n("Hide Path"));
   m_paShowPath->setWhatsThis(i18n("Show the complete document path in the window caption"));
-  a=KStdAction::keyBindings(this, SLOT(editKeys()), actionCollection());
+  a=KStdAction::keyBindings(this, TQT_SLOT(editKeys()), actionCollection());
   a->setWhatsThis(i18n("Configure the application's keyboard shortcut assignments."));
 
-  a=KStdAction::configureToolbars(this, SLOT(editToolbars()), actionCollection());
+  a=KStdAction::configureToolbars(this, TQT_SLOT(editToolbars()), actionCollection());
   a->setWhatsThis(i18n("Configure which items should appear in the toolbar(s)."));
 }
 
@@ -226,7 +226,7 @@ void KWrite::slotOpen()
   {
 	KEncodingFileDialog::Result r=KEncodingFileDialog::getOpenURLsAndEncoding(
 		KTextEditor::encodingInterface(m_view->document())->encoding(),
-	m_view->document()->url().url(),QString::null,this,i18n("Open File"));
+	m_view->document()->url().url(),TQString::null,this,i18n("Open File"));
 
     for (KURL::List::Iterator i=r.URLs.begin(); i != r.URLs.end(); ++i)
     {
@@ -236,7 +236,7 @@ void KWrite::slotOpen()
   }
   else
   {
-    KURL::List l=KFileDialog::getOpenURLs(m_view->document()->url().url(),QString::null,this,QString::null);
+    KURL::List l=KFileDialog::getOpenURLs(m_view->document()->url().url(),TQString::null,this,TQString::null);
     for (KURL::List::Iterator i=l.begin(); i != l.end(); ++i)
     {
       slotOpen ( *i );
@@ -299,7 +299,7 @@ void KWrite::editToolbars()
 {
   saveMainWindowSettings( kapp->config(), "MainWindow" );
   KEditToolbar *dlg = new KEditToolbar(guiFactory());
-  connect( dlg, SIGNAL(newToolbarConfig()), this, SLOT(slotNewToolbarConfig()) );
+  connect( dlg, TQT_SIGNAL(newToolbarConfig()), this, TQT_SLOT(slotNewToolbarConfig()) );
   dlg->exec();
   delete dlg;
 }
@@ -320,7 +320,7 @@ void KWrite::printDlg()
   KTextEditor::printInterface(m_view->document())->printDialog ();
 }
 
-void KWrite::newStatus(const QString &msg)
+void KWrite::newStatus(const TQString &msg)
 {
   newCaption();
 
@@ -334,7 +334,7 @@ void KWrite::newCaption()
   }
   else
   {
-    QString c;
+    TQString c;
     if (!m_paShowPath->isChecked())
     {
       c = m_view->document()->url().fileName();
@@ -356,17 +356,17 @@ void KWrite::newCaption()
   }
 }
 
-void KWrite::dragEnterEvent( QDragEnterEvent *event )
+void KWrite::dragEnterEvent( TQDragEnterEvent *event )
 {
   event->accept(KURLDrag::canDecode(event));
 }
 
-void KWrite::dropEvent( QDropEvent *event )
+void KWrite::dropEvent( TQDropEvent *event )
 {
   slotDropEvent(event);
 }
 
-void KWrite::slotDropEvent( QDropEvent *event )
+void KWrite::slotDropEvent( TQDropEvent *event )
 {
   KURL::List textlist;
 
@@ -379,9 +379,9 @@ void KWrite::slotDropEvent( QDropEvent *event )
 
 void KWrite::slotEnableActions( bool enable )
 {
-  QValueList<KAction *> actions = actionCollection()->actions();
-  QValueList<KAction *>::ConstIterator it = actions.begin();
-  QValueList<KAction *>::ConstIterator end = actions.end();
+  TQValueList<KAction *> actions = actionCollection()->actions();
+  TQValueList<KAction *>::ConstIterator it = actions.begin();
+  TQValueList<KAction *>::ConstIterator end = actions.end();
 
   for (; it != end; ++it )
       (*it)->setEnabled( enable );
@@ -471,7 +471,7 @@ void KWrite::saveGlobalProperties(KConfig *config) //save documents
 
   for (uint z = 1; z <= docList.count(); z++)
   {
-     QString buf = QString("Document %1").arg(z);
+     TQString buf = TQString("Document %1").arg(z);
      config->setGroup(buf);
 
      KTextEditor::Document *doc = docList.at(z - 1);
@@ -482,7 +482,7 @@ void KWrite::saveGlobalProperties(KConfig *config) //save documents
 
   for (uint z = 1; z <= winList.count(); z++)
   {
-     QString buf = QString("Window %1").arg(z);
+     TQString buf = TQString("Window %1").arg(z);
      config->setGroup(buf);
 
      config->writeEntry("DocumentNumber",docList.find(winList.at(z-1)->view()->document()) + 1);
@@ -498,7 +498,7 @@ void KWrite::restore()
     return;
 
   int docs, windows;
-  QString buf;
+  TQString buf;
   KTextEditor::Document *doc;
   KWrite *t;
 
@@ -508,7 +508,7 @@ void KWrite::restore()
 
   for (int z = 1; z <= docs; z++)
   {
-     buf = QString("Document %1").arg(z);
+     buf = TQString("Document %1").arg(z);
      config->setGroup(buf);
      doc=KTextEditor::EditorChooser::createDocument(0,"KTextEditor::Document");
 
@@ -519,7 +519,7 @@ void KWrite::restore()
 
   for (int z = 1; z <= windows; z++)
   {
-    buf = QString("Window %1").arg(z);
+    buf = TQString("Window %1").arg(z);
     config->setGroup(buf);
     t = new KWrite(docList.at(config->readNumEntry("DocumentNumber") - 1));
     t->restore(config,z);
@@ -543,7 +543,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
   KLocale::setMainCatalogue("kate");         //lukas: set this to have the kwritepart translated using kate message catalog
 
   // here we go, construct the KWrite version
-  QString kWriteVersion  = QString ("%1.%2.%3").arg(KDE::versionMajor() + 1).arg(KDE::versionMinor()).arg(KDE::versionRelease());
+  TQString kWriteVersion  = TQString ("%1.%2.%3").arg(KDE::versionMajor() + 1).arg(KDE::versionMinor()).arg(KDE::versionRelease());
 
   KAboutData aboutData ( "kwrite",
                          I18N_NOOP("KWrite"),
@@ -609,7 +609,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
     bool nav = false;
     int line = 0, column = 0;
 
-    QTextCodec *codec = args->isSet("encoding") ? QTextCodec::codecForName(args->getOption("encoding")) : 0;
+    TQTextCodec *codec = args->isSet("encoding") ? TQTextCodec::codecForName(args->getOption("encoding")) : 0;
 
     if (args->isSet ("line"))
     {
@@ -629,14 +629,14 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
         if( args->isSet( "stdin" ) )
         {
-          QTextIStream input(stdin);
+          TQTextIStream input(stdin);
 
           // set chosen codec
           if (codec)
             input.setCodec (codec);
 
-          QString line;
-          QString text;
+          TQString line;
+          TQString text;
 
           do
           {
@@ -660,7 +660,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
         KWrite *t = new KWrite();
 
         // this file is no local dir, open it, else warn
-        bool noDir = !args->url(z).isLocalFile() || !QDir (args->url(z).path()).exists();
+        bool noDir = !args->url(z).isLocalFile() || !TQDir (args->url(z).path()).exists();
 
         if (noDir)
         {
@@ -692,10 +692,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
   return a.exec ();
 }
 
-KWriteEditorChooser::KWriteEditorChooser(QWidget *):
+KWriteEditorChooser::KWriteEditorChooser(TQWidget *):
 	KDialogBase(KDialogBase::Plain,i18n("Choose Editor Component"),KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Cancel)
 {
-	(new QVBoxLayout(plainPage()))->setAutoAdd(true);
+	(new TQVBoxLayout(plainPage()))->setAutoAdd(true);
 	m_chooser=new KTextEditor::EditorChooser(plainPage(),"Editor Chooser");
 	setMainWidget(m_chooser);
 	m_chooser->readAppSetting();

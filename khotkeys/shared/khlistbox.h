@@ -11,7 +11,7 @@
 #ifndef _KHLISTBOX_H_
 #define _KHLISTBOX_H_
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <klistbox.h>
 
@@ -24,23 +24,23 @@ class KHListBox
     Q_OBJECT
     Q_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )
     public:
-        KHListBox( QWidget* parent_P, const char* name_P = NULL );
+        KHListBox( TQWidget* parent_P, const char* name_P = NULL );
         virtual void clear();
-        virtual void insertItem( QListBoxItem* item_P );
+        virtual void insertItem( TQListBoxItem* item_P );
         bool forceSelect() const;
         void setForceSelect( bool force_P );
     signals:
-        void current_changed( QListBoxItem* item_P );
+        void current_changed( TQListBoxItem* item_P );
     private slots:
-        void slot_selection_changed( QListBoxItem* item_P );
+        void slot_selection_changed( TQListBoxItem* item_P );
         void slot_selection_changed();
-        void slot_current_changed( QListBoxItem* item_P );
+        void slot_current_changed( TQListBoxItem* item_P );
         void slot_insert_select();
     private:
-        QListBoxItem* saved_current_item;
+        TQListBoxItem* saved_current_item;
         bool in_clear;
         bool force_select;
-        QTimer insert_select_timer;
+        TQTimer insert_select_timer;
     };
 
 //***************************************************************************

@@ -31,7 +31,7 @@ class KSysInfo;
 class KEyeCandyPage : public KEyeCandyPageDlg {
 	Q_OBJECT
 public: 
-	KEyeCandyPage(QWidget *parent=0, const char *name=0);
+	KEyeCandyPage(TQWidget *parent=0, const char *name=0);
 	~KEyeCandyPage();
 
 //---------------------------------------------------------------------------------------------------------
@@ -125,34 +125,34 @@ public slots:
 	void slotEyeCandyShowDetails(bool details);
 	/** to be connected to the OS page. changes default values of features according
 		to the desktop selection*/
-	void slotPresetSlider(const QString& style);
+	void slotPresetSlider(const TQString& style);
 
 private:
 	// DEFAULT VALUES SET BY USER
 	int panelsize; // kicker panelsize 0,1,2,3 before the big icons are set to reset that
 	int desktopiconsize;
-	QString osStyle;  //stores OS-Style selection (page 2)
+	TQString osStyle;  //stores OS-Style selection (page 2)
 	bool b_EffectFadeMenu, b_EffectAnimateCombo, b_EffectFadeTooltip, b_EnableIconZoom,
 		 b_AnimateMinimize, b_AnimateShade, b_MoveResizeMaximizedWindows,
 		 b_ShadeHover, b_useXft, b_enableXft, b_PushButtonIcons, b_EffectsEnabled,
 		 b_iconMngAnim, b_konq_prev_sound, b_konq_prev_enable, b_OpaqueResize;
 
-	QString konqbgimage, s_ResizeMode, s_MoveMode, deskbgimage;
-	QStringList konq_dont_prev, kdesktop_prev;
-	QColor desktopTextColor;
+	TQString konqbgimage, s_ResizeMode, s_MoveMode, deskbgimage;
+	TQStringList konq_dont_prev, kdesktop_prev;
+	TQColor desktopTextColor;
 
 	struct st_Gamma{
-		QString EffectDesktop;
-		QString EffectPanel;
-		QString ValueDesktop;
-		QString ValuePanel;
+		TQString EffectDesktop;
+		TQString EffectPanel;
+		TQString ValueDesktop;
+		TQString ValuePanel;
 	} st_UserGamma;
 
 	struct st_Wallpaper{
 		bool CommonDesktop;
-		QString MultiWallpaperMode;
-		QString WallpaperMode;
-		QString Wallpaper;
+		TQString MultiWallpaperMode;
+		TQString WallpaperMode;
+		TQString Wallpaper;
 	} st_UserWallpaper;
 
 	struct st_Sound {
@@ -191,37 +191,37 @@ private:
 
 	bool prevImage, prevText, prevOther;
 
-	QCheckListItem* alpha_blending_desktop;
-	QCheckListItem* alpha_blending_panel;
+	TQCheckListItem* alpha_blending_desktop;
+	TQCheckListItem* alpha_blending_panel;
 
-	QCheckListItem* animated_combo;
+	TQCheckListItem* animated_combo;
 
-	QCheckListItem* antialiasing_fonts;
+	TQCheckListItem* antialiasing_fonts;
 
-	QCheckListItem* backgrounds_konqueror;
-	QCheckListItem* backgrounds_panel;
+	TQCheckListItem* backgrounds_konqueror;
+	TQCheckListItem* backgrounds_panel;
 
-	QCheckListItem* desktop_wallpaper;
-	QCheckListItem* desktop_window_effects;
-	QCheckListItem* desktop_window_moving_contents;
+	TQCheckListItem* desktop_wallpaper;
+	TQCheckListItem* desktop_window_effects;
+	TQCheckListItem* desktop_window_moving_contents;
 
-	QCheckListItem* icon_effect_gamma;
-	QCheckListItem* icon_effect_size_desktop;
-	QCheckListItem* icon_effect_size_panel;
+	TQCheckListItem* icon_effect_gamma;
+	TQCheckListItem* icon_effect_size_desktop;
+	TQCheckListItem* icon_effect_size_panel;
 
-	QCheckListItem* icon_zooming_panel;
-	QCheckListItem* icon_mng_animation;
+	TQCheckListItem* icon_zooming_panel;
+	TQCheckListItem* icon_mng_animation;
 
-	QCheckListItem* fading_menus;
-	QCheckListItem* fading_tooltips;
+	TQCheckListItem* fading_menus;
+	TQCheckListItem* fading_tooltips;
   
-	QCheckListItem* pushbutton_icons;
+	TQCheckListItem* pushbutton_icons;
 
-	QCheckListItem* preview_text;
-	QCheckListItem* preview_images;
-	QCheckListItem* preview_other;
+	TQCheckListItem* preview_text;
+	TQCheckListItem* preview_images;
+	TQCheckListItem* preview_other;
 
-	QCheckListItem* sound_scheme;
+	TQCheckListItem* sound_scheme;
 };
 
 #endif

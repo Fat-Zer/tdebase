@@ -20,10 +20,10 @@
 #ifndef _POPUPPROXY_H_
 #define _POPUPPROXY_H_
 
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qstring.h>
-#include <qregexp.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqregexp.h>
 
 #include <kpopupmenu.h>
 #include <history.h>
@@ -55,7 +55,7 @@ public:
      * @param filter If non-empty, only insert items that match filter as a regex
      * @return number of items inserted.
      */
-    int buildParent( int index, const QRegExp& filter = QRegExp() );
+    int buildParent( int index, const TQRegExp& filter = TQRegExp() );
 
 public slots:
     void slotAboutToShow();
@@ -83,7 +83,7 @@ private:
 private:
     KPopupMenu* proxy_for_menu;
     History::iterator spillPointer;
-    QRegExp m_filter;
+    TQRegExp m_filter;
     int m_menu_height;
     int m_menu_width;
     int nextItemNumber;

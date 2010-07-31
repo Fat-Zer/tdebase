@@ -13,8 +13,8 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <string.h>
 
 #include <dcopclient.h>
-#include <qmessagebox.h>
-#include <qdir.h>
+#include <tqmessagebox.h>
+#include <tqdir.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -46,7 +46,7 @@ void IoErrorHandler ( IceConn iceConn)
     the_server->ioError( iceConn );
 }
 
-bool writeTest(QCString path)
+bool writeTest(TQCString path)
 {
    path += "/XXXXXX";
    int fd = mkstemp(path.data());
@@ -67,9 +67,9 @@ bool writeTest(QCString path)
 
 void sanity_check( int argc, char* argv[] )
 {
-  QCString msg;
-  QCString path = getenv("HOME");
-  QCString readOnly = getenv("KDE_HOME_READONLY");
+  TQCString msg;
+  TQCString path = getenv("HOME");
+  TQCString readOnly = getenv("KDE_HOME_READONLY");
   if (path.isEmpty())
   {
      msg = "$HOME not set!";
@@ -94,7 +94,7 @@ void sanity_check( int argc, char* argv[] )
         msg = "$HOME directory (%s) is out of disk space.";
      else
         msg = "Writing to the $HOME directory (%s) failed with\n    "
-              "the error '"+QCString(strerror(errno))+"'";
+              "the error '"+TQCString(strerror(errno))+"'";
   }
   if (msg.isEmpty())
   {
@@ -131,7 +131,7 @@ void sanity_check( int argc, char* argv[] )
            msg = "Temp directory (%s) is out of disk space.";
         else
            msg = "Writing to the temp directory (%s) failed with\n    "
-                 "the error '"+QCString(strerror(errno))+"'";
+                 "the error '"+TQCString(strerror(errno))+"'";
      }
   }
   if (msg.isEmpty() && (path != "/tmp"))
@@ -143,7 +143,7 @@ void sanity_check( int argc, char* argv[] )
            msg = "Temp directory (%s) is out of disk space.";
         else
            msg = "Writing to the temp directory (%s) failed with\n    "
-                 "the error '"+QCString(strerror(errno))+"'";
+                 "the error '"+TQCString(strerror(errno))+"'";
      }
   }
   if (msg.isEmpty())
@@ -165,12 +165,12 @@ void sanity_check( int argc, char* argv[] )
     fprintf(stderr, msg.data(), path.data());
     fputs(msg_post, stderr);
 
-    QApplication a(argc, argv);
-    QCString qmsg(256+path.length());
+    TQApplication a(argc, argv);
+    TQCString qmsg(256+path.length());
     qmsg.sprintf(msg.data(), path.data());
     qmsg = msg_pre+qmsg+msg_post;
-    QMessageBox::critical(0, "KDE Installation Problem!",
-        QString::fromLatin1(qmsg.data()));
+    TQMessageBox::critical(0, "KDE Installation Problem!",
+        TQString::fromLatin1(qmsg.data()));
     exit(255);
   }
 }
@@ -202,7 +202,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
        return 1;
     }
 
-    QCString wm = args->getOption("windowmanager");
+    TQCString wm = args->getOption("windowmanager");
     if ( wm.isEmpty() )
 	wm = "kwin";
 
@@ -218,7 +218,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     only_local = false;
 #endif
 
-    KSMServer *server = new KSMServer( QString::fromLatin1(wm), only_local);
+    KSMServer *server = new KSMServer( TQString::fromLatin1(wm), only_local);
     kapp->dcopClient()->setDefaultObject( server->objId() );
 
     IceSetIOErrorHandler( IoErrorHandler );
@@ -230,7 +230,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     bool screenCountChanged =
          ( config->readNumEntry( "screenCount", realScreenCount ) != realScreenCount );
 
-    QString loginMode = config->readEntry( "loginMode", "restorePreviousLogout" );
+    TQString loginMode = config->readEntry( "loginMode", "restorePreviousLogout" );
 
     if ( args->isSet("restore") && ! screenCountChanged )
 	server->restoreSession( SESSION_BY_USER );

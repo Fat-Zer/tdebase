@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <algorithm>
 
-#include <qbutton.h>
+#include <tqbutton.h>
 
 #include <kpanelapplet.h>
 #include <kpanelextension.h>
@@ -40,10 +40,10 @@ class KShadowEngine;
 
 /**
  * PanelButton is the base class for all buttons to be
- * placed in Kicker's panels. It inherits QButton, and
+ * placed in Kicker's panels. It inherits TQButton, and
  * KickerTip::Client.
  */
-class KDE_EXPORT PanelButton: public QButton, public KickerTip::Client
+class KDE_EXPORT PanelButton: public TQButton, public KickerTip::Client
 {
     Q_OBJECT
 
@@ -53,7 +53,7 @@ public:
      * @param parent the parent widget
      * @param name the widget's name
      */
-    PanelButton( QWidget* parent, const char* name );
+    PanelButton( TQWidget* parent, const char* name );
 
     /**
      * Configures this button according to the user's preferences for
@@ -90,12 +90,12 @@ public:
     /**
      * @return the button's current icon
      */
-    virtual const QPixmap& labelIcon() const;
+    virtual const TQPixmap& labelIcon() const;
 
     /**
      * @return the button's zoom icon
      */
-    virtual const QPixmap& zoomIcon() const;
+    virtual const TQPixmap& zoomIcon() const;
 
      /**
      * @return true if this button is valid.
@@ -106,12 +106,12 @@ public:
      * Changes the title for the panel button.
      * @param t the button's title
      */
-    void setTitle(const QString& t);
+    void setTitle(const TQString& t);
 
     /**
      * @return the title of the button.
      */
-    QString title() const;
+    TQString title() const;
 
     /**
      * Changes the name of the panel button's tile, with
@@ -119,7 +119,7 @@ public:
      * @param tile the button's tile name
      * @param color the button's tile color
      */
-    void setTile(const QString& tile, const QColor& color = QColor());
+    void setTile(const TQString& tile, const TQColor& color = TQColor());
 
     /**
      * Set to true to draw an arrow on the button.
@@ -130,12 +130,12 @@ public:
      * Used to set the icon for this panel button.
      * @param icon the path to the button's icon
      */
-    void setIcon(const QString& icon);
+    void setIcon(const TQString& icon);
 
     /**
      * @return the button's icon
      */
-    QString icon() const;
+    TQString icon() const;
 
     /**
      * @return whether this button has a text label or not
@@ -146,23 +146,23 @@ public:
      * Change the button's text label
      * @param text text for button's label
      */
-    void setButtonText(const QString& text);
+    void setButtonText(const TQString& text);
 
     /**
      * @return button's text label
      */
-    QString buttonText() const;
+    TQString buttonText() const;
 
     /**
      * Change the button's text label color
      * @param c the new text label color
      */
-    void setTextColor(const QColor& c);
+    void setTextColor(const TQColor& c);
 
     /**
      * @return the button's text label color
      */
-    QColor textColor() const;
+    TQColor textColor() const;
 
     /**
      * Change the button's text scale
@@ -188,7 +188,7 @@ public:
     /**
      * @return global position of the center of the button
      */
-    QPoint center() const;
+    TQPoint center() const;
 
     /**
      * Used to load the graphical tile of the button
@@ -196,8 +196,8 @@ public:
      * @param size size of the tile
      * @param state used if button has multiple states (null by default)
      */
-    static QImage loadTile(const QString& name, const QSize&,
-                           const QString& state = QString::null);
+    static TQImage loadTile(const TQString& name, const TQSize&,
+                           const TQString& state = TQString::null);
 
     /**
      * Update the contents of the button's KickerTip
@@ -233,12 +233,12 @@ signals:
     /**
      * Emitted when button initiates a drag
      */
-    void dragme(const QPixmap);
+    void dragme(const TQPixmap);
 
     /**
      * Overloads dragme to support panel button's with a list of KURL's ([url/servicemenu/browser]button)
      */
-    void dragme(const KURL::List, const QPixmap);
+    void dragme(const KURL::List, const TQPixmap);
 
 public slots:
     /**
@@ -263,12 +263,12 @@ protected:
      * to the subclass, should not be i18n'd and is never made user visible.
      * KDE4: remove this and use the classname directly instead.
      */
-    virtual QString tileName() = 0;
+    virtual TQString tileName() = 0;
 
     /**
      * @return the default icon for the button
      */
-    virtual QString defaultIcon() const { return "unknown"; };
+    virtual TQString defaultIcon() const { return "unknown"; };
 
     /**
      * Called right before drag occurs.
@@ -277,22 +277,22 @@ protected:
 
     /**
      * Emits a signal to drag the button. Reimplement this if, for example,
-     * if you need the button to call dragme(KURL::List, const QPixmap)
-     * instead of dragme(const QPixmap)
+     * if you need the button to call dragme(KURL::List, const TQPixmap)
+     * instead of dragme(const TQPixmap)
      */
     virtual void startDrag();
 
-    virtual void enterEvent(QEvent *);
-    virtual void leaveEvent(QEvent *);
-    virtual void dragEnterEvent(QDragEnterEvent *);
-    virtual void dragLeaveEvent(QDragLeaveEvent *);
-    virtual void dropEvent(QDropEvent *);
-    virtual void mouseMoveEvent(QMouseEvent *);
-    virtual void mousePressEvent(QMouseEvent *);
-    virtual void mouseReleaseEvent(QMouseEvent *);
-    virtual void resizeEvent(QResizeEvent*);
-    virtual void drawButton(QPainter *);
-    virtual void drawButtonLabel(QPainter *);
+    virtual void enterEvent(TQEvent *);
+    virtual void leaveEvent(TQEvent *);
+    virtual void dragEnterEvent(TQDragEnterEvent *);
+    virtual void dragLeaveEvent(TQDragLeaveEvent *);
+    virtual void dropEvent(TQDropEvent *);
+    virtual void mouseMoveEvent(TQMouseEvent *);
+    virtual void mousePressEvent(TQMouseEvent *);
+    virtual void mouseReleaseEvent(TQMouseEvent *);
+    virtual void resizeEvent(TQResizeEvent*);
+    virtual void drawButton(TQPainter *);
+    virtual void drawButtonLabel(TQPainter *);
 
     /**
      * @return the preferred icon size.
@@ -320,7 +320,7 @@ protected:
      * Set the file backing this button (See @ref checkForBackingFile()),
      * you shouldn't need to use this, currently it's only used in [url/service]button
      */
-    void backedByFile(const QString& localFilePath);
+    void backedByFile(const TQString& localFilePath);
 
     /**
      * Sets the button's arrow direction.
@@ -344,7 +344,7 @@ protected:
     bool calculateIconSize();
 
     bool m_valid;
-    QPixmap m_icon;
+    TQPixmap m_icon;
 
 protected slots:
     /**
@@ -364,7 +364,7 @@ protected slots:
      * has been deleted.
      * @param path path to backing file
      */
-    void checkForDeletion(const QString& path);
+    void checkForDeletion(const TQString& path);
 
     /**
      * Called to prepare the button for removal from the Kicker
@@ -372,23 +372,23 @@ protected slots:
     void scheduleForRemoval();
 
 private:
-    QPoint m_lastLeftMouseButtonPress;
+    TQPoint m_lastLeftMouseButtonPress;
     bool m_isLeftMouseButtonDown;
     bool m_drawArrow;
     bool m_highlight;
     bool m_changeCursorOverItem;
     bool m_hasAcceptedDrag;
-    QColor m_textColor;
-    QColor m_tileColor;
-    QString m_buttonText;
-    QString m_tile;
-    QString m_title;
-    QString m_iconName;
-    QString m_backingFile;
-    QPixmap m_up;
-    QPixmap m_down;
-    QPixmap m_iconh; // hover
-    QPixmap m_iconz; // mouse over
+    TQColor m_textColor;
+    TQColor m_tileColor;
+    TQString m_buttonText;
+    TQString m_tile;
+    TQString m_title;
+    TQString m_iconName;
+    TQString m_backingFile;
+    TQPixmap m_up;
+    TQPixmap m_down;
+    TQPixmap m_iconh; // hover
+    TQPixmap m_iconz; // mouse over
     KPanelExtension::Position m_arrowDirection;
     KPanelApplet::Direction m_popupDirection;
     Orientation m_orientation;
@@ -413,20 +413,20 @@ public:
     * @param parent the parent widget
     * @param name the widget's name
     */
-    PanelPopupButton(QWidget *parent=0, const char *name=0);
+    PanelPopupButton(TQWidget *parent=0, const char *name=0);
 
     /**
      * Sets the button's popup menu.
      * @param popup the menu to pop up
      */
-    void setPopup(QPopupMenu *popup);
+    void setPopup(TQPopupMenu *popup);
 
     /**
      * @return the button's popup menu
      */
-    QPopupMenu *popup() const;
+    TQPopupMenu *popup() const;
 
-    bool eventFilter(QObject *, QEvent *);
+    bool eventFilter(TQObject *, TQEvent *);
     virtual void showMenu();
 
 protected:
@@ -460,7 +460,7 @@ private slots:
     void menuAboutToHide();
 
 private:
-    QPopupMenu *m_popup;
+    TQPopupMenu *m_popup;
     bool m_pressedDuringPopup;
     bool m_initialized;
 

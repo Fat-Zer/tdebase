@@ -20,8 +20,8 @@
 #define _MEDIAMANAGER_H_
 
 #include <kdedmodule.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include "medialist.h"
 #include "backendbase.h"
@@ -36,53 +36,53 @@ class MediaManager : public KDEDModule
 Q_OBJECT
 K_DCOP
 public:
-	MediaManager(const QCString &obj);
+	MediaManager(const TQCString &obj);
 	~MediaManager();
 
 k_dcop:
-	QStringList fullList();
-	QStringList properties(const QString &name);
-	QStringList mountoptions(const QString &name);
-	bool setMountoptions(const QString &name, const QStringList &options);
+	TQStringList fullList();
+	TQStringList properties(const TQString &name);
+	TQStringList mountoptions(const TQString &name);
+	bool setMountoptions(const TQString &name, const TQStringList &options);
 
-	QString mount(const QString &uid);
-	QString unmount(const QString &uid);
-	QString decrypt(const QString &uid, const QString &password);
-	QString undecrypt(const QString &uid);
+	TQString mount(const TQString &uid);
+	TQString unmount(const TQString &uid);
+	TQString decrypt(const TQString &uid, const TQString &password);
+	TQString undecrypt(const TQString &uid);
 
-	QString nameForLabel(const QString &label);
-	ASYNC setUserLabel(const QString &name, const QString &label);
+	TQString nameForLabel(const TQString &label);
+	ASYNC setUserLabel(const TQString &name, const TQString &label);
 
 	ASYNC reloadBackends();
 
 	// Removable media handling (for people not having HAL)
-	bool removablePlug(const QString &devNode, const QString &label);
-	bool removableUnplug(const QString &devNode);
-	bool removableCamera(const QString &devNode);
+	bool removablePlug(const TQString &devNode, const TQString &label);
+	bool removableUnplug(const TQString &devNode);
+	bool removableCamera(const TQString &devNode);
 
 k_dcop_signals:
-	void mediumAdded(const QString &name, bool allowNotification);
-	void mediumRemoved(const QString &name, bool allowNotification);
-	void mediumChanged(const QString &name, bool allowNotification);
+	void mediumAdded(const TQString &name, bool allowNotification);
+	void mediumRemoved(const TQString &name, bool allowNotification);
+	void mediumChanged(const TQString &name, bool allowNotification);
 
 	// For compatibility purpose, not needed for KDE4
-	void mediumAdded(const QString &name);
-	void mediumRemoved(const QString &name);
-	void mediumChanged(const QString &name);
+	void mediumAdded(const TQString &name);
+	void mediumRemoved(const TQString &name);
+	void mediumChanged(const TQString &name);
 
 private slots:
 	void loadBackends();
 	
-	void slotMediumAdded(const QString &id, const QString &name,
+	void slotMediumAdded(const TQString &id, const TQString &name,
 	                     bool allowNotification);
-	void slotMediumRemoved(const QString &id, const QString &name,
+	void slotMediumRemoved(const TQString &id, const TQString &name,
 	                       bool allowNotification);
-	void slotMediumChanged(const QString &id, const QString &name,
+	void slotMediumChanged(const TQString &id, const TQString &name,
 	                       bool mounted, bool allowNotification);
 
 private:
 	MediaList m_mediaList;
-	QValueList<BackendBase*> m_backends;
+	TQValueList<BackendBase*> m_backends;
 	RemovableBackend *mp_removableBackend;
 	HALBackend *m_halbackend;
 	MediaDirNotify m_dirNotify;

@@ -22,10 +22,10 @@
 #define QT_CLEAN_NAMESPACE
 #endif
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <kconfig.h>
 #include <kcursor.h>
@@ -85,7 +85,7 @@ static const int DFLT_OFF   = 60;
 
 extern "C" {
 
-    KDE_EXPORT KCModule *create_energy(QWidget *parent, char *) {
+    KDE_EXPORT KCModule *create_energy(TQWidget *parent, char *) {
 	return new KEnergy(parent, "kcmenergy");
     }
 
@@ -131,7 +131,7 @@ extern "C" {
 
 /**** KEnergy ****/
 
-KEnergy::KEnergy(QWidget *parent, const char *name)
+KEnergy::KEnergy(TQWidget *parent, const char *name)
     : KCModule(parent, name)
 {
     m_bChanged = false;
@@ -156,28 +156,28 @@ KEnergy::KEnergy(QWidget *parent, const char *name)
     m_bDPMS = DPMSQueryExtension(qt_xdisplay(), &dummy, &dummy);
 #endif
 
-    QVBoxLayout *top = new QVBoxLayout(this, 0, KDialog::spacingHint());
-    QHBoxLayout *hbox = new QHBoxLayout();
+    TQVBoxLayout *top = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+    TQHBoxLayout *hbox = new TQHBoxLayout();
     top->addLayout(hbox);
 
-    QLabel *lbl;
+    TQLabel *lbl;
     if (m_bDPMS) {
-    m_pCBEnable= new QCheckBox(i18n("&Enable display power management" ), this);
-    connect(m_pCBEnable, SIGNAL(toggled(bool)), SLOT(slotChangeEnable(bool)));
+    m_pCBEnable= new TQCheckBox(i18n("&Enable display power management" ), this);
+    connect(m_pCBEnable, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChangeEnable(bool)));
     hbox->addWidget(m_pCBEnable);
-        QWhatsThis::add( m_pCBEnable, i18n("Check this option to enable the"
+        TQWhatsThis::add( m_pCBEnable, i18n("Check this option to enable the"
            " power saving features of your display.") );
     } else {
-        lbl = new QLabel(i18n("Your display does not support power saving."), this);
+        lbl = new TQLabel(i18n("Your display does not support power saving."), this);
          hbox->addWidget(lbl);
     }
 
     KURLLabel *logo = new KURLLabel(this);
     logo->setURL("http://www.energystar.gov");
-    logo->setPixmap(QPixmap(locate("data", "kcontrol/pics/energybig.png")));
+    logo->setPixmap(TQPixmap(locate("data", "kcontrol/pics/energybig.png")));
     logo->setTipText(i18n("Learn more about the Energy Star program"));
     logo->setUseTips(true); 
-connect(logo, SIGNAL(leftClickedURL(const QString&)), SLOT(openURL(const QString &)));
+connect(logo, TQT_SIGNAL(leftClickedURL(const TQString&)), TQT_SLOT(openURL(const TQString &)));
 
     hbox->addStretch();
     hbox->addWidget(logo);
@@ -188,9 +188,9 @@ connect(logo, SIGNAL(leftClickedURL(const QString&)), SLOT(openURL(const QString
     m_pStandbySlider->setRange(0, 120, 10);
     m_pStandbySlider->setSuffix(i18n(" min"));
     m_pStandbySlider->setSpecialValueText(i18n("Disabled"));
-    connect(m_pStandbySlider, SIGNAL(valueChanged(int)), SLOT(slotChangeStandby(int)));
+    connect(m_pStandbySlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotChangeStandby(int)));
     top->addWidget(m_pStandbySlider);
-    QWhatsThis::add( m_pStandbySlider, i18n("Choose the period of inactivity"
+    TQWhatsThis::add( m_pStandbySlider, i18n("Choose the period of inactivity"
        " after which the display should enter \"standby\" mode. This is the"
        " first level of power saving.") );
 
@@ -199,9 +199,9 @@ connect(logo, SIGNAL(leftClickedURL(const QString&)), SLOT(openURL(const QString
     m_pSuspendSlider->setRange(0, 120, 10);
     m_pSuspendSlider->setSuffix(i18n(" min"));
     m_pSuspendSlider->setSpecialValueText(i18n("Disabled"));
-    connect(m_pSuspendSlider, SIGNAL(valueChanged(int)), SLOT(slotChangeSuspend(int)));
+    connect(m_pSuspendSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotChangeSuspend(int)));
     top->addWidget(m_pSuspendSlider);
-    QWhatsThis::add( m_pSuspendSlider, i18n("Choose the period of inactivity"
+    TQWhatsThis::add( m_pSuspendSlider, i18n("Choose the period of inactivity"
        " after which the display should enter \"suspend\" mode. This is the"
        " second level of power saving, but may not be different from the first"
        " level for some displays.") );
@@ -211,9 +211,9 @@ connect(logo, SIGNAL(leftClickedURL(const QString&)), SLOT(openURL(const QString
     m_pOffSlider->setRange(0, 120, 10);
     m_pOffSlider->setSuffix(i18n(" min"));
     m_pOffSlider->setSpecialValueText(i18n("Disabled"));
-    connect(m_pOffSlider, SIGNAL(valueChanged(int)), SLOT(slotChangeOff(int)));
+    connect(m_pOffSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotChangeOff(int)));
     top->addWidget(m_pOffSlider);
-    QWhatsThis::add( m_pOffSlider, i18n("Choose the period of inactivity"
+    TQWhatsThis::add( m_pOffSlider, i18n("Choose the period of inactivity"
        " after which the display should be powered off. This is the"
        " greatest level of power saving that can be achieved while the"
        " display is still physically turned on.") );
@@ -434,7 +434,7 @@ void KEnergy::slotChangeOff(int value)
     emit changed(true);
 }
 
-void KEnergy::openURL(const QString &URL)
+void KEnergy::openURL(const TQString &URL)
 {
       new KRun(KURL( URL ));
 }

@@ -16,8 +16,8 @@
 
 #include "dcop_widget.h"
 
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
 
 #include <krun.h>
 #include <kmessagebox.h>
@@ -30,20 +30,20 @@
 namespace KHotKeys
 {
 
-Dcop_widget::Dcop_widget( QWidget* parent_P, const char* name_P )
+Dcop_widget::Dcop_widget( TQWidget* parent_P, const char* name_P )
     : Dcop_widget_ui( parent_P, name_P )
     {
     clear_data();
     try_button->setText( i18n( "to try", "&Try" )); // Qt designer can't do this
     // KHotKeys::Module::changed()
-    connect( remote_app_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( remote_object_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( called_function_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
-    connect( arguments_lineedit, SIGNAL( textChanged( const QString& )),
-        module, SLOT( changed()));
+    connect( remote_app_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( remote_object_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( called_function_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
+    connect( arguments_lineedit, TQT_SIGNAL( textChanged( const TQString& )),
+        module, TQT_SLOT( changed()));
     }
     
 void Dcop_widget::clear_data()

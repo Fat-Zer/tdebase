@@ -31,9 +31,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <kpushbutton.h>
 
-#include <qradiobutton.h>
-#include <qtoolbutton.h>
-#include <qpixmap.h>
+#include <tqradiobutton.h>
+#include <tqtoolbutton.h>
+#include <tqpixmap.h>
 
 class QLabel;
 class KPushButton;
@@ -43,14 +43,14 @@ class QComboBox;
 class QCheckBox;
 class QLineEdit;
 
-enum { Authed = QDialog::Accepted + 1, Schedule };
+enum { Authed = TQDialog::Accepted + 1, Schedule };
 
 class KDMShutdownBase : public FDialog, public KGVerifyHandler {
 	Q_OBJECT
 	typedef FDialog inherited;
 
   public:
-	KDMShutdownBase( int _uid, QWidget *_parent );
+	KDMShutdownBase( int _uid, TQWidget *_parent );
 	virtual ~KDMShutdownBase();
 
   protected slots:
@@ -61,9 +61,9 @@ class KDMShutdownBase : public FDialog, public KGVerifyHandler {
 
   protected:
 	void updateNeedRoot();
-	void complete( QWidget *prevWidget );
+	void complete( TQWidget *prevWidget );
 
-	QVBoxLayout *box;
+	TQVBoxLayout *box;
 #ifdef HAVE_VTS
 	bool willShut;
 #else
@@ -77,7 +77,7 @@ class KDMShutdownBase : public FDialog, public KGVerifyHandler {
 
   private:
 	KPushButton *okButton, *cancelButton;
-	QLabel *rootlab;
+	TQLabel *rootlab;
 	KGStdVerify *verify;
 	int needRoot, uid;
 
@@ -89,7 +89,7 @@ class KDMShutdownBase : public FDialog, public KGVerifyHandler {
 	virtual void verifyOk();
 	virtual void verifyFailed();
 	virtual void verifyRetry();
-	virtual void verifySetUser( const QString &user );
+	virtual void verifySetUser( const TQString &user );
 };
 
 
@@ -98,8 +98,8 @@ class KDMShutdown : public KDMShutdownBase {
 	typedef KDMShutdownBase inherited;
 
   public:
-	KDMShutdown( int _uid, QWidget *_parent = 0 );
-	static void scheduleShutdown( QWidget *_parent = 0 );
+	KDMShutdown( int _uid, TQWidget *_parent = 0 );
+	static void scheduleShutdown( TQWidget *_parent = 0 );
 
   protected slots:
 	virtual void accept();
@@ -112,26 +112,26 @@ class KDMShutdown : public KDMShutdownBase {
 	void slotWhenChanged();
 
   private:
-	QButtonGroup *howGroup;
-	QGroupBox *schedGroup;
-	QRadioButton *restart_rb;
-	QLineEdit *le_start, *le_timeout;
-	QCheckBox *cb_force;
-	QComboBox *targets;
+	TQButtonGroup *howGroup;
+	TQGroupBox *schedGroup;
+	TQRadioButton *restart_rb;
+	TQLineEdit *le_start, *le_timeout;
+	TQCheckBox *cb_force;
+	TQComboBox *targets;
 	int oldTarget;
 	int sch_st, sch_to;
 
 };
 
-class KDMRadioButton : public QRadioButton {
+class KDMRadioButton : public TQRadioButton {
 	Q_OBJECT
-	typedef QRadioButton inherited;
+	typedef TQRadioButton inherited;
 
   public:
-	KDMRadioButton( const QString &label, QWidget *parent );
+	KDMRadioButton( const TQString &label, TQWidget *parent );
 
   private:
-	virtual void mouseDoubleClickEvent( QMouseEvent * );
+	virtual void mouseDoubleClickEvent( TQMouseEvent * );
 
   signals:
 	void doubleClicked();
@@ -143,8 +143,8 @@ class KDMDelayedPushButton : public KPushButton {
 	typedef KPushButton inherited;
 
   public:
-	KDMDelayedPushButton( const KGuiItem &item, QWidget *parent, const char *name = 0 );
-	void setPopup( QPopupMenu *pop );
+	KDMDelayedPushButton( const KGuiItem &item, TQWidget *parent, const char *name = 0 );
+	void setPopup( TQPopupMenu *pop );
 
   private slots:
 	void slotTimeout();
@@ -152,8 +152,8 @@ class KDMDelayedPushButton : public KPushButton {
 	void slotReleased();
 
   private:
-	QPopupMenu *pop;
-	QTimer popt;
+	TQPopupMenu *pop;
+	TQTimer popt;
 };
 
 class KDMSlimShutdown : public FDialog {
@@ -161,7 +161,7 @@ class KDMSlimShutdown : public FDialog {
 	typedef FDialog inherited;
 
   public:
-	KDMSlimShutdown( QWidget *_parent = 0 );
+	KDMSlimShutdown( TQWidget *_parent = 0 );
 	~KDMSlimShutdown();
 	static void externShutdown( int type, const char *os, int uid );
 
@@ -183,7 +183,7 @@ class KDMConfShutdown : public KDMShutdownBase {
 
   public:
 	KDMConfShutdown( int _uid, struct dpySpec *sess, int type, const char *os,
-	                 QWidget *_parent = 0 );
+	                 TQWidget *_parent = 0 );
 };
 
 class KDMCancelShutdown : public KDMShutdownBase {
@@ -192,7 +192,7 @@ class KDMCancelShutdown : public KDMShutdownBase {
 
   public:
 	KDMCancelShutdown( int how, int start, int timeout, int force, int uid,
-	                   const char *os, QWidget *_parent );
+	                   const char *os, TQWidget *_parent );
 };
 
 class KSMPushButton : public KPushButton
@@ -201,11 +201,11 @@ class KSMPushButton : public KPushButton
 
 public:
 
-  KSMPushButton( const KGuiItem &item, QWidget *parent, const char *name = 0 );
+  KSMPushButton( const KGuiItem &item, TQWidget *parent, const char *name = 0 );
 
 protected:
-  virtual void keyPressEvent(QKeyEvent*e);
-  virtual void keyReleaseEvent(QKeyEvent*e);
+  virtual void keyPressEvent(TQKeyEvent*e);
+  virtual void keyReleaseEvent(TQKeyEvent*e);
 
 private:
 
@@ -219,12 +219,12 @@ class FlatButton : public QToolButton
 
  public:
 
-  FlatButton( QWidget *parent = 0, const char *name = 0 );
+  FlatButton( TQWidget *parent = 0, const char *name = 0 );
   ~FlatButton();
 
  protected:
-  virtual void keyPressEvent(QKeyEvent*e);
-  virtual void keyReleaseEvent(QKeyEvent*e);
+  virtual void keyPressEvent(TQKeyEvent*e);
+  virtual void keyReleaseEvent(TQKeyEvent*e);
 
  private slots:
   
@@ -232,8 +232,8 @@ class FlatButton : public QToolButton
   void init();
   
   bool m_pressed;
-  QString m_text;
-  QPixmap m_pixmap;
+  TQString m_text;
+  TQPixmap m_pixmap;
  
 };
 

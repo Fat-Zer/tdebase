@@ -21,11 +21,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qlabel.h>
-#include <qfont.h>
-#include <qstringlist.h>
-#include <qpushbutton.h>
-#include <qhbox.h>
+#include <tqlabel.h>
+#include <tqfont.h>
+#include <tqstringlist.h>
+#include <tqpushbutton.h>
+#include <tqhbox.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -42,22 +42,22 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 extern "C"
 {
-  KDE_EXPORT KPanelApplet* init(QWidget *parent, const QString& configFile)
+  KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
   {
     KGlobal::locale()->insertCatalogue("krunapplet");
     return new RunApplet(configFile, KPanelApplet::Stretch, 0, parent, "krunapplet");
   }
 }
 
-RunApplet::RunApplet(const QString& configFile, Type type, int actions,
-                             QWidget *parent, const char *name)
+RunApplet::RunApplet(const TQString& configFile, Type type, int actions,
+                             TQWidget *parent, const char *name)
   : KPanelApplet(configFile, type, actions, parent, name)
 {
   //  setBackgroundMode(X11ParentRelative);
     setBackgroundOrigin( AncestorOrigin );
     // setup label
-    _label = new QLabel(i18n("Run command:"), this);
-    QFont f(_label->font());
+    _label = new TQLabel(i18n("Run command:"), this);
+    TQFont f(_label->font());
     f.setPixelSize(12);
 //    _label->setBackgroundMode(X11ParentRelative);
     _label->setBackgroundOrigin( AncestorOrigin );
@@ -65,25 +65,25 @@ RunApplet::RunApplet(const QString& configFile, Type type, int actions,
     _label->setFont(f);
 
     // setup popup button
-    _btn = new QPushButton(this);
+    _btn = new TQPushButton(this);
     f = _btn->font();
     f.setPixelSize(12);
     _btn->setFont(f);
-    connect(_btn, SIGNAL(clicked()), SLOT(popup_combo()));
+    connect(_btn, TQT_SIGNAL(clicked()), TQT_SLOT(popup_combo()));
 
     // setup history combo
     _input = new KHistoryCombo(this);
     _input->setFocus();
     _input->clearEdit();
     watchForFocus(_input->lineEdit());
-    connect(_input, SIGNAL(activated(const QString&)),
-	    SLOT(run_command(const QString&)));
+    connect(_input, TQT_SIGNAL(activated(const TQString&)),
+	    TQT_SLOT(run_command(const TQString&)));
 
     KConfig *c = config();
     c->setGroup("General");
 
     // restore history and completion list
-    QStringList list = c->readListEntry("Completion list");
+    TQStringList list = c->readListEntry("Completion list");
     _input->completionObject()->setItems(list);
     list = c->readListEntry("History list");
     _input->setHistoryItems(list);
@@ -92,7 +92,7 @@ RunApplet::RunApplet(const QString& configFile, Type type, int actions,
 
     _filterData = new KURIFilterData();
 
-    _hbox = new QHBox( 0, 0, WStyle_Customize | WType_Popup );
+    _hbox = new TQHBox( 0, 0, WStyle_Customize | WType_Popup );
     _hbox->setFixedSize(120, 22);
 }
 
@@ -102,7 +102,7 @@ RunApplet::~RunApplet()
     c->setGroup("General");
 
     // save history and completion list
-    QStringList list = _input->completionObject()->items();
+    TQStringList list = _input->completionObject()->items();
     c->writeEntry("Completion list", list);
     list = _input->historyItems();
     c->writeEntry("History list", list);
@@ -113,12 +113,12 @@ RunApplet::~RunApplet()
     KGlobal::locale()->removeCatalogue("krunapplet");
 }
 
-void RunApplet::resizeEvent(QResizeEvent*)
+void RunApplet::resizeEvent(TQResizeEvent*)
 {
     if(orientation() == Horizontal)
 	{
 	    _btn->hide();
-	    _input->reparent(this, QPoint(0,0), true);
+	    _input->reparent(this, TQPoint(0,0), true);
 	    _label->setGeometry(0,0, width(), _label->height());
 
 	    if(height() >= _input->sizeHint().height() + _label->height())
@@ -149,7 +149,7 @@ void RunApplet::resizeEvent(QResizeEvent*)
 	{
 	    _btn->show();
 	    _btn->setFixedSize(width(), 22);
-	    _input->reparent( _hbox, QPoint(0, 0), false);
+	    _input->reparent( _hbox, TQPoint(0, 0), false);
 	    _label->hide();
 	}
     setButtonText();
@@ -162,7 +162,7 @@ void RunApplet::positionChange(KPanelApplet::Position)
 
 void RunApplet::setButtonText()
 {
-    QString t;
+    TQString t;
 
     if (position() == pRight)
 	{
@@ -194,32 +194,32 @@ int RunApplet::heightForWidth(int ) const
 
 void RunApplet::popup_combo()
 {
-    QPoint p;
+    TQPoint p;
     if (position() == pRight)
-	p = mapToGlobal(QPoint(-_input->width()-1, 0));
+	p = mapToGlobal(TQPoint(-_input->width()-1, 0));
     else
-	p = mapToGlobal(QPoint(width()+1, 0));
+	p = mapToGlobal(TQPoint(width()+1, 0));
     _hbox->move(p);
     _hbox->show();
     _input->setFocus();
 }
 
-void RunApplet::run_command(const QString& command)
+void RunApplet::run_command(const TQString& command)
 {
-    QString exec;
+    TQString exec;
     bool focusNeeded = false;
 
     kapp->propagateSessionManager();
 
     _filterData->setData( _input->currentText().stripWhiteSpace() );
-    QStringList filters;
+    TQStringList filters;
     filters << "kurisearchfilter" << "kshorturifilter";
     KURIFilter::self()->filterURI( *(_filterData), filters );
 
     _input->addToHistory(command);
     _input->clearEdit();
 
-    QString cmd = (_filterData->uri().isLocalFile() ? _filterData->uri().path():_filterData->uri().url());
+    TQString cmd = (_filterData->uri().isLocalFile() ? _filterData->uri().path():_filterData->uri().url());
 
     // Nothing interesting. Quit!
     if ( cmd.isEmpty() ){

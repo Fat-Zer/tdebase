@@ -30,7 +30,7 @@
 #include <kstandarddirs.h>
 #include <kstatusbar.h>
 
-#include <qheader.h>
+#include <tqheader.h>
 
 #include <sys/stat.h>
 
@@ -39,7 +39,7 @@ using namespace KHC;
 class SectionItem : public KListViewItem
 {
 	public:
-		SectionItem( QListViewItem *parent, const QString &text )
+		SectionItem( TQListViewItem *parent, const TQString &text )
 			: KListViewItem( parent, text )
 		{
 			setOpen( false );
@@ -49,7 +49,7 @@ class SectionItem : public KListViewItem
 		{
 				KListViewItem::setOpen(open);
 				
-				setPixmap( 0, SmallIcon( QString::fromLatin1( open ? "contents" : "contents2" ) ) );
+				setPixmap( 0, SmallIcon( TQString::fromLatin1( open ? "contents" : "contents2" ) ) );
 
 		}
 };
@@ -57,29 +57,29 @@ class SectionItem : public KListViewItem
 class EntryItem : public KListViewItem
 {
 	public:
-		EntryItem( SectionItem *parent, const QString &term, const QString &id )
+		EntryItem( SectionItem *parent, const TQString &term, const TQString &id )
 			: KListViewItem( parent, term ),
 			m_id( id )
 		{
 		}
 
-		QString id() const { return m_id; }
+		TQString id() const { return m_id; }
 	
 	private:
-		QString m_id;
+		TQString m_id;
 };
 
-Glossary::Glossary( QWidget *parent ) : KListView( parent )
+Glossary::Glossary( TQWidget *parent ) : KListView( parent )
 {
 	m_initialized = false;
 
-	connect( this, SIGNAL( clicked( QListViewItem * ) ),
-	         this, SLOT( treeItemSelected( QListViewItem * ) ) );
-	connect( this, SIGNAL( returnPressed( QListViewItem * ) ),
-	         this, SLOT( treeItemSelected( QListViewItem * ) ) );
+	connect( this, TQT_SIGNAL( clicked( TQListViewItem * ) ),
+	         this, TQT_SLOT( treeItemSelected( TQListViewItem * ) ) );
+	connect( this, TQT_SIGNAL( returnPressed( TQListViewItem * ) ),
+	         this, TQT_SLOT( treeItemSelected( TQListViewItem * ) ) );
 	
-	setFrameStyle( QFrame::Panel | QFrame::Sunken );
-	addColumn( QString::null );
+	setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
+	addColumn( TQString::null );
 	header()->hide();
 	setAllColumnsShowFocus( true );
 	setRootIsDecorated( true );
@@ -92,7 +92,7 @@ Glossary::Glossary( QWidget *parent ) : KListView( parent )
 
 	m_cacheFile = locateLocal( "cache", "help/glossary.xml" );
 
-	m_sourceFile = View::View::langLookup( QString::fromLatin1( "khelpcenter/glossary/index.docbook" ) );
+	m_sourceFile = View::View::langLookup( TQString::fromLatin1( "khelpcenter/glossary/index.docbook" ) );
 
 	m_config = kapp->config();
 	m_config->setGroup( "Glossary" );
@@ -117,14 +117,14 @@ Glossary::~Glossary()
 	m_glossEntries.clear();
 }
 
-const GlossaryEntry &Glossary::entry( const QString &id ) const
+const GlossaryEntry &Glossary::entry( const TQString &id ) const
 {
 	return *m_glossEntries[ id ];
 }
 
 Glossary::CacheStatus Glossary::cacheStatus() const
 {
-	if ( !QFile::exists( m_cacheFile ) ||
+	if ( !TQFile::exists( m_cacheFile ) ||
 	     m_config->readPathEntry( "CachedGlossary" ) != m_sourceFile ||
 	     m_config->readNumEntry( "CachedGlossaryTimestamp" ) != glossaryCTime() )
 		return NeedRebuild;
@@ -135,7 +135,7 @@ Glossary::CacheStatus Glossary::cacheStatus() const
 int Glossary::glossaryCTime() const
 {
 	struct stat stat_buf;
-	stat( QFile::encodeName( m_sourceFile ).data(), &stat_buf );
+	stat( TQFile::encodeName( m_sourceFile ).data(), &stat_buf );
 
 	return stat_buf.st_ctime;
 }
@@ -147,13 +147,13 @@ void Glossary::rebuildGlossaryCache()
 	mainWindow->statusBar()->message( i18n( "Rebuilding cache..." ) );
 
 	KProcess *meinproc = new KProcess;
-	connect( meinproc, SIGNAL( processExited( KProcess * ) ),
-	         this, SLOT( meinprocExited( KProcess * ) ) );
+	connect( meinproc, TQT_SIGNAL( processExited( KProcess * ) ),
+	         this, TQT_SLOT( meinprocExited( KProcess * ) ) );
 
-	*meinproc << locate( "exe", QString::fromLatin1( "meinproc" ) );
-	*meinproc << QString::fromLatin1( "--output" ) << m_cacheFile;
-	*meinproc << QString::fromLatin1( "--stylesheet" )
-	          << locate( "data", QString::fromLatin1( "khelpcenter/glossary.xslt" ) );
+	*meinproc << locate( "exe", TQString::fromLatin1( "meinproc" ) );
+	*meinproc << TQString::fromLatin1( "--output" ) << m_cacheFile;
+	*meinproc << TQString::fromLatin1( "--stylesheet" )
+	          << locate( "data", TQString::fromLatin1( "khelpcenter/glossary.xslt" ) );
 	*meinproc << m_sourceFile;
 
 	meinproc->start( KProcess::NotifyOnExit );
@@ -163,7 +163,7 @@ void Glossary::meinprocExited( KProcess *meinproc )
 {
 	delete meinproc;
 
-	if ( !QFile::exists( m_cacheFile ) )
+	if ( !TQFile::exists( m_cacheFile ) )
 		return;
 
 	m_config->writePathEntry( "CachedGlossary", m_sourceFile );
@@ -181,36 +181,36 @@ void Glossary::meinprocExited( KProcess *meinproc )
 
 void Glossary::buildGlossaryTree()
 {
-	QFile cacheFile(m_cacheFile);
+	TQFile cacheFile(m_cacheFile);
 	if ( !cacheFile.open( IO_ReadOnly ) )
 		return;
 
-	QDomDocument doc;
+	TQDomDocument doc;
 	if ( !doc.setContent( &cacheFile ) )
 		return;
 
-	QDomNodeList sectionNodes = doc.documentElement().elementsByTagName( QString::fromLatin1( "section" ) );
+	TQDomNodeList sectionNodes = doc.documentElement().elementsByTagName( TQString::fromLatin1( "section" ) );
 	for ( unsigned int i = 0; i < sectionNodes.count(); i++ ) {
-		QDomElement sectionElement = sectionNodes.item( i ).toElement();
-		QString title = sectionElement.attribute( QString::fromLatin1( "title" ) );
+		TQDomElement sectionElement = sectionNodes.item( i ).toElement();
+		TQString title = sectionElement.attribute( TQString::fromLatin1( "title" ) );
 		SectionItem *topicSection = new SectionItem( m_byTopicItem, title );
 
-		QDomNodeList entryNodes = sectionElement.elementsByTagName( QString::fromLatin1( "entry" ) );
+		TQDomNodeList entryNodes = sectionElement.elementsByTagName( TQString::fromLatin1( "entry" ) );
 		for ( unsigned int j = 0; j < entryNodes.count(); j++ ) {
-			QDomElement entryElement = entryNodes.item( j ).toElement();
+			TQDomElement entryElement = entryNodes.item( j ).toElement();
 			
-			QString entryId = entryElement.attribute( QString::fromLatin1( "id" ) );
+			TQString entryId = entryElement.attribute( TQString::fromLatin1( "id" ) );
 			if ( entryId.isNull() )
 				continue;
 				
-			QDomElement termElement = childElement( entryElement, QString::fromLatin1( "term" ) );
-			QString term = termElement.text().simplifyWhiteSpace();
+			TQDomElement termElement = childElement( entryElement, TQString::fromLatin1( "term" ) );
+			TQString term = termElement.text().simplifyWhiteSpace();
 
 			EntryItem *entry = new EntryItem(topicSection, term, entryId );
             m_idDict.insert( entryId, entry );
 
 			SectionItem *alphabSection = 0L;
-			for ( QListViewItemIterator it( m_alphabItem ); it.current(); it++ )
+			for ( TQListViewItemIterator it( m_alphabItem ); it.current(); it++ )
 				if ( it.current()->text( 0 ) == term[ 0 ].upper() ) {
 					alphabSection = static_cast<SectionItem *>( it.current() );
 					break;
@@ -221,19 +221,19 @@ void Glossary::buildGlossaryTree()
 
 			new EntryItem( alphabSection, term, entryId );
 
-			QDomElement definitionElement = childElement( entryElement, QString::fromLatin1( "definition" ) );
-			QString definition = definitionElement.text().simplifyWhiteSpace();
+			TQDomElement definitionElement = childElement( entryElement, TQString::fromLatin1( "definition" ) );
+			TQString definition = definitionElement.text().simplifyWhiteSpace();
 
 			GlossaryEntryXRef::List seeAlso;
 
-			QDomElement referencesElement = childElement( entryElement, QString::fromLatin1( "references" ) );
-			QDomNodeList referenceNodes = referencesElement.elementsByTagName( QString::fromLatin1( "reference" ) );
+			TQDomElement referencesElement = childElement( entryElement, TQString::fromLatin1( "references" ) );
+			TQDomNodeList referenceNodes = referencesElement.elementsByTagName( TQString::fromLatin1( "reference" ) );
 			if ( referenceNodes.count() > 0 )
 				for ( unsigned int k = 0; k < referenceNodes.count(); k++ ) {
-					QDomElement referenceElement = referenceNodes.item( k ).toElement();
+					TQDomElement referenceElement = referenceNodes.item( k ).toElement();
 
-					QString term = referenceElement.attribute( QString::fromLatin1( "term" ) );
-					QString id = referenceElement.attribute( QString::fromLatin1( "id" ) );
+					TQString term = referenceElement.attribute( TQString::fromLatin1( "term" ) );
+					TQString id = referenceElement.attribute( TQString::fromLatin1( "id" ) );
 					
 					seeAlso += GlossaryEntryXRef( term, id );
 				}
@@ -243,7 +243,7 @@ void Glossary::buildGlossaryTree()
 	}
 }
 
-void Glossary::treeItemSelected( QListViewItem *item )
+void Glossary::treeItemSelected( TQListViewItem *item )
 {
 	if ( !item )
 		return;
@@ -254,40 +254,40 @@ void Glossary::treeItemSelected( QListViewItem *item )
 	item->setOpen( !item->isOpen() );
 }
 	
-QDomElement Glossary::childElement( const QDomElement &element, const QString &name )
+TQDomElement Glossary::childElement( const TQDomElement &element, const TQString &name )
 {
-	QDomElement e;
+	TQDomElement e;
 	for ( e = element.firstChild().toElement(); !e.isNull(); e = e.nextSibling().toElement() )
 		if ( e.tagName() == name )
 			break;
 	return e;
 }
 
-QString Glossary::entryToHtml( const GlossaryEntry &entry )
+TQString Glossary::entryToHtml( const GlossaryEntry &entry )
 {
-    QFile htmlFile( locate("data", "khelpcenter/glossary.html.in" ) );
+    TQFile htmlFile( locate("data", "khelpcenter/glossary.html.in" ) );
     if (!htmlFile.open(IO_ReadOnly))
-      return QString( "<html><head></head><body><h3>%1</h3>%2</body></html>" )
+      return TQString( "<html><head></head><body><h3>%1</h3>%2</body></html>" )
              .arg( i18n( "Error" ) )
              .arg( i18n( "Unable to show selected glossary entry: unable to open "
                           "file 'glossary.html.in'!" ) );
 
-    QString seeAlso;
+    TQString seeAlso;
     if (!entry.seeAlso().isEmpty()) {
         seeAlso = i18n("See also: ");
         GlossaryEntryXRef::List seeAlsos = entry.seeAlso();
         GlossaryEntryXRef::List::ConstIterator it = seeAlsos.begin();
         GlossaryEntryXRef::List::ConstIterator end = seeAlsos.end();
         for (; it != end; ++it) {
-            seeAlso += QString::fromLatin1("<a href=\"glossentry:");
+            seeAlso += TQString::fromLatin1("<a href=\"glossentry:");
             seeAlso += (*it).id();
-            seeAlso += QString::fromLatin1("\">") + (*it).term();
-            seeAlso += QString::fromLatin1("</a>, ");
+            seeAlso += TQString::fromLatin1("\">") + (*it).term();
+            seeAlso += TQString::fromLatin1("</a>, ");
         }
         seeAlso = seeAlso.left(seeAlso.length() - 2);
     }
 
-    QTextStream htmlStream(&htmlFile);
+    TQTextStream htmlStream(&htmlFile);
     return htmlStream.read()
            .arg( i18n( "KDE Glossary" ) )
            .arg( entry.term() )
@@ -301,7 +301,7 @@ QString Glossary::entryToHtml( const GlossaryEntry &entry )
            .arg( View::langLookup( "khelpcenter/kdelogo2.png" ) );
 }
 
-void Glossary::slotSelectGlossEntry( const QString &id )
+void Glossary::slotSelectGlossEntry( const TQString &id )
 {
     EntryItem *newItem = m_idDict.find( id );
     if ( newItem == 0 )

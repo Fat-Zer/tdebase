@@ -17,13 +17,13 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qimage.h>
+#include <tqimage.h>
 
 #include <kimageio.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kglobal.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <ImfInputFile.h>
 #include <ImfPreviewImage.h>
@@ -38,7 +38,7 @@ extern "C"
     }
 }
 
-bool EXRCreator::create(const QString &path, int, int, QImage &img)
+bool EXRCreator::create(const TQString &path, int, int, TQImage &img)
 {
     Imf::InputFile in ( path.ascii() );
     const Imf::Header &h = in.header();
@@ -46,7 +46,7 @@ bool EXRCreator::create(const QString &path, int, int, QImage &img)
     if ( h.hasPreviewImage() ) {
 	kdDebug() << "EXRcreator - using preview" << endl;
 	const Imf::PreviewImage &preview = in.header().previewImage();
-	QImage qpreview(preview.width(), preview.height(), 32, 0, QImage::BigEndian);
+	TQImage qpreview(preview.width(), preview.height(), 32, 0, TQImage::BigEndian);
 	for ( unsigned int y=0; y < preview.height(); y++ ) {
 	    for ( unsigned int x=0; x < preview.width(); x++ ) {
 		const Imf::PreviewRgba &q = preview.pixels()[x+(y*preview.width())];
@@ -65,7 +65,7 @@ bool EXRCreator::create(const QString &path, int, int, QImage &img)
 	KConfig * config = KGlobal::config();
 	KConfigGroupSaver cgs( config, "PreviewSettings" );
 	unsigned long long maxSize = config->readNumEntry( "MaximumSize", 1024*1024 /* 1MB */ );
-	unsigned long long fileSize = QFile( path ).size();
+	unsigned long long fileSize = TQFile( path ).size();
 	if ( (fileSize > 0) && (fileSize < maxSize) ) {
 	    if (!img.load( path )) {
 		return false;

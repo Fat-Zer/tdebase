@@ -53,15 +53,15 @@
 #include "schema.h"
 #include "kapplication.h"
 
-#include <qdir.h>
-#include <qdatetime.h>
+#include <tqdir.h>
+#include <tqdatetime.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kdebug.h>
 
 
-typedef QPtrListIterator<ColorSchema> ColorSchemaListIterator;
+typedef TQPtrListIterator<ColorSchema> ColorSchemaListIterator;
 
 
 // Number all the new color schema's (non-default) from 1.
@@ -103,39 +103,39 @@ static const ColorEntry default_table[TABLE_COLORS] =
  // gamma correction for the dim colors to compensate for bright X screens.
  // It contains the 8 ansiterm/xterm colors in 2 intensities.
 {
-    ColorEntry( QColor(0x00,0x00,0x00), 0, 0 ), ColorEntry(
-QColor(0xFF,0xFF,0xFF), 1, 0 ), // Dfore, Dback
-    ColorEntry( QColor(0x00,0x00,0x00), 0, 0 ), ColorEntry(
-QColor(0xB2,0x18,0x18), 0, 0 ), // Black, Red
-    ColorEntry( QColor(0x18,0xB2,0x18), 0, 0 ), ColorEntry(
-QColor(0xB2,0x68,0x18), 0, 0 ), // Green, Yellow
-    ColorEntry( QColor(0x18,0x18,0xB2), 0, 0 ), ColorEntry(
-QColor(0xB2,0x18,0xB2), 0, 0 ), // Blue,  Magenta
-    ColorEntry( QColor(0x18,0xB2,0xB2), 0, 0 ), ColorEntry(
-QColor(0xB2,0xB2,0xB2), 0, 0 ), // Cyan,  White
+    ColorEntry( TQColor(0x00,0x00,0x00), 0, 0 ), ColorEntry(
+TQColor(0xFF,0xFF,0xFF), 1, 0 ), // Dfore, Dback
+    ColorEntry( TQColor(0x00,0x00,0x00), 0, 0 ), ColorEntry(
+TQColor(0xB2,0x18,0x18), 0, 0 ), // Black, Red
+    ColorEntry( TQColor(0x18,0xB2,0x18), 0, 0 ), ColorEntry(
+TQColor(0xB2,0x68,0x18), 0, 0 ), // Green, Yellow
+    ColorEntry( TQColor(0x18,0x18,0xB2), 0, 0 ), ColorEntry(
+TQColor(0xB2,0x18,0xB2), 0, 0 ), // Blue,  Magenta
+    ColorEntry( TQColor(0x18,0xB2,0xB2), 0, 0 ), ColorEntry(
+TQColor(0xB2,0xB2,0xB2), 0, 0 ), // Cyan,  White
     // intensive
-    ColorEntry( QColor(0x00,0x00,0x00), 0, 1 ), ColorEntry(
-QColor(0xFF,0xFF,0xFF), 1, 0 ),
-    ColorEntry( QColor(0x68,0x68,0x68), 0, 0 ), ColorEntry(
-QColor(0xFF,0x54,0x54), 0, 0 ),
-    ColorEntry( QColor(0x54,0xFF,0x54), 0, 0 ), ColorEntry(
-QColor(0xFF,0xFF,0x54), 0, 0 ),
-    ColorEntry( QColor(0x54,0x54,0xFF), 0, 0 ), ColorEntry(
-QColor(0xFF,0x54,0xFF), 0, 0 ),
-    ColorEntry( QColor(0x54,0xFF,0xFF), 0, 0 ), ColorEntry(
-QColor(0xFF,0xFF,0xFF), 0, 0 )
+    ColorEntry( TQColor(0x00,0x00,0x00), 0, 1 ), ColorEntry(
+TQColor(0xFF,0xFF,0xFF), 1, 0 ),
+    ColorEntry( TQColor(0x68,0x68,0x68), 0, 0 ), ColorEntry(
+TQColor(0xFF,0x54,0x54), 0, 0 ),
+    ColorEntry( TQColor(0x54,0xFF,0x54), 0, 0 ), ColorEntry(
+TQColor(0xFF,0xFF,0x54), 0, 0 ),
+    ColorEntry( TQColor(0x54,0x54,0xFF), 0, 0 ), ColorEntry(
+TQColor(0xFF,0x54,0xFF), 0, 0 ),
+    ColorEntry( TQColor(0x54,0xFF,0xFF), 0, 0 ), ColorEntry(
+TQColor(0xFF,0xFF,0xFF), 0, 0 )
 };
 
-ColorSchema::ColorSchema(const QString& pathname)
+ColorSchema::ColorSchema(const TQString& pathname)
 :m_fileRead(false)
-,lastRead(new QDateTime())
+,lastRead(new TQDateTime())
 {
   //start with a valid time, aleXXX
-  *lastRead = QDateTime::currentDateTime();
-  QString fPath = pathname.startsWith("/") ? pathname : locate("data", "konsole/"+pathname);
-  if (fPath.isEmpty() || !QFile::exists(fPath))
+  *lastRead = TQDateTime::currentDateTime();
+  TQString fPath = pathname.startsWith("/") ? pathname : locate("data", "konsole/"+pathname);
+  if (fPath.isEmpty() || !TQFile::exists(fPath))
   {
-    fRelPath = QString::null;
+    fRelPath = TQString::null;
     setDefaultSchema();
   }
   else
@@ -151,7 +151,7 @@ ColorSchema::ColorSchema(const QString& pathname)
 
 ColorSchema::ColorSchema()
 :m_fileRead(false)
-,fRelPath(QString::null)
+,fRelPath(TQString::null)
 ,lastRead(0L)
 {
   setDefaultSchema();
@@ -160,7 +160,7 @@ ColorSchema::ColorSchema()
 
 ColorSchema::ColorSchema(KConfig& c)
 :m_fileRead(false)
-,fRelPath(QString::null)
+,fRelPath(TQString::null)
 ,lastRead(0L)
 {
   clearSchema();
@@ -197,7 +197,7 @@ void ColorSchema::clearSchema()
 
   for (i = 0; i < TABLE_COLORS; i++)
   {
-    m_table[i].color       = QColor(0,0,0);
+    m_table[i].color       = TQColor(0,0,0);
     m_table[i].transparent = 0;
     m_table[i].bold        = 0;
   }
@@ -226,7 +226,7 @@ void ColorSchema::setDefaultSchema()
   }
 }
 
-/* static */ QString ColorSchema::colorName(int i)
+/* static */ TQString ColorSchema::colorName(int i)
 {
   if ((i<0) || (i>=TABLE_COLORS))
   {
@@ -234,14 +234,14 @@ void ColorSchema::setDefaultSchema()
       << i
       << " out of range."
       << endl;
-    return QString::null;
+    return TQString::null;
   }
 
-  return QString(colornames[i]);
+  return TQString(colornames[i]);
 }
 
 void ColorSchema::writeConfigColor(KConfig& c,
-  const QString& name,
+  const TQString& name,
   const ColorEntry& e) const
 {
   KConfigGroupSaver(&c,name);
@@ -252,7 +252,7 @@ void ColorSchema::writeConfigColor(KConfig& c,
 }
 
 void ColorSchema::readConfigColor(KConfig& c,
-  const QString& name,
+  const TQString& name,
   ColorEntry& e)
 {
   KConfigGroupSaver(&c,name);
@@ -264,7 +264,7 @@ void ColorSchema::readConfigColor(KConfig& c,
 }
 
 
-void ColorSchema::writeConfig(const QString& path) const
+void ColorSchema::writeConfig(const TQString& path) const
 {
 //  KONSOLEDEBUG << "Writing schema " << relPath << " to file " << path << endl;
 
@@ -291,13 +291,13 @@ static int random_hue = -1;
 
 bool ColorSchema::rereadSchemaFile()
 {
-  QString fPath = fRelPath.isEmpty() ? "" : (fRelPath.startsWith("/") ? fRelPath : locate("data", "konsole/"+fRelPath));
-  if (fPath.isEmpty() || !QFile::exists(fPath))
+  TQString fPath = fRelPath.isEmpty() ? "" : (fRelPath.startsWith("/") ? fRelPath : locate("data", "konsole/"+fRelPath));
+  if (fPath.isEmpty() || !TQFile::exists(fPath))
      return false;
 
   //KONSOLEDEBUG << "Rereading schema file " << fPath << endl;
 
-  FILE *sysin = fopen(QFile::encodeName(fPath),"r");
+  FILE *sysin = fopen(TQFile::encodeName(fPath),"r");
   if (!sysin)
   {
     int e = errno;
@@ -313,7 +313,7 @@ bool ColorSchema::rereadSchemaFile()
 
   char line[100];
 
-  *lastRead = QDateTime::currentDateTime();
+  *lastRead = TQDateTime::currentDateTime();
 
   while (fscanf(sysin,"%80[^\n]\n",line) > 0)
   {
@@ -332,7 +332,7 @@ bool ColorSchema::rereadSchemaFile()
         if (!strcmp(rend,"full"  )) attr = 4; else
           continue;
 
-        QString qline(line);
+        TQString qline(line);
         m_imagePath = locate("wallpaper", qline.mid( qline.find(" ",7)+1 ) );
         m_alignment = attr;
       }
@@ -362,7 +362,7 @@ bool ColorSchema::rereadSchemaFile()
         if (!(0 <= cv && cv <= 255         )) continue;
         if (!(0 <= tr && tr <= 1           )) continue;
         if (!(0 <= bo && bo <= 1           )) continue;
-        m_table[fi].color       = QColor();
+        m_table[fi].color       = TQColor();
         m_table[fi].color.setHsv(ch,cs,cv);
         m_table[fi].transparent = tr;
         m_table[fi].bold        = bo;
@@ -377,7 +377,7 @@ bool ColorSchema::rereadSchemaFile()
         if (!(0 <= cb && cb <= 255         )) continue;
         if (!(0 <= tr && tr <= 1           )) continue;
         if (!(0 <= bo && bo <= 1           )) continue;
-        m_table[fi].color       = QColor(cr,cg,cb);
+        m_table[fi].color       = TQColor(cr,cg,cb);
         m_table[fi].transparent = tr;
         m_table[fi].bold        = bo;
       }
@@ -412,7 +412,7 @@ bool ColorSchema::rereadSchemaFile()
 
 bool ColorSchema::hasSchemaFileChanged() const
 {
-  QString fPath = fRelPath.isEmpty() ? "" : locate("data", "konsole/"+fRelPath);
+  TQString fPath = fRelPath.isEmpty() ? "" : locate("data", "konsole/"+fRelPath);
 
   //KONSOLEDEBUG << "Checking schema file " << fPath << endl;
 
@@ -421,11 +421,11 @@ bool ColorSchema::hasSchemaFileChanged() const
   //
   if (fPath.isEmpty()) return false;
 
-  QFileInfo i(fPath);
+  TQFileInfo i(fPath);
 
   if (i.exists())
   {
-    QDateTime written = i.lastModified();
+    TQDateTime written = i.lastModified();
 
     if (written != (*lastRead))
     {
@@ -446,7 +446,7 @@ bool ColorSchema::hasSchemaFileChanged() const
   }
 }
 
-void ColorSchema::updateLastRead(const QDateTime& dt)
+void ColorSchema::updateLastRead(const TQDateTime& dt)
 {
   if (lastRead)
   {
@@ -456,7 +456,7 @@ void ColorSchema::updateLastRead(const QDateTime& dt)
 
 
 ColorSchemaList::ColorSchemaList() :
-  QPtrList<ColorSchema> ()
+  TQPtrList<ColorSchema> ()
 {
 //  KONSOLEDEBUG << "Got new color list" << endl;
 
@@ -473,7 +473,7 @@ ColorSchemaList::~ColorSchemaList()
 }
 
 
-ColorSchema *ColorSchemaList::find(const QString& path)
+ColorSchema *ColorSchemaList::find(const TQString& path)
 {
    if (path.isEmpty())
       return find(0);
@@ -525,18 +525,18 @@ ColorSchema *ColorSchemaList::find(int i)
   return 0;
 }
 
-bool ColorSchemaList::updateAllSchemaTimes(const QDateTime& now)
+bool ColorSchemaList::updateAllSchemaTimes(const TQDateTime& now)
 {
 //  KONSOLEDEBUG << "Updating time stamps" << endl;
 
-  QStringList list;
+  TQStringList list;
   KGlobal::dirs()->findAllResources("data", "konsole/*.schema", false, true, list);
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   bool r = false;
 
   for (it=list.begin(); it!=list.end(); ++it)
   {
-    QString filename=*it;
+    TQString filename=*it;
     int j=filename.findRev('/');
     if (j>-1)
       filename = filename.mid(8);
@@ -571,7 +571,7 @@ bool ColorSchemaList::updateAllSchemaTimes(const QDateTime& now)
   return r;
 }
 
-bool ColorSchemaList::deleteOldSchemas(const QDateTime& now)
+bool ColorSchemaList::deleteOldSchemas(const TQDateTime& now)
 {
 //  KONSOLEDEBUG << "Checking for vanished schemas" << endl;
 
@@ -615,7 +615,7 @@ bool ColorSchemaList::checkSchemas()
   // now.
   //
   //
-  QDateTime now = QDateTime::currentDateTime();
+  TQDateTime now = TQDateTime::currentDateTime();
 
 
   r = updateAllSchemaTimes(now);
@@ -624,11 +624,11 @@ bool ColorSchemaList::checkSchemas()
   return r;
 }
 
-int ColorSchemaList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+int ColorSchemaList::compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2)
 {
    ColorSchema* schema1=(ColorSchema*)item1;
    ColorSchema* schema2=(ColorSchema*)item2;
-   return -1*QString::compare(schema1->title(),schema2->title());
+   return -1*TQString::compare(schema1->title(),schema2->title());
 }
 
 

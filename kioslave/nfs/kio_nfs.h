@@ -23,11 +23,11 @@
 #include <kio/slavebase.h>
 #include <kio/global.h>
 
-#include <qmap.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qintdict.h>
-#include <qtimer.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqintdict.h>
+#include <tqtimer.h>
 
 #define PORTMAP  //this seems to be required to compile on Solaris
 #include <rpc/rpc.h>
@@ -55,24 +55,24 @@ class NFSFileHandle
 
 //ostream& operator<<(ostream&, const NFSFileHandle&);
 
-typedef QMap<QString,NFSFileHandle> NFSFileHandleMap;
+typedef TQMap<TQString,NFSFileHandle> NFSFileHandleMap;
 
 
 class NFSProtocol : public KIO::SlaveBase
 {
    public:
-      NFSProtocol (const QCString &pool, const QCString &app );
+      NFSProtocol (const TQCString &pool, const TQCString &app );
       virtual ~NFSProtocol();
 
       virtual void openConnection();
       virtual void closeConnection();
 
-      virtual void setHost( const QString& host, int port, const QString& user, const QString& pass );
+      virtual void setHost( const TQString& host, int port, const TQString& user, const TQString& pass );
 
       virtual void put( const KURL& url, int _mode,bool _overwrite, bool _resume );
       virtual void get( const KURL& url );
       virtual void listDir( const KURL& url);
-      virtual void symlink( const QString &target, const KURL &dest, bool );
+      virtual void symlink( const TQString &target, const KURL &dest, bool );
       virtual void stat( const KURL & url);
       virtual void mkdir( const KURL& url, int permissions );
       virtual void del( const KURL& url, bool isfile);
@@ -81,22 +81,22 @@ class NFSProtocol : public KIO::SlaveBase
       virtual void copy( const KURL& src, const KURL &dest, int mode, bool overwrite );
    protected:
 //      void createVirtualDirEntry(KIO::UDSEntry & entry);
-      bool checkForError(int clientStat, int nfsStat, const QString& text);
-      bool isExportedDir(const QString& path);
+      bool checkForError(int clientStat, int nfsStat, const TQString& text);
+      bool isExportedDir(const TQString& path);
       void completeUDSEntry(KIO::UDSEntry& entry, fattr& attributes);
       void completeBadLinkUDSEntry(KIO::UDSEntry& entry, fattr& attributes);
-      void completeAbsoluteLinkUDSEntry(KIO::UDSEntry& entry, const QCString& path);
-      bool isValidLink(const QString& parentDir, const QString& linkDest);
-//      bool isAbsoluteLink(const QString& path);
+      void completeAbsoluteLinkUDSEntry(KIO::UDSEntry& entry, const TQCString& path);
+      bool isValidLink(const TQString& parentDir, const TQString& linkDest);
+//      bool isAbsoluteLink(const TQString& path);
       
-      NFSFileHandle getFileHandle(QString path);
+      NFSFileHandle getFileHandle(TQString path);
 
       NFSFileHandleMap m_handleCache;
-      QIntDict<QString> m_usercache;      // maps long ==> QString *
-      QIntDict<QString> m_groupcache;
+      TQIntDict<TQString> m_usercache;      // maps long ==> TQString *
+      TQIntDict<TQString> m_groupcache;
 
-      QStringList m_exportedDirs;
-      QString m_currentHost;
+      TQStringList m_exportedDirs;
+      TQString m_currentHost;
       CLIENT *m_client;
       CLIENT *m_nfsClient;
       timeval total_timeout;

@@ -19,20 +19,20 @@
 #ifndef __PANELINFO_H
 #define __PANELINFO_H
 
-#include <qvaluelist.h>
-#include <qlistview.h>
+#include <tqvaluelist.h>
+#include <tqlistview.h>
 #include <kpanelextension.h>
 
 class ExtensionInfo;
 
-typedef QValueList<ExtensionInfo*> ExtensionInfoList;
+typedef TQValueList<ExtensionInfo*> ExtensionInfoList;
 
 class ExtensionInfo
 {
     public:
-        ExtensionInfo(const QString& destopFile,
-                      const QString& configFile,
-                      const QString& configPath);
+        ExtensionInfo(const TQString& destopFile,
+                      const TQString& configFile,
+                      const TQString& configPath);
         ~ExtensionInfo() {};
 
         void setDefaults();
@@ -40,12 +40,12 @@ class ExtensionInfo
         void load();
         void configChanged();
 
-        QString _configFile;
-        QString _configPath;
-        QString _desktopFile;
+        TQString _configFile;
+        TQString _configPath;
+        TQString _desktopFile;
 
         // Configuration settings
-        QString  _name;
+        TQString  _name;
         int      _position;
         int      _alignment;
         int      _xineramaScreen;

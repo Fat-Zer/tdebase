@@ -42,7 +42,7 @@ class CFontThumbnail : public ThumbCreator
     CFontThumbnail();
     ~CFontThumbnail() {}
 
-    bool  create(const QString &path, int width, int height, QImage &img);
+    bool  create(const TQString &path, int width, int height, TQImage &img);
     Flags flags() const;
 
     private:

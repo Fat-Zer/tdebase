@@ -16,8 +16,8 @@
 
 #include "gesture_triggers_tab.h"
 
-#include <qpushbutton.h>
-#include <qlineedit.h>
+#include <tqpushbutton.h>
+#include <tqlineedit.h>
 
 #include <triggers.h>
 #include <actions.h> 
@@ -30,28 +30,28 @@
 namespace KHotKeys
 {
 
-Gesture_triggers_tab::Gesture_triggers_tab( QWidget* parent_P, const char* name_P )
+Gesture_triggers_tab::Gesture_triggers_tab( TQWidget* parent_P, const char* name_P )
     : Gesture_triggers_tab_ui( parent_P, name_P )
     {
     clear_data();
     // KHotKeys::Module::changed()
-    connect( gesture_edit_button1, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( gesture_edit_button2, SIGNAL( clicked()),
-        module, SLOT( changed()));
-    connect( gesture_edit_button3, SIGNAL( clicked()),
-        module, SLOT( changed()));
+    connect( gesture_edit_button1, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( gesture_edit_button2, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
+    connect( gesture_edit_button3, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
     } 
 
 void Gesture_triggers_tab::clear_data()
     {
-    gesture1 = gesture2 = gesture3 = QString::null;
+    gesture1 = gesture2 = gesture3 = TQString::null;
     gesture_lineedit1->clear();
     gesture_lineedit2->clear();
     gesture_lineedit3->clear();
-    gesture_drawer1->setData( QString::null );
-    gesture_drawer2->setData( QString::null );
-    gesture_drawer3->setData( QString::null );
+    gesture_drawer1->setData( TQString::null );
+    gesture_drawer2->setData( TQString::null );
+    gesture_drawer3->setData( TQString::null );
     }
     
 void Gesture_triggers_tab::set_data( const Trigger_list* triggers_P )
@@ -70,7 +70,7 @@ void Gesture_triggers_tab::set_data( const Trigger_list* triggers_P )
         }
     else
         trig = NULL;
-    gesture1 = trig ? trig->gesturecode() : QString::null;
+    gesture1 = trig ? trig->gesturecode() : TQString::null;
     gesture_lineedit1->setText( gesture1 );
     gesture_drawer1->setData( gesture1 );
     ++it;
@@ -81,7 +81,7 @@ void Gesture_triggers_tab::set_data( const Trigger_list* triggers_P )
         }
     else
         trig = NULL;
-    gesture2 = trig ? trig->gesturecode() : QString::null;
+    gesture2 = trig ? trig->gesturecode() : TQString::null;
     gesture_lineedit2->setText( gesture2 );
     gesture_drawer2->setData( gesture2 );
     ++it;
@@ -92,7 +92,7 @@ void Gesture_triggers_tab::set_data( const Trigger_list* triggers_P )
         }
     else
         trig = NULL;
-    gesture3 = trig ? trig->gesturecode() : QString::null;
+    gesture3 = trig ? trig->gesturecode() : TQString::null;
     gesture_lineedit3->setText( gesture3 );
     gesture_drawer3->setData( gesture3 );
     }
@@ -135,20 +135,20 @@ void Gesture_triggers_tab::edit_gesture_pressed3()
 
 // Gesture_edit_dialog
 
-Gesture_edit_dialog::Gesture_edit_dialog( const QString& gesture_P )
+Gesture_edit_dialog::Gesture_edit_dialog( const TQString& gesture_P )
     : KDialogBase( NULL, NULL, true, "", Ok | Cancel ), // CHECKME caption
         _gesture( gesture_P ), _page( NULL )
     {
     _page = new GestureRecordPage( _gesture,
                                   this, "GestureRecordPage");
    
-//    connect(_page, SIGNAL(gestureRecorded(bool)), // allow clearing the gesture
-//            this, SLOT(enableButtonOK(bool)));
+//    connect(_page, TQT_SIGNAL(gestureRecorded(bool)), // allow clearing the gesture
+//            this, TQT_SLOT(enableButtonOK(bool)));
    
     setMainWidget( _page );
     }
 
-QString Gesture_edit_dialog::edit_gesture()
+TQString Gesture_edit_dialog::edit_gesture()
     {
     if( exec())
         return _page->getGesture();

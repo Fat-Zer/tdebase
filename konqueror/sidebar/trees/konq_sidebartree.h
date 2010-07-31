@@ -24,10 +24,10 @@
 #include "konq_sidebartreetoplevelitem.h"
 #include "konqsidebar_tree.h"
 #include <kdirnotify.h>
-#include <qmap.h>
-#include <qpoint.h>
-#include <qstrlist.h>
-#include <qtooltip.h>
+#include <tqmap.h>
+#include <tqpoint.h>
+#include <tqstrlist.h>
+#include <tqtooltip.h>
 
 class KonqSidebarTreeModule;
 class KonqSidebarTreeItem;
@@ -46,20 +46,20 @@ typedef struct DirTreeConfigData_
 {
   KURL dir;
   int type;
-  QString relDir;
+  TQString relDir;
 } DirTreeConfigData;
 
 
 class KonqSidebarTreeToolTip : public QToolTip
 {
 public:
-    KonqSidebarTreeToolTip( QListView *view ) : QToolTip( view->viewport() ), m_view( view ) {}
+    KonqSidebarTreeToolTip( TQListView *view ) : TQToolTip( view->viewport() ), m_view( view ) {}
 
 protected:
-    virtual void maybeTip( const QPoint & );
+    virtual void maybeTip( const TQPoint & );
 
 private:
-    QListView *m_view;
+    TQListView *m_view;
 };
 
 typedef enum {
@@ -77,7 +77,7 @@ class KonqSidebarTree : public KListView, public KDirNotify
 {
     Q_OBJECT
 public:
-    KonqSidebarTree( KonqSidebar_Tree *parent, QWidget *parentWidget, int virt, const QString& path );
+    KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path );
     virtual ~KonqSidebarTree();
 
     void followURL( const KURL &url );
@@ -87,7 +87,7 @@ public:
      */
     KonqSidebarTreeItem * currentItem() const;
 
-    void startAnimation( KonqSidebarTreeItem * item, const char * iconBaseName = "kde", uint iconCount = 6, const QPixmap * originalPixmap = 0L );
+    void startAnimation( KonqSidebarTreeItem * item, const char * iconBaseName = "kde", uint iconCount = 6, const TQPixmap * originalPixmap = 0L );
     void stopAnimation( KonqSidebarTreeItem * item );
 
     // Reimplemented from KDirNotify
@@ -106,7 +106,7 @@ public:
 
     void itemDestructed( KonqSidebarTreeItem *item );
 
-    void setDropFormats( const QStringList &formats ); // used in KListView mode
+    void setDropFormats( const TQStringList &formats ); // used in KListView mode
     
     // Show context menu for toplevel items
     void showToplevelContextMenu();
@@ -121,21 +121,21 @@ public slots:
     virtual void setContentsPos( int x, int y );
 
 protected:
-    virtual void contentsDragEnterEvent( QDragEnterEvent *e );
-    virtual void contentsDragMoveEvent( QDragMoveEvent *e );
-    virtual void contentsDragLeaveEvent( QDragLeaveEvent *e );
-    virtual void contentsDropEvent( QDropEvent *ev );
-    virtual bool acceptDrag(QDropEvent* e) const; // used in KListView mode
+    virtual void contentsDragEnterEvent( TQDragEnterEvent *e );
+    virtual void contentsDragMoveEvent( TQDragMoveEvent *e );
+    virtual void contentsDragLeaveEvent( TQDragLeaveEvent *e );
+    virtual void contentsDropEvent( TQDropEvent *ev );
+    virtual bool acceptDrag(TQDropEvent* e) const; // used in KListView mode
 
-    virtual void leaveEvent( QEvent * );
+    virtual void leaveEvent( TQEvent * );
 
-    virtual QDragObject* dragObject();
+    virtual TQDragObject* dragObject();
 
 private slots:
-    void slotDoubleClicked( QListViewItem *item );
-    void slotExecuted( QListViewItem *item );
-    void slotMouseButtonPressed(int _button, QListViewItem* _item, const QPoint&, int col);
-    void slotMouseButtonClicked(int _button, QListViewItem* _item, const QPoint&, int col);
+    void slotDoubleClicked( TQListViewItem *item );
+    void slotExecuted( TQListViewItem *item );
+    void slotMouseButtonPressed(int _button, TQListViewItem* _item, const TQPoint&, int col);
+    void slotMouseButtonClicked(int _button, TQListViewItem* _item, const TQPoint&, int col);
     void slotSelectionChanged();
 
     void slotAnimation();
@@ -144,7 +144,7 @@ private slots:
 
     void rescanConfiguration();
 
-    void slotItemRenamed(QListViewItem*, const QString &, int);
+    void slotItemRenamed(TQListViewItem*, const TQString &, int);
 
     void slotCreateFolder();
     void slotDelete();
@@ -156,41 +156,41 @@ private slots:
 
 private:
     void clearTree();
-    void scanDir( KonqSidebarTreeItem *parent, const QString &path, bool isRoot = false );
-    void loadTopLevelGroup( KonqSidebarTreeItem *parent, const QString &path );
-    void loadTopLevelItem( KonqSidebarTreeItem *parent, const QString &filename );
+    void scanDir( KonqSidebarTreeItem *parent, const TQString &path, bool isRoot = false );
+    void loadTopLevelGroup( KonqSidebarTreeItem *parent, const TQString &path );
+    void loadTopLevelItem( KonqSidebarTreeItem *parent, const TQString &filename );
 
     void loadModuleFactories();
     
 
 private:
-    QPtrList<KonqSidebarTreeTopLevelItem> m_topLevelItems;
+    TQPtrList<KonqSidebarTreeTopLevelItem> m_topLevelItems;
     KonqSidebarTreeTopLevelItem *m_currentTopLevelItem;
 
-    QPtrList<KonqSidebarTreeModule> m_lstModules;
+    TQPtrList<KonqSidebarTreeModule> m_lstModules;
 
     KonqSidebarPlugin  *m_part;
 
     struct AnimationInfo
     {
-        AnimationInfo( const char * _iconBaseName, uint _iconCount, const QPixmap & _originalPixmap )
+        AnimationInfo( const char * _iconBaseName, uint _iconCount, const TQPixmap & _originalPixmap )
             : iconBaseName(_iconBaseName), iconCount(_iconCount), iconNumber(1), originalPixmap(_originalPixmap) {}
         AnimationInfo() : iconCount(0) {}
-        QCString iconBaseName;
+        TQCString iconBaseName;
         uint iconCount;
         uint iconNumber;
-        QPixmap originalPixmap;
+        TQPixmap originalPixmap;
     };
-    typedef QMap<KonqSidebarTreeItem *, AnimationInfo> MapCurrentOpeningFolders;
+    typedef TQMap<KonqSidebarTreeItem *, AnimationInfo> MapCurrentOpeningFolders;
     MapCurrentOpeningFolders m_mapCurrentOpeningFolders;
 
-    QTimer *m_animationTimer;
+    TQTimer *m_animationTimer;
 
-    QListViewItem *m_currentBeforeDropItem; // The item that was current before the drag-enter event happened
-    QListViewItem *m_dropItem; // The item we are moving the mouse over (during a drag)
-    QStrList m_lstDropFormats;
+    TQListViewItem *m_currentBeforeDropItem; // The item that was current before the drag-enter event happened
+    TQListViewItem *m_dropItem; // The item we are moving the mouse over (during a drag)
+    TQStrList m_lstDropFormats;
 
-    QTimer *m_autoOpenTimer;
+    TQTimer *m_autoOpenTimer;
 
     // The base URL for our configuration directory
     //KURL m_dirtreeDir;
@@ -199,10 +199,10 @@ private:
     KonqSidebarTreeToolTip m_toolTip;
     bool m_scrollingLocked;
 
-    getModule getPluginFactory(QString name);
+    getModule getPluginFactory(TQString name);
     
-    QMap<QString, QString>   pluginInfo;
-    QMap<QString, getModule> pluginFactories;
+    TQMap<TQString, TQString>   pluginInfo;
+    TQMap<TQString, getModule> pluginFactories;
 
     bool m_bOpeningFirstChild;
     KActionCollection *m_collection;
@@ -216,9 +216,9 @@ signals:
 #define signals protected
     void openURLRequest( const KURL &url, const KParts::URLArgs &args = KParts::URLArgs() );
     void createNewWindow( const KURL &url, const KParts::URLArgs &args = KParts::URLArgs() );
-    void popupMenu( const QPoint &global, const KURL &url,
-         const QString &mimeType, mode_t mode = (mode_t)-1 );
-    void popupMenu( const QPoint &global, const KFileItemList &items );
+    void popupMenu( const TQPoint &global, const KURL &url,
+         const TQString &mimeType, mode_t mode = (mode_t)-1 );
+    void popupMenu( const TQPoint &global, const KFileItemList &items );
     void enableAction( const char * name, bool enabled );
 };
 

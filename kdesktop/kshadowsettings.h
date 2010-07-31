@@ -22,12 +22,12 @@
 #ifndef __FX_DATA
 #define __FX_DATA
 
-#define SHADOW_CONFIG_ENTRY QString("ShadowParameters")
-#define SHADOW_TEXT_COLOR QString("ShadowTextColor")
-#define SHADOW_TEXT_BACKGROUND QString("ShadowTextBackground")
+#define SHADOW_CONFIG_ENTRY TQString("ShadowParameters")
+#define SHADOW_TEXT_COLOR TQString("ShadowTextColor")
+#define SHADOW_TEXT_BACKGROUND TQString("ShadowTextBackground")
 
 // fallback configuration string
-#define DEFAULT_SHADOW_CONFIGURATION QString("0,0,4.0,120.0,2,1,1,0,0,0")
+#define DEFAULT_SHADOW_CONFIGURATION TQString("0,0,4.0,120.0,2,1,1,0,0,0")
 
 /**
  * This class is the implementation of a structure for the
@@ -90,13 +90,13 @@ class KShadowSettings
 		 * @param the string to load from (comma-separated values)
 		 * @see ConfigurationOrder
 		 */
-		virtual void fromString(const QString &s);
+		virtual void fromString(const TQString &s);
 		/**
 		 * Saves the configuration to a string.
 		 * @return the configuration (comma-separated values)
 		 * @see ConfigurationOrder
 		 */ 
-		virtual QString toString() const;
+		virtual TQString toString() const;
 		
 		// get methods
 		/**

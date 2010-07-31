@@ -33,7 +33,7 @@ class KCertExport : public KDialog
 {
   Q_OBJECT
 public:
-  KCertExport(QWidget *parent = 0L, const char *name = 0L);
+  KCertExport(TQWidget *parent = 0L, const char *name = 0L);
   virtual ~KCertExport();
 
   void setCertificate(KSSLCertificate *c);
@@ -41,11 +41,11 @@ public:
 protected slots:
   void slotExport();
   void slotChoose();
-  void slotTextChanged(const QString &);
+  void slotTextChanged(const TQString &);
 
 private:
-  QPushButton *_export, *_cancel, *_choose;
-  QRadioButton *_pem, *_netscape, *_der, *_text;
+  TQPushButton *_export, *_cancel, *_choose;
+  TQRadioButton *_pem, *_netscape, *_der, *_text;
   KLineEdit *_filename;
 
   KSSLCertificate *_c;

@@ -25,13 +25,13 @@
 #include <config.h>
 #endif
 
-#include <qcheckbox.h>
-#include <qdatetime.h>
-#include <qlineedit.h>
-#include <qlistview.h>
-#include <qptrlist.h>
-#include <qtabwidget.h>
-#include <qvbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqdatetime.h>
+#include <tqlineedit.h>
+#include <tqlistview.h>
+#include <tqptrlist.h>
+#include <tqtabwidget.h>
+#include <tqvbuttongroup.h>
 
 #include <kcmodule.h>
 #include <ksimpleconfig.h>
@@ -50,23 +50,23 @@ class KURLRequester;
 class CipherItem : public QCheckListItem
 {
 public:
-    CipherItem( QListView *view, const QString& cipher, int bits, int maxBits,
+    CipherItem( TQListView *view, const TQString& cipher, int bits, int maxBits,
 		KCryptoConfig *module );
     ~CipherItem() {}
 
-    void setCipher( const QString& cipher ) { m_cipher = cipher; }
-    const QString& cipher() const { return m_cipher; }
+    void setCipher( const TQString& cipher ) { m_cipher = cipher; }
+    const TQString& cipher() const { return m_cipher; }
     void setBits( int bits ) { m_bits = bits; }
     int bits() const { return m_bits; }
 
-    QString configName() const;
+    TQString configName() const;
 
 protected:
     virtual void stateChange( bool );
 
 private:
     int m_bits;
-    QString m_cipher;
+    TQString m_cipher;
     KCryptoConfig *m_module; // just to call configChanged()
 };
 
@@ -75,26 +75,26 @@ private:
 class OtherCertItem : public QListViewItem
 {
 public:
-    OtherCertItem(QListView *view, const QString& sub, const QString& md5, bool perm, int policy, QDateTime exp, KCryptoConfig *module );
+    OtherCertItem(TQListView *view, const TQString& sub, const TQString& md5, bool perm, int policy, TQDateTime exp, KCryptoConfig *module );
     ~OtherCertItem() {}
 
-    QString configName() const;
-    const QString& getSub() { return _sub; }
+    TQString configName() const;
+    const TQString& getSub() { return _sub; }
     int getPolicy() { return _policy; }
-    const QString& getMD5() { return _md5; }
+    const TQString& getMD5() { return _md5; }
     bool isPermanent() { return _perm; }
-    QDateTime getExpires() { return _exp; }
+    TQDateTime getExpires() { return _exp; }
     void setPolicy(int x) { _policy = x; }
     void setPermanent(bool x) { _perm = x; }
-    void setExpires(QDateTime x) { _exp = x; }
+    void setExpires(TQDateTime x) { _exp = x; }
 
 protected:
     virtual void stateChange( bool );
 
 private:
-    QString _sub, _md5;
+    TQString _sub, _md5;
     KCryptoConfig *m_module; // just to call configChanged()
-    QDateTime _exp;
+    TQDateTime _exp;
     bool _perm;
     int _policy;
 };
@@ -105,27 +105,27 @@ private:
 class YourCertItem : public QListViewItem
 {
 public:
-    YourCertItem(QListView *view, QString pkcs, QString pass, QString name, KCryptoConfig *module );
+    YourCertItem(TQListView *view, TQString pkcs, TQString pass, TQString name, KCryptoConfig *module );
     ~YourCertItem() {}
 
-    QString configName() const;
-    QString& getPKCS() { return _pkcs; }
-    void setPKCS(QString pkcs) { _pkcs = pkcs; }
-    QString& getPass() { return _pass; }
-    void setPass(QString pass) { _pass = pass; }
-    QString& getName() { return _name; }
-    void setName(QString name) { _name = name; }
-    QString& getPassCache() { return _cpass; }
-    void setPassCache(QString pass) { _cpass = pass; }
+    TQString configName() const;
+    TQString& getPKCS() { return _pkcs; }
+    void setPKCS(TQString pkcs) { _pkcs = pkcs; }
+    TQString& getPass() { return _pass; }
+    void setPass(TQString pass) { _pass = pass; }
+    TQString& getName() { return _name; }
+    void setName(TQString name) { _name = name; }
+    TQString& getPassCache() { return _cpass; }
+    void setPassCache(TQString pass) { _cpass = pass; }
 
 protected:
     virtual void stateChange( bool );
 
 private:
-    QString _pkcs;
-    QString _pass;
-    QString _cpass;
-    QString _name;
+    TQString _pkcs;
+    TQString _pass;
+    TQString _cpass;
+    TQString _name;
     KCryptoConfig *m_module; // just to call configChanged()
 };
 
@@ -135,14 +135,14 @@ private:
 class CAItem : public QListViewItem
 {
 public:
-    CAItem(QListView *view, QString name, QString cert, bool site, bool email, bool code, KCryptoConfig *module );
+    CAItem(TQListView *view, TQString name, TQString cert, bool site, bool email, bool code, KCryptoConfig *module );
     ~CAItem() {}
 
-    QString configName() const;
-    QString& getName() { return _name; }
-    void setName(QString name) { _name = name; }
+    TQString configName() const;
+    TQString& getName() { return _name; }
+    void setName(TQString name) { _name = name; }
 
-    inline QString getCert() const { return _cert; }
+    inline TQString getCert() const { return _cert; }
     inline bool getSite() const { return _site; }
     inline bool getEmail() const { return _email; }
     inline bool getCode() const { return _code; }
@@ -156,8 +156,8 @@ protected:
     virtual void stateChange( bool );
 
 private:
-    QString _name;
-    QString _cert;
+    TQString _name;
+    TQString _cert;
     bool _site, _email, _code;
     KCryptoConfig *m_module; // just to call configChanged()
 };
@@ -169,12 +169,12 @@ private:
 class HostAuthItem : public QListViewItem
 {
 public:
-    HostAuthItem(QListView *view, QString host, QString name, KCryptoConfig *module ) : QListViewItem(view, QString::null ) {
+    HostAuthItem(TQListView *view, TQString host, TQString name, KCryptoConfig *module ) : TQListViewItem(view, TQString::null ) {
                                _name = name;  _host = host;
                                m_module = module;
                                setText(0, _host);
                                setText(1, _name);
-                               _oname = QString::null;
+                               _oname = TQString::null;
                               }
     ~HostAuthItem() {}
 
@@ -195,18 +195,18 @@ public:
                                }
     }
     KSSLCertificateHome::KSSLAuthAction getAction() const { return _aa; }
-    QString configName() const { return _host; }
-    QString getCertName() const { return _name; }
-    void setCertName(QString name) { _name = name; setText(1, name); }
-    void setHost(QString name) { _host = name; setText(0, name); }
-    void setOriginalName(QString oname) { _oname = oname; }
-    QString originalName() const { return _oname; }
+    TQString configName() const { return _host; }
+    TQString getCertName() const { return _name; }
+    void setCertName(TQString name) { _name = name; setText(1, name); }
+    void setHost(TQString name) { _host = name; setText(0, name); }
+    void setOriginalName(TQString oname) { _oname = oname; }
+    TQString originalName() const { return _oname; }
 
 protected:
 
 private:
-    QString _host;
-    QString _name, _oname;
+    TQString _host;
+    TQString _name, _oname;
     KSSLCertificateHome::KSSLAuthAction _aa;
     KCryptoConfig *m_module; // just to call configChanged()
 };
@@ -219,7 +219,7 @@ class KCryptoConfig : public KCModule
 {
   Q_OBJECT
 public:
-  KCryptoConfig(QWidget *parent = 0L, const char *name = 0L, const QStringList &list = QStringList());
+  KCryptoConfig(TQWidget *parent = 0L, const char *name = 0L, const TQStringList &list = TQStringList());
   virtual ~KCryptoConfig();
 
   void load();
@@ -261,7 +261,7 @@ public slots:
   void slotNewHostAuth();
   void slotRemoveHostAuth();
   void slotAuthItemChanged();
-  void slotAuthText(const QString &t);
+  void slotAuthText(const TQString &t);
   void slotAuthButtons();
   void slotAuthCombo();
 
@@ -279,78 +279,78 @@ protected:
 
 private:
 
-  void offerImportToKMail( const QString& certFile );
+  void offerImportToKMail( const TQString& certFile );
   void setAuthCertLists();
   void genCAList();
 
-  QTabWidget *tabs;
-  QWidget *tabSSL, *tabOSSL;
+  TQTabWidget *tabs;
+  TQWidget *tabSSL, *tabOSSL;
 
-  QWidget *tabYourSSLCert, *tabOtherSSLCert, *tabSSLCA, *tabSSLCOpts, *tabAuth;
+  TQWidget *tabYourSSLCert, *tabOtherSSLCert, *tabSSLCA, *tabSSLCOpts, *tabAuth;
 
-  QListView *SSLv2Box, *SSLv3Box;
-  QCheckBox *mUseTLS, *mUseSSLv2, *mUseSSLv3;
-  QCheckBox *mWarnOnEnter, *mWarnOnLeave;
+  TQListView *SSLv2Box, *SSLv3Box;
+  TQCheckBox *mUseTLS, *mUseSSLv2, *mUseSSLv3;
+  TQCheckBox *mWarnOnEnter, *mWarnOnLeave;
 
   /* EGD stuff */
-  QLabel        *mEGDLabel;
+  TQLabel        *mEGDLabel;
   KURLRequester *mEGDPath;
-  QCheckBox     *mUseEGD;
-  QCheckBox     *mUseEFile;
+  TQCheckBox     *mUseEGD;
+  TQCheckBox     *mUseEFile;
 
   /* CipherWizards */
-  QPushButton *mCWall, *mCWus, *mCWexp, *mCWcompatible;
+  TQPushButton *mCWall, *mCWus, *mCWexp, *mCWcompatible;
 
-  QCheckBox *mWarnOnUnencrypted, *mWarnOnMixed;
-  QListView *yourSSLBox, *otherSSLBox, *caList;
-  QCheckBox *mWarnSelfSigned, *mWarnExpired, *mWarnRevoked;
-  QPushButton *macAdd, *macRemove;
+  TQCheckBox *mWarnOnUnencrypted, *mWarnOnMixed;
+  TQListView *yourSSLBox, *otherSSLBox, *caList;
+  TQCheckBox *mWarnSelfSigned, *mWarnExpired, *mWarnRevoked;
+  TQPushButton *macAdd, *macRemove;
   KPushButton *macClear;
-  QListBox *macBox;
-  QPushButton *otherSSLExport, *otherSSLView, *otherSSLRemove, *otherSSLVerify;
-  QPushButton *yourSSLImport, *yourSSLPass, *yourSSLRemove, *yourSSLExport,
+  TQListBox *macBox;
+  TQPushButton *otherSSLExport, *otherSSLView, *otherSSLRemove, *otherSSLVerify;
+  TQPushButton *yourSSLImport, *yourSSLPass, *yourSSLRemove, *yourSSLExport,
               *yourSSLUnlock, *yourSSLVerify;
-  QRadioButton *yourSSLUseDefault, *yourSSLList, *yourSSLDont;
-  QLineEdit *macCert;
+  TQRadioButton *yourSSLUseDefault, *yourSSLList, *yourSSLDont;
+  TQLineEdit *macCert;
   KSSLCertBox *oSubject, *oIssuer;
   KSSLCertBox *ySubject, *yIssuer;
-  QGridLayout *oGrid;
+  TQGridLayout *oGrid;
 
-  QVButtonGroup *policyGroup;
-  QVButtonGroup *cacheGroup;
-  QRadioButton *policyAccept, *policyReject, *policyPrompt;
-  QRadioButton *cacheUntil, *cachePerm;
-  QLabel *fromLabel, *untilLabel;
-  QLabel *validFrom, *validUntil;
-  QLabel *yValidFrom, *yValidUntil;
+  TQVButtonGroup *policyGroup;
+  TQVButtonGroup *cacheGroup;
+  TQRadioButton *policyAccept, *policyReject, *policyPrompt;
+  TQRadioButton *cacheUntil, *cachePerm;
+  TQLabel *fromLabel, *untilLabel;
+  TQLabel *validFrom, *validUntil;
+  TQLabel *yValidFrom, *yValidUntil;
   KURLLabel *untilDate;
 
-  QVGroupBox  *oInfo;
+  TQVGroupBox  *oInfo;
   KURLRequester *oPath;
-  QPushButton *oTest;
-  QPtrList<OtherCertItem> otherCertDelList;
-  QPtrList<YourCertItem> yourCertDelList;
-  QPtrList<CAItem> caDelList;
+  TQPushButton *oTest;
+  TQPtrList<OtherCertItem> otherCertDelList;
+  TQPtrList<YourCertItem> yourCertDelList;
+  TQPtrList<CAItem> caDelList;
 
   /* Personal Cert Policies tab */
   KComboBox *defCertBox;
   KComboBox *hostCertBox;
-  QVButtonGroup *defCertBG;
-  QHButtonGroup *hostCertBG;
-  QRadioButton *defSend, *defPrompt, *defDont;
-  QRadioButton *hostSend, *hostPrompt, *hostDont;
-  QListView *hostAuthList;
-  QPushButton *authAdd, *authRemove;
-  QLineEdit *authHost;
-  QPtrList<HostAuthItem> authDelList;
-  QLabel *yHash, *pHash;
+  TQVButtonGroup *defCertBG;
+  TQHButtonGroup *hostCertBG;
+  TQRadioButton *defSend, *defPrompt, *defDont;
+  TQRadioButton *hostSend, *hostPrompt, *hostDont;
+  TQListView *hostAuthList;
+  TQPushButton *authAdd, *authRemove;
+  TQLineEdit *authHost;
+  TQPtrList<HostAuthItem> authDelList;
+  TQLabel *yHash, *pHash;
 
   /* CA stuff */
   KSSLCertBox *caSubject, *caIssuer;
-  QPushButton *caSSLImport, *caSSLRemove, *caSSLRestore;
-  QCheckBox *caSite, *caEmail, *caCode;
+  TQPushButton *caSSLImport, *caSSLRemove, *caSSLRestore;
+  TQCheckBox *caSite, *caEmail, *caCode;
   KSSLSigners *_signers;
-  QLabel *cHash;
+  TQLabel *cHash;
 
   KConfig *config;
   KSimpleConfig *policies, *pcerts, *authcfg;

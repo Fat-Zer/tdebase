@@ -17,15 +17,15 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qcheckbox.h>
-#include <qfile.h>
-#include <qgroupbox.h>
-#include <qheader.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqfile.h>
+#include <tqgroupbox.h>
+#include <tqheader.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -52,8 +52,8 @@
 class SearchProviderItem : public QCheckListItem
 {
 public:
-    SearchProviderItem(QListView *parent, SearchProvider *provider)
-    :QCheckListItem(parent, provider->name(), CheckBox), m_provider(provider)
+    SearchProviderItem(TQListView *parent, SearchProvider *provider)
+    :TQCheckListItem(parent, provider->name(), CheckBox), m_provider(provider)
     {
       update();
     }
@@ -75,10 +75,10 @@ private:
     SearchProvider *m_provider;
 };
 
-FilterOptions::FilterOptions(KInstance *instance, QWidget *parent, const char *name)
+FilterOptions::FilterOptions(KInstance *instance, TQWidget *parent, const char *name)
               :KCModule(instance, parent, name)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout( this, KDialog::marginHint(),
+    TQVBoxLayout *mainLayout = new TQVBoxLayout( this, KDialog::marginHint(),
         KDialog::spacingHint());
 
     m_dlg = new FilterOptionsUI (this);
@@ -91,7 +91,7 @@ FilterOptions::FilterOptions(KInstance *instance, QWidget *parent, const char *n
     load();
 }
 
-QString FilterOptions::quickHelp() const
+TQString FilterOptions::quickHelp() const
 {
     return i18n("In this module you can configure the web shortcuts feature. "
                 "Web shortcuts allow you to quickly search or lookup words on "
@@ -120,7 +120,7 @@ void FilterOptions::load( bool useDefaults )
 
     config.setGroup("General");
 
-    QString defaultSearchEngine = config.readEntry("DefaultSearchEngine");
+    TQString defaultSearchEngine = config.readEntry("DefaultSearchEngine");
 
     m_favoriteEngines.clear();
     m_favoriteEngines << "google" << "google_groups" << "google_news" << "webster" << "dmoz" << "wikipedia";
@@ -147,35 +147,35 @@ void FilterOptions::load( bool useDefaults )
       m_dlg->lvSearchProviders->setSelected(m_dlg->lvSearchProviders->firstChild(), true);
 
     // Connect all the signals/slots...
-    connect(m_dlg->cbEnableShortcuts, SIGNAL(clicked()), this,
-            SLOT(setWebShortcutState()));
-    connect(m_dlg->cbEnableShortcuts, SIGNAL(clicked()), this,
-            SLOT(configChanged()));
+    connect(m_dlg->cbEnableShortcuts, TQT_SIGNAL(clicked()), this,
+            TQT_SLOT(setWebShortcutState()));
+    connect(m_dlg->cbEnableShortcuts, TQT_SIGNAL(clicked()), this,
+            TQT_SLOT(configChanged()));
 
-    connect(m_dlg->lvSearchProviders, SIGNAL(selectionChanged(QListViewItem *)),
-           this, SLOT(updateSearchProvider()));
-    connect(m_dlg->lvSearchProviders, SIGNAL(doubleClicked(QListViewItem *)),
-           this, SLOT(changeSearchProvider()));
-    connect(m_dlg->lvSearchProviders, SIGNAL(returnPressed(QListViewItem *)),
-           this, SLOT(changeSearchProvider()));
-    connect(m_dlg->lvSearchProviders, SIGNAL(executed(QListViewItem *)),
-           this, SLOT(checkFavoritesChanged()));
-    connect(m_dlg->lvSearchProviders, SIGNAL(spacePressed(QListViewItem *)),
-           this, SLOT(checkFavoritesChanged()));
-    connect(m_dlg->lvSearchProviders, SIGNAL(pressed(QListViewItem *)),
-           this, SLOT(checkFavoritesChanged()));
-    connect(m_dlg->lvSearchProviders, SIGNAL(clicked(QListViewItem *)),
-           this, SLOT(checkFavoritesChanged()));
+    connect(m_dlg->lvSearchProviders, TQT_SIGNAL(selectionChanged(TQListViewItem *)),
+           this, TQT_SLOT(updateSearchProvider()));
+    connect(m_dlg->lvSearchProviders, TQT_SIGNAL(doubleClicked(TQListViewItem *)),
+           this, TQT_SLOT(changeSearchProvider()));
+    connect(m_dlg->lvSearchProviders, TQT_SIGNAL(returnPressed(TQListViewItem *)),
+           this, TQT_SLOT(changeSearchProvider()));
+    connect(m_dlg->lvSearchProviders, TQT_SIGNAL(executed(TQListViewItem *)),
+           this, TQT_SLOT(checkFavoritesChanged()));
+    connect(m_dlg->lvSearchProviders, TQT_SIGNAL(spacePressed(TQListViewItem *)),
+           this, TQT_SLOT(checkFavoritesChanged()));
+    connect(m_dlg->lvSearchProviders, TQT_SIGNAL(pressed(TQListViewItem *)),
+           this, TQT_SLOT(checkFavoritesChanged()));
+    connect(m_dlg->lvSearchProviders, TQT_SIGNAL(clicked(TQListViewItem *)),
+           this, TQT_SLOT(checkFavoritesChanged()));
 
 
-    connect(m_dlg->cmbDefaultEngine, SIGNAL(activated(const QString &)), this,
-            SLOT(configChanged()));
-    connect(m_dlg->cmbDelimiter, SIGNAL(activated(const QString &)), this,
-            SLOT(configChanged()));
+    connect(m_dlg->cmbDefaultEngine, TQT_SIGNAL(activated(const TQString &)), this,
+            TQT_SLOT(configChanged()));
+    connect(m_dlg->cmbDelimiter, TQT_SIGNAL(activated(const TQString &)), this,
+            TQT_SLOT(configChanged()));
 
-    connect(m_dlg->pbNew, SIGNAL(clicked()), this, SLOT(addSearchProvider()));
-    connect(m_dlg->pbChange, SIGNAL(clicked()), this, SLOT(changeSearchProvider()));
-    connect(m_dlg->pbDelete, SIGNAL(clicked()), this, SLOT(deleteSearchProvider()));
+    connect(m_dlg->pbNew, TQT_SIGNAL(clicked()), this, TQT_SLOT(addSearchProvider()));
+    connect(m_dlg->pbChange, TQT_SIGNAL(clicked()), this, TQT_SLOT(changeSearchProvider()));
+    connect(m_dlg->pbDelete, TQT_SIGNAL(clicked()), this, TQT_SLOT(deleteSearchProvider()));
 
     emit changed( useDefaults );
 }
@@ -213,7 +213,7 @@ void FilterOptions::save()
   config.writeEntry("EnableWebShortcuts", m_dlg->cbEnableShortcuts->isChecked());
   config.writeEntry("KeywordDelimiter", delimiter() );
 
-  QString engine;
+  TQString engine;
 
   if (m_dlg->cmbDefaultEngine->currentItem() != 0)
     engine = m_dlg->cmbDefaultEngine->currentText();
@@ -223,11 +223,11 @@ void FilterOptions::save()
   // kdDebug () << "Engine: " << m_defaultEngineMap[engine] << endl;
 
   int changedProviderCount = 0;
-  QString path = kapp->dirs()->saveLocation("services", "searchproviders/");
+  TQString path = kapp->dirs()->saveLocation("services", "searchproviders/");
 
   m_favoriteEngines.clear();
 
-  for (QListViewItemIterator it(m_dlg->lvSearchProviders); it.current(); ++it)
+  for (TQListViewItemIterator it(m_dlg->lvSearchProviders); it.current(); ++it)
   {
     SearchProviderItem *item = dynamic_cast<SearchProviderItem *>(it.current());
 
@@ -235,7 +235,7 @@ void FilterOptions::save()
 
     SearchProvider *provider = item->provider();
 
-    QString name = provider->desktopEntryName();
+    TQString name = provider->desktopEntryName();
 
     if (item->isOn())
       m_favoriteEngines << name;
@@ -250,16 +250,16 @@ void FilterOptions::save()
         // Take the longest search shortcut as filename,
         // if such a file already exists, append a number and increase it
         // until the name is unique
-        for (QStringList::ConstIterator it = provider->keys().begin(); it != provider->keys().end(); ++it)
+        for (TQStringList::ConstIterator it = provider->keys().begin(); it != provider->keys().end(); ++it)
         {
             if ((*it).length() > name.length())
                 name = (*it).lower();
         }
         for (int suffix = 0; ; ++suffix)
         {
-            QString located, check = name;
+            TQString located, check = name;
             if (suffix)
-                check += QString().setNum(suffix);
+                check += TQString().setNum(suffix);
             if ((located = locate("services", "searchproviders/" + check + ".desktop")).isEmpty())
             {
                 name = check;
@@ -288,10 +288,10 @@ void FilterOptions::save()
     }
   }
 
-  for (QStringList::ConstIterator it = m_deletedProviders.begin();
+  for (TQStringList::ConstIterator it = m_deletedProviders.begin();
       it != m_deletedProviders.end(); ++it)
   {
-      QStringList matches = kapp->dirs()->findAllResources("services", "searchproviders/" + *it + ".desktop");
+      TQStringList matches = kapp->dirs()->findAllResources("services", "searchproviders/" + *it + ".desktop");
 
       // Shouldn't happen
       if (!matches.count())
@@ -301,7 +301,7 @@ void FilterOptions::save()
       {
           // If only the local copy existed, unlink it
           // TODO: error handling
-          QFile::remove(matches[0]);
+          TQFile::remove(matches[0]);
           continue;
       }
       KSimpleConfig service(path + *it + ".desktop");
@@ -338,8 +338,8 @@ void FilterOptions::configChanged()
 
 void FilterOptions::checkFavoritesChanged()
 {
-  QStringList currentFavoriteEngines;
-  for (QListViewItemIterator it(m_dlg->lvSearchProviders); it.current(); ++it)
+  TQStringList currentFavoriteEngines;
+  for (TQListViewItemIterator it(m_dlg->lvSearchProviders); it.current(); ++it)
   {
     SearchProviderItem *item = dynamic_cast<SearchProviderItem *>(it.current());
 
@@ -437,7 +437,7 @@ SearchProviderItem *FilterOptions::displaySearchProvider(SearchProvider *p, bool
   // Show the provider in the list.
   SearchProviderItem *item = 0L;
 
-  QListViewItemIterator it(m_dlg->lvSearchProviders);
+  TQListViewItemIterator it(m_dlg->lvSearchProviders);
 
   for (; it.current(); ++it)
   {

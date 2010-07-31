@@ -23,8 +23,8 @@
 #ifndef __krootwm_h__
 #define __krootwm_h__
 
-#include <qpixmap.h>
-#include <qobject.h>
+#include <tqpixmap.h>
+#include <tqobject.h>
 
 // we need Window but do not want to include X.h since it
 // #defines way too many constants
@@ -59,7 +59,7 @@ enum {
 /**
  * This class is the handler for the menus (root popup menu and desktop menubar)
  */
-class KRootWm: public QObject {
+class KRootWm: public TQObject {
   Q_OBJECT
 
 public:
@@ -67,7 +67,7 @@ public:
   ~KRootWm();
 
   bool startup;
-  void mousePressed( const QPoint& _global, int _button );
+  void mousePressed( const TQPoint& _global, int _button );
   bool hasLeftButtonMenu() { return leftButtonChoice != NOTHING; }
 
   /**
@@ -83,7 +83,7 @@ public:
   /**
    * The position of the (usually RMB) click that opened the 'desktop' menu
    */
-  QPoint desktopMenuPosition() const { return m_desktopMenuPosition; }
+  TQPoint desktopMenuPosition() const { return m_desktopMenuPosition; }
 
   /**
    * Read and apply configuration
@@ -93,7 +93,7 @@ public:
   /**
    * List of config modules used by Configure Desktop
    */
-  static QStringList configModules();
+  static TQStringList configModules();
 
 public slots:
   void slotArrangeByNameCS();
@@ -126,10 +126,10 @@ private:
 
   // The five root menus :
   KWindowListMenu* windowListMenu;
-  QPopupMenu* desktopMenu;
+  TQPopupMenu* desktopMenu;
   // the appMenu is (will be) provided by kicker
-  QPopupMenu* customMenu1;
-  QPopupMenu* customMenu2;
+  TQPopupMenu* customMenu1;
+  TQPopupMenu* customMenu2;
   KCMultiDialog* m_configDialog;
 
   // Configuration for the root menus :
@@ -142,9 +142,9 @@ private:
   KActionMenu* bookmarks;
   KBookmarkMenu* bookmarkMenu;
   KActionCollection * m_actionCollection;
-  QPoint m_desktopMenuPosition;
+  TQPoint m_desktopMenuPosition;
 
-  void activateMenu( menuChoice choice, const QPoint& global );
+  void activateMenu( menuChoice choice, const TQPoint& global );
   void buildMenus();
 
   bool m_bShowMenuBar;
@@ -153,14 +153,14 @@ private:
   bool m_bDesktopEnabled;
   KMenuBar *menuBar;
 
-  QPopupMenu *file;
-  QPopupMenu *desk;
+  TQPopupMenu *file;
+  TQPopupMenu *desk;
   KHelpMenu *help;
 
-  QPixmap defaultPixmap;
+  TQPixmap defaultPixmap;
 
   void doNewSession( bool lock );
-  QPopupMenu *sessionsMenu;
+  TQPopupMenu *sessionsMenu;
 
   static KRootWm * s_rootWm;
 

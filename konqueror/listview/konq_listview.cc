@@ -36,10 +36,10 @@
 #include <klineedit.h>
 #include <kmimetype.h>
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qheader.h>
-#include <qregexp.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
+#include <tqheader.h>
+#include <tqregexp.h>
 
 #include <assert.h>
 #include <string.h>
@@ -63,7 +63,7 @@ KonqListViewFactory::~KonqListViewFactory()
   s_defaultViewProps = 0;
 }
 
-KParts::Part* KonqListViewFactory::createPartObject( QWidget *parentWidget, const char *, QObject *parent, const char *name, const char*, const QStringList &args )
+KParts::Part* KonqListViewFactory::createPartObject( TQWidget *parentWidget, const char *, TQObject *parent, const char *name, const char*, const TQStringList &args )
 {
   if( args.count() < 1 )
     kdWarning() << "KonqListView: Missing Parameter" << endl;
@@ -144,7 +144,7 @@ void ListViewBrowserExtension::updateActions()
 void ListViewBrowserExtension::copySelection( bool move )
 {
   KonqDrag *urlData = new KonqDrag( m_listView->listViewWidget()->selectedUrls(false), m_listView->listViewWidget()->selectedUrls(true), move );
-  QApplication::clipboard()->setData( urlData );
+  TQApplication::clipboard()->setData( urlData );
 }
 
 void ListViewBrowserExtension::paste()
@@ -159,15 +159,15 @@ void ListViewBrowserExtension::pasteTo( const KURL& url )
 
 void ListViewBrowserExtension::rename()
 {
-  QListViewItem* item = m_listView->listViewWidget()->currentItem();
+  TQListViewItem* item = m_listView->listViewWidget()->currentItem();
   Q_ASSERT ( item );
   m_listView->listViewWidget()->rename( item, 0 );
 
   // Enhanced rename: Don't highlight the file extension.
   KLineEdit* le = m_listView->listViewWidget()->renameLineEdit();
   if ( le ) {
-     const QString txt = le->text();
-     QString pattern;
+     const TQString txt = le->text();
+     TQString pattern;
      KMimeType::diagnoseFileName( txt, pattern );
      if (!pattern.isEmpty() && pattern.at(0)=='*' && pattern.find('*',1)==-1)
          le->setSelection(0, txt.length()-pattern.stripWhiteSpace().length()+1);
@@ -199,7 +199,7 @@ void ListViewBrowserExtension::setSaveViewPropertiesLocally(bool value)
    m_listView->props()->setSaveViewPropertiesLocally( value );
 }
 
-void ListViewBrowserExtension::setNameFilter( const QString &nameFilter )
+void ListViewBrowserExtension::setNameFilter( const TQString &nameFilter )
 {
   m_listView->setNameFilter( nameFilter );
 }
@@ -216,7 +216,7 @@ void ListViewBrowserExtension::editMimeType()
   KonqOperations::editMimeType( items.first()->mimetype() );
 }
 
-KonqListView::KonqListView( QWidget *parentWidget, QObject *parent, const char *name, const QString& mode )
+KonqListView::KonqListView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode )
  : KonqDirPart( parent, name )
 ,m_headerTimer(0)
 {
@@ -228,7 +228,7 @@ KonqListView::KonqListView( QWidget *parentWidget, QObject *parent, const char *
 
    setBrowserExtension( new ListViewBrowserExtension( this ) );
 
-   QString xmlFile;
+   TQString xmlFile;
 
    if (mode=="TextView")
    {
@@ -278,20 +278,20 @@ KonqListView::KonqListView( QWidget *parentWidget, QObject *parent, const char *
    m_pListView->confColumns[10].setData(I18N_NOOP("File Type"),"Type",KIO::UDS_FILE_TYPE,m_paShowType);
 
 
-   connect( m_pListView, SIGNAL( selectionChanged() ),
-            m_extension, SLOT( updateActions() ) );
-   connect( m_pListView, SIGNAL( selectionChanged() ),
-            this, SLOT( slotSelectionChanged() ) );
+   connect( m_pListView, TQT_SIGNAL( selectionChanged() ),
+            m_extension, TQT_SLOT( updateActions() ) );
+   connect( m_pListView, TQT_SIGNAL( selectionChanged() ),
+            this, TQT_SLOT( slotSelectionChanged() ) );
 
-   connect( m_pListView, SIGNAL( currentChanged(QListViewItem*) ),
-            m_extension, SLOT( updateActions() ) );
-   connect(m_pListView->header(),SIGNAL(indexChange(int,int,int)),this,SLOT(headerDragged(int,int,int)));
-   connect(m_pListView->header(),SIGNAL(clicked(int)),this,SLOT(slotHeaderClicked(int)));
-   connect(m_pListView->header(),SIGNAL(sizeChange(int,int,int)),SLOT(slotHeaderSizeChanged()));
+   connect( m_pListView, TQT_SIGNAL( currentChanged(TQListViewItem*) ),
+            m_extension, TQT_SLOT( updateActions() ) );
+   connect(m_pListView->header(),TQT_SIGNAL(indexChange(int,int,int)),this,TQT_SLOT(headerDragged(int,int,int)));
+   connect(m_pListView->header(),TQT_SIGNAL(clicked(int)),this,TQT_SLOT(slotHeaderClicked(int)));
+   connect(m_pListView->header(),TQT_SIGNAL(sizeChange(int,int,int)),TQT_SLOT(slotHeaderSizeChanged()));
 
    // signals from konqdirpart (for BC reasons)
-   connect( this, SIGNAL( findOpened( KonqDirPart * ) ), SLOT( slotKFindOpened() ) );
-   connect( this, SIGNAL( findClosed( KonqDirPart * ) ), SLOT( slotKFindClosed() ) );
+   connect( this, TQT_SIGNAL( findOpened( KonqDirPart * ) ), TQT_SLOT( slotKFindOpened() ) );
+   connect( this, TQT_SIGNAL( findClosed( KonqDirPart * ) ), TQT_SLOT( slotKFindClosed() ) );
 
    loadPlugins( this, this, instance() );
 }
@@ -312,7 +312,7 @@ void KonqListView::guiActivateEvent( KParts::GUIActivateEvent *event )
 bool KonqListView::doOpenURL( const KURL &url )
 {
   KURL u( url );
-  const QString prettyURL = url.pathOrURL();
+  const TQString prettyURL = url.pathOrURL();
   emit setWindowCaption( prettyURL );
   return m_pListView->openURL( url );
 }
@@ -335,7 +335,7 @@ void KonqListView::determineIcon( KonqBaseListViewItem * item )
 
   (void) item->item()->determineMimeType();
 
-  //QPixmap newIcon = item->item()->pixmap( m_parent->iconSize(),
+  //TQPixmap newIcon = item->item()->pixmap( m_parent->iconSize(),
   //                                        item->state() );
   //if ( oldSerial != newIcon.serialNumber() )
   //  item->setPixmap( 0, newIcon );
@@ -344,14 +344,14 @@ void KonqListView::determineIcon( KonqBaseListViewItem * item )
   item->updateContents();
 }
 
-void KonqListView::saveState( QDataStream &stream )
+void KonqListView::saveState( TQDataStream &stream )
 {
     //kdDebug(1202) << k_funcinfo << endl;
     KonqDirPart::saveState( stream );
     m_pListView->saveState( stream );
 }
 
-void KonqListView::restoreState( QDataStream &stream )
+void KonqListView::restoreState( TQDataStream &stream )
 {
     //kdDebug(1202) << k_funcinfo << endl;
     KonqDirPart::restoreState( stream );
@@ -366,12 +366,12 @@ void KonqListView::disableIcons( const KURL::List &lst )
 void KonqListView::slotSelect()
 {
    bool ok;
-   QString pattern = KInputDialog::getText( QString::null,
+   TQString pattern = KInputDialog::getText( TQString::null,
       i18n( "Select files:" ), "*", &ok, m_pListView );
    if ( !ok )
       return;
 
-   QRegExp re( pattern, true, true );
+   TQRegExp re( pattern, true, true );
 
    m_pListView->blockSignals( true );
 
@@ -397,12 +397,12 @@ void KonqListView::slotSelect()
 void KonqListView::slotUnselect()
 {
    bool ok;
-   QString pattern = KInputDialog::getText( QString::null,
+   TQString pattern = KInputDialog::getText( TQString::null,
       i18n( "Unselect files:" ), "*", &ok, m_pListView );
    if ( !ok )
       return;
 
-   QRegExp re( pattern, TRUE, TRUE );
+   TQRegExp re( pattern, TRUE, TRUE );
 
    m_pListView->blockSignals(TRUE);
 
@@ -494,7 +494,7 @@ void KonqListView::slotColumnToggled()
    m_pListView->updateListContents();
 
    //save the config
-   QStringList lstColumns;
+   TQStringList lstColumns;
    int currentColumn(m_pListView->m_filenameColumn+1);
    for (int i=0; i<(int)m_pListView->NumberOfAtoms; i++)
    {
@@ -523,7 +523,7 @@ void KonqListView::slotHeaderClicked(int sec)
    for (uint i=0; i<m_pListView->NumberOfAtoms; i++)
       if (m_pListView->confColumns[i].displayInColumn==sec) clickedColumn=i;
    kdDebug(1202)<<"atom index "<<clickedColumn<<endl;
-   QString nameOfSortColumn;
+   TQString nameOfSortColumn;
    //we clicked the file name column
    if (clickedColumn==-1)
       nameOfSortColumn="FileName";
@@ -550,7 +550,7 @@ void KonqListView::headerDragged(int sec, int from, int to)
    kdDebug(1202)<<"section: "<<sec<<" fromIndex: "<<from<<" toIndex "<<to<<endl;
    //at this point the columns aren't moved yet, so I let the listview
    //rearrange the stuff and use a single shot timer
-   QTimer::singleShot(200,this,SLOT(slotSaveAfterHeaderDrag()));
+   TQTimer::singleShot(200,this,TQT_SLOT(slotSaveAfterHeaderDrag()));
 }
 
 const KFileItem * KonqListView::currentItem()
@@ -562,7 +562,7 @@ const KFileItem * KonqListView::currentItem()
 
 void KonqListView::slotSaveAfterHeaderDrag()
 {
-   QStringList lstColumns;
+   TQStringList lstColumns;
 
    for ( int i=0; i < m_pListView->columns(); i++ )
    {
@@ -589,7 +589,7 @@ void KonqListView::slotSaveAfterHeaderDrag()
 
 void KonqListView::slotSaveColumnWidths()
 {
-   QValueList<int> lstColumnWidths;
+   TQValueList<int> lstColumnWidths;
 
    for ( int i=0; i < m_pListView->columns(); i++ )
    {
@@ -620,8 +620,8 @@ void KonqListView::slotHeaderSizeChanged()
 {
    if ( !m_headerTimer )
    {
-      m_headerTimer = new QTimer( this );
-      connect( m_headerTimer, SIGNAL( timeout() ), this, SLOT( slotSaveColumnWidths() ) );
+      m_headerTimer = new TQTimer( this );
+      connect( m_headerTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( slotSaveColumnWidths() ) );
    }
    else
       m_headerTimer->stop();
@@ -643,37 +643,37 @@ void KonqListView::slotKFindClosed()
 
 void KonqListView::setupActions()
 {
-   m_paShowTime=new KToggleAction(i18n("Show &Modification Time"), 0,this, SLOT(slotColumnToggled()), actionCollection(), "show_time" );
+   m_paShowTime=new KToggleAction(i18n("Show &Modification Time"), 0,this, TQT_SLOT(slotColumnToggled()), actionCollection(), "show_time" );
    m_paShowTime->setCheckedState(i18n("Hide &Modification Time"));
-   m_paShowType=new KToggleAction(i18n("Show &File Type"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_type" );
+   m_paShowType=new KToggleAction(i18n("Show &File Type"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_type" );
    m_paShowType->setCheckedState(i18n("Hide &File Type"));
-   m_paShowMimeType=new KToggleAction(i18n("Show MimeType"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_mimetype" );
+   m_paShowMimeType=new KToggleAction(i18n("Show MimeType"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_mimetype" );
    m_paShowMimeType->setCheckedState(i18n("Hide MimeType"));
-   m_paShowAccessTime=new KToggleAction(i18n("Show &Access Time"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_access_time" );
+   m_paShowAccessTime=new KToggleAction(i18n("Show &Access Time"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_access_time" );
    m_paShowAccessTime->setCheckedState(i18n("Hide &Access Time"));
-   m_paShowCreateTime=new KToggleAction(i18n("Show &Creation Time"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_creation_time" );
+   m_paShowCreateTime=new KToggleAction(i18n("Show &Creation Time"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_creation_time" );
    m_paShowCreateTime->setCheckedState(i18n("Hide &Creation Time"));
-   m_paShowLinkDest=new KToggleAction(i18n("Show &Link Destination"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_link_dest" );
+   m_paShowLinkDest=new KToggleAction(i18n("Show &Link Destination"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_link_dest" );
    m_paShowLinkDest->setCheckedState(i18n("Hide &Link Destination"));
-   m_paShowSize=new KToggleAction(i18n("Show Filesize"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_size" );
+   m_paShowSize=new KToggleAction(i18n("Show Filesize"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_size" );
    m_paShowSize->setCheckedState(i18n("Hide Filesize"));
-   m_paShowOwner=new KToggleAction(i18n("Show Owner"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_owner" );
+   m_paShowOwner=new KToggleAction(i18n("Show Owner"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_owner" );
    m_paShowOwner->setCheckedState(i18n("Hide Owner"));
-   m_paShowGroup=new KToggleAction(i18n("Show Group"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_group" );
+   m_paShowGroup=new KToggleAction(i18n("Show Group"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_group" );
    m_paShowGroup->setCheckedState(i18n("Hide Group"));
-   m_paShowPermissions=new KToggleAction(i18n("Show Permissions"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_permissions" );
+   m_paShowPermissions=new KToggleAction(i18n("Show Permissions"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_permissions" );
    m_paShowPermissions->setCheckedState(i18n("Hide Permissions"));
-   m_paShowURL=new KToggleAction(i18n("Show URL"), 0, this, SLOT(slotColumnToggled()),actionCollection(), "show_url" );
+   m_paShowURL=new KToggleAction(i18n("Show URL"), 0, this, TQT_SLOT(slotColumnToggled()),actionCollection(), "show_url" );
 
-   m_paSelect = new KAction( i18n( "Se&lect..." ), CTRL+Key_Plus, this, SLOT( slotSelect() ), actionCollection(), "select" );
-  m_paUnselect = new KAction( i18n( "Unselect..." ), CTRL+Key_Minus, this, SLOT( slotUnselect() ), actionCollection(), "unselect" );
-  m_paSelectAll = KStdAction::selectAll( this, SLOT( slotSelectAll() ), actionCollection(), "selectall" );
-  m_paUnselectAll = new KAction( i18n( "Unselect All" ), CTRL+Key_U, this, SLOT( slotUnselectAll() ), actionCollection(), "unselectall" );
-  m_paInvertSelection = new KAction( i18n( "&Invert Selection" ), CTRL+Key_Asterisk, this, SLOT( slotInvertSelection() ), actionCollection(), "invertselection" );
+   m_paSelect = new KAction( i18n( "Se&lect..." ), CTRL+Key_Plus, this, TQT_SLOT( slotSelect() ), actionCollection(), "select" );
+  m_paUnselect = new KAction( i18n( "Unselect..." ), CTRL+Key_Minus, this, TQT_SLOT( slotUnselect() ), actionCollection(), "unselect" );
+  m_paSelectAll = KStdAction::selectAll( this, TQT_SLOT( slotSelectAll() ), actionCollection(), "selectall" );
+  m_paUnselectAll = new KAction( i18n( "Unselect All" ), CTRL+Key_U, this, TQT_SLOT( slotUnselectAll() ), actionCollection(), "unselectall" );
+  m_paInvertSelection = new KAction( i18n( "&Invert Selection" ), CTRL+Key_Asterisk, this, TQT_SLOT( slotInvertSelection() ), actionCollection(), "invertselection" );
 
-  m_paShowDot = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, SLOT( slotShowDot() ), actionCollection(), "show_dot" );
+  m_paShowDot = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ), actionCollection(), "show_dot" );
 //  m_paShowDot->setCheckedState(i18n("Hide &Hidden Files"));
-  m_paCaseInsensitive = new KToggleAction(i18n("Case Insensitive Sort"), 0, this, SLOT(slotCaseInsensitive()),actionCollection(), "sort_caseinsensitive" );
+  m_paCaseInsensitive = new KToggleAction(i18n("Case Insensitive Sort"), 0, this, TQT_SLOT(slotCaseInsensitive()),actionCollection(), "sort_caseinsensitive" );
 
   newIconSize( KIcon::SizeSmall /* default size */ );
 }

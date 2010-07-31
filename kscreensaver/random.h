@@ -21,13 +21,13 @@ class KRandomSetup : public KDialogBase
 {
 	Q_OBJECT
 	public:
-		KRandomSetup( QWidget *parent = NULL, const char *name = NULL );
+		KRandomSetup( TQWidget *parent = NULL, const char *name = NULL );
 
 	private:
 
-		QWidget *preview;
-		QCheckBox *openGL;
-		QCheckBox *manipulateScreen;
+		TQWidget *preview;
+		TQCheckBox *openGL;
+		TQCheckBox *manipulateScreen;
 
 		private slots:
 

@@ -31,7 +31,7 @@ class KHotKeysApp
         virtual ~KHotKeysApp();
     private:
         Action_data_group* actions_root;
-        QObject* delete_helper;
+        TQObject* delete_helper;
     };
 
 //***************************************************************************

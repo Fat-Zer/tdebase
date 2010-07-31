@@ -18,13 +18,13 @@
 
 // Behaviour options for konqueror
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvbox.h>
-#include <qvbuttongroup.h>
-#include <qvgroupbox.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqvbox.h>
+#include <tqvbuttongroup.h>
+#include <tqvgroupbox.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 
@@ -38,43 +38,43 @@
 
 #include "behaviour.h"
 
-KBehaviourOptions::KBehaviourOptions(KConfig *config, QString group, QWidget *parent, const char * )
+KBehaviourOptions::KBehaviourOptions(KConfig *config, TQString group, TQWidget *parent, const char * )
     : KCModule(parent, "kcmkonq"), g_pConfig(config), groupname(group)
 {
-    QLabel * label;
+    TQLabel * label;
 
     setQuickHelp( i18n("<h1>Konqueror Behavior</h1> You can configure how Konqueror behaves as a file manager here."));
 
-    QVBoxLayout *lay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+    TQVBoxLayout *lay = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 
-	QVGroupBox * miscGb = new QVGroupBox(i18n("Misc Options"), this);
+	TQVGroupBox * miscGb = new TQVGroupBox(i18n("Misc Options"), this);
 	lay->addWidget( miscGb );
-	QHBox *hbox = new QHBox(miscGb);
-	QVBox *vbox = new QVBox(hbox);
+	TQHBox *hbox = new TQHBox(miscGb);
+	TQVBox *vbox = new TQVBox(hbox);
 
 	// ----
 
-	winPixmap = new QLabel(hbox);
-    winPixmap->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
-    winPixmap->setPixmap(QPixmap(locate("data",
+	winPixmap = new TQLabel(hbox);
+    winPixmap->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken );
+    winPixmap->setPixmap(TQPixmap(locate("data",
                                         "kcontrol/pics/onlyone.png")));
     winPixmap->setFixedSize( winPixmap->sizeHint() );
 
 
    // ----
 
-    cbNewWin = new QCheckBox(i18n("Open folders in separate &windows"), vbox);
-    QWhatsThis::add( cbNewWin, i18n("If this option is checked, Konqueror will open a new window when "
+    cbNewWin = new TQCheckBox(i18n("Open folders in separate &windows"), vbox);
+    TQWhatsThis::add( cbNewWin, i18n("If this option is checked, Konqueror will open a new window when "
                                     "you open a folder, rather than showing that folder's contents in the current window."));
-    connect(cbNewWin, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(cbNewWin, SIGNAL(toggled(bool)), SLOT(updateWinPixmap(bool)));
+    connect(cbNewWin, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(cbNewWin, TQT_SIGNAL(toggled(bool)), TQT_SLOT(updateWinPixmap(bool)));
 
     // ----
 
-    cbListProgress = new QCheckBox( i18n( "&Show network operations in a single window" ), vbox );
-    connect(cbListProgress, SIGNAL(clicked()), this, SLOT(changed()));
+    cbListProgress = new TQCheckBox( i18n( "&Show network operations in a single window" ), vbox );
+    connect(cbListProgress, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    QWhatsThis::add( cbListProgress, i18n("Checking this option will group the"
+    TQWhatsThis::add( cbListProgress, i18n("Checking this option will group the"
                                           " progress information for all network file transfers into a single window"
                                           " with a list. When the option is not checked, all transfers appear in a"
                                           " separate window.") );
@@ -82,83 +82,83 @@ KBehaviourOptions::KBehaviourOptions(KConfig *config, QString group, QWidget *pa
 
     // --
 
-    cbShowTips = new QCheckBox( i18n( "Show file &tips" ), vbox );
-    connect(cbShowTips, SIGNAL(clicked()), this, SLOT(changed()));
+    cbShowTips = new TQCheckBox( i18n( "Show file &tips" ), vbox );
+    connect(cbShowTips, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    QWhatsThis::add( cbShowTips, i18n("Here you can control if, when moving the mouse over a file, you want to see a "
+    TQWhatsThis::add( cbShowTips, i18n("Here you can control if, when moving the mouse over a file, you want to see a "
                                     "small popup window with additional information about that file"));
 
-    connect(cbShowTips, SIGNAL(toggled(bool)), SLOT(slotShowTips(bool)));
+    connect(cbShowTips, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotShowTips(bool)));
 /*
-    //connect(cbShowTips, SIGNAL(toggled(bool)), sbToolTip, SLOT(setEnabled(bool)));
-    //connect(cbShowTips, SIGNAL(toggled(bool)), fileTips, SLOT(setEnabled(bool)));
+    //connect(cbShowTips, TQT_SIGNAL(toggled(bool)), sbToolTip, TQT_SLOT(setEnabled(bool)));
+    //connect(cbShowTips, TQT_SIGNAL(toggled(bool)), fileTips, TQT_SLOT(setEnabled(bool)));
     fileTips->setBuddy(sbToolTip);
-    QString tipstr = i18n("If you move the mouse over a file, you usually see a small popup window that shows some "
+    TQString tipstr = i18n("If you move the mouse over a file, you usually see a small popup window that shows some "
                           "additional information about that file. Here, you can set how many items of information "
                           "are displayed");
-    QWhatsThis::add( fileTips, tipstr );
-    QWhatsThis::add( sbToolTip, tipstr );
+    TQWhatsThis::add( fileTips, tipstr );
+    TQWhatsThis::add( sbToolTip, tipstr );
 */
 
-    QHBox *hboxpreview = new QHBox(vbox);
-    QWidget* spacer = new QWidget( hboxpreview );
+    TQHBox *hboxpreview = new TQHBox(vbox);
+    TQWidget* spacer = new TQWidget( hboxpreview );
     spacer->setMinimumSize( 20, 0 );
-    spacer->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Minimum );
+    spacer->setSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum );
 
-    cbShowPreviewsInTips = new QCheckBox( i18n( "Show &previews in file tips" ), hboxpreview );
-    connect(cbShowPreviewsInTips, SIGNAL(clicked()), this, SLOT(changed()));
+    cbShowPreviewsInTips = new TQCheckBox( i18n( "Show &previews in file tips" ), hboxpreview );
+    connect(cbShowPreviewsInTips, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    QWhatsThis::add( cbShowPreviewsInTips, i18n("Here you can control if you want the "
+    TQWhatsThis::add( cbShowPreviewsInTips, i18n("Here you can control if you want the "
                           "popup window to contain a larger preview for the file, when moving the mouse over it."));
 
-    cbRenameDirectlyIcon = new QCheckBox(i18n("Rename icons in&line"), vbox);
-    QWhatsThis::add(cbRenameDirectlyIcon, i18n("Checking this option will allow files to be "
+    cbRenameDirectlyIcon = new TQCheckBox(i18n("Rename icons in&line"), vbox);
+    TQWhatsThis::add(cbRenameDirectlyIcon, i18n("Checking this option will allow files to be "
                                                "renamed by clicking directly on the icon name. "));
-    connect(cbRenameDirectlyIcon, SIGNAL(clicked()), this, SLOT(changed()));
+    connect(cbRenameDirectlyIcon, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-	QHBoxLayout *hlay = new QHBoxLayout( lay );
+	TQHBoxLayout *hlay = new TQHBoxLayout( lay );
 
-    label = new QLabel(i18n("Home &URL:"), this);
+    label = new TQLabel(i18n("Home &URL:"), this);
 	hlay->addWidget( label );
 
 	homeURL = new KURLRequester(this);
 	homeURL->setMode(KFile::Directory);
 	homeURL->setCaption(i18n("Select Home Folder"));
 	hlay->addWidget( homeURL );
-    connect(homeURL, SIGNAL(textChanged(const QString &)), this, SLOT(changed()));
+    connect(homeURL, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
     label->setBuddy(homeURL);
 
-    QString homestr = i18n("This is the URL (e.g. a folder or a web page) where "
+    TQString homestr = i18n("This is the URL (e.g. a folder or a web page) where "
                            "Konqueror will jump to when the \"Home\" button is pressed. "
 						   "This is usually your home folder, symbolized by a 'tilde' (~).");
-    QWhatsThis::add( label, homestr );
-    QWhatsThis::add( homeURL, homestr );
+    TQWhatsThis::add( label, homestr );
+    TQWhatsThis::add( homeURL, homestr );
 
-    lay->addItem(new QSpacerItem(0,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
+    lay->addItem(new TQSpacerItem(0,20,TQSizePolicy::Fixed,TQSizePolicy::Fixed));
 
-    cbShowDeleteCommand = new QCheckBox( i18n( "Show 'Delete' context me&nu entries which bypass the trashcan" ), this );
+    cbShowDeleteCommand = new TQCheckBox( i18n( "Show 'Delete' context me&nu entries which bypass the trashcan" ), this );
     lay->addWidget( cbShowDeleteCommand );
-    connect(cbShowDeleteCommand, SIGNAL(clicked()), this, SLOT(changed()));
+    connect(cbShowDeleteCommand, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    QWhatsThis::add( cbShowDeleteCommand, i18n("Check this if you want 'Delete' menu commands to be displayed "
+    TQWhatsThis::add( cbShowDeleteCommand, i18n("Check this if you want 'Delete' menu commands to be displayed "
                                                 "on the desktop and in the file manager's context menus. "
 						"You can always delete files by holding the Shift key "
 						"while calling 'Move to Trash'."));
 
-    QButtonGroup *bg = new QVButtonGroup( i18n("Ask Confirmation For"), this );
+    TQButtonGroup *bg = new TQVButtonGroup( i18n("Ask Confirmation For"), this );
     bg->layout()->setSpacing( KDialog::spacingHint() );
-    QWhatsThis::add( bg, i18n("This option tells Konqueror whether to ask"
+    TQWhatsThis::add( bg, i18n("This option tells Konqueror whether to ask"
        " for a confirmation when you \"delete\" a file."
        " <ul><li><em>Move To Trash:</em> moves the file to your trash folder,"
        " from where it can be recovered very easily.</li>"
        " <li><em>Delete:</em> simply deletes the file.</li>"
        " </li></ul>") );
 
-    connect(bg, SIGNAL( clicked( int ) ), SLOT( changed() ));
+    connect(bg, TQT_SIGNAL( clicked( int ) ), TQT_SLOT( changed() ));
 
-    cbMoveToTrash = new QCheckBox( i18n("&Move to trash"), bg );
+    cbMoveToTrash = new TQCheckBox( i18n("&Move to trash"), bg );
 
-    cbDelete = new QCheckBox( i18n("D&elete"), bg );
+    cbDelete = new TQCheckBox( i18n("D&elete"), bg );
 
     lay->addWidget(bg);
 
@@ -234,7 +234,7 @@ void KBehaviourOptions::save()
     g_pConfig->setGroup( groupname );
 
     g_pConfig->writeEntry( "AlwaysNewWin", cbNewWin->isChecked() );
-    g_pConfig->writePathEntry( "HomeURL", homeURL->url().isEmpty()? QString("~") : homeURL->url() );
+    g_pConfig->writePathEntry( "HomeURL", homeURL->url().isEmpty()? TQString("~") : homeURL->url() );
 
     g_pConfig->writeEntry( "ShowFileTips", cbShowTips->isChecked() );
     g_pConfig->writeEntry( "ShowPreviewsInFileTips", cbShowPreviewsInTips->isChecked() );
@@ -265,7 +265,7 @@ void KBehaviourOptions::save()
     }
 
     // Send signal to konqueror
-    QByteArray data;
+    TQByteArray data;
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
     kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
@@ -275,10 +275,10 @@ void KBehaviourOptions::save()
 void KBehaviourOptions::updateWinPixmap(bool b)
 {
   if (b)
-    winPixmap->setPixmap(QPixmap(locate("data",
+    winPixmap->setPixmap(TQPixmap(locate("data",
                                         "kcontrol/pics/overlapping.png")));
   else
-    winPixmap->setPixmap(QPixmap(locate("data",
+    winPixmap->setPixmap(TQPixmap(locate("data",
                                         "kcontrol/pics/onlyone.png")));
 }
 

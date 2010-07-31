@@ -25,8 +25,8 @@
 #include <kurl.h>
 #include <dcopobject.h>
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 class SystemImpl : public QObject
 {
@@ -35,31 +35,31 @@ public:
 	SystemImpl();
 
 	void createTopLevelEntry(KIO::UDSEntry& entry) const;
-	bool statByName(const QString &filename, KIO::UDSEntry& entry);
+	bool statByName(const TQString &filename, KIO::UDSEntry& entry);
 
-	bool listRoot(QValueList<KIO::UDSEntry> &list);
+	bool listRoot(TQValueList<KIO::UDSEntry> &list);
 
-	bool parseURL(const KURL &url, QString &name, QString &path) const;
-	bool realURL(const QString &name, const QString &path, KURL &url) const;
+	bool parseURL(const KURL &url, TQString &name, TQString &path) const;
+	bool realURL(const TQString &name, const TQString &path, KURL &url) const;
 
 	int lastErrorCode() const { return m_lastErrorCode; }
-	QString lastErrorMessage() const { return m_lastErrorMessage; }
+	TQString lastErrorMessage() const { return m_lastErrorMessage; }
 
 private slots:
-	KURL findBaseURL(const QString &filename) const;
+	KURL findBaseURL(const TQString &filename) const;
 	void slotEntries(KIO::Job *job, const KIO::UDSEntryList &list);
 	void slotResult(KIO::Job *job);
 
 private:
-	void createEntry(KIO::UDSEntry& entry, const QString &directory,
-	                 const QString &file);
+	void createEntry(KIO::UDSEntry& entry, const TQString &directory,
+	                 const TQString &file);
 
 	bool m_lastListingEmpty;
 
 	/// Last error code stored in class to simplify API.
 	/// Note that this means almost no method can be const.
 	int m_lastErrorCode;
-	QString m_lastErrorMessage;
+	TQString m_lastErrorMessage;
 };
 
 #endif

@@ -15,14 +15,14 @@ class QCString;
 
 class Lexer {
 public:
-    Lexer(const QCString &input);
+    Lexer(const TQCString &input);
     ~Lexer();
 
     /** Read next token. */
     int lex();
 
     /** Return the token's value. */
-    QCString &lval();
+    TQCString &lval();
 
     enum Tokens { 
     Tok_none, Tok_exec=256, Tok_pass, Tok_delCmd,
@@ -33,8 +33,8 @@ public:
     };
 
 private:
-    QCString m_Input;
-    QCString m_Output;
+    TQCString m_Input;
+    TQCString m_Output;
 
     int in;
 };

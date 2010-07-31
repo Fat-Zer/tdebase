@@ -20,26 +20,26 @@
 
 #include "kio_smb.h"
 #include <kstandarddirs.h>
-#include <qcstring.h>
+#include <tqcstring.h>
 #include <unistd.h>
-#include <qdir.h>
+#include <tqdir.h>
 #include <kprocess.h>
 
 void SMBSlave::readOutput(KProcess *, char *buffer, int buflen)
 {
-    mybuf += QString::fromLocal8Bit(buffer, buflen);
+    mybuf += TQString::fromLocal8Bit(buffer, buflen);
 }
 
 void SMBSlave::readStdErr(KProcess *, char *buffer, int buflen)
 {
-    mystderr += QString::fromLocal8Bit(buffer, buflen);
+    mystderr += TQString::fromLocal8Bit(buffer, buflen);
 }
 
-void SMBSlave::special( const QByteArray & data)
+void SMBSlave::special( const TQByteArray & data)
 {
    kdDebug(KIO_SMB)<<"Smb::special()"<<endl;
    int tmp;
-   QDataStream stream(data, IO_ReadOnly);
+   TQDataStream stream(data, IO_ReadOnly);
    stream >> tmp;
    //mounting and umounting are both blocking, "guarded" by a SIGALARM in the future
    switch (tmp)
@@ -47,11 +47,11 @@ void SMBSlave::special( const QByteArray & data)
    case 1:
    case 3:
       {
-         QString remotePath, mountPoint, user;
+         TQString remotePath, mountPoint, user;
          stream >> remotePath >> mountPoint;
 
-         QStringList sl=QStringList::split("/",remotePath);
-         QString share,host;
+         TQStringList sl=TQStringList::split("/",remotePath);
+         TQString share,host;
          if (sl.count()>=2)
          {
             host=(*sl.at(0)).mid(2);
@@ -89,7 +89,7 @@ void SMBSlave::special( const QByteArray & data)
          proc.setUseShell(true);  // to have the path to smbmnt (which is used by smbmount); see man smbmount
          proc << "smbmount";
 
-         QString options;
+         TQString options;
 
          if ( smburl.user().isEmpty() )
          {
@@ -113,11 +113,11 @@ void SMBSlave::special( const QByteArray & data)
          proc << KProcess::quote(mountPoint.local8Bit());
          proc << options;
 
-         connect(&proc, SIGNAL( receivedStdout(KProcess *, char *, int )),
-                 SLOT(readOutput(KProcess *, char *, int)));
+         connect(&proc, TQT_SIGNAL( receivedStdout(KProcess *, char *, int )),
+                 TQT_SLOT(readOutput(KProcess *, char *, int)));
 
-         connect(&proc, SIGNAL( receivedStderr(KProcess *, char *, int )),
-                 SLOT(readStdErr(KProcess *, char *, int)));
+         connect(&proc, TQT_SIGNAL( receivedStderr(KProcess *, char *, int )),
+                 TQT_SLOT(readStdErr(KProcess *, char *, int)));
 
          if (!proc.start( KProcess::Block, KProcess::AllOutput ))
          {
@@ -143,7 +143,7 @@ void SMBSlave::special( const QByteArray & data)
    case 2:
    case 4:
       {
-         QString mountPoint;
+         TQString mountPoint;
          stream >> mountPoint;
 
          KProcess proc;
@@ -154,11 +154,11 @@ void SMBSlave::special( const QByteArray & data)
          mybuf.truncate(0);
          mystderr.truncate(0);
 
-         connect(&proc, SIGNAL( receivedStdout(KProcess *, char *, int )),
-                 SLOT(readOutput(KProcess *, char *, int)));
+         connect(&proc, TQT_SIGNAL( receivedStdout(KProcess *, char *, int )),
+                 TQT_SLOT(readOutput(KProcess *, char *, int)));
 
-         connect(&proc, SIGNAL( receivedStderr(KProcess *, char *, int )),
-                 SLOT(readStdErr(KProcess *, char *, int)));
+         connect(&proc, TQT_SIGNAL( receivedStderr(KProcess *, char *, int )),
+                 TQT_SLOT(readStdErr(KProcess *, char *, int)));
 
          if ( !proc.start( KProcess::Block, KProcess::AllOutput ) )
          {
@@ -182,12 +182,12 @@ void SMBSlave::special( const QByteArray & data)
          {
            bool ok;
 
-           QDir dir(mountPoint);
+           TQDir dir(mountPoint);
            dir.cdUp();
            ok = dir.rmdir(mountPoint);
            if ( ok )
            {
-             QString p=dir.path();
+             TQString p=dir.path();
              dir.cdUp();
              ok = dir.rmdir(p);
            }

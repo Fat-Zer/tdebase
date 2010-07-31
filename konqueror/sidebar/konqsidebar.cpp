@@ -19,11 +19,11 @@
 
 #include <konq_events.h>
 #include <kdebug.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 #include <kaccelmanager.h>
 
-KonqSidebar::KonqSidebar( QWidget *parentWidget, const char *widgetName,
-                          QObject *parent, const char *name, bool universalMode )
+KonqSidebar::KonqSidebar( TQWidget *parentWidget, const char *widgetName,
+                          TQObject *parent, const char *name, bool universalMode )
 : KParts::ReadOnlyPart(parent, name),KonqSidebarIface()
 {
 	// we need an instance
@@ -32,11 +32,11 @@ KonqSidebar::KonqSidebar( QWidget *parentWidget, const char *widgetName,
 	// this should be your custom internal widget
 	m_widget = new Sidebar_Widget( parentWidget, this, widgetName ,universalMode, parentWidget->topLevelWidget()->property("currentProfile").toString() );
 	m_extension = new KonqSidebarBrowserExtension( this, m_widget,"KonqSidebar::BrowserExtension" );
-	connect(m_widget,SIGNAL(started(KIO::Job *)),
-		this, SIGNAL(started(KIO::Job*)));
-	connect(m_widget,SIGNAL(completed()),this,SIGNAL(completed()));
-	connect(m_extension, SIGNAL(addWebSideBar(const KURL&, const QString&)),
-		m_widget, SLOT(addWebSideBar(const KURL&, const QString&)));
+	connect(m_widget,TQT_SIGNAL(started(KIO::Job *)),
+		this, TQT_SIGNAL(started(KIO::Job*)));
+	connect(m_widget,TQT_SIGNAL(completed()),this,TQT_SIGNAL(completed()));
+	connect(m_extension, TQT_SIGNAL(addWebSideBar(const KURL&, const TQString&)),
+		m_widget, TQT_SLOT(addWebSideBar(const KURL&, const TQString&)));
         KAcceleratorManager::setNoAccel(m_widget);
 	setWidget(m_widget);
 }
@@ -62,14 +62,14 @@ bool KonqSidebar::openURL(const KURL &url) {
 	else return false;
 } 
 
-void KonqSidebar::customEvent(QCustomEvent* ev)
+void KonqSidebar::customEvent(TQCustomEvent* ev)
 {
 	if (KonqFileSelectionEvent::test(ev) ||
 	    KonqFileMouseOverEvent::test(ev) ||
 	    KonqConfigEvent::test(ev))
 	{
 		// Forward the event to the widget
-		QApplication::sendEvent( m_widget, ev );
+		TQApplication::sendEvent( m_widget, ev );
 	}
 }
 
@@ -97,15 +97,15 @@ KonqSidebarFactory::~KonqSidebarFactory()
 	s_about = 0L;
 }
 
-KParts::Part* KonqSidebarFactory::createPartObject( QWidget *parentWidget, const char *widgetName,
-                                                        QObject *parent, const char *name,
-                                                        const char * /*classname*/, const QStringList &args )
+KParts::Part* KonqSidebarFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
+                                                        TQObject *parent, const char *name,
+                                                        const char * /*classname*/, const TQStringList &args )
 {
     // Create an instance of our Part
     KonqSidebar* obj = new KonqSidebar( parentWidget, widgetName, parent, name, args.contains("universal") );
 
     // See if we are to be read-write or not
-//    if (QCString(classname) == "KParts::ReadOnlyPart")
+//    if (TQCString(classname) == "KParts::ReadOnlyPart")
   //      obj->setReadWrite(false);
 
     return obj;

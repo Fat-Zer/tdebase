@@ -20,17 +20,17 @@
    Boston, MA 02110-1301, USA.
  */
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qheader.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqheader.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
+#include <tqpushbutton.h>
+#include <tqslider.h>
+#include <tqspinbox.h>
+#include <tqwhatsthis.h>
 
 #include <kconfig.h>
 #include <kcolorbutton.h>
@@ -48,12 +48,12 @@
 
 /**** BGAdvancedDialog ****/
 
-static QCString desktopConfigname()
+static TQCString desktopConfigname()
 {
     int desktop=0;
     if (qt_xdisplay())
         desktop = DefaultScreen(qt_xdisplay());
-    QCString name;
+    TQCString name;
     if (desktop == 0)
         name = "kdesktoprc";
     else
@@ -64,7 +64,7 @@ static QCString desktopConfigname()
 
 
 BGAdvancedDialog::BGAdvancedDialog(KBackgroundRenderer *_r,
-                                   QWidget *parent,
+                                   TQWidget *parent,
                                    bool m_multidesktop)
     : KDialogBase(parent, "BGAdvancedDialog",
                   true, i18n("Advanced Background Settings"),
@@ -77,12 +77,12 @@ BGAdvancedDialog::BGAdvancedDialog(KBackgroundRenderer *_r,
    dlg->m_listPrograms->header()->setStretchEnabled ( true, 1 );
    dlg->m_listPrograms->setAllColumnsShowFocus(true);
 
-   connect(dlg->m_listPrograms, SIGNAL(clicked(QListViewItem *)),
-         SLOT(slotProgramItemClicked(QListViewItem *)));
+   connect(dlg->m_listPrograms, TQT_SIGNAL(clicked(TQListViewItem *)),
+         TQT_SLOT(slotProgramItemClicked(TQListViewItem *)));
 
    // Load programs
-   QStringList lst = KBackgroundProgram::list();
-   QStringList::Iterator it;
+   TQStringList lst = KBackgroundProgram::list();
+   TQStringList::Iterator it;
    for (it=lst.begin(); it != lst.end(); ++it)
       addProgram(*it);
 
@@ -100,15 +100,15 @@ BGAdvancedDialog::BGAdvancedDialog(KBackgroundRenderer *_r,
       dlg->m_spinCache->setSpecialValueText(i18n("Unlimited"));
       dlg->m_spinCache->setSuffix(i18n(" KB"));
 
-      connect(dlg->m_buttonAdd, SIGNAL(clicked()),
-         SLOT(slotAdd()));
-      connect(dlg->m_buttonRemove, SIGNAL(clicked()),
-         SLOT(slotRemove()));
-      connect(dlg->m_buttonModify, SIGNAL(clicked()),
-         SLOT(slotModify()));
+      connect(dlg->m_buttonAdd, TQT_SIGNAL(clicked()),
+         TQT_SLOT(slotAdd()));
+      connect(dlg->m_buttonRemove, TQT_SIGNAL(clicked()),
+         TQT_SLOT(slotRemove()));
+      connect(dlg->m_buttonModify, TQT_SIGNAL(clicked()),
+         TQT_SLOT(slotModify()));
 
-      connect(dlg->m_listPrograms, SIGNAL(doubleClicked(QListViewItem *)),
-         SLOT(slotProgramItemDoubleClicked(QListViewItem *)));
+      connect(dlg->m_listPrograms, TQT_SIGNAL(doubleClicked(TQListViewItem *)),
+         TQT_SLOT(slotProgramItemDoubleClicked(TQListViewItem *)));
    }
    else
    {
@@ -119,8 +119,8 @@ BGAdvancedDialog::BGAdvancedDialog(KBackgroundRenderer *_r,
       dlg->m_groupCache->hide();
    }
 
-   connect( dlg->m_cbProgram, SIGNAL(toggled(bool)),
-            SLOT(slotEnableProgram(bool)));
+   connect( dlg->m_cbProgram, TQT_SIGNAL(toggled(bool)),
+            TQT_SLOT(slotEnableProgram(bool)));
 
    m_backgroundMode = m_oldBackgroundMode = r->backgroundMode();
    if (m_oldBackgroundMode == KBackgroundSettings::Program)
@@ -146,23 +146,23 @@ int BGAdvancedDialog::cacheSize()
    return dlg->m_spinCache->value();
 }
 
-QColor BGAdvancedDialog::textColor()
+TQColor BGAdvancedDialog::textColor()
 {
     return dlg->m_colorText->color();
 }
 
-void BGAdvancedDialog::setTextColor(const QColor &color)
+void BGAdvancedDialog::setTextColor(const TQColor &color)
 {
     dlg->m_colorText->setColor(color);
 }
 
-QColor BGAdvancedDialog::textBackgroundColor()
+TQColor BGAdvancedDialog::textBackgroundColor()
 {
     return dlg->m_cbSolidTextBackground->isChecked() ?
-           dlg->m_colorTextBackground->color() : QColor();
+           dlg->m_colorTextBackground->color() : TQColor();
 }
 
-void BGAdvancedDialog::setTextBackgroundColor(const QColor &color)
+void BGAdvancedDialog::setTextBackgroundColor(const TQColor &color)
 {
     dlg->m_colorTextBackground->blockSignals(true);
     dlg->m_cbSolidTextBackground->blockSignals(true);
@@ -214,7 +214,7 @@ int BGAdvancedDialog::textWidth() const
 
 void BGAdvancedDialog::updateUI()
 {
-    QString prog = r->KBackgroundProgram::name();
+    TQString prog = r->KBackgroundProgram::name();
 
     dlg->m_cbProgram->blockSignals(true);
     if ((r->backgroundMode() == KBackgroundSettings::Program)
@@ -238,7 +238,7 @@ void BGAdvancedDialog::updateUI()
     dlg->m_cbProgram->blockSignals(false);
 }
 
-void BGAdvancedDialog::removeProgram(const QString &name)
+void BGAdvancedDialog::removeProgram(const TQString &name)
 {
    if (m_programItems.find(name))
    {
@@ -247,7 +247,7 @@ void BGAdvancedDialog::removeProgram(const QString &name)
    }
 }
 
-void BGAdvancedDialog::addProgram(const QString &name)
+void BGAdvancedDialog::addProgram(const TQString &name)
 {
    removeProgram(name);
 
@@ -255,7 +255,7 @@ void BGAdvancedDialog::addProgram(const QString &name)
    if (prog.command().isEmpty() || (prog.isGlobal() && !prog.isAvailable()))
       return;
 
-   QListViewItem *item = new QListViewItem(dlg->m_listPrograms);
+   TQListViewItem *item = new TQListViewItem(dlg->m_listPrograms);
    item->setText(0, prog.name());
    item->setText(1, prog.comment());
    item->setText(2, i18n("%1 min.").arg(prog.refresh()));
@@ -263,11 +263,11 @@ void BGAdvancedDialog::addProgram(const QString &name)
    m_programItems.insert(name, item);
 }
 
-void BGAdvancedDialog::selectProgram(const QString &name)
+void BGAdvancedDialog::selectProgram(const TQString &name)
 {
    if (m_programItems.find(name))
    {
-      QListViewItem *item = m_programItems[name];
+      TQListViewItem *item = m_programItems[name];
       dlg->m_listPrograms->ensureItemVisible(item);
       dlg->m_listPrograms->setSelected(item, true);
       m_selectedProgram = name;
@@ -278,9 +278,9 @@ void BGAdvancedDialog::slotAdd()
 {
    KProgramEditDialog dlg;
    dlg.exec();
-   if (dlg.result() == QDialog::Accepted)
+   if (dlg.result() == TQDialog::Accepted)
    {
-      QString program = dlg.program();
+      TQString program = dlg.program();
       addProgram(program);
       selectProgram(program);
    }
@@ -309,7 +309,7 @@ void BGAdvancedDialog::slotRemove()
 
    prog.remove();
    removeProgram(m_selectedProgram);
-   m_selectedProgram = QString::null;
+   m_selectedProgram = TQString::null;
 }
 
 /*
@@ -322,9 +322,9 @@ void BGAdvancedDialog::slotModify()
 
    KProgramEditDialog dlg(m_selectedProgram);
    dlg.exec();
-   if (dlg.result() == QDialog::Accepted)
+   if (dlg.result() == TQDialog::Accepted)
    {
-      QString program = dlg.program();
+      TQString program = dlg.program();
       if (program != m_selectedProgram)
       {
          KBackgroundProgram prog(m_selectedProgram);
@@ -336,14 +336,14 @@ void BGAdvancedDialog::slotModify()
    }
 }
 
-void BGAdvancedDialog::slotProgramItemClicked(QListViewItem *item)
+void BGAdvancedDialog::slotProgramItemClicked(TQListViewItem *item)
 {
    if (item)
       m_selectedProgram = item->text(0);
    slotProgramChanged();
 }
 
-void BGAdvancedDialog::slotProgramItemDoubleClicked(QListViewItem *item)
+void BGAdvancedDialog::slotProgramItemDoubleClicked(TQListViewItem *item)
 {
    slotProgramItemClicked(item);
    slotModify();
@@ -363,7 +363,7 @@ void BGAdvancedDialog::slotEnableProgram(bool b)
    if (b)
    {
       dlg->m_listPrograms->blockSignals(true);
-      QListViewItem *cur = dlg->m_listPrograms->currentItem();
+      TQListViewItem *cur = dlg->m_listPrograms->currentItem();
       dlg->m_listPrograms->setSelected(cur, true);
       dlg->m_listPrograms->ensureItemVisible(cur);
       dlg->m_listPrograms->blockSignals(false);
@@ -375,7 +375,7 @@ void BGAdvancedDialog::slotEnableProgram(bool b)
    }
 }
 
-QString BGAdvancedDialog::backgroundProgram() const
+TQString BGAdvancedDialog::backgroundProgram() const
 {
    return m_selectedProgram;
 }
@@ -387,48 +387,48 @@ int BGAdvancedDialog::backgroundMode() const
 
 /**** KProgramEditDialog ****/
 
-KProgramEditDialog::KProgramEditDialog(const QString &program, QWidget *parent, char *name)
+KProgramEditDialog::KProgramEditDialog(const TQString &program, TQWidget *parent, char *name)
     : KDialogBase(parent, name, true, i18n("Configure Background Program"),
 	Ok | Cancel, Ok, true)
 {
-    QFrame *frame = makeMainWidget();
+    TQFrame *frame = makeMainWidget();
 
-    QGridLayout *grid = new QGridLayout(frame, 6, 2, 0, spacingHint());
+    TQGridLayout *grid = new TQGridLayout(frame, 6, 2, 0, spacingHint());
     grid->addColSpacing(1, 300);
 
-    QLabel *lbl = new QLabel(i18n("&Name:"), frame);
+    TQLabel *lbl = new TQLabel(i18n("&Name:"), frame);
     grid->addWidget(lbl, 0, 0);
-    m_NameEdit = new QLineEdit(frame);
+    m_NameEdit = new TQLineEdit(frame);
     lbl->setBuddy(m_NameEdit);
     grid->addWidget(m_NameEdit, 0, 1);
 
-    lbl = new QLabel(i18n("Co&mment:"), frame);
+    lbl = new TQLabel(i18n("Co&mment:"), frame);
     grid->addWidget(lbl, 1, 0);
-    m_CommentEdit = new QLineEdit(frame);
+    m_CommentEdit = new TQLineEdit(frame);
     lbl->setBuddy(m_CommentEdit);
     grid->addWidget(m_CommentEdit, 1, 1);
 
-    lbl = new QLabel(i18n("Comman&d:"), frame);
+    lbl = new TQLabel(i18n("Comman&d:"), frame);
     grid->addWidget(lbl, 2, 0);
-    m_CommandEdit = new QLineEdit(frame);
+    m_CommandEdit = new TQLineEdit(frame);
     lbl->setBuddy(m_CommandEdit);
     grid->addWidget(m_CommandEdit, 2, 1);
 
-    lbl = new QLabel(i18n("&Preview cmd:"), frame);
+    lbl = new TQLabel(i18n("&Preview cmd:"), frame);
     grid->addWidget(lbl, 3, 0);
-    m_PreviewEdit = new QLineEdit(frame);
+    m_PreviewEdit = new TQLineEdit(frame);
     lbl->setBuddy(m_PreviewEdit);
     grid->addWidget(m_PreviewEdit, 3, 1);
 
-    lbl = new QLabel(i18n("&Executable:"), frame);
+    lbl = new TQLabel(i18n("&Executable:"), frame);
     grid->addWidget(lbl, 4, 0);
-    m_ExecEdit = new QLineEdit(frame);
+    m_ExecEdit = new TQLineEdit(frame);
     lbl->setBuddy(m_ExecEdit);
     grid->addWidget(m_ExecEdit, 4, 1);
 
-    lbl = new QLabel(i18n("&Refresh time:"), frame);
+    lbl = new TQLabel(i18n("&Refresh time:"), frame);
     grid->addWidget(lbl, 5, 0);
-    m_RefreshEdit = new QSpinBox(frame);
+    m_RefreshEdit = new TQSpinBox(frame);
     m_RefreshEdit->setRange(5, 60);
     m_RefreshEdit->setSteps(5, 10);
     m_RefreshEdit->setSuffix(i18n(" min"));
@@ -459,14 +459,14 @@ KProgramEditDialog::KProgramEditDialog(const QString &program, QWidget *parent, 
 }
 
 
-QString KProgramEditDialog::program()const
+TQString KProgramEditDialog::program()const
 {
     return m_NameEdit->text();
 }
 
 void KProgramEditDialog::slotOk()
 {
-    QString s = m_NameEdit->text();
+    TQString s = m_NameEdit->text();
     if (s.isEmpty()) {
 	KMessageBox::sorry(this, i18n("You did not fill in the `Name' field.\n"
 		"This is a required field."));
@@ -477,7 +477,7 @@ void KProgramEditDialog::slotOk()
     if ((s != m_Program) && !prog.command().isEmpty()) {
 	int ret = KMessageBox::warningContinueCancel(this,
 	    i18n("There is already a program with the name `%1'.\n"
-	    "Do you want to overwrite it?").arg(s),QString::null,i18n("Overwrite"));
+	    "Do you want to overwrite it?").arg(s),TQString::null,i18n("Overwrite"));
 	if (ret != KMessageBox::Continue)
 	    return;
     }

@@ -24,19 +24,19 @@
 #include "kateconfigdialog.h"
 #include <klistbox.h>
 #include "kateapp.h"
-#include <qstringlist.h>
-#include <qhbox.h>
-#include <qlabel.h>
+#include <tqstringlist.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
 #include <klocale.h>
-#include <qpushbutton.h>
-#include <qtooltip.h>
+#include <tqpushbutton.h>
+#include <tqtooltip.h>
 #include <kiconloader.h>
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 
 class KatePluginListItem : public QCheckListItem
 {
   public:
-    KatePluginListItem(bool checked, KatePluginInfo *info, QListView *parent);
+    KatePluginListItem(bool checked, KatePluginInfo *info, TQListView *parent);
     KatePluginInfo *info() const { return mInfo; }
 
   protected:
@@ -47,8 +47,8 @@ class KatePluginListItem : public QCheckListItem
     bool silentStateChange;
 };
 
-KatePluginListItem::KatePluginListItem(bool checked, KatePluginInfo *info, QListView *parent)
-  : QCheckListItem(parent, info->service->name(), CheckBox)
+KatePluginListItem::KatePluginListItem(bool checked, KatePluginInfo *info, TQListView *parent)
+  : TQCheckListItem(parent, info->service->name(), CheckBox)
   , mInfo(info)
   , silentStateChange(false)
 {
@@ -63,7 +63,7 @@ void KatePluginListItem::stateChange(bool b)
     static_cast<KatePluginListView *>(listView())->stateChanged(this, b);
 }
 
-KatePluginListView::KatePluginListView(QWidget *parent, const char *name)
+KatePluginListView::KatePluginListView(TQWidget *parent, const char *name)
   : KListView(parent, name)
 {
 }
@@ -73,16 +73,16 @@ void KatePluginListView::stateChanged(KatePluginListItem *item, bool b)
   emit stateChange(item, b);
 }
 
-KateConfigPluginPage::KateConfigPluginPage(QWidget *parent, KateConfigDialog *dialog):QVBox(parent)
+KateConfigPluginPage::KateConfigPluginPage(TQWidget *parent, KateConfigDialog *dialog):TQVBox(parent)
 {
   myDialog=dialog;
 
   KatePluginListView* listView = new KatePluginListView(this);
   listView->addColumn(i18n("Name"));
   listView->addColumn(i18n("Comment"));
-  QWhatsThis::add(listView,i18n("Here you can see all available Kate plugins. Those with a check mark are loaded, and will be loaded again the next time Kate is started."));
+  TQWhatsThis::add(listView,i18n("Here you can see all available Kate plugins. Those with a check mark are loaded, and will be loaded again the next time Kate is started."));
 
-  connect(listView, SIGNAL(stateChange(KatePluginListItem *, bool)), this, SLOT(stateChange(KatePluginListItem *, bool)));
+  connect(listView, TQT_SIGNAL(stateChange(KatePluginListItem *, bool)), this, TQT_SLOT(stateChange(KatePluginListItem *, bool)));
 
   KatePluginList &pluginList (KatePluginManager::self()->pluginList());
   for (unsigned int i=0; i < pluginList.size(); ++i)

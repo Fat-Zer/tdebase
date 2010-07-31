@@ -35,8 +35,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
-#include <qregexp.h>
-#include <qfile.h>
+#include <tqregexp.h>
+#include <tqfile.h>
 #include <ft2build.h>
 #include FT_SFNT_NAMES_H
 #include FT_TRUETYPE_IDS_H
@@ -46,7 +46,7 @@
 namespace KFI
 {
 
-bool CFontEngine::openFont(const QString &file, int face)
+bool CFontEngine::openFont(const TQString &file, int face)
 {
     bool ok=false;
 
@@ -62,7 +62,7 @@ bool CFontEngine::openFont(const QString &file, int face)
         itsItalic=ITALIC_NONE;
         itsPath=file;
         itsFaceIndex=face;
-        itsPsName=QString();
+        itsPsName=TQString();
 
         if(!openFontFt(file) && !itsPsName.isEmpty())
             itsType=NONE;
@@ -74,12 +74,12 @@ bool CFontEngine::openFont(const QString &file, int face)
 void CFontEngine::closeFont()
 {
     closeFaceFt();
-    itsPath=QString::null;
+    itsPath=TQString::null;
     itsFaceIndex=-1;
     itsType=NONE;
 }
 
-QString CFontEngine::weightStr(enum EWeight w)
+TQString CFontEngine::weightStr(enum EWeight w)
 {
     switch(w)
     {
@@ -155,12 +155,12 @@ CFontEngine::EWeight CFontEngine::strToWeight(const char *str)
         return WEIGHT_MEDIUM; // WEIGHT_UNKNOWN;
 }
 
-static void removeSymbols(QString &str)
+static void removeSymbols(TQString &str)
 {
-    str.replace(QRegExp("[\\-\\[\\]()]"), " ");
+    str.replace(TQRegExp("[\\-\\[\\]()]"), " ");
 
     int   len=str.length();
-    QChar space(' ');
+    TQChar space(' ');
 
     for(int c=0; c<len; ++c)
         if(str[c].unicode()<0x20 || str[c].unicode()>0x7E)
@@ -210,10 +210,10 @@ static bool lookupName(FT_Face face, int nid, int pid, int eid, FT_SfntName *nam
     return false;
 }
 
-static QCString getName(FT_Face face, int nid)
+static TQCString getName(FT_Face face, int nid)
 {
     FT_SfntName name;
-    QCString    str;
+    TQCString    str;
 
     if(lookupName(face, nid, TT_PLATFORM_MICROSOFT, TT_MS_ID_UNICODE_CS, &name) ||
        lookupName(face, nid, TT_PLATFORM_APPLE_UNICODE, -1, &name))
@@ -226,7 +226,7 @@ static QCString getName(FT_Face face, int nid)
     return str;
 }
 
-bool CFontEngine::openFontFt(const QString &file)
+bool CFontEngine::openFontFt(const TQString &file)
 {
     enum ETtfWeight
     {
@@ -242,7 +242,7 @@ bool CFontEngine::openFontFt(const QString &file)
         TTF_WEIGHT_BLACK      = 900 +50
     };
 
-    bool status=FT_New_Face(itsFt.library, QFile::encodeName(file), 0, &itsFt.face) ? false : true;
+    bool status=FT_New_Face(itsFt.library, TQFile::encodeName(file), 0, &itsFt.face) ? false : true;
 
     if(status)
         itsFt.open=true;

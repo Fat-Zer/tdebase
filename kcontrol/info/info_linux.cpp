@@ -36,7 +36,7 @@
 #  undef INFO_PARTITIONS_FULL_INFO	/* no partitions-info */
 #endif
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <kapplication.h>
 #include <kiconloader.h>
@@ -82,13 +82,13 @@
 
 #define MAXCOLUMNWIDTH 600
 
-bool GetInfo_ReadfromFile(QListView * lbox, const char *FileName,
-			  const QChar& splitChar,
-			  QListViewItem * lastitem = 0,
-			  QListViewItem ** newlastitem = 0)
+bool GetInfo_ReadfromFile(TQListView * lbox, const char *FileName,
+			  const TQChar& splitChar,
+			  TQListViewItem * lastitem = 0,
+			  TQListViewItem ** newlastitem = 0)
 {
     bool added = false;
-    QFile file(FileName);
+    TQFile file(FileName);
 
     if (!file.exists()) {
 	return false;
@@ -101,11 +101,11 @@ bool GetInfo_ReadfromFile(QListView * lbox, const char *FileName,
 	 */
 	return false;
     }
-    QTextStream stream(&file);
-    QString line;
+    TQTextStream stream(&file);
+    TQString line;
 
     while (!stream.atEnd()) {
-	QString s1, s2;
+	TQString s1, s2;
 	line = stream.readLine();
 	if (!line.isEmpty()) {
 	    if (!splitChar.isNull()) {
@@ -116,7 +116,7 @@ bool GetInfo_ReadfromFile(QListView * lbox, const char *FileName,
 	    else
 	        s1 = line;
 	}
-	lastitem = new QListViewItem(lbox, lastitem, s1, s2);
+	lastitem = new TQListViewItem(lbox, lastitem, s1, s2);
 	added = true;
     }
 
@@ -130,7 +130,7 @@ bool GetInfo_ReadfromFile(QListView * lbox, const char *FileName,
 
 
 
-bool GetInfo_CPU(QListView * lBox)
+bool GetInfo_CPU(TQListView * lBox)
 {
     lBox->addColumn(i18n("Information"));
     lBox->addColumn(i18n("Value"));
@@ -138,30 +138,30 @@ bool GetInfo_CPU(QListView * lBox)
 }
 
 
-bool GetInfo_IRQ(QListView * lBox)
+bool GetInfo_IRQ(TQListView * lBox)
 {
     lBox->setFont(KGlobalSettings::fixedFont());
     return GetInfo_ReadfromFile(lBox, INFO_IRQ, 0);
 }
 
-bool GetInfo_DMA(QListView * lBox)
+bool GetInfo_DMA(TQListView * lBox)
 {
-    QFile file(INFO_DMA);
+    TQFile file(INFO_DMA);
     
     lBox->addColumn(i18n("DMA-Channel"));
     lBox->addColumn(i18n("Used By"));
 
     if (file.exists() && file.open(IO_ReadOnly)) {
-	QTextStream stream(&file);
-	QString line;
-	QListViewItem *child=0L;
+	TQTextStream stream(&file);
+	TQString line;
+	TQListViewItem *child=0L;
 	
 	while (!stream.atEnd()) {
 	    line = stream.readLine();
 	    if (!line.isEmpty()) {
-		QRegExp rx("^\\s*(\\S+)\\s*:\\s*(\\S+)");
+		TQRegExp rx("^\\s*(\\S+)\\s*:\\s*(\\S+)");
 		if (-1 != rx.search(line)) {
-		    child = new QListViewItem(lBox,child,rx.cap(1),rx.cap(2));
+		    child = new TQListViewItem(lBox,child,rx.cap(1),rx.cap(2));
 		}
 	    }
 	}
@@ -173,7 +173,7 @@ bool GetInfo_DMA(QListView * lBox)
     return true;
 }
 
-bool GetInfo_PCI(QListView * lBox)
+bool GetInfo_PCI(TQListView * lBox)
 {
     int num;
     sorting_allowed = false;	/* no sorting by user */
@@ -189,14 +189,14 @@ bool GetInfo_PCI(QListView * lBox)
     return GetInfo_ReadfromFile(lBox, INFO_PCI, 0);
 }
 
-bool GetInfo_IO_Ports(QListView * lBox)
+bool GetInfo_IO_Ports(TQListView * lBox)
 {
     lBox->addColumn(i18n("I/O-Range"));
     lBox->addColumn(i18n("Used By"));
     return GetInfo_ReadfromFile(lBox, INFO_IOPORTS, ':');
 }
 
-bool GetInfo_Sound(QListView * lBox)
+bool GetInfo_Sound(TQListView * lBox)
 {
     sorting_allowed = false;	/* no sorting by user */
     if (GetInfo_ReadfromFile(lBox, INFO_DEV_SNDSTAT, 0))
@@ -209,10 +209,10 @@ bool GetInfo_Sound(QListView * lBox)
 	return GetInfo_ReadfromFile(lBox, INFO_ASOUND09, 0);
 }
 
-bool GetInfo_Devices(QListView * lBox)
+bool GetInfo_Devices(TQListView * lBox)
 {
-    QFile file;
-    QListViewItem *misc=0L;
+    TQFile file;
+    TQListViewItem *misc=0L;
 
     lBox->setRootIsDecorated(true);
     lBox->addColumn(i18n("Devices"));
@@ -221,28 +221,28 @@ bool GetInfo_Devices(QListView * lBox)
 
     file.setName(INFO_DEVICES);
     if (file.exists() && file.open(IO_ReadOnly)) {
-	QTextStream stream(&file);
-	QString line;
-	QListViewItem *parent=0L, *child=0L;
+	TQTextStream stream(&file);
+	TQString line;
+	TQListViewItem *parent=0L, *child=0L;
 	
 	while (!stream.atEnd()) {
 	    line = stream.readLine();
 	    if (!line.isEmpty()) {
 		if (-1 != line.find("character device",0,false)) {
-		    parent = new QListViewItem(lBox,parent,i18n("Character Devices"));
+		    parent = new TQListViewItem(lBox,parent,i18n("Character Devices"));
 		    parent->setPixmap(0,SmallIcon("chardevice"));
 		    parent->setOpen(true);
 		} else if (-1 != line.find("block device",0,false)) {
-		    parent = new QListViewItem(lBox,parent,i18n("Block Devices"));
+		    parent = new TQListViewItem(lBox,parent,i18n("Block Devices"));
 		    parent->setPixmap(0,SmallIcon("blockdevice"));
 		    parent->setOpen(true);
 		} else {
-		    QRegExp rx("^\\s*(\\S+)\\s+(\\S+)");
+		    TQRegExp rx("^\\s*(\\S+)\\s+(\\S+)");
 		    if (-1 != rx.search(line)) {
 			if (parent) {
-			    child = new QListViewItem(parent,child,rx.cap(2),rx.cap(1));
+			    child = new TQListViewItem(parent,child,rx.cap(2),rx.cap(1));
 			} else {
-			    child = new QListViewItem(lBox,parent,rx.cap(2),rx.cap(1));
+			    child = new TQListViewItem(lBox,parent,rx.cap(2),rx.cap(1));
 			}
 			if (rx.cap(2)=="misc") {
 			    misc=child;
@@ -258,9 +258,9 @@ bool GetInfo_Devices(QListView * lBox)
     
     file.setName(INFO_MISC);
     if (misc && file.exists() && file.open(IO_ReadOnly)) {
-	QTextStream stream(&file);
-	QString line;
-	QListViewItem *child=0L;
+	TQTextStream stream(&file);
+	TQString line;
+	TQListViewItem *child=0L;
 	
 	misc->setText(0,i18n("Miscellaneous Devices"));
 	misc->setPixmap(0,SmallIcon("memory"));
@@ -269,9 +269,9 @@ bool GetInfo_Devices(QListView * lBox)
 	while (!stream.atEnd()) {
 	    line = stream.readLine();
 	    if (!line.isEmpty()) {
-		QRegExp rx("^\\s*(\\S+)\\s+(\\S+)");
+		TQRegExp rx("^\\s*(\\S+)\\s+(\\S+)");
 		if (-1 != rx.search(line)) {
-		    child = new QListViewItem(misc,child,rx.cap(2),"10",rx.cap(1));
+		    child = new TQListViewItem(misc,child,rx.cap(2),"10",rx.cap(1));
 		}
 	    }
 	}
@@ -281,15 +281,15 @@ bool GetInfo_Devices(QListView * lBox)
     return true;
 }
 
-bool GetInfo_SCSI(QListView * lBox)
+bool GetInfo_SCSI(TQListView * lBox)
 {
     return GetInfo_ReadfromFile(lBox, INFO_SCSI, 0);
 }
 
-static void cleanPassword(QString & str)
+static void cleanPassword(TQString & str)
 {
     int index = 0;
-    QString passwd("password=");
+    TQString passwd("password=");
 
     while (index >= 0)
     {
@@ -305,7 +305,7 @@ static void cleanPassword(QString & str)
 
 #ifndef INFO_PARTITIONS_FULL_INFO
 
-bool GetInfo_Partitions(QListView * lBox)
+bool GetInfo_Partitions(TQListView * lBox)
 {
     return GetInfo_ReadfromFile(lBox, INFO_PARTITIONS, 0);
 }
@@ -341,13 +341,13 @@ bool GetInfo_Partitions(QListView * lBox)
 /*
  * get raw device bindings and information
  */
-void Get_LinuxRawDevices(QListView *lbox)
+void Get_LinuxRawDevices(TQListView *lbox)
 {
     int f, i, err;
     int new_raw_devs = 1;
     struct raw_config_request rq;
-    QString devname;
-    QString MB(i18n("MB"));	/* "MB" = "Mega-Byte" */
+    TQString devname;
+    TQString MB(i18n("MB"));	/* "MB" = "Mega-Byte" */
 
     /* try to open the raw device control file */
     f = open("/dev/rawctl", O_RDWR);
@@ -371,8 +371,8 @@ void Get_LinuxRawDevices(QListView *lbox)
 		/* IDE drives */
 		case 3: first_letter = 'a';
 			set_ide_name:
-			devname = QString("/dev/hd%1%2")
-				.arg(QChar(first_letter + minor/64))
+			devname = TQString("/dev/hd%1%2")
+				.arg(TQChar(first_letter + minor/64))
 				.arg(minor&63);
 			break;
 		case 22:first_letter = 'c';	goto set_ide_name;
@@ -388,8 +388,8 @@ void Get_LinuxRawDevices(QListView *lbox)
 		/* SCSI drives */
 		case 8: first_letter = 'a';
 			set_scsi_name:
-			devname = QString("/dev/sd%1%2")
-				.arg(QChar(first_letter + minor/16))
+			devname = TQString("/dev/sd%1%2")
+				.arg(TQChar(first_letter + minor/16))
 				.arg(minor&15);
 			break;
 		case 65:first_letter = 'q';	goto set_scsi_name;
@@ -397,7 +397,7 @@ void Get_LinuxRawDevices(QListView *lbox)
 		/* Compaq /dev/cciss devices */
 		case 104: case 105: case 106:
 		case 107: case 108: case 109:
-			devname = QString("/dev/cciss/c%1d%2")
+			devname = TQString("/dev/cciss/c%1d%2")
 				.arg((int)rq.block_major-104)
 				.arg(minor&15);
 			break;
@@ -405,22 +405,22 @@ void Get_LinuxRawDevices(QListView *lbox)
 		/* Compaq Intelligent Drive Array (ida) */
 		case 72: case 73: case 74: case 75:
 		case 76: case 77: case 78: case 79:
-			devname = QString("/dev/ida/c%1d%2")
+			devname = TQString("/dev/ida/c%1d%2")
 				.arg((int)rq.block_major-72)
 				.arg(minor&15);
 			break;
 
-		default: devname = QString("%1/%2")
+		default: devname = TQString("%1/%2")
 			 	.arg((int)rq.block_major)
 				.arg(minor);
 
 	}
 
 	/* TODO: get device size */
-	QString size = "";
+	TQString size = "";
 
-	new QListViewItem(lbox, devname,
-		QString(new_raw_devs ? "/dev/raw/raw%1" : "/dev/raw%1").arg(i),
+	new TQListViewItem(lbox, devname,
+		TQString(new_raw_devs ? "/dev/raw/raw%1" : "/dev/raw%1").arg(i),
 		"raw", size, " ", "");
     }
     close(f);
@@ -429,11 +429,11 @@ void Get_LinuxRawDevices(QListView *lbox)
 #define Get_LinuxRawDevices(x)	/* nothing */
 #endif
 
-bool GetInfo_Partitions(QListView * lbox)
+bool GetInfo_Partitions(TQListView * lbox)
 {
 #define NUMCOLS 6
-    QString Title[NUMCOLS];
-    QStringList Mounted_Partitions;
+    TQString Title[NUMCOLS];
+    TQStringList Mounted_Partitions;
     bool found_in_List;
     int n;
 
@@ -454,8 +454,8 @@ bool GetInfo_Partitions(QListView * lbox)
 
     struct statfs sfs;
     LONG_TYPE total, avail;
-    QString str, mountopts;
-    QString MB(i18n("MB"));	/* "MB" = "Mega-Byte" */
+    TQString str, mountopts;
+    TQString MB(i18n("MB"));	/* "MB" = "Mega-Byte" */
 
 
 #ifdef HAVE_FSTAB_H
@@ -467,11 +467,11 @@ bool GetInfo_Partitions(QListView * lbox)
 #endif
 
     /* read the list of already mounted file-systems.. */
-    QFile *file = new QFile(INFO_MOUNTED_PARTITIONS);
+    TQFile *file = new TQFile(INFO_MOUNTED_PARTITIONS);
     if (file->open(IO_ReadOnly)) {
 	char buf[1024];
 	while (file->readLine(buf, sizeof( buf )) > 0) {
-	    str = QString::fromLocal8Bit(buf);
+	    str = TQString::fromLocal8Bit(buf);
 	    if (str.length()) {
 		int p = str.find(' ');	/* find first space. */
 		if (p)
@@ -484,7 +484,7 @@ bool GetInfo_Partitions(QListView * lbox)
     delete file;
 
     /* create the header-tables */
-    MB = QString(" ") + MB;
+    MB = TQString(" ") + MB;
     Title[0] = i18n("Device");
     Title[1] = i18n("Mount Point");
     Title[2] = i18n("FS Type");
@@ -518,16 +518,16 @@ bool GetInfo_Partitions(QListView * lbox)
 	mountopts = FS_MNTOPS;
 	cleanPassword(mountopts);
 	if (total)
-	    new QListViewItem(lbox, QString(FS_NAME) + "  ",
-			      QString(FS_FILE) + "  ",
-			      QString(FS_TYPE) + "  ",
+	    new TQListViewItem(lbox, TQString(FS_NAME) + "  ",
+			      TQString(FS_FILE) + "  ",
+			      TQString(FS_TYPE) + "  ",
 			      Value((int) (((total / 1024) + 512) / 1024),
 				    6) + MB,
 			      Value((int) (((avail / 1024) + 512) / 1024),
 				    6) + MB, mountopts);
 	else
-	    new QListViewItem(lbox, QString(FS_NAME), QString(FS_FILE),
-			      QString(FS_TYPE), " ", " ", mountopts);
+	    new TQListViewItem(lbox, TQString(FS_NAME), TQString(FS_FILE),
+			      TQString(FS_TYPE), " ", " ", mountopts);
     }
 
 #ifdef HAVE_FSTAB_H
@@ -549,40 +549,40 @@ bool GetInfo_Partitions(QListView * lbox)
 
 
 
-bool GetInfo_XServer_and_Video(QListView * lBox)
+bool GetInfo_XServer_and_Video(TQListView * lBox)
 {
     return GetInfo_XServer_Generic(lBox);
 }
 
 /* GetInfo for CD-ROM Info by Jahshan Bhatti */
-bool GetInfo_CD_ROM(QListView * lBox)
+bool GetInfo_CD_ROM(TQListView * lBox)
 {
-	QFile file(INFO_CD_ROM);
+	TQFile file(INFO_CD_ROM);
 	lBox->addColumn(i18n("Information"));
 	lBox->addColumn(i18n("Value"));
 
 	if (file.exists() && file.open(IO_ReadOnly)) {
-		QRegExp rx("(.+):\\s+(\\S.*)");
-		QTextStream stream(&file);
-		QString line;
-		QListViewItem *child = NULL;
+		TQRegExp rx("(.+):\\s+(\\S.*)");
+		TQTextStream stream(&file);
+		TQString line;
+		TQListViewItem *child = NULL;
 
 		while (!stream.atEnd()) {
 			line = stream.readLine();
 			if (!line.isEmpty()) {
 				if (-1 != rx.search(line)) {
-					QString text = rx.cap(1);
-					QString value = rx.cap(2);
+					TQString text = rx.cap(1);
+					TQString value = rx.cap(2);
 					if (!text.contains('#')) {
 						if (value == "0")
 							value = KStdGuiItem::no().plainText();
 						if (value == "1")
 							value = KStdGuiItem::yes().plainText();
 					}
-					child = new QListViewItem(lBox,child,text,value);
+					child = new TQListViewItem(lBox,child,text,value);
 				}
 			} else {
-				child = new QListViewItem(lBox,child,QString::null,QString::null);
+				child = new TQListViewItem(lBox,child,TQString::null,TQString::null);
 			}
 		}
 		file.close();

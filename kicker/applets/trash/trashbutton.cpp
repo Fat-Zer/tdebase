@@ -19,8 +19,8 @@
 
 #include "trashbutton.h"
 
-#include <qpopupmenu.h>
-#include <qtooltip.h>
+#include <tqpopupmenu.h>
+#include <tqtooltip.h>
 
 #include <klocale.h>
 #include <krun.h>
@@ -31,7 +31,7 @@
 #include <konq_operations.h>
 #include <konq_popupmenu.h>
 
-TrashButton::TrashButton(QWidget *parent)
+TrashButton::TrashButton(TQWidget *parent)
 	: PanelPopupButton(parent), mActions(this, this),
 	  mFileItem(KFileItem::Unknown, KFileItem::Unknown, "trash:/")
 {
@@ -39,7 +39,7 @@ TrashButton::TrashButton(QWidget *parent)
 	KIO::NetAccess::stat("trash:/", entry, 0L);
 	mFileItem.assign(KFileItem(entry, "trash:/"));
 
-	KAction *a = KStdAction::paste(this, SLOT(slotPaste()),
+	KAction *a = KStdAction::paste(this, TQT_SLOT(slotPaste()),
 	                               &mActions, "paste");
 	a->setShortcut(0);
 
@@ -53,9 +53,9 @@ TrashButton::TrashButton(QWidget *parent)
 
 	// Activate this code only if we find a way to have both an
 	// action and a popup menu for the same kicker button
-	//connect(this, SIGNAL(clicked()), this, SLOT(slotClicked()));
+	//connect(this, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotClicked()));
 
-	setPopup(new QPopupMenu());
+	setPopup(new TQPopupMenu());
 }
 
 TrashButton::~TrashButton()
@@ -67,18 +67,18 @@ void TrashButton::setItemCount(int count)
     if (count==0)
     {
         setIcon( "trashcan_empty" );
-        QToolTip::add(this, i18n("Empty"));
+        TQToolTip::add(this, i18n("Empty"));
     }
     else
     {
         setIcon( "trashcan_full" );
-        QToolTip::add(this, i18n("One item", "%n items", count));
+        TQToolTip::add(this, i18n("One item", "%n items", count));
     }
 }
 
 void TrashButton::initPopup()
 {
-	QPopupMenu *old_popup = popup();
+	TQPopupMenu *old_popup = popup();
 
 	KFileItemList items;
 	items.append(&mFileItem);
@@ -117,17 +117,17 @@ void TrashButton::slotPaste()
 	KonqOperations::doPaste(this, mFileItem.url());
 }
 
-void TrashButton::dragEnterEvent(QDragEnterEvent* e)
+void TrashButton::dragEnterEvent(TQDragEnterEvent* e)
 {
 	e->accept(true);
 }
 
-void TrashButton::dropEvent(QDropEvent *e)
+void TrashButton::dropEvent(TQDropEvent *e)
 {
 	KonqOperations::doDrop(0L, mFileItem.url(), e, this);
 }
 
-QString TrashButton::tileName()
+TQString TrashButton::tileName()
 {
 	return mFileItem.name();
 }

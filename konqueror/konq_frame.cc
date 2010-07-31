@@ -18,14 +18,14 @@
 */
 #include <math.h>
 
-#include <qpainter.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qtoolbutton.h>
-#include <qtabbar.h>
-#include <qptrlist.h>
-#include <qpopupmenu.h>
-#include <qkeysequence.h>
+#include <tqpainter.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqtoolbutton.h>
+#include <tqtabbar.h>
+#include <tqptrlist.h>
+#include <tqpopupmenu.h>
+#include <tqkeysequence.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -48,11 +48,11 @@
 
 #define DEFAULT_HEADER_HEIGHT 13
 
-void KonqCheckBox::drawButton( QPainter *p )
+void KonqCheckBox::drawButton( TQPainter *p )
 {
-    //static QPixmap indicator_anchor( UserIcon( "indicator_anchor" ) );
-    static QPixmap indicator_connect( UserIcon( "indicator_connect" ) );
-    static QPixmap indicator_noconnect( UserIcon( "indicator_noconnect" ) );
+    //static TQPixmap indicator_anchor( UserIcon( "indicator_anchor" ) );
+    static TQPixmap indicator_connect( UserIcon( "indicator_connect" ) );
+    static TQPixmap indicator_noconnect( UserIcon( "indicator_noconnect" ) );
 
    if (isOn() || isDown())
       p->drawPixmap(0,0,indicator_connect);
@@ -66,22 +66,22 @@ KonqFrameStatusBar::KonqFrameStatusBar( KonqFrame *_parent, const char *_name )
 {
     setSizeGripEnabled( false );
 
-    m_led = new QLabel( this );
+    m_led = new TQLabel( this );
     m_led->setAlignment( Qt::AlignCenter );
-    m_led->setSizePolicy(QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ));
+    m_led->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     addWidget( m_led, 0, false ); // led (active view indicator)
     m_led->hide();
 
     m_pStatusLabel = new KSqueezedTextLabel( this );
     m_pStatusLabel->setMinimumSize( 0, 0 );
-    m_pStatusLabel->setSizePolicy(QSizePolicy( QSizePolicy::Ignored, QSizePolicy::Fixed ));
+    m_pStatusLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
     m_pStatusLabel->installEventFilter(this);
     addWidget( m_pStatusLabel, 1 /*stretch*/, false ); // status label
 
     m_pLinkedViewCheckBox = new KonqCheckBox( this, "m_pLinkedViewCheckBox" );
     m_pLinkedViewCheckBox->setFocusPolicy(NoFocus);
-    m_pLinkedViewCheckBox->setSizePolicy(QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ));
-    QWhatsThis::add( m_pLinkedViewCheckBox,
+    m_pLinkedViewCheckBox->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    TQWhatsThis::add( m_pLinkedViewCheckBox,
                      i18n("Checking this box on at least two views sets those views as 'linked'. "
                           "Then, when you change directories in one view, the other views "
                           "linked with it will automatically update to show the current directory. "
@@ -89,15 +89,15 @@ KonqFrameStatusBar::KonqFrameStatusBar( KonqFrame *_parent, const char *_name )
                           "directory tree with an icon view or detailed view, and possibly a "
                           "terminal emulator window." ) );
     addWidget( m_pLinkedViewCheckBox, 0, true /*permanent->right align*/ );
-    connect( m_pLinkedViewCheckBox, SIGNAL(toggled(bool)),
-            this, SIGNAL(linkedViewClicked(bool)) );
+    connect( m_pLinkedViewCheckBox, TQT_SIGNAL(toggled(bool)),
+            this, TQT_SIGNAL(linkedViewClicked(bool)) );
 
     m_progressBar = new KProgress( this );
     m_progressBar->setMaximumHeight(fontMetrics().height());
     m_progressBar->hide();
     addWidget( m_progressBar, 0, true /*permanent->right align*/ );
 
-    fontChange(QFont());
+    fontChange(TQFont());
     installEventFilter( this );
 }
 
@@ -105,7 +105,7 @@ KonqFrameStatusBar::~KonqFrameStatusBar()
 {
 }
 
-void KonqFrameStatusBar::fontChange(const QFont & /* oldFont */)
+void KonqFrameStatusBar::fontChange(const TQFont & /* oldFont */)
 {
     int h = fontMetrics().height();
     if ( h < DEFAULT_HEADER_HEIGHT ) h = DEFAULT_HEADER_HEIGHT;
@@ -116,7 +116,7 @@ void KonqFrameStatusBar::fontChange(const QFont & /* oldFont */)
 
 }
 
-void KonqFrameStatusBar::resizeEvent( QResizeEvent* ev )
+void KonqFrameStatusBar::resizeEvent( TQResizeEvent* ev )
 {
     //m_progressBar->setGeometry( width()-160, 0, 140, height() );
     //m_pLinkedViewCheckBox->move( width()-15, m_yOffset ); // right justify
@@ -125,9 +125,9 @@ void KonqFrameStatusBar::resizeEvent( QResizeEvent* ev )
 
 // I don't think this code _ever_ gets called!
 // I don't want to remove it, though.  :-)
-void KonqFrameStatusBar::mousePressEvent( QMouseEvent* event )
+void KonqFrameStatusBar::mousePressEvent( TQMouseEvent* event )
 {
-   QWidget::mousePressEvent( event );
+   TQWidget::mousePressEvent( event );
    if ( !m_pParentKonqFrame->childView()->isPassiveMode() )
    {
       emit clicked();
@@ -145,7 +145,7 @@ void KonqFrameStatusBar::splitFrameMenu()
 
    // We have to ship the remove view action ourselves,
    // since this may not be the active view (passive view)
-   KAction actRemoveView(i18n("Close View"), "view_remove", 0, m_pParentKonqFrame, SLOT(slotRemoveView()), (QObject*)0, "removethisview");
+   KAction actRemoveView(i18n("Close View"), "view_remove", 0, m_pParentKonqFrame, TQT_SLOT(slotRemoveView()), (TQObject*)0, "removethisview");
    //KonqView * nextView = mw->viewManager()->chooseNextView( m_pParentKonqFrame->childView() );
    actRemoveView.setEnabled( mw->mainViewsCount() > 1 || m_pParentKonqFrame->childView()->isToggleView() || m_pParentKonqFrame->childView()->isPassiveMode() );
 
@@ -153,7 +153,7 @@ void KonqFrameStatusBar::splitFrameMenu()
    // ###### might be not right for passive views !
    KActionCollection *actionColl = mw->actionCollection();
 
-   QPopupMenu menu;
+   TQPopupMenu menu;
 
    actionColl->action( "splitviewh" )->plug( &menu );
    actionColl->action( "splitviewv" )->plug( &menu );
@@ -162,20 +162,20 @@ void KonqFrameStatusBar::splitFrameMenu()
 
    actRemoveView.plug( &menu );
 
-   menu.exec(QCursor::pos());
+   menu.exec(TQCursor::pos());
 }
 
-bool KonqFrameStatusBar::eventFilter(QObject* o, QEvent *e)
+bool KonqFrameStatusBar::eventFilter(TQObject* o, TQEvent *e)
 {
-   if (o == m_pStatusLabel && e->type()==QEvent::MouseButtonPress)
+   if (o == m_pStatusLabel && e->type()==TQEvent::MouseButtonPress)
    {
       emit clicked();
       update();
-      if ( static_cast<QMouseEvent *>(e)->button() == RightButton)
+      if ( static_cast<TQMouseEvent *>(e)->button() == RightButton)
          splitFrameMenu();
       return true;
    }
-   else if ( o == this && e->type() == QEvent::ApplicationPaletteChange )
+   else if ( o == this && e->type() == TQEvent::ApplicationPaletteChange )
    {
       unsetPalette();
       updateActiveStatus();
@@ -185,17 +185,17 @@ bool KonqFrameStatusBar::eventFilter(QObject* o, QEvent *e)
    return false;
 }
 
-void KonqFrameStatusBar::message( const QString &msg )
+void KonqFrameStatusBar::message( const TQString &msg )
 {
-    // We don't use the message()/clear() mechanism of QStatusBar because
+    // We don't use the message()/clear() mechanism of TQStatusBar because
     // it really looks ugly (the label border goes away, the active-view indicator
     // is hidden...)
-    QString saveMsg = m_savedMessage;
+    TQString saveMsg = m_savedMessage;
     slotDisplayStatusText( msg );
     m_savedMessage = saveMsg;
 }
 
-void KonqFrameStatusBar::slotDisplayStatusText(const QString& text)
+void KonqFrameStatusBar::slotDisplayStatusText(const TQString& text)
 {
     //kdDebug(1202)<<"KonqFrameHeader::slotDisplayStatusText("<<text<<")"<<endl;
     //m_pStatusLabel->resize(fontMetrics().width(text),fontMetrics().height()+2);
@@ -223,7 +223,7 @@ void KonqFrameStatusBar::slotLoadingProgress( int percent )
 
 void KonqFrameStatusBar::slotSpeedProgress( int bytesPerSecond )
 {
-  QString sizeStr;
+  TQString sizeStr;
 
   if ( bytesPerSecond > 0 )
     sizeStr = i18n( "%1/s" ).arg( KIO::convertSize( bytesPerSecond ) );
@@ -236,8 +236,8 @@ void KonqFrameStatusBar::slotSpeedProgress( int bytesPerSecond )
 void KonqFrameStatusBar::slotConnectToNewView(KonqView *, KParts::ReadOnlyPart *,KParts::ReadOnlyPart *newOne)
 {
    if (newOne!=0)
-      connect(newOne,SIGNAL(setStatusBarText(const QString &)),this,SLOT(slotDisplayStatusText(const QString&)));
-   slotDisplayStatusText( QString::null );
+      connect(newOne,TQT_SIGNAL(setStatusBarText(const TQString &)),this,TQT_SLOT(slotDisplayStatusText(const TQString&)));
+   slotDisplayStatusText( TQString::null );
 }
 
 void KonqFrameStatusBar::showActiveViewIndicator( bool b )
@@ -268,25 +268,25 @@ void KonqFrameStatusBar::updateActiveStatus()
 
     bool hasFocus = m_pParentKonqFrame->isActivePart();
 
-    const QColorGroup& activeCg = kapp->palette().active();
+    const TQColorGroup& activeCg = kapp->palette().active();
     setPaletteBackgroundColor( hasFocus ? activeCg.midlight() : activeCg.mid() );
 
-    static QPixmap indicator_viewactive( UserIcon( "indicator_viewactive" ) );
-    static QPixmap indicator_empty( UserIcon( "indicator_empty" ) );
+    static TQPixmap indicator_viewactive( UserIcon( "indicator_viewactive" ) );
+    static TQPixmap indicator_empty( UserIcon( "indicator_empty" ) );
     m_led->setPixmap( hasFocus ? indicator_viewactive : indicator_empty );
 }
 
 //###################################################################
 
-void KonqFrameBase::printFrameInfo(const QString& spaces)
+void KonqFrameBase::printFrameInfo(const TQString& spaces)
 {
     kdDebug(1202) << spaces << "KonqFrameBase " << this << " printFrameInfo not implemented in derived class!" << endl;
 }
 
 //###################################################################
 
-KonqFrame::KonqFrame( QWidget* parent, KonqFrameContainerBase *parentContainer, const char *name )
-:QWidget(parent,name)
+KonqFrame::KonqFrame( TQWidget* parent, KonqFrameContainerBase *parentContainer, const char *name )
+:TQWidget(parent,name)
 {
    //kdDebug(1202) << "KonqFrame::KonqFrame()" << endl;
 
@@ -295,9 +295,9 @@ KonqFrame::KonqFrame( QWidget* parent, KonqFrameContainerBase *parentContainer, 
 
    // the frame statusbar
    m_pStatusBar = new KonqFrameStatusBar( this, "KonquerorFrameStatusBar");
-   m_pStatusBar->setSizePolicy(QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed ));
-   connect(m_pStatusBar, SIGNAL(clicked()), this, SLOT(slotStatusBarClicked()));
-   connect( m_pStatusBar, SIGNAL( linkedViewClicked( bool ) ), this, SLOT( slotLinkedViewClicked( bool ) ) );
+   m_pStatusBar->setSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+   connect(m_pStatusBar, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotStatusBarClicked()));
+   connect( m_pStatusBar, TQT_SIGNAL( linkedViewClicked( bool ) ), this, TQT_SLOT( slotLinkedViewClicked( bool ) ) );
    m_separator = 0;
    m_pParentContainer = parentContainer;
 }
@@ -318,22 +318,22 @@ void KonqFrame::listViews( ChildViewList *viewList )
   viewList->append( childView() );
 }
 
-void KonqFrame::saveConfig( KConfig* config, const QString &prefix, bool saveURLs, KonqFrameBase* docContainer, int /*id*/, int /*depth*/ )
+void KonqFrame::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int /*id*/, int /*depth*/ )
 {
   if (saveURLs)
-    config->writePathEntry( QString::fromLatin1( "URL" ).prepend( prefix ),
+    config->writePathEntry( TQString::fromLatin1( "URL" ).prepend( prefix ),
                         childView()->url().url() );
-  config->writeEntry( QString::fromLatin1( "ServiceType" ).prepend( prefix ), childView()->serviceType() );
-  config->writeEntry( QString::fromLatin1( "ServiceName" ).prepend( prefix ), childView()->service()->desktopEntryName() );
-  config->writeEntry( QString::fromLatin1( "PassiveMode" ).prepend( prefix ), childView()->isPassiveMode() );
-  config->writeEntry( QString::fromLatin1( "LinkedView" ).prepend( prefix ), childView()->isLinkedView() );
-  config->writeEntry( QString::fromLatin1( "ToggleView" ).prepend( prefix ), childView()->isToggleView() );
-  config->writeEntry( QString::fromLatin1( "LockedLocation" ).prepend( prefix ), childView()->isLockedLocation() );
-  //config->writeEntry( QString::fromLatin1( "ShowStatusBar" ).prepend( prefix ), statusbar()->isVisible() );
-  if (this == docContainer) config->writeEntry( QString::fromLatin1( "docContainer" ).prepend( prefix ), true );
+  config->writeEntry( TQString::fromLatin1( "ServiceType" ).prepend( prefix ), childView()->serviceType() );
+  config->writeEntry( TQString::fromLatin1( "ServiceName" ).prepend( prefix ), childView()->service()->desktopEntryName() );
+  config->writeEntry( TQString::fromLatin1( "PassiveMode" ).prepend( prefix ), childView()->isPassiveMode() );
+  config->writeEntry( TQString::fromLatin1( "LinkedView" ).prepend( prefix ), childView()->isLinkedView() );
+  config->writeEntry( TQString::fromLatin1( "ToggleView" ).prepend( prefix ), childView()->isToggleView() );
+  config->writeEntry( TQString::fromLatin1( "LockedLocation" ).prepend( prefix ), childView()->isLockedLocation() );
+  //config->writeEntry( TQString::fromLatin1( "ShowStatusBar" ).prepend( prefix ), statusbar()->isVisible() );
+  if (this == docContainer) config->writeEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), true );
 
   KonqConfigEvent ev( config, prefix+"_", true/*save*/);
-  QApplication::sendEvent( childView()->part(), &ev );
+  TQApplication::sendEvent( childView()->part(), &ev );
 }
 
 void KonqFrame::copyHistory( KonqFrameBase *other )
@@ -342,12 +342,12 @@ void KonqFrame::copyHistory( KonqFrameBase *other )
     childView()->copyHistory( static_cast<KonqFrame *>( other )->childView() );
 }
 
-void KonqFrame::printFrameInfo( const QString& spaces )
+void KonqFrame::printFrameInfo( const TQString& spaces )
 {
-   QString className = "NoPart";
+   TQString className = "NoPart";
    if (part()) className = part()->widget()->className();
-   kdDebug(1202) << spaces << "KonqFrame " << this << " visible=" << QString("%1").arg(isVisible()) << " containing view "
-                 << childView() << " visible=" << QString("%1").arg(isVisible())
+   kdDebug(1202) << spaces << "KonqFrame " << this << " visible=" << TQString("%1").arg(isVisible()) << " containing view "
+                 << childView() << " visible=" << TQString("%1").arg(isVisible())
                  << " and part " << part() << " whose widget is a " << className << endl;
 }
 
@@ -375,7 +375,7 @@ void KonqFrame::attachInternal()
    //kdDebug(1202) << "KonqFrame::attachInternal()" << endl;
    delete m_pLayout;
 
-   m_pLayout = new QVBoxLayout( this, 0, -1, "KonqFrame's QVBoxLayout" );
+   m_pLayout = new TQVBoxLayout( this, 0, -1, "KonqFrame's TQVBoxLayout" );
 
    m_pLayout->addWidget( m_pPart->widget(), 1 );
 
@@ -387,11 +387,11 @@ void KonqFrame::attachInternal()
    m_pPart->widget()->installEventFilter(this);
 }
 
-bool KonqFrame::eventFilter(QObject* /*obj*/, QEvent *ev)
+bool KonqFrame::eventFilter(TQObject* /*obj*/, TQEvent *ev)
 {
-   if (ev->type()==QEvent::KeyPress)
+   if (ev->type()==TQEvent::KeyPress)
    {
-      QKeyEvent * keyEv = static_cast<QKeyEvent*>(ev);
+      TQKeyEvent * keyEv = static_cast<TQKeyEvent*>(ev);
       if ((keyEv->key()==Key_Tab) && (keyEv->state()==ControlButton))
       {
          emit ((KonqFrameContainer*)parent())->ctrlTabPressed();
@@ -401,7 +401,7 @@ bool KonqFrame::eventFilter(QObject* /*obj*/, QEvent *ev)
    return false;
 }
 
-void KonqFrame::insertTopWidget( QWidget * widget )
+void KonqFrame::insertTopWidget( TQWidget * widget )
 {
     assert(m_pLayout);
     m_pLayout->insertWidget( 0, widget );
@@ -414,27 +414,27 @@ void KonqFrame::setView( KonqView* child )
    m_pView = child;
    if (m_pView)
    {
-     connect(m_pView,SIGNAL(sigPartChanged(KonqView *, KParts::ReadOnlyPart *,KParts::ReadOnlyPart *)),
-             m_pStatusBar,SLOT(slotConnectToNewView(KonqView *, KParts::ReadOnlyPart *,KParts::ReadOnlyPart *)));
+     connect(m_pView,TQT_SIGNAL(sigPartChanged(KonqView *, KParts::ReadOnlyPart *,KParts::ReadOnlyPart *)),
+             m_pStatusBar,TQT_SLOT(slotConnectToNewView(KonqView *, KParts::ReadOnlyPart *,KParts::ReadOnlyPart *)));
    }
 }
 
-void KonqFrame::setTitle( const QString &title , QWidget* /*sender*/)
+void KonqFrame::setTitle( const TQString &title , TQWidget* /*sender*/)
 {
   //kdDebug(1202) << "KonqFrame::setTitle( " << title << " )" << endl;
   m_title = title;
   if (m_pParentContainer) m_pParentContainer->setTitle( title , this);
 }
 
-void KonqFrame::setTabIcon( const KURL &url, QWidget* /*sender*/ )
+void KonqFrame::setTabIcon( const KURL &url, TQWidget* /*sender*/ )
 {
   //kdDebug(1202) << "KonqFrame::setTabIcon( " << url << " )" << endl;
   if (m_pParentContainer) m_pParentContainer->setTabIcon( url, this );
 }
 
-void KonqFrame::reparentFrame( QWidget* parent, const QPoint & p, bool showIt )
+void KonqFrame::reparentFrame( TQWidget* parent, const TQPoint & p, bool showIt )
 {
-   QWidget::reparent( parent, p, showIt );
+   TQWidget::reparent( parent, p, showIt );
 }
 
 void KonqFrame::slotStatusBarClicked()
@@ -452,7 +452,7 @@ void KonqFrame::slotLinkedViewClicked( bool mode )
 }
 
 void
-KonqFrame::paintEvent( QPaintEvent* )
+KonqFrame::paintEvent( TQPaintEvent* )
 {
    m_pStatusBar->repaint();
 }
@@ -470,7 +470,7 @@ void KonqFrame::activateChild()
 
 //###################################################################
 
-void KonqFrameContainerBase::printFrameInfo(const QString& spaces)
+void KonqFrameContainerBase::printFrameInfo(const TQString& spaces)
 {
 	kdDebug(1202) << spaces << "KonqFrameContainerBase " << this << ", this shouldn't happen!" << endl;
 }
@@ -478,10 +478,10 @@ void KonqFrameContainerBase::printFrameInfo(const QString& spaces)
 //###################################################################
 
 KonqFrameContainer::KonqFrameContainer( Orientation o,
-                                        QWidget* parent,
+                                        TQWidget* parent,
                                         KonqFrameContainerBase* parentContainer,
                                         const char * name)
-  : QSplitter( o, parent, name ), m_bAboutToBeDeleted(false)
+  : TQSplitter( o, parent, name ), m_bAboutToBeDeleted(false)
 {
   m_pParentContainer = parentContainer;
   m_pFirstChild = 0L;
@@ -506,45 +506,45 @@ void KonqFrameContainer::listViews( ChildViewList *viewList )
       m_pSecondChild->listViews( viewList );
 }
 
-void KonqFrameContainer::saveConfig( KConfig* config, const QString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id, int depth )
+void KonqFrameContainer::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id, int depth )
 {
   int idSecond = id + (int)pow( 2.0, depth );
 
   //write children sizes
-  config->writeEntry( QString::fromLatin1( "SplitterSizes" ).prepend( prefix ), sizes() );
+  config->writeEntry( TQString::fromLatin1( "SplitterSizes" ).prepend( prefix ), sizes() );
 
   //write children
-  QStringList strlst;
+  TQStringList strlst;
   if( firstChild() )
-    strlst.append( QString::fromLatin1( firstChild()->frameType() ) + QString::number(idSecond - 1) );
+    strlst.append( TQString::fromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1) );
   if( secondChild() )
-    strlst.append( QString::fromLatin1( secondChild()->frameType() ) + QString::number( idSecond ) );
+    strlst.append( TQString::fromLatin1( secondChild()->frameType() ) + TQString::number( idSecond ) );
 
-  config->writeEntry( QString::fromLatin1( "Children" ).prepend( prefix ), strlst );
+  config->writeEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), strlst );
 
   //write orientation
-  QString o;
+  TQString o;
   if( orientation() == Qt::Horizontal )
-    o = QString::fromLatin1("Horizontal");
+    o = TQString::fromLatin1("Horizontal");
   else if( orientation() == Qt::Vertical )
-    o = QString::fromLatin1("Vertical");
-  config->writeEntry( QString::fromLatin1( "Orientation" ).prepend( prefix ), o );
+    o = TQString::fromLatin1("Vertical");
+  config->writeEntry( TQString::fromLatin1( "Orientation" ).prepend( prefix ), o );
 
   //write docContainer
-  if (this == docContainer) config->writeEntry( QString::fromLatin1( "docContainer" ).prepend( prefix ), true );
+  if (this == docContainer) config->writeEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), true );
 
-  if (m_pSecondChild == m_pActiveChild) config->writeEntry( QString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 1 );
-  else config->writeEntry( QString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 0 );
+  if (m_pSecondChild == m_pActiveChild) config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 1 );
+  else config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 0 );
 
   //write child configs
   if( firstChild() ) {
-    QString newPrefix = QString::fromLatin1( firstChild()->frameType() ) + QString::number(idSecond - 1);
+    TQString newPrefix = TQString::fromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1);
     newPrefix.append( '_' );
     firstChild()->saveConfig( config, newPrefix, saveURLs, docContainer, id, depth + 1 );
   }
 
   if( secondChild() ) {
-    QString newPrefix = QString::fromLatin1( secondChild()->frameType() ) + QString::number( idSecond );
+    TQString newPrefix = TQString::fromLatin1( secondChild()->frameType() ) + TQString::number( idSecond );
     newPrefix.append( '_' );
     secondChild()->saveConfig( config, newPrefix, saveURLs, docContainer, idSecond, depth + 1 );
   }
@@ -568,9 +568,9 @@ KonqFrameBase* KonqFrameContainer::otherChild( KonqFrameBase* child )
    return 0L;
 }
 
-void KonqFrameContainer::printFrameInfo( const QString& spaces )
+void KonqFrameContainer::printFrameInfo( const TQString& spaces )
 {
-        kdDebug(1202) << spaces << "KonqFrameContainer " << this << " visible=" << QString("%1").arg(isVisible())
+        kdDebug(1202) << spaces << "KonqFrameContainer " << this << " visible=" << TQString("%1").arg(isVisible())
                       << " activeChild=" << m_pActiveChild << endl;
         if (!m_pActiveChild)
             kdDebug(1202) << "WARNING: " << this << " has a null active child!" << endl;
@@ -586,9 +586,9 @@ void KonqFrameContainer::printFrameInfo( const QString& spaces )
             kdDebug(1202) << spaces << "  Null child" << endl;
 }
 
-void KonqFrameContainer::reparentFrame( QWidget* parent, const QPoint & p, bool showIt )
+void KonqFrameContainer::reparentFrame( TQWidget* parent, const TQPoint & p, bool showIt )
 {
-  QWidget::reparent( parent, p, showIt );
+  TQWidget::reparent( parent, p, showIt );
 }
 
 void KonqFrameContainer::swapChildren()
@@ -598,14 +598,14 @@ void KonqFrameContainer::swapChildren()
   m_pSecondChild = firstCh;
 }
 
-void KonqFrameContainer::setTitle( const QString &title , QWidget* sender)
+void KonqFrameContainer::setTitle( const TQString &title , TQWidget* sender)
 {
   //kdDebug(1202) << "KonqFrameContainer::setTitle( " << title << " , " << sender << " )" << endl;
   if (m_pParentContainer && activeChild() && (sender == activeChild()->widget()))
       m_pParentContainer->setTitle( title , this);
 }
 
-void KonqFrameContainer::setTabIcon( const KURL &url, QWidget* sender )
+void KonqFrameContainer::setTabIcon( const KURL &url, TQWidget* sender )
 {
   //kdDebug(1202) << "KonqFrameContainer::setTabIcon( " << url << " , " << sender << " )" << endl;
   if (m_pParentContainer && activeChild() && (sender == activeChild()->widget()))
@@ -653,18 +653,18 @@ void KonqFrameContainer::removeChildFrame( KonqFrameBase * frame )
     kdWarning(1202) << this << " Can't find this child:" << frame << endl;
 }
 
-void KonqFrameContainer::childEvent( QChildEvent *c )
+void KonqFrameContainer::childEvent( TQChildEvent *c )
 {
   // Child events cause layout changes. These are unnecassery if we are going
   // to be deleted anyway.
   if (!m_bAboutToBeDeleted)
-      QSplitter::childEvent(c);
+      TQSplitter::childEvent(c);
 }
 
 void KonqFrameContainer::setRubberband( int pos  )
 {
     emit setRubberbandCalled();
-    QSplitter::setRubberband( pos );
+    TQSplitter::setRubberband( pos );
 }
 
 #include "konq_frame.moc"

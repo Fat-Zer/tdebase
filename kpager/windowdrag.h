@@ -24,17 +24,17 @@
 #ifndef WINDOWDRAG_H
 #define WINDOWDRAG_H
 
-#include <qdragobject.h>
+#include <tqdragobject.h>
 #include <X11/Xlib.h>
 
 class PagerWindowDrag : public QStoredDrag
 {
 public:
-    PagerWindowDrag(WId w,int deltax,int deltay,int origdesk,QWidget *parent);
+    PagerWindowDrag(WId w,int deltax,int deltay,int origdesk,TQWidget *parent);
     virtual ~PagerWindowDrag();
 
-    static bool canDecode( QDragMoveEvent *e);
-    static bool decode ( QDropEvent *e, WId &w,int &deltax,int &deltay,int &origdesk);
+    static bool canDecode( TQDragMoveEvent *e);
+    static bool decode ( TQDropEvent *e, WId &w,int &deltax,int &deltay,int &origdesk);
     
 };
 

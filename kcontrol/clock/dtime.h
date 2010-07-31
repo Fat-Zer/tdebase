@@ -22,14 +22,14 @@
 #ifndef dtime_included
 #define dtime_included
 
-#include <qdatetime.h> 
-#include <qlineedit.h> 
-#include <qspinbox.h> 
-#include <qstring.h>
-#include <qtimer.h>
-#include <qvalidator.h>
-#include <qwidget.h>
-#include <qcheckbox.h>
+#include <tqdatetime.h> 
+#include <tqlineedit.h> 
+#include <tqspinbox.h> 
+#include <tqstring.h>
+#include <tqtimer.h>
+#include <tqvalidator.h>
+#include <tqwidget.h>
+#include <tqcheckbox.h>
 
 #include <kdatepicker.h>
 #include <knuminput.h>
@@ -40,21 +40,21 @@ class HMSTimeWidget : public KIntSpinBox
 {
   Q_OBJECT
  public:
-  HMSTimeWidget(QWidget *parent=0, const char *name=0);
+  HMSTimeWidget(TQWidget *parent=0, const char *name=0);
  protected:
-  QString mapValueToText(int);
+  TQString mapValueToText(int);
 };
 
 class Dtime : public QWidget
 {
   Q_OBJECT
  public:
-  Dtime( QWidget *parent=0, const char* name=0 );
+  Dtime( TQWidget *parent=0, const char* name=0 );
 
   void	save();
   void	load();
 
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 signals:
   void	timeChanged(bool);
@@ -64,13 +64,13 @@ signals:
   void	serverTimeCheck(); 
   void	timeout();
   void	set_time();
-  void	changeDate(QDate);
+  void	changeDate(TQDate);
 
 private:
   void	findNTPutility();
   QString	ntpUtility;
 
-  QWidget*	privateLayoutWidget;
+  TQWidget*	privateLayoutWidget;
   QCheckBox	*setDateTimeAuto;
   QComboBox	*timeServerList;
 
@@ -99,27 +99,27 @@ class Kclock : public QWidget
   Q_OBJECT
 
 public:
-  Kclock( QWidget *parent=0, const char *name=0 ) 
-    : QWidget(parent, name) {};
+  Kclock( TQWidget *parent=0, const char *name=0 ) 
+    : TQWidget(parent, name) {};
   
-  void setTime(const QTime&);
+  void setTime(const TQTime&);
   
 protected:
-  virtual void	paintEvent( QPaintEvent *event );
+  virtual void	paintEvent( TQPaintEvent *event );
   
   
 private:
   QTime		time;
 };
 
-class KStrictIntValidator : public QIntValidator 
+class KStrictIntValidator : public TQIntValidator 
 {
 public:
-  KStrictIntValidator(int bottom, int top, QWidget * parent,
+  KStrictIntValidator(int bottom, int top, TQWidget * parent,
 		      const char * name = 0 )
-    : QIntValidator(bottom, top, parent, name) {};
+    : TQIntValidator(bottom, top, parent, name) {};
   
-  QValidator::State validate( QString & input, int & d ) const; 
+  TQValidator::State validate( TQString & input, int & d ) const; 
 };
 
 #endif // dtime_included

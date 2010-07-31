@@ -20,8 +20,8 @@
 #ifndef __konq_viewprops_h__
 #define __konq_viewprops_h__
 
-#include <qpixmap.h>
-#include <qstringlist.h>
+#include <tqpixmap.h>
+#include <tqstringlist.h>
 
 #include <kurl.h>
 #include <libkonq_export.h>
@@ -84,11 +84,11 @@ public:
   void setIconSize( int size ); // in pixel, 0 for default
   int iconSize() const { return m_iIconSize; }
 
-  void setItemTextPos( int pos ); // QIconView::Bottom or QIconView::Right, currently
+  void setItemTextPos( int pos ); // TQIconView::Bottom or TQIconView::Right, currently
   int itemTextPos() const { return m_iItemTextPos; }
 
-  void setSortCriterion( const QString &criterion );
-  const QString& sortCriterion() const;
+  void setSortCriterion( const TQString &criterion );
+  const TQString& sortCriterion() const;
 
   void setDirsFirst ( bool first );
   bool isDirsFirst() const;
@@ -105,25 +105,25 @@ public:
   void setShowingDirectoryOverlays( bool show );
   bool isShowingDirectoryOverlays() const { return m_bShowDirectoryOverlays; }
 
-  void setShowingPreview( const QString &preview, bool show );
+  void setShowingPreview( const TQString &preview, bool show );
   void setShowingPreview( bool show );
-  bool isShowingPreview( const QString &preview ) const { return ! m_dontPreview.contains(preview); }
+  bool isShowingPreview( const TQString &preview ) const { return ! m_dontPreview.contains(preview); }
   bool isShowingPreview();
-  const QStringList &previewSettings();
+  const TQStringList &previewSettings();
 
-  void setBgColor( const QColor & color );
-  const QColor& bgColor(QWidget * widget) const;
-  void setTextColor( const QColor & color );
-  const QColor& textColor(QWidget * widget) const;
-  void setBgPixmapFile( const QString & file );
-  const QString& bgPixmapFile() const { return m_bgPixmapFile; }
+  void setBgColor( const TQColor & color );
+  const TQColor& bgColor(TQWidget * widget) const;
+  void setTextColor( const TQColor & color );
+  const TQColor& textColor(TQWidget * widget) const;
+  void setBgPixmapFile( const TQString & file );
+  const TQString& bgPixmapFile() const { return m_bgPixmapFile; }
 
   // Applies bgcolor, textcolor, pixmap to the @p widget
-  void applyColors( QWidget * widget ) const;
+  void applyColors( TQWidget * widget ) const;
 
 protected:
 
-  QPixmap loadPixmap() const;
+  TQPixmap loadPixmap() const;
 
   // Current config object for _saving_
   KConfigBase * currentConfig();
@@ -131,9 +131,9 @@ protected:
   // Current config object for _saving_ settings related to colors
   KConfigBase * currentColorConfig();
 
-  QString currentGroup() const {
+  TQString currentGroup() const {
       return isDefaultProperties() ? 
-          QString::fromLatin1("Settings") : QString::fromLatin1("URL properties");
+          TQString::fromLatin1("Settings") : TQString::fromLatin1("URL properties");
   }
 
 private:
@@ -143,13 +143,13 @@ private:
   int m_iItemTextPos;
   bool m_bShowDot;
   bool m_bShowDirectoryOverlays;
-  QStringList m_dontPreview;
-  QColor m_textColor;
-  QColor m_bgColor;
-  QString m_bgPixmapFile;
+  TQStringList m_dontPreview;
+  TQColor m_textColor;
+  TQColor m_bgColor;
+  TQString m_bgPixmapFile;
 
   // Path to .directory file, whether it exists or not
-  QString dotDirectory;
+  TQString dotDirectory;
 
   bool m_bSaveViewPropertiesLocally;
 

@@ -21,11 +21,11 @@
 
 #include <stdlib.h>
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -42,16 +42,16 @@
 #define NO_PROXY          "NO_PROXY,no_proxy"
 
 
-static QString getProxyEnv(const QString& var)
+static TQString getProxyEnv(const TQString& var)
 {
-  return QString::fromLocal8Bit(::getenv(var.local8Bit().data()));
+  return TQString::fromLocal8Bit(::getenv(var.local8Bit().data()));
 }
 
-static bool autoDetectProxySetting(const QString& type, QString& proxyEnv)
+static bool autoDetectProxySetting(const TQString& type, TQString& proxyEnv)
 {
-  QStringList list = QStringList::split( ',', type);
-  QStringList::ConstIterator it = list.begin();
-  QStringList::ConstIterator end = list.end();
+  TQStringList list = TQStringList::split( ',', type);
+  TQStringList::ConstIterator it = list.begin();
+  TQStringList::ConstIterator end = list.end();
 
   for(; it != end; ++it)
   {
@@ -65,7 +65,7 @@ static bool autoDetectProxySetting(const QString& type, QString& proxyEnv)
   return false;
 }
 
-KEnvVarProxyDlg::KEnvVarProxyDlg( QWidget* parent, const char* name )
+KEnvVarProxyDlg::KEnvVarProxyDlg( TQWidget* parent, const char* name )
                 :KProxyDialogBase( parent, name, true,
                                    i18n( "Variable Proxy Configuration" ) )
 {
@@ -83,9 +83,9 @@ void KEnvVarProxyDlg::init()
 {
   m_bHasValidData = false;
 
-  connect( mDlg->cbShowValue, SIGNAL( clicked() ), SLOT( showValuePressed() ) );
-  connect( mDlg->pbVerify, SIGNAL( clicked() ), SLOT( verifyPressed() ) );
-  connect( mDlg->pbDetect, SIGNAL( clicked() ), SLOT( autoDetectPressed() ) );
+  connect( mDlg->cbShowValue, TQT_SIGNAL( clicked() ), TQT_SLOT( showValuePressed() ) );
+  connect( mDlg->pbVerify, TQT_SIGNAL( clicked() ), TQT_SLOT( verifyPressed() ) );
+  connect( mDlg->pbDetect, TQT_SIGNAL( clicked() ), TQT_SLOT( autoDetectPressed() ) );
 }
 
 void KEnvVarProxyDlg::setProxyData( const KProxyData& data )
@@ -103,7 +103,7 @@ void KEnvVarProxyDlg::setProxyData( const KProxyData& data )
     mEnvVarsMap["ftp"] = data.proxyList["ftp"];
 
   // Setup NO Proxy For...
-  QString noProxyFor = data.noProxyFor.join("");
+  TQString noProxyFor = data.noProxyFor.join("");
   if (!getProxyEnv(noProxyFor).isEmpty())
     mEnvVarsMap["noProxy"] = noProxyFor;
 
@@ -133,10 +133,10 @@ void KEnvVarProxyDlg::verifyPressed()
 {
   if ( !validate() )
   {
-    QString msg = i18n("You must specify at least one valid proxy "
+    TQString msg = i18n("You must specify at least one valid proxy "
                        "environment variable.");
 
-    QString details = i18n("<qt>Make sure you entered the actual environment "
+    TQString details = i18n("<qt>Make sure you entered the actual environment "
                            "variable name rather than its value. For "
                            "example, if the environment variable is <br><b>"
                            "HTTP_PROXY=http://localhost:3128</b><br> you need "
@@ -163,24 +163,24 @@ void KEnvVarProxyDlg::autoDetectPressed()
   setHighLight (mDlg->lbNoProxy, false);
 
   // Detect HTTP proxy settings...
-  found |= autoDetectProxySetting (QString::fromLatin1(ENV_HTTP_PROXY), mEnvVarsMap["http"]);
+  found |= autoDetectProxySetting (TQString::fromLatin1(ENV_HTTP_PROXY), mEnvVarsMap["http"]);
 
   // Detect HTTPS proxy settings...
-  found |= autoDetectProxySetting (QString::fromLatin1(ENV_HTTPS_PROXY), mEnvVarsMap["https"]);
+  found |= autoDetectProxySetting (TQString::fromLatin1(ENV_HTTPS_PROXY), mEnvVarsMap["https"]);
 
   // Detect FTP proxy settings...
-  found |= autoDetectProxySetting (QString::fromLatin1(ENV_FTP_PROXY), mEnvVarsMap["ftp"]);
+  found |= autoDetectProxySetting (TQString::fromLatin1(ENV_FTP_PROXY), mEnvVarsMap["ftp"]);
 
   // Detect the NO_PROXY settings...
-  found |= autoDetectProxySetting (QString::fromLatin1(NO_PROXY), mEnvVarsMap["noProxy"]);
+  found |= autoDetectProxySetting (TQString::fromLatin1(NO_PROXY), mEnvVarsMap["noProxy"]);
 
   if ( !found )
   {
-    QString msg = i18n("Did not detect any environment variables "
+    TQString msg = i18n("Did not detect any environment variables "
                        "commonly used to set system wide proxy "
                        "information.");
 
-    QString details = i18n("<qt>To learn about the variable names the "
+    TQString details = i18n("<qt>To learn about the variable names the "
                            "automatic detection process searches for, "
                            "press OK, click on the quick help button "
                            "on the window title bar of the "
@@ -197,7 +197,7 @@ void KEnvVarProxyDlg::autoDetectPressed()
 
 void KEnvVarProxyDlg::updateVariables()
 {
-  QString text = mDlg->leHttp->text();
+  TQString text = mDlg->leHttp->text();
   if (mEnvVarsMap["http"] != text)
     mEnvVarsMap["http"] = text;
 
@@ -258,22 +258,22 @@ bool KEnvVarProxyDlg::validate(bool erase)
   bool notFound = getProxyEnv(mEnvVarsMap["http"]).isEmpty();
   m_bHasValidData |= !notFound;
   setHighLight (mDlg->lbHttp, notFound);
-  if(notFound && erase) mEnvVarsMap["http"] = QString::null;
+  if(notFound && erase) mEnvVarsMap["http"] = TQString::null;
 
   notFound = getProxyEnv(mEnvVarsMap["https"]).isEmpty();
   m_bHasValidData |= !notFound;
   setHighLight (mDlg->lbHttps, notFound);
-  if(notFound && erase) mEnvVarsMap["https"] = QString::null;
+  if(notFound && erase) mEnvVarsMap["https"] = TQString::null;
 
   notFound = getProxyEnv(mEnvVarsMap["ftp"]).isEmpty();
   m_bHasValidData |= !notFound;
   setHighLight (mDlg->lbFtp, notFound);
-  if(notFound && erase) mEnvVarsMap["ftp"] = QString::null;
+  if(notFound && erase) mEnvVarsMap["ftp"] = TQString::null;
 
   notFound = getProxyEnv(mEnvVarsMap["noProxy"]).isEmpty();
   m_bHasValidData |= !notFound;
   setHighLight (mDlg->lbNoProxy, notFound);
-  if(notFound && erase) mEnvVarsMap["noProxy"] = QString::null;
+  if(notFound && erase) mEnvVarsMap["noProxy"] = TQString::null;
 
   return m_bHasValidData;
 }
@@ -282,10 +282,10 @@ void KEnvVarProxyDlg::slotOk()
 {
   if(!validate(true))
   {
-    QString msg = i18n("You must specify at least one valid proxy "
+    TQString msg = i18n("You must specify at least one valid proxy "
                        "environment variable.");
 
-    QString details = i18n("<qt>Make sure you entered the actual environment "
+    TQString details = i18n("<qt>Make sure you entered the actual environment "
                            "variable name rather than its value. For "
                            "example, if the environment variable is <br><b>"
                            "HTTP_PROXY=http://localhost:3128</b><br> you need "

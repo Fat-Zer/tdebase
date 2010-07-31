@@ -26,15 +26,15 @@
 #include <kgenericfactory.h>
 #include <kio/netaccess.h>
 
-KShellCmdPlugin::KShellCmdPlugin( QObject* parent, const char* name,
-	                          const QStringList & )
+KShellCmdPlugin::KShellCmdPlugin( TQObject* parent, const char* name,
+	                          const TQStringList & )
     : KParts::Plugin( parent, name )
 {
     if (!kapp->authorize("shell_access"))
        return;
 
     new KAction( i18n( "&Execute Shell Command..." ), "run", CTRL+Key_E, this,
-                 SLOT( slotExecuteShellCommand() ), actionCollection(), "executeshellcommand" );
+                 TQT_SLOT( slotExecuteShellCommand() ), actionCollection(), "executeshellcommand" );
 }
 
 void KShellCmdPlugin::slotExecuteShellCommand()
@@ -51,7 +51,7 @@ void KShellCmdPlugin::slotExecuteShellCommand()
       KMessageBox::sorry(part->widget(),i18n("Executing shell commands works only on local directories."));
       return;
    }
-   QString path;
+   TQString path;
    if ( part->currentItem() )
    {
       // Putting the complete path to the selected file isn't really necessary,
@@ -65,12 +65,12 @@ void KShellCmdPlugin::slotExecuteShellCommand()
       path = url.path();
    }
    bool ok;
-   QString cmd = KInputDialog::getText( i18n("Execute Shell Command"),
+   TQString cmd = KInputDialog::getText( i18n("Execute Shell Command"),
       i18n( "Execute shell command in current directory:" ),
       KProcess::quote( path ), &ok, part->widget() );
    if ( ok )
    {
-      QString chDir;
+      TQString chDir;
       chDir="cd ";
       chDir+=KProcess::quote(part->url().path());
       chDir+="; ";

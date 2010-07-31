@@ -9,11 +9,11 @@
 #ifndef _KDE_B2CONFIG_H
 #define _KDE_B2CONFIG_H
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qhgroupbox.h>
-#include <qlabel.h>
-#include <qcombobox.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqhgroupbox.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
 #include <kconfig.h>
 
 class B2Config: public QObject
@@ -21,7 +21,7 @@ class B2Config: public QObject
 	Q_OBJECT
 
 	public:
-		B2Config( KConfig* conf, QWidget* parent );
+		B2Config( KConfig* conf, TQWidget* parent );
 		~B2Config();
 
 	// These public signals/slots work similar to KCM modules
@@ -38,11 +38,11 @@ class B2Config: public QObject
 
 	private:
 		KConfig*   b2Config;
-		QCheckBox* cbColorBorder;
-		QCheckBox*  showGrabHandleCb;
-		QHGroupBox* actionsGB;
-		QComboBox*  menuDblClickOp;
-		QWidget* gb;
+		TQCheckBox* cbColorBorder;
+		TQCheckBox*  showGrabHandleCb;
+		TQHGroupBox* actionsGB;
+		TQComboBox*  menuDblClickOp;
+		TQWidget* gb;
 };
 
 #endif

@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <kdialogbase.h>
-#include <qcombobox.h>
+#include <tqcombobox.h>
 
 namespace KFI
 {
@@ -39,7 +39,7 @@ class CPrintDialog : public KDialogBase
 {
     public:
 
-    CPrintDialog(QWidget *parent);
+    CPrintDialog(TQWidget *parent);
 
     bool exec(bool select, int size);
     int  chosenSize() { return itsSize->currentItem(); }
@@ -47,7 +47,7 @@ class CPrintDialog : public KDialogBase
 
     private:
 
-    QComboBox *itsOutput,
+    TQComboBox *itsOutput,
               *itsSize;
 };
 

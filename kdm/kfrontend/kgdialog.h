@@ -57,15 +57,15 @@ class KGDialog : public FDialog {
 
   protected:
 #ifdef XDMCP
-	void completeMenu( int _switchIf, int _switchCode, const QString &_switchMsg, int _switchAccel );
+	void completeMenu( int _switchIf, int _switchCode, const TQString &_switchMsg, int _switchAccel );
 #else
 	void completeMenu();
 #endif
-	void inserten( const QString& txt, int accel, const char *member );
-	int inserten( const QString& txt, int accel, QPopupMenu *cmnu );
+	void inserten( const TQString& txt, int accel, const char *member );
+	int inserten( const TQString& txt, int accel, TQPopupMenu *cmnu );
 
 	bool needSep;
-	QPopupMenu *optMenu;
+	TQPopupMenu *optMenu;
 	KGVerify *verify;
 #ifdef WITH_KDM_XCONSOLE
 	KConsole *consoleView;
@@ -79,7 +79,7 @@ class KGDialog : public FDialog {
 	void ensureMenu();
 
 #ifdef HAVE_VTS
-	QPopupMenu *dpyMenu;
+	TQPopupMenu *dpyMenu;
 #endif
 	int switchCode;
 };

@@ -22,13 +22,13 @@
 
 #include <klocale.h>
 #include <dcopref.h>
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <kdirnotify_stub.h>
 
 #include "managermoduleview.h"
 #include "mediamanagersettings.h"
 
-ManagerModule::ManagerModule( QWidget* parent, const char* name )
+ManagerModule::ManagerModule( TQWidget* parent, const char* name )
 	: KCModule( parent, name )
 {
 	ManagerModuleView *view = new ManagerModuleView( this );
@@ -36,14 +36,14 @@ ManagerModule::ManagerModule( QWidget* parent, const char* name )
 	addConfig(  MediaManagerSettings::self(), view );
 
 #ifndef COMPILE_HALBACKEND
-	QString hal_text = view->kcfg_HalBackendEnabled->text();
+	TQString hal_text = view->kcfg_HalBackendEnabled->text();
 	hal_text += " ("+i18n("No support for HAL on this system")+")";
 	view->kcfg_HalBackendEnabled->setText( hal_text );
 #endif
 	view->kcfg_HalBackendEnabled->setEnabled( false );
 
 #ifndef COMPILE_LINUXCDPOLLING
-	QString poll_text = view->kcfg_CdPollingEnabled->text();
+	TQString poll_text = view->kcfg_CdPollingEnabled->text();
 	poll_text += " ("+i18n("No support for CD polling on this system")+")";
 	view->kcfg_CdPollingEnabled->setText( poll_text );
 #endif

@@ -30,7 +30,7 @@ class KActionMenu;
 class QTextStream;
 class KPopupMenu;
 
-class KBookmarkHandler : public QObject, public KBookmarkOwner
+class KBookmarkHandler : public TQObject, public KBookmarkOwner
 {
     Q_OBJECT
 
@@ -39,19 +39,19 @@ public:
     ~KBookmarkHandler();
 
     // KBookmarkOwner interface:
-    virtual void openBookmarkURL( const QString& url ) { emit openURL( url ); }
-    virtual QString currentURL() const;
+    virtual void openBookmarkURL( const TQString& url ) { emit openURL( url ); }
+    virtual TQString currentURL() const;
 
     KPopupMenu *menu() const { return m_menu; }
 
 signals:
-    void openURL( const QString& url );
+    void openURL( const TQString& url );
 
 private slots:
-    void slotNewBookmark( const QString& text, const QCString& url,
-                          const QString& additionalInfo );
-    void slotNewFolder( const QString& text, bool open,
-                        const QString& additionalInfo );
+    void slotNewBookmark( const TQString& text, const TQCString& url,
+                          const TQString& additionalInfo );
+    void slotNewFolder( const TQString& text, bool open,
+                        const TQString& additionalInfo );
     void newSeparator();
     void endFolder();
 
@@ -63,7 +63,7 @@ private:
     KPopupMenu *m_menu;
     KBookmarkMenu *m_bookmarkMenu;
 
-    QTextStream *m_importStream;
+    TQTextStream *m_importStream;
 
     //class KBookmarkHandlerPrivate *d;
 };

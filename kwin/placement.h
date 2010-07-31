@@ -13,8 +13,8 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef KWIN_PLACEMENT_H
 #define KWIN_PLACEMENT_H
 
-#include <qpoint.h>
-#include <qvaluelist.h>
+#include <tqpoint.h>
+#include <tqvaluelist.h>
 
 namespace KWinInternal
 {
@@ -49,40 +49,40 @@ class Placement
             Maximizing
             };
 
-        void place(Client* c, QRect& area );
+        void place(Client* c, TQRect& area );
         
-        void placeAtRandom            (Client* c, const QRect& area, Policy next = Unknown );
-        void placeCascaded            (Client* c, QRect& area, Policy next = Unknown );
-        void placeSmart               (Client* c, const QRect& area, Policy next = Unknown );
-        void placeMaximizing          (Client* c, QRect& area, Policy next = Unknown );
-        void placeCentered    (Client* c, const QRect& area, Policy next = Unknown );
-        void placeZeroCornered(Client* c, const QRect& area, Policy next = Unknown );
-        void placeDialog      (Client* c, QRect& area, Policy next = Unknown );
-        void placeUtility     (Client* c, QRect& area, Policy next = Unknown );
+        void placeAtRandom            (Client* c, const TQRect& area, Policy next = Unknown );
+        void placeCascaded            (Client* c, TQRect& area, Policy next = Unknown );
+        void placeSmart               (Client* c, const TQRect& area, Policy next = Unknown );
+        void placeMaximizing          (Client* c, TQRect& area, Policy next = Unknown );
+        void placeCentered    (Client* c, const TQRect& area, Policy next = Unknown );
+        void placeZeroCornered(Client* c, const TQRect& area, Policy next = Unknown );
+        void placeDialog      (Client* c, TQRect& area, Policy next = Unknown );
+        void placeUtility     (Client* c, TQRect& area, Policy next = Unknown );
 
         void reinitCascading( int desktop );
 
-        static Policy policyFromString( const QString& policy, bool no_special );
+        static Policy policyFromString( const TQString& policy, bool no_special );
         static const char* policyToString( Policy policy );
 
     private:
 
-        void place(Client* c, QRect& area, Policy policy, Policy nextPlacement = Unknown );
-        void placeUnderMouse(Client* c, QRect& area, Policy next = Unknown );
-        void placeOnMainWindow(Client* c, QRect& area, Policy next = Unknown );
-        QRect checkArea( const Client*c, const QRect& area );
+        void place(Client* c, TQRect& area, Policy policy, Policy nextPlacement = Unknown );
+        void placeUnderMouse(Client* c, TQRect& area, Policy next = Unknown );
+        void placeOnMainWindow(Client* c, TQRect& area, Policy next = Unknown );
+        TQRect checkArea( const Client*c, const TQRect& area );
 
         Placement();
 
     //CT needed for cascading+
         struct DesktopCascadingInfo 
             {
-            QPoint pos;
+            TQPoint pos;
             int col;
             int row;
             };
 
-        QValueList<DesktopCascadingInfo> cci;
+        TQValueList<DesktopCascadingInfo> cci;
 
         Workspace* m_WorkspacePtr;
     };

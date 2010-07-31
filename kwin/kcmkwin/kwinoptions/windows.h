@@ -22,7 +22,7 @@
 #ifndef __KWINDOWCONFIG_H__
 #define __KWINDOWCONFIG_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kcmodule.h>
 #include <config.h>
 
@@ -72,7 +72,7 @@ class KFocusConfig : public KCModule
 {
   Q_OBJECT
 public:
-  KFocusConfig( bool _standAlone, KConfig *_config, QWidget *parent=0, const char* name=0 );
+  KFocusConfig( bool _standAlone, KConfig *_config, TQWidget *parent=0, const char* name=0 );
   ~KFocusConfig();
 
   void load();
@@ -109,21 +109,21 @@ private:
   void setRollOverDesktops(bool);
   void setShowPopupinfo(bool);
 
-  QButtonGroup *fcsBox;
-  QComboBox *focusCombo;
-  QCheckBox *autoRaiseOn;
-  QCheckBox *delayFocusOn;
-  QCheckBox *clickRaiseOn;
+  TQButtonGroup *fcsBox;
+  TQComboBox *focusCombo;
+  TQCheckBox *autoRaiseOn;
+  TQCheckBox *delayFocusOn;
+  TQCheckBox *clickRaiseOn;
   KIntNumInput *autoRaise;
   KIntNumInput *delayFocus;
-  QCheckBox *separateScreenFocus;
-  QCheckBox *activeMouseScreen;
+  TQCheckBox *separateScreenFocus;
+  TQCheckBox *activeMouseScreen;
 
-  QButtonGroup *kbdBox;
-  QCheckBox    *altTabPopup;
-  QCheckBox    *traverseAll;
-  QCheckBox    *rollOverDesktops;
-  QCheckBox    *showPopupinfo;
+  TQButtonGroup *kbdBox;
+  TQCheckBox    *altTabPopup;
+  TQCheckBox    *traverseAll;
+  TQCheckBox    *rollOverDesktops;
+  TQCheckBox    *showPopupinfo;
 
   KConfig *config;
   bool     standAlone;
@@ -133,7 +133,7 @@ class KMovingConfig : public KCModule
 {
   Q_OBJECT
 public:
-  KMovingConfig( bool _standAlone, KConfig *config, QWidget *parent=0, const char* name=0 );
+  KMovingConfig( bool _standAlone, KConfig *config, TQWidget *parent=0, const char* name=0 );
   ~KMovingConfig();
 
   void load();
@@ -161,16 +161,16 @@ private:
   void setPlacement(int); //CT
   void setMoveResizeMaximized(bool);
 
-  QButtonGroup *windowsBox;
-  QCheckBox *opaque;
-  QCheckBox *resizeOpaqueOn;
-  QCheckBox *geometryTipOn;
-  QCheckBox* minimizeAnimOn;
-  QSlider *minimizeAnimSlider;
-  QLabel *minimizeAnimSlowLabel, *minimizeAnimFastLabel;
-  QCheckBox *moveResizeMaximized;
+  TQButtonGroup *windowsBox;
+  TQCheckBox *opaque;
+  TQCheckBox *resizeOpaqueOn;
+  TQCheckBox *geometryTipOn;
+  TQCheckBox* minimizeAnimOn;
+  TQSlider *minimizeAnimSlider;
+  TQLabel *minimizeAnimSlowLabel, *minimizeAnimFastLabel;
+  TQCheckBox *moveResizeMaximized;
 
-  QComboBox *placementCombo;
+  TQComboBox *placementCombo;
 
   KConfig *config;
   bool     standAlone;
@@ -180,9 +180,9 @@ private:
   int getWindowSnapZone();
   void setWindowSnapZone( int );
 
-  QVButtonGroup *MagicBox;
+  TQVButtonGroup *MagicBox;
   KIntNumInput *BrdrSnap, *WndwSnap;
-  QCheckBox *OverlapSnap;
+  TQCheckBox *OverlapSnap;
 
 };
 
@@ -190,7 +190,7 @@ class KAdvancedConfig : public KCModule
 {
   Q_OBJECT
 public:
-  KAdvancedConfig( bool _standAlone, KConfig *config, QWidget *parent=0, const char* name=0 );
+  KAdvancedConfig( bool _standAlone, KConfig *config, TQWidget *parent=0, const char* name=0 );
   ~KAdvancedConfig();
 
   void load();
@@ -212,9 +212,9 @@ private:
   void setShadeHover(bool);
   void setShadeHoverInterval(int);
 
-  QCheckBox *animateShade;
-  QButtonGroup *shBox;
-  QCheckBox *shadeHoverOn;
+  TQCheckBox *animateShade;
+  TQButtonGroup *shBox;
+  TQCheckBox *shadeHoverOn;
   KIntNumInput *shadeHover;
 
   KConfig *config;
@@ -225,17 +225,17 @@ private:
   void setElectricBorders( int );
   void setElectricBorderDelay( int );
 
-  QVButtonGroup *electricBox;
-  QRadioButton *active_disable;
-  QRadioButton *active_move;
-  QRadioButton *active_always;
+  TQVButtonGroup *electricBox;
+  TQRadioButton *active_disable;
+  TQRadioButton *active_move;
+  TQRadioButton *active_always;
   KIntNumInput *delays;
   
   void setFocusStealing( int );
   void setHideUtilityWindowsForInactive( bool );
 
-  QComboBox* focusStealing;
-  QCheckBox* hideUtilityWindowsForInactive;
+  TQComboBox* focusStealing;
+  TQCheckBox* hideUtilityWindowsForInactive;
 };
 
 class KProcess;
@@ -243,7 +243,7 @@ class KTranslucencyConfig : public KCModule
 {
   Q_OBJECT
 public:
-  KTranslucencyConfig( bool _standAlone, KConfig *config, QWidget *parent=0, const char* name=0 );
+  KTranslucencyConfig( bool _standAlone, KConfig *config, TQWidget *parent=0, const char* name=0 );
   ~KTranslucencyConfig();
   
   void load();
@@ -251,21 +251,21 @@ public:
   void defaults();
   
 private:
-  QCheckBox *useTranslucency;
-  QCheckBox *activeWindowTransparency;
-  QCheckBox *inactiveWindowTransparency;
-  QCheckBox *movingWindowTransparency;
-  QCheckBox *dockWindowTransparency;
-  QCheckBox *keepAboveAsActive;
-  QCheckBox *disableARGB;
-  QCheckBox *fadeInWindows;
-  QCheckBox *fadeOnOpacityChange;
-  QCheckBox *useShadows;
-  QCheckBox *removeShadowsOnResize;
-  QCheckBox *removeShadowsOnMove;
-  QGroupBox *sGroup;
-  QCheckBox *onlyDecoTranslucent;
-//   QPushButton *xcompmgrButton;
+  TQCheckBox *useTranslucency;
+  TQCheckBox *activeWindowTransparency;
+  TQCheckBox *inactiveWindowTransparency;
+  TQCheckBox *movingWindowTransparency;
+  TQCheckBox *dockWindowTransparency;
+  TQCheckBox *keepAboveAsActive;
+  TQCheckBox *disableARGB;
+  TQCheckBox *fadeInWindows;
+  TQCheckBox *fadeOnOpacityChange;
+  TQCheckBox *useShadows;
+  TQCheckBox *removeShadowsOnResize;
+  TQCheckBox *removeShadowsOnMove;
+  TQGroupBox *sGroup;
+  TQCheckBox *onlyDecoTranslucent;
+//   TQPushButton *xcompmgrButton;
   KIntNumInput *activeWindowOpacity;
   KIntNumInput *inactiveWindowOpacity;
   KIntNumInput *movingWindowOpacity;

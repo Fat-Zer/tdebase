@@ -12,7 +12,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include "placement.h"
 
-#include <qrect.h>
+#include <tqrect.h>
 #include <assert.h>
 
 #ifndef KCMRULES
@@ -37,7 +37,7 @@ Placement::Placement(Workspace* w)
 /*!
   Places the client \a c according to the workspace's layout policy
  */
-void Placement::place(Client* c, QRect& area )
+void Placement::place(Client* c, TQRect& area )
     {
     Policy policy = c->rules()->checkPlacement( Default );
     if( policy != Default )
@@ -56,7 +56,7 @@ void Placement::place(Client* c, QRect& area )
         place(c, area, options->placement);
     }
 
-void Placement::place(Client* c, QRect& area, Policy policy, Policy nextPlacement )
+void Placement::place(Client* c, TQRect& area, Policy policy, Policy nextPlacement )
     {
     if( policy == Unknown )
         policy = Default;
@@ -85,14 +85,14 @@ void Placement::place(Client* c, QRect& area, Policy policy, Policy nextPlacemen
 /*!
   Place the client \a c according to a simply "random" placement algorithm.
  */
-void Placement::placeAtRandom(Client* c, const QRect& area, Policy /*next*/ )
+void Placement::placeAtRandom(Client* c, const TQRect& area, Policy /*next*/ )
     {
     const int step  = 24;
     static int px = step;
     static int py = 2 * step;
     int tx,ty;
 
-    const QRect maxRect = checkArea( c, area );
+    const TQRect maxRect = checkArea( c, area );
 
     if (px < maxRect.x())
         px = maxRect.x();
@@ -128,7 +128,7 @@ void Placement::placeAtRandom(Client* c, const QRect& area, Policy /*next*/ )
 /*!
   Place the client \a c according to a really smart placement algorithm :-)
 */
-void Placement::placeSmart(Client* c, const QRect& area, Policy /*next*/ )
+void Placement::placeSmart(Client* c, const TQRect& area, Policy /*next*/ )
     {
     /*
      * SmartPlacement by Cristian Tibirna (tibirna@kde.org)
@@ -150,7 +150,7 @@ void Placement::placeSmart(Client* c, const QRect& area, Policy /*next*/ )
     int basket;                 //temp holder
 
     // get the maximum allowed windows space
-    const QRect maxRect = checkArea( c, area );
+    const TQRect maxRect = checkArea( c, area );
     int x = maxRect.left(), y = maxRect.top();
     x_optimal = x; y_optimal = y;
 
@@ -304,7 +304,7 @@ void Placement::reinitCascading( int desktop )
         for( int i = 0; i < m_WorkspacePtr->numberOfDesktops(); i++) 
             {
             DesktopCascadingInfo inf;
-            inf.pos = QPoint(-1,-1);
+            inf.pos = TQPoint(-1,-1);
             inf.col = 0;
             inf.row = 0;
             cci.append(inf);
@@ -312,7 +312,7 @@ void Placement::reinitCascading( int desktop )
         }
     else
         {
-        cci[desktop - 1].pos = QPoint(-1, -1);
+        cci[desktop - 1].pos = TQPoint(-1, -1);
         cci[desktop - 1].col = cci[desktop - 1].row = 0;
         }
     }
@@ -320,7 +320,7 @@ void Placement::reinitCascading( int desktop )
 /*!
   Place windows in a cascading order, remembering positions for each desktop
 */
-void Placement::placeCascaded (Client* c, QRect& area, Policy nextPlacement)
+void Placement::placeCascaded (Client* c, TQRect& area, Policy nextPlacement)
     {
     /* cascadePlacement by Cristian Tibirna (tibirna@kde.org) (30Jan98)
      */
@@ -334,7 +334,7 @@ void Placement::placeCascaded (Client* c, QRect& area, Policy nextPlacement)
     const int dn = c->desktop() == 0 || c->isOnAllDesktops() ? (m_WorkspacePtr->currentDesktop() - 1) : (c->desktop() - 1);
 
     // get the maximum allowed windows space and desk's origin
-    QRect maxRect = checkArea( c, area );
+    TQRect maxRect = checkArea( c, area );
 
     // initialize often used vars: width and height of c; we gain speed
     const int ch = c->height();
@@ -350,7 +350,7 @@ void Placement::placeCascaded (Client* c, QRect& area, Policy nextPlacement)
   //initialize if needed
     if (cci[dn].pos.x() < 0 || cci[dn].pos.x() < X || cci[dn].pos.y() < Y )
         {
-        cci[dn].pos = QPoint(X, Y);
+        cci[dn].pos = TQPoint(X, Y);
         cci[dn].col = cci[dn].row = 0;
         }
 
@@ -399,41 +399,41 @@ void Placement::placeCascaded (Client* c, QRect& area, Policy nextPlacement)
         }
 
     // place the window
-    c->move(QPoint(xp, yp));
+    c->move(TQPoint(xp, yp));
 
     // new position
-    cci[dn].pos = QPoint(xp + delta_x,  yp + delta_y);
+    cci[dn].pos = TQPoint(xp + delta_x,  yp + delta_y);
     }
 
 /*!
   Place windows centered, on top of all others
 */
-void Placement::placeCentered (Client* c, const QRect& area, Policy /*next*/ )
+void Placement::placeCentered (Client* c, const TQRect& area, Policy /*next*/ )
     {
 
     // get the maximum allowed windows space and desk's origin
-    const QRect maxRect = checkArea( c, area );
+    const TQRect maxRect = checkArea( c, area );
 
     const int xp = maxRect.left() + (maxRect.width() -  c->width())  / 2;
     const int yp = maxRect.top()  + (maxRect.height() - c->height()) / 2;
 
     // place the window
-    c->move(QPoint(xp, yp));
+    c->move(TQPoint(xp, yp));
     }
 
 /*!
   Place windows in the (0,0) corner, on top of all others
 */
-void Placement::placeZeroCornered(Client* c, const QRect& area, Policy /*next*/ )
+void Placement::placeZeroCornered(Client* c, const TQRect& area, Policy /*next*/ )
     {
     // get the maximum allowed windows space and desk's origin
-    const QRect maxRect = checkArea( c, area );
+    const TQRect maxRect = checkArea( c, area );
 
     // place the window
-    c->move(QPoint(maxRect.left(), maxRect.top()));
+    c->move(TQPoint(maxRect.left(), maxRect.top()));
     }
 
-void Placement::placeUtility(Client* c, QRect& area, Policy /*next*/ )
+void Placement::placeUtility(Client* c, TQRect& area, Policy /*next*/ )
     {
 // TODO kwin should try to place utility windows next to their mainwindow,
 // preferably at the right edge, and going down if there are more of them
@@ -444,21 +444,21 @@ void Placement::placeUtility(Client* c, QRect& area, Policy /*next*/ )
     }
 
 
-void Placement::placeDialog(Client* c, QRect& area, Policy nextPlacement )
+void Placement::placeDialog(Client* c, TQRect& area, Policy nextPlacement )
     {
     placeOnMainWindow( c, area, nextPlacement );
     }
 
-void Placement::placeUnderMouse(Client* c, QRect& area, Policy /*next*/ )
+void Placement::placeUnderMouse(Client* c, TQRect& area, Policy /*next*/ )
     {
     area = checkArea( c, area );
-    QRect geom = c->geometry();
-    geom.moveCenter( QCursor::pos());
+    TQRect geom = c->geometry();
+    geom.moveCenter( TQCursor::pos());
     c->move( geom.topLeft());
     c->keepInArea( area ); // make sure it's kept inside workarea
     }
 
-void Placement::placeOnMainWindow(Client* c, QRect& area, Policy nextPlacement )
+void Placement::placeOnMainWindow(Client* c, TQRect& area, Policy nextPlacement )
     {
     if( nextPlacement == Unknown )
         nextPlacement = Centered;
@@ -507,15 +507,15 @@ void Placement::placeOnMainWindow(Client* c, QRect& area, Policy nextPlacement )
         place( c, area, Centered );
         return;
         }
-    QRect geom = c->geometry();
+    TQRect geom = c->geometry();
     geom.moveCenter( place_on->geometry().center());
     c->move( geom.topLeft());
     // get area again, because the mainwindow may be on different xinerama screen
-    area = checkArea( c, QRect()); 
+    area = checkArea( c, TQRect()); 
     c->keepInArea( area ); // make sure it's kept inside workarea
     }
 
-void Placement::placeMaximizing(Client* c, QRect& area, Policy nextPlacement )
+void Placement::placeMaximizing(Client* c, TQRect& area, Policy nextPlacement )
     {
     if( nextPlacement == Unknown )
         nextPlacement = Smart;
@@ -535,7 +535,7 @@ void Placement::placeMaximizing(Client* c, QRect& area, Policy nextPlacement )
         }
     }
 
-QRect Placement::checkArea( const Client* c, const QRect& area )
+TQRect Placement::checkArea( const Client* c, const TQRect& area )
     {
     if( area.isNull())
         return m_WorkspacePtr->clientArea( PlacementArea, c->geometry().center(), c->desktop());
@@ -545,7 +545,7 @@ QRect Placement::checkArea( const Client* c, const QRect& area )
 #endif
 
 
-Placement::Policy Placement::policyFromString( const QString& policy, bool no_special )
+Placement::Policy Placement::policyFromString( const TQString& policy, bool no_special )
     {
     if( policy == "NoPlacement" )
         return NoPlacement;
@@ -627,16 +627,16 @@ void Client::growHorizontal()
     {
     if( !isResizable() || isShade())
         return;
-    QRect geom = geometry();
+    TQRect geom = geometry();
     geom.setRight( workspace()->packPositionRight( this, geom.right(), true ));
-    QSize adjsize = adjustedSize( geom.size(), SizemodeFixedW );
+    TQSize adjsize = adjustedSize( geom.size(), SizemodeFixedW );
     if( geometry().size() == adjsize && geom.size() != adjsize && xSizeHint.width_inc > 1 ) // take care of size increments
         {
         int newright = workspace()->packPositionRight( this, geom.right() + xSizeHint.width_inc - 1, true );
         // check that it hasn't grown outside of the area, due to size increments
         // TODO this may be wrong?
         if( workspace()->clientArea( MovementArea,
-            QPoint(( x() + newright ) / 2, geometry().center().y()), desktop()).right() >= newright )
+            TQPoint(( x() + newright ) / 2, geometry().center().y()), desktop()).right() >= newright )
             geom.setRight( newright );
         }
     geom.setSize( adjustedSize( geom.size(), SizemodeFixedW ));
@@ -653,7 +653,7 @@ void Client::shrinkHorizontal()
     {
     if( !isResizable() || isShade())
         return;
-    QRect geom = geometry();
+    TQRect geom = geometry();
     geom.setRight( workspace()->packPositionLeft( this, geom.right(), false ));
     if( geom.width() <= 1 )
         return;
@@ -672,15 +672,15 @@ void Client::growVertical()
     {
     if( !isResizable() || isShade())
         return;
-    QRect geom = geometry();
+    TQRect geom = geometry();
     geom.setBottom( workspace()->packPositionDown( this, geom.bottom(), true ));
-    QSize adjsize = adjustedSize( geom.size(), SizemodeFixedH );
+    TQSize adjsize = adjustedSize( geom.size(), SizemodeFixedH );
     if( geometry().size() == adjsize && geom.size() != adjsize && xSizeHint.height_inc > 1 ) // take care of size increments
         {
         int newbottom = workspace()->packPositionDown( this, geom.bottom() + xSizeHint.height_inc - 1, true );
         // check that it hasn't grown outside of the area, due to size increments
         if( workspace()->clientArea( MovementArea,
-            QPoint( geometry().center().x(), ( y() + newbottom ) / 2 ), desktop()).bottom() >= newbottom )
+            TQPoint( geometry().center().x(), ( y() + newbottom ) / 2 ), desktop()).bottom() >= newbottom )
             geom.setBottom( newbottom );
         }
     geom.setSize( adjustedSize( geom.size(), SizemodeFixedH ));
@@ -698,7 +698,7 @@ void Client::shrinkVertical()
     {
     if( !isResizable() || isShade())
         return;
-    QRect geom = geometry();
+    TQRect geom = geometry();
     geom.setBottom( workspace()->packPositionUp( this, geom.bottom(), false ));
     if( geom.height() <= 1 )
         return;
@@ -712,7 +712,7 @@ int Workspace::packPositionLeft( const Client* cl, int oldx, bool left_edge ) co
     int newx = clientArea( MovementArea, cl ).left();
     if( oldx <= newx ) // try another Xinerama screen
         newx = clientArea( MovementArea,
-            QPoint( cl->geometry().left() - 1, cl->geometry().center().y()), cl->desktop()).left();
+            TQPoint( cl->geometry().left() - 1, cl->geometry().center().y()), cl->desktop()).left();
     if( oldx <= newx )
         return oldx;
     for( ClientList::ConstIterator it = clients.begin();
@@ -735,7 +735,7 @@ int Workspace::packPositionRight( const Client* cl, int oldx, bool right_edge ) 
     int newx = clientArea( MovementArea, cl ).right();
     if( oldx >= newx ) // try another Xinerama screen
         newx = clientArea( MovementArea,
-            QPoint( cl->geometry().right() + 1, cl->geometry().center().y()), cl->desktop()).right();
+            TQPoint( cl->geometry().right() + 1, cl->geometry().center().y()), cl->desktop()).right();
     if( oldx >= newx )
         return oldx;
     for( ClientList::ConstIterator it = clients.begin();
@@ -758,7 +758,7 @@ int Workspace::packPositionUp( const Client* cl, int oldy, bool top_edge ) const
     int newy = clientArea( MovementArea, cl ).top();
     if( oldy <= newy ) // try another Xinerama screen
         newy = clientArea( MovementArea,
-            QPoint( cl->geometry().center().x(), cl->geometry().top() - 1 ), cl->desktop()).top();
+            TQPoint( cl->geometry().center().x(), cl->geometry().top() - 1 ), cl->desktop()).top();
     if( oldy <= newy )
         return oldy;
     for( ClientList::ConstIterator it = clients.begin();
@@ -781,7 +781,7 @@ int Workspace::packPositionDown( const Client* cl, int oldy, bool bottom_edge ) 
     int newy = clientArea( MovementArea, cl ).bottom();
     if( oldy >= newy ) // try another Xinerama screen
         newy = clientArea( MovementArea,
-            QPoint( cl->geometry().center().x(), cl->geometry().bottom() + 1 ), cl->desktop()).bottom();
+            TQPoint( cl->geometry().center().x(), cl->geometry().bottom() + 1 ), cl->desktop()).bottom();
     if( oldy >= newy )
         return oldy;
     for( ClientList::ConstIterator it = clients.begin();
@@ -802,12 +802,12 @@ int Workspace::packPositionDown( const Client* cl, int oldy, bool bottom_edge ) 
 /*!
   Asks the internal positioning object to place a client
 */
-void Workspace::place(Client* c, QRect& area)
+void Workspace::place(Client* c, TQRect& area)
     {
     initPositioning->place( c, area );
     }
 
-void Workspace::placeSmart(Client* c, const QRect& area)
+void Workspace::placeSmart(Client* c, const TQRect& area)
     {
     initPositioning->placeSmart( c, area );
     }

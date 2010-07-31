@@ -27,7 +27,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Misc.h"
-#include <qfile.h>
+#include <tqfile.h>
 #include <kprocess.h> 
 #include <kstandarddirs.h>
 #include <klargefile.h>
@@ -40,14 +40,14 @@ namespace KFI
 namespace Misc
 {
 
-QString linkedTo(const QString &i)
+TQString linkedTo(const TQString &i)
 {
-    QString d;
+    TQString d;
 
     if(isLink(i))
     {
         char buffer[1000];
-        int  n=readlink(QFile::encodeName(i), buffer, 1000);
+        int  n=readlink(TQFile::encodeName(i), buffer, 1000);
 
         if(n!=-1)
         {
@@ -59,11 +59,11 @@ QString linkedTo(const QString &i)
     return d;
 }
 
-QString dirSyntax(const QString &d)
+TQString dirSyntax(const TQString &d)
 {
     if(!d.isEmpty())
     {
-        QString ds(d);
+        TQString ds(d);
 
         ds.replace("//", "/");
 
@@ -78,11 +78,11 @@ QString dirSyntax(const QString &d)
     return d;
 }
 
-QString xDirSyntax(const QString &d)
+TQString xDirSyntax(const TQString &d)
 {
     if(!d.isEmpty())
     {
-        QString ds(d);
+        TQString ds(d);
 
         ds.replace("//", "/");
 
@@ -96,9 +96,9 @@ QString xDirSyntax(const QString &d)
     return d;
 }
 
-QString getDir(const QString &f)
+TQString getDir(const TQString &f)
 {
-    QString d(f);
+    TQString d(f);
 
     int slashPos=d.findRev('/');
  
@@ -108,9 +108,9 @@ QString getDir(const QString &f)
     return dirSyntax(d);
 }
 
-QString getFile(const QString &f)
+TQString getFile(const TQString &f)
 {
-    QString d(f);
+    TQString d(f);
 
     int slashPos=d.findRev('/');
  
@@ -120,7 +120,7 @@ QString getFile(const QString &f)
     return d;
 }
 
-bool createDir(const QString &dir)
+bool createDir(const TQString &dir)
 {
     //
     // Clear any umask before dir is created
@@ -131,7 +131,7 @@ bool createDir(const QString &dir)
     return status;
 }
 
-bool doCmd(const QString &cmd, const QString &p1, const QString &p2, const QString &p3)
+bool doCmd(const TQString &cmd, const TQString &p1, const TQString &p2, const TQString &p3)
 {
     KProcess proc;
 
@@ -149,13 +149,13 @@ bool doCmd(const QString &cmd, const QString &p1, const QString &p2, const QStri
     return proc.normalExit() && proc.exitStatus()==0;
 }
 
-QString changeExt(const QString &f, const QString &newExt)
+TQString changeExt(const TQString &f, const TQString &newExt)
 {
-    QString newStr(f);
+    TQString newStr(f);
     int     dotPos=newStr.findRev('.');
 
     if(-1==dotPos)
-        newStr+=QChar('.')+newExt;
+        newStr+=TQChar('.')+newExt;
     else
     {
         newStr.remove(dotPos+1, newStr.length());
@@ -164,9 +164,9 @@ QString changeExt(const QString &f, const QString &newExt)
     return newStr;
 }
 
-void createBackup(const QString &f)
+void createBackup(const TQString &f)
 {
-    const QString constExt(".bak");
+    const TQString constExt(".bak");
 
     if(!fExists(f+constExt) && fExists(f))
         doCmd("cp", "-f", f, f+constExt);
@@ -179,7 +179,7 @@ void createBackup(const QString &f)
 //
 //    Associated: /home/a/courier.afm /home/a/courier.pfm
 //
-void getAssociatedUrls(const KURL &url, KURL::List &list, bool afmAndPfm, QWidget *widget)
+void getAssociatedUrls(const KURL &url, KURL::List &list, bool afmAndPfm, TQWidget *widget)
 {
     const char *afm[]={"afm", "AFM", "Afm", "AFm", "AfM", "aFM", "aFm", "afM", NULL},
                *pfm[]={"pfm", "PFM", "Pfm", "PFm", "PfM", "pFM", "pFm", "pfM", NULL};
@@ -217,18 +217,18 @@ void getAssociatedUrls(const KURL &url, KURL::List &list, bool afmAndPfm, QWidge
         }
 }
 
-time_t getTimeStamp(const QString &item)
+time_t getTimeStamp(const TQString &item)
 {
     KDE_struct_stat info;
 
-    return !item.isEmpty() && 0==KDE_lstat(QFile::encodeName(item), &info) ? info.st_mtime : 0;
+    return !item.isEmpty() && 0==KDE_lstat(TQFile::encodeName(item), &info) ? info.st_mtime : 0;
 }
 
 
-bool check(const QString &path, unsigned int fmt, bool checkW)
+bool check(const TQString &path, unsigned int fmt, bool checkW)
 { 
     KDE_struct_stat info;
-    QCString        pathC(QFile::encodeName(path));
+    TQCString        pathC(TQFile::encodeName(path));
 
     return 0==KDE_lstat(pathC, &info) && (info.st_mode&S_IFMT)==fmt && (!checkW || 0==::access(pathC, W_OK));
 }

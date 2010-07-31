@@ -24,15 +24,15 @@
 #include <signal.h>
 #include <stdlib.h>
 
-#include <qsocketnotifier.h>
+#include <tqsocketnotifier.h>
 
 #include <kinputdialog.h>
 #include <kglobalsettings.h>
 #include <kdesu/process.h>
 #include <klocale.h>
 
-KShellCommandExecutor::KShellCommandExecutor(const QString& command, QWidget* parent)
-:QTextView(parent)
+KShellCommandExecutor::KShellCommandExecutor(const TQString& command, TQWidget* parent)
+:TQTextView(parent)
 ,m_shellProcess(0)
 ,m_command(command)
 ,m_readNotifier(0)
@@ -73,7 +73,7 @@ int KShellCommandExecutor::exec()
    args+=m_command.local8Bit();
    //kdDebug()<<"------- executing: "<<m_command.local8Bit()<<endl;
 
-   QCString shell( getenv("SHELL") );
+   TQCString shell( getenv("SHELL") );
    if (shell.isEmpty())
       shell = "sh";
 
@@ -84,11 +84,11 @@ int KShellCommandExecutor::exec()
       return 0;
    }
 
-   m_readNotifier=new QSocketNotifier(m_shellProcess->fd(),QSocketNotifier::Read, this);
-   m_writeNotifier=new QSocketNotifier(m_shellProcess->fd(),QSocketNotifier::Write, this);
+   m_readNotifier=new TQSocketNotifier(m_shellProcess->fd(),TQSocketNotifier::Read, this);
+   m_writeNotifier=new TQSocketNotifier(m_shellProcess->fd(),TQSocketNotifier::Write, this);
    m_writeNotifier->setEnabled(false);
-   connect (m_readNotifier, SIGNAL(activated(int)), this,SLOT(readDataFromShell()));
-   connect (m_writeNotifier, SIGNAL(activated(int)), this,SLOT(writeDataToShell()));
+   connect (m_readNotifier, TQT_SIGNAL(activated(int)), this,TQT_SLOT(readDataFromShell()));
+   connect (m_writeNotifier, TQT_SIGNAL(activated(int)), this,TQT_SLOT(writeDataToShell()));
 
    return 1;
 }
@@ -108,7 +108,7 @@ void KShellCommandExecutor::readDataFromShell()
    {
       //kdDebug()<<"***********************\n"<<buffer<<"###################\n"<<endl;
       buffer[bytesRead]='\0';
-      this->append(QString::fromLocal8Bit(buffer));
+      this->append(TQString::fromLocal8Bit(buffer));
       setTextFormat(PlainText);
    };
 }
@@ -117,11 +117,11 @@ void KShellCommandExecutor::writeDataToShell()
 {
    //kdDebug()<<"--------- writing ------------"<<endl;
    bool ok;
-   QString str = KInputDialog::getText( QString::null,
-      i18n( "Input Required:" ), QString::null, &ok, this );
+   TQString str = KInputDialog::getText( TQString::null,
+      i18n( "Input Required:" ), TQString::null, &ok, this );
    if ( ok )
    {
-      QCString input=str.local8Bit();
+      TQCString input=str.local8Bit();
       ::write(m_shellProcess->fd(),input,input.length());
       ::write(m_shellProcess->fd(),"\n",1);
    }

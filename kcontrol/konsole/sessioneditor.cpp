@@ -18,8 +18,8 @@
 #include "sessioneditor.h"
 #include "sessioneditor.moc"
 
-#include <qlineedit.h>
-#include <qcombobox.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
@@ -38,18 +38,18 @@
 class SessionListBoxText : public QListBoxText
 {
   public:
-    SessionListBoxText(const QString &title, const QString &filename): QListBoxText(title)
+    SessionListBoxText(const TQString &title, const TQString &filename): TQListBoxText(title)
     {
       m_filename = filename;
     };
 
-    const QString filename() { return m_filename; };
+    const TQString filename() { return m_filename; };
 
   private:
-    QString m_filename;
+    TQString m_filename;
 };
 
-SessionEditor::SessionEditor(QWidget * parent, const char *name)
+SessionEditor::SessionEditor(TQWidget * parent, const char *name)
 :SessionDialog(parent, name)
 {
   sesMod=false;
@@ -60,20 +60,20 @@ SessionEditor::SessionEditor(QWidget * parent, const char *name)
   KGlobal::iconLoader()->addAppDir( "konsole" );
 
   directoryLine->setMode(KFile::Directory);
-  connect(sessionList, SIGNAL(highlighted(int)), this, SLOT(readSession(int)));
-  connect(saveButton, SIGNAL(clicked()), this, SLOT(saveCurrent()));
-  connect(removeButton, SIGNAL(clicked()), this, SLOT(removeCurrent()));
+  connect(sessionList, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(readSession(int)));
+  connect(saveButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(saveCurrent()));
+  connect(removeButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(removeCurrent()));
 
-  connect(nameLine, SIGNAL(textChanged(const QString&)), this, SLOT(sessionModified()));
-  connect(directoryLine, SIGNAL(textChanged(const QString&)), this, SLOT(sessionModified()));
-  connect(executeLine, SIGNAL(textChanged(const QString&)), this, SLOT(sessionModified()));
-  connect(termLine, SIGNAL(textChanged(const QString&)), this, SLOT(sessionModified()));
+  connect(nameLine, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(sessionModified()));
+  connect(directoryLine, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(sessionModified()));
+  connect(executeLine, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(sessionModified()));
+  connect(termLine, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(sessionModified()));
 
-  connect(previewIcon, SIGNAL(iconChanged(QString)), this, SLOT(sessionModified()));
+  connect(previewIcon, TQT_SIGNAL(iconChanged(TQString)), this, TQT_SLOT(sessionModified()));
 
-  connect(fontCombo, SIGNAL(activated(int)), this, SLOT(sessionModified()));
-  connect(keytabCombo, SIGNAL(activated(int)), this, SLOT(sessionModified()));
-  connect(schemaCombo, SIGNAL(activated(int)), this, SLOT(sessionModified()));
+  connect(fontCombo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(sessionModified()));
+  connect(keytabCombo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(sessionModified()));
+  connect(schemaCombo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(sessionModified()));
 }
 
 SessionEditor::~SessionEditor()
@@ -97,22 +97,22 @@ void SessionEditor::show()
 
 void SessionEditor::loadAllKeytab()
 {
-  QStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
+  TQStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
   keytabCombo->clear();
   keytabFilename.clear();
 
   keytabCombo->insertItem(i18n("XTerm (XFree 4.x.x)"),0);
-  keytabFilename.append(new QString(""));
+  keytabFilename.append(new TQString(""));
 
   int i=1;
-  for(QStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
+  for(TQStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
   {
-    QString name = (*it);
-    QString title = readKeymapTitle(name);
+    TQString name = (*it);
+    TQString title = readKeymapTitle(name);
 
     name = name.section('/',-1);
     name = name.section('.',0);
-    keytabFilename.append(new QString(name));
+    keytabFilename.append(new TQString(name));
 
     if (title.isNull() || title.isEmpty())
       title=i18n("untitled");
@@ -123,18 +123,18 @@ void SessionEditor::loadAllKeytab()
   }
 }
 
-QString SessionEditor::readKeymapTitle(const QString & file)
+TQString SessionEditor::readKeymapTitle(const TQString & file)
 {
-  QString fPath = locate("data", "konsole/" + file);
+  TQString fPath = locate("data", "konsole/" + file);
 
   if (fPath.isNull())
     fPath = locate("data", file);
-  removeButton->setEnabled( QFileInfo (fPath).isWritable () );
+  removeButton->setEnabled( TQFileInfo (fPath).isWritable () );
 
   if (fPath.isNull())
     return 0;
 
-  FILE *sysin = fopen(QFile::encodeName(fPath), "r");
+  FILE *sysin = fopen(TQFile::encodeName(fPath), "r");
   if (!sysin)
     return 0;
 
@@ -146,7 +146,7 @@ QString SessionEditor::readKeymapTitle(const QString & file)
 	fclose(sysin);
         if(line[len-1] == '"')
           line[len-1] = '\000';
-        QString temp;
+        TQString temp;
         if(line[9] == '"')
           temp=i18n(line+10);
         else
@@ -157,19 +157,19 @@ QString SessionEditor::readKeymapTitle(const QString & file)
   return 0;
 }
 
-void SessionEditor::loadAllSession(QString currentFile)
+void SessionEditor::loadAllSession(TQString currentFile)
 {
-  QStringList list = KGlobal::dirs()->findAllResources("data", "konsole/*.desktop", false, true);
+  TQStringList list = KGlobal::dirs()->findAllResources("data", "konsole/*.desktop", false, true);
   sessionList->clear();
 
-  QListBoxItem* currentItem = 0;
-  for (QStringList::ConstIterator it = list.begin(); it != list.end(); ++it) {
+  TQListBoxItem* currentItem = 0;
+  for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it) {
 
-    QString name = (*it);
+    TQString name = (*it);
 
     KSimpleConfig* co = new KSimpleConfig(name,true);
     co->setDesktopGroup();
-    QString sesname = co->readEntry("Name",i18n("Unnamed"));
+    TQString sesname = co->readEntry("Name",i18n("Unnamed"));
     delete co;
 
     sessionList->insertItem(new SessionListBoxText(sesname, name));
@@ -186,21 +186,21 @@ void SessionEditor::loadAllSession(QString currentFile)
 void SessionEditor::readSession(int num)
 {
     int i,counter;
-    QString str;
+    TQString str;
     KSimpleConfig* co;
 
     if(sesMod) {
-        disconnect(sessionList, SIGNAL(highlighted(int)), this, SLOT(readSession(int)));
+        disconnect(sessionList, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(readSession(int)));
 
         sessionList->setCurrentItem(oldSession);
         querySave();
         sessionList->setCurrentItem(num);
-        connect(sessionList, SIGNAL(highlighted(int)), this, SLOT(readSession(int)));
+        connect(sessionList, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(readSession(int)));
         sesMod=false;
     }
     if( sessionList->item(num) )
     {
-        removeButton->setEnabled( QFileInfo ( ((SessionListBoxText *)sessionList->item(num))->filename() ).isWritable () );
+        removeButton->setEnabled( TQFileInfo ( ((SessionListBoxText *)sessionList->item(num))->filename() ).isWritable () );
         co = new KSimpleConfig( ((SessionListBoxText *)sessionList->item(num))->filename(),true);
 
         co->setDesktopGroup();
@@ -225,7 +225,7 @@ void SessionEditor::readSession(int num)
         str = co->readEntry("KeyTab","");
         i=0;
         counter=0;
-        for (QString *it = keytabFilename.first(); it != 0; it = keytabFilename.next()) {
+        for (TQString *it = keytabFilename.first(); it != 0; it = keytabFilename.next()) {
             if (str == (*it))
                 i = counter;
             counter++;
@@ -235,7 +235,7 @@ void SessionEditor::readSession(int num)
         str = co->readEntry("Schema","");
         i=0;
         counter=0;
-        for (QString *it = schemaFilename.first(); it != 0; it = schemaFilename.next()) {
+        for (TQString *it = schemaFilename.first(); it != 0; it = schemaFilename.next()) {
             if (str == (*it))
                 i = counter;
             counter++;
@@ -261,19 +261,19 @@ void SessionEditor::querySave()
     }
 }
 
-void SessionEditor::schemaListChanged(const QStringList &titles, const QStringList &filenames)
+void SessionEditor::schemaListChanged(const TQStringList &titles, const TQStringList &filenames)
 {
-  const QString text = schemaCombo->currentText();
+  const TQString text = schemaCombo->currentText();
 
   schemaCombo->clear();
   schemaFilename.clear();
 
   schemaCombo->insertItem(i18n("Konsole Default"),0);
-  schemaFilename.append(new QString(""));
+  schemaFilename.append(new TQString(""));
 
   schemaCombo->insertStringList(titles, 1);
-  for (QStringList::const_iterator it = filenames.begin(); it != filenames.end(); ++it)
-      schemaFilename.append(new QString(*it));
+  for (TQStringList::const_iterator it = filenames.begin(); it != filenames.end(); ++it)
+      schemaFilename.append(new TQString(*it));
 
   // Restore current item
   int item = 0;
@@ -289,14 +289,14 @@ void SessionEditor::saveCurrent()
 {
   // Verify Execute entry is valid; otherwise Konsole will ignore it.
   // This code is take from konsole.cpp; if you change one, change both.
-  QString exec = executeLine->text();
+  TQString exec = executeLine->text();
   if ( !exec.isEmpty() )  // If Execute field is empty, default shell is used.
   {
     if ( exec.startsWith( "su -c \'" ) )
       exec = exec.mid( 7, exec.length() - 8 );
     exec = KRun::binaryName( exec, false );
     exec = KShell::tildeExpand( exec );
-    QString pexec = KGlobal::dirs()->findExe( exec );
+    TQString pexec = KGlobal::dirs()->findExe( exec );
 
     if ( pexec.isEmpty() )
     {
@@ -311,7 +311,7 @@ void SessionEditor::saveCurrent()
 
   }
 
-  QString fullpath;
+  TQString fullpath;
   if (sessionList->currentText() == nameLine->text()) {
     fullpath = ( ((SessionListBoxText *)sessionList->item( sessionList->currentItem() ))->filename() ).section('/',-1);
   }
@@ -351,7 +351,7 @@ void SessionEditor::saveCurrent()
 
 void SessionEditor::removeCurrent()
 {
-  QString base = ((SessionListBoxText *)sessionList->item( sessionList->currentItem() ))->filename();
+  TQString base = ((SessionListBoxText *)sessionList->item( sessionList->currentItem() ))->filename();
 
   // Query if system sessions should be removed
   if (locateLocal("data", "konsole/" + base.section('/', -1)) != base) {
@@ -363,7 +363,7 @@ void SessionEditor::removeCurrent()
       return;
   }
 
-  if (!QFile::remove(base)) {
+  if (!TQFile::remove(base)) {
     KMessageBox::error(this,
       i18n("Cannot remove the session.\nMaybe it is a system session.\n"),
       i18n("Error Removing Session"));

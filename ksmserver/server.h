@@ -9,18 +9,18 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 
 // needed to avoid clash with INT8 defined in X11/Xmd.h on solaris
 #define QT_CLEAN_NAMESPACE 1
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qsocketnotifier.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
-#include <qcstring.h>
-#include <qdict.h>
-#include <qptrqueue.h>
-#include <qptrdict.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqsocketnotifier.h>
+#include <tqptrlist.h>
+#include <tqvaluelist.h>
+#include <tqcstring.h>
+#include <tqdict.h>
+#include <tqptrqueue.h>
+#include <tqptrdict.h>
 #include <kapplication.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <dcopobject.h>
 
 #include "server2.h"
@@ -30,7 +30,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #define SESSION_PREVIOUS_LOGOUT "saved at previous logout"
 #define SESSION_BY_USER  "saved by user"
 
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 class KSMListener;
 class KSMConnection;
 class KSMClient;
@@ -39,18 +39,18 @@ enum SMType { SM_ERROR, SM_WMCOMMAND, SM_WMSAVEYOURSELF };
 struct SMData
     {
     SMType type;
-    QStringList wmCommand;
-    QString wmClientMachine;
-    QString wmclass1, wmclass2;
+    TQStringList wmCommand;
+    TQString wmClientMachine;
+    TQString wmclass1, wmclass2;
     };
-typedef QMap<WId,SMData> WindowMap;
+typedef TQMap<WId,SMData> WindowMap;
 
-class KSMServer : public QObject, public KSMServerInterface
+class KSMServer : public TQObject, public KSMServerInterface
 {
 Q_OBJECT
 K_DCOP
 k_dcop:
-    void notifySlot(QString,QString,QString,QString,QString,int,int,int,int);
+    void notifySlot(TQString,TQString,TQString,TQString,TQString,int,int,int,int);
     void logoutSoundFinished(int,int);
     void autoStart0Done();
     void autoStart1Done();
@@ -58,7 +58,7 @@ k_dcop:
     void kcmPhase1Done();
     void kcmPhase2Done();
 public:
-    KSMServer( const QString& windowManager, bool only_local );
+    KSMServer( const TQString& windowManager, bool only_local );
     ~KSMServer();
 
     static KSMServer* self();
@@ -83,14 +83,14 @@ public:
     void clientRegistered( const char* previousId );
 
     // public API
-    void restoreSession( QString sessionName );
+    void restoreSession( TQString sessionName );
     void startDefaultSession();
     void shutdown( KApplication::ShutdownConfirm confirm,
                    KApplication::ShutdownType sdtype,
                    KApplication::ShutdownMode sdmode );
 
-    virtual void suspendStartup( QCString app );
-    virtual void resumeStartup( QCString app );
+    virtual void suspendStartup( TQCString app );
+    virtual void resumeStartup( TQCString app );
 
 public slots:
     void cleanUp();
@@ -132,13 +132,13 @@ private:
     void startProtection();
     void endProtection();
 
-    void startApplication( QStringList command,
-        const QString& clientMachine = QString::null,
-        const QString& userId = QString::null );
-    void executeCommand( const QStringList& command );
+    void startApplication( TQStringList command,
+        const TQString& clientMachine = TQString::null,
+        const TQString& userId = TQString::null );
+    void executeCommand( const TQStringList& command );
     
     bool isWM( const KSMClient* client ) const;
-    bool isWM( const QString& program ) const;
+    bool isWM( const TQString& program ) const;
     bool defaultSession() const; // empty session
     void setupXIOErrorHandler();
 
@@ -146,10 +146,10 @@ private:
     void storeLegacySession( KConfig* config );
     void restoreLegacySession( KConfig* config );
     void restoreLegacySessionInternal( KConfig* config, char sep = ',' );
-    QStringList windowWmCommand(WId w);
-    QString windowWmClientMachine(WId w);
+    TQStringList windowWmCommand(WId w);
+    TQString windowWmClientMachine(WId w);
     WId windowWmClientLeader(WId w);
-    QCString windowSessionId(WId w, WId leader);
+    TQCString windowSessionId(WId w, WId leader);
     
     bool checkStartupSuspend();
     void finishStartup();
@@ -157,14 +157,14 @@ private:
 
     // public dcop interface
     void logout( int, int, int );
-    QStringList sessionList();
-    QString currentSession();
+    TQStringList sessionList();
+    TQString currentSession();
     void saveCurrentSession();
-    void saveCurrentSessionAs( QString );
+    void saveCurrentSessionAs( TQString );
 
  private:
-    QPtrList<KSMListener> listener;
-    QPtrList<KSMClient> clients;
+    TQPtrList<KSMListener> listener;
+    TQPtrList<KSMClient> clients;
 
     enum State
         {
@@ -177,41 +177,41 @@ private:
     bool saveSession;
     int wmPhase1WaitingCount;
     int saveType;
-    QMap< QCString, int > startupSuspendCount;
+    TQMap< TQCString, int > startupSuspendCount;
 
     KApplication::ShutdownType shutdownType;
     KApplication::ShutdownMode shutdownMode;
-    QString bootOption;
+    TQString bootOption;
 
     bool clean;
     KSMClient* clientInteracting;
-    QString wm;
-    QString sessionGroup;
-    QString sessionName;
-    QCString launcher;
-    QTimer protectionTimer;
-    QTimer restoreTimer;
-    QString xonCommand;
+    TQString wm;
+    TQString sessionGroup;
+    TQString sessionName;
+    TQCString launcher;
+    TQTimer protectionTimer;
+    TQTimer restoreTimer;
+    TQString xonCommand;
     int logoutSoundEvent;
-    QTimer knotifyTimeoutTimer;
-    QTimer startupSuspendTimeoutTimer;
+    TQTimer knotifyTimeoutTimer;
+    TQTimer startupSuspendTimeoutTimer;
     bool waitAutoStart2;
     bool waitKcmInit2;
-    QTimer pendingShutdown;
+    TQTimer pendingShutdown;
     KApplication::ShutdownConfirm pendingShutdown_confirm;
     KApplication::ShutdownType pendingShutdown_sdtype;
     KApplication::ShutdownMode pendingShutdown_sdmode;
 
     // ksplash interface
-    void upAndRunning( const QString& msg );
+    void upAndRunning( const TQString& msg );
     void publishProgress( int progress, bool max  = false  );
 
     // sequential startup
     int appsToStart;
     int lastAppStarted;
-    QString lastIdStarted;
+    TQString lastIdStarted;
     
-    QStringList excludeApps;
+    TQStringList excludeApps;
 
     WindowMap legacyWindows;
 };

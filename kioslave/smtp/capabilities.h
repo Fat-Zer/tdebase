@@ -32,10 +32,10 @@
 #ifndef __KIOSMTP_CAPABILITIES_H__
 #define __KIOSMTP_CAPABILITIES_H__
 
-#include <qmap.h>
-#include <qcstring.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqmap.h>
+#include <tqcstring.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 class QStrIList;
 
@@ -49,27 +49,27 @@ namespace KioSMTP {
 
     static Capabilities fromResponse( const Response & response );
 
-    void add( const QString & cap, bool replace=false );
-    void add( const QString & name, const QStringList & args, bool replace=false );
+    void add( const TQString & cap, bool replace=false );
+    void add( const TQString & name, const TQStringList & args, bool replace=false );
     void clear() { mCapabilities.clear(); }
 
-    bool have( const QString & cap ) const {
+    bool have( const TQString & cap ) const {
       return mCapabilities.find( cap.upper() ) != mCapabilities.end();
     }
-    bool have( const QCString & cap ) const { return have( QString( cap.data() ) ); }
-    bool have( const char * cap ) const { return have( QString::fromLatin1( cap ) ); }
+    bool have( const TQCString & cap ) const { return have( TQString( cap.data() ) ); }
+    bool have( const char * cap ) const { return have( TQString::fromLatin1( cap ) ); }
 
-    QString asMetaDataString() const;
+    TQString asMetaDataString() const;
 
-    QString authMethodMetaData() const;
-    QStrIList saslMethods() const;
+    TQString authMethodMetaData() const;
+    TQStrIList saslMethods() const;
 
-    QString createSpecialResponse( bool tls ) const;
+    TQString createSpecialResponse( bool tls ) const;
 
-    QStringList saslMethodsQSL() const;
+    TQStringList saslMethodsQSL() const;
   private:
 
-    QMap<QString,QStringList> mCapabilities;
+    TQMap<TQString,TQStringList> mCapabilities;
   };
 
 } // namespace KioSMTP

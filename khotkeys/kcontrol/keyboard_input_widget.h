@@ -24,7 +24,7 @@ class Keyboard_input_widget
     {
     Q_OBJECT
     public:
-        Keyboard_input_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Keyboard_input_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void set_data( const Keyboard_input_action* data_P );
         Keyboard_input_action* get_data( Action_data* data_P ) const;
     public slots:

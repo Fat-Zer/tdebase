@@ -28,8 +28,8 @@
 
 #include <ktrader.h>
 
-#include <qobject.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
 
 class KatePluginInfo
 {
@@ -39,14 +39,14 @@ class KatePluginInfo
     Kate::Plugin *plugin;
 };
 
-typedef QValueList<KatePluginInfo> KatePluginList;
+typedef TQValueList<KatePluginInfo> KatePluginList;
 
 class KatePluginManager : public QObject
 {
   Q_OBJECT
 
   public:
-    KatePluginManager(QObject *parent);
+    KatePluginManager(TQObject *parent);
     ~KatePluginManager();
 
     static KatePluginManager *self();
@@ -73,11 +73,11 @@ class KatePluginManager : public QObject
 
     inline KatePluginList & pluginList () { return m_pluginList; };
 
-    Kate::Plugin *plugin (const QString &name);
-    bool pluginAvailable (const QString &name);
+    Kate::Plugin *plugin (const TQString &name);
+    bool pluginAvailable (const TQString &name);
 
-    Kate::Plugin *loadPlugin (const QString &name, bool permanent=true);
-    void unloadPlugin (const QString &name, bool permanent=true);
+    Kate::Plugin *loadPlugin (const TQString &name, bool permanent=true);
+    void unloadPlugin (const TQString &name, bool permanent=true);
 
   private:
     Kate::PluginManager *m_pluginManager;

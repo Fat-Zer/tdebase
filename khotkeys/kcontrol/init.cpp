@@ -31,13 +31,13 @@ extern "C"
     // Non-xinerama multhead support in KDE is just a hack
     // involving forking apps per-screen. Don't bother with
     // kded modules in such case.
-    QCString multiHead = getenv("KDE_MULTIHEAD");
+    TQCString multiHead = getenv("KDE_MULTIHEAD");
     if (multiHead.lower() == "true")
         kapp->kdeinitExec( "khotkeys" );
     else
         {
         DCOPRef ref( "kded", "kded" );
-        if( !ref.call( "loadModule", QCString( "khotkeys" )))
+        if( !ref.call( "loadModule", TQCString( "khotkeys" )))
             {
             kdWarning( 1217 ) << "Loading of khotkeys module failed." << endl;
             kapp->kdeinitExec( "khotkeys" );

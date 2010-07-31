@@ -33,13 +33,13 @@
 
 #include "capabilities.h"
 
-#include <qstring.h>
-#include <qptrqueue.h>
+#include <tqstring.h>
+#include <tqptrqueue.h>
 
 class KURL;
 class QCString;
 template <typename T> class QMemArray;
-typedef QMemArray<char> QByteArray;
+typedef TQMemArray<char> QByteArray;
 
 namespace KioSMTP {
   class Response;
@@ -50,13 +50,13 @@ namespace KioSMTP {
 class SMTPProtocol : public KIO::TCPSlaveBase {
   friend class KioSMTP::Command;
 public:
-  SMTPProtocol(const QCString & pool, const QCString & app, bool useSSL);
+  SMTPProtocol(const TQCString & pool, const TQCString & app, bool useSSL);
   virtual ~ SMTPProtocol();
 
-  virtual void setHost(const QString & host, int port,
-                       const QString & user, const QString & pass);
+  virtual void setHost(const TQString & host, int port,
+                       const TQString & user, const TQString & pass);
 
-  virtual void special(const QByteArray & aData);
+  virtual void special(const TQByteArray & aData);
   virtual void put(const KURL & url, int permissions, bool overwrite,
                    bool resume);
   virtual void stat(const KURL & url);
@@ -65,7 +65,7 @@ public:
 
 protected:
 
-  bool smtp_open(const QString& fakeHostname = QString::null);
+  bool smtp_open(const TQString& fakeHostname = TQString::null);
 
   /** Closes the connection. If @p nice is true (default), then QUIT
       is sent and it's reponse waited for. */
@@ -100,8 +100,8 @@ protected:
   bool authenticate();
   void parseFeatures( const KioSMTP::Response & ehloResponse );
 
-  bool sendCommandLine( const QCString & cmd );
-  QCString collectPipelineCommands( KioSMTP::TransactionState * ts );
+  bool sendCommandLine( const TQCString & cmd );
+  TQCString collectPipelineCommands( KioSMTP::TransactionState * ts );
   bool batchProcessResponses( KioSMTP::TransactionState * ts );
 
   /** This is a pure convenience wrapper around
@@ -120,7 +120,7 @@ protected:
 
   /** This is a pure convenience wrapper around
       @ref KioSMTP::Capabilities::createSpecialResponse */
-  QString createSpecialResponse() const {
+  TQString createSpecialResponse() const {
     return mCapabilities.createSpecialResponse( usingTLS() || haveCapability( "STARTTLS" ) );
   }
 
@@ -131,14 +131,14 @@ protected:
 
   unsigned short m_iOldPort;
   bool m_opened;
-  QString m_sServer, m_sOldServer;
-  QString m_sUser, m_sOldUser;
-  QString m_sPass, m_sOldPass;
-  QString m_hostname;
+  TQString m_sServer, m_sOldServer;
+  TQString m_sUser, m_sOldUser;
+  TQString m_sPass, m_sOldPass;
+  TQString m_hostname;
 
   KioSMTP::Capabilities mCapabilities;
 
-  typedef QPtrQueue<KioSMTP::Command> CommandQueue;
+  typedef TQPtrQueue<KioSMTP::Command> CommandQueue;
   CommandQueue mPendingCommandQueue;
   CommandQueue mSentCommandQueue;
 };

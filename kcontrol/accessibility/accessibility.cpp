@@ -18,9 +18,9 @@
  *                                                                          *
  ****************************************************************************/
 
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qtabwidget.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqtabwidget.h>
 
 #include <kaboutdata.h>
 #include <kcolorbutton.h>
@@ -31,7 +31,7 @@
 
 #include "accessibility.moc"
 
-typedef KGenericFactory<AccessibilityConfig, QWidget> AccessibilityFactory;
+typedef KGenericFactory<AccessibilityConfig, TQWidget> AccessibilityFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_accessibility, AccessibilityFactory("kcmaccessibility") )
 
 /**
@@ -53,7 +53,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_accessibility, AccessibilityFactory("kcmaccessib
 //    return false; // don't need it
 // }
 
-AccessibilityConfig::AccessibilityConfig(QWidget *parent, const char *name, const QStringList &)
+AccessibilityConfig::AccessibilityConfig(TQWidget *parent, const char *name, const TQStringList &)
   : AccessibilityConfigWidget( parent, name){
 
    KAboutData *about =
@@ -65,9 +65,9 @@ AccessibilityConfig::AccessibilityConfig(QWidget *parent, const char *name, cons
    about->addAuthor("José Pablo Ezequiel Fernández", I18N_NOOP("Author") , "pupeno@kde.org");
    setAboutData( about );
 
-   kdDebug() << "Running: AccessibilityConfig::AccessibilityConfig(QWidget *parent, const char *name, const QStringList &)" << endl;
+   kdDebug() << "Running: AccessibilityConfig::AccessibilityConfig(TQWidget *parent, const char *name, const TQStringList &)" << endl;
    // TODO: set the KURL Dialog to open just audio files
-   connect( mainTab, SIGNAL(currentChanged(QWidget*)), this, SIGNAL(quickHelpChanged()) );
+   connect( mainTab, TQT_SIGNAL(currentChanged(TQWidget*)), this, TQT_SIGNAL(quickHelpChanged()) );
    load();
 }
 
@@ -101,7 +101,7 @@ void AccessibilityConfig::load( bool useDefaults )
    invertScreen->setChecked(bell->readBoolEntry("Invert", true));
    flashScreen->setChecked(bell->readBoolEntry("Flash", false));
    // TODO: There has to be a cleaner way.
-   QColor *redColor = new QColor(Qt::red);
+   TQColor *redColor = new TQColor(Qt::red);
    flashScreenColor->setColor(bell->readColorEntry("FlashColor", redColor));
    delete redColor;
    visibleBellDuration->setValue(bell->readNumEntry("Duration", 500));

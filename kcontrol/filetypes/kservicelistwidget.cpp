@@ -20,9 +20,9 @@
 
 #include <unistd.h>
 
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqpushbutton.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -38,7 +38,7 @@
 #include <kstandarddirs.h>
 
 KServiceListItem::KServiceListItem( KService *pService, int kind )
-    : QListBoxText(), desktopPath(pService->desktopEntryPath())
+    : TQListBoxText(), desktopPath(pService->desktopEntryPath())
 {
     if ( kind == KServiceListWidget::SERVICELIST_APPLICATIONS )
         setText( pService->name() );
@@ -57,13 +57,13 @@ bool KServiceListItem::isImmutable()
     return !checkAccess(localPath, W_OK);
 }
 
-KServiceListWidget::KServiceListWidget(int kind, QWidget *parent, const char *name)
-  : QGroupBox( kind == SERVICELIST_APPLICATIONS ? i18n("Application Preference Order")
+KServiceListWidget::KServiceListWidget(int kind, TQWidget *parent, const char *name)
+  : TQGroupBox( kind == SERVICELIST_APPLICATIONS ? i18n("Application Preference Order")
                : i18n("Services Preference Order"), parent, name ),
     m_kind( kind ), m_item( 0L )
 {
-  QWidget * gb = this;
-  QGridLayout * grid = new QGridLayout(gb, 7, 2, KDialog::marginHint(),
+  TQWidget * gb = this;
+  TQGridLayout * grid = new TQGridLayout(gb, 7, 2, KDialog::marginHint(),
                                        KDialog::spacingHint());
   grid->addRowSpacing(0, fontMetrics().lineSpacing());
   grid->setRowStretch(1, 1);
@@ -73,12 +73,12 @@ KServiceListWidget::KServiceListWidget(int kind, QWidget *parent, const char *na
   grid->setRowStretch(5, 1);
   grid->setRowStretch(6, 1);
 
-  servicesLB = new QListBox(gb);
-  connect(servicesLB, SIGNAL(highlighted(int)), SLOT(enableMoveButtons(int)));
+  servicesLB = new TQListBox(gb);
+  connect(servicesLB, TQT_SIGNAL(highlighted(int)), TQT_SLOT(enableMoveButtons(int)));
   grid->addMultiCellWidget(servicesLB, 1, 6, 0, 0);
-  connect( servicesLB, SIGNAL( doubleClicked ( QListBoxItem * )), this, SLOT( editService()));
+  connect( servicesLB, TQT_SIGNAL( doubleClicked ( TQListBoxItem * )), this, TQT_SLOT( editService()));
 
-  QString wtstr =
+  TQString wtstr =
     (kind == SERVICELIST_APPLICATIONS ?
      i18n("This is a list of applications associated with files of the selected"
           " file type. This list is shown in Konqueror's context menus when you select"
@@ -91,15 +91,15 @@ KServiceListWidget::KServiceListWidget(int kind, QWidget *parent, const char *na
           " then the list is ordered by priority with the uppermost item taking precedence"
           " over the others."));
 
-  QWhatsThis::add( gb, wtstr );
-  QWhatsThis::add( servicesLB, wtstr );
+  TQWhatsThis::add( gb, wtstr );
+  TQWhatsThis::add( servicesLB, wtstr );
 
-  servUpButton = new QPushButton(i18n("Move &Up"), gb);
+  servUpButton = new TQPushButton(i18n("Move &Up"), gb);
   servUpButton->setEnabled(false);
-  connect(servUpButton, SIGNAL(clicked()), SLOT(promoteService()));
+  connect(servUpButton, TQT_SIGNAL(clicked()), TQT_SLOT(promoteService()));
   grid->addWidget(servUpButton, 2, 1);
 
-  QWhatsThis::add( servUpButton, kind == SERVICELIST_APPLICATIONS ?
+  TQWhatsThis::add( servUpButton, kind == SERVICELIST_APPLICATIONS ?
                    i18n("Assigns a higher priority to the selected\n"
                         "application, moving it up in the list. Note:  This\n"
                         "only affects the selected application if the file type is\n"
@@ -107,12 +107,12 @@ KServiceListWidget::KServiceListWidget(int kind, QWidget *parent, const char *na
                    i18n("Assigns a higher priority to the selected\n"
                         "service, moving it up in the list."));
 
-  servDownButton = new QPushButton(i18n("Move &Down"), gb);
+  servDownButton = new TQPushButton(i18n("Move &Down"), gb);
   servDownButton->setEnabled(false);
-  connect(servDownButton, SIGNAL(clicked()), SLOT(demoteService()));
+  connect(servDownButton, TQT_SIGNAL(clicked()), TQT_SLOT(demoteService()));
   grid->addWidget(servDownButton, 3, 1);
 
-  QWhatsThis::add( servDownButton, kind == SERVICELIST_APPLICATIONS ?
+  TQWhatsThis::add( servDownButton, kind == SERVICELIST_APPLICATIONS ?
                    i18n("Assigns a lower priority to the selected\n"
                         "application, moving it down in the list. Note: This \n"
                         "only affects the selected application if the file type is\n"
@@ -120,28 +120,28 @@ KServiceListWidget::KServiceListWidget(int kind, QWidget *parent, const char *na
                    i18n("Assigns a lower priority to the selected\n"
                         "service, moving it down in the list."));
 
-  servNewButton = new QPushButton(i18n("Add..."), gb);
+  servNewButton = new TQPushButton(i18n("Add..."), gb);
   servNewButton->setEnabled(false);
-  connect(servNewButton, SIGNAL(clicked()), SLOT(addService()));
+  connect(servNewButton, TQT_SIGNAL(clicked()), TQT_SLOT(addService()));
   grid->addWidget(servNewButton, 1, 1);
 
-  QWhatsThis::add( servNewButton, i18n( "Add a new application for this file type." ) );
+  TQWhatsThis::add( servNewButton, i18n( "Add a new application for this file type." ) );
 
 
-  servEditButton = new QPushButton(i18n("Edit..."), gb);
+  servEditButton = new TQPushButton(i18n("Edit..."), gb);
   servEditButton->setEnabled(false);
-  connect(servEditButton, SIGNAL(clicked()), SLOT(editService()));
+  connect(servEditButton, TQT_SIGNAL(clicked()), TQT_SLOT(editService()));
   grid->addWidget(servEditButton, 4, 1);
 
-  QWhatsThis::add( servEditButton, i18n( "Edit command line of the selected application." ) );
+  TQWhatsThis::add( servEditButton, i18n( "Edit command line of the selected application." ) );
 
 
-  servRemoveButton = new QPushButton(i18n("Remove"), gb);
+  servRemoveButton = new TQPushButton(i18n("Remove"), gb);
   servRemoveButton->setEnabled(false);
-  connect(servRemoveButton, SIGNAL(clicked()), SLOT(removeService()));
+  connect(servRemoveButton, TQT_SIGNAL(clicked()), TQT_SLOT(removeService()));
   grid->addWidget(servRemoveButton, 5, 1);
 
-  QWhatsThis::add( servRemoveButton, i18n( "Remove the selected application from the list." ) );
+  TQWhatsThis::add( servRemoveButton, i18n( "Remove the selected application from the list." ) );
 }
 
 void KServiceListWidget::setTypeItem( TypesListItem * item )
@@ -163,14 +163,14 @@ void KServiceListWidget::setTypeItem( TypesListItem * item )
 
   if ( item )
   {
-    QStringList services = ( m_kind == SERVICELIST_APPLICATIONS )
+    TQStringList services = ( m_kind == SERVICELIST_APPLICATIONS )
       ? item->appServices()
       : item->embedServices();
 
     if (services.count() == 0) {
       servicesLB->insertItem(i18n("None"));
     } else {
-      for ( QStringList::Iterator it = services.begin();
+      for ( TQStringList::Iterator it = services.begin();
             it != services.end(); it++ )
       {
         KService::Ptr pService = KService::serviceByDesktopPath( *it );
@@ -196,7 +196,7 @@ void KServiceListWidget::promoteService()
     return;
   }
 
-  QListBoxItem *selItem = servicesLB->item(selIndex);
+  TQListBoxItem *selItem = servicesLB->item(selIndex);
   servicesLB->takeItem(selItem);
   servicesLB->insertItem(selItem, selIndex-1);
   servicesLB->setCurrentItem(selIndex - 1);
@@ -219,7 +219,7 @@ void KServiceListWidget::demoteService()
     return;
   }
 
-  QListBoxItem *selItem = servicesLB->item(selIndex);
+  TQListBoxItem *selItem = servicesLB->item(selIndex);
   servicesLB->takeItem(selItem);
   servicesLB->insertItem(selItem, selIndex+1);
   servicesLB->setCurrentItem(selIndex + 1);
@@ -237,9 +237,9 @@ void KServiceListWidget::addService()
   KService::Ptr service = 0L;
   if ( m_kind == SERVICELIST_APPLICATIONS )
   {
-      KOpenWithDlg dlg(m_item->name(), QString::null, 0L);
+      KOpenWithDlg dlg(m_item->name(), TQString::null, 0L);
       dlg.setSaveNewApplications(true);
-      if (dlg.exec() != QDialog::Accepted)
+      if (dlg.exec() != TQDialog::Accepted)
           return;
 
       service = dlg.service();
@@ -250,8 +250,8 @@ void KServiceListWidget::addService()
   }
   else
   {
-      KServiceSelectDlg dlg(m_item->name(), QString::null, 0L);
-      if (dlg.exec() != QDialog::Accepted)
+      KServiceSelectDlg dlg(m_item->name(), TQString::null, 0L);
+      if (dlg.exec() != TQDialog::Accepted)
           return;
        service = dlg.service();
        Q_ASSERT(service);
@@ -294,14 +294,14 @@ void KServiceListWidget::editService()
     {
       // Just like popping up an add dialog except that we
       // pass the current command line as a default
-      QListBoxItem *selItem = servicesLB->item(selected);
+      TQListBoxItem *selItem = servicesLB->item(selected);
 
       KService::Ptr service = KService::serviceByDesktopPath(
           ((KServiceListItem*)selItem)->desktopPath );
       if (!service)
         return;
 
-      QString path = service->desktopEntryPath();
+      TQString path = service->desktopEntryPath();
 
       // If the path to the desktop file is relative, try to get the full
       // path from KStdDirs.
@@ -310,7 +310,7 @@ void KServiceListWidget::editService()
       serviceURL.setPath( path );
       KFileItem item( serviceURL, "application/x-desktop", KFileItem::Unknown );
       KPropertiesDialog dlg( &item, this, 0, true /*modal*/, false /*no auto-show*/ );
-      if ( dlg.exec() != QDialog::Accepted )
+      if ( dlg.exec() != TQDialog::Accepted )
         return;
 
       // Reload service
@@ -349,15 +349,15 @@ void KServiceListWidget::removeService()
   if (!m_item) return;
   // Here are some strings already so that we don't have to break translations
   // later on.
-  QString msg1 = i18n("The service <b>%1</b> can not be removed.");
-  QString msg2 = i18n("The service is listed here because it has been associated "
+  TQString msg1 = i18n("The service <b>%1</b> can not be removed.");
+  TQString msg2 = i18n("The service is listed here because it has been associated "
                      "with the <b>%1</b> (%2) file type and files of type "
                      "<b>%3</b> (%4) are per definition also of type "
                      "<b>%5</b>.");
-  QString msg3 = i18n("Either select the <b>%1</b> file type to remove the "
+  TQString msg3 = i18n("Either select the <b>%1</b> file type to remove the "
                       "service from there or move the service down "
                       "to deprecate it.");
-  QString msg4 = i18n("Do you want to remove the service from the <b>%1</b> "
+  TQString msg4 = i18n("Do you want to remove the service from the <b>%1</b> "
                       "file type or from the <b>%2</b> file type?");
 
   int selected = servicesLB->currentItem();
@@ -398,7 +398,7 @@ void KServiceListWidget::updatePreferredServices()
 {
   if (!m_item)
     return;
-  QStringList sl;
+  TQStringList sl;
   unsigned int count = servicesLB->count();
 
   for (unsigned int i = 0; i < count; i++) {

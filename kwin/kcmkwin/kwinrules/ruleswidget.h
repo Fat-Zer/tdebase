@@ -38,7 +38,7 @@ class RulesWidget
     {
     Q_OBJECT
     public:
-        RulesWidget( QWidget* parent = NULL, const char* name = NULL );
+        RulesWidget( TQWidget* parent = NULL, const char* name = NULL );
         void setRules( Rules* r );
         Rules* rules() const;
         bool finalCheck();
@@ -99,7 +99,7 @@ class RulesDialog
     {
     Q_OBJECT
     public:
-        RulesDialog( QWidget* parent = NULL, const char* name = NULL );
+        RulesDialog( TQWidget* parent = NULL, const char* name = NULL );
         Rules* edit( Rules* r, WId window, bool show_hints );
     protected:
         virtual void accept();
@@ -115,7 +115,7 @@ class EditShortcut
     {
     Q_OBJECT
     public:
-        EditShortcut( QWidget* parent = NULL, const char* name = NULL );
+        EditShortcut( TQWidget* parent = NULL, const char* name = NULL );
     protected:
         void editShortcut();
         void clearShortcut();
@@ -126,9 +126,9 @@ class EditShortcutDialog
     {
     Q_OBJECT
     public:
-        EditShortcutDialog( QWidget* parent = NULL, const char* name = NULL );
-        void setShortcut( const QString& cut );
-        QString shortcut() const;
+        EditShortcutDialog( TQWidget* parent = NULL, const char* name = NULL );
+        void setShortcut( const TQString& cut );
+        TQString shortcut() const;
     private:
         EditShortcut* widget;
     };
@@ -139,7 +139,7 @@ class ShortcutDialog
     {
     Q_OBJECT
     public:
-        ShortcutDialog( const KShortcut& cut, QWidget* parent = NULL, const char* name = NULL );
+        ShortcutDialog( const KShortcut& cut, TQWidget* parent = NULL, const char* name = NULL );
         virtual void accept();
     };
 

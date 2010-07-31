@@ -28,7 +28,7 @@ class HomeDirNotifyModule : public KDEDModule
 K_DCOP
 
 public:
-	HomeDirNotifyModule(const QCString &obj);
+	HomeDirNotifyModule(const TQCString &obj);
 private:
 	HomeDirNotify notifier;
 };

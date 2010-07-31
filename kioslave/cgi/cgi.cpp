@@ -19,8 +19,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kprocess.h>
@@ -33,7 +33,7 @@
 
 using namespace KIO;
 
-CgiProtocol::CgiProtocol( const QCString &pool, const QCString &app )
+CgiProtocol::CgiProtocol( const TQCString &pool, const TQCString &app )
     : SlaveBase( "cgi", pool, app )
 {
   kdDebug(7124) << "CgiProtocol::CgiProtocol" << endl;
@@ -49,10 +49,10 @@ CgiProtocol::~CgiProtocol()
 }
 
 /**
- * Search in reverse order through a QByteArray for a given character.  The position
+ * Search in reverse order through a TQByteArray for a given character.  The position
  * of the character is returned, or -1 if it was not found.
  */
-static int qByteArrayFindRev( const QByteArray &ba, char c, int startIndex )
+static int qByteArrayFindRev( const TQByteArray &ba, char c, int startIndex )
 {
   for ( int i = startIndex; i >= 0; --i )
     if ( ba[i] == c ) return i;
@@ -62,29 +62,29 @@ static int qByteArrayFindRev( const QByteArray &ba, char c, int startIndex )
 
 /**
  * Extract data in ba from start, including no more than len characters from ba.
- * Should be exactly comparable to QCString::mid()
+ * Should be exactly comparable to TQCString::mid()
  */
-static QCString extractQCString( const QByteArray &ba, uint start, uint len = 0xffffffff )
+static TQCString extractQCString( const TQByteArray &ba, uint start, uint len = 0xffffffff )
 {
   uint realLen = len;
 
   if ( ( ba.size() - start ) < len )
     realLen = ba.size() - start;
 
-  return QCString( &ba[ start ], realLen + 1 );
+  return TQCString( &ba[ start ], realLen + 1 );
 }
 
 /**
- * Search through a QByteArray for a given string.  The position of the string
+ * Search through a TQByteArray for a given string.  The position of the string
  * is returned, or -1 if it was not found.
  */
-static int qByteArrayFindStr( const QByteArray &ba, const char *str )
+static int qByteArrayFindStr( const TQByteArray &ba, const char *str )
 {
   int strLen = qstrlen( str );
   int searchLen = ba.size() - strLen;
 
   for ( int i = 0; i <= searchLen; ++i ) {
-    QCString temp = extractQCString( ba, i, strLen );
+    TQCString temp = extractQCString( ba, i, strLen );
     if ( temp == str )
       return i;
   }
@@ -102,30 +102,30 @@ void CgiProtocol::get( const KURL& url )
   kdDebug(7124) << " Protocol: " << url.protocol() << endl;
   kdDebug(7124) << " Filename: " << url.filename() << endl;
 #endif
-  QCString protocol = "SERVER_PROTOCOL=HTTP";
+  TQCString protocol = "SERVER_PROTOCOL=HTTP";
   putenv( protocol.data() );
 
-  QCString requestMethod = "REQUEST_METHOD=GET";
+  TQCString requestMethod = "REQUEST_METHOD=GET";
   putenv( requestMethod.data() );
 
-  QCString query = url.query().mid( 1 ).local8Bit();
+  TQCString query = url.query().mid( 1 ).local8Bit();
   query.prepend( "QUERY_STRING=" );
   putenv( query.data() );
 
-  QString path = url.path();
+  TQString path = url.path();
 
-  QString file;
+  TQString file;
 
   int pos = path.findRev('/');
   if ( pos >= 0 ) file = path.mid( pos + 1 );
   else file = path;
 
-  QString cmd;
+  TQString cmd;
 
   bool stripHeader = false;
   bool forwardFile = true;
 
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for( it = mCgiPaths.begin(); it != mCgiPaths.end(); ++it ) {
     cmd = *it;
     if ( !(*it).endsWith("/") )
@@ -143,7 +143,7 @@ void CgiProtocol::get( const KURL& url )
   if ( forwardFile ) {
     kdDebug(7124) << "Forwarding to '" << path << "'" << endl;
 
-    QCString filepath = QFile::encodeName( path );
+    TQCString filepath = TQFile::encodeName( path );
 
     fd = fopen( filepath.data(), "r" );
 
@@ -155,7 +155,7 @@ void CgiProtocol::get( const KURL& url )
   } else {
     kdDebug(7124) << "Cmd: " << cmd << endl;
 
-    fd = popen( QFile::encodeName(KProcess::quote( cmd )).data(), "r" );
+    fd = popen( TQFile::encodeName(KProcess::quote( cmd )).data(), "r" );
 
     if ( !fd ) {
       kdDebug(7124) << "Error running '" << cmd << "'" << endl;
@@ -184,7 +184,7 @@ void CgiProtocol::get( const KURL& url )
     buffer[n] = 0;
 
     if ( stripHeader ) {
-      QByteArray output;
+      TQByteArray output;
 
       // Access the buffer in-place by using setRawData()
       output.setRawData( buffer, n );
@@ -203,7 +203,7 @@ void CgiProtocol::get( const KURL& url )
       kdDebug(7124) << "  end: " << end << endl;
 #endif
 
-      QCString contentType = extractQCString( output, colon + 1, end - colon - 1 );
+      TQCString contentType = extractQCString( output, colon + 1, end - colon - 1 );
 
       contentType = contentType.stripWhiteSpace();
 
@@ -231,7 +231,7 @@ void CgiProtocol::get( const KURL& url )
 
       stripHeader = false;
     } else {
-      QByteArray array;
+      TQByteArray array;
       array.setRawData( buffer, n );
       data( array );
       array.resetRawData( buffer, n );

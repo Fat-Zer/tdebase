@@ -29,12 +29,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "addapplet_mnu.h"
 #include "addapplet_mnu.moc"
 
-PanelAddAppletMenu::PanelAddAppletMenu(ContainerArea* cArea, QWidget *parent, const char *name)
-    : QPopupMenu(parent, name), containerArea(cArea)
+PanelAddAppletMenu::PanelAddAppletMenu(ContainerArea* cArea, TQWidget *parent, const char *name)
+    : TQPopupMenu(parent, name), containerArea(cArea)
 {
     setCheckable(true);
-    connect(this, SIGNAL(activated(int)), SLOT(slotExec(int)));
-    connect(this, SIGNAL(aboutToShow()), SLOT(slotAboutToShow()));
+    connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
+    connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 }
 
 void PanelAddAppletMenu::slotAboutToShow()

@@ -6,7 +6,7 @@
 //using std::endl;
 
 int main( int , char ** ) {
-  static QCString expected =
+  static TQCString expected =
     "From: mutz@kde.org\r\n"
     "Subject: missing subject\r\n"
     "To: joe@user.org,\r\n"
@@ -57,7 +57,7 @@ int main( int , char ** ) {
     "\n";
 
   KioSMTP::Request request;
-  QCString result;
+  TQCString result;
 
   request.setEmitHeaders( true );
   request.setFromAddress( "mutz@kde.org" );

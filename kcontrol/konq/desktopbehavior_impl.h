@@ -29,12 +29,12 @@ class DesktopBehavior : public DesktopBehaviorBase
 {
         Q_OBJECT
 public:
-        DesktopBehavior(KConfig *config, QWidget *parent = 0L, const char *name = 0L );
+        DesktopBehavior(KConfig *config, TQWidget *parent = 0L, const char *name = 0L );
         virtual void load();
         virtual void load( bool useDefaults );
         virtual void save();
         virtual void defaults();
-        virtual QString quickHelp() const;
+        virtual TQString quickHelp() const;
         friend class DesktopBehaviorPreviewItem;
 	friend class DesktopBehaviorMediaItem;
 
@@ -53,7 +53,7 @@ private:
 	void saveMediaListView();
 
         // Combo for the menus
-        void fillMenuCombo( QComboBox * combo );
+        void fillMenuCombo( TQComboBox * combo );
 
         typedef enum { NOTHING = 0, WINDOWLISTMENU, DESKTOPMENU, APPMENU, BOOKMARKSMENU=12 } menuChoice;
         bool m_bHasMedia;
@@ -64,7 +64,7 @@ class DesktopBehaviorModule : public KCModule
         Q_OBJECT
 
 public:
-        DesktopBehaviorModule(KConfig *config, QWidget *parent = 0L, const char *name = 0L );
+        DesktopBehaviorModule(KConfig *config, TQWidget *parent = 0L, const char *name = 0L );
         virtual void load() { m_behavior->load(); emit KCModule::changed( false ); }
         virtual void save() { m_behavior->save(); emit KCModule::changed( false ); }
         virtual void defaults() { m_behavior->defaults(); emit KCModule::changed( true ); }

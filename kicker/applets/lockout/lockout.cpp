@@ -24,13 +24,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpopupmenu.h>
-#include <qtoolbutton.h>
-#include <qstyle.h>
-#include <qtooltip.h>
+#include <tqlayout.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqpopupmenu.h>
+#include <tqtoolbutton.h>
+#include <tqstyle.h>
+#include <tqtooltip.h>
 
 #include <dcopclient.h>
 
@@ -46,14 +46,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 extern "C"
 {
-    KDE_EXPORT KPanelApplet* init(QWidget *parent, const QString& configFile)
+    KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
         KGlobal::locale()->insertCatalogue("lockout");
         return new Lockout(configFile, parent, "lockout");
     }
 }
 
-Lockout::Lockout( const QString& configFile, QWidget *parent, const char *name)
+Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name)
     : KPanelApplet( configFile, KPanelApplet::Normal, 0, parent, name ), bTransparent( false )
 {
     KConfig *conf = config();
@@ -63,9 +63,9 @@ Lockout::Lockout( const QString& configFile, QWidget *parent, const char *name)
     setBackgroundOrigin( AncestorOrigin );
 
     if ( orientation() == Horizontal )
-        layout = new QBoxLayout( this, QBoxLayout::TopToBottom );
+        layout = new TQBoxLayout( this, TQBoxLayout::TopToBottom );
     else
-        layout = new QBoxLayout( this, QBoxLayout::LeftToRight );
+        layout = new TQBoxLayout( this, TQBoxLayout::LeftToRight );
 
     layout->setAutoAdd( true );
     layout->setMargin( 0 );
@@ -74,16 +74,16 @@ Lockout::Lockout( const QString& configFile, QWidget *parent, const char *name)
     lockButton = new SimpleButton( this, "lock");
     logoutButton = new SimpleButton( this, "logout");
 
-    QToolTip::add( lockButton, i18n("Lock the session") );
-    QToolTip::add( logoutButton, i18n("Log out") );
+    TQToolTip::add( lockButton, i18n("Lock the session") );
+    TQToolTip::add( logoutButton, i18n("Log out") );
 
     lockButton->setPixmap( SmallIcon( "lock" ));
     logoutButton->setPixmap( SmallIcon( "exit" ));
 
     bTransparent = conf->readBoolEntry( "Transparent", bTransparent );
 
-    connect( lockButton, SIGNAL( clicked() ), SLOT( lock() ));
-    connect( logoutButton, SIGNAL( clicked() ), SLOT( logout() ));
+    connect( lockButton, TQT_SIGNAL( clicked() ), TQT_SLOT( lock() ));
+    connect( logoutButton, TQT_SIGNAL( clicked() ), TQT_SLOT( logout() ));
 
     lockButton->installEventFilter( this );
     logoutButton->installEventFilter( this );
@@ -94,13 +94,13 @@ Lockout::Lockout( const QString& configFile, QWidget *parent, const char *name)
     if (!kapp->authorize("logout"))
        logoutButton->hide();
 
-    lockButton->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
-    logoutButton->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+    lockButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+    logoutButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
 
     if ( !kapp->dcopClient()->isAttached() )
         kapp->dcopClient()->attach();
 
-    connect( kapp, SIGNAL( iconChanged(int) ), SLOT( slotIconChanged() ));
+    connect( kapp, TQT_SIGNAL( iconChanged(int) ), TQT_SLOT( slotIconChanged() ));
 }
 
 Lockout::~Lockout()
@@ -113,18 +113,18 @@ Lockout::~Lockout()
 // direction and wasting a lot of space.
 void Lockout::checkLayout( int height ) const
 {
-    QSize s = minimumSizeHint();
-    QBoxLayout::Direction direction = layout->direction();
+    TQSize s = minimumSizeHint();
+    TQBoxLayout::Direction direction = layout->direction();
 
-    if ( direction == QBoxLayout::LeftToRight &&
+    if ( direction == TQBoxLayout::LeftToRight &&
          ( ( orientation() == Vertical   && s.width() - 2 >= height ) ||
            ( orientation() == Horizontal && s.width() - 2 < height ) ) ) {
-        layout->setDirection( QBoxLayout::TopToBottom );
+        layout->setDirection( TQBoxLayout::TopToBottom );
     }
-    else if ( direction == QBoxLayout::TopToBottom &&
+    else if ( direction == TQBoxLayout::TopToBottom &&
               ( ( orientation() == Vertical   && s.height() - 2 < height ) ||
                 ( orientation() == Horizontal && s.height() - 2 >= height ) ) ) {
-        layout->setDirection( QBoxLayout::LeftToRight );
+        layout->setDirection( TQBoxLayout::LeftToRight );
     }
 }
 
@@ -142,7 +142,7 @@ int Lockout::heightForWidth( int width ) const
 
 void Lockout::lock()
 {
-    QCString appname( "kdesktop" );
+    TQCString appname( "kdesktop" );
     int kicker_screen_number = qt_xscreen();
     if ( kicker_screen_number )
         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
@@ -154,64 +154,64 @@ void Lockout::logout()
     kapp->requestShutDown();
 }
 
-void Lockout::mousePressEvent(QMouseEvent* e)
+void Lockout::mousePressEvent(TQMouseEvent* e)
 {
     propagateMouseEvent(e);
 }
 
-void Lockout::mouseReleaseEvent(QMouseEvent* e)
+void Lockout::mouseReleaseEvent(TQMouseEvent* e)
 {
     propagateMouseEvent(e);
 }
 
-void Lockout::mouseDoubleClickEvent(QMouseEvent* e)
+void Lockout::mouseDoubleClickEvent(TQMouseEvent* e)
 {
     propagateMouseEvent(e);
 }
 
-void Lockout::mouseMoveEvent(QMouseEvent* e)
+void Lockout::mouseMoveEvent(TQMouseEvent* e)
 {
     propagateMouseEvent(e);
 }
 
-void Lockout::propagateMouseEvent(QMouseEvent* e)
+void Lockout::propagateMouseEvent(TQMouseEvent* e)
 {
     if ( !isTopLevel()  ) {
-        QMouseEvent me(e->type(), mapTo( topLevelWidget(), e->pos() ),
+        TQMouseEvent me(e->type(), mapTo( topLevelWidget(), e->pos() ),
                        e->globalPos(), e->button(), e->state() );
-        QApplication::sendEvent( topLevelWidget(), &me );
+        TQApplication::sendEvent( topLevelWidget(), &me );
     }
 }
 
-bool Lockout::eventFilter( QObject *o, QEvent *e )
+bool Lockout::eventFilter( TQObject *o, TQEvent *e )
 {
     if (!kapp->authorizeKAction("kicker_rmb"))
         return false;     // Process event normally:
 
-    if( e->type() == QEvent::MouseButtonPress )
+    if( e->type() == TQEvent::MouseButtonPress )
     {
         KConfig *conf = config();
         conf->setGroup("lockout");
 
-        QMouseEvent *me = static_cast<QMouseEvent *>( e );
-        if( me->button() == QMouseEvent::RightButton )
+        TQMouseEvent *me = static_cast<TQMouseEvent *>( e );
+        if( me->button() == TQMouseEvent::RightButton )
         {
             if( o == lockButton )
             {
-                QPopupMenu *popup = new QPopupMenu();
+                TQPopupMenu *popup = new TQPopupMenu();
 
                 popup->insertItem( SmallIcon( "lock" ), i18n("Lock Session"),
-                                   this, SLOT( lock() ) );
+                                   this, TQT_SLOT( lock() ) );
                 popup->insertSeparator();
                 
                 i18n("&Transparent");
                 //popup->insertItem( i18n( "&Transparent" ), 100 );
                 popup->insertItem( SmallIcon( "configure" ),
                                    i18n( "&Configure Screen Saver..." ),
-                                   this, SLOT( slotLockPrefs() ) );
+                                   this, TQT_SLOT( slotLockPrefs() ) );
 
                 //popup->setItemChecked( 100, bTransparent );
-                //popup->connectItem(100, this, SLOT( slotTransparent() ) );
+                //popup->connectItem(100, this, TQT_SLOT( slotTransparent() ) );
                 //if (conf->entryIsImmutable( "Transparent" ))
                 //    popup->setItemEnabled( 100, false );
                 popup->exec( me->globalPos() );
@@ -221,18 +221,18 @@ bool Lockout::eventFilter( QObject *o, QEvent *e )
             }
             else if ( o == logoutButton )
             {
-                QPopupMenu *popup = new QPopupMenu();
+                TQPopupMenu *popup = new TQPopupMenu();
 
                 popup->insertItem( SmallIcon( "exit" ), i18n("&Log Out..."),
-                                   this, SLOT( logout() ) );
+                                   this, TQT_SLOT( logout() ) );
                 popup->insertSeparator();
                 //popup->insertItem( i18n( "&Transparent" ), 100 );
                 popup->insertItem( SmallIcon( "configure" ),
                                    i18n( "&Configure Session Manager..." ),
-                                   this, SLOT( slotLogoutPrefs() ) );
+                                   this, TQT_SLOT( slotLogoutPrefs() ) );
 
                 //popup->setItemChecked( 100, bTransparent );
-                //popup->connectItem(100, this, SLOT( slotTransparent() ) );
+                //popup->connectItem(100, this, TQT_SLOT( slotTransparent() ) );
                 //if (conf->entryIsImmutable( "Transparent" ))
                 //    popup->setItemEnabled( 100, false );
                 popup->exec( me->globalPos() );

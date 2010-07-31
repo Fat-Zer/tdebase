@@ -40,14 +40,14 @@ public:
   /**
    * Constructor.
    */
-  DrKBugReport(QWidget *parent = 0, bool modal = true,
+  DrKBugReport(TQWidget *parent = 0, bool modal = true,
                const KAboutData *aboutData = 0);
 
 public:
   /**
    * Allows the debugger to set the default text in the editor.
    */
-  void setText(const QString &str);
+  void setText(const TQString &str);
 
 protected slots:
   /**
@@ -56,7 +56,7 @@ protected slots:
   virtual void slotOk( void );
 
 private:
-  QString m_startstring;
+  TQString m_startstring;
 };
 
 #endif

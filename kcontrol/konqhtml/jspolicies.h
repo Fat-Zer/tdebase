@@ -22,8 +22,8 @@
 #ifndef __JSPOLICIES_H__
 #define __JSPOLICIES_H__
 
-#include <qgroupbox.h>
-#include <qstring.h>
+#include <tqgroupbox.h>
+#include <tqstring.h>
 
 #include <khtml_settings.h>
 
@@ -63,11 +63,11 @@ public:
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */
-  JSPolicies(KConfig* config, const QString &group, bool global,
-  		const QString &domain = QString::null);
+  JSPolicies(KConfig* config, const TQString &group, bool global,
+  		const TQString &domain = TQString::null);
 		
   /**
-   * dummy constructor to make QMap happy.
+   * dummy constructor to make TQMap happy.
    *
    * Never construct an object by using this.
    * @internal
@@ -201,7 +201,7 @@ private:
  *
  * @author Leo Savernik
  */
-class JSPoliciesFrame : public QGroupBox {
+class JSPoliciesFrame : public TQGroupBox {
   Q_OBJECT
 public:
   /**
@@ -211,8 +211,8 @@ public:
    * @param title title for group box
    * @param parent parent widget
    */
-  JSPoliciesFrame(JSPolicies *policies, const QString &title,
-		QWidget* parent = 0);
+  JSPoliciesFrame(JSPolicies *policies, const TQString &title,
+		TQWidget* parent = 0);
 
   virtual ~JSPoliciesFrame();
 
@@ -258,11 +258,11 @@ private slots:
 private:
 
   JSPolicies *policies;
-  QButtonGroup *js_popup;
-  QButtonGroup *js_resize;
-  QButtonGroup *js_move;
-  QButtonGroup *js_focus;
-  QButtonGroup *js_statusbar;
+  TQButtonGroup *js_popup;
+  TQButtonGroup *js_resize;
+  TQButtonGroup *js_move;
+  TQButtonGroup *js_focus;
+  TQButtonGroup *js_statusbar;
 };
 
 

@@ -5,7 +5,7 @@
  */
 
 #include <config.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -14,12 +14,12 @@
 #include <kdesu/su.h>
 #include "sudlg.h"
 
-KDEsuDialog::KDEsuDialog(QCString user, QCString auth_user, bool enableKeep,const QString& icon, bool withIgnoreButton)
+KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,const TQString& icon, bool withIgnoreButton)
      : KPasswordDialog(Password, enableKeep, (withIgnoreButton ? User1:NoDefault), icon)
 {
     KConfig* config = KGlobal::config();
     config->setGroup("super-user-command");
-    QString superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
+    TQString superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
     if ( superUserCommand != "sudo" && superUserCommand != "su" ) {
 	kdWarning() << "unknown super user command" << endl;
 	superUserCommand = "su";
@@ -28,7 +28,7 @@ KDEsuDialog::KDEsuDialog(QCString user, QCString auth_user, bool enableKeep,cons
     m_User = auth_user;
     setCaption(i18n("Run as %1").arg(user));
 
-    QString prompt;
+    TQString prompt;
     if (superUserCommand == "sudo" && m_User == "root") {
 	    prompt = i18n("Please enter your password." );
     } else {

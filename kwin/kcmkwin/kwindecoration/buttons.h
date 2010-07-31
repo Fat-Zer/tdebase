@@ -31,10 +31,10 @@
 #ifndef __BUTTONS_H_
 #define __BUTTONS_H_
 
-#include <qbitmap.h>
-#include <qevent.h>
-#include <qdragobject.h>
-#include <qlistbox.h>
+#include <tqbitmap.h>
+#include <tqevent.h>
+#include <tqdragobject.h>
+#include <tqlistbox.h>
 
 #include <klistview.h>
 
@@ -47,12 +47,12 @@ class Button
 {
 	public:
 		Button();
-		Button(const QString& name, const QBitmap& icon, QChar type, bool duplicate, bool supported);
+		Button(const TQString& name, const TQBitmap& icon, TQChar type, bool duplicate, bool supported);
 		virtual ~Button();
 
-		QString name;
-		QBitmap icon;
-		QChar type;
+		TQString name;
+		TQBitmap icon;
+		TQChar type;
 		bool duplicate;
 		bool supported;
 };
@@ -60,11 +60,11 @@ class Button
 class ButtonDrag : public QStoredDrag
 {
 	public:
-		ButtonDrag( Button btn, QWidget* parent, const char* name=0 );
+		ButtonDrag( Button btn, TQWidget* parent, const char* name=0 );
 		~ButtonDrag() {};
 
-		static bool canDecode( QDropEvent* e );
-		static bool decode( QDropEvent* e, Button& btn );
+		static bool canDecode( TQDropEvent* e );
+		static bool decode( TQDropEvent* e, Button& btn );
 };
 
 /**
@@ -78,11 +78,11 @@ class ButtonDropSiteItem
 	
 		Button button();
 
-		QRect rect;
+		TQRect rect;
 		int width();
 		int height();
 
-		void draw(QPainter *p, const QColorGroup& cg, QRect rect);
+		void draw(TQPainter *p, const TQColorGroup& cg, TQRect rect);
 
 	private:
 		Button m_button;
@@ -94,10 +94,10 @@ class ButtonDropSiteItem
 class ButtonSourceItem : public QListViewItem
 {
 	public:
-		ButtonSourceItem(QListView * parent, const Button& btn);
+		ButtonSourceItem(TQListView * parent, const Button& btn);
 		virtual ~ButtonSourceItem();
 
-		void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int align);
+		void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int align);
 
 		void setButton(const Button& btn);
 		Button button() const;
@@ -114,24 +114,24 @@ class ButtonSource : public KListView
 	Q_OBJECT
 
 	public:
-		ButtonSource(QWidget *parent = 0, const char* name = 0);
+		ButtonSource(TQWidget *parent = 0, const char* name = 0);
 		virtual ~ButtonSource();
 
-		QSize sizeHint() const;
+		TQSize sizeHint() const;
 
 		void hideAllButtons();
 		void showAllButtons();
 
 	public slots:
-		void hideButton(QChar btn);
-		void showButton(QChar btn);
+		void hideButton(TQChar btn);
+		void showButton(TQChar btn);
 
 	protected:
-		bool acceptDrag(QDropEvent* e) const;
-		virtual QDragObject *dragObject();
+		bool acceptDrag(TQDropEvent* e) const;
+		virtual TQDragObject *dragObject();
 };
 
-typedef QValueList<ButtonDropSiteItem*> ButtonList;
+typedef TQValueList<ButtonDropSiteItem*> ButtonList;
 
 /**
  * This class renders and handles the demo titlebar dropsite
@@ -141,7 +141,7 @@ class ButtonDropSite: public QFrame
 	Q_OBJECT
 
 	public:
-		ButtonDropSite( QWidget* parent=0, const char* name=0 );
+		ButtonDropSite( TQWidget* parent=0, const char* name=0 );
 		~ButtonDropSite();
 
 		// Allow external classes access our buttons - ensure buttons are
@@ -152,8 +152,8 @@ class ButtonDropSite: public QFrame
 		void clearRight();
 
 	signals:
-		void buttonAdded(QChar btn);
-		void buttonRemoved(QChar btn);
+		void buttonAdded(TQChar btn);
+		void buttonRemoved(TQChar btn);
 		void changed();
 
 	public slots:
@@ -161,21 +161,21 @@ class ButtonDropSite: public QFrame
 		void recalcItemGeometry(); ///< Call this whenever the item list changes... updates the items' rect property
 
 	protected:
-		void resizeEvent(QResizeEvent*);
-		void dragEnterEvent( QDragEnterEvent* e );
-		void dragMoveEvent( QDragMoveEvent* e );
-		void dragLeaveEvent( QDragLeaveEvent* e );
-		void dropEvent( QDropEvent* e );
-		void mousePressEvent( QMouseEvent* e ); ///< Starts dragging a button...
+		void resizeEvent(TQResizeEvent*);
+		void dragEnterEvent( TQDragEnterEvent* e );
+		void dragMoveEvent( TQDragMoveEvent* e );
+		void dragLeaveEvent( TQDragLeaveEvent* e );
+		void dropEvent( TQDropEvent* e );
+		void mousePressEvent( TQMouseEvent* e ); ///< Starts dragging a button...
 
-		void drawContents( QPainter* p );
-		ButtonDropSiteItem *buttonAt(QPoint p);
+		void drawContents( TQPainter* p );
+		ButtonDropSiteItem *buttonAt(TQPoint p);
 		bool removeButton(ButtonDropSiteItem *item);
 		int calcButtonListWidth(const ButtonList& buttons); ///< Computes the total space the buttons will take in the titlebar
-		void drawButtonList(QPainter *p, const ButtonList& buttons, int offset);
+		void drawButtonList(TQPainter *p, const ButtonList& buttons, int offset);
 
-		QRect leftDropArea();
-		QRect rightDropArea();
+		TQRect leftDropArea();
+		TQRect rightDropArea();
 
 	private:
 		/**
@@ -184,7 +184,7 @@ class ButtonDropSite: public QFrame
 		bool getItemIterator(ButtonDropSiteItem *item, ButtonList* &list, ButtonList::iterator &iterator);
 
 		void cleanDropVisualizer();
-		QRect m_oldDropVisualizer;
+		TQRect m_oldDropVisualizer;
 
 		ButtonDropSiteItem *m_selected;
 };
@@ -194,7 +194,7 @@ class ButtonPositionWidget : public QWidget
 	Q_OBJECT
 
 	public:
-		ButtonPositionWidget(QWidget *parent = 0, const char* name = 0);
+		ButtonPositionWidget(TQWidget *parent = 0, const char* name = 0);
 		~ButtonPositionWidget();
 
 		/**
@@ -202,23 +202,23 @@ class ButtonPositionWidget : public QWidget
 		 */
 		void setDecorationFactory(KDecorationFactory *factory);
 
-		QString buttonsLeft() const;
-		QString buttonsRight() const;
-		void setButtonsLeft(const QString &buttons);
-		void setButtonsRight(const QString &buttons);
+		TQString buttonsLeft() const;
+		TQString buttonsRight() const;
+		void setButtonsLeft(const TQString &buttons);
+		void setButtonsRight(const TQString &buttons);
 
 	signals:
 		void changed();
 
 	private:
 		void clearButtonList(const ButtonList& btns);
-		Button getButton(QChar type, bool& success);
+		Button getButton(TQChar type, bool& success);
 
 		ButtonDropSite* m_dropSite;
 		ButtonSource *m_buttonSource;
 
 		KDecorationFactory *m_factory;
-		QString m_supportedButtons;
+		TQString m_supportedButtons;
 };
 
 

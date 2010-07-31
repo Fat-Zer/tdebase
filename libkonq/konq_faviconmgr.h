@@ -28,7 +28,7 @@
  * Maintains a list of custom icons per URL. This is only a stub
  * for the "favicons" KDED Module
  */
-class LIBKONQ_EXPORT KonqFavIconMgr : public QObject, public DCOPObject
+class LIBKONQ_EXPORT KonqFavIconMgr : public TQObject, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
@@ -36,7 +36,7 @@ public:
     /**
      * Constructor.
      */
-    KonqFavIconMgr(QObject *parent = 0, const char *name = 0);
+    KonqFavIconMgr(TQObject *parent = 0, const char *name = 0);
 
     /**
      * Downloads an icon from @p iconURL and associates @p url with it.
@@ -52,15 +52,15 @@ public:
 
     /**
      * Looks up an icon for @p url and returns its name if found
-     * or QString::null otherwise
+     * or TQString::null otherwise
      */
-    static QString iconForURL(const QString &url);
+    static TQString iconForURL(const TQString &url);
 
 k_dcop:
     /**
      * an icon changed, updates the combo box
      */
-    virtual ASYNC notifyChange( bool, QString, QString ) = 0;
+    virtual ASYNC notifyChange( bool, TQString, TQString ) = 0;
 
 signals:
     void changed();

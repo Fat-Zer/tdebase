@@ -12,9 +12,9 @@
 #ifndef __icons_h__
 #define __icons_h__
 
-#include <qcolor.h>
-#include <qimage.h>
-#include <qvaluelist.h>
+#include <tqcolor.h>
+#include <tqimage.h>
+#include <tqvaluelist.h>
 
 #include <kcmodule.h>
 #include <kdialogbase.h>
@@ -43,8 +43,8 @@ struct Effect
 {
     int type;
     float value;
-    QColor color;
-    QColor color2;
+    TQColor color;
+    TQColor color2;
     bool transparant;
 };
 
@@ -57,7 +57,7 @@ class KIconConfig: public KCModule
     Q_OBJECT
 
 public:
-    KIconConfig(QWidget *parent, const char *name=0);
+    KIconConfig(TQWidget *parent, const char *name=0);
     ~KIconConfig();
 
     virtual void load();
@@ -80,7 +80,7 @@ private slots:
 private:
     void preview(int i);
     void EffectSetup(int state);
-    QPushButton *addPreviewIcon(int i, const QString &str, QWidget *parent, QGridLayout *lay);
+    TQPushButton *addPreviewIcon(int i, const TQString &str, TQWidget *parent, TQGridLayout *lay);
     void init();
     void initDefaults();
     void read();
@@ -89,14 +89,14 @@ private:
 
     bool mbDP[6], mbChanged[6], mbAnimated[6];
     int mSizes[6];
-    QValueList<int> mAvSizes[6];
+    TQValueList<int> mAvSizes[6];
 
     Effect mEffects[6][3];
     Effect mDefaultEffect[3];
     
     int mUsage;
-    QString mTheme, mExample;
-    QStringList mGroups, mStates;
+    TQString mTheme, mExample;
+    TQStringList mGroups, mStates;
     int mSysTraySize;
     int mQuickLaunchSize;
 
@@ -107,15 +107,15 @@ private:
     KSimpleConfig *mpSystrayConfig;
     KSimpleConfig *mpKickerConfig;
 
-    typedef QLabel *QLabelPtr;
+    typedef TQLabel *QLabelPtr;
     QLabelPtr mpPreview[3];
 
-    QListBox *mpUsageList;
-    QComboBox *mpSizeBox;
-    QCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck;
-    QTabWidget *m_pTabWidget;
-    QWidget *m_pTab1;
-    QPushButton *mPreviewButton1, *mPreviewButton2, *mPreviewButton3;
+    TQListBox *mpUsageList;
+    TQComboBox *mpSizeBox;
+    TQCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck;
+    TQTabWidget *m_pTabWidget;
+    TQWidget *m_pTab1;
+    TQPushButton *mPreviewButton1, *mPreviewButton2, *mPreviewButton3;
 };
 
 class KIconEffectSetupDialog: public KDialogBase
@@ -124,8 +124,8 @@ class KIconEffectSetupDialog: public KDialogBase
      
 public:
     KIconEffectSetupDialog(const Effect &, const Effect &,
-                           const QString &, const QImage &,
-			   QWidget *parent=0L, char *name=0L);
+                           const TQString &, const TQImage &,
+			   TQWidget *parent=0L, char *name=0L);
     ~KIconEffectSetupDialog();
     Effect effect() { return mEffect; }
 
@@ -135,24 +135,24 @@ protected:
 
 protected slots:
     void slotEffectValue(int value);
-    void slotEffectColor(const QColor &col);
-    void slotEffectColor2(const QColor &col);
+    void slotEffectColor(const TQColor &col);
+    void slotEffectColor2(const TQColor &col);
     void slotEffectType(int type);
     void slotSTCheck(bool b);
     void slotDefault();
 
 private:
     KIconEffect *mpEffect;
-    QListBox *mpEffectBox;
-    QCheckBox *mpSTCheck;
-    QSlider *mpEffectSlider;
+    TQListBox *mpEffectBox;
+    TQCheckBox *mpSTCheck;
+    TQSlider *mpEffectSlider;
     KColorButton *mpEColButton;
     KColorButton *mpECol2Button;
     Effect mEffect;
     Effect mDefaultEffect;
-    QImage mExample;
-    QGroupBox *mpEffectGroup;
-    QLabel *mpPreview, *mpEffectLabel, *mpEffectColor, *mpEffectColor2;
+    TQImage mExample;
+    TQGroupBox *mpEffectGroup;
+    TQLabel *mpPreview, *mpEffectLabel, *mpEffectColor, *mpEffectColor2;
 };
 
 #endif

@@ -23,15 +23,15 @@
 #include "konq_sound.h"
 #include "konq_filetip.h"
 
-#include <qclipboard.h>
-#include <qlayout.h>
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qtooltip.h>
-#include <qlabel.h>
-#include <qmovie.h>
-#include <qregexp.h>
-#include <qcursor.h>
+#include <tqclipboard.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
+#include <tqpainter.h>
+#include <tqtooltip.h>
+#include <tqlabel.h>
+#include <tqmovie.h>
+#include <tqregexp.h>
+#include <tqcursor.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -88,7 +88,7 @@ struct KonqIconViewWidgetPrivate
     // Sound preview
     KFileIVI *pSoundItem;
     KonqSoundPlayer *pSoundPlayer;
-    QTimer *pSoundTimer;
+    TQTimer *pSoundTimer;
     bool bSoundPreviews;
     bool bSoundItemClicked;
     bool bAllowSetWallpaper;
@@ -97,48 +97,48 @@ struct KonqIconViewWidgetPrivate
 
     // Animated icons support
     bool doAnimations;
-    QMovie* m_movie;
+    TQMovie* m_movie;
     int m_movieBlocked;
-    QString movieFileName;
+    TQString movieFileName;
 
     KIO::PreviewJob *pPreviewJob;
     KonqFileTip* pFileTip;
-    QStringList previewSettings;
+    TQStringList previewSettings;
     bool renameItem;
     bool firstClick;
     bool releaseMouseEvent;
-    QPoint mousePos;
+    TQPoint mousePos;
     int mouseState;
-    QTimer *pActivateDoubleClick;
-    QStringList* pPreviewMimeTypes;
+    TQTimer *pActivateDoubleClick;
+    TQStringList* pPreviewMimeTypes;
     bool bProgramsURLdrag;
 };
 
-KonqIconViewWidget::KonqIconViewWidget( QWidget * parent, const char * name, WFlags f, bool kdesktop )
+KonqIconViewWidget::KonqIconViewWidget( TQWidget * parent, const char * name, WFlags f, bool kdesktop )
     : KIconView( parent, name, f ),
       m_rootItem( 0L ), m_size( 0 ) /* default is DesktopIcon size */,
       m_bDesktop( kdesktop ),
       m_bSetGridX( !kdesktop ) /* No line breaking on the desktop */
 {
     d = new KonqIconViewWidgetPrivate;
-    connect( this, SIGNAL( dropped( QDropEvent *, const QValueList<QIconDragItem> & ) ),
-             this, SLOT( slotDropped( QDropEvent*, const QValueList<QIconDragItem> & ) ) );
+    connect( this, TQT_SIGNAL( dropped( TQDropEvent *, const TQValueList<TQIconDragItem> & ) ),
+             this, TQT_SLOT( slotDropped( TQDropEvent*, const TQValueList<TQIconDragItem> & ) ) );
 
-    connect( this, SIGNAL( selectionChanged() ),
-             this, SLOT( slotSelectionChanged() ) );
+    connect( this, TQT_SIGNAL( selectionChanged() ),
+             this, TQT_SLOT( slotSelectionChanged() ) );
 
     kapp->addKipcEventMask( KIPC::IconChanged );
-    connect( kapp, SIGNAL(iconChanged(int)), SLOT(slotIconChanged(int)) );
-    connect( this, SIGNAL(onItem(QIconViewItem *)), SLOT(slotOnItem(QIconViewItem *)) );
-    connect( this, SIGNAL(onViewport()), SLOT(slotOnViewport()) );
-    connect( this, SIGNAL(itemRenamed(QIconViewItem *, const QString &)), SLOT(slotItemRenamed(QIconViewItem *, const QString &)) );
+    connect( kapp, TQT_SIGNAL(iconChanged(int)), TQT_SLOT(slotIconChanged(int)) );
+    connect( this, TQT_SIGNAL(onItem(TQIconViewItem *)), TQT_SLOT(slotOnItem(TQIconViewItem *)) );
+    connect( this, TQT_SIGNAL(onViewport()), TQT_SLOT(slotOnViewport()) );
+    connect( this, TQT_SIGNAL(itemRenamed(TQIconViewItem *, const TQString &)), TQT_SLOT(slotItemRenamed(TQIconViewItem *, const TQString &)) );
 
     m_pSettings = KonqFMSettings::settings();  // already needed in setItemTextPos(), calculateGridX()
     d->bBoostPreview = boostPreview();
 
     // hardcoded settings
-    setSelectionMode( QIconView::Extended );
-    setItemTextPos( QIconView::Bottom );
+    setSelectionMode( TQIconView::Extended );
+    setItemTextPos( TQIconView::Bottom );
     d->releaseMouseEvent = false;
     d->pFileTip = new KonqFileTip(this);
     d->firstClick = false;
@@ -151,7 +151,7 @@ KonqIconViewWidget::KonqIconViewWidget( QWidget * parent, const char * name, WFl
     m_LineupMode = LineupBoth;
     // emit our signals
     slotSelectionChanged();
-    m_iconPositionGroupPrefix = QString::fromLatin1( "IconPosition::" );
+    m_iconPositionGroupPrefix = TQString::fromLatin1( "IconPosition::" );
     KonqUndoManager::incRef();
 }
 
@@ -172,7 +172,7 @@ void KonqIconViewWidget::setMaySetWallpaper(bool b)
     d->bAllowSetWallpaper = b;
 }
 
-void KonqIconViewWidget::focusOutEvent( QFocusEvent * ev )
+void KonqIconViewWidget::focusOutEvent( TQFocusEvent * ev )
 {
     // We can't possibly have the mouse pressed and still lose focus.
     // Well, we can, but when we regain focus we should assume the mouse is
@@ -189,7 +189,7 @@ void KonqIconViewWidget::focusOutEvent( QFocusEvent * ev )
     KIconView::focusOutEvent( ev );
 }
 
-void KonqIconViewWidget::slotItemRenamed(QIconViewItem *item, const QString &name)
+void KonqIconViewWidget::slotItemRenamed(TQIconViewItem *item, const TQString &name)
 {
     kdDebug(1203) << "KonqIconViewWidget::slotItemRenamed" << endl;
     KFileIVI *viewItem = static_cast<KFileIVI *>(item);
@@ -231,7 +231,7 @@ void KonqIconViewWidget::readAnimatedIconsConfig()
     d->doAnimations = cfgGroup.readBoolEntry( "Animated", true /*default*/ );
 }
 
-void KonqIconViewWidget::slotOnItem( QIconViewItem *_item )
+void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
 {
     KFileIVI* item = static_cast<KFileIVI *>( _item );
     // Reset icon of previous item
@@ -284,7 +284,7 @@ void KonqIconViewWidget::slotOnItem( QIconViewItem *_item )
                     else {
                         kdDebug(1203) << "we go ahead.." << endl;
                         d->m_movieBlocked++;
-                        QTimer::singleShot(300, this, SLOT(slotReenableAnimation()));
+                        TQTimer::singleShot(300, this, TQT_SLOT(slotReenableAnimation()));
                         d->m_movie->restart();
                         d->m_movie->unpause();
                     }
@@ -292,14 +292,14 @@ void KonqIconViewWidget::slotOnItem( QIconViewItem *_item )
                 else
 #endif
                 {
-                    QMovie movie = KGlobal::iconLoader()->loadMovie( d->pActiveItem->mouseOverAnimation(), KIcon::Desktop, d->pActiveItem->iconSize() );
+                    TQMovie movie = KGlobal::iconLoader()->loadMovie( d->pActiveItem->mouseOverAnimation(), KIcon::Desktop, d->pActiveItem->iconSize() );
                     if ( !movie.isNull() )
                     {
                         delete d->m_movie;
-                        d->m_movie = new QMovie( movie ); // shallow copy, don't worry
+                        d->m_movie = new TQMovie( movie ); // shallow copy, don't worry
                         // Fix alpha-channel - currently only if no background pixmap,
                         // the bg pixmap case requires to uncomment the code at qmovie.cpp:404
-                        const QPixmap* pm = backgroundPixmap();
+                        const TQPixmap* pm = backgroundPixmap();
                         bool hasPixmap = pm && !pm->isNull();
                         if ( !hasPixmap ) {
                             pm = viewport()->backgroundPixmap();
@@ -307,8 +307,8 @@ void KonqIconViewWidget::slotOnItem( QIconViewItem *_item )
                         }
                         if (!hasPixmap && backgroundMode() != NoBackground)
                            d->m_movie->setBackgroundColor( viewport()->backgroundColor() );
-                        d->m_movie->connectUpdate( this, SLOT( slotMovieUpdate(const QRect &) ) );
-                        d->m_movie->connectStatus( this, SLOT( slotMovieStatus(int) ) );
+                        d->m_movie->connectUpdate( this, TQT_SLOT( slotMovieUpdate(const TQRect &) ) );
+                        d->m_movie->connectStatus( this, TQT_SLOT( slotMovieStatus(int) ) );
                         d->movieFileName = d->pActiveItem->mouseOverAnimation();
                         d->pActiveItem->setAnimated( true );
                     }
@@ -318,7 +318,7 @@ void KonqIconViewWidget::slotOnItem( QIconViewItem *_item )
                         if (d->m_movie)
                             d->m_movie->pause();
                         // No movie available, remember it
-                        d->pActiveItem->setMouseOverAnimation( QString::null );
+                        d->pActiveItem->setMouseOverAnimation( TQString::null );
                     }
                 }
             } // animations
@@ -355,8 +355,8 @@ void KonqIconViewWidget::slotOnItem( QIconViewItem *_item )
         d->bSoundItemClicked = false;
         if (!d->pSoundTimer)
         {
-            d->pSoundTimer = new QTimer(this);
-            connect(d->pSoundTimer, SIGNAL(timeout()), SLOT(slotStartSoundPreview()));
+            d->pSoundTimer = new TQTimer(this);
+            connect(d->pSoundTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotStartSoundPreview()));
         }
         if (d->pSoundTimer->isActive())
             d->pSoundTimer->stop();
@@ -394,7 +394,7 @@ void KonqIconViewWidget::slotOnViewport()
             d->m_movie->pause();
             d->m_movieBlocked++;
             kdDebug(1203) << "on viewport, blocking" << endl;
-            QTimer::singleShot(300, this, SLOT(slotReenableAnimation()));
+            TQTimer::singleShot(300, this, TQT_SLOT(slotReenableAnimation()));
         }
 #endif
         d->pActiveItem->refreshIcon( true );
@@ -419,16 +419,16 @@ void KonqIconViewWidget::slotStartSoundPreview()
 }
 
 
-void KonqIconViewWidget::slotPreview(const KFileItem *item, const QPixmap &pix)
+void KonqIconViewWidget::slotPreview(const KFileItem *item, const TQPixmap &pix)
 {
     // ### slow. Idea: move KonqKfmIconView's m_itemDict into this class
-    for (QIconViewItem *it = firstItem(); it; it = it->nextItem())
+    for (TQIconViewItem *it = firstItem(); it; it = it->nextItem())
     {
         KFileIVI* current = static_cast<KFileIVI *>(it);
         if (current->item() == item)
         {
             if (item->overlays() & KIcon::HiddenOverlay) {
-                QPixmap p(pix);
+                TQPixmap p(pix);
 
                 KIconEffect::semiTransparent(p);
                 current->setThumbnailPixmap(p);
@@ -446,7 +446,7 @@ void KonqIconViewWidget::slotPreviewResult()
     emit imagePreviewFinished();
 }
 
-void KonqIconViewWidget::slotToolTipPreview(const KFileItem* , const QPixmap &)
+void KonqIconViewWidget::slotToolTipPreview(const KFileItem* , const TQPixmap &)
 {
 // unused - remove for KDE4
 }
@@ -456,14 +456,14 @@ void KonqIconViewWidget::slotToolTipPreviewResult()
 // unused - remove for KDE4
 }
 
-void KonqIconViewWidget::slotMovieUpdate( const QRect& rect )
+void KonqIconViewWidget::slotMovieUpdate( const TQRect& rect )
 {
     //kdDebug(1203) << "KonqIconViewWidget::slotMovieUpdate " << rect.x() << "," << rect.y() << " " << rect.width() << "x" << rect.height() << endl;
     Q_ASSERT( d );
     Q_ASSERT( d->m_movie );
     // seems stopAnimation triggers one last update
     if ( d->pActiveItem && d->m_movie && d->pActiveItem->isAnimated() ) {
-        const QPixmap &frame = d->m_movie->framePixmap();
+        const TQPixmap &frame = d->m_movie->framePixmap();
         // This can happen if the icon was scaled to the desired size, so KIconLoader
         // will happily return a movie with different dimensions than the icon
         int iconSize=d->pActiveItem->iconSize();
@@ -472,12 +472,12 @@ void KonqIconViewWidget::slotMovieUpdate( const QRect& rect )
             d->pActiveItem->setAnimated( false );
             d->m_movie->pause();
             // No movie available, remember it
-            d->pActiveItem->setMouseOverAnimation( QString::null );
+            d->pActiveItem->setMouseOverAnimation( TQString::null );
             d->pActiveItem->setActive( true );
             return;
         }
         d->pActiveItem->setPixmapDirect( frame, false, false /*no redraw*/ );
-        QRect pixRect = d->pActiveItem->pixmapRect(false);
+        TQRect pixRect = d->pActiveItem->pixmapRect(false);
         repaintContents( pixRect.x() + rect.x(), pixRect.y() + rect.y(), rect.width(), rect.height(), false );
     }
 }
@@ -488,7 +488,7 @@ void KonqIconViewWidget::slotMovieStatus( int status )
         // Error playing the MNG -> forget about it and do normal iconeffect
         if ( d->pActiveItem && d->pActiveItem->isAnimated() ) {
             d->pActiveItem->setAnimated( false );
-            d->pActiveItem->setMouseOverAnimation( QString::null );
+            d->pActiveItem->setMouseOverAnimation( TQString::null );
             d->pActiveItem->setActive( true );
         }
     }
@@ -513,7 +513,7 @@ void KonqIconViewWidget::clear()
     d->pActiveItem = 0L;
 }
 
-void KonqIconViewWidget::takeItem( QIconViewItem *item )
+void KonqIconViewWidget::takeItem( TQIconViewItem *item )
 {
     if ( d->pActiveItem == static_cast<KFileIVI *>(item) )
     {
@@ -528,7 +528,7 @@ void KonqIconViewWidget::takeItem( QIconViewItem *item )
 }
 
 // Currently unused - remove in KDE 4.0
-void KonqIconViewWidget::setThumbnailPixmap( KFileIVI * item, const QPixmap & pixmap )
+void KonqIconViewWidget::setThumbnailPixmap( KFileIVI * item, const TQPixmap & pixmap )
 {
     if ( item )
     {
@@ -552,19 +552,19 @@ bool KonqIconViewWidget::initConfig( bool bInit )
     bool fontChanged = false;
 
     // Color settings
-    QColor normalTextColor       = m_pSettings->normalTextColor();
+    TQColor normalTextColor       = m_pSettings->normalTextColor();
     setItemColor( normalTextColor );
 
     if (m_bDesktop)
     {
-      QColor itemTextBg = m_pSettings->itemTextBackground();
+      TQColor itemTextBg = m_pSettings->itemTextBackground();
       if ( itemTextBg.isValid() )
           setItemTextBackground( itemTextBg );
       else
           setItemTextBackground( NoBrush );
     }
 
-    bool on = m_pSettings->showFileTips() && QToolTip::isGloballyEnabled();
+    bool on = m_pSettings->showFileTips() && TQToolTip::isGloballyEnabled();
     d->pFileTip->setOptions(on,
                             m_pSettings->showPreviewsInFileTips(),
                             m_pSettings->numFileTips());
@@ -573,7 +573,7 @@ bool KonqIconViewWidget::initConfig( bool bInit )
     setShowToolTips(!on);
 
     // Font settings
-    QFont font( m_pSettings->standardFont() );
+    TQFont font( m_pSettings->standardFont() );
     if (!m_bDesktop)
         font.setUnderline( m_pSettings->underlineLink() );
 
@@ -582,7 +582,7 @@ bool KonqIconViewWidget::initConfig( bool bInit )
         setFont( font );
         if (!bInit)
         {
-            // QIconView doesn't do it by default... but if the font is made much
+            // TQIconView doesn't do it by default... but if the font is made much
             // bigger, we really need to give more space between the icons
             fontChanged = true;
         }
@@ -590,7 +590,7 @@ bool KonqIconViewWidget::initConfig( bool bInit )
 
     setIconTextHeight( m_pSettings->iconTextHeight() );
 
-    if ( (itemTextPos() == QIconView::Right) && (maxItemWidth() != gridXValue()) )
+    if ( (itemTextPos() == TQIconView::Right) && (maxItemWidth() != gridXValue()) )
     {
         int size = m_size;
         m_size = -1; // little trick to force grid change in setIcons
@@ -622,7 +622,7 @@ void KonqIconViewWidget::disableSoundPreviews()
       d->pSoundTimer->stop();
 }
 
-void KonqIconViewWidget::setIcons( int size, const QStringList& stopImagePreviewFor )
+void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePreviewFor )
 {
     // size has changed?
     bool sizeChanged = (m_size != size);
@@ -639,7 +639,7 @@ void KonqIconViewWidget::setIcons( int size, const QStringList& stopImagePreview
         int realSize = size ? size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
         // choose spacing depending on font, but min 5 (due to KFileIVI  move limit)
         setSpacing( ( m_bDesktop || ( realSize > KIcon::SizeSmall ) ) ?
-                    QMAX( 5, QFontMetrics(font()).width('n') ) : 0 );
+                    QMAX( 5, TQFontMetrics(font()).width('n') ) : 0 );
     }
 
     if ( sizeChanged || previewSizeChanged || !stopImagePreviewFor.isEmpty() )
@@ -656,7 +656,7 @@ void KonqIconViewWidget::setIcons( int size, const QStringList& stopImagePreview
     viewport()->setUpdatesEnabled( false );
 
     // Do this even if size didn't change, since this is used by refreshMimeTypes...
-    for ( QIconViewItem *it = firstItem(); it; it = it->nextItem() ) {
+    for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() ) {
         KFileIVI * ivi = static_cast<KFileIVI *>( it );
         // Set a normal icon for files that are not thumbnails, and for files
         // that are thumbnails but for which it should be stopped
@@ -682,22 +682,22 @@ void KonqIconViewWidget::setIcons( int size, const QStringList& stopImagePreview
         viewport()->update(); //Repaint later..
 }
 
-bool KonqIconViewWidget::mimeTypeMatch( const QString& mimeType, const QStringList& mimeList ) const
+bool KonqIconViewWidget::mimeTypeMatch( const TQString& mimeType, const TQStringList& mimeList ) const
 {
     // Code duplication from KIO::PreviewJob
     KMimeType::Ptr mime = KMimeType::mimeType( mimeType );
-    for (QStringList::ConstIterator mt = mimeList.begin(); mt != mimeList.end(); ++mt)
+    for (TQStringList::ConstIterator mt = mimeList.begin(); mt != mimeList.end(); ++mt)
     {
         if ( mime->is( *mt ) )
             return true;
         // Support for *mt == "image/*"
-        QString tmp( mimeType );
-        if ( (*mt).endsWith("*") && tmp.replace(QRegExp("/.*"), "/*") == (*mt) )
+        TQString tmp( mimeType );
+        if ( (*mt).endsWith("*") && tmp.replace(TQRegExp("/.*"), "/*") == (*mt) )
             return true;
         if ( (*mt) == "text/plain" )
         {
-            QVariant textProperty = mime->property( "X-KDE-text" );
-            if ( textProperty.type() == QVariant::Bool && textProperty.toBool() )
+            TQVariant textProperty = mime->property( "X-KDE-text" );
+            if ( textProperty.type() == TQVariant::Bool && textProperty.toBool() )
                 return true;
         }
     }
@@ -710,7 +710,7 @@ void KonqIconViewWidget::setItemTextPos( ItemTextPos pos )
     int sz = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
     if ( m_bSetGridX )
-        if ( pos == QIconView::Bottom )
+        if ( pos == TQIconView::Bottom )
             setGridX( QMAX( sz + 50, previewIconSize( sz ) + 13 ) );
         else
         {
@@ -774,7 +774,7 @@ void KonqIconViewWidget::gridValues( int* x, int* y, int* dx, int* dy,
 void KonqIconViewWidget::calculateGridX()
 {
     if ( m_bSetGridX )
-        if ( itemTextPos() == QIconView::Bottom )
+        if ( itemTextPos() == TQIconView::Bottom )
             setGridX( gridXValue() );
         else
         {
@@ -789,7 +789,7 @@ int KonqIconViewWidget::gridXValue() const
     int sz = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
     int newGridX;
 
-    if ( itemTextPos() == QIconView::Bottom )
+    if ( itemTextPos() == TQIconView::Bottom )
         newGridX = QMAX( sz + 50, previewIconSize( sz ) + 13 );
     else
         newGridX = QMAX( sz, previewIconSize( sz ) ) + m_pSettings->iconTextWidth();
@@ -801,7 +801,7 @@ int KonqIconViewWidget::gridXValue() const
 void KonqIconViewWidget::refreshMimeTypes()
 {
     updatePreviewMimeTypes();
-    for ( QIconViewItem *it = firstItem(); it; it = it->nextItem() )
+    for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() )
         (static_cast<KFileIVI *>( it ))->item()->refreshMimeType();
     setIcons( m_size );
 }
@@ -816,10 +816,10 @@ void KonqIconViewWidget::setURL( const KURL &kurl )
     if ( m_url.isLocalFile() )
         m_dotDirectoryPath = m_url.path(1).append( ".directory" );
     else
-        m_dotDirectoryPath = QString::null;
+        m_dotDirectoryPath = TQString::null;
 }
 
-void KonqIconViewWidget::startImagePreview( const QStringList &, bool force )
+void KonqIconViewWidget::startImagePreview( const TQStringList &, bool force )
 {
     stopImagePreview(); // just in case
 
@@ -841,12 +841,12 @@ void KonqIconViewWidget::startImagePreview( const QStringList &, bool force )
     }
 
     KFileItemList items;
-    for ( QIconViewItem *it = firstItem(); it; it = it->nextItem() )
+    for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() )
         if ( force || !static_cast<KFileIVI *>( it )->hasValidThumbnail() )
             items.append( static_cast<KFileIVI *>( it )->item() );
 
     bool onlyAudio = true;
-    for ( QStringList::ConstIterator it = d->previewSettings.begin(); it != d->previewSettings.end(); ++it ) {
+    for ( TQStringList::ConstIterator it = d->previewSettings.begin(); it != d->previewSettings.end(); ++it ) {
         if ( (*it).startsWith( "audio/" ) )
             d->bSoundPreviews = true;
         else
@@ -870,10 +870,10 @@ void KonqIconViewWidget::startImagePreview( const QStringList &, bool force )
     d->pPreviewJob = KIO::filePreview( items, size, size, iconSize,
         m_pSettings->textPreviewIconTransparency(), true /* scale */,
         true /* save */, &(d->previewSettings) );
-    connect( d->pPreviewJob, SIGNAL( gotPreview( const KFileItem *, const QPixmap & ) ),
-             this, SLOT( slotPreview( const KFileItem *, const QPixmap & ) ) );
-    connect( d->pPreviewJob, SIGNAL( result( KIO::Job * ) ),
-             this, SLOT( slotPreviewResult() ) );
+    connect( d->pPreviewJob, TQT_SIGNAL( gotPreview( const KFileItem *, const TQPixmap & ) ),
+             this, TQT_SLOT( slotPreview( const KFileItem *, const TQPixmap & ) ) );
+    connect( d->pPreviewJob, TQT_SIGNAL( result( KIO::Job * ) ),
+             this, TQT_SLOT( slotPreviewResult() ) );
 }
 
 void KonqIconViewWidget::stopImagePreview()
@@ -896,7 +896,7 @@ KFileItemList KonqIconViewWidget::selectedFileItems()
 {
     KFileItemList lstItems;
 
-    QIconViewItem *it = firstItem();
+    TQIconViewItem *it = firstItem();
     for (; it; it = it->nextItem() )
         if ( it->isSelected() ) {
             KFileItem *fItem = (static_cast<KFileIVI *>(it))->item();
@@ -905,7 +905,7 @@ KFileItemList KonqIconViewWidget::selectedFileItems()
     return lstItems;
 }
 
-void KonqIconViewWidget::slotDropped( QDropEvent *ev, const QValueList<QIconDragItem> & )
+void KonqIconViewWidget::slotDropped( TQDropEvent *ev, const TQValueList<TQIconDragItem> & )
 {
     // Drop on background
     KURL dirURL = url();
@@ -916,26 +916,26 @@ void KonqIconViewWidget::slotDropped( QDropEvent *ev, const QValueList<QIconDrag
     KonqOperations::doDrop( m_rootItem /* may be 0L */, dirURL, ev, this );
 }
 
-void KonqIconViewWidget::slotAboutToCreate(const QPoint &, const QValueList<KIO::CopyInfo> &)
+void KonqIconViewWidget::slotAboutToCreate(const TQPoint &, const TQValueList<KIO::CopyInfo> &)
 {
    // Do nothing :-)
 }
 
-void KonqIconViewWidget::drawBackground( QPainter *p, const QRect &r )
+void KonqIconViewWidget::drawBackground( TQPainter *p, const TQRect &r )
 {
     drawBackground(p, r, r.topLeft());
 }
 
-void KonqIconViewWidget::drawBackground( QPainter *p, const QRect &r , const QPoint &pt)
+void KonqIconViewWidget::drawBackground( TQPainter *p, const TQRect &r , const TQPoint &pt)
 {
-    const QPixmap *pm  = backgroundPixmap();
+    const TQPixmap *pm  = backgroundPixmap();
     bool hasPixmap = pm && !pm->isNull();
     if ( !hasPixmap ) {
         pm = viewport()->backgroundPixmap();
         hasPixmap = pm && !pm->isNull();
     }
 
-    QRect rtgt(r);
+    TQRect rtgt(r);
     rtgt.moveTopLeft(pt);
     if (!hasPixmap && backgroundMode() != NoBackground) {
         p->fillRect(rtgt, viewport()->backgroundColor());
@@ -945,11 +945,11 @@ void KonqIconViewWidget::drawBackground( QPainter *p, const QRect &r , const QPo
     if (hasPixmap) {
         int ax = (r.x() + contentsX() + leftMargin()) % pm->width();
         int ay = (r.y() + contentsY() + topMargin()) % pm->height();
-        p->drawTiledPixmap(rtgt, *pm, QPoint(ax, ay));
+        p->drawTiledPixmap(rtgt, *pm, TQPoint(ax, ay));
     }
 }
 
-QDragObject * KonqIconViewWidget::dragObject()
+TQDragObject * KonqIconViewWidget::dragObject()
 {
     if ( !currentItem() )
         return 0;
@@ -957,14 +957,14 @@ QDragObject * KonqIconViewWidget::dragObject()
     return konqDragObject( viewport() );
 }
 
-KonqIconDrag * KonqIconViewWidget::konqDragObject( QWidget * dragSource )
+KonqIconDrag * KonqIconViewWidget::konqDragObject( TQWidget * dragSource )
 {
     //kdDebug(1203) << "KonqIconViewWidget::konqDragObject" << endl;
 
     KonqIconDrag2 * drag = new KonqIconDrag2( dragSource );
-    QIconViewItem *primaryItem = currentItem();
+    TQIconViewItem *primaryItem = currentItem();
     // Append all items to the drag object
-    for ( QIconViewItem *it = firstItem(); it; it = it->nextItem() ) {
+    for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() ) {
         if ( it->isSelected() ) {
           if (!primaryItem)
              primaryItem = it;
@@ -972,14 +972,14 @@ KonqIconDrag * KonqIconViewWidget::konqDragObject( QWidget * dragSource )
           KURL url = fileItem->url();
           bool dummy;
           KURL mostLocalURL = fileItem->mostLocalURL(dummy);
-          QString itemURL = KURLDrag::urlToString(url);
+          TQString itemURL = KURLDrag::urlToString(url);
           kdDebug(1203) << "itemURL=" << itemURL << endl;
-          QIconDragItem id;
-          id.setData( QCString(itemURL.latin1()) );
+          TQIconDragItem id;
+          id.setData( TQCString(itemURL.latin1()) );
           drag->append( id,
-                        QRect( it->pixmapRect(false).topLeft() - m_mousePos,
+                        TQRect( it->pixmapRect(false).topLeft() - m_mousePos,
                                it->pixmapRect().size() ),
-                        QRect( it->textRect(false).topLeft() - m_mousePos,
+                        TQRect( it->textRect(false).topLeft() - m_mousePos,
                                it->textRect().size() ),
                         itemURL, mostLocalURL );
         }
@@ -991,11 +991,11 @@ KonqIconDrag * KonqIconViewWidget::konqDragObject( QWidget * dragSource )
     return drag;
 }
 
-void KonqIconViewWidget::contentsDragEnterEvent( QDragEnterEvent *e )
+void KonqIconViewWidget::contentsDragEnterEvent( TQDragEnterEvent *e )
 {
     if ( e->provides( "text/uri-list" ) )
     {
-        QByteArray payload = e->encodedData( "text/uri-list" );
+        TQByteArray payload = e->encodedData( "text/uri-list" );
         if ( !payload.size() )
             kdError() << "Empty data !" << endl;
         // Cache the URLs, since we need them every time we move over a file
@@ -1021,7 +1021,7 @@ void KonqIconViewWidget::contentsDragEnterEvent( QDragEnterEvent *e )
     emit dragEntered( true /*accepted*/ );
 }
 
-void KonqIconViewWidget::contentsDragMoveEvent( QDragMoveEvent *e )
+void KonqIconViewWidget::contentsDragMoveEvent( TQDragMoveEvent *e )
 {
     if ( d->bProgramsURLdrag ) {
         emit dragMove( false );
@@ -1030,7 +1030,7 @@ void KonqIconViewWidget::contentsDragMoveEvent( QDragMoveEvent *e )
         return;
     }
 
-    QIconViewItem *item = findItem( e->pos() );
+    TQIconViewItem *item = findItem( e->pos() );
     if ( e->source() != viewport() &&
          !item && m_rootItem && !m_rootItem->isWritable() ) {
         emit dragMove( false );
@@ -1042,7 +1042,7 @@ void KonqIconViewWidget::contentsDragMoveEvent( QDragMoveEvent *e )
     KIconView::contentsDragMoveEvent( e );
 }
 
-void KonqIconViewWidget::contentsDragLeaveEvent( QDragLeaveEvent *e )
+void KonqIconViewWidget::contentsDragLeaveEvent( TQDragLeaveEvent *e )
 {
     d->bProgramsURLdrag = false;
     KIconView::contentsDragLeaveEvent(e);
@@ -1050,19 +1050,19 @@ void KonqIconViewWidget::contentsDragLeaveEvent( QDragLeaveEvent *e )
 }
 
 
-void KonqIconViewWidget::setItemColor( const QColor &c )
+void KonqIconViewWidget::setItemColor( const TQColor &c )
 {
     iColor = c;
 }
 
-QColor KonqIconViewWidget::itemColor() const
+TQColor KonqIconViewWidget::itemColor() const
 {
     return iColor;
 }
 
 void KonqIconViewWidget::disableIcons( const KURL::List & lst )
 {
-  for ( QIconViewItem *kit = firstItem(); kit; kit = kit->nextItem() )
+  for ( TQIconViewItem *kit = firstItem(); kit; kit = kit->nextItem() )
   {
       bool bFound = false;
       // Wow. This is ugly. Matching two lists together....
@@ -1088,7 +1088,7 @@ void KonqIconViewWidget::slotSelectionChanged()
     bool bInTrash = false;
     int iCount = 0;
 
-    for ( QIconViewItem *it = firstItem(); it; it = it->nextItem() )
+    for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() )
     {
         if ( it->isSelected() )
         {
@@ -1097,7 +1097,7 @@ void KonqIconViewWidget::slotSelectionChanged()
 
             KFileItem *item = ( static_cast<KFileIVI *>( it ) )->item();
             KURL url = item->url();
-            QString local_path = item->localPath();
+            TQString local_path = item->localPath();
 
             if ( url.directory(false) == KGlobalSettings::trashPath() )
                 bInTrash = true;
@@ -1126,8 +1126,8 @@ void KonqIconViewWidget::renameCurrentItem()
 void KonqIconViewWidget::renameSelectedItem()
 {
     kdDebug(1203) << " -- KonqIconViewWidget::renameSelectedItem() -- " << endl;
-    QIconViewItem * item = 0L;
-    QIconViewItem *it = firstItem();
+    TQIconViewItem * item = 0L;
+    TQIconViewItem *it = firstItem();
     for (; it; it = it->nextItem() )
         if ( it->isSelected() && !item )
         {
@@ -1147,14 +1147,14 @@ void KonqIconViewWidget::cutSelection()
     kdDebug(1203) << " -- KonqIconViewWidget::cutSelection() -- " << endl;
     KonqIconDrag * obj = konqDragObject( /* no parent ! */ );
     obj->setMoveSelection( true );
-    QApplication::clipboard()->setData( obj );
+    TQApplication::clipboard()->setData( obj );
 }
 
 void KonqIconViewWidget::copySelection()
 {
     kdDebug(1203) << " -- KonqIconViewWidget::copySelection() -- " << endl;
     KonqIconDrag * obj = konqDragObject( /* no parent ! */ );
-    QApplication::clipboard()->setData( obj );
+    TQApplication::clipboard()->setData( obj );
 }
 
 void KonqIconViewWidget::pasteSelection()
@@ -1176,7 +1176,7 @@ KURL::List KonqIconViewWidget::selectedUrls( UrlFlags flags ) const
 {
     KURL::List lstURLs;
     bool dummy;
-    for ( QIconViewItem *it = firstItem(); it; it = it->nextItem() )
+    for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() )
         if ( it->isSelected() ) {
             KFileItem* item = (static_cast<KFileIVI *>( it ))->item();
             lstURLs.append( flags == MostLocalUrls ? item->mostLocalURL( dummy ) : item->url() );
@@ -1184,12 +1184,12 @@ KURL::List KonqIconViewWidget::selectedUrls( UrlFlags flags ) const
     return lstURLs;
 }
 
-QRect KonqIconViewWidget::iconArea() const
+TQRect KonqIconViewWidget::iconArea() const
 {
     return m_IconRect;
 }
 
-void KonqIconViewWidget::setIconArea(const QRect &rect)
+void KonqIconViewWidget::setIconArea(const TQRect &rect)
 {
     m_IconRect = rect;
 }
@@ -1214,14 +1214,14 @@ void KonqIconViewWidget::setSortDirectoriesFirst( bool b )
   m_bSortDirsFirst = b;
 }
 
-void KonqIconViewWidget::contentsMouseMoveEvent( QMouseEvent *e )
+void KonqIconViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
 {
     if ( (d->pSoundPlayer && d->pSoundPlayer->isPlaying()) || (d->pSoundTimer && d->pSoundTimer->isActive()))
     {
         // The following call is SO expensive (the ::widgetAt call eats up to 80%
         // of the mouse move cpucycles!), so it's mandatory to place that function
         // under strict checks, such as d->pSoundPlayer->isPlaying()
-        if ( QApplication::widgetAt( QCursor::pos() ) != topLevelWidget() )
+        if ( TQApplication::widgetAt( TQCursor::pos() ) != topLevelWidget() )
         {
             if (d->pSoundPlayer)
                 d->pSoundPlayer->stop();
@@ -1234,9 +1234,9 @@ void KonqIconViewWidget::contentsMouseMoveEvent( QMouseEvent *e )
     KIconView::contentsMouseMoveEvent( e );
 }
 
-void KonqIconViewWidget::contentsDropEvent( QDropEvent * ev )
+void KonqIconViewWidget::contentsDropEvent( TQDropEvent * ev )
 {
-  QIconViewItem *i = findItem( ev->pos() );
+  TQIconViewItem *i = findItem( ev->pos() );
 
     if ( ev->source() != viewport() &&
          !i && m_rootItem && !m_rootItem->isWritable() ) {
@@ -1244,18 +1244,18 @@ void KonqIconViewWidget::contentsDropEvent( QDropEvent * ev )
         return;
     }
 
-  // Short-circuit QIconView if Ctrl is pressed, so that it's possible
+  // Short-circuit TQIconView if Ctrl is pressed, so that it's possible
   // to drop a file into its own parent widget to copy it.
-  if ( !i && (ev->action() == QDropEvent::Copy || ev->action() == QDropEvent::Link)
+  if ( !i && (ev->action() == TQDropEvent::Copy || ev->action() == TQDropEvent::Link)
           && ev->source() && ev->source() == viewport())
   {
-    // First we need to call QIconView though, to clear the drag shape
+    // First we need to call TQIconView though, to clear the drag shape
     bool bMovable = itemsMovable();
     setItemsMovable(false); // hack ? call it what you want :-)
     KIconView::contentsDropEvent( ev );
     setItemsMovable(bMovable);
 
-    QValueList<QIconDragItem> lst;
+    TQValueList<TQIconDragItem> lst;
     slotDropped(ev, lst);
   }
   else
@@ -1280,8 +1280,8 @@ void KonqIconViewWidget::doubleClickTimeout()
     mousePressChangeValue();
     if ( d->releaseMouseEvent )
     {
-        QMouseEvent e( QEvent::MouseButtonPress,d->mousePos , 1, d->mouseState);
-        QIconViewItem* item = findItem( e.pos() );
+        TQMouseEvent e( TQEvent::MouseButtonPress,d->mousePos , 1, d->mouseState);
+        TQIconViewItem* item = findItem( e.pos() );
         KURL url;
         if ( item )
         {
@@ -1301,7 +1301,7 @@ void KonqIconViewWidget::doubleClickTimeout()
     }
     else
     {
-        QMouseEvent e( QEvent::MouseMove,d->mousePos , 1, d->mouseState);
+        TQMouseEvent e( TQEvent::MouseMove,d->mousePos , 1, d->mouseState);
         KIconView::contentsMousePressEvent( &e );
     }
     if( d->pActivateDoubleClick->isActive() )
@@ -1311,7 +1311,7 @@ void KonqIconViewWidget::doubleClickTimeout()
     d->renameItem= false;
 }
 
-void KonqIconViewWidget::wheelEvent(QWheelEvent* e)
+void KonqIconViewWidget::wheelEvent(TQWheelEvent* e)
 {
     // when scrolling with mousewheel, stop possible pending filetip
     d->pFileTip->setItem( 0 );
@@ -1333,7 +1333,7 @@ void KonqIconViewWidget::wheelEvent(QWheelEvent* e)
     KIconView::wheelEvent(e);
 }
 
-void KonqIconViewWidget::leaveEvent( QEvent *e )
+void KonqIconViewWidget::leaveEvent( TQEvent *e )
 {
     // when leaving the widget, stop possible pending filetip and icon effect
     slotOnViewport();
@@ -1355,11 +1355,11 @@ void KonqIconViewWidget::mousePressChangeValue()
   d->pFileTip->setItem( 0 );
 }
 
-void KonqIconViewWidget::contentsMousePressEvent( QMouseEvent *e )
+void KonqIconViewWidget::contentsMousePressEvent( TQMouseEvent *e )
 {
     if(d->pActivateDoubleClick && d->pActivateDoubleClick->isActive ())
         d->pActivateDoubleClick->stop();
-     QIconViewItem* item = findItem( e->pos() );
+     TQIconViewItem* item = findItem( e->pos() );
      m_mousePos = e->pos();
      KURL url;
      if ( item )
@@ -1375,13 +1375,13 @@ void KonqIconViewWidget::contentsMousePressEvent( QMouseEvent *e )
              d->mouseState = e->state();
              if (!d->pActivateDoubleClick)
              {
-                 d->pActivateDoubleClick = new QTimer(this);
-                 connect(d->pActivateDoubleClick, SIGNAL(timeout()), this, SLOT(doubleClickTimeout()));
+                 d->pActivateDoubleClick = new TQTimer(this);
+                 connect(d->pActivateDoubleClick, TQT_SIGNAL(timeout()), this, TQT_SLOT(doubleClickTimeout()));
              }
              if( d->pActivateDoubleClick->isActive () )
                  d->pActivateDoubleClick->stop();
              else
-                 d->pActivateDoubleClick->start(QApplication::doubleClickInterval());
+                 d->pActivateDoubleClick->start(TQApplication::doubleClickInterval());
              d->releaseMouseEvent = false;
              return;
          }
@@ -1397,7 +1397,7 @@ void KonqIconViewWidget::contentsMousePressEvent( QMouseEvent *e )
 
 }
 
-void KonqIconViewWidget::contentsMouseReleaseEvent( QMouseEvent *e )
+void KonqIconViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e )
 {
     KIconView::contentsMouseReleaseEvent( e );
     if(d->releaseMouseEvent && d->pActivateDoubleClick && d->pActivateDoubleClick->isActive ())
@@ -1422,7 +1422,7 @@ void KonqIconViewWidget::slotSaveIconPositions()
     return; // Currently not available in Konqueror
   kdDebug(1214) << "KonqIconViewWidget::slotSaveIconPositions" << endl;
   KSimpleConfig dotDirectory( m_dotDirectoryPath );
-  QIconViewItem *it = firstItem();
+  TQIconViewItem *it = firstItem();
   if ( !it )
     return; // No more icons. Maybe we're closing and they've been removed already
   while ( it )
@@ -1430,18 +1430,18 @@ void KonqIconViewWidget::slotSaveIconPositions()
     KFileIVI *ivi = static_cast<KFileIVI *>( it );
     KFileItem *item = ivi->item();
 
-    dotDirectory.setGroup( QString( m_iconPositionGroupPrefix ).append( item->url().fileName() ) );
+    dotDirectory.setGroup( TQString( m_iconPositionGroupPrefix ).append( item->url().fileName() ) );
     kdDebug(1214) << "KonqIconViewWidget::slotSaveIconPositions " << item->url().fileName() << " " << it->x() << " " << it->y() << endl;
-    dotDirectory.writeEntry( QString( "X %1" ).arg( width() ), it->x() );
-    dotDirectory.writeEntry( QString( "Y %1" ).arg( height() ), it->y() );
+    dotDirectory.writeEntry( TQString( "X %1" ).arg( width() ), it->x() );
+    dotDirectory.writeEntry( TQString( "Y %1" ).arg( height() ), it->y() );
     dotDirectory.writeEntry( "Exists", true );
 
     it = it->nextItem();
   }
 
-  QStringList groups = dotDirectory.groupList();
-  QStringList::ConstIterator gIt = groups.begin();
-  QStringList::ConstIterator gEnd = groups.end();
+  TQStringList groups = dotDirectory.groupList();
+  TQStringList::ConstIterator gIt = groups.begin();
+  TQStringList::ConstIterator gEnd = groups.end();
   for (; gIt != gEnd; ++gIt )
     if ( (*gIt).left( m_iconPositionGroupPrefix.length() ) == m_iconPositionGroupPrefix )
     {
@@ -1465,10 +1465,10 @@ void KonqIconViewWidget::slotSaveIconPositions()
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 }
 
-// Adapted version of QIconView::insertInGrid, that works relative to
+// Adapted version of TQIconView::insertInGrid, that works relative to
 // m_IconRect, instead of the entire viewport.
 
-void KonqIconViewWidget::insertInGrid(QIconViewItem *item)
+void KonqIconViewWidget::insertInGrid(TQIconViewItem *item)
 {
     if (0L == item)
         return;
@@ -1479,8 +1479,8 @@ void KonqIconViewWidget::insertInGrid(QIconViewItem *item)
         return;
     }
 
-    QRegion r(m_IconRect);
-    QIconViewItem *i = firstItem();
+    TQRegion r(m_IconRect);
+    TQIconViewItem *i = firstItem();
     int y = -1;
     for (; i; i = i->nextItem() )
     {
@@ -1488,12 +1488,12 @@ void KonqIconViewWidget::insertInGrid(QIconViewItem *item)
         y = QMAX(y, i->y() + i->height());
     }
 
-    QMemArray<QRect> rects = r.rects();
-    QMemArray<QRect>::Iterator it = rects.begin();
+    TQMemArray<TQRect> rects = r.rects();
+    TQMemArray<TQRect>::Iterator it = rects.begin();
     bool foundPlace = FALSE;
     for (; it != rects.end(); ++it)
     {
-        QRect rect = *it;
+        TQRect rect = *it;
         if (rect.width() >= item->width() && rect.height() >= item->height())
         {
             int sx = 0, sy = 0;
@@ -1566,7 +1566,7 @@ void KonqIconViewWidget::lineupIcons()
 
     int iconSize = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
-    typedef QValueList<QIconViewItem*> Bin;
+    typedef TQValueList<TQIconViewItem*> Bin;
     Bin*** bins = new Bin**[nx];
     int i;
     int j;
@@ -1579,7 +1579,7 @@ void KonqIconViewWidget::lineupIcons()
     // Insert items into grid
     int textHeight = iconTextHeight() * fontMetrics().height();
 
-    for ( QIconViewItem* item = firstItem(); item; item = item->nextItem() ) {
+    for ( TQIconViewItem* item = firstItem(); item; item = item->nextItem() ) {
         int x = item->x() + item->width() / 2 - x0;
         int y = item->pixmapRect( false ).bottom() - iconSize / 2
                 - ( dy - ( iconSize + textHeight ) ) / 2 - y0;
@@ -1640,7 +1640,7 @@ void KonqIconViewWidget::lineupIcons()
                 }
 
                 // Move one item in the direction of the least friction
-                QIconViewItem* movedItem;
+                TQIconViewItem* movedItem;
                 Bin* items = bins[i][j];
 
                 int mini = QMIN( QMIN( tf, bf ), QMIN( lf, rf ) );
@@ -1703,8 +1703,8 @@ void KonqIconViewWidget::lineupIcons()
     }
 
     // Perform the actual moving
-    QRegion repaintRegion;
-    QValueList<QIconViewItem*> movedItems;
+    TQRegion repaintRegion;
+    TQValueList<TQIconViewItem*> movedItems;
 
     for ( i = 0; i < nx; i++ ) {
         for ( j = 0; j < ny; j++ ) {
@@ -1712,13 +1712,13 @@ void KonqIconViewWidget::lineupIcons()
             if ( !bin )
                 continue;
             if ( !bin->isEmpty() ) {
-                QIconViewItem* item = bin->first();
+                TQIconViewItem* item = bin->first();
                 int newX = x0 + i*dx + spacing() +
                            QMAX(0, ( (dx-spacing()) - item->width() ) / 2);  // pixmap can be larger as iconsize
                 // align all icons vertically to their text
                 int newY = y0 + j*dy + dy - spacing() - ( item->pixmapRect().bottom() + 2 + textHeight );
                 if ( item->x() != newX || item->y() != newY ) {
-                    QRect oldRect = item->rect();
+                    TQRect oldRect = item->rect();
                     movedItems.prepend( item );
                     item->move( newX, newY );
                     if ( item->rect() != oldRect )
@@ -1735,7 +1735,7 @@ void KonqIconViewWidget::lineupIcons()
         updateContents();
     else {
         // Repaint only repaintRegion...
-        QMemArray<QRect> rects = repaintRegion.rects();
+        TQMemArray<TQRect> rects = repaintRegion.rects();
         for ( uint l = 0; l < rects.count(); l++ ) {
             kdDebug( 1203 ) << "Repainting (" << rects[l].x() << ","
                             << rects[l].y() << ")\n";
@@ -1754,30 +1754,30 @@ void KonqIconViewWidget::lineupIcons()
     delete [] bins;
 }
 
-void KonqIconViewWidget::lineupIcons( QIconView::Arrangement arrangement )
+void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
 {
     int x0, y0, dx, dy, nxmax, nymax;
     gridValues( &x0, &y0, &dx, &dy, &nxmax, &nymax );
     int textHeight = iconTextHeight() * fontMetrics().height();
 
-    QRegion repaintRegion;
-    QValueList<QIconViewItem*> movedItems;
+    TQRegion repaintRegion;
+    TQValueList<TQIconViewItem*> movedItems;
     int nx = 0, ny = 0;
 
-    QIconViewItem* item;
+    TQIconViewItem* item;
     for ( item = firstItem(); item; item = item->nextItem() ) {
         int newX = x0 + nx*dx + spacing() +
                    QMAX(0, ( (dx-spacing()) - item->width() ) / 2);  // icon can be larger as defined
         // align all icons vertically to their text
         int newY = y0 + ny*dy + dy - spacing() - ( item->pixmapRect().bottom() + 2 + textHeight );
         if ( item->x() != newX || item->y() != newY ) {
-            QRect oldRect = item->rect();
+            TQRect oldRect = item->rect();
             movedItems.prepend( item );
             item->move( newX, newY );
             if ( item->rect() != oldRect )
                 repaintRegion = repaintRegion.unite( oldRect );
         }
-        if ( arrangement == QIconView::LeftToRight ) {
+        if ( arrangement == TQIconView::LeftToRight ) {
             nx++;
             if ( nx >= nxmax ) {
                 ny++;
@@ -1794,7 +1794,7 @@ void KonqIconViewWidget::lineupIcons( QIconView::Arrangement arrangement )
     }
 
     // Repaint only repaintRegion...
-    QMemArray<QRect> rects = repaintRegion.rects();
+    TQMemArray<TQRect> rects = repaintRegion.rects();
     for ( uint l = 0; l < rects.count(); l++ ) {
         kdDebug( 1203 ) << "Repainting (" << rects[l].x() << ","
                         << rects[l].y() << ")\n";
@@ -1833,13 +1833,13 @@ int KonqIconViewWidget::previewIconSize( int size ) const
     return largestPreviewIconSize( iconSize );
 }
 
-void KonqIconViewWidget::visualActivate(QIconViewItem * item)
+void KonqIconViewWidget::visualActivate(TQIconViewItem * item)
 {
-    // Rect of the QIconViewItem.
-    QRect irect = item->rect();
+    // Rect of the TQIconViewItem.
+    TQRect irect = item->rect();
 
     // Rect of the QIconViewItem's pixmap area.
-    QRect rect = item->pixmapRect();
+    TQRect rect = item->pixmapRect();
 
     // Adjust to correct position. If this isn't done, the fact that the
     // text may be wider than the pixmap puts us off-centre.
@@ -1851,12 +1851,12 @@ void KonqIconViewWidget::visualActivate(QIconViewItem * item)
     KIconEffect::visualActivate(viewport(), rect, item->pixmap());
 }
 
-void KonqIconViewWidget::backgroundPixmapChange( const QPixmap & )
+void KonqIconViewWidget::backgroundPixmapChange( const TQPixmap & )
 {
     viewport()->update();
 }
 
-void KonqIconViewWidget::setPreviewSettings( const QStringList& settings )
+void KonqIconViewWidget::setPreviewSettings( const TQStringList& settings )
 {
     d->previewSettings = settings;
     updatePreviewMimeTypes();
@@ -1866,12 +1866,12 @@ void KonqIconViewWidget::setPreviewSettings( const QStringList& settings )
     setIcons( size ); // force re-determining all icons
 }
 
-const QStringList& KonqIconViewWidget::previewSettings()
+const TQStringList& KonqIconViewWidget::previewSettings()
 {
     return d->previewSettings;
 }
 
-void KonqIconViewWidget::setNewURL( const QString& url )
+void KonqIconViewWidget::setNewURL( const TQString& url )
 {
     KURL u;
     if ( url.startsWith( "/" ) )
@@ -1915,8 +1915,8 @@ void KonqIconViewWidget::updatePreviewMimeTypes()
 
     for ( it = plugins.begin(); it != plugins.end(); ++it ) {
         if ( d->previewSettings.contains((*it)->desktopEntryName()) ) {
-            QStringList mimeTypes = (*it)->property("MimeTypes").toStringList();
-            for (QStringList::ConstIterator mt = mimeTypes.begin(); mt != mimeTypes.end(); ++mt)
+            TQStringList mimeTypes = (*it)->property("MimeTypes").toStringList();
+            for (TQStringList::ConstIterator mt = mimeTypes.begin(); mt != mimeTypes.end(); ++mt)
                 d->pPreviewMimeTypes->append(*mt);
         }
     }

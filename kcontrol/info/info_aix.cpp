@@ -60,14 +60,14 @@ device_description(struct CuDv *cudv)
 }
 
 bool
-list_devices(QListView *lBox, char *criteria)
+list_devices(TQListView *lBox, char *criteria)
 {
   struct CuDv *cudv;    /* Customized Devices */
   struct listinfo info;
   int i;
   char *cudv_desc;
-  QString cudv_status;
-  QListViewItem *lastitem = NULL;
+  TQString cudv_status;
+  TQListViewItem *lastitem = NULL;
 
   lBox->addColumn(i18n("Name"));
   lBox->addColumn(i18n("Status"));
@@ -98,18 +98,18 @@ list_devices(QListView *lBox, char *criteria)
     {
       switch(cudv[i].status)
         {
-          case DEFINED:    cudv_status = QString("Defined");    break;
-          case AVAILABLE:  cudv_status = QString("Available");  break;
-          case STOPPED:    cudv_status = QString("Stopped");    break;
-          default:         cudv_status = QString("Unknown");
+          case DEFINED:    cudv_status = TQString("Defined");    break;
+          case AVAILABLE:  cudv_status = TQString("Available");  break;
+          case STOPPED:    cudv_status = TQString("Stopped");    break;
+          default:         cudv_status = TQString("Unknown");
         }
       cudv_desc = device_description(&cudv[i]);
 
-      lastitem = new QListViewItem(lBox, lastitem,
-                                   QString(cudv[i].name),
+      lastitem = new TQListViewItem(lBox, lastitem,
+                                   TQString(cudv[i].name),
                                    cudv_status,
-                                   QString(cudv[i].location),
-                                   QString(cudv_desc ? cudv_desc : "N/A") );
+                                   TQString(cudv[i].location),
+                                   TQString(cudv_desc ? cudv_desc : "N/A") );
 
       if (cudv_desc) free(cudv_desc);
     }
@@ -271,7 +271,7 @@ struct model _4C_models[] =
 */
 
 bool 
-GetInfo_XServer_and_Video( QListView *lBox )
+GetInfo_XServer_and_Video( TQListView *lBox )
 {
 	return GetInfo_XServer_Generic( lBox );
 }
@@ -286,14 +286,14 @@ GetInfo_XServer_and_Video( QListView *lBox )
  * 
  */
 bool 
-GetInfo_CPU( QListView *lBox )
+GetInfo_CPU( TQListView *lBox )
 {
   struct utsname info;
   struct model *table = _models;  /* table of model information */
   char model_ID[21] = "";  /* information for table lookup */
   char cpu_ID[7] = "";    /* unique CPU ID */
   int i;
-  QListViewItem *lastitem = NULL;
+  TQListViewItem *lastitem = NULL;
 
   lBox->addColumn(i18n("Information"));
   lBox->addColumn(i18n("Value"));
@@ -326,57 +326,57 @@ GetInfo_CPU( QListView *lBox )
         }
     }
 
-  lastitem = new QListViewItem(lBox, lastitem, QString("CPU ID"), QString(cpu_ID));
-  lastitem = new QListViewItem(lBox, lastitem, QString("Node"), QString(info.nodename));
-  lastitem = new QListViewItem(lBox, lastitem, QString("OS"), QString(info.sysname) + 
-             QString(" ") + QString(info.version) + QString(".") + QString(info.release));
+  lastitem = new TQListViewItem(lBox, lastitem, TQString("CPU ID"), TQString(cpu_ID));
+  lastitem = new TQListViewItem(lBox, lastitem, TQString("Node"), TQString(info.nodename));
+  lastitem = new TQListViewItem(lBox, lastitem, TQString("OS"), TQString(info.sysname) + 
+             TQString(" ") + TQString(info.version) + TQString(".") + TQString(info.release));
 
   for (i=0; *(table[i].model_ID); i++)
     if (strcmp(model_ID, table[i].model_ID) == 0)
       {
-        lastitem = new QListViewItem(lBox, lastitem, QString("Machine Type"), QString(table[i].machine_type));
-        lastitem = new QListViewItem(lBox, lastitem, QString("Architecture"), QString(chip_name[table[i].architecture]));
-        lastitem = new QListViewItem(lBox, lastitem, QString("Speed"), QString(table[i].processor_speed) + QString(" Mhz"));
+        lastitem = new TQListViewItem(lBox, lastitem, TQString("Machine Type"), TQString(table[i].machine_type));
+        lastitem = new TQListViewItem(lBox, lastitem, TQString("Architecture"), TQString(chip_name[table[i].architecture]));
+        lastitem = new TQListViewItem(lBox, lastitem, TQString("Speed"), TQString(table[i].processor_speed) + TQString(" Mhz"));
         break;
       }
          
   return(true);
 }
 
-bool GetInfo_IRQ( QListView * )
+bool GetInfo_IRQ( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_DMA( QListView * )
+bool GetInfo_DMA( TQListView * )
 {
 	return false;
 }
 
 bool 
-GetInfo_PCI( QListView *lBox )
+GetInfo_PCI( TQListView *lBox )
 {
   return list_devices(lBox, (char *)"PdDvLn like '*/pci/*'");
 }
 
-bool GetInfo_IO_Ports( QListView * )
+bool GetInfo_IO_Ports( TQListView * )
 {
 	return false;
 }
 
-bool GetInfo_Sound( QListView * )
+bool GetInfo_Sound( TQListView * )
 {
 	return false;
 }
 
 bool 
-GetInfo_Devices( QListView *lBox )
+GetInfo_Devices( TQListView *lBox )
 {
   return list_devices(lBox, (char *)"PdDvLn like '*'");
 }
 
 bool 
-GetInfo_SCSI( QListView *lBox )
+GetInfo_SCSI( TQListView *lBox )
 {
   return list_devices(lBox, (char *)"PdDvLn like '*/scsi/*'");
 }
@@ -432,17 +432,17 @@ static int get_fs_usage (char *path, long *l_total, long *l_avail)
 // Some Ideas taken from garbazo from his source in info_fbsd.cpp
 
 bool 
-GetInfo_Partitions ( QListView *lbox )
+GetInfo_Partitions ( TQListView *lbox )
 {
 	#define NUMCOLS 5
-	QString Title[NUMCOLS];
+	TQString Title[NUMCOLS];
 	int n;
 	
 	struct fstab *fstab_ent;
 	struct statvfs svfs;
 	long total,avail;
-	QString str;
-	QString MB(i18n("MB")+ "  ");	// International Text for MB=Mega-Byte
+	TQString str;
+	TQString MB(i18n("MB")+ "  ");	// International Text for MB=Mega-Byte
 
 	if (setfsent() != 1) // Try to open fstab 
 	    return false;
@@ -467,16 +467,16 @@ GetInfo_Partitions ( QListView *lbox )
 			svfs.f_basetype[0] = 0;
 
         if(svfs.f_basetype[0]) {
-            new QListViewItem(lbox, QString(fstab_ent->fs_spec),
-                              QString(fstab_ent->fs_file) + QString("  "),
-                              (svfs.f_basetype[0] ? QString(svfs.f_basetype) : i18n("n/a")),
+            new TQListViewItem(lbox, TQString(fstab_ent->fs_spec),
+                              TQString(fstab_ent->fs_file) + TQString("  "),
+                              (svfs.f_basetype[0] ? TQString(svfs.f_basetype) : i18n("n/a")),
                               Value((total+512)/1024,6) + MB,
                               Value((avail+512)/1024,6) + MB);
         }
         else {
-            new QListViewItem(lbox, QString(fstab_ent->fs_spec),
-                              QString(fstab_ent->fs_file) + QString("  "),
-                              (svfs.f_basetype[0] ? QString(svfs.f_basetype) : i18n("n/a")));
+            new TQListViewItem(lbox, TQString(fstab_ent->fs_spec),
+                              TQString(fstab_ent->fs_file) + TQString("  "),
+                              (svfs.f_basetype[0] ? TQString(svfs.f_basetype) : i18n("n/a")));
         }
 
 	}

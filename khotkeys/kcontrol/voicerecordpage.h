@@ -11,7 +11,7 @@
 #ifndef VOICE_RECORD_PAGE_H
 #define VOICE_RECORD_PAGE_H
 
-#include <qvbox.h>
+#include <tqvbox.h>
 
 
 
@@ -34,10 +34,10 @@ class VoiceRecordPage : public QVBox
     Q_OBJECT
 
     public:
-        VoiceRecordPage(const QString &voiceip_P, QWidget *parent, const char *name);
+        VoiceRecordPage(const TQString &voiceip_P, TQWidget *parent, const char *name);
         ~VoiceRecordPage();
 
-        QString getVoiceId() const ;
+        TQString getVoiceId() const ;
 		VoiceSignature getVoiceSignature(int) const;
 		bool isModifiedSignature(int) const;
 
@@ -51,10 +51,10 @@ class VoiceRecordPage : public QVBox
 		VoiceRecorder *_recorder1;
 		VoiceRecorder *_recorder2;
 		KLineEdit *_lineEdit;
-		QLabel *_label;
-		QString _message;
+		TQLabel *_label;
+		TQString _message;
 		
-		QString _original_voiceId;
+		TQString _original_voiceId;
 		
 		
     };

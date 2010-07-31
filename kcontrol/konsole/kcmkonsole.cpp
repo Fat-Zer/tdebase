@@ -15,10 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qstringlist.h>
-#include <qtabwidget.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqstringlist.h>
+#include <tqtabwidget.h>
 
 #include <dcopclient.h>
 
@@ -33,10 +33,10 @@
 #include "sessioneditor.h"
 #include "kcmkonsole.h"
 
-typedef KGenericFactory<KCMKonsole, QWidget> ModuleFactory;
+typedef KGenericFactory<KCMKonsole, TQWidget> ModuleFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_konsole, ModuleFactory("kcmkonsole") )
 
-KCMKonsole::KCMKonsole(QWidget * parent, const char *name, const QStringList&)
+KCMKonsole::KCMKonsole(TQWidget * parent, const char *name, const TQStringList&)
 :KCModule(ModuleFactory::instance(), parent, name)
 {
     
@@ -45,7 +45,7 @@ KCMKonsole::KCMKonsole(QWidget * parent, const char *name, const QStringList&)
 		"configured using the RMB) and you can edit the schemas and sessions "
 		"available to Konsole."));
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    TQVBoxLayout *topLayout = new TQVBoxLayout(this);
     dialog = new KCMKonsoleDialog(this);
     dialog->line_spacingSB->setRange(0, 8, 1, false);
     dialog->line_spacingSB->setSpecialValueText(i18n("normal line spacing", "Normal"));
@@ -60,24 +60,24 @@ KCMKonsole::KCMKonsole(QWidget * parent, const char *name, const QStringList&)
     ab->addAuthor("Andrea Rizzi",0, "rizzi@kde.org");
     setAboutData( ab );
 
-    connect(dialog->terminalSizeHintCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->warnCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->ctrldragCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->cutToBeginningOfLineCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->allowResizeCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->bidiCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->xonXoffCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->blinkingCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->frameCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->line_spacingSB,SIGNAL(valueChanged(int)), SLOT( changed() ));
-    connect(dialog->matchTabWinTitleCB,SIGNAL(toggled(bool)), SLOT( changed() ));
-    connect(dialog->silence_secondsSB,SIGNAL(valueChanged(int)), SLOT( changed() ));
-    connect(dialog->word_connectorLE,SIGNAL(textChanged(const QString &)), SLOT( changed() ));
-    connect(dialog->SchemaEditor1, SIGNAL(changed()), SLOT( changed() ));
-    connect(dialog->SessionEditor1, SIGNAL(changed()), SLOT( changed() ));
-    connect(dialog->SchemaEditor1, SIGNAL(schemaListChanged(const QStringList &,const QStringList &)),
-            dialog->SessionEditor1, SLOT(schemaListChanged(const QStringList &,const QStringList &)));
-    connect(dialog->SessionEditor1, SIGNAL(getList()), dialog->SchemaEditor1, SLOT(getList()));
+    connect(dialog->terminalSizeHintCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->warnCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->ctrldragCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->cutToBeginningOfLineCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->allowResizeCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->bidiCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->xonXoffCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->blinkingCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->frameCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->line_spacingSB,TQT_SIGNAL(valueChanged(int)), TQT_SLOT( changed() ));
+    connect(dialog->matchTabWinTitleCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->silence_secondsSB,TQT_SIGNAL(valueChanged(int)), TQT_SLOT( changed() ));
+    connect(dialog->word_connectorLE,TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT( changed() ));
+    connect(dialog->SchemaEditor1, TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
+    connect(dialog->SessionEditor1, TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
+    connect(dialog->SchemaEditor1, TQT_SIGNAL(schemaListChanged(const TQStringList &,const TQStringList &)),
+            dialog->SessionEditor1, TQT_SLOT(schemaListChanged(const TQStringList &,const TQStringList &)));
+    connect(dialog->SessionEditor1, TQT_SIGNAL(getList()), dialog->SchemaEditor1, TQT_SLOT(getList()));
 }
 
 void KCMKonsole::load()
@@ -152,9 +152,9 @@ void KCMKonsole::save()
     emit changed(false);
 
     DCOPClient *dcc = kapp->dcopClient();
-    dcc->send("konsole-*", "konsole", "reparseConfiguration()", QByteArray());
-    dcc->send("kdesktop", "default", "configure()", QByteArray());
-    dcc->send("klauncher", "klauncher", "reparseConfiguration()", QByteArray());
+    dcc->send("konsole-*", "konsole", "reparseConfiguration()", TQByteArray());
+    dcc->send("kdesktop", "default", "configure()", TQByteArray());
+    dcc->send("klauncher", "klauncher", "reparseConfiguration()", TQByteArray());
 
     if (xonXoffOrig != xonXoffNew)
     {

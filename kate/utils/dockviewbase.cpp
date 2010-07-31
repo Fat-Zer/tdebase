@@ -19,8 +19,8 @@
 #include "dockviewbase.h"
 #include "dockviewbase.moc"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 //#include <kdebug.h>
 
@@ -29,22 +29,22 @@ namespace Kate {
 // data storage
 class DockViewBasePrivate {
   public:
-  QWidget *header;
-  QLabel *lTitle;
-  QLabel *lPrefix;
+  TQWidget *header;
+  TQLabel *lTitle;
+  TQLabel *lPrefix;
 };
 
 }
 
-Kate::DockViewBase::DockViewBase( QWidget* parent, const char* name )
-  : QVBox( parent, name ),
+Kate::DockViewBase::DockViewBase( TQWidget* parent, const char* name )
+  : TQVBox( parent, name ),
     d ( new Kate::DockViewBasePrivate )
 {
-  init( QString::null, QString::null );
+  init( TQString::null, TQString::null );
 }
 
-Kate::DockViewBase::DockViewBase( const QString &prefix, const QString &title, QWidget* parent, const char* name )
-  : QVBox( parent, name ),
+Kate::DockViewBase::DockViewBase( const TQString &prefix, const TQString &title, TQWidget* parent, const char* name )
+  : TQVBox( parent, name ),
     d ( new Kate::DockViewBasePrivate )
 {
   init( prefix, title );
@@ -55,45 +55,45 @@ Kate::DockViewBase::~DockViewBase()
   delete d;
 }
 
-void Kate::DockViewBase::setTitlePrefix( const QString &prefix )
+void Kate::DockViewBase::setTitlePrefix( const TQString &prefix )
 {
     d->lPrefix->setText( prefix );
     d->lPrefix->show();
 }
 
-QString Kate::DockViewBase::titlePrefix() const
+TQString Kate::DockViewBase::titlePrefix() const
 {
   return d->lPrefix->text();
 }
 
-void Kate::DockViewBase::setTitle( const QString &title )
+void Kate::DockViewBase::setTitle( const TQString &title )
 {
   d->lTitle->setText( title );
   d->lTitle->show();
 }
 
-QString Kate::DockViewBase::title() const
+TQString Kate::DockViewBase::title() const
 {
   return d->lTitle->text();
 }
 
-void Kate::DockViewBase::setTitle( const QString &prefix, const QString &title )
+void Kate::DockViewBase::setTitle( const TQString &prefix, const TQString &title )
 {
   setTitlePrefix( prefix );
   setTitle( title );
 }
 
-void Kate::DockViewBase::init( const QString &prefix, const QString &title )
+void Kate::DockViewBase::init( const TQString &prefix, const TQString &title )
 {
   setSpacing( 4 );
-  d->header = new QWidget( this );
-  d->header->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed, true ) );
-  QHBoxLayout *lo = new QHBoxLayout( d->header );
+  d->header = new TQWidget( this );
+  d->header->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed, true ) );
+  TQHBoxLayout *lo = new TQHBoxLayout( d->header );
   lo->setSpacing( 6 );
   lo->insertSpacing( 0, 6 ); 
-  d->lPrefix = new QLabel( title, d->header );
+  d->lPrefix = new TQLabel( title, d->header );
   lo->addWidget( d->lPrefix );
-  d->lTitle = new QLabel( title, d->header );
+  d->lTitle = new TQLabel( title, d->header );
   lo->addWidget( d->lTitle );
   lo->setStretchFactor( d->lTitle, 1 );
   lo->insertSpacing( -1, 6 );

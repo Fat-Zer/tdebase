@@ -43,15 +43,15 @@ namespace KHotKeys
 
 Gesture* gesture_handler;
 
-Gesture::Gesture( bool /*enabled_P*/, QObject* parent_P )
+Gesture::Gesture( bool /*enabled_P*/, TQObject* parent_P )
     : _enabled( false ), recording( false ), button( 0 ), exclude( NULL )
     {
     (void) new DeleteObject( this, parent_P );
     assert( gesture_handler == NULL );
     gesture_handler = this;
-    connect( &nostroke_timer, SIGNAL( timeout()), SLOT( stroke_timeout()));
-    connect( windows_handler, SIGNAL( active_window_changed( WId )),
-        SLOT( active_window_changed( WId )));
+    connect( &nostroke_timer, TQT_SIGNAL( timeout()), TQT_SLOT( stroke_timeout()));
+    connect( windows_handler, TQT_SIGNAL( active_window_changed( WId )),
+        TQT_SLOT( active_window_changed( WId )));
     }
       
 Gesture::~Gesture()
@@ -103,23 +103,23 @@ void Gesture::active_window_changed( WId )
     update_grab();
     }
 
-void Gesture::register_handler( QObject* receiver_P, const char* slot_P )
+void Gesture::register_handler( TQObject* receiver_P, const char* slot_P )
     {
     if( handlers.contains( receiver_P ))
         return;
     handlers[ receiver_P ] = true;
-    connect( this, SIGNAL( handle_gesture( const QString&, WId )),
+    connect( this, TQT_SIGNAL( handle_gesture( const TQString&, WId )),
         receiver_P, slot_P );
     if( handlers.count() == 1 )
         update_grab();
     }
 
-void Gesture::unregister_handler( QObject* receiver_P, const char* slot_P )
+void Gesture::unregister_handler( TQObject* receiver_P, const char* slot_P )
     {
     if( !handlers.contains( receiver_P ))
         return;
     handlers.remove( receiver_P );
-    disconnect( this, SIGNAL( handle_gesture( const QString&, WId )),
+    disconnect( this, TQT_SIGNAL( handle_gesture( const TQString&, WId )),
         receiver_P, slot_P );
     if( handlers.count() == 0 )
         update_grab();
@@ -150,7 +150,7 @@ bool Gesture::x11Event( XEvent* ev_P )
         recording = false;
         nostroke_timer.stop();
         stroke.record( ev_P->xbutton.x, ev_P->xbutton.y );
-        QString gesture( stroke.translate());
+        TQString gesture( stroke.translate());
         if( gesture.isEmpty())
             {
             kdDebug( 1217 ) << "GESTURE: replay" << endl;

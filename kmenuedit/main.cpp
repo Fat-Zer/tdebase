@@ -51,10 +51,10 @@ public:
       KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
       if (args->count() > 0)
       {
-          menuEdit->selectMenu(QString::fromLocal8Bit(args->arg(0)));
+          menuEdit->selectMenu(TQString::fromLocal8Bit(args->arg(0)));
           if (args->count() > 1)
           {
-              menuEdit->selectMenuEntry(QString::fromLocal8Bit(args->arg(1)));
+              menuEdit->selectMenuEntry(TQString::fromLocal8Bit(args->arg(1)));
           }
       }
       return KUniqueApplication::newInstance();

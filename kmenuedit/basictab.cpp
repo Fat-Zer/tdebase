@@ -18,13 +18,13 @@
  */
 
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qfileinfo.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqfileinfo.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -47,19 +47,19 @@
 #include "basictab.h"
 #include "basictab.moc"
 
-BasicTab::BasicTab( QWidget *parent, const char *name )
-  : QWidget(parent, name)
+BasicTab::BasicTab( TQWidget *parent, const char *name )
+  : TQWidget(parent, name)
 {
     _menuFolderInfo = 0;
     _menuEntryInfo = 0;
 
-    QGridLayout *layout = new QGridLayout(this, 6, 2,
+    TQGridLayout *layout = new TQGridLayout(this, 6, 2,
                                           KDialog::marginHint(),
                                           KDialog::spacingHint());
 
     // general group
-    QGroupBox *general_group = new QGroupBox(this);
-    QGridLayout *grid = new QGridLayout(general_group, 5, 2,
+    TQGroupBox *general_group = new TQGroupBox(this);
+    TQGridLayout *grid = new TQGridLayout(general_group, 5, 2,
                                         KDialog::marginHint(),
                                         KDialog::spacingHint());
 
@@ -74,7 +74,7 @@ BasicTab::BasicTab( QWidget *parent, const char *name )
     _commentEdit->setAcceptDrops(false);
     _execEdit = new KURLRequester(general_group);
     _execEdit->lineEdit()->setAcceptDrops(false);
-    QWhatsThis::add(_execEdit,i18n(
+    TQWhatsThis::add(_execEdit,i18n(
     "Following the command, you can have several place holders which will be replaced "
     "with the actual values when the actual program is run:\n"
     "%f - a single file name\n"
@@ -87,32 +87,32 @@ BasicTab::BasicTab( QWidget *parent, const char *name )
     "%m - the mini-icon\n"
     "%c - the caption"));
 
-    _launchCB = new QCheckBox(i18n("Enable &launch feedback"), general_group);
-    _systrayCB = new QCheckBox(i18n("&Place in system tray"), general_group);
+    _launchCB = new TQCheckBox(i18n("Enable &launch feedback"), general_group);
+    _systrayCB = new TQCheckBox(i18n("&Place in system tray"), general_group);
 
     // setup labels
-    _nameLabel = new QLabel(_nameEdit, i18n("&Name:"), general_group);
-    _descriptionLabel = new QLabel(_descriptionEdit, i18n("&Description:"), general_group);
-    _commentLabel = new QLabel(_commentEdit, i18n("&Comment:"), general_group);
-    _execLabel = new QLabel(_execEdit, i18n("Co&mmand:"), general_group);
+    _nameLabel = new TQLabel(_nameEdit, i18n("&Name:"), general_group);
+    _descriptionLabel = new TQLabel(_descriptionEdit, i18n("&Description:"), general_group);
+    _commentLabel = new TQLabel(_commentEdit, i18n("&Comment:"), general_group);
+    _execLabel = new TQLabel(_execEdit, i18n("Co&mmand:"), general_group);
     grid->addWidget(_nameLabel, 0, 0);
     grid->addWidget(_descriptionLabel, 1, 0);
     grid->addWidget(_commentLabel, 2, 0);
     grid->addWidget(_execLabel, 3, 0);
 
     // connect line inputs
-    connect(_nameEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotChanged()));
-    connect(_descriptionEdit, SIGNAL(textChanged(const QString&)),
-	    SLOT(slotChanged()));
-    connect(_commentEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotChanged()));
-    connect(_execEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotChanged()));
-    connect(_execEdit, SIGNAL(urlSelected(const QString&)),
-            SLOT(slotExecSelected()));
-    connect(_launchCB, SIGNAL(clicked()), SLOT(launchcb_clicked()));
-    connect(_systrayCB, SIGNAL(clicked()), SLOT(systraycb_clicked()));
+    connect(_nameEdit, TQT_SIGNAL(textChanged(const TQString&)),
+            TQT_SLOT(slotChanged()));
+    connect(_descriptionEdit, TQT_SIGNAL(textChanged(const TQString&)),
+	    TQT_SLOT(slotChanged()));
+    connect(_commentEdit, TQT_SIGNAL(textChanged(const TQString&)),
+            TQT_SLOT(slotChanged()));
+    connect(_execEdit, TQT_SIGNAL(textChanged(const TQString&)),
+            TQT_SLOT(slotChanged()));
+    connect(_execEdit, TQT_SIGNAL(urlSelected(const TQString&)),
+            TQT_SLOT(slotExecSelected()));
+    connect(_launchCB, TQT_SIGNAL(clicked()), TQT_SLOT(launchcb_clicked()));
+    connect(_systrayCB, TQT_SIGNAL(clicked()), TQT_SLOT(systraycb_clicked()));
 
     // add line inputs to the grid
     grid->addMultiCellWidget(_nameEdit, 0, 0, 1, 1);
@@ -126,21 +126,21 @@ BasicTab::BasicTab( QWidget *parent, const char *name )
     _iconButton = new KIconButton(general_group);
     _iconButton->setFixedSize(56,56);
     _iconButton->setIconSize(48);
-    connect(_iconButton, SIGNAL(iconChanged(QString)), SLOT(slotChanged()));
+    connect(_iconButton, TQT_SIGNAL(iconChanged(TQString)), TQT_SLOT(slotChanged()));
     grid->addMultiCellWidget(_iconButton, 0, 1, 2, 2);
 
     // add the general group to the main layout
     layout->addMultiCellWidget(general_group, 0, 0, 0, 1);
 
     // path group
-    _path_group = new QGroupBox(this);
-    QVBoxLayout *vbox = new QVBoxLayout(_path_group, KDialog::marginHint(),
+    _path_group = new TQGroupBox(this);
+    TQVBoxLayout *vbox = new TQVBoxLayout(_path_group, KDialog::marginHint(),
                                         KDialog::spacingHint());
 
-    QHBox *hbox = new QHBox(_path_group);
+    TQHBox *hbox = new TQHBox(_path_group);
     hbox->setSpacing(KDialog::spacingHint());
 
-    _pathLabel = new QLabel(i18n("&Work path:"), hbox);
+    _pathLabel = new TQLabel(i18n("&Work path:"), hbox);
 
     _pathEdit = new KURLRequester(hbox);
     _pathEdit->setMode(KFile::Directory | KFile::LocalOnly);
@@ -148,52 +148,52 @@ BasicTab::BasicTab( QWidget *parent, const char *name )
 
     _pathLabel->setBuddy(_pathEdit);
 
-    connect(_pathEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotChanged()));
+    connect(_pathEdit, TQT_SIGNAL(textChanged(const TQString&)),
+            TQT_SLOT(slotChanged()));
     vbox->addWidget(hbox);
     layout->addMultiCellWidget(_path_group, 1, 1, 0, 1);
 
     // terminal group
-    _term_group = new QGroupBox(this);
-    vbox = new QVBoxLayout(_term_group, KDialog::marginHint(),
+    _term_group = new TQGroupBox(this);
+    vbox = new TQVBoxLayout(_term_group, KDialog::marginHint(),
 			   KDialog::spacingHint());
 
-    _terminalCB = new QCheckBox(i18n("Run in term&inal"), _term_group);
-    connect(_terminalCB, SIGNAL(clicked()), SLOT(termcb_clicked()));
+    _terminalCB = new TQCheckBox(i18n("Run in term&inal"), _term_group);
+    connect(_terminalCB, TQT_SIGNAL(clicked()), TQT_SLOT(termcb_clicked()));
     vbox->addWidget(_terminalCB);
 
-    hbox = new QHBox(_term_group);
+    hbox = new TQHBox(_term_group);
     hbox->setSpacing(KDialog::spacingHint());
-    _termOptLabel = new QLabel(i18n("Terminal &options:"), hbox);
+    _termOptLabel = new TQLabel(i18n("Terminal &options:"), hbox);
     _termOptEdit = new KLineEdit(hbox);
     _termOptEdit->setAcceptDrops(false);
     _termOptLabel->setBuddy(_termOptEdit);
 
-    connect(_termOptEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotChanged()));
+    connect(_termOptEdit, TQT_SIGNAL(textChanged(const TQString&)),
+            TQT_SLOT(slotChanged()));
     vbox->addWidget(hbox);
     layout->addMultiCellWidget(_term_group, 2, 2, 0, 1);
 
     _termOptEdit->setEnabled(false);
 
     // uid group
-    _uid_group = new QGroupBox(this);
-    vbox = new QVBoxLayout(_uid_group, KDialog::marginHint(),
+    _uid_group = new TQGroupBox(this);
+    vbox = new TQVBoxLayout(_uid_group, KDialog::marginHint(),
                            KDialog::spacingHint());
 
-    _uidCB = new QCheckBox(i18n("&Run as a different user"), _uid_group);
-    connect(_uidCB, SIGNAL(clicked()), SLOT(uidcb_clicked()));
+    _uidCB = new TQCheckBox(i18n("&Run as a different user"), _uid_group);
+    connect(_uidCB, TQT_SIGNAL(clicked()), TQT_SLOT(uidcb_clicked()));
     vbox->addWidget(_uidCB);
 
-    hbox = new QHBox(_uid_group);
+    hbox = new TQHBox(_uid_group);
     hbox->setSpacing(KDialog::spacingHint());
-    _uidLabel = new QLabel(i18n("&Username:"), hbox);
+    _uidLabel = new TQLabel(i18n("&Username:"), hbox);
     _uidEdit = new KLineEdit(hbox);
     _uidEdit->setAcceptDrops(false);
     _uidLabel->setBuddy(_uidEdit);
 
-    connect(_uidEdit, SIGNAL(textChanged(const QString&)),
-	    SLOT(slotChanged()));
+    connect(_uidEdit, TQT_SIGNAL(textChanged(const TQString&)),
+	    TQT_SLOT(slotChanged()));
     vbox->addWidget(hbox);
     layout->addMultiCellWidget(_uid_group, 3, 3, 0, 1);
 
@@ -202,25 +202,25 @@ BasicTab::BasicTab( QWidget *parent, const char *name )
     layout->setRowStretch(0, 2);
 
     // key binding group
-    general_group_keybind = new QGroupBox(this);
+    general_group_keybind = new TQGroupBox(this);
     layout->addMultiCellWidget( general_group_keybind, 4, 4, 0, 1 );
     // dummy widget in order to make it look a bit better
-    layout->addWidget( new QWidget(this), 5, 0 );
+    layout->addWidget( new TQWidget(this), 5, 0 );
     layout->setRowStretch( 5, 4 );
-    QGridLayout *grid_keybind = new QGridLayout(general_group_keybind, 3, 1,
+    TQGridLayout *grid_keybind = new TQGridLayout(general_group_keybind, 3, 1,
                                                 KDialog::marginHint(),
                                                 KDialog::spacingHint());
 
     //_keyEdit = new KLineEdit(general_group_keybind);
     //_keyEdit->setReadOnly( true );
     //_keyEdit->setText( "" );
-    //QPushButton* _keyButton = new QPushButton( i18n( "Change" ),
+    //TQPushButton* _keyButton = new TQPushButton( i18n( "Change" ),
     //                                           general_group_keybind );
-    //connect( _keyButton, SIGNAL( clicked()), this, SLOT( keyButtonPressed()));
+    //connect( _keyButton, TQT_SIGNAL( clicked()), this, TQT_SLOT( keyButtonPressed()));
     _keyEdit = new KKeyButton(general_group_keybind);
-    grid_keybind->addWidget(new QLabel(_keyEdit, i18n("Current shortcut &key:"), general_group_keybind), 0, 0);
-    connect( _keyEdit, SIGNAL(capturedShortcut(const KShortcut&)),
-             this, SLOT(slotCapturedShortcut(const KShortcut&)));
+    grid_keybind->addWidget(new TQLabel(_keyEdit, i18n("Current shortcut &key:"), general_group_keybind), 0, 0);
+    connect( _keyEdit, TQT_SIGNAL(capturedShortcut(const KShortcut&)),
+             this, TQT_SLOT(slotCapturedShortcut(const KShortcut&)));
     grid_keybind->addWidget(_keyEdit, 0, 1);
     //grid_keybind->addWidget(_keyButton, 0, 2 );
 
@@ -315,19 +315,19 @@ void BasicTab::setEntryInfo(MenuEntryInfo *entryInfo)
     
     if (!entryInfo)
     {
-       _nameEdit->setText(QString::null);
-       _descriptionEdit->setText(QString::null);
-       _commentEdit->setText(QString::null);
-       _iconButton->setIcon(QString::null);
+       _nameEdit->setText(TQString::null);
+       _descriptionEdit->setText(TQString::null);
+       _commentEdit->setText(TQString::null);
+       _iconButton->setIcon(TQString::null);
 
        // key binding part
        _keyEdit->setShortcut( KShortcut(), false );
-       _execEdit->lineEdit()->setText(QString::null);
+       _execEdit->lineEdit()->setText(TQString::null);
        _systrayCB->setChecked(false);
 
-       _pathEdit->lineEdit()->setText(QString::null);
-       _termOptEdit->setText(QString::null);
-       _uidEdit->setText(QString::null);
+       _pathEdit->lineEdit()->setText(TQString::null);
+       _termOptEdit->setText(TQString::null);
+       _uidEdit->setText(TQString::null);
 
        _launchCB->setChecked(false);
        _terminalCB->setChecked(false);
@@ -352,7 +352,7 @@ void BasicTab::setEntryInfo(MenuEntryInfo *entryInfo)
         _keyEdit->setShortcut( entryInfo->shortcut(), false );
     }
 
-    QString temp = df->readPathEntry("Exec");
+    TQString temp = df->readPathEntry("Exec");
     if (temp.left(12) == "ksystraycmd ")
     {
       _execEdit->lineEdit()->setText(temp.right(temp.length()-12));
@@ -458,7 +458,7 @@ void BasicTab::uidcb_clicked()
 
 void BasicTab::slotExecSelected()
 {
-    QString path = _execEdit->lineEdit()->text();
+    TQString path = _execEdit->lineEdit()->text();
     if (!path.startsWith("'"))
         _execEdit->lineEdit()->setText(KProcess::quote(path));
 }

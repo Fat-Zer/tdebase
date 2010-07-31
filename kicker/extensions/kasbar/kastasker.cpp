@@ -51,8 +51,8 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <qapplication.h>
-#include <qtimer.h>
+#include <tqapplication.h>
+#include <tqtimer.h>
 
 #include <kactionclasses.h>
 #include <kconfig.h>
@@ -79,7 +79,7 @@
 
 static const int SWITCH_DESKTOPS_REGROUP_DELAY = 50;
 
-KasTasker::KasTasker( Orientation o, QWidget* parent, const char* name, WFlags f )
+KasTasker::KasTasker( Orientation o, TQWidget* parent, const char* name, WFlags f )
   : KasBar( o, parent, name, f ),
     menu( 0 ),
     conf( 0 ),
@@ -102,20 +102,20 @@ KasTasker::KasTasker( Orientation o, QWidget* parent, const char* name, WFlags f
     loadItem(0)
 {
    setAcceptDrops( true );
-   connect(TaskManager::the(), SIGNAL(taskAdded(Task::Ptr)), SLOT(addTask(Task::Ptr)));
-   connect(TaskManager::the(), SIGNAL(taskRemoved(Task::Ptr)), SLOT(removeTask(Task::Ptr)));
-   connect(TaskManager::the(), SIGNAL(startupAdded(Startup::Ptr)), SLOT(addStartup(Startup::Ptr)));
-   connect(TaskManager::the(), SIGNAL(startupRemoved(Startup::Ptr)), SLOT(removeStartup(Startup::Ptr)));
-   connect(TaskManager::the(), SIGNAL(desktopChanged(int)), SLOT(refreshAllLater()));
-//   connect( manager, SIGNAL( windowChanged( Task::Ptr ) ), SLOT( refreshAllLater() ) );
+   connect(TaskManager::the(), TQT_SIGNAL(taskAdded(Task::Ptr)), TQT_SLOT(addTask(Task::Ptr)));
+   connect(TaskManager::the(), TQT_SIGNAL(taskRemoved(Task::Ptr)), TQT_SLOT(removeTask(Task::Ptr)));
+   connect(TaskManager::the(), TQT_SIGNAL(startupAdded(Startup::Ptr)), TQT_SLOT(addStartup(Startup::Ptr)));
+   connect(TaskManager::the(), TQT_SIGNAL(startupRemoved(Startup::Ptr)), TQT_SLOT(removeStartup(Startup::Ptr)));
+   connect(TaskManager::the(), TQT_SIGNAL(desktopChanged(int)), TQT_SLOT(refreshAllLater()));
+//   connect( manager, TQT_SIGNAL( windowChanged( Task::Ptr ) ), TQT_SLOT( refreshAllLater() ) );
 
-   connect( this, SIGNAL( itemSizeChanged( int ) ), SLOT( refreshAll() ) );
+   connect( this, TQT_SIGNAL( itemSizeChanged( int ) ), TQT_SLOT( refreshAll() ) );
 
-   connect( this, SIGNAL( detachedPositionChanged(const QPoint &) ), SLOT( writeLayout() ) );
-   connect( this, SIGNAL( directionChanged() ), SLOT( writeLayout() ) );
+   connect( this, TQT_SIGNAL( detachedPositionChanged(const TQPoint &) ), TQT_SLOT( writeLayout() ) );
+   connect( this, TQT_SIGNAL( directionChanged() ), TQT_SLOT( writeLayout() ) );
 }
 
-KasTasker::KasTasker( Orientation o, KasTasker *master, QWidget* parent, const char* name, WFlags f )
+KasTasker::KasTasker( Orientation o, KasTasker *master, TQWidget* parent, const char* name, WFlags f )
   : KasBar( o, master, parent, name, f ),
     menu( 0 ),
     conf( 0 ),
@@ -155,27 +155,27 @@ KPopupMenu *KasTasker::contextMenu()
 						  this, "toggle_show_all_windows" );
 	showAllWindowsAction->setChecked( showAllWindows() );
 	showAllWindowsAction->plug( menu );
-	connect( showAllWindowsAction, SIGNAL(toggled(bool)), SLOT(setShowAllWindows(bool)) );
-	connect( this, SIGNAL(showAllWindowsChanged(bool)), showAllWindowsAction, SLOT(setChecked(bool)) );
+	connect( showAllWindowsAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setShowAllWindows(bool)) );
+	connect( this, TQT_SIGNAL(showAllWindowsChanged(bool)), showAllWindowsAction, TQT_SLOT(setChecked(bool)) );
 
 	groupWindowsAction = new KToggleAction( i18n("&Group Windows"), KShortcut(),
 						this, "toggle_group_windows" );
 	groupWindowsAction->setChecked( groupWindows() );
 	groupWindowsAction->plug( menu );
-	connect( groupWindowsAction, SIGNAL(toggled(bool)), SLOT(setGroupWindows(bool)) );
-	connect( this, SIGNAL(groupWindowsChanged(bool)), groupWindowsAction, SLOT(setChecked(bool)) );
+	connect( groupWindowsAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setGroupWindows(bool)) );
+	connect( this, TQT_SIGNAL(groupWindowsChanged(bool)), groupWindowsAction, TQT_SLOT(setChecked(bool)) );
 
 	showClockAction = new KToggleAction( i18n("Show &Clock"), KShortcut(), this, "toggle_show_clock" );
 	showClockAction->setChecked( showClock() );
 	showClockAction->plug( menu );
-	connect( showClockAction, SIGNAL(toggled(bool)), SLOT(setShowClock(bool)) );
-	connect( this, SIGNAL(showClockChanged(bool)), showClockAction, SLOT(setChecked(bool)) );
+	connect( showClockAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setShowClock(bool)) );
+	connect( this, TQT_SIGNAL(showClockChanged(bool)), showClockAction, TQT_SLOT(setChecked(bool)) );
 
 	showLoadAction = new KToggleAction( i18n("Show &Load Meter"), KShortcut(), this, "toggle_show_load" );
 	showLoadAction->setChecked( showLoad() );
 	showLoadAction->plug( menu );
-	connect( showLoadAction, SIGNAL(toggled(bool)), SLOT(setShowLoad(bool)) );
-	connect( this, SIGNAL(showLoadChanged(bool)), showLoadAction, SLOT(setChecked(bool)) );
+	connect( showLoadAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setShowLoad(bool)) );
+	connect( this, TQT_SIGNAL(showLoadChanged(bool)), showLoadAction, TQT_SLOT(setChecked(bool)) );
 
 	menu->insertSeparator();
 
@@ -183,38 +183,38 @@ KPopupMenu *KasTasker::contextMenu()
 	    toggleDetachedAction = new KToggleAction( i18n("&Floating"), KShortcut(), this, "toggle_detached" );
 	    toggleDetachedAction->setChecked( isDetached() );
 	    toggleDetachedAction->plug( menu );
-	    connect( toggleDetachedAction, SIGNAL(toggled(bool)), SLOT(setDetached(bool)) );
-	    connect( this, SIGNAL(detachedChanged(bool)), toggleDetachedAction, SLOT(setChecked(bool)) );
+	    connect( toggleDetachedAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setDetached(bool)) );
+	    connect( this, TQT_SIGNAL(detachedChanged(bool)), toggleDetachedAction, TQT_SLOT(setChecked(bool)) );
 	}
 
-	rotateBarAction = new KAction( i18n("R&otate Bar"), QString("rotate"), KShortcut(),
-				       this, SLOT( toggleOrientation() ),
+	rotateBarAction = new KAction( i18n("R&otate Bar"), TQString("rotate"), KShortcut(),
+				       this, TQT_SLOT( toggleOrientation() ),
 				       this, "rotate_bar" );
 	rotateBarAction->plug( menu );
-	connect( this, SIGNAL(detachedChanged(bool)), rotateBarAction, SLOT(setEnabled(bool)) );
-	connect( rotateBarAction, SIGNAL(activated()), SLOT(writeConfigLater()) );
+	connect( this, TQT_SIGNAL(detachedChanged(bool)), rotateBarAction, TQT_SLOT(setEnabled(bool)) );
+	connect( rotateBarAction, TQT_SIGNAL(activated()), TQT_SLOT(writeConfigLater()) );
 
-	menu->insertItem( SmallIcon("reload"), i18n("&Refresh"), this, SLOT( refreshAll() ) );
+	menu->insertItem( SmallIcon("reload"), i18n("&Refresh"), this, TQT_SLOT( refreshAll() ) );
 
 	menu->insertSeparator();
 
-	menu->insertItem( SmallIcon("configure"), i18n("&Configure Kasbar..."), this, SLOT( showPreferences() ) );
+	menu->insertItem( SmallIcon("configure"), i18n("&Configure Kasbar..."), this, TQT_SLOT( showPreferences() ) );
 
 	// Help menu
 	KPopupMenu *help = new KPopupMenu;
-	help->insertItem( SmallIcon("about"), i18n("&About Kasbar"), this, SLOT( showAbout() ) );
+	help->insertItem( SmallIcon("about"), i18n("&About Kasbar"), this, TQT_SLOT( showAbout() ) );
 	menu->insertItem( SmallIcon("help"), i18n("&Help"), help );
 
 	if ( standalone_ ) {
 	    menu->insertSeparator();
-	    menu->insertItem( SmallIcon("exit"), i18n("&Quit"), qApp, SLOT( quit() ) );
+	    menu->insertItem( SmallIcon("exit"), i18n("&Quit"), qApp, TQT_SLOT( quit() ) );
 	}
     }
 
     return menu;
 }
 
-KasTasker *KasTasker::createChildBar( Orientation o, QWidget *parent, const char *name )
+KasTasker *KasTasker::createChildBar( Orientation o, TQWidget *parent, const char *name )
 {
     KasTasker *child = new KasTasker( o, this, parent, name );
     child->conf =  this->conf;
@@ -269,9 +269,9 @@ void KasTasker::addTask( Task::Ptr t )
       //
       // Ensure the window manager knows where we put the icon.
       //
-      QPoint p = mapToGlobal( itemPos( item ) );
-      QSize s( itemExtent(), itemExtent() );
-      t->publishIconGeometry( QRect( p, s ) );
+      TQPoint p = mapToGlobal( itemPos( item ) );
+      TQSize s( itemExtent(), itemExtent() );
+      t->publishIconGeometry( TQRect( p, s ) );
    }
 }
 
@@ -294,7 +294,7 @@ KasGroupItem *KasTasker::convertToGroup( Task::Ptr t )
   removeTask( t );
   insert( i, gi );
 
-  connect(TaskManager::the(), SIGNAL(taskRemoved(Task::Ptr)), gi, SLOT(removeTask(Task::Ptr)));
+  connect(TaskManager::the(), TQT_SIGNAL(taskRemoved(Task::Ptr)), gi, TQT_SLOT(removeTask(Task::Ptr)));
 
   return gi;
 }
@@ -371,7 +371,7 @@ void KasTasker::refreshAll()
 
 void KasTasker::refreshAllLater()
 {
-    QTimer::singleShot( SWITCH_DESKTOPS_REGROUP_DELAY, this, SLOT( refreshAll() ) );
+    TQTimer::singleShot( SWITCH_DESKTOPS_REGROUP_DELAY, this, TQT_SLOT( refreshAll() ) );
 }
 
 void KasTasker::refreshIconGeometry()
@@ -380,9 +380,9 @@ void KasTasker::refreshIconGeometry()
       if ( itemAt(i)->inherits( "KasTaskItem" ) ) {
 	 KasTaskItem *curr = static_cast<KasTaskItem *> (itemAt( i ));
 
-	 QPoint p = mapToGlobal( itemPos( curr ) );
-	 QSize s( itemExtent(), itemExtent() );
-	 curr->task()->publishIconGeometry( QRect( p, s ) );
+	 TQPoint p = mapToGlobal( itemPos( curr ) );
+	 TQSize s( itemExtent(), itemExtent() );
+	 curr->task()->publishIconGeometry( TQRect( p, s ) );
       }
    }
 }
@@ -432,12 +432,12 @@ void KasTasker::setShowAllWindows( bool enable )
       showAllWindows_ = enable;
       refreshAll();
       if ( !showAllWindows_ ) {
-	connect(TaskManager::the(), SIGNAL(desktopChanged(int)), SLOT(refreshAll()));
-//	connect( manager, SIGNAL( windowChanged( Task::Ptr ) ), SLOT( refreshAll() ) );
+	connect(TaskManager::the(), TQT_SIGNAL(desktopChanged(int)), TQT_SLOT(refreshAll()));
+//	connect( manager, TQT_SIGNAL( windowChanged( Task::Ptr ) ), TQT_SLOT( refreshAll() ) );
       }
       else {
-	disconnect(TaskManager::the(), SIGNAL(desktopChanged(int)), this, SLOT(refreshAll()));
-//	disconnect( manager, SIGNAL( windowChanged( Task::Ptr ) ), this, SLOT( refreshAll() ) );
+	disconnect(TaskManager::the(), TQT_SIGNAL(desktopChanged(int)), this, TQT_SLOT(refreshAll()));
+//	disconnect( manager, TQT_SIGNAL( windowChanged( Task::Ptr ) ), this, TQT_SLOT( refreshAll() ) );
       }
 
       emit showAllWindowsChanged( enable );
@@ -551,7 +551,7 @@ void KasTasker::readConfig()
 
 void KasTasker::writeConfigLater()
 {
-   QTimer::singleShot( 10, this, SLOT( writeConfig() ) );
+   TQTimer::singleShot( 10, this, TQT_SLOT( writeConfig() ) );
 }
 
 void KasTasker::writeConfig()
@@ -634,11 +634,11 @@ void KasTasker::readConfig( KConfig *conf )
    //
    conf->setGroup("Layout");
 
-   setDirection( (Direction) conf->readNumEntry( "Direction", QBoxLayout::LeftToRight ) );
+   setDirection( (Direction) conf->readNumEntry( "Direction", TQBoxLayout::LeftToRight ) );
    setOrientation( (Qt::Orientation) conf->readNumEntry( "Orientation", Horizontal ) );
    setMaxBoxes( conf->readUnsignedNumEntry( "MaxBoxes", 0 ) );
 
-   QPoint pos(100, 100);
+   TQPoint pos(100, 100);
    setDetachedPosition( conf->readPointEntry( "DetachedPosition", &pos ) );
    setDetached( conf->readBoolEntry( "Detached", false ) );
 

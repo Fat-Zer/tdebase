@@ -20,11 +20,11 @@
 #include <kio/slavebase.h>
 #include <kinstance.h>
 #include <kdebug.h>
-#include <qtextstream.h>
+#include <tqtextstream.h>
 #include <klocale.h>
 #include <sys/stat.h>
 #include <dcopclient.h>
-#include <qdatastream.h>
+#include <tqdatastream.h>
 #include <time.h>
 #include <kprocess.h>
 #include <kservice.h>
@@ -35,13 +35,13 @@ class SettingsProtocol : public KIO::SlaveBase
 {
 public:
 	enum RunMode { SettingsMode, ProgramsMode, ApplicationsMode };
-	SettingsProtocol(const QCString &protocol, const QCString &pool, const QCString &app);
+	SettingsProtocol(const TQCString &protocol, const TQCString &pool, const TQCString &app);
 	virtual ~SettingsProtocol();
 	virtual void get( const KURL& url );
 	virtual void stat(const KURL& url);
 	virtual void listDir(const KURL& url);
 	void listRoot();
-	KServiceGroup::Ptr findGroup(const QString &relPath);
+	KServiceGroup::Ptr findGroup(const TQString &relPath);
 
 private:
 	DCOPClient *m_dcopClient;
@@ -60,7 +60,7 @@ extern "C" {
 }
 
 
-static void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const QString& s = QString::null)
+static void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const TQString& s = TQString::null)
 {
 	KIO::UDSAtom atom;
 	atom.m_uds = ID;
@@ -69,7 +69,7 @@ static void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const QString
 	entry.append(atom);
 }
 
-static void createFileEntry(KIO::UDSEntry& entry, const QString& name, const QString& url, const QString& mime, const QString& iconName, const QString& localPath)
+static void createFileEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime, const TQString& iconName, const TQString& localPath)
 {
 	entry.clear();
 	addAtom(entry, KIO::UDS_NAME, 0, KIO::encodeFileName(name));
@@ -84,7 +84,7 @@ static void createFileEntry(KIO::UDSEntry& entry, const QString& name, const QSt
 	addAtom(entry, KIO::UDS_ICON_NAME, 0, iconName);
 }
 
-static void createDirEntry(KIO::UDSEntry& entry, const QString& name, const QString& url, const QString& mime,const QString& iconName)
+static void createDirEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime,const TQString& iconName)
 {
 	entry.clear();
 	addAtom(entry, KIO::UDS_NAME, 0, name);
@@ -96,7 +96,7 @@ static void createDirEntry(KIO::UDSEntry& entry, const QString& name, const QStr
 	addAtom(entry, KIO::UDS_ICON_NAME, 0, iconName);
 }
 
-SettingsProtocol::SettingsProtocol( const QCString &protocol, const QCString &pool, const QCString &app): SlaveBase( protocol, pool, app )
+SettingsProtocol::SettingsProtocol( const TQCString &protocol, const TQCString &pool, const TQCString &app): SlaveBase( protocol, pool, app )
 {
 	// Adjusts which part of the K Menu to virtualize.
 	if ( protocol == "programs" )
@@ -119,11 +119,11 @@ SettingsProtocol::~SettingsProtocol()
 	delete m_dcopClient;
 }
 
-KServiceGroup::Ptr SettingsProtocol::findGroup(const QString &relPath)
+KServiceGroup::Ptr SettingsProtocol::findGroup(const TQString &relPath)
 {
-	QString nextPart;
-	QString alreadyFound("Settings/");
-	QStringList rest = QStringList::split('/', relPath);
+	TQString nextPart;
+	TQString alreadyFound("Settings/");
+	TQStringList rest = TQStringList::split('/', relPath);
 
 	kdDebug() << "Trying harder to find group " << relPath << endl;
 	for (unsigned int i=0; i<rest.count(); i++)
@@ -182,7 +182,7 @@ void SettingsProtocol::stat(const KURL& url)
 {
 	KIO::UDSEntry entry;
 
-	QString servicePath( url.path(1) );
+	TQString servicePath( url.path(1) );
 	servicePath.remove(0, 1); // remove starting '/'
 
 	if ( m_runMode == SettingsMode)
@@ -216,7 +216,7 @@ void SettingsProtocol::stat(const KURL& url)
 
 void SettingsProtocol::listDir(const KURL& url)
 {
-	QString groupPath = url.path(1);
+	TQString groupPath = url.path(1);
 	groupPath.remove(0, 1); // remove starting '/'
 
 	if ( m_runMode == SettingsMode)
@@ -243,7 +243,7 @@ void SettingsProtocol::listDir(const KURL& url)
 
 		if (e->isType(KST_KServiceGroup)) {
 			KServiceGroup::Ptr g(static_cast<KServiceGroup *>(e));
-			QString groupCaption = g->caption();
+			TQString groupCaption = g->caption();
 
 			// Avoid adding empty groups.
 			KServiceGroup::Ptr subMenuRoot = KServiceGroup::group(g->relPath());
@@ -254,7 +254,7 @@ void SettingsProtocol::listDir(const KURL& url)
 			if ((g->name().at(0) == '.'))
 			    continue;
 
-			QString relPath = g->relPath();
+			TQString relPath = g->relPath();
 
 			// Do not display the "Settings" menu group in Programs Mode.
 			if( (m_runMode == ProgramsMode) && relPath.startsWith( "Settings" ) )

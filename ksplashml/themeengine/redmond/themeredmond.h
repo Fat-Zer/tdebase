@@ -25,12 +25,12 @@ class CfgRedmond: public ThemeEngineConfig
 {
   Q_OBJECT
 public:
-  CfgRedmond( QWidget *, KConfig * );
+  CfgRedmond( TQWidget *, KConfig * );
 
 protected:
-  QCheckBox *mShowUsername;
-  QCheckBox *mShowIcon;
-  QCheckBox *mShowWelcome;
+  TQCheckBox *mShowUsername;
+  TQCheckBox *mShowIcon;
+  TQCheckBox *mShowWelcome;
   KFontCombo *mWelcomeFont;
   KFontCombo *mUsernameFont;
   KFontCombo *mActionFont;
@@ -41,18 +41,18 @@ class ThemeRedmond: public ThemeEngine
 {
   Q_OBJECT
 public:
-  ThemeRedmond( QWidget *, const char *, const QStringList& );
+  ThemeRedmond( TQWidget *, const char *, const TQStringList& );
 
-  inline const QString name() { return( QString("Redmond") );  }
-  static QStringList names()
+  inline const TQString name() { return( TQString("Redmond") );  }
+  static TQStringList names()
   {
-    QStringList Names;
+    TQStringList Names;
     Names << "Redmond";
     return( Names );
   };
 
 public slots:
-  inline void slotSetText( const QString& s )
+  inline void slotSetText( const TQString& s )
   {
     if( mText != s )
     {
@@ -62,15 +62,15 @@ public slots:
   };
 
 private:
-  void paintEvent( QPaintEvent * );
+  void paintEvent( TQPaintEvent * );
 
   void _initUi();
   void _readSettings();
 
-  QString mText;
-  QPixmap mPixmap;
+  TQString mText;
+  TQPixmap mPixmap;
   bool mRedrawKonqi;
-  QPoint mMsgPos;
+  TQPoint mMsgPos;
   KPixmap mImage;
 
   // ThemeEngine configuration.
@@ -81,21 +81,21 @@ private:
   bool mShowActionText;
   bool mShowIcon;
   bool mUseKdmUserIcon;
-  QString mBackgroundImage;
-  QString mWelcomeText;
-  QString mUsernameText; // Leave this undefined to autodetect the username.
-  QString mIcon;
-  QFont mWelcomeFont;
-  QFont mUsernameFont;
-  QFont mActionFont;
-  QColor mWelcomeTextColor;
-  QColor mWelcomeTextShadowColor;
-  QColor mUsernameTextColor;
-  QColor mActionTextColor;
-  QPoint mWelcomeTextPosition; // Set this to (0,0) to autoposition the text.
-  QPoint mUsernameTextPosition; // Likewise.
-  QPoint mActionTextPosition; // Likewise likewise.
-  QPoint mIconPosition; // ...
+  TQString mBackgroundImage;
+  TQString mWelcomeText;
+  TQString mUsernameText; // Leave this undefined to autodetect the username.
+  TQString mIcon;
+  TQFont mWelcomeFont;
+  TQFont mUsernameFont;
+  TQFont mActionFont;
+  TQColor mWelcomeTextColor;
+  TQColor mWelcomeTextShadowColor;
+  TQColor mUsernameTextColor;
+  TQColor mActionTextColor;
+  TQPoint mWelcomeTextPosition; // Set this to (0,0) to autoposition the text.
+  TQPoint mUsernameTextPosition; // Likewise.
+  TQPoint mActionTextPosition; // Likewise likewise.
+  TQPoint mIconPosition; // ...
 
 }
 ;

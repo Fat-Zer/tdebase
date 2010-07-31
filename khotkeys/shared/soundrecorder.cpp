@@ -27,7 +27,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <klibloader.h>
 
 #include "khotkeysglobal.h"
@@ -47,7 +47,7 @@ bool SoundRecorder::init( KLibrary* lib )
     return create_fun != NULL;
 }
 
-SoundRecorder* SoundRecorder::create( QObject* parent, const char* name )
+SoundRecorder* SoundRecorder::create( TQObject* parent, const char* name )
 {
 #ifdef HAVE_ARTS
     if( create_fun != NULL )
@@ -56,7 +56,7 @@ SoundRecorder* SoundRecorder::create( QObject* parent, const char* name )
     return new SoundRecorder( parent, name );
 }
 
-SoundRecorder::SoundRecorder(QObject *parent, const char *name)  : QObject(parent, name) {}
+SoundRecorder::SoundRecorder(TQObject *parent, const char *name)  : TQObject(parent, name) {}
 
 SoundRecorder::~SoundRecorder()
 {

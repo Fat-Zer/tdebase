@@ -21,7 +21,7 @@
 #ifndef REMOTEENCODING_PLUGIN_H
 #define REMOTEENCODING_PLUGIN_H
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <kurl.h>
 #include <klibloader.h>
 #include <kparts/plugin.h>
@@ -34,8 +34,8 @@ class KRemoteEncodingPlugin: public KParts::Plugin
 {
   Q_OBJECT
 public:
-  KRemoteEncodingPlugin(QObject * parent, const char *name,
-			const QStringList &);
+  KRemoteEncodingPlugin(TQObject * parent, const char *name,
+			const TQStringList &);
   ~KRemoteEncodingPlugin();
 
 protected slots:
@@ -53,7 +53,7 @@ private:
 
   KonqDirPart *m_part;
   KActionMenu *m_menu;
-  QStringList m_encodingDescriptions;
+  TQStringList m_encodingDescriptions;
   KURL m_currentURL;
 
   bool m_loaded;

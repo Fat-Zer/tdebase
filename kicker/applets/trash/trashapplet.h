@@ -25,7 +25,7 @@
 #endif
 
 #include <kpanelapplet.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kurl.h>
 #include <kdirlister.h>
 
@@ -36,8 +36,8 @@ class TrashApplet : public KPanelApplet
 Q_OBJECT
 
 public:
-	TrashApplet(const QString& configFile, Type t = Normal, int actions = 0,
-	            QWidget *parent = 0, const char *name = 0);
+	TrashApplet(const TQString& configFile, Type t = Normal, int actions = 0,
+	            TQWidget *parent = 0, const char *name = 0);
 	~TrashApplet();
 
 	int widthForHeight(int height) const;
@@ -45,7 +45,7 @@ public:
 	void about();
 
 protected:
-	void resizeEvent(QResizeEvent *e);
+	void resizeEvent(TQResizeEvent *e);
 	void positionChange(Position p);
 
 protected slots:

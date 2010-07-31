@@ -10,10 +10,10 @@
 #ifndef __PixmapServer_h_Included__
 #define __PixmapServer_h_Included__
 
-#include <qwindowdefs.h>
+#include <tqwindowdefs.h>
 
-#include <qwidget.h>
-#include <qmap.h>
+#include <tqwidget.h>
+#include <tqmap.h>
 
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -30,7 +30,7 @@ struct KPixmapInode
 
 struct KPixmapData
 {
-    QPixmap *pixmap;
+    TQPixmap *pixmap;
     int usecount;
     int refcount;
 };
@@ -38,7 +38,7 @@ struct KPixmapData
 struct KSelectionInode
 {
     Qt::HANDLE handle;
-    QString name;
+    TQString name;
 };
 
 /**
@@ -70,7 +70,7 @@ public:
      * @param pm A pointer to the pixmap.
      * @param overwrite Should an pixmap with the same name be overwritten?
      */
-    void add(QString name, QPixmap *pm, bool overwrite=true);
+    void add(TQString name, TQPixmap *pm, bool overwrite=true);
 
     /**
      * Remove a pixmap from the server. This will delete the pixmap after 
@@ -78,21 +78,21 @@ public:
      *
      * @param name The name of the shared pixmap.
      */
-    void remove(QString name);
+    void remove(TQString name);
 
     /**
      * List all pixmaps currently served by this server.
      * 
-     * @return A QStringList containing all the shared pixmaps.
+     * @return A TQStringList containing all the shared pixmaps.
      */
-    QStringList list();
+    TQStringList list();
 
     /**
      * Re-set ownership of the selection providing the shared pixmap.
      *
      * @param name The name of the shared pixmap.
      */
-    void setOwner(QString name);
+    void setOwner(TQString name);
 
 signals:
     /** 
@@ -101,7 +101,7 @@ signals:
      * this server, though it can be served by another. You can re-aqcuire
      * the selection by calling setOwner().
      */
-    void selectionCleared(QString name);
+    void selectionCleared(TQString name);
 
 protected:
     bool x11Event(XEvent *);
@@ -109,15 +109,15 @@ protected:
 private:
     Atom pixmap;
 
-    QMap<QString,KPixmapInode> m_Names;
-    QMap<Atom,KSelectionInode> m_Selections;
-    QMap<HANDLE,KPixmapData> m_Data;
-    QMap<Atom,HANDLE> m_Active;
+    TQMap<TQString,KPixmapInode> m_Names;
+    TQMap<Atom,KSelectionInode> m_Selections;
+    TQMap<HANDLE,KPixmapData> m_Data;
+    TQMap<Atom,HANDLE> m_Active;
 
-    typedef QMap<QString,KPixmapInode>::Iterator NameIterator;
-    typedef QMap<Atom,KSelectionInode>::Iterator SelectionIterator;
-    typedef QMap<HANDLE,KPixmapData>::Iterator DataIterator;
-    typedef QMap<Atom,HANDLE>::Iterator AtomIterator;
+    typedef TQMap<TQString,KPixmapInode>::Iterator NameIterator;
+    typedef TQMap<Atom,KSelectionInode>::Iterator SelectionIterator;
+    typedef TQMap<HANDLE,KPixmapData>::Iterator DataIterator;
+    typedef TQMap<Atom,HANDLE>::Iterator AtomIterator;
 };
 
 

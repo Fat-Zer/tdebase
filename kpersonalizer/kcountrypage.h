@@ -31,7 +31,7 @@ class KFindLanguage;
 class KCountryPage : public KCountryPageDlg  {
 	Q_OBJECT
 public:
-	KCountryPage(QWidget *parent=0, const char *name=0);
+	KCountryPage(TQWidget *parent=0, const char *name=0);
 	~KCountryPage();
 
 	void loadCountryList(KLanguageButton *combo);
@@ -44,12 +44,12 @@ public:
 	bool b_startedLanguageChanged;
 
 private:
-	QStringList langs;
-	QString s_oldlocale;
+	TQStringList langs;
+	TQString s_oldlocale;
 	KFindLanguage *flang;
 
 private slots: // Private slots
-	void setLangForCountry(const QString &);
+	void setLangForCountry(const TQString &);
 	void setLanguageChanged();
 
 };

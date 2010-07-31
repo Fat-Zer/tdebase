@@ -11,9 +11,9 @@
 //
 #include <assert.h>
 
-#include <qregexp.h>
-#include <qstringlist.h>
-#include <qdict.h>
+#include <tqregexp.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -63,12 +63,12 @@ bool KxkbConfig::load(int loadMode)
 	m_model = config->readEntry("Model", DEFAULT_MODEL);
 	kdDebug() << "Model: " << m_model << endl;
 	
-	QStringList layoutList;
+	TQStringList layoutList;
 	if( config->hasKey("LayoutList") ) {
 		layoutList = config->readListEntry("LayoutList");
 	}
 	else { // old config
-		QString mainLayout = config->readEntry("Layout", DEFAULT_LAYOUT_UNIT.toPair());
+		TQString mainLayout = config->readEntry("Layout", DEFAULT_LAYOUT_UNIT.toPair());
 		layoutList = config->readListEntry("Additional");
 		layoutList.prepend(mainLayout);
 	}
@@ -76,16 +76,16 @@ bool KxkbConfig::load(int loadMode)
 		layoutList.append("us");
 	
 	m_layouts.clear();
-	for(QStringList::ConstIterator it = layoutList.begin(); it != layoutList.end() ; ++it) {
+	for(TQStringList::ConstIterator it = layoutList.begin(); it != layoutList.end() ; ++it) {
 		m_layouts.append( LayoutUnit(*it) );
 		kdDebug() << " layout " << LayoutUnit(*it).toPair() << " in list: " << m_layouts.contains( LayoutUnit(*it) ) << endl;
 	}
 
 	kdDebug() << "Found " << m_layouts.count() << " layouts, default is " << getDefaultLayout().toPair() << endl;
 	
-	QStringList displayNamesList = config->readListEntry("DisplayNames", ',');
-	for(QStringList::ConstIterator it = displayNamesList.begin(); it != displayNamesList.end() ; ++it) {
-		QStringList displayNamePair = QStringList::split(':', *it );
+	TQStringList displayNamesList = config->readListEntry("DisplayNames", ',');
+	for(TQStringList::ConstIterator it = displayNamesList.begin(); it != displayNamesList.end() ; ++it) {
+		TQStringList displayNamePair = TQStringList::split(':', *it );
 		if( displayNamePair.count() == 2 ) {
 			LayoutUnit layoutUnit( displayNamePair[0] );
 			if( m_layouts.contains( layoutUnit ) ) {
@@ -97,9 +97,9 @@ bool KxkbConfig::load(int loadMode)
 // 	m_includes.clear();
 	if( X11Helper::areSingleGroupsSupported() ) {
 		if( config->hasKey("IncludeGroups") ) {
-			QStringList includeList = config->readListEntry("IncludeGroups", ',');
-			for(QStringList::ConstIterator it = includeList.begin(); it != includeList.end() ; ++it) {
-				QStringList includePair = QStringList::split(':', *it );
+			TQStringList includeList = config->readListEntry("IncludeGroups", ',');
+			for(TQStringList::ConstIterator it = includeList.begin(); it != includeList.end() ; ++it) {
+				TQStringList includePair = TQStringList::split(':', *it );
 				if( includePair.count() == 2 ) {
 					LayoutUnit layoutUnit( includePair[0] );
 					if( m_layouts.contains( layoutUnit ) ) {
@@ -111,13 +111,13 @@ bool KxkbConfig::load(int loadMode)
 		}
 		else { //old includes format
 			kdDebug() << "Old includes..." << endl;
-			QStringList includeList = config->readListEntry("Includes");
-			for(QStringList::ConstIterator it = includeList.begin(); it != includeList.end() ; ++it) {
-				QString layoutName = LayoutUnit::parseLayout( *it );
+			TQStringList includeList = config->readListEntry("Includes");
+			for(TQStringList::ConstIterator it = includeList.begin(); it != includeList.end() ; ++it) {
+				TQString layoutName = LayoutUnit::parseLayout( *it );
 				LayoutUnit layoutUnit( layoutName, "" );
 				kdDebug() << "old layout for inc: " << layoutUnit.toPair() << " included " << m_layouts.contains( layoutUnit ) << endl;
 				if( m_layouts.contains( layoutUnit ) ) {
-					QString variantName = LayoutUnit::parseVariant(*it);
+					TQString variantName = LayoutUnit::parseVariant(*it);
 					m_layouts[m_layouts.findIndex(layoutUnit)].includeGroup = variantName;
 					kdDebug() << "Got inc group: " << layoutUnit.toPair() << ": " <<  variantName << endl;
 				}
@@ -128,7 +128,7 @@ bool KxkbConfig::load(int loadMode)
 	m_showSingle = config->readBoolEntry("ShowSingle", false);
 	m_showFlag = config->readBoolEntry("ShowFlag", true);
 	
-	QString layoutOwner = config->readEntry("SwitchMode", "Global");
+	TQString layoutOwner = config->readEntry("SwitchMode", "Global");
 
 	if( layoutOwner == "WinClass" ) {
 		m_switchingPolicy = SWITCH_POLICY_WIN_CLASS;
@@ -180,25 +180,25 @@ void KxkbConfig::save()
 	config->writeEntry("ResetOldOptions", m_resetOldOptions);
 	config->writeEntry("Options", m_options );
 
-	QStringList layoutList;
-	QStringList includeList;
-	QStringList displayNamesList;
+	TQStringList layoutList;
+	TQStringList includeList;
+	TQStringList displayNamesList;
 	
-	QValueList<LayoutUnit>::ConstIterator it;
+	TQValueList<LayoutUnit>::ConstIterator it;
 	for(it = m_layouts.begin(); it != m_layouts.end(); ++it) {
 		const LayoutUnit& layoutUnit = *it;
 		
 		layoutList.append( layoutUnit.toPair() );
 		
 		if( layoutUnit.includeGroup.isEmpty() == false ) {
-			QString incGroupUnit = QString("%1:%2").arg(layoutUnit.toPair(), layoutUnit.includeGroup);
+			TQString incGroupUnit = TQString("%1:%2").arg(layoutUnit.toPair(), layoutUnit.includeGroup);
 			includeList.append( incGroupUnit );
 		}
 	
-		QString displayName( layoutUnit.displayName );
+		TQString displayName( layoutUnit.displayName );
 		kdDebug() << " displayName " << layoutUnit.toPair() << " : " << displayName << endl;
 		if( displayName.isEmpty() == false && displayName != layoutUnit.layout ) {
-			displayName = QString("%1:%2").arg(layoutUnit.toPair(), displayName);
+			displayName = TQString("%1:%2").arg(layoutUnit.toPair(), displayName);
 			displayNamesList.append( displayName );
 		}
 	}
@@ -257,10 +257,10 @@ void KxkbConfig::setDefaults()
 	m_stickySwitchingDepth = 2;
 }
 
-QStringList KxkbConfig::getLayoutStringList(/*bool compact*/)
+TQStringList KxkbConfig::getLayoutStringList(/*bool compact*/)
 {
-	QStringList layoutList;
-	for(QValueList<LayoutUnit>::ConstIterator it = m_layouts.begin(); it != m_layouts.end(); ++it) {
+	TQStringList layoutList;
+	for(TQValueList<LayoutUnit>::ConstIterator it = m_layouts.begin(); it != m_layouts.end(); ++it) {
 		const LayoutUnit& layoutUnit = *it;
 		layoutList.append( layoutUnit.toPair() );
 	}
@@ -268,17 +268,17 @@ QStringList KxkbConfig::getLayoutStringList(/*bool compact*/)
 }
 
 
-QString KxkbConfig::getDefaultDisplayName(const QString& code_)
+TQString KxkbConfig::getDefaultDisplayName(const TQString& code_)
 {
-	QString displayName;
+	TQString displayName;
 	
 	if( code_.length() <= 2 ) {
 		displayName = code_;
 	}
 	else {
-		int sepPos = code_.find(QRegExp("[-_]"));
-		QString leftCode = code_.mid(0, sepPos);
-		QString rightCode;
+		int sepPos = code_.find(TQRegExp("[-_]"));
+		TQString leftCode = code_.mid(0, sepPos);
+		TQString rightCode;
 		if( sepPos != -1 )
 			rightCode = code_.mid(sepPos+1);
 		
@@ -291,12 +291,12 @@ QString KxkbConfig::getDefaultDisplayName(const QString& code_)
 	return displayName;
 }
 
-QString KxkbConfig::getDefaultDisplayName(const LayoutUnit& layoutUnit, bool single)
+TQString KxkbConfig::getDefaultDisplayName(const LayoutUnit& layoutUnit, bool single)
 {
 	if( layoutUnit.variant == "" )
 		return getDefaultDisplayName( layoutUnit.layout );
 	
-	QString displayName = layoutUnit.layout.left(2);
+	TQString displayName = layoutUnit.layout.left(2);
 	if( single == false )
 		displayName += layoutUnit.variant.left(1);
 	return displayName;
@@ -307,11 +307,11 @@ QString KxkbConfig::getDefaultDisplayName(const LayoutUnit& layoutUnit, bool sin
  * @param[in] layvar String in form layout(variant) to parse
  * @return The layout found in the string
  */
-const QString LayoutUnit::parseLayout(const QString &layvar)
+const TQString LayoutUnit::parseLayout(const TQString &layvar)
 {
 	static const char* LAYOUT_PATTERN = "[a-zA-Z0-9_/-]*";
-	QString varLine = layvar.stripWhiteSpace();
-	QRegExp rx(LAYOUT_PATTERN);
+	TQString varLine = layvar.stripWhiteSpace();
+	TQRegExp rx(LAYOUT_PATTERN);
 	int pos = rx.search(varLine, 0);
 	int len = rx.matchedLength();
   // check for errors
@@ -326,11 +326,11 @@ const QString LayoutUnit::parseLayout(const QString &layvar)
  * @param[in] layvar String in form layout(variant) to parse
  * @return The variant found in the string, no check is performed
  */
-const QString LayoutUnit::parseVariant(const QString &layvar)
+const TQString LayoutUnit::parseVariant(const TQString &layvar)
 {
 	static const char* VARIANT_PATTERN = "\\([a-zA-Z0-9_-]*\\)";
-	QString varLine = layvar.stripWhiteSpace();
-	QRegExp rx(VARIANT_PATTERN);
+	TQString varLine = layvar.stripWhiteSpace();
+	TQRegExp rx(VARIANT_PATTERN);
 	int pos = rx.search(varLine, 0);
 	int len = rx.matchedLength();
   // check for errors

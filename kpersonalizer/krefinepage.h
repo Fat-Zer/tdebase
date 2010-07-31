@@ -27,7 +27,7 @@
 class KRefinePage : public KRefinePageDlg  {
    Q_OBJECT
 public: 
-	KRefinePage(QWidget *parent=0, const char *name=0);
+	KRefinePage(TQWidget *parent=0, const char *name=0);
 	~KRefinePage();
 public slots: // Public slots
   /** starts kcontrol via krun when the user presses the

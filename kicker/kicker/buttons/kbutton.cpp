@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -37,10 +37,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kbutton.h"
 #include "kbutton.moc"
 
-KButton::KButton( QWidget* parent )
+KButton::KButton( TQWidget* parent )
     : PanelPopupButton( parent, "KButton" )
 {
-    QToolTip::add(this, i18n("Applications, tasks and desktop sessions"));
+    TQToolTip::add(this, i18n("Applications, tasks and desktop sessions"));
     setTitle(i18n("K Menu"));
 
     setPopup(MenuManager::the()->kmenu());
@@ -64,7 +64,7 @@ KButton::~KButton()
 
 void KButton::properties()
 {
-    KApplication::startServiceByDesktopName("kmenuedit", QStringList(),
+    KApplication::startServiceByDesktopName("kmenuedit", TQStringList(),
                                             0, 0, 0, "", true);
 }
 

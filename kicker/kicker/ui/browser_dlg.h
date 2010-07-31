@@ -34,20 +34,20 @@ class PanelBrowserDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    PanelBrowserDialog( const QString &path = QString::null, const QString &icon = QString::null, QWidget *parent = 0, const char *name = 0 );
+    PanelBrowserDialog( const TQString &path = TQString::null, const TQString &icon = TQString::null, TQWidget *parent = 0, const char *name = 0 );
     ~PanelBrowserDialog();
 
-    const QString icon();
-    QString path();
+    const TQString icon();
+    TQString path();
 
 protected slots:
     void browse();
     virtual void slotOk();
-    void slotPathChanged( const QString &_text );
+    void slotPathChanged( const TQString &_text );
 protected:
     KIconButton *iconBtn;
     KLineEdit *pathInput;
-    QPushButton *browseBtn;
+    TQPushButton *browseBtn;
 };
 
 #endif

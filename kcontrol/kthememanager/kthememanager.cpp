@@ -16,12 +16,12 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpixmap.h>
+#include <tqpushbutton.h>
+#include <tqtoolbutton.h>
+#include <tqtooltip.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -42,7 +42,7 @@
 #include "knewthemedlg.h"
 #include "config.h"
 
-kthememanager::kthememanager( QWidget *parent, const char *name )
+kthememanager::kthememanager( TQWidget *parent, const char *name )
     : KCModule( parent, name ), m_theme( 0 ), m_origTheme( 0 )
 {
 
@@ -61,33 +61,33 @@ kthememanager::kthememanager( QWidget *parent, const char *name )
     setAcceptDrops( true );
     init();
 
-    QBoxLayout *top = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQBoxLayout *top = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
     dlg = new KThemeDlg(this);
     top->addWidget( dlg );
 
-    dlg->lvThemes->setColumnWidthMode( 0, QListView::Maximum );
+    dlg->lvThemes->setColumnWidthMode( 0, TQListView::Maximum );
 
-    connect( ( QObject * )dlg->btnInstall, SIGNAL( clicked() ),
-             this, SLOT( slotInstallTheme() ) );
+    connect( ( TQObject * )dlg->btnInstall, TQT_SIGNAL( clicked() ),
+             this, TQT_SLOT( slotInstallTheme() ) );
 
-    connect( ( QObject * )dlg->btnRemove, SIGNAL( clicked() ),
-             this, SLOT( slotRemoveTheme() ) );
+    connect( ( TQObject * )dlg->btnRemove, TQT_SIGNAL( clicked() ),
+             this, TQT_SLOT( slotRemoveTheme() ) );
 
-    connect( ( QObject * )dlg->btnCreate, SIGNAL( clicked() ),
-             this, SLOT( slotCreateTheme() ) );
+    connect( ( TQObject * )dlg->btnCreate, TQT_SIGNAL( clicked() ),
+             this, TQT_SLOT( slotCreateTheme() ) );
 
-    connect( ( QObject * )dlg->lvThemes, SIGNAL( clicked( QListViewItem * ) ),
-             this, SLOT( slotThemeChanged( QListViewItem * ) ) );
+    connect( ( TQObject * )dlg->lvThemes, TQT_SIGNAL( clicked( TQListViewItem * ) ),
+             this, TQT_SLOT( slotThemeChanged( TQListViewItem * ) ) );
 
-    connect( ( QObject * )dlg->lvThemes, SIGNAL( currentChanged( QListViewItem * ) ),
-             this, SLOT( slotThemeChanged( QListViewItem * ) ) );
+    connect( ( TQObject * )dlg->lvThemes, TQT_SIGNAL( currentChanged( TQListViewItem * ) ),
+             this, TQT_SLOT( slotThemeChanged( TQListViewItem * ) ) );
 
-    connect( this, SIGNAL( filesDropped( const KURL::List& ) ),
-             this, SLOT( updateButton() ) );
+    connect( this, TQT_SIGNAL( filesDropped( const KURL::List& ) ),
+             this, TQT_SLOT( updateButton() ) );
 
-    connect( ( QObject * )dlg->lvThemes, SIGNAL( clicked( QListViewItem * ) ),
-             this, SLOT( updateButton() ) );
+    connect( ( TQObject * )dlg->lvThemes, TQT_SIGNAL( clicked( TQListViewItem * ) ),
+             this, TQT_SLOT( updateButton() ) );
 
     m_origTheme = new KTheme( this, true ); // stores the defaults to get back to
     m_origTheme->setName( ORIGINAL_THEME );
@@ -112,10 +112,10 @@ void kthememanager::init()
 
 void kthememanager::updateButton()
 {
-    QListViewItem * cur = dlg->lvThemes->currentItem();
+    TQListViewItem * cur = dlg->lvThemes->currentItem();
     bool enable = (cur != 0);
     if (enable) {
-        enable = QFile(KGlobal::dirs()->saveLocation( "themes",  cur->text( 0 ) + "/"+ cur->text( 0 )+ ".xml" ,false)).exists() ;
+        enable = TQFile(KGlobal::dirs()->saveLocation( "themes",  cur->text( 0 ) + "/"+ cur->text( 0 )+ ".xml" ,false)).exists() ;
     }
     dlg->btnRemove->setEnabled(enable);
 }
@@ -135,8 +135,8 @@ void kthememanager::load(bool useDefaults)
 	 conf.setReadDefaults( useDefaults );
 
     conf.setGroup( "General" );
-    QString themeName = conf.readEntry( "CurrentTheme" );
-    QListViewItem * cur =  dlg->lvThemes->findItem( themeName, 0 );
+    TQString themeName = conf.readEntry( "CurrentTheme" );
+    TQListViewItem * cur =  dlg->lvThemes->findItem( themeName, 0 );
     if ( cur )
     {
         dlg->lvThemes->setSelected( cur, true );
@@ -154,11 +154,11 @@ void kthememanager::defaults()
 
 void kthememanager::save()
 {
-    QListViewItem * cur = dlg->lvThemes->currentItem();
+    TQListViewItem * cur = dlg->lvThemes->currentItem();
 
     if ( cur )
     {
-        QString themeName = cur->text( 0 );
+        TQString themeName = cur->text( 0 );
 
         m_theme = new KTheme( this, KGlobal::dirs()->findResource( "themes", themeName + "/" + themeName + ".xml") );
         m_theme->apply();
@@ -178,33 +178,33 @@ void kthememanager::save()
 void kthememanager::listThemes()
 {
     dlg->lvThemes->clear();
-    dlg->lbPreview->setPixmap( QPixmap() );
+    dlg->lbPreview->setPixmap( TQPixmap() );
 
-    QStringList themes = KGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
+    TQStringList themes = KGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
 
-    QStringList::const_iterator it;
+    TQStringList::const_iterator it;
 
     for ( it = themes.begin(); it != themes.end(); ++it )
     {
         KTheme theme( this, ( *it ) );
-        QString name = theme.name();
+        TQString name = theme.name();
         if ( name != ORIGINAL_THEME ) // skip the "original" theme
-            ( void ) new QListViewItem( dlg->lvThemes, name, theme.comment() );
+            ( void ) new TQListViewItem( dlg->lvThemes, name, theme.comment() );
     }
 
     kdDebug() << "Available themes: " << themes << endl;
 }
 
-float kthememanager::getThemeVersion( const QString & themeName )
+float kthememanager::getThemeVersion( const TQString & themeName )
 {
-    QStringList themes = KGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
+    TQStringList themes = KGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
 
-    QStringList::const_iterator it;
+    TQStringList::const_iterator it;
 
     for ( it = themes.begin(); it != themes.end(); ++it )
     {
         KTheme theme( 0L, ( *it ) );
-        QString name = theme.name();
+        TQString name = theme.name();
         bool ok = false;
         float version = theme.version().toFloat( &ok );
         if ( name == themeName && ok )
@@ -224,7 +224,7 @@ void kthememanager::addNewTheme( const KURL & url )
 {
     if ( url.isValid() )
     {
-        QString themeName = QFileInfo( url.fileName() ).baseName();
+        TQString themeName = TQFileInfo( url.fileName() ).baseName();
         if ( getThemeVersion( themeName ) != -1 ) // theme exists already
         {
             KTheme::remove( themeName  ); // remove first
@@ -246,11 +246,11 @@ void kthememanager::addNewTheme( const KURL & url )
 void kthememanager::slotRemoveTheme()
 {
     // get the selected item from the listview
-    QListViewItem * cur = dlg->lvThemes->currentItem();
+    TQListViewItem * cur = dlg->lvThemes->currentItem();
     // ask and remove it
     if ( cur )
     {
-        QString themeName = cur->text( 0 );
+        TQString themeName = cur->text( 0 );
         if ( KMessageBox::warningContinueCancel( this, "<qt>" + i18n( "Do you really want to remove the theme <b>%1</b>?" ).arg( themeName ),
                                                  i18n( "Remove Theme" ), KGuiItem( i18n( "&Remove" ), "editdelete" ) )
              == KMessageBox::Continue )
@@ -262,7 +262,7 @@ void kthememanager::slotRemoveTheme()
     }
 }
 
-bool kthememanager::themeExist(const QString &_themeName)
+bool kthememanager::themeExist(const TQString &_themeName)
 {
     return ( dlg->lvThemes->findItem( _themeName, 0 )!=0 );
 }
@@ -279,10 +279,10 @@ void kthememanager::slotCreateTheme()
     dlg.setEmail( es.getSetting( KEMailSettings::EmailAddress ) );
     dlg.setVersion( "0.1" );
 
-    if ( dlg.exec() == QDialog::Accepted )
+    if ( dlg.exec() == TQDialog::Accepted )
     {
 
-        QString themeName = dlg.getName();
+        TQString themeName = dlg.getName();
         if ( themeExist(themeName) )
         {
             KMessageBox::information( this, i18n( "Theme %1 already exists." ).arg( themeName ) );
@@ -301,7 +301,7 @@ void kthememanager::slotCreateTheme()
             m_theme->setComment( dlg.getComment().replace( "\n", "" ) );
             m_theme->setVersion( dlg.getVersion() );
 
-            QString result = m_theme->createYourself( true );
+            TQString result = m_theme->createYourself( true );
 	    m_theme->addPreview();
 
             if ( !result.isEmpty() )
@@ -318,30 +318,30 @@ void kthememanager::slotCreateTheme()
     }
 }
 
-void kthememanager::slotThemeChanged( QListViewItem * item )
+void kthememanager::slotThemeChanged( TQListViewItem * item )
 {
     if ( item )
     {
-        QString themeName = item->text(0);
+        TQString themeName = item->text(0);
         kdDebug() << "Activated theme: " << themeName  << endl;
 
-        QString themeDir = KGlobal::dirs()->findResourceDir( "themes", themeName + "/" + themeName + ".xml") + themeName + "/";
+        TQString themeDir = KGlobal::dirs()->findResourceDir( "themes", themeName + "/" + themeName + ".xml") + themeName + "/";
 
-        QString pixFile = themeDir + themeName + ".preview.png";
+        TQString pixFile = themeDir + themeName + ".preview.png";
 
-        if ( QFile::exists( pixFile ) )
+        if ( TQFile::exists( pixFile ) )
         {
             updatePreview( pixFile );
         }
         else
         {
-            dlg->lbPreview->setPixmap( QPixmap() );
+            dlg->lbPreview->setPixmap( TQPixmap() );
             dlg->lbPreview->setText( i18n( "This theme does not contain a preview." ) );
         }
 
         KTheme theme( this, themeDir + themeName + ".xml" );
-        QToolTip::remove( dlg->lbPreview );
-        QToolTip::add( dlg->lbPreview, "<qt>" + i18n( "Author: %1<br>Email: %2<br>Version: %3<br>Homepage: %4" )
+        TQToolTip::remove( dlg->lbPreview );
+        TQToolTip::add( dlg->lbPreview, "<qt>" + i18n( "Author: %1<br>Email: %2<br>Version: %3<br>Homepage: %4" )
                        .arg( theme.author() ).arg( theme.email() )
                        .arg( theme.version() ).arg( theme.homepage() ) + "</qt>");
 
@@ -349,12 +349,12 @@ void kthememanager::slotThemeChanged( QListViewItem * item )
     }
 }
 
-void kthememanager::dragEnterEvent( QDragEnterEvent * ev )
+void kthememanager::dragEnterEvent( TQDragEnterEvent * ev )
 {
     ev->accept( KURLDrag::canDecode( ev ) );
 }
 
-void kthememanager::dropEvent( QDropEvent * ev )
+void kthememanager::dropEvent( TQDropEvent * ev )
 {
     KURL::List urls;
     if ( KURLDrag::decode( ev, urls ) )
@@ -401,21 +401,21 @@ void kthememanager::queryLNFModules()
     dlg->btnSaver->setIconSet( il->loadIconSet( "kscreensaver", KIcon::Desktop, 32 ) );
 }
 
-void kthememanager::updatePreview( const QString & pixFile )
+void kthememanager::updatePreview( const TQString & pixFile )
 {
      kdDebug() << "Preview is in file: " << pixFile << endl;
-     QImage preview( pixFile, "PNG" );
+     TQImage preview( pixFile, "PNG" );
      if (preview.width()>dlg->lbPreview->contentsRect().width() ||
          preview.height()>dlg->lbPreview->contentsRect().height() )
-         preview = preview.smoothScale( dlg->lbPreview->contentsRect().size(), QImage::ScaleMin );
-     QPixmap pix;
+         preview = preview.smoothScale( dlg->lbPreview->contentsRect().size(), TQImage::ScaleMin );
+     TQPixmap pix;
      pix.convertFromImage( preview );
      dlg->lbPreview->setPixmap( pix );
 }
 
 extern "C"
 {
-    KDE_EXPORT KCModule *create_kthememanager(QWidget *parent, const char *)
+    KDE_EXPORT KCModule *create_kthememanager(TQWidget *parent, const char *)
     {
         KGlobal::locale()->insertCatalogue( "kthememanager" );
         return new kthememanager( parent, "kthememanager" );

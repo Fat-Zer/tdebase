@@ -19,7 +19,7 @@
 
 #include "notifieraction.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
@@ -32,42 +32,42 @@ NotifierAction::~NotifierAction()
 {
 }
 
-void NotifierAction::setIconName(const QString &iconName)
+void NotifierAction::setIconName(const TQString &iconName)
 {
 	m_iconName = iconName;
 }
 
-void NotifierAction::setLabel(const QString &label)
+void NotifierAction::setLabel(const TQString &label)
 {
 	m_label = label;
 }
 
-QString NotifierAction::iconName() const
+TQString NotifierAction::iconName() const
 {
 	return m_iconName;
 }
 
-QPixmap NotifierAction::pixmap() const
+TQPixmap NotifierAction::pixmap() const
 {
-	QFile f( m_iconName );
+	TQFile f( m_iconName );
 	
 	if ( f.exists() )
 	{
-		return QPixmap( m_iconName );
+		return TQPixmap( m_iconName );
 	}
 	else
 	{
-		QString path = KGlobal::iconLoader()->iconPath( m_iconName, -32 );
-		return QPixmap( path );
+		TQString path = KGlobal::iconLoader()->iconPath( m_iconName, -32 );
+		return TQPixmap( path );
 	}
 }
 
-QString NotifierAction::label() const
+TQString NotifierAction::label() const
 {
 	return m_label;
 }
 
-void NotifierAction::addAutoMimetype( const QString &mimetype )
+void NotifierAction::addAutoMimetype( const TQString &mimetype )
 {
 	if ( !m_autoMimetypes.contains( mimetype ) )
 	{
@@ -75,12 +75,12 @@ void NotifierAction::addAutoMimetype( const QString &mimetype )
 	}
 }
 
-void NotifierAction::removeAutoMimetype( const QString &mimetype )
+void NotifierAction::removeAutoMimetype( const TQString &mimetype )
 {
 	m_autoMimetypes.remove( mimetype );
 }
 
-QStringList NotifierAction::autoMimetypes()
+TQStringList NotifierAction::autoMimetypes()
 {
 	return m_autoMimetypes;
 }
@@ -90,7 +90,7 @@ bool NotifierAction::isWritable() const
 	return false;
 }
 
-bool NotifierAction::supportsMimetype(const QString &/*mimetype*/) const
+bool NotifierAction::supportsMimetype(const TQString &/*mimetype*/) const
 {
 	return true;
 }

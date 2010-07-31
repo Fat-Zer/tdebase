@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _paneldrag_h_
 #define _paneldrag_h_
 
-#include <qdragobject.h>
+#include <tqdragobject.h>
 
 #include <kdemacros.h>
 
@@ -35,33 +35,33 @@ class BaseContainer;
 class KDE_EXPORT PanelDrag : public QDragObject
 {
     public:
-        PanelDrag(BaseContainer* container, QWidget *dragSource);
+        PanelDrag(BaseContainer* container, TQWidget *dragSource);
         ~PanelDrag();
 
         virtual const char * format(int i = 0) const;
-        virtual QByteArray encodedData(const char *) const;
+        virtual TQByteArray encodedData(const char *) const;
 
-        static bool canDecode(const QMimeSource * e);
-        static bool decode(const QMimeSource* e, BaseContainer** container);
+        static bool canDecode(const TQMimeSource * e);
+        static bool decode(const TQMimeSource* e, BaseContainer** container);
 
     private:
-        QByteArray a;
+        TQByteArray a;
 };
 
 class KDE_EXPORT AppletInfoDrag : public QDragObject
 {
     public:
-        AppletInfoDrag(const AppletInfo& container, QWidget *dragSource);
+        AppletInfoDrag(const AppletInfo& container, TQWidget *dragSource);
         ~AppletInfoDrag();
 
         virtual const char * format(int i = 0) const;
-        virtual QByteArray encodedData(const char *) const;
+        virtual TQByteArray encodedData(const char *) const;
 
-        static bool canDecode(const QMimeSource * e);
-        static bool decode(const QMimeSource* e, AppletInfo& container);
+        static bool canDecode(const TQMimeSource * e);
+        static bool decode(const TQMimeSource* e, AppletInfo& container);
 
     private:
-        QByteArray a;
+        TQByteArray a;
 };
 
 #endif

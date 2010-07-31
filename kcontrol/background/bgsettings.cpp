@@ -17,8 +17,8 @@
 #undef Bool
 #undef Unsorted
 
-#include <qdir.h>
-#include <qpixmap.h>
+#include <tqdir.h>
+#include <tqpixmap.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -37,7 +37,7 @@
 /**** KBackgroundPattern ****/
 
 
-KBackgroundPattern::KBackgroundPattern(QString name)
+KBackgroundPattern::KBackgroundPattern(TQString name)
 {
     dirty = false;
     hashdirty = true;
@@ -70,7 +70,7 @@ void KBackgroundPattern::copyConfig(const KBackgroundPattern *settings)
     m_File = settings->m_File;
 }
 
-void KBackgroundPattern::load(QString name)
+void KBackgroundPattern::load(TQString name)
 {
     m_Name = name;
     init();
@@ -91,12 +91,12 @@ void KBackgroundPattern::init(bool force_rw)
 
     m_pConfig->setGroup("KDE Desktop Pattern");
 
-    QFileInfo fi(m_File);
+    TQFileInfo fi(m_File);
     m_bReadOnly = !fi.isWritable();
 }
 
 
-void KBackgroundPattern::setComment(const QString &comment)
+void KBackgroundPattern::setComment(const TQString &comment)
 {
     if (m_Comment == comment)
         return;
@@ -105,7 +105,7 @@ void KBackgroundPattern::setComment(const QString &comment)
 }
 
 
-void KBackgroundPattern::setPattern(QString pattern)
+void KBackgroundPattern::setPattern(TQString pattern)
 {
     if (m_Pattern == pattern)
         return;
@@ -147,10 +147,10 @@ bool KBackgroundPattern::isAvailable()
 {
     if (m_Pattern.isEmpty())
        return false;
-    QString file = m_Pattern;
+    TQString file = m_Pattern;
     if (file.at(0) != '/')
         file = m_pDirs->findResource("dtop_pattern", file);
-    QFileInfo fi(file);
+    TQFileInfo fi(file);
     return (fi.exists());
 }
 
@@ -159,11 +159,11 @@ bool KBackgroundPattern::remove()
 {
     if (m_bReadOnly)
         return false;
-    return !unlink(QFile::encodeName(m_File));
+    return !unlink(TQFile::encodeName(m_File));
 }
 
 
-QString KBackgroundPattern::fingerprint()
+TQString KBackgroundPattern::fingerprint()
 {
     return m_File;
 }
@@ -180,14 +180,14 @@ int KBackgroundPattern::hash()
 
 
 /* static */
-QStringList KBackgroundPattern::list()
+TQStringList KBackgroundPattern::list()
 {
     KStandardDirs *dirs = KGlobal::dirs();
     dirs->addResourceType("dtop_pattern", dirs->kde_default("data") +
                           "kdesktop/patterns");
-    QStringList lst = dirs->findAllResources("dtop_pattern", "*.desktop",
+    TQStringList lst = dirs->findAllResources("dtop_pattern", "*.desktop",
                                              false, true);
-    QStringList::Iterator it;
+    TQStringList::Iterator it;
     for (it=lst.begin(); it!=lst.end(); ++it) {
         // Strip path and suffix
         int pos = (*it).findRev('/');
@@ -204,7 +204,7 @@ QStringList KBackgroundPattern::list()
 /**** KBackgroundProgram ****/
 
 
-KBackgroundProgram::KBackgroundProgram(QString name)
+KBackgroundProgram::KBackgroundProgram(TQString name)
 {
     dirty = false;
     hashdirty = true;
@@ -262,7 +262,7 @@ void KBackgroundProgram::init(bool force_rw)
 }
 
 
-void KBackgroundProgram::load(const QString &name)
+void KBackgroundProgram::load(const TQString &name)
 {
     m_Name = name;
     init();
@@ -270,7 +270,7 @@ void KBackgroundProgram::load(const QString &name)
 }
 
 
-void KBackgroundProgram::setComment(const QString &comment)
+void KBackgroundProgram::setComment(const TQString &comment)
 {
     if (m_Comment == comment)
         return;
@@ -279,7 +279,7 @@ void KBackgroundProgram::setComment(const QString &comment)
 }
 
 
-void KBackgroundProgram::setExecutable(const QString &executable)
+void KBackgroundProgram::setExecutable(const TQString &executable)
 {
     if (m_Executable == executable)
         return;
@@ -288,7 +288,7 @@ void KBackgroundProgram::setExecutable(const QString &executable)
 }
 
 
-void KBackgroundProgram::setCommand(const QString &command)
+void KBackgroundProgram::setCommand(const TQString &command)
 {
     if (m_Command == command)
         return;
@@ -297,7 +297,7 @@ void KBackgroundProgram::setCommand(const QString &command)
 }
 
 
-void KBackgroundProgram::setPreviewCommand(const QString &command)
+void KBackgroundProgram::setPreviewCommand(const TQString &command)
 {
     if (m_PreviewCommand == command)
         return;
@@ -358,7 +358,7 @@ bool KBackgroundProgram::remove()
 {
     if (m_bReadOnly)
         return false;
-    return !unlink(QFile::encodeName(m_File));
+    return !unlink(TQFile::encodeName(m_File));
 }
 
 
@@ -374,9 +374,9 @@ void KBackgroundProgram::update()
 }
 
 
-QString KBackgroundProgram::fingerprint()
+TQString KBackgroundProgram::fingerprint()
 {
-    return QString("co:%1;re:%2").arg(m_Command).arg(m_Refresh);
+    return TQString("co:%1;re:%2").arg(m_Command).arg(m_Refresh);
 }
 
 
@@ -391,14 +391,14 @@ int KBackgroundProgram::hash()
 
 
 /* static */
-QStringList KBackgroundProgram::list()
+TQStringList KBackgroundProgram::list()
 {
     KStandardDirs *dirs = KGlobal::dirs();
     dirs->addResourceType("dtop_program", dirs->kde_default("data") +
                           "kdesktop/programs");
-    QStringList lst = dirs->findAllResources("dtop_program", "*.desktop",
+    TQStringList lst = dirs->findAllResources("dtop_program", "*.desktop",
                                              false, true);
-    QStringList::Iterator it;
+    TQStringList::Iterator it;
     for (it=lst.begin(); it!=lst.end(); ++it) {
         // Strip path and suffix
         int pos = (*it).findRev('/');
@@ -428,7 +428,7 @@ KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgrou
     // Default values.
     defColorA = _defColorA;
     defColorB = _defColorB;
-    if (QPixmap::defaultDepth() > 8)
+    if (TQPixmap::defaultDepth() > 8)
         defBackgroundMode = _defBackgroundMode;
     else
         defBackgroundMode = Flat;
@@ -495,7 +495,7 @@ KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgrou
         int screen_number = 0;
         if (qt_xdisplay())
             screen_number = DefaultScreen(qt_xdisplay());
-        QCString configname;
+        TQCString configname;
         if (screen_number == 0)
             configname = "kdesktoprc";
         else
@@ -558,7 +558,7 @@ void KBackgroundSettings::load(int desk, int screen, bool drawBackgroundPerScree
 }
 
 
-void KBackgroundSettings::setColorA(const QColor& color)
+void KBackgroundSettings::setColorA(const TQColor& color)
 {
     if (m_ColorA == color)
         return;
@@ -567,7 +567,7 @@ void KBackgroundSettings::setColorA(const QColor& color)
 }
 
 
-void KBackgroundSettings::setColorB(const QColor& color)
+void KBackgroundSettings::setColorB(const TQColor& color)
 {
     if (m_ColorB == color)
         return;
@@ -576,7 +576,7 @@ void KBackgroundSettings::setColorB(const QColor& color)
 }
 
 
-void KBackgroundSettings::setPatternName(QString name)
+void KBackgroundSettings::setPatternName(TQString name)
 {
     int ohash = KBackgroundPattern::hash();
     KBackgroundPattern::load(name);
@@ -588,7 +588,7 @@ void KBackgroundSettings::setPatternName(QString name)
 }
 
 
-void KBackgroundSettings::setProgram(QString name)
+void KBackgroundSettings::setProgram(TQString name)
 {
     int ohash = KBackgroundProgram::hash();
     KBackgroundProgram::load(name);
@@ -633,7 +633,7 @@ void KBackgroundSettings::setReverseBlending(bool value)
 }
 
 
-void KBackgroundSettings::setWallpaper(QString wallpaper)
+void KBackgroundSettings::setWallpaper(TQString wallpaper)
 {
     dirty = hashdirty = true;
     m_Wallpaper = wallpaper;
@@ -649,7 +649,7 @@ void KBackgroundSettings::setWallpaperMode(int mode)
 }
 
 
-void KBackgroundSettings::setWallpaperList(QStringList list)
+void KBackgroundSettings::setWallpaperList(TQStringList list)
 {
     KStandardDirs *d = KGlobal::dirs();
     if (m_WallpaperList == list)
@@ -657,10 +657,10 @@ void KBackgroundSettings::setWallpaperList(QStringList list)
 
     dirty = hashdirty = true;
     m_WallpaperList.clear();
-    for(QStringList::ConstIterator it = list.begin();
+    for(TQStringList::ConstIterator it = list.begin();
         it != list.end(); ++it)
     {
-       QString rpath = d->relativeLocation("wallpaper", *it);
+       TQString rpath = d->relativeLocation("wallpaper", *it);
        m_WallpaperList.append( !rpath.isEmpty() ? rpath : *it );
     }
     updateWallpaperFiles();
@@ -704,9 +704,9 @@ bool KBackgroundSettings::optimize() const
         case AlwaysOpt :
             return true;
         case Opt16bpp :
-            return QPixmap::defaultDepth() >= 16;
+            return TQPixmap::defaultDepth() >= 16;
         case Opt15bpp :
-            return QPixmap::defaultDepth() >= 15;
+            return TQPixmap::defaultDepth() >= 15;
         case NeverOpt :
         default :
             return false;
@@ -721,12 +721,12 @@ void KBackgroundSettings::setUseShm(bool use)
     m_bShm = use;
 }
 
-QString KBackgroundSettings::configGroupName() const
+TQString KBackgroundSettings::configGroupName() const
 {
-    QString screenName;
+    TQString screenName;
     if (m_bDrawBackgroundPerScreen)
-        screenName = QString("Screen%1").arg(QString::number(m_Screen));
-    return QString("Desktop%1%2").arg(m_Desk).arg(screenName);
+        screenName = TQString("Screen%1").arg(TQString::number(m_Screen));
+    return TQString("Desktop%1%2").arg(m_Desk).arg(screenName);
 }
 
 void KBackgroundSettings::readSettings(bool reparse)
@@ -740,7 +740,7 @@ void KBackgroundSettings::readSettings(bool reparse)
     m_ColorA = m_pConfig->readColorEntry("Color1", &defColorA);
     m_ColorB = m_pConfig->readColorEntry("Color2", &defColorB);
 
-    QString s = m_pConfig->readPathEntry("Pattern");
+    TQString s = m_pConfig->readPathEntry("Pattern");
     if (!s.isEmpty())
         KBackgroundPattern::load(s);
 
@@ -853,25 +853,25 @@ void KBackgroundSettings::writeSettings()
  */
 void KBackgroundSettings::updateWallpaperFiles()
 {
-    QStringList::Iterator it;
+    TQStringList::Iterator it;
     m_WallpaperFiles.clear();
     for (it=m_WallpaperList.begin(); it!=m_WallpaperList.end(); ++it) {
-        QString file = locate("wallpaper", *it);
+        TQString file = locate("wallpaper", *it);
         if (file.isEmpty())
             continue;
-	QFileInfo fi(file);
+	TQFileInfo fi(file);
 	if (!fi.exists())
 	    continue;
 	if (fi.isFile() && fi.isReadable())
 	    m_WallpaperFiles.append(file);
 	if (fi.isDir()) {
-	    QDir dir(file);
-	    QStringList lst = dir.entryList(QDir::Files | QDir::Readable);
-	    QStringList::Iterator it;
+	    TQDir dir(file);
+	    TQStringList lst = dir.entryList(TQDir::Files | TQDir::Readable);
+	    TQStringList::Iterator it;
 	    for (it=lst.begin(); it!=lst.end(); ++it)
 	    {
 		file = dir.absFilePath(*it);
-		QFileInfo fi(file);
+		TQFileInfo fi(file);
 		if (fi.isFile() && fi.isReadable())
 		    m_WallpaperFiles.append(file);
 	    }
@@ -889,8 +889,8 @@ void KBackgroundSettings::randomizeWallpaperFiles()
       return;
 
    KRandomSequence rseq;
-   QStringList tmpList = m_WallpaperFiles;
-   QStringList randomList;
+   TQStringList tmpList = m_WallpaperFiles;
+   TQStringList randomList;
    randomList.append(tmpList.front());
    tmpList.pop_front();
    while(tmpList.count())
@@ -904,21 +904,21 @@ void KBackgroundSettings::randomizeWallpaperFiles()
    m_WallpaperFiles = randomList;
 }
 
-QStringList KBackgroundSettings::wallpaperList() const
+TQStringList KBackgroundSettings::wallpaperList() const
 {
     if ( m_WallpaperMode == NoWallpaper )
-        return QStringList();
+        return TQStringList();
     if ( m_MultiMode == NoMulti || m_MultiMode == NoMultiRandom )
-        return QStringList(m_Wallpaper);
+        return TQStringList(m_Wallpaper);
     return m_WallpaperList;
 }
 
-QStringList KBackgroundSettings::wallpaperFiles() const
+TQStringList KBackgroundSettings::wallpaperFiles() const
 {
     if ( m_WallpaperMode == NoWallpaper )
-        return QStringList();
+        return TQStringList();
     if ( m_MultiMode == NoMulti || m_MultiMode == NoMultiRandom )
-        return QStringList(m_Wallpaper);
+        return TQStringList(m_Wallpaper);
     return m_WallpaperFiles;
 }
 
@@ -930,7 +930,7 @@ void KBackgroundSettings::changeWallpaper(bool init)
     if (m_WallpaperFiles.count() == 0) {
         if( init ) {
 	    m_CurrentWallpaper = 0;
-            m_CurrentWallpaperName = QString();
+            m_CurrentWallpaperName = TQString();
         }
         return;
     }
@@ -967,16 +967,16 @@ void KBackgroundSettings::changeWallpaper(bool init)
 }
 
 
-QString KBackgroundSettings::currentWallpaper() const
+TQString KBackgroundSettings::currentWallpaper() const
 {
     if ( m_WallpaperMode == NoWallpaper )
-	return QString::null;
+	return TQString::null;
     if (m_MultiMode == NoMulti || m_MultiMode == NoMultiRandom)
 	return m_Wallpaper;
 
     if (m_CurrentWallpaper >= 0 && m_CurrentWallpaper < (int) m_WallpaperFiles.count())
 	return m_WallpaperFiles[m_CurrentWallpaper];
-    return QString::null;
+    return TQString::null;
 }
 
 bool KBackgroundSettings::discardCurrentWallpaper()
@@ -1007,39 +1007,39 @@ bool KBackgroundSettings::needWallpaperChange()
  * that only a different final result will give a different fingerprint.
  */
 
-QString KBackgroundSettings::fingerprint()
+TQString KBackgroundSettings::fingerprint()
 {
-    QString s = QString("bm:%1;en:%2").arg(m_BackgroundMode).arg(m_bEnabled);
+    TQString s = TQString("bm:%1;en:%2").arg(m_BackgroundMode).arg(m_bEnabled);
     switch (m_BackgroundMode) {
     case Flat:
-        s += QString("ca:%1;").arg(m_ColorA.rgb());
+        s += TQString("ca:%1;").arg(m_ColorA.rgb());
         break;
     case Program:
-        s += QString("pr:%1;").arg(KBackgroundProgram::hash());
+        s += TQString("pr:%1;").arg(KBackgroundProgram::hash());
         break;
     case Pattern:
-        s += QString("ca:%1;cb:%2;pt:%3;").arg(m_ColorA.rgb())
+        s += TQString("ca:%1;cb:%2;pt:%3;").arg(m_ColorA.rgb())
 	     .arg(m_ColorB.rgb()).arg(KBackgroundPattern::hash());
         break;
     default:
-        s += QString("ca:%1;cb:%2;").arg(m_ColorA.rgb()).arg(m_ColorB.rgb());
+        s += TQString("ca:%1;cb:%2;").arg(m_ColorA.rgb()).arg(m_ColorB.rgb());
         break;
     }
 
-    s += QString("wm:%1;").arg(m_WallpaperMode);
+    s += TQString("wm:%1;").arg(m_WallpaperMode);
     if (m_WallpaperMode != NoWallpaper)
     {
         Q_UINT32 rh = KGlobal::dirs()->calcResourceHash("wallpaper", currentWallpaper(), false);
-        s += QString("wp:%2:%1;").arg(rh).arg(currentWallpaper());
+        s += TQString("wp:%2:%1;").arg(rh).arg(currentWallpaper());
         
     }
-    s += QString("blm:%1;").arg(m_BlendMode);
+    s += TQString("blm:%1;").arg(m_BlendMode);
     if (m_BlendMode != NoBlending) {
-      s += QString("blb:%1;").arg(m_BlendBalance);
-      s += QString("rbl:%1;").arg(int(m_ReverseBlending));
+      s += TQString("blb:%1;").arg(m_BlendBalance);
+      s += TQString("rbl:%1;").arg(int(m_ReverseBlending));
     }
-    s += QString::number( m_bShm );
-    s += QString::number( m_MinOptimizationDepth );
+    s += TQString::number( m_bShm );
+    s += TQString::number( m_MinOptimizationDepth );
 
     return s;
 }
@@ -1073,14 +1073,14 @@ KGlobalBackgroundSettings::KGlobalBackgroundSettings(KConfig *_config)
 }
 
 
-QString KGlobalBackgroundSettings::deskName(int desk)
+TQString KGlobalBackgroundSettings::deskName(int desk)
 {
     return m_Names[desk];
 }
 
 
 /*
-void KGlobalBackgroundSettings::setDeskName(int desk, QString name)
+void KGlobalBackgroundSettings::setDeskName(int desk, TQString name)
 {
     if (name == m_Names[desk])
 	return;
@@ -1164,7 +1164,7 @@ void KGlobalBackgroundSettings::setExportBackground(bool _export)
     m_bExport = _export;
 }
 
-void KGlobalBackgroundSettings::setTextColor(QColor _color)
+void KGlobalBackgroundSettings::setTextColor(TQColor _color)
 {
     if (_color == m_TextColor)
         return;
@@ -1172,7 +1172,7 @@ void KGlobalBackgroundSettings::setTextColor(QColor _color)
     m_TextColor = _color;
 }
 
-void KGlobalBackgroundSettings::setTextBackgroundColor(QColor _color)
+void KGlobalBackgroundSettings::setTextBackgroundColor(TQColor _color)
 {
     if (_color == m_TextBackgroundColor)
         return;
@@ -1218,7 +1218,7 @@ void KGlobalBackgroundSettings::readSettings()
     NETRootInfo info( qt_xdisplay(), NET::DesktopNames | NET::NumberOfDesktops );
     m_bDrawBackgroundPerScreen.resize(info.numberOfDesktops());
     for ( int i = 0 ; i < info.numberOfDesktops() ; ++i )
-        m_bDrawBackgroundPerScreen[i] = m_pConfig->readBoolEntry( QString("DrawBackgroundPerScreen_%1").arg(i), _defDrawBackgroundPerScreen );
+        m_bDrawBackgroundPerScreen[i] = m_pConfig->readBoolEntry( TQString("DrawBackgroundPerScreen_%1").arg(i), _defDrawBackgroundPerScreen );
 
     m_TextColor = KGlobalSettings::textColor();
     m_pConfig->setGroup("FMSettings");
@@ -1229,7 +1229,7 @@ void KGlobalBackgroundSettings::readSettings()
     m_textWidth = m_pConfig->readNumEntry("TextWidth", DEFAULT_TEXTWIDTH);
 
     for ( int i = 0 ; i < info.numberOfDesktops() ; ++i )
-      m_Names.append( QString::fromUtf8(info.desktopName(i+1)) );
+      m_Names.append( TQString::fromUtf8(info.desktopName(i+1)) );
 
     dirty = false;
 }
@@ -1248,7 +1248,7 @@ void KGlobalBackgroundSettings::writeSettings()
     m_pConfig->writeEntry("CacheSize", m_CacheSize);
 
     for ( unsigned i = 0 ; i < m_bDrawBackgroundPerScreen.size() ; ++i )
-        m_pConfig->writeEntry(QString("DrawBackgroundPerScreen_%1").arg(i), m_bDrawBackgroundPerScreen[i] );
+        m_pConfig->writeEntry(TQString("DrawBackgroundPerScreen_%1").arg(i), m_bDrawBackgroundPerScreen[i] );
 
     m_pConfig->setGroup("FMSettings");
     m_pConfig->writeEntry("NormalTextColor", m_TextColor);
@@ -1261,7 +1261,7 @@ void KGlobalBackgroundSettings::writeSettings()
     dirty = false;
 
     // tell kdesktop to get it's butt in gear and pick up the new settings
-    QByteArray data;
+    TQByteArray data;
     kapp->dcopClient()->send("kdesktop", "KDesktopIface", "configure()", data);
 }
 

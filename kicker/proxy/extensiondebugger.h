@@ -32,10 +32,10 @@ class ExtensionContainer : public QWidget
     Q_OBJECT
 
 public:
-    ExtensionContainer(KPanelExtension *extension, QWidget* parent = 0, const char* name = 0);
+    ExtensionContainer(KPanelExtension *extension, TQWidget* parent = 0, const char* name = 0);
 
 protected:
-    void resizeEvent( QResizeEvent *ev );
+    void resizeEvent( TQResizeEvent *ev );
 
 private slots:
     void showPreferences();

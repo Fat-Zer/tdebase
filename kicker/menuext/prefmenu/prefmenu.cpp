@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qcursor.h>
-#include <qtimer.h>
+#include <tqcursor.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -43,28 +43,28 @@ K_EXPORT_KICKER_MENUEXT(prefmenu, PrefMenu)
 
 const int idStart = 4242;
 
-PrefMenu::PrefMenu(QWidget *parent,
+PrefMenu::PrefMenu(TQWidget *parent,
                    const char *name,
-                   const QStringList &/*args*/)
+                   const TQStringList &/*args*/)
     : KPanelMenu(i18n("Settings"), parent, name),
       m_clearOnClose(false)
 {
 }
 
-PrefMenu::PrefMenu(const QString& label,
-                   const QString& root,
-                   QWidget *parent)
+PrefMenu::PrefMenu(const TQString& label,
+                   const TQString& root,
+                   TQWidget *parent)
     : KPanelMenu(label, parent),
       m_clearOnClose(false),
       m_root(root)
 {
     m_subMenus.setAutoDelete(true);
 
-    connect(KSycoca::self(),  SIGNAL(databaseChanged()),
-            this, SLOT(clearOnClose()));
+    connect(KSycoca::self(),  TQT_SIGNAL(databaseChanged()),
+            this, TQT_SLOT(clearOnClose()));
 
-    connect(this, SIGNAL(aboutToHide()),
-            this, SLOT(aboutToClose()));
+    connect(this, TQT_SIGNAL(aboutToHide()),
+            this, TQT_SLOT(aboutToClose()));
 }
 
 PrefMenu::~PrefMenu()
@@ -74,11 +74,11 @@ PrefMenu::~PrefMenu()
 void PrefMenu::insertMenuItem(KService::Ptr& s,
                               int nId,
                               int nIndex,
-                              const QStringList *suppressGenericNames)
+                              const TQStringList *suppressGenericNames)
 {
-    QString serviceName = s->name();
+    TQString serviceName = s->name();
     // add comment
-    QString comment = s->genericName();
+    TQString comment = s->genericName();
     if (!comment.isEmpty())
     {
         if (KickerSettings::menuEntryFormat() == KickerSettings::NameAndDescription)
@@ -86,12 +86,12 @@ void PrefMenu::insertMenuItem(KService::Ptr& s,
             if (!suppressGenericNames ||
                 !suppressGenericNames->contains(s->untranslatedGenericName()))
             {
-                serviceName = QString("%1 (%2)").arg(serviceName).arg(comment);
+                serviceName = TQString("%1 (%2)").arg(serviceName).arg(comment);
             }
         }
         else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionAndName)
         {
-            serviceName = QString("%1 (%2)").arg(comment).arg(serviceName);
+            serviceName = TQString("%1 (%2)").arg(comment).arg(serviceName);
         }
         else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionOnly)
         {
@@ -126,13 +126,13 @@ void PrefMenu::insertMenuItem(KService::Ptr& s,
     m_entryMap.insert(newId, static_cast<KSycocaEntry*>(s));
 }
 
-void PrefMenu::mousePressEvent(QMouseEvent * ev)
+void PrefMenu::mousePressEvent(TQMouseEvent * ev)
 {
     m_dragStartPos = ev->pos();
     KPanelMenu::mousePressEvent(ev);
 }
 
-void PrefMenu::mouseMoveEvent(QMouseEvent * ev)
+void PrefMenu::mouseMoveEvent(TQMouseEvent * ev)
 {
     KPanelMenu::mouseMoveEvent(ev);
 
@@ -141,8 +141,8 @@ void PrefMenu::mouseMoveEvent(QMouseEvent * ev)
         return;
     }
 
-    QPoint p = ev->pos() - m_dragStartPos;
-    if (p.manhattanLength() <= QApplication::startDragDistance())
+    TQPoint p = ev->pos() - m_dragStartPos;
+    if (p.manhattanLength() <= TQApplication::startDragDistance())
     {
         return;
     }
@@ -163,7 +163,7 @@ void PrefMenu::mouseMoveEvent(QMouseEvent * ev)
 
     KSycocaEntry * e = m_entryMap[id];
 
-    QPixmap icon;
+    TQPixmap icon;
     KURL url;
 
     switch (e->sycocaType())
@@ -171,7 +171,7 @@ void PrefMenu::mouseMoveEvent(QMouseEvent * ev)
         case KST_KService:
         {
             icon = static_cast<KService *>(e)->pixmap(KIcon::Small);
-            QString filePath = static_cast<KService *>(e)->desktopEntryPath();
+            TQString filePath = static_cast<KService *>(e)->desktopEntryPath();
             if (filePath[0] != '/')
             {
                 filePath = locate("apps", filePath);
@@ -198,17 +198,17 @@ void PrefMenu::mouseMoveEvent(QMouseEvent * ev)
     // If the path to the desktop file is relative, try to get the full
     // path from KStdDirs.
     KURLDrag *d = new KURLDrag(KURL::List(url), this);
-    connect(d, SIGNAL(destroyed()), this, SLOT(dragObjectDestroyed()));
+    connect(d, TQT_SIGNAL(destroyed()), this, TQT_SLOT(dragObjectDestroyed()));
     d->setPixmap(icon);
     d->dragCopy();
 
     // Set the startposition outside the panel, so there is no drag initiated
     // when we use drag and click to select items. A drag is only initiated when
     // you click to open the menu, and then press and drag an item.
-    m_dragStartPos = QPoint(-1,-1);
+    m_dragStartPos = TQPoint(-1,-1);
 }
 
-void PrefMenu::dragEnterEvent(QDragEnterEvent *event)
+void PrefMenu::dragEnterEvent(TQDragEnterEvent *event)
 {
     // Set the DragObject's target to this widget. This is needed because the
     // widget doesn't accept drops, but we want to determine if the drag object
@@ -221,10 +221,10 @@ void PrefMenu::dragEnterEvent(QDragEnterEvent *event)
     event->ignore();
 }
 
-void PrefMenu::dragLeaveEvent(QDragLeaveEvent */*event*/)
+void PrefMenu::dragLeaveEvent(TQDragLeaveEvent */*event*/)
 {
     // see PrefMenu::dragEnterEvent why this is nescessary
-    if (!frameGeometry().contains(QCursor::pos()))
+    if (!frameGeometry().contains(TQCursor::pos()))
     {
         KURLDrag::setTarget(0);
     }
@@ -240,13 +240,13 @@ void PrefMenu::initialize()
     // Set the startposition outside the panel, so there is no drag initiated
     // when we use drag and click to select items. A drag is only initiated when
     // you click to open the menu, and then press and drag an item.
-    m_dragStartPos = QPoint(-1,-1);
+    m_dragStartPos = TQPoint(-1,-1);
 
     if (m_root.isEmpty())
     {
         insertItem(KickerLib::menuIconSet("kcontrol"),
                    i18n("Control Center"),
-                   this, SLOT(launchControlCenter()));
+                   this, TQT_SLOT(launchControlCenter()));
         insertSeparator();
     }
 
@@ -269,7 +269,7 @@ void PrefMenu::initialize()
 
     int id = idStart;
 
-    QStringList suppressGenericNames = root->suppressGenericNames();
+    TQStringList suppressGenericNames = root->suppressGenericNames();
 
     KServiceGroup::List::ConstIterator it = list.begin();
     for (; it != list.end(); ++it)
@@ -280,7 +280,7 @@ void PrefMenu::initialize()
         {
 
             KServiceGroup::Ptr g(static_cast<KServiceGroup *>(e));
-            QString groupCaption = g->caption();
+            TQString groupCaption = g->caption();
 
             // Avoid adding empty groups.
             KServiceGroup::Ptr subMenuRoot = KServiceGroup::group(g->relPath());
@@ -332,8 +332,8 @@ void PrefMenu::slotExec(int id)
     KSycocaEntry *e = m_entryMap[id];
     KService::Ptr service = static_cast<KService *>(e);
     KApplication::startServiceByDesktopPath(service->desktopEntryPath(),
-                                            QStringList(), 0, 0, 0, "", true);
-    m_dragStartPos = QPoint(-1,-1);
+                                            TQStringList(), 0, 0, 0, "", true);
+    m_dragStartPos = TQPoint(-1,-1);
 }
 
 void PrefMenu::clearOnClose()
@@ -358,7 +358,7 @@ void PrefMenu::slotClear()
         // QPopupMenu's aboutToHide() is emitted before the popup is really hidden,
         // and also before a click in the menu is handled, so do the clearing
         // only after that has been handled
-        QTimer::singleShot( 100, this, SLOT( slotClear()));
+        TQTimer::singleShot( 100, this, TQT_SLOT( slotClear()));
         return;
     }
 
@@ -378,7 +378,7 @@ void PrefMenu::aboutToClose()
 
 void PrefMenu::launchControlCenter()
 {
-    KApplication::startServiceByDesktopName("kcontrol", QStringList(),
+    KApplication::startServiceByDesktopName("kcontrol", TQStringList(),
                                             0, 0, 0, "", true);
 }
 

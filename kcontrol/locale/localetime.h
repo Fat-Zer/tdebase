@@ -24,9 +24,9 @@
 #ifndef __KLOCALECONFIGTIME_H__
 #define __KLOCALECONFIGTIME_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
-#include <qmap.h>
+#include <tqmap.h>
 
 class QCheckBox;
 class QComboBox;
@@ -41,13 +41,13 @@ class KLocaleConfigTime : public QWidget
   Q_OBJECT
 
 public:
-  KLocaleConfigTime( KLocale *_locale, QWidget *parent=0, const char *name=0);
+  KLocaleConfigTime( KLocale *_locale, TQWidget *parent=0, const char *name=0);
   virtual ~KLocaleConfigTime( );
 
   void save();
 
 protected:
-  void showEvent( QShowEvent *e );
+  void showEvent( TQShowEvent *e );
 
 public slots:
   /**
@@ -64,9 +64,9 @@ signals:
 
 private slots:
   // Time & dates
-  void slotTimeFmtChanged(const QString &t);
-  void slotDateFmtChanged(const QString &t);
-  void slotDateFmtShortChanged(const QString &t);
+  void slotTimeFmtChanged(const TQString &t);
+  void slotDateFmtChanged(const TQString &t);
+  void slotDateFmtShortChanged(const TQString &t);
   void slotWeekStartDayChanged(int firstDay);
   void slotDateMonthNamePossChanged();
   void slotCalendarSystemChanged(int calendarSystem);
@@ -74,29 +74,29 @@ private slots:
 private:
   void updateWeekDayNames();
 
-  QValueList<StringPair> timeMap() const;
-  QValueList<StringPair> dateMap() const;
+  TQValueList<StringPair> timeMap() const;
+  TQValueList<StringPair> dateMap() const;
 
-  QString storeToUser(const QValueList<StringPair> & map,
-		      const QString & storeFormat) const;
-  QString userToStore(const QValueList<StringPair> & map,
-		      const QString & userFormat) const;
-  StringPair buildStringPair(const QChar &storeName, const QString &userName) const;
+  TQString storeToUser(const TQValueList<StringPair> & map,
+		      const TQString & storeFormat) const;
+  TQString userToStore(const TQValueList<StringPair> & map,
+		      const TQString & userFormat) const;
+  StringPair buildStringPair(const TQChar &storeName, const TQString &userName) const;
 
   KLocale *m_locale;
 
   // Time & dates
-  QLabel *m_labTimeFmt;
-  QComboBox *m_comboTimeFmt;
-  QLabel *m_labDateFmt;
-  QComboBox * m_comboDateFmt;
-  QLabel *m_labDateFmtShort;
-  QComboBox * m_comboDateFmtShort;
-  QLabel * m_labWeekStartDay;
-  QComboBox * m_comboWeekStartDay;
-  QCheckBox *m_chDateMonthNamePossessive;
-  QLabel * m_labCalendarSystem;
-  QComboBox * m_comboCalendarSystem;
+  TQLabel *m_labTimeFmt;
+  TQComboBox *m_comboTimeFmt;
+  TQLabel *m_labDateFmt;
+  TQComboBox * m_comboDateFmt;
+  TQLabel *m_labDateFmtShort;
+  TQComboBox * m_comboDateFmtShort;
+  TQLabel * m_labWeekStartDay;
+  TQComboBox * m_comboWeekStartDay;
+  TQCheckBox *m_chDateMonthNamePossessive;
+  TQLabel * m_labCalendarSystem;
+  TQComboBox * m_comboCalendarSystem;
 };
 
 #endif

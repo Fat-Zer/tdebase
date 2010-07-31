@@ -20,12 +20,12 @@
 
 #include "konq_sidebartreemodule.h"
 
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qdir.h>
-#include <qheader.h>
-#include <qpopupmenu.h>
-#include <qtimer.h>
+#include <tqclipboard.h>
+#include <tqcursor.h>
+#include <tqdir.h>
+#include <tqheader.h>
+#include <tqpopupmenu.h>
+#include <tqtimer.h>
 
 #include <dcopclient.h>
 #include <dcopref.h>
@@ -53,18 +53,18 @@
 static const int autoOpenTimeout = 750;
 
 
-getModule KonqSidebarTree::getPluginFactory(QString name)
+getModule KonqSidebarTree::getPluginFactory(TQString name)
 {
   if (!pluginFactories.contains(name))
   {
     KLibLoader *loader = KLibLoader::self();
-    QString libName    = pluginInfo[name];
-    KLibrary *lib      = loader->library(QFile::encodeName(libName));
+    TQString libName    = pluginInfo[name];
+    KLibrary *lib      = loader->library(TQFile::encodeName(libName));
     if (lib)
     {
       // get the create_ function
-      QString factory = "create_" + libName;
-      void *create    = lib->symbol(QFile::encodeName(factory));
+      TQString factory = "create_" + libName;
+      void *create    = lib->symbol(TQFile::encodeName(factory));
       if (create)
       {
         getModule func = (getModule)create;
@@ -88,15 +88,15 @@ void KonqSidebarTree::loadModuleFactories()
   pluginFactories.clear();
   pluginInfo.clear();
   KStandardDirs *dirs=KGlobal::dirs();
-  QStringList list=dirs->findAllResources("data","konqsidebartng/dirtree/*.desktop",false,true);
+  TQStringList list=dirs->findAllResources("data","konqsidebartng/dirtree/*.desktop",false,true);
 
 
-  for (QStringList::ConstIterator it=list.begin();it!=list.end();++it)
+  for (TQStringList::ConstIterator it=list.begin();it!=list.end();++it)
   {
     KSimpleConfig ksc(*it);
     ksc.setGroup("Desktop Entry");
-    QString name    = ksc.readEntry("X-KDE-TreeModule");
-    QString libName = ksc.readEntry("X-KDE-TreeModule-Lib");
+    TQString name    = ksc.readEntry("X-KDE-TreeModule");
+    TQString libName = ksc.readEntry("X-KDE-TreeModule-Lib");
     if ((name.isEmpty()) || (libName.isEmpty()))
         {kdWarning()<<"Bad Configuration file for a dirtree module "<<*it<<endl; continue;}
 
@@ -110,11 +110,11 @@ class KonqSidebarTree_Internal
 {
 public:
     DropAcceptType m_dropMode;
-    QStringList m_dropFormats;
+    TQStringList m_dropFormats;
 };
 
 
-KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, QWidget *parentWidget, int virt, const QString& path )
+KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path )
     : KListView( parentWidget ),
       m_currentTopLevelItem( 0 ),
       m_toolTip( this ),
@@ -130,46 +130,46 @@ KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, QWidget *parentWidge
     viewport()->setAcceptDrops( true );
     m_lstModules.setAutoDelete( true );
 
-    setSelectionMode( QListView::Single );
+    setSelectionMode( TQListView::Single );
     setDragEnabled(true);
 
     m_part = parent;
 
-    m_animationTimer = new QTimer( this );
-    connect( m_animationTimer, SIGNAL( timeout() ),
-             this, SLOT( slotAnimation() ) );
+    m_animationTimer = new TQTimer( this );
+    connect( m_animationTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( slotAnimation() ) );
 
     m_currentBeforeDropItem = 0;
     m_dropItem = 0;
     m_bOpeningFirstChild=false;
 
-    addColumn( QString::null );
+    addColumn( TQString::null );
     header()->hide();
     setTreeStepSize(15);
 
-    m_autoOpenTimer = new QTimer( this );
-    connect( m_autoOpenTimer, SIGNAL( timeout() ),
-             this, SLOT( slotAutoOpenFolder() ) );
+    m_autoOpenTimer = new TQTimer( this );
+    connect( m_autoOpenTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( slotAutoOpenFolder() ) );
 
-    connect( this, SIGNAL( doubleClicked( QListViewItem * ) ),
-             this, SLOT( slotDoubleClicked( QListViewItem * ) ) );
-    connect( this, SIGNAL( mouseButtonPressed(int, QListViewItem*, const QPoint&, int)),
-             this, SLOT( slotMouseButtonPressed(int, QListViewItem*, const QPoint&, int)) );
-    connect( this, SIGNAL( mouseButtonClicked( int, QListViewItem*, const QPoint&, int ) ),
-	     this, SLOT( slotMouseButtonClicked( int, QListViewItem*, const QPoint&, int ) ) );
-    connect( this, SIGNAL( returnPressed( QListViewItem * ) ),
-             this, SLOT( slotDoubleClicked( QListViewItem * ) ) );
-    connect( this, SIGNAL( selectionChanged() ),
-             this, SLOT( slotSelectionChanged() ) );
+    connect( this, TQT_SIGNAL( doubleClicked( TQListViewItem * ) ),
+             this, TQT_SLOT( slotDoubleClicked( TQListViewItem * ) ) );
+    connect( this, TQT_SIGNAL( mouseButtonPressed(int, TQListViewItem*, const TQPoint&, int)),
+             this, TQT_SLOT( slotMouseButtonPressed(int, TQListViewItem*, const TQPoint&, int)) );
+    connect( this, TQT_SIGNAL( mouseButtonClicked( int, TQListViewItem*, const TQPoint&, int ) ),
+	     this, TQT_SLOT( slotMouseButtonClicked( int, TQListViewItem*, const TQPoint&, int ) ) );
+    connect( this, TQT_SIGNAL( returnPressed( TQListViewItem * ) ),
+             this, TQT_SLOT( slotDoubleClicked( TQListViewItem * ) ) );
+    connect( this, TQT_SIGNAL( selectionChanged() ),
+             this, TQT_SLOT( slotSelectionChanged() ) );
 
-    connect( this, SIGNAL(itemRenamed(QListViewItem*, const QString &, int)),
-             this, SLOT(slotItemRenamed(QListViewItem*, const QString &, int)));
+    connect( this, TQT_SIGNAL(itemRenamed(TQListViewItem*, const TQString &, int)),
+             this, TQT_SLOT(slotItemRenamed(TQListViewItem*, const TQString &, int)));
 
 /*    assert( m_part->getInterfaces()->getInstance()->dirs );
-    QString dirtreeDir = m_part->getInterfaces()->getInstance()->dirs()->saveLocation( "data", "konqueror/dirtree/" ); */
+    TQString dirtreeDir = m_part->getInterfaces()->getInstance()->dirs()->saveLocation( "data", "konqueror/dirtree/" ); */
 
 //    assert( KGlobal::dirs() );
-//    QString dirtreeDir = part->getInterfaces()->getInstance()->dirs()->saveLocation( "data", "konqueror/dirtree/" );
+//    TQString dirtreeDir = part->getInterfaces()->getInstance()->dirs()->saveLocation( "data", "konqueror/dirtree/" );
 
     if (virt==VIRT_Folder)
 		{
@@ -190,7 +190,7 @@ KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, QWidget *parentWidge
       m_bOpeningFirstChild = false;
     }
 
-    setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
+    setFrameStyle( TQFrame::ToolBarPanel | TQFrame::Raised );
 }
 
 KonqSidebarTree::~KonqSidebarTree()
@@ -210,7 +210,7 @@ void KonqSidebarTree::itemDestructed( KonqSidebarTreeItem *item )
     }
 }
 
-void KonqSidebarTree::setDropFormats(const QStringList &formats)
+void KonqSidebarTree::setDropFormats(const TQStringList &formats)
 {
     d->m_dropFormats = formats;
 }
@@ -244,7 +244,7 @@ void KonqSidebarTree::followURL( const KURL &url )
     }
 
     kdDebug(1201) << "KonqDirTree::followURL: " << url.url() << endl;
-    QPtrListIterator<KonqSidebarTreeTopLevelItem> topItem ( m_topLevelItems );
+    TQPtrListIterator<KonqSidebarTreeTopLevelItem> topItem ( m_topLevelItems );
     for (; topItem.current(); ++topItem )
     {
         if ( topItem.current()->externalURL().isParentOf( url ) )
@@ -256,7 +256,7 @@ void KonqSidebarTree::followURL( const KURL &url )
     kdDebug(1201) << "KonqDirTree::followURL: Not found" << endl;
 }
 
-void KonqSidebarTree::contentsDragEnterEvent( QDragEnterEvent *ev )
+void KonqSidebarTree::contentsDragEnterEvent( TQDragEnterEvent *ev )
 {
     m_dropItem = 0;
     m_currentBeforeDropItem = selectedItem();
@@ -267,9 +267,9 @@ void KonqSidebarTree::contentsDragEnterEvent( QDragEnterEvent *ev )
          m_lstDropFormats.append( ev->format( i ) );
 }
 
-void KonqSidebarTree::contentsDragMoveEvent( QDragMoveEvent *e )
+void KonqSidebarTree::contentsDragMoveEvent( TQDragMoveEvent *e )
 {
-    QListViewItem *item = itemAt( contentsToViewport( e->pos() ) );
+    TQListViewItem *item = itemAt( contentsToViewport( e->pos() ) );
 
     // Accept drops on the background, if URLs
     if ( !item && m_lstDropFormats.contains("text/uri-list") )
@@ -308,7 +308,7 @@ void KonqSidebarTree::contentsDragMoveEvent( QDragMoveEvent *e )
     }
 }
 
-void KonqSidebarTree::contentsDragLeaveEvent( QDragLeaveEvent *ev )
+void KonqSidebarTree::contentsDragLeaveEvent( TQDragLeaveEvent *ev )
 {
     // Restore the current item to what it was before the dragging (#17070)
     if ( m_currentBeforeDropItem )
@@ -324,7 +324,7 @@ void KonqSidebarTree::contentsDragLeaveEvent( QDragLeaveEvent *ev )
     }
 }
 
-void KonqSidebarTree::contentsDropEvent( QDropEvent *ev )
+void KonqSidebarTree::contentsDropEvent( TQDropEvent *ev )
 {
     if (d->m_dropMode == SidebarTreeMode) {
         m_autoOpenTimer->stop();
@@ -352,23 +352,23 @@ void KonqSidebarTree::contentsDropEvent( QDropEvent *ev )
     }
 }
 
-static QString findUniqueFilename(const QString &path, QString filename)
+static TQString findUniqueFilename(const TQString &path, TQString filename)
 {
     if (filename.endsWith(".desktop"))
        filename.truncate(filename.length()-8);
 
-    QString name = filename;
+    TQString name = filename;
     int n = 2;
-    while(QFile::exists(path + filename + ".desktop"))
+    while(TQFile::exists(path + filename + ".desktop"))
     {
-       filename = QString("%2_%1").arg(n++).arg(name);
+       filename = TQString("%2_%1").arg(n++).arg(name);
     }
     return path+filename+".desktop";
 }
 
 void KonqSidebarTree::addURL(KonqSidebarTreeTopLevelItem* item, const KURL & url)
 {
-    QString path;
+    TQString path;
     if (item)
        path = item->path();
     else
@@ -378,23 +378,23 @@ void KonqSidebarTree::addURL(KonqSidebarTreeTopLevelItem* item, const KURL & url
 
     if (url.isLocalFile() && url.fileName().endsWith(".desktop"))
     {
-       QString filename = findUniqueFilename(path, url.fileName());
+       TQString filename = findUniqueFilename(path, url.fileName());
        destUrl.setPath(filename);
        KIO::NetAccess::copy(url, destUrl, this);
     }
     else
     {
-       QString name = url.host();
+       TQString name = url.host();
        if (name.isEmpty())
           name = url.fileName();
-       QString filename = findUniqueFilename(path, name);
+       TQString filename = findUniqueFilename(path, name);
        destUrl.setPath(filename);
 
        KDesktopFile cfg(filename);
        cfg.writeEntry("Encoding", "UTF-8");
        cfg.writeEntry("Type","Link");
        cfg.writeEntry("URL", url.url());
-       QString icon = "folder";
+       TQString icon = "folder";
        if (!url.isLocalFile())
           icon = KMimeType::favIconForURL(url);
        if (icon.isEmpty())
@@ -413,7 +413,7 @@ void KonqSidebarTree::addURL(KonqSidebarTreeTopLevelItem* item, const KURL & url
        item->setOpen(true);
 }
 
-bool KonqSidebarTree::acceptDrag(QDropEvent* e) const
+bool KonqSidebarTree::acceptDrag(TQDropEvent* e) const
 {
     // for KListViewMode...
     for( int i = 0; e->format( i ); i++ )
@@ -422,31 +422,31 @@ bool KonqSidebarTree::acceptDrag(QDropEvent* e) const
     return false;
 }
 
-QDragObject* KonqSidebarTree::dragObject()
+TQDragObject* KonqSidebarTree::dragObject()
 {
     KonqSidebarTreeItem* item = static_cast<KonqSidebarTreeItem *>( selectedItem() );
     if ( !item )
         return 0;
 
-    QDragObject* drag = item->dragObject( viewport(), false );
+    TQDragObject* drag = item->dragObject( viewport(), false );
     if ( !drag )
         return 0;
 
-    const QPixmap *pix = item->pixmap(0);
+    const TQPixmap *pix = item->pixmap(0);
     if ( pix && drag->pixmap().isNull() )
         drag->setPixmap( *pix );
 
     return drag;
 }
 
-void KonqSidebarTree::leaveEvent( QEvent *e )
+void KonqSidebarTree::leaveEvent( TQEvent *e )
 {
     KListView::leaveEvent( e );
-//    emitStatusBarText( QString::null );
+//    emitStatusBarText( TQString::null );
 }
 
 
-void KonqSidebarTree::slotDoubleClicked( QListViewItem *item )
+void KonqSidebarTree::slotDoubleClicked( TQListViewItem *item )
 {
     //kdDebug(1201) << "KonqSidebarTree::slotDoubleClicked " << item << endl;
     if ( !item )
@@ -459,7 +459,7 @@ void KonqSidebarTree::slotDoubleClicked( QListViewItem *item )
     item->setOpen( !item->isOpen() );
 }
 
-void KonqSidebarTree::slotExecuted( QListViewItem *item )
+void KonqSidebarTree::slotExecuted( TQListViewItem *item )
 {
     kdDebug(1201) << "KonqSidebarTree::slotExecuted " << item << endl;
     if ( !item )
@@ -479,7 +479,7 @@ void KonqSidebarTree::slotExecuted( QListViewItem *item )
 	openURLRequest( externalURL, args );
 }
 
-void KonqSidebarTree::slotMouseButtonPressed( int _button, QListViewItem* _item, const QPoint&, int col )
+void KonqSidebarTree::slotMouseButtonPressed( int _button, TQListViewItem* _item, const TQPoint&, int col )
 {
     KonqSidebarTreeItem * item = static_cast<KonqSidebarTreeItem*>( _item );
     if (_button == RightButton)
@@ -492,7 +492,7 @@ void KonqSidebarTree::slotMouseButtonPressed( int _button, QListViewItem* _item,
     }
 }
 
-void KonqSidebarTree::slotMouseButtonClicked(int _button, QListViewItem* _item, const QPoint&, int col)
+void KonqSidebarTree::slotMouseButtonClicked(int _button, TQListViewItem* _item, const TQPoint&, int col)
 {
     KonqSidebarTreeItem * item = static_cast<KonqSidebarTreeItem*>(_item);
     if(_item && col < 2)
@@ -554,7 +554,7 @@ void KonqSidebarTree::FilesAdded( const KURL & dir )
     kdDebug(1201) << "KonqSidebarTree::FilesAdded " << dir.url() << endl;
     if ( m_dirtreeDir.dir.isParentOf( dir ) )
         // We use a timer in case of DCOP re-entrance..
-        QTimer::singleShot( 0, this, SLOT( rescanConfiguration() ) );
+        TQTimer::singleShot( 0, this, TQT_SLOT( rescanConfiguration() ) );
 }
 
 void KonqSidebarTree::FilesRemoved( const KURL::List & urls )
@@ -565,7 +565,7 @@ void KonqSidebarTree::FilesRemoved( const KURL::List & urls )
         //kdDebug(1201) <<  "KonqSidebarTree::FilesRemoved " << (*it).prettyURL() << endl;
         if ( m_dirtreeDir.dir.isParentOf( *it ) )
         {
-            QTimer::singleShot( 0, this, SLOT( rescanConfiguration() ) );
+            TQTimer::singleShot( 0, this, TQT_SLOT( rescanConfiguration() ) );
             kdDebug(1201) << "KonqSidebarTree::FilesRemoved done" << endl;
             return;
         }
@@ -579,17 +579,17 @@ void KonqSidebarTree::FilesChanged( const KURL::List & urls )
     FilesRemoved( urls );
 }
 
-void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const QString &path, bool isRoot )
+void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path, bool isRoot )
 {
-    QDir dir( path );
+    TQDir dir( path );
 
     if ( !dir.isReadable() )
         return;
 
     kdDebug(1201) << "scanDir " << path << endl;
 
-    QStringList entries = dir.entryList( QDir::Files );
-    QStringList dirEntries = dir.entryList( QDir::Dirs | QDir::NoSymLinks );
+    TQStringList entries = dir.entryList( TQDir::Files );
+    TQStringList dirEntries = dir.entryList( TQDir::Dirs | TQDir::NoSymLinks );
     dirEntries.remove( "." );
     dirEntries.remove( ".." );
 
@@ -606,7 +606,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const QString &path,
             // Version 5 includes the audiocd browser
             // Version 6 includes the printmanager and lan browser
             const int currentVersion = 6;
-            QString key = QString::fromLatin1("X-KDE-DirTreeVersionNumber");
+            TQString key = TQString::fromLatin1("X-KDE-DirTreeVersionNumber");
             KSimpleConfig versionCfg( path + "/.directory" );
             int versionNumber = versionCfg.readNumEntry( key, 1 );
             kdDebug(1201) << "KonqSidebarTree::scanDir found version " << versionNumber << endl;
@@ -620,64 +620,64 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const QString &path,
         if (copyConfig)
         {
             // We will copy over the configuration for the dirtree, from the global directory
-            QStringList dirtree_dirs = KGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/");
+            TQStringList dirtree_dirs = KGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/");
 
 
-//            QString dirtree_dir = KGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/").last();  // most global
+//            TQString dirtree_dir = KGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/").last();  // most global
 //            kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir=" << dirtree_dir << endl;
 
             /*
             // debug code
 
-            QStringList blah = m_part->getInterfaces->getInstance()->dirs()->dirs()->findDirs( "data", "konqueror/dirtree" );
-            QStringList::ConstIterator eIt = blah.begin();
-            QStringList::ConstIterator eEnd = blah.end();
+            TQStringList blah = m_part->getInterfaces->getInstance()->dirs()->dirs()->findDirs( "data", "konqueror/dirtree" );
+            TQStringList::ConstIterator eIt = blah.begin();
+            TQStringList::ConstIterator eEnd = blah.end();
             for (; eIt != eEnd; ++eIt )
                 kdDebug(1201) << "KonqSidebarTree::scanDir findDirs got me " << *eIt << endl;
             // end debug code
             */
 
-	    for (QStringList::const_iterator ddit=dirtree_dirs.begin();ddit!=dirtree_dirs.end();++ddit) {
-		QString dirtree_dir=*ddit;
+	    for (TQStringList::const_iterator ddit=dirtree_dirs.begin();ddit!=dirtree_dirs.end();++ddit) {
+		TQString dirtree_dir=*ddit;
 		if (dirtree_dir==path) continue;
 	        //    if ( !dirtree_dir.isEmpty() && dirtree_dir != path )
 	            {
-        	        QDir globalDir( dirtree_dir );
+        	        TQDir globalDir( dirtree_dir );
                 	Q_ASSERT( globalDir.isReadable() );
 	                // Only copy the entries that don't exist yet in the local dir
-        	        QStringList globalDirEntries = globalDir.entryList();
-                	QStringList::ConstIterator eIt = globalDirEntries.begin();
-	                QStringList::ConstIterator eEnd = globalDirEntries.end();
+        	        TQStringList globalDirEntries = globalDir.entryList();
+                	TQStringList::ConstIterator eIt = globalDirEntries.begin();
+	                TQStringList::ConstIterator eEnd = globalDirEntries.end();
         	        for (; eIt != eEnd; ++eIt )
                 	{
 	                    //kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir contains " << *eIt << endl;
         	            if ( *eIt != "." && *eIt != ".."
                 	         && !entries.contains( *eIt ) && !dirEntries.contains( *eIt ) )
 	                    { // we don't have that one yet -> copy it.
-                	        QString cp("cp -R -- ");
+                	        TQString cp("cp -R -- ");
         	                cp += KProcess::quote(dirtree_dir + *eIt);
 	                        cp += " ";
         	                cp += KProcess::quote(path);
                 	        kdDebug(1201) << "KonqSidebarTree::scanDir executing " << cp << endl;
-                        	::system( QFile::encodeName(cp) );
+                        	::system( TQFile::encodeName(cp) );
 	                    }
         	        }
 		     }
                   }
-	                // hack to make QDir refresh the lists
+	                // hack to make TQDir refresh the lists
 	                dir.setPath(path);
-        	        entries = dir.entryList( QDir::Files );
-	                dirEntries = dir.entryList( QDir::Dirs );
+        	        entries = dir.entryList( TQDir::Files );
+	                dirEntries = dir.entryList( TQDir::Dirs );
         	        dirEntries.remove( "." );
 	                dirEntries.remove( ".." );
              }
 	}
-    QStringList::ConstIterator eIt = entries.begin();
-    QStringList::ConstIterator eEnd = entries.end();
+    TQStringList::ConstIterator eIt = entries.begin();
+    TQStringList::ConstIterator eEnd = entries.end();
 
     for (; eIt != eEnd; ++eIt )
     {
-        QString filePath = QString( *eIt ).prepend( path );
+        TQString filePath = TQString( *eIt ).prepend( path );
         KURL u;
         u.setPath( filePath );
         if ( KMimeType::findByURL( u, 0, true )->name() == "application/x-desktop" )
@@ -689,7 +689,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const QString &path,
 
     for (; eIt != eEnd; eIt++ )
     {
-        QString newPath = QString( path ).append( *eIt ).append( '/' );
+        TQString newPath = TQString( path ).append( *eIt ).append( '/' );
 
         if ( newPath == KGlobalSettings::autostartPath() )
             continue;
@@ -698,18 +698,18 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const QString &path,
     }
 }
 
-void KonqSidebarTree::loadTopLevelGroup( KonqSidebarTreeItem *parent, const QString &path )
+void KonqSidebarTree::loadTopLevelGroup( KonqSidebarTreeItem *parent, const TQString &path )
 {
-    QDir dir( path );
-    QString name = dir.dirName();
-    QString icon = "folder";
+    TQDir dir( path );
+    TQString name = dir.dirName();
+    TQString icon = "folder";
     bool    open = false;
 
     kdDebug(1201) << "Scanning " << path << endl;
 
-    QString dotDirectoryFile = QString( path ).append( "/.directory" );
+    TQString dotDirectoryFile = TQString( path ).append( "/.directory" );
 
-    if ( QFile::exists( dotDirectoryFile ) )
+    if ( TQFile::exists( dotDirectoryFile ) )
     {
         kdDebug(1201) << "Reading the .directory" << endl;
         KSimpleConfig cfg( dotDirectoryFile, true );
@@ -745,15 +745,15 @@ void KonqSidebarTree::loadTopLevelGroup( KonqSidebarTreeItem *parent, const QStr
         item->setExpandable( false );
 }
 
-void KonqSidebarTree::loadTopLevelItem( KonqSidebarTreeItem *parent,  const QString &filename )
+void KonqSidebarTree::loadTopLevelItem( KonqSidebarTreeItem *parent,  const TQString &filename )
 {
     KDesktopFile cfg( filename, true );
     cfg.setDollarExpansion(true);
 
-    QFileInfo inf( filename );
+    TQFileInfo inf( filename );
 
-    QString path = filename;
-    QString name = KIO::decodeFileName( inf.fileName() );
+    TQString path = filename;
+    TQString name = KIO::decodeFileName( inf.fileName() );
     if ( name.length() > 8 && name.right( 8 ) == ".desktop" )
         name.truncate( name.length() - 8 );
     if ( name.length() > 7 && name.right( 7 ) == ".kdelnk" )
@@ -764,8 +764,8 @@ void KonqSidebarTree::loadTopLevelItem( KonqSidebarTreeItem *parent,  const QStr
 
     // Here's where we need to create the right module...
     // ### TODO: make this KTrader/KLibrary based.
-    QString moduleName = cfg.readEntry( "X-KDE-TreeModule" );
-    QString showHidden=cfg.readEntry("X-KDE-TreeModule-ShowHidden");
+    TQString moduleName = cfg.readEntry( "X-KDE-TreeModule" );
+    TQString showHidden=cfg.readEntry("X-KDE-TreeModule-ShowHidden");
 
     if (moduleName.isEmpty()) moduleName="Directory";
     kdDebug(1201) << "##### Loading module: " << moduleName << " file: " << filename << endl;
@@ -806,7 +806,7 @@ void KonqSidebarTree::slotAnimation()
     for (; it != end; ++it )
     {
         uint & iconNumber = it.data().iconNumber;
-        QString icon = QString::fromLatin1( it.data().iconBaseName ).append( QString::number( iconNumber ) );
+        TQString icon = TQString::fromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
         it.key()->setPixmap( 0, SmallIcon( icon));
 
         iconNumber++;
@@ -816,9 +816,9 @@ void KonqSidebarTree::slotAnimation()
 }
 
 
-void KonqSidebarTree::startAnimation( KonqSidebarTreeItem * item, const char * iconBaseName, uint iconCount, const QPixmap * originalPixmap )
+void KonqSidebarTree::startAnimation( KonqSidebarTreeItem * item, const char * iconBaseName, uint iconCount, const TQPixmap * originalPixmap )
 {
-    const QPixmap *pix = originalPixmap ? originalPixmap : item->pixmap(0);
+    const TQPixmap *pix = originalPixmap ? originalPixmap : item->pixmap(0);
     if (pix)
     {
         m_mapCurrentOpeningFolders.insert( item, AnimationInfo( iconBaseName, iconCount, *pix ) );
@@ -851,7 +851,7 @@ void KonqSidebarTree::setContentsPos( int x, int y )
 	KListView::setContentsPos( x, y );
 }
 
-void KonqSidebarTree::slotItemRenamed(QListViewItem* item, const QString &name, int col)
+void KonqSidebarTree::slotItemRenamed(TQListViewItem* item, const TQString &name, int col)
 {
     Q_ASSERT(col==0);
     if (col != 0) return;
@@ -881,7 +881,7 @@ bool KonqSidebarTree::tabSupport()
         QCStringList funcs;
         reply.get(funcs, "QCStringList");
         for (QCStringList::ConstIterator it = funcs.begin(); it != funcs.end(); ++it) {
-            if ((*it) == "void newTab(QString url)") {
+            if ((*it) == "void newTab(TQString url)") {
                 return true;
                 break;
             }
@@ -901,24 +901,24 @@ void KonqSidebarTree::showToplevelContextMenu()
     {
         m_collection = new KActionCollection( this, "bookmark actions" );
         (void) new KAction( i18n("&Create New Folder..."), "folder_new", 0, this,
-                            SLOT( slotCreateFolder() ), m_collection, "create_folder");
+                            TQT_SLOT( slotCreateFolder() ), m_collection, "create_folder");
         (void) new KAction( i18n("Delete Folder"), "editdelete", 0, this,
-                            SLOT( slotDelete() ), m_collection, "delete_folder");
+                            TQT_SLOT( slotDelete() ), m_collection, "delete_folder");
         (void) new KAction( i18n("Rename"), 0, this,
-                            SLOT( slotRename() ), m_collection, "rename");
+                            TQT_SLOT( slotRename() ), m_collection, "rename");
         (void) new KAction( i18n("Delete Link"), "editdelete", 0, this,
-                            SLOT( slotDelete() ), m_collection, "delete_link");
+                            TQT_SLOT( slotDelete() ), m_collection, "delete_link");
         (void) new KAction( i18n("Properties"), "edit", 0, this,
-                            SLOT( slotProperties() ), m_collection, "item_properties");
+                            TQT_SLOT( slotProperties() ), m_collection, "item_properties");
         (void) new KAction( i18n("Open in New Window"), "window_new", 0, this,
-                            SLOT( slotOpenNewWindow() ), m_collection, "open_window");
+                            TQT_SLOT( slotOpenNewWindow() ), m_collection, "open_window");
         (void) new KAction( i18n("Open in New Tab"), "tab_new", 0, this,
-                            SLOT( slotOpenTab() ), m_collection, "open_tab");
+                            TQT_SLOT( slotOpenTab() ), m_collection, "open_tab");
         (void) new KAction( i18n("Copy Link Address"), "editcopy", 0, this,
-                            SLOT( slotCopyLocation() ), m_collection, "copy_location");
+                            TQT_SLOT( slotCopyLocation() ), m_collection, "copy_location");
     }
 
-    QPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new QPopupMenu;
 
     if (item) {
         if (item->isTopLevelGroup()) {
@@ -943,7 +943,7 @@ void KonqSidebarTree::showToplevelContextMenu()
 
     m_currentTopLevelItem = item;
 
-    menu->exec( QCursor::pos() );
+    menu->exec( TQCursor::pos() );
     delete menu;
 
     m_currentTopLevelItem = 0;
@@ -951,8 +951,8 @@ void KonqSidebarTree::showToplevelContextMenu()
 
 void KonqSidebarTree::slotCreateFolder()
 {
-    QString path;
-    QString name = i18n("New Folder");
+    TQString path;
+    TQString name = i18n("New Folder");
 
     while(true)
     {
@@ -971,7 +971,7 @@ void KonqSidebarTree::slotCreateFolder()
 
         path = path + name;
 
-        if (!QFile::exists(path))
+        if (!TQFile::exists(path))
             break;
 
         name = name + "-2";
@@ -1017,7 +1017,7 @@ void KonqSidebarTree::slotOpenTab()
 {
     if (!m_currentTopLevelItem) return;
     DCOPRef ref(kapp->dcopClient()->appId(), topLevelWidget()->name());
-    ref.call( "newTab(QString)", m_currentTopLevelItem->externalURL().url() );
+    ref.call( "newTab(TQString)", m_currentTopLevelItem->externalURL().url() );
 }
 
 void KonqSidebarTree::slotCopyLocation()
@@ -1032,11 +1032,11 @@ void KonqSidebarTree::slotCopyLocation()
 ///////////////////////////////////////////////////////////////////
 
 
-void KonqSidebarTreeToolTip::maybeTip( const QPoint &point )
+void KonqSidebarTreeToolTip::maybeTip( const TQPoint &point )
 {
-    QListViewItem *item = m_view->itemAt( point );
+    TQListViewItem *item = m_view->itemAt( point );
     if ( item ) {
-	QString text = static_cast<KonqSidebarTreeItem*>( item )->toolTipText();
+	TQString text = static_cast<KonqSidebarTreeItem*>( item )->toolTipText();
 	if ( !text.isEmpty() )
 	    tip ( m_view->itemRect( item ), text );
     }

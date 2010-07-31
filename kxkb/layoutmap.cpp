@@ -47,14 +47,14 @@ void LayoutMap::setCurrentWindow(WId winId)
 
 // private
 //LayoutQueue& 
-QPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueueInternal(WId winId)
+TQPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueueInternal(WId winId)
 {
 	if( winId == X11Helper::UNKNOWN_WINDOW_ID )
 		return m_globalLayouts;
 	
 	switch( m_kxkbConfig.m_switchingPolicy ) {
 		case SWITCH_POLICY_WIN_CLASS: {
-//			QString winClass = X11Helper::getWindowClass(winId, qt_xdisplay());
+//			TQString winClass = X11Helper::getWindowClass(winId, qt_xdisplay());
 			return m_appLayouts[ m_currentWinClass ];
 		}
 		case SWITCH_POLICY_WINDOW:
@@ -67,9 +67,9 @@ QPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueueInternal(WId winId)
 
 // private
 //LayoutQueue& 
-QPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueue(WId winId)
+TQPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueue(WId winId)
 {
-	QPtrQueue<LayoutState>& layoutQueue = getCurrentLayoutQueueInternal(winId);
+	TQPtrQueue<LayoutState>& layoutQueue = getCurrentLayoutQueueInternal(winId);
 	if( layoutQueue.count() == 0 ) {
 		initLayoutQueue(layoutQueue);
 		kdDebug() << "map: Created queue for " << winId << " size: " << layoutQueue.count() << endl;

@@ -11,7 +11,7 @@
 #ifndef _MENUEDIT_H_
 #define _MENUEDIT_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kdialogbase.h>
 #include <kaccel.h>
 #include <kservice.h>
@@ -27,18 +27,18 @@ KDE_EXPORT void khotkeys_init( void );
 KDE_EXPORT void khotkeys_cleanup( void );
 // return keyboard shortcut ( e.g. "ALT+T" ) for given menu entry ( e.g.
 // "System/Konsole.desktop"
-KDE_EXPORT QString khotkeys_get_menu_entry_shortcut( const QString& entry_P );
+KDE_EXPORT TQString khotkeys_get_menu_entry_shortcut( const TQString& entry_P );
 // changes assigned shortcut to menu entry a updates config file
-KDE_EXPORT QString khotkeys_change_menu_entry_shortcut( const QString& entry_P,
-    const QString& shortcut_P );
+KDE_EXPORT TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
+    const TQString& shortcut_P );
 // menu entry was moved in K Menu
-KDE_EXPORT bool khotkeys_menu_entry_moved( const QString& new_P, const QString& old_P );
+KDE_EXPORT bool khotkeys_menu_entry_moved( const TQString& new_P, const TQString& old_P );
 // menu entry was removed
-KDE_EXPORT void khotkeys_menu_entry_deleted( const QString& entry_P );    
+KDE_EXPORT void khotkeys_menu_entry_deleted( const TQString& entry_P );    
 // List of all hotkeys in use
-KDE_EXPORT QStringList khotkeys_get_all_shortcuts( );
+KDE_EXPORT TQStringList khotkeys_get_all_shortcuts( );
 // Find menu entry that uses shortcut
-KDE_EXPORT KService::Ptr khotkeys_find_menu_entry( const QString& shortcut_P );
+KDE_EXPORT KService::Ptr khotkeys_find_menu_entry( const TQString& shortcut_P );
     } // extern "C"
 
 #endif

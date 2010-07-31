@@ -21,9 +21,9 @@
 
 #include "linuxcdpolling.h"
 
-#include <qthread.h>
-#include <qmutex.h>
-#include <qfile.h>
+#include <tqthread.h>
+#include <tqmutex.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 
@@ -113,7 +113,7 @@ DiscType::operator int() const
 class PollingThread : public QThread
 {
 public:
-	PollingThread(const QCString &devNode) : m_dev(devNode)
+	PollingThread(const TQCString &devNode) : m_dev(devNode)
 	{
 		kdDebug(1219) << "PollingThread::PollingThread("
 		          << devNode << ")" << endl;
@@ -125,20 +125,20 @@ public:
 
 	void stop()
 	{
-		QMutexLocker locker(&m_mutex);
+		TQMutexLocker locker(&m_mutex);
 		m_stop = true;
 	}
 
 	bool hasChanged()
 	{
-		QMutexLocker locker(&m_mutex);
+		TQMutexLocker locker(&m_mutex);
 
 		return m_currentType!=m_lastPollType;
 	}
 
 	DiscType type()
 	{
-		QMutexLocker locker(&m_mutex);
+		TQMutexLocker locker(&m_mutex);
 		m_currentType = m_lastPollType;
 		return m_currentType;
 	}
@@ -165,36 +165,36 @@ protected:
 	}
 
 private:
-	QMutex m_mutex;
+	TQMutex m_mutex;
 	bool m_stop;
-	const QCString m_dev;
+	const TQCString m_dev;
 	DiscType m_currentType;
 	DiscType m_lastPollType;
 };
 
 
 LinuxCDPolling::LinuxCDPolling(MediaList &list)
-	: QObject(), BackendBase(list)
+	: TQObject(), BackendBase(list)
 {
-	connect(&m_mediaList, SIGNAL(mediumAdded(const QString &,
-	                                        const QString &, bool)),
-	        this, SLOT(slotMediumAdded(const QString &)) );
+	connect(&m_mediaList, TQT_SIGNAL(mediumAdded(const TQString &,
+	                                        const TQString &, bool)),
+	        this, TQT_SLOT(slotMediumAdded(const TQString &)) );
 
-	connect(&m_mediaList, SIGNAL(mediumRemoved(const QString &,
-	                                          const QString &, bool)),
-	        this, SLOT(slotMediumRemoved(const QString &)) );
+	connect(&m_mediaList, TQT_SIGNAL(mediumRemoved(const TQString &,
+	                                          const TQString &, bool)),
+	        this, TQT_SLOT(slotMediumRemoved(const TQString &)) );
 
-	connect(&m_mediaList, SIGNAL(mediumStateChanged(const QString &,
-	                                               const QString &, bool, bool)),
-	        this, SLOT(slotMediumStateChanged(const QString &)) );
+	connect(&m_mediaList, TQT_SIGNAL(mediumStateChanged(const TQString &,
+	                                               const TQString &, bool, bool)),
+	        this, TQT_SLOT(slotMediumStateChanged(const TQString &)) );
 
-	connect(&m_timer, SIGNAL(timeout()), this, SLOT(slotTimeout()));
+	connect(&m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotTimeout()));
 }
 
 LinuxCDPolling::~LinuxCDPolling()
 {
-	QMap<QString, PollingThread*>::iterator it = m_threads.begin();
-	QMap<QString, PollingThread*>::iterator end = m_threads.end();
+	TQMap<TQString, PollingThread*>::iterator it = m_threads.begin();
+	TQMap<TQString, PollingThread*>::iterator end = m_threads.end();
 
 	for(; it!=end; ++it)
 	{
@@ -205,7 +205,7 @@ LinuxCDPolling::~LinuxCDPolling()
 	}
 }
 
-void LinuxCDPolling::slotMediumAdded(const QString &id)
+void LinuxCDPolling::slotMediumAdded(const TQString &id)
 {
 	kdDebug(1219) << "LinuxCDPolling::slotMediumAdded(" << id << ")" << endl;
 
@@ -213,7 +213,7 @@ void LinuxCDPolling::slotMediumAdded(const QString &id)
 
 	const Medium *medium = m_mediaList.findById(id);
 
-	QString mime = medium->mimeType();
+	TQString mime = medium->mimeType();
 	kdDebug(1219) << "mime == " << mime << endl;
 
 	if (mime.find("dvd")==-1 && mime.find("cd")==-1) return;
@@ -222,7 +222,7 @@ void LinuxCDPolling::slotMediumAdded(const QString &id)
 	{
 		m_excludeNotification.append( id );
 		
-		QCString dev = QFile::encodeName( medium->deviceNode() ).data();
+		TQCString dev = TQFile::encodeName( medium->deviceNode() ).data();
 		PollingThread *thread = new PollingThread(dev);
 		m_threads[id] = thread;
 		thread->start();
@@ -230,7 +230,7 @@ void LinuxCDPolling::slotMediumAdded(const QString &id)
 	}
 }
 
-void LinuxCDPolling::slotMediumRemoved(const QString &id)
+void LinuxCDPolling::slotMediumRemoved(const TQString &id)
 {
 	kdDebug(1219) << "LinuxCDPolling::slotMediumRemoved(" << id << ")" << endl;
 
@@ -245,14 +245,14 @@ void LinuxCDPolling::slotMediumRemoved(const QString &id)
 	m_excludeNotification.remove(id);
 }
 
-void LinuxCDPolling::slotMediumStateChanged(const QString &id)
+void LinuxCDPolling::slotMediumStateChanged(const TQString &id)
 {
 	kdDebug(1219) << "LinuxCDPolling::slotMediumStateChanged("
 	          << id << ")" << endl;
 
 	const Medium *medium = m_mediaList.findById(id);
 
-	QString mime = medium->mimeType();
+	TQString mime = medium->mimeType();
 	kdDebug(1219) << "mime == " << mime << endl;
 
 	if (mime.find("dvd")==-1 && mime.find("cd")==-1) return;
@@ -262,7 +262,7 @@ void LinuxCDPolling::slotMediumStateChanged(const QString &id)
 		// It is just a mount state change, no need to notify
 		m_excludeNotification.append( id );
 		
-		QCString dev = QFile::encodeName( medium->deviceNode() ).data();
+		TQCString dev = TQFile::encodeName( medium->deviceNode() ).data();
 		PollingThread *thread = new PollingThread(dev);
 		m_threads[id] = thread;
 		thread->start();
@@ -288,12 +288,12 @@ void LinuxCDPolling::slotTimeout()
 		return;
 	}
 
-	QMap<QString, PollingThread*>::iterator it = m_threads.begin();
-	QMap<QString, PollingThread*>::iterator end = m_threads.end();
+	TQMap<TQString, PollingThread*>::iterator it = m_threads.begin();
+	TQMap<TQString, PollingThread*>::iterator end = m_threads.end();
 
 	for(; it!=end; ++it)
 	{
-		QString id = it.key();
+		TQString id = it.key();
 		PollingThread *thread = it.data();
 
 		if (thread->hasChanged())
@@ -305,16 +305,16 @@ void LinuxCDPolling::slotTimeout()
 	}
 }
 
-static QString baseType(const Medium *medium)
+static TQString baseType(const Medium *medium)
 {
 	kdDebug(1219) << "baseType(" << medium->id() << ")" << endl;
 
-	QString devNode = medium->deviceNode();
-	QString mountPoint = medium->mountPoint();
-	QString fsType = medium->fsType();
+	TQString devNode = medium->deviceNode();
+	TQString mountPoint = medium->mountPoint();
+	TQString fsType = medium->fsType();
 	bool mounted = medium->isMounted();
 
-	QString mimeType, iconName, label;
+	TQString mimeType, iconName, label;
 
 	FstabBackend::guess(devNode, mountPoint, fsType, mounted,
 	                    mimeType, iconName, label);
@@ -336,13 +336,13 @@ static void restoreEmptyState(MediaList &list, const Medium *medium,
 {
 	kdDebug(1219) << "restoreEmptyState(" << medium->id() << ")" << endl;
 
-	QString id = medium->id();
-	QString devNode = medium->deviceNode();
-	QString mountPoint = medium->mountPoint();
-	QString fsType = medium->fsType();
+	TQString id = medium->id();
+	TQString devNode = medium->deviceNode();
+	TQString mountPoint = medium->mountPoint();
+	TQString fsType = medium->fsType();
 	bool mounted = medium->isMounted();
 
-	QString mimeType, iconName, label;
+	TQString mimeType, iconName, label;
 
 	FstabBackend::guess(devNode, mountPoint, fsType, mounted,
 	                    mimeType, iconName, label);
@@ -357,8 +357,8 @@ void LinuxCDPolling::applyType(DiscType type, const Medium *medium)
 	kdDebug(1219) << "LinuxCDPolling::applyType(" << type << ", "
 	          << medium->id() << ")" << endl;
 
-	QString id = medium->id();
-	QString dev = medium->deviceNode();
+	TQString id = medium->id();
+	TQString dev = medium->deviceNode();
 	
 	bool notify = !m_excludeNotification.contains(id);
 	m_excludeNotification.remove(id);
@@ -402,7 +402,7 @@ void LinuxCDPolling::applyType(DiscType type, const Medium *medium)
 	}
 }
 
-DiscType LinuxCDPolling::identifyDiscType(const QCString &devNode,
+DiscType LinuxCDPolling::identifyDiscType(const TQCString &devNode,
                                           const DiscType &current)
 {
 	//kdDebug(1219) << "LinuxCDPolling::identifyDiscType("
@@ -475,7 +475,7 @@ DiscType LinuxCDPolling::identifyDiscType(const QCString &devNode,
 	}
 }
 
-bool LinuxCDPolling::hasDirectory(const QCString &devNode, const QCString &dir)
+bool LinuxCDPolling::hasDirectory(const TQCString &devNode, const TQCString &dir)
 {
 	bool ret = false; // return value
 	int fd = 0; // file descriptor for drive
@@ -487,7 +487,7 @@ bool LinuxCDPolling::hasDirectory(const QCString &devNode, const QCString &dir)
 	char dirname[256]; // filename for the current path table entry
 	int pos = 0; // our position into the path table
 	int curr_record = 1; // the path table record we're on
-	QCString fixed_directory = dir.upper(); // the uppercase version of the "directory" parameter
+	TQCString fixed_directory = dir.upper(); // the uppercase version of the "directory" parameter
 
 	// open the drive
 	fd = open(devNode, O_RDONLY | O_NONBLOCK);
@@ -555,7 +555,7 @@ bool LinuxCDPolling::hasDirectory(const QCString &devNode, const QCString &dir)
 			break;
 		}
 		dirname[len_di] = 0;
-		qstrcpy(dirname, QCString(dirname).upper());
+		qstrcpy(dirname, TQCString(dirname).upper());
 
 		// if we found a folder that has the root as a parent, and the directory name matches
 		// then return success

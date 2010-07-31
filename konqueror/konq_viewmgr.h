@@ -22,10 +22,10 @@
 
 #include "konq_factory.h"
 
-#include <qnamespace.h>
-#include <qobject.h>
-#include <qmap.h>
-#include <qguardedptr.h>
+#include <tqnamespace.h>
+#include <tqobject.h>
+#include <tqmap.h>
+#include <tqguardedptr.h>
 
 #include <ktrader.h>
 
@@ -57,7 +57,7 @@ public:
   KonqViewManager( KonqMainWindow *mainWindow );
   ~KonqViewManager();
 
-  KonqView* Initialize( const QString &serviceType, const QString &serviceName );
+  KonqView* Initialize( const TQString &serviceType, const TQString &serviceName );
 
   /**
    * Splits the view, depending on orientation, either horizontally or
@@ -70,8 +70,8 @@ public:
    * @param newOneFirst if true, move the new view as the first one (left or top)
    */
   KonqView* splitView( Qt::Orientation orientation,
-                       const QString & serviceType = QString::null,
-                       const QString & serviceName = QString::null,
+                       const TQString & serviceType = TQString::null,
+                       const TQString & serviceName = TQString::null,
                        bool newOneFirst = false, bool forceAutoEmbed = false );
 
   /**
@@ -82,8 +82,8 @@ public:
    * @param newOneFirst if true, move the new view as the first one (left or top)
    */
   KonqView* splitWindow( Qt::Orientation orientation,
-                         const QString & serviceType = QString::null,
-                         const QString & serviceName = QString::null,
+                         const TQString & serviceType = TQString::null,
+                         const TQString & serviceName = TQString::null,
                          bool newOneFirst = false);
 
   /**
@@ -95,8 +95,8 @@ public:
   /**
    * Adds a tab to m_pMainContainer
    */
-  KonqView* addTab(const QString &serviceType = QString::null,
-                   const QString &serviceName = QString::null,
+  KonqView* addTab(const TQString &serviceType = TQString::null,
+                   const TQString &serviceName = TQString::null,
                    bool passiveMode = false, bool openAfterCurrentPage = false );
 
 
@@ -188,20 +188,20 @@ public:
    * @param saveURLs whether to save the URLs in the profile
    * @param saveWindowSize whether to save the size of the window in the profile
    */
-  void saveViewProfile( const QString & fileName, const QString & profileName,
+  void saveViewProfile( const TQString & fileName, const TQString & profileName,
                         bool saveURLs, bool saveWindowSize );
 
   /**
    * Loads a view layout from a config file. Removes all views before loading.
    * @param cfg the config file
    * @param filename if set, remember the file name of the profile (for save settings)
-   * It has to be under the profiles dir. Otherwise, set to QString::null
+   * It has to be under the profiles dir. Otherwise, set to TQString::null
    * @param forcedURL if set, the URL to open, whatever the profile says
    * @param req attributes related to @p forcedURL
    * @param resetWindow if the profile doesn't have attributes like size or toolbar
    * settings, they will be reset to the defaults
    */
-  void loadViewProfile( KConfig &cfg, const QString & filename,
+  void loadViewProfile( KConfig &cfg, const TQString & filename,
                         const KURL & forcedURL = KURL(),
                         const KonqOpenURLRequest &req = KonqOpenURLRequest(),
                         bool resetWindow = false, bool openURL = true );
@@ -210,13 +210,13 @@ public:
    * Loads a view layout from a config file. Removes all views before loading.
    * @param path the full path to the config file
    * @param filename if set, remember the file name of the profile (for save settings)
-   * It has to be under the profiles dir. Otherwise, set to QString::null
+   * It has to be under the profiles dir. Otherwise, set to TQString::null
    * @param forcedURL if set, the URL to open, whatever the profile says
    * @param req attributes related to @p forcedURL
    * @param resetWindow if the profile doesn't have attributes like size or toolbar
    * settings, they will be reset to the defaults
    */
-  void loadViewProfile( const QString & path, const QString & filename,
+  void loadViewProfile( const TQString & path, const TQString & filename,
                         const KURL & forcedURL = KURL(),
                         const KonqOpenURLRequest &req = KonqOpenURLRequest(),
                         bool resetWindow = false, bool openURL = true );
@@ -224,12 +224,12 @@ public:
    * Return the filename of the last profile that was loaded
    * by the view manager. For "save settings".
    */
-  QString currentProfile() const { return m_currentProfile; }
+  TQString currentProfile() const { return m_currentProfile; }
   /**
    * Return the name (i18n'ed) of the last profile that was loaded
    * by the view manager. For "save settings".
    */
-  QString currentProfileText() const { return m_currentProfileText; }
+  TQString currentProfileText() const { return m_currentProfileText; }
 
   /**
    * Whether we are currently loading a profile
@@ -265,16 +265,16 @@ public:
   /**
    * Reimplemented from PartManager
    */
-  virtual void setActivePart( KParts::Part *part, QWidget *widget = 0L );
+  virtual void setActivePart( KParts::Part *part, TQWidget *widget = 0L );
 
   void setActivePart( KParts::Part *part, bool immediate );
 
-  void showProfileDlg( const QString & preselectProfile );
+  void showProfileDlg( const TQString & preselectProfile );
 
   /**
    *   The widget is the one which you are referring to.
    */
-  static QSize readConfigSize( KConfig &cfg, QWidget *widget = NULL);
+  static TQSize readConfigSize( KConfig &cfg, TQWidget *widget = NULL);
 
 #ifndef NDEBUG
   void printFullHierarchy( KonqFrameContainerBase * container );
@@ -284,7 +284,7 @@ public:
   
   void showHTML(bool b);
 
-  QString profileHomeURL() const { return m_profileHomeURL; }
+  TQString profileHomeURL() const { return m_profileHomeURL; }
 
 protected slots:
   void emitActivePartChanged();
@@ -310,7 +310,7 @@ protected:
    *  (this is set to false when we have a forcedURL to open)
    */
   void loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
-                 const QString &name, const KURL & defaultURL, bool openURL, bool openAfterCurrentPage = false );
+                 const TQString &name, const KURL & defaultURL, bool openURL, bool openAfterCurrentPage = false );
 
   // Disabled - we do it ourselves
   virtual void setActiveInstance( KInstance * ) {}
@@ -322,8 +322,8 @@ private:
    * it clones the current view.
    * Returns the newly created view.
    */
-  KonqViewFactory createView( const QString &serviceType,
-                              const QString &serviceName,
+  KonqViewFactory createView( const TQString &serviceType,
+                              const TQString &serviceName,
                               KService::Ptr &service,
                               KTrader::OfferList &partServiceOffers,
                               KTrader::OfferList &appServiceOffers,
@@ -338,7 +338,7 @@ private:
                        const KService::Ptr &service,
                        const KTrader::OfferList &partServiceOffers,
                        const KTrader::OfferList &appServiceOffers,
-                       const QString &serviceType,
+                       const TQString &serviceType,
                        bool passiveMode, bool openAfterCurrentPage = false);
 
 #ifndef NDEBUG
@@ -352,16 +352,16 @@ private:
 
   KonqFrameBase *m_pDocContainer;
 
-  QGuardedPtr<KActionMenu> m_pamProfiles;
+  TQGuardedPtr<KActionMenu> m_pamProfiles;
   bool m_bProfileListDirty;
   bool m_bLoadingProfile;
-  QString m_currentProfile;
-  QString m_currentProfileText;
-  QString m_profileHomeURL;
+  TQString m_currentProfile;
+  TQString m_currentProfileText;
+  TQString m_profileHomeURL;
 
-  QMap<QString, QString> m_mapProfileNames;
+  TQMap<TQString, TQString> m_mapProfileNames;
 
-  QTimer *m_activePartChangedTimer;
+  TQTimer *m_activePartChangedTimer;
 };
 
 #endif

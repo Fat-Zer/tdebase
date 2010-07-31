@@ -79,7 +79,7 @@ class KasPrefsDialog : public KDialogBase
    Q_OBJECT
 
 public:
-   KasPrefsDialog( KasTasker *kas, QWidget *parent=0 );
+   KasPrefsDialog( KasTasker *kas, TQWidget *parent=0 );
    ~KasPrefsDialog();
 
    void addLookPage();
@@ -102,27 +102,27 @@ private slots:
 
 private:
 
-   QComboBox *itemSizeCombo;
-   QSpinBox *customSize;
-   QCheckBox *transCheck;
-   QCheckBox *tintCheck;
+   TQComboBox *itemSizeCombo;
+   TQSpinBox *customSize;
+   TQCheckBox *transCheck;
+   TQCheckBox *tintCheck;
    KColorButton *tintButton;
-   QSlider *tintAmount;
-   QCheckBox *thumbsCheck;
-   QCheckBox *embedThumbsCheck;
-   QSlider *thumbSizeSlider;
-   QSpinBox *thumbUpdateSpin;
-   QCheckBox *notifierCheck;
-   QCheckBox *modifiedCheck;
-   QCheckBox *progressCheck;
-   QCheckBox *showAllWindowsCheck;
-   QCheckBox *onlyShowMinimizedCheck;
+   TQSlider *tintAmount;
+   TQCheckBox *thumbsCheck;
+   TQCheckBox *embedThumbsCheck;
+   TQSlider *thumbSizeSlider;
+   TQSpinBox *thumbUpdateSpin;
+   TQCheckBox *notifierCheck;
+   TQCheckBox *modifiedCheck;
+   TQCheckBox *progressCheck;
+   TQCheckBox *showAllWindowsCheck;
+   TQCheckBox *onlyShowMinimizedCheck;
    KIntSpinBox *maxBoxesSpin;
-   QCheckBox *detachedCheck;
-   QCheckBox *groupWindowsCheck;
-   QCheckBox *groupInactiveCheck;
-   QCheckBox *attentionCheck;
-   QCheckBox *inactiveFramesCheck;
+   TQCheckBox *detachedCheck;
+   TQCheckBox *groupWindowsCheck;
+   TQCheckBox *groupInactiveCheck;
+   TQCheckBox *attentionCheck;
+   TQCheckBox *inactiveFramesCheck;
 
    KColorButton *labelPenButton;
    KColorButton *labelBackgroundButton;

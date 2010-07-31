@@ -35,7 +35,7 @@
 
 #include "response.h"
 
-#include <qstrlist.h>
+#include <tqstrlist.h>
 
 namespace KioSMTP {
 
@@ -56,24 +56,24 @@ namespace KioSMTP {
     return c;
   }
 
-  void Capabilities::add( const QString & cap, bool replace ) {
-    QStringList tokens = QStringList::split( ' ', cap.upper() );
+  void Capabilities::add( const TQString & cap, bool replace ) {
+    TQStringList tokens = TQStringList::split( ' ', cap.upper() );
     if ( tokens.empty() )
       return;
-    QString name = tokens.front(); tokens.pop_front();
+    TQString name = tokens.front(); tokens.pop_front();
     add( name, tokens, replace );
   }
 
-  void Capabilities::add( const QString & name, const QStringList & args, bool replace ) {
+  void Capabilities::add( const TQString & name, const TQStringList & args, bool replace ) {
     if ( replace )
       mCapabilities[name] = args;
     else
       mCapabilities[name] += args;
   }
 
-  QString Capabilities::asMetaDataString() const {
-    QString result;
-    for ( QMap<QString,QStringList>::const_iterator it = mCapabilities.begin() ; it != mCapabilities.end() ; ++it ) {
+  TQString Capabilities::asMetaDataString() const {
+    TQString result;
+    for ( TQMap<TQString,TQStringList>::const_iterator it = mCapabilities.begin() ; it != mCapabilities.end() ; ++it ) {
       result += it.key();
       if ( !it.data().empty() )
 	result += ' ' + it.data().join( " " );
@@ -82,24 +82,24 @@ namespace KioSMTP {
     return result;
   }
 
-  QString Capabilities::authMethodMetaData() const {
-    QStringList sl = saslMethodsQSL();
-    QString result;
-    for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
+  TQString Capabilities::authMethodMetaData() const {
+    TQStringList sl = saslMethodsQSL();
+    TQString result;
+    for ( TQStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
       result += "SASL/" + *it + '\n';
     return result;
   }
 
-  QStrIList Capabilities::saslMethods() const {
-    QStrIList result( true ); // deep copies to be safe
-    QStringList sl = saslMethodsQSL();
-    for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
+  TQStrIList Capabilities::saslMethods() const {
+    TQStrIList result( true ); // deep copies to be safe
+    TQStringList sl = saslMethodsQSL();
+    for ( TQStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
       result.append( (*it).latin1() );
     return result;
   }
 
-  QString Capabilities::createSpecialResponse( bool tls ) const {
-    QStringList result;
+  TQString Capabilities::createSpecialResponse( bool tls ) const {
+    TQStringList result;
     if ( tls )
       result.push_back( "STARTTLS" );
     result += saslMethodsQSL();
@@ -113,16 +113,16 @@ namespace KioSMTP {
       if ( ok && !size )
 	result.push_back( "SIZE=*" ); // any size
       else if ( ok )
-	result.push_back( "SIZE=" + QString::number( size ) ); // fixed max
+	result.push_back( "SIZE=" + TQString::number( size ) ); // fixed max
       else
 	result.push_back( "SIZE" ); // indetermined
     }
     return result.join( " " );
   }
 
-  QStringList Capabilities::saslMethodsQSL() const {
-    QStringList result;
-    for ( QMap<QString,QStringList>::const_iterator it = mCapabilities.begin() ; it != mCapabilities.end() ; ++it ) {
+  TQStringList Capabilities::saslMethodsQSL() const {
+    TQStringList result;
+    for ( TQMap<TQString,TQStringList>::const_iterator it = mCapabilities.begin() ; it != mCapabilities.end() ; ++it ) {
       if ( it.key() == "AUTH" )
 	result += it.data();
       else if ( it.key().startsWith( "AUTH=" ) ) {
@@ -131,8 +131,8 @@ namespace KioSMTP {
       }
     }
     result.sort();
-    QStringList::iterator it = result.begin();
-    for (QStringList::iterator ot = it++; it != result.end(); ot = it++)
+    TQStringList::iterator it = result.begin();
+    for (TQStringList::iterator ot = it++; it != result.end(); ot = it++)
         if (*ot == *it) result.remove(ot);
     return result;
   }

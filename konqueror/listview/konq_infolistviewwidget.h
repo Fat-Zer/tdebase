@@ -22,8 +22,8 @@
 #include "konq_listviewwidget.h"
 
 #include <kurl.h>
-#include <qmap.h>
-#include <qpair.h>
+#include <tqmap.h>
+#include <tqpair.h>
 
 namespace KIO {class MetaInfoJob;}
 class KonqListView;
@@ -37,10 +37,10 @@ class KonqInfoListViewWidget : public KonqBaseListViewWidget
 //   friend class KonqTextViewItem;
    Q_OBJECT
    public:
-      KonqInfoListViewWidget( KonqListView *parent, QWidget *parentWidget );
+      KonqInfoListViewWidget( KonqListView *parent, TQWidget *parentWidget );
       ~KonqInfoListViewWidget();
       
-     const QStringList columnKeys() {return m_columnKeys;}
+     const TQStringList columnKeys() {return m_columnKeys;}
       
       virtual bool openURL( const KURL &url );
 
@@ -76,8 +76,8 @@ class KonqInfoListViewWidget : public KonqBaseListViewWidget
       };
 
       // all the mimetypes
-      QMap<QString, KonqILVMimeType > m_counts; 
-      QStringList                     m_columnKeys;
+      TQMap<TQString, KonqILVMimeType > m_counts; 
+      TQStringList                     m_columnKeys;
 
       KonqILVMimeType                 m_favorite;
       

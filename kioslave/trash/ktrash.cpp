@@ -50,8 +50,8 @@ int main(int argc, char *argv[])
     if ( args->isSet( "empty" ) ) {
         // We use a kio job instead of linking to TrashImpl, for a smaller binary
         // (and the possibility of a central service at some point)
-        QByteArray packedArgs;
-        QDataStream stream( packedArgs, IO_WriteOnly );
+        TQByteArray packedArgs;
+        TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)1;
         KIO::Job* job = KIO::special( "trash:/", packedArgs );
         (void)KIO::NetAccess::synchronousRun( job, 0 );
@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
 #if 0
     // This is only for testing. KDesktop handles it automatically.
     if ( args->isSet( "migrate" ) ) {
-        QByteArray packedArgs;
-        QDataStream stream( packedArgs, IO_WriteOnly );
+        TQByteArray packedArgs;
+        TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)2;
         KIO::Job* job = KIO::special( "trash:/", packedArgs );
         (void)KIO::NetAccess::synchronousRun( job, 0 );
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    QCString restoreArg = args->getOption( "restore" );
+    TQCString restoreArg = args->getOption( "restore" );
     if ( !restoreArg.isEmpty() ) {
 
         if (restoreArg.find("system:/trash")==0) {
@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
             return 1;
         }
 
-        QByteArray packedArgs;
-        QDataStream stream( packedArgs, IO_WriteOnly );
+        TQByteArray packedArgs;
+        TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)3 << trashURL;
         KIO::Job* job = KIO::special( trashURL, packedArgs );
         bool ok = KIO::NetAccess::synchronousRun( job, 0 );

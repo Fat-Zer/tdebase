@@ -6,7 +6,7 @@
 #define __KBackgroundIface_h__
 
 #include <dcopobject.h>
-#include <qcolor.h>
+#include <tqcolor.h>
 
 class KBackgroundIface : virtual public DCOPObject
 {
@@ -38,17 +38,17 @@ k_dcop:
      * @param desk desktop number, or 0 for the current visible desktop.
      * @param wallpaper The (local) path to the wallpaper.
      * @param mode The tiling mode. */
-    virtual void setWallpaper(int desk, QString wallpaper, int mode) = 0;
+    virtual void setWallpaper(int desk, TQString wallpaper, int mode) = 0;
 
     /** Change the wallpaper.
      * @param wallpaper The (local) path to the wallpaper.
      * @param mode The tiling mode. */
-    virtual void setWallpaper(QString wallpaper, int mode) = 0;
+    virtual void setWallpaper(TQString wallpaper, int mode) = 0;
 
     /** Set color.
      * @param c The color.
      * @param isColorA true for foreground and false for background color. */
-    virtual void setColor(const QColor &c, bool isColorA) = 0;
+    virtual void setColor(const TQColor &c, bool isColorA) = 0;
 
     /** Change the wallpaper in "multi mode". */
     virtual void changeWallpaper() = 0;
@@ -59,17 +59,17 @@ k_dcop:
     /** Return the current wallpaper for specified desk.
      * @param desk desktop number, or 0 for the current visible desktop.
      */
-    virtual QString currentWallpaper( int desk ) = 0;
+    virtual TQString currentWallpaper( int desk ) = 0;
 
     /** Return the wallpaper list for specified desk.
      * @param desk desktop number, or 0 for the current visible desktop.
      */
-    virtual QStringList wallpaperList(int desk) = 0;
+    virtual TQStringList wallpaperList(int desk) = 0;
 
     /** Return the wallpaper files for specified desk.
      * @param desk desktop number, or 0 for the current visible desktop.
      */
-    virtual QStringList wallpaperFiles(int desk) = 0;
+    virtual TQStringList wallpaperFiles(int desk) = 0;
 };
 
 #endif // __KBackgroundIface_h__

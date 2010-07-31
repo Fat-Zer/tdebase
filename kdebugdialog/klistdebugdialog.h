@@ -21,9 +21,9 @@
 #define KLISTDEBUGDIALOG__H
 
 #include "kabstractdebugdialog.h"
-#include <qcheckbox.h>
-#include <qptrlist.h>
-#include <qstringlist.h>
+#include <tqcheckbox.h>
+#include <tqptrlist.h>
+#include <tqstringlist.h>
 
 class QVBox;
 class KLineEdit;
@@ -40,10 +40,10 @@ class KListDebugDialog : public KAbstractDebugDialog
   Q_OBJECT
 
 public:
-  KListDebugDialog( QStringList areaList, QWidget *parent=0, const char *name=0, bool modal=true );
+  KListDebugDialog( TQStringList areaList, TQWidget *parent=0, const char *name=0, bool modal=true );
   virtual ~KListDebugDialog() {}
 
-  void activateArea( QCString area, bool activate );
+  void activateArea( TQCString area, bool activate );
 
   virtual void save();
 
@@ -51,15 +51,15 @@ protected slots:
   void selectAll();
   void deSelectAll();
 
-  void generateCheckBoxes( const QString& filter );
+  void generateCheckBoxes( const TQString& filter );
 
 private:
   void load();
-  QPtrList<QCheckBox> boxes;
-  QStringList m_areaList;
-  QVBox *m_box;
+  TQPtrList<TQCheckBox> boxes;
+  TQStringList m_areaList;
+  TQVBox *m_box;
   KLineEdit *m_incrSearch;
-  QMap<QCString, int> m_changes;
+  TQMap<TQCString, int> m_changes;
 };
 
 #endif

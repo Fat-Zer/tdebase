@@ -18,11 +18,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qlistview.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqlistview.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kdialog.h>
 #include <kglobal.h>
@@ -58,7 +58,7 @@ int my_reset_handler(raw1394handle_t handle, unsigned int )
 }
 
 
-View1394::View1394(QWidget *parent, const char *name)
+View1394::View1394(TQWidget *parent, const char *name)
 :KCModule(parent,name)
 ,m_insideRescanBus(false)
 {
@@ -79,15 +79,15 @@ View1394::View1394(QWidget *parent, const char *name)
    setButtons( KCModule::Help );
 
    m_ouiDb=new OuiDb();
-   QVBoxLayout *box=new QVBoxLayout(this, 0, KDialog::spacingHint());
+   TQVBoxLayout *box=new TQVBoxLayout(this, 0, KDialog::spacingHint());
    m_view=new View1394Widget(this);
    for (int i=2; i<8; i++)
       m_view->m_listview->setColumnAlignment(i, AlignHCenter);
    m_view->m_listview->setColumnAlignment(8, AlignRight);
    m_view->m_listview->setColumnAlignment(9, AlignRight);
    box->addWidget(m_view);
-   connect(m_view->m_busResetPb, SIGNAL(clicked()), this, SLOT(generateBusReset()));
-   connect(&m_rescanTimer, SIGNAL(timeout()), this, SLOT(rescanBus()));
+   connect(m_view->m_busResetPb, TQT_SIGNAL(clicked()), this, TQT_SLOT(generateBusReset()));
+   connect(&m_rescanTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(rescanBus()));
    m_notifiers.setAutoDelete(true);
    rescanBus();
 }
@@ -143,7 +143,7 @@ bool View1394::readConfigRom(raw1394handle_t handle, nodeid_t nodeid, quadlet_t&
 
 void View1394::callRaw1394EventLoop(int fd)
 {
-   for (QValueList<raw1394handle_t>::iterator it= m_handles.begin(); it!=m_handles.end(); ++it)
+   for (TQValueList<raw1394handle_t>::iterator it= m_handles.begin(); it!=m_handles.end(); ++it)
       if (raw1394_get_fd(*it)==fd)
       {
          raw1394_loop_iterate(*it);
@@ -162,7 +162,7 @@ void View1394::rescanBus()
 //   static int depth=0;
 //   depth++;
    m_notifiers.clear();
-   for (QValueList<raw1394handle_t>::iterator it=m_handles.begin(); it!=m_handles.end(); ++it)
+   for (TQValueList<raw1394handle_t>::iterator it=m_handles.begin(); it!=m_handles.end(); ++it)
       raw1394_destroy_handle(*it);
    m_handles.clear();
    m_view->m_listview->clear();
@@ -188,12 +188,12 @@ void View1394::rescanBus()
       }
       raw1394_set_userdata(handle, this);
       raw1394_set_bus_reset_handler(handle, my_reset_handler);
-      QSocketNotifier *notif=new QSocketNotifier(raw1394_get_fd(handle),QSocketNotifier::Read);
-      connect(notif, SIGNAL(activated(int)), this, SLOT(callRaw1394EventLoop(int)));
+      TQSocketNotifier *notif=new TQSocketNotifier(raw1394_get_fd(handle),TQSocketNotifier::Read);
+      connect(notif, TQT_SIGNAL(activated(int)), this, TQT_SLOT(callRaw1394EventLoop(int)));
       m_notifiers.append(notif);
       m_handles.append(handle);
       
-      QListViewItem *card=new QListViewItem(m_view->m_listview,i18n("Port %1:\"%2\"").arg(i).arg(p_info[i].name));
+      TQListViewItem *card=new TQListViewItem(m_view->m_listview,i18n("Port %1:\"%2\"").arg(i).arg(p_info[i].name));
       int num_of_nodes=raw1394_get_nodecount(handle);
 
       int localNodeId=raw1394_get_local_id(handle);
@@ -206,34 +206,34 @@ void View1394::rescanBus()
          quadlet_t cap=0;
          bool success=readConfigRom(handle, j, firstQuad, cap, guid);
 
-         QString nodeStr=i18n("Node %1").arg(j);
+         TQString nodeStr=i18n("Node %1").arg(j);
          if (!success)
          {
-            new QListViewItem(card,nodeStr, i18n("Not ready"));
+            new TQListViewItem(card,nodeStr, i18n("Not ready"));
             continue;
          }
          if (((firstQuad>>24) & 0xff)==1) //minimal config rom
          {
-            QString guidStr=QString::number(firstQuad,16);
+            TQString guidStr=TQString::number(firstQuad,16);
             guidStr="0x"+guidStr.rightJustify(6,'0');
-            new QListViewItem(card,nodeStr, guidStr);
+            new TQListViewItem(card,nodeStr, guidStr);
          }
          else  //general config rom
          {
-            QString guidStr;
+            TQString guidStr;
             char buf[32];
             snprintf(buf, 32, "%"PRIX64, guid);
             guidStr=buf;
             guidStr="0x"+guidStr.rightJustify(16,'0');
-            QString local=((j | 0xffc0) == localNodeId)?"X":"";
-            QString irmStr=(cap & 0x80000000) ? "X":"";
-            QString cmStr=(cap & 0x40000000) ? "X":"";
-            QString isStr=(cap & 0x20000000) ? "X":"";
-            QString bmStr=(cap & 0x10000000) ? "X":"";
-            QString pmStr=(cap & 0x08000000) ? "X":"";
-            QString accStr=QString::number((cap &0x00ff0000)>>16);
+            TQString local=((j | 0xffc0) == localNodeId)?"X":"";
+            TQString irmStr=(cap & 0x80000000) ? "X":"";
+            TQString cmStr=(cap & 0x40000000) ? "X":"";
+            TQString isStr=(cap & 0x20000000) ? "X":"";
+            TQString bmStr=(cap & 0x10000000) ? "X":"";
+            TQString pmStr=(cap & 0x08000000) ? "X":"";
+            TQString accStr=TQString::number((cap &0x00ff0000)>>16);
             int speed=( cap & 0x00000007);
-            QString speedStr;
+            TQString speedStr;
             switch(speed)
             {
             case(3):
@@ -250,7 +250,7 @@ void View1394::rescanBus()
                speedStr="100";
                break;
             }
-            QListViewItem* node=new QListViewItem(card);
+            TQListViewItem* node=new TQListViewItem(card);
             node->setText(0,nodeStr);
             node->setText(1, guidStr);
             node->setText(2,local);
@@ -272,21 +272,21 @@ void View1394::rescanBus()
 
 void View1394::generateBusReset()
 {
-   for (QValueList<raw1394handle_t>::iterator it=m_handles.begin(); it!=m_handles.end(); ++it)
+   for (TQValueList<raw1394handle_t>::iterator it=m_handles.begin(); it!=m_handles.end(); ++it)
       raw1394_reset_bus(*it);
 }
 
 
 OuiDb::OuiDb()
 {
-   QString filename=locate("data","kcmview1394/oui.db");
+   TQString filename=locate("data","kcmview1394/oui.db");
    if (filename.isEmpty())
       return;
-   QFile f(filename);
+   TQFile f(filename);
    if (!f.open(IO_ReadOnly))
       return;
 
-   QByteArray ba=f.readAll();
+   TQByteArray ba=f.readAll();
    int bytesLeft=ba.size();
    char* data=ba.data();
    while(bytesLeft>8)
@@ -306,12 +306,12 @@ OuiDb::OuiDb()
    f.close();
 }
 
-QString OuiDb::vendor(octlet_t guid)
+TQString OuiDb::vendor(octlet_t guid)
 {
    guid=(guid & 0xffffff0000000000LL)>>40;
-   QString key=QString::number((unsigned int)(guid),16);
+   TQString key=TQString::number((unsigned int)(guid),16);
    key=key.rightJustify(6, '0').upper();
-   QString v=m_vendorIds[key];
+   TQString v=m_vendorIds[key];
    if (v.isEmpty())
       v=i18n("Unknown");
    return v;
@@ -324,7 +324,7 @@ QString OuiDb::vendor(octlet_t guid)
 extern "C"
 {
 
-   KDE_EXPORT KCModule *create_view1394(QWidget *parent, const char *name)
+   KDE_EXPORT KCModule *create_view1394(TQWidget *parent, const char *name)
    {
       KGlobal::locale()->insertCatalogue("kcmview1394");
       return new View1394(parent, name);

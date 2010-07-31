@@ -19,15 +19,15 @@
 
 
 #include "delayedinitializer.h"
-#include <qtimer.h>
+#include <tqtimer.h>
 
-DelayedInitializer::DelayedInitializer( int eventType, QObject *parent, const char *name )
-    : QObject( parent, name ), m_eventType( eventType ), m_signalEmitted( false )
+DelayedInitializer::DelayedInitializer( int eventType, TQObject *parent, const char *name )
+    : TQObject( parent, name ), m_eventType( eventType ), m_signalEmitted( false )
 {
     parent->installEventFilter( this );
 }
 
-bool DelayedInitializer::eventFilter( QObject *receiver, QEvent *event )
+bool DelayedInitializer::eventFilter( TQObject *receiver, TQEvent *event )
 {
     if ( m_signalEmitted || event->type() != m_eventType )
         return false;
@@ -38,7 +38,7 @@ bool DelayedInitializer::eventFilter( QObject *receiver, QEvent *event )
     // Move the emitting of the event to the end of the eventQueue
     // so we are absolutely sure the event we get here is handled before
     // the initialize is fired.
-    QTimer::singleShot( 0, this, SLOT( slotInitialize() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( slotInitialize() ) );
 
     return false;
 }

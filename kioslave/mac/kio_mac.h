@@ -21,16 +21,16 @@
 #include <kurl.h>
 #include <kprocess.h>
 
-#include <qstring.h>
-#include <qcstring.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
-class MacProtocol : public QObject, public KIO::SlaveBase
+class MacProtocol : public TQObject, public KIO::SlaveBase
 {
     Q_OBJECT
 public:
-    MacProtocol(const QCString &pool, const QCString &app);
+    MacProtocol(const TQCString &pool, const TQCString &app);
     ~MacProtocol();
     virtual void get(const KURL& url );
     virtual void listDir(const KURL& url);
@@ -39,17 +39,17 @@ protected slots:
     void slotGetStdOutput(KProcess*, char*, int);
     void slotSetDataStdOutput(KProcess*, char *s, int len);
 protected:
-    QString prepareHP(const KURL& _url);
-    QValueList<KIO::UDSAtom> makeUDS(const QString& _line);
-    int makeTime(QString mday, QString mon, QString third);
-    QString getMimetype(QString type, QString app);
-    QValueList<KIO::UDSAtom> doStat(const KURL& url);
+    TQString prepareHP(const KURL& _url);
+    TQValueList<KIO::UDSAtom> makeUDS(const TQString& _line);
+    int makeTime(TQString mday, TQString mon, TQString third);
+    TQString getMimetype(TQString type, TQString app);
+    TQValueList<KIO::UDSAtom> doStat(const KURL& url);
 
     KIO::filesize_t processedBytes;
-    QString standardOutputStream;
+    TQString standardOutputStream;
     KProcess* myKProcess;
 
     //for debugging
-    //QFile* logFile;
-    //QTextStream* logStream;
+    //TQFile* logFile;
+    //TQTextStream* logStream;
 };

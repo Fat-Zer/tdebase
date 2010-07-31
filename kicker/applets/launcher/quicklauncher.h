@@ -25,9 +25,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __quicklauncher_h__
 
 #include <dcopobject.h>
-#include <qimage.h>
-#include <qstring.h>
-#include <qvaluevector.h>
+#include <tqimage.h>
+#include <tqstring.h>
+#include <tqvaluevector.h>
 #include <kpanelapplet.h>
 #include <map>
 
@@ -49,7 +49,7 @@ class QuickLauncher: public KPanelApplet, public DCOPObject
     K_DCOP
 
 k_dcop:
-    void serviceStartedByStorageId(QString starter, QString storageId);
+    void serviceStartedByStorageId(TQString starter, TQString storageId);
 
 public:
     enum {DEFAULT_ICON_DIM=QuickButton::DEFAULT_ICON_DIM};
@@ -59,34 +59,34 @@ public:
         float popularity;
     };
     
-    QuickLauncher(const QString& configFile, Type t = Normal, int actions = 0,
-                  QWidget *parent = 0, const char *name = 0);
+    QuickLauncher(const TQString& configFile, Type t = Normal, int actions = 0,
+                  TQWidget *parent = 0, const char *name = 0);
     ~QuickLauncher();
     int widthForHeight(int height) const;
     int heightForWidth(int width) const;
-    void addApp(QString url, int index, bool manuallyAdded);
+    void addApp(TQString url, int index, bool manuallyAdded);
     virtual void action(Action a);
 
 public slots:
-    void addApp(QString url, bool manuallyAdded);
-    void addAppBeforeManually(QString url, QString sender);
+    void addApp(TQString url, bool manuallyAdded);
+    void addAppBeforeManually(TQString url, TQString sender);
     void removeAppManually(QuickButton *button);
-    void removeApp(QString url, bool manuallyRemoved);
+    void removeApp(TQString url, bool manuallyRemoved);
     void removeApp(int index, bool manuallyRemoved);
     void removeAppManually(int index);
     void saveConfig();
     void about();
     
 protected:
-    int findApp(QString url);
+    int findApp(TQString url);
     int findApp(QuickButton *button);
     
-    void mousePressEvent(QMouseEvent *e);
-    void resizeEvent(QResizeEvent*);
-    void dragEnterEvent(QDragEnterEvent *e);
-    void dragLeaveEvent(QDragLeaveEvent *e);
-    void dragMoveEvent(QDragMoveEvent *e);
-    void dropEvent(QDropEvent *e);
+    void mousePressEvent(TQMouseEvent *e);
+    void resizeEvent(TQResizeEvent*);
+    void dragEnterEvent(TQDragEnterEvent *e);
+    void dragLeaveEvent(TQDragLeaveEvent *e);
+    void dragMoveEvent(TQDragMoveEvent *e);
+    void dropEvent(TQDropEvent *e);
     void refreshContents();
     void setRefreshEnabled(bool enable);
     void setConserveSpace(bool conserve_space);
@@ -106,33 +106,33 @@ protected slots:
     void slotConfigure();
     void slotSettingsDialogChanged();
     void fillRemoveAppsMenu();
-    void slotOwnServiceExecuted(QString serviceMenuId);
+    void slotOwnServiceExecuted(TQString serviceMenuId);
     void slotAdjustToCurrentPopularity();
     void slotStickyToggled();
 
 protected:
     void updateInsertionPosToStatusQuo();
     void updateStickyHighlightLayer();
-    QuickButton* createButton(QString url);
-    virtual void paintEvent(QPaintEvent* e);
+    QuickButton* createButton(TQString url);
+    virtual void paintEvent(TQPaintEvent* e);
     virtual void positionChange(Position);
     
-    QPopupMenu *m_popup;
-    QPopupMenu *m_appletPopup;
-    QPopupMenu *m_removeAppsMenu;
+    TQPopupMenu *m_popup;
+    TQPopupMenu *m_appletPopup;
+    TQPopupMenu *m_removeAppsMenu;
     QuickButtonGroup *m_buttons, *m_newButtons, *m_oldButtons, *m_dragButtons;
     int m_space, m_border;
-    QSize m_buttonSize;
+    TQSize m_buttonSize;
     FlowGridManager *m_manager;
     int m_dropLen, m_dropPos, m_minPanelDim;
     bool m_dragAccepted, m_refreshEnabled, m_needsSave, m_needsRefresh;
-    std::map<QString, int> m_appOrdering;
+    std::map<TQString, int> m_appOrdering;
     Prefs* m_settings;
     KAction *m_configAction;
     ConfigDlg *m_configDialog;
     PopularityStatistics* m_popularity;
-    QImage m_stickyHighlightLayer;
-    QTimer *m_saveTimer;
+    TQImage m_stickyHighlightLayer;
+    TQTimer *m_saveTimer;
 };
 
 #endif

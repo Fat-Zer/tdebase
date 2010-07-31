@@ -23,7 +23,7 @@
 #endif
 
 #include <kapplication.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 class QPixmap;
 class KSharedPixmap;
 
@@ -35,18 +35,18 @@ class SchemaEditor : public SchemaDialog
   Q_OBJECT 
   public:
     /** constructor */
-    SchemaEditor(QWidget* parent=0, const char *name=0);
+    SchemaEditor(TQWidget* parent=0, const char *name=0);
     /** destructor */
     ~SchemaEditor();
 
-    QString schema();
-    void setSchema(QString);
+    TQString schema();
+    void setSchema(TQString);
     bool isModified() const { return schMod; }
     void querySave();
 
   signals:
   	void changed();
-	void schemaListChanged(const QStringList &titles, const QStringList &filenames);
+	void schemaListChanged(const TQStringList &titles, const TQStringList &filenames);
 
   public slots:
   	void slotColorChanged(int);
@@ -60,23 +60,23 @@ class SchemaEditor : public SchemaDialog
   private slots:
 	void show();
 	void schemaModified();
-	void loadAllSchema(QString currentFile="");
+	void loadAllSchema(TQString currentFile="");
 	void updatePreview();
   private:
 	bool schMod;
-  	QMemArray<QColor> color;
-	QMemArray<int> type; // 0= custom, 1= sysfg, 2=sysbg, 3=rcolor
-	QMemArray<bool> transparent;
-	QMemArray<bool> bold;
-	QPixmap pix;
+  	TQMemArray<TQColor> color;
+	TQMemArray<int> type; // 0= custom, 1= sysfg, 2=sysbg, 3=rcolor
+	TQMemArray<bool> transparent;
+	TQMemArray<bool> bold;
+	TQPixmap pix;
 	KSharedPixmap *spix;
-	QString defaultSchema;	
+	TQString defaultSchema;	
 	bool loaded;
 	bool schemaLoaded;
 	bool change;
 	int oldSchema;
 	int oldSlot;
-	QString readSchemaTitle(const QString& filename);
+	TQString readSchemaTitle(const TQString& filename);
 	void schemaListChanged();
 
 };

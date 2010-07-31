@@ -53,17 +53,17 @@
 */
 #include <errno.h>
 
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qmetaobject.h>
-#include <qpainter.h>
-#include <qregexp.h>
-#include <qtabwidget.h>
-#include <qtextview.h>
-#include <qtimer.h>
-#include <qvbox.h>
+#include <tqbitmap.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqmetaobject.h>
+#include <tqpainter.h>
+#include <tqregexp.h>
+#include <tqtabwidget.h>
+#include <tqtextview.h>
+#include <tqtimer.h>
+#include <tqvbox.h>
 
 #include <kdebug.h>
 #include <kdialog.h>
@@ -99,17 +99,17 @@ KasTaskItem::KasTaskItem( KasTasker *parent, Task::Ptr task )
     setAttention( task->demandsAttention() );
     updateTask(false);
 
-    connect( task, SIGNAL( changed(bool) ), this, SLOT( updateTask(bool) ) );
-    connect( task, SIGNAL( activated() ), this, SLOT( startAutoThumbnail() ) );
-    connect( task, SIGNAL( deactivated() ), this, SLOT( stopAutoThumbnail() ) );
-    connect( task, SIGNAL( iconChanged() ), this, SLOT( iconChanged() ) );
-    connect( task, SIGNAL( thumbnailChanged() ), this, SLOT( iconChanged() ) );
+    connect( task, TQT_SIGNAL( changed(bool) ), this, TQT_SLOT( updateTask(bool) ) );
+    connect( task, TQT_SIGNAL( activated() ), this, TQT_SLOT( startAutoThumbnail() ) );
+    connect( task, TQT_SIGNAL( deactivated() ), this, TQT_SLOT( stopAutoThumbnail() ) );
+    connect( task, TQT_SIGNAL( iconChanged() ), this, TQT_SLOT( iconChanged() ) );
+    connect( task, TQT_SIGNAL( thumbnailChanged() ), this, TQT_SLOT( iconChanged() ) );
 
-    connect( this, SIGNAL(leftButtonClicked(QMouseEvent *)), SLOT(toggleActivateAction()) );
-    connect( this, SIGNAL(rightButtonClicked(QMouseEvent *)), SLOT(showWindowMenuAt(QMouseEvent *) ) );
+    connect( this, TQT_SIGNAL(leftButtonClicked(TQMouseEvent *)), TQT_SLOT(toggleActivateAction()) );
+    connect( this, TQT_SIGNAL(rightButtonClicked(TQMouseEvent *)), TQT_SLOT(showWindowMenuAt(TQMouseEvent *) ) );
 
-    attentionTimer = new QTimer( this, "attentionTimer" );
-    connect( attentionTimer, SIGNAL( timeout() ), SLOT( checkAttention() ) );
+    attentionTimer = new TQTimer( this, "attentionTimer" );
+    connect( attentionTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( checkAttention() ) );
     attentionTimer->start( CHECK_ATTENTION_DELAY );
 }
 
@@ -122,7 +122,7 @@ KasTasker *KasTaskItem::kasbar() const
     return static_cast<KasTasker *> (KasItem::kasbar());
 }
 
-QPixmap KasTaskItem::icon()
+TQPixmap KasTaskItem::icon()
 {
     int sizes[] = { KIcon::SizeEnormous,
 		    KIcon::SizeHuge,
@@ -133,11 +133,11 @@ QPixmap KasTaskItem::icon()
     if ( kasbar()->embedThumbnails() && task_->hasThumbnail() ) {
 	usedIconLoader = true;
 
-	QPixmap thumb = task_->thumbnail();
-	QSize sz = thumb.size();
-	sz.scale( sizes[kasbar()->itemSize()], sizes[kasbar()->itemSize()], QSize::ScaleMin );
+	TQPixmap thumb = task_->thumbnail();
+	TQSize sz = thumb.size();
+	sz.scale( sizes[kasbar()->itemSize()], sizes[kasbar()->itemSize()], TQSize::ScaleMin );
 
-	QImage img = thumb.convertToImage();
+	TQImage img = thumb.convertToImage();
 	img = img.smoothScale( sz );
 
 	bool ok = thumb.convertFromImage( img );
@@ -146,7 +146,7 @@ QPixmap KasTaskItem::icon()
     }
 
     usedIconLoader = false;
-    QPixmap p = task_->bestIcon( sizes[kasbar()->itemSize()], usedIconLoader );
+    TQPixmap p = task_->bestIcon( sizes[kasbar()->itemSize()], usedIconLoader );
     if ( !p.isNull() )
 	return p;
 
@@ -184,12 +184,12 @@ void KasTaskItem::updateTask(bool geometryChangeOnly)
     update();
 }
 
-void KasTaskItem::paint( QPainter *p )
+void KasTaskItem::paint( TQPainter *p )
 {
     KasItem::paint( p );
 
     KasResources *res = resources();
-    QColor c = task_->isActive() ? res->activePenColor() : res->inactivePenColor();
+    TQColor c = task_->isActive() ? res->activePenColor() : res->inactivePenColor();
     p->setPen( c );
 
     //
@@ -203,9 +203,9 @@ void KasTaskItem::paint( QPainter *p )
 	          && ( kas->itemSize() != KasBar::Medium );
 
     if ( usedIconLoader && iconHasChanged && haveSpace ) {
-	QPixmap pix = icon();
+	TQPixmap pix = icon();
 	int x = (extent() - 4 - pix.width()) / 2;
-	QPixmap overlay = task_->pixmap();
+	TQPixmap overlay = task_->pixmap();
 	p->drawPixmap( x-4+pix.width()-overlay.width(), 18, overlay );
     }
 
@@ -226,7 +226,7 @@ void KasTaskItem::paint( QPainter *p )
     // Check if we only have one desktop
     bool oneDesktop = (TaskManager::the()->numberOfDesktops() == 1) ? true : false;
 
-    QString deskStr;
+    TQString deskStr;
     if ( task_->isOnAllDesktops() )
 	deskStr = i18n( "All" );
     else
@@ -261,7 +261,7 @@ void KasTaskItem::toggleActivateAction()
     }
 }
 
-void KasTaskItem::showWindowMenuAt( QMouseEvent *ev )
+void KasTaskItem::showWindowMenuAt( TQMouseEvent *ev )
 {
     hidePopup();
     showWindowMenuAt( ev->globalPos() );
@@ -294,13 +294,13 @@ void KasTaskItem::startAutoThumbnail()
 	return;
 
     if ( kasbar()->thumbnailUpdateDelay() > 0 ) {
-	thumbTimer = new QTimer( this, "thumbTimer" );
-	connect( thumbTimer, SIGNAL( timeout() ), SLOT( refreshThumbnail() ) );
+	thumbTimer = new TQTimer( this, "thumbTimer" );
+	connect( thumbTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( refreshThumbnail() ) );
 
 	thumbTimer->start( kasbar()->thumbnailUpdateDelay() * 1000 );
     }
 
-    QTimer::singleShot( 200, this, SLOT( refreshThumbnail() ) );
+    TQTimer::singleShot( 200, this, TQT_SLOT( refreshThumbnail() ) );
 }
 
 void KasTaskItem::stopAutoThumbnail()
@@ -322,7 +322,7 @@ void KasTaskItem::refreshThumbnail()
     // TODO: Check if the popup obscures the window
     KasItem *i = kasbar()->itemUnderMouse();
     if ( i && i->isShowingPopup() ) {
-	QTimer::singleShot( 200, this, SLOT( refreshThumbnail() ) );
+	TQTimer::singleShot( 200, this, TQT_SLOT( refreshThumbnail() ) );
 	return;
     }
 
@@ -330,14 +330,14 @@ void KasTaskItem::refreshThumbnail()
     task_->updateThumbnail();
 }
 
-void KasTaskItem::showWindowMenuAt( QPoint p )
+void KasTaskItem::showWindowMenuAt( TQPoint p )
 {
     TaskRMBMenu *tm = new TaskRMBMenu(task_, true, kasbar());
-    tm->insertItem( i18n("To &Tray" ), this, SLOT( sendToTray() ) );
+    tm->insertItem( i18n("To &Tray" ), this, TQT_SLOT( sendToTray() ) );
     tm->insertSeparator();
     tm->insertItem( i18n("&Kasbar"), kasbar()->contextMenu() );
     tm->insertSeparator();
-    tm->insertItem( i18n("&Properties" ), this, SLOT( showPropertiesDialog() ) );
+    tm->insertItem( i18n("&Properties" ), this, TQT_SLOT( showPropertiesDialog() ) );
 
     mouseLeave();
     kasbar()->updateMouseOver();
@@ -347,7 +347,7 @@ void KasTaskItem::showWindowMenuAt( QPoint p )
 
 void KasTaskItem::sendToTray()
 {
-    QString s;
+    TQString s;
     s.setNum( task_->window() );
 
     KProcess proc;
@@ -372,7 +372,7 @@ void KasTaskItem::showPropertiesDialog()
     //
     // Create Dialog
     //
-    QDialog *dlg = new QDialog( /*kasbar()*/0L, "task_props", false );
+    TQDialog *dlg = new TQDialog( /*kasbar()*/0L, "task_props", false );
 
     //
     // Title
@@ -385,7 +385,7 @@ void KasTaskItem::showPropertiesDialog()
     //
     // Tabbed View
     //
-    QTabWidget *tabs = new QTabWidget( dlg );
+    TQTabWidget *tabs = new TQTabWidget( dlg );
     tabs->addTab( createX11Props( tabs ), i18n("General") );
     tabs->addTab( createTaskProps( task_, tabs ), i18n("Task") );
 
@@ -399,7 +399,7 @@ void KasTaskItem::showPropertiesDialog()
     //
     // Layout Dialog
     //
-    QVBoxLayout *vbl = new QVBoxLayout( dlg, KDialog::marginHint(), KDialog::spacingHint() );
+    TQVBoxLayout *vbl = new TQVBoxLayout( dlg, KDialog::marginHint(), KDialog::spacingHint() );
     vbl->addWidget( title );
     vbl->addWidget( tabs );
 
@@ -408,23 +408,23 @@ void KasTaskItem::showPropertiesDialog()
 
 }
 
-QWidget *KasTaskItem::createTaskProps( QObject *target, QWidget *parent, bool recursive )
+TQWidget *KasTaskItem::createTaskProps( TQObject *target, TQWidget *parent, bool recursive )
 {
-    QVBox *vb = new QVBox( parent );
+    TQVBox *vb = new TQVBox( parent );
     vb->setSpacing( KDialog::spacingHint() );
     vb->setMargin( KDialog::marginHint() );
 
     // Create List View
     KListView *taskprops = new KListView( vb, "props_view" );
-    taskprops->setResizeMode( QListView::LastColumn );
+    taskprops->setResizeMode( TQListView::LastColumn );
     taskprops->addColumn( i18n("Property"), 0 );
     taskprops->addColumn( i18n("Type"), 0 );
     taskprops->addColumn( i18n("Value") );
 
     // Create List Items
-    QMetaObject *mo = target->metaObject();
+    TQMetaObject *mo = target->metaObject();
     for ( int i = 0; i < mo->numProperties( recursive ); i++ ) {
-	const QMetaProperty *p = mo->property(i, recursive);
+	const TQMetaProperty *p = mo->property(i, recursive);
 
 	(void) new KListViewItem( taskprops,
 				  p->name(), p->type(),
@@ -434,17 +434,17 @@ QWidget *KasTaskItem::createTaskProps( QObject *target, QWidget *parent, bool re
     return vb;
 }
 
-QString KasTaskItem::expandMacros( const QString &format, QObject *data )
+TQString KasTaskItem::expandMacros( const TQString &format, TQObject *data )
 {
-    QString s = format;
-    QRegExp re("\\$(\\w+)");
+    TQString s = format;
+    TQRegExp re("\\$(\\w+)");
 
     int pos = 0;
     while ( pos >= 0 ) {
         pos = re.search( s, pos );
         if ( pos >= 0 ) {
-	    QVariant val = data->property( re.cap(1).latin1() );
-	    QString v = val.asString();
+	    TQVariant val = data->property( re.cap(1).latin1() );
+	    TQString v = val.asString();
 	    s.replace( pos, re.matchedLength(), v );
             pos = pos + v.length();
         }
@@ -453,18 +453,18 @@ QString KasTaskItem::expandMacros( const QString &format, QObject *data )
     return s;
 }
 
-QWidget *KasTaskItem::createX11Props( QWidget *parent )
+TQWidget *KasTaskItem::createX11Props( TQWidget *parent )
 {
-    QVBox *vb2 = new QVBox( parent );
-    vb2->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Preferred );
+    TQVBox *vb2 = new TQVBox( parent );
+    vb2->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
     vb2->setSpacing( KDialog::spacingHint() );
     vb2->setMargin( KDialog::marginHint() );
 
     // Create View
-    new QLabel( i18n("General"), vb2, "view" );
-    QTextView *tv = new QTextView( vb2 );
+    new TQLabel( i18n("General"), vb2, "view" );
+    TQTextView *tv = new TQTextView( vb2 );
 
-    QString fmt = i18n(
+    TQString fmt = i18n(
 	"<html>"
 	"<body>"
 	"<b>Name</b>: $name<br>"
@@ -489,20 +489,20 @@ QWidget *KasTaskItem::createX11Props( QWidget *parent )
 	);
 
     tv->setText( expandMacros( fmt, task_ ) );
-    tv->setWordWrap( QTextEdit::WidgetWidth );
+    tv->setWordWrap( TQTextEdit::WidgetWidth );
 
     return vb2;
 }
 
-QWidget *KasTaskItem::createNETProps( QWidget *parent )
+TQWidget *KasTaskItem::createNETProps( TQWidget *parent )
 {
-    QVBox *vb3 = new QVBox( parent );
+    TQVBox *vb3 = new TQVBox( parent );
     vb3->setSpacing( KDialog::spacingHint() );
     vb3->setMargin( KDialog::marginHint() );
 
     // Create View
-    new QLabel( i18n("NET WM Specification Info"), vb3, "view" );
-    new QTextView( vb3 );
+    new TQLabel( i18n("NET WM Specification Info"), vb3, "view" );
+    new TQTextView( vb3 );
 
     return vb3;
 }

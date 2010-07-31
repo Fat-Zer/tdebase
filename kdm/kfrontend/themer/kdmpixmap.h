@@ -24,8 +24,8 @@
 
 #include "kdmitem.h"
 
-//#include <qrect.h>
-#include <qpixmap.h>
+//#include <tqrect.h>
+#include <tqpixmap.h>
 
 /*
  * KdmPixmap. A pixmap element
@@ -35,26 +35,26 @@ class KdmPixmap : public KdmItem {
 	Q_OBJECT
 
 public:
-	KdmPixmap( KdmItem *parent, const QDomNode &node, const char *name = 0 );
+	KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name = 0 );
 
 protected:
 	// reimplemented; returns the size of loaded pixmap
-	virtual QSize sizeHint();
+	virtual TQSize sizeHint();
 
 	// draw the pixmap
-	virtual void drawContents( QPainter *p, const QRect &r );
+	virtual void drawContents( TQPainter *p, const TQRect &r );
 
 	// handle switching between normal / active / prelight configurations
 	virtual void statusChanged();
 
-	virtual void setGeometry( const QRect &newGeometry, bool force );
+	virtual void setGeometry( const TQRect &newGeometry, bool force );
 
 	struct PixmapStruct {
 		struct PixmapClass {
-			QString fullpath;
-			QPixmap pixmap;
-			QPixmap readyPixmap;
-			QColor tint;
+			TQString fullpath;
+			TQPixmap pixmap;
+			TQPixmap readyPixmap;
+			TQColor tint;
 			float alpha;	//TODO added: not in greeter.dtd
 			bool present;
 		} normal, active, prelight;
@@ -62,8 +62,8 @@ protected:
 
 private:
 	// Method to load the pixmap given by the theme
-	void loadPixmap( const QString &fileName, QPixmap &p, QString &path );
-	void renderSvg( PixmapStruct::PixmapClass *pClass, const QRect &area );
+	void loadPixmap( const TQString &fileName, TQPixmap &p, TQString &path );
+	void renderSvg( PixmapStruct::PixmapClass *pClass, const TQRect &area );
 };
 
 #endif

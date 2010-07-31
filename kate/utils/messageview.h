@@ -26,7 +26,7 @@
     
     This is a message view for displaying output from processes.
     
-    It uses a QTextEdit in _ mode to display the text. 
+    It uses a TQTextEdit in _ mode to display the text. 
     
     You can use HTML links, for example to allow the user to go
     to a line in a precessed document.
@@ -52,18 +52,18 @@ namespace Kate
 class MessageView : public DockViewBase {
   Q_OBJECT
   public:
-    MessageView( QWidget *parent=0, const char *name=0 );
+    MessageView( TQWidget *parent=0, const char *name=0 );
     ~MessageView();
     
   public slots:
-    void addMessage( const QString &msg );
+    void addMessage( const TQString &msg );
     void clear();
 
   signals: 
-    void linkClicked( const QString & href );
+    void linkClicked( const TQString & href );
         
   private:
-    QTextBrowser *m_view;
+    TQTextBrowser *m_view;
 };
 
 }

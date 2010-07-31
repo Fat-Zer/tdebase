@@ -28,7 +28,7 @@
 #ifndef CHFACEDLG_H
 #define CHFACEDLG_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kiconview.h> // declaration below
 
@@ -42,26 +42,26 @@ class ChFaceDlg : public KDialogBase
 public:
 
 
-  ChFaceDlg(const QString& picsdirs, QWidget *parent=0, const char *name=0, bool modal=true);
+  ChFaceDlg(const TQString& picsdirs, TQWidget *parent=0, const char *name=0, bool modal=true);
 
 
-  QPixmap getFaceImage() const 
+  TQPixmap getFaceImage() const 
   {
     if(m_FacesWidget->currentItem())
       return *(m_FacesWidget->currentItem()->pixmap());
     else
-      return QPixmap();
+      return TQPixmap();
   }
 
 private slots:
-  void slotFaceWidgetSelectionChanged( QIconViewItem *item )
+  void slotFaceWidgetSelectionChanged( TQIconViewItem *item )
   	{ enableButtonOK( !item->pixmap()->isNull() ); }
 
   void slotGetCustomImage();
   //void slotSaveCustomImage();
 
 private:
-  void addCustomPixmap( QString imPath, bool saveCopy );
+  void addCustomPixmap( TQString imPath, bool saveCopy );
 
   KIconView *m_FacesWidget;
 };

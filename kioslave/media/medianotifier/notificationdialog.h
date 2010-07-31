@@ -35,13 +35,13 @@ class NotificationDialog : public KDialogBase
 
 public:
 	NotificationDialog( KFileItem medium, NotifierSettings *settings,
-	                    QWidget* parent = 0, const char* name = 0 );
+	                    TQWidget* parent = 0, const char* name = 0 );
 	~NotificationDialog();
 
 private slots:
 	void slotOk();
 	void slotConfigure();
-	void slotActionsChanged(const QString& dir);
+	void slotActionsChanged(const TQString& dir);
 
 private:
 	void launchAction( NotifierAction *action );

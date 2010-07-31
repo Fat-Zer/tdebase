@@ -54,7 +54,7 @@ public:
     /**
      * Create a new window with a single view, showing @p url
      */
-    static KonqMainWindow * createSimpleWindow( const KURL &url, const QString &frameName = QString::null );
+    static KonqMainWindow * createSimpleWindow( const KURL &url, const TQString &frameName = TQString::null );
 
     /**
      * Create a new window with a single view, showing @p url, using @p args
@@ -70,7 +70,7 @@ public:
     static KonqMainWindow * createNewWindow( const KURL &url,
                                              const KParts::URLArgs &args = KParts::URLArgs(),
                                              bool forbidUseHTML = false,
-                                             QStringList filesToSelect = QStringList(),
+                                             TQStringList filesToSelect = TQStringList(),
                                              bool tempFile = false,
 					     bool openURL = true);
 
@@ -80,12 +80,12 @@ public:
      * @param forbidUseHTML internal. True when called by "Find Files"
      * @param openURL If false no url is opened
      */
-    static KonqMainWindow * createBrowserWindowFromProfile( const QString &path,
-                                                            const QString &filename,
+    static KonqMainWindow * createBrowserWindowFromProfile( const TQString &path,
+                                                            const TQString &filename,
                                                             const KURL &url = KURL(),
                                                             const KParts::URLArgs &args = KParts::URLArgs(),
                                                             bool forbidUseHTML = false,
-                                                            const QStringList& filesToSelect = QStringList(),
+                                                            const TQStringList& filesToSelect = TQStringList(),
                                                             bool tempFile = false,
 							    bool openURL = true);
 
@@ -103,30 +103,30 @@ public:
      * @p _url to be filtered.
      * @p _path the absolute path to append to the url before filtering it.
      */
-    static QString konqFilteredURL( QWidget* /*parent*/, const QString& /*_url*/, const QString& _path = QString::null );
+    static TQString konqFilteredURL( TQWidget* /*parent*/, const TQString& /*_url*/, const TQString& _path = TQString::null );
 
 };
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 class KonqDraggableLabel : public QLabel
 {
     Q_OBJECT
 public:
-    KonqDraggableLabel( KonqMainWindow * mw, const QString & text );
+    KonqDraggableLabel( KonqMainWindow * mw, const TQString & text );
 
 protected:
-    void mousePressEvent( QMouseEvent * ev );
-    void mouseMoveEvent( QMouseEvent * ev );
-    void mouseReleaseEvent( QMouseEvent * );
-    void dragEnterEvent( QDragEnterEvent *ev );
-    void dropEvent( QDropEvent* ev );
+    void mousePressEvent( TQMouseEvent * ev );
+    void mouseMoveEvent( TQMouseEvent * ev );
+    void mouseReleaseEvent( TQMouseEvent * );
+    void dragEnterEvent( TQDragEnterEvent *ev );
+    void dropEvent( TQDropEvent* ev );
 
 private slots:
     void delayedOpenURL();
 
 private:
-    QPoint startDragPos;
+    TQPoint startDragPos;
     bool validDrag;
     KonqMainWindow * m_mw;
     KURL::List _savedLst;

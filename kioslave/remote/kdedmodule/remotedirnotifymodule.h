@@ -28,7 +28,7 @@ class RemoteDirNotifyModule : public KDEDModule
 K_DCOP
 
 public:
-	RemoteDirNotifyModule(const QCString &obj);
+	RemoteDirNotifyModule(const TQCString &obj);
 private:
 	RemoteDirNotify notifier;
 };

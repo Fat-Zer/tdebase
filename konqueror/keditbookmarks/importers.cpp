@@ -25,7 +25,7 @@
 #include "toplevel.h"
 #include "listview.h"
 
-#include <qregexp.h>
+#include <tqregexp.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -40,15 +40,15 @@
 #include <kbookmarkimporter_crash.h>
 #include <kbookmarkdombuilder.h>
 
-QString ImportCommand::name() const {
+TQString ImportCommand::name() const {
     return i18n("Import %1 Bookmarks").arg(visibleName());
 }
 
-QString ImportCommand::folder() const {
-    return m_folder ? i18n("%1 Bookmarks").arg(visibleName()) : QString::null;
+TQString ImportCommand::folder() const {
+    return m_folder ? i18n("%1 Bookmarks").arg(visibleName()) : TQString::null;
 }
 
-ImportCommand* ImportCommand::importerFactory(const QCString &type) {
+ImportCommand* ImportCommand::importerFactory(const TQCString &type) {
     if (type == "Galeon") return new GaleonImportCommand();
     else if (type == "IE") return new IEImportCommand();
     else if (type == "KDE2") return new KDE2ImportCommand();
@@ -62,10 +62,10 @@ ImportCommand* ImportCommand::importerFactory(const QCString &type) {
     }
 }
 
-ImportCommand* ImportCommand::performImport(const QCString &type, QWidget *top) {
+ImportCommand* ImportCommand::performImport(const TQCString &type, TQWidget *top) {
     ImportCommand *importer = ImportCommand::importerFactory(type);
 
-    QString mydirname = importer->requestFilename();
+    TQString mydirname = importer->requestFilename();
     if (mydirname.isEmpty()) {
         delete importer;
         return 0;
@@ -136,9 +136,9 @@ void ImportCommand::unexecute() {
     }
 }
 
-QString ImportCommand::affectedBookmarks() const
+TQString ImportCommand::affectedBookmarks() const
 {
-    QString rootAdr = CurrentMgr::self()->mgr()->root().address();
+    TQString rootAdr = CurrentMgr::self()->mgr()->root().address();
     if(m_group == rootAdr)
         return m_group;
     else
@@ -147,42 +147,42 @@ QString ImportCommand::affectedBookmarks() const
 
 /* -------------------------------------- */
 
-QString MozImportCommand::requestFilename() const {
+TQString MozImportCommand::requestFilename() const {
     static KMozillaBookmarkImporterImpl importer;
     return importer.findDefaultLocation();
 }
 
-QString NSImportCommand::requestFilename() const {
+TQString NSImportCommand::requestFilename() const {
     static KNSBookmarkImporterImpl importer;
     return importer.findDefaultLocation();
 }
 
-QString OperaImportCommand::requestFilename() const {
+TQString OperaImportCommand::requestFilename() const {
     static KOperaBookmarkImporterImpl importer;
     return importer.findDefaultLocation();
 }
 
-QString CrashesImportCommand::requestFilename() const {
+TQString CrashesImportCommand::requestFilename() const {
     static KCrashBookmarkImporterImpl importer;
     return importer.findDefaultLocation();
 }
 
-QString IEImportCommand::requestFilename() const {
+TQString IEImportCommand::requestFilename() const {
     static KIEBookmarkImporterImpl importer;
     return importer.findDefaultLocation();
 }
 
 // following two are really just xbel
 
-QString GaleonImportCommand::requestFilename() const {
+TQString GaleonImportCommand::requestFilename() const {
     return KFileDialog::getOpenFileName(
-            QDir::homeDirPath() + "/.galeon",
+            TQDir::homeDirPath() + "/.galeon",
             i18n("*.xbel|Galeon Bookmark Files (*.xbel)"));
 }
 
 #include "kstandarddirs.h"
 
-QString KDE2ImportCommand::requestFilename() const {
+TQString KDE2ImportCommand::requestFilename() const {
     return KFileDialog::getOpenFileName(
             locateLocal("data", "konqueror"),
             i18n("*.xml|KDE Bookmark Files (*.xml)"));
@@ -233,10 +233,10 @@ void XBELImportCommand::doExecute(const KBookmarkGroup &/*bkGroup*/) {
     // check if already open first???
     KBookmarkManager *pManager = KBookmarkManager::managerForFile(m_fileName, false);
 
-    QDomDocument doc = CurrentMgr::self()->mgr()->internalDocument();
+    TQDomDocument doc = CurrentMgr::self()->mgr()->internalDocument();
 
     // get the xbel
-    QDomNode subDoc = pManager->internalDocument().namedItem("xbel").cloneNode();
+    TQDomNode subDoc = pManager->internalDocument().namedItem("xbel").cloneNode();
     if (subDoc.isProcessingInstruction())
         subDoc = subDoc.nextSibling();
     if (subDoc.isDocumentType())
@@ -249,42 +249,42 @@ void XBELImportCommand::doExecute(const KBookmarkGroup &/*bkGroup*/) {
         subDoc.toElement().setTagName("folder");
 
         // clear attributes
-        QStringList tags;
+        TQStringList tags;
         for (uint i = 0; i < subDoc.attributes().count(); i++)
             tags << subDoc.attributes().item(i).toAttr().name();
-        for (QStringList::Iterator it = tags.begin(); it != tags.end(); ++it)
+        for (TQStringList::Iterator it = tags.begin(); it != tags.end(); ++it)
             subDoc.attributes().removeNamedItem((*it));
 
         subDoc.toElement().setAttribute("icon", m_icon);
 
         // give the folder a name
-        QDomElement textElem = doc.createElement("title");
+        TQDomElement textElem = doc.createElement("title");
         subDoc.insertBefore(textElem, subDoc.firstChild());
         textElem.appendChild(doc.createTextNode(folder()));
     }
 
     // import and add it
-    QDomNode node = doc.importNode(subDoc, true);
+    TQDomNode node = doc.importNode(subDoc, true);
 
     if (!folder().isEmpty()) {
         CurrentMgr::self()->mgr()->root().internalElement().appendChild(node);
         m_group = KBookmarkGroup(node.toElement()).address();
 
     } else {
-        QDomElement root = CurrentMgr::self()->mgr()->root().internalElement();
+        TQDomElement root = CurrentMgr::self()->mgr()->root().internalElement();
 
-        QValueList<QDomElement> childList;
+        TQValueList<TQDomElement> childList;
 
-        QDomNode n = subDoc.firstChild().toElement();
+        TQDomNode n = subDoc.firstChild().toElement();
         while (!n.isNull()) {
-            QDomElement e = n.toElement();
+            TQDomElement e = n.toElement();
             if (!e.isNull())
                 childList.append(e);
             n = n.nextSibling();
         }
 
-        QValueList<QDomElement>::Iterator it = childList.begin();
-        QValueList<QDomElement>::Iterator end = childList.end();
+        TQValueList<TQDomElement>::Iterator it = childList.begin();
+        TQValueList<TQDomElement>::Iterator end = childList.end();
         for (; it!= end ; ++it)
             root.appendChild((*it));
     }

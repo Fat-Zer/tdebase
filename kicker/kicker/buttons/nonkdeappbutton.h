@@ -42,12 +42,12 @@ class NonKDEAppButton : public PanelButton
 
 public:
     // define our two constructors, one used for creating new buttons...
-    NonKDEAppButton(const QString& name, const QString& description,
-                    const QString& filePath, const QString& icon,
-                    const QString& cmdLine, bool inTerm, QWidget* parent);
+    NonKDEAppButton(const TQString& name, const TQString& description,
+                    const TQString& filePath, const TQString& icon,
+                    const TQString& cmdLine, bool inTerm, TQWidget* parent);
 
     // ... and once for restoring them at start up
-    NonKDEAppButton(const KConfigGroup& config, QWidget* parent);
+    NonKDEAppButton(const KConfigGroup& config, TQWidget* parent);
 
     // reimplemented from PanelButton
     virtual void saveConfig(KConfigGroup& config) const;
@@ -63,29 +63,29 @@ protected slots:
 protected:
     // used to set up our internal state, either when creating the button
     // or after reconfiguration
-    void initialize(const QString& name, const QString& description,
-                    const QString& filePath, const QString& icon,
-                    const QString& cmdLine, bool inTerm);
+    void initialize(const TQString& name, const TQString& description,
+                    const TQString& filePath, const TQString& icon,
+                    const TQString& cmdLine, bool inTerm);
 
     // run the command!
     // the execStr parameter, which default to an empty string,
     // is used to provide additional command line options aside
     // from the ones in our config file; for instance a URL drag'd onto us
-    void runCommand(const QString& execStr = QString::null);
+    void runCommand(const TQString& execStr = TQString::null);
 
     // reimplemented from PanelButton
-    virtual QString tileName() { return "URL"; }
-    QString defaultIcon() const { return "exec"; };
+    virtual TQString tileName() { return "URL"; }
+    TQString defaultIcon() const { return "exec"; };
 
     // handle drag and drop actions
-    virtual void dropEvent(QDropEvent *ev);
-    virtual void dragEnterEvent(QDragEnterEvent *ev);
+    virtual void dropEvent(TQDropEvent *ev);
+    virtual void dragEnterEvent(TQDragEnterEvent *ev);
 
-    QString    nameStr; // the name given this button by the user
-    QString    descStr; // the description given this button by the user
-    QString    pathStr; // the path to the command
-    QString    iconStr; // the path to the icon for this button
-    QString    cmdStr;  // command line flags, if any
+    TQString    nameStr; // the name given this button by the user
+    TQString    descStr; // the description given this button by the user
+    TQString    pathStr; // the path to the command
+    TQString    iconStr; // the path to the icon for this button
+    TQString    cmdStr;  // command line flags, if any
     bool       term;    // whether to run this in a terminal or not
 }; // all done defining the class!
 

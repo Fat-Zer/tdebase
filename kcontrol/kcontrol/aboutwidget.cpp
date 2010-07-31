@@ -17,11 +17,11 @@
 
 */
 
-#include <qpainter.h>
-#include <qwhatsthis.h>
-#include <qregexp.h>
-#include <qlayout.h>
-#include <qfile.h>
+#include <tqpainter.h>
+#include <tqwhatsthis.h>
+#include <tqregexp.h>
+#include <tqlayout.h>
+#include <tqfile.h>
 
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -68,8 +68,8 @@ static const char system_text[] = I18N_NOOP("System:");
 static const char release_text[] = I18N_NOOP("Release:");
 static const char machine_text[] = I18N_NOOP("Machine:");
 
-AboutWidget::AboutWidget(QWidget *parent , const char *name, QListViewItem* category, const QString &caption)
-   : QHBox(parent, name),
+AboutWidget::AboutWidget(TQWidget *parent , const char *name, TQListViewItem* category, const TQString &caption)
+   : TQHBox(parent, name),
       _moduleList(false),
       _category(category),
       _caption(caption)
@@ -80,16 +80,16 @@ AboutWidget::AboutWidget(QWidget *parent , const char *name, QListViewItem* cate
     setMinimumSize(400, 400);
 
     // set qwhatsthis help
-    QWhatsThis::add(this, i18n(intro_text));
+    TQWhatsThis::add(this, i18n(intro_text));
     _viewer = new KHTMLPart( this, "_viewer" );
-    _viewer->widget()->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    _viewer->widget()->setSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Ignored );
     connect( _viewer->browserExtension(),
-             SIGNAL(openURLRequest(const KURL&, const KParts::URLArgs&)),
-             this, SLOT(slotModuleLinkClicked(const KURL&)) );
+             TQT_SIGNAL(openURLRequest(const KURL&, const KParts::URLArgs&)),
+             this, TQT_SLOT(slotModuleLinkClicked(const KURL&)) );
     updatePixmap();
 }
 
-void AboutWidget::setCategory( QListViewItem* category, const QString& icon, const QString &caption )
+void AboutWidget::setCategory( TQListViewItem* category, const TQString& icon, const TQString &caption )
 {
   _icon = icon;
   _caption = caption;
@@ -105,11 +105,11 @@ void AboutWidget::setCategory( QListViewItem* category, const QString& icon, con
 
 void AboutWidget::updatePixmap()
 {
-    QString file = locate(  "data", "kcontrol/about/main.html" );
-    QFile f( file );
+    TQString file = locate(  "data", "kcontrol/about/main.html" );
+    TQFile f( file );
     f.open( IO_ReadOnly );
-    QTextStream t(  &f );
-    QString res = t.read();
+    TQTextStream t(  &f );
+    TQString res = t.read();
 
     res = res.arg(  locate(  "data", "kdeui/about/kde_infopage.css" ) );
     if (  kapp->reverseLayout() )
@@ -118,7 +118,7 @@ void AboutWidget::updatePixmap()
         res = res.arg(  "" );
 
 
-    QString title, intro, caption;
+    TQString title, intro, caption;
     if (KCGlobal::isInfoCenter())
     {
        res = res.arg(i18n(kcc_infotext))
@@ -132,7 +132,7 @@ void AboutWidget::updatePixmap()
                 .arg(i18n(intro_text));
     }
 
-    QString content;
+    TQString content;
 
     if (!_moduleList)
     {
@@ -151,7 +151,7 @@ void AboutWidget::updatePixmap()
     else
     {
         KIconLoader *loader = KGlobal::instance()->iconLoader();
-        QString iconPath;
+        TQString iconPath;
         if (!_icon.isEmpty()) {
             iconPath = loader->iconPath( _icon, KIcon::Toolbar );
             content += "<div id=\"tableTitle\"><img src=\"" + iconPath +" \"</a>&nbsp;" + _caption + "</div>";
@@ -159,11 +159,11 @@ void AboutWidget::updatePixmap()
 
         content += "<table class=\"kc_table\">\n";
         // traverse the list
-        QListViewItem* pEntry = _category;
+        TQListViewItem* pEntry = _category;
         while (pEntry != NULL)
         {
-            QString szName;
-            QString szComment;
+            TQString szName;
+            TQString szComment;
             ConfigModule *module = static_cast<ModuleTreeItem*>(pEntry)->module();
             /* TODO: work out link */
             content += "<tr><td class=\"kc_leftcol\">";
@@ -174,8 +174,8 @@ void AboutWidget::updatePixmap()
                 iconPath = loader->iconPath( module->icon(), KIcon::Small );
 
                 content += "<img src=\"" + iconPath +" \"</a>&nbsp;<a href=\"%1\" class=\"kcm_link\">" + szName + "</a></td><td class=\"kc_rightcol\">" + szComment;
-                KURL moduleURL( QString("kcm://%1").arg(QString().sprintf("%p",module)) );
-                QString linkURL( moduleURL.url() );
+                KURL moduleURL( TQString("kcm://%1").arg(TQString().sprintf("%p",module)) );
+                TQString linkURL( moduleURL.url() );
                 content = content.arg( linkURL );
                 _moduleMap.insert( linkURL, module );
             }

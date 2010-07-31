@@ -22,9 +22,9 @@
 
 #include "navigatoritem.h"
 
-#include <qdom.h>
-#include <qlistview.h>
-#include <qobject.h>
+#include <tqdom.h>
+#include <tqlistview.h>
+#include <tqobject.h>
 
 class KProcess;
 
@@ -36,17 +36,17 @@ class TOC : public QObject
 	public:
 		TOC( NavigatorItem *parentItem );
 
-		QString application() const { return m_application; }
-		void setApplication( const QString &application ) { m_application = application; }
+		TQString application() const { return m_application; }
+		void setApplication( const TQString &application ) { m_application = application; }
 	
 	public slots:
-		void build( const QString &file );
+		void build( const TQString &file );
 		
 	signals:
-		void itemSelected( const QString &url );
+		void itemSelected( const TQString &url );
 
 	private slots:
-		void slotItemSelected( QListViewItem *item );
+		void slotItemSelected( TQListViewItem *item );
 		void meinprocExited( KProcess *meinproc );
 
 	private:
@@ -55,13 +55,13 @@ class TOC : public QObject
 		CacheStatus cacheStatus() const;
 		int sourceFileCTime() const;
 		int cachedCTime() const;
-		QDomElement childElement( const QDomElement &e, const QString &name );
+		TQDomElement childElement( const TQDomElement &e, const TQString &name );
 		void buildCache();
 		void fillTree();
 
-		QString m_application;
-		QString m_cacheFile;
-		QString m_sourceFile;
+		TQString m_application;
+		TQString m_cacheFile;
+		TQString m_sourceFile;
 
 		NavigatorItem *m_parentItem;
 };

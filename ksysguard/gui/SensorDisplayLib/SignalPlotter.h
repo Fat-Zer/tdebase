@@ -24,10 +24,10 @@
 #ifndef KSG_SIGNALPLOTTER_H
 #define KSG_SIGNALPLOTTER_H
 
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qvaluelist.h>
-#include <qwidget.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
+#include <tqwidget.h>
 
 #define GRAPH_POLYGON     0
 #define	GRAPH_ORIGINAL    1
@@ -39,20 +39,20 @@ class SignalPlotter : public QWidget
   Q_OBJECT
 
   public:
-    SignalPlotter( QWidget *parent = 0, const char *name = 0 );
+    SignalPlotter( TQWidget *parent = 0, const char *name = 0 );
     ~SignalPlotter();
 
-    bool addBeam( const QColor &color );
-    void addSample( const QValueList<double> &samples );
+    bool addBeam( const TQColor &color );
+    void addSample( const TQValueList<double> &samples );
 
     void removeBeam( uint pos );
 
     void changeRange( int beam, double min, double max );
 
-    QValueList<QColor> &beamColors();
+    TQValueList<TQColor> &beamColors();
 
-    void setTitle( const QString &title );
-    QString title() const;
+    void setTitle( const TQString &title );
+    TQString title() const;
 
     void setUseAutoRange( bool value );
     bool useAutoRange() const;
@@ -72,8 +72,8 @@ class SignalPlotter : public QWidget
     void setShowVerticalLines( bool value );
     bool showVerticalLines() const;
 
-    void setVerticalLinesColor( const QColor &color );
-    QColor verticalLinesColor() const;
+    void setVerticalLinesColor( const TQColor &color );
+    TQColor verticalLinesColor() const;
 
     void setVerticalLinesDistance( int distance );
     int verticalLinesDistance() const;
@@ -84,8 +84,8 @@ class SignalPlotter : public QWidget
     void setShowHorizontalLines( bool value );
     bool showHorizontalLines() const;
 
-    void setHorizontalLinesColor( const QColor &color );
-    QColor horizontalLinesColor() const;
+    void setHorizontalLinesColor( const TQColor &color );
+    TQColor horizontalLinesColor() const;
 
     void setHorizontalLinesCount( int count );
     int horizontalLinesCount() const;
@@ -99,17 +99,17 @@ class SignalPlotter : public QWidget
     void setFontSize( int size );
     int fontSize() const;
 
-    void setBackgroundColor( const QColor &color );
-    QColor backgroundColor() const;
-    void reorderBeams( const QValueList<int>& newOrder );
+    void setBackgroundColor( const TQColor &color );
+    TQColor backgroundColor() const;
+    void reorderBeams( const TQValueList<int>& newOrder );
 
     void setThinFrame(bool set) { mShowThinFrame = set; }
 
   protected:
     void updateDataBuffers();
 
-    virtual void resizeEvent( QResizeEvent* );
-    virtual void paintEvent( QPaintEvent* );
+    virtual void resizeEvent( TQResizeEvent* );
+    virtual void paintEvent( TQPaintEvent* );
 
   private:
     double mMinValue;
@@ -120,28 +120,28 @@ class SignalPlotter : public QWidget
     uint mGraphStyle;
 
     bool mShowVerticalLines;
-    QColor mVerticalLinesColor;
+    TQColor mVerticalLinesColor;
     uint mVerticalLinesDistance;
     bool mVerticalLinesScroll;
     uint mVerticalLinesOffset;
     uint mHorizontalScale;
 
     bool mShowHorizontalLines;
-    QColor mHorizontalLinesColor;
+    TQColor mHorizontalLinesColor;
     uint mHorizontalLinesCount;
 
     bool mShowLabels;
     bool mShowTopBar;
     uint mFontSize;
 
-    QColor mBackgroundColor;
+    TQColor mBackgroundColor;
 
-    QPtrList<double> mBeamData;
-    QValueList<QColor> mBeamColor;
+    TQPtrList<double> mBeamData;
+    TQValueList<TQColor> mBeamColor;
 
     unsigned int mSamples;
 
-    QString mTitle;
+    TQString mTitle;
 };
 
 #endif

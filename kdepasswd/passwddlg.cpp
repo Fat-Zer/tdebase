@@ -35,7 +35,7 @@ bool KDEpasswd1Dialog::checkPassword(const char *password)
     {
     case -1:
     {
-        QString msg = QString::fromLocal8Bit(proc.error());
+        TQString msg = TQString::fromLocal8Bit(proc.error());
         if (!msg.isEmpty())
             msg = "<p>\"<i>" + msg + "</i>\"";
         msg = "<qt>" + i18n("Conversation with 'passwd' failed.") + msg;
@@ -66,7 +66,7 @@ bool KDEpasswd1Dialog::checkPassword(const char *password)
 
 
 // static
-int KDEpasswd1Dialog::getPassword(QCString &password)
+int KDEpasswd1Dialog::getPassword(TQCString &password)
 {
     KDEpasswd1Dialog *dlg = new KDEpasswd1Dialog();
     int res = dlg->exec();
@@ -78,7 +78,7 @@ int KDEpasswd1Dialog::getPassword(QCString &password)
 
 
 
-KDEpasswd2Dialog::KDEpasswd2Dialog(const char *oldpass, QCString user)
+KDEpasswd2Dialog::KDEpasswd2Dialog(const char *oldpass, TQCString user)
     : KPasswordDialog(NewPassword, false, 0)
 {
     m_Pass = oldpass;
@@ -132,7 +132,7 @@ bool KDEpasswd2Dialog::checkPassword(const char *password)
     case 0:
     {
         hide();
-        QString msg = QString::fromLocal8Bit(proc.error());
+        TQString msg = TQString::fromLocal8Bit(proc.error());
         if (!msg.isEmpty())
             msg = "<p>\"<i>" + msg + "</i>\"";
         msg = "<qt>" + i18n("Your password has been changed.") + msg;
@@ -142,7 +142,7 @@ bool KDEpasswd2Dialog::checkPassword(const char *password)
 
     case PasswdProcess::PasswordNotGood:
     {
-        QString msg = QString::fromLocal8Bit(proc.error());
+        TQString msg = TQString::fromLocal8Bit(proc.error());
         if (!msg.isEmpty())
             msg = "<p>\"<i>" + msg + "</i>\"";
         msg = "<qt>" + i18n("Your password has not been changed.") + msg;
@@ -153,7 +153,7 @@ bool KDEpasswd2Dialog::checkPassword(const char *password)
     }
 
     default:
-        QString msg = QString::fromLocal8Bit(proc.error());
+        TQString msg = TQString::fromLocal8Bit(proc.error());
         if (!msg.isEmpty())
             msg = "<p>\"<i>" + msg + "</i>\"";
         msg = "<qt>" + i18n("Conversation with 'passwd' failed.") + msg;

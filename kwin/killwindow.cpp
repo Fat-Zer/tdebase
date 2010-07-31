@@ -13,7 +13,7 @@ License. See the file "COPYING" for the exact licensing terms.
 //#define QT_CLEAN_NAMESPACE
 //#endif
 #include "killwindow.h"
-#include <qcursor.h>
+#include <tqcursor.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <X11/keysymdef.h>
@@ -75,7 +75,7 @@ void KillWindow::start()
                     mx /= 10;
                     my /= 10;
                     }
-                QCursor::setPos(QCursor::pos()+QPoint(mx, my));
+                TQCursor::setPos(TQCursor::pos()+TQPoint(mx, my));
                 }
 
             if (ev.type == ButtonRelease) 

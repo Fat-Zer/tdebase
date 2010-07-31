@@ -19,7 +19,7 @@
 
 #include "prefwidget.h"
 
-PreferencesWidget::PreferencesWidget( SwallowCommandList *swc, QWidget *parent )
+PreferencesWidget::PreferencesWidget( SwallowCommandList *swc, TQWidget *parent )
 	: PreferencesWidgetBase(parent)
 {
 

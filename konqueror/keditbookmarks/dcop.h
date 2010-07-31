@@ -23,14 +23,14 @@
 
 #include <dcopobject.h>
 
-class KBookmarkEditorIface : public QObject, public DCOPObject
+class KBookmarkEditorIface : public TQObject, public DCOPObject
 {
    Q_OBJECT
    K_DCOP
 public:
    KBookmarkEditorIface();
 k_dcop_hidden:
-   void slotDcopUpdatedAccessMetadata(QString filename, QString url);
+   void slotDcopUpdatedAccessMetadata(TQString filename, TQString url);
 };
 
 #endif

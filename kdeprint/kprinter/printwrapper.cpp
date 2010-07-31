@@ -23,14 +23,14 @@
 #include <signal.h>
 #include <sys/time.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <stdlib.h>
 #include <kmessagebox.h>
-#include <qfile.h>
-#include <qtimer.h>
-#include <qregexp.h>
-#include <qsocketnotifier.h>
+#include <tqfile.h>
+#include <tqtimer.h>
+#include <tqregexp.h>
+#include <tqsocketnotifier.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -47,14 +47,14 @@
 #include <kdeprint/kprintdialog.h>
 
 void signal_handler(int);
-QString tempFile;
+TQString tempFile;
 bool fromStdin = false;
 char job_output = 0;	// 0: dialog, 1: console, 2: none
 char readchar = '\0';
 bool dataread = false;
 bool docopy = false;
 
-void showmsgdialog(const QString& msg, int type = 0)
+void showmsgdialog(const TQString& msg, int type = 0)
 {
 	switch (type)
 	{
@@ -64,13 +64,13 @@ void showmsgdialog(const QString& msg, int type = 0)
 	}
 }
 
-void showmsgconsole(const QString& msg, int type = 0)
+void showmsgconsole(const TQString& msg, int type = 0)
 {
-	QString	errmsg = QString::fromLatin1("%1 : ").arg((type == 0 ? i18n("Print info") : (type == 1 ? i18n("Print warning") : i18n("Print error"))));
+	QString	errmsg = TQString::fromLatin1("%1 : ").arg((type == 0 ? i18n("Print info") : (type == 1 ? i18n("Print warning") : i18n("Print error"))));
 	kdDebug() << errmsg << msg << endl;
 }
 
-void showmsg(const QString& msg, int type = 0)
+void showmsg(const TQString& msg, int type = 0)
 {
 	switch (job_output) {
 	   case 0: showmsgdialog(msg,type); break;
@@ -79,7 +79,7 @@ void showmsg(const QString& msg, int type = 0)
 	}
 }
 
-void errormsg(const QString& msg)
+void errormsg(const TQString& msg)
 {
 	showmsg(msg,2);
 	exit(1);
@@ -87,20 +87,20 @@ void errormsg(const QString& msg)
 
 void signal_handler(int s)
 {
-	QFile::remove(tempFile);
+	TQFile::remove(tempFile);
 	exit(s);
 }
 
-QString copyfile( const QString& filename )
+TQString copyfile( const TQString& filename )
 {
 	kdDebug( 500 ) << "Copying file " << filename << endl;
-	QString result;
-	QFile f( filename );
+	TQString result;
+	TQFile f( filename );
 	if ( f.open( IO_ReadOnly ) )
 	{
 		KTempFile temp;
 		temp.setAutoDelete( false );
-		QFile *tf = temp.file();
+		TQFile *tf = temp.file();
 		if ( tf )
 		{
 			char buffer[ 0xFFFF ];
@@ -129,7 +129,7 @@ QString copyfile( const QString& filename )
 //******************************************************************************************************
 
 PrintWrapper::PrintWrapper()
-: QWidget(), force_stdin(false), check_stdin(true)
+: TQWidget(), force_stdin(false), check_stdin(true)
 {
 }
 
@@ -144,11 +144,11 @@ void PrintWrapper::slotPrint()
 	// read variables from command line
 	QString	printer = args->getOption("d");
 	QString	title = args->getOption("t");
-	int	ncopies = QString(args->getOption("n")).toInt();
+	int	ncopies = TQString(args->getOption("n")).toInt();
 	QString	job_mode = args->getOption("j");
 	QString	system = args->getOption("system");
 	QCStringList	optlist = args->getOptionList("o");
-	QMap<QString,QString>	opts;
+	TQMap<TQString,TQString>	opts;
 	KURL::List	files;
 	QStringList	filestoprint;
 	force_stdin = args->isSet("stdin");
@@ -164,8 +164,8 @@ void PrintWrapper::slotPrint()
 	// parse options
 	for (QCStringList::ConstIterator it=optlist.begin(); it!=optlist.end(); ++it)
 	{
-		QStringList	l = QStringList::split('=',QString(*it),false);
-		if (l.count() >= 1) opts[l[0]] = (l.count() == 2 ? l[1] : QString::null);
+		QStringList	l = TQStringList::split('=',TQString(*it),false);
+		if (l.count() >= 1) opts[l[0]] = (l.count() == 2 ? l[1] : TQString::null);
 	}
 
 	// read file list
@@ -262,11 +262,11 @@ void PrintWrapper::slotPrint()
 		dlg = KPrintDialog::printerDialog(&kprinter, 0);
 		if (dlg)
 		{
-			connect(dlg, SIGNAL(printRequested(KPrinter*)), SLOT(slotPrintRequested(KPrinter*)));
+			connect(dlg, TQT_SIGNAL(printRequested(KPrinter*)), TQT_SLOT(slotPrintRequested(KPrinter*)));
 			if( check_stdin )
 			{
-			    notif = new QSocketNotifier( 0, QSocketNotifier::Read, this );
-			    connect( notif, SIGNAL( activated( int )), this, SLOT( slotGotStdin()));
+			    notif = new TQSocketNotifier( 0, TQSocketNotifier::Read, this );
+			    connect( notif, TQT_SIGNAL( activated( int )), this, TQT_SLOT( slotGotStdin()));
 			    kdDebug( 500 ) << "waiting for input on stdin" << endl;
 			}
 			dlg->exec();
@@ -276,7 +276,7 @@ void PrintWrapper::slotPrint()
 			errormsg(i18n("Unable to construct the print dialog."));
 	}
 
-	QTimer::singleShot(10,kapp,SLOT(quit()));
+	TQTimer::singleShot(10,kapp,TQT_SLOT(quit()));
 }
 
 void hack( KPrintDialog* dlg );
@@ -297,11 +297,11 @@ void PrintWrapper::slotGotStdin()
 void PrintWrapper::slotPrintRequested(KPrinter *kprinter)
 {
 	// re-initialize docName
-	kprinter->setDocName(QString::null);
+	kprinter->setDocName(TQString::null);
 
 	// download files if needed
-	QStringList	files = QStringList::split("@@", kprinter->option("kde-filelist"), false), filestoprint;
-	for (QStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
+	QStringList	files = TQStringList::split("@@", kprinter->option("kde-filelist"), false), filestoprint;
+	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 	{
 		QString	tmpFile;
 		KURL	url = KURL::fromPathOrURL(*it);
@@ -342,10 +342,10 @@ void PrintWrapper::slotPrintRequested(KPrinter *kprinter)
 		signal(SIGTERM, signal_handler);
 #  endif
 
-		tempFile = locateLocal("tmp","kprinter_")+QString::number(getpid());
+		tempFile = locateLocal("tmp","kprinter_")+TQString::number(getpid());
 		filestoprint.append(tempFile);
 		fromStdin = true;
-		FILE	*fout = fopen(QFile::encodeName(filestoprint[0]),"w");
+		FILE	*fout = fopen(TQFile::encodeName(filestoprint[0]),"w");
 		if (!fout) errormsg(i18n("Unable to open temporary file."));
 		char	buffer[8192];
 		int	s;
@@ -362,15 +362,15 @@ void PrintWrapper::slotPrintRequested(KPrinter *kprinter)
 		if (s <= 0)
 		{
 			showmsg(i18n("Stdin is empty, no job sent."), 2);
-			QFile::remove(filestoprint[0]);
+			TQFile::remove(filestoprint[0]);
 			return;
 		}
 	}
 	else if ( docopy )
 	{
-		for ( QStringList::Iterator it=filestoprint.begin(); it!=filestoprint.end(); ++it )
+		for ( TQStringList::Iterator it=filestoprint.begin(); it!=filestoprint.end(); ++it )
 		{
-			QString tmp = copyfile( *it );
+			TQString tmp = copyfile( *it );
 			if ( tmp.isEmpty() )
 			{
 				errormsg( i18n( "Unable to copy file %1." ).arg( *it ) );

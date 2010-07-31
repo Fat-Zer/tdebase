@@ -30,7 +30,7 @@
 
 //---------------------------------------------------------------------------------------------
 
-typedef KGenericFactory<joystick, QWidget> JoystickFactory;
+typedef KGenericFactory<joystick, TQWidget> JoystickFactory;
 K_EXPORT_COMPONENT_FACTORY(kcm_joystick, JoystickFactory("joystick"))
 
 extern "C"
@@ -66,7 +66,7 @@ extern "C"
 
 //---------------------------------------------------------------------------------------------
 
-joystick::joystick(QWidget *parent, const char *name, const QStringList &)
+joystick::joystick(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(JoystickFactory::instance(), parent, name)
 {
   setAboutData( new KAboutData("kcmjoystick", I18N_NOOP("KDE Joystick Control Module"), "1.0",

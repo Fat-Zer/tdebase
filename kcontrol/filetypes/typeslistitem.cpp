@@ -26,32 +26,32 @@
 
 #include "typeslistitem.h"
 
-QMap< QString, QStringList >* TypesListItem::s_changedServices;
-static KStaticDeleter< QMap< QString, QStringList > > deleter;
+TQMap< TQString, TQStringList >* TypesListItem::s_changedServices;
+static KStaticDeleter< TQMap< TQString, TQStringList > > deleter;
 
-TypesListItem::TypesListItem(QListView *parent, const QString & major)
-  : QListViewItem(parent), metaType(true), m_bNewItem(false), m_askSave(2)
+TypesListItem::TypesListItem(TQListView *parent, const TQString & major)
+  : TQListViewItem(parent), metaType(true), m_bNewItem(false), m_askSave(2)
 {
   initMeta(major);
   setText(0, majorType());
 }
 
 TypesListItem::TypesListItem(TypesListItem *parent, KMimeType::Ptr mimetype, bool newItem)
-  : QListViewItem(parent), metaType(false), m_bNewItem(newItem), m_askSave(2)
+  : TQListViewItem(parent), metaType(false), m_bNewItem(newItem), m_askSave(2)
 {
   init(mimetype);
   setText(0, minorType());
 }
 
-TypesListItem::TypesListItem(QListView *parent, KMimeType::Ptr mimetype)
-  : QListViewItem(parent), metaType(false), m_bNewItem(false), m_askSave(2)
+TypesListItem::TypesListItem(TQListView *parent, KMimeType::Ptr mimetype)
+  : TQListViewItem(parent), metaType(false), m_bNewItem(false), m_askSave(2)
 {
   init(mimetype);
   setText(0, majorType());
 }
 
-TypesListItem::TypesListItem(QListView *parent, KMimeType::Ptr mimetype, bool newItem)
-  : QListViewItem(parent), metaType(false), m_bNewItem(newItem), m_askSave(2)
+TypesListItem::TypesListItem(TQListView *parent, KMimeType::Ptr mimetype, bool newItem)
+  : TQListViewItem(parent), metaType(false), m_bNewItem(newItem), m_askSave(2)
 {
   init(mimetype);
   setText(0, majorType());
@@ -61,7 +61,7 @@ TypesListItem::~TypesListItem()
 {
 }
 
-void TypesListItem::initMeta( const QString & major )
+void TypesListItem::initMeta( const TQString & major )
 {
   m_bFullInit = true;
   m_mimetype = 0L;
@@ -69,10 +69,10 @@ void TypesListItem::initMeta( const QString & major )
   KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
   config->setGroup("EmbedSettings");
   bool defaultValue = defaultEmbeddingSetting( major );
-  m_autoEmbed = config->readBoolEntry( QString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
+  m_autoEmbed = config->readBoolEntry( TQString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
 }
 
-bool TypesListItem::defaultEmbeddingSetting( const QString& major )
+bool TypesListItem::defaultEmbeddingSetting( const TQString& major )
 {
   // embedding is false by default except for image/*
   return ( major=="image" );
@@ -84,7 +84,7 @@ void TypesListItem::setup()
   {
      setPixmap(0, m_mimetype->pixmap(KIcon::Small, IconSize(KIcon::Small)));
   }
-  QListViewItem::setup();
+  TQListViewItem::setup();
 }
 
 void TypesListItem::init(KMimeType::Ptr mimetype)
@@ -101,15 +101,15 @@ void TypesListItem::init(KMimeType::Ptr mimetype)
     m_major = mimetype->name();
     m_minor = "";
   }
-  m_comment = mimetype->comment(QString(), false);
-  m_icon = mimetype->icon(QString(), false);
+  m_comment = mimetype->comment(TQString(), false);
+  m_icon = mimetype->icon(TQString(), false);
   m_patterns = mimetype->patterns();
   m_autoEmbed = readAutoEmbed( mimetype );
 }
 
 int TypesListItem::readAutoEmbed( KMimeType::Ptr mimetype )
 {
-  QVariant v = mimetype->property( "X-KDE-AutoEmbed" );
+  TQVariant v = mimetype->property( "X-KDE-AutoEmbed" );
   if ( v.isValid() )
       return (v.toBool() ? 0 : 1);
   else if ( !mimetype->property( "X-KDE-LocalProtocol" ).toString().isEmpty() )
@@ -118,7 +118,7 @@ int TypesListItem::readAutoEmbed( KMimeType::Ptr mimetype )
       return 2;
 }
 
-QStringList TypesListItem::appServices() const
+TQStringList TypesListItem::appServices() const
 {
   if (!m_bFullInit)
   {
@@ -129,7 +129,7 @@ QStringList TypesListItem::appServices() const
   return m_appServices;
 }
 
-QStringList TypesListItem::embedServices() const
+TQStringList TypesListItem::embedServices() const
 {
   if (!m_bFullInit)
   {
@@ -140,13 +140,13 @@ QStringList TypesListItem::embedServices() const
   return m_embedServices;
 }
 
-void TypesListItem::getServiceOffers( QStringList & appServices, QStringList & embedServices ) const
+void TypesListItem::getServiceOffers( TQStringList & appServices, TQStringList & embedServices ) const
 {
   KServiceTypeProfile::setConfigurationMode();
 
   KServiceTypeProfile::OfferList offerList =
     KServiceTypeProfile::offers(m_mimetype->name(), "Application");
-  QValueListIterator<KServiceOffer> it(offerList.begin());
+  TQValueListIterator<KServiceOffer> it(offerList.begin());
   for (; it != offerList.end(); ++it)
     if ((*it).allowAsDefault())
       appServices.append((*it).service()->desktopEntryPath());
@@ -168,14 +168,14 @@ bool TypesListItem::isMimeTypeDirty() const
     kdDebug() << "Mimetype Name Dirty: old=" << m_mimetype->name() << " name()=" << name() << endl;
     return true;
   }
-  if (m_mimetype->comment(QString(), false) != m_comment)
+  if (m_mimetype->comment(TQString(), false) != m_comment)
   {
-    kdDebug() << "Mimetype Comment Dirty: old=" << m_mimetype->comment(QString(),false) << " m_comment=" << m_comment << endl;
+    kdDebug() << "Mimetype Comment Dirty: old=" << m_mimetype->comment(TQString(),false) << " m_comment=" << m_comment << endl;
     return true;
   }
-  if (m_mimetype->icon(QString(), false) != m_icon)
+  if (m_mimetype->icon(TQString(), false) != m_icon)
   {
-    kdDebug() << "Mimetype Icon Dirty: old=" << m_mimetype->icon(QString(),false) << " m_icon=" << m_icon << endl;
+    kdDebug() << "Mimetype Icon Dirty: old=" << m_mimetype->icon(TQString(),false) << " m_icon=" << m_icon << endl;
     return true;
   }
 
@@ -206,8 +206,8 @@ bool TypesListItem::isDirty() const
 
   if ( !isMeta() )
   {
-    QStringList oldAppServices;
-    QStringList oldEmbedServices;
+    TQStringList oldAppServices;
+    TQStringList oldEmbedServices;
     getServiceOffers( oldAppServices, oldEmbedServices );
 
     if (oldAppServices != m_appServices)
@@ -230,7 +230,7 @@ bool TypesListItem::isDirty() const
     KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
     config->setGroup("EmbedSettings");
     bool defaultValue = defaultEmbeddingSetting(m_major);
-    unsigned int oldAutoEmbed = config->readBoolEntry( QString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
+    unsigned int oldAutoEmbed = config->readBoolEntry( TQString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
     if ( m_autoEmbed != oldAutoEmbed )
       return true;
   }
@@ -249,7 +249,7 @@ void TypesListItem::sync()
   {
     KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
     config->setGroup("EmbedSettings");
-    config->writeEntry( QString::fromLatin1("embed-")+m_major, m_autoEmbed == 0 );
+    config->writeEntry( TQString::fromLatin1("embed-")+m_major, m_autoEmbed == 0 );
     return;
   }
 
@@ -286,9 +286,9 @@ void TypesListItem::sync()
     config.writeEntry("Hidden", false);
 
     if ( m_autoEmbed == 2 )
-      config.deleteEntry( QString::fromLatin1("X-KDE-AutoEmbed"), false );
+      config.deleteEntry( TQString::fromLatin1("X-KDE-AutoEmbed"), false );
     else
-      config.writeEntry( QString::fromLatin1("X-KDE-AutoEmbed"), m_autoEmbed == 0 );
+      config.writeEntry( TQString::fromLatin1("X-KDE-AutoEmbed"), m_autoEmbed == 0 );
 
     m_bNewItem = false;
   }
@@ -298,9 +298,9 @@ void TypesListItem::sync()
   // Deleting current contents in profilerc relating to
   // this service type
   //
-  QStringList groups = profile.groupList();
+  TQStringList groups = profile.groupList();
 
-  for (QStringList::Iterator it = groups.begin();
+  for (TQStringList::Iterator it = groups.begin();
        it != groups.end(); it++ )
   {
     profile.setGroup(*it);
@@ -331,7 +331,7 @@ void TypesListItem::sync()
   offerList += KServiceTypeProfile::offers(m_mimetype->name(), "KParts/ReadOnlyPart");
   KServiceTypeProfile::unsetConfigurationMode();
 
-  QValueListIterator<KServiceOffer> it_srv(offerList.begin());
+  TQValueListIterator<KServiceOffer> it_srv(offerList.begin());
 
   for (; it_srv != offerList.end(); ++it_srv) {
 
@@ -350,8 +350,8 @@ void TypesListItem::sync()
         // create a new .desktop file without this mimetype
 
         if( s_changedServices == NULL )
-            deleter.setObject( s_changedServices, new QMap< QString, QStringList > );
-        QStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
+            deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
+        TQStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : pService->serviceTypes();
 
         if ( mimeTypeList.contains( name() ) ) {
@@ -364,7 +364,7 @@ void TypesListItem::sync()
           }
           else
           {
-            QString path = pService->locateLocal();
+            TQString path = pService->locateLocal();
             KConfig orig(pService->desktopEntryPath(), true, false, "apps");
             desktop = orig.copyTo(path);
           }
@@ -374,7 +374,7 @@ void TypesListItem::sync()
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : desktop->readListEntry("MimeType", ';');
 
           // Remove entry and the number that might follow.
-          QStringList::Iterator it;
+          TQStringList::Iterator it;
           for(;(it = mimeTypeList.find(name())) != mimeTypeList.end();)
           {
              it = mimeTypeList.remove(it);
@@ -405,10 +405,10 @@ void TypesListItem::sync()
           // KUserProfile is concerned, but using the mimetype makes it a
           // bit more structured for "manual" reading
           while ( profile.hasGroup(
-                  name() + " - " + QString::number(groupCount) ) )
+                  name() + " - " + TQString::number(groupCount) ) )
               groupCount++;
 
-          profile.setGroup( name() + " - " + QString::number(groupCount) );
+          profile.setGroup( name() + " - " + TQString::number(groupCount) );
 
           profile.writeEntry("Application", pService->storageId());
           profile.writeEntry("ServiceType", name());
@@ -419,9 +419,9 @@ void TypesListItem::sync()
   }
 }
 
-static bool inheritsMimetype(KMimeType::Ptr m, const QStringList &mimeTypeList)
+static bool inheritsMimetype(KMimeType::Ptr m, const TQStringList &mimeTypeList)
 {
-  for(QStringList::ConstIterator it = mimeTypeList.begin();
+  for(TQStringList::ConstIterator it = mimeTypeList.begin();
       it != mimeTypeList.end(); ++it)
   {
     if (m->is(*it))
@@ -431,17 +431,17 @@ static bool inheritsMimetype(KMimeType::Ptr m, const QStringList &mimeTypeList)
   return false;
 }
 
-KMimeType::Ptr TypesListItem::findImplicitAssociation(const QString &desktop)
+KMimeType::Ptr TypesListItem::findImplicitAssociation(const TQString &desktop)
 {
     KService::Ptr s = KService::serviceByDesktopPath(desktop);
     if (!s) return 0; // Hey, where did that one go?
 
     if( s_changedServices == NULL )
-       deleter.setObject( s_changedServices, new QMap< QString, QStringList > );
-    QStringList mimeTypeList = s_changedServices->contains( s->desktopEntryPath())
+       deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
+    TQStringList mimeTypeList = s_changedServices->contains( s->desktopEntryPath())
        ? (*s_changedServices)[ s->desktopEntryPath() ] : s->serviceTypes();
 
-    for(QStringList::ConstIterator it = mimeTypeList.begin();
+    for(TQStringList::ConstIterator it = mimeTypeList.begin();
        it != mimeTypeList.end(); ++it)
     {
        if ((m_mimetype->name() != *it) && m_mimetype->is(*it))
@@ -452,9 +452,9 @@ KMimeType::Ptr TypesListItem::findImplicitAssociation(const QString &desktop)
     return 0;
 }
 
-void TypesListItem::saveServices( KConfig & profile, QStringList services, const QString & genericServiceType )
+void TypesListItem::saveServices( KConfig & profile, TQStringList services, const TQString & genericServiceType )
 {
-  QStringList::Iterator it(services.begin());
+  TQStringList::Iterator it(services.begin());
   for (int i = services.count(); it != services.end(); ++it, i--) {
 
     KService::Ptr pService = KService::serviceByDesktopPath(*it);
@@ -463,10 +463,10 @@ void TypesListItem::saveServices( KConfig & profile, QStringList services, const
     // Find a group header. The headers are just dummy names as far as
     // KUserProfile is concerned, but using the mimetype makes it a
     // bit more structured for "manual" reading
-    while ( profile.hasGroup( name() + " - " + QString::number(groupCount) ) )
+    while ( profile.hasGroup( name() + " - " + TQString::number(groupCount) ) )
         groupCount++;
 
-    profile.setGroup( name() + " - " + QString::number(groupCount) );
+    profile.setGroup( name() + " - " + TQString::number(groupCount) );
 
     profile.writeEntry("ServiceType", name());
     profile.writeEntry("GenericServiceType", genericServiceType);
@@ -476,20 +476,20 @@ void TypesListItem::saveServices( KConfig & profile, QStringList services, const
 
     // merge new mimetype
     if( s_changedServices == NULL )
-       deleter.setObject( s_changedServices, new QMap< QString, QStringList > );
-    QStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
+       deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
+    TQStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
        ? (*s_changedServices)[ pService->desktopEntryPath() ] : pService->serviceTypes();
 
     if (!mimeTypeList.contains(name()) && !inheritsMimetype(m_mimetype, mimeTypeList))
     {
       KConfig *desktop;
-      if ( pService->type() == QString("Service") )
+      if ( pService->type() == TQString("Service") )
       {
         desktop = new KConfig(pService->desktopEntryPath(), false, false, "services");
       }
       else
       {
-        QString path = pService->locateLocal();
+        TQString path = pService->locateLocal();
         KConfig orig(pService->desktopEntryPath(), true, false, "apps");
         desktop = orig.copyTo(path);
       }
@@ -510,7 +510,7 @@ void TypesListItem::saveServices( KConfig & profile, QStringList services, const
   }
 }
 
-void TypesListItem::setIcon( const QString& icon )
+void TypesListItem::setIcon( const TQString& icon )
 {
   m_icon = icon;
   setPixmap( 0, SmallIcon( icon ) );
@@ -518,7 +518,7 @@ void TypesListItem::setIcon( const QString& icon )
 
 bool TypesListItem::isEssential() const
 {
-    QString n = name();
+    TQString n = name();
     if ( n == "application/octet-stream" )
         return true;
     if ( n == "inode/directory" )

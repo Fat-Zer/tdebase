@@ -19,13 +19,13 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -38,10 +38,10 @@
 #include "cache.h"
 #include "cache_ui.h"
 
-KCacheConfigDialog::KCacheConfigDialog( QWidget* parent )
+KCacheConfigDialog::KCacheConfigDialog( TQWidget* parent )
                    :KCModule( parent, "kcmkio" )
 {
-  QVBoxLayout* mainLayout = new QVBoxLayout(this, 0, 0);
+  TQVBoxLayout* mainLayout = new TQVBoxLayout(this, 0, 0);
   m_dlg = new CacheDlgUI(this);
   mainLayout->addWidget(m_dlg);
   mainLayout->addStretch();
@@ -66,10 +66,10 @@ void KCacheConfigDialog::load()
       m_dlg->rbCacheIfPossible->setChecked( true );
 
   // Config changed notifications...
-  connect ( m_dlg->cbUseCache, SIGNAL(toggled(bool)), SLOT(configChanged()) );
-  connect ( m_dlg->bgCachePolicy, SIGNAL(clicked (int)), SLOT(configChanged()) );
-  connect ( m_dlg->sbMaxCacheSize, SIGNAL(valueChanged(int)), SLOT(configChanged()) );
-  connect ( m_dlg->pbClearCache, SIGNAL(clicked()), SLOT(slotClearCache()) );
+  connect ( m_dlg->cbUseCache, TQT_SIGNAL(toggled(bool)), TQT_SLOT(configChanged()) );
+  connect ( m_dlg->bgCachePolicy, TQT_SIGNAL(clicked (int)), TQT_SLOT(configChanged()) );
+  connect ( m_dlg->sbMaxCacheSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(configChanged()) );
+  connect ( m_dlg->pbClearCache, TQT_SIGNAL(clicked()), TQT_SLOT(slotClearCache()) );
   emit changed( false );
 } 
 
@@ -100,7 +100,7 @@ void KCacheConfigDialog::defaults()
   m_dlg->sbMaxCacheSize->setValue( DEFAULT_MAX_CACHE_SIZE );
 }
 
-QString KCacheConfigDialog::quickHelp() const
+TQString KCacheConfigDialog::quickHelp() const
 {
   return i18n( "<h1>Cache</h1><p>This module lets you configure your cache settings.</p>"
                 "<p>The cache is an internal memory in Konqueror where recently "

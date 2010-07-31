@@ -19,15 +19,15 @@
  */
 
 
-#include <qdialog.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qradiobutton.h>
-#include <qbuttongroup.h>
-#include <qwidget.h>
-#include <qlayout.h>
-#include <qprogressbar.h>
-#include <qtimer.h>
+#include <tqdialog.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqradiobutton.h>
+#include <tqbuttongroup.h>
+#include <tqwidget.h>
+#include <tqlayout.h>
+#include <tqprogressbar.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kdialog.h>
@@ -41,7 +41,7 @@
 
 #include "logitechmouse.h"
 
-LogitechMouse::LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlags, QWidget* parent, const char* name )
+LogitechMouse::LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlags, TQWidget* parent, const char* name )
     : LogitechMouseBase( parent, name, 0 )
 {
     if ( !name )
@@ -70,8 +70,8 @@ LogitechMouse::LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlag
         updateResolution();
         resolutionSelector->setEnabled( TRUE );
 
-        connect( button400cpi, SIGNAL( clicked() ), parent, SLOT( changed() ) );
-        connect( button800cpi, SIGNAL( clicked() ), parent, SLOT( changed() ) );
+        connect( button400cpi, TQT_SIGNAL( clicked() ), parent, TQT_SLOT( changed() ) );
+        connect( button800cpi, TQT_SIGNAL( clicked() ), parent, TQT_SLOT( changed() ) );
 
         if ( 4 == resolution() ) {
             button800cpi->setChecked( TRUE );
@@ -100,12 +100,12 @@ LogitechMouse::LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlag
         // if the channel is changed, we need to turn off the timer, otherwise it
         // just resets the button to reflect the current status. The timer is
         // started again when we applyChanges()
-        connect( channel1, SIGNAL( clicked() ), this, SLOT( stopTimerForNow() ) );
-        connect( channel1, SIGNAL( clicked() ), parent, SLOT( changed() ) );
+        connect( channel1, TQT_SIGNAL( clicked() ), this, TQT_SLOT( stopTimerForNow() ) );
+        connect( channel1, TQT_SIGNAL( clicked() ), parent, TQT_SLOT( changed() ) );
         if ( isDualChannelCapable() ) {
             channel2->setEnabled( TRUE );
-            connect( channel2, SIGNAL( clicked() ), this, SLOT( stopTimerForNow() ) );
-            connect( channel2, SIGNAL( clicked() ), parent, SLOT( changed() ) );
+            connect( channel2, TQT_SIGNAL( clicked() ), this, TQT_SLOT( stopTimerForNow() ) );
+            connect( channel2, TQT_SIGNAL( clicked() ), parent, TQT_SLOT( changed() ) );
         }
 
         updateGUI();
@@ -121,14 +121,14 @@ LogitechMouse::~LogitechMouse()
 void LogitechMouse::initCordlessStatusReporting()
 {
     updateCordlessStatus();
-    doUpdate = new QTimer( this ); // will be automatically deleted
-    connect( doUpdate, SIGNAL( timeout() ), this, SLOT( updateGUI() ) );
+    doUpdate = new TQTimer( this ); // will be automatically deleted
+    connect( doUpdate, TQT_SIGNAL( timeout() ), this, TQT_SLOT( updateGUI() ) );
     doUpdate->start( 20000 );
 }
 
 void LogitechMouse::updateCordlessStatus()
 {
-    QByteArray status(8);
+    TQByteArray status(8);
 
     int result =  usb_control_msg(  m_usbDeviceHandle,
                                     USB_TYPE_VENDOR | USB_ENDPOINT_IN,0x09,
@@ -349,7 +349,7 @@ void LogitechMouse::setChannel2()
 
 }
 
-QString LogitechMouse::cordlessName()
+TQString LogitechMouse::cordlessName()
 {
     switch ( m_cordlessNameIndex ) {
     case 0x00:

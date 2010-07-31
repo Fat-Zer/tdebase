@@ -1,16 +1,16 @@
 #ifndef _INFO_H_
 #define _INFO_H_
 
-#include <qwidget.h>
-#include <qwidgetstack.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qtabdialog.h>
-#include <qpushbutton.h>
-#include <qtimer.h>
-#include <qlistview.h>
-#include <qfile.h>
-#include <qevent.h>
+#include <tqwidget.h>
+#include <tqwidgetstack.h>
+#include <tqframe.h>
+#include <tqlabel.h>
+#include <tqtabdialog.h>
+#include <tqpushbutton.h>
+#include <tqtimer.h>
+#include <tqlistview.h>
+#include <tqfile.h>
+#include <tqevent.h>
 
 #include <kcmodule.h>
 #include <kaboutdata.h>
@@ -19,35 +19,35 @@
 
 /* function call-back-prototypes... */
 
-bool GetInfo_CPU( QListView *lBox );
-bool GetInfo_IRQ( QListView *lBox );
-bool GetInfo_DMA( QListView *lBox );
-bool GetInfo_PCI( QListView *lBox );
-bool GetInfo_IO_Ports( QListView *lBox );
-bool GetInfo_Sound( QListView *lBox );
-bool GetInfo_Devices( QListView *lBox );
-bool GetInfo_SCSI( QListView *lBox );
-bool GetInfo_Partitions( QListView *lBox );
-bool GetInfo_XServer_and_Video( QListView *lBox );
-bool GetInfo_CD_ROM( QListView *lBox ); /* New CD-ROM Info */
-extern bool GetInfo_OpenGL( QListView *lBox );
+bool GetInfo_CPU( TQListView *lBox );
+bool GetInfo_IRQ( TQListView *lBox );
+bool GetInfo_DMA( TQListView *lBox );
+bool GetInfo_PCI( TQListView *lBox );
+bool GetInfo_IO_Ports( TQListView *lBox );
+bool GetInfo_Sound( TQListView *lBox );
+bool GetInfo_Devices( TQListView *lBox );
+bool GetInfo_SCSI( TQListView *lBox );
+bool GetInfo_Partitions( TQListView *lBox );
+bool GetInfo_XServer_and_Video( TQListView *lBox );
+bool GetInfo_CD_ROM( TQListView *lBox ); /* New CD-ROM Info */
+extern bool GetInfo_OpenGL( TQListView *lBox );
 
 class KInfoListWidget : public KCModule
 {
 public:
-  KInfoListWidget(const QString &_title, QWidget *parent, const char *name=0, bool _getlistbox (QListView *)=0);
+  KInfoListWidget(const TQString &_title, TQWidget *parent, const char *name=0, bool _getlistbox (TQListView *)=0);
 
   virtual void load();
-  virtual QString quickHelp() const;
+  virtual TQString quickHelp() const;
   
 private:
-  QListView 	*lBox;
-  bool 		(*getlistbox) (QListView *);
-  QString title;
+  TQListView 	*lBox;
+  bool 		(*getlistbox) (TQListView *);
+  TQString title;
   
   QLabel	*NoInfoText;
   QString	ErrorString;
-  QWidgetStack  *widgetStack;
+  TQWidgetStack  *widgetStack;
 };
 
 #endif

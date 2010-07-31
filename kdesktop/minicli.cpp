@@ -35,17 +35,17 @@
 #include <string.h>
 #include <errno.h>
 
-#include <qvbox.h>
-#include <qlabel.h>
-#include <qbitmap.h>
-#include <qfile.h>
-#include <qslider.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qcheckbox.h>
-#include <qregexp.h>
-#include <qwhatsthis.h>
-#include <qstylesheet.h>
+#include <tqvbox.h>
+#include <tqlabel.h>
+#include <tqbitmap.h>
+#include <tqfile.h>
+#include <tqslider.h>
+#include <tqlayout.h>
+#include <tqgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqregexp.h>
+#include <tqwhatsthis.h>
+#include <tqstylesheet.h>
 
 #include <dcopclient.h>
 #include <klocale.h>
@@ -75,7 +75,7 @@
 
 #define KDESU_ERR strerror(errno)
 
-Minicli::Minicli( QWidget *parent, const char *name)
+Minicli::Minicli( TQWidget *parent, const char *name)
         :KDialog( parent, name, false, WType_TopLevel ),
          m_autoCheckedRunInTerm(false)
 {
@@ -84,7 +84,7 @@ Minicli::Minicli( QWidget *parent, const char *name)
   setPlainCaption( i18n("Run Command") );
   KWin::setIcons( winId(), DesktopIcon("run"), SmallIcon("run") );
 
-  QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  TQVBoxLayout* mainLayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
   m_dlg = new MinicliDlgUI (this);
   mainLayout->addWidget(m_dlg);
 
@@ -116,7 +116,7 @@ Minicli::Minicli( QWidget *parent, const char *name)
   m_filterData = new KURIFilterData();
 
   // Create a timer object...
-  m_parseTimer = new QTimer(this);
+  m_parseTimer = new TQTimer(this);
 
   m_FocusWidget = 0;
 
@@ -131,29 +131,29 @@ Minicli::Minicli( QWidget *parent, const char *name)
   m_histfilesystemAutocomplete = 0;
   m_pURLCompletion = new KURLCompletion();
   //m_pURLCompletion->setCompletionMode( KGlobalSettings::completionMode() );
-  connect( m_pURLCompletion, SIGNAL( match(const QString&) ), SLOT( slotMatch(const QString&) ));
+  connect( m_pURLCompletion, TQT_SIGNAL( match(const TQString&) ), TQT_SLOT( slotMatch(const TQString&) ));
 
   // Main widget buttons...
-  connect( m_dlg->pbRun, SIGNAL(clicked()), this, SLOT(accept()) );
-  connect( m_dlg->pbCancel, SIGNAL(clicked()), this, SLOT(reject()) );
-  connect( m_dlg->pbOptions, SIGNAL(clicked()), SLOT(slotAdvanced()) );
-  connect( m_parseTimer, SIGNAL(timeout()), SLOT(slotParseTimer()) );
+  connect( m_dlg->pbRun, TQT_SIGNAL(clicked()), this, TQT_SLOT(accept()) );
+  connect( m_dlg->pbCancel, TQT_SIGNAL(clicked()), this, TQT_SLOT(reject()) );
+  connect( m_dlg->pbOptions, TQT_SIGNAL(clicked()), TQT_SLOT(slotAdvanced()) );
+  connect( m_parseTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotParseTimer()) );
 
-  connect( m_dlg->cbCommand, SIGNAL( textChanged( const QString& ) ),
-           SLOT( slotCmdChanged(const QString&) ) );
+  connect( m_dlg->cbCommand, TQT_SIGNAL( textChanged( const TQString& ) ),
+           TQT_SLOT( slotCmdChanged(const TQString&) ) );
 
-  connect( m_dlg->cbCommand, SIGNAL( returnPressed() ),
-           m_dlg->pbRun, SLOT( animateClick() ) );
+  connect( m_dlg->cbCommand, TQT_SIGNAL( returnPressed() ),
+           m_dlg->pbRun, TQT_SLOT( animateClick() ) );
 
   // Advanced group box...
-  connect(m_dlg->cbPriority, SIGNAL(toggled(bool)), SLOT(slotChangeScheduler(bool)));
-  connect(m_dlg->slPriority, SIGNAL(valueChanged(int)), SLOT(slotPriority(int)));
-  connect(m_dlg->cbRealtime, SIGNAL(toggled(bool)), SLOT(slotRealtime(bool)));
-  connect(m_dlg->cbAutocomplete, SIGNAL(toggled(bool)), SLOT(slotAutocompleteToggled(bool)));
-  connect(m_dlg->cbAutohistory, SIGNAL(toggled(bool)), SLOT(slotAutohistoryToggled(bool)));
-  connect(m_dlg->cbRunAsOther, SIGNAL(toggled(bool)), SLOT(slotChangeUid(bool)));
-  connect(m_dlg->leUsername, SIGNAL(lostFocus()), SLOT(updateAuthLabel()));
-  connect(m_dlg->cbRunInTerminal, SIGNAL(toggled(bool)), SLOT(slotTerminal(bool)));
+  connect(m_dlg->cbPriority, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChangeScheduler(bool)));
+  connect(m_dlg->slPriority, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotPriority(int)));
+  connect(m_dlg->cbRealtime, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotRealtime(bool)));
+  connect(m_dlg->cbAutocomplete, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotAutocompleteToggled(bool)));
+  connect(m_dlg->cbAutohistory, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotAutohistoryToggled(bool)));
+  connect(m_dlg->cbRunAsOther, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChangeUid(bool)));
+  connect(m_dlg->leUsername, TQT_SIGNAL(lostFocus()), TQT_SLOT(updateAuthLabel()));
+  connect(m_dlg->cbRunInTerminal, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotTerminal(bool)));
 
   m_dlg->slPriority->setValue(50);
 
@@ -166,7 +166,7 @@ Minicli::~Minicli()
   delete m_pURLCompletion;
 }
 
-void Minicli::setCommand(const QString& command)
+void Minicli::setCommand(const TQString& command)
 {
   m_dlg->cbCommand->lineEdit()->setText(command);
   m_dlg->cbCommand->lineEdit()->deselect();
@@ -176,9 +176,9 @@ void Minicli::setCommand(const QString& command)
   }
 }
 
-QSize Minicli::sizeHint() const
+TQSize Minicli::sizeHint() const
 {
-  int maxWidth = qApp->desktop()->screenGeometry((QWidget*)this).width();
+  int maxWidth = qApp->desktop()->screenGeometry((TQWidget*)this).width();
   if (maxWidth < 603)
   {
     // a sensible max for smaller screens
@@ -189,7 +189,7 @@ QSize Minicli::sizeHint() const
     maxWidth = maxWidth * 2 / 5;
   }
 
-  return QSize(maxWidth, -1);
+  return TQSize(maxWidth, -1);
 }
 
 void Minicli::show()
@@ -200,7 +200,7 @@ void Minicli::show()
 
 void Minicli::loadConfig()
 {
-  QStringList histList = KDesktopSettings::history();
+  TQStringList histList = KDesktopSettings::history();
   int maxHistory = KDesktopSettings::historyLength();
   m_terminalAppList = KDesktopSettings::terminalApps();
 
@@ -226,7 +226,7 @@ void Minicli::loadConfig()
       m_dlg->cbAutocomplete->setDisabled( false );
   }
 
-  QStringList compList = KDesktopSettings::completionItems();
+  TQStringList compList = KDesktopSettings::completionItems();
   if( compList.isEmpty() )
     m_dlg->cbCommand->completionObject()->setItems( histList );
   else
@@ -247,12 +247,12 @@ void Minicli::loadConfig()
 
   // Provide username completions. Use saner and configurable maximum values.
   int maxEntries = KDesktopSettings::maxUsernameCompletions();
-  QStringList users;
+  TQStringList users;
 
   struct passwd *pw;
   setpwent();
   for (int count=0; ((pw = getpwent()) != 0L) && (count < maxEntries); count++)
-    users << QString::fromLocal8Bit(pw->pw_name);
+    users << TQString::fromLocal8Bit(pw->pw_name);
   endpwent();
 
   KCompletion *completion = new KCompletion;
@@ -284,11 +284,11 @@ void Minicli::clearHistory()
 
 void Minicli::accept()
 {
-  QString cmd = m_dlg->cbCommand->currentText().stripWhiteSpace();
+  TQString cmd = m_dlg->cbCommand->currentText().stripWhiteSpace();
   if (!cmd.isEmpty() && (cmd[0].isNumber() || (cmd[0] == '(')) &&
-      (QRegExp("[a-zA-Z\\]\\[]").search(cmd) == -1))
+      (TQRegExp("[a-zA-Z\\]\\[]").search(cmd) == -1))
   {
-     QString result = calculate(cmd);
+     TQString result = calculate(cmd);
      if (!result.isEmpty())
         m_dlg->cbCommand->setCurrentText(result);
      return;
@@ -301,7 +301,7 @@ void Minicli::accept()
   m_dlg->cbCommand->addToHistory( m_dlg->cbCommand->currentText().stripWhiteSpace() );
   reset();
   saveConfig();
-  QDialog::accept();
+  TQDialog::accept();
 
   if ( logout )
   {
@@ -313,7 +313,7 @@ void Minicli::accept()
 void Minicli::reject()
 {
   reset();
-  QDialog::reject();
+  TQDialog::reject();
 }
 
 void Minicli::reset()
@@ -345,15 +345,15 @@ void Minicli::reset()
   m_dlg->lePassword->erase();
 
   m_FocusWidget = 0;
-  m_iconName = QString::null;
-  m_prevIconName = QString::null;
+  m_iconName = TQString::null;
+  m_prevIconName = TQString::null;
 
   m_prevCached = false;
   updateAuthLabel();
   setIcon();
 }
 
-void Minicli::keyPressEvent( QKeyEvent* e )
+void Minicli::keyPressEvent( TQKeyEvent* e )
 {
   if ( e->key() == Qt::Key_Escape )
   {
@@ -362,19 +362,19 @@ void Minicli::keyPressEvent( QKeyEvent* e )
     return;
   }
 
-  QDialog::keyPressEvent( e );
+  TQDialog::keyPressEvent( e );
 }
 
-QString Minicli::terminalCommand (const QString& cmd, const QString& args)
+TQString Minicli::terminalCommand (const TQString& cmd, const TQString& args)
 {
-  QString terminal = KDesktopSettings::terminalApplication().stripWhiteSpace();
+  TQString terminal = KDesktopSettings::terminalApplication().stripWhiteSpace();
   if (terminal.endsWith("konsole"))
     terminal += " --noclose";
 
   if( args.isEmpty() )
-    terminal += QString(" -e /bin/sh -c \"%1\"").arg(cmd);
+    terminal += TQString(" -e /bin/sh -c \"%1\"").arg(cmd);
   else
-    terminal += QString(" -e /bin/sh -c \"%1 %2\"").arg(cmd).arg(args);
+    terminal += TQString(" -e /bin/sh -c \"%1 %2\"").arg(cmd).arg(args);
 
   if (!m_terminalAppList.contains(cmd))
     m_terminalAppList << cmd;
@@ -393,14 +393,14 @@ int Minicli::runCommand()
   if ( m_dlg->cbCommand->currentText().isEmpty() )
     return 1;
 
-  QString cmd;
+  TQString cmd;
   KURL uri = m_filterData->uri();
   if ( uri.isLocalFile() && !uri.hasRef() && uri.query().isEmpty() )
     cmd = uri.path();
   else
     cmd = uri.url();
     
-  QCString asn;
+  TQCString asn;
   if( qApp->desktop()->isVirtualDesktop())
   {
     asn = KStartupInfo::createNewStartupId();
@@ -422,7 +422,7 @@ int Minicli::runCommand()
 
   if( needsKDEsu() )
   {
-    QCString user;
+    TQCString user;
     struct passwd *pw;
 
     if (m_dlg->cbRunAsOther)
@@ -470,7 +470,7 @@ int Minicli::runCommand()
       }
     }
 
-    QApplication::flushX();
+    TQApplication::flushX();
 
     int pid = fork();
 
@@ -494,7 +494,7 @@ int Minicli::runCommand()
       proc.setScheduler(m_iScheduler);
     }
 
-    QCString command;
+    TQCString command;
 
     if (useTerminal)
       command = terminalCommand( cmd, m_filterData->argsAndOptions() ).local8Bit();
@@ -519,7 +519,7 @@ int Minicli::runCommand()
   }
   else
   {
-    QString exec;
+    TQString exec;
 
     // yes, this is a hack, but there is no way of doing it
     // through SuProcess without providing the user password
@@ -527,7 +527,7 @@ int Minicli::runCommand()
     {
       // from kdesu_stub.c
       int val = 20 - (int) (((double) m_iPriority) * 40 / 100 + 0.5);
-      cmd = "nice -n " + QString::number( val ) + " " + cmd;
+      cmd = "nice -n " + TQString::number( val ) + " " + cmd;
     }
 
     if (useTerminal)
@@ -579,7 +579,7 @@ int Minicli::runCommand()
             KMessageBox::sorry( this, i18n("<center><b>%1</b></center>\n"
                                       "You do not have permission to execute "
                                       "this command.")
-                                      .arg( QStyleSheet::convertFromPlainText(cmd) ));
+                                      .arg( TQStyleSheet::convertFromPlainText(cmd) ));
             return 1;
           }
         }
@@ -606,7 +606,7 @@ int Minicli::runCommand()
 
           KMessageBox::sorry( this, i18n("<center><b>%1</b></center>\n"
                                     "Could not run the specified command.")
-                                    .arg( QStyleSheet::convertFromPlainText(cmd) ));
+                                    .arg( TQStyleSheet::convertFromPlainText(cmd) ));
           return 1;
         }
       }
@@ -627,15 +627,15 @@ void Minicli::notifyServiceStarted(KService::Ptr service)
 {
     // Inform other applications (like the quickstarter applet)
     // that an application was started
-    QByteArray params;
-    QDataStream stream(params, IO_WriteOnly);
+    TQByteArray params;
+    TQDataStream stream(params, IO_WriteOnly);
     stream << "minicli" << service->storageId();
     kdDebug() << "minicli appLauncher dcop signal: " << service->storageId() << endl;
     KApplication::kApplication()->dcopClient()->emitDCOPSignal("appLauncher",
-        "serviceStartedByStorageId(QString,QString)", params);
+        "serviceStartedByStorageId(TQString,TQString)", params);
 }
 
-void Minicli::slotCmdChanged(const QString& text)
+void Minicli::slotCmdChanged(const TQString& text)
 {
   bool isEmpty = text.isEmpty();
   m_dlg->pbRun->setEnabled( !isEmpty );
@@ -649,7 +649,7 @@ void Minicli::slotCmdChanged(const QString& text)
     slotTerminal(false);
 
     // Reset the icon if needed...
-    const QPixmap pixmap = DesktopIcon("kmenu");
+    const TQPixmap pixmap = DesktopIcon("kmenu");
 
     if ( pixmap.serialNumber() != m_dlg->lbRunIcon->pixmap()->serialNumber())
       m_dlg->lbRunIcon->setPixmap(pixmap);
@@ -662,7 +662,7 @@ void Minicli::slotCmdChanged(const QString& text)
     m_urlCompletionStarted = true; // flag for slotMatch()
 
     if ((text.startsWith( "/" ) || text.startsWith( "~" ) || (text.contains("://", false) != 0)) && (text.contains("http://", false) == 0)) {
-        QString completion = m_pURLCompletion->makeCompletion( text );
+        TQString completion = m_pURLCompletion->makeCompletion( text );
     }
   }
 
@@ -670,10 +670,10 @@ void Minicli::slotCmdChanged(const QString& text)
 }
 
 // Handle match() from m_pURLCompletion
-void Minicli::slotMatch( const QString &match )
+void Minicli::slotMatch( const TQString &match )
 {
-  QString current_text;
-  QStringList histList = KDesktopSettings::history();
+  TQString current_text;
+  TQStringList histList = KDesktopSettings::history();
   int maxHistory = KDesktopSettings::historyLength();
   int maxAutocompletion = KDesktopSettings::miniCLIAutocompletionLength();
 
@@ -687,7 +687,7 @@ void Minicli::slotMatch( const QString &match )
     if (m_filesystemAutocomplete == true) {
         bool block = m_dlg->cbCommand->signalsBlocked();
         m_dlg->cbCommand->blockSignals( true );
-        QStringList items = m_pURLCompletion->allMatches();
+        TQStringList items = m_pURLCompletion->allMatches();
         items.sort();
         if (m_histfilesystemAutocomplete == true) {
             // Add the history to the list
@@ -741,7 +741,7 @@ void Minicli::slotParseTimer()
 
 void Minicli::parseLine( bool final )
 {
-  QString cmd = m_dlg->cbCommand->currentText().stripWhiteSpace();
+  TQString cmd = m_dlg->cbCommand->currentText().stripWhiteSpace();
   m_filterData->setData( cmd );
 
   if( final )
@@ -779,25 +779,25 @@ void Minicli::parseLine( bool final )
 void Minicli::setIcon ()
 {
   if( m_iconName.isEmpty() || m_iconName == "unknown" || m_iconName == "kde" )
-    m_iconName = QString::fromLatin1("kmenu");
+    m_iconName = TQString::fromLatin1("kmenu");
 
-  QPixmap icon = DesktopIcon( m_iconName );
+  TQPixmap icon = DesktopIcon( m_iconName );
 
   if ( m_iconName == "www" )
   {
     // Not using KIconEffect::overlay as that requires the same size
     // for the icon and the overlay, also the overlay definately doesn't
     // have a more that one-bit alpha channel here
-    QPixmap overlay( locate ( "icon", KMimeType::favIconForURL( m_filterData->uri() ) + ".png" ) );
+    TQPixmap overlay( locate ( "icon", KMimeType::favIconForURL( m_filterData->uri() ) + ".png" ) );
     if ( !overlay.isNull() )
     {
       int x = icon.width() - overlay.width();
       int y = icon.height() - overlay.height();
       if ( icon.mask() )
       {
-        QBitmap mask = *icon.mask();
+        TQBitmap mask = *icon.mask();
         bitBlt( &mask, x, y,
-                overlay.mask() ? const_cast<QBitmap *>(overlay.mask()) : &overlay,
+                overlay.mask() ? const_cast<TQBitmap *>(overlay.mask()) : &overlay,
                 0, 0, overlay.width(), overlay.height(),
                 overlay.mask() ? OrROP : SetROP );
         icon.setMask(mask);
@@ -824,9 +824,9 @@ void Minicli::updateAuthLabel()
       m_prevChecked = m_dlg->cbRunAsOther->isChecked();
       m_prevCached = true;
     }
-    if (m_dlg->leUsername->text() != QString::fromLatin1("root"))
-      m_dlg->lePassword->setText(QString::null);
-    m_dlg->leUsername->setText(QString::fromLatin1("root"));
+    if (m_dlg->leUsername->text() != TQString::fromLatin1("root"))
+      m_dlg->lePassword->setText(TQString::null);
+    m_dlg->leUsername->setText(TQString::fromLatin1("root"));
     m_dlg->cbRunAsOther->setChecked(true);
     m_dlg->cbRunAsOther->setEnabled(false);
     m_dlg->leUsername->setEnabled(false);
@@ -871,7 +871,7 @@ void Minicli::slotTerminal(bool enable)
   if (enable)
   {
     m_prevIconName = m_iconName;
-    m_iconName = QString::fromLatin1( "konsole" );
+    m_iconName = TQString::fromLatin1( "konsole" );
     setIcon();
   }
   else if (!m_prevIconName.isEmpty())
@@ -921,7 +921,7 @@ void Minicli::slotRealtime(bool enabled)
                 i18n("Running a realtime application can be very dangerous. "
                     "If the application misbehaves, the system might hang "
                     "unrecoverably.\nAre you sure you want to continue?"),
-                i18n("Warning - Run Command"), KGuiItem(i18n("&Run Realtime")),QString::null,KMessageBox::Notify|KMessageBox::PlainCaption)
+                i18n("Warning - Run Command"), KGuiItem(i18n("&Run Realtime")),TQString::null,KMessageBox::Notify|KMessageBox::PlainCaption)
         != KMessageBox::Continue )
     {
       m_iScheduler = StubProcess::SchedNormal;
@@ -944,7 +944,7 @@ void Minicli::slotAutocompleteToggled(bool enabled)
     m_filesystemAutocomplete = false;
   }
 
-  QString current_text = m_dlg->cbCommand->currentText();
+  TQString current_text = m_dlg->cbCommand->currentText();
   m_dlg->cbCommand->setCurrentText( current_text );    // Force an update of the autocompletion list
 }
 
@@ -964,7 +964,7 @@ void Minicli::slotAutohistoryToggled(bool enabled)
     m_dlg->cbAutocomplete->setDisabled ( false );
   }
 
-  QString current_text = m_dlg->cbCommand->currentText();
+  TQString current_text = m_dlg->cbCommand->currentText();
   m_dlg->cbCommand->setCurrentText( current_text );    // Force an update of the autocompletion list
 }
 
@@ -982,19 +982,19 @@ void Minicli::slotPriority(int priority)
   updateAuthLabel();
 }
 
-QString Minicli::calculate(const QString &exp)
+TQString Minicli::calculate(const TQString &exp)
 {
-   QString result, cmd;
-   const QString bc = KStandardDirs::findExe("bc");
+   TQString result, cmd;
+   const TQString bc = KStandardDirs::findExe("bc");
    if ( !bc.isEmpty() )
-      cmd = QString("echo %1 | %2").arg(KProcess::quote(QString("scale=8; ")+exp), KProcess::quote(bc));
+      cmd = TQString("echo %1 | %2").arg(KProcess::quote(TQString("scale=8; ")+exp), KProcess::quote(bc));
    else
-      cmd = QString("echo $((%1))").arg(exp);
-   FILE *fs = popen(QFile::encodeName(cmd).data(), "r");
+      cmd = TQString("echo $((%1))").arg(exp);
+   FILE *fs = popen(TQFile::encodeName(cmd).data(), "r");
    if (fs)
    {
        { // scope for QTextStream
-           QTextStream ts(fs, IO_ReadOnly);
+           TQTextStream ts(fs, IO_ReadOnly);
            result = ts.read().stripWhiteSpace();
        }
        pclose(fs);
@@ -1002,7 +1002,7 @@ QString Minicli::calculate(const QString &exp)
    return result;
 }
 
-void Minicli::fontChange( const QFont & )
+void Minicli::fontChange( const TQFont & )
 {
    adjustSize();
 }

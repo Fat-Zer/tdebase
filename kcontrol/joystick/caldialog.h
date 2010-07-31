@@ -34,7 +34,7 @@ class CalDialog : public KDialogBase
   Q_OBJECT
   
   public:
-    CalDialog(QWidget *parent, JoyDevice *joy);
+    CalDialog(TQWidget *parent, JoyDevice *joy);
 
     void calibrate();
 
@@ -47,8 +47,8 @@ class CalDialog : public KDialogBase
   private:
     JoyDevice *joydev;
 
-    QLabel *text;
-    QLabel *valueLbl;
+    TQLabel *text;
+    TQLabel *valueLbl;
 };
 
 #endif

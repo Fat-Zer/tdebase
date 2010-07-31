@@ -44,16 +44,16 @@ int main(int argc, char *argv[])
 
 	KUniqueApplication app;
 
-	KTipDialog *tipDialog = new KTipDialog(new KTipDatabase(locate("data", QString("kdewizard/tips"))));
+	KTipDialog *tipDialog = new KTipDialog(new KTipDatabase(locate("data", TQString("kdewizard/tips"))));
 	Q_CHECK_PTR(tipDialog);
 #ifdef Q_WS_X11
 	KWin::setState(tipDialog->winId(), NET::StaysOnTop);
 #endif
 	tipDialog->setCaption(i18n("Useful Tips"));
-	app.dcopClient()->send("ksplash", "ksplash", "close()", QByteArray()); // Close splash screen
+	app.dcopClient()->send("ksplash", "ksplash", "close()", TQByteArray()); // Close splash screen
 	tipDialog->show();
 
-	QObject::connect(qApp, SIGNAL(lastWindowClosed()), qApp, SLOT(quit()));
+	TQObject::connect(qApp, TQT_SIGNAL(lastWindowClosed()), qApp, TQT_SLOT(quit()));
 
 	app.setMainWidget(tipDialog);
 

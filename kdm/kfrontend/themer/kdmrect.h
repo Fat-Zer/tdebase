@@ -24,8 +24,8 @@
 
 #include "kdmitem.h"
 
-#include <qcolor.h>
-#include <qfont.h>
+#include <tqcolor.h>
+#include <tqfont.h>
 
 /*
  * KdmRect: A themed rectangular element
@@ -35,11 +35,11 @@ class KdmRect : public KdmItem {
 	Q_OBJECT
 
 public:
-	KdmRect( KdmItem *parent, const QDomNode &node, const char *name = 0 );
+	KdmRect( KdmItem *parent, const TQDomNode &node, const char *name = 0 );
 
 protected:
 	// draw the rect
-	virtual void drawContents( QPainter *p, const QRect &r );
+	virtual void drawContents( TQPainter *p, const TQRect &r );
 
 	// handle switching between normal / active / prelight configurations
 	virtual void statusChanged();
@@ -47,19 +47,19 @@ protected:
 	struct RectStruct {
 		struct RectClass {
 			float alpha;
-			QColor color;
+			TQColor color;
 			bool present;
-			QFont font;
+			TQFont font;
 		} normal, active, prelight;
 		bool hasBorder;
 	} rect;
 
-//	virtual void setWidget( QWidget *widget );
-//	virtual void setLayoutItem( QLayoutItem *item );
+//	virtual void setWidget( TQWidget *widget );
+//	virtual void setLayoutItem( TQLayoutItem *item );
 
 private:
-	void setAttribs( QWidget *widget );
-	void recursiveSetAttribs( QLayoutItem *item );
+	void setAttribs( TQWidget *widget );
+	void recursiveSetAttribs( TQLayoutItem *item );
 };
 
 #endif

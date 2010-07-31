@@ -19,11 +19,11 @@
 #include <sys/wait.h>
 #endif
 
-#include <qstring.h>
-#include <qfileinfo.h>
-#include <qglobal.h>
-#include <qfile.h>
-#include <qdir.h>
+#include <tqstring.h>
+#include <tqfileinfo.h>
+#include <tqglobal.h>
+#include <tqfile.h>
+#include <tqdir.h>
 
 #include <dcopclient.h>
 
@@ -47,7 +47,7 @@
 
 #define ERR strerror(errno)
 
-QCString command;
+TQCString command;
 const char *Version = "1.0";
 
 // NOTE: if you change the position of the -u switch, be sure to adjust it
@@ -70,11 +70,11 @@ static KCmdLineOptions options[] = {
 };
 
 
-QCString dcopNetworkId()
+TQCString dcopNetworkId()
 {
-    QCString result;
+    TQCString result;
     result.resize(1025);
-    QFile file(DCOPClient::dcopServerFile());
+    TQFile file(DCOPClient::dcopServerFile());
     if (!file.open(IO_ReadOnly))
         return "";
     int i = file.readLine(result.data(), 1024);
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     KCmdLineArgs::addCmdLineOptions(options);
     KApplication::disableAutoDcopRegistration();
     // kdesu doesn't process SM events, so don't even connect to ksmserver
-    QCString session_manager = getenv( "SESSION_MANAGER" );
+    TQCString session_manager = getenv( "SESSION_MANAGER" );
     unsetenv( "SESSION_MANAGER" );
     KApplication app;
     // but propagate it to the started app
@@ -155,7 +155,7 @@ static int startApp()
         exit(1);
     }
 
-    QString icon;
+    TQString icon;
     if ( args->isSet("i"))
 	icon = args->getOption("i");	
 
@@ -164,8 +164,8 @@ static int startApp()
 	prompt = false;
 
     // Get target uid
-    QCString user = args->getOption("u");
-    QCString auth_user = user;
+    TQCString user = args->getOption("u");
+    TQCString auth_user = user;
     struct passwd *pw = getpwnam(user);
     if (pw == 0L)
     {
@@ -175,7 +175,7 @@ static int startApp()
     bool change_uid = (getuid() != pw->pw_uid);
 
     // If file is writeable, do not change uid
-    QString file = QFile::decodeName(args->getOption("f"));
+    TQString file = TQFile::decodeName(args->getOption("f"));
     if (change_uid && !file.isEmpty())
     {
         if (file.at(0) != '/')
@@ -189,7 +189,7 @@ static int startApp()
                 exit(1);
             }
         }
-        QFileInfo fi(file);
+        TQFileInfo fi(file);
         if (!fi.exists())
         {
             kdError(1206) << "File does not exist: " << file << "\n";
@@ -199,7 +199,7 @@ static int startApp()
     }
 
     // Get priority/scheduler
-    QCString tmp = args->getOption("p");
+    TQCString tmp = args->getOption("p");
     bool ok;
     int priority = tmp.toInt(&ok);
     if (!ok || (priority < 0) || (priority > 100))
@@ -222,10 +222,10 @@ static int startApp()
         command = args->getOption("c");
         for (int i=0; i<args->count(); i++)
         {
-            QString arg = QFile::decodeName(args->arg(i));
+            TQString arg = TQFile::decodeName(args->arg(i));
             KRun::shellQuote(arg);
             command += " ";
-            command += QFile::encodeName(arg);
+            command += TQFile::encodeName(arg);
         }
     }
     else 
@@ -238,10 +238,10 @@ static int startApp()
         command = args->arg(0);
         for (int i=1; i<args->count(); i++)
         {
-            QString arg = QFile::decodeName(args->arg(i));
+            TQString arg = TQFile::decodeName(args->arg(i));
             KRun::shellQuote(arg);
             command += " ";
-            command += QFile::encodeName(arg);
+            command += TQFile::encodeName(arg);
         }
     }
 
@@ -279,7 +279,7 @@ static int startApp()
     bool withIgnoreButton = args->isSet("ignorebutton");
     
     QCStringList env;
-    QCString options;
+    TQCString options;
     env << ( "DESKTOP_STARTUP_ID=" + kapp->startupId());
     
     if (pw->pw_uid)
@@ -288,21 +288,21 @@ static int startApp()
        // root uses KDEROOTHOME
        
        // Translate the KDEHOME of this user to the new user.
-       QString kdeHome = KGlobal::dirs()->relativeLocation("home", KGlobal::dirs()->localkdedir());
+       TQString kdeHome = KGlobal::dirs()->relativeLocation("home", KGlobal::dirs()->localkdedir());
        if (kdeHome[0] != '/')
           kdeHome.prepend("~/"); 
        else
-          kdeHome=QString::null; // Use default
+          kdeHome=TQString::null; // Use default
 
-       env << ("KDEHOME="+ QFile::encodeName(kdeHome));
+       env << ("KDEHOME="+ TQFile::encodeName(kdeHome));
     }
 
     KUser u;
-    env << (QCString) ("KDESU_USER=" + u.loginName().local8Bit());
+    env << (TQCString) ("KDESU_USER=" + u.loginName().local8Bit());
     
     if (!new_dcop)
     {
-        QCString ksycoca = "KDESYCOCA="+QFile::encodeName(locateLocal("cache", "ksycoca"));
+        TQCString ksycoca = "KDESYCOCA="+TQFile::encodeName(locateLocal("cache", "ksycoca"));
         env << ksycoca;
 
         options += "xf"; // X-only, dcop forwarding enabled.
@@ -341,7 +341,7 @@ static int startApp()
     int needpw = proc.checkNeedPassword();
     if (needpw < 0)
     {
-        QString err = i18n("Su returned with an error.\n");
+        TQString err = i18n("Su returned with an error.\n");
         KMessageBox::error(0L, err);
         exit(1);
     }
@@ -352,7 +352,7 @@ static int startApp()
     }
 
     // Start the dialog
-    QCString password;
+    TQCString password;
     if (needpw)
     {
         KStartupInfoId id;
@@ -365,10 +365,10 @@ static int startApp()
 	    dlg.addLine(i18n("Command:"), command);
         if ((priority != 50) || (scheduler != SuProcess::SchedNormal))
         {
-            QString prio;
+            TQString prio;
             if (scheduler == SuProcess::SchedRealtime)
                 prio += i18n("realtime: ");
-            prio += QString("%1/100").arg(priority);
+            prio += TQString("%1/100").arg(priority);
 	    if (prompt)
 		dlg.addLine(i18n("Priority:"), prio);
         }

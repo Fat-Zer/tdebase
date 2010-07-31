@@ -1,29 +1,29 @@
 #ifndef SAVERCONFIG_H
 #define SAVERCONFIG_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class SaverConfig
 {
 public:
     SaverConfig();
 
-    bool read(const QString &file);
+    bool read(const TQString &file);
 
-    QString exec() const { return mExec; }
-    QString setup() const { return mSetup; }
-    QString saver() const { return mSaver; }
-    QString name() const { return mName; }
-    QString file() const { return mFile; }
-    QString category() const { return mCategory; }
+    TQString exec() const { return mExec; }
+    TQString setup() const { return mSetup; }
+    TQString saver() const { return mSaver; }
+    TQString name() const { return mName; }
+    TQString file() const { return mFile; }
+    TQString category() const { return mCategory; }
 
 protected:
-    QString mExec;
-    QString mSetup;
-    QString mSaver;
-    QString mName;
-    QString mFile;
-    QString mCategory;
+    TQString mExec;
+    TQString mSetup;
+    TQString mSaver;
+    TQString mName;
+    TQString mFile;
+    TQString mCategory;
 };
 
 #endif

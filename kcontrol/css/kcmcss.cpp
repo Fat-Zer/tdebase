@@ -1,9 +1,9 @@
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qtextbrowser.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqtextbrowser.h>
 
 #include <kapplication.h>
 #include <kcolorbutton.h>
@@ -22,13 +22,13 @@
 
 #include "kcmcss.h"
 
-typedef KGenericFactory<CSSConfig, QWidget> CSSFactory;
+typedef KGenericFactory<CSSConfig, TQWidget> CSSFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_css, CSSFactory("kcmcss") )
 
-CSSConfig::CSSConfig(QWidget *parent, const char *name, const QStringList &)
+CSSConfig::CSSConfig(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(CSSFactory::instance(), parent, name)
 {
-  customDialogBase = new KDialogBase(this, "customCSSDialog", true, QString::null, 
+  customDialogBase = new KDialogBase(this, "customCSSDialog", true, TQString::null, 
         KDialogBase::Close, KDialogBase::Close, true );
   customDialog = new CSSCustomDialog(customDialogBase);
   customDialogBase->setMainWidget(customDialog);
@@ -46,52 +46,52 @@ CSSConfig::CSSConfig(QWidget *parent, const char *name, const QStringList &)
               " that are unreadable due to bad design."));
 
 
-  QStringList fonts;
+  TQStringList fonts;
   KFontChooser::getFontList(fonts, 0);
   customDialog->fontFamily->insertStringList(fonts);
 
-  connect(configDialog->useDefault, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(configDialog->useAccess, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(configDialog->useUser, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(configDialog->urlRequester, SIGNAL(textChanged(const QString&)),
-	  SLOT(changed()));
-  connect(configDialog->customize, SIGNAL(clicked()),
-          SLOT(slotCustomize()));
-  connect(customDialog->basefontsize, SIGNAL(highlighted(int)),
-	  SLOT(changed()));
-  connect(customDialog->basefontsize, SIGNAL(textChanged(const QString&)),
-	  SLOT(changed()));
-  connect(customDialog->dontScale, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(customDialog->blackOnWhite, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(customDialog->whiteOnBlack, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(customDialog->customColor, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(customDialog->foregroundColor, SIGNAL(changed(const QColor &)),
-	  SLOT(changed()));
-  connect(customDialog->backgroundColor, SIGNAL(changed(const QColor &)),
-	  SLOT(changed()));
-  connect(customDialog->fontFamily, SIGNAL(highlighted(int)),
-	  SLOT(changed()));
-  connect(customDialog->fontFamily, SIGNAL(textChanged(const QString&)),
-	  SLOT(changed()));
-  connect(customDialog->sameFamily, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(customDialog->preview, SIGNAL(clicked()),
-          SLOT(slotPreview()));
-  connect(customDialog->sameColor, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(customDialog->hideImages, SIGNAL(clicked()),
-	  SLOT(changed()));
-  connect(customDialog->hideBackground, SIGNAL(clicked()),
-	  SLOT(changed()));
+  connect(configDialog->useDefault, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(configDialog->useAccess, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(configDialog->useUser, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(configDialog->urlRequester, TQT_SIGNAL(textChanged(const TQString&)),
+	  TQT_SLOT(changed()));
+  connect(configDialog->customize, TQT_SIGNAL(clicked()),
+          TQT_SLOT(slotCustomize()));
+  connect(customDialog->basefontsize, TQT_SIGNAL(highlighted(int)),
+	  TQT_SLOT(changed()));
+  connect(customDialog->basefontsize, TQT_SIGNAL(textChanged(const TQString&)),
+	  TQT_SLOT(changed()));
+  connect(customDialog->dontScale, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(customDialog->blackOnWhite, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(customDialog->whiteOnBlack, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(customDialog->customColor, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(customDialog->foregroundColor, TQT_SIGNAL(changed(const TQColor &)),
+	  TQT_SLOT(changed()));
+  connect(customDialog->backgroundColor, TQT_SIGNAL(changed(const TQColor &)),
+	  TQT_SLOT(changed()));
+  connect(customDialog->fontFamily, TQT_SIGNAL(highlighted(int)),
+	  TQT_SLOT(changed()));
+  connect(customDialog->fontFamily, TQT_SIGNAL(textChanged(const TQString&)),
+	  TQT_SLOT(changed()));
+  connect(customDialog->sameFamily, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(customDialog->preview, TQT_SIGNAL(clicked()),
+          TQT_SLOT(slotPreview()));
+  connect(customDialog->sameColor, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(customDialog->hideImages, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
+  connect(customDialog->hideBackground, TQT_SIGNAL(clicked()),
+	  TQT_SLOT(changed()));
 
-  QVBoxLayout *vbox = new QVBoxLayout(this, 0, 0);
+  TQVBoxLayout *vbox = new TQVBoxLayout(this, 0, 0);
   vbox->addWidget(configDialog);
 
   load();
@@ -108,17 +108,17 @@ void CSSConfig::load( bool useDefaults )
   c->setReadDefaults( useDefaults );
 
   c->setGroup("Stylesheet");
-  QString u = c->readEntry("Use", "default");
+  TQString u = c->readEntry("Use", "default");
   configDialog->useDefault->setChecked(u == "default");
   configDialog->useUser->setChecked(u == "user");
   configDialog->useAccess->setChecked(u == "access");
   configDialog->urlRequester->setURL(c->readEntry("SheetName"));
 
   c->setGroup("Font");
-  customDialog->basefontsize->setEditText(QString::number(c->readNumEntry("BaseSize", 12)));
+  customDialog->basefontsize->setEditText(TQString::number(c->readNumEntry("BaseSize", 12)));
   customDialog->dontScale->setChecked(c->readBoolEntry("DontScale", false));
 
-  QString fname = c->readEntry("Family", "Arial");
+  TQString fname = c->readEntry("Family", "Arial");
   for (int i=0; i < customDialog->fontFamily->count(); ++i)
     if (customDialog->fontFamily->text(i) == fname)
       {
@@ -129,7 +129,7 @@ void CSSConfig::load( bool useDefaults )
   customDialog->sameFamily->setChecked(c->readBoolEntry("SameFamily", false));
 
   c->setGroup("Colors");
-  QString m = c->readEntry("Mode", "black-on-white");
+  TQString m = c->readEntry("Mode", "black-on-white");
   customDialog->blackOnWhite->setChecked(m == "black-on-white");
   customDialog->whiteOnBlack->setChecked(m == "white-on-black");
   customDialog->customColor->setChecked(m == "custom");
@@ -187,8 +187,8 @@ void CSSConfig::save()
   delete c;
 
   // generate CSS template
-  QString templ = locate("data", "kcmcss/template.css");
-  QString dest;
+  TQString templ = locate("data", "kcmcss/template.css");
+  TQString dest;
   if (!templ.isEmpty())
     {
       CSSTemplate css(templ);
@@ -222,18 +222,18 @@ void CSSConfig::defaults()
 }
 
 
-QString px(int i, double scale)
+TQString px(int i, double scale)
 {
-  QString px;
+  TQString px;
   px.setNum(static_cast<int>(i * scale));
   px += "px";
   return px;
 }
 
 
-QMap<QString,QString> CSSConfig::cssDict()
+TQMap<TQString,TQString> CSSConfig::cssDict()
 {
-  QMap<QString,QString> dict;
+  TQMap<TQString,TQString> dict;
 
   // Fontsizes ------------------------------------------------------
 
@@ -314,10 +314,10 @@ void CSSConfig::slotCustomize()
 void CSSConfig::slotPreview()
 {
 
-  QStyleSheetItem *h1 = new QStyleSheetItem(QStyleSheet::defaultSheet(), "h1");
-  QStyleSheetItem *h2 = new QStyleSheetItem(QStyleSheet::defaultSheet(), "h2");
-  QStyleSheetItem *h3 = new QStyleSheetItem(QStyleSheet::defaultSheet(), "h3");
-  QStyleSheetItem *text = new QStyleSheetItem(QStyleSheet::defaultSheet(), "p");
+  TQStyleSheetItem *h1 = new TQStyleSheetItem(TQStyleSheet::defaultSheet(), "h1");
+  TQStyleSheetItem *h2 = new TQStyleSheetItem(TQStyleSheet::defaultSheet(), "h2");
+  TQStyleSheetItem *h3 = new TQStyleSheetItem(TQStyleSheet::defaultSheet(), "h3");
+  TQStyleSheetItem *text = new TQStyleSheetItem(TQStyleSheet::defaultSheet(), "p");
 
   // Fontsize
 
@@ -338,7 +338,7 @@ void CSSConfig::slotPreview()
 
   // Colors
 
-  QColor back, fore;
+  TQColor back, fore;
 
   if (customDialog->blackOnWhite->isChecked())
     {
@@ -371,7 +371,7 @@ void CSSConfig::slotPreview()
   // Show the preview
   PreviewDialog *dlg = new PreviewDialog(this, 0, true);
   dlg->preview->setPaper(back);
-  dlg->preview->viewport()->setFont(QFont(KGlobalSettings::generalFont().family(), bfs));
+  dlg->preview->viewport()->setFont(TQFont(KGlobalSettings::generalFont().family(), bfs));
 
   dlg->exec();
 

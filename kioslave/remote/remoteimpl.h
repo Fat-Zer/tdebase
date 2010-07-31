@@ -24,7 +24,7 @@
 #include <kio/job.h>
 #include <kurl.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class RemoteImpl
 {
@@ -34,21 +34,21 @@ public:
 	void createTopLevelEntry(KIO::UDSEntry &entry) const;
 	bool createWizardEntry(KIO::UDSEntry &entry) const;
 	bool isWizardURL(const KURL &url) const;
-	bool statNetworkFolder(KIO::UDSEntry &entry, const QString &filename) const;
+	bool statNetworkFolder(KIO::UDSEntry &entry, const TQString &filename) const;
 
-	void listRoot(QValueList<KIO::UDSEntry> &list) const;
+	void listRoot(TQValueList<KIO::UDSEntry> &list) const;
 
-	KURL findBaseURL(const QString &filename) const;
-	QString findDesktopFile(const QString &filename) const;
+	KURL findBaseURL(const TQString &filename) const;
+	TQString findDesktopFile(const TQString &filename) const;
 	
-	bool deleteNetworkFolder(const QString &filename) const;
-	bool renameFolders(const QString &src, const QString &dest,
+	bool deleteNetworkFolder(const TQString &filename) const;
+	bool renameFolders(const TQString &src, const TQString &dest,
 	                   bool overwrite) const;
 
 private:
-	bool findDirectory(const QString &filename, QString &directory) const;
-	void createEntry(KIO::UDSEntry& entry, const QString &directory,
-	                 const QString &file) const;
+	bool findDirectory(const TQString &filename, TQString &directory) const;
+	void createEntry(KIO::UDSEntry& entry, const TQString &directory,
+	                 const TQString &file) const;
 };
 
 #endif

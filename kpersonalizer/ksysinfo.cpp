@@ -19,10 +19,10 @@
  * Code partly taken from kcontrol/info and kcontrol/fonts
  */
 
-#include <qfontdatabase.h>
-#include <qfont.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqfontdatabase.h>
+#include <tqfont.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kdebug.h>
 
@@ -31,7 +31,7 @@
 #include "ksysinfo.h"
 
 KSysInfo::KSysInfo() {
-	m_fdb = new QFontDatabase();
+	m_fdb = new TQFontDatabase();
 	initXInfo();
 	initFontFamilies();
 	initHWInfo();
@@ -55,7 +55,7 @@ KSysInfo::~KSysInfo() {
 void KSysInfo::initXInfo() {
 	Display *dpy = XOpenDisplay(0);
 	// vendor
-	m_xvendor = !dpy ? QString::null : (QString)ServerVendor(dpy);
+	m_xvendor = !dpy ? TQString::null : (TQString)ServerVendor(dpy);
 	// XFree-Inc?
 	m_xfree_inc = m_xvendor.contains("XFree86");
 	// X.org ?
@@ -65,10 +65,10 @@ void KSysInfo::initXInfo() {
 	// RENDER-support
 	m_xrender = false;
 	int extCount;
-	QString extension;
+	TQString extension;
 	char **extensions = XListExtensions( dpy, &extCount );
 	for (int i = 0; i < extCount; i++ ) {
-		extension=QString( extensions[i] );
+		extension=TQString( extensions[i] );
 		extension=extension.stripWhiteSpace();
 		if (!extension.compare("RENDER"))
 			m_xrender=true;
@@ -98,13 +98,13 @@ bool KSysInfo::getRenderSupport(){
  */
 
 void KSysInfo::initFontFamilies() {
-	QFontDatabase fdb;
-	QStringList families = fdb.families();
-	m_normal_font = QString::null;
-	m_fixed_font = QString::null;
+	TQFontDatabase fdb;
+	TQStringList families = fdb.families();
+	m_normal_font = TQString::null;
+	m_fixed_font = TQString::null;
 	int normal_priority = 0, fixed_priority = 0;
 	for (uint i=0; i < families.count(); i++) {
-		QString font = *families.at(i);
+		TQString font = *families.at(i);
 		//add further NORMAL fonts here
 		if ( (font.contains("Arial [") || font=="Arial") && normal_priority < 15 ) {
 			m_normal_font = font;
@@ -154,19 +154,19 @@ void KSysInfo::initFontFamilies() {
 	}
 }
 
-QFont KSysInfo::getNormalFont() {
+TQFont KSysInfo::getNormalFont() {
 	return m_fdb->font(m_normal_font,"Normal",12); // this will return the current font, if !m_normal_font
 }
 
-QFont KSysInfo::getSmallFont(){
+TQFont KSysInfo::getSmallFont(){
 	return m_fdb->font(m_normal_font,"Normal",11);
 }
 
-QFont KSysInfo::getBoldFont(){
+TQFont KSysInfo::getBoldFont(){
 	return m_fdb->font(m_normal_font,"Bold",12);
 }
 
-QFont KSysInfo::getFixedWidthFont(){
+TQFont KSysInfo::getFixedWidthFont(){
 	return m_fdb->font(m_fixed_font,"Normal",10);
 }
 
@@ -179,12 +179,12 @@ QFont KSysInfo::getFixedWidthFont(){
 #ifdef __linux__
 ///////////////////
 
-	#include <qfile.h>
+	#include <tqfile.h>
 	#include <math.h>
 
 	void KSysInfo::initHWInfo() {
 		char buf[512];
-		QFile *file = new QFile("/proc/cpuinfo");
+		TQFile *file = new TQFile("/proc/cpuinfo");
 
 		m_cpu_speed = 0;
 
@@ -200,8 +200,8 @@ QFont KSysInfo::getFixedWidthFont(){
 
 		// File Parser
 		while (file->readLine(buf, sizeof(buf) - 1) > 0) {
-			QString s1 = QString::fromLocal8Bit(buf);
-			QString s2 = s1.mid(s1.find(":") + 1);
+			TQString s1 = TQString::fromLocal8Bit(buf);
+			TQString s2 = s1.mid(s1.find(":") + 1);
 			s1.truncate(s1.find(":"));
 			s1=s1.stripWhiteSpace();
 			s2=s2.stripWhiteSpace();

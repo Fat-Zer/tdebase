@@ -32,13 +32,13 @@
 #include "FcEngine.h"
 #include "KfiConstants.h"
 #include <ksavefile.h>
-#include <qtextstream.h>
-#include <qdir.h>
+#include <tqtextstream.h>
+#include <tqdir.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 #include <fstream>
 #include <unistd.h>
 
@@ -52,7 +52,7 @@ static const char * findSpace(const char *str)
     return str;
 }
 
-static bool parseLine(const char *line, QString &ps, QString &fname, bool &isAlias)
+static bool parseLine(const char *line, TQString &ps, TQString &fname, bool &isAlias)
 {
     static const int constMaxLen     = 127;
     static const int constFileMaxLen = 1023;
@@ -107,13 +107,13 @@ static bool parseLine(const char *line, QString &ps, QString &fname, bool &isAli
 //
 // Returns a PS name from an X family name...
 //    e.g. "Times New Roman" -> "TimesNewRoman"
-static QString createX11PsName(const QString &font)
+static TQString createX11PsName(const TQString &font)
 {
-    QString       newName(font);
+    TQString       newName(font);
     unsigned int  ch;
     bool          newWord=true;
 
-    newName.replace(QRegExp("\\-"), "_");
+    newName.replace(TQRegExp("\\-"), "_");
 
     for(ch=0; ch<newName.length(); ++ch)
     {
@@ -136,7 +136,7 @@ static QString createX11PsName(const QString &font)
         }
     }
 
-    newName.replace(" ", QString::null);
+    newName.replace(" ", TQString::null);
     return newName;
 }
 
@@ -156,10 +156,10 @@ static const char * getItalicStr(KFI::CFontEngine::EItalic it)
 
 //
 // Create a full Ps name
-static QString createName(const QString &family, const QString &weight, const char *italic)
+static TQString createName(const TQString &family, const TQString &weight, const char *italic)
 {
-    QString      name;
-    QTextOStream str(&name);
+    TQString      name;
+    TQTextOStream str(&name);
 
     str << family;
     if(!weight.isEmpty() || NULL!=italic)
@@ -174,26 +174,26 @@ static QString createName(const QString &family, const QString &weight, const ch
     return name;
 }
 
-static QString getEntry(QStringList &list, const QString &name)
+static TQString getEntry(TQStringList &list, const TQString &name)
 {
-    QStringList::Iterator it(list.begin()),
+    TQStringList::Iterator it(list.begin()),
                           end(list.end());
 
     for( ; it!=end; ++it)
         if(0==(*it).find('/'+name+' '))
             return *it;
 
-    return QString::null;
+    return TQString::null;
 }
 
-inline bool isAlias(const QString &entry)
+inline bool isAlias(const TQString &entry)
 {
-    return -1==entry.findRev(QRegExp(")\\s*;\\s*$"));
+    return -1==entry.findRev(TQRegExp(")\\s*;\\s*$"));
 }
 
-static void addEntry(QStringList &list, const QString &name, const QString &file, const QString &fmapDir)
+static void addEntry(TQStringList &list, const TQString &name, const TQString &file, const TQString &fmapDir)
 {
-    QString existing(getEntry(list, name));
+    TQString existing(getEntry(list, name));
     bool    insert=true;
 
     if(!existing.isEmpty())
@@ -204,8 +204,8 @@ static void addEntry(QStringList &list, const QString &name, const QString &file
 
     if(insert)
     {
-        QString      entry;
-        QTextOStream str(&entry);
+        TQString      entry;
+        TQTextOStream str(&entry);
 
         str << '/' << name << " (";
 
@@ -219,16 +219,16 @@ static void addEntry(QStringList &list, const QString &name, const QString &file
     }
 }
 
-static void addAliasEntry(QStringList &list, const QString &x11Name, const QString &psName)
+static void addAliasEntry(TQStringList &list, const TQString &x11Name, const TQString &psName)
 {
     if(x11Name!=psName)
     {
-        QString existing(getEntry(list, x11Name));
+        TQString existing(getEntry(list, x11Name));
 
         if(existing.isEmpty())
         {
-            QString      entry;
-            QTextOStream str(&entry);
+            TQString      entry;
+            TQTextOStream str(&entry);
 
             str << '/' << x11Name << " /" << psName << " ;";
             list.append(entry);
@@ -236,11 +236,11 @@ static void addAliasEntry(QStringList &list, const QString &x11Name, const QStri
     }
 }
 
-static QString locateFile(const char *dir, const char *file, int level=0)
+static TQString locateFile(const char *dir, const char *file, int level=0)
 {
     if(level<5)
     {
-        QDir d(dir);
+        TQDir d(dir);
 
         if(d.isReadable())
         {
@@ -249,14 +249,14 @@ static QString locateFile(const char *dir, const char *file, int level=0)
             if(fList)
             {
                 QFileInfoListIterator it(*fList);
-                QFileInfo             *fInfo;
-                QString               str;
+                TQFileInfo             *fInfo;
+                TQString               str;
 
                 for(; NULL!=(fInfo=it.current()); ++it)
                     if("."!=fInfo->fileName() && ".."!=fInfo->fileName())
                         if(fInfo->isDir())
                         {
-                            if(!(str=locateFile(QFile::encodeName(fInfo->filePath()+"/"), file, level+1)).isEmpty())
+                            if(!(str=locateFile(TQFile::encodeName(fInfo->filePath()+"/"), file, level+1)).isEmpty())
                                 return str;
                         }
                         else
@@ -266,19 +266,19 @@ static QString locateFile(const char *dir, const char *file, int level=0)
         }
     }
 
-    return QString::null;
+    return TQString::null;
 }
 
-static QString locateFile(const char *file, const char **dirs)
+static TQString locateFile(const char *file, const char **dirs)
 {
     int     d;
-    QString str;
+    TQString str;
 
     for(d=0; dirs[d]; ++d)
         if(!(str=locateFile(dirs[d], file)).isEmpty())
             return str;
 
-    return QString::null;
+    return TQString::null;
 }
 
 #define FONTMAP "Fontmap"
@@ -289,13 +289,13 @@ namespace KFI
 namespace Fontmap
 {
 
-bool create(const QString &dir, CFontEngine &fe)
+bool create(const TQString &dir, CFontEngine &fe)
 {
     bool        root(Misc::root()),
                 added=false;
-    QString     fmapDir(Misc::dirSyntax(root ? KFI_ROOT_CFG_DIR : dir));
+    TQString     fmapDir(Misc::dirSyntax(root ? KFI_ROOT_CFG_DIR : dir));
     CFile       old(fmapDir);
-    QStringList entries;
+    TQStringList entries;
     int         i;
     FcPattern   *pat = FcPatternCreate();
     FcObjectSet *os = FcObjectSetBuild(FC_FILE, FC_SCALABLE, (void*)0);
@@ -306,13 +306,13 @@ bool create(const QString &dir, CFontEngine &fe)
 
     for (i = 0; i<fs->nfont; i++)
     {
-        QString fName(Misc::fileSyntax(CFcEngine::getFcString(fs->fonts[i], FC_FILE)));
+        TQString fName(Misc::fileSyntax(CFcEngine::getFcString(fs->fonts[i], FC_FILE)));
         FcBool  scalable=FcFalse;
 
         if(!fName.isEmpty() && (root || dir.isEmpty() || 0==fName.find(dir)) &&
            FcResultMatch==FcPatternGetBool(fs->fonts[i], FC_SCALABLE, 0, &scalable) && scalable)
         {
-            const QStringList *existing=old.getEntries(fName);
+            const TQStringList *existing=old.getEntries(fName);
 
             if(existing && existing->count())
                 entries+=(*existing);
@@ -342,7 +342,7 @@ bool create(const QString &dir, CFontEngine &fe)
                                 case CFontEngine::WEIGHT_MEDIUM:
                                 case CFontEngine::WEIGHT_REGULAR:
                                 {
-                                    QString x11Ps(createX11PsName(fe.getFamilyName()));
+                                    TQString x11Ps(createX11PsName(fe.getFamilyName()));
 
                                     if(CFontEngine::ITALIC_ITALIC!=fe.getItalic() &&
                                        CFontEngine::ITALIC_OBLIQUE!=fe.getItalic())
@@ -378,11 +378,11 @@ bool create(const QString &dir, CFontEngine &fe)
     if(added || entries.count()!=old.getLineCount())
     {
         KSaveFile   out(fmapDir+FONTMAP);
-        QTextStream *stream=out.textStream();
+        TQTextStream *stream=out.textStream();
 
         if(stream)
         {
-            QStringList::Iterator it;
+            TQStringList::Iterator it;
 
             for(it=entries.begin(); it!=entries.end(); ++it)
                 *stream << *it << endl;
@@ -403,7 +403,7 @@ bool create(const QString &dir, CFontEngine &fe)
             NULL
         };
 
-        QString gsFile=locateFile(FONTMAP, constGhostscriptDirs);
+        TQString gsFile=locateFile(FONTMAP, constGhostscriptDirs);
 
         if(!gsFile.isEmpty())
         {
@@ -411,11 +411,11 @@ bool create(const QString &dir, CFontEngine &fe)
             const char *constRLF=".runlibfile";
 
             char     line[constMaxLineLen];
-            ifstream in(QFile::encodeName(gsFile));
+            ifstream in(TQFile::encodeName(gsFile));
 
             if(in)
             {
-                QCString fmap(QFile::encodeName(fmapDir+FONTMAP));
+                TQCString fmap(TQFile::encodeName(fmapDir+FONTMAP));
                 int      lineNum=0,
                          kfiLine=-1,
                          gsLine=-1,
@@ -492,7 +492,7 @@ bool create(const QString &dir, CFontEngine &fe)
                         if(added) // Don't re-write GS's Fontmap unless we've actually added something...
                         {
                             KSaveFile   out(gsFile);
-                            QTextStream *stream=out.textStream();
+                            TQTextStream *stream=out.textStream();
 
                             if(stream)
                                 *stream << buffer;
@@ -507,11 +507,11 @@ bool create(const QString &dir, CFontEngine &fe)
     return status;
 }
 
-CFile::CFile(const QString &dir)
+CFile::CFile(const TQString &dir)
      : itsDir(dir),
        itsLineCount(0)
 {
-    ifstream f(QFile::encodeName(dir+FONTMAP));
+    ifstream f(TQFile::encodeName(dir+FONTMAP));
 
     itsEntries.setAutoDelete(true);
 
@@ -528,7 +528,7 @@ CFile::CFile(const QString &dir)
 
             if(!f.eof())
             {
-                QString ps,
+                TQString ps,
                         fname;
                 bool    isAlias;
 
@@ -550,14 +550,14 @@ CFile::CFile(const QString &dir)
     }
 }
 
-const QStringList * CFile::getEntries(const QString &fname)
+const TQStringList * CFile::getEntries(const TQString &fname)
 {
     TEntry *entry=findEntry(0==fname.find(itsDir) ? fname.mid(itsDir.length()) : fname, false);
 
     return entry ? &entry->entries : NULL;
 }
 
-CFile::TEntry * CFile::findEntry(const QString &fname, bool isAlias)
+CFile::TEntry * CFile::findEntry(const TQString &fname, bool isAlias)
 {
     TEntry *entry=NULL;
 
@@ -568,7 +568,7 @@ CFile::TEntry * CFile::findEntry(const QString &fname, bool isAlias)
     return entry;
 }
 
-CFile::TEntry * CFile::getEntry(TEntry **current, const QString &fname, bool isAlias)
+CFile::TEntry * CFile::getEntry(TEntry **current, const TQString &fname, bool isAlias)
 {
     //
     // See if its the current one...

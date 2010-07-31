@@ -1,9 +1,9 @@
-#include <qimage.h>
-//#include <qbitmap.h>
-#include <qfont.h>
-#include <qpainter.h>
-#include <qregexp.h>
-#include <qdict.h>
+#include <tqimage.h>
+//#include <tqbitmap.h>
+#include <tqfont.h>
+#include <tqpainter.h>
+#include <tqregexp.h>
+#include <tqdict.h>
 
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -17,8 +17,8 @@
 static const int FLAG_MAX_WIDTH = 21;
 static const int FLAG_MAX_HEIGHT = 14;
 
-const QString LayoutIcon::flagTemplate("l10n/%1/flag.png");
-const QString& LayoutIcon::ERROR_CODE("error");
+const TQString LayoutIcon::flagTemplate("l10n/%1/flag.png");
+const TQString& LayoutIcon::ERROR_CODE("error");
 LayoutIcon* LayoutIcon::instance;
 
 
@@ -34,13 +34,13 @@ LayoutIcon::LayoutIcon():
 		m_labelFont("sans")
 {
 	m_labelFont.setPixelSize(10);
-	m_labelFont.setWeight(QFont::Bold);
+	m_labelFont.setWeight(TQFont::Bold);
 }
 
-const QPixmap&
-LayoutIcon::findPixmap(const QString& code_, bool showFlag, const QString& displayName_)
+const TQPixmap&
+LayoutIcon::findPixmap(const TQString& code_, bool showFlag, const TQString& displayName_)
 {
-	QPixmap* pm = NULL;
+	TQPixmap* pm = NULL;
 
 	if( code_ == ERROR_CODE ) {
 		pm = m_pixmapCache[ERROR_CODE];
@@ -51,7 +51,7 @@ LayoutIcon::findPixmap(const QString& code_, bool showFlag, const QString& displ
 		return *pm;
 	}
 
-	QString displayName(displayName_);
+	TQString displayName(displayName_);
 	
 	if( displayName.isEmpty() ) {
 		displayName = KxkbConfig::getDefaultDisplayName(code_);
@@ -59,38 +59,38 @@ LayoutIcon::findPixmap(const QString& code_, bool showFlag, const QString& displ
 	if( displayName.length() > 3 )
 		displayName = displayName.left(3);
 
-	const QString pixmapKey( showFlag ? code_ + "." + displayName : displayName );
+	const TQString pixmapKey( showFlag ? code_ + "." + displayName : displayName );
 	
 	pm = m_pixmapCache[pixmapKey];
 	if( pm )
 		return *pm;
 
-	QString flag;
+	TQString flag;
 	if( showFlag ) {
-		QString countryCode = getCountryFromLayoutName( code_ );
+		TQString countryCode = getCountryFromLayoutName( code_ );
 		flag = locate("locale", flagTemplate.arg(countryCode));
 	}
 
 	if( flag.isEmpty() ) {
-		pm = new QPixmap(FLAG_MAX_WIDTH, FLAG_MAX_HEIGHT);
+		pm = new TQPixmap(FLAG_MAX_WIDTH, FLAG_MAX_HEIGHT);
 		pm->fill(Qt::gray);
 	}
 	else {
-		pm = new QPixmap(flag);
+		pm = new TQPixmap(flag);
 		dimPixmap( *pm );
 
 #if 0		
 		if( pm->height() < FLAG_MAX_HEIGHT ) {
-			QPixmap* pix = new QPixmap(FLAG_MAX_WIDTH, FLAG_MAX_HEIGHT);
+			TQPixmap* pix = new TQPixmap(FLAG_MAX_WIDTH, FLAG_MAX_HEIGHT);
 			pix->fill( Qt::lightGray );
-//			pix->fill( QColor(qRgba(127,127,127,255)) );
-//			QBitmap mask;
+//			pix->fill( TQColor(qRgba(127,127,127,255)) );
+//			TQBitmap mask;
 //			mask.fill(1);
 //			pix->setMask(mask);
 			
 			int dy = (pix->height() - pm->height()) / 2;
 			copyBlt( pix, 0, dy, pm, 0, 0, -1, -1 );
-//			QPixmap* px = new QPixmap(21, 14);
+//			TQPixmap* px = new TQPixmap(21, 14);
 //			px->convertFromImage(img);*/
 			delete pm;
 			pm = pix;
@@ -98,7 +98,7 @@ LayoutIcon::findPixmap(const QString& code_, bool showFlag, const QString& displ
 #endif
 	}
 
-	QPainter p(pm);
+	TQPainter p(pm);
 	p.setFont(m_labelFont);
 
 	p.setPen(Qt::black);
@@ -114,16 +114,16 @@ LayoutIcon::findPixmap(const QString& code_, bool showFlag, const QString& displ
 /**
 @brief Try to get country code from layout name in xkb before xorg 6.9.0
 */
-QString LayoutIcon::getCountryFromLayoutName(const QString& layoutName)
+TQString LayoutIcon::getCountryFromLayoutName(const TQString& layoutName)
 {
-	QString flag;
+	TQString flag;
 	
 	if( X11Helper::areLayoutsClean() ) { // >= Xorg 6.9.0
 		if( layoutName == "mkd" )
 			flag = "mk";
 		else
 		if( layoutName == "srp" ) {
-			QString csFlagFile = locate("locale", flagTemplate.arg("cs"));
+			TQString csFlagFile = locate("locale", flagTemplate.arg("cs"));
 			flag = csFlagFile.isEmpty() ? "yu" : "cs";
 		}
 		else
@@ -183,15 +183,15 @@ QString LayoutIcon::getCountryFromLayoutName(const QString& layoutName)
 						 || layoutName == "tel" || layoutName == "tml" || layoutName == "ben" ) // some Indian languages
 				flag = "in";
 		else {
-			int sepPos = layoutName.find(QRegExp("[-_]"));
-			QString leftCode = layoutName.mid(0, sepPos);
-			QString rightCode;
+			int sepPos = layoutName.find(TQRegExp("[-_]"));
+			TQString leftCode = layoutName.mid(0, sepPos);
+			TQString rightCode;
 			if( sepPos != -1 )
 				rightCode = layoutName.mid(sepPos+1);
 //			kdDebug() << "layout name breakup: " << leftCode << ":" << rightCode << endl;
 	
 			if( rightCode.length() == 2 
-					&& QRegExp("[A-Z][A-Z]").exactMatch(rightCode) ) {
+					&& TQRegExp("[A-Z][A-Z]").exactMatch(rightCode) ) {
 				flag = rightCode.lower();
 			}
 			else {
@@ -204,9 +204,9 @@ QString LayoutIcon::getCountryFromLayoutName(const QString& layoutName)
 }
 
 
-void LayoutIcon::dimPixmap(QPixmap& pm)
+void LayoutIcon::dimPixmap(TQPixmap& pm)
 {
-	QImage image = pm.convertToImage();
+	TQImage image = pm.convertToImage();
 	for (int y=0; y<image.height(); y++)
 		for(int x=0; x<image.width(); x++)
 	{
@@ -220,12 +220,12 @@ void LayoutIcon::dimPixmap(QPixmap& pm)
 static const char* ERROR_LABEL = "err";
 
 //private
-QPixmap* LayoutIcon::createErrorPixmap()
+TQPixmap* LayoutIcon::createErrorPixmap()
 {
-	QPixmap* pm = new QPixmap(21, 14);
+	TQPixmap* pm = new TQPixmap(21, 14);
 	pm->fill(Qt::white);
 
-	QPainter p(pm);
+	TQPainter p(pm);
 
 	p.setFont(m_labelFont);
 	p.setPen(Qt::red);

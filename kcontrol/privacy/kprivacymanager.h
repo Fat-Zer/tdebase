@@ -21,7 +21,7 @@
 #ifndef KPRIVACYMANAGER_H
 #define KPRIVACYMANAGER_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 /**
 @author Ralf Hoelzer
@@ -47,7 +47,7 @@ public:
     bool clearFavIcons();
 
 private:
-    bool isApplicationRegistered(const QString &appName);
+    bool isApplicationRegistered(const TQString &appName);
     bool m_error;
 
 };

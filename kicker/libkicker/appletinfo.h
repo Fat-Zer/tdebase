@@ -24,18 +24,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __appletinfo_h__
 #define __appletinfo_h__
 
-#include <qmap.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qvaluevector.h>
+#include <tqmap.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqvaluevector.h>
 
 #include <kdemacros.h>
 
 class KDE_EXPORT AppletInfo
 {
     public:
-        typedef QValueVector<AppletInfo> List;
-        typedef QMap<QObject*, AppletInfo*> Dict;
+        typedef TQValueVector<AppletInfo> List;
+        typedef TQMap<TQObject*, AppletInfo*> Dict;
 
         enum AppletType { Undefined = 0,
                           Applet = 1,
@@ -44,24 +44,24 @@ class KDE_EXPORT AppletInfo
                           Extension = 8,
                           Button = BuiltinButton | SpecialButton };
 
-        AppletInfo(const QString& desktopFile = QString::null,
-                    const QString& configFile = QString::null,
+        AppletInfo(const TQString& desktopFile = TQString::null,
+                    const TQString& configFile = TQString::null,
                     const AppletType type = Undefined);
 
-        QString name() const { return m_name; }
-        QString comment() const { return m_comment; }
-        QString icon() const { return m_icon; }
+        TQString name() const { return m_name; }
+        TQString comment() const { return m_comment; }
+        TQString icon() const { return m_icon; }
 
         AppletType type() const { return m_type; }
 
-        QString library() const { return m_lib; }
-        QString desktopFile() const { return m_desktopFile; }
-        QString configFile() const { return m_configFile; }
+        TQString library() const { return m_lib; }
+        TQString desktopFile() const { return m_desktopFile; }
+        TQString configFile() const { return m_configFile; }
 
         bool isUniqueApplet() const { return m_unique; }
         bool isHidden() const { return m_hidden; }
 
-        void setConfigFile(QString cf) { m_configFile = cf; }
+        void setConfigFile(TQString cf) { m_configFile = cf; }
 
         bool operator<(const AppletInfo& rhs) const;
         bool operator>(const AppletInfo& rhs) const;
@@ -71,19 +71,19 @@ class KDE_EXPORT AppletInfo
         void setType(AppletType type) { m_type = type; }
 
     protected:
-        void setName(QString name) { m_name = name; }
-        void setComment(QString comment) { m_comment = comment; }
-        void setIcon(QString icon) { m_icon = icon; }
-        void setLibrary(QString lib) { m_lib = lib; }
+        void setName(TQString name) { m_name = name; }
+        void setComment(TQString comment) { m_comment = comment; }
+        void setIcon(TQString icon) { m_icon = icon; }
+        void setLibrary(TQString lib) { m_lib = lib; }
         void setIsUnique(bool u) { m_unique = u; }
 
     private:
-        QString m_name;
-        QString m_comment;
-        QString m_icon;
-        QString m_lib;
-        QString m_desktopFile;
-        QString m_configFile;
+        TQString m_name;
+        TQString m_comment;
+        TQString m_icon;
+        TQString m_lib;
+        TQString m_desktopFile;
+        TQString m_configFile;
         AppletType m_type;
         bool m_unique;
         bool m_hidden;

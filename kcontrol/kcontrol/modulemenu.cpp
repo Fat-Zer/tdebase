@@ -21,11 +21,11 @@ that is intentional :-]
 */
 
 
-#include <qheader.h>
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qpoint.h>
-#include <qcursor.h>
+#include <tqheader.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqpoint.h>
+#include <tqcursor.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -40,7 +40,7 @@ that is intentional :-]
 #include "global.h"
 
 
-ModuleMenu::ModuleMenu(ConfigModuleList *list, QWidget * parent, const char * name)
+ModuleMenu::ModuleMenu(ConfigModuleList *list, TQWidget * parent, const char * name)
   : KPopupMenu(parent, name)
   , _modules(list)
 {
@@ -49,27 +49,27 @@ ModuleMenu::ModuleMenu(ConfigModuleList *list, QWidget * parent, const char * na
 
   fill(this, KCGlobal::baseGroup());
 
-  connect(this, SIGNAL(activated(int)), this, SLOT(moduleSelected(int)));
+  connect(this, TQT_SIGNAL(activated(int)), this, TQT_SLOT(moduleSelected(int)));
 }
 
-void ModuleMenu::fill(KPopupMenu *parentMenu, const QString &parentPath)
+void ModuleMenu::fill(KPopupMenu *parentMenu, const TQString &parentPath)
 {
-  QStringList subMenus = _modules->submenus(parentPath);
-  for(QStringList::ConstIterator it = subMenus.begin();
+  TQStringList subMenus = _modules->submenus(parentPath);
+  for(TQStringList::ConstIterator it = subMenus.begin();
       it != subMenus.end(); ++it)
   {
-     QString path = *it;
+     TQString path = *it;
      KServiceGroup::Ptr group = KServiceGroup::group(path);
      if (!group)
         continue;
      
      // create new menu
      KPopupMenu *menu = new KPopupMenu(parentMenu);
-     connect(menu, SIGNAL(activated(int)), this, SLOT(moduleSelected(int)));
+     connect(menu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(moduleSelected(int)));
 
      // Item names may contain ampersands. To avoid them being converted to 
      // accelators, replace them with two ampersands.
-     QString name = group->caption();
+     TQString name = group->caption();
      name.replace("&", "&&");
   
      parentMenu->insertItem(KGlobal::iconLoader()->loadIcon(group->icon(), KIcon::Desktop, KIcon::SizeSmall)
@@ -79,12 +79,12 @@ void ModuleMenu::fill(KPopupMenu *parentMenu, const QString &parentPath)
   }
 
   ConfigModule *module;
-  QPtrList<ConfigModule> moduleList = _modules->modules(parentPath);
+  TQPtrList<ConfigModule> moduleList = _modules->modules(parentPath);
   for (module=moduleList.first(); module != 0; module=moduleList.next())
   {
      // Item names may contain ampersands. To avoid them being converted to 
      // accelators, replace them with two ampersands.
-     QString name = module->moduleName();
+     TQString name = module->moduleName();
      name.replace("&", "&&");
 
      int realid = parentMenu->insertItem(KGlobal::iconLoader()->loadIcon(module->icon(), KIcon::Desktop, KIcon::SizeSmall)

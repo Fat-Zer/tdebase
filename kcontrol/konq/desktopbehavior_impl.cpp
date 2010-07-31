@@ -22,14 +22,14 @@
 
 #include "desktopbehavior_impl.h"
 
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qbuttongroup.h>
-#include <qtabwidget.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqpushbutton.h>
+#include <tqbuttongroup.h>
+#include <tqtabwidget.h>
+#include <tqwhatsthis.h>
 #include <klistview.h>
 #include <kservice.h>
 #include <klocale.h>
@@ -46,13 +46,13 @@
 const int customMenu1ID = 5;
 const int customMenu2ID = 6;
 
-DesktopBehaviorModule::DesktopBehaviorModule(KConfig *config, QWidget *parent, const char * )
+DesktopBehaviorModule::DesktopBehaviorModule(KConfig *config, TQWidget *parent, const char * )
     : KCModule( parent, "kcmkonq" )
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    TQVBoxLayout* layout = new TQVBoxLayout(this);
     m_behavior = new DesktopBehavior(config, this);
     layout->addWidget(m_behavior);
-    connect(m_behavior, SIGNAL(changed()), this, SLOT(changed()));
+    connect(m_behavior, TQT_SIGNAL(changed()), this, TQT_SLOT(changed()));
 }
 
 void DesktopBehaviorModule::changed()
@@ -63,59 +63,59 @@ void DesktopBehaviorModule::changed()
 class DesktopBehaviorPreviewItem : public QCheckListItem
 {
 public:
-    DesktopBehaviorPreviewItem(DesktopBehavior *rootOpts, QListView *parent,
+    DesktopBehaviorPreviewItem(DesktopBehavior *rootOpts, TQListView *parent,
                 const KService::Ptr &plugin, bool on)
-        : QCheckListItem(parent, plugin->name(), CheckBox),
+        : TQCheckListItem(parent, plugin->name(), CheckBox),
           m_rootOpts(rootOpts)
     {
         m_pluginName = plugin->desktopEntryName();
         setOn(on);
     }
-    DesktopBehaviorPreviewItem(DesktopBehavior *rootOpts, QListView *parent,
+    DesktopBehaviorPreviewItem(DesktopBehavior *rootOpts, TQListView *parent,
                 bool on)
-        : QCheckListItem(parent, i18n("Sound Files"), CheckBox),
+        : TQCheckListItem(parent, i18n("Sound Files"), CheckBox),
           m_rootOpts(rootOpts)
     {
         m_pluginName = "audio/";
         setOn(on);
     }
-    const QString &pluginName() const { return m_pluginName; }
+    const TQString &pluginName() const { return m_pluginName; }
 
 protected:
     virtual void stateChange( bool ) { m_rootOpts->changed(); }
 
 private:
     DesktopBehavior *m_rootOpts;
-    QString m_pluginName;
+    TQString m_pluginName;
 };
 
 
 class DesktopBehaviorMediaItem : public QCheckListItem
 {
 public:
-    DesktopBehaviorMediaItem(DesktopBehavior *rootOpts, QListView *parent,
-                const QString name, const QString mimetype, bool on)
-        : QCheckListItem(parent, name, CheckBox),
+    DesktopBehaviorMediaItem(DesktopBehavior *rootOpts, TQListView *parent,
+                const TQString name, const TQString mimetype, bool on)
+        : TQCheckListItem(parent, name, CheckBox),
           m_rootOpts(rootOpts),m_mimeType(mimetype){setOn(on);}
 
-    const QString &mimeType() const { return m_mimeType; }
+    const TQString &mimeType() const { return m_mimeType; }
 
 protected:
     virtual void stateChange( bool ) { m_rootOpts->changed(); }
 
 private:
     DesktopBehavior *m_rootOpts;
-    QString m_mimeType;
+    TQString m_mimeType;
 };
 
 
 static const int choiceCount=7;
 static const char * s_choices[7] = { "", "WindowListMenu", "DesktopMenu", "AppMenu", "BookmarksMenu", "CustomMenu1", "CustomMenu2" };
 
-DesktopBehavior::DesktopBehavior(KConfig *config, QWidget *parent, const char * )
+DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char * )
     : DesktopBehaviorBase( parent, "kcmkonq" ), g_pConfig(config)
 {
-  QString strMouseButton1, strMouseButton3, strButtonTxt1, strButtonTxt3;
+  TQString strMouseButton1, strMouseButton3, strButtonTxt1, strButtonTxt3;
 
   /*
    * The text on this form depends on the mouse setting, which can be right
@@ -124,14 +124,14 @@ DesktopBehavior::DesktopBehavior(KConfig *config, QWidget *parent, const char * 
    */
   bool leftHandedMouse = ( KGlobalSettings::mouseSettings().handed == KGlobalSettings::KMouseSettings::LeftHanded);
 
-  m_bHasMedia = KProtocolInfo::isKnownProtocol(QString::fromLatin1("media"));
+  m_bHasMedia = KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media"));
 
-  connect(desktopMenuGroup, SIGNAL(clicked(int)), this, SIGNAL(changed()));
-  connect(iconsEnabledBox, SIGNAL(clicked()), this, SLOT(enableChanged()));
-  connect(showHiddenBox, SIGNAL(clicked()), this, SIGNAL(changed()));
-  connect(vrootBox, SIGNAL(clicked()), this, SIGNAL(changed()));
-  connect(autoLineupIconsBox, SIGNAL(clicked()), this, SIGNAL(changed()));
-  connect(toolTipBox, SIGNAL(clicked()), this, SIGNAL(changed()));
+  connect(desktopMenuGroup, TQT_SIGNAL(clicked(int)), this, TQT_SIGNAL(changed()));
+  connect(iconsEnabledBox, TQT_SIGNAL(clicked()), this, TQT_SLOT(enableChanged()));
+  connect(showHiddenBox, TQT_SIGNAL(clicked()), this, TQT_SIGNAL(changed()));
+  connect(vrootBox, TQT_SIGNAL(clicked()), this, TQT_SIGNAL(changed()));
+  connect(autoLineupIconsBox, TQT_SIGNAL(clicked()), this, TQT_SIGNAL(changed()));
+  connect(toolTipBox, TQT_SIGNAL(clicked()), this, TQT_SIGNAL(changed()));
 
   strMouseButton1 = i18n("&Left button:");
   strButtonTxt1 = i18n( "You can choose what happens when"
@@ -150,10 +150,10 @@ DesktopBehavior::DesktopBehavior(KConfig *config, QWidget *parent, const char * 
   leftLabel->setText( strMouseButton1 );
   leftLabel->setBuddy( leftComboBox );
   fillMenuCombo( leftComboBox );
-  connect(leftEditButton, SIGNAL(clicked()), this, SLOT(editButtonPressed()));
-  connect(leftComboBox, SIGNAL(activated(int)), this, SIGNAL(changed()));
-  connect(leftComboBox, SIGNAL(activated(int)), this, SLOT(comboBoxChanged()));
-  QString wtstr = strButtonTxt1 +
+  connect(leftEditButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(editButtonPressed()));
+  connect(leftComboBox, TQT_SIGNAL(activated(int)), this, TQT_SIGNAL(changed()));
+  connect(leftComboBox, TQT_SIGNAL(activated(int)), this, TQT_SLOT(comboBoxChanged()));
+  TQString wtstr = strButtonTxt1 +
                   i18n(" <ul><li><em>No action:</em> as you might guess, nothing happens!</li>"
                        " <li><em>Window list menu:</em> a menu showing all windows on all"
                        " virtual desktops pops up. You can click on the desktop name to switch"
@@ -167,14 +167,14 @@ DesktopBehavior::DesktopBehavior(KConfig *config, QWidget *parent, const char * 
                        " <li><em>Application menu:</em> the \"K\" menu pops up. This might be"
                        " useful for quickly accessing applications if you like to keep the"
                        " panel (also known as \"Kicker\") hidden from view.</li></ul>");
-  QWhatsThis::add( leftLabel, wtstr );
-  QWhatsThis::add( leftComboBox, wtstr );
+  TQWhatsThis::add( leftLabel, wtstr );
+  TQWhatsThis::add( leftComboBox, wtstr );
 
   middleLabel->setBuddy( middleComboBox );
   fillMenuCombo( middleComboBox );
-  connect(middleEditButton, SIGNAL(clicked()), this, SLOT(editButtonPressed()));
-  connect(middleComboBox, SIGNAL(activated(int)), this, SIGNAL(changed()));
-  connect(middleComboBox, SIGNAL(activated(int)), this, SLOT(comboBoxChanged()));
+  connect(middleEditButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(editButtonPressed()));
+  connect(middleComboBox, TQT_SIGNAL(activated(int)), this, TQT_SIGNAL(changed()));
+  connect(middleComboBox, TQT_SIGNAL(activated(int)), this, TQT_SLOT(comboBoxChanged()));
   wtstr = i18n("You can choose what happens when"
                " you click the middle button of your pointing device on the desktop:"
                " <ul><li><em>No action:</em> as you might guess, nothing happens!</li>"
@@ -190,15 +190,15 @@ DesktopBehavior::DesktopBehavior(KConfig *config, QWidget *parent, const char * 
                " <li><em>Application menu:</em> the \"K\" menu pops up. This might be"
                " useful for quickly accessing applications if you like to keep the"
                " panel (also known as \"Kicker\") hidden from view.</li></ul>");
-  QWhatsThis::add( middleLabel, wtstr );
-  QWhatsThis::add( middleComboBox, wtstr );
+  TQWhatsThis::add( middleLabel, wtstr );
+  TQWhatsThis::add( middleComboBox, wtstr );
 
   rightLabel->setText( strMouseButton3 );
   rightLabel->setBuddy( rightComboBox );
   fillMenuCombo( rightComboBox );
-  connect(rightEditButton, SIGNAL(clicked()), this, SLOT(editButtonPressed()));
-  connect(rightComboBox, SIGNAL(activated(int)), this, SIGNAL(changed()));
-  connect(rightComboBox, SIGNAL(activated(int)), this, SLOT(comboBoxChanged()));
+  connect(rightEditButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(editButtonPressed()));
+  connect(rightComboBox, TQT_SIGNAL(activated(int)), this, TQT_SIGNAL(changed()));
+  connect(rightComboBox, TQT_SIGNAL(activated(int)), this, TQT_SLOT(comboBoxChanged()));
   wtstr = strButtonTxt3 +
           i18n(" <ul><li><em>No action:</em> as you might guess, nothing happens!</li>"
                " <li><em>Window list menu:</em> a menu showing all windows on all"
@@ -213,12 +213,12 @@ DesktopBehavior::DesktopBehavior(KConfig *config, QWidget *parent, const char * 
                " <li><em>Application menu:</em> the \"K\" menu pops up. This might be"
                " useful for quickly accessing applications if you like to keep the"
                " panel (also known as \"Kicker\") hidden from view.</li></ul>");
-  QWhatsThis::add( rightLabel, wtstr );
-  QWhatsThis::add( rightComboBox, wtstr );
+  TQWhatsThis::add( rightLabel, wtstr );
+  TQWhatsThis::add( rightComboBox, wtstr );
 
   if (m_bHasMedia)
   {
-     connect(enableMediaBox, SIGNAL(clicked()), this, SLOT(enableChanged()));
+     connect(enableMediaBox, TQT_SIGNAL(clicked()), this, TQT_SLOT(enableChanged()));
   }
   else
   {
@@ -233,10 +233,10 @@ void DesktopBehavior::fillMediaListView()
     mediaListView->clear();
     mediaListView->setRootIsDecorated(false);
     KMimeType::List mimetypes = KMimeType::allMimeTypes();
-    QValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
+    TQValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
     g_pConfig->setGroup( "Media" );
     enableMediaBox->setChecked(g_pConfig->readBoolEntry("enabled",false));
-    QString excludedMedia=g_pConfig->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
+    TQString excludedMedia=g_pConfig->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
     for (; it2 != mimetypes.end(); ++it2) {
        if ( ((*it2)->name().startsWith("media/")) )
 	{
@@ -254,7 +254,7 @@ void DesktopBehavior::saveMediaListView()
 
     g_pConfig->setGroup( "Media" );
     g_pConfig->writeEntry("enabled",enableMediaBox->isChecked());
-    QStringList exclude;
+    TQStringList exclude;
     for (DesktopBehaviorMediaItem *it=static_cast<DesktopBehaviorMediaItem *>(mediaListView->firstChild());
      	it; it=static_cast<DesktopBehaviorMediaItem *>(it->nextSibling()))
     	{
@@ -264,7 +264,7 @@ void DesktopBehavior::saveMediaListView()
 }
 
 
-void DesktopBehavior::fillMenuCombo( QComboBox * combo )
+void DesktopBehavior::fillMenuCombo( TQComboBox * combo )
 {
   combo->insertItem( i18n("No Action") );
   combo->insertItem( i18n("Window List Menu") );
@@ -289,7 +289,7 @@ void DesktopBehavior::load( bool useDefaults )
     //bool bVertAlign = g_pConfig->readBoolEntry("VertAlign", DEFAULT_VERT_ALIGN);
     KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
     previewListView->clear();
-    QStringList previews = g_pConfig->readListEntry("Preview");
+    TQStringList previews = g_pConfig->readListEntry("Preview");
     for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         new DesktopBehaviorPreviewItem(this, previewListView, *it, previews.contains((*it)->desktopEntryName()));
     new DesktopBehaviorPreviewItem(this, previewListView, previews.contains("audio/"));
@@ -314,7 +314,7 @@ void DesktopBehavior::load( bool useDefaults )
 
     //
     g_pConfig->setGroup( "Mouse Buttons" );
-    QString s;
+    TQString s;
     s = g_pConfig->readEntry( "Left", "" );
     for ( int c = 0 ; c < choiceCount ; c ++ )
     if (s == s_choices[c])
@@ -344,7 +344,7 @@ void DesktopBehavior::save()
 {
     g_pConfig->setGroup( "Desktop Icons" );
     g_pConfig->writeEntry("ShowHidden", showHiddenBox->isChecked());
-    QStringList previews;
+    TQStringList previews;
     for ( DesktopBehaviorPreviewItem *item = static_cast<DesktopBehaviorPreviewItem *>( previewListView->firstChild() );
           item;
           item = static_cast<DesktopBehaviorPreviewItem *>( item->nextSibling() ) )
@@ -380,10 +380,10 @@ void DesktopBehavior::save()
     // Tell kdesktop about the new config file
     if ( !kapp->dcopClient()->isAttached() )
        kapp->dcopClient()->attach();
-    QByteArray data;
+    TQByteArray data;
 
     int konq_screen_number = KApplication::desktop()->primaryScreen();
-    QCString appname;
+    TQCString appname;
     if (konq_screen_number == 0)
         appname = "kdesktop";
     else
@@ -432,7 +432,7 @@ void DesktopBehavior::editButtonPressed()
    if (sender() == rightEditButton)
       i = rightComboBox->currentItem();
 
-   QString cfgFile;
+   TQString cfgFile;
    if (i == customMenu1ID)
       cfgFile = "kdesktop_custom_menu1";
    if (i == customMenu2ID)
@@ -453,7 +453,7 @@ void DesktopBehavior::editButtonPressed()
    }
 }
 
-QString DesktopBehavior::quickHelp() const
+TQString DesktopBehavior::quickHelp() const
 {
   return i18n("<h1>Behavior</h1>\n"
     "This module allows you to choose various options\n"

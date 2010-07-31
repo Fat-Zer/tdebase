@@ -21,9 +21,9 @@
 
 */
 
-#include <qimage.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
+#include <tqimage.h>
+#include <tqpushbutton.h>
+#include <tqspinbox.h>
 
 #include <kconfig.h>
 #include <klocale.h>
@@ -38,20 +38,20 @@ StyleEngine* KSGRD::Style;
 
 StyleEngine::StyleEngine()
 {
-  mFirstForegroundColor = QColor( 0x6894c9 );  // light blue
-  mSecondForegroundColor = QColor( 0x6894c9 ); // light blue
-  mAlarmColor = QColor( 255, 0, 0 );
-  mBackgroundColor = QColor( 0x313031 );       // almost black
+  mFirstForegroundColor = TQColor( 0x6894c9 );  // light blue
+  mSecondForegroundColor = TQColor( 0x6894c9 ); // light blue
+  mAlarmColor = TQColor( 255, 0, 0 );
+  mBackgroundColor = TQColor( 0x313031 );       // almost black
   mFontSize = 9;
 
-  mSensorColors.append( QColor( 0x1889ff ) );  // soft blue
-  mSensorColors.append( QColor( 0xff7f08 ) );  // reddish
-  mSensorColors.append( QColor( 0xffeb14 ) );  // bright yellow
+  mSensorColors.append( TQColor( 0x1889ff ) );  // soft blue
+  mSensorColors.append( TQColor( 0xff7f08 ) );  // reddish
+  mSensorColors.append( TQColor( 0xffeb14 ) );  // bright yellow
 
   uint v = 0x00ff00;
   for ( uint i = mSensorColors.count(); i < 32; ++i ) {
     v = ( ( ( v + 82 ) & 0xff ) << 23 ) | ( v >> 8 );
-    mSensorColors.append( QColor( v & 0xff, ( v >> 16 ) & 0xff, ( v >> 8 ) & 0xff ) );
+    mSensorColors.append( TQColor( v & 0xff, ( v >> 16 ) & 0xff, ( v >> 8 ) & 0xff ) );
   }
 }
 
@@ -67,12 +67,12 @@ void StyleEngine::readProperties( KConfig *cfg )
   mBackgroundColor = cfg->readColorEntry( "backgroundColor", &mBackgroundColor );
   mFontSize = cfg->readNumEntry( "fontSize", mFontSize );
 
-  QStringList list = cfg->readListEntry( "sensorColors" );
+  TQStringList list = cfg->readListEntry( "sensorColors" );
   if ( !list.isEmpty() ) {
     mSensorColors.clear();
-    QStringList::Iterator it;
+    TQStringList::Iterator it;
     for ( it = list.begin(); it != list.end(); ++it )
-      mSensorColors.append( QColor( *it ) );
+      mSensorColors.append( TQColor( *it ) );
   }
 }
 
@@ -84,30 +84,30 @@ void StyleEngine::saveProperties( KConfig *cfg )
   cfg->writeEntry( "backgroundColor", mBackgroundColor );
   cfg->writeEntry( "fontSize", mFontSize );
 
-  QStringList list;
-  QValueList<QColor>::Iterator it;
+  TQStringList list;
+  TQValueList<TQColor>::Iterator it;
   for ( it = mSensorColors.begin(); it != mSensorColors.end(); ++it )
     list.append( (*it).name() );
 
   cfg->writeEntry( "sensorColors", list );
 }
 
-const QColor &StyleEngine::firstForegroundColor() const
+const TQColor &StyleEngine::firstForegroundColor() const
 {
   return mFirstForegroundColor;
 }
 
-const QColor &StyleEngine::secondForegroundColor() const
+const TQColor &StyleEngine::secondForegroundColor() const
 {
   return mSecondForegroundColor;
 }
 
-const QColor &StyleEngine::alarmColor() const
+const TQColor &StyleEngine::alarmColor() const
 {
   return mAlarmColor;
 }
 
-const QColor &StyleEngine::backgroundColor() const
+const TQColor &StyleEngine::backgroundColor() const
 {
   return mBackgroundColor;
 }
@@ -117,9 +117,9 @@ uint StyleEngine::fontSize() const
   return mFontSize;
 }
 
-const QColor& StyleEngine::sensorColor( uint pos )
+const TQColor& StyleEngine::sensorColor( uint pos )
 {
-  static QColor dummy;
+  static TQColor dummy;
 
   if ( pos < mSensorColors.count() )
     return *mSensorColors.at( pos );
@@ -143,8 +143,8 @@ void StyleEngine::configure()
   mSettingsDialog->setFontSize( mFontSize );
   mSettingsDialog->setSensorColors( mSensorColors );
 
-  connect( mSettingsDialog, SIGNAL( applyClicked() ),
-           this, SLOT( applyToWorksheet() ) );
+  connect( mSettingsDialog, TQT_SIGNAL( applyClicked() ),
+           this, TQT_SLOT( applyToWorksheet() ) );
 
   if ( mSettingsDialog->exec() )
     apply();

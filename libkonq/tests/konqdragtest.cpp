@@ -20,7 +20,7 @@
 #include <kdebug.h>
 #include <kurldrag.h>
 #include <assert.h>
-#include <qiconview.h>
+#include <tqiconview.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 
@@ -36,8 +36,8 @@ void testKonqIconDrag2()
     KURL mediaURL = "media:/hda1/tmp/Mat%C3%A9riel";
     KURL localURL = "file:///tmp/Mat%C3%A9riel";
     KonqIconDrag2 iconDrag( 0 );
-    QIconDragItem item;
-    iconDrag.append( item, QRect( 1, 2, 3, 4 ), QRect( 5, 6, 7, 8 ),
+    TQIconDragItem item;
+    iconDrag.append( item, TQRect( 1, 2, 3, 4 ), TQRect( 5, 6, 7, 8 ),
                      mediaURL.url(), localURL.url() );
 
 

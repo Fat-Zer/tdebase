@@ -36,16 +36,16 @@ class KDateTimeDlg : public KDialog
 {
   Q_OBJECT
 public:
-  KDateTimeDlg(QWidget *parent = 0L, const char *name = 0L);
+  KDateTimeDlg(TQWidget *parent = 0L, const char *name = 0L);
   virtual ~KDateTimeDlg();
 
-  virtual QTime     getTime();
-  virtual QDate     getDate();
-  virtual QDateTime getDateTime();
+  virtual TQTime     getTime();
+  virtual TQDate     getDate();
+  virtual TQDateTime getDateTime();
 
-  virtual void      setDate(const QDate& qdate);
-  virtual void      setTime(const QTime& qtime);
-  virtual void      setDateTime(const QDateTime& qdatetime);
+  virtual void      setDate(const TQDate& qdate);
+  virtual void      setTime(const TQTime& qtime);
+  virtual void      setDateTime(const TQDateTime& qdatetime);
 
 protected slots:
 

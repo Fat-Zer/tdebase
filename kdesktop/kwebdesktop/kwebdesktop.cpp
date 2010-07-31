@@ -30,7 +30,7 @@
 #include <kurifilter.h>
 #include <kio/job.h>
 
-#include <qscrollview.h>
+#include <tqscrollview.h>
 #include "kwebdesktop.h"
 #include <kmimetype.h>
 #include <kparts/componentfactory.h>
@@ -52,18 +52,18 @@ KWebDesktopRun::KWebDesktopRun( KWebDesktop* webDesktop, const KURL & url )
 {
     kdDebug() << "KWebDesktopRun::KWebDesktopRun starting get" << endl;
     KIO::Job * job = KIO::get(m_url, false, false);
-    connect( job, SIGNAL( result( KIO::Job *)),
-             this, SLOT( slotFinished(KIO::Job *)));
-    connect( job, SIGNAL( mimetype( KIO::Job *, const QString &)),
-             this, SLOT( slotMimetype(KIO::Job *, const QString &)));
+    connect( job, TQT_SIGNAL( result( KIO::Job *)),
+             this, TQT_SLOT( slotFinished(KIO::Job *)));
+    connect( job, TQT_SIGNAL( mimetype( KIO::Job *, const TQString &)),
+             this, TQT_SLOT( slotMimetype(KIO::Job *, const TQString &)));
 }
 
-void KWebDesktopRun::slotMimetype( KIO::Job *job, const QString &_type )
+void KWebDesktopRun::slotMimetype( KIO::Job *job, const TQString &_type )
 {
     KIO::SimpleJob *sjob = static_cast<KIO::SimpleJob *>(job);
     // Update our URL in case of a redirection
     m_url = sjob->url();
-    QString type = _type; // necessary copy if we plan to use it
+    TQString type = _type; // necessary copy if we plan to use it
     sjob->putOnHold();
     kdDebug() << "slotMimetype : " << type << endl;
 
@@ -105,12 +105,12 @@ int main( int argc, char **argv )
        args->usage();
        return 1;
     }
-    const int width = QCString(args->arg(0)).toInt();
-    const int height = QCString(args->arg(1)).toInt();
-    QCString imageFile = args->arg(2);
-    QString url;
+    const int width = TQCString(args->arg(0)).toInt();
+    const int height = TQCString(args->arg(1)).toInt();
+    TQCString imageFile = args->arg(2);
+    TQString url;
     if (args->count() == 4)
-        url = QString::fromLocal8Bit(args->arg(3));
+        url = TQString::fromLocal8Bit(args->arg(3));
 
     KWebDesktop *webDesktop = new KWebDesktop( 0, imageFile, width, height );
 
@@ -138,13 +138,13 @@ void KWebDesktop::slotCompleted()
 {
     kdDebug() << "KWebDesktop::slotCompleted" << endl;
     // Dump image to m_imageFile
-    QPixmap snapshot = QPixmap::grabWidget( m_part->widget() );
+    TQPixmap snapshot = TQPixmap::grabWidget( m_part->widget() );
     snapshot.save( m_imageFile, "PNG" );
     // And terminate the app.
     kapp->quit();
 }
 
-KParts::ReadOnlyPart* KWebDesktop::createPart( const QString& mimeType )
+KParts::ReadOnlyPart* KWebDesktop::createPart( const TQString& mimeType )
 {
     delete m_part;
     m_part = 0;
@@ -161,26 +161,26 @@ KParts::ReadOnlyPart* KWebDesktop::createPart( const QString& mimeType )
         htmlPart->setJScriptEnabled(false);
         htmlPart->setJavaEnabled(false);
 
-        ((QScrollView *)htmlPart->widget())->setHScrollBarMode( QScrollView::AlwaysOff );
-        ((QScrollView *)htmlPart->widget())->setVScrollBarMode( QScrollView::AlwaysOff );
+        ((TQScrollView *)htmlPart->widget())->setHScrollBarMode( TQScrollView::AlwaysOff );
+        ((TQScrollView *)htmlPart->widget())->setVScrollBarMode( TQScrollView::AlwaysOff );
 
-        connect( htmlPart, SIGNAL( completed() ), this, SLOT( slotCompleted() ) );
+        connect( htmlPart, TQT_SIGNAL( completed() ), this, TQT_SLOT( slotCompleted() ) );
         m_part = htmlPart;
     } else {
         // Try to find an appropriate viewer component
         m_part = KParts::ComponentFactory::createPartInstanceFromQuery<KParts::ReadOnlyPart>
-                 ( mimeType, QString::null, 0, 0, this, 0 );
+                 ( mimeType, TQString::null, 0, 0, this, 0 );
         if ( !m_part )
             kdWarning() << "No handler found for " << mimeType << endl;
         else {
             kdDebug() << "Loaded " << m_part->className() << endl;
-            connect( m_part, SIGNAL( completed() ),
-                     this, SLOT( slotCompleted() ) );
+            connect( m_part, TQT_SIGNAL( completed() ),
+                     this, TQT_SLOT( slotCompleted() ) );
         }
     }
     if ( m_part ) {
-        connect( m_part, SIGNAL( canceled(const QString &) ),
-                 this, SLOT( slotCompleted() ) );
+        connect( m_part, TQT_SIGNAL( canceled(const TQString &) ),
+                 this, TQT_SLOT( slotCompleted() ) );
     }
     return m_part;
 }

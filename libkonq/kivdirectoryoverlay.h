@@ -23,7 +23,7 @@
 #include <kfileitem.h>
 #include <libkonq_export.h>
 
-#include <qdict.h>
+#include <tqdict.h>
 
 class KDirLister;
 class KFileIVI;
@@ -40,7 +40,7 @@ signals:
     void finished();
 
 protected:
-    virtual void timerEvent(QTimerEvent *);
+    virtual void timerEvent(TQTimerEvent *);
 
 private slots:
     void slotCompleted();
@@ -50,8 +50,8 @@ private:
     KDirLister* m_lister;
     bool m_foundItems;
     bool m_containsFolder;
-    QDict<int>* m_popularIcons;
-    QString m_bestIcon;
+    TQDict<int>* m_popularIcons;
+    TQString m_bestIcon;
     KFileIVI* m_directory;
 };
 

@@ -36,13 +36,13 @@ class UserAgentDlg : public KCModule
   Q_OBJECT
 
 public:
-  UserAgentDlg ( QWidget * parent = 0) ;
+  UserAgentDlg ( TQWidget * parent = 0) ;
   ~UserAgentDlg();
 
   virtual void load();
   virtual void save();
   virtual void defaults();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 private slots:
   void updateButtons();
@@ -57,7 +57,7 @@ private slots:
   void changeDefaultUAModifiers( int );
 
 private:
-  bool handleDuplicate( const QString&, const QString&, const QString& );
+  bool handleDuplicate( const TQString&, const TQString&, const TQString& );
 
   enum {
     SHOW_OS = 0,
@@ -68,7 +68,7 @@ private:
   };
 
   // Useragent modifiers...
-  QString m_ua_keys;
+  TQString m_ua_keys;
 
   // Fake user-agent modifiers...
   FakeUASProvider* m_provider;

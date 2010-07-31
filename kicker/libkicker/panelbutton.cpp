@@ -21,15 +21,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qcursor.h>
-#include <qfile.h>
-#include <qfontmetrics.h>
-#include <qpainter.h>
-#include <qpopupmenu.h>
-#include <qstyle.h>
-#include <qstylesheet.h>
-#include <qtooltip.h>
-#include <qpixmap.h>
+#include <tqcursor.h>
+#include <tqfile.h>
+#include <tqfontmetrics.h>
+#include <tqpainter.h>
+#include <tqpopupmenu.h>
+#include <tqstyle.h>
+#include <tqstylesheet.h>
+#include <tqtooltip.h>
+#include <tqpixmap.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -57,8 +57,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // init static variable
 KShadowEngine* PanelButton::s_textShadowEngine = 0L;
 
-PanelButton::PanelButton( QWidget* parent, const char* name )
-    : QButton(parent, name),
+PanelButton::PanelButton( TQWidget* parent, const char* name )
+    : TQButton(parent, name),
       m_valid(true),
       m_isLeftMouseButtonDown(false),
       m_drawArrow(false),
@@ -85,41 +85,41 @@ PanelButton::PanelButton( QWidget* parent, const char* name )
 
     installEventFilter(KickerTip::the());
 
-    connect(kapp, SIGNAL(settingsChanged(int)), SLOT(updateSettings(int)));
-    connect(kapp, SIGNAL(iconChanged(int)), SLOT(updateIcon(int)));
+    connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(updateSettings(int)));
+    connect(kapp, TQT_SIGNAL(iconChanged(int)), TQT_SLOT(updateIcon(int)));
 }
 
 void PanelButton::configure()
 {
-    QString name = tileName();
+    TQString name = tileName();
     if( name.isEmpty() )
         return;
 
     if (!KickerSettings::enableTileBackground())
     {
-        setTile(QString::null);
+        setTile(TQString::null);
         return;
     }
 
     KConfigGroup tilesGroup( KGlobal::config(), "button_tiles" );
     if( !tilesGroup.readBoolEntry( "Enable" + name + "Tiles", true ) ) {
-            setTile( QString::null );
+            setTile( TQString::null );
         return;
     }
 
-    QString tile = tilesGroup.readEntry( name + "Tile" );
-    QColor color = QColor();
+    TQString tile = tilesGroup.readEntry( name + "Tile" );
+    TQColor color = TQColor();
 
     if (tile == "Colorize")
     {
         color = tilesGroup.readColorEntry( name + "TileColor" );
-        tile = QString::null;
+        tile = TQString::null;
     }
 
     setTile( tile, color );
 }
 
-void PanelButton::setTile(const QString& tile, const QColor& color)
+void PanelButton::setTile(const TQString& tile, const TQColor& color)
 {
     if (tile == m_tile && m_tileColor == color)
     {
@@ -143,11 +143,11 @@ void PanelButton::setDrawArrow(bool drawArrow)
     update();
 }
 
-QImage PanelButton::loadTile(const QString& tile,
-                             const QSize& size,
-                             const QString& state)
+TQImage PanelButton::loadTile(const TQString& tile,
+                             const TQSize& size,
+                             const TQString& state)
 {
-    QString name = tile;
+    TQString name = tile;
 
     if (size.height() < 42)
     {
@@ -164,7 +164,7 @@ QImage PanelButton::loadTile(const QString& tile,
 
     name += state + ".png";
 
-    QImage tileImg(KGlobal::dirs()->findResource("tiles", name));
+    TQImage tileImg(KGlobal::dirs()->findResource("tiles", name));
 
     // scale if size does not match exactly
     if (!tileImg.isNull() && tileImg.size() != size)
@@ -177,7 +177,7 @@ QImage PanelButton::loadTile(const QString& tile,
 
 void PanelButton::setEnabled(bool enable)
 {
-    QButton::setEnabled(enable);
+    TQButton::setEnabled(enable);
     loadIcons();
     update();
 }
@@ -223,18 +223,18 @@ void PanelButton::updateSettings(int category)
     }
 }
 
-void PanelButton::checkForDeletion(const QString& path)
+void PanelButton::checkForDeletion(const TQString& path)
 {
     if (path == m_backingFile)
     {
         setEnabled(false);
-        QTimer::singleShot(1000, this, SLOT(scheduleForRemoval()));
+        TQTimer::singleShot(1000, this, TQT_SLOT(scheduleForRemoval()));
     }
 }
 
 bool PanelButton::checkForBackingFile()
 {
-    return QFile::exists(m_backingFile);
+    return TQFile::exists(m_backingFile);
 }
 
 void PanelButton::scheduleForRemoval()
@@ -261,7 +261,7 @@ void PanelButton::scheduleForRemoval()
         }
 
         timelapse *= 2;
-        QTimer::singleShot(timelapse, this, SLOT(scheduleForRemoval()));
+        TQTimer::singleShot(timelapse, this, TQT_SLOT(scheduleForRemoval()));
     }
 }
 
@@ -290,9 +290,9 @@ int PanelButton::widthForHeight(int height) const
     // before adding the text in here
     if (orientation() == Horizontal && !m_buttonText.isEmpty())
     {
-        QFont f(font());
+        TQFont f(font());
         //f.setPixelSize(KMIN(height, KMAX(int(float(height) * m_fontPercent), 16)));
-        QFontMetrics fm(f);
+        TQFontMetrics fm(f);
 
         //rc += fm.width(m_buttonText) + KMIN(25, KMAX(5, fm.width('m') / 2));
         rc += fm.width(m_buttonText);
@@ -306,12 +306,12 @@ int PanelButton::heightForWidth(int width) const
     return preferredDimension(width);
 }
 
-const QPixmap& PanelButton::labelIcon() const
+const TQPixmap& PanelButton::labelIcon() const
 {
     return m_highlight ? m_iconh : m_icon;
 }
 
-const QPixmap& PanelButton::zoomIcon() const
+const TQPixmap& PanelButton::zoomIcon() const
 {
     return m_iconz;
 }
@@ -321,12 +321,12 @@ bool PanelButton::isValid() const
     return m_valid;
 }
 
-void PanelButton::setTitle(const QString& t)
+void PanelButton::setTitle(const TQString& t)
 {
     m_title = t;
 }
 
-void PanelButton::setIcon(const QString& icon)
+void PanelButton::setIcon(const TQString& icon)
 {
     if (icon == m_iconName)
     {
@@ -339,7 +339,7 @@ void PanelButton::setIcon(const QString& icon)
     emit iconChanged();
 }
 
-QString PanelButton::icon() const
+TQString PanelButton::icon() const
 {
     return m_iconName;
 }
@@ -349,23 +349,23 @@ bool PanelButton::hasText() const
     return !m_buttonText.isEmpty();
 }
 
-void PanelButton::setButtonText(const QString& text)
+void PanelButton::setButtonText(const TQString& text)
 {
     m_buttonText = " " + text;
     update();
 }
 
-QString PanelButton::buttonText() const
+TQString PanelButton::buttonText() const
 {
     return m_buttonText;
 }
 
-void PanelButton::setTextColor(const QColor& c)
+void PanelButton::setTextColor(const TQColor& c)
 {
     m_textColor = c;
 }
 
-QColor PanelButton::textColor() const
+TQColor PanelButton::textColor() const
 {
     return m_textColor;
 }
@@ -390,12 +390,12 @@ KPanelApplet::Direction PanelButton::popupDirection() const
     return m_popupDirection;
 }
 
-QPoint PanelButton::center() const
+TQPoint PanelButton::center() const
 {
     return mapToGlobal(rect().center());
 }
 
-QString PanelButton::title() const
+TQString PanelButton::title() const
 {
     return m_title;
 }
@@ -412,7 +412,7 @@ void PanelButton::startDrag()
     emit dragme(m_icon);
 }
 
-void PanelButton::enterEvent(QEvent* e)
+void PanelButton::enterEvent(TQEvent* e)
 {
     if (!m_highlight)
     {
@@ -420,10 +420,10 @@ void PanelButton::enterEvent(QEvent* e)
         repaint(false);
     }
 
-    QButton::enterEvent(e);
+    TQButton::enterEvent(e);
 }
 
-void PanelButton::leaveEvent(QEvent* e)
+void PanelButton::leaveEvent(TQEvent* e)
 {
     if (m_highlight)
     {
@@ -431,10 +431,10 @@ void PanelButton::leaveEvent(QEvent* e)
         repaint(false);
     }
 
-    QButton::leaveEvent(e);
+    TQButton::leaveEvent(e);
 }
 
-void PanelButton::dragEnterEvent(QDragEnterEvent* e)
+void PanelButton::dragEnterEvent(TQDragEnterEvent* e)
 {
     if (e->isAccepted())
     {
@@ -442,31 +442,31 @@ void PanelButton::dragEnterEvent(QDragEnterEvent* e)
     }
 
     update();
-    QButton::dragEnterEvent( e );
+    TQButton::dragEnterEvent( e );
 }
 
-void PanelButton::dragLeaveEvent(QDragLeaveEvent* e)
+void PanelButton::dragLeaveEvent(TQDragLeaveEvent* e)
 {
     m_hasAcceptedDrag = false;
     update();
-    QButton::dragLeaveEvent( e );
+    TQButton::dragLeaveEvent( e );
 }
 
-void PanelButton::dropEvent(QDropEvent* e)
+void PanelButton::dropEvent(TQDropEvent* e)
 {
     m_hasAcceptedDrag = false;
     update();
-    QButton::dropEvent( e );
+    TQButton::dropEvent( e );
 }
 
-void PanelButton::mouseMoveEvent(QMouseEvent *e)
+void PanelButton::mouseMoveEvent(TQMouseEvent *e)
 {
     if (!m_isLeftMouseButtonDown || (e->state() & LeftButton) == 0)
     {
         return;
     }
 
-    QPoint p(e->pos() - m_lastLeftMouseButtonPress);
+    TQPoint p(e->pos() - m_lastLeftMouseButtonPress);
     if (p.manhattanLength() <= 16)
     {
         // KGlobalSettings::dndEventDelay() is not enough!
@@ -477,29 +477,29 @@ void PanelButton::mouseMoveEvent(QMouseEvent *e)
     triggerDrag();
 }
 
-void PanelButton::mousePressEvent(QMouseEvent *e)
+void PanelButton::mousePressEvent(TQMouseEvent *e)
 {
     if (e->button() == LeftButton)
     {
         m_lastLeftMouseButtonPress = e->pos();
         m_isLeftMouseButtonDown = true;
     }
-    QButton::mousePressEvent(e);
+    TQButton::mousePressEvent(e);
 }
 
-void PanelButton::mouseReleaseEvent(QMouseEvent *e)
+void PanelButton::mouseReleaseEvent(TQMouseEvent *e)
 {
     if (e->button() == LeftButton)
     {
         m_isLeftMouseButtonDown = false;
 	
-	QPixmap pix = labelIcon();
+	TQPixmap pix = labelIcon();
 	KIconEffect::visualActivate(this, this->geometry(), &pix);
     }
-    QButton::mouseReleaseEvent(e);
+    TQButton::mouseReleaseEvent(e);
 }
 
-void PanelButton::resizeEvent(QResizeEvent*)
+void PanelButton::resizeEvent(TQResizeEvent*)
 {
     loadTiles();
 
@@ -509,20 +509,20 @@ void PanelButton::resizeEvent(QResizeEvent*)
     }
 }
 
-void PanelButton::drawButton(QPainter *p)
+void PanelButton::drawButton(TQPainter *p)
 {
-    const QPixmap& tile = (isDown() || isOn()) ? m_down : m_up;
+    const TQPixmap& tile = (isDown() || isOn()) ? m_down : m_up;
     
     if (m_tileColor.isValid())
     {
         p->fillRect(rect(), m_tileColor);
-        style().drawPrimitive(QStyle::PE_Panel, p, rect(), colorGroup());
+        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), colorGroup());
     }
     else if (paletteBackgroundPixmap())
     {
         // Draw the background. This is always needed, even when using tiles,
         // because they don't have to cover the entire button.
-        QPoint offset = backgroundOffset();
+        TQPoint offset = backgroundOffset();
         int ox = offset.x();
         int oy = offset.y();
         p->drawTiledPixmap( 0, 0, width(), height(),*paletteBackgroundPixmap(), ox, oy);
@@ -536,7 +536,7 @@ void PanelButton::drawButton(QPainter *p)
     else if (isDown() || isOn())
     {
         // Draw shapes to indicate the down state.
-        style().drawPrimitive(QStyle::PE_Panel, p, rect(), colorGroup(), QStyle::Style_Sunken);
+        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), colorGroup(), TQStyle::Style_Sunken);
     }
 
     drawButtonLabel(p);
@@ -545,15 +545,15 @@ void PanelButton::drawButton(QPainter *p)
     {
         int x1, y1, x2, y2;
         rect().coords(&x1, &y1, &x2, &y2);
-        QRect r(x1+2, y1+2, x2-x1-3, y2-y1-3);
-        style().drawPrimitive(QStyle::PE_FocusRect, p, r, colorGroup(),
-        QStyle::Style_Default, colorGroup().button());
+        TQRect r(x1+2, y1+2, x2-x1-3, y2-y1-3);
+        style().drawPrimitive(TQStyle::PE_FocusRect, p, r, colorGroup(),
+        TQStyle::Style_Default, colorGroup().button());
     }
 }
 
-void PanelButton::drawButtonLabel(QPainter *p)
+void PanelButton::drawButtonLabel(TQPainter *p)
 {
-    QPixmap icon = labelIcon();
+    TQPixmap icon = labelIcon();
     bool active = isDown() || isOn();
 
     if (active)
@@ -568,7 +568,7 @@ void PanelButton::drawButtonLabel(QPainter *p)
         int w = width();
         int y = (h - icon.height())/2;
         p->save();
-        QFont f = font();
+        TQFont f = font();
 
         double fontPercent = m_fontPercent;
         if (active)
@@ -576,12 +576,12 @@ void PanelButton::drawButtonLabel(QPainter *p)
             fontPercent *= .8;
         }
         //f.setPixelSize(KMIN(h, KMAX(int(float(h) * m_fontPercent), 16)));
-        QFontMetrics fm(f);
+        TQFontMetrics fm(f);
         p->setFont(f);
 
         /* Draw shadowed text */
-        bool reverse = QApplication::reverseLayout();
-        QPainter::TextDirection rtl = reverse ? QPainter::RTL : QPainter::LTR;
+        bool reverse = TQApplication::reverseLayout();
+        TQPainter::TextDirection rtl = reverse ? TQPainter::RTL : TQPainter::LTR;
 
         if (!reverse && !icon.isNull())
         {
@@ -592,13 +592,13 @@ void PanelButton::drawButtonLabel(QPainter *p)
         int tX = reverse ? 3 : icon.width() + KMIN(25, KMAX(5, fm.width('m') / 2));
         int tY = fm.ascent() + ((h - fm.height()) / 2);
 
-        QColor shadCol = KickerLib::shadowColor(m_textColor);
+        TQColor shadCol = KickerLib::shadowColor(m_textColor);
 
         // get a transparent pixmap
-        QPainter pixPainter;
-        QPixmap textPixmap(w, h);
+        TQPainter pixPainter;
+        TQPixmap textPixmap(w, h);
 
-        textPixmap.fill(QColor(0,0,0));
+        textPixmap.fill(TQColor(0,0,0));
         textPixmap.setMask(textPixmap.createHeuristicMask(true));
 
         // draw text
@@ -619,7 +619,7 @@ void PanelButton::drawButtonLabel(QPainter *p)
         }
 
         // draw shadow
-        QImage img = s_textShadowEngine->makeShadow(textPixmap, shadCol);
+        TQImage img = s_textShadowEngine->makeShadow(textPixmap, shadCol);
         p->drawImage(0, 0, img);
         p->save();
         p->setPen(m_textColor);
@@ -642,50 +642,50 @@ void PanelButton::drawButtonLabel(QPainter *p)
 
     if (m_drawArrow && (m_highlight || active))
     {
-        QStyle::PrimitiveElement e = QStyle::PE_ArrowUp;
-        int arrowSize = style().pixelMetric(QStyle::PM_MenuButtonIndicator);
-        QRect r((width() - arrowSize)/2, 0, arrowSize, arrowSize);
+        TQStyle::PrimitiveElement e = TQStyle::PE_ArrowUp;
+        int arrowSize = style().pixelMetric(TQStyle::PM_MenuButtonIndicator);
+        TQRect r((width() - arrowSize)/2, 0, arrowSize, arrowSize);
 
         switch (m_arrowDirection)
         {
             case KPanelExtension::Top:
-                e = QStyle::PE_ArrowUp;
+                e = TQStyle::PE_ArrowUp;
                 break;
             case KPanelExtension::Bottom:
-                e = QStyle::PE_ArrowDown;
+                e = TQStyle::PE_ArrowDown;
                 r.moveBy(0, height() - arrowSize);
                 break;
             case KPanelExtension::Right:
-                e = QStyle::PE_ArrowRight;
-                r = QRect(width() - arrowSize, (height() - arrowSize)/2, arrowSize, arrowSize);
+                e = TQStyle::PE_ArrowRight;
+                r = TQRect(width() - arrowSize, (height() - arrowSize)/2, arrowSize, arrowSize);
                 break;
             case KPanelExtension::Left:
-                e = QStyle::PE_ArrowLeft;
-                r = QRect(0, (height() - arrowSize)/2, arrowSize, arrowSize);
+                e = TQStyle::PE_ArrowLeft;
+                r = TQRect(0, (height() - arrowSize)/2, arrowSize, arrowSize);
                 break;
             case KPanelExtension::Floating:
                 if (orientation() == Horizontal)
                 {
-                    e = QStyle::PE_ArrowDown;
+                    e = TQStyle::PE_ArrowDown;
                     r.moveBy(0, height() - arrowSize);
                 }
-                else if (QApplication::reverseLayout())
+                else if (TQApplication::reverseLayout())
                 {
-                    e = QStyle::PE_ArrowLeft;
-                    r = QRect(0, (height() - arrowSize)/2, arrowSize, arrowSize);
+                    e = TQStyle::PE_ArrowLeft;
+                    r = TQRect(0, (height() - arrowSize)/2, arrowSize, arrowSize);
                 }
                 else
                 {
-                    e = QStyle::PE_ArrowRight;
-                    r = QRect(width() - arrowSize, (height() - arrowSize)/2, arrowSize, arrowSize);
+                    e = TQStyle::PE_ArrowRight;
+                    r = TQRect(width() - arrowSize, (height() - arrowSize)/2, arrowSize, arrowSize);
                 }
                 break;
         }
 
-        int flags = QStyle::Style_Enabled;
+        int flags = TQStyle::Style_Enabled;
         if (active)
         {
-            flags |= QStyle::Style_Down;
+            flags |= TQStyle::Style_Down;
         }
         style().drawPrimitive(e, p, r, colorGroup(), flags);
     }
@@ -704,7 +704,7 @@ int PanelButton::preferredIconSize(int proposed_size) const
         return -1; // unknown icon size
     }
 
-    QValueList<int> sizes = ith->querySizes(KIcon::Panel);
+    TQValueList<int> sizes = ith->querySizes(KIcon::Panel);
 
     int sz = ith->defaultSize(KIcon::Panel);
 
@@ -723,7 +723,7 @@ int PanelButton::preferredIconSize(int proposed_size) const
     }
 
     //kdDebug()<<endl<<endl<<flush;
-    QValueListConstIterator<int> i = sizes.constBegin();
+    TQValueListConstIterator<int> i = sizes.constBegin();
     while (i != sizes.constEnd())
     {
         if ((*i) + (2 * KickerSettings::iconMargin()) > upperLimit)
@@ -738,7 +738,7 @@ int PanelButton::preferredIconSize(int proposed_size) const
     return sz;
 }
 
-void PanelButton::backedByFile(const QString& localFilePath)
+void PanelButton::backedByFile(const TQString& localFilePath)
 {
     m_backingFile = localFilePath;
 
@@ -748,16 +748,16 @@ void PanelButton::backedByFile(const QString& localFilePath)
     }
 
     // avoid multiple connections
-    disconnect(KDirWatch::self(), SIGNAL(deleted(const QString&)),
-               this, SLOT(checkForDeletion(const QString&)));
+    disconnect(KDirWatch::self(), TQT_SIGNAL(deleted(const TQString&)),
+               this, TQT_SLOT(checkForDeletion(const TQString&)));
 
     if (!KDirWatch::self()->contains(m_backingFile))
     {
         KDirWatch::self()->addFile(m_backingFile);
     }
 
-    connect(KDirWatch::self(), SIGNAL(deleted(const QString&)),
-            this, SLOT(checkForDeletion(const QString&)));
+    connect(KDirWatch::self(), TQT_SIGNAL(deleted(const TQString&)),
+            this, TQT_SLOT(checkForDeletion(const TQString&)));
 
 }
 
@@ -775,27 +775,27 @@ void PanelButton::loadTiles()
     if (m_tileColor.isValid())
     {
         setBackgroundOrigin(WidgetOrigin);
-        m_up = m_down = QPixmap();
+        m_up = m_down = TQPixmap();
     }
     else if (m_tile.isNull())
     {
         setBackgroundOrigin(AncestorOrigin);
-        m_up = m_down = QPixmap();
+        m_up = m_down = TQPixmap();
     }
     else
     {
         setBackgroundOrigin(WidgetOrigin);
         // If only the tiles were named a bit smarter we wouldn't have
         // to pass the up or down argument.
-        m_up   = QPixmap(loadTile(m_tile, size(), "up"));
-        m_down = QPixmap(loadTile(m_tile, size(), "down"));
+        m_up   = TQPixmap(loadTile(m_tile, size(), "up"));
+        m_down = TQPixmap(loadTile(m_tile, size(), "down"));
     }
 }
 
 void PanelButton::loadIcons()
 {
     KIconLoader * ldr = KGlobal::iconLoader();
-    QString nm = m_iconName;
+    TQString nm = m_iconName;
     KIcon::States defaultState = isEnabled() ? KIcon::DefaultState :
                                                KIcon::DisabledState;
     m_icon = ldr->loadIcon(nm, KIcon::Panel, m_size, defaultState, 0L, true);
@@ -844,8 +844,8 @@ bool PanelButton::calculateIconSize()
 
 void PanelButton::updateKickerTip(KickerTip::Data& data)
 {
-    data.message = QStyleSheet::escape(title());
-    data.subtext = QStyleSheet::escape(QToolTip::textFor(this));
+    data.message = TQStyleSheet::escape(title());
+    data.subtext = TQStyleSheet::escape(TQToolTip::textFor(this));
     data.icon = zoomIcon();
     data.direction = popupDirection();
 }
@@ -854,21 +854,21 @@ void PanelButton::updateKickerTip(KickerTip::Data& data)
 // PanelPopupButton class
 //
 
-PanelPopupButton::PanelPopupButton(QWidget *parent, const char *name)
+PanelPopupButton::PanelPopupButton(TQWidget *parent, const char *name)
   : PanelButton(parent, name),
     m_popup(0),
     m_pressedDuringPopup(false),
     m_initialized(false)
 {
-    connect(this, SIGNAL(pressed()), SLOT(slotExecMenu()));
+    connect(this, TQT_SIGNAL(pressed()), TQT_SLOT(slotExecMenu()));
 }
 
-void PanelPopupButton::setPopup(QPopupMenu *popup)
+void PanelPopupButton::setPopup(TQPopupMenu *popup)
 {
     if (m_popup)
     {
         m_popup->removeEventFilter(this);
-        disconnect(m_popup, SIGNAL(aboutToHide()), this, SLOT(menuAboutToHide()));
+        disconnect(m_popup, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(menuAboutToHide()));
     }
 
     m_popup = popup;
@@ -877,20 +877,20 @@ void PanelPopupButton::setPopup(QPopupMenu *popup)
     if (m_popup)
     {
         m_popup->installEventFilter(this);
-        connect(m_popup, SIGNAL(aboutToHide()), this, SLOT(menuAboutToHide()));
+        connect(m_popup, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(menuAboutToHide()));
     }
 }
 
-QPopupMenu *PanelPopupButton::popup() const
+TQPopupMenu *PanelPopupButton::popup() const
 {
     return m_popup;
 }
 
-bool PanelPopupButton::eventFilter(QObject *, QEvent *e)
+bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
 {
-    if (e->type() == QEvent::MouseMove)
+    if (e->type() == TQEvent::MouseMove)
     {
-        QMouseEvent *me = static_cast<QMouseEvent *>(e);
+        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
         if (rect().contains(mapFromGlobal(me->globalPos())) &&
             ((me->state() & ControlButton) != 0 ||
              (me->state() & ShiftButton) != 0))
@@ -899,19 +899,19 @@ bool PanelPopupButton::eventFilter(QObject *, QEvent *e)
             return true;
         }
     }
-    else if (e->type() == QEvent::MouseButtonPress ||
-             e->type() == QEvent::MouseButtonDblClick)
+    else if (e->type() == TQEvent::MouseButtonPress ||
+             e->type() == TQEvent::MouseButtonDblClick)
     {
-        QMouseEvent *me = static_cast<QMouseEvent *>(e);
+        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
         if (rect().contains(mapFromGlobal(me->globalPos())))
         {
             m_pressedDuringPopup = true;
             return true;
         }
     }
-    else if (e->type() == QEvent::MouseButtonRelease)
+    else if (e->type() == TQEvent::MouseButtonRelease)
     {
-        QMouseEvent *me = static_cast<QMouseEvent *>(e);
+        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
         if (rect().contains(mapFromGlobal(me->globalPos())))
         {
             if (m_pressedDuringPopup && m_popup)

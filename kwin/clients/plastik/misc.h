@@ -23,8 +23,8 @@
 #ifndef MISC_H
 #define MISC_H
 
-QColor hsvRelative(const QColor& baseColor, int relativeH, int relativeS = 0, int relativeV = 0);
-QColor alphaBlendColors(const QColor &backgroundColor, const QColor &foregroundColor, const int alpha);
-QImage recolorImage(QImage *img, QColor color);
+TQColor hsvRelative(const TQColor& baseColor, int relativeH, int relativeS = 0, int relativeV = 0);
+TQColor alphaBlendColors(const TQColor &backgroundColor, const TQColor &foregroundColor, const int alpha);
+TQImage recolorImage(TQImage *img, TQColor color);
 
 #endif // MISC_H

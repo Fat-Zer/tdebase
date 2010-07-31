@@ -26,24 +26,24 @@
 #include <kapplication.h>
 #include <kuser.h>
 
-#include <qobjectlist.h>
-#include <qaccel.h>
+#include <tqobjectlist.h>
+#include <tqaccel.h>
 
 #include "global.h"
 
 bool KCGlobal::_root = false;
 bool KCGlobal::_infocenter = false;
-QStringList KCGlobal::_types;
-QString KCGlobal::_uname = "";
-QString KCGlobal::_hname = "";
-QString KCGlobal::_kdeversion = "";
-QString KCGlobal::_isystem = "";
-QString KCGlobal::_irelease = "";
-QString KCGlobal::_iversion = "";
-QString KCGlobal::_imachine = "";
+TQStringList KCGlobal::_types;
+TQString KCGlobal::_uname = "";
+TQString KCGlobal::_hname = "";
+TQString KCGlobal::_kdeversion = "";
+TQString KCGlobal::_isystem = "";
+TQString KCGlobal::_irelease = "";
+TQString KCGlobal::_iversion = "";
+TQString KCGlobal::_imachine = "";
 IndexViewMode KCGlobal::_viewmode = Icon;
 KIcon::StdSizes KCGlobal::_iconsize = KIcon::SizeMedium;
-QString KCGlobal::_baseGroup = "";
+TQString KCGlobal::_baseGroup = "";
 
 void KCGlobal::init()
 {
@@ -51,7 +51,7 @@ void KCGlobal::init()
   buf[0] = '\0';
   if (!gethostname(buf, sizeof(buf)))
     buf[sizeof(buf)-1] ='\0';
-  QString hostname(buf);
+  TQString hostname(buf);
   
   setHostName(hostname);
   setUserName(KUser().loginName());
@@ -68,13 +68,13 @@ void KCGlobal::init()
   setSystemMachine(info.machine);
 }
 
-void KCGlobal::setType(const QCString& s)
+void KCGlobal::setType(const TQCString& s)
 {
-  QString string = s.lower();
-  _types = QStringList::split(',', string);
+  TQString string = s.lower();
+  _types = TQStringList::split(',', string);
 }
 
-QString KCGlobal::baseGroup()
+TQString KCGlobal::baseGroup()
 {
   if ( _baseGroup.isEmpty() )
   {
@@ -91,26 +91,26 @@ QString KCGlobal::baseGroup()
       if (_infocenter)
       {
         kdWarning() << "No K menu group with X-KDE-BaseGroup=info found ! Defaulting to Settings/Information/" << endl;
-        _baseGroup = QString::fromLatin1("Settings/Information/");
+        _baseGroup = TQString::fromLatin1("Settings/Information/");
       }
       else
       {
         kdWarning() << "No K menu group with X-KDE-BaseGroup=settings found ! Defaulting to Settings/" << endl;
-        _baseGroup = QString::fromLatin1("Settings/");
+        _baseGroup = TQString::fromLatin1("Settings/");
       }
     }
   }
   return _baseGroup;
 }
 
-void KCGlobal::repairAccels( QWidget * tw )
+void KCGlobal::repairAccels( TQWidget * tw )
 {
-    QObjectList * l = tw->queryList( "QAccel" );
-    QObjectListIt it( *l );             // iterate over the buttons
-    QObject * obj;
+    TQObjectList * l = tw->queryList( "TQAccel" );
+    TQObjectListIt it( *l );             // iterate over the buttons
+    TQObject * obj;
     while ( (obj=it.current()) != 0 ) { // for each found object...
         ++it;
-        ((QAccel*)obj)->repairEventFilter();
+        ((TQAccel*)obj)->repairEventFilter();
     }
     delete l;                           // delete the list, not the objects
 }

@@ -19,12 +19,12 @@
 
 #include "glibevents.h"
 
-#include <qapplication.h>
+#include <tqapplication.h>
 
 GlibEvents::GlibEvents()
     {
     g_main_context_ref( g_main_context_default());
-    connect( &timer, SIGNAL( timeout()), SLOT( process()));
+    connect( &timer, TQT_SIGNAL( timeout()), TQT_SLOT( process()));
     // TODO Poll for now
     timer.start( 10 );
     }

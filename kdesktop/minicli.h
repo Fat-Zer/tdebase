@@ -31,8 +31,8 @@
 #ifndef MINICLI_H
 #define MINICLI_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kdialog.h>
 #include <kservice.h>
@@ -49,16 +49,16 @@ class Minicli : public KDialog
   Q_OBJECT
 
 public:
-  Minicli( QWidget *parent=0, const char *name=0 );
+  Minicli( TQWidget *parent=0, const char *name=0 );
   virtual ~Minicli();
 
-  void setCommand(const QString& command);
+  void setCommand(const TQString& command);
   void reset();
   void saveConfig();
   void clearHistory();
   
   virtual void show();
-  virtual QSize sizeHint() const;
+  virtual TQSize sizeHint() const;
 
 protected slots:
   virtual void accept();
@@ -68,8 +68,8 @@ protected slots:
 protected:
   void loadConfig();
   bool needsKDEsu();
-  virtual void keyPressEvent( QKeyEvent* );
-  virtual void fontChange( const QFont & );
+  virtual void keyPressEvent( TQKeyEvent* );
+  virtual void fontChange( const TQFont & );
 
 private slots:
   void slotAdvanced();
@@ -81,35 +81,35 @@ private slots:
   void slotTerminal(bool);
   void slotChangeUid(bool);
   void slotChangeScheduler(bool);
-  void slotCmdChanged(const QString&);
-  void slotMatch( const QString&);
+  void slotCmdChanged(const TQString&);
+  void slotMatch( const TQString&);
 
 private:
   void setIcon();
   int runCommand();
   void parseLine( bool final );
-  QString terminalCommand (const QString&, const QString&);
-  QString calculate(const QString &exp);
+  TQString terminalCommand (const TQString&, const TQString&);
+  TQString calculate(const TQString &exp);
   void notifyServiceStarted(KService::Ptr service);
 
 
   int m_iPriority;
   int m_iScheduler;
 
-  QString m_iconName;
-  QString m_prevIconName;
-  QStringList m_terminalAppList;
-  QStringList m_middleFilters;
-  QStringList m_finalFilters;
+  TQString m_iconName;
+  TQString m_prevIconName;
+  TQStringList m_terminalAppList;
+  TQStringList m_middleFilters;
+  TQStringList m_finalFilters;
 
-  QTimer* m_parseTimer;
-  QWidget* m_FocusWidget;
+  TQTimer* m_parseTimer;
+  TQWidget* m_FocusWidget;
   MinicliDlgUI* m_dlg;
   KURIFilterData* m_filterData;
 
   // Cached values
-  QString m_prevUser;
-  QString m_prevPass;
+  TQString m_prevUser;
+  TQString m_prevPass;
   bool m_prevChecked;
   bool m_prevCached;
   bool m_autoCheckedRunInTerm;

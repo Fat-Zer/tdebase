@@ -14,8 +14,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
 
 #include <krun.h>
 #include <kconfig.h>
@@ -26,9 +26,9 @@
 #include "kpersonalizer.h"
 
 
-KRefinePage::KRefinePage(QWidget *parent, const char *name ) : KRefinePageDlg(parent,name) {
+KRefinePage::KRefinePage(TQWidget *parent, const char *name ) : KRefinePageDlg(parent,name) {
    px_finishSidebar->setPixmap(UserIcon("step5.png"));
-   connect( pb_kcontrol, SIGNAL(clicked()), SLOT(startKControl()) );
+   connect( pb_kcontrol, TQT_SIGNAL(clicked()), TQT_SLOT(startKControl()) );
    if( KPersonalizer::beforeSession()) {
        pb_kcontrol->hide();
        lb_kcontrol->hide();

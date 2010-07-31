@@ -27,8 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <assert.h>
 
-#include <qvaluelist.h>
-#include <qevent.h>
+#include <tqvaluelist.h>
+#include <tqevent.h>
 #include <qxembed.h>
 
 #include <kpanelapplet.h>
@@ -78,7 +78,7 @@ k_dcop:
     ASYNC configure();
     
 public:
-    Applet( const QString& configFile, QWidget *parent );
+    Applet( const TQString& configFile, TQWidget *parent );
             virtual ~Applet();
     virtual int widthForHeight( int height ) const;
     virtual int heightForWidth( int width ) const;
@@ -92,9 +92,9 @@ public:
 
 protected:
     
-    virtual void paletteChange(const QPalette& );
+    virtual void paletteChange(const TQPalette& );
     virtual void positionChange( Position p );
-    virtual void moveEvent(QMoveEvent *);
+    virtual void moveEvent(TQMoveEvent *);
 
 private slots:
     
@@ -150,7 +150,7 @@ private:
     /**
      * List of all known menus.
      */
-    QValueList< MenuEmbed* > menus;
+    TQValueList< MenuEmbed* > menus;
     
     /**
      * A pointer to the current active menu, which is member
@@ -197,7 +197,7 @@ public:
      * @param desktop true if @p mainwindow is the desktop
      */
     MenuEmbed( WId mainwindow, bool desktop,
-                QWidget* parent = NULL, const char* name = NULL );
+                TQWidget* parent = NULL, const char* name = NULL );
     
     void setBackground();
     
@@ -210,7 +210,7 @@ public:
      */
     bool isDesktopMenu() const;
     virtual void setMinimumSize( int w, int h );
-    void setMinimumSize( const QSize& s ) { setMinimumSize( s.width(), s.height()); }
+    void setMinimumSize( const TQSize& s ) { setMinimumSize( s.width(), s.height()); }
 
 protected:
     

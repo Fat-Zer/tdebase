@@ -19,7 +19,7 @@
 
 #include "printwrapper.h"
 
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
@@ -49,7 +49,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char *argv[])
 	KApplication	app;
 	PrintWrapper	*wrap = new PrintWrapper;
 	app.setMainWidget(wrap);
-	QTimer::singleShot(10,wrap,SLOT(slotPrint()));
+	TQTimer::singleShot(10,wrap,TQT_SLOT(slotPrint()));
 
 	int	result = app.exec();
 	delete wrap;

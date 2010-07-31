@@ -16,19 +16,19 @@
 
 #include "general_settings_tab.h"
 
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 
 #include "kcmkhotkeys.h"
 
 namespace KHotKeys
 {
 
-General_settings_tab::General_settings_tab( QWidget* parent_P, const char* name_P )
+General_settings_tab::General_settings_tab( TQWidget* parent_P, const char* name_P )
     : General_settings_tab_ui( parent_P, name_P )
     {
     // KHotKeys::Module::changed()
-    connect( disable_daemon_checkbox, SIGNAL( clicked()),
-        module, SLOT( changed()));
+    connect( disable_daemon_checkbox, TQT_SIGNAL( clicked()),
+        module, TQT_SLOT( changed()));
     }
 
 void General_settings_tab::import_clicked()

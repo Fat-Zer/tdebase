@@ -25,18 +25,18 @@
 #include <dcopref.h>
 #include <kmessagebox.h>
 
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qmessagebox.h>
-#include <qsimplerichtext.h>
-#include <qlabel.h>
-#include <qstringlist.h>
-#include <qfontmetrics.h>
-#include <qstyle.h>
-#include <qapplication.h>
-#include <qlistview.h>
-#include <qheader.h>
-#include <qcheckbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqmessagebox.h>
+#include <tqsimplerichtext.h>
+#include <tqlabel.h>
+#include <tqstringlist.h>
+#include <tqfontmetrics.h>
+#include <tqstyle.h>
+#include <tqapplication.h>
+#include <tqlistview.h>
+#include <tqheader.h>
+#include <tqcheckbox.h>
 
 #include <ctype.h>
 #include <unistd.h>
@@ -59,49 +59,49 @@
 // Simple dialog for displaying a password/PIN entry dialog
 //
 QueryDlg::QueryDlg(LockProcess *parent)
-    : QDialog(parent, "query dialog", true, WX11BypassWM),
+    : TQDialog(parent, "query dialog", true, WX11BypassWM),
       mUnlockingFailed(false)
 {
-    frame = new QFrame( this );
-    frame->setFrameStyle( QFrame::Panel | QFrame::Raised );
+    frame = new TQFrame( this );
+    frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
     frame->setLineWidth( 2 );
 
-    mpixLabel = new QLabel( frame, "pixlabel" );
+    mpixLabel = new TQLabel( frame, "pixlabel" );
     mpixLabel->setPixmap(DesktopIcon("unlock"));
 
     KUser user;
 
-    mStatusLabel = new QLabel( "<b> </b>", frame );
-    //mStatusLabel->setAlignment( QLabel::AlignCenter );
-    mStatusLabel->setAlignment( QLabel::AlignLeft );
+    mStatusLabel = new TQLabel( "<b> </b>", frame );
+    //mStatusLabel->setAlignment( TQLabel::AlignCenter );
+    mStatusLabel->setAlignment( TQLabel::AlignLeft );
 
     KSeparator *sep = new KSeparator( KSeparator::HLine, frame );
 
     ok = new KPushButton( i18n("Unl&ock"), frame );
 
-    QVBoxLayout *unlockDialogLayout = new QVBoxLayout( this );
+    TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
 
-    QHBoxLayout *layStatus = new QHBoxLayout( 0, 0, KDialog::spacingHint());
+    TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
     layStatus->addWidget( mStatusLabel );
 
-    QHBoxLayout *layPin = new QHBoxLayout( 0, 0, KDialog::spacingHint());
+    TQHBoxLayout *layPin = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
     pin_box = new KPasswordEdit( this, "pin_box" );
     layPin->addWidget( pin_box );
     pin_box->setFocus();
 
-    QHBoxLayout *layButtons = new QHBoxLayout( 0, 0, KDialog::spacingHint());
+    TQHBoxLayout *layButtons = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
     layButtons->addStretch();
     layButtons->addWidget( ok );
 
-    frameLayout = new QGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+    frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
     frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, AlignTop );
     frameLayout->addLayout( layStatus, 0, 1 );
     frameLayout->addLayout( layPin, 2, 1 );
     frameLayout->addMultiCellWidget( sep, 3, 3, 0, 1 );
     frameLayout->addMultiCellLayout( layButtons, 4, 4, 0, 1 );
 
-    connect(ok, SIGNAL(clicked()), SLOT(slotOK()));
+    connect(ok, TQT_SIGNAL(clicked()), TQT_SLOT(slotOK()));
 
     installEventFilter(this);
 }
@@ -121,7 +121,7 @@ const char * QueryDlg::getEntry()
     return pin_box->password();
 }
 
-void QueryDlg::updateLabel(QString &txt)
+void QueryDlg::updateLabel(TQString &txt)
 {
     mStatusLabel->setPaletteForegroundColor(Qt::black);
     mStatusLabel->setText("<b>" + txt + "</b>");
@@ -139,8 +139,8 @@ void QueryDlg::setWarningIcon()
 
 void QueryDlg::show()
 {
-    QDialog::show();
-    QApplication::flushX();
+    TQDialog::show();
+    TQApplication::flushX();
 }
 
 #include "querydlg.moc"

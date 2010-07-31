@@ -23,8 +23,8 @@
 #ifndef _BGWALLPAPER_H_
 #define _BGWALLPAPER_H_
 
-#include <qlistbox.h>
-#include <qstringlist.h>
+#include <tqlistbox.h>
+#include <tqstringlist.h>
 
 #include <kdialogbase.h>
 
@@ -34,10 +34,10 @@ class KBackgroundSettings;
 class BGMultiWallpaperList : public QListBox
 {
 public:
-   BGMultiWallpaperList(QWidget *parent, const char *name);
+   BGMultiWallpaperList(TQWidget *parent, const char *name);
 
-   void dragEnterEvent(QDragEnterEvent *ev);
-   void dropEvent(QDropEvent *ev);
+   void dragEnterEvent(TQDragEnterEvent *ev);
+   void dropEvent(TQDropEvent *ev);
    bool hasSelection();
    void ensureSelectionVisible();
 };
@@ -46,7 +46,7 @@ class BGMultiWallpaperDialog : public KDialogBase
 {
    Q_OBJECT
 public:
-   BGMultiWallpaperDialog(KBackgroundSettings *settings, QWidget *parent, const char *name=0);
+   BGMultiWallpaperDialog(KBackgroundSettings *settings, TQWidget *parent, const char *name=0);
 
 public slots:
    void slotAdd();
@@ -54,7 +54,7 @@ public slots:
    void slotMoveUp();
    void slotMoveDown();
    void slotOk();
-   void slotItemSelected( QListBoxItem * );
+   void slotItemSelected( TQListBoxItem * );
 private:
    void setEnabledMoveButtons();
 

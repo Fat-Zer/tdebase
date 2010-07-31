@@ -26,10 +26,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef ADDAPPLETVISUALFEEDBACK_H
 #define ADDAPPLETVISUALFEEDBACK_H
 
-#include <qbitmap.h>
-#include <qpixmap.h>
-#include <qtimer.h>
-#include <qwidget.h>
+#include <tqbitmap.h>
+#include <tqpixmap.h>
+#include <tqtimer.h>
+#include <tqwidget.h>
 
 #include <kpanelapplet.h>
 
@@ -44,7 +44,7 @@ class AddAppletVisualFeedback : QWidget
 
     public:
         AddAppletVisualFeedback(AppletWidget* parent,
-                                const QWidget* destination,
+                                const TQWidget* destination,
                                 KPanelApplet::Direction direction);
         ~AddAppletVisualFeedback();
 
@@ -53,28 +53,28 @@ class AddAppletVisualFeedback : QWidget
         void swoopCloser();
 
     protected:
-        void paintEvent(QPaintEvent * e);
-        void mousePressEvent(QMouseEvent * e);
+        void paintEvent(TQPaintEvent * e);
+        void mousePressEvent(TQMouseEvent * e);
 
         void makeMask();
         void displayInternal();
 
     private:
-        const QWidget* m_target;
+        const TQWidget* m_target;
         KPanelApplet::Direction m_direction;
-        QBitmap m_mask;
-        QPixmap m_pixmap;
-        QPixmap m_icon;
-        QSimpleRichText* m_richText;
+        TQBitmap m_mask;
+        TQPixmap m_pixmap;
+        TQPixmap m_icon;
+        TQSimpleRichText* m_richText;
 
         int m_dissolveSize;
         int m_dissolveDelta;
         int m_frames;
 
-        QTimer m_moveTimer;
+        TQTimer m_moveTimer;
         bool m_dirty;
 
-        QPoint m_destination;
+        TQPoint m_destination;
 };
 
 #endif

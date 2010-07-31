@@ -21,11 +21,11 @@
 #define TRASHBUTTON_H
 
 #include <panelbutton.h>
-#include <qpoint.h>
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qcursor.h>
-#include <qtimer.h>
+#include <tqpoint.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
+#include <tqcursor.h>
+#include <tqtimer.h>
 #include <kfileitem.h>
 #include <kpanelapplet.h>
 #include <kactioncollection.h>
@@ -35,16 +35,16 @@ class TrashButton : public PanelPopupButton
 Q_OBJECT
 
 public:
-	TrashButton(QWidget *parent);
+	TrashButton(TQWidget *parent);
 	~TrashButton();
 	void setItemCount(int count);
 	void setPanelPosition(KPanelApplet::Position position);
 
 protected:
-	QString tileName();
+	TQString tileName();
 	void initPopup();
-	void dragEnterEvent(QDragEnterEvent *e);
-	void dropEvent(QDropEvent *e);
+	void dragEnterEvent(TQDragEnterEvent *e);
+	void dropEvent(TQDropEvent *e);
 
 protected slots:
         // Activate this code only if we find a way to have both an

@@ -21,12 +21,12 @@
 #ifndef TE_WIDGET_H
 #define TE_WIDGET_H
 
-#include <qbitarray.h>
-#include <qwidget.h>
-#include <qcolor.h>
-#include <qkeycode.h>
-#include <qtimer.h>
-#include <qscrollbar.h>
+#include <tqbitarray.h>
+#include <tqwidget.h>
+#include <tqcolor.h>
+#include <tqkeycode.h>
+#include <tqtimer.h>
+#include <tqscrollbar.h>
 
 #include <kpopupmenu.h>
 
@@ -47,13 +47,13 @@ class TEWidget : public QFrame
   friend class Konsole;
 public:
 
-    TEWidget(QWidget *parent=0, const char *name=0);
+    TEWidget(TQWidget *parent=0, const char *name=0);
     virtual ~TEWidget();
 
     void setBlendColor(const QRgb color) { blend_color = color; }
 
-    void setDefaultBackColor(const QColor& color);
-    QColor getDefaultBackColor();
+    void setDefaultBackColor(const TQColor& color);
+    TQColor getDefaultBackColor();
 
     const ColorEntry* getColorTable() const;
     void              setColorTable(const ColorEntry table[]);
@@ -78,10 +78,10 @@ public:
     uint lineSpacing() const;
 
     void emitSelection(bool useXselection,bool appendReturn);
-    void emitText(QString text);
+    void emitText(TQString text);
 
     void setImage(const ca* const newimg, int lines, int columns);
-    void setLineWrapped(QBitArray line_wrapped) { m_line_wrapped=line_wrapped; }
+    void setLineWrapped(TQBitArray line_wrapped) { m_line_wrapped=line_wrapped; }
 
     void setCursorPos(const int curx, const int cury);
 
@@ -96,32 +96,32 @@ public:
     void updateImageSize();
     void setSize(int cols, int lins);
     void setFixedSize(int cols, int lins);
-    QSize sizeHint() const;
+    TQSize sizeHint() const;
 
-    void setWordCharacters(QString wc);
-    QString wordCharacters() { return word_characters; }
+    void setWordCharacters(TQString wc);
+    TQString wordCharacters() { return word_characters; }
 
     void setBellMode(int mode);
     int bellMode() { return m_bellMode; }
     enum { BELLSYSTEM=0, BELLNOTIFY=1, BELLVISUAL=2, BELLNONE=3 };
-    void Bell(bool visibleSession, QString message);
+    void Bell(bool visibleSession, TQString message);
 
-    void setSelection(const QString &t);
+    void setSelection(const TQString &t);
 
     /** 
      * Reimplemented.  Has no effect.  Use setVTFont() to change the font
      * used to draw characters in the display.
      */
-    virtual void setFont(const QFont &);
+    virtual void setFont(const TQFont &);
 
     /** Returns the font used to draw characters in the display */
-    QFont getVTFont() { return font(); }
+    TQFont getVTFont() { return font(); }
 
     /** 
      * Sets the font used to draw the display.  Has no effect if @p font
      * is larger than the size of the display itself.    
      */
-    void setVTFont(const QFont& font);
+    void setVTFont(const TQFont& font);
 
     void setMouseMarks(bool on);
     static void setAntialias( bool enable ) { s_antialias = enable; }
@@ -136,7 +136,7 @@ public:
     void setBidiEnabled(bool set) { bidiEnabled=set; }
     bool isBidiEnabled() { return bidiEnabled; }
     
-    void print(QPainter &paint, bool friendly, bool exact);
+    void print(TQPainter &paint, bool friendly, bool exact);
 
     void setRim(int rim) { rimX=rim; rimY=rim; }
 
@@ -150,7 +150,7 @@ public slots:
 
 signals:
 
-    void keyPressedSignal(QKeyEvent *e);
+    void keyPressedSignal(TQKeyEvent *e);
     void mouseSignal(int cb, int cx, int cy);
     void changedFontMetricSignal(int height, int width);
     void changedContentSizeSignal(int height, int width);
@@ -168,56 +168,56 @@ signals:
 
 protected:
 
-    virtual void styleChange( QStyle& );
+    virtual void styleChange( TQStyle& );
 
-    bool eventFilter( QObject *, QEvent * );
-    bool event( QEvent * );
+    bool eventFilter( TQObject *, TQEvent * );
+    bool event( TQEvent * );
 
-    void drawTextFixed(QPainter &paint, int x, int y,
-                       QString& str, const ca *attr);
+    void drawTextFixed(TQPainter &paint, int x, int y,
+                       TQString& str, const ca *attr);
 
-    void drawAttrStr(QPainter &paint, QRect rect,
-                     QString& str, const ca *attr, bool pm, bool clear);
-    void paintEvent( QPaintEvent * );
+    void drawAttrStr(TQPainter &paint, TQRect rect,
+                     TQString& str, const ca *attr, bool pm, bool clear);
+    void paintEvent( TQPaintEvent * );
 
-    void paintContents(QPainter &paint, const QRect &rect, bool pm=false);
+    void paintContents(TQPainter &paint, const TQRect &rect, bool pm=false);
 
-    void resizeEvent(QResizeEvent*);
+    void resizeEvent(TQResizeEvent*);
 
-    void fontChange(const QFont &font);
+    void fontChange(const TQFont &font);
     void frameChanged();
 
-    void mouseDoubleClickEvent(QMouseEvent* ev);
-    void mousePressEvent( QMouseEvent* );
-    void mouseReleaseEvent( QMouseEvent* );
-    void mouseMoveEvent( QMouseEvent* );
-    void extendSelection( QPoint pos );
-    void wheelEvent( QWheelEvent* );
+    void mouseDoubleClickEvent(TQMouseEvent* ev);
+    void mousePressEvent( TQMouseEvent* );
+    void mouseReleaseEvent( TQMouseEvent* );
+    void mouseMoveEvent( TQMouseEvent* );
+    void extendSelection( TQPoint pos );
+    void wheelEvent( TQWheelEvent* );
 
-    void focusInEvent( QFocusEvent * );
-    void focusOutEvent( QFocusEvent * );
+    void focusInEvent( TQFocusEvent * );
+    void focusOutEvent( TQFocusEvent * );
     bool focusNextPrevChild( bool next );
     // Dnd
-    void dragEnterEvent(QDragEnterEvent* event);
-    void dropEvent(QDropEvent* event);
+    void dragEnterEvent(TQDragEnterEvent* event);
+    void dropEvent(TQDropEvent* event);
     void doDrag();
     enum DragState { diNone, diPending, diDragging };
 
     struct _dragInfo {
       DragState       state;
-      QPoint          start;
-      QTextDrag       *dragObject;
+      TQPoint          start;
+      TQTextDrag       *dragObject;
     } dragInfo;
 
     virtual int charClass(UINT16) const;
 
     void clearImage();
 
-    void mouseTripleClickEvent(QMouseEvent* ev);
+    void mouseTripleClickEvent(TQMouseEvent* ev);
 
-    void imStartEvent( QIMEvent *e );
-    void imComposeEvent( QIMEvent *e );
-    void imEndEvent( QIMEvent *e );
+    void imStartEvent( TQIMEvent *e );
+    void imComposeEvent( TQIMEvent *e );
+    void imEndEvent( TQIMEvent *e );
 
 protected slots:
 
@@ -227,7 +227,7 @@ protected slots:
 
 private:
 
-//    QChar (*fontMap)(QChar); // possible vt100 font extension
+//    TQChar (*fontMap)(TQChar); // possible vt100 font extension
 
     bool fixed_font; // has fixed pitch
     int  font_h;     // height
@@ -243,10 +243,10 @@ private:
     int contentWidth;
     ca *image; // [lines][columns]
     int image_size;
-    QBitArray m_line_wrapped;
+    TQBitArray m_line_wrapped;
 
     ColorEntry color_table[TABLE_COLORS];
-    QColor defaultBgColor;
+    TQColor defaultBgColor;
 
     bool resizing;
     bool terminalSizeHint,terminalSizeStartup;
@@ -255,9 +255,9 @@ private:
 
     void makeImage();
 
-    QPoint iPntSel; // initial selection point
-    QPoint pntSel; // current selection point
-    QPoint tripleSelBegin; // help avoid flicker
+    TQPoint iPntSel; // initial selection point
+    TQPoint pntSel; // current selection point
+    TQPoint tripleSelBegin; // help avoid flicker
     int    actSel; // selection state
     bool    word_selection_mode;
     bool    line_selection_mode;
@@ -265,10 +265,10 @@ private:
     bool    column_selection_mode;
 
     QClipboard*    cb;
-    QScrollBar* scrollbar;
+    TQScrollBar* scrollbar;
     int         scrollLoc;
-    QString     word_characters;
-    QTimer      bellTimer; //used to rate-limit bell events.  started when a bell event occurs,
+    TQString     word_characters;
+    TQTimer      bellTimer; //used to rate-limit bell events.  started when a bell event occurs,
                            //and prevents further bell events until it stops
     int         m_bellMode;
 
@@ -283,36 +283,36 @@ private:
     bool printerFriendly; // paint printer friendly, save ink
     bool printerBold; // Use a bold font instead of overstrike for bold
     bool isFixedSize; //Columns / lines are locked.
-    QTimer* blinkT;  // active when hasBlinker
-    QTimer* blinkCursorT;  // active when hasBlinkingCursor
+    TQTimer* blinkT;  // active when hasBlinker
+    TQTimer* blinkCursorT;  // active when hasBlinkingCursor
 
     KPopupMenu* m_drop;
-    QString dropText;
+    TQString dropText;
     int m_dnd_file_count;
 
     bool possibleTripleClick;  // is set in mouseDoubleClickEvent and deleted
-                               // after QApplication::doubleClickInterval() delay
+                               // after TQApplication::doubleClickInterval() delay
 
     static bool s_antialias;   // do we antialias or not
     static bool s_standalone;  // are we part of a standalone konsole?
 
-    QFrame *mResizeWidget;
-    QLabel *mResizeLabel;
-    QTimer *mResizeTimer;
+    TQFrame *mResizeWidget;
+    TQLabel *mResizeLabel;
+    TQTimer *mResizeTimer;
 
     uint m_lineSpacing;
 
-    QRect       cursorRect; //for quick changing of cursor
+    TQRect       cursorRect; //for quick changing of cursor
 
-    QPoint configureRequestPoint;  // remember right mouse button click position
+    TQPoint configureRequestPoint;  // remember right mouse button click position
     bool colorsSwapped; // true during visual bell
 
     // the rim should normally be 1, 0 only when running in full screen mode.
     int rimX;      // left/right rim width
     int rimY;      // top/bottom rim high
-    QSize m_size;
+    TQSize m_size;
 
-    QString m_imPreeditText;
+    TQString m_imPreeditText;
     int m_imPreeditLength;
     int m_imStart;
     int m_imStartLine;

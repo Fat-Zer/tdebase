@@ -28,8 +28,8 @@ class MediaProtocol : public KIO::ForwardingSlaveBase
 {
 Q_OBJECT
 public:
-	MediaProtocol(const QCString &protocol, const QCString &pool,
-	              const QCString &app);
+	MediaProtocol(const TQCString &protocol, const TQCString &pool,
+	              const TQCString &app);
 	virtual ~MediaProtocol();
 
 	virtual bool rewriteURL(const KURL &url, KURL &newUrl);
@@ -43,7 +43,7 @@ public:
 	virtual void listDir(const KURL &url);
 
 private slots:
-	void slotWarning( const QString &msg );
+	void slotWarning( const TQString &msg );
 	
 private:
 	void listRoot();

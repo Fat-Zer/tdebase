@@ -56,19 +56,19 @@ void KProxyData::init()
 }
 
 
-KProxyDialogBase::KProxyDialogBase( QWidget* parent, const char* name,
-                                    bool modal, const QString &caption )
+KProxyDialogBase::KProxyDialogBase( TQWidget* parent, const char* name,
+                                    bool modal, const TQString &caption )
     :KDialogBase( parent, name, modal, caption, Ok|Cancel, Ok, true )
 {
   m_bHasValidData = false;
 }
 
-void KProxyDialogBase::setHighLight (QWidget* widget, bool highlight)
+void KProxyDialogBase::setHighLight (TQWidget* widget, bool highlight)
 {
   if (!widget)
     return;
 
-  QFont f = widget->font();
+  TQFont f = widget->font();
   f.setBold( highlight );
   widget->setFont( f );
 }

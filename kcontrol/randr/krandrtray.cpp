@@ -16,8 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qtimer.h>
-#include <qtooltip.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -46,15 +46,15 @@
 #define OUTPUT_ON			(1 << 3)
 #define OUTPUT_ALL			(0xf)
 
-KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
+KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	: KSystemTray(parent, name)
 	, m_popupUp(false)
 	, m_help(new KHelpMenu(this, KGlobal::instance()->aboutData(), false, actionCollection()))
 {
 	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-	connect(this, SIGNAL(quitSelected()), this, SLOT(_quit()));
-	QToolTip::add(this, i18n("Screen resize & rotate"));
+	connect(this, TQT_SIGNAL(quitSelected()), this, TQT_SLOT(_quit()));
+	TQToolTip::add(this, i18n("Screen resize & rotate"));
 	my_parent = parent;
 
 	//printf("Reading configuration...\n\r");
@@ -66,10 +66,10 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 	globalKeys->setEnabled(true);
 	globalKeys->updateConnections();
 
-	connect(kapp, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)));
+	connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
 
 #if (QT_VERSION-0 >= 0x030200) // XRANDR support
-//	connect(this, SIGNAL(screenSizeChanged(int, int)), kapp->desktop(), SLOT( desktopResized()));
+//	connect(this, TQT_SIGNAL(screenSizeChanged(int, int)), kapp->desktop(), TQT_SLOT( desktopResized()));
 #endif
 
 	randr_display = XOpenDisplay(NULL);
@@ -81,7 +81,7 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 
 	t_config = new KSimpleConfig("kiccconfigrc");
 
-	QString cur_profile;
+	TQString cur_profile;
 	cur_profile = getCurrentProfile();
 	if (cur_profile != "") {
 		applyIccConfiguration(cur_profile, NULL);
@@ -89,14 +89,14 @@ KRandRSystemTray::KRandRSystemTray(QWidget* parent, const char *name)
 }
 
 /*!
- * \b SLOT which called if krandrtray is exited by the user. In this case the user
+ * \b TQT_SLOT which called if krandrtray is exited by the user. In this case the user
  * is asked through a yes/no box if "KRandRTray should start automatically on log in" and the
  * result is written to the KDE configfile.
  */
 void KRandRSystemTray::_quit (){
 	r_config = new KSimpleConfig("krandrtrayrc");
 
-	QString tmp1 = i18n ("Start KRandRTray automatically when you log in?");
+	TQString tmp1 = i18n ("Start KRandRTray automatically when you log in?");
 	int tmp2 = KMessageBox::questionYesNo ( 0, tmp1, i18n("Question"), i18n("Start Automatically"), i18n("Do Not Start"));
 	r_config->setGroup("General");
 	r_config->writeEntry ("Autostart", tmp2 == KMessageBox::Yes);
@@ -105,12 +105,12 @@ void KRandRSystemTray::_quit (){
 	exit(0);
 }
 
-void KRandRSystemTray::resizeEvent ( QResizeEvent * )
+void KRandRSystemTray::resizeEvent ( TQResizeEvent * )
 {
 	// Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
-	QPixmap origpixmap;
-	QPixmap scaledpixmap;
-	QImage newIcon;
+	TQPixmap origpixmap;
+	TQPixmap scaledpixmap;
+	TQImage newIcon;
 	origpixmap = KSystemTray::loadSizedIcon( "randr", width() );
 	newIcon = origpixmap;
 	newIcon = newIcon.smoothScale(width(), height());
@@ -118,7 +118,7 @@ void KRandRSystemTray::resizeEvent ( QResizeEvent * )
 	setPixmap(scaledpixmap);
 }
 
-void KRandRSystemTray::mousePressEvent(QMouseEvent* e)
+void KRandRSystemTray::mousePressEvent(TQMouseEvent* e)
 {
 	// Popup the context menu with left-click
 	if (e->button() == LeftButton) {
@@ -203,11 +203,11 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 				/*lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1));
 				menu->setItemEnabled(lastIndex, false);*/
 			} else {
-				KPopupMenu* subMenu = new KPopupMenu(menu, QString("screen%1").arg(s+1).latin1());
+				KPopupMenu* subMenu = new KPopupMenu(menu, TQString("screen%1").arg(s+1).latin1());
 				m_screenPopups.append(subMenu);
 				populateMenu(subMenu);
 				lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1), subMenu);
-				connect(subMenu, SIGNAL(activated(int)), SLOT(slotScreenActivated()));
+				connect(subMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(slotScreenActivated()));
 			}
 		}
 
@@ -218,34 +218,34 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 	addOutputMenu(menu);
 
 	// Find any user ICC profiles
-	QStringList cfgProfiles;
+	TQStringList cfgProfiles;
 	cfgProfiles = t_config->groupList();
 	if (cfgProfiles.isEmpty() == false) {
 		menu->insertTitle(SmallIcon("kcoloredit"), i18n("Color Profile"));
 	}
-	for (QStringList::Iterator t(cfgProfiles.begin()); t != cfgProfiles.end(); ++t) {
+	for (TQStringList::Iterator t(cfgProfiles.begin()); t != cfgProfiles.end(); ++t) {
 		lastIndex = menu->insertItem(*t);
 		if (t_config->readEntry("CurrentProfile") == (*t)) {
 			menu->setItemChecked(lastIndex, true);
 		}
 		menu->setItemEnabled(lastIndex, t_config->readBoolEntry("EnableICC", false));
-		menu->connectItem(lastIndex, this, SLOT(slotColorProfileChanged(int)));
+		menu->connectItem(lastIndex, this, TQT_SLOT(slotColorProfileChanged(int)));
 	}
 
 	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
 
 	KAction *actColors = new KAction( i18n( "Configure Color Profiles..." ),
-		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotColorConfig() ),
+		SmallIconSet( "configure" ), KShortcut(), this, TQT_SLOT( slotColorConfig() ),
 		actionCollection() );
 	actColors->plug( menu );
 
 // 	KAction *actPrefs = new KAction( i18n( "Configure Display..." ),
-// 		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotPrefs() ),
+// 		SmallIconSet( "configure" ), KShortcut(), this, TQT_SLOT( slotPrefs() ),
 // 		actionCollection() );
 // 	actPrefs->plug( menu );
 
 	KAction *actSKeys = new KAction( i18n( "Configure Shortcut Keys..." ),
-		SmallIconSet( "configure" ), KShortcut(), this, SLOT( slotSKeys() ),
+		SmallIconSet( "configure" ), KShortcut(), this, TQT_SLOT( slotSKeys() ),
 		actionCollection() );
 	actSKeys->plug( menu );
 
@@ -286,7 +286,7 @@ void KRandRSystemTray::configChanged()
 
 	first = false;
 
-	QString cur_profile;
+	TQString cur_profile;
 	cur_profile = getCurrentProfile();
 	if (cur_profile != "") {
 		applyIccConfiguration(cur_profile, NULL);
@@ -363,7 +363,7 @@ void KRandRSystemTray::populateMenu(KPopupMenu* menu)
 			menu->setItemChecked(lastIndex, true);
 
 		menu->setItemParameter(lastIndex, highestIndex);
-		menu->connectItem(lastIndex, this, SLOT(slotResolutionChanged(int)));
+		menu->connectItem(lastIndex, this, TQT_SLOT(slotResolutionChanged(int)));
 	}
 	delete [] sizeSort;
 	sizeSort = 0L;
@@ -381,25 +381,25 @@ void KRandRSystemTray::populateMenu(KPopupMenu* menu)
 					menu->setItemChecked(lastIndex, true);
 
 				menu->setItemParameter(lastIndex, 1 << i);
-				menu->connectItem(lastIndex, this, SLOT(slotOrientationChanged(int)));
+				menu->connectItem(lastIndex, this, TQT_SLOT(slotOrientationChanged(int)));
 			}
 		}
 	}
 
-	QStringList rr = currentScreen()->refreshRates(currentScreen()->proposedSize());
+	TQStringList rr = currentScreen()->refreshRates(currentScreen()->proposedSize());
 
 	if (rr.count())
 		menu->insertTitle(SmallIcon("clock"), i18n("Refresh Rate"));
 
 	int i = 0;
-	for (QStringList::Iterator it = rr.begin(); it != rr.end(); ++it, i++) {
+	for (TQStringList::Iterator it = rr.begin(); it != rr.end(); ++it, i++) {
 		lastIndex = menu->insertItem(*it);
 
 		if (currentScreen()->proposedRefreshRate() == i)
 			menu->setItemChecked(lastIndex, true);
 
 		menu->setItemParameter(lastIndex, i);
-		menu->connectItem(lastIndex, this, SLOT(slotRefreshRateChanged(int)));
+		menu->connectItem(lastIndex, this, TQT_SLOT(slotRefreshRateChanged(int)));
 	}
 }
 
@@ -488,7 +488,7 @@ void KRandRSystemTray::slotSKeys()
 {
 	ConfigDialog *dlg = new ConfigDialog(globalKeys, true);
 
-	if ( dlg->exec() == QDialog::Accepted ) {
+	if ( dlg->exec() == TQDialog::Accepted ) {
 		dlg->commitShortcuts();
 		globalKeys->writeSettings(0, true);
 		globalKeys->updateConnections();
@@ -709,7 +709,7 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 
 			lastIndex = menu->insertItem(i18n("%1 (Active)").arg(output_name));
 			menu->setItemChecked(lastIndex, true);
-			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
+			menu->connectItem(lastIndex, this, TQT_SLOT(slotOutputChanged(int)));
 			menu->setItemParameter(lastIndex, i);
 
 			connected_displays++;
@@ -732,7 +732,7 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 
 			lastIndex = menu->insertItem(i18n("%1 (Connected, Inactive)").arg(output_name));
 			menu->setItemChecked(lastIndex, false);
-			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
+			menu->connectItem(lastIndex, this, TQT_SLOT(slotOutputChanged(int)));
 			menu->setItemParameter(lastIndex, i);
 
 			connected_displays++;
@@ -756,7 +756,7 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 			lastIndex = menu->insertItem(i18n("%1 (Disconnected, Inactive)").arg(output_name));
 			menu->setItemChecked(lastIndex, false);
 			menu->setItemEnabled(lastIndex, false);
-			menu->connectItem(lastIndex, this, SLOT(slotOutputChanged(int)));
+			menu->connectItem(lastIndex, this, TQT_SLOT(slotOutputChanged(int)));
 			menu->setItemParameter(lastIndex, i);
 		}
 
@@ -764,7 +764,7 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 		if (connected_displays < 2) {
 			menu->setItemEnabled(lastIndex, false);
 		}
-		menu->connectItem(lastIndex, this, SLOT(slotCycleDisplays()));
+		menu->connectItem(lastIndex, this, TQT_SLOT(slotCycleDisplays()));
 	}
 }
 

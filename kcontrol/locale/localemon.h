@@ -25,7 +25,7 @@
 #ifndef __KLOCALECONFIGMON_H__
 #define __KLOCALECONFIGMON_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QCheckBox;
 class QComboBox;
@@ -40,7 +40,7 @@ class KLocaleConfigMoney : public QWidget
   Q_OBJECT
 
 public:
-  KLocaleConfigMoney(KLocale *locale, QWidget *parent = 0, const char *name = 0);
+  KLocaleConfigMoney(KLocale *locale, TQWidget *parent = 0, const char *name = 0);
   virtual ~KLocaleConfigMoney();
 
   void save();
@@ -60,9 +60,9 @@ signals:
 
 private slots:
   // Money
-  void slotMonCurSymChanged(const QString &t);
-  void slotMonDecSymChanged(const QString &t);
-  void slotMonThoSepChanged(const QString &t);
+  void slotMonCurSymChanged(const TQString &t);
+  void slotMonDecSymChanged(const TQString &t);
+  void slotMonThoSepChanged(const TQString &t);
   void slotMonFraDigChanged(int value);
   void slotMonPosPreCurSymChanged();
   void slotMonNegPreCurSymChanged();
@@ -73,21 +73,21 @@ private:
   KLocale *m_locale;
 
   // Money
-  QLabel *m_labMonCurSym;
-  QLineEdit *m_edMonCurSym;
-  QLabel *m_labMonDecSym;
-  QLineEdit *m_edMonDecSym;
-  QLabel *m_labMonThoSep;
-  QLineEdit *m_edMonThoSep;
-  QLabel *m_labMonFraDig;
+  TQLabel *m_labMonCurSym;
+  TQLineEdit *m_edMonCurSym;
+  TQLabel *m_labMonDecSym;
+  TQLineEdit *m_edMonDecSym;
+  TQLabel *m_labMonThoSep;
+  TQLineEdit *m_edMonThoSep;
+  TQLabel *m_labMonFraDig;
   KIntNumInput * m_inMonFraDig;
 
-  QCheckBox *m_chMonPosPreCurSym;
-  QCheckBox *m_chMonNegPreCurSym;
-  QLabel *m_labMonPosMonSignPos;
-  QComboBox *m_cmbMonPosMonSignPos;
-  QLabel *m_labMonNegMonSignPos;
-  QComboBox *m_cmbMonNegMonSignPos;
+  TQCheckBox *m_chMonPosPreCurSym;
+  TQCheckBox *m_chMonNegPreCurSym;
+  TQLabel *m_labMonPosMonSignPos;
+  TQComboBox *m_cmbMonPosMonSignPos;
+  TQLabel *m_labMonNegMonSignPos;
+  TQComboBox *m_cmbMonNegMonSignPos;
 };
 
 #endif

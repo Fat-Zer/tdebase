@@ -31,7 +31,7 @@
 #include <kparts/browserinterface.h>
 #include <kparts/browserextension.h>
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #include "nspluginloader.h"
 #include "plugin_part.h"
@@ -57,7 +57,7 @@ PluginLiveConnectExtension::PluginLiveConnectExtension(PluginPart* part)
 PluginLiveConnectExtension::~PluginLiveConnectExtension() {
 }
 
-bool PluginLiveConnectExtension::get(const unsigned long, const QString &field, Type &type, unsigned long &retobj, QString &value) {
+bool PluginLiveConnectExtension::get(const unsigned long, const TQString &field, Type &type, unsigned long &retobj, TQString &value) {
 Q_UNUSED(type);
 Q_UNUSED(retobj);
 Q_UNUSED(value);
@@ -65,7 +65,7 @@ Q_UNUSED(value);
     return false;
 }
 
-bool PluginLiveConnectExtension::call(const unsigned long, const QString &func, const QStringList &args, Type &type, unsigned long &retobjid, QString &value) {
+bool PluginLiveConnectExtension::call(const unsigned long, const TQString &func, const TQStringList &args, Type &type, unsigned long &retobjid, TQString &value) {
 Q_UNUSED(type);
 Q_UNUSED(retobjid);
 Q_UNUSED(value);
@@ -73,7 +73,7 @@ Q_UNUSED(value);
     return false;
 }
 
-bool PluginLiveConnectExtension::put( const unsigned long, const QString &field, const QString &value) {
+bool PluginLiveConnectExtension::put( const unsigned long, const TQString &field, const TQString &value) {
     kdDebug(1432) << "PLUGIN:LiveConnect::put " << field << " " << value << endl;
     if (_retval && field == "__nsplugin") {
         *_retval = value;
@@ -85,15 +85,15 @@ bool PluginLiveConnectExtension::put( const unsigned long, const QString &field,
     return false;
 }
 
-QString PluginLiveConnectExtension::evalJavaScript( const QString & script )
+TQString PluginLiveConnectExtension::evalJavaScript( const TQString & script )
 {
     kdDebug(1432) << "PLUGIN:LiveConnect::evalJavaScript " << script << endl;
     ArgList args;
-    QString jscode;
-    jscode.sprintf("this.__nsplugin=eval(\"%s\")",  QString(script).replace('\\', "\\\\").replace('"', "\\\"").latin1());
+    TQString jscode;
+    jscode.sprintf("this.__nsplugin=eval(\"%s\")",  TQString(script).replace('\\', "\\\\").replace('"', "\\\"").latin1());
     //kdDebug(1432) << "String is [" << jscode << "]" << endl;
     args.push_back(qMakePair(KParts::LiveConnectExtension::TypeString, jscode));
-    QString nsplugin("Undefined");
+    TQString nsplugin("Undefined");
     _retval = &nsplugin;
     emit partEvent(0, "eval", args);
     _retval = 0L;
@@ -119,25 +119,25 @@ NSPluginCallback::NSPluginCallback(PluginPart *part)
 }
 
 
-void NSPluginCallback::postURL(QString url, QString target, QByteArray data, QString mime)
+void NSPluginCallback::postURL(TQString url, TQString target, TQByteArray data, TQString mime)
 {
     _part->postURL( url, target, data, mime );
 }
 
 
-void NSPluginCallback::requestURL(QString url, QString target)
+void NSPluginCallback::requestURL(TQString url, TQString target)
 {
     _part->requestURL( url, target );
 }
 
 
-void NSPluginCallback::statusMessage( QString msg )
+void NSPluginCallback::statusMessage( TQString msg )
 {
     _part->statusMessage( msg );
 }
 
 
-void NSPluginCallback::evalJavaScript( int id, QString script )
+void NSPluginCallback::evalJavaScript( int id, TQString script )
 {
     _part->evalJavaScript( id, script );
 }
@@ -171,9 +171,9 @@ PluginFactory::~PluginFactory()
    s_instance = 0;
 }
 
-KParts::Part * PluginFactory::createPartObject(QWidget *parentWidget, const char *widgetName,
-                                         QObject *parent, const char *name,
-                                         const char *classname, const QStringList &args)
+KParts::Part * PluginFactory::createPartObject(TQWidget *parentWidget, const char *widgetName,
+                                         TQObject *parent, const char *name,
+                                         const char *classname, const TQStringList &args)
 {
     Q_UNUSED(classname)
     kdDebug(1432) << "PluginFactory::create" << endl;
@@ -201,8 +201,8 @@ KAboutData *PluginFactory::aboutData()
 /**************************************************************************/
 
 
-PluginPart::PluginPart(QWidget *parentWidget, const char *widgetName, QObject *parent,
-                       const char *name, const QStringList &args)
+PluginPart::PluginPart(TQWidget *parentWidget, const char *widgetName, TQObject *parent,
+                       const char *name, const TQStringList &args)
     : KParts::ReadOnlyPart(parent, name), _widget(0), _args(args),
       _destructed(0L)
 {
@@ -217,7 +217,7 @@ PluginPart::PluginPart(QWidget *parentWidget, const char *widgetName, QObject *p
     // Only create this if we have no parent since the parent part is
     // responsible for "Save As" then
     if (!parent || !parent->inherits("Part")) {
-        new KAction(i18n("&Save As..."), CTRL+Key_S, this, SLOT(saveAs()), actionCollection(), "saveDocument");
+        new KAction(i18n("&Save As..."), CTRL+Key_S, this, TQT_SLOT(saveAs()), actionCollection(), "saveDocument");
         setXMLFile("nspluginpart.rc");
     }
 
@@ -227,13 +227,13 @@ PluginPart::PluginPart(QWidget *parentWidget, const char *widgetName, QObject *p
 
     // create a canvas to insert our widget
     _canvas = new PluginCanvasWidget( parentWidget, widgetName );
-    //_canvas->setFocusPolicy( QWidget::ClickFocus );
-    _canvas->setFocusPolicy( QWidget::WheelFocus );
-    _canvas->setBackgroundMode( QWidget::NoBackground );
+    //_canvas->setFocusPolicy( TQWidget::ClickFocus );
+    _canvas->setFocusPolicy( TQWidget::WheelFocus );
+    _canvas->setBackgroundMode( TQWidget::NoBackground );
     setWidget(_canvas);
     _canvas->show();
-    QObject::connect( _canvas, SIGNAL(resized(int,int)),
-                      this, SLOT(pluginResized(int,int)) );
+    TQObject::connect( _canvas, TQT_SIGNAL(resized(int,int)),
+                      this, TQT_SLOT(pluginResized(int,int)) );
 }
 
 
@@ -254,23 +254,23 @@ bool PluginPart::openURL(const KURL &url)
     kdDebug(1432) << "-> PluginPart::openURL" << endl;
 
     m_url = url;
-    QString surl = url.url();
-    QString smime = _extension->urlArgs().serviceType;
+    TQString surl = url.url();
+    TQString smime = _extension->urlArgs().serviceType;
     bool reload = _extension->urlArgs().reload;
     bool embed = false;
     bool post = _extension->urlArgs().doPost();
 
     // handle arguments
-    QStringList argn, argv;
+    TQStringList argn, argv;
 
-    QStringList::Iterator it = _args.begin();
+    TQStringList::Iterator it = _args.begin();
     for ( ; it != _args.end(); ) {
 
         int equalPos = (*it).find("=");
         if (equalPos>0) {
 
-            QString name = (*it).left(equalPos).upper();
-            QString value = (*it).mid(equalPos+1);
+            TQString name = (*it).left(equalPos).upper();
+            TQString value = (*it).mid(equalPos+1);
             if (value[0] == '"' && value[value.length()-1] == '"')
                 value = value.mid(1, value.length()-2);
 
@@ -306,7 +306,7 @@ bool PluginPart::openURL(const KURL &url)
     if ( inst ) {
         _widget = inst;
     } else {
-        QLabel *label = new QLabel( i18n("Unable to load Netscape plugin for %1").arg(url.url()), _canvas );
+        TQLabel *label = new TQLabel( i18n("Unable to load Netscape plugin for %1").arg(url.url()), _canvas );
         label->setAlignment( AlignCenter | WordBreak );
         _widget = label;
     }
@@ -334,7 +334,7 @@ void PluginPart::reloadPage()
     _extension->browserInterface()->callMethod("goHistory(int)", 0);
 }
 
-void PluginPart::postURL(const QString& url, const QString& target, const QByteArray& data, const QString& mime)
+void PluginPart::postURL(const TQString& url, const TQString& target, const TQByteArray& data, const TQString& mime)
 {
     kdDebug(1432) << "PluginPart::postURL( url=" << url
                   << ", target=" << target << endl;
@@ -349,7 +349,7 @@ void PluginPart::postURL(const QString& url, const QString& target, const QByteA
     emit _extension->openURLRequest(new_url, args);
 }
 
-void PluginPart::requestURL(const QString& url, const QString& target)
+void PluginPart::requestURL(const TQString& url, const TQString& target)
 {
     kdDebug(1432) << "PluginPart::requestURL( url=" << url
                   << ", target=" << target << endl;
@@ -362,14 +362,14 @@ void PluginPart::requestURL(const QString& url, const QString& target)
     emit _extension->openURLRequest(new_url, args);
 }
 
-void PluginPart::evalJavaScript(int id, const QString & script)
+void PluginPart::evalJavaScript(int id, const TQString & script)
 {
     kdDebug(1432) <<"evalJavascript: before widget check"<<endl;
     if (_widget) {
         bool destructed = false;
         _destructed = &destructed;
 	kdDebug(1432) <<"evalJavascript: there is a widget" <<endl;	
-        QString rc = _liveconnect->evalJavaScript(script);
+        TQString rc = _liveconnect->evalJavaScript(script);
         if (destructed)
             return;
         _destructed = 0L;
@@ -380,7 +380,7 @@ void PluginPart::evalJavaScript(int id, const QString & script)
     }
 }
 
-void PluginPart::statusMessage(QString msg)
+void PluginPart::statusMessage(TQString msg)
 {
     kdDebug(1422) << "PluginPart::statusMessage " << msg << endl;
     emit setStatusBarText(msg);
@@ -397,21 +397,21 @@ void PluginPart::pluginResized(int w, int h)
 }
 
 
-void PluginPart::changeSrc(const QString& url) {
+void PluginPart::changeSrc(const TQString& url) {
     closeURL();
     openURL(KURL( url ));
 }
 
 
 void PluginPart::saveAs() {
-    KURL savefile = KFileDialog::getSaveURL(QString::null, QString::null, _widget);
+    KURL savefile = KFileDialog::getSaveURL(TQString::null, TQString::null, _widget);
     KIO::NetAccess::copy(m_url, savefile, _widget);
 }
 
 
-void PluginCanvasWidget::resizeEvent(QResizeEvent *ev)
+void PluginCanvasWidget::resizeEvent(TQResizeEvent *ev)
 {
-    QWidget::resizeEvent(ev);
+    TQWidget::resizeEvent(ev);
     emit resized(width(), height());
 }
 

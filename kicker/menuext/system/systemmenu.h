@@ -30,8 +30,8 @@ class SystemMenu : public KPanelMenu
     Q_OBJECT
 
     public:
-        SystemMenu(QWidget *parent, const char *name,
-                   const QStringList & /*args*/);
+        SystemMenu(TQWidget *parent, const char *name,
+                   const TQStringList & /*args*/);
         ~SystemMenu();
 
     protected slots:
@@ -41,10 +41,10 @@ class SystemMenu : public KPanelMenu
         void slotCompleted();
 
     private:
-        void append(const QString &icon, const KURL &url, const QString &label);
+        void append(const TQString &icon, const KURL &url, const TQString &label);
         KDirLister m_dirLister;
         KFileItemList m_entries;
-        QMap<int, KURL> m_urlMap;
+        TQMap<int, KURL> m_urlMap;
 };
 
 #endif

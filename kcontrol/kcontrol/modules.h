@@ -21,8 +21,8 @@
 #define MODULES_H
 
 #include <kcmoduleinfo.h>
-#include <qobject.h>
-#include <qdict.h>
+#include <tqobject.h>
+#include <tqdict.h>
 #include <qxembed.h>
 
 template<class ConfigModule> class QPtrList;
@@ -36,7 +36,7 @@ class QVBoxLayout;
 class QVBox;
 class QWidgetStack;
 
-class ConfigModule : public QObject, public KCModuleInfo
+class ConfigModule : public TQObject, public KCModuleInfo
 {
   Q_OBJECT
 
@@ -81,53 +81,53 @@ private:
   ProxyWidget *_module;
   QXEmbed     *_embedWidget;
   KProcess    *_rootProcess;
-  QVBoxLayout *_embedLayout;
-  QVBox       *_embedFrame;
-  QWidgetStack *_embedStack;
+  TQVBoxLayout *_embedLayout;
+  TQVBox       *_embedFrame;
+  TQWidgetStack *_embedStack;
 
 };
 
-class ConfigModuleList : public QPtrList<ConfigModule>
+class ConfigModuleList : public TQPtrList<ConfigModule>
 {
 public:
 
   ConfigModuleList();
 
   void readDesktopEntries();
-  bool readDesktopEntriesRecursive(const QString &path);
+  bool readDesktopEntriesRecursive(const TQString &path);
 
   /**
    * Returns all submenus of the submenu identified by path
    */
-  QPtrList<ConfigModule> modules(const QString &path);
+  TQPtrList<ConfigModule> modules(const TQString &path);
   
   /**
    * Returns all modules of the submenu identified by path
    */
-  QStringList submenus(const QString &path);
+  TQStringList submenus(const TQString &path);
 
   /**
    * Returns the path of the submenu the module is in
    */
-  QString findModule(ConfigModule *module);
+  TQString findModule(ConfigModule *module);
  
 protected:
 
   class Menu
   {
   public:
-    QPtrList<ConfigModule> modules;
-    QStringList submenus;
+    TQPtrList<ConfigModule> modules;
+    TQStringList submenus;
   };
 
-  QDict<Menu> subMenus;
+  TQDict<Menu> subMenus;
 };
 
 class KControlEmbed : public QXEmbed
     {
     Q_OBJECT
     public:
-        KControlEmbed( QWidget* w ) : QXEmbed( w ) {}
+        KControlEmbed( TQWidget* w ) : QXEmbed( w ) {}
         virtual void windowChanged( WId w ) { if( w ) emit windowEmbedded( w ); }
     signals:
         void windowEmbedded( WId w );

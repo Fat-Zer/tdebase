@@ -27,12 +27,12 @@ class LookAndFeelConfig : public KCModule
     Q_OBJECT
 
 public:
-    LookAndFeelConfig(QWidget *parent = 0L, const char *name = 0L);
+    LookAndFeelConfig(TQWidget *parent = 0L, const char *name = 0L);
 
     void load();
     void save();
     void defaults();
-    QString quickHelp() const;
+    TQString quickHelp() const;
 
 public slots:
     void configChanged();

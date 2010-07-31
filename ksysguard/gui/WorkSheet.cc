@@ -21,11 +21,11 @@
 
 */
 
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qdragobject.h>
-#include <qfile.h>
-#include <qlayout.h>
+#include <tqclipboard.h>
+#include <tqcursor.h>
+#include <tqdragobject.h>
+#include <tqfile.h>
+#include <tqlayout.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -45,8 +45,8 @@
 #include "WorkSheet.h"
 #include "WorkSheetSettings.h"
 
-WorkSheet::WorkSheet( QWidget *parent, const char *name )
-  : QWidget( parent, name )
+WorkSheet::WorkSheet( TQWidget *parent, const char *name )
+  : TQWidget( parent, name )
 {
   mGridLayout = 0;
   mRows = mColumns = 0;
@@ -57,9 +57,9 @@ WorkSheet::WorkSheet( QWidget *parent, const char *name )
   setAcceptDrops( true );
 }
 
-WorkSheet::WorkSheet( uint rows, uint columns, uint interval, QWidget* parent,
+WorkSheet::WorkSheet( uint rows, uint columns, uint interval, TQWidget* parent,
                       const char *name )
-  : QWidget( parent, name )
+  : TQWidget( parent, name )
 {
   mRows = mColumns = 0;
   mGridLayout = 0;
@@ -84,18 +84,18 @@ WorkSheet::~WorkSheet()
 {
 }
 
-bool WorkSheet::load( const QString &fileName )
+bool WorkSheet::load( const TQString &fileName )
 {
   setModified( false );
 
   mFileName = fileName;
-  QFile file( mFileName );
+  TQFile file( mFileName );
   if ( !file.open( IO_ReadOnly ) ) {
     KMessageBox::sorry( this, i18n( "Cannot open the file %1." ).arg( mFileName ) );
     return false;
   }
 
-  QDomDocument doc;
+  TQDomDocument doc;
 
   // Read in file and check for a valid XML header.
   if ( !doc.setContent( &file) ) {
@@ -113,7 +113,7 @@ bool WorkSheet::load( const QString &fileName )
   }
 
   // Check for proper size.
-  QDomElement element = doc.documentElement();
+  TQDomElement element = doc.documentElement();
   updateInterval( element.attribute( "interval" ).toUInt() );
   if ( updateInterval() < 1 || updateInterval() > 300 )
     updateInterval( 2 );
@@ -132,9 +132,9 @@ bool WorkSheet::load( const QString &fileName )
   uint i;
   /* Load lists of hosts that are needed for the work sheet and try
    * to establish a connection. */
-  QDomNodeList dnList = element.elementsByTagName( "host" );
+  TQDomNodeList dnList = element.elementsByTagName( "host" );
   for ( i = 0; i < dnList.count(); ++i ) {
-    QDomElement element = dnList.item( i ).toElement();
+    TQDomElement element = dnList.item( i ).toElement();
     bool ok;
     int port = element.attribute( "port" ).toInt( &ok );
     if ( !ok )
@@ -150,7 +150,7 @@ bool WorkSheet::load( const QString &fileName )
   // Load the displays and place them into the work sheet.
   dnList = element.elementsByTagName( "display" );
   for ( i = 0; i < dnList.count(); ++i ) {
-    QDomElement element = dnList.item( i ).toElement();
+    TQDomElement element = dnList.item( i ).toElement();
     uint row = element.attribute( "row" ).toUInt();
     uint column = element.attribute( "column" ).toUInt();
     if ( row >= mRows || column >= mColumns) {
@@ -173,32 +173,32 @@ bool WorkSheet::load( const QString &fileName )
   return true;
 }
 
-bool WorkSheet::save( const QString &fileName )
+bool WorkSheet::save( const TQString &fileName )
 {
   mFileName = fileName;
 
-  QDomDocument doc( "KSysGuardWorkSheet" );
+  TQDomDocument doc( "KSysGuardWorkSheet" );
   doc.appendChild( doc.createProcessingInstruction(
                    "xml", "version=\"1.0\" encoding=\"UTF-8\"" ) );
 
   // save work sheet information
-  QDomElement ws = doc.createElement( "WorkSheet" );
+  TQDomElement ws = doc.createElement( "WorkSheet" );
   doc.appendChild( ws );
   ws.setAttribute( "interval", updateInterval() );
   ws.setAttribute( "rows", mRows );
   ws.setAttribute( "columns", mColumns );
 
-  QStringList hosts;
+  TQStringList hosts;
   collectHosts( hosts );
 
   // save host information (name, shell, etc.)
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   for ( it = hosts.begin(); it != hosts.end(); ++it ) {
-    QString shell, command;
+    TQString shell, command;
     int port;
 
     if ( KSGRD::SensorMgr->hostInfo( *it, shell, command, port ) ) {
-      QDomElement host = doc.createElement( "host" );
+      TQDomElement host = doc.createElement( "host" );
       ws.appendChild( host );
       host.setAttribute( "name", *it );
       host.setAttribute( "shell", shell );
@@ -211,7 +211,7 @@ bool WorkSheet::save( const QString &fileName )
     for (uint c = 0; c < mColumns; ++c )
       if ( !mDisplayList[ r ][ c ]->isA( "DummyDisplay" ) ) {
         KSGRD::SensorDisplay* display = (KSGRD::SensorDisplay*)mDisplayList[ r ][ c ];
-        QDomElement element = doc.createElement( "display" );
+        TQDomElement element = doc.createElement( "display" );
         ws.appendChild( element );
         element.setAttribute( "row", r );
         element.setAttribute( "column", c );
@@ -220,14 +220,14 @@ bool WorkSheet::save( const QString &fileName )
         display->saveSettings( doc, element );
       }
 
-  QFile file( mFileName );
+  TQFile file( mFileName );
   if ( !file.open( IO_WriteOnly ) ) {
     KMessageBox::sorry( this, i18n( "Cannot save file %1" ).arg( mFileName ) );
     return false;
   }
 
-  QTextStream s( &file );
-  s.setEncoding( QTextStream::UnicodeUTF8 );
+  TQTextStream s( &file );
+  s.setEncoding( TQTextStream::UnicodeUTF8 );
   s << doc;
   file.close();
 
@@ -241,7 +241,7 @@ void WorkSheet::cut()
   if ( !currentDisplay() || currentDisplay()->isA( "DummyDisplay" ) )
     return;
 
-  QClipboard* clip = QApplication::clipboard();
+  QClipboard* clip = TQApplication::clipboard();
 
   clip->setText( currentDisplayAsXML() );
 
@@ -253,7 +253,7 @@ void WorkSheet::copy()
   if ( !currentDisplay() || currentDisplay()->isA( "DummyDisplay" ) )
     return;
 
-  QClipboard* clip = QApplication::clipboard();
+  QClipboard* clip = TQApplication::clipboard();
 
   clip->setText( currentDisplayAsXML() );
 }
@@ -264,9 +264,9 @@ void WorkSheet::paste()
   if ( !currentDisplay( &row, &column ) )
     return;
 
-  QClipboard* clip = QApplication::clipboard();
+  QClipboard* clip = TQApplication::clipboard();
 
-  QDomDocument doc;
+  TQDomDocument doc;
   /* Get text from clipboard and check for a valid XML header and
    * proper document type. */
   if ( !doc.setContent( clip->text() ) || doc.doctype().name() != "KSysGuardDisplay" ) {
@@ -275,17 +275,17 @@ void WorkSheet::paste()
     return;
   }
 
-  QDomElement element = doc.documentElement();
+  TQDomElement element = doc.documentElement();
   replaceDisplay( row, column, element );
 }
 
-void WorkSheet::setFileName( const QString &fileName )
+void WorkSheet::setFileName( const TQString &fileName )
 {
   mFileName = fileName;
   setModified( true );
 }
 
-const QString& WorkSheet::fileName() const
+const TQString& WorkSheet::fileName() const
 {
   return mFileName;
 }
@@ -295,30 +295,30 @@ bool WorkSheet::modified() const
   return mModified;
 }
 
-void WorkSheet::setTitle( const QString &title )
+void WorkSheet::setTitle( const TQString &title )
 {
   mTitle = title;
 }
 
-QString WorkSheet::title() const
+TQString WorkSheet::title() const
 {
   return mTitle;
 }
 
-KSGRD::SensorDisplay *WorkSheet::addDisplay( const QString &hostName,
-                                             const QString &sensorName,
-                                             const QString &sensorType,
-                                             const QString& sensorDescr,
+KSGRD::SensorDisplay *WorkSheet::addDisplay( const TQString &hostName,
+                                             const TQString &sensorName,
+                                             const TQString &sensorType,
+                                             const TQString& sensorDescr,
                                              uint row, uint column )
 {
   if ( !KSGRD::SensorMgr->engageHost( hostName ) ) {
-    QString msg = i18n( "It is impossible to connect to \'%1\'." ).arg( hostName );
+    TQString msg = i18n( "It is impossible to connect to \'%1\'." ).arg( hostName );
     KMessageBox::error( this, msg );
 
     return 0;
   }
 
-  /* If the by 'row' and 'column' specified display is a QGroupBox dummy
+  /* If the by 'row' and 'column' specified display is a TQGroupBox dummy
    * display we replace the widget. Otherwise we just try to add
    * the new sensor to an existing display. */
   if ( mDisplayList[ row ][ column ]->isA( "DummyDisplay" ) ) {
@@ -333,7 +333,7 @@ KSGRD::SensorDisplay *WorkSheet::addDisplay( const QString &hostName,
       pm.insertItem( i18n( "&Multimeter" ), 2 );
       pm.insertItem( i18n( "&BarGraph" ), 3 );
       pm.insertItem( i18n( "S&ensorLogger" ), 4 );
-      switch ( pm.exec( QCursor::pos() ) ) {
+      switch ( pm.exec( TQCursor::pos() ) ) {
         case 1:
           newDisplay = new FancyPlotter( this, "FancyPlotter", sensorDescr );
           break;
@@ -424,23 +424,23 @@ void WorkSheet::applyStyle()
       mDisplayList[ r ][ c ]->applyStyle();
 }
 
-void WorkSheet::dragEnterEvent( QDragEnterEvent *e )
+void WorkSheet::dragEnterEvent( TQDragEnterEvent *e )
 {
-  e->accept( QTextDrag::canDecode( e ) );
+  e->accept( TQTextDrag::canDecode( e ) );
 }
 
-void WorkSheet::dropEvent( QDropEvent *e )
+void WorkSheet::dropEvent( TQDropEvent *e )
 {
-  QString dragObject;
+  TQString dragObject;
 
-  if ( QTextDrag::decode( e, dragObject) ) {
+  if ( TQTextDrag::decode( e, dragObject) ) {
     // The host name, sensor name and type are seperated by a ' '.
-    QStringList parts = QStringList::split( ' ', dragObject );
+    TQStringList parts = TQStringList::split( ' ', dragObject );
 
-    QString hostName = parts[ 0 ];
-    QString sensorName = parts[ 1 ];
-    QString sensorType = parts[ 2 ];
-    QString sensorDescr = parts[ 3 ];
+    TQString hostName = parts[ 0 ];
+    TQString sensorName = parts[ 1 ];
+    TQString sensorType = parts[ 2 ];
+    TQString sensorDescr = parts[ 3 ];
 
     if ( hostName.isEmpty() || sensorName.isEmpty() || sensorType.isEmpty() ) {
       return;
@@ -457,23 +457,23 @@ void WorkSheet::dropEvent( QDropEvent *e )
   }
 }
 
-QSize WorkSheet::sizeHint() const
+TQSize WorkSheet::sizeHint() const
 {
-  return QSize( 200,150 );
+  return TQSize( 200,150 );
 }
 
-void WorkSheet::customEvent( QCustomEvent *e )
+void WorkSheet::customEvent( TQCustomEvent *e )
 {
-  if ( e->type() == QEvent::User ) {
+  if ( e->type() == TQEvent::User ) {
     // SensorDisplays send out this event if they want to be removed.
 
     removeDisplay( (KSGRD::SensorDisplay*)e->data() );
   }
 }
 
-bool WorkSheet::replaceDisplay( uint row, uint column, QDomElement& element )
+bool WorkSheet::replaceDisplay( uint row, uint column, TQDomElement& element )
 {
-  QString classType = element.attribute( "class" );
+  TQString classType = element.attribute( "class" );
   KSGRD::SensorDisplay* newDisplay;
   if ( classType == "FancyPlotter" )
     newDisplay = new FancyPlotter( this );
@@ -518,10 +518,10 @@ void WorkSheet::replaceDisplay( uint row, uint column, KSGRD::SensorDisplay* new
     mDisplayList[ row ][ column ] = newDisplay;
     if ( mDisplayList[ row ][ column ]->useGlobalUpdateInterval() )
       mDisplayList[ row ][ column ]->setUpdateInterval( updateInterval() );
-    connect( newDisplay, SIGNAL( showPopupMenu( KSGRD::SensorDisplay* ) ),
-             SLOT( showPopupMenu( KSGRD::SensorDisplay* ) ) );
-    connect( newDisplay, SIGNAL( modified( bool ) ),
-             SLOT( setModified( bool ) ) );
+    connect( newDisplay, TQT_SIGNAL( showPopupMenu( KSGRD::SensorDisplay* ) ),
+             TQT_SLOT( showPopupMenu( KSGRD::SensorDisplay* ) ) );
+    connect( newDisplay, TQT_SIGNAL( modified( bool ) ),
+             TQT_SLOT( setModified( bool ) ) );
   }
 
 
@@ -550,7 +550,7 @@ void WorkSheet::removeDisplay( KSGRD::SensorDisplay *display )
       }
 }
 
-void WorkSheet::collectHosts( QStringList &list )
+void WorkSheet::collectHosts( TQStringList &list )
 {
   for ( uint r = 0; r < mRows; ++r )
     for ( uint c = 0; c < mColumns; ++c )
@@ -564,7 +564,7 @@ void WorkSheet::createGrid( uint rows, uint columns )
   mColumns = columns;
 
   // create grid layout with specified dimentions
-  mGridLayout = new QGridLayout( this, mRows, mColumns, 5 );
+  mGridLayout = new TQGridLayout( this, mRows, mColumns, 5 );
 
   mDisplayList = new KSGRD::SensorDisplay**[ mRows ];
   for ( uint r = 0; r < mRows; ++r ) {
@@ -667,18 +667,18 @@ void WorkSheet::fixTabOrder()
     }
 }
 
-QString WorkSheet::currentDisplayAsXML()
+TQString WorkSheet::currentDisplayAsXML()
 {
   KSGRD::SensorDisplay* display = currentDisplay();
   if ( !display )
-    return QString::null;
+    return TQString::null;
 
   /* We create an XML description of the current display. */
-  QDomDocument doc( "KSysGuardDisplay" );
+  TQDomDocument doc( "KSysGuardDisplay" );
   doc.appendChild( doc.createProcessingInstruction(
                    "xml", "version=\"1.0\" encoding=\"UTF-8\"" ) );
 
-  QDomElement element = doc.createElement( "display" );
+  TQDomElement element = doc.createElement( "display" );
   doc.appendChild( element );
   element.setAttribute( "class", display->className() );
   display->saveSettings( doc, element );

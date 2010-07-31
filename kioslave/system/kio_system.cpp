@@ -25,7 +25,7 @@
 #include <kcmdlineargs.h>
 #include <dcopclient.h>
 
-#include <qeventloop.h>
+#include <tqeventloop.h>
 
 #include "kio_system.h"
 
@@ -57,8 +57,8 @@ extern "C" {
 }
 
 
-SystemProtocol::SystemProtocol(const QCString &protocol,
-                               const QCString &pool, const QCString &app)
+SystemProtocol::SystemProtocol(const TQCString &protocol,
+                               const TQCString &pool, const TQCString &app)
 	: ForwardingSlaveBase(protocol, pool, app)
 {
 }
@@ -69,7 +69,7 @@ SystemProtocol::~SystemProtocol()
 
 bool SystemProtocol::rewriteURL(const KURL &url, KURL &newUrl)
 {
-	QString name, path;
+	TQString name, path;
 
 	if ( !m_impl.parseURL(url, name, path) )
 	{
@@ -91,7 +91,7 @@ void SystemProtocol::stat(const KURL &url)
 {
 	kdDebug() << "SystemProtocol::stat: " << url << endl;
 
-	QString path = url.path();
+	TQString path = url.path();
 	if ( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
@@ -102,7 +102,7 @@ void SystemProtocol::stat(const KURL &url)
 		return;
 	}
 
-	QString name;
+	TQString name;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( !ok )
@@ -141,7 +141,7 @@ void SystemProtocol::listDir(const KURL &url)
 		return;
 	}
 
-	QString name, path;
+	TQString name, path;
 	bool ok = m_impl.parseURL(url, name, path);
 
 	if ( !ok )

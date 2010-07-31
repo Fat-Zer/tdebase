@@ -27,9 +27,9 @@
 #include <kpixmap.h>
 #include <kstandarddirs.h>
 #include <kurldrag.h>
-#include <qapplication.h>
-#include <qpixmap.h>
-#include <qwhatsthis.h>
+#include <tqapplication.h>
+#include <tqpixmap.h>
+#include <tqwhatsthis.h>
 
 #include "bgmonitor.h"
 
@@ -38,17 +38,17 @@
 // Geometry of "display" part of monitor image: (23,14)-[151x115]
 
 //BEGIN class BGMonitorArrangement
-BGMonitorArrangement::BGMonitorArrangement(QWidget *parent, const char *name)
-    : QWidget(parent, name)
+BGMonitorArrangement::BGMonitorArrangement(TQWidget *parent, const char *name)
+    : TQWidget(parent, name)
 {
-    m_pBGMonitor.resize( QApplication::desktop()->numScreens(), 0l );
+    m_pBGMonitor.resize( TQApplication::desktop()->numScreens(), 0l );
     
-    for (int screen = 0; screen < QApplication::desktop()->numScreens(); ++screen)
+    for (int screen = 0; screen < TQApplication::desktop()->numScreens(); ++screen)
     {
         BGMonitorLabel * label = new BGMonitorLabel(this);
         m_pBGMonitor[screen] = label;
         
-        connect( label->monitor(), SIGNAL(imageDropped(const QString &)), this, SIGNAL(imageDropped(const QString &)) );
+        connect( label->monitor(), TQT_SIGNAL(imageDropped(const TQString &)), this, TQT_SIGNAL(imageDropped(const TQString &)) );
     }
     
     parent->setFixedSize(200, 186);
@@ -63,27 +63,27 @@ BGMonitor * BGMonitorArrangement::monitor( unsigned screen ) const
 }
 
 
-QRect BGMonitorArrangement::expandToPreview( QRect r ) const
+TQRect BGMonitorArrangement::expandToPreview( TQRect r ) const
 {
     double scaleX = 200.0 / 151.0;
     double scaleY = 186.0 / 115.0;
-    return QRect( int(r.x()*scaleX), int(r.y()*scaleY), int(r.width()*scaleX), int(r.height()*scaleY) );
+    return TQRect( int(r.x()*scaleX), int(r.y()*scaleY), int(r.width()*scaleX), int(r.height()*scaleY) );
 }
 
 
-QSize BGMonitorArrangement::expandToPreview( QSize s ) const
+TQSize BGMonitorArrangement::expandToPreview( TQSize s ) const
 {
     double scaleX = 200.0 / 151.0;
     double scaleY = 186.0 / 115.0;
-    return QSize( int(s.width()*scaleX), int(s.height()*scaleY) );
+    return TQSize( int(s.width()*scaleX), int(s.height()*scaleY) );
 }
 
 
-QPoint BGMonitorArrangement::expandToPreview( QPoint p ) const
+TQPoint BGMonitorArrangement::expandToPreview( TQPoint p ) const
 {
     double scaleX = 200.0 / 151.0;
     double scaleY = 186.0 / 115.0;
-    return QPoint( int(p.x()*scaleX), int(p.y()*scaleY) );
+    return TQPoint( int(p.x()*scaleX), int(p.y()*scaleY) );
 }
 
 
@@ -94,11 +94,11 @@ void BGMonitorArrangement::updateArrangement()
     // image that contains the preview of the background. The monitor image
     // will set the background preview back to the normal value.
     
-    QRect overallGeometry;
-    for (int screen = 0; screen < QApplication::desktop()->numScreens(); ++screen)
-        overallGeometry |= QApplication::desktop()->screenGeometry(screen);
+    TQRect overallGeometry;
+    for (int screen = 0; screen < TQApplication::desktop()->numScreens(); ++screen)
+        overallGeometry |= TQApplication::desktop()->screenGeometry(screen);
     
-    QRect expandedOverallGeometry = expandToPreview(overallGeometry);
+    TQRect expandedOverallGeometry = expandToPreview(overallGeometry);
     
     double scale = QMIN(
                 double(width()) / double(expandedOverallGeometry.width()),
@@ -107,16 +107,16 @@ void BGMonitorArrangement::updateArrangement()
     
     m_combinedPreviewSize = overallGeometry.size() * scale;
     
-    m_maxPreviewSize = QSize(0,0);
+    m_maxPreviewSize = TQSize(0,0);
     int previousMax = 0;
     
-    for (int screen = 0; screen < QApplication::desktop()->numScreens(); ++screen)
+    for (int screen = 0; screen < TQApplication::desktop()->numScreens(); ++screen)
     {
-        QPoint topLeft = (QApplication::desktop()->screenGeometry(screen).topLeft() - overallGeometry.topLeft()) * scale;
-        QPoint expandedTopLeft = expandToPreview(topLeft);
+        TQPoint topLeft = (TQApplication::desktop()->screenGeometry(screen).topLeft() - overallGeometry.topLeft()) * scale;
+        TQPoint expandedTopLeft = expandToPreview(topLeft);
         
-        QSize previewSize = QApplication::desktop()->screenGeometry(screen).size() * scale;
-        QSize expandedPreviewSize = expandToPreview(previewSize);
+        TQSize previewSize = TQApplication::desktop()->screenGeometry(screen).size() * scale;
+        TQSize expandedPreviewSize = expandToPreview(previewSize);
         
         if ( (previewSize.width() * previewSize.height()) > previousMax )
         {
@@ -124,16 +124,16 @@ void BGMonitorArrangement::updateArrangement()
             m_maxPreviewSize = previewSize;
         }
         
-        m_pBGMonitor[screen]->setPreviewPosition( QRect( topLeft, previewSize ) );
-        m_pBGMonitor[screen]->setGeometry( QRect( expandedTopLeft, expandedPreviewSize ) );
+        m_pBGMonitor[screen]->setPreviewPosition( TQRect( topLeft, previewSize ) );
+        m_pBGMonitor[screen]->setGeometry( TQRect( expandedTopLeft, expandedPreviewSize ) );
         m_pBGMonitor[screen]->updateMonitorGeometry();
     }
 }
 
 
-void BGMonitorArrangement::resizeEvent( QResizeEvent * e )
+void BGMonitorArrangement::resizeEvent( TQResizeEvent * e )
 {
-    QWidget::resizeEvent(e);
+    TQWidget::resizeEvent(e);
     updateArrangement();
 }
 
@@ -142,9 +142,9 @@ void BGMonitorArrangement::setPixmap( const KPixmap & pm )
 {
     for (unsigned screen = 0; screen < m_pBGMonitor.size(); ++screen)
     {
-        QRect position = m_pBGMonitor[screen]->previewPosition();
+        TQRect position = m_pBGMonitor[screen]->previewPosition();
         
-        QPixmap monitorPixmap( position.size(), pm.depth() );
+        TQPixmap monitorPixmap( position.size(), pm.depth() );
         copyBlt( &monitorPixmap, 0, 0, &pm, position.x(), position.y(), position.width(), position.height() );
         m_pBGMonitor[screen]->monitor()->setPixmap(monitorPixmap);
     }
@@ -154,15 +154,15 @@ void BGMonitorArrangement::setPixmap( const KPixmap & pm )
 
 
 //BEGIN class BGMonitorLabel
-BGMonitorLabel::BGMonitorLabel(QWidget *parent, const char *name)
-    : QLabel(parent, name)
+BGMonitorLabel::BGMonitorLabel(TQWidget *parent, const char *name)
+    : TQLabel(parent, name)
 {
     setAlignment(AlignCenter);
     setScaledContents(true);
-    setPixmap( QPixmap( locate("data",  "kcontrol/pics/monitor.png") ) );
+    setPixmap( TQPixmap( locate("data",  "kcontrol/pics/monitor.png") ) );
     m_pBGMonitor = new BGMonitor(this);
     
-    QWhatsThis::add( this, i18n("This picture of a monitor contains a preview of what the current settings will look like on your desktop.") );
+    TQWhatsThis::add( this, i18n("This picture of a monitor contains a preview of what the current settings will look like on your desktop.") );
 }
 
 
@@ -171,14 +171,14 @@ void BGMonitorLabel::updateMonitorGeometry()
     double scaleX = double(width()) / double(sizeHint().width());
     double scaleY = double(height()) / double(sizeHint().height());
     
-    kdDebug() << k_funcinfo << " Setting geometry to " << QRect( int(23*scaleX), int(14*scaleY), int(151*scaleX), int(115*scaleY) ) << endl;
+    kdDebug() << k_funcinfo << " Setting geometry to " << TQRect( int(23*scaleX), int(14*scaleY), int(151*scaleX), int(115*scaleY) ) << endl;
     m_pBGMonitor->setGeometry( int(23*scaleX), int(14*scaleY), int(151*scaleX), int(115*scaleY) );
 }
 
 
-void BGMonitorLabel::resizeEvent( QResizeEvent * e )
+void BGMonitorLabel::resizeEvent( TQResizeEvent * e )
 {
-    QWidget::resizeEvent(e);
+    TQWidget::resizeEvent(e);
     updateMonitorGeometry();
 }
 //END class BGMonitorLabel
@@ -186,8 +186,8 @@ void BGMonitorLabel::resizeEvent( QResizeEvent * e )
 
 
 //BEGIN class BGMonitor
-BGMonitor::BGMonitor(QWidget *parent, const char *name)
-    : QLabel(parent, name)
+BGMonitor::BGMonitor(TQWidget *parent, const char *name)
+    : TQLabel(parent, name)
 {
     setAlignment(AlignCenter);
     setScaledContents(true);
@@ -195,7 +195,7 @@ BGMonitor::BGMonitor(QWidget *parent, const char *name)
 }
 
 
-void BGMonitor::dropEvent(QDropEvent *e)
+void BGMonitor::dropEvent(TQDropEvent *e)
 {
     if (!KURLDrag::canDecode(e))
         return;
@@ -208,7 +208,7 @@ void BGMonitor::dropEvent(QDropEvent *e)
     }
 }
 
-void BGMonitor::dragEnterEvent(QDragEnterEvent *e)
+void BGMonitor::dragEnterEvent(TQDragEnterEvent *e)
 {
     if (KURLDrag::canDecode(e))
         e->accept(rect());

@@ -8,10 +8,10 @@
 #ifndef __KMISCHTML_OPTIONS_H
 #define __KMISCHTML_OPTIONS_H
 
-#include <qstrlist.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
+#include <tqstrlist.h>
+#include <tqcheckbox.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
 
 
 //-----------------------------------------------------------------------------
@@ -23,7 +23,7 @@
 // ... there is room for others :))
 
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kconfig.h>
 #include <kcmodule.h>
 class QRadioButton;
@@ -34,7 +34,7 @@ class KMiscHTMLOptions : public KCModule
     Q_OBJECT
 
 public:
-    KMiscHTMLOptions(KConfig *config, QString group, QWidget *parent = 0L, const char *name = 0L );
+    KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *parent = 0L, const char *name = 0L );
 	~KMiscHTMLOptions();
     virtual void load();
     virtual void load( bool useDefaults );
@@ -47,21 +47,21 @@ private slots:
 
 private:
     KConfig* m_pConfig;
-    QString  m_groupname;
+    TQString  m_groupname;
 
-    QComboBox* m_pUnderlineCombo;
-    QComboBox* m_pAnimationsCombo;
-    QCheckBox* m_cbCursor;
-    QCheckBox* m_pAutoLoadImagesCheckBox;
-    QCheckBox* m_pUnfinishedImageFrameCheckBox;
-    QCheckBox* m_pAutoRedirectCheckBox;
-    QCheckBox* m_pOpenMiddleClick;
-    QCheckBox* m_pBackRightClick;
-    QCheckBox* m_pShowMMBInTabs;
-    QCheckBox* m_pFormCompletionCheckBox;
-    QCheckBox* m_pDynamicTabbarHide;
-    QCheckBox* m_pAdvancedAddBookmarkCheckBox;
-    QCheckBox* m_pOnlyMarkedBookmarksCheckBox;
+    TQComboBox* m_pUnderlineCombo;
+    TQComboBox* m_pAnimationsCombo;
+    TQCheckBox* m_cbCursor;
+    TQCheckBox* m_pAutoLoadImagesCheckBox;
+    TQCheckBox* m_pUnfinishedImageFrameCheckBox;
+    TQCheckBox* m_pAutoRedirectCheckBox;
+    TQCheckBox* m_pOpenMiddleClick;
+    TQCheckBox* m_pBackRightClick;
+    TQCheckBox* m_pShowMMBInTabs;
+    TQCheckBox* m_pFormCompletionCheckBox;
+    TQCheckBox* m_pDynamicTabbarHide;
+    TQCheckBox* m_pAdvancedAddBookmarkCheckBox;
+    TQCheckBox* m_pOnlyMarkedBookmarksCheckBox;
     KIntNumInput* m_pMaxFormCompletionItems;
 };
 

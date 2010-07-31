@@ -25,14 +25,14 @@
 
 #include <unistd.h>
 
-#include <qcombobox.h>
-#include <qdir.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qregexp.h>
-#include <qslider.h>
-#include <qtabwidget.h>
-#include <qwhatsthis.h>
+#include <tqcombobox.h>
+#include <tqdir.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqregexp.h>
+#include <tqslider.h>
+#include <tqtabwidget.h>
+#include <tqwhatsthis.h>
 
 #include <dcopref.h>
 
@@ -55,7 +55,7 @@
 extern "C" {
 	KDE_EXPORT void init_arts();
 
-    KDE_EXPORT KCModule *create_arts(QWidget *parent, const char* /*name*/)
+    KDE_EXPORT KCModule *create_arts(TQWidget *parent, const char* /*name*/)
 	{
 		KGlobal::locale()->insertCatalogue("kcmarts");
 		return new KArtsModule(parent, "kcmarts" );
@@ -69,13 +69,13 @@ static bool startArts()
 	config->setGroup("Arts");
 	bool startServer = config->readBoolEntry("StartServer",true);
 	bool startRealtime = config->readBoolEntry("StartRealtime",true);
-	QString args = config->readEntry("Arguments","-F 10 -S 4096 -s 60 -m artsmessage -c drkonqi -l 3 -f");
+	TQString args = config->readEntry("Arguments","-F 10 -S 4096 -s 60 -m artsmessage -c drkonqi -l 3 -f");
 
 	delete config;
 
 	if (startServer)
 		kapp->kdeinitExec(startRealtime?"artswrapper":"artsd",
-		                  QStringList::split(" ",args));
+		                  TQStringList::split(" ",args));
 	return startServer;
 }
 
@@ -100,10 +100,10 @@ void KArtsModule::initAudioIOList()
 	*artsd << "artsd";
 	*artsd << "-A";
 
-	connect(artsd, SIGNAL(processExited(KProcess*)),
-	        this, SLOT(slotArtsdExited(KProcess*)));
-	connect(artsd, SIGNAL(receivedStderr(KProcess*, char*, int)),
-	        this, SLOT(slotProcessArtsdOutput(KProcess*, char*, int)));
+	connect(artsd, TQT_SIGNAL(processExited(KProcess*)),
+	        this, TQT_SLOT(slotArtsdExited(KProcess*)));
+	connect(artsd, TQT_SIGNAL(receivedStderr(KProcess*, char*, int)),
+	        this, TQT_SLOT(slotProcessArtsdOutput(KProcess*, char*, int)));
 
 	if (!artsd->start(KProcess::Block, KProcess::Stderr)) {
 		KMessageBox::error(0, i18n("Unable to start the sound server to "
@@ -124,13 +124,13 @@ void KArtsModule::slotProcessArtsdOutput(KProcess*, char* buf, int len)
 {
 	// XXX(gioele): I suppose this will be called with full lines, am I wrong?
 
-	QStringList availableIOs = QStringList::split("\n", QCString(buf, len));
+	TQStringList availableIOs = TQStringList::split("\n", TQCString(buf, len));
 	// valid entries have two leading spaces
-	availableIOs = availableIOs.grep(QRegExp("^ {2}"));
+	availableIOs = availableIOs.grep(TQRegExp("^ {2}"));
 	availableIOs.sort();
 
-	QString name, fullName;
-	QStringList::Iterator it;
+	TQString name, fullName;
+	TQStringList::Iterator it;
 	for (it = availableIOs.begin(); it != availableIOs.end(); ++it) {
 		name = (*it).left(12).stripWhiteSpace();
 		fullName = (*it).mid(12).stripWhiteSpace();
@@ -138,7 +138,7 @@ void KArtsModule::slotProcessArtsdOutput(KProcess*, char* buf, int len)
 	}
 }
 
-KArtsModule::KArtsModule(QWidget *parent, const char *name)
+KArtsModule::KArtsModule(TQWidget *parent, const char *name)
   : KCModule(parent, name), configChanged(false)
 {
 	setButtons(Default|Apply);
@@ -151,8 +151,8 @@ KArtsModule::KArtsModule(QWidget *parent, const char *name)
 
 	initAudioIOList();
 
-	QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
-	QTabWidget *tab = new QTabWidget(this);
+	TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQTabWidget *tab = new TQTabWidget(this);
 	layout->addWidget(tab);
 
 	general = new generalTab(tab);
@@ -179,18 +179,18 @@ KArtsModule::KArtsModule(QWidget *parent, const char *name)
 	customRate = hardware->customRate;
 	samplingRate = hardware->samplingRate;
 
-   	QString deviceHint = i18n("Normally, the sound server defaults to using the device called <b>/dev/dsp</b> for sound output. That should work in most cases. On some systems where devfs is used, however, you may need to use <b>/dev/sound/dsp</b> instead. Other alternatives are things like <b>/dev/dsp0</b> or <b>/dev/dsp1</b>, if you have a soundcard that supports multiple outputs, or you have multiple soundcards.");
+   	TQString deviceHint = i18n("Normally, the sound server defaults to using the device called <b>/dev/dsp</b> for sound output. That should work in most cases. On some systems where devfs is used, however, you may need to use <b>/dev/sound/dsp</b> instead. Other alternatives are things like <b>/dev/dsp0</b> or <b>/dev/dsp1</b>, if you have a soundcard that supports multiple outputs, or you have multiple soundcards.");
 
-	QString rateHint = i18n("Normally, the sound server defaults to using a sampling rate of 44100 Hz (CD quality), which is supported on almost any hardware. If you are using certain <b>Yamaha soundcards</b>, you might need to configure this to 48000 Hz here, if you are using <b>old SoundBlaster cards</b>, like SoundBlaster Pro, you might need to change this to 22050 Hz. All other values are possible, too, and may make sense in certain contexts (i.e. professional studio equipment).");
+	TQString rateHint = i18n("Normally, the sound server defaults to using a sampling rate of 44100 Hz (CD quality), which is supported on almost any hardware. If you are using certain <b>Yamaha soundcards</b>, you might need to configure this to 48000 Hz here, if you are using <b>old SoundBlaster cards</b>, like SoundBlaster Pro, you might need to change this to 22050 Hz. All other values are possible, too, and may make sense in certain contexts (i.e. professional studio equipment).");
 
-	QString optionsHint = i18n("This configuration module is intended to cover almost every aspect of the aRts sound server that you can configure. However, there are some things which may not be available here, so you can add <b>command line options</b> here which will be passed directly to <b>artsd</b>. The command line options will override the choices made in the GUI. To see the possible choices, open a Konsole window, and type <b>artsd -h</b>.");
+	TQString optionsHint = i18n("This configuration module is intended to cover almost every aspect of the aRts sound server that you can configure. However, there are some things which may not be available here, so you can add <b>command line options</b> here which will be passed directly to <b>artsd</b>. The command line options will override the choices made in the GUI. To see the possible choices, open a Konsole window, and type <b>artsd -h</b>.");
 
-	QWhatsThis::add(customDevice, deviceHint);
-	QWhatsThis::add(deviceName, deviceHint);
-	QWhatsThis::add(customRate, rateHint);
-	QWhatsThis::add(samplingRate, rateHint);
-	QWhatsThis::add(hardware->customOptions, optionsHint);
-	QWhatsThis::add(hardware->addOptions, optionsHint);
+	TQWhatsThis::add(customDevice, deviceHint);
+	TQWhatsThis::add(deviceName, deviceHint);
+	TQWhatsThis::add(customRate, rateHint);
+	TQWhatsThis::add(samplingRate, rateHint);
+	TQWhatsThis::add(hardware->customOptions, optionsHint);
+	TQWhatsThis::add(hardware->addOptions, optionsHint);
 
 	hardware->audioIO->insertItem( i18n( "Autodetect" ) );
 	for (AudioIOElement *a = audioIOList.first(); a != 0; a = audioIOList.next())
@@ -199,7 +199,7 @@ KArtsModule::KArtsModule(QWidget *parent, const char *name)
 	deviceManager = new DeviceManager();
 	deviceManager->initManager();
 
-	QString s;
+	TQString s;
 	for ( int i = 0; i < deviceManager->midiPorts()+deviceManager->synthDevices(); i++)
 	{
 		if ( strcmp( deviceManager->type( i ), "" ) != 0 )
@@ -216,31 +216,31 @@ KArtsModule::KArtsModule(QWidget *parent, const char *name)
 
 	suspendTime->setRange( 1, 999, 1, true );
 
-	connect(startServer,SIGNAL(clicked()),this,SLOT(slotChanged()));
-	connect(networkTransparent,SIGNAL(clicked()),this,SLOT(slotChanged()));
-	connect(startRealtime,SIGNAL(clicked()),this,SLOT(slotChanged()));
-	connect(fullDuplex,SIGNAL(clicked()),this,SLOT(slotChanged()));
-	connect(customDevice, SIGNAL(clicked()), SLOT(slotChanged()));
-	connect(deviceName, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(customRate, SIGNAL(clicked()), SLOT(slotChanged()));
-	connect(samplingRate, SIGNAL(valueChanged(const QString&)), SLOT(slotChanged()));
-//	connect(general->volumeSystray, SIGNAL(clicked()), this, SLOT(slotChanged()) );
+	connect(startServer,TQT_SIGNAL(clicked()),this,TQT_SLOT(slotChanged()));
+	connect(networkTransparent,TQT_SIGNAL(clicked()),this,TQT_SLOT(slotChanged()));
+	connect(startRealtime,TQT_SIGNAL(clicked()),this,TQT_SLOT(slotChanged()));
+	connect(fullDuplex,TQT_SIGNAL(clicked()),this,TQT_SLOT(slotChanged()));
+	connect(customDevice, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
+	connect(deviceName, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(customRate, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
+	connect(samplingRate, TQT_SIGNAL(valueChanged(const TQString&)), TQT_SLOT(slotChanged()));
+//	connect(general->volumeSystray, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotChanged()) );
 
-	connect(hardware->audioIO,SIGNAL(highlighted(int)),SLOT(slotChanged()));
-	connect(hardware->audioIO,SIGNAL(activated(int)),SLOT(slotChanged()));
-	connect(hardware->customOptions,SIGNAL(clicked()),SLOT(slotChanged()));
-	connect(hardware->addOptions,SIGNAL(textChanged(const QString&)),SLOT(slotChanged()));
-	connect(hardware->soundQuality,SIGNAL(highlighted(int)),SLOT(slotChanged()));
-	connect(hardware->soundQuality,SIGNAL(activated(int)),SLOT(slotChanged()));
-	connect(general->latencySlider,SIGNAL(valueChanged(int)),SLOT(slotChanged()));
-	connect(autoSuspend,SIGNAL(clicked()),SLOT(slotChanged()));
-	connect(suspendTime,SIGNAL(valueChanged(int)),SLOT(slotChanged()));
-	connect(general->testSound,SIGNAL(clicked()),SLOT(slotTestSound()));
-	connect(hardware->midiDevice, SIGNAL( highlighted(int) ), this, SLOT( slotChanged() ) );
-	connect(hardware->midiDevice, SIGNAL( activated(int) ), this, SLOT( slotChanged() ) );
-	connect(hardware->midiUseMapper, SIGNAL( clicked() ), this, SLOT( slotChanged() ) );
-	connect(hardware->midiMapper, SIGNAL( textChanged( const QString& ) ),
-			this, SLOT( slotChanged() ) );
+	connect(hardware->audioIO,TQT_SIGNAL(highlighted(int)),TQT_SLOT(slotChanged()));
+	connect(hardware->audioIO,TQT_SIGNAL(activated(int)),TQT_SLOT(slotChanged()));
+	connect(hardware->customOptions,TQT_SIGNAL(clicked()),TQT_SLOT(slotChanged()));
+	connect(hardware->addOptions,TQT_SIGNAL(textChanged(const TQString&)),TQT_SLOT(slotChanged()));
+	connect(hardware->soundQuality,TQT_SIGNAL(highlighted(int)),TQT_SLOT(slotChanged()));
+	connect(hardware->soundQuality,TQT_SIGNAL(activated(int)),TQT_SLOT(slotChanged()));
+	connect(general->latencySlider,TQT_SIGNAL(valueChanged(int)),TQT_SLOT(slotChanged()));
+	connect(autoSuspend,TQT_SIGNAL(clicked()),TQT_SLOT(slotChanged()));
+	connect(suspendTime,TQT_SIGNAL(valueChanged(int)),TQT_SLOT(slotChanged()));
+	connect(general->testSound,TQT_SIGNAL(clicked()),TQT_SLOT(slotTestSound()));
+	connect(hardware->midiDevice, TQT_SIGNAL( highlighted(int) ), this, TQT_SLOT( slotChanged() ) );
+	connect(hardware->midiDevice, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( slotChanged() ) );
+	connect(hardware->midiUseMapper, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChanged() ) );
+	connect(hardware->midiMapper, TQT_SIGNAL( textChanged( const TQString& ) ),
+			this, TQT_SLOT( slotChanged() ) );
 
 	KAboutData *about =  new KAboutData(I18N_NOOP("kcmarts"),
                   I18N_NOOP("The Sound Server Control Module"),
@@ -261,9 +261,9 @@ void KArtsModule::load( bool useDefaults )
 	fullDuplex->setChecked(config->readBoolEntry("FullDuplex",false));
 	autoSuspend->setChecked(config->readBoolEntry("AutoSuspend",true));
 	suspendTime->setValue(config->readNumEntry("SuspendTime",60));
-	deviceName->setText(config->readEntry("DeviceName",QString::null));
+	deviceName->setText(config->readEntry("DeviceName",TQString::null));
 	customDevice->setChecked(!deviceName->text().isEmpty());
-	hardware->addOptions->setText(config->readEntry("AddOptions",QString::null));
+	hardware->addOptions->setText(config->readEntry("AddOptions",TQString::null));
 	hardware->customOptions->setChecked(!hardware->addOptions->text().isEmpty());
 	general->latencySlider->setValue(config->readNumEntry("Latency",250));
 
@@ -291,7 +291,7 @@ void KArtsModule::load( bool useDefaults )
 		break;
 	}
 
-	QString audioIO = config->readEntry("AudioIO", QString::null);
+	TQString audioIO = config->readEntry("AudioIO", TQString::null);
 	hardware->audioIO->setCurrentItem(0);
 	for(AudioIOElement *a = audioIOList.first(); a != 0; a = audioIOList.next())
 	{
@@ -310,7 +310,7 @@ void KArtsModule::load( bool useDefaults )
 
 	midiConfig->setGroup( "Configuration" );
 	hardware->midiDevice->setCurrentItem( midiConfig->readNumEntry( "midiDevice", 0 ) );
-	QString mapurl( midiConfig->readPathEntry( "mapFilename" ) );
+	TQString mapurl( midiConfig->readPathEntry( "mapFilename" ) );
 	hardware->midiMapper->setURL( mapurl );
 	hardware->midiUseMapper->setChecked( midiConfig->readBoolEntry( "useMidiMapper", false ) );
 	hardware->midiMapper->setEnabled( hardware->midiUseMapper->isChecked() );
@@ -329,7 +329,7 @@ KArtsModule::~KArtsModule() {
 
 void KArtsModule::saveParams( void )
 {
-	QString audioIO;
+	TQString audioIO;
 
 	int item = hardware->audioIO->currentItem() - 1;	// first item: "default"
 
@@ -337,9 +337,9 @@ void KArtsModule::saveParams( void )
 		audioIO = audioIOList.at(item)->name;
 	}
 
-	QString dev = customDevice->isChecked() ? deviceName->text() : QString::null;
+	TQString dev = customDevice->isChecked() ? deviceName->text() : TQString::null;
 	int rate = customRate->isChecked()?samplingRate->value() : 0;
-	QString addOptions;
+	TQString addOptions;
 	if(hardware->customOptions->isChecked())
 		addOptions = hardware->addOptions->text();
 
@@ -419,10 +419,10 @@ int KArtsModule::userSavedChanges()
 	if (!configChanged)
 		return KMessageBox::Yes;
 
-	QString question = i18n("The settings have changed since the last time "
+	TQString question = i18n("The settings have changed since the last time "
                             "you restarted the sound server.\n"
                             "Do you want to save them?");
-	QString caption = i18n("Save Sound Server Settings?");
+	TQString caption = i18n("Save Sound Server Settings?");
 	reply = KMessageBox::questionYesNo(this, question, caption,KStdGuiItem::save(),KStdGuiItem::discard());
 	if ( reply == KMessageBox::Yes)
 	{
@@ -494,12 +494,12 @@ void KArtsModule::updateWidgets()
 		                              "missing or disabled"));
 	}
 	deviceName->setEnabled(customDevice->isChecked());
-	QString audioIO;
+	TQString audioIO;
 	int item = hardware->audioIO->currentItem() - 1;	// first item: "default"
 	if (item >= 0)
 	{
 		audioIO = audioIOList.at(item)->name;
-		bool jack = (audioIO == QString::fromLatin1("jack"));
+		bool jack = (audioIO == TQString::fromLatin1("jack"));
 		if(jack)
 		{
 			customRate->setChecked(false);
@@ -542,8 +542,8 @@ bool KArtsModule::realtimeIsPossible()
 	*checkProcess << "artswrapper";
 	*checkProcess << "check";
 
-	connect(checkProcess, SIGNAL(processExited(KProcess*)),
-	        this, SLOT(slotArtsdExited(KProcess*)));
+	connect(checkProcess, TQT_SIGNAL(processExited(KProcess*)),
+	        this, TQT_SLOT(slotArtsdExited(KProcess*)));
 	if (!checkProcess->start(KProcess::Block))
 	{
 		delete checkProcess;
@@ -608,60 +608,60 @@ void init_arts()
 	startArts();
 }
 
-QString KArtsModule::createArgs(bool netTrans,
+TQString KArtsModule::createArgs(bool netTrans,
                                 bool duplex, int fragmentCount,
                                 int fragmentSize,
-                                const QString &deviceName,
-                                int rate, int bits, const QString &audioIO,
-                                const QString &addOptions, bool autoSuspend,
+                                const TQString &deviceName,
+                                int rate, int bits, const TQString &audioIO,
+                                const TQString &addOptions, bool autoSuspend,
                                 int suspendTime
                                 )
 {
-	QString args;
+	TQString args;
 
 	if(fragmentCount)
-		args += QString::fromLatin1(" -F %1").arg(fragmentCount);
+		args += TQString::fromLatin1(" -F %1").arg(fragmentCount);
 
 	if(fragmentSize)
-		args += QString::fromLatin1(" -S %1").arg(fragmentSize);
+		args += TQString::fromLatin1(" -S %1").arg(fragmentSize);
 
 	if (!audioIO.isEmpty())
-		args += QString::fromLatin1(" -a %1").arg(audioIO);
+		args += TQString::fromLatin1(" -a %1").arg(audioIO);
 
 	if (duplex)
-		args += QString::fromLatin1(" -d");
+		args += TQString::fromLatin1(" -d");
 
 	if (netTrans)
-		args += QString::fromLatin1(" -n");
+		args += TQString::fromLatin1(" -n");
 
 	if (!deviceName.isEmpty())
-		args += QString::fromLatin1(" -D ") + deviceName;
+		args += TQString::fromLatin1(" -D ") + deviceName;
 
 	if (rate)
-		args += QString::fromLatin1(" -r %1").arg(rate);
+		args += TQString::fromLatin1(" -r %1").arg(rate);
 
 	if (bits)
-		args += QString::fromLatin1(" -b %1").arg(bits);
+		args += TQString::fromLatin1(" -b %1").arg(bits);
 
 	if (autoSuspend && suspendTime)
-		args += QString::fromLatin1(" -s %1").arg(suspendTime);
+		args += TQString::fromLatin1(" -s %1").arg(suspendTime);
 
 	if (!addOptions.isEmpty())
-		args += QChar(' ') + addOptions;
+		args += TQChar(' ') + addOptions;
 
-	args += QString::fromLatin1(" -m artsmessage");
-	args += QString::fromLatin1(" -c drkonqi");
-	args += QString::fromLatin1(" -l 3");
-	args += QString::fromLatin1(" -f");
+	args += TQString::fromLatin1(" -m artsmessage");
+	args += TQString::fromLatin1(" -c drkonqi");
+	args += TQString::fromLatin1(" -l 3");
+	args += TQString::fromLatin1(" -f");
 
 	return args;
 }
 
 KStartArtsProgressDialog::KStartArtsProgressDialog(KArtsModule *parent, const char *name,
-                          const QString &caption, const QString &text)
+                          const TQString &caption, const TQString &text)
  : KProgressDialog(parent, name, caption, text, true), m_module(parent), m_shutdown(false)
 {
-  connect(&m_timer, SIGNAL(timeout()), this, SLOT(slotProgress()));
+  connect(&m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotProgress()));
   progressBar()->setTotalSteps(20);
   m_timeStep = 700;
   m_timer.start(m_timeStep);
@@ -707,7 +707,7 @@ KStartArtsProgressDialog::slotFinished()
 {
   progressBar()->setProgress(20);
   m_timer.stop();
-  QTimer::singleShot(1000, this, SLOT(close()));
+  TQTimer::singleShot(1000, this, TQT_SLOT(close()));
 }
 
 

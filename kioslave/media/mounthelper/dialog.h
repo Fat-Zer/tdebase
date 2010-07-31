@@ -30,9 +30,9 @@
 #include <kdialogbase.h>
 #include <kiconloader.h>
 
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qgroupbox.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqgroupbox.h>
 
 #include "decryptdialog.h"
 
@@ -44,14 +44,14 @@ class Dialog : public KDialogBase
 Q_OBJECT	
 
 public:
-	Dialog(QString url, QString iconName);
+	Dialog(TQString url, TQString iconName);
 	~Dialog();
 
-	QString getPassword();
+	TQString getPassword();
 
 public slots:
-	void slotDialogError(QString errorMsg);
-	void slotPasswordChanged(const QString &text);
+	void slotDialogError(TQString errorMsg);
+	void slotPasswordChanged(const TQString &text);
 
 private:
 	DecryptDialog *decryptDialog;

@@ -28,14 +28,14 @@
 #include <config.h>
 #include <math.h>
 
-#include <qslider.h>
-#include <qfileinfo.h>
-#include <qcheckbox.h>
-#include <qstring.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qvbuttongroup.h>
-#include <qradiobutton.h>
+#include <tqslider.h>
+#include <tqfileinfo.h>
+#include <tqcheckbox.h>
+#include <tqstring.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqvbuttongroup.h>
+#include <tqradiobutton.h>
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -50,11 +50,11 @@
 #include "kcmmiscwidget.h"
 #include <X11/Xlib.h>
 
-KeyboardConfig::KeyboardConfig (QWidget * parent, const char *)
+KeyboardConfig::KeyboardConfig (TQWidget * parent, const char *)
     : KCModule (parent, "kcmlayout")
 {
-  QString wtstr;
-  QBoxLayout* lay = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQString wtstr;
+  TQBoxLayout* lay = new TQVBoxLayout(this, 0, KDialog::spacingHint());
   ui = new KeyboardConfigWidget(this, "ui");
   lay->addWidget(ui);
   lay->addStretch();
@@ -73,14 +73,14 @@ KeyboardConfig::KeyboardConfig (QWidget * parent, const char *)
   ui->rateSlider->setSteps(30, 500);
   ui->rateSlider->setTickInterval(498);
 
-  connect(ui->repeatBox, SIGNAL(clicked()), this, SLOT(changed()));
-  connect(ui->delay, SIGNAL(valueChanged(int)), this, SLOT(delaySpinboxChanged(int)));
-  connect(ui->delaySlider, SIGNAL(valueChanged(int)), this, SLOT(delaySliderChanged(int)));
-  connect(ui->rate, SIGNAL(valueChanged(double)), this, SLOT(rateSpinboxChanged(double)));
-  connect(ui->rateSlider, SIGNAL(valueChanged(int)), this, SLOT(rateSliderChanged(int)));
+  connect(ui->repeatBox, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+  connect(ui->delay, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(delaySpinboxChanged(int)));
+  connect(ui->delaySlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(delaySliderChanged(int)));
+  connect(ui->rate, TQT_SIGNAL(valueChanged(double)), this, TQT_SLOT(rateSpinboxChanged(double)));
+  connect(ui->rateSlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(rateSliderChanged(int)));
 
-  connect(ui->click, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-  connect(ui->numlockGroup, SIGNAL(released(int)), this, SLOT(changed()));
+  connect(ui->click, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+  connect(ui->numlockGroup, TQT_SIGNAL(released(int)), this, TQT_SLOT(changed()));
 
 #if !defined(HAVE_XTEST) && !defined(HAVE_XKB)
   ui->numlockGroup->setDisabled( true );
@@ -113,7 +113,7 @@ void KeyboardConfig::setClick(int v)
 
 int KeyboardConfig::getNumLockState()
 {
-    QButton* selected = ui->numlockGroup->selected();
+    TQButton* selected = ui->numlockGroup->selected();
     if( selected == NULL )
         return 2;
     int ret = ui->numlockGroup->id( selected );
@@ -183,9 +183,9 @@ void KeyboardConfig::defaults()
     setNumLockState( 2 );
 }
 
-QString KeyboardConfig::quickHelp() const
+TQString KeyboardConfig::quickHelp() const
 {
-  return QString::null;
+  return TQString::null;
 
   /* "<h1>Keyboard</h1> This module allows you to choose options"
      " for the way in which your keyboard works. The actual effect of"
@@ -470,12 +470,12 @@ void set_repeatrate(int delay, double rate)
   else
      r = (int)floor(rate + 0.5);
 
-  QString exe = KGlobal::dirs()->findExe("xset");
+  TQString exe = KGlobal::dirs()->findExe("xset");
   if (exe.isEmpty())
     return;
 
   KProcess p;
-  p << exe << "r" << "rate" << QString::number(delay) << QString::number(r);
+  p << exe << "r" << "rate" << TQString::number(delay) << TQString::number(r);
   
   p.start(KProcess::Block);
 }

@@ -31,7 +31,7 @@ Configuration of the maximum image size
 
 */
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kcmodule.h>
 
@@ -44,7 +44,7 @@ class KPreviewOptions : public KCModule
 {
     Q_OBJECT
 public:
-    KPreviewOptions( QWidget *parent = 0L, const char *name = 0L );
+    KPreviewOptions( TQWidget *parent = 0L, const char *name = 0L );
     virtual void load();
     virtual void save();
     virtual void defaults();
@@ -56,10 +56,10 @@ public slots:
     void changed();
 
 private:
-    QPtrList<QCheckListItem> m_items;
+    TQPtrList<TQCheckListItem> m_items;
     KDoubleNumInput *m_maxSize;
-    QCheckBox *m_boostSize;
-    QCheckBox *m_useFileThumbnails;
+    TQCheckBox *m_boostSize;
+    TQCheckBox *m_useFileThumbnails;
 };
 
 #endif

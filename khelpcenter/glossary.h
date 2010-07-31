@@ -22,9 +22,9 @@
 
 #include <klistview.h>
 
-#include <qdict.h>
-#include <qdom.h>
-#include <qstringlist.h>
+#include <tqdict.h>
+#include <tqdom.h>
+#include <tqstringlist.h>
 
 class KConfig;
 class KProcess;
@@ -35,41 +35,41 @@ namespace KHC {
 
 class GlossaryEntryXRef
 {
-	friend QDataStream &operator>>( QDataStream &, GlossaryEntryXRef & );
+	friend TQDataStream &operator>>( TQDataStream &, GlossaryEntryXRef & );
 	public:
-		typedef QValueList<GlossaryEntryXRef> List;
+		typedef TQValueList<GlossaryEntryXRef> List;
 
 		GlossaryEntryXRef() {}
-		GlossaryEntryXRef( const QString &term, const QString &id ) :
+		GlossaryEntryXRef( const TQString &term, const TQString &id ) :
 			m_term( term ),
 			m_id( id )
 		{
 		}
 
-		QString term() const { return m_term; }
-		QString id() const { return m_id; }
+		TQString term() const { return m_term; }
+		TQString id() const { return m_id; }
 	
 	private:
-		QString m_term;
-		QString m_id;
+		TQString m_term;
+		TQString m_id;
 };
 
-inline QDataStream &operator<<( QDataStream &stream, const GlossaryEntryXRef &e )
+inline TQDataStream &operator<<( TQDataStream &stream, const GlossaryEntryXRef &e )
 {
 	return stream << e.term() << e.id();
 }
 
-inline QDataStream &operator>>( QDataStream &stream, GlossaryEntryXRef &e )
+inline TQDataStream &operator>>( TQDataStream &stream, GlossaryEntryXRef &e )
 {
 	return stream >> e.m_term >> e.m_id;
 }
 
 class GlossaryEntry
 {
-	friend QDataStream &operator>>( QDataStream &, GlossaryEntry & );
+	friend TQDataStream &operator>>( TQDataStream &, GlossaryEntry & );
 	public:
 		GlossaryEntry() {}
-		GlossaryEntry( const QString &term, const QString &definition,
+		GlossaryEntry( const TQString &term, const TQString &definition,
 				const GlossaryEntryXRef::List &seeAlso ) :
 			m_term( term ),
 			m_definition( definition ),
@@ -77,22 +77,22 @@ class GlossaryEntry
 			{
 			}
 
-		QString term() const { return m_term; }
-		QString definition() const { return m_definition; }
+		TQString term() const { return m_term; }
+		TQString definition() const { return m_definition; }
 		GlossaryEntryXRef::List seeAlso() const { return m_seeAlso; }
 	
 	private:
-		QString m_term;
-		QString m_definition;
+		TQString m_term;
+		TQString m_definition;
 		GlossaryEntryXRef::List m_seeAlso;
 };
 
-inline QDataStream &operator<<( QDataStream &stream, const GlossaryEntry &e )
+inline TQDataStream &operator<<( TQDataStream &stream, const GlossaryEntry &e )
 {
 	return stream << e.term() << e.definition() << e.seeAlso();
 }
 
-inline QDataStream &operator>>( QDataStream &stream, GlossaryEntry &e )
+inline TQDataStream &operator>>( TQDataStream &stream, GlossaryEntry &e )
 {
 	return stream >> e.m_term >> e.m_definition >> e.m_seeAlso;
 }
@@ -101,24 +101,24 @@ class Glossary : public KListView
 {
 	Q_OBJECT
 	public:
-		Glossary( QWidget *parent );
+		Glossary( TQWidget *parent );
 		virtual ~Glossary();
 
-		const GlossaryEntry &entry( const QString &id ) const;
+		const GlossaryEntry &entry( const TQString &id ) const;
  
-    static QString entryToHtml( const GlossaryEntry &entry );
+    static TQString entryToHtml( const GlossaryEntry &entry );
 
     virtual void show();
 
 	public slots:
-		void slotSelectGlossEntry( const QString &id );
+		void slotSelectGlossEntry( const TQString &id );
 
 	signals:
 		void entrySelected( const GlossaryEntry &entry );
 		
 	private slots:
 		void meinprocExited( KProcess *meinproc );
-		void treeItemSelected( QListViewItem *item );
+		void treeItemSelected( TQListViewItem *item );
 
 	private:
 		enum CacheStatus { NeedRebuild, CacheOk };
@@ -127,16 +127,16 @@ class Glossary : public KListView
 		int glossaryCTime() const;
 		void rebuildGlossaryCache();
 		void buildGlossaryTree();
-		QDomElement childElement( const QDomElement &e, const QString &name );
+		TQDomElement childElement( const TQDomElement &e, const TQString &name );
 
 		KConfig *m_config;
-		QListViewItem *m_byTopicItem;
-		QListViewItem *m_alphabItem;
-		QString m_sourceFile;
-		QString m_cacheFile;
+		TQListViewItem *m_byTopicItem;
+		TQListViewItem *m_alphabItem;
+		TQString m_sourceFile;
+		TQString m_cacheFile;
 		CacheStatus m_status;
-		QDict<GlossaryEntry> m_glossEntries;
-    QDict<EntryItem> m_idDict;
+		TQDict<GlossaryEntry> m_glossEntries;
+    TQDict<EntryItem> m_idDict;
     bool m_initialized;
 };
 

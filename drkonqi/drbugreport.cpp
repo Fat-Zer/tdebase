@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
 
-#include <qmultilineedit.h>
+#include <tqmultilineedit.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -34,13 +34,13 @@
 #include "drbugreport.moc"
 #include "drbugreport.h"
 
-DrKBugReport::DrKBugReport(QWidget *parent, bool modal,
+DrKBugReport::DrKBugReport(TQWidget *parent, bool modal,
                            const KAboutData *aboutData)
   : KBugReport(parent, modal, aboutData)
 {
 }
 
-void DrKBugReport::setText(const QString &str)
+void DrKBugReport::setText(const TQString &str)
 {
   m_lineedit->setText(str);
   m_startstring = str.simplifyWhiteSpace();
@@ -51,7 +51,7 @@ void DrKBugReport::slotOk()
   if (!m_startstring.isEmpty() &&
       m_lineedit->text().simplifyWhiteSpace() == m_startstring)
   {
-    QString msg = i18n("You have to edit the description "
+    TQString msg = i18n("You have to edit the description "
                        "before the report can be sent.");
     KMessageBox::error(this, msg);
     return;

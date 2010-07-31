@@ -26,18 +26,18 @@ class QWhatsThis;
 class HelpWidget : public QWhatsThis
 {
 public:
-  HelpWidget(QWidget *parent);
+  HelpWidget(TQWidget *parent);
 
-  void setText( const QString& docPath, const QString& text);
+  void setText( const TQString& docPath, const TQString& text);
   void setBaseText();
-  QString text() const;
+  TQString text() const;
 
-  bool clicked(const QString &);
+  bool clicked(const TQString &);
   void handbookRequest();
 
 private:
-  QString docpath;
-  QString helptext;
+  TQString docpath;
+  TQString helptext;
 };
 
 #endif

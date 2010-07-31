@@ -24,17 +24,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef KCONSOLE_H
 #define KCONSOLE_H
 
-#include <qtextedit.h>
+#include <tqtextedit.h>
 
 class QSocketNotifier;
 class KPty;
 
-class KConsole : public QTextEdit {
+class KConsole : public TQTextEdit {
 	Q_OBJECT
-	typedef QTextEdit inherited;
+	typedef TQTextEdit inherited;
 
   public:
-	KConsole( QWidget *_parent = 0 );
+	KConsole( TQWidget *_parent = 0 );
 	~KConsole();
 
   private slots:
@@ -45,8 +45,8 @@ class KConsole : public QTextEdit {
 	void CloseConsole();
 
 	KPty *pty;
-	QSocketNotifier *notifier;
-	QString leftover;
+	TQSocketNotifier *notifier;
+	TQString leftover;
 	int fd;
 };
 

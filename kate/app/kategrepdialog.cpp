@@ -21,15 +21,15 @@
 #include "kategrepdialog.h"
 #include "katemainwindow.h"
 
-#include <qobject.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qevent.h>
-#include <qlistbox.h>
-#include <qregexp.h>
-#include <qwhatsthis.h>
-#include <qcursor.h>
+#include <tqobject.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqevent.h>
+#include <tqlistbox.h>
+#include <tqregexp.h>
+#include <tqwhatsthis.h>
+#include <tqcursor.h>
 
 #include <kapplication.h>
 #include <kaccelmanager.h>
@@ -65,8 +65,8 @@ const char *strTemplate[] = {
 };
 
 
-GrepTool::GrepTool(QWidget *parent, const char *name)
-  : QWidget(parent, name/*, false*/), m_fixFocus(true), childproc(0)
+GrepTool::GrepTool(TQWidget *parent, const char *name)
+  : TQWidget(parent, name/*, false*/), m_fixFocus(true), childproc(0)
 {
   setCaption(i18n("Find in Files"));
   config = KGlobal::config();
@@ -85,7 +85,7 @@ GrepTool::GrepTool(QWidget *parent, const char *name)
                     << "*";
   }
 
-  QGridLayout *layout = new QGridLayout(this, 6, 3, 4, 4);
+  TQGridLayout *layout = new TQGridLayout(this, 6, 3, 4, 4);
   layout->setColStretch(0, 10);
   layout->addColSpacing(1, 10);
   layout->setColStretch(1, 0);
@@ -94,43 +94,43 @@ GrepTool::GrepTool(QWidget *parent, const char *name)
   layout->setRowStretch(2, 10);
   layout->setRowStretch(4, 0);
 
-  QGridLayout *loInput = new QGridLayout(4, 2, 4);
+  TQGridLayout *loInput = new TQGridLayout(4, 2, 4);
   layout->addLayout(loInput, 0, 0);
   loInput->setColStretch(0, 0);
   loInput->setColStretch(1, 20);
 
-  QLabel *lPattern = new QLabel(i18n("Pattern:"), this);
+  TQLabel *lPattern = new TQLabel(i18n("Pattern:"), this);
   lPattern->setFixedSize(lPattern->sizeHint());
   loInput->addWidget(lPattern, 0, 0, AlignRight | AlignVCenter);
 
-  QBoxLayout *loPattern = new QHBoxLayout( 4 );
+  TQBoxLayout *loPattern = new TQHBoxLayout( 4 );
   loInput->addLayout( loPattern, 0, 1 );
   cmbPattern = new KComboBox(true, this);
   cmbPattern->setDuplicatesEnabled(false);
   cmbPattern->insertStringList(lastSearchItems);
-  cmbPattern->setEditText(QString::null);
-  cmbPattern->setInsertionPolicy(QComboBox::NoInsertion);
+  cmbPattern->setEditText(TQString::null);
+  cmbPattern->setInsertionPolicy(TQComboBox::NoInsertion);
   lPattern->setBuddy(cmbPattern);
   cmbPattern->setFocus();
   cmbPattern->setMinimumSize(cmbPattern->sizeHint());
   loPattern->addWidget( cmbPattern );
 
-  cbCasesensitive = new QCheckBox(i18n("Case sensitive"), this);
+  cbCasesensitive = new TQCheckBox(i18n("Case sensitive"), this);
   cbCasesensitive->setMinimumWidth(cbCasesensitive->sizeHint().width());
   cbCasesensitive->setChecked(config->readBoolEntry("CaseSensitive", true));
   loPattern->addWidget(cbCasesensitive);
 
-  cbRegex = new QCheckBox( i18n("Regular expression"), this );
+  cbRegex = new TQCheckBox( i18n("Regular expression"), this );
   cbRegex->setMinimumWidth( cbRegex->sizeHint().width() );
   cbRegex->setChecked( config->readBoolEntry( "Regex", true ) );
   loPattern->addWidget( cbRegex );
   loPattern->setStretchFactor( cmbPattern, 100 );
 
-  QLabel *lTemplate = new QLabel(i18n("Template:"), this);
+  TQLabel *lTemplate = new TQLabel(i18n("Template:"), this);
   lTemplate->setFixedSize(lTemplate->sizeHint());
   loInput->addWidget(lTemplate, 1, 0, AlignRight | AlignVCenter);
 
-  QBoxLayout *loTemplate = new QHBoxLayout(4);
+  TQBoxLayout *loTemplate = new TQHBoxLayout(4);
   loInput->addLayout(loTemplate, 1, 1);
 
   leTemplate = new KLineEdit(this);
@@ -145,29 +145,29 @@ GrepTool::GrepTool(QWidget *parent, const char *name)
   cmbTemplate->setFixedSize(cmbTemplate->size());
   loTemplate->addWidget(cmbTemplate);
 
-  QLabel *lFiles = new QLabel(i18n("Files:"), this);
+  TQLabel *lFiles = new TQLabel(i18n("Files:"), this);
   lFiles->setFixedSize(lFiles->sizeHint());
   loInput->addWidget(lFiles, 2, 0, AlignRight | AlignVCenter);
 
   cmbFiles = new KComboBox(true, this);
   lFiles->setBuddy(cmbFiles->focusProxy());
   cmbFiles->setMinimumSize(cmbFiles->sizeHint());
-  cmbFiles->setInsertionPolicy(QComboBox::NoInsertion);
+  cmbFiles->setInsertionPolicy(TQComboBox::NoInsertion);
   cmbFiles->setDuplicatesEnabled(false);
   cmbFiles->insertStringList(lastSearchFiles);
   loInput->addWidget(cmbFiles, 2, 1);
 
-  QLabel *lDir = new QLabel(i18n("Folder:"), this);
+  TQLabel *lDir = new TQLabel(i18n("Folder:"), this);
   lDir->setFixedSize(lDir->sizeHint());
   loInput->addWidget(lDir, 3, 0, AlignRight | AlignVCenter);
 
-  QBoxLayout *loDir = new QHBoxLayout(3);
+  TQBoxLayout *loDir = new TQHBoxLayout(3);
   loInput->addLayout(loDir, 3, 1);
 
   KComboBox* cmbUrl = new KComboBox(true, this);
   cmbUrl->setMinimumWidth(80); // make sure that 800x600 res works
   cmbUrl->setDuplicatesEnabled(false);
-  cmbUrl->setInsertionPolicy(QComboBox::NoInsertion);
+  cmbUrl->setInsertionPolicy(TQComboBox::NoInsertion);
   cmbDir = new KURLRequester( cmbUrl, this, "dir combo" );
   cmbDir->completionObject()->setMode(KURLCompletion::DirCompletion);
   cmbDir->comboBox()->insertStringList(lastSearchPaths);
@@ -175,7 +175,7 @@ GrepTool::GrepTool(QWidget *parent, const char *name)
   loDir->addWidget(cmbDir, 1);
   lDir->setBuddy(cmbDir);
 
-  cbRecursive = new QCheckBox(i18n("Recursive"), this);
+  cbRecursive = new TQCheckBox(i18n("Recursive"), this);
   cbRecursive->setMinimumWidth(cbRecursive->sizeHint().width());
   cbRecursive->setChecked(config->readBoolEntry("Recursive", true));
   loDir->addWidget(cbRecursive);
@@ -189,15 +189,15 @@ GrepTool::GrepTool(QWidget *parent, const char *name)
   actionbox->addStretch();
   actionbox->layout();
 
-  lbResult = new QListBox(this);
-  QFontMetrics rb_fm(lbResult->fontMetrics());
+  lbResult = new TQListBox(this);
+  TQFontMetrics rb_fm(lbResult->fontMetrics());
   layout->addMultiCellWidget(lbResult, 2, 2, 0, 2);
 
   layout->activate();
 
   KAcceleratorManager::manage( this );
 
-  QWhatsThis::add(lPattern,
+  TQWhatsThis::add(lPattern,
     i18n("<p>Enter the expression you want to search for here."
      "<p>If 'regular expression' is unchecked, any non-space letters in your "
      "expression will be escaped with a backslash character."
@@ -220,26 +220,26 @@ GrepTool::GrepTool(QWidget *parent, const char *name)
      "via the notation <code>\\#</code>."
      "<p>See the grep(1) documentation for the full documentation."
      ));
-  QWhatsThis::add(lFiles,
+  TQWhatsThis::add(lFiles,
     i18n("Enter the file name pattern of the files to search here.\n"
      "You may give several patterns separated by commas."));
-  QWhatsThis::add(lTemplate,
+  TQWhatsThis::add(lTemplate,
     i18n("You can choose a template for the pattern from the combo box\n"
      "and edit it here. The string %s in the template is replaced\n"
      "by the pattern input field, resulting in the regular expression\n"
      "to search for."));
-  QWhatsThis::add(lDir,
+  TQWhatsThis::add(lDir,
     i18n("Enter the folder which contains the files in which you want to search."));
-  QWhatsThis::add(cbRecursive,
+  TQWhatsThis::add(cbRecursive,
     i18n("Check this box to search in all subfolders."));
-  QWhatsThis::add(cbCasesensitive,
+  TQWhatsThis::add(cbCasesensitive,
     i18n("If this option is enabled (the default), the search will be case sensitive."));
-  QWhatsThis::add( cbRegex, i18n(
+  TQWhatsThis::add( cbRegex, i18n(
       "<p>If this is enabled, your pattern will be passed unmodified to "
       "<em>grep(1)</em>. Otherwise, all characters that are not letters will be "
       "escaped using a backslash character to prevent grep from interpreting "
       "them as part of the expression.") );
-  QWhatsThis::add(lbResult,
+  TQWhatsThis::add(lbResult,
     i18n("The results of the grep run are listed here. Select a\n"
      "filename/line number combination and press Enter or doubleclick\n"
      "on the item to show the respective line in the editor."));
@@ -250,16 +250,16 @@ GrepTool::GrepTool(QWidget *parent, const char *name)
   cmbFiles->installEventFilter( this );
   cmbDir->comboBox()->installEventFilter( this );
 
-  connect( cmbTemplate, SIGNAL(activated(int)),
-           SLOT(templateActivated(int)) );
-  connect( lbResult, SIGNAL(selected(const QString&)),
-           SLOT(itemSelected(const QString&)) );
-  connect( btnSearch, SIGNAL(clicked()),
-           SLOT(slotSearch()) );
-  connect( btnClear, SIGNAL(clicked()),
-           SLOT(slotClear()) );
-  connect( cmbPattern->lineEdit(), SIGNAL(textChanged ( const QString & )),
-           SLOT( patternTextChanged( const QString & )));
+  connect( cmbTemplate, TQT_SIGNAL(activated(int)),
+           TQT_SLOT(templateActivated(int)) );
+  connect( lbResult, TQT_SIGNAL(selected(const TQString&)),
+           TQT_SLOT(itemSelected(const TQString&)) );
+  connect( btnSearch, TQT_SIGNAL(clicked()),
+           TQT_SLOT(slotSearch()) );
+  connect( btnClear, TQT_SIGNAL(clicked()),
+           TQT_SLOT(slotClear()) );
+  connect( cmbPattern->lineEdit(), TQT_SIGNAL(textChanged ( const TQString & )),
+           TQT_SLOT( patternTextChanged( const TQString & )));
 
   patternTextChanged( cmbPattern->lineEdit()->text());
 }
@@ -270,7 +270,7 @@ GrepTool::~GrepTool()
   delete childproc;
 }
 
-void GrepTool::patternTextChanged( const QString & _text)
+void GrepTool::patternTextChanged( const TQString & _text)
 {
   btnSearch->setEnabled( !_text.isEmpty() );
 }
@@ -280,19 +280,19 @@ void GrepTool::templateActivated(int index)
   leTemplate->setText(strTemplate[index]);
 }
 
-void GrepTool::itemSelected(const QString& item)
+void GrepTool::itemSelected(const TQString& item)
 {
   int pos;
-  QString filename, linenumber;
+  TQString filename, linenumber;
 
-  QString str = item;
+  TQString str = item;
   if ( (pos = str.find(':')) != -1)
   {
     filename = str.left(pos);
     str = str.mid(pos+1);
     if ( (pos = str.find(':')) != -1)
     {
-      filename = m_workingDir + QDir::separator() + filename;
+      filename = m_workingDir + TQDir::separator() + filename;
       linenumber = str.left(pos);
       emit itemSelected(filename,linenumber.toInt()-1);
     }
@@ -304,7 +304,7 @@ void GrepTool::processOutput()
   int pos;
   while ( (pos = buf.find('\n')) != -1)
   {
-    QString item = buf.mid(2,pos-2);
+    TQString item = buf.mid(2,pos-2);
     if (!item.isEmpty())
       lbResult->insertItem(item);
     buf = buf.mid(pos+1);
@@ -320,7 +320,7 @@ void GrepTool::slotSearch()
     return;
   }
 
-  if ( cmbDir->url().isEmpty() || ! QDir(cmbDir->url()).exists() )
+  if ( cmbDir->url().isEmpty() || ! TQDir(cmbDir->url()).exists() )
   {
     cmbDir->setFocus();
     KMessageBox::information( this, i18n(
@@ -345,10 +345,10 @@ void GrepTool::slotSearch()
 
   m_workingDir = cmbDir->url();
 
-  QString s = cmbPattern->currentText();
+  TQString s = cmbPattern->currentText();
   if ( ! cbRegex->isChecked() )
-    s.replace( QRegExp( "([^\\w'()<>])" ), "\\\\1" );
-  QString pattern = leTemplate->text();
+    s.replace( TQRegExp( "([^\\w'()<>])" ), "\\\\1" );
+  TQString pattern = leTemplate->text();
   pattern.replace( "%s", s );
 
   childproc = new KProcess();
@@ -358,10 +358,10 @@ void GrepTool::slotSearch()
     *childproc << "-maxdepth" << "1";
   if (!cmbFiles->currentText().isEmpty() )
   {
-    QStringList files = QStringList::split ( ",", cmbFiles->currentText(), FALSE );
+    TQStringList files = TQStringList::split ( ",", cmbFiles->currentText(), FALSE );
     *childproc << "(";
     bool first = true;
-    for ( QStringList::Iterator it = files.begin(); it != files.end(); ++it )
+    for ( TQStringList::Iterator it = files.begin(); it != files.end(); ++it )
     {
       if (!first)
         *childproc << "-o";
@@ -377,21 +377,21 @@ void GrepTool::slotSearch()
   *childproc << "/dev/null"; //trick to have grep always display the filename
   *childproc << ";";
 
-  connect( childproc, SIGNAL(processExited(KProcess *)),
-           SLOT(childExited()) );
-  connect( childproc, SIGNAL(receivedStdout(KProcess *, char *, int)),
-           SLOT(receivedOutput(KProcess *, char *, int)) );
-  connect( childproc, SIGNAL(receivedStderr(KProcess *, char *, int)),
-           SLOT(receivedErrOutput(KProcess *, char *, int)) );
+  connect( childproc, TQT_SIGNAL(processExited(KProcess *)),
+           TQT_SLOT(childExited()) );
+  connect( childproc, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+           TQT_SLOT(receivedOutput(KProcess *, char *, int)) );
+  connect( childproc, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
+           TQT_SLOT(receivedErrOutput(KProcess *, char *, int)) );
 
   // actually it should be checked whether the process was started successfully
-  lbResult->setCursor( QCursor(Qt::WaitCursor) );
+  lbResult->setCursor( TQCursor(Qt::WaitCursor) );
   btnClear->setEnabled( false );
   btnSearch->setGuiItem( KGuiItem(i18n("Cancel"), "button_cancel"));
   childproc->start(KProcess::NotifyOnExit, KProcess::AllOutput);
 }
 
-void GrepTool::slotSearchFor(const QString &pattern)
+void GrepTool::slotSearchFor(const TQString &pattern)
 {
   slotClear();
   cmbPattern->setEditText(pattern);
@@ -409,7 +409,7 @@ void GrepTool::finish()
 
   config->setGroup("GrepTool");
 
-  QString cmbText = cmbPattern->currentText();
+  TQString cmbText = cmbPattern->currentText();
   bool itemsRemoved = lastSearchItems.remove(cmbText) > 0;
   lastSearchItems.prepend(cmbText);
   if (itemsRemoved)
@@ -485,13 +485,13 @@ void GrepTool::childExited()
 
 void GrepTool::receivedOutput(KProcess */*proc*/, char *buffer, int buflen)
 {
-  buf += QCString(buffer, buflen+1);
+  buf += TQCString(buffer, buflen+1);
   processOutput();
 }
 
 void GrepTool::receivedErrOutput(KProcess */*proc*/, char *buffer, int buflen)
 {
-  errbuf += QCString( buffer, buflen + 1 );
+  errbuf += TQCString( buffer, buflen + 1 );
 }
 
 void GrepTool::slotClear()
@@ -500,7 +500,7 @@ void GrepTool::slotClear()
   lbResult->clear();
 }
 
-void GrepTool::updateDirName(const QString &dir)
+void GrepTool::updateDirName(const TQString &dir)
 {
   if (m_lastUpdatedDir != dir)
   {
@@ -509,35 +509,35 @@ void GrepTool::updateDirName(const QString &dir)
   }
 }
 
-void GrepTool::setDirName(const QString &dir){
+void GrepTool::setDirName(const TQString &dir){
   cmbDir->setURL(dir);
 }
 
-bool GrepTool::eventFilter( QObject *o, QEvent *e )
+bool GrepTool::eventFilter( TQObject *o, TQEvent *e )
 {
-  if ( e->type() == QEvent::KeyPress && (
-       ((QKeyEvent*)e)->key() == Qt::Key_Return ||
-       ((QKeyEvent*)e)->key() == Qt::Key_Enter ) )
+  if ( e->type() == TQEvent::KeyPress && (
+       ((TQKeyEvent*)e)->key() == Qt::Key_Return ||
+       ((TQKeyEvent*)e)->key() == Qt::Key_Enter ) )
   {
     slotSearch();
     return true;
   }
 
-  return QWidget::eventFilter( o, e );
+  return TQWidget::eventFilter( o, e );
 }
 
-void GrepTool::focusInEvent ( QFocusEvent * ev )
+void GrepTool::focusInEvent ( TQFocusEvent * ev )
 {
-  QWidget::focusInEvent(ev);
+  TQWidget::focusInEvent(ev);
   if (m_fixFocus) {
     m_fixFocus = false;
     cmbPattern->setFocus();
   }
 }
 
-void GrepTool::showEvent( QShowEvent * ev )
+void GrepTool::showEvent( TQShowEvent * ev )
 {
-  QWidget::showEvent(ev);
+  TQWidget::showEvent(ev);
   m_fixFocus = true;
 }
 

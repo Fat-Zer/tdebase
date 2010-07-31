@@ -23,7 +23,7 @@
 #include <kdeprint/kmmanager.h>
 
 #include <stdlib.h>
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <kmessagebox.h>
@@ -39,22 +39,22 @@ class JobTray : public KSystemTray
 {
 public:
 	JobTray(KJobViewerApp *parent, const char *name = 0)
-		: KSystemTray(0, name), m_app(parent) { connect( this, SIGNAL( quitSelected() ), kapp, SLOT( quit() ) ); }
+		: KSystemTray(0, name), m_app(parent) { connect( this, TQT_SIGNAL( quitSelected() ), kapp, TQT_SLOT( quit() ) ); }
 protected:
-	void mousePressEvent(QMouseEvent*);
+	void mousePressEvent(TQMouseEvent*);
 private:
 	KJobViewerApp	*m_app;
 };
 
-void JobTray::mousePressEvent(QMouseEvent *e)
+void JobTray::mousePressEvent(TQMouseEvent *e)
 {
 	if (e->button() == Qt::RightButton)
 		KSystemTray::mousePressEvent(e);
 	else if (m_app->m_views.count() > 0)
 	{
 		KPopupMenu	menu;
-		QDictIterator<KMJobViewer>	it(m_app->m_views);
-		QPtrList<KMJobViewer>	list;
+		TQDictIterator<KMJobViewer>	it(m_app->m_views);
+		TQPtrList<KMJobViewer>	list;
 		list.setAutoDelete(false);
 		for (; it.current(); ++it)
 		{
@@ -117,7 +117,7 @@ void KJobViewerApp::initialize()
 	if (!m_timer)
 	{
 		m_timer = KMTimer::self();
-		connect(m_timer,SIGNAL(timeout()),SLOT(slotTimer()));
+		connect(m_timer,TQT_SIGNAL(timeout()),TQT_SLOT(slotTimer()));
 	}
 
 	if (prname.isEmpty() && all)
@@ -146,10 +146,10 @@ void KJobViewerApp::initialize()
         {
             kdDebug() << "creating new view: " << prname << endl;
             view = new KMJobViewer();
-            connect(view, SIGNAL(jobsShown(KMJobViewer*,bool)), SLOT(slotJobsShown(KMJobViewer*,bool)));
-            connect(view, SIGNAL(printerChanged(KMJobViewer*,const QString&)), SLOT(slotPrinterChanged(KMJobViewer*,const QString&)));
-            connect(view, SIGNAL(refreshClicked()), SLOT(slotTimer()));
-            connect(view, SIGNAL(viewerDestroyed(KMJobViewer*)), SLOT(slotViewerDestroyed(KMJobViewer*)));
+            connect(view, TQT_SIGNAL(jobsShown(KMJobViewer*,bool)), TQT_SLOT(slotJobsShown(KMJobViewer*,bool)));
+            connect(view, TQT_SIGNAL(printerChanged(KMJobViewer*,const TQString&)), TQT_SLOT(slotPrinterChanged(KMJobViewer*,const TQString&)));
+            connect(view, TQT_SIGNAL(refreshClicked()), TQT_SLOT(slotTimer()));
+            connect(view, TQT_SIGNAL(viewerDestroyed(KMJobViewer*)), TQT_SLOT(slotViewerDestroyed(KMJobViewer*)));
             m_views.insert(prname, view);
         }
 
@@ -193,12 +193,12 @@ void KJobViewerApp::slotTimer()
 	// Refresh views. The first time, job list is reloaded,
 	// other views will simply use reloaded job list
 	bool	trigger(true);
-	QDictIterator<KMJobViewer>	it(m_views);
+	TQDictIterator<KMJobViewer>	it(m_views);
 	for (; it.current(); ++it, trigger=false)
 		it.current()->refresh(trigger);
 }
 
-void KJobViewerApp::slotPrinterChanged(KMJobViewer *view, const QString& prname)
+void KJobViewerApp::slotPrinterChanged(KMJobViewer *view, const TQString& prname)
 {
 	KMJobViewer	*other = m_views.find(prname);
 	if (other)

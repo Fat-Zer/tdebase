@@ -24,7 +24,7 @@
 */
 
 
-#include <qdir.h>
+#include <tqdir.h>
 
 
 #include <kapplication.h>
@@ -36,13 +36,13 @@
 #include <kconfig.h>
 #include <dcopclient.h>
 #include <dcopstub.h>
-#include <qlayout.h>
-#include <qobject.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqobject.h>
+#include <tqpushbutton.h>
 #include <qxembed.h>
-#include <qtextstream.h>
-#include <qtimer.h>
-#include <qregexp.h>
+#include <tqtextstream.h>
+#include <tqtimer.h>
+#include <tqregexp.h>
 
 #include "nspluginloader.h"
 #include "nspluginloader.moc"
@@ -55,21 +55,21 @@ NSPluginLoader *NSPluginLoader::s_instance = 0;
 int NSPluginLoader::s_refCount = 0;
 
 
-NSPluginInstance::NSPluginInstance(QWidget *parent)
+NSPluginInstance::NSPluginInstance(TQWidget *parent)
   : EMBEDCLASS(parent), _loader( NULL ), shown( false ), inited( false ), resize_count( 0 ), stub( NULL )
 {
 }
 
-void NSPluginInstance::init(const QCString& app, const QCString& obj)
+void NSPluginInstance::init(const TQCString& app, const TQCString& obj)
 {
     stub = new NSPluginInstanceIface_stub( app, obj );
-    QGridLayout *_layout = new QGridLayout(this, 1, 1);
+    TQGridLayout *_layout = new TQGridLayout(this, 1, 1);
     KConfig cfg("kcmnspluginrc", false);
     cfg.setGroup("Misc");
     if (cfg.readBoolEntry("demandLoad", false)) {
-        _button = new QPushButton(i18n("Start Plugin"), dynamic_cast<EMBEDCLASS*>(this));
+        _button = new TQPushButton(i18n("Start Plugin"), dynamic_cast<EMBEDCLASS*>(this));
         _layout->addWidget(_button, 0, 0);
-        connect(_button, SIGNAL(clicked()), this, SLOT(loadPlugin()));
+        connect(_button, TQT_SIGNAL(clicked()), this, TQT_SLOT(loadPlugin()));
         show();
     } else {
         _button = 0L;
@@ -80,7 +80,7 @@ void NSPluginInstance::init(const QCString& app, const QCString& obj)
         // and use 'resize_count' to wait for that one more resize to come (plus a timer
         // for a possible timeout). Only then flash is actually initialized ('inited' is true).
         resize_count = 1;
-        QTimer::singleShot( 1000, this, SLOT( doLoadPlugin()));
+        TQTimer::singleShot( 1000, this, TQT_SLOT( doLoadPlugin()));
     }
 }
 
@@ -94,7 +94,7 @@ void NSPluginInstance::loadPlugin()
 void NSPluginInstance::doLoadPlugin() {
     if (!inited && !_button) {
         _loader = NSPluginLoader::instance();
-        setBackgroundMode(QWidget::NoBackground);
+        setBackgroundMode(TQWidget::NoBackground);
         WId winid = stub->winId();
         if( winid != 0 ) {
             setProtocol(QXEmbed::XPLAIN);
@@ -127,7 +127,7 @@ NSPluginInstance::~NSPluginInstance()
 
 void NSPluginInstance::windowChanged(WId w)
 {
-    setBackgroundMode(w == 0 ? QWidget::PaletteBackground : QWidget::NoBackground);
+    setBackgroundMode(w == 0 ? TQWidget::PaletteBackground : TQWidget::NoBackground);
     if (w == 0) {
         // FIXME: Put a notice here to tell the user that it crashed.
         repaint();
@@ -135,7 +135,7 @@ void NSPluginInstance::windowChanged(WId w)
 }
 
 
-void NSPluginInstance::resizeEvent(QResizeEvent *event)
+void NSPluginInstance::resizeEvent(TQResizeEvent *event)
 {
   if (shown == false) // ignore all resizes before being shown
      return;
@@ -152,7 +152,7 @@ void NSPluginInstance::resizeEvent(QResizeEvent *event)
   kdDebug() << "NSPluginInstance(client)::resizeEvent" << endl;
 }
 
-void NSPluginInstance::showEvent(QShowEvent *event)
+void NSPluginInstance::showEvent(TQShowEvent *event)
 {
   EMBEDCLASS::showEvent(event);
   shown = true;
@@ -162,12 +162,12 @@ void NSPluginInstance::showEvent(QShowEvent *event)
     resizePlugin(width(), height());
 }
 
-void NSPluginInstance::focusInEvent( QFocusEvent* event )
+void NSPluginInstance::focusInEvent( TQFocusEvent* event )
 {
   stub->gotFocusIn();
 }
 
-void NSPluginInstance::focusOutEvent( QFocusEvent* event )
+void NSPluginInstance::focusOutEvent( TQFocusEvent* event )
 {
   stub->gotFocusOut();
 }
@@ -194,7 +194,7 @@ void NSPluginInstance::shutdown()
 
 
 NSPluginLoader::NSPluginLoader()
-   : QObject(), _mapping(7, false), _viewer(0)
+   : TQObject(), _mapping(7, false), _viewer(0)
 {
   scanPlugins();
   _mapping.setAutoDelete( true );
@@ -202,9 +202,9 @@ NSPluginLoader::NSPluginLoader()
 
   // trap dcop register events
   kapp->dcopClient()->setNotifications(true);
-  QObject::connect(kapp->dcopClient(),
-                   SIGNAL(applicationRegistered(const QCString&)),
-                   this, SLOT(applicationRegistered(const QCString&)));
+  TQObject::connect(kapp->dcopClient(),
+                   TQT_SIGNAL(applicationRegistered(const TQCString&)),
+                   this, TQT_SLOT(applicationRegistered(const TQCString&)));
 
   // load configuration
   KConfig cfg("kcmnspluginrc", false);
@@ -248,19 +248,19 @@ NSPluginLoader::~NSPluginLoader()
 
 void NSPluginLoader::scanPlugins()
 {
-  QRegExp version(";version=[^:]*:");
+  TQRegExp version(";version=[^:]*:");
 
   // open the cache file
-  QFile cachef(locate("data", "nsplugins/cache"));
+  TQFile cachef(locate("data", "nsplugins/cache"));
   if (!cachef.open(IO_ReadOnly)) {
       kdDebug() << "Could not load plugin cache file!" << endl;
       return;
   }
 
-  QTextStream cache(&cachef);
+  TQTextStream cache(&cachef);
 
   // read in cache
-  QString line, plugin;
+  TQString line, plugin;
   while (!cache.atEnd()) {
       line = cache.readLine();
       if (line.isEmpty() || (line.left(1) == "#"))
@@ -272,20 +272,20 @@ void NSPluginLoader::scanPlugins()
           continue;
         }
 
-      QStringList desc = QStringList::split(':', line, TRUE);
-      QString mime = desc[0].stripWhiteSpace();
-      QStringList suffixes = QStringList::split(',', desc[1].stripWhiteSpace());
+      TQStringList desc = TQStringList::split(':', line, TRUE);
+      TQString mime = desc[0].stripWhiteSpace();
+      TQStringList suffixes = TQStringList::split(',', desc[1].stripWhiteSpace());
       if (!mime.isEmpty())
         {
           // insert the mimetype -> plugin mapping
-          _mapping.insert(mime, new QString(plugin));
+          _mapping.insert(mime, new TQString(plugin));
 
           // insert the suffix -> mimetype mapping
-          QStringList::Iterator suffix;
+          TQStringList::Iterator suffix;
           for (suffix = suffixes.begin(); suffix != suffixes.end(); ++suffix) {
 
               // strip whitspaces and any preceding '.'
-              QString stripped = (*suffix).stripWhiteSpace();
+              TQString stripped = (*suffix).stripWhiteSpace();
 
               unsigned p=0;
               for ( ; p<stripped.length() && stripped[p]=='.'; p++ );
@@ -293,30 +293,30 @@ void NSPluginLoader::scanPlugins()
 
               // add filetype to list
               if ( !stripped.isEmpty() && !_filetype.find(stripped) )
-                  _filetype.insert( stripped, new QString(mime));
+                  _filetype.insert( stripped, new TQString(mime));
           }
         }
     }
 }
 
 
-QString NSPluginLoader::lookupMimeType(const QString &url)
+TQString NSPluginLoader::lookupMimeType(const TQString &url)
 {
-  QDictIterator<QString> dit2(_filetype);
+  TQDictIterator<TQString> dit2(_filetype);
   while (dit2.current())
     {
-      QString ext = QString(".")+dit2.currentKey();
+      TQString ext = TQString(".")+dit2.currentKey();
       if (url.right(ext.length()) == ext)
         return *dit2.current();
       ++dit2;
     }
-  return QString::null;
+  return TQString::null;
 }
 
 
-QString NSPluginLoader::lookup(const QString &mimeType)
+TQString NSPluginLoader::lookup(const TQString &mimeType)
 {
-    QString plugin;
+    TQString plugin;
     if (  _mapping[mimeType] )
         plugin = *_mapping[mimeType];
 
@@ -337,11 +337,11 @@ bool NSPluginLoader::loadViewer()
    int pid = (int)getpid();
    _dcopid.sprintf("nspluginviewer-%d", pid);
 
-   connect( _process, SIGNAL(processExited(KProcess*)),
-            this, SLOT(processTerminated(KProcess*)) );
+   connect( _process, TQT_SIGNAL(processExited(KProcess*)),
+            this, TQT_SLOT(processTerminated(KProcess*)) );
 
    // find the external viewer process
-   QString viewer = KGlobal::dirs()->findExe("nspluginviewer");
+   TQString viewer = KGlobal::dirs()->findExe("nspluginviewer");
    if (!viewer)
    {
       kdDebug() << "can't find nspluginviewer" << endl;
@@ -352,7 +352,7 @@ bool NSPluginLoader::loadViewer()
    // find the external artsdsp process
    if( _useArtsdsp ) {
        kdDebug() << "trying to use artsdsp" << endl;
-       QString artsdsp = KGlobal::dirs()->findExe("artsdsp");
+       TQString artsdsp = KGlobal::dirs()->findExe("artsdsp");
        if (!artsdsp)
        {
            kdDebug() << "can't find artsdsp" << endl;
@@ -429,7 +429,7 @@ void NSPluginLoader::unloadViewer()
 }
 
 
-void NSPluginLoader::applicationRegistered( const QCString& appId )
+void NSPluginLoader::applicationRegistered( const TQCString& appId )
 {
    kdDebug() << "DCOP application " << appId.data() << " just registered!" << endl;
 
@@ -454,10 +454,10 @@ void NSPluginLoader::processTerminated(KProcess *proc)
 }
 
 
-NSPluginInstance *NSPluginLoader::newInstance(QWidget *parent, QString url,
-                                              QString mimeType, bool embed,
-                                              QStringList argn, QStringList argv,
-                                              QString appId, QString callbackId, bool reload, bool doPost, QByteArray postData)
+NSPluginInstance *NSPluginLoader::newInstance(TQWidget *parent, TQString url,
+                                              TQString mimeType, bool embed,
+                                              TQStringList argn, TQStringList argv,
+                                              TQString appId, TQString callbackId, bool reload, bool doPost, TQByteArray postData)
 {
    kdDebug() << "-> NSPluginLoader::NewInstance( parent=" << (void*)parent << ", url=" << url << ", mime=" << mimeType << ", ...)" << endl;
 
@@ -474,7 +474,7 @@ NSPluginInstance *NSPluginLoader::newInstance(QWidget *parent, QString url,
    }
 
    // check the mime type
-   QString mime = mimeType;
+   TQString mime = mimeType;
    if (mime.isEmpty())
    {
       mime = lookupMimeType( url );
@@ -488,7 +488,7 @@ NSPluginInstance *NSPluginLoader::newInstance(QWidget *parent, QString url,
    }
 
    // lookup plugin for mime type
-   QString plugin_name = lookup(mime);
+   TQString plugin_name = lookup(mime);
    if (plugin_name.isEmpty())
    {
       kdDebug() << "No suitable plugin" << endl;

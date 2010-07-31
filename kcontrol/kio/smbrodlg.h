@@ -21,9 +21,9 @@
 #ifndef __SMBRODLG_H
 #define __SMBRODLG_H
 
-#include <qwidget.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
+#include <tqwidget.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
 
 #include <kcmodule.h>
 
@@ -33,22 +33,22 @@ class SMBRoOptions : public KCModule
 {
    Q_OBJECT
    public:
-      SMBRoOptions(QWidget *parent = 0);
+      SMBRoOptions(TQWidget *parent = 0);
       ~SMBRoOptions();
 
       virtual void load();
       virtual void save();
       virtual void defaults();
-      QString quickHelp() const;
+      TQString quickHelp() const;
 
    private slots:
       void changed();
 
    private:
-      QLineEdit *m_userLe;
-      QLineEdit *m_passwordLe;
-//      QLineEdit *m_workgroupLe; //currently unused, Alex
-//      QCheckBox *m_showHiddenShares; //currently unused, Alex
+      TQLineEdit *m_userLe;
+      TQLineEdit *m_passwordLe;
+//      TQLineEdit *m_workgroupLe; //currently unused, Alex
+//      TQCheckBox *m_showHiddenShares; //currently unused, Alex
 //      KComboBox *m_encodingList; //currently unused
 };
 

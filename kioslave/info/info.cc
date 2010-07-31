@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kprocess.h>
@@ -18,7 +18,7 @@
 
 using namespace KIO;
 
-InfoProtocol::InfoProtocol( const QCString &pool, const QCString &app )
+InfoProtocol::InfoProtocol( const TQCString &pool, const TQCString &app )
     : SlaveBase( "info", pool, app )
     , m_page( "" )
     , m_node( "" )
@@ -31,11 +31,11 @@ InfoProtocol::InfoProtocol( const QCString &pool, const QCString &app )
 
     if( m_perl.isNull() || m_infoScript.isNull() || m_infoConf.isNull() ) {
 	kdError( 7108 ) << "Critical error: Cannot locate files for HTML-conversion" << endl;
-	QString errorStr;
+	TQString errorStr;
 	if ( m_perl.isNull() ) {
 		errorStr = "perl.";
 	} else {
-		QString missing =m_infoScript.isNull() ?  "kio_info/kde-info2html" : "kio_info/kde-info2html.conf";
+		TQString missing =m_infoScript.isNull() ?  "kio_info/kde-info2html" : "kio_info/kde-info2html.conf";
 		errorStr = "kde-info2html" + i18n( "\nUnable to locate file %1 which is necessary to run this service. "
 				"Please check your software installation" ).arg( missing );
 	}
@@ -70,7 +70,7 @@ void InfoProtocol::get( const KURL& url )
     if (!url.host().isEmpty()) {
         KURL newURl(url);
         newURl.setPath(url.host()+url.path());
-        newURl.setHost(QString::null);
+        newURl.setHost(TQString::null);
         redirection(newURl);
         finished();
         return;
@@ -80,7 +80,7 @@ void InfoProtocol::get( const KURL& url )
     {
         // Trailing / are not supported, so we need to remove them.
         KURL newUrl( url );
-        QString newPath( url.path() );
+        TQString newPath( url.path() );
         newPath.truncate( newPath.length()-1 );
         newUrl.setPath( newPath );
         redirection( newUrl );
@@ -92,11 +92,11 @@ void InfoProtocol::get( const KURL& url )
     // extract the path and node from url
     decodeURL( url );
 
-    QString path = KGlobal::iconLoader()->iconPath("up", KIcon::Toolbar, true);
+    TQString path = KGlobal::iconLoader()->iconPath("up", KIcon::Toolbar, true);
     int revindex = path.findRev('/');
     path = path.left(revindex);
 
-    QString cmd = KProcess::quote(m_perl);
+    TQString cmd = KProcess::quote(m_perl);
     cmd += " ";
     cmd += KProcess::quote(m_infoScript);
     cmd += " ";
@@ -110,7 +110,7 @@ void InfoProtocol::get( const KURL& url )
 
     kdDebug( 7108 ) << "cmd: " << cmd << endl;
 
-    FILE *file = popen( QFile::encodeName(cmd), "r" );
+    FILE *file = popen( TQFile::encodeName(cmd), "r" );
     if ( !file ) {
         kdDebug( 7108 ) << "InfoProtocol::get popen failed" << endl;
         error( ERR_CANNOT_LAUNCH_PROCESS, cmd );
@@ -118,7 +118,7 @@ void InfoProtocol::get( const KURL& url )
     }
 
     char buffer[ 4096 ];
-    QByteArray array;
+    TQByteArray array;
 
     bool empty = true;
     while ( !feof( file ) )
@@ -192,7 +192,7 @@ void InfoProtocol::decodeURL( const KURL &url )
     kdDebug( 7108 ) << "InfoProtocol::decodeURL - done" << endl;
 }
 
-void InfoProtocol::decodePath( QString path )
+void InfoProtocol::decodePath( TQString path )
 {
     kdDebug( 7108 ) << "InfoProtocol::decodePath(-" <<path<<"-)"<< endl;
 

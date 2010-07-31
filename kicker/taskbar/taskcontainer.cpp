@@ -25,15 +25,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <assert.h>
 
-#include <qbitmap.h>
-#include <qcolor.h>
-#include <qcursor.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qstyle.h>
-#include <qstylesheet.h>
-#include <qtooltip.h>
+#include <tqbitmap.h>
+#include <tqcolor.h>
+#include <tqcursor.h>
+#include <tqimage.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqstyle.h>
+#include <tqstylesheet.h>
+#include <tqtooltip.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -55,8 +55,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "taskcontainer.moc"
 
 TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
-                             QWidget *parent, const char *name)
-    : QToolButton(parent, name),
+                             TQWidget *parent, const char *name)
+    : TQToolButton(parent, name),
       currentFrame(0),
       attentionState(-1),
       lastActivated(0),
@@ -82,8 +82,8 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
 }
 
 TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
-                             TaskBar* bar, QWidget *parent, const char *name)
-    : QToolButton(parent, name),
+                             TaskBar* bar, TQWidget *parent, const char *name)
+    : TQToolButton(parent, name),
       currentFrame(0),
       frames(startupFrames),
       attentionState(-1),
@@ -102,7 +102,7 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
 
     sid = m_startup->bin();
 
-    connect(m_startup, SIGNAL(changed()), SLOT(update()));
+    connect(m_startup, TQT_SIGNAL(changed()), TQT_SLOT(update()));
 
     dragSwitchTimer.start(333, true);
 }
@@ -111,14 +111,14 @@ void TaskContainer::init()
 {
     setWFlags(WNoAutoErase);
     setBackgroundMode(NoBackground);
-    animBg = QPixmap(16, 16);
+    animBg = TQPixmap(16, 16);
 
     installEventFilter(KickerTip::the());
 
-    connect(&animationTimer, SIGNAL(timeout()), SLOT(animationTimerFired()));
-    connect(&dragSwitchTimer, SIGNAL(timeout()), SLOT(showMe()));
-    connect(&attentionTimer, SIGNAL(timeout()), SLOT(attentionTimerFired()));
-    connect(&m_paintEventCompressionTimer, SIGNAL(timeout()), SLOT(updateNow()));
+    connect(&animationTimer, TQT_SIGNAL(timeout()), TQT_SLOT(animationTimerFired()));
+    connect(&dragSwitchTimer, TQT_SIGNAL(timeout()), TQT_SLOT(showMe()));
+    connect(&attentionTimer, TQT_SIGNAL(timeout()), TQT_SLOT(attentionTimerFired()));
+    connect(&m_paintEventCompressionTimer, TQT_SIGNAL(timeout()), TQT_SLOT(updateNow()));
 }
 
 TaskContainer::~TaskContainer()
@@ -138,8 +138,8 @@ void TaskContainer::showMe()
         animationTimer.start(100);
 
     emit showMe(this);
-    disconnect(&dragSwitchTimer, SIGNAL(timeout()), this, SLOT(showMe()));
-    connect(&dragSwitchTimer, SIGNAL(timeout()), SLOT(dragSwitch()));
+    disconnect(&dragSwitchTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(showMe()));
+    connect(&dragSwitchTimer, TQT_SIGNAL(timeout()), TQT_SLOT(dragSwitch()));
 }
 
 void TaskContainer::stopTimers()
@@ -159,7 +159,7 @@ void TaskContainer::taskChanged(bool geometryOnlyChange)
         return;
     }
 
-    const QObject* source = sender();
+    const TQObject* source = sender();
     Task::Ptr task = 0;
     Task::List::const_iterator itEnd = tasks.constEnd();
     for (Task::List::const_iterator it = tasks.constBegin(); it != itEnd; ++it)
@@ -182,7 +182,7 @@ void TaskContainer::taskChanged(bool geometryOnlyChange)
 
 void TaskContainer::iconChanged()
 {
-    const QObject* source = sender();
+    const TQObject* source = sender();
     Task::Ptr task = 0;
     Task::List::const_iterator itEnd = tasks.constEnd();
     for (Task::List::const_iterator it = tasks.constBegin(); it != itEnd; ++it)
@@ -204,7 +204,7 @@ void TaskContainer::iconChanged()
     }
     
     KickerTip::Client::updateKickerTip();
-    QToolButton::update();
+    TQToolButton::update();
 }
 
 void TaskContainer::setLastActivated()
@@ -227,14 +227,14 @@ void TaskContainer::animationTimerFired()
 {
     if (!frames.isEmpty() && taskBar->showIcon() && frames.at(currentFrame) != frames.end())
     {
-        QPixmap *pm = *frames.at(currentFrame);
+        TQPixmap *pm = *frames.at(currentFrame);
 
         // draw pixmap
         if ( pm && !pm->isNull() ) {
 	    // we only have to redraw the background for frames 0, 8 and 9
 	    if ( currentFrame == 0 || currentFrame > 7 ) {
 		// double buffered painting
-		QPixmap composite( animBg );
+		TQPixmap composite( animBg );
 		bitBlt( &composite, 0, 0, pm );
 		bitBlt( this, iconRect.x(), iconRect.y(), &composite );
     	    }
@@ -298,16 +298,16 @@ void TaskContainer::attentionTimerFired()
     update();
 }
 
-QSizePolicy TaskContainer::sizePolicy() const
+TQSizePolicy TaskContainer::sizePolicy() const
 {
-    return QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    return TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
 }
 
-void TaskContainer::resizeEvent( QResizeEvent * )
+void TaskContainer::resizeEvent( TQResizeEvent * )
 {
     // calculate the icon rect
-    QRect br( style().subRect( QStyle::SR_PushButtonContents, this ) );
-    iconRect = QStyle::visualRect( QRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
+    TQRect br( style().subRect( TQStyle::SR_PushButtonContents, this ) );
+    iconRect = TQStyle::visualRect( TQRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
 }
 
 void TaskContainer::add(Task::Ptr task)
@@ -330,9 +330,9 @@ void TaskContainer::add(Task::Ptr task)
     KickerTip::Client::updateKickerTip();
     update();
 
-    connect(task, SIGNAL(changed(bool)), SLOT(taskChanged(bool)));
-    connect(task, SIGNAL(iconChanged()), SLOT(iconChanged()));
-    connect(task, SIGNAL(activated()), SLOT(setLastActivated()));
+    connect(task, TQT_SIGNAL(changed(bool)), TQT_SLOT(taskChanged(bool)));
+    connect(task, TQT_SIGNAL(iconChanged()), TQT_SLOT(iconChanged()));
+    connect(task, TQT_SIGNAL(activated()), TQT_SLOT(setLastActivated()));
 }
 
 void TaskContainer::remove(Task::Ptr task)
@@ -342,7 +342,7 @@ void TaskContainer::remove(Task::Ptr task)
         return;
     }
 
-    task->publishIconGeometry(QRect());
+    task->publishIconGeometry(TQRect());
     for (Task::List::Iterator it = tasks.begin(); it != tasks.end(); ++it)
     {
         if ((*it) == task)
@@ -424,7 +424,7 @@ bool TaskContainer::isEmpty()
     return (tasks.isEmpty() && !m_startup);
 }
 
-QString TaskContainer::id()
+TQString TaskContainer::id()
 {
     return sid;
 }
@@ -440,7 +440,7 @@ void TaskContainer::setBackground()
     updateNow();
 }
 
-void TaskContainer::paintEvent( QPaintEvent* )
+void TaskContainer::paintEvent( TQPaintEvent* )
 {
     if (!m_paintEventCompression)
     {
@@ -452,14 +452,14 @@ void TaskContainer::paintEvent( QPaintEvent* )
     }
 
     m_paintEventCompression = false;
-    QPixmap* pm = new QPixmap(size());
+    TQPixmap* pm = new TQPixmap(size());
 
-    const QPixmap* background = taskBar->backgroundPixmap();
+    const TQPixmap* background = taskBar->backgroundPixmap();
 
     if (background)
     {
-        QPoint pt = mapTo(taskBar, QPoint(0, 0)) + taskBar->backgroundOffset();
-        QPainter p(pm);
+        TQPoint pt = mapTo(taskBar, TQPoint(0, 0)) + taskBar->backgroundOffset();
+        TQPainter p(pm);
         p.drawTiledPixmap(0, 0, width(), height(), *background, pt.x(), pt.y());
         p.end();
     }
@@ -468,7 +468,7 @@ void TaskContainer::paintEvent( QPaintEvent* )
         pm->fill(taskBar->paletteBackgroundColor());
     }
 
-    QPainter p;
+    TQPainter p;
     p.begin(pm ,this);
     drawButton(&p);
     p.end();
@@ -477,7 +477,7 @@ void TaskContainer::paintEvent( QPaintEvent* )
     delete pm;
 }
 
-void TaskContainer::drawButton(QPainter *p)
+void TaskContainer::drawButton(TQPainter *p)
 {
     if (isEmpty())
     {
@@ -485,8 +485,8 @@ void TaskContainer::drawButton(QPainter *p)
     }
 
     // get a pointer to the pixmap we're drawing on
-    QPixmap *pm((QPixmap*)p->device());
-    QPixmap pixmap; // icon
+    TQPixmap *pm((TQPixmap*)p->device());
+    TQPixmap pixmap; // icon
     Task::Ptr task = 0;
     bool iconified = !TaskBarSettings::showOnlyIconified();
     bool halo = TaskBarSettings::haloText();
@@ -494,7 +494,7 @@ void TaskContainer::drawButton(QPainter *p)
     bool drawButton = alwaysDrawButtons ||
                       (m_mouseOver && !halo && isEnabled() &&
                        TaskBarSettings::showButtonOnHover());
-    QFont font(KGlobalSettings::taskbarFont());
+    TQFont font(KGlobalSettings::taskbarFont());
 
     // draw sunken if we contain the active task
     bool active = false;
@@ -522,14 +522,14 @@ void TaskContainer::drawButton(QPainter *p)
 
     font.setBold(active);
 
-    QColorGroup colors = palette().active();
+    TQColorGroup colors = palette().active();
     
     if (TaskBarSettings::useCustomColors())
     {
-        colors.setColor( QColorGroup::Button, TaskBarSettings::taskBackgroundColor());
-        colors.setColor( QColorGroup::Background, TaskBarSettings::taskBackgroundColor() );
-        colors.setColor( QColorGroup::ButtonText, TaskBarSettings::inactiveTaskTextColor() );
-        colors.setColor( QColorGroup::Text, TaskBarSettings::inactiveTaskTextColor() );
+        colors.setColor( TQColorGroup::Button, TaskBarSettings::taskBackgroundColor());
+        colors.setColor( TQColorGroup::Background, TaskBarSettings::taskBackgroundColor() );
+        colors.setColor( TQColorGroup::ButtonText, TaskBarSettings::inactiveTaskTextColor() );
+        colors.setColor( TQColorGroup::Text, TaskBarSettings::inactiveTaskTextColor() );
     }
     
     if (demandsAttention)
@@ -538,29 +538,29 @@ void TaskContainer::drawButton(QPainter *p)
         {
             halo = true;
 
-            QRect r = rect();
-            QColor line = colors.highlight();
+            TQRect r = rect();
+            TQColor line = colors.highlight();
             r.addCoords(2, 2, -2, -2);
             p->fillRect(r, line);
             for (int i = 0; i < 2; ++i)
             {
                 line = KickerLib::blendColors(line, colors.background());
-                p->setPen(QPen(line, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+                p->setPen(TQPen(line, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
                 r.addCoords(-1, -1, 1, 1);
                 p->drawRect(r);
             }
         }
 
         // blink until blink timeout, then display differently without blinking
-        colors.setColor( QColorGroup::Button,     colors.highlight() );
-        colors.setColor( QColorGroup::Background, colors.highlight() );
-        colors.setColor( QColorGroup::ButtonText, colors.highlightedText() );
-        colors.setColor( QColorGroup::Text,       colors.highlightedText() );
+        colors.setColor( TQColorGroup::Button,     colors.highlight() );
+        colors.setColor( TQColorGroup::Background, colors.highlight() );
+        colors.setColor( TQColorGroup::ButtonText, colors.highlightedText() );
+        colors.setColor( TQColorGroup::Text,       colors.highlightedText() );
     }
 
     if (active || aboutToActivate)
     {
-        colors.setColor(QColorGroup::Button, colors.button().dark(110));
+        colors.setColor(TQColorGroup::Button, colors.button().dark(110));
     }
 
     // get the task icon
@@ -570,16 +570,16 @@ void TaskContainer::drawButton(QPainter *p)
     }
 
     bool sunken = isDown() || (alwaysDrawButtons && (active || aboutToActivate));
-    bool reverse = QApplication::reverseLayout();
-    QRect br(style().subRect(QStyle::SR_PushButtonContents, this));
-    QPoint shift = QPoint(style().pixelMetric(QStyle::PM_ButtonShiftHorizontal),
-                          style().pixelMetric(QStyle::PM_ButtonShiftVertical));
+    bool reverse = TQApplication::reverseLayout();
+    TQRect br(style().subRect(TQStyle::SR_PushButtonContents, this));
+    TQPoint shift = TQPoint(style().pixelMetric(TQStyle::PM_ButtonShiftHorizontal),
+                          style().pixelMetric(TQStyle::PM_ButtonShiftVertical));
 
     // draw button background
     if (drawButton)
     {
-        style().drawPrimitive(QStyle::PE_HeaderSection, p,
-                              QRect(0, 0, width(), height()),
+        style().drawPrimitive(TQStyle::PE_HeaderSection, p,
+                              TQRect(0, 0, width(), height()),
                               colors);
     }
 
@@ -601,7 +601,7 @@ void TaskContainer::drawButton(QPainter *p)
             // make sure it is no larger than 16x16
             if ( pixmap.width() > 16 || pixmap.height() > 16 )
             {
-                QImage tmp = pixmap.convertToImage();
+                TQImage tmp = pixmap.convertToImage();
                 pixmap.convertFromImage( tmp.smoothScale( 16, 16 ) );
             }
 
@@ -612,17 +612,17 @@ void TaskContainer::drawButton(QPainter *p)
             }
 
             // draw icon
-            QRect pmr(0, 0, pixmap.width(), pixmap.height());
+            TQRect pmr(0, 0, pixmap.width(), pixmap.height());
             pmr.moveCenter(iconRect.center());
             p->drawPixmap(pmr, pixmap);
         }
     }
 
     // find text
-    QString text = name();
+    TQString text = name();
 
     // modified overlay
-    static QString modStr = "[" + i18n( "modified" ) + "]";
+    static TQString modStr = "[" + i18n( "modified" ) + "]";
     int modStrPos = text.find( modStr );
     int textPos = ( taskBar->showIcon() && (!pixmap.isNull() || m_startup)) ? 2 + 16 + 2 : 0;
 
@@ -630,12 +630,12 @@ void TaskContainer::drawButton(QPainter *p)
     {
         // +1 because we include a space after the closing brace.
         text.remove(modStrPos, modStr.length() + 1);
-        QPixmap modPixmap = SmallIcon("modified");
+        TQPixmap modPixmap = SmallIcon("modified");
 
         // draw modified overlay
         if (!modPixmap.isNull())
         {
-            QRect r = QStyle::visualRect(QRect(br.x() + textPos,
+            TQRect r = TQStyle::visualRect(TQRect(br.x() + textPos,
                                                (height() - 16) / 2, 16, 16),
                                          this);
 
@@ -652,27 +652,27 @@ void TaskContainer::drawButton(QPainter *p)
     // draw text
     if (!text.isEmpty())
     {
-        QRect tr = QStyle::visualRect(QRect(br.x() + textPos + 1, 0,
+        TQRect tr = TQStyle::visualRect(TQRect(br.x() + textPos + 1, 0,
                                             width() - textPos, height()),
                                       this);
         int textFlags = AlignVCenter | SingleLine;
         textFlags |= reverse ? AlignRight : AlignLeft;
-        QPen textPen;
+        TQPen textPen;
 
         // get the color for the text label
         if (iconified)
         {
-            textPen = QPen(KickerLib::blendColors(colors.button(), colors.buttonText()));
+            textPen = TQPen(KickerLib::blendColors(colors.button(), colors.buttonText()));
         }
         else if (!active)
         {
-            textPen = QPen(colors.buttonText());
+            textPen = TQPen(colors.buttonText());
         }
         else // hack for the dotNET style and others
         {
             if (TaskBarSettings::useCustomColors())
             {
-                textPen = QPen(TaskBarSettings::activeTaskTextColor());
+                textPen = TQPen(TaskBarSettings::activeTaskTextColor());
             }
             else
             {
@@ -686,11 +686,11 @@ void TaskContainer::drawButton(QPainter *p)
             availableWidth -= 8;
         }
 
-        if (QFontMetrics(font).width(text) > availableWidth)
+        if (TQFontMetrics(font).width(text) > availableWidth)
         {
             // draw text into overlay pixmap
-            QPixmap tpm(*pm);
-            QPainter tp(&tpm);
+            TQPixmap tpm(*pm);
+            TQPainter tp(&tpm);
 
             if (sunken)
             {
@@ -710,8 +710,8 @@ void TaskContainer::drawButton(QPainter *p)
             }
 
             // blend text into background image
-            QImage img = pm->convertToImage();
-            QImage timg = tpm.convertToImage();
+            TQImage img = pm->convertToImage();
+            TQImage timg = tpm.convertToImage();
             KImageEffect::blend(img, timg, *taskBar->blendGradient(size()), KImageEffect::Red);
             pm->convertFromImage(img);
         }
@@ -733,12 +733,12 @@ void TaskContainer::drawButton(QPainter *p)
 
     if (!frames.isEmpty() && m_startup && frames.at(currentFrame) != frames.end())
     {
-        QPixmap *anim = *frames.at(currentFrame);
+        TQPixmap *anim = *frames.at(currentFrame);
 
         if (anim && !anim->isNull())
         {
             // save the background for the other frames
-            bitBlt(&animBg, QPoint(0,0), pm, iconRect);
+            bitBlt(&animBg, TQPoint(0,0), pm, iconRect);
             // draw the animation frame
             bitBlt(pm, iconRect.x(), iconRect.y(), anim);
         }
@@ -753,22 +753,22 @@ void TaskContainer::drawButton(QPainter *p)
     // draw popup arrow
     if (m_filteredTasks.count() > 1)
     {
-        QStyle::PrimitiveElement e = QStyle::PE_ArrowLeft;
+        TQStyle::PrimitiveElement e = TQStyle::PE_ArrowLeft;
 
         switch (arrowType)
         {
-            case Qt::LeftArrow:  e = QStyle::PE_ArrowLeft;  break;
-            case Qt::RightArrow: e = QStyle::PE_ArrowRight; break;
-            case Qt::UpArrow:    e = QStyle::PE_ArrowUp;    break;
-            case Qt::DownArrow:  e = QStyle::PE_ArrowDown;  break;
+            case Qt::LeftArrow:  e = TQStyle::PE_ArrowLeft;  break;
+            case Qt::RightArrow: e = TQStyle::PE_ArrowRight; break;
+            case Qt::UpArrow:    e = TQStyle::PE_ArrowUp;    break;
+            case Qt::DownArrow:  e = TQStyle::PE_ArrowDown;  break;
         }
 
-        int flags = QStyle::Style_Enabled;
-        QRect ar = QStyle::visualRect(QRect(br.x() + br.width() - 8 - 2,
+        int flags = TQStyle::Style_Enabled;
+        TQRect ar = TQStyle::visualRect(TQRect(br.x() + br.width() - 8 - 2,
                                             br.y(), 8, br.height()), this);
         if (sunken)
         {
-            flags |= QStyle::Style_Down;
+            flags |= TQStyle::Style_Down;
         }
 
         style().drawPrimitive(e, p, ar, colors, flags);
@@ -776,7 +776,7 @@ void TaskContainer::drawButton(QPainter *p)
     
     // draw mouse over frame in transparent mode
     if (m_mouseOver && halo)
-        KickerLib::drawBlendedRect(p, QRect(0, 0, width(), height()), colorGroup().foreground());
+        KickerLib::drawBlendedRect(p, TQRect(0, 0, width(), height()), colorGroup().foreground());
 
     if (aboutToActivate)
     {
@@ -784,10 +784,10 @@ void TaskContainer::drawButton(QPainter *p)
     }
 }
 
-QString TaskContainer::name()
+TQString TaskContainer::name()
 {
     // default to container id
-    QString text;
+    TQString text;
 
     // single task -> use mainwindow caption
     if (m_filteredTasks.count() == 1)
@@ -798,7 +798,7 @@ QString TaskContainer::name()
     {
         // multiple tasks -> use the common part of all captions
         // if it is more descriptive than the class name
-        const QString match = m_filteredTasks.first()->visibleName();
+        const TQString match = m_filteredTasks.first()->visibleName();
         unsigned int maxLength = match.length();
         unsigned int i = 0;
         bool stop = false;
@@ -807,11 +807,11 @@ QString TaskContainer::name()
         // in common, and then use everything UP TO that as the name in the button
         while (i < maxLength)
         {
-            QChar check = match.at(i).lower();
+            TQChar check = match.at(i).lower();
             Task::List::iterator itEnd = m_filteredTasks.end();
             for (Task::List::iterator it = m_filteredTasks.begin(); it != itEnd; ++it)
             {
-                // we're doing a lot of Utf8 -> QString conversions here
+                // we're doing a lot of Utf8 -> TQString conversions here
                 // by repeatedly calling visibleIconicName() =/
                 if (check != (*it)->visibleName().at(i).lower())
                 {
@@ -863,14 +863,14 @@ QString TaskContainer::name()
         // this is faster than (" [%1]").arg() or +
         // and it's as fast as using append, but cleaner looking
         text += " [";
-        text += QString::number(m_filteredTasks.count());
+        text += TQString::number(m_filteredTasks.count());
         text += "]";
     }
 
     return text;
 }
 
-void TaskContainer::mousePressEvent( QMouseEvent* e )
+void TaskContainer::mousePressEvent( TQMouseEvent* e )
 {
     if (discardNextMouseEvent)
     {
@@ -884,7 +884,7 @@ void TaskContainer::mousePressEvent( QMouseEvent* e )
     }
     else
     {
-        m_dragStartPos = QPoint();
+        m_dragStartPos = TQPoint();
     }
 
     int buttonAction = 0;
@@ -913,9 +913,9 @@ void TaskContainer::mousePressEvent( QMouseEvent* e )
     }
 }
 
-void TaskContainer::mouseReleaseEvent(QMouseEvent *e)
+void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
 {
-    m_dragStartPos = QPoint();
+    m_dragStartPos = TQPoint();
 
     if (!TaskBarSettings::drawButtons())
     {
@@ -926,7 +926,7 @@ void TaskContainer::mouseReleaseEvent(QMouseEvent *e)
     // button as unpressed just before it's activated.
     if (!rect().contains(e->pos()))
     {
-        QToolButton::mouseReleaseEvent(e);
+        TQToolButton::mouseReleaseEvent(e);
         return;
     }
 
@@ -960,7 +960,7 @@ void TaskContainer::mouseReleaseEvent(QMouseEvent *e)
     }
 
     performAction( buttonAction );
-    QTimer::singleShot(0, this, SLOT(update()));
+    TQTimer::singleShot(0, this, TQT_SLOT(update()));
 }
 
 void TaskContainer::performAction(int action)
@@ -1130,7 +1130,7 @@ void TaskContainer::popupMenu(int action)
     }
 
     // calc popup menu position
-    QPoint pos(mapToGlobal(QPoint(0, 0)));
+    TQPoint pos(mapToGlobal(TQPoint(0, 0)));
 
     switch( arrowType )
     {
@@ -1141,12 +1141,12 @@ void TaskContainer::popupMenu(int action)
             pos.setX(pos.x() - m_menu->sizeHint().width());
             break;
         case DownArrow:
-            if ( QApplication::reverseLayout() )
+            if ( TQApplication::reverseLayout() )
                 pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
             pos.setY( pos.y() + height() );
             break;
         case UpArrow:
-            if ( QApplication::reverseLayout() )
+            if ( TQApplication::reverseLayout() )
                 pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
             pos.setY(pos.y() - m_menu->sizeHint().height());
             break;
@@ -1160,7 +1160,7 @@ void TaskContainer::popupMenu(int action)
     m_menu = 0;
 }
 
-void TaskContainer::mouseMoveEvent( QMouseEvent* e )
+void TaskContainer::mouseMoveEvent( TQMouseEvent* e )
 {
     kdDebug() << "regular move" << endl;
     if (!m_dragStartPos.isNull())
@@ -1168,10 +1168,10 @@ void TaskContainer::mouseMoveEvent( QMouseEvent* e )
         startDrag(e->pos());
     }
 
-    QToolButton::mouseMoveEvent(e);
+    TQToolButton::mouseMoveEvent(e);
 }
 
-bool TaskContainer::startDrag(const QPoint& pos)
+bool TaskContainer::startDrag(const TQPoint& pos)
 {
     if (m_filteredTasks.count() != 1)
     {
@@ -1205,21 +1205,21 @@ bool TaskContainer::startDrag(const QPoint& pos)
 // This is the code that gives us the proper behavior
 // when a popup menu is displayed and we are clicked:
 // close the menu, and don't reopen it immediately.
-// It's copied from QToolButton. Unfortunately Qt is lame
+// It's copied from TQToolButton. Unfortunately Qt is lame
 // as usual and makes interesting stuff private or
 // non-virtual, so we have to copy code.
-bool TaskContainer::eventFilter(QObject *o, QEvent *e)
+bool TaskContainer::eventFilter(TQObject *o, TQEvent *e)
 {
     switch ( e->type() )
     {
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonDblClick:
+        case TQEvent::MouseButtonPress:
+        case TQEvent::MouseButtonDblClick:
         {
-            QMouseEvent *me = (QMouseEvent*)e;
-            QPoint p = me->globalPos();
-            if ( QApplication::widgetAt( p, true ) == this )
+            TQMouseEvent *me = (TQMouseEvent*)e;
+            TQPoint p = me->globalPos();
+            if ( TQApplication::widgetAt( p, true ) == this )
             {
-                if (me->type() == QEvent::MouseButtonPress &&
+                if (me->type() == TQEvent::MouseButtonPress &&
                     me->button() == LeftButton)
                 {
                     m_dragStartPos = mapFromGlobal(p);
@@ -1229,25 +1229,25 @@ bool TaskContainer::eventFilter(QObject *o, QEvent *e)
             }
             break;
         }
-        case QEvent::MouseButtonRelease:
+        case TQEvent::MouseButtonRelease:
         {
-            m_dragStartPos = QPoint();
+            m_dragStartPos = TQPoint();
             break;
         }
-        case QEvent::MouseMove:
+        case TQEvent::MouseMove:
         {
             if (!m_dragStartPos.isNull())
             {
-                QMouseEvent* me = static_cast<QMouseEvent*>(e);
-                QPoint p(me->globalPos());
+                TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
+                TQPoint p(me->globalPos());
 
                 if (me->state() & LeftButton &&
-                    QApplication::widgetAt(p, true) == this)
+                    TQApplication::widgetAt(p, true) == this)
                 {
                     kdDebug() << "event move" << endl;
                     if (startDrag(mapFromGlobal(p)))
                     {
-                        QPopupMenu* menu = dynamic_cast<QPopupMenu*>(o);
+                        TQPopupMenu* menu = dynamic_cast<TQPopupMenu*>(o);
 
                         if (menu)
                         {
@@ -1263,7 +1263,7 @@ bool TaskContainer::eventFilter(QObject *o, QEvent *e)
         break;
     }
 
-    return QToolButton::eventFilter( o, e );
+    return TQToolButton::eventFilter( o, e );
 }
 
 void TaskContainer::setArrowType( Qt::ArrowType at )
@@ -1277,19 +1277,19 @@ void TaskContainer::setArrowType( Qt::ArrowType at )
     update();
 }
 
-void TaskContainer::publishIconGeometry( QPoint global )
+void TaskContainer::publishIconGeometry( TQPoint global )
 {
-    QPoint p = global + geometry().topLeft();
+    TQPoint p = global + geometry().topLeft();
 
     Task::List::const_iterator itEnd = tasks.constEnd();
     for (Task::List::const_iterator it = tasks.constBegin(); it != itEnd; ++it)
     {
         Task::Ptr t = *it;
-        t->publishIconGeometry(QRect(p.x(), p.y(), width(), height()));
+        t->publishIconGeometry(TQRect(p.x(), p.y(), width(), height()));
     }
 }
 
-void TaskContainer::dragEnterEvent( QDragEnterEvent* e )
+void TaskContainer::dragEnterEvent( TQDragEnterEvent* e )
 {
     // ignore task drags and applet drags
     if (TaskDrag::canDecode(e) || PanelDrag::canDecode(e))
@@ -1310,37 +1310,37 @@ void TaskContainer::dragEnterEvent( QDragEnterEvent* e )
         dragSwitchTimer.start(1000, true);
     }
 
-    QToolButton::dragEnterEvent( e );
+    TQToolButton::dragEnterEvent( e );
 }
 
-void TaskContainer::dragLeaveEvent( QDragLeaveEvent* e )
+void TaskContainer::dragLeaveEvent( TQDragLeaveEvent* e )
 {
     dragSwitchTimer.stop();
 
-    QToolButton::dragLeaveEvent( e );
+    TQToolButton::dragLeaveEvent( e );
 }
 
-void TaskContainer::enterEvent(QEvent* e)
+void TaskContainer::enterEvent(TQEvent* e)
 {
-    QToolTip::remove(this);
+    TQToolTip::remove(this);
     m_mouseOver = true;
     updateNow();
 
     if (tasks.isEmpty())
     {
-        QToolButton::enterEvent(e);
+        TQToolButton::enterEvent(e);
         return;
     }
 
     if (!KickerSettings::showMouseOverEffects())
     {
-        QString tooltip = "<qt>" + QStyleSheet::escape(name()) + "</qt>";
-        QToolTip::add(this, tooltip);
+        TQString tooltip = "<qt>" + TQStyleSheet::escape(name()) + "</qt>";
+        TQToolTip::add(this, tooltip);
         return;
     }
 }
 
-void TaskContainer::leaveEvent(QEvent*)
+void TaskContainer::leaveEvent(TQEvent*)
 {
     m_mouseOver = false;
     updateNow();
@@ -1458,14 +1458,14 @@ void TaskContainer::updateFilteredTaskList()
         }
         else
         {
-            t->publishIconGeometry( QRect());
+            t->publishIconGeometry( TQRect());
         }
     }
 
     // sort container list by desktop
     if (taskBar->sortByDesktop() && m_filteredTasks.count() > 1)
     {
-        QValueVector<QPair<int, Task::Ptr> > sorted;
+        TQValueVector<QPair<int, Task::Ptr> > sorted;
         sorted.resize(m_filteredTasks.count());
         int i = 0;
 
@@ -1480,7 +1480,7 @@ void TaskContainer::updateFilteredTaskList()
         qHeapSort(sorted);
 
         m_filteredTasks.clear();
-        for (QValueVector<QPair<int, Task::Ptr> >::iterator it = sorted.begin();
+        for (TQValueVector<QPair<int, Task::Ptr> >::iterator it = sorted.begin();
              it != sorted.end();
              ++it)
         {
@@ -1525,9 +1525,9 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
         return;
     }
 
-    QPixmap pixmap;
-    QString name;
-    QString details;
+    TQPixmap pixmap;
+    TQString name;
+    TQString details;
     
     if (m_filteredTasks.count() > 0)
     {
@@ -1549,7 +1549,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
         }
     
         // Collect all desktops the tasks are on. Sort naturally.
-        QMap<int, QString> desktopMap;
+        TQMap<int, TQString> desktopMap;
         bool demandsAttention = false;
         bool modified = false;
         bool allDesktops = false;
@@ -1587,8 +1587,8 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
             }
             else
             {
-                QStringList desktopNames = desktopMap.values();
-                details.append(i18n("On %1").arg(QStyleSheet::escape(desktopNames.join(", "))) + "<br>");
+                TQStringList desktopNames = desktopMap.values();
+                details.append(i18n("On %1").arg(TQStyleSheet::escape(desktopNames.join(", "))) + "<br>");
             }
         }
     
@@ -1602,7 +1602,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
         {
             details.append(i18n("Has unsaved changes"));
     
-            static QString modStr = "[" + i18n( "modified" ) + "]";
+            static TQString modStr = "[" + i18n( "modified" ) + "]";
             int modStrPos = name.find(modStr);
     
             if (modStrPos >= 0)
@@ -1613,7 +1613,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
         }
     }
 
-    data.message = QStyleSheet::escape(name);
+    data.message = TQStyleSheet::escape(name);
     data.subtext = details;
     data.icon = pixmap;
     data.direction = KickerLib::arrowToDirection(arrowType);
@@ -1624,7 +1624,7 @@ void TaskContainer::finish()
     // Disconnect all signal/slot connections to avoid triggering a popupMenu() call,
     // whose event loop is the root of all (or at least much) evil.
     // Unfortunately, we can't just do "disconnect()", because that gets us a bunch
-    // of dangling QGuardedPtr objects (most notably in QTipManager.) (kling)
+    // of dangling TQGuardedPtr objects (most notably in QTipManager.) (kling)
 
     animationTimer.disconnect();
     dragSwitchTimer.disconnect();

@@ -12,10 +12,10 @@
 #ifndef KXKBCONFIG_H
 #define KXKBCONFIG_H
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qptrqueue.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqptrqueue.h>
+#include <tqmap.h>
 
 
 /* Utility classes for per-window/per-application layout implementation
@@ -29,37 +29,37 @@ enum SwitchingPolicy {
 
 
 
-inline QString createPair(QString key, QString value) 
+inline TQString createPair(TQString key, TQString value) 
 {
 	if( value.isEmpty() )
 		return key;
-	return QString("%1(%2)").arg(key, value);
+	return TQString("%1(%2)").arg(key, value);
 } 
 
 struct LayoutUnit {
-	QString layout;
-	QString variant;
-	QString includeGroup;
-	QString displayName;
+	TQString layout;
+	TQString variant;
+	TQString includeGroup;
+	TQString displayName;
  	int defaultGroup;
 	
 	LayoutUnit() {}
 	
-	LayoutUnit(QString layout_, QString variant_):
+	LayoutUnit(TQString layout_, TQString variant_):
 		layout(layout_),
 		variant(variant_)
 	{}
 	
-	LayoutUnit(QString pair) {
+	LayoutUnit(TQString pair) {
 		setFromPair( pair );
 	}
 	
-	void setFromPair(const QString& pair) {
+	void setFromPair(const TQString& pair) {
 		layout = parseLayout(pair);
 		variant = parseVariant(pair);
 	}
 	
-	QString toPair() const {
+	TQString toPair() const {
 		return createPair(layout, variant);
 	}
 	
@@ -78,8 +78,8 @@ struct LayoutUnit {
 	}
 	
 //private:
-	static const QString parseLayout(const QString &layvar);
-	static const QString parseVariant(const QString &layvar);
+	static const TQString parseLayout(const TQString &layvar);
+	static const TQString parseVariant(const TQString &layvar);
 };
 
 extern const LayoutUnit DEFAULT_LAYOUT_UNIT;
@@ -100,9 +100,9 @@ public:
 	bool m_stickySwitching;
 	int m_stickySwitchingDepth;
 	
-	QString m_model;
-	QString m_options;
-	QValueList<LayoutUnit> m_layouts;
+	TQString m_model;
+	TQString m_options;
+	TQValueList<LayoutUnit> m_layouts;
 
 	LayoutUnit getDefaultLayout();
 	
@@ -110,12 +110,12 @@ public:
 	void save();
 	void setDefaults();
 	
-	QStringList getLayoutStringList(/*bool compact*/);
-	static QString getDefaultDisplayName(const QString& code_);
-	static QString getDefaultDisplayName(const LayoutUnit& layoutUnit, bool single=false);
+	TQStringList getLayoutStringList(/*bool compact*/);
+	static TQString getDefaultDisplayName(const TQString& code_);
+	static TQString getDefaultDisplayName(const LayoutUnit& layoutUnit, bool single=false);
 
 private:	
-	static const QMap<QString, QString> parseIncludesMap(const QStringList& pairList);
+	static const TQMap<TQString, TQString> parseIncludesMap(const TQStringList& pairList);
 };
 
 

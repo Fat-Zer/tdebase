@@ -22,18 +22,18 @@
 #include <kaboutdata.h>
 #include <kfiledialog.h>
 
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
+#include <tqlayout.h>
+#include <tqlistbox.h>
+#include <tqpushbutton.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
 
 #include "kcmcgi.h"
 #include "kcmcgi.moc"
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_cgi( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_cgi( TQWidget *parent, const char * )
   {
     KGlobal::locale()->insertCatalogue("kcmcgi");
     return new KCMCgi( parent, "kcmcgi" );
@@ -41,27 +41,27 @@ extern "C"
 }
 
 
-KCMCgi::KCMCgi(QWidget *parent, const char *name)
+KCMCgi::KCMCgi(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
   setButtons(Default|Apply);
 
-  QVBoxLayout *topLayout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *topLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
-  QGroupBox *topBox = new QGroupBox( 1, Horizontal, i18n("Paths to Local CGI Programs"), this );
+  TQGroupBox *topBox = new TQGroupBox( 1, Horizontal, i18n("Paths to Local CGI Programs"), this );
   topLayout->addWidget( topBox );
 
-  mListBox = new QListBox( topBox );
+  mListBox = new TQListBox( topBox );
 
-  QHBox *buttonBox = new QHBox( topBox );
+  TQHBox *buttonBox = new TQHBox( topBox );
   buttonBox->setSpacing( KDialog::spacingHint() );
 
-  mAddButton = new QPushButton( i18n("Add..."), buttonBox );
-  connect( mAddButton, SIGNAL( clicked() ), SLOT( addPath() ) );
+  mAddButton = new TQPushButton( i18n("Add..."), buttonBox );
+  connect( mAddButton, TQT_SIGNAL( clicked() ), TQT_SLOT( addPath() ) );
 
-  mRemoveButton = new QPushButton( i18n("Remove"), buttonBox );
-  connect( mRemoveButton, SIGNAL( clicked() ), SLOT( removePath() ) );
-  connect( mListBox, SIGNAL( clicked ( QListBoxItem * )),this, SLOT( slotItemSelected( QListBoxItem *)));
+  mRemoveButton = new TQPushButton( i18n("Remove"), buttonBox );
+  connect( mRemoveButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removePath() ) );
+  connect( mListBox, TQT_SIGNAL( clicked ( TQListBoxItem * )),this, TQT_SLOT( slotItemSelected( TQListBoxItem *)));
 
   mConfig = new KConfig("kcmcgirc");
 
@@ -82,7 +82,7 @@ KCMCgi::~KCMCgi()
   delete mConfig;
 }
 
-void KCMCgi::slotItemSelected( QListBoxItem * )
+void KCMCgi::slotItemSelected( TQListBoxItem * )
 {
     updateButton();
 }
@@ -100,7 +100,7 @@ void KCMCgi::defaults()
 
 void KCMCgi::save()
 {
-  QStringList paths;
+  TQStringList paths;
 
   uint i;
   for( i = 0; i < mListBox->count(); ++i ) {
@@ -116,14 +116,14 @@ void KCMCgi::save()
 void KCMCgi::load()
 {
   mConfig->setGroup( "General" );
-  QStringList paths = mConfig->readListEntry( "Paths" );
+  TQStringList paths = mConfig->readListEntry( "Paths" );
 
   mListBox->insertStringList( paths );
 }
 
 void KCMCgi::addPath()
 {
-  QString path = KFileDialog::getExistingDirectory( QString::null, this );
+  TQString path = KFileDialog::getExistingDirectory( TQString::null, this );
 
   if ( !path.isEmpty() ) {
     mListBox->insertItem( path );
@@ -142,7 +142,7 @@ void KCMCgi::removePath()
   updateButton();
 }
 
-QString KCMCgi::quickHelp() const
+TQString KCMCgi::quickHelp() const
 {
   return i18n("<h1>CGI Scripts</h1> The CGI KIO slave lets you execute "
               "local CGI programs without the need to run a web server. "

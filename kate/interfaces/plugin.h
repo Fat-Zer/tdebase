@@ -20,8 +20,8 @@
 #ifndef _KATE_PLUGIN_INCLUDE_
 #define _KATE_PLUGIN_INCLUDE_
 
-#include <qwidget.h>
-#include <qpixmap.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
 #include <kicontheme.h>
 
 #include <kurl.h>
@@ -52,7 +52,7 @@ class KDE_EXPORT Plugin : public QObject
     unsigned int myPluginNumber;
 };
 
-KDE_EXPORT Plugin *createPlugin ( const char* libname, Application *application = 0, const char *name = 0,const QStringList &args = QStringList() );
+KDE_EXPORT Plugin *createPlugin ( const char* libname, Application *application = 0, const char *name = 0,const TQStringList &args = TQStringList() );
 
 /*
  * view plugin class

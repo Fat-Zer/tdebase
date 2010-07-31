@@ -26,30 +26,30 @@
 #include <knuminput.h>
 #include <klocale.h>
 
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qspinbox.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqspinbox.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include "WorkSheetSettings.h"
 
-WorkSheetSettings::WorkSheetSettings( QWidget* parent, const char* name )
-  : KDialogBase( parent, name, true, QString::null, Ok|Cancel, Ok, true )
+WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
+  : KDialogBase( parent, name, true, TQString::null, Ok|Cancel, Ok, true )
 {
   setCaption( i18n( "Worksheet Properties" ) );
 
-  QWidget *page = new QWidget( this );
+  TQWidget *page = new TQWidget( this );
   setMainWidget( page );
 
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, spacingHint() );
 
-  QGroupBox *group = new QGroupBox( 0, Qt::Vertical, i18n( "Title" ), page );
+  TQGroupBox *group = new TQGroupBox( 0, Qt::Vertical, i18n( "Title" ), page );
   group->layout()->setMargin( marginHint() );
   group->layout()->setSpacing( spacingHint() );
 
-  QGridLayout *groupLayout = new QGridLayout( group->layout(), 1, 1 );
+  TQGridLayout *groupLayout = new TQGridLayout( group->layout(), 1, 1 );
   groupLayout->setAlignment( Qt::AlignTop );
 
   mSheetTitle = new KLineEdit( group );
@@ -57,14 +57,14 @@ WorkSheetSettings::WorkSheetSettings( QWidget* parent, const char* name )
 
   topLayout->addWidget( group );
 
-  group = new QGroupBox( 0, Qt::Vertical, i18n( "Properties" ), page );
+  group = new TQGroupBox( 0, Qt::Vertical, i18n( "Properties" ), page );
   group->layout()->setMargin( marginHint() );
   group->layout()->setSpacing( spacingHint() );
 
-  groupLayout = new QGridLayout( group->layout(), 3, 2 );
+  groupLayout = new TQGridLayout( group->layout(), 3, 2 );
   groupLayout->setAlignment( Qt::AlignTop );
 
-  QLabel *label = new QLabel( i18n( "Rows:" ), group );
+  TQLabel *label = new TQLabel( i18n( "Rows:" ), group );
   groupLayout->addWidget( label, 0, 0 );
 
   mRows = new KIntNumInput( 1, group );
@@ -73,7 +73,7 @@ WorkSheetSettings::WorkSheetSettings( QWidget* parent, const char* name )
   groupLayout->addWidget( mRows, 0, 1 );
   label->setBuddy( mRows );
 
-  label = new QLabel( i18n( "Columns:" ), group );
+  label = new TQLabel( i18n( "Columns:" ), group );
   groupLayout->addWidget( label, 1, 0 );
 
   mColumns = new KIntNumInput( 1, group );
@@ -82,7 +82,7 @@ WorkSheetSettings::WorkSheetSettings( QWidget* parent, const char* name )
   groupLayout->addWidget( mColumns, 1, 1 );
   label->setBuddy( mColumns );
 
-  label = new QLabel( i18n( "Update interval:" ), group );
+  label = new TQLabel( i18n( "Update interval:" ), group );
   groupLayout->addWidget( label, 2, 0 );
 
   mInterval = new KIntNumInput( 2, group );
@@ -94,16 +94,16 @@ WorkSheetSettings::WorkSheetSettings( QWidget* parent, const char* name )
 
   topLayout->addWidget( group );
 
-  QWhatsThis::add( mRows, i18n( "Enter the number of rows the sheet should have." ) );
-  QWhatsThis::add( mColumns, i18n( "Enter the number of columns the sheet should have." ) );
-  QWhatsThis::add( mInterval, i18n( "All displays of the sheet are updated at the rate specified here." ) );
-  QToolTip::add( mSheetTitle, i18n( "Enter the title of the worksheet here." ) );
+  TQWhatsThis::add( mRows, i18n( "Enter the number of rows the sheet should have." ) );
+  TQWhatsThis::add( mColumns, i18n( "Enter the number of columns the sheet should have." ) );
+  TQWhatsThis::add( mInterval, i18n( "All displays of the sheet are updated at the rate specified here." ) );
+  TQToolTip::add( mSheetTitle, i18n( "Enter the title of the worksheet here." ) );
 
   KAcceleratorManager::manage( page );
 
   mSheetTitle->setFocus();
 
-  resize( QSize( 250, 230 ).expandedTo( minimumSizeHint() ) );
+  resize( TQSize( 250, 230 ).expandedTo( minimumSizeHint() ) );
 }
 
 WorkSheetSettings::~WorkSheetSettings()
@@ -140,12 +140,12 @@ int WorkSheetSettings::interval() const
   return mInterval->value();
 }
 
-void WorkSheetSettings::setSheetTitle( const QString &title )
+void WorkSheetSettings::setSheetTitle( const TQString &title )
 {
   mSheetTitle->setText( title );
 }
 
-QString WorkSheetSettings::sheetTitle() const
+TQString WorkSheetSettings::sheetTitle() const
 {
   return mSheetTitle->text();
 }

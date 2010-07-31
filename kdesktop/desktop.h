@@ -22,8 +22,8 @@
 
 #include "KDesktopIface.h"
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 
 #include <kapplication.h>	// for logout parameters
 
@@ -45,11 +45,11 @@ class KRootWidget : public QObject
     Q_OBJECT
 public:
    KRootWidget();
-   bool eventFilter( QObject *, QEvent * e );
+   bool eventFilter( TQObject *, TQEvent * e );
 signals:
    void wheelRolled( int delta );
-   void colorDropEvent( QDropEvent* e );
-   void imageDropEvent( QDropEvent* e );
+   void colorDropEvent( TQDropEvent* e );
+   void imageDropEvent( TQDropEvent* e );
    void newWallpaper( const KURL& url );
 };
 
@@ -58,7 +58,7 @@ signals:
  * It handles the background, the screensaver and all the rest of the global stuff.
  * The icon view is a child widget of KDesktop.
  */
-class KDesktop : public QWidget, virtual public KDesktopIface
+class KDesktop : public TQWidget, virtual public KDesktopIface
 {
   Q_OBJECT
 
@@ -75,11 +75,11 @@ public:
   virtual void selectAll();
   virtual void unselectAll();
   virtual void refreshIcons();
-  virtual QStringList selectedURLs();
+  virtual TQStringList selectedURLs();
 
   virtual void configure();
   virtual void popupExecuteCommand();
-  virtual void popupExecuteCommand(const QString& content);
+  virtual void popupExecuteCommand(const TQString& content);
   virtual void refresh();
   virtual void logout();
   virtual void clearCommandHistory();
@@ -87,7 +87,7 @@ public:
 
   virtual void switchDesktops( int delta );
 
-  virtual void desktopIconsAreaChanged(const QRect &area, int screen);
+  virtual void desktopIconsAreaChanged(const TQRect &area, int screen);
 
   void logout( KApplication::ShutdownConfirm confirm, KApplication::ShutdownType sdtype );
 
@@ -141,8 +141,8 @@ private slots:
   void slotSetVRoot();
 
   /** Connected to KDIconView */
-  void handleImageDropEvent( QDropEvent * );
-  void handleColorDropEvent( QDropEvent * );
+  void handleImageDropEvent( TQDropEvent * );
+  void handleColorDropEvent( TQDropEvent * );
   void slotNewWallpaper(const KURL &url);
 
   /** Connected to KDIconView and KRootWidget  */
@@ -155,14 +155,14 @@ protected:
   void initConfig();
   void initRoot();
 
-  virtual void closeEvent(QCloseEvent *e);
+  virtual void closeEvent(TQCloseEvent *e);
 
   virtual bool isVRoot() { return set_vroot; }
   virtual void setVRoot( bool enable );
 
   virtual bool isIconsEnabled() { return m_bDesktopEnabled; }
   virtual void setIconsEnabled( bool enable );
-  virtual bool event ( QEvent * e );
+  virtual bool event ( TQEvent * e );
 
 private slots:
   void desktopResized();
@@ -195,7 +195,7 @@ private:
   /** Whether or not to switch desktops when mouse wheel is rolled */
   bool m_bWheelSwitchesWorkspace;
 
-  QTimer *m_waitForKicker;
+  TQTimer *m_waitForKicker;
 
   /** Default mouse wheel direction (Fwd means mwheel up switches to
       lower desktop)

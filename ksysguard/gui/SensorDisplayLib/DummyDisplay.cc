@@ -24,35 +24,35 @@
 #include <klocale.h>
 #include <ksgrd/SensorManager.h>
 
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 
 #include "DummyDisplay.h"
 
-DummyDisplay::DummyDisplay( QWidget* parent, const char* name,
-                            const QString&, double, double )
+DummyDisplay::DummyDisplay( TQWidget* parent, const char* name,
+                            const TQString&, double, double )
   : KSGRD::SensorDisplay( parent, name, i18n( "Drop Sensor Here" ) )
 {
   setMinimumSize( 16, 16 );
 
-  QWhatsThis::add( this, i18n(
+  TQWhatsThis::add( this, i18n(
                    "This is an empty space in a worksheet. Drag a sensor from "
                    "the Sensor Browser and drop it here. A sensor display will "
                    "appear that allows you to monitor the values of the sensor "
                    "over time." ) );
 }
 
-void DummyDisplay::resizeEvent( QResizeEvent* )
+void DummyDisplay::resizeEvent( TQResizeEvent* )
 {
   frame()->setGeometry( 0, 0, width(), height() );
 }
 
-bool DummyDisplay::eventFilter( QObject* object, QEvent* event )
+bool DummyDisplay::eventFilter( TQObject* object, TQEvent* event )
 {
-  if ( event->type() == QEvent::MouseButtonRelease &&
-       ( (QMouseEvent*)event)->button() == LeftButton )
+  if ( event->type() == TQEvent::MouseButtonRelease &&
+       ( (TQMouseEvent*)event)->button() == LeftButton )
     setFocus();
 
-	return QWidget::eventFilter( object, event );
+	return TQWidget::eventFilter( object, event );
 }
 
 #include "DummyDisplay.moc"

@@ -29,14 +29,14 @@ class SidebarExtension : public KPanelExtension
     Q_OBJECT
 
 public:
-    SidebarExtension( const QString& configFile,
+    SidebarExtension( const TQString& configFile,
                      Type t = Normal,
                      int actions = 0,
-                     QWidget *parent = 0, const char *name = 0 );
+                     TQWidget *parent = 0, const char *name = 0 );
 
     virtual ~SidebarExtension();
 
-    QSize sizeHint( Position, QSize maxSize ) const;
+    TQSize sizeHint( Position, TQSize maxSize ) const;
     Position preferedPosition() const;
 
     virtual void positionChange( Position position );
@@ -44,7 +44,7 @@ public:
 protected:
     virtual void about();
     virtual void preferences();
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
 protected slots:
     void openURLRequest( const KURL &, const KParts::URLArgs &);
     void needLayoutUpdate(bool);
@@ -52,11 +52,11 @@ protected slots:
 private:
     int m_currentWidth;
     int m_x;
-    QFrame *m_resizeHandle;
+    TQFrame *m_resizeHandle;
     bool m_resizing;
     int m_expandedSize;
-    QHBoxLayout *m_layout;
-    QVBox *m_sbWrapper;
+    TQHBoxLayout *m_layout;
+    TQVBox *m_sbWrapper;
 };
 
 #endif

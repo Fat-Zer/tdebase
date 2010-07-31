@@ -11,9 +11,9 @@
 #ifndef VOICE_RECORDER_H
 #define VOICE_RECORDER_H
 
-#include <qframe.h>
+#include <tqframe.h>
 #include "ui/voice_input_widget_ui.h"
-#include <qmemarray.h>
+#include <tqmemarray.h>
 
 #include "sound.h"
 class QMouseEvent;
@@ -33,7 +33,7 @@ class VoiceRecorder : public Voice_input_widget_ui
     Q_OBJECT
 
     public:
-        VoiceRecorder(const Sound& sound_P, const QString &voiceId, QWidget *parent, const char *name);
+        VoiceRecorder(const Sound& sound_P, const TQString &voiceId, TQWidget *parent, const char *name);
         ~VoiceRecorder();
 
         Sound sound() const;
@@ -46,7 +46,7 @@ class VoiceRecorder : public Voice_input_widget_ui
             }
             
         static bool init( KLibrary* lib );
-        typedef void (*arts_play_fun)( const QString& file );
+        typedef void (*arts_play_fun)( const TQString& file );
 
     protected slots:
         void slotStopPressed();
@@ -64,7 +64,7 @@ class VoiceRecorder : public Voice_input_widget_ui
         Sound _sound;
         State _state;
         KTempFile *_tempFile;
-        QString _voiceId;
+        TQString _voiceId;
         static arts_play_fun arts_play;
     };
 

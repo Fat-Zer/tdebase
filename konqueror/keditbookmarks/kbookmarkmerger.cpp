@@ -31,9 +31,9 @@
 
 #include <dcopclient.h>
 
-#include <qdir.h>
-#include <qdom.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqdom.h>
+#include <tqfile.h>
 
 #include <X11/Xlib.h>
 
@@ -82,7 +82,7 @@ int main( int argc, char**argv )
 	}
 
 	KBookmarkManager *konqBookmarks = KBookmarkManager::userBookmarksManager();
-	QStringList mergedFiles;
+	TQStringList mergedFiles;
 	{
 		KBookmarkGroup root = konqBookmarks->root();
 		for ( KBookmark bm = root.first(); !bm.isNull(); bm = root.next( bm ) ) {
@@ -90,7 +90,7 @@ int main( int argc, char**argv )
 				continue;
 			}
 
-			QString mergedFrom = bm.metaDataItem( "merged_from" );
+			TQString mergedFrom = bm.metaDataItem( "merged_from" );
 			if ( !mergedFrom.isNull() ) {
 				mergedFiles << mergedFrom;
 			}
@@ -99,20 +99,20 @@ int main( int argc, char**argv )
 
 	bool didMergeBookmark = false;
 
-	QString extraBookmarksDirName = QFile::decodeName( args->arg( 0 ) );
-	QDir extraBookmarksDir( extraBookmarksDirName, "*.xml" );
+	TQString extraBookmarksDirName = TQFile::decodeName( args->arg( 0 ) );
+	TQDir extraBookmarksDir( extraBookmarksDirName, "*.xml" );
 	if ( !extraBookmarksDir.isReadable() ) {
 		kdError() << "Failed to read files in directory " << extraBookmarksDirName << endl;
 		return 1;
 	}
 
 	for ( unsigned int i = 0; i < extraBookmarksDir.count(); ++i ) {
-		const QString fileName = extraBookmarksDir[ i ];
+		const TQString fileName = extraBookmarksDir[ i ];
 		if ( mergedFiles.find( fileName ) != mergedFiles.end() ) {
 			continue;
 		}
 
-		const QString absPath = extraBookmarksDir.filePath( fileName );
+		const TQString absPath = extraBookmarksDir.filePath( fileName );
 		KBookmarkManager *mgr = KBookmarkManager::managerForFile( absPath, false );
 		KBookmarkGroup root = mgr->root();
 		for ( KBookmark bm = root.first(); !bm.isNull(); bm = root.next( bm ) ) {

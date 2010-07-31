@@ -22,13 +22,13 @@
 #include "config.h"
 #endif
 
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qgroupbox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqpushbutton.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -40,29 +40,29 @@
 
 #include "kdebugdialog.h"
 
-KDebugDialog::KDebugDialog( QStringList areaList, QWidget *parent, const char *name, bool modal )
+KDebugDialog::KDebugDialog( TQStringList areaList, TQWidget *parent, const char *name, bool modal )
   : KAbstractDebugDialog( parent, name, modal )
 {
   setCaption(i18n("Debug Settings"));
 
-  QVBoxLayout *topLayout = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  TQVBoxLayout *topLayout = new TQVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
   if( topLayout == 0 ) { return; } // can this happen ?
 
-  QLabel * tmpLabel = new QLabel( i18n("Debug area:"), this );
+  TQLabel * tmpLabel = new TQLabel( i18n("Debug area:"), this );
   tmpLabel->setFixedHeight( fontMetrics().lineSpacing() );
   topLayout->addWidget( tmpLabel );
 
   // Build combo of debug areas
-  pDebugAreas = new QComboBox( false, this );
+  pDebugAreas = new TQComboBox( false, this );
   pDebugAreas->setFixedHeight( pDebugAreas->sizeHint().height() );
   pDebugAreas->insertStringList( areaList );
   topLayout->addWidget( pDebugAreas );
 
-  QGridLayout *gbox = new QGridLayout( 2, 2, KDialog::marginHint() );
+  TQGridLayout *gbox = new TQGridLayout( 2, 2, KDialog::marginHint() );
   if( gbox == 0 ) { return; }
   topLayout->addLayout( gbox );
 
-  QStringList destList;
+  TQStringList destList;
   destList.append( i18n("File") );
   destList.append( i18n("Message Box") );
   destList.append( i18n("Shell") );
@@ -72,105 +72,105 @@ KDebugDialog::KDebugDialog( QStringList areaList, QWidget *parent, const char *n
   //
   // Upper left frame
   //
-  pInfoGroup = new QGroupBox( i18n("Information"), this );
+  pInfoGroup = new TQGroupBox( i18n("Information"), this );
   gbox->addWidget( pInfoGroup, 0, 0 );
-  QVBoxLayout *vbox = new QVBoxLayout( pInfoGroup, KDialog::spacingHint() );
+  TQVBoxLayout *vbox = new TQVBoxLayout( pInfoGroup, KDialog::spacingHint() );
   vbox->addSpacing( fontMetrics().lineSpacing() );
-  pInfoLabel1 = new QLabel( i18n("Output to:"), pInfoGroup );
+  pInfoLabel1 = new TQLabel( i18n("Output to:"), pInfoGroup );
   vbox->addWidget( pInfoLabel1 );
-  pInfoCombo = new QComboBox( false, pInfoGroup );
-  connect(pInfoCombo, SIGNAL(activated(int)),
-	  this, SLOT(slotDestinationChanged(int)));
+  pInfoCombo = new TQComboBox( false, pInfoGroup );
+  connect(pInfoCombo, TQT_SIGNAL(activated(int)),
+	  this, TQT_SLOT(slotDestinationChanged(int)));
   vbox->addWidget( pInfoCombo );
   pInfoCombo->insertStringList( destList );
-  pInfoLabel2 = new QLabel( i18n("Filename:"), pInfoGroup );
+  pInfoLabel2 = new TQLabel( i18n("Filename:"), pInfoGroup );
   vbox->addWidget( pInfoLabel2 );
-  pInfoFile = new QLineEdit( pInfoGroup );
+  pInfoFile = new TQLineEdit( pInfoGroup );
   vbox->addWidget( pInfoFile );
   /*
-  pInfoLabel3 = new QLabel( i18n("Show only area(s):"), pInfoGroup );
+  pInfoLabel3 = new TQLabel( i18n("Show only area(s):"), pInfoGroup );
   vbox->addWidget( pInfoLabel3 );
-  pInfoShow = new QLineEdit( pInfoGroup );
+  pInfoShow = new TQLineEdit( pInfoGroup );
   vbox->addWidget( pInfoShow );
   */
 
   //
   // Upper right frame
   //
-  pWarnGroup = new QGroupBox( i18n("Warning"), this );
+  pWarnGroup = new TQGroupBox( i18n("Warning"), this );
   gbox->addWidget( pWarnGroup, 0, 1 );
-  vbox = new QVBoxLayout( pWarnGroup, KDialog::spacingHint() );
+  vbox = new TQVBoxLayout( pWarnGroup, KDialog::spacingHint() );
   vbox->addSpacing( fontMetrics().lineSpacing() );
-  pWarnLabel1 = new QLabel( i18n("Output to:"), pWarnGroup );
+  pWarnLabel1 = new TQLabel( i18n("Output to:"), pWarnGroup );
   vbox->addWidget( pWarnLabel1 );
-  pWarnCombo = new QComboBox( false, pWarnGroup );
-  connect(pWarnCombo, SIGNAL(activated(int)),
-	  this, SLOT(slotDestinationChanged(int)));
+  pWarnCombo = new TQComboBox( false, pWarnGroup );
+  connect(pWarnCombo, TQT_SIGNAL(activated(int)),
+	  this, TQT_SLOT(slotDestinationChanged(int)));
   vbox->addWidget( pWarnCombo );
   pWarnCombo->insertStringList( destList );
-  pWarnLabel2 = new QLabel( i18n("Filename:"), pWarnGroup );
+  pWarnLabel2 = new TQLabel( i18n("Filename:"), pWarnGroup );
   vbox->addWidget( pWarnLabel2 );
-  pWarnFile = new QLineEdit( pWarnGroup );
+  pWarnFile = new TQLineEdit( pWarnGroup );
   vbox->addWidget( pWarnFile );
   /*
-  pWarnLabel3 = new QLabel( i18n("Show only area(s):"), pWarnGroup );
+  pWarnLabel3 = new TQLabel( i18n("Show only area(s):"), pWarnGroup );
   vbox->addWidget( pWarnLabel3 );
-  pWarnShow = new QLineEdit( pWarnGroup );
+  pWarnShow = new TQLineEdit( pWarnGroup );
   vbox->addWidget( pWarnShow );
   */
 
   //
   // Lower left frame
   //
-  pErrorGroup = new QGroupBox( i18n("Error"), this );
+  pErrorGroup = new TQGroupBox( i18n("Error"), this );
   gbox->addWidget( pErrorGroup, 1, 0 );
-  vbox = new QVBoxLayout( pErrorGroup, KDialog::spacingHint() );
+  vbox = new TQVBoxLayout( pErrorGroup, KDialog::spacingHint() );
   vbox->addSpacing( fontMetrics().lineSpacing() );
-  pErrorLabel1 = new QLabel( i18n("Output to:"), pErrorGroup );
+  pErrorLabel1 = new TQLabel( i18n("Output to:"), pErrorGroup );
   vbox->addWidget( pErrorLabel1 );
-  pErrorCombo = new QComboBox( false, pErrorGroup );
-  connect(pErrorCombo, SIGNAL(activated(int)),
-	  this, SLOT(slotDestinationChanged(int)));
+  pErrorCombo = new TQComboBox( false, pErrorGroup );
+  connect(pErrorCombo, TQT_SIGNAL(activated(int)),
+	  this, TQT_SLOT(slotDestinationChanged(int)));
   vbox->addWidget( pErrorCombo );
   pErrorCombo->insertStringList( destList );
-  pErrorLabel2 = new QLabel( i18n("Filename:"), pErrorGroup );
+  pErrorLabel2 = new TQLabel( i18n("Filename:"), pErrorGroup );
   vbox->addWidget( pErrorLabel2 );
-  pErrorFile = new QLineEdit( pErrorGroup );
+  pErrorFile = new TQLineEdit( pErrorGroup );
   vbox->addWidget( pErrorFile );
   /*
-  pErrorLabel3 = new QLabel( i18n("Show only area(s):"), pErrorGroup );
+  pErrorLabel3 = new TQLabel( i18n("Show only area(s):"), pErrorGroup );
   vbox->addWidget( pErrorLabel3 );
-  pErrorShow = new QLineEdit( pErrorGroup );
+  pErrorShow = new TQLineEdit( pErrorGroup );
   vbox->addWidget( pErrorShow );
   */
 
   //
   // Lower right frame
   //
-  pFatalGroup = new QGroupBox( i18n("Fatal Error"), this );
+  pFatalGroup = new TQGroupBox( i18n("Fatal Error"), this );
   gbox->addWidget( pFatalGroup, 1, 1 );
-  vbox = new QVBoxLayout( pFatalGroup, KDialog::spacingHint() );
+  vbox = new TQVBoxLayout( pFatalGroup, KDialog::spacingHint() );
   vbox->addSpacing( fontMetrics().lineSpacing() );
-  pFatalLabel1 = new QLabel( i18n("Output to:"), pFatalGroup );
+  pFatalLabel1 = new TQLabel( i18n("Output to:"), pFatalGroup );
   vbox->addWidget( pFatalLabel1 );
-  pFatalCombo = new QComboBox( false, pFatalGroup );
-  connect(pFatalCombo, SIGNAL(activated(int)),
-	  this, SLOT(slotDestinationChanged(int)));
+  pFatalCombo = new TQComboBox( false, pFatalGroup );
+  connect(pFatalCombo, TQT_SIGNAL(activated(int)),
+	  this, TQT_SLOT(slotDestinationChanged(int)));
   vbox->addWidget( pFatalCombo );
   pFatalCombo->insertStringList( destList );
-  pFatalLabel2 = new QLabel( i18n("Filename:"), pFatalGroup );
+  pFatalLabel2 = new TQLabel( i18n("Filename:"), pFatalGroup );
   vbox->addWidget( pFatalLabel2 );
-  pFatalFile = new QLineEdit( pFatalGroup );
+  pFatalFile = new TQLineEdit( pFatalGroup );
   vbox->addWidget( pFatalFile );
   /*
-  pFatalLabel3 = new QLabel( i18n("Show only area(s):"), pFatalGroup );
+  pFatalLabel3 = new TQLabel( i18n("Show only area(s):"), pFatalGroup );
   vbox->addWidget( pFatalLabel3 );
-  pFatalShow = new QLineEdit( pFatalGroup );
+  pFatalShow = new TQLineEdit( pFatalGroup );
   vbox->addWidget( pFatalShow );
   */
 
 
-  pAbortFatal = new QCheckBox( i18n("Abort on fatal errors"), this );
+  pAbortFatal = new TQCheckBox( i18n("Abort on fatal errors"), this );
   topLayout->addWidget(pAbortFatal);
 
   topLayout->addStretch();
@@ -179,8 +179,8 @@ KDebugDialog::KDebugDialog( QStringList areaList, QWidget *parent, const char *n
 
   buildButtons( topLayout );
 
-  connect( pDebugAreas, SIGNAL( activated( const QString &) ),
-           SLOT( slotDebugAreaChanged( const QString & ) ) );
+  connect( pDebugAreas, TQT_SIGNAL( activated( const TQString &) ),
+           TQT_SLOT( slotDebugAreaChanged( const TQString & ) ) );
 
   // Get initial values ("initial" is understood by the slot)
   slotDebugAreaChanged( "0 initial" );
@@ -193,13 +193,13 @@ KDebugDialog::~KDebugDialog()
 {
 }
 
-void KDebugDialog::slotDebugAreaChanged( const QString & text )
+void KDebugDialog::slotDebugAreaChanged( const TQString & text )
 {
   // Save settings from previous page
   if ( text != "0 initial" ) // except on first call
     save();
 
-  QString data = text.simplifyWhiteSpace();
+  TQString data = text.simplifyWhiteSpace();
   int space = data.find(" ");
   if (space == -1)
       kdError() << "No space:" << data << endl;
@@ -210,7 +210,7 @@ void KDebugDialog::slotDebugAreaChanged( const QString & text )
       kdError() << "The first part wasn't a number : " << data << endl;
 
   /* Fill dialog fields with values from config data */
-  pConfig->setGroup( QString::number( number ) ); // Group name = debug area code
+  pConfig->setGroup( TQString::number( number ) ); // Group name = debug area code
   pInfoCombo->setCurrentItem( pConfig->readNumEntry( "InfoOutput", 2 ) );
   pInfoFile->setText( pConfig->readPathEntry( "InfoFilename","kdebug.dbg" ) );
   //pInfoShow->setText( pConfig->readEntry( "InfoShow" ) );
@@ -243,7 +243,7 @@ void KDebugDialog::save()
   //pConfig->writeEntry( "FatalShow", pFatalShow->text() );
   pConfig->writeEntry( "AbortFatal", pAbortFatal->isChecked() );
 
-  QByteArray data;
+  TQByteArray data;
   if (!kapp->dcopClient()->send("*", "KDebug", "notifyKDebugConfigChanged()", data))
   {
     kdError() << "Unable to send DCOP message" << endl;

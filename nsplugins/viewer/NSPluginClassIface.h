@@ -25,8 +25,8 @@
 #define __NSPluginClassIface_h__
 
 
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 #include <dcopobject.h>
 #include <dcopref.h>
 
@@ -37,7 +37,7 @@ class NSPluginViewerIface : virtual public DCOPObject
 
 k_dcop:
   virtual void shutdown() = 0;
-  virtual DCOPRef newClass(QString plugin) = 0;
+  virtual DCOPRef newClass(TQString plugin) = 0;
 };
 
 
@@ -47,11 +47,11 @@ class NSPluginClassIface : virtual public DCOPObject
 
 k_dcop:
 
-  virtual DCOPRef newInstance(QString url, QString mimeType, Q_INT8 embed,
-                              QStringList argn, QStringList argv,
-                              QString appId, QString callbackId, Q_INT8 reload,
-                              Q_INT8 doPost, QByteArray postData, Q_UINT32 xembed) = 0;
-  virtual QString getMIMEDescription() = 0;
+  virtual DCOPRef newInstance(TQString url, TQString mimeType, Q_INT8 embed,
+                              TQStringList argn, TQStringList argv,
+                              TQString appId, TQString callbackId, Q_INT8 reload,
+                              Q_INT8 doPost, TQByteArray postData, Q_UINT32 xembed) = 0;
+  virtual TQString getMIMEDescription() = 0;
 
 };
 
@@ -70,7 +70,7 @@ k_dcop:
 
   virtual void resizePlugin(Q_INT32 w, Q_INT32 h) = 0;
 
-  virtual void javascriptResult(Q_INT32 id, QString result) = 0;
+  virtual void javascriptResult(Q_INT32 id, TQString result) = 0;
 
   virtual void displayPlugin() = 0;
   

@@ -30,28 +30,28 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <qwidget.h>
-#include <qfile.h>
+#include <tqwidget.h>
+#include <tqfile.h>
 
 #include <assert.h>
 
 KAboutData *KonqFactory::s_aboutData = 0;
 
-KonqViewFactory::KonqViewFactory( KLibFactory *factory, const QStringList &args,
+KonqViewFactory::KonqViewFactory( KLibFactory *factory, const TQStringList &args,
                                   bool createBrowser )
     : m_factory( factory ), m_args( args ), m_createBrowser( createBrowser )
 {
     if ( m_createBrowser )
-        m_args << QString::fromLatin1( "Browser/View" );
+        m_args << TQString::fromLatin1( "Browser/View" );
 }
 
-KParts::ReadOnlyPart *KonqViewFactory::create( QWidget *parentWidget, const char *widgetName,
-                                               QObject * parent, const char *name )
+KParts::ReadOnlyPart *KonqViewFactory::create( TQWidget *parentWidget, const char *widgetName,
+                                               TQObject * parent, const char *name )
 {
   if ( !m_factory )
     return 0L;
 
-  QObject *obj = 0L;
+  TQObject *obj = 0L;
 
   if ( m_factory->inherits( "KParts::Factory" ) )
   {
@@ -74,17 +74,17 @@ KParts::ReadOnlyPart *KonqViewFactory::create( QWidget *parentWidget, const char
       kdError(1202) << "Part " << obj << " (" << obj->className() << ") doesn't inherit KParts::ReadOnlyPart !" << endl;
 
   KParts::ReadOnlyPart* part = static_cast<KParts::ReadOnlyPart *>( obj );
-  QFrame* frame = ::qt_cast<QFrame*>( part->widget() );
+  TQFrame* frame = ::qt_cast<TQFrame*>( part->widget() );
   if (frame)
   {
-      frame->setFrameStyle( QFrame::NoFrame );
+      frame->setFrameStyle( TQFrame::NoFrame );
   }
 
   return part;
 }
 
-KonqViewFactory KonqFactory::createView( const QString &serviceType,
-                                         const QString &serviceName,
+KonqViewFactory KonqFactory::createView( const TQString &serviceType,
+                                         const TQString &serviceName,
                                          KService::Ptr *serviceImpl,
                                          KTrader::OfferList *partServiceOffers,
                                          KTrader::OfferList *appServiceOffers,
@@ -142,7 +142,7 @@ KonqViewFactory KonqFactory::createView( const QString &serviceType,
   if ( service )
   {
     kdDebug(1202) << "Trying to open lib for requested service " << service->desktopEntryName() << endl;
-    factory = KLibLoader::self()->factory( QFile::encodeName(service->library()) );
+    factory = KLibLoader::self()->factory( TQFile::encodeName(service->library()) );
     if ( !factory )
         KMessageBox::error(0,
                            i18n("There was an error loading the module %1.\nThe diagnostics is:\n%2")
@@ -154,13 +154,13 @@ KonqViewFactory KonqFactory::createView( const QString &serviceType,
   {
     service = (*it);
     // Allowed as default ?
-    QVariant prop = service->property( "X-KDE-BrowserView-AllowAsDefault" );
+    TQVariant prop = service->property( "X-KDE-BrowserView-AllowAsDefault" );
     kdDebug(1202) << service->desktopEntryName() << " : X-KDE-BrowserView-AllowAsDefault is valid : " << prop.isValid() << endl;
     if ( !prop.isValid() || prop.toBool() ) // defaults to true
     {
       //kdDebug(1202) << "Trying to open lib for service " << service->name() << endl;
       // Try loading factory
-      factory = KLibLoader::self()->factory( QFile::encodeName(service->library()) );
+      factory = KLibLoader::self()->factory( TQFile::encodeName(service->library()) );
       if ( !factory )
         KMessageBox::error(0,
                            i18n("There was an error loading the module %1.\nThe diagnostics is:\n%2")
@@ -179,20 +179,20 @@ KonqViewFactory KonqFactory::createView( const QString &serviceType,
     return KonqViewFactory();
   }
 
-  QStringList args;
+  TQStringList args;
 
-  QVariant prop = service->property( "X-KDE-BrowserView-Args" );
+  TQVariant prop = service->property( "X-KDE-BrowserView-Args" );
 
   if ( prop.isValid() )
   {
-    QString argStr = prop.toString();
-    args = QStringList::split( " ", argStr );
+    TQString argStr = prop.toString();
+    args = TQStringList::split( " ", argStr );
   }
 
   return KonqViewFactory( factory, args, service->serviceTypes().contains( "Browser/View" ) );
 }
 
-void KonqFactory::getOffers( const QString & serviceType,
+void KonqFactory::getOffers( const TQString & serviceType,
                              KTrader::OfferList *partServiceOffers,
                              KTrader::OfferList *appServiceOffers )
 {
@@ -200,13 +200,13 @@ void KonqFactory::getOffers( const QString & serviceType,
     {
         *appServiceOffers = KTrader::self()->query( serviceType, "Application",
 "DesktopEntryName != 'kfmclient' and DesktopEntryName != 'kfmclient_dir' and DesktopEntryName != 'kfmclient_html'",
-                                                    QString::null );
+                                                    TQString::null );
     }
 
     if ( partServiceOffers )
     {
         *partServiceOffers = KTrader::self()->query( serviceType, "KParts/ReadOnlyPart",
-                                                     QString::null, QString::null );
+                                                     TQString::null, TQString::null );
     }
 }
 

@@ -33,7 +33,7 @@
 #include "kio_smb_internal.h"
 #include <kconfig.h>
 
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 //===========================================================================
 void SMBSlave::reparseConfiguration()
 {
@@ -43,23 +43,23 @@ void SMBSlave::reparseConfiguration()
 //  m_default_workgroup=cfg->readEntry("Workgroup");
 //  m_showHiddenShares=cfg->readBoolEntry("ShowHiddenShares",false);
 
-  QString m_encoding = QTextCodec::codecForLocale()->name();
+  TQString m_encoding = TQTextCodec::codecForLocale()->name();
   m_default_encoding = cfg->readEntry( "Encoding", m_encoding.lower() );
 
   // unscramble, taken from Nicola Brodu's smb ioslave
   //not really secure, but better than storing the plain password
-  QString scrambled = cfg->readEntry( "Password" );
+  TQString scrambled = cfg->readEntry( "Password" );
   m_default_password = "";
   for (uint i=0; i<scrambled.length()/3; i++)
   {
-     QChar qc1 = scrambled[i*3];
-     QChar qc2 = scrambled[i*3+1];
-     QChar qc3 = scrambled[i*3+2];
+     TQChar qc1 = scrambled[i*3];
+     TQChar qc2 = scrambled[i*3+1];
+     TQChar qc3 = scrambled[i*3+2];
      unsigned int a1 = qc1.latin1() - '0';
      unsigned int a2 = qc2.latin1() - 'A';
      unsigned int a3 = qc3.latin1() - '0';
      unsigned int num = ((a1 & 0x3F) << 10) | ((a2& 0x1F) << 5) | (a3 & 0x1F);
-     m_default_password[i] = QChar((uchar)((num - 17) ^ 173)); // restore
+     m_default_password[i] = TQChar((uchar)((num - 17) ^ 173)); // restore
   }
 
   delete cfg;

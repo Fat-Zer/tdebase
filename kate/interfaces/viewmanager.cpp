@@ -43,7 +43,7 @@ class PrivateViewManager
     KateViewManager *viewMan; 
   };
             
-ViewManager::ViewManager (void *viewManager) : QObject ((KateViewManager*) viewManager)
+ViewManager::ViewManager (void *viewManager) : TQObject ((KateViewManager*) viewManager)
 {
   d = new PrivateViewManager ();
   d->viewMan = (KateViewManager*) viewManager;
@@ -66,7 +66,7 @@ void ViewManager::activateView ( uint documentNumber )
 
 void ViewManager::openURL (const KURL &url)
 {
-  d->viewMan->openURL (url, QString::null, true);
+  d->viewMan->openURL (url, TQString::null, true);
 }
 
 }

@@ -21,10 +21,10 @@
 
 #include <sys/vfs.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qdir.h>
-#include <qcheckbox.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqdir.h>
+#include <tqcheckbox.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -41,30 +41,30 @@
 #include "notifieraction.h"
 #include "mediamanagersettings.h"
 
-MediaNotifier::MediaNotifier(const QCString &name) : KDEDModule(name)
+MediaNotifier::MediaNotifier(const TQCString &name) : KDEDModule(name)
 {
-	connectDCOPSignal( "kded", "mediamanager", "mediumAdded(QString, bool)",
-	                   "onMediumChange(QString, bool)", true );
+	connectDCOPSignal( "kded", "mediamanager", "mediumAdded(TQString, bool)",
+	                   "onMediumChange(TQString, bool)", true );
 	
-	connectDCOPSignal( "kded", "mediamanager", "mediumChanged(QString, bool)",
-	                   "onMediumChange(QString, bool)", true );
+	connectDCOPSignal( "kded", "mediamanager", "mediumChanged(TQString, bool)",
+	                   "onMediumChange(TQString, bool)", true );
 
-    m_freeTimer = new QTimer( this );
-    connect( m_freeTimer, SIGNAL( timeout() ), SLOT( checkFreeDiskSpace() ) );
+    m_freeTimer = new TQTimer( this );
+    connect( m_freeTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( checkFreeDiskSpace() ) );
     m_freeTimer->start( 1000*6*2 /* 20 minutes */ );
     m_freeDialog = 0;
 }
 
 MediaNotifier::~MediaNotifier()
 {
-	disconnectDCOPSignal( "kded", "mediamanager", "mediumAdded(QString, bool)",
-	                      "onMediumChange(QString, bool)" );
+	disconnectDCOPSignal( "kded", "mediamanager", "mediumAdded(TQString, bool)",
+	                      "onMediumChange(TQString, bool)" );
 	
-	disconnectDCOPSignal( "kded", "mediamanager", "mediumChanged(QString, bool)",
-	                      "onMediumChange(QString, bool)" );
+	disconnectDCOPSignal( "kded", "mediamanager", "mediumChanged(TQString, bool)",
+	                      "onMediumChange(TQString, bool)" );
 }
 
-void MediaNotifier::onMediumChange( const QString &name, bool allowNotification )
+void MediaNotifier::onMediumChange( const TQString &name, bool allowNotification )
 {
 	kdDebug() << "MediaNotifier::onMediumChange( " << name << ", "
 	          << allowNotification << ")" << endl;
@@ -85,8 +85,8 @@ void MediaNotifier::onMediumChange( const QString &name, bool allowNotification 
 
 	m_allowNotificationMap[job] = allowNotification;
 	
-	connect( job, SIGNAL( result( KIO::Job * ) ),
-	         this, SLOT( slotStatResult( KIO::Job * ) ) );
+	connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+	         this, TQT_SLOT( slotStatResult( KIO::Job * ) ) );
 }
 
 void MediaNotifier::slotStatResult( KIO::Job *job )
@@ -110,7 +110,7 @@ void MediaNotifier::slotStatResult( KIO::Job *job )
 
 bool MediaNotifier::autostart( const KFileItem &medium )
 {
-	QString mimetype = medium.mimetype();
+	TQString mimetype = medium.mimetype();
 
 	bool is_cdrom = mimetype.startsWith( "media/cd" ) || mimetype.startsWith( "media/dvd" );
 	bool is_mounted = mimetype.contains( "_mounted" );
@@ -136,20 +136,20 @@ bool MediaNotifier::autostart( const KFileItem &medium )
 	// From now we're sure the medium is already mounted.
 	// We can use the local path for stating, no need to use KIO here.
 	bool local;
-	QString path = medium.mostLocalURL( local ).path(); // local is always true here...
+	TQString path = medium.mostLocalURL( local ).path(); // local is always true here...
 
 	// When a new medium is mounted the root directory of the medium should
 	// be checked for the following Autostart files in order of precedence:
 	// .autorun, autorun, autorun.sh
-	QStringList autorun_list;
+	TQStringList autorun_list;
 	autorun_list << ".autorun" << "autorun" << "autorun.sh";
 
-	QStringList::iterator it = autorun_list.begin();
-	QStringList::iterator end = autorun_list.end();
+	TQStringList::iterator it = autorun_list.begin();
+	TQStringList::iterator end = autorun_list.end();
 
 	for ( ; it!=end; ++it )
 	{
-		if ( QFile::exists( path + "/" + *it ) )
+		if ( TQFile::exists( path + "/" + *it ) )
 		{
 			return execAutorun( medium, path, *it );
 		}
@@ -158,7 +158,7 @@ bool MediaNotifier::autostart( const KFileItem &medium )
 	// When a new medium is mounted the root directory of the medium should
 	// be checked for the following Autoopen files in order of precedence:
 	// .autoopen, autoopen
-	QStringList autoopen_list;
+	TQStringList autoopen_list;
 	autoopen_list << ".autoopen" << "autoopen";
 
 	it = autoopen_list.begin();
@@ -166,7 +166,7 @@ bool MediaNotifier::autostart( const KFileItem &medium )
 	
 	for ( ; it!=end; ++it )
 	{
-		if ( QFile::exists( path + "/" + *it ) )
+		if ( TQFile::exists( path + "/" + *it ) )
 		{
 			return execAutoopen( medium, path, *it );
 		}
@@ -175,23 +175,23 @@ bool MediaNotifier::autostart( const KFileItem &medium )
 	return false;
 }
 
-bool MediaNotifier::execAutorun( const KFileItem &medium, const QString &path,
-                                 const QString &autorunFile )
+bool MediaNotifier::execAutorun( const KFileItem &medium, const TQString &path,
+                                 const TQString &autorunFile )
 {
 	// The desktop environment MUST prompt the user for confirmation
 	// before automatically starting an application.
-	QString mediumType = medium.mimeTypePtr()->name();
-	QString text = i18n( "An autorun file has been found on your '%1'."
+	TQString mediumType = medium.mimeTypePtr()->name();
+	TQString text = i18n( "An autorun file has been found on your '%1'."
 	                     " Do you want to execute it?\n"
 	                     "Note that executing a file on a medium may compromise"
 	                     " your system's security").arg( mediumType );
-	QString caption = i18n( "Autorun - %1" ).arg( medium.url().prettyURL() );
+	TQString caption = i18n( "Autorun - %1" ).arg( medium.url().prettyURL() );
 	KGuiItem yes = KStdGuiItem::yes();
 	KGuiItem no = KStdGuiItem::no();
 	int options = KMessageBox::Notify | KMessageBox::Dangerous;
 
 	int answer = KMessageBox::warningYesNo( 0L, text, caption, yes, no,
-	                                        QString::null, options );
+	                                        TQString::null, options );
 
 	if ( answer == KMessageBox::Yes )
 	{
@@ -209,16 +209,16 @@ bool MediaNotifier::execAutorun( const KFileItem &medium, const QString &path,
 	return true;
 }
 
-bool MediaNotifier::execAutoopen( const KFileItem &medium, const QString &path,
-                                  const QString &autoopenFile )
+bool MediaNotifier::execAutoopen( const KFileItem &medium, const TQString &path,
+                                  const TQString &autoopenFile )
 {
 	// An Autoopen file MUST contain a single relative path that points
 	// to a non-executable file contained on the medium. [...]
-	QFile file( path+"/"+autoopenFile );
+	TQFile file( path+"/"+autoopenFile );
 	file.open( IO_ReadOnly );
-	QTextStream stream( &file );
+	TQTextStream stream( &file );
 
-	QString relative_path = stream.readLine().stripWhiteSpace();
+	TQString relative_path = stream.readLine().stripWhiteSpace();
 
 	// The relative path MUST NOT contain path components that
 	// refer to a parent directory ( ../ )
@@ -229,7 +229,7 @@ bool MediaNotifier::execAutoopen( const KFileItem &medium, const QString &path,
 	
 	// The desktop environment MUST verify that the relative path points
 	// to a file that is actually located on the medium [...]
-	QString resolved_path
+	TQString resolved_path
 		= KStandardDirs::realFilePath( path+"/"+relative_path );
 
 	if ( !resolved_path.startsWith( path ) )
@@ -238,12 +238,12 @@ bool MediaNotifier::execAutoopen( const KFileItem &medium, const QString &path,
 	}
 	
 	
-	QFile document( resolved_path );
+	TQFile document( resolved_path );
 
 	// TODO: What about FAT all files are executable...
 	// If the relative path points to an executable file then the desktop
 	// environment MUST NOT execute the file.
-	if ( !document.exists() /*|| QFileInfo(document).isExecutable()*/ )
+	if ( !document.exists() /*|| TQFileInfo(document).isExecutable()*/ )
 	{
 		return false;
 	}
@@ -253,19 +253,19 @@ bool MediaNotifier::execAutoopen( const KFileItem &medium, const QString &path,
 	
 	// The desktop environment MUST prompt the user for confirmation
 	// before opening the file.
-	QString mediumType = medium.mimeTypePtr()->name();
-	QString filename = url.filename();
-	QString text = i18n( "An autoopen file has been found on your '%1'."
+	TQString mediumType = medium.mimeTypePtr()->name();
+	TQString filename = url.filename();
+	TQString text = i18n( "An autoopen file has been found on your '%1'."
 	                     " Do you want to open '%2'?\n"
 	                     "Note that opening a file on a medium may compromise"
 	                     " your system's security").arg( mediumType ).arg( filename );
-	QString caption = i18n( "Autoopen - %1" ).arg( medium.url().prettyURL() );
+	TQString caption = i18n( "Autoopen - %1" ).arg( medium.url().prettyURL() );
 	KGuiItem yes = KStdGuiItem::yes();
 	KGuiItem no = KStdGuiItem::no();
 	int options = KMessageBox::Notify | KMessageBox::Dangerous;
 
 	int answer = KMessageBox::warningYesNo( 0L, text, caption, yes, no,
-	                                        QString::null, options );
+	                                        TQString::null, options );
 
 	// TODO: Take case of the "UNLESS" part?
 	// When an Autoopen file has been detected and the user has confirmed
@@ -289,7 +289,7 @@ void MediaNotifier::notify( KFileItem &medium )
 	
 	if ( settings->autoActionForMimetype( medium.mimetype() )==0L )
 	{
-		QValueList<NotifierAction*> actions
+		TQValueList<NotifierAction*> actions
 			= settings->actionsForMimetype( medium.mimetype() );
 		
 		// If only one action remains, it's the "do nothing" action
@@ -311,7 +311,7 @@ void MediaNotifier::notify( KFileItem &medium )
 
 extern "C"
 {
-	KDE_EXPORT KDEDModule *create_medianotifier(const QCString &name)
+	KDE_EXPORT KDEDModule *create_medianotifier(const TQCString &name)
 	{
 		KGlobal::locale()->insertCatalogue("kay");
 		return new MediaNotifier(name);
@@ -325,7 +325,7 @@ void MediaNotifier::checkFreeDiskSpace()
     if ( m_freeDialog )
         return;
 
-    if ( statfs( QFile::encodeName( QDir::homeDirPath() ), &sfs ) == 0 )
+    if ( statfs( TQFile::encodeName( TQDir::homeDirPath() ), &sfs ) == 0 )
     {
         total = sfs.f_blocks;
         avail = ( getuid() ? sfs.f_bavail : sfs.f_bfree );
@@ -344,15 +344,15 @@ void MediaNotifier::checkFreeDiskSpace()
                 0, "warningYesNo", false, true,
                 i18n( "Start Konqueror" ), KStdGuiItem::cancel());
 
-            QString text = i18n( "You are running low on disk space on your home partition (currently %1% free), would you like to "
+            TQString text = i18n( "You are running low on disk space on your home partition (currently %1% free), would you like to "
                                  "run Konqueror to free some disk space and fix the problem?" ).arg( freeperc );
             bool checkboxResult = false;
-            KMessageBox::createKMessageBox(m_freeDialog, QMessageBox::Warning, text, QStringList(),
+            KMessageBox::createKMessageBox(m_freeDialog, TQMessageBox::Warning, text, TQStringList(),
                                            i18n("Do not ask again"),
                                            &checkboxResult, KMessageBox::Notify | KMessageBox::NoExec);
             m_freeDialog->show();
-            connect( m_freeDialog, SIGNAL( yesClicked() ), SLOT( slotFreeContinue() ) );
-            connect( m_freeDialog, SIGNAL( noClicked() ), SLOT( slotFreeCancel() ) );
+            connect( m_freeDialog, TQT_SIGNAL( yesClicked() ), TQT_SLOT( slotFreeContinue() ) );
+            connect( m_freeDialog, TQT_SIGNAL( noClicked() ), TQT_SLOT( slotFreeCancel() ) );
         }
     }
 }
@@ -369,7 +369,7 @@ void MediaNotifier::slotFreeCancel()
 
 void MediaNotifier::slotFreeFinished( KMessageBox::ButtonCode res )
 {
-    QCheckBox *checkbox = ::qt_cast<QCheckBox*>( m_freeDialog->child( 0, "QCheckBox" ) );
+    TQCheckBox *checkbox = ::qt_cast<TQCheckBox*>( m_freeDialog->child( 0, "TQCheckBox" ) );
     if ( checkbox && checkbox->isChecked() )
         KMessageBox::saveDontShowAgainYesNo("dontagainfreespace", res);
     m_freeDialog->delayedDestruct();
@@ -377,7 +377,7 @@ void MediaNotifier::slotFreeFinished( KMessageBox::ButtonCode res )
 
     if ( res == KMessageBox::Continue ) // start Konqi
     {
-        ( void ) new KRun( KURL::fromPathOrURL( QDir::homeDirPath() ) );
+        ( void ) new KRun( KURL::fromPathOrURL( TQDir::homeDirPath() ) );
     }
     else                // people don't want to be bothered, at least stop the timer; there's no way to save the dontshowagain entry in this case
         m_freeTimer->stop();

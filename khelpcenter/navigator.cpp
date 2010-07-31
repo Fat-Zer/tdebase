@@ -23,19 +23,19 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qpixmap.h>
-#include <qstring.h>
-#include <qlabel.h>
-#include <qheader.h>
-#include <qdom.h>
-#include <qtextstream.h>
-#include <qregexp.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qtooltip.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqpixmap.h>
+#include <tqstring.h>
+#include <tqlabel.h>
+#include <tqheader.h>
+#include <tqdom.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
+#include <tqtooltip.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -76,8 +76,8 @@
 
 using namespace KHC;
 
-Navigator::Navigator( View *view, QWidget *parent, const char *name )
-   : QWidget( parent, name ), mIndexDialog( 0 ),
+Navigator::Navigator( View *view, TQWidget *parent, const char *name )
+   : TQWidget( parent, name ), mIndexDialog( 0 ),
      mView( view ), mSelected( false )
 {
     KConfig *config = kapp->config();
@@ -85,43 +85,43 @@ Navigator::Navigator( View *view, QWidget *parent, const char *name )
     mShowMissingDocs = config->readBoolEntry("ShowMissingDocs",false);
 
     mSearchEngine = new SearchEngine( view );
-    connect( mSearchEngine, SIGNAL( searchFinished() ),
-             SLOT( slotSearchFinished() ) );
+    connect( mSearchEngine, TQT_SIGNAL( searchFinished() ),
+             TQT_SLOT( slotSearchFinished() ) );
 
     DocMetaInfo::self()->scanMetaInfo();
 
-    QBoxLayout *topLayout = new QVBoxLayout( this );
+    TQBoxLayout *topLayout = new TQVBoxLayout( this );
 
-    mSearchFrame = new QFrame( this );
+    mSearchFrame = new TQFrame( this );
     topLayout->addWidget( mSearchFrame );
 
-    QBoxLayout *searchLayout = new QHBoxLayout( mSearchFrame );
+    TQBoxLayout *searchLayout = new TQHBoxLayout( mSearchFrame );
     searchLayout->setSpacing( KDialog::spacingHint() );
     searchLayout->setMargin( 6 );
 
-    QPushButton *clearButton = new QPushButton( mSearchFrame );
+    TQPushButton *clearButton = new TQPushButton( mSearchFrame );
     clearButton->setIconSet( KApplication::reverseLayout() ?
       SmallIconSet( "clear_left" ) : SmallIconSet("locationbar_erase") );
     searchLayout->addWidget( clearButton );
-    connect( clearButton, SIGNAL( clicked() ), SLOT( clearSearch() ) );
-    QToolTip::add( clearButton, i18n("Clear search") );
+    connect( clearButton, TQT_SIGNAL( clicked() ), TQT_SLOT( clearSearch() ) );
+    TQToolTip::add( clearButton, i18n("Clear search") );
 
-    mSearchEdit = new QLineEdit( mSearchFrame );
+    mSearchEdit = new TQLineEdit( mSearchFrame );
     searchLayout->addWidget( mSearchEdit );
-    connect( mSearchEdit, SIGNAL( returnPressed() ), SLOT( slotSearch() ) );
-    connect( mSearchEdit, SIGNAL( textChanged( const QString & ) ),
-             SLOT( checkSearchButton() ) );
+    connect( mSearchEdit, TQT_SIGNAL( returnPressed() ), TQT_SLOT( slotSearch() ) );
+    connect( mSearchEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+             TQT_SLOT( checkSearchButton() ) );
 
-    mSearchButton = new QPushButton( i18n("&Search"), mSearchFrame );
+    mSearchButton = new TQPushButton( i18n("&Search"), mSearchFrame );
     searchLayout->addWidget( mSearchButton );
-    connect( mSearchButton, SIGNAL( clicked() ), SLOT( slotSearch() ) );
+    connect( mSearchButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotSearch() ) );
 
     clearButton->setFixedHeight( mSearchButton->height() );
 
-    mTabWidget = new QTabWidget( this );
+    mTabWidget = new TQTabWidget( this );
     topLayout->addWidget( mTabWidget );
-    connect( mTabWidget, SIGNAL( currentChanged( QWidget * ) ),
-             SLOT( slotTabChanged( QWidget * ) ) );
+    connect( mTabWidget, TQT_SIGNAL( currentChanged( TQWidget * ) ),
+             TQT_SLOT( slotTabChanged( TQWidget * ) ) );
 
     setupContentsTab();
     setupGlossaryTab();
@@ -160,29 +160,29 @@ bool Navigator::showMissingDocs() const
 void Navigator::setupContentsTab()
 {
     mContentsTree = new KListView( mTabWidget );
-    mContentsTree->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    mContentsTree->addColumn(QString::null);
+    mContentsTree->setFrameStyle(TQFrame::Panel | TQFrame::Sunken);
+    mContentsTree->addColumn(TQString::null);
     mContentsTree->setAllColumnsShowFocus(true);
     mContentsTree->header()->hide();
     mContentsTree->setRootIsDecorated(false);
     mContentsTree->setSorting(-1, false);
 
-    connect(mContentsTree, SIGNAL(clicked(QListViewItem*)),
-            SLOT(slotItemSelected(QListViewItem*)));
-    connect(mContentsTree, SIGNAL(returnPressed(QListViewItem*)),
-           SLOT(slotItemSelected(QListViewItem*)));
+    connect(mContentsTree, TQT_SIGNAL(clicked(TQListViewItem*)),
+            TQT_SLOT(slotItemSelected(TQListViewItem*)));
+    connect(mContentsTree, TQT_SIGNAL(returnPressed(TQListViewItem*)),
+           TQT_SLOT(slotItemSelected(TQListViewItem*)));
     mTabWidget->addTab(mContentsTree, i18n("&Contents"));
 }
 
 void Navigator::setupSearchTab()
 {
     mSearchWidget = new SearchWidget( mSearchEngine, mTabWidget );
-    connect( mSearchWidget, SIGNAL( searchResult( const QString & ) ),
-             SLOT( slotShowSearchResult( const QString & ) ) );
-    connect( mSearchWidget, SIGNAL( scopeCountChanged( int ) ),
-             SLOT( checkSearchButton() ) );
-    connect( mSearchWidget, SIGNAL( showIndexDialog() ),
-      SLOT( showIndexDialog() ) );
+    connect( mSearchWidget, TQT_SIGNAL( searchResult( const TQString & ) ),
+             TQT_SLOT( slotShowSearchResult( const TQString & ) ) );
+    connect( mSearchWidget, TQT_SIGNAL( scopeCountChanged( int ) ),
+             TQT_SLOT( checkSearchButton() ) );
+    connect( mSearchWidget, TQT_SIGNAL( showIndexDialog() ),
+      TQT_SLOT( showIndexDialog() ) );
 
     mTabWidget->addTab( mSearchWidget, i18n("Search Options"));
 }
@@ -190,8 +190,8 @@ void Navigator::setupSearchTab()
 void Navigator::setupGlossaryTab()
 {
     mGlossaryTree = new Glossary( mTabWidget );
-    connect( mGlossaryTree, SIGNAL( entrySelected( const GlossaryEntry & ) ),
-             this, SIGNAL( glossSelected( const GlossaryEntry & ) ) );
+    connect( mGlossaryTree, TQT_SIGNAL( entrySelected( const GlossaryEntry & ) ),
+             this, TQT_SIGNAL( glossSelected( const GlossaryEntry & ) ) );
     mTabWidget->addTab( mGlossaryTree, i18n( "G&lossary" ) );
 }
 
@@ -211,7 +211,7 @@ void Navigator::insertPlugins()
 #endif
 }
 
-void Navigator::insertParentAppDocs( const QString &name, NavigatorItem *topItem )
+void Navigator::insertParentAppDocs( const TQString &name, NavigatorItem *topItem )
 {
   kdDebug(1400) << "Requested plugin documents for ID " << name << endl;
 
@@ -223,30 +223,30 @@ void Navigator::insertParentAppDocs( const QString &name, NavigatorItem *topItem
   KServiceGroup::List::ConstIterator it = entries.begin();
   KServiceGroup::List::ConstIterator end = entries.end();
   for ( ; it != end; ++it ) {
-    QString desktopFile = ( *it )->entryPath();
-    if ( QDir::isRelativePath( desktopFile ) )
+    TQString desktopFile = ( *it )->entryPath();
+    if ( TQDir::isRelativePath( desktopFile ) )
         desktopFile = locate( "apps", desktopFile );
     createItemFromDesktopFile( topItem, desktopFile );
   }
 }
 
-void Navigator::insertIOSlaveDocs( const QString &name, NavigatorItem *topItem )
+void Navigator::insertIOSlaveDocs( const TQString &name, NavigatorItem *topItem )
 {
   kdDebug(1400) << "Requested IOSlave documents for ID " << name << endl;
 
 #if KDE_IS_VERSION( 3, 1, 90 )
-  QStringList list = KProtocolInfo::protocols();
+  TQStringList list = KProtocolInfo::protocols();
   list.sort();
 
   NavigatorItem *prevItem = 0;
-  for ( QStringList::ConstIterator it = list.begin(); it != list.end(); ++it )
+  for ( TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it )
   {
-    QString docPath = KProtocolInfo::docPath(*it);
+    TQString docPath = KProtocolInfo::docPath(*it);
     if ( !docPath.isNull() )
     {
       // First parameter is ignored if second is an absolute path
       KURL url(KURL("help:/"), docPath);
-      QString icon = KProtocolInfo::icon(*it);
+      TQString icon = KProtocolInfo::icon(*it);
       if ( icon.isEmpty() ) icon = "document2";
       DocEntry *entry = new DocEntry( *it, url.url(), icon );
       NavigatorItem *item = new NavigatorItem( entry, topItem, prevItem );
@@ -261,25 +261,25 @@ void Navigator::insertIOSlaveDocs( const QString &name, NavigatorItem *topItem )
 
 void Navigator::insertAppletDocs( NavigatorItem *topItem )
 {
-  QDir appletDir( locate( "data", QString::fromLatin1( "kicker/applets/" ) ) );
-  appletDir.setNameFilter( QString::fromLatin1( "*.desktop" ) );
+  TQDir appletDir( locate( "data", TQString::fromLatin1( "kicker/applets/" ) ) );
+  appletDir.setNameFilter( TQString::fromLatin1( "*.desktop" ) );
 
-  QStringList files = appletDir.entryList( QDir::Files | QDir::Readable );
-  QStringList::ConstIterator it = files.begin();
-  QStringList::ConstIterator end = files.end();
+  TQStringList files = appletDir.entryList( TQDir::Files | TQDir::Readable );
+  TQStringList::ConstIterator it = files.begin();
+  TQStringList::ConstIterator end = files.end();
   for ( ; it != end; ++it )
     createItemFromDesktopFile( topItem, appletDir.absPath() + "/" + *it );
 }
 
 void Navigator::createItemFromDesktopFile( NavigatorItem *topItem,
-                                           const QString &file )
+                                           const TQString &file )
 {
     KDesktopFile desktopFile( file );
-    QString docPath = desktopFile.readDocPath();
+    TQString docPath = desktopFile.readDocPath();
     if ( !docPath.isNull() ) {
       // First parameter is ignored if second is an absolute path
       KURL url(KURL("help:/"), docPath);
-      QString icon = desktopFile.readIcon();
+      TQString icon = desktopFile.readIcon();
       if ( icon.isEmpty() ) icon = "document2";
       DocEntry *entry = new DocEntry( desktopFile.readName(), url.url(), icon );
       NavigatorItem *item = new NavigatorItem( entry, topItem );
@@ -316,7 +316,7 @@ void Navigator::selectItem( const KURL &url )
   if (url.hasRef())
   {
      alternativeURL.setQuery("anchor="+url.ref());
-     alternativeURL.setRef(QString::null);
+     alternativeURL.setRef(TQString::null);
   }
 
   // If the navigator already has the given URL selected, do nothing.
@@ -332,14 +332,14 @@ void Navigator::selectItem( const KURL &url )
 
   // First, populate the NavigatorAppItems if we don't want the home page
   if ( url != homeURL() ) {
-    for ( QListViewItem *item = mContentsTree->firstChild(); item;
+    for ( TQListViewItem *item = mContentsTree->firstChild(); item;
           item = item->nextSibling() ) {
       NavigatorAppItem *appItem = dynamic_cast<NavigatorAppItem *>( item );
       if ( appItem ) appItem->populate( true /* recursive */ );
     }
   }
 
-  QListViewItemIterator it( mContentsTree );
+  TQListViewItemIterator it( mContentsTree );
   while ( it.current() ) {
     NavigatorItem *item = static_cast<NavigatorItem *>( it.current() );
     KURL itemUrl( item->entry()->url() );
@@ -367,7 +367,7 @@ void Navigator::clearSelection()
   mSelected = false;
 }
 
-void Navigator::slotItemSelected( QListViewItem *currentItem )
+void Navigator::slotItemSelected( TQListViewItem *currentItem )
 {
   if ( !currentItem ) return;
 
@@ -397,7 +397,7 @@ void Navigator::slotItemSelected( QListViewItem *currentItem )
         kdDebug( 1400 ) << "slotItemSelected(): Trying to build TOC for "
                         << item->entry()->name() << endl;
         tocTree->setApplication( url.directory() );
-        QString doc = View::langLookup( url.path() );
+        TQString doc = View::langLookup( url.path() );
         // Enforce the original .docbook version, in case langLookup returns a
         // cached version
         if ( !doc.isNull() ) {
@@ -438,26 +438,26 @@ void Navigator::showOverview( NavigatorItem *item, const KURL &url )
 {
   mView->beginInternal( url );
 
-  QString fileName = locate( "data", "khelpcenter/index.html.in" );
+  TQString fileName = locate( "data", "khelpcenter/index.html.in" );
   if ( fileName.isEmpty() )
     return;
 
-  QFile file( fileName );
+  TQFile file( fileName );
 
   if ( !file.open( IO_ReadOnly ) )
     return;
 
-  QTextStream stream( &file );
-  QString res = stream.read();
+  TQTextStream stream( &file );
+  TQString res = stream.read();
 
-  QString title,name,content;
+  TQString title,name,content;
   uint childCount;
 
   if ( item ) {
     title = item->entry()->name();
     name = item->entry()->name();
 
-    QString info = item->entry()->info();
+    TQString info = item->entry()->info();
     if ( !info.isEmpty() ) content = "<p>" + info + "</p>\n";
 
     childCount = item->childCount();
@@ -469,7 +469,7 @@ void Navigator::showOverview( NavigatorItem *item, const KURL &url )
   }
 
   if ( childCount > 0 ) {
-    QListViewItem *child;
+    TQListViewItem *child;
     if ( item ) child = item->firstChild();
     else child = mContentsTree->firstChild();
 
@@ -487,11 +487,11 @@ void Navigator::showOverview( NavigatorItem *item, const KURL &url )
   mView->end();
 }
 
-QString Navigator::createChildrenList( QListViewItem *child )
+TQString Navigator::createChildrenList( TQListViewItem *child )
 {
   ++mDirLevel;
 
-  QString t;
+  TQString t;
 
   t += "<ul>\n";
 
@@ -534,10 +534,10 @@ void Navigator::slotSearch()
 
   if ( mSearchEngine->isRunning() ) return;
 
-  QString words = mSearchEdit->text();
-  QString method = mSearchWidget->method();
+  TQString words = mSearchEdit->text();
+  TQString method = mSearchWidget->method();
   int pages = mSearchWidget->pages();
-  QString scope = mSearchWidget->scope();
+  TQString scope = mSearchWidget->scope();
 
   kdDebug(1400) << "Navigator::slotSearch() words: " << words << endl;
   kdDebug(1400) << "Navigator::slotSearch() scope: " << scope << endl;
@@ -546,7 +546,7 @@ void Navigator::slotSearch()
 
   // disable search Button during searches
   mSearchButton->setEnabled(false);
-  QApplication::setOverrideCursor(waitCursor);
+  TQApplication::setOverrideCursor(waitCursor);
 
   if ( !mSearchEngine->search( words, method, pages, scope ) ) {
     slotSearchFinished();
@@ -554,9 +554,9 @@ void Navigator::slotSearch()
   }
 }
 
-void Navigator::slotShowSearchResult( const QString &url )
+void Navigator::slotShowSearchResult( const TQString &url )
 {
-  QString u = url;
+  TQString u = url;
   u.replace( "%k", mSearchEdit->text() );
 
   emit itemSelected( u );
@@ -565,7 +565,7 @@ void Navigator::slotShowSearchResult( const QString &url )
 void Navigator::slotSearchFinished()
 {
   mSearchButton->setEnabled(true);
-  QApplication::restoreOverrideCursor();
+  TQApplication::restoreOverrideCursor();
 
   kdDebug( 1400 ) << "Search finished." << endl;
 }
@@ -591,10 +591,10 @@ bool Navigator::checkSearchIndex()
 
   if ( mIndexDialog && mIndexDialog->isShown() ) return true;
 
-  QString text = i18n( "A search index does not yet exist. Do you want "
+  TQString text = i18n( "A search index does not yet exist. Do you want "
                        "to create the index now?" );
 
-  int result = KMessageBox::questionYesNo( this, text, QString::null,
+  int result = KMessageBox::questionYesNo( this, text, TQString::null,
                                            i18n("Create"),
                                            i18n("Do Not Create"),
                                            "indexcreation" );
@@ -606,12 +606,12 @@ bool Navigator::checkSearchIndex()
   return true;
 }
 
-void Navigator::slotTabChanged( QWidget *wid )
+void Navigator::slotTabChanged( TQWidget *wid )
 {
   if ( wid == mSearchWidget ) checkSearchIndex();
 }
 
-void Navigator::slotSelectGlossEntry( const QString &id )
+void Navigator::slotSelectGlossEntry( const TQString &id )
 {
   mGlossaryTree->slotSelectGlossEntry( id );
 }
@@ -633,8 +633,8 @@ void Navigator::showIndexDialog()
 {
   if ( !mIndexDialog ) {
     mIndexDialog = new KCMHelpCenter( mSearchEngine, this );
-    connect( mIndexDialog, SIGNAL( searchIndexUpdated() ), mSearchWidget,
-             SLOT( updateScopeList() ) );
+    connect( mIndexDialog, TQT_SIGNAL( searchIndexUpdated() ), mSearchWidget,
+             TQT_SLOT( updateScopeList() ) );
   }
   mIndexDialog->show();
   mIndexDialog->raise();
@@ -664,7 +664,7 @@ void Navigator::writeConfig()
 
 void Navigator::clearSearch()
 {
-  mSearchEdit->setText( QString::null );
+  mSearchEdit->setText( TQString::null );
 }
 
 #include "navigator.moc"

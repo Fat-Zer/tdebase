@@ -16,9 +16,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qpopupmenu.h>
+#include <tqclipboard.h>
+#include <tqcursor.h>
+#include <tqpopupmenu.h>
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -37,47 +37,47 @@
 #include <kdebug.h>
 
 KonqSidebarBookmarkModule::KonqSidebarBookmarkModule( KonqSidebarTree * parentTree )
-    : QObject( 0L ), KonqSidebarTreeModule( parentTree ),
+    : TQObject( 0L ), KonqSidebarTreeModule( parentTree ),
       m_topLevelItem( 0L ), m_ignoreOpenChange(true)
 {
     // formats handled by KBookmarkDrag:
-    QStringList formats;
+    TQStringList formats;
     formats << "text/uri-list" << "application/x-xbel" << "text/plain";
     tree()->setDropFormats(formats);
 
-    connect(tree(), SIGNAL(moved(QListViewItem*,QListViewItem*,QListViewItem*)),
-            this,   SLOT(slotMoved(QListViewItem*,QListViewItem*,QListViewItem*)));
-    connect(tree(), SIGNAL(dropped(KListView*,QDropEvent*,QListViewItem*,QListViewItem*)),
-            this,   SLOT(slotDropped(KListView*,QDropEvent*,QListViewItem*,QListViewItem*)));
+    connect(tree(), TQT_SIGNAL(moved(TQListViewItem*,TQListViewItem*,TQListViewItem*)),
+            this,   TQT_SLOT(slotMoved(TQListViewItem*,TQListViewItem*,TQListViewItem*)));
+    connect(tree(), TQT_SIGNAL(dropped(KListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*)),
+            this,   TQT_SLOT(slotDropped(KListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*)));
 
-    connect(tree(), SIGNAL(expanded(QListViewItem*)),
-            this,   SLOT(slotOpenChange(QListViewItem*)));
-    connect(tree(), SIGNAL(collapsed(QListViewItem*)),
-            this,   SLOT(slotOpenChange(QListViewItem*)));
+    connect(tree(), TQT_SIGNAL(expanded(TQListViewItem*)),
+            this,   TQT_SLOT(slotOpenChange(TQListViewItem*)));
+    connect(tree(), TQT_SIGNAL(collapsed(TQListViewItem*)),
+            this,   TQT_SLOT(slotOpenChange(TQListViewItem*)));
 
     m_collection = new KActionCollection( this, "bookmark actions" );
     (void) new KAction( i18n("&Create New Folder"), "folder_new", 0, this,
-                        SLOT( slotCreateFolder() ), m_collection, "create_folder");
+                        TQT_SLOT( slotCreateFolder() ), m_collection, "create_folder");
     (void) new KAction( i18n("Delete Folder"), "editdelete", 0, this,
-                        SLOT( slotDelete() ), m_collection, "delete_folder");
+                        TQT_SLOT( slotDelete() ), m_collection, "delete_folder");
     (void) new KAction( i18n("Delete Bookmark"), "editdelete", 0, this,
-                        SLOT( slotDelete() ), m_collection, "delete_bookmark");
+                        TQT_SLOT( slotDelete() ), m_collection, "delete_bookmark");
     (void) new KAction( i18n("Properties"), "edit", 0, this,
-                        SLOT( slotProperties() ), m_collection, "item_properties");
+                        TQT_SLOT( slotProperties() ), m_collection, "item_properties");
     (void) new KAction( i18n("Open in New Window"), "window_new", 0, this,
-                        SLOT( slotOpenNewWindow() ), m_collection, "open_window");
+                        TQT_SLOT( slotOpenNewWindow() ), m_collection, "open_window");
     (void) new KAction( i18n("Open in New Tab"), "tab_new", 0, this,
-                        SLOT( slotOpenTab() ), m_collection, "open_tab");
+                        TQT_SLOT( slotOpenTab() ), m_collection, "open_tab");
     (void) new KAction( i18n("Open Folder in Tabs"), "tab_new", 0, this,
-                        SLOT( slotOpenTab() ), m_collection, "folder_open_tabs");
+                        TQT_SLOT( slotOpenTab() ), m_collection, "folder_open_tabs");
     (void) new KAction( i18n("Copy Link Address"), "editcopy", 0, this,
-                        SLOT( slotCopyLocation() ), m_collection, "copy_location");
+                        TQT_SLOT( slotCopyLocation() ), m_collection, "copy_location");
 
-    KStdAction::editBookmarks( KonqBookmarkManager::self(), SLOT( slotEditBookmarks() ),
+    KStdAction::editBookmarks( KonqBookmarkManager::self(), TQT_SLOT( slotEditBookmarks() ),
 			       m_collection, "edit_bookmarks" );
 
-    connect( KonqBookmarkManager::self(), SIGNAL(changed(const QString &, const QString &) ),
-             SLOT( slotBookmarksChanged(const QString &) ) );
+    connect( KonqBookmarkManager::self(), TQT_SIGNAL(changed(const TQString &, const TQString &) ),
+             TQT_SLOT( slotBookmarksChanged(const TQString &) ) );
 }
 
 KonqSidebarBookmarkModule::~KonqSidebarBookmarkModule()
@@ -94,9 +94,9 @@ void KonqSidebarBookmarkModule::addTopLevelItem( KonqSidebarTreeTopLevelItem * i
     m_ignoreOpenChange = false;
 }
 
-bool KonqSidebarBookmarkModule::handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *, const QPoint& ) 
+bool KonqSidebarBookmarkModule::handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *, const TQPoint& ) 
 {
-    QPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new QPopupMenu;
 
     if (tree()->tabSupport()) {
 	m_collection->action("folder_open_tabs")->plug(menu);
@@ -107,7 +107,7 @@ bool KonqSidebarBookmarkModule::handleTopLevelContextMenu( KonqSidebarTreeTopLev
     menu->insertSeparator();
     m_collection->action("edit_bookmarks")->plug(menu);
 
-    menu->exec( QCursor::pos() );
+    menu->exec( TQCursor::pos() );
     delete menu;
 
     return true;
@@ -120,7 +120,7 @@ void KonqSidebarBookmarkModule::showPopupMenu()
         return;
 
     bool tabSupported = tree()->tabSupport();
-    QPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new QPopupMenu;
 
     if (bi->bookmark().isGroup()) {
         if (tabSupported) {
@@ -141,11 +141,11 @@ void KonqSidebarBookmarkModule::showPopupMenu()
     menu->insertSeparator();
     m_collection->action("item_properties")->plug(menu);
 
-    menu->exec( QCursor::pos() );
+    menu->exec( TQCursor::pos() );
     delete menu;
 }
 
-void KonqSidebarBookmarkModule::slotMoved(QListViewItem *i, QListViewItem*, QListViewItem *after)
+void KonqSidebarBookmarkModule::slotMoved(TQListViewItem *i, TQListViewItem*, TQListViewItem *after)
 {
     KonqSidebarBookmarkItem *item = dynamic_cast<KonqSidebarBookmarkItem*>( i );
     if (!item)
@@ -159,7 +159,7 @@ void KonqSidebarBookmarkModule::slotMoved(QListViewItem *i, QListViewItem*, QLis
 
     KBookmarkGroup oldParentGroup = bookmark.parentGroup();
     KBookmarkGroup parentGroup;
-    // try to get the parent group (assume that the QListViewItem has been reparented by KListView)...
+    // try to get the parent group (assume that the TQListViewItem has been reparented by KListView)...
     // if anything goes wrong, use the root.
     if (item->parent()) {
         bool error = false;
@@ -191,20 +191,20 @@ void KonqSidebarBookmarkModule::slotMoved(QListViewItem *i, QListViewItem*, QLis
 
     // inform others about the changed groups. quite expensive, so do
     // our best to update them in only one emitChanged call.
-    QString oldAddress = oldParentGroup.address();
-    QString newAddress = parentGroup.address();
+    TQString oldAddress = oldParentGroup.address();
+    TQString newAddress = parentGroup.address();
     if (oldAddress == newAddress) {
         KonqBookmarkManager::self()->emitChanged( parentGroup );
     } else {
         int i = 0;
         while (true) {
-            QChar c1 = oldAddress[i];
-            QChar c2 = newAddress[i];
-            if (c1 == QChar::null) {
+            TQChar c1 = oldAddress[i];
+            TQChar c2 = newAddress[i];
+            if (c1 == TQChar::null) {
                 // oldParentGroup is probably parent of parentGroup.
                 KonqBookmarkManager::self()->emitChanged( oldParentGroup );
                 break;
-            } else if (c2 == QChar::null) {
+            } else if (c2 == TQChar::null) {
                 // parentGroup is probably parent of oldParentGroup.
                 KonqBookmarkManager::self()->emitChanged( parentGroup );
                 break;
@@ -223,7 +223,7 @@ void KonqSidebarBookmarkModule::slotMoved(QListViewItem *i, QListViewItem*, QLis
     }
 }
 
-void KonqSidebarBookmarkModule::slotDropped(KListView *, QDropEvent *e, QListViewItem *parent, QListViewItem *after)
+void KonqSidebarBookmarkModule::slotDropped(KListView *, TQDropEvent *e, TQListViewItem *parent, TQListViewItem *after)
 {
     if (!KBookmarkDrag::canDecode(e))
         return;
@@ -257,10 +257,10 @@ void KonqSidebarBookmarkModule::slotDropped(KListView *, QDropEvent *e, QListVie
         parentGroup = KonqBookmarkManager::self()->root();
     }
 
-    QValueList<KBookmark> bookmarks = KBookmarkDrag::decode(e);
+    TQValueList<KBookmark> bookmarks = KBookmarkDrag::decode(e);
 
     // copy
-    QValueList<KBookmark>::iterator it = bookmarks.begin();
+    TQValueList<KBookmark>::iterator it = bookmarks.begin();
     for (;it != bookmarks.end(); ++it) {
         // insert new item.
         parentGroup.moveItem(*it, afterBookmark);
@@ -320,21 +320,21 @@ void KonqSidebarBookmarkModule::slotDelete()
     KonqBookmarkManager::self()->emitChanged( parentBookmark );
 }
 
-void makeTextNodeMod(KBookmark bk, const QString &m_nodename, const QString &m_newText) {
-    QDomNode subnode = bk.internalElement().namedItem(m_nodename);
+void makeTextNodeMod(KBookmark bk, const TQString &m_nodename, const TQString &m_newText) {
+    TQDomNode subnode = bk.internalElement().namedItem(m_nodename);
     if (subnode.isNull()) {
         subnode = bk.internalElement().ownerDocument().createElement(m_nodename);
         bk.internalElement().appendChild(subnode);
     }
     
     if (subnode.firstChild().isNull()) {
-        QDomText domtext = subnode.ownerDocument().createTextNode("");
+        TQDomText domtext = subnode.ownerDocument().createTextNode("");
         subnode.appendChild(domtext);
     }
     
-    QDomText domtext = subnode.firstChild().toText();
+    TQDomText domtext = subnode.firstChild().toText();
     
-    QString m_oldText = domtext.data();
+    TQString m_oldText = domtext.data();
     domtext.setData(m_newText);
 }
 
@@ -348,7 +348,7 @@ void KonqSidebarBookmarkModule::slotProperties(KonqSidebarBookmarkItem *bi)
 
     KBookmark bookmark = bi->bookmark();
 
-    QString folder = bookmark.isGroup() ? QString::null : bookmark.url().pathOrURL();
+    TQString folder = bookmark.isGroup() ? TQString::null : bookmark.url().pathOrURL();
     BookmarkEditDialog dlg( bookmark.fullText(), folder, 0, 0,
                             i18n("Bookmark Properties") );
     if ( dlg.exec() != KDialogBase::Accepted )
@@ -394,11 +394,11 @@ void KonqSidebarBookmarkModule::slotOpenTab()
         bookmark = group.first();
         while (!bookmark.isNull()) {
             if (!bookmark.isGroup() && !bookmark.isSeparator())
-                ref.call( "newTab(QString)", bookmark.url().url() );
+                ref.call( "newTab(TQString)", bookmark.url().url() );
             bookmark = group.next(bookmark);
         }
     } else {
-        ref.call( "newTab(QString)", bookmark.url().url() );
+        ref.call( "newTab(TQString)", bookmark.url().url() );
     }
 }
 
@@ -419,7 +419,7 @@ void KonqSidebarBookmarkModule::slotCopyLocation()
     }
 }
 
-void KonqSidebarBookmarkModule::slotOpenChange(QListViewItem* i)
+void KonqSidebarBookmarkModule::slotOpenChange(TQListViewItem* i)
 {
     if (m_ignoreOpenChange)
         return;
@@ -438,7 +438,7 @@ void KonqSidebarBookmarkModule::slotOpenChange(QListViewItem* i)
         m_folderOpenState[bookmark.address()] = open;
 }
 
-void KonqSidebarBookmarkModule::slotBookmarksChanged( const QString & groupAddress )
+void KonqSidebarBookmarkModule::slotBookmarksChanged( const TQString & groupAddress )
 {
     m_ignoreOpenChange = true;
 
@@ -450,9 +450,9 @@ void KonqSidebarBookmarkModule::slotBookmarksChanged( const QString & groupAddre
     if (!group.isNull() && item)
     {
         // Delete all children of item
-        QListViewItem * child = item->firstChild();
+        TQListViewItem * child = item->firstChild();
         while( child ) {
-            QListViewItem * next = child->nextSibling();
+            TQListViewItem * next = child->nextSibling();
             delete child;
             child = next;
         }
@@ -483,7 +483,7 @@ void KonqSidebarBookmarkModule::fillGroup( KonqSidebarTreeItem * parentItem, KBo
                 KBookmarkGroup grp = bk.toGroup();
                 fillGroup( item, grp );
 
-                QString address(grp.address());
+                TQString address(grp.address());
                 if (m_folderOpenState.contains(address))
                     item->setOpen(m_folderOpenState[address]);
                 else
@@ -497,12 +497,12 @@ void KonqSidebarBookmarkModule::fillGroup( KonqSidebarTreeItem * parentItem, KBo
 }
 
 // Borrowed from KEditBookmarks
-KonqSidebarBookmarkItem * KonqSidebarBookmarkModule::findByAddress( const QString & address ) const
+KonqSidebarBookmarkItem * KonqSidebarBookmarkModule::findByAddress( const TQString & address ) const
 {
-    QListViewItem * item = m_topLevelItem;
+    TQListViewItem * item = m_topLevelItem;
     // The address is something like /5/10/2
-    QStringList addresses = QStringList::split('/',address);
-    for ( QStringList::Iterator it = addresses.begin() ; it != addresses.end() ; ++it )
+    TQStringList addresses = TQStringList::split('/',address);
+    for ( TQStringList::Iterator it = addresses.begin() ; it != addresses.end() ; ++it )
     {
         uint number = (*it).toUInt();
         item = item->firstChild();
@@ -514,8 +514,8 @@ KonqSidebarBookmarkItem * KonqSidebarBookmarkModule::findByAddress( const QStrin
 }
 
 // Borrowed&modified from KBookmarkMenu...
-BookmarkEditDialog::BookmarkEditDialog(const QString& title, const QString& url,
-                                       QWidget * parent, const char * name, const QString& caption )
+BookmarkEditDialog::BookmarkEditDialog(const TQString& title, const TQString& url,
+                                       TQWidget * parent, const char * name, const TQString& caption )
   : KDialogBase(parent, name, true, caption,
                 (Ok|Cancel),
                 Ok, false, KGuiItem()),
@@ -523,20 +523,20 @@ BookmarkEditDialog::BookmarkEditDialog(const QString& title, const QString& url,
 {
     setButtonOK( i18n( "&Update" ) );
 
-    QWidget *main = new QWidget( this );
+    TQWidget *main = new TQWidget( this );
     setMainWidget( main );
 
     bool folder = url.isNull();
-    QGridLayout *grid = new QGridLayout( main, 2, folder?1:2, spacingHint() );
+    TQGridLayout *grid = new TQGridLayout( main, 2, folder?1:2, spacingHint() );
 
-    QLabel *nameLabel = new QLabel(i18n("Name:"), main, "title label");
+    TQLabel *nameLabel = new TQLabel(i18n("Name:"), main, "title label");
     grid->addWidget(nameLabel, 0, 0);
     m_title = new KLineEdit(main, "title edit");
     m_title->setText(title);
     nameLabel->setBuddy(m_title);
     grid->addWidget(m_title, 0, 1);
     if(!folder) {
-        QLabel *locationLabel = new QLabel(i18n("Location:"), main, "location label");
+        TQLabel *locationLabel = new TQLabel(i18n("Location:"), main, "location label");
         grid->addWidget(locationLabel, 1, 0);
         m_location = new KLineEdit(main, "location edit");
         m_location->setText(url);
@@ -556,20 +556,20 @@ void BookmarkEditDialog::slotCancel()
     reject();
 }
 
-QString BookmarkEditDialog::finalUrl() const
+TQString BookmarkEditDialog::finalUrl() const
 {
     if (m_location!=0)
         return m_location->text();
     else
-        return QString::null;
+        return TQString::null;
 }
 
-QString BookmarkEditDialog::finalTitle() const
+TQString BookmarkEditDialog::finalTitle() const
 {
     if (m_title!=0) 
         return m_title->text();
     else
-        return QString::null;
+        return TQString::null;
 }
 
 extern "C"

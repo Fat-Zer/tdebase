@@ -31,12 +31,12 @@ namespace KHC
   {
     Q_OBJECT
     public:
-      InfoTree( QObject *parent, const char *name = 0 );
+      InfoTree( TQObject *parent, const char *name = 0 );
 
       virtual void build( NavigatorItem  *parentItem );
 
     private:
-      void parseInfoDirFile( const QString &fileName );
+      void parseInfoDirFile( const TQString &fileName );
 
       NavigatorItem *m_parentItem;
       NavigatorItem *m_alphabItem;

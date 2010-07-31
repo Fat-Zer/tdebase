@@ -18,9 +18,9 @@
 */
 
 
-#include <qwhatsthis.h>
-#include <qstyle.h>
-#include <qdir.h>
+#include <tqwhatsthis.h>
+#include <tqstyle.h>
+#include <tqdir.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -47,10 +47,10 @@
 // Terminates fullscreen-mode for any full-screen window on the current desktop
 void KonqMisc::abortFullScreenMode()
 {
-  QPtrList<KonqMainWindow> *mainWindows = KonqMainWindow::mainWindowList();
+  TQPtrList<KonqMainWindow> *mainWindows = KonqMainWindow::mainWindowList();
   if ( mainWindows )
   {
-    QPtrListIterator<KonqMainWindow> it( *mainWindows );
+    TQPtrListIterator<KonqMainWindow> it( *mainWindows );
     for (; it.current(); ++it )
     {
       if ( it.current()->fullScreenMode() )
@@ -64,14 +64,14 @@ void KonqMisc::abortFullScreenMode()
 }
 
 // #### this can probably be removed
-KonqMainWindow * KonqMisc::createSimpleWindow( const KURL & _url, const QString &frameName )
+KonqMainWindow * KonqMisc::createSimpleWindow( const KURL & _url, const TQString &frameName )
 {
   abortFullScreenMode();
 
   // If _url is 0L, open $HOME [this doesn't happen anymore]
   KURL url;
   if (_url.isEmpty())
-     url.setPath(QDir::homeDirPath());
+     url.setPath(TQDir::homeDirPath());
   else
      url = _url;
 
@@ -91,28 +91,28 @@ KonqMainWindow * KonqMisc::createSimpleWindow( const KURL & url, const KParts::U
   req.args = args;
   req.tempFile = tempFile;
   KonqMainWindow *win = new KonqMainWindow( KURL(), false );
-  win->openURL( 0L, url, QString::null, req );
+  win->openURL( 0L, url, TQString::null, req );
   win->show();
 
   return win;
 }
 
-KonqMainWindow * KonqMisc::createNewWindow( const KURL &url, const KParts::URLArgs &args, bool forbidUseHTML, QStringList filesToSelect, bool tempFile, bool openURL )
+KonqMainWindow * KonqMisc::createNewWindow( const KURL &url, const KParts::URLArgs &args, bool forbidUseHTML, TQStringList filesToSelect, bool tempFile, bool openURL )
 {
   kdDebug() << "KonqMisc::createNewWindow url=" << url << endl;
 
   // For HTTP or html files, use the web browsing profile, otherwise use filemanager profile
-  QString profileName = (!(KProtocolInfo::supportsListing(url)) ||
+  TQString profileName = (!(KProtocolInfo::supportsListing(url)) ||
                         KMimeType::findByURL(url)->name() == "text/html")
           ? "webbrowsing" : "filemanagement";
 
-  QString profile = locate( "data", QString::fromLatin1("konqueror/profiles/") + profileName );
+  TQString profile = locate( "data", TQString::fromLatin1("konqueror/profiles/") + profileName );
   return createBrowserWindowFromProfile(profile, profileName, 
 					url, args, 
 					forbidUseHTML, filesToSelect, tempFile, openURL );
 }
 
-KonqMainWindow * KonqMisc::createBrowserWindowFromProfile( const QString &path, const QString &filename, const KURL &url, const KParts::URLArgs &args, bool forbidUseHTML, const QStringList& filesToSelect, bool tempFile, bool openURL )
+KonqMainWindow * KonqMisc::createBrowserWindowFromProfile( const TQString &path, const TQString &filename, const KURL &url, const KParts::URLArgs &args, bool forbidUseHTML, const TQStringList& filesToSelect, bool tempFile, bool openURL )
 {
   kdDebug(1202) << "void KonqMisc::createBrowserWindowFromProfile() " << endl;
   kdDebug(1202) << "path=" << path << ",filename=" << filename << ",url=" << url.prettyURL() << endl;
@@ -147,7 +147,7 @@ KonqMainWindow * KonqMisc::createBrowserWindowFromProfile( const QString &path, 
       KConfig cfg( path, true );
       cfg.setDollarExpansion( true );
       cfg.setGroup( "Profile" );
-      QString xmluiFile=cfg.readEntry("XMLUIFile","konqueror.rc");
+      TQString xmluiFile=cfg.readEntry("XMLUIFile","konqueror.rc");
 
       mainWindow = new KonqMainWindow( KURL(), false, 0, xmluiFile );
       if ( forbidUseHTML )
@@ -173,7 +173,7 @@ KonqMainWindow * KonqMisc::newWindowFromHistory( KonqView* view, int steps )
       return 0L;
 
   KonqMainWindow* mainwindow = createNewWindow(he->url, KParts::URLArgs(), 
-					       false, QStringList(), false, /*openURL*/false);
+					       false, TQStringList(), false, /*openURL*/false);
   if(!mainwindow)
       return 0L;
   KonqView* newView = mainwindow->currentView();  
@@ -187,7 +187,7 @@ KonqMainWindow * KonqMisc::newWindowFromHistory( KonqView* view, int steps )
   return mainwindow;
 }
 
-QString KonqMisc::konqFilteredURL( QWidget* parent, const QString& _url, const QString& _path )
+TQString KonqMisc::konqFilteredURL( TQWidget* parent, const TQString& _url, const TQString& _path )
 {
   if ( !_url.startsWith( "about:" ) ) // Don't filter "about:" URLs
   {
@@ -205,7 +205,7 @@ QString KonqMisc::konqFilteredURL( QWidget* parent, const QString& _url, const Q
       if( data.uriType() == KURIFilterData::ERROR && !data.errorMsg().isEmpty() )
       {
         KMessageBox::sorry( parent, i18n( data.errorMsg().utf8() ) );
-        return QString::null;
+        return TQString::null;
       }
       else
         return data.uri().url();
@@ -220,56 +220,56 @@ QString KonqMisc::konqFilteredURL( QWidget* parent, const QString& _url, const Q
   return _url;  // return the original url if it cannot be filtered.
 }
 
-KonqDraggableLabel::KonqDraggableLabel( KonqMainWindow* mw, const QString& text )
-  : QLabel( text, 0L, "kde toolbar widget" )	// Use this name for it to be styled!
+KonqDraggableLabel::KonqDraggableLabel( KonqMainWindow* mw, const TQString& text )
+  : TQLabel( text, 0L, "kde toolbar widget" )	// Use this name for it to be styled!
   , m_mw(mw)
 {
   setBackgroundMode( Qt::PaletteButton );
-  setAlignment( (QApplication::reverseLayout() ? Qt::AlignRight : Qt::AlignLeft) |
+  setAlignment( (TQApplication::reverseLayout() ? Qt::AlignRight : Qt::AlignLeft) |
                  Qt::AlignVCenter | Qt::ShowPrefix );
   setAcceptDrops(true);
   adjustSize();
   validDrag = false;
 }
 
-void KonqDraggableLabel::mousePressEvent( QMouseEvent * ev )
+void KonqDraggableLabel::mousePressEvent( TQMouseEvent * ev )
 {
   validDrag = true;
   startDragPos = ev->pos();
 }
 
-void KonqDraggableLabel::mouseMoveEvent( QMouseEvent * ev )
+void KonqDraggableLabel::mouseMoveEvent( TQMouseEvent * ev )
 {
-  if ((startDragPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
+  if ((startDragPos - ev->pos()).manhattanLength() > TQApplication::startDragDistance())
   {
     validDrag = false;
     if ( m_mw->currentView() )
     {
       KURL::List lst;
       lst.append( m_mw->currentView()->url() );
-      QDragObject * drag = new KURLDrag( lst, m_mw );
+      TQDragObject * drag = new KURLDrag( lst, m_mw );
       drag->setPixmap( KMimeType::pixmapForURL( lst.first(), 0, KIcon::Small ) );
       drag->dragCopy();
     }
   }
 }
 
-void KonqDraggableLabel::mouseReleaseEvent( QMouseEvent * )
+void KonqDraggableLabel::mouseReleaseEvent( TQMouseEvent * )
 {
   validDrag = false;
 }
 
-void KonqDraggableLabel::dragEnterEvent( QDragEnterEvent *ev )
+void KonqDraggableLabel::dragEnterEvent( TQDragEnterEvent *ev )
 {
   if ( KURLDrag::canDecode( ev ) )
     ev->acceptAction();
 }
 
-void KonqDraggableLabel::dropEvent( QDropEvent* ev )
+void KonqDraggableLabel::dropEvent( TQDropEvent* ev )
 {
   _savedLst.clear();
   if ( KURLDrag::decode( ev, _savedLst ) ) {
-    QTimer::singleShot(0, this, SLOT(delayedOpenURL()));
+    TQTimer::singleShot(0, this, TQT_SLOT(delayedOpenURL()));
   }
 }
 

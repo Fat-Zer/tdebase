@@ -19,11 +19,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
 
 #include <dcopclient.h>
 
@@ -43,11 +43,11 @@
 
 #include "smartcard.h"
 
-KSmartcardConfig::KSmartcardConfig(QWidget *parent, const char *name)
+KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name),DCOPObject(name)
 {
 
-  QVBoxLayout *layout = new QVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
   config = new KConfig("ksmartcardrc", false, false);
 
   DCOPClient *dc = KApplication::kApplication()->dcopClient();
@@ -72,26 +72,26 @@ KSmartcardConfig::KSmartcardConfig(QWidget *parent, const char *name)
      _popUpKardChooser = new KPopupMenu(this,"KpopupKardChooser");
      _popUpKardChooser->insertItem(i18n("Change Module..."),
 				   this,
-				   SLOT(slotLaunchChooser()));
+				   TQT_SLOT(slotLaunchChooser()));
      // The config backend
 
-     connect(base->launchManager, SIGNAL(clicked()), SLOT( changed() ));
-     connect(base->beepOnInsert,  SIGNAL(clicked()), SLOT( changed() ));
-     connect(base->enableSupport, SIGNAL(clicked()), SLOT( changed() ));
+     connect(base->launchManager, TQT_SIGNAL(clicked()), TQT_SLOT( changed() ));
+     connect(base->beepOnInsert,  TQT_SIGNAL(clicked()), TQT_SLOT( changed() ));
+     connect(base->enableSupport, TQT_SIGNAL(clicked()), TQT_SLOT( changed() ));
 
 
-     connect(base->enablePolling, SIGNAL(clicked()), SLOT( changed() ));
+     connect(base->enablePolling, TQT_SIGNAL(clicked()), TQT_SLOT( changed() ));
      connect(base->_readerHostsListView,
-	     SIGNAL(rightButtonPressed(QListViewItem *,const QPoint &,int)),
+	     TQT_SIGNAL(rightButtonPressed(TQListViewItem *,const TQPoint &,int)),
 	     this,
-	     SLOT(slotShowPopup(QListViewItem *,const QPoint &,int)));
+	     TQT_SLOT(slotShowPopup(TQListViewItem *,const TQPoint &,int)));
 
 
 
      if (!connectDCOPSignal("",
 			    "",
-			    "signalReaderListChanged(QStringList)",
-			    "loadReadersTab(QStringList)",
+			    "signalReaderListChanged(TQStringList)",
+			    "loadReadersTab(TQStringList)",
 			    FALSE))
 
        kdDebug()<<"Error connecting to DCOP server" <<endl;
@@ -99,8 +99,8 @@ KSmartcardConfig::KSmartcardConfig(QWidget *parent, const char *name)
 
      if (!connectDCOPSignal("",
 			    "",
-			    "signalCardStateChanged(QString,bool,QString)",
-			    "updateReadersState (QString,bool,QString) ",
+			    "signalCardStateChanged(TQString,bool,TQString)",
+			    "updateReadersState (TQString,bool,TQString) ",
 			    FALSE))
 
        kdDebug()<<"Error connecting to DCOP server" <<endl;
@@ -131,7 +131,7 @@ void KSmartcardConfig::slotLaunchChooser(){
 
 }
 
-void KSmartcardConfig::slotShowPopup(QListViewItem * item ,const QPoint & _point,int i)
+void KSmartcardConfig::slotShowPopup(TQListViewItem * item ,const TQPoint & _point,int i)
 {
 
   //The popup only appears in cards, not in the slots1
@@ -141,9 +141,9 @@ void KSmartcardConfig::slotShowPopup(QListViewItem * item ,const QPoint & _point
 }
 
 
-void KSmartcardConfig::updateReadersState (QString readerName,
+void KSmartcardConfig::updateReadersState (TQString readerName,
                                            bool isCardPresent,
-                                           QString atr) {
+                                           TQString atr) {
 
     KListViewItem * tID=(KListViewItem *) base->_readerHostsListView->findItem(readerName, 0);
     if (tID==0) return;
@@ -165,13 +165,13 @@ void KSmartcardConfig::updateReadersState (QString readerName,
 
 
 
-void KSmartcardConfig::loadReadersTab( QStringList lr){
+void KSmartcardConfig::loadReadersTab( TQStringList lr){
 
   //Prepare data for dcop calls
-  QByteArray data, retval;
-  QCString rettype;
-  QDataStream arg(data, IO_WriteOnly);
-  QCString modName = "kardsvc";
+  TQByteArray data, retval;
+  TQCString rettype;
+  TQDataStream arg(data, IO_WriteOnly);
+  TQCString modName = "kardsvc";
   arg << modName;
 
   //  New view items
@@ -189,7 +189,7 @@ void KSmartcardConfig::loadReadersTab( QStringList lr){
 
     //  New view items
     KListViewItem * temp;
-    kapp->dcopClient()->call("kded", "kded", "unloadModule(QCString)",
+    kapp->dcopClient()->call("kded", "kded", "unloadModule(TQCString)",
 			     data, rettype, retval);
 
     (void) new KListViewItem(base->_readerHostsListView,
@@ -208,21 +208,21 @@ void KSmartcardConfig::loadReadersTab( QStringList lr){
     return;
   }
 
-  for (QStringList::Iterator _slot=lr.begin();_slot!=lr.end();++_slot){
+  for (TQStringList::Iterator _slot=lr.begin();_slot!=lr.end();++_slot){
 
    temp= new KListViewItem(base->_readerHostsListView,*_slot);
 
 
-   QByteArray dataATR;
-   QDataStream argATR(dataATR,IO_WriteOnly);
+   TQByteArray dataATR;
+   TQDataStream argATR(dataATR,IO_WriteOnly);
    argATR << *_slot;
 
-   kapp->dcopClient()->call("kded", "kardsvc", "getCardATR(QString)",
+   kapp->dcopClient()->call("kded", "kardsvc", "getCardATR(TQString)",
 			   dataATR, rettype, retval);
 
 
-   QString cardATR;
-   QDataStream retReaderATR(retval, IO_ReadOnly);
+   TQString cardATR;
+   TQDataStream retReaderATR(retval, IO_ReadOnly);
    retReaderATR>>cardATR;
 
    if (cardATR.isNull()){
@@ -242,7 +242,7 @@ void KSmartcardConfig::loadReadersTab( QStringList lr){
 
 
 void KSmartcardConfig::getSupportingModule( KListViewItem * ant,
-                                            QString & cardATR) const{
+                                            TQString & cardATR) const{
 
 
     if (cardATR.isNull()){
@@ -252,12 +252,12 @@ void KSmartcardConfig::getSupportingModule( KListViewItem * ant,
     }
 
 
-    QString modName=_cardDB->getModuleName(cardATR);
+    TQString modName=_cardDB->getModuleName(cardATR);
     if (!modName.isNull()){
-        QStringList mng= QStringList::split(",",modName);
-        QString type=mng[0];
-        QString subType=mng[1];
-        QString subSubType=mng[2];
+        TQStringList mng= TQStringList::split(",",modName);
+        TQString type=mng[0];
+        TQString subType=mng[1];
+        TQString subSubType=mng[2];
         KListViewItem * hil =new KListViewItem(ant,
                                                i18n("Managed by: "),
                                                type,
@@ -282,10 +282,10 @@ void KSmartcardConfig::load(bool useDefaults )
 {
 
   //Prepare data for dcop calls
-  QByteArray data, retval;
-  QCString rettype;
-  QDataStream arg(data, IO_WriteOnly);
-  QCString modName = "kardsvc";
+  TQByteArray data, retval;
+  TQCString rettype;
+  TQDataStream arg(data, IO_WriteOnly);
+  TQCString modName = "kardsvc";
   arg << modName;
 
   //Update the toggle buttons with the current configuration
@@ -306,9 +306,9 @@ void KSmartcardConfig::load(bool useDefaults )
   // We call kardsvc to retrieve the current readers
   kapp->dcopClient()->call("kded", "kardsvc", "getSlotList ()",
 			   data, rettype, retval);
-  QStringList readers;
+  TQStringList readers;
   readers.clear();
-  QDataStream retReader(retval, IO_ReadOnly);
+  TQDataStream retReader(retval, IO_ReadOnly);
   retReader>>readers;
 
   //And we update the panel
@@ -328,16 +328,16 @@ if (_ok) {
   config->writeEntry("Launch Manager", base->launchManager->isChecked());
 
 
-  QByteArray data, retval;
-  QCString rettype;
-  QDataStream arg(data, IO_WriteOnly);
-  QCString modName = "kardsvc";
+  TQByteArray data, retval;
+  TQCString rettype;
+  TQDataStream arg(data, IO_WriteOnly);
+  TQCString modName = "kardsvc";
   arg << modName;
 
   // Start or stop the server as needed
   if (base->enableSupport->isChecked()) {
 
-    kapp->dcopClient()->call("kded", "kded", "loadModule(QCString)",
+    kapp->dcopClient()->call("kded", "kded", "loadModule(TQCString)",
 			     data, rettype, retval);
     config->sync();
 
@@ -347,7 +347,7 @@ if (_ok) {
 
 
 
-    kapp->dcopClient()->call("kded", "kded", "unloadModule(QCString)",
+    kapp->dcopClient()->call("kded", "kded", "unloadModule(TQCString)",
 			     data, rettype, retval);
   }
 
@@ -363,7 +363,7 @@ void KSmartcardConfig::defaults()
 
 
 
-QString KSmartcardConfig::quickHelp() const
+TQString KSmartcardConfig::quickHelp() const
 {
   return i18n("<h1>smartcard</h1> This module allows you to configure KDE support"
      " for smartcards. These can be used for various tasks such as storing"
@@ -372,7 +372,7 @@ QString KSmartcardConfig::quickHelp() const
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_smartcard(QWidget *parent, const char *)
+  KDE_EXPORT KCModule *create_smartcard(TQWidget *parent, const char *)
   {
     return new KSmartcardConfig(parent, "kcmsmartcard");
   }
@@ -384,12 +384,12 @@ extern "C"
     delete config;
 
     if (start) {
-	QByteArray data, retval;
-	QCString rettype;
-	QDataStream arg(data, IO_WriteOnly);
-	QCString modName = "kardsvc";
+	TQByteArray data, retval;
+	TQCString rettype;
+	TQDataStream arg(data, IO_WriteOnly);
+	TQCString modName = "kardsvc";
 	arg << modName;
-	kapp->dcopClient()->call("kded", "kded", "loadModule(QCString)",
+	kapp->dcopClient()->call("kded", "kded", "loadModule(TQCString)",
 			         data, rettype, retval);
     }
   }

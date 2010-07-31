@@ -45,7 +45,7 @@ class PrivateDocumentManager
     KateDocManager *docMan;
   };
 
-DocumentManager::DocumentManager (void *documentManager) : QObject ((KateDocManager*) documentManager)
+DocumentManager::DocumentManager (void *documentManager) : TQObject ((KateDocManager*) documentManager)
 {
   d = new PrivateDocumentManager ();
   d->docMan = (KateDocManager*) documentManager;
@@ -86,7 +86,7 @@ uint DocumentManager::documents ()
   return d->docMan->documents ();
 }
 
-Document *DocumentManager::openURL(const KURL&url,const QString &encoding,uint *id)
+Document *DocumentManager::openURL(const KURL&url,const TQString &encoding,uint *id)
 {
   return d->docMan->openURL (url, encoding, id);
 }

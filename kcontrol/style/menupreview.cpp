@@ -19,8 +19,8 @@
 
 #include "menupreview.h"
 
-#include <qpainter.h>
-#include <qimage.h>
+#include <tqpainter.h>
+#include <tqimage.h>
 
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
@@ -29,8 +29,8 @@
 #include <kiconloader.h>
 
 
-MenuPreview::MenuPreview( QWidget* parent, int opacity, PreviewMode pvm )
-	: QWidget( parent, 0, WStyle_Customize | WRepaintNoErase ),
+MenuPreview::MenuPreview( TQWidget* parent, int opacity, PreviewMode pvm )
+	: TQWidget( parent, 0, WStyle_Customize | WRepaintNoErase ),
 	pixBackground(NULL), pixOverlay(NULL), pixBlended(NULL)
 {
 	setFixedSize(150, 150);
@@ -68,13 +68,13 @@ void MenuPreview::createPixmaps()
 	if (pixBlended)
 		pixBlended->resize( w, h );
 	
-	QColorGroup cg = colorGroup();
-	QColor c1 = cg.background();
-	QColor c2 = cg.mid();
+	TQColorGroup cg = colorGroup();
+	TQColor c1 = cg.background();
+	TQColor c2 = cg.mid();
 
 	if (pixBackground) {
 		// Paint checkerboard
-		QPainter p;
+		TQPainter p;
 		p.begin(pixBackground);
 		for(int x=0; x < pixBackground->width(); x+=5)
 			for(int y=0; y < pixBackground->height(); y+=5)
@@ -83,7 +83,7 @@ void MenuPreview::createPixmaps()
 								((y % 2) ?  c2 : c1  ) : 	// See the grid? ;-)
 								((y % 2) ?  c1 : c2  ) );	
 		KIconLoader* icl = KGlobal::iconLoader();
-		QPixmap pix = icl->loadIcon("go", KIcon::Desktop, KIcon::SizeLarge, KIcon::ActiveState);
+		TQPixmap pix = icl->loadIcon("go", KIcon::Desktop, KIcon::SizeLarge, KIcon::ActiveState);
 		p.drawPixmap( (width()-2-pix.width())/2, (height()-2-pix.height())/2, pix );
 	}
 
@@ -100,13 +100,13 @@ void MenuPreview::blendPixmaps()
 	if (pixBlended && pixBackground) 
 	{
 		if (mode == Blend && pixOverlay) {
-			QImage src = pixOverlay->convertToImage();
-			QImage dst = pixBackground->convertToImage();
+			TQImage src = pixOverlay->convertToImage();
+			TQImage dst = pixBackground->convertToImage();
 			KImageEffect::blend(src, dst, menuOpacity);
 			pixBlended->convertFromImage( dst );
 		} else if (mode == Tint) {
-			QColor clr = colorGroup().button();
-			QImage dst = pixBackground->convertToImage();
+			TQColor clr = colorGroup().button();
+			TQImage dst = pixBackground->convertToImage();
 			KImageEffect::blend(clr, dst, menuOpacity);
 			pixBlended->convertFromImage( dst );
 		}
@@ -134,14 +134,14 @@ void MenuPreview::setPreviewMode( PreviewMode pvm )
 	}
 }
 
-void MenuPreview::paintEvent( QPaintEvent* /* pe */ )
+void MenuPreview::paintEvent( TQPaintEvent* /* pe */ )
 {
 	// Paint the frame and blended pixmap
-	QColorGroup cg = colorGroup();
+	TQColorGroup cg = colorGroup();
 	int x2 = width()-1;
 	int y2 = height()-1;
 
-	QPainter p(this);
+	TQPainter p(this);
 	p.setPen(cg.dark());
 	p.drawLine(0, 0, x2, 0);
 	p.drawLine(0, 0, 0, y2);
@@ -154,10 +154,10 @@ void MenuPreview::paintEvent( QPaintEvent* /* pe */ )
 	else if (mode != NoEffect && pixBlended)
 		p.drawPixmap(1, 1, *pixBlended, 0, 0, --x2, --y2);
 
-	QRect r = rect();
+	TQRect r = rect();
 	r.moveBy(6,3);
 	p.setPen( cg.text() );
-	p.drawText( r, AlignTop | AlignLeft, QString::number((int)(menuOpacity*100))+i18n("%") );
+	p.drawText( r, AlignTop | AlignLeft, TQString::number((int)(menuOpacity*100))+i18n("%") );
 }
 
 #include "menupreview.moc"

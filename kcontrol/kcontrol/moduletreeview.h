@@ -20,11 +20,11 @@
 #ifndef __moduletreeview_h__
 #define __moduletreeview_h__
 
-#include <qpalette.h>
-#include <qptrlist.h>
-#include <qlistview.h>
+#include <tqpalette.h>
+#include <tqptrlist.h>
+#include <tqlistview.h>
 #include <klistview.h>
-#include <qdict.h>
+#include <tqdict.h>
 
 
 class ConfigModule;
@@ -35,33 +35,33 @@ class ModuleTreeItem : public QListViewItem
 {
 
 public:
-  ModuleTreeItem(QListViewItem *parent, ConfigModule *module = 0);
-  ModuleTreeItem(QListViewItem *parent, const QString& text);
-  ModuleTreeItem(QListView *parent, ConfigModule *module = 0);
-  ModuleTreeItem(QListView *parent, const QString& text);
+  ModuleTreeItem(TQListViewItem *parent, ConfigModule *module = 0);
+  ModuleTreeItem(TQListViewItem *parent, const TQString& text);
+  ModuleTreeItem(TQListView *parent, ConfigModule *module = 0);
+  ModuleTreeItem(TQListView *parent, const TQString& text);
 
-  void setTag(const QString& tag) { _tag = tag; }
-  void setCaption(const QString& caption) { _caption = caption; }
+  void setTag(const TQString& tag) { _tag = tag; }
+  void setCaption(const TQString& caption) { _caption = caption; }
   void setModule(ConfigModule *m) { _module = m; }
-  QString tag() const { return _tag; };
-  QString caption() const { return _caption; };
-  QString icon() const { return _icon; };
+  TQString tag() const { return _tag; };
+  TQString caption() const { return _caption; };
+  TQString icon() const { return _icon; };
   ConfigModule *module() { return _module; };
   void regChildIconWidth(int width);
   int  maxChildIconWidth() { return _maxChildIconWidth; }
 
-  void setPixmap(int column, const QPixmap& pm);
-  void setGroup(const QString &path);
+  void setPixmap(int column, const TQPixmap& pm);
+  void setGroup(const TQString &path);
 
 protected:
-  void paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int align );
+  void paintCell( TQPainter * p, const TQColorGroup & cg, int column, int width, int align );
 
 private:
   ConfigModule *_module;
-  QString       _tag;
-  QString       _caption;
+  TQString       _tag;
+  TQString       _caption;
   int _maxChildIconWidth;
-  QString       _icon;
+  TQString       _icon;
 };
 
 class ModuleTreeView : public KListView
@@ -69,24 +69,24 @@ class ModuleTreeView : public KListView
   Q_OBJECT
 
 public:
-  ModuleTreeView(ConfigModuleList *list, QWidget * parent = 0, const char * name = 0);
+  ModuleTreeView(ConfigModuleList *list, TQWidget * parent = 0, const char * name = 0);
 
   void makeSelected(ConfigModule* module);
   void makeVisible(ConfigModule *module);
   void fill();
-  QSize sizeHint() const;
+  TQSize sizeHint() const;
 
 signals:
   void moduleSelected(ConfigModule*);
-  void categorySelected(QListViewItem*);
+  void categorySelected(TQListViewItem*);
 
 protected slots:
-  void slotItemSelected(QListViewItem*);
+  void slotItemSelected(TQListViewItem*);
 
 protected:
   void updateItem(ModuleTreeItem *item, ConfigModule* module); 
-  void keyPressEvent(QKeyEvent *);
-  void fill(ModuleTreeItem *parent, const QString &parentPath);
+  void keyPressEvent(TQKeyEvent *);
+  void fill(ModuleTreeItem *parent, const TQString &parentPath);
 
 private:
   ConfigModuleList *_modules;

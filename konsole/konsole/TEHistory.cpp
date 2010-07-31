@@ -144,7 +144,7 @@ bool HistoryScroll::hasScroll()
    at 0 in cells.
 */
 
-HistoryScrollFile::HistoryScrollFile(const QString &logFileName)
+HistoryScrollFile::HistoryScrollFile(const TQString &logFileName)
   : HistoryScroll(new HistoryTypeFile(logFileName)),
   m_logFileName(logFileName)
 {
@@ -246,9 +246,9 @@ void HistoryScrollBuffer::addCells(ca a[], int count)
 void HistoryScrollBuffer::normalize()
 {
   if (!m_buffFilled || !m_arrayIndex) return;
-  QPtrVector<histline> newHistBuffer;
+  TQPtrVector<histline> newHistBuffer;
   newHistBuffer.resize(m_maxNbLines);
-  QBitArray newWrappedLine;
+  TQBitArray newWrappedLine;
   newWrappedLine.resize(m_maxNbLines);
   for(int i = 0; i < (int) m_maxNbLines-2; i++)
   {
@@ -583,7 +583,7 @@ HistoryScroll* HistoryTypeBuffer::getScroll(HistoryScroll *old) const
 
 //////////////////////////////
 
-HistoryTypeFile::HistoryTypeFile(const QString& fileName)
+HistoryTypeFile::HistoryTypeFile(const TQString& fileName)
   : m_fileName(fileName)
 {
 }
@@ -593,7 +593,7 @@ bool HistoryTypeFile::isOn() const
   return true;
 }
 
-const QString& HistoryTypeFile::getFileName() const
+const TQString& HistoryTypeFile::getFileName() const
 {
   return m_fileName;
 }

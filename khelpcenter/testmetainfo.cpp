@@ -1,4 +1,4 @@
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -14,7 +14,7 @@ using namespace KHC;
 class MyTraverser : public DocEntryTraverser
 {
   public:
-    MyTraverser( const QString &indent = "" ) : mIndent( indent ) {}
+    MyTraverser( const TQString &indent = "" ) : mIndent( indent ) {}
 
     void process( DocEntry *entry )
     {
@@ -34,7 +34,7 @@ class MyTraverser : public DocEntryTraverser
     }
 
   private:
-    QString mIndent;
+    TQString mIndent;
 };
 
 class LinearTraverser : public DocEntryTraverser
@@ -61,7 +61,7 @@ class LinearTraverser : public DocEntryTraverser
 class AsyncTraverser : public DocEntryTraverser
 {
   public:
-    AsyncTraverser( const QString &indent = "" ) : mIndent( indent )
+    AsyncTraverser( const TQString &indent = "" ) : mIndent( indent )
     {
 //      kdDebug() << "AsyncTraverser()" << endl;
     }
@@ -83,7 +83,7 @@ class AsyncTraverser : public DocEntryTraverser
     }
 
   private:
-    QString mIndent;
+    TQString mIndent;
 };
 
 int main(int argc,char **argv)
@@ -95,7 +95,7 @@ int main(int argc,char **argv)
 
   kdDebug() << "Scanning Meta Info" << endl;
 
-  QStringList langs;
+  TQStringList langs;
   langs << "en";
 //  langs << "de";
 

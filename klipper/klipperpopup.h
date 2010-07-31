@@ -21,8 +21,8 @@
 #define _KLIPPERPOPUP_H_
 
 #include <kpopupmenu.h>
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 class History;
 class KlipperWidget;
@@ -40,7 +40,7 @@ class KlipperPopup : public KPopupMenu
     Q_OBJECT
 
 public:
-    KlipperPopup( History* history, QWidget* parent=0, const char* name=0 );
+    KlipperPopup( History* history, TQWidget* parent=0, const char* name=0 );
     ~KlipperPopup();
     void plugAction( KAction* action );
 
@@ -59,14 +59,14 @@ public slots:
     void slotAboutToShow();
 
 private:
-    void rebuild( const QString& filter = QString::null );
+    void rebuild( const TQString& filter = TQString::null );
     void buildFromScratch();
 
     void insertSearchFilter();
     void removeSearchFilter();
 
 protected:
-     virtual void keyPressEvent( QKeyEvent* e );
+     virtual void keyPressEvent( TQKeyEvent* e );
 
 private:
     bool m_dirty : 1; // true if menu contents needs to be rebuild.
@@ -74,13 +74,13 @@ private:
     /**
      * Contains the string shown if the menu is empty.
      */
-    QString QSempty;
+    TQString QSempty;
 
     /**
      * Contains the string shown if the search string has no
      * matches and the menu is not empty.
      */
-    QString QSnomatch;
+    TQString QSnomatch;
 
     /**
      * The "document" (clipboard history)
@@ -95,7 +95,7 @@ private:
     /**
      * (unowned) actions to plug into the primary popup menu
      */
-    QPtrList<KAction> m_actions;
+    TQPtrList<KAction> m_actions;
 
     /**
      * Proxy helper object used to track history items

@@ -21,25 +21,25 @@
 #include <kconfig.h>
 #include <klocale.h>
 
-const QString Medium::SEPARATOR = "---";
+const TQString Medium::SEPARATOR = "---";
 
-Medium::Medium(const QString &id, const QString &name)
+Medium::Medium(const TQString &id, const TQString &name)
 {
 	m_properties+= id; /* ID */
 	m_properties+= name; /* NAME */
 	m_properties+= name; /* LABEL */
-	m_properties+= QString::null; /* USER_LABEL */
+	m_properties+= TQString::null; /* USER_LABEL */
 
 	m_properties+= "false"; /* MOUNTABLE */
-	m_properties+= QString::null; /* DEVICE_NODE */
-	m_properties+= QString::null; /* MOUNT_POINT */
-	m_properties+= QString::null; /* FS_TYPE */
+	m_properties+= TQString::null; /* DEVICE_NODE */
+	m_properties+= TQString::null; /* MOUNT_POINT */
+	m_properties+= TQString::null; /* FS_TYPE */
 	m_properties+= "false"; /* MOUNTED */
-	m_properties+= QString::null; /* BASE_URL */
-	m_properties+= QString::null; /* MIME_TYPE */
-	m_properties+= QString::null; /* ICON_NAME */
+	m_properties+= TQString::null; /* BASE_URL */
+	m_properties+= TQString::null; /* MIME_TYPE */
+	m_properties+= TQString::null; /* ICON_NAME */
 	m_properties+= "false"; /* ENCRYPTED */
-	m_properties+= QString::null; /* CLEAR_DEVICE_UDI */
+	m_properties+= TQString::null; /* CLEAR_DEVICE_UDI */
 
 	loadUserLabel();
 
@@ -48,26 +48,26 @@ Medium::Medium(const QString &id, const QString &name)
 
 Medium::Medium()
 {
-	m_properties+= QString::null; /* ID */
-	m_properties+= QString::null; /* NAME */
-	m_properties+= QString::null; /* LABEL */
-	m_properties+= QString::null; /* USER_LABEL */
+	m_properties+= TQString::null; /* ID */
+	m_properties+= TQString::null; /* NAME */
+	m_properties+= TQString::null; /* LABEL */
+	m_properties+= TQString::null; /* USER_LABEL */
 
-	m_properties+= QString::null; /* MOUNTABLE */
-	m_properties+= QString::null; /* DEVICE_NODE */
-	m_properties+= QString::null; /* MOUNT_POINT */
-	m_properties+= QString::null; /* FS_TYPE */
-	m_properties+= QString::null; /* MOUNTED */
-	m_properties+= QString::null; /* BASE_URL */
-	m_properties+= QString::null; /* MIME_TYPE */
-	m_properties+= QString::null; /* ICON_NAME */
-	m_properties+= QString::null; /* ENCRYPTED */
-	m_properties+= QString::null; /* CLEAR_DEVICE_UDI */
+	m_properties+= TQString::null; /* MOUNTABLE */
+	m_properties+= TQString::null; /* DEVICE_NODE */
+	m_properties+= TQString::null; /* MOUNT_POINT */
+	m_properties+= TQString::null; /* FS_TYPE */
+	m_properties+= TQString::null; /* MOUNTED */
+	m_properties+= TQString::null; /* BASE_URL */
+	m_properties+= TQString::null; /* MIME_TYPE */
+	m_properties+= TQString::null; /* ICON_NAME */
+	m_properties+= TQString::null; /* ENCRYPTED */
+	m_properties+= TQString::null; /* CLEAR_DEVICE_UDI */
 	
 	m_halmounted = false;
 }
 
-const Medium Medium::create(const QStringList &properties)
+const Medium Medium::create(const TQStringList &properties)
 {
 	Medium m;
 
@@ -93,7 +93,7 @@ const Medium Medium::create(const QStringList &properties)
 	return m;
 }
 
-Medium::List Medium::createList(const QStringList &properties)
+Medium::List Medium::createList(const TQStringList &properties)
 {
 	List l;
 
@@ -101,15 +101,15 @@ Medium::List Medium::createList(const QStringList &properties)
 	{
 		int media_count = properties.size()/(PROPERTIES_COUNT+1);
 
-		QStringList props = properties;
+		TQStringList props = properties;
 
 		for(int i=0; i<media_count; i++)
 		{
 			const Medium m = create(props);
 			l.append(m);
 
-			QStringList::iterator first = props.begin();
-			QStringList::iterator last = props.find(SEPARATOR);
+			TQStringList::iterator first = props.begin();
+			TQStringList::iterator last = props.find(SEPARATOR);
 			++last;
 			props.erase(first, last);
 		}
@@ -119,12 +119,12 @@ Medium::List Medium::createList(const QStringList &properties)
 }
 
 
-void Medium::setName(const QString &name)
+void Medium::setName(const TQString &name)
 {
 	m_properties[NAME] = name;
 }
 
-void Medium::setLabel(const QString &label)
+void Medium::setLabel(const TQString &label)
 {
 	m_properties[LABEL] = label;
 }
@@ -134,12 +134,12 @@ void Medium::setEncrypted(bool state)
 	m_properties[ENCRYPTED] = ( state ? "true" : "false" );
 }
 
-void Medium::setUserLabel(const QString &label)
+void Medium::setUserLabel(const TQString &label)
 {
 	KConfig cfg("mediamanagerrc");
 	cfg.setGroup("UserLabels");
 
-	QString entry_name = m_properties[ID];
+	TQString entry_name = m_properties[ID];
 
 	if ( label.isNull() )
 	{
@@ -158,7 +158,7 @@ void Medium::loadUserLabel()
 	KConfig cfg("mediamanagerrc");
 	cfg.setGroup("UserLabels");
 
-	QString entry_name = m_properties[ID];
+	TQString entry_name = m_properties[ID];
 
 	if ( cfg.hasKey(entry_name) )
 	{
@@ -166,7 +166,7 @@ void Medium::loadUserLabel()
 	}
 	else
 	{
-		m_properties[USER_LABEL] = QString::null;
+		m_properties[USER_LABEL] = TQString::null;
 	}
 }
 
@@ -185,9 +185,9 @@ bool Medium::mountableState(bool mounted)
 	return true;
 }
 
-void Medium::mountableState(const QString &deviceNode,
-                            const QString &mountPoint,
-                            const QString &fsType, bool mounted)
+void Medium::mountableState(const TQString &deviceNode,
+                            const TQString &mountPoint,
+                            const TQString &fsType, bool mounted)
 {
 	m_properties[MOUNTABLE] = "true";
 	m_properties[DEVICE_NODE] = deviceNode;
@@ -196,10 +196,10 @@ void Medium::mountableState(const QString &deviceNode,
 	m_properties[MOUNTED] = ( mounted ? "true" : "false" );
 }
 
-void Medium::mountableState(const QString &deviceNode,
-	                    const QString &clearDeviceUdi,
-                            const QString &mountPoint,
-                            const QString &fsType, bool mounted)
+void Medium::mountableState(const TQString &deviceNode,
+	                    const TQString &clearDeviceUdi,
+                            const TQString &mountPoint,
+                            const TQString &fsType, bool mounted)
 {
 	m_properties[MOUNTABLE] = "true";
 	m_properties[DEVICE_NODE] = deviceNode;
@@ -209,18 +209,18 @@ void Medium::mountableState(const QString &deviceNode,
 	m_properties[MOUNTED] = ( mounted ? "true" : "false" );
 }
 
-void Medium::unmountableState(const QString &baseURL)
+void Medium::unmountableState(const TQString &baseURL)
 {
 	m_properties[MOUNTABLE] = "false";
 	m_properties[BASE_URL] = baseURL;
 }
 
-void Medium::setMimeType(const QString &mimeType)
+void Medium::setMimeType(const TQString &mimeType)
 {
 	m_properties[MIME_TYPE] = mimeType;
 }
 
-void Medium::setIconName(const QString &iconName)
+void Medium::setIconName(const TQString &iconName)
 {
 	m_properties[ICON_NAME] = iconName;
 }
@@ -243,7 +243,7 @@ KURL Medium::prettyBaseURL() const
 		return KURL( mountPoint() );
 }
 
-QString Medium::prettyLabel() const
+TQString Medium::prettyLabel() const
 {
 	if ( !userLabel().isEmpty() )
 	{

@@ -16,7 +16,7 @@ class ProgressDialog : public KDialogBase
 
 public:
 
-  ProgressDialog(QWidget *parent=0, const char *name=0);
+  ProgressDialog(TQWidget *parent=0, const char *name=0);
 
   void setFilesScanned(int s);
   void setFilesToDig(int d);
@@ -26,7 +26,7 @@ public:
 
 private:
 
-  QLabel    *filesScanned, *check1, *check2, *check3;
+  TQLabel    *filesScanned, *check1, *check2, *check3;
   KProgress *bar;
 
 };

@@ -23,10 +23,10 @@
 #ifndef _KACCELACTION_H
 #define _KACCELACTION_H
 
-#include <qmap.h>
-#include <qptrvector.h>
-#include <qstring.h>
-#include <qvaluevector.h>
+#include <tqmap.h>
+#include <tqptrvector.h>
+#include <tqstring.h>
+#include <tqvaluevector.h>
 
 #include <kshortcut.h>
 
@@ -71,37 +71,37 @@ class KAccelAction
  public:
 	KAccelAction();
 	KAccelAction( const KAccelAction& );
-	KAccelAction( const QString& sName, const QString& sLabel, const QString& sWhatsThis,
+	KAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& cutDef3, const KShortcut& cutDef4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
 	~KAccelAction();
 
 	void clear();
-	bool init( const QString& sName, const QString& sLabel, const QString& sWhatsThis,
+	bool init( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& cutDef3, const KShortcut& cutDef4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
 
 	KAccelAction& operator=( const KAccelAction& );
 
-	const QString& name() const                { return m_sName; }
-	const QString& label() const               { return m_sLabel; }
-	const QString& whatsThis() const           { return m_sWhatsThis; }
+	const TQString& name() const                { return m_sName; }
+	const TQString& label() const               { return m_sLabel; }
+	const TQString& whatsThis() const           { return m_sWhatsThis; }
 	const KShortcut& shortcut() const          { return m_cut; }
 	const KShortcut& shortcutDefault() const;
 	const KShortcut& shortcutDefault3() const  { return m_cutDefault3; }
 	const KShortcut& shortcutDefault4() const  { return m_cutDefault4; }
-	const QObject* objSlotPtr() const          { return m_pObjSlot; }
+	const TQObject* objSlotPtr() const          { return m_pObjSlot; }
 	const char* methodSlotPtr() const          { return m_psMethodSlot; }
 	bool isConfigurable() const                { return m_bConfigurable; }
 	bool isEnabled() const                     { return m_bEnabled; }
 
-	void setName( const QString& );
-	void setLabel( const QString& );
-	void setWhatsThis( const QString& );
+	void setName( const TQString& );
+	void setLabel( const TQString& );
+	void setWhatsThis( const TQString& );
 	bool setShortcut( const KShortcut& rgCuts );
-	void setSlot( const QObject* pObjSlot, const char* psMethodSlot );
+	void setSlot( const TQObject* pObjSlot, const char* psMethodSlot );
 	void setConfigurable( bool );
 	void setEnabled( bool );
 
@@ -113,19 +113,19 @@ class KAccelAction
 	void clearShortcut();
 	bool contains( const KKeySequence& );
 
-	QString toString() const;
-	QString toStringInternal() const;
+	TQString toString() const;
+	TQString toStringInternal() const;
 
 	static bool useFourModifierKeys();
 	static void useFourModifierKeys( bool );
 
  protected:
-	QString m_sName,
+	TQString m_sName,
 	        m_sLabel,
 	        m_sWhatsThis;
 	KShortcut m_cut;
 	KShortcut m_cutDefault3, m_cutDefault4;
-	const QObject* m_pObjSlot;
+	const TQObject* m_pObjSlot;
 	const char* m_psMethodSlot;
 	bool m_bConfigurable,
 	     m_bEnabled;
@@ -156,28 +156,28 @@ class KAccelActions
 
 	void clear();
 	bool init( const KAccelActions& );
-	bool init( KConfigBase& config, const QString& sGroup );
+	bool init( KConfigBase& config, const TQString& sGroup );
 
 	void updateShortcuts( KAccelActions& );
 
-	int actionIndex( const QString& sAction ) const;
+	int actionIndex( const TQString& sAction ) const;
 	KAccelAction* actionPtr( uint );
 	const KAccelAction* actionPtr( uint ) const;
-	KAccelAction* actionPtr( const QString& sAction );
-	const KAccelAction* actionPtr( const QString& sAction ) const;
+	KAccelAction* actionPtr( const TQString& sAction );
+	const KAccelAction* actionPtr( const TQString& sAction ) const;
 	KAccelAction* actionPtr( KKeySequence cut );
 	KAccelAction& operator []( uint );
 	const KAccelAction& operator []( uint ) const;
 
-	KAccelAction* insert( const QString& sAction, const QString& sLabel, const QString& sWhatsThis,
+	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
-			const QObject* pObjSlot = 0, const char* psMethodSlot = 0,
+			const TQObject* pObjSlot = 0, const char* psMethodSlot = 0,
 			bool bConfigurable = true, bool bEnabled = true );
-	KAccelAction* insert( const QString& sName, const QString& sLabel );
-	bool remove( const QString& sAction );
+	KAccelAction* insert( const TQString& sName, const TQString& sLabel );
+	bool remove( const TQString& sAction );
 
-	bool readActions( const QString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0 );
-	bool writeActions( const QString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0,
+	bool readActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0 );
+	bool writeActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0,
 			bool bWriteAll = false, bool bGlobal = false ) const;
 
 	void emitKeycodeChanged();

@@ -11,8 +11,8 @@
 #ifndef __APPEARANCE_H__
 #define __APPEARANCE_H__
 
-#include <qwidget.h>
-#include <qmap.h>
+#include <tqwidget.h>
+#include <tqmap.h>
 
 #include <kcmodule.h>
 
@@ -23,7 +23,7 @@ class KAppearanceOptions : public KCModule
 {
   Q_OBJECT
 public:
-  KAppearanceOptions(KConfig *config, QString group, QWidget *parent=0, const char *name=0);
+  KAppearanceOptions(KConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
   ~KAppearanceOptions();
 
   virtual void load();
@@ -34,13 +34,13 @@ public:
 public slots:
   void slotFontSize( int );
   void slotMinimumFontSize( int );
-  void slotStandardFont(const QString& n);
-  void slotFixedFont(const QString& n);
-  void slotSerifFont( const QString& n );
-  void slotSansSerifFont( const QString& n );
-  void slotCursiveFont( const QString& n );
-  void slotFantasyFont( const QString& n );
-  void slotEncoding( const QString& n);
+  void slotStandardFont(const TQString& n);
+  void slotFixedFont(const TQString& n);
+  void slotSerifFont( const TQString& n );
+  void slotSansSerifFont( const TQString& n );
+  void slotCursiveFont( const TQString& n );
+  void slotFantasyFont( const TQString& n );
+  void slotEncoding( const TQString& n);
   void slotFontSizeAdjust( int value );
 
 private:
@@ -49,22 +49,22 @@ private:
 private:
 
   KConfig *m_pConfig;
-  QString m_groupname;
-  QStringList m_families;
+  TQString m_groupname;
+  TQStringList m_families;
 
   KIntNumInput* m_minSize;
   KIntNumInput* m_MedSize;
   KIntNumInput* m_pageDPI;
   KFontCombo* m_pFonts[6];
-  QComboBox* m_pEncoding;
-  QSpinBox *m_pFontSizeAdjust;
+  TQComboBox* m_pEncoding;
+  TQSpinBox *m_pFontSizeAdjust;
 
   int fSize;
   int fMinSize;
-  QStringList encodings;
-  QStringList fonts;
-  QStringList defaultFonts;
-  QString encodingName;
+  TQStringList encodings;
+  TQStringList fonts;
+  TQStringList defaultFonts;
+  TQString encodingName;
 };
 
 #endif // __APPEARANCE_H__

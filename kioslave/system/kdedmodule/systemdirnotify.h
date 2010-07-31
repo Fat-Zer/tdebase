@@ -21,7 +21,7 @@
 
 #include <kurl.h>
 #include <kdirnotify.h>
-#include <qmap.h>
+#include <tqmap.h>
 
 class SystemDirNotify : public KDirNotify
 {
@@ -40,7 +40,7 @@ private:
 	KURL toSystemURL(const KURL &url);
 	KURL::List toSystemURLList(const KURL::List &list);
 
-	QMap<KURL,KURL> m_urlMap;
+	TQMap<KURL,KURL> m_urlMap;
 	bool mInited;
 };
 

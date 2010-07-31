@@ -30,25 +30,25 @@ class Actions_listview_widget
     { 
     Q_OBJECT
     public:
-        Actions_listview_widget( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Actions_listview_widget( TQWidget* parent_P = NULL, const char* name_P = NULL );
         Action_listview_item* current_action() const;
         void set_current_action( Action_listview_item* item );
         Action_data_base* current_action_data() const; 
         void set_action_data( Action_data_base* data_P, bool recent_action_P = false );
-        void action_name_changed( const QString& name_P );
+        void action_name_changed( const TQString& name_P );
         void clear();
         void build_up();
         void new_action( Action_data_base* data_P );
         void delete_action();
     private:
-        Action_listview_item* create_item( QListViewItem* parent_P, QListViewItem* after_P, Action_data_base* data_P );
+        Action_listview_item* create_item( TQListViewItem* parent_P, TQListViewItem* after_P, Action_data_base* data_P );
         void build_up_recursively( Action_data_group* parent_P,
             Action_listview_item* item_parent_P );
         Action_listview_item* recent_item;
         Action_listview_item* saved_current_item;
     private slots:
-        void item_moved( QListViewItem* item_P, QListViewItem* was_after_P, QListViewItem* after_P );
-        void current_changed( QListViewItem* item_P );
+        void item_moved( TQListViewItem* item_P, TQListViewItem* was_after_P, TQListViewItem* after_P );
+        void current_changed( TQListViewItem* item_P );
     signals:
         void current_action_changed();
     };
@@ -58,7 +58,7 @@ class Actions_listview
     {
     Q_OBJECT
     public:
-        Actions_listview( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Actions_listview( TQWidget* parent_P = NULL, const char* name_P = NULL );
         Actions_listview_widget* widget();
     private:
         Actions_listview_widget* _widget;
@@ -69,12 +69,12 @@ class Action_listview_item
     : public QListViewItem
     {
     public:
-        virtual QString text( int column_P ) const;
+        virtual TQString text( int column_P ) const;
         Action_data_base* data() const;
         void set_data( Action_data_base* data_P );
-        Action_listview_item( QListView* parent_P, QListViewItem* after_P,
+        Action_listview_item( TQListView* parent_P, TQListViewItem* after_P,
             Action_data_base* data_P );
-        Action_listview_item( QListViewItem* parent_P, QListViewItem* after_P,
+        Action_listview_item( TQListViewItem* parent_P, TQListViewItem* after_P,
             Action_data_base* data_P );
     protected:
         Action_data_base* _data; // CHECKME doesn't own !!!
@@ -117,18 +117,18 @@ Actions_listview_widget* Actions_listview::widget()
 // Action_listview_item
 
 inline
-Action_listview_item::Action_listview_item( QListView* parent_P, QListViewItem* after_P,
+Action_listview_item::Action_listview_item( TQListView* parent_P, TQListViewItem* after_P,
     Action_data_base* data_P )
-    : QListViewItem( parent_P, after_P ), _data( data_P )
+    : TQListViewItem( parent_P, after_P ), _data( data_P )
     {
     if( dynamic_cast< Action_data_group* >( data_P ))
         setExpandable( true );
     }
 
 inline
-Action_listview_item::Action_listview_item( QListViewItem* parent_P, QListViewItem* after_P,
+Action_listview_item::Action_listview_item( TQListViewItem* parent_P, TQListViewItem* after_P,
     Action_data_base* data_P )
-    : QListViewItem( parent_P, after_P ), _data( data_P )
+    : TQListViewItem( parent_P, after_P ), _data( data_P )
     {
     if( dynamic_cast< Action_data_group* >( data_P ))
         setExpandable( true );

@@ -31,25 +31,25 @@ class LookAndFeelTab : public LookAndFeelTabBase
     Q_OBJECT
 
 public:
-    LookAndFeelTab(QWidget *parent = 0, const char* name = 0);
+    LookAndFeelTab(TQWidget *parent = 0, const char* name = 0);
 
     void load();
     void load(bool useDefaults);
     void save();
     void defaults();
 
-    QString quickHelp() const;
+    TQString quickHelp() const;
 
 signals:
     void changed();
 
 protected:
     void fillTileCombos();
-    void previewBackground(const QString& themepath, bool isNew);
+    void previewBackground(const TQString& themepath, bool isNew);
 
 protected slots:
     void browseTheme();
-    void browseTheme(const QString&);
+    void browseTheme(const TQString&);
     void enableTransparency( bool );
 
     void launchAdvancedDialog();
@@ -62,8 +62,8 @@ protected slots:
     void wlTileChanged(int i);
 
 private:
-    QPixmap theme_preview;
-    QStringList m_tilename;
+    TQPixmap theme_preview;
+    TQStringList m_tilename;
     advancedDialog *m_advDialog;
 };
 

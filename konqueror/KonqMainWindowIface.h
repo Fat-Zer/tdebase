@@ -22,7 +22,7 @@
 #define __KonqMainWindowIface_h__
 
 #include <dcopobject.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 #include <dcopref.h>
 #include <kmainwindowiface.h>
 
@@ -42,13 +42,13 @@ public:
 
 k_dcop:
 
-  void openURL( QString url );
-  void newTab( QString url );
+  void openURL( TQString url );
+  void newTab( TQString url );
 
-  void openURL( QString url, bool tempFile );
-  void newTab( QString url, bool tempFile );
+  void openURL( TQString url, bool tempFile );
+  void newTab( TQString url, bool tempFile );
 
-  void newTabASN( QString url, const QCString& startup_id, bool tempFile );
+  void newTabASN( TQString url, const TQCString& startup_id, bool tempFile );
 
   void splitViewHorizontally();
   void splitViewVertically();
@@ -71,9 +71,9 @@ k_dcop:
   DCOPRef view(int viewNumber);
   DCOPRef part(int partNumber);
 
-  DCOPRef action( const QCString &name );
+  DCOPRef action( const TQCString &name );
   QCStringList actions();
-  QMap<QCString,DCOPRef> actionMap();
+  TQMap<TQCString,DCOPRef> actionMap();
 
   /**
    * Used by kfmclient when searching a window to open a tab within
@@ -82,7 +82,7 @@ k_dcop:
 
 public:
     virtual QCStringList functionsDynamic();
-    virtual bool processDynamic( const QCString &fun, const QByteArray &data, QCString &replyType, QByteArray &replyData );
+    virtual bool processDynamic( const TQCString &fun, const TQByteArray &data, TQCString &replyType, TQByteArray &replyData );
 
 private:
 

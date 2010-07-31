@@ -39,24 +39,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <ksimpleconfig.h>
 #include <kstringhandler.h>
 
-#undef Unsorted // x headers suck - make qdir.h work with --enable-final
-#include <qdir.h>
-#include <qfile.h>
-#include <qbuffer.h>
-#include <qmemarray.h>
-#include <qimage.h>
-#include <qmovie.h>
-#include <qpopupmenu.h>
-#include <qtimer.h>
-#include <qheader.h>
-#include <qstyle.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qtooltip.h>
-#include <qaccel.h>
-#include <qstring.h>
-#include <qeventloop.h>
+#undef Unsorted // x headers suck - make tqdir.h work with --enable-final
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqbuffer.h>
+#include <tqmemarray.h>
+#include <tqimage.h>
+#include <tqmovie.h>
+#include <tqpopupmenu.h>
+#include <tqtimer.h>
+#include <tqheader.h>
+#include <tqstyle.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqtooltip.h>
+#include <tqaccel.h>
+#include <tqstring.h>
+#include <tqeventloop.h>
 
 #include <pwd.h>
 #include <grp.h>
@@ -69,32 +69,32 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class UserListView : public KListView {
   public:
-	UserListView( QWidget *parent = 0, const char *name = 0 )
+	UserListView( TQWidget *parent = 0, const char *name = 0 )
 		: KListView( parent, name )
 		, cachedSizeHint( -1, 0 )
 	{
-		setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Ignored );
+		setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
 		header()->hide();
-		addColumn( QString::null );
+		addColumn( TQString::null );
 		setColumnAlignment( 0, AlignVCenter );
-		setResizeMode( QListView::LastColumn );
+		setResizeMode( TQListView::LastColumn );
 	}
 
-	mutable QSize cachedSizeHint;
+	mutable TQSize cachedSizeHint;
 
   protected:
-	virtual QSize sizeHint() const
+	virtual TQSize sizeHint() const
 	{
 		if (!cachedSizeHint.isValid()) {
 			constPolish();
 			uint maxw = 0;
-			for (QListViewItem *itm = firstChild(); itm; itm = itm->nextSibling()) {
+			for (TQListViewItem *itm = firstChild(); itm; itm = itm->nextSibling()) {
 				uint thisw = itm->width( fontMetrics(), this, 0 );
 				if (thisw > maxw)
 					maxw = thisw;
 			}
 			cachedSizeHint.setWidth(
-				style().pixelMetric( QStyle::PM_ScrollBarExtent ) +
+				style().pixelMetric( TQStyle::PM_ScrollBarExtent ) +
 				frameWidth() * 2 + maxw );
 		}
 		return cachedSizeHint;
@@ -122,19 +122,19 @@ KGreeter::KGreeter( bool framed )
 
 	if (_userList) {
 		userView = new UserListView( this );
-		connect( userView, SIGNAL(clicked( QListViewItem * )),
-		         SLOT(slotUserClicked( QListViewItem * )) );
-		connect( userView, SIGNAL(doubleClicked( QListViewItem * )),
-		         SLOT(accept()) );
+		connect( userView, TQT_SIGNAL(clicked( TQListViewItem * )),
+		         TQT_SLOT(slotUserClicked( TQListViewItem * )) );
+		connect( userView, TQT_SIGNAL(doubleClicked( TQListViewItem * )),
+		         TQT_SLOT(accept()) );
 	}
 	if (_userCompletion)
 		userList = new QStringList;
 	if (userView || userList)
 		insertUsers();
 
-	sessMenu = new QPopupMenu( this );
-	connect( sessMenu, SIGNAL(activated( int )),
-	         SLOT(slotSessionSelected( int )) );
+	sessMenu = new TQPopupMenu( this );
+	connect( sessMenu, TQT_SIGNAL(activated( int )),
+	         TQT_SLOT(slotSessionSelected( int )) );
 	insertSessions();
 
 	if (curPlugin < 0) {
@@ -153,8 +153,8 @@ KGreeter::~KGreeter()
 
 class UserListViewItem : public KListViewItem {
   public:
-	UserListViewItem( UserListView *parent, const QString &text,
-	                  const QPixmap &pixmap, const QString &username )
+	UserListViewItem( UserListView *parent, const TQString &text,
+	                  const TQPixmap &pixmap, const TQString &username )
 		: KListViewItem( parent )
 		, login( username )
 	{
@@ -164,15 +164,15 @@ class UserListViewItem : public KListViewItem {
 		parent->cachedSizeHint.setWidth( -1 );
 	}
 
-	QString login;
+	TQString login;
 };
 
 #define FILE_LIMIT_ICON 20
 #define FILE_LIMIT_IMAGE 200
 
 void
-KGreeter::insertUser( const QImage &default_pix,
-                      const QString &username, struct passwd *ps )
+KGreeter::insertUser( const TQImage &default_pix,
+                      const TQString &username, struct passwd *ps )
 {
         if (setegid( ps->pw_gid ))
                 return;
@@ -193,12 +193,12 @@ KGreeter::insertUser( const QImage &default_pix,
 	if (_faceSource != FACE_USER_ONLY &&
 	    _faceSource != FACE_ADMIN_ONLY)
 		nd = 1;
-	QImage p;
+	TQImage p;
 	do {
 		dp ^= 1;
-		QCString fn = !dp ?
-		              QCString( ps->pw_dir ) + '/' :
-		              QFile::encodeName( _faceDir + '/' + username );
+		TQCString fn = !dp ?
+		              TQCString( ps->pw_dir ) + '/' :
+		              TQFile::encodeName( _faceDir + '/' + username );
 		fn += ".face.icon";
 		int fd, ico;
 		if ((fd = open( fn.data(), O_RDONLY | O_NONBLOCK )) < 0) {
@@ -208,7 +208,7 @@ KGreeter::insertUser( const QImage &default_pix,
 			ico = 0;
 		} else
 			ico = 1;
-		QFile f;
+		TQFile f;
 		f.open( IO_ReadOnly, fd );
 		int fs = f.size();
 		if (fs > (ico ? FILE_LIMIT_ICON : FILE_LIMIT_IMAGE) * 1000) {
@@ -216,40 +216,40 @@ KGreeter::insertUser( const QImage &default_pix,
 			         fn.data(), ico ? FILE_LIMIT_ICON : FILE_LIMIT_IMAGE );
 			continue;
 		}
-		QByteArray fc( fs );
+		TQByteArray fc( fs );
 		int rfs = f.readBlock( fc.data(), fs );
 		::close( fd );
 		fc.resize( rfs > 0 ? rfs : 0 );
-		QBuffer buf( fc );
+		TQBuffer buf( fc );
 		buf.open( IO_ReadOnly );
-		QImageIO ir;
+		TQImageIO ir;
 		ir.setIODevice( &buf );
 		if (!ir.read()) {
 			LogInfo( "%s is no valid image\n", fn.data() );
 			continue;
 		}
 		p = ir.image();
-		QSize ns( 48, 48 );
+		TQSize ns( 48, 48 );
 		if (p.size() != ns)
-			p = p.convertDepth( 32 ).smoothScale( ns, QImage::ScaleMin );
+			p = p.convertDepth( 32 ).smoothScale( ns, TQImage::ScaleMin );
 		goto gotit;
 	} while (--nd >= 0);
 	p = default_pix;
   gotit:
-	QString realname = KStringHandler::from8Bit( ps->pw_gecos );
+	TQString realname = KStringHandler::from8Bit( ps->pw_gecos );
 	realname.truncate( realname.find( ',' ) );
 	if (realname.isEmpty() || realname == username)
-		new UserListViewItem( userView, username, QPixmap( p ), username );
+		new UserListViewItem( userView, username, TQPixmap( p ), username );
 	else {
 		realname.append( "\n" ).append( username );
-		new UserListViewItem( userView, realname, QPixmap( p ), username );
+		new UserListViewItem( userView, realname, TQPixmap( p ), username );
 	}
 
         seteuid( 0 );
         setegid( 0 );
 }
 
-class KCStringList : public QValueList<QCString> {
+class KCStringList : public TQValueList<TQCString> {
   public:
 	bool contains( const char *str ) const
 	{
@@ -270,7 +270,7 @@ class UserList {
 	KCStringList users;
 
   private:
-	QValueList<gid_t> groups;
+	TQValueList<gid_t> groups;
 };
 
 UserList::UserList( char **in )
@@ -296,19 +296,19 @@ KGreeter::insertUsers()
 	if (!(ps = getpwnam( "nobody" )))
 		return;
 
-	QImage default_pix;
+	TQImage default_pix;
 	if (userView) {
 		if (!default_pix.load( _faceDir + "/.default.face.icon" ))
 			if (!default_pix.load( _faceDir + "/.default.face" ))
 				LogError( "Can't open default user face\n" );
-		QSize ns( 48, 48 );
+		TQSize ns( 48, 48 );
 		if (default_pix.size() != ns)
 			default_pix =
-			  default_pix.convertDepth( 32 ).smoothScale( ns, QImage::ScaleMin );
+			  default_pix.convertDepth( 32 ).smoothScale( ns, TQImage::ScaleMin );
 	}
 	if (_showUsers == SHOW_ALL) {
 		UserList noUsers( _noUsers );
-		QDict<int> dupes( 1000 );
+		TQDict<int> dupes( 1000 );
 		for (setpwent(); (ps = getpwent()) != 0;) {
 			if (*ps->pw_dir && *ps->pw_shell &&
 			    (ps->pw_uid >= (unsigned)_lowUserId ||
@@ -317,7 +317,7 @@ KGreeter::insertUsers()
 			    !noUsers.hasUser( ps->pw_name ) &&
 			    !noUsers.hasGroup( ps->pw_gid ))
 			{
-				QString username( QFile::decodeName( ps->pw_name ) );
+				TQString username( TQFile::decodeName( ps->pw_name ) );
 				if (!dupes.find( username )) {
 					dupes.insert( username, (int *)-1 );
 					insertUser( default_pix, username, ps );
@@ -327,7 +327,7 @@ KGreeter::insertUsers()
 	} else {
 		UserList users( _users );
 		if (users.hasGroups()) {
-			QDict<int> dupes( 1000 );
+			TQDict<int> dupes( 1000 );
 			for (setpwent(); (ps = getpwent()) != 0;) {
 				if (*ps->pw_dir && *ps->pw_shell &&
 				    (ps->pw_uid >= (unsigned)_lowUserId ||
@@ -336,7 +336,7 @@ KGreeter::insertUsers()
 				    (users.hasUser( ps->pw_name ) ||
 				     users.hasGroup( ps->pw_gid )))
 				{
-					QString username( QFile::decodeName( ps->pw_name ) );
+					TQString username( TQFile::decodeName( ps->pw_name ) );
 					if (!dupes.find( username )) {
 						dupes.insert( username, (int *)-1 );
 						insertUser( default_pix, username, ps );
@@ -348,7 +348,7 @@ KGreeter::insertUsers()
 			for (; it != users.users.end(); ++it)
 				if ((ps = getpwnam( (*it).data() )) &&
 				    (ps->pw_uid || _showRoot))
-					insertUser( default_pix, QFile::decodeName( *it ), ps );
+					insertUser( default_pix, TQFile::decodeName( *it ), ps );
 		}
 	}
 	endpwent();
@@ -361,7 +361,7 @@ KGreeter::insertUsers()
 }
 
 void
-KGreeter::putSession( const QString &type, const QString &name, bool hid, const char *exe )
+KGreeter::putSession( const TQString &type, const TQString &name, bool hid, const char *exe )
 {
 	int prio = exe ? (!strcmp( exe, "default" ) ? 0 :
 	                  !strcmp( exe, "failsafe" ) ? 3 : 2) : 2;
@@ -377,10 +377,10 @@ void
 KGreeter::insertSessions()
 {
 	for (char **dit = _sessionsDirs; *dit; ++dit) {
-		QStringList ents = QDir( *dit ).entryList();
-		for (QStringList::ConstIterator it = ents.begin(); it != ents.end(); ++it)
+		TQStringList ents = TQDir( *dit ).entryList();
+		for (TQStringList::ConstIterator it = ents.begin(); it != ents.end(); ++it)
 			if ((*it).endsWith( ".desktop" )) {
-				KSimpleConfig dsk( QString( *dit ).append( '/' ).append( *it ) );
+				KSimpleConfig dsk( TQString( *dit ).append( '/' ).append( *it ) );
 				dsk.setGroup( "Desktop Entry" );
 				putSession( (*it).left( (*it).length() - 8 ),
 				            dsk.readEntry( "Name" ),
@@ -406,7 +406,7 @@ void
 KGreeter::slotUserEntered()
 {
 	if (userView) {
-		QListViewItem *item;
+		TQListViewItem *item;
 		for (item = userView->firstChild(); item; item = item->nextSibling())
 			if (((UserListViewItem *)item)->login == curUser) {
 				userView->setSelected( item, true );
@@ -419,11 +419,11 @@ KGreeter::slotUserEntered()
 	if (isVisible())
 		slotLoadPrevWM();
 	else
-		QTimer::singleShot( 0, this, SLOT(slotLoadPrevWM()) );
+		TQTimer::singleShot( 0, this, TQT_SLOT(slotLoadPrevWM()) );
 }
 
 void
-KGreeter::slotUserClicked( QListViewItem *item )
+KGreeter::slotUserClicked( TQListViewItem *item )
 {
 	if (item) {
 		curUser = ((UserListViewItem *)item)->login;
@@ -475,7 +475,7 @@ KGreeter::slotLoadPrevWM()
 {
 	int len, i, b;
 	unsigned long crc, by;
-	QCString name;
+	TQCString name;
 	char *sess;
 
 	if (verify->coreLock) {
@@ -537,7 +537,7 @@ void // protected
 KGreeter::pluginSetup()
 {
 	int field = 0;
-	QString ent, pn( verify->pluginName() ), dn( dName + '_' + pn );
+	TQString ent, pn( verify->pluginName() ), dn( dName + '_' + pn );
 
 	if (_preselUser != PRESEL_PREV)
 		stsFile->deleteEntry( verify->entitiesLocal() ? dName : dn, false );
@@ -548,9 +548,9 @@ KGreeter::pluginSetup()
 		else
 			ent = _preselUser == PRESEL_PREV ?
 				stsFile->readEntry( dn ) :
-				verify->getConf( 0, (pn + ".DefaultEntity").latin1(), QVariant() ).toString();
+				verify->getConf( 0, (pn + ".DefaultEntity").latin1(), TQVariant() ).toString();
 		field = verify->entitiesFielded() ?
-			verify->getConf( 0, (pn + ".FocusField").latin1(), QVariant( 0 ) ).toInt() :
+			verify->getConf( 0, (pn + ".FocusField").latin1(), TQVariant( 0 ) ).toInt() :
 			_focusPasswd;
 	}
 	verify->presetEntity( ent, field );
@@ -568,7 +568,7 @@ KGreeter::verifyPluginChanged( int id )
 void
 KGreeter::verifyClear()
 {
-	curUser = QString::null;
+	curUser = TQString::null;
 	slotUserEntered();
 	slotSessionSelected( -1 );
 }
@@ -602,7 +602,7 @@ KGreeter::verifyFailed()
 }
 
 void
-KGreeter::verifySetUser( const QString &user )
+KGreeter::verifySetUser( const TQString &user )
 {
 	curUser = user;
 	slotUserEntered();
@@ -613,25 +613,25 @@ KStdGreeter::KStdGreeter()
   , clock( 0 )
   , pixLabel( 0 )
 {
-	QBoxLayout *main_box;
+	TQBoxLayout *main_box;
 #ifdef WITH_KDM_XCONSOLE
 	if (consoleView) {
-		QBoxLayout *ex_box = new QVBoxLayout( this, 10, 10 );
-		main_box = new QHBoxLayout( ex_box, 10 );
+		TQBoxLayout *ex_box = new TQVBoxLayout( this, 10, 10 );
+		main_box = new TQHBoxLayout( ex_box, 10 );
 		ex_box->addWidget( consoleView );
 	} else
 #endif
-		main_box = new QHBoxLayout( this, 10, 10 );
+		main_box = new TQHBoxLayout( this, 10, 10 );
 
 	if (userView)
 		main_box->addWidget( userView );
 
-	QBoxLayout *inner_box = new QVBoxLayout( main_box, 10 );
+	TQBoxLayout *inner_box = new TQVBoxLayout( main_box, 10 );
 
 	if (!_authorized && _authComplain) {
-		QLabel *complainLabel = new QLabel(
+		TQLabel *complainLabel = new TQLabel(
 			i18n("Warning: this is an unsecured session"), this );
-		QToolTip::add( complainLabel,
+		TQToolTip::add( complainLabel,
 		               i18n("This display requires no X authorization.\n"
 		                    "This means that anybody can connect to it,\n"
 		                    "open windows on it or intercept your input.") );
@@ -641,7 +641,7 @@ KStdGreeter::KStdGreeter()
 		inner_box->addWidget( complainLabel );
 	}
 	if (!_greetString.isEmpty()) {
-		QLabel *welcomeLabel = new QLabel( _greetString, this );
+		TQLabel *welcomeLabel = new TQLabel( _greetString, this );
 		welcomeLabel->setAlignment( AlignCenter );
 		welcomeLabel->setFont( _greetFont );
 		inner_box->addWidget( welcomeLabel );
@@ -653,19 +653,19 @@ KStdGreeter::KStdGreeter()
 			break;
 		case LOGO_LOGO:
 			{
-				QMovie movie( _logo );
-				kapp->eventLoop()->processEvents( QEventLoop::ExcludeUserInput | QEventLoop::ExcludeSocketNotifiers, 100 );
-				QPixmap pixmap;
+				TQMovie movie( _logo );
+				kapp->eventLoop()->processEvents( TQEventLoop::ExcludeUserInput | TQEventLoop::ExcludeSocketNotifiers, 100 );
+				TQPixmap pixmap;
 				if (!movie.framePixmap().isNull() || pixmap.load( _logo )) {
-					pixLabel = new QLabel( this );
+					pixLabel = new TQLabel( this );
 					if (!movie.framePixmap().isNull()) {
 						pixLabel->setMovie( movie );
 						if (!movie.framePixmap().hasAlpha())
-							pixLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+							pixLabel->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
 					} else {
 						pixLabel->setPixmap( pixmap );
 						if (!pixmap.hasAlpha())
-							pixLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+							pixLabel->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
 					}
 					pixLabel->setIndent( 0 );
 				}
@@ -685,13 +685,13 @@ KStdGreeter::KStdGreeter()
 			main_box->addWidget( pixLabel, 0, AlignCenter );
 	}
 
-	goButton = new QPushButton( i18n("L&ogin"), this );
+	goButton = new TQPushButton( i18n("L&ogin"), this );
 	goButton->setDefault( true );
-	connect( goButton, SIGNAL(clicked()), SLOT(accept()) );
-	menuButton = new QPushButton( i18n("&Menu"), this );
+	connect( goButton, TQT_SIGNAL(clicked()), TQT_SLOT(accept()) );
+	menuButton = new TQPushButton( i18n("&Menu"), this );
 	//helpButton
 
-	QWidget *prec;
+	TQWidget *prec;
 	if (userView)
 		prec = userView;
 #ifdef WITH_KDM_XCONSOLE
@@ -701,17 +701,17 @@ KStdGreeter::KStdGreeter()
 	else
 		prec = menuButton;
 	KGStdVerify *sverify =
-		new KGStdVerify( this, this, prec, QString::null,
+		new KGStdVerify( this, this, prec, TQString::null,
 		                 pluginList, KGreeterPlugin::Authenticate,
 		                 KGreeterPlugin::Login );
 	inner_box->addLayout( sverify->getLayout() );
-	QPopupMenu *plugMenu = sverify->getPlugMenu();
+	TQPopupMenu *plugMenu = sverify->getPlugMenu();
 	sverify->selectPlugin( curPlugin );
 	verify = sverify;
 
 	inner_box->addWidget( new KSeparator( KSeparator::HLine, this ) );
 
-	QBoxLayout *hbox2 = new QHBoxLayout( inner_box, 10 );
+	TQBoxLayout *hbox2 = new TQHBoxLayout( inner_box, 10 );
 	hbox2->addWidget( goButton );
 	hbox2->addStretch( 1 );
 	hbox2->addWidget( menuButton );
@@ -796,8 +796,8 @@ KThemedGreeter::KThemedGreeter()
 		return;
 	}
 
-	connect( themer, SIGNAL(activated( const QString & )),
-	         SLOT(slotThemeActivated( const QString & )) );
+	connect( themer, TQT_SIGNAL(activated( const TQString & )),
+	         TQT_SLOT(slotThemeActivated( const TQString & )) );
 
 	console_rect = themer->findNode( "xconsole" ); // kdm ext
 	userlist_rect = themer->findNode( "userlist" );
@@ -830,7 +830,7 @@ KThemedGreeter::KThemedGreeter()
 //	}
 //	clock = new KdmClock( this, "clock" );
 
-	QWidget *prec;
+	TQWidget *prec;
 	if (userView)
 		prec = userView;
 #ifdef WITH_KDM_XCONSOLE
@@ -840,10 +840,10 @@ KThemedGreeter::KThemedGreeter()
 	else
 		prec = 0;
 	KGThemedVerify *tverify =
-		new KGThemedVerify( this, themer, this, prec, QString::null,
+		new KGThemedVerify( this, themer, this, prec, TQString::null,
 		                    pluginList, KGreeterPlugin::Authenticate,
 		                    KGreeterPlugin::Login );
-	QPopupMenu *plugMenu = tverify->getPlugMenu();
+	TQPopupMenu *plugMenu = tverify->getPlugMenu();
 	tverify->selectPlugin( curPlugin );
 	verify = tverify;
 
@@ -853,9 +853,9 @@ KThemedGreeter::KThemedGreeter()
 			itm->hide( true );
 		else {
 			session_button = itm;
-			QAccel *accel = new QAccel( this );
+			TQAccel *accel = new TQAccel( this );
 			accel->insertItem( ALT+Key_T, 0 );
-			connect( accel, SIGNAL(activated( int )), SLOT(slotSessMenu()) );
+			connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotSessMenu()) );
 		}
 	} else {
 		if (sessMenu->count() > 1) {
@@ -876,9 +876,9 @@ KThemedGreeter::KThemedGreeter()
 #endif
 
 	system_button = themer->findNode( "system_button" );
-	QAccel *accel = new QAccel( this );
+	TQAccel *accel = new TQAccel( this );
 	accel->insertItem( ALT+Key_M, 0 );
-	connect( accel, SIGNAL(activated( int )), SLOT(slotActionMenu()) );
+	connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotActionMenu()) );
 
 	pluginSetup();
 
@@ -886,7 +886,7 @@ KThemedGreeter::KThemedGreeter()
 }
 
 bool
-KThemedGreeter::event( QEvent *e )
+KThemedGreeter::event( TQEvent *e )
 {
 	if (themer)
 		themer->widgetEvent( e );
@@ -924,7 +924,7 @@ KThemedGreeter::verifyRetry()
 //	goButton->setEnabled( true );
 }
 
-QString KThemedGreeter::timedUser = QString::null;
+TQString KThemedGreeter::timedUser = TQString::null;
 int KThemedGreeter::timedDelay = -1;
 
 void
@@ -958,7 +958,7 @@ KThemedGreeter::updateStatus( bool fail, bool caps, int timedleft )
 }
 
 void
-KThemedGreeter::slotThemeActivated( const QString &id )
+KThemedGreeter::slotThemeActivated( const TQString &id )
 {
 	if (id == "login_button")
 		accept();
@@ -984,7 +984,7 @@ KThemedGreeter::slotActionMenu()
 }
 
 void
-KThemedGreeter::keyPressEvent( QKeyEvent *e )
+KThemedGreeter::keyPressEvent( TQKeyEvent *e )
 {
 	inherited::keyPressEvent( e );
 	if (!(e->state() & KeyButtonMask) &&

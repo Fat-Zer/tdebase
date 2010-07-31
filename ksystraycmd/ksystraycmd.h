@@ -3,7 +3,7 @@
 #ifndef KSYSTRAYCMD_H
 #define KSYSTRAYCMD_H
 
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <kwin.h>
 
 class KShellProcess;
@@ -22,17 +22,17 @@ public:
   ~KSysTrayCmd();
 
   void setWindow( WId w ) { win = w; }
-  void setCommand( const QString &cmd ) { command = cmd; }
-  void setPattern( const QString &regexp ) { window = regexp; }
+  void setCommand( const TQString &cmd ) { command = cmd; }
+  void setPattern( const TQString &regexp ) { window = regexp; }
     void setStartOnShow( bool enable ) { lazyStart = enable; isVisible = !enable; }
   void setNoQuit( bool enable ) { noquit = enable; }
   void setQuitOnHide( bool enable ) { quitOnHide = enable; }
   void setOnTop( bool enable ) { onTop = enable; }
   void setOwnIcon( bool enable ) { ownIcon = enable; }
-  void setDefaultTip( const QString &tip ) { tooltip = tip; }
+  void setDefaultTip( const TQString &tip ) { tooltip = tip; }
   bool hasTargetWindow() const { return (win != 0); }
   bool hasRunningClient() const { return (client != 0); }
-  const QString &errorMsg() const { return errStr; }
+  const TQString &errorMsg() const { return errStr; }
 
   bool start();
 
@@ -46,7 +46,7 @@ public slots:
   void toggleWindow() { if ( isVisible ) hideWindow(); else showWindow(); }
 
   void setTargetWindow( WId w );
-  void execContextMenu( const QPoint &pos );
+  void execContextMenu( const TQPoint &pos );
 
   void quit();
   void quitClient();
@@ -62,12 +62,12 @@ protected:
   void checkExistingWindows();
   void setTargetWindow( const KWin::WindowInfo &info );
 
-  void mousePressEvent( QMouseEvent *e );
+  void mousePressEvent( TQMouseEvent *e );
 
 private:
-  QString command;
-  QString window;
-  QString tooltip;
+  TQString command;
+  TQString window;
+  TQString tooltip;
   bool isVisible;
   bool lazyStart;
   bool noquit;
@@ -78,7 +78,7 @@ private:
   WId win;
   KShellProcess *client;
   KWinModule *kwinmodule;
-  QString errStr;
+  TQString errStr;
 
   /** Memorized 'top' position of the window*/
   int top;

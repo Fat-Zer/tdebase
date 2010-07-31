@@ -46,7 +46,7 @@ class PrivateMainWindow
     KateMainWindow *win;
   };
 
-MainWindow::MainWindow (void *mainWindow) : QObject ((KateMainWindow*) mainWindow)
+MainWindow::MainWindow (void *mainWindow) : TQObject ((KateMainWindow*) mainWindow)
 {
   d = new PrivateMainWindow;
   d->win = (KateMainWindow*) mainWindow;
@@ -67,7 +67,7 @@ ViewManager *MainWindow::viewManager () const
   return d->win->viewManager ()->viewManager ();
 }
 
-class QWidget *MainWindow::centralWidget() const
+class TQWidget *MainWindow::centralWidget() const
 {
   return d->win->centralWidget();
 }

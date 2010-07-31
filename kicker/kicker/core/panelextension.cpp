@@ -22,11 +22,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qframe.h>
-#include <qvalidator.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qstyle.h>
+#include <tqframe.h>
+#include <tqvalidator.h>
+#include <tqlayout.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
 
 #include <kdebug.h>
 #include <khelpmenu.h>
@@ -53,8 +53,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "panelextension.moc"
 
 // KDE4: make these say Panel_(somenumber)
-PanelExtension::PanelExtension(const QString& configFile, QWidget *parent, const char *name)
-    : DCOPObject(QCString("ChildPanel_") + QString::number((ulong)this).latin1()),
+PanelExtension::PanelExtension(const TQString& configFile, TQWidget *parent, const char *name)
+    : DCOPObject(TQCString("ChildPanel_") + TQString::number((ulong)this).latin1()),
       KPanelExtension(configFile, KPanelExtension::Stretch, 0, parent, name),
       _opMnu(0),
       m_panelAddMenu(0),
@@ -67,11 +67,11 @@ PanelExtension::PanelExtension(const QString& configFile, QWidget *parent, const
     setAcceptDrops(!Kicker::the()->isImmutable());
     setCustomMenu(opMenu());
 
-    QVBoxLayout* _layout = new QVBoxLayout(this);
+    TQVBoxLayout* _layout = new TQVBoxLayout(this);
 
     // container area
     _containerArea = new ContainerArea( config(), this, opMenu() );
-    connect(_containerArea, SIGNAL(maintainFocus(bool)), this, SIGNAL(maintainFocus(bool)));
+    connect(_containerArea, TQT_SIGNAL(maintainFocus(bool)), this, TQT_SIGNAL(maintainFocus(bool)));
     _layout->addWidget(_containerArea);
 
     _containerArea->viewport()->installEventFilter(this);
@@ -81,15 +81,15 @@ PanelExtension::PanelExtension(const QString& configFile, QWidget *parent, const
     // beginning.
     positionChange(position());
 
-    connect(Kicker::the(), SIGNAL(configurationChanged()),
-            SLOT(configurationChanged()));
-    connect(Kicker::the(), SIGNAL(immutabilityChanged(bool)),
-            SLOT(immutabilityChanged(bool)));
+    connect(Kicker::the(), TQT_SIGNAL(configurationChanged()),
+            TQT_SLOT(configurationChanged()));
+    connect(Kicker::the(), TQT_SIGNAL(immutabilityChanged(bool)),
+            TQT_SLOT(immutabilityChanged(bool)));
 
     // we wait to get back to the event loop to start up the container area so that
     // the main panel in ExtensionManager will be assigned and we can tell in a
     // relatively non-hackish way that we are (or aren't) the "main panel"
-    QTimer::singleShot(0, this, SLOT(populateContainerArea()));
+    TQTimer::singleShot(0, this, TQT_SLOT(populateContainerArea()));
 }
 
 PanelExtension::~PanelExtension()
@@ -121,15 +121,15 @@ void PanelExtension::immutabilityChanged(bool)
     m_opMenuBuilt = false;
 }
 
-QPopupMenu* PanelExtension::opMenu()
+TQPopupMenu* PanelExtension::opMenu()
 {
     if (_opMnu)
     {
         return _opMnu;
     }
 
-    _opMnu = new QPopupMenu(this);
-    connect(_opMnu, SIGNAL(aboutToShow()), this, SLOT(slotBuildOpMenu()));
+    _opMnu = new TQPopupMenu(this);
+    connect(_opMnu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(slotBuildOpMenu()));
 
     return _opMnu;
 }
@@ -139,39 +139,39 @@ void PanelExtension::positionChange(Position p)
     _containerArea->setPosition(p);
 }
 
-QSize PanelExtension::sizeHint(Position p, QSize maxSize) const
+TQSize PanelExtension::sizeHint(Position p, TQSize maxSize) const
 {
-    QSize size;
+    TQSize size;
 
     if (p == Left || p == Right)
     {
-        size = QSize(sizeInPixels(),
+        size = TQSize(sizeInPixels(),
                      _containerArea->heightForWidth(sizeInPixels()));
     }
     else
     {
-        size = QSize(_containerArea->widthForHeight(sizeInPixels()),
+        size = TQSize(_containerArea->widthForHeight(sizeInPixels()),
                      sizeInPixels());
     }
 
     return size.boundedTo( maxSize );
 }
 
-bool PanelExtension::eventFilter(QObject*, QEvent * e)
+bool PanelExtension::eventFilter(TQObject*, TQEvent * e)
 {
-    if ( e->type() == QEvent::MouseButtonPress )
+    if ( e->type() == TQEvent::MouseButtonPress )
     {
-        QMouseEvent* me = (QMouseEvent*) e;
+        TQMouseEvent* me = (TQMouseEvent*) e;
         if ( me->button() == RightButton && kapp->authorize("action/kicker_rmb"))
         {
             Kicker::the()->setInsertionPoint(me->globalPos());
             opMenu()->exec(me->globalPos());
-            Kicker::the()->setInsertionPoint(QPoint());
+            Kicker::the()->setInsertionPoint(TQPoint());
             return true;
         }
     }
     else
-    if ( e->type() == QEvent::Resize )
+    if ( e->type() == TQEvent::Resize )
     {
         emit updateLayout();
     }
@@ -211,72 +211,72 @@ void PanelExtension::addWindowListButton()
     _containerArea->addWindowListButton();
 }
 
-void PanelExtension::addURLButton(const QString &url)
+void PanelExtension::addURLButton(const TQString &url)
 {
     _containerArea->addURLButton(url);
 }
 
-void PanelExtension::addBrowserButton(const QString &startDir)
+void PanelExtension::addBrowserButton(const TQString &startDir)
 {
     _containerArea->addBrowserButton(startDir);
 }
 
-void PanelExtension::addServiceButton(const QString& desktopEntry)
+void PanelExtension::addServiceButton(const TQString& desktopEntry)
 {
     _containerArea->addServiceButton(desktopEntry);
 }
 
-void PanelExtension::addServiceMenuButton(const QString &,
-                                          const QString& relPath)
+void PanelExtension::addServiceMenuButton(const TQString &,
+                                          const TQString& relPath)
 {
     _containerArea->addServiceMenuButton(relPath);
 }
 
-void PanelExtension::addNonKDEAppButton(const QString &filePath,
-                                        const QString &icon,
-                                        const QString &cmdLine, bool inTerm)
+void PanelExtension::addNonKDEAppButton(const TQString &filePath,
+                                        const TQString &icon,
+                                        const TQString &cmdLine, bool inTerm)
 {
-    _containerArea->addNonKDEAppButton(filePath, QString::null, filePath, icon,
+    _containerArea->addNonKDEAppButton(filePath, TQString::null, filePath, icon,
                                        cmdLine, inTerm);
 }
 
-void PanelExtension::addNonKDEAppButton(const QString &title,
-                                        const QString &description,
-                                        const QString &filePath,
-                                        const QString &icon,
-                                        const QString &cmdLine, bool inTerm)
+void PanelExtension::addNonKDEAppButton(const TQString &title,
+                                        const TQString &description,
+                                        const TQString &filePath,
+                                        const TQString &icon,
+                                        const TQString &cmdLine, bool inTerm)
 {
     _containerArea->addNonKDEAppButton(title, description, filePath, icon,
                                        cmdLine, inTerm);
 }
 
-void PanelExtension::addApplet(const QString &desktopFile)
+void PanelExtension::addApplet(const TQString &desktopFile)
 {
-    _containerArea->addApplet(AppletInfo(desktopFile, QString::null, AppletInfo::Applet));
+    _containerArea->addApplet(AppletInfo(desktopFile, TQString::null, AppletInfo::Applet));
 }
 
-void PanelExtension::addAppletContainer(const QString &desktopFile)
+void PanelExtension::addAppletContainer(const TQString &desktopFile)
 {
     // KDE4: this appears in the DCOP interface.
     // but it's such a bad name, can this go away?
     addApplet(desktopFile);
 }
 
-bool PanelExtension::insertApplet(const QString& desktopFile, int index)
+bool PanelExtension::insertApplet(const TQString& desktopFile, int index)
 {
     return _containerArea->addApplet(desktopFile, false, index) != 0;
 }
 
-bool PanelExtension::insertImmutableApplet(const QString& desktopFile, int index)
+bool PanelExtension::insertImmutableApplet(const TQString& desktopFile, int index)
 {
     return _containerArea->addApplet(desktopFile, true, index) != 0;
 }
 
-QStringList PanelExtension::listApplets()
+TQStringList PanelExtension::listApplets()
 {
     return _containerArea->listContainers();
     BaseContainer::List containers = _containerArea->containers("All");
-    QStringList names;
+    TQStringList names;
 
     for (BaseContainer::List::const_iterator it = containers.constBegin();
          it != containers.constEnd();
@@ -330,7 +330,7 @@ void PanelExtension::slotBuildOpMenu()
 
     m_opMenuBuilt = true;
     bool kickerImmutable = Kicker::the()->isImmutable();
-    bool isMenuBar = ExtensionManager::the()->isMenuBar(dynamic_cast<QWidget*>(parent()));
+    bool isMenuBar = ExtensionManager::the()->isMenuBar(dynamic_cast<TQWidget*>(parent()));
 
     if (!kickerImmutable)
     {
@@ -339,7 +339,7 @@ void PanelExtension::slotBuildOpMenu()
         {
             _opMnu->insertItem(isMenuBar ? i18n("Add &Applet to Menubar...")
                                          : i18n("Add &Applet to Panel..."),
-                               _containerArea, SLOT(showAddAppletDialog()));
+                               _containerArea, TQT_SLOT(showAddAppletDialog()));
             m_panelAddMenu = new PanelAddButtonMenu(_containerArea, this);
             _opMnu->insertItem(isMenuBar ? i18n("Add Appli&cation to Menubar")
                                          : i18n("Add Appli&cation to Panel"),
@@ -362,7 +362,7 @@ void PanelExtension::slotBuildOpMenu()
         }
 
         _opMnu->insertItem(SmallIconSet("lock"), i18n("&Lock Panels"),
-                Kicker::the(), SLOT(toggleLock()));
+                Kicker::the(), TQT_SLOT(toggleLock()));
     }
     else if (!Kicker::the()->isKioskImmutable())
     {
@@ -370,20 +370,20 @@ void PanelExtension::slotBuildOpMenu()
                                             SmallIconSet("lock"),
                            kickerImmutable ? i18n("Un&lock Panels") :
                                              i18n("&Lock Panels"),
-                           Kicker::the(), SLOT(toggleLock()));
+                           Kicker::the(), TQT_SLOT(toggleLock()));
     }
 
     if (!isMenuBar && !Kicker::the()->isKioskImmutable())
     {
         _opMnu->insertItem(SmallIconSet("configure"),
                             i18n("&Configure Panel..."),
-                            this, SLOT(showConfig()));
+                            this, TQT_SLOT(showConfig()));
         _opMnu->insertSeparator();
     }
 
     _opMnu->insertItem(SmallIconSet("fork"),
                             i18n("&Launch Process Manager..."),
-                            this, SLOT(showProcessManager()));
+                            this, TQT_SLOT(showProcessManager()));
     _opMnu->insertSeparator();
 
     if (kapp->authorize("action/help"))
@@ -441,7 +441,7 @@ void MenubarExtension::populateContainerArea()
     if (!m_menubar)
     {
         m_menubar = _containerArea->addApplet(AppletInfo("menuapplet.desktop",
-                                                         QString::null,
+                                                         TQString::null,
                                                          AppletInfo::Applet));
     }
 

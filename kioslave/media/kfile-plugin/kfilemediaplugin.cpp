@@ -24,11 +24,11 @@
 
 #include <dcopref.h>
 
-#include <qpixmap.h>
-#include <qpainter.h>
-#include <qstyle.h>
-#include <qapplication.h>
-#include <qfile.h>
+#include <tqpixmap.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
+#include <tqapplication.h>
+#include <tqfile.h>
 
 #ifdef HAVE_STATVFS
 # include <sys/statvfs.h>
@@ -41,8 +41,8 @@
 typedef KGenericFactory<KFileMediaPlugin> KFileMediaPluginFactory;
 K_EXPORT_COMPONENT_FACTORY(kfile_media, KFileMediaPluginFactory("kio_media"))
 
-KFileMediaPlugin::KFileMediaPlugin(QObject *parent, const char *name,
-		                     const QStringList& args)
+KFileMediaPlugin::KFileMediaPlugin(TQObject *parent, const char *name,
+		                     const TQStringList& args)
 	: KFilePlugin(parent, name, args)
 {
 	addMimeType( "media/audiocd" );
@@ -94,9 +94,9 @@ bool KFileMediaPlugin::readInfo(KFileMetaInfo &info, uint /*what*/)
  
 	if (medium.id().isNull()) return false;
 	
-	QString mount_point = medium.mountPoint();
+	TQString mount_point = medium.mountPoint();
 	KURL base_url = medium.prettyBaseURL();
-	QString device_node = medium.deviceNode();
+	TQString device_node = medium.deviceNode();
 
 	KFileMetaInfoGroup group = appendGroup(info, "mediumInfo");
 
@@ -119,7 +119,7 @@ bool KFileMediaPlugin::readInfo(KFileMetaInfo &info, uint /*what*/)
 		struct statvfs vfs;
 		memset(&vfs, 0, sizeof(vfs));
 
-		if ( ::statvfs(QFile::encodeName(mount_point), &vfs) != -1 )
+		if ( ::statvfs(TQFile::encodeName(mount_point), &vfs) != -1 )
 		{
 			m_total = static_cast<KIO::filesize_t>(vfs.f_blocks) * static_cast<KIO::filesize_t>(vfs.f_frsize);
 			m_free = static_cast<KIO::filesize_t>(vfs.f_bavail) * static_cast<KIO::filesize_t>(vfs.f_frsize);
@@ -140,19 +140,19 @@ bool KFileMediaPlugin::readInfo(KFileMetaInfo &info, uint /*what*/)
 
 			group = appendGroup(info, "mediumSummary");
 
-			appendItem(group, "percent", QString("%1%").arg(percent));
+			appendItem(group, "percent", TQString("%1%").arg(percent));
 
-			QPixmap bar(150, 20);
-			QPainter p(&bar);
+			TQPixmap bar(150, 20);
+			TQPainter p(&bar);
 
 			p.fillRect(0, 0, length, 20, Qt::red);
 			p.fillRect(length, 0, 150-length, 20, Qt::green);
 
-			QColorGroup cg = QApplication::palette().active();
+			TQColorGroup cg = TQApplication::palette().active();
 
-			QApplication::style().drawPrimitive(QStyle::PE_Panel, &p,
-							    QRect(0, 0, 150, 20), cg,
-							    QStyle::Style_Sunken);
+			TQApplication::style().drawPrimitive(TQStyle::PE_Panel, &p,
+							    TQRect(0, 0, 150, 20), cg,
+							    TQStyle::Style_Sunken);
 
 			appendItem( group, "thumbnail", bar );
 		}
@@ -169,7 +169,7 @@ const Medium KFileMediaPlugin::askMedium(KFileMetaInfo &info)
 
 	if ( !reply.isValid() )
 	{
-		return Medium(QString::null, QString::null);
+		return Medium(TQString::null, TQString::null);
 	}
 
 	return Medium::create(reply);
@@ -183,24 +183,24 @@ void KFileMediaPlugin::addMimeType(const char *mimeType)
 		= addGroupInfo(info, "mediumInfo", i18n("Medium Information"));
 
 	KFileMimeTypeInfo::ItemInfo *item
-		= addItemInfo(group, "free", i18n("Free"), QVariant::ULongLong);
+		= addItemInfo(group, "free", i18n("Free"), TQVariant::ULongLong);
 	setUnit(item, KFileMimeTypeInfo::Bytes);
 
-	item = addItemInfo(group, "used", i18n("Used"), QVariant::ULongLong);
+	item = addItemInfo(group, "used", i18n("Used"), TQVariant::ULongLong);
 	setUnit(item, KFileMimeTypeInfo::Bytes);
 
-	item = addItemInfo(group, "total", i18n("Total"), QVariant::ULongLong);
+	item = addItemInfo(group, "total", i18n("Total"), TQVariant::ULongLong);
 	setUnit(item, KFileMimeTypeInfo::Bytes);
 
-	item = addItemInfo(group, "baseURL", i18n("Base URL"), QVariant::String);
-	item = addItemInfo(group, "mountPoint", i18n("Mount Point"), QVariant::String);
-	item = addItemInfo(group, "deviceNode", i18n("Device Node"), QVariant::String);
+	item = addItemInfo(group, "baseURL", i18n("Base URL"), TQVariant::String);
+	item = addItemInfo(group, "mountPoint", i18n("Mount Point"), TQVariant::String);
+	item = addItemInfo(group, "deviceNode", i18n("Device Node"), TQVariant::String);
 
 	group = addGroupInfo(info, "mediumSummary", i18n("Medium Summary"));
 
-	item = addItemInfo(group, "percent", i18n("Usage"), QVariant::String);
+	item = addItemInfo(group, "percent", i18n("Usage"), TQVariant::String);
 
-	item = addItemInfo( group, "thumbnail", i18n("Bar Graph"), QVariant::Image );
+	item = addItemInfo( group, "thumbnail", i18n("Bar Graph"), TQVariant::Image );
 	setHint( item, KFileMimeTypeInfo::Thumbnail );
 }
 

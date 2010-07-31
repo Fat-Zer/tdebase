@@ -14,12 +14,12 @@
 #include <sys/stat.h>
 #include <time.h>
 
-#include <qtextstream.h>
-#include <qfileinfo.h>
-#include <qdir.h>
-#include <qclipboard.h>
-#include <qpixmap.h>
-#include <qdragobject.h>
+#include <tqtextstream.h>
+#include <tqfileinfo.h>
+#include <tqdir.h>
+#include <tqclipboard.h>
+#include <tqpixmap.h>
+#include <tqdragobject.h>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -34,7 +34,7 @@
 #include <kpopupmenu.h>
 #include <kio/netaccess.h>
 #include <kurldrag.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 
@@ -42,7 +42,7 @@
 
 #include "kfwin.moc"
 
-template class QPtrList<KfFileLVI>;
+template class TQPtrList<KfFileLVI>;
 
 // Permission strings
 static const char* perm[4] = {
@@ -55,17 +55,17 @@ static const char* perm[4] = {
 #define WO 2
 #define NA 3
 
-KfFileLVI::KfFileLVI(KfindWindow* lv, const KFileItem &item, const QString& matchingLine)
-  : QListViewItem(lv),
+KfFileLVI::KfFileLVI(KfindWindow* lv, const KFileItem &item, const TQString& matchingLine)
+  : TQListViewItem(lv),
     fileitem(item)
 {
-  fileInfo = new QFileInfo(item.url().path());
+  fileInfo = new TQFileInfo(item.url().path());
 
-  QString size = KGlobal::locale()->formatNumber(item.size(), 0);
+  TQString size = KGlobal::locale()->formatNumber(item.size(), 0);
 
-  QDateTime dt;
+  TQDateTime dt;
   dt.setTime_t(item.time(KIO::UDS_MODIFICATION_TIME));
-  QString date = KGlobal::locale()->formatDateTime(dt);
+  TQString date = KGlobal::locale()->formatDateTime(dt);
 
   int perm_index;
   if(fileInfo->isReadable())
@@ -90,26 +90,26 @@ KfFileLVI::~KfFileLVI()
   delete fileInfo;
 }
 
-QString KfFileLVI::key(int column, bool) const
+TQString KfFileLVI::key(int column, bool) const
 {
   switch (column) {
   case 2:
     // Returns size in bytes. Used for sorting
-    return QString().sprintf("%010d", fileInfo->size());
+    return TQString().sprintf("%010d", fileInfo->size());
   case 3:
     // Returns time in secs from 1/1/1970. Used for sorting
-    return QString().sprintf("%010ld", fileitem.time(KIO::UDS_MODIFICATION_TIME));
+    return TQString().sprintf("%010ld", fileitem.time(KIO::UDS_MODIFICATION_TIME));
   }
 
   return text(column);
 }
 
-KfindWindow::KfindWindow( QWidget *parent, const char *name )
+KfindWindow::KfindWindow( TQWidget *parent, const char *name )
   : KListView( parent, name )
 ,m_baseDir("")
 ,m_menu(0)
 {
-  setSelectionMode( QListView::Extended );
+  setSelectionMode( TQListView::Extended );
   setShowSortIndicator( TRUE );
 
   addColumn(i18n("Name"));
@@ -131,24 +131,24 @@ KfindWindow::KfindWindow( QWidget *parent, const char *name )
 
   resetColumns(true);
 
-  connect( this, SIGNAL(selectionChanged()),
-	   this, SLOT( selectionHasChanged() ));
+  connect( this, TQT_SIGNAL(selectionChanged()),
+	   this, TQT_SLOT( selectionHasChanged() ));
 
-  connect(this, SIGNAL(contextMenu(KListView *, QListViewItem*,const QPoint&)),
-	  this, SLOT(slotContextMenu(KListView *,QListViewItem*,const QPoint&)));
+  connect(this, TQT_SIGNAL(contextMenu(KListView *, TQListViewItem*,const TQPoint&)),
+	  this, TQT_SLOT(slotContextMenu(KListView *,TQListViewItem*,const TQPoint&)));
 
-  connect(this, SIGNAL(executed(QListViewItem*)),
-	  this, SLOT(slotExecute(QListViewItem*)));
+  connect(this, TQT_SIGNAL(executed(TQListViewItem*)),
+	  this, TQT_SLOT(slotExecute(TQListViewItem*)));
   setDragEnabled(true);
 
 }
 
 
-QString KfindWindow::reducedDir(const QString& fullDir)
+TQString KfindWindow::reducedDir(const TQString& fullDir)
 {
    if (fullDir.find(m_baseDir)==0)
    {
-      QString tmp=fullDir.mid(m_baseDir.length());
+      TQString tmp=fullDir.mid(m_baseDir.length());
       return tmp;
    };
    return fullDir;
@@ -156,7 +156,7 @@ QString KfindWindow::reducedDir(const QString& fullDir)
 
 void KfindWindow::beginSearch(const KURL& baseUrl)
 {
-  kdDebug()<<QString("beginSearch in: %1").arg(baseUrl.path())<<endl;
+  kdDebug()<<TQString("beginSearch in: %1").arg(baseUrl.path())<<endl;
   m_baseDir=baseUrl.path(+1);
   haveSelection = false;
   clear();
@@ -166,7 +166,7 @@ void KfindWindow::endSearch()
 {
 }
 
-void KfindWindow::insertItem(const KFileItem &item, const QString& matchingLine)
+void KfindWindow::insertItem(const KFileItem &item, const TQString& matchingLine)
 {
   new KfFileLVI(this, item, matchingLine);
 }
@@ -174,7 +174,7 @@ void KfindWindow::insertItem(const KFileItem &item, const QString& matchingLine)
 // copy to clipboard aka X11 selection
 void KfindWindow::copySelection()
 {
-  QDragObject *drag_obj = dragObject();
+  TQDragObject *drag_obj = dragObject();
 
   if (drag_obj)
   {
@@ -185,21 +185,21 @@ void KfindWindow::copySelection()
 
 void KfindWindow::saveResults()
 {
-  QListViewItem *item;
+  TQListViewItem *item;
 
-  KFileDialog *dlg = new KFileDialog(QString::null, QString::null, this,
+  KFileDialog *dlg = new KFileDialog(TQString::null, TQString::null, this,
 	"filedialog", true);
   dlg->setOperationMode (KFileDialog::Saving);
 
   dlg->setCaption(i18n("Save Results As"));
 
-  QStringList list;
+  TQStringList list;
 
   list << "text/plain" << "text/html";
 
   dlg->setOperationMode(KFileDialog::Saving);
   
-  dlg->setMimeFilter(list, QString("text/plain"));
+  dlg->setMimeFilter(list, TQString("text/plain"));
 
   dlg->exec();
 
@@ -210,19 +210,19 @@ void KfindWindow::saveResults()
   if (!u.isValid() || !u.isLocalFile())
      return;
 
-  QString filename = u.path();
+  TQString filename = u.path();
 
-  QFile file(filename);
+  TQFile file(filename);
 
   if ( !file.open(IO_WriteOnly) )
     KMessageBox::error(parentWidget(),
 		       i18n("Unable to save results."));
   else {
-    QTextStream stream( &file );
-    stream.setEncoding( QTextStream::Locale );
+    TQTextStream stream( &file );
+    stream.setEncoding( TQTextStream::Locale );
 
     if ( mimeType->name() == "text/html") {
-      stream << QString::fromLatin1("<HTML><HEAD>\n"
+      stream << TQString::fromLatin1("<HTML><HEAD>\n"
 				    "<!DOCTYPE %1>\n"
 				    "<TITLE>%2</TITLE></HEAD>\n"
 				    "<BODY><H1>%3</H1>"
@@ -234,21 +234,21 @@ void KfindWindow::saveResults()
       item = firstChild();
       while(item != NULL)
 	{
-	  QString path=((KfFileLVI*)item)->fileitem.url().url();
-	  QString pretty=((KfFileLVI*)item)->fileitem.url().htmlURL();
-	  stream << QString::fromLatin1("<DT><A HREF=\"") << path
-		 << QString::fromLatin1("\">") << pretty
-		 << QString::fromLatin1("</A>\n");
+	  TQString path=((KfFileLVI*)item)->fileitem.url().url();
+	  TQString pretty=((KfFileLVI*)item)->fileitem.url().htmlURL();
+	  stream << TQString::fromLatin1("<DT><A HREF=\"") << path
+		 << TQString::fromLatin1("\">") << pretty
+		 << TQString::fromLatin1("</A>\n");
 
 	  item = item->nextSibling();
 	}
-      stream << QString::fromLatin1("</DL><P></BODY></HTML>\n");
+      stream << TQString::fromLatin1("</DL><P></BODY></HTML>\n");
     }
     else {
       item = firstChild();
       while(item != NULL)
       {
-	QString path=((KfFileLVI*)item)->fileitem.url().url();
+	TQString path=((KfFileLVI*)item)->fileitem.url().url();
 	stream << path << endl;
 	item = item->nextSibling();
       }
@@ -267,7 +267,7 @@ void KfindWindow::selectionHasChanged()
 {
   emit resultSelected(true);
 
-  QListViewItem *item = firstChild();
+  TQListViewItem *item = firstChild();
   while(item != 0L)
   {
     if(isSelected(item)) {
@@ -285,13 +285,13 @@ void KfindWindow::selectionHasChanged()
 
 void KfindWindow::deleteFiles()
 {
-  QString tmp = i18n("Do you really want to delete the selected file?",
+  TQString tmp = i18n("Do you really want to delete the selected file?",
                      "Do you really want to delete the %n selected files?",selectedItems().count());
   if (KMessageBox::warningContinueCancel(parentWidget(), tmp, "", KGuiItem( i18n("&Delete"), "editdelete")) == KMessageBox::Cancel)
     return;
 
   // Iterate on all selected elements
-  QPtrList<QListViewItem> selected = selectedItems();
+  TQPtrList<TQListViewItem> selected = selectedItems();
   for ( uint i = 0; i < selected.count(); i++ ) {
     KfFileLVI *item = (KfFileLVI *) selected.at(i);
     KFileItem file = item->fileitem;
@@ -313,7 +313,7 @@ void KfindWindow::openFolder()
 {
   KFileItem fileitem = ((KfFileLVI *)currentItem())->fileitem;
   KURL url = fileitem.url();
-  url.setFileName(QString::null);
+  url.setFileName(TQString::null);
 
   (void) new KRun(url);
 }
@@ -323,7 +323,7 @@ void KfindWindow::openBinding()
   ((KfFileLVI*)currentItem())->fileitem.run();
 }
 
-void KfindWindow::slotExecute(QListViewItem* item)
+void KfindWindow::slotExecute(TQListViewItem* item)
 {
    if (item==0)
       return;
@@ -331,17 +331,17 @@ void KfindWindow::slotExecute(QListViewItem* item)
 }
 
 // Resizes KListView to occupy all visible space
-void KfindWindow::resizeEvent(QResizeEvent *e)
+void KfindWindow::resizeEvent(TQResizeEvent *e)
 {
   KListView::resizeEvent(e);
   resetColumns(false);
   clipper()->repaint();
 }
 
-QDragObject * KfindWindow::dragObject()
+TQDragObject * KfindWindow::dragObject()
 {
   KURL::List uris;
-  QPtrList<QListViewItem> selected = selectedItems();
+  TQPtrList<TQListViewItem> selected = selectedItems();
 
   // create a list of URIs from selection
   for ( uint i = 0; i < selected.count(); i++ )
@@ -356,9 +356,9 @@ QDragObject * KfindWindow::dragObject()
   if ( uris.count() <= 0 )
      return 0;
 
-  QUriDrag *ud = new KURLDrag( uris, (QWidget *) this, "kfind uridrag" );
+  TQUriDrag *ud = new KURLDrag( uris, (TQWidget *) this, "kfind uridrag" );
 
-  const QPixmap *pix = currentItem()->pixmap(0);
+  const TQPixmap *pix = currentItem()->pixmap(0);
   if ( pix && !pix->isNull() )
     ud->setPixmap( *pix );
 
@@ -367,12 +367,12 @@ QDragObject * KfindWindow::dragObject()
 
 void KfindWindow::resetColumns(bool init)
 {
-   QFontMetrics fm = fontMetrics();
+   TQFontMetrics fm = fontMetrics();
   if (init)
   {
     setColumnWidth(2, QMAX(fm.width(columnText(2)), fm.width("0000000")) + 15);
-    QString sampleDate =
-      KGlobal::locale()->formatDateTime(QDateTime::currentDateTime());
+    TQString sampleDate =
+      KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime());
     setColumnWidth(3, QMAX(fm.width(columnText(3)), fm.width(sampleDate)) + 15);
     setColumnWidth(4, QMAX(fm.width(columnText(4)), fm.width(i18n(perm[RO]))) + 15);
     setColumnWidth(5, QMAX(fm.width(columnText(5)), fm.width("some text")) + 15);
@@ -390,7 +390,7 @@ void KfindWindow::resetColumns(bool init)
   setColumnWidth(1, dir_w);
 }
 
-void KfindWindow::slotContextMenu(KListView *,QListViewItem *item,const QPoint&p)
+void KfindWindow::slotContextMenu(KListView *,TQListViewItem *item,const TQPoint&p)
 {
   if (!item) return;
   int count = selectedItems().count();
@@ -409,21 +409,21 @@ void KfindWindow::slotContextMenu(KListView *,QListViewItem *item,const QPoint&p
   {
      //menu = new KPopupMenu(item->text(0), this);
      m_menu->insertTitle(item->text(0));
-     m_menu->insertItem(SmallIcon("fileopen"),i18n("Menu item", "Open"), this, SLOT(openBinding()));
-     m_menu->insertItem(SmallIcon("window_new"),i18n("Open Folder"), this, SLOT(openFolder()));
+     m_menu->insertItem(SmallIcon("fileopen"),i18n("Menu item", "Open"), this, TQT_SLOT(openBinding()));
+     m_menu->insertItem(SmallIcon("window_new"),i18n("Open Folder"), this, TQT_SLOT(openFolder()));
      m_menu->insertSeparator();
-     m_menu->insertItem(SmallIcon("editcopy"),i18n("Copy"), this, SLOT(copySelection()));
-     m_menu->insertItem(SmallIcon("editdelete"),i18n("Delete"), this, SLOT(deleteFiles()));
+     m_menu->insertItem(SmallIcon("editcopy"),i18n("Copy"), this, TQT_SLOT(copySelection()));
+     m_menu->insertItem(SmallIcon("editdelete"),i18n("Delete"), this, TQT_SLOT(deleteFiles()));
      m_menu->insertSeparator();
-     m_menu->insertItem(i18n("Open With..."), this, SLOT(slotOpenWith()));
+     m_menu->insertItem(i18n("Open With..."), this, TQT_SLOT(slotOpenWith()));
      m_menu->insertSeparator();
-     m_menu->insertItem(i18n("Properties"), this, SLOT(fileProperties()));
+     m_menu->insertItem(i18n("Properties"), this, TQT_SLOT(fileProperties()));
   }
   else
   {
      m_menu->insertTitle(i18n("Selected Files"));
-     m_menu->insertItem(SmallIcon("editcopy"),i18n("Copy"), this, SLOT(copySelection()));
-     m_menu->insertItem(SmallIcon("editdelete"),i18n("Delete"), this, SLOT(deleteFiles()));
+     m_menu->insertItem(SmallIcon("editcopy"),i18n("Copy"), this, TQT_SLOT(copySelection()));
+     m_menu->insertItem(SmallIcon("editdelete"),i18n("Delete"), this, TQT_SLOT(deleteFiles()));
   }
   m_menu->popup(p, 1);
 }

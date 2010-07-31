@@ -20,7 +20,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "workspace.h"
 
 #include <fixx11h.h>
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kxerrorhandler.h>
 #include <kstartupinfo.h>
 #include <kstringhandler.h>
@@ -44,7 +44,7 @@ namespace KWinInternal
  to force focus change even in cases when ICCCM 4.2.7 doesn't allow it
  (e.g. they may try to activate their main window because the user
  definitely "needs" to see something happened - misusing
- of QWidget::setActiveWindow() may be such case).
+ of TQWidget::setActiveWindow() may be such case).
 
  There are 4 ways how a window may become active:
  - the user changes the active window (e.g. focus follows mouse, clicking
@@ -221,7 +221,7 @@ void Workspace::setActiveClient( Client* c, allowed_t )
         closeActivePopup();
     StackingUpdatesBlocker blocker( this );
     ++set_active_client_recursion;
-    updateFocusMousePosition( QCursor::pos());
+    updateFocusMousePosition( TQCursor::pos());
     if( active_client != NULL )
         { // note that this may call setActiveClient( NULL ), therefore the recursion counter
         active_client->setActive( false, !c || !c->isModal() || c != active_client->transientFor() );
@@ -713,8 +713,8 @@ void Client::demandAttention( bool set )
 
         if( demandAttentionKNotifyTimer == NULL )
             {
-            demandAttentionKNotifyTimer = new QTimer( this );
-            connect( demandAttentionKNotifyTimer, SIGNAL( timeout()), SLOT( demandAttentionKNotify()));
+            demandAttentionKNotifyTimer = new TQTimer( this );
+            connect( demandAttentionKNotifyTimer, TQT_SIGNAL( timeout()), TQT_SLOT( demandAttentionKNotify()));
             }
         demandAttentionKNotifyTimer->start( 1000, true );
         }

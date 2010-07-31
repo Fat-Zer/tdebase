@@ -21,13 +21,13 @@
 #include <kglobalsettings.h>
 #include <kwin.h>
 
-#include <qdesktopwidget.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qpixmap.h>
-#include <qpoint.h>
-#include <qtimer.h>
-#include <qwidget.h>
+#include <tqdesktopwidget.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqpixmap.h>
+#include <tqpoint.h>
+#include <tqtimer.h>
+#include <tqwidget.h>
 
 #include "wndicon.h"
 #include "wndicon.moc"
@@ -38,19 +38,19 @@ WndIcon::WndIcon(
   unsigned int status_height,
   int xineramaScreen,
   const KPixmap& pix,
-  const QString& text,
+  const TQString& text,
   Position icon_position,
   bool statusAtTop,
   bool iconsJumping )
-    :QHBox( 0, "wndSplash", WStyle_Customize|WX11BypassWM ),
+    :TQHBox( 0, "wndSplash", WStyle_Customize|WX11BypassWM ),
      mStatusText(text), mIconPos(icon_position), mXineramaScreen( xineramaScreen ), mPosX(0), mPosY(0), mGroundX(0), mGroundY(0),
      mVelocity(8.0), mInitialVelocity(8.0), mGravity(0.8),
      mIconNum(icon_num), mStatusHeight(status_height), mIconSize(icon_std_width), mStatusAtTop(statusAtTop),
      mStopJump(false), mIconJumping(iconsJumping)
 {
-  setFrameStyle( QFrame::NoFrame );
+  setFrameStyle( TQFrame::NoFrame );
 
-  QLabel *w = new QLabel( this );
+  TQLabel *w = new TQLabel( this );
   w->setFixedSize( pix.width(), pix.height() );
   w->setPixmap( pix );
   if(pix.mask())
@@ -62,15 +62,15 @@ WndIcon::WndIcon(
   resize( pix.width(), pix.height() );
 
   // Set initial position of icon, and ground.
-  QPoint p = determinePosition();
+  TQPoint p = determinePosition();
   mGroundX = mPosX = p.x();
   mGroundY = mPosY = p.y();
   move( p + kapp->desktop()->screenGeometry( mXineramaScreen ).topLeft() );
 
   if( mIconJumping )
   {
-    QTimer *t = new QTimer( this );
-    connect(t, SIGNAL(timeout()), SLOT(slotJump()));
+    TQTimer *t = new TQTimer( this );
+    connect(t, TQT_SIGNAL(timeout()), TQT_SLOT(slotJump()));
     t->start( 50, false );
   }
 }
@@ -78,7 +78,7 @@ WndIcon::WndIcon(
 void WndIcon::show()
 {
   emit setStatusText( mStatusText );
-  QHBox::show();
+  TQHBox::show();
 }
 
 // Emit our EXTRA signal without becoming visible.
@@ -93,12 +93,12 @@ void WndIcon::noshow()
  * screen. This is placed in its own function due to the massive
  * complexity required by the variables involved.
  */
-QPoint WndIcon::determinePosition()
+TQPoint WndIcon::determinePosition()
 {
   int DW, DH, SBH, wid, X, Y, x, y, nSlot, topshift, bottomshift;
 
   bottomshift = topshift = 0;
-  const QRect srect = kapp->desktop()->screenGeometry( mXineramaScreen );
+  const TQRect srect = kapp->desktop()->screenGeometry( mXineramaScreen );
   // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
   DW = srect.width();
   DH = srect.height();
@@ -220,7 +220,7 @@ QPoint WndIcon::determinePosition()
     return(determinePosition());
     break;
   }
-  return( QPoint( X, Y ) );
+  return( TQPoint( X, Y ) );
 }
 
 // Make the icons jump in a macosx-like way (Thanks, Jone!:)
@@ -301,7 +301,7 @@ void WndIcon::slotJump()
     mPosY = (int)((float)mPosY - mVelocity );
     break;
   }
-  move( QPoint( mPosX, mPosY ) + kapp->desktop()->screenGeometry( mXineramaScreen ).topLeft() );
+  move( TQPoint( mPosX, mPosY ) + kapp->desktop()->screenGeometry( mXineramaScreen ).topLeft() );
 }
 
 void WndIcon::slotStopJumping()

@@ -32,10 +32,10 @@
 #include <kstandarddirs.h>
 
 #include <stdlib.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qregexp.h>
-#include <qtextedit.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqregexp.h>
+#include <tqtextedit.h>
 
 /*! \class TESession
 
@@ -47,7 +47,7 @@
     of the abilities of the framework - multible sessions.
 */
 
-TESession::TESession(TEWidget* _te, const QString &_term, ulong _winId, const QString &_sessionId, const QString &_initial_cwd)
+TESession::TESession(TEWidget* _te, const TQString &_term, ulong _winId, const TQString &_sessionId, const TQString &_initial_cwd)
    : DCOPObject( _sessionId.latin1() )
    , sh(0)
    , connected(true)
@@ -62,8 +62,8 @@ TESession::TESession(TEWidget* _te, const QString &_term, ulong _winId, const QS
    , silence_seconds(10)
    , add_to_utmp(true)
    , xon_xoff(false)
-   , pgm(QString())
-   , args(QStrList())
+   , pgm(TQString())
+   , args(TQStrList())
    , sessionId(_sessionId)
    , cwd("")
    , initial_cwd(_initial_cwd)
@@ -78,10 +78,10 @@ TESession::TESession(TEWidget* _te, const QString &_term, ulong _winId, const QS
   em = new TEmuVt102(te);
   font_h = te-> fontHeight();
   font_w = te-> fontWidth();
-  QObject::connect(te,SIGNAL(changedContentSizeSignal(int,int)),
-                   this,SLOT(onContentSizeChange(int,int)));
-  QObject::connect(te,SIGNAL(changedFontMetricSignal(int,int)),
-                   this,SLOT(onFontMetricChange(int,int)));
+  TQObject::connect(te,TQT_SIGNAL(changedContentSizeSignal(int,int)),
+                   this,TQT_SLOT(onContentSizeChange(int,int)));
+  TQObject::connect(te,TQT_SIGNAL(changedFontMetricSignal(int,int)),
+                   this,TQT_SLOT(onFontMetricChange(int,int)));
 
   term = _term;
   winId = _winId;
@@ -89,17 +89,17 @@ TESession::TESession(TEWidget* _te, const QString &_term, ulong _winId, const QS
 
   setPty( new TEPty() );
 
-  connect( em, SIGNAL( changeTitle( int, const QString & ) ),
-           this, SLOT( setUserTitle( int, const QString & ) ) );
-  connect( em, SIGNAL( notifySessionState(int) ),
-           this, SLOT( notifySessionState(int) ) );
-  monitorTimer = new QTimer(this);
-  connect(monitorTimer, SIGNAL(timeout()), this, SLOT(monitorTimerDone()));
+  connect( em, TQT_SIGNAL( changeTitle( int, const TQString & ) ),
+           this, TQT_SLOT( setUserTitle( int, const TQString & ) ) );
+  connect( em, TQT_SIGNAL( notifySessionState(int) ),
+           this, TQT_SLOT( notifySessionState(int) ) );
+  monitorTimer = new TQTimer(this);
+  connect(monitorTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(monitorTimerDone()));
 
-  connect( em, SIGNAL( zmodemDetected() ), this, SLOT(slotZModemDetected()));
+  connect( em, TQT_SIGNAL( zmodemDetected() ), this, TQT_SLOT(slotZModemDetected()));
 
-  connect( em, SIGNAL( changeTabTextColor( int ) ),
-           this, SLOT( changeTabTextColor( int ) ) );
+  connect( em, TQT_SIGNAL( changeTabTextColor( int ) ),
+           this, TQT_SLOT( changeTabTextColor( int ) ) );
 
   //kdDebug(1211)<<"TESession ctor() done"<<endl;
 }
@@ -110,23 +110,23 @@ void TESession::setPty(TEPty *_sh)
     delete sh;
   }
   sh = _sh;
-  connect( sh, SIGNAL( forkedChild() ),
-           this, SIGNAL( forkedChild() ));
+  connect( sh, TQT_SIGNAL( forkedChild() ),
+           this, TQT_SIGNAL( forkedChild() ));
 
   //kdDebug(1211)<<"TESession ctor() sh->setSize()"<<endl;
   sh->setSize(te->Lines(),te->Columns()); // not absolutely nessesary
   sh->useUtf8(em->utf8());
   //kdDebug(1211)<<"TESession ctor() connecting"<<endl;
-  connect( sh,SIGNAL(block_in(const char*,int)),this,SLOT(onRcvBlock(const char*,int)) );
+  connect( sh,TQT_SIGNAL(block_in(const char*,int)),this,TQT_SLOT(onRcvBlock(const char*,int)) );
 
-  connect( em,SIGNAL(sndBlock(const char*,int)),sh,SLOT(send_bytes(const char*,int)) );
-  connect( em,SIGNAL(lockPty(bool)),sh,SLOT(lockPty(bool)) );
-  connect( em,SIGNAL(useUtf8(bool)),sh,SLOT(useUtf8(bool)) );
+  connect( em,TQT_SIGNAL(sndBlock(const char*,int)),sh,TQT_SLOT(send_bytes(const char*,int)) );
+  connect( em,TQT_SIGNAL(lockPty(bool)),sh,TQT_SLOT(lockPty(bool)) );
+  connect( em,TQT_SIGNAL(useUtf8(bool)),sh,TQT_SLOT(useUtf8(bool)) );
 
-  connect( sh,SIGNAL(done(int)), this,SLOT(done(int)) );
+  connect( sh,TQT_SIGNAL(done(int)), this,TQT_SLOT(done(int)) );
 
   if (!sh->error().isEmpty())
-     QTimer::singleShot(0, this, SLOT(ptyError()));
+     TQTimer::singleShot(0, this, TQT_SLOT(ptyError()));
 }
 
 void TESession::ptyError()
@@ -143,10 +143,10 @@ void TESession::ptyError()
 
 void TESession::changeWidget(TEWidget* w)
 {
-  QObject::disconnect(te,SIGNAL(changedContentSizeSignal(int,int)),
-                     this,SLOT(onContentSizeChange(int,int)));
-  QObject::disconnect(te,SIGNAL(changedFontMetricSignal(int,int)),
-                     this,SLOT(onFontMetricChange(int,int)));
+  TQObject::disconnect(te,TQT_SIGNAL(changedContentSizeSignal(int,int)),
+                     this,TQT_SLOT(onContentSizeChange(int,int)));
+  TQObject::disconnect(te,TQT_SIGNAL(changedFontMetricSignal(int,int)),
+                     this,TQT_SLOT(onFontMetricChange(int,int)));
   te=w;
   em->changeGUI(w);
   font_h = te->fontHeight();
@@ -155,13 +155,13 @@ void TESession::changeWidget(TEWidget* w)
 
   te->setDefaultBackColor(modifiedBackground);
 
-  QObject::connect(te,SIGNAL(changedContentSizeSignal(int,int)),
-                   this,SLOT(onContentSizeChange(int,int)));
-  QObject::connect(te,SIGNAL(changedFontMetricSignal(int,int)),
-                   this,SLOT(onFontMetricChange(int,int)));
+  TQObject::connect(te,TQT_SIGNAL(changedContentSizeSignal(int,int)),
+                   this,TQT_SLOT(onContentSizeChange(int,int)));
+  TQObject::connect(te,TQT_SIGNAL(changedFontMetricSignal(int,int)),
+                   this,TQT_SLOT(onFontMetricChange(int,int)));
 }
 
-void TESession::setProgram( const QString &_pgm, const QStrList &_args )
+void TESession::setProgram( const TQString &_pgm, const TQStrList &_args )
 {
     pgm = _pgm;
     args = _args;
@@ -171,35 +171,35 @@ void TESession::run()
 {
   // Upon a KPty error, there is no description on what that error was...
   // Check to see if the given program is executable.
-  QString exec = QFile::encodeName(pgm);
+  TQString exec = TQFile::encodeName(pgm);
   exec = KRun::binaryName(exec, false);
   exec = KShell::tildeExpand(exec);
-  QString pexec = KGlobal::dirs()->findExe(exec);
+  TQString pexec = KGlobal::dirs()->findExe(exec);
   if ( pexec.isEmpty() ) {
     kdError()<<"can not execute "<<exec<<endl;
-    QTimer::singleShot(1, this, SLOT(done()));
+    TQTimer::singleShot(1, this, TQT_SLOT(done()));
     return;
   }
 
-  QString appId=kapp->dcopClient()->appId();
+  TQString appId=kapp->dcopClient()->appId();
 
-  QString cwd_save = QDir::currentDirPath();
+  TQString cwd_save = TQDir::currentDirPath();
   if (!initial_cwd.isEmpty())
-     QDir::setCurrent(initial_cwd);
+     TQDir::setCurrent(initial_cwd);
   sh->setXonXoff(xon_xoff);
 
-  int result = sh->run(QFile::encodeName(pgm), args, term.latin1(), 
+  int result = sh->run(TQFile::encodeName(pgm), args, term.latin1(), 
           winId, add_to_utmp,
           ("DCOPRef("+appId+",konsole)").latin1(),
           ("DCOPRef("+appId+","+sessionId+")").latin1());
   if (result < 0) {     // Error in opening pseudo teletype
     kdWarning()<<"Unable to open a pseudo teletype!"<<endl;
-    QTimer::singleShot(0, this, SLOT(ptyError()));
+    TQTimer::singleShot(0, this, TQT_SLOT(ptyError()));
   }
   sh->setErase(em->getErase());
 
   if (!initial_cwd.isEmpty())
-     QDir::setCurrent(cwd_save);
+     TQDir::setCurrent(cwd_save);
   else
      initial_cwd=cwd_save;
 
@@ -211,7 +211,7 @@ void TESession::changeTabTextColor( int color )
     emit changeTabTextColor( this, color );
 }
 
-void TESession::setUserTitle( int what, const QString &caption )
+void TESession::setUserTitle( int what, const TQString &caption )
 {
     // (btw: what=0 changes title and icon, what=1 only icon, what=2 only title
     if ((what == 0) || (what == 2))
@@ -219,8 +219,8 @@ void TESession::setUserTitle( int what, const QString &caption )
     if ((what == 0) || (what == 1))
        iconText = caption;
     if (what == 11) {
-      QString colorString = caption.section(';',0,0);
-      QColor backColor = QColor(colorString);
+      TQString colorString = caption.section(';',0,0);
+      TQColor backColor = TQColor(colorString);
       if (backColor.isValid()){// change color via \033]11;Color\007
 	if (backColor != modifiedBackground) {
 	    modifiedBackground = backColor;
@@ -232,7 +232,7 @@ void TESession::setUserTitle( int what, const QString &caption )
        renameSession(caption);
     if (what == 31) {
        cwd=caption;
-       cwd=cwd.replace( QRegExp("^~"), QDir::homeDirPath() );
+       cwd=cwd.replace( TQRegExp("^~"), TQDir::homeDirPath() );
        emit openURLRequest(cwd);
     }    
     if (what == 32) { // change icon via \033]32;Icon\007
@@ -243,9 +243,9 @@ void TESession::setUserTitle( int what, const QString &caption )
     emit updateTitle(this);
 }
 
-QString TESession::fullTitle() const
+TQString TESession::fullTitle() const
 {
-    QString res = title;
+    TQString res = title;
     if ( !userTitle.isEmpty() )
         res = userTitle + " - " + res;
     return res;
@@ -311,12 +311,12 @@ bool TESession::closeSession()
   if (!sh->isRunning() || !sendSignal(SIGHUP))
   {
      // Forced close.
-     QTimer::singleShot(1, this, SLOT(done()));
+     TQTimer::singleShot(1, this, TQT_SLOT(done()));
   }
   return true;
 }
 
-void TESession::feedSession(const QString &text)
+void TESession::feedSession(const TQString &text)
 {
   emit disableMasterModeConnections();
   setListenToKeyPress(true);
@@ -325,14 +325,14 @@ void TESession::feedSession(const QString &text)
   emit enableMasterModeConnections();
 }
 
-void TESession::sendSession(const QString &text)
+void TESession::sendSession(const TQString &text)
 {
-  QString newtext=text;
+  TQString newtext=text;
   newtext.append("\r");
   feedSession(newtext);
 }
 
-void TESession::renameSession(const QString &name)
+void TESession::renameSession(const TQString &name)
 {
   title=name;
   emit renameSession(this,name);
@@ -341,8 +341,8 @@ void TESession::renameSession(const QString &name)
 TESession::~TESession()
 {
  //kdDebug(1211) << "disconnnecting..." << endl;
-  QObject::disconnect( sh, SIGNAL( done(int) ),
-                       this, SLOT( done(int) ) );
+  TQObject::disconnect( sh, TQT_SIGNAL( done(int) ),
+                       this, TQT_SLOT( done(int) ) );
   delete em;
   delete sh;
 
@@ -419,7 +419,7 @@ int TESession::keymapNo()
   return em->keymapNo();
 }
 
-QString TESession::keymap()
+TQString TESession::keymap()
 {
   return em->keymap();
 }
@@ -429,12 +429,12 @@ int TESession::fontNo()
   return font_no;
 }
 
-const QString & TESession::Term()
+const TQString & TESession::Term()
 {
   return term;
 }
 
-const QString & TESession::SessionId()
+const TQString & TESession::SessionId()
 {
   return sessionId;
 }
@@ -454,7 +454,7 @@ void TESession::setKeymapNo(int kn)
   em->setKeymap(kn);
 }
 
-void TESession::setKeymap(const QString &id)
+void TESession::setKeymap(const TQString &id)
 {
   em->setKeymap(id);
 }
@@ -464,39 +464,39 @@ void TESession::setFontNo(int fn)
   font_no = fn;
 }
 
-void TESession::setTitle(const QString& _title)
+void TESession::setTitle(const TQString& _title)
 {
   title = _title;
   //kdDebug(1211)<<"Session setTitle " <<  title <<endl;
 }
 
-const QString& TESession::Title()
+const TQString& TESession::Title()
 {
   return title;
 }
 
-void TESession::setIconName(const QString& _iconName)
+void TESession::setIconName(const TQString& _iconName)
 {
   iconName = _iconName;
 }
 
-void TESession::setIconText(const QString& _iconText)
+void TESession::setIconText(const TQString& _iconText)
 {
   iconText = _iconText;
   //kdDebug(1211)<<"Session setIconText " <<  iconText <<endl;
 }
 
-const QString& TESession::IconName()
+const TQString& TESession::IconName()
 {
   return iconName;
 }
 
-const QString& TESession::IconText()
+const TQString& TESession::IconText()
 {
   return iconText;
 }
 
-bool TESession::testAndSetStateIconName (const QString& newname)
+bool TESession::testAndSetStateIconName (const TQString& newname)
 {
   if (newname != stateIconName)
     {
@@ -528,21 +528,21 @@ void TESession::clearHistory()
   }
 }
 
-QStrList TESession::getArgs()
+TQStrList TESession::getArgs()
 {
   return args;
 }
 
-QString TESession::getPgm()
+TQString TESession::getPgm()
 {
   return pgm;
 }
 
-QString TESession::getCwd()
+TQString TESession::getCwd()
 {
 #ifdef HAVE_PROC_CWD
   if (cwd.isEmpty()) {
-    QFileInfo Cwd(QString("/proc/%1/cwd").arg(sh->pid()));
+    TQFileInfo Cwd(TQString("/proc/%1/cwd").arg(sh->pid()));
     if(Cwd.isSymLink())
       return Cwd.readLink();
   }
@@ -599,7 +599,7 @@ void TESession::slotZModemDetected()
 {
   if (!zmodemBusy)
   {
-    QTimer::singleShot(10, this, SLOT(emitZModemDetected()));
+    TQTimer::singleShot(10, this, TQT_SLOT(emitZModemDetected()));
     zmodemBusy = true;
   }
 }
@@ -615,13 +615,13 @@ void TESession::cancelZModem()
   zmodemBusy = false;
 }
 
-void TESession::startZModem(const QString &zmodem, const QString &dir, const QStringList &list)
+void TESession::startZModem(const TQString &zmodem, const TQString &dir, const TQStringList &list)
 {
   zmodemBusy = true;
   zmodemProc = new KProcIO;
 
   (*zmodemProc) << zmodem << "-v";
-  for(QStringList::ConstIterator it = list.begin();
+  for(TQStringList::ConstIterator it = list.begin();
       it != list.end();
       ++it)
   {
@@ -633,23 +633,23 @@ void TESession::startZModem(const QString &zmodem, const QString &dir, const QSt
   zmodemProc->start(KProcIO::NotifyOnExit, false);
 
   // Override the read-processing of KProcIO
-  disconnect(zmodemProc,SIGNAL (receivedStdout (KProcess *, char *, int)), 0, 0);
-  connect(zmodemProc,SIGNAL (receivedStdout (KProcess *, char *, int)),
-          this, SLOT(zmodemSendBlock(KProcess *, char *, int)));
-  connect(zmodemProc,SIGNAL (receivedStderr (KProcess *, char *, int)),
-          this, SLOT(zmodemStatus(KProcess *, char *, int)));
-  connect(zmodemProc,SIGNAL (processExited(KProcess *)),
-          this, SLOT(zmodemDone()));
+  disconnect(zmodemProc,TQT_SIGNAL (receivedStdout (KProcess *, char *, int)), 0, 0);
+  connect(zmodemProc,TQT_SIGNAL (receivedStdout (KProcess *, char *, int)),
+          this, TQT_SLOT(zmodemSendBlock(KProcess *, char *, int)));
+  connect(zmodemProc,TQT_SIGNAL (receivedStderr (KProcess *, char *, int)),
+          this, TQT_SLOT(zmodemStatus(KProcess *, char *, int)));
+  connect(zmodemProc,TQT_SIGNAL (processExited(KProcess *)),
+          this, TQT_SLOT(zmodemDone()));
 
-  disconnect( sh,SIGNAL(block_in(const char*,int)), this, SLOT(onRcvBlock(const char*,int)) );
-  connect( sh,SIGNAL(block_in(const char*,int)), this, SLOT(zmodemRcvBlock(const char*,int)) );
-  connect( sh,SIGNAL(buffer_empty()), this, SLOT(zmodemContinue()));
+  disconnect( sh,TQT_SIGNAL(block_in(const char*,int)), this, TQT_SLOT(onRcvBlock(const char*,int)) );
+  connect( sh,TQT_SIGNAL(block_in(const char*,int)), this, TQT_SLOT(zmodemRcvBlock(const char*,int)) );
+  connect( sh,TQT_SIGNAL(buffer_empty()), this, TQT_SLOT(zmodemContinue()));
 
   zmodemProgress = new ZModemDialog(te->topLevelWidget(), false,
                                     i18n("ZModem Progress"));
 
-  connect(zmodemProgress, SIGNAL(user1Clicked()),
-          this, SLOT(zmodemDone()));
+  connect(zmodemProgress, TQT_SIGNAL(user1Clicked()),
+          this, TQT_SLOT(zmodemDone()));
 
   zmodemProgress->show();
 }
@@ -673,12 +673,12 @@ void TESession::zmodemContinue()
 
 void TESession::zmodemStatus(KProcess *, char *data, int len)
 {
-  QCString msg(data, len+1);
+  TQCString msg(data, len+1);
   while(!msg.isEmpty())
   {
      int i = msg.find('\015');
      int j = msg.find('\012');
-     QCString txt;
+     TQCString txt;
      if ((i != -1) && ((j == -1) || (i < j)))
      {
        msg = msg.mid(i+1);
@@ -694,13 +694,13 @@ void TESession::zmodemStatus(KProcess *, char *data, int len)
        msg.truncate(0);
      }
      if (!txt.isEmpty())
-       zmodemProgress->addProgressText(QString::fromLocal8Bit(txt));
+       zmodemProgress->addProgressText(TQString::fromLocal8Bit(txt));
   }
 }
 
 void TESession::zmodemRcvBlock(const char *data, int len)
 {
-  QByteArray ba;
+  TQByteArray ba;
   ba.duplicate(data, len);
   zmodemProc->writeStdin(ba);
 //  qWarning("--> %d bytes", len);
@@ -714,9 +714,9 @@ void TESession::zmodemDone()
     zmodemProc = 0;
     zmodemBusy = false;
 
-    disconnect( sh,SIGNAL(block_in(const char*,int)), this ,SLOT(zmodemRcvBlock(const char*,int)) );
-    disconnect( sh,SIGNAL(buffer_empty()), this, SLOT(zmodemContinue()));
-    connect( sh,SIGNAL(block_in(const char*,int)), this, SLOT(onRcvBlock(const char*,int)) );
+    disconnect( sh,TQT_SIGNAL(block_in(const char*,int)), this ,TQT_SLOT(zmodemRcvBlock(const char*,int)) );
+    disconnect( sh,TQT_SIGNAL(buffer_empty()), this, TQT_SLOT(zmodemContinue()));
+    connect( sh,TQT_SIGNAL(block_in(const char*,int)), this, TQT_SLOT(onRcvBlock(const char*,int)) );
 
     sh->send_bytes("\030\030\030\030", 4); // Abort
     sh->send_bytes("\001\013\n", 3); // Try to get prompt back
@@ -725,23 +725,23 @@ void TESession::zmodemDone()
 }
 
 
-bool TESession::processDynamic(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData)
+bool TESession::processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData)
 {
     if (fullScripting)
     {
-      if (fun == "feedSession(QString)")
+      if (fun == "feedSession(TQString)")
       {
-        QString arg0;
-        QDataStream arg( data, IO_ReadOnly );
+        TQString arg0;
+        TQDataStream arg( data, IO_ReadOnly );
         arg >> arg0;
         feedSession(arg0);
         replyType = "void";
         return true;
       }
-      else if (fun == "sendSession(QString)")
+      else if (fun == "sendSession(TQString)")
       {
-        QString arg0;
-        QDataStream arg( data, IO_ReadOnly );
+        TQString arg0;
+        TQDataStream arg( data, IO_ReadOnly );
         arg >> arg0;
         sendSession(arg0);
         replyType = "void";
@@ -757,8 +757,8 @@ QCStringList TESession::functionsDynamic()
     QCStringList funcs = SessionIface::functionsDynamic();
     if (fullScripting)
     {
-       funcs << "void feedSession(QString text)";
-       funcs << "void sendSession(QString text)";
+       funcs << "void feedSession(TQString text)";
+       funcs << "void sendSession(TQString text)";
     }
     return funcs;
 }
@@ -767,67 +767,67 @@ QCStringList TESession::functionsDynamic()
 void TESession::onRcvBlock( const char* buf, int len )
 {
     em->onRcvBlock( buf, len );
-    emit receivedData( QString::fromLatin1( buf, len ) );
+    emit receivedData( TQString::fromLatin1( buf, len ) );
 }
 
-void TESession::print( QPainter &paint, bool friendly, bool exact )
+void TESession::print( TQPainter &paint, bool friendly, bool exact )
 {
     te->print(paint, friendly, exact);
 }
 
-QString TESession::schema()
+TQString TESession::schema()
 {
-  QString currentSchema;
+  TQString currentSchema;
   emit getSessionSchema(this, currentSchema);
   return currentSchema;
 }
 
-void TESession::setSchema(const QString &schema)
+void TESession::setSchema(const TQString &schema)
 {
   emit setSessionSchema(this, schema);
 }
 
-QString TESession::font()
+TQString TESession::font()
 {
   return te->getVTFont().toString();
 }
 
-void TESession::setFont(const QString &font)
+void TESession::setFont(const TQString &font)
 {
-  QFont tmp;
+  TQFont tmp;
   if (tmp.fromString(font))
     te->setVTFont(tmp);
   else
     kdWarning()<<"unknown font: "<<font<<endl;
 }
 
-QString TESession::encoding()
+TQString TESession::encoding()
 {
   return em->codec()->name();
 }
 
-void TESession::setEncoding(const QString &encoding)
+void TESession::setEncoding(const TQString &encoding)
 {
   emit setSessionEncoding(this, encoding);
 }
 
-QString TESession::keytab()
+TQString TESession::keytab()
 {
    return keymap();
 }
 
-void TESession::setKeytab(const QString &keytab)
+void TESession::setKeytab(const TQString &keytab)
 {
    setKeymap(keytab);
    emit updateSessionConfig(this);
 }
 
-QSize TESession::size()
+TQSize TESession::size()
 {
   return em->imageSize();
 }
 
-void TESession::setSize(QSize size)
+void TESession::setSize(TQSize size)
 {
   if ((size.width() <= 1) || (size.height() <= 1))
      return;

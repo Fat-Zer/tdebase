@@ -30,11 +30,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <klocale.h>
 
-#include <qaccel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qpopupmenu.h>
-#include <qapplication.h>
+#include <tqaccel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqpopupmenu.h>
+#include <tqapplication.h>
 
 #include <stdlib.h>
 
@@ -50,50 +50,50 @@ KGDialog::KGDialog( bool themed ) : inherited( 0, !themed )
 
 void
 #ifdef XDMCP
-KGDialog::completeMenu( int _switchIf, int _switchCode, const QString &_switchMsg, int _switchAccel )
+KGDialog::completeMenu( int _switchIf, int _switchCode, const TQString &_switchMsg, int _switchAccel )
 #else
 KGDialog::completeMenu()
 #endif
 {
 #ifdef HAVE_VTS
 	if (_isLocal) {
-		dpyMenu = new QPopupMenu( this );
+		dpyMenu = new TQPopupMenu( this );
 		int id = inserten( i18n("Sw&itch User"), ALT+Key_I, dpyMenu );
-		connect( dpyMenu, SIGNAL(activated( int )),
-		         SLOT(slotDisplaySelected( int )) );
-		connect( dpyMenu, SIGNAL(aboutToShow()),
-		         SLOT(slotPopulateDisplays()) );
-		QAccel *accel = new QAccel( this );
+		connect( dpyMenu, TQT_SIGNAL(activated( int )),
+		         TQT_SLOT(slotDisplaySelected( int )) );
+		connect( dpyMenu, TQT_SIGNAL(aboutToShow()),
+		         TQT_SLOT(slotPopulateDisplays()) );
+		TQAccel *accel = new TQAccel( this );
 		accel->insertItem( ALT+CTRL+Key_Insert, id );
-		connect( accel, SIGNAL(activated( int )), SLOT(slotActivateMenu( int )) );
+		connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotActivateMenu( int )) );
 	}
 #endif
 
 	if (_allowClose)
 		inserten( _isLocal ? i18n("R&estart X Server") : i18n("Clos&e Connection"),
-		          ALT+Key_E, SLOT(slotExit()) );
+		          ALT+Key_E, TQT_SLOT(slotExit()) );
 
 #ifdef XDMCP
 	if (_isLocal && _loginMode != _switchIf) {
 		switchCode = _switchCode;
-		inserten( _switchMsg, _switchAccel, SLOT(slotSwitch()) );
+		inserten( _switchMsg, _switchAccel, TQT_SLOT(slotSwitch()) );
 	}
 #endif
 
 	if (_hasConsole)
-		inserten( i18n("Co&nsole Login"), ALT+Key_N, SLOT(slotConsole()) );
+		inserten( i18n("Co&nsole Login"), ALT+Key_N, TQT_SLOT(slotConsole()) );
 
 	if (_allowShutdown != SHUT_NONE) {
-		inserten( i18n("&Shutdown..."), ALT+Key_S, SLOT(slotShutdown( int )) );
-		QAccel *accel = new QAccel( this );
+		inserten( i18n("&Shutdown..."), ALT+Key_S, TQT_SLOT(slotShutdown( int )) );
+		TQAccel *accel = new TQAccel( this );
 		accel->insertItem( ALT+CTRL+Key_Delete );
-		connect( accel, SIGNAL(activated( int )), SLOT(slotShutdown( int )) );
-		accel = new QAccel( this );
+		connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotShutdown( int )) );
+		accel = new TQAccel( this );
 		accel->insertItem( SHIFT+ALT+CTRL+Key_PageUp, SHUT_REBOOT );
-		connect( accel, SIGNAL(activated( int )), SLOT(slotShutdown( int )) );
-		accel = new QAccel( this );
+		connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotShutdown( int )) );
+		accel = new TQAccel( this );
 		accel->insertItem( SHIFT+ALT+CTRL+Key_PageDown, SHUT_HALT );
-		connect( accel, SIGNAL(activated( int )), SLOT(slotShutdown( int )) );
+		connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotShutdown( int )) );
 	}
 }
 
@@ -101,7 +101,7 @@ void
 KGDialog::ensureMenu()
 {
 	if (!optMenu) {
-		optMenu = new QPopupMenu( this );
+		optMenu = new TQPopupMenu( this );
 		optMenu->setCheckable( false );
 		needSep = false;
 	} else if (needSep) {
@@ -111,19 +111,19 @@ KGDialog::ensureMenu()
 }
 
 void
-KGDialog::inserten( const QString& txt, int accel, const char *member )
+KGDialog::inserten( const TQString& txt, int accel, const char *member )
 {
 	ensureMenu();
 	optMenu->insertItem( txt, this, member, accel );
 }
 
 int
-KGDialog::inserten( const QString& txt, int accel, QPopupMenu *cmnu )
+KGDialog::inserten( const TQString& txt, int accel, TQPopupMenu *cmnu )
 {
 	ensureMenu();
 	int id = optMenu->insertItem( txt, cmnu );
 	optMenu->setAccel( accel, id );
-	optMenu->connectItem( id, this, SLOT(slotActivateMenu( int )) );
+	optMenu->connectItem( id, this, TQT_SLOT(slotActivateMenu( int )) );
 	optMenu->setItemParameter( id, id );
 	return id;
 }
@@ -131,9 +131,9 @@ KGDialog::inserten( const QString& txt, int accel, QPopupMenu *cmnu )
 void
 KGDialog::slotActivateMenu( int id )
 {
-	QPopupMenu *cmnu = optMenu->findItem( id )->popup();
-	QSize sh( cmnu->sizeHint() / 2 );
-	cmnu->exec( geometry().center() - QPoint( sh.width(), sh.height() ) );
+	TQPopupMenu *cmnu = optMenu->findItem( id )->popup();
+	TQSize sh( cmnu->sizeHint() / 2 );
+	cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 }
 
 void
@@ -149,7 +149,7 @@ KGDialog::slotSwitch()
 {
 #ifdef XDMCP
 	// workaround for Qt bug
-	QTimer::singleShot( 0, this, SLOT(slotReallySwitch()) );
+	TQTimer::singleShot( 0, this, TQT_SLOT(slotReallySwitch()) );
 #endif
 }
 
@@ -220,7 +220,7 @@ KGDialog::slotPopulateDisplays()
 #ifdef HAVE_VTS
 	dpyMenu->clear();
 	dpySpec *sessions = fetchSessions( lstPassive | lstTTY );
-	QString user, loc;
+	TQString user, loc;
 	for (dpySpec *sess = sessions; sess; sess = sess->next) {
 		decodeSess( sess, user, loc );
 		int id = dpyMenu->insertItem(

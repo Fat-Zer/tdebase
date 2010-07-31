@@ -27,15 +27,15 @@ class General_tab
     {
     Q_OBJECT
     public:
-        General_tab( QWidget* parent_P = NULL, const char* name_P = NULL );
+        General_tab( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void set_data( const Action_data* data_P );
-        void get_data( QString& name_O, QString& comment_O, bool& enabled_O );
+        void get_data( TQString& name_O, TQString& comment_O, bool& enabled_O );
     public slots:
         void clear_data();
     signals:
         void action_type_changed( int type_P );
     protected slots:
-        void action_name_changed( const QString& name_P );
+        void action_name_changed( const TQString& name_P );
     };
     
 //***************************************************************************

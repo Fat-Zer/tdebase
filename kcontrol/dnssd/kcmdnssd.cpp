@@ -21,16 +21,16 @@
 #include <sys/stat.h>
 #include <config.h>
 
-#include <qlayout.h>
-#include <qfile.h>
-#include <qgroupbox.h>
-#include <qradiobutton.h>
-#include <qtimer.h>
-#include <qtabwidget.h>
-#include <qcheckbox.h>
-#include <qprocess.h>
-#include <qcursor.h>
-#include <qbuttongroup.h>
+#include <tqlayout.h>
+#include <tqfile.h>
+#include <tqgroupbox.h>
+#include <tqradiobutton.h>
+#include <tqtimer.h>
+#include <tqtabwidget.h>
+#include <tqcheckbox.h>
+#include <tqprocess.h>
+#include <tqcursor.h>
+#include <tqbuttongroup.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -50,10 +50,10 @@
 #define MDNSD_CONF "/etc/mdnsd.conf"
 #define MDNSD_PID "/var/run/mdnsd.pid"
 
-typedef KGenericFactory<KCMDnssd, QWidget> KCMDnssdFactory;
+typedef KGenericFactory<KCMDnssd, TQWidget> KCMDnssdFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_kdnssd, KCMDnssdFactory("kcmkdnssd"))
 
-KCMDnssd::KCMDnssd(QWidget *parent, const char *name, const QStringList&)
+KCMDnssd::KCMDnssd(TQWidget *parent, const char *name, const TQStringList&)
 		: ConfigDialog(parent, name), m_wdchanged(false)
 {
 	setAboutData(new KAboutData(I18N_NOOP("kcm_kdnssd"),
@@ -65,13 +65,13 @@ KCMDnssd::KCMDnssd(QWidget *parent, const char *name, const QStringList&)
 		else if (getenv("KDESU_USER")!=0) tabs->removePage(tab); 
 	addConfig(DNSSD::Configuration::self(),this);
 	// it is host-wide setting so it has to be in global config file
-	domain = new KSimpleConfig( QString::fromLatin1( KDE_CONFDIR "/kdnssdrc" ));
+	domain = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdnssdrc" ));
 	domain->setGroup("publishing");
 	load();
-	connect(hostedit,SIGNAL(textChanged(const QString&)),this,SLOT(wdchanged()));
-	connect(secretedit,SIGNAL(textChanged(const QString&)),this,SLOT(wdchanged()));
-	connect(domainedit,SIGNAL(textChanged(const QString&)),this,SLOT(wdchanged()));
-	connect(enableZeroconf,SIGNAL(toggled(bool)),this,SLOT(enableZeroconfChanged(bool)));
+	connect(hostedit,TQT_SIGNAL(textChanged(const TQString&)),this,TQT_SLOT(wdchanged()));
+	connect(secretedit,TQT_SIGNAL(textChanged(const TQString&)),this,TQT_SLOT(wdchanged()));
+	connect(domainedit,TQT_SIGNAL(textChanged(const TQString&)),this,TQT_SLOT(wdchanged()));
+	connect(enableZeroconf,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(enableZeroconfChanged(bool)));
 	m_enableZeroconfChanged=false;
 	if (DNSSD::Configuration::self()->publishDomain().isEmpty()) WANButton->setEnabled(false);
 	kcfg_PublishType->hide(); //unused with Avahi
@@ -84,7 +84,7 @@ KCMDnssd::~KCMDnssd()
 
 void KCMDnssd::save()
 {
-	setCursor(QCursor(Qt::BusyCursor));
+	setCursor(TQCursor(Qt::BusyCursor));
 	KCModule::save();
 	if (geteuid()==0 && m_wdchanged) saveMdnsd(); 
 	domain->setFileWriteMode(0644); // this should be readable for everyone
@@ -93,7 +93,7 @@ void KCMDnssd::save()
 	KIPC::sendMessageAll((KIPC::Message)KIPCDomainsChanged);
 	if (m_enableZeroconfChanged) {
 
-	  QString scaryMessage = i18n("Enabling local network browsing will open a network port (5353) on your computer.  If security problems are discovered in the zeroconf server, remote attackers could access your computer as the \"avahi\" user.");
+	  TQString scaryMessage = i18n("Enabling local network browsing will open a network port (5353) on your computer.  If security problems are discovered in the zeroconf server, remote attackers could access your computer as the \"avahi\" user.");
 
 	  KProcess *proc = new KProcess;
 
@@ -112,14 +112,14 @@ void KCMDnssd::save()
 	    proc->start(KProcess::Block);
 	  }
 	}
-	setCursor(QCursor(Qt::ArrowCursor));
+	setCursor(TQCursor(Qt::ArrowCursor));
 }
 
 void KCMDnssd::load()
 {
 	if (geteuid()==0) loadMdnsd();
 	enableZeroconf->setChecked(false);
-	QProcess avahiStatus(QString("/usr/share/avahi/avahi_status"), this, "avahiStatus");
+	TQProcess avahiStatus(TQString("/usr/share/avahi/avahi_status"), this, "avahiStatus");
 	avahiStatus.start();
 	while (avahiStatus.isRunning()) {
 	  kapp->processEvents();
@@ -151,14 +151,14 @@ void KCMDnssd::enableZeroconfChanged(bool)
 
 void KCMDnssd::loadMdnsd()
 {
-	QFile f(MDNSD_CONF);
+	TQFile f(MDNSD_CONF);
 	if (!f.open(IO_ReadWrite)) return;
-	QTextStream stream(&f);
-	QString line;
+	TQTextStream stream(&f);
+	TQString line;
 	while (!stream.atEnd()) {
 		line = stream.readLine();
-		mdnsdLines.insert(line.section(' ',0,0,QString::SectionSkipEmpty),
-			line.section(' ',1,-1,QString::SectionSkipEmpty));
+		mdnsdLines.insert(line.section(' ',0,0,TQString::SectionSkipEmpty),
+			line.section(' ',1,-1,TQString::SectionSkipEmpty));
 		}
 	if (!mdnsdLines["zone"].isNull()) domainedit->setText(mdnsdLines["zone"]);
 	if (!mdnsdLines["hostname"].isNull()) hostedit->setText(mdnsdLines["hostname"]);
@@ -169,13 +169,13 @@ bool KCMDnssd::saveMdnsd()
 {
 	mdnsdLines["zone"]=domainedit->text();
 	mdnsdLines["hostname"]=hostedit->text();
-	if (!secretedit->text().isEmpty()) mdnsdLines["secret-64"]=QString(secretedit->password());
+	if (!secretedit->text().isEmpty()) mdnsdLines["secret-64"]=TQString(secretedit->password());
 		else mdnsdLines.remove("secret-64");
-	QFile f(MDNSD_CONF);
+	TQFile f(MDNSD_CONF);
 	bool newfile=!f.exists();
 	if (!f.open(IO_WriteOnly)) return false; 
-	QTextStream stream(&f);
-	for (QMap<QString,QString>::ConstIterator it=mdnsdLines.begin();it!=mdnsdLines.end();
+	TQTextStream stream(&f);
+	for (TQMap<TQString,TQString>::ConstIterator it=mdnsdLines.begin();it!=mdnsdLines.end();
 		++it) stream << it.key() << " " << (*it) << "\n";
 	f.close();
 	// if it is new file, then make it only accessible for root as it can contain shared
@@ -183,7 +183,7 @@ bool KCMDnssd::saveMdnsd()
 	if (newfile) chmod(MDNSD_CONF,0600); 
 	f.setName(MDNSD_PID);
 	if (!f.open(IO_ReadOnly)) return true; // it is not running so no need to signal
-	QString line;
+	TQString line;
 	if (f.readLine(line,16)<1) return true;
 	unsigned int pid = line.toUInt();
 	if (pid==0) return true;           // not a pid

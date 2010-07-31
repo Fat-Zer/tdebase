@@ -16,16 +16,16 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qdesktopwidget.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qvbox.h>
-#include <qvbuttongroup.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqdesktopwidget.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqvbox.h>
+#include <tqvbuttongroup.h>
+#include <tqwhatsthis.h>
 
 #include <kcmodule.h>
 #include <kcombobox.h>
@@ -42,7 +42,7 @@
 #include <X11/extensions/Xrandr.h>
 
 // DLL Interface for kcontrol
-typedef KGenericFactory<KRandRModule, QWidget > KSSFactory;
+typedef KGenericFactory<KRandRModule, TQWidget > KSSFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_randr, KSSFactory("krandr") )
 extern "C"
 
@@ -73,22 +73,22 @@ void KRandRModule::performApplyOnStartup()
 	}
 }
 
-KRandRModule::KRandRModule(QWidget *parent, const char *name, const QStringList&)
+KRandRModule::KRandRModule(TQWidget *parent, const char *name, const TQStringList&)
     : KCModule(parent, name)
 	, m_changed(false)
 {
 	if (!isValid()) {
-		QVBoxLayout *topLayout = new QVBoxLayout(this);
-		topLayout->addWidget(new QLabel(i18n("<qt>Your X server does not support resizing and rotating the display. Please update to version 4.3 or greater. You need the X Resize And Rotate extension (RANDR) version 1.1 or greater to use this feature.</qt>"), this));
+		TQVBoxLayout *topLayout = new TQVBoxLayout(this);
+		topLayout->addWidget(new TQLabel(i18n("<qt>Your X server does not support resizing and rotating the display. Please update to version 4.3 or greater. You need the X Resize And Rotate extension (RANDR) version 1.1 or greater to use this feature.</qt>"), this));
 		kdWarning() << "Error: " << errorCode() << endl;
 		return;
 	}
 
-	QVBoxLayout* topLayout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout* topLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
-	QHBox* screenBox = new QHBox(this);
+	TQHBox* screenBox = new TQHBox(this);
 	topLayout->addWidget(screenBox);
-	QLabel *screenLabel = new QLabel(i18n("Settings for screen:"), screenBox);
+	TQLabel *screenLabel = new TQLabel(i18n("Settings for screen:"), screenBox);
 	m_screenSelector = new KComboBox(screenBox);
 
 	for (int s = 0; s < numScreens(); s++) {
@@ -97,45 +97,45 @@ KRandRModule::KRandRModule(QWidget *parent, const char *name, const QStringList&
 
 	m_screenSelector->setCurrentItem(currentScreenIndex());
         screenLabel->setBuddy( m_screenSelector );
-	QWhatsThis::add(m_screenSelector, i18n("The screen whose settings you would like to change can be selected using this drop-down list."));
+	TQWhatsThis::add(m_screenSelector, i18n("The screen whose settings you would like to change can be selected using this drop-down list."));
 
-	connect(m_screenSelector, SIGNAL(activated(int)), SLOT(slotScreenChanged(int)));
+	connect(m_screenSelector, TQT_SIGNAL(activated(int)), TQT_SLOT(slotScreenChanged(int)));
 
 	if (numScreens() <= 1)
 		m_screenSelector->setEnabled(false);
 
-	QHBox* sizeBox = new QHBox(this);
+	TQHBox* sizeBox = new TQHBox(this);
 	topLayout->addWidget(sizeBox);
-	QLabel *sizeLabel = new QLabel(i18n("Screen size:"), sizeBox);
+	TQLabel *sizeLabel = new TQLabel(i18n("Screen size:"), sizeBox);
 	m_sizeCombo = new KComboBox(sizeBox);
-	QWhatsThis::add(m_sizeCombo, i18n("The size, otherwise known as the resolution, of your screen can be selected from this drop-down list."));
-	connect(m_sizeCombo, SIGNAL(activated(int)), SLOT(slotSizeChanged(int)));
+	TQWhatsThis::add(m_sizeCombo, i18n("The size, otherwise known as the resolution, of your screen can be selected from this drop-down list."));
+	connect(m_sizeCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSizeChanged(int)));
         sizeLabel->setBuddy( m_sizeCombo );
 
-	QHBox* refreshBox = new QHBox(this);
+	TQHBox* refreshBox = new TQHBox(this);
 	topLayout->addWidget(refreshBox);
-	QLabel *rateLabel = new QLabel(i18n("Refresh rate:"), refreshBox);
+	TQLabel *rateLabel = new TQLabel(i18n("Refresh rate:"), refreshBox);
 	m_refreshRates = new KComboBox(refreshBox);
-	QWhatsThis::add(m_refreshRates, i18n("The refresh rate of your screen can be selected from this drop-down list."));
-	connect(m_refreshRates, SIGNAL(activated(int)), SLOT(slotRefreshChanged(int)));
+	TQWhatsThis::add(m_refreshRates, i18n("The refresh rate of your screen can be selected from this drop-down list."));
+	connect(m_refreshRates, TQT_SIGNAL(activated(int)), TQT_SLOT(slotRefreshChanged(int)));
         rateLabel->setBuddy( m_refreshRates );
 
-	m_rotationGroup = new QButtonGroup(2, Qt::Horizontal, i18n("Orientation (degrees counterclockwise)"), this);
+	m_rotationGroup = new TQButtonGroup(2, Qt::Horizontal, i18n("Orientation (degrees counterclockwise)"), this);
 	topLayout->addWidget(m_rotationGroup);
 	m_rotationGroup->setRadioButtonExclusive(true);
-	QWhatsThis::add(m_rotationGroup, i18n("The options in this section allow you to change the rotation of your screen."));
+	TQWhatsThis::add(m_rotationGroup, i18n("The options in this section allow you to change the rotation of your screen."));
 
-	m_applyOnStartup = new QCheckBox(i18n("Apply settings on KDE startup"), this);
+	m_applyOnStartup = new TQCheckBox(i18n("Apply settings on KDE startup"), this);
 	topLayout->addWidget(m_applyOnStartup);
-	QWhatsThis::add(m_applyOnStartup, i18n("If this option is enabled the size and orientation settings will be used when KDE starts."));
-	connect(m_applyOnStartup, SIGNAL(clicked()), SLOT(setChanged()));
+	TQWhatsThis::add(m_applyOnStartup, i18n("If this option is enabled the size and orientation settings will be used when KDE starts."));
+	connect(m_applyOnStartup, TQT_SIGNAL(clicked()), TQT_SLOT(setChanged()));
 
-	QHBox* syncBox = new QHBox(this);
-	syncBox->layout()->addItem(new QSpacerItem(20, 1, QSizePolicy::Maximum));
-	m_syncTrayApp = new QCheckBox(i18n("Allow tray application to change startup settings"), syncBox);
+	TQHBox* syncBox = new TQHBox(this);
+	syncBox->layout()->addItem(new TQSpacerItem(20, 1, TQSizePolicy::Maximum));
+	m_syncTrayApp = new TQCheckBox(i18n("Allow tray application to change startup settings"), syncBox);
 	topLayout->addWidget(syncBox);
-	QWhatsThis::add(m_syncTrayApp, i18n("If this option is enabled, options set by the system tray applet will be saved and loaded when KDE starts instead of being temporary."));
-	connect(m_syncTrayApp, SIGNAL(clicked()), SLOT(setChanged()));
+	TQWhatsThis::add(m_syncTrayApp, i18n("If this option is enabled, options set by the system tray applet will be saved and loaded when KDE starts instead of being temporary."));
+	connect(m_syncTrayApp, TQT_SIGNAL(clicked()), TQT_SLOT(setChanged()));
 
 	topLayout->addStretch(1);
 
@@ -143,7 +143,7 @@ KRandRModule::KRandRModule(QWidget *parent, const char *name, const QStringList&
 	load();
 	m_syncTrayApp->setEnabled(m_applyOnStartup->isChecked());
 
-	slotScreenChanged(QApplication::desktop()->primaryScreen());
+	slotScreenChanged(TQApplication::desktop()->primaryScreen());
 
 	setButtons(KCModule::Apply);
 }
@@ -152,13 +152,13 @@ void KRandRModule::addRotationButton(int thisRotation, bool checkbox)
 {
 	Q_ASSERT(m_rotationGroup);
 	if (!checkbox) {
-		QRadioButton* thisButton = new QRadioButton(RandRScreen::rotationName(thisRotation), m_rotationGroup);
+		TQRadioButton* thisButton = new TQRadioButton(RandRScreen::rotationName(thisRotation), m_rotationGroup);
 		thisButton->setEnabled(thisRotation & currentScreen()->rotations());
-		connect(thisButton, SIGNAL(clicked()), SLOT(slotRotationChanged()));
+		connect(thisButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotRotationChanged()));
 	} else {
-		QCheckBox* thisButton = new QCheckBox(RandRScreen::rotationName(thisRotation), m_rotationGroup);
+		TQCheckBox* thisButton = new TQCheckBox(RandRScreen::rotationName(thisRotation), m_rotationGroup);
 		thisButton->setEnabled(thisRotation & currentScreen()->rotations());
-		connect(thisButton, SIGNAL(clicked()), SLOT(slotRotationChanged()));
+		connect(thisButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotRotationChanged()));
 	}
 }
 
@@ -243,11 +243,11 @@ void KRandRModule::populateRefreshRates()
 {
 	m_refreshRates->clear();
 
-	QStringList rr = currentScreen()->refreshRates(currentScreen()->proposedSize());
+	TQStringList rr = currentScreen()->refreshRates(currentScreen()->proposedSize());
 
 	m_refreshRates->setEnabled(rr.count());
 
-	for (QStringList::Iterator it = rr.begin(); it != rr.end(); ++it)
+	for (TQStringList::Iterator it = rr.begin(); it != rr.end(); ++it)
 		m_refreshRates->insertItem(*it);
 }
 

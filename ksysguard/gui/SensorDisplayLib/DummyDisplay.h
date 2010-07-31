@@ -31,14 +31,14 @@ class DummyDisplay : public KSGRD::SensorDisplay
   Q_OBJECT
 
   public:
-    DummyDisplay( QWidget* parent = 0, const char* name = 0,
-                  const QString& = QString::null, double min = 0,
+    DummyDisplay( TQWidget* parent = 0, const char* name = 0,
+                  const TQString& = TQString::null, double min = 0,
                   double max = 0 );
     virtual ~DummyDisplay() {}
 
-    void resizeEvent( QResizeEvent* );
+    void resizeEvent( TQResizeEvent* );
 
-    virtual bool eventFilter( QObject*, QEvent* );
+    virtual bool eventFilter( TQObject*, TQEvent* );
 };
 
 #endif

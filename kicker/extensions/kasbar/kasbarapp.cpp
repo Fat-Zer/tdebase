@@ -104,7 +104,7 @@ int main( int argc, char **argv )
 
       kastasker->readConfig();
       kastasker->move( kastasker->detachedPosition() );
-      kastasker->connect( kastasker->resources(), SIGNAL(changed()), SLOT(readConfig()) );
+      kastasker->connect( kastasker->resources(), TQT_SIGNAL(changed()), TQT_SLOT(readConfig()) );
       kastasker->refreshAll();
   }
 
@@ -118,7 +118,7 @@ int main( int argc, char **argv )
 
   KApplication::kApplication()->dcopClient()->registerAs( "kasbar" );
 
-  app.connect( &app, SIGNAL( lastWindowClosed() ), SLOT(quit()) );
+  app.connect( &app, TQT_SIGNAL( lastWindowClosed() ), TQT_SLOT(quit()) );
 
   return app.exec();
 }

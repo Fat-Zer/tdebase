@@ -25,17 +25,17 @@
 #include <ksgrd/SensorManager.h>
 #include <ksgrd/StyleEngine.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "SensorLogger.moc"
 #include "SensorLoggerSettings.h"
 
-SLListViewItem::SLListViewItem(QListView *parent)
-	: QListViewItem(parent)
+SLListViewItem::SLListViewItem(TQListView *parent)
+	: TQListViewItem(parent)
 {
 }
 
-LogSensor::LogSensor(QListView *parent)
+LogSensor::LogSensor(TQListView *parent)
 	: timerID( NONE ), lowerLimitActive( 0 ), upperLimitActive( 0 ),
 	  lowerLimit( 0 ), upperLimit( 0 )
 {
@@ -78,15 +78,15 @@ LogSensor::stopLogging(void)
 }
 
 void
-LogSensor::timerEvent(QTimerEvent*)
+LogSensor::timerEvent(TQTimerEvent*)
 {
 	KSGRD::SensorMgr->sendRequest(hostName, sensorName, (KSGRD::SensorClient*) this, 42);
 }
 
 void
-LogSensor::answerReceived(int id, const QString& answer)
+LogSensor::answerReceived(int id, const TQString& answer)
 {
-	QFile logFile(fileName);
+	TQFile logFile(fileName);
 
 	if (!logFile.open(IO_ReadWrite | IO_Append))
 	{
@@ -97,7 +97,7 @@ LogSensor::answerReceived(int id, const QString& answer)
 	switch (id)
 	{
 		case 42: {
-			QTextStream stream(&logFile);
+			TQTextStream stream(&logFile);
 			double value = answer.toDouble();
 
 			if (lowerLimitActive && value < lowerLimit)
@@ -106,7 +106,7 @@ LogSensor::answerReceived(int id, const QString& answer)
 				lowerLimitActive = false;
 				lvi->setTextColor(monitor->colorGroup().foreground());
 				lvi->repaint();
-				KNotifyClient::event(monitor->winId(), "sensor_alarm", QString("sensor '%1' at '%2' reached lower limit").arg(sensorName).arg(hostName));
+				KNotifyClient::event(monitor->winId(), "sensor_alarm", TQString("sensor '%1' at '%2' reached lower limit").arg(sensorName).arg(hostName));
 				timerOn();
 			} else if (upperLimitActive && value > upperLimit)
 			{
@@ -114,23 +114,23 @@ LogSensor::answerReceived(int id, const QString& answer)
 				upperLimitActive = false;
 				lvi->setTextColor(monitor->colorGroup().foreground());
 				lvi->repaint();
-				KNotifyClient::event(monitor->winId(), "sensor_alarm", QString("sensor '%1' at '%2' reached upper limit").arg(sensorName).arg(hostName));
+				KNotifyClient::event(monitor->winId(), "sensor_alarm", TQString("sensor '%1' at '%2' reached upper limit").arg(sensorName).arg(hostName));
 				timerOn();
 			}
-			QDate date = QDateTime::currentDateTime().date();
-			QTime time = QDateTime::currentDateTime().time();
+			TQDate date = TQDateTime::currentDateTime().date();
+			TQTime time = TQDateTime::currentDateTime().time();
 
-			stream << QString("%1 %2 %3 %4 %5: %6\n").arg(date.shortMonthName(date.month())).arg(date.day()).arg(time.toString()).arg(hostName).arg(sensorName).arg(value);
+			stream << TQString("%1 %2 %3 %4 %5: %6\n").arg(date.shortMonthName(date.month())).arg(date.day()).arg(time.toString()).arg(hostName).arg(sensorName).arg(value);
 		}
 	}
 
 	logFile.close();
 }
 
-SensorLogger::SensorLogger(QWidget *parent, const char *name, const QString& title)
+SensorLogger::SensorLogger(TQWidget *parent, const char *name, const TQString& title)
 	: KSGRD::SensorDisplay(parent, name, title)
 {
-	monitor = new QListView(this, "monitor");
+	monitor = new TQListView(this, "monitor");
 	Q_CHECK_PTR(monitor);
 
 	monitor->addColumn(i18n("Logging"));
@@ -139,14 +139,14 @@ SensorLogger::SensorLogger(QWidget *parent, const char *name, const QString& tit
 	monitor->addColumn(i18n("Host Name"));
 	monitor->addColumn(i18n("Log File"));
 
-	QColorGroup cgroup = monitor->colorGroup();
-	cgroup.setColor(QColorGroup::Text, KSGRD::Style->firstForegroundColor());
-	cgroup.setColor(QColorGroup::Base, KSGRD::Style->backgroundColor());
-	cgroup.setColor(QColorGroup::Foreground, KSGRD::Style->alarmColor());
-	monitor->setPalette(QPalette(cgroup, cgroup, cgroup));
-	monitor->setSelectionMode(QListView::NoSelection);
+	TQColorGroup cgroup = monitor->colorGroup();
+	cgroup.setColor(TQColorGroup::Text, KSGRD::Style->firstForegroundColor());
+	cgroup.setColor(TQColorGroup::Base, KSGRD::Style->backgroundColor());
+	cgroup.setColor(TQColorGroup::Foreground, KSGRD::Style->alarmColor());
+	monitor->setPalette(TQPalette(cgroup, cgroup, cgroup));
+	monitor->setSelectionMode(TQListView::NoSelection);
 
-	connect(monitor, SIGNAL(rightButtonClicked(QListViewItem*, const QPoint&, int)), this, SLOT(RMBClicked(QListViewItem*, const QPoint&, int)));
+	connect(monitor, TQT_SIGNAL(rightButtonClicked(TQListViewItem*, const TQPoint&, int)), this, TQT_SLOT(RMBClicked(TQListViewItem*, const TQPoint&, int)));
 
 	setTitle(i18n("Sensor Logger"));
 
@@ -163,7 +163,7 @@ SensorLogger::~SensorLogger(void)
 }
 
 bool
-SensorLogger::addSensor(const QString& hostName, const QString& sensorName, const QString& sensorType, const QString&)
+SensorLogger::addSensor(const TQString& hostName, const TQString& sensorName, const TQString& sensorType, const TQString&)
 {
 	if (sensorType != "integer" && sensorType != "float")
 		return (false);
@@ -232,12 +232,12 @@ SensorLogger::editSensor(LogSensor* sensor)
 void
 SensorLogger::configureSettings()
 {
-	QColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->colorGroup();
 
 	sls = new SensorLoggerSettings(this, "SensorLoggerSettings");
 	Q_CHECK_PTR(sls);
 
-	connect( sls, SIGNAL( applyClicked() ), SLOT( applySettings() ) );
+	connect( sls, TQT_SIGNAL( applyClicked() ), TQT_SLOT( applySettings() ) );
 
 	sls->setTitle(title());
 	sls->setForegroundColor(cgroup.text());
@@ -254,14 +254,14 @@ SensorLogger::configureSettings()
 void
 SensorLogger::applySettings()
 {
-	QColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->colorGroup();
 
 	setTitle(sls->title());
 
-	cgroup.setColor(QColorGroup::Text, sls->foregroundColor());
-	cgroup.setColor(QColorGroup::Base, sls->backgroundColor());
-	cgroup.setColor(QColorGroup::Foreground, sls->alarmColor());
-	monitor->setPalette(QPalette(cgroup, cgroup, cgroup));
+	cgroup.setColor(TQColorGroup::Text, sls->foregroundColor());
+	cgroup.setColor(TQColorGroup::Base, sls->backgroundColor());
+	cgroup.setColor(TQColorGroup::Foreground, sls->alarmColor());
+	monitor->setPalette(TQPalette(cgroup, cgroup, cgroup));
 
 	setModified(true);
 }
@@ -269,31 +269,31 @@ SensorLogger::applySettings()
 void
 SensorLogger::applyStyle(void)
 {
-	QColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->colorGroup();
 
-	cgroup.setColor(QColorGroup::Text, KSGRD::Style->firstForegroundColor());
-	cgroup.setColor(QColorGroup::Base, KSGRD::Style->backgroundColor());
-	cgroup.setColor(QColorGroup::Foreground, KSGRD::Style->alarmColor());
-	monitor->setPalette(QPalette(cgroup, cgroup, cgroup));
+	cgroup.setColor(TQColorGroup::Text, KSGRD::Style->firstForegroundColor());
+	cgroup.setColor(TQColorGroup::Base, KSGRD::Style->backgroundColor());
+	cgroup.setColor(TQColorGroup::Foreground, KSGRD::Style->alarmColor());
+	monitor->setPalette(TQPalette(cgroup, cgroup, cgroup));
 
 	setModified(true);
 }
 
 bool
-SensorLogger::restoreSettings(QDomElement& element)
+SensorLogger::restoreSettings(TQDomElement& element)
 {
-	QColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->colorGroup();
 
-	cgroup.setColor(QColorGroup::Text, restoreColor(element, "textColor", Qt::green));
-	cgroup.setColor(QColorGroup::Base, restoreColor(element, "backgroundColor", Qt::black));
-	cgroup.setColor(QColorGroup::Foreground, restoreColor(element, "alarmColor", Qt::red));
-	monitor->setPalette(QPalette(cgroup, cgroup, cgroup));
+	cgroup.setColor(TQColorGroup::Text, restoreColor(element, "textColor", Qt::green));
+	cgroup.setColor(TQColorGroup::Base, restoreColor(element, "backgroundColor", Qt::black));
+	cgroup.setColor(TQColorGroup::Foreground, restoreColor(element, "alarmColor", Qt::red));
+	monitor->setPalette(TQPalette(cgroup, cgroup, cgroup));
 
 	logSensors.clear();
 
-	QDomNodeList dnList = element.elementsByTagName("logsensors");
+	TQDomNodeList dnList = element.elementsByTagName("logsensors");
 	for (uint i = 0; i < dnList.count(); i++) {
-		QDomElement element = dnList.item(i).toElement();
+		TQDomElement element = dnList.item(i).toElement();
 		LogSensor* sensor = new LogSensor(monitor);
 		Q_CHECK_PTR(sensor);
 
@@ -317,7 +317,7 @@ SensorLogger::restoreSettings(QDomElement& element)
 }
 
 bool
-SensorLogger::saveSettings(QDomDocument& doc, QDomElement& element, bool save)
+SensorLogger::saveSettings(TQDomDocument& doc, TQDomElement& element, bool save)
 {
 	saveColor(element, "textColor", monitor->colorGroup().text());
 	saveColor(element, "backgroundColor", monitor->colorGroup().base());
@@ -325,15 +325,15 @@ SensorLogger::saveSettings(QDomDocument& doc, QDomElement& element, bool save)
 
 	for (LogSensor* sensor = logSensors.first(); sensor != 0; sensor = logSensors.next())
 	{
-		QDomElement log = doc.createElement("logsensors");
+		TQDomElement log = doc.createElement("logsensors");
 		log.setAttribute("sensorName", sensor->getSensorName());
 		log.setAttribute("hostName", sensor->getHostName());
 		log.setAttribute("fileName", sensor->getFileName());
 		log.setAttribute("timerInterval", sensor->getTimerInterval());
-		log.setAttribute("lowerLimitActive", QString("%1").arg(sensor->getLowerLimitActive()));
-		log.setAttribute("lowerLimit", QString("%1").arg(sensor->getLowerLimit()));
-		log.setAttribute("upperLimitActive", QString("%1").arg(sensor->getUpperLimitActive()));
-		log.setAttribute("upperLimit", QString("%1").arg(sensor->getUpperLimit()));
+		log.setAttribute("lowerLimitActive", TQString("%1").arg(sensor->getLowerLimitActive()));
+		log.setAttribute("lowerLimit", TQString("%1").arg(sensor->getLowerLimit()));
+		log.setAttribute("upperLimitActive", TQString("%1").arg(sensor->getUpperLimitActive()));
+		log.setAttribute("upperLimit", TQString("%1").arg(sensor->getUpperLimit()));
 
 		element.appendChild(log);
 	}
@@ -347,20 +347,20 @@ SensorLogger::saveSettings(QDomDocument& doc, QDomElement& element, bool save)
 }
 
 void
-SensorLogger::answerReceived(int, const QString&)
+SensorLogger::answerReceived(int, const TQString&)
 {
  // we do not use this, since all answers are received by the LogSensors
 }
 
 void
-SensorLogger::resizeEvent(QResizeEvent*)
+SensorLogger::resizeEvent(TQResizeEvent*)
 {
 	frame()->setGeometry(0, 0, this->width(), this->height());
 	monitor->setGeometry(10, 20, this->width() - 20, this->height() - 30);
 }
 
 LogSensor*
-SensorLogger::getLogSensor(QListViewItem* item)
+SensorLogger::getLogSensor(TQListViewItem* item)
 {
 	for (LogSensor* sensor = logSensors.first(); sensor != 0; sensor = logSensors.next())
 	{
@@ -373,9 +373,9 @@ SensorLogger::getLogSensor(QListViewItem* item)
 }
 
 void
-SensorLogger::RMBClicked(QListViewItem* item, const QPoint& point, int)
+SensorLogger::RMBClicked(TQListViewItem* item, const TQPoint& point, int)
 {
-	QPopupMenu pm;
+	TQPopupMenu pm;
 	if (hasSettingsDialog())
 		pm.insertItem(i18n("&Properties"), 1);
 	pm.insertItem(i18n("&Remove Display"), 2);
@@ -404,7 +404,7 @@ SensorLogger::RMBClicked(QListViewItem* item, const QPoint& point, int)
 		configureSettings();
 		break;
 	case 2: {
-		QCustomEvent* ev = new QCustomEvent(QEvent::User);
+		TQCustomEvent* ev = new TQCustomEvent(TQEvent::User);
 		ev->setData(this);
 		kapp->postEvent(parent(), ev);
 		break;

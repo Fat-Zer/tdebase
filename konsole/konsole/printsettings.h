@@ -29,11 +29,11 @@ class PrintSettings : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	PrintSettings(QWidget *parent = 0, const char *name = 0);
+	PrintSettings(TQWidget *parent = 0, const char *name = 0);
 	~PrintSettings();
 
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-	void setOptions(const QMap<QString,QString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
 
 private:
 	QCheckBox	*m_printfriendly;

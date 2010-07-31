@@ -21,7 +21,7 @@
 #define _KONQUEROR_PRELOADER_H
 
 #include <kdedmodule.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 class KonqyPreloader
     : public KDEDModule
@@ -29,30 +29,30 @@ class KonqyPreloader
     Q_OBJECT
     K_DCOP
     public:
-        KonqyPreloader( const QCString& obj );
+        KonqyPreloader( const TQCString& obj );
         virtual ~KonqyPreloader();
     k_dcop:
-        bool registerPreloadedKonqy( QCString id, int screen );
-        QCString getPreloadedKonqy( int screen );
-        ASYNC unregisterPreloadedKonqy( QCString id );
+        bool registerPreloadedKonqy( TQCString id, int screen );
+        TQCString getPreloadedKonqy( int screen );
+        ASYNC unregisterPreloadedKonqy( TQCString id );
         void reconfigure();
         void unloadAllPreloaded();
     private slots:
-        void appRemoved( const QCString& id );
+        void appRemoved( const TQCString& id );
 	void checkAlwaysPreloaded();
     private:
         void updateCount();
         struct KonqyData
             {
             KonqyData() {}; // for QValueList
-            KonqyData( const QCString& id_P, int screen_P )
+            KonqyData( const TQCString& id_P, int screen_P )
                 : id( id_P ), screen( screen_P ) {}
-            QCString id;
+            TQCString id;
             int screen;
             };
-        typedef QValueList< KonqyData > InstancesList;
+        typedef TQValueList< KonqyData > InstancesList;
         InstancesList instances;
-	QTimer check_always_preloaded_timer;
+	TQTimer check_always_preloaded_timer;
     };
 
 #endif

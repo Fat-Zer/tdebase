@@ -31,7 +31,7 @@
 
 extern "C"
 {
-	KDE_EXPORT KPanelApplet* init( QWidget *parent, const QString& configFile)
+	KDE_EXPORT KPanelApplet* init( TQWidget *parent, const TQString& configFile)
 	{
 		KGlobal::locale()->insertCatalogue("trashapplet");
 		return new TrashApplet(configFile, KPanelApplet::Normal,
@@ -39,7 +39,7 @@ extern "C"
 	}
 }
 
-TrashApplet::TrashApplet(const QString& configFile, Type type, int actions, QWidget *parent, const char *name)
+TrashApplet::TrashApplet(const TQString& configFile, Type type, int actions, TQWidget *parent, const char *name)
 	: KPanelApplet(configFile, type, actions, parent, name), mButton(0)
 {
 	mButton = new TrashButton(this);
@@ -53,12 +53,12 @@ TrashApplet::TrashApplet(const QString& configFile, Type type, int actions, QWid
 
 	mpDirLister = new KDirLister();
 
-	connect( mpDirLister, SIGNAL( clear() ),
-	         this, SLOT( slotClear() ) );
-	connect( mpDirLister, SIGNAL( completed() ),
-	         this, SLOT( slotCompleted() ) );
-	connect( mpDirLister, SIGNAL( deleteItem( KFileItem * ) ),
-	         this, SLOT( slotDeleteItem( KFileItem * ) ) );
+	connect( mpDirLister, TQT_SIGNAL( clear() ),
+	         this, TQT_SLOT( slotClear() ) );
+	connect( mpDirLister, TQT_SIGNAL( completed() ),
+	         this, TQT_SLOT( slotCompleted() ) );
+	connect( mpDirLister, TQT_SIGNAL( deleteItem( KFileItem * ) ),
+	         this, TQT_SLOT( slotDeleteItem( KFileItem * ) ) );
 
 	mpDirLister->openURL("trash:/");
 }
@@ -67,8 +67,8 @@ TrashApplet::~TrashApplet()
 {
 	// disconnect the dir lister before quitting so as not to crash
 	// on kicker exit
-	disconnect( mpDirLister, SIGNAL( clear() ),
-	            this, SLOT( slotClear() ) );
+	disconnect( mpDirLister, TQT_SIGNAL( clear() ),
+	            this, TQT_SLOT( slotClear() ) );
 	delete mpDirLister;
 	KGlobal::locale()->removeCatalogue("trashapplet");
 }
@@ -111,7 +111,7 @@ int TrashApplet::heightForWidth( int width ) const
 	return mButton->heightForWidth( width );
 }
 
-void TrashApplet::resizeEvent( QResizeEvent * )
+void TrashApplet::resizeEvent( TQResizeEvent * )
 {
 	if (!mButton)
 	{

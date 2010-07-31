@@ -21,10 +21,10 @@
 #define _KATE_MW_MODONHD_DIALOG_H_
 
 #include <kdialogbase.h>
-#include <qptrvector.h>
+#include <tqptrvector.h>
 #include <kate/document.h>
 
-typedef  QPtrVector<Kate::Document> DocVector;
+typedef  TQPtrVector<Kate::Document> DocVector;
 class KProcIO;
 class KProcess;
 /**
@@ -35,7 +35,7 @@ class KateMwModOnHdDialog : public KDialogBase
 {
   Q_OBJECT
   public:
-    KateMwModOnHdDialog( DocVector docs, QWidget *parent=0, const char *name=0 );
+    KateMwModOnHdDialog( DocVector docs, TQWidget *parent=0, const char *name=0 );
     ~KateMwModOnHdDialog();
 
   protected slots:
@@ -53,7 +53,7 @@ class KateMwModOnHdDialog : public KDialogBase
     enum Action { Ignore, Overwrite, Reload };
     void handleSelected( int action );
     class KListView *lvDocuments;
-    class QPushButton *btnDiff;
+    class TQPushButton *btnDiff;
     class KTempFile *m_tmpfile;
 };
 

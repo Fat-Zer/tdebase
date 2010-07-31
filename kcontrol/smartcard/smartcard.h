@@ -44,7 +44,7 @@ class KSmartcardConfig : public KCModule, public DCOPObject
 
 
 public:
-  KSmartcardConfig(QWidget *parent = 0L, const char *name = 0L);
+  KSmartcardConfig(TQWidget *parent = 0L, const char *name = 0L);
   virtual ~KSmartcardConfig();
 
   SmartcardBase *base;
@@ -55,19 +55,19 @@ public:
   void defaults();
 
   int buttons();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
  k_dcop:
 
 
- void updateReadersState (QString readerName,
+ void updateReadersState (TQString readerName,
                           bool isCardPresent,
-                          QString atr);
- void loadReadersTab (QStringList lr);
+                          TQString atr);
+ void loadReadersTab (TQStringList lr);
 
   private slots:
 
-  void slotShowPopup(QListViewItem * item ,const QPoint & _point,int i);
+  void slotShowPopup(TQListViewItem * item ,const TQPoint & _point,int i);
   void slotLaunchChooser();
 
 
@@ -80,7 +80,7 @@ private:
   KPopupMenu * _popUpKardChooser;
   
   void getSupportingModule( KListViewItem * ant,
-                            QString & cardATR) const ;
+                            TQString & cardATR) const ;
 
 
 };

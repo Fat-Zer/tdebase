@@ -25,7 +25,7 @@
 #include <dcopclient.h>
 #include <kdebug.h>
 
-KonqViewIface::KonqViewIface( KonqView * view, const QCString& name )
+KonqViewIface::KonqViewIface( KonqView * view, const TQCString& name )
     : DCOPObject( name ), m_pView ( view )
 {
 }
@@ -34,14 +34,14 @@ KonqViewIface::~KonqViewIface()
 {
 }
 
-void KonqViewIface::openURL( QString url, const QString & locationBarURL, const QString & nameFilter )
+void KonqViewIface::openURL( TQString url, const TQString & locationBarURL, const TQString & nameFilter )
 {
   KURL u(url);
   m_pView->openURL( u, locationBarURL, nameFilter );
 }
 
-bool KonqViewIface::changeViewMode( const QString &serviceType,
-                                    const QString &serviceName )
+bool KonqViewIface::changeViewMode( const TQString &serviceType,
+                                    const TQString &serviceName )
 {
   return m_pView->changeViewMode( serviceType, serviceName );
 }
@@ -57,22 +57,22 @@ void KonqViewIface::stop()
   m_pView->stop();
 }
 
-QString KonqViewIface::url()
+TQString KonqViewIface::url()
 {
   return m_pView->url().url();
 }
 
-QString KonqViewIface::locationBarURL()
+TQString KonqViewIface::locationBarURL()
 {
   return m_pView->locationBarURL();
 }
 
-QString KonqViewIface::serviceType()
+TQString KonqViewIface::serviceType()
 {
   return m_pView->serviceType();
 }
 
-QStringList KonqViewIface::serviceTypes()
+TQStringList KonqViewIface::serviceTypes()
 {
   return m_pView->serviceTypes();
 }
@@ -86,9 +86,9 @@ DCOPRef KonqViewIface::part()
   if ( !part )
     return res;
 
-  QVariant dcopProperty = part->property( "dcopObjectId" );
+  TQVariant dcopProperty = part->property( "dcopObjectId" );
 
-  if ( dcopProperty.type() != QVariant::CString )
+  if ( dcopProperty.type() != TQVariant::CString )
     return res;
 
   res.setRef( kapp->dcopClient()->appId(), dcopProperty.toCString() );

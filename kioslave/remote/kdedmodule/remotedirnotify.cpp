@@ -26,14 +26,14 @@
 
 #include <kdirnotify_stub.h>
 
-#include <qdir.h>
+#include <tqdir.h>
 
 RemoteDirNotify::RemoteDirNotify()
 {
 	KGlobal::dirs()->addResourceType("remote_entries",
 		KStandardDirs::kde_default("data") + "remoteview");
 
-	QString path = KGlobal::dirs()->saveLocation("remote_entries");
+	TQString path = KGlobal::dirs()->saveLocation("remote_entries");
 	m_baseURL.setPath(path);
 }
 
@@ -42,7 +42,7 @@ KURL RemoteDirNotify::toRemoteURL(const KURL &url)
 	kdDebug(1220) << "RemoteDirNotify::toRemoteURL(" << url << ")" << endl;
 	if ( m_baseURL.isParentOf(url) )
 	{
-		QString path = KURL::relativePath(m_baseURL.path(),
+		TQString path = KURL::relativePath(m_baseURL.path(),
 						  url.path());
 		KURL result("remote:/"+path);
 		result.cleanPath();

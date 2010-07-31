@@ -24,14 +24,14 @@
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include <kdebug.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "konsole.h"
 #include "konsolebookmarkmenu.h"
 #include "konsolebookmarkhandler.h"
 
 KonsoleBookmarkHandler::KonsoleBookmarkHandler( Konsole *konsole, bool toplevel )
-    : QObject( konsole, "KonsoleBookmarkHandler" ),
+    : TQObject( konsole, "KonsoleBookmarkHandler" ),
       KBookmarkOwner(),
       m_konsole( konsole )
 {
@@ -39,10 +39,10 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( Konsole *konsole, bool toplevel 
 
     // KDE3.5 - Konsole's bookmarks are now in konsole/bookmarks.xml
     // TODO: Consider removing for KDE4
-    QString new_bm_file = locateLocal( "data", "konsole/bookmarks.xml" );
-    if ( !QFile::exists( new_bm_file ) ) {
-        QString old_bm_file = locateLocal( "data", "kfile/bookmarks.xml" );
-        if ( QFile::exists( old_bm_file ) )
+    TQString new_bm_file = locateLocal( "data", "konsole/bookmarks.xml" );
+    if ( !TQFile::exists( new_bm_file ) ) {
+        TQString old_bm_file = locateLocal( "data", "kfile/bookmarks.xml" );
+        if ( TQFile::exists( old_bm_file ) )
             // We want sync here... 
             if ( !KIO::NetAccess::copy( KURL( old_bm_file ), 
                                    KURL ( new_bm_file ), 0 ) ) {
@@ -59,8 +59,8 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( Konsole *konsole, bool toplevel 
     manager->setUpdate( true );
     manager->setShowNSBookmarks( false );
     
-    connect( manager, SIGNAL( changed(const QString &, const QString &) ),
-             SLOT( slotBookmarksChanged(const QString &, const QString &) ) );
+    connect( manager, TQT_SIGNAL( changed(const TQString &, const TQString &) ),
+             TQT_SLOT( slotBookmarksChanged(const TQString &, const TQString &) ) );
 
     if (toplevel) {
         m_bookmarkMenu = new KonsoleBookmarkMenu( manager, this, m_menu,
@@ -77,25 +77,25 @@ KonsoleBookmarkHandler::~KonsoleBookmarkHandler()
     delete m_bookmarkMenu;
 }
 
-QString KonsoleBookmarkHandler::currentURL() const
+TQString KonsoleBookmarkHandler::currentURL() const
 {
     return m_konsole->baseURL().prettyURL();
 }
 
-QString KonsoleBookmarkHandler::currentTitle() const
+TQString KonsoleBookmarkHandler::currentTitle() const
 {
     const KURL &u = m_konsole->baseURL();
     if (u.isLocalFile())
     {
-       QString path = u.path();
+       TQString path = u.path();
        path = KShell::tildeExpand(path);
        return path;
     }
     return u.prettyURL();
 }
 
-void KonsoleBookmarkHandler::slotBookmarksChanged( const QString &,
-                                                   const QString &)
+void KonsoleBookmarkHandler::slotBookmarksChanged( const TQString &,
+                                                   const TQString &)
 {
     // This is called when someone changes bookmarks in konsole....
     m_bookmarkMenu->slotBookmarksChanged("");

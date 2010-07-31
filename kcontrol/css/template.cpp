@@ -1,24 +1,24 @@
 
 
-#include <qfile.h>
+#include <tqfile.h>
 
 
 #include "template.h"
 
 
-bool CSSTemplate::expand(QString destname, const QMap<QString,QString> &dict)
+bool CSSTemplate::expand(TQString destname, const TQMap<TQString,TQString> &dict)
 {
-  QFile inf(_filename);
+  TQFile inf(_filename);
   if (!inf.open(IO_ReadOnly))
     return false;
-  QTextStream is(&inf);
+  TQTextStream is(&inf);
   
-  QFile outf(destname);
+  TQFile outf(destname);
   if (!outf.open(IO_WriteOnly))
     return false;
-  QTextStream os(&outf);
+  TQTextStream os(&outf);
 
-  QString line;
+  TQString line;
   while (!is.eof())
     {
       line = is.readLine();
@@ -29,8 +29,8 @@ bool CSSTemplate::expand(QString destname, const QMap<QString,QString> &dict)
 	  int end = line.find('$', start+1);
 	  if (end >= 0)
             {
-	      QString expr = line.mid(start+1, end-start-1);
-	      QString res = dict[expr];
+	      TQString expr = line.mid(start+1, end-start-1);
+	      TQString res = dict[expr];
 
 	      line.replace(start, end-start+1, res);
 	    }

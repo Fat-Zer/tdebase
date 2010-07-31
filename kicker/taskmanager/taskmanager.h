@@ -27,15 +27,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <sys/types.h>
 
-#include <qobject.h>
-#include <qpixmap.h>
-#include <qpoint.h>
-#include <qptrlist.h>
-#include <qpixmap.h>
-#include <qdragobject.h>
-#include <qrect.h>
-#include <qvaluelist.h>
-#include <qvaluevector.h>
+#include <tqobject.h>
+#include <tqpixmap.h>
+#include <tqpoint.h>
+#include <tqptrlist.h>
+#include <tqpixmap.h>
+#include <tqdragobject.h>
+#include <tqrect.h>
+#include <tqvaluelist.h>
+#include <tqvaluevector.h>
 
 #include <ksharedptr.h>
 #include <kstartupinfo.h>
@@ -60,7 +60,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class KWinModule;
 class TaskManager;
 
-typedef QValueList<WId> WindowList;
+typedef TQValueList<WId> WindowList;
 
 /**
  * A dynamic interface to a task (main window).
@@ -68,16 +68,16 @@ typedef QValueList<WId> WindowList;
  * @see TaskManager
  * @see KWinModule
  */
-class KDE_EXPORT Task: public QObject, public KShared
+class KDE_EXPORT Task: public TQObject, public KShared
 {
     Q_OBJECT
-    Q_PROPERTY( QString visibleIconicName READ visibleIconicName )
-    Q_PROPERTY( QString iconicName READ iconicName )
-    Q_PROPERTY( QString visibleIconicNameWithState READ visibleIconicNameWithState )
-    Q_PROPERTY( QString visibleName READ visibleName )
-    Q_PROPERTY( QString name READ name )
-    Q_PROPERTY( QString visibleNameWithState READ visibleNameWithState )
-    Q_PROPERTY( QPixmap pixmap READ pixmap )
+    Q_PROPERTY( TQString visibleIconicName READ visibleIconicName )
+    Q_PROPERTY( TQString iconicName READ iconicName )
+    Q_PROPERTY( TQString visibleIconicNameWithState READ visibleIconicNameWithState )
+    Q_PROPERTY( TQString visibleName READ visibleName )
+    Q_PROPERTY( TQString name READ name )
+    Q_PROPERTY( TQString visibleNameWithState READ visibleNameWithState )
+    Q_PROPERTY( TQPixmap pixmap READ pixmap )
     Q_PROPERTY( bool maximized READ isMaximized )
     Q_PROPERTY( bool minimized READ isMinimized )
     // KDE4 deprecated
@@ -92,33 +92,33 @@ class KDE_EXPORT Task: public QObject, public KShared
     Q_PROPERTY( int desktop READ desktop )
     Q_PROPERTY( double thumbnailSize READ thumbnailSize WRITE setThumbnailSize )
     Q_PROPERTY( bool hasThumbnail READ hasThumbnail )
-    Q_PROPERTY( QPixmap thumbnail READ thumbnail )
+    Q_PROPERTY( TQPixmap thumbnail READ thumbnail )
 
 public:
     typedef KSharedPtr<Task> Ptr;
-    typedef QValueVector<Task::Ptr> List;
-    typedef QMap<WId, Task::Ptr> Dict;
+    typedef TQValueVector<Task::Ptr> List;
+    typedef TQMap<WId, Task::Ptr> Dict;
 
-    Task(WId win, QObject *parent, const char *name = 0);
+    Task(WId win, TQObject *parent, const char *name = 0);
     virtual ~Task();
 
     WId window() const { return _win; }
     KWin::WindowInfo info() const { return _info; }
 
 #if 0 // this would use (_NET_)WM_ICON_NAME, which is shorter, but can be different from window name
-    QString visibleIconicName() const { return _info.visibleIconName(); }
-    QString visibleIconicNameWithState() const { return _info.visibleIconNameWithState(); }
-    QString iconicName() const { return _info.iconName(); }
+    TQString visibleIconicName() const { return _info.visibleIconName(); }
+    TQString visibleIconicNameWithState() const { return _info.visibleIconNameWithState(); }
+    TQString iconicName() const { return _info.iconName(); }
 #else
-    QString visibleIconicName() const { return _info.visibleName(); }
-    QString visibleIconicNameWithState() const { return _info.visibleNameWithState(); }
-    QString iconicName() const { return _info.name(); }
+    TQString visibleIconicName() const { return _info.visibleName(); }
+    TQString visibleIconicNameWithState() const { return _info.visibleNameWithState(); }
+    TQString iconicName() const { return _info.name(); }
 #endif
-    QString visibleName() const { return _info.visibleName(); }
-    QString visibleNameWithState() const { return _info.visibleNameWithState(); }
-    QString name() const { return _info.name(); }
-    QString className();
-    QString classClass();
+    TQString visibleName() const { return _info.visibleName(); }
+    TQString visibleNameWithState() const { return _info.visibleNameWithState(); }
+    TQString name() const { return _info.name(); }
+    TQString className();
+    TQString classClass();
 
     /**
      * A list of the window ids of all transient windows (dialogs) associated
@@ -131,7 +131,7 @@ public:
      * only fall back to a static icon if there is no icon of any size in
      * the WM hints.
      */
-    QPixmap pixmap() const { return _pixmap; }
+    TQPixmap pixmap() const { return _pixmap; }
 
     /**
      * Returns the best icon for any of the KIcon::StdSizes. If there is no
@@ -140,14 +140,14 @@ public:
      *
      * <pre>
      *   bool gotStaticIcon;
-     *   QPixmap icon = myTask->icon( KIcon::SizeMedium, gotStaticIcon );
+     *   TQPixmap icon = myTask->icon( KIcon::SizeMedium, gotStaticIcon );
      * </pre>
      *
      * @param size Any of the constants in KIcon::StdSizes.
      * @param isStaticIcon Set to true if KIconLoader was used, false otherwise.
      * @see KIcon
      */
-    QPixmap bestIcon( int size, bool &isStaticIcon );
+    TQPixmap bestIcon( int size, bool &isStaticIcon );
 
     /**
      * Tries to find an icon for the task with the specified size. If there
@@ -158,13 +158,13 @@ public:
      * parameters will only query the NET properties if the icon has changed or
      * none was found.
      */
-    QPixmap icon( int width, int height, bool allowResize = false );
+    TQPixmap icon( int width, int height, bool allowResize = false );
 
     /**
      * Returns true iff the windows with the specified ids should be grouped
      * together in the task list.
      */
-    static bool idMatch(const QString &, const QString &);
+    static bool idMatch(const TQString &, const TQString &);
 
     // state
 
@@ -264,12 +264,12 @@ public:
     /**
      * Returns the geometry for this window
      */
-    QRect geometry() const { return _info.geometry(); }
+    TQRect geometry() const { return _info.geometry(); }
 
     /**
      * Returns the geometry for the from of this window
      */
-    QRect frameGeometry() const { return _info.frameGeometry(); }
+    TQRect frameGeometry() const { return _info.frameGeometry(); }
 
     // internal
 
@@ -312,9 +312,9 @@ public:
      * Returns the thumbnail for this task (or a null image if there is
      * none).
      */
-    const QPixmap &thumbnail() const { return _thumb; }
+    const TQPixmap &thumbnail() const { return _thumb; }
 
-    QPixmap thumbnail(int maxDimension);
+    TQPixmap thumbnail(int maxDimension);
 
     void updateWindowPixmap();
 
@@ -415,7 +415,7 @@ public slots:
      * task will be displayed when iconised. It is used, for example by the
      * KWin inconify animation.
      */
-    void publishIconGeometry(QRect);
+    void publishIconGeometry(TQRect);
 
     /**
      * Tells the task to generate a new thumbnail. When the thumbnail is
@@ -460,7 +460,7 @@ private:
     bool                _active;
     WId                 _win;
     WId                 m_frameId;
-    QPixmap             _pixmap;
+    TQPixmap             _pixmap;
     KWin::WindowInfo    _info;
     WindowList          _transients;
     WindowList          _transients_demanding_attention;
@@ -468,12 +468,12 @@ private:
     int                 _lastWidth;
     int                 _lastHeight;
     bool                _lastResize;
-    QPixmap             _lastIcon;
+    TQPixmap             _lastIcon;
 
     double _thumbSize;
-    QPixmap _thumb;
-    QPixmap _grab;
-    QRect m_iconGeometry;
+    TQPixmap _thumb;
+    TQPixmap _grab;
+    TQRect m_iconGeometry;
 #ifdef THUMBNAILING_POSSIBLE
     Pixmap              m_windowPixmap;
 #endif // THUMBNAILING_POSSIBLE
@@ -489,20 +489,20 @@ public:
     /**
      * Constructs a task drag object for a task list.
      */
-    TaskDrag(const Task::List& tasks, QWidget* source = 0,
+    TaskDrag(const Task::List& tasks, TQWidget* source = 0,
              const char* name = 0);
     ~TaskDrag();
 
     /**
      * Returns true if the mime source can be decoded to a TaskDrag.
      */
-    static bool canDecode( const QMimeSource* e );
+    static bool canDecode( const TQMimeSource* e );
 
     /**
      * Decodes the tasks from the mime source and returns them if successful.
      * Otherwise an empty task list is returned.
      */
-    static Task::List decode( const QMimeSource* e );
+    static Task::List decode( const TQMimeSource* e );
 };
 
 
@@ -511,35 +511,35 @@ public:
  *
  * @see TaskManager
  */
-class KDE_EXPORT Startup: public QObject, public KShared
+class KDE_EXPORT Startup: public TQObject, public KShared
 {
     Q_OBJECT
-    Q_PROPERTY( QString text READ text )
-    Q_PROPERTY( QString bin READ bin )
-    Q_PROPERTY( QString icon READ icon )
+    Q_PROPERTY( TQString text READ text )
+    Q_PROPERTY( TQString bin READ bin )
+    Q_PROPERTY( TQString icon READ icon )
 
 public:
     typedef KSharedPtr<Startup> Ptr;
-    typedef QValueVector<Startup::Ptr> List;
+    typedef TQValueVector<Startup::Ptr> List;
 
-    Startup( const KStartupInfoId& id, const KStartupInfoData& data, QObject * parent,
+    Startup( const KStartupInfoId& id, const KStartupInfoData& data, TQObject * parent,
         const char *name = 0);
     virtual ~Startup();
 
     /**
      * The name of the starting task (if known).
      */
-    QString text() const { return _data.findName(); }
+    TQString text() const { return _data.findName(); }
 
     /**
      * The name of the executable of the starting task.
      */
-    QString bin() const { return _data.bin(); }
+    TQString bin() const { return _data.bin(); }
 
     /**
      * The name of the icon to be used for the starting task.
      */
-    QString icon() const { return _data.findIcon(); }
+    TQString icon() const { return _data.findIcon(); }
     void update( const KStartupInfoData& data );
     const KStartupInfoId& id() const { return _id; }
 
@@ -583,7 +583,7 @@ public:
     /**
      * Returns the task for a given location, or 0 if there is no such task.
      */
-    Task::Ptr findTask(int desktop, const QPoint& p);
+    Task::Ptr findTask(int desktop, const TQPoint& p);
 
     /**
      * Returns a list of all current tasks.
@@ -598,7 +598,7 @@ public:
     /**
      * Returns the name of the nth desktop.
      */
-    QString desktopName(int n) const;
+    TQString desktopName(int n) const;
 
     /**
      * Returns the number of virtual desktops.

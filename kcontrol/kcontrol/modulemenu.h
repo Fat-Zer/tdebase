@@ -24,12 +24,12 @@ that is intentional :-]
 #define __modulemenu_h__
 
 
-#include <qptrlist.h>
-#include <qstringlist.h>
-#include <qintdict.h>
-#include <qstring.h>
-#include <qwidget.h>
-#include <qdict.h>
+#include <tqptrlist.h>
+#include <tqstringlist.h>
+#include <tqintdict.h>
+#include <tqstring.h>
+#include <tqwidget.h>
+#include <tqdict.h>
 
 #include <kpopupmenu.h>
 
@@ -43,7 +43,7 @@ class ModuleMenu : public KPopupMenu
   Q_OBJECT
 
 public:
-  ModuleMenu(ConfigModuleList *list, QWidget * parent = 0, const char * name = 0);
+  ModuleMenu(ConfigModuleList *list, TQWidget * parent = 0, const char * name = 0);
 
 signals:
   void moduleActivated(ConfigModule*);
@@ -52,13 +52,13 @@ private slots:
   void moduleSelected(int id);
 
 protected:
-  void fill(KPopupMenu *parentMenu, const QString &parentPath);
+  void fill(KPopupMenu *parentMenu, const TQString &parentPath);
 
 private:
   int id;
 
   ConfigModuleList       *_modules;
-  QIntDict<ConfigModule> _moduleDict;
+  TQIntDict<ConfigModule> _moduleDict;
 };
 
 

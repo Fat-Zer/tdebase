@@ -56,9 +56,9 @@
 #include <sys/select.h>                // Needed on some systems.
 #endif
 
-#include <qptrvector.h>
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqptrvector.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 
 #include <kinstance.h>
 #include <kdebug.h>
@@ -87,7 +87,7 @@
 
 Repository *repo;
 const char *Version = "1.01";
-QCString sock;
+TQCString sock;
 Display *x11Display;
 int pipeOfDeath[2];
 
@@ -157,7 +157,7 @@ int create_socket()
     ksocklen_t addrlen;
     struct stat s;
 
-    QCString display(getenv("DISPLAY"));
+    TQCString display(getenv("DISPLAY"));
     if (display.isEmpty())
     {
         kdWarning(1205) << "$DISPLAY is not set\n";
@@ -165,9 +165,9 @@ int create_socket()
     }
 
     // strip the screen number from the display
-    display.replace(QRegExp("\\.[0-9]+$"), "");
+    display.replace(TQRegExp("\\.[0-9]+$"), "");
 
-    sock = QFile::encodeName(locateLocal("socket", QString("kdesud_%1").arg(display)));
+    sock = TQFile::encodeName(locateLocal("socket", TQString("kdesud_%1").arg(display)));
     int stat_err=lstat(sock, &s);
     if(!stat_err && S_ISLNK(s.st_mode)) {
         kdWarning(1205) << "Someone is running a symlink attack on you\n";
@@ -294,7 +294,7 @@ int main(int argc, char *argv[])
     maxfd = QMAX(maxfd, x11Fd);
 
     repo = new Repository;
-    QPtrVector<ConnectionHandler> handler;
+    TQPtrVector<ConnectionHandler> handler;
     handler.setAutoDelete(true);
 
     pipe(pipeOfDeath);

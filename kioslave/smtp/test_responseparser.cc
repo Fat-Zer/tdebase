@@ -1,10 +1,10 @@
 #include "response.h"
 #include <assert.h>
 
-static const QCString singleLineResponseCRLF = "250 OK\r\n";
-static const QCString singleLineResponse     = "250 OK";
+static const TQCString singleLineResponseCRLF = "250 OK\r\n";
+static const TQCString singleLineResponse     = "250 OK";
 
-static const QCString multiLineResponse[] = {
+static const TQCString multiLineResponse[] = {
   "250-ktown.kde.org\r\n",
   "250-STARTTLS\r\n",
   "250-AUTH PLAIN DIGEST-MD5\r\n",

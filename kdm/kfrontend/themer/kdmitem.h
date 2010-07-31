@@ -22,10 +22,10 @@
 #ifndef KDMITEM_H
 #define KDMITEM_H
 
-#include <qobject.h>
-#include <qvaluelist.h>
-#include <qrect.h>
-#include <qdom.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
+#include <tqrect.h>
+#include <tqdom.h>
 
 class KdmItem;
 class KdmLayoutBox;
@@ -80,7 +80,7 @@ class QLayoutItem;
  *    - TODO: send a selective redraw signal also merging children's areas
  */
 
-class KdmItem : public QObject {
+class KdmItem : public TQObject {
 	Q_OBJECT
 
 	friend class KdmThemer;
@@ -89,7 +89,7 @@ public:
 	/**
 	 * Item constructor and destructor
 	 */
-	KdmItem( KdmItem *parent, const QDomNode &node = QDomNode(), const char *name = 0 );
+	KdmItem( KdmItem *parent, const TQDomNode &node = TQDomNode(), const char *name = 0 );
 	virtual ~KdmItem();
 
 	/**
@@ -97,14 +97,14 @@ public:
 	 * or boxed ones). Note that this will generate repaint signals
 	 * when needed. The default implementation should fit all needs.
 	 */
-	virtual void setGeometry( const QRect &newGeometry, bool force );
+	virtual void setGeometry( const TQRect &newGeometry, bool force );
 
 	/**
 	 * Paint the item and its children using the given painter.
 	 * This is the compositing core function. It buffers paint operations
 	 * to speed up rendering of dynamic objects.
 	 */
-	void paint( QPainter *painter, const QRect &boundaries );
+	void paint( TQPainter *painter, const TQRect &boundaries );
 
 	/**
 	 * Update representation of contents and repaint.
@@ -124,45 +124,45 @@ public:
 	 * @param parentGeometry the geometry of the caller item or a
 	 * null rect if the geometry of the parent is not yet defined.
 	 */
-	virtual QRect placementHint( const QRect &parentGeometry );
+	virtual TQRect placementHint( const TQRect &parentGeometry );
 
 	/**
 	 * Create the box layout manager; next children will be
 	 * managed by the box layouter
 	 */
-	void setBoxLayout( const QDomNode &node = QDomNode() );
+	void setBoxLayout( const TQDomNode &node = TQDomNode() );
 
 	/**
 	 * Create the fixed layout manager; next children will be
 	 * in fixed position relative to this item
 	 */
-	void setFixedLayout( const QDomNode &node = QDomNode() );
+	void setFixedLayout( const TQDomNode &node = TQDomNode() );
 
-	QString type() const { return itemType;	}
-	void setType( const QString &t ) { itemType = t; }
-	void setBaseDir( const QString &bd ) { basedir = bd; }
+	TQString type() const { return itemType;	}
+	void setType( const TQString &t ) { itemType = t; }
+	void setBaseDir( const TQString &bd ) { basedir = bd; }
 
-	QString baseDir() const
+	TQString baseDir() const
 	{
 		if (basedir.isEmpty() && parent())
 			return static_cast<KdmItem *>( parent()->qt_cast( "KdmItem" ) )->baseDir();
 		return basedir;
 	}
 
-	KdmItem *findNode( const QString &id ) const;
-	virtual void setWidget( QWidget *widget );
-	virtual void setLayoutItem( QLayoutItem *item );
+	KdmItem *findNode( const TQString &id ) const;
+	virtual void setWidget( TQWidget *widget );
+	virtual void setLayoutItem( TQLayoutItem *item );
 
 	virtual void hide( bool force = false );
 	virtual void show( bool force = false );
 
 	bool isHidden() const { return isShown != Shown; }
 	bool isExplicitlyHidden() const { return isShown == ExplicitlyHidden; }
-	QRect rect() const { return area; }
+	TQRect rect() const { return area; }
 
 signals:
 	void needUpdate( int x, int y, int w, int h );
-	void activated( const QString &id );
+	void activated( const TQString &id );
 
 protected slots:
 	void widgetGone();
@@ -175,7 +175,7 @@ protected:
 	 * @return (-1,-1) if no size can be determined (so it should
 	 * default to parent's size).
 	 */
-	virtual QSize sizeHint();
+	virtual TQSize sizeHint();
 
 	/**
 	 * Low level graphical function to paint the item.
@@ -185,7 +185,7 @@ protected:
 	 * @param painter the painter to draw the item with
 	 * @param region the part of the the image to render
 	 */
-	virtual void drawContents( QPainter *painter, const QRect &region ) = 0;
+	virtual void drawContents( TQPainter *painter, const TQRect &region ) = 0;
 
 	/**
 	 * Called when item changes its 'state' variable. This must
@@ -209,7 +209,7 @@ protected:
 	} properties;
 
 	// This is the placement of the item
-	QRect area;
+	TQRect area;
 
 	// This struct is filled in by KdmItem base class
 	enum DataType { DTnone, DTpixel, DTnpixel, DTpercent, DTbox };
@@ -219,7 +219,7 @@ protected:
 		int y;
 		int width;
 		int height;
-		QString anchor;
+		TQString anchor;
 	} pos;
 
 	/* For internal use ONLY
@@ -232,14 +232,14 @@ protected:
 	 * Parse type and value of an attribute (pos tag), a font or a
 	 * color.
 	 */
-	void parseAttribute( const QString &, int &, enum DataType & );
-	void parseFont( const QString &, QFont & );
-	void parseColor( const QString &, QColor & );
+	void parseAttribute( const TQString &, int &, enum DataType & );
+	void parseFont( const TQString &, TQFont & );
+	void parseColor( const TQString &, TQColor & );
 
 	void inheritFromButton( KdmItem *button );
 
-	QString itemType, id;
-	QValueList<KdmItem *> m_children;
+	TQString itemType, id;
+	TQValueList<KdmItem *> m_children;
 
 	// Layouting related variables
 	enum { MNone = 0, MFixed = 1, MBox = 2 } currentManager;
@@ -247,13 +247,13 @@ protected:
 	KdmLayoutFixed *fixedManager;
 
 	// Compositing related variables
-	QImage *image;
+	TQImage *image;
 
 	// defines the directory the theme is in (may be present in the parent)
-	QString basedir;
+	TQString basedir;
 
-	QWidget *myWidget;
-	QLayoutItem *myLayoutItem;
+	TQWidget *myWidget;
+	TQLayoutItem *myLayoutItem;
 
 	enum { InitialHidden, ExplicitlyHidden, Shown } isShown;
 

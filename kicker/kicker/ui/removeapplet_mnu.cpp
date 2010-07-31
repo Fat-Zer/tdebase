@@ -33,12 +33,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "removeapplet_mnu.moc"
 
 PanelRemoveAppletMenu::PanelRemoveAppletMenu(ContainerArea* cArea,
-                                             QWidget *parent,
+                                             TQWidget *parent,
                                              const char *name)
-    : QPopupMenu(parent, name), m_containerArea(cArea)
+    : TQPopupMenu(parent, name), m_containerArea(cArea)
 {
-    connect(this, SIGNAL(activated(int)), SLOT(slotExec(int)));
-    connect(this, SIGNAL(aboutToShow()), SLOT(slotAboutToShow()));
+    connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
+    connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 }
 
 void PanelRemoveAppletMenu::slotAboutToShow()
@@ -49,7 +49,7 @@ void PanelRemoveAppletMenu::slotAboutToShow()
     m_containers = m_containerArea->containers("Applet") +
                    m_containerArea->containers("Special Button");
 
-    QValueList<PanelMenuItemInfo> items;
+    TQValueList<PanelMenuItemInfo> items;
 
     for (BaseContainer::List::const_iterator it = m_containers.constBegin();
          it != m_containers.constEnd();)
@@ -71,7 +71,7 @@ void PanelRemoveAppletMenu::slotAboutToShow()
 
     qHeapSort(items);
 
-    for (QValueList<PanelMenuItemInfo>::iterator it = items.begin();
+    for (TQValueList<PanelMenuItemInfo>::iterator it = items.begin();
          it != items.end();
          ++it)
     {
@@ -81,7 +81,7 @@ void PanelRemoveAppletMenu::slotAboutToShow()
     if (m_containers.count() > 1)
     {
         insertSeparator();
-        insertItem(i18n("All"), this, SLOT(slotRemoveAll()), 0, id);
+        insertItem(i18n("All"), this, TQT_SLOT(slotRemoveAll()), 0, id);
     }
 }
 

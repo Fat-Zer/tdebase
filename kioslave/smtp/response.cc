@@ -36,7 +36,7 @@
 #include <klocale.h>
 #include <kio/global.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 namespace KioSMTP {
 
@@ -59,7 +59,7 @@ namespace KioSMTP {
     }
 
     bool ok = false;
-    unsigned int code = QCString( line, 3+1 ).toUInt( &ok );
+    unsigned int code = TQCString( line, 3+1 ).toUInt( &ok );
     if ( !ok || code < 100 || code > 559 ) {
       // not a number or number out of range
       mValid = false;
@@ -85,22 +85,22 @@ namespace KioSMTP {
       return;
     }
 
-    mLines.push_back( len > 4 ? QCString( line+4, len-4+1 ).stripWhiteSpace() : QCString() );
+    mLines.push_back( len > 4 ? TQCString( line+4, len-4+1 ).stripWhiteSpace() : TQCString() );
   }
 
 
   // hackishly fixing QCStringList flaws...
-  static QCString join( char sep, const QCStringList & list ) {
+  static TQCString join( char sep, const QCStringList & list ) {
     if ( list.empty() )
-      return QCString();
-    QCString result = list.front();
+      return TQCString();
+    TQCString result = list.front();
     for ( QCStringList::const_iterator it = ++list.begin() ; it != list.end() ; ++it )
       result += sep + *it;
     return result;
   }
 
-  QString Response::errorMessage() const {
-    QString msg;
+  TQString Response::errorMessage() const {
+    TQString msg;
     if ( lines().count() > 1 )
       msg = i18n("The server responded:\n%1")
 	.arg( join( '\n', lines() ) );

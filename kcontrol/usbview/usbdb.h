@@ -13,7 +13,7 @@
 #define __USB_DB_H__
 
 
-#include <qdict.h>
+#include <tqdict.h>
 
 
 class USBDB
@@ -22,16 +22,16 @@ public:
 
   USBDB();
 
-  QString vendor(int id);
-  QString device(int vendor, int id);
+  TQString vendor(int id);
+  TQString device(int vendor, int id);
 
-  QString cls(int cls);
-  QString subclass(int cls, int sub);
-  QString protocol(int cls, int sub, int prot);
+  TQString cls(int cls);
+  TQString subclass(int cls, int sub);
+  TQString protocol(int cls, int sub, int prot);
 
 private:
 
-  QDict<QString> _classes, _ids;
+  TQDict<TQString> _classes, _ids;
 
 };
 

@@ -4,19 +4,19 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <qlayout.h>
-#include <qdrawutil.h>
+#include <tqlayout.h>
+#include <tqdrawutil.h>
 #include <kpixmapeffect.h>
 #include <kdrawutil.h>
-#include <qbitmap.h>
-#include <qtooltip.h>
-#include <qapplication.h>
-#include <qlabel.h>
+#include <tqbitmap.h>
+#include <tqtooltip.h>
+#include <tqapplication.h>
+#include <tqlabel.h>
 #include "modernsys.h"
 
 #include "buttondata.h"
 #include "btnhighcolor.h"
-#include <qimage.h>
+#include <tqimage.h>
 
 namespace ModernSystem {
 
@@ -73,19 +73,19 @@ static unsigned char btnhighcolor_mask_bits[] = {
 
 static KPixmap *aUpperGradient=0;
 static KPixmap *iUpperGradient=0;
-static QPixmap *buttonPix=0;
-static QPixmap *buttonPixDown=0;
-static QPixmap *iButtonPix=0;
-static QPixmap *iButtonPixDown=0;
+static TQPixmap *buttonPix=0;
+static TQPixmap *buttonPixDown=0;
+static TQPixmap *iButtonPix=0;
+static TQPixmap *iButtonPixDown=0;
 
-static QColor *buttonFg;
+static TQColor *buttonFg;
 static bool pixmaps_created = false;
 
-static QBitmap *lcDark1;
-static QBitmap *lcDark2;
-static QBitmap *lcDark3;
-static QBitmap *lcLight1;
-static QImage *btnSource;
+static TQBitmap *lcDark1;
+static TQBitmap *lcDark2;
+static TQBitmap *lcDark3;
+static TQBitmap *lcLight1;
+static TQImage *btnSource;
 
 static bool show_handle;
 static int handle_size;
@@ -98,25 +98,25 @@ static inline const KDecorationOptions* options()
     return KDecoration::options();
 }
 
-static void make_button_fx(const QColorGroup &g, QPixmap *pix, bool light=false)
+static void make_button_fx(const TQColorGroup &g, TQPixmap *pix, bool light=false)
 {
     pix->fill(g.background());
-    QPainter p(pix);
+    TQPainter p(pix);
 
-    if(QPixmap::defaultDepth() > 8){
+    if(TQPixmap::defaultDepth() > 8){
         int i, destH, destS, destV, srcH, srcS, srcV;
-        QColor btnColor = g.background();
+        TQColor btnColor = g.background();
 
         if(btnSource->depth() < 32)
             *btnSource = btnSource->convertDepth(32);
         if(light)
             btnColor = btnColor.light(120);
         btnColor.hsv(&destH, &destS, &destV);
-        QImage btnDest(14, 15, 32);
+        TQImage btnDest(14, 15, 32);
 
         unsigned int *srcData = (unsigned int *)btnSource->bits();
         unsigned int *destData = (unsigned int *)btnDest.bits();
-        QColor srcColor;
+        TQColor srcColor;
         for(i=0; i < btnSource->width()*btnSource->height(); ++i){
             srcColor.setRgb(srcData[i]);
             srcColor.hsv(&srcH, &srcS, &srcV);
@@ -150,13 +150,13 @@ static void create_pixmaps()
         return;
     pixmaps_created = true;
 
-    lcDark1 = new QBitmap(14, 15, lowcolor_6a696a_bits, true);
-    lcDark2 = new QBitmap(14, 15, lowcolor_949194_bits, true);
-    lcDark3 = new QBitmap(14, 15, lowcolor_b4b6b4_bits, true);
-    lcLight1 = new QBitmap(14, 15, lowcolor_e6e6e6_bits, true);
-    btnSource = new QImage(btnhighcolor_xpm);
+    lcDark1 = new TQBitmap(14, 15, lowcolor_6a696a_bits, true);
+    lcDark2 = new TQBitmap(14, 15, lowcolor_949194_bits, true);
+    lcDark3 = new TQBitmap(14, 15, lowcolor_b4b6b4_bits, true);
+    lcLight1 = new TQBitmap(14, 15, lowcolor_e6e6e6_bits, true);
+    btnSource = new TQImage(btnhighcolor_xpm);
 
-    if(QPixmap::defaultDepth() > 8){
+    if(TQPixmap::defaultDepth() > 8){
         aUpperGradient = new KPixmap;
         aUpperGradient->resize(32, title_height+2);
         iUpperGradient = new KPixmap;
@@ -171,23 +171,23 @@ static void create_pixmaps()
                                 KPixmapEffect::VerticalGradient);
     }
     // buttons
-    QColorGroup btnColor(options()->colorGroup(KDecoration::ColorButtonBg, true));
-    buttonPix = new QPixmap(14, 15);
+    TQColorGroup btnColor(options()->colorGroup(KDecoration::ColorButtonBg, true));
+    buttonPix = new TQPixmap(14, 15);
     make_button_fx(btnColor, buttonPix);
-    buttonPixDown = new QPixmap(14, 15);
+    buttonPixDown = new TQPixmap(14, 15);
     make_button_fx(btnColor, buttonPixDown, true);
 
     btnColor = options()->colorGroup(KDecoration::ColorButtonBg, false);
-    iButtonPix = new QPixmap(14, 15);
+    iButtonPix = new TQPixmap(14, 15);
     make_button_fx(btnColor, iButtonPix);
-    iButtonPixDown = new QPixmap(14, 15);
+    iButtonPixDown = new TQPixmap(14, 15);
     make_button_fx(btnColor, iButtonPixDown, true);
 
 
     if(qGray(btnColor.background().rgb()) < 150)
-        buttonFg = new QColor(Qt::white);
+        buttonFg = new TQColor(Qt::white);
     else
-        buttonFg = new QColor(Qt::black);
+        buttonFg = new TQColor(Qt::black);
 
     delete lcDark1;
     delete lcDark2;
@@ -263,7 +263,7 @@ void ModernSysFactory::read_config()
           bwidth = 4;
     }
 
-    theight = QFontMetrics(options()->font(true)).height() + 2;
+    theight = TQFontMetrics(options()->font(true)).height() + 2;
     if (theight < 16)
         theight = 16;
     if (theight < bwidth)
@@ -276,9 +276,9 @@ void ModernSysFactory::read_config()
     title_height = theight;
 }
 
-QValueList< ModernSysFactory::BorderSize > ModernSysFactory::borderSizes() const
+TQValueList< ModernSysFactory::BorderSize > ModernSysFactory::borderSizes() const
 { // the list must be sorted
-  return QValueList< BorderSize >() << BorderNormal << BorderLarge <<
+  return TQValueList< BorderSize >() << BorderNormal << BorderLarge <<
       BorderVeryLarge <<  BorderHuge;
    // as long as the buttons don't scale don't offer the largest two sizes.
    //   BorderVeryLarge <<  BorderHuge << BorderVeryHuge << BorderOversized;
@@ -289,7 +289,7 @@ ModernButton::ModernButton(ButtonType type, ModernSys *parent, const char *name)
 {
     setBackgroundMode( NoBackground );
 
-    QBitmap mask(14, 15, QPixmap::defaultDepth() > 8 ?
+    TQBitmap mask(14, 15, TQPixmap::defaultDepth() > 8 ?
                  btnhighcolor_mask_bits : lowcolor_mask_bits, true);
     resize(14, 15);
 
@@ -339,15 +339,15 @@ void ModernButton::reset(unsigned long changed)
 void ModernButton::setBitmap(const unsigned char *bitmap)
 {
     if (bitmap)
-        deco = QBitmap(8, 8, bitmap, true);
+        deco = TQBitmap(8, 8, bitmap, true);
     else {
-        deco = QBitmap(8,8);
+        deco = TQBitmap(8,8);
         deco.fill(Qt::color0);
     }
     deco.setMask(deco);
 }
 
-void ModernButton::drawButton(QPainter *p)
+void ModernButton::drawButton(TQPainter *p)
 {
     if(decoration()->isActive()){
         if(buttonPix)
@@ -378,17 +378,17 @@ ModernSys::ModernSys( KDecorationBridge* b, KDecorationFactory* f )
 {
 }
 
-QString ModernSys::visibleName() const
+TQString ModernSys::visibleName() const
 {
     return i18n("Modern System");
 }
 
-QString ModernSys::defaultButtonsLeft() const
+TQString ModernSys::defaultButtonsLeft() const
 {
     return "X";
 }
 
-QString ModernSys::defaultButtonsRight() const
+TQString ModernSys::defaultButtonsRight() const
 {
     return "HSIA";
 }
@@ -495,7 +495,7 @@ KCommonDecorationButton *ModernSys::createButton(ButtonType type)
 
 void ModernSys::init()
 {
-    reverse = QApplication::reverseLayout();
+    reverse = TQApplication::reverseLayout();
 
     KCommonDecoration::init();
 
@@ -507,24 +507,24 @@ void ModernSys::recalcTitleBuffer()
     if(oldTitle == caption() && width() == titleBuffer.width())
         return;
 
-    QFontMetrics fm(options()->font(true));
+    TQFontMetrics fm(options()->font(true));
     titleBuffer.resize(width(), title_height+2);
-    QPainter p;
+    TQPainter p;
     p.begin(&titleBuffer);
     if(aUpperGradient)
         p.drawTiledPixmap(0, 0, width(), title_height+2, *aUpperGradient);
     else
         p.fillRect(0, 0, width(), title_height+2,
                    options()->colorGroup(ColorTitleBar, true).
-                   brush(QColorGroup::Button));
+                   brush(TQColorGroup::Button));
 
-    QRect t = titleRect(); // titlebar->geometry();
+    TQRect t = titleRect(); // titlebar->geometry();
     t.setTop( 2 );
     t.setLeft( t.left() );
     t.setRight( t.right() - 2 );
 
-    QRegion r(t.x(), 0, t.width(), title_height+2);
-    r -= QRect(t.x()+((t.width()-fm.width(caption()))/2)-4,
+    TQRegion r(t.x(), 0, t.width(), title_height+2);
+    r -= TQRect(t.x()+((t.width()-fm.width(caption()))/2)-4,
                0, fm.width(caption())+8, title_height+2);
     p.setClipRegion(r);
     int i, ly;
@@ -551,14 +551,14 @@ void ModernSys::updateCaption()
     widget()->update(titleRect() );
 }
 
-void ModernSys::drawRoundFrame(QPainter &p, int x, int y, int w, int h)
+void ModernSys::drawRoundFrame(TQPainter &p, int x, int y, int w, int h)
 {
     kDrawRoundButton(&p, x, y, w, h,
                      options()->colorGroup(ColorFrame, isActive()), false);
 
 }
 
-void ModernSys::paintEvent( QPaintEvent* )
+void ModernSys::paintEvent( TQPaintEvent* )
 {
     // update title buffer...
     if (oldTitle != caption() || width() != titleBuffer.width() )
@@ -567,13 +567,13 @@ void ModernSys::paintEvent( QPaintEvent* )
     int hs = handle_size;
     int hw = handle_width;
 
-    QPainter p( widget() );
-    QRect t = titleRect(); // titlebar->geometry();
+    TQPainter p( widget() );
+    TQRect t = titleRect(); // titlebar->geometry();
 
-    QBrush fillBrush(widget()->colorGroup().brush(QColorGroup::Background).pixmap() ?
-                     widget()->colorGroup().brush(QColorGroup::Background) :
+    TQBrush fillBrush(widget()->colorGroup().brush(TQColorGroup::Background).pixmap() ?
+                     widget()->colorGroup().brush(TQColorGroup::Background) :
                      options()->colorGroup(ColorFrame, isActive()).
-                     brush(QColorGroup::Button));
+                     brush(TQColorGroup::Button));
 
     p.fillRect(1, title_height+3, width()-2, height()-(title_height+3), fillBrush);
     p.fillRect(width()-6, 0, width()-1, height(), fillBrush);
@@ -586,7 +586,7 @@ void ModernSys::paintEvent( QPaintEvent* )
     int h = height() - hw;
 
     // titlebar
-    QColorGroup g = options()->colorGroup(ColorTitleBar, isActive());
+    TQColorGroup g = options()->colorGroup(ColorTitleBar, isActive());
     if(isActive()){
         p.drawPixmap(1, 1, titleBuffer, 0, 0, w-2, title_height+2);
     }
@@ -649,20 +649,20 @@ void ModernSys::updateWindowShape()
 {
     int hs = handle_size;
     int hw = handle_width;
-    QRegion mask;
-    mask += QRect(0, 0, width()-hw, height()-hw);
+    TQRegion mask;
+    mask += TQRect(0, 0, width()-hw, height()-hw);
     //single points
-    mask -= QRect(0, 0, 1, 1);
-    mask -= QRect(width()-hw-1, 0, 1, 1);
-    mask -= QRect(0, height()-hw-1, 1, 1);
+    mask -= TQRect(0, 0, 1, 1);
+    mask -= TQRect(width()-hw-1, 0, 1, 1);
+    mask -= TQRect(0, height()-hw-1, 1, 1);
 
     if (show_handle) {
-        mask += QRect(width()-hs, height()-hs, hs-1, hs-1);
-        mask -= QRect(width()-2, height()-2, 1, 1);
-        mask -= QRect(width()-2, height()-hs, 1, 1);
-        mask -= QRect(width()-hs, height()-2, 1, 1);
+        mask += TQRect(width()-hs, height()-hs, hs-1, hs-1);
+        mask -= TQRect(width()-2, height()-2, 1, 1);
+        mask -= TQRect(width()-2, height()-hs, 1, 1);
+        mask -= TQRect(width()-hs, height()-2, 1, 1);
     } else
-        mask -= QRect(width()-1, height()-1, 1, 1);
+        mask -= TQRect(width()-1, height()-1, 1, 1);
 
     setMask(mask);
 }

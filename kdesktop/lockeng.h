@@ -8,9 +8,9 @@
 #ifndef __LOCKENG_H__
 #define __LOCKENG_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kprocess.h>
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 #include "KScreensaverIface.h"
 #include "xautolock.h"
 #include "xautolock_c.h"
@@ -23,7 +23,7 @@ class DCOPClientTransaction;
  * hacks, and password entry.
  */
 class SaverEngine
-    : public QWidget,
+    : public TQWidget,
       virtual public KScreensaverIface
 {
     Q_OBJECT
@@ -106,7 +106,7 @@ protected:
     int         mXExposures;
 
     bool	mBlankOnly;  // only use the blanker, not the defined saver
-    QValueVector< DCOPClientTransaction* > mLockTransactions;
+    TQValueVector< DCOPClientTransaction* > mLockTransactions;
 };
 
 #endif

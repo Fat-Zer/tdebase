@@ -20,11 +20,11 @@
 #ifndef URLGRABBER_H
 #define URLGRABBER_H
 
-#include <qptrlist.h>
-#include <qintdict.h>
-#include <qregexp.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqptrlist.h>
+#include <tqintdict.h>
+#include <tqregexp.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kprocess.h>
 
@@ -36,8 +36,8 @@ class KPopupMenu;
 
 class ClipAction;
 struct ClipCommand;
-typedef QPtrList<ClipAction> ActionList;
-typedef QPtrListIterator<ClipAction> ActionListIterator;
+typedef TQPtrList<ClipAction> ActionList;
+typedef TQPtrListIterator<ClipAction> ActionListIterator;
 
 class URLGrabber : public QObject
 {
@@ -53,8 +53,8 @@ public:
    * @returns false if the string should be put into the popupmenu or not,
    * otherwise true.
    */
-  bool checkNewData( const QString& clipData );
-  void invokeAction( const QString& clip = QString::null );
+  bool checkNewData( const TQString& clipData );
+  void invokeAction( const TQString& clip = TQString::null );
 
   const ActionList * actionList() const { return myActions; }
   void setActionList( ActionList * );
@@ -64,29 +64,29 @@ public:
   int popupTimeout() const { return myPopupKillTimeout; }
   void setPopupTimeout( int timeout ) { myPopupKillTimeout = timeout; }
 
-  const QStringList& avoidWindows() const { return myAvoidWindows; }
-  void setAvoidWindows( const QStringList& list ) { myAvoidWindows = list; }
+  const TQStringList& avoidWindows() const { return myAvoidWindows; }
+  void setAvoidWindows( const TQStringList& list ) { myAvoidWindows = list; }
 
   bool stripWhiteSpace() const { return m_stripWhiteSpace; }
   void setStripWhiteSpace( bool enable ) { m_stripWhiteSpace = enable; }
     
 private:
-  const ActionList& matchingActions( const QString& );
+  const ActionList& matchingActions( const TQString& );
   void execute( const struct ClipCommand *command, 
-                QStringList *backrefs ) const;
+                TQStringList *backrefs ) const;
   void editData();
   bool isAvoidedWindow() const;
   void actionMenu( bool wm_class_check );
 
   ActionList *myActions;
   ActionList myMatches;
-  QStringList myAvoidWindows;
-  QString myClipData;
+  TQStringList myAvoidWindows;
+  TQString myClipData;
   ClipAction *myCurrentAction;
-  QIntDict<ClipCommand> myCommandMapper;
-  QIntDict<QStringList> myGroupingMapper;
+  TQIntDict<ClipCommand> myCommandMapper;
+  TQIntDict<TQStringList> myGroupingMapper;
   KPopupMenu *myMenu;
-  QTimer *myPopupKillTimer;
+  TQTimer *myPopupKillTimer;
   int myPopupKillTimeout;
   bool m_stripWhiteSpace;
   KConfig* m_config;
@@ -98,7 +98,7 @@ private slots:
 
 
 signals:
-    void sigPopup( QPopupMenu * );
+    void sigPopup( TQPopupMenu * );
     void sigDisablePopup();
 
 };
@@ -106,11 +106,11 @@ signals:
 
 struct ClipCommand
 {
-    ClipCommand( const QString &, const QString &, bool = true, const QString & = "" );
-    QString command;
-    QString description;
+    ClipCommand( const TQString &, const TQString &, bool = true, const TQString & = "" );
+    TQString command;
+    TQString description;
     bool isEnabled;
-    QString pixmap;
+    TQString pixmap;
     //  int id; // the index reflecting the position in the list of commands
 };
 
@@ -122,14 +122,14 @@ struct ClipCommand
 class ClipAction
 {
 public:
-  ClipAction( const QString& regExp, const QString& description );
+  ClipAction( const TQString& regExp, const TQString& description );
   ClipAction( const ClipAction& );
   ClipAction( KConfig *kc );
   ~ClipAction();
 
-  void  setRegExp( const QString& r) 	      { myRegExp = QRegExp( r ); }
-  QString regExp() 			const { return myRegExp.pattern(); }
-  inline bool matches( const QString& string ) {
+  void  setRegExp( const TQString& r) 	      { myRegExp = TQRegExp( r ); }
+  TQString regExp() 			const { return myRegExp.pattern(); }
+  inline bool matches( const TQString& string ) {
     int res = myRegExp.search( string ) ;
     if ( res != -1 ) {
       myCapturedTexts = myRegExp.capturedTexts();
@@ -138,16 +138,16 @@ public:
     return false;
   }
 
-  void 	setDescription( const QString& d)     { myDescription = d; }
-  const QString& description() 		const { return myDescription; }
+  void 	setDescription( const TQString& d)     { myDescription = d; }
+  const TQString& description() 		const { return myDescription; }
 
   /**
    * Removes all ClipCommands associated with this ClipAction.
    */
   void clearCommands() { myCommands.clear(); }
 
-  void  addCommand( const QString& command, const QString& description, bool, const QString& icon = "" );
-  const QPtrList<ClipCommand>& commands() 	const { return myCommands; }
+  void  addCommand( const TQString& command, const TQString& description, bool, const TQString& icon = "" );
+  const TQPtrList<ClipCommand>& commands() 	const { return myCommands; }
 
   /**
    * Saves this action to a a given KConfig object
@@ -158,13 +158,13 @@ public:
    * Returns the most recent list of matched group backreferences.
    * Note: you probably need to call matches() first.
    */
-  inline const QStringList* capturedTexts() const { return &myCapturedTexts; }
+  inline const TQStringList* capturedTexts() const { return &myCapturedTexts; }
 
 private:
-  QRegExp 		myRegExp;
+  TQRegExp 		myRegExp;
   QStringList	myCapturedTexts;
-  QString 		myDescription;
-  QPtrList<ClipCommand> 	myCommands;
+  TQString 		myDescription;
+  TQPtrList<ClipCommand> 	myCommands;
 
 };
 

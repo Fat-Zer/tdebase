@@ -44,15 +44,15 @@
 **
 *****************************************************************************/
 
-#include <qglobal.h>
+#include <tqglobal.h>
 #if QT_VERSION < 0x030100
 
 #include <kapplication.h>
-#include <qwidget.h>
-#include <qobjectlist.h>
-#include <qwidgetlist.h>
+#include <tqwidget.h>
+#include <tqobjectlist.h>
+#include <tqwidgetlist.h>
 #include <kdebug.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "kxt.h"
 
@@ -136,15 +136,15 @@ typedef struct _QWidgetRec {
 
 
 static
-void reparentChildrenOf(QWidget* parent)
+void reparentChildrenOf(TQWidget* parent)
 {
 
     if ( !parent->children() )
         return; // nothing to do
 
-    for ( QObjectListIt it( *parent->children() ); it.current(); ++it ) {
+    for ( TQObjectListIt it( *parent->children() ); it.current(); ++it ) {
         if ( it.current()->isWidgetType() ) {
-            QWidget* widget = (QWidget*)it.current();
+            TQWidget* widget = (TQWidget*)it.current();
             XReparentWindow( qt_xdisplay(),
                              widget->winId(),
                              parent->winId(),
@@ -177,7 +177,7 @@ static
 QWidgetClassRec qwidgetClassRec = {
   { /* core fields */
     /* superclass               */      (WidgetClass) &widgetClassRec,
-    /* class_name               */      (char*)"QWidget",
+    /* class_name               */      (char*)"TQWidget",
     /* widget_size              */      sizeof(QWidgetRec),
     /* class_initialize         */      0,
     /* class_part_initialize    */      0,
@@ -249,7 +249,7 @@ void removeXtEventFilters()
     filters_installed = FALSE;
 }
 
-// When we are in an event loop of QApplication rather than the browser's
+// When we are in an event loop of TQApplication rather than the browser's
 // event loop (eg. for a modal dialog), we still send events to Xt.
 static
 void np_event_proc( XEvent* e )
@@ -263,7 +263,7 @@ void np_event_proc( XEvent* e )
 
 static void np_set_timer( int interval )
 {
-    // Ensure we only have one timeout in progress - QApplication is
+    // Ensure we only have one timeout in progress - TQApplication is
     // computing the one amount of time we need to wait.
     if ( qt_np_timerid ) {
         XtRemoveTimeOut( qt_np_timerid );
@@ -302,7 +302,7 @@ static void np_do_timers( void*, void* )
 static bool my_xt;
 
 /*!
-  Constructs a QApplication and initializes the Xt toolkit.
+  Constructs a TQApplication and initializes the Xt toolkit.
   The \a appclass, \a options, \a num_options, and \a resources
   arguments are passed on to XtAppSetFallbackResources and
   XtDisplayInitialize.
@@ -311,7 +311,7 @@ static bool my_xt;
   needs to use some existing Xt/Motif widgets.
 */
 KXtApplication::KXtApplication(int& argc, char** argv,
-        const QCString& rAppName, bool allowStyles, bool GUIenabled,
+        const TQCString& rAppName, bool allowStyles, bool GUIenabled,
         XrmOptionDescRec *options, int num_options,
         char** resources)
   : KApplication(argc, argv, rAppName, allowStyles, GUIenabled)
@@ -327,14 +327,14 @@ KXtApplication::KXtApplication(int& argc, char** argv,
 }
 
 /*!
-  Constructs a QApplication from the \a display of an already-initialized
+  Constructs a TQApplication from the \a display of an already-initialized
   Xt application.
 
   Use this constructor when introducing Qt widgets into an existing
   Xt/Motif application.
 */
 KXtApplication::KXtApplication(Display* dpy, int& argc, char** argv,
-        const QCString& rAppName, bool allowStyles, bool GUIenabled)
+        const TQCString& rAppName, bool allowStyles, bool GUIenabled)
    : KApplication(dpy, argc, argv, rAppName, allowStyles, GUIenabled)
 {
     my_xt = FALSE;
@@ -367,7 +367,7 @@ void KXtApplication::init()
     qt_np_add_timer_setter(np_set_timer);
     qt_np_add_event_proc(np_event_proc);
     qt_np_count++;
-/*    QTimer *timer = new QTimer( this );
+/*    TQTimer *timer = new TQTimer( this );
       timer->start(500);*/
 }
 
@@ -381,11 +381,11 @@ void KXtApplication::init()
   Xt widgets, it can be a QWidget
   based on a Xt widget class. For including Qt widgets in an existing
   Xt/Motif application, it can be a special Xt widget class that is
-  a QWidget.  See the constructors for the different behaviors.
+  a TQWidget.  See the constructors for the different behaviors.
 */
 
 void KXtWidget::init(const char* name, WidgetClass widget_class,
-                    Widget parent, QWidget* qparent,
+                    Widget parent, TQWidget* qparent,
                     ArgList args, Cardinal num_args,
                     bool managed)
 {
@@ -438,14 +438,14 @@ void KXtWidget::init(const char* name, WidgetClass widget_class,
 
 /*!
   Constructs a KXtWidget of the special Xt widget class known as
-  "QWidget" to the resource manager.
+  "TQWidget" to the resource manager.
 
   Use this constructor to utilize Qt widgets in an Xt/Motif
-  application.  The KXtWidget is a QWidget, so you can create
+  application.  The KXtWidget is a TQWidget, so you can create
   subwidgets, layouts, etc. using Qt functionality.
 */
 KXtWidget::KXtWidget(const char* name, Widget parent, bool managed) :
-    QWidget( 0, name, WResizeNoErase )
+    TQWidget( 0, name, WResizeNoErase )
 {
     init(name, qWidgetClass, parent, 0, 0, 0, managed);
     Arg reqargs[20];
@@ -460,21 +460,21 @@ KXtWidget::KXtWidget(const char* name, Widget parent, bool managed) :
 
   Use this constructor to utilize Xt or Motif widgets in a Qt
   application.  The KXtWidget looks and behaves
-  like the Xt class, but can be used like any QWidget.
+  like the Xt class, but can be used like any TQWidget.
 
   Note that Xt requires that the most toplevel Xt widget is a shell.
   That means, if \a parent is a KXtWidget, the \a widget_class can be
   of any kind. If there isn't a parent or the parent is just a normal
-  QWidget, \a widget_class should be something like \c
+  TQWidget, \a widget_class should be something like \c
   topLevelShellWidgetClass.
 
   If the \a managed parameter is TRUE and \a parent in not NULL,
   XtManageChild it used to manage the child.
 */
 KXtWidget::KXtWidget(const char* name, WidgetClass widget_class,
-                     QWidget *parent, ArgList args, Cardinal num_args,
+                     TQWidget *parent, ArgList args, Cardinal num_args,
                      bool managed) :
-    QWidget( parent, name, WResizeNoErase )
+    TQWidget( parent, name, WResizeNoErase )
 {
     if ( !parent )
         init(name, widget_class, 0, 0, args, num_args, managed);
@@ -492,11 +492,11 @@ KXtWidget::~KXtWidget()
 {
     // Delete children first, as Xt will destroy their windows
     //
-    QObjectList* list = queryList("QWidget", 0, FALSE, FALSE);
+    TQObjectList* list = queryList("TQWidget", 0, FALSE, FALSE);
     if ( list ) {
-        QWidget* c;
-        QObjectListIt it( *list );
-        while ( (c = (QWidget*)it.current()) ) {
+        TQWidget* c;
+        TQObjectListIt it( *list );
+        while ( (c = (TQWidget*)it.current()) ) {
             delete c;
             ++it;
         }
@@ -530,7 +530,7 @@ bool KXtWidget::x11Event( XEvent * e )
         if  ( xtparent )
             setActiveWindow();
     }
-    return QWidget::x11Event( e );
+    return TQWidget::x11Event( e );
 }
 
 
@@ -540,7 +540,7 @@ bool KXtWidget::x11Event( XEvent * e )
 void KXtWidget::setActiveWindow()
 {
     if  ( xtparent ) {
-        if ( !QWidget::isActiveWindow() && isActiveWindow() ) {
+        if ( !TQWidget::isActiveWindow() && isActiveWindow() ) {
             XFocusChangeEvent e;
             e.type = FocusIn;
             e.window = winId();
@@ -549,12 +549,12 @@ void KXtWidget::setActiveWindow()
             XSendEvent( qt_xdisplay(), e.window, TRUE, NoEventMask, (XEvent*)&e );
         }
     } else {
-        QWidget::setActiveWindow();
+        TQWidget::setActiveWindow();
     }
 }
 
 /*!
-  Different from QWidget::isActiveWindow()
+  Different from TQWidget::isActiveWindow()
  */
 bool KXtWidget::isActiveWindow() const
 {
@@ -564,7 +564,7 @@ bool KXtWidget::isActiveWindow() const
 
     if ( win == None) return FALSE;
 
-    QWidget *w = find( (WId)win );
+    TQWidget *w = find( (WId)win );
     if ( w ) {
         // We know that window
         return w->topLevelWidget() == topLevelWidget();
@@ -586,7 +586,7 @@ bool KXtWidget::isActiveWindow() const
 
 /*!\reimp
  */
-void KXtWidget::moveEvent( QMoveEvent* )
+void KXtWidget::moveEvent( TQMoveEvent* )
 {
     if ( xtparent )
         return;
@@ -605,7 +605,7 @@ void KXtWidget::moveEvent( QMoveEvent* )
 
 /*!\reimp
  */
-void KXtWidget::resizeEvent( QResizeEvent* )
+void KXtWidget::resizeEvent( TQResizeEvent* )
 {
     if ( xtparent )
         return;

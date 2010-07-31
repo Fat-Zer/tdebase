@@ -22,9 +22,9 @@
 
 #include <assert.h>
 
-#include <qlistview.h>
-#include <qmap.h>
-#include <qvaluevector.h>
+#include <tqlistview.h>
+#include <tqmap.h>
+#include <tqvaluevector.h>
 
 #include <klocale.h>
 #include <kbookmark.h>
@@ -39,24 +39,24 @@ class KListViewSearchLine;
 class KEBListViewItem : public QListViewItem
 {
 public:
-   KEBListViewItem(QListView *, const KBookmarkGroup &);
-   KEBListViewItem(KEBListViewItem *, QListViewItem *);
-   KEBListViewItem(KEBListViewItem *, QListViewItem *, const KBookmarkGroup &);
+   KEBListViewItem(TQListView *, const KBookmarkGroup &);
+   KEBListViewItem(KEBListViewItem *, TQListViewItem *);
+   KEBListViewItem(KEBListViewItem *, TQListViewItem *, const KBookmarkGroup &);
    KEBListViewItem(KEBListViewItem *, const KBookmark &);
-   KEBListViewItem(KEBListViewItem *, QListViewItem *, const KBookmark &);
+   KEBListViewItem(KEBListViewItem *, TQListViewItem *, const KBookmark &);
 
-   KEBListViewItem(QListView *, const KBookmark &);
-   KEBListViewItem(QListView *, QListViewItem *, const KBookmark &);
+   KEBListViewItem(TQListView *, const KBookmark &);
+   KEBListViewItem(TQListView *, TQListViewItem *, const KBookmark &);
 
-   void nsPut(const QString &nm);
+   void nsPut(const TQString &nm);
 
    void modUpdate();
 
-   void setOldStatus(const QString &);
-   void setTmpStatus(const QString &);
+   void setOldStatus(const TQString &);
+   void setTmpStatus(const TQString &);
    void restoreStatus();
 
-   void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
+   void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment);
    void setSelected ( bool s );
 
    virtual void setOpen(bool);
@@ -66,18 +66,18 @@ public:
 
   typedef enum { GreyStyle, BoldStyle, GreyBoldStyle, DefaultStyle } PaintStyle;
 
-   static bool parentSelected(QListViewItem * item);
+   static bool parentSelected(TQListViewItem * item);
 
 private:
-   const QString nsGet() const;
+   const TQString nsGet() const;
    void normalConstruct(const KBookmark &);
 
    KBookmark m_bookmark;
    PaintStyle m_paintStyle;
    bool m_emptyFolderPadder;
-   QString m_oldStatus;
-   void greyStyle(QColorGroup &);
-   void boldStyle(QPainter *);
+   TQString m_oldStatus;
+   void greyStyle(TQColorGroup &);
+   void boldStyle(TQPainter *);
 };
 
 class KEBListView : public KListView
@@ -91,7 +91,7 @@ public:
       StatusColumn = 3,
       AddressColumn = 4
    };
-   KEBListView(QWidget *parent, bool folderList) 
+   KEBListView(TQWidget *parent, bool folderList) 
       : KListView(parent), m_folderList(folderList) {}
    virtual ~KEBListView() {}
 
@@ -102,24 +102,24 @@ public:
    void loadColumnSetting();
    void saveColumnSetting();
 
-   void updateByURL(QString url);
+   void updateByURL(TQString url);
 
    bool isFolderList() const { return m_folderList; }
 
    KEBListViewItem* rootItem() const;
 
 public slots:
-   virtual void rename(QListViewItem *item, int c);
+   virtual void rename(TQListViewItem *item, int c);
    void slotMoved();
-   void slotContextMenu(KListView *, QListViewItem *, const QPoint &);
-   void slotItemRenamed(QListViewItem *, const QString &, int);
-   void slotDoubleClicked(QListViewItem *, const QPoint &, int);
-   void slotDropped(QDropEvent*, QListViewItem*, QListViewItem*);
+   void slotContextMenu(KListView *, TQListViewItem *, const TQPoint &);
+   void slotItemRenamed(TQListViewItem *, const TQString &, int);
+   void slotDoubleClicked(TQListViewItem *, const TQPoint &, int);
+   void slotDropped(TQDropEvent*, TQListViewItem*, TQListViewItem*);
    void slotColumnSizeChanged(int, int, int);
 
 protected:
-   virtual bool acceptDrag(QDropEvent *e) const;
-   virtual QDragObject* dragObject();
+   virtual bool acceptDrag(TQDropEvent *e) const;
+   virtual TQDragObject* dragObject();
 
 private:
    bool m_folderList;
@@ -140,25 +140,25 @@ public:
    // selected item stuff
    void selected(KEBListViewItem * item, bool s);
    
-   void invalidate(const QString & address);
-   void invalidate(QListViewItem * item);
-   void fixUpCurrent(const QString & address);
+   void invalidate(const TQString & address);
+   void invalidate(TQListViewItem * item);
+   void fixUpCurrent(const TQString & address);
 
    KEBListViewItem * firstSelected() const;
-   QValueVector<KEBListViewItem *> selectedItemsMap() const;
+   TQValueVector<KEBListViewItem *> selectedItemsMap() const;
 
-   QValueList<QString> selectedAddresses();
+   TQValueList<TQString> selectedAddresses();
 
    // bookmark helpers
-   QValueList<KBookmark> itemsToBookmarks(const QValueVector<KEBListViewItem *> & items) const;
+   TQValueList<KBookmark> itemsToBookmarks(const TQValueVector<KEBListViewItem *> & items) const;
 
    // bookmark stuff
-   QValueList<KBookmark> allBookmarks() const;
-   QValueList<KBookmark> selectedBookmarksExpanded() const;
+   TQValueList<KBookmark> allBookmarks() const;
+   TQValueList<KBookmark> selectedBookmarksExpanded() const;
 
    // address stuff
-   KEBListViewItem* getItemAtAddress(const QString &address) const;
-   QString userAddress() const;
+   KEBListViewItem* getItemAtAddress(const TQString &address) const;
+   TQString userAddress() const;
 
    // gui stuff - DESIGN - all of it???
    SelcAbilities getSelectionAbilities() const;
@@ -168,20 +168,20 @@ public:
    void setCurrent(KEBListViewItem *item, bool select);
    void renameNextCell(bool dir);
 
-   QWidget *widget() const { return m_listView; }
+   TQWidget *widget() const { return m_listView; }
    void rename(int);
    void clearSelection();
 
-   void updateStatus(QString url);
+   void updateStatus(TQString url);
 
    static ListView* self() { return s_self; }
-   static void createListViews(QSplitter *parent);
+   static void createListViews(TQSplitter *parent);
 
    void handleMoved(KEBListView *);
-   void handleDropped(KEBListView *, QDropEvent *, QListViewItem *, QListViewItem *);
-   void handleContextMenu(KEBListView *, KListView *, QListViewItem *, const QPoint &);
-   void handleDoubleClicked(KEBListView *, QListViewItem *, const QPoint &, int);
-   void handleItemRenamed(KEBListView *, QListViewItem *, const QString &, int);
+   void handleDropped(KEBListView *, TQDropEvent *, TQListViewItem *, TQListViewItem *);
+   void handleContextMenu(KEBListView *, KListView *, TQListViewItem *, const TQPoint &);
+   void handleDoubleClicked(KEBListView *, TQListViewItem *, const TQPoint &, int);
+   void handleItemRenamed(KEBListView *, TQListViewItem *, const TQString &, int);
 
    static void startRename(int column, KEBListViewItem *item);
 
@@ -194,7 +194,7 @@ public slots:
 
 private:
    void updateTree();
-   void selectedBookmarksExpandedHelper(KEBListViewItem * item, QValueList<KBookmark> & bookmarks) const;
+   void selectedBookmarksExpandedHelper(KEBListViewItem * item, TQValueList<KBookmark> & bookmarks) const;
    void fillWithGroup(KEBListView *, KBookmarkGroup, KEBListViewItem * = 0);
 
    ListView();
@@ -203,15 +203,15 @@ private:
    KListViewSearchLine * m_searchline;
 
 //  Actually this is a std:set, the bool is ignored
-   QMap<KEBListViewItem *, bool> mSelectedItems;
+   TQMap<KEBListViewItem *, bool> mSelectedItems;
    bool m_needToFixUp;
 
    // statics
    static ListView *s_self;
    static int s_myrenamecolumn;
    static KEBListViewItem *s_myrenameitem;
-   static QStringList s_selected_addresses;
-   static QString s_current_address;
+   static TQStringList s_selected_addresses;
+   static TQString s_current_address;
 };
 
 #endif

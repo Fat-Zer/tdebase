@@ -78,7 +78,7 @@ public slots:
     void refresh();
 
 protected:
-    virtual void paintEvent( QPaintEvent * );
+    virtual void paintEvent( TQPaintEvent * );
 
  private:
     KasTaskItem *item;

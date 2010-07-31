@@ -15,12 +15,12 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <dcopclient.h>
 
@@ -32,22 +32,22 @@
 
 #include "kcmlaunch.h"
 
-typedef KGenericFactory<LaunchConfig, QWidget> LaunchFactory;
+typedef KGenericFactory<LaunchConfig, TQWidget> LaunchFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_launch, LaunchFactory("kcmlaunch") )
 
 
-LaunchConfig::LaunchConfig(QWidget * parent, const char * name, const QStringList &)
+LaunchConfig::LaunchConfig(TQWidget * parent, const char * name, const TQStringList &)
   : KCModule(LaunchFactory::instance(), parent, name)
 {
-    QVBoxLayout* Form1Layout = new QVBoxLayout( this, 0, 
+    TQVBoxLayout* Form1Layout = new TQVBoxLayout( this, 0, 
         KDialog::spacingHint() );
 
     setQuickHelp( i18n ( "<h1>Launch Feedback</h1>"
      " You can configure the application-launch feedback here."));
 
-    QGroupBox* GroupBox1 = new QGroupBox( this, "GroupBox1" );
+    TQGroupBox* GroupBox1 = new TQGroupBox( this, "GroupBox1" );
     GroupBox1->setTitle( i18n( "Bus&y Cursor" ) );
-    QWhatsThis::add(GroupBox1, i18n(
+    TQWhatsThis::add(GroupBox1, i18n(
      "<h1>Busy Cursor</h1>\n"
      "KDE offers a busy cursor for application startup notification.\n"
      "To enable the busy cursor, select one kind of visual feedback\n"
@@ -60,22 +60,22 @@ LaunchConfig::LaunchConfig(QWidget * parent, const char * name, const QStringLis
     GroupBox1->layout()->setSpacing( 0 );
     GroupBox1->layout()->setMargin( 0 );
     Form1Layout->addWidget( GroupBox1 );
-    QGridLayout* GroupBox1Layout = new QGridLayout( GroupBox1->layout(), 3, 2 );
+    TQGridLayout* GroupBox1Layout = new TQGridLayout( GroupBox1->layout(), 3, 2 );
     GroupBox1Layout->setSpacing( 6 );
     GroupBox1Layout->setMargin( 11 );
     GroupBox1Layout->setColStretch( 1, 1 );
 
-    cb_busyCursor = new QComboBox( GroupBox1, "cb_busyCursor" );
+    cb_busyCursor = new TQComboBox( GroupBox1, "cb_busyCursor" );
     cb_busyCursor->insertItem( i18n( "No Busy Cursor" ), 0 );
     cb_busyCursor->insertItem( i18n( "Passive Busy Cursor" ), 1 );
     cb_busyCursor->insertItem( i18n( "Blinking Cursor" ), 2 );
     cb_busyCursor->insertItem( i18n( "Bouncing Cursor" ), 3 );
     GroupBox1Layout->addWidget( cb_busyCursor, 0, 0 );
-    connect( cb_busyCursor, SIGNAL( activated(int) ),
-            SLOT ( slotBusyCursor(int)));
-    connect( cb_busyCursor, SIGNAL( activated(int) ), SLOT( checkChanged() ) );
+    connect( cb_busyCursor, TQT_SIGNAL( activated(int) ),
+            TQT_SLOT ( slotBusyCursor(int)));
+    connect( cb_busyCursor, TQT_SIGNAL( activated(int) ), TQT_SLOT( checkChanged() ) );
 
-    lbl_cursorTimeout = new QLabel( GroupBox1, "TextLabel1" );
+    lbl_cursorTimeout = new TQLabel( GroupBox1, "TextLabel1" );
     lbl_cursorTimeout->setText( i18n( "&Startup indication timeout:" ) );
     GroupBox1Layout->addWidget( lbl_cursorTimeout, 2, 0 );
     sb_cursorTimeout = new KIntNumInput( GroupBox1, "sb_cursorTimeout" );
@@ -83,12 +83,12 @@ LaunchConfig::LaunchConfig(QWidget * parent, const char * name, const QStringLis
     sb_cursorTimeout->setSuffix( i18n(" sec") );
     GroupBox1Layout->addWidget( sb_cursorTimeout, 2, 1 );
     lbl_cursorTimeout->setBuddy( sb_cursorTimeout );
-    connect( sb_cursorTimeout, SIGNAL( valueChanged(int) ), 
-            SLOT( checkChanged() ) );
+    connect( sb_cursorTimeout, TQT_SIGNAL( valueChanged(int) ), 
+            TQT_SLOT( checkChanged() ) );
 
-    QGroupBox* GroupBox2 = new QGroupBox( this, "GroupBox2" );
+    TQGroupBox* GroupBox2 = new TQGroupBox( this, "GroupBox2" );
     GroupBox2->setTitle( i18n( "Taskbar &Notification" ) );
-    QWhatsThis::add(GroupBox2, i18n("<H1>Taskbar Notification</H1>\n"
+    TQWhatsThis::add(GroupBox2, i18n("<H1>Taskbar Notification</H1>\n"
     "You can enable a second method of startup notification which is\n"
     "used by the taskbar where a button with a rotating hourglass appears,\n"
     "symbolizing that your started application is loading.\n"
@@ -100,19 +100,19 @@ LaunchConfig::LaunchConfig(QWidget * parent, const char * name, const QStringLis
     GroupBox2->layout()->setSpacing( 0 );
     GroupBox2->layout()->setMargin( 0 );
     Form1Layout->addWidget( GroupBox2 );
-    QGridLayout* GroupBox2Layout = new QGridLayout( GroupBox2->layout(), 2, 2 );
+    TQGridLayout* GroupBox2Layout = new TQGridLayout( GroupBox2->layout(), 2, 2 );
     GroupBox2Layout->setSpacing( 6 );
     GroupBox2Layout->setMargin( 11 );
     GroupBox2Layout->setColStretch( 1, 1 );
 
-    cb_taskbarButton = new QCheckBox( GroupBox2, "cb_taskbarButton" );
+    cb_taskbarButton = new TQCheckBox( GroupBox2, "cb_taskbarButton" );
     cb_taskbarButton->setText( i18n( "Enable &taskbar notification" ) );
     GroupBox2Layout->addMultiCellWidget( cb_taskbarButton, 0, 0, 0, 1 );
-    connect( cb_taskbarButton, SIGNAL( toggled(bool) ), 
-            SLOT( slotTaskbarButton(bool)));
-    connect( cb_taskbarButton, SIGNAL( toggled(bool) ), SLOT( checkChanged()));
+    connect( cb_taskbarButton, TQT_SIGNAL( toggled(bool) ), 
+            TQT_SLOT( slotTaskbarButton(bool)));
+    connect( cb_taskbarButton, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( checkChanged()));
 
-    lbl_taskbarTimeout = new QLabel( GroupBox2, "TextLabel2" );
+    lbl_taskbarTimeout = new TQLabel( GroupBox2, "TextLabel2" );
     lbl_taskbarTimeout->setText( i18n( "Start&up indication timeout:" ) );
     GroupBox2Layout->addWidget( lbl_taskbarTimeout, 1, 0 );
     sb_taskbarTimeout = new KIntNumInput( GroupBox2, "sb_taskbarTimeout" );
@@ -120,8 +120,8 @@ LaunchConfig::LaunchConfig(QWidget * parent, const char * name, const QStringLis
     sb_taskbarTimeout->setSuffix( i18n(" sec") );
     GroupBox2Layout->addWidget( sb_taskbarTimeout, 1, 1 );
     lbl_taskbarTimeout->setBuddy( sb_taskbarTimeout );
-    connect( sb_taskbarTimeout, SIGNAL( valueChanged(int) ), 
-            SLOT( checkChanged() ) );
+    connect( sb_taskbarTimeout, TQT_SIGNAL( valueChanged(int) ), 
+            TQT_SLOT( checkChanged() ) );
 
     Form1Layout->addStretch();
 
@@ -214,7 +214,7 @@ LaunchConfig::save()
 
   if (!kapp->dcopClient()->isAttached())
      kapp->dcopClient()->attach();
-  QByteArray data;
+  TQByteArray data;
   kapp->dcopClient()->send( "kicker", "Panel", "restart()", data );
   kapp->dcopClient()->send( "kdesktop", "", "configure()", data );
 }

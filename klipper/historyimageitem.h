@@ -22,8 +22,8 @@
 #define _HISTORYIMAGEITEM_H_
 
 #include "historyitem.h"
-#include <qpixmap.h>
-#include <qdragobject.h>
+#include <tqpixmap.h>
+#include <tqdragobject.h>
 
 /**
  * A image entry in the clipboard history.
@@ -31,29 +31,29 @@
 class HistoryImageItem : public HistoryItem
 {
 public:
-    HistoryImageItem( const QPixmap& data );
+    HistoryImageItem( const TQPixmap& data );
     virtual ~HistoryImageItem() {}
-    virtual QString text() const;
+    virtual TQString text() const;
     virtual bool operator==( const HistoryItem& rhs) const {
         if ( const HistoryImageItem* casted_rhs = dynamic_cast<const HistoryImageItem*>( &rhs ) ) {
             return &casted_rhs->m_data == &m_data; // Not perfect, but better than nothing.
         }
         return false;
     }
-    virtual const QPixmap& image() const { return m_data; }
-    virtual QMimeSource* mimeSource() const { return new QImageDrag( m_data.convertToImage()) ; }
+    virtual const TQPixmap& image() const { return m_data; }
+    virtual TQMimeSource* mimeSource() const { return new TQImageDrag( m_data.convertToImage()) ; }
 
-    virtual void write( QDataStream& stream ) const;
+    virtual void write( TQDataStream& stream ) const;
 
 private:
     /**
      *
      */
-    const QPixmap m_data;
+    const TQPixmap m_data;
     /**
      * Cache for m_data's string representation
      */
-    mutable QString m_text;
+    mutable TQString m_text;
 };
 
 

@@ -22,7 +22,7 @@
 
 #include <kuniqueapplication.h>
 #include <kdeprint/kpreloadobject.h>
-#include <qdict.h>
+#include <tqdict.h>
 
 class KMJobViewer;
 class KMTimer;
@@ -45,11 +45,11 @@ protected:
 protected slots:
 	void slotJobsShown(KMJobViewer*, bool);
 	void slotTimer();
-	void slotPrinterChanged(KMJobViewer*, const QString&);
+	void slotPrinterChanged(KMJobViewer*, const TQString&);
 	void slotViewerDestroyed(KMJobViewer*);
 
 private:
-	QDict<KMJobViewer>	m_views;
+	TQDict<KMJobViewer>	m_views;
 	JobTray	*m_tray;
 	KMTimer	*m_timer;
 };

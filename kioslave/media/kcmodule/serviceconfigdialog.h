@@ -31,8 +31,8 @@ class ServiceConfigDialog : public KDialogBase
 
 public:
 	ServiceConfigDialog(NotifierServiceAction *action,
-	                    const QStringList &mimetypesList,
-	                    QWidget* parent = 0, const char* name = 0);
+	                    const TQStringList &mimetypesList,
+	                    TQWidget* parent = 0, const char* name = 0);
 	
 public slots:
 	void slotOk();

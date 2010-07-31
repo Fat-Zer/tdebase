@@ -53,10 +53,10 @@ int kdemain( int argc, char ** argv)
   return 0;
 }
 
-FilterProtocol::FilterProtocol( const QCString & protocol, const QCString &pool, const QCString &app )
+FilterProtocol::FilterProtocol( const TQCString & protocol, const TQCString &pool, const TQCString &app )
  : KIO::SlaveBase( protocol, pool, app )
 {
-    QString mimetype = QString::fromLatin1("application/x-") + QString::fromLatin1(protocol);
+    TQString mimetype = TQString::fromLatin1("application/x-") + TQString::fromLatin1(protocol);
     filter = KFilterBase::findFilterByMimeType( mimetype );
     Q_ASSERT(filter);
 }
@@ -82,8 +82,8 @@ void FilterProtocol::get( const KURL & )
   bool bError = true;
   int result;
 
-  QByteArray inputBuffer;
-  QByteArray outputBuffer(8*1024); // Start with a modest buffer
+  TQByteArray inputBuffer;
+  TQByteArray outputBuffer(8*1024); // Start with a modest buffer
   filter->setOutBuffer( outputBuffer.data(), outputBuffer.size() );
   while(true)
   {
@@ -139,7 +139,7 @@ void FilterProtocol::get( const KURL & )
      dataReq(); // Request data
      result = readData( inputBuffer);
   kdDebug(7110) << "requestData: got " << result << "(expecting 0)" << endl;
-     data( QByteArray() ); // Send EOF
+     data( TQByteArray() ); // Send EOF
   }
 
   filter->terminate();
@@ -157,7 +157,7 @@ void FilterProtocol::get( const KURL & )
 
 void FilterProtocol::put( const KURL &/*url*/, int, bool /*_overwrite*/, bool /*_resume*/ )
 {
-  error( KIO::ERR_UNSUPPORTED_ACTION, QString::fromLatin1("put"));
+  error( KIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("put"));
 }
 
 void FilterProtocol::setSubURL(const KURL &url)

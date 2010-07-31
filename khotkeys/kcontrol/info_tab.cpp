@@ -16,15 +16,15 @@
 
 #include "info_tab.h"
 
-#include <qpushbutton.h>
-#include <qlabel.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
 
 #include <klocale.h>
 
 namespace KHotKeys
 {
 
-Info_tab::Info_tab( QWidget* parent_P, const char* name_P )
+Info_tab::Info_tab( TQWidget* parent_P, const char* name_P )
     : Info_tab_ui( parent_P, name_P )
     {
     clear_data();

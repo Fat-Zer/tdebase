@@ -20,7 +20,7 @@
 
 #include <assert.h>
 
-#include <qimage.h>
+#include <tqimage.h>
 
 #include <kimageio.h>
 
@@ -35,7 +35,7 @@ extern "C"
     }
 }
 
-bool ImageCreator::create(const QString &path, int, int, QImage &img)
+bool ImageCreator::create(const TQString &path, int, int, TQImage &img)
 {
     // create image preview
     if (!img.load( path ))

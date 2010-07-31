@@ -41,11 +41,11 @@ class DancingBarsSettings : public KDialogBase
   Q_OBJECT
 
   public:
-    DancingBarsSettings( QWidget* parent = 0, const char* name = 0 );
+    DancingBarsSettings( TQWidget* parent = 0, const char* name = 0 );
     ~DancingBarsSettings();
 
-    void setTitle( const QString& title );
-    QString title() const;
+    void setTitle( const TQString& title );
+    TQString title() const;
 
     void setMinValue( double min );
     double minValue() const;
@@ -65,25 +65,25 @@ class DancingBarsSettings : public KDialogBase
     void setUpperLimit( double limit );
     double upperLimit() const;
 
-    void setForegroundColor( const QColor &color );
-    QColor foregroundColor() const;
+    void setForegroundColor( const TQColor &color );
+    TQColor foregroundColor() const;
 
-    void setAlarmColor( const QColor &color );
-    QColor alarmColor() const;
+    void setAlarmColor( const TQColor &color );
+    TQColor alarmColor() const;
 
-    void setBackgroundColor( const QColor &color );
-    QColor backgroundColor() const;
+    void setBackgroundColor( const TQColor &color );
+    TQColor backgroundColor() const;
 
     void setFontSize( int size );
     int fontSize() const;
 
-    void setSensors( const QValueList< QStringList > &list );
-    QValueList< QStringList > sensors() const;
+    void setSensors( const TQValueList< TQStringList > &list );
+    TQValueList< TQStringList > sensors() const;
 
   private slots:
     void editSensor();
     void removeSensor();
-    void selectionChanged( QListViewItem* );
+    void selectionChanged( TQListViewItem* );
 
   private:
     KColorButton *mForegroundColor;
@@ -97,10 +97,10 @@ class DancingBarsSettings : public KDialogBase
     KListView *mSensorView;
     KIntNumInput *mFontSize;
 
-    QCheckBox *mUseLowerLimit;
-    QCheckBox *mUseUpperLimit;
-    QPushButton *mEditButton;
-    QPushButton *mRemoveButton;
+    TQCheckBox *mUseLowerLimit;
+    TQCheckBox *mUseUpperLimit;
+    TQPushButton *mEditButton;
+    TQPushButton *mRemoveButton;
 };
 
 #endif

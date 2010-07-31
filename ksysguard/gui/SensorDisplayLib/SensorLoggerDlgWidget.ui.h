@@ -17,7 +17,7 @@ void SensorLoggerDlgWidget::init()
 }
 
 
-QString SensorLoggerDlgWidget::fileName()
+TQString SensorLoggerDlgWidget::fileName()
 {
     return m_fileName->url();
 }
@@ -53,7 +53,7 @@ double SensorLoggerDlgWidget::upperLimit()
 }
 
 
-void SensorLoggerDlgWidget::setFileName( const QString &url )
+void SensorLoggerDlgWidget::setFileName( const TQString &url )
 {
     m_fileName->setURL(url);
 }
@@ -73,7 +73,7 @@ void SensorLoggerDlgWidget::setLowerLimitActive( bool b )
 
 void SensorLoggerDlgWidget::setLowerLimit( double d )
 {
-    m_lowerLimit->setText(QString("%1").arg(d));
+    m_lowerLimit->setText(TQString("%1").arg(d));
 }
 
 
@@ -85,5 +85,5 @@ void SensorLoggerDlgWidget::setUpperLimitActive( bool b )
 
 void SensorLoggerDlgWidget::setUpperLimit( double d )
 {
-    m_upperLimit->setText(QString("%1").arg(d));
+    m_upperLimit->setText(TQString("%1").arg(d));
 }

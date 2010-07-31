@@ -32,7 +32,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 
 #define FS 11025
@@ -42,7 +42,7 @@
 
 extern "C"
 KDE_EXPORT
-KHotKeys::SoundRecorder* khotkeys_soundrecorder_create( QObject* parent, const char* name )
+KHotKeys::SoundRecorder* khotkeys_soundrecorder_create( TQObject* parent, const char* name )
 {
     return new KHotKeys::SoundRecorderArts( parent, name );
 }
@@ -51,7 +51,7 @@ namespace KHotKeys
 {
 
 
-SoundRecorderArts::SoundRecorderArts(QObject *parent, const char *name)
+SoundRecorderArts::SoundRecorderArts(TQObject *parent, const char *name)
 	: SoundRecorder(parent, name) ,
 	  m_dis(new KArtsDispatcher( this) ),
 	  m_server( new KArtsServer( this ) ) ,
@@ -61,7 +61,7 @@ SoundRecorderArts::SoundRecorderArts(QObject *parent, const char *name)
         ( void ) check;
 
 	m_recStream->usePolling( false );
-	connect( m_recStream, SIGNAL(data (QByteArray &)), this, SLOT(slotDataReceived(QByteArray& )));
+	connect( m_recStream, TQT_SIGNAL(data (TQByteArray &)), this, TQT_SLOT(slotDataReceived(TQByteArray& )));
 }
 
 SoundRecorderArts::~SoundRecorderArts()
@@ -80,7 +80,7 @@ void SoundRecorderArts::start()
 void SoundRecorderArts::stop()
 {
 	m_recStream->stop();
-	QTimer::singleShot(400,this,SLOT(slotEmitSignal()));
+	TQTimer::singleShot(400,this,TQT_SLOT(slotEmitSignal()));
 }
 
 void SoundRecorderArts::abort()
@@ -95,7 +95,7 @@ Sound SoundRecorderArts::sound()
 	Sound s;
 	uint BytePS=BITS/8;
 	uint length=m_data.size()/BytePS;
-	QMemArray<Q_INT32> da(length);
+	TQMemArray<Q_INT32> da(length);
 	s.max=0;
 	s._fs=FS;
 	for(uint f=0;f<length; f++)
@@ -119,7 +119,7 @@ Sound SoundRecorderArts::sound()
 	return s;
 }
 
-void SoundRecorderArts::slotDataReceived(QByteArray & data)
+void SoundRecorderArts::slotDataReceived(TQByteArray & data)
 {
 	uint pos=m_data.size();
 	m_data.resize(pos + data.size());

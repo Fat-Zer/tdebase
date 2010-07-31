@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 CONF_GREET_DEFS
 
-QString _stsFile;
+TQString _stsFile;
 bool _isLocal;
 bool _authorized;
 
@@ -43,7 +43,7 @@ static QString
 GetCfgQStr( int id )
 {
 	char *tmp = GetCfgStr( id );
-	QString qs = QString::fromUtf8( tmp );
+	TQString qs = TQString::fromUtf8( tmp );
 	free( tmp );
 	return qs;
 }
@@ -53,9 +53,9 @@ GetCfgQStrList( int id )
 {
 	int i, len;
 	char **tmp = GetCfgStrArr( id, &len );
-	QStringList qsl;
+	TQStringList qsl;
 	for (i = 0; i < len - 1; i++) {
-		qsl.append( QString::fromUtf8( tmp[i] ) );
+		qsl.append( TQString::fromUtf8( tmp[i] ) );
 		free( tmp[i] );
 	}
 	free( tmp );
@@ -64,26 +64,26 @@ GetCfgQStrList( int id )
 
 // Based on kconfigbase.cpp
 static QFont
-Str2Font( const QString &aValue )
+Str2Font( const TQString &aValue )
 {
 	uint nFontBits;
-	QFont aRetFont;
-	QString chStr;
+	TQFont aRetFont;
+	TQString chStr;
 
-	QStringList sl = QStringList::split( QString::fromLatin1(","), aValue );
+	TQStringList sl = TQStringList::split( TQString::fromLatin1(","), aValue );
 
 	if (sl.count() == 1) {
 		/* X11 font spec */
-		aRetFont = QFont( aValue );
+		aRetFont = TQFont( aValue );
 		aRetFont.setRawMode( true );
 	} else if (sl.count() == 10) {
 		/* qt3 font spec */
 		aRetFont.fromString( aValue );
 	} else if (sl.count() == 6) {
 		/* backward compatible kde2 font spec */
-		aRetFont = QFont( sl[0], sl[1].toInt(), sl[4].toUInt() );
+		aRetFont = TQFont( sl[0], sl[1].toInt(), sl[4].toUInt() );
 
-		aRetFont.setStyleHint( (QFont::StyleHint)sl[2].toUInt() );
+		aRetFont.setStyleHint( (TQFont::StyleHint)sl[2].toUInt() );
 
 		nFontBits = sl[5].toUInt();
 		aRetFont.setItalic( (nFontBits & 0x01) != 0 );
@@ -92,9 +92,9 @@ Str2Font( const QString &aValue )
 		aRetFont.setFixedPitch( (nFontBits & 0x08) != 0 );
 		aRetFont.setRawMode( (nFontBits & 0x20) != 0 );
 	}
-	aRetFont.setStyleStrategy( (QFont::StyleStrategy)
-	   (QFont::PreferMatch |
-	    (_antiAliasing ? QFont::PreferAntialias : QFont::NoAntialias)) );
+	aRetFont.setStyleStrategy( (TQFont::StyleStrategy)
+	   (TQFont::PreferMatch |
+	    (_antiAliasing ? TQFont::PreferAntialias : TQFont::NoAntialias)) );
 
 	return aRetFont;
 }
@@ -117,8 +117,8 @@ void init_config( void )
 		hostname[sizeof(hostname)-1] = '\0';
 	struct utsname tuname;
 	uname( &tuname );
-	QString gst = _greetString;
-	_greetString = QString::null;
+	TQString gst = _greetString;
+	_greetString = TQString::null;
 	int i, j, l = gst.length();
 	for (i = 0; i < l; i++) {
 		if (gst[i] == '%') {
@@ -138,7 +138,7 @@ void init_config( void )
 			case 'm': ptr = tuname.machine; break;
 			default: _greetString += i18n("[fix kdmrc!]"); continue;
 			}
-			_greetString += QString::fromLocal8Bit( ptr );
+			_greetString += TQString::fromLocal8Bit( ptr );
 		} else
 			_greetString += gst[i];
 	}
@@ -147,7 +147,7 @@ void init_config( void )
 
 /* out-of-place utility function */
 void
-decodeSess( dpySpec *sess, QString &user, QString &loc )
+decodeSess( dpySpec *sess, TQString &user, TQString &loc )
 {
 	if (sess->flags & isTTY) {
 		user =
@@ -156,9 +156,9 @@ decodeSess( dpySpec *sess, QString &user, QString &loc )
 		loc = 
 #ifdef HAVE_VTS
 			sess->vt ?
-				QString("vt%1").arg( sess->vt ) :
+				TQString("vt%1").arg( sess->vt ) :
 #endif
-				QString::fromLatin1( *sess->from ? sess->from : sess->display );
+				TQString::fromLatin1( *sess->from ? sess->from : sess->display );
 	} else {
 		user =
 			!sess->user ?
@@ -170,8 +170,8 @@ decodeSess( dpySpec *sess, QString &user, QString &loc )
 		loc =
 #ifdef HAVE_VTS
 			sess->vt ?
-				QString("%1, vt%2").arg( sess->display ).arg( sess->vt ) :
+				TQString("%1, vt%2").arg( sess->display ).arg( sess->vt ) :
 #endif
-				QString::fromLatin1( sess->display );
+				TQString::fromLatin1( sess->display );
 	}
 }

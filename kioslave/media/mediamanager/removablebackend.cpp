@@ -33,19 +33,19 @@
 
 
 RemovableBackend::RemovableBackend(MediaList &list)
-	: QObject(), BackendBase(list)
+	: TQObject(), BackendBase(list)
 {
 	KDirWatch::self()->addFile(MTAB);
 
-	connect( KDirWatch::self(), SIGNAL( dirty(const QString&) ),
-	         this, SLOT( slotDirty(const QString&) ) );
+	connect( KDirWatch::self(), TQT_SIGNAL( dirty(const TQString&) ),
+	         this, TQT_SLOT( slotDirty(const TQString&) ) );
 	KDirWatch::self()->startScan();
 }
 
 RemovableBackend::~RemovableBackend()
 {
-	QStringList::iterator it = m_removableIds.begin();
-	QStringList::iterator end = m_removableIds.end();
+	TQStringList::iterator it = m_removableIds.begin();
+	TQStringList::iterator end = m_removableIds.end();
 
 	for (; it!=end; ++it)
 	{
@@ -55,25 +55,25 @@ RemovableBackend::~RemovableBackend()
         KDirWatch::self()->removeFile(MTAB);
 }
 
-bool RemovableBackend::plug(const QString &devNode, const QString &label)
+bool RemovableBackend::plug(const TQString &devNode, const TQString &label)
 {
-	QString name = generateName(devNode);
-	QString id = generateId(devNode);
+	TQString name = generateName(devNode);
+	TQString id = generateId(devNode);
 
 	if (!m_removableIds.contains(id))
 	{
 		Medium *medium = new Medium(id, name);
-		medium->mountableState(devNode, QString::null,
-		                       QString::null, false);
+		medium->mountableState(devNode, TQString::null,
+		                       TQString::null, false);
 
-		QStringList words = QStringList::split(" ", label);
+		TQStringList words = TQStringList::split(" ", label);
 		
-		QStringList::iterator it = words.begin();
-		QStringList::iterator end = words.end();
+		TQStringList::iterator it = words.begin();
+		TQStringList::iterator end = words.end();
 
-		QString tmp = (*it).lower();
+		TQString tmp = (*it).lower();
 		tmp[0] = tmp[0].upper();
-		QString new_label = tmp;
+		TQString new_label = tmp;
 		
 		++it;
 		for (; it!=end; ++it)
@@ -92,9 +92,9 @@ bool RemovableBackend::plug(const QString &devNode, const QString &label)
 	return false;
 }
 
-bool RemovableBackend::unplug(const QString &devNode)
+bool RemovableBackend::unplug(const TQString &devNode)
 {
-	QString id = generateId(devNode);
+	TQString id = generateId(devNode);
 	if (m_removableIds.contains(id))
 	{
 		m_removableIds.remove(id);
@@ -103,18 +103,18 @@ bool RemovableBackend::unplug(const QString &devNode)
 	return false;
 }
 
-bool RemovableBackend::camera(const QString &devNode)
+bool RemovableBackend::camera(const TQString &devNode)
 {
-	QString id = generateId(devNode);
+	TQString id = generateId(devNode);
 	if (m_removableIds.contains(id))
 	{
 		return m_mediaList.changeMediumState(id,
-			QString("camera:/"), false, "media/gphoto2camera");
+			TQString("camera:/"), false, "media/gphoto2camera");
 	}
 	return false;
 }
 
-void RemovableBackend::slotDirty(const QString &path)
+void RemovableBackend::slotDirty(const TQString &path)
 {
 	if (path==MTAB)
 	{
@@ -125,7 +125,7 @@ void RemovableBackend::slotDirty(const QString &path)
 
 void RemovableBackend::handleMtabChange()
 {
-	QStringList new_mtabIds;
+	TQStringList new_mtabIds;
 	KMountPoint::List mtab = KMountPoint::currentMountPoints();
 
 	KMountPoint::List::iterator it = mtab.begin();
@@ -133,11 +133,11 @@ void RemovableBackend::handleMtabChange()
 
 	for (; it!=end; ++it)
 	{
-		QString dev = (*it)->mountedFrom();
-		QString mp = (*it)->mountPoint();
-		QString fs = (*it)->mountType();
+		TQString dev = (*it)->mountedFrom();
+		TQString mp = (*it)->mountPoint();
+		TQString fs = (*it)->mountType();
 
-		QString id = generateId(dev);
+		TQString id = generateId(dev);
 		new_mtabIds+=id;
 
 		if ( !m_mtabIds.contains(id)
@@ -148,8 +148,8 @@ void RemovableBackend::handleMtabChange()
 		}
 	}
 
-	QStringList::iterator it2 = m_mtabIds.begin();
-	QStringList::iterator end2 = m_mtabIds.end();
+	TQStringList::iterator it2 = m_mtabIds.begin();
+	TQStringList::iterator end2 = m_mtabIds.end();
 
 	for (; it2!=end2; ++it2)
 	{
@@ -164,15 +164,15 @@ void RemovableBackend::handleMtabChange()
 	m_mtabIds = new_mtabIds;
 }
 
-QString RemovableBackend::generateId(const QString &devNode)
+TQString RemovableBackend::generateId(const TQString &devNode)
 {
-	QString dev = KStandardDirs::realFilePath(devNode);
+	TQString dev = KStandardDirs::realFilePath(devNode);
 
 	return "/org/kde/mediamanager/removable/"
 	      +dev.replace("/", "");
 }
 
-QString RemovableBackend::generateName(const QString &devNode)
+TQString RemovableBackend::generateName(const TQString &devNode)
 {
 	return KURL(devNode).fileName();
 }

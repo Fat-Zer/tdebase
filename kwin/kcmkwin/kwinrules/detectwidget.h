@@ -35,7 +35,7 @@ class DetectWidget
     {
     Q_OBJECT
     public:
-        DetectWidget( QWidget* parent = NULL, const char* name = NULL );
+        DetectWidget( TQWidget* parent = NULL, const char* name = NULL );
     };
 
 class DetectDialog
@@ -43,35 +43,35 @@ class DetectDialog
     {
     Q_OBJECT
     public:
-        DetectDialog( QWidget* parent = NULL, const char* name = NULL );
+        DetectDialog( TQWidget* parent = NULL, const char* name = NULL );
         void detect( WId window );
-        QCString selectedClass() const;
+        TQCString selectedClass() const;
         bool selectedWholeClass() const;
-        QCString selectedRole() const;
+        TQCString selectedRole() const;
         bool selectedWholeApp() const;
         NET::WindowType selectedType() const;
-        QString selectedTitle() const;
+        TQString selectedTitle() const;
         Rules::StringMatch titleMatch() const;
-        QCString selectedMachine() const;
+        TQCString selectedMachine() const;
         const KWin::WindowInfo& windowInfo() const;
     signals:
         void detectionDone( bool );
     protected:
-        virtual bool eventFilter( QObject* o, QEvent* e );
+        virtual bool eventFilter( TQObject* o, TQEvent* e );
     private:
         void selectWindow();
         void readWindow( WId window );
         void executeDialog();
         WId findWindow();
-        QCString wmclass_class;
-        QCString wmclass_name;
-        QCString role;
+        TQCString wmclass_class;
+        TQCString wmclass_name;
+        TQCString role;
         NET::WindowType type;
-        QString title;
-        QCString extrarole;
-        QCString machine;
+        TQString title;
+        TQCString extrarole;
+        TQCString machine;
         DetectWidget* widget;
-        QDialog* grabber;
+        TQDialog* grabber;
         KWin::WindowInfo info;
     };
 

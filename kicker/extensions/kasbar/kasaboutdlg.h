@@ -68,7 +68,7 @@ class KasAboutDialog : public KDialogBase
    Q_OBJECT
 
 public:
-   KasAboutDialog( QWidget *parent=0 );
+   KasAboutDialog( TQWidget *parent=0 );
    ~KasAboutDialog();
 
    void addAuthorsPage();

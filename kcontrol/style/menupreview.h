@@ -20,7 +20,7 @@
 #ifndef __MENUPREVIEW_H
 #define __MENUPREVIEW_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KPixmap;
 
@@ -35,7 +35,7 @@ public:
 		Blend 
 	};
 
-	MenuPreview( QWidget* parent, int opacity, PreviewMode pvm );
+	MenuPreview( TQWidget* parent, int opacity, PreviewMode pvm );
 	~MenuPreview();
 
 public slots:
@@ -43,7 +43,7 @@ public slots:
 	void setPreviewMode( PreviewMode pvm );
 
 protected:
-	void paintEvent( QPaintEvent* pe );
+	void paintEvent( TQPaintEvent* pe );
 
 private:
 	void createPixmaps();

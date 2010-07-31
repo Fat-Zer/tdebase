@@ -23,10 +23,10 @@
 #include "klaunchsettings.h"
 
 #include <kiconloader.h>
-#include <qcursor.h>
+#include <tqcursor.h>
 #include <kapplication.h>
-#include <qimage.h>
-#include <qbitmap.h>
+#include <tqimage.h>
+#include <tqbitmap.h>
 #include <kconfig.h>
 #include <X11/Xlib.h>
 
@@ -40,14 +40,14 @@ enum kde_startup_status_enum { StartupPre, StartupIn, StartupDone };
 static kde_startup_status_enum kde_startup_status = StartupPre;
 static Atom kde_splash_progress;
 
-StartupId::StartupId( QWidget* parent, const char* name )
-    :   QWidget( parent, name ),
+StartupId::StartupId( TQWidget* parent, const char* name )
+    :   TQWidget( parent, name ),
 	startup_info( KStartupInfo::CleanOnCantDetect ),
 	startup_widget( NULL ),
 	blinking( true ),
 	bouncing( false )
     {
-    hide(); // is QWidget only because of x11Event()
+    hide(); // is TQWidget only because of x11Event()
     if( kde_startup_status == StartupPre )
         {
         kde_splash_progress = XInternAtom( qt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
@@ -56,16 +56,16 @@ StartupId::StartupId( QWidget* parent, const char* name )
         XSelectInput( qt_xdisplay(), qt_xrootwin(), attrs.your_event_mask | SubstructureNotifyMask);
         kapp->installX11EventFilter( this );
         }
-    connect( &update_timer, SIGNAL( timeout()), SLOT( update_startupid()));
+    connect( &update_timer, TQT_SIGNAL( timeout()), TQT_SLOT( update_startupid()));
     connect( &startup_info,
-        SIGNAL( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )),
-        SLOT( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )));
+        TQT_SIGNAL( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )),
+        TQT_SLOT( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )));
     connect( &startup_info,
-        SIGNAL( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )),
-        SLOT( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )));
+        TQT_SIGNAL( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )),
+        TQT_SLOT( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )));
     connect( &startup_info,
-        SIGNAL( gotRemoveStartup( const KStartupInfoId&, const KStartupInfoData& )),
-        SLOT( gotRemoveStartup( const KStartupInfoId& )));
+        TQT_SIGNAL( gotRemoveStartup( const KStartupInfoId&, const KStartupInfoData& )),
+        TQT_SLOT( gotRemoveStartup( const KStartupInfoId& )));
     }
 
 StartupId::~StartupId()
@@ -82,7 +82,7 @@ void StartupId::configure()
 
 void StartupId::gotNewStartup( const KStartupInfoId& id_P, const KStartupInfoData& data_P )
     {
-    QString icon = data_P.findIcon();
+    TQString icon = data_P.findIcon();
     current_startup = id_P;
     startups[ id_P ] = icon;
     start_startupid( icon );
@@ -92,7 +92,7 @@ void StartupId::gotStartupChange( const KStartupInfoId& id_P, const KStartupInfo
     {
     if( current_startup == id_P )
         {
-        QString icon = data_P.findIcon();
+        TQString icon = data_P.findIcon();
         if( !icon.isEmpty() && icon != startups[ current_startup ] )
             {
             startups[ id_P ] = icon;
@@ -129,10 +129,10 @@ bool StartupId::x11Event( XEvent* e )
             if( startups.count() == 0 )
                 start_startupid( KDE_STARTUP_ICON );
             // 60(?) sec timeout - shouldn't be hopefully needed anyway, ksmserver should have it too
-            QTimer::singleShot( 60000, this, SLOT( finishKDEStartup()));
+            TQTimer::singleShot( 60000, this, TQT_SLOT( finishKDEStartup()));
             }
         else if( strcmp( s, "session ready" ) == 0 && kde_startup_status < StartupDone )
-            QTimer::singleShot( 2000, this, SLOT( finishKDEStartup()));
+            TQTimer::singleShot( 2000, this, TQT_SLOT( finishKDEStartup()));
         }
     return false;
     }
@@ -153,16 +153,16 @@ void StartupId::stop_startupid()
         for( int i = 0;
              i < NUM_BLINKING_PIXMAPS;
              ++i )
-            pixmaps[ i ] = QPixmap(); // null
+            pixmaps[ i ] = TQPixmap(); // null
     update_timer.stop();
     }
 
-static QPixmap scalePixmap( const QPixmap& pm, int w, int h )
+static TQPixmap scalePixmap( const TQPixmap& pm, int w, int h )
 {
 #if QT_VERSION >= 0x030200
-	QPixmap result( 20, 20, pm.depth() );
-	result.setMask( QBitmap( 20, 20, true ) );
-	QPixmap scaled( pm.convertToImage().smoothScale( w, h ) );
+	TQPixmap result( 20, 20, pm.depth() );
+	result.setMask( TQBitmap( 20, 20, true ) );
+	TQPixmap scaled( pm.convertToImage().smoothScale( w, h ) );
 	copyBlt( &result, (20 - w) / 2, (20 - h) / 2, &scaled, 0, 0, w, h );
 	return result;
 #else
@@ -172,20 +172,20 @@ static QPixmap scalePixmap( const QPixmap& pm, int w, int h )
 #endif
 }
 
-void StartupId::start_startupid( const QString& icon_P )
+void StartupId::start_startupid( const TQString& icon_P )
     {
 
-    const QColor startup_colors[ StartupId::NUM_BLINKING_PIXMAPS ]
+    const TQColor startup_colors[ StartupId::NUM_BLINKING_PIXMAPS ]
     = { Qt::black, Qt::darkGray, Qt::lightGray, Qt::white, Qt::white };
 
 
-    QPixmap icon_pixmap = KGlobal::iconLoader()->loadIcon( icon_P, KIcon::Small, 0,
+    TQPixmap icon_pixmap = KGlobal::iconLoader()->loadIcon( icon_P, KIcon::Small, 0,
         KIcon::DefaultState, 0, true ); // return null pixmap if not found
     if( icon_pixmap.isNull())
         icon_pixmap = SmallIcon( "exec" );
     if( startup_widget == NULL )
         {
-        startup_widget = new QWidget( NULL, NULL, WX11BypassWM );
+        startup_widget = new TQWidget( NULL, NULL, WX11BypassWM );
         XSetWindowAttributes attr;
         attr.save_under = True; // useful saveunder if possible to avoid redrawing
         XChangeWindowAttributes( qt_xdisplay(), startup_widget->winId(), CWSaveUnder, &attr );
@@ -200,7 +200,7 @@ void StartupId::start_startupid( const QString& icon_P )
              i < NUM_BLINKING_PIXMAPS;
              ++i )
             {
-            pixmaps[ i ] = QPixmap( window_w, window_h );
+            pixmaps[ i ] = TQPixmap( window_w, window_h );
             pixmaps[ i ].fill( startup_colors[ i ] );
             bitBlt( &pixmaps[ i ], 0, 0, &icon_pixmap );
             }
@@ -255,7 +255,7 @@ void StartupId::update_startupid()
     else if( bouncing )
         {
         yoffset = frame_to_yoffset[ frame ];
-        QPixmap pm = pixmaps[ frame_to_pixmap[ frame ] ];
+        TQPixmap pm = pixmaps[ frame_to_pixmap[ frame ] ];
         startup_widget->setBackgroundPixmap( pm );
         if ( pm.mask() != NULL )
             startup_widget->setMask( *pm.mask() );
@@ -274,7 +274,7 @@ void StartupId::update_startupid()
         update_timer.start( 100, true );
         return;
         }
-    QPoint c_pos( x, y );
+    TQPoint c_pos( x, y );
     int cursor_size = 0;
 #ifdef HAVE_XCURSOR
     cursor_size = XcursorGetDefaultSize( qt_xdisplay());
@@ -295,7 +295,7 @@ void StartupId::update_startupid()
     startup_widget->show();
     XRaiseWindow( qt_xdisplay(), startup_widget->winId());
     update_timer.start( bouncing ? 30 : 100, true );
-    QApplication::flushX();
+    TQApplication::flushX();
     }
 
 #include "startupid.moc"

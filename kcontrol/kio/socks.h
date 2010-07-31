@@ -37,7 +37,7 @@ class KSocksConfig : public KCModule
 {
   Q_OBJECT
 public:
-  KSocksConfig(QWidget *parent);
+  KSocksConfig(TQWidget *parent);
   virtual ~KSocksConfig();
 
   SocksBase *base;
@@ -47,7 +47,7 @@ public:
   void defaults();
 
   int buttons();
-  QString quickHelp() const;
+  TQString quickHelp() const;
 
 public slots:
   void configChanged();
@@ -57,10 +57,10 @@ private slots:
   void methodChanged(int id);
   void testClicked();
   void chooseCustomLib(KURLRequester *url);
-  void customPathChanged(const QString&);
+  void customPathChanged(const TQString&);
   void addLibrary();
-  void libTextChanged(const QString& lib);
-  void addThisLibrary(const QString& lib);
+  void libTextChanged(const TQString& lib);
+  void addThisLibrary(const TQString& lib);
   void removeLibrary();
   void libSelection();
 

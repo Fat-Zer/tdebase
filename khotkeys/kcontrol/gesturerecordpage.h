@@ -12,7 +12,7 @@
 #ifndef GESTURE_RECORD_PAGE_H
 #define GESTURE_RECORD_PAGE_H
 
-#include <qvbox.h>
+#include <tqvbox.h>
 
 #include "gesturedrawer.h"
 
@@ -31,14 +31,14 @@ class GestureRecordPage : public QVBox
     Q_OBJECT
 
     public:
-        GestureRecordPage(const QString &gesture,
-                          QWidget *parent, const char *name);
+        GestureRecordPage(const TQString &gesture,
+                          TQWidget *parent, const char *name);
         ~GestureRecordPage();
 
-        const QString &getGesture() const { return _gest; }
+        const TQString &getGesture() const { return _gest; }
 
     protected slots:
-        void slotRecorded(const QString &data);
+        void slotRecorded(const TQString &data);
          void slotResetClicked();
 
     signals:
@@ -46,12 +46,12 @@ class GestureRecordPage : public QVBox
 
     private:
         GestureRecorder *_recorder;
-        QPushButton *_resetButton;
+        TQPushButton *_resetButton;
         GestureDrawer *_tryOne;
         GestureDrawer *_tryTwo;
         GestureDrawer *_tryThree;
 
-        QString _gest;
+        TQString _gest;
 
         Q_UINT32 _tryCount;
     };

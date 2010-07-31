@@ -52,7 +52,7 @@ class CFontListViewItem : public KListViewItem
 {
     public:
 
-    CFontListViewItem(QListView *parent, const QString &text, const QPixmap &icon, KFileItem *fi)
+    CFontListViewItem(TQListView *parent, const TQString &text, const TQPixmap &icon, KFileItem *fi)
 	: KListViewItem(parent, text),
           itsInf(fi)
     {
@@ -60,14 +60,14 @@ class CFontListViewItem : public KListViewItem
         setText(0, text);
     }
 
-    CFontListViewItem(QListView *parent, KFileItem *fi)
+    CFontListViewItem(TQListView *parent, KFileItem *fi)
         : KListViewItem(parent),
           itsInf(fi)
     {
         init();
     }
 
-    CFontListViewItem(QListView *parent, const QString &text, const QPixmap &icon, KFileItem *fi, QListViewItem *after)
+    CFontListViewItem(TQListView *parent, const TQString &text, const TQPixmap &icon, KFileItem *fi, TQListViewItem *after)
 	: KListViewItem(parent, after),
           itsInf(fi)
     {
@@ -82,15 +82,15 @@ class CFontListViewItem : public KListViewItem
      */
     KFileItem *fileInfo() const { return itsInf; }
 
-    virtual QString key( int /*column*/, bool /*ascending*/ ) const { return itsKey; }
+    virtual TQString key( int /*column*/, bool /*ascending*/ ) const { return itsKey; }
 
-    void setKey( const QString& key ) { itsKey = key; }
+    void setKey( const TQString& key ) { itsKey = key; }
 
-    QRect rect() const
+    TQRect rect() const
     {
-        QRect r = listView()->itemRect(this);
+        TQRect r = listView()->itemRect(this);
 
-        return QRect(listView()->viewportToContents(r.topLeft()), QSize(r.width(), r.height()));
+        return TQRect(listView()->viewportToContents(r.topLeft()), TQSize(r.width(), r.height()));
     }
 
     void init();
@@ -98,7 +98,7 @@ class CFontListViewItem : public KListViewItem
     private:
 
     KFileItem *itsInf;
-    QString   itsKey;
+    TQString   itsKey;
 
     class CFontListViewItemPrivate;
 
@@ -119,10 +119,10 @@ class CKFileFontView : public KListView, public KFileView
 
     public:
 
-    CKFileFontView(QWidget *parent, const char *name);
+    CKFileFontView(TQWidget *parent, const char *name);
     virtual ~CKFileFontView();
 
-    virtual QWidget *   widget() { return this; }
+    virtual TQWidget *   widget() { return this; }
     virtual void        clearView();
     virtual void        setAutoUpdate(bool) {} // ### unused. remove in KDE4
     virtual void        setSelectionMode( KFile::SelectionMode sm );
@@ -142,38 +142,38 @@ class CKFileFontView : public KListView, public KFileView
     virtual KFileItem * prevItem(const KFileItem *i) const;
     virtual void        insertItem( KFileItem *i);
 
-    void                readConfig(KConfig *kc, const QString &group);
-    void                writeConfig(KConfig *kc, const QString &group);
+    void                readConfig(KConfig *kc, const TQString &group);
+    void                writeConfig(KConfig *kc, const TQString &group);
 
     // implemented to get noticed about sorting changes (for sortingIndicator)
-    virtual void        setSorting(QDir::SortSpec s);
+    virtual void        setSorting(TQDir::SortSpec s);
     void                ensureItemVisible(const KFileItem *i);
 
     // for KMimeTypeResolver
     void                mimeTypeDeterminationFinished();
     void                determineIcon(CFontListViewItem *item);
-    QScrollView *       scrollWidget() const { return (QScrollView*) this; }
+    TQScrollView *       scrollWidget() const { return (TQScrollView*) this; }
 
     signals:
     // The user dropped something.
     // fileItem points to the item dropped on or can be 0 if the
     // user dropped on empty space.
-    void                dropped(QDropEvent *event, KFileItem *fileItem);
+    void                dropped(TQDropEvent *event, KFileItem *fileItem);
     // The user dropped the URLs urls.
     // url points to the item dropped on or can be empty if the
     // user dropped on empty space.
-    void                dropped(QDropEvent *event, const KURL::List &urls, const KURL &url);
+    void                dropped(TQDropEvent *event, const KURL::List &urls, const KURL &url);
 
     protected:
 
-    virtual void        keyPressEvent(QKeyEvent *e);
+    virtual void        keyPressEvent(TQKeyEvent *e);
     // DND support
-    QDragObject *       dragObject();
-    void                contentsDragEnterEvent(QDragEnterEvent *e);
-    void                contentsDragMoveEvent(QDragMoveEvent *e);
-    void                contentsDragLeaveEvent(QDragLeaveEvent *e);
-    void                contentsDropEvent(QDropEvent *e);
-    bool                acceptDrag(QDropEvent *e) const;
+    TQDragObject *       dragObject();
+    void                contentsDragEnterEvent(TQDragEnterEvent *e);
+    void                contentsDragMoveEvent(TQDragMoveEvent *e);
+    void                contentsDragLeaveEvent(TQDragLeaveEvent *e);
+    void                contentsDropEvent(TQDropEvent *e);
+    bool                acceptDrag(TQDropEvent *e) const;
 
     int itsSortingCol;
 
@@ -184,17 +184,17 @@ class CKFileFontView : public KListView, public KFileView
     private slots:
 
     void                slotSortingChanged(int c);
-    void                selected(QListViewItem *item);
-    void                slotActivate(QListViewItem *item);
-    void                highlighted(QListViewItem *item);
-    void                slotActivateMenu(QListViewItem *item, const QPoint& pos);
+    void                selected(TQListViewItem *item);
+    void                slotActivate(TQListViewItem *item);
+    void                highlighted(TQListViewItem *item);
+    void                slotActivateMenu(TQListViewItem *item, const TQPoint& pos);
     void                slotAutoOpen();
 
     private:
 
-    virtual void        insertItem(QListViewItem *i)          { KListView::insertItem(i); }
+    virtual void        insertItem(TQListViewItem *i)          { KListView::insertItem(i); }
     virtual void        setSorting(int i, bool b)             { KListView::setSorting(i, b); }
-    virtual void        setSelected(QListViewItem *i, bool b) { KListView::setSelected(i, b); }
+    virtual void        setSelected(TQListViewItem *i, bool b) { KListView::setSelected(i, b); }
 
     inline CFontListViewItem * viewItem( const KFileItem *item ) const
     {

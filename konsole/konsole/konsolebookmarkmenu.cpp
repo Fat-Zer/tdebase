@@ -27,7 +27,7 @@
 KonsoleBookmarkMenu::KonsoleBookmarkMenu( KBookmarkManager* mgr,
                      KonsoleBookmarkHandler * _owner, KPopupMenu * _parentMenu,
                      KActionCollection *collec, bool _isRoot, bool _add,
-                     const QString & parentAddress )
+                     const TQString & parentAddress )
 : KBookmarkMenu( mgr, _owner, _parentMenu, collec, _isRoot, _add,
                  parentAddress),
   m_kOwner(_owner)
@@ -36,14 +36,14 @@ KonsoleBookmarkMenu::KonsoleBookmarkMenu( KBookmarkManager* mgr,
     /*
      * First, we disconnect KBookmarkMenu::slotAboutToShow()
      * Then,  we connect    KonsoleBookmarkMenu::slotAboutToShow().
-     * They are named differently because the SLOT() macro thinks we want
+     * They are named differently because the TQT_SLOT() macro thinks we want
      * KonsoleBookmarkMenu::KBookmarkMenu::slotAboutToShow()
      * Could this be solved if slotAboutToShow() is virtual in KBookmarMenu?
      */
-    disconnect( _parentMenu, SIGNAL( aboutToShow() ), this,
-                SLOT( slotAboutToShow() ) );
-    connect( _parentMenu, SIGNAL( aboutToShow() ),
-             SLOT( slotAboutToShow2() ) );
+    disconnect( _parentMenu, TQT_SIGNAL( aboutToShow() ), this,
+                TQT_SLOT( slotAboutToShow() ) );
+    connect( _parentMenu, TQT_SIGNAL( aboutToShow() ),
+             TQT_SLOT( slotAboutToShow2() ) );
 }
 
 /*
@@ -68,7 +68,7 @@ void KonsoleBookmarkMenu::slotAboutToShow2()
 void KonsoleBookmarkMenu::refill()
 {
   m_lstSubMenus.clear();
-  QPtrListIterator<KAction> it( m_actions );
+  TQPtrListIterator<KAction> it( m_actions );
   for (; it.current(); ++it )
     it.current()->unplug( m_parentMenu );
   m_parentMenu->clear();
@@ -96,7 +96,7 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
   for ( KBookmark bm = parentBookmark.first(); !bm.isNull();
         bm = parentBookmark.next(bm) )
   {
-    QString text = bm.text();
+    TQString text = bm.text();
     text.replace( '&', "&&" );
     if ( !separatorInserted && m_bIsRoot) { // inserted before the first konq bookmark, to avoid the separator if no konq bookmark
       m_parentMenu->insertSeparator();
@@ -113,7 +113,7 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
         // kdDebug(1203) << "Creating URL bookmark menu item for " << bm.text() << endl;
         // create a normal URL item, with ID as a name
         KAction * action = new KAction( text, bm.icon(), 0,
-                                        this, SLOT( slotBookmarkSelected() ),
+                                        this, TQT_SLOT( slotBookmarkSelected() ),
                                         m_actionCollection, bm.url().url().utf8() );
 
         action->setStatusText( bm.url().prettyURL() );
@@ -149,7 +149,7 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
 void KonsoleBookmarkMenu::slotBookmarkSelected()
 {
     if ( !m_pOwner ) return; // this view doesn't handle bookmarks...
-    m_kOwner->openBookmarkURL( QString::fromUtf8(sender()->name()), /* URL */
+    m_kOwner->openBookmarkURL( TQString::fromUtf8(sender()->name()), /* URL */
                                ( (KAction *)sender() )->text() /* Title */ );
 }
 

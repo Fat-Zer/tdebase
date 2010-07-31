@@ -19,12 +19,12 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <qimage.h>
-#include <qtextstream.h>
-#include <qregexp.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qdatetime.h>
+#include <tqimage.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqdatetime.h>
 
 #include <iostream>
 
@@ -37,11 +37,11 @@ static int primes[] = {
 };
 
 struct EmbedImage {
-	QString string;
+	TQString string;
 	int width;
 	int height;
 	bool alpha;
-	QString name;
+	TQString name;
 };
 
 class KeramikEmbedder {
@@ -53,17 +53,17 @@ public:
 	void writeIndex();
 	
 private:
-	QFile *file;
-	QPtrList<EmbedImage> *index;
-	QTextStream stream;
+	TQFile *file;
+	TQPtrList<EmbedImage> *index;
+	TQTextStream stream;
 };
 
 KeramikEmbedder::KeramikEmbedder()
 {
-	QDateTime date( QDateTime::currentDateTime() );
-	QString datestring( date.toString() );
+	TQDateTime date( TQDateTime::currentDateTime() );
+	TQString datestring( date.toString() );
 	
-	file = new QFile( "tiles.h" );
+	file = new TQFile( "tiles.h" );
 	file->open( IO_WriteOnly | IO_Truncate );
 
 	stream.setDevice( file );
@@ -74,11 +74,11 @@ KeramikEmbedder::KeramikEmbedder()
 	
 	stream << "#ifndef __TILES_H\n";
 	stream << "#define __TILES_H\n\n";
-	stream << "#include <qimage.h>\n"; 
-	stream << "#include <qdict.h>\n\n";
+	stream << "#include <tqimage.h>\n"; 
+	stream << "#include <tqdict.h>\n\n";
 	stream << "namespace Keramik {\n\n";
 	
-	index = new QPtrList<EmbedImage>;
+	index = new TQPtrList<EmbedImage>;
 	index->setAutoDelete( true );
 }
 
@@ -95,15 +95,15 @@ KeramikEmbedder::~KeramikEmbedder()
 
 void KeramikEmbedder::embed( const char *name )
 {
-	QFileInfo   fileinfo( name );
-	QString     basename( fileinfo.baseName() );
-	QString     codename( basename );
-	QImage      image( name );
+	TQFileInfo   fileinfo( name );
+	TQString     basename( fileinfo.baseName() );
+	TQString     codename( basename );
+	TQImage      image( name );
 	
-	codename = codename.replace( QRegExp("[^a-zA-Z0-9]"), "_" );
+	codename = codename.replace( TQRegExp("[^a-zA-Z0-9]"), "_" );
 	
 	stream << "\tstatic const QRgb " << codename << "_data[] = {" << endl << "\t\t";
-	stream.setf( QTextStream::hex | QTextStream::right );
+	stream.setf( TQTextStream::hex | TQTextStream::right );
 	stream.fill( '0' );
 	
 	int pixels = image.width() * image.height();
@@ -174,14 +174,14 @@ void KeramikEmbedder::writeIndex()
 	stream << "\tclass KeramikImageDb {\n";
 	stream << "\tprivate:\n";
 	stream << "\t\tstatic KeramikImageDb *m_inst;\n";
-	stream << "\t\tQDict<QImage> *db;\n\n";
+	stream << "\t\tQDict<TQImage> *db;\n\n";
 	stream << "\t\tKeramikImageDb() {\n";
-	stream << "\t\t\tdb = new QDict<QImage>( " << prime << " );\n";
+	stream << "\t\t\tdb = new TQDict<TQImage>( " << prime << " );\n";
 	stream << "\t\t\tdb->setAutoDelete( true );\n\n";
 	stream << "\t\t\tfor ( int i = 0; i < " << index->count() << "; i++ ) {\n";
-	stream << "\t\t\t\tQImage *img = new QImage( (uchar*)image_db[i].data,\n";
+	stream << "\t\t\t\tQImage *img = new TQImage( (uchar*)image_db[i].data,\n";
 	stream << "\t\t\t\t\t\timage_db[i].width, image_db[i].height,\n";
-	stream << "\t\t\t\t\t\t32, NULL, 0, QImage::LittleEndian );\n\n";
+	stream << "\t\t\t\t\t\t32, NULL, 0, TQImage::LittleEndian );\n\n";
 	stream << "\t\t\t\tif ( image_db[i].alpha )\n";
 	stream << "\t\t\t\t\timg->setAlphaBuffer( true );\n\n";
 	stream << "\t\t\t\tdb->insert( image_db[i].name, img );\n";
@@ -199,7 +199,7 @@ void KeramikEmbedder::writeIndex()
 	stream << "\t\t\tif ( m_inst ) delete m_inst;\n";
 	stream << "\t\t\tm_inst = NULL;\n";
 	stream << "\t\t}\n\n";
-	stream << "\t\tQImage *image( const QString &name ) const {\n";
+	stream << "\t\tQImage *image( const TQString &name ) const {\n";
 	stream << "\t\t\treturn db->find( name );\n";
 	stream << "\t\t}\n\n";
 	stream << "\t}; // class KeramikImageDb\n\n";

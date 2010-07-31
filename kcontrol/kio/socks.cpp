@@ -20,10 +20,10 @@
  */
 
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qvbuttongroup.h>
-#include <qcheckbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqvbuttongroup.h>
+#include <tqcheckbox.h>
 
 #include <kfiledialog.h>
 #include <klistview.h>
@@ -34,7 +34,7 @@
 #include "socks.h"
 #include <kaboutdata.h>
 
-KSocksConfig::KSocksConfig(QWidget *parent)
+KSocksConfig::KSocksConfig(TQWidget *parent)
   : KCModule(parent, "kcmkio")
 {
 
@@ -48,30 +48,30 @@ KSocksConfig::KSocksConfig(QWidget *parent)
   setAboutData( about );
 
 
-  QVBoxLayout *layout = new QVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
   base = new SocksBase(this);
   layout->add(base);
 
-  connect(base->_c_enableSocks, SIGNAL(clicked()), this, SLOT(enableChanged()));
-  connect(base->bg, SIGNAL(clicked(int)), this, SLOT(methodChanged(int)));
+  connect(base->_c_enableSocks, TQT_SIGNAL(clicked()), this, TQT_SLOT(enableChanged()));
+  connect(base->bg, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(methodChanged(int)));
 
   // The custom library
-  connect(base->_c_customPath, SIGNAL(openFileDialog(KURLRequester *)), this, SLOT(chooseCustomLib(KURLRequester *)));
-  connect(base->_c_customPath, SIGNAL(textChanged(const QString&)),
-                     this, SLOT(customPathChanged(const QString&)));
+  connect(base->_c_customPath, TQT_SIGNAL(openFileDialog(KURLRequester *)), this, TQT_SLOT(chooseCustomLib(KURLRequester *)));
+  connect(base->_c_customPath, TQT_SIGNAL(textChanged(const TQString&)),
+                     this, TQT_SLOT(customPathChanged(const TQString&)));
 
   // Additional libpaths
-  connect(base->_c_newPath, SIGNAL(openFileDialog(KURLRequester *)), this, SLOT(chooseCustomLib(KURLRequester *)));
-  connect(base->_c_newPath, SIGNAL(returnPressed(const QString&)),
-          this, SLOT(addThisLibrary(const QString&)));
-  connect(base->_c_newPath, SIGNAL(textChanged(const QString&)),
-          this, SLOT(libTextChanged(const QString&)));
-  connect(base->_c_add, SIGNAL(clicked()), this, SLOT(addLibrary()));
-  connect(base->_c_remove, SIGNAL(clicked()), this, SLOT(removeLibrary()));
-  connect(base->_c_libs, SIGNAL(selectionChanged()), this, SLOT(libSelection()));
+  connect(base->_c_newPath, TQT_SIGNAL(openFileDialog(KURLRequester *)), this, TQT_SLOT(chooseCustomLib(KURLRequester *)));
+  connect(base->_c_newPath, TQT_SIGNAL(returnPressed(const TQString&)),
+          this, TQT_SLOT(addThisLibrary(const TQString&)));
+  connect(base->_c_newPath, TQT_SIGNAL(textChanged(const TQString&)),
+          this, TQT_SLOT(libTextChanged(const TQString&)));
+  connect(base->_c_add, TQT_SIGNAL(clicked()), this, TQT_SLOT(addLibrary()));
+  connect(base->_c_remove, TQT_SIGNAL(clicked()), this, TQT_SLOT(removeLibrary()));
+  connect(base->_c_libs, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(libSelection()));
 
   // The "Test" button
-  connect(base->_c_test, SIGNAL(clicked()), this, SLOT(testClicked()));
+  connect(base->_c_test, TQT_SIGNAL(clicked()), this, TQT_SLOT(testClicked()));
 
   // The config backend
   load();
@@ -110,7 +110,7 @@ void KSocksConfig::methodChanged(int id)
 }
 
 
-void KSocksConfig::customPathChanged(const QString&)
+void KSocksConfig::customPathChanged(const TQString&)
 {
   emit changed(true);
 }
@@ -140,7 +140,7 @@ void KSocksConfig::testClicked()
 void KSocksConfig::chooseCustomLib(KURLRequester * url)
 {
   url->setMode( KFile::Directory );
-/*  QString newFile = KFileDialog::getOpenFileName();
+/*  TQString newFile = KFileDialog::getOpenFileName();
   if (newFile.length() > 0) {
     base->_c_customPath->setURL(newFile);
     emit changed(true);
@@ -149,7 +149,7 @@ void KSocksConfig::chooseCustomLib(KURLRequester * url)
 
 
 
-void KSocksConfig::libTextChanged(const QString& lib)
+void KSocksConfig::libTextChanged(const TQString& lib)
 {
    if (lib.length() > 0)
      base-> _c_add->setEnabled(true);
@@ -157,10 +157,10 @@ void KSocksConfig::libTextChanged(const QString& lib)
 }
 
 
-void KSocksConfig::addThisLibrary(const QString& lib)
+void KSocksConfig::addThisLibrary(const TQString& lib)
 {
    if (lib.length() > 0) {
-      new QListViewItem(base->_c_libs, lib);
+      new TQListViewItem(base->_c_libs, lib);
       base->_c_newPath->clear();
       base->_c_add->setEnabled(false);
       base->_c_newPath->setFocus();
@@ -177,7 +177,7 @@ void KSocksConfig::addLibrary()
 
 void KSocksConfig::removeLibrary()
 {
- QListViewItem *thisitem = base->_c_libs->selectedItem();
+ TQListViewItem *thisitem = base->_c_libs->selectedItem();
    base->_c_libs->takeItem(thisitem);
    delete thisitem;
    base->_c_libs->clearSelection();
@@ -207,17 +207,17 @@ void KSocksConfig::load()
   }
   base->_c_customPath->setURL(config.readPathEntry("SOCKS_lib"));
 
-  QListViewItem *thisitem;
+  TQListViewItem *thisitem;
   while ((thisitem = base->_c_libs->firstChild())) {
      base->_c_libs->takeItem(thisitem);
      delete thisitem;
   }
 
-  QStringList libs = config.readPathListEntry("SOCKS_lib_path");
-  for(QStringList::Iterator it = libs.begin();
+  TQStringList libs = config.readPathListEntry("SOCKS_lib_path");
+  for(TQStringList::Iterator it = libs.begin();
                             it != libs.end();
                             ++it ) {
-     new QListViewItem(base->_c_libs, *it);
+     new TQListViewItem(base->_c_libs, *it);
   }
   base->_c_libs->clearSelection();
   base->_c_remove->setEnabled(false);
@@ -232,9 +232,9 @@ void KSocksConfig::save()
   config.writeEntry("SOCKS_enable",base-> _c_enableSocks->isChecked(), true, true);
   config.writeEntry("SOCKS_method", base->bg->id(base->bg->selected()), true, true);
   config.writePathEntry("SOCKS_lib", base->_c_customPath->url(), true, true);
-  QListViewItem *thisitem = base->_c_libs->firstChild();
+  TQListViewItem *thisitem = base->_c_libs->firstChild();
 
-  QStringList libs;
+  TQStringList libs;
   while (thisitem) {
     libs << thisitem->text(0);
     thisitem = thisitem->itemBelow();
@@ -254,7 +254,7 @@ void KSocksConfig::defaults()
   base->_c_customLabel->setEnabled(false);
   base->_c_customPath->setEnabled(false);
   base->_c_customPath->setURL("");
-  QListViewItem *thisitem;
+  TQListViewItem *thisitem;
   while ((thisitem = base->_c_libs->firstChild())) {
      base->_c_libs->takeItem(thisitem);
      delete thisitem;
@@ -265,7 +265,7 @@ void KSocksConfig::defaults()
   emit changed(true);
 }
 
-QString KSocksConfig::quickHelp() const
+TQString KSocksConfig::quickHelp() const
 {
   return i18n("<h1>SOCKS</h1><p>This module allows you to configure KDE support"
      " for a SOCKS server or proxy.</p><p>SOCKS is a protocol to traverse firewalls"

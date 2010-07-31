@@ -21,19 +21,19 @@
 namespace KHotKeys
 {
 
-KHListView::KHListView( QWidget* parent_P, const char* name_P )
+KHListView::KHListView( TQWidget* parent_P, const char* name_P )
     : KListView( parent_P, name_P ), saved_current_item( NULL ),
         in_clear( false ), ignore( false ), force_select( false )
     {
-    connect( this, SIGNAL( selectionChanged( QListViewItem* )),
-        SLOT( slot_selection_changed( QListViewItem* )));
-    connect( this, SIGNAL( currentChanged( QListViewItem* )),
-        SLOT( slot_current_changed( QListViewItem* )));
+    connect( this, TQT_SIGNAL( selectionChanged( TQListViewItem* )),
+        TQT_SLOT( slot_selection_changed( TQListViewItem* )));
+    connect( this, TQT_SIGNAL( currentChanged( TQListViewItem* )),
+        TQT_SLOT( slot_current_changed( TQListViewItem* )));
     // CHECKME grrr
-    connect( this, SIGNAL( selectionChanged()),
-        SLOT( slot_selection_changed()));
-    connect( &insert_select_timer, SIGNAL( timeout()),
-        SLOT( slot_insert_select()));
+    connect( this, TQT_SIGNAL( selectionChanged()),
+        TQT_SLOT( slot_selection_changed()));
+    connect( &insert_select_timer, TQT_SIGNAL( timeout()),
+        TQT_SLOT( slot_insert_select()));
     }
 
 void KHListView::slot_selection_changed()
@@ -46,7 +46,7 @@ void KHListView::slot_selection_changed()
         setSelected( saved_current_item, true );
     }
     
-void KHListView::slot_selection_changed( QListViewItem* item_P )
+void KHListView::slot_selection_changed( TQListViewItem* item_P )
     {
     if( ignore )
         return;
@@ -57,7 +57,7 @@ void KHListView::slot_selection_changed( QListViewItem* item_P )
     emit current_changed( saved_current_item );
     }
     
-void KHListView::slot_current_changed( QListViewItem* item_P )
+void KHListView::slot_current_changed( TQListViewItem* item_P )
     {
     if( ignore )
         return;
@@ -77,7 +77,7 @@ void KHListView::clear()
     slot_selection_changed( NULL );
     }
     
-void KHListView::insertItem( QListViewItem* item_P )
+void KHListView::insertItem( TQListViewItem* item_P )
     {
     bool set = false;
     if( !in_clear )
@@ -100,7 +100,7 @@ void KHListView::clearSelection()
     slot_current_changed( currentItem());
     }
 
-// items are often inserted using the QListViewItem constructor,
+// items are often inserted using the TQListViewItem constructor,
 // which means that a derived class are not yet fully created
 void KHListView::slot_insert_select()
     {
@@ -109,7 +109,7 @@ void KHListView::slot_insert_select()
     slot_current_changed( currentItem());
     }
 
-void KHListView::contentsDropEvent( QDropEvent* e )
+void KHListView::contentsDropEvent( TQDropEvent* e )
     {
     bool save_ignore = ignore;
     ignore = true;

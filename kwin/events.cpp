@@ -22,9 +22,9 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "group.h"
 #include "rules.h"
 
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 #include <kkeynative.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 
 #include <X11/extensions/shape.h>
 #include <X11/Xatom.h>
@@ -289,7 +289,7 @@ bool Workspace::workspaceEvent( XEvent * e )
         {
         case CreateNotify:
             if ( e->xcreatewindow.parent == root &&
-                 !QWidget::find( e->xcreatewindow.window) &&
+                 !TQWidget::find( e->xcreatewindow.window) &&
                  !e->xcreatewindow.override_redirect )
             {
         // see comments for allowClientActivation()
@@ -365,7 +365,7 @@ bool Workspace::workspaceEvent( XEvent * e )
                 c = createClient( e->xmaprequest.window, false );
                 if ( c != NULL && root != qt_xrootwin() ) 
                     { // TODO what is this?
-                    // TODO may use QWidget::create
+                    // TODO may use TQWidget::create
                     XReparentWindow( qt_xdisplay(), c->frameId(), root, 0, 0 );
                     }
                 if( c == NULL ) // refused to manage, simply map it (most probably override redirect)
@@ -382,11 +382,11 @@ bool Workspace::workspaceEvent( XEvent * e )
             }
         case EnterNotify:
             {
-            if ( QWhatsThis::inWhatsThisMode() )
+            if ( TQWhatsThis::inWhatsThisMode() )
                 {
-                QWidget* w = QWidget::find( e->xcrossing.window );
+                TQWidget* w = TQWidget::find( e->xcrossing.window );
                 if ( w )
-                    QWhatsThis::leaveWhatsThisMode();
+                    TQWhatsThis::leaveWhatsThisMode();
                 }
             if( electricBorder(e))
                 return true;
@@ -394,12 +394,12 @@ bool Workspace::workspaceEvent( XEvent * e )
             }
         case LeaveNotify:
             {
-            if ( !QWhatsThis::inWhatsThisMode() )
+            if ( !TQWhatsThis::inWhatsThisMode() )
                 break;
             // TODO is this cliente ever found, given that client events are searched above?
             Client* c = findClient( FrameIdMatchPredicate( e->xcrossing.window ));
             if ( c && e->xcrossing.detail != NotifyInferior )
-                QWhatsThis::leaveWhatsThisMode();
+                TQWhatsThis::leaveWhatsThisMode();
             break;
             }
         case ConfigureRequest:
@@ -430,7 +430,7 @@ bool Workspace::workspaceEvent( XEvent * e )
                 return FALSE;
             break;
         case FocusIn:
-            if( e->xfocus.window == rootWin() && QCString( getenv("KDE_MULTIHEAD")).lower() != "true"
+            if( e->xfocus.window == rootWin() && TQCString( getenv("KDE_MULTIHEAD")).lower() != "true"
                 && ( e->xfocus.detail == NotifyDetailNone || e->xfocus.detail == NotifyPointerRoot ))
                 {
                 updateXTime(); // focusToNull() uses qt_x_time, which is old now (FocusIn has no timestamp)
@@ -583,7 +583,7 @@ bool Client::windowEvent( XEvent* e )
         case MotionNotify:
             motionNotifyEvent( e->xmotion.window, e->xmotion.state,
                 e->xmotion.x, e->xmotion.y, e->xmotion.x_root, e->xmotion.y_root );
-            workspace()->updateFocusMousePosition( QPoint( e->xmotion.x_root, e->xmotion.y_root ));
+            workspace()->updateFocusMousePosition( TQPoint( e->xmotion.x_root, e->xmotion.y_root ));
             break;
         case EnterNotify:
             enterNotifyEvent( &e->xcrossing );
@@ -594,14 +594,14 @@ bool Client::windowEvent( XEvent* e )
             // events simpler (Qt does that too).
             motionNotifyEvent( e->xcrossing.window, e->xcrossing.state,
                 e->xcrossing.x, e->xcrossing.y, e->xcrossing.x_root, e->xcrossing.y_root );
-            workspace()->updateFocusMousePosition( QPoint( e->xcrossing.x_root, e->xcrossing.y_root ));
+            workspace()->updateFocusMousePosition( TQPoint( e->xcrossing.x_root, e->xcrossing.y_root ));
             break;
         case LeaveNotify:
             motionNotifyEvent( e->xcrossing.window, e->xcrossing.state,
                 e->xcrossing.x, e->xcrossing.y, e->xcrossing.x_root, e->xcrossing.y_root );
             leaveNotifyEvent( &e->xcrossing );
             // not here, it'd break following enter notify handling
-            // workspace()->updateFocusMousePosition( QPoint( e->xcrossing.x_root, e->xcrossing.y_root ));
+            // workspace()->updateFocusMousePosition( TQPoint( e->xcrossing.x_root, e->xcrossing.y_root ));
             break;
         case FocusIn:
             focusInEvent( &e->xfocus );
@@ -879,8 +879,8 @@ void Client::enterNotifyEvent( XCrossingEvent* e )
         if (options->shadeHover && isShade()) 
             {
             delete shadeHoverTimer;
-            shadeHoverTimer = new QTimer( this );
-            connect( shadeHoverTimer, SIGNAL( timeout() ), this, SLOT( shadeHover() ));
+            shadeHoverTimer = new TQTimer( this );
+            connect( shadeHoverTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( shadeHover() ));
             shadeHoverTimer->start( options->shadeHoverInterval, TRUE );
             }
 
@@ -892,12 +892,12 @@ void Client::enterNotifyEvent( XCrossingEvent* e )
              workspace()->topClientOnDesktop( workspace()->currentDesktop()) != this ) 
             {
             delete autoRaiseTimer;
-            autoRaiseTimer = new QTimer( this );
-            connect( autoRaiseTimer, SIGNAL( timeout() ), this, SLOT( autoRaise() ) );
+            autoRaiseTimer = new TQTimer( this );
+            connect( autoRaiseTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( autoRaise() ) );
             autoRaiseTimer->start( options->autoRaiseInterval, TRUE  );
             }
 
-        QPoint currentPos( e->x_root, e->y_root );
+        TQPoint currentPos( e->x_root, e->y_root );
         if ( options->focusPolicy != Options::FocusStrictlyUnderMouse && ( isDesktop() || isDock() || isTopMenu() ) )
             return;
         // for FocusFollowsMouse, change focus only if the mouse has actually been moved, not if the focus
@@ -925,7 +925,7 @@ void Client::leaveNotifyEvent( XCrossingEvent* e )
             mode = PositionCenter;
             setCursor( arrowCursor );
             }
-        bool lostMouse = !rect().contains( QPoint( e->x, e->y ) );
+        bool lostMouse = !rect().contains( TQPoint( e->x, e->y ) );
         // 'lostMouse' wouldn't work with e.g. B2 or Keramik, which have non-rectangular decorations
         // (i.e. the LeaveNotify event comes before leaving the rect and no LeaveNotify event
         // comes after leaving the rect) - so lets check if the pointer is really outside the window
@@ -1076,41 +1076,41 @@ int qtToX11State( Qt::ButtonState state )
 
 // Qt propagates mouse events up the widget hierachy, which means events
 // for the decoration window cannot be (easily) intercepted as X11 events
-bool Client::eventFilter( QObject* o, QEvent* e )
+bool Client::eventFilter( TQObject* o, TQEvent* e )
     {
     if( decoration == NULL
         || o != decoration->widget())
         return false;
-    if( e->type() == QEvent::MouseButtonPress )
+    if( e->type() == TQEvent::MouseButtonPress )
         {
-        QMouseEvent* ev = static_cast< QMouseEvent* >( e );
+        TQMouseEvent* ev = static_cast< TQMouseEvent* >( e );
         return buttonPressEvent( decorationId(), qtToX11Button( ev->button()), qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         }
-    if( e->type() == QEvent::MouseButtonRelease )
+    if( e->type() == TQEvent::MouseButtonRelease )
         {
-        QMouseEvent* ev = static_cast< QMouseEvent* >( e );
+        TQMouseEvent* ev = static_cast< TQMouseEvent* >( e );
         return buttonReleaseEvent( decorationId(), qtToX11Button( ev->button()), qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         }
-    if( e->type() == QEvent::MouseMove ) // FRAME i fake z enter/leave?
+    if( e->type() == TQEvent::MouseMove ) // FRAME i fake z enter/leave?
         {
-        QMouseEvent* ev = static_cast< QMouseEvent* >( e );
+        TQMouseEvent* ev = static_cast< TQMouseEvent* >( e );
         return motionNotifyEvent( decorationId(), qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         }
-    if( e->type() == QEvent::Wheel )
+    if( e->type() == TQEvent::Wheel )
         {
-        QWheelEvent* ev = static_cast< QWheelEvent* >( e );
+        TQWheelEvent* ev = static_cast< TQWheelEvent* >( e );
         bool r = buttonPressEvent( decorationId(), ev->delta() > 0 ? Button4 : Button5, qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         r = r || buttonReleaseEvent( decorationId(), ev->delta() > 0 ? Button4 : Button5, qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         return r;
         }
-    if( e->type() == QEvent::Resize )
+    if( e->type() == TQEvent::Resize )
         {
-        QResizeEvent* ev = static_cast< QResizeEvent* >( e );
+        TQResizeEvent* ev = static_cast< TQResizeEvent* >( e );
         // Filter out resize events that inform about size different than frame size.
         // This will ensure that decoration->width() etc. and decoration->widget()->width() will be in sync.
         // These events only seem to be delayed events from initial resizing before show() was called
@@ -1204,7 +1204,7 @@ bool Client::buttonPressEvent( Window w, int button, int state, int x, int y, in
             }
         if( was_action )
             {
-            bool replay = performMouseCommand( com, QPoint( x_root, y_root), perform_handled );
+            bool replay = performMouseCommand( com, TQPoint( x_root, y_root), perform_handled );
 
             if ( isSpecialWindow())
                 replay = TRUE;
@@ -1247,20 +1247,20 @@ void Client::processDecorationButtonPress( int button, int /*state*/, int x, int
         && com != Options::MouseOperationsMenu // actions where it's not possible to get the matching
         && com != Options::MouseMinimize )  // mouse release event
         {
-        mode = mousePosition( QPoint( x, y ));
+        mode = mousePosition( TQPoint( x, y ));
         buttonDown = TRUE;
-        moveOffset = QPoint( x, y );
+        moveOffset = TQPoint( x, y );
         invertedMoveOffset = rect().bottomRight() - moveOffset;
         unrestrictedMoveResize = false;
         setCursor( mode ); // update to sizeAllCursor if about to move
         }
-    performMouseCommand( com, QPoint( x_root, y_root ));
+    performMouseCommand( com, TQPoint( x_root, y_root ));
     }
 
 // called from decoration
-void Client::processMousePressEvent( QMouseEvent* e )
+void Client::processMousePressEvent( TQMouseEvent* e )
     {
-    if( e->type() != QEvent::MouseButtonPress )
+    if( e->type() != TQEvent::MouseButtonPress )
         {
         kdWarning() << "processMousePressEvent()" << endl;
         return;
@@ -1304,7 +1304,7 @@ bool Client::buttonReleaseEvent( Window w, int /*button*/, int state, int x, int
             {
             finishMoveResize( false );
             // mouse position is still relative to old Client position, adjust it
-            QPoint mousepos( x_root - x, y_root - y );
+            TQPoint mousepos( x_root - x, y_root - y );
             mode = mousePosition( mousepos );
             }
         setCursor( mode );
@@ -1353,7 +1353,7 @@ bool Client::motionNotifyEvent( Window w, int /*state*/, int x, int y, int x_roo
         return true; // care only about the whole frame
     if ( !buttonDown ) 
         {
-        Position newmode = mousePosition( QPoint( x, y ));
+        Position newmode = mousePosition( TQPoint( x, y ));
         if( newmode != mode )
             setCursor( newmode );
         mode = newmode;
@@ -1452,7 +1452,7 @@ void Client::focusOutEvent( XFocusOutEvent* e )
         && e->detail != NotifyNonlinearVirtual )
         // SELI check all this
         return; // hack for motif apps like netscape
-    if ( QApplication::activePopupWidget() )
+    if ( TQApplication::activePopupWidget() )
         return;
     if( !check_follows_focusin( this ))
         setActive( FALSE );
@@ -1462,7 +1462,7 @@ void Client::focusOutEvent( XFocusOutEvent* e )
 void Client::NETMoveResize( int x_root, int y_root, NET::Direction direction )
     {
     if( direction == NET::Move )
-        performMouseCommand( Options::MouseMove, QPoint( x_root, y_root ));
+        performMouseCommand( Options::MouseMove, TQPoint( x_root, y_root ));
     else if( moveResizeMode && direction == NET::MoveResizeCancel )
     {
         finishMoveResize( true );
@@ -1487,7 +1487,7 @@ void Client::NETMoveResize( int x_root, int y_root, NET::Direction direction )
         if( moveResizeMode )
             finishMoveResize( false );
         buttonDown = TRUE;
-        moveOffset = QPoint( x_root - x(), y_root - y()); // map from global
+        moveOffset = TQPoint( x_root - x(), y_root - y()); // map from global
         invertedMoveOffset = rect().bottomRight() - moveOffset;
         unrestrictedMoveResize = false;
         mode = convert[ direction ];
@@ -1500,12 +1500,12 @@ void Client::NETMoveResize( int x_root, int y_root, NET::Direction direction )
         }
     else if( direction == NET::KeyboardMove )
         { // ignore mouse coordinates given in the message, mouse position is used by the moving algorithm
-        QCursor::setPos( geometry().center() );
+        TQCursor::setPos( geometry().center() );
         performMouseCommand( Options::MouseUnrestrictedMove, geometry().center());
         }
     else if( direction == NET::KeyboardSize )
         { // ignore mouse coordinates given in the message, mouse position is used by the resizing algorithm
-        QCursor::setPos( geometry().bottomRight());
+        TQCursor::setPos( geometry().bottomRight());
         performMouseCommand( Options::MouseUnrestrictedResize, geometry().bottomRight());
         }
     }
@@ -1519,7 +1519,7 @@ void Client::keyPressEvent( uint key_code )
     bool is_alt = key_code & Qt::ALT;
     key_code = key_code & 0xffff;
     int delta = is_control?1:is_alt?32:8;
-    QPoint pos = QCursor::pos();
+    TQPoint pos = TQCursor::pos();
     switch ( key_code ) 
         {
         case Key_Left:
@@ -1549,7 +1549,7 @@ void Client::keyPressEvent( uint key_code )
         default:
             return;
         }
-    QCursor::setPos( pos );
+    TQCursor::setPos( pos );
     }
 
 // ****************************************

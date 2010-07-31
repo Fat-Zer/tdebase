@@ -31,14 +31,14 @@ class ListboxViewPrivate {
 
 }
 
-Kate::ListboxView::ListboxView( QWidget *parent, const char *name )
+Kate::ListboxView::ListboxView( TQWidget *parent, const char *name )
   : Kate::DockViewBase( parent, name),
     d( new Kate::ListboxViewPrivate)
 {
   d->listbox = new KListBox( this );
 }
 
-Kate::ListboxView::ListboxView( const QString &titlePrefix, const QString &title, QWidget *parent, const char *name )
+Kate::ListboxView::ListboxView( const TQString &titlePrefix, const TQString &title, TQWidget *parent, const char *name )
   : Kate::DockViewBase( titlePrefix, title, parent, name),
     d( new Kate::ListboxViewPrivate)
 {

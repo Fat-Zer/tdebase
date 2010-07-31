@@ -18,13 +18,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "ktheme.h"
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qregexp.h>
-#include <qtextstream.h>
-#include <qdir.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqimage.h>
+#include <tqpixmap.h>
+#include <tqregexp.h>
+#include <tqtextstream.h>
+#include <tqdir.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -43,26 +43,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <ktar.h>
 #include <kstyle.h>
 
-KTheme::KTheme( QWidget *parent, const QString & xmlFile )
+KTheme::KTheme( TQWidget *parent, const TQString & xmlFile )
 	: m_parent(parent)
 {
-    QFile file( xmlFile );
+    TQFile file( xmlFile );
     file.open( IO_ReadOnly );
     m_dom.setContent( file.readAll() );
     file.close();
 
     //kdDebug() << m_dom.toString( 2 ) << endl;
 
-    setName( QFileInfo( file ).baseName() );
+    setName( TQFileInfo( file ).baseName() );
     m_kgd = KGlobal::dirs();
 }
 
-KTheme::KTheme( QWidget *parent, bool create )
+KTheme::KTheme( TQWidget *parent, bool create )
     : m_parent(parent)
 {
     if ( create )
     {
-        m_dom = QDomDocument( "ktheme" );
+        m_dom = TQDomDocument( "ktheme" );
 
         m_root = m_dom.createElement( "ktheme" );
         m_root.setAttribute( "version", SYNTAX_VERSION );
@@ -79,7 +79,7 @@ KTheme::~KTheme()
 {
 }
 
-void KTheme::setName( const QString & name )
+void KTheme::setName( const TQString & name )
 {
     m_name = name;
 }
@@ -88,24 +88,24 @@ bool KTheme::load( const KURL & url )
 {
     kdDebug() << "Loading theme from URL: " << url << endl;
 
-    QString tmpFile;
+    TQString tmpFile;
     if ( !KIO::NetAccess::download( url, tmpFile, 0L ) )
         return false;
 
     kdDebug() << "Theme is in temp file: " << tmpFile << endl;
 
     // set theme's name
-    setName( QFileInfo( url.fileName() ).baseName() );
+    setName( TQFileInfo( url.fileName() ).baseName() );
 
     // unpack the tarball
-    QString location = m_kgd->saveLocation( "themes",  m_name + "/" );
+    TQString location = m_kgd->saveLocation( "themes",  m_name + "/" );
     KTar tar( tmpFile );
     tar.open( IO_ReadOnly );
     tar.directory()->copyTo( location );
     tar.close();
 
     // create the DOM
-    QFile file( location + m_name + ".xml" );
+    TQFile file( location + m_name + ".xml" );
     file.open( IO_ReadOnly );
     m_dom.setContent( file.readAll() );
     file.close();
@@ -116,7 +116,7 @@ bool KTheme::load( const KURL & url )
     return true;
 }
 
-QString KTheme::createYourself( bool pack )
+TQString KTheme::createYourself( bool pack )
 {
     // start with empty dir for orig theme
     if ( !pack )
@@ -137,35 +137,35 @@ QString KTheme::createYourself( bool pack )
 
     for ( uint i=0; i < numDesktops-1; i++ )
     {
-        QDomElement desktopElem = m_dom.createElement( "desktop" );
+        TQDomElement desktopElem = m_dom.createElement( "desktop" );
         desktopElem.setAttribute( "number", i );
         desktopElem.setAttribute( "common", common );
 
-        desktopConf.setGroup( "Desktop" + QString::number( i ) );
+        desktopConf.setGroup( "Desktop" + TQString::number( i ) );
 
-        QDomElement modeElem = m_dom.createElement( "mode" );
+        TQDomElement modeElem = m_dom.createElement( "mode" );
         modeElem.setAttribute( "id", desktopConf.readEntry( "BackgroundMode", "Flat" ) );
         desktopElem.appendChild( modeElem );
 
-        QDomElement c1Elem = m_dom.createElement( "color1" );
+        TQDomElement c1Elem = m_dom.createElement( "color1" );
         c1Elem.setAttribute( "rgb", desktopConf.readColorEntry( "Color1" ).name() );
         desktopElem.appendChild( c1Elem );
 
-        QDomElement c2Elem = m_dom.createElement( "color2" );
+        TQDomElement c2Elem = m_dom.createElement( "color2" );
         c2Elem.setAttribute( "rgb", desktopConf.readColorEntry( "Color2" ).name() );
         desktopElem.appendChild( c2Elem );
 
-        QDomElement blendElem = m_dom.createElement( "blending" );
-        blendElem.setAttribute( "mode", desktopConf.readEntry( "BlendMode", QString( "NoBlending" ) ) );
-        blendElem.setAttribute( "balance", desktopConf.readEntry( "BlendBalance", QString::number( 100 ) ) );
+        TQDomElement blendElem = m_dom.createElement( "blending" );
+        blendElem.setAttribute( "mode", desktopConf.readEntry( "BlendMode", TQString( "NoBlending" ) ) );
+        blendElem.setAttribute( "balance", desktopConf.readEntry( "BlendBalance", TQString::number( 100 ) ) );
         blendElem.setAttribute( "reverse", desktopConf.readBoolEntry( "ReverseBlending", false ) );
         desktopElem.appendChild( blendElem );
 
-        QDomElement patElem = m_dom.createElement( "pattern" );
+        TQDomElement patElem = m_dom.createElement( "pattern" );
         patElem.setAttribute( "name", desktopConf.readEntry( "Pattern" ) );
         desktopElem.appendChild( patElem );
 
-        QDomElement wallElem = m_dom.createElement( "wallpaper" );
+        TQDomElement wallElem = m_dom.createElement( "wallpaper" );
         wallElem.setAttribute( "url", processFilePath( "desktop", desktopConf.readPathEntry( "Wallpaper" ) ) );
         wallElem.setAttribute( "mode", desktopConf.readEntry( "WallpaperMode" ) );
         desktopElem.appendChild( wallElem );
@@ -180,13 +180,13 @@ QString KTheme::createYourself( bool pack )
 
     // 11. Screensaver
     desktopConf.setGroup( "ScreenSaver" );
-    QDomElement saverElem = m_dom.createElement( "screensaver" );
+    TQDomElement saverElem = m_dom.createElement( "screensaver" );
     saverElem.setAttribute( "name", desktopConf.readEntry( "Saver" ) );
     m_root.appendChild( saverElem );
 
     // 3. Icons
     globalConf->setGroup( "Icons" );
-    QDomElement iconElem = m_dom.createElement( "icons" );
+    TQDomElement iconElem = m_dom.createElement( "icons" );
     iconElem.setAttribute( "name", globalConf->readEntry( "Theme",KIconTheme::current() ) );
     createIconElems( "DesktopIcons", "desktop", iconElem, globalConf );
     createIconElems( "MainToolbarIcons", "mainToolbar", iconElem, globalConf );
@@ -198,7 +198,7 @@ QString KTheme::createYourself( bool pack )
     // 4. Sounds
     // 4.1 Global sounds
     KConfig * soundConf = new KConfig( "knotify.eventsrc", true );
-    QStringList stdEvents;
+    TQStringList stdEvents;
     stdEvents << "cannotopenfile" << "catastrophe" << "exitkde" << "fatalerror"
               << "notification" << "printerror" << "startkde" << "warning"
               << "messageCritical" << "messageInformation" << "messageWarning"
@@ -206,7 +206,7 @@ QString KTheme::createYourself( bool pack )
 
     // 4.2 KWin sounds
     KConfig * kwinSoundConf = new KConfig( "kwin.eventsrc", true );
-    QStringList kwinEvents;
+    TQStringList kwinEvents;
     kwinEvents << "activate" << "close" << "delete" <<
         "desktop1" << "desktop2" << "desktop3" << "desktop4" <<
         "desktop5" << "desktop6" << "desktop7" << "desktop8" <<
@@ -215,7 +215,7 @@ QString KTheme::createYourself( bool pack )
         "resizeend" << "resizestart" << "shadedown" << "shadeup" <<
         "transdelete" << "transnew" << "unmaximize" << "unminimize";
 
-    QDomElement soundsElem = m_dom.createElement( "sounds" );
+    TQDomElement soundsElem = m_dom.createElement( "sounds" );
     createSoundList( stdEvents, "global", soundsElem, soundConf );
     createSoundList( kwinEvents, "kwin", soundsElem, kwinSoundConf );
     m_root.appendChild( soundsElem );
@@ -224,24 +224,24 @@ QString KTheme::createYourself( bool pack )
 
 
     // 5. Colors
-    QDomElement colorsElem = m_dom.createElement( "colors" );
+    TQDomElement colorsElem = m_dom.createElement( "colors" );
     globalConf->setGroup( "KDE" );
     colorsElem.setAttribute( "contrast", globalConf->readNumEntry( "contrast", 7 ) );
-    QStringList stdColors;
+    TQStringList stdColors;
     stdColors << "background" << "selectBackground" << "foreground" << "windowForeground"
               << "windowBackground" << "selectForeground" << "buttonBackground"
               << "buttonForeground" << "linkColor" << "visitedLinkColor" << "alternateBackground";
 
     globalConf->setGroup( "General" );
-    for ( QStringList::Iterator it = stdColors.begin(); it != stdColors.end(); ++it )
+    for ( TQStringList::Iterator it = stdColors.begin(); it != stdColors.end(); ++it )
         createColorElem( ( *it ), "global", colorsElem, globalConf );
 
-    QStringList kwinColors;
+    TQStringList kwinColors;
     kwinColors << "activeForeground" << "inactiveBackground" << "inactiveBlend" << "activeBackground"
                << "activeBlend" << "inactiveForeground" << "activeTitleBtnBg" << "inactiveTitleBtnBg"
                << "frame" << "inactiveFrame" << "handle" << "inactiveHandle";
     globalConf->setGroup( "WM" );
-    for ( QStringList::Iterator it = kwinColors.begin(); it != kwinColors.end(); ++it )
+    for ( TQStringList::Iterator it = kwinColors.begin(); it != kwinColors.end(); ++it )
         createColorElem( ( *it ), "kwin", colorsElem, globalConf );
 
     m_root.appendChild( colorsElem );
@@ -249,7 +249,7 @@ QString KTheme::createYourself( bool pack )
     // 6. Cursors
     KConfig* mouseConf = new KConfig( "kcminputrc", true );
     mouseConf->setGroup( "Mouse" );
-    QDomElement cursorsElem = m_dom.createElement( "cursors" );
+    TQDomElement cursorsElem = m_dom.createElement( "cursors" );
     cursorsElem.setAttribute( "name", mouseConf->readEntry( "cursorTheme" ) );
     m_root.appendChild( cursorsElem );
     delete mouseConf;
@@ -257,17 +257,17 @@ QString KTheme::createYourself( bool pack )
 
     // 7. KWin
     kwinConf.setGroup( "Style" );
-    QDomElement wmElem = m_dom.createElement( "wm" );
+    TQDomElement wmElem = m_dom.createElement( "wm" );
     wmElem.setAttribute( "name", kwinConf.readEntry( "PluginLib" ) );
     wmElem.setAttribute( "type", "builtin" );    // TODO support pixmap themes when the kwin client gets ported
     if ( kwinConf.readBoolEntry( "CustomButtonPositions" )  )
     {
-        QDomElement buttonsElem = m_dom.createElement( "buttons" );
+        TQDomElement buttonsElem = m_dom.createElement( "buttons" );
         buttonsElem.setAttribute( "left", kwinConf.readEntry( "ButtonsOnLeft" ) );
         buttonsElem.setAttribute( "right", kwinConf.readEntry( "ButtonsOnRight" ) );
         wmElem.appendChild( buttonsElem );
     }
-    QDomElement borderElem = m_dom.createElement( "border" );
+    TQDomElement borderElem = m_dom.createElement( "border" );
     borderElem.setAttribute( "size", kwinConf.readNumEntry( "BorderSize", 1 ) );
     wmElem.appendChild( borderElem );
     m_root.appendChild( wmElem );
@@ -275,12 +275,12 @@ QString KTheme::createYourself( bool pack )
     // 8. Konqueror
     KConfig konqConf( "konquerorrc", true );
     konqConf.setGroup( "Settings" );
-    QDomElement konqElem = m_dom.createElement( "konqueror" );
-    QDomElement konqWallElem = m_dom.createElement( "wallpaper" );
-    QString bgImagePath = konqConf.readPathEntry( "BgImage" );
+    TQDomElement konqElem = m_dom.createElement( "konqueror" );
+    TQDomElement konqWallElem = m_dom.createElement( "wallpaper" );
+    TQString bgImagePath = konqConf.readPathEntry( "BgImage" );
     konqWallElem.setAttribute( "url", processFilePath( "konqueror", bgImagePath ) );
     konqElem.appendChild( konqWallElem );
-    QDomElement konqBgColorElem = m_dom.createElement( "bgcolor" );
+    TQDomElement konqBgColorElem = m_dom.createElement( "bgcolor" );
     konqBgColorElem.setAttribute( "rgb", konqConf.readColorEntry( "BgColor" ).name() );
     konqElem.appendChild( konqBgColorElem );
     m_root.appendChild( konqElem );
@@ -289,31 +289,31 @@ QString KTheme::createYourself( bool pack )
     KConfig kickerConf( "kickerrc", true );
     kickerConf.setGroup( "General" );
 
-    QDomElement panelElem = m_dom.createElement( "panel" );
+    TQDomElement panelElem = m_dom.createElement( "panel" );
 
     if ( kickerConf.readBoolEntry( "UseBackgroundTheme" ) )
     {
-        QDomElement backElem = m_dom.createElement( "background" );
-        QString kbgPath = kickerConf.readPathEntry( "BackgroundTheme" );
+        TQDomElement backElem = m_dom.createElement( "background" );
+        TQString kbgPath = kickerConf.readPathEntry( "BackgroundTheme" );
         backElem.setAttribute( "url", processFilePath( "panel", kbgPath ) );
         backElem.setAttribute( "colorize", kickerConf.readBoolEntry( "ColorizeBackground" ) );
         panelElem.appendChild( backElem );
     }
 
-    QDomElement transElem = m_dom.createElement( "transparent" );
+    TQDomElement transElem = m_dom.createElement( "transparent" );
     transElem.setAttribute( "value", kickerConf.readBoolEntry( "Transparent" ) );
     panelElem.appendChild( transElem );
 
-    QDomElement posElem = m_dom.createElement( "position" );
+    TQDomElement posElem = m_dom.createElement( "position" );
     posElem.setAttribute( "value", kickerConf.readEntry( "Position" ) );
     panelElem.appendChild( posElem );
 
 
-    QDomElement showLeftHideButtonElem = m_dom.createElement( "showlefthidebutton" );
+    TQDomElement showLeftHideButtonElem = m_dom.createElement( "showlefthidebutton" );
     showLeftHideButtonElem.setAttribute( "value", kickerConf.readBoolEntry( "ShowLeftHideButton" ) );
     panelElem.appendChild( showLeftHideButtonElem );
 
-    QDomElement showRightHideButtonElem = m_dom.createElement( "showrighthidebutton" );
+    TQDomElement showRightHideButtonElem = m_dom.createElement( "showrighthidebutton" );
     showRightHideButtonElem.setAttribute( "value", kickerConf.readBoolEntry( "ShowRightHideButton" ) );
     panelElem.appendChild( showRightHideButtonElem );
 
@@ -323,13 +323,13 @@ QString KTheme::createYourself( bool pack )
 
     // 10. Widget style
     globalConf->setGroup( "General" );
-    QDomElement widgetsElem = m_dom.createElement( "widgets" );
+    TQDomElement widgetsElem = m_dom.createElement( "widgets" );
     widgetsElem.setAttribute( "name", globalConf->readEntry( "widgetStyle",KStyle::defaultStyle()  ) );
     m_root.appendChild( widgetsElem );
 
     // 12.
-    QDomElement fontsElem = m_dom.createElement( "fonts" );
-    QStringList fonts;
+    TQDomElement fontsElem = m_dom.createElement( "fonts" );
+    TQStringList fonts;
     fonts   << "General"    << "font"
             << "General"    << "fixed"
             << "General"    << "toolBarFont"
@@ -338,10 +338,10 @@ QString KTheme::createYourself( bool pack )
             << "General"    << "taskbarFont"
             << "FMSettings" << "StandardFont";
 
-    for ( QStringList::Iterator it = fonts.begin(); it != fonts.end(); ++it ) {
-        QString group = *it; ++it;
-        QString key   = *it;
-        QString value;
+    for ( TQStringList::Iterator it = fonts.begin(); it != fonts.end(); ++it ) {
+        TQString group = *it; ++it;
+        TQString key   = *it;
+        TQString value;
 
         if ( group == "FMSettings" ) {
             desktopConf.setGroup( group );
@@ -351,7 +351,7 @@ QString KTheme::createYourself( bool pack )
             globalConf->setGroup( group );
             value = globalConf->readEntry( key );
         }
-        QDomElement fontElem = m_dom.createElement( key );
+        TQDomElement fontElem = m_dom.createElement( key );
         fontElem.setAttribute( "object", group );
         fontElem.setAttribute( "value", value );
         fontsElem.appendChild( fontElem );
@@ -359,14 +359,14 @@ QString KTheme::createYourself( bool pack )
     m_root.appendChild( fontsElem );
 
     // Save the XML
-    QFile file( m_kgd->saveLocation( "themes", m_name + "/" ) + m_name + ".xml" );
+    TQFile file( m_kgd->saveLocation( "themes", m_name + "/" ) + m_name + ".xml" );
     if ( file.open( IO_WriteOnly ) ) {
-        QTextStream stream( &file );
+        TQTextStream stream( &file );
         m_dom.save( stream, 2 );
         file.close();
     }
 
-    QString result;
+    TQString result;
     if ( pack )
     {
         // Pack the whole theme
@@ -375,7 +375,7 @@ QString KTheme::createYourself( bool pack )
 
         kdDebug() << "Packing everything under: " << m_kgd->saveLocation( "themes", m_name + "/" ) << endl;
 
-        if ( tar.addLocalDirectory( m_kgd->saveLocation( "themes", m_name + "/" ), QString::null ) )
+        if ( tar.addLocalDirectory( m_kgd->saveLocation( "themes", m_name + "/" ), TQString::null ) )
             result = tar.fileName();
 
         tar.close();
@@ -390,18 +390,18 @@ void KTheme::apply()
 {
     kdDebug() << "Going to apply theme: " << m_name << endl;
 
-    QString themeDir = m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/";
+    TQString themeDir = m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/";
     kdDebug() << "Theme dir: " << themeDir << endl;
 
     // 2. Background theme
 
-    QDomNodeList desktopList = m_dom.elementsByTagName( "desktop" );
+    TQDomNodeList desktopList = m_dom.elementsByTagName( "desktop" );
     KConfig desktopConf( "kdesktoprc" );
     desktopConf.setGroup( "Background Common" );
 
     for ( uint i = 0; i <= desktopList.count(); i++ )
     {
-        QDomElement desktopElem = desktopList.item( i ).toElement();
+        TQDomElement desktopElem = desktopList.item( i ).toElement();
         if ( !desktopElem.isNull() )
         {
             // TODO optimize, don't write several times the common section
@@ -409,10 +409,10 @@ void KTheme::apply()
             desktopConf.writeEntry( "CommonDesktop", common );
             desktopConf.writeEntry( "DeskNum", desktopElem.attribute( "number", "0" ).toUInt() );
 
-            desktopConf.setGroup( QString( "Desktop%1" ).arg( i ) );
+            desktopConf.setGroup( TQString( "Desktop%1" ).arg( i ) );
             desktopConf.writeEntry( "BackgroundMode", getProperty( desktopElem, "mode", "id" ) );
-            desktopConf.writeEntry( "Color1", QColor( getProperty( desktopElem, "color1", "rgb" ) ) );
-            desktopConf.writeEntry( "Color2", QColor( getProperty( desktopElem, "color2", "rgb" ) ) );
+            desktopConf.writeEntry( "Color1", TQColor( getProperty( desktopElem, "color1", "rgb" ) ) );
+            desktopConf.writeEntry( "Color2", TQColor( getProperty( desktopElem, "color2", "rgb" ) ) );
             desktopConf.writeEntry( "BlendMode", getProperty( desktopElem, "blending", "mode" ) );
             desktopConf.writeEntry( "BlendBalance", getProperty( desktopElem, "blending", "balance" ) );
             desktopConf.writeEntry( "ReverseBlending",
@@ -428,7 +428,7 @@ void KTheme::apply()
     }
 
     // 11. Screensaver
-    QDomElement saverElem = m_dom.elementsByTagName( "screensaver" ).item( 0 ).toElement();
+    TQDomElement saverElem = m_dom.elementsByTagName( "screensaver" ).item( 0 ).toElement();
 
     if ( !saverElem.isNull() )
     {
@@ -445,18 +445,18 @@ void KTheme::apply()
     // FIXME Xinerama
 
     // 3. Icons
-    QDomElement iconElem = m_dom.elementsByTagName( "icons" ).item( 0 ).toElement();
+    TQDomElement iconElem = m_dom.elementsByTagName( "icons" ).item( 0 ).toElement();
     if ( !iconElem.isNull() )
     {
         KConfig * iconConf = KGlobal::config();
         iconConf->setGroup( "Icons" );
         iconConf->writeEntry( "Theme", iconElem.attribute( "name", "crystalsvg" ), true, true );
 
-        QDomNodeList iconList = iconElem.childNodes();
+        TQDomNodeList iconList = iconElem.childNodes();
         for ( uint i = 0; i < iconList.count(); i++ )
         {
-            QDomElement iconSubElem = iconList.item( i ).toElement();
-            QString object = iconSubElem.attribute( "object" );
+            TQDomElement iconSubElem = iconList.item( i ).toElement();
+            TQString object = iconSubElem.attribute( "object" );
             if ( object == "desktop" )
                 iconConf->setGroup( "DesktopIcons" );
             else if ( object == "mainToolbar" )
@@ -468,10 +468,10 @@ void KTheme::apply()
             else if ( object == "toolbar" )
                 iconConf->setGroup( "ToolbarIcons" );
 
-            QString iconName = iconSubElem.tagName();
+            TQString iconName = iconSubElem.tagName();
             if ( iconName.contains( "Color" ) )
             {
-                QColor iconColor = QColor( iconSubElem.attribute( "rgb" ) );
+                TQColor iconColor = TQColor( iconSubElem.attribute( "rgb" ) );
                 iconConf->writeEntry( iconName, iconColor, true, true );
             }
             else if ( iconName.contains( "Value" ) || iconName == "Size" )
@@ -489,16 +489,16 @@ void KTheme::apply()
     }
 
     // 4. Sounds
-    QDomElement soundsElem = m_dom.elementsByTagName( "sounds" ).item( 0 ).toElement();
+    TQDomElement soundsElem = m_dom.elementsByTagName( "sounds" ).item( 0 ).toElement();
     if ( !soundsElem.isNull() )
     {
         KConfig soundConf( "knotify.eventsrc" );
         KConfig kwinSoundConf( "kwin.eventsrc" );
-        QDomNodeList eventList = soundsElem.elementsByTagName( "event" );
+        TQDomNodeList eventList = soundsElem.elementsByTagName( "event" );
         for ( uint i = 0; i < eventList.count(); i++ )
         {
-            QDomElement eventElem = eventList.item( i ).toElement();
-            QString object = eventElem.attribute( "object" );
+            TQDomElement eventElem = eventList.item( i ).toElement();
+            TQString object = eventElem.attribute( "object" );
 
             if ( object == "global" )
             {
@@ -521,28 +521,28 @@ void KTheme::apply()
     }
 
     // 5. Colors
-    QDomElement colorsElem = m_dom.elementsByTagName( "colors" ).item( 0 ).toElement();
+    TQDomElement colorsElem = m_dom.elementsByTagName( "colors" ).item( 0 ).toElement();
 
     if ( !colorsElem.isNull() )
     {
-        QDomNodeList colorList = colorsElem.childNodes();
+        TQDomNodeList colorList = colorsElem.childNodes();
         KConfig * colorConf = KGlobal::config();
 
-        QString sCurrentScheme = locateLocal("data", "kdisplay/color-schemes/thememgr.kcsrc");
+        TQString sCurrentScheme = locateLocal("data", "kdisplay/color-schemes/thememgr.kcsrc");
         KSimpleConfig *colorScheme = new KSimpleConfig( sCurrentScheme );
         colorScheme->setGroup("Color Scheme" );
 
         for ( uint i = 0; i < colorList.count(); i++ )
         {
-            QDomElement colorElem = colorList.item( i ).toElement();
-            QString object = colorElem.attribute( "object" );
+            TQDomElement colorElem = colorList.item( i ).toElement();
+            TQString object = colorElem.attribute( "object" );
             if ( object == "global" )
                 colorConf->setGroup( "General" );
             else if ( object == "kwin" )
                 colorConf->setGroup( "WM" );
 
-            QString colName = colorElem.tagName();
-            QColor curColor = QColor( colorElem.attribute( "rgb" ) );
+            TQString colName = colorElem.tagName();
+            TQColor curColor = TQColor( colorElem.attribute( "rgb" ) );
             colorConf->writeEntry( colName, curColor, true, true ); // kdeglobals
             colorScheme->writeEntry( colName, curColor ); // thememgr.kcsrc
         }
@@ -558,7 +558,7 @@ void KTheme::apply()
     }
 
     // 6.Cursors
-    QDomElement cursorsElem = m_dom.elementsByTagName( "cursors" ).item( 0 ).toElement();
+    TQDomElement cursorsElem = m_dom.elementsByTagName( "cursors" ).item( 0 ).toElement();
 
     if ( !cursorsElem.isNull() )
     {
@@ -569,17 +569,17 @@ void KTheme::apply()
     }
 
     // 7. KWin
-    QDomElement wmElem = m_dom.elementsByTagName( "wm" ).item( 0 ).toElement();
+    TQDomElement wmElem = m_dom.elementsByTagName( "wm" ).item( 0 ).toElement();
 
     if ( !wmElem.isNull() )
     {
         KConfig kwinConf( "kwinrc" );
         kwinConf.setGroup( "Style" );
-        QString type = wmElem.attribute( "type" );
+        TQString type = wmElem.attribute( "type" );
         if ( type == "builtin" )
             kwinConf.writeEntry( "PluginLib", wmElem.attribute( "name" ) );
         //else // TODO support custom themes
-        QDomNodeList buttons = wmElem.elementsByTagName ("buttons");
+        TQDomNodeList buttons = wmElem.elementsByTagName ("buttons");
         if ( buttons.count() > 0 )
         {
             kwinConf.writeEntry( "CustomButtonPositions", true );
@@ -597,27 +597,27 @@ void KTheme::apply()
     }
 
     // 8. Konqueror
-    QDomElement konqElem = m_dom.elementsByTagName( "konqueror" ).item( 0 ).toElement();
+    TQDomElement konqElem = m_dom.elementsByTagName( "konqueror" ).item( 0 ).toElement();
 
     if ( !konqElem.isNull() )
     {
         KConfig konqConf( "konquerorrc" );
         konqConf.setGroup( "Settings" );
         konqConf.writeEntry( "BgImage", unprocessFilePath( "konqueror", getProperty( konqElem, "wallpaper", "url" ) ) );
-        konqConf.writeEntry( "BgColor", QColor( getProperty( konqElem, "bgcolor", "rgb" ) ) );
+        konqConf.writeEntry( "BgColor", TQColor( getProperty( konqElem, "bgcolor", "rgb" ) ) );
 
         konqConf.sync();
         client->send("konqueror*", "KonquerorIface", "reparseConfiguration()", ""); // FIXME seems not to work :(
     }
 
     // 9. Kicker
-    QDomElement panelElem = m_dom.elementsByTagName( "panel" ).item( 0 ).toElement();
+    TQDomElement panelElem = m_dom.elementsByTagName( "panel" ).item( 0 ).toElement();
 
     if ( !panelElem.isNull() )
     {
         KConfig kickerConf( "kickerrc" );
         kickerConf.setGroup( "General" );
-        QString kickerBgUrl = getProperty( panelElem, "background", "url" );
+        TQString kickerBgUrl = getProperty( panelElem, "background", "url" );
         if ( !kickerBgUrl.isEmpty() )
         {
             kickerConf.writeEntry( "UseBackgroundTheme", true );
@@ -639,7 +639,7 @@ void KTheme::apply()
     }
 
     // 10. Widget style
-    QDomElement widgetsElem = m_dom.elementsByTagName( "widgets" ).item( 0 ).toElement();
+    TQDomElement widgetsElem = m_dom.elementsByTagName( "widgets" ).item( 0 ).toElement();
 
     if ( !widgetsElem.isNull() )
     {
@@ -651,20 +651,20 @@ void KTheme::apply()
     }
 
     // 12. Fonts
-    QDomElement fontsElem = m_dom.elementsByTagName( "fonts" ).item( 0 ).toElement();
+    TQDomElement fontsElem = m_dom.elementsByTagName( "fonts" ).item( 0 ).toElement();
     if ( !fontsElem.isNull() )
     {
         KConfig * fontsConf = KGlobal::config();
-        KConfig * kde1xConf = new KSimpleConfig( QDir::homeDirPath() + "/.kderc" );
+        KConfig * kde1xConf = new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
         kde1xConf->setGroup( "General" );
 
-        QDomNodeList fontList = fontsElem.childNodes();
+        TQDomNodeList fontList = fontsElem.childNodes();
         for ( uint i = 0; i < fontList.count(); i++ )
         {
-            QDomElement fontElem = fontList.item( i ).toElement();
-            QString fontName  = fontElem.tagName();
-            QString fontValue = fontElem.attribute( "value" );
-            QString fontObject = fontElem.attribute( "object" );
+            TQDomElement fontElem = fontList.item( i ).toElement();
+            TQString fontName  = fontElem.tagName();
+            TQString fontValue = fontElem.attribute( "value" );
+            TQString fontObject = fontElem.attribute( "object" );
 
             if ( fontObject == "FMSettings" ) {
                 desktopConf.setGroup( fontObject );
@@ -685,51 +685,51 @@ void KTheme::apply()
 
 }
 
-bool KTheme::remove( const QString & name )
+bool KTheme::remove( const TQString & name )
 {
     kdDebug() << "Going to remove theme: " << name << endl;
     return KIO::NetAccess::del( KGlobal::dirs()->saveLocation( "themes", name + "/" ), 0L );
 }
 
-void KTheme::setProperty( const QString & name, const QString & value, QDomElement parent )
+void KTheme::setProperty( const TQString & name, const TQString & value, TQDomElement parent )
 {
-    QDomElement tmp = m_dom.createElement( name );
+    TQDomElement tmp = m_dom.createElement( name );
     tmp.setAttribute( "value", value );
     parent.appendChild( tmp );
 }
 
-QString KTheme::getProperty( const QString & name ) const
+TQString KTheme::getProperty( const TQString & name ) const
 {
-    QDomNodeList _list = m_dom.elementsByTagName( name );
+    TQDomNodeList _list = m_dom.elementsByTagName( name );
     if ( _list.count() != 0 )
         return _list.item( 0 ).toElement().attribute( "value" );
     else
     {
         kdWarning() << "Found no such property: " << name << endl;
-        return QString::null;
+        return TQString::null;
     }
 }
 
-QString KTheme::getProperty( QDomElement parent, const QString & tag,
-                             const QString & attr ) const
+TQString KTheme::getProperty( TQDomElement parent, const TQString & tag,
+                             const TQString & attr ) const
 {
-    QDomNodeList _list = parent.elementsByTagName( tag );
+    TQDomNodeList _list = parent.elementsByTagName( tag );
 
     if ( _list.count() != 0 )
         return _list.item( 0 ).toElement().attribute( attr );
     else
     {
-        kdWarning() << QString( "No such property found: %1->%2->%3" )
+        kdWarning() << TQString( "No such property found: %1->%2->%3" )
             .arg( parent.tagName() ).arg( tag ).arg( attr ) << endl;
-        return QString::null;
+        return TQString::null;
     }
 }
 
-void KTheme::createIconElems( const QString & group, const QString & object,
-                              QDomElement parent, KConfig * cfg )
+void KTheme::createIconElems( const TQString & group, const TQString & object,
+                              TQDomElement parent, KConfig * cfg )
 {
     cfg->setGroup( group );
-    QStringList elemNames;
+    TQStringList elemNames;
     elemNames << "Animated" << "DoublePixels" << "Size"
               << "ActiveColor" << "ActiveColor2" << "ActiveEffect"
               << "ActiveSemiTransparent" << "ActiveValue"
@@ -737,12 +737,12 @@ void KTheme::createIconElems( const QString & group, const QString & object,
               << "DefaultSemiTransparent" << "DefaultValue"
               << "DisabledColor" << "DisabledColor2" << "DisabledEffect"
               << "DisabledSemiTransparent" << "DisabledValue";
-    for ( QStringList::ConstIterator it = elemNames.begin(); it != elemNames.end(); ++it ) {
+    for ( TQStringList::ConstIterator it = elemNames.begin(); it != elemNames.end(); ++it ) {
         if ( (*it).contains( "Color" ) )
             createColorElem( *it, object, parent, cfg );
         else
         {
-            QDomElement tmpCol = m_dom.createElement( *it );
+            TQDomElement tmpCol = m_dom.createElement( *it );
             tmpCol.setAttribute( "object", object );
 
             if ( (*it).contains( "Value" ) || *it == "Size" )
@@ -758,33 +758,33 @@ void KTheme::createIconElems( const QString & group, const QString & object,
     }
 }
 
-void KTheme::createColorElem( const QString & name, const QString & object,
-                              QDomElement parent, KConfig * cfg )
+void KTheme::createColorElem( const TQString & name, const TQString & object,
+                              TQDomElement parent, KConfig * cfg )
 {
-    QColor color = cfg->readColorEntry( name );
+    TQColor color = cfg->readColorEntry( name );
     if ( color.isValid() )
     {
-        QDomElement tmpCol = m_dom.createElement( name );
+        TQDomElement tmpCol = m_dom.createElement( name );
         tmpCol.setAttribute( "rgb", color.name() );
         tmpCol.setAttribute( "object", object );
         parent.appendChild( tmpCol );
     }
 }
 
-void KTheme::createSoundList( const QStringList & events, const QString & object,
-                              QDomElement parent, KConfig * cfg )
+void KTheme::createSoundList( const TQStringList & events, const TQString & object,
+                              TQDomElement parent, KConfig * cfg )
 {
-    for ( QStringList::ConstIterator it = events.begin(); it != events.end(); ++it )
+    for ( TQStringList::ConstIterator it = events.begin(); it != events.end(); ++it )
     {
-        QString group = ( *it );
+        TQString group = ( *it );
         if ( cfg->hasGroup( group ) )
         {
             cfg->setGroup( group );
-            QString soundURL = cfg->readPathEntry( "soundfile" );
+            TQString soundURL = cfg->readPathEntry( "soundfile" );
             int pres = cfg->readNumEntry( "presentation", 0 );
             if ( !soundURL.isEmpty() && ( ( pres & 1 ) == 1 ) )
             {
-                QDomElement eventElem = m_dom.createElement( "event" );
+                TQDomElement eventElem = m_dom.createElement( "event" );
                 eventElem.setAttribute( "object", object );
                 eventElem.setAttribute( "name", group );
                 eventElem.setAttribute( "url", processFilePath( "sounds", soundURL ) );
@@ -794,9 +794,9 @@ void KTheme::createSoundList( const QStringList & events, const QString & object
     }
 }
 
-QString KTheme::processFilePath( const QString & section, const QString & path )
+TQString KTheme::processFilePath( const TQString & section, const TQString & path )
 {
-    QFileInfo fi( path );
+    TQFileInfo fi( path );
 
     if ( fi.isRelative() )
         fi.setFile( findResource( section, path ) );
@@ -826,60 +826,60 @@ QString KTheme::processFilePath( const QString & section, const QString & path )
     else
         kdWarning() << "Unsupported theme resource type" << endl;
 
-    return QString::null;       // an error occured or the resource doesn't exist
+    return TQString::null;       // an error occured or the resource doesn't exist
 }
 
-QString KTheme::unprocessFilePath( const QString & section, QString path )
+TQString KTheme::unprocessFilePath( const TQString & section, TQString path )
 {
     if ( path.startsWith( "theme:/" ) )
-        return path.replace( QRegExp( "^theme:/" ), m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/" );
+        return path.replace( TQRegExp( "^theme:/" ), m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/" );
 
-    if ( QFile::exists( path ) )
+    if ( TQFile::exists( path ) )
         return path;
     else  // try to find it in the system
         return findResource( section, path );
 }
 
-void KTheme::setAuthor( const QString & author )
+void KTheme::setAuthor( const TQString & author )
 {
     setProperty( "author", author, m_general );
 }
 
-void KTheme::setEmail( const QString & email )
+void KTheme::setEmail( const TQString & email )
 {
     setProperty( "email", email, m_general );
 }
 
-void KTheme::setHomepage( const QString & homepage )
+void KTheme::setHomepage( const TQString & homepage )
 {
     setProperty( "homepage", homepage, m_general );
 }
 
-void KTheme::setComment( const QString & comment )
+void KTheme::setComment( const TQString & comment )
 {
     setProperty( "comment", comment, m_general );
 }
 
-void KTheme::setVersion( const QString & version )
+void KTheme::setVersion( const TQString & version )
 {
     setProperty( "version", version, m_general );
 }
 
 void KTheme::addPreview()
 {
-    QString file = m_kgd->saveLocation( "themes", m_name + "/" ) + m_name + ".preview.png";
+    TQString file = m_kgd->saveLocation( "themes", m_name + "/" ) + m_name + ".preview.png";
     kdDebug() << "Adding preview: " << file << endl;
-    QPixmap snapshot = QPixmap::grabWindow( qt_xrootwin() );
+    TQPixmap snapshot = TQPixmap::grabWindow( qt_xrootwin() );
     snapshot.save( file, "PNG" );
 }
 
-bool KTheme::copyFile( const QString & from, const QString & to )
+bool KTheme::copyFile( const TQString & from, const TQString & to )
 {
     // we overwrite b/c of restoring the "original" theme
     return KIO::NetAccess::file_copy( from, to, -1, true /*overwrite*/ );
 }
 
-QString KTheme::findResource( const QString & section, const QString & path )
+TQString KTheme::findResource( const TQString & section, const TQString & path )
 {
     if ( section == "desktop" )
         return m_kgd->findResource( "wallpaper", path );
@@ -892,6 +892,6 @@ QString KTheme::findResource( const QString & section, const QString & path )
     else
     {
         kdWarning() << "Requested unknown resource: " << section << endl;
-        return QString::null;
+        return TQString::null;
     }
 }

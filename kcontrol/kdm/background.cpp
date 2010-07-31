@@ -23,9 +23,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -33,19 +33,19 @@
 #include "../background/bgsettings.h"
 #include "../background/bgdialog.h"
 #include "background.h"
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <ksimpleconfig.h>
 #include <kdialog.h>
 
 extern KSimpleConfig *config;
 
-KBackground::KBackground(QWidget *parent, const char *name)
-    : QWidget(parent, name)
+KBackground::KBackground(TQWidget *parent, const char *name)
+    : TQWidget(parent, name)
 {
 
     // Enabling checkbox
-    m_pCBEnable = new QCheckBox( i18n("E&nable background"), this );
-    QWhatsThis::add( m_pCBEnable,
+    m_pCBEnable = new TQCheckBox( i18n("E&nable background"), this );
+    TQWhatsThis::add( m_pCBEnable,
              i18n("If this is checked, KDM will use the settings below for the background."
 		" If it is disabled, you have to look after the background yourself."
 		" This is done by running some program (possibly xsetroot) in the script"
@@ -54,14 +54,14 @@ KBackground::KBackground(QWidget *parent, const char *name)
     m_simpleConf=new KSimpleConfig(config->readEntry( "BackgroundCfg",KDE_CONFDIR "/kdm/backgroundrc" ) );
     m_background = new BGDialog( this, m_simpleConf, false );
 
-    connect(m_background, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+    connect(m_background, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
     // Top layout
-    QVBoxLayout *top = new QVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint() );
+    TQVBoxLayout *top = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint() );
     top->addWidget(m_pCBEnable);
     top->addWidget(m_background);
     top->addStretch();
-    connect( m_pCBEnable, SIGNAL(toggled( bool )), SLOT(slotEnableChanged()) );
+    connect( m_pCBEnable, TQT_SIGNAL(toggled( bool )), TQT_SLOT(slotEnableChanged()) );
 }
 
 KBackground::~KBackground()

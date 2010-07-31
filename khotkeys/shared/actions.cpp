@@ -42,7 +42,7 @@ namespace KHotKeys
     
 Action* Action::create_cfg_read( KConfig& cfg_P, Action_data* data_P )
     {
-    QString type = cfg_P.readEntry( "Type" );
+    TQString type = cfg_P.readEntry( "Type" );
     if( type == "COMMAND_URL" )
         return new Command_url_action( cfg_P, data_P );
     if( type == "MENUENTRY" )
@@ -65,16 +65,16 @@ void Action::cfg_write( KConfig& cfg_P ) const
 // Action_list
 
 Action_list::Action_list( KConfig& cfg_P, Action_data* data_P )
-    : QPtrList< Action >()
+    : TQPtrList< Action >()
     {
     setAutoDelete( true );
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int cnt = cfg_P.readNumEntry( "ActionsCount", 0 );
     for( int i = 0;
          i < cnt;
          ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         Action* action = Action::create_cfg_read( cfg_P, data_P );
         if( action )
             append( action );
@@ -84,13 +84,13 @@ Action_list::Action_list( KConfig& cfg_P, Action_data* data_P )
     
 void Action_list::cfg_write( KConfig& cfg_P ) const
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int i = 0;
     for( Iterator it( *this );
          it;
          ++it, ++i )
         {
-        cfg_P.setGroup( save_cfg_group + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + TQString::number( i ));
         it.current()->cfg_write( cfg_P );
         }
     cfg_P.setGroup( save_cfg_group );
@@ -117,7 +117,7 @@ void Command_url_action::execute()
     if( command_url().isEmpty())
         return;
     KURIFilterData uri;
-    QString cmd = command_url();
+    TQString cmd = command_url();
     static bool sm_ready = false;
     if( !sm_ready )
         {
@@ -176,7 +176,7 @@ void Command_url_action::execute()
     timeout.start( 1000, true ); // 1sec timeout
     }
 
-QString Command_url_action::description() const
+TQString Command_url_action::description() const
     {
     return i18n( "Command/URL : " ) + command_url();
     }
@@ -212,10 +212,10 @@ void Menuentry_action::execute()
     timeout.start( 1000, true ); // 1sec timeout
     }
 
-QString Menuentry_action::description() const
+TQString Menuentry_action::description() const
     {
     (void) service();
-    return i18n( "Menuentry : " ) + (_service ? _service->name() : QString::null);
+    return i18n( "Menuentry : " ) + (_service ? _service->name() : TQString::null);
     }
 
 Action* Menuentry_action::copy( Action_data* data_P ) const
@@ -248,8 +248,8 @@ void Dcop_action::execute()
     {
     if( app.isEmpty() || obj.isEmpty() || call.isEmpty())
         return;
-    QStringList args_list;
-    QString args_str = args;
+    TQStringList args_list;
+    TQString args_str = args;
     while( !args_str.isEmpty())
         {
         unsigned int pos = 0;
@@ -257,8 +257,8 @@ void Dcop_action::execute()
             ++pos;
         if( args_str[ pos ] == '\"' || args_str[ pos ] == '\'' )
             {
-            QString val = "";
-            QChar sep = args_str[ pos ];
+            TQString val = "";
+            TQChar sep = args_str[ pos ];
             bool skip = false;
             ++pos;
             for(;
@@ -297,7 +297,7 @@ void Dcop_action::execute()
     proc.start( KProcess::DontCare );
     }
     
-QString Dcop_action::description() const
+TQString Dcop_action::description() const
     {
     return i18n( "DCOP : " ) + remote_application() + "::" + remote_object() + "::"
         + called_function();
@@ -317,7 +317,7 @@ Keyboard_input_action::Keyboard_input_action( KConfig& cfg_P, Action_data* data_
     _input = cfg_P.readEntry( "Input" );
     if( cfg_P.readBoolEntry( "IsDestinationWindow" ))
         {
-        QString save_cfg_group = cfg_P.group();
+        TQString save_cfg_group = cfg_P.group();
         cfg_P.setGroup( save_cfg_group + "DestinationWindow" );
         _dest_window = new Windowdef_list( cfg_P );
         _active_window = false; // ignored with _dest_window set anyway
@@ -343,7 +343,7 @@ void Keyboard_input_action::cfg_write( KConfig& cfg_P ) const
     if( dest_window() != NULL )
         {
         cfg_P.writeEntry( "IsDestinationWindow", true );
-        QString save_cfg_group = cfg_P.group();
+        TQString save_cfg_group = cfg_P.group();
         cfg_P.setGroup( save_cfg_group + "DestinationWindow" );
         dest_window()->cfg_write( cfg_P );
         cfg_P.setGroup( save_cfg_group );
@@ -374,23 +374,23 @@ void Keyboard_input_action::execute()
     int last_index = -1, start = 0;
     while(( last_index = input().find( ':', last_index + 1 )) != -1 ) // find next ';'
 	{
-        QString key = input().mid( start, last_index - start ).stripWhiteSpace();
+        TQString key = input().mid( start, last_index - start ).stripWhiteSpace();
         if( key == "Enter" && KKey( key ).keyCodeQt() == 0 )
             key = "Return"; // CHECKE hack
 	keyboard_handler->send_macro_key( KKey( key ), w );
 	start = last_index + 1;
 	}
     // and the last one
-    QString key = input().mid( start, input().length()).stripWhiteSpace();
+    TQString key = input().mid( start, input().length()).stripWhiteSpace();
     if( key == "Enter" && KKey( key ).keyCodeQt() == 0 )
         key = "Return";
     keyboard_handler->send_macro_key( KKey( key ), w ); // the rest
     XFlush( qt_xdisplay());
     }
     
-QString Keyboard_input_action::description() const
+TQString Keyboard_input_action::description() const
     {
-    QString tmp = input();
+    TQString tmp = input();
     tmp.replace( '\n', ' ' );
     tmp.truncate( 30 );
     return i18n( "Keyboard input : " ) + tmp;
@@ -407,7 +407,7 @@ Action* Keyboard_input_action::copy( Action_data* data_P ) const
 Activate_window_action::Activate_window_action( KConfig& cfg_P, Action_data* data_P )
     : Action( cfg_P, data_P )
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Window" );
     _window = new Windowdef_list( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -422,7 +422,7 @@ void Activate_window_action::cfg_write( KConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "ACTIVATE_WINDOW" ); // overwrites value set in base::cfg_write()
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     cfg_P.setGroup( save_cfg_group + "Window" );
     window()->cfg_write( cfg_P );
     cfg_P.setGroup( save_cfg_group );
@@ -437,7 +437,7 @@ void Activate_window_action::execute()
         windows_handler->activate_window( win_id );
     }
 
-QString Activate_window_action::description() const
+TQString Activate_window_action::description() const
     {
     return i18n( "Activate window : " ) + window()->comment();
     }

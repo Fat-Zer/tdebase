@@ -7,7 +7,7 @@ SaverConfig::SaverConfig()
 {
 }
 
-bool SaverConfig::read(const QString &file)
+bool SaverConfig::read(const TQString &file)
 {
     KDesktopFile config(file, true);
     if( !config.tryExec())

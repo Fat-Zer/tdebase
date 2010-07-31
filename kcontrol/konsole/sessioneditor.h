@@ -22,10 +22,10 @@
 #include <config.h>
 #endif
 
-#include <qptrlist.h>
-#include <qstringlist.h>
+#include <tqptrlist.h>
+#include <tqstringlist.h>
 #include <kapplication.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "sessiondialog.h"
 
@@ -33,7 +33,7 @@ class SessionEditor : public SessionDialog
 {
   Q_OBJECT 
   public:
-    SessionEditor(QWidget* parent=0, const char *name=0);
+    SessionEditor(TQWidget* parent=0, const char *name=0);
     ~SessionEditor();
  
     bool isModified() const { return sesMod; }
@@ -44,7 +44,7 @@ class SessionEditor : public SessionDialog
     void getList();
 
   public slots:
-    void schemaListChanged(const QStringList &titles, const QStringList &filenames);
+    void schemaListChanged(const TQStringList &titles, const TQStringList &filenames);
 
   private slots:
     void readSession(int);
@@ -55,14 +55,14 @@ class SessionEditor : public SessionDialog
   private: 
     void show();
     void loadAllKeytab();
-    void loadAllSession(QString currentFile="");
-    QString readKeymapTitle(const QString& filename);
+    void loadAllSession(TQString currentFile="");
+    TQString readKeymapTitle(const TQString& filename);
 
     bool sesMod;
     int oldSession;
     bool loaded;
-    QPtrList<QString> keytabFilename;
-    QPtrList<QString> schemaFilename;
+    TQPtrList<TQString> keytabFilename;
+    TQPtrList<TQString> schemaFilename;
 };
 
 #endif

@@ -39,7 +39,7 @@ namespace KHotKeys
 
 KHotKeysApp::KHotKeysApp()
     :   KUniqueApplication( false, true ), // no styles
-        delete_helper( new QObject )
+        delete_helper( new TQObject )
     {
     init_global_data( true, delete_helper ); // grab keys
     // CHECKME triggery a dalsi vytvaret az tady za inicializaci
@@ -51,9 +51,9 @@ KHotKeysApp::~KHotKeysApp()
     {
     // CHECKME triggery a dalsi rusit uz tady pred cleanupem
     delete actions_root;
-// Many global data should be destroyed while the QApplication object still
+// Many global data should be destroyed while the TQApplication object still
 // exists, and therefore 'this' cannot be the parent, as ~Object
-// for 'this' would be called after ~QApplication - use proxy object
+// for 'this' would be called after ~TQApplication - use proxy object
     delete delete_helper;
     }
 
@@ -96,7 +96,7 @@ int KDE_EXPORT kdemain( int argc, char** argv )
     {
         {
 	// multiheaded hotkeys
-        QCString multiHead = getenv("KDE_MULTIHEAD");
+        TQCString multiHead = getenv("KDE_MULTIHEAD");
         if (multiHead.lower() == "true") {
 	    Display *dpy = XOpenDisplay(NULL);
 	    if (! dpy) {
@@ -108,14 +108,14 @@ int KDE_EXPORT kdemain( int argc, char** argv )
 	    int number_of_screens = ScreenCount(dpy);
 	    khotkeys_screen_number = DefaultScreen(dpy);
 	    int pos;
-	    QCString displayname = XDisplayString(dpy);
+	    TQCString displayname = XDisplayString(dpy);
 	    XCloseDisplay(dpy);
 	    dpy = 0;
 
 	    if ((pos = displayname.findRev('.')) != -1)
 		displayname.remove(pos, 10);
 
-	    QCString env;
+	    TQCString env;
 	    if (number_of_screens != 1) {
 		for (int i = 0; i < number_of_screens; i++) {
 		    if (i != khotkeys_screen_number && fork() == 0) {
@@ -137,7 +137,7 @@ int KDE_EXPORT kdemain( int argc, char** argv )
 	}
         }
 
-    QCString appname;
+    TQCString appname;
     if (khotkeys_screen_number == 0)
 	appname = "khotkeys";
     else

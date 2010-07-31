@@ -25,22 +25,22 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __taskrmbmenu_h__
 #define __taskrmbmenu_h__
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 class KDE_EXPORT TaskRMBMenu : public QPopupMenu
 {
 	Q_OBJECT
 
 public:
-	TaskRMBMenu(const Task::List&, bool showAll = true, QWidget *parent = 0, const char *name = 0);
-	TaskRMBMenu(Task::Ptr, bool showAll = true, QWidget *parent = 0, const char *name = 0);
+	TaskRMBMenu(const Task::List&, bool showAll = true, TQWidget *parent = 0, const char *name = 0);
+	TaskRMBMenu(Task::Ptr, bool showAll = true, TQWidget *parent = 0, const char *name = 0);
 
 private:
 	void fillMenu(Task::Ptr);
 	void fillMenu();
-    QPopupMenu* makeAdvancedMenu(Task::Ptr);
-	QPopupMenu* makeDesktopsMenu(Task::Ptr);
-	QPopupMenu* makeDesktopsMenu();
+    TQPopupMenu* makeAdvancedMenu(Task::Ptr);
+	TQPopupMenu* makeDesktopsMenu(Task::Ptr);
+	TQPopupMenu* makeDesktopsMenu();
 
 private slots:
 	void slotMinimizeAll();

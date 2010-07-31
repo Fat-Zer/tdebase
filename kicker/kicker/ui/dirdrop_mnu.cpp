@@ -26,8 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "dirdrop_mnu.h"
 
-PanelDirDropMenu::PanelDirDropMenu(QWidget *parent, const char *name)
-  :QPopupMenu(parent, name)
+PanelDirDropMenu::PanelDirDropMenu(TQWidget *parent, const char *name)
+  :TQPopupMenu(parent, name)
 {
     insertItem(SmallIconSet("folder"), i18n("Add as &File Manager URL"), Url);
     setAccel(CTRL+Key_F, Url);

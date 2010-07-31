@@ -1,9 +1,9 @@
 #ifndef __RULES_H__
 #define __RULES_H__
 
-#include <qstring.h>
-#include <qdict.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqdict.h>
+#include <tqmap.h>
 
 
 class XkbRules
@@ -12,32 +12,32 @@ public:
 
   XkbRules(bool layoutsOnly=false);
 
-  const QDict<char> &models() const { return m_models; };
-  const QDict<char> &layouts() const { return m_layouts; };
-  const QDict<char> &options() const { return m_options; };
+  const TQDict<char> &models() const { return m_models; };
+  const TQDict<char> &layouts() const { return m_layouts; };
+  const TQDict<char> &options() const { return m_options; };
   
-  QStringList getAvailableVariants(const QString& layout);
-  unsigned int getDefaultGroup(const QString& layout, const QString& includeGroup);
+  TQStringList getAvailableVariants(const TQString& layout);
+  unsigned int getDefaultGroup(const TQString& layout, const TQString& includeGroup);
 
-  bool isSingleGroup(const QString& layout);
+  bool isSingleGroup(const TQString& layout);
 
 protected:
 
-  void loadRules(QString filename, bool layoutsOnly=false);
-  void loadGroups(QString filename);
-  void loadOldLayouts(QString filename);
+  void loadRules(TQString filename, bool layoutsOnly=false);
+  void loadGroups(TQString filename);
+  void loadOldLayouts(TQString filename);
 
 private:
 
-  QDict<char> m_models;
-  QDict<char> m_layouts;
-  QDict<char> m_options;
-  QMap<QString, unsigned int> m_initialGroups;
-  QDict<QStringList> m_varLists;
-  QStringList m_oldLayouts;
-  QStringList m_nonLatinLayouts;
+  TQDict<char> m_models;
+  TQDict<char> m_layouts;
+  TQDict<char> m_options;
+  TQMap<TQString, unsigned int> m_initialGroups;
+  TQDict<TQStringList> m_varLists;
+  TQStringList m_oldLayouts;
+  TQStringList m_nonLatinLayouts;
   
-  QString X11_DIR;	// pseudo-constant
+  TQString X11_DIR;	// pseudo-constant
   
 //  void fixLayouts();
 };

@@ -34,21 +34,21 @@
 #include <ksimpleconfig.h>
 #include <kdebug.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
-//#include <qtimer.h>		// animation timer - TODO
-#include <qobjectlist.h>
-#include <qpainter.h>
-#include <qwidget.h>
-#include <qregion.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+//#include <tqtimer.h>		// animation timer - TODO
+#include <tqobjectlist.h>
+#include <tqpainter.h>
+#include <tqwidget.h>
+#include <tqregion.h>
 
 #include <unistd.h>
 
 /*
  * KdmThemer. The main theming interface
  */
-KdmThemer::KdmThemer( const QString &_filename, const QString &mode, QWidget *parent )
-    : QObject( parent )
+KdmThemer::KdmThemer( const TQString &_filename, const TQString &mode, TQWidget *parent )
+    : TQObject( parent )
     , rootItem( 0 )
     , backBuffer( 0 )
 {
@@ -56,13 +56,13 @@ KdmThemer::KdmThemer( const QString &_filename, const QString &mode, QWidget *pa
 	m_currentMode = mode;
 
 	// read the XML file and create DOM tree
-	QString filename = _filename;
-	if (!::access( QFile::encodeName( filename + "/GdmGreeterTheme.desktop" ), R_OK )) {
+	TQString filename = _filename;
+	if (!::access( TQFile::encodeName( filename + "/GdmGreeterTheme.desktop" ), R_OK )) {
 		KSimpleConfig cfg( filename + "/GdmGreeterTheme.desktop" );
 		cfg.setGroup( "GdmGreeterTheme" );
 		filename += '/' + cfg.readEntry( "Greeter" );
 	}
-	QFile opmlFile( filename );
+	TQFile opmlFile( filename );
 	if (!opmlFile.open( IO_ReadOnly )) {
 		FDialog::box( widget(), errorbox, i18n( "Cannot open theme file %1" ).arg(filename) );
 		return;
@@ -72,22 +72,22 @@ KdmThemer::KdmThemer( const QString &_filename, const QString &mode, QWidget *pa
 		return;
 	}
 	// Set the root (screen) item
-	rootItem = new KdmRect( 0, QDomNode(), "kdm root" );
-	connect( rootItem, SIGNAL(needUpdate( int, int, int, int )),
-	         widget(), SLOT(update( int, int, int, int )) );
+	rootItem = new KdmRect( 0, TQDomNode(), "kdm root" );
+	connect( rootItem, TQT_SIGNAL(needUpdate( int, int, int, int )),
+	         widget(), TQT_SLOT(update( int, int, int, int )) );
 
-	rootItem->setBaseDir( QFileInfo( filename ).dirPath( true ) );
+	rootItem->setBaseDir( TQFileInfo( filename ).dirPath( true ) );
 
 	// generate all the items defined in the theme
 	generateItems( rootItem );
 
-	connect( rootItem, SIGNAL(activated( const QString & )), SIGNAL(activated( const QString & )) );
+	connect( rootItem, TQT_SIGNAL(activated( const TQString & )), TQT_SIGNAL(activated( const TQString & )) );
 
 /*	*TODO*
 	// Animation timer
-	QTimer *time = new QTimer( this );
+	TQTimer *time = new TQTimer( this );
 	time->start( 500 );
-	connect( time, SIGNAL(timeout()), SLOT(update()) )
+	connect( time, TQT_SIGNAL(timeout()), TQT_SLOT(update()) )
 */
 }
 
@@ -97,14 +97,14 @@ KdmThemer::~KdmThemer()
 	delete backBuffer;
 }
 
-inline QWidget *
+inline TQWidget *
 KdmThemer::widget()
 {
-	return static_cast<QWidget *>(parent());
+	return static_cast<TQWidget *>(parent());
 }
 
 KdmItem *
-KdmThemer::findNode( const QString &item ) const
+KdmThemer::findNode( const TQString &item ) const
 {
 	return rootItem->findNode( item );
 }
@@ -112,53 +112,53 @@ KdmThemer::findNode( const QString &item ) const
 void
 KdmThemer::updateGeometry( bool force )
 {
-	rootItem->setGeometry( QRect( QPoint(), widget()->size() ), force );
+	rootItem->setGeometry( TQRect( TQPoint(), widget()->size() ), force );
 }
 
 // BEGIN other functions
 
 void
-KdmThemer::widgetEvent( QEvent *e )
+KdmThemer::widgetEvent( TQEvent *e )
 {
 	if (!rootItem)
 		return;
 	switch (e->type()) {
-	case QEvent::MouseMove:
+	case TQEvent::MouseMove:
 		{
-			QMouseEvent *me = static_cast<QMouseEvent *>(e);
+			TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
 			rootItem->mouseEvent( me->x(), me->y() );
 		}
 		break;
-	case QEvent::MouseButtonPress:
+	case TQEvent::MouseButtonPress:
 		{
-			QMouseEvent *me = static_cast<QMouseEvent *>(e);
+			TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
 			rootItem->mouseEvent( me->x(), me->y(), true );
 		}
 		break;
-	case QEvent::MouseButtonRelease:
+	case TQEvent::MouseButtonRelease:
 		{
-			QMouseEvent *me = static_cast<QMouseEvent *>(e);
+			TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
 			rootItem->mouseEvent( me->x(), me->y(), false, true );
 		}
 		break;
-	case QEvent::Show:
+	case TQEvent::Show:
 		rootItem->show();
 		break;
-	case QEvent::Resize:
+	case TQEvent::Resize:
 		updateGeometry( false );
 		showStructure( rootItem );
 		break;
-	case QEvent::Paint:
+	case TQEvent::Paint:
 		{
-			QRect paintRect = static_cast<QPaintEvent *>(e)->rect();
+			TQRect paintRect = static_cast<TQPaintEvent *>(e)->rect();
 			kdDebug() << "paint on: " << paintRect << endl;
 
 			if (!backBuffer)
-				backBuffer = new QPixmap( widget()->size() );
+				backBuffer = new TQPixmap( widget()->size() );
 			if (backBuffer->size() != widget()->size())
 				backBuffer->resize( widget()->size() );
 
-			QPainter p;
+			TQPainter p;
 			p.begin( backBuffer );
 			rootItem->paint( &p, paintRect );
 			p.end();
@@ -173,25 +173,25 @@ KdmThemer::widgetEvent( QEvent *e )
 
 /*
 void
-KdmThemer::pixmap( const QRect &r, QPixmap *px )
+KdmThemer::pixmap( const TQRect &r, TQPixmap *px )
 {
-	bitBlt( px, QPoint( 0, 0 ), widget(), r );
+	bitBlt( px, TQPoint( 0, 0 ), widget(), r );
 }
 */
 
 void
-KdmThemer::generateItems( KdmItem *parent, const QDomNode &node )
+KdmThemer::generateItems( KdmItem *parent, const TQDomNode &node )
 {
 	if (!parent)
 		return;
 
-	QDomNodeList subnodeList;	//List of subnodes of this node
+	TQDomNodeList subnodeList;	//List of subnodes of this node
 
 	/*
 	 * Get the child nodes
 	 */
 	if (node.isNull()) {	// It's the first node, get its child nodes
-		QDomElement theme = domTree.documentElement();
+		TQDomElement theme = domTree.documentElement();
 
 		// Get its tag, and check it's correct ("greeter")
 		if (theme.tagName() != "greeter") {
@@ -207,15 +207,15 @@ KdmThemer::generateItems( KdmItem *parent, const QDomNode &node )
 	 * Go through each of the child nodes
 	 */
 	for (uint nod = 0; nod < subnodeList.count(); nod++) {
-		QDomNode subnode = subnodeList.item( nod );
-		QDomElement el = subnode.toElement();
-		QString tagName = el.tagName();
+		TQDomNode subnode = subnodeList.item( nod );
+		TQDomElement el = subnode.toElement();
+		TQString tagName = el.tagName();
 
 		if (tagName == "item") {
 			if (!willDisplay( subnode ))
 				continue;
 			// It's a new item. Draw it
-			QString type = el.attribute( "type" );
+			TQString type = el.attribute( "type" );
 
 			KdmItem *newItem = 0;
 
@@ -255,26 +255,26 @@ KdmThemer::generateItems( KdmItem *parent, const QDomNode &node )
 	}
 }
 
-bool KdmThemer::willDisplay( const QDomNode &node )
+bool KdmThemer::willDisplay( const TQDomNode &node )
 {
-	QDomNode showNode = node.namedItem( "show" );
+	TQDomNode showNode = node.namedItem( "show" );
 
 	// No "show" node means this item can be displayed at all times
 	if (showNode.isNull())
 		return true;
 
-	QDomElement el = showNode.toElement();
+	TQDomElement el = showNode.toElement();
 
-	QString modes = el.attribute( "modes" );
+	TQString modes = el.attribute( "modes" );
 	if (!modes.isNull()) {
-		QStringList modeList = QStringList::split( ",", modes );
+		TQStringList modeList = TQStringList::split( ",", modes );
 
 		// If current mode isn't in this list, do not display item
 		if (modeList.find( m_currentMode ) == modeList.end())
 			return false;
 	}
 
-	QString type = el.attribute( "type" );
+	TQString type = el.attribute( "type" );
 	if (type == "config" || type == "suspend")
 		return false;	// not implemented (yet)
 	if (type == "timed")
@@ -295,21 +295,21 @@ bool KdmThemer::willDisplay( const QDomNode &node )
 }
 
 void
-KdmThemer::showStructure( QObject *obj )
+KdmThemer::showStructure( TQObject *obj )
 {
 
-	const QObjectList *wlist = obj->children();
+	const TQObjectList *wlist = obj->children();
 	static int counter = 0;
 	if (counter == 0)
 		kdDebug() << "\n\n<=======  Widget tree =================" << endl;
 	if (wlist) {
 		counter++;
-		QObjectListIterator it( *wlist );
-		QObject *object;
+		TQObjectListIterator it( *wlist );
+		TQObject *object;
 
 		while ((object = it.current()) != 0) {
 			++it;
-			QString node;
+			TQString node;
 			for (int i = 1; i < counter; i++)
 				node += "-";
 

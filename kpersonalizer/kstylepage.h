@@ -18,7 +18,7 @@
 #ifndef KSTYLEPAGE_H
 #define KSTYLEPAGE_H
 
-#include <qcolor.h>
+#include <tqcolor.h>
 #include "kstylepagedlg.h"
 
 /**Abstract class for the style page
@@ -30,7 +30,7 @@ class KStylePage : public KStylePageDlg  {
 	Q_OBJECT
 
 public:
-	KStylePage(QWidget *parent=0, const char *name=0);
+	KStylePage(TQWidget *parent=0, const char *name=0);
 	~KStylePage();
 	void save(bool curSettings=true);
 	/** resets to KDE style as default */
@@ -39,58 +39,58 @@ public:
 	void switchPrevStyle();
 
 private:
-	QString origStyle;
-	QString origKWinStyle;
-	QString origIcons;
-	QString defaultKWinStyle;
-	QString currentStyle;
+	TQString origStyle;
+	TQString origKWinStyle;
+	TQString origIcons;
+	TQString defaultKWinStyle;
+	TQString currentStyle;
 	KConfig* ckwin;
 	struct colorSet {
-		QString colorFile, bgMode;
+		TQString colorFile, bgMode;
 		int contrast;
-		QColor usrCol1, usrCol2;
-		QColor foreground;
-		QColor background;
-		QColor windowForeground;
-		QColor windowBackground;
-		QColor selectForeground;
-		QColor selectBackground;
-		QColor buttonForeground;
-		QColor buttonBackground;
-		QColor linkColor;
-		QColor visitedLinkColor;
-		QColor activeForeground;
-		QColor inactiveForeground;
-		QColor activeBackground;
-		QColor inactiveBackground;
-		QColor activeBlend;
-		QColor inactiveBlend;
-		QColor activeTitleBtnBg;
-		QColor inactiveTitleBtnBg;
-                QColor alternateBackground;
+		TQColor usrCol1, usrCol2;
+		TQColor foreground;
+		TQColor background;
+		TQColor windowForeground;
+		TQColor windowBackground;
+		TQColor selectForeground;
+		TQColor selectBackground;
+		TQColor buttonForeground;
+		TQColor buttonBackground;
+		TQColor linkColor;
+		TQColor visitedLinkColor;
+		TQColor activeForeground;
+		TQColor inactiveForeground;
+		TQColor activeBackground;
+		TQColor inactiveBackground;
+		TQColor activeBlend;
+		TQColor inactiveBlend;
+		TQColor activeTitleBtnBg;
+		TQColor inactiveTitleBtnBg;
+                TQColor alternateBackground;
 	} usrColors, currentColors;
 	// first, the KDE 2 default color values
-	QColor widget;
-	QColor kde34Blue;
-        QColor inactiveBackground;
-        QColor activeBackground;
-	QColor button;
-	QColor link;
-	QColor visitedLink;
-        QColor activeBlend;
-        QColor activeTitleBtnBg;
-        QColor inactiveTitleBtnBg;
-        QColor inactiveForeground;
-        QColor alternateBackground;
+	TQColor widget;
+	TQColor kde34Blue;
+        TQColor inactiveBackground;
+        TQColor activeBackground;
+	TQColor button;
+	TQColor link;
+	TQColor visitedLink;
+        TQColor activeBlend;
+        TQColor activeTitleBtnBg;
+        TQColor inactiveTitleBtnBg;
+        TQColor inactiveForeground;
+        TQColor alternateBackground;
 
-	QListViewItem * kde;
-	QListViewItem * classic;
-	QListViewItem * keramik;
-	QListViewItem * cde;
-	QListViewItem * win;
-	QListViewItem * platinum;
+	TQListViewItem * kde;
+	TQListViewItem * classic;
+	TQListViewItem * keramik;
+	TQListViewItem * cde;
+	TQListViewItem * win;
+	TQListViewItem * platinum;
 
-	QStyle *appliedStyle;
+	TQStyle *appliedStyle;
 
 	// widget-style existence
 	bool kde_hc_exist, kde_def_exist, kde_keramik_exist, kde_light_exist,
@@ -105,7 +105,7 @@ private:
 
 public slots: // Public slots
 	/** to be connected to the OS page. Catches either KDE, CDE, win or mac and pre-sets the style.  */
-	void presetStyle(const QString& style);
+	void presetStyle(const TQString& style);
 
 private:
 	void saveColors(bool curSettings=true);
@@ -117,9 +117,9 @@ private:
 	void initColors();
 	void liveUpdate();
 	void getColors(colorSet *set, bool colorfile );
-	void setStyleRecursive(QWidget* w, QPalette &, QStyle* s);
+	void setStyleRecursive(TQWidget* w, TQPalette &, TQStyle* s);
 	void changeCurrentStyle();
-	QPalette createPalette();
+	TQPalette createPalette();
 
 private slots:
 	void slotCurrentChanged();

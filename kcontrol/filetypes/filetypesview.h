@@ -1,8 +1,8 @@
 #ifndef _FILETYPESVIEW_H
 #define _FILETYPESVIEW_H
 
-#include <qptrlist.h>
-#include <qmap.h>
+#include <tqptrlist.h>
+#include <tqmap.h>
 
 #include <kconfig.h>
 #include <kcmodule.h>
@@ -25,7 +25,7 @@ class FileTypesView : public KCModule
 {
   Q_OBJECT
 public:
-  FileTypesView(QWidget *p = 0, const char *name = 0);
+  FileTypesView(TQWidget *p = 0, const char *name = 0);
   ~FileTypesView();
 
   void load();
@@ -38,34 +38,34 @@ protected slots:
 
   void addType();
   void removeType();
-  void updateDisplay(QListViewItem *);
-  void slotDoubleClicked(QListViewItem *);
-  void slotFilter(const QString &patternFilter);
+  void updateDisplay(TQListViewItem *);
+  void slotDoubleClicked(TQListViewItem *);
+  void slotFilter(const TQString &patternFilter);
   void setDirty(bool state);
 
   void slotDatabaseChanged();
-  void slotEmbedMajor(const QString &major, bool &embed);
+  void slotEmbedMajor(const TQString &major, bool &embed);
 
 protected:
   void readFileTypes();
-  bool sync( QValueList<TypesListItem *>& itemsModified );
+  bool sync( TQValueList<TypesListItem *>& itemsModified );
 
 private:
   KListView *typesLV;
-  QPushButton *m_removeTypeB;
+  TQPushButton *m_removeTypeB;
 
-  QWidgetStack * m_widgetStack;
+  TQWidgetStack * m_widgetStack;
   FileTypeDetails * m_details;
   FileGroupDetails * m_groupDetails;
-  QLabel * m_emptyWidget;
+  TQLabel * m_emptyWidget;
 
-  QLineEdit *patternFilterLE;
-  QStringList removedList;
+  TQLineEdit *patternFilterLE;
+  TQStringList removedList;
   bool m_dirty;
-  QMap<QString,TypesListItem*> m_majorMap;
-  QPtrList<TypesListItem> m_itemList;
+  TQMap<TQString,TypesListItem*> m_majorMap;
+  TQPtrList<TypesListItem> m_itemList;
 
-  QValueList<TypesListItem *> m_itemsModified;
+  TQValueList<TypesListItem *> m_itemsModified;
 
   KSharedConfig::Ptr m_konqConfig;
 };

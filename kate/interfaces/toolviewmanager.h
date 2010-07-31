@@ -20,7 +20,7 @@
 #ifndef _KATE_TOOLVIEWMANAGER_INCLUDE_
 #define _KATE_TOOLVIEWMANAGER_INCLUDE_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kurl.h>
 
 namespace Kate
@@ -60,7 +60,7 @@ class KDE_EXPORT ToolViewManager : public QObject
      * @param text text to use in addition to icon
      * @return created toolview on success or 0
      */
-    QWidget *createToolView (const QString &identifier, ToolViewManager::Position pos, const QPixmap &icon, const QString &text);
+    TQWidget *createToolView (const TQString &identifier, ToolViewManager::Position pos, const TQPixmap &icon, const TQString &text);
 
     /**
      * Move the toolview
@@ -68,21 +68,21 @@ class KDE_EXPORT ToolViewManager : public QObject
      * @param pos position to move widget to
      * @return bool success
      */
-    bool moveToolView (QWidget *widget, ToolViewManager::Position pos);
+    bool moveToolView (TQWidget *widget, ToolViewManager::Position pos);
 
     /**
      * Show the toolview
      * @param widget to show, widget given must be widget constructed by createToolView
      * @return bool success
      */
-    bool showToolView (QWidget *widget);
+    bool showToolView (TQWidget *widget);
 
     /**
      * Hide the toolview
      * @param widget to hide, widget given must be widget constructed by createToolView
      * @return bool success
      */
-    bool hideToolView (QWidget *widget);
+    bool hideToolView (TQWidget *widget);
 
   private:
     /**

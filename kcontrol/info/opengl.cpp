@@ -24,10 +24,10 @@
 
 #define KCMGL_DO_GLU
 
-#include <qregexp.h>
-#include <qlistview.h>
-#include <qfile.h>
-#include <qstring.h>
+#include <tqregexp.h>
+#include <tqlistview.h>
+#include <tqfile.h>
+#include <tqstring.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -68,7 +68,7 @@ static struct glinfo {
 } gli;
 
 static struct {
-	QString module,
+	TQString module,
 		pci,
 		vendor,
 		device,
@@ -76,7 +76,7 @@ static struct {
 		rev;
 } dri_info;
 
-static int ReadPipe(QString FileName, QStringList &list)
+static int ReadPipe(TQString FileName, TQStringList &list)
 {
     FILE *pipe;
 
@@ -85,7 +85,7 @@ static int ReadPipe(QString FileName, QStringList &list)
 	return 0;
     }
 
-    QTextStream t(pipe, IO_ReadOnly);
+    TQTextStream t(pipe, IO_ReadOnly);
 
     while (!t.atEnd()) list.append(t.readLine());
 
@@ -99,20 +99,20 @@ static int ReadPipe(QString FileName, QStringList &list)
 
 static bool get_dri_device()
 {
-    QFile file;
+    TQFile file;
     file.setName(INFO_DRI);
     if (!file.exists() || !file.open(IO_ReadOnly))
 	return false;
 
-    QTextStream stream(&file);
-    QString line = stream.readLine();
+    TQTextStream stream(&file);
+    TQString line = stream.readLine();
     if (!line.isEmpty()) {
 	dri_info.module = line.mid(0, line.find(0x20));
 
 	// possible formats, for regression testing
 	// line = " PCI:01:00:0";
 	// line = " pci:0000:01:00.0"
-	QRegExp rx = QRegExp("\\b[Pp][Cc][Ii][:]([0-9a-fA-F]+[:])?([0-9a-fA-F]+[:][0-9a-fA-F]+[:.][0-9a-fA-F]+)\\b");
+	TQRegExp rx = TQRegExp("\\b[Pp][Cc][Ii][:]([0-9a-fA-F]+[:])?([0-9a-fA-F]+[:][0-9a-fA-F]+[:.][0-9a-fA-F]+)\\b");
 	if (rx.search(line)>0)	 {
 		dri_info.pci = rx.cap(2);
 		int end = dri_info.pci.findRev(':');
@@ -120,8 +120,8 @@ static bool get_dri_device()
 		if (end2>end) end=end2;
 		dri_info.pci[end]='.';
 
-		QString cmd = QString("lspci -m -v -s ") + dri_info.pci;
-		QStringList pci_info;
+		TQString cmd = TQString("lspci -m -v -s ") + dri_info.pci;
+		TQStringList pci_info;
 		int num;
 		if (((num = ReadPipe(cmd, pci_info)) ||
 		(num = ReadPipe("/sbin/"+cmd, pci_info)) ||
@@ -129,7 +129,7 @@ static bool get_dri_device()
 		(num = ReadPipe("/usr/local/sbin/"+cmd, pci_info))) && num>=7) {
 			for (int i=2; i<=6; i++) {
 				line = pci_info[i];
-				line.remove(QRegExp("[^:]*:[ ]*"));
+				line.remove(TQRegExp("[^:]*:[ ]*"));
 				switch (i){
 					case 2: dri_info.vendor = line;    break;
 					case 3: dri_info.device = line;    break;
@@ -149,7 +149,7 @@ static bool get_dri_device()
 
 static bool get_dri_device() {
 
-	QStringList pci_info;
+	TQStringList pci_info;
 	if (ReadPipe("sysctl -n hw.dri.0.name",pci_info)) {
 		dri_info.module = pci_info[0].mid(0, pci_info[0].find(0x20));
 		}
@@ -188,14 +188,14 @@ mesa_hack(Display *dpy, int scrnum)
 
 
 static void
-print_extension_list(const char *ext, QListViewItem *l1)
+print_extension_list(const char *ext, TQListViewItem *l1)
 {
    int i, j;
 
    if (!ext || !ext[0])
       return;
-   QString qext = QString::fromLatin1(ext);
-   QListViewItem *l2 = NULL;
+   TQString qext = TQString::fromLatin1(ext);
+   TQListViewItem *l2 = NULL;
 
    i = j = 0;
    while (1) {
@@ -203,8 +203,8 @@ print_extension_list(const char *ext, QListViewItem *l1)
          /* found end of an extension name */
          const int len = j - i;
          /* print the extension name between ext[i] and ext[j] */
-	 if (!l2) l2 = new QListViewItem(l1, qext.mid(i, len));
-	 else l2 = new QListViewItem(l1, l2, qext.mid(i, len));
+	 if (!l2) l2 = new TQListViewItem(l1, qext.mid(i, len));
+	 else l2 = new TQListViewItem(l1, l2, qext.mid(i, len));
 	 i=j;
          if (ext[j] == 0) {
             break;
@@ -227,7 +227,7 @@ extern "C" {
 #endif
 
 static void
-print_limits(QListViewItem *l1, const char * glExtensions, bool GetProcAddress)
+print_limits(TQListViewItem *l1, const char * glExtensions, bool GetProcAddress)
 {
  /*  TODO
       GL_SAMPLE_BUFFERS
@@ -241,18 +241,18 @@ print_limits(QListViewItem *l1, const char * glExtensions, bool GetProcAddress)
   struct token_name {
       GLuint type;  // count and flags, !!! count must be <=2 for now
       GLenum token;
-      const QString name;
+      const TQString name;
    };
 
    struct token_group {
    	int count;
 	int type;
 	const token_name *group;
-	const QString descr;
+	const TQString descr;
 	const char *ext;
    };
 
-   QListViewItem *l2 = NULL, *l3 = NULL;
+   TQListViewItem *l2 = NULL, *l3 = NULL;
 #if defined(PFNGLGETPROGRAMIVARBPROC)
    PFNGLGETPROGRAMIVARBPROC kcm_glGetProgramivARB = NULL;
 #endif
@@ -433,8 +433,8 @@ print_limits(QListViewItem *l1, const char * glExtensions, bool GetProcAddress)
    for (uint i = 0; i<KCMGL_SIZE(groups); i++) {
    	if (groups[i].ext && !strstr(glExtensions, groups[i].ext)) continue;
 
-	if (l2) l2 = new QListViewItem(l1, l2, groups[i].descr);
-   	   else l2 = new QListViewItem(l1, groups[i].descr);
+	if (l2) l2 = new TQListViewItem(l1, l2, groups[i].descr);
+   	   else l2 = new TQListViewItem(l1, groups[i].descr);
 	l3 = NULL;
    	const struct token_name *cur_token;
 	for (cur_token = groups[i].group; cur_token->type; cur_token++) {
@@ -454,13 +454,13 @@ print_limits(QListViewItem *l1, const char * glExtensions, bool GetProcAddress)
    			else glGetIntegerv(cur_token->token, max);
 
 		if (glGetError() == GL_NONE) {
-			QString s;
-		 	if (!tfloat && count == 1) s = QString::number(max[0]); else
-		 	if (!tfloat && count == 2) s = QString("%1, %2").arg(max[0]).arg(max[1]); else
-		 	if (tfloat && count == 2) s = QString("%1 - %2").arg(fmax[0],0,'f',6).arg(fmax[1],0,'f',6); else
-			if (tfloat && count == 1) s = QString::number(fmax[0],'f',6);
-   			if (l3) l3 = new QListViewItem(l2, l3, cur_token->name, s);
-   	   			else l3 = new QListViewItem(l2, cur_token->name, s);
+			TQString s;
+		 	if (!tfloat && count == 1) s = TQString::number(max[0]); else
+		 	if (!tfloat && count == 2) s = TQString("%1, %2").arg(max[0]).arg(max[1]); else
+		 	if (tfloat && count == 2) s = TQString("%1 - %2").arg(fmax[0],0,'f',6).arg(fmax[1],0,'f',6); else
+			if (tfloat && count == 1) s = TQString::number(fmax[0],'f',6);
+   			if (l3) l3 = new TQListViewItem(l2, l3, cur_token->name, s);
+   	   			else l3 = new TQListViewItem(l2, cur_token->name, s);
 
 		}
 	}
@@ -469,71 +469,71 @@ print_limits(QListViewItem *l1, const char * glExtensions, bool GetProcAddress)
 }
 
 
-static QListViewItem *print_screen_info(QListViewItem *l1, QListViewItem *after)
+static TQListViewItem *print_screen_info(TQListViewItem *l1, TQListViewItem *after)
 {
-   	QListViewItem *l2 = NULL, *l3 = NULL;
+   	TQListViewItem *l2 = NULL, *l3 = NULL;
 
-   	if (after) l1= new QListViewItem(l1,after,IsDirect ? i18n("Direct Rendering") : i18n("Indirect Rendering"));
-         	else l1= new QListViewItem(l1,IsDirect ? i18n("Direct Rendering") : i18n("Indirect Rendering"));
+   	if (after) l1= new TQListViewItem(l1,after,IsDirect ? i18n("Direct Rendering") : i18n("Indirect Rendering"));
+         	else l1= new TQListViewItem(l1,IsDirect ? i18n("Direct Rendering") : i18n("Indirect Rendering"));
    	if (IsDirect)
    	 	if (get_dri_device())  {
-      			l2 = new QListViewItem(l1, i18n("3D Accelerator"));
+      			l2 = new TQListViewItem(l1, i18n("3D Accelerator"));
     			l2->setOpen(true);
-   			l3 = new QListViewItem(l2, l3, i18n("Vendor"), dri_info.vendor);
-   			l3 = new QListViewItem(l2, l3, i18n("Device"), dri_info.device);
-   			l3 = new QListViewItem(l2, l3, i18n("Subvendor"), dri_info.subvendor);
-   			l3 = new QListViewItem(l2, l3, i18n("Revision"), dri_info.rev);
+   			l3 = new TQListViewItem(l2, l3, i18n("Vendor"), dri_info.vendor);
+   			l3 = new TQListViewItem(l2, l3, i18n("Device"), dri_info.device);
+   			l3 = new TQListViewItem(l2, l3, i18n("Subvendor"), dri_info.subvendor);
+   			l3 = new TQListViewItem(l2, l3, i18n("Revision"), dri_info.rev);
 		}
-		else l2=new QListViewItem(l1, l2, i18n("3D Accelerator"),i18n("unknown"));
-    	if (l2) l2 = new QListViewItem(l1, l2, i18n("Driver"));
-       		else l2 = new QListViewItem(l1, i18n("Driver"));
+		else l2=new TQListViewItem(l1, l2, i18n("3D Accelerator"),i18n("unknown"));
+    	if (l2) l2 = new TQListViewItem(l1, l2, i18n("Driver"));
+       		else l2 = new TQListViewItem(l1, i18n("Driver"));
     	l2->setOpen(true);
 
-  	l3 = new QListViewItem(l2, i18n("Vendor"),gli.glVendor);
-    	l3 = new QListViewItem(l2, l3, i18n("Renderer"), gli.glRenderer);
-    	l3 = new QListViewItem(l2, l3, i18n("OpenGL version"), gli.glVersion);
+  	l3 = new TQListViewItem(l2, i18n("Vendor"),gli.glVendor);
+    	l3 = new TQListViewItem(l2, l3, i18n("Renderer"), gli.glRenderer);
+    	l3 = new TQListViewItem(l2, l3, i18n("OpenGL version"), gli.glVersion);
 
     	if (IsDirect) {
     		if (!dri_info.module) dri_info.module = i18n("unknown");
-    		l3 = new QListViewItem(l2, l3, i18n("Kernel module"), dri_info.module);
+    		l3 = new TQListViewItem(l2, l3, i18n("Kernel module"), dri_info.module);
     	}
 
-    	l3 = new QListViewItem(l2, l3, i18n("OpenGL extensions"));
+    	l3 = new TQListViewItem(l2, l3, i18n("OpenGL extensions"));
     	print_extension_list(gli.glExtensions,l3);
 
-    	l3 = new QListViewItem(l2, l3, i18n("Implementation specific"));
+    	l3 = new TQListViewItem(l2, l3, i18n("Implementation specific"));
     	print_limits(l3, gli.glExtensions, strstr(gli.clientExtensions, "GLX_ARB_get_proc_address") != NULL);
 
         return l1;
 }
 
-void print_glx_glu(QListViewItem *l1, QListViewItem *l2)
+void print_glx_glu(TQListViewItem *l1, TQListViewItem *l2)
 {
-   QListViewItem *l3;
+   TQListViewItem *l3;
 
-   l2=new QListViewItem(l1, l2, i18n("GLX"));
-   l3 = new QListViewItem(l2, i18n("server GLX vendor"),gli.serverVendor);
-   l3 = new QListViewItem(l2, l3, i18n("server GLX version"),gli.serverVersion);
-   l3 = new QListViewItem(l2, l3, i18n("server GLX extensions"));
+   l2=new TQListViewItem(l1, l2, i18n("GLX"));
+   l3 = new TQListViewItem(l2, i18n("server GLX vendor"),gli.serverVendor);
+   l3 = new TQListViewItem(l2, l3, i18n("server GLX version"),gli.serverVersion);
+   l3 = new TQListViewItem(l2, l3, i18n("server GLX extensions"));
    print_extension_list(gli.serverExtensions,l3);
 
-    l3 = new QListViewItem(l2, l3, i18n("client GLX vendor"),gli.clientVendor);
-    l3 = new QListViewItem(l2, l3, i18n("client GLX version"),gli.clientVersion);
-    l3 = new QListViewItem(l2, l3, i18n("client GLX extensions"));
+    l3 = new TQListViewItem(l2, l3, i18n("client GLX vendor"),gli.clientVendor);
+    l3 = new TQListViewItem(l2, l3, i18n("client GLX version"),gli.clientVersion);
+    l3 = new TQListViewItem(l2, l3, i18n("client GLX extensions"));
     print_extension_list(gli.clientExtensions,l3);
-    l3 = new QListViewItem(l2, l3, i18n("GLX extensions"));
+    l3 = new TQListViewItem(l2, l3, i18n("GLX extensions"));
     print_extension_list(gli.glxExtensions,l3);
 
 #ifdef KCMGL_DO_GLU
-    l2 = new QListViewItem(l1, l2, i18n("GLU"));
-    l3 = new QListViewItem(l2, i18n("GLU version"), gli.gluVersion);
-    l3 = new QListViewItem(l2, l3, i18n("GLU extensions"));
+    l2 = new TQListViewItem(l1, l2, i18n("GLU"));
+    l3 = new TQListViewItem(l2, i18n("GLU version"), gli.gluVersion);
+    l3 = new TQListViewItem(l2, l3, i18n("GLU extensions"));
     print_extension_list(gli.gluExtensions,l3);
 #endif
 
 }
 
-static QListViewItem *get_gl_info(Display *dpy, int scrnum, Bool allowDirect,QListViewItem *l1, QListViewItem *after)
+static TQListViewItem *get_gl_info(Display *dpy, int scrnum, Bool allowDirect,TQListViewItem *l1, TQListViewItem *after)
 {
    Window win;
    int attribSingle[] = {
@@ -556,7 +556,7 @@ static QListViewItem *get_gl_info(Display *dpy, int scrnum, Bool allowDirect,QLi
    GLXContext ctx;
    XVisualInfo *visinfo;
    int width = 100, height = 100;
-   QListViewItem *result = after;
+   TQListViewItem *result = after;
 
    root = RootWindow(dpy, scrnum);
 
@@ -617,9 +617,9 @@ static QListViewItem *get_gl_info(Display *dpy, int scrnum, Bool allowDirect,QLi
 }
 
 
-static bool GetInfo_OpenGL_Generic( QListView *lBox )
+static bool GetInfo_OpenGL_Generic( TQListView *lBox )
 {
-   QListViewItem *l1, *l2 = NULL;
+   TQListViewItem *l1, *l2 = NULL;
 
    char *displayName = NULL;
    Display *dpy;
@@ -634,7 +634,7 @@ static bool GetInfo_OpenGL_Generic( QListView *lBox )
     lBox->addColumn(i18n("Information") );
     lBox->addColumn(i18n("Value") );
 
-    l1 = new QListViewItem(lBox, i18n("Name of the Display"), DisplayString(dpy));
+    l1 = new TQListViewItem(lBox, i18n("Name of the Display"), DisplayString(dpy));
     l1->setOpen(true);
     l1->setSelectable(false);
     l1->setExpandable(false);
@@ -664,7 +664,7 @@ static bool GetInfo_OpenGL_Generic( QListView *lBox )
     return true;
    }
 
-bool GetInfo_OpenGL(QListView * lBox)
+bool GetInfo_OpenGL(TQListView * lBox)
 {
     return GetInfo_OpenGL_Generic(lBox);
 }

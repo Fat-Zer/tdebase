@@ -9,9 +9,9 @@
 #ifndef __TIMEOUT_H__
 #define __TIMEOUT_H__
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 class LockProcess;
 class QFrame;
@@ -30,20 +30,20 @@ public:
     virtual void show();
  
 protected:
-    virtual void timerEvent(QTimerEvent *);
+    virtual void timerEvent(TQTimerEvent *);
 
 private slots:
     void slotActivity();
 
 private:
     void        updateInfo(int);
-    QFrame      *frame;
-    QGridLayout *frameLayout;
-    QLabel      *mStatusLabel;
+    TQFrame      *frame;
+    TQGridLayout *frameLayout;
+    TQLabel      *mStatusLabel;
     int         mCountdownTimerId;
     int         mRemaining;
-    QTimer      countDownTimer;
-    QProgressBar *mProgressRemaining;
+    TQTimer      countDownTimer;
+    TQProgressBar *mProgressRemaining;
     void logout();
 };
 

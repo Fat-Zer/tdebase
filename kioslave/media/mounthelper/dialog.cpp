@@ -22,7 +22,7 @@
 
 #include "dialog.h"
 
-Dialog::Dialog(QString url, QString iconName) :
+Dialog::Dialog(TQString url, TQString iconName) :
 	KDialogBase(NULL, "Dialog", true, "Decrypt Storage Device", (Cancel|User1), User1, false, KGuiItem(i18n("Decrypt"), "decrypted" ))
 {
 	decryptDialog = new DecryptDialog(this);
@@ -34,10 +34,10 @@ Dialog::Dialog(QString url, QString iconName) :
 
 	enableButton( User1, false );
 
-	QPixmap pixmap = KGlobal::iconLoader()->loadIcon(iconName, KIcon::NoGroup, KIcon::SizeLarge);
+	TQPixmap pixmap = KGlobal::iconLoader()->loadIcon(iconName, KIcon::NoGroup, KIcon::SizeLarge);
 	decryptDialog->encryptedIcon->setPixmap( pixmap );
 
-	connect(decryptDialog->passwordEdit, SIGNAL (textChanged(const QString &)), this, SLOT (slotPasswordChanged(const QString &)));
+	connect(decryptDialog->passwordEdit, TQT_SIGNAL (textChanged(const TQString &)), this, TQT_SLOT (slotPasswordChanged(const TQString &)));
 
 	setMainWidget(decryptDialog);
 }
@@ -47,20 +47,20 @@ Dialog::~Dialog()
 	delete decryptDialog;
 }
 
-QString Dialog::getPassword()
+TQString Dialog::getPassword()
 {
 	return decryptDialog->passwordEdit->text();
 }
 
-void Dialog::slotDialogError(QString errorMsg)
+void Dialog::slotDialogError(TQString errorMsg)
 {
 	kdDebug() << __func__ << "(" << errorMsg << " )" << endl;
 
-	decryptDialog->errorLabel->setText(QString("<b>%1</b>").arg(errorMsg));
+	decryptDialog->errorLabel->setText(TQString("<b>%1</b>").arg(errorMsg));
 	decryptDialog->errorBox->show();
 }
 
-void Dialog::slotPasswordChanged(const QString &text)
+void Dialog::slotPasswordChanged(const TQString &text)
 {
 	enableButton( User1, !text.isEmpty() );
 }

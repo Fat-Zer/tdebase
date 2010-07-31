@@ -20,14 +20,14 @@
 #ifndef __KDMUSERS_H__
 #define __KDMUSERS_H__
 
-#include <qwidget.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qimage.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qcheckbox.h>
-#include <qwidgetstack.h>
+#include <tqwidget.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqimage.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqcheckbox.h>
+#include <tqwidgetstack.h>
 
 #include <klineedit.h>
 #include <klistview.h>
@@ -42,19 +42,19 @@ class KDMUsersWidget : public QWidget
 	Q_OBJECT
 
 public:
-	KDMUsersWidget( QWidget *parent = 0, const char *name = 0 );
+	KDMUsersWidget( TQWidget *parent = 0, const char *name = 0 );
 
 	void load();
 	void save();
 	void defaults();
 	void makeReadOnly();
 
-	bool eventFilter( QObject *o, QEvent *e );
+	bool eventFilter( TQObject *o, TQEvent *e );
 
 public slots:
 	void slotClearUsers();
-	void slotAddUsers( const QMap<QString,int> & );
-	void slotDelUsers( const QMap<QString,int> & );
+	void slotAddUsers( const TQMap<TQString,int> & );
+	void slotDelUsers( const TQMap<TQString,int> & );
 
 signals:
 	void changed( bool state );
@@ -63,8 +63,8 @@ signals:
 private slots:
 	void slotMinMaxChanged();
 	void slotShowOpts();
-	void slotUpdateOptIn( QListViewItem *item );
-	void slotUpdateOptOut( QListViewItem *item );
+	void slotUpdateOptIn( TQListViewItem *item );
+	void slotUpdateOptOut( TQListViewItem *item );
 	void slotUserSelected();
 	void slotUnsetUserPix();
 	void slotFaceOpts();
@@ -72,9 +72,9 @@ private slots:
 	void slotChanged();
 
 private:
-	void updateOptList( QListViewItem *item, QStringList &list );
-	void userButtonDropEvent( QDropEvent *e );
-	void changeUserPix( const QString & );
+	void updateOptList( TQListViewItem *item, TQStringList &list );
+	void userButtonDropEvent( TQDropEvent *e );
+	void changeUserPix( const TQString & );
 
 	QGroupBox	*minGroup;	// top left
 	QLineEdit	*leminuid, *lemaxuid;

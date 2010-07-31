@@ -47,9 +47,9 @@ extern "C" {
 }
 #endif
 
-#include <qcstring.h>
-#include <qglobal.h>
-#include <qregexp.h>
+#include <tqcstring.h>
+#include <tqglobal.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kinstance.h>
@@ -124,7 +124,7 @@ int kdemain(int argc, char **argv)
   return 0;
 }
 
-POP3Protocol::POP3Protocol(const QCString & pool, const QCString & app,
+POP3Protocol::POP3Protocol(const TQCString & pool, const TQCString & app,
                            bool isSSL)
 :  TCPSlaveBase((isSSL ? 995 : 110), (isSSL ? "pop3s" : "pop3"), pool, app,
              isSSL)
@@ -148,8 +148,8 @@ POP3Protocol::~POP3Protocol()
   closeConnection();
 }
 
-void POP3Protocol::setHost(const QString & _host, int _port,
-                           const QString & _user, const QString & _pass)
+void POP3Protocol::setHost(const TQString & _host, int _port,
+                           const TQString & _user, const TQString & _pass)
 {
   m_sServer = _host;
   m_iPort = _port;
@@ -242,8 +242,8 @@ POP3Protocol::Resp POP3Protocol::getResponse(char *r_buf, unsigned int r_len,
              QMIN(r_len, (buf[4] == ' ' ? recv_len - 5 : recv_len - 4)));
     }
 
-    QString command = QString::fromLatin1(cmd);
-    QString serverMsg = QString::fromLatin1(buf).mid(5).stripWhiteSpace();
+    TQString command = TQString::fromLatin1(cmd);
+    TQString serverMsg = TQString::fromLatin1(buf).mid(5).stripWhiteSpace();
 
     if (command.left(4) == "PASS") {
       command = i18n("PASS <your password>");
@@ -353,7 +353,7 @@ int POP3Protocol::loginAPOP( char *challenge, KIO::AuthInfo &ai )
 {
   char buf[512];
 
-  QString apop_string = QString::fromLatin1("APOP ");
+  TQString apop_string = TQString::fromLatin1("APOP ");
   if (m_sUser.isEmpty() || m_sPass.isEmpty()) {
     // Prompt for usernames
     if (!openPassDlg(ai)) {
@@ -455,13 +455,13 @@ bool POP3Protocol::saslInteract( void *in, AuthInfo &ai )
 
 #define SASLERROR  closeConnection(); \
 error(ERR_COULD_NOT_AUTHENTICATE, i18n("An error occured during authentication: %1").arg \
-( QString::fromUtf8( sasl_errdetail( conn ) ))); \
+( TQString::fromUtf8( sasl_errdetail( conn ) ))); \
 
 int POP3Protocol::loginSASL( KIO::AuthInfo &ai )
 {
 #ifdef HAVE_LIBSASL2
   char buf[512];
-  QString sasl_buffer = QString::fromLatin1("AUTH");
+  TQString sasl_buffer = TQString::fromLatin1("AUTH");
 
   int result;
   sasl_conn_t *conn = NULL;
@@ -485,7 +485,7 @@ int POP3Protocol::loginSASL( KIO::AuthInfo &ai )
   // This is based on RFC 1734's wisdom
   if ( hasMetaData("sasl") || command(sasl_buffer.local8Bit()) == Ok  ) {
 
-    QStringList sasl_list;
+    TQStringList sasl_list;
     if (hasMetaData("sasl")) {
       sasl_list.append(metaData("sasl").latin1());
     } else
@@ -523,22 +523,22 @@ int POP3Protocol::loginSASL( KIO::AuthInfo &ai )
 
     POP3_DEBUG << "Preferred authentication method is " << mechusing << "." << endl;
 
-    QByteArray challenge, tmp;
+    TQByteArray challenge, tmp;
 
-    QString firstCommand = "AUTH " + QString::fromLatin1( mechusing );
+    TQString firstCommand = "AUTH " + TQString::fromLatin1( mechusing );
     challenge.setRawData( out, outlen );
     KCodecs::base64Encode( challenge, tmp );
     challenge.resetRawData( out, outlen );
     if ( !tmp.isEmpty() ) {
       firstCommand += " ";
-      firstCommand += QString::fromLatin1( tmp.data(), tmp.size() );
+      firstCommand += TQString::fromLatin1( tmp.data(), tmp.size() );
     }
 
     challenge.resize( 2049 );
     resp = command( firstCommand.latin1(), challenge.data(), 2049 );
     while( resp == Cont ) {
       challenge.resize(challenge.find(0));
-//      POP3_DEBUG << "S: " << QCString(challenge.data(),challenge.size()+1) << endl;
+//      POP3_DEBUG << "S: " << TQCString(challenge.data(),challenge.size()+1) << endl;
       KCodecs::base64Decode( challenge, tmp );
       do {
         result = sasl_client_step(conn, tmp.isEmpty() ? 0 : tmp.data(),
@@ -563,7 +563,7 @@ int POP3Protocol::loginSASL( KIO::AuthInfo &ai )
       challenge.setRawData( out, outlen );
       KCodecs::base64Encode( challenge, tmp );
       challenge.resetRawData( out, outlen );
-//        POP3_DEBUG << "C: " << QCString(tmp.data(),tmp.size()+1) << endl;
+//        POP3_DEBUG << "C: " << TQCString(tmp.data(),tmp.size()+1) << endl;
       tmp.resize(tmp.size()+1);
       tmp[tmp.size()-1] = '\0';
       challenge.resize(2049);
@@ -624,7 +624,7 @@ bool POP3Protocol::loginPASS( KIO::AuthInfo &ai )
   m_sOldUser = m_sUser;
   m_sOldPass = m_sPass;
 
-  QString one_string = QString::fromLatin1("USER ");
+  TQString one_string = TQString::fromLatin1("USER ");
   one_string.append( m_sUser );
 
   if ( command(one_string.local8Bit(), buf, sizeof(buf)) != Ok ) {
@@ -638,7 +638,7 @@ bool POP3Protocol::loginPASS( KIO::AuthInfo &ai )
     return false;
   }
 
-  one_string = QString::fromLatin1("PASS ");
+  one_string = TQString::fromLatin1("PASS ");
   one_string.append(m_sPass);
 
   if ( command(one_string.local8Bit(), buf, sizeof(buf)) != Ok ) {
@@ -692,7 +692,7 @@ bool POP3Protocol::pop3_open()
       return false;             // we've got major problems, and possibly the
       // wrong port
     }
-    QCString greeting(greeting_buf);
+    TQCString greeting(greeting_buf);
     delete[]greeting_buf;
 
     if (greeting.length() > 0) {
@@ -700,8 +700,8 @@ bool POP3Protocol::pop3_open()
     }
 
     // Does the server support APOP?
-    QString apop_cmd;
-    QRegExp re("<[A-Za-z0-9\\.\\-_]+@[A-Za-z0-9\\.\\-_]+>$", false);
+    TQString apop_cmd;
+    TQRegExp re("<[A-Za-z0-9\\.\\-_]+@[A-Za-z0-9\\.\\-_]+>$", false);
 
     POP3_DEBUG << "greeting: " << greeting << endl;
     int apop_pos = greeting.find(re);
@@ -783,7 +783,7 @@ bool POP3Protocol::pop3_open()
 size_t POP3Protocol::realGetSize(unsigned int msg_num)
 {
   char *buf;
-  QCString cmd;
+  TQCString cmd;
   size_t ret = 0;
 
   buf = new char[MAX_RESPONSE_LEN];
@@ -801,11 +801,11 @@ size_t POP3Protocol::realGetSize(unsigned int msg_num)
   return ret;
 }
 
-void POP3Protocol::special(const QByteArray & aData)
+void POP3Protocol::special(const TQByteArray & aData)
 {
-  QString result;
+  TQString result;
   char buf[MAX_PACKET_LEN];
-  QDataStream stream(aData, IO_ReadOnly);
+  TQDataStream stream(aData, IO_ReadOnly);
   int tmp;
   stream >> tmp;
 
@@ -813,14 +813,14 @@ void POP3Protocol::special(const QByteArray & aData)
     return;
 
   for (int i = 0; i < 2; i++) {
-    QCString cmd = (i) ? "AUTH" : "CAPA";
+    TQCString cmd = (i) ? "AUTH" : "CAPA";
     if ( command(cmd) != Ok )
       continue;
     while (true) {
       myReadLine(buf, MAX_PACKET_LEN - 1);
       if (qstrcmp(buf, ".\r\n") == 0)
         break;
-      result += " " + QString(buf).left(strlen(buf) - 2)
+      result += " " + TQString(buf).left(strlen(buf) - 2)
           .replace(" ", "-");
     }
   }
@@ -853,8 +853,8 @@ void POP3Protocol::get(const KURL & url)
   bool ok = true;
   char buf[MAX_PACKET_LEN];
   char destbuf[MAX_PACKET_LEN];
-  QByteArray array;
-  QString cmd, path = url.path();
+  TQByteArray array;
+  TQString cmd, path = url.path();
   int maxCommands = (metaData("pipelining") == "on") ? MAX_COMMANDS : 1;
 
   if (path.at(0) == '/')
@@ -919,12 +919,12 @@ void POP3Protocol::get(const KURL & url)
       }
     }
     POP3_DEBUG << "Finishing up list" << endl;
-    data(QByteArray());
+    data(TQByteArray());
     finished();
   } else if (cmd == "remove") {
-    QStringList waitingCommands = QStringList::split(',', path);
+    TQStringList waitingCommands = TQStringList::split(',', path);
     int activeCommands = 0;
-    QStringList::Iterator it = waitingCommands.begin();
+    TQStringList::Iterator it = waitingCommands.begin();
     while (it != waitingCommands.end() || activeCommands > 0) {
       while (activeCommands < maxCommands && it != waitingCommands.end()) {
         sendCommand(("DELE " + *it).latin1());
@@ -937,12 +937,12 @@ void POP3Protocol::get(const KURL & url)
     finished();
     m_cmd = CMD_NONE;
   } else if (cmd == "download" || cmd == "headers") {
-    QStringList waitingCommands = QStringList::split(',', path);
+    TQStringList waitingCommands = TQStringList::split(',', path);
     bool noProgress = (metaData("progress") == "off"
                        || waitingCommands.count() > 1);
     int p_size = 0;
     unsigned int msg_len = 0;
-    QString list_cmd("LIST ");
+    TQString list_cmd("LIST ");
     list_cmd += path;
     memset(buf, 0, sizeof(buf));
     if ( !noProgress ) {
@@ -972,7 +972,7 @@ void POP3Protocol::get(const KURL & url)
     }
 
     int activeCommands = 0;
-    QStringList::Iterator it = waitingCommands.begin();
+    TQStringList::Iterator it = waitingCommands.begin();
     while (it != waitingCommands.end() || activeCommands > 0) {
       while (activeCommands < maxCommands && it != waitingCommands.end()) {
         sendCommand(((cmd ==
@@ -1069,10 +1069,10 @@ void POP3Protocol::get(const KURL & url)
       }
     }
     POP3_DEBUG << "Finishing up" << endl;
-    data(QByteArray());
+    data(TQByteArray());
     finished();
   } else if ((cmd == "uid") || (cmd == "list")) {
-    QString qbuf;
+    TQString qbuf;
     (void) path.toInt(&ok);
 
     if (!ok) {
@@ -1096,7 +1096,7 @@ void POP3Protocol::get(const KURL & url)
       processedSize(len);
       POP3_DEBUG << buf << endl;
       POP3_DEBUG << "Finishing up uid" << endl;
-      data(QByteArray());
+      data(TQByteArray());
       finished();
     } else {
       closeConnection();
@@ -1117,7 +1117,7 @@ void POP3Protocol::listDir(const KURL &)
   bool isINT;
   int num_messages = 0;
   char buf[MAX_RESPONSE_LEN];
-  QCString q_buf;
+  TQCString q_buf;
 
   // Try and open a connection
   if (!pop3_open()) {
@@ -1150,7 +1150,7 @@ void POP3Protocol::listDir(const KURL &)
   }
   UDSEntry entry;
   UDSAtom atom;
-  QString fname;
+  TQString fname;
   for (int i = 0; i < num_messages; i++) {
     fname = "Message %1";
 
@@ -1176,7 +1176,7 @@ void POP3Protocol::listDir(const KURL &)
     uds_url.setUser(m_sUser);
     uds_url.setPass(m_sPass);
     uds_url.setHost(m_sServer);
-    uds_url.setPath(QString::fromLatin1("/download/%1").arg(i + 1));
+    uds_url.setPath(TQString::fromLatin1("/download/%1").arg(i + 1));
     atom.m_str = uds_url.url();
     atom.m_long = 0;
     entry.append(atom);
@@ -1205,7 +1205,7 @@ void POP3Protocol::listDir(const KURL &)
 
 void POP3Protocol::stat(const KURL & url)
 {
-  QString _path = url.path();
+  TQString _path = url.path();
 
   if (_path.at(0) == '/')
     _path.remove(0, 1);
@@ -1234,7 +1234,7 @@ void POP3Protocol::stat(const KURL & url)
 
 void POP3Protocol::del(const KURL & url, bool /*isfile */ )
 {
-  QString invalidURI = QString::null;
+  TQString invalidURI = TQString::null;
   bool isInt;
 
   if (!pop3_open()) {
@@ -1243,7 +1243,7 @@ void POP3Protocol::del(const KURL & url, bool /*isfile */ )
     return;
   }
 
-  QString _path = url.path();
+  TQString _path = url.path();
   if (_path.at(0) == '/') {
     _path.remove(0, 1);
   }

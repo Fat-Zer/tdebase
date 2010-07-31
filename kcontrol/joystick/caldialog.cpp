@@ -22,10 +22,10 @@
 #include "caldialog.h"
 #include "joydevice.h"
 
-#include <qlabel.h>
-#include <qtimer.h>
-#include <qapplication.h>
-#include <qvbox.h>
+#include <tqlabel.h>
+#include <tqtimer.h>
+#include <tqapplication.h>
+#include <tqvbox.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -33,17 +33,17 @@
 
 //--------------------------------------------------------------
 
-CalDialog::CalDialog(QWidget *parent, JoyDevice *joy)
+CalDialog::CalDialog(TQWidget *parent, JoyDevice *joy)
   : KDialogBase(parent, "calibrateDialog", true,
       i18n("Calibration"),
       KDialogBase::Cancel|KDialogBase::User1, KDialogBase::User1, true, KGuiItem(i18n("Next"))),
     joydev(joy)
 {
-  QVBox *main = makeVBoxMainWidget();
+  TQVBox *main = makeVBoxMainWidget();
 
-  text = new QLabel(main);
+  text = new TQLabel(main);
   text->setMinimumHeight(200);
-  valueLbl = new QLabel(main);
+  valueLbl = new TQLabel(main);
 }
 
 //--------------------------------------------------------------
@@ -56,7 +56,7 @@ void CalDialog::calibrate()
 
   // calibrate precision (which min,max delivers the joystick in its center position)
   // get values through the normal idle procedure
-  QTimer ti;
+  TQTimer ti;
   ti.start(2000, true); // single shot in 2 seconds
 
   // normally I'd like to hide the 'Next' button in this step,
@@ -67,15 +67,15 @@ void CalDialog::calibrate()
   {
     qApp->processEvents(2000);
   }
-  while ( ti.isActive() && (result() != QDialog::Rejected) );
+  while ( ti.isActive() && (result() != TQDialog::Rejected) );
 
-  if ( result() == QDialog::Rejected ) return;  // user cancelled the dialog
+  if ( result() == TQDialog::Rejected ) return;  // user cancelled the dialog
 
   joydev->calcPrecision();
 
   int i, lastVal;
   int min[2], center[2], max[2];
-  QString hint;
+  TQString hint;
 
   for (i = 0; i < joydev->numAxes(); i++)
   {
@@ -93,12 +93,12 @@ void CalDialog::calibrate()
                        "to continue with the next step.</qt>").arg(i+1).arg(hint));
     waitButton(i, true, lastVal);
 
-    if ( result() == QDialog::Rejected ) return;  // user cancelled the dialog
+    if ( result() == TQDialog::Rejected ) return;  // user cancelled the dialog
 
     joydev->resetMinMax(i, lastVal);
     if ( result() != -2 ) waitButton(i, false, lastVal);
 
-    if ( result() == QDialog::Rejected ) return;  // user cancelled the dialog
+    if ( result() == TQDialog::Rejected ) return;  // user cancelled the dialog
 
     min[0] = joydev->axisMin(i);
     min[1] = joydev->axisMax(i);
@@ -110,12 +110,12 @@ void CalDialog::calibrate()
                        "to continue with the next step.</qt>").arg(i+1).arg(hint));
     waitButton(i, true, lastVal);
 
-    if ( result() == QDialog::Rejected ) return;  // user cancelled the dialog
+    if ( result() == TQDialog::Rejected ) return;  // user cancelled the dialog
 
     joydev->resetMinMax(i, lastVal);
     if ( result() != -2 ) waitButton(i, false, lastVal);
 
-    if ( result() == QDialog::Rejected ) return;  // user cancelled the dialog
+    if ( result() == TQDialog::Rejected ) return;  // user cancelled the dialog
 
     center[0] = joydev->axisMin(i);
     center[1] = joydev->axisMax(i);
@@ -127,12 +127,12 @@ void CalDialog::calibrate()
                        "to continue with the next step.</qt>").arg(i+1).arg(hint));
     waitButton(i, true, lastVal);
 
-    if ( result() == QDialog::Rejected ) return;  // user cancelled the dialog
+    if ( result() == TQDialog::Rejected ) return;  // user cancelled the dialog
 
     joydev->resetMinMax(i, lastVal);
     if ( result() != -2 ) waitButton(i, false, lastVal);
 
-    if ( result() == QDialog::Rejected ) return;  // user cancelled the dialog
+    if ( result() == TQDialog::Rejected ) return;  // user cancelled the dialog
 
     max[0] = joydev->axisMin(i);
     max[1] = joydev->axisMax(i);

@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qapplication.h>
-#include <qpopupmenu.h>
+#include <tqapplication.h>
+#include <tqpopupmenu.h>
 
 #include <kapplication.h>
 #include <kaction.h>
@@ -39,7 +39,7 @@ static KStaticDeleter<KonqSidebarHistorySettings> sd;
 KonqSidebarHistorySettings * KonqSidebarHistoryModule::s_settings = 0L;
 
 KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree, const char *name )
-    : QObject( 0L, name ), KonqSidebarTreeModule( parentTree ),
+    : TQObject( 0L, name ), KonqSidebarTreeModule( parentTree ),
       m_dict( 349 ),
       m_topLevelItem( 0L ),
       m_dlg( 0L ),
@@ -51,10 +51,10 @@ KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree
 	s_settings->readSettings( true );
     }
 
-    connect( s_settings, SIGNAL( settingsChanged() ), SLOT( slotSettingsChanged() ));
+    connect( s_settings, TQT_SIGNAL( settingsChanged() ), TQT_SLOT( slotSettingsChanged() ));
 
     m_dict.setAutoDelete( true );
-    m_currentTime = QDateTime::currentDateTime();
+    m_currentTime = TQDateTime::currentDateTime();
 
     KConfig *kc = KGlobal::config();
     KConfigGroupSaver cs( kc, "HistorySettings" );
@@ -63,35 +63,35 @@ KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree
 
     KonqHistoryManager *manager = KonqHistoryManager::kself();
 
-    connect( manager, SIGNAL( loadingFinished() ), SLOT( slotCreateItems() ));
-    connect( manager, SIGNAL( cleared() ), SLOT( clear() ));
+    connect( manager, TQT_SIGNAL( loadingFinished() ), TQT_SLOT( slotCreateItems() ));
+    connect( manager, TQT_SIGNAL( cleared() ), TQT_SLOT( clear() ));
 
-    connect( manager, SIGNAL( entryAdded( const KonqHistoryEntry * ) ),
-	     SLOT( slotEntryAdded( const KonqHistoryEntry * ) ));
-    connect( manager, SIGNAL( entryRemoved( const KonqHistoryEntry *) ),
-	     SLOT( slotEntryRemoved( const KonqHistoryEntry *) ));
+    connect( manager, TQT_SIGNAL( entryAdded( const KonqHistoryEntry * ) ),
+	     TQT_SLOT( slotEntryAdded( const KonqHistoryEntry * ) ));
+    connect( manager, TQT_SIGNAL( entryRemoved( const KonqHistoryEntry *) ),
+	     TQT_SLOT( slotEntryRemoved( const KonqHistoryEntry *) ));
 
-    connect( parentTree, SIGNAL( expanded( QListViewItem * )),
-	     SLOT( slotItemExpanded( QListViewItem * )));
+    connect( parentTree, TQT_SIGNAL( expanded( TQListViewItem * )),
+	     TQT_SLOT( slotItemExpanded( TQListViewItem * )));
 
     m_collection = new KActionCollection( this, "history actions" );
     (void) new KAction( i18n("New &Window"), "window_new", 0, this,
- 			SLOT( slotNewWindow() ), m_collection, "open_new");
+ 			TQT_SLOT( slotNewWindow() ), m_collection, "open_new");
     (void) new KAction( i18n("&Remove Entry"), "editdelete", 0, this,
-			SLOT( slotRemoveEntry() ), m_collection, "remove");
+			TQT_SLOT( slotRemoveEntry() ), m_collection, "remove");
     (void) new KAction( i18n("C&lear History"), "history_clear", 0, this,
-			SLOT( slotClearHistory() ), m_collection, "clear");
+			TQT_SLOT( slotClearHistory() ), m_collection, "clear");
     (void) new KAction( i18n("&Preferences..."), "configure", 0, this,
-			SLOT( slotPreferences()), m_collection, "preferences");
+			TQT_SLOT( slotPreferences()), m_collection, "preferences");
 
     KRadioAction *sort;
     sort = new KRadioAction( i18n("By &Name"), 0, this,
-			     SLOT( slotSortByName() ), m_collection, "byName");
+			     TQT_SLOT( slotSortByName() ), m_collection, "byName");
     sort->setExclusiveGroup("SortGroup");
     sort->setChecked( m_sortsByName );
 
     sort = new KRadioAction( i18n("By &Date"), 0, this,
-			     SLOT( slotSortByDate() ), m_collection, "byDate");
+			     TQT_SLOT( slotSortByDate() ), m_collection, "byDate");
     sort->setExclusiveGroup("SortGroup");
     sort->setChecked( !m_sortsByName );
 
@@ -104,7 +104,7 @@ KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree
 KonqSidebarHistoryModule::~KonqSidebarHistoryModule()
 {
     HistoryItemIterator it( m_dict );
-    QStringList openGroups;
+    TQStringList openGroups;
     while ( it.current() ) {
 	if ( it.current()->isOpen() )
 	    openGroups.append( it.currentKey() );
@@ -125,14 +125,14 @@ void KonqSidebarHistoryModule::slotSettingsChanged()
 
 void KonqSidebarHistoryModule::slotCreateItems()
 {
-    QApplication::setOverrideCursor( KCursor::waitCursor() );
+    TQApplication::setOverrideCursor( KCursor::waitCursor() );
     clear();
 
     KonqSidebarHistoryItem *item;
     KonqHistoryEntry *entry;
     KonqHistoryList entries( KonqHistoryManager::kself()->entries() );
     KonqHistoryIterator it( entries );
-    m_currentTime = QDateTime::currentDateTime();
+    m_currentTime = TQDateTime::currentDateTime();
 
     // the group item and the item of the serverroot '/' get a fav-icon
     // if available. All others get the protocol icon.
@@ -145,8 +145,8 @@ void KonqSidebarHistoryModule::slotCreateItems()
 
     KConfig *kc = KGlobal::config();
     KConfigGroupSaver cs( kc, "HistorySettings" );
-    QStringList openGroups = kc->readListEntry("OpenGroups");
-    QStringList::Iterator it2 = openGroups.begin();
+    TQStringList openGroups = kc->readListEntry("OpenGroups");
+    TQStringList::Iterator it2 = openGroups.begin();
     KonqSidebarHistoryGroupItem *group;
     while ( it2 != openGroups.end() ) {
 	group = m_dict.find( *it2 );
@@ -156,7 +156,7 @@ void KonqSidebarHistoryModule::slotCreateItems()
 	++it2;
     }
 
-    QApplication::restoreOverrideCursor();
+    TQApplication::restoreOverrideCursor();
     m_initialized = true;
 }
 
@@ -171,7 +171,7 @@ void KonqSidebarHistoryModule::slotEntryAdded( const KonqHistoryEntry *entry )
     if ( !m_initialized )
 	return;
 
-    m_currentTime = QDateTime::currentDateTime();
+    m_currentTime = TQDateTime::currentDateTime();
     KonqSidebarHistoryGroupItem *group = getGroupItem( entry->url );
     KonqSidebarHistoryItem *item = group->findChild( entry );
     if ( !item )
@@ -179,7 +179,7 @@ void KonqSidebarHistoryModule::slotEntryAdded( const KonqHistoryEntry *entry )
     else
 	item->update( entry );
 
-    // QListView scrolls when calling sort(), so we have to hack around that
+    // TQListView scrolls when calling sort(), so we have to hack around that
     // (we don't want no scrolling every time an entry is added)
     KonqSidebarTree *t = tree();
     t->lockScrolling( true );
@@ -194,7 +194,7 @@ void KonqSidebarHistoryModule::slotEntryRemoved( const KonqHistoryEntry *entry )
     if ( !m_initialized )
 	return;
 
-    QString groupKey = groupForURL( entry->url );
+    TQString groupKey = groupForURL( entry->url );
     KonqSidebarHistoryGroupItem *group = m_dict.find( groupKey );
     if ( !group )
 	return;
@@ -211,7 +211,7 @@ void KonqSidebarHistoryModule::addTopLevelItem( KonqSidebarTreeTopLevelItem * it
 }
 
 bool KonqSidebarHistoryModule::handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *,
-                                                          const QPoint& pos )
+                                                          const TQPoint& pos )
 {
     showPopupMenu( ModuleContextMenu, pos );
     return true;
@@ -219,16 +219,16 @@ bool KonqSidebarHistoryModule::handleTopLevelContextMenu( KonqSidebarTreeTopLeve
 
 void KonqSidebarHistoryModule::showPopupMenu()
 {
-    showPopupMenu( EntryContextMenu | ModuleContextMenu, QCursor::pos() );
+    showPopupMenu( EntryContextMenu | ModuleContextMenu, TQCursor::pos() );
 }
 
-void KonqSidebarHistoryModule::showPopupMenu( int which, const QPoint& pos )
+void KonqSidebarHistoryModule::showPopupMenu( int which, const TQPoint& pos )
 {
-    QPopupMenu *sortMenu = new QPopupMenu;
+    TQPopupMenu *sortMenu = new QPopupMenu;
     m_collection->action("byName")->plug( sortMenu );
     m_collection->action("byDate")->plug( sortMenu );
 
-    QPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new QPopupMenu;
 
     if ( which & EntryContextMenu )
     {
@@ -252,7 +252,7 @@ void KonqSidebarHistoryModule::slotNewWindow()
 {
     kdDebug(1201)<<"void KonqSidebarHistoryModule::slotNewWindow()"<<endl;
 
-    QListViewItem *item = tree()->selectedItem();
+    TQListViewItem *item = tree()->selectedItem();
     KonqSidebarHistoryItem *hi = dynamic_cast<KonqSidebarHistoryItem*>( item );
     if ( hi )
        {
@@ -263,7 +263,7 @@ void KonqSidebarHistoryModule::slotNewWindow()
 
 void KonqSidebarHistoryModule::slotRemoveEntry()
 {
-    QListViewItem *item = tree()->selectedItem();
+    TQListViewItem *item = tree()->selectedItem();
     KonqSidebarHistoryItem *hi = dynamic_cast<KonqSidebarHistoryItem*>( item );
     if ( hi ) // remove a single entry
 	KonqHistoryManager::kself()->emitRemoveFromHistory( hi->externalURL());
@@ -303,7 +303,7 @@ void KonqSidebarHistoryModule::sortingChanged()
     kc->sync();
 }
 
-void KonqSidebarHistoryModule::slotItemExpanded( QListViewItem *item )
+void KonqSidebarHistoryModule::slotItemExpanded( TQListViewItem *item )
 {
     if ( item == m_topLevelItem && !m_initialized )
 	slotCreateItems();
@@ -323,12 +323,12 @@ void KonqSidebarHistoryModule::groupOpened( KonqSidebarHistoryGroupItem *item, b
 
 KonqSidebarHistoryGroupItem * KonqSidebarHistoryModule::getGroupItem( const KURL& url )
 {
-    const QString& groupKey = groupForURL( url );
+    const TQString& groupKey = groupForURL( url );
     KonqSidebarHistoryGroupItem *group = m_dict.find( groupKey );
     if ( !group ) {
 	group = new KonqSidebarHistoryGroupItem( url, m_topLevelItem );
 
-	QString icon = KonqFavIconMgr::iconForURL( url.url() );
+	TQString icon = KonqFavIconMgr::iconForURL( url.url() );
 	if ( icon.isEmpty() )
 	    group->setPixmap( 0, m_folderClosed );
 	else

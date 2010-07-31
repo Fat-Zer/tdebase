@@ -21,17 +21,17 @@
 #include <keditlistbox.h>
 #include <knuminput.h>
 #include <klocale.h>
-#include <qvbox.h>
+#include <tqvbox.h>
 
 #include "NaughtyConfigDialog.h"
 #include "NaughtyConfigDialog.moc"
 
 NaughtyConfigDialog::NaughtyConfigDialog
 (
- const QStringList & items,
+ const TQStringList & items,
  uint updateInterval,
  uint threshold,
- QWidget * parent,
+ TQWidget * parent,
  const char * name
 )
   :
@@ -46,7 +46,7 @@ NaughtyConfigDialog::NaughtyConfigDialog
    true
   )
 {
-  QVBox * v = new QVBox(this);
+  TQVBox * v = new TQVBox(this);
   setMainWidget(v);
 
   kini_updateInterval_  = new KIntNumInput(updateInterval, v);
@@ -88,7 +88,7 @@ NaughtyConfigDialog::threshold() const
   QStringList
 NaughtyConfigDialog::ignoreList() const
 {
-  QStringList retval;
+  TQStringList retval;
 
   for (int i = 0; i < listBox_->count(); i++)
     retval << listBox_->text(i);

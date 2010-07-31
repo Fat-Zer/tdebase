@@ -21,10 +21,10 @@
 
 #include "backendbase.h"
 
-#include <qobject.h>
-#include <qcstring.h>
-#include <qmap.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqcstring.h>
+#include <tqmap.h>
+#include <tqtimer.h>
 
 class DiscType
 {
@@ -47,7 +47,7 @@ private:
 
 class PollingThread;
 
-class LinuxCDPolling : public QObject, public BackendBase
+class LinuxCDPolling : public TQObject, public BackendBase
 {
 Q_OBJECT
 
@@ -64,23 +64,23 @@ public:
 	 * @param current the current known state of the drive
 	 * @return the disc type
 	 */
-	static DiscType identifyDiscType(const QCString &devNode,
+	static DiscType identifyDiscType(const TQCString &devNode,
 		 const DiscType &current = DiscType::Unknown);
 
 private slots:
-	void slotMediumAdded(const QString &id);
-	void slotMediumRemoved(const QString &id);
-	void slotMediumStateChanged(const QString &id);
+	void slotMediumAdded(const TQString &id);
+	void slotMediumRemoved(const TQString &id);
+	void slotMediumStateChanged(const TQString &id);
 	void slotTimeout();
 
 private:
 	void applyType(DiscType type, const Medium *medium);
 
-	static bool hasDirectory(const QCString &devNode, const QCString &dir);
+	static bool hasDirectory(const TQCString &devNode, const TQCString &dir);
 
-	QMap<QString, PollingThread*> m_threads;
-	QStringList m_excludeNotification;
-	QTimer m_timer;
+	TQMap<TQString, PollingThread*> m_threads;
+	TQStringList m_excludeNotification;
+	TQTimer m_timer;
 };
 
 #endif

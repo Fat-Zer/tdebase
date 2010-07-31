@@ -14,8 +14,8 @@
     *************************************************************************
 */
 
-#include <qlayout.h>
-#include <qtimer.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -39,7 +39,7 @@ public:
 	bool isChanged;
 };
 
-KonqExtensionManager::KonqExtensionManager(QWidget *parent, KonqMainWindow *mainWindow, KParts::ReadOnlyPart* activePart) :
+KonqExtensionManager::KonqExtensionManager(TQWidget *parent, KonqMainWindow *mainWindow, KParts::ReadOnlyPart* activePart) :
   KDialogBase(Plain, i18n("Configure"), Default | Cancel | Apply | Ok | User1,
               Ok, parent, "extensionmanager", false, true, KGuiItem(i18n("&Reset"), "undo"))
 {
@@ -47,14 +47,14 @@ KonqExtensionManager::KonqExtensionManager(QWidget *parent, KonqMainWindow *main
 	showButton(User1, false);
 	setChanged(false);
 
-	setInitialSize(QSize(640, 480));
+	setInitialSize(TQSize(640, 480));
 
-	(new QVBoxLayout(plainPage(), 0, 0))->setAutoAdd(true);
+	(new TQVBoxLayout(plainPage(), 0, 0))->setAutoAdd(true);
 	d->pluginSelector = new KPluginSelector(plainPage());
 	setMainWidget(d->pluginSelector);
-	connect(d->pluginSelector, SIGNAL(changed(bool)), this, SLOT(setChanged(bool)));
-	connect(d->pluginSelector, SIGNAL(configCommitted(const QCString &)),
-	        KSettings::Dispatcher::self(), SLOT(reparseConfiguration(const QCString &)));
+	connect(d->pluginSelector, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(setChanged(bool)));
+	connect(d->pluginSelector, TQT_SIGNAL(configCommitted(const TQCString &)),
+	        KSettings::Dispatcher::self(), TQT_SLOT(reparseConfiguration(const TQCString &)));
 
 	d->mainWindow = mainWindow;
 	d->activePart = activePart;
@@ -101,8 +101,8 @@ void KonqExtensionManager::apply()
 		if( d->mainWindow )
 		{
 			KParts::Plugin::loadPlugins(d->mainWindow, d->mainWindow, KGlobal::instance());
-			QPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects(d->mainWindow);
-			QPtrListIterator<KParts::Plugin> it(plugins);
+			TQPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects(d->mainWindow);
+			TQPtrListIterator<KParts::Plugin> it(plugins);
 			KParts::Plugin *plugin;
 			while((plugin = it.current()) != 0)
 			{
@@ -113,8 +113,8 @@ void KonqExtensionManager::apply()
 		if ( d->activePart )
 		{
 			KParts::Plugin::loadPlugins( d->activePart, d->activePart, d->activePart->instance() );
-			QPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects( d->activePart );
-			QPtrListIterator<KParts::Plugin> it(plugins);
+			TQPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects( d->activePart );
+			TQPtrListIterator<KParts::Plugin> it(plugins);
 			KParts::Plugin *plugin;
 			while((plugin = it.current()) != 0)
 			{

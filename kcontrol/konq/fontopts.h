@@ -34,8 +34,8 @@
 #ifndef __KONQFONT_OPTIONS_H__
 #define __KONQFONT_OPTIONS_H__
 
-#include <qstringlist.h>
-#include <qspinbox.h>
+#include <tqstringlist.h>
+#include <tqspinbox.h>
 
 #include <kcmodule.h>
 
@@ -53,8 +53,8 @@ class KonqFontOptions : public KCModule
 {
   Q_OBJECT
 public:
-  KonqFontOptions(KConfig *config, QString group, bool desktop, QWidget *parent=0, const char *name=0);
-  QString quickHelp() const;
+  KonqFontOptions(KConfig *config, TQString group, bool desktop, TQWidget *parent=0, const char *name=0);
+  TQString quickHelp() const;
 
   virtual void load();
   virtual void load( bool readDefaults );
@@ -63,12 +63,12 @@ public:
 
 public slots:
   void slotFontSize(int i);
-  void slotStandardFont(const QString& n);
+  void slotStandardFont(const TQString& n);
   void slotTextBackgroundClicked();
 
-  void slotNormalTextColorChanged( const QColor &col );
-  //void slotHighlightedTextColorChanged( const QColor &col );
-  void slotTextBackgroundColorChanged( const QColor &col );
+  void slotNormalTextColorChanged( const TQColor &col );
+  //void slotHighlightedTextColorChanged( const TQColor &col );
+  void slotTextBackgroundColorChanged( const TQColor &col );
 
 private slots:
   void slotPNbLinesChanged(int value);
@@ -80,33 +80,33 @@ private:
 private:
 
   KConfig *g_pConfig;
-  QString groupname;
+  TQString groupname;
   bool m_bDesktop;
 
   /*
-  QRadioButton* m_pSmall;
-  QRadioButton* m_pMedium;
-  QRadioButton* m_pLarge;
+  TQRadioButton* m_pSmall;
+  TQRadioButton* m_pMedium;
+  TQRadioButton* m_pLarge;
   */
   KFontCombo* m_pStandard;
-  QSpinBox* m_pSize;
+  TQSpinBox* m_pSize;
 
   int m_fSize;
-  QString m_stdName;
+  TQString m_stdName;
 
   KColorButton* m_pBg;
   KColorButton* m_pNormalText;
   //KColorButton* m_pHighlightedText;
-  QCheckBox* m_cbTextBackground;
+  TQCheckBox* m_cbTextBackground;
   KColorButton* m_pTextBackground;
-  QColor normalTextColor;
-  //QColor highlightedTextColor;
-  QColor textBackgroundColor;
+  TQColor normalTextColor;
+  //TQColor highlightedTextColor;
+  TQColor textBackgroundColor;
 
-  QSpinBox* m_pNbLines;
-  QSpinBox* m_pNbWidth;
-  QCheckBox* cbUnderline;
-  QCheckBox* m_pSizeInBytes;
+  TQSpinBox* m_pNbLines;
+  TQSpinBox* m_pNbWidth;
+  TQCheckBox* cbUnderline;
+  TQCheckBox* m_pSizeInBytes;
 };
 
 #endif

@@ -31,16 +31,16 @@
 #include <kglobal.h>
 #include <kdebug.h>
 
-#include <qframe.h>
-#include <qwidget.h>
-#include <qlayout.h>
-#include <qimage.h>
+#include <tqframe.h>
+#include <tqwidget.h>
+#include <tqlayout.h>
+#include <tqimage.h>
 #ifdef DRAW_OUTLINE
-# include <qpainter.h>
+# include <tqpainter.h>
 #endif
 
-KdmItem::KdmItem( KdmItem *parent, const QDomNode &node, const char *name )
-    : QObject( parent, name )
+KdmItem::KdmItem( KdmItem *parent, const TQDomNode &node, const char *name )
+    : TQObject( parent, name )
     , boxManager( 0 )
     , fixedManager( 0 )
     , image( 0 )
@@ -68,23 +68,23 @@ KdmItem::KdmItem( KdmItem *parent, const QDomNode &node, const char *name )
 	}
 	// Read the mandatory Pos tag. Other tags such as normal, prelighted,
 	// etc.. are read under specific implementations.
-	QDomNodeList childList = node.childNodes();
+	TQDomNodeList childList = node.childNodes();
 	for (uint nod = 0; nod < childList.count(); nod++) {
-		QDomNode child = childList.item( nod );
-		QDomElement el = child.toElement();
-		QString tagName = el.tagName(), attr;
+		TQDomNode child = childList.item( nod );
+		TQDomElement el = child.toElement();
+		TQString tagName = el.tagName(), attr;
 
 		if (tagName == "pos") {
-			parseAttribute( el.attribute( "x", QString::null ), pos.x, pos.xType );
-			parseAttribute( el.attribute( "y", QString::null ), pos.y, pos.yType );
-			parseAttribute( el.attribute( "width", QString::null ), pos.width, pos.wType );
-			parseAttribute( el.attribute( "height", QString::null ), pos.height, pos.hType );
+			parseAttribute( el.attribute( "x", TQString::null ), pos.x, pos.xType );
+			parseAttribute( el.attribute( "y", TQString::null ), pos.y, pos.yType );
+			parseAttribute( el.attribute( "width", TQString::null ), pos.width, pos.wType );
+			parseAttribute( el.attribute( "height", TQString::null ), pos.height, pos.hType );
 			pos.anchor = el.attribute( "anchor", "nw" );
 		}
 	}
 
-	QDomNode tnode = node;
-	id = tnode.toElement().attribute( "id", QString::number( (ulong)this, 16 ) );
+	TQDomNode tnode = node;
+	id = tnode.toElement().attribute( "id", TQString::number( (ulong)this, 16 ) );
 
 	// Tell 'parent' to add 'me' to its children
 	KdmItem *parentItem = static_cast<KdmItem *>( parent );
@@ -115,7 +115,7 @@ KdmItem::show( bool force )
 	if (isShown != InitialHidden && !force)
 		return;
 
-	QValueList<KdmItem *>::Iterator it;
+	TQValueList<KdmItem *>::Iterator it;
 	for (it = m_children.begin(); it != m_children.end(); ++it)
 		(*it)->show();
 
@@ -139,7 +139,7 @@ KdmItem::hide( bool force )
 		return;		// no need for further action
 	}
 
-	QValueList<KdmItem *>::Iterator it;
+	TQValueList<KdmItem *>::Iterator it;
 	for (it = m_children.begin(); it != m_children.end(); ++it)
 		(*it)->hide();
 
@@ -158,18 +158,18 @@ KdmItem::inheritFromButton( KdmItem *button )
 	if (button)
 		buttonParent = button;
 
-	QValueList<KdmItem *>::Iterator it;
+	TQValueList<KdmItem *>::Iterator it;
 	for (it = m_children.begin(); it != m_children.end(); ++it)
 		(*it)->inheritFromButton( button );
 }
 
 KdmItem *
-KdmItem::findNode( const QString &_id ) const
+KdmItem::findNode( const TQString &_id ) const
 {
 	if (id == _id)
 		return const_cast<KdmItem *>( this );
 
-	QValueList<KdmItem *>::ConstIterator it;
+	TQValueList<KdmItem *>::ConstIterator it;
 	for (it = m_children.begin(); it != m_children.end(); ++it) {
 		KdmItem *t = (*it)->findNode( _id );
 		if (t)
@@ -180,7 +180,7 @@ KdmItem::findNode( const QString &_id ) const
 }
 
 void
-KdmItem::setWidget( QWidget *widget )
+KdmItem::setWidget( TQWidget *widget )
 {
 //	delete myWidget;	-- themer->widget() owns the widgets
 
@@ -191,13 +191,13 @@ KdmItem::setWidget( QWidget *widget )
 		myWidget->show();
 
 	// Remove borders so that it blends nicely with the theme background
-	QFrame* frame = ::qt_cast<QFrame *>( widget );
+	TQFrame* frame = ::qt_cast<TQFrame *>( widget );
 	if (frame)
-		frame->setFrameStyle( QFrame::NoFrame );
+		frame->setFrameStyle( TQFrame::NoFrame );
 
 	myWidget->setGeometry(area);
 
-	connect( myWidget, SIGNAL(destroyed()), SLOT(widgetGone()) );
+	connect( myWidget, TQT_SIGNAL(destroyed()), TQT_SLOT(widgetGone()) );
 }
 
 void
@@ -207,16 +207,16 @@ KdmItem::widgetGone()
 }
 
 void
-KdmItem::setLayoutItem( QLayoutItem *item )
+KdmItem::setLayoutItem( TQLayoutItem *item )
 {
 	myLayoutItem = item;
 	// XXX hiding not supported - it think it's pointless here
 	if (myLayoutItem->widget())
-		connect( myLayoutItem->widget(), SIGNAL(destroyed()),
-		         SLOT(layoutItemGone()) );
+		connect( myLayoutItem->widget(), TQT_SIGNAL(destroyed()),
+		         TQT_SLOT(layoutItemGone()) );
 	else if (myLayoutItem->layout())
-		connect( myLayoutItem->layout(), SIGNAL(destroyed()),
-		         SLOT(layoutItemGone()) );
+		connect( myLayoutItem->layout(), TQT_SIGNAL(destroyed()),
+		         TQT_SLOT(layoutItemGone()) );
 }
 
 void
@@ -227,7 +227,7 @@ KdmItem::layoutItemGone()
 
 /* This is called as a result of KdmLayout::update, and directly on the root */
 void
-KdmItem::setGeometry( const QRect &newGeometry, bool force )
+KdmItem::setGeometry( const TQRect &newGeometry, bool force )
 {
 	kdDebug() << " KdmItem::setGeometry " << id << newGeometry << endl;
 	// check if already 'in place'
@@ -253,7 +253,7 @@ KdmItem::setGeometry( const QRect &newGeometry, bool force )
 }
 
 void
-KdmItem::paint( QPainter *p, const QRect &rect )
+KdmItem::paint( TQPainter *p, const TQRect &rect )
 {
 	if (isHidden())
 		return;
@@ -262,7 +262,7 @@ KdmItem::paint( QPainter *p, const QRect &rect )
 		return;
 
 	if (area.intersects( rect )) {
-		QRect contentsRect = area.intersect( rect );
+		TQRect contentsRect = area.intersect( rect );
 		contentsRect.moveBy( QMIN( 0, -area.x() ), QMIN( 0, -area.y() ) );
 		drawContents( p, contentsRect );
 	}
@@ -277,7 +277,7 @@ KdmItem::paint( QPainter *p, const QRect &rect )
 		return;
 
 	// Dispatch paint events to children
-	QValueList<KdmItem *>::Iterator it;
+	TQValueList<KdmItem *>::Iterator it;
 	for (it = m_children.begin(); it != m_children.end(); ++it)
 		(*it)->paint( p, rect );
 }
@@ -316,7 +316,7 @@ KdmItem::mouseEvent( int x, int y, bool pressed, bool released )
 	}
 
 	if (!buttonParent) {
-		QValueList<KdmItem *>::Iterator it;
+		TQValueList<KdmItem *>::Iterator it;
 		for (it = m_children.begin(); it != m_children.end(); ++it)
 			(*it)->mouseEvent( x, y, pressed, released );
 	}
@@ -329,7 +329,7 @@ void
 KdmItem::statusChanged()
 {
 	if (buttonParent == this) {
-		QValueList<KdmItem *>::Iterator it;
+		TQValueList<KdmItem *>::Iterator it;
 		for (it = m_children.begin(); it != m_children.end(); ++it) {
 			(*it)->state = state;
 			(*it)->statusChanged();
@@ -348,14 +348,14 @@ KdmItem::sizeHint()
 		return myLayoutItem->sizeHint();
 	int w = pos.wType == DTpixel ? kAbs( pos.width ) : -1,
 	    h = pos.hType == DTpixel ? kAbs( pos.height ) : -1;
-	return QSize( w, h );
+	return TQSize( w, h );
 }
 
 QRect
-KdmItem::placementHint( const QRect &parentRect )
+KdmItem::placementHint( const TQRect &parentRect )
 {
-	QSize hintedSize = sizeHint();
-	QSize boxHint;
+	TQSize hintedSize = sizeHint();
+	TQSize boxHint;
 
 	int x = parentRect.left(),
 	    y = parentRect.top(),
@@ -435,7 +435,7 @@ KdmItem::placementHint( const QRect &parentRect )
 	x += dx;
 
 	// Note: no clipping to parent because this broke many themes!
-	return QRect( x, y, w, h );
+	return TQRect( x, y, w, h );
 }
 
 // END protected inheritable
@@ -457,12 +457,12 @@ KdmItem::addChildItem( KdmItem *item )
 	}
 
 	// signal bounce from child to parent
-	connect( item, SIGNAL(needUpdate( int, int, int, int )), SIGNAL(needUpdate( int, int, int, int )) );
-	connect( item, SIGNAL(activated( const QString & )), SIGNAL(activated( const QString & )) );
+	connect( item, TQT_SIGNAL(needUpdate( int, int, int, int )), TQT_SIGNAL(needUpdate( int, int, int, int )) );
+	connect( item, TQT_SIGNAL(activated( const TQString & )), TQT_SIGNAL(activated( const TQString & )) );
 }
 
 void
-KdmItem::parseAttribute( const QString &s, int &val, enum DataType &dType )
+KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 {
 	if (s.isEmpty())
 		return;
@@ -473,13 +473,13 @@ KdmItem::parseAttribute( const QString &s, int &val, enum DataType &dType )
 		val = 0;
 	} else if ((p = s.find( '%' )) >= 0) {	// percent value
 		dType = DTpercent;
-		QString sCopy = s;
+		TQString sCopy = s;
 		sCopy.remove( p, 1 );
 		sCopy.replace( ',', '.' );
 		val = (int)sCopy.toDouble();
 	} else {		// int value
 		dType = DTpixel;
-		QString sCopy = s;
+		TQString sCopy = s;
 		if (sCopy.at( 0 ) == '-') {
 			sCopy.remove( 0, 1 );
 			dType = DTnpixel;
@@ -490,7 +490,7 @@ KdmItem::parseAttribute( const QString &s, int &val, enum DataType &dType )
 }
 
 void
-KdmItem::parseFont( const QString &s, QFont &font )
+KdmItem::parseFont( const TQString &s, TQFont &font )
 {
 	int splitAt = s.findRev( ' ' );
 	if (splitAt < 1)
@@ -502,19 +502,19 @@ KdmItem::parseFont( const QString &s, QFont &font )
 }
 
 void
-KdmItem::parseColor( const QString &s, QColor &color )
+KdmItem::parseColor( const TQString &s, TQColor &color )
 {
 	if (s.at( 0 ) != '#')
 		return;
 	bool ok;
-	QString sCopy = s;
+	TQString sCopy = s;
 	int hexColor = sCopy.remove( 0, 1 ).toInt( &ok, 16 );
 	if (ok)
 		color.setRgb( hexColor );
 }
 
 void
-KdmItem::setBoxLayout( const QDomNode &node )
+KdmItem::setBoxLayout( const TQDomNode &node )
 {
 	if (!boxManager)
 		boxManager = new KdmLayoutBox( node );
@@ -522,7 +522,7 @@ KdmItem::setBoxLayout( const QDomNode &node )
 }
 
 void
-KdmItem::setFixedLayout( const QDomNode &node )
+KdmItem::setFixedLayout( const TQDomNode &node )
 {
 	if (!fixedManager)
 		fixedManager = new KdmLayoutFixed( node );

@@ -12,25 +12,25 @@
 
 #include <kstandarddirs.h>
 
-#include <qlabel.h>
-#include <qpixmap.h>
-#include <qwidget.h>
+#include <tqlabel.h>
+#include <tqpixmap.h>
+#include <tqwidget.h>
 
 #include "themeredmond.h"
 
 extern "C"
 {
-  ThemeEngineConfig *KsThemeConfig( QWidget *parent, KConfig *config )
+  ThemeEngineConfig *KsThemeConfig( TQWidget *parent, KConfig *config )
   {
     return new CfgRedmond( parent, config );
   }
 
-  QStringList KsThemeSupports()
+  TQStringList KsThemeSupports()
   {
     return ThemeRedmond::names();
   }
 
-  void* KsThemeInit( QWidget *parent, ObjKsTheme *theme )
+  void* KsThemeInit( TQWidget *parent, ObjKsTheme *theme )
   {
     return new ThemeRedmond( parent, theme );
   }

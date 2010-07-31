@@ -28,7 +28,7 @@
 class KOSPage : public KOSPageDlg  {
 	Q_OBJECT
 public:
-	KOSPage(QWidget *parent=0, const char *name=0);
+	KOSPage(TQWidget *parent=0, const char *name=0);
 	~KOSPage();
 	void save(bool currSettings=true);
 	void saveCheckState(bool currSettings);
@@ -36,7 +36,7 @@ public:
 	void writeUNIX();
 	void writeWindows();
 	void writeMacOS();
-	void writeKeyEntrys(QString keyfile);
+	void writeKeyEntrys(TQString keyfile);
 	void writeUserKeys();
 	void writeUserDefaults();
 	/** retrieve the user's local values */
@@ -50,7 +50,7 @@ public:
 signals: // Signals
 	/** emits either of: KDE, CDE, win or mac in save() depending
 	on the selection made by the user. */
-	void selectedOS(const QString&);
+	void selectedOS(const TQString&);
 private:
 	KConfig* cglobal;
 	KConfig* claunch;
@@ -66,7 +66,7 @@ private:
 		 b_DesktopUnderline, b_KonqUnderline, b_ChangeCursor, b_syncClipboards;
 	QString	s_TitlebarDCC, s_FocusPolicy, s_AltTabStyle, s_MMB,
 			s_TitlebarMMB, s_TitlebarRMB;
-	QMap<QString, QString> map_AppUserKeys, map_GlobalUserKeys;
+	TQMap<TQString, TQString> map_AppUserKeys, map_GlobalUserKeys;
 	// DEFAULT VALLUES SET BY USER (END)
 };
 #endif

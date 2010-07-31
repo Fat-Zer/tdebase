@@ -17,11 +17,11 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qdict.h>
-#include <qpixmap.h>
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qimage.h>
+#include <tqdict.h>
+#include <tqpixmap.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqimage.h>
 
 #include <kfileivi.h>
 #include <kfileitem.h>
@@ -43,8 +43,8 @@ KIVDirectoryOverlay::KIVDirectoryOverlay(KFileIVI* directory)
     {
         m_lister = new KDirLister;
         m_lister->setAutoErrorHandlingEnabled(false, 0);
-        connect(m_lister, SIGNAL(completed()), SLOT(slotCompleted()));
-        connect(m_lister, SIGNAL(newItems( const KFileItemList& )), SLOT(slotNewItems( const KFileItemList& )));
+        connect(m_lister, TQT_SIGNAL(completed()), TQT_SLOT(slotCompleted()));
+        connect(m_lister, TQT_SIGNAL(newItems( const KFileItemList& )), TQT_SLOT(slotNewItems( const KFileItemList& )));
         m_lister->setShowingDotFiles(false);
     }
     m_directory = directory;
@@ -60,7 +60,7 @@ KIVDirectoryOverlay::~KIVDirectoryOverlay()
 void KIVDirectoryOverlay::start()
 {
     if ( m_directory->item()->isReadable() ) {
-        m_popularIcons = new QDict<int>;
+        m_popularIcons = new TQDict<int>;
         m_popularIcons->setAutoDelete(true);
         m_lister->openURL(m_directory->item()->url());
     } else {
@@ -68,7 +68,7 @@ void KIVDirectoryOverlay::start()
     }
 }
 
-void KIVDirectoryOverlay::timerEvent(QTimerEvent *)
+void KIVDirectoryOverlay::timerEvent(TQTimerEvent *)
 {
     m_lister->stop();
 }
@@ -78,7 +78,7 @@ void KIVDirectoryOverlay::slotCompleted()
     if (!m_popularIcons) return;
 
     // Look through the histogram for the most popular mimetype
-    QDictIterator<int> currentIcon( (*m_popularIcons) );
+    TQDictIterator<int> currentIcon( (*m_popularIcons) );
     unsigned int best = 0;
     unsigned int total = 0;
     for ( ; currentIcon.current(); ++currentIcon ) {
@@ -120,7 +120,7 @@ void KIVDirectoryOverlay::slotNewItems( const KFileItemList& items )
     for ( ; (file = files.current()) != 0; ++files ) {
         if ( file -> isFile() ) {
 
-        QString iconName = file -> iconName();
+        TQString iconName = file -> iconName();
         if (!iconName) continue;
 
         int* iconCount = m_popularIcons -> find( file -> iconName() );

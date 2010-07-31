@@ -19,19 +19,19 @@
 #ifndef __menufile_h__
 #define __menufile_h__
 
-#include <qdom.h>
-#include <qstring.h>
+#include <tqdom.h>
+#include <tqstring.h>
 
 class MenuFile
 {
 public:
-   MenuFile(const QString &file);
+   MenuFile(const TQString &file);
    ~MenuFile();
    
    bool load();
    bool save();
    void create();
-   QString error() { return m_error; } // Returns the last error message
+   TQString error() { return m_error; } // Returns the last error message
 
    enum ActionType {
        ADD_ENTRY = 0,
@@ -44,14 +44,14 @@ public:
    struct ActionAtom
    {
       ActionType action;
-      QString arg1;
-      QString arg2;
+      TQString arg1;
+      TQString arg2;
    };
 
    /**
     * Create action atom and push it on the stack
     */
-   ActionAtom *pushAction(ActionType action, const QString &arg1, const QString &arg2);
+   ActionAtom *pushAction(ActionType action, const TQString &arg1, const TQString &arg2);
 
    /**
     * Pop @p atom from the stack.
@@ -76,20 +76,20 @@ public:
     */
    bool dirty();
    
-   void addEntry(const QString &menuName, const QString &menuId);
-   void removeEntry(const QString &menuName, const QString &menuId);
+   void addEntry(const TQString &menuName, const TQString &menuId);
+   void removeEntry(const TQString &menuName, const TQString &menuId);
    
-   void addMenu(const QString &menuName, const QString &menuFile);
-   void moveMenu(const QString &oldMenu, const QString &newMenu);
-   void removeMenu(const QString &menuName);
+   void addMenu(const TQString &menuName, const TQString &menuFile);
+   void moveMenu(const TQString &oldMenu, const TQString &newMenu);
+   void removeMenu(const TQString &menuName);
 
-   void setLayout(const QString &menuName, const QStringList &layout);
+   void setLayout(const TQString &menuName, const TQStringList &layout);
 
    /**
     * Returns a unique menu-name for a new menu under @p menuName 
     * inspired by @p newMenu and not part of @p excludeList
     */
-   QString uniqueMenuName(const QString &menuName, const QString &newMenu, const QStringList &excludeList);
+   TQString uniqueMenuName(const TQString &menuName, const TQString &newMenu, const TQStringList &excludeList);
 
 protected:
    /**
@@ -97,17 +97,17 @@ protected:
     * If @p create is true, the menu is created if it doesn't exist yet.
     * @return The menu dom-node of @p menuName
     */
-   QDomElement findMenu(QDomElement elem, const QString &menuName, bool create);
+   TQDomElement findMenu(TQDomElement elem, const TQString &menuName, bool create);
    
 private:
-   QString m_error;
-   QString m_fileName;
+   TQString m_error;
+   TQString m_fileName;
 
-   QDomDocument m_doc;
+   TQDomDocument m_doc;
    bool m_bDirty;
    
-   QPtrList<ActionAtom> m_actionList;
-   QStringList m_removedEntries;
+   TQPtrList<ActionAtom> m_actionList;
+   TQStringList m_removedEntries;
 };
 
 

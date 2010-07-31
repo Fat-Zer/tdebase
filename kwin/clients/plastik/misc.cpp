@@ -23,13 +23,13 @@
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
 
-#include <qcolor.h>
-#include <qimage.h>
-#include <qpainter.h>
+#include <tqcolor.h>
+#include <tqimage.h>
+#include <tqpainter.h>
 
 #include "misc.h"
 
-QColor hsvRelative(const QColor& baseColor, int relativeH, int relativeS, int relativeV)
+TQColor hsvRelative(const TQColor& baseColor, int relativeH, int relativeS, int relativeV)
 {
     int h, s, v;
     baseColor.hsv(&h, &s, &v);
@@ -45,12 +45,12 @@ QColor hsvRelative(const QColor& baseColor, int relativeH, int relativeS, int re
     if(v < 0) { v = 0; }
     else if(v > 255) { v = 255; }
 
-    QColor c;
+    TQColor c;
     c.setHsv( h, s, v );
     return c;
 }
 
-QColor alphaBlendColors(const QColor &bgColor, const QColor &fgColor, const int a)
+TQColor alphaBlendColors(const TQColor &bgColor, const TQColor &fgColor, const int a)
 {
 
     // normal button...
@@ -61,15 +61,15 @@ QColor alphaBlendColors(const QColor &bgColor, const QColor &fgColor, const int 
     if(alpha<0) alpha = 0;
     int inv_alpha = 255 - alpha;
 
-    QColor result  = QColor( qRgb(qRed(rgb_b)*inv_alpha/255 + qRed(rgb)*alpha/255,
+    TQColor result  = TQColor( qRgb(qRed(rgb_b)*inv_alpha/255 + qRed(rgb)*alpha/255,
                                   qGreen(rgb_b)*inv_alpha/255 + qGreen(rgb)*alpha/255,
                                   qBlue(rgb_b)*inv_alpha/255 + qBlue(rgb)*alpha/255) );
 
     return result;
 }
 
-QImage recolorImage(QImage *img, QColor color) {
-    QImage destImg(img->width(),img->height(),32);
+TQImage recolorImage(TQImage *img, TQColor color) {
+    TQImage destImg(img->width(),img->height(),32);
     destImg.setAlphaBuffer(true);
     for (int x = 0; x < img->width(); x++) {
         for (int y = 0; y < img->height(); y++) {

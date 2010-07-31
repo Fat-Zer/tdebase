@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 #include <kconfig.h>
 #include <kpanelmenu.h>
@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "extensionbutton.h"
 #include "extensionbutton.moc"
 
-ExtensionButton::ExtensionButton( const QString& desktopFile, QWidget* parent )
+ExtensionButton::ExtensionButton( const TQString& desktopFile, TQWidget* parent )
     : PanelPopupButton( parent, "ExtensionButton" )
     , info( 0 )
     , menu( 0 )
@@ -39,13 +39,13 @@ ExtensionButton::ExtensionButton( const QString& desktopFile, QWidget* parent )
     initialize( desktopFile );
 }
 
-ExtensionButton::ExtensionButton( const KConfigGroup& config, QWidget* parent )
+ExtensionButton::ExtensionButton( const KConfigGroup& config, TQWidget* parent )
     : PanelPopupButton( parent, "extensionbuttton" )
 {
     initialize( config.readPathEntry("DesktopFile") );
 }
 
-void ExtensionButton::initialize( const QString& desktopFile )
+void ExtensionButton::initialize( const TQString& desktopFile )
 {
     info = new MenuInfo(desktopFile);
     if (!info->isValid())
@@ -56,7 +56,7 @@ void ExtensionButton::initialize( const QString& desktopFile )
     menu = info->load(this);
     setPopup(menu);
 
-    QToolTip::add(this, info->comment());
+    TQToolTip::add(this, info->comment());
     setTitle(info->name());
     setIcon(info->icon());
 }

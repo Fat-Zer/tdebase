@@ -26,10 +26,10 @@
 
 #include <stdlib.h>
 
-#include <qdir.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
+#include <tqdir.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqcheckbox.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -42,8 +42,8 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 
-ShortcutsModule::ShortcutsModule( QWidget *parent, const char *name )
-: QWidget( parent, name )
+ShortcutsModule::ShortcutsModule( TQWidget *parent, const char *name )
+: TQWidget( parent, name )
 {
 	initGUI();
 }
@@ -91,7 +91,7 @@ void ShortcutsModule::defaults()
 	m_pkcApplication->allDefault();
 }
 
-QString ShortcutsModule::quickHelp() const
+TQString ShortcutsModule::quickHelp() const
 {
   return i18n("<h1>Key Bindings</h1> Using key bindings you can configure certain actions to be"
     " triggered when you press a key or a combination of keys, e.g. Ctrl+C is normally bound to"
@@ -104,7 +104,7 @@ QString ShortcutsModule::quickHelp() const
 
 void ShortcutsModule::initGUI()
 {
-	QString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
+	TQString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
 
 	kdDebug(125) << "A-----------" << endl;
 	KAccelActions* keys = &m_actionsGeneral;
@@ -128,57 +128,57 @@ void ShortcutsModule::initGUI()
 	kdDebug(125) << "E-----------" << endl;
 
 	kdDebug(125) << "F-----------" << endl;
-	QVBoxLayout* pVLayout = new QVBoxLayout( this, KDialog::marginHint() );
+	TQVBoxLayout* pVLayout = new TQVBoxLayout( this, KDialog::marginHint() );
 
 	pVLayout->addSpacing( KDialog::marginHint() );
 
 	// (o) [Current      ] <Remove>   ( ) New <Save>
 
-	QHBoxLayout *pHLayout = new QHBoxLayout( pVLayout, KDialog::spacingHint() );
-	QButtonGroup* pGroup = new QButtonGroup( this );
+	TQHBoxLayout *pHLayout = new TQHBoxLayout( pVLayout, KDialog::spacingHint() );
+	TQButtonGroup* pGroup = new TQButtonGroup( this );
 	pGroup->hide();
 
-	m_prbPre = new QRadioButton( "", this );
-	connect( m_prbPre, SIGNAL(clicked()), SLOT(slotSchemeCur()) );
+	m_prbPre = new TQRadioButton( "", this );
+	connect( m_prbPre, TQT_SIGNAL(clicked()), TQT_SLOT(slotSchemeCur()) );
 	pGroup->insert( m_prbPre );
 	pHLayout->addWidget( m_prbPre );
 
 	m_pcbSchemes = new KComboBox( this );
 	m_pcbSchemes->setMinimumWidth( 100 );
-	m_pcbSchemes->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed );
-	connect( m_pcbSchemes, SIGNAL(activated(int)), SLOT(slotSelectScheme(int)) );
+	m_pcbSchemes->setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Fixed );
+	connect( m_pcbSchemes, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSelectScheme(int)) );
 	pHLayout->addWidget( m_pcbSchemes );
 
 	pHLayout->addSpacing( KDialog::marginHint() );
 
-	m_pbtnRemove = new QPushButton( i18n("&Remove"), this );
+	m_pbtnRemove = new TQPushButton( i18n("&Remove"), this );
 	m_pbtnRemove->setEnabled( false );
-	connect( m_pbtnRemove, SIGNAL(clicked()), SLOT(slotRemoveScheme()) );
-	QWhatsThis::add( m_pbtnRemove, i18n("Click here to remove the selected key bindings scheme. You cannot"
+	connect( m_pbtnRemove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveScheme()) );
+	TQWhatsThis::add( m_pbtnRemove, i18n("Click here to remove the selected key bindings scheme. You cannot"
 		" remove the standard system-wide schemes 'Current scheme' and 'KDE default'.") );
 	pHLayout->addWidget( m_pbtnRemove );
 
 	pHLayout->addSpacing( KDialog::marginHint() * 3 );
 
-	m_prbNew = new QRadioButton( i18n("New scheme"), this );
+	m_prbNew = new TQRadioButton( i18n("New scheme"), this );
 	m_prbNew->setEnabled( false );
 	pGroup->insert( m_prbNew );
 	pHLayout->addWidget( m_prbNew );
 
-	m_pbtnSave = new QPushButton( i18n("&Save..."), this );
+	m_pbtnSave = new TQPushButton( i18n("&Save..."), this );
 	m_pbtnSave->setEnabled( false );
-	QWhatsThis::add( m_pbtnSave, i18n("Click here to add a new key bindings scheme. You will be prompted for a name.") );
-	connect( m_pbtnSave, SIGNAL(clicked()), SLOT(slotSaveSchemeAs()) );
+	TQWhatsThis::add( m_pbtnSave, i18n("Click here to add a new key bindings scheme. You will be prompted for a name.") );
+	connect( m_pbtnSave, TQT_SIGNAL(clicked()), TQT_SLOT(slotSaveSchemeAs()) );
 	pHLayout->addWidget( m_pbtnSave );
 
 	pHLayout->addStretch( 1 );
 
-	m_pTab = new QTabWidget( this );
+	m_pTab = new TQTabWidget( this );
 	m_pTab->setMargin( KDialog::marginHint() );
 	pVLayout->addWidget( m_pTab );
 
 	// See if ~/.kde3/env/win-key.sh exists
-	QFile f( kde_winkeys_env_dir + "win-key.sh" );
+	TQFile f( kde_winkeys_env_dir + "win-key.sh" );
 	if ( f.exists() == false ) {
 		// No, it does not, so Win is a modifier
 		m_bUseRmWinKeys = true;
@@ -192,24 +192,24 @@ void ShortcutsModule::initGUI()
 	m_pkcGeneral = new KKeyChooser( m_pListGeneral, this, KKeyChooser::Global, false );
 	m_pkcGeneral->resize (m_pkcGeneral->sizeHint() );
 	if (system("xmodmap 1> /dev/null 2> /dev/null") == 0) {
-		m_useRmWinKeys = new QCheckBox( i18n("Use Win key as modifier (uncheck to bind Win key to Menu)"), this );
+		m_useRmWinKeys = new TQCheckBox( i18n("Use Win key as modifier (uncheck to bind Win key to Menu)"), this );
 		m_useRmWinKeys->resize( m_useRmWinKeys->sizeHint() );
 		m_useRmWinKeys->setChecked( m_bUseRmWinKeys );
 		pVLayout->addWidget( m_useRmWinKeys, 1, 0 );
-		connect( m_useRmWinKeys, SIGNAL(clicked()), SLOT(slotUseRmWinKeysClicked()) );
+		connect( m_useRmWinKeys, TQT_SIGNAL(clicked()), TQT_SLOT(slotUseRmWinKeysClicked()) );
 	}
 	m_pTab->addTab( m_pkcGeneral, i18n("&Global Shortcuts") );
-	connect( m_pkcGeneral, SIGNAL(keyChange()), SLOT(slotKeyChange()) );
+	connect( m_pkcGeneral, TQT_SIGNAL(keyChange()), TQT_SLOT(slotKeyChange()) );
 
 	m_pListSequence = new KAccelShortcutList( m_actionsSequence, true );
 	m_pkcSequence = new KKeyChooser( m_pListSequence, this, KKeyChooser::Global, false );
 	m_pTab->addTab( m_pkcSequence, i18n("Shortcut Se&quences") );
-	connect( m_pkcSequence, SIGNAL(keyChange()), SLOT(slotKeyChange()) );
+	connect( m_pkcSequence, TQT_SIGNAL(keyChange()), TQT_SLOT(slotKeyChange()) );
 
 	m_pListApplication = new KStdAccel::ShortcutList;
 	m_pkcApplication = new KKeyChooser( m_pListApplication, this, KKeyChooser::Standard, false );
 	m_pTab->addTab( m_pkcApplication, i18n("App&lication Shortcuts") );
-	connect( m_pkcApplication, SIGNAL(keyChange()), SLOT(slotKeyChange()) );
+	connect( m_pkcApplication, TQT_SIGNAL(keyChange()), TQT_SLOT(slotKeyChange()) );
 
 	kdDebug(125) << "G-----------" << endl;
 	readSchemeNames();
@@ -225,7 +225,7 @@ void ShortcutsModule::createActionsGeneral()
 	KAccelActions& actions = m_actionsGeneral;
 
 	for( uint i = 0; i < actions.count(); i++ ) {
-		QString sConfigKey = actions[i].name();
+		TQString sConfigKey = actions[i].name();
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
 		int iLastSpace = sConfigKey.findRev( ' ' );
 		bool bIsNum = false;
@@ -236,7 +236,7 @@ void ShortcutsModule::createActionsGeneral()
 		//	<< " bIsNum: " << bIsNum << endl;
 		if( bIsNum && !sConfigKey.contains( ':' ) ) {
 			actions[i].setConfigurable( false );
-			actions[i].setName( QString::null );
+			actions[i].setName( TQString::null );
 		}
 	}
 }
@@ -246,7 +246,7 @@ void ShortcutsModule::createActionsSequence()
 	KAccelActions& actions = m_actionsSequence;
 
 	for( uint i = 0; i < actions.count(); i++ ) {
-		QString sConfigKey = actions[i].name();
+		TQString sConfigKey = actions[i].name();
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
 		int iLastSpace = sConfigKey.findRev( ' ' );
 		bool bIsNum = false;
@@ -257,14 +257,14 @@ void ShortcutsModule::createActionsSequence()
 		//	<< " bIsNum: " << bIsNum << endl;
 		if( !bIsNum && !sConfigKey.contains( ':' ) ) {
 			actions[i].setConfigurable( false );
-			actions[i].setName( QString::null );
+			actions[i].setName( TQString::null );
 		}
 	}
 }
 
 void ShortcutsModule::readSchemeNames()
 {
-	QStringList schemes = KGlobal::dirs()->findAllResources("data", "kcmkeys/*.kksrc");
+	TQStringList schemes = KGlobal::dirs()->findAllResources("data", "kcmkeys/*.kksrc");
 
 	m_pcbSchemes->clear();
 	m_rgsSchemeFiles.clear();
@@ -274,7 +274,7 @@ void ShortcutsModule::readSchemeNames()
 	m_rgsSchemeFiles.append( "cur" );
 
 	// This for system files
-	for ( QStringList::ConstIterator it = schemes.begin(); it != schemes.end(); ++it) {
+	for ( TQStringList::ConstIterator it = schemes.begin(); it != schemes.end(); ++it) {
 	// KPersonalizer relies on .kksrc files containing all the keyboard shortcut
 	//  schemes for various setups.  It also requires the KDE defaults to be in
 	//  a .kksrc file.  The KDE defaults shouldn't be listed here.
@@ -283,14 +283,14 @@ void ShortcutsModule::readSchemeNames()
 
 		KSimpleConfig config( *it, true );
 		config.setGroup( "Settings" );
-		QString str = config.readEntry( "Name" );
+		TQString str = config.readEntry( "Name" );
 
 		m_pcbSchemes->insertItem( str );
 		m_rgsSchemeFiles.append( *it );
 	}
 }
 
-void ShortcutsModule::resizeEvent( QResizeEvent * )
+void ShortcutsModule::resizeEvent( TQResizeEvent * )
 {
 	//m_pTab->setGeometry(0,0,width(),height());
 }
@@ -315,7 +315,7 @@ void ShortcutsModule::slotSelectScheme( int )
 {
 	i18n("Your current changes will be lost if you load another scheme before saving this one.");
 	kdDebug(125) << "ShortcutsModule::slotSelectScheme( " << m_pcbSchemes->currentItem() << " )" << endl;
-	QString sFilename = m_rgsSchemeFiles[ m_pcbSchemes->currentItem() ];
+	TQString sFilename = m_rgsSchemeFiles[ m_pcbSchemes->currentItem() ];
 
 	if( sFilename == "cur" ) {
 		// TODO: remove nulls params
@@ -353,7 +353,7 @@ void ShortcutsModule::slotSelectScheme( int )
 
 void ShortcutsModule::slotSaveSchemeAs()
 {
-	QString sName, sFile;
+	TQString sName, sFile;
 	bool bNameValid, ok;
 	int iScheme = -1;
 
@@ -382,7 +382,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 				sFile.remove( ind, 1 );
 
 				// Make the next letter upper case
-				QString s = sFile.mid( ind, 1 );
+				TQString s = sFile.mid( ind, 1 );
 				s = s.upper();
 				sFile.replace( ind, 1, s );
 			}
@@ -404,11 +404,11 @@ void ShortcutsModule::slotSaveSchemeAs()
 			return;
 	} while( !bNameValid );
 
-	disconnect( m_pcbSchemes, SIGNAL(activated(int)), this, SLOT(slotSelectScheme(int)) );
+	disconnect( m_pcbSchemes, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotSelectScheme(int)) );
 
-	QString kksPath = KGlobal::dirs()->saveLocation( "data", "kcmkeys/" );
+	TQString kksPath = KGlobal::dirs()->saveLocation( "data", "kcmkeys/" );
 
-	QDir dir( kksPath );
+	TQDir dir( kksPath );
 	if( !dir.exists() && !dir.mkdir( kksPath ) ) {
 		qWarning("KShortcutsModule: Could not make directory to store user info.");
 		return;
@@ -434,13 +434,13 @@ void ShortcutsModule::slotSaveSchemeAs()
 
 	saveScheme();
 
-	connect( m_pcbSchemes, SIGNAL(activated(int)), SLOT(slotSelectScheme(int)) );
+	connect( m_pcbSchemes, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSelectScheme(int)) );
 	slotSelectScheme();
 }
 
 void ShortcutsModule::saveScheme()
 {
-	QString sFilename = m_rgsSchemeFiles[ m_pcbSchemes->currentItem() ];
+	TQString sFilename = m_rgsSchemeFiles[ m_pcbSchemes->currentItem() ];
 	KSimpleConfig config( sFilename );
 
 	m_pkcGeneral->commitChanges();
@@ -458,16 +458,16 @@ void ShortcutsModule::slotRemoveScheme()
 
 void ShortcutsModule::slotUseRmWinKeysClicked()
 {
-	QString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
+	TQString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
 
 	// See if ~/.kde3/env/win-key.sh exists
-	QFile f( kde_winkeys_env_dir + "win-key.sh" );
+	TQFile f( kde_winkeys_env_dir + "win-key.sh" );
 	if ( f.exists() == false ) {
 		// No, it does not, so Win is currently a modifier
 		if (m_useRmWinKeys->isChecked() == false) {
 			// Create the file
 			if ( f.open( IO_WriteOnly ) ) {
-				QTextStream stream( &f );
+				TQTextStream stream( &f );
 				stream << "xmodmap -e 'keycode 133=Menu'" << "\n";
 				stream << "xmodmap -e 'keycode 134=Menu'" << "\n";
 				f.close();

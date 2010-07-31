@@ -28,11 +28,11 @@
 
 */
 
-#include <qheader.h>
-#include <qpainter.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qstyle.h>
+#include <tqheader.h>
+#include <tqpainter.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqstyle.h>
 
 #include <kdebug.h>
 
@@ -47,11 +47,11 @@
 
 
 #define BUTTONDRAGMIMETYPE "application/x-kde_kwindecoration_buttons"
-ButtonDrag::ButtonDrag( Button btn, QWidget* parent, const char* name)
-	: QStoredDrag( BUTTONDRAGMIMETYPE, parent, name)
+ButtonDrag::ButtonDrag( Button btn, TQWidget* parent, const char* name)
+	: TQStoredDrag( BUTTONDRAGMIMETYPE, parent, name)
 {
-	QByteArray data;
-	QDataStream stream(data, IO_WriteOnly);
+	TQByteArray data;
+	TQDataStream stream(data, IO_WriteOnly);
 	stream << btn.name;
 	stream << btn.icon;
 	stream << btn.type.unicode();
@@ -61,23 +61,23 @@ ButtonDrag::ButtonDrag( Button btn, QWidget* parent, const char* name)
 }
 
 
-bool ButtonDrag::canDecode( QDropEvent* e )
+bool ButtonDrag::canDecode( TQDropEvent* e )
 {
 	return e->provides( BUTTONDRAGMIMETYPE );
 }
 
-bool ButtonDrag::decode( QDropEvent* e, Button& btn )
+bool ButtonDrag::decode( TQDropEvent* e, Button& btn )
 {
-	QByteArray data = e->data( BUTTONDRAGMIMETYPE );
+	TQByteArray data = e->data( BUTTONDRAGMIMETYPE );
 	if ( data.size() )
 	{
 		e->accept();
-		QDataStream stream(data, IO_ReadOnly);
+		TQDataStream stream(data, IO_ReadOnly);
 		stream >> btn.name;
 		stream >> btn.icon;
 		ushort type;
 		stream >> type;
-		btn.type = QChar(type);
+		btn.type = TQChar(type);
 		int duplicate;
 		stream >> duplicate;
 		btn.duplicate = duplicate;
@@ -94,7 +94,7 @@ Button::Button()
 {
 }
 
-Button::Button(const QString& n, const QBitmap& i, QChar t, bool d, bool s)
+Button::Button(const TQString& n, const TQBitmap& i, TQChar t, bool d, bool s)
 	: name(n),
 	  icon(i),
 	  type(t),
@@ -108,11 +108,11 @@ Button::~Button()
 }
 
 // helper function to deal with the Button's bitmaps more easily...
-QPixmap bitmapPixmap(const QBitmap& bm, const QColor& color)
+TQPixmap bitmapPixmap(const TQBitmap& bm, const TQColor& color)
 {
-	QPixmap pm(bm.size() );
+	TQPixmap pm(bm.size() );
 	pm.setMask(bm);
-	QPainter p(&pm);
+	TQPainter p(&pm);
 	p.setPen(color);
 	p.drawPixmap(0,0,bm);
 	p.end();
@@ -120,12 +120,12 @@ QPixmap bitmapPixmap(const QBitmap& bm, const QColor& color)
 }
 
 
-ButtonSource::ButtonSource(QWidget *parent, const char* name)
+ButtonSource::ButtonSource(TQWidget *parent, const char* name)
 	: KListView(parent, name)
 {
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
 
-	setResizeMode(QListView::AllColumns);
+	setResizeMode(TQListView::AllColumns);
 	setDragEnabled(true);
 	setAcceptDrops(true);
 	setDropVisualizer(false);
@@ -140,20 +140,20 @@ ButtonSource::~ButtonSource()
 {
 }
 
-QSize ButtonSource::sizeHint() const
+TQSize ButtonSource::sizeHint() const
 {
-	// make the sizeHint height a bit smaller than the one of QListView...
+	// make the sizeHint height a bit smaller than the one of TQListView...
 
 	if ( cachedSizeHint().isValid() )
 		return cachedSizeHint();
 
 	constPolish();
 
-	QSize s( header()->sizeHint() );
+	TQSize s( header()->sizeHint() );
 
 	if ( verticalScrollBar()->isVisible() )
-		s.setWidth( s.width() + style().pixelMetric(QStyle::PM_ScrollBarExtent) );
-	s += QSize(frameWidth()*2,frameWidth()*2);
+		s.setWidth( s.width() + style().pixelMetric(TQStyle::PM_ScrollBarExtent) );
+	s += TQSize(frameWidth()*2,frameWidth()*2);
 
 	// size hint: 4 lines of text...
 	s.setHeight( s.height() + fontMetrics().lineSpacing()*3 );
@@ -165,7 +165,7 @@ QSize ButtonSource::sizeHint() const
 
 void ButtonSource::hideAllButtons()
 {
-	QListViewItemIterator it(this);
+	TQListViewItemIterator it(this);
 	while (it.current() ) {
 		it.current()->setVisible(false);
 		++it;
@@ -174,16 +174,16 @@ void ButtonSource::hideAllButtons()
 
 void ButtonSource::showAllButtons()
 {
-	QListViewItemIterator it(this);
+	TQListViewItemIterator it(this);
 	while (it.current() ) {
 		it.current()->setVisible(true);
 		++it;
 	}
 }
 
-void ButtonSource::showButton( QChar btn )
+void ButtonSource::showButton( TQChar btn )
 {
-	QListViewItemIterator it(this);
+	TQListViewItemIterator it(this);
 	while (it.current() ) {
 		ButtonSourceItem *item = dynamic_cast<ButtonSourceItem*>(it.current() );
 		if (item && item->button().type == btn) {
@@ -194,9 +194,9 @@ void ButtonSource::showButton( QChar btn )
 	}
 }
 
-void ButtonSource::hideButton( QChar btn )
+void ButtonSource::hideButton( TQChar btn )
 {
-	QListViewItemIterator it(this);
+	TQListViewItemIterator it(this);
 	while (it.current() ) {
 		ButtonSourceItem *item = dynamic_cast<ButtonSourceItem*>(it.current() );
 		if (item && item->button().type == btn && !item->button().duplicate) {
@@ -207,12 +207,12 @@ void ButtonSource::hideButton( QChar btn )
 	}
 }
 
-bool ButtonSource::acceptDrag(QDropEvent* e) const
+bool ButtonSource::acceptDrag(TQDropEvent* e) const
 {
 	return acceptDrops() && ButtonDrag::canDecode(e);
 }
 
-QDragObject *ButtonSource::dragObject()
+TQDragObject *ButtonSource::dragObject()
 {
 	ButtonSourceItem *i = dynamic_cast<ButtonSourceItem*>(selectedItem() );
 
@@ -251,20 +251,20 @@ int ButtonDropSiteItem::height()
 	return 20;
 }
 
-void ButtonDropSiteItem::draw(QPainter *p, const QColorGroup& cg, QRect r)
+void ButtonDropSiteItem::draw(TQPainter *p, const TQColorGroup& cg, TQRect r)
 {
 // 	p->fillRect(r, cg.base() );
 	if (m_button.supported)
 		p->setPen(cg.foreground() );
 	else
 		p->setPen(cg.mid() );
-	QBitmap &i = m_button.icon;
+	TQBitmap &i = m_button.icon;
 	p->drawPixmap(r.left()+(r.width()-i.width())/2, r.top()+(r.height()-i.height())/2, i);
 }
 
 
-ButtonDropSite::ButtonDropSite( QWidget* parent, const char* name )
-	: QFrame( parent, name ),
+ButtonDropSite::ButtonDropSite( TQWidget* parent, const char* name )
+	: TQFrame( parent, name ),
 	  m_selected(0)
 {
 	setAcceptDrops( TRUE );
@@ -303,14 +303,14 @@ void ButtonDropSite::clearRight()
 	}
 }
 
-void ButtonDropSite::dragMoveEvent( QDragMoveEvent* e )
+void ButtonDropSite::dragMoveEvent( TQDragMoveEvent* e )
 {
-	QPoint p = e->pos();
+	TQPoint p = e->pos();
 	if (leftDropArea().contains(p) || rightDropArea().contains(p) || buttonAt(p) ) {
 		e->accept();
 
 		// 2 pixel wide drop visualizer...
-		QRect r = contentsRect();
+		TQRect r = contentsRect();
 		int x = -1;
 		if (leftDropArea().contains(p) ) {
 			x = leftDropArea().left();
@@ -327,7 +327,7 @@ void ButtonDropSite::dragMoveEvent( QDragMoveEvent* e )
 			}
 		}
 		if (x != -1) {
-			QRect tmpRect(x, r.y(), 2, r.height() );
+			TQRect tmpRect(x, r.y(), 2, r.height() );
 			if (tmpRect != m_oldDropVisualizer) {
 				cleanDropVisualizer();
 				m_oldDropVisualizer = tmpRect;
@@ -346,28 +346,28 @@ void ButtonDropSite::cleanDropVisualizer()
 {
 	if (m_oldDropVisualizer.isValid())
 	{
-		QRect rect = m_oldDropVisualizer;
-		m_oldDropVisualizer = QRect(); // rect is invalid
+		TQRect rect = m_oldDropVisualizer;
+		m_oldDropVisualizer = TQRect(); // rect is invalid
 		update(rect);
 	}
 }
 
-void ButtonDropSite::dragEnterEvent( QDragEnterEvent* e )
+void ButtonDropSite::dragEnterEvent( TQDragEnterEvent* e )
 {
 	if ( ButtonDrag::canDecode( e ) )
 		e->accept();
 }
 
-void ButtonDropSite::dragLeaveEvent( QDragLeaveEvent* /* e */ )
+void ButtonDropSite::dragLeaveEvent( TQDragLeaveEvent* /* e */ )
 {
 	cleanDropVisualizer();
 }
 
-void ButtonDropSite::dropEvent( QDropEvent* e )
+void ButtonDropSite::dropEvent( TQDropEvent* e )
 {
 	cleanDropVisualizer();
 
-	QPoint p = e->pos();
+	TQPoint p = e->pos();
 
 	// collect information where to insert the dropped button
 	ButtonList *buttonList = 0;
@@ -393,7 +393,7 @@ void ButtonDropSite::dropEvent( QDropEvent* e )
 
 		// got the list and the aboveItem position. now determine if the item should be inserted
 		// before aboveItem or after aboveItem.
-		QRect aboveItemRect = aboveItem->rect;
+		TQRect aboveItemRect = aboveItem->rect;
 		if (!aboveItemRect.isValid() )
 			return;
 
@@ -463,25 +463,25 @@ bool ButtonDropSite::getItemIterator(ButtonDropSiteItem *item, ButtonList* &list
 	return true;
 }
 
-QRect ButtonDropSite::leftDropArea()
+TQRect ButtonDropSite::leftDropArea()
 {
 	// return a 10 pixel drop area...
-	QRect r = contentsRect();
+	TQRect r = contentsRect();
 
 	int leftButtonsWidth = calcButtonListWidth(buttonsLeft);
-	return QRect(r.left()+leftButtonsWidth, r.top(), 10, r.height() );
+	return TQRect(r.left()+leftButtonsWidth, r.top(), 10, r.height() );
 }
 
-QRect ButtonDropSite::rightDropArea()
+TQRect ButtonDropSite::rightDropArea()
 {
 	// return a 10 pixel drop area...
-	QRect r = contentsRect();
+	TQRect r = contentsRect();
 
 	int rightButtonsWidth = calcButtonListWidth(buttonsRight);
-	return QRect(r.right()-rightButtonsWidth-10, r.top(), 10, r.height() );
+	return TQRect(r.right()-rightButtonsWidth-10, r.top(), 10, r.height() );
 }
 
-void ButtonDropSite::mousePressEvent( QMouseEvent* e )
+void ButtonDropSite::mousePressEvent( TQMouseEvent* e )
 {
 	// TODO: only start the real drag after some drag distance
 	m_selected = buttonAt(e->pos() );
@@ -492,20 +492,20 @@ void ButtonDropSite::mousePressEvent( QMouseEvent* e )
 	}
 }
 
-void ButtonDropSite::resizeEvent(QResizeEvent*)
+void ButtonDropSite::resizeEvent(TQResizeEvent*)
 {
 	recalcItemGeometry();
 }
 
 void ButtonDropSite::recalcItemGeometry()
 {
-	QRect r = contentsRect();
+	TQRect r = contentsRect();
 
 	// update the geometry of the items in the left button list
 	int offset = r.left();
 	for (ButtonList::const_iterator it = buttonsLeft.begin(); it != buttonsLeft.end(); ++it) {
 		int w = (*it)->width();
-		(*it)->rect = QRect(offset, r.top(), w, (*it)->height() );
+		(*it)->rect = TQRect(offset, r.top(), w, (*it)->height() );
 		offset += w;
 	}
 
@@ -513,12 +513,12 @@ void ButtonDropSite::recalcItemGeometry()
 	offset = r.right() - calcButtonListWidth(buttonsRight);
 	for (ButtonList::const_iterator it = buttonsRight.begin(); it != buttonsRight.end(); ++it) {
 		int w = (*it)->width();
-		(*it)->rect = QRect(offset, r.top(), w, (*it)->height() );
+		(*it)->rect = TQRect(offset, r.top(), w, (*it)->height() );
 		offset += w;
 	}
 }
 
-ButtonDropSiteItem *ButtonDropSite::buttonAt(QPoint p) {
+ButtonDropSiteItem *ButtonDropSite::buttonAt(TQPoint p) {
 	// try to find the item in the left button list
 	for (ButtonList::const_iterator it = buttonsLeft.begin(); it != buttonsLeft.end(); ++it) {
 		if ( (*it)->rect.contains(p) ) {
@@ -578,10 +578,10 @@ bool ButtonDropSite::removeSelectedButton()
 	return succ;
 }
 
-void ButtonDropSite::drawButtonList(QPainter *p, const ButtonList& btns, int offset)
+void ButtonDropSite::drawButtonList(TQPainter *p, const ButtonList& btns, int offset)
 {
 	for (ButtonList::const_iterator it = btns.begin(); it != btns.end(); ++it) {
-		QRect itemRect = (*it)->rect;
+		TQRect itemRect = (*it)->rect;
 		if (itemRect.isValid() ) {
 			(*it)->draw(p, colorGroup(), itemRect);
 		}
@@ -589,13 +589,13 @@ void ButtonDropSite::drawButtonList(QPainter *p, const ButtonList& btns, int off
 	}
 }
 
-void ButtonDropSite::drawContents( QPainter* p )
+void ButtonDropSite::drawContents( TQPainter* p )
 {
 	int leftoffset = calcButtonListWidth( buttonsLeft );
 	int rightoffset = calcButtonListWidth( buttonsRight );
 	int offset = 3;
 
-	QRect r = contentsRect();
+	TQRect r = contentsRect();
 
 	// Shrink by 1
 	r.moveBy(1 + leftoffset, 1);
@@ -604,10 +604,10 @@ void ButtonDropSite::drawContents( QPainter* p )
 
 	drawButtonList( p, buttonsLeft, offset );
 
-	QColor c1( 0x0A, 0x5F, 0x89 );		// KDE 2 titlebar default colour
+	TQColor c1( 0x0A, 0x5F, 0x89 );		// KDE 2 titlebar default colour
 	p->fillRect( r, c1 );
 	p->setPen( Qt::white );
-	p->setFont( QFont( KGlobalSettings::generalFont().family(), 12, QFont::Bold) );
+	p->setFont( TQFont( KGlobalSettings::generalFont().family(), 12, TQFont::Bold) );
 	p->drawText( r, AlignLeft | AlignVCenter, i18n("KDE") );
 
 	offset = geometry().width() - 3 - rightoffset;
@@ -619,8 +619,8 @@ void ButtonDropSite::drawContents( QPainter* p )
 	}
 }
 
-ButtonSourceItem::ButtonSourceItem(QListView * parent, const Button& btn)
-	: QListViewItem(parent),
+ButtonSourceItem::ButtonSourceItem(TQListView * parent, const Button& btn)
+	: TQListViewItem(parent),
 	  m_button(btn),
 	  m_dirty(true)
 {
@@ -631,7 +631,7 @@ ButtonSourceItem::~ButtonSourceItem()
 {
 }
 
-void ButtonSourceItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int align)
+void ButtonSourceItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int align)
 {
 	// we need the color group cg, so to the work here, not in setButton...
 	if (m_dirty) {
@@ -644,12 +644,12 @@ void ButtonSourceItem::paintCell(QPainter *p, const QColorGroup &cg, int column,
 	}
 
 	if (m_button.supported) {
-		QListViewItem::paintCell(p,cg,column,width,align);
+		TQListViewItem::paintCell(p,cg,column,width,align);
 	} else {
 		// grey out unsupported buttons
-		QColorGroup cg2 = cg;
-		cg2.setColor(QColorGroup::Text, cg.mid() );
-		QListViewItem::paintCell(p,cg2,column,width,align);
+		TQColorGroup cg2 = cg;
+		cg2.setColor(TQColorGroup::Text, cg.mid() );
+		TQListViewItem::paintCell(p,cg2,column,width,align);
 	}
 }
 
@@ -670,16 +670,16 @@ Button ButtonSourceItem::button() const
 }
 
 
-ButtonPositionWidget::ButtonPositionWidget(QWidget *parent, const char* name)
-    : QWidget(parent,name),
+ButtonPositionWidget::ButtonPositionWidget(TQWidget *parent, const char* name)
+    : TQWidget(parent,name),
       m_factory(0)
 {
-	QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint() );
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+	TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+	setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
 
-	QLabel* label = new QLabel( this );
+	TQLabel* label = new TQLabel( this );
 	m_dropSite = new ButtonDropSite( this );
-	label->setAlignment( int( QLabel::WordBreak ) );
+	label->setAlignment( int( TQLabel::WordBreak ) );
 	label->setText( i18n( "To add or remove titlebar buttons, simply <i>drag</i> items "
 		"between the available item list and the titlebar preview. Similarly, "
 		"drag items within the titlebar preview to re-position them.") );
@@ -689,11 +689,11 @@ ButtonPositionWidget::ButtonPositionWidget(QWidget *parent, const char* name)
 	layout->addWidget(m_dropSite);
 	layout->addWidget(m_buttonSource);
 
-	connect( m_dropSite, SIGNAL(buttonAdded(QChar)), m_buttonSource, SLOT(hideButton(QChar)) );
-	connect( m_dropSite, SIGNAL(buttonRemoved(QChar)), m_buttonSource, SLOT(showButton(QChar)) );
-	connect( m_buttonSource, SIGNAL(dropped(QDropEvent*, QListViewItem*)), m_dropSite, SLOT(removeSelectedButton()) );
+	connect( m_dropSite, TQT_SIGNAL(buttonAdded(TQChar)), m_buttonSource, TQT_SLOT(hideButton(TQChar)) );
+	connect( m_dropSite, TQT_SIGNAL(buttonRemoved(TQChar)), m_buttonSource, TQT_SLOT(showButton(TQChar)) );
+	connect( m_buttonSource, TQT_SIGNAL(dropped(TQDropEvent*, TQListViewItem*)), m_dropSite, TQT_SLOT(removeSelectedButton()) );
 
-	connect( m_dropSite, SIGNAL(changed()), SIGNAL(changed()) );
+	connect( m_dropSite, TQT_SIGNAL(changed()), TQT_SIGNAL(changed()) );
 
 	// insert all possible buttons into the source (backwards to keep the preferred order...)
 	bool dummy;
@@ -723,7 +723,7 @@ void ButtonPositionWidget::setDecorationFactory(KDecorationFactory *factory)
 
 	// get the list of supported buttons
 	if (m_factory->supports(KDecorationDefines::AbilityAnnounceButtons) ) {
-		QString supportedButtons;
+		TQString supportedButtons;
 
 		if (m_factory->supports(KDecorationDefines::AbilityButtonMenu) )
 			supportedButtons.append('M');
@@ -756,7 +756,7 @@ void ButtonPositionWidget::setDecorationFactory(KDecorationFactory *factory)
 
 	// update the button lists...
 	// 1. set status on the source items...
-	QListViewItemIterator it(m_buttonSource);
+	TQListViewItemIterator it(m_buttonSource);
 	while (it.current() ) {
 		ButtonSourceItem *i = dynamic_cast<ButtonSourceItem*>(it.current() );
 		if (i) {
@@ -771,51 +771,51 @@ void ButtonPositionWidget::setDecorationFactory(KDecorationFactory *factory)
 	setButtonsRight(buttonsRight() );
 }
 
-Button ButtonPositionWidget::getButton(QChar type, bool& success) {
+Button ButtonPositionWidget::getButton(TQChar type, bool& success) {
 	success = true;
 
 	if (type == 'R') {
-		QBitmap bmp(resize_width, resize_height, resize_bits, true);
+		TQBitmap bmp(resize_width, resize_height, resize_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Resize"), bmp, 'R', false, m_supportedButtons.contains('R') );
 	} else if (type == 'L') {
-		QBitmap bmp(shade_width, shade_height, shade_bits, true);
+		TQBitmap bmp(shade_width, shade_height, shade_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Shade"), bmp, 'L', false, m_supportedButtons.contains('L') );
 	} else if (type == 'B') {
-		QBitmap bmp(keepbelowothers_width, keepbelowothers_height, keepbelowothers_bits, true);
+		TQBitmap bmp(keepbelowothers_width, keepbelowothers_height, keepbelowothers_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Keep Below Others"), bmp, 'B', false, m_supportedButtons.contains('B') );
 	} else if (type == 'F') {
-		QBitmap bmp(keepaboveothers_width, keepaboveothers_height, keepaboveothers_bits, true);
+		TQBitmap bmp(keepaboveothers_width, keepaboveothers_height, keepaboveothers_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Keep Above Others"), bmp, 'F', false, m_supportedButtons.contains('F') );
 	} else if (type == 'X') {
-		QBitmap bmp(close_width, close_height, close_bits, true);
+		TQBitmap bmp(close_width, close_height, close_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Close"), bmp, 'X', false,  m_supportedButtons.contains('X') );
 	} else if (type == 'A') {
-		QBitmap bmp(maximize_width, maximize_height, maximize_bits, true);
+		TQBitmap bmp(maximize_width, maximize_height, maximize_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Maximize"), bmp, 'A', false, m_supportedButtons.contains('A') );
 	} else if (type == 'I') {
-		QBitmap bmp(minimize_width, minimize_height, minimize_bits, true);
+		TQBitmap bmp(minimize_width, minimize_height, minimize_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Minimize"), bmp, 'I', false, m_supportedButtons.contains('I') );
 	} else if (type == 'H') {
-		QBitmap bmp(help_width, help_height, help_bits, true);
+		TQBitmap bmp(help_width, help_height, help_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Help"), bmp, 'H', false, m_supportedButtons.contains('H') );
 	} else if (type == 'S') {
-		QBitmap bmp(onalldesktops_width, onalldesktops_height, onalldesktops_bits, true);
+		TQBitmap bmp(onalldesktops_width, onalldesktops_height, onalldesktops_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("On All Desktops"), bmp, 'S', false, m_supportedButtons.contains('S') );
 	} else if (type == 'M') {
-		QBitmap bmp(menu_width, menu_height, menu_bits, true);
+		TQBitmap bmp(menu_width, menu_height, menu_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("Menu"), bmp, 'M', false, m_supportedButtons.contains('M') );
 	} else if (type == '_') {
-		QBitmap bmp(spacer_width, spacer_height, spacer_bits, true);
+		TQBitmap bmp(spacer_width, spacer_height, spacer_bits, true);
 		bmp.setMask(bmp);
 		return Button(i18n("--- spacer ---"), bmp, '_', true, m_supportedButtons.contains('_') );
 	} else {
@@ -824,27 +824,27 @@ Button ButtonPositionWidget::getButton(QChar type, bool& success) {
 	}
 }
 
-QString ButtonPositionWidget::buttonsLeft() const
+TQString ButtonPositionWidget::buttonsLeft() const
 {
 	ButtonList btns = m_dropSite->buttonsLeft;
-	QString btnString = "";
+	TQString btnString = "";
 	for (ButtonList::const_iterator it = btns.begin(); it != btns.end(); ++it) {
 		btnString.append( (*it)->button().type );
 	}
 	return btnString;
 }
 
-QString ButtonPositionWidget::buttonsRight() const
+TQString ButtonPositionWidget::buttonsRight() const
 {
 	ButtonList btns = m_dropSite->buttonsRight;
-	QString btnString = "";
+	TQString btnString = "";
 	for (ButtonList::const_iterator it = btns.begin(); it != btns.end(); ++it) {
 		btnString.append( (*it)->button().type );
 	}
 	return btnString;
 }
 
-void ButtonPositionWidget::setButtonsLeft(const QString &buttons)
+void ButtonPositionWidget::setButtonsLeft(const TQString &buttons)
 {
 	// to keep the button lists consistent, first remove all left buttons, then add buttons again...
 	m_dropSite->clearLeft();
@@ -861,7 +861,7 @@ void ButtonPositionWidget::setButtonsLeft(const QString &buttons)
 	m_dropSite->update();
 }
 	
-void ButtonPositionWidget::setButtonsRight(const QString &buttons)
+void ButtonPositionWidget::setButtonsRight(const TQString &buttons)
 {
 	// to keep the button lists consistent, first remove all left buttons, then add buttons again...
 	m_dropSite->clearRight();

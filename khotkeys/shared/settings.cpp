@@ -60,7 +60,7 @@ bool Settings::read_settings( KConfig& cfg_P, bool include_disabled_P, ImportTyp
         already_imported = cfg_P.readListEntry( "AlreadyImported" );
     else
         {
-        QString import_id = cfg_P.readEntry( "ImportId" );
+        TQString import_id = cfg_P.readEntry( "ImportId" );
         if( !import_id.isEmpty())
             {
             if( already_imported.contains( import_id ))
@@ -122,8 +122,8 @@ void Settings::write_settings()
     {
     KConfig cfg( KHOTKEYS_CONFIG_FILE, false );
 // CHECKME    smazat stare sekce ?
-    QStringList groups = cfg.groupList();
-    for( QStringList::ConstIterator it = groups.begin();
+    TQStringList groups = cfg.groupList();
+    for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();
          ++it )
         cfg.deleteGroup( *it );
@@ -157,7 +157,7 @@ void Settings::write_settings()
 int Settings::write_actions_recursively_v2( KConfig& cfg_P, Action_data_group* parent_P, bool enabled_P )
     {
     int enabled_cnt = 0;
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int cnt = 0;
     for( Action_data_group::Iterator it = parent_P->first_child();
          it;
@@ -166,7 +166,7 @@ int Settings::write_actions_recursively_v2( KConfig& cfg_P, Action_data_group* p
         ++cnt;
         if( enabled_P && (*it)->enabled( true ))
             ++enabled_cnt;
-        cfg_P.setGroup( save_cfg_group + "_" + QString::number( cnt ));
+        cfg_P.setGroup( save_cfg_group + "_" + TQString::number( cnt ));
         ( *it )->cfg_write( cfg_P );
         Action_data_group* grp = dynamic_cast< Action_data_group* >( *it );
         if( grp != NULL )
@@ -186,13 +186,13 @@ void Settings::read_settings_v2( KConfig& cfg_P, bool include_disabled_P  )
 void Settings::read_actions_recursively_v2( KConfig& cfg_P, Action_data_group* parent_P,
     bool include_disabled_P )
     {
-    QString save_cfg_group = cfg_P.group();
+    TQString save_cfg_group = cfg_P.group();
     int cnt = cfg_P.readNumEntry( "DataCount" );
     for( int i = 1;
          i <= cnt;
          ++i )
         {
-        cfg_P.setGroup( save_cfg_group + "_" + QString::number( i ));
+        cfg_P.setGroup( save_cfg_group + "_" + TQString::number( i ));
         if( include_disabled_P || Action_data_base::cfg_is_enabled( cfg_P ))
             {
             Action_data_base* new_action = Action_data_base::create_cfg_read( cfg_P, parent_P );
@@ -226,17 +226,17 @@ void Settings::read_settings_v1( KConfig& cfg_P )
          sect <= sections;
          ++sect )
         {
-        QString group = QString( "Section%1" ).arg( sect );
+        TQString group = TQString( "Section%1" ).arg( sect );
         if( !cfg_P.hasGroup( group ))
             continue;
         cfg_P.setGroup( group );
-        QString name = cfg_P.readEntry( "Name" );
+        TQString name = cfg_P.readEntry( "Name" );
         if( name.isNull() )
             continue;
-        QString shortcut = cfg_P.readEntry( "Shortcut" );
+        TQString shortcut = cfg_P.readEntry( "Shortcut" );
         if( shortcut.isNull() )
             continue;
-        QString run = cfg_P.readEntry( "Run" );
+        TQString run = cfg_P.readEntry( "Run" );
         if( run.isNull() )
             continue;
         bool menuentry = cfg_P.readBoolEntry( "MenuEntry", false );

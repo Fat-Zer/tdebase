@@ -31,21 +31,21 @@ s
 class QuickAddAppsMenu: public PanelServiceMenu {
    Q_OBJECT
 public:
-   QuickAddAppsMenu(const QString &label, const QString &relPath, QWidget *target, QWidget *parent=0, const char *name=0, const QString &sender=QString(""));
-   QuickAddAppsMenu(QWidget *target, QWidget *parent=0, const QString &sender=QString(""), const char *name=0);
+   QuickAddAppsMenu(const TQString &label, const TQString &relPath, TQWidget *target, TQWidget *parent=0, const char *name=0, const TQString &sender=TQString(""));
+   QuickAddAppsMenu(TQWidget *target, TQWidget *parent=0, const TQString &sender=TQString(""), const char *name=0);
 signals:
-   void addAppBefore(QString,QString);
+   void addAppBefore(TQString,TQString);
 protected slots:
    virtual void slotExec(int id);
 protected:
-   virtual PanelServiceMenu *newSubMenu(const QString &label,
-                                        const QString &relPath,
-                                        QWidget *parent,
+   virtual PanelServiceMenu *newSubMenu(const TQString &label,
+                                        const TQString &relPath,
+                                        TQWidget *parent,
                                         const char *name,
-					const QString & _inlineHeader=QString::null);
+					const TQString & _inlineHeader=TQString::null);
 private:
-   QWidget *_targetObject;
-   QString _sender;
+   TQWidget *_targetObject;
+   TQString _sender;
 };
 
 #endif

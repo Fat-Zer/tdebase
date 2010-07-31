@@ -47,14 +47,14 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qlayout.h>
-#include <qcheckbox.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
 #undef Below
 #undef Above
-#include <qslider.h>
-#include <qwhatsthis.h>
-#include <qtabwidget.h>
-#include <qradiobutton.h>
+#include <tqslider.h>
+#include <tqwhatsthis.h>
+#include <tqtabwidget.h>
+#include <tqradiobutton.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -74,7 +74,7 @@
 
 #undef Below
 
-MouseConfig::MouseConfig (QWidget * parent, const char *name)
+MouseConfig::MouseConfig (TQWidget * parent, const char *name)
   : KCModule(parent, name)
 {
 
@@ -84,15 +84,15 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
      " pointing device may be a mouse, trackball, or some other hardware"
      " that performs a similar function."));
 
-    QString wtstr;
+    TQString wtstr;
 
-    QBoxLayout *top = new QVBoxLayout(this, 0, KDialog::spacingHint());
+    TQBoxLayout *top = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
-    tabwidget = new QTabWidget(this);
+    tabwidget = new TQTabWidget(this);
     top->addWidget(tabwidget);
 
     tab1 = new KMouseDlg(this);
-    QButtonGroup *group = new QButtonGroup( tab1 );
+    TQButtonGroup *group = new TQButtonGroup( tab1 );
     group->setExclusive( true );
     group->hide();
     group->insert( tab1->singleClick );
@@ -100,8 +100,8 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
 
     tabwidget->addTab(tab1, i18n("&General"));
 
-    connect(tab1->handedBox, SIGNAL(clicked(int)), this, SLOT(changed()));
-    connect(tab1->handedBox, SIGNAL(clicked(int)), this, SLOT(slotHandedChanged(int)));
+    connect(tab1->handedBox, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(changed()));
+    connect(tab1->handedBox, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(slotHandedChanged(int)));
 
     wtstr = i18n("If you are left-handed, you may prefer to swap the"
          " functions of the left and right buttons on your pointing device"
@@ -109,9 +109,9 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
          " has more than two buttons, only those that function as the"
          " left and right buttons are affected. For example, if you have"
          " a three-button mouse, the middle button is unaffected.");
-    QWhatsThis::add( tab1->handedBox, wtstr );
+    TQWhatsThis::add( tab1->handedBox, wtstr );
 
-    connect(tab1->doubleClick, SIGNAL(clicked()), SLOT(changed()));
+    connect(tab1->doubleClick, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 
     wtstr = i18n("The default behavior in KDE is to select and activate"
          " icons with a single click of the left button on your pointing"
@@ -119,44 +119,44 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
          " when you click links in most web browsers. If you would prefer"
          " to select with a single click, and activate with a double click,"
          " check this option.");
-    QWhatsThis::add( tab1->doubleClick, wtstr );
+    TQWhatsThis::add( tab1->doubleClick, wtstr );
 
     wtstr = i18n("Activates and opens a file or folder with a single click.");
-    QWhatsThis::add( tab1->singleClick, wtstr );
+    TQWhatsThis::add( tab1->singleClick, wtstr );
 
 
-    connect(tab1->cbAutoSelect, SIGNAL(clicked()), this, SLOT(changed()));
+    connect(tab1->cbAutoSelect, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
     wtstr = i18n("If you check this option, pausing the mouse pointer"
          " over an icon on the screen will automatically select that icon."
          " This may be useful when single clicks activate icons, and you"
          " want only to select the icon without activating it.");
-    QWhatsThis::add( tab1->cbAutoSelect, wtstr );
+    TQWhatsThis::add( tab1->cbAutoSelect, wtstr );
 
-//    slAutoSelect = new QSlider(0, 2000, 10, 0, QSlider::Horizontal, tab1);
+//    slAutoSelect = new TQSlider(0, 2000, 10, 0, TQSlider::Horizontal, tab1);
     tab1->slAutoSelect->setSteps( 125, 125 );
-    tab1->slAutoSelect->setTickmarks( QSlider::Below );
+    tab1->slAutoSelect->setTickmarks( TQSlider::Below );
     tab1->slAutoSelect->setTickInterval( 250 );
     tab1->slAutoSelect->setTracking( true );
 
     wtstr = i18n("If you have checked the option to automatically select"
          " icons, this slider allows you to select how long the mouse pointer"
          " must be paused over the icon before it is selected.");
-    QWhatsThis::add( tab1->slAutoSelect, wtstr );
+    TQWhatsThis::add( tab1->slAutoSelect, wtstr );
 
     wtstr = i18n("Show feedback when clicking an icon");
-    QWhatsThis::add( tab1->cbVisualActivate, wtstr );
+    TQWhatsThis::add( tab1->cbVisualActivate, wtstr );
 
-    connect(tab1->slAutoSelect, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-    connect(tab1->cbVisualActivate, SIGNAL(clicked()), this, SLOT(changed()));
+    connect(tab1->slAutoSelect, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+    connect(tab1->cbVisualActivate, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    connect(tab1->cb_pointershape, SIGNAL(clicked()), this, SLOT(changed()));
+    connect(tab1->cb_pointershape, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    connect(tab1->singleClick, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(tab1->singleClick, SIGNAL(clicked()), this, SLOT(slotClick()));
+    connect(tab1->singleClick, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(tab1->singleClick, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotClick()));
 
-    connect( tab1->doubleClick, SIGNAL( clicked() ), this, SLOT( slotClick() ) );
-    connect( tab1->cbAutoSelect, SIGNAL( clicked() ), this, SLOT( slotClick() ) );
+    connect( tab1->doubleClick, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotClick() ) );
+    connect( tab1->cbAutoSelect, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotClick() ) );
 
     // Only allow setting reversing scroll polarity if we have scroll buttons
     unsigned char map[20];
@@ -170,26 +170,26 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
       tab1->cbScrollPolarity->setEnabled( false );
       tab1->cbScrollPolarity->hide();
     }
-    connect(tab1->cbScrollPolarity, SIGNAL(clicked()), this, SLOT(changed()));
-    connect(tab1->cbScrollPolarity, SIGNAL(clicked()), this, SLOT(slotScrollPolarityChanged()));
+    connect(tab1->cbScrollPolarity, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(tab1->cbScrollPolarity, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotScrollPolarityChanged()));
 
     // Cursor theme tab
     themetab = new ThemePage(this);
-    connect(themetab, SIGNAL(changed(bool)), SLOT(changed()));
+    connect(themetab, TQT_SIGNAL(changed(bool)), TQT_SLOT(changed()));
     tabwidget->addTab(themetab, i18n("&Cursor Theme"));
 
     // Advanced tab
-    tab2 = new QWidget(0, "Advanced Tab");
+    tab2 = new TQWidget(0, "Advanced Tab");
     tabwidget->addTab(tab2, i18n("Advanced"));
 
-    QBoxLayout *lay = new QVBoxLayout(tab2, KDialog::marginHint(),
+    TQBoxLayout *lay = new TQVBoxLayout(tab2, KDialog::marginHint(),
               KDialog::spacingHint());
 
     accel = new KDoubleNumInput(1, 20, 2, 0.1, 1, tab2);
     accel->setLabel(i18n("Pointer acceleration:"));
     accel->setSuffix("x");
     lay->addWidget(accel);
-    connect(accel, SIGNAL(valueChanged(double)), this, SLOT(changed()));
+    connect(accel, TQT_SIGNAL(valueChanged(double)), this, TQT_SLOT(changed()));
 
     wtstr = i18n("This option allows you to change the relationship"
          " between the distance that the mouse pointer moves on the"
@@ -201,15 +201,15 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
          " you only make a small movement with the physical device."
          " Selecting very high values may result in the mouse pointer"
          " flying across the screen, making it hard to control.");
-    QWhatsThis::add( accel, wtstr );
+    TQWhatsThis::add( accel, wtstr );
 
     thresh = new KIntNumInput(accel, 20, tab2);
     thresh->setLabel(i18n("Pointer threshold:"));
     thresh->setRange(0,20,1);
     thresh->setSteps(1,1);
     lay->addWidget(thresh);
-    connect(thresh, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-    connect(thresh, SIGNAL(valueChanged(int)), this, SLOT(slotThreshChanged(int)));
+    connect(thresh, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+    connect(thresh, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotThreshChanged(int)));
     slotThreshChanged(thresh->value());
 
     wtstr = i18n("The threshold is the smallest distance that the"
@@ -221,7 +221,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
          " of control over the mouse pointer. With larger movements of"
          " the physical device, you can move the mouse pointer"
          " rapidly to different areas on the screen.");
-    QWhatsThis::add( thresh, wtstr );
+    TQWhatsThis::add( thresh, wtstr );
 
     // It would be nice if the user had a test field.
     // Selecting such values in milliseconds is not intuitive
@@ -231,7 +231,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
     doubleClickInterval->setSuffix(i18n(" msec"));
     doubleClickInterval->setSteps(100, 100);
     lay->addWidget(doubleClickInterval);
-    connect(doubleClickInterval, SIGNAL(valueChanged(int)), this, SLOT(changed()));
+    connect(doubleClickInterval, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
 
     wtstr = i18n("The double click interval is the maximal time"
          " (in milliseconds) between two mouse clicks which"
@@ -239,7 +239,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
          " click happens later than this time interval after"
          " the first click, they are recognized as two"
          " separate clicks.");
-    QWhatsThis::add( doubleClickInterval, wtstr );
+    TQWhatsThis::add( doubleClickInterval, wtstr );
 
     lay->addSpacing(15);
 
@@ -249,54 +249,54 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
     dragStartTime->setSuffix(i18n(" msec"));
     dragStartTime->setSteps(100, 100);
     lay->addWidget(dragStartTime);
-    connect(dragStartTime, SIGNAL(valueChanged(int)), this, SLOT(changed()));
+    connect(dragStartTime, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
 
     wtstr = i18n("If you click with the mouse (e.g. in a multi-line"
          " editor) and begin to move the mouse within the"
          " drag start time, a drag operation will be initiated.");
-    QWhatsThis::add( dragStartTime, wtstr );
+    TQWhatsThis::add( dragStartTime, wtstr );
 
     dragStartDist = new KIntNumInput(dragStartTime, 20, tab2);
     dragStartDist->setLabel(i18n("Drag start distance:"));
     dragStartDist->setRange(1, 20, 1);
     dragStartDist->setSteps(1,1);
     lay->addWidget(dragStartDist);
-    connect(dragStartDist, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-    connect(dragStartDist, SIGNAL(valueChanged(int)), this, SLOT(slotDragStartDistChanged(int)));
+    connect(dragStartDist, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+    connect(dragStartDist, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDragStartDistChanged(int)));
     slotDragStartDistChanged(dragStartDist->value());
 
     wtstr = i18n("If you click with the mouse and begin to move the"
          " mouse at least the drag start distance, a drag"
          " operation will be initiated.");
-    QWhatsThis::add( dragStartDist, wtstr);
+    TQWhatsThis::add( dragStartDist, wtstr);
 
     wheelScrollLines = new KIntNumInput(dragStartDist, 3, tab2);
     wheelScrollLines->setLabel(i18n("Mouse wheel scrolls by:"));
     wheelScrollLines->setRange(1, 12, 1);
     wheelScrollLines->setSteps(1,1);
     lay->addWidget(wheelScrollLines);
-    connect(wheelScrollLines, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-    connect(wheelScrollLines, SIGNAL(valueChanged(int)), SLOT(slotWheelScrollLinesChanged(int)));
+    connect(wheelScrollLines, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+    connect(wheelScrollLines, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotWheelScrollLinesChanged(int)));
     slotWheelScrollLinesChanged(wheelScrollLines->value());
 
     wtstr = i18n("If you use the wheel of a mouse, this value determines the number of lines to scroll for each wheel movement. Note that if this number exceeds the number of visible lines, it will be ignored and the wheel movement will be handled as a page up/down movement.");
-    QWhatsThis::add( wheelScrollLines, wtstr);
+    TQWhatsThis::add( wheelScrollLines, wtstr);
     lay->addStretch();
 
 {
-  QWidget *mouse = new QWidget(this, "Mouse Navigation");
+  TQWidget *mouse = new TQWidget(this, "Mouse Navigation");
   tabwidget->addTab(mouse, i18n("Mouse Navigation"));
 
 
-  QBoxLayout *vbox = new QVBoxLayout(mouse, KDialog::marginHint(),
+  TQBoxLayout *vbox = new TQVBoxLayout(mouse, KDialog::marginHint(),
     KDialog::spacingHint());
 
-  QVBoxLayout *vvbox = new QVBoxLayout(mouse->layout(), KDialog::spacingHint());
+  TQVBoxLayout *vvbox = new TQVBoxLayout(mouse->layout(), KDialog::spacingHint());
 
-  mouseKeys = new QCheckBox(i18n("&Move pointer with keyboard (using the num pad)"), mouse);
+  mouseKeys = new TQCheckBox(i18n("&Move pointer with keyboard (using the num pad)"), mouse);
   vvbox->addWidget(mouseKeys);
 
-  QBoxLayout *hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  TQBoxLayout *hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   mk_delay = new KIntNumInput(mouse);
   mk_delay->setLabel(i18n("&Acceleration delay:"), AlignVCenter);
@@ -304,7 +304,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
   mk_delay->setRange(1, 1000, 50);
   hbox->addWidget(mk_delay);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   mk_interval = new KIntNumInput(mk_delay, 0, mouse);
   mk_interval->setLabel(i18n("R&epeat interval:"), AlignVCenter);
@@ -312,7 +312,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
   mk_interval->setRange(1, 1000, 10);
   hbox->addWidget(mk_interval);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   mk_time_to_max = new KIntNumInput(mk_interval, 0, mouse);
   mk_time_to_max->setLabel(i18n("Acceleration &time:"), AlignVCenter);
@@ -320,7 +320,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
   mk_time_to_max->setSuffix(i18n(" msec"));
   hbox->addWidget(mk_time_to_max);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   mk_max_speed = new KIntNumInput(mk_time_to_max, 0, mouse);
   mk_max_speed->setLabel(i18n("Ma&ximum speed:"), AlignVCenter);
@@ -328,20 +328,20 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
   mk_max_speed->setSuffix(i18n(" pixel/sec"));
   hbox->addWidget(mk_max_speed);
 
-  hbox = new QHBoxLayout(vvbox, KDialog::spacingHint());
+  hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
   hbox->addSpacing(24);
   mk_curve = new KIntNumInput(mk_max_speed, 0, mouse);
   mk_curve->setLabel(i18n("Acceleration &profile:"), AlignVCenter);
   mk_curve->setRange(-1000, 1000, 100);
   hbox->addWidget(mk_curve);
 
-  connect(mouseKeys, SIGNAL(clicked()), this, SLOT(checkAccess()));
-  connect(mouseKeys, SIGNAL(clicked()), this, SLOT(changed()));
-  connect(mk_delay, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-  connect(mk_interval, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-  connect(mk_time_to_max, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-  connect(mk_max_speed, SIGNAL(valueChanged(int)), this, SLOT(changed()));
-  connect(mk_curve, SIGNAL(valueChanged(int)), this, SLOT(changed()));
+  connect(mouseKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(checkAccess()));
+  connect(mouseKeys, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+  connect(mk_delay, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+  connect(mk_interval, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+  connect(mk_time_to_max, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+  connect(mk_max_speed, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+  connect(mk_curve, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
 
   vbox->addStretch();
 }
@@ -355,8 +355,8 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
   struct device_table {
       int idVendor;
       int idProduct;
-      QString Model;
-      QString Name;
+      TQString Model;
+      TQString Name;
       int flags;
   } device_table[] = {
       { VENDOR_LOGITECH, 0xC00E, "M-BJ58", "Wheel Mouse Optical", HAS_RES },
@@ -377,7 +377,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
       { VENDOR_LOGITECH, 0xC50E, "M-RAG97", "MX1000 Laser Mouse", HAS_SS | HAS_CSR },
       { VENDOR_LOGITECH, 0xC512, "M-RAK89B", "Cordless Desktop Pro LX700", HAS_CSR | USE_CH2 },
       { VENDOR_LOGITECH, 0xC702, "C-UF15", "Receiver for Cordless Presenter", HAS_CSR },
-      { 0, 0, QString(), QString(), 0 }
+      { 0, 0, TQString(), TQString(), 0 }
   };
 
   usb_init();
@@ -395,7 +395,7 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name)
 		  // OK, we have a device that appears to be one of the ones we support
 		  LogitechMouse *mouse = new LogitechMouse( dev, device_table[n].flags, this, device_table[n].Name.latin1() );
 		  settings->logitechMouseList.append(mouse);
-		  tabwidget->addTab( (QWidget*)mouse, device_table[n].Name );
+		  tabwidget->addTab( (TQWidget*)mouse, device_table[n].Name );
 	      }
       }
   }
@@ -682,7 +682,7 @@ void MouseSettings::load(KConfig *config)
   else
     thresholdMove = t;
 
-  QString key = config->readEntry("MouseButtonMapping");
+  TQString key = config->readEntry("MouseButtonMapping");
   if (key == "RightHanded")
     handed = RIGHT_HANDED;
   else if (key == "LeftHanded")
@@ -805,9 +805,9 @@ void MouseSettings::save(KConfig *config)
   config->writeEntry("Acceleration",accelRate);
   config->writeEntry("Threshold",thresholdMove);
   if (handed == RIGHT_HANDED)
-      config->writeEntry("MouseButtonMapping",QString("RightHanded"));
+      config->writeEntry("MouseButtonMapping",TQString("RightHanded"));
   else
-      config->writeEntry("MouseButtonMapping",QString("LeftHanded"));
+      config->writeEntry("MouseButtonMapping",TQString("LeftHanded"));
   config->writeEntry( "ReverseScrollPolarity", reverseScrollPolarity );
 
   config->setGroup("KDE");

@@ -35,7 +35,7 @@ Kbd* keyboard_handler;
 Windows* windows_handler;
 static bool _khotkeys_active = false;
 
-void init_global_data( bool active_P, QObject* owner_P )
+void init_global_data( bool active_P, TQObject* owner_P )
     {
     assert( keyboard_handler == NULL );
     assert( windows_handler == NULL );
@@ -59,15 +59,15 @@ bool khotkeys_active()
     
 // does the opposite of KStandardDirs::findResource() i.e. e.g.
 // "/opt/kde2/share/applnk/System/konsole.desktop" -> "System/konsole.desktop"
-QString get_menu_entry_from_path( const QString& path_P )
+TQString get_menu_entry_from_path( const TQString& path_P )
     {
-    QStringList dirs = KGlobal::dirs()->resourceDirs( "apps" );
-    for( QStringList::ConstIterator it = dirs.begin();
+    TQStringList dirs = KGlobal::dirs()->resourceDirs( "apps" );
+    for( TQStringList::ConstIterator it = dirs.begin();
          it != dirs.end();
          ++it )
         if( path_P.find( *it ) == 0 )
             {
-            QString ret = path_P;
+            TQString ret = path_P;
             ret.remove( 0, (*it).length());
             if( ret[ 0 ] == '/' )
                 ret.remove( 0, 1 );

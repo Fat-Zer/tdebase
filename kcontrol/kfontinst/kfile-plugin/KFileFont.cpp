@@ -28,19 +28,19 @@
 
 #include "KFileFont.h"
 #include "KfiConstants.h"
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 #include <kgenericfactory.h>
 #include <kio/netaccess.h>
 
-static void addEntry(int face, QString &existing, const QString &add)
+static void addEntry(int face, TQString &existing, const TQString &add)
 {
     if(face>0)
         existing.append(", ");
     existing.append(add);
 }
 
-static int strToWeight(const QString &str)
+static int strToWeight(const TQString &str)
 {
     if(NULL==str)
         return FC_WEIGHT_MEDIUM;
@@ -79,7 +79,7 @@ static int strToWeight(const QString &str)
 }
 
 #ifndef KFI_FC_NO_WIDTHS
-static int strToWidth(const QString &str)
+static int strToWidth(const TQString &str)
 {   
     if(str.isEmpty())
         return FC_WIDTH_NORMAL;
@@ -171,13 +171,13 @@ static const char * getFoundry(const char *notice)
     return NULL;
 }
 
-static bool readAfm(const QString &file, QString &full, QString &family, QString &foundry, QString &weight,
+static bool readAfm(const TQString &file, TQString &full, TQString &family, TQString &foundry, TQString &weight,
 #ifndef KFI_FC_NO_WIDTHS
-                    QString &width,
+                    TQString &width,
 #endif
-                    QString &spacing, QString &slant)
+                    TQString &spacing, TQString &slant)
 {
-    QFile f(file);
+    TQFile f(file);
     bool  foundName=false,
           foundFamily=false;
     int   intSpacing=FC_PROPORTIONAL,
@@ -190,8 +190,8 @@ static bool readAfm(const QString &file, QString &full, QString &family, QString
 
     if(f.open(IO_ReadOnly))
     {
-        QTextStream stream(&f);
-        QString     line;
+        TQTextStream stream(&f);
+        TQString     line;
         bool        inMetrics=false;
 
         while(!stream.atEnd())
@@ -265,7 +265,7 @@ K_EXPORT_COMPONENT_FACTORY(kfile_font, KFileFontPluginFactory("kfontinst"))
 namespace KFI
 {
 
-KFileFontPlugin::KFileFontPlugin(QObject *parent, const char *name, const QStringList& args)
+KFileFontPlugin::KFileFontPlugin(TQObject *parent, const char *name, const TQStringList& args)
                : KFilePlugin(parent, name, args)
 {
     KGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
@@ -286,20 +286,20 @@ void KFileFontPlugin::addMimeType(const char *mime)
     KFileMimeTypeInfo            *info=addMimeTypeInfo(mime);
     KFileMimeTypeInfo::GroupInfo *group=addGroupInfo(info, "General", i18n("General"));
 
-    addItemInfo(group, "Full", i18n("Full Name"), QVariant::String);
-    addItemInfo(group, "Family", i18n("Family"), QVariant::String);
-    addItemInfo(group, "Foundry", i18n("Foundry"), QVariant::String);
-    addItemInfo(group, "Weight", i18n("Weight"),  QVariant::String);
+    addItemInfo(group, "Full", i18n("Full Name"), TQVariant::String);
+    addItemInfo(group, "Family", i18n("Family"), TQVariant::String);
+    addItemInfo(group, "Foundry", i18n("Foundry"), TQVariant::String);
+    addItemInfo(group, "Weight", i18n("Weight"),  TQVariant::String);
 #ifndef KFI_FC_NO_WIDTHS
-    addItemInfo(group, "Width", i18n("Width"), QVariant::String);
+    addItemInfo(group, "Width", i18n("Width"), TQVariant::String);
 #endif
-    addItemInfo(group, "Spacing", i18n("Spacing"),  QVariant::String);
-    addItemInfo(group, "Slant", i18n("Slant"), QVariant::String);
+    addItemInfo(group, "Spacing", i18n("Spacing"),  TQVariant::String);
+    addItemInfo(group, "Slant", i18n("Slant"), TQVariant::String);
 }
 
 bool KFileFontPlugin::readInfo(KFileMetaInfo& info, uint what)
 {
-    QString full,
+    TQString full,
             lastFull,
             family,
             foundry,
@@ -319,7 +319,7 @@ bool KFileFontPlugin::readInfo(KFileMetaInfo& info, uint what)
             spacingAll,
             slantAll;
     KURL    url(info.url());
-    QString fName;
+    TQString fName;
     bool    fontsProt  = KFI_KIO_FONTS_PROTOCOL == url.protocol(),
             fileProt   = "file"             == url.protocol(),
             downloaded = false,

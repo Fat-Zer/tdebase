@@ -39,8 +39,8 @@ class KCMUserAccount : public KCModule
 	Q_OBJECT
 
 public:
-	KCMUserAccount(QWidget* parent, const char* name = "KCMUserAccount",
-		const QStringList& list=QStringList());
+	KCMUserAccount(TQWidget* parent, const char* name = "KCMUserAccount",
+		const TQStringList& list=TQStringList());
 	~KCMUserAccount();
 
 	/**
@@ -57,7 +57,7 @@ public:
 	/**
 	 * For the face button
 	 */
-	bool eventFilter(QObject *, QEvent *e);
+	bool eventFilter(TQObject *, TQEvent *e);
 
 private slots:
 	void slotChangePassword();
@@ -65,14 +65,14 @@ private slots:
 	void slotFaceButtonClicked();
 
 private:
-	void changeFace(const QPixmap& pix);
-	inline KURL* decodeImgDrop(QDropEvent *e, QWidget *wdg);
+	void changeFace(const TQPixmap& pix);
+	inline KURL* decodeImgDrop(TQDropEvent *e, TQWidget *wdg);
 
 	KEMailSettings *_kes;
 	KUser *_ku;
 	MainWidget *_mw;
 	FacePerm _facePerm;
-	QPixmap _facePixmap;
+	TQPixmap _facePixmap;
 
 };
 

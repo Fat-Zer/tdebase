@@ -8,13 +8,13 @@
 #ifndef __KEYCONFIG_H__
 #define __KEYCONFIG_H__
 
-#include <qpushbutton.h>
-#include <qlistbox.h>
+#include <tqpushbutton.h>
+#include <tqlistbox.h>
 
 #include <kaccel.h>
 #include <kkeydialog.h>
 //#include <kcmodule.h>
-#include <qdict.h>
+#include <tqdict.h>
 
 class QCheckBox;
 
@@ -28,8 +28,8 @@ public:
         //KAccelActions dict;
         KeyChooserSpec *kc;
 
-	KKeyModule( QWidget *parent, bool isGlobal, bool bSeriesOnly, bool bSeriesNone, const char *name = 0 );
-	KKeyModule( QWidget *parent, bool isGlobal, const char *name = 0 );
+	KKeyModule( TQWidget *parent, bool isGlobal, bool bSeriesOnly, bool bSeriesNone, const char *name = 0 );
+	KKeyModule( TQWidget *parent, bool isGlobal, const char *name = 0 );
 	~KKeyModule ();
 
 protected:
@@ -41,8 +41,8 @@ public:
         virtual void defaults();
         static void init();
 
-	bool writeSettings( const QString& sGroup, KConfig* pConfig );
-	bool writeSettingsGlobal( const QString& sGroup );
+	bool writeSettings( const TQString& sGroup, KConfig* pConfig );
+	bool writeSettingsGlobal( const TQString& sGroup );
 
 public slots:
 	//void slotPreviewScheme( int );
@@ -59,19 +59,19 @@ signals:
         //void keysChanged( const KAccelActions* map_P );
 
 protected:
-	QListBox *sList;
-	QStringList *sFileList;
-	QPushButton *addBt;
-	QPushButton *removeBt;
-	QCheckBox *preferMetaBt;
+	TQListBox *sList;
+	TQStringList *sFileList;
+	TQPushButton *addBt;
+	TQPushButton *removeBt;
+	TQCheckBox *preferMetaBt;
 	int nSysSchemes;
 	bool bSeriesOnly;
 
 	void readScheme( int index=0 );
 
-	QString KeyType;
-	QString KeyScheme;
-	QString KeySet;
+	TQString KeyType;
+	TQString KeyScheme;
+	TQString KeySet;
 
 };
 
@@ -79,7 +79,7 @@ class KeyChooserSpec : public KKeyChooser
 {
         Q_OBJECT
 public:
-        KeyChooserSpec( KAccelActions& actions, QWidget* parent,
+        KeyChooserSpec( KAccelActions& actions, TQWidget* parent,
                  bool bGlobal );
         //void updateKeys( const KAccelActions* map_P );
 protected:

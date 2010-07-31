@@ -25,12 +25,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <math.h>
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qdesktopwidget.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qstringlist.h>
+#include <tqapplication.h>
+#include <tqbitmap.h>
+#include <tqdesktopwidget.h>
+#include <tqlayout.h>
+#include <tqpainter.h>
+#include <tqstringlist.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -50,7 +50,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "taskbar.moc"
 
 
-TaskBar::TaskBar( QWidget *parent, const char *name )
+TaskBar::TaskBar( TQWidget *parent, const char *name )
     : Panner( parent, name ),
       m_showAllWindows(false),
       m_currentScreen(-1),
@@ -65,35 +65,35 @@ TaskBar::TaskBar( QWidget *parent, const char *name )
     blocklayout = true;
     
     // init
-    setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
+    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
     // setup animation frames
     for (int i = 1; i < 11; i++)
     {
-        frames.append(new QPixmap(locate("data", "kicker/pics/disk" + QString::number(i) + ".png")));
+        frames.append(new TQPixmap(locate("data", "kicker/pics/disk" + TQString::number(i) + ".png")));
     }
 
     // configure
     configure();
 
-    connect(&m_relayoutTimer, SIGNAL(timeout()),
-            this, SLOT(reLayout()));
+    connect(&m_relayoutTimer, TQT_SIGNAL(timeout()),
+            this, TQT_SLOT(reLayout()));
 
-		connect(this, SIGNAL(contentsMoving(int, int)), SLOT(setBackground()));
+		connect(this, TQT_SIGNAL(contentsMoving(int, int)), TQT_SLOT(setBackground()));
 
     // connect manager
-    connect(TaskManager::the(), SIGNAL(taskAdded(Task::Ptr)),
-            this, SLOT(add(Task::Ptr)));
-    connect(TaskManager::the(), SIGNAL(taskRemoved(Task::Ptr)),
-            this, SLOT(remove(Task::Ptr)));
-    connect(TaskManager::the(), SIGNAL(startupAdded(Startup::Ptr)),
-            this, SLOT(add(Startup::Ptr)));
-    connect(TaskManager::the(), SIGNAL(startupRemoved(Startup::Ptr)),
-            this, SLOT(remove(Startup::Ptr)));
-    connect(TaskManager::the(), SIGNAL(desktopChanged(int)),
-            this, SLOT(desktopChanged(int)));
-    connect(TaskManager::the(), SIGNAL(windowChanged(Task::Ptr)),
-            this, SLOT(windowChanged(Task::Ptr)));
+    connect(TaskManager::the(), TQT_SIGNAL(taskAdded(Task::Ptr)),
+            this, TQT_SLOT(add(Task::Ptr)));
+    connect(TaskManager::the(), TQT_SIGNAL(taskRemoved(Task::Ptr)),
+            this, TQT_SLOT(remove(Task::Ptr)));
+    connect(TaskManager::the(), TQT_SIGNAL(startupAdded(Startup::Ptr)),
+            this, TQT_SLOT(add(Startup::Ptr)));
+    connect(TaskManager::the(), TQT_SIGNAL(startupRemoved(Startup::Ptr)),
+            this, TQT_SLOT(remove(Startup::Ptr)));
+    connect(TaskManager::the(), TQT_SIGNAL(desktopChanged(int)),
+            this, TQT_SLOT(desktopChanged(int)));
+    connect(TaskManager::the(), TQT_SIGNAL(windowChanged(Task::Ptr)),
+            this, TQT_SLOT(windowChanged(Task::Ptr)));
 
     isGrouping = shouldGroup();
 
@@ -115,7 +115,7 @@ TaskBar::TaskBar( QWidget *parent, const char *name )
 
     blocklayout = false;
 
-    connect(kapp, SIGNAL(settingsChanged(int)), SLOT(slotSettingsChanged(int)));
+    connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
     keys = new KGlobalAccel( this );
 #include "taskbarbindings.cpp"
     keys->readSettings();
@@ -159,22 +159,22 @@ KTextShadowEngine *TaskBar::textShadowEngine()
 }
 
 
-QSize TaskBar::sizeHint() const
+TQSize TaskBar::sizeHint() const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
-    QFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(KGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
                           fm.height() : TaskBarSettings::minimumButtonHeight();
 
-    return QSize(BUTTON_MIN_WIDTH, minButtonHeight);
+    return TQSize(BUTTON_MIN_WIDTH, minButtonHeight);
 }
 
-QSize TaskBar::sizeHint( KPanelExtension::Position p, QSize maxSize) const
+TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
-    QFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(KGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
                           fm.height() : TaskBarSettings::minimumButtonHeight();
 
@@ -191,7 +191,7 @@ QSize TaskBar::sizeHint( KPanelExtension::Position p, QSize maxSize) const
         {
             return maxSize;
         }
-        return QSize( maxSize.width(), actualMax );
+        return TQSize( maxSize.width(), actualMax );
     }
     else
     {
@@ -224,7 +224,7 @@ QSize TaskBar::sizeHint( KPanelExtension::Position p, QSize maxSize) const
         {
            return maxSize;
         }
-        return QSize( actualMax, maxSize.height() );
+        return TQSize( actualMax, maxSize.height() );
     }
 }
 
@@ -242,8 +242,8 @@ void TaskBar::configure()
 
     m_currentScreen = -1;    // Show all screens or re-get our screen
     m_showOnlyCurrentScreen = (TaskBarSettings::showCurrentScreenOnly() &&
-                              QApplication::desktop()->isVirtualDesktop() &&
-                              QApplication::desktop()->numScreens() > 1) || (QApplication::desktop()->numScreens() < 2);
+                              TQApplication::desktop()->isVirtualDesktop() &&
+                              TQApplication::desktop()->numScreens() > 1) || (TQApplication::desktop()->numScreens() < 2);
 
     // we need to watch geometry issues if we aren't showing windows when we
     // are paying attention to the current Xinerama screen
@@ -251,10 +251,10 @@ void TaskBar::configure()
     {
         // disconnect first in case we've been here before
         // to avoid multiple connections
-        disconnect(TaskManager::the(), SIGNAL(windowChangedGeometry(Task::Ptr)),
-                    this, SLOT(windowChangedGeometry(Task::Ptr)));
-        connect(TaskManager::the(), SIGNAL(windowChangedGeometry(Task::Ptr)),
-                 this, SLOT(windowChangedGeometry(Task::Ptr)));
+        disconnect(TaskManager::the(), TQT_SIGNAL(windowChangedGeometry(Task::Ptr)),
+                    this, TQT_SLOT(windowChangedGeometry(Task::Ptr)));
+        connect(TaskManager::the(), TQT_SIGNAL(windowChangedGeometry(Task::Ptr)),
+                 this, TQT_SLOT(windowChangedGeometry(Task::Ptr)));
     }
     TaskManager::the()->trackGeometry(m_showOnlyCurrentScreen);
 
@@ -283,18 +283,18 @@ void TaskBar::setOrientation( Orientation o )
     reLayoutEventually();
 }
 
-void TaskBar::moveEvent( QMoveEvent* e )
+void TaskBar::moveEvent( TQMoveEvent* e )
 {
     Panner::moveEvent(e);
     setViewportBackground();
 }
 
-void TaskBar::resizeEvent( QResizeEvent* e )
+void TaskBar::resizeEvent( TQResizeEvent* e )
 {
     if (m_showOnlyCurrentScreen)
     {
-        QPoint topLeft = mapToGlobal(this->geometry().topLeft());
-        if (m_currentScreen != QApplication::desktop()->screenNumber(topLeft))
+        TQPoint topLeft = mapToGlobal(this->geometry().topLeft());
+        if (m_currentScreen != TQApplication::desktop()->screenNumber(topLeft))
         {
             // we have been moved to another screen!
             m_currentScreen = -1;
@@ -366,7 +366,7 @@ void TaskBar::add(Startup::Ptr startup)
     // create new container
     TaskContainer *container = new TaskContainer(startup, frames, this, viewport());
     m_hiddenContainers.append(container);
-    connect(container, SIGNAL(showMe(TaskContainer*)), this, SLOT(showTaskContainer(TaskContainer*)));
+    connect(container, TQT_SIGNAL(showMe(TaskContainer*)), this, TQT_SLOT(showTaskContainer(TaskContainer*)));
 }
 
 void TaskBar::showTaskContainer(TaskContainer* container)
@@ -654,8 +654,8 @@ void TaskBar::reLayoutEventually()
 
 void TaskBar::reLayout()
 {
-    // Because QPopupMenu::exec() creates its own event loop, deferred deletes
-    // via QObject::deleteLater() may be prematurely executed when a container's
+    // Because TQPopupMenu::exec() creates its own event loop, deferred deletes
+    // via TQObject::deleteLater() may be prematurely executed when a container's
     // popup menu is visible.
     //
     // To get around this, we collect the containers and delete them manually
@@ -695,7 +695,7 @@ void TaskBar::reLayout()
     // number of rows simply depends on our height which is either the
     // minimum button height or the height of the font in use, whichever is
     // largest
-    QFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(KGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
                           fm.height() : TaskBarSettings::minimumButtonHeight();
 
@@ -756,7 +756,7 @@ void TaskBar::reLayout()
         }
 
         int i = 0;
-        bool reverseLayout = QApplication::reverseLayout();
+        bool reverseLayout = TQApplication::reverseLayout();
         for (TaskContainer::Iterator it = list.begin();
              it != list.end();
              ++it, i++)
@@ -812,16 +812,16 @@ void TaskBar::reLayout()
         }
     }
     
-    QTimer::singleShot(100, this, SLOT(publishIconGeometry()));
+    TQTimer::singleShot(100, this, TQT_SLOT(publishIconGeometry()));
 }
 
 void TaskBar::setViewportBackground()
 {
-    const QPixmap *bg = parentWidget()->backgroundPixmap();
+    const TQPixmap *bg = parentWidget()->backgroundPixmap();
     
     if (bg)
     {
-        QPixmap pm(parentWidget()->size());
+        TQPixmap pm(parentWidget()->size());
         pm.fill(parentWidget(), pos() + viewport()->pos());
         viewport()->setPaletteBackgroundPixmap(pm);
         viewport()->setBackgroundOrigin(WidgetOrigin);
@@ -863,7 +863,7 @@ void TaskBar::setArrowType(Qt::ArrowType at)
 
 void TaskBar::publishIconGeometry()
 {
-    QPoint p = mapToGlobal(QPoint(0,0)); // roundtrip, don't do that too often
+    TQPoint p = mapToGlobal(TQPoint(0,0)); // roundtrip, don't do that too often
 
     for (TaskContainer::Iterator it = containers.begin();
          it != containers.end();
@@ -873,37 +873,37 @@ void TaskBar::publishIconGeometry()
     }
 }
 
-void TaskBar::viewportMousePressEvent( QMouseEvent* e )
+void TaskBar::viewportMousePressEvent( TQMouseEvent* e )
 {
     propagateMouseEvent( e );
 }
 
-void TaskBar::viewportMouseReleaseEvent( QMouseEvent* e )
+void TaskBar::viewportMouseReleaseEvent( TQMouseEvent* e )
 {
     propagateMouseEvent( e );
 }
 
-void TaskBar::viewportMouseDoubleClickEvent( QMouseEvent* e )
+void TaskBar::viewportMouseDoubleClickEvent( TQMouseEvent* e )
 {
     propagateMouseEvent( e );
 }
 
-void TaskBar::viewportMouseMoveEvent( QMouseEvent* e )
+void TaskBar::viewportMouseMoveEvent( TQMouseEvent* e )
 {
     propagateMouseEvent( e );
 }
 
-void TaskBar::propagateMouseEvent( QMouseEvent* e )
+void TaskBar::propagateMouseEvent( TQMouseEvent* e )
 {
     if ( !isTopLevel()  )
     {
-        QMouseEvent me( e->type(), mapTo( topLevelWidget(), e->pos() ),
+        TQMouseEvent me( e->type(), mapTo( topLevelWidget(), e->pos() ),
                         e->globalPos(), e->button(), e->state() );
-        QApplication::sendEvent( topLevelWidget(), &me );
+        TQApplication::sendEvent( topLevelWidget(), &me );
     }
 }
 
-bool TaskBar::idMatch( const QString& id1, const QString& id2 )
+bool TaskBar::idMatch( const TQString& id1, const TQString& id2 )
 {
     if ( id1.isEmpty() || id2.isEmpty() )
         return false;
@@ -949,7 +949,7 @@ int TaskBar::taskCount() const
 
 int TaskBar::maximumButtonsWithoutShrinking() const
 {
-    QFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(KGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
                           fm.height() : TaskBarSettings::minimumButtonHeight();
     int rows = contentsRect().height() / minButtonHeight;
@@ -1124,7 +1124,7 @@ void TaskBar::activateNextTask(bool forward)
     }
 }
 
-void TaskBar::wheelEvent(QWheelEvent* e)
+void TaskBar::wheelEvent(TQWheelEvent* e)
 {
     if (e->delta() > 0)
     {
@@ -1162,35 +1162,35 @@ int TaskBar::showScreen() const
     if (m_showOnlyCurrentScreen && m_currentScreen == -1)
     {
         const_cast<TaskBar*>(this)->m_currentScreen =
-            QApplication::desktop()->screenNumber(mapToGlobal(this->geometry().topLeft()));
+            TQApplication::desktop()->screenNumber(mapToGlobal(this->geometry().topLeft()));
     }
 
     return m_currentScreen;
 }
 
-QImage* TaskBar::blendGradient(const QSize& size)
+TQImage* TaskBar::blendGradient(const TQSize& size)
 {
     if (m_blendGradient.isNull() || m_blendGradient.size() != size)
     {
-        QPixmap bgpm(size);
-        QPainter bgp(&bgpm);
+        TQPixmap bgpm(size);
+        TQPainter bgp(&bgpm);
         bgpm.fill(black);
 
-        if (QApplication::reverseLayout())
+        if (TQApplication::reverseLayout())
         {
-            QImage gradient = KImageEffect::gradient(
-                    QSize(30, size.height()),
-                    QColor(255,255,255),
-                    QColor(0,0,0),
+            TQImage gradient = KImageEffect::gradient(
+                    TQSize(30, size.height()),
+                    TQColor(255,255,255),
+                    TQColor(0,0,0),
                     KImageEffect::HorizontalGradient);
             bgp.drawImage(0, 0, gradient);
         }
         else
         {
-            QImage gradient = KImageEffect::gradient(
-                    QSize(30, size.height()),
-                    QColor(0,0,0),
-                    QColor(255,255,255),
+            TQImage gradient = KImageEffect::gradient(
+                    TQSize(30, size.height()),
+                    TQColor(0,0,0),
+                    TQColor(255,255,255),
                     KImageEffect::HorizontalGradient);
             bgp.drawImage(size.width() - 30, 0, gradient);
         }
@@ -1203,7 +1203,7 @@ QImage* TaskBar::blendGradient(const QSize& size)
 
 void TaskBar::sortContainersByDesktop(TaskContainer::List& list)
 {
-    typedef QValueVector<QPair<int, QPair<int, TaskContainer*> > > SortVector;
+    typedef TQValueVector<QPair<int, QPair<int, TaskContainer*> > > SortVector;
     SortVector sorted;
     sorted.resize(list.count());
     int i = 0;

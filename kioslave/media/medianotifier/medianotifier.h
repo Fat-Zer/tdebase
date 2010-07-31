@@ -25,8 +25,8 @@
 #include <kio/job.h>
 #include <kmessagebox.h>
 
-#include <qstring.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqmap.h>
 
 class KDialogBase;
 
@@ -36,11 +36,11 @@ class MediaNotifier:  public KDEDModule
 	K_DCOP
 
 public:
-	MediaNotifier( const QCString &name );
+	MediaNotifier( const TQCString &name );
 	virtual ~MediaNotifier();
 
 k_dcop:
-	void onMediumChange( const QString &name, bool allowNotification );
+	void onMediumChange( const TQString &name, bool allowNotification );
 
 private slots:
 	void slotStatResult( KIO::Job *job );
@@ -53,13 +53,13 @@ private:
 	bool autostart( const KFileItem &medium );
 	void notify( KFileItem &medium );
 	
-	bool execAutorun( const KFileItem &medium, const QString &path,
-	                  const QString &autorunFile );
-	bool execAutoopen( const KFileItem &medium, const QString &path,
-	                   const QString &autoopenFile );
+	bool execAutorun( const KFileItem &medium, const TQString &path,
+	                  const TQString &autorunFile );
+	bool execAutoopen( const KFileItem &medium, const TQString &path,
+	                   const TQString &autoopenFile );
 
-	QMap<KIO::Job*,bool> m_allowNotificationMap;
-	QTimer * m_freeTimer;
+	TQMap<KIO::Job*,bool> m_allowNotificationMap;
+	TQTimer * m_freeTimer;
 	KDialogBase * m_freeDialog;
 };
 #endif

@@ -23,11 +23,11 @@
 #include <klocale.h>
 #include <assert.h>
 #include <stdio.h>
-#include <qpainter.h>
-#include <qheader.h>
+#include <tqpainter.h>
+#include <tqheader.h>
 #include <kiconloader.h>
 
-static QString retrieveExtraEntry( KFileItem* fileitem, int numExtra )
+static TQString retrieveExtraEntry( KFileItem* fileitem, int numExtra )
 {
     /// ######## SLOOOOW
     KIO::UDSEntry::ConstIterator it = fileitem->entry().begin();
@@ -44,7 +44,7 @@ static QString retrieveExtraEntry( KFileItem* fileitem, int numExtra )
             }
         }
     }
-    return QString::null;
+    return TQString::null;
 }
 
 
@@ -70,7 +70,7 @@ KonqListViewItem::KonqListViewItem( KonqBaseListViewWidget *_listViewWidget, KFi
 
 KonqListViewItem::~KonqListViewItem()
 {
-   for ( QValueVector<QPixmap*>::iterator
+   for ( TQValueVector<TQPixmap*>::iterator
             it = m_pixmaps.begin(), itEnd = m_pixmaps.end();
          it != itEnd; ++it )
       delete *it;
@@ -130,7 +130,7 @@ void KonqListViewItem::updateContents()
          case KIO::UDS_ACCESS_TIME:
          case KIO::UDS_CREATION_TIME:
             {
-               QDateTime dt;
+               TQDateTime dt;
                time_t _time = m_fileitem->time( tmpColumn->udsId );
                if ( _time != 0 )
                {
@@ -141,14 +141,14 @@ void KonqListViewItem::updateContents()
             break;
          case KIO::UDS_EXTRA:
          {
-             const QString entryStr = retrieveExtraEntry( m_fileitem, numExtra );
-             if ( tmpColumn->type == QVariant::DateTime )
+             const TQString entryStr = retrieveExtraEntry( m_fileitem, numExtra );
+             if ( tmpColumn->type == TQVariant::DateTime )
              {
-                 QDateTime dt = QDateTime::fromString( entryStr, Qt::ISODate );
+                 TQDateTime dt = TQDateTime::fromString( entryStr, Qt::ISODate );
                  setText(tmpColumn->displayInColumn,
                          KGlobal::locale()->formatDateTime(dt));
              }
-             else // if ( tmpColumn->type == QVariant::String )
+             else // if ( tmpColumn->type == TQVariant::String )
                  setText(tmpColumn->displayInColumn, entryStr);
              ++numExtra;
              break;
@@ -180,12 +180,12 @@ void KonqListViewItem::setActive( bool active )
     setPixmap( 0, m_fileitem->pixmap( iconSize, state() ) );
 }
 
-void KonqListViewItem::setPixmap( int column, const QPixmap& pm )
+void KonqListViewItem::setPixmap( int column, const TQPixmap& pm )
 {
    if ( column < 0 )
       return;
 
-   const QPixmap *current = pixmap( column );
+   const TQPixmap *current = pixmap( column );
 
    if ( ( pm.isNull() && !current ) ||
         ( current && pm.serialNumber() == current->serialNumber() ) )
@@ -198,7 +198,7 @@ void KonqListViewItem::setPixmap( int column, const QPixmap& pm )
       m_pixmaps.resize( column+1 );
 
    delete current;
-   m_pixmaps[column] = pm.isNull() ? 0 : new QPixmap( pm );
+   m_pixmaps[column] = pm.isNull() ? 0 : new TQPixmap( pm );
 
    int newWidth = pm.isNull() ? 0 : pm.width();
    int newHeight = pm.isNull() ? 0 : pm.height();
@@ -218,7 +218,7 @@ void KonqListViewItem::setPixmap( int column, const QPixmap& pm )
    // If we're just replacing the icon with another one its size -- i.e. a
    // "highlighted" icon, don't bother repainting the whole widget.
 
-   QListView *lv = m_pListViewWidget;
+   TQListView *lv = m_pListViewWidget;
 
    int decorationWidth = lv->treeStepSize() * ( depth() + ( lv->rootIsDecorated() ? 1 : 0 ) );
    int x = lv->header()->sectionPos( column ) + decorationWidth + lv->itemMargin();
@@ -228,19 +228,19 @@ void KonqListViewItem::setPixmap( int column, const QPixmap& pm )
    lv->repaintContents( x, y, w, h );
 }
 
-const QPixmap* KonqListViewItem::pixmap( int column ) const
+const TQPixmap* KonqListViewItem::pixmap( int column ) const
 {
    bool ok;
    if ((int)m_pixmaps.count() <= column)
       return 0;
 
-   QPixmap *pm = m_pixmaps.at( column, &ok );
+   TQPixmap *pm = m_pixmaps.at( column, &ok );
    if( !ok )
       return 0;
    return pm;
 }
 
-int KonqBaseListViewItem::compare( QListViewItem* item, int col, bool ascending ) const
+int KonqBaseListViewItem::compare( TQListViewItem* item, int col, bool ascending ) const
 {
    KonqListViewItem* k = static_cast<KonqListViewItem*>( item );
    if ( sortChar != k->sortChar )
@@ -273,11 +273,11 @@ int KonqBaseListViewItem::compare( QListViewItem* item, int col, bool ascending 
             }
             case KIO::UDS_EXTRA:
             {
-                if ( cInfo->type & QVariant::DateTime ) {
-                    const QString entryStr1 = retrieveExtraEntry( m_fileitem, numExtra );
-                    QDateTime dt1 = QDateTime::fromString( entryStr1, Qt::ISODate );
-                    const QString entryStr2 = retrieveExtraEntry( k->m_fileitem, numExtra );
-                    QDateTime dt2 = QDateTime::fromString( entryStr2, Qt::ISODate );
+                if ( cInfo->type & TQVariant::DateTime ) {
+                    const TQString entryStr1 = retrieveExtraEntry( m_fileitem, numExtra );
+                    TQDateTime dt1 = TQDateTime::fromString( entryStr1, Qt::ISODate );
+                    const TQString entryStr2 = retrieveExtraEntry( k->m_fileitem, numExtra );
+                    TQDateTime dt2 = TQDateTime::fromString( entryStr2, Qt::ISODate );
                     return ( dt1 > dt2 ) ? 1 : ( dt1 < dt2 ) ? -1 : 0;
                 }
             }
@@ -294,19 +294,19 @@ int KonqBaseListViewItem::compare( QListViewItem* item, int col, bool ascending 
    }
 }
 
-void KonqListViewItem::paintCell( QPainter *_painter, const QColorGroup & _cg, int _column, int _width, int _alignment )
+void KonqListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment )
 {
-    QColorGroup cg( _cg );
+    TQColorGroup cg( _cg );
 
     if ( _column == 0 )
     {
         _painter->setFont( m_pListViewWidget->itemFont() );
     }
 
-    cg.setColor( QColorGroup::Text, m_pListViewWidget->itemColor() );
+    cg.setColor( TQColorGroup::Text, m_pListViewWidget->itemColor() );
 
     KListView *lv = static_cast< KListView* >( listView() );
-    const QPixmap *pm = lv->viewport()->paletteBackgroundPixmap();
+    const TQPixmap *pm = lv->viewport()->paletteBackgroundPixmap();
     if ( _column == 0 && isSelected() && !lv->allColumnsShowFocus() )
     {
         int newWidth = width( lv->fontMetrics(), lv, _column );
@@ -314,11 +314,11 @@ void KonqListViewItem::paintCell( QPainter *_painter, const QColorGroup & _cg, i
             newWidth = _width;
         if ( pm && !pm->isNull() )
         {
-            cg.setBrush( QColorGroup::Base, QBrush( backgroundColor(_column), *pm ) );
-            QPoint o = _painter->brushOrigin();
+            cg.setBrush( TQColorGroup::Base, TQBrush( backgroundColor(_column), *pm ) );
+            TQPoint o = _painter->brushOrigin();
             _painter->setBrushOrigin( o.x() - lv->contentsX(), o.y() - lv->contentsY() );
-            const QColorGroup::ColorRole crole =
-                QPalette::backgroundRoleFromMode( lv->viewport()->backgroundMode() );
+            const TQColorGroup::ColorRole crole =
+                TQPalette::backgroundRoleFromMode( lv->viewport()->backgroundMode() );
             _painter->fillRect( newWidth, 0, _width - newWidth, height(), cg.brush( crole ) );
             _painter->setBrushOrigin( o );
         }
@@ -333,14 +333,14 @@ void KonqListViewItem::paintCell( QPainter *_painter, const QColorGroup & _cg, i
     KListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
 }
 
-void KonqListViewItem::paintFocus( QPainter * _painter, const QColorGroup & cg, const QRect & _r )
+void KonqListViewItem::paintFocus( TQPainter * _painter, const TQColorGroup & cg, const TQRect & _r )
 {
-    QRect r( _r );
-    QListView *lv = static_cast< QListView * >( listView() );
+    TQRect r( _r );
+    TQListView *lv = static_cast< TQListView * >( listView() );
     r.setWidth( width( lv->fontMetrics(), lv, 0 ) );
     if ( r.right() > lv->header()->sectionRect( 0 ).right() )
         r.setRight( lv->header()->sectionRect( 0 ).right() );
-    QListViewItem::paintFocus( _painter, cg, r );
+    TQListViewItem::paintFocus( _painter, cg, r );
 }
 
 const char* KonqBaseListViewItem::makeAccessString( const mode_t mode)
@@ -419,10 +419,10 @@ KonqBaseListViewItem::~KonqBaseListViewItem()
       m_pListViewWidget->m_selected->removeRef(this);
 }
 
-QRect KonqBaseListViewItem::rect() const
+TQRect KonqBaseListViewItem::rect() const
 {
-    QRect r = m_pListViewWidget->itemRect(this);
-    return QRect( m_pListViewWidget->viewportToContents( r.topLeft() ), QSize( r.width(), r.height() ) );
+    TQRect r = m_pListViewWidget->itemRect(this);
+    return TQRect( m_pListViewWidget->viewportToContents( r.topLeft() ), TQSize( r.width(), r.height() ) );
 }
 
 void KonqBaseListViewItem::mimetypeFound()

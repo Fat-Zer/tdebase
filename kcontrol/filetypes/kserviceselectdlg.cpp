@@ -22,17 +22,17 @@
 
 #include <klocale.h>
 
-#include <qvbox.h>
-#include <qlabel.h>
+#include <tqvbox.h>
+#include <tqlabel.h>
 
-KServiceSelectDlg::KServiceSelectDlg( const QString& /*serviceType*/, const QString& /*value*/, QWidget *parent )
+KServiceSelectDlg::KServiceSelectDlg( const TQString& /*serviceType*/, const TQString& /*value*/, TQWidget *parent )
     : KDialogBase( parent, "serviceSelectDlg", true,
                    i18n( "Add Service" ), Ok|Cancel, Ok )
 {
-    QVBox *vbox = new QVBox ( this );
+    TQVBox *vbox = new TQVBox ( this );
 
     vbox->setSpacing( KDialog::spacingHint() );
-    new QLabel( i18n( "Select service:" ), vbox );
+    new TQLabel( i18n( "Select service:" ), vbox );
     m_listbox=new KListBox( vbox );
 
     // Can't make a KTrader query since we don't have a servicetype to give,
@@ -40,7 +40,7 @@ KServiceSelectDlg::KServiceSelectDlg( const QString& /*serviceType*/, const QStr
     // So we have to do it the slow way
     // ### Why can't we query for KParts/ReadOnlyPart as the servicetype? Should work fine!
     KService::List allServices = KService::allServices();
-    QValueListIterator<KService::Ptr> it(allServices.begin());
+    TQValueListIterator<KService::Ptr> it(allServices.begin());
     for ( ; it != allServices.end() ; ++it )
       if ( (*it)->hasServiceType( "KParts/ReadOnlyPart" ) )
       {
@@ -50,7 +50,7 @@ KServiceSelectDlg::KServiceSelectDlg( const QString& /*serviceType*/, const QStr
     m_listbox->sort();
     m_listbox->setMinimumHeight(350);
     m_listbox->setMinimumWidth(300);
-    connect(m_listbox,SIGNAL(doubleClicked ( QListBoxItem * )),SLOT(slotOk()));
+    connect(m_listbox,TQT_SIGNAL(doubleClicked ( TQListBoxItem * )),TQT_SLOT(slotOk()));
     setMainWidget(vbox);
 }
 

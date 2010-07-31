@@ -24,9 +24,9 @@
 #ifndef KSG_BARGRAPH_H
 #define KSG_BARGRAPH_H
 
-#include <qmemarray.h>
-#include <qptrvector.h>
-#include <qwidget.h>
+#include <tqmemarray.h>
+#include <tqptrvector.h>
+#include <tqwidget.h>
 
 class BarGraph : public QWidget
 {
@@ -35,13 +35,13 @@ class BarGraph : public QWidget
   friend class DancingBars;
 
   public:
-    BarGraph( QWidget *parent, const char *name = 0 );
+    BarGraph( TQWidget *parent, const char *name = 0 );
     ~BarGraph();
 
-    bool addBar( const QString &footer );
+    bool addBar( const TQString &footer );
     bool removeBar( uint idx );
 
-    void updateSamples( const QMemArray<double> &newSamples );
+    void updateSamples( const TQMemArray<double> &newSamples );
 
     double getMin() const
     {
@@ -72,7 +72,7 @@ class BarGraph : public QWidget
     void changeRange( double min, double max );
 
   protected:
-    virtual void paintEvent( QPaintEvent* );
+    virtual void paintEvent( TQPaintEvent* );
 
   private:
     double minValue;
@@ -82,12 +82,12 @@ class BarGraph : public QWidget
     double upperLimit;
     bool upperLimitActive;
     bool autoRange;
-    QMemArray<double> samples;
-    QStringList footers;
+    TQMemArray<double> samples;
+    TQStringList footers;
     uint bars;
-    QColor normalColor;
-    QColor alarmColor;
-    QColor backgroundColor;
+    TQColor normalColor;
+    TQColor alarmColor;
+    TQColor backgroundColor;
     int fontSize;
 };
 

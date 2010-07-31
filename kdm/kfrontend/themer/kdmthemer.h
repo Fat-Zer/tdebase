@@ -22,8 +22,8 @@
 #ifndef KDMTHEMER_H
 #define KDMTHEMER_H
 
-#include <qobject.h>
-#include <qdom.h>
+#include <tqobject.h>
+#include <tqdom.h>
 
 class KdmThemer;
 class KdmItem;
@@ -47,7 +47,7 @@ class QEvent;
 */
 
 
-class KdmThemer : public QObject {
+class KdmThemer : public TQObject {
 	Q_OBJECT
 
 public:
@@ -55,41 +55,41 @@ public:
 	 * Construct and destruct the interface
 	 */
 
-	KdmThemer( const QString &path, const QString &mode, QWidget *parent );
+	KdmThemer( const TQString &path, const TQString &mode, TQWidget *parent );
 	~KdmThemer();
 
 	bool isOK() { return rootItem != 0; }
 	/*
 	 * Gives a sizeHint to the widget (parent size)
 	 */
-	//QSize sizeHint() const{ return parentWidget()->size(); }
+	//TQSize sizeHint() const{ return parentWidget()->size(); }
 
 	/*
 	 * Takes a shot of the current widget
 	 */
-//	void pixmap( const QRect &r, QPixmap *px );
+//	void pixmap( const TQRect &r, TQPixmap *px );
 
 	virtual // just to put the reference in the vmt
-	KdmItem *findNode( const QString & ) const;
+	KdmItem *findNode( const TQString & ) const;
 
 	void updateGeometry( bool force ); // force = true for external calls
 
 	// must be called by parent widget
-	void widgetEvent( QEvent *e );
+	void widgetEvent( TQEvent *e );
 
 signals:
-	void activated( const QString &id );
+	void activated( const TQString &id );
 
 private:
 	/*
 	 * Our display mode (e.g. console, remote, ...)
 	 */
-	QString m_currentMode;
+	TQString m_currentMode;
 
 	/*
 	 * The config file being used
 	 */
-	QDomDocument domTree;
+	TQDomDocument domTree;
 
 	/*
 	 * Stores the root of the theme
@@ -99,24 +99,24 @@ private:
 	/*
 	 * The backbuffer
 	 */
-	QPixmap *backBuffer;
+	TQPixmap *backBuffer;
 
 	// methods
 
 	/*
 	 * Test whether item needs to be displayed
 	 */
-	bool willDisplay( const QDomNode &node );
+	bool willDisplay( const TQDomNode &node );
 
 	/*
 	 * Parses the XML file looking for the
 	 * item list and adds those to the themer
 	 */
-	void generateItems( KdmItem *parent = 0, const QDomNode &node = QDomNode() );
+	void generateItems( KdmItem *parent = 0, const TQDomNode &node = TQDomNode() );
 
-	void showStructure( QObject *obj );
+	void showStructure( TQObject *obj );
 
-	QWidget *widget();
+	TQWidget *widget();
 };
 
 

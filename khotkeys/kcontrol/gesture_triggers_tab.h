@@ -13,7 +13,7 @@
 
 #include <gesture_triggers_tab_ui.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdialogbase.h>
 
@@ -28,7 +28,7 @@ class Gesture_triggers_tab
     {
     Q_OBJECT
     public:
-        Gesture_triggers_tab( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Gesture_triggers_tab( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void set_data( const Trigger_list* triggers_P );
         Trigger_list* get_data( Action_data* data_P ) const;
     protected:
@@ -38,7 +38,7 @@ class Gesture_triggers_tab
     public slots:
         void clear_data();
     private:
-        QString gesture1, gesture2, gesture3;
+        TQString gesture1, gesture2, gesture3;
     };
 
 class GestureRecordPage;
@@ -48,11 +48,11 @@ class Gesture_edit_dialog
     {
     Q_OBJECT
     public:
-        Gesture_edit_dialog( const QString& gesture_P );
-        QString edit_gesture();
+        Gesture_edit_dialog( const TQString& gesture_P );
+        TQString edit_gesture();
     private:
         // CHECKME accept() ?
-        QString _gesture;
+        TQString _gesture;
         GestureRecordPage *_page;
     };        
             

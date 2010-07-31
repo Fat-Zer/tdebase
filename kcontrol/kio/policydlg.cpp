@@ -16,11 +16,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qvalidator.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqvalidator.h>
 
 #include <klineedit.h>
 #include <kcombobox.h>
@@ -33,12 +33,12 @@
 class DomainLineValidator : public QValidator
 {
 public:
-  DomainLineValidator(QObject *parent)
-  :QValidator(parent, "domainValidator")
+  DomainLineValidator(TQObject *parent)
+  :TQValidator(parent, "domainValidator")
   {
   }
 
-  State validate(QString &input, int &) const
+  State validate(TQString &input, int &) const
   {
     if (input.isEmpty() || (input == "."))
       return Intermediate;
@@ -56,7 +56,7 @@ public:
 };
 
 
-PolicyDlg::PolicyDlg (const QString& caption, QWidget *parent,
+PolicyDlg::PolicyDlg (const TQString& caption, TQWidget *parent,
     const char *name)
     : KDialogBase(parent, name, true, caption, Ok|Cancel, Ok, true)
 {
@@ -67,14 +67,14 @@ PolicyDlg::PolicyDlg (const QString& caption, QWidget *parent,
   m_dlgUI->cbPolicy->setMinimumWidth( m_dlgUI->cbPolicy->fontMetrics().maxWidth() * 25 );
   
   enableButtonOK( false );
-  connect(m_dlgUI->leDomain, SIGNAL(textChanged(const QString&)),
-    SLOT(slotTextChanged(const QString&)));
+  connect(m_dlgUI->leDomain, TQT_SIGNAL(textChanged(const TQString&)),
+    TQT_SLOT(slotTextChanged(const TQString&)));
 
   setFixedSize (sizeHint());
   m_dlgUI->leDomain->setFocus ();
 }
 
-void PolicyDlg::setEnableHostEdit( bool state, const QString& host )
+void PolicyDlg::setEnableHostEdit( bool state, const TQString& host )
 {
   if ( !host.isEmpty() )
     m_dlgUI->leDomain->setText( host );
@@ -95,12 +95,12 @@ int PolicyDlg::advice () const
   return m_dlgUI->cbPolicy->currentItem() + 1;
 }
 
-QString PolicyDlg::domain () const
+TQString PolicyDlg::domain () const
 {
   return m_dlgUI->leDomain->text();
 }
 
-void PolicyDlg::slotTextChanged( const QString& text )
+void PolicyDlg::slotTextChanged( const TQString& text )
 {
   enableButtonOK( text.length() > 1 );
 }

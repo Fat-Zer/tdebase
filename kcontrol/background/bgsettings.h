@@ -12,11 +12,11 @@
 #define __BGSettings_h_Included__
 
 
-#include <qstringlist.h>
-#include <qcolor.h>
-#include <qvaluevector.h>
+#include <tqstringlist.h>
+#include <tqcolor.h>
+#include <tqvaluevector.h>
 
-template <class QString, class T> class QMap;
+template <class TQString, class T> class QMap;
 class KStandardDirs;
 class KSimpleConfig;
 class KConfig;
@@ -32,19 +32,19 @@ class QImage;
 class KBackgroundPattern
 {
 public:
-    KBackgroundPattern(QString name=QString::null);
+    KBackgroundPattern(TQString name=TQString::null);
     ~KBackgroundPattern();
 
     void copyConfig(const KBackgroundPattern*);
 
-    QString name() const { return m_Name; }
-    void load(QString name);
+    TQString name() const { return m_Name; }
+    void load(TQString name);
 
-    void setComment(const QString &comment);
-    QString comment() const {return m_Comment; }
+    void setComment(const TQString &comment);
+    TQString comment() const {return m_Comment; }
 
-    void setPattern(QString file);
-    QString pattern() const { return m_Pattern; }
+    void setPattern(TQString file);
+    TQString pattern() const { return m_Pattern; }
 
     void readSettings();
     void writeSettings();
@@ -55,17 +55,17 @@ public:
 
     int hash();
 
-    static QStringList list();
+    static TQStringList list();
 
 private:
     void init(bool force_rw=false);
-    QString fingerprint();
+    TQString fingerprint();
 
     bool dirty, hashdirty;
     bool m_bReadOnly;
     int m_Hash;
-    QString m_Name, m_Comment;
-    QString m_Pattern, m_File;
+    TQString m_Name, m_Comment;
+    TQString m_Pattern, m_File;
     KStandardDirs *m_pDirs;
     KSimpleConfig *m_pConfig;
 };
@@ -90,28 +90,28 @@ private:
 class KBackgroundProgram
 {
 public:
-    KBackgroundProgram(QString name=QString::null);
+    KBackgroundProgram(TQString name=TQString::null);
     ~KBackgroundProgram();
 
     void copyConfig(const KBackgroundProgram*);
 
-    QString name()const { return m_Name; }
-    void load(const QString & name);
+    TQString name()const { return m_Name; }
+    void load(const TQString & name);
 
-    void setComment(const QString &comment);
-    QString comment()const { return m_Comment; }
+    void setComment(const TQString &comment);
+    TQString comment()const { return m_Comment; }
 
-    void setCommand(const QString &command);
-    QString command()const { return m_Command; }
+    void setCommand(const TQString &command);
+    TQString command()const { return m_Command; }
 
-    void setPreviewCommand(const QString &command);
-    QString previewCommand()const { return m_PreviewCommand; }
+    void setPreviewCommand(const TQString &command);
+    TQString previewCommand()const { return m_PreviewCommand; }
 
     void setRefresh(int refresh);
     int refresh()const { return m_Refresh; }
 
-    void setExecutable(const QString &executable);
-    QString executable()const { return m_Executable; }
+    void setExecutable(const TQString &executable);
+    TQString executable()const { return m_Executable; }
 
     void readSettings();
     void writeSettings();
@@ -125,18 +125,18 @@ public:
     bool isGlobal()const { return m_bReadOnly; }
     bool remove();
 
-    static QStringList list();
+    static TQStringList list();
 
 private:
     void init(bool force_rw=false);
-    QString fingerprint();
+    TQString fingerprint();
 
     bool dirty, hashdirty;
     bool m_bReadOnly;
     int m_Refresh, m_Hash, m_LastChange;
-    QString m_Name, m_Command;
-    QString m_PreviewCommand, m_Comment;
-    QString m_Executable, m_File;
+    TQString m_Name, m_Command;
+    TQString m_PreviewCommand, m_Comment;
+    TQString m_Executable, m_File;
     KStandardDirs *m_pDirs;
     KSimpleConfig *m_pConfig;
 };
@@ -169,13 +169,13 @@ public:
 //     void load(int desk, int screen, bool drawBackgroundPerScreen, bool reparseConfig=true);
     void load(int desk, int screen, bool drawBackgroundPerScreen, bool reparseConfig);
 
-    void setColorA(const QColor &color);
-    QColor colorA() const { return m_ColorA; }
-    void setColorB(const QColor &color);
-    QColor colorB() const { return m_ColorB; }
+    void setColorA(const TQColor &color);
+    TQColor colorA() const { return m_ColorA; }
+    void setColorB(const TQColor &color);
+    TQColor colorB() const { return m_ColorB; }
 
-    void setProgram(QString program);
-    void setPatternName(QString pattern);
+    void setProgram(TQString program);
+    void setPatternName(TQString pattern);
 
     enum BackgroundMode {
 	Flat, Pattern, Program,
@@ -201,8 +201,8 @@ public:
     void setBlendBalance(int value);
     int blendBalance() const { return m_BlendBalance; }
 
-    void setWallpaper(QString name);
-    QString wallpaper() const { return m_Wallpaper; }
+    void setWallpaper(TQString name);
+    TQString wallpaper() const { return m_Wallpaper; }
 
     enum WallpaperMode {
 	NoWallpaper, Centred, Tiled, CenterTiled, CentredMaxpect, TiledMaxpect,
@@ -211,9 +211,9 @@ public:
     void setWallpaperMode(int mode);
     int wallpaperMode() const { return m_WallpaperMode; }
 
-    void setWallpaperList(QStringList);
-    QStringList wallpaperList() const;
-    QStringList wallpaperFiles() const;
+    void setWallpaperList(TQStringList);
+    TQStringList wallpaperList() const;
+    TQStringList wallpaperFiles() const;
 
     void setWallpaperChangeInterval(int);
     int wallpaperChangeInterval() const { return m_Interval; }
@@ -238,7 +238,7 @@ public:
     void updateWallpaperFiles();
     void randomizeWallpaperFiles();
 
-    QString currentWallpaper() const;
+    TQString currentWallpaper() const;
     /**
      * @return true if the currentWallpaper has changed
      */
@@ -248,10 +248,10 @@ public:
 
     void readSettings(bool reparse=false);
     void writeSettings();
-    QString configGroupName() const;
+    TQString configGroupName() const;
 
     int hash();
-    QString fingerprint();
+    TQString fingerprint();
 
     void setEnabled( const bool enable );
     bool enabled() const { return m_bEnabled; }
@@ -263,10 +263,10 @@ private:
     bool hashdirty;
     int m_Screen, m_Desk, m_Hash;
 
-    QColor m_ColorA, defColorA;
-    QColor m_ColorB, defColorB;
-    QString m_Wallpaper;
-    QStringList m_WallpaperList, m_WallpaperFiles;
+    TQColor m_ColorA, defColorA;
+    TQColor m_ColorB, defColorB;
+    TQString m_Wallpaper;
+    TQStringList m_WallpaperList, m_WallpaperFiles;
 
     int m_BackgroundMode, defBackgroundMode;
     int m_WallpaperMode, defWallpaperMode;
@@ -280,7 +280,7 @@ private:
     int m_MultiMode, defMultiMode;
     int m_Interval, m_LastChange;
     int m_CurrentWallpaper;
-    QString m_CurrentWallpaperName;
+    TQString m_CurrentWallpaperName;
 
     KConfig *m_pConfig;
     KStandardDirs *m_pDirs;
@@ -288,10 +288,10 @@ private:
     bool m_bEnabled;
 
 public:
-    QMap<QString,int> m_BMMap;
-    QMap<QString,int> m_WMMap;
-    QMap<QString,int> m_MMMap;
-    QMap<QString,int> m_BlMMap;
+    TQMap<TQString,int> m_BMMap;
+    TQMap<TQString,int> m_WMMap;
+    TQMap<TQString,int> m_MMMap;
+    TQMap<TQString,int> m_BlMMap;
     char *m_BMRevMap[16];
     char *m_WMRevMap[16];
     char *m_MMRevMap[16];
@@ -307,8 +307,8 @@ class KGlobalBackgroundSettings
 public:
     KGlobalBackgroundSettings(KConfig *config);
 
-    QString deskName(int desk);
-    //void setDeskName(int desk, QString name);
+    TQString deskName(int desk);
+    //void setDeskName(int desk, TQString name);
 
     int cacheSize() { return m_CacheSize; }
     void setCacheSize(int size);
@@ -331,11 +331,11 @@ public:
     bool exportBackground() {return m_bExport; }
     void setExportBackground(bool _export);
 
-    void setTextColor(QColor _color);
-    QColor textColor() const { return m_TextColor; }
+    void setTextColor(TQColor _color);
+    TQColor textColor() const { return m_TextColor; }
 
-    void setTextBackgroundColor(QColor _color);
-    QColor textBackgroundColor() const { return m_TextBackgroundColor; }
+    void setTextBackgroundColor(TQColor _color);
+    TQColor textBackgroundColor() const { return m_TextBackgroundColor; }
 
     void setShadowEnabled(bool enabled);
     bool shadowEnabled() const { return m_shadowEnabled; }
@@ -356,16 +356,16 @@ private:
     bool m_bDock;
     bool m_bLimitCache, m_bExport;
     int m_CacheSize;
-    QStringList m_Names;
+    TQStringList m_Names;
 
-    QColor m_TextColor;
-    QColor m_TextBackgroundColor;
+    TQColor m_TextColor;
+    TQColor m_TextBackgroundColor;
     bool m_shadowEnabled;
     int m_textLines;
     int m_textWidth;
     KConfig *m_pConfig;
     bool m_bDeleteConfig;
-    QValueVector<bool> m_bDrawBackgroundPerScreen; // m_bDrawBackgroundPerScreen[desk]
+    TQValueVector<bool> m_bDrawBackgroundPerScreen; // m_bDrawBackgroundPerScreen[desk]
 };
 
 

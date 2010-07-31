@@ -21,7 +21,7 @@
 #ifndef _JOYWIDGET_H_
 #define _JOYWIDGET_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class JoyDevice;
 
@@ -40,7 +40,7 @@ class JoyWidget : public QWidget
   Q_OBJECT
   
   public:
-    JoyWidget(QWidget *parent = 0, const char *name = 0);
+    JoyWidget(TQWidget *parent = 0, const char *name = 0);
 
     ~JoyWidget();
 
@@ -53,7 +53,7 @@ class JoyWidget : public QWidget
 
   private slots:
     void checkDevice();
-    void deviceChanged(const QString &dev);
+    void deviceChanged(const TQString &dev);
     void traceChanged(bool);
     void calibrateDevice();
 
@@ -62,16 +62,16 @@ class JoyWidget : public QWidget
     void restoreCurrDev(); // restores the content of the combobox to reflect the current open device
 
   private:
-    QHBox  *messageBox;
-    QLabel *message;  // in case of no device, show here a message rather than in a dialog
-    QComboBox *device;
+    TQHBox  *messageBox;
+    TQLabel *message;  // in case of no device, show here a message rather than in a dialog
+    TQComboBox *device;
     PosWidget *xyPos;
-    QTable *buttonTbl;
-    QTable *axesTbl;
-    QCheckBox *trace;
-    QPushButton *calibrate;
+    TQTable *buttonTbl;
+    TQTable *axesTbl;
+    TQCheckBox *trace;
+    TQPushButton *calibrate;
 
-    QTimer *idle;
+    TQTimer *idle;
 
     JoyDevice *joydev;
 };

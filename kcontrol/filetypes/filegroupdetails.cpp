@@ -17,29 +17,29 @@
 */
 #include "filegroupdetails.h"
 #include "typeslistitem.h"
-#include <qlayout.h>
-#include <qvbuttongroup.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqvbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
 #include <kdialog.h>
 #include <klocale.h>
 
-FileGroupDetails::FileGroupDetails(QWidget *parent, const char *name )
-    : QWidget( parent, name )
+FileGroupDetails::FileGroupDetails(TQWidget *parent, const char *name )
+    : TQWidget( parent, name )
 {
-  QWidget * parentWidget = this;
-  QVBoxLayout *secondLayout = new QVBoxLayout(parentWidget,
+  TQWidget * parentWidget = this;
+  TQVBoxLayout *secondLayout = new TQVBoxLayout(parentWidget,
       0, KDialog::spacingHint());
 
-  m_autoEmbed = new QVButtonGroup( i18n("Left Click Action"), parentWidget );
+  m_autoEmbed = new TQVButtonGroup( i18n("Left Click Action"), parentWidget );
   m_autoEmbed->layout()->setSpacing( KDialog::spacingHint() );
   secondLayout->addWidget( m_autoEmbed );
   // The order of those two items is very important. If you change it, fix typeslistitem.cpp !
-  new QRadioButton( i18n("Show file in embedded viewer"), m_autoEmbed );
-  new QRadioButton( i18n("Show file in separate viewer"), m_autoEmbed );
-  connect(m_autoEmbed, SIGNAL( clicked( int ) ), SLOT( slotAutoEmbedClicked( int ) ));
+  new TQRadioButton( i18n("Show file in embedded viewer"), m_autoEmbed );
+  new TQRadioButton( i18n("Show file in separate viewer"), m_autoEmbed );
+  connect(m_autoEmbed, TQT_SIGNAL( clicked( int ) ), TQT_SLOT( slotAutoEmbedClicked( int ) ));
 
-  QWhatsThis::add( m_autoEmbed, i18n("Here you can configure what the Konqueror file manager"
+  TQWhatsThis::add( m_autoEmbed, i18n("Here you can configure what the Konqueror file manager"
     " will do when you click on a file belonging to this group. Konqueror can display the file in"
     " an embedded viewer or start up a separate application. You can change this setting for a"
     " specific file type in the 'Embedding' tab of the file type configuration.") );

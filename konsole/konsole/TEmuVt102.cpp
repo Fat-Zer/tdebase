@@ -81,10 +81,10 @@
 TEmuVt102::TEmuVt102(TEWidget* gui) : TEmulation(gui)
 {
   //kdDebug(1211)<<"TEmuVt102 ctor() connecting"<<endl;
-  QObject::connect(gui,SIGNAL(mouseSignal(int,int,int)),
-                   this,SLOT(onMouse(int,int,int)));
-  QObject::connect(gui, SIGNAL(sendStringToEmu(const char*)),
-		   this, SLOT(sendString(const char*)));
+  TQObject::connect(gui,TQT_SIGNAL(mouseSignal(int,int,int)),
+                   this,TQT_SLOT(onMouse(int,int,int)));
+  TQObject::connect(gui, TQT_SIGNAL(sendStringToEmu(const char*)),
+		   this, TQT_SLOT(sendString(const char*)));
   //kdDebug(1211)<<"TEmuVt102 ctor() initToken..."<<endl;
   initTokenizer();
   //kdDebug(1211)<<"TEmuVt102 ctor() reset()"<<endl;
@@ -100,16 +100,16 @@ void TEmuVt102::changeGUI(TEWidget* newgui)
   if (static_cast<TEWidget *>( gui )==newgui) return;
 
   if ( gui ) {
-    QObject::disconnect(gui,SIGNAL(mouseSignal(int,int,int)),
-                        this,SLOT(onMouse(int,int,int)));
-    QObject::disconnect(gui, SIGNAL(sendStringToEmu(const char*)),
-                        this, SLOT(sendString(const char*)));
+    TQObject::disconnect(gui,TQT_SIGNAL(mouseSignal(int,int,int)),
+                        this,TQT_SLOT(onMouse(int,int,int)));
+    TQObject::disconnect(gui, TQT_SIGNAL(sendStringToEmu(const char*)),
+                        this, TQT_SLOT(sendString(const char*)));
   }
   TEmulation::changeGUI(newgui);
-  QObject::connect(gui,SIGNAL(mouseSignal(int,int,int)),
-                   this,SLOT(onMouse(int,int,int)));
-  QObject::connect(gui, SIGNAL(sendStringToEmu(const char*)),
-		   this, SLOT(sendString(const char*)));
+  TQObject::connect(gui,TQT_SIGNAL(mouseSignal(int,int,int)),
+                   this,TQT_SLOT(onMouse(int,int,int)));
+  TQObject::connect(gui, TQT_SIGNAL(sendStringToEmu(const char*)),
+		   this, TQT_SLOT(sendString(const char*)));
 }
 
 /*!
@@ -382,9 +382,9 @@ void TEmuVt102::XtermHack()
   for (i = 2; i < ppos && '0'<=pbuf[i] && pbuf[i]<'9' ; i++)
     arg = 10*arg + (pbuf[i]-'0');
   if (pbuf[i] != ';') { ReportErrorToken(); return; }
-  QChar *str = new QChar[ppos-i-2];
+  TQChar *str = new QChar[ppos-i-2];
   for (int j = 0; j < ppos-i-2; j++) str[j] = pbuf[i+1+j];
-  QString unistr(str,ppos-i-2);
+  TQString unistr(str,ppos-i-2);
   // arg == 1 doesn't change the title. In XTerm it only changes the icon name
   // (btw: arg=0 changes title and icon, arg=1 only icon, arg=2 only title
   emit changeTitle(arg,unistr);
@@ -927,7 +927,7 @@ void TEmuVt102::onScrollLock()
    the complications towards a configuration file [see KeyTrans class].
 */
 
-void TEmuVt102::onKeyPress( QKeyEvent* ev )
+void TEmuVt102::onKeyPress( TQKeyEvent* ev )
 {
   if (!listenToKeyPress) return; // someone else gets the keys
   emit notifySessionState(NOTIFYNORMAL);
@@ -986,8 +986,8 @@ void TEmuVt102::onKeyPress( QKeyEvent* ev )
   if (!ev->text().isEmpty())
   {
     if (ev->state() & AltButton) sendString("\033"); // ESC, this is the ALT prefix
-    QCString s = m_codec->fromUnicode(ev->text());     // encode for application
-    // FIXME: In Qt 2, QKeyEvent::text() would return "\003" for Ctrl-C etc.
+    TQCString s = m_codec->fromUnicode(ev->text());     // encode for application
+    // FIXME: In Qt 2, TQKeyEvent::text() would return "\003" for Ctrl-C etc.
     //        while in Qt 3 it returns the actual key ("c" or "C") which caused
     //        the ControlButton to be ignored. This hack seems to work for
     //        latin1 locales at least. Please anyone find a clean solution (malte)
@@ -1195,8 +1195,8 @@ void TEmuVt102::setConnect(bool c)
   TEmulation::setConnect(c);
   if (gui)
   {
-    QObject::disconnect(gui, SIGNAL(sendStringToEmu(const char*)),
-                        this, SLOT(sendString(const char*)));
+    TQObject::disconnect(gui, TQT_SIGNAL(sendStringToEmu(const char*)),
+                        this, TQT_SLOT(sendString(const char*)));
   }
   if (c)
   { // refresh mouse mode
@@ -1210,8 +1210,8 @@ void TEmuVt102::setConnect(bool c)
     else
       scrolllock_set_off();
 #endif
-    QObject::connect(gui, SIGNAL(sendStringToEmu(const char*)),
-                     this, SLOT(sendString(const char*)));
+    TQObject::connect(gui, TQT_SIGNAL(sendStringToEmu(const char*)),
+                     this, TQT_SLOT(sendString(const char*)));
   }
 }
 

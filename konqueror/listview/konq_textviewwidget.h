@@ -34,21 +34,21 @@ class KonqTextViewWidget : public KonqBaseListViewWidget
    friend class KonqTextViewItem;
    Q_OBJECT
    public:
-      KonqTextViewWidget( KonqListView *parent, QWidget *parentWidget );
+      KonqTextViewWidget( KonqListView *parent, TQWidget *parentWidget );
       ~KonqTextViewWidget();
-      virtual bool isExecuteArea( const QPoint& point );
+      virtual bool isExecuteArea( const TQPoint& point );
 
    protected slots:
       // slots connected to the directory lister
       virtual void setComplete();
       virtual void slotNewItems( const KFileItemList & );
    protected:
-//      bool isNameColumn(const QPoint& point );
-//      virtual void viewportDragMoveEvent( QDragMoveEvent *_ev );
-//      virtual void viewportDropEvent( QDropEvent *ev  );
+//      bool isNameColumn(const TQPoint& point );
+//      virtual void viewportDragMoveEvent( TQDragMoveEvent *_ev );
+//      virtual void viewportDropEvent( TQDropEvent *ev  );
       virtual void createColumns();
 
-      QColor colors[11];
+      TQColor colors[11];
 };
 
 #endif

@@ -34,26 +34,26 @@ class KrashConfig;
 class KTextBrowser;
 class BackTrace;
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KrashDebugger : public QWidget
 {
   Q_OBJECT
 
 public:
-  KrashDebugger(const KrashConfig *krashconf, QWidget *parent = 0, const char *name = 0);
+  KrashDebugger(const KrashConfig *krashconf, TQWidget *parent = 0, const char *name = 0);
   ~KrashDebugger();
 
 public slots:
-  void slotAppend(const QString &);
-  void slotDone(const QString&);
+  void slotAppend(const TQString &);
+  void slotDone(const TQString&);
   void slotSomeError();
 
 protected:
   void startDebugger();
-  bool performChecks( QString* msg );
+  bool performChecks( TQString* msg );
 
-  virtual void showEvent(QShowEvent *e);
+  virtual void showEvent(TQShowEvent *e);
 
 protected slots:
   void slotCopy();
@@ -62,11 +62,11 @@ protected slots:
 private:
   const KrashConfig *m_krashconf;
   BackTrace *m_proctrace;
-  QLabel *m_status;
+  TQLabel *m_status;
   KTextBrowser *m_backtrace;
-  QPushButton * m_copyButton;
-  QPushButton * m_saveButton;
-  QString m_prependText;
+  TQPushButton * m_copyButton;
+  TQPushButton * m_saveButton;
+  TQString m_prependText;
 };
 
 #endif

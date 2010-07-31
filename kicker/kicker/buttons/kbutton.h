@@ -34,7 +34,7 @@ class KButton : public PanelPopupButton
     Q_OBJECT
 
 public:
-    KButton( QWidget *parent );
+    KButton( TQWidget *parent );
     ~KButton();
 
     void loadConfig( const KConfigGroup& config );
@@ -42,9 +42,9 @@ public:
     virtual void properties();
 
 protected:
-    virtual QString tileName() { return "KMenu"; }
+    virtual TQString tileName() { return "KMenu"; }
     virtual void initPopup();
-    virtual QString defaultIcon() const { return "go"; }
+    virtual TQString defaultIcon() const { return "go"; }
 };
 
 #endif

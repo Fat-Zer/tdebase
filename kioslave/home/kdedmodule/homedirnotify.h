@@ -22,7 +22,7 @@
 #include <kurl.h>
 #include <kdirnotify.h>
 
-#include <qmap.h>
+#include <tqmap.h>
 
 class HomeDirNotify : public KDirNotify
 {
@@ -41,7 +41,7 @@ private:
 	KURL toHomeURL(const KURL &url);
 	KURL::List toHomeURLList(const KURL::List &list);
 	
-	QMap<QString,KURL> m_homeFoldersMap;
+	TQMap<TQString,KURL> m_homeFoldersMap;
 	bool mInited;
 };
 

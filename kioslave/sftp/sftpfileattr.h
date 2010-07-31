@@ -20,9 +20,9 @@
 
 #include <sys/types.h>
 
-#include <qglobal.h>
-#include <qstring.h>
-#include <qdatastream.h>
+#include <tqglobal.h>
+#include <tqstring.h>
+#include <tqdatastream.h>
 
 #include <kio/global.h>
 #include <kdebug.h>
@@ -39,7 +39,7 @@ class sftpFileAttr {
 
 private: // Private attributes
     /** Name of file. */
-    QString mFilename;
+    TQString mFilename;
 
     /** Specifies which fields of the file attribute are available. */
     Q_UINT32 mFlags;
@@ -69,13 +69,13 @@ private: // Private attributes
      /** Longname of the file as found in a SSH_FXP_NAME sftp packet.
           These contents are parse to return the file's owner name and
           gr oup name. */
-    QCString mLongname;
+    TQCString mLongname;
 
-    QString mUserName;
-    QString mGroupName;
+    TQString mUserName;
+    TQString mGroupName;
 
     /** If file is a link, contains the destination of the link */
-    QString mLinkDestination;
+    TQString mLinkDestination;
 
     /** If resource is a link, contains the type the link,e.g. file,dir... */
     mode_t mLinkType;
@@ -195,17 +195,17 @@ public:
     unsigned int flags() const { return mFlags; }
 
     /** Sets file's longname. See sftpFileAttr::longname. */
-    void setLongname(QString l) { mLongname = l.latin1(); }
+    void setLongname(TQString l) { mLongname = l.latin1(); }
 
     /** Returns a string describing the file attributes. The format is specific
         to the implementation of the sftp server.  In most cases (ie OpenSSH)
         this is similar to the long output of 'ls'. */
-    QString longname() const { return mLongname; }
+    TQString longname() const { return mLongname; }
 
-    void setLinkDestination(const QString& target)
+    void setLinkDestination(const TQString& target)
         { mLinkDestination = target; }
 
-    QString linkDestination()
+    TQString linkDestination()
         { return mLinkDestination; }
 
     /** Sets the actual type a symbolic link points to. */
@@ -214,10 +214,10 @@ public:
     mode_t linkType() const { return mLinkType; }
 
     /** No descriptions */
-    void setFilename(const QString& fn)
+    void setFilename(const TQString& fn)
         { mFilename = fn; }
 
-    QString filename() const
+    TQString filename() const
         { return mFilename; }
 
     /** Returns a UDSEntry describing the file.
@@ -228,7 +228,7 @@ public:
         This will only write the sftp ATTR structure to the stream.
         It will never write the filename and longname because the client
         never sends those to the server. */
-    friend QDataStream& operator<< (QDataStream&, const sftpFileAttr&);
+    friend TQDataStream& operator<< (TQDataStream&, const sftpFileAttr&);
 
     /** Use to read a file attribute from a sftp packet.
         Read this carefully! If the DirAttrs flag is true, this will
@@ -237,7 +237,7 @@ public:
         If the DirAttrs flag is false, this will only read file attributes
         from the stream.
         BY DEFAULT, A NEW INSTANCE HAS DirAttrs == false */
-    friend QDataStream& operator>> (QDataStream&, sftpFileAttr&);
+    friend TQDataStream& operator>> (TQDataStream&, sftpFileAttr&);
 
     /** Parse longname for the owner and group names. */
     void getUserGroupNames();

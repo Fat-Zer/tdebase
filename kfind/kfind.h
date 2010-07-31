@@ -7,7 +7,7 @@
 #ifndef KFIND_H
 #define KFIND_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kfileitem.h>
 #include <kdirlister.h>
 
@@ -23,7 +23,7 @@ class Kfind: public QWidget
     Q_OBJECT
 
 public:
-    Kfind(QWidget * parent = 0, const char * name = 0);
+    Kfind(TQWidget * parent = 0, const char * name = 0);
     ~Kfind();
 
     void setURL( const KURL &url );
@@ -31,8 +31,8 @@ public:
     void setQuery(KQuery * q) { query = q; }
     void searchFinished();
 
-    void saveState( QDataStream *stream );
-    void restoreState( QDataStream *stream );
+    void saveState( TQDataStream *stream );
+    void restoreState( TQDataStream *stream );
 
 public slots:
     void startSearch();

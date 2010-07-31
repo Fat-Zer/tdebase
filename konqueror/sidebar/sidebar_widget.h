@@ -17,10 +17,10 @@
 #ifndef _SIDEBAR_WIDGET_
 #define _SIDEBAR_WIDGET_
 
-#include <qptrvector.h>
-#include <qtimer.h>
-#include <qstring.h>
-#include <qguardedptr.h>
+#include <tqptrvector.h>
+#include <tqtimer.h>
+#include <tqstring.h>
+#include <tqguardedptr.h>
 
 #include <kdockwidget.h>
 #include <kurl.h>
@@ -36,15 +36,15 @@ class QHBoxLayout;
 class QSplitter;
 class QStringList;
 
-class ButtonInfo: public QObject, public KonqSidebarIface
+class ButtonInfo: public TQObject, public KonqSidebarIface
 {
 	Q_OBJECT
 public:
-	ButtonInfo(const QString& file_, class KonqSidebarIface *part, class KDockWidget *dock_,
-			const QString &url_,const QString &lib,
-			const QString &dispName_, const QString &iconName_,
-			QObject *parent)
-		: QObject(parent), file(file_), dock(dock_), URL(url_),
+	ButtonInfo(const TQString& file_, class KonqSidebarIface *part, class KDockWidget *dock_,
+			const TQString &url_,const TQString &lib,
+			const TQString &dispName_, const TQString &iconName_,
+			TQObject *parent)
+		: TQObject(parent), file(file_), dock(dock_), URL(url_),
 		libName(lib), displayName(dispName_), iconName(iconName_), m_part(part)
 		{
 		copy = cut = paste = trash = del = rename =false;
@@ -52,13 +52,13 @@ public:
 
 	~ButtonInfo() {}
 
-	QString file;
+	TQString file;
 	KDockWidget *dock;
 	KonqSidebarPlugin *module;
-	QString URL;
-	QString libName;
-	QString displayName;
-	QString iconName;
+	TQString URL;
+	TQString libName;
+	TQString displayName;
+	TQString iconName;
 	bool copy;
 	bool cut;
 	bool paste;
@@ -74,8 +74,8 @@ class addBackEnd: public QObject
 {
 	Q_OBJECT
 public:
-	addBackEnd(QWidget *parent,class QPopupMenu *addmenu, bool universal,
-                   const QString &currentProfile, const char *name=0);
+	addBackEnd(TQWidget *parent,class TQPopupMenu *addmenu, bool universal,
+                   const TQString &currentProfile, const char *name=0);
 	~addBackEnd(){;}
 protected slots:
 	void aboutToShowAddMenu();
@@ -84,13 +84,13 @@ signals:
 	void updateNeeded();
 	void initialCopyNeeded();
 private:
-	QGuardedPtr<class QPopupMenu> menu;
-	QPtrVector<QString> libNames;
-	QPtrVector<QString> libParam;
+	TQGuardedPtr<class TQPopupMenu> menu;
+	TQPtrVector<TQString> libNames;
+	TQPtrVector<TQString> libParam;
 	bool m_universal;
-	QString m_currentProfile;
+	TQString m_currentProfile;
 	void doRollBack();
-	QWidget *m_parent;
+	TQWidget *m_parent;
 };
 
 class KDE_EXPORT Sidebar_Widget: public QWidget
@@ -99,24 +99,24 @@ class KDE_EXPORT Sidebar_Widget: public QWidget
 public:
 	friend class ButtonInfo;
 public:
-	Sidebar_Widget(QWidget *parent, KParts::ReadOnlyPart *par,
+	Sidebar_Widget(TQWidget *parent, KParts::ReadOnlyPart *par,
 						const char * name,bool universalMode, 
-						const QString &currentProfile);
+						const TQString &currentProfile);
 	~Sidebar_Widget();
 	bool openURL(const class KURL &url);
 	void stdAction(const char *handlestd);
 	//virtual KParts::ReadOnlyPart *getPart();
 	KParts::BrowserExtension *getExtension();
-        virtual QSize sizeHint() const;	
+        virtual TQSize sizeHint() const;	
 
 public slots:
-	void addWebSideBar(const KURL& url, const QString& name);
+	void addWebSideBar(const KURL& url, const TQString& name);
 
 protected:
-	void customEvent(QCustomEvent* ev);
-	void resizeEvent(QResizeEvent* ev);
-	virtual bool eventFilter(QObject*,QEvent*);
-	virtual void mousePressEvent(QMouseEvent*);
+	void customEvent(TQCustomEvent* ev);
+	void resizeEvent(TQResizeEvent* ev);
+	virtual bool eventFilter(TQObject*,TQEvent*);
+	virtual void mousePressEvent(TQMouseEvent*);
 
 protected slots:
 	void showHidePage(int value);
@@ -138,8 +138,8 @@ signals:
 public:
 	/* interface KonqSidebar_PluginInterface*/
 	KInstance  *getInstance();
-//        virtual void showError(QString &);      for later extension
-//        virtual void showMessage(QString &);    for later extension
+//        virtual void showError(TQString &);      for later extension
+//        virtual void showMessage(TQString &);    for later extension
 	/* end of interface implementation */
 
 
@@ -150,30 +150,30 @@ public slots:
 	 * @since 3.2
 	 * ### KDE4 remove me
 	 */
-	void submitFormRequest(const char*,const QString&,const QByteArray&,const QString&,const QString&,const QString&);
+	void submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&);
   	void createNewWindow( const KURL &url, const KParts::URLArgs &args = KParts::URLArgs() );
 	void createNewWindow( const KURL &url, const KParts::URLArgs &args,
              const KParts::WindowArgs &windowArgs, KParts::ReadOnlyPart *&part );
 
-	void popupMenu( const QPoint &global, const KFileItemList &items );
-  	void popupMenu( KXMLGUIClient *client, const QPoint &global, const KFileItemList &items );
-	void popupMenu( const QPoint &global, const KURL &url,
-		const QString &mimeType, mode_t mode = (mode_t)-1 );
+	void popupMenu( const TQPoint &global, const KFileItemList &items );
+  	void popupMenu( KXMLGUIClient *client, const TQPoint &global, const KFileItemList &items );
+	void popupMenu( const TQPoint &global, const KURL &url,
+		const TQString &mimeType, mode_t mode = (mode_t)-1 );
 	void popupMenu( KXMLGUIClient *client,
-		const QPoint &global, const KURL &url,
-		const QString &mimeType, mode_t mode = (mode_t)-1 );
+		const TQPoint &global, const KURL &url,
+		const TQString &mimeType, mode_t mode = (mode_t)-1 );
 	void enableAction( const char * name, bool enabled );
 	void userMovedSplitter();
 	
 private:
-	QSplitter *splitter() const;
-	bool addButton(const QString &desktoppath,int pos=-1);
+	TQSplitter *splitter() const;
+	bool addButton(const TQString &desktoppath,int pos=-1);
 	bool createView(ButtonInfo *data);
-	KonqSidebarPlugin *loadModule(QWidget *par,QString &desktopName,QString lib_name,ButtonInfo *bi);
+	KonqSidebarPlugin *loadModule(TQWidget *par,TQString &desktopName,TQString lib_name,ButtonInfo *bi);
 	void readConfig();
 	void initialCopy();
 	void doLayout();
-	void connectModule(QObject *mod);
+	void connectModule(TQObject *mod);
 	void collapseExpandSidebar();
 	bool doEnableActions();
 	bool m_universalMode;
@@ -184,15 +184,15 @@ private:
 	KDockWidget *m_mainDockWidget;
 
 	KMultiTabBar *m_buttonBar;
-        QPtrVector<ButtonInfo> m_buttons;
-	QHBoxLayout *m_layout;
+        TQPtrVector<ButtonInfo> m_buttons;
+	TQHBoxLayout *m_layout;
 	KPopupMenu *m_buttonPopup;
-	QPopupMenu *m_menu;
-	QGuardedPtr<ButtonInfo> m_activeModule;
-	QGuardedPtr<ButtonInfo> m_currentButton;
+	TQPopupMenu *m_menu;
+	TQGuardedPtr<ButtonInfo> m_activeModule;
+	TQGuardedPtr<ButtonInfo> m_currentButton;
 	
 	KConfig *m_config;
-	QTimer m_configTimer;
+	TQTimer m_configTimer;
 	
 	KURL m_storedUrl;
 	int m_savedWidth;
@@ -212,11 +212,11 @@ private:
 	bool m_noUpdate;
 	bool m_initial;
 
-	QString m_path;
-	QString m_relPath;
-	QString m_currentProfile;
-	QStringList m_visibleViews; // The views that are actually open
-	QStringList m_openViews; // The views that should be opened
+	TQString m_path;
+	TQString m_relPath;
+	TQString m_currentProfile;
+	TQStringList m_visibleViews; // The views that are actually open
+	TQStringList m_openViews; // The views that should be opened
 
 signals:
 	void panelHasBeenExpanded(bool);

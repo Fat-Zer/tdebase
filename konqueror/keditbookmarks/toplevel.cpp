@@ -32,10 +32,10 @@
 
 #include <stdlib.h>
 
-#include <qclipboard.h>
-#include <qsplitter.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqclipboard.h>
+#include <tqsplitter.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -60,8 +60,8 @@ CmdHistory* CmdHistory::s_self = 0;
 
 CmdHistory::CmdHistory(KActionCollection *collection)
     : m_commandHistory(collection) {
-    connect(&m_commandHistory, SIGNAL( commandExecuted(KCommand *) ),
-            SLOT( slotCommandExecuted(KCommand *) ));
+    connect(&m_commandHistory, TQT_SIGNAL( commandExecuted(KCommand *) ),
+            TQT_SLOT( slotCommandExecuted(KCommand *) ));
     assert(!s_self);
     s_self = this; // this is hacky
 }
@@ -121,17 +121,17 @@ void CmdHistory::clearHistory() {
 
 CurrentMgr *CurrentMgr::s_mgr = 0;
 
-KBookmark CurrentMgr::bookmarkAt(const QString &a) {
+KBookmark CurrentMgr::bookmarkAt(const TQString &a) {
     return self()->mgr()->findByAddress(a);
 }
 
 bool CurrentMgr::managerSave() { return mgr()->save(); }
-void CurrentMgr::saveAs(const QString &fileName) { mgr()->saveAs(fileName); }
+void CurrentMgr::saveAs(const TQString &fileName) { mgr()->saveAs(fileName); }
 void CurrentMgr::setUpdate(bool update) { mgr()->setUpdate(update); }
-QString CurrentMgr::path() const { return mgr()->path(); }
+TQString CurrentMgr::path() const { return mgr()->path(); }
 bool CurrentMgr::showNSBookmarks() const { return mgr()->showNSBookmarks(); }
 
-void CurrentMgr::createManager(const QString &filename) {
+void CurrentMgr::createManager(const TQString &filename) {
     if (m_mgr) {
         kdDebug()<<"ERROR calling createManager twice"<<endl;
         disconnect(m_mgr, 0, 0, 0);
@@ -140,11 +140,11 @@ void CurrentMgr::createManager(const QString &filename) {
 
     m_mgr = KBookmarkManager::managerForFile(filename, false);
 
-    connect(m_mgr, SIGNAL( changed(const QString &, const QString &) ),
-            SLOT( slotBookmarksChanged(const QString &, const QString &) ));
+    connect(m_mgr, TQT_SIGNAL( changed(const TQString &, const TQString &) ),
+            TQT_SLOT( slotBookmarksChanged(const TQString &, const TQString &) ));
 }
 
-void CurrentMgr::slotBookmarksChanged(const QString &, const QString &) {
+void CurrentMgr::slotBookmarksChanged(const TQString &, const TQString &) {
     if(ignorenext > 0) //We ignore the first changed signal after every change we did
     {
         --ignorenext;
@@ -170,21 +170,21 @@ void CurrentMgr::reloadConfig() {
     mgr()->emitConfigChanged();
 }
 
-QString CurrentMgr::makeTimeStr(const QString & in)
+TQString CurrentMgr::makeTimeStr(const TQString & in)
 {
     int secs;
     bool ok;
     secs = in.toInt(&ok);
     if (!ok)
-        return QString::null;
+        return TQString::null;
     return makeTimeStr(secs);
 }
 
-QString CurrentMgr::makeTimeStr(int b)
+TQString CurrentMgr::makeTimeStr(int b)
 {
-    QDateTime dt;
+    TQDateTime dt;
     dt.setTime_t(b);
-    return (dt.daysTo(QDateTime::currentDateTime()) > 31)
+    return (dt.daysTo(TQDateTime::currentDateTime()) > 31)
         ? KGlobal::locale()->formatDate(dt.date(), false)
         : KGlobal::locale()->formatDateTime(dt, false);
 }
@@ -194,8 +194,8 @@ QString CurrentMgr::makeTimeStr(int b)
 KEBApp *KEBApp::s_topLevel = 0;
 
 KEBApp::KEBApp(
-    const QString &bookmarksFile, bool readonly,
-    const QString &address, bool browser, const QString &caption
+    const TQString &bookmarksFile, bool readonly,
+    const TQString &address, bool browser, const TQString &caption
 ) : KMainWindow(), m_dcopIface(0), m_bookmarksFilename(bookmarksFile),
     m_caption(caption), m_readOnly(readonly), m_browser(browser) {
 
@@ -205,24 +205,24 @@ KEBApp::KEBApp(
 
     int h = 20;
 
-    QSplitter *vsplitter = new QSplitter(this);
+    TQSplitter *vsplitter = new TQSplitter(this);
 
     KToolBar *quicksearch = new KToolBar(vsplitter, "search toolbar");
 
     KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
-        QApplication::reverseLayout() ? "clear_left" : "locationbar_erase",
+        TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase",
         0, actionCollection(), "reset_quicksearch" );
     resetQuickSearch->setWhatsThis( i18n( "<b>Reset Quick Search</b><br>"
         "Resets the quick search so that all bookmarks are shown again." ) );
     resetQuickSearch->plug( quicksearch );
 
-    QLabel *lbl = new QLabel(i18n("Se&arch:"), quicksearch, "kde toolbar widget");
+    TQLabel *lbl = new TQLabel(i18n("Se&arch:"), quicksearch, "kde toolbar widget");
 
     KListViewSearchLine *searchLineEdit = new KEBSearchLine(quicksearch, 0, "KListViewSearchLine");
     quicksearch->setStretchableWidget(searchLineEdit);
     lbl->setBuddy(searchLineEdit);
-    connect(resetQuickSearch, SIGNAL(activated()), searchLineEdit, SLOT(clear()));
-    connect(searchLineEdit, SIGNAL(searchUpdated()), SLOT(updateActions()));
+    connect(resetQuickSearch, TQT_SIGNAL(activated()), searchLineEdit, TQT_SLOT(clear()));
+    connect(searchLineEdit, TQT_SIGNAL(searchUpdated()), TQT_SLOT(updateActions()));
 
     ListView::createListViews(vsplitter);
     ListView::self()->initListViews();
@@ -231,8 +231,8 @@ KEBApp::KEBApp(
 
     m_bkinfo = new BookmarkInfoWidget(vsplitter);
 
-    vsplitter->setOrientation(QSplitter::Vertical);
-    vsplitter->setSizes(QValueList<int>() << h << 380
+    vsplitter->setOrientation(TQSplitter::Vertical);
+    vsplitter->setSizes(TQValueList<int>() << h << 380
                                           << m_bkinfo->sizeHint().height() );
 
     setCentralWidget(vsplitter);
@@ -247,8 +247,8 @@ KEBApp::KEBApp(
 
     m_dcopIface = new KBookmarkEditorIface();
 
-    connect(kapp->clipboard(), SIGNAL( dataChanged() ),
-                               SLOT( slotClipboardDataChanged() ));
+    connect(kapp->clipboard(), TQT_SIGNAL( dataChanged() ),
+                               TQT_SLOT( slotClipboardDataChanged() ));
 
     ListView::self()->connectSignals();
 
@@ -276,7 +276,7 @@ void KEBApp::construct() {
     setAutoSaveSettings();
 }
 
-void KEBApp::updateStatus(QString url)
+void KEBApp::updateStatus(TQString url)
 {
     if(m_bkinfo->bookmark().url() == url)
         m_bkinfo->updateStatus();
@@ -339,8 +339,8 @@ void KEBApp::notifyCommandExecuted() {
 void KEBApp::slotConfigureToolbars() {
     saveMainWindowSettings(KGlobal::config(), "MainWindow");
     KEditToolbar dlg(actionCollection());
-    connect(&dlg, SIGNAL( newToolbarConfig() ),
-                  SLOT( slotNewToolbarConfig() ));
+    connect(&dlg, TQT_SIGNAL( newToolbarConfig() ),
+                  TQT_SLOT( slotNewToolbarConfig() ));
     dlg.exec();
 }
 

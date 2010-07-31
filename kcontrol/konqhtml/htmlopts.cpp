@@ -5,11 +5,11 @@
 // (c) David Faure 1998
 // (c) 2001 Waldo Bastian <bastian@kde.org>
 
-#include <qlayout.h>//CT - 12Nov1998
-#include <qwhatsthis.h>
-#include <qvgroupbox.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>//CT - 12Nov1998
+#include <tqwhatsthis.h>
+#include <tqvgroupbox.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
 
 #include "htmlopts.h"
 #include "advancedTabDialog.h"
@@ -31,11 +31,11 @@ enum UnderlineLinkType { UnderlineAlways=0, UnderlineNever=1, UnderlineHover=2 }
 enum AnimationsType { AnimationsAlways=0, AnimationsNever=1, AnimationsLoopOnce=2 };
 //-----------------------------------------------------------------------------
 
-KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, QString group, QWidget *parent, const char *)
+KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *parent, const char *)
     : KCModule( parent, "kcmkonqhtml" ), m_pConfig(config), m_groupname(group)
 {
     int row = 0;
-    QGridLayout *lay = new QGridLayout(this, 10, 2, 0, KDialog::spacingHint());
+    TQGridLayout *lay = new TQGridLayout(this, 10, 2, 0, KDialog::spacingHint());
 
     // Bookmarks
     setQuickHelp( i18n("<h1>Konqueror Browser</h1> Here you can configure Konqueror's browser "
@@ -46,105 +46,105 @@ KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, QString group, QWidget *pare
               "the web pages it loads. It is usually not necessary to "
               "change anything here."));
 
-    QVGroupBox *bgBookmarks = new QVGroupBox( i18n("Boo&kmarks"), this );
-    m_pAdvancedAddBookmarkCheckBox = new QCheckBox(i18n( "Ask for name and folder when adding bookmarks" ), bgBookmarks);
-    QWhatsThis::add( m_pAdvancedAddBookmarkCheckBox, i18n( "If this box is checked, Konqueror will allow you to"
+    TQVGroupBox *bgBookmarks = new TQVGroupBox( i18n("Boo&kmarks"), this );
+    m_pAdvancedAddBookmarkCheckBox = new TQCheckBox(i18n( "Ask for name and folder when adding bookmarks" ), bgBookmarks);
+    TQWhatsThis::add( m_pAdvancedAddBookmarkCheckBox, i18n( "If this box is checked, Konqueror will allow you to"
                                                         " change the title of the bookmark and choose a folder in which to store it when you add a new bookmark." ) );
-    connect(m_pAdvancedAddBookmarkCheckBox, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_pAdvancedAddBookmarkCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
 
-    m_pOnlyMarkedBookmarksCheckBox = new QCheckBox(i18n( "Show only marked bookmarks in bookmark toolbar" ), bgBookmarks);
-    QWhatsThis::add( m_pOnlyMarkedBookmarksCheckBox, i18n( "If this box is checked, Konqueror will show only those"
+    m_pOnlyMarkedBookmarksCheckBox = new TQCheckBox(i18n( "Show only marked bookmarks in bookmark toolbar" ), bgBookmarks);
+    TQWhatsThis::add( m_pOnlyMarkedBookmarksCheckBox, i18n( "If this box is checked, Konqueror will show only those"
                                                          " bookmarks in the bookmark toolbar which you have marked to do so in the bookmark editor." ) );
-    connect(m_pOnlyMarkedBookmarksCheckBox, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_pOnlyMarkedBookmarksCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
 
     lay->addMultiCellWidget( bgBookmarks, row, row, 0, 1 );
     row++;
 
      // Form completion
 
-    QVGroupBox *bgForm = new QVGroupBox( i18n("Form Com&pletion"), this );
-    m_pFormCompletionCheckBox = new QCheckBox(i18n( "Enable completion of &forms" ), bgForm);
-    QWhatsThis::add( m_pFormCompletionCheckBox, i18n( "If this box is checked, Konqueror will remember"
+    TQVGroupBox *bgForm = new TQVGroupBox( i18n("Form Com&pletion"), this );
+    m_pFormCompletionCheckBox = new TQCheckBox(i18n( "Enable completion of &forms" ), bgForm);
+    TQWhatsThis::add( m_pFormCompletionCheckBox, i18n( "If this box is checked, Konqueror will remember"
                                                         " the data you enter in web forms and suggest it in similar fields for all forms." ) );
-    connect(m_pFormCompletionCheckBox, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_pFormCompletionCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
 
     m_pMaxFormCompletionItems = new KIntNumInput( bgForm );
     m_pMaxFormCompletionItems->setLabel( i18n( "&Maximum completions:" ) );
     m_pMaxFormCompletionItems->setRange( 0, 100 );
-    QWhatsThis::add( m_pMaxFormCompletionItems,
+    TQWhatsThis::add( m_pMaxFormCompletionItems,
         i18n( "Here you can select how many values Konqueror will remember for a form field." ) );
-    connect(m_pMaxFormCompletionItems, SIGNAL(valueChanged(int)), SLOT(slotChanged()));
+    connect(m_pMaxFormCompletionItems, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotChanged()));
 
     lay->addMultiCellWidget( bgForm, row, row, 0, 1 );
     row++;
 
     // Tabbed Browsing
 
-    QGroupBox *bgTabbedBrowsing = new QGroupBox( 0, Qt::Vertical, i18n("Tabbed Browsing"), this );
-    QVBoxLayout *laygroup = new QVBoxLayout(bgTabbedBrowsing->layout(), KDialog::spacingHint() );
+    TQGroupBox *bgTabbedBrowsing = new TQGroupBox( 0, Qt::Vertical, i18n("Tabbed Browsing"), this );
+    TQVBoxLayout *laygroup = new TQVBoxLayout(bgTabbedBrowsing->layout(), KDialog::spacingHint() );
 
-    m_pShowMMBInTabs = new QCheckBox( i18n( "Open &links in new tab instead of in new window" ), bgTabbedBrowsing );
-    QWhatsThis::add( m_pShowMMBInTabs, i18n("This will open a new tab instead of a new window in various situations, "
+    m_pShowMMBInTabs = new TQCheckBox( i18n( "Open &links in new tab instead of in new window" ), bgTabbedBrowsing );
+    TQWhatsThis::add( m_pShowMMBInTabs, i18n("This will open a new tab instead of a new window in various situations, "
                           "such as choosing a link or a folder with the middle mouse button.") );
-    connect(m_pShowMMBInTabs, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_pShowMMBInTabs, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
     laygroup->addWidget(m_pShowMMBInTabs);
 
-    m_pDynamicTabbarHide = new QCheckBox( i18n( "Hide the tab bar when only one tab is open" ), bgTabbedBrowsing );
-    QWhatsThis::add( m_pDynamicTabbarHide, i18n("This will display the tab bar only if there are two or more tabs. Otherwise it will always be displayed.") );
-    connect(m_pDynamicTabbarHide, SIGNAL(clicked()), SLOT(slotChanged()));
+    m_pDynamicTabbarHide = new TQCheckBox( i18n( "Hide the tab bar when only one tab is open" ), bgTabbedBrowsing );
+    TQWhatsThis::add( m_pDynamicTabbarHide, i18n("This will display the tab bar only if there are two or more tabs. Otherwise it will always be displayed.") );
+    connect(m_pDynamicTabbarHide, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
     laygroup->addWidget(m_pDynamicTabbarHide);
 
-    QHBoxLayout *laytab = new QHBoxLayout(laygroup, KDialog::spacingHint());
-    QPushButton *advancedTabButton = new QPushButton( i18n( "Advanced Options"), bgTabbedBrowsing );
+    TQHBoxLayout *laytab = new TQHBoxLayout(laygroup, KDialog::spacingHint());
+    TQPushButton *advancedTabButton = new TQPushButton( i18n( "Advanced Options"), bgTabbedBrowsing );
     laytab->addWidget(advancedTabButton);
     laytab->addStretch();
-    connect(advancedTabButton, SIGNAL(clicked()), this, SLOT(launchAdvancedTabDialog()));
+    connect(advancedTabButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(launchAdvancedTabDialog()));
 
     lay->addMultiCellWidget( bgTabbedBrowsing, row, row, 0, 1 );
     row++;
 
     // Mouse behavior
 
-    QVGroupBox *bgMouse = new QVGroupBox( i18n("Mouse Beha&vior"), this );
+    TQVGroupBox *bgMouse = new TQVGroupBox( i18n("Mouse Beha&vior"), this );
 
-    m_cbCursor = new QCheckBox(i18n("Chan&ge cursor over links"), bgMouse );
-    QWhatsThis::add( m_cbCursor, i18n("If this option is set, the shape of the cursor will change "
+    m_cbCursor = new TQCheckBox(i18n("Chan&ge cursor over links"), bgMouse );
+    TQWhatsThis::add( m_cbCursor, i18n("If this option is set, the shape of the cursor will change "
        "(usually to a hand) if it is moved over a hyperlink.") );
-    connect(m_cbCursor, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_cbCursor, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
 
-    m_pOpenMiddleClick = new QCheckBox( i18n ("M&iddle click opens URL in selection" ), bgMouse );
-    QWhatsThis::add( m_pOpenMiddleClick, i18n (
+    m_pOpenMiddleClick = new TQCheckBox( i18n ("M&iddle click opens URL in selection" ), bgMouse );
+    TQWhatsThis::add( m_pOpenMiddleClick, i18n (
       "If this box is checked, you can open the URL in the selection by middle clicking on a "
       "Konqueror view." ) );
-    connect(m_pOpenMiddleClick, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_pOpenMiddleClick, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
 
-    m_pBackRightClick = new QCheckBox( i18n( "Right click goes &back in history" ), bgMouse );
-    QWhatsThis::add( m_pBackRightClick, i18n(
+    m_pBackRightClick = new TQCheckBox( i18n( "Right click goes &back in history" ), bgMouse );
+    TQWhatsThis::add( m_pBackRightClick, i18n(
       "If this box is checked, you can go back in history by right clicking on a Konqueror view. "
       "To access the context menu, press the right mouse button and move." ) );
-    connect(m_pBackRightClick, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_pBackRightClick, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
 
     lay->addMultiCellWidget( bgMouse, row, row, 0, 1 );
     row++;
 
     // Misc
 
-    m_pAutoLoadImagesCheckBox = new QCheckBox( i18n( "A&utomatically load images"), this );
-    QWhatsThis::add( m_pAutoLoadImagesCheckBox, i18n( "If this box is checked, Konqueror will automatically load any images that are embedded in a web page. Otherwise, it will display placeholders for the images, and you can then manually load the images by clicking on the image button.<br>Unless you have a very slow network connection, you will probably want to check this box to enhance your browsing experience." ) );
-    connect(m_pAutoLoadImagesCheckBox, SIGNAL(clicked()), SLOT(slotChanged()));
+    m_pAutoLoadImagesCheckBox = new TQCheckBox( i18n( "A&utomatically load images"), this );
+    TQWhatsThis::add( m_pAutoLoadImagesCheckBox, i18n( "If this box is checked, Konqueror will automatically load any images that are embedded in a web page. Otherwise, it will display placeholders for the images, and you can then manually load the images by clicking on the image button.<br>Unless you have a very slow network connection, you will probably want to check this box to enhance your browsing experience." ) );
+    connect(m_pAutoLoadImagesCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
     lay->addMultiCellWidget( m_pAutoLoadImagesCheckBox, row, row, 0, 1 );
     row++;
 
-    m_pUnfinishedImageFrameCheckBox = new QCheckBox( i18n( "Dra&w frame around not completely loaded images"), this );
-    QWhatsThis::add( m_pUnfinishedImageFrameCheckBox, i18n( "If this box is checked, Konqueror will draw a frame as placeholder around not yet fully loaded images that are embedded in a web page.<br>Especially if you have a slow network connection, you will probably want to check this box to enhance your browsing experience." ) );
-    connect(m_pUnfinishedImageFrameCheckBox, SIGNAL(clicked()), SLOT(slotChanged()));
+    m_pUnfinishedImageFrameCheckBox = new TQCheckBox( i18n( "Dra&w frame around not completely loaded images"), this );
+    TQWhatsThis::add( m_pUnfinishedImageFrameCheckBox, i18n( "If this box is checked, Konqueror will draw a frame as placeholder around not yet fully loaded images that are embedded in a web page.<br>Especially if you have a slow network connection, you will probably want to check this box to enhance your browsing experience." ) );
+    connect(m_pUnfinishedImageFrameCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
     lay->addMultiCellWidget( m_pUnfinishedImageFrameCheckBox, row, row, 0, 1 );
     row++;
 
-    m_pAutoRedirectCheckBox = new QCheckBox( i18n( "Allow automatic delayed &reloading/redirecting"), this );
-    QWhatsThis::add( m_pAutoRedirectCheckBox,
+    m_pAutoRedirectCheckBox = new TQCheckBox( i18n( "Allow automatic delayed &reloading/redirecting"), this );
+    TQWhatsThis::add( m_pAutoRedirectCheckBox,
     i18n( "Some web pages request an automatic reload or redirection after a certain period of time. By unchecking this box Konqueror will ignore these requests." ) );
-    connect(m_pAutoRedirectCheckBox, SIGNAL(clicked()), SLOT(slotChanged()));
+    connect(m_pAutoRedirectCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
     lay->addMultiCellWidget( m_pAutoRedirectCheckBox, row, row, 0, 1 );
     row++;
 
@@ -155,8 +155,8 @@ KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, QString group, QWidget *pare
     lay->addMultiCellWidget(sep, row, row, 0, 1);
     row++;
 
-    QLabel *label = new QLabel( i18n("Und&erline links:"), this);
-    m_pUnderlineCombo = new QComboBox( false, this );
+    TQLabel *label = new TQLabel( i18n("Und&erline links:"), this);
+    m_pUnderlineCombo = new TQComboBox( false, this );
     label->setBuddy(m_pUnderlineCombo);
     m_pUnderlineCombo->insertItem(i18n("underline","Enabled"), UnderlineAlways);
     m_pUnderlineCombo->insertItem(i18n("underline","Disabled"), UnderlineNever);
@@ -164,19 +164,19 @@ KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, QString group, QWidget *pare
     lay->addWidget(label, row, 0);
     lay->addWidget(m_pUnderlineCombo, row, 1);
     row++;
-    QString whatsThis = i18n("Controls how Konqueror handles underlining hyperlinks:<br>"
+    TQString whatsThis = i18n("Controls how Konqueror handles underlining hyperlinks:<br>"
 	    "<ul><li><b>Enabled</b>: Always underline links</li>"
 	    "<li><b>Disabled</b>: Never underline links</li>"
 	    "<li><b>Only on Hover</b>: Underline when the mouse is moved over the link</li>"
 	    "</ul><br><i>Note: The site's CSS definitions can override this value</i>");
-    QWhatsThis::add( label, whatsThis);
-    QWhatsThis::add( m_pUnderlineCombo, whatsThis);
-    connect(m_pUnderlineCombo, SIGNAL(activated(int)), SLOT(slotChanged()));
+    TQWhatsThis::add( label, whatsThis);
+    TQWhatsThis::add( m_pUnderlineCombo, whatsThis);
+    connect(m_pUnderlineCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotChanged()));
 
 
 
-    label = new QLabel( i18n("A&nimations:"), this);
-    m_pAnimationsCombo = new QComboBox( false, this );
+    label = new TQLabel( i18n("A&nimations:"), this);
+    m_pAnimationsCombo = new TQComboBox( false, this );
     label->setBuddy(m_pAnimationsCombo);
     m_pAnimationsCombo->insertItem(i18n("animations","Enabled"), AnimationsAlways);
     m_pAnimationsCombo->insertItem(i18n("animations","Disabled"), AnimationsNever);
@@ -188,9 +188,9 @@ KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, QString group, QWidget *pare
 	    "<ul><li><b>Enabled</b>: Show all animations completely.</li>"
 	    "<li><b>Disabled</b>: Never show animations, show the start image only.</li>"
 	    "<li><b>Show only once</b>: Show all animations completely but do not repeat them.</li>");
-    QWhatsThis::add( label, whatsThis);
-    QWhatsThis::add( m_pAnimationsCombo, whatsThis);
-    connect(m_pAnimationsCombo, SIGNAL(activated(int)), SLOT(slotChanged()));
+    TQWhatsThis::add( label, whatsThis);
+    TQWhatsThis::add( m_pAnimationsCombo, whatsThis);
+    connect(m_pAnimationsCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotChanged()));
 
     lay->setRowStretch(row, 1);
 
@@ -229,7 +229,7 @@ void KMiscHTMLOptions::load( bool useDefaults )
     bool hoverLinks = READ_BOOL("HoverLinks", true);
     bool bAutoLoadImages = READ_BOOL( "AutoLoadImages", true );
     bool bUnfinishedImageFrame = READ_BOOL( "UnfinishedImageFrame", true );
-    QString strAnimations = READ_ENTRY( "ShowAnimations" ).lower();
+    TQString strAnimations = READ_ENTRY( "ShowAnimations" ).lower();
 
     bool bAutoRedirect = m_pConfig->readBoolEntry( "AutoDelayedActions", true );
 
@@ -340,7 +340,7 @@ void KMiscHTMLOptions::save()
     config.writeEntry("FilteredToolbar", m_pOnlyMarkedBookmarksCheckBox->isChecked());
     config.sync();
 
-  QByteArray data;
+  TQByteArray data;
   if ( !kapp->dcopClient()->isAttached() )
     kapp->dcopClient()->attach();
   kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );

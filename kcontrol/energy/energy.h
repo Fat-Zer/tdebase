@@ -14,7 +14,7 @@
 #ifndef __Energy_h_Included__
 #define __Energy_h_Included__
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kcmodule.h>
 
 class QCheckBox;
@@ -31,7 +31,7 @@ class KEnergy: public KCModule
     Q_OBJECT
 
 public:
-    KEnergy(QWidget *parent, const char *name);
+    KEnergy(TQWidget *parent, const char *name);
     ~KEnergy();
 
     virtual void load();
@@ -44,7 +44,7 @@ private slots:
     void slotChangeStandby(int);
     void slotChangeSuspend(int);
     void slotChangeOff(int);
-    void openURL(const QString &);
+    void openURL(const TQString &);
 
 private:
     void readSettings();
@@ -58,7 +58,7 @@ private:
     int m_Standby, m_Suspend, m_Off;
     int m_StandbyDesired, m_SuspendDesired, m_OffDesired;
 
-    QCheckBox *m_pCBEnable;
+    TQCheckBox *m_pCBEnable;
     KIntNumInput *m_pStandbySlider;
     KIntNumInput *m_pSuspendSlider;
     KIntNumInput *m_pOffSlider;

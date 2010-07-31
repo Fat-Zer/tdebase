@@ -23,9 +23,9 @@
 #include <kaccel.h>
 #include <kapplication.h>
 #include <dcopclient.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqlayout.h>
 #include <kkeydialog.h>
 
 #include <settings.h>
@@ -34,7 +34,7 @@
 namespace KHotKeys
 {
 
-static QObject* owner = NULL;
+static TQObject* owner = NULL;
 
 void khotkeys_init()
     {
@@ -53,7 +53,7 @@ void khotkeys_cleanup()
     }
 
 Menuentry_shortcut_action_data* khotkeys_get_menu_entry_internal2( 
-    const Action_data_group* data_P, const QString& entry_P )
+    const Action_data_group* data_P, const TQString& entry_P )
     {
     if( !data_P->enabled( false ))
         return NULL;
@@ -97,19 +97,19 @@ Action_data_group* khotkeys_get_menu_root( Action_data_group* data_P )
     }
 
 Menuentry_shortcut_action_data* khotkeys_get_menu_entry_internal( Action_data_group* data_P,
-    const QString& entry_P )
+    const TQString& entry_P )
     {
     return khotkeys_get_menu_entry_internal2( khotkeys_get_menu_root( data_P ), entry_P );
     }
 
-QString khotkeys_get_menu_shortcut( Menuentry_shortcut_action_data* data_P )
+TQString khotkeys_get_menu_shortcut( Menuentry_shortcut_action_data* data_P )
     {
     if( data_P->trigger() != NULL )
         return data_P->trigger()->shortcut().toString();
     return "";
     }
 
-void khotkeys_get_all_shortcuts_internal(const Action_data_group* data_P, QStringList &result)
+void khotkeys_get_all_shortcuts_internal(const Action_data_group* data_P, TQStringList &result)
     {
     if( !data_P->enabled( false ))
         return;
@@ -133,9 +133,9 @@ void khotkeys_get_all_shortcuts_internal(const Action_data_group* data_P, QStrin
     }
 
 
-QStringList khotkeys_get_all_shortcuts( )
+TQStringList khotkeys_get_all_shortcuts( )
     {
-    QStringList result;
+    TQStringList result;
     Settings settings;
     settings.read_settings( true );
 
@@ -145,7 +145,7 @@ QStringList khotkeys_get_all_shortcuts( )
     }
 
 
-KService::Ptr khotkeys_find_menu_entry_internal(const Action_data_group* data_P, const QString &shortcut_P)
+KService::Ptr khotkeys_find_menu_entry_internal(const Action_data_group* data_P, const TQString &shortcut_P)
     {
     if( !data_P->enabled( false ))
         return 0;
@@ -177,7 +177,7 @@ KService::Ptr khotkeys_find_menu_entry_internal(const Action_data_group* data_P,
     }
 
 
-KService::Ptr khotkeys_find_menu_entry( const QString& shortcut_P )
+KService::Ptr khotkeys_find_menu_entry( const TQString& shortcut_P )
     {
     Settings settings;
     settings.read_settings( true );
@@ -188,7 +188,7 @@ KService::Ptr khotkeys_find_menu_entry( const QString& shortcut_P )
         
 void khotkeys_send_reread_config()
     {
-    QByteArray data;
+    TQByteArray data;
     if( !kapp->dcopClient()->isAttached())
         kapp->dcopClient()->attach();
     if( !kapp->dcopClient()->isApplicationRegistered( "khotkeys" ))
@@ -198,13 +198,13 @@ void khotkeys_send_reread_config()
         }
     else
         {
-        QByteArray data;
+        TQByteArray data;
         kapp->dcopClient()->send( "khotkeys*", "khotkeys", "reread_configuration()", data );
         kdDebug( 1217 ) << "telling khotkeys daemon to reread configuration" << endl;
         }
     }
 
-QString khotkeys_get_menu_entry_shortcut( const QString& entry_P )
+TQString khotkeys_get_menu_entry_shortcut( const TQString& entry_P )
     {
     Settings settings;
     settings.read_settings( true );
@@ -215,12 +215,12 @@ QString khotkeys_get_menu_entry_shortcut( const QString& entry_P )
         delete settings.actions;
         return "";
         }
-    QString shortcut = khotkeys_get_menu_shortcut( entry );
+    TQString shortcut = khotkeys_get_menu_shortcut( entry );
     delete settings.actions;
     return shortcut;
     }    
     
-bool khotkeys_menu_entry_moved( const QString& new_P, const QString& old_P )
+bool khotkeys_menu_entry_moved( const TQString& new_P, const TQString& old_P )
     {
     Settings settings;
     settings.read_settings( true );
@@ -232,7 +232,7 @@ bool khotkeys_menu_entry_moved( const QString& new_P, const QString& old_P )
         return false;
         }
     Action_data_group* parent = entry->parent();
-    QString new_name = new_P;
+    TQString new_name = new_P;
     if( entry->name().startsWith( i18n( "K Menu - " )))
         new_name = i18n( "K Menu - " ) + new_P;
     Menuentry_shortcut_action_data* new_entry = new Menuentry_shortcut_action_data( parent,
@@ -246,7 +246,7 @@ bool khotkeys_menu_entry_moved( const QString& new_P, const QString& old_P )
     return true;
     }
 
-void khotkeys_menu_entry_deleted( const QString& entry_P )
+void khotkeys_menu_entry_deleted( const TQString& entry_P )
     {
     Settings settings;
     settings.read_settings( true );
@@ -263,8 +263,8 @@ void khotkeys_menu_entry_deleted( const QString& entry_P )
     khotkeys_send_reread_config();
     }
 
-QString khotkeys_change_menu_entry_shortcut( const QString& entry_P,
-    const QString& shortcut_P )
+TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
+    const TQString& shortcut_P )
     {
     Settings settings;
     settings.read_settings( true );
@@ -286,7 +286,7 @@ QString khotkeys_change_menu_entry_shortcut( const QString& entry_P,
         delete entry;
         entry = entry_tmp;
         }
-    QString shortcut = "";
+    TQString shortcut = "";
     // make sure the shortcut is valid
     shortcut = (KShortcut( shortcut_P )).toStringInternal();
     if( !shortcut.isEmpty())
@@ -327,33 +327,33 @@ void khotkeys_cleanup()
     KHotKeys::khotkeys_cleanup();
     }
     
-QString khotkeys_get_menu_entry_shortcut( const QString& entry_P )
+TQString khotkeys_get_menu_entry_shortcut( const TQString& entry_P )
     {
     return KHotKeys::khotkeys_get_menu_entry_shortcut( entry_P );
     }
 
-bool khotkeys_menu_entry_moved( const QString& new_P, const QString& old_P )
+bool khotkeys_menu_entry_moved( const TQString& new_P, const TQString& old_P )
     {
     return KHotKeys::khotkeys_menu_entry_moved( new_P, old_P );
     }
 
-void khotkeys_menu_entry_deleted( const QString& entry_P )
+void khotkeys_menu_entry_deleted( const TQString& entry_P )
     {
     KHotKeys::khotkeys_menu_entry_deleted( entry_P );
     }
     
-QString khotkeys_change_menu_entry_shortcut( const QString& entry_P,
-    const QString& shortcut_P )
+TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
+    const TQString& shortcut_P )
     {
     return KHotKeys::khotkeys_change_menu_entry_shortcut( entry_P, shortcut_P );
     }
 
-QStringList khotkeys_get_all_shortcuts( )
+TQStringList khotkeys_get_all_shortcuts( )
     {
     return KHotKeys::khotkeys_get_all_shortcuts();
     }
 
-KService::Ptr khotkeys_find_menu_entry( const QString& shortcut_P )
+KService::Ptr khotkeys_find_menu_entry( const TQString& shortcut_P )
     {
     return KHotKeys::khotkeys_find_menu_entry( shortcut_P );
     }

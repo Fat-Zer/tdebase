@@ -515,7 +515,7 @@ ClientList Workspace::constrainedStackingOrder()
     kdDebug() << "stacking1:" << endl;
 #endif
     // build the order from layers
-    QMap< Group*, Layer > minimum_layer;
+    TQMap< Group*, Layer > minimum_layer;
     for( ClientList::ConstIterator it = unconstrained_stacking_order.begin();
          it != unconstrained_stacking_order.end();
          ++it )

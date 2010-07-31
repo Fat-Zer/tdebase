@@ -60,11 +60,11 @@ public:
 
   static void setProxyAuthMode( KProtocolManager::ProxyAuthMode );
 
-  static void setProxyConfigScript( const QString&  );
+  static void setProxyConfigScript( const TQString&  );
 
-  static void setProxyFor( const QString&, const QString&  );
+  static void setProxyFor( const TQString&, const TQString&  );
 
-  static void setNoProxyFor( const QString& );
+  static void setNoProxyFor( const TQString& );
 
 
   /** Miscelaneous Settings */
@@ -80,10 +80,10 @@ public:
 
 
   /** Update all running io-slaves */
-  static void updateRunningIOSlaves (QWidget * parent = 0L);
+  static void updateRunningIOSlaves (TQWidget * parent = 0L);
 
   /** Update proxy scout */
-  static void updateProxyScout( QWidget * parent = 0L );
+  static void updateProxyScout( TQWidget * parent = 0L );
 
 protected:
   static KConfig* config ();

@@ -20,9 +20,9 @@
 #include <kglobal.h>
 #include <kwin.h>
 
-#include <qevent.h>
-#include <qfile.h>
-#include <qwidget.h>
+#include <tqevent.h>
+#include <tqfile.h>
+#include <tqwidget.h>
 
 #include <X11/Xlib.h>
 
@@ -37,11 +37,11 @@
 
 struct ThemeEngine::ThemeEnginePrivate
 {
-    QValueList< Window > mSplashWindows;
+    TQValueList< Window > mSplashWindows;
 };
 
-ThemeEngine::ThemeEngine( QWidget *, const char *, const QStringList& args )
-  : QVBox( 0, "wndSplash", WStyle_Customize|WX11BypassWM ), d(0)
+ThemeEngine::ThemeEngine( TQWidget *, const char *, const TQStringList& args )
+  : TQVBox( 0, "wndSplash", WStyle_Customize|WX11BypassWM ), d(0)
 {
   d = new ThemeEnginePrivate;
   kapp->installX11EventFilter( this );
@@ -71,19 +71,19 @@ ThemeEngine::~ThemeEngine()
  force them to be WX11BypassWM (so that ksplash can handle their stacking),
  and keep them on top, even above all windows handled by KWin.
 */
-bool ThemeEngine::eventFilter( QObject* o, QEvent* e )
+bool ThemeEngine::eventFilter( TQObject* o, TQEvent* e )
 {
-    if( e->type() == QEvent::Show && o->isWidgetType())
-        addSplashWindow( static_cast< QWidget* >( o ));
+    if( e->type() == TQEvent::Show && o->isWidgetType())
+        addSplashWindow( static_cast< TQWidget* >( o ));
     return false;
 }
 
 namespace
 {
-class HackWidget : public QWidget { friend class ::ThemeEngine; };
+class HackWidget : public TQWidget { friend class ::ThemeEngine; };
 }
 
-void ThemeEngine::addSplashWindow( QWidget* w )
+void ThemeEngine::addSplashWindow( TQWidget* w )
 {
     if( !w->isTopLevel())
         return;
@@ -98,13 +98,13 @@ void ThemeEngine::addSplashWindow( QWidget* w )
         XChangeWindowAttributes( qt_xdisplay(), w->winId(), CWOverrideRedirect, &attrs );
     }
     d->mSplashWindows.prepend( w->winId());
-    connect( w, SIGNAL( destroyed( QObject* )), SLOT( splashWindowDestroyed( QObject* )));
+    connect( w, TQT_SIGNAL( destroyed( TQObject* )), TQT_SLOT( splashWindowDestroyed( TQObject* )));
     w->raise();
 }
 
-void ThemeEngine::splashWindowDestroyed( QObject* obj )
+void ThemeEngine::splashWindowDestroyed( TQObject* obj )
 {
-    d->mSplashWindows.remove( static_cast< QWidget* >( obj )->winId());
+    d->mSplashWindows.remove( static_cast< TQWidget* >( obj )->winId());
 }
 
 bool ThemeEngine::x11Event( XEvent* e )
@@ -126,7 +126,7 @@ bool ThemeEngine::x11Event( XEvent* e )
     // and stack others below it
     Window* stack = new Window[ d->mSplashWindows.count() ];
     int count = 0;
-    for( QValueList< Window >::ConstIterator it = d->mSplashWindows.begin();
+    for( TQValueList< Window >::ConstIterator it = d->mSplashWindows.begin();
          it != d->mSplashWindows.end();
          ++it )
         stack[ count++ ] = *it;

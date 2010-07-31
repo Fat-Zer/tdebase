@@ -33,7 +33,7 @@
 #include "kio_smb_internal.h"
 
 #include <ksimpleconfig.h>
-#include <qdir.h>
+#include <tqdir.h>
 #include <stdlib.h>
 
 // call for libsmbclient
@@ -67,14 +67,14 @@ void SMBSlave::auth_smbc_get_data(const char *server,const char *share,
     kdDebug(KIO_SMB) << "AAAAAAAAAAAAAA auth_smbc_get_dat: set user=" << username << ", workgroup=" << workgroup
                      << " server=" << server << ", share=" << share << endl;
 
-    QString s_server = QString::fromUtf8(server);
-    QString s_share = QString::fromUtf8(share);
+    TQString s_server = TQString::fromUtf8(server);
+    TQString s_share = TQString::fromUtf8(share);
     workgroup[wgmaxlen - 1] = 0;
-    QString s_workgroup = QString::fromUtf8(workgroup);
+    TQString s_workgroup = TQString::fromUtf8(workgroup);
     username[unmaxlen - 1] = 0;
-    QString s_username = QString::fromUtf8(username);
+    TQString s_username = TQString::fromUtf8(username);
     password[pwmaxlen - 1] = 0;
-    QString s_password = QString::fromUtf8(password);
+    TQString s_password = TQString::fromUtf8(password);
 
     KIO::AuthInfo info;
     info.url = KURL("smb:///");
@@ -93,7 +93,7 @@ void SMBSlave::auth_smbc_get_data(const char *server,const char *share,
         {
             // ok, we do not know the password. Let's try anonymous before we try for real
             info.username = "anonymous";
-            info.password = QString::null;
+            info.password = TQString::null;
         }
         else
         {
@@ -117,7 +117,7 @@ bool SMBSlave::checkPassword(SMBUrl &url)
     info.url = KURL("smb:///");
     info.url.setHost(url.host());
 
-    QString share = url.path();
+    TQString share = url.path();
     int index = share.find('/', 1);
     if (index > 1)
         share = share.left(index);

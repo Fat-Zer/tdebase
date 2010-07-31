@@ -20,11 +20,11 @@
 #include "katetabwidget.h"
 #include "katetabwidget.moc"
 
-#include <qtabbar.h>
+#include <tqtabbar.h>
 
 //BEGIN KateTabWidget
 
-KateTabWidget::KateTabWidget(QWidget* parent, const char* name)
+KateTabWidget::KateTabWidget(TQWidget* parent, const char* name)
  : KTabWidget(parent,name)
  , m_visibility (ShowWhenMoreThanOneTab)
 {
@@ -32,40 +32,40 @@ KateTabWidget::KateTabWidget(QWidget* parent, const char* name)
 
   setHoverCloseButton(true);
 
-  connect(this, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeTab(QWidget*)));
+  connect(this, TQT_SIGNAL(closeRequest(TQWidget*)), this, TQT_SLOT(closeTab(TQWidget*)));
 }
 
 KateTabWidget::~KateTabWidget()
 {
 }
 
-void KateTabWidget::closeTab(QWidget* w)
+void KateTabWidget::closeTab(TQWidget* w)
 {
   w->close();
 }
 
-void KateTabWidget::addTab ( QWidget * child, const QString & label )
+void KateTabWidget::addTab ( TQWidget * child, const TQString & label )
 {
   KTabWidget::addTab(child,label);
   showPage(child);
   maybeShow();
 }
 
-void KateTabWidget::addTab ( QWidget * child, const QIconSet & iconset, const QString & label )
+void KateTabWidget::addTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label )
 {
   KTabWidget::addTab(child,iconset,label);
   showPage(child);
   maybeShow();
 }
 
-void KateTabWidget::addTab ( QWidget * child, QTab * tab )
+void KateTabWidget::addTab ( TQWidget * child, TQTab * tab )
 {
   KTabWidget::addTab(child,tab);
   showPage(child);
   maybeShow();
 }
 
-void KateTabWidget::insertTab ( QWidget * child, const QString & label, int index)
+void KateTabWidget::insertTab ( TQWidget * child, const TQString & label, int index)
 {
   KTabWidget::insertTab(child,label,index);
   showPage(child);
@@ -73,7 +73,7 @@ void KateTabWidget::insertTab ( QWidget * child, const QString & label, int inde
   tabBar()->repaint();
 }
 
-void KateTabWidget::insertTab ( QWidget * child, const QIconSet & iconset, const QString & label, int index )
+void KateTabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index )
 {
   KTabWidget::insertTab(child,iconset,label,index);
   showPage(child);
@@ -81,7 +81,7 @@ void KateTabWidget::insertTab ( QWidget * child, const QIconSet & iconset, const
   tabBar()->repaint();
 }
 
-void KateTabWidget::insertTab ( QWidget * child, QTab * tab, int index)
+void KateTabWidget::insertTab ( TQWidget * child, TQTab * tab, int index)
 {
   KTabWidget::insertTab(child,tab,index);
   showPage(child);
@@ -89,7 +89,7 @@ void KateTabWidget::insertTab ( QWidget * child, QTab * tab, int index)
   tabBar()->repaint();
 }
 
-void KateTabWidget::removePage ( QWidget * w )
+void KateTabWidget::removePage ( TQWidget * w )
 {
   KTabWidget::removePage(w);
   maybeShow();

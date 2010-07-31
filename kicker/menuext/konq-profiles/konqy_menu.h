@@ -26,14 +26,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kpanelmenu.h>
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 class KonquerorProfilesMenu : public KPanelMenu
 {
    Q_OBJECT
 
    public:
-      KonquerorProfilesMenu(QWidget *parent, const char *name, const QStringList & /*args*/);
+      KonquerorProfilesMenu(TQWidget *parent, const char *name, const TQStringList & /*args*/);
       ~KonquerorProfilesMenu();
 
    protected slots:
@@ -43,7 +43,7 @@ class KonquerorProfilesMenu : public KPanelMenu
 
    protected:
       void reload();
-      QValueVector<QString> m_profiles;
+      TQValueVector<TQString> m_profiles;
 
 };
 

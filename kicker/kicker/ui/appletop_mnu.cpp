@@ -31,15 +31,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "container_button.h"
 #include "containerarea.h"
 
-PanelAppletOpMenu::PanelAppletOpMenu(int actions, QPopupMenu *opMenu, const QPopupMenu* appletsMenu,
-                                     const QString & title, const QString &icon,
-                                     QWidget *parent, const char *name)
-  : QPopupMenu(parent, name)
+PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQPopupMenu* appletsMenu,
+                                     const TQString & title, const TQString &icon,
+                                     TQWidget *parent, const char *name)
+  : TQPopupMenu(parent, name)
 {
     bool needSeparator = false;
     bool isButton = (parent && parent->inherits("ButtonContainer"));
     bool isMenu = false;
-    QString titleText = title;
+    TQString titleText = title;
     titleText = titleText.replace('&', "&&");
     if (isButton)
     {
@@ -48,7 +48,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, QPopupMenu *opMenu, const QPop
 
     if (!Kicker::the()->isImmutable())
     {
-        QString text = isButton ? (isMenu ? i18n("&Move %1 Menu") :
+        TQString text = isButton ? (isMenu ? i18n("&Move %1 Menu") :
                                             i18n("&Move %1 Button")) :
                                   i18n("&Move %1");
         insertItem(SmallIcon("move"), text.arg(titleText), Move);
@@ -57,7 +57,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, QPopupMenu *opMenu, const QPop
         // this is part of the kiosk support in kicker, allowing
         // one to block users from adding new containers
         ContainerArea* area = 0;
-        QObject* findTheArea = parent ? parent->parent() : 0;
+        TQObject* findTheArea = parent ? parent->parent() : 0;
         while (findTheArea)
         {
             area = dynamic_cast<ContainerArea*>(findTheArea);
@@ -98,7 +98,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, QPopupMenu *opMenu, const QPop
             insertSeparator();
         }
 
-        QPixmap iconPix(kapp->iconLoader()->loadIcon(icon,
+        TQPixmap iconPix(kapp->iconLoader()->loadIcon(icon,
                                                      KIcon::Small, 0,
                                                      KIcon::DefaultState,
                                                      0, true));
@@ -140,22 +140,22 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, QPopupMenu *opMenu, const QPop
             needSeparator = false;
         }
 
-        QString text = title.isEmpty() ? i18n("Applet Menu") :
+        TQString text = title.isEmpty() ? i18n("Applet Menu") :
                                          i18n("%1 Menu").arg(titleText);
 
         // the 2 const_cast's below prevents const_cast'ing in multiple places
         // elsewhere in the kicker code base. it's ugly, but unavoidable
-        // unless either QPopupMenu one day allows inserting const
+        // unless either TQPopupMenu one day allows inserting const
         // QPopupMenu's or we uglify other bits of kicker's API,
         // notably KPanelApplet::customMeu()
         if (icon.isEmpty())
         {
-            insertItem(text, const_cast<QPopupMenu*>(appletsMenu));
+            insertItem(text, const_cast<TQPopupMenu*>(appletsMenu));
         }
         else
         {
             insertItem(SmallIcon(icon), text,
-                       const_cast<QPopupMenu*>(appletsMenu));
+                       const_cast<TQPopupMenu*>(appletsMenu));
         }
     }
 
@@ -195,14 +195,14 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, QPopupMenu *opMenu, const QPop
     adjustSize();
 }
 
-void PanelAppletOpMenu::keyPressEvent(QKeyEvent* e)
+void PanelAppletOpMenu::keyPressEvent(TQKeyEvent* e)
 {
     if (e->key() == Qt::Key_Escape)
     {
         emit escapePressed();
     }
 
-    QPopupMenu::keyPressEvent(e);
+    TQPopupMenu::keyPressEvent(e);
 }
 
 #include "appletop_mnu.moc"

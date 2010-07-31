@@ -31,8 +31,8 @@
 K_EXPORT_KICKER_MENUEXT( find, FindMenu )
 
 
-FindMenu::FindMenu( QWidget *parent, const char *name,
-                    const QStringList &/*args*/)
+FindMenu::FindMenu( TQWidget *parent, const char *name,
+                    const TQStringList &/*args*/)
   : KPanelMenu( "", parent, name )
 {
 }
@@ -44,19 +44,19 @@ FindMenu::~FindMenu()
 
 void FindMenu::initialize()
 {
-  QStringList list = KGlobal::dirs()->findAllResources( "data", "kicker/menuext/find/*.desktop", false, true );
+  TQStringList list = KGlobal::dirs()->findAllResources( "data", "kicker/menuext/find/*.desktop", false, true );
 
   list.sort();
 
   int id = 0;
 
   mConfigList.clear();
-  for ( QStringList::ConstIterator it = list.begin(); it != list.end(); ++it ) {
+  for ( TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it ) {
     KSimpleConfig config( *it, true );
     config.setDesktopGroup();
 
     mConfigList.append( *it );
-    QString text = config.readEntry( "Name" );
+    TQString text = config.readEntry( "Name" );
 
     insertItem( SmallIconSet( config.readEntry( "Icon" ) ), text, id );
     id++;
@@ -65,7 +65,7 @@ void FindMenu::initialize()
 
 void FindMenu::slotExec( int pos )
 {
-  QString app = mConfigList[ pos ];
+  TQString app = mConfigList[ pos ];
 
   kapp->propagateSessionManager();
 

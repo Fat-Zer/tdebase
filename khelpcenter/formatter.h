@@ -20,8 +20,8 @@
 #ifndef KHC_FORMATTER_H
 #define KHC_FORMATTER_H
 
-#include <qstring.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqmap.h>
 
 namespace KHC {
 
@@ -33,19 +33,19 @@ class Formatter
 
     bool readTemplates();
 
-    virtual QString header( const QString &title );
-    virtual QString footer();
-    virtual QString separator();
-    virtual QString docTitle( const QString & );
-    virtual QString sectionHeader( const QString & );
-    virtual QString paragraph( const QString & );
-    virtual QString title( const QString & );
+    virtual TQString header( const TQString &title );
+    virtual TQString footer();
+    virtual TQString separator();
+    virtual TQString docTitle( const TQString & );
+    virtual TQString sectionHeader( const TQString & );
+    virtual TQString paragraph( const TQString & );
+    virtual TQString title( const TQString & );
     
-    virtual QString processResult( const QString & );
+    virtual TQString processResult( const TQString & );
 
   private:
     bool mHasTemplate;
-    QMap<QString,QString> mSymbols;
+    TQMap<TQString,TQString> mSymbols;
 };
 
 }

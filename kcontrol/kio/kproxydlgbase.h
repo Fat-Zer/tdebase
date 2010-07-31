@@ -22,9 +22,9 @@
 #ifndef KPROXY_DIALOG_BASE_H
 #define KPROXY_DIALOG_BASE_H
 
-#include <qmap.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kdialogbase.h>
 #include <kprotocolmanager.h>
@@ -40,9 +40,9 @@ public:
 
   bool useReverseProxy;
   bool showEnvVarValue;
-  QStringList noProxyFor;
+  TQStringList noProxyFor;
   KProtocolManager::ProxyType type;
-  QMap<QString, QString> proxyList;
+  TQMap<TQString, TQString> proxyList;
 
 private:
   void init();
@@ -52,8 +52,8 @@ private:
 class KProxyDialogBase : public KDialogBase
 {
 public:
-  KProxyDialogBase( QWidget* parent = 0, const char* name = 0,
-                    bool modal = false, const QString &caption = QString::null);
+  KProxyDialogBase( TQWidget* parent = 0, const char* name = 0,
+                    bool modal = false, const TQString &caption = TQString::null);
 
   virtual ~KProxyDialogBase() {};
 
@@ -62,7 +62,7 @@ public:
   virtual void setProxyData (const KProxyData&)=0;
 
 protected:
-  void setHighLight (QWidget* widget = 0, bool highlight = false);
+  void setHighLight (TQWidget* widget = 0, bool highlight = false);
   bool m_bHasValidData;
 };
 #endif

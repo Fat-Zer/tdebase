@@ -24,8 +24,8 @@
 #ifndef _ProcessController_h_
 #define _ProcessController_h_
 
-#include <qdict.h>
-#include <qwidget.h>
+#include <tqdict.h>
+#include <tqwidget.h>
 
 #include <kapplication.h>
 
@@ -54,28 +54,28 @@ class ProcessController : public KSGRD::SensorDisplay
 	Q_OBJECT
 
 public:
-	ProcessController(QWidget* parent = 0, const char* name = 0, const QString &title = QString::null, bool nf = false);
+	ProcessController(TQWidget* parent = 0, const char* name = 0, const TQString &title = TQString::null, bool nf = false);
 	virtual ~ProcessController() { }
 
-	void resizeEvent(QResizeEvent*);
+	void resizeEvent(TQResizeEvent*);
 
-	bool restoreSettings(QDomElement& element);
+	bool restoreSettings(TQDomElement& element);
 
-	bool saveSettings(QDomDocument& doc, QDomElement& element, bool save = true);
+	bool saveSettings(TQDomDocument& doc, TQDomElement& element, bool save = true);
 
 	void refreshList(void)
 	{
 		updateList();
 	}
 
-	virtual void timerEvent(QTimerEvent*)
+	virtual void timerEvent(TQTimerEvent*)
 	{
 		updateList();
 	}
 
-	virtual bool addSensor(const QString&, const QString&, const QString&, const QString&);
+	virtual bool addSensor(const TQString&, const TQString&, const TQString&, const TQString&);
 
-	virtual void answerReceived(int id, const QString& answer);
+	virtual void answerReceived(int id, const TQString& answer);
 
 	virtual void sensorError(int, bool err);
 
@@ -117,7 +117,7 @@ public slots:
 	void killProcess();
 	void killProcess(int pid, int sig);
 
-	void reniceProcess(const QValueList<int> &pids, int niceValue);
+	void reniceProcess(const TQValueList<int> &pids, int niceValue);
 
 	void updateList();
 
@@ -125,30 +125,30 @@ signals:
 	void setFilterMode(int);
 
 private:
-	QVBoxLayout* gm;
+	TQVBoxLayout* gm;
 
 	bool killSupported;
 
 	/// The process list.
 	ProcessList* pList;
 	///Layout for the search line and process filter combo box
-	QHBoxLayout* gmSearch;
+	TQHBoxLayout* gmSearch;
 	KListViewSearchLineWidget *pListSearchLine;
 	
-	QHBoxLayout* gm1;
+	TQHBoxLayout* gm1;
 
 	/// Checkbox to switch between tree and list view
-	QCheckBox* xbTreeView;
+	TQCheckBox* xbTreeView;
 
 	/// This combo boxes control the process filter.
-	QComboBox* cbFilter;
+	TQComboBox* cbFilter;
 
 	/// These buttons force an immedeate refresh or kill a process.
 	KPushButton* bRefresh;
 	KPushButton* bKill;
 
 	/// Dictionary for header translations.
-	QDict<QString> dict;
+	TQDict<TQString> dict;
 };
 
 #endif

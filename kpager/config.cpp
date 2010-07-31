@@ -21,13 +21,13 @@
 
 ***************************************************************************/
 
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qbuttongroup.h>
-#include <qwidget.h>
-#include <qvbox.h>
-#include <qhbox.h>
-#include <qlayout.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqbuttongroup.h>
+#include <tqwidget.h>
+#include <tqvbox.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
 
 #include <kdialogbase.h>
 #include <klocale.h>
@@ -42,51 +42,51 @@
 #include "kpager.h"
 
 
-KPagerConfigDialog::KPagerConfigDialog (QWidget *parent)
+KPagerConfigDialog::KPagerConfigDialog (TQWidget *parent)
  : KDialogBase ( parent, "configdialog", true, i18n("Configuration"), Ok|Cancel, Ok, true )
 {
-    QVBox *box = new QVBox( this );
-    m_chkWindowDragging=new QCheckBox(i18n("Enable window dragging"),box,0);
+    TQVBox *box = new TQVBox( this );
+    m_chkWindowDragging=new TQCheckBox(i18n("Enable window dragging"),box,0);
     (void ) new KSeparator( box );
-    connect(m_chkWindowDragging, SIGNAL(toggled(bool)), this, SLOT(enableWindowDragging(bool)));
+    connect(m_chkWindowDragging, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(enableWindowDragging(bool)));
 
-    QHBox *page = new QHBox( box );
-    QVBox *lpage = new QVBox( page );
+    TQHBox *page = new TQHBox( box );
+    TQVBox *lpage = new TQVBox( page );
     setMainWidget(box);
 
-    m_chkShowName=new QCheckBox(i18n("Show name"),lpage,0);
-    connect(m_chkShowName, SIGNAL(toggled(bool)), this, SLOT(setShowName(bool)));
-    m_chkShowNumber=new QCheckBox(i18n("Show number"),lpage,0);
-    connect(m_chkShowNumber, SIGNAL(toggled(bool)), this, SLOT(setShowNumber(bool)));
-    m_chkShowBackground=new QCheckBox(i18n("Show background"),lpage,0);
-    connect(m_chkShowBackground, SIGNAL(toggled(bool)), this, SLOT(setShowBackground(bool)));
-    m_chkShowWindows=new QCheckBox(i18n("Show windows"),lpage,0);
-    connect(m_chkShowWindows, SIGNAL(toggled(bool)), this, SLOT(setShowWindows(bool)));
+    m_chkShowName=new TQCheckBox(i18n("Show name"),lpage,0);
+    connect(m_chkShowName, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(setShowName(bool)));
+    m_chkShowNumber=new TQCheckBox(i18n("Show number"),lpage,0);
+    connect(m_chkShowNumber, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(setShowNumber(bool)));
+    m_chkShowBackground=new TQCheckBox(i18n("Show background"),lpage,0);
+    connect(m_chkShowBackground, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(setShowBackground(bool)));
+    m_chkShowWindows=new TQCheckBox(i18n("Show windows"),lpage,0);
+    connect(m_chkShowWindows, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(setShowWindows(bool)));
 
-    m_grpWindowDrawMode=new QButtonGroup(i18n("Type of Window"),page);
+    m_grpWindowDrawMode=new TQButtonGroup(i18n("Type of Window"),page);
     m_grpWindowDrawMode->setExclusive(true);
-    QVBoxLayout *vbox = new QVBoxLayout(m_grpWindowDrawMode, KDialog::marginHint(),
+    TQVBoxLayout *vbox = new TQVBoxLayout(m_grpWindowDrawMode, KDialog::marginHint(),
 					KDialog::spacingHint());
     vbox->addSpacing(fontMetrics().lineSpacing());
-    vbox->addWidget(new QRadioButton(i18n("Plain"),m_grpWindowDrawMode));
-    vbox->addWidget(new QRadioButton(i18n("Icon"),m_grpWindowDrawMode));
+    vbox->addWidget(new TQRadioButton(i18n("Plain"),m_grpWindowDrawMode));
+    vbox->addWidget(new TQRadioButton(i18n("Icon"),m_grpWindowDrawMode));
 
-    QRadioButton *rbpix = new QRadioButton(i18n("Pixmap"),m_grpWindowDrawMode);
+    TQRadioButton *rbpix = new TQRadioButton(i18n("Pixmap"),m_grpWindowDrawMode);
 //    rbpix->setEnabled(false);
     vbox->addWidget(rbpix);
 
-    connect(m_grpWindowDrawMode, SIGNAL(clicked(int)), this, SLOT(setWindowDrawMode(int)));
+    connect(m_grpWindowDrawMode, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(setWindowDrawMode(int)));
 
-    m_grpLayoutType=new QButtonGroup(i18n("Layout"),page);
+    m_grpLayoutType=new TQButtonGroup(i18n("Layout"),page);
     m_grpLayoutType->setExclusive(true);
-    vbox = new QVBoxLayout(m_grpLayoutType, KDialog::marginHint(), KDialog::spacingHint());
+    vbox = new TQVBoxLayout(m_grpLayoutType, KDialog::marginHint(), KDialog::spacingHint());
     vbox->addSpacing(fontMetrics().lineSpacing());
-    vbox->addWidget(new QRadioButton(i18n("Classical"),m_grpLayoutType));
-    vbox->addWidget(new QRadioButton(i18n("Horizontal"),m_grpLayoutType));
-    vbox->addWidget(new QRadioButton(i18n("Vertical"),m_grpLayoutType));
+    vbox->addWidget(new TQRadioButton(i18n("Classical"),m_grpLayoutType));
+    vbox->addWidget(new TQRadioButton(i18n("Horizontal"),m_grpLayoutType));
+    vbox->addWidget(new TQRadioButton(i18n("Vertical"),m_grpLayoutType));
 
-    connect(m_grpLayoutType, SIGNAL(clicked(int)), this, SLOT(setLayout(int)));
-    connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
+    connect(m_grpLayoutType, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(setLayout(int)));
+    connect(this,TQT_SIGNAL(okClicked()),this,TQT_SLOT(slotOk()));
     loadConfiguration();
     setMinimumSize(360, 160);
 }

@@ -4,17 +4,17 @@
  *
  **********************************************************************/
 
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qtooltip.h>
-#include <qcombobox.h>
-#include <qspinbox.h>
-#include <qpushbutton.h>
-#include <qapplication.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqtooltip.h>
+#include <tqcombobox.h>
+#include <tqspinbox.h>
+#include <tqpushbutton.h>
+#include <tqapplication.h>
 
 #include <kcalendarsystem.h>
 #include <kglobal.h>
@@ -31,15 +31,15 @@
 #include "kftabdlg.h"
 
 // Static utility functions
-static void save_pattern(QComboBox *, const QString &, const QString &);
+static void save_pattern(TQComboBox *, const TQString &, const TQString &);
 
 #define SPECIAL_TYPES 7
 
-class KSortedMimeTypeList : public QPtrList<KMimeType>
+class KSortedMimeTypeList : public TQPtrList<KMimeType>
 {
 public:
   KSortedMimeTypeList() { };
-  int compareItems(QPtrCollection::Item s1, QPtrCollection::Item s2)
+  int compareItems(TQPtrCollection::Item s1, TQPtrCollection::Item s2)
   {
      KMimeType *item1 = (KMimeType *) s1;
      KMimeType *item2 = (KMimeType *) s2;
@@ -49,27 +49,27 @@ public:
   }
 };
 
-KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
-  : QTabWidget( parent, name ), regExpDialog(0)
+KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
+  : TQTabWidget( parent, name ), regExpDialog(0)
 {
     // This validator will be used for all numeric edit fields
     //KDigitValidator *digitV = new KDigitValidator(this);
 
     // ************ Page One ************
 
-    pages[0] = new QWidget( this, "page1" );
+    pages[0] = new TQWidget( this, "page1" );
 
     nameBox = new KComboBox(TRUE, pages[0], "combo1");
-    nameBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // allow smaller than widest entry
-    QLabel * namedL = new QLabel(nameBox, i18n("&Named:"), pages[0], "named");
-    QToolTip::add( namedL, i18n("You can use wildcard matching and \";\" for separating multiple names") );
+    nameBox->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
+    TQLabel * namedL = new TQLabel(nameBox, i18n("&Named:"), pages[0], "named");
+    TQToolTip::add( namedL, i18n("You can use wildcard matching and \";\" for separating multiple names") );
     dirBox  = new KComboBox(TRUE, pages[0], "combo2");
-    dirBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // allow smaller than widest entry
-    QLabel * lookinL = new QLabel(dirBox, i18n("Look &in:"), pages[0], "named");
-    subdirsCb  = new QCheckBox(i18n("Include &subfolders"), pages[0]);
-    caseSensCb  = new QCheckBox(i18n("Case s&ensitive search"), pages[0]);
-    browseB    = new QPushButton(i18n("&Browse..."), pages[0]);
-    useLocateCb = new QCheckBox(i18n("&Use files index"), pages[0]);
+    dirBox->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
+    TQLabel * lookinL = new TQLabel(dirBox, i18n("Look &in:"), pages[0], "named");
+    subdirsCb  = new TQCheckBox(i18n("Include &subfolders"), pages[0]);
+    caseSensCb  = new TQCheckBox(i18n("Case s&ensitive search"), pages[0]);
+    browseB    = new TQPushButton(i18n("&Browse..."), pages[0]);
+    useLocateCb = new TQCheckBox(i18n("&Use files index"), pages[0]);
 
     // Setup
 
@@ -83,10 +83,10 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
     nameBox->setFocus();
     dirBox->setDuplicatesEnabled(FALSE);
 
-    nameBox->setInsertionPolicy(QComboBox::AtTop);
-    dirBox->setInsertionPolicy(QComboBox::AtTop);
+    nameBox->setInsertionPolicy(TQComboBox::AtTop);
+    dirBox->setInsertionPolicy(TQComboBox::AtTop);
 
-    const QString nameWhatsThis
+    const TQString nameWhatsThis
       = i18n("<qt>Enter the filename you are looking for. <br>"
 	     "Alternatives may be separated by a semicolon \";\".<br>"
 	     "<br>"
@@ -105,21 +105,21 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
 	     "having one character in between</li>"
 	     "<li><b>My Document.kwd</b> finds a file of exactly that name</li>"
 	     "</ul></qt>");
-    QWhatsThis::add(nameBox,nameWhatsThis);
-    QWhatsThis::add(namedL,nameWhatsThis);
-    const QString whatsfileindex
+    TQWhatsThis::add(nameBox,nameWhatsThis);
+    TQWhatsThis::add(namedL,nameWhatsThis);
+    const TQString whatsfileindex
         = i18n("<qt>This lets you use the files' index created by the <i>slocate</i> "
                "package to speed-up the search; remember to update the index from time to time "
                "(using <i>updatedb</i>)."
                "</qt>");
-    QWhatsThis::add(useLocateCb,whatsfileindex);
+    TQWhatsThis::add(useLocateCb,whatsfileindex);
 
     // Layout
 
-    QGridLayout *grid = new QGridLayout( pages[0], 3, 2,
+    TQGridLayout *grid = new TQGridLayout( pages[0], 3, 2,
 					 KDialog::marginHint(),
 					 KDialog::spacingHint() );
-    QBoxLayout *subgrid = new QVBoxLayout( -1 , "subgrid" );
+    TQBoxLayout *subgrid = new TQVBoxLayout( -1 , "subgrid" );
     grid->addWidget( namedL, 0, 0 );
     grid->addMultiCellWidget( nameBox, 0, 0, 1, 2 );
     grid->addWidget( lookinL, 1, 0 );
@@ -134,21 +134,21 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
 
     // Signals
 
-    connect( browseB, SIGNAL(clicked()),
-             this, SLOT(getDirectory()) );
+    connect( browseB, TQT_SIGNAL(clicked()),
+             this, TQT_SLOT(getDirectory()) );
 
-    connect( nameBox, SIGNAL(activated(int)),
-             this, SIGNAL(startSearch()));
+    connect( nameBox, TQT_SIGNAL(activated(int)),
+             this, TQT_SIGNAL(startSearch()));
 
     // ************ Page Two
 
-    pages[1] = new QWidget( this, "page2" );
+    pages[1] = new TQWidget( this, "page2" );
 
-    findCreated =  new QCheckBox(i18n("Find all files created or &modified:"), pages[1]);
-    bg  = new QButtonGroup();
-    rb[0] = new QRadioButton(i18n("&between"), pages[1] );
-    rb[1] = new QRadioButton(i18n("&during the previous"), pages[1] );
-    QLabel * andL   = new QLabel(i18n("and"), pages[1], "and");
+    findCreated =  new TQCheckBox(i18n("Find all files created or &modified:"), pages[1]);
+    bg  = new TQButtonGroup();
+    rb[0] = new TQRadioButton(i18n("&between"), pages[1] );
+    rb[1] = new TQRadioButton(i18n("&during the previous"), pages[1] );
+    TQLabel * andL   = new TQLabel(i18n("and"), pages[1], "and");
     betweenType = new KComboBox(FALSE, pages[1], "comboBetweenType");
     betweenType->insertItem(i18n("minute(s)"));
     betweenType->insertItem(i18n("hour(s)"));
@@ -158,22 +158,22 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
     betweenType->setCurrentItem(1);
 
 
-    QDate dt = KGlobal::locale()->calendar()->addYears(QDate::currentDate(), -1);
+    TQDate dt = KGlobal::locale()->calendar()->addYears(TQDate::currentDate(), -1);
 
     fromDate = new KDateCombo(dt, pages[1], "fromDate");
     toDate = new KDateCombo(pages[1], "toDate");
-    timeBox = new QSpinBox(1, 60, 1, pages[1], "timeBox");
+    timeBox = new TQSpinBox(1, 60, 1, pages[1], "timeBox");
 
     sizeBox =new KComboBox(FALSE, pages[1], "sizeBox");
-    QLabel * sizeL   =new QLabel(sizeBox,i18n("File &size is:"), pages[1],"size");
-    sizeEdit=new QSpinBox(0, INT_MAX, 1, pages[1], "sizeEdit" );
+    TQLabel * sizeL   =new TQLabel(sizeBox,i18n("File &size is:"), pages[1],"size");
+    sizeEdit=new TQSpinBox(0, INT_MAX, 1, pages[1], "sizeEdit" );
     sizeEdit->setValue(1);
     sizeUnitBox =new KComboBox(FALSE, pages[1], "sizeUnitBox");
 
     m_usernameBox = new KComboBox( true, pages[1], "m_combo1");
-    QLabel *usernameLabel= new QLabel(m_usernameBox,i18n("Files owned by &user:"),pages[1]);
+    TQLabel *usernameLabel= new TQLabel(m_usernameBox,i18n("Files owned by &user:"),pages[1]);
     m_groupBox = new KComboBox( true, pages[1], "m_combo2");
-    QLabel *groupLabel= new QLabel(m_groupBox,i18n("Owned by &group:"),pages[1]);
+    TQLabel *groupLabel= new TQLabel(m_groupBox,i18n("Owned by &group:"),pages[1]);
 
     sizeBox ->insertItem( i18n("(none)") );
     sizeBox ->insertItem( i18n("At Least") );
@@ -191,19 +191,19 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
 
     m_usernameBox->setDuplicatesEnabled(FALSE);
     m_groupBox->setDuplicatesEnabled(FALSE);
-    m_usernameBox->setInsertionPolicy(QComboBox::AtTop);
-    m_groupBox->setInsertionPolicy(QComboBox::AtTop);
+    m_usernameBox->setInsertionPolicy(TQComboBox::AtTop);
+    m_groupBox->setInsertionPolicy(TQComboBox::AtTop);
 
 
     // Setup
-    timeBox->setButtonSymbols(QSpinBox::PlusMinus);
+    timeBox->setButtonSymbols(TQSpinBox::PlusMinus);
     rb[0]->setChecked(true);
     bg->insert( rb[0] );
     bg->insert( rb[1] );
 
     // Layout
 
-    QGridLayout *grid1 = new QGridLayout( pages[1], 5,  6,
+    TQGridLayout *grid1 = new TQGridLayout( pages[1], 5,  6,
 					  KDialog::marginHint(),
 					  KDialog::spacingHint() );
 
@@ -235,52 +235,52 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
     grid1->setRowStretch(6,1);
 
     // Connect
-    connect( findCreated,  SIGNAL(toggled(bool)),   SLOT(fixLayout()) );
-    connect( bg,  SIGNAL(clicked(int)), this,   SLOT(fixLayout()) );
-    connect( sizeBox, SIGNAL(highlighted(int)), this, SLOT(slotSizeBoxChanged(int)));
+    connect( findCreated,  TQT_SIGNAL(toggled(bool)),   TQT_SLOT(fixLayout()) );
+    connect( bg,  TQT_SIGNAL(clicked(int)), this,   TQT_SLOT(fixLayout()) );
+    connect( sizeBox, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(slotSizeBoxChanged(int)));
 
 
     // ************ Page Three
 
-    pages[2] = new QWidget( this, "page3" );
+    pages[2] = new TQWidget( this, "page3" );
 
     typeBox =new KComboBox(FALSE, pages[2], "typeBox");
-    typeBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // allow smaller than widest entry
-    QLabel * typeL   =new QLabel(typeBox, i18n("File &type:"), pages[2], "type");
+    typeBox->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
+    TQLabel * typeL   =new TQLabel(typeBox, i18n("File &type:"), pages[2], "type");
     textEdit=new KLineEdit(pages[2], "textEdit" );
-    QLabel * textL   =new QLabel(textEdit, i18n("C&ontaining text:"), pages[2], "text");
+    TQLabel * textL   =new TQLabel(textEdit, i18n("C&ontaining text:"), pages[2], "text");
 
-    connect( textEdit, SIGNAL(returnPressed(const QString &)), SIGNAL( startSearch()));
+    connect( textEdit, TQT_SIGNAL(returnPressed(const TQString &)), TQT_SIGNAL( startSearch()));
 
-    const QString containingtext
+    const TQString containingtext
       = i18n("<qt>If specified, only files that contain this text"
 	      " are found. Note that not all file types from the list"
 		  " above are supported. Please refer to the documentation"
 		  " for a list of supported file types."
 	      "</qt>");
-    QToolTip::add(textEdit,containingtext);
-    QWhatsThis::add(textL,containingtext);
+    TQToolTip::add(textEdit,containingtext);
+    TQWhatsThis::add(textL,containingtext);
 
-    caseContextCb  =new QCheckBox(i18n("Case s&ensitive"), pages[2]);
-    binaryContextCb  =new QCheckBox(i18n("Include &binary files"), pages[2]);
-    regexpContentCb  =new QCheckBox(i18n("Regular e&xpression"), pages[2]);
+    caseContextCb  =new TQCheckBox(i18n("Case s&ensitive"), pages[2]);
+    binaryContextCb  =new TQCheckBox(i18n("Include &binary files"), pages[2]);
+    regexpContentCb  =new TQCheckBox(i18n("Regular e&xpression"), pages[2]);
 
-    const QString binaryTooltip
+    const TQString binaryTooltip
       = i18n("<qt>This lets you search in any type of file, "
        "even those that usually do not contain text (for example "
 	   "program files and images).</qt>");
-    QToolTip::add(binaryContextCb,binaryTooltip);
+    TQToolTip::add(binaryContextCb,binaryTooltip);
 
-    QPushButton* editRegExp = 0;
+    TQPushButton* editRegExp = 0;
     if ( !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
       // The editor is available, so lets use it.
-      editRegExp = new QPushButton(i18n("&Edit..."), pages[2], "editRegExp");
+      editRegExp = new TQPushButton(i18n("&Edit..."), pages[2], "editRegExp");
     }
 
     metainfokeyEdit=new KLineEdit(pages[2], "textEdit" );
     metainfoEdit=new KLineEdit(pages[2], "textEdit" );
-    QLabel * textMetaInfo = new QLabel(metainfoEdit, i18n("fo&r:"), pages[2], "text");
-    QLabel * textMetaKey = new QLabel(metainfokeyEdit, i18n("Search &metainfo sections:"), pages[2], "text");
+    TQLabel * textMetaInfo = new TQLabel(metainfoEdit, i18n("fo&r:"), pages[2], "text");
+    TQLabel * textMetaKey = new TQLabel(metainfokeyEdit, i18n("Search &metainfo sections:"), pages[2], "text");
 
     // Setup
     typeBox->insertItem(i18n("All Files & Folders"));
@@ -306,9 +306,9 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
 
     if ( editRegExp ) {
       // The editor was available, so lets use it.
-      connect( regexpContentCb, SIGNAL(toggled(bool) ), editRegExp, SLOT(setEnabled(bool)) );
+      connect( regexpContentCb, TQT_SIGNAL(toggled(bool) ), editRegExp, TQT_SLOT(setEnabled(bool)) );
       editRegExp->setEnabled(false);
-      connect( editRegExp, SIGNAL(clicked()), this, SLOT( slotEditRegExp() ) );
+      connect( editRegExp, TQT_SIGNAL(clicked()), this, TQT_SLOT( slotEditRegExp() ) );
     }
     else
         regexpContentCb->hide();
@@ -317,7 +317,7 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
     tmp = sizeEdit->fontMetrics().width(" 00000 ");
     sizeEdit->setMinimumSize(tmp, sizeEdit->sizeHint().height());
 
-    QGridLayout *grid2 = new QGridLayout( pages[2], 5, 4,
+    TQGridLayout *grid2 = new TQGridLayout( pages[2], 5, 4,
 					  KDialog::marginHint(),
 					  KDialog::spacingHint() );
     grid2->addWidget( typeL, 0, 0 );
@@ -346,7 +346,7 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
 
 
     // Setup
-    const QString whatsmetainfo
+    const TQString whatsmetainfo
       = i18n("<qt>Search within files' specific comments/metainfo<br>"
 	     "These are some examples:<br>"
 	     "<ul>"
@@ -354,17 +354,17 @@ KfindTabWidget::KfindTabWidget(QWidget *parent, const char *name)
 	     "<li><b>Images (png...)</b> Search images with a special resolution, comment...</li>"
 	     "</ul>"
 	     "</qt>");
-    const QString whatsmetainfokey
+    const TQString whatsmetainfokey
       = i18n("<qt>If specified, search only in this field<br>"
 	     "<ul>"
 	     "<li><b>Audio files (mp3...)</b> This can be Title, Album...</li>"
 	     "<li><b>Images (png...)</b> Search only in Resolution, Bitdepth...</li>"
 	     "</ul>"
 	     "</qt>");
-    QWhatsThis::add(textMetaInfo,whatsmetainfo);
-    QToolTip::add(metainfoEdit,whatsmetainfo);
-    QWhatsThis::add(textMetaKey,whatsmetainfokey);
-    QToolTip::add(metainfokeyEdit,whatsmetainfokey);
+    TQWhatsThis::add(textMetaInfo,whatsmetainfo);
+    TQToolTip::add(metainfoEdit,whatsmetainfo);
+    TQWhatsThis::add(textMetaKey,whatsmetainfokey);
+    TQToolTip::add(metainfokeyEdit,whatsmetainfokey);
 
 
     fixLayout();
@@ -383,7 +383,7 @@ void KfindTabWidget::setURL( const KURL & url )
   KConfig *conf = KGlobal::config();
   conf->setGroup("History");
   m_url = url;
-  QStringList sl = conf->readPathListEntry("Directories");
+  TQStringList sl = conf->readPathListEntry("Directories");
   dirBox->clear(); // make sure there is no old Stuff in there
 
   if(!sl.isEmpty()) {
@@ -397,9 +397,9 @@ void KfindTabWidget::setURL( const KURL & url )
       dirBox->setCurrentItem(indx);
   }
   else {
-    QDir m_dir("/lib");
+    TQDir m_dir("/lib");
     dirBox ->insertItem( m_url.prettyURL() );
-    dirBox ->insertItem( "file:" + QDir::homeDirPath() );
+    dirBox ->insertItem( "file:" + TQDir::homeDirPath() );
     dirBox ->insertItem( "file:/" );
     dirBox ->insertItem( "file:/usr" );
     if (m_dir.exists())
@@ -461,7 +461,7 @@ void KfindTabWidget::loadHistory()
   // Load pattern history
   KConfig *conf = KGlobal::config();
   conf->setGroup("History");
-  QStringList sl = conf->readListEntry("Patterns");
+  TQStringList sl = conf->readListEntry("Patterns");
   if(!sl.isEmpty())
     nameBox->insertStringList(sl);
   else
@@ -479,9 +479,9 @@ void KfindTabWidget::loadHistory()
       dirBox->setCurrentItem(indx);
   }
   else {
-    QDir m_dir("/lib");
+    TQDir m_dir("/lib");
     dirBox ->insertItem( m_url.prettyURL() );
-    dirBox ->insertItem( "file:" + QDir::homeDirPath() );
+    dirBox ->insertItem( "file:" + TQDir::homeDirPath() );
     dirBox ->insertItem( "file:/" );
     dirBox ->insertItem( "file:/usr" );
     if (m_dir.exists())
@@ -496,7 +496,7 @@ void KfindTabWidget::loadHistory()
 void KfindTabWidget::slotEditRegExp()
 {
   if ( ! regExpDialog )
-    regExpDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString::null, this );
+    regExpDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString::null, this );
 
   KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( regExpDialog->qt_cast( "KRegExpEditorInterface" ) );
   if ( !iface )
@@ -522,10 +522,10 @@ void KfindTabWidget::slotSizeBoxChanged(int index)
 
 void KfindTabWidget::setDefaults()
 {
-    QDate dt = KGlobal::locale()->calendar()->addYears(QDate::currentDate(), -1);
+    TQDate dt = KGlobal::locale()->calendar()->addYears(TQDate::currentDate(), -1);
 
     fromDate ->setDate(dt);
-    toDate ->setDate(QDate::currentDate());
+    toDate ->setDate(TQDate::currentDate());
 
     timeBox->setValue(1);
     betweenType->setCurrentItem(1);
@@ -555,15 +555,15 @@ bool KfindTabWidget::isDateValid()
 
   // If we can not parse either of the dates or
   // "from" date is bigger than "to" date return FALSE.
-  QDate hi1, hi2;
+  TQDate hi1, hi2;
 
-  QString str;
+  TQString str;
   if ( ! fromDate->getDate(&hi1).isValid() ||
        ! toDate->getDate(&hi2).isValid() )
     str = i18n("The date is not valid.");
   else if ( hi1 > hi2 )
     str = i18n("Invalid date range.");
-  else if ( QDate::currentDate() < hi1 )
+  else if ( TQDate::currentDate() < hi1 )
     str = i18n("Unable to search dates in the future.");
 
   if (!str.isNull()) {
@@ -590,7 +590,7 @@ void KfindTabWidget::setQuery(KQuery *query)
   if (!itemAlreadyContained)
      dirBox->insertItem(dirBox->currentText().stripWhiteSpace(),0);
 
-  QString regex = nameBox->currentText().isEmpty() ? "*" : nameBox->currentText();
+  TQString regex = nameBox->currentText().isEmpty() ? "*" : nameBox->currentText();
   query->setRegExp(regex, caseSensCb->isChecked());
   itemAlreadyContained=false;
   for (int idx=0; idx<nameBox->count(); idx++)
@@ -640,13 +640,13 @@ void KfindTabWidget::setQuery(KQuery *query)
   query->setSizeRange(sizeBox->currentItem(),size,0);
 
   // dates
-  QDateTime epoch;
+  TQDateTime epoch;
   epoch.setTime_t(0);
 
   // Add date predicate
   if (findCreated->isChecked()) { // Modified
     if (rb[0]->isChecked()) { // Between dates
-      QDate q1, q2;
+      TQDate q1, q2;
       fromDate->getDate(&q1);
       toDate->getDate(&q2);
 
@@ -712,7 +712,7 @@ void KfindTabWidget::setQuery(KQuery *query)
   }
   else
   {
-     query->setMimeType( QString::null );
+     query->setMimeType( TQString::null );
   }
 
   //Metainfo
@@ -725,17 +725,17 @@ void KfindTabWidget::setQuery(KQuery *query)
   	binaryContextCb->isChecked(), regexpContentCb->isChecked());
 }
 
-QString KfindTabWidget::date2String(const QDate & date) {
+TQString KfindTabWidget::date2String(const TQDate & date) {
   return(KGlobal::locale()->formatDate(date, true));
 }
 
-QDate &KfindTabWidget::string2Date(const QString & str, QDate *qd) {
+TQDate &KfindTabWidget::string2Date(const TQString & str, TQDate *qd) {
   return *qd = KGlobal::locale()->readDate(str);
 }
 
 void KfindTabWidget::getDirectory()
 {
-  QString result =
+  TQString result =
   KFileDialog::getExistingDirectory( dirBox->text(dirBox->currentItem()).stripWhiteSpace(),
                                      this );
 
@@ -806,10 +806,10 @@ bool KfindTabWidget::isSearchRecursive()
 /**
    Digit validator. Allows only digits to be typed.
 **/
-KDigitValidator::KDigitValidator( QWidget * parent, const char *name )
-  : QValidator( parent, name )
+KDigitValidator::KDigitValidator( TQWidget * parent, const char *name )
+  : TQValidator( parent, name )
 {
-  r = new QRegExp("^[0-9]*$");
+  r = new TQRegExp("^[0-9]*$");
 }
 
 KDigitValidator::~KDigitValidator()
@@ -817,31 +817,31 @@ KDigitValidator::~KDigitValidator()
   delete r;
 }
 
-QValidator::State KDigitValidator::validate( QString & input, int & ) const
+TQValidator::State KDigitValidator::validate( TQString & input, int & ) const
 {
   if (r->search(input) < 0) {
     // Beep on user if he enters non-digit
-    QApplication::beep();
-    return QValidator::Invalid;
+    TQApplication::beep();
+    return TQValidator::Invalid;
   }
   else
-    return QValidator::Acceptable;
+    return TQValidator::Acceptable;
 }
 
 //*******************************************************
 //             Static utility functions
 //*******************************************************
-static void save_pattern(QComboBox *obj,
-			 const QString & group, const QString & entry)
+static void save_pattern(TQComboBox *obj,
+			 const TQString & group, const TQString & entry)
 {
-  // QComboBox allows insertion of items more than specified by
+  // TQComboBox allows insertion of items more than specified by
   // maxCount() (QT bug?). This API call will truncate list if needed.
   obj->setMaxCount(15);
 
   // make sure the current item is saved first so it will be the
   // default when started next time
-  QStringList sl;
-  QString cur = obj->currentText();
+  TQStringList sl;
+  TQString cur = obj->currentText();
   sl.append(cur);
   for (int i = 0; i < obj->count(); i++) {
     if( cur != obj->text(i) ) {
@@ -854,13 +854,13 @@ static void save_pattern(QComboBox *obj,
   conf->writePathEntry(entry, sl);
 }
 
-QSize KfindTabWidget::sizeHint() const
+TQSize KfindTabWidget::sizeHint() const
 {
   // #44662: avoid a huge default size when the comboboxes have very large items
   // Like in minicli, we changed the combobox size policy so that they can resize down,
   // and then we simply provide a reasonable size hint for the whole window, depending
   // on the screen width.
-  QSize sz = QTabWidget::sizeHint();
+  TQSize sz = TQTabWidget::sizeHint();
   KfindTabWidget* me = const_cast<KfindTabWidget*>( this );
   const int screenWidth = qApp->desktop()->screenGeometry(me).width();
   if ( sz.width() > screenWidth / 2 )

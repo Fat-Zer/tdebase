@@ -19,7 +19,7 @@
 #ifndef __THEMEPAGE_H
 #define __THEMEPAGE_H
 
-#include <qdict.h>
+#include <tqdict.h>
 
 
 class KListView;
@@ -37,7 +37,7 @@ class ThemePage : public QWidget
 	Q_OBJECT
 
 	public:
-		ThemePage( QWidget* parent = 0, const char* name = 0 );
+		ThemePage( TQWidget* parent = 0, const char* name = 0 );
 		~ThemePage();
 
 		// Called by the KCM
@@ -50,25 +50,25 @@ class ThemePage : public QWidget
 		void changed( bool );
 
 	private slots:
-		void selectionChanged( QListViewItem * );
+		void selectionChanged( TQListViewItem * );
 		void installClicked();
 		void removeClicked();
 
 	private:
-		bool installThemes( const QString &file );
-		void insertTheme( const QString & );
-		const QStringList getThemeBaseDirs() const;
-		bool isCursorTheme( const QString &theme, const int depth = 0 ) const;
+		bool installThemes( const TQString &file );
+		void insertTheme( const TQString & );
+		const TQStringList getThemeBaseDirs() const;
+		bool isCursorTheme( const TQString &theme, const int depth = 0 ) const;
 		void insertThemes();
-		QPixmap createIcon( const QString &, const QString & ) const;
+		TQPixmap createIcon( const TQString &, const TQString & ) const;
 
 		KListView *listview;
 		PreviewWidget *preview;
-		QPushButton *installButton, *removeButton;
-		QString selectedTheme;
-		QString currentTheme;
-		QStringList themeDirs;
-		QDict<ThemeInfo> themeInfo;
+		TQPushButton *installButton, *removeButton;
+		TQString selectedTheme;
+		TQString currentTheme;
+		TQStringList themeDirs;
+		TQDict<ThemeInfo> themeInfo;
 };
 
 #endif // __THEMEPAGE_H

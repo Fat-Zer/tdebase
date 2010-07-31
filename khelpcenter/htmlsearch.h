@@ -1,8 +1,8 @@
 #ifndef KHC_HTMLSEARCH_H
 #define KHC_HTMLSEARCH_H
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 class KConfig;
 
@@ -19,9 +19,9 @@ class HTMLSearch : public QObject
 
     void setupDocEntry( KHC::DocEntry * );
 
-    QString defaultSearch( KHC::DocEntry * );
-    QString defaultIndexer( KHC::DocEntry * );
-    QString defaultIndexTestFile( KHC::DocEntry * );
+    TQString defaultSearch( KHC::DocEntry * );
+    TQString defaultIndexer( KHC::DocEntry * );
+    TQString defaultIndexTestFile( KHC::DocEntry * );
 
   private:
     KConfig *mConfig;

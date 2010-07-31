@@ -51,16 +51,16 @@
 namespace KHotKeys
 {
 
-Tab_widget::Tab_widget( QWidget* parent_P, const char* name_P )
-    : QTabWidget( parent_P, name_P )
+Tab_widget::Tab_widget( TQWidget* parent_P, const char* name_P )
+    : TQTabWidget( parent_P, name_P )
     {
     pages[ TAB_INFO ] = new Info_tab;
     pages[ TAB_GENERAL_SETTINGS ] = new General_settings_tab;
     pages[ TAB_GESTURES_SETTINGS ] = new Gestures_settings_tab;
     General_tab* general_tab;
     pages[ TAB_GENERAL ] = general_tab = new General_tab;
-    connect( general_tab, SIGNAL( action_type_changed( int )),
-        SLOT( set_action_type_slot( int )));
+    connect( general_tab, TQT_SIGNAL( action_type_changed( int )),
+        TQT_SLOT( set_action_type_slot( int )));
     pages[ TAB_GROUP_GENERAL ] = new Action_group_tab;
     pages[ TAB_CONDITIONS ] = new Condition_list_tab;
     pages[ TAB_ACTIONS ] = new Action_list_tab;
@@ -76,7 +76,7 @@ Tab_widget::Tab_widget( QWidget* parent_P, const char* name_P )
     for( tab_pos_t i = TAB_FIRST;
          i < TAB_END;
          ++i )
-        connect( this, SIGNAL( clear_pages_signal()), pages[ i ], SLOT( clear_data()));
+        connect( this, TQT_SIGNAL( clear_pages_signal()), pages[ i ], TQT_SLOT( clear_data()));
 #ifdef HAVE_ARTS
     if( haveArts())
         show_pages(( TAB_INFO, TAB_GENERAL_SETTINGS, TAB_GESTURES_SETTINGS, TAB_VOICE_SETTINGS ));
@@ -127,7 +127,7 @@ void Tab_widget::save_current_action_changes()
         }
     else if( current_type == DATA )
         {
-        QString name, comment;
+        TQString name, comment;
         bool enabled;
         static_cast< General_tab* >( pages[ TAB_GENERAL ] )->get_data( name, comment, enabled );
         switch( current_data_type )
@@ -441,18 +441,18 @@ void Tab_widget::show_pages( const Pages_set& pages_P )
         {
         removePage( pages[ i ] );
         if( pages_P.is_set( i )) // don't clear page contents if it stays visible
-            disconnect( this, SIGNAL( clear_pages_signal()), pages[ i ], SLOT( clear_data()));
+            disconnect( this, TQT_SIGNAL( clear_pages_signal()), pages[ i ], TQT_SLOT( clear_data()));
         }
     clear_pages();
     // reconnect all pages to this signal
-    disconnect( this, SIGNAL( clear_pages_signal()), NULL, NULL );
+    disconnect( this, TQT_SIGNAL( clear_pages_signal()), NULL, NULL );
     for( tab_pos_t i = TAB_FIRST;
          i < TAB_END;
          ++i )
         {
         if( pages_P.is_set( i ))
             addTab( pages[ i ], i18n( tab_labels[ i ] ));
-        connect( this, SIGNAL( clear_pages_signal()), pages[ i ], SLOT( clear_data()));
+        connect( this, TQT_SIGNAL( clear_pages_signal()), pages[ i ], TQT_SLOT( clear_data()));
         }
     show();
     }

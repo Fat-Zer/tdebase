@@ -30,7 +30,7 @@ class NotifierModule : public KCModule
 	Q_OBJECT
 
 public:
-	NotifierModule( QWidget* parent = 0, const char* name = 0);
+	NotifierModule( TQWidget* parent = 0, const char* name = 0);
 	~NotifierModule();
 
 	void load();
@@ -43,13 +43,13 @@ private slots:
 	void slotEdit();
 	void slotToggleAuto();
 
-	void slotActionSelected( QListBoxItem * item );
+	void slotActionSelected( TQListBoxItem * item );
 	void slotMimeTypeChanged( int index );
 
 private:
 	void updateListBox();
 
-	QString m_mimetype;
+	TQString m_mimetype;
 	NotifierSettings m_settings;
 	NotifierModuleView *m_view;
 };

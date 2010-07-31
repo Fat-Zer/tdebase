@@ -4,7 +4,7 @@
  *
  ***********************************************************************/
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -16,18 +16,18 @@
 
 #include "kdatecombo.moc"
 
-KDateCombo::KDateCombo(QWidget *parent, const char *name ) : QComboBox(FALSE, parent,name)
+KDateCombo::KDateCombo(TQWidget *parent, const char *name ) : TQComboBox(FALSE, parent,name)
 {
-  QDate date = QDate::currentDate();
+  TQDate date = TQDate::currentDate();
   initObject(date, parent, name);
 }
 
-KDateCombo::KDateCombo(const QDate & date, QWidget *parent, const char *name) : QComboBox(FALSE, parent,name)
+KDateCombo::KDateCombo(const TQDate & date, TQWidget *parent, const char *name) : TQComboBox(FALSE, parent,name)
 {
   initObject(date, parent, name);
 }
 
-void KDateCombo::initObject(const QDate & date, QWidget *, const char *)
+void KDateCombo::initObject(const TQDate & date, TQWidget *, const char *)
 {
   clearValidator();
   popupFrame = new KPopupFrame(this, "popupFrame");
@@ -38,7 +38,7 @@ void KDateCombo::initObject(const QDate & date, QWidget *, const char *)
   popupFrame->setMainWidget(datePicker);
   setDate(date);
 
-  connect(datePicker, SIGNAL(dateSelected(QDate)), this, SLOT(dateEnteredEvent(QDate)));
+  connect(datePicker, TQT_SIGNAL(dateSelected(TQDate)), this, TQT_SLOT(dateEnteredEvent(TQDate)));
 }
 
 KDateCombo::~KDateCombo()
@@ -47,22 +47,22 @@ KDateCombo::~KDateCombo()
   delete popupFrame;
 }
 
-QString KDateCombo::date2String(const QDate & date)
+TQString KDateCombo::date2String(const TQDate & date)
 {
   return(KGlobal::locale()->formatDate(date, true));
 }
 
-QDate & KDateCombo::string2Date(const QString & str, QDate *qd)
+TQDate & KDateCombo::string2Date(const TQString & str, TQDate *qd)
 {
   return *qd = KGlobal::locale()->readDate(str);
 }
 
-QDate & KDateCombo::getDate(QDate *currentDate)
+TQDate & KDateCombo::getDate(TQDate *currentDate)
 {
   return string2Date(currentText(), currentDate);
 }
 
-bool KDateCombo::setDate(const QDate & newDate)
+bool KDateCombo::setDate(const TQDate & newDate)
 {
   if (newDate.isValid())
   {
@@ -74,7 +74,7 @@ bool KDateCombo::setDate(const QDate & newDate)
   return FALSE;
 }
 
-void KDateCombo::dateEnteredEvent(QDate newDate)
+void KDateCombo::dateEnteredEvent(TQDate newDate)
 {
   if (!newDate.isValid())
      newDate = datePicker->date();
@@ -82,36 +82,36 @@ void KDateCombo::dateEnteredEvent(QDate newDate)
   setDate(newDate);
 }
 
-void KDateCombo::mousePressEvent (QMouseEvent * e)
+void KDateCombo::mousePressEvent (TQMouseEvent * e)
 {
-  if (e->button() & QMouseEvent::LeftButton)
+  if (e->button() & TQMouseEvent::LeftButton)
   {
     if  (rect().contains( e->pos()))
     {
-      QDate tempDate;
+      TQDate tempDate;
       getDate(& tempDate);
       datePicker->setDate(tempDate);
-      popupFrame->popup(mapToGlobal(QPoint(0, height())));
+      popupFrame->popup(mapToGlobal(TQPoint(0, height())));
       //datePicker->setFocus();
     }
   }
 }
 
-bool KDateCombo::eventFilter (QObject*, QEvent* e)
+bool KDateCombo::eventFilter (TQObject*, TQEvent* e)
 {
-  if ( e->type() == QEvent::MouseButtonPress )
+  if ( e->type() == TQEvent::MouseButtonPress )
   {
-      QMouseEvent *me = (QMouseEvent *)e;
-      QPoint p = mapFromGlobal( me->globalPos() );
+      TQMouseEvent *me = (TQMouseEvent *)e;
+      TQPoint p = mapFromGlobal( me->globalPos() );
       if (rect().contains( p ) )
       {
-        QTimer::singleShot(10, this, SLOT(dateEnteredEvent()));
+        TQTimer::singleShot(10, this, TQT_SLOT(dateEnteredEvent()));
         return true;
       }
   }
-  else if ( e->type() == QEvent::KeyRelease )
+  else if ( e->type() == TQEvent::KeyRelease )
   {
-      QKeyEvent *k = (QKeyEvent *)e;
+      TQKeyEvent *k = (TQKeyEvent *)e;
       //Press return == pick selected date and close the combo
       if((k->key()==Qt::Key_Return)||(k->key()==Qt::Key_Enter))
       {

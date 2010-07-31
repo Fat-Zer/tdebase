@@ -13,16 +13,16 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "tabbox.h"
 #include "workspace.h"
 #include "client.h"
-#include <qpainter.h>
-#include <qlabel.h>
-#include <qdrawutil.h>
-#include <qstyle.h>
+#include <tqpainter.h>
+#include <tqlabel.h>
+#include <tqdrawutil.h>
+#include <tqstyle.h>
 #include <kglobal.h>
 #include <fixx11h.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
+#include <tqapplication.h>
+#include <tqdesktopwidget.h>
 #include <kstringhandler.h>
 #include <stdarg.h>
 #include <kdebug.h>
@@ -40,12 +40,12 @@ extern Time qt_x_time;
 namespace KWinInternal
 {
 
-extern QPixmap* kwin_get_menu_pix_hack();
+extern TQPixmap* kwin_get_menu_pix_hack();
 
 TabBox::TabBox( Workspace *ws, const char *name )
-    : QFrame( 0, name, Qt::WNoAutoErase ), current_client( NULL ), wspace(ws)
+    : TQFrame( 0, name, Qt::WNoAutoErase ), current_client( NULL ), wspace(ws)
     {
-    setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
+    setFrameStyle(TQFrame::StyledPanel | TQFrame::Plain);
     setLineWidth(2);
     setMargin(2);
 
@@ -55,7 +55,7 @@ TabBox::TabBox( Workspace *ws, const char *name )
     m = DesktopMode; // init variables
     reconfigure();
     reset();
-    connect(&delayedShowTimer, SIGNAL(timeout()), this, SLOT(show()));
+    connect(&delayedShowTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(show()));
     
     XSetWindowAttributes attr;
     attr.override_redirect = 1;
@@ -165,7 +165,7 @@ void TabBox::reset()
     {
     int w, h, cw = 0, wmax = 0;
 
-    QRect r = workspace()->screenGeometry( workspace()->activeScreen());
+    TQRect r = workspace()->screenGeometry( workspace()->activeScreen());
 
     // calculate height of 1 line
     // fontheight + 1 pixel above + 1 pixel below, or 32x32 icon + 2 pixel above + below
@@ -189,11 +189,11 @@ void TabBox::reset()
         // calculate height for the popup
         if ( clients.count() == 0 )  // height for the "not tasks" text
           {
-          QFont f = font();
+          TQFont f = font();
           f.setBold( TRUE );
           f.setPointSize( 14 );
 
-          h = QFontMetrics(f).height()*4;
+          h = TQFontMetrics(f).height()*4;
           }
         else
           {
@@ -343,7 +343,7 @@ int TabBox::currentDesktop()
 /*!
   Reimplemented to raise the tab box as well
  */
-void TabBox::showEvent( QShowEvent* )
+void TabBox::showEvent( TQShowEvent* )
     {
     updateOutline();
     XRaiseWindow( qt_xdisplay(), outline_left );
@@ -357,7 +357,7 @@ void TabBox::showEvent( QShowEvent* )
 /*!
   hide the icon box if necessary
  */
-void TabBox::hideEvent( QHideEvent* )
+void TabBox::hideEvent( TQHideEvent* )
     {
     XUnmapWindow( qt_xdisplay(), outline_left );
     XUnmapWindow( qt_xdisplay(), outline_right );
@@ -368,16 +368,16 @@ void TabBox::hideEvent( QHideEvent* )
 /*!
   Paints the tab box
  */
-void TabBox::drawContents( QPainter * )
+void TabBox::drawContents( TQPainter * )
     {
-    QRect r(contentsRect());
-    QPixmap pix(r.size());  // do double buffering to avoid flickers
+    TQRect r(contentsRect());
+    TQPixmap pix(r.size());  // do double buffering to avoid flickers
     pix.fill(this, 0, 0);
 
-    QPainter p;
+    TQPainter p;
     p.begin(&pix, this);
 
-    QPixmap* menu_pix = kwin_get_menu_pix_hack();
+    TQPixmap* menu_pix = kwin_get_menu_pix_hack();
 
     int iconWidth = showMiniIcon ? 16 : 32;
     int x = 0;
@@ -387,7 +387,7 @@ void TabBox::drawContents( QPainter * )
         {
         if ( !currentClient() )
             {
-            QFont f = font();
+            TQFont f = font();
             f.setBold( TRUE );
             f.setPointSize( 14 );
 
@@ -405,7 +405,7 @@ void TabBox::drawContents( QPainter * )
                     p.fillRect(x, y, r.width(), lineHeight, colorGroup().highlight());
 
                   // draw icon
-                  QPixmap icon;
+                  TQPixmap icon;
                   if ( showMiniIcon )
                     {
                     if ( !(*it)->miniIcon().isNull() )
@@ -425,13 +425,13 @@ void TabBox::drawContents( QPainter * )
                     }
 
                   // generate text to display
-                  QString s;
+                  TQString s;
 
                   if ( !(*it)->isOnDesktop(workspace()->currentDesktop()) )
                     s = workspace()->desktopName((*it)->desktop()) + ": ";
 
                   if ( (*it)->isMinimized() )
-                    s += QString("(") + (*it)->caption() + ")";
+                    s += TQString("(") + (*it)->caption() + ")";
                   else
                     s += (*it)->caption();
 
@@ -442,8 +442,8 @@ void TabBox::drawContents( QPainter * )
                     p.setPen(colorGroup().highlightedText());
                   else if( (*it)->isMinimized())
                     {
-                    QColor c1 = colorGroup().text();
-                    QColor c2 = colorGroup().background();
+                    TQColor c1 = colorGroup().text();
+                    TQColor c2 = colorGroup().background();
                     // from kicker's TaskContainer::blendColors()
                     int r1, g1, b1;
                     int r2, g2, b2;
@@ -455,7 +455,7 @@ void TabBox::drawContents( QPainter * )
                     g1 += (int) ( .5 * ( g2 - g1 ) );
                     b1 += (int) ( .5 * ( b2 - b1 ) );
 
-                    p.setPen(QColor( r1, g1, b1 ));
+                    p.setPen(TQColor( r1, g1, b1 ));
                     }
                   else
                     p.setPen(colorGroup().text());
@@ -474,10 +474,10 @@ void TabBox::drawContents( QPainter * )
         int iconHeight = iconWidth;
 
         // get widest desktop name/number
-        QFont f(font());
+        TQFont f(font());
         f.setBold(true);
         f.setPixelSize(iconHeight - 4);  // pixel, not point because I need to know the pixels
-        QFontMetrics fm(f);
+        TQFontMetrics fm(f);
 
         int wmax = 0;
         for ( int i = 1; i <= workspace()->numberOfDesktops(); i++ )
@@ -485,7 +485,7 @@ void TabBox::drawContents( QPainter * )
             wmax = QMAX(wmax, fontMetrics().width(workspace()->desktopName(i)));
 
             // calculate max width of desktop-number text
-            QString num = QString::number(i);
+            TQString num = TQString::number(i);
             iconWidth = QMAX(iconWidth - 4, fm.boundingRect(num).width()) + 4;
             }
 
@@ -507,7 +507,7 @@ void TabBox::drawContents( QPainter * )
 
             // draw desktop-number
             p.setFont(f);
-            QString num = QString::number(iDesktop);
+            TQString num = TQString::number(iDesktop);
             p.drawText(x+5, y+2, iconWidth, iconHeight, Qt::AlignCenter, num);
 
             p.restore();
@@ -571,8 +571,8 @@ void TabBox::updateOutline()
     XMoveResizeWindow( qt_xdisplay(), outline_top, c->x(), c->y(), c->width(), 5 );
     XMoveResizeWindow( qt_xdisplay(), outline_bottom, c->x(), c->y() + c->height() - 5, c->width(), 5 );
     {
-    QPixmap pix( 5, c->height() - 10 );
-    QPainter p( &pix );
+    TQPixmap pix( 5, c->height() - 10 );
+    TQPainter p( &pix );
     p.setPen( white );
     p.drawLine( 0, 0, 0, pix.height() - 1 );
     p.drawLine( 4, 0, 4, pix.height() - 1 );
@@ -586,8 +586,8 @@ void TabBox::updateOutline()
     XSetWindowBackgroundPixmap( qt_xdisplay(), outline_right, pix.handle());
     }
     {
-    QPixmap pix( c->width(), 5 );
-    QPainter p( &pix );
+    TQPixmap pix( c->width(), 5 );
+    TQPainter p( &pix );
     p.setPen( white );
     p.drawLine( 0, 0, pix.width() - 1 - 0, 0 );
     p.drawLine( 4, 4, pix.width() - 1 - 4, 4 );
@@ -608,8 +608,8 @@ void TabBox::updateOutline()
     XSetWindowBackgroundPixmap( qt_xdisplay(), outline_top, pix.handle());
     }
     {
-    QPixmap pix( c->width(), 5 );
-    QPainter p( &pix );
+    TQPixmap pix( c->width(), 5 );
+    TQPainter p( &pix );
     p.setPen( white );
     p.drawLine( 4, 0, pix.width() - 1 - 4, 0 );
     p.drawLine( 0, 4, pix.width() - 1 - 0, 4 );
@@ -642,8 +642,8 @@ void TabBox::updateOutline()
 void TabBox::hide()
     {
     delayedShowTimer.stop();
-    QWidget::hide();
-    QApplication::syncX();
+    TQWidget::hide();
+    TQApplication::syncX();
     XEvent otherEvent;
     while (XCheckTypedEvent (qt_xdisplay(), EnterNotify, &otherEvent ) )
         ;
@@ -697,7 +697,7 @@ void TabBox::handleMouseEvent( XEvent* e )
     XAllowEvents( qt_xdisplay(), AsyncPointer, qt_x_time );
     if( e->type != ButtonPress )
         return;
-    QPoint pos( e->xbutton.x_root, e->xbutton.y_root );
+    TQPoint pos( e->xbutton.x_root, e->xbutton.y_root );
     if( !geometry().contains( pos ))
         {
         workspace()->closeTabBox();  // click outside closes tab
@@ -768,9 +768,9 @@ bool areKeySymXsDepressed( bool bAll, const uint keySyms[], int nKeySyms )
         int i = keyCodeX / 8;
         char mask = 1 << (keyCodeX - (i * 8));
 
-        kdDebug(125) << iKeySym << ": keySymX=0x" << QString::number( keySymX, 16 )
-                << " i=" << i << " mask=0x" << QString::number( mask, 16 )
-                << " keymap[i]=0x" << QString::number( keymap[i], 16 ) << endl;
+        kdDebug(125) << iKeySym << ": keySymX=0x" << TQString::number( keySymX, 16 )
+                << " i=" << i << " mask=0x" << TQString::number( mask, 16 )
+                << " keymap[i]=0x" << TQString::number( keymap[i], 16 ) << endl;
 
                 // Abort if bad index value,
         if( i < 0 || i >= 32 )

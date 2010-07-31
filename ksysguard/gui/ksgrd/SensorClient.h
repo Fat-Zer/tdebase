@@ -24,8 +24,8 @@
 #ifndef KSG_SENSORCLIENT_H
 #define KSG_SENSORCLIENT_H
 
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 namespace KSGRD {
 
@@ -46,7 +46,7 @@ class SensorClient
       been received by the sensor agent. This function must be reimplemented
       by the sensor client to receive and process this information.
      */
-    virtual void answerReceived( int, const QString& ) { }
+    virtual void answerReceived( int, const TQString& ) { }
 
     /**
       In case of an unexpected fatal problem with the sensor the sensor
@@ -81,14 +81,14 @@ class SensorBoard
 class SensorTokenizer
 {
   public:
-    SensorTokenizer( const QString &info, QChar separator )
+    SensorTokenizer( const TQString &info, TQChar separator )
     {
-      mTokens = QStringList::split( separator, info );
+      mTokens = TQStringList::split( separator, info );
     }
 
     ~SensorTokenizer() { }
 
-    const QString& operator[]( unsigned idx )
+    const TQString& operator[]( unsigned idx )
 	  {
       return mTokens[ idx ];
     }
@@ -99,7 +99,7 @@ class SensorTokenizer
     }
 
   private:
-    QStringList mTokens;
+    TQStringList mTokens;
 };
 
 /**
@@ -110,12 +110,12 @@ class SensorTokenizer
 class SensorIntegerInfo : public SensorTokenizer
 {
   public:
-    SensorIntegerInfo( const QString &info )
+    SensorIntegerInfo( const TQString &info )
       : SensorTokenizer( info, '\t' ) { }
 
     ~SensorIntegerInfo() { }
 
-    const QString &name()
+    const TQString &name()
     {
       return (*this)[ 0 ];
     }
@@ -130,7 +130,7 @@ class SensorIntegerInfo : public SensorTokenizer
       return (*this)[ 2 ].toLong();
     }
 
-    const QString &unit()
+    const TQString &unit()
     {
       return (*this)[ 3 ];
     }
@@ -144,12 +144,12 @@ class SensorIntegerInfo : public SensorTokenizer
 class SensorFloatInfo : public SensorTokenizer
 {
   public:
-    SensorFloatInfo( const QString &info )
+    SensorFloatInfo( const TQString &info )
       : SensorTokenizer( info, '\t' ) { }
 
     ~SensorFloatInfo() { }
 
-    const QString &name()
+    const TQString &name()
     {
       return (*this)[ 0 ];
     }
@@ -164,7 +164,7 @@ class SensorFloatInfo : public SensorTokenizer
       return (*this)[ 2 ].toDouble();
     }
 
-    const QString &unit()
+    const TQString &unit()
     {
       return (*this)[ 3 ];
     }
@@ -178,12 +178,12 @@ class SensorFloatInfo : public SensorTokenizer
 class SensorPSLine : public SensorTokenizer
 {
   public:
-    SensorPSLine( const QString &line )
+    SensorPSLine( const TQString &line )
       : SensorTokenizer( line, '\t' ) { }
 
     ~SensorPSLine() { }
 
-    const QString& name()
+    const TQString& name()
     {
       return (*this)[ 0 ];
     }

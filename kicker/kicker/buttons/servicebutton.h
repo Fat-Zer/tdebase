@@ -33,9 +33,9 @@ class ServiceButton : public PanelButton
     Q_OBJECT
 
 public:
-    ServiceButton( const QString& desktopFile, QWidget* parent );
-    ServiceButton( const KService::Ptr& service, QWidget* parent );
-    ServiceButton( const KConfigGroup& config, QWidget* parent );
+    ServiceButton( const TQString& desktopFile, TQWidget* parent );
+    ServiceButton( const KService::Ptr& service, TQWidget* parent );
+    ServiceButton( const KConfigGroup& config, TQWidget* parent );
 
     ~ServiceButton();
 
@@ -50,17 +50,17 @@ protected slots:
 
 protected:
     void initialize();
-    void loadServiceFromId(const QString &id);
+    void loadServiceFromId(const TQString &id);
     void readDesktopFile();
-    virtual QString tileName() { return "URL"; }
+    virtual TQString tileName() { return "URL"; }
     virtual void startDrag();
-    virtual void dropEvent(QDropEvent *);
-    virtual void dragEnterEvent(QDragEnterEvent *);
-    QString defaultIcon() const { return "exec"; };
+    virtual void dropEvent(TQDropEvent *);
+    virtual void dragEnterEvent(TQDragEnterEvent *);
+    TQString defaultIcon() const { return "exec"; };
     bool checkForBackingFile();
 
     KService::Ptr  _service;
-    QString        _id;
+    TQString        _id;
 };
 
 #endif

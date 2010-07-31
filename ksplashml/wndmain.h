@@ -14,9 +14,9 @@
 
 #include <kapplication.h>
 
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqobject.h>
 
 #include "ksplashiface.h"
 
@@ -27,8 +27,8 @@
 // in knowing this.
 typedef struct
 {
-  QString ItemPixmap;
-  QString ItemText;
+  TQString ItemPixmap;
+  TQString ItemText;
 } Action;
 
 class WndStatus;
@@ -36,7 +36,7 @@ class ObjKsTheme;
 class ThemeEngine;
 class KConfig;
 
-class KSplash: public QWidget, virtual public KSplashIface
+class KSplash: public TQWidget, virtual public KSplashIface
 {
   Q_OBJECT
 
@@ -44,14 +44,14 @@ public:
   KSplash(const char *name = "ksplash");
   ~KSplash();
 
-  QPtrList<Action> actionList();
+  TQPtrList<Action> actionList();
 
   // DCOP interface
-  ASYNC upAndRunning( QString );
+  ASYNC upAndRunning( TQString );
   ASYNC setMaxProgress(int);
   ASYNC setProgress(int);
   ASYNC setStartupItemCount( int count );
-  ASYNC programStarted( QString programIcon, QString programName, QString description );
+  ASYNC programStarted( TQString programIcon, TQString programName, TQString description );
   ASYNC startupComplete();
   ASYNC close();
   ASYNC hide();
@@ -63,7 +63,7 @@ signals:
   void actionListChanged();
 
 protected:
-  bool eventFilter( QObject *o, QEvent *e );
+  bool eventFilter( TQObject *o, TQEvent *e );
 
 public slots:
   void slotUpdateSteps( int );
@@ -75,35 +75,35 @@ private slots:
   void prepareSplashScreen();
   void slotExec();
   void nextIcon();
-  void slotInsertAction( const QString&, const QString& );
+  void slotInsertAction( const TQString&, const TQString& );
   void slotReadProperties( KConfig * );
 
-  void slotSetText( const QString& );
-  void slotSetPixmap( const QString& );
+  void slotSetText( const TQString& );
+  void slotSetPixmap( const TQString& );
 
-  void loadTheme( const QString& );
+  void loadTheme( const TQString& );
 
 private:
-  ThemeEngine *_loadThemeEngine( const QString& pluginName, const QString& theme );
+  ThemeEngine *_loadThemeEngine( const TQString& pluginName, const TQString& theme );
   void updateState( unsigned int state );
 
 protected:
   unsigned int mState;
   unsigned int mMaxProgress;
   unsigned int mStep; // ??
-  QTimer* close_timer;
+  TQTimer* close_timer;
 
   bool mSessMgrCalled;
   bool mTimeToGo;
 
-  QString mTheme;
+  TQString mTheme;
   ObjKsTheme *mKsTheme;
 
   ThemeEngine *mThemeEngine;
-  QPtrList<Action> mActionList;
+  TQPtrList<Action> mActionList;
   Action *mCurrentAction, *mPreviousAction;
 
-  QString mThemeLibName;
+  TQString mThemeLibName;
 };
 
 #endif

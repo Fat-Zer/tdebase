@@ -22,14 +22,14 @@
 #include <string.h>
 #include <dirent.h>
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qdatastream.h>
-#include <qcstring.h>
-#include <qptrlist.h>
-#include <qmap.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqdatastream.h>
+#include <tqcstring.h>
+#include <tqptrlist.h>
+#include <tqmap.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kinstance.h>
@@ -56,7 +56,7 @@ MANProtocol *MANProtocol::_self = 0;
  * Drop trailing ".section[.gz]" from name
  */
 static
-void stripExtension( QString *name )
+void stripExtension( TQString *name )
 {
     int pos = name->length();
 
@@ -77,11 +77,11 @@ void stripExtension( QString *name )
 }
 
 static
-bool parseUrl(const QString& _url, QString &title, QString &section)
+bool parseUrl(const TQString& _url, TQString &title, TQString &section)
 {
-    section = QString::null;
+    section = TQString::null;
 
-    QString url = _url;
+    TQString url = _url;
     if (url.at(0) == '/') {
         if (KStandardDirs::exists(url)) {
             title = url;
@@ -111,13 +111,13 @@ bool parseUrl(const QString& _url, QString &title, QString &section)
 }
 
 
-MANProtocol::MANProtocol(const QCString &pool_socket, const QCString &app_socket)
-    : QObject(), SlaveBase("man", pool_socket, app_socket)
+MANProtocol::MANProtocol(const TQCString &pool_socket, const TQCString &app_socket)
+    : TQObject(), SlaveBase("man", pool_socket, app_socket)
 {
     assert(!_self);
     _self = this;
-    const QString common_dir = KGlobal::dirs()->findResourceDir( "html", "en/common/kde-common.css" );
-    const QString strPath=QString( "file:%1/en/common" ).arg( common_dir );
+    const TQString common_dir = KGlobal::dirs()->findResourceDir( "html", "en/common/kde-common.css" );
+    const TQString strPath=TQString( "file:%1/en/common" ).arg( common_dir );
     m_htmlPath=strPath.local8Bit(); // ### TODO encode for HTML
     m_cssPath=strPath.local8Bit(); // ### TODO encode for CSS
     section_names << "1" << "2" << "3" << "3n" << "3p" << "4" << "5" << "6" << "7"
@@ -132,18 +132,18 @@ MANProtocol::~MANProtocol()
     _self = 0;
 }
 
-void MANProtocol::parseWhatIs( QMap<QString, QString> &i, QTextStream &t, const QString &mark )
+void MANProtocol::parseWhatIs( TQMap<TQString, TQString> &i, TQTextStream &t, const TQString &mark )
 {
-    QRegExp re( mark );
-    QString l;
+    TQRegExp re( mark );
+    TQString l;
     while ( !t.atEnd() )
     {
 	l = t.readLine();
 	int pos = re.search( l );
 	if (pos != -1)
 	{
-	    QString names = l.left(pos);
-	    QString descr = l.mid(pos + re.matchedLength());
+	    TQString names = l.left(pos);
+	    TQString descr = l.mid(pos + re.matchedLength());
 	    while ((pos = names.find(",")) != -1)
 	    {
 		i[names.left(pos++)] = descr;
@@ -156,20 +156,20 @@ void MANProtocol::parseWhatIs( QMap<QString, QString> &i, QTextStream &t, const 
     }
 }
 
-bool MANProtocol::addWhatIs(QMap<QString, QString> &i, const QString &name, const QString &mark)
+bool MANProtocol::addWhatIs(TQMap<TQString, TQString> &i, const TQString &name, const TQString &mark)
 {
-    QFile f(name);
+    TQFile f(name);
     if (!f.open(IO_ReadOnly))
         return false;
-    QTextStream t(&f);
+    TQTextStream t(&f);
     parseWhatIs( i, t, mark );
     return true;
 }
 
-QMap<QString, QString> MANProtocol::buildIndexMap(const QString &section)
+TQMap<TQString, TQString> MANProtocol::buildIndexMap(const TQString &section)
 {
-    QMap<QString, QString> i;
-    QStringList man_dirs = manDirectories();
+    TQMap<TQString, TQString> i;
+    TQStringList man_dirs = manDirectories();
     // Supplementary places for whatis databases
     man_dirs += m_mandbpath;
     if (man_dirs.find("/var/cache/man")==man_dirs.end())
@@ -177,16 +177,16 @@ QMap<QString, QString> MANProtocol::buildIndexMap(const QString &section)
     if (man_dirs.find("/var/catman")==man_dirs.end())
         man_dirs << "/var/catman";
     
-    QStringList names;
+    TQStringList names;
     names << "whatis.db" << "whatis";
-    QString mark = "\\s+\\(" + section + "[a-z]*\\)\\s+-\\s+";
+    TQString mark = "\\s+\\(" + section + "[a-z]*\\)\\s+-\\s+";
 
-    for ( QStringList::ConstIterator it_dir = man_dirs.begin();
+    for ( TQStringList::ConstIterator it_dir = man_dirs.begin();
           it_dir != man_dirs.end();
           ++it_dir )
     {
-        if ( QFile::exists( *it_dir ) ) {
-    	    QStringList::ConstIterator it_name;
+        if ( TQFile::exists( *it_dir ) ) {
+    	    TQStringList::ConstIterator it_name;
             for ( it_name = names.begin();
 	          it_name != names.end();
 	          it_name++ )
@@ -197,11 +197,11 @@ QMap<QString, QString> MANProtocol::buildIndexMap(const QString &section)
             if ( it_name == names.end() ) {
                 KProcess proc;
                 proc << "whatis" << "-M" << (*it_dir) << "-w" << "*";
-                myStdStream = QString::null;
-                connect( &proc, SIGNAL( receivedStdout(KProcess *, char *, int ) ),
-                         SLOT( slotGetStdOutput( KProcess *, char *, int ) ) );
+                myStdStream = TQString::null;
+                connect( &proc, TQT_SIGNAL( receivedStdout(KProcess *, char *, int ) ),
+                         TQT_SLOT( slotGetStdOutput( KProcess *, char *, int ) ) );
                 proc.start( KProcess::Block, KProcess::Stdout );
-                QTextStream t( &myStdStream, IO_ReadOnly );
+                TQTextStream t( &myStdStream, IO_ReadOnly );
                 parseWhatIs( i, t, mark );
             }
         }
@@ -209,54 +209,54 @@ QMap<QString, QString> MANProtocol::buildIndexMap(const QString &section)
     return i;
 }
 
-QStringList MANProtocol::manDirectories()
+TQStringList MANProtocol::manDirectories()
 {
     checkManPaths();
     //
     // Build a list of man directories including translations
     //
-    QStringList man_dirs;
+    TQStringList man_dirs;
 
-    for ( QStringList::ConstIterator it_dir = m_manpath.begin();
+    for ( TQStringList::ConstIterator it_dir = m_manpath.begin();
           it_dir != m_manpath.end();
           it_dir++ )
     {
         // Translated pages in "<mandir>/<lang>" if the directory
         // exists
-        QStringList languages = KGlobal::locale()->languageList();
+        TQStringList languages = KGlobal::locale()->languageList();
 
-        for (QStringList::ConstIterator it_lang = languages.begin();
+        for (TQStringList::ConstIterator it_lang = languages.begin();
              it_lang != languages.end();
              it_lang++ )
         {
-            if ( !(*it_lang).isEmpty() && (*it_lang) != QString("C") ) {
-                QString dir = (*it_dir) + '/' + (*it_lang);
+            if ( !(*it_lang).isEmpty() && (*it_lang) != TQString("C") ) {
+                TQString dir = (*it_dir) + '/' + (*it_lang);
 
                 struct stat sbuf;
 
-                if ( ::stat( QFile::encodeName( dir ), &sbuf ) == 0
+                if ( ::stat( TQFile::encodeName( dir ), &sbuf ) == 0
                     && S_ISDIR( sbuf.st_mode ) )
                 {
-                    const QString p = QDir(dir).canonicalPath();
+                    const TQString p = TQDir(dir).canonicalPath();
                     if (!man_dirs.contains(p)) man_dirs += p;	
                 }
             }
         }
 
         // Untranslated pages in "<mandir>"
-        const QString p = QDir(*it_dir).canonicalPath();
+        const TQString p = TQDir(*it_dir).canonicalPath();
         if (!man_dirs.contains(p)) man_dirs += p;
     }
     return man_dirs;
 }
 
-QStringList MANProtocol::findPages(const QString &_section,
-                                   const QString &title,
+TQStringList MANProtocol::findPages(const TQString &_section,
+                                   const TQString &title,
                                    bool full_path)
 {
-    QString section = _section;
+    TQString section = _section;
 
-    QStringList list;
+    TQStringList list;
 
     // kdDebug() << "findPages '" << section << "' '" << title << "'\n";
     if (title.at(0) == '/') {
@@ -264,12 +264,12 @@ QStringList MANProtocol::findPages(const QString &_section,
        return list;
     }
 
-    const QString star( "*" );
+    const TQString star( "*" );
 
     //
     // Find man sections in this directory
     //
-    QStringList sect_list;
+    TQStringList sect_list;
     if ( section.isEmpty() )
         section = star;
 
@@ -287,41 +287,41 @@ QStringList MANProtocol::findPages(const QString &_section,
         sect_list += section;
     }
 
-    QStringList man_dirs = manDirectories();
+    TQStringList man_dirs = manDirectories();
 
     //
     // Find man pages in the sections listed above
     //
-    for ( QStringList::ConstIterator it_sect = sect_list.begin();
+    for ( TQStringList::ConstIterator it_sect = sect_list.begin();
           it_sect != sect_list.end();
           it_sect++ )
     {
-	    QString it_real = (*it_sect).lower();
+	    TQString it_real = (*it_sect).lower();
         //
         // Find pages
         //
-        for ( QStringList::ConstIterator it_dir = man_dirs.begin();
+        for ( TQStringList::ConstIterator it_dir = man_dirs.begin();
               it_dir != man_dirs.end();
               it_dir++ )
         {
-            QString man_dir = (*it_dir);
+            TQString man_dir = (*it_dir);
 
             //
             // Sections = all sub directories "man*" and "sman*"
             //
-            DIR *dp = ::opendir( QFile::encodeName( man_dir ) );
+            DIR *dp = ::opendir( TQFile::encodeName( man_dir ) );
 
             if ( !dp )
                 continue;
 
             struct dirent *ep;
 
-            const QString man = QString("man");
-            const QString sman = QString("sman");
+            const TQString man = TQString("man");
+            const TQString sman = TQString("sman");
 
             while ( (ep = ::readdir( dp )) != 0L ) {
-                const QString file = QFile::decodeName( ep->d_name );
-                QString sect = QString::null;
+                const TQString file = TQFile::decodeName( ep->d_name );
+                TQString sect = TQString::null;
 
                 if ( file.startsWith( man ) )
                     sect = file.mid(3);
@@ -340,8 +340,8 @@ QStringList MANProtocol::findPages(const QString &_section,
             ::closedir( dp );
 
             if ( *it_sect != star ) { // in that case we only look around for sections
-                const QString dir = man_dir + QString("/man") + (it_real) + '/';
-                const QString sdir = man_dir + QString("/sman") + (it_real) + '/';
+                const TQString dir = man_dir + TQString("/man") + (it_real) + '/';
+                const TQString sdir = man_dir + TQString("/sman") + (it_real) + '/';
 
                 findManPagesInSection(dir, title, full_path, list);
                 findManPagesInSection(sdir, title, full_path, list);
@@ -354,12 +354,12 @@ QStringList MANProtocol::findPages(const QString &_section,
     return list;
 }
 
-void MANProtocol::findManPagesInSection(const QString &dir, const QString &title, bool full_path, QStringList &list)
+void MANProtocol::findManPagesInSection(const TQString &dir, const TQString &title, bool full_path, TQStringList &list)
 {
     kdDebug() << "findManPagesInSection " << dir << " " << title << endl;
     bool title_given = !title.isEmpty();
 
-    DIR *dp = ::opendir( QFile::encodeName( dir ) );
+    DIR *dp = ::opendir( TQFile::encodeName( dir ) );
 
     if ( !dp )
         return;
@@ -369,7 +369,7 @@ void MANProtocol::findManPagesInSection(const QString &dir, const QString &title
     while ( (ep = ::readdir( dp )) != 0L ) {
         if ( ep->d_name[0] != '.' ) {
 
-            QString name = QFile::decodeName( ep->d_name );
+            TQString name = TQFile::decodeName( ep->d_name );
 
             // check title if we're looking for a specific page
             if ( title_given ) {
@@ -378,7 +378,7 @@ void MANProtocol::findManPagesInSection(const QString &dir, const QString &title
                 }
                 else {
                     // beginning matches, do a more thorough check...
-                    QString tmp_name = name;
+                    TQString tmp_name = name;
                     stripExtension( &tmp_name );
                     if ( tmp_name != title )
                         continue;
@@ -404,7 +404,7 @@ void MANProtocol::output(const char *insert)
     {
         m_outputBuffer.close();
         data(m_outputBuffer.buffer());
-        m_outputBuffer.setBuffer(QByteArray());
+        m_outputBuffer.setBuffer(TQByteArray());
         m_outputBuffer.open(IO_WriteOnly);
     }
 }
@@ -421,9 +421,9 @@ void output_real(const char *insert)
     MANProtocol::self()->output(insert);
 }
 
-static QString text2html(const QString& txt)
+static TQString text2html(const TQString& txt)
 {
-    QString reply = txt;
+    TQString reply = txt;
 
     reply = reply.replace('&', "&amp;");
     reply = reply.replace('<', "&lt;");
@@ -437,7 +437,7 @@ void MANProtocol::get(const KURL& url )
 {
     kdDebug(7107) << "GET " << url.url() << endl;
 
-    QString title, section;
+    TQString title, section;
 
     if (!parseUrl(url.path(), title, section))
     {
@@ -458,7 +458,7 @@ void MANProtocol::get(const KURL& url )
     // tell the mimetype
     mimeType("text/html");
 
-    const QStringList foundPages=findPages(section, title);
+    const TQStringList foundPages=findPages(section, title);
     bool pageFound=true;
     if (foundPages.isEmpty())
     {
@@ -488,7 +488,7 @@ void MANProtocol::get(const KURL& url )
     {
        setResourcePath(m_htmlPath,m_cssPath);
        m_outputBuffer.open(IO_WriteOnly);
-       const QCString filename=QFile::encodeName(foundPages[0]);
+       const TQCString filename=TQFile::encodeName(foundPages[0]);
        char *buf = readManPage(filename);
 
        if (!buf)
@@ -505,26 +505,26 @@ void MANProtocol::get(const KURL& url )
 
        m_outputBuffer.close();
        data(m_outputBuffer.buffer());
-       m_outputBuffer.setBuffer(QByteArray());
+       m_outputBuffer.setBuffer(TQByteArray());
        // tell we are done
-       data(QByteArray());
+       data(TQByteArray());
     }
     finished();
 }
 
 void MANProtocol::slotGetStdOutput(KProcess* /* p */, char *s, int len)
 {
-  myStdStream += QString::fromLocal8Bit(s, len);
+  myStdStream += TQString::fromLocal8Bit(s, len);
 }
 
 void MANProtocol::slotGetStdOutputUtf8(KProcess* /* p */, char *s, int len)
 {
-  myStdStream += QString::fromUtf8(s, len);
+  myStdStream += TQString::fromUtf8(s, len);
 }
 
 char *MANProtocol::readManPage(const char *_filename)
 {
-    QCString filename = _filename;
+    TQCString filename = _filename;
 
     char *buf = NULL;
 
@@ -533,21 +533,21 @@ char *MANProtocol::readManPage(const char *_filename)
      * /usr/man/sman7fs/pcfs.7fs -> text/x-csrc : WRONG
      * If the path name constains the string sman, assume that it's SGML and
      * convert it to roff format (used on Solaris). */
-    //QString file_mimetype = KMimeType::findByPath(QString(filename), 0, false)->name();
+    //TQString file_mimetype = KMimeType::findByPath(TQString(filename), 0, false)->name();
     if (filename.contains("sman", false)) //file_mimetype == "text/html" || )
     {
-        myStdStream =QString::null;
+        myStdStream =TQString::null;
 	KProcess proc;
 
 	/* Determine path to sgml2roff, if not already done. */
 	getProgramPath();
 	proc << mySgml2RoffPath << filename;
 
-	QApplication::connect(&proc, SIGNAL(receivedStdout (KProcess *, char *, int)),
-			      this, SLOT(slotGetStdOutput(KProcess *, char *, int)));
+	TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (KProcess *, char *, int)),
+			      this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 	proc.start(KProcess::Block, KProcess::All);
 
-        const QCString cstr=myStdStream.latin1();
+        const TQCString cstr=myStdStream.latin1();
         const int len = cstr.size()-1;
         buf = new char[len + 4];
         qmemmove(buf + 1, cstr.data(), len);
@@ -556,30 +556,30 @@ char *MANProtocol::readManPage(const char *_filename)
     }
     else
     {
-        if (QDir::isRelativePath(filename)) {
+        if (TQDir::isRelativePath(filename)) {
             kdDebug(7107) << "relative " << filename << endl;
-            filename = QDir::cleanDirPath(lastdir + "/" + filename).utf8();
+            filename = TQDir::cleanDirPath(lastdir + "/" + filename).utf8();
             if (!KStandardDirs::exists(filename)) { // exists perhaps with suffix
                 lastdir = filename.left(filename.findRev('/'));
-                QDir mandir(lastdir);
+                TQDir mandir(lastdir);
                 mandir.setNameFilter(filename.mid(filename.findRev('/') + 1) + ".*");
-                filename = lastdir + "/" + QFile::encodeName(mandir.entryList().first());
+                filename = lastdir + "/" + TQFile::encodeName(mandir.entryList().first());
             }
             kdDebug(7107) << "resolved to " << filename << endl;
         }
         lastdir = filename.left(filename.findRev('/'));
     
-        myStdStream = QString::null;
+        myStdStream = TQString::null;
         KProcess proc;
         /* TODO: detect availability of 'man --recode' so that this can go
          * upstream */
         proc << "man" << "--recode" << "UTF-8" << filename;
 
-        QApplication::connect(&proc, SIGNAL(receivedStdout (KProcess *, char *, int)),
-                              this, SLOT(slotGetStdOutputUtf8(KProcess *, char *, int)));
+        TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (KProcess *, char *, int)),
+                              this, TQT_SLOT(slotGetStdOutputUtf8(KProcess *, char *, int)));
         proc.start(KProcess::Block, KProcess::All);
 
-        const QCString cstr=myStdStream.utf8();
+        const TQCString cstr=myStdStream.utf8();
         const int len = cstr.size()-1;
         buf = new char[len + 4];
         qmemmove(buf + 1, cstr.data(), len);
@@ -590,11 +590,11 @@ char *MANProtocol::readManPage(const char *_filename)
 }
 
 
-void MANProtocol::outputError(const QString& errmsg)
+void MANProtocol::outputError(const TQString& errmsg)
 {
-    QByteArray array;
-    QTextStream os(array, IO_WriteOnly);
-    os.setEncoding(QTextStream::UnicodeUTF8);
+    TQByteArray array;
+    TQTextStream os(array, IO_WriteOnly);
+    os.setEncoding(TQTextStream::UnicodeUTF8);
 
     os << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\">" << endl;
     os << "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" << endl;
@@ -608,11 +608,11 @@ void MANProtocol::outputError(const QString& errmsg)
     data(array);
 }
 
-void MANProtocol::outputMatchingPages(const QStringList &matchingPages)
+void MANProtocol::outputMatchingPages(const TQStringList &matchingPages)
 {
-    QByteArray array;
-    QTextStream os(array, IO_WriteOnly);
-    os.setEncoding(QTextStream::UnicodeUTF8);
+    TQByteArray array;
+    TQTextStream os(array, IO_WriteOnly);
+    os.setEncoding(TQTextStream::UnicodeUTF8);
 
     os << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\">" << endl;
     os << "<html>\n<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"<<endl;
@@ -624,7 +624,7 @@ void MANProtocol::outputMatchingPages(const QStringList &matchingPages)
     os << "</h1>\n<ul>\n";
     
     int acckey=1;
-    for (QStringList::ConstIterator it = matchingPages.begin(); it != matchingPages.end(); ++it)
+    for (TQStringList::ConstIterator it = matchingPages.begin(); it != matchingPages.end(); ++it)
     {
       os<<"<li><a href='man:"<<(*it)<<"' accesskey='"<< acckey <<"'>"<< *it <<"</a><br>\n<br>\n";
       acckey++;
@@ -645,7 +645,7 @@ void MANProtocol::stat( const KURL& url)
 {
     kdDebug(7107) << "ENTERING STAT " << url.url() << endl;
 
-    QString title, section;
+    TQString title, section;
 
     if (!parseUrl(url.path(), title, section))
     {
@@ -670,9 +670,9 @@ void MANProtocol::stat( const KURL& url)
 
     atom.m_uds = UDS_URL;
     atom.m_long = 0;
-    QString newUrl = "man:"+title;
+    TQString newUrl = "man:"+title;
     if (!section.isEmpty())
-        newUrl += QString("(%1)").arg(section);
+        newUrl += TQString("(%1)").arg(section);
     atom.m_str = newUrl;
     entry.append(atom);
 
@@ -718,7 +718,7 @@ void MANProtocol::mimetype(const KURL & /*url*/)
     finished();
 }
 
-static QString sectionName(const QString& section)
+static TQString sectionName(const TQString& section)
 {
     if (section == "1")
         return i18n("User Commands");
@@ -747,20 +747,20 @@ static QString sectionName(const QString& section)
     else if (section == "n")
         return i18n("New");
 
-    return QString::null;
+    return TQString::null;
 }
 
-QStringList MANProtocol::buildSectionList(const QStringList& dirs) const
+TQStringList MANProtocol::buildSectionList(const TQStringList& dirs) const
 {
-    QStringList l;
+    TQStringList l;
 
-    for (QStringList::ConstIterator it = section_names.begin();
+    for (TQStringList::ConstIterator it = section_names.begin();
 	    it != section_names.end(); ++it)
     {
-	    for (QStringList::ConstIterator dir = dirs.begin();
+	    for (TQStringList::ConstIterator dir = dirs.begin();
 		    dir != dirs.end(); ++dir)
 	    {
-		QDir d((*dir)+"/man"+(*it));
+		TQDir d((*dir)+"/man"+(*it));
 		if (d.exists())
 		{
 		    l << *it;
@@ -773,9 +773,9 @@ QStringList MANProtocol::buildSectionList(const QStringList& dirs) const
 
 void MANProtocol::showMainIndex()
 {
-    QByteArray array;
-    QTextStream os(array, IO_WriteOnly);
-    os.setEncoding(QTextStream::UnicodeUTF8);
+    TQByteArray array;
+    TQTextStream os(array, IO_WriteOnly);
+    os.setEncoding(TQTextStream::UnicodeUTF8);
 
     // print header
     os << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\">" << endl;
@@ -787,16 +787,16 @@ void MANProtocol::showMainIndex()
     os << "<body><h1>" << i18n("UNIX Manual Index") << "</h1>" << endl;
 
     // ### TODO: why still the environment variable
-    const QString sectList = getenv("MANSECT");
-    QStringList sections;
+    const TQString sectList = getenv("MANSECT");
+    TQStringList sections;
     if (sectList.isEmpty())
     	sections = buildSectionList(manDirectories());
     else
-	sections = QStringList::split(':', sectList);
+	sections = TQStringList::split(':', sectList);
 
     os << "<table>" << endl;
 
-    QStringList::ConstIterator it;
+    TQStringList::ConstIterator it;
     for (it = sections.begin(); it != sections.end(); ++it)
         os << "<tr><td><a href=\"man:(" << *it << ")\" accesskey=\"" << 
 	(((*it).length()==1)?(*it):(*it).right(1))<<"\">" << i18n("Section ") 
@@ -811,10 +811,10 @@ void MANProtocol::showMainIndex()
     finished();
 }
 
-void MANProtocol::constructPath(QStringList& constr_path, QStringList constr_catmanpath)
+void MANProtocol::constructPath(TQStringList& constr_path, TQStringList constr_catmanpath)
 {
-    QMap<QString, QString> manpath_map;
-    QMap<QString, QString> mandb_map;
+    TQMap<TQString, TQString> manpath_map;
+    TQMap<TQString, TQString> mandb_map;
 
     // Add paths from /etc/man.conf
     //
@@ -823,14 +823,14 @@ void MANProtocol::constructPath(QStringList& constr_path, QStringList constr_cat
     // Mappings from $PATH to manpath are given by lines starting with
     // "MANPATH_MAP"
 
-    QRegExp manpath_regex( "^MANPATH\\s" );
-    QRegExp mandatory_regex( "^MANDATORY_MANPATH\\s" );
-    QRegExp manpath_map_regex( "^MANPATH_MAP\\s" );
-    QRegExp mandb_map_regex( "^MANDB_MAP\\s" );
-    //QRegExp section_regex( "^SECTION\\s" );
-    QRegExp space_regex( "\\s+" ); // for parsing manpath map
+    TQRegExp manpath_regex( "^MANPATH\\s" );
+    TQRegExp mandatory_regex( "^MANDATORY_MANPATH\\s" );
+    TQRegExp manpath_map_regex( "^MANPATH_MAP\\s" );
+    TQRegExp mandb_map_regex( "^MANDB_MAP\\s" );
+    //TQRegExp section_regex( "^SECTION\\s" );
+    TQRegExp space_regex( "\\s+" ); // for parsing manpath map
 
-    QFile mc("/etc/man.conf");             // Caldera
+    TQFile mc("/etc/man.conf");             // Caldera
     if (!mc.exists())
         mc.setName("/etc/manpath.config"); // SuSE, Debian
     if (!mc.exists())
@@ -838,32 +838,32 @@ void MANProtocol::constructPath(QStringList& constr_path, QStringList constr_cat
 
     if (mc.open(IO_ReadOnly))
     {
-        QTextStream is(&mc);
-        is.setEncoding(QTextStream::Locale);
+        TQTextStream is(&mc);
+        is.setEncoding(TQTextStream::Locale);
     
         while (!is.eof())
         {
-            const QString line = is.readLine();
+            const TQString line = is.readLine();
             if ( manpath_regex.search(line, 0) == 0 )
             {
-                const QString path = line.mid(8).stripWhiteSpace();
+                const TQString path = line.mid(8).stripWhiteSpace();
                 constr_path += path;
             }
             else if ( mandatory_regex.search(line, 0) == 0 )
             {
-                const QString path = line.mid(18).stripWhiteSpace();
+                const TQString path = line.mid(18).stripWhiteSpace();
                 constr_path += path;
             }
             else if ( manpath_map_regex.search(line, 0) == 0 )
             {
                         // The entry is "MANPATH_MAP  <path>  <manpath>"
-                const QStringList mapping =
-                        QStringList::split(space_regex, line);
+                const TQStringList mapping =
+                        TQStringList::split(space_regex, line);
     
                 if ( mapping.count() == 3 )
                 {
-                    const QString dir = QDir::cleanDirPath( mapping[1] );
-                    const QString mandir = QDir::cleanDirPath( mapping[2] );
+                    const TQString dir = TQDir::cleanDirPath( mapping[1] );
+                    const TQString mandir = TQDir::cleanDirPath( mapping[2] );
     
                     manpath_map[ dir ] = mandir;
                 }
@@ -871,13 +871,13 @@ void MANProtocol::constructPath(QStringList& constr_path, QStringList constr_cat
             else if ( mandb_map_regex.search(line, 0) == 0 )
             {
                         // The entry is "MANDB_MAP  <manpath>  <catmanpath>"
-                const QStringList mapping =
-                        QStringList::split(space_regex, line);
+                const TQStringList mapping =
+                        TQStringList::split(space_regex, line);
     
                 if ( mapping.count() == 3 )
                 {
-                    const QString mandir = QDir::cleanDirPath( mapping[1] );
-                    const QString catmandir = QDir::cleanDirPath( mapping[2] );
+                    const TQString mandir = TQDir::cleanDirPath( mapping[1] );
+                    const TQString catmandir = TQDir::cleanDirPath( mapping[2] );
     
                     mandb_map[ mandir ] = catmandir;
                 }
@@ -920,8 +920,8 @@ void MANProtocol::constructPath(QStringList& constr_path, QStringList constr_cat
 
     int i = 0;
     while (manpaths[i]) {
-        if ( constr_path.findIndex( QString( manpaths[i] ) ) == -1 )
-            constr_path += QString( manpaths[i] );
+        if ( constr_path.findIndex( TQString( manpaths[i] ) ) == -1 )
+            constr_path += TQString( manpaths[i] );
         i++;
     }
 
@@ -931,16 +931,16 @@ void MANProtocol::constructPath(QStringList& constr_path, QStringList constr_cat
     //   to the man path (the actual existence check is done further down)
 
     if ( ::getenv("PATH") ) {
-        const QStringList path =
-                QStringList::split( ":",
-                                    QString::fromLocal8Bit( ::getenv("PATH") ) );
+        const TQStringList path =
+                TQStringList::split( ":",
+                                    TQString::fromLocal8Bit( ::getenv("PATH") ) );
 
-        for ( QStringList::const_iterator it = path.begin();
+        for ( TQStringList::const_iterator it = path.begin();
               it != path.end();
               ++it )
         {
-            const QString dir = QDir::cleanDirPath( *it );
-            QString mandir = manpath_map[ dir ];
+            const TQString dir = TQDir::cleanDirPath( *it );
+            TQString mandir = manpath_map[ dir ];
 
             if ( !mandir.isEmpty() ) {
                                 // a path mapping exists
@@ -950,18 +950,18 @@ void MANProtocol::constructPath(QStringList& constr_path, QStringList constr_cat
             else {
                                 // no manpath mapping, use "<path>/man" and "<path>/../man"
 
-                mandir = dir + QString( "/man" );
+                mandir = dir + TQString( "/man" );
                 if ( constr_path.findIndex( mandir ) == -1 )
                     constr_path += mandir;
 
                 int pos = dir.findRev( '/' );
                 if ( pos > 0 ) {
-                    mandir = dir.left( pos ) + QString("/man");
+                    mandir = dir.left( pos ) + TQString("/man");
                     if ( constr_path.findIndex( mandir ) == -1 )
                         constr_path += mandir;
                 }
             }
-            QString catmandir = mandb_map[ mandir ];
+            TQString catmandir = mandb_map[ mandir ];
             if ( !mandir.isEmpty() )
             {
                 if ( constr_catmanpath.findIndex( catmandir ) == -1 )
@@ -988,8 +988,8 @@ void MANProtocol::checkManPaths()
 
     inited = true;
 
-    const QString manpath_env = QString::fromLocal8Bit( ::getenv("MANPATH") );
-    //QString mansect_env = QString::fromLocal8Bit( ::getenv("MANSECT") );
+    const TQString manpath_env = TQString::fromLocal8Bit( ::getenv("MANPATH") );
+    //TQString mansect_env = TQString::fromLocal8Bit( ::getenv("MANSECT") );
 
     // Decide if $MANPATH is enough on its own or if it should be merged
     // with the constructed path.
@@ -1010,10 +1010,10 @@ void MANProtocol::checkManPaths()
     //   /etc/man.conf
     //   default dirs
     //   $PATH
-    QStringList constr_path;
-    QStringList constr_catmanpath; // catmanpath
+    TQStringList constr_path;
+    TQStringList constr_catmanpath; // catmanpath
 
-    QString conf_section;
+    TQString conf_section;
 
     if ( construct_path )
     {
@@ -1029,20 +1029,20 @@ void MANProtocol::checkManPaths()
     // satisfied if any empty string in path_list_env (there
     // should be 1 or 0) is replaced by the constructed path.
 
-    const QStringList path_list_env = QStringList::split( ':', manpath_env , true );
+    const TQStringList path_list_env = TQStringList::split( ':', manpath_env , true );
 
-    for ( QStringList::const_iterator it = path_list_env.begin();
+    for ( TQStringList::const_iterator it = path_list_env.begin();
           it != path_list_env.end();
           ++it )
     {
         struct stat sbuf;
 
-        QString dir = (*it);
+        TQString dir = (*it);
 
         if ( !dir.isEmpty() ) {
             // Add dir to the man path if it exists
             if ( m_manpath.findIndex( dir ) == -1 ) {
-                if ( ::stat( QFile::encodeName( dir ), &sbuf ) == 0
+                if ( ::stat( TQFile::encodeName( dir ), &sbuf ) == 0
                     && S_ISDIR( sbuf.st_mode ) )
                 {
                     m_manpath += dir;
@@ -1053,7 +1053,7 @@ void MANProtocol::checkManPaths()
             // Insert constructed path ($MANPATH was empty, or
             // there was a ":" at an end or "::")
 
-            for ( QStringList::Iterator it2 = constr_path.begin();
+            for ( TQStringList::Iterator it2 = constr_path.begin();
                   it2 != constr_path.end();
                   it2++ )
             {
@@ -1061,7 +1061,7 @@ void MANProtocol::checkManPaths()
 
                 if ( !dir.isEmpty() ) {
                     if ( m_manpath.findIndex( dir ) == -1 ) {
-                        if ( ::stat( QFile::encodeName( dir ), &sbuf ) == 0
+                        if ( ::stat( TQFile::encodeName( dir ), &sbuf ) == 0
                             && S_ISDIR( sbuf.st_mode ) )
                         {
                             m_manpath += dir;
@@ -1074,14 +1074,14 @@ void MANProtocol::checkManPaths()
 
 /* sections are not used
     // Sections
-    QStringList m_mansect = QStringList::split( ':', mansect_env, true );
+    TQStringList m_mansect = TQStringList::split( ':', mansect_env, true );
 
     const char* default_sect[] =
         { "1", "2", "3", "4", "5", "6", "7", "8", "9", "n", 0L };
 
     for ( int i = 0; default_sect[i] != 0L; i++ )
-        if ( m_mansect.findIndex( QString( default_sect[i] ) ) == -1 )
-            m_mansect += QString( default_sect[i] );
+        if ( m_mansect.findIndex( TQString( default_sect[i] ) ) == -1 )
+            m_mansect += TQString( default_sect[i] );
 */
 
 }
@@ -1151,14 +1151,14 @@ int compare_man_index(const void *s1, const void *s2)
 #warning using heapsort
 // Set up my own man page list,
 // with a special compare function to sort itself
-typedef QPtrList<struct man_index_t> QManIndexListBase;
-typedef QPtrListIterator<struct man_index_t> QManIndexListIterator;
+typedef TQPtrList<struct man_index_t> QManIndexListBase;
+typedef TQPtrListIterator<struct man_index_t> QManIndexListIterator;
 
 class QManIndexList : public QManIndexListBase
 {
 public:
 private:
-    int compareItems( QPtrCollection::Item s1, QPtrCollection::Item s2 )
+    int compareItems( TQPtrCollection::Item s1, TQPtrCollection::Item s2 )
 	{
 	    struct man_index_t *m1 = (struct man_index_t *)s1;
 	    struct man_index_t *m2 = (struct man_index_t *)s2;
@@ -1198,11 +1198,11 @@ private:
 
 
 
-void MANProtocol::showIndex(const QString& section)
+void MANProtocol::showIndex(const TQString& section)
 {
-    QByteArray array;
-    QTextStream os(array, IO_WriteOnly);
-    os.setEncoding(QTextStream::UnicodeUTF8);
+    TQByteArray array;
+    TQTextStream os(array, IO_WriteOnly);
+    os.setEncoding(TQTextStream::UnicodeUTF8);
 
     // print header
     os << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\">" << endl;
@@ -1220,9 +1220,9 @@ void MANProtocol::showIndex(const QString& section)
     infoMessage(i18n("Generating Index"));
 
     // search for the man pages
-	QStringList pages = findPages( section, QString::null );
+	TQStringList pages = findPages( section, TQString::null );
 
-	QMap<QString, QString> indexmap = buildIndexMap(section);
+	TQMap<TQString, TQString> indexmap = buildIndexMap(section);
 
     // print out the list
     os << "<table>" << endl;
@@ -1230,12 +1230,12 @@ void MANProtocol::showIndex(const QString& section)
 #ifdef _USE_OLD_CODE
     pages.sort();
 
-    QMap<QString, QString> pagemap;
+    TQMap<TQString, TQString> pagemap;
 
-    QStringList::ConstIterator page;
+    TQStringList::ConstIterator page;
     for (page = pages.begin(); page != pages.end(); ++page)
     {
-        QString fileName = *page;
+        TQString fileName = *page;
 
         stripExtension( &fileName );
 
@@ -1248,7 +1248,7 @@ void MANProtocol::showIndex(const QString& section)
 
     }
 
-    for (QMap<QString,QString>::ConstIterator it = pagemap.begin();
+    for (TQMap<TQString,TQString>::ConstIterator it = pagemap.begin();
 	 it != pagemap.end(); ++it)
     {
 	os << "<tr><td><a href=\"man:" << it.data() << "\">\n"
@@ -1272,7 +1272,7 @@ void MANProtocol::showIndex(const QString& section)
 
 #endif /* _USE_QSORT */
 
-    QStringList::const_iterator page;
+    TQStringList::const_iterator page;
     for (page = pages.begin(); page != pages.end(); ++page)
     {
 	// I look for the beginning of the man page name
@@ -1366,13 +1366,13 @@ void MANProtocol::showIndex(const QString& section)
     // sort and print
     qsort(indexlist, listlen, sizeof(struct man_index_t *), compare_man_index);
 
-    QChar firstchar, tmp;
-    QString indexLine="<div class=\"secidxshort\">\n";
+    TQChar firstchar, tmp;
+    TQString indexLine="<div class=\"secidxshort\">\n";
     if (indexlist[0]->manpage_len>0)
     {
-	firstchar=QChar((indexlist[0]->manpage_begin)[0]).lower();
+	firstchar=TQChar((indexlist[0]->manpage_begin)[0]).lower();
 
-	const QString appendixstr = QString(
+	const TQString appendixstr = TQString(
 	    " [<a href=\"#%1\" accesskey=\"%2\">%3</a>]\n"
 	).arg(firstchar).arg(firstchar).arg(firstchar);
 	indexLine.append(appendixstr);
@@ -1397,14 +1397,14 @@ void MANProtocol::showIndex(const QString& section)
 	    continue;
 	}
 	
-	tmp=QChar((manindex->manpage_begin)[0]).lower();
+	tmp=TQChar((manindex->manpage_begin)[0]).lower();
 	if (firstchar != tmp)
 	{
 	    firstchar = tmp;
 	    os << "<tr><td class=\"secidxnextletter\"" << " colspan=\"3\">\n  <a name=\"" 
 	       << firstchar << "\">" << firstchar << "</a>\n</td></tr>" << endl;
 
-    	    const QString appendixstr = QString(
+    	    const TQString appendixstr = TQString(
     		" [<a href=\"#%1\" accesskey=\"%2\">%3</a>]\n"
 	    ).arg(firstchar).arg(firstchar).arg(firstchar);
 	    indexLine.append(appendixstr);
@@ -1471,7 +1471,7 @@ void MANProtocol::showIndex(const QString& section)
     // print footer
     os << "</body></html>" << endl;
 
-    infoMessage(QString::null);
+    infoMessage(TQString::null);
     mimeType("text/html");
     data(array);
     finished();
@@ -1481,15 +1481,15 @@ void MANProtocol::listDir(const KURL &url)
 {
     kdDebug( 7107 ) << "ENTER listDir: " << url.prettyURL() << endl;
 
-    QString title;
-    QString section;
+    TQString title;
+    TQString section;
 
     if ( !parseUrl(url.path(), title, section) ) {
         error( KIO::ERR_MALFORMED_URL, url.url() );
         return;
     }
 
-    QStringList list = findPages( section, QString::null, false );
+    TQStringList list = findPages( section, TQString::null, false );
 
     UDSEntryList uds_entry_list;
     UDSEntry     uds_entry;
@@ -1498,8 +1498,8 @@ void MANProtocol::listDir(const KURL &url)
     uds_atom.m_uds = KIO::UDS_NAME; // we only do names...
     uds_entry.append( uds_atom );
 
-    QStringList::Iterator it = list.begin();
-    QStringList::Iterator end = list.end();
+    TQStringList::Iterator it = list.begin();
+    TQStringList::Iterator end = list.end();
 
     for ( ; it != end; ++it ) {
         stripExtension( &(*it) );
@@ -1522,7 +1522,7 @@ void MANProtocol::getProgramPath()
     return;
 
   /* sgml2roff isn't found in PATH. Check some possible locations where it may be found. */
-  mySgml2RoffPath = KGlobal::dirs()->findExe("sgml2roff", QString(SGML2ROFF_DIRS));
+  mySgml2RoffPath = KGlobal::dirs()->findExe("sgml2roff", TQString(SGML2ROFF_DIRS));
   if (!mySgml2RoffPath.isEmpty())
     return;
 

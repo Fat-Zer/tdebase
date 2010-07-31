@@ -19,7 +19,7 @@
   Boston, MA 02110-1301, USA.
 */
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #include "WebButton.h"
 #include "Web.h"
@@ -124,35 +124,35 @@ void WebButton::reset(unsigned long changed)
 }
 
   void
-WebButton::enterEvent(QEvent * e)
+WebButton::enterEvent(TQEvent * e)
 {
   mouseOver_ = true;
   repaint();
-  QButton::enterEvent(e);
+  TQButton::enterEvent(e);
 }
 
   void
-WebButton::leaveEvent(QEvent * e)
+WebButton::leaveEvent(TQEvent * e)
 {
   mouseOver_ = false;
   repaint();
-  QButton::leaveEvent(e);
+  TQButton::leaveEvent(e);
 }
 
   void
-WebButton::drawButton(QPainter *p)
+WebButton::drawButton(TQPainter *p)
 {
-  QPen highlightPen;
+  TQPen highlightPen;
 
   if (isDown() )
-    highlightPen = QPen(colorGroup().light());
+    highlightPen = TQPen(colorGroup().light());
 
   else
   {
     if (mouseOver_)
-      highlightPen = QPen(colorGroup().highlight());
+      highlightPen = TQPen(colorGroup().highlight());
     else
-      highlightPen = QPen(NoPen);
+      highlightPen = TQPen(NoPen);
   }
 
   p->fillRect(rect(), colorGroup().background());
@@ -188,7 +188,7 @@ WebButton::drawButton(QPainter *p)
         p->setPen(highlightPen);
 
         if (shape_)
-          p->setClipRegion(QRegion(rect()) - QRect(0, 0, 6, 6));
+          p->setClipRegion(TQRegion(rect()) - TQRect(0, 0, 6, 6));
 
         p->drawRect(2, 2, width() - 4, height() - 4);
         if (shape_)
@@ -224,7 +224,7 @@ WebButton::drawButton(QPainter *p)
         p->setPen(highlightPen);
 
         if (shape_)
-          p->setClipRegion(QRegion(rect()) - QRect(width() - 6, 0, 6, 6));
+          p->setClipRegion(TQRegion(rect()) - TQRect(width() - 6, 0, 6, 6));
 
         p->drawRect(2, 2, width() - 4, height() - 4);
         if (shape_)
@@ -260,7 +260,7 @@ WebButton::drawButton(QPainter *p)
 
   // Draw icon.
 
-  QPoint center(rect().center());
+  TQPoint center(rect().center());
 
   int bwby2(bitmap_.width() / 2);    // Bitmap Width BY 2
   int bhby2(bitmap_.height() / 2);   // Bitmap Height BY 2
@@ -275,9 +275,9 @@ WebButton::drawButton(QPainter *p)
 WebButton::setBitmap(const unsigned char *bitmap)
 {
   if (bitmap)
-    bitmap_ = QBitmap(8,8, bitmap, true);
+    bitmap_ = TQBitmap(8,8, bitmap, true);
   else
-    bitmap_ = QBitmap(8,8);
+    bitmap_ = TQBitmap(8,8);
   bitmap_.setMask(bitmap_);
 }
 

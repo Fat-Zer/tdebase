@@ -20,7 +20,7 @@
 #ifndef __testlink_h
 #define __testlink_h
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kio/job.h>
 #include <kbookmark.h>
@@ -33,22 +33,22 @@ public:
    static TestLinkItrHolder* self() { 
       if (!s_self) { s_self = new TestLinkItrHolder(); }; return s_self; 
    }
-   void addAffectedBookmark( const QString & address );
-   void resetToValue(const QString &url, const QString &val);
-   const QString getMod(const QString &url) const;
-   const QString getOldVisit(const QString &url) const;
-   void setMod(const QString &url, const QString &val);
-   void setOldVisit(const QString &url, const QString &val);
-   static QString calcPaintStyle(const QString &, KEBListViewItem::PaintStyle&, 
-                                 const QString &, const QString &);
+   void addAffectedBookmark( const TQString & address );
+   void resetToValue(const TQString &url, const TQString &val);
+   const TQString getMod(const TQString &url) const;
+   const TQString getOldVisit(const TQString &url) const;
+   void setMod(const TQString &url, const TQString &val);
+   void setOldVisit(const TQString &url, const TQString &val);
+   static TQString calcPaintStyle(const TQString &, KEBListViewItem::PaintStyle&, 
+                                 const TQString &, const TQString &);
 protected:
    virtual void doItrListChanged();
 private:
    TestLinkItrHolder();
    static TestLinkItrHolder *s_self;
-   QMap<QString, QString> m_modify;
-   QMap<QString, QString> m_oldModify;
-   QString m_affectedBookmark;
+   TQMap<TQString, TQString> m_modify;
+   TQMap<TQString, TQString> m_oldModify;
+   TQString m_affectedBookmark;
 };
 
 class TestLinkItr : public BookmarkIterator
@@ -56,13 +56,13 @@ class TestLinkItr : public BookmarkIterator
    Q_OBJECT
 
 public:
-   TestLinkItr(QValueList<KBookmark> bks);
+   TestLinkItr(TQValueList<KBookmark> bks);
    ~TestLinkItr();
    virtual TestLinkItrHolder* holder() const { return TestLinkItrHolder::self(); }
 
 public slots:
    void slotJobResult(KIO::Job *job);
-   void slotJobData(KIO::Job *job, const QByteArray &data);
+   void slotJobData(KIO::Job *job, const TQByteArray &data);
 
 private:
    virtual void doAction();

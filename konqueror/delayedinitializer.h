@@ -20,15 +20,15 @@
 #ifndef __delayedinitializer_h__
 #define __delayedinitializer_h__
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class DelayedInitializer : public QObject
 {
     Q_OBJECT
 public:
-    DelayedInitializer( int eventType, QObject *parent, const char *name = 0 );
+    DelayedInitializer( int eventType, TQObject *parent, const char *name = 0 );
 
-    virtual bool eventFilter( QObject *receiver, QEvent *event );
+    virtual bool eventFilter( TQObject *receiver, TQEvent *event );
 
 signals:
     void initialize();

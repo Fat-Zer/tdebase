@@ -19,14 +19,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qregexp.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qtabwidget.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqtabwidget.h>
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -40,12 +40,12 @@
 #include "kproxydlg.h"
 #include "kproxydlg_ui.h"
 
-KProxyOptions::KProxyOptions (QWidget* parent )
+KProxyOptions::KProxyOptions (TQWidget* parent )
               :KCModule (parent, "kcmkio")
 {
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
   
-  mTab = new QTabWidget(this);
+  mTab = new TQTabWidget(this);
   layout->addWidget(mTab);
 
   mProxy  = new KProxyDialog(mTab);
@@ -54,9 +54,9 @@ KProxyOptions::KProxyOptions (QWidget* parent )
   mTab->addTab(mProxy, i18n("&Proxy"));
   mTab->addTab(mSocks, i18n("&SOCKS"));
 
-  connect(mProxy, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
-  connect(mSocks, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
-  connect(mTab, SIGNAL(currentChanged(QWidget *)), SIGNAL(quickHelpChanged()));
+  connect(mProxy, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
+  connect(mSocks, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
+  connect(mTab, TQT_SIGNAL(currentChanged(TQWidget *)), TQT_SIGNAL(quickHelpChanged()));
 }
 
 KProxyOptions::~KProxyOptions()
@@ -81,9 +81,9 @@ void KProxyOptions::defaults()
   mSocks->defaults();
 }
 
-QString KProxyOptions::quickHelp() const
+TQString KProxyOptions::quickHelp() const
 {
-  QWidget *w = mTab->currentPage();
+  TQWidget *w = mTab->currentPage();
   
   if (w && w->inherits("KCModule"))
   {
@@ -91,14 +91,14 @@ QString KProxyOptions::quickHelp() const
      return m->quickHelp();
   }
   
-  return QString::null;
+  return TQString::null;
 }
 
 
-KProxyDialog::KProxyDialog( QWidget* parent)
+KProxyDialog::KProxyDialog( TQWidget* parent)
              :KCModule( parent, "kcmkio" )
 {
-  QVBoxLayout* mainLayout = new QVBoxLayout( this, KDialog::marginHint(),
+  TQVBoxLayout* mainLayout = new TQVBoxLayout( this, KDialog::marginHint(),
                                               KDialog::spacingHint() );
   
   mDlg = new KProxyDialogUI( this );
@@ -106,27 +106,27 @@ KProxyDialog::KProxyDialog( QWidget* parent)
   mainLayout->addStretch();
   
   // signals and slots connections
-  connect( mDlg->rbNoProxy, SIGNAL( toggled(bool) ),
-            SLOT( slotUseProxyChanged() ) );
+  connect( mDlg->rbNoProxy, TQT_SIGNAL( toggled(bool) ),
+            TQT_SLOT( slotUseProxyChanged() ) );
   
-  connect( mDlg->rbAutoDiscover, SIGNAL( toggled(bool) ),
-            SLOT( slotChanged() ) );
-  connect( mDlg->rbAutoScript, SIGNAL( toggled(bool) ),
-            SLOT( slotChanged() ) );
+  connect( mDlg->rbAutoDiscover, TQT_SIGNAL( toggled(bool) ),
+            TQT_SLOT( slotChanged() ) );
+  connect( mDlg->rbAutoScript, TQT_SIGNAL( toggled(bool) ),
+            TQT_SLOT( slotChanged() ) );
   
-  connect( mDlg->rbPrompt, SIGNAL( toggled(bool) ),
-            SLOT( slotChanged() ) );
-  connect( mDlg->rbPresetLogin, SIGNAL( toggled(bool) ),
-            SLOT( slotChanged() ) );
+  connect( mDlg->rbPrompt, TQT_SIGNAL( toggled(bool) ),
+            TQT_SLOT( slotChanged() ) );
+  connect( mDlg->rbPresetLogin, TQT_SIGNAL( toggled(bool) ),
+            TQT_SLOT( slotChanged() ) );
   
-  connect( mDlg->cbPersConn, SIGNAL( toggled(bool) ),
-            SLOT( slotChanged() ) );
+  connect( mDlg->cbPersConn, TQT_SIGNAL( toggled(bool) ),
+            TQT_SLOT( slotChanged() ) );
   
-  connect( mDlg->location, SIGNAL( textChanged(const QString&) ),
-            SLOT( slotChanged() ) );
+  connect( mDlg->location, TQT_SIGNAL( textChanged(const TQString&) ),
+            TQT_SLOT( slotChanged() ) );
   
-  connect( mDlg->pbEnvSetup, SIGNAL( clicked() ), SLOT( setupEnvProxy() ) );
-  connect( mDlg->pbManSetup, SIGNAL( clicked() ), SLOT( setupManProxy() ) );
+  connect( mDlg->pbEnvSetup, TQT_SIGNAL( clicked() ), TQT_SLOT( setupEnvProxy() ) );
+  connect( mDlg->pbManSetup, TQT_SIGNAL( clicked() ), TQT_SLOT( setupManProxy() ) );
   
   load();
 }
@@ -150,7 +150,7 @@ void KProxyDialog::load()
   mData->proxyList["ftp"] = proto.proxyFor( "ftp" );
   mData->proxyList["script"] = proto.proxyConfigScript();
   mData->useReverseProxy = proto.useReverseProxy();
-  mData->noProxyFor = QStringList::split( QRegExp("[',''\t'' ']"),
+  mData->noProxyFor = TQStringList::split( TQRegExp("[',''\t'' ']"),
                                            proto.noProxyForRaw() );
 
   mDlg->gbAuth->setEnabled( useProxy );
@@ -306,7 +306,7 @@ void KProxyDialog::setupManProxy()
 
   dlgManual.setProxyData( *mData );
 
-  if ( dlgManual.exec() == QDialog::Accepted )
+  if ( dlgManual.exec() == TQDialog::Accepted )
   {
     *mData = dlgManual.data();
     mDlg->rbManual->setChecked(true);
@@ -320,7 +320,7 @@ void KProxyDialog::setupEnvProxy()
 
   dlgEnv.setProxyData( *mData );
 
-  if ( dlgEnv.exec() == QDialog::Accepted )
+  if ( dlgEnv.exec() == TQDialog::Accepted )
   {
     *mData = dlgEnv.data();
     mDlg->rbEnvVar->setChecked(true);
@@ -343,7 +343,7 @@ void KProxyDialog::slotUseProxyChanged()
   emit changed( true );
 }
 
-QString KProxyDialog::quickHelp() const
+TQString KProxyDialog::quickHelp() const
 {
   return i18n( "<h1>Proxy</h1>"
                "<p>A proxy server is an intermediate program that sits between "
@@ -357,9 +357,9 @@ QString KProxyDialog::quickHelp() const
                "<p><u>Note:</u> Some proxy servers provide both services.</p>" );
 }
 
-void KProxyDialog::showInvalidMessage( const QString& _msg )
+void KProxyDialog::showInvalidMessage( const TQString& _msg )
 {
-  QString msg;
+  TQString msg;
 
   if( !_msg.isEmpty() )
     msg = _msg;

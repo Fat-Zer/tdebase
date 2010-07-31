@@ -19,9 +19,9 @@
 */
 
 #include <time.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qpainter.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
+#include <tqpainter.h>
 #include <kapplication.h>
 #include <khtml_part.h>
 
@@ -45,12 +45,12 @@ HTMLCreator::~HTMLCreator()
     delete m_html;
 }
 
-bool HTMLCreator::create(const QString &path, int width, int height, QImage &img)
+bool HTMLCreator::create(const TQString &path, int width, int height, TQImage &img)
 {
     if (!m_html)
     {
         m_html = new KHTMLPart;
-        connect(m_html, SIGNAL(completed()), SLOT(slotCompleted()));
+        connect(m_html, TQT_SIGNAL(completed()), TQT_SLOT(slotCompleted()));
         m_html->setJScriptEnabled(false);
         m_html->setJavaEnabled(false);
         m_html->setPluginsEnabled(false);
@@ -68,8 +68,8 @@ bool HTMLCreator::create(const QString &path, int width, int height, QImage &img
     killTimer(t);
 
     // render the HTML page on a bigger pixmap and use smoothScale,
-    // looks better than directly scaling with the QPainter (malte)
-    QPixmap pix;
+    // looks better than directly scaling with the TQPainter (malte)
+    TQPixmap pix;
     if (width > 400 || height > 600)
     {
         if (height * 3 > width * 4)
@@ -81,13 +81,13 @@ bool HTMLCreator::create(const QString &path, int width, int height, QImage &img
         pix.resize(400, 600);
 
     // light-grey background, in case loadind the page failed
-    pix.fill( QColor( 245, 245, 245 ) );
+    pix.fill( TQColor( 245, 245, 245 ) );
 
     int borderX = pix.width() / width, borderY = pix.height() / height;
-    QRect rc(borderX, borderY, pix.width() - borderX * 2,
+    TQRect rc(borderX, borderY, pix.width() - borderX * 2,
              pix.height() - borderY * 2);
 
-    QPainter p;
+    TQPainter p;
     p.begin(&pix);
     m_html->paint(&p, rc);
     p.end();
@@ -99,7 +99,7 @@ bool HTMLCreator::create(const QString &path, int width, int height, QImage &img
     return true;
 }
 
-void HTMLCreator::timerEvent(QTimerEvent *)
+void HTMLCreator::timerEvent(TQTimerEvent *)
 {
     qApp->exit_loop();
 }

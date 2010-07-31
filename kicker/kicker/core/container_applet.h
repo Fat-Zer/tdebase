@@ -43,11 +43,11 @@ class AppletContainer : public BaseContainer
     Q_OBJECT
 
 public:
-    AppletContainer(const AppletInfo& info, QPopupMenu* opMenu, bool isImmutable = false, QWidget* parent = 0);
+    AppletContainer(const AppletInfo& info, TQPopupMenu* opMenu, bool isImmutable = false, TQWidget* parent = 0);
 
     KPanelApplet::Type type() const { return _type; }
     const AppletInfo& info() const { return _info; }
-    const QPopupMenu* appletsOwnMenu() const;
+    const TQPopupMenu* appletsOwnMenu() const;
     bool isStretch() const { return type() ==  KPanelApplet::Stretch; }
     void resetLayout();
 
@@ -58,9 +58,9 @@ public:
     virtual void reportBug();
     virtual void setBackground();
     virtual bool isValid() const { return _valid; }
-    virtual QString appletType() const { return "Applet"; }
-    virtual QString icon() const { return _info.icon(); }
-    virtual QString visibleName() const { return _info.name(); }
+    virtual TQString appletType() const { return "Applet"; }
+    virtual TQString icon() const { return _info.icon(); }
+    virtual TQString visibleName() const { return _info.name(); }
 
     int widthForHeight(int height) const;
     int heightForWidth(int width)  const;
@@ -76,7 +76,7 @@ public slots:
     virtual void setPopupDirection(KPanelApplet::Direction d);
     virtual void setOrientation(KPanelExtension::Orientation o);
     virtual void setImmutable(bool immutable);
-    void moveApplet( const QPoint& moveOffset );
+    void moveApplet( const TQPoint& moveOffset );
     void showAppletMenu();
     void slotReconfigure();
     void activateWindow();
@@ -86,18 +86,18 @@ protected:
     virtual void doSaveConfiguration( KConfigGroup&, bool layoutOnly ) const;
     virtual void alignmentChange(KPanelExtension::Alignment a);
 
-    virtual QPopupMenu* createOpMenu();
+    virtual TQPopupMenu* createOpMenu();
 
     AppletInfo         _info;
     AppletHandle      *_handle;
-    QHBox             *_appletframe;
-    QBoxLayout        *_layout;
+    TQHBox             *_appletframe;
+    TQBoxLayout        *_layout;
     KPanelApplet::Type _type;
     int                _widthForHeightHint;
     int                _heightForWidthHint;
-    QString            _deskFile, _configFile;
+    TQString            _deskFile, _configFile;
     bool               _firstuse;
-    QCString           _id;
+    TQCString           _id;
     KPanelApplet *     _applet;
     bool               _valid;
 

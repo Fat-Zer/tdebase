@@ -32,7 +32,7 @@
 #include "kio_smb_internal.h"
 
 //===========================================================================
-SMBSlave::SMBSlave(const QCString& pool, const QCString& app)
+SMBSlave::SMBSlave(const TQCString& pool, const TQCString& app)
     : SlaveBase( "smb", pool, app )
 {
     m_initialized_smbc = false;

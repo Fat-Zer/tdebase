@@ -26,14 +26,14 @@
 #include <dcopclient.h>
 #include <kdebug.h>
 
-KonqyPreloader::KonqyPreloader( const QCString& obj )
+KonqyPreloader::KonqyPreloader( const TQCString& obj )
     : KDEDModule( obj )
     {
     reconfigure();
-    connect( kapp->dcopClient(), SIGNAL( applicationRemoved( const QCString& )),
-        SLOT( appRemoved( const QCString& )));
-    connect( &check_always_preloaded_timer, SIGNAL( timeout()),
-	SLOT( checkAlwaysPreloaded()));
+    connect( kapp->dcopClient(), TQT_SIGNAL( applicationRemoved( const TQCString& )),
+        TQT_SLOT( appRemoved( const TQCString& )));
+    connect( &check_always_preloaded_timer, TQT_SIGNAL( timeout()),
+	TQT_SLOT( checkAlwaysPreloaded()));
     }
 
 KonqyPreloader::~KonqyPreloader()
@@ -41,7 +41,7 @@ KonqyPreloader::~KonqyPreloader()
     updateCount();
     }
 
-bool KonqyPreloader::registerPreloadedKonqy( QCString id, int screen )
+bool KonqyPreloader::registerPreloadedKonqy( TQCString id, int screen )
     {
     if( instances.count() >= (uint)KonqSettings::maxPreloadCount() )
         return false;
@@ -49,7 +49,7 @@ bool KonqyPreloader::registerPreloadedKonqy( QCString id, int screen )
     return true;
     }
 
-QCString KonqyPreloader::getPreloadedKonqy( int screen )
+TQCString KonqyPreloader::getPreloadedKonqy( int screen )
     {
     if( instances.count() == 0 )
         return "";
@@ -59,7 +59,7 @@ QCString KonqyPreloader::getPreloadedKonqy( int screen )
         {
         if( (*it).screen == screen )
             {
-            QCString ret = (*it).id;
+            TQCString ret = (*it).id;
             instances.remove( it );
             check_always_preloaded_timer.start( 5000, true );
             return ret;
@@ -68,7 +68,7 @@ QCString KonqyPreloader::getPreloadedKonqy( int screen )
     return "";
     }
 
-void KonqyPreloader::unregisterPreloadedKonqy( QCString id_P )
+void KonqyPreloader::unregisterPreloadedKonqy( TQCString id_P )
     {
     for( InstancesList::Iterator it = instances.begin();
          it != instances.end();
@@ -80,7 +80,7 @@ void KonqyPreloader::unregisterPreloadedKonqy( QCString id_P )
             }
     }
 
-void KonqyPreloader::appRemoved( const QCString& id )
+void KonqyPreloader::appRemoved( const TQCString& id )
     {
     unregisterPreloadedKonqy( id );
     }
@@ -109,8 +109,8 @@ void KonqyPreloader::updateCount()
 	{
 	if( !check_always_preloaded_timer.isActive())
 	    {
-	    if( kapp->kdeinitExec( QString::fromLatin1( "konqueror" ),
-		QStringList() << QString::fromLatin1( "--preload" ), NULL, NULL, "0" ) == 0 )
+	    if( kapp->kdeinitExec( TQString::fromLatin1( "konqueror" ),
+		TQStringList() << TQString::fromLatin1( "--preload" ), NULL, NULL, "0" ) == 0 )
 		{
 		kdDebug( 1202 ) << "Preloading Konqueror instance" << endl;
 	        check_always_preloaded_timer.start( 5000, true );
@@ -143,7 +143,7 @@ void KonqyPreloader::unloadAllPreloaded()
     }
     
 extern "C"
-KDE_EXPORT KDEDModule *create_konqy_preloader( const QCString& obj )
+KDE_EXPORT KDEDModule *create_konqy_preloader( const TQCString& obj )
     {
     return new KonqyPreloader( obj );
     }

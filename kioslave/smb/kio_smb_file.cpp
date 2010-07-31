@@ -45,7 +45,7 @@ void SMBSlave::get( const KURL& kurl )
     time_t      lasttime        = 0;
     time_t      starttime       = 0;
     KIO::filesize_t totalbytesread  = 0;
-    QByteArray  filedata;
+    TQByteArray  filedata;
     SMBUrl      url;
 
     kdDebug(KIO_SMB) << "SMBSlave::get on " << kurl << endl;
@@ -132,7 +132,7 @@ void SMBSlave::get( const KURL& kurl )
         }
 
         smbc_close(filefd);
-        data( QByteArray() );
+        data( TQByteArray() );
         processedSize(static_cast<KIO::filesize_t>(st.st_size));
 
     }
@@ -161,7 +161,7 @@ void SMBSlave::put( const KURL& kurl,
     int         filefd;
     bool        exists;
     mode_t      mode;
-    QByteArray  filedata;
+    TQByteArray  filedata;
 
     kdDebug(KIO_SMB) << "SMBSlave::put on " << kurl << endl;
 

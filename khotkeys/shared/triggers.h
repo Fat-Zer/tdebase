@@ -11,9 +11,9 @@
 #ifndef _TRIGGERS_H_
 #define _TRIGGERS_H_
 
-#include <qptrlist.h>
-#include <qtimer.h>
-#include <qmap.h>
+#include <tqptrlist.h>
+#include <tqtimer.h>
+#include <tqmap.h>
 #include <kdemacros.h>
 
 #include "khotkeysglobal.h"
@@ -37,7 +37,7 @@ class KDE_EXPORT Trigger
         virtual ~Trigger();
         virtual void cfg_write( KConfig& cfg_P ) const = 0;
         virtual Trigger* copy( Action_data* data_P ) const = 0;
-        virtual const QString description() const = 0;
+        virtual const TQString description() const = 0;
         static Trigger* create_cfg_read( KConfig& cfg_P, Action_data* data_P );
         virtual void activate( bool activate_P ) = 0;
     protected:
@@ -46,18 +46,18 @@ class KDE_EXPORT Trigger
     };
 
 class KDE_EXPORT Trigger_list
-    : public QPtrList< Trigger >
+    : public TQPtrList< Trigger >
     {
     public:
-        Trigger_list( const QString& comment_P ); // CHECKME nebo i data ?
+        Trigger_list( const TQString& comment_P ); // CHECKME nebo i data ?
         Trigger_list( KConfig& cfg_P, Action_data* data_P );
         void activate( bool activate_P );
         void cfg_write( KConfig& cfg_P ) const;
-        typedef QPtrListIterator< Trigger > Iterator;
-        const QString& comment() const;
+        typedef TQPtrListIterator< Trigger > Iterator;
+        const TQString& comment() const;
         Trigger_list* copy( Action_data* data_P ) const;
     private:
-        QString _comment;
+        TQString _comment;
     KHOTKEYS_DISABLE_COPY( Trigger_list );
     };
     
@@ -71,7 +71,7 @@ class KDE_EXPORT Shortcut_trigger
         virtual ~Shortcut_trigger();
         virtual void cfg_write( KConfig& cfg_P ) const;
         virtual Shortcut_trigger* copy( Action_data* data_P ) const;
-        virtual const QString description() const;
+        virtual const TQString description() const;
         const KShortcut& shortcut() const;
         virtual bool handle_key( const KShortcut& shortcut_P );
         virtual void activate( bool activate_P );
@@ -80,7 +80,7 @@ class KDE_EXPORT Shortcut_trigger
     };
 
 class KDE_EXPORT Window_trigger
-    : public QObject, public Trigger        
+    : public TQObject, public Trigger        
     {
     Q_OBJECT
     typedef Trigger base;
@@ -101,7 +101,7 @@ class KDE_EXPORT Window_trigger
 #else
         virtual Trigger* copy( Action_data* data_P ) const;
 #endif
-        virtual const QString description() const;
+        virtual const TQString description() const;
         const Windowdef_list* windows() const;
         bool triggers_on( window_action_t w_action_P ) const;
         virtual void activate( bool activate_P );
@@ -109,7 +109,7 @@ class KDE_EXPORT Window_trigger
         Windowdef_list* _windows;
         int window_actions;
         void init();
-        typedef QMap< WId, bool > Windows_map;
+        typedef TQMap< WId, bool > Windows_map;
         Windows_map existing_windows;
         WId last_active_window;
     protected slots:
@@ -122,45 +122,45 @@ class KDE_EXPORT Window_trigger
     };
 
 class KDE_EXPORT Gesture_trigger
-    : public QObject, public Trigger
+    : public TQObject, public Trigger
     {
     Q_OBJECT
     typedef Trigger base;
     public:
-        Gesture_trigger( Action_data* data_P, const QString& gesture_P );
+        Gesture_trigger( Action_data* data_P, const TQString& gesture_P );
         Gesture_trigger( KConfig& cfg_P, Action_data* data_P );
         virtual ~Gesture_trigger();
         virtual void cfg_write( KConfig& cfg_P ) const;
         virtual Trigger* copy( Action_data* data_P ) const;
-        virtual const QString description() const;
-        const QString& gesturecode() const;
+        virtual const TQString description() const;
+        const TQString& gesturecode() const;
         virtual void activate( bool activate_P );
     protected slots:
-        void handle_gesture( const QString& gesture_P, WId window_P );
+        void handle_gesture( const TQString& gesture_P, WId window_P );
     private:
-        QString _gesturecode;
+        TQString _gesturecode;
     };
 
 
 class KDE_EXPORT Voice_trigger
-    : public QObject, public Trigger
+    : public TQObject, public Trigger
     {
     Q_OBJECT
     typedef Trigger base;
     public:
-		Voice_trigger( Action_data* data_P, const QString& Voice_P, const VoiceSignature & signature1_P, const VoiceSignature & signature2_P );
+		Voice_trigger( Action_data* data_P, const TQString& Voice_P, const VoiceSignature & signature1_P, const VoiceSignature & signature2_P );
         Voice_trigger( KConfig& cfg_P, Action_data* data_P );
         virtual ~Voice_trigger();
         virtual void cfg_write( KConfig& cfg_P ) const;
         virtual Trigger* copy( Action_data* data_P ) const;
-        virtual const QString description() const;
-        const QString& voicecode() const;
+        virtual const TQString description() const;
+        const TQString& voicecode() const;
         virtual void activate( bool activate_P );
 		VoiceSignature voicesignature( int ech ) const;
     public slots:
         void handle_Voice(  );
     private:
-        QString _voicecode;
+        TQString _voicecode;
 		VoiceSignature _voicesignature[2];
     };
 
@@ -191,14 +191,14 @@ Trigger::~Trigger()
 // Trigger_list
     
 inline
-Trigger_list::Trigger_list( const QString& comment_P )
-    : QPtrList< Trigger >(), _comment( comment_P )
+Trigger_list::Trigger_list( const TQString& comment_P )
+    : TQPtrList< Trigger >(), _comment( comment_P )
     {
     setAutoDelete( true );
     }
 
 inline
-const QString& Trigger_list::comment() const
+const TQString& Trigger_list::comment() const
     {
     return _comment;
     }
@@ -237,14 +237,14 @@ bool Window_trigger::triggers_on( window_action_t w_action_P ) const
 // Gesture_trigger
 
 inline
-const QString& Gesture_trigger::gesturecode() const
+const TQString& Gesture_trigger::gesturecode() const
     {
     return _gesturecode;
     }
 
 // Voice_trigger
 inline
-const QString& Voice_trigger::voicecode() const
+const TQString& Voice_trigger::voicecode() const
 	{
 		return _voicecode;
 	}

@@ -18,11 +18,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
 
 #include <dcopclient.h>
 
@@ -45,14 +45,14 @@
 #include <ksimpleconfig.h>
 #include <string>
 #include <stdio.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "iccconfig.h"
 
 using namespace std;
 
 /**** DLL Interface ****/
-typedef KGenericFactory<KICCConfig, QWidget> KICCCFactory;
+typedef KGenericFactory<KICCConfig, TQWidget> KICCCFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_iccconfig, KICCCFactory("kcmiccconfig") )
 
 KSimpleConfig *config;
@@ -60,13 +60,13 @@ KSimpleConfig *systemconfig;
 
 /**** KICCConfig ****/
 
-KICCConfig::KICCConfig(QWidget *parent, const char *name, const QStringList &)
+KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KICCCFactory::instance(), parent, name)
 {
 
-  QVBoxLayout *layout = new QVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
-  config = new KSimpleConfig( QString::fromLatin1( "kiccconfigrc" ));
-  systemconfig = new KSimpleConfig( QString::fromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
+  TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
+  config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
+  systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
 
   KAboutData *about =
   new KAboutData(I18N_NOOP("kcmiccconfig"), I18N_NOOP("KDE ICC Profile Control Module"),
@@ -82,23 +82,23 @@ KICCConfig::KICCConfig(QWidget *parent, const char *name, const QStringList &)
   setRootOnlyMsg(i18n("<b>The global ICC color profile is a system wide setting, and requires administrator access</b><br>To alter the system's global ICC profile, click on the \"Administrator Mode\" button below."));
   setUseRootOnlyMsg(true);
 
-  connect(base->systemEnableSupport, SIGNAL(clicked()), SLOT(changed()));
-  connect(base->systemEnableSupport, SIGNAL(toggled(bool)), base->systemIccFile, SLOT(setEnabled(bool)));
-  connect(base->enableSupport, SIGNAL(clicked()), SLOT(changed()));
-  connect(base->enableSupport, SIGNAL(toggled(bool)), base->iccFile, SLOT(setEnabled(bool)));
-  connect(base->enableSupport, SIGNAL(toggled(bool)), base->randrScreenList, SLOT(setEnabled(bool)));
-  connect(base->enableSupport, SIGNAL(toggled(bool)), base->iccProfileList, SLOT(setEnabled(bool)));
-  connect(base->enableSupport, SIGNAL(toggled(bool)), base->addProfileButton, SLOT(setEnabled(bool)));
-  connect(base->enableSupport, SIGNAL(toggled(bool)), base->renameProfileButton, SLOT(setEnabled(bool)));
-  connect(base->enableSupport, SIGNAL(toggled(bool)), base->deleteProfileButton, SLOT(setEnabled(bool)));
-  connect(base->iccProfileList, SIGNAL(activated(int)), this, SLOT(selectProfile(int)));
-  connect(base->randrScreenList, SIGNAL(activated(int)), this, SLOT(selectScreen(int)));
-  connect(base->iccFile, SIGNAL(textChanged(const QString&)), SLOT(updateArray()));
-  connect(base->systemIccFile, SIGNAL(textChanged(const QString&)), SLOT(changed()));
+  connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+  connect(base->systemEnableSupport, TQT_SIGNAL(toggled(bool)), base->systemIccFile, TQT_SLOT(setEnabled(bool)));
+  connect(base->enableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+  connect(base->enableSupport, TQT_SIGNAL(toggled(bool)), base->iccFile, TQT_SLOT(setEnabled(bool)));
+  connect(base->enableSupport, TQT_SIGNAL(toggled(bool)), base->randrScreenList, TQT_SLOT(setEnabled(bool)));
+  connect(base->enableSupport, TQT_SIGNAL(toggled(bool)), base->iccProfileList, TQT_SLOT(setEnabled(bool)));
+  connect(base->enableSupport, TQT_SIGNAL(toggled(bool)), base->addProfileButton, TQT_SLOT(setEnabled(bool)));
+  connect(base->enableSupport, TQT_SIGNAL(toggled(bool)), base->renameProfileButton, TQT_SLOT(setEnabled(bool)));
+  connect(base->enableSupport, TQT_SIGNAL(toggled(bool)), base->deleteProfileButton, TQT_SLOT(setEnabled(bool)));
+  connect(base->iccProfileList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(selectProfile(int)));
+  connect(base->randrScreenList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(selectScreen(int)));
+  connect(base->iccFile, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(updateArray()));
+  connect(base->systemIccFile, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(changed()));
 
-  connect(base->addProfileButton, SIGNAL(clicked()), this, SLOT(addProfile()));
-  connect(base->renameProfileButton, SIGNAL(clicked()), this, SLOT(renameProfile()));
-  connect(base->deleteProfileButton, SIGNAL(clicked()), this, SLOT(deleteProfile()));
+  connect(base->addProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(addProfile()));
+  connect(base->renameProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(renameProfile()));
+  connect(base->deleteProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(deleteProfile()));
 
   load();
 
@@ -127,7 +127,7 @@ KICCConfig::~KICCConfig()
 
 void KICCConfig::deleteProfile () {
 	int i;
-	QString *iccFileArrayNew;
+	TQString *iccFileArrayNew;
 
 	// Delete the profile
 	config->deleteGroup(base->iccProfileList->currentText());
@@ -146,24 +146,24 @@ void KICCConfig::deleteProfile () {
 
 void KICCConfig::renameProfile () {
 	int i;
-	QString *iccFileArrayNew;
+	TQString *iccFileArrayNew;
 
 	// Pop up a text entry box asking for the name of the new profile
 	bool _ok = false;
 	bool _end = false;
-	QString _new;
-	QString _text = i18n("Please enter the new profile name below:");
-	QString _error;
+	TQString _new;
+	TQString _text = i18n("Please enter the new profile name below:");
+	TQString _error;
 
 	while (!_end) {
-		_new = KInputDialog::getText( i18n("ICC Profile Configuration"),  _error + _text, QString::null, &_ok, this);
+		_new = KInputDialog::getText( i18n("ICC Profile Configuration"),  _error + _text, TQString::null, &_ok, this);
 		if (!_ok ) {
 			_end = true;
 		} else {
-			_error = QString();
+			_error = TQString();
 			if (!_new.isEmpty()) {
 				if (findProfileIndex(_new) != -1)
-					_error = i18n("Error: A profile with that name already exists") + QString("\n");
+					_error = i18n("Error: A profile with that name already exists") + TQString("\n");
 				else
 					_end = true;
 			}
@@ -180,24 +180,24 @@ void KICCConfig::renameProfile () {
 
 void KICCConfig::addProfile () {
 	int i;
-	QString *iccFileArrayNew;
+	TQString *iccFileArrayNew;
 
 	// Pop up a text entry box asking for the name of the new profile
 	bool _ok = false;
 	bool _end = false;
-	QString _new;
-	QString _text = i18n("Please enter the new profile name below:");
-	QString _error;
+	TQString _new;
+	TQString _text = i18n("Please enter the new profile name below:");
+	TQString _error;
 
 	while (!_end) {
-		_new = KInputDialog::getText( i18n("ICC Profile Configuration"),  _error + _text, QString::null, &_ok, this);
+		_new = KInputDialog::getText( i18n("ICC Profile Configuration"),  _error + _text, TQString::null, &_ok, this);
 		if (!_ok ) {
 			_end = true;
 		} else {
-			_error = QString();
+			_error = TQString();
 			if (!_new.isEmpty()) {
 				if (findProfileIndex(_new) != -1)
-					_error = i18n("Error: A profile with that name already exists") + QString("\n");
+					_error = i18n("Error: A profile with that name already exists") + TQString("\n");
 				else
 					_end = true;
 			}
@@ -250,11 +250,11 @@ void KICCConfig::updateDisplayedInformation () {
 	base->iccFile->setURL(iccFileArray[((base->iccProfileList->currentItem())*(base->randrScreenList->count()))+(base->randrScreenList->currentItem())]);
 }
 
-QString KICCConfig::extractFileName(QString displayName, QString profileName) {
+TQString KICCConfig::extractFileName(TQString displayName, TQString profileName) {
 	//
 }
 
-int KICCConfig::findProfileIndex(QString profileName) {
+int KICCConfig::findProfileIndex(TQString profileName) {
 	int i;
 	for (i=0;i<numberOfProfiles;i++) {
 		if (base->iccProfileList->text(i) == profileName) {
@@ -264,7 +264,7 @@ int KICCConfig::findProfileIndex(QString profileName) {
 	return -1;
 }
 
-int KICCConfig::findScreenIndex(QString screenName) {
+int KICCConfig::findScreenIndex(TQString screenName) {
 	int i;
 	for (i=0;i<(base->randrScreenList->count());i++) {
 		if (base->randrScreenList->text(i) == screenName) {
@@ -317,7 +317,7 @@ void KICCConfig::load(bool useDefaults )
   // Find all profile names
   numberOfProfiles = 0;
   cfgProfiles = config->groupList();
-  for (QStringList::Iterator i(cfgProfiles.begin()); i != cfgProfiles.end(); ++i) {
+  for (TQStringList::Iterator i(cfgProfiles.begin()); i != cfgProfiles.end(); ++i) {
       base->iccProfileList->insertItem((*i), -1);
       numberOfProfiles++;
   }
@@ -379,7 +379,7 @@ void KICCConfig::save()
 	config->sync();
 	systemconfig->sync();
 
-	QString errorstr;
+	TQString errorstr;
 	if (base->enableSupport->isChecked() == true) {
 		errorstr = randrsimple->applyIccConfiguration(base->iccProfileList->currentText(), KDE_CONFDIR);
 	}
@@ -390,7 +390,7 @@ void KICCConfig::save()
 		errorstr = randrsimple->clearIccConfiguration();
 	}
 	if (errorstr != "") {
-		KMessageBox::error(this, QString("Unable to apply ICC configuration:\n\r%1").arg(errorstr));
+		KMessageBox::error(this, TQString("Unable to apply ICC configuration:\n\r%1").arg(errorstr));
 	}
 
 	emit changed(false);
@@ -401,7 +401,7 @@ void KICCConfig::defaults()
 	load( true );
 }
 
-QString KICCConfig::quickHelp() const
+TQString KICCConfig::quickHelp() const
 {
   return i18n("<h1>ICC Profile Configuration</h1> This module allows you to configure KDE support"
      " for ICC profiles. This allows you to easily color correct your monitor"

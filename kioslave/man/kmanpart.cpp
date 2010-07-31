@@ -18,7 +18,7 @@
 */
 
 #include "kmanpart.h"
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kinstance.h>
 #include <kglobal.h>
@@ -39,7 +39,7 @@ extern "C"
 KInstance* KManPartFactory::s_instance = 0L;
 KAboutData* KManPartFactory::s_about = 0L;
 
-KManPartFactory::KManPartFactory( QObject* parent, const char* name )
+KManPartFactory::KManPartFactory( TQObject* parent, const char* name )
    : KParts::Factory( parent, name )
 {}
 
@@ -50,8 +50,8 @@ KManPartFactory::~KManPartFactory()
    delete s_about;
 }
 
-KParts::Part* KManPartFactory::createPartObject( QWidget * parentWidget, const char* /*widgetName*/, QObject *,
-                                 const char* name, const char* /*className*/,const QStringList & )
+KParts::Part* KManPartFactory::createPartObject( TQWidget * parentWidget, const char* /*widgetName*/, TQObject *,
+                                 const char* name, const char* /*className*/,const TQStringList & )
 {
    KManPart* part = new KManPart(parentWidget, name );
    return part;
@@ -69,7 +69,7 @@ KInstance* KManPartFactory::instance()
 }
 
 
-KManPart::KManPart( QWidget * parent, const char * name )
+KManPart::KManPart( TQWidget * parent, const char * name )
 : KHTMLPart( parent, name )
 ,m_job(0)
 {
@@ -95,12 +95,12 @@ bool KManPart::openFile()
    url.setPath( m_file );
 
    m_job = KIO::get( url, true, false );
-   connect( m_job, SIGNAL( data( KIO::Job *, const QByteArray &) ), SLOT( readData( KIO::Job *, const QByteArray &) ) );
-   connect( m_job, SIGNAL( result( KIO::Job * ) ), SLOT( jobDone( KIO::Job * ) ) );
+   connect( m_job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray &) ), TQT_SLOT( readData( KIO::Job *, const TQByteArray &) ) );
+   connect( m_job, TQT_SIGNAL( result( KIO::Job * ) ), TQT_SLOT( jobDone( KIO::Job * ) ) );
    return true;
 }
 
-void KManPart::readData(KIO::Job * , const QByteArray & data)
+void KManPart::readData(KIO::Job * , const TQByteArray & data)
 {
    write(data,data.size());
 }

@@ -26,10 +26,10 @@
 */
 
 #include "keytrans.h"
-#include <qbuffer.h>
-#include <qobject.h>
-#include <qintdict.h>
-#include <qfile.h>
+#include <tqbuffer.h>
+#include <tqobject.h>
+#include <tqintdict.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 
@@ -41,7 +41,7 @@
    instances represent the individual assignments
 */
 
-KeyTrans::KeyEntry::KeyEntry(int _ref, int _key, int _bits, int _mask, int _cmd, QString _txt)
+KeyTrans::KeyEntry::KeyEntry(int _ref, int _key, int _bits, int _mask, int _cmd, TQString _txt)
 : ref(_ref), key(_key), bits(_bits), mask(_mask), cmd(_cmd), txt(_txt)
 {
 }
@@ -66,7 +66,7 @@ bool KeyTrans::KeyEntry::anymodspecified(void)
   return (mask & (1 << BITS_AnyMod)) && (bits & (1 << BITS_AnyMod));
 }
 
-QString KeyTrans::KeyEntry::text()
+TQString KeyTrans::KeyEntry::text()
 {
   return txt;
 }
@@ -77,7 +77,7 @@ QString KeyTrans::KeyEntry::text()
    Takes part in a collection themself.
 */
 
-KeyTrans::KeyTrans(const QString& path)
+KeyTrans::KeyTrans(const TQString& path)
 :m_path(path)
 ,m_numb(0)
 ,m_fileRead(false)
@@ -110,10 +110,10 @@ KeyTrans::~KeyTrans()
 {
 }
 
-KeyTrans::KeyEntry* KeyTrans::addEntry(int ref, int key, int bits, int mask, int cmd, QString txt)
+KeyTrans::KeyEntry* KeyTrans::addEntry(int ref, int key, int bits, int mask, int cmd, TQString txt)
 // returns conflicting entry
 {
-  for (QPtrListIterator<KeyEntry> it(tableX); it.current(); ++it)
+  for (TQPtrListIterator<KeyEntry> it(tableX); it.current(); ++it)
   {
     if (it.current()->matches(key,bits,mask))
     {
@@ -132,7 +132,7 @@ bool KeyTrans::findEntry(int key, int bits, int* cmd, const char** txt, int* len
   if (bits & ((1<<BITS_Shift)|(1<<BITS_Alt)|(1<<BITS_Control)))
     bits |= (1<<BITS_AnyMod);
   
-  for (QPtrListIterator<KeyEntry> it(tableX); it.current(); ++it)
+  for (TQPtrListIterator<KeyEntry> it(tableX); it.current(); ++it)
     if (it.current()->matches(key,bits,0xffff))
     {
       *cmd = it.current()->cmd;
@@ -183,7 +183,7 @@ bool KeyTrans::findEntry(int key, int bits, int* cmd, const char** txt, int* len
 class KeytabReader
 {
 public:
-  KeytabReader(QString p, QIODevice &d);
+  KeytabReader(TQString p, TQIODevice &d);
 public:
   void getCc();
   void getSymbol();
@@ -192,7 +192,7 @@ public:
   void ReportToken(); // diagnostic
 private:
   int     sym;
-  QString res;
+  TQString res;
   int     len;
   int     slinno;
   int     scolno;
@@ -200,12 +200,12 @@ private:
   int     cc;
   int     linno;
   int     colno;
-  QIODevice* buf;
-  QString path;
+  TQIODevice* buf;
+  TQString path;
 };
 
 
-KeytabReader::KeytabReader(QString p, QIODevice &d)
+KeytabReader::KeytabReader(TQString p, TQIODevice &d)
 {
   path = p;
   buf = &d;
@@ -337,9 +337,9 @@ protected:
   void defOprSym(const char* key, int val);
   void defModSym(const char* key, int val);
 public:
-  QDict<QObject> keysyms;
-  QDict<QObject> modsyms;
-  QDict<QObject> oprsyms;
+  TQDict<TQObject> keysyms;
+  TQDict<TQObject> modsyms;
+  TQDict<TQObject> oprsyms;
 };
 
 static KeyTransSymbols * syms = 0L;
@@ -354,17 +354,17 @@ void KeyTrans::readConfig()
 {
    if (m_fileRead) return;
    m_fileRead=true;
-   QIODevice* buf(0);
+   TQIODevice* buf(0);
    if (m_path=="[buildin]")
    {
-      QCString txt =
+      TQCString txt =
 #include "default.keytab.h"
 ;
-      buf=new QBuffer(txt);
+      buf=new TQBuffer(txt);
    }
    else
    {
-      buf=new QFile(m_path);
+      buf=new TQFile(m_path);
    };
    KeytabReader ktr(m_path,*buf);
    ktr.parseTo(this);
@@ -474,17 +474,17 @@ ERROR:
 
 void KeyTransSymbols::defKeySym(const char* key, int val)
 {
-  keysyms.insert(key,(QObject*)(val+1));
+  keysyms.insert(key,(TQObject*)(val+1));
 }
 
 void KeyTransSymbols::defOprSym(const char* key, int val)
 {
-  oprsyms.insert(key,(QObject*)(val+1));
+  oprsyms.insert(key,(TQObject*)(val+1));
 }
 
 void KeyTransSymbols::defModSym(const char* key, int val)
 {
-  modsyms.insert(key,(QObject*)(val+1));
+  modsyms.insert(key,(TQObject*)(val+1));
 }
 
 void KeyTransSymbols::defOprSyms()
@@ -666,7 +666,7 @@ KeyTransSymbols::KeyTransSymbols()
 
 static int keytab_serial = 0; //FIXME: remove,localize
 
-static QIntDict<KeyTrans> * numb2keymap = 0L;
+static TQIntDict<KeyTrans> * numb2keymap = 0L;
 
 KeyTrans* KeyTrans::find(int numb)
 {
@@ -674,9 +674,9 @@ KeyTrans* KeyTrans::find(int numb)
   return res ? res : numb2keymap->find(0);
 }
 
-KeyTrans* KeyTrans::find(const QString &id)
+KeyTrans* KeyTrans::find(const TQString &id)
 {
-  QIntDictIterator<KeyTrans> it(*numb2keymap);
+  TQIntDictIterator<KeyTrans> it(*numb2keymap);
   while(it.current())
   {
     if (it.current()->id() == id)
@@ -700,7 +700,7 @@ void KeyTrans::addKeyTrans()
 void KeyTrans::loadAll()
 {
   if (!numb2keymap)
-    numb2keymap = new QIntDict<KeyTrans>;
+    numb2keymap = new TQIntDict<KeyTrans>;
   else  {  // Needed for konsole_part.
     numb2keymap->clear();
     keytab_serial = 0;
@@ -713,20 +713,20 @@ void KeyTrans::loadAll()
   KeyTrans* sc = new KeyTrans("[buildin]");
   sc->addKeyTrans();
 
-  QStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
+  TQStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
 
-  for(QStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
+  for(TQStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
   {
-    //QFile file(QFile::encodeName(*it));
-    sc = new KeyTrans(QFile::encodeName(*it));
-    //KeyTrans* sc = KeyTrans::fromDevice(QFile::encodeName(*it),file);
+    //TQFile file(TQFile::encodeName(*it));
+    sc = new KeyTrans(TQFile::encodeName(*it));
+    //KeyTrans* sc = KeyTrans::fromDevice(TQFile::encodeName(*it),file);
     if (sc) sc->addKeyTrans();
   }
 }
 
 // Debugging material -----------------------------------------------------------
 /*
-void TestTokenizer(QBuffer &buf)
+void TestTokenizer(TQBuffer &buf)
 {
   // opening sequence
 
@@ -745,10 +745,10 @@ void test()
 {
   // Opening sequence
 
-  QCString txt =
+  TQCString txt =
 #include "default.keytab.h"
   ;
-  QBuffer buf(txt);
+  TQBuffer buf(txt);
   if (0) TestTokenizer(buf);
   if (1) { KeyTrans kt; kt.scanTable(buf); }
 }

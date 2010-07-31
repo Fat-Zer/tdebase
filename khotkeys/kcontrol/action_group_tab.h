@@ -25,14 +25,14 @@ class Action_group_tab
     {
     Q_OBJECT
     public:
-        Action_group_tab( QWidget* parent_P = NULL, const char* name_P = NULL );
+        Action_group_tab( TQWidget* parent_P = NULL, const char* name_P = NULL );
         void set_data( const Action_data_group* data_P );
         Action_data_group* get_data( Action_data_group* parent_P,
             Condition_list* conditions_P ) const;
     public slots:
         void clear_data();
     protected slots:
-        virtual void action_group_name_changed( const QString& name_P );
+        virtual void action_group_name_changed( const TQString& name_P );
     protected:
         Action_data_group::system_group_t system_group;
     };

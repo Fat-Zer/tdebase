@@ -21,9 +21,9 @@
 #ifndef TEHISTORY_H
 #define TEHISTORY_H
 
-#include <qcstring.h>
-#include <qptrvector.h>
-#include <qbitarray.h>
+#include <tqcstring.h>
+#include <tqptrvector.h>
+#include <tqbitarray.h>
 
 #include <ktempfile.h>
 
@@ -95,7 +95,7 @@ protected:
 class HistoryScrollFile : public HistoryScroll
 {
 public:
-  HistoryScrollFile(const QString &logFileName);
+  HistoryScrollFile(const TQString &logFileName);
   virtual ~HistoryScrollFile();
 
   virtual int  getLines();
@@ -109,7 +109,7 @@ public:
 private:
   int startOfLine(int lineno);
 
-  QString m_logFileName;
+  TQString m_logFileName;
   HistoryFile index; // lines Row(int)
   HistoryFile cells; // text  Row(ca)
   HistoryFile lineflags; // flags Row(unsigned char)
@@ -122,7 +122,7 @@ private:
 class HistoryScrollBuffer : public HistoryScroll
 {
 public:
-  typedef QMemArray<ca> histline;
+  typedef TQMemArray<ca> histline;
 
   HistoryScrollBuffer(unsigned int maxNbLines = 1000);
   virtual ~HistoryScrollBuffer();
@@ -146,8 +146,8 @@ private:
   void normalize();
 
   bool m_hasScroll;
-  QPtrVector<histline> m_histBuffer;
-  QBitArray m_wrappedLine;
+  TQPtrVector<histline> m_histBuffer;
+  TQBitArray m_wrappedLine;
   unsigned int m_maxNbLines;
   unsigned int m_nbLines;
   unsigned int m_arrayIndex;
@@ -181,7 +181,7 @@ public:
 // BlockArray-based history
 //////////////////////////////////////////////////////////////////////
 #include "BlockArray.h"
-#include <qintdict.h>
+#include <tqintdict.h>
 class HistoryScrollBlockArray : public HistoryScroll
 {
 public:
@@ -198,7 +198,7 @@ public:
 
 protected:
   BlockArray m_blockArray;
-  QIntDict<size_t> m_lineLengths;
+  TQIntDict<size_t> m_lineLengths;
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -246,16 +246,16 @@ protected:
 class HistoryTypeFile : public HistoryType
 {
 public:
-  HistoryTypeFile(const QString& fileName=QString::null);
+  HistoryTypeFile(const TQString& fileName=TQString::null);
 
   virtual bool isOn() const;
-  virtual const QString& getFileName() const;
+  virtual const TQString& getFileName() const;
   virtual unsigned int getSize() const;
 
   virtual HistoryScroll* getScroll(HistoryScroll *) const;
 
 protected:
-  QString m_fileName;
+  TQString m_fileName;
 };
 
 

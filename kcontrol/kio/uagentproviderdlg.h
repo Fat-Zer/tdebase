@@ -32,10 +32,10 @@ class UALineEdit : public KLineEdit
   Q_OBJECT
 
 public:
-  UALineEdit( QWidget *parent, const char *name=0 );
+  UALineEdit( TQWidget *parent, const char *name=0 );
 
 protected:
-  virtual void keyPressEvent( QKeyEvent * );
+  virtual void keyPressEvent( TQKeyEvent * );
 };
 
 class UAProviderDlg : public KDialog
@@ -43,20 +43,20 @@ class UAProviderDlg : public KDialog
   Q_OBJECT
 
 public:
-  UAProviderDlg( const QString& caption, QWidget *parent = 0,
+  UAProviderDlg( const TQString& caption, TQWidget *parent = 0,
                  FakeUASProvider* provider = 0, const char *name = 0 );
   ~UAProviderDlg();
 
-  void setSiteName( const QString& );
-  void setIdentity( const QString& );
+  void setSiteName( const TQString& );
+  void setIdentity( const TQString& );
 
-  QString siteName();
-  QString identity();
-  QString alias();
+  TQString siteName();
+  TQString identity();
+  TQString alias();
 
 protected slots:
-  void slotActivated( const QString& );
-  void slotTextChanged( const QString& );
+  void slotActivated( const TQString& );
+  void slotTextChanged( const TQString& );
 
 protected:
   void init();

@@ -22,10 +22,10 @@
 #include <unistd.h>
 
 #undef Unsorted
-#include <qbuffer.h>
-#include <qdir.h>
-#include <qsettings.h>
-#include <qtooltip.h>
+#include <tqbuffer.h>
+#include <tqdir.h>
+#include <tqsettings.h>
+#include <tqtooltip.h>
 
 #include <dcopclient.h>
 
@@ -75,45 +75,45 @@ inline const char * userGtkrc(int version)
 // -----------------------------------------------------------------------------
 static void applyGtkStyles(bool active, int version)
 {
-   QString gtkkde = locateLocal("config", 2==version?"gtkrc-2.0":"gtkrc");
-   QCString gtkrc = getenv(gtkEnvVar(version));
-   QStringList list = QStringList::split(':', QFile::decodeName(gtkrc));
+   TQString gtkkde = locateLocal("config", 2==version?"gtkrc-2.0":"gtkrc");
+   TQCString gtkrc = getenv(gtkEnvVar(version));
+   TQStringList list = TQStringList::split(':', TQFile::decodeName(gtkrc));
    if (list.count() == 0)
    {
-      list.append(QString::fromLatin1(sysGtkrc(version)));
-      list.append(QDir::homeDirPath()+userGtkrc(version));
+      list.append(TQString::fromLatin1(sysGtkrc(version)));
+      list.append(TQDir::homeDirPath()+userGtkrc(version));
    }
    list.remove(gtkkde);
    list.append(gtkkde);
    if (!active)
-      ::unlink(QFile::encodeName(gtkkde));
+      ::unlink(TQFile::encodeName(gtkkde));
 
    // Pass env. var to kdeinit.
-   QCString name = gtkEnvVar(version);
-   QCString value = QFile::encodeName(list.join(":"));
-   QByteArray params;
-   QDataStream stream(params, IO_WriteOnly);
+   TQCString name = gtkEnvVar(version);
+   TQCString value = TQFile::encodeName(list.join(":"));
+   TQByteArray params;
+   TQDataStream stream(params, IO_WriteOnly);
    stream << name << value;
-   kapp->dcopClient()->send("klauncher", "klauncher", "setLaunchEnv(QCString,QCString)", params);
+   kapp->dcopClient()->send("klauncher", "klauncher", "setLaunchEnv(TQCString,TQCString)", params);
 }
 
 // -----------------------------------------------------------------------------
 
-static void applyQtColors( KConfig& kglobals, QSettings& settings, QPalette& newPal )
+static void applyQtColors( KConfig& kglobals, TQSettings& settings, TQPalette& newPal )
 {
-  QStringList actcg, inactcg, discg;
+  TQStringList actcg, inactcg, discg;
 
   /* export kde color settings */
   int i;
-  for (i = 0; i < QColorGroup::NColorRoles; i++)
-     actcg   << newPal.color(QPalette::Active,
-                (QColorGroup::ColorRole) i).name();
-  for (i = 0; i < QColorGroup::NColorRoles; i++)
-     inactcg << newPal.color(QPalette::Inactive,
-                (QColorGroup::ColorRole) i).name();
-  for (i = 0; i < QColorGroup::NColorRoles; i++)
-     discg   << newPal.color(QPalette::Disabled,
-                (QColorGroup::ColorRole) i).name();
+  for (i = 0; i < TQColorGroup::NColorRoles; i++)
+     actcg   << newPal.color(TQPalette::Active,
+                (TQColorGroup::ColorRole) i).name();
+  for (i = 0; i < TQColorGroup::NColorRoles; i++)
+     inactcg << newPal.color(TQPalette::Inactive,
+                (TQColorGroup::ColorRole) i).name();
+  for (i = 0; i < TQColorGroup::NColorRoles; i++)
+     discg   << newPal.color(TQPalette::Disabled,
+                (TQColorGroup::ColorRole) i).name();
 
   while (!settings.writeEntry("/qt/Palette/active", actcg)) ;
   settings.writeEntry("/qt/Palette/inactive", inactcg);
@@ -123,10 +123,10 @@ static void applyQtColors( KConfig& kglobals, QSettings& settings, QPalette& new
   kglobals.setGroup("WM");
 
   // active colors
-  QColor clr = newPal.active().background();
+  TQColor clr = newPal.active().background();
   clr = kglobals.readColorEntry("activeBackground", &clr);
   settings.writeEntry("/qt/KWinPalette/activeBackground", clr.name());
-  if (QPixmap::defaultDepth() > 8)
+  if (TQPixmap::defaultDepth() > 8)
     clr = clr.dark(110);
   clr = kglobals.readColorEntry("activeBlend", &clr);
   settings.writeEntry("/qt/KWinPalette/activeBlend", clr.name());
@@ -143,7 +143,7 @@ static void applyQtColors( KConfig& kglobals, QSettings& settings, QPalette& new
   clr = newPal.inactive().background();
   clr = kglobals.readColorEntry("inactiveBackground", &clr);
   settings.writeEntry("/qt/KWinPalette/inactiveBackground", clr.name());
-  if (QPixmap::defaultDepth() > 8)
+  if (TQPixmap::defaultDepth() > 8)
     clr = clr.dark(110);
   clr = kglobals.readColorEntry("inactiveBlend", &clr);
   settings.writeEntry("/qt/KWinPalette/inactiveBlend", clr.name());
@@ -162,33 +162,33 @@ static void applyQtColors( KConfig& kglobals, QSettings& settings, QPalette& new
 
 // -----------------------------------------------------------------------------
 
-static void applyQtSettings( KConfig& kglobals, QSettings& settings )
+static void applyQtSettings( KConfig& kglobals, TQSettings& settings )
 {
   /* export kde's plugin library path to qtrc */
 
-  QMap <QString, bool> pathDb;
+  TQMap <TQString, bool> pathDb;
     // OK, this isn't fun at all.
     // KApp adds paths ending with /, QApp those without slash, and if
     // one gives it something that is other way around, it will complain and scare
     // users. So we need to know whether a path being added is from KApp, and in this case
-    // end it with.. So keep a QMap to bool, specifying whether the path is KDE-specified..
+    // end it with.. So keep a TQMap to bool, specifying whether the path is KDE-specified..
 
-  QString qversion = qVersion();
+  TQString qversion = qVersion();
   if ( qversion.contains( '.' ) > 1 )
      qversion.truncate( qversion.findRev( '.' ) );
   if ( qversion.contains( '-' ) )
      qversion.truncate( qversion.findRev( '-' ) );
 
-  QStringList kdeAdded =
+  TQStringList kdeAdded =
     settings.readListEntry("/qt/KDE/kdeAddedLibraryPaths");
-  QString libPathKey =
-    QString("/qt/%1/libraryPath").arg( qversion );
+  TQString libPathKey =
+    TQString("/qt/%1/libraryPath").arg( qversion );
 
   //Read qt library path..
-  QStringList plugins = settings.readListEntry(libPathKey, ':');
-  for (QStringList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+  TQStringList plugins = settings.readListEntry(libPathKey, ':');
+  for (TQStringList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
   {
-    QString path = *it;
+    TQString path = *it;
     if (path.endsWith("/"))
       path.truncate(path.length()-1);
 
@@ -196,10 +196,10 @@ static void applyQtSettings( KConfig& kglobals, QSettings& settings )
   }
 
   //Get rid of old KDE-added ones...
-  for (QStringList::ConstIterator it = kdeAdded.begin(); it != kdeAdded.end(); ++it)
+  for (TQStringList::ConstIterator it = kdeAdded.begin(); it != kdeAdded.end(); ++it)
   {
     //Normalize..
-    QString path = *it;
+    TQString path = *it;
     if (path.endsWith("/"))
       path.truncate(path.length()-1);
 
@@ -212,9 +212,9 @@ static void applyQtSettings( KConfig& kglobals, QSettings& settings )
   //Merge in KDE ones..
   plugins = KGlobal::dirs()->resourceDirs( "qtplugins" );
 
-  for (QStringList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+  for (TQStringList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
   {
-    QString path = *it;
+    TQString path = *it;
     if (path.endsWith("/"))
       path.truncate(path.length()-1);
 
@@ -225,16 +225,16 @@ static void applyQtSettings( KConfig& kglobals, QSettings& settings )
     pathDb[path]=true;
   }
 
-  QStringList paths;
-  for (QMap <QString, bool>::ConstIterator it = pathDb.begin();
+  TQStringList paths;
+  for (TQMap <TQString, bool>::ConstIterator it = pathDb.begin();
          it != pathDb.end(); ++it)
   {
-    QString path = it.key();
+    TQString path = it.key();
     bool fromKDE = it.data();
 
     char new_path[PATH_MAX+1];
-    if (realpath(QFile::encodeName(path), new_path))
-      path = QFile::decodeName(new_path);
+    if (realpath(TQFile::encodeName(path), new_path))
+      path = TQFile::decodeName(new_path);
 
     if (fromKDE)
     {
@@ -252,7 +252,7 @@ static void applyQtSettings( KConfig& kglobals, QSettings& settings )
 
   /* export widget style */
   kglobals.setGroup("General");
-  QString style = kglobals.readEntry("widgetStyle", KStyle::defaultStyle() );
+  TQString style = kglobals.readEntry("widgetStyle", KStyle::defaultStyle() );
   if (!style.isEmpty())
     settings.writeEntry("/qt/style", style);
 
@@ -272,27 +272,27 @@ static void applyQtSettings( KConfig& kglobals, QSettings& settings )
   bool fadeTooltips = kglobals.readBoolEntry("EffectFadeTooltip", false);
   bool animateCombobox = kglobals.readBoolEntry("EffectAnimateCombo", false);
 
-  QStringList guieffects;
+  TQStringList guieffects;
   if (effectsEnabled) {
-    guieffects << QString("general");
+    guieffects << TQString("general");
     if (fadeMenus)
-      guieffects << QString("fademenu");
+      guieffects << TQString("fademenu");
     if (animateCombobox)
-      guieffects << QString("animatecombo");
+      guieffects << TQString("animatecombo");
     if (fadeTooltips)
-      guieffects << QString("fadetooltip");
+      guieffects << TQString("fadetooltip");
   }
   else
-    guieffects << QString("none");
+    guieffects << TQString("none");
 
   settings.writeEntry("/qt/GUIEffects", guieffects);
 }
 
 // -----------------------------------------------------------------------------
 
-static void addColorDef(QString& s, const char* n, const QColor& col)
+static void addColorDef(TQString& s, const char* n, const TQColor& col)
 {
-  QString tmp;
+  TQString tmp;
 
   tmp.sprintf("#define %s #%02x%02x%02x\n",
               n, col.red(), col.green(), col.blue());
@@ -303,11 +303,11 @@ static void addColorDef(QString& s, const char* n, const QColor& col)
 
 // -----------------------------------------------------------------------------
 
-static void copyFile(QFile& tmp, QString const& filename, bool )
+static void copyFile(TQFile& tmp, TQString const& filename, bool )
 {
-  QFile f( filename );
+  TQFile f( filename );
   if ( f.open(IO_ReadOnly) ) {
-      QCString buf( 8192 );
+      TQCString buf( 8192 );
       while ( !f.atEnd() ) {
           int read = f.readBlock( buf.data(), buf.size() );
           if ( read > 0 )
@@ -319,16 +319,16 @@ static void copyFile(QFile& tmp, QString const& filename, bool )
 
 // -----------------------------------------------------------------------------
 
-static QString item( int i ) {
-    return QString::number( i / 255.0, 'f', 3 );
+static TQString item( int i ) {
+    return TQString::number( i / 255.0, 'f', 3 );
 }
 
-static QString color( const QColor& col )
+static TQString color( const TQColor& col )
 {
-    return QString( "{ %1, %2, %3 }" ).arg( item( col.red() ) ).arg( item( col.green() ) ).arg( item( col.blue() ) );
+    return TQString( "{ %1, %2, %3 }" ).arg( item( col.red() ) ).arg( item( col.green() ) ).arg( item( col.blue() ) );
 }
 
-static void createGtkrc( bool exportColors, const QColorGroup& cg, int version )
+static void createGtkrc( bool exportColors, const TQColorGroup& cg, int version )
 {
     // lukas: why does it create in ~/.kde/share/config ???
     // pfeiffer: so that we don't overwrite the user's gtkrc.
@@ -337,8 +337,8 @@ static void createGtkrc( bool exportColors, const QColorGroup& cg, int version )
     if ( saveFile.status() != 0 || saveFile.textStream() == 0L )
         return;
 
-    QTextStream& t = *saveFile.textStream();
-    t.setEncoding( QTextStream::Locale );
+    TQTextStream& t = *saveFile.textStream();
+    t.setEncoding( TQTextStream::Locale );
 
     t << i18n(
             "# created by KDE, %1\n"
@@ -347,7 +347,7 @@ static void createGtkrc( bool exportColors, const QColorGroup& cg, int version )
             "# Appearance & Themes -> Colors in the Control Center and disable the checkbox\n"
             "# \"Apply colors to non-KDE applications\"\n"
             "#\n"
-            "#\n").arg(QDateTime::currentDateTime().toString());
+            "#\n").arg(TQDateTime::currentDateTime().toString());
 
     t << "style \"default\"" << endl;
     t << "{" << endl;
@@ -392,7 +392,7 @@ static void createGtkrc( bool exportColors, const QColorGroup& cg, int version )
         // tooltips don't have the standard background color
         t << "style \"ToolTip\"" << endl;
         t << "{" << endl;
-        QColorGroup group = QToolTip::palette().active();
+        TQColorGroup group = TQToolTip::palette().active();
         t << "  bg[NORMAL] = " << color( group.background() ) << endl;
         t << "  base[NORMAL] = " << color( group.base() ) << endl;
         t << "  text[NORMAL] = " << color( group.text() ) << endl;
@@ -422,7 +422,7 @@ static void createGtkrc( bool exportColors, const QColorGroup& cg, int version )
 void runRdb( uint flags )
 {
   // Obtain the application palette that is about to be set.
-  QPalette newPal = KApplication::createApplicationPalette();
+  TQPalette newPal = KApplication::createApplicationPalette();
   bool exportColors      = flags & KRdbExportColors;
   bool exportQtColors    = flags & KRdbExportQtColors;
   bool exportQtSettings  = flags & KRdbExportQtSettings;
@@ -439,19 +439,19 @@ void runRdb( uint flags )
     exit(0);
   }
 
-  QFile &tmp = *(tmpFile.file());
+  TQFile &tmp = *(tmpFile.file());
 
   // Export colors to non-(KDE/Qt) apps (e.g. Motif, GTK+ apps)
   if (exportColors)
   {
     KGlobal::dirs()->addResourceType("appdefaults", KStandardDirs::kde_default("data") + "kdisplay/app-defaults/");
-    QColorGroup cg = newPal.active();
+    TQColorGroup cg = newPal.active();
     KGlobal::locale()->insertCatalogue("krdb");
     createGtkrc( true, cg, 1 );
     createGtkrc( true, cg, 2 );
 
-    QString preproc;
-    QColor backCol = cg.background();
+    TQString preproc;
+    TQColor backCol = cg.background();
     addColorDef(preproc, "FOREGROUND"         , cg.foreground());
     addColorDef(preproc, "BACKGROUND"         , backCol);
     addColorDef(preproc, "HIGHLIGHT"          , backCol.light(100+(2*KGlobalSettings::contrast()+4)*16/1));
@@ -468,30 +468,30 @@ void runRdb( uint flags )
 
     tmp.writeBlock( preproc.latin1(), preproc.length() );
 
-    QStringList list;
+    TQStringList list;
 
-    QStringList adPaths = KGlobal::dirs()->findDirs("appdefaults", "");
-    for (QStringList::ConstIterator it = adPaths.begin(); it != adPaths.end(); ++it) {
-      QDir dSys( *it );
+    TQStringList adPaths = KGlobal::dirs()->findDirs("appdefaults", "");
+    for (TQStringList::ConstIterator it = adPaths.begin(); it != adPaths.end(); ++it) {
+      TQDir dSys( *it );
 
       if ( dSys.exists() ) {
-        dSys.setFilter( QDir::Files );
-        dSys.setSorting( QDir::Name );
+        dSys.setFilter( TQDir::Files );
+        dSys.setSorting( TQDir::Name );
         dSys.setNameFilter("*.ad");
         list += dSys.entryList();
       }
     }
 
-    for (QStringList::ConstIterator it = list.begin(); it != list.end(); it++)
+    for (TQStringList::ConstIterator it = list.begin(); it != list.end(); it++)
       copyFile(tmp, locate("appdefaults", *it ), true);
   }
 
   // Merge ~/.Xresources or fallback to ~/.Xdefaults
-  QString homeDir = QDir::homeDirPath();
-  QString xResources = homeDir + "/.Xresources";
+  TQString homeDir = TQDir::homeDirPath();
+  TQString xResources = homeDir + "/.Xresources";
 
   // very primitive support for ~/.Xresources by appending it
-  if ( QFile::exists( xResources ) )
+  if ( TQFile::exists( xResources ) )
     copyFile(tmp, xResources, true);
   else
     copyFile(tmp, homeDir + "/.Xdefaults", true);
@@ -499,9 +499,9 @@ void runRdb( uint flags )
   // Export the Xcursor theme & size settings
   KConfig mousecfg( "kcminputrc" );
   mousecfg.setGroup( "Mouse" );
-  QString theme = mousecfg.readEntry("cursorTheme", QString());
-  QString size  = mousecfg.readEntry("cursorSize", QString());
-  QString contents;
+  TQString theme = mousecfg.readEntry("cursorTheme", TQString());
+  TQString size  = mousecfg.readEntry("cursorSize", TQString());
+  TQString contents;
 
   if (!theme.isNull())
     contents = "Xcursor.theme: " + theme + '\n';
@@ -524,7 +524,7 @@ void runRdb( uint flags )
 
     if (kglobals.hasKey("XftHintStyle"))
     {
-      QString hintStyle = kglobals.readEntry("XftHintStyle", "hintfull");
+      TQString hintStyle = kglobals.readEntry("XftHintStyle", "hintfull");
       contents += "Xft.hinting: ";
       if(hintStyle.isEmpty())
         contents += "-1\n";
@@ -540,7 +540,7 @@ void runRdb( uint flags )
 
     if (kglobals.hasKey("XftSubPixel"))
     {
-      QString subPixel = kglobals.readEntry("XftSubPixel", "none");
+      TQString subPixel = kglobals.readEntry("XftSubPixel", "none");
       if(!subPixel.isEmpty())
         contents += "Xft.rgba: " + subPixel + '\n';
     }
@@ -572,7 +572,7 @@ void runRdb( uint flags )
   /* Qt exports */
   if ( exportQtColors || exportQtSettings )
   {
-    QSettings* settings = new QSettings;
+    TQSettings* settings = new QSettings;
 
     if ( exportQtColors )
       applyQtColors( kglobals, *settings, newPal );    // For kcmcolors
@@ -581,7 +581,7 @@ void runRdb( uint flags )
       applyQtSettings( kglobals, *settings );          // For kcmstyle
 
     delete settings;
-    QApplication::flushX();
+    TQApplication::flushX();
 
     // We let KIPC take care of ourselves, as we are in a KDE app with
     // QApp::setDesktopSettingsAware(false);
@@ -590,23 +590,23 @@ void runRdb( uint flags )
     // Qt-only apps without adversely affecting ourselves.
 
     // Cheat and use the current timestamp, since we just saved to qtrc.
-    QDateTime settingsstamp = QDateTime::currentDateTime();
+    TQDateTime settingsstamp = TQDateTime::currentDateTime();
 
     static Atom qt_settings_timestamp = 0;
     if (!qt_settings_timestamp) {
-	 QString atomname("_QT_SETTINGS_TIMESTAMP_");
+	 TQString atomname("_QT_SETTINGS_TIMESTAMP_");
 	 atomname += XDisplayName( 0 ); // Use the $DISPLAY envvar.
 	 qt_settings_timestamp = XInternAtom( qt_xdisplay(), atomname.latin1(), False);
     }
 
-    QBuffer stamp;
-    QDataStream s(stamp.buffer(), IO_WriteOnly);
+    TQBuffer stamp;
+    TQDataStream s(stamp.buffer(), IO_WriteOnly);
     s << settingsstamp;
     XChangeProperty( qt_xdisplay(), qt_xrootwin(), qt_settings_timestamp,
 		     qt_settings_timestamp, 8, PropModeReplace,
 		     (unsigned char*) stamp.buffer().data(),
 		     stamp.buffer().size() );
-    QApplication::flushX();
+    TQApplication::flushX();
   }
 }
 

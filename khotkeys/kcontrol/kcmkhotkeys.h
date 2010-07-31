@@ -32,16 +32,16 @@ class Module
     {
     Q_OBJECT
     public:
-        Module( QWidget *parent_P, const char *name_P );
+        Module( TQWidget *parent_P, const char *name_P );
         virtual ~Module();
         virtual void load();
         virtual void save();
 //        virtual void defaults(); not used
-        QString quickHelp() const;
+        TQString quickHelp() const;
         int buttons();
         void set_current_action_data( Action_data_base* data_P );
         Action_data_base* current_action_data();
-        void action_name_changed( const QString& name_P );
+        void action_name_changed( const TQString& name_P );
         Action_data_group* actions_root() const;
         void set_gestures_disabled( bool set );
         bool gestures_disabled() const;

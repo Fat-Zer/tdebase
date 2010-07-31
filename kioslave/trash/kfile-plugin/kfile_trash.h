@@ -31,11 +31,11 @@ class KTrashPlugin: public KFilePlugin
     Q_OBJECT
 
 public:
-    KTrashPlugin(QObject *parent, const char *name, const QStringList& args);
+    KTrashPlugin(TQObject *parent, const char *name, const TQStringList& args);
     virtual bool readInfo(KFileMetaInfo& info, uint what);
 
 private:
-    void makeMimeTypeInfo(const QString& mimeType);
+    void makeMimeTypeInfo(const TQString& mimeType);
     TrashImpl impl;
 };
 

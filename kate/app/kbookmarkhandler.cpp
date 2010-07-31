@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qtextstream.h>
+#include <tqtextstream.h>
 
 #include <kbookmarkimporter.h>
 #include <kpopupmenu.h>
@@ -36,7 +36,7 @@
 
 
 KBookmarkHandler::KBookmarkHandler( KateFileSelector *parent, KPopupMenu* kpopupmenu )
-    : QObject( parent, "KBookmarkHandler" ),
+    : TQObject( parent, "KBookmarkHandler" ),
       KBookmarkOwner(),
       mParent( parent ),
       m_menu( kpopupmenu ),
@@ -45,7 +45,7 @@ KBookmarkHandler::KBookmarkHandler( KateFileSelector *parent, KPopupMenu* kpopup
     if (!m_menu)
       m_menu = new KPopupMenu( parent, "bookmark menu" );
 
-    QString file = locate( "data", "kate/fsbookmarks.xml" );
+    TQString file = locate( "data", "kate/fsbookmarks.xml" );
     if ( file.isEmpty() )
         file = locateLocal( "data", "kate/fsbookmarks.xml" );
 
@@ -61,23 +61,23 @@ KBookmarkHandler::~KBookmarkHandler()
     //     delete m_bookmarkMenu; ###
 }
 
-QString KBookmarkHandler::currentURL() const
+TQString KBookmarkHandler::currentURL() const
 {
     return mParent->dirOperator()->url().url();
 }
 
 
-void KBookmarkHandler::slotNewBookmark( const QString& /*text*/,
-                                            const QCString& url,
-                                            const QString& additionalInfo )
+void KBookmarkHandler::slotNewBookmark( const TQString& /*text*/,
+                                            const TQCString& url,
+                                            const TQString& additionalInfo )
 {
     *m_importStream << "<bookmark icon=\"" << KMimeType::iconForURL( KURL( url ) );
-    *m_importStream << "\" href=\"" << QString::fromUtf8(url) << "\">\n";
-    *m_importStream << "<title>" << (additionalInfo.isEmpty() ? QString::fromUtf8(url) : additionalInfo) << "</title>\n</bookmark>\n";
+    *m_importStream << "\" href=\"" << TQString::fromUtf8(url) << "\">\n";
+    *m_importStream << "<title>" << (additionalInfo.isEmpty() ? TQString::fromUtf8(url) : additionalInfo) << "</title>\n</bookmark>\n";
 }
 
-void KBookmarkHandler::slotNewFolder( const QString& text, bool /*open*/,
-                                          const QString& /*additionalInfo*/ )
+void KBookmarkHandler::slotNewFolder( const TQString& text, bool /*open*/,
+                                          const TQString& /*additionalInfo*/ )
 {
     *m_importStream << "<folder icon=\"bookmark_folder\">\n<title=\"";
     *m_importStream << text << "\">\n";

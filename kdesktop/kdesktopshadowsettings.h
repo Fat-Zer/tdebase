@@ -23,7 +23,7 @@
 #ifndef __FX_DATA_DESKTOP
 #define __FX_DATA_DESKTOP
 
-#include <qcolor.h>
+#include <tqcolor.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 
@@ -77,13 +77,13 @@ class KDesktopShadowSettings : public KShadowSettings
      * Returns the text color as definied in the configuraiton
      * @return the text color as definied in the configuraiton
      */
-    QColor &textColor(){ return m_textColor; };
+    TQColor &textColor(){ return m_textColor; };
     
     /**
      * Returns the shadow color as definied in the configuraiton
      * @return the shadow color as definied in the configuraiton
      */
-    QColor &bgColor() {  return m_bgColor; };
+    TQColor &bgColor() {  return m_bgColor; };
     
     /**
      * Returns true if the shadow engine is enabled.
@@ -105,8 +105,8 @@ class KDesktopShadowSettings : public KShadowSettings
     
  private:
     KConfig *config;
-    QColor m_textColor;
-    QColor m_bgColor;
+    TQColor m_textColor;
+    TQColor m_bgColor;
     bool m_isEnabled;
     
     // uid of the object. Use this to determine the oportunity of a new

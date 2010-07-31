@@ -24,7 +24,7 @@
 #include <kparts/part.h>
 #include <kfileitem.h>
 #include <kdebug.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <konq_dirpart.h>
 
 class KQuery;
@@ -44,8 +44,8 @@ class KFindPart : public KonqDirPart//KParts::ReadOnlyPart
     Q_OBJECT
     Q_PROPERTY( bool showsResult READ showsResult )
 public:
-    KFindPart( QWidget * parentWidget, const char *widgetName, 
-	       QObject *parent, const char *name, const QStringList & /*args*/ );
+    KFindPart( TQWidget * parentWidget, const char *widgetName, 
+	       TQObject *parent, const char *name, const TQStringList & /*args*/ );
     virtual ~KFindPart();
 
     static KAboutData *createAboutData();
@@ -56,8 +56,8 @@ public:
 
     bool showsResult() const { return m_bShowsResult; }
     
-    virtual void saveState( QDataStream &stream );
-    virtual void restoreState( QDataStream &stream );
+    virtual void saveState( TQDataStream &stream );
+    virtual void restoreState( TQDataStream &stream );
 
   // "Cut" icons : disable those whose URL is in lst, enable the rest //added for konqdirpart
   virtual void disableIcons( const KURL::List & ){};
@@ -76,7 +76,7 @@ signals:
 protected slots:
     void slotStarted();
     void slotDestroyMe();
-    void addFile(const KFileItem *item, const QString& matchingLine);
+    void addFile(const KFileItem *item, const TQString& matchingLine);
     /* An item has been removed, so update konqueror's view */
     void removeFile(KFileItem *item);
     void slotResult(int errorCode);
@@ -98,7 +98,7 @@ private:
     /**
      * The internal storage of file items
      */
-    QPtrList<KFileItem> m_lstFileItems;
+    TQPtrList<KFileItem> m_lstFileItems;
 };
 
 #endif

@@ -30,11 +30,11 @@
 
 #include <kdebug.h>
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qimage.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
 
-KdmPixmap::KdmPixmap( KdmItem *parent, const QDomNode &node, const char *name )
+KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
     : KdmItem( parent, node, name )
 {
 	itemType = "pixmap";
@@ -47,15 +47,15 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const QDomNode &node, const char *name )
 
 	// Read PIXMAP ID
 	// it rarely happens that a pixmap can be a button too!
-	QDomNode n = node;
-	QDomElement elPix = n.toElement();
+	TQDomNode n = node;
+	TQDomElement elPix = n.toElement();
 
 	// Read PIXMAP TAGS
-	QDomNodeList childList = node.childNodes();
+	TQDomNodeList childList = node.childNodes();
 	for (uint nod = 0; nod < childList.count(); nod++) {
-		QDomNode child = childList.item( nod );
-		QDomElement el = child.toElement();
-		QString tagName = el.tagName();
+		TQDomNode child = childList.item( nod );
+		TQDomElement el = child.toElement();
+		TQString tagName = el.tagName();
 
 		if (tagName == "normal") {
 			loadPixmap( el.attribute( "file", "" ), pixmap.normal.pixmap, pixmap.normal.fullpath );
@@ -91,7 +91,7 @@ KdmPixmap::sizeHint()
 }
 
 void
-KdmPixmap::setGeometry( const QRect &newGeometry, bool force )
+KdmPixmap::setGeometry( const TQRect &newGeometry, bool force )
 {
 	KdmItem::setGeometry( newGeometry, force );
 	pixmap.active.readyPixmap.resize( 0, 0 );
@@ -101,7 +101,7 @@ KdmPixmap::setGeometry( const QRect &newGeometry, bool force )
 
 
 void
-KdmPixmap::loadPixmap( const QString &fileName, QPixmap &map, QString &fullName )
+KdmPixmap::loadPixmap( const TQString &fileName, TQPixmap &map, TQString &fullName )
 {
 	if (fileName.isEmpty())
 		return;
@@ -112,24 +112,24 @@ KdmPixmap::loadPixmap( const QString &fileName, QPixmap &map, QString &fullName 
 
 	if (!fullName.endsWith( ".svg" ))	// we delay it for svgs
 		if (!map.load( fullName ))
-			fullName = QString::null;
+			fullName = TQString::null;
 }
 
 void
-KdmPixmap::renderSvg( PixmapStruct::PixmapClass *pClass, const QRect &area )
+KdmPixmap::renderSvg( PixmapStruct::PixmapClass *pClass, const TQRect &area )
 {
 #ifdef HAVE_LIBART
 	// Special stuff for SVG icons
 	KSVGIconEngine *svgEngine = new KSVGIconEngine();
 
 	if (svgEngine->load( area.width(), area.height(), pClass->fullpath )) {
-		QImage *t = svgEngine->image();
+		TQImage *t = svgEngine->image();
 		pClass->pixmap = *t;
 		pClass->readyPixmap.resize( 0, 0 );
 		delete t;
 	} else {
 		kdWarning() << "failed to load " << pClass->fullpath << endl;
-		pClass->fullpath = QString::null;
+		pClass->fullpath = TQString::null;
 	}
 
 	delete svgEngine;
@@ -140,7 +140,7 @@ KdmPixmap::renderSvg( PixmapStruct::PixmapClass *pClass, const QRect &area )
 }
 
 void
-KdmPixmap::drawContents( QPainter *p, const QRect &r )
+KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 {
 	// choose the correct pixmap class
 	PixmapStruct::PixmapClass *pClass = &pixmap.normal;
@@ -176,7 +176,7 @@ KdmPixmap::drawContents( QPainter *p, const QRect &r )
 
 
 	if (pClass->readyPixmap.isNull()) {
-		QImage scaledImage;
+		TQImage scaledImage;
 
 		// use the loaded pixmap or a scaled version if needed
 
@@ -187,7 +187,7 @@ KdmPixmap::drawContents( QPainter *p, const QRect &r )
 				scaledImage = pClass->pixmap.convertToImage();
 			} else {
 				kdDebug() << "convertFromImage\n";
-				QImage tempImage = pClass->pixmap.convertToImage();
+				TQImage tempImage = pClass->pixmap.convertToImage();
 				scaledImage = tempImage.smoothScale( area.width(), area.height() );
 			}
 		} else

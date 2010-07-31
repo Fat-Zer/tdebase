@@ -1,7 +1,7 @@
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qvgroupbox.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqvgroupbox.h>
 
 #include <kio/ioslave_defaults.h>
 #include <knuminput.h>
@@ -14,13 +14,13 @@
 
 #define MAX_TIMEOUT_VALUE  3600
 
-KIOPreferences::KIOPreferences( QWidget* parent )
+KIOPreferences::KIOPreferences( TQWidget* parent )
                :KCModule( parent, "kcmkio" )
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout( this, 0,
+    TQVBoxLayout* mainLayout = new TQVBoxLayout( this, 0,
                                                KDialog::spacingHint() );
-    gb_Timeout = new QVGroupBox( i18n("Timeout Values"), this, "gb_Timeout" );
-    QWhatsThis::add( gb_Timeout, i18n("Here you can set timeout values. "
+    gb_Timeout = new TQVGroupBox( i18n("Timeout Values"), this, "gb_Timeout" );
+    TQWhatsThis::add( gb_Timeout, i18n("Here you can set timeout values. "
                     "You might want to tweak them if your "
                     "connection is very slow. The maximum "
                     "allowed value is %1 seconds.").arg(MAX_TIMEOUT_VALUE));
@@ -29,43 +29,43 @@ KIOPreferences::KIOPreferences( QWidget* parent )
     sb_socketRead = new KIntNumInput( gb_Timeout, "sb_socketRead" );
     sb_socketRead->setSuffix( i18n( " sec" ) );
     sb_socketRead->setLabel( i18n( "Soc&ket read:" ), AlignVCenter);
-    connect(sb_socketRead, SIGNAL(valueChanged ( int )),
-            this, SLOT(configChanged()));
+    connect(sb_socketRead, TQT_SIGNAL(valueChanged ( int )),
+            this, TQT_SLOT(configChanged()));
 
     sb_proxyConnect = new KIntNumInput( sb_socketRead, 0, gb_Timeout,
             10, "sb_proxyConnect" );
     sb_proxyConnect->setSuffix( i18n( " sec" ) );
     sb_proxyConnect->setLabel( i18n( "Pro&xy connect:" ), AlignVCenter);
-    connect(sb_proxyConnect, SIGNAL(valueChanged ( int )),
-            this, SLOT(configChanged()));
+    connect(sb_proxyConnect, TQT_SIGNAL(valueChanged ( int )),
+            this, TQT_SLOT(configChanged()));
 
     sb_serverConnect = new KIntNumInput( sb_proxyConnect, 0, gb_Timeout,
             10, "sb_serverConnect" );
     sb_serverConnect->setSuffix( i18n( " sec" ) );
     sb_serverConnect->setLabel( i18n("Server co&nnect:"), AlignVCenter);
-    connect(sb_serverConnect, SIGNAL(valueChanged ( int )),
-            this, SLOT(configChanged()));
+    connect(sb_serverConnect, TQT_SIGNAL(valueChanged ( int )),
+            this, TQT_SLOT(configChanged()));
 
     sb_serverResponse = new KIntNumInput( sb_serverConnect, 0, gb_Timeout,
             10, "sb_serverResponse" );
     sb_serverResponse->setSuffix( i18n( " sec" ) );
     sb_serverResponse->setLabel( i18n("&Server response:"), AlignVCenter);
-    connect(sb_serverResponse, SIGNAL(valueChanged ( int )),
-            this, SLOT(configChanged()));
+    connect(sb_serverResponse, TQT_SIGNAL(valueChanged ( int )),
+            this, TQT_SLOT(configChanged()));
 
-    gb_Ftp = new QVGroupBox( i18n( "FTP Options" ), this, "gb_Ftp" );
-    cb_ftpEnablePasv = new QCheckBox( i18n( "Enable passive &mode (PASV)" ), gb_Ftp );
-    QWhatsThis::add(cb_ftpEnablePasv, i18n( "Enables FTP's \"passive\" mode. This is required to allow FTP to work from behind firewalls." ));
-    cb_ftpMarkPartial = new QCheckBox( i18n( "Mark &partially uploaded files" ), gb_Ftp );
-    QWhatsThis::add(cb_ftpMarkPartial, i18n( "<p>Marks partially uploaded FTP files.</p>"
+    gb_Ftp = new TQVGroupBox( i18n( "FTP Options" ), this, "gb_Ftp" );
+    cb_ftpEnablePasv = new TQCheckBox( i18n( "Enable passive &mode (PASV)" ), gb_Ftp );
+    TQWhatsThis::add(cb_ftpEnablePasv, i18n( "Enables FTP's \"passive\" mode. This is required to allow FTP to work from behind firewalls." ));
+    cb_ftpMarkPartial = new TQCheckBox( i18n( "Mark &partially uploaded files" ), gb_Ftp );
+    TQWhatsThis::add(cb_ftpMarkPartial, i18n( "<p>Marks partially uploaded FTP files.</p>"
                                              "<p>When this option is enabled, partially uploaded files "
                                              "will have a \".part\" extension. This extension will be removed "
                                              "once the transfer is complete.</p>"));
 
     mainLayout->addWidget( gb_Ftp );
 
-    connect(cb_ftpEnablePasv, SIGNAL(toggled(bool)), SLOT(configChanged()));
-    connect(cb_ftpMarkPartial, SIGNAL(toggled(bool)), SLOT(configChanged()));
+    connect(cb_ftpEnablePasv, TQT_SIGNAL(toggled(bool)), TQT_SLOT(configChanged()));
+    connect(cb_ftpMarkPartial, TQT_SIGNAL(toggled(bool)), TQT_SLOT(configChanged()));
 
     mainLayout->addStretch();
 
@@ -126,7 +126,7 @@ void KIOPreferences::defaults()
   emit changed(true);
 }
 
-QString KIOPreferences::quickHelp() const
+TQString KIOPreferences::quickHelp() const
 {
   return i18n("<h1>Network Preferences</h1>Here you can define"
               " the behavior of KDE programs when using Internet"

@@ -34,13 +34,13 @@
 #include "konq_view.h"
 #include "konq_settingsxt.h"
 
-template class QPtrList<KonqHistoryEntry>;
+template class TQPtrList<KonqHistoryEntry>;
 
 /////////////////
 
 //static - used by KonqHistoryAction and KonqBidiHistoryAction
-void KonqBidiHistoryAction::fillHistoryPopup( const QPtrList<HistoryEntry> &history,
-                                          QPopupMenu * popup,
+void KonqBidiHistoryAction::fillHistoryPopup( const TQPtrList<HistoryEntry> &history,
+                                          TQPopupMenu * popup,
                                           bool onlyBack,
                                           bool onlyForward,
                                           bool checkCurrentItem,
@@ -50,7 +50,7 @@ void KonqBidiHistoryAction::fillHistoryPopup( const QPtrList<HistoryEntry> &hist
 
   //kdDebug(1202) << "fillHistoryPopup position: " << history.at() << endl;
   HistoryEntry * current = history.current();
-  QPtrListIterator<HistoryEntry> it( history );
+  TQPtrListIterator<HistoryEntry> it( history );
   if (onlyBack || onlyForward)
   {
       it += history.at(); // Jump to current item
@@ -61,7 +61,7 @@ void KonqBidiHistoryAction::fillHistoryPopup( const QPtrList<HistoryEntry> &hist
   uint i = 0;
   while ( it.current() )
   {
-      QString text = it.current()->title;
+      TQString text = it.current()->title;
       text = KStringHandler::cEmSqueeze(text, popup->fontMetrics(), 30); //CT: squeeze
       text.replace( "&", "&&" );
       if ( checkCurrentItem && it.current() == current )
@@ -80,7 +80,7 @@ void KonqBidiHistoryAction::fillHistoryPopup( const QPtrList<HistoryEntry> &hist
 
 ///////////////////////////////
 
-KonqBidiHistoryAction::KonqBidiHistoryAction ( const QString & text, QObject* parent, const char* name )
+KonqBidiHistoryAction::KonqBidiHistoryAction ( const TQString & text, TQObject* parent, const char* name )
   : KAction( text, 0, parent, name )
 {
   setShortcutConfigurable(false);
@@ -88,20 +88,20 @@ KonqBidiHistoryAction::KonqBidiHistoryAction ( const QString & text, QObject* pa
   m_goMenu = 0L;
 }
 
-int KonqBidiHistoryAction::plug( QWidget *widget, int index )
+int KonqBidiHistoryAction::plug( TQWidget *widget, int index )
 {
   if (kapp && !kapp->authorizeKAction(name()))
     return -1;
 
   // Go menu
-  if ( widget->inherits("QPopupMenu") )
+  if ( widget->inherits("TQPopupMenu") )
   {
-    m_goMenu = (QPopupMenu*)widget;
+    m_goMenu = (TQPopupMenu*)widget;
     // Forward signal (to main view)
-    connect( m_goMenu, SIGNAL( aboutToShow() ),
-             this, SIGNAL( menuAboutToShow() ) );
-    connect( m_goMenu, SIGNAL( activated( int ) ),
-             this, SLOT( slotActivated( int ) ) );
+    connect( m_goMenu, TQT_SIGNAL( aboutToShow() ),
+             this, TQT_SIGNAL( menuAboutToShow() ) );
+    connect( m_goMenu, TQT_SIGNAL( activated( int ) ),
+             this, TQT_SLOT( slotActivated( int ) ) );
     //kdDebug(1202) << "m_goMenu->count()=" << m_goMenu->count() << endl;
     // Store how many items the menu already contains.
     // This means, the KonqBidiHistoryAction has to be plugged LAST in a menu !
@@ -111,7 +111,7 @@ int KonqBidiHistoryAction::plug( QWidget *widget, int index )
   return KAction::plug( widget, index );
 }
 
-void KonqBidiHistoryAction::fillGoMenu( const QPtrList<HistoryEntry> & history )
+void KonqBidiHistoryAction::fillGoMenu( const TQPtrList<HistoryEntry> & history )
 {
     if (history.isEmpty())
         return; // nothing to do
@@ -168,29 +168,29 @@ void KonqBidiHistoryAction::slotActivated( int id )
 
 ///////////////////////////////
 
-KonqLogoAction::KonqLogoAction( const QString& text, int accel, QObject* parent, const char* name )
+KonqLogoAction::KonqLogoAction( const TQString& text, int accel, TQObject* parent, const char* name )
   : KAction( text, accel, parent, name )
 {
 }
 
-KonqLogoAction::KonqLogoAction( const QString& text, int accel,
-                               QObject* receiver, const char* slot, QObject* parent, const char* name )
+KonqLogoAction::KonqLogoAction( const TQString& text, int accel,
+                               TQObject* receiver, const char* slot, TQObject* parent, const char* name )
   : KAction( text, accel, receiver, slot, parent, name )
 {
 }
 
-KonqLogoAction::KonqLogoAction( const QString& text, const QIconSet& pix, int accel, QObject* parent, const char* name )
+KonqLogoAction::KonqLogoAction( const TQString& text, const TQIconSet& pix, int accel, TQObject* parent, const char* name )
   : KAction( text, pix, accel, parent, name )
 {
 }
 
-KonqLogoAction::KonqLogoAction( const QString& text, const QIconSet& pix,int accel, QObject* receiver, const char* slot, QObject* parent, const char* name )
+KonqLogoAction::KonqLogoAction( const TQString& text, const TQIconSet& pix,int accel, TQObject* receiver, const char* slot, TQObject* parent, const char* name )
   : KAction( text, pix, accel, receiver, slot, parent, name )
 {
 }
 
-KonqLogoAction::KonqLogoAction( const QStringList& icons, QObject* receiver,
-                                const char* slot, QObject* parent,
+KonqLogoAction::KonqLogoAction( const TQStringList& icons, TQObject* receiver,
+                                const char* slot, TQObject* parent,
                                 const char* name )
     : KAction( 0L, 0, receiver, slot, parent, name ) // text missing !
 {
@@ -202,7 +202,7 @@ void KonqLogoAction::start()
   int len = containerCount();
   for ( int i = 0; i < len; i++ )
   {
-    QWidget *w = container( i );
+    TQWidget *w = container( i );
 
     if ( w->inherits( "KToolBar" ) )
     {
@@ -217,7 +217,7 @@ void KonqLogoAction::stop()
   int len = containerCount();
   for ( int i = 0; i < len; i++ )
   {
-    QWidget *w = container( i );
+    TQWidget *w = container( i );
 
     if ( w->inherits( "KToolBar" ) )
     {
@@ -229,7 +229,7 @@ void KonqLogoAction::stop()
 
 void KonqLogoAction::updateIcon(int id)
 {
-    QWidget *w = container( id );
+    TQWidget *w = container( id );
 
     if ( w->inherits( "KToolBar" ) )
     {
@@ -240,7 +240,7 @@ void KonqLogoAction::updateIcon(int id)
 
 
 
-int KonqLogoAction::plug( QWidget *widget, int index )
+int KonqLogoAction::plug( TQWidget *widget, int index )
 {
   if (kapp && !kapp->authorizeKAction(name()))
     return -1;
@@ -261,12 +261,12 @@ int KonqLogoAction::plug( QWidget *widget, int index )
 
     int id_ = getToolButtonID();
 
-    bar->insertAnimatedWidget( id_, this, SIGNAL(activated()), QString("kde"), index );
+    bar->insertAnimatedWidget( id_, this, TQT_SIGNAL(activated()), TQString("kde"), index );
     bar->alignItemRight( id_ );
 
     addContainer( bar, id_ );
 
-    connect( bar, SIGNAL( destroyed() ), this, SLOT( slotDestroyed() ) );
+    connect( bar, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotDestroyed() ) );
 
     return containerCount() - 1;
   }
@@ -278,18 +278,18 @@ int KonqLogoAction::plug( QWidget *widget, int index )
 
 ///////////
 
-KonqViewModeAction::KonqViewModeAction( const QString &text, const QString &icon,
-                                        QObject *parent, const char *name )
+KonqViewModeAction::KonqViewModeAction( const TQString &text, const TQString &icon,
+                                        TQObject *parent, const char *name )
     : KRadioAction( text, icon, 0, parent, name )
 {
     m_menu = new QPopupMenu;
 
-    connect( m_menu, SIGNAL( aboutToShow() ),
-             this, SLOT( slotPopupAboutToShow() ) );
-    connect( m_menu, SIGNAL( activated( int ) ),
-             this, SLOT( slotPopupActivated() ) );
-    connect( m_menu, SIGNAL( aboutToHide() ),
-             this, SLOT( slotPopupAboutToHide() ) );
+    connect( m_menu, TQT_SIGNAL( aboutToShow() ),
+             this, TQT_SLOT( slotPopupAboutToShow() ) );
+    connect( m_menu, TQT_SIGNAL( activated( int ) ),
+             this, TQT_SLOT( slotPopupActivated() ) );
+    connect( m_menu, TQT_SIGNAL( aboutToHide() ),
+             this, TQT_SLOT( slotPopupAboutToHide() ) );
 }
 
 KonqViewModeAction::~KonqViewModeAction()
@@ -297,7 +297,7 @@ KonqViewModeAction::~KonqViewModeAction()
     delete m_menu;
 }
 
-int KonqViewModeAction::plug( QWidget *widget, int index )
+int KonqViewModeAction::plug( TQWidget *widget, int index )
 {
     int res = KRadioAction::plug( widget, index );
 
@@ -331,7 +331,7 @@ void KonqViewModeAction::slotPopupAboutToHide()
         int i = 0;
         for (; i < containerCount(); ++i )
         {
-            QWidget *widget = container( i );
+            TQWidget *widget = container( i );
             if ( !widget->inherits( "KToolBar" ) )
                 continue;
 
@@ -348,17 +348,17 @@ void KonqViewModeAction::slotPopupAboutToHide()
 MostOftenList * KonqMostOftenURLSAction::s_mostEntries = 0L;
 uint KonqMostOftenURLSAction::s_maxEntries = 0;
 
-KonqMostOftenURLSAction::KonqMostOftenURLSAction( const QString& text,
-						  QObject *parent,
+KonqMostOftenURLSAction::KonqMostOftenURLSAction( const TQString& text,
+						  TQObject *parent,
 						  const char *name )
     : KActionMenu( text, "goto", parent, name )
 {
     setDelayed( false );
 
-    connect( popupMenu(), SIGNAL( aboutToShow() ), SLOT( slotFillMenu() ));
-    //connect( popupMenu(), SIGNAL( aboutToHide() ), SLOT( slotClearMenu() ));
-    connect( popupMenu(), SIGNAL( activated( int ) ),
-	     SLOT( slotActivated(int) ));
+    connect( popupMenu(), TQT_SIGNAL( aboutToShow() ), TQT_SLOT( slotFillMenu() ));
+    //connect( popupMenu(), TQT_SIGNAL( aboutToHide() ), TQT_SLOT( slotClearMenu() ));
+    connect( popupMenu(), TQT_SIGNAL( activated( int ) ),
+	     TQT_SLOT( slotActivated(int) ));
     // Need to do all this upfront for a correct initial state
     init();
 }
@@ -380,11 +380,11 @@ void KonqMostOftenURLSAction::parseHistory() // only ever called once
     KonqHistoryManager *mgr = KonqHistoryManager::kself();
     KonqHistoryIterator it( mgr->entries() );
 
-    connect( mgr, SIGNAL( entryAdded( const KonqHistoryEntry * )),
-             SLOT( slotEntryAdded( const KonqHistoryEntry * )));
-    connect( mgr, SIGNAL( entryRemoved( const KonqHistoryEntry * )),
-             SLOT( slotEntryRemoved( const KonqHistoryEntry * )));
-    connect( mgr, SIGNAL( cleared() ), SLOT( slotHistoryCleared() ));
+    connect( mgr, TQT_SIGNAL( entryAdded( const KonqHistoryEntry * )),
+             TQT_SLOT( slotEntryAdded( const KonqHistoryEntry * )));
+    connect( mgr, TQT_SIGNAL( entryRemoved( const KonqHistoryEntry * )),
+             TQT_SLOT( slotEntryRemoved( const KonqHistoryEntry * )));
+    connect( mgr, TQT_SIGNAL( cleared() ), TQT_SLOT( slotHistoryCleared() ));
 
     s_mostEntries = new MostOftenList; // exit() will clean this up for now
     for ( uint i = 0; it.current() && i < s_maxEntries; i++ ) {
@@ -447,7 +447,7 @@ void KonqMostOftenURLSAction::slotFillMenu()
     KonqHistoryEntry *entry = s_mostEntries->at( id );
     while ( entry ) {
 	// we take either title, typedURL or URL (in this order)
-	QString text = entry->title.isEmpty() ? (entry->typedURL.isEmpty() ?
+	TQString text = entry->title.isEmpty() ? (entry->typedURL.isEmpty() ?
 						 entry->url.prettyURL() :
 						 entry->typedURL) :
 		       entry->title;
@@ -487,8 +487,8 @@ void KonqMostOftenURLSAction::slotActivated( int id )
 }
 
 // sort by numberOfTimesVisited (least often goes first)
-int MostOftenList::compareItems( QPtrCollection::Item item1,
-				 QPtrCollection::Item item2)
+int MostOftenList::compareItems( TQPtrCollection::Item item1,
+				 TQPtrCollection::Item item2)
 {
     KonqHistoryEntry *entry1 = static_cast<KonqHistoryEntry *>( item1 );
     KonqHistoryEntry *entry2 = static_cast<KonqHistoryEntry *>( item2 );

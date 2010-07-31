@@ -29,7 +29,7 @@
 
 
 #include <kdebug.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 
 #undef Complex
 
@@ -109,10 +109,10 @@ static inline double hamming(uint n, uint size)
 }
 
 
-static QMemArray<double> fft(const Sound& sound, unsigned int start, unsigned int stop)
+static TQMemArray<double> fft(const Sound& sound, unsigned int start, unsigned int stop)
 {
 	if(start>=stop || sound.size() == 0)
-		return QMemArray<double>();
+		return TQMemArray<double>();
 	
 	//We need a sample with a size of a power of two
 	uint size=stop-start;
@@ -146,7 +146,7 @@ static QMemArray<double> fft(const Sound& sound, unsigned int start, unsigned in
 	}
 
 	//Generate an array to work in
-	QMemArray<Complex> samples(size);
+	TQMemArray<Complex> samples(size);
 
 	//Fill it with samples in the "reversed carry" order
 	int rev_carry = 0;
@@ -188,7 +188,7 @@ static QMemArray<double> fft(const Sound& sound, unsigned int start, unsigned in
 		}
 	}
 
-	QMemArray<double> result(size);
+	TQMemArray<double> result(size);
 	for(uint f=0;f<size;f++)
 	{
 		result[f]=samples[f].Mod()  / size;
@@ -200,10 +200,10 @@ static QMemArray<double> fft(const Sound& sound, unsigned int start, unsigned in
 
 
 
-QMemArray<double> VoiceSignature::fft(const Sound& sound, unsigned int start, unsigned int stop)
+TQMemArray<double> VoiceSignature::fft(const Sound& sound, unsigned int start, unsigned int stop)
 {
 	return KHotKeys::fft(sound, start, stop);
-	/*QMemArray<double> result(8000);
+	/*TQMemArray<double> result(8000);
 	for(int f=0; f<8000;f++)
 	{
 		Complex c(0);
@@ -276,7 +276,7 @@ bool VoiceSignature::window(const Sound& sound, unsigned int *_start, unsigned i
 VoiceSignature::VoiceSignature(const Sound& sound)
 {
  	static uint temp_wind=0, temp_fft=0, temp_moy=0;
- 	QTime t;
+ 	TQTime t;
  	t.start();
 	
 	unsigned int start , stop;
@@ -296,7 +296,7 @@ VoiceSignature::VoiceSignature(const Sound& sound)
 		unsigned int w_stop =MIN(stop , start+ (int)((wind+1.0+WINDOW_SUPER)*length/WINDOW_NUMBER));
 		
 
-		QMemArray<double> fourrier=fft(sound, w_start,w_stop);
+		TQMemArray<double> fourrier=fft(sound, w_start,w_stop);
 		
 		temp_fft+=t.restart();
 
@@ -394,24 +394,24 @@ int VoiceSignature::size2()
 	return FOUR_NUMBER;
 }
 
-QMap<int, QMap<int, double> > VoiceSignature::pond;
+TQMap<int, TQMap<int, double> > VoiceSignature::pond;
 
 
 
-void VoiceSignature::write(KConfigBase *cfg, const QString &key) const
+void VoiceSignature::write(KConfigBase *cfg, const TQString &key) const
 {
-	QStringList sl;
+	TQStringList sl;
 	for(int x=0;x<WINDOW_NUMBER;x++)
 		for(int y=0;y<FOUR_NUMBER;y++)
 	{
-		sl.append( QString::number(data[x][y]) );
+		sl.append( TQString::number(data[x][y]) );
 	}
 	cfg->writeEntry(key,sl);
 }
 
-void VoiceSignature::read(KConfigBase *cfg, const QString &key)
+void VoiceSignature::read(KConfigBase *cfg, const TQString &key)
 {
-	QStringList sl=cfg->readListEntry(key);
+	TQStringList sl=cfg->readListEntry(key);
 	for(int x=0;x<WINDOW_NUMBER;x++)
 		for(int y=0;y<FOUR_NUMBER;y++)
 	{

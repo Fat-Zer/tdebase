@@ -25,8 +25,8 @@
 #include "commands.h"
 #include "bookmarkiterator.h"
 
-#include <qtimer.h>
-#include <qpainter.h>
+#include <tqtimer.h>
+#include <tqpainter.h>
 
 #include <kdebug.h>
 
@@ -49,11 +49,11 @@ void TestLinkItrHolder::doItrListChanged() {
     {
         kdDebug()<<"Notifing managers "<<m_affectedBookmark<<endl;
         CurrentMgr::self()->notifyManagers(CurrentMgr::bookmarkAt(m_affectedBookmark).toGroup());
-        m_affectedBookmark = QString::null;
+        m_affectedBookmark = TQString::null;
     }
 }
 
-void TestLinkItrHolder::addAffectedBookmark( const QString & address )
+void TestLinkItrHolder::addAffectedBookmark( const TQString & address )
 {
     kdDebug()<<"addAffectedBookmark "<<address<<endl;
     if(m_affectedBookmark.isNull())
@@ -65,7 +65,7 @@ void TestLinkItrHolder::addAffectedBookmark( const QString & address )
 
 /* -------------------------- */
 
-TestLinkItr::TestLinkItr(QValueList<KBookmark> bks)
+TestLinkItr::TestLinkItr(TQValueList<KBookmark> bks)
     : BookmarkIterator(bks) {
     m_job = 0;
 }
@@ -88,28 +88,28 @@ void TestLinkItr::doAction() {
 
     m_job = KIO::get(curBk().url(), true, false);
     m_job->addMetaData("errorPage", "true");
-    m_job->addMetaData( QString("cookies"), QString("none") );
+    m_job->addMetaData( TQString("cookies"), TQString("none") );
 
-    connect(m_job, SIGNAL( result( KIO::Job *)),
-            this, SLOT( slotJobResult(KIO::Job *)));
-    connect(m_job, SIGNAL( data( KIO::Job *,  const QByteArray &)),
-            this, SLOT( slotJobData(KIO::Job *, const QByteArray &)));
+    connect(m_job, TQT_SIGNAL( result( KIO::Job *)),
+            this, TQT_SLOT( slotJobResult(KIO::Job *)));
+    connect(m_job, TQT_SIGNAL( data( KIO::Job *,  const TQByteArray &)),
+            this, TQT_SLOT( slotJobData(KIO::Job *, const TQByteArray &)));
 
     curItem()->setTmpStatus(i18n("Checking..."));
-    QString oldModDate = TestLinkItrHolder::self()->getMod(curBk().url().url());
+    TQString oldModDate = TestLinkItrHolder::self()->getMod(curBk().url().url());
     curItem()->setOldStatus(oldModDate);
     TestLinkItrHolder::self()->setMod(curBk().url().url(), i18n("Checking..."));
 }
 
-void TestLinkItr::slotJobData(KIO::Job *job, const QByteArray &data) {
+void TestLinkItr::slotJobData(KIO::Job *job, const TQByteArray &data) {
     KIO::TransferJob *transfer = (KIO::TransferJob *)job;
 
     if (transfer->isErrorPage()) {
-        QStringList lines = QStringList::split('\n', data);
-        for (QStringList::Iterator it = lines.begin(); it != lines.end(); ++it) {
+        TQStringList lines = TQStringList::split('\n', data);
+        for (TQStringList::Iterator it = lines.begin(); it != lines.end(); ++it) {
             int open_pos = (*it).find("<title>", 0, false);
             if (open_pos >= 0) {
-                QString leftover = (*it).mid(open_pos + 7);
+                TQString leftover = (*it).mid(open_pos + 7);
                 int close_pos = leftover.findRev("</title>", -1, false);
                 if (close_pos >= 0) {
                     // if no end tag found then just 
@@ -123,9 +123,9 @@ void TestLinkItr::slotJobData(KIO::Job *job, const QByteArray &data) {
         }
 
     } else {
-        QString modDate = transfer->queryMetaData("modified");
+        TQString modDate = transfer->queryMetaData("modified");
         if (!modDate.isEmpty()) {
-            curItem()->nsPut(QString::number(KRFCDate::parseDate(modDate)));
+            curItem()->nsPut(TQString::number(KRFCDate::parseDate(modDate)));
         }
     }
 
@@ -137,12 +137,12 @@ void TestLinkItr::slotJobResult(KIO::Job *job) {
     if ( !curItem() ) return;
 
     KIO::TransferJob *transfer = (KIO::TransferJob *)job;
-    QString modDate = transfer->queryMetaData("modified");
+    TQString modDate = transfer->queryMetaData("modified");
 
     bool chkErr = true;
     if (transfer->error()) {
         // can we assume that errorString will contain no entities?
-        QString jerr = job->errorString();
+        TQString jerr = job->errorString();
         if (!jerr.isEmpty()) {
             jerr.replace("\n", " ");
             curItem()->nsPut(jerr);
@@ -152,9 +152,9 @@ void TestLinkItr::slotJobResult(KIO::Job *job) {
 
     if (chkErr) {
         if (!modDate.isEmpty()) {
-            curItem()->nsPut(QString::number(KRFCDate::parseDate(modDate)));
+            curItem()->nsPut(TQString::number(KRFCDate::parseDate(modDate)));
         } else if (!m_errSet) {
-            curItem()->nsPut(QString::number(KRFCDate::parseDate("0")));
+            curItem()->nsPut(TQString::number(KRFCDate::parseDate("0")));
         }
     }
 
@@ -165,27 +165,27 @@ void TestLinkItr::slotJobResult(KIO::Job *job) {
 
 /* -------------------------- */
 
-const QString TestLinkItrHolder::getMod(const QString &url) const {
+const TQString TestLinkItrHolder::getMod(const TQString &url) const {
     return m_modify.contains(url) 
         ? m_modify[url] 
-        : QString::null;
+        : TQString::null;
 }
 
-const QString TestLinkItrHolder::getOldVisit(const QString &url) const {
+const TQString TestLinkItrHolder::getOldVisit(const TQString &url) const {
     return self()->m_oldModify.contains(url) 
         ? self()->m_oldModify[url] 
-        : QString::null;
+        : TQString::null;
 }
 
-void TestLinkItrHolder::setMod(const QString &url, const QString &val) {
+void TestLinkItrHolder::setMod(const TQString &url, const TQString &val) {
     m_modify[url] = val;
 }
 
-void TestLinkItrHolder::setOldVisit(const QString &url, const QString &val) {
+void TestLinkItrHolder::setOldVisit(const TQString &url, const TQString &val) {
     m_oldModify[url] = val;
 }
 
-void TestLinkItrHolder::resetToValue(const QString &url, const QString &oldValue) {
+void TestLinkItrHolder::resetToValue(const TQString &url, const TQString &oldValue) {
     if (!oldValue.isEmpty()) {
         m_modify[url] = oldValue;
     } else {
@@ -195,11 +195,11 @@ void TestLinkItrHolder::resetToValue(const QString &url, const QString &oldValue
 
 /* -------------------------- */
 
-QString TestLinkItrHolder::calcPaintStyle(const QString &url, KEBListViewItem::PaintStyle &_style, 
-                                          const QString &nVisit, const QString &Modify) {
+TQString TestLinkItrHolder::calcPaintStyle(const TQString &url, KEBListViewItem::PaintStyle &_style, 
+                                          const TQString &nVisit, const TQString &Modify) {
     bool newModValid = false;
     int newMod = 0;
-    QString newModStr;
+    TQString newModStr;
     bool initial = false;
     bool oldError = false;
 
@@ -224,7 +224,7 @@ QString TestLinkItrHolder::calcPaintStyle(const QString &url, KEBListViewItem::P
 //    kdDebug() << "TestLink " << url << " " << "booktime=" << nVisit << " urltime=" << newModStr << 
 //               " Modify=" << Modify << " init=" << initial << " newMod=" << newMod << "\n";
 
-    QString visitStr;
+    TQString visitStr;
 
     if (self()->getOldVisit(url).isNull()) {
         // first time
@@ -233,7 +233,7 @@ QString TestLinkItrHolder::calcPaintStyle(const QString &url, KEBListViewItem::P
             self()->setOldVisit(url, visitStr);
     } else {
         // may be reading a second bookmark with same url
-        QString oom = nVisit;
+        TQString oom = nVisit;
         visitStr = self()->getOldVisit(url);
         if (oom.toInt() > visitStr.toInt()) {
             self()->setOldVisit(url, oom);
@@ -245,7 +245,7 @@ QString TestLinkItrHolder::calcPaintStyle(const QString &url, KEBListViewItem::P
     if (!visitStr.isNull())
         visit = visitStr.toInt(); // TODO - check validity?
 
-    QString statusStr;
+    TQString statusStr;
     KEBListViewItem::PaintStyle style = KEBListViewItem::DefaultStyle;
 
 //    kdDebug() << "TestLink " << "isNull=" << newModStr.isNull() << "newModValid=" 
@@ -271,7 +271,7 @@ QString TestLinkItrHolder::calcPaintStyle(const QString &url, KEBListViewItem::P
 
     } else if (initial && !newModStr.isNull() && (newMod == 0)) { 
         // previous check has no modify time recorded
-        statusStr = QString::null;
+        statusStr = TQString::null;
 
     } else if (!newModStr.isNull() && (newMod > visit)) { 
         // if modify time greater than last visit, show bold modify time
@@ -292,26 +292,26 @@ QString TestLinkItrHolder::calcPaintStyle(const QString &url, KEBListViewItem::P
         }
 
     } else {
-        statusStr = QString::null;
+        statusStr = TQString::null;
     }
 
     _style = style;
     return statusStr;
 }
 
-static void parseInfo (KBookmark &bk, QString &nVisited) {
+static void parseInfo (KBookmark &bk, TQString &nVisited) {
     nVisited = 
-        NodeEditCommand::getNodeText(bk, QStringList() << "info" << "metadata"
+        NodeEditCommand::getNodeText(bk, TQStringList() << "info" << "metadata"
                                      << "time_visited" );
 
 //    kdDebug() << " Visited=" << nVisited << "\n";
 }
 
-static void parseNsInfo(const QString &nsinfo, QString &nCreate, QString &nAccess, QString &nModify) {
-    QStringList sl = QStringList::split(' ', nsinfo);
+static void parseNsInfo(const TQString &nsinfo, TQString &nCreate, TQString &nAccess, TQString &nModify) {
+    TQStringList sl = TQStringList::split(' ', nsinfo);
 
-    for (QStringList::Iterator it = sl.begin(); it != sl.end(); ++it) {
-        QStringList spl = QStringList::split('"', (*it));
+    for (TQStringList::Iterator it = sl.begin(); it != sl.end(); ++it) {
+        TQStringList spl = TQStringList::split('"', (*it));
 
         if (spl[0] == "LAST_MODIFIED=") {
             nModify = spl[1];
@@ -324,27 +324,27 @@ static void parseNsInfo(const QString &nsinfo, QString &nCreate, QString &nAcces
 }
 
 // Still use nsinfo for storing old modify time
-static const QString updateNsInfoMod(const QString &_nsinfo, const QString &nm) {
-    QString nCreate, nAccess, nModify;
+static const TQString updateNsInfoMod(const TQString &_nsinfo, const TQString &nm) {
+    TQString nCreate, nAccess, nModify;
     parseNsInfo(_nsinfo, nCreate, nAccess, nModify);
 
     bool numValid = false;
     nm.toInt(&numValid);
 
-    QString tmp;
-    tmp  =  "ADD_DATE=\"" + ((nCreate.isEmpty()) ? QString::number(time(0)) : nCreate) + "\"";
-    tmp += " LAST_VISIT=\"" + ((nAccess.isEmpty()) ? QString("0") : nAccess) + "\"";
-    tmp += " LAST_MODIFIED=\"" + ((numValid) ? nm : QString("1")) + "\"";
+    TQString tmp;
+    tmp  =  "ADD_DATE=\"" + ((nCreate.isEmpty()) ? TQString::number(time(0)) : nCreate) + "\"";
+    tmp += " LAST_VISIT=\"" + ((nAccess.isEmpty()) ? TQString("0") : nAccess) + "\"";
+    tmp += " LAST_MODIFIED=\"" + ((numValid) ? nm : TQString("1")) + "\"";
 
 //  if (!numValid) kdDebug() << tmp << "\n";
     return tmp;
 }
 
 // KEBListViewItem !!!!!!!!!!!
-void KEBListViewItem::nsPut(const QString &newModDate) {
-    static const QString NetscapeInfoAttribute = "netscapeinfo";
-    const QString info = m_bookmark.internalElement().attribute(NetscapeInfoAttribute);
-    QString blah = updateNsInfoMod(info, newModDate);
+void KEBListViewItem::nsPut(const TQString &newModDate) {
+    static const TQString NetscapeInfoAttribute = "netscapeinfo";
+    const TQString info = m_bookmark.internalElement().attribute(NetscapeInfoAttribute);
+    TQString blah = updateNsInfoMod(info, newModDate);
     m_bookmark.internalElement().setAttribute(NetscapeInfoAttribute, blah);
     TestLinkItrHolder::self()->setMod(m_bookmark.url().url(), newModDate);
     setText(KEBListView::StatusColumn, newModDate);
@@ -352,17 +352,17 @@ void KEBListViewItem::nsPut(const QString &newModDate) {
 
 // KEBListViewItem !!!!!!!!!!!
 void KEBListViewItem::modUpdate() {
-    QString nCreate, nAccess, oldModify;
-    QString iVisit;
+    TQString nCreate, nAccess, oldModify;
+    TQString iVisit;
 
-    QString nsinfo = m_bookmark.internalElement().attribute("netscapeinfo");
+    TQString nsinfo = m_bookmark.internalElement().attribute("netscapeinfo");
     if (!nsinfo.isEmpty()) {
         parseNsInfo(nsinfo, nCreate, nAccess, oldModify);
     }
 
     parseInfo(m_bookmark, iVisit);
 
-    QString statusLine;
+    TQString statusLine;
     statusLine = TestLinkItrHolder::calcPaintStyle(m_bookmark.url().url(), m_paintStyle, iVisit, oldModify);
     if (statusLine != "Error")
         setText(KEBListView::StatusColumn, statusLine);
@@ -371,13 +371,13 @@ void KEBListViewItem::modUpdate() {
 /* -------------------------- */
 
 // KEBListViewItem !!!!!!!!!!!
-void KEBListViewItem::setOldStatus(const QString &oldStatus) {
+void KEBListViewItem::setOldStatus(const TQString &oldStatus) {
     // kdDebug() << "KEBListViewItem::setOldStatus" << endl;
     m_oldStatus = oldStatus;
 }
 
 // KEBListViewItem !!!!!!!!!!!
-void KEBListViewItem::setTmpStatus(const QString &status) {
+void KEBListViewItem::setTmpStatus(const TQString &status) {
     // kdDebug() << "KEBListViewItem::setTmpStatus" << endl;
     m_paintStyle = KEBListViewItem::BoldStyle;
     setText(KEBListView::StatusColumn, status);

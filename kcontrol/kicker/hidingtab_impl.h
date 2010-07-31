@@ -29,7 +29,7 @@ class HidingTab : public HidingTabBase
     Q_OBJECT
 
 public:
-    HidingTab(QWidget *parent = 0, const char* name = 0);
+    HidingTab(TQWidget *parent = 0, const char* name = 0);
 
     void load();
     void save();

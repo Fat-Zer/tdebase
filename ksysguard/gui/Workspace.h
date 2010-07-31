@@ -24,8 +24,8 @@
 #ifndef KSG_WORKSPACE_H
 #define KSG_WORKSPACE_H
 
-#include <qptrlist.h>
-#include <qtabwidget.h>
+#include <tqptrlist.h>
+#include <tqtabwidget.h>
 
 class KConfig;
 class KURL;
@@ -37,7 +37,7 @@ class Workspace : public QTabWidget
   Q_OBJECT
 
   public:
-    Workspace( QWidget* parent, const char* name = 0 );
+    Workspace( TQWidget* parent, const char* name = 0 );
     ~Workspace();
 
     void saveProperties( KConfig* );
@@ -47,9 +47,9 @@ class Workspace : public QTabWidget
 
     void showProcesses();
 
-    WorkSheet *restoreWorkSheet( const QString &fileName,
-                           const QString &newName = QString::null );
-    void deleteWorkSheet( const QString &fileName );
+    WorkSheet *restoreWorkSheet( const TQString &fileName,
+                           const TQString &newName = TQString::null );
+    void deleteWorkSheet( const TQString &fileName );
 
   public slots:
     void newWorkSheet();
@@ -65,19 +65,19 @@ class Workspace : public QTabWidget
     void copy();
     void paste();
     void configure();
-    void updateCaption( QWidget* );
-    void updateSheetTitle( QWidget* );
+    void updateCaption( TQWidget* );
+    void updateSheetTitle( TQWidget* );
     void applyStyle();
 
   signals:
     void announceRecentURL( const KURL &url );
-    void setCaption( const QString &text, bool modified );
+    void setCaption( const TQString &text, bool modified );
 
   private:
-    QPtrList<WorkSheet> mSheetList;
+    TQPtrList<WorkSheet> mSheetList;
 
     // Directory that was used for the last load/save.
-    QString mWorkDir;
+    TQString mWorkDir;
     bool mAutoSave;
 };
 

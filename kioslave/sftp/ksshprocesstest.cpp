@@ -22,15 +22,15 @@ int main(int argc, char *argv[]) {
     opts.append(opt);
 
     opt.opt = KSshProcess::SSH_HOST;
-    opt.str = QString(argv[2]);
+    opt.str = TQString(argv[2]);
     opts.append(opt);
 
     opt.opt = KSshProcess::SSH_USERNAME;
-    opt.str = QString(argv[3]);
+    opt.str = TQString(argv[3]);
     opts.append(opt);
 
 //    opt.opt = KSshProcess::SSH_PASSWD;
-//    opt.str = QString(argv[4]);
+//    opt.str = TQString(argv[4]);
 //   opts.append(opt);
 
     if( !ssh.setOptions(opts) ) {
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
                 cout << "Password: ";
                 cin >> buf;
                 cout << "password is " << buf << endl;
-                ssh.setPassword(QString(buf));
+                ssh.setPassword(TQString(buf));
                 break;
             case KSshProcess::ERR_NEW_HOST_KEY:
             case KSshProcess::ERR_DIFF_HOST_KEY:

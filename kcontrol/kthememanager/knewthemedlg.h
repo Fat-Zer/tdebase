@@ -19,7 +19,7 @@
 #ifndef KNEWTHEMEDLG_H
 #define KNEWTHEMEDLG_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdialogbase.h>
 
@@ -34,25 +34,25 @@ class KNewThemeDlg: public KDialogBase
 {
     Q_OBJECT
 public:
-    KNewThemeDlg( QWidget * parent = 0, const char * name = 0);
+    KNewThemeDlg( TQWidget * parent = 0, const char * name = 0);
     ~KNewThemeDlg();
 
-    QString getName() const;
-    QString getAuthor() const;
-    QString getEmail() const;
-    QString getHomepage() const;
-    QString getComment() const;
-    QString getVersion() const;
+    TQString getName() const;
+    TQString getAuthor() const;
+    TQString getEmail() const;
+    TQString getHomepage() const;
+    TQString getComment() const;
+    TQString getVersion() const;
 
-    void setName( const QString & name );
-    void setAuthor( const QString & author );
-    void setEmail( const QString & email );
-    void setVersion( const QString & version );
+    void setName( const TQString & name );
+    void setAuthor( const TQString & author );
+    void setEmail( const TQString & email );
+    void setVersion( const TQString & version );
 private:
     NewThemeWidget * m_base;
 
 private slots:
-    void slotThemeNameChanged( const QString &_text );
+    void slotThemeNameChanged( const TQString &_text );
 };
 
 #endif

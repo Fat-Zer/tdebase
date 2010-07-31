@@ -20,7 +20,7 @@
 #ifndef TREEBUILDER_H
 #define TREEBUILDER_H
 
-#include "qobject.h"
+#include "tqobject.h"
 
 #include <kurl.h>
 
@@ -32,12 +32,12 @@ class TreeBuilder : public QObject
 {
 	Q_OBJECT
 	public:
-		TreeBuilder( QObject *parent, const char *name = 0 );
+		TreeBuilder( TQObject *parent, const char *name = 0 );
 
 		virtual void build( NavigatorItem *item ) = 0;
 
   public slots:
-    virtual void selectURL( const QString &url );
+    virtual void selectURL( const TQString &url );
 
   signals:
     void urlSelected( const KURL &url );

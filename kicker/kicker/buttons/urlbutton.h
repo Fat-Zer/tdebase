@@ -37,8 +37,8 @@ class URLButton : public PanelButton
     Q_OBJECT
 
 public:
-    URLButton( const QString& url, QWidget* parent );
-    URLButton( const KConfigGroup& config, QWidget* parent );
+    URLButton( const TQString& url, TQWidget* parent );
+    URLButton( const KConfigGroup& config, TQWidget* parent );
 
     virtual ~URLButton();
 
@@ -51,11 +51,11 @@ protected slots:
     void updateURL();
 
 protected:
-    void initialize( const QString& url );
-    virtual QString tileName() { return "URL"; }
+    void initialize( const TQString& url );
+    virtual TQString tileName() { return "URL"; }
     virtual void startDrag();
-    virtual void dropEvent(QDropEvent *);
-    virtual void dragEnterEvent(QDragEnterEvent *);
+    virtual void dropEvent(TQDropEvent *);
+    virtual void dragEnterEvent(TQDragEnterEvent *);
     void setToolTip();
 
     KFileItem *fileItem;

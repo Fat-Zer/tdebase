@@ -5,13 +5,13 @@
 // Copyright (c)  Mark Donohoe 1998
 //
 
-#include <qdrawutil.h>
-#include <qpainter.h>
-#include <qscrollbar.h>
-#include <qbitmap.h>
-#include <qtooltip.h>
-#include <qstyle.h>
-#include <qpopupmenu.h>
+#include <tqdrawutil.h>
+#include <tqpainter.h>
+#include <tqscrollbar.h>
+#include <tqbitmap.h>
+#include <tqtooltip.h>
+#include <tqstyle.h>
+#include <tqpopupmenu.h>
 
 #include <kcolordrag.h>
 #include <kpixmapeffect.h>
@@ -24,25 +24,25 @@
 #include "widgetcanvas.moc"
 #include "stdclient_bitmaps.h"
 
-static QPixmap* close_pix = 0;
-static QPixmap* maximize_pix = 0;
-static QPixmap* minimize_pix = 0;
-static QPixmap* normalize_pix = 0;
-static QPixmap* pinup_pix = 0;
-static QPixmap* pindown_pix = 0;
-static QPixmap* menu_pix = 0;
+static TQPixmap* close_pix = 0;
+static TQPixmap* maximize_pix = 0;
+static TQPixmap* minimize_pix = 0;
+static TQPixmap* normalize_pix = 0;
+static TQPixmap* pinup_pix = 0;
+static TQPixmap* pindown_pix = 0;
+static TQPixmap* menu_pix = 0;
 
-static QPixmap* dis_close_pix = 0;
-static QPixmap* dis_maximize_pix = 0;
-static QPixmap* dis_minimize_pix = 0;
-static QPixmap* dis_normalize_pix = 0;
-static QPixmap* dis_pinup_pix = 0;
-static QPixmap* dis_pindown_pix = 0;
-static QPixmap* dis_menu_pix = 0;
+static TQPixmap* dis_close_pix = 0;
+static TQPixmap* dis_maximize_pix = 0;
+static TQPixmap* dis_minimize_pix = 0;
+static TQPixmap* dis_normalize_pix = 0;
+static TQPixmap* dis_pinup_pix = 0;
+static TQPixmap* dis_pindown_pix = 0;
+static TQPixmap* dis_menu_pix = 0;
 
 
-WidgetCanvas::WidgetCanvas( QWidget *parent, const char *name )
-	: QWidget( parent, name  ), shadeSortColumn( true )
+WidgetCanvas::WidgetCanvas( TQWidget *parent, const char *name )
+	: TQWidget( parent, name  ), shadeSortColumn( true )
 {
     setMouseTracking( true );
     setBackgroundMode( NoBackground );
@@ -51,17 +51,17 @@ WidgetCanvas::WidgetCanvas( QWidget *parent, const char *name )
     currentHotspot = -1;
 }
 
-void WidgetCanvas::addToolTip( int area, const QString &tip )
+void WidgetCanvas::addToolTip( int area, const TQString &tip )
 {
     tips.insert(area, tip);
 }
 
-void WidgetCanvas::paintEvent(QPaintEvent *)
+void WidgetCanvas::paintEvent(TQPaintEvent *)
 {
     bitBlt( this, 0, 0, &smplw );
 }
 
-void WidgetCanvas::mousePressEvent( QMouseEvent *me )
+void WidgetCanvas::mousePressEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
 	if ( hotspots[i].rect.contains( me->pos() ) ) {
@@ -70,25 +70,25 @@ void WidgetCanvas::mousePressEvent( QMouseEvent *me )
 	}
 }
 
-void WidgetCanvas::mouseMoveEvent( QMouseEvent *me )
+void WidgetCanvas::mouseMoveEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
 	if ( hotspots[i].rect.contains( me->pos() ) ) {
 	    if ( i != currentHotspot ) {
-		QString tip = tips[hotspots[i].number];
-		QToolTip::remove( this );
-		QToolTip::add( this, tip );
+		TQString tip = tips[hotspots[i].number];
+		TQToolTip::remove( this );
+		TQToolTip::add( this, tip );
 		currentHotspot = i;
 	    }
 	    return;
 	}
 
-    QToolTip::remove( this );
+    TQToolTip::remove( this );
 }
 
-void WidgetCanvas::dropEvent( QDropEvent *e)
+void WidgetCanvas::dropEvent( TQDropEvent *e)
 {
-    QColor c;
+    TQColor c;
     if (KColorDrag::decode( e, c)) {
 	for ( int i = 0; i < MAX_HOTSPOTS; i++ )
 	    if ( hotspots[i].rect.contains( e->pos() ) ) {
@@ -99,17 +99,17 @@ void WidgetCanvas::dropEvent( QDropEvent *e)
 }
 
 
-void WidgetCanvas::dragEnterEvent( QDragEnterEvent *e)
+void WidgetCanvas::dragEnterEvent( TQDragEnterEvent *e)
 {
         e->accept( KColorDrag::canDecode( e));
 }
 
-void WidgetCanvas::paletteChange(const QPalette &)
+void WidgetCanvas::paletteChange(const TQPalette &)
 {
 	drawSampleWidgets();
 }
 
-void WidgetCanvas::resizeEvent(QResizeEvent *)
+void WidgetCanvas::resizeEvent(TQResizeEvent *)
 {
     drawSampleWidgets();
 }
@@ -118,13 +118,13 @@ void WidgetCanvas::resizeEvent(QResizeEvent *)
  * This is necessary because otherwise the scrollbar in drawSampleWidgets()
  * doesn't show the first time.
  */
-void WidgetCanvas::showEvent(QShowEvent *)
+void WidgetCanvas::showEvent(TQShowEvent *)
 {
     drawSampleWidgets();
 }
 
-void WidgetCanvas::resetTitlebarPixmaps(const QColor &actMed,
-                                        const QColor &disMed)
+void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
+                                        const TQColor &disMed)
 {
     if(close_pix) delete close_pix;
     if(maximize_pix) delete maximize_pix;
@@ -142,133 +142,133 @@ void WidgetCanvas::resetTitlebarPixmaps(const QColor &actMed,
     if(dis_pindown_pix) delete dis_pindown_pix;
     if(dis_menu_pix) delete dis_menu_pix;
     
-    QPainter pact, pdis;
-    QBitmap bitmap;
-    QColor actHigh = actMed.light(150);
-    QColor actLow = actMed.dark(120);
-    QColor disHigh = disMed.light(150);
-    QColor disLow = disMed.dark(120);
+    TQPainter pact, pdis;
+    TQBitmap bitmap;
+    TQColor actHigh = actMed.light(150);
+    TQColor actLow = actMed.dark(120);
+    TQColor disHigh = disMed.light(150);
+    TQColor disLow = disMed.dark(120);
     
-    close_pix = new QPixmap(16, 16);
-    dis_close_pix = new QPixmap(16, 16);
+    close_pix = new TQPixmap(16, 16);
+    dis_close_pix = new TQPixmap(16, 16);
     pact.begin(close_pix); pdis.begin(dis_close_pix);
-    bitmap = QBitmap(16, 16, close_white_bits, true);
+    bitmap = TQBitmap(16, 16, close_white_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actHigh); pdis.setPen(disHigh);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, close_dgray_bits, true);
+    bitmap = TQBitmap(16, 16, close_dgray_bits, true);
     pact.setPen(actLow); pdis.setPen(disLow);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = QBitmap(16, 16, close_mask_bits, true);
+    bitmap = TQBitmap(16, 16, close_mask_bits, true);
     close_pix->setMask(bitmap); dis_close_pix->setMask(bitmap);
 
-    minimize_pix = new QPixmap(16, 16);
-    dis_minimize_pix = new QPixmap(16, 16);
+    minimize_pix = new TQPixmap(16, 16);
+    dis_minimize_pix = new TQPixmap(16, 16);
     pact.begin(minimize_pix); pdis.begin(dis_minimize_pix);
-    bitmap = QBitmap(16, 16, iconify_white_bits, true);
+    bitmap = TQBitmap(16, 16, iconify_white_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actHigh); pdis.setPen(disHigh);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, iconify_dgray_bits, true);
+    bitmap = TQBitmap(16, 16, iconify_dgray_bits, true);
     pact.setPen(actLow); pdis.setPen(disLow);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = QBitmap(16, 16, iconify_mask_bits, true);
+    bitmap = TQBitmap(16, 16, iconify_mask_bits, true);
     minimize_pix->setMask(bitmap); dis_minimize_pix->setMask(bitmap);
     
-    maximize_pix = new QPixmap(16, 16);
-    dis_maximize_pix = new QPixmap(16, 16);
+    maximize_pix = new TQPixmap(16, 16);
+    dis_maximize_pix = new TQPixmap(16, 16);
     pact.begin(maximize_pix); pdis.begin(dis_maximize_pix);
-    bitmap = QBitmap(16, 16, maximize_white_bits, true);
+    bitmap = TQBitmap(16, 16, maximize_white_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actHigh); pdis.setPen(disHigh);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, maximize_dgray_bits, true);
+    bitmap = TQBitmap(16, 16, maximize_dgray_bits, true);
     pact.setPen(actLow); pdis.setPen(disLow);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = QBitmap(16, 16, maximize_mask_bits, true);
+    bitmap = TQBitmap(16, 16, maximize_mask_bits, true);
     maximize_pix->setMask(bitmap); dis_maximize_pix->setMask(bitmap);
 
-    normalize_pix = new QPixmap(16, 16);
-    dis_normalize_pix = new QPixmap(16, 16);
+    normalize_pix = new TQPixmap(16, 16);
+    dis_normalize_pix = new TQPixmap(16, 16);
     pact.begin(normalize_pix); pdis.begin(dis_normalize_pix);
-    bitmap = QBitmap(16, 16, maximizedown_white_bits, true);
+    bitmap = TQBitmap(16, 16, maximizedown_white_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actHigh); pdis.setPen(disHigh);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, maximizedown_dgray_bits, true);
+    bitmap = TQBitmap(16, 16, maximizedown_dgray_bits, true);
     pact.setPen(actLow); pdis.setPen(disLow);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = QBitmap(16, 16, maximizedown_mask_bits, true);
+    bitmap = TQBitmap(16, 16, maximizedown_mask_bits, true);
     normalize_pix->setMask(bitmap); dis_normalize_pix->setMask(bitmap);
 
-    menu_pix = new QPixmap(16, 16);
-    dis_menu_pix = new QPixmap(16, 16);
+    menu_pix = new TQPixmap(16, 16);
+    dis_menu_pix = new TQPixmap(16, 16);
     pact.begin(menu_pix); pdis.begin(dis_menu_pix);
-    bitmap = QBitmap(16, 16, menu_white_bits, true);
+    bitmap = TQBitmap(16, 16, menu_white_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actHigh); pdis.setPen(disHigh);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, menu_dgray_bits, true);
+    bitmap = TQBitmap(16, 16, menu_dgray_bits, true);
     pact.setPen(actLow); pdis.setPen(disLow);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = QBitmap(16, 16, menu_mask_bits, true);
+    bitmap = TQBitmap(16, 16, menu_mask_bits, true);
     menu_pix->setMask(bitmap); dis_menu_pix->setMask(bitmap);
 
-    pinup_pix = new QPixmap(16, 16);
-    dis_pinup_pix = new QPixmap(16, 16);
+    pinup_pix = new TQPixmap(16, 16);
+    dis_pinup_pix = new TQPixmap(16, 16);
     pact.begin(pinup_pix); pdis.begin(dis_pinup_pix);
-    bitmap = QBitmap(16, 16, pinup_white_bits, true);
+    bitmap = TQBitmap(16, 16, pinup_white_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actHigh); pdis.setPen(disHigh);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, pinup_gray_bits, true);
+    bitmap = TQBitmap(16, 16, pinup_gray_bits, true);
     pact.setPen(actMed); pdis.setPen(disMed);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, pinup_dgray_bits, true);
+    bitmap = TQBitmap(16, 16, pinup_dgray_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actLow); pdis.setPen(disLow);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = QBitmap(16, 16, pinup_mask_bits, true);
+    bitmap = TQBitmap(16, 16, pinup_mask_bits, true);
     pinup_pix->setMask(bitmap); dis_pinup_pix->setMask(bitmap);
     
-    pindown_pix = new QPixmap(16, 16);
-    dis_pindown_pix = new QPixmap(16, 16);
+    pindown_pix = new TQPixmap(16, 16);
+    dis_pindown_pix = new TQPixmap(16, 16);
     pact.begin(pindown_pix); pdis.begin(dis_pindown_pix);
-    bitmap = QBitmap(16, 16, pindown_white_bits, true);
+    bitmap = TQBitmap(16, 16, pindown_white_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actHigh); pdis.setPen(disHigh);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, pindown_gray_bits, true);
+    bitmap = TQBitmap(16, 16, pindown_gray_bits, true);
     pact.setPen(actMed); pdis.setPen(disMed);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
-    bitmap = QBitmap(16, 16, pindown_dgray_bits, true);
+    bitmap = TQBitmap(16, 16, pindown_dgray_bits, true);
     bitmap.setMask(bitmap);
     pact.setPen(actLow); pdis.setPen(disLow);
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = QBitmap(16, 16, pindown_mask_bits, true);
+    bitmap = TQBitmap(16, 16, pindown_mask_bits, true);
     pindown_pix->setMask(bitmap); dis_pindown_pix->setMask(bitmap);
     
 }
@@ -282,15 +282,15 @@ void WidgetCanvas::drawSampleWidgets()
 
     // Keep in sync with kglobalsettings.
 
-    QFont windowFontGuess(KGlobalSettings::generalFont().family(), 12, QFont::SansSerif, true);
+    TQFont windowFontGuess(KGlobalSettings::generalFont().family(), 12, TQFont::SansSerif, true);
     windowFontGuess.setPixelSize(12);
 
     c->setGroup("WM");
-    QFont windowFont = c->readFontEntry("activeFont", &windowFontGuess);
+    TQFont windowFont = c->readFontEntry("activeFont", &windowFontGuess);
 
     c->setGroup("General");
-    QFont defaultMenuFont = KGlobalSettings::menuFont();
-    QFont menuFont = c->readFontEntry("menuFont", &defaultMenuFont);
+    TQFont defaultMenuFont = KGlobalSettings::menuFont();
+    TQFont menuFont = c->readFontEntry("menuFont", &defaultMenuFont);
 
     delete c;
     c = 0;
@@ -301,7 +301,7 @@ void WidgetCanvas::drawSampleWidgets()
     highlightVal=100+(2*contrast+4)*16/10;
     lowlightVal=100+(2*contrast+4)*10;
 
-    QColorGroup cg( txt, back,
+    TQColorGroup cg( txt, back,
                     back.light(highlightVal),
                     back.dark(lowlightVal),
                     back.dark(120),
@@ -309,26 +309,26 @@ void WidgetCanvas::drawSampleWidgets()
 
     // We will need this brush.
 
-    QBrush brush(SolidPattern);
+    TQBrush brush(SolidPattern);
     brush.setColor( back );
 
     // Create a scrollbar and redirect drawing into a temp. pixmap to save a
     // lot of fiddly drawing later.
 
-    QScrollBar *vertScrollBar = new QScrollBar( QScrollBar::Vertical, this );
-    // TODO: vertScrollBar->setStyle( new QMotifStyle() );
+    TQScrollBar *vertScrollBar = new TQScrollBar( TQScrollBar::Vertical, this );
+    // TODO: vertScrollBar->setStyle( new TQMotifStyle() );
     vertScrollBar->setGeometry( 400, 400, SCROLLBAR_SIZE, height());
     vertScrollBar->setRange( 0,  0 );
-    vertScrollBar->setPalette( QPalette(cg,cg,cg));
+    vertScrollBar->setPalette( TQPalette(cg,cg,cg));
     vertScrollBar->show();
 
-    QPixmap pm( vertScrollBar->width(), vertScrollBar->height() );
+    TQPixmap pm( vertScrollBar->width(), vertScrollBar->height() );
     pm.fill( back );
 #ifndef __osf__
-    QPainter::redirect( vertScrollBar, &pm );
+    TQPainter::redirect( vertScrollBar, &pm );
 #endif
     vertScrollBar->repaint();
-    QPainter::redirect( vertScrollBar, 0 );
+    TQPainter::redirect( vertScrollBar, 0 );
     vertScrollBar->hide();
 
     // Reset the titlebar pixmaps
@@ -342,7 +342,7 @@ void WidgetCanvas::drawSampleWidgets()
 
     // Actually start painting in
 
-    QPainter paint( &smplw );
+    TQPainter paint( &smplw );
 
     // Inactive window
 
@@ -377,19 +377,19 @@ void WidgetCanvas::drawSampleWidgets()
     
     int spot = 0;
     hotspots[ spot++ ] =
-        HotSpot( QRect( 65, 25-14, textLen, 14 ), CSM_Inactive_title_text );
+        HotSpot( TQRect( 65, 25-14, textLen, 14 ), CSM_Inactive_title_text );
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 60, 10, (width()-160)/2, 20 ), CSM_Inactive_title_bar );
+        HotSpot( TQRect( 60, 10, (width()-160)/2, 20 ), CSM_Inactive_title_bar );
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 60+(width()-160)/2, 10,
+        HotSpot( TQRect( 60+(width()-160)/2, 10,
                         (width()-160)/2, 20 ), CSM_Inactive_title_blend );
 
     hotspots[spot++] =
-        HotSpot(QRect(20, 12, 40, 20), CSM_Inactive_title_button); 
+        HotSpot(TQRect(20, 12, 40, 20), CSM_Inactive_title_button); 
     hotspots[spot++] =
-        HotSpot(QRect(tmp, 12, 60, 20), CSM_Inactive_title_button);
+        HotSpot(TQRect(tmp, 12, 60, 20), CSM_Inactive_title_button);
     
 
     // Active window
@@ -420,44 +420,44 @@ void WidgetCanvas::drawSampleWidgets()
     paint.drawPixmap(tmp+42, 35, *close_pix);
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 75, 50-14, textLen, 14 ), CSM_Active_title_text);
+        HotSpot( TQRect( 75, 50-14, textLen, 14 ), CSM_Active_title_text);
     hotspots[ spot ++] =
-        HotSpot( QRect( 65, 35, (width()-152)/2, 20 ), CSM_Active_title_bar );
+        HotSpot( TQRect( 65, 35, (width()-152)/2, 20 ), CSM_Active_title_bar );
     hotspots[ spot ++] =
-        HotSpot( QRect( 65+(width()-152)/2, 35,
+        HotSpot( TQRect( 65+(width()-152)/2, 35,
                         (width()-152)/2, 20 ), CSM_Active_title_blend );
 
     hotspots[spot++] =
-        HotSpot(QRect(25, 35, 40, 20), CSM_Active_title_button);
+        HotSpot(TQRect(25, 35, 40, 20), CSM_Active_title_button);
     hotspots[spot++] =
-        HotSpot(QRect(tmp, 35, 60, 20), CSM_Active_title_button);
+        HotSpot(TQRect(tmp, 35, 60, 20), CSM_Active_title_button);
     
     // Menu bar
 
     //qDrawShadePanel ( &paint, 25, 55, width()-52, 28, cg, FALSE, 2, &brush);
-    kapp->style().drawPrimitive(QStyle::PE_PanelMenuBar, &paint, 
-			QRect(QPoint(25, 55), QSize(width()-52, 28)), cg);
+    kapp->style().drawPrimitive(TQStyle::PE_PanelMenuBar, &paint, 
+			TQRect(TQPoint(25, 55), TQSize(width()-52, 28)), cg);
 
     paint.setFont( menuFont );
     paint.setPen(txt );
-	QString file = i18n("File");
+	TQString file = i18n("File");
     textLen = paint.fontMetrics().width( file );
     //qDrawShadePanel ( &paint, 30, 59, textLen + 10, 21, cg, FALSE, 2, &brush);
-	kapp->style().drawPrimitive(QStyle::PE_Panel, &paint,
-			QRect(30, 59, textLen + 10, 21), cg);
+	kapp->style().drawPrimitive(TQStyle::PE_Panel, &paint,
+			TQRect(30, 59, textLen + 10, 21), cg);
     paint.drawText( 35, 74, file );
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 35, 62, textLen, 14 ), CSM_Text );
+        HotSpot( TQRect( 35, 62, textLen, 14 ), CSM_Text );
     hotspots[ spot++ ] =
-        HotSpot( QRect( 27, 57, 33, 21 ), CSM_Background );
+        HotSpot( TQRect( 27, 57, 33, 21 ), CSM_Background );
 
     paint.setFont( menuFont );
     paint.setPen( txt );
     paint.drawText( 35 + textLen + 20, 74, i18n("Edit") );
     textLen = paint.fontMetrics().width( i18n("Edit") );
 
-    hotspots[ spot++ ] = HotSpot( QRect( 35 + textLen + 20, 62, textLen, 14 ), CSM_Text );
+    hotspots[ spot++ ] = HotSpot( TQRect( 35 + textLen + 20, 62, textLen, 14 ), CSM_Text );
 
     // Button Rects need to go before window
 
@@ -468,7 +468,7 @@ void WidgetCanvas::drawSampleWidgets()
                       height(), cg, TRUE, 2, &brush);
 
     // Standard text
-    QFont fnt = KGlobalSettings::generalFont();
+    TQFont fnt = KGlobalSettings::generalFont();
     paint.setFont( fnt );
     paint.setPen( windowTxt );
     paint.drawText( 140, 127-20, i18n( "Standard text") );
@@ -476,7 +476,7 @@ void WidgetCanvas::drawSampleWidgets()
     int column2 = 120 + textLen + 40 + 16;
  
     hotspots[ spot++ ] =
-        HotSpot( QRect( 140, 113-20, textLen, 14 ), CSM_Standard_text );
+        HotSpot( TQRect( 140, 113-20, textLen, 14 ), CSM_Standard_text );
 
     // Selected text
     textLen = paint.fontMetrics().width( i18n("Selected text") );
@@ -491,9 +491,9 @@ void WidgetCanvas::drawSampleWidgets()
     paint.drawText( 140, 135, i18n( "Selected text") );
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 140, 121, textLen, 14 ), CSM_Select_text );
+        HotSpot( TQRect( 140, 121, textLen, 14 ), CSM_Select_text );
     hotspots[ spot++ ] =
-        HotSpot( QRect( 120, 115, textLen+40, 32), CSM_Select_background ); // select bg
+        HotSpot( TQRect( 120, 115, textLen+40, 32), CSM_Select_background ); // select bg
 
     // Link
     paint.setPen( link );
@@ -502,7 +502,7 @@ void WidgetCanvas::drawSampleWidgets()
     paint.drawLine( column2+18, 109, column2+18+textLen, 109);
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( column2+18, 113-20, textLen, 17 ), CSM_Link );
+        HotSpot( TQRect( column2+18, 113-20, textLen, 17 ), CSM_Link );
 
     int column3 = column2 + 25 + textLen;
     // Followed Link
@@ -512,24 +512,24 @@ void WidgetCanvas::drawSampleWidgets()
     paint.drawLine( column3, 109, column3+textLen, 109);
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( column3, 113-20, textLen, 17 ), CSM_Followed_Link );
+        HotSpot( TQRect( column3, 113-20, textLen, 17 ), CSM_Followed_Link );
 
     // Button
     int xpos = column2;
     int ypos = 115 + 2;
     textLen = paint.fontMetrics().width(i18n("Push Button"));
     hotspots[ spot++ ] =
-        HotSpot( QRect(xpos+16, ypos+((28-paint.fontMetrics().height())/2),
+        HotSpot( TQRect(xpos+16, ypos+((28-paint.fontMetrics().height())/2),
                        textLen, paint.fontMetrics().height()), CSM_Button_text );
     hotspots[ spot++ ] =
-        HotSpot( QRect(xpos, ypos, textLen+32, 28), CSM_Button_background );
+        HotSpot( TQRect(xpos, ypos, textLen+32, 28), CSM_Button_background );
     //brush.setColor( button );
-    QColorGroup cg2(cg);
-    cg2.setColor(QColorGroup::Button, button);
-    cg2.setColor(QColorGroup::Background, window);
+    TQColorGroup cg2(cg);
+    cg2.setColor(TQColorGroup::Button, button);
+    cg2.setColor(TQColorGroup::Background, window);
     //qDrawWinButton(&paint, xpos, ypos, textLen+32, 28, cg, false, &brush);
-	kapp->style().drawPrimitive(QStyle::PE_ButtonCommand, &paint,
-			QRect(xpos, ypos, textLen+32, 28), cg2, QStyle::Style_Enabled | QStyle::Style_Raised);
+	kapp->style().drawPrimitive(TQStyle::PE_ButtonCommand, &paint,
+			TQRect(xpos, ypos, textLen+32, 28), cg2, TQStyle::Style_Enabled | TQStyle::Style_Raised);
     paint.setPen(buttonTxt);
     paint.drawText(xpos, ypos, textLen+32, 28, AlignCenter,
                    i18n("Push Button"));
@@ -547,20 +547,20 @@ void WidgetCanvas::drawSampleWidgets()
     textLenNew = paint.fontMetrics().width( i18n("New") );
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 56, 83, textLenNew, 14 ), CSM_Text );
+        HotSpot( TQRect( 56, 83, textLenNew, 14 ), CSM_Text );
 
     paint.setFont( menuFont );
     textLenOpen = paint.fontMetrics().width( i18n("Menu item", "Open") );
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 56, 105, textLenOpen, 14 ), CSM_Text );
+        HotSpot( TQRect( 56, 105, textLenOpen, 14 ), CSM_Text );
 
     paint.setFont( menuFont );
     textLenSave = paint.fontMetrics().width( i18n("Menu item", "Save") );
 
-	QPopupMenu *popup = new QPopupMenu( this );
+	TQPopupMenu *popup = new TQPopupMenu( this );
 	popup->setFont( menuFont );
-	popup->setPalette( QPalette(cg,cg,cg));
+	popup->setPalette( TQPalette(cg,cg,cg));
 	popup->insertItem(i18n("New"));
 	popup->insertItem(i18n("Menu item", "Open"));
 	int id = popup->insertItem(i18n("Menu item", "Save"));
@@ -571,15 +571,15 @@ void WidgetCanvas::drawSampleWidgets()
 	//popup->sizeHint(); // Breaks with Qt 3.3
 	popup->resize(popup->sizeHint());
 
-	pm = QPixmap::grabWidget( popup );
+	pm = TQPixmap::grabWidget( popup );
 	delete popup;
 	bitBlt(&smplw, 30, 80, &pm, 0, 0, pm.width(), pm.height());
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 28, 78, 88, 77 ), CSM_Background );
+        HotSpot( TQRect( 28, 78, 88, 77 ), CSM_Background );
 
     hotspots[ spot++ ] =
-        HotSpot( QRect(25, 80+5-4, width()-7-45-2-16, height()), CSM_Standard_background );
+        HotSpot( TQRect(25, 80+5-4, width()-7-45-2-16, height()), CSM_Standard_background );
 
 
     // Valance
@@ -590,7 +590,7 @@ void WidgetCanvas::drawSampleWidgets()
     // Stop the painting
 
     hotspots[ spot++ ] =
-        HotSpot( QRect( 0, 0, width(), height() ), CSM_Background ); // ?
+        HotSpot( TQRect( 0, 0, width(), height() ), CSM_Background ); // ?
 
     repaint( FALSE );
 }

@@ -19,11 +19,11 @@
 #ifndef ksmbstatus_h_included
 #define ksmbstatus_h_included
  
-#include <qtimer.h>
-#include <qlabel.h>
+#include <tqtimer.h>
+#include <tqlabel.h>
 #include <kprocess.h>
-#include <qcstring.h>
-#include <qlistview.h>
+#include <tqcstring.h>
+#include <tqlistview.h>
 #include <kconfig.h>
 
 #define SCREEN_XY_OFFSET 20
@@ -36,16 +36,16 @@ class NetMon : public QWidget
 {
 Q_OBJECT
 public:
-   NetMon(QWidget *parent, KConfig * config=0, const char * name=0);
+   NetMon(TQWidget *parent, KConfig * config=0, const char * name=0);
    void saveSettings() {};
    void loadSettings() {};
 private:
    KConfig *configFile;
    KProcess *showmountProc;
-   QListView *list;
-   QLabel *version;
-   QTimer *timer;
-   QListViewItem *killrow;
+   TQListView *list;
+   TQLabel *version;
+   TQTimer *timer;
+   TQListViewItem *killrow;
    int rownumber;
    enum {header, connexions, locked_files, finished, nfs} readingpart;
    int lo[65536];
@@ -53,7 +53,7 @@ private:
    void processNFSLine(char *bufline, int linelen);
    void processSambaLine(char *bufline, int linelen);
 
-   QCString strShare, strUser, strGroup, strMachine, strSince, strPid;
+   TQCString strShare, strUser, strGroup, strMachine, strSince, strPid;
    int iUser, iGroup, iMachine, iPid;
 
 private slots:

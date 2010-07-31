@@ -34,7 +34,7 @@ class KeramikConfig: public QObject
 	Q_OBJECT
 
 	public:
-		KeramikConfig( KConfig* conf, QWidget* parent );
+		KeramikConfig( KConfig* conf, TQWidget* parent );
 		~KeramikConfig();
 
 	// These public signals/slots work similar to KCM modules

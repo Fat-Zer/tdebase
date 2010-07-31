@@ -26,14 +26,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qcursor.h>
-#include <qlayout.h>
-#include <qpopupmenu.h>
-#include <qtimer.h>
-#include <qpixmap.h>
-#include <qevent.h>
-#include <qstyle.h>
-#include <qpainter.h>
+#include <tqcursor.h>
+#include <tqlayout.h>
+#include <tqpopupmenu.h>
+#include <tqtimer.h>
+#include <tqpixmap.h>
+#include <tqevent.h>
+#include <tqstyle.h>
+#include <tqpainter.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -59,7 +59,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 extern "C"
 {
-    KDE_EXPORT KPanelApplet* init(QWidget *parent, const QString& configFile)
+    KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
         KGlobal::locale()->insertCatalogue("ksystemtrayapplet");
         return new SystemTrayApplet(configFile, KPanelApplet::Normal,
@@ -67,8 +67,8 @@ extern "C"
     }
 }
 
-SystemTrayApplet::SystemTrayApplet(const QString& configFile, Type type, int actions,
-                                   QWidget *parent, const char *name)
+SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int actions,
+                                   TQWidget *parent, const char *name)
   : KPanelApplet(configFile, type, actions, parent, name),
     m_showFrame(false),
     m_showHidden(false),
@@ -92,15 +92,15 @@ SystemTrayApplet::SystemTrayApplet(const QString& configFile, Type type, int act
     kapp->dcopClient()->setNotifications(true);
     connectDCOPSignal("kicker", "kicker", "configurationChanged()", "loadSettings()", false);
 
-    QTimer::singleShot(0, this, SLOT(initialize()));
+    TQTimer::singleShot(0, this, TQT_SLOT(initialize()));
 }
 
 void SystemTrayApplet::initialize()
 {
     // register existing tray windows
-    const QValueList<WId> systemTrayWindows = kwin_module->systemTrayWindows();
+    const TQValueList<WId> systemTrayWindows = kwin_module->systemTrayWindows();
     bool existing = false;
-    for (QValueList<WId>::ConstIterator it = systemTrayWindows.begin();
+    for (TQValueList<WId>::ConstIterator it = systemTrayWindows.begin();
          it != systemTrayWindows.end(); ++it )
     {
         embedWindow(*it, true);
@@ -116,14 +116,14 @@ void SystemTrayApplet::initialize()
     }
 
     // the KWinModule notifies us when tray windows are added or removed
-    connect( kwin_module, SIGNAL( systemTrayWindowAdded(WId) ),
-             this, SLOT( systemTrayWindowAdded(WId) ) );
-    connect( kwin_module, SIGNAL( systemTrayWindowRemoved(WId) ),
-             this, SLOT( updateTrayWindows() ) );
+    connect( kwin_module, TQT_SIGNAL( systemTrayWindowAdded(WId) ),
+             this, TQT_SLOT( systemTrayWindowAdded(WId) ) );
+    connect( kwin_module, TQT_SIGNAL( systemTrayWindowRemoved(WId) ),
+             this, TQT_SLOT( updateTrayWindows() ) );
 
-    QCString screenstr;
+    TQCString screenstr;
     screenstr.setNum(qt_xscreen());
-    QCString trayatom = "_NET_SYSTEM_TRAY_S" + screenstr;
+    TQCString trayatom = "_NET_SYSTEM_TRAY_S" + screenstr;
 
     Display *display = qt_xdisplay();
 
@@ -210,9 +210,9 @@ void SystemTrayApplet::preferences()
                                        KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                                        KDialogBase::Ok, true);
     m_settingsDialog->resize(450, 400);
-    connect(m_settingsDialog, SIGNAL(applyClicked()), this, SLOT(applySettings()));
-    connect(m_settingsDialog, SIGNAL(okClicked()), this, SLOT(applySettings()));
-    connect(m_settingsDialog, SIGNAL(finished()), this, SLOT(settingsDialogFinished()));
+    connect(m_settingsDialog, TQT_SIGNAL(applyClicked()), this, TQT_SLOT(applySettings()));
+    connect(m_settingsDialog, TQT_SIGNAL(okClicked()), this, TQT_SLOT(applySettings()));
+    connect(m_settingsDialog, TQT_SIGNAL(finished()), this, TQT_SLOT(settingsDialogFinished()));
 
     m_iconSelector = new KActionSelector(m_settingsDialog);
     m_iconSelector->setAvailableLabel(i18n("Visible icons:"));
@@ -220,14 +220,14 @@ void SystemTrayApplet::preferences()
     m_iconSelector->setShowUpDownButtons(false);
     m_settingsDialog->setMainWidget(m_iconSelector);
 
-    QListBox *shownListBox = m_iconSelector->availableListBox();
-    QListBox *hiddenListBox = m_iconSelector->selectedListBox();
+    TQListBox *shownListBox = m_iconSelector->availableListBox();
+    TQListBox *hiddenListBox = m_iconSelector->selectedListBox();
 
     TrayEmbedList::const_iterator it = m_shownWins.begin();
     TrayEmbedList::const_iterator itEnd = m_shownWins.end();
     for (; it != itEnd; ++it)
     {
-        QString name = KWin::windowInfo((*it)->embeddedWinId()).name();
+        TQString name = KWin::windowInfo((*it)->embeddedWinId()).name();
         if(!shownListBox->findItem(name, Qt::ExactMatch | Qt::CaseSensitive))
         {
             shownListBox->insertItem(KWin::icon((*it)->embeddedWinId(), 22, 22, true), name);
@@ -238,7 +238,7 @@ void SystemTrayApplet::preferences()
     itEnd = m_hiddenWins.end();
     for (; it != itEnd; ++it)
     {
-        QString name = KWin::windowInfo((*it)->embeddedWinId()).name();
+        TQString name = KWin::windowInfo((*it)->embeddedWinId()).name();
         if(!hiddenListBox->findItem(name, Qt::ExactMatch | Qt::CaseSensitive))
         {
             hiddenListBox->insertItem(KWin::icon((*it)->embeddedWinId(), 22, 22, true), name);
@@ -264,13 +264,13 @@ void SystemTrayApplet::applySettings()
 
     KConfig *conf = config();
     conf->setGroup("HiddenTrayIcons");
-    QString name;
+    TQString name;
 
     // use the following snippet of code someday to implement ordering
     // of icons
     /*
     m_visibleIconList.clear();
-    QListBoxItem* item = m_iconSelector->availableListBox()->firstItem();
+    TQListBoxItem* item = m_iconSelector->availableListBox()->firstItem();
     for (; item; item = item->next())
     {
         m_visibleIconList.append(item->text());
@@ -279,7 +279,7 @@ void SystemTrayApplet::applySettings()
     selection.clear();*/
 
     m_hiddenIconList.clear();
-    QListBoxItem* item = m_iconSelector->selectedListBox()->firstItem();
+    TQListBoxItem* item = m_iconSelector->selectedListBox()->firstItem();
     for (; item; item = item->next())
     {
         m_hiddenIconList.append(item->text());
@@ -328,7 +328,7 @@ void SystemTrayApplet::checkAutoRetract()
         return;
     }
 
-    if (!geometry().contains(mapFromGlobal(QCursor::pos())))
+    if (!geometry().contains(mapFromGlobal(TQCursor::pos())))
     {
         m_autoRetractTimer->stop();
         if (m_autoRetract)
@@ -376,12 +376,12 @@ void SystemTrayApplet::showExpandButton(bool show)
                                                             .width(),
                                              height() - 4);
             }
-            connect(m_expandButton, SIGNAL(clicked()),
-                    this, SLOT(toggleExpanded()));
+            connect(m_expandButton, TQT_SIGNAL(clicked()),
+                    this, TQT_SLOT(toggleExpanded()));
 
-            m_autoRetractTimer = new QTimer(this);
-            connect(m_autoRetractTimer, SIGNAL(timeout()),
-                    this, SLOT(checkAutoRetract()));
+            m_autoRetractTimer = new TQTimer(this);
+            connect(m_autoRetractTimer, TQT_SIGNAL(timeout()),
+                    this, TQT_SLOT(checkAutoRetract()));
         }
         else
         {
@@ -483,7 +483,7 @@ void SystemTrayApplet::embedWindow( WId w, bool kde_tray )
         return;
     }
     
-    connect(emb, SIGNAL(embeddedWindowDestroyed()), SLOT(updateTrayWindows()));
+    connect(emb, TQT_SIGNAL(embeddedWindowDestroyed()), TQT_SLOT(updateTrayWindows()));
     emb->getIconSize(m_iconSize);
 
     if (shouldHide(w))
@@ -724,18 +724,18 @@ int SystemTrayApplet::maxIconHeight() const
     return largest;
 }
 
-bool SystemTrayApplet::eventFilter(QObject* watched, QEvent* e)
+bool SystemTrayApplet::eventFilter(TQObject* watched, TQEvent* e)
 {
     if (watched == m_expandButton)
     {
-        QPoint p;
-        if (e->type() == QEvent::ContextMenu)
+        TQPoint p;
+        if (e->type() == TQEvent::ContextMenu)
         {
-            p = static_cast<QContextMenuEvent*>(e)->globalPos();
+            p = static_cast<TQContextMenuEvent*>(e)->globalPos();
         }
-        else if (e->type() == QEvent::MouseButtonPress)
+        else if (e->type() == TQEvent::MouseButtonPress)
         {
-            QMouseEvent* me = static_cast<QMouseEvent*>(e);
+            TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
             if (me->button() == Qt::RightButton)
             {
                 p = me->globalPos();
@@ -744,11 +744,11 @@ bool SystemTrayApplet::eventFilter(QObject* watched, QEvent* e)
 
         if (!p.isNull())
         {
-            QPopupMenu* contextMenu = new QPopupMenu(this);
+            TQPopupMenu* contextMenu = new TQPopupMenu(this);
             contextMenu->insertItem(SmallIcon("configure"), i18n("Configure System Tray..."),
-                                    this, SLOT(configure()));
+                                    this, TQT_SLOT(configure()));
 
-            contextMenu->exec(static_cast<QContextMenuEvent*>(e)->globalPos());
+            contextMenu->exec(static_cast<TQContextMenuEvent*>(e)->globalPos());
 
             delete contextMenu;
             return true;
@@ -796,17 +796,17 @@ int SystemTrayApplet::heightForWidth(int w) const
     return sizeHint().height(); 
 }
 
-void SystemTrayApplet::moveEvent( QMoveEvent* )
+void SystemTrayApplet::moveEvent( TQMoveEvent* )
 {
     setBackground();
 }
 
 
-void SystemTrayApplet::resizeEvent( QResizeEvent* )
+void SystemTrayApplet::resizeEvent( TQResizeEvent* )
 {
     layoutTray();
     // we need to give ourselves a chance to adjust our size before calling this
-    QTimer::singleShot(0, this, SIGNAL(updateLayout()));
+    TQTimer::singleShot(0, this, TQT_SIGNAL(updateLayout()));
 }
 
 void SystemTrayApplet::layoutTray()
@@ -826,7 +826,7 @@ void SystemTrayApplet::layoutTray()
     int i = 0, line, nbrOfLines, heightWidth;
     bool showExpandButton = m_expandButton && m_expandButton->isVisibleTo(this);
     delete m_layout;
-    m_layout = new QGridLayout(this, 1, 1, ICON_MARGIN, ICON_MARGIN);
+    m_layout = new TQGridLayout(this, 1, 1, ICON_MARGIN, ICON_MARGIN);
 
     if (m_expandButton)
     {
@@ -966,7 +966,7 @@ void SystemTrayApplet::layoutTray()
     setBackground();
 }
 
-void SystemTrayApplet::paletteChange(const QPalette & /* oldPalette */)
+void SystemTrayApplet::paletteChange(const TQPalette & /* oldPalette */)
 {
     setBackground();
 }
@@ -985,17 +985,17 @@ void SystemTrayApplet::setBackground()
 }
 
 
-TrayEmbed::TrayEmbed( bool kdeTray, QWidget* parent )
+TrayEmbed::TrayEmbed( bool kdeTray, TQWidget* parent )
     : QXEmbed( parent ), kde_tray( kdeTray )
 {
     hide();
-    m_scaledWidget = new QWidget(parent);
+    m_scaledWidget = new TQWidget(parent);
     m_scaledWidget->hide();
 }
 
 void TrayEmbed::getIconSize(int defaultIconSize)
 {
-    QSize minSize = minimumSizeHint();
+    TQSize minSize = minimumSizeHint();
     
     int width = minSize.width();
     int height = minSize.height();
@@ -1011,11 +1011,11 @@ void TrayEmbed::getIconSize(int defaultIconSize)
 
 void TrayEmbed::setBackground()
 {
-    const QPixmap *pbg = parentWidget()->backgroundPixmap();
+    const TQPixmap *pbg = parentWidget()->backgroundPixmap();
     
     if (pbg)
     {
-        QPixmap bg(width(), height());
+        TQPixmap bg(width(), height());
         bg.fill(parentWidget(), pos());
         setPaletteBackgroundPixmap(bg);
         setBackgroundOrigin(WidgetOrigin);

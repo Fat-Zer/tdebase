@@ -29,11 +29,11 @@
 #include <kcommand.h>
 #include <kbookmark.h>
 
-#include <qptrstack.h>
-#include <qobject.h>
+#include <tqptrstack.h>
+#include <tqobject.h>
 
 // part pure
-class ImportCommand : public QObject, public KCommand, public IKEBCommand
+class ImportCommand : public TQObject, public KCommand, public IKEBCommand
 {
    Q_OBJECT
 public:
@@ -41,24 +41,24 @@ public:
       : KCommand(), m_utf8(false), m_folder(false), m_cleanUpCmd(0L)
    { ; }
 
-   virtual void import(const QString &fileName, bool folder) = 0;
+   virtual void import(const TQString &fileName, bool folder) = 0;
 
-   virtual QString name() const;
-   virtual QString visibleName() const { return m_visibleName; }
-   virtual QString requestFilename() const = 0;
+   virtual TQString name() const;
+   virtual TQString visibleName() const { return m_visibleName; }
+   virtual TQString requestFilename() const = 0;
 
-   static ImportCommand* performImport(const QCString &, QWidget *);
-   static ImportCommand* importerFactory(const QCString &);
+   static ImportCommand* performImport(const TQCString &, TQWidget *);
+   static ImportCommand* importerFactory(const TQCString &);
 
    virtual ~ImportCommand()
    { ; }
 
    virtual void execute();
    virtual void unexecute();
-   virtual QString affectedBookmarks() const;
+   virtual TQString affectedBookmarks() const;
 
-   QString groupAddress() const { return m_group; }
-   QString folder() const;
+   TQString groupAddress() const { return m_group; }
+   TQString folder() const;
 
 protected:
    /**
@@ -67,7 +67,7 @@ protected:
     * @param icon icon for the new folder, if @p folder isn't empty
     * @param utf8 true if the HTML is in utf-8 encoding
     */
-   void init(const QString &fileName, bool folder, const QString &icon, bool utf8)
+   void init(const TQString &fileName, bool folder, const TQString &icon, bool utf8)
    {
       m_fileName = fileName;
       m_folder = folder;
@@ -79,10 +79,10 @@ protected:
    virtual void doExecute(const KBookmarkGroup &) = 0;
 
 protected:
-   QString m_visibleName;
-   QString m_fileName;
-   QString m_icon;
-   QString m_group;
+   TQString m_visibleName;
+   TQString m_fileName;
+   TQString m_icon;
+   TQString m_group;
    bool m_utf8;
 
 private:
@@ -95,8 +95,8 @@ class XBELImportCommand : public ImportCommand
 {
 public:
    XBELImportCommand() : ImportCommand() { ; }
-   virtual void import(const QString &fileName, bool folder) = 0;
-   virtual QString requestFilename() const = 0;
+   virtual void import(const TQString &fileName, bool folder) = 0;
+   virtual TQString requestFilename() const = 0;
 private:
    virtual void doCreateHoldingFolder(KBookmarkGroup &bkGroup);
    virtual void doExecute(const KBookmarkGroup &);
@@ -106,20 +106,20 @@ class GaleonImportCommand : public XBELImportCommand
 {
 public:
    GaleonImportCommand() : XBELImportCommand() { m_visibleName = i18n("Galeon"); }
-   virtual void import(const QString &fileName, bool folder) {
+   virtual void import(const TQString &fileName, bool folder) {
       init(fileName, folder, "", false);
    }
-   virtual QString requestFilename() const;
+   virtual TQString requestFilename() const;
 };
 
 class KDE2ImportCommand : public XBELImportCommand
 {
 public:
    KDE2ImportCommand() : XBELImportCommand() { m_visibleName = i18n("KDE"); }
-   virtual void import(const QString &fileName, bool folder) {
+   virtual void import(const TQString &fileName, bool folder) {
       init(fileName, folder, "", false);
    }
-   virtual QString requestFilename() const;
+   virtual TQString requestFilename() const;
 };
 
 // part pure
@@ -127,8 +127,8 @@ class HTMLImportCommand : public ImportCommand
 {
 public:
    HTMLImportCommand() : ImportCommand() { ; }
-   virtual void import(const QString &fileName, bool folder) = 0;
-   virtual QString requestFilename() const = 0;
+   virtual void import(const TQString &fileName, bool folder) = 0;
+   virtual TQString requestFilename() const = 0;
 private:
    virtual void doExecute(const KBookmarkGroup &);
 };
@@ -137,30 +137,30 @@ class NSImportCommand : public HTMLImportCommand
 {
 public:
    NSImportCommand() : HTMLImportCommand() { m_visibleName = i18n("Netscape"); }
-   virtual void import(const QString &fileName, bool folder) {
+   virtual void import(const TQString &fileName, bool folder) {
       init(fileName, folder, "netscape", false);
    }
-   virtual QString requestFilename() const;
+   virtual TQString requestFilename() const;
 };
 
 class MozImportCommand : public HTMLImportCommand
 {
 public:
    MozImportCommand() : HTMLImportCommand() { m_visibleName = i18n("Mozilla"); }
-   virtual void import(const QString &fileName, bool folder) {
+   virtual void import(const TQString &fileName, bool folder) {
       init(fileName, folder, "mozilla", true);
    }
-   virtual QString requestFilename() const;
+   virtual TQString requestFilename() const;
 };
 
 class IEImportCommand : public ImportCommand
 {
 public:
    IEImportCommand() : ImportCommand() { m_visibleName = i18n("IE"); }
-   virtual void import(const QString &fileName, bool folder) {
+   virtual void import(const TQString &fileName, bool folder) {
       init(fileName, folder, "", false);
    }
-   virtual QString requestFilename() const;
+   virtual TQString requestFilename() const;
 private:
    virtual void doExecute(const KBookmarkGroup &);
 };
@@ -169,10 +169,10 @@ class OperaImportCommand : public ImportCommand
 {
 public:
    OperaImportCommand() : ImportCommand() { m_visibleName = i18n("Opera"); }
-   virtual void import(const QString &fileName, bool folder) {
+   virtual void import(const TQString &fileName, bool folder) {
       init(fileName, folder, "opera", false);
    }
-   virtual QString requestFilename() const;
+   virtual TQString requestFilename() const;
 private:
    virtual void doExecute(const KBookmarkGroup &);
 };
@@ -181,10 +181,10 @@ class CrashesImportCommand : public ImportCommand
 {
 public:
    CrashesImportCommand() : ImportCommand() { m_visibleName = i18n("Crashes"); }
-   virtual void import(const QString &fileName, bool folder) {
+   virtual void import(const TQString &fileName, bool folder) {
       init(fileName, folder, "core", false);
    }
-   virtual QString requestFilename() const;
+   virtual TQString requestFilename() const;
 private:
    virtual void doExecute(const KBookmarkGroup &);
 };

@@ -19,7 +19,7 @@
 #ifndef KONSOLEBOOKMARKMENU_H
 #define KONSOLEBOOKMARKMENU_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kbookmark.h>
 #include <kbookmarkmenu.h>
 
@@ -44,7 +44,7 @@ public:
     KonsoleBookmarkMenu( KBookmarkManager* mgr,
                          KonsoleBookmarkHandler * _owner, KPopupMenu * _parentMenu,
                          KActionCollection *collec, bool _isRoot,
-                         bool _add = true, const QString & parentAddress = "");
+                         bool _add = true, const TQString & parentAddress = "");
 
     void fillBookmarkMenu();
 

@@ -27,17 +27,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //#include <kapplication.h>
 //#include <kconfig.h>
 
-#include <qdatetime.h>
-#include <qpixmap.h>
-#include <qpainter.h>
-#include <qtimer.h>
+#include <tqdatetime.h>
+#include <tqpixmap.h>
+#include <tqpainter.h>
+#include <tqtimer.h>
 
-KdmClock::KdmClock( QWidget *parent, const char *name )
+KdmClock::KdmClock( TQWidget *parent, const char *name )
 	: inherited( parent, name )
 {
 	// start timer
-	QTimer *timer = new QTimer( this );
-	connect( timer, SIGNAL(timeout()), SLOT(timeout()) );
+	TQTimer *timer = new TQTimer( this );
+	connect( timer, TQT_SIGNAL(timeout()), TQT_SLOT(timeout()) );
 	timer->start( 1000 );
 
 	// reading rc file
@@ -50,7 +50,7 @@ KdmClock::KdmClock( QWidget *parent, const char *name )
 	mBorder = false;//config->readNumEntry( "border", FALSE );
 
 	//config->setGroup( "Font" );
-	mFont.setFamily( QString::fromLatin1("Utopia")/*config->readEntry( "Family", "Utopia")*/ );
+	mFont.setFamily( TQString::fromLatin1("Utopia")/*config->readEntry( "Family", "Utopia")*/ );
 	mFont.setPointSize( 51/*config->readNumEntry( "Point Size", 51)*/ );
 	mFont.setWeight( 75/*config->readNumEntry( "Weight", 75)*/ );
 	mFont.setItalic( TRUE/*config->readNumEntry( "Italic",TRUE )*/ );
@@ -80,7 +80,7 @@ KdmClock::KdmClock( QWidget *parent, const char *name )
 }
 
 
-void KdmClock::showEvent( QShowEvent * )
+void KdmClock::showEvent( TQShowEvent * )
 {
 	repaint();
 }
@@ -91,25 +91,25 @@ void KdmClock::timeout()
 	repaint();
 }
 
-void KdmClock::paintEvent( QPaintEvent * )
+void KdmClock::paintEvent( TQPaintEvent * )
 {
 	if (!isVisible())
 		return;
 
-	QPainter p( this );
+	TQPainter p( this );
 	drawFrame( &p );
 
-	QPixmap pm( contentsRect().size() );
-	QPainter paint;
+	TQPixmap pm( contentsRect().size() );
+	TQPainter paint;
 	paint.begin( &pm );
 	paint.fillRect( contentsRect(), mBackgroundBrush );
 
 	// get current time
-	QTime time = QTime::currentTime();
+	TQTime time = TQTime::currentTime();
 
 /*
 	if (mDigital) {
-		QString buf;
+		TQString buf;
 		if (mSecond)
 			buf.sprintf( "%02d:%02d:%02d", time.hour(), time.minute(),
 			             time.second() );
@@ -121,13 +121,13 @@ void KdmClock::paintEvent( QPaintEvent * )
 		paint.drawText( contentsRect(),AlignHCenter|AlignVCenter, buf,-1,0,0 );
 	} else {
 */
-		QPointArray pts;
-		QPoint cp = contentsRect().center() - QPoint( 2,2 );
+		TQPointArray pts;
+		TQPoint cp = contentsRect().center() - TQPoint( 2,2 );
 		int d = QMIN( contentsRect().width()-15,contentsRect().height()-15 );
 		paint.setPen( foregroundColor() );
 		paint.setBrush( foregroundColor() );
 
-		QWMatrix matrix;
+		TQWMatrix matrix;
 		matrix.translate( cp.x(), cp.y() );
 		matrix.scale( d/1000.0F, d/1000.0F );
 

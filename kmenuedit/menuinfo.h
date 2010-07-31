@@ -20,7 +20,7 @@
 #ifndef __menuinfo_h__
 #define __menuinfo_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kshortcut.h>
 #include <kservice.h>
@@ -66,40 +66,40 @@ public:
     void take(MenuEntryInfo *);
 
     // Return a unique sub-menu caption inspired by @p caption
-    QString uniqueMenuCaption(const QString &caption);
+    TQString uniqueMenuCaption(const TQString &caption);
 
     // Return a unique item caption inspired by @p caption but different
     // from @p exclude
-    QString uniqueItemCaption(const QString &caption, const QString &exclude = QString::null);
+    TQString uniqueItemCaption(const TQString &caption, const TQString &exclude = TQString::null);
 
     // Update full id's for this item and all submenus
-    void updateFullId(const QString &parentId);
+    void updateFullId(const TQString &parentId);
 
     // Return a list of existing submenu ids
-    QStringList existingMenuIds();
+    TQStringList existingMenuIds();
 
-    void setCaption(const QString &_caption)
+    void setCaption(const TQString &_caption)
     {
        if (_caption == caption) return;
        caption = _caption;
        setDirty();
     }
 
-    void setIcon(const QString &_icon)
+    void setIcon(const TQString &_icon)
     {
        if (_icon == icon) return;
        icon = _icon;
        setDirty();
     }
 
-    void setGenericName(const QString &_description)
+    void setGenericName(const TQString &_description)
     {
        if (_description == genericname) return;
        genericname = _description;
        setDirty();
     }
 
-    void setComment(const QString &_comment)
+    void setComment(const TQString &_comment)
     {
        if (_comment == comment) return;
        comment = _comment;
@@ -125,16 +125,16 @@ public:
     void setInUse(bool inUse);
     
 public:
-    QString id; // Relative to parent
-    QString fullId; // Name in tree
-    QString caption; // Visible name
-    QString genericname; // Generic description
-    QString comment; // Comment
-    QString directoryFile; // File describing this folder.
-    QString icon; // Icon
-    QPtrList<MenuFolderInfo> subFolders; // Sub menus in this folder
-    QPtrList<MenuEntryInfo> entries; // Menu entries in this folder
-    QPtrList<MenuInfo> initialLayout; // Layout of menu entries according to sycoca
+    TQString id; // Relative to parent
+    TQString fullId; // Name in tree
+    TQString caption; // Visible name
+    TQString genericname; // Generic description
+    TQString comment; // Comment
+    TQString directoryFile; // File describing this folder.
+    TQString icon; // Icon
+    TQPtrList<MenuFolderInfo> subFolders; // Sub menus in this folder
+    TQPtrList<MenuEntryInfo> entries; // Menu entries in this folder
+    TQPtrList<MenuInfo> initialLayout; // Layout of menu entries according to sycoca
     bool dirty;
     bool hidden;
 };
@@ -152,13 +152,13 @@ public:
     }
     ~MenuEntryInfo();
 
-    void setCaption(const QString &_caption);
-    void setDescription(const QString &_description);
-    void setIcon(const QString &_icon);
+    void setCaption(const TQString &_caption);
+    void setDescription(const TQString &_description);
+    void setIcon(const TQString &_icon);
     
-    QString menuId() const { return service->menuId(); }
+    TQString menuId() const { return service->menuId(); }
     
-    QString file() const { return service->desktopEntryPath(); }
+    TQString file() const { return service->desktopEntryPath(); }
     
     KShortcut shortcut();
     void setShortcut(const KShortcut &_shortcut);
@@ -177,9 +177,9 @@ public:
     KDesktopFile *desktopFile();
 
 public:
-    QString caption;
-    QString description;
-    QString icon;
+    TQString caption;
+    TQString description;
+    TQString icon;
     KService::Ptr service;
     KDesktopFile *df;
     KShortcut shortCut;

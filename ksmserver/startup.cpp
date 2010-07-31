@@ -56,14 +56,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <limits.h>
 #endif
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qdatastream.h>
-#include <qptrstack.h>
-#include <qpushbutton.h>
-#include <qmessagebox.h>
-#include <qguardedptr.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqdatastream.h>
+#include <tqptrstack.h>
+#include <tqpushbutton.h>
+#include <tqmessagebox.h>
+#include <tqguardedptr.h>
+#include <tqtimer.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -88,7 +88,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*!  Restores the previous session. Ensures the window manager is
   running (if specified).
  */
-void KSMServer::restoreSession( QString sessionName )
+void KSMServer::restoreSession( TQString sessionName )
 {
     if( state != Idle )
         return;
@@ -104,17 +104,17 @@ void KSMServer::restoreSession( QString sessionName )
     int count =  config->readNumEntry( "count" );
     appsToStart = count;
 
-    QValueList<QStringList> wmCommands;
+    TQValueList<TQStringList> wmCommands;
     if ( !wm.isEmpty() ) {
 	for ( int i = 1; i <= count; i++ ) {
-	    QString n = QString::number(i);
-	    if ( wm == config->readEntry( QString("program")+n ) ) {
-		wmCommands << config->readListEntry( QString("restartCommand")+n );
+	    TQString n = TQString::number(i);
+	    if ( wm == config->readEntry( TQString("program")+n ) ) {
+		wmCommands << config->readListEntry( TQString("restartCommand")+n );
 	    }
 	}
     }
     if ( wmCommands.isEmpty() )
-        wmCommands << ( QStringList() << wm );
+        wmCommands << ( TQStringList() << wm );
 
     publishProgress( appsToStart, true );
     connectDCOPSignal( launcher, launcher, "autoStart0Done()",
@@ -131,7 +131,7 @@ void KSMServer::restoreSession( QString sessionName )
         // visually more appealing startup.
         for (uint i = 0; i < wmCommands.count(); i++)
             startApplication( wmCommands[i] );
-        QTimer::singleShot( 4000, this, SLOT( autoStart0() ) );
+        TQTimer::singleShot( 4000, this, TQT_SLOT( autoStart0() ) );
     } else {
         autoStart0();
     }
@@ -158,7 +158,7 @@ void KSMServer::startDefaultSession()
     connectDCOPSignal( launcher, launcher, "autoStart2Done()",
                        "autoStart2Done()", true);
     startApplication( wm );
-    QTimer::singleShot( 4000, this, SLOT( autoStart0() ) );
+    TQTimer::singleShot( 4000, this, TQT_SLOT( autoStart0() ) );
 }
 
 
@@ -192,7 +192,7 @@ void KSMServer::autoStart0Done()
     connectDCOPSignal( "kcminit", "kcminit", "phase1Done()",
                        "kcmPhase1Done()", true);
     state = KcmInitPhase1;
-    QTimer::singleShot( 10000, this, SLOT( kcmPhase1Timeout())); // protection
+    TQTimer::singleShot( 10000, this, TQT_SLOT( kcmPhase1Timeout())); // protection
     DCOPRef( "kcminit", "kcminit" ).send( "runPhase1" );
 }
 
@@ -232,7 +232,7 @@ void KSMServer::autoStart1Done()
         return;
     kdDebug( 1218 ) << "Autostart 1 done" << endl;
     lastAppStarted = 0;
-    lastIdStarted = QString::null;
+    lastIdStarted = TQString::null;
     state = Restoring;
     if( defaultSession()) {
         autoStart2();
@@ -258,20 +258,20 @@ void KSMServer::tryRestoreNext()
     while ( lastAppStarted < appsToStart ) {
         publishProgress ( appsToStart - lastAppStarted );
         lastAppStarted++;
-        QString n = QString::number(lastAppStarted);
-        QStringList restartCommand = config->readListEntry( QString("restartCommand")+n );
+        TQString n = TQString::number(lastAppStarted);
+        TQStringList restartCommand = config->readListEntry( TQString("restartCommand")+n );
         if ( restartCommand.isEmpty() ||
-             (config->readNumEntry( QString("restartStyleHint")+n ) == SmRestartNever)) {
+             (config->readNumEntry( TQString("restartStyleHint")+n ) == SmRestartNever)) {
             continue;
         }
-        if ( wm == config->readEntry( QString("program")+n ) )
+        if ( wm == config->readEntry( TQString("program")+n ) )
             continue; // wm already started
-        if( config->readBoolEntry( QString( "wasWm" )+n, false ))
+        if( config->readBoolEntry( TQString( "wasWm" )+n, false ))
             continue; // it was wm before, but not now, don't run it (some have --replace in command :(  )
         startApplication( restartCommand,
-                          config->readEntry( QString("clientMachine")+n ),
-                          config->readEntry( QString("userId")+n ));
-        lastIdStarted = config->readEntry( QString("clientId")+n );
+                          config->readEntry( TQString("clientMachine")+n ),
+                          config->readEntry( TQString("userId")+n ));
+        lastIdStarted = config->readEntry( TQString("clientId")+n );
         if ( !lastIdStarted.isEmpty() ) {
             restoreTimer.start( 2000, TRUE );
             return; // we get called again from the clientRegistered handler
@@ -279,7 +279,7 @@ void KSMServer::tryRestoreNext()
     }
 
     appsToStart = 0;
-    lastIdStarted = QString::null;
+    lastIdStarted = TQString::null;
     publishProgress( 0 );
 
     autoStart2();
@@ -299,7 +299,7 @@ void KSMServer::autoStart2()
     DCOPRef( "kdesktop", "KDesktopIface" ).send( "runAutoStart" );
     connectDCOPSignal( "kcminit", "kcminit", "phase2Done()",
                        "kcmPhase2Done()", true);
-    QTimer::singleShot( 10000, this, SLOT( kcmPhase2Timeout())); // protection
+    TQTimer::singleShot( 10000, this, TQT_SLOT( kcmPhase2Timeout())); // protection
     DCOPRef( "kcminit", "kcminit" ).send( "runPhase2" );
     if( !defaultSession())
         restoreLegacySession( KGlobal::config());
@@ -361,14 +361,14 @@ bool KSMServer::checkStartupSuspend()
     return false;
 }
 
-void KSMServer::suspendStartup( QCString app )
+void KSMServer::suspendStartup( TQCString app )
 {
     if( !startupSuspendCount.contains( app ))
         startupSuspendCount[ app ] = 0;
     ++startupSuspendCount[ app ];
 }
 
-void KSMServer::resumeStartup( QCString app )
+void KSMServer::resumeStartup( TQCString app )
 {
     if( !startupSuspendCount.contains( app ))
         return;
@@ -415,7 +415,7 @@ void KSMServer::publishProgress( int progress, bool max  )
 }
 
 
-void KSMServer::upAndRunning( const QString& msg )
+void KSMServer::upAndRunning( const TQString& msg )
 {
     DCOPRef( "ksplash" ).send( "upAndRunning", msg );
     XEvent e;

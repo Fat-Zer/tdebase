@@ -19,14 +19,14 @@
 
 #include "kbackedcombobox.h"
 
-void KBackedComboBox::insertItem( const QString &id, const QString &name )
+void KBackedComboBox::insertItem( const TQString &id, const TQString &name )
 {
     id2name[id] = name;
     name2id[name] = id;
     KComboBox::insertItem( name );
 }
 
-void KBackedComboBox::setCurrentId( const QString &id )
+void KBackedComboBox::setCurrentId( const TQString &id )
 {
     if (id2name.contains( id ))
 	setCurrentItem( id2name[id] );
@@ -34,7 +34,7 @@ void KBackedComboBox::setCurrentId( const QString &id )
 	setCurrentItem( 0 );
 }
 
-const QString &KBackedComboBox::currentId() const
+const TQString &KBackedComboBox::currentId() const
 {
     return name2id[currentText()];
 }

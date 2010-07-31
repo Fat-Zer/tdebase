@@ -1,5 +1,5 @@
 /****************************************************************************
-** Implementation of QWidget class
+** Implementation of TQWidget class
 **
 ** Created : 931031
 **
@@ -39,11 +39,11 @@
 
 #if QT_VERSION >= 0x030100
 
-#include <qapplication.h>
-#include <qwidgetintdict.h>
+#include <tqapplication.h>
+#include <tqwidgetintdict.h>
 #include <kglobal.h>
 
-// resolve the conflict between X11's FocusIn and QEvent::FocusIn
+// resolve the conflict between X11's FocusIn and TQEvent::FocusIn
 const int XFocusOut = FocusOut;
 const int XFocusIn = FocusIn;
 #undef FocusOut
@@ -65,10 +65,10 @@ public:
     void unhook();
 
     XtAppContext appContext, ownContext;
-    QMemArray<XtEventDispatchProc> dispatchers;
-    QWidgetIntDict mapper;
+    TQMemArray<XtEventDispatchProc> dispatchers;
+    TQWidgetIntDict mapper;
 
-    QIntDict<QSocketNotifier> socknotDict;
+    TQIntDict<TQSocketNotifier> socknotDict;
     bool activate_timers;
     XtIntervalId timerid;
 
@@ -87,7 +87,7 @@ static XEvent* last_xevent = 0;
   Rationale: An XEvent handled by Qt does not go through the Xt event
   handlers, and the internal state of Xt/Motif widgets will not be
   updated.  This function should only be used if an event delivered by
-  Qt to a QWidget needs to be sent to an Xt/Motif widget.
+  Qt to a TQWidget needs to be sent to an Xt/Motif widget.
 */
 bool QXtEventLoop::redeliverEvent( XEvent *event )
 {
@@ -123,7 +123,7 @@ void QXtEventLoopPrivate::hookMeUp()
     int et;
     for ( et = 2; et < LASTEvent; et++ )
 	dispatchers[ et ] =
-	    XtSetEventDispatcher( QPaintDevice::x11AppDisplay(),
+	    XtSetEventDispatcher( TQPaintDevice::x11AppDisplay(),
 				  et, ::qmotif_event_dispatcher );
 }
 
@@ -135,29 +135,29 @@ void QXtEventLoopPrivate::unhook()
     // ### TODO extensions?
     int et;
     for ( et = 2; et < LASTEvent; et++ )
-	(void) XtSetEventDispatcher( QPaintDevice::x11AppDisplay(),
+	(void) XtSetEventDispatcher( TQPaintDevice::x11AppDisplay(),
 				     et, dispatchers[ et ] );
     dispatchers.resize( 0 );
 
     /*
       We cannot destroy the app context here because it closes the X
-      display, something QApplication does as well a bit later.
+      display, something TQApplication does as well a bit later.
       if ( ownContext )
           XtDestroyApplicationContext( ownContext );
      */
     appContext = ownContext = 0;
 }
 
-extern bool qt_try_modal( QWidget *, XEvent * ); // defined in qapplication_x11.cpp
+extern bool qt_try_modal( TQWidget *, XEvent * ); // defined in qapplication_x11.cpp
 Boolean qmotif_event_dispatcher( XEvent *event )
 {
-    QApplication::sendPostedEvents();
+    TQApplication::sendPostedEvents();
 
-    QWidgetIntDict *mapper = &static_d->mapper;
-    QWidget* qMotif = mapper->find( event->xany.window );
-    if ( !qMotif && QWidget::find( event->xany.window) == 0 ) {
+    TQWidgetIntDict *mapper = &static_d->mapper;
+    TQWidget* qMotif = mapper->find( event->xany.window );
+    if ( !qMotif && TQWidget::find( event->xany.window) == 0 ) {
 	// event is not for Qt, try Xt
-	Display* dpy = QPaintDevice::x11AppDisplay();
+	Display* dpy = TQPaintDevice::x11AppDisplay();
 	Widget w = XtWindowToWidget( dpy, event->xany.window );
 	while ( w && ! ( qMotif = mapper->find( XtWindow( w ) ) ) ) {
 	    if ( XtIsShell( w ) ) {
@@ -201,11 +201,11 @@ Boolean qmotif_event_dispatcher( XEvent *event )
 	return True;
 
 
-    if ( QApplication::activePopupWidget() )
+    if ( TQApplication::activePopupWidget() )
 	// we get all events through the popup grabs.  discard the event
 	return True;
 
-    if ( qMotif && QApplication::activeModalWidget() ) {
+    if ( qMotif && TQApplication::activeModalWidget() ) {
 	if ( !qt_try_modal(qMotif, event) )
 	    return True;
 
@@ -229,13 +229,13 @@ Boolean qmotif_event_dispatcher( XEvent *event )
     QXtEventLoop only provides a few public functions, but is the brains
     behind the integration.  QXtEventLoop is responsible for initializing
     the Xt toolkit and the Xt application context.  It does not open a
-    connection to the X server, this is done by using QApplication.
+    connection to the X server, this is done by using TQApplication.
 
     The only member function in QXtEventLoop that depends on an X server
     connection is QXtEventLoop::initialize(). QXtEventLoop must be created before
-    QApplication.
+    TQApplication.
 
-    Example usage of QXtEventLoop and QApplication:
+    Example usage of QXtEventLoop and TQApplication:
 
     \code
     static char *resources[] = {
@@ -247,7 +247,7 @@ Boolean qmotif_event_dispatcher( XEvent *event )
 	QXtEventLoop integrator( "AppClass" );
 	XtAppSetFallbackResources( integrator.applicationContext(),
 				   resources );
-	QApplication app( argc, argv );
+	TQApplication app( argc, argv );
 
 	...
 
@@ -264,7 +264,7 @@ Boolean qmotif_event_dispatcher( XEvent *event )
 
   All arguments passed to this function (\a applicationClass, \a
   options and \a numOptions) are used to call XtDisplayInitialize()
-  after QApplication has been constructed.
+  after TQApplication has been constructed.
 */
 
 
@@ -311,7 +311,7 @@ void QXtEventLoop::appStartingUp()
 {
     int argc = qApp->argc();
     XtDisplayInitialize( d->appContext,
-			 QPaintDevice::x11AppDisplay(),
+			 TQPaintDevice::x11AppDisplay(),
 			 qApp->name(),
 			 d->applicationClass,
 			 d->options,
@@ -329,7 +329,7 @@ void QXtEventLoop::appClosingDown()
 
 /*!\internal
  */
-void QXtEventLoop::registerWidget( QWidget* w )
+void QXtEventLoop::registerWidget( TQWidget* w )
 {
     if ( !static_d )
 	return;
@@ -339,7 +339,7 @@ void QXtEventLoop::registerWidget( QWidget* w )
 
 /*!\internal
  */
-void QXtEventLoop::unregisterWidget( QWidget* w )
+void QXtEventLoop::unregisterWidget( TQWidget* w )
 {
     if ( !static_d )
 	return;
@@ -352,7 +352,7 @@ void QXtEventLoop::unregisterWidget( QWidget* w )
 void qmotif_socknot_handler( XtPointer pointer, int *, XtInputId *id )
 {
     QXtEventLoop *eventloop = (QXtEventLoop *) pointer;
-    QSocketNotifier *socknot = static_d->socknotDict.find( *id );
+    TQSocketNotifier *socknot = static_d->socknotDict.find( *id );
     if ( ! socknot ) // this shouldn't happen
 	return;
     eventloop->setSocketNotifierPending( socknot );
@@ -360,19 +360,19 @@ void qmotif_socknot_handler( XtPointer pointer, int *, XtInputId *id )
 
 /*! \reimp
  */
-void QXtEventLoop::registerSocketNotifier( QSocketNotifier *notifier )
+void QXtEventLoop::registerSocketNotifier( TQSocketNotifier *notifier )
 {
     XtInputMask mask;
     switch ( notifier->type() ) {
-    case QSocketNotifier::Read:
+    case TQSocketNotifier::Read:
 	mask = XtInputReadMask;
 	break;
 
-    case QSocketNotifier::Write:
+    case TQSocketNotifier::Write:
 	mask = XtInputWriteMask;
 	break;
 
-    case QSocketNotifier::Exception:
+    case TQSocketNotifier::Exception:
 	mask = XtInputExceptMask;
 	break;
 
@@ -386,14 +386,14 @@ void QXtEventLoop::registerSocketNotifier( QSocketNotifier *notifier )
 				  qmotif_socknot_handler, this );
     d->socknotDict.insert( id, notifier );
 
-    QEventLoop::registerSocketNotifier( notifier );
+    TQEventLoop::registerSocketNotifier( notifier );
 }
 
 /*! \reimp
  */
-void QXtEventLoop::unregisterSocketNotifier( QSocketNotifier *notifier )
+void QXtEventLoop::unregisterSocketNotifier( TQSocketNotifier *notifier )
 {
-    QIntDictIterator<QSocketNotifier> it( d->socknotDict );
+    TQIntDictIterator<TQSocketNotifier> it( d->socknotDict );
     while ( it.current() && notifier != it.current() )
 	++it;
     if ( ! it.current() ) {
@@ -405,7 +405,7 @@ void QXtEventLoop::unregisterSocketNotifier( QSocketNotifier *notifier )
     XtRemoveInput( it.currentKey() );
     d->socknotDict.remove( it.currentKey() );
 
-    QEventLoop::unregisterSocketNotifier( notifier );
+    TQEventLoop::unregisterSocketNotifier( notifier );
 }
 
 /*! \internal
@@ -422,7 +422,7 @@ bool QXtEventLoop::processEvents( ProcessEventsFlags flags )
 {
     // Qt uses posted events to do lots of delayed operations, like repaints... these
     // need to be delivered before we go to sleep
-    QApplication::sendPostedEvents();
+    TQApplication::sendPostedEvents();
 
     // make sure we fire off Qt's timers
     int ttw = timeToWait();

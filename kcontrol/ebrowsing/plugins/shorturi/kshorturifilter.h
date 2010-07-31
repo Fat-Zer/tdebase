@@ -49,8 +49,8 @@ public:
      * @param parent the parent of this class.
      * @param name the internal name for this object.
      */
-    KShortURIFilter( QObject *parent = 0, const char *name = 0,
-	             const QStringList &args = QStringList() );
+    KShortURIFilter( TQObject *parent = 0, const char *name = 0,
+	             const TQStringList &args = TQStringList() );
 
     /**
      * Destructor
@@ -76,7 +76,7 @@ public:
      *
      * @return the name of the config module.
      */
-    virtual QString configName() const;
+    virtual TQString configName() const;
 
     /**
      * Returns an instance of the module used to configure
@@ -84,7 +84,7 @@ public:
          *
          * @return the config module
          */
-    virtual KCModule* configModule( QWidget*, const char* ) const;
+    virtual KCModule* configModule( TQWidget*, const char* ) const;
 
 public:
 k_dcop:
@@ -95,16 +95,16 @@ private:
     struct URLHint
     {
         URLHint() {}
-        URLHint( QString r, QString p, 
+        URLHint( TQString r, TQString p, 
                  KURIFilterData::URITypes t = KURIFilterData::NET_PROTOCOL )
                : regexp(r), prepend(p), type(t) {}
-        QString regexp; // if this matches, then...
-        QString prepend; // ...prepend this to the url
+        TQString regexp; // if this matches, then...
+        TQString prepend; // ...prepend this to the url
         KURIFilterData::URITypes type;
     };
 
-    QValueList<URLHint> m_urlHints;
-    QString m_strDefaultProtocol;
+    TQValueList<URLHint> m_urlHints;
+    TQString m_strDefaultProtocol;
     bool m_bVerbose;
 };
 

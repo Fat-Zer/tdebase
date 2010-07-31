@@ -30,16 +30,16 @@
 #include <kdebug.h>
 #include <kapplication.h>
 
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <ktextedit.h>
-#include <qvbox.h>
-#include <qfile.h>
+#include <tqvbox.h>
+#include <tqfile.h>
 
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 #include <netwm.h>
 #endif
 
-void Widgets::handleXGeometry(QWidget * dlg)
+void Widgets::handleXGeometry(TQWidget * dlg)
 {
 #ifdef Q_WS_X11
     if ( ! kapp->geometryArgument().isEmpty()) {
@@ -56,16 +56,16 @@ void Widgets::handleXGeometry(QWidget * dlg)
 #endif
 }
 
-bool Widgets::inputBox(QWidget *parent, const QString& title, const QString& text, const QString& init, QString &result)
+bool Widgets::inputBox(TQWidget *parent, const TQString& title, const TQString& text, const TQString& init, TQString &result)
 {
   bool ok;
-  QString str = KInputDialog::text( title, text, init, &ok, parent, 0, 0, QString::null );
+  TQString str = KInputDialog::text( title, text, init, &ok, parent, 0, 0, TQString::null );
   if ( ok )
     result = str;
   return ok;
 }
 
-bool Widgets::passwordBox(QWidget *parent, const QString& title, const QString& text, QCString &result)
+bool Widgets::passwordBox(TQWidget *parent, const TQString& title, const TQString& text, TQCString &result)
 {
   KPasswordDialog dlg( KPasswordDialog::Password, false, 0, parent );
 
@@ -75,13 +75,13 @@ bool Widgets::passwordBox(QWidget *parent, const QString& title, const QString& 
 
   handleXGeometry(&dlg);
 
-  bool retcode = (dlg.exec() == QDialog::Accepted);
+  bool retcode = (dlg.exec() == TQDialog::Accepted);
   if ( retcode )
     result = dlg.password();
   return retcode;
 }
 
-int Widgets::textBox(QWidget *parent, int width, int height, const QString& title, const QString& file)
+int Widgets::textBox(TQWidget *parent, int width, int height, const TQString& title, const TQString& file)
 {
 //  KTextBox dlg(parent, 0, TRUE, width, height, file);
   KDialogBase dlg( parent, 0, true, title, KDialogBase::Ok, KDialogBase::Ok );
@@ -90,23 +90,23 @@ int Widgets::textBox(QWidget *parent, int width, int height, const QString& titl
   KTextEdit *edit = new KTextEdit( dlg.makeVBoxMainWidget() );
   edit->setReadOnly(TRUE);
 
-  QFile f(file);
+  TQFile f(file);
   if (!f.open(IO_ReadOnly))
   {
     kdError() << i18n("kdialog: could not open file ") << file << endl;
     return -1;
   }
-  QTextStream s(&f);
+  TQTextStream s(&f);
 
   while (!s.eof())
     edit->append(s.readLine());
 
-  edit->moveCursor(QTextEdit::MoveHome, false);
+  edit->moveCursor(TQTextEdit::MoveHome, false);
 
   f.close();
 
   if ( width > 0 && height > 0 )
-      dlg.setInitialSize( QSize( width, height ) );
+      dlg.setInitialSize( TQSize( width, height ) );
 
   handleXGeometry(&dlg);
   dlg.setCaption(title);
@@ -114,17 +114,17 @@ int Widgets::textBox(QWidget *parent, int width, int height, const QString& titl
   return 0;
 }
 
-int Widgets::textInputBox(QWidget *parent, int width, int height, const QString& title, const QStringList& args, QCString &result)
+int Widgets::textInputBox(TQWidget *parent, int width, int height, const TQString& title, const TQStringList& args, TQCString &result)
 {
 //  KTextBox dlg(parent, 0, TRUE, width, height, file);
   KDialogBase dlg( parent, 0, true, title, KDialogBase::Ok, KDialogBase::Ok );
 
   kapp->setTopWidget( &dlg );
-  QVBox* vbox = dlg.makeVBoxMainWidget();
+  TQVBox* vbox = dlg.makeVBoxMainWidget();
 
   if( args.count() > 0 )
   {
-    QLabel *label = new QLabel(vbox);
+    TQLabel *label = new TQLabel(vbox);
     label->setText(args[0]);
   }
 
@@ -137,7 +137,7 @@ int Widgets::textInputBox(QWidget *parent, int width, int height, const QString&
     edit->setText( args[1] );
 
   if ( width > 0 && height > 0 )
-    dlg.setInitialSize( QSize( width, height ) );
+    dlg.setInitialSize( TQSize( width, height ) );
 
   handleXGeometry(&dlg);
   dlg.setCaption(title);
@@ -146,17 +146,17 @@ int Widgets::textInputBox(QWidget *parent, int width, int height, const QString&
   return 0;
 }
 
-bool Widgets::comboBox(QWidget *parent, const QString& title, const QString& text, const QStringList& args, 
-		       const QString& defaultEntry, QString &result)
+bool Widgets::comboBox(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, 
+		       const TQString& defaultEntry, TQString &result)
 {
   KDialogBase dlg( parent, 0, true, title, KDialogBase::Ok|KDialogBase::Cancel,
                    KDialogBase::Ok );
 
   kapp->setTopWidget( &dlg );
   dlg.setCaption(title);
-  QVBox* vbox = dlg.makeVBoxMainWidget();
+  TQVBox* vbox = dlg.makeVBoxMainWidget();
 
-  QLabel label (vbox);
+  TQLabel label (vbox);
   label.setText (text);
   KComboBox combo (vbox);
   combo.insertStringList (args);
@@ -164,7 +164,7 @@ bool Widgets::comboBox(QWidget *parent, const QString& title, const QString& tex
 
   handleXGeometry(&dlg);
 
-  bool retcode = (dlg.exec() == QDialog::Accepted);
+  bool retcode = (dlg.exec() == TQDialog::Accepted);
 
   if (retcode)
     result = combo.currentText();
@@ -172,8 +172,8 @@ bool Widgets::comboBox(QWidget *parent, const QString& title, const QString& tex
   return retcode;
 }
 
-bool Widgets::listBox(QWidget *parent, const QString& title, const QString& text, const QStringList& args, 
-		      const QString& defaultEntry, QString &result)
+bool Widgets::listBox(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, 
+		      const TQString& defaultEntry, TQString &result)
 {
   KListBoxDialog box(text,parent);
 
@@ -187,23 +187,23 @@ bool Widgets::listBox(QWidget *parent, const QString& title, const QString& text
 
   handleXGeometry(&box);
 
-  bool retcode = (box.exec() == QDialog::Accepted);
+  bool retcode = (box.exec() == TQDialog::Accepted);
   if ( retcode )
     result = args[ box.currentItem()*2 ];
   return retcode;
 }
 
 
-bool Widgets::checkList(QWidget *parent, const QString& title, const QString& text, const QStringList& args, bool separateOutput, QStringList &result)
+bool Widgets::checkList(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, bool separateOutput, TQStringList &result)
 {
-  QStringList entries, tags;
-  QString rs;
+  TQStringList entries, tags;
+  TQString rs;
 
   result.clear();
 
   KListBoxDialog box(text,parent);
 
-  QListBox &table = box.getTable();
+  TQListBox &table = box.getTable();
 
   kapp->setTopWidget( &box );
   box.setCaption(title);
@@ -218,12 +218,12 @@ bool Widgets::checkList(QWidget *parent, const QString& title, const QString& te
   table.setCurrentItem(0); // This is to circumvent a Qt bug
 
   for (unsigned int i=0; i+2<args.count(); i += 3) {
-    table.setSelected( i/3, args[i+2] == QString::fromLatin1("on") );
+    table.setSelected( i/3, args[i+2] == TQString::fromLatin1("on") );
   }
 
   handleXGeometry(&box);
 
-  bool retcode = (box.exec() == QDialog::Accepted);
+  bool retcode = (box.exec() == TQDialog::Accepted);
 
   if ( retcode ) {
     if (separateOutput) {
@@ -233,7 +233,7 @@ bool Widgets::checkList(QWidget *parent, const QString& title, const QString& te
     } else {
       for (unsigned int i=0; i<table.count(); i++)
         if (table.isSelected(i))
-          rs += QString::fromLatin1("\"") + tags[i] + QString::fromLatin1("\" ");
+          rs += TQString::fromLatin1("\"") + tags[i] + TQString::fromLatin1("\" ");
       result.append(rs);
     }
   }
@@ -241,13 +241,13 @@ bool Widgets::checkList(QWidget *parent, const QString& title, const QString& te
 }
 
 
-bool Widgets::radioBox(QWidget *parent, const QString& title, const QString& text, const QStringList& args, QString &result)
+bool Widgets::radioBox(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, TQString &result)
 {
-  QStringList entries, tags;
+  TQStringList entries, tags;
 
   KListBoxDialog box(text,parent);
 
-  QListBox &table = box.getTable();
+  TQListBox &table = box.getTable();
 
   kapp->setTopWidget( &box );
   box.setCaption(title);
@@ -260,18 +260,18 @@ bool Widgets::radioBox(QWidget *parent, const QString& title, const QString& tex
   table.insertStringList(entries);
 
   for (unsigned int i=0; i+2<args.count(); i += 3) {
-    table.setSelected( i/3, args[i+2] == QString::fromLatin1("on") );
+    table.setSelected( i/3, args[i+2] == TQString::fromLatin1("on") );
   }
 
   handleXGeometry(&box);
 
-  bool retcode = (box.exec() == QDialog::Accepted);
+  bool retcode = (box.exec() == TQDialog::Accepted);
   if ( retcode )
     result = tags[ table.currentItem() ];
   return retcode;
 }
 
-bool Widgets::progressBar(QWidget *parent, const QString& title, const QString& text, int totalSteps)
+bool Widgets::progressBar(TQWidget *parent, const TQString& title, const TQString& text, int totalSteps)
 {
   ProgressDialog dlg( parent, title, text, totalSteps );
   kapp->setTopWidget( &dlg );

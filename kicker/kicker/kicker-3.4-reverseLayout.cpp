@@ -1,8 +1,8 @@
-#include <qfile.h>
-#include <qmap.h>
-#include <qregexp.h>
-#include <qstring.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqmap.h>
+#include <tqregexp.h>
+#include <tqstring.h>
+#include <tqtextstream.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -14,10 +14,10 @@
 struct AppletInfo
 {
     double freeSpace;
-    QString configFile;
-    QString desktopFile;
+    TQString configFile;
+    TQString desktopFile;
 };
-typedef QMap<QString, AppletInfo> AppletInfoMap;
+typedef TQMap<TQString, AppletInfo> AppletInfoMap;
 
 int main(int argc, char** argv)
 {
@@ -25,20 +25,20 @@ int main(int argc, char** argv)
     KCmdLineArgs::init(argc, argv, "kicker", "", "", "", false);
     KApplication app(false, false);
 
-    QStringList stretchableApplets;
+    TQStringList stretchableApplets;
     stretchableApplets << "taskbarapplet.desktop";
 
-    QTextStream in (stdin,  IO_ReadOnly);
-    QTextStream out(stdout, IO_WriteOnly);
+    TQTextStream in (stdin,  IO_ReadOnly);
+    TQTextStream out(stdout, IO_WriteOnly);
 
-    QStringList appletIds;
+    TQStringList appletIds;
     AppletInfoMap applets;
 
-    QRegExp rxGroup("^\\[(.+)\\]$");
-    QRegExp rxKeyValue("([^=]+)=[ \t]*([^\n]+)");
-    QString currentGroup;
+    TQRegExp rxGroup("^\\[(.+)\\]$");
+    TQRegExp rxKeyValue("([^=]+)=[ \t]*([^\n]+)");
+    TQString currentGroup;
 
-    QString line;
+    TQString line;
     while (!(line = in.readLine()).isNull())
     {
         if (rxGroup.search(line) != -1)
@@ -49,12 +49,12 @@ int main(int argc, char** argv)
 
         if (rxKeyValue.search(line) != -1)
         {
-            QString key   = rxKeyValue.cap(1);
-            QString value = rxKeyValue.cap(2);
+            TQString key   = rxKeyValue.cap(1);
+            TQString value = rxKeyValue.cap(2);
 
             if (key == "Applets")
             {
-                appletIds = QStringList::split(",", value);
+                appletIds = TQStringList::split(",", value);
             }
             else if (key == "FreeSpace")
             {
@@ -71,11 +71,11 @@ int main(int argc, char** argv)
         }
     }
 
-    if (QApplication::reverseLayout())
+    if (TQApplication::reverseLayout())
     {
         // Reverse appletIds
-        QStringList appletIdsRev;
-        QStringList::ConstIterator it;
+        TQStringList appletIdsRev;
+        TQStringList::ConstIterator it;
         for (it = appletIds.begin(); it != appletIds.end(); ++it)
         {
             appletIdsRev.prepend(*it);
@@ -108,7 +108,7 @@ int main(int argc, char** argv)
     {
         out << "[General]" << endl;
         out << "Applets2=" << appletIds.join(",") << endl;
-        QStringList::ConstIterator it;
+        TQStringList::ConstIterator it;
         for (it = appletIds.begin(); it != appletIds.end(); ++it)
         {
             out << "[" << *it << "]" << endl;
@@ -117,9 +117,9 @@ int main(int argc, char** argv)
     }
 
     // Build a list of childpanel config files.
-    QStringList childPanelConfigFiles;
+    TQStringList childPanelConfigFiles;
     AppletInfoMap::ConstIterator it2;
-    QStringList::ConstIterator it;
+    TQStringList::ConstIterator it;
     for (it2 = applets.begin(); it2 != applets.end(); ++it2)
     {
         if (it2.data().desktopFile == "childpanelextension.desktop")
@@ -131,8 +131,8 @@ int main(int argc, char** argv)
     if (!childPanelConfigFiles.isEmpty())
     {
         // Create a temporary kconf_update .upd file for updating the childpanels
-        KTempFile tempFile(QString::null, ".upd");
-        QTextStream* upd = tempFile.textStream();
+        KTempFile tempFile(TQString::null, ".upd");
+        TQTextStream* upd = tempFile.textStream();
         for (it = childPanelConfigFiles.begin(); it != childPanelConfigFiles.end(); ++it)
         {
             *upd << "Id=kde_3.4_reverseLayout" << endl;

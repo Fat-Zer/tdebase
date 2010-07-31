@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __MINIPAGER_H
 #define __MINIPAGER_H
 
-#include <qvaluelist.h>
-#include <qintdict.h>
+#include <tqvaluelist.h>
+#include <tqintdict.h>
 
 #include <kpanelapplet.h>
 #include <kwin.h>
@@ -49,8 +49,8 @@ class KMiniPager : public KPanelApplet
     Q_OBJECT
 
 public:
-    KMiniPager(const QString& configFile, Type t = Normal, int actions = 0,
-               QWidget *parent = 0, const char *name = 0);
+    KMiniPager(const TQString& configFile, Type t = Normal, int actions = 0,
+               TQWidget *parent = 0, const char *name = 0);
 
     virtual ~KMiniPager();
 
@@ -78,11 +78,11 @@ public:
 
     void emitRequestFocus() { emit requestFocus(); }
 
-    QPoint clickPos;
+    TQPoint clickPos;
 
 public slots:
     void slotSetDesktop(int desktop);
-    void slotSetDesktopViewport(int desktop, const QPoint& viewport);
+    void slotSetDesktopViewport(int desktop, const TQPoint& viewport);
     void slotSetDesktopCount(int count);
     void slotRefreshViewportCount(int currentDesktop);
     void slotButtonSelected(int desk );
@@ -90,7 +90,7 @@ public slots:
     void slotWindowAdded( WId );
     void slotWindowRemoved( WId );
     void slotWindowChanged( WId, unsigned int );
-    void slotShowMenu( const QPoint&, int );
+    void slotShowMenu( const TQPoint&, int );
     void slotDesktopNamesChanged();
     void slotBackgroundChanged( int );
 
@@ -98,30 +98,30 @@ public slots:
 
 protected:
     void drawButtons();
-    void startDrag( const QPoint &point );
+    void startDrag( const TQPoint &point );
 
     void updateDesktopLayout(int,int,int);
-    void resizeEvent(QResizeEvent*);
-    void wheelEvent( QWheelEvent* e );
+    void resizeEvent(TQResizeEvent*);
+    void wheelEvent( TQWheelEvent* e );
     void showKPager(bool toggleShow);
 
 protected slots:
     void showPager();
-    void applicationRegistered(const QCString &appName);
+    void applicationRegistered(const TQCString &appName);
     void aboutToShowContextMenu();
     void contextMenuActivated(int);
 
 private:
-    QValueList<KMiniPagerButton*> m_desktops;
+    TQValueList<KMiniPagerButton*> m_desktops;
     int m_curDesk;
     int m_rmbDesk;
 
-    QIntDict<KWin::WindowInfo> m_windows;
+    TQIntDict<KWin::WindowInfo> m_windows;
     WId m_activeWindow;
 
-    QButtonGroup *m_group;
+    TQButtonGroup *m_group;
 
-    QGridLayout *m_layout;
+    TQGridLayout *m_layout;
     bool m_useViewports;
     int desktopLayoutOrientation;
     int desktopLayoutX;
@@ -131,7 +131,7 @@ private:
     KWinModule *m_kwin;
     KTextShadowEngine* m_shadowEngine;
 
-    QPopupMenu *m_contextMenu;
+    TQPopupMenu *m_contextMenu;
     PagerSettings *m_settings;
 };
 

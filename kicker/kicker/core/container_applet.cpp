@@ -21,14 +21,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qcursor.h>
+#include <tqcursor.h>
 #include <qxembed.h>
-#include <qframe.h>
-#include <qlayout.h>
-#include <qhbox.h>
-#include <qfile.h>
-#include <qtimer.h>
-#include <qtooltip.h>
+#include <tqframe.h>
+#include <tqlayout.h>
+#include <tqhbox.h>
+#include <tqfile.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -57,12 +57,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define APPLET_MARGIN  1
 
 AppletContainer::AppletContainer(const AppletInfo& info,
-                                 QPopupMenu* opMenu,
+                                 TQPopupMenu* opMenu,
                                  bool immutable,
-                                 QWidget* parent )
+                                 TQWidget* parent )
   : BaseContainer(opMenu,
                   parent,
-                  QString(info.library() + "container").latin1()),
+                  TQString(info.library() + "container").latin1()),
     _info(info),
     _handle(0),
     _layout(0),
@@ -74,28 +74,28 @@ AppletContainer::AppletContainer(const AppletInfo& info,
     setBackgroundOrigin(AncestorOrigin);
 
     //setup appletframe
-    _appletframe = new QHBox(this);
+    _appletframe = new TQHBox(this);
     _appletframe->setBackgroundOrigin( AncestorOrigin );
-    _appletframe->setFrameStyle(QFrame::NoFrame);
+    _appletframe->setFrameStyle(TQFrame::NoFrame);
     _appletframe->installEventFilter(this);
 
     if (orientation() == Horizontal)
     {
-        _layout = new QBoxLayout(this, QBoxLayout::LeftToRight, 0, 0);
+        _layout = new TQBoxLayout(this, TQBoxLayout::LeftToRight, 0, 0);
     }
     else
     {
-        _layout = new QBoxLayout(this, QBoxLayout::TopToBottom, 0, 0);
+        _layout = new TQBoxLayout(this, TQBoxLayout::TopToBottom, 0, 0);
     }
 
-    _layout->setResizeMode( QLayout::FreeResize );
+    _layout->setResizeMode( TQLayout::FreeResize );
 
     _layout->addSpacing(APPLET_MARGIN);
     _handle = new AppletHandle(this);
     _layout->addWidget(_handle, 0);
-    connect(_handle, SIGNAL(moveApplet(const QPoint&)),
-            this, SLOT(moveApplet(const QPoint&)));
-    connect(_handle, SIGNAL(showAppletMenu()), this, SLOT(showAppletMenu()));
+    connect(_handle, TQT_SIGNAL(moveApplet(const TQPoint&)),
+            this, TQT_SLOT(moveApplet(const TQPoint&)));
+    connect(_handle, TQT_SIGNAL(showAppletMenu()), this, TQT_SLOT(showAppletMenu()));
 
     _layout->addWidget(_appletframe, 1);
     _layout->activate();
@@ -124,12 +124,12 @@ AppletContainer::AppletContainer(const AppletInfo& info,
 
     setImmutable(immutable);
 
-    connect(_applet, SIGNAL(updateLayout()), SLOT(slotUpdateLayout()));
-    connect(_applet, SIGNAL(requestFocus()), SLOT(activateWindow()));
-    connect(_applet, SIGNAL(requestFocus(bool)), SLOT(focusRequested(bool)));
+    connect(_applet, TQT_SIGNAL(updateLayout()), TQT_SLOT(slotUpdateLayout()));
+    connect(_applet, TQT_SIGNAL(requestFocus()), TQT_SLOT(activateWindow()));
+    connect(_applet, TQT_SIGNAL(requestFocus(bool)), TQT_SLOT(focusRequested(bool)));
 
-    connect(Kicker::the(), SIGNAL(configurationChanged()),
-            this, SLOT(slotReconfigure()));
+    connect(Kicker::the(), TQT_SIGNAL(configurationChanged()),
+            this, TQT_SLOT(slotReconfigure()));
 }
 
 void AppletContainer::configure()
@@ -193,17 +193,17 @@ void AppletContainer::resetLayout()
 
     if (orientation() == Horizontal)
     {
-        _layout->setDirection( QBoxLayout::LeftToRight );
+        _layout->setDirection( TQBoxLayout::LeftToRight );
     }
     else
     {
-        _layout->setDirection( QBoxLayout::TopToBottom );
+        _layout->setDirection( TQBoxLayout::TopToBottom );
     }
 
     _layout->activate();
 }
 
-void AppletContainer::moveApplet( const QPoint& moveOffset )
+void AppletContainer::moveApplet( const TQPoint& moveOffset )
 {
     _moveOffset = moveOffset;
     emit moveme(this);
@@ -221,7 +221,7 @@ void AppletContainer::showAppletMenu()
         return;
     }
 
-    QPopupMenu *menu = opMenu();
+    TQPopupMenu *menu = opMenu();
 
     Kicker::the()->setInsertionPoint(_handle->mapToGlobal(_handle->rect().center()));
 
@@ -231,7 +231,7 @@ void AppletContainer::showAppletMenu()
             moveApplet(_handle->mapToParent(_handle->rect().center()));
             break;
         case PanelAppletOpMenu::Remove:
-            Kicker::the()->setInsertionPoint(QPoint());
+            Kicker::the()->setInsertionPoint(TQPoint());
             emit removeme(this);
             return; // Above signal will cause this to be deleted.
             break;
@@ -251,7 +251,7 @@ void AppletContainer::showAppletMenu()
             break;
     }
 
-    Kicker::the()->setInsertionPoint(QPoint());
+    Kicker::the()->setInsertionPoint(TQPoint());
     clearOpMenu();
 }
 
@@ -270,7 +270,7 @@ void AppletContainer::slotRemoved(KConfig* config)
         return;
     }
 
-    QFile::remove(locateLocal("config", _configFile));
+    TQFile::remove(locateLocal("config", _configFile));
 }
 
 void AppletContainer::activateWindow()
@@ -314,15 +314,15 @@ void AppletContainer::doSaveConfiguration( KConfigGroup& config,
     }
 }
 
-QPopupMenu* AppletContainer::createOpMenu()
+TQPopupMenu* AppletContainer::createOpMenu()
 {
-    QPopupMenu* opMenu = new PanelAppletOpMenu(_actions, appletOpMenu(),
+    TQPopupMenu* opMenu = new PanelAppletOpMenu(_actions, appletOpMenu(),
                                                appletsOwnMenu(),
                                                _info.name(), _info.icon(),
                                                this);
 
-    connect(opMenu, SIGNAL(escapePressed()),
-            _handle, SLOT(toggleMenuButtonOff()));
+    connect(opMenu, TQT_SIGNAL(escapePressed()),
+            _handle, TQT_SLOT(toggleMenuButtonOff()));
 
     return opMenu;
 }
@@ -339,7 +339,7 @@ void AppletContainer::slotUpdateLayout()
 }
 
 
-const QPopupMenu* AppletContainer::appletsOwnMenu() const
+const TQPopupMenu* AppletContainer::appletsOwnMenu() const
 {
     if (!_applet)
     {
@@ -447,8 +447,8 @@ void AppletContainer::setBackground()
     if (KickerSettings::transparent())
     {
         // Trick to tell applets that they must refresh their transparent background if they need.
-        QMoveEvent e(_applet->pos(), _applet->pos());
-        QApplication::sendEvent(_applet, &e);
+        TQMoveEvent e(_applet->pos(), _applet->pos());
+        TQApplication::sendEvent(_applet, &e);
     }
 }
 
@@ -471,7 +471,7 @@ void AppletContainer::setImmutable(bool immutable)
     }
     else if (!_handle->isVisibleTo(this))
     {
-        QToolTip::add(_handle, _info.name());
+        TQToolTip::add(_handle, _info.name());
         _handle->show();
         setBackground();
     }

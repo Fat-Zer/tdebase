@@ -12,7 +12,7 @@
 #ifndef _KCMUSB_H
 #define _KCMUSB_H
 
-#include <qintdict.h>
+#include <tqintdict.h>
 
 #include <kcmodule.h>
 
@@ -27,20 +27,20 @@ class USBViewer : public KCModule
 
 public:
 
-  USBViewer(QWidget *parent = 0L, const char *name = 0L, const QStringList &list=QStringList() );
+  USBViewer(TQWidget *parent = 0L, const char *name = 0L, const TQStringList &list=TQStringList() );
 
   void load();
 
 protected slots:
 
-  void selectionChanged(QListViewItem *item);
+  void selectionChanged(TQListViewItem *item);
   void refresh();
 
 private:
 
-  QIntDict<QListViewItem> _items;
-  QListView *_devices;
-  QTextView *_details;
+  TQIntDict<TQListViewItem> _items;
+  TQListView *_devices;
+  TQTextView *_details;
 };
 
 

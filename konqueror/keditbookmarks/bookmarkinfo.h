@@ -24,7 +24,7 @@
 #include "commands.h"
 
 #include <kbookmark.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <klineedit.h>
 
 class QTimer;
@@ -32,16 +32,16 @@ class QTimer;
 class BookmarkLineEdit : public KLineEdit {
     Q_OBJECT
 public:
-    BookmarkLineEdit( QWidget * );
+    BookmarkLineEdit( TQWidget * );
 public slots:
     virtual void cut ();
 };
 
 
-class BookmarkInfoWidget : public QWidget {
+class BookmarkInfoWidget : public TQWidget {
     Q_OBJECT
 public:
-    BookmarkInfoWidget(QWidget * = 0, const char * = 0);
+    BookmarkInfoWidget(TQWidget * = 0, const char * = 0);
     void showBookmark(const KBookmark &bk);
     void saveBookmark(const KBookmark &bk);
     KBookmark bookmark() { return m_bk; }
@@ -50,9 +50,9 @@ public:
     void updateStatus();
 
 public slots:
-    void slotTextChangedURL(const QString &);
-    void slotTextChangedTitle(const QString &);
-    void slotTextChangedComment(const QString &);
+    void slotTextChangedURL(const TQString &);
+    void slotTextChangedTitle(const TQString &);
+    void slotTextChangedComment(const TQString &);
 
     // _The deal with all those commitChanges() calls_
     // First a short example how all the components 
@@ -99,7 +99,7 @@ private:
     NodeEditCommand *titlecmd;
     EditCommand *urlcmd;
     NodeEditCommand *commentcmd;
-    QTimer * timer;
+    TQTimer * timer;
     BookmarkLineEdit *m_title_le, *m_url_le,
         *m_comment_le;
     KLineEdit  *m_visitdate_le, *m_credate_le,

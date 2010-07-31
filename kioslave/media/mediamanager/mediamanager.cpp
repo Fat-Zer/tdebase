@@ -19,7 +19,7 @@
 #include "mediamanager.h"
 
 #include <config.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -41,18 +41,18 @@
 #endif //COMPILE_LINUXCDPOLLING
 
 
-MediaManager::MediaManager(const QCString &obj)
+MediaManager::MediaManager(const TQCString &obj)
     : KDEDModule(obj), m_dirNotify(m_mediaList)
 {
-    connect( &m_mediaList, SIGNAL(mediumAdded(const QString&, const QString&, bool)),
-             SLOT(slotMediumAdded(const QString&, const QString&, bool)) );
-    connect( &m_mediaList, SIGNAL(mediumRemoved(const QString&, const QString&, bool)),
-             SLOT(slotMediumRemoved(const QString&, const QString&, bool)) );
+    connect( &m_mediaList, TQT_SIGNAL(mediumAdded(const TQString&, const TQString&, bool)),
+             TQT_SLOT(slotMediumAdded(const TQString&, const TQString&, bool)) );
+    connect( &m_mediaList, TQT_SIGNAL(mediumRemoved(const TQString&, const TQString&, bool)),
+             TQT_SLOT(slotMediumRemoved(const TQString&, const TQString&, bool)) );
     connect( &m_mediaList,
-             SIGNAL(mediumStateChanged(const QString&, const QString&, bool, bool)),
-             SLOT(slotMediumChanged(const QString&, const QString&, bool, bool)) );
+             TQT_SIGNAL(mediumStateChanged(const TQString&, const TQString&, bool, bool)),
+             TQT_SLOT(slotMediumChanged(const TQString&, const TQString&, bool, bool)) );
 
-    QTimer::singleShot( 10, this, SLOT( loadBackends() ) );
+    TQTimer::singleShot( 10, this, TQT_SLOT( loadBackends() ) );
 }
 
 MediaManager::~MediaManager()
@@ -117,14 +117,14 @@ void MediaManager::loadBackends()
 }
 
 
-QStringList MediaManager::fullList()
+TQStringList MediaManager::fullList()
 {
-    QPtrList<Medium> list = m_mediaList.list();
+    TQPtrList<Medium> list = m_mediaList.list();
 
-    QStringList result;
+    TQStringList result;
 
-    QPtrList<Medium>::const_iterator it = list.begin();
-    QPtrList<Medium>::const_iterator end = list.end();
+    TQPtrList<Medium>::const_iterator it = list.begin();
+    TQPtrList<Medium>::const_iterator end = list.end();
     for (; it!=end; ++it)
     {
         result+= (*it)->properties();
@@ -134,7 +134,7 @@ QStringList MediaManager::fullList()
     return result;
 }
 
-QStringList MediaManager::properties(const QString &name)
+TQStringList MediaManager::properties(const TQString &name)
 {
     const Medium *m = m_mediaList.findByName(name);
 
@@ -146,7 +146,7 @@ QStringList MediaManager::properties(const QString &name)
         {
             if (u.protocol() == "system")
             {
-                QString path = u.path();
+                TQString path = u.path();
                 if (path.startsWith("/media/"))
                     path = path.mid(strlen("/media/"));
                 m = m_mediaList.findByName(path);
@@ -160,10 +160,10 @@ QStringList MediaManager::properties(const QString &name)
             else if (u.protocol() == "file")
             {
                 // look for the mount point
-                QPtrList<Medium> list = m_mediaList.list();
-                QPtrList<Medium>::const_iterator it = list.begin();
-                QPtrList<Medium>::const_iterator end = list.end();
-                QString path;
+                TQPtrList<Medium> list = m_mediaList.list();
+                TQPtrList<Medium>::const_iterator it = list.begin();
+                TQPtrList<Medium>::const_iterator end = list.end();
+                TQString path;
 
                 for (; it!=end; ++it)
                 {
@@ -181,21 +181,21 @@ QStringList MediaManager::properties(const QString &name)
     if (m)
         return m->properties();
     else
-        return QStringList();
+        return TQStringList();
 }
 
-QStringList MediaManager::mountoptions(const QString &name)
+TQStringList MediaManager::mountoptions(const TQString &name)
 {
 #ifdef COMPILE_HALBACKEND
     if (!m_halbackend)
-        return QStringList();
+        return TQStringList();
     return m_halbackend->mountoptions(name);
 #else
-    return QStringList();
+    return TQStringList();
 #endif
 }
 
-bool MediaManager::setMountoptions(const QString &name, const QStringList &options)
+bool MediaManager::setMountoptions(const TQString &name, const TQStringList &options)
 {
 #ifdef COMPILE_HALBACKEND
     if (!m_halbackend)
@@ -206,7 +206,7 @@ bool MediaManager::setMountoptions(const QString &name, const QStringList &optio
 #endif
 }
 
-QString MediaManager::mount(const QString &name)
+TQString MediaManager::mount(const TQString &name)
 {
 #ifdef COMPILE_HALBACKEND
     if (!m_halbackend)
@@ -219,7 +219,7 @@ QString MediaManager::mount(const QString &name)
 #endif
 }
 
-QString MediaManager::unmount(const QString &name)
+TQString MediaManager::unmount(const TQString &name)
 {
 #ifdef COMPILE_HALBACKEND
     if (!m_halbackend)
@@ -232,7 +232,7 @@ QString MediaManager::unmount(const QString &name)
 #endif
 }
 
-QString MediaManager::decrypt(const QString &name, const QString &password)
+TQString MediaManager::decrypt(const TQString &name, const TQString &password)
 {
 #ifdef COMPILE_HALBACKEND
     if (!m_halbackend)
@@ -243,7 +243,7 @@ QString MediaManager::decrypt(const QString &name, const QString &password)
 #endif
 }
 
-QString MediaManager::undecrypt(const QString &name)
+TQString MediaManager::undecrypt(const TQString &name)
 {
 #ifdef COMPILE_HALBACKEND
     if (!m_halbackend)
@@ -254,12 +254,12 @@ QString MediaManager::undecrypt(const QString &name)
 #endif
 }
 
-QString MediaManager::nameForLabel(const QString &label)
+TQString MediaManager::nameForLabel(const TQString &label)
 {
-    const QPtrList<Medium> media = m_mediaList.list();
+    const TQPtrList<Medium> media = m_mediaList.list();
 
-    QPtrList<Medium>::const_iterator it = media.begin();
-    QPtrList<Medium>::const_iterator end = media.end();
+    TQPtrList<Medium>::const_iterator it = media.begin();
+    TQPtrList<Medium>::const_iterator end = media.end();
     for (; it!=end; ++it)
     {
         const Medium *m = *it;
@@ -270,10 +270,10 @@ QString MediaManager::nameForLabel(const QString &label)
         }
     }
 
-    return QString::null;
+    return TQString::null;
 }
 
-ASYNC MediaManager::setUserLabel(const QString &name, const QString &label)
+ASYNC MediaManager::setUserLabel(const TQString &name, const TQString &label)
 {
     m_mediaList.setUserLabel(name, label);
 }
@@ -284,7 +284,7 @@ ASYNC MediaManager::reloadBackends()
     loadBackends();
 }
 
-bool MediaManager::removablePlug(const QString &devNode, const QString &label)
+bool MediaManager::removablePlug(const TQString &devNode, const TQString &label)
 {
     if (mp_removableBackend)
     {
@@ -293,7 +293,7 @@ bool MediaManager::removablePlug(const QString &devNode, const QString &label)
     return false;
 }
 
-bool MediaManager::removableUnplug(const QString &devNode)
+bool MediaManager::removableUnplug(const TQString &devNode)
 {
     if (mp_removableBackend)
     {
@@ -302,7 +302,7 @@ bool MediaManager::removableUnplug(const QString &devNode)
     return false;
 }
 
-bool MediaManager::removableCamera(const QString &devNode)
+bool MediaManager::removableCamera(const TQString &devNode)
 {
     if (mp_removableBackend)
     {
@@ -312,7 +312,7 @@ bool MediaManager::removableCamera(const QString &devNode)
 }
 
 
-void MediaManager::slotMediumAdded(const QString &/*id*/, const QString &name,
+void MediaManager::slotMediumAdded(const TQString &/*id*/, const TQString &name,
                                    bool allowNotification)
 {
     kdDebug(1219) << "MediaManager::slotMediumAdded: " << name << endl;
@@ -324,7 +324,7 @@ void MediaManager::slotMediumAdded(const QString &/*id*/, const QString &name,
     emit mediumAdded(name);
 }
 
-void MediaManager::slotMediumRemoved(const QString &/*id*/, const QString &name,
+void MediaManager::slotMediumRemoved(const TQString &/*id*/, const TQString &name,
                                      bool allowNotification)
 {
     kdDebug(1219) << "MediaManager::slotMediumRemoved: " << name << endl;
@@ -336,7 +336,7 @@ void MediaManager::slotMediumRemoved(const QString &/*id*/, const QString &name,
     emit mediumRemoved(name);
 }
 
-void MediaManager::slotMediumChanged(const QString &/*id*/, const QString &name,
+void MediaManager::slotMediumChanged(const TQString &/*id*/, const TQString &name,
                                      bool mounted, bool allowNotification)
 {
     kdDebug(1219) << "MediaManager::slotMediumChanged: " << name << endl;
@@ -354,7 +354,7 @@ void MediaManager::slotMediumChanged(const QString &/*id*/, const QString &name,
 
 
 extern "C" {
-    KDE_EXPORT KDEDModule *create_mediamanager(const QCString &obj)
+    KDE_EXPORT KDEDModule *create_mediamanager(const TQCString &obj)
     {
         KGlobal::locale()->insertCatalogue("kio_media");
         return new MediaManager(obj);

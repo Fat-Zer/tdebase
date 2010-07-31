@@ -21,11 +21,11 @@
 #include <sys/types.h>
 
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <ksimpleconfig.h>
 #include <karrowbutton.h>
@@ -40,27 +40,27 @@
 extern KSimpleConfig *config;
 
 
-KDMSessionsWidget::KDMSessionsWidget(QWidget *parent, const char *name)
-  : QWidget(parent, name)
+KDMSessionsWidget::KDMSessionsWidget(TQWidget *parent, const char *name)
+  : TQWidget(parent, name)
 {
-      QString wtstr;
+      TQString wtstr;
 
 
-      QGroupBox *group0 = new QGroupBox( i18n("Allow Shutdown"), this );
+      TQGroupBox *group0 = new TQGroupBox( i18n("Allow Shutdown"), this );
 
-      sdlcombo = new QComboBox( FALSE, group0 );
-      sdllabel = new QLabel (sdlcombo, i18n ("&Local:"), group0);
+      sdlcombo = new TQComboBox( FALSE, group0 );
+      sdllabel = new TQLabel (sdlcombo, i18n ("&Local:"), group0);
       sdlcombo->insertItem(i18n("Everybody"), SdAll);
       sdlcombo->insertItem(i18n("Only Root"), SdRoot);
       sdlcombo->insertItem(i18n("Nobody"), SdNone);
-      connect(sdlcombo, SIGNAL(activated(int)), SLOT(changed()));
-      sdrcombo = new QComboBox( FALSE, group0 );
-      sdrlabel = new QLabel (sdrcombo, i18n ("&Remote:"), group0);
+      connect(sdlcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+      sdrcombo = new TQComboBox( FALSE, group0 );
+      sdrlabel = new TQLabel (sdrcombo, i18n ("&Remote:"), group0);
       sdrcombo->insertItem(i18n("Everybody"), SdAll);
       sdrcombo->insertItem(i18n("Only Root"), SdRoot);
       sdrcombo->insertItem(i18n("Nobody"), SdNone);
-      connect(sdrcombo, SIGNAL(activated(int)), SLOT(changed()));
-      QWhatsThis::add( group0, i18n("Here you can select who is allowed to shutdown"
+      connect(sdrcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+      TQWhatsThis::add( group0, i18n("Here you can select who is allowed to shutdown"
         " the computer using KDM. You can specify different values for local (console) and remote displays. "
 	"Possible values are:<ul>"
         " <li><em>Everybody:</em> everybody can shutdown the computer using KDM</li>"
@@ -68,26 +68,26 @@ KDMSessionsWidget::KDMSessionsWidget(QWidget *parent, const char *name)
         " <li><em>Nobody:</em> nobody can shutdown the computer using KDM</li></ul>") );
 
 
-      QGroupBox *group1 = new QGroupBox( i18n("Commands"), this );
+      TQGroupBox *group1 = new TQGroupBox( i18n("Commands"), this );
 
       shutdown_lined = new KURLRequester(group1);
-      QLabel *shutdown_label = new QLabel(shutdown_lined, i18n("H&alt:"), group1);
-      connect(shutdown_lined, SIGNAL(textChanged(const QString&)),
-	      SLOT(changed()));
+      TQLabel *shutdown_label = new TQLabel(shutdown_lined, i18n("H&alt:"), group1);
+      connect(shutdown_lined, TQT_SIGNAL(textChanged(const TQString&)),
+	      TQT_SLOT(changed()));
       wtstr = i18n("Command to initiate the system halt. Typical value: /sbin/halt");
-      QWhatsThis::add( shutdown_label, wtstr );
-      QWhatsThis::add( shutdown_lined, wtstr );
+      TQWhatsThis::add( shutdown_label, wtstr );
+      TQWhatsThis::add( shutdown_lined, wtstr );
 
       restart_lined = new KURLRequester(group1);
-      QLabel *restart_label = new QLabel(restart_lined, i18n("Reb&oot:"), group1);
-      connect(restart_lined, SIGNAL(textChanged(const QString&)),
-	      SLOT(changed()));
+      TQLabel *restart_label = new TQLabel(restart_lined, i18n("Reb&oot:"), group1);
+      connect(restart_lined, TQT_SIGNAL(textChanged(const TQString&)),
+	      TQT_SLOT(changed()));
       wtstr = i18n("Command to initiate the system reboot. Typical value: /sbin/reboot");
-      QWhatsThis::add( restart_label, wtstr );
-      QWhatsThis::add( restart_lined, wtstr );
+      TQWhatsThis::add( restart_label, wtstr );
+      TQWhatsThis::add( restart_lined, wtstr );
 
 
-      QGroupBox *group4 = new QGroupBox( i18n("Miscellaneous"), this );
+      TQGroupBox *group4 = new TQGroupBox( i18n("Miscellaneous"), this );
 
       bm_combo = new KBackedComboBox( group4 );
       bm_combo->insertItem("None", i18n("boot manager", "None"));
@@ -95,16 +95,16 @@ KDMSessionsWidget::KDMSessionsWidget(QWidget *parent, const char *name)
 #if defined(__linux__) && ( defined(__i386__) || defined(__amd64__) )
       bm_combo->insertItem("Lilo", i18n("Lilo"));
 #endif
-      QLabel *bm_label = new QLabel( bm_combo, i18n("Boot manager:"), group4 );
-      connect(bm_combo, SIGNAL(activated(int)), SLOT(changed()));
+      TQLabel *bm_label = new TQLabel( bm_combo, i18n("Boot manager:"), group4 );
+      connect(bm_combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
       wtstr = i18n("Enable boot options in the \"Shutdown...\" dialog.");
-      QWhatsThis::add( bm_label, wtstr );
-      QWhatsThis::add( bm_combo, wtstr );
+      TQWhatsThis::add( bm_label, wtstr );
+      TQWhatsThis::add( bm_combo, wtstr );
 
-      QBoxLayout *main = new QVBoxLayout( this, 10 );
-      QGridLayout *lgroup0 = new QGridLayout( group0, 1, 1, 10);
-      QGridLayout *lgroup1 = new QGridLayout( group1, 1, 1, 10);
-      QGridLayout *lgroup4 = new QGridLayout( group4, 1, 1, 10);
+      TQBoxLayout *main = new TQVBoxLayout( this, 10 );
+      TQGridLayout *lgroup0 = new TQGridLayout( group0, 1, 1, 10);
+      TQGridLayout *lgroup1 = new TQGridLayout( group1, 1, 1, 10);
+      TQGridLayout *lgroup4 = new TQGridLayout( group4, 1, 1, 10);
 
       main->addWidget(group0);
       main->addWidget(group1);
@@ -151,9 +151,9 @@ void KDMSessionsWidget::makeReadOnly()
     bm_combo->setEnabled(false);
 }
 
-void KDMSessionsWidget::writeSD(QComboBox *combo)
+void KDMSessionsWidget::writeSD(TQComboBox *combo)
 {
-    QString what;
+    TQString what;
     switch (combo->currentItem()) {
     case SdAll: what = "All"; break;
     case SdRoot: what = "Root"; break;
@@ -177,9 +177,9 @@ void KDMSessionsWidget::save()
     config->writeEntry("BootManager", bm_combo->currentId());
 }
 
-void KDMSessionsWidget::readSD(QComboBox *combo, QString def)
+void KDMSessionsWidget::readSD(TQComboBox *combo, TQString def)
 {
-  QString str = config->readEntry("AllowShutdown", def);
+  TQString str = config->readEntry("AllowShutdown", def);
   SdModes sdMode;
   if(str == "All")
     sdMode = SdAll;

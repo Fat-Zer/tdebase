@@ -22,10 +22,10 @@
 #ifndef __konq_mainwindow_h__
 #define __konq_mainwindow_h__
 
-#include <qmap.h>
-#include <qpoint.h>
-#include <qtimer.h>
-#include <qguardedptr.h>
+#include <tqmap.h>
+#include <tqpoint.h>
+#include <tqtimer.h>
+#include <tqguardedptr.h>
 
 #include <kfileitem.h>
 #include "konq_openurlrequest.h"
@@ -91,42 +91,42 @@ class KonqMainWindow : public KParts::MainWindow, public KonqFrameContainerBase
   Q_PROPERTY( int viewCount READ viewCount )
   Q_PROPERTY( int activeViewsCount READ activeViewsCount )
   Q_PROPERTY( int linkableViewsCount READ linkableViewsCount )
-  Q_PROPERTY( QString locationBarURL READ locationBarURL )
+  Q_PROPERTY( TQString locationBarURL READ locationBarURL )
   Q_PROPERTY( bool fullScreenMode READ fullScreenMode )
-  Q_PROPERTY( QString currentTitle READ currentTitle )
-  Q_PROPERTY( QString currentURL READ currentURL )
+  Q_PROPERTY( TQString currentTitle READ currentTitle )
+  Q_PROPERTY( TQString currentURL READ currentURL )
   Q_PROPERTY( bool isHTMLAllowed READ isHTMLAllowed )
-  Q_PROPERTY( QString currentProfile READ currentProfile )
+  Q_PROPERTY( TQString currentProfile READ currentProfile )
 public:
   enum ComboAction { ComboClear, ComboAdd, ComboRemove };
   enum PageSecurity { NotCrypted, Encrypted, Mixed };
 
-  KonqMainWindow( const KURL &initialURL = KURL(), bool openInitialURL = true, const char *name = 0, const QString& xmluiFile="konqueror.rc");
+  KonqMainWindow( const KURL &initialURL = KURL(), bool openInitialURL = true, const char *name = 0, const TQString& xmluiFile="konqueror.rc");
   ~KonqMainWindow();
 
 
   /**
    * Filters the URL and calls the main openURL method.
    */
-  void openFilteredURL( const QString & _url, KonqOpenURLRequest& _req);
+  void openFilteredURL( const TQString & _url, KonqOpenURLRequest& _req);
 
   /**
    * Filters the URL and calls the main openURL method.
    */
-  void openFilteredURL( const QString &_url, bool inNewTab = false, bool tempFile = false );
+  void openFilteredURL( const TQString &_url, bool inNewTab = false, bool tempFile = false );
 
   /**
    * The main openURL method.
    */
   void openURL( KonqView * view, const KURL & url,
-                const QString &serviceType = QString::null,
+                const TQString &serviceType = TQString::null,
                 KonqOpenURLRequest & req = KonqOpenURLRequest::null, bool trustedSource = false );
 
   /**
    * Called by openURL when it knows the service type (either directly,
    * or using KonqRun)
    */
-  bool openView( QString serviceType, const KURL &_url, KonqView *childView,
+  bool openView( TQString serviceType, const KURL &_url, KonqView *childView,
                  KonqOpenURLRequest & req = KonqOpenURLRequest::null );
 
 
@@ -137,15 +137,15 @@ public:
   KonqViewManager *viewManager() const { return m_pViewManager; }
 
   // Central widget of the mainwindow, never 0L
-  QWidget *mainWidget() const;
+  TQWidget *mainWidget() const;
 
-  virtual QWidget *createContainer( QWidget *parent, int index, const QDomElement &element, int &id );
-  virtual void removeContainer( QWidget *container, QWidget *parent, QDomElement &element, int id );
+  virtual TQWidget *createContainer( TQWidget *parent, int index, const TQDomElement &element, int &id );
+  virtual void removeContainer( TQWidget *container, TQWidget *parent, TQDomElement &element, int id );
 
   virtual void saveProperties( KConfig *config );
   virtual void readProperties( KConfig *config );
 
-  void setInitialFrameName( const QString &name );
+  void setInitialFrameName( const TQString &name );
 
   KonqMainWindowIface * dcopObject();
 
@@ -154,10 +154,10 @@ public:
   void insertChildView( KonqView *childView );
   void removeChildView( KonqView *childView );
   KonqView *childView( KParts::ReadOnlyPart *view );
-  KonqView *childView( KParts::ReadOnlyPart *callingPart, const QString &name, KParts::BrowserHostExtension **hostExtension, KParts::ReadOnlyPart **part );
+  KonqView *childView( KParts::ReadOnlyPart *callingPart, const TQString &name, KParts::BrowserHostExtension **hostExtension, KParts::ReadOnlyPart **part );
 
   // dcop idl bug! it can't handle KonqMainWindow *&mainWindow
-  static KonqView *findChildView( KParts::ReadOnlyPart *callingPart, const QString &name, KonqMainWindow **mainWindow, KParts::BrowserHostExtension **hostExtension, KParts::ReadOnlyPart **part );
+  static KonqView *findChildView( KParts::ReadOnlyPart *callingPart, const TQString &name, KonqMainWindow **mainWindow, KParts::BrowserHostExtension **hostExtension, KParts::ReadOnlyPart **part );
 
   // Total number of views
   int viewCount() const { return m_mapViews.count(); }
@@ -171,7 +171,7 @@ public:
   // Number of main views (non-toggle non-passive views)
   int mainViewsCount() const;
 
-  typedef QMap<KParts::ReadOnlyPart *, KonqView *> MapViews;
+  typedef TQMap<KParts::ReadOnlyPart *, KonqView *> MapViews;
 
   const MapViews & viewMap() const { return m_mapViews; }
 
@@ -185,10 +185,10 @@ public:
   // Only valid if there are one or two views
   KonqView * otherView( KonqView * view ) const;
 
-  virtual void customEvent( QCustomEvent *event );
+  virtual void customEvent( TQCustomEvent *event );
 
   /// Overloaded of KMainWindow
-  virtual void setCaption( const QString &caption );
+  virtual void setCaption( const TQString &caption );
 
   /**
    * Reimplemented for internal reasons. The API is not affected.
@@ -198,7 +198,7 @@ public:
   /**
    * Change URL displayed in the location bar
    */
-  void setLocationBarURL( const QString &url );
+  void setLocationBarURL( const TQString &url );
   /**
    * Overload for convenience
    */
@@ -206,7 +206,7 @@ public:
   /**
    * Return URL displayed in the location bar - for KonqViewManager
    */
-  QString locationBarURL() const;
+  TQString locationBarURL() const;
   void focusLocationBar();
 
   /**
@@ -237,7 +237,7 @@ public:
   KToggleAction * linkViewAction()const { return m_paLinkView; }
 
   void enableAction( const char * name, bool enabled );
-  void setActionText( const char * name, const QString& text );
+  void setActionText( const char * name, const TQString& text );
 
   /**
    * The default settings "allow HTML" - the one used when creating a new view
@@ -247,7 +247,7 @@ public:
 
   bool saveViewPropertiesLocally() const { return m_bSaveViewPropertiesLocally; }
 
-  static QPtrList<KonqMainWindow> *mainWindowList() { return s_lstViews; }
+  static TQPtrList<KonqMainWindow> *mainWindowList() { return s_lstViews; }
 
   // public for konq_guiclients
   void viewCountChanged();
@@ -257,8 +257,8 @@ public:
 
   // operates on all combos of all mainwindows of this instance
   // up to now adds an entry or clears all entries
-  static void comboAction( int action, const QString& url,
-			   const QCString& objId );
+  static void comboAction( int action, const TQString& url,
+			   const TQCString& objId );
 
 #ifndef NDEBUG
   void dumpViewList();
@@ -275,25 +275,25 @@ public:
    */
   void removeChildFrame( KonqFrameBase * frame );
 
-  void saveConfig( KConfig* config, const QString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
+  void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
 
   void copyHistory( KonqFrameBase *other );
 
-  void printFrameInfo( const QString &spaces );
+  void printFrameInfo( const TQString &spaces );
 
-  void reparentFrame( QWidget* parent,
-                              const QPoint & p, bool showIt=FALSE );
+  void reparentFrame( TQWidget* parent,
+                              const TQPoint & p, bool showIt=FALSE );
 
   KonqFrameContainerBase* parentContainer()const;
   void setParentContainer(KonqFrameContainerBase* parent);
 
-  void setTitle( const QString &title , QWidget* sender);
-  void setTabIcon( const KURL &url, QWidget* sender );
+  void setTitle( const TQString &title , TQWidget* sender);
+  void setTabIcon( const KURL &url, TQWidget* sender );
 
-  QWidget* widget();
+  TQWidget* widget();
 
   void listViews( ChildViewList *viewList );
-  QCString frameType();
+  TQCString frameType();
 
   KonqFrameBase* childFrame()const;
 
@@ -304,8 +304,8 @@ public:
   KonqFrameBase* workingTab()const { return m_pWorkingTab; }
   void setWorkingTab( KonqFrameBase* tab ) { m_pWorkingTab = tab; }
 
-  static bool isMimeTypeAssociatedWithSelf( const QString &mimeType );
-  static bool isMimeTypeAssociatedWithSelf( const QString &mimeType, const KService::Ptr &offer );
+  static bool isMimeTypeAssociatedWithSelf( const TQString &mimeType );
+  static bool isMimeTypeAssociatedWithSelf( const TQString &mimeType, const KService::Ptr &offer );
 
   void resetWindow();
 
@@ -316,11 +316,11 @@ public:
   
   void toggleReloadStopButton(bool isStop);
 
-  QString currentTitle() const;
-  QString currentURL() const;
-  QString currentProfile() const;
+  TQString currentTitle() const;
+  TQString currentURL() const;
+  TQString currentProfile() const;
 
-  QStringList configModules() const;
+  TQStringList configModules() const;
 
   void saveWindowSize() const;
   void restoreWindowSize();
@@ -334,19 +334,19 @@ public slots:
   void slotCtrlTabPressed();
 
   // for KBookmarkMenu and KBookmarkBar
-  void slotFillContextMenu( const KBookmark &, QPopupMenu * );
-  void slotOpenBookmarkURL( const QString & url, Qt::ButtonState state );
+  void slotFillContextMenu( const KBookmark &, TQPopupMenu * );
+  void slotOpenBookmarkURL( const TQString & url, Qt::ButtonState state );
 
-  void slotPopupMenu( const QPoint &_global, const KURL &_url, const QString &_mimeType, mode_t mode );
-  void slotPopupMenu( KXMLGUIClient *client, const QPoint &_global, const KURL &_url, const QString &_mimeType, mode_t mode );
-  void slotPopupMenu( KXMLGUIClient *client, const QPoint &_global, const KURL &_url, const KParts::URLArgs &_args, KParts::BrowserExtension::PopupFlags f, mode_t mode );
+  void slotPopupMenu( const TQPoint &_global, const KURL &_url, const TQString &_mimeType, mode_t mode );
+  void slotPopupMenu( KXMLGUIClient *client, const TQPoint &_global, const KURL &_url, const TQString &_mimeType, mode_t mode );
+  void slotPopupMenu( KXMLGUIClient *client, const TQPoint &_global, const KURL &_url, const KParts::URLArgs &_args, KParts::BrowserExtension::PopupFlags f, mode_t mode );
 
-  void slotPopupMenu( const QPoint &_global, const KFileItemList &_items );
-  void slotPopupMenu( KXMLGUIClient *client, const QPoint &_global, const KFileItemList &_items );
-  void slotPopupMenu( KXMLGUIClient *client, const QPoint &_global, const KFileItemList &_items, const KParts::URLArgs &_args, KParts::BrowserExtension::PopupFlags _flags );
+  void slotPopupMenu( const TQPoint &_global, const KFileItemList &_items );
+  void slotPopupMenu( KXMLGUIClient *client, const TQPoint &_global, const KFileItemList &_items );
+  void slotPopupMenu( KXMLGUIClient *client, const TQPoint &_global, const KFileItemList &_items, const KParts::URLArgs &_args, KParts::BrowserExtension::PopupFlags _flags );
 
 
-  void slotPopupMenu( KXMLGUIClient *client, const QPoint &_global, const KFileItemList &_items, const KParts::URLArgs &_args, KParts::BrowserExtension::PopupFlags f, bool showProperties );
+  void slotPopupMenu( KXMLGUIClient *client, const TQPoint &_global, const KFileItemList &_items, const KParts::URLArgs &_args, KParts::BrowserExtension::PopupFlags f, bool showProperties );
 
   /**
    * __NEEEEVER__ call this method directly. It relies on sender() (the part)
@@ -413,12 +413,12 @@ public slots:
   void slotClearLocationBar( KAction::ActivationReason reason, Qt::ButtonState state );
 
   // reimplement from KParts::MainWindow
-  virtual void slotSetStatusBarText( const QString &text );
+  virtual void slotSetStatusBarText( const TQString &text );
 
   // public for KonqViewManager
   void slotPartActivated( KParts::Part *part );
 
-  virtual void setIcon( const QPixmap& );
+  virtual void setIcon( const TQPixmap& );
   void slotGoHistoryActivated( int steps );
   void slotGoHistoryActivated( int steps, Qt::ButtonState state );
 
@@ -429,7 +429,7 @@ public slots:
 protected slots:
   void slotViewCompleted( KonqView * view );
 
-  void slotURLEntered( const QString &text, int );
+  void slotURLEntered( const TQString &text, int );
 
   void slotFileNewAboutToShow();
   void slotLocationLabelActivated();
@@ -491,10 +491,10 @@ protected slots:
   void slotGoHistoryDelayed();
 
   void slotCompletionModeChanged( KGlobalSettings::Completion );
-  void slotMakeCompletion( const QString& );
-  void slotSubstringcompletion( const QString& );
+  void slotMakeCompletion( const TQString& );
+  void slotSubstringcompletion( const TQString& );
   void slotRotation( KCompletionBase::KeyBindingType );
-  void slotMatch( const QString& );
+  void slotMatch( const TQString& );
   void slotClearHistory();
   void slotClearComboHistory();
 
@@ -505,7 +505,7 @@ protected slots:
 
   void slotOpenURL( const KURL& );
 
-  void slotActionStatusText( const QString &text );
+  void slotActionStatusText( const TQString &text );
   void slotClearStatusText();
 
   void slotFindOpen( KonqDirPart * dirPart );
@@ -513,21 +513,21 @@ protected slots:
 
   void slotIconsChanged();
 
-  virtual bool event( QEvent* );
+  virtual bool event( TQEvent* );
 
   void slotMoveTabLeft();
   void slotMoveTabRight();
 
-  void slotAddWebSideBar(const KURL& url, const QString& name);
+  void slotAddWebSideBar(const KURL& url, const TQString& name);
 
   void slotUpdateFullScreen( bool set ); // do not call directly
 
 protected:
-  virtual bool eventFilter(QObject*obj,QEvent *ev);
+  virtual bool eventFilter(TQObject*obj,TQEvent *ev);
 
-  void fillHistoryPopup( QPopupMenu *menu, const QPtrList<HistoryEntry> &history );
+  void fillHistoryPopup( TQPopupMenu *menu, const TQPtrList<HistoryEntry> &history );
 
-  bool makeViewsFollow( const KURL & url, const KParts::URLArgs &args, const QString & serviceType,
+  bool makeViewsFollow( const KURL & url, const KParts::URLArgs &args, const TQString & serviceType,
                         KonqView * senderView );
 
   void applyKonqMainWindowSettings();
@@ -538,10 +538,10 @@ protected:
 
   void updateLocalPropsActions();
 
-  virtual void closeEvent( QCloseEvent * );
+  virtual void closeEvent( TQCloseEvent * );
   virtual bool queryExit();
 
-  bool askForTarget(const QString& text, KURL& url);
+  bool askForTarget(const TQString& text, KURL& url);
 
 private slots:
   void slotRequesterClicked( KURLRequester * );
@@ -578,7 +578,7 @@ private:
    * still no match, then http://www. Due to that, this is only usable for
    * popupcompletion and not for manual or auto-completion.
    */
-  static QStringList historyPopupCompletionItems( const QString& s = QString::null);
+  static TQStringList historyPopupCompletionItems( const TQString& s = TQString::null);
 
   void startAnimation();
   void stopAnimation();
@@ -593,14 +593,14 @@ private:
   /**
    * Tries to find a index.html (.kde.html) file in the specified directory
    */
-  static QString findIndexFile( const QString &directory );
+  static TQString findIndexFile( const TQString &directory );
 
   void connectExtension( KParts::BrowserExtension *ext );
   void disconnectExtension( KParts::BrowserExtension *ext );
 
   void plugViewModeActions();
   void unplugViewModeActions();
-  static QString viewModeActionKey( KService::Ptr service );
+  static TQString viewModeActionKey( KService::Ptr service );
 
   void connectActionCollection( KActionCollection *coll );
   void disconnectActionCollection( KActionCollection *coll );
@@ -608,7 +608,7 @@ private:
   bool stayPreloaded();
   bool checkPreloadResourceUsage();
 
-  QObject* lastFrame( KonqView *view );
+  TQObject* lastFrame( KonqView *view );
 
   KNewMenu * m_pMenuNew;
 
@@ -693,7 +693,7 @@ private:
 
   MapViews m_mapViews;
 
-  QGuardedPtr<KonqView> m_currentView;
+  TQGuardedPtr<KonqView> m_currentView;
 
   KBookmarkMenu* m_pBookmarkMenu;
   KonqExtendedBookmarkOwner *m_pBookmarksOwner;
@@ -710,7 +710,7 @@ private:
 
   KonqRun *m_initialKonqRun;
 
-  QString m_title;
+  TQString m_title;
 
   /**
    * @since 3.4
@@ -722,10 +722,10 @@ private:
    * the configure dialog.
    * @since 3.4
    */
-  QStringList m_configureModules;
+  TQStringList m_configureModules;
 
-  QLabel* m_locationLabel;
-  QGuardedPtr<KonqCombo> m_combo;
+  TQLabel* m_locationLabel;
+  TQGuardedPtr<KonqCombo> m_combo;
   static KConfig *s_comboConfig;
   KURLCompletion *m_pURLCompletion;
   // just a reference to KonqHistoryManager's completionObject
@@ -734,28 +734,28 @@ private:
   ToggleViewGUIClient *m_toggleViewGUIClient;
 
   KTrader::OfferList m_popupEmbeddingServices;
-  QString m_popupService;
-  QString m_popupServiceType;
+  TQString m_popupService;
+  TQString m_popupServiceType;
   KURL m_popupURL;
 
-  QString m_initialFrameName;
+  TQString m_initialFrameName;
 
-  QPtrList<KAction> m_openWithActions;
+  TQPtrList<KAction> m_openWithActions;
   KActionMenu *m_viewModeMenu;
-  QPtrList<KAction> m_toolBarViewModeActions; // basically holds two KonqViewActions, one of
+  TQPtrList<KAction> m_toolBarViewModeActions; // basically holds two KonqViewActions, one of
                                               // iconview and one for listview
-  QPtrList<KRadioAction> m_viewModeActions;
-  QMap<QString,KService::Ptr> m_viewModeToolBarServices; // similar to m_toolBarViewModeActions
+  TQPtrList<KRadioAction> m_viewModeActions;
+  TQMap<TQString,KService::Ptr> m_viewModeToolBarServices; // similar to m_toolBarViewModeActions
   // it holds a map library name (libkonqiconview/libkonqlistview) ==> service (service for
   // iconview, multicolumnview, treeview, etc .)
 
   KonqMainWindowIface * m_dcopObject;
 
-  static QStringList *s_plstAnimatedLogo;
+  static TQStringList *s_plstAnimatedLogo;
 
-  static QPtrList<KonqMainWindow> *s_lstViews;
+  static TQPtrList<KonqMainWindow> *s_lstViews;
 
-  QString m_currentDir; // stores current dir for relative URLs whenever applicable
+  TQString m_currentDir; // stores current dir for relative URLs whenever applicable
 
   bool m_urlCompletionStarted;
 
@@ -769,7 +769,7 @@ private:
 
 public:
 
-  static QFile *s_crashlog_file;
+  static TQFile *s_crashlog_file;
 };
 
 #endif

@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "popupmenutitle.h"
 
-PopupMenuTitle::PopupMenuTitle(const QString &name, const QFont &font) : 
-        QCustomMenuItem(),
+PopupMenuTitle::PopupMenuTitle(const TQString &name, const TQFont &font) : 
+        TQCustomMenuItem(),
         m_desktopName(name),
         m_font(font)
 {

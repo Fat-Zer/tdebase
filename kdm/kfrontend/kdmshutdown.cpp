@@ -37,20 +37,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kconfig.h>
 #include <kiconloader.h>
 
-#include <qcombobox.h>
-#include <qvbuttongroup.h>
-#include <qstyle.h>
-#include <qlayout.h>
-#include <qaccel.h>
-#include <qpopupmenu.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qdatetime.h>
-#include <qlistview.h>
-#include <qheader.h>
-#include <qdatetime.h>
-#include <qregexp.h>
+#include <tqcombobox.h>
+#include <tqvbuttongroup.h>
+#include <tqstyle.h>
+#include <tqlayout.h>
+#include <tqaccel.h>
+#include <tqpopupmenu.h>
+#include <tqcheckbox.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqdatetime.h>
+#include <tqlistview.h>
+#include <tqheader.h>
+#include <tqdatetime.h>
+#include <tqregexp.h>
 
 #define KDmh KDialog::marginHint()
 #define KDsh KDialog::spacingHint()
@@ -60,9 +60,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 int KDMShutdownBase::curPlugin = -1;
 PluginList KDMShutdownBase::pluginList;
 
-KDMShutdownBase::KDMShutdownBase( int _uid, QWidget *_parent )
+KDMShutdownBase::KDMShutdownBase( int _uid, TQWidget *_parent )
 	: inherited( _parent )
-	, box( new QVBoxLayout( this, KDmh, KDsh ) )
+	, box( new TQVBoxLayout( this, KDmh, KDsh ) )
 #ifdef HAVE_VTS
 	, willShut( true )
 #endif
@@ -84,15 +84,15 @@ KDMShutdownBase::~KDMShutdownBase()
 }
 
 void
-KDMShutdownBase::complete( QWidget *prevWidget )
+KDMShutdownBase::complete( TQWidget *prevWidget )
 {
-	QSizePolicy fp( QSizePolicy::Fixed, QSizePolicy::Fixed );
+	TQSizePolicy fp( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 
 	if (uid &&
 	    ((willShut && _allowShutdown == SHUT_ROOT) ||
 	     (mayNuke && _allowNuke == SHUT_ROOT)))
 	{
-		rootlab = new QLabel( i18n("Root authorization required."), this );
+		rootlab = new TQLabel( i18n("Root authorization required."), this );
 		box->addWidget( rootlab );
 		if (curPlugin < 0) {
 			curPlugin = 0;
@@ -104,14 +104,14 @@ KDMShutdownBase::complete( QWidget *prevWidget )
 		                          KGreeterPlugin::Shutdown );
 		verify->selectPlugin( curPlugin );
 		box->addLayout( verify->getLayout() );
-		QAccel *accel = new QAccel( this );
+		TQAccel *accel = new TQAccel( this );
 		accel->insertItem( ALT+Key_A, 0 );
-		connect( accel, SIGNAL(activated( int )), SLOT(slotActivatePlugMenu()) );
+		connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotActivatePlugMenu()) );
 	}
 
 	box->addWidget( new KSeparator( KSeparator::HLine, this ) );
 
-	QBoxLayout *hlay = new QHBoxLayout( box, KDsh );
+	TQBoxLayout *hlay = new TQHBoxLayout( box, KDsh );
 	hlay->addStretch( 1 );
 	if (mayOk) {
 		okButton = new KPushButton( KStdGuiItem::ok(), this );
@@ -119,7 +119,7 @@ KDMShutdownBase::complete( QWidget *prevWidget )
 		okButton->setDefault( true );
 		hlay->addWidget( okButton );
 		hlay->addStretch( 1 );
-		connect( okButton, SIGNAL(clicked()), SLOT(accept()) );
+		connect( okButton, TQT_SIGNAL(clicked()), TQT_SLOT(accept()) );
 	}
 	if (maySched) {
 		KPushButton *schedButton =
@@ -127,7 +127,7 @@ KDMShutdownBase::complete( QWidget *prevWidget )
 		schedButton->setSizePolicy( fp );
 		hlay->addWidget( schedButton );
 		hlay->addStretch( 1 );
-		connect( schedButton, SIGNAL(clicked()), SLOT(slotSched()) );
+		connect( schedButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotSched()) );
 	}
 	cancelButton = new KPushButton( KStdGuiItem::cancel(), this );
 	cancelButton->setSizePolicy( fp );
@@ -135,7 +135,7 @@ KDMShutdownBase::complete( QWidget *prevWidget )
 		cancelButton->setDefault( true );
 	hlay->addWidget( cancelButton );
 	hlay->addStretch( 1 );
-	connect( cancelButton, SIGNAL(clicked()), SLOT(reject()) );
+	connect( cancelButton, TQT_SIGNAL(clicked()), TQT_SLOT(reject()) );
 
 	updateNeedRoot();
 }
@@ -144,11 +144,11 @@ void
 KDMShutdownBase::slotActivatePlugMenu()
 {
 	if (needRoot) {
-		QPopupMenu *cmnu = verify->getPlugMenu();
+		TQPopupMenu *cmnu = verify->getPlugMenu();
 		if (!cmnu)
 			return;
-		QSize sh( cmnu->sizeHint() / 2 );
-		cmnu->exec( geometry().center() - QPoint( sh.width(), sh.height() ) );
+		TQSize sh( cmnu->sizeHint() / 2 );
+		cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 	}
 }
 
@@ -218,7 +218,7 @@ KDMShutdownBase::verifyRetry()
 }
 
 void
-KDMShutdownBase::verifySetUser( const QString & )
+KDMShutdownBase::verifySetUser( const TQString & )
 {
 }
 
@@ -239,25 +239,25 @@ doShutdown( int type, const char *os )
 
 
 
-KDMShutdown::KDMShutdown( int _uid, QWidget *_parent )
+KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 	: inherited( _uid, _parent )
 {
-	QSizePolicy fp( QSizePolicy::Fixed, QSizePolicy::Fixed );
+	TQSizePolicy fp( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 
-	QHBoxLayout *hlay = new QHBoxLayout( box, KDsh );
+	TQHBoxLayout *hlay = new TQHBoxLayout( box, KDsh );
 
-	howGroup = new QVButtonGroup( i18n("Shutdown Type"), this );
+	howGroup = new TQVButtonGroup( i18n("Shutdown Type"), this );
 	hlay->addWidget( howGroup, 0, AlignTop );
 
-	QRadioButton *rb;
+	TQRadioButton *rb;
 	rb = new KDMRadioButton( i18n("&Turn off computer"), howGroup );
 	rb->setChecked( true );
 	rb->setFocus();
 
 	restart_rb = new KDMRadioButton( i18n("&Restart computer"), howGroup );
 
-	connect( rb, SIGNAL(doubleClicked()), SLOT(accept()) );
-	connect( restart_rb, SIGNAL(doubleClicked()), SLOT(accept()) );
+	connect( rb, TQT_SIGNAL(doubleClicked()), TQT_SLOT(accept()) );
+	connect( restart_rb, TQT_SIGNAL(doubleClicked()), TQT_SLOT(accept()) );
 
 	GSet( 1 );
 	GSendInt( G_ListBootOpts );
@@ -265,40 +265,40 @@ KDMShutdown::KDMShutdown( int _uid, QWidget *_parent )
 		char **tlist = GRecvStrArr( 0 );
 		int defaultTarget = GRecvInt();
 		oldTarget = GRecvInt();
-		QWidget *hlp = new QWidget( howGroup );
-		targets = new QComboBox( hlp );
+		TQWidget *hlp = new TQWidget( howGroup );
+		targets = new TQComboBox( hlp );
 		for (int i = 0; tlist[i]; i++)
-			targets->insertItem( QString::fromLocal8Bit( tlist[i] ) );
+			targets->insertItem( TQString::fromLocal8Bit( tlist[i] ) );
 		freeStrArr( tlist );
 		targets->setCurrentItem( oldTarget == -1 ? defaultTarget : oldTarget );
-		QHBoxLayout *hb = new QHBoxLayout( hlp, 0, KDsh );
-		int spc = kapp->style().pixelMetric( QStyle::PM_ExclusiveIndicatorWidth )
+		TQHBoxLayout *hb = new TQHBoxLayout( hlp, 0, KDsh );
+		int spc = kapp->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth )
 		          + howGroup->insideSpacing();
 		hb->addSpacing( spc );
 		hb->addWidget( targets );
-		connect( targets, SIGNAL(activated( int )), SLOT(slotTargetChanged()) );
+		connect( targets, TQT_SIGNAL(activated( int )), TQT_SLOT(slotTargetChanged()) );
 	}
 	GSet( 0 );
 
 	howGroup->setSizePolicy( fp );
 
-	schedGroup = new QGroupBox( i18n("Scheduling"), this );
+	schedGroup = new TQGroupBox( i18n("Scheduling"), this );
 	hlay->addWidget( schedGroup, 0, AlignTop );
 
-	le_start = new QLineEdit( schedGroup );
-	QLabel *lab1 = new QLabel( le_start, i18n("&Start:"), schedGroup );
+	le_start = new TQLineEdit( schedGroup );
+	TQLabel *lab1 = new TQLabel( le_start, i18n("&Start:"), schedGroup );
 
-	le_timeout = new QLineEdit( schedGroup );
-	QLabel *lab2 = new QLabel( le_timeout, i18n("T&imeout:"), schedGroup );
+	le_timeout = new TQLineEdit( schedGroup );
+	TQLabel *lab2 = new TQLabel( le_timeout, i18n("T&imeout:"), schedGroup );
 
-	cb_force = new QCheckBox( i18n("&Force after timeout"), schedGroup );
+	cb_force = new TQCheckBox( i18n("&Force after timeout"), schedGroup );
 	if (_allowNuke != SHUT_NONE) {
-		connect( cb_force, SIGNAL(clicked()), SLOT(slotWhenChanged()) );
+		connect( cb_force, TQT_SIGNAL(clicked()), TQT_SLOT(slotWhenChanged()) );
 		mayNuke = true;
 	} else
 		cb_force->setEnabled( false );
 
-	QGridLayout *grid = new QGridLayout( schedGroup, 0, 0, KDmh, KDsh );
+	TQGridLayout *grid = new TQGridLayout( schedGroup, 0, 0, KDmh, KDsh );
 	grid->addRowSpacing( 0, schedGroup->fontMetrics().height() - 5 );
 	grid->addWidget( lab1, 1, 0, AlignRight );
 	grid->addWidget( le_start, 1, 1 );
@@ -326,7 +326,7 @@ get_date( const char *str )
 	KProcIO prc;
 	prc << "/bin/date" << "+%s" << "-d" << str;
 	prc.start( KProcess::Block, false );
-	QString dstr;
+	TQString dstr;
 	if (prc.readln( dstr, false, 0 ) < 0)
 		return -1;
 	return dstr.toInt();
@@ -388,7 +388,7 @@ KDMShutdown::accepted()
 }
 
 void
-KDMShutdown::scheduleShutdown( QWidget *_parent )
+KDMShutdown::scheduleShutdown( TQWidget *_parent )
 {
 	GSet( 1 );
 	GSendInt( G_QueryShutdown );
@@ -415,30 +415,30 @@ KDMShutdown::scheduleShutdown( QWidget *_parent )
 }
 
 
-KDMRadioButton::KDMRadioButton( const QString &label, QWidget *parent )
+KDMRadioButton::KDMRadioButton( const TQString &label, TQWidget *parent )
 	: inherited( label, parent )
 {
 }
 
 void
-KDMRadioButton::mouseDoubleClickEvent( QMouseEvent * )
+KDMRadioButton::mouseDoubleClickEvent( TQMouseEvent * )
 {
 	emit doubleClicked();
 }
 
 
 KDMDelayedPushButton::KDMDelayedPushButton( const KGuiItem &item,
-                                            QWidget *parent, 
+                                            TQWidget *parent, 
                                             const char *name )
 	: inherited( item, parent, name )
 	, pop( 0 )
 {
-	connect( this, SIGNAL(pressed()), SLOT(slotPressed()) );
-	connect( this, SIGNAL(released()), SLOT(slotReleased()) );
-	connect( &popt, SIGNAL(timeout()), SLOT(slotTimeout()) );
+	connect( this, TQT_SIGNAL(pressed()), TQT_SLOT(slotPressed()) );
+	connect( this, TQT_SIGNAL(released()), TQT_SLOT(slotReleased()) );
+	connect( &popt, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
 }
 
-void KDMDelayedPushButton::setPopup( QPopupMenu *p )
+void KDMDelayedPushButton::setPopup( TQPopupMenu *p )
 {
 	pop = p;
 	setIsMenuButton( p != 0 );
@@ -447,7 +447,7 @@ void KDMDelayedPushButton::setPopup( QPopupMenu *p )
 void KDMDelayedPushButton::slotPressed()
 {
 	if (pop)
-		popt.start( QApplication::startDragTime() );
+		popt.start( TQApplication::startDragTime() );
 }
 
 void KDMDelayedPushButton::slotReleased()
@@ -462,41 +462,41 @@ void KDMDelayedPushButton::slotTimeout()
 	setDown( false );
 }
 
-KDMSlimShutdown::KDMSlimShutdown( QWidget *_parent )
+KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 	: inherited( _parent )
 	, targetList( 0 )
 {
 
 	bool doUbuntuLogout = KConfigGroup(KGlobal::config(), "Shutdown").readBoolEntry("doUbuntuLogout", false);
 
-	QVBoxLayout* vbox = new QVBoxLayout( this );
-	QHBoxLayout *hbox = new QHBoxLayout( this, KDmh, KDsh );
-	QFrame* lfrm = new QFrame( this );
-	QHBoxLayout* hbuttonbox;
+	TQVBoxLayout* vbox = new TQVBoxLayout( this );
+	TQHBoxLayout *hbox = new TQHBoxLayout( this, KDmh, KDsh );
+	TQFrame* lfrm = new TQFrame( this );
+	TQHBoxLayout* hbuttonbox;
 
 	if(doUbuntuLogout)
 	{		
-		lfrm->setFrameStyle( QFrame::StyledPanel | QFrame::Raised );
-		lfrm->setLineWidth( style().pixelMetric( QStyle::PM_DefaultFrameWidth, lfrm ) );
+		lfrm->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
+		lfrm->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, lfrm ) );
 		// we need to set the minimum size for the logout box, since it
 		// gets too small if there isn't all options available
 		lfrm->setMinimumSize(300,120);
 		vbox->addWidget( lfrm );
-		vbox = new QVBoxLayout( lfrm, 2 * KDialog::marginHint(),
+		vbox = new TQVBoxLayout( lfrm, 2 * KDialog::marginHint(),
 								2 * KDialog::spacingHint() );
 
 		// first line of buttons
-		hbuttonbox = new QHBoxLayout( vbox, 8 * KDialog::spacingHint() );
+		hbuttonbox = new TQHBoxLayout( vbox, 8 * KDialog::spacingHint() );
 		hbuttonbox->setAlignment( Qt::AlignHCenter );
 
 		// Reboot
 		FlatButton* btnReboot = new FlatButton( lfrm );
 		btnReboot->setTextLabel( i18n("&Restart"), false );
 		btnReboot->setPixmap( DesktopIcon( "reload") );
-                int i = btnReboot->textLabel().find( QRegExp("\\&"), 0 );    // i == 1
+                int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
                 btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnReboot);
-		connect(btnReboot, SIGNAL(clicked()), SLOT(slotReboot()));
+		connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
 		
 		// Copied completely from the standard restart/shutdown dialog
 		GSet( 1 );
@@ -505,17 +505,17 @@ KDMSlimShutdown::KDMSlimShutdown( QWidget *_parent )
 			targetList = GRecvStrArr( 0 );
 			/*int def =*/ GRecvInt();
 			int cur = GRecvInt();
-			QPopupMenu *targets = new QPopupMenu( this );
+			TQPopupMenu *targets = new TQPopupMenu( this );
 			btnReboot->setPopupDelay(300); // visually add dropdown
 			for (int i = 0; targetList[i]; i++) {
-				QString t( QString::fromLocal8Bit( targetList[i] ) );
+				TQString t( TQString::fromLocal8Bit( targetList[i] ) );
 				targets->insertItem( i == cur ?
 									i18n("current option in boot loader",
 										"%1 (current)").arg( t ) :
 									t, i );
 			}
 			btnReboot->setPopup( targets );
-			connect( targets, SIGNAL(activated(int)), SLOT(slotReboot(int)) );
+			connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
 		}
 		GSet( 0 );
 		// Copied completely from the standard restart/shutdown dialog
@@ -524,46 +524,46 @@ KDMSlimShutdown::KDMSlimShutdown( QWidget *_parent )
 		FlatButton* btnHalt = new FlatButton( lfrm );
 		btnHalt->setTextLabel( i18n("&Turn Off"), false );
 		btnHalt->setPixmap( DesktopIcon( "exit") );
-                i = btnHalt->textLabel().find( QRegExp("\\&"), 0 );    // i == 1
+                i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
                 btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnHalt );
-		connect(btnHalt, SIGNAL(clicked()), SLOT(slotHalt()));
+		connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
 
 		// cancel buttonbox
-		QHBoxLayout* hbuttonbox2 = new QHBoxLayout( vbox, 8 * KDialog::spacingHint()  );
+		TQHBoxLayout* hbuttonbox2 = new TQHBoxLayout( vbox, 8 * KDialog::spacingHint()  );
 		hbuttonbox2->setAlignment( Qt::AlignRight );
 
 		// Back to kdm
 		KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), lfrm );
 		hbuttonbox2->addWidget( btnBack );
-		connect(btnBack, SIGNAL(clicked()), SLOT(reject()));	
+		connect(btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));	
 	
 	
 	}
 	else
 	{
-		lfrm->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+		lfrm->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
 		hbox->addWidget( lfrm, AlignCenter );
-		QLabel *icon = new QLabel( lfrm );
-		icon->setPixmap( QPixmap( locate( "data", "kdm/pics/shutdown.jpg" ) ) );
-		QVBoxLayout *iconlay = new QVBoxLayout( lfrm );
+		TQLabel *icon = new TQLabel( lfrm );
+		icon->setPixmap( TQPixmap( locate( "data", "kdm/pics/shutdown.jpg" ) ) );
+		TQVBoxLayout *iconlay = new TQVBoxLayout( lfrm );
 		iconlay->addWidget( icon );
 	
-		QVBoxLayout *buttonlay = new QVBoxLayout( hbox, KDsh );
+		TQVBoxLayout *buttonlay = new TQVBoxLayout( hbox, KDsh );
 	
 		buttonlay->addStretch( 1 );
 	
 		KPushButton *btnHalt = new
 			KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit" ), this );
 		buttonlay->addWidget( btnHalt );
-		connect( btnHalt, SIGNAL(clicked()), SLOT(slotHalt()) );
+		connect( btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()) );
 	
 		buttonlay->addSpacing( KDialog::spacingHint() );
 	
 		KDMDelayedPushButton *btnReboot = new
 			KDMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload" ), this );
 		buttonlay->addWidget( btnReboot );
-		connect( btnReboot, SIGNAL(clicked()), SLOT(slotReboot()) );
+		connect( btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()) );
 	
 		GSet( 1 );
 		GSendInt( G_ListBootOpts );
@@ -571,16 +571,16 @@ KDMSlimShutdown::KDMSlimShutdown( QWidget *_parent )
 			targetList = GRecvStrArr( 0 );
 			/*int def =*/ GRecvInt();
 			int cur = GRecvInt();
-			QPopupMenu *targets = new QPopupMenu( this );
+			TQPopupMenu *targets = new TQPopupMenu( this );
 			for (int i = 0; targetList[i]; i++) {
-				QString t( QString::fromLocal8Bit( targetList[i] ) );
+				TQString t( TQString::fromLocal8Bit( targetList[i] ) );
 				targets->insertItem( i == cur ?
 									i18n("current option in boot loader",
 										"%1 (current)").arg( t ) :
 									t, i );
 			}
 			btnReboot->setPopup( targets );
-			connect( targets, SIGNAL(activated(int)), SLOT(slotReboot(int)) );
+			connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
 		}
 		GSet( 0 );
 	
@@ -590,7 +590,7 @@ KDMSlimShutdown::KDMSlimShutdown( QWidget *_parent )
 			KPushButton *btnSched = new
 				KPushButton( KGuiItem( i18n("&Schedule...") ), this );
 			buttonlay->addWidget( btnSched );
-			connect( btnSched, SIGNAL(clicked()), SLOT(slotSched()) );
+			connect( btnSched, TQT_SIGNAL(clicked()), TQT_SLOT(slotSched()) );
 	
 			buttonlay->addStretch( 1 );
 		}
@@ -601,7 +601,7 @@ KDMSlimShutdown::KDMSlimShutdown( QWidget *_parent )
 	
 		KPushButton *btnBack = new KPushButton( KStdGuiItem::cancel(), this );
 		buttonlay->addWidget( btnBack );
-		connect( btnBack, SIGNAL(clicked()), SLOT(reject()) );
+		connect( btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()) );
 	
 		buttonlay->addSpacing( KDialog::spacingHint() );
 	
@@ -673,7 +673,7 @@ KDMSlimShutdown::externShutdown( int type, const char *os, int uid )
 
 
 KSMPushButton::KSMPushButton( const KGuiItem &item,
-					    QWidget *parent,
+					    TQWidget *parent,
 					    const char *name)
   : KPushButton( item, parent, name),
     m_pressed(false)
@@ -682,7 +682,7 @@ KSMPushButton::KSMPushButton( const KGuiItem &item,
 	setAutoDefault ( false );	
 }
 
-void KSMPushButton::keyPressEvent( QKeyEvent* e )
+void KSMPushButton::keyPressEvent( TQKeyEvent* e )
 {
 	switch ( e->key() ) 
 	{
@@ -700,11 +700,11 @@ void KSMPushButton::keyPressEvent( QKeyEvent* e )
 			e->ignore();
 	}
 
-	QPushButton::keyPressEvent(e);
+	TQPushButton::keyPressEvent(e);
 }
 
 
-void KSMPushButton::keyReleaseEvent( QKeyEvent* e )
+void KSMPushButton::keyReleaseEvent( TQKeyEvent* e )
 {
   switch ( e->key() ) 
   {
@@ -728,8 +728,8 @@ void KSMPushButton::keyReleaseEvent( QKeyEvent* e )
 	}
 }
 
-FlatButton::FlatButton( QWidget *parent, const char *name )
-  : QToolButton( parent, name/*, WNoAutoErase*/ ),
+FlatButton::FlatButton( TQWidget *parent, const char *name )
+  : TQToolButton( parent, name/*, WNoAutoErase*/ ),
     m_pressed(false)
 {
   init();
@@ -743,12 +743,12 @@ void FlatButton::init()
 	setUsesTextLabel(true);
 	setUsesBigPixmap(true);
 	setAutoRaise(true);
-	setTextPosition( QToolButton::Under );
-	setFocusPolicy(QWidget::StrongFocus);	
+	setTextPosition( TQToolButton::Under );
+	setFocusPolicy(TQWidget::StrongFocus);	
  }
 
 
-void FlatButton::keyPressEvent( QKeyEvent* e )
+void FlatButton::keyPressEvent( TQKeyEvent* e )
 {
 	switch ( e->key() ) 
 	{
@@ -766,10 +766,10 @@ void FlatButton::keyPressEvent( QKeyEvent* e )
 			e->ignore();
 	}
 
-	QToolButton::keyPressEvent(e);
+	TQToolButton::keyPressEvent(e);
 }
 
-void FlatButton::keyReleaseEvent( QKeyEvent* e )
+void FlatButton::keyReleaseEvent( TQKeyEvent* e )
 {
 	switch ( e->key() ) 
 	{
@@ -796,14 +796,14 @@ void FlatButton::keyReleaseEvent( QKeyEvent* e )
 
 
 KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char *os,
-                                  QWidget *_parent )
+                                  TQWidget *_parent )
 	: inherited( _uid, _parent )
 {
 #ifdef HAVE_VTS
 	if (type == SHUT_CONSOLE)
 		willShut = false;
 #endif
-	box->addWidget( new QLabel( QString( "<qt><center><b><nobr>"
+	box->addWidget( new TQLabel( TQString( "<qt><center><b><nobr>"
 	                                     "%1%2"
 	                                     "</nobr></b></center><br></qt>" )
 	                            .arg( (type == SHUT_HALT) ?
@@ -815,8 +815,8 @@ KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char 
 	                                  i18n("Restart Computer") )
 	                            .arg( os ?
 	                                  i18n("<br>(Next boot: %1)")
-	                                  .arg( QString::fromLocal8Bit( os ) ) :
-	                                  QString::null ),
+	                                  .arg( TQString::fromLocal8Bit( os ) ) :
+	                                  TQString::null ),
 	                            this ) );
 
 	if (sess) {
@@ -825,23 +825,23 @@ KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char 
 		mayNuke = doesNuke = true;
 		if (_allowNuke == SHUT_NONE)
 			mayOk = false;
-		QLabel *lab = new QLabel( mayOk ?
+		TQLabel *lab = new TQLabel( mayOk ?
 		                          i18n("Abort active sessions:") :
 		                          i18n("No permission to abort active sessions:"),
 		                          this );
 		box->addWidget( lab );
-		QListView *lv = new QListView( this );
-		lv->setSelectionMode( QListView::NoSelection );
+		TQListView *lv = new TQListView( this );
+		lv->setSelectionMode( TQListView::NoSelection );
 		lv->setAllColumnsShowFocus( true );
 		lv->header()->setResizeEnabled( false );
 		lv->addColumn( i18n("Session") );
 		lv->addColumn( i18n("Location") );
-		QListViewItem *itm;
+		TQListViewItem *itm;
 		int ns = 0;
-		QString user, loc;
+		TQString user, loc;
 		do {
 			decodeSess( sess, user, loc );
-			itm = new QListViewItem( lv, user, loc );
+			itm = new TQListViewItem( lv, user, loc );
 			sess = sess->next, ns++;
 		} while (sess);
 		int fw = lv->frameWidth() * 2;
@@ -856,7 +856,7 @@ KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char 
 
 KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
                                       int force, int uid, const char *os,
-                                      QWidget *_parent )
+                                      TQWidget *_parent )
 	: inherited( -1, _parent )
 {
 	if (force == SHUT_FORCE) {
@@ -865,13 +865,13 @@ KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
 		else if (_allowNuke == SHUT_ROOT)
 			mayNuke = doesNuke = true;
 	}
-	QLabel *lab = new QLabel( mayOk ?
+	TQLabel *lab = new TQLabel( mayOk ?
 	                          i18n("Abort pending shutdown:") :
 	                          i18n("No permission to abort pending shutdown:"),
 	                          this );
 	box->addWidget( lab );
-	QDateTime qdt;
-	QString strt, end;
+	TQDateTime qdt;
+	TQString strt, end;
 	if (start < time( 0 ))
 		strt = i18n("now");
 	else {
@@ -884,7 +884,7 @@ KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
 		qdt.setTime_t( timeout );
 		end = qdt.toString( LocalDate );
 	}
-	QString trg =
+	TQString trg =
 		i18n("Owner: %1"
 		     "\nType: %2%5"
 		     "\nStart: %3"
@@ -899,8 +899,8 @@ KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
 		      i18n("restart computer") )
 		.arg( strt ).arg( end )
 		.arg( os ?
-		      i18n("\nNext boot: %1").arg( QString::fromLocal8Bit( os ) ) :
-		      QString::null );
+		      i18n("\nNext boot: %1").arg( TQString::fromLocal8Bit( os ) ) :
+		      TQString::null );
 	if (timeout != TO_INF)
 		trg += i18n("\nAfter timeout: %1")
 		       .arg( force == SHUT_FORCE ?
@@ -908,7 +908,7 @@ KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
 		             force == SHUT_FORCEMY ?
 		             i18n("abort own sessions") :
 		             i18n("cancel shutdown") );
-	lab = new QLabel( trg, this );
+	lab = new TQLabel( trg, this );
 	box->addWidget( lab );
 	complete( 0 );
 }

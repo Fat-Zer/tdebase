@@ -39,11 +39,11 @@
 #include <kdebug.h>
 #include <kcursor.h>
 #include <kurldrag.h>
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
-#include <qapplication.h>
-#include <qmetaobject.h>
-#include <qobjectlist.h>
+#include <tqapplication.h>
+#include <tqmetaobject.h>
+#include <tqobjectlist.h>
 #include <config.h>
 #include <private/qucomextra_p.h>
 #include <kmessagebox.h>
@@ -53,7 +53,7 @@
 
 //#define DEBUG_HISTORY
 
-template class QPtrList<HistoryEntry>;
+template class TQPtrList<HistoryEntry>;
 
 KonqView::KonqView( KonqViewFactory &viewFactory,
                     KonqFrame* viewFrame,
@@ -61,7 +61,7 @@ KonqView::KonqView( KonqViewFactory &viewFactory,
                     const KService::Ptr &service,
                     const KTrader::OfferList &partServiceOffers,
                     const KTrader::OfferList &appServiceOffers,
-                    const QString &serviceType,
+                    const TQString &serviceType,
                     bool passiveMode
                     )
 {
@@ -111,13 +111,13 @@ KonqView::~KonqView()
   //kdDebug(1202) << "KonqView::~KonqView : part = " << m_pPart << endl;
 
   if (KonqMainWindow::s_crashlog_file) {
-     QString part_url;
+     TQString part_url;
      if (m_pPart)
         part_url = m_pPart->url().url();
      if (part_url.isNull())
         part_url = "";
-     QCString line;
-     line = ( QString("close(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
+     TQCString line;
+     line = ( TQString("close(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line, line.length());
      KonqMainWindow::s_crashlog_file->flush();
   }
@@ -127,7 +127,7 @@ KonqView::~KonqView()
   {
     finishedWithCurrentURL();
     if ( isPassiveMode() )
-      disconnect( m_pPart, SIGNAL( destroyed() ), m_pMainWindow->viewManager(), SLOT( slotObjectDestroyed() ) );
+      disconnect( m_pPart, TQT_SIGNAL( destroyed() ), m_pMainWindow->viewManager(), TQT_SLOT( slotObjectDestroyed() ) );
 
     delete m_pPart;
   }
@@ -136,28 +136,28 @@ KonqView::~KonqView()
   //kdDebug(1202) << "KonqView::~KonqView " << this << " done" << endl;
 }
 
-void KonqView::openURL( const KURL &url, const QString & locationBarURL,
-                        const QString & nameFilter, bool tempFile )
+void KonqView::openURL( const KURL &url, const TQString & locationBarURL,
+                        const TQString & nameFilter, bool tempFile )
 {
   kdDebug(1202) << "KonqView::openURL url=" << url << " locationBarURL=" << locationBarURL << endl;
   setServiceTypeInExtension();
 
   if (KonqMainWindow::s_crashlog_file) {
-     QString part_url;
+     TQString part_url;
      if (m_pPart)
         part_url = m_pPart->url().url();
      if (part_url.isNull())
         part_url = "";
 
-     QString url_url = url.url();
+     TQString url_url = url.url();
      if (url_url.isNull())
-        url_url = QString("");
+        url_url = TQString("");
 
-     QCString line;
+     TQCString line;
 
-     line = ( QString("closed(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
+     line = ( TQString("closed(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line,line.length());
-     line = ( QString("opened(%3):%4\n").arg(m_randID,0,16).arg(url_url)  ).utf8();
+     line = ( TQString("opened(%3):%4\n").arg(m_randID,0,16).arg(url_url)  ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line,line.length());
      KonqMainWindow::s_crashlog_file->flush();
   }
@@ -190,7 +190,7 @@ void KonqView::openURL( const KURL &url, const QString & locationBarURL,
   } else
     m_bLockHistory = false;
 
-  callExtensionStringMethod( "setNameFilter(const QString&)", nameFilter );
+  callExtensionStringMethod( "setNameFilter(const TQString&)", nameFilter );
   if ( m_bDisableScrolling )
     callExtensionMethod( "disableScrolling()" );
 
@@ -224,7 +224,7 @@ void KonqView::openURL( const KURL &url, const QString & locationBarURL,
 
   updateHistoryEntry(false /* don't save location bar URL yet */);
   // add pending history entry
-  KonqHistoryManager::kself()->addPending( url, locationBarURL, QString::null);
+  KonqHistoryManager::kself()->addPending( url, locationBarURL, TQString::null);
 
 #ifdef DEBUG_HISTORY
   kdDebug(1202) << "Current position : " << m_lstHistory.at() << endl;
@@ -255,7 +255,7 @@ void KonqView::switchView( KonqViewFactory &viewFactory )
 
   connectPart();
 
-  QVariant prop;
+  TQVariant prop;
 
   prop = m_service->property( "X-KDE-BrowserView-FollowActive");
   if (prop.isValid() && prop.toBool())
@@ -304,8 +304,8 @@ void KonqView::switchView( KonqViewFactory &viewFactory )
   }
 }
 
-bool KonqView::changeViewMode( const QString &serviceType,
-                               const QString &serviceName,
+bool KonqView::changeViewMode( const TQString &serviceType,
+                               const TQString &serviceName,
                                bool forceAutoEmbed )
 {
   // Caller should call stop first.
@@ -372,16 +372,16 @@ bool KonqView::changeViewMode( const QString &serviceType,
 void KonqView::connectPart(  )
 {
   //kdDebug(1202) << "KonqView::connectPart" << endl;
-  connect( m_pPart, SIGNAL( started( KIO::Job * ) ),
-           this, SLOT( slotStarted( KIO::Job * ) ) );
-  connect( m_pPart, SIGNAL( completed() ),
-           this, SLOT( slotCompleted() ) );
-  connect( m_pPart, SIGNAL( completed(bool) ),
-           this, SLOT( slotCompleted(bool) ) );
-  connect( m_pPart, SIGNAL( canceled( const QString & ) ),
-           this, SLOT( slotCanceled( const QString & ) ) );
-  connect( m_pPart, SIGNAL( setWindowCaption( const QString & ) ),
-           this, SLOT( setCaption( const QString & ) ) );
+  connect( m_pPart, TQT_SIGNAL( started( KIO::Job * ) ),
+           this, TQT_SLOT( slotStarted( KIO::Job * ) ) );
+  connect( m_pPart, TQT_SIGNAL( completed() ),
+           this, TQT_SLOT( slotCompleted() ) );
+  connect( m_pPart, TQT_SIGNAL( completed(bool) ),
+           this, TQT_SLOT( slotCompleted(bool) ) );
+  connect( m_pPart, TQT_SIGNAL( canceled( const TQString & ) ),
+           this, TQT_SLOT( slotCanceled( const TQString & ) ) );
+  connect( m_pPart, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
+           this, TQT_SLOT( setCaption( const TQString & ) ) );
 
   KParts::BrowserExtension *ext = browserExtension();
 
@@ -389,8 +389,8 @@ void KonqView::connectPart(  )
   {
       ext->setBrowserInterface( m_browserIface );
 
-      connect( ext, SIGNAL( openURLRequestDelayed( const KURL &, const KParts::URLArgs &) ),
-               m_pMainWindow, SLOT( slotOpenURLRequest( const KURL &, const KParts::URLArgs & ) ) );
+      connect( ext, TQT_SIGNAL( openURLRequestDelayed( const KURL &, const KParts::URLArgs &) ),
+               m_pMainWindow, TQT_SLOT( slotOpenURLRequest( const KURL &, const KParts::URLArgs & ) ) );
 
       if ( m_bPopupMenuEnabled )
       {
@@ -398,90 +398,90 @@ void KonqView::connectPart(  )
           enablePopupMenu( true );
       }
 
-      connect( ext, SIGNAL( setLocationBarURL( const QString & ) ),
-               this, SLOT( setLocationBarURL( const QString & ) ) );
+      connect( ext, TQT_SIGNAL( setLocationBarURL( const TQString & ) ),
+               this, TQT_SLOT( setLocationBarURL( const TQString & ) ) );
 
-      connect( ext, SIGNAL( setIconURL( const KURL & ) ),
-               this, SLOT( setIconURL( const KURL & ) ) );
+      connect( ext, TQT_SIGNAL( setIconURL( const KURL & ) ),
+               this, TQT_SLOT( setIconURL( const KURL & ) ) );
 
-      connect( ext, SIGNAL( setPageSecurity( int ) ),
-               this, SLOT( setPageSecurity( int ) ) );
+      connect( ext, TQT_SIGNAL( setPageSecurity( int ) ),
+               this, TQT_SLOT( setPageSecurity( int ) ) );
 
-      connect( ext, SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & ) ),
-               m_pMainWindow, SLOT( slotCreateNewWindow( const KURL &, const KParts::URLArgs & ) ) );
+      connect( ext, TQT_SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & ) ),
+               m_pMainWindow, TQT_SLOT( slotCreateNewWindow( const KURL &, const KParts::URLArgs & ) ) );
 
-      connect( ext, SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs &, const KParts::WindowArgs &, KParts::ReadOnlyPart *& ) ),
-               m_pMainWindow, SLOT( slotCreateNewWindow( const KURL &, const KParts::URLArgs &, const KParts::WindowArgs &, KParts::ReadOnlyPart *& ) ) );
+      connect( ext, TQT_SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs &, const KParts::WindowArgs &, KParts::ReadOnlyPart *& ) ),
+               m_pMainWindow, TQT_SLOT( slotCreateNewWindow( const KURL &, const KParts::URLArgs &, const KParts::WindowArgs &, KParts::ReadOnlyPart *& ) ) );
 
-      connect( ext, SIGNAL( loadingProgress( int ) ),
-               m_pKonqFrame->statusbar(), SLOT( slotLoadingProgress( int ) ) );
+      connect( ext, TQT_SIGNAL( loadingProgress( int ) ),
+               m_pKonqFrame->statusbar(), TQT_SLOT( slotLoadingProgress( int ) ) );
 
-      connect( ext, SIGNAL( speedProgress( int ) ),
-               m_pKonqFrame->statusbar(), SLOT( slotSpeedProgress( int ) ) );
+      connect( ext, TQT_SIGNAL( speedProgress( int ) ),
+               m_pKonqFrame->statusbar(), TQT_SLOT( slotSpeedProgress( int ) ) );
 
-      connect( ext, SIGNAL( selectionInfo( const KFileItemList & ) ),
-               this, SLOT( slotSelectionInfo( const KFileItemList & ) ) );
+      connect( ext, TQT_SIGNAL( selectionInfo( const KFileItemList & ) ),
+               this, TQT_SLOT( slotSelectionInfo( const KFileItemList & ) ) );
 
-      connect( ext, SIGNAL( mouseOverInfo( const KFileItem * ) ),
-               this, SLOT( slotMouseOverInfo( const KFileItem * ) ) );
+      connect( ext, TQT_SIGNAL( mouseOverInfo( const KFileItem * ) ),
+               this, TQT_SLOT( slotMouseOverInfo( const KFileItem * ) ) );
 
-      connect( ext, SIGNAL( openURLNotify() ),
-               this, SLOT( slotOpenURLNotify() ) );
+      connect( ext, TQT_SIGNAL( openURLNotify() ),
+               this, TQT_SLOT( slotOpenURLNotify() ) );
 
-      connect( ext, SIGNAL( enableAction( const char *, bool ) ),
-               this, SLOT( slotEnableAction( const char *, bool ) ) );
+      connect( ext, TQT_SIGNAL( enableAction( const char *, bool ) ),
+               this, TQT_SLOT( slotEnableAction( const char *, bool ) ) );
 
-      connect( ext, SIGNAL( setActionText( const char *, const QString& ) ),
-               this, SLOT( slotSetActionText( const char *, const QString& ) ) );
+      connect( ext, TQT_SIGNAL( setActionText( const char *, const TQString& ) ),
+               this, TQT_SLOT( slotSetActionText( const char *, const TQString& ) ) );
 
-      connect( ext, SIGNAL( moveTopLevelWidget( int, int ) ),
-               this, SLOT( slotMoveTopLevelWidget( int, int ) ) );
+      connect( ext, TQT_SIGNAL( moveTopLevelWidget( int, int ) ),
+               this, TQT_SLOT( slotMoveTopLevelWidget( int, int ) ) );
 
-      connect( ext, SIGNAL( resizeTopLevelWidget( int, int ) ),
-               this, SLOT( slotResizeTopLevelWidget( int, int ) ) );
+      connect( ext, TQT_SIGNAL( resizeTopLevelWidget( int, int ) ),
+               this, TQT_SLOT( slotResizeTopLevelWidget( int, int ) ) );
 
-      connect( ext, SIGNAL( requestFocus(KParts::ReadOnlyPart *) ),
-               this, SLOT( slotRequestFocus(KParts::ReadOnlyPart *) ) );
+      connect( ext, TQT_SIGNAL( requestFocus(KParts::ReadOnlyPart *) ),
+               this, TQT_SLOT( slotRequestFocus(KParts::ReadOnlyPart *) ) );
 
       if (service()->desktopEntryName() != "konq_sidebartng") {
-          connect( ext, SIGNAL( infoMessage( const QString & ) ),
-               m_pKonqFrame->statusbar(), SLOT( message( const QString & ) ) );
+          connect( ext, TQT_SIGNAL( infoMessage( const TQString & ) ),
+               m_pKonqFrame->statusbar(), TQT_SLOT( message( const TQString & ) ) );
 
           connect( ext,
-                   SIGNAL( addWebSideBar(const KURL&, const QString&) ),
+                   TQT_SIGNAL( addWebSideBar(const KURL&, const TQString&) ),
                    m_pMainWindow,
-                   SLOT( slotAddWebSideBar(const KURL&, const QString&) ) );
+                   TQT_SLOT( slotAddWebSideBar(const KURL&, const TQString&) ) );
       }
 
       callExtensionBoolMethod( "setSaveViewPropertiesLocally(bool)", m_pMainWindow->saveViewPropertiesLocally() );
   }
 
-  QVariant urlDropHandling;
+  TQVariant urlDropHandling;
 
   if ( ext )
       urlDropHandling = ext->property( "urlDropHandling" );
   else
-      urlDropHandling = QVariant( true, 0 );
+      urlDropHandling = TQVariant( true, 0 );
 
   // Handle url drops if
   //  a) either the property says "ok"
   //  or
   //  b) the part is a plain krop (no BE)
-  m_bURLDropHandling = ( urlDropHandling.type() == QVariant::Bool &&
+  m_bURLDropHandling = ( urlDropHandling.type() == TQVariant::Bool &&
                          urlDropHandling.toBool() );
 
   m_pPart->widget()->installEventFilter( this );
 
-  if (m_bBackRightClick && m_pPart->widget()->inherits("QScrollView") )
+  if (m_bBackRightClick && m_pPart->widget()->inherits("TQScrollView") )
   {
-    (static_cast<QScrollView *>(m_pPart->widget()))->viewport()->installEventFilter( this );
+    (static_cast<TQScrollView *>(m_pPart->widget()))->viewport()->installEventFilter( this );
   }
 
   // KonqDirPart signal
   if ( m_pPart->inherits("KonqDirPart") )
   {
-      connect( m_pPart, SIGNAL( findOpen( KonqDirPart * ) ),
-               m_pMainWindow, SLOT( slotFindOpen( KonqDirPart * ) ) );
+      connect( m_pPart, TQT_SIGNAL( findOpen( KonqDirPart * ) ),
+               m_pMainWindow, TQT_SLOT( slotFindOpen( KonqDirPart * ) ) );
   }
 }
 
@@ -493,7 +493,7 @@ void KonqView::slotEnableAction( const char * name, bool enabled )
     // stored inside the browser-extension.
 }
 
-void KonqView::slotSetActionText( const char* name, const QString& text )
+void KonqView::slotSetActionText( const char* name, const TQString& text )
 {
     if ( m_pMainWindow->currentView() == this )
         m_pMainWindow->setActionText( name, text );
@@ -532,9 +532,9 @@ void KonqView::slotStarted( KIO::Job * job )
         job->setWindow (m_pMainWindow->topLevelWidget ());
       }
 
-      connect( job, SIGNAL( percent( KIO::Job *, unsigned long ) ), this, SLOT( slotPercent( KIO::Job *, unsigned long ) ) );
-      connect( job, SIGNAL( speed( KIO::Job *, unsigned long ) ), this, SLOT( slotSpeed( KIO::Job *, unsigned long ) ) );
-      connect( job, SIGNAL( infoMessage( KIO::Job *, const QString & ) ), this, SLOT( slotInfoMessage( KIO::Job *, const QString & ) ) );
+      connect( job, TQT_SIGNAL( percent( KIO::Job *, unsigned long ) ), this, TQT_SLOT( slotPercent( KIO::Job *, unsigned long ) ) );
+      connect( job, TQT_SIGNAL( speed( KIO::Job *, unsigned long ) ), this, TQT_SLOT( slotSpeed( KIO::Job *, unsigned long ) ) );
+      connect( job, TQT_SIGNAL( infoMessage( KIO::Job *, const TQString & ) ), this, TQT_SLOT( slotInfoMessage( KIO::Job *, const TQString & ) ) );
   }
 }
 
@@ -564,7 +564,7 @@ void KonqView::slotSpeed( KIO::Job *, unsigned long bytesPerSecond )
   m_pKonqFrame->statusbar()->slotSpeedProgress( bytesPerSecond );
 }
 
-void KonqView::slotInfoMessage( KIO::Job *, const QString &msg )
+void KonqView::slotInfoMessage( KIO::Job *, const TQString &msg )
 {
   m_pKonqFrame->statusbar()->message( msg );
 }
@@ -605,7 +605,7 @@ void KonqView::slotCompleted( bool hasPending )
   }
 }
 
-void KonqView::slotCanceled( const QString & errorMsg )
+void KonqView::slotCanceled( const TQString & errorMsg )
 {
   kdDebug(1202) << "KonqView::slotCanceled" << endl;
   // The errorMsg comes from the ReadOnlyPart's job.
@@ -619,13 +619,13 @@ void KonqView::slotCanceled( const QString & errorMsg )
 void KonqView::slotSelectionInfo( const KFileItemList &items )
 {
   KonqFileSelectionEvent ev( items, m_pPart );
-  QApplication::sendEvent( m_pMainWindow, &ev );
+  TQApplication::sendEvent( m_pMainWindow, &ev );
 }
 
 void KonqView::slotMouseOverInfo( const KFileItem *item )
 {
   KonqFileMouseOverEvent ev( item, m_pPart );
-  QApplication::sendEvent( m_pMainWindow, &ev );
+  TQApplication::sendEvent( m_pMainWindow, &ev );
 }
 
 void KonqView::setLocationBarURL( const KURL& locationBarURL )
@@ -633,7 +633,7 @@ void KonqView::setLocationBarURL( const KURL& locationBarURL )
   setLocationBarURL( locationBarURL.pathOrURL() );
 }
 
-void KonqView::setLocationBarURL( const QString & locationBarURL )
+void KonqView::setLocationBarURL( const TQString & locationBarURL )
 {
   //kdDebug(1202) << "KonqView::setLocationBarURL " << locationBarURL << " this=" << this << endl;
 
@@ -673,11 +673,11 @@ void KonqView::setTabIcon( const KURL &url )
   if (!m_bPassiveMode) frame()->setTabIcon( url, 0L );
 }
 
-void KonqView::setCaption( const QString & caption )
+void KonqView::setCaption( const TQString & caption )
 {
   if (caption.isEmpty()) return;
 
-  QString adjustedCaption = caption;
+  TQString adjustedCaption = caption;
   // For local URLs we prefer to use only the directory name
   if (url().isLocalFile())
   {
@@ -745,8 +745,8 @@ void KonqView::updateHistoryEntry( bool saveLocationBarURL )
 
   if ( browserExtension() )
   {
-    current->buffer = QByteArray(); // Start with empty buffer.
-    QDataStream stream( current->buffer, IO_WriteOnly );
+    current->buffer = TQByteArray(); // Start with empty buffer.
+    TQDataStream stream( current->buffer, IO_WriteOnly );
 
     browserExtension()->saveState( stream );
   }
@@ -772,8 +772,8 @@ void KonqView::updateHistoryEntry( bool saveLocationBarURL )
   current->strServiceName = m_service->desktopEntryName();
 
   current->doPost = m_doPost;
-  current->postData = m_doPost ? m_postData : QByteArray();
-  current->postContentType = m_doPost ? m_postContentType : QString::null;
+  current->postData = m_doPost ? m_postData : TQByteArray();
+  current->postContentType = m_doPost ? m_postContentType : TQString::null;
   current->pageReferrer = m_pageReferrer;
 }
 
@@ -835,7 +835,7 @@ void KonqView::restoreHistory()
 #endif
   setLocationBarURL( h.locationBarURL );
   setPageSecurity( h.pageSecurity );
-  m_sTypedURL = QString::null;
+  m_sTypedURL = TQString::null;
   if ( ! changeViewMode( h.strServiceType, h.strServiceName ) )
   {
     kdWarning(1202) << "Couldn't change view mode to " << h.strServiceType
@@ -850,7 +850,7 @@ void KonqView::restoreHistory()
   if ( browserExtension() )
   {
     //kdDebug(1202) << "Restoring view from stream" << endl;
-    QDataStream stream( h.buffer, IO_ReadOnly );
+    TQDataStream stream( h.buffer, IO_ReadOnly );
 
     browserExtension()->restoreState( stream );
 
@@ -884,7 +884,7 @@ void KonqView::copyHistory( KonqView *other )
 {
     m_lstHistory.clear();
 
-    QPtrListIterator<HistoryEntry> it( other->m_lstHistory );
+    TQPtrListIterator<HistoryEntry> it( other->m_lstHistory );
     for (; it.current(); ++it )
         m_lstHistory.append( new HistoryEntry( *it.current() ) );
     m_lstHistory.at(other->m_lstHistory.at());
@@ -963,8 +963,8 @@ void KonqView::finishedWithCurrentURL()
   if ( !m_tempFile.isEmpty() )
   {
     kdDebug(1202) << "######### Deleting tempfile after use:" << m_tempFile << endl;
-    QFile::remove( m_tempFile );
-    m_tempFile = QString::null;
+    TQFile::remove( m_tempFile );
+    m_tempFile = TQString::null;
   }
 }
 
@@ -1008,7 +1008,7 @@ void KonqView::setLockedLocation( bool b )
 void KonqView::aboutToOpenURL( const KURL &url, const KParts::URLArgs &args )
 {
   KParts::OpenURLEvent ev( m_pPart, url, args );
-  QApplication::sendEvent( m_pMainWindow, &ev );
+  TQApplication::sendEvent( m_pMainWindow, &ev );
 
   m_bGotIconURL = false;
   m_bAborted = false;
@@ -1025,14 +1025,14 @@ void KonqView::setServiceTypeInExtension()
   ext->setURLArgs( args );
 }
 
-QStringList KonqView::frameNames() const
+TQStringList KonqView::frameNames() const
 {
   return childFrameNames( m_pPart );
 }
 
-QStringList KonqView::childFrameNames( KParts::ReadOnlyPart *part )
+TQStringList KonqView::childFrameNames( KParts::ReadOnlyPart *part )
 {
-  QStringList res;
+  TQStringList res;
 
   KParts::BrowserHostExtension *hostExtension = KParts::BrowserHostExtension::childObject( part );
 
@@ -1041,15 +1041,15 @@ QStringList KonqView::childFrameNames( KParts::ReadOnlyPart *part )
 
   res += hostExtension->frameNames();
 
-  const QPtrList<KParts::ReadOnlyPart> children = hostExtension->frames();
-  QPtrListIterator<KParts::ReadOnlyPart> it( children );
+  const TQPtrList<KParts::ReadOnlyPart> children = hostExtension->frames();
+  TQPtrListIterator<KParts::ReadOnlyPart> it( children );
   for (; it.current(); ++it )
     res += childFrameNames( it.current() );
 
   return res;
 }
 
-KParts::BrowserHostExtension* KonqView::hostExtension( KParts::ReadOnlyPart *part, const QString &name )
+KParts::BrowserHostExtension* KonqView::hostExtension( KParts::ReadOnlyPart *part, const TQString &name )
 {
     KParts::BrowserHostExtension *ext = KParts::BrowserHostExtension::childObject( part );
 
@@ -1059,8 +1059,8 @@ KParts::BrowserHostExtension* KonqView::hostExtension( KParts::ReadOnlyPart *par
   if ( ext->frameNames().contains( name ) )
     return ext;
 
-  const QPtrList<KParts::ReadOnlyPart> children = ext->frames();
-  QPtrListIterator<KParts::ReadOnlyPart> it( children );
+  const TQPtrList<KParts::ReadOnlyPart> children = ext->frames();
+  TQPtrListIterator<KParts::ReadOnlyPart> it( children );
   for (; it.current(); ++it )
   {
     KParts::BrowserHostExtension *childHost = hostExtension( it.current(), name );
@@ -1073,7 +1073,7 @@ KParts::BrowserHostExtension* KonqView::hostExtension( KParts::ReadOnlyPart *par
 
 bool KonqView::callExtensionMethod( const char *methodName )
 {
-  QObject *obj = KParts::BrowserExtension::childObject( m_pPart );
+  TQObject *obj = KParts::BrowserExtension::childObject( m_pPart );
   if ( !obj ) // not all views have a browser extension !
     return false;
 
@@ -1088,7 +1088,7 @@ bool KonqView::callExtensionMethod( const char *methodName )
 
 bool KonqView::callExtensionBoolMethod( const char *methodName, bool value )
 {
-  QObject *obj = KParts::BrowserExtension::childObject( m_pPart );
+  TQObject *obj = KParts::BrowserExtension::childObject( m_pPart );
   if ( !obj ) // not all views have a browser extension !
     return false;
 
@@ -1103,9 +1103,9 @@ bool KonqView::callExtensionBoolMethod( const char *methodName, bool value )
   return true;
 }
 
-bool KonqView::callExtensionStringMethod( const char *methodName, QString value )
+bool KonqView::callExtensionStringMethod( const char *methodName, TQString value )
 {
-  QObject *obj = KParts::BrowserExtension::childObject( m_pPart );
+  TQObject *obj = KParts::BrowserExtension::childObject( m_pPart );
   if ( !obj ) // not all views have a browser extension !
     return false;
 
@@ -1122,7 +1122,7 @@ bool KonqView::callExtensionStringMethod( const char *methodName, QString value 
 
 bool KonqView::callExtensionURLMethod( const char *methodName, const KURL& value )
 {
-  QObject *obj = KParts::BrowserExtension::childObject( m_pPart );
+  TQObject *obj = KParts::BrowserExtension::childObject( m_pPart );
   if ( !obj ) // not all views have a browser extension !
     return false;
 
@@ -1137,16 +1137,16 @@ bool KonqView::callExtensionURLMethod( const char *methodName, const KURL& value
   return true;
 }
 
-void KonqView::setViewName( const QString &name )
+void KonqView::setViewName( const TQString &name )
 {
     //kdDebug() << "KonqView::setViewName this=" << this << " name=" << name << endl;
     if ( m_pPart )
         m_pPart->setName( name.local8Bit().data() );
 }
 
-QString KonqView::viewName() const
+TQString KonqView::viewName() const
 {
-    return m_pPart ? QString::fromLocal8Bit( m_pPart->name() ) : QString::null;
+    return m_pPart ? TQString::fromLocal8Bit( m_pPart->name() ) : TQString::null;
 }
 
 void KonqView::enablePopupMenu( bool b )
@@ -1165,39 +1165,39 @@ void KonqView::enablePopupMenu( bool b )
   if ( b ) {
     m_bPopupMenuEnabled = true;
 
-    connect( ext, SIGNAL( popupMenu( const QPoint &, const KFileItemList & ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( const QPoint &, const KFileItemList & ) ) );
+    connect( ext, TQT_SIGNAL( popupMenu( const TQPoint &, const KFileItemList & ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( const TQPoint &, const KFileItemList & ) ) );
 
-    connect( ext, SIGNAL( popupMenu( const QPoint &, const KURL &, const QString &, mode_t ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( const QPoint &, const KURL &, const QString &, mode_t ) ) );
+    connect( ext, TQT_SIGNAL( popupMenu( const TQPoint &, const KURL &, const TQString &, mode_t ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( const TQPoint &, const KURL &, const TQString &, mode_t ) ) );
 
-    connect( ext, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList & ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList & ) ) );
+    connect( ext, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList & ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList & ) ) );
 
-    connect( ext, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ) );
+    connect( ext, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ) );
 
-    connect( ext, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const QString &, mode_t ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const QString &, mode_t ) ) );
+    connect( ext, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const TQString &, mode_t ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const TQString &, mode_t ) ) );
 
-    connect( ext, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ) );
+    connect( ext, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ) );
   }
   else // disable context popup
   {
     m_bPopupMenuEnabled = false;
 
-    disconnect( ext, SIGNAL( popupMenu( const QPoint &, const KFileItemList & ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( const QPoint &, const KFileItemList & ) ) );
+    disconnect( ext, TQT_SIGNAL( popupMenu( const TQPoint &, const KFileItemList & ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( const TQPoint &, const KFileItemList & ) ) );
 
-    disconnect( ext, SIGNAL( popupMenu( const QPoint &, const KURL &, const QString &, mode_t ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( const QPoint &, const KURL &, const QString &, mode_t ) ) );
+    disconnect( ext, TQT_SIGNAL( popupMenu( const TQPoint &, const KURL &, const TQString &, mode_t ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( const TQPoint &, const KURL &, const TQString &, mode_t ) ) );
 
-    disconnect( ext, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList & ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList & ) ) );
+    disconnect( ext, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList & ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList & ) ) );
 
-    disconnect( ext, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const QString &, mode_t ) ),
-             m_pMainWindow, SLOT( slotPopupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const QString &, mode_t ) ) );
+    disconnect( ext, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const TQString &, mode_t ) ),
+             m_pMainWindow, TQT_SLOT( slotPopupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const TQString &, mode_t ) ) );
   }
   enableBackRightClick( m_bBackRightClick );
 }
@@ -1207,11 +1207,11 @@ void KonqView::enableBackRightClick( bool b )
 {
     m_bBackRightClick = b;
     if ( b )
-        connect( this, SIGNAL( backRightClick() ),
-                 m_pMainWindow, SLOT( slotBack() ) );
+        connect( this, TQT_SIGNAL( backRightClick() ),
+                 m_pMainWindow, TQT_SLOT( slotBack() ) );
     else
-        disconnect( this, SIGNAL( backRightClick() ),
-                    m_pMainWindow, SLOT( slotBack() ) );
+        disconnect( this, TQT_SIGNAL( backRightClick() ),
+                    m_pMainWindow, TQT_SLOT( slotBack() ) );
 }
 
 void KonqView::reparseConfiguration()
@@ -1220,9 +1220,9 @@ void KonqView::reparseConfiguration()
     bool b = KonqSettings::backRightClick();
     if ( m_bBackRightClick != b )
     {
-        if (m_bBackRightClick && m_pPart->widget()->inherits("QScrollView") )
+        if (m_bBackRightClick && m_pPart->widget()->inherits("TQScrollView") )
         {
-            (static_cast<QScrollView *>(m_pPart->widget()))->viewport()->installEventFilter( this );
+            (static_cast<TQScrollView *>(m_pPart->widget()))->viewport()->installEventFilter( this );
         }
         enableBackRightClick( b );
     }
@@ -1237,12 +1237,12 @@ void KonqView::disableScrolling()
 KonqViewIface * KonqView::dcopObject()
 {
   if ( !m_dcopObject ) {
-    QCString dcopName = name();
+    TQCString dcopName = name();
     if ( dcopName.isEmpty() || dcopName == "unnamed" )
       dcopName = viewName().utf8();
     if ( dcopName.isEmpty() || dcopName == "unnamed" ) {
-      QVariant dcopProperty = part()->property( "dcopObjectId" );
-      if ( dcopProperty.type() == QVariant::CString )
+      TQVariant dcopProperty = part()->property( "dcopObjectId" );
+      if ( dcopProperty.type() == TQVariant::CString )
         dcopName = dcopProperty.toCString();
     }
     dcopName += "-view"; // to avoid having the same name as the part
@@ -1251,21 +1251,21 @@ KonqViewIface * KonqView::dcopObject()
   return m_dcopObject;
 }
 
-bool KonqView::eventFilter( QObject *obj, QEvent *e )
+bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
 {
     if ( !m_pPart )
         return false;
 //  kdDebug() << "--" << obj->className() << "--" << e->type() << "--"  << endl;
-    if ( e->type() == QEvent::DragEnter && m_bURLDropHandling && obj == m_pPart->widget() )
+    if ( e->type() == TQEvent::DragEnter && m_bURLDropHandling && obj == m_pPart->widget() )
     {
-        QDragEnterEvent *ev = static_cast<QDragEnterEvent *>( e );
+        TQDragEnterEvent *ev = static_cast<TQDragEnterEvent *>( e );
 
         if ( KURLDrag::canDecode( ev ) )
         {
             KURL::List lstDragURLs;
             bool ok = KURLDrag::decode( ev, lstDragURLs );
 
-            QObjectList *children = m_pPart->widget()->queryList( "QWidget" );
+            TQObjectList *children = m_pPart->widget()->queryList( "TQWidget" );
 
             if ( ok &&
                  !lstDragURLs.first().url().contains( "javascript:", false ) && // ### this looks like a hack to me
@@ -1277,9 +1277,9 @@ bool KonqView::eventFilter( QObject *obj, QEvent *e )
             delete children;
         }
     }
-    else if ( e->type() == QEvent::Drop && m_bURLDropHandling && obj == m_pPart->widget() )
+    else if ( e->type() == TQEvent::Drop && m_bURLDropHandling && obj == m_pPart->widget() )
     {
-        QDropEvent *ev = static_cast<QDropEvent *>( e );
+        TQDropEvent *ev = static_cast<TQDropEvent *>( e );
 
         KURL::List lstDragURLs;
         bool ok = KURLDrag::decode( ev, lstDragURLs );
@@ -1291,48 +1291,48 @@ bool KonqView::eventFilter( QObject *obj, QEvent *e )
 
     if ( m_bBackRightClick )
     {
-        if ( e->type() == QEvent::ContextMenu )
+        if ( e->type() == TQEvent::ContextMenu )
         {
-            QContextMenuEvent *ev = static_cast<QContextMenuEvent *>( e );
-            if ( ev->reason() == QContextMenuEvent::Mouse )
+            TQContextMenuEvent *ev = static_cast<TQContextMenuEvent *>( e );
+            if ( ev->reason() == TQContextMenuEvent::Mouse )
             {
                 return true;
             }
         }
-        else if ( e->type() == QEvent::MouseButtonPress )
+        else if ( e->type() == TQEvent::MouseButtonPress )
         {
-            QMouseEvent *ev = static_cast<QMouseEvent *>( e );
+            TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
             if ( ev->button() == RightButton )
             {
                 return true;
             }
         }
-        else if ( e->type() == QEvent::MouseButtonRelease )
+        else if ( e->type() == TQEvent::MouseButtonRelease )
         {
-            QMouseEvent *ev = static_cast<QMouseEvent *>( e );
+            TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
             if ( ev->button() == RightButton )
             {
                 emit backRightClick();
                 return true;
             }
         }
-        else if ( e->type() == QEvent::MouseMove )
+        else if ( e->type() == TQEvent::MouseMove )
         {
-            QMouseEvent *ev = static_cast<QMouseEvent *>( e );
+            TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
             if ( ev->state() == RightButton )
             {
                 obj->removeEventFilter( this );
-                QMouseEvent me( QEvent::MouseButtonPress, ev->pos(), 2, 2 );
-                QApplication::sendEvent( obj, &me );
-                QContextMenuEvent ce( QContextMenuEvent::Mouse, ev->pos(), 2 );
-                QApplication::sendEvent( obj, &ce );
+                TQMouseEvent me( TQEvent::MouseButtonPress, ev->pos(), 2, 2 );
+                TQApplication::sendEvent( obj, &me );
+                TQContextMenuEvent ce( TQContextMenuEvent::Mouse, ev->pos(), 2 );
+                TQApplication::sendEvent( obj, &ce );
                 obj->installEventFilter( this );
                 return true;
             }
         }
     }
 
-    if ( e->type() == QEvent::FocusIn )
+    if ( e->type() == TQEvent::FocusIn )
     {
         setActiveInstance();
     }
@@ -1381,10 +1381,10 @@ KParts::StatusBarExtension * KonqView::statusBarExtension() const
     return KParts::StatusBarExtension::childObject( m_pPart );
 }
 
-bool KonqView::supportsServiceType( const QString &serviceType ) const
+bool KonqView::supportsServiceType( const TQString &serviceType ) const
 {
-    const QStringList lst = serviceTypes();
-    for( QStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+    const TQStringList lst = serviceTypes();
+    for( TQStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
         if ( *it == serviceType )
             return true;
         // Maybe we should keep around a list of KServiceType::Ptr?

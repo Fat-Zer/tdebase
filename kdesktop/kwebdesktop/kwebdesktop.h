@@ -19,8 +19,8 @@
 #ifndef KWEBDESKTOP_H
 #define KWEBDESKTOP_H
 
-#include <qobject.h>
-#include <qcstring.h>
+#include <tqobject.h>
+#include <tqcstring.h>
 #include <kparts/browserextension.h>
 #include <khtml_part.h>
 
@@ -30,22 +30,22 @@ class KWebDesktop : public QObject
 {
     Q_OBJECT
 public:
-    KWebDesktop( QObject* parent, const QCString & imageFile, int width, int height )
-        : QObject( parent ),
+    KWebDesktop( TQObject* parent, const TQCString & imageFile, int width, int height )
+        : TQObject( parent ),
           m_part( 0 ),
           m_imageFile( imageFile ),
           m_width( width ),
           m_height( height ) {}
     ~KWebDesktop();
 
-    KParts::ReadOnlyPart* createPart( const QString& mimeType );
+    KParts::ReadOnlyPart* createPart( const TQString& mimeType );
 
 private slots:
     void slotCompleted();
 
 private:
     KParts::ReadOnlyPart* m_part;
-    QCString m_imageFile;
+    TQCString m_imageFile;
     int m_width;
     int m_height;
 };
@@ -59,7 +59,7 @@ public:
     ~KWebDesktopRun() {}
 
 protected slots:
-    void slotMimetype( KIO::Job *job, const QString &_type );
+    void slotMimetype( KIO::Job *job, const TQString &_type );
     void slotFinished( KIO::Job * job );
 
 private:

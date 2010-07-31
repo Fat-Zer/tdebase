@@ -22,10 +22,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <typeinfo>
-#include <qcursor.h>
-#include <qbitmap.h>
-#include <qpixmap.h>
-#include <qimage.h>
+#include <tqcursor.h>
+#include <tqbitmap.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -55,8 +55,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "service_mnu.h"
 #include "service_mnu.moc"
 
-PanelServiceMenu::PanelServiceMenu(const QString & label, const QString & relPath, QWidget * parent,
-                                   const char * name, bool addmenumode, const QString & insertInlineHeader)
+PanelServiceMenu::PanelServiceMenu(const TQString & label, const TQString & relPath, TQWidget * parent,
+                                   const char * name, bool addmenumode, const TQString & insertInlineHeader)
     : KPanelMenu(label, parent, name),
       relPath_(relPath),
       insertInlineHeader_( insertInlineHeader ),
@@ -66,9 +66,9 @@ PanelServiceMenu::PanelServiceMenu(const QString & label, const QString & relPat
 {
     excludeNoDisplay_=true;
 
-    connect(KSycoca::self(), SIGNAL(databaseChanged()),
-            SLOT(slotClearOnClose()));
-    connect(this, SIGNAL(aboutToHide()), this, SLOT(slotClose()));
+    connect(KSycoca::self(), TQT_SIGNAL(databaseChanged()),
+            TQT_SLOT(slotClearOnClose()));
+    connect(this, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(slotClose()));
 }
 
 PanelServiceMenu::~PanelServiceMenu()
@@ -84,7 +84,7 @@ void PanelServiceMenu::setExcludeNoDisplay( bool flag )
 
 void PanelServiceMenu::showMenu()
 {
-    activateParent(QString::null);
+    activateParent(TQString::null);
 }
 
 // the initialization is split in initialize() and
@@ -105,10 +105,10 @@ void PanelServiceMenu::initialize()
 
 void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
                                 KServiceGroup::List& _list,
-                                const QString& /* _relPath */,
+                                const TQString& /* _relPath */,
                                 int& id)
 {
-    QStringList suppressGenericNames = _root->suppressGenericNames();
+    TQStringList suppressGenericNames = _root->suppressGenericNames();
 
     KServiceGroup::List::ConstIterator it = _list.begin();
     bool separatorNeeded = false;
@@ -120,7 +120,7 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
         {
 
             KServiceGroup::Ptr g(static_cast<KServiceGroup *>(e));
-            QString groupCaption = g->caption();
+            TQString groupCaption = g->caption();
 
            // Avoid adding empty groups.
             KServiceGroup::Ptr subMenuRoot = KServiceGroup::group(g->relPath());
@@ -131,7 +131,7 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
                 continue;
             }
 
-            QString inlineHeaderName = g->showInlineHeader() ? groupCaption : "";
+            TQString inlineHeaderName = g->showInlineHeader() ? groupCaption : "";
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace them with two ampersands.
             groupCaption.replace("&", "&&");
@@ -192,7 +192,7 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
                 newSubMenu(g->name(), g->relPath(), this, g->name().utf8(), inlineHeaderName);
             m->setCaption(groupCaption);
 
-            QIconSet iconset = KickerLib::menuIconSet(g->icon());
+            TQIconSet iconset = KickerLib::menuIconSet(g->icon());
 
             if (separatorNeeded)
             {
@@ -248,7 +248,7 @@ void PanelServiceMenu::doInitialize()
     // Set the startposition outside the panel, so there is no drag initiated
     // when we use drag and click to select items. A drag is only initiated when
     // you click to open the menu, and then press and drag an item.
-    startPos_ = QPoint(-1,-1);
+    startPos_ = TQPoint(-1,-1);
 
     // We ask KSycoca to give us all services (sorted).
     KServiceGroup::Ptr root = KServiceGroup::group(relPath_);
@@ -272,7 +272,7 @@ void PanelServiceMenu::doInitialize()
         if (relPath_ == "")
         {
             insertItem(KickerLib::menuIconSet("exec"), i18n("Add Non-KDE Application"),
-                       this, SLOT(addNonKDEApp()));
+                       this, TQT_SLOT(addNonKDEApp()));
         }
 
         if (list.count() > 0) {
@@ -295,11 +295,11 @@ void PanelServiceMenu::configChanged()
 
 void PanelServiceMenu::insertMenuItem(KService::Ptr & s, int nId,
                                       int nIndex/*= -1*/,
-                                      const QStringList *suppressGenericNames /* = 0 */,
-                                      const QString & aliasname)
+                                      const TQStringList *suppressGenericNames /* = 0 */,
+                                      const TQString & aliasname)
 {
-    QString serviceName = (aliasname.isEmpty() ? s->name() : aliasname).simplifyWhiteSpace();
-    QString comment = s->genericName().simplifyWhiteSpace();
+    TQString serviceName = (aliasname.isEmpty() ? s->name() : aliasname).simplifyWhiteSpace();
+    TQString comment = s->genericName().simplifyWhiteSpace();
 
     if (!comment.isEmpty())
     {
@@ -351,7 +351,7 @@ void PanelServiceMenu::insertMenuItem(KService::Ptr & s, int nId,
     entryMap_.insert(newId, static_cast<KSycocaEntry*>(s));
 }
 
-void PanelServiceMenu::activateParent(const QString &child)
+void PanelServiceMenu::activateParent(const TQString &child)
 {
     PanelServiceMenu *parentMenu = dynamic_cast<PanelServiceMenu*>(parent());
     if (parentMenu)
@@ -389,7 +389,7 @@ void PanelServiceMenu::activateParent(const QString &child)
     }
 }
 
-bool PanelServiceMenu::highlightMenuItem( const QString &menuItemId )
+bool PanelServiceMenu::highlightMenuItem( const TQString &menuItemId )
 {
     initialize();
 
@@ -406,13 +406,13 @@ bool PanelServiceMenu::highlightMenuItem( const QString &menuItemId )
             static_cast<KSycocaEntry*>(mapIt.data()));
         if (s && (s->menuId() == menuItemId))
         {
-            activateParent(QString::null);
+            activateParent(TQString::null);
             int index = indexOf(mapIt.key());
             setActiveItem(index);
 
             // Warp mouse pointer to location of active item
-            QRect r = itemGeometry(index);
-            QCursor::setPos(mapToGlobal(QPoint(r.x()+ r.width() - 15,
+            TQRect r = itemGeometry(index);
+            TQCursor::setPos(mapToGlobal(TQPoint(r.x()+ r.width() - 15,
                 r.y() + r.height() - 5)));
             return true;
         }
@@ -442,19 +442,19 @@ void PanelServiceMenu::slotExec(int id)
 
     KService::Ptr service = static_cast<KService *>(e);
     KApplication::startServiceByDesktopPath(service->desktopEntryPath(),
-      QStringList(), 0, 0, 0, "", true);
+      TQStringList(), 0, 0, 0, "", true);
 
     updateRecentlyUsedApps(service);
-    startPos_ = QPoint(-1,-1);
+    startPos_ = TQPoint(-1,-1);
 }
 
-void PanelServiceMenu::mousePressEvent(QMouseEvent * ev)
+void PanelServiceMenu::mousePressEvent(TQMouseEvent * ev)
 {
     startPos_ = ev->pos();
     KPanelMenu::mousePressEvent(ev);
 }
 
-void PanelServiceMenu::mouseReleaseEvent(QMouseEvent * ev)
+void PanelServiceMenu::mouseReleaseEvent(TQMouseEvent * ev)
 {
     if (ev->button() == RightButton && !Kicker::the()->isKioskImmutable())
     {
@@ -475,7 +475,7 @@ void PanelServiceMenu::mouseReleaseEvent(QMouseEvent * ev)
 
         delete popupMenu_;
         popupMenu_ = new KPopupMenu(this);
-        connect(popupMenu_, SIGNAL(activated(int)), SLOT(slotContextMenu(int)));
+        connect(popupMenu_, TQT_SIGNAL(activated(int)), TQT_SLOT(slotContextMenu(int)));
         bool hasEntries = false;
 
         switch (contextKSycocaEntry_->sycocaType())
@@ -552,8 +552,8 @@ void PanelServiceMenu::slotContextMenu(int selected)
     KProcess *proc;
     KService::Ptr service;
     KServiceGroup::Ptr g;
-    QByteArray ba;
-    QDataStream ds(ba, IO_WriteOnly);
+    TQByteArray ba;
+    TQDataStream ds(ba, IO_WriteOnly);
 
     KURL src,dest;
     KIO::CopyJob *job;
@@ -572,29 +572,29 @@ void PanelServiceMenu::slotContextMenu(int selected)
 	    break;
 
         case AddItemToPanel: {
-            QCString appname = "kicker";
+            TQCString appname = "kicker";
             if ( kicker_screen_number )
                 appname.sprintf("kicker-screen-%d", kicker_screen_number);
             service = static_cast<KService *>(contextKSycocaEntry_);
-            kapp->dcopClient()->send(appname, "Panel", "addServiceButton(QString)", service->desktopEntryPath());
+            kapp->dcopClient()->send(appname, "Panel", "addServiceButton(TQString)", service->desktopEntryPath());
             break;
         }
 
 	case EditItem:
             proc = new KProcess(this);
-            *proc << KStandardDirs::findExe(QString::fromLatin1("kmenuedit"));
+            *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
             *proc << "/"+relPath_ << static_cast<KService *>(contextKSycocaEntry_)->menuId();
             proc->start();
 	    break;
 
         case PutIntoRunDialog: {
             close();
-            QCString appname = "kdesktop";
+            TQCString appname = "kdesktop";
             if ( kicker_screen_number )
                 appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
             service = static_cast<KService *>(contextKSycocaEntry_);
             kapp->updateRemoteUserTimestamp( appname );
-            kapp->dcopClient()->send(appname, "default", "popupExecuteCommand(QString)", service->exec());
+            kapp->dcopClient()->send(appname, "default", "popupExecuteCommand(TQString)", service->exec());
             break;
         }
 
@@ -614,19 +614,19 @@ void PanelServiceMenu::slotContextMenu(int selected)
 	    break;
 
         case AddMenuToPanel: {
-            QCString appname = "kicker";
+            TQCString appname = "kicker";
             if ( kicker_screen_number )
                 appname.sprintf("kicker-screen-%d", kicker_screen_number);
 
             g = static_cast<KServiceGroup *>(contextKSycocaEntry_);
             ds << "foo" << g->relPath();
-            kapp->dcopClient()->send("kicker", "Panel", "addServiceMenuButton(QString,QString)", ba);
+            kapp->dcopClient()->send("kicker", "Panel", "addServiceMenuButton(TQString,TQString)", ba);
             break;
         }
 
         case EditMenu:
             proc = new KProcess(this);
-            *proc << KStandardDirs::findExe(QString::fromLatin1("kmenuedit"));
+            *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
             *proc << "/"+static_cast<KServiceGroup *>(contextKSycocaEntry_)->relPath();
             proc->start();
 	    break;
@@ -636,7 +636,7 @@ void PanelServiceMenu::slotContextMenu(int selected)
 	}
 }
 
-void PanelServiceMenu::mouseMoveEvent(QMouseEvent * ev)
+void PanelServiceMenu::mouseMoveEvent(TQMouseEvent * ev)
 {
     KPanelMenu::mouseMoveEvent(ev);
 
@@ -646,8 +646,8 @@ void PanelServiceMenu::mouseMoveEvent(QMouseEvent * ev)
     if ( (ev->state() & LeftButton ) != LeftButton )
         return;
 
-    QPoint p = ev->pos() - startPos_;
-    if (p.manhattanLength() <= QApplication::startDragDistance() )
+    TQPoint p = ev->pos() - startPos_;
+    if (p.manhattanLength() <= TQApplication::startDragDistance() )
         return;
 
     int id = idAt(startPos_);
@@ -663,7 +663,7 @@ void PanelServiceMenu::mouseMoveEvent(QMouseEvent * ev)
 
     KSycocaEntry * e = entryMap_[id];
 
-    QPixmap icon;
+    TQPixmap icon;
     KURL url;
 
     switch (e->sycocaType()) {
@@ -671,7 +671,7 @@ void PanelServiceMenu::mouseMoveEvent(QMouseEvent * ev)
         case KST_KService:
         {
             icon = static_cast<KService *>(e)->pixmap(KIcon::Small);
-            QString filePath = static_cast<KService *>(e)->desktopEntryPath();
+            TQString filePath = static_cast<KService *>(e)->desktopEntryPath();
             if (filePath[0] != '/')
             {
                 filePath = locate("apps", filePath);
@@ -699,17 +699,17 @@ void PanelServiceMenu::mouseMoveEvent(QMouseEvent * ev)
     // path from KStdDirs.
 
     KURLDrag *d = new KURLDrag(KURL::List(url), this);
-    connect(d, SIGNAL(destroyed()), this, SLOT(slotDragObjectDestroyed()));
+    connect(d, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDragObjectDestroyed()));
     d->setPixmap(icon);
     d->dragCopy();
 
     // Set the startposition outside the panel, so there is no drag initiated
     // when we use drag and click to select items. A drag is only initiated when
     // you click to open the menu, and then press and drag an item.
-    startPos_ = QPoint(-1,-1);
+    startPos_ = TQPoint(-1,-1);
 }
 
-void PanelServiceMenu::dragEnterEvent(QDragEnterEvent *event)
+void PanelServiceMenu::dragEnterEvent(TQDragEnterEvent *event)
 {
     // Set the DragObject's target to this widget. This is needed because the
     // widget doesn't accept drops, but we want to determine if the drag object
@@ -722,10 +722,10 @@ void PanelServiceMenu::dragEnterEvent(QDragEnterEvent *event)
     event->ignore();
 }
 
-void PanelServiceMenu::dragLeaveEvent(QDragLeaveEvent *)
+void PanelServiceMenu::dragLeaveEvent(TQDragLeaveEvent *)
 {
     // see PanelServiceMenu::dragEnterEvent why this is nescessary
-    if (!frameGeometry().contains(QCursor::pos()))
+    if (!frameGeometry().contains(TQCursor::pos()))
     {
         KURLDrag::setTarget(0);
     }
@@ -742,12 +742,12 @@ void PanelServiceMenu::slotDragObjectDestroyed()
         // the execution of any code after the original exec() statement
         // though the panels themselves continue on otherwise normally
         // (we just have some sort of nested event loop)
-        QTimer::singleShot(0, this, SLOT(close()));
+        TQTimer::singleShot(0, this, TQT_SLOT(close()));
     }
 }
 
-PanelServiceMenu *PanelServiceMenu::newSubMenu(const QString & label, const QString & relPath,
-                                               QWidget * parent, const char * name, const QString& _inlineHeader)
+PanelServiceMenu *PanelServiceMenu::newSubMenu(const TQString & label, const TQString & relPath,
+                                               TQWidget * parent, const char * name, const TQString& _inlineHeader)
 {
     return new PanelServiceMenu(label, relPath, parent, name, false,_inlineHeader);
 }
@@ -783,7 +783,7 @@ void PanelServiceMenu::slotClear()
         // QPopupMenu's aboutToHide() is emitted before the popup is really hidden,
         // and also before a click in the menu is handled, so do the clearing
         // only after that has been handled
-        QTimer::singleShot(100, this, SLOT(slotClear()));
+        TQTimer::singleShot(100, this, TQT_SLOT(slotClear()));
         return;
     }
 
@@ -807,7 +807,7 @@ void PanelServiceMenu::selectFirstItem()
 // updates "recent" section of KMenu
 void PanelServiceMenu::updateRecentlyUsedApps(KService::Ptr &service)
 {
-    QString strItem(service->desktopEntryPath());
+    TQString strItem(service->desktopEntryPath());
 
     // don't add an item from root kmenu level
     if (!strItem.contains('/'))

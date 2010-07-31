@@ -24,8 +24,8 @@
 #include <kdeprint/kmjob.h>
 #include <kdeprint/driver.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kinstance.h>
@@ -39,8 +39,8 @@
 #include <kaboutdata.h>
 #include <kprocess.h>
 #include <ktempfile.h>
-#include <qfile.h>
-#include <qdom.h>
+#include <tqfile.h>
+#include <tqdom.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +53,7 @@ extern "C"
 	int KDE_EXPORT kdemain(int argc, char **argv);
 }
 
-void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const QString& s = QString::null)
+void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const TQString& s = TQString::null)
 {
 	KIO::UDSAtom	atom;
 	atom.m_uds = ID;
@@ -62,7 +62,7 @@ void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const QString& s = Q
 	entry.append(atom);
 }
 
-static void createDirEntry(KIO::UDSEntry& entry, const QString& name, const QString& url, const QString& mime)
+static void createDirEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime)
 {
 	entry.clear();
 	addAtom(entry, KIO::UDS_NAME, 0, name);
@@ -75,7 +75,7 @@ static void createDirEntry(KIO::UDSEntry& entry, const QString& name, const QStr
 	//addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 }
 
-static void createFileEntry(KIO::UDSEntry& entry, const QString& name, const QString& url, const QString& mime)
+static void createFileEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime)
 {
 	entry.clear();
 	addAtom(entry, KIO::UDS_NAME, 0, name);
@@ -87,14 +87,14 @@ static void createFileEntry(KIO::UDSEntry& entry, const QString& name, const QSt
 	addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 }
 
-QString buildMenu(const QStringList& items, const QStringList& links, int active)
+TQString buildMenu(const TQStringList& items, const TQStringList& links, int active)
 {
 	if (items.count() == 0 || items.count() != links.count())
-		return QString("<td height=20 class=\"menu\">&nbsp;</td>");
+		return TQString("<td height=20 class=\"menu\">&nbsp;</td>");
 
 	QString	s;
 	int	index = 0;
-	for (QStringList::ConstIterator it1=items.begin(), it2=links.begin(); it1!=items.end() && it2!=links.end(); ++it1, ++it2, index++)
+	for (TQStringList::ConstIterator it1=items.begin(), it2=links.begin(); it1!=items.end() && it2!=links.end(); ++it1, ++it2, index++)
 	{
 		if (index == active)
 			s.append("<td height=20 class=\"menuactive\">&nbsp; ").append(*it1).append("&nbsp;</td>");
@@ -106,27 +106,27 @@ QString buildMenu(const QStringList& items, const QStringList& links, int active
 	return s;
 }
 
-QString buildOptionRow(DrBase *opt, bool f)
+TQString buildOptionRow(DrBase *opt, bool f)
 {
 	QString	s("<tr class=\"%1\"><td width=\"41%\">%1</td><td width=\"59%\">%1</td></tr>\n");
 	s = s.arg(f ? "contentwhite" : "contentyellow").arg(opt->get("text")).arg(opt->prettyText());
 	return s;
 }
 
-QString buildGroupTable(DrGroup *grp, bool showHeader = true)
+TQString buildGroupTable(DrGroup *grp, bool showHeader = true)
 {
 	QString	s("<tr class=\"top\"><td colspan=\"2\">%1</td></tr>\n");
 	if (showHeader)
 		s = s.arg(grp->get("text"));
 	else
-		s = QString::null;
+		s = TQString::null;
 
-	QPtrListIterator<DrBase>	oit(grp->options());
+	TQPtrListIterator<DrBase>	oit(grp->options());
 	bool	f(false);
 	for (; oit.current(); ++oit, f = !f)
 		s.append(buildOptionRow(oit.current(), f));
 
-	QPtrListIterator<DrGroup>	git(grp->groups());
+	TQPtrListIterator<DrGroup>	git(grp->groups());
 	for (; git.current(); ++git)
 		s.append(buildGroupTable(git.current()));
 
@@ -157,7 +157,7 @@ int kdemain(int argc, char **argv)
 	return 0;
 }
 
-KIO_Print::KIO_Print(const QCString& pool, const QCString& app)
+KIO_Print::KIO_Print(const TQCString& pool, const TQCString& app)
 : KIO::SlaveBase("print", pool, app)
 {
 }
@@ -170,7 +170,7 @@ void KIO_Print::listDir(const KURL& url)
 		return;
 	}
 
-	QStringList	path = QStringList::split('/', url.path(), false);
+	QStringList	path = TQStringList::split('/', url.path(), false);
 
 	PRINT_DEBUG << "listing " << url.path() << endl;
 	QString	group = path[0].lower();
@@ -205,7 +205,7 @@ void KIO_Print::listDir(const KURL& url)
 			return;
 		}
 
-		QPtrListIterator<KMPrinter>	it(*(KMManager::self()->printerList()));
+		TQPtrListIterator<KMPrinter>	it(*(KMManager::self()->printerList()));
 		for (;it.current();++it)
 		{
 			if (!(it.current()->type() & mask) || !it.current()->instanceName().isEmpty())
@@ -252,7 +252,7 @@ void KIO_Print::listRoot()
 	listEntry(entry, false);
 
 	// Management entry
-	//createFileEntry(entry, i18n("Manager"), "print:/manager", "print/manager", QString::null, S_IFDIR);
+	//createFileEntry(entry, i18n("Manager"), "print:/manager", "print/manager", TQString::null, S_IFDIR);
 	createDirEntry(entry, i18n("Manager"), "print:/manager", "print/manager");
 	listEntry(entry, false);
 
@@ -270,7 +270,7 @@ void KIO_Print::listDirDB( const KURL& url )
 {
 	PRINT_DEBUG << "listDirDB: " << url << endl;
 
-	QStringList pathComps = QStringList::split( '/', url.path(), false );
+	TQStringList pathComps = TQStringList::split( '/', url.path(), false );
 	KURL remUrl;
 
 	remUrl.setProtocol( "http" );
@@ -298,10 +298,10 @@ void KIO_Print::listDirDB( const KURL& url )
 
 	if ( getDBFile( remUrl ) )
 	{
-		QDomDocument doc;
+		TQDomDocument doc;
 		if ( doc.setContent( &m_httpBuffer, false ) )
 		{
-			QDomNodeList l;
+			TQDomNodeList l;
 			KIO::UDSEntry entry;
 			switch ( pathComps.size() )
 			{
@@ -309,7 +309,7 @@ void KIO_Print::listDirDB( const KURL& url )
 					l = doc.documentElement().elementsByTagName( "make" );
 					for ( unsigned int i=0; i<l.count(); i++ )
 					{
-						QString make = l.item( i ).toElement().text();
+						TQString make = l.item( i ).toElement().text();
 						KURL makeUrl = url;
 						makeUrl.addPath( "/" + make );
 						createDirEntry( entry, make, makeUrl.url(), "print/folder" );
@@ -321,10 +321,10 @@ void KIO_Print::listDirDB( const KURL& url )
 					l = doc.documentElement().elementsByTagName( "printer" );
 					for ( unsigned int i=0; i<l.count(); i++ )
 					{
-						QString ID, name;
-						for ( QDomNode n=l.item( i ).firstChild(); !n.isNull(); n=n.nextSibling() )
+						TQString ID, name;
+						for ( TQDomNode n=l.item( i ).firstChild(); !n.isNull(); n=n.nextSibling() )
 						{
-							QDomElement e = n.toElement();
+							TQDomElement e = n.toElement();
 							if ( e.tagName() == "id" )
 								ID = e.text();
 							else if ( e.tagName() == "model" )
@@ -344,7 +344,7 @@ void KIO_Print::listDirDB( const KURL& url )
 					l = doc.documentElement().elementsByTagName( "driver" );
 					for ( unsigned int i=0; i<l.count(); i++ )
 					{
-						QString driver = l.item( i ).toElement().text();
+						TQString driver = l.item( i ).toElement().text();
 						KURL driverUrl = url;
 						driverUrl.addPath( "/" + driver );
 						createFileEntry( entry, driver, driverUrl.url(), "print/driver" );
@@ -382,7 +382,7 @@ void KIO_Print::stat(const KURL& url)
 	}
 
 	PRINT_DEBUG << "stat: " << url.url() << endl;
-	QStringList	path = QStringList::split('/', url.encodedPathAndQuery(-1), false);
+	QStringList	path = TQStringList::split('/', url.encodedPathAndQuery(-1), false);
 	KIO::UDSEntry	entry;
 	QString	mime;
 	bool err(false);
@@ -434,7 +434,7 @@ void KIO_Print::statDB( const KURL& url )
 {
 	PRINT_DEBUG << "statDB: " << url << endl;
 	KIO::UDSEntry entry;
-	QStringList pathComps = QStringList::split( '/', url.path(), false );
+	TQStringList pathComps = TQStringList::split( '/', url.path(), false );
 	if ( pathComps.size() == 3 )
 		createFileEntry( entry, i18n( "Printer driver" ), url.url(), "print/driver" );
 	else
@@ -455,10 +455,10 @@ bool KIO_Print::getDBFile( const KURL& src )
 
 	/* start the transfer job */
 	KIO::TransferJob *job = KIO::get( src, false, false );
-	connect( job, SIGNAL( result( KIO::Job* ) ), SLOT( slotResult( KIO::Job* ) ) );
-	connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ), SLOT( slotData( KIO::Job*, const QByteArray& ) ) );
-	connect( job, SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ), SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
-	connect( job, SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ), SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
+	connect( job, TQT_SIGNAL( result( KIO::Job* ) ), TQT_SLOT( slotResult( KIO::Job* ) ) );
+	connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ), TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
+	connect( job, TQT_SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ), TQT_SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
+	connect( job, TQT_SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ), TQT_SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
 	kapp->enter_loop();
 	m_httpBuffer.close();
 
@@ -472,7 +472,7 @@ void KIO_Print::getDB( const KURL& url )
 {
 	PRINT_DEBUG << "downloading PPD file for " << url.url() << endl;
 
-	QStringList pathComps = QStringList::split( '/', url.path(), false );
+	TQStringList pathComps = TQStringList::split( '/', url.path(), false );
 	if ( pathComps.size() != 3 )
 		error( KIO::ERR_MALFORMED_URL, url.url() );
 	else
@@ -513,7 +513,7 @@ void KIO_Print::slotResult( KIO::Job *j )
 	kapp->exit_loop();
 }
 
-void KIO_Print::slotData( KIO::Job *j, const QByteArray& d )
+void KIO_Print::slotData( KIO::Job *j, const TQByteArray& d )
 {
 	PRINT_DEBUG << "HTTP data received (size=" << d.size() << ")" << endl;
 	if ( d.size() > 0 )
@@ -546,7 +546,7 @@ void KIO_Print::get(const KURL& url)
 		return;
 	}
 
-	QStringList	elems = QStringList::split('/', url.encodedPathAndQuery(), false);
+	QStringList	elems = TQStringList::split('/', url.encodedPathAndQuery(), false);
 	QString		group(elems[0].lower()), printer(KURL::decode_string(elems[1])), path, query;
 	KMPrinter	*mprinter(0);
 
@@ -568,7 +568,7 @@ void KIO_Print::get(const KURL& url)
 			query = group.mid(p+1);
 		if (!query.isEmpty() && query != "jobs" && query != "completed_jobs")
 		{
-			error(KIO::ERR_MALFORMED_URL, QString::null);
+			error(KIO::ERR_MALFORMED_URL, TQString::null);
 			return;
 		}
 		PRINT_DEBUG << "listing jobs for all printers" << endl;
@@ -635,7 +635,7 @@ void KIO_Print::showPrinterInfo(KMPrinter *printer)
 		mimeType("text/html");
 
 		QString	content;
-		if (!loadTemplate(QString::fromLatin1("printer.template"), content))
+		if (!loadTemplate(TQString::fromLatin1("printer.template"), content))
 		{
 			error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("printer.template"));
 			return;
@@ -644,10 +644,10 @@ void KIO_Print::showPrinterInfo(KMPrinter *printer)
 		content = content
 				 .arg(i18n("Properties of %1").arg(printer->printerName()))
 				 .arg(i18n("Properties of %1").arg(printer->printerName()))
-				 .arg(buildMenu(QStringList::split('|', i18n("General|Driver|Active jobs|Completed jobs"), false),
-							 QStringList::split('|', "?general|?driver|?jobs|?completed_jobs", true),
+				 .arg(buildMenu(TQStringList::split('|', i18n("General|Driver|Active jobs|Completed jobs"), false),
+							 TQStringList::split('|', "?general|?driver|?jobs|?completed_jobs", true),
 							 0))
-				 .arg(QString::null)
+				 .arg(TQString::null)
 				 .arg(printer->pixmap())
 				 .arg(printer->name())
 				 .arg(i18n("General Properties"))
@@ -676,7 +676,7 @@ void KIO_Print::showClassInfo(KMPrinter *printer)
 		mimeType("text/html");
 
 		QString	content;
-		if (!loadTemplate(QString::fromLatin1("class.template"), content))
+		if (!loadTemplate(TQString::fromLatin1("class.template"), content))
 		{
 			error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("class.template"));
 			return;
@@ -684,9 +684,9 @@ void KIO_Print::showClassInfo(KMPrinter *printer)
 
 		QString		memberContent("<ul>\n");
 		QStringList	members(printer->members());
-		for (QStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
+		for (TQStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
 		{
-			memberContent.append(QString::fromLatin1("<li><a href=\"print:/printers/%1\">%2</a></li>\n").arg(*it).arg(*it));
+			memberContent.append(TQString::fromLatin1("<li><a href=\"print:/printers/%1\">%2</a></li>\n").arg(*it).arg(*it));
 		}
 		memberContent.append("</ul>\n");
 
@@ -695,10 +695,10 @@ void KIO_Print::showClassInfo(KMPrinter *printer)
 		content = content
 				 .arg(i18n("Properties of %1").arg(printer->printerName()))
 				 .arg(i18n("Properties of %1").arg(printer->printerName()))
-				 .arg(buildMenu(QStringList::split('|', i18n("General|Active jobs|Completed jobs"), false),
-							 QStringList::split('|', "?general|?jobs|?completed_jobs", true),
+				 .arg(buildMenu(TQStringList::split('|', i18n("General|Active jobs|Completed jobs"), false),
+							 TQStringList::split('|', "?general|?jobs|?completed_jobs", true),
 							 0))
-				 .arg(QString::null)
+				 .arg(TQString::null)
 				 .arg(printer->pixmap())
 				 .arg(printer->name())
 				 .arg(i18n("General Properties"))
@@ -719,25 +719,25 @@ void KIO_Print::showSpecialInfo(KMPrinter *printer)
 	mimeType("text/html");
 
 	QString	content;
-	if (!loadTemplate(QString::fromLatin1("pseudo.template"), content))
+	if (!loadTemplate(TQString::fromLatin1("pseudo.template"), content))
 	{
 		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
 	}
 
 	QString	reqContent("<ul>\n");
-	QStringList	requirements = QStringList::split(",", printer->option("kde-special-require"), false);
-	for (QStringList::ConstIterator it=requirements.begin(); it!=requirements.end(); ++it)
+	QStringList	requirements = TQStringList::split(",", printer->option("kde-special-require"), false);
+	for (TQStringList::ConstIterator it=requirements.begin(); it!=requirements.end(); ++it)
 		reqContent += ("<li>" + (*it) + "</li>\n");
 	reqContent.append("</ul>\n");
 
 	content = content
 			 .arg(i18n("Properties of %1").arg(printer->printerName()))
 			 .arg(i18n("Properties of %1").arg(printer->printerName()))
-			 .arg(buildMenu(QStringList::split('|', i18n("General"), false),
-						 QStringList::split('|', "?general", true),
+			 .arg(buildMenu(TQStringList::split('|', i18n("General"), false),
+						 TQStringList::split('|', "?general", true),
 						 0))
-			 .arg(QString::null)
+			 .arg(TQString::null)
 			 .arg(printer->pixmap())
 			 .arg(printer->name())
 			 .arg(i18n("General Properties"))
@@ -753,9 +753,9 @@ void KIO_Print::showSpecialInfo(KMPrinter *printer)
 	finished();
 }
 
-bool KIO_Print::loadTemplate(const QString& filename, QString& buffer)
+bool KIO_Print::loadTemplate(const TQString& filename, TQString& buffer)
 {
-	QFile	f(locate("data", QString::fromLatin1("kdeprint/template/")+filename));
+	QFile	f(locate("data", TQString::fromLatin1("kdeprint/template/")+filename));
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
 		QTextStream	t(&f);
@@ -764,12 +764,12 @@ bool KIO_Print::loadTemplate(const QString& filename, QString& buffer)
 	}
 	else
 	{
-		buffer = QString::null;
+		buffer = TQString::null;
 		return false;
 	}
 }
 
-void KIO_Print::showData(const QString& pathname)
+void KIO_Print::showData(const TQString& pathname)
 {
 	PRINT_DEBUG << "sending data: " << pathname << endl;
 	QFile	f(pathname);
@@ -792,7 +792,7 @@ void KIO_Print::showData(const QString& pathname)
  *	- $KDEDIR/share/apps/kdeprint/template/
  *	- as a desktop icon
  */
-QString KIO_Print::locateData(const QString& item)
+TQString KIO_Print::locateData(const TQString& item)
 {
 	QString	path = locate("data", "kdeprint/template/"+item);
 	if (path.isEmpty())
@@ -811,7 +811,7 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 		mgr->addPrinter(prt->printerName(), type);
 	else
 	{
-		QPtrListIterator<KMPrinter>	pit(*(KMManager::self()->printerList()));
+		TQPtrListIterator<KMPrinter>	pit(*(KMManager::self()->printerList()));
 		for (; pit.current(); ++pit)
 			if (pit.current()->isVirtual() || pit.current()->isSpecial())
 				continue;
@@ -820,7 +820,7 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 	}
 
 	QString	content;
-	if (!loadTemplate(QString::fromLatin1("jobs.template"), content))
+	if (!loadTemplate(TQString::fromLatin1("jobs.template"), content))
 	{
 		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
@@ -832,13 +832,13 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 				 .arg(i18n("Jobs of %1").arg(prt->printerName()))
 				 .arg(i18n("Jobs of %1").arg(prt->printerName()))
 				 .arg(prt->isClass () ?
-						 buildMenu(QStringList::split('|', i18n("General|Active jobs|Completed jobs"), false),
-							 QStringList::split('|', "?general|?jobs|?completed_jobs", true),
+						 buildMenu(TQStringList::split('|', i18n("General|Active jobs|Completed jobs"), false),
+							 TQStringList::split('|', "?general|?jobs|?completed_jobs", true),
 							 (completed ? 2 : 1)) :
-						 buildMenu(QStringList::split('|', i18n("General|Driver|Active jobs|Completed jobs"), false),
-							 QStringList::split('|', "?general|?driver|?jobs|?completed_jobs", true),
+						 buildMenu(TQStringList::split('|', i18n("General|Driver|Active jobs|Completed jobs"), false),
+							 TQStringList::split('|', "?general|?driver|?jobs|?completed_jobs", true),
 							 (completed ? 3 : 2)))
-				 .arg(QString::null)
+				 .arg(TQString::null)
 				 .arg(prt->pixmap())
 				 .arg(prt->printerName());
 	}
@@ -846,8 +846,8 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 	{
 		content = content
 				 .arg(i18n("All jobs"))
-				 .arg(buildMenu(QStringList::split('|', i18n("Active jobs|Completed jobs"), false),
-							 QStringList::split('|', "?jobs|?completed_jobs", true),
+				 .arg(buildMenu(TQStringList::split('|', i18n("Active jobs|Completed jobs"), false),
+							 TQStringList::split('|', "?jobs|?completed_jobs", true),
 							 (completed ? 1 : 0)))
 				 .arg("fileprint")
 				 .arg(i18n("All jobs"));
@@ -855,7 +855,7 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 	content = content.arg(i18n("ID")).arg(i18n("Owner")).arg(i18n("Printer")).arg(i18n("Name")).arg(i18n("State"));
 
 	QString	jobContent, cellContent("<td>%1</td>\n");
-	QPtrListIterator<KMJob>	it(mgr->jobList());
+	TQPtrListIterator<KMJob>	it(mgr->jobList());
 	bool	flag(true);
 	for (; it.current(); ++it, flag = !flag)
 	{
@@ -874,7 +874,7 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 		mgr->removePrinter(prt->printerName(), type);
 	else
 	{
-		QPtrListIterator<KMPrinter>	pit(*(KMManager::self()->printerList()));
+		TQPtrListIterator<KMPrinter>	pit(*(KMManager::self()->printerList()));
 		for (; pit.current(); ++pit)
 			if (pit.current()->isVirtual() || pit.current()->isSpecial())
 				continue;
@@ -891,7 +891,7 @@ void KIO_Print::showDriver(KMPrinter *prt)
 	mimeType("text/html");
 
 	QString	content;
-	if (!loadTemplate(QString::fromLatin1("driver.template"), content))
+	if (!loadTemplate(TQString::fromLatin1("driver.template"), content))
 	{
 		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
@@ -901,17 +901,17 @@ void KIO_Print::showDriver(KMPrinter *prt)
 	content = content
 			 .arg(i18n("Driver of %1").arg(prt->printerName()))
 			 .arg(i18n("Driver of %1").arg(prt->printerName()))
-			 .arg(buildMenu(QStringList::split('|', i18n("General|Driver|Active jobs|Completed jobs"), false),
-						 QStringList::split('|', "?general|?driver|?jobs|?completed_jobs", true),
+			 .arg(buildMenu(TQStringList::split('|', i18n("General|Driver|Active jobs|Completed jobs"), false),
+						 TQStringList::split('|', "?general|?driver|?jobs|?completed_jobs", true),
 						 1))
-			 .arg(QString::null)
+			 .arg(TQString::null)
 			 .arg(prt->pixmap())
 			 .arg(prt->printerName() + "&nbsp;(" + (driver ? driver->get("text") : i18n("No driver found")) + ")");
 
 	if (driver)
 		content = content.arg(buildGroupTable(driver, false));
 	else
-		content = content.arg(QString::null);
+		content = content.arg(TQString::null);
 
 	data(content.local8Bit());
 	finished();
