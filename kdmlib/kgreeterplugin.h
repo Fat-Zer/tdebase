@@ -30,8 +30,8 @@
 
 class KdmThemer;
 
-class QWidget;
-class QLayoutItem;
+class TQWidget;
+class TQLayoutItem;
 
 class KGreeterPluginHandler {
 public:

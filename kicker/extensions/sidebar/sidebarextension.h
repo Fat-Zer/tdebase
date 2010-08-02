@@ -21,8 +21,8 @@
 #include <kurl.h>
 #include <kparts/browserextension.h>
 
-class QHBoxLayout;
-class QVBox;
+class TQHBoxLayout;
+class TQVBox;
 
 class SidebarExtension : public KPanelExtension
 {

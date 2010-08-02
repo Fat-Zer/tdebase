@@ -16,7 +16,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <kapplication.h>
 #include <netwm_def.h>
 
-class QSocketNotifier;
+class TQSocketNotifier;
 
 namespace KWinInternal
 {

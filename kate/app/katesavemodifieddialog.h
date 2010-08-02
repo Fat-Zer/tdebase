@@ -22,7 +22,7 @@
 #include <kdialogbase.h>
 #include <kate/document.h>
 
-class QListViewItem;
+class TQListViewItem;
 class KListView;
 
 class KateSaveModifiedDialog: public KDialogBase {

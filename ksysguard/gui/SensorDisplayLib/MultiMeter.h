@@ -26,9 +26,9 @@
 
 #include <SensorDisplay.h>
 
-class QGroupBox;
-class QLCDNumber;
-class QLabel;
+class TQGroupBox;
+class TQLCDNumber;
+class TQLabel;
 class MultiMeterSettings;
 
 class MultiMeter : public KSGRD::SensorDisplay

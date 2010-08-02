@@ -20,11 +20,11 @@
 
 #include <kcmodule.h>
 
-class QListBox;
-class QPushButton;
-class QLineEdit;
-class QListBoxItem;
-class QCheckBox;
+class TQListBox;
+class TQPushButton;
+class TQLineEdit;
+class TQListBoxItem;
+class TQCheckBox;
 
 class KConfig;
 

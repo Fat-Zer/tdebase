@@ -26,7 +26,7 @@
 
 #include <kpanelapplet.h>
 
-class QBoxLayout;
+class TQBoxLayout;
 class KConfig;
 class KProcess;
 class KWinModule;

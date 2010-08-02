@@ -282,7 +282,7 @@ KonqViewModeAction::KonqViewModeAction( const TQString &text, const TQString &ic
                                         TQObject *parent, const char *name )
     : KRadioAction( text, icon, 0, parent, name )
 {
-    m_menu = new QPopupMenu;
+    m_menu = new TQPopupMenu;
 
     connect( m_menu, TQT_SIGNAL( aboutToShow() ),
              this, TQT_SLOT( slotPopupAboutToShow() ) );

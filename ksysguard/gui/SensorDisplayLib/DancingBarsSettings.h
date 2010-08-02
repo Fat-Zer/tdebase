@@ -32,9 +32,9 @@ class KIntNumInput;
 class KLineEdit;
 class KListView;
 
-class QCheckBox;
-class QListViewItem;
-class QPushButton;
+class TQCheckBox;
+class TQListViewItem;
+class TQPushButton;
 
 class DancingBarsSettings : public KDialogBase
 {

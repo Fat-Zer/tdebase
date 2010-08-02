@@ -9,17 +9,17 @@
 
 #include "typeslistitem.h"
 
-class QLabel;
+class TQLabel;
 class KListView;
-class QListViewItem;
-class QListBox;
-class QPushButton;
+class TQListViewItem;
+class TQListBox;
+class TQPushButton;
 class KIconButton;
-class QLineEdit;
-class QComboBox;
+class TQLineEdit;
+class TQComboBox;
 class FileTypeDetails;
 class FileGroupDetails;
-class QWidgetStack;
+class TQWidgetStack;
 
 class FileTypesView : public KCModule
 {

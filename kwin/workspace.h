@@ -26,15 +26,15 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include <X11/Xlib.h>
 
-class QPopupMenu;
+class TQPopupMenu;
 class KConfig;
 class KGlobalAccel;
 class KShortcutDialog;
 class KStartupInfo;
 class KStartupInfoId;
 class KStartupInfoData;
-class QSlider;
-class QPushButton;
+class TQSlider;
+class TQPushButton;
 class KProcess;
 
 namespace KWinInternal

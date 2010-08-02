@@ -27,7 +27,7 @@
 
 #include <tqcombobox.h>
 
-class QPopupMenu;
+class TQPopupMenu;
 
 /*
  * This class should be just like qcombobox, but it should be possible

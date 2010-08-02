@@ -25,7 +25,7 @@
 
 class Dtime;
 class Tzone;
-class QTabWidget;
+class TQTabWidget;
 
 
 class KclockModule : public KCModule

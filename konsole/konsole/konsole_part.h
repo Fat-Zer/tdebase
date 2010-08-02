@@ -34,11 +34,11 @@
 
 class KInstance;
 class konsoleBrowserExtension;
-class QPushButton;
-class QSpinBox;
+class TQPushButton;
+class TQSpinBox;
 class KPopupMenu;
 class KActionMenu;
-class QCheckBox;
+class TQCheckBox;
 class KRootPixmap;
 class KToggleAction;
 class KSelectAction;

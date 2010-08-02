@@ -32,8 +32,8 @@
 
 class KdmItem;
 
-class QDomNode;
-class QRect;
+class TQDomNode;
+class TQRect;
 
 class KdmLayout {
 

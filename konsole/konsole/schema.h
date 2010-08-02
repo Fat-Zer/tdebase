@@ -55,7 +55,7 @@
 #define KONSOLEDEBUG	kdDebug(1211)
 #endif
 
-class QDateTime;
+class TQDateTime;
 class KConfig;
 
 class ColorSchema

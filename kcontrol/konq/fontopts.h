@@ -39,8 +39,8 @@
 
 #include <kcmodule.h>
 
-class QCheckBox;
-class QRadioButton;
+class TQCheckBox;
+class TQRadioButton;
 
 class KColorButton;
 class KConfig;

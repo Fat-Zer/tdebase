@@ -22,7 +22,7 @@
 #include "konq_sidebartreeitem.h"
 #include <kurl.h>
 #include <tqstringlist.h>
-class QDropEvent;
+class TQDropEvent;
 class KFileItem;
 
 class KonqSidebarDirTreeItem : public KonqSidebarTreeItem

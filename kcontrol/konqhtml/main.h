@@ -31,7 +31,7 @@
 class KJavaOptions;
 class KJavaScriptOptions;
 
-class QTabWidget;
+class TQTabWidget;
 
 class KJSParts : public KCModule
 {

@@ -26,12 +26,12 @@
 #include <tqwidget.h>
 #include <tqptrlist.h>
 
-class QListView;
-class QLabel;
-class QComboBox;
-class QCheckBox;
-class QLineEdit;
-class QPushButton;
+class TQListView;
+class TQLabel;
+class TQComboBox;
+class TQCheckBox;
+class TQLineEdit;
+class TQPushButton;
 
 class KConfig;
 

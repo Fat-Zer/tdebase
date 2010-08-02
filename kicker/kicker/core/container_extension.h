@@ -36,18 +36,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "unhidetrigger.h"
 #include "extensionSettings.h"
 
-class QBoxLayout;
-class QGridLayout;
-class QPopupMenu;
-class QTimer;
-class QVBox;
+class TQBoxLayout;
+class TQGridLayout;
+class TQPopupMenu;
+class TQTimer;
+class TQVBox;
 class QXEmbed;
 class HideButton;
 class KConfig;
 class KWinModule;
 class PopupWidgetFilter;
 class PanelExtensionOpMenu;
-class QColor;
+class TQColor;
 
 class ExtensionContainer : public QFrame
 {

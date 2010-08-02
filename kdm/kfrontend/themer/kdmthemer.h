@@ -31,9 +31,9 @@ class KdmPixmap;
 class KdmRect;
 class KdmBox;
 
-class QRect;
-class QWidget;
-class QEvent;
+class TQRect;
+class TQWidget;
+class TQEvent;
 
 /**
 * @author Unai Garro

@@ -27,7 +27,7 @@
 #include "kthemedlg.h"
 #include "ktheme.h"
 
-class QString;
+class TQString;
 
 class KAboutData;
 

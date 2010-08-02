@@ -26,9 +26,9 @@
 
 #include <ktabwidget.h>
 
-class QPixmap;
-class QPopupMenu;
-class QToolButton;
+class TQPixmap;
+class TQPopupMenu;
+class TQToolButton;
 
 class KonqView;
 class KonqViewManager;

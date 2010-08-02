@@ -9,7 +9,7 @@
 
 
 #include <klistview.h>
-class QDragObject;
+class TQDragObject;
 
 class KDCOPListView : public KListView
 {

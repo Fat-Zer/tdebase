@@ -24,7 +24,7 @@
 /**Abstract class for the style page
   *@author Ralf Nolden
   */
-class QListViewItem;
+class TQListViewItem;
 
 class KStylePage : public KStylePageDlg  {
 	Q_OBJECT

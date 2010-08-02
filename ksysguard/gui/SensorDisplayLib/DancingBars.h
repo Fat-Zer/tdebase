@@ -29,9 +29,9 @@
 
 class KIntNumInput;
 
-class QGroupBox;
-class QLineEdit;
-class QListViewItem;
+class TQGroupBox;
+class TQLineEdit;
+class TQListViewItem;
 
 class BarGraph;
 class DancingBarsSettings;

@@ -37,7 +37,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class ContainerArea;
 class AppletView;
 class AppletWidget;
-class QTimer;
+class TQTimer;
 
 class AddAppletDialog : public KDialogBase
 {

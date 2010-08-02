@@ -31,7 +31,7 @@
 
 #include <kdialogbase.h>
 
-class QCheckBox;
+class TQCheckBox;
 
 namespace KFI
 {

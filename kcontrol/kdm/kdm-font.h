@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 
 class KFontRequester;
-class QCheckBox;
+class TQCheckBox;
 
 class KDMFontWidget : public QWidget
 {

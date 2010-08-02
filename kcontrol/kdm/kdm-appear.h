@@ -34,11 +34,11 @@
 
 #include "klanguagebutton.h"
 
-class QComboBox;
+class TQComboBox;
 class KBackedComboBox;
-class QLabel;
-class QRadioButton;
-class QLineEdit;
+class TQLabel;
+class TQRadioButton;
+class TQLineEdit;
 class KLineEdit;
 
 

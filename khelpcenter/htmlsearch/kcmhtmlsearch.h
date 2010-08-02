@@ -25,9 +25,9 @@
 #include <kcmodule.h>
 
 
-class QLineEdit;
-class QCheckBox;
-class QPushButton;
+class TQLineEdit;
+class TQCheckBox;
+class TQPushButton;
 class KListBox;
 class KProcess;
 class KLanguageCombo;

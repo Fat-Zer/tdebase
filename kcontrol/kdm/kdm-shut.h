@@ -23,8 +23,8 @@
 
 #include <tqstring.h>
 
-class QComboBox;
-class QCheckBox;
+class TQComboBox;
+class TQCheckBox;
 class KURLRequester;
 class KBackedComboBox;
 

@@ -33,7 +33,7 @@ class KPixmap;
 class KWinModule;
 class KMiniPager;
 class KSharedPixmap;
-class QLineEdit;
+class TQLineEdit;
 
 class KMiniPagerButton : public TQButton, public KickerTip::Client
 {

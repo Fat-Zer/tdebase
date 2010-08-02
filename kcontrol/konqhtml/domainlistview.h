@@ -25,9 +25,9 @@
 #include <tqgroupbox.h>
 #include <tqmap.h>
 
-class QListViewItem;
-class QPushButton;
-class QStringList;
+class TQListViewItem;
+class TQPushButton;
+class TQStringList;
 
 class KConfig;
 class KListView;

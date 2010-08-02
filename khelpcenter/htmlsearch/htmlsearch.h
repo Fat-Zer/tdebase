@@ -6,8 +6,8 @@
 #include <tqstringlist.h>
 
 
-class QWidget;
-class QProgressDialog;
+class TQWidget;
+class TQProgressDialog;
 
 
 class KProcess;

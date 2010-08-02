@@ -26,7 +26,7 @@
 
 #include <kpanelmenu.h>
 
-class QStringList;
+class TQStringList;
 
 class FindMenu : public KPanelMenu
 {

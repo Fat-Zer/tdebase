@@ -71,10 +71,10 @@ class KGVerifyHandler {
 	virtual void updateStatus( bool fail, bool caps, int left ); // for themed only
 };
 
-class QWidget;
-class QLabel;
-class QPopupMenu;
-class QTimer;
+class TQWidget;
+class TQLabel;
+class TQPopupMenu;
+class TQTimer;
 class KPushButton;
 class KLibrary;
 

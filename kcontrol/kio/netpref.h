@@ -3,12 +3,12 @@
 
 #include <kcmodule.h>
 
-class QLabel;
-class QVGroupBox;
-class QCheckBox;
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class TQLabel;
+class TQVGroupBox;
+class TQCheckBox;
+class TQVBoxLayout;
+class TQHBoxLayout;
+class TQGridLayout;
 
 class KIntNumInput;
 

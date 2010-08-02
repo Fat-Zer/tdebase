@@ -14,11 +14,11 @@
 #include <tqlayout.h>
 
 class LockProcess;
-class QFrame;
-class QGridLayout;
-class QLabel;
-class QDialog;
-class QProgressBar;
+class TQFrame;
+class TQGridLayout;
+class TQLabel;
+class TQDialog;
+class TQProgressBar;
 
 class AutoLogout : public QDialog
 {

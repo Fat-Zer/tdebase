@@ -56,8 +56,8 @@
 #ifndef KASITEM_H
 #define KASITEM_H
 
-class QPainter;
-class QMouseEvent;
+class TQPainter;
+class TQMouseEvent;
 class KasPopup;
 
 #include <tqobject.h>

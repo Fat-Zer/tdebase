@@ -36,8 +36,8 @@ Configuration of the maximum image size
 #include <kcmodule.h>
 
 class KConfig;
-class QCheckBox;
-class QCheckListItem;
+class TQCheckBox;
+class TQCheckListItem;
 class KDoubleNumInput;
 
 class KPreviewOptions : public KCModule

@@ -24,7 +24,7 @@
 
 #include <kpushbutton.h>
 #include <kdialog.h>
-class QPushButton;
+class TQPushButton;
 class KShellCommandExecutor;
 
 class KShellCommandDialog:public KDialog

@@ -33,9 +33,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pagerbutton.h"
 #include "pagersettings.h"
 
-class QButtonGroup;
-class QGridLayout;
-class QTimer;
+class TQButtonGroup;
+class TQGridLayout;
+class TQTimer;
 
 class KProcess;
 class KWinModule;

@@ -25,9 +25,9 @@
 #include "sidebar_widget.h"
 #include "konqsidebariface_p.h"
 
-class QWidget;
-class QPainter;
-class QCustomEvent;
+class TQWidget;
+class TQPainter;
+class TQCustomEvent;
 class KURL;
 
 

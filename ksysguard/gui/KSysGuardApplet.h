@@ -33,9 +33,9 @@ class SensorBoard;
 class SensorDisplay;
 }
 
-class QDragEnterEvent;
-class QDropEvent;
-class QPoint;
+class TQDragEnterEvent;
+class TQDropEvent;
+class TQPoint;
 class KSGAppletSettings;
 
 class KSysGuardApplet : public KPanelApplet, public KSGRD::SensorBoard

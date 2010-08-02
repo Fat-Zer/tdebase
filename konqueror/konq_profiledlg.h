@@ -26,10 +26,10 @@
 #include <tqmap.h>
 
 class KonqViewManager;
-class QListViewItem;
-class QGridLayout;
-class QCheckBox;
-class QLineEdit;
+class TQListViewItem;
+class TQGridLayout;
+class TQCheckBox;
+class TQLineEdit;
 class KPushButton;
 class KListView;
 

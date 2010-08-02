@@ -32,7 +32,7 @@
 #include "kpagerIface.h"
 
 class KPager;
-class QPopupMenu;
+class TQPopupMenu;
 
 class KPagerMainWindow : public KMainWindow, public virtual KPagerIface
 {

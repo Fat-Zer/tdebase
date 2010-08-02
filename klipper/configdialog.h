@@ -38,8 +38,8 @@
 class KGlobalAccel;
 class KKeyChooser;
 class KListView;
-class QPushButton;
-class QDialog;
+class TQPushButton;
+class TQDialog;
 class ConfigDialog;
 
 class GeneralWidget : public QVBox

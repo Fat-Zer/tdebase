@@ -18,13 +18,13 @@
 
 #include "widgetcanvas.h"
 
-class QSlider;
-class QComboBox;
-class QPushButton;
-class QCheckBox;
-class QResizeEvent;
+class TQSlider;
+class TQComboBox;
+class TQPushButton;
+class TQCheckBox;
+class TQResizeEvent;
 class KLineEdit;
-class QPalette;
+class TQPalette;
 class KListBox;
 class KColorButton;
 class KConfig;

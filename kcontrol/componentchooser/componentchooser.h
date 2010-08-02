@@ -26,7 +26,7 @@
 
 #include <kservice.h>
 
-class QListBoxItem;
+class TQListBoxItem;
 class KEMailSettings;
 class KConfig;
 

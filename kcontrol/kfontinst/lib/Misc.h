@@ -37,7 +37,7 @@
 #include <tqstringlist.h>
 #include <kurl.h>
 
-class QWidget;
+class TQWidget;
 
 namespace KFI
 {

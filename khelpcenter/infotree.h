@@ -22,7 +22,7 @@
 
 #include "treebuilder.h"
 
-class QListViewItem;
+class TQListViewItem;
 
 namespace KHC
 {

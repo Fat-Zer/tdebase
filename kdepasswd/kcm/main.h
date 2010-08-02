@@ -26,8 +26,8 @@
 class KAboutData;
 class KUser;
 class KEmailSettings;
-class QEvent;
-class QObject;
+class TQEvent;
+class TQObject;
 class KURL;
 class Config;
 

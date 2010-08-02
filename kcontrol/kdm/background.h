@@ -17,8 +17,8 @@
 class KSimpleConfig;
 class BGDialog;
 class KGlobalBackgroundSettings;
-class QCheckBox;
-class QLabel;
+class TQCheckBox;
+class TQLabel;
 
 class KBackground: public QWidget
 {

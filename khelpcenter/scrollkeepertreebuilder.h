@@ -27,7 +27,7 @@
 
 class KProcIO;
 
-class QDomNode;
+class TQDomNode;
 
 namespace KHC {
 

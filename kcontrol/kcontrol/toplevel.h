@@ -25,8 +25,8 @@
 #include <tqlistview.h>
 
 
-class QSplitter;
-class QWidgetStack;
+class TQSplitter;
+class TQWidgetStack;
 
 class KToggleAction;
 class KAction;

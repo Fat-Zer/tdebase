@@ -25,9 +25,9 @@
 
 class KComboBox;
 
-class QLabel;
-class QRadioButton;
-class QSpinBox;
+class TQLabel;
+class TQRadioButton;
+class TQSpinBox;
 
 class HostConnector : public KDialogBase
 {

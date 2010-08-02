@@ -23,11 +23,11 @@
 
 
 class KListView;
-class QString;
+class TQString;
 class PreviewWidget;
-class QStringList;
-class QListViewItem;
-class QPushButton;
+class TQStringList;
+class TQListViewItem;
+class TQPushButton;
 
 struct ThemeInfo;
 

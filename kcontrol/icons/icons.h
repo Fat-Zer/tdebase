@@ -19,19 +19,19 @@
 #include <kcmodule.h>
 #include <kdialogbase.h>
 
-class QCheckBox;
-class QColor;
-class QComboBox;
-class QGridLayout;
-class QGroupBox;
-class QIconView;
-class QLabel;
-class QListBox;
-class QListView;
-class QPushButton;
-class QSlider;
-class QTabWidget;
-class QWidget;
+class TQCheckBox;
+class TQColor;
+class TQComboBox;
+class TQGridLayout;
+class TQGroupBox;
+class TQIconView;
+class TQLabel;
+class TQListBox;
+class TQListView;
+class TQPushButton;
+class TQSlider;
+class TQTabWidget;
+class TQWidget;
 
 class KColorButton;
 class KConfig;

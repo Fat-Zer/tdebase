@@ -25,7 +25,7 @@
 #include <klibloader.h>
 
 class KPopupMenu;
-class QPopupMenu;
+class TQPopupMenu;
 
 typedef TQPtrList<TQPopupMenu> PopupMenuList;
 typedef TQMap<int, KService::Ptr> TaskMap;

@@ -11,7 +11,7 @@
 #include <kfileitem.h>
 #include <kdirlister.h>
 
-class QString;
+class TQString;
 class KPushButton;
 
 class KQuery;

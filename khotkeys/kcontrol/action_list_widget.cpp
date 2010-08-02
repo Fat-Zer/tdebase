@@ -42,7 +42,7 @@ namespace KHotKeys
 Action_list_widget::Action_list_widget( TQWidget* parent_P, const char* name_P )
     : Action_list_widget_ui( parent_P, name_P ), selected_item( NULL )
     {
-    TQPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
+    TQPopupMenu* popup = new TQPopupMenu; // CHECKME looks like setting parent doesn't work
     popup->insertItem( i18n( "Command/URL..." ), TYPE_COMMAND_URL_ACTION );
     popup->insertItem( i18n( "K-Menu Entry..." ), TYPE_MENUENTRY_ACTION );
     popup->insertItem( i18n( "DCOP Call..." ), TYPE_DCOP_ACTION );

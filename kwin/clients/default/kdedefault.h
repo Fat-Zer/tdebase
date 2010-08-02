@@ -20,9 +20,9 @@
 #include <kcommondecoration.h>
 #include <kdecorationfactory.h>
 
-class QSpacerItem;
-class QBoxLayout;
-class QGridLayout;
+class TQSpacerItem;
+class TQBoxLayout;
+class TQGridLayout;
 
 namespace Default {
 

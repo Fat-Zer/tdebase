@@ -21,7 +21,7 @@
 
 #include <kdialogbase.h>
 
-class QTextEdit;
+class TQTextEdit;
 
 class ZModemDialog : public KDialogBase
 {

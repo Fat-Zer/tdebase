@@ -21,7 +21,7 @@
 
 #include <tqobject.h>
 #include "konq_sidebartree.h"
-class QDragObject;
+class TQDragObject;
 class KonqSidebarTreeItem;
 class KonqSidebarTreeTopLevelItem;
 class KonqSidebarTree;

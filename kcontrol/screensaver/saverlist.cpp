@@ -2,7 +2,7 @@
 #include "saverlist.h"
 
 class SaverConfig;
-class QPtrCollection;
+class TQPtrCollection;
 
 int SaverList::compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2)
 {

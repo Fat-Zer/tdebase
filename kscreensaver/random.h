@@ -14,8 +14,8 @@
 #ifndef RANDOM_H
 #define RANDOM_H
 
-class QWidget;
-class QCheckBox;
+class TQWidget;
+class TQCheckBox;
 
 class KRandomSetup : public KDialogBase
 {

@@ -36,7 +36,7 @@ class AppletContainer;
 class ExtensionContainer;
 class KPanelApplet;
 class KPanelExtension;
-class QPopupMenu;
+class TQPopupMenu;
 
 class KDE_EXPORT PluginManager : public QObject
 {

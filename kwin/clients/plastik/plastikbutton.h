@@ -29,7 +29,7 @@
 
 #include <kcommondecoration.h>
 
-class QTimer;
+class TQTimer;
 
 namespace KWinPlastik {
 

@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kpanelapplet.h>
 
 class TaskBarContainer;
-class QPalette;
+class TQPalette;
 
 class TaskbarApplet : public KPanelApplet
 {

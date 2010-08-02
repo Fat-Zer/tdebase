@@ -36,8 +36,8 @@
 extern unsigned short vt100_graphics[32];
 
 class Konsole;
-class QLabel;
-class QTimer;
+class TQLabel;
+class TQTimer;
 
 class TEWidget : public QFrame
 // a widget representing attributed text

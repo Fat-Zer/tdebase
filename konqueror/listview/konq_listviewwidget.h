@@ -32,8 +32,8 @@
 
 namespace KIO { class Job; }
 
-class QCursor;
-class QRect;
+class TQCursor;
+class TQRect;
 class KDirLister;
 class KonqFMSettings;
 class ListViewPropertiesExtension;
@@ -41,15 +41,15 @@ class KToggleAction;
 class KonqListView;
 class KonqFileTip;
 class ListViewBrowserExtension;
-class QTimer;
-class QFocusEvent;
-class QDragMoveEvent;
-class QDragEnterEvent;
-class QDragLeaveEvent;
-class QDropEvent;
-class QPaintEvent;
-class QResizeEvent;
-class QMouseEvent;
+class TQTimer;
+class TQFocusEvent;
+class TQDragMoveEvent;
+class TQDragEnterEvent;
+class TQDragLeaveEvent;
+class TQDropEvent;
+class TQPaintEvent;
+class TQResizeEvent;
+class TQMouseEvent;
 
 class ColumnInfo
 {

@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdemacros.h>
 
 class KPanelMenu;
-class QWidget;
+class TQWidget;
 
 class KDE_EXPORT MenuInfo
 {

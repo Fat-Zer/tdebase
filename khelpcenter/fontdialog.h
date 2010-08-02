@@ -22,8 +22,8 @@
 
 #include <kdialogbase.h>
 
-class QBoxLayout;
-class QSpinBox;
+class TQBoxLayout;
+class TQSpinBox;
 
 class KComboBox;
 class KFontCombo;

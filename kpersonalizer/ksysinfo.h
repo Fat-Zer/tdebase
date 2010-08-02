@@ -18,9 +18,9 @@
 #ifndef KSYSINFO_H
 #define KSYSINFO_H
 
-class QString;
-class QFont;
-class QFontDatabase;
+class TQString;
+class TQFont;
+class TQFontDatabase;
 
 class KSysInfo {
 public:

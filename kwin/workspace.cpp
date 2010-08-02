@@ -219,7 +219,7 @@ void Workspace::init()
 //     topDock = 0L;
 //     maximizedWindowCounter = 0;
     
-    supportWindow = new QWidget;
+    supportWindow = new TQWidget;
     XLowerWindow( qt_xdisplay(), supportWindow->winId()); // see usage in layers.cpp
 
     XSetWindowAttributes attr;
@@ -2416,7 +2416,7 @@ void Workspace::setupTopMenuHandling()
     connect( topmenu_selection, TQT_SIGNAL( lostOwnership()), this, TQT_SLOT( lostTopMenuSelection()));
     disconnect( topmenu_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( lostTopMenuOwner()));
     managing_topmenus = true;
-    topmenu_space = new QWidget;
+    topmenu_space = new TQWidget;
     Window stack[ 2 ];
     stack[ 0 ] = supportWindow->winId();
     stack[ 1 ] = topmenu_space->winId();

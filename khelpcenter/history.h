@@ -28,7 +28,7 @@
 class KActionCollection;
 class KMainWindow;
 class KToolBarPopupAction;
-class QPopupMenu;
+class TQPopupMenu;
 
 namespace KHC {
 

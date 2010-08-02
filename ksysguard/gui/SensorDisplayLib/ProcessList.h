@@ -51,7 +51,7 @@ public:
 	virtual int compare( TQListViewItem *item, int column, bool ) const;
 };
 
-class QPopupMenu;
+class TQPopupMenu;
 
 /**
  * This class implementes a table filled with information about the running

@@ -31,9 +31,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "appletinfo.h"
 #include "container_base.h"
 
-class QHBox;
+class TQHBox;
 class QXEmbed;
-class QBoxLayout;
+class TQBoxLayout;
 class KConfig;
 
 class AppletHandle;

@@ -27,7 +27,7 @@
 
 #include "SignalPlotter.h"
 
-class QListViewItem;
+class TQListViewItem;
 class FancyPlotterSettings;
 
 class FPSensorProperties : public KSGRD::SensorProperties

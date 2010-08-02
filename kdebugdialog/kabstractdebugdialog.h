@@ -23,7 +23,7 @@
 #include <kdialog.h>
 
 class KConfig;
-class QVBoxLayout;
+class TQVBoxLayout;
 class KPushButton;
 
 class KAbstractDebugDialog : public KDialog

@@ -560,7 +560,7 @@ const TQStringList& KonqPropsView::previewSettings()
 {
     if ( ! d->previewsToShow )
     {
-        d->previewsToShow = new QStringList;
+        d->previewsToShow = new TQStringList;
 
         if (d->previewsEnabled) {
             KTrader::OfferList plugins = KTrader::self()->query( "ThumbCreator" );

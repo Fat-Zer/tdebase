@@ -20,8 +20,8 @@
 #endif
 
 class KConfig;
-class QTimer;
-class QPixmap;
+class TQTimer;
+class TQPixmap;
 class KPopupMenu;
 class KWinModule;
 class KPixmap;

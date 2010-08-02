@@ -27,10 +27,10 @@
 
 class AppTreeView;
 class AppTreeItem;
-class QButtonGroup;
-class QRadioButton;
+class TQButtonGroup;
+class TQRadioButton;
 class KKeyButton;
-class QListViewItem;
+class TQListViewItem;
 
 typedef TQPtrList<AppTreeItem> treeItemList;
 typedef TQPtrListIterator<AppTreeItem> treeItemListIterator;

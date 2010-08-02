@@ -649,7 +649,7 @@ void Desktop::backgroundLoaded(bool b)
     {
       if (m_bgSmallPixmap) { delete m_bgSmallPixmap; m_bgSmallPixmap=0L ; };
 
-      if (!m_bgCommonSmallPixmap) m_bgCommonSmallPixmap=new QPixmap;
+      if (!m_bgCommonSmallPixmap) m_bgCommonSmallPixmap=new TQPixmap;
       *m_bgCommonSmallPixmap=scalePixmap(*m_bgPixmap,200,150);
     }
     else
@@ -657,7 +657,7 @@ void Desktop::backgroundLoaded(bool b)
       if (m_bgCommonSmallPixmap) { delete m_bgCommonSmallPixmap;
 		m_bgCommonSmallPixmap=0L ; };
 
-      if (!m_bgSmallPixmap) m_bgSmallPixmap=new QPixmap;
+      if (!m_bgSmallPixmap) m_bgSmallPixmap=new TQPixmap;
       *m_bgSmallPixmap=fastScalePixmap(*m_bgPixmap,200,150);
     }
     delete m_bgPixmap;

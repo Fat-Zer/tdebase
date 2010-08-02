@@ -35,8 +35,8 @@
 
 #define NONE -1
 
-class QDomDocument;
-class QDomElement;
+class TQDomDocument;
+class TQDomElement;
 
 namespace KSGRD {
 

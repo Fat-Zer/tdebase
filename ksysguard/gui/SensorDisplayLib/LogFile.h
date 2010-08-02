@@ -23,8 +23,8 @@
 
 #define MAXLINES 500
 
-class QFile;
-class QListBox;
+class TQFile;
+class TQListBox;
 
 #include <tqdom.h>
 #include <tqpopupmenu.h>

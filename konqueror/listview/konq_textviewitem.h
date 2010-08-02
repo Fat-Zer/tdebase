@@ -28,7 +28,7 @@
 #include "konq_textviewwidget.h"
 
 class KFileItem;
-class QPainter;
+class TQPainter;
 
 #define KTVI_REGULAR 0
 #define KTVI_REGULARLINK 1

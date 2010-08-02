@@ -3,8 +3,8 @@
 
 #include <tqwidget.h>
 
-class QCheckBox;
-class QLabel;
+class TQCheckBox;
+class TQLabel;
 class KComboBox;
 class KListView;
 

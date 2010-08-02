@@ -20,7 +20,7 @@
 
 #include "kcountrypagedlg.h"
 
-class QStringList;
+class TQStringList;
 class KLanguageButton;
 class KFindLanguage;
 

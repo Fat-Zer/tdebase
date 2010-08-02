@@ -17,7 +17,7 @@
 
 #include <actions_listview_widget_ui.h>
 
-class QDragObject;
+class TQDragObject;
 
 namespace KHotKeys
 {

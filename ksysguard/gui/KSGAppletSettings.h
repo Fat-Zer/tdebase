@@ -23,7 +23,7 @@
 
 #include <kdialogbase.h>
 
-class QSpinBox;
+class TQSpinBox;
 
 class KSGAppletSettings : public KDialogBase
 {

@@ -17,7 +17,7 @@
 #include <tqobject.h>
 #include <kcmodule.h>
 
-class QCheckBox;
+class TQCheckBox;
 class KIntNumInput;
 class KConfig;
 

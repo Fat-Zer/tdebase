@@ -29,7 +29,7 @@
 #include <kprocess.h>
 
 
-class QTimer;
+class TQTimer;
 
 class KConfig;
 class KPopupMenu;

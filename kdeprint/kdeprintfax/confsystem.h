@@ -24,8 +24,8 @@
 #include <tqwidget.h>
 #include <tqstringlist.h>
 
-class QLineEdit;
-class QComboBox;
+class TQLineEdit;
+class TQComboBox;
 
 class ConfSystem : public QWidget
 {

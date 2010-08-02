@@ -30,8 +30,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "container_applet.h"
 #include "simplebutton.h"
 
-class QBoxLayout;
-class QTimer;
+class TQBoxLayout;
+class TQTimer;
 class AppletHandleDrag;
 class AppletHandleButton;
 

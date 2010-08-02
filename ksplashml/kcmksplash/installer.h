@@ -17,9 +17,9 @@
 #include <klistbox.h>
 #include <kurl.h>
 
-class QLabel;
-class QTextEdit;
-class QPushButton;
+class TQLabel;
+class TQTextEdit;
+class TQPushButton;
 class ThemeListBox;
 
 class SplashInstaller : public QWidget

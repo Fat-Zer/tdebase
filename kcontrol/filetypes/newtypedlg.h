@@ -6,7 +6,7 @@
 #include <kdialogbase.h>
 
 class KLineEdit;
-class QComboBox;
+class TQComboBox;
 
 /**
  * A dialog for creating a new file type, with

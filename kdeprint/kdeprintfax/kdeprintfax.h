@@ -26,15 +26,15 @@
 
 class KListBox;
 class KListView;
-class QLineEdit;
-class QTextEdit;
+class TQLineEdit;
+class TQTextEdit;
 class FaxCtrl;
-class QCheckBox;
-class QLabel;
+class TQCheckBox;
+class TQLabel;
 class QTimeEdit;
-class QComboBox;
-class QPushButton;
-class QListViewItem;
+class TQComboBox;
+class TQPushButton;
+class TQListViewItem;
 
 class KdeprintFax : public KMainWindow
 {

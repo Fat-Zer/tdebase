@@ -19,10 +19,10 @@
 #include <tqwidget.h>
 
 #include "themeengine.h"
-class QPixmap;
-class QTimer;
+class TQPixmap;
+class TQTimer;
 
-class QCheckBox;
+class TQCheckBox;
 
 class DefaultConfig: public ThemeEngineConfig
 {

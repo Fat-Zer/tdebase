@@ -34,7 +34,7 @@ class KateViewSpaceContainer;
 class KConfig;
 class KAction;
 
-class QToolButton;
+class TQToolButton;
 
 class KateViewManager : public QObject
 {

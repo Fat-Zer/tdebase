@@ -60,7 +60,7 @@ typedef NPError NP_ShutdownUPP(void);
 void quitXt();
 
 class KLibrary;
-class QTimer;
+class TQTimer;
 
 
 class NSPluginStreamBase : public QObject

@@ -48,9 +48,9 @@ class KRadioAction;
 class KActionMenu;
 class KToggleAction;
 class KFileItem;
-class QLabel;
-class QSplitter;
-class QDropEvent;
+class TQLabel;
+class TQSplitter;
+class TQDropEvent;
 class KFileItem;
 
 namespace KFI

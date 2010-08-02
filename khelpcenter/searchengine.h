@@ -10,7 +10,7 @@
 
 #include "docentrytraverser.h"
 
-class QWidget;
+class TQWidget;
 class KProcess;
 class KConfig;
 class KHTMLPart;

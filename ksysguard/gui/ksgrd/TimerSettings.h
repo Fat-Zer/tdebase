@@ -26,9 +26,9 @@
 
 #include <kdialogbase.h>
 
-class QCheckBox;
-class QLabel;
-class QSpinBox;
+class TQCheckBox;
+class TQLabel;
+class TQSpinBox;
 
 class KDE_EXPORT TimerSettings : public KDialogBase
 {

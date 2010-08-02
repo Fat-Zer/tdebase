@@ -18,10 +18,10 @@
 
 #include "bgsettings.h"
 
-class QSize;
-class QRect;
-class QString;
-class QTimer;
+class TQSize;
+class TQRect;
+class TQString;
+class TQTimer;
 
 class KConfig;
 class KProcess;

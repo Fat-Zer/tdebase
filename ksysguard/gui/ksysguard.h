@@ -37,7 +37,7 @@
 class KRecentFilesAction;
 class KToggleAction;
 
-class QSplitter;
+class TQSplitter;
 class SensorBrowser;
 class Workspace;
 

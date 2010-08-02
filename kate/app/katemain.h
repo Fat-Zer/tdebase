@@ -23,18 +23,18 @@
 
 #include <config.h>
 
-class QComboBox;
-class QDateTime;
-class QEvent;
-class QFileInfo;
-class QGridLayout;
-class QLabel;
-class QListBox;
-class QObject;
-class QPixmap;
-class QVBoxLayout;
-class QString;
-class QWidgetStack;
+class TQComboBox;
+class TQDateTime;
+class TQEvent;
+class TQFileInfo;
+class TQGridLayout;
+class TQLabel;
+class TQListBox;
+class TQObject;
+class TQPixmap;
+class TQVBoxLayout;
+class TQString;
+class TQWidgetStack;
 
 class KAction;
 class KActionMenu;

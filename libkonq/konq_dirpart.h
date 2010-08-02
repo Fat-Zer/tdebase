@@ -31,7 +31,7 @@
 class KDirLister;
 namespace KParts { class BrowserExtension; }
 class KonqPropsView;
-class QScrollView;
+class TQScrollView;
 class KAction;
 class KToggleAction;
 class KonqDirPartBrowserExtension;

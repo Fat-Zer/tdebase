@@ -32,9 +32,9 @@
 #include "konqsidebariface_p.h"
 
 class KDockWidget;
-class QHBoxLayout;
-class QSplitter;
-class QStringList;
+class TQHBoxLayout;
+class TQSplitter;
+class TQStringList;
 
 class ButtonInfo: public TQObject, public KonqSidebarIface
 {

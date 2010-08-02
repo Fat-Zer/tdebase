@@ -34,10 +34,10 @@ class KToggleAction;
 class KAboutData;
 class URLGrabber;
 class ClipboardPoll;
-class QTime;
+class TQTime;
 class History;
 class KAction;
-class QMimeSource;
+class TQMimeSource;
 class HistoryItem;
 class KlipperSessionManaged;
 

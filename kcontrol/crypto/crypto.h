@@ -36,8 +36,8 @@
 #include <kcmodule.h>
 #include <ksimpleconfig.h>
 
-class QGridLayout;
-class QVButtonGroup;
+class TQGridLayout;
+class TQVButtonGroup;
 
 class KComboBox;
 class KCryptoConfig;

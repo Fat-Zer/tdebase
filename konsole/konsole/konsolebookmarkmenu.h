@@ -26,7 +26,7 @@
 #include "konsolebookmarkhandler.h"
 
 
-class QString;
+class TQString;
 class KBookmark;
 class KAction;
 class KActionMenu;

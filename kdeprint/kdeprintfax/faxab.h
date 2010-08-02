@@ -28,7 +28,7 @@
 
 class KListView;
 class AddressBook;
-class QPushButton;
+class TQPushButton;
 
 class FaxAB : public KDialog
 {

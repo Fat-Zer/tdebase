@@ -26,8 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kpanelmenu.h>
 
-class QStringList;
-class QPoint;
+class TQStringList;
+class TQPoint;
 
 class RecentDocsMenu : public KPanelMenu
 {

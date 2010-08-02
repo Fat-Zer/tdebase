@@ -25,16 +25,16 @@
 #include <tqdict.h>
 #include <qxembed.h>
 
-template<class ConfigModule> class QPtrList;
-class QStringList;
+template<class ConfigModule> class TQPtrList;
+class TQStringList;
 class KAboutData;
 class KCModule;
 class ProxyWidget;
 class KProcess;
 class QXEmbed;
-class QVBoxLayout;
-class QVBox;
-class QWidgetStack;
+class TQVBoxLayout;
+class TQVBox;
+class TQWidgetStack;
 
 class ConfigModule : public TQObject, public KCModuleInfo
 {

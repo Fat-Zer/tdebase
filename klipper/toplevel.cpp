@@ -1078,7 +1078,7 @@ void KlipperWidget::updateTimestamp()
                 ? qt_x_user_time : qt_x_time;
     static TQWidget* w = 0;
     if ( !w )
-        w = new QWidget;
+        w = new TQWidget;
     unsigned char data[ 1 ];
     XChangeProperty( qt_xdisplay(), w->winId(), XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
     next_x_time = CurrentTime;

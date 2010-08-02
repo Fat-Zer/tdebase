@@ -29,8 +29,8 @@
 
 #include <kdialogbase.h>
 
-class QLineEdit;
-class QSpinBox;
+class TQLineEdit;
+class TQSpinBox;
 
 class BGAdvancedBase;
 class KBackgroundRenderer;

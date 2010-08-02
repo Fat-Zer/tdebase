@@ -17,15 +17,15 @@
 #include "policies.h"
 
 class KConfig;
-class QCheckBox;
+class TQCheckBox;
 
 #include <kcmodule.h>
 #include "nsconfigwidget.h"
 
-class QBoxLayout;
-class QLabel;
-class QProgressDialog;
-class QSlider;
+class TQBoxLayout;
+class TQLabel;
+class TQProgressDialog;
+class TQSlider;
 class KDialogBase;
 class KPluginOptions;
 class KProcIO;

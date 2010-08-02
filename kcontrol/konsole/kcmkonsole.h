@@ -22,8 +22,8 @@
 
 #include "kcmkonsoledialog.h"
 
-class QFont;
-class QStringList;
+class TQFont;
+class TQStringList;
 
 class KCMKonsole
 	: public KCModule

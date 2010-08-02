@@ -572,7 +572,7 @@ void runRdb( uint flags )
   /* Qt exports */
   if ( exportQtColors || exportQtSettings )
   {
-    TQSettings* settings = new QSettings;
+    TQSettings* settings = new TQSettings;
 
     if ( exportQtColors )
       applyQtColors( kglobals, *settings, newPal );    // For kcmcolors

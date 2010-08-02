@@ -7,7 +7,7 @@
 #ifndef __Lexer_h_included__
 #define __Lexer_h_included__
 
-class QCString;
+class TQCString;
 
 /**
  * This is a lexer for the kdesud protocol.

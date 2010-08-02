@@ -23,9 +23,9 @@
 
 #include <kcmodule.h>
 
-class QStringList;
-class QPushButton;
-class QListView;
+class TQStringList;
+class TQPushButton;
+class TQListView;
 
 class KCMNic:public KCModule
 {

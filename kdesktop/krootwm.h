@@ -33,7 +33,7 @@ typedef XID Window;
 
 class KMenuBar;
 class KDesktop;
-class QPopupMenu;
+class TQPopupMenu;
 class KCMultiDialog;
 class KNewMenu;
 class KWinModule;

@@ -4,12 +4,12 @@
 #include <tqtabwidget.h>
 class TypesListItem;
 class KIconButton;
-class QLineEdit;
-class QListBox;
-class QButtonGroup;
-class QCheckBox;
-class QRadioButton;
-class QPushButton;
+class TQLineEdit;
+class TQListBox;
+class TQButtonGroup;
+class TQCheckBox;
+class TQRadioButton;
+class TQPushButton;
 class KServiceListWidget;
 
 /**

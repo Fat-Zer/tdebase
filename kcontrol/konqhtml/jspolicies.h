@@ -30,8 +30,8 @@
 #include "policies.h"
 
 class KConfig;
-class QRadioButton;
-class QButtonGroup;
+class TQRadioButton;
+class TQButtonGroup;
 
 // special value for inheriting a global policy
 #define INHERIT_POLICY		32767

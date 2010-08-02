@@ -24,16 +24,16 @@
 #include <kdialog.h>
 #include <tqstringlist.h>
 
-class QLineEdit;
+class TQLineEdit;
 class KComboBox;
-class QCheckBox;
-class QListBox;
+class TQCheckBox;
+class TQListBox;
 class KPushButton;
-class QLabel;
+class TQLabel;
 class KProcess;
 class KConfig;
 class KURLRequester;
-class QEvent;
+class TQEvent;
 
 class GrepTool : public QWidget
 {

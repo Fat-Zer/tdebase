@@ -21,8 +21,8 @@
 
 #include <ktrader.h>
 
-class QString;
-class QStringList;
+class TQString;
+class TQStringList;
 
 class FakeUASProvider
 {

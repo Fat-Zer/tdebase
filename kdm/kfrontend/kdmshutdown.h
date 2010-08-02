@@ -35,13 +35,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <tqtoolbutton.h>
 #include <tqpixmap.h>
 
-class QLabel;
+class TQLabel;
 class KPushButton;
-class QButtonGroup;
-class QGroupBox;
-class QComboBox;
-class QCheckBox;
-class QLineEdit;
+class TQButtonGroup;
+class TQGroupBox;
+class TQComboBox;
+class TQCheckBox;
+class TQLineEdit;
 
 enum { Authed = TQDialog::Accepted + 1, Schedule };
 

@@ -28,12 +28,12 @@
 
 #include <SensorDisplay.h>
 
-class QDomElement;
-class QDragEnterEvent;
-class QDropEvent;
-class QGridLayout;
-class QString;
-class QStringList;
+class TQDomElement;
+class TQDragEnterEvent;
+class TQDropEvent;
+class TQGridLayout;
+class TQString;
+class TQStringList;
 
 /**
   A WorkSheet contains the displays to visualize the sensor results. When

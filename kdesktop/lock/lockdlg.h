@@ -16,11 +16,11 @@
 
 struct GreeterPluginHandle;
 class LockProcess;
-class QFrame;
-class QGridLayout;
-class QLabel;
+class TQFrame;
+class TQGridLayout;
+class TQLabel;
 class KPushButton;
-class QListView;
+class TQListView;
 
 //===========================================================================
 //

@@ -33,7 +33,7 @@ class KonqSidebarTreeModule;
 class KonqSidebarTreeItem;
 class KActionCollection;
 
-class QTimer;
+class TQTimer;
 
 class KonqSidebarTree_Internal;
 

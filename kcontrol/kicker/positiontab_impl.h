@@ -22,7 +22,7 @@
 
 #include "positiontab.h"
 
-class QFrame;
+class TQFrame;
 class KVirtualBGRenderer;
 class KickerConfig;
 class ExtensionInfo;

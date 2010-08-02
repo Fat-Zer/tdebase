@@ -26,7 +26,7 @@
 #include <tqevent.h>
 
 namespace KIO { class Job; class CopyInfo; }
-class QWidget;
+class TQWidget;
 class KFileItem;
 class KonqMainWindow;
 

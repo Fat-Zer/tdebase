@@ -28,8 +28,8 @@
 #include <kcmodule.h>
 #include <kgenericfactory.h>
 
-class QTabWidget;
-class QGroupBox;
+class TQTabWidget;
+class TQGroupBox;
 
 class KConfig;
 class KLocale;

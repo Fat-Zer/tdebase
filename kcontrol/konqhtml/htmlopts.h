@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <kconfig.h>
 #include <kcmodule.h>
-class QRadioButton;
+class TQRadioButton;
 class KIntNumInput;
 
 class KMiscHTMLOptions : public KCModule

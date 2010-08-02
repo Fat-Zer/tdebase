@@ -26,11 +26,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "kgdialog.h"
 
-class QSocketNotifier;
-class QPopupMenu;
-class QLineEdit;
-class QListView;
-class QListViewItem;
+class TQSocketNotifier;
+class TQPopupMenu;
+class TQLineEdit;
+class TQListView;
+class TQListViewItem;
 
 class ChooserDlg : public KGDialog {
 	Q_OBJECT

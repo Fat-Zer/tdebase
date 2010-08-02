@@ -29,7 +29,7 @@
 #include <tqmap.h>
 #include <kstartupinfo.h>
 
-class QStyle;
+class TQStyle;
 
 class StartupId
     : public QWidget

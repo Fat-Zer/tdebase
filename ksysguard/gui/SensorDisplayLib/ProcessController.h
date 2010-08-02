@@ -33,10 +33,10 @@
 
 #include "ProcessList.h"
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QCheckBox;
-class QComboBox;
+class TQVBoxLayout;
+class TQHBoxLayout;
+class TQCheckBox;
+class TQComboBox;
 class KPushButton;
 class KListViewSearchLineWidget;
 

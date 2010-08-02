@@ -27,7 +27,7 @@
 #include <tqwidget.h>
 #include <klineedit.h>
 
-class QTimer;
+class TQTimer;
 
 class BookmarkLineEdit : public KLineEdit {
     Q_OBJECT

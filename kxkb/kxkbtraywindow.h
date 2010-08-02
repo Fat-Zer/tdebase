@@ -20,8 +20,8 @@
 #include "kxkbconfig.h"
 
 
-class QLabel;
-class QPopupMenu;
+class TQLabel;
+class TQPopupMenu;
 class XkbRules;
 
 /* This class is responsible for displaying flag/label for the layout,

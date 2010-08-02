@@ -414,7 +414,7 @@ static void freeShortcut(const KShortcut &shortCut)
          s_newShortcuts->remove(shortcutKey);
       
       if (!s_freeShortcuts)
-         s_freeShortcuts = new QStringList;
+         s_freeShortcuts = new TQStringList;
       
       s_freeShortcuts->append(shortcutKey);
    }
@@ -429,7 +429,7 @@ static void allocateShortcut(const KShortcut &shortCut)
           s_freeShortcuts->remove(shortcutKey);
 
       if (!s_newShortcuts)
-         s_newShortcuts = new QStringList;
+         s_newShortcuts = new TQStringList;
 
       s_newShortcuts->append(shortcutKey);
    }
@@ -472,7 +472,7 @@ void MenuEntryInfo::setInUse(bool inUse)
       
       // Add to list of deleted apps
       if (!s_deletedApps)
-         s_deletedApps = new QStringList;
+         s_deletedApps = new TQStringList;
 
       s_deletedApps->append(service->storageId());
    }

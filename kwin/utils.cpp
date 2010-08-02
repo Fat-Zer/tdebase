@@ -258,7 +258,7 @@ void updateXTime()
     {
     static TQWidget* w = 0;
     if ( !w )
-        w = new QWidget;
+        w = new TQWidget;
     long data = 1;
     XChangeProperty(qt_xdisplay(), w->winId(), atoms->kwin_running, atoms->kwin_running, 32,
                     PropModeAppend, (unsigned char*) &data, 1);

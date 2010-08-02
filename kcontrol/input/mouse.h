@@ -55,9 +55,9 @@
 #define RIGHT_HANDED 0
 #define LEFT_HANDED  1
 
-class QCheckBox;
-class QSlider;
-class QTabWidget;
+class TQCheckBox;
+class TQSlider;
+class TQTabWidget;
 
 class MouseSettings
 {

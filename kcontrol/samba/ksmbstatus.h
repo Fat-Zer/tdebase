@@ -28,8 +28,8 @@
 
 #define SCREEN_XY_OFFSET 20
 
-class QListView;
-class QListViewItem;
+class TQListView;
+class TQListViewItem;
 class KProcess;
 
 class NetMon : public QWidget

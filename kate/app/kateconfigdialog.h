@@ -31,9 +31,9 @@
 
 #include <kdialogbase.h>
 
-class QCheckBox;
-class QSpinBox;
-class QButtonGroup;
+class TQCheckBox;
+class TQSpinBox;
+class TQButtonGroup;
 
 struct PluginPageListItem
 {

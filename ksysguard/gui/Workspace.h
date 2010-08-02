@@ -29,7 +29,7 @@
 
 class KConfig;
 class KURL;
-class QString;
+class TQString;
 class WorkSheet;
 
 class Workspace : public QTabWidget

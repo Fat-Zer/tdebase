@@ -27,7 +27,7 @@
 #include <tqcolor.h>
 #include <tqfont.h>
 
-class QTimer;
+class TQTimer;
 
 /*
  * KdmLabel. A label element

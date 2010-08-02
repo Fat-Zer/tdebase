@@ -28,9 +28,9 @@
 #include <kcmodule.h>
 #include <kdialogbase.h>
 
-class QCheckBox;
-class QLabel;
-class QSlider;
+class TQCheckBox;
+class TQLabel;
+class TQSlider;
 
 class KAboutData;
 class KComboBox;

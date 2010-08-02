@@ -23,7 +23,7 @@
 #include <klocale.h>
 
 class KConfig;
-class QObject;
+class TQObject;
 
 namespace KHotKeys
 {

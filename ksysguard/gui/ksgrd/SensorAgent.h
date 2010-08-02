@@ -27,7 +27,7 @@
 class KProcess;
 class KShellProcess;
 
-class QString;
+class TQString;
 
 namespace KSGRD {
 

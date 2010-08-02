@@ -24,8 +24,8 @@
 #include <tqgroupbox.h>
 #include <tqlistbox.h>
 class TypesListItem;
-class QLineEdit;
-class QPushButton;
+class TQLineEdit;
+class TQPushButton;
 class KService;
 
 class KServiceListItem : public QListBoxText

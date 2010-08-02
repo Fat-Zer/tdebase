@@ -28,8 +28,8 @@
 
 class KColorButton;
 class KURLRequester;
-class QButtonGroup;
-class QRadioButton;
+class TQButtonGroup;
+class TQRadioButton;
 
 /**
  * Dialog for configuring the background

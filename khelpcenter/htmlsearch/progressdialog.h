@@ -5,7 +5,7 @@
 #include <kdialogbase.h>
 
 
-class QLabel;
+class TQLabel;
 class KProgress;
 
 

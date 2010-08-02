@@ -24,7 +24,7 @@
 #include <tqtextview.h>
 
 class PtyProcess;
-class QSocketNotifier;
+class TQSocketNotifier;
 
 class KShellCommandExecutor:public QTextView
 {

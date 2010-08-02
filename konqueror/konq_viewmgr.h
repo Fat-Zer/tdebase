@@ -32,9 +32,9 @@
 #include <kparts/partmanager.h>
 #include "konq_openurlrequest.h"
 
-class QString;
-class QStringList;
-class QTimer;
+class TQString;
+class TQStringList;
+class TQTimer;
 class KConfig;
 class KonqMainWindow;
 class KonqFrameBase;

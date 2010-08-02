@@ -24,8 +24,8 @@
 
 #include "konq_sidebartreeitem.h"
 
-class QDropEvent;
-class QPainter;
+class TQDropEvent;
+class TQPainter;
 class KonqSidebarHistorySettings;
 
 class KonqSidebarHistoryItem : public KonqSidebarTreeItem

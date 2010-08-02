@@ -24,7 +24,7 @@
 #include <kfilemetainfo.h>
 #include "../trashimpl.h"
 
-class QStringList;
+class TQStringList;
 
 class KTrashPlugin: public KFilePlugin
 {

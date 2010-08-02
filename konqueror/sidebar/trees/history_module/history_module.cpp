@@ -224,11 +224,11 @@ void KonqSidebarHistoryModule::showPopupMenu()
 
 void KonqSidebarHistoryModule::showPopupMenu( int which, const TQPoint& pos )
 {
-    TQPopupMenu *sortMenu = new QPopupMenu;
+    TQPopupMenu *sortMenu = new TQPopupMenu;
     m_collection->action("byName")->plug( sortMenu );
     m_collection->action("byDate")->plug( sortMenu );
 
-    TQPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new TQPopupMenu;
 
     if ( which & EntryContextMenu )
     {

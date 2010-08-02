@@ -28,13 +28,13 @@
 #include <kapplication.h>	// for logout parameters
 
 class KURL;
-class QCloseEvent;
-class QDropEvent;
-class QPopupMenu;
+class TQCloseEvent;
+class TQDropEvent;
+class TQPopupMenu;
 class KGlobalAccel;
 class KWinModule;
 class KBackgroundManager;
-class QTimer;
+class TQTimer;
 class StartupId;
 class KDIconView;
 class Minicli;

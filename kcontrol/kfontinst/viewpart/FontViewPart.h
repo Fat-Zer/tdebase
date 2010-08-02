@@ -31,9 +31,9 @@
 
 #include <kparts/part.h>
 
-class QPushButton;
-class QFrame;
-class QLabel;
+class TQPushButton;
+class TQFrame;
+class TQLabel;
 class KIntNumInput;
 class KAction;
 class KURL;

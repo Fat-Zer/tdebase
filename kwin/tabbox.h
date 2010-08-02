@@ -17,7 +17,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqvaluelist.h>
 #include "utils.h"
 
-class QLabel;
+class TQLabel;
 
 namespace KWinInternal
 {

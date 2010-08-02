@@ -16,7 +16,7 @@
 
 #include <kcmodule.h>
 
-class QSpinBox;
+class TQSpinBox;
 class KFontCombo;
 
 class KAppearanceOptions : public KCModule

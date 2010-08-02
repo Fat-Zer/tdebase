@@ -26,7 +26,7 @@
 class ConfigModule;
 class ModuleTitle;
 class ProxyWidget;
-class QLabel;
+class TQLabel;
 
 class ModuleWidget : public QVBox
 {

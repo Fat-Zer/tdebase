@@ -43,10 +43,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "settings.h"
 #include "kshadowengine.h"
 
-class QTimer;
-class QBoxLayout;
+class TQTimer;
+class TQBoxLayout;
 class DatePicker;
-class QPixmap;
+class TQPixmap;
 class Zone;
 class KPopupMenu;
 class Prefs;

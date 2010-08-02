@@ -21,12 +21,12 @@
 
 #include "kabstractdebugdialog.h"
 
-class QLineEdit;
-class QComboBox;
-class QLabel;
-class QGroupBox;
-class QCheckBox;
-class QPushButton;
+class TQLineEdit;
+class TQComboBox;
+class TQLabel;
+class TQGroupBox;
+class TQCheckBox;
+class TQPushButton;
 
 class KConfig;
 

@@ -20,7 +20,7 @@
 
 #include <tqhbox.h>
 
-class QLabel;
+class TQLabel;
 class KProgress;
 
 /** @short Window displaying status and progress bar. */

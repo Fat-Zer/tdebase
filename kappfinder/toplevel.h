@@ -29,9 +29,9 @@
 #include "common.h"
 
 class KProgress;
-class QLabel;
-class QListView;
-class QPushButton;
+class TQLabel;
+class TQListView;
+class TQPushButton;
 
 class TopLevel : public KDialog
 {

@@ -32,7 +32,7 @@
 #define GRAPH_POLYGON     0
 #define	GRAPH_ORIGINAL    1
 
-class QColor;
+class TQColor;
 
 class SignalPlotter : public QWidget
 {

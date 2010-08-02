@@ -17,7 +17,7 @@
 
 #include <gestures.h>
 
-class QMouseEvent;
+class TQMouseEvent;
 
 namespace KHotKeys
 {

@@ -25,7 +25,7 @@
 #include <tqptrlist.h>
 
 class HistoryEntry;
-class QPopupMenu;
+class TQPopupMenu;
 
 /**
  * Plug this action into a menu to get a bidirectional history

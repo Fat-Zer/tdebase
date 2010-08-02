@@ -29,9 +29,9 @@
 // (C) Craig Drummond, 2005
 ////////////////////////////////////////////////////////////////////////////////
 
-class QStringList;
-class QString;
-class QWidget;
+class TQStringList;
+class TQString;
+class TQWidget;
 
 namespace KFI
 {

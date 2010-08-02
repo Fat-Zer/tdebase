@@ -30,8 +30,8 @@
 
 class KColorButton;
 
-class QListBoxItem;
-class QPushButton;
+class TQListBoxItem;
+class TQPushButton;
 
 class StyleSettings : public KDialogBase
 {

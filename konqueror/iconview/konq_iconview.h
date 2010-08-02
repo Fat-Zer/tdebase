@@ -34,7 +34,7 @@ class KDirLister;
 class KAction;
 class KToggleAction;
 class KActionMenu;
-class QIconViewItem;
+class TQIconViewItem;
 class IconViewBrowserExtension;
 
 /**

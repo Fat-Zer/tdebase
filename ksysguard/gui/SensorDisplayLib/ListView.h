@@ -31,7 +31,7 @@
 
 typedef const char* (*KeyFunc)(const char*);
 
-class QLabel;
+class TQLabel;
 class QBoxGroup;
 class ListViewSettings;
 

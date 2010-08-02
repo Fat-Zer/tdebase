@@ -26,13 +26,13 @@
 class JoyDevice;
 
 class PosWidget;
-class QLabel;
-class QTable;
-class QTimer;
-class QComboBox;
-class QPushButton;
-class QCheckBox;
-class QHBox;
+class TQLabel;
+class TQTable;
+class TQTimer;
+class TQComboBox;
+class TQPushButton;
+class TQCheckBox;
+class TQHBox;
 
 // the widget which displays all buttons, values, etc.
 class JoyWidget : public QWidget

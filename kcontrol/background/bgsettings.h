@@ -16,12 +16,12 @@
 #include <tqcolor.h>
 #include <tqvaluevector.h>
 
-template <class TQString, class T> class QMap;
+template <class TQString, class T> class TQMap;
 class KStandardDirs;
 class KSimpleConfig;
 class KConfig;
-class QString;
-class QImage;
+class TQString;
+class TQImage;
 
 /**
  * A class to manipulate/read/write/list KDE desktop patterns.

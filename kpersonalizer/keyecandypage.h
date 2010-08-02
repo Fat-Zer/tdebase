@@ -20,8 +20,8 @@
 
 #include "keyecandypagedlg.h"
 
-class QCheckListItem;
-class QColor;
+class TQCheckListItem;
+class TQColor;
 class KSysInfo;
 
 /**Abstract class for the eyecandy page. Applies  the accoring eyecandy settings

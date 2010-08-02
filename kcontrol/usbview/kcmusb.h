@@ -16,9 +16,9 @@
 
 #include <kcmodule.h>
 
-class QListView;
-class QListViewItem;
-class QTextView;
+class TQListView;
+class TQListViewItem;
+class TQTextView;
 
 
 class USBViewer : public KCModule

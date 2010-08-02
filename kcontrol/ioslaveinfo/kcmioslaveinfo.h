@@ -34,8 +34,8 @@
 #include <ktextbrowser.h>
 
 class KIOTimeoutControl;
-class QTabWidget;
-class QSpinBox;
+class TQTabWidget;
+class TQSpinBox;
 class KConfig;
 
 class KCMIOSlaveInfo : public KCModule

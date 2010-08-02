@@ -33,7 +33,7 @@ namespace KIO { class Job; }
 class KDirWatch;
 class KLineEdit;
 class KURLRequester;
-class QPopupMenu;
+class TQPopupMenu;
 
 /**
  * The 'New' submenu, both for the File menu and the RMB popup menu.

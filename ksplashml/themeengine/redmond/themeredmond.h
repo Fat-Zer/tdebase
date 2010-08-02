@@ -19,7 +19,7 @@
 #include <themeengine.h>
 
 class KFontCombo;
-class QCheckBox;
+class TQCheckBox;
 
 class CfgRedmond: public ThemeEngineConfig
 {

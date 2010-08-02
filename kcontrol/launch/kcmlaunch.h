@@ -20,9 +20,9 @@
 
 #include <kcmodule.h>
 
-class QCheckBox;
-class QComboBox;
-class QGroupBox;
+class TQCheckBox;
+class TQComboBox;
+class TQGroupBox;
 
 class KIntNumInput;
 

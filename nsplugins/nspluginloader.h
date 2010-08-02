@@ -40,8 +40,8 @@
 #define EMBEDCLASS QXEmbed
 
 class KProcess;
-class QPushButton;
-class QGridLayout;
+class TQPushButton;
+class TQGridLayout;
 
 class NSPluginInstance : public EMBEDCLASS
 {

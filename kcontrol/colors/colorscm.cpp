@@ -182,7 +182,7 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
 		" current user." ));
 
 
-    TQBoxLayout *stackLayout = new QVBoxLayout;
+    TQBoxLayout *stackLayout = new TQVBoxLayout;
     topLayout->addLayout(stackLayout, 1, 1);
 
     group = new TQGroupBox(i18n("&Widget Color"), this);
@@ -251,7 +251,7 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
 
     TQVBoxLayout *groupLayout2 = new TQVBoxLayout(group, 10);
     groupLayout2->addSpacing(10);
-    groupLayout = new QHBoxLayout;
+    groupLayout = new TQHBoxLayout;
     groupLayout2->addLayout(groupLayout);
 
     sb = new TQSlider( TQSlider::Horizontal,group,"Slider" );

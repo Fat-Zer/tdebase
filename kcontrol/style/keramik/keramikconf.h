@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef KERAMIK_CONF_H
 #define KERAMIK_CONF_H
 
-class QCheckBox;
+class TQCheckBox;
 
 class KeramikStyleConfig: public QWidget
 {

@@ -36,8 +36,8 @@
 //                 2000, 2001 Carste
 
 class KFileItem;
-class QWidget;
-class QKeyEvent;
+class TQWidget;
+class TQKeyEvent;
 
 #include <klistview.h>
 #include <kmimetyperesolver.h>

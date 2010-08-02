@@ -23,7 +23,7 @@
 
 #include "extensionInfo.h"
 
-class QComboBox;
+class TQComboBox;
 class KAboutData;
 class KDirWatch;
 

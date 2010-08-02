@@ -27,7 +27,7 @@
 
 #include <SensorAgent.h>
 
-class QString;
+class TQString;
 
 class KProcess;
 

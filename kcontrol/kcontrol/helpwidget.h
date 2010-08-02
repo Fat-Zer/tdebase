@@ -20,8 +20,8 @@
 #ifndef __helpwidget_h__
 #define __helpwidget_h__
 
-class QWidget;
-class QWhatsThis;
+class TQWidget;
+class TQWhatsThis;
 
 class HelpWidget : public QWhatsThis
 {

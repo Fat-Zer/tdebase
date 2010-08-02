@@ -16,7 +16,7 @@
 #include <tqmemarray.h>
 
 #include "sound.h"
-class QMouseEvent;
+class TQMouseEvent;
 class  KAudioRecordStream ;
 class KArtsServer;
 class KTempFile;

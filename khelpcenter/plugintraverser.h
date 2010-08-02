@@ -22,8 +22,8 @@
 
 #include "docentrytraverser.h"
 
-class QListView;
-class QListViewItem;
+class TQListView;
+class TQListViewItem;
 
 namespace KHC {
   class Navigator;

@@ -16,7 +16,7 @@
 #undef explicit
 
 class KDialogBase;
-class QLabel;
+class TQLabel;
 class KComboBox;
 
 class KAccessApp : public KUniqueApplication

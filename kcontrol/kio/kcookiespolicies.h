@@ -31,7 +31,7 @@
 
 #include "policydlg.h"
 
-class QListViewItem;
+class TQListViewItem;
 
 class DCOPClient;
 class KCookiesPolicyDlgUI;

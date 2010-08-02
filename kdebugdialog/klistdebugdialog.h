@@ -25,7 +25,7 @@
 #include <tqptrlist.h>
 #include <tqstringlist.h>
 
-class QVBox;
+class TQVBox;
 class KLineEdit;
 
 /**

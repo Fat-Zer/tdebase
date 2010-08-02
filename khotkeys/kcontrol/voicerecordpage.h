@@ -15,9 +15,9 @@
 
 
 
-class QWidget;
-class QPushButton;
-class QLabel;
+class TQWidget;
+class TQPushButton;
+class TQLabel;
 class KLineEdit;
 
 

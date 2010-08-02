@@ -7,8 +7,8 @@
 
 #include "simplebutton.h"
 
-class QBoxLayout;
-class QToolButton;
+class TQBoxLayout;
+class TQToolButton;
 
 class Lockout : public KPanelApplet
 {

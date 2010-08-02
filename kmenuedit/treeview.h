@@ -27,7 +27,7 @@
 #include <kservice.h>
 #include <kservicegroup.h>
 
-class QPopupMenu;
+class TQPopupMenu;
 class KActionCollection;
 class KDesktopFile;
 class MenuFile;

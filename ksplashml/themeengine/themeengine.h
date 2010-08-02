@@ -20,7 +20,7 @@
 
 class KConfig;
 class ObjKsTheme;
-class QMouseEvent;
+class TQMouseEvent;
 
 /**
  * @short The base for the ThemeEngine's configuration widget.

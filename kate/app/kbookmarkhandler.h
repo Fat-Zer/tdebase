@@ -27,7 +27,7 @@ class KateFileSelector;
 
 class KActionMenu;
 
-class QTextStream;
+class TQTextStream;
 class KPopupMenu;
 
 class KBookmarkHandler : public TQObject, public KBookmarkOwner

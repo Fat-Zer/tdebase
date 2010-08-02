@@ -15,17 +15,17 @@
 
 #include "kdatecombo.h"
 
-class QButtonGroup;
-class QPushButton;
-class QRadioButton;
-class QCheckBox;
-class QLineEdit;
-class QString;
-class QDate;
-class QRegExp;
-class QDialog;
-class QComboBox;
-class QSpinBox;
+class TQButtonGroup;
+class TQPushButton;
+class TQRadioButton;
+class TQCheckBox;
+class TQLineEdit;
+class TQString;
+class TQDate;
+class TQRegExp;
+class TQDialog;
+class TQComboBox;
+class TQSpinBox;
 
 class KfDirDialog;
 

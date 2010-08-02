@@ -23,7 +23,7 @@
 
 #include <tqwidget.h>
 
-class QComboBox;
+class TQComboBox;
 
 class ConfFax : public QWidget
 {

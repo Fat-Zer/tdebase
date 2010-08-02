@@ -96,7 +96,7 @@ void KonqSidebarBookmarkModule::addTopLevelItem( KonqSidebarTreeTopLevelItem * i
 
 bool KonqSidebarBookmarkModule::handleTopLevelContextMenu( KonqSidebarTreeTopLevelItem *, const TQPoint& ) 
 {
-    TQPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new TQPopupMenu;
 
     if (tree()->tabSupport()) {
 	m_collection->action("folder_open_tabs")->plug(menu);
@@ -120,7 +120,7 @@ void KonqSidebarBookmarkModule::showPopupMenu()
         return;
 
     bool tabSupported = tree()->tabSupport();
-    TQPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new TQPopupMenu;
 
     if (bi->bookmark().isGroup()) {
         if (tabSupported) {

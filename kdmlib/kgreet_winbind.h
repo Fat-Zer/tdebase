@@ -35,8 +35,8 @@ class KComboBox;
 class KLineEdit;
 class KPasswordEdit;
 class KSimpleConfig;
-class QGridLayout;
-class QLabel;
+class TQGridLayout;
+class TQLabel;
 class KdmThemer;
 class KProcIO;
 

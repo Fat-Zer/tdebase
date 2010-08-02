@@ -41,11 +41,11 @@
 #include "kwindecorationIface.h"
 
 class KComboBox;
-class QCheckBox;
-class QLabel;
-class QTabWidget;
-class QVBox;
-class QSlider;
+class TQCheckBox;
+class TQLabel;
+class TQTabWidget;
+class TQVBox;
+class TQSlider;
 
 class KDecorationPlugins;
 class KDecorationPreview;

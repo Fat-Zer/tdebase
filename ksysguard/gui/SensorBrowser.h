@@ -29,7 +29,7 @@
 #include <klistview.h>
 #include <ksgrd/SensorClient.h>
 
-class QMouseEvent;
+class TQMouseEvent;
 
 namespace KSGRD {
 class SensorManager;

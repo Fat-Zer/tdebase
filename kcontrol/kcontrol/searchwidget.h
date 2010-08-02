@@ -30,7 +30,7 @@
 
 class KListBox;
 class KLineEdit;
-class QListBoxItem;
+class TQListBoxItem;
 
 class KeywordListEntry
 {

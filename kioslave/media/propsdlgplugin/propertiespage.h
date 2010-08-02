@@ -23,7 +23,7 @@
 #include "propertiespagegui.h"
 #include <tqmap.h>
 
-class QCheckBox;
+class TQCheckBox;
 class Medium;
 
 class PropertiesPage : public PropertiesPageGUI

@@ -32,12 +32,12 @@
 #include <kpixmapeffect.h>
 #include <kstatusbar.h>
 
-class QPixmap;
-class QVBoxLayout;
-class QHBoxLayout;
-class QTimer;
-class QPushButton;
-class QToolButton;
+class TQPixmap;
+class TQVBoxLayout;
+class TQHBoxLayout;
+class TQTimer;
+class TQPushButton;
+class TQToolButton;
 
 class KonqView;
 class KonqViewManager;

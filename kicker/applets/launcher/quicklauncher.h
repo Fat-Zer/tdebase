@@ -36,7 +36,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "quickbutton.h"
 
 class ConfigDlg;
-class QPopupMenu;
+class TQPopupMenu;
 class QuickButtonGroup;
 class PopularityStatistics;
 class KAction;

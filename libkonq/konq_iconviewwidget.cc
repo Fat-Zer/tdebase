@@ -1905,7 +1905,7 @@ bool KonqIconViewWidget::canPreview( KFileItem* item )
 void KonqIconViewWidget::updatePreviewMimeTypes()
 {
     if ( d->pPreviewMimeTypes == 0L )
-        d->pPreviewMimeTypes = new QStringList;
+        d->pPreviewMimeTypes = new TQStringList;
     else
         d->pPreviewMimeTypes->clear();
 

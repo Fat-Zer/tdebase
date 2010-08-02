@@ -28,7 +28,7 @@
 #include "kdeprintfax.h"
 
 class KProcess;
-class QTextEdit;
+class TQTextEdit;
 
 class FaxCtrl : public QObject
 {

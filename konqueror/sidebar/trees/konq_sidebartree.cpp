@@ -918,7 +918,7 @@ void KonqSidebarTree::showToplevelContextMenu()
                             TQT_SLOT( slotCopyLocation() ), m_collection, "copy_location");
     }
 
-    TQPopupMenu *menu = new QPopupMenu;
+    TQPopupMenu *menu = new TQPopupMenu;
 
     if (item) {
         if (item->isTopLevelGroup()) {

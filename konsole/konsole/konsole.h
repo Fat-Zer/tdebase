@@ -51,8 +51,8 @@
 #define KONSOLE_VERSION "1.6.6"
 
 class KRootPixmap;
-class QLabel;
-class QCheckBox;
+class TQLabel;
+class TQCheckBox;
 class KonsoleFind;
 class KPopupMenu;
 class KAction;
@@ -60,7 +60,7 @@ class KToggleAction;
 class KSelectAction;
 class KRadioAction;
 class KTabWidget;
-class QToolButton;
+class TQToolButton;
 
 // Defined in main.C
 const char *konsole_shell(TQStrList &args);
@@ -437,7 +437,7 @@ private:
   TQColor    m_tabColor;
 };
 
-class QSpinBox;
+class TQSpinBox;
 
 class HistoryTypeDialog : public KDialogBase
 {

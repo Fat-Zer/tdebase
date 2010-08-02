@@ -13,14 +13,14 @@
 #include <knuminput.h>
 
 
-class QCheckBox;
-class QComboBox;
-class QLabel;
-class QLineEdit;
-class QPushButton;
-class QRadioButton;
+class TQCheckBox;
+class TQComboBox;
+class TQLabel;
+class TQLineEdit;
+class TQPushButton;
+class TQRadioButton;
 class KColorButton;
-class QSlider;
+class TQSlider;
 class KNumInput;
 class KAboutData;
 

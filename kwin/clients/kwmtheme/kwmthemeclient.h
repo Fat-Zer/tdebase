@@ -7,9 +7,9 @@
 #include <kdecoration.h>
 #include <kdecorationfactory.h>
 
-class QLabel;
-class QSpacerItem;
-class QGridLayout;
+class TQLabel;
+class TQSpacerItem;
+class TQGridLayout;
 
 namespace KWMTheme {
 

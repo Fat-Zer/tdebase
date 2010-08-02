@@ -33,7 +33,7 @@
 
 #include "toplevel.h"
 
-class QSplitter;
+class TQSplitter;
 class KListViewSearchLine;
 
 class KEBListViewItem : public QListViewItem

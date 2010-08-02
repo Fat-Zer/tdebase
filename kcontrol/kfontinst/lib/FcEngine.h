@@ -36,7 +36,7 @@
 
 #endif
 
-class QPixmap;
+class TQPixmap;
 
 #ifdef HAVE_XFT
 typedef struct _XftFont  XftFont;

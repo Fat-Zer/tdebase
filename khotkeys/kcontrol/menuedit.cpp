@@ -42,7 +42,7 @@ void khotkeys_init()
     KGlobal::locale()->insertCatalogue("khotkeys");
     // CHECKME hack
     assert( owner == NULL );
-    owner = new QObject;
+    owner = new TQObject;
     init_global_data( false, owner );
     }
 

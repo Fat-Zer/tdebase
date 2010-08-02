@@ -39,8 +39,8 @@
 
 #include <kurlcompletion.h>
 
-class QTimer;
-class QWidget;
+class TQTimer;
+class TQWidget;
 class MinicliDlgUI;
 class KURIFilterData;
 

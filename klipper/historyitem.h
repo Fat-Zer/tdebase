@@ -21,9 +21,9 @@
 #define _HISTORYITEM_H_
 #include <tqpixmap.h>
 
-class QString;
-class QMimeSource;
-class QDataStream;
+class TQString;
+class TQMimeSource;
+class TQDataStream;
 
 /**
  * An entry in the clipboard history.

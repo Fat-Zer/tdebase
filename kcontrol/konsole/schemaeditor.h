@@ -24,7 +24,7 @@
 
 #include <kapplication.h>
 #include <tqwidget.h>
-class QPixmap;
+class TQPixmap;
 class KSharedPixmap;
 
 #include "schemadialog.h"

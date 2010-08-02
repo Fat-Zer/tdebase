@@ -30,7 +30,7 @@
 
 #include "tiles.h"
 
-class QSpacerItem;
+class TQSpacerItem;
 
 namespace Keramik {
 

@@ -25,8 +25,8 @@
 
 #include <kdialogbase.h>
 
-class QCheckBox;
-class QButtonGroup;
+class TQCheckBox;
+class TQButtonGroup;
 
 class KPagerConfigDialog : public KDialogBase
 {

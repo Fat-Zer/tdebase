@@ -37,7 +37,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-class QStrIList;
+class TQStrIList;
 
 namespace KioSMTP {
 

@@ -31,7 +31,7 @@
 #include "socksbase.h"
 
 
-class QVButtonGroup;
+class TQVButtonGroup;
 
 class KSocksConfig : public KCModule
 {

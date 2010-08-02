@@ -42,7 +42,7 @@
 #include "konq_combo.h"
 #include "konq_frame.h"
 
-class QFile;
+class TQFile;
 class KAction;
 class KActionCollection;
 class KActionMenu;

@@ -24,7 +24,7 @@
 
 #include "kproxydlgbase.h"
 
-class QSpinBox;
+class TQSpinBox;
 class KLineEdit;
 class ManualProxyDlgUI;
 

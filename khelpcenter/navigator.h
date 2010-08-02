@@ -34,7 +34,7 @@
 #include <tqlistview.h>
 #include <tqdict.h>
 
-class QPushButton;
+class TQPushButton;
 
 class KListView;
 class KService;

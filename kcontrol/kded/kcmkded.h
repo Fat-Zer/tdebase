@@ -25,8 +25,8 @@
 
 class KListView;
 
-class QStringList;
-class QPushButton;
+class TQStringList;
+class TQPushButton;
 
 class KDEDConfig : public KCModule
 {

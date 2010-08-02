@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "kickertip.h"
 
-class QPopupMenu;
+class TQPopupMenu;
 class KConfigGroup;
 class KShadowEngine;
 

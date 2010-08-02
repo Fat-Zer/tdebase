@@ -12,7 +12,7 @@
 #include <klocale.h>
 #include <tqlineedit.h>
 class KonqSidebarTree;
-class QVBox;
+class TQVBox;
 
 class KonqSidebar_Tree: public KonqSidebarPlugin
         {

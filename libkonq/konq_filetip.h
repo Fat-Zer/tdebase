@@ -29,9 +29,9 @@
 #include <libkonq_export.h>
 
 class KFileItem;
-class QLabel;
-class QScrollView;
-class QTimer;
+class TQLabel;
+class TQScrollView;
+class TQTimer;
 
 //--------------------------------------------------------------------------------
 

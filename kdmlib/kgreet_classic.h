@@ -33,8 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class KLineEdit;
 class KPasswordEdit;
 class KSimpleConfig;
-class QGridLayout;
-class QLabel;
+class TQGridLayout;
+class TQLabel;
 
 class KClassicGreeter : public TQObject, public KGreeterPlugin {
 	Q_OBJECT

@@ -60,10 +60,10 @@
 
 #include <kdialogbase.h>
 
-class QComboBox;
-class QCheckBox;
-class QSlider;
-class QSpinBox;
+class TQComboBox;
+class TQCheckBox;
+class TQSlider;
+class TQSpinBox;
 class KColorButton;
 class KConfig;
 class KIntSpinBox;

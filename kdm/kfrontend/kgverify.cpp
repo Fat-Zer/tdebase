@@ -922,7 +922,7 @@ KGStdVerify::KGStdVerify( KGVerifyHandler *_handler, TQWidget *_parent,
 	             _pluginList, _func, _ctx )
 	, failedLabelState( 0 )
 {
-	grid = new QGridLayout;
+	grid = new TQGridLayout;
 	grid->setAlignment( AlignCenter );
 
 	failedLabel = new TQLabel( parent );

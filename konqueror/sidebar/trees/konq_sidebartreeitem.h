@@ -24,9 +24,9 @@
 #include <tqstringlist.h>
 #include <kurl.h>
 
-class QPainter;
-class QDragObject;
-class QStrList;
+class TQPainter;
+class TQDragObject;
+class TQStrList;
 class KonqSidebarTree;
 class KonqSidebarTreeItem;
 class KonqSidebarTreeModule;

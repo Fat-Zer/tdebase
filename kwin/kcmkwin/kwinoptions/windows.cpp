@@ -833,7 +833,7 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, TQWidget *pare
 
     TQBoxLayout *wLay = new TQVBoxLayout (windowsBox->layout(), KDialog::spacingHint());
 
-    TQBoxLayout *bLay = new QVBoxLayout;
+    TQBoxLayout *bLay = new TQVBoxLayout;
     wLay->addLayout(bLay);
 
     opaque = new TQCheckBox(i18n("Di&splay content in moving windows"), windowsBox);

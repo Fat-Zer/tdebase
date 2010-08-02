@@ -27,8 +27,8 @@
 
 #include <tqwidget.h>
 
-class QLabel;
-class QResizeEvent;
+class TQLabel;
+class TQResizeEvent;
 
 class KLocale;
 

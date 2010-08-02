@@ -48,7 +48,7 @@ TQPopupMenu* Workspace::clientPopup()
     {
     if ( !popup )
         {
-        popup = new QPopupMenu;
+        popup = new TQPopupMenu;
         popup->setCheckable( TRUE );
         popup->setFont(KGlobalSettings::menuFont());
         connect( popup, TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( clientPopupAboutToShow() ) );

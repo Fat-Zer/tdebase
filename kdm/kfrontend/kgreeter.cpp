@@ -128,7 +128,7 @@ KGreeter::KGreeter( bool framed )
 		         TQT_SLOT(accept()) );
 	}
 	if (_userCompletion)
-		userList = new QStringList;
+		userList = new TQStringList;
 	if (userView || userList)
 		insertUsers();
 

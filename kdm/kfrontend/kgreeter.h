@@ -37,10 +37,10 @@ class KdmItem;
 class KListView;
 class KSimpleConfig;
 
-class QLabel;
-class QPushButton;
-class QPopupMenu;
-class QListViewItem;
+class TQLabel;
+class TQPushButton;
+class TQPopupMenu;
+class TQListViewItem;
 
 struct SessType {
 	TQString name, type;

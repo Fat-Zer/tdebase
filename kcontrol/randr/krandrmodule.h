@@ -21,9 +21,9 @@
 
 #include <libkrandr/libkrandr.h>
 
-class QButtonGroup;
+class TQButtonGroup;
 class KComboBox;
-class QCheckBox;
+class TQCheckBox;
 
 class KRandRModule : public KCModule, public KRandrSimpleAPI
 {

@@ -19,14 +19,14 @@
 #include "kssmonitor.h"
 #include "saverlist.h"
 
-class QTimer;
-class QSpinBox;
-class QSlider;
-class QCheckBox;
-class QLabel;
-class QListView;
-class QListViewItem;
-class QPushButton;
+class TQTimer;
+class TQSpinBox;
+class TQSlider;
+class TQCheckBox;
+class TQLabel;
+class TQListView;
+class TQListViewItem;
+class TQPushButton;
 class KIntNumInput;
 class KProcess;
 

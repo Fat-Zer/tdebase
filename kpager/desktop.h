@@ -32,8 +32,8 @@
 class KSharedPixmap;
 class KPopupMenu;
 
-class QPainter;
-class QPoint;
+class TQPainter;
+class TQPoint;
 
 class Desktop : public QWidget
 {

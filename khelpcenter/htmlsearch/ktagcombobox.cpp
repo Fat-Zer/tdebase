@@ -41,7 +41,7 @@ KTagComboBox::KTagComboBox (TQWidget * parent, const char *name)
 	popup(0),
 	old_popup(0)
 {
-  tags = new QStringList;
+  tags = new TQStringList;
 
   clear();
 }

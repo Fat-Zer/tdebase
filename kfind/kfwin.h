@@ -12,8 +12,8 @@
 #include <kurl.h>
 
 class KfArchiver;
-class QPixmap;
-class QFileInfo;
+class TQPixmap;
+class TQFileInfo;
 class KPopupMenu;
 class KfindWindow;
 

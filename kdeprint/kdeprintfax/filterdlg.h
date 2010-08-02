@@ -23,7 +23,7 @@
 
 #include <kdialogbase.h>
 
-class QLineEdit;
+class TQLineEdit;
 
 class FilterDlg : public KDialogBase
 {

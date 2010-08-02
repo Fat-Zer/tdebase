@@ -27,9 +27,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqstring.h>
 #include <kpanelapplet.h>
 
-class QLabel;
-class QHBox;
-class QPushButton;
+class TQLabel;
+class TQHBox;
+class TQPushButton;
 class KHistoryCombo;
 class KURIFilterData;
 

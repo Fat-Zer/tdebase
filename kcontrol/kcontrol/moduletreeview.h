@@ -29,7 +29,7 @@
 
 class ConfigModule;
 class ConfigModuleList;
-class QPainter;
+class TQPainter;
 
 class ModuleTreeItem : public QListViewItem
 {

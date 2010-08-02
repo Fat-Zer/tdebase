@@ -26,8 +26,8 @@
 #include <ktimezonewidget.h>
 #include <tqvgroupbox.h>
 
-class QComboBox;
-class QLabel;
+class TQComboBox;
+class TQLabel;
 
 class Tzone : public QVGroupBox
 {

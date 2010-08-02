@@ -18,13 +18,13 @@
 class KColorButton;
 class KConfig;
 class KURLRequester;
-class QCheckBox;
-class QComboBox;
-class QLineEdit;
-class QListViewItem;
-class QRadioButton;
-class QSpinBox;
-class QButtonGroup;
+class TQCheckBox;
+class TQComboBox;
+class TQLineEdit;
+class TQListViewItem;
+class TQRadioButton;
+class TQSpinBox;
+class TQButtonGroup;
 
 class PolicyDialog;
 

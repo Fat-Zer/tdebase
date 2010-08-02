@@ -26,7 +26,7 @@
 
 #include "../../rules.h"
 
-class QListBoxItem;
+class TQListBoxItem;
 
 namespace KWinInternal
 {

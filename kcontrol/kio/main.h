@@ -24,7 +24,7 @@
 #include <kcmodule.h>
 #include <kglobal.h>
 
-class QTabWidget;
+class TQTabWidget;
 
 class LanBrowser:public KCModule
 {

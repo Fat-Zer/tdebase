@@ -63,7 +63,7 @@
 
 class Startup;
 class KasPopup;
-class QTimer;
+class TQTimer;
 
 /**
  * A KasItem that represents a single Startup.

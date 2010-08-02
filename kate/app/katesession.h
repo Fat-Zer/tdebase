@@ -35,7 +35,7 @@ class KDirWatch;
 class KListView;
 class KPushButton;
 
-class QCheckBox;
+class TQCheckBox;
 
 class KateSession  : public KShared
 {

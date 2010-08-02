@@ -17,12 +17,12 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <kguiitem.h>
 #include <tqtoolbutton.h>
 
-class QPushButton;
-class QVButtonGroup;
-class QPopupMenu;
-class QTimer;
-class QPainter;
-class QString;
+class TQPushButton;
+class TQVButtonGroup;
+class TQPopupMenu;
+class TQTimer;
+class TQPainter;
+class TQString;
 class KAction;
 
 

@@ -25,7 +25,7 @@
 
 #include <kcmodule.h>
 
-class QListBox;
+class TQListBox;
 
 class FilterOptions : public KCModule
 {

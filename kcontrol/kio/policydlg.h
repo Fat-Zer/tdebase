@@ -24,7 +24,7 @@
 #include <kdialogbase.h>
 
 
-class QPushButton;
+class TQPushButton;
 class PolicyDlgUI;
 
 class KCookieAdvice

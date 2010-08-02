@@ -21,11 +21,11 @@
 
 #include <kcmodule.h>
 
-class QCheckBox;
-class QLabel;
-class QRadioButton;
-class QSpinBox;
-class QVButtonGroup;
+class TQCheckBox;
+class TQLabel;
+class TQRadioButton;
+class TQSpinBox;
+class TQVButtonGroup;
 
 class KConfig;
 class KURLRequester;

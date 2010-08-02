@@ -25,8 +25,8 @@
 
 #include <tqobject.h>
 
-class QButtonGroup;
-class QGroupBox;
+class TQButtonGroup;
+class TQGroupBox;
 class KConfig;
 class ConfigDialog;
 

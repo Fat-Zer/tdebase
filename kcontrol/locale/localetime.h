@@ -28,8 +28,8 @@
 
 #include <tqmap.h>
 
-class QCheckBox;
-class QComboBox;
+class TQCheckBox;
+class TQComboBox;
 
 class KLocale;
 class KLanguageCombo;

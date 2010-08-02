@@ -32,7 +32,7 @@
 
 class KConfig;
 
-class QListBoxItem;
+class TQListBoxItem;
 
 class StyleSettings;
 

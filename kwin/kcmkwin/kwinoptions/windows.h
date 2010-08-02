@@ -26,16 +26,16 @@
 #include <kcmodule.h>
 #include <config.h>
 
-class QRadioButton;
-class QCheckBox;
-class QPushButton;
-class QComboBox;
-class QGroupBox;
-class QLabel;
-class QSlider;
-class QButtonGroup;
-class QSpinBox;
-class QVButtonGroup;
+class TQRadioButton;
+class TQCheckBox;
+class TQPushButton;
+class TQComboBox;
+class TQGroupBox;
+class TQLabel;
+class TQSlider;
+class TQButtonGroup;
+class TQSpinBox;
+class TQVButtonGroup;
 
 class KColorButton;
 class KIntNumInput;
@@ -66,7 +66,7 @@ class KIntNumInput;
 #define  FOCUS_UNDER_MOUSE            2
 #define  FOCUS_STRICTLY_UNDER_MOUSE   3
 
-class QSpinBox;
+class TQSpinBox;
 
 class KFocusConfig : public KCModule
 {

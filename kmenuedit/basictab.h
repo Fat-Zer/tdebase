@@ -28,9 +28,9 @@
 class KKeyButton;
 class KLineEdit;
 class KIconButton;
-class QCheckBox;
-class QGroupBox;
-class QLabel;
+class TQCheckBox;
+class TQGroupBox;
+class TQLabel;
 class KURLRequester;
 class KComboBox;
 class KService;

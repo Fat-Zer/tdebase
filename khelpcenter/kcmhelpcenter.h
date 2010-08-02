@@ -27,10 +27,10 @@
 
 #include "scopeitem.h"
 
-class QPushButton;
-class QProgressBar;
-class QTextEdit;
-class QLabel;
+class TQPushButton;
+class TQProgressBar;
+class TQTextEdit;
+class TQLabel;
 
 class KProcess;
 class KConfig;

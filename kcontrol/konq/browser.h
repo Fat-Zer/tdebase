@@ -23,7 +23,7 @@
 #include <kcmodule.h>
 
 class KConfig;
-class QTabWidget;
+class TQTabWidget;
 
 //-----------------------------------------------------------------------------
 

@@ -31,8 +31,8 @@ class KdmItem;
 class KdmLayoutBox;
 class KdmLayoutFixed;
 
-class QPainter;
-class QLayoutItem;
+class TQPainter;
+class TQLayoutItem;
 
 /** class KdmItem
  * @short Base class for every kdmthemes' element.

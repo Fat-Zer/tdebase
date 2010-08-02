@@ -33,9 +33,9 @@ class KLanguageButton;
 class KLocale;
 class KLocaleSample;
 
-class QLabel;
-class QListBox;
-class QPushButton;
+class TQLabel;
+class TQListBox;
+class TQPushButton;
 
 class KLocaleConfig : public QWidget
 {

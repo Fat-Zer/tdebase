@@ -36,7 +36,7 @@
 #include <tqvaluelist.h>
 typedef TQValueList<TQCString> QCStringList;
 
-class QString;
+class TQString;
 
 namespace KioSMTP {
 

@@ -30,7 +30,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "kdecoration.h"
 #include "rules.h"
 
-class QTimer;
+class TQTimer;
 class KProcess;
 class KStartupInfoData;
 

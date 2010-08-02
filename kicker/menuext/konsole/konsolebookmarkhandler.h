@@ -7,7 +7,7 @@
 #include "konsolebookmarkmenu.h"
 
 
-class QTextStream;
+class TQTextStream;
 class KPopupMenu;
 class KonsoleBookmarkMenu;
 class KonsoleMenu;

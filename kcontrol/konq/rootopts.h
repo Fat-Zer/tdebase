@@ -19,9 +19,9 @@
 #include <kio/global.h>
 #include <kurl.h>
 
-class QCheckBox;
-class QComboBox;
-class QPushButton;
+class TQCheckBox;
+class TQComboBox;
+class TQPushButton;
 
 class KConfig;
 class KListView;

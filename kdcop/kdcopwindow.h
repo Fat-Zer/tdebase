@@ -8,11 +8,11 @@
 #define __KDCOPWINDOW_H__
 
 class DCOPClient;
-class QListViewItem;
+class TQListViewItem;
 class KAction;
 class KSelectAction;
-class QWidgetStack;
-class QLabel;
+class TQWidgetStack;
+class TQLabel;
 class KDCOPListView;
 
 #include <kmainwindow.h>

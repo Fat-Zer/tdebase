@@ -31,7 +31,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-class QPainter;
+class TQPainter;
 class KFileItem;
 class KonqBaseListViewWidget;
 

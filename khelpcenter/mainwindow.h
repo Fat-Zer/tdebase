@@ -14,7 +14,7 @@
 #include "glossary.h"
 
 class KHTMLPart;
-class QSplitter;
+class TQSplitter;
 
 class LogDialog;
 

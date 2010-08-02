@@ -24,12 +24,12 @@
 #include <tqwidget.h>
 #include "applettab.h"
 
-class QGroupBox;
-class QButtonGroup;
-class QRadioButton;
-class QPushButton;
+class TQGroupBox;
+class TQButtonGroup;
+class TQRadioButton;
+class TQPushButton;
 class KListView;
-class QListViewItem;
+class TQListViewItem;
 
 class AppletTab : public AppletTabBase
 {

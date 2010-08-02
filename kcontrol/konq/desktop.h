@@ -21,9 +21,9 @@
 
 #include <kcmodule.h>
 
-class QSpinBox;
-class QLabel;
-class QCheckBox;
+class TQSpinBox;
+class TQLabel;
+class TQCheckBox;
 class KLineEdit;
 class KIntNumInput;
 

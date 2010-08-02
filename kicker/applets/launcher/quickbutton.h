@@ -39,7 +39,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "simplebutton.h"
 
-class QPopupMenu;
+class TQPopupMenu;
 class KAction;
 class KToggleAction;
 

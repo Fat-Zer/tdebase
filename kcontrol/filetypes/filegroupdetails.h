@@ -20,7 +20,7 @@
 
 #include <tqwidget.h>
 class TypesListItem;
-class QButtonGroup;
+class TQButtonGroup;
 
 /**
  * This widget contains the details for a filetype group.

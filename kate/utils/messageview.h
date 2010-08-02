@@ -44,7 +44,7 @@
     Each time you restart the process, clear() the view.
 */
 
-class QTextBrowser;
+class TQTextBrowser;
 
 namespace Kate
 {

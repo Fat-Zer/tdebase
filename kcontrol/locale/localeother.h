@@ -26,8 +26,8 @@
 
 #include <tqwidget.h>
 
-class QLabel;
-class QComboBox;
+class TQLabel;
+class TQComboBox;
 
 class KLocale;
 

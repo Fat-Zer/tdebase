@@ -100,7 +100,7 @@ StatisticsView::StatisticsView(TQWidget *parent,KConfig *config, const char *nam
    subLayout->setColStretch(1,1);
    subLayout->setColStretch(2,1);
    
-   TQHBoxLayout *twoButtonsLayout=new QHBoxLayout;
+   TQHBoxLayout *twoButtonsLayout=new TQHBoxLayout;
    twoButtonsLayout->addWidget(calcButton,1);
    twoButtonsLayout->addWidget(clearButton,1);
    

@@ -27,10 +27,10 @@
 
 #include "docmetainfo.h"
 
-class QCheckBox;
-class QListView;
-class QListViewItem;
-class QComboBox;
+class TQCheckBox;
+class TQListView;
+class TQListViewItem;
+class TQComboBox;
 
 class KLanguageCombo;
 class KConfig;

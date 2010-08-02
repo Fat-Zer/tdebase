@@ -26,8 +26,8 @@
 #include "historyitem.h"
 
 class KlipperPopup;
-class QPopupMenu;
-class QWidget;
+class TQPopupMenu;
+class TQWidget;
 class QptrListIterator;
 
 class History : public QObject

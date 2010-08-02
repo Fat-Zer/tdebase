@@ -37,9 +37,9 @@
 #include <tqptrqueue.h>
 
 class KURL;
-class QCString;
-template <typename T> class QMemArray;
-typedef TQMemArray<char> QByteArray;
+class TQCString;
+template <typename T> class TQMemArray;
+typedef TQMemArray<char> TQByteArray;
 
 namespace KioSMTP {
   class Response;

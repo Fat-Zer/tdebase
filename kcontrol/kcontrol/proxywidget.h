@@ -24,9 +24,9 @@
 #define __PROXYWIDGET_H__
 
 
-class QWidget;
-class QPushButton;
-class QFrame;
+class TQWidget;
+class TQPushButton;
+class TQFrame;
 
 class KCModule;
 class KAboutData;

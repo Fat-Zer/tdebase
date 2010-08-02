@@ -26,7 +26,7 @@
 
 #include <kcmodule.h>
 
-class QTabWidget;
+class TQTabWidget;
 
 class KProxyData;
 class KProxyDialogUI;

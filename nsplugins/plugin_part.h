@@ -35,7 +35,7 @@ class KAboutData;
 class KInstance;
 class PluginBrowserExtension;
 class PluginLiveConnectExtension;
-class QLabel;
+class TQLabel;
 class NSPluginInstance;
 class PluginPart;
 

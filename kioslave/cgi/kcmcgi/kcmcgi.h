@@ -20,8 +20,8 @@
 
 #include <kcmodule.h>
 
-class QListBox;
-class QPushButton;
+class TQListBox;
+class TQPushButton;
 
 class KConfig;
 

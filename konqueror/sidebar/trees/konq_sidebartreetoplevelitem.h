@@ -21,7 +21,7 @@
 
 #include "konq_sidebartreeitem.h"
 
-class QStrList;
+class TQStrList;
 class KonqSidebarTreeModule;
 
 /**

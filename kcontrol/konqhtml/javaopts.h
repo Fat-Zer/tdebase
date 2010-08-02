@@ -26,11 +26,11 @@ class KListView;
 class KURLRequester;
 class KIntNumInput;
 
-class QCheckBox;
-class QComboBox;
-class QLineEdit;
-class QListViewItem;
-class QRadioButton;
+class TQCheckBox;
+class TQComboBox;
+class TQLineEdit;
+class TQListViewItem;
+class TQRadioButton;
 
 class KJavaOptions;
 

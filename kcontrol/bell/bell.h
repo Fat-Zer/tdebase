@@ -23,9 +23,9 @@
 
 #include "kcmodule.h"
 
-class QCheckBox;
+class TQCheckBox;
 class KIntNumInput;
-class QPushButton;
+class TQPushButton;
 
 class KBellConfig : public KCModule
 {

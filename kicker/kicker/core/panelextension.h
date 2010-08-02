@@ -32,8 +32,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class AppletContainer;
 class ContainerArea;
-class QPopupMenu;
-class QGridLayout;
+class TQPopupMenu;
+class TQGridLayout;
 
 // This is the KPanelExtension responsible for the main kicker panel
 // Prior to KDE 3.4 it was the ChildPanelExtension

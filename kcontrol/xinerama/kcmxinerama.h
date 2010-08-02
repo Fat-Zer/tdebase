@@ -28,7 +28,7 @@
 #include "xineramawidget.h"
 
 class KConfig;
-class QWidget;
+class TQWidget;
 
 class KCMXinerama : public KCModule {
 	Q_OBJECT

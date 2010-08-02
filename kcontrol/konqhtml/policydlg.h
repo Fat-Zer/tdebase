@@ -10,11 +10,11 @@
 #include <tqlineedit.h>
 #include <tqstringlist.h>
 
-class QLabel;
-class QComboBox;
-class QString;
-class QVBoxLayout;
-class QPushButton;
+class TQLabel;
+class TQComboBox;
+class TQString;
+class TQVBoxLayout;
+class TQPushButton;
 
 class Policies;
 

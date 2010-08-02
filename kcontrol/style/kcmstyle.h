@@ -36,19 +36,19 @@
 #include "menupreview.h"
 
 class KComboBox;
-class QCheckBox;
-class QComboBox;
-class QFrame;
-class QGroupBox;
-class QLabel;
-class QListBox;
-class QListViewItem;
-class QSettings;
-class QSlider;
-class QSpacerItem;
-class QStyle;
-class QTabWidget;
-class QVBoxLayout;
+class TQCheckBox;
+class TQComboBox;
+class TQFrame;
+class TQGroupBox;
+class TQLabel;
+class TQListBox;
+class TQListViewItem;
+class TQSettings;
+class TQSlider;
+class TQSpacerItem;
+class TQStyle;
+class TQTabWidget;
+class TQVBoxLayout;
 class StyleConfigDialog;
 class WidgetPreview;
 

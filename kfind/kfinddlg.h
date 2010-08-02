@@ -11,7 +11,7 @@
 #include <kdirlister.h>
 #include <kdirwatch.h>
 
-class QString;
+class TQString;
 
 class KQuery;
 class KURL;

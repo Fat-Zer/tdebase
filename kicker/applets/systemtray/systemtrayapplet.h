@@ -35,8 +35,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "simplebutton.h"
 
-class QGridLayout;
-class QTimer;
+class TQGridLayout;
+class TQTimer;
 class KWinModule;
 class TrayEmbed;
 class KDialogBase;

@@ -20,7 +20,7 @@
 #define __THEMEPAGE_H
 
 class KListView;
-class QListViewItem;
+class TQListViewItem;
 
 class ThemePage : public QWidget
 {

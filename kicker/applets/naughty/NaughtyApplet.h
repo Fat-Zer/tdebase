@@ -27,7 +27,7 @@
 #include "simplebutton.h"
 
 class NaughtyProcessMonitor;
-class QPushButton;
+class TQPushButton;
 
 class NaughtyApplet : public KPanelApplet
 {

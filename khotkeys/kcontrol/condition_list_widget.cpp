@@ -43,7 +43,7 @@ Condition_list_widget::Condition_list_widget( TQWidget* parent_P, const char* na
     : Condition_list_widget_ui( parent_P, name_P ), selected_item( NULL )
     {
     conditions.setAutoDelete( true );
-    TQPopupMenu* popup = new QPopupMenu; // CHECKME looks like setting parent doesn't work
+    TQPopupMenu* popup = new TQPopupMenu; // CHECKME looks like setting parent doesn't work
     popup->insertItem( i18n( "Active Window..." ), TYPE_ACTIVE_WINDOW );
     popup->insertItem( i18n( "Existing Window..." ), TYPE_EXISTING_WINDOW );
     popup->insertItem( i18n( "Not_condition", "Not" ), TYPE_NOT );

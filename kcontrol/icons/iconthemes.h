@@ -23,10 +23,10 @@
 #include <tqmap.h>
 #include <klistview.h>
 
-class QPushButton;
+class TQPushButton;
 class DeviceManager;
-class QCheckBox;
-class QStringList;
+class TQCheckBox;
+class TQStringList;
 
 
 class IconThemesConfig : public KCModule

@@ -40,10 +40,10 @@
 #define CSM_Alternate_background        22
 #define CSM_LAST			23
 
-class QPixmap;
-class QColor;
-class QPainter;
-class QEvent;
+class TQPixmap;
+class TQColor;
+class TQPainter;
+class TQEvent;
 
 class KPixmap;
 

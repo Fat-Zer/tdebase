@@ -34,9 +34,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kpanelapplet.h>
 
 class AppletItem;
-class QPaintEvent;
-class QSimpleRichText;
-class QTimer;
+class TQPaintEvent;
+class TQSimpleRichText;
+class TQTimer;
 
 class AddAppletVisualFeedback : QWidget
 {

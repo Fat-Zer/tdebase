@@ -26,9 +26,9 @@
 #include "../../lib/kcommondecoration.h"
 #include "../../lib/kdecorationfactory.h"
 
-class QLabel;
-class QSpacerItem;
-class QBoxLayout;
+class TQLabel;
+class TQSpacerItem;
+class TQBoxLayout;
 
 namespace Web
 {

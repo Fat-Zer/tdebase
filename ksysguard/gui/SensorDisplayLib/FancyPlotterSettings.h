@@ -31,10 +31,10 @@ class KIntNumInput;
 class KLineEdit;
 class KListView;
 
-class QCheckBox;
-class QListViewItem;
-class QPushButton;
-class QRadioButton;
+class TQCheckBox;
+class TQListViewItem;
+class TQPushButton;
+class TQRadioButton;
 
 class FancyPlotterSettings : public KDialogBase
 {

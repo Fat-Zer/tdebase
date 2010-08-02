@@ -16,7 +16,7 @@
 //#include <kcmodule.h>
 #include <tqdict.h>
 
-class QCheckBox;
+class TQCheckBox;
 
 class KeyChooserSpec;
 

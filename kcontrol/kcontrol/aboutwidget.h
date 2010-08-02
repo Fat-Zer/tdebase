@@ -25,7 +25,7 @@
 #include <tqhbox.h>
 
 class KCModuleInfo;
-class QPixmap;
+class TQPixmap;
 class KPixmap;
 class ConfigModule;
 class KHTMLPart;
