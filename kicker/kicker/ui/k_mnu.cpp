@@ -26,9 +26,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #include <dmctl.h>
 
+#include <tqhbox.h>
 #include <tqimage.h>
+#include <tqlabel.h>
 #include <tqpainter.h>
 #include <tqstyle.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -40,9 +44,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
+#include <ktoolbarbutton.h>
 #include <kwin.h>
 
 #include "client_mnu.h"
@@ -57,9 +63,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "popupmenutitle.h"
 #include "quickbrowser_mnu.h"
 #include "recentapps.h"
+#include "clicklineedit.h"
 
 #include "k_mnu.h"
 #include "k_mnu.moc"
+
+const int PanelKMenu::searchLineID(23140 /*whatever*/);
 
 PanelKMenu::PanelKMenu()
   : PanelServiceMenu(TQString::null, TQString::null, 0, "KMenu")
@@ -165,6 +174,25 @@ void PanelKMenu::paletteChanged()
     }
 }
 
+/* A MenuHBox is supposed to be inserted into a menu.
+ * You can set a special widget in the hbox which will
+ * get the focus if the user moves up or down with the 
+ * cursor keys
+ */ 
+class MenuHBox : public TQHBox {
+public:
+    MenuHBox(PanelKMenu* parent) : TQHBox(parent)
+    {
+    }
+
+    virtual void keyPressEvent(TQKeyEvent *e)
+    {
+
+    }
+private:
+    PanelKMenu *parent;
+};
+
 void PanelKMenu::initialize()
 {
 //    kdDebug(1210) << "PanelKMenu::initialize()" << endl;
@@ -190,6 +218,22 @@ void PanelKMenu::initialize()
 
     // add services
     PanelServiceMenu::initialize();
+
+    // Insert search field
+    TQHBox* hbox = new TQHBox( this );
+    KToolBarButton *clearButton = new KToolBarButton( "locationbar_erase", 0, hbox );
+    searchEdit = new KPIM::ClickLineEdit(hbox, " "+i18n("Press '/' to search..."));
+    hbox->setFocusPolicy(TQWidget::StrongFocus);
+    hbox->setFocusProxy(searchEdit);
+    hbox->setSpacing( 3 );
+    connect(clearButton, TQT_SIGNAL(clicked()), searchEdit, TQT_SLOT(clear()));
+    connect(this, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(slotClearSearch())); 
+    connect(searchEdit, TQT_SIGNAL(textChanged(const TQString&)),
+        this, TQT_SLOT( slotUpdateSearch( const TQString&)));
+    insertItem(hbox, searchLineID, 0);
+
+    //TQToolTip::add(clearButton, i18n("Clear Search"));
+    //TQToolTip::add(searchEdit, i18n("Enter the name of an application"));
 
     if (KickerSettings::showMenuTitles())
     {
@@ -579,6 +623,47 @@ void PanelKMenu::mouseMoveEvent(TQMouseEvent *e)
 {
     TQMouseEvent newEvent = translateMouseEvent(e);
     PanelServiceMenu::mouseMoveEvent( &newEvent );
+}
+
+void PanelKMenu::slotUpdateSearch(const TQString& searchString)
+{
+    kdDebug() << "Searching for " << searchString << endl;
+    setSearchString(searchString);
+}
+
+void PanelKMenu::slotClearSearch()
+{
+    if (searchEdit && searchEdit->text().isEmpty() == false) {
+        TQTimer::singleShot(0, searchEdit, TQT_SLOT(clear()));
+    }
+}
+
+void PanelKMenu::keyPressEvent(TQKeyEvent* e)
+{
+    // We move the focus to the search field if the
+    // user presses '/'. This is the same shortcut as
+    // konqueror is using, and afaik it's hardcoded both
+    // here and there. This sucks badly for many non-us
+    // keyboard layouts, but for the sake of consistency
+    // we follow konqueror.
+    if (!searchEdit) return KPanelMenu::keyPressEvent(e);
+
+    if (e->key() == TQt::Key_Slash && !searchEdit->hasFocus()) {
+        if (indexOf(searchLineID) >=0 ) {
+            setActiveItem(indexOf(searchLineID));
+        }
+    }
+    else if (e->key() == TQt::Key_Escape && searchEdit->text().isEmpty() == false) {
+        searchEdit->clear();
+    }
+    else if (e->key() == TQt::Key_Delete && !searchEdit->hasFocus() && 
+        searchEdit->text().isEmpty() == false)
+    {
+        searchEdit->clear();
+    }
+    else {
+        KPanelMenu::keyPressEvent(e);
+    }
 }
 
 void PanelKMenu::configChanged()

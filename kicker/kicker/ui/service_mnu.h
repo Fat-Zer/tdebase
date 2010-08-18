@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define SERVICE_MENU_H
 
 #include <tqmap.h>
+#include <set>
 #include <tqvaluevector.h>
 
 #include <ksycocaentry.h>
@@ -41,8 +42,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @author Rik Hemsley <rik@kde.org>
  */
 
+class KLineEdit;
 typedef TQMap<int, KSycocaEntry::Ptr> EntryMap;
 typedef TQValueVector<TQPopupMenu*> PopupMenuList;
+class PanelServiceMenu;
+typedef TQMap<PanelServiceMenu*,int> PanelServiceMenuMap;
 
 class KDE_EXPORT PanelServiceMenu : public KPanelMenu
 {
@@ -63,6 +67,8 @@ public:
     virtual void showMenu();
     bool highlightMenuItem( const TQString &menuId );
     void selectFirstItem();
+    void setSearchString(const TQString& searchString);
+    bool hasSearchResults();
 
 private:
     void fillMenu( KServiceGroup::Ptr &_root, KServiceGroup::List &_list,
@@ -114,6 +120,9 @@ protected:
     bool addmenumode_;
     TQPoint startPos_;
     PopupMenuList subMenus;
+    PanelServiceMenuMap searchSubMenuIDs;
+    bool hasSearchResults_;
+    std::set<int> searchMenuItems;
 
 private slots:
     void slotContextMenu(int);

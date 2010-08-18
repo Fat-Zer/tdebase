@@ -13,7 +13,7 @@ libkicker_ui_la_SOURCES = addbutton_mnu.cpp appletitem.ui appletview.ui addapple
         recentapps.cpp browser_dlg.cpp \
         removeapplet_mnu.cpp removeextension_mnu.cpp removecontainer_mnu.cpp \
         removebutton_mnu.cpp popupmenutitle.cpp hidebutton.cpp \
-        addappletvisualfeedback.cpp
+        addappletvisualfeedback.cpp clicklineedit.cpp
 
 libkicker_ui_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(top_builddir)/kdmlib/libdmctl.la
 
@@ -25,7 +25,8 @@ noinst_HEADERS = addapplet.h appletwidget.h addbutton_mnu.h addapplet_mnu.h appl
 		addextension_mnu.h extensionop_mnu.h \
 		recentapps.h browser_dlg.h \
 		removeapplet_mnu.h removeextension_mnu.h removecontainer_mnu.h \
-		removebutton_mnu.h popupmenutitle.h hidebutton.h addappletvisualfeedback.h
+		removebutton_mnu.h popupmenutitle.h hidebutton.h \
+		addappletvisualfeedback.h clicklineedit.h
 
 removecontainer_mnu.lo: ../../libkicker/kickerSettings.h
 removeextension_mnu.lo: ../../libkicker/kickerSettings.h

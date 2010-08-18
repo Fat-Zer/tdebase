@@ -26,6 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqbitmap.h>
 #include <tqpixmap.h>
 #include <tqimage.h>
+#include <tqmap.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -100,6 +101,8 @@ void PanelServiceMenu::initialize()
     clear();
 
     clearSubmenus();
+    searchSubMenuIDs.clear();
+    searchMenuItems.clear();
     doInitialize();
 }
 
@@ -202,6 +205,10 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
 
             int newId = insertItem(iconset, groupCaption, m, id++);
             entryMap_.insert(newId, static_cast<KSycocaEntry*>(g));
+            // This submenu will be searched when applying a search string
+            searchSubMenuIDs[m] = newId;
+            // Also search the submenu name itself
+            searchMenuItems.insert(newId);
             // We have to delete the sub menu our selves! (See Qt docs.)
             subMenus.append(m);
         }
@@ -214,6 +221,7 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
             }
 
             KService::Ptr s(static_cast<KService *>(e));
+            searchMenuItems.insert(id);
             insertMenuItem(s, id++, -1, &suppressGenericNames);
         }
         else if (e->isType(KST_KServiceSeparator))
@@ -797,11 +805,83 @@ void PanelServiceMenu::slotClear()
         delete *it;
     }
     subMenus.clear();
+    searchSubMenuIDs.clear();
+    searchMenuItems.clear();
 }
 
 void PanelServiceMenu::selectFirstItem()
 {
     setActiveItem(indexOf(serviceMenuStartId()));
+}
+
+void PanelServiceMenu::setSearchString(const TQString &searchString)
+{
+    // We must initialize the menu, because it might have not been opened before
+    initialize();
+
+    bool foundSomething = false;
+    std::set<int> nonemptyMenus;
+    std::set<int>::const_iterator menuItemIt(searchMenuItems.begin());
+    // Apply the filter on this menu
+    for (; menuItemIt != searchMenuItems.end(); ++menuItemIt) {
+        int id = *menuItemIt;
+        KService* s = dynamic_cast< KService* >( static_cast< KSycocaEntry* >( entryMap_[ id ]));
+        TQString menuText = text(id);
+        if (menuText.contains(searchString, false) > 0
+            || ( s != NULL && ( s->name().contains(searchString, false) > 0
+                               || s->exec().contains(searchString, false) > 0
+                               || s->comment().contains(searchString, false) > 0
+                               || s->genericName().contains(searchString, false) > 0
+                               || s->exec().contains(searchString, false) > 0 )
+                )) {
+            setItemEnabled(id, true);
+            foundSomething = true;
+            nonemptyMenus.insert(id);
+        }
+        else {
+            setItemEnabled(id, false);
+        }
+    }
+    // Apply the filter on this menu
+    /*for (int i=count()-1; i>=0; --i) {
+        int id = idAt(i);
+        TQString menuText = text(id);
+        if (menuText.contains(searchString, false) > 0) {
+            setItemEnabled(id, true);
+            foundSomething = true;
+            nonemptyMenus.insert(id);
+        }
+        else {
+            setItemEnabled(id, false);
+        }
+    }*/
+
+    PanelServiceMenuMap::iterator it(searchSubMenuIDs.begin());
+    // Apply the search filter on submenus
+    for (; it != searchSubMenuIDs.end(); ++it) {
+        it.key()->setSearchString(searchString);
+        if (nonemptyMenus.find(it.data()) != nonemptyMenus.end()) {
+            // if the current menu is a match already, we don't
+            // block access to the contained items
+            setItemEnabled(it.data(), true);
+            it.key()->setSearchString(TQString());
+            foundSomething = true;
+        }
+        else if (it.key()->hasSearchResults()) {
+            setItemEnabled(it.data(), true);
+            foundSomething = true;
+        }
+        else {
+            setItemEnabled(it.data(), false);
+        }
+    }
+
+    hasSearchResults_ = foundSomething;
+}
+
+bool PanelServiceMenu::hasSearchResults()
+{
+    return hasSearchResults_;
 }
 
 // updates "recent" section of KMenu

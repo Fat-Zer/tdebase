@@ -30,6 +30,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "service_mnu.h"
 
+namespace KPIM {
+    // Yes, ClickLineEdit was copied from libkdepim.
+    // Can we have it in kdelibs please?
+    class ClickLineEdit;
+}
+
 class KickerClientMenu;
 class KBookmarkMenu;
 class KActionCollection;
@@ -73,6 +79,8 @@ protected slots:
     void slotSaveSession();
     void slotRunCommand();
     void slotEditUserContact();
+    void slotUpdateSearch(const TQString &searchtext);
+    void slotClearSearch();
     void paletteChanged();
     virtual void configChanged();
     void updateRecent();
@@ -87,6 +95,8 @@ protected:
     void mouseMoveEvent(TQMouseEvent *);
     bool loadSidePixmap();
     void doNewSession(bool lock);
+    void filterMenu(PanelServiceMenu* menu, const TQString &searchString);
+    void keyPressEvent(TQKeyEvent* e);
     void createRecentMenuItems();
     virtual void clearSubmenus();
 
@@ -101,6 +111,8 @@ private:
     KActionCollection          *actionCollection;
     KBookmarkOwner             *bookmarkOwner;
     PopupMenuList               dynamicSubMenus;
+    KPIM::ClickLineEdit        *searchEdit;
+    static const int            searchLineID;
 };
 
 #endif
