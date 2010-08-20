@@ -67,7 +67,8 @@ void kSubMenuItem::stateChange(bool state)
 MenuTab::MenuTab( TQWidget *parent, const char* name )
   : MenuTabBase (parent, name),
     m_bookmarkMenu(0),
-    m_quickBrowserMenu(0)
+    m_quickBrowserMenu(0),
+    m_kmenu_button_changed(false)
 {
     // connections
     connect(m_editKMenuButton, TQT_SIGNAL(clicked()), TQT_SLOT(launchMenuEditor()));
