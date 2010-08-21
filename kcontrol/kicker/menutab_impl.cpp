@@ -73,10 +73,10 @@ MenuTab::MenuTab( TQWidget *parent, const char* name )
     // connections
     connect(m_editKMenuButton, TQT_SIGNAL(clicked()), TQT_SLOT(launchMenuEditor()));
     connect(btnCustomKMenuIcon, TQT_SIGNAL(clicked()), TQT_SLOT(launchIconEditor()));
-    connect(kcfg_KMenuText, TQT_SIGNAL(textChanged(TQString)), TQT_SLOT(kmenuChanged()));
+    connect(kcfg_KMenuText, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(kmenuChanged()));
     connect(kcfg_ShowKMenuText, TQT_SIGNAL(toggled(bool)), TQT_SLOT(kmenuChanged()));
     //connect(kcfg_ButtonFont, TQT_SIGNAL(fontSelected(const TQFont &)), TQT_SLOT(kmenuChanged()));
-    connect(maxrecentdocs, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+    connect(maxrecentdocs, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(kmenuChanged()));
 
     KIconLoader * ldr = KGlobal::iconLoader();
     TQPixmap kmenu_icon;
@@ -240,5 +240,6 @@ void MenuTab::launchIconEditor()
 
 void MenuTab::kmenuChanged()
 {
-    m_kmenu_button_changed = true;
+    //m_kmenu_button_changed = true;
+    emit changed();
 }
