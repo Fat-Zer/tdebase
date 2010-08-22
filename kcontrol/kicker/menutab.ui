@@ -623,9 +623,6 @@
 					<property name="checked">
 						<bool>true</bool>
 					</property>
-					<property name="enabled">
-						<bool>false</bool>
-					</property>
 					<property name="whatsThis" stdset="0">
 						<string>&lt;qt&gt;When this option is selected a text-based search field will appear in the K Menu.&lt;/qt&gt;</string>
 					</property>
