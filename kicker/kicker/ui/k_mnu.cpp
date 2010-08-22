@@ -220,7 +220,7 @@ void PanelKMenu::initialize()
     PanelServiceMenu::initialize();
 
     // Insert search field
-    if (KickerSettings::UseSearchBar())
+    if (KickerSettings::useSearchBar()) {
         TQHBox* hbox = new TQHBox( this );
         KToolBarButton *clearButton = new KToolBarButton( "locationbar_erase", 0, hbox );
         searchEdit = new KPIM::ClickLineEdit(hbox, " "+i18n("Press '/' to search..."));
