@@ -255,6 +255,11 @@
       <default>true</default>
    </entry>
 
+<entry name="UseSearchBar" type="Bool" >
+      <label>Show searh field in Kmenu</label>
+      <default>true</default>
+   </entry>
+
 <entry name="SidePixmapName" key="SideName" type="String" >
       <label>The name of the file to use as the side image in the K Menu</label>
       <default>kside.png</default>

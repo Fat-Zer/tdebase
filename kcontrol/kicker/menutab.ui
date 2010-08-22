@@ -185,7 +185,7 @@
 						</sizepolicy>
 					</property>
 					<property name="text">
-						<string>Custom K Menu button icon:</string>
+						<string>K Menu button icon:</string>
 					</property>
 				</widget>
 				<widget class="KPushButton" row="3" column="3" colspan="2">
@@ -506,7 +506,7 @@
 				</spacer>
 			</grid>
 		</widget>
-		<widget class="QButtonGroup" row="0" column="1" rowspan="2">
+		<widget class="QButtonGroup" row="0" column="1" rowspan="1">
 		<property name="name">
 			<cstring>m_pRecentOrderGroup</cstring>
 		</property>
@@ -599,6 +599,53 @@
 					<height>0</height>
 					</size>
 				</property>
+				</spacer>
+			</grid>
+		</widget>
+		<widget class="QButtonGroup" row="1" column="1" rowspan="1">
+			<property name="name">
+				<cstring>m_pSearchGroup</cstring>
+			</property>
+			<property name="title">
+				<string>K Menu Search</string>
+			</property>
+			<grid>
+				<property name="name">
+					<cstring>unnamed</cstring>
+				</property>
+				<widget class="QCheckBox">
+					<property name="name">
+						<cstring>kcfg_UseSearchBar</cstring>
+					</property>
+					<property name="text">
+						<string>Show search field in K Menu</string>
+					</property>
+					<property name="checked">
+						<bool>true</bool>
+					</property>
+					<property name="enabled">
+						<bool>false</bool>
+					</property>
+					<property name="whatsThis" stdset="0">
+						<string>&lt;qt&gt;When this option is selected a text-based search field will appear in the K Menu.&lt;/qt&gt;</string>
+					</property>
+				</widget>
+				<spacer row="0" column="1" rowspan="3" colspan="1">
+					<property name="name">
+						<cstring>Spacer8</cstring>
+					</property>
+					<property name="orientation">
+						<enum>Horizontal</enum>
+					</property>
+					<property name="sizeType">
+						<enum>Expanding</enum>
+					</property>
+					<property name="sizeHint">
+						<size>
+							<width>20</width>
+							<height>0</height>
+						</size>
+					</property>
 				</spacer>
 			</grid>
 		</widget>

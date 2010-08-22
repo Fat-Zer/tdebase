@@ -220,17 +220,19 @@ void PanelKMenu::initialize()
     PanelServiceMenu::initialize();
 
     // Insert search field
-    TQHBox* hbox = new TQHBox( this );
-    KToolBarButton *clearButton = new KToolBarButton( "locationbar_erase", 0, hbox );
-    searchEdit = new KPIM::ClickLineEdit(hbox, " "+i18n("Press '/' to search..."));
-    hbox->setFocusPolicy(TQWidget::StrongFocus);
-    hbox->setFocusProxy(searchEdit);
-    hbox->setSpacing( 3 );
-    connect(clearButton, TQT_SIGNAL(clicked()), searchEdit, TQT_SLOT(clear()));
-    connect(this, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(slotClearSearch())); 
-    connect(searchEdit, TQT_SIGNAL(textChanged(const TQString&)),
-        this, TQT_SLOT( slotUpdateSearch( const TQString&)));
-    insertItem(hbox, searchLineID, 0);
+    if (KickerSettings::UseSearchBar())
+        TQHBox* hbox = new TQHBox( this );
+        KToolBarButton *clearButton = new KToolBarButton( "locationbar_erase", 0, hbox );
+        searchEdit = new KPIM::ClickLineEdit(hbox, " "+i18n("Press '/' to search..."));
+        hbox->setFocusPolicy(TQWidget::StrongFocus);
+        hbox->setFocusProxy(searchEdit);
+        hbox->setSpacing( 3 );
+        connect(clearButton, TQT_SIGNAL(clicked()), searchEdit, TQT_SLOT(clear()));
+        connect(this, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(slotClearSearch())); 
+        connect(searchEdit, TQT_SIGNAL(textChanged(const TQString&)),
+            this, TQT_SLOT( slotUpdateSearch( const TQString&)));
+        insertItem(hbox, searchLineID, 0);
+    }
 
     //TQToolTip::add(clearButton, i18n("Clear Search"));
     //TQToolTip::add(searchEdit, i18n("Enter the name of an application"));
