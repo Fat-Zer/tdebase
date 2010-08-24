@@ -2050,9 +2050,9 @@ Description:
 
 Key: GreetString
 Type: string
-Default: "Welcome to Kubuntu at %n"
+Default: "Welcome to Trinity at %n"
 User: greeter
-Instance: #*/"Welcome to Kubuntu at %n"
+Instance: #*/"Welcome to Trinity at %n"
 Comment:
  The headline in the greeter. The following character pairs are replaced:
  - %d -> current display
