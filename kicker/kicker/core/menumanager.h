@@ -28,7 +28,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqvaluelist.h>
 
 class PanelKMenu;
+class KMenu;
 class KickerClientMenu;
+class KMenuStub;
 class PanelPopupButton;
 
 typedef TQValueList<PanelPopupButton*> KButtonList;
@@ -50,13 +52,12 @@ public:
     bool process(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &reply);
 
     // KMenu controls
-    PanelKMenu* kmenu() { return m_kmenu; }
-    void showKMenu();
+    KMenuStub* kmenu() { return m_kmenu; }
     void popupKMenu(const TQPoint &p);
 
     void registerKButton(PanelPopupButton *button);
     void unregisterKButton(PanelPopupButton *button);
-    PanelPopupButton* findKButtonFor(TQPopupMenu* menu);
+    PanelPopupButton* findKButtonFor(TQWidget* menu);
     ~MenuManager();
 
 public slots:
@@ -67,7 +68,7 @@ protected slots:
     void applicationRemoved(const TQCString&);
 
 protected:
-    PanelKMenu* m_kmenu;
+    KMenuStub* m_kmenu;
     typedef TQValueList<KickerClientMenu*> ClientMenuList;
     ClientMenuList clientmenus;
 

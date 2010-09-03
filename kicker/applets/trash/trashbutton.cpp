@@ -78,7 +78,7 @@ void TrashButton::setItemCount(int count)
 
 void TrashButton::initPopup()
 {
-	TQPopupMenu *old_popup = popup();
+	TQPopupMenu *old_popup = static_cast<TQPopupMenu*>(popup());
 
 	KFileItemList items;
 	items.append(&mFileItem);

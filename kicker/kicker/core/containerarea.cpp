@@ -87,7 +87,8 @@ ContainerArea::ContainerArea(KConfig* _c,
       m_immutable(_c->isImmutable()),
       m_updateBackgroundsCalled(false),
       m_layout(0),
-      m_addAppletDialog(0)
+      m_addAppletDialog(0),
+      _autoScrollTimer(0, "ContainerArea::autoScrollTimer")
 {
     setBackgroundOrigin( WidgetOrigin );
 

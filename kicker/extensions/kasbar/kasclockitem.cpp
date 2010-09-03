@@ -38,7 +38,7 @@ KasClockItem::KasClockItem( KasBar *parent )
 {
     setCustomPopup( true );
 
-    TQTimer *t = new TQTimer( this );
+    TQTimer *t = new TQTimer( this, "t" );
     connect( t, TQT_SIGNAL( timeout() ), TQT_SLOT( updateTime() ) );
     t->start( 1000 );
 

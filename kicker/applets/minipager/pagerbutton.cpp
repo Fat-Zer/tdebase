@@ -70,6 +70,8 @@ KMiniPagerButton::KMiniPagerButton(int desk, bool useViewPorts, const TQPoint& v
       m_bgPixmap(0),
       m_isCommon(false),
       m_currentWindow(0),
+      m_updateCompressor(0, "KMiniPagerButton::updateCompressor"),
+      m_dragSwitchTimer(0, "KMiniPagerButton::dragSwitchTimer"),
       m_inside(false)
 {
     setToggleButton(true);

@@ -43,6 +43,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "desktopbutton.h"
 #include "extensionbutton.h"
 #include "kbutton.h"
+#include "knewbutton.h"
 #include "kicker.h"
 #include "kickerSettings.h"
 #include "kickertip.h"
@@ -326,14 +327,20 @@ KMenuButtonContainer::KMenuButtonContainer(const KConfigGroup& config, TQPopupMe
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
-    embedButton( new KButton(this) );
+    if(KickerSettings::legacyKMenu())
+	embedButton( new KButton(this) );
+    else
+	embedButton( new KNewButton(this) );
     _actions = PanelAppletOpMenu::KMenuEditor;
 }
 
 KMenuButtonContainer::KMenuButtonContainer(TQPopupMenu *opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
-    embedButton( new KButton(this) );
+    if(KickerSettings::legacyKMenu())
+	embedButton( new KButton(this) );
+    else
+	embedButton( new KNewButton(this) );
     _actions = PanelAppletOpMenu::KMenuEditor;
 }
 

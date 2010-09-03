@@ -98,6 +98,70 @@
       <label>A list of extensions that have been loaded at runtime. In the case of a crash these extensions will not be loaded at the next Kicker start, in case they caused the crash</label>
    </entry>
 
+<entry name="LegacyKMenu" type="Bool" >
+      <label>When this option is enabled, the classic K Menu is used.</label>
+      <default>true</default>
+   </entry>
+
+<entry name="OpenOnHover" type="Bool" >
+      <label>When this option is enabled, the Kickoff Menu opens on mouse hover.</label>
+      <default>true</default>
+   </entry>
+
+<entry name="ScrollFlipView" type="Bool" >
+      <label>When this option is enabled, the Kickoff Menu application view switching will scroll.</label>
+      <default>true</default>
+   </entry>
+
+<entry name="KMenuWidth" type="Int">
+      <label>Preferred width of the KMenu</label>
+      <default>0</default>
+    </entry>
+
+<entry name="KMenuHeight" type="Int">
+      <label>Preferred width of the KMenu</label>
+      <default>0</default>
+    </entry>
+
+<entry name="KickoffFontPointSizeOffset" type="Int" >
+      <label>With this option the scale of the fonts Kickoff uses can be influenced</label>
+      <default>0</default>
+      <min>-100</min>
+      <max>100</max>
+   </entry>
+
+<entry name="KickoffSearchAddressBook" type="Bool" >
+      <label>When this option is enabled, kabc is utilized to search for addresses. This may start KMail.</label>
+      <default>false</default>
+   </entry>
+
+<entry name="KickoffDrawGeekoEye" type="Bool" >
+      <label>When this option is enabled, the Geeko eye moves when the mouse hovers the start menu button</label>
+      <default>false</default>
+   </entry>
+
+<entry name="KickoffTabBarFormat" type="Enum" >
+        <choices>
+            <choice name="LabelAndIcon">
+                <label>Show names and icons on tabs</label>
+            </choice>
+            <choice name="LabelOnly">
+                <label>Show only the names</label>
+            </choice>
+            <choice name="IconOnly">
+                <label>Show only the icons</label>
+            </choice>
+        </choices>
+        <default>LabelAndIcon</default>
+        <label>Appearace of the Kickoff tabbar</label>
+    </entry>
+
+<entry name="KickoffSwitchTabsOnHover" type="Bool" >
+      <label>When this option is enabled, the tabs in the Kickoff menu will switch without the need to click</label>
+      <default>true</default>
+   </entry>
+
+
 </group>
 
 <group name="menus">
@@ -175,6 +239,19 @@
 <entry name="RecentVsOften" type="Bool" >
       <label>Show most recently used applications rather than most frequently used</label>
       <default>false</default>
+   </entry>
+
+<entry name="Favorites" type="StringList">
+      <label>The menu entries shown in the Favorites tab</label>
+   </entry>
+
+<entry name="FirstRun" type="Bool" >
+      <label>Whether the panel has been started before or not</label>
+      <default>false</default>
+   </entry>
+
+<entry name="FirstSeenApps" type="StringList">
+      <label>When the applications were first seen by Kickoff</label>
    </entry>
 
 </group>
@@ -351,6 +428,29 @@
    </entry>
 
 </group>
+
+  <group name="SearchField"> 
+    <entry key="History" type="PathList">
+      <default></default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="HistoryLength" type="Int">
+      <default>50</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="CompletionItems" type="PathList">
+      <default></default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="CompletionMode" type="Int">
+      <default>2</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+  </group>
 
 </kcfg>
 

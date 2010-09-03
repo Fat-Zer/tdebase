@@ -1,12 +1,14 @@
 INCLUDES = -I$(srcdir)/../../libkicker -I../../libkicker \
-	 -I$(srcdir)/../ui -I$(srcdir)/../buttons -I$(top_srcdir)/libkonq \
-	 $(all_includes)
+	 -I../ui -I$(srcdir)/../ui -I$(srcdir)/../buttons -I$(top_srcdir)/libkonq \
+	 $(all_includes) $(LIBBEAGLE_CFLAGS) $(GLIB_CFLAGS)
 
 noinst_LTLIBRARIES = libkicker_core.la
 
+libkicker_core_la_COMPILE_FIRST = kmenubase.h
+
 libkicker_core_la_SOURCES = extensionSettings.kcfgc \
     main.cpp kicker.cpp kicker.skel \
-    userrectsel.cpp containerarea.cpp \
+    userrectsel.cpp containerarea.cpp kmenubase.ui \
     applethandle.cpp container_base.cpp container_button.cpp \
     container_applet.cpp container_extension.cpp extensionmanager.cpp \
     menumanager.cpp pluginmanager.cpp showdesktop.cpp \

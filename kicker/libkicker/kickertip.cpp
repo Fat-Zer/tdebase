@@ -38,6 +38,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // putting this #include higher results in compile errors
 #include <netwm.h>
+#include <assert.h>
 
 static const int DEFAULT_FRAMES_PER_SECOND = 30;
 
@@ -71,20 +72,27 @@ KickerTip::KickerTip(TQWidget * parent)
       m_dissolveDelta(-1),
       m_direction(KPanelApplet::Up),
       m_dirty(false),
-      m_toolTipsEnabled(KickerSettings::showToolTips()),
-      m_tippingFor(0)
+      m_tippingFor(0),
+      m_timer(0, "KickerTip::m_timer"),
+      m_frameTimer(0, "KickerTip::m_frameTimer")
 {
     setFocusPolicy(NoFocus);
     setBackgroundMode(NoBackground);
     resize(0, 0);
     hide();
     connect(&m_frameTimer, TQT_SIGNAL(timeout()), TQT_SLOT(internalUpdate()));
+    connect(kapp, TQT_SIGNAL(settingsChanged(SettingsCategory)), TQT_SLOT(slotSettingsChanged()));
 }
 
 KickerTip::~KickerTip()
 {
     delete m_richText;
     delete m_mimeFactory;
+}
+
+void KickerTip::slotSettingsChanged()
+{
+    TQToolTip::setGloballyEnabled(KickerSettings::showToolTips());
 }
 
 void KickerTip::display()
@@ -194,7 +202,7 @@ void KickerTip::paintEvent(TQPaintEvent * e)
 
 void KickerTip::mousePressEvent(TQMouseEvent * /*e*/)
 {
-    TQToolTip::setGloballyEnabled(m_toolTipsEnabled);
+    m_timer.stop();
     hide();
 }
 
@@ -463,8 +471,11 @@ void KickerTip::enableTipping(bool tip)
         m_tippingEnabled--;
     }
 
+    assert(m_tippingEnabled >= -1);
+
     if (m_tippingEnabled < 1 && m_self)
     {
+        m_self->m_timer.stop();
         m_self->hide();
     }
 }
@@ -480,6 +491,8 @@ void KickerTip::hide()
     m_timer.stop();
     m_frameTimer.stop();
     TQWidget::hide();
+
+    TQToolTip::setGloballyEnabled(KickerSettings::showToolTips());
 }
 
 bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
@@ -508,7 +521,6 @@ bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
                 !qApp->activePopupWidget() &&
                 !isTippingFor(widget))
             {
-                m_toolTipsEnabled = TQToolTip::isGloballyEnabled();
                 TQToolTip::setGloballyEnabled(false);
 
                 tipFor(widget);
@@ -530,8 +542,6 @@ bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
             }
             break;
         case TQEvent::Leave:
-            TQToolTip::setGloballyEnabled(m_toolTipsEnabled);
-
             m_timer.stop();
 
             if (isTippingFor(widget) && isVisible())
@@ -544,7 +554,7 @@ bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
             tipFor(0);
             break;
         case TQEvent::MouseButtonPress:
-            TQToolTip::setGloballyEnabled(m_toolTipsEnabled);
+            m_timer.stop();
             hide();
         default:
             break;

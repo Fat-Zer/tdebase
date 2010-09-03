@@ -44,6 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kipc.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "global.h"
 
@@ -67,6 +68,7 @@ PanelButton::PanelButton( TQWidget* parent, const char* name )
       m_hasAcceptedDrag(false),
       m_arrowDirection(KPanelExtension::Bottom),
       m_popupDirection(KPanelApplet::Up),
+      m_iconAlignment(AlignCenter),
       m_orientation(Horizontal),
       m_size((KIcon::StdSizes)-1),
       m_fontPercent(0.40)
@@ -188,6 +190,12 @@ void PanelButton::setPopupDirection(KPanelApplet::Direction d)
     setArrowDirection(KickerLib::directionToPopupPosition(d));
 }
 
+void PanelButton::setIconAlignment(AlignmentFlags align)
+{
+    m_iconAlignment = align;
+    update();
+}
+
 void PanelButton::setOrientation(Orientation o)
 {
     m_orientation = o;
@@ -303,7 +311,9 @@ int PanelButton::widthForHeight(int height) const
 
 int PanelButton::heightForWidth(int width) const
 {
-    return preferredDimension(width);
+    int rc=preferredDimension(width);
+
+    return rc;
 }
 
 const TQPixmap& PanelButton::labelIcon() const
@@ -562,11 +572,16 @@ void PanelButton::drawButtonLabel(TQPainter *p)
                                                  icon.height() - 2);
     }
 
+    int y = 0;
+    if (m_iconAlignment & AlignVCenter) 
+        y = (height() - icon.height()) / 2;
+    else if (m_iconAlignment & AlignBottom)
+        y = (height() - icon.height());
+
     if (!m_buttonText.isEmpty() && orientation() == Horizontal)
     {
         int h = height();
         int w = width();
-        int y = (h - icon.height())/2;
         p->save();
         TQFont f = font();
 
@@ -635,8 +650,11 @@ void PanelButton::drawButtonLabel(TQPainter *p)
     }
     else if (!icon.isNull())
     {
-        int y = (height() - icon.height()) / 2;
-        int x = (width()  - icon.width()) / 2;
+        int x = 0;
+        if (m_iconAlignment & AlignHCenter)
+           x = (width()  - icon.width()) / 2;
+        else if (m_iconAlignment & AlignRight)
+           x = (width() - icon.width());
         p->drawPixmap(x, y, icon);
     }
 
@@ -798,7 +816,19 @@ void PanelButton::loadIcons()
     TQString nm = m_iconName;
     KIcon::States defaultState = isEnabled() ? KIcon::DefaultState :
                                                KIcon::DisabledState;
-    m_icon = ldr->loadIcon(nm, KIcon::Panel, m_size, defaultState, 0L, true);
+    if (nm=="kmenu-suse")
+    {
+        TQString pth = locate( "data", "kicker/pics/kmenu_basic.mng" );
+        if (!pth.isEmpty())
+        {
+            m_icon = TQImage(pth);
+            m_iconh = TQPixmap(m_icon);
+            m_iconz = TQPixmap(m_icon);
+            return;
+        }
+    }
+    else
+        m_icon = ldr->loadIcon(nm, KIcon::Panel, m_size, defaultState, 0L, true);
 
     if (m_icon.isNull())
     {
@@ -863,7 +893,7 @@ PanelPopupButton::PanelPopupButton(TQWidget *parent, const char *name)
     connect(this, TQT_SIGNAL(pressed()), TQT_SLOT(slotExecMenu()));
 }
 
-void PanelPopupButton::setPopup(TQPopupMenu *popup)
+void PanelPopupButton::setPopup(TQWidget *popup)
 {
     if (m_popup)
     {
@@ -881,7 +911,7 @@ void PanelPopupButton::setPopup(TQPopupMenu *popup)
     }
 }
 
-TQPopupMenu *PanelPopupButton::popup() const
+TQWidget *PanelPopupButton::popup() const
 {
     return m_popup;
 }
@@ -960,7 +990,9 @@ void PanelPopupButton::slotExecMenu()
     }
 
     m_popup->adjustSize();
-    m_popup->exec(KickerLib::popupPosition(popupDirection(), m_popup, this));
+    if(dynamic_cast<TQPopupMenu*>(m_popup))
+        static_cast<TQPopupMenu*>(m_popup)->exec(KickerLib::popupPosition(popupDirection(), m_popup, this));
+    // else.. hmm. some derived class has to fix it.
 }
 
 void PanelPopupButton::menuAboutToHide()
@@ -970,8 +1002,10 @@ void PanelPopupButton::menuAboutToHide()
         return;
     }
 
-    setDown(false);
-    KickerTip::enableTipping(true);
+    if (isDown()) {
+        setDown(false);
+        KickerTip::enableTipping(true);
+    }
 }
 
 void PanelPopupButton::triggerDrag()
@@ -988,4 +1022,6 @@ void PanelPopupButton::setInitialized(bool initialized)
 {
     m_initialized = initialized;
 }
+
+
 

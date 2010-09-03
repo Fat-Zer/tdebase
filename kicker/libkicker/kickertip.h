@@ -92,6 +92,7 @@ protected slots:
     void tipperDestroyed(TQObject* o);
     void internalUpdate();
     void display();
+    void slotSettingsChanged();
 
 private:
     TQBitmap m_mask;
@@ -108,7 +109,6 @@ private:
     TQTimer m_timer;
     TQTimer m_frameTimer;
     bool m_dirty;
-    bool m_toolTipsEnabled;
 
     const TQWidget* m_tippingFor;
 

@@ -48,6 +48,8 @@
 #include "extensionmanager.h"
 #include "pluginmanager.h"
 #include "menumanager.h"
+#include "k_new_mnu.h"
+#include "k_mnu_stub.h"
 #include "k_mnu.h"
 #include "showdesktop.h"
 #include "panelbutton.h"
@@ -106,6 +108,7 @@ Kicker::Kicker()
 
     KGlobal::iconLoader()->addExtraDesktopThemes();
 
+    KGlobal::locale()->insertCatalogue("kdmgreet");
     KGlobal::locale()->insertCatalogue("libkonq");
     KGlobal::locale()->insertCatalogue("libdmctl");
     KGlobal::locale()->insertCatalogue("libtaskbar");
@@ -212,7 +215,7 @@ bool Kicker::highlightMenuItem(const TQString &menuId)
 
 void Kicker::showKMenu()
 {
-    MenuManager::the()->showKMenu();
+    MenuManager::the()->kmenuAccelActivated();
 }
 
 void Kicker::popupKMenu(const TQPoint &p)

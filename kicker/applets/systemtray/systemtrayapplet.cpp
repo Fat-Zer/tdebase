@@ -401,7 +401,7 @@ void SystemTrayApplet::showExpandButton(bool show)
             connect(m_expandButton, TQT_SIGNAL(clicked()),
                     this, TQT_SLOT(toggleExpanded()));
 
-            m_autoRetractTimer = new TQTimer(this);
+            m_autoRetractTimer = new TQTimer(this, "m_autoRetractTimer");
             connect(m_autoRetractTimer, TQT_SIGNAL(timeout()),
                     this, TQT_SLOT(checkAutoRetract()));
         }

@@ -45,7 +45,8 @@
 #include <konq_drag.h>
 
 MediumButton::MediumButton(TQWidget *parent, const KFileItem &fileItem)
-    : PanelPopupButton(parent), mActions(this, this), mFileItem(fileItem)
+	: PanelPopupButton(parent), mActions(this, this), mFileItem(fileItem), mOpenTimer(0,
+                "MediumButton::mOpenTimer")
 {
     KAction *a = KStdAction::paste(this, TQT_SLOT(slotPaste()),
                                     &mActions, "pasteto");
@@ -74,9 +75,9 @@ MediumButton::MediumButton(TQWidget *parent, const KFileItem &fileItem)
 
 MediumButton::~MediumButton()
 {
-    TQPopupMenu *menu = popup();
-    setPopup(0);
-    delete menu;
+	TQPopupMenu *menu = static_cast<TQPopupMenu*>(popup());
+	setPopup(0);
+	delete menu;
 }
 
 const KFileItem &MediumButton::fileItem() const
@@ -94,29 +95,29 @@ void MediumButton::setFileItem(const KFileItem &fileItem)
 
 void MediumButton::initPopup()
 {
-    TQPopupMenu *old_popup = popup();
-    
-    KFileItemList items;
-    items.append(&mFileItem);
-    
-    KonqPopupMenu::KonqPopupFlags kpf =
-        KonqPopupMenu::ShowProperties
-        | KonqPopupMenu::ShowNewWindow;
-    
-    KParts::BrowserExtension::PopupFlags bef =
-        KParts::BrowserExtension::DefaultPopupItems;
-    
-    KonqPopupMenu *new_popup = new KonqPopupMenu(0L, items,
-                                        KURL("media:/"), mActions, 0L,
-                                        this, kpf, bef);
-    KPopupTitle *title = new KPopupTitle(new_popup);
-    title->setTitle(mFileItem.text());
-    
-    new_popup->insertItem(title, -1, 0);
-    
-    setPopup(new_popup);
-    
-    if (old_popup!=0L) delete old_popup;
+	TQPopupMenu *old_popup = static_cast<TQPopupMenu*>(popup());
+
+	KFileItemList items;
+	items.append(&mFileItem);
+
+	KonqPopupMenu::KonqPopupFlags kpf =
+		  KonqPopupMenu::ShowProperties
+		| KonqPopupMenu::ShowNewWindow;
+
+	KParts::BrowserExtension::PopupFlags bef =
+		  KParts::BrowserExtension::DefaultPopupItems;
+
+	KonqPopupMenu *new_popup = new KonqPopupMenu(0L, items,
+	                                   KURL("media:/"), mActions, 0L,
+	                                   this, kpf, bef);
+	KPopupTitle *title = new KPopupTitle(new_popup);
+	title->setTitle(mFileItem.text());
+
+	new_popup->insertItem(title, -1, 0);
+
+	setPopup(new_popup);
+
+	if (old_popup!=0L) delete old_popup;
 }
 
 void MediumButton::refreshType()

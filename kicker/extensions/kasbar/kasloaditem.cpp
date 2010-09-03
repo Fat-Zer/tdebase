@@ -33,7 +33,7 @@
 KasLoadItem::KasLoadItem( KasBar *parent )
     : KasItem( parent )
 {
-    TQTimer *t = new TQTimer( this );
+    TQTimer *t = new TQTimer( this, "KasLoadItem::t" );
     connect( t, TQT_SIGNAL( timeout() ), TQT_SLOT( updateDisplay() ) );
     t->start( 1000 );
     updateDisplay();

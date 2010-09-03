@@ -47,6 +47,9 @@ public:
 signals:
     void escapePressed();
 
+protected slots:
+    void toggleLegacy();
+
 protected:
     void keyPressEvent(TQKeyEvent* e);
 };

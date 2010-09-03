@@ -332,7 +332,7 @@ void PanelBrowserMenu::initialize()
     if(_mimemap.count() > 0) {
 
         if(!_mimecheckTimer)
-            _mimecheckTimer = new TQTimer(this);
+            _mimecheckTimer = new TQTimer(this, "_mimecheckTimer");
 
         connect(_mimecheckTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotMimeCheck()));
         _mimecheckTimer->start(0);

@@ -150,7 +150,7 @@ void AppletHandle::setFadeOutHandle(bool fadeOut)
     {
         if (!m_handleHoverTimer)
         {
-            m_handleHoverTimer = new TQTimer(this);
+            m_handleHoverTimer = new TQTimer(this, "m_handleHoverTimer");
             connect(m_handleHoverTimer, TQT_SIGNAL(timeout()),
                     this, TQT_SLOT(checkHandleHover()));
             m_applet->installEventFilter(this);
@@ -177,11 +177,7 @@ bool AppletHandle::eventFilter(TQObject *o, TQEvent *e)
                 m_drawHandle = true;
                 resetLayout();
 
-                if (m_handleHoverTimer)
-                {
-                    m_handleHoverTimer->start(250);
-                }
-                break;
+               break;
             }
 
             case TQEvent::Leave:
@@ -189,6 +185,11 @@ bool AppletHandle::eventFilter(TQObject *o, TQEvent *e)
                 if (m_menuButton && m_menuButton->isOn())
                 {
                     break;
+                }
+
+                if (m_handleHoverTimer)
+                {
+                    m_handleHoverTimer->start(250);
                 }
 
                 TQWidget* w = dynamic_cast<TQWidget*>(o);
@@ -207,11 +208,6 @@ bool AppletHandle::eventFilter(TQObject *o, TQEvent *e)
 
                 if (nowDrawIt != m_drawHandle)
                 {
-                    if (m_handleHoverTimer)
-                    {
-                        m_handleHoverTimer->stop();
-                    }
-
                     m_drawHandle = nowDrawIt;
                     resetLayout();
                 }
@@ -297,6 +293,11 @@ void AppletHandle::toggleMenuButtonOff()
     }
 
     m_menuButton->setDown(false);
+
+    if (m_handleHoverTimer)
+    {
+        m_handleHoverTimer->start(250);
+    }
 }
 
 AppletHandleDrag::AppletHandleDrag(AppletHandle* parent)

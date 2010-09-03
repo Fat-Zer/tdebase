@@ -108,7 +108,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 	appname.sprintf("kicker-screen-%d", kicker_screen_number);
 
     KAboutData aboutData( appname.data(), I18N_NOOP("KDE Panel"),
-                          version, description, KAboutData::License_BSD,
+                          version, description, KAboutData::License_GPL_V2,
                           I18N_NOOP("(c) 1999-2010, The KDE Team") );
 
     aboutData.addAuthor("Timothy Pearson", I18N_NOOP("Current maintainer"), "kb9vqf@pearsoncomputing.net");

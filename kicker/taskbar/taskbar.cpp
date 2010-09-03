@@ -59,7 +59,8 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
       m_showIcon(false),
       m_showOnlyIconified(false),
       m_textShadowEngine(0),
-      m_ignoreUpdates(false)
+      m_ignoreUpdates(false),
+      m_relayoutTimer(0, "TaskBar::m_relayoutTimer")
 {
     arrowType = LeftArrow;
     blocklayout = true;

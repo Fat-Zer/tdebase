@@ -51,6 +51,7 @@ AddAppletVisualFeedback::AddAppletVisualFeedback(AppletWidget* widget,
       m_richText(0),
       m_dissolveDelta(-1),
       m_frames(1),
+      m_moveTimer(0, "m_moveTimer"),
       m_dirty(false)
 {
     setFocusPolicy(NoFocus);

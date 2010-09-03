@@ -110,7 +110,7 @@ QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
     m_configAction = new KAction(i18n("Configure Quicklauncher..."), "configure", KShortcut(),
         this, TQT_SLOT(slotConfigure()), this);
 
-    m_saveTimer = new TQTimer(this);
+    m_saveTimer = new TQTimer(this, "m_saveTimer");
     connect(m_saveTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(saveConfig()));
 
     m_popularity = new PopularityStatistics();

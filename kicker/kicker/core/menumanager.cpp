@@ -31,9 +31,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "client_mnu.h"
 #include "container_extension.h"
 #include "global.h"
+#include "k_new_mnu.h"
 #include "k_mnu.h"
+#include "k_mnu_stub.h"
 #include "kicker.h"
 #include "panelbutton.h"
+#include "kickerSettings.h"
 
 #include "menumanager.h"
 #include "menumanager.moc"
@@ -62,7 +65,11 @@ MenuManager* MenuManager::the()
 MenuManager::MenuManager(TQObject *parent)
     : TQObject(parent, "MenuManager"), DCOPObject("MenuManager")
 {
-    m_kmenu = new PanelKMenu;
+    if (KickerSettings::legacyKMenu()) 
+	m_kmenu = new KMenuStub(new PanelKMenu);
+    else
+	m_kmenu = new KMenuStub(new KMenu);
+
     kapp->dcopClient()->setNotifications(true);
     connect(kapp->dcopClient(), TQT_SIGNAL(applicationRemoved(const TQCString&)),
             this, TQT_SLOT(applicationRemoved(const TQCString&)));
@@ -83,14 +90,8 @@ void MenuManager::slotSetKMenuItemActive()
     m_kmenu->selectFirstItem();
 }
 
-void MenuManager::showKMenu()
-{
-    m_kmenu->showMenu();
-}
-
 void MenuManager::popupKMenu(const TQPoint &p)
 {
-//    kdDebug(1210) << "popupKMenu()" << endl;
     if (m_kmenu->isVisible())
     {
         m_kmenu->hide();
@@ -120,7 +121,7 @@ void MenuManager::unregisterKButton(PanelPopupButton *button)
     m_kbuttons.remove(button);
 }
 
-PanelPopupButton* MenuManager::findKButtonFor(TQPopupMenu* menu)
+PanelPopupButton* MenuManager::findKButtonFor(TQWidget* menu)
 {
     KButtonList::const_iterator itEnd = m_kbuttons.constEnd();
     for (KButtonList::const_iterator it = m_kbuttons.constBegin(); it != itEnd; ++it)
@@ -173,7 +174,7 @@ void MenuManager::kmenuAccelActivated()
         const TQSize size = m_kmenu->sizeHint();
         m_kmenu->resize(size.width(),size.height());
 
-        PanelPopupButton* button = findKButtonFor(m_kmenu);
+        PanelPopupButton* button = findKButtonFor(m_kmenu->widget());
 
         // let's unhide the panel while we're at it. traverse the widget
         // hierarchy until we find the panel, if any
@@ -193,7 +194,6 @@ void MenuManager::kmenuAccelActivated()
 
             menuParent = menuParent->parent();
         }
-
         button->showMenu();
     }
 }
@@ -217,7 +217,7 @@ TQCString MenuManager::createMenu(TQPixmap icon, TQString text)
 
 void MenuManager::removeMenu(TQCString menu)
 {
-    bool iterate = true;
+    bool iterate = true, need_adjustSize = false;
     ClientMenuList::iterator it = clientmenus.begin();
     for (; it != clientmenus.end(); iterate ? ++it : it)
     {
@@ -228,15 +228,17 @@ void MenuManager::removeMenu(TQCString menu)
             m_kmenu->removeClientMenu(m->idInParentMenu);
             it = clientmenus.erase(it);
             iterate = false;
+            need_adjustSize = true;
         }
     }
-    m_kmenu->adjustSize();
+    if (need_adjustSize)
+        m_kmenu->adjustSize();
 }
 
 
 void MenuManager::applicationRemoved(const TQCString& appRemoved)
 {
-    bool iterate = true;
+    bool iterate = true, need_adjustSize = false;
     ClientMenuList::iterator it = clientmenus.begin();
     for (; it != clientmenus.end(); iterate ? ++it : it)
     {
@@ -247,9 +249,11 @@ void MenuManager::applicationRemoved(const TQCString& appRemoved)
             m_kmenu->removeClientMenu(m->idInParentMenu);
             it = clientmenus.erase(it);
             iterate = false;
+            need_adjustSize = true;
         }
     }
-    m_kmenu->adjustSize();
+    if (need_adjustSize)
+        m_kmenu->adjustSize();
 }
 
 bool MenuManager::process(const TQCString &fun, const TQByteArray &data,

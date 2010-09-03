@@ -65,6 +65,7 @@ signals:
 
 public slots:
     void launchMenuEditor();
+    void menuStyleChanged();
     void launchIconEditor();
     void kmenuChanged();
 

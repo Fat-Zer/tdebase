@@ -30,6 +30,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "appletop_mnu.h"
 #include "container_button.h"
 #include "containerarea.h"
+#include "kickerSettings.h"
 
 PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQPopupMenu* appletsMenu,
                                      const TQString & title, const TQString &icon,
@@ -159,6 +160,20 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
         }
     }
 
+    if ((actions & PanelAppletOpMenu::KMenuEditor))
+    {
+        if (needSeparator)
+        {
+            insertSeparator();
+            needSeparator = false;
+        }
+
+        if (KickerSettings::legacyKMenu()) 
+          insertItem(SmallIcon("kickoff"), i18n("Switch to Kickoff Menu Style"), this, TQT_SLOT(toggleLegacy()));
+        else
+          insertItem(SmallIcon("about_kde"), i18n("Switch to KDE Menu Style"), this, TQT_SLOT(toggleLegacy()));
+    }
+
     if ((actions & PanelAppletOpMenu::KMenuEditor) && kapp->authorizeKAction("menuedit"))
     {
         if (needSeparator)
@@ -203,6 +218,13 @@ void PanelAppletOpMenu::keyPressEvent(TQKeyEvent* e)
     }
 
     TQPopupMenu::keyPressEvent(e);
+}
+
+void PanelAppletOpMenu::toggleLegacy()
+{
+    KickerSettings::setLegacyKMenu(!KickerSettings::legacyKMenu());
+    KickerSettings::writeConfig();
+    Kicker::the()->restart();
 }
 
 #include "appletop_mnu.moc"

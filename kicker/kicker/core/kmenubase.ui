@@ -1,0 +1,300 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>KMenuBase</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>KMenu</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>723</width>
+            <height>580</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>KMenu</string>
+    </property>
+    <property name="frameShadow" stdset="0">
+        <string>MShadow</string>
+    </property>
+    <property name="frameShape" stdset="0">
+        <string>MShape</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>m_search</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>40</y>
+                <width>190</width>
+                <height>54</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <property name="margin">
+                <number>0</number>
+            </property>
+            <property name="spacing">
+                <number>0</number>
+            </property>
+            <widget class="QFrame">
+                <property name="name">
+                    <cstring>m_searchFrame</cstring>
+                </property>
+                <property name="sizePolicy">
+                    <sizepolicy>
+                        <hsizetype>5</hsizetype>
+                        <vsizetype>0</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                    </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                    <size>
+                        <width>0</width>
+                        <height>52</height>
+                    </size>
+                </property>
+                <property name="maximumSize">
+                    <size>
+                        <width>32767</width>
+                        <height>52</height>
+                    </size>
+                </property>
+                <property name="frameShape">
+                    <enum>StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                    <enum>Raised</enum>
+                </property>
+                <property name="lineWidth">
+                    <number>0</number>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout18</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>m_searchLabel</cstring>
+                                </property>
+                                <property name="backgroundOrigin">
+                                    <enum>ParentOrigin</enum>
+                                </property>
+                                <property name="font">
+                                    <font>
+                                        <pointsize>14</pointsize>
+                                    </font>
+                                </property>
+                                <property name="text">
+                                    <string>Search:</string>
+                                </property>
+                            </widget>
+                            <widget class="KHistoryCombo">
+                                <property name="name">
+                                    <cstring>m_kcommand</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>7</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                            </widget>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>m_searchPixmap</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>1</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>32</width>
+                                        <height>32</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>32</width>
+                                        <height>32</height>
+                                    </size>
+                                </property>
+                                <property name="backgroundMode">
+                                    <enum>PaletteBackground</enum>
+                                </property>
+                                <property name="backgroundOrigin">
+                                    <enum>ParentOrigin</enum>
+                                </property>
+                                <property name="scaledContents">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                </hbox>
+            </widget>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer5_2</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Preferred</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>16</width>
+                        <height>20</height>
+                    </size>
+                </property>
+            </spacer>
+        </hbox>
+    </widget>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>m_footer</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>110</y>
+                <width>407</width>
+                <height>34</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <property name="margin">
+                <number>4</number>
+            </property>
+            <property name="spacing">
+                <number>4</number>
+            </property>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>m_userInfo</cstring>
+                </property>
+                <property name="sizePolicy">
+                    <sizepolicy>
+                        <hsizetype>3</hsizetype>
+                        <vsizetype>0</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                    </sizepolicy>
+                </property>
+                <property name="text">
+                    <string>User&amp;nbsp;&lt;b&gt;user&lt;/b&gt;&amp;nbsp;on&amp;nbsp;&lt;b&gt;host&lt;/b&gt;</string>
+                </property>
+            </widget>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer13_2</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>MinimumExpanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>10</width>
+                        <height>20</height>
+                    </size>
+                </property>
+            </spacer>
+            <widget class="QToolButton">
+                <property name="name">
+                    <cstring>m_branding</cstring>
+                </property>
+                <property name="sizePolicy">
+                    <sizepolicy>
+                        <hsizetype>4</hsizetype>
+                        <vsizetype>4</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                    </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                    <size>
+                        <width>90</width>
+                        <height>24</height>
+                    </size>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+                <property name="iconSet">
+                    <iconset>image0</iconset>
+                </property>
+                <property name="usesBigPixmap">
+                    <bool>true</bool>
+                </property>
+                <property name="autoRaise">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer13</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Fixed</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>14</width>
+                        <height>20</height>
+                    </size>
+                </property>
+            </spacer>
+        </hbox>
+    </widget>
+</widget>
+<customwidgets>
+</customwidgets>
+<images>
+    <image name="image0">
+	    <data format="PNG" length="347">89504e470d0a1a0a0000000d494844520000005a0000001808060000007a38ea6500000122494441546881ed98610e83200c85c7e2a93c0087e6005c0b7f754152ea43a532ec972c512cf5f96c28d3c5183f467fbe4f0b780b66b41266b41266b412cbd302b4594348d2f5e8bd93e2e83a9a93e2ada21b397a51355e57d1794592695c954af16b08899b23e5f955f41a42a25fbbfcbe709a9ed0c9998eb25b3aa2f72e7aef4634fbdf395c3a72d3f346811c73f390b172fcac36eefc2a522172e3746fd1e8b3a2a579523e3ae7c6b9fbf434f46e764623cda18ce78cc973213950b108b99e1ee6235b398e050d44e2f2f1abb966e3f43eba5c0e466ba03df4d4fa0982b8469706b65469f9a0b57d271787beb89ab63b970da9c1b5c4ba59bf4723464b3de9eebfe0531a3de20e64ba6f1da3f50a62ca8a1e91e92a7a54cc6825cc6825cc682536f10e058bc1bcdf310000000049454e44ae426082</data>
+    </image>
+</images>
+<includes>
+    <include location="local" impldecl="in implementation">kmenubase.ui.h</include>
+</includes>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kcombobox.h</includehint>
+</includehints>
+</UI>

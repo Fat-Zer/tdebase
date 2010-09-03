@@ -1,6 +1,7 @@
 INCLUDES = $(all_includes)
 
-SUBDIRS = core ui buttons .
+# SUBDIRS = core interfaces ui buttons plugins .
+SUBDIRS = core interfaces ui buttons .
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
@@ -9,7 +10,7 @@ kdeinit_LTLIBRARIES = kicker.la
 CLEANFILES = dummy.cpp
 
 kicker_la_LIBADD = core/libkicker_core.la  buttons/libkicker_buttons.la \
-	ui/libkicker_ui.la ../libkicker/libkickermain.la $(LIB_KIO) $(LIB_KUTILS)
+	ui/libkicker_ui.la ../libkicker/libkickermain.la $(LIB_KIO) $(LIB_KUTILS) $(LIB_KABC)
 
 kicker_la_SOURCES = dummy.cpp
 kicker_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

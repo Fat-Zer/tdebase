@@ -67,7 +67,11 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
       discardNextMouseEvent(false),
       aboutToActivate(false),
       m_mouseOver(false),
-      m_paintEventCompression(false)
+      animationTimer(0, "TaskContainer::animationTimer"),
+      dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
+      attentionTimer(0, "TaskContainer::attentionTimer"),
+      m_paintEventCompression(false),
+      m_paintEventCompressionTimer(0, "TaskContainer::paintEventCompressionTimer")
 {
     init();
     setAcceptDrops(true); // Always enabled to activate task during drag&drop.
@@ -95,7 +99,11 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
       discardNextMouseEvent(false),
       aboutToActivate(false),
       m_mouseOver(false),
-      m_paintEventCompression(false)
+      animationTimer(0, "TaskContainer::animationTimer"),
+      dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
+      attentionTimer(0, "TaskContainer::attentionTimer"),
+      m_paintEventCompression(false),
+      m_paintEventCompressionTimer(0, "TaskContainer::paintEventCompressionTimer")
 {
     init();
     setEnabled(false);

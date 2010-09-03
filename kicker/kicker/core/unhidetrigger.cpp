@@ -39,7 +39,7 @@ UnhideTrigger::UnhideTrigger()
 	, _lastXineramaScreen( -1 )
 	, enabledCount( 0 )
 {
-	_timer = new TQTimer( this );
+	_timer = new TQTimer( this, "UnhideTrigger" );
 	connect( _timer, TQT_SIGNAL(timeout()), TQT_SLOT(pollMouse()) );
 }
 

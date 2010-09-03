@@ -65,7 +65,7 @@ void BrowserButton::initialize( const TQString& icon, const TQString& path )
     topMenu = new PanelBrowserMenu( path );
     setPopup(topMenu);
 
-    _menuTimer = new TQTimer( this );
+    _menuTimer = new TQTimer( this, "_menuTimer" );
     connect( _menuTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotDelayedPopup()) );
 
     TQToolTip::add(this, i18n("Browse: %1").arg(path));

@@ -254,9 +254,11 @@ public slots:
     /**
      * Sets the direction to pop up the contents of the button.
      */
-    void setPopupDirection(KPanelApplet::Direction d);
+    virtual void setPopupDirection(KPanelApplet::Direction d);
 
 protected:
+
+    void setIconAlignment(AlignmentFlags align);
     /**
      * Subclasses must implement this to define the name of the button which is
      * used to identify this button for saving and loading. It must be unique
@@ -391,6 +393,7 @@ private:
     TQPixmap m_iconz; // mouse over
     KPanelExtension::Position m_arrowDirection;
     KPanelApplet::Direction m_popupDirection;
+    AlignmentFlags m_iconAlignment;
     Orientation m_orientation;
     int m_size;
     double m_fontPercent;
@@ -419,12 +422,12 @@ public:
      * Sets the button's popup menu.
      * @param popup the menu to pop up
      */
-    void setPopup(TQPopupMenu *popup);
+    void setPopup(TQWidget *popup);
 
     /**
      * @return the button's popup menu
      */
-    TQPopupMenu *popup() const;
+    TQWidget *popup() const;
 
     bool eventFilter(TQObject *, TQEvent *);
     virtual void showMenu();
@@ -459,8 +462,8 @@ protected slots:
 private slots:
     void menuAboutToHide();
 
-private:
-    TQPopupMenu *m_popup;
+protected:
+    TQWidget *m_popup;
     bool m_pressedDuringPopup;
     bool m_initialized;
 

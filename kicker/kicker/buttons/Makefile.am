@@ -1,10 +1,10 @@
 INCLUDES = -I$(srcdir)/../core -I$(srcdir)/../../libkicker -I../../libkicker \
-	-I$(srcdir)/../ui -I$(top_srcdir)/libkonq $(all_includes)
+	-I../ui -I$(srcdir)/../ui -I$(top_srcdir)/libkonq $(all_includes) $(LIBBEAGLE_CFLAGS) $(GLIB_CFLAGS)
 
 noinst_LTLIBRARIES = libkicker_buttons.la
 
 libkicker_buttons_la_SOURCES = servicebutton.cpp bookmarksbutton.cpp \
-	browserbutton.cpp \
+	browserbutton.cpp knewbutton.cpp \
 	desktopbutton.cpp extensionbutton.cpp kbutton.cpp \
 	nonkdeappbutton.cpp servicemenubutton.cpp urlbutton.cpp \
 	windowlistbutton.cpp

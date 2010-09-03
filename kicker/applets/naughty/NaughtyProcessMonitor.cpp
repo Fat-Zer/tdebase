@@ -94,7 +94,7 @@ NaughtyProcessMonitor::NaughtyProcessMonitor
   d = new NaughtyProcessMonitorPrivate;
   d->interval_ = interval * 1000;
   d->triggerLevel_ = triggerLevel;
-  d->timer_ = new TQTimer(this);
+  d->timer_ = new TQTimer(this, "NaughtyProcessMonitorPrivate::timer");
   connect(d->timer_, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotTimeout()));
 }
 

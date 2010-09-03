@@ -16,12 +16,16 @@
  */
 
 #include <tqcheckbox.h>
+#include <tqgroupbox.h>
 #include <tqdir.h>
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
+#include <tqcombobox.h>
+#include <tqbuttongroup.h>
 
+#include <dcopref.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
@@ -148,10 +152,45 @@ void MenuTab::load( bool useDefaults )
         }
     }
 
+    c->setGroup("General");
+    m_comboMenuStyle->setCurrentItem( c->readBoolEntry("LegacyKMenu", true) ? 1 : 0 );
+    m_openOnHover->setChecked( c->readBoolEntry("OpenOnHover", true) );
+    menuStyleChanged();
+
+    connect(m_comboMenuStyle, TQT_SIGNAL(activated(int)), TQT_SIGNAL(changed()));
+    connect(m_comboMenuStyle, TQT_SIGNAL(activated(int)), TQT_SLOT(menuStyleChanged()));
+    connect(m_openOnHover, TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()));
+
     m_showFrequent->setChecked(true);
 
     if ( useDefaults )
        emit changed();
+}
+
+void MenuTab::menuStyleChanged()
+{
+    if (m_comboMenuStyle->currentItem()==1) {
+       m_openOnHover->setEnabled(false);
+       m_subMenus->setEnabled(true);
+       kcfg_UseSidePixmap->setEnabled(true);
+       kcfg_MenuEntryFormat->setEnabled(true);
+       kcfg_RecentVsOften->setEnabled(true);
+       m_showFrequent->setEnabled(true);
+       kcfg_UseSearchBar->setEnabled(true);
+       kcfg_MaxEntries2->setEnabled(true);
+       maxrecentdocs->setEnabled(true);
+    }
+    else {
+       m_openOnHover->setEnabled(true);
+       m_subMenus->setEnabled(false);
+       kcfg_UseSidePixmap->setEnabled(false);
+       kcfg_MenuEntryFormat->setEnabled(false);
+       kcfg_RecentVsOften->setEnabled(false);
+       m_showFrequent->setEnabled(false);
+       kcfg_UseSearchBar->setEnabled(false);
+       kcfg_MaxEntries2->setEnabled(false);
+       maxrecentdocs->setEnabled(false);
+    }
 }
 
 void MenuTab::save()
@@ -179,8 +218,17 @@ void MenuTab::save()
         }
     }
     c->writeEntry("Extensions", ext);
+    c->setGroup("General");
 
+    bool kmenusetting = m_comboMenuStyle->currentItem()==1;
+    bool oldkmenusetting = c->readBoolEntry("LegacyKMenu", true);
+
+    c->writeEntry("LegacyKMenu", kmenusetting);
+    c->writeEntry("OpenOnHover", m_openOnHover->isChecked());
     c->sync();
+
+    if (kmenusetting != oldkmenusetting)
+        DCOPRef ("kicker", "default").call("restart()");
 
     // Save KMenu settings
     c->setGroup("KMenu");
@@ -195,7 +243,7 @@ void MenuTab::save()
     config->sync();
 
     if (m_kmenu_button_changed == true) {
-        system("dcop kicker kicker restart &");
+        DCOPRef ("kicker", "default").call("restart()");
     }
 }
 

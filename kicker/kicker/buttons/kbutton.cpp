@@ -33,6 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "menumanager.h"
 #include "k_mnu.h"
+#include "k_mnu_stub.h"
 
 #include "kbutton.h"
 #include "kbutton.moc"
@@ -43,7 +44,7 @@ KButton::KButton( TQWidget* parent )
     TQToolTip::add(this, i18n("Applications, tasks and desktop sessions"));
     setTitle(i18n("K Menu"));
 
-    setPopup(MenuManager::the()->kmenu());
+    setPopup(MenuManager::the()->kmenu()->widget());
     MenuManager::the()->registerKButton(this);
 
     setIcon("kmenu");

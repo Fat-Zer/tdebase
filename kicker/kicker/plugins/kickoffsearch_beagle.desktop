@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Beagle Search
+Comment=Beagle search plugin for Kickoff search
+ServiceTypes=KickoffSearch/Plugin
+Type=Service
+X-KDE-Library=kickoffsearch_beagle
