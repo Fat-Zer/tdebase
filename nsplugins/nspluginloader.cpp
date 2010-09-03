@@ -326,7 +326,7 @@ TQString NSPluginLoader::lookup(const TQString &mimeType)
 }
 
 
-bool NSPluginLoader::loadViewer()
+bool NSPluginLoader::loadViewer(const TQString &mimeType)
 {
    kdDebug() << "NSPluginLoader::loadViewer" << endl;
 
@@ -350,7 +350,7 @@ bool NSPluginLoader::loadViewer()
    }
 
    // find the external artsdsp process
-   if( _useArtsdsp ) {
+   if( _useArtsdsp && mimeType != "application/pdf" ) {
        kdDebug() << "trying to use artsdsp" << endl;
        TQString artsdsp = KGlobal::dirs()->findExe("artsdsp");
        if (!artsdsp)
@@ -464,7 +464,7 @@ NSPluginInstance *NSPluginLoader::newInstance(TQWidget *parent, TQString url,
    if ( !_viewer )
    {
       // load plugin viewer process
-      loadViewer();
+      loadViewer(mimeType);
 
       if ( !_viewer )
       {

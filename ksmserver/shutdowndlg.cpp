@@ -29,6 +29,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqregexp.h>
 
 #include <klocale.h>
+#include <kconfig.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
@@ -340,6 +341,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		buttonlay->addStretch( 1 );
 		// End session
 		KPushButton* btnLogout = new KPushButton( KGuiItem( i18n("&End Current Session"), "undo"), frame );
+                TQToolTip::add( btnLogout, i18n( "<qt><h3>End Current Session</h3><p>Log out of the current session to login with a different user</p></qt>" ) );
 		btnFont = btnLogout->font();
 		buttonlay->addWidget( btnLogout );
 		connect(btnLogout, TQT_SIGNAL(clicked()), TQT_SLOT(slotLogout()));
@@ -510,14 +512,16 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		{
 			// Shutdown
 			KPushButton* btnHalt = new KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit"), frame );
+        TQToolTip::add( btnHalt, i18n( "<qt><h3>Turn Off Computer</h3><p>Log out of the current session and turn off the computer</p></qt>" ) );
 			btnHalt->setFont( btnFont );
 			buttonlay->addWidget( btnHalt );
 			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
-			if ( sdtype == KApplication::ShutdownTypeHalt )
+        if ( sdtype == KApplication::ShutdownTypeHalt || getenv("KDM_AUTOLOGIN") ) 
 				btnHalt->setFocus();
 	
 			// Reboot
 			KSMDelayedPushButton* btnReboot = new KSMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload"), frame );
+        TQToolTip::add( btnReboot, i18n( "<qt><h3>Restart Computer</h3><p>Log out of the current session and restart the computer</p><p>Hold the mouse button or the space bar for a short while to get a list of options what to boot</p></qt>" ) );
 			btnReboot->setFont( btnFont );
 			buttonlay->addWidget( btnReboot );
 	
@@ -759,6 +763,70 @@ void KSMDelayedPushButton::slotTimeout()
   pop->popup( bl );
   popt->stop();
   setDown(false);
+}
+
+KSMDelayedMessageBox::KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
+    : TimedLogoutDlg( 0, 0, true, WType_Popup ), m_remaining(confirmDelay)
+{
+    if ( sdtype == KApplication::ShutdownTypeHalt )
+    {
+        m_title->setText( i18n( "Would you like to turn off your computer?" ) );
+        m_template = i18n( "This computer will turn off automatically\n"
+                           "after %1 seconds." );
+        m_logo->setPixmap( BarIcon( "exit", 48 ) );
+    } else if ( sdtype == KApplication::ShutdownTypeReboot )
+    {
+        if (bootOption.isEmpty())
+            m_title->setText( i18n( "Would you like to reboot your computer?" ) );
+        else
+            m_title->setText( i18n( "Would you like to reboot to \"%1\"?" ).arg(bootOption) );
+        m_template = i18n( "This computer will reboot automatically\n"
+                           "after %1 seconds." );
+        m_logo->setPixmap( BarIcon( "reload", 48 ) );
+    } else {
+        m_title->setText( i18n( "Would you like to end your current session?" ) );
+        m_template = i18n( "This session will end\n"
+                           "after %1 seconds automatically." );
+        m_logo->setPixmap( BarIcon( "previous", 48 ) );
+    }
+
+    updateText();
+    adjustSize();
+    if (  double( height() ) / width() < 0.25 )
+    {
+        setFixedHeight( qRound( width() * 0.3 ) );
+        adjustSize();
+    }
+    TQTimer *timer = new TQTimer( this );
+    timer->start( 1000 );
+    connect( timer, TQT_SIGNAL( timeout() ), TQT_SLOT( updateText() ) );
+    KDialog::centerOnScreen(this);
+}
+
+void KSMDelayedMessageBox::updateText()
+{
+    m_remaining--;
+    if ( m_remaining == 0 )
+    {
+        accept();
+        return;
+    }
+    m_text->setText( m_template.arg( m_remaining ) );
+}
+
+bool KSMDelayedMessageBox::showTicker( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
+{
+    kapp->enableStyles();
+    KSMDelayedMessageBox msg( sdtype, bootOption, confirmDelay );
+    TQSize sh = msg.sizeHint();
+    TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+
+    msg.move(rect.x() + (rect.width() - sh.width())/2,
+            rect.y() + (rect.height() - sh.height())/2);
+    bool result = msg.exec();
+
+    kapp->disableStyles();
+    return result;
 }
 
 KSMPushButton::KSMPushButton( const KGuiItem &item,

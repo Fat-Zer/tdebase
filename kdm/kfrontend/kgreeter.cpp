@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "kdmconfig.h"
 #include "kdmclock.h"
 #include "kdm_greet.h"
+#include "kdmadmindialog.h"
 #include "themer/kdmthemer.h"
 #include "themer/kdmitem.h"
 #include "themer/kdmlabel.h"
@@ -38,6 +39,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <klistview.h>
 #include <ksimpleconfig.h>
 #include <kstringhandler.h>
+#include <kdebug.h>
 
 #undef Unsorted // x headers suck - make tqdir.h work with --enable-final
 #include <tqdir.h>
@@ -46,6 +48,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <tqmemarray.h>
 #include <tqimage.h>
 #include <tqmovie.h>
+#include <tqpainter.h>
 #include <tqpopupmenu.h>
 #include <tqtimer.h>
 #include <tqheader.h>
@@ -57,6 +60,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <tqaccel.h>
 #include <tqstring.h>
 #include <tqeventloop.h>
+#include <tqbitmap.h>
 
 #include <pwd.h>
 #include <grp.h>
@@ -64,27 +68,46 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
+#include <utmp.h>
+#include <utmpx.h>
 
 #include <X11/Xlib.h>
 
 class UserListView : public KListView {
   public:
-	UserListView( TQWidget *parent = 0, const char *name = 0 )
+        UserListView( bool _them, TQWidget *parent = 0, const char *name = 0 )
 		: KListView( parent, name )
-		, cachedSizeHint( -1, 0 )
+		, themed(_them), cachedSizeHint( -1, 0 )
 	{
 		setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
 		header()->hide();
 		addColumn( TQString::null );
 		setColumnAlignment( 0, AlignVCenter );
 		setResizeMode( TQListView::LastColumn );
+		if (themed) {
+		  setBackgroundMode( Qt::NoBackground );
+		  viewport()->setBackgroundMode( Qt::NoBackground );
+		  setFrameStyle( TQFrame::NoFrame );
+		}
 	}
 
+        bool themed;
 	mutable TQSize cachedSizeHint;
 
-  protected:
+        int sumHeight() const 
+  {
+        int sum = 0;
+        for (TQListViewItem *itm = firstChild(); itm; itm = itm->nextSibling()) {
+            sum += itm->height();
+        }
+        return sum;
+    }
+public:
 	virtual TQSize sizeHint() const
 	{
+	  if (themed)
+            return KListView::sizeHint();
+
 		if (!cachedSizeHint.isValid()) {
 			constPolish();
 			uint maxw = 0;
@@ -99,8 +122,23 @@ class UserListView : public KListView {
 		}
 		return cachedSizeHint;
 	}
-};
+    virtual void paintEmptyArea ( TQPainter * p, const TQRect & rect )
+    {
+      if (!themed)
+        return KListView::paintEmptyArea(p, rect );
 
+        const TQPixmap *pm = paletteBackgroundPixmap();
+        if (!pm || pm->isNull())
+            return;
+
+        kdDebug() << "paintEmpty " << rect << endl;
+        TQRect devRect = p->xForm( rect );
+        kdDebug() << "paintEmpty2 " << devRect << endl;
+        p->drawPixmap(0, 0, *pm, devRect.left(), devRect.top() );
+    }
+
+    TQPixmap background;
+};
 
 int KGreeter::curPlugin = -1;
 PluginList KGreeter::pluginList;
@@ -116,12 +154,14 @@ KGreeter::KGreeter( bool framed )
   , curSel( -1 )
   , prevValid( true )
   , needLoad( false )
+  , themed( framed )
 {
 	stsFile = new KSimpleConfig( _stsFile );
 	stsFile->setGroup( "PrevUser" );
 
 	if (_userList) {
-		userView = new UserListView( this );
+                readFacesList();
+		userView = new UserListView( framed, this );
 		connect( userView, TQT_SIGNAL(clicked( TQListViewItem * )),
 		         TQT_SLOT(slotUserClicked( TQListViewItem * )) );
 		connect( userView, TQT_SIGNAL(doubleClicked( TQListViewItem * )),
@@ -129,10 +169,8 @@ KGreeter::KGreeter( bool framed )
 	}
 	if (_userCompletion)
 		userList = new TQStringList;
-	if (userView || userList)
-		insertUsers();
 
-	sessMenu = new TQPopupMenu( this );
+        sessMenu = new TQPopupMenu( this );
 	connect( sessMenu, TQT_SIGNAL(activated( int )),
 	         TQT_SLOT(slotSessionSelected( int )) );
 	insertSessions();
@@ -151,6 +189,33 @@ KGreeter::~KGreeter()
 	delete stsFile;
 }
 
+void KGreeter::readFacesList()
+{
+    FILE *f = fopen( TQFile::encodeName( _faceDir + "/.randomlist" ), "rt" );
+    if ( !f )
+        return;
+    TQTextIStream is( f );
+    while ( !is.eof() )
+    {
+        TQString line = is.readLine().simplifyWhiteSpace();
+        if ( line.isEmpty() )
+            continue;
+        TQString icon;
+        int index = line.find( ' ' );
+        if ( index > 0 ) {
+            icon = line.left( index );
+            line = line.mid( index );
+        } else {
+            icon = line;
+            line = TQString::null;
+        }
+        randomFaces.push_back( icon );
+        TQStringList list = TQStringList::split( ' ', line );
+        for ( TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it )
+            randomFacesMap[*it] = icon;
+    }
+}
+
 class UserListViewItem : public KListViewItem {
   public:
 	UserListViewItem( UserListView *parent, const TQString &text,
@@ -163,6 +228,14 @@ class UserListViewItem : public KListViewItem {
 		setText( 0, text );
 		parent->cachedSizeHint.setWidth( -1 );
 	}
+
+        virtual void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment)
+    {
+      if (((UserListView*)listView())->themed)
+        TQListViewItem::paintCell(p, cg, column, width, alignment);
+      else
+	KListViewItem::paintCell(p, cg, column, width, alignment);
+    }
 
 	TQString login;
 };
@@ -232,10 +305,23 @@ KGreeter::insertUser( const TQImage &default_pix,
 		TQSize ns( 48, 48 );
 		if (p.size() != ns)
 			p = p.convertDepth( 32 ).smoothScale( ns, TQImage::ScaleMin );
-		goto gotit;
+		break;
 	} while (--nd >= 0);
-	p = default_pix;
-  gotit:
+
+        if ( p.isNull() && randomFaces.count() ) {
+            TQString randomFace = randomFacesMap[username];
+            if ( randomFace.isNull() ) {
+                TQStringList::size_type index = 0;
+                for ( size_t i = 0; i < username.length(); ++i )
+                    index += ( 0x7f - username.at( i ).latin1() ) % 37;
+                randomFace = randomFaces[ index % randomFaces.count() ];
+            }
+            p.load( _faceDir + "/../pics/users/" + randomFace + ".png" );
+        }
+
+        if ( p.isNull() )
+            p = default_pix;
+
 	TQString realname = KStringHandler::from8Bit( ps->pw_gecos );
 	realname.truncate( realname.find( ',' ) );
 	if (realname.isEmpty() || realname == username)
@@ -289,7 +375,7 @@ UserList::UserList( char **in )
 }
 
 void
-KGreeter::insertUsers()
+KGreeter::insertUsers(int limit_users)
 {
 	struct passwd *ps;
 
@@ -309,6 +395,8 @@ KGreeter::insertUsers()
 	if (_showUsers == SHOW_ALL) {
 		UserList noUsers( _noUsers );
 		TQDict<int> dupes( 1000 );
+                TQStringList toinsert;
+                int count = 0;
 		for (setpwent(); (ps = getpwent()) != 0;) {
 			if (*ps->pw_dir && *ps->pw_shell &&
 			    (ps->pw_uid >= (unsigned)_lowUserId ||
@@ -320,10 +408,53 @@ KGreeter::insertUsers()
 				TQString username( TQFile::decodeName( ps->pw_name ) );
 				if (!dupes.find( username )) {
 					dupes.insert( username, (int *)-1 );
-					insertUser( default_pix, username, ps );
+                                        toinsert.append( username );
+
+                                        if ( limit_users >= 0 && ++count > limit_users )
+                                            break;
 				}
 			}
 		}
+                if ( limit_users >= 0 && ++count > limit_users ) {
+                    utmpname( _PATH_WTMP );
+                    setutxent();
+                    toinsert = TQStringList();
+                    dupes.clear();
+
+                    for ( count = 0; count < limit_users; ) {
+                        struct utmpx * ent = getutxent();
+                        if ( !ent )
+                            break;
+                        struct passwd *ps = getpwnam( ent->ut_user );
+                        if (ps && *ps->pw_dir && *ps->pw_shell &&
+			    (ps->pw_uid >= (unsigned)_lowUserId ||
+			     !ps->pw_uid && _showRoot) &&
+			    ps->pw_uid <= (unsigned)_highUserId &&
+			    !noUsers.hasUser( ps->pw_name ) &&
+			    !noUsers.hasGroup( ps->pw_gid ))
+                        {
+                            TQString username( TQFile::decodeName( ent->ut_user ) );
+                            if (!dupes.find( username )) {
+                                dupes.insert( username, (int *)-1 );
+                                toinsert.append( username );
+                                count++;
+                            }
+                        }
+
+
+                    }
+                    endutxent();
+                }
+
+                for ( TQStringList::ConstIterator it = toinsert.begin();
+                      it != toinsert.end(); ++it )
+                {
+                    // pretty stupid to do another lookup round, but the number is limited
+                    // and caching struct passwd is pretty ugly
+                    struct passwd *ps = getpwnam( TQFile::encodeName( *it ) );
+                    if ( ps )
+                        insertUser( default_pix, *it, ps );
+                }
 	} else {
 		UserList users( _users );
 		if (users.hasGroups()) {
@@ -379,7 +510,7 @@ KGreeter::insertSessions()
 	for (char **dit = _sessionsDirs; *dit; ++dit) {
 		TQStringList ents = TQDir( *dit ).entryList();
 		for (TQStringList::ConstIterator it = ents.begin(); it != ents.end(); ++it)
-			if ((*it).endsWith( ".desktop" )) {
+		  if ((*it).endsWith( ".desktop" ) && !(*it).endsWith("admin.desktop")) {
 				KSimpleConfig dsk( TQString( *dit ).append( '/' ).append( *it ) );
 				dsk.setGroup( "Desktop Entry" );
 				putSession( (*it).left( (*it).length() - 8 ),
@@ -517,6 +648,17 @@ KGreeter::slotLoadPrevWM()
 				return;
 			}
 		} else {
+		  if (!strcmp(sess, "admin")) {
+		    // need to get the original
+		    GSendInt( G_GetDmrc);
+		    GSendStr( "OrigSession");
+		    sess = GRecvStr();
+		    if (!sess) {
+		      free(sess);
+		      sess = strdup("default");
+		    }
+		  }
+
 			for (uint i = 0; i < sessionTypes.count() && !sessionTypes[i].hid; i++)
 				if (sessionTypes[i].type == sess) {
 					free( sess );
@@ -718,20 +860,23 @@ KStdGreeter::KStdGreeter()
 	hbox2->addStretch( 1 );
 
 	if (sessMenu->count() > 1) {
-		inserten( i18n("Session &Type"), ALT+Key_T, sessMenu );
+		inserten( i18n("Session &Type"), 0, sessMenu );
 		needSep = true;
 	}
 
 	if (plugMenu) {
-		inserten( i18n("&Authentication Method"), ALT+Key_A, plugMenu );
+		inserten( i18n("&Authentication Method"), 0, plugMenu );
 		needSep = true;
 	}
 
 #ifdef XDMCP
-	completeMenu( LOGIN_LOCAL_ONLY, ex_choose, i18n("&Remote Login"), ALT+Key_R );
+	completeMenu( LOGIN_LOCAL_ONLY, ex_choose, i18n("&Remote Login"), 0 );
 #else
 	completeMenu();
 #endif
+
+        if (userView || userList)
+		insertUsers();
 
 	if (optMenu)
 		menuButton->setPopup( optMenu );
@@ -826,6 +971,9 @@ KThemedGreeter::KThemedGreeter()
 	if (xauth_warning && (_authorized || !_authComplain))
 		xauth_warning->hide( true );
 
+        if (userView || userList)
+            insertUsers( 7 ); // TODO: find out how many are a good value
+
 //	if (!_greetString.isEmpty()) {
 //	}
 //	clock = new KdmClock( this, "clock" );
@@ -851,17 +999,19 @@ KThemedGreeter::KThemedGreeter()
 	if ((itm = themer->findNode( "session_button" ))) {
 		if (sessMenu->count() <= 1)
 			itm->hide( true );
-		else {
+                else
 			session_button = itm;
-			TQAccel *accel = new TQAccel( this );
-			accel->insertItem( ALT+Key_T, 0 );
-			connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotSessMenu()) );
-		}
 	} else {
 		if (sessMenu->count() > 1) {
 			inserten( i18n("Session &Type"), ALT+Key_T, sessMenu );
 			needSep = true;
 		}
+	}
+
+	admin_button = themer->findNode( "admin_button");
+	if ( admin_button ) {
+	  if ( !_useAdminSession )
+	    admin_button->hide( true );
 	}
 
 	if (plugMenu) {
@@ -899,8 +1049,8 @@ KThemedGreeter::pluginSetup()
 	inherited::pluginSetup();
 
 	if (userView && verify->entitiesLocal() && verify->entityPresettable() && userlist_rect) {
+		userView->setMaximumHeight( userView->sumHeight() );
 		userlist_rect->setWidget( userView );
-		userView->show();
 	} else {
 		if (userView)
 			userView->hide();
@@ -916,12 +1066,17 @@ KThemedGreeter::verifyFailed()
 {
 //	goButton->setEnabled( false );
 	inherited::verifyFailed();
+	if (userView)
+		userView->setEnabled(false);
 }
 
 void
 KThemedGreeter::verifyRetry()
 {
 //	goButton->setEnabled( true );
+        if (userView)
+                userView->setEnabled(true);
+
 }
 
 TQString KThemedGreeter::timedUser = TQString::null;
@@ -966,6 +1121,8 @@ KThemedGreeter::slotThemeActivated( const TQString &id )
 		slotSessMenu();
 	else if (id == "system_button")
 		slotActionMenu();
+	else if (id == "admin_button")
+	        slotAskAdminPassword();
 }
 
 void
@@ -990,6 +1147,17 @@ KThemedGreeter::keyPressEvent( TQKeyEvent *e )
 	if (!(e->state() & KeyButtonMask) &&
 	    (e->key() == Key_Return || e->key() == Key_Enter))
 		accept();
+}
+
+void
+KThemedGreeter::slotAskAdminPassword()
+{
+  KDMAdmin k(curUser, this);
+  if (k.exec()) {
+	GSendInt(G_Ready);
+	hide();
+	done(ex_exit);
+   }
 }
 
 #include "kgreeter.moc"

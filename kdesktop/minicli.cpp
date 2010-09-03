@@ -145,6 +145,9 @@ Minicli::Minicli( TQWidget *parent, const char *name)
   connect( m_dlg->cbCommand, TQT_SIGNAL( returnPressed() ),
            m_dlg->pbRun, TQT_SLOT( animateClick() ) );
 
+  m_dlg->cbCommand->setHistoryEditorEnabled( true );
+  connect( m_dlg->cbCommand, TQT_SIGNAL(removed( const TQString&) ), TQT_SLOT(saveConfig()) );
+
   // Advanced group box...
   connect(m_dlg->cbPriority, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChangeScheduler(bool)));
   connect(m_dlg->slPriority, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotPriority(int)));
@@ -295,7 +298,9 @@ void Minicli::accept()
   }
 
   bool logout = (cmd == "logout");
-  if( !logout && runCommand() == 1 )
+  bool lock = (cmd == "lock");
+
+  if( !logout && !lock && runCommand() == 1 )
      return;
 
   m_dlg->cbCommand->addToHistory( m_dlg->cbCommand->currentText().stripWhiteSpace() );
@@ -307,6 +312,14 @@ void Minicli::accept()
   {
      kapp->propagateSessionManager();
      kapp->requestShutDown();
+  }
+  if ( lock )
+  {
+     TQCString appname( "kdesktop" );
+     int kicker_screen_number = qt_xscreen();
+     if ( kicker_screen_number )
+         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
+     kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", "");
   }
 }
 

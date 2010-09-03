@@ -36,6 +36,7 @@ class KdmRect : public KdmItem {
 
 public:
 	KdmRect( KdmItem *parent, const TQDomNode &node, const char *name = 0 );
+	KdmRect( TQWidget *parent, const TQDomNode &node, const char *name = 0 );
 
 protected:
 	// draw the rect
@@ -54,8 +55,9 @@ protected:
 		bool hasBorder;
 	} rect;
 
-//	virtual void setWidget( TQWidget *widget );
+	virtual void setWidget( TQWidget *widget );
 //	virtual void setLayoutItem( TQLayoutItem *item );
+	void init( const TQDomNode &node, const char *name );
 
 private:
 	void setAttribs( TQWidget *widget );

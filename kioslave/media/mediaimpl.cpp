@@ -281,6 +281,13 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		return m_lastErrorCode==0;
 	}
 
+	if (medium.id().isEmpty())
+	{
+		m_lastErrorCode = KIO::ERR_COULD_NOT_MOUNT;
+		m_lastErrorMessage = i18n("No such medium.");
+		return false;
+	}
+
 	return true;
 }
 

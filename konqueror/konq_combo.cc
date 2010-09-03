@@ -128,6 +128,9 @@ KonqCombo::KonqCombo( TQWidget *parent, const char *name )
     connect( this, TQT_SIGNAL(activated( const TQString& )),
              TQT_SLOT(slotActivated( const TQString& )) );
 
+    setHistoryEditorEnabled( true ); 
+    connect( this, TQT_SIGNAL(removed( const TQString&) ), TQT_SLOT(slotRemoved( const TQString& )) );
+
     if ( !kapp->dcopClient()->isAttached() )
         kapp->dcopClient()->attach();
 }
@@ -505,6 +508,15 @@ void KonqCombo::slotCleared()
     TQDataStream s( data, IO_WriteOnly );
     s << kapp->dcopClient()->defaultObject();
     kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "comboCleared(TQCString)", data);
+}
+
+void KonqCombo::slotRemoved( const TQString& item )
+{
+    TQByteArray data;
+    TQDataStream s( data, IO_WriteOnly );
+    s << item << kapp->dcopClient()->defaultObject();
+    kapp->dcopClient()->send( "konqueror*", "KonquerorIface",
+                               "removeFromCombo(TQString,TQCString)", data);
 }
 
 void KonqCombo::removeURL( const TQString& url )

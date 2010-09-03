@@ -1985,6 +1985,17 @@ Description:
  Specify the widget style for the greeter. Empty means to use the
  built-in default which currently is <literal>Plastik</literal>.
 
+Key: UseAdminSession
+Type: bool
+Default: false
+User: greeter
+Instance: #*/!
+Comment:
+ Admin session
+Description:
+ If given there will be a special button that requires root password
+ and starts the given session
+
 Key: ColorScheme
 Type: string
 Default: ""

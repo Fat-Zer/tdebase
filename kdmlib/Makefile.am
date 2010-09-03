@@ -1,10 +1,14 @@
 AM_CPPFLAGS = -I$(top_srcdir)/kdm/kfrontend $(all_includes)
 
-kde_module_LTLIBRARIES = kgreet_classic.la kgreet_winbind.la
+kde_module_LTLIBRARIES = kgreet_classic.la kgreet_pam.la kgreet_winbind.la
 
 kgreet_classic_la_SOURCES = kgreet_classic.cpp
 kgreet_classic_la_LDFLAGS = -module -no-undefined $(KDE_PLUGIN) $(all_libraries)
 kgreet_classic_la_LIBADD = $(LIB_KDEUI)
+
+kgreet_pam_la_SOURCES = kgreet_pam.cpp
+kgreet_pam_la_LDFLAGS = -module -no-undefined $(KDE_PLUGIN) $(all_libraries)
+kgreet_pam_la_LIBADD = $(LIB_KDEUI)
 
 kgreet_winbind_la_SOURCES = kgreet_winbind.cpp
 kgreet_winbind_la_LDFLAGS = -module -no-undefined $(KDE_PLUGIN) $(all_libraries)

@@ -22,6 +22,7 @@
 #include <config.h>
 
 #include "kdmpixmap.h"
+#include <kdmconfig.h>
 
 #include <kimageeffect.h>
 #ifdef HAVE_LIBART
@@ -29,6 +30,7 @@
 #endif
 
 #include <kdebug.h>
+#include <kstandarddirs.h>
 
 #include <tqpainter.h>
 #include <tqpixmap.h>
@@ -58,21 +60,28 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 		TQString tagName = el.tagName();
 
 		if (tagName == "normal") {
-			loadPixmap( el.attribute( "file", "" ), pixmap.normal.pixmap, pixmap.normal.fullpath );
+			pixmap.normal.fullpath = fullPath( el.attribute( "file", "" ) );
 			parseColor( el.attribute( "tint", "#ffffff" ), pixmap.normal.tint );
 			pixmap.normal.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 		} else if (tagName == "active") {
 			pixmap.active.present = true;
-			loadPixmap( el.attribute( "file", "" ), pixmap.active.pixmap, pixmap.active.fullpath );
+			pixmap.active.fullpath = fullPath( el.attribute( "file", "" ) );
 			parseColor( el.attribute( "tint", "#ffffff" ), pixmap.active.tint );
 			pixmap.active.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 		} else if (tagName == "prelight") {
 			pixmap.prelight.present = true;
-			loadPixmap( el.attribute( "file", "" ), pixmap.prelight.pixmap, pixmap.prelight.fullpath );
+			pixmap.prelight.fullpath = fullPath(el.attribute( "file", "" ) );
 			parseColor( el.attribute( "tint", "#ffffff" ), pixmap.prelight.tint );
 			pixmap.prelight.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 		}
 	}
+
+	// look if we have to have the aspect ratio ready
+	if (((pos.wType == DTnone && pos.hType != DTnone) ||
+	     (pos.wType != DTnone && pos.hType == DTnone) ||
+	     (pos.wType == DTnone && pos.hType == DTnone)) &&
+	    !pixmap.normal.fullpath.endsWith( ".svg" ))
+	  loadPixmap( &pixmap.normal );
 }
 
 QSize
@@ -100,19 +109,16 @@ KdmPixmap::setGeometry( const TQRect &newGeometry, bool force )
 }
 
 
-void
-KdmPixmap::loadPixmap( const TQString &fileName, TQPixmap &map, TQString &fullName )
+TQString
+KdmPixmap::fullPath( const TQString &fileName)
 {
-	if (fileName.isEmpty())
-		return;
+        if (fileName.isEmpty())
+		return TQString::null;
 
-	fullName = fileName;
+	TQString fullName = fileName;
 	if (fullName.at( 0 ) != '/')
 		fullName = baseDir() + "/" + fileName;
-
-	if (!fullName.endsWith( ".svg" ))	// we delay it for svgs
-		if (!map.load( fullName ))
-			fullName = TQString::null;
+	return fullName;
 }
 
 void
@@ -140,6 +146,25 @@ KdmPixmap::renderSvg( PixmapStruct::PixmapClass *pClass, const TQRect &area )
 }
 
 void
+KdmPixmap::loadPixmap( PixmapStruct::PixmapClass *pClass )
+{
+  TQString fullpath = pClass->fullpath;
+
+  kdDebug() << timestamp() << " load " << fullpath << endl;
+  int index = fullpath.findRev('.');
+  TQString ext = fullpath.right(fullpath.length() - index);
+  fullpath = fullpath.left(index);
+  kdDebug() << timestamp() << " ext " << ext << " " << fullpath << endl;
+  TQString testpath = TQString("-%1x%2").arg(area.width()).arg(area.height()) + ext;
+  kdDebug() << timestamp() << " testing for " << fullpath + testpath << endl;
+  if (KStandardDirs::exists(fullpath + testpath)) 
+    pClass->pixmap.load(fullpath + testpath);
+  else
+    pClass->pixmap.load( fullpath + ext );
+  kdDebug() << timestamp() << " done\n";
+}
+
+void
 KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 {
 	// choose the correct pixmap class
@@ -149,12 +174,20 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 	if (state == Sprelight && pixmap.prelight.present)
 		pClass = &pixmap.prelight;
 
+	kdDebug() << "draw " << id << " " << pClass->pixmap.isNull() << endl;
+ 
 	if (pClass->pixmap.isNull()) {
-		if (pClass->fullpath.isEmpty())	// if neither is set, we're empty
+	        
+	        if (pClass->fullpath.isEmpty())	// if neither is set, we're empty
 			return;
-
-		kdDebug() << "renderSVG\n";
-		renderSvg( pClass, area );
+		
+		if (!pClass->fullpath.endsWith( ".svg" ) ) {
+		  loadPixmap(pClass);
+		} else {
+		  kdDebug() << timestamp() << " renderSVG\n";
+		  renderSvg( pClass, area );
+		  kdDebug() << timestamp() << " done\n";
+		}
 	}
 
 	int px = area.left() + r.left();
@@ -176,25 +209,37 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 
 
 	if (pClass->readyPixmap.isNull()) {
-		TQImage scaledImage;
+	  
+		bool haveTint = pClass->tint.rgb() != 0xFFFFFF;
+		bool haveAlpha = pClass->alpha < 1.0;
 
+		TQImage scaledImage;
+		
 		// use the loaded pixmap or a scaled version if needed
 
+		kdDebug() << timestamp() << " prepare readyPixmap " << pClass->fullpath << " " << area.size() << " " << pClass->pixmap.size() << endl;
 		if (area.size() != pClass->pixmap.size()) {
 			if (pClass->fullpath.endsWith( ".svg" )) {
-				kdDebug() << "renderSVG\n";
+				kdDebug() << timestamp() << " renderSVG\n";
 				renderSvg( pClass, area );
 				scaledImage = pClass->pixmap.convertToImage();
 			} else {
-				kdDebug() << "convertFromImage\n";
+				kdDebug() << timestamp() << " convertFromImage smoothscale\n";
 				TQImage tempImage = pClass->pixmap.convertToImage();
+				kdDebug() << timestamp() << " convertToImage done\n";
 				scaledImage = tempImage.smoothScale( area.width(), area.height() );
+				kdDebug() << timestamp() << " done\n";
 			}
-		} else
+		} else {
+		  if (haveTint || haveAlpha)
+                  {
 			scaledImage = pClass->pixmap.convertToImage();
-
-		bool haveTint = pClass->tint.rgb() != 0xFFFFFF;
-		bool haveAlpha = pClass->alpha < 1.0;
+                        // enforce rgba values for the later
+                        scaledImage = scaledImage.convertDepth( 32 );
+                  }
+		  else
+		    pClass->readyPixmap = pClass->pixmap;
+		}
 
 		if (haveTint || haveAlpha) {
 			// blend image(pix) with the given tint
@@ -221,9 +266,12 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 
 		}
 
-		pClass->readyPixmap.convertFromImage( scaledImage );
+		if (!scaledImage.isNull()) {
+		  kdDebug() << timestamp() << " convertFromImage " << id << " " << area << endl;
+		  pClass->readyPixmap.convertFromImage( scaledImage );
+		}
 	}
-	// kdDebug() << "Pixmap::drawContents " << pClass->readyPixmap.size() << " " << px << " " << py << " " << sx << " " << sy << " " << sw << " " << sh << endl;
+	kdDebug() << timestamp() << " Pixmap::drawContents " << pClass->readyPixmap.size() << " " << px << " " << py << " " << sx << " " << sy << " " << sw << " " << sh << endl;
 	p->drawPixmap( px, py, pClass->readyPixmap, sx, sy, sw, sh );
 }
 

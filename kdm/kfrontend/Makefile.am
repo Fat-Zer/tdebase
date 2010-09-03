@@ -21,6 +21,7 @@ kdm_greet_SOURCES = \
     kchooser.cpp \
     kgverify.cpp \
     kdmshutdown.cpp \
+    kdmadmindialog.cpp \
     kgreeter.cpp \
     kgapp.cpp
 kdm_greet_LDFLAGS = $(all_libraries) $(KDE_RPATH)

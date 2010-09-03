@@ -85,12 +85,18 @@ public:
     // public API
     void restoreSession( TQString sessionName );
     void startDefaultSession();
+
     void shutdown( KApplication::ShutdownConfirm confirm,
                    KApplication::ShutdownType sdtype,
                    KApplication::ShutdownMode sdmode );
 
     virtual void suspendStartup( TQCString app );
     virtual void resumeStartup( TQCString app );
+
+    bool checkStatus( bool &logoutConfirmed, bool &maysd, 
+		      KApplication::ShutdownConfirm confirm,
+		      KApplication::ShutdownType sdtype,
+		      KApplication::ShutdownMode sdmode );
 
 public slots:
     void cleanUp();
@@ -142,6 +148,11 @@ private:
     bool defaultSession() const; // empty session
     void setupXIOErrorHandler();
 
+    void shutdownInternal( KApplication::ShutdownConfirm confirm,
+			   KApplication::ShutdownType sdtype,
+			   KApplication::ShutdownMode sdmode,
+			   TQString bootOption = TQString::null );
+
     void performLegacySessionSave();
     void storeLegacySession( KConfig* config );
     void restoreLegacySession( KConfig* config );
@@ -157,6 +168,7 @@ private:
 
     // public dcop interface
     void logout( int, int, int );
+    virtual void logoutTimed( int, int, TQString );
     TQStringList sessionList();
     TQString currentSession();
     void saveCurrentSession();

@@ -80,6 +80,10 @@ public:
 signals:
 	void activated( const TQString &id );
 
+protected slots:
+	void slotActivated( const TQString &id );
+	void slotPaintRoot();
+
 private:
 	/*
 	 * Our display mode (e.g. console, remote, ...)

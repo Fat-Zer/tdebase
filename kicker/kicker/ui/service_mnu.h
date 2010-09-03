@@ -89,7 +89,8 @@ protected slots:
 protected:
     void insertMenuItem(KService::Ptr & s, int nId, int nIndex = -1,
                         const TQStringList *suppressGenericNames=0,
-                        const TQString &aliasname = TQString::null);
+                        const TQString &aliasname = TQString::null,
+                        const TQString &label = TQString::null, const TQString &categoryIcon = TQString::null);
     virtual PanelServiceMenu * newSubMenu(const TQString & label,
                                           const TQString & relPath,
                                           TQWidget * parent, const char * name,

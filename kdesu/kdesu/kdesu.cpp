@@ -382,6 +382,7 @@ static int startApp()
             change_uid = false;
         password = dlg.password();
         keep = dlg.keep();
+        KConfigGroup(config,"Passwords").writeEntry("Keep", keep);
         data.setSilent( KStartupInfoData::No );
         KStartupInfo::sendChange( id, data );
     }

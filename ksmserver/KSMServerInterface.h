@@ -22,6 +22,8 @@ k_dcop:
   
   virtual void suspendStartup( TQCString ) = 0;
   virtual void resumeStartup( TQCString ) = 0;
+
+  virtual void logoutTimed( int, int, TQString ) = 0;
 };
 
 #endif

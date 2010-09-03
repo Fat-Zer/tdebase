@@ -114,6 +114,11 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
     TQStringList suppressGenericNames = _root->suppressGenericNames();
 
     KServiceGroup::List::ConstIterator it = _list.begin();
+    KSortableValueList<KSharedPtr<KSycocaEntry>,TQCString> slist;
+    KSortableValueList<KSharedPtr<KSycocaEntry>,TQCString> glist;
+    TQMap<TQString,TQString> specialTitle;
+    TQMap<TQString,TQString> categoryIcon;
+
     bool separatorNeeded = false;
     for (; it != _list.end(); ++it)
     {
@@ -121,19 +126,108 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
 
         if (e->isType(KST_KServiceGroup))
         {
-
             KServiceGroup::Ptr g(static_cast<KServiceGroup *>(e));
-            TQString groupCaption = g->caption();
+            if ( KickerSettings::reduceMenuDepth() && g->SuSEshortMenu() ){
+               KServiceGroup::List l = g->entries(true, excludeNoDisplay_ );
+               if ( l.count() == 1 ) {
+                  // the special case, we want to short the menu.
+                  // TOFIX? : this works only for one level
+                  KServiceGroup::List::ConstIterator _it=l.begin();
+                  KSycocaEntry *_e = *_it;
+                  if (_e->isType(KST_KService)) {
+                     KService::Ptr s(static_cast<KService *>(_e));
+		     TQString key;
+                     if ( g->SuSEgeneralDescription() ) {
+			// we use the application name
+                        key = s->name();
+                        if( !s->genericName().isEmpty()) {
+                           if (KickerSettings::menuEntryFormat() == KickerSettings::NameAndDescription)
+                               key = s->name() + " (" + s->genericName() + ")";
+			   else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionAndName)
+                               key = s->genericName() + " (" + s->name() + ")";
+			   else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionOnly)
+                             key = s->genericName();
+                        }
+                     }
+		     else {
+			// we use the normal menu description
+			key = s->name();
+                        if( !s->genericName().isEmpty()) {
+                           if (KickerSettings::menuEntryFormat() == KickerSettings::NameAndDescription)
+                               key = s->name() + " (" + g->caption() + ")";
+			   else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionAndName)
+                               key = g->caption() + " (" + s->name() + ")";
+			   else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionOnly)
+                             key = g->caption();
+                        }
+		     }
+		     specialTitle.insert( _e->name(), key );
+		     categoryIcon.insert( _e->name(), g->icon() );
+                     slist.insert( key.local8Bit(), _e );
+                     // and escape from here
+                     continue;
+                  }
+               }
+            }
+            glist.insert( g->caption().local8Bit(), e );
+        }else if( e->isType(KST_KService)) {
+            KService::Ptr s(static_cast<KService *>(e));
+            TQString name = s->name();
+            if( !s->genericName().isEmpty()) {
+               if (KickerSettings::menuEntryFormat() == KickerSettings::NameAndDescription)
+                   name = s->name() + " (" + s->genericName() + ")";
+	       else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionAndName)
+                   name = s->genericName() + " (" + s->name() + ")";
+	       else if (KickerSettings::menuEntryFormat() == KickerSettings::DescriptionOnly)
+                   name = s->genericName();
+            }
+            slist.insert( name.local8Bit(), e );
+        } else
+            slist.insert( e->name().local8Bit(), e );
+    }
 
+    _list = _root->SuSEsortEntries( slist, glist, excludeNoDisplay_, true );
+    it = _list.begin();
+
+    for (; it != _list.end(); ++it) {
+
+        KSycocaEntry * e = *it;
+
+        if (e->isType(KST_KServiceGroup)) {
+            KServiceGroup::Ptr g(static_cast<KServiceGroup *>(e));
+            if ( KickerSettings::reduceMenuDepth() && g->SuSEshortMenu() ){
+               KServiceGroup::List l = g->entries(true, excludeNoDisplay_ );
+               if ( l.count() == 1 ) {
+ /*               // the special case, we want to short the menu.
+                  // TOFIX? : this works only for one level
+                  KServiceGroup::List::ConstIterator _it=l.begin();
+                  KSycocaEntry *_e = *_it;
+                  if (_e->isType(KST_KService)) {
+                     KService::Ptr s(static_cast<KService *>(_e));
+                     if ( g->SuSEgeneralDescription() )
+                       // we use the application name
+                       insertMenuItem(s, id++, -1, 0, TQString::null, TQString::null, g->icon() );
+                    else
+                       // we use the normal menu description
+                       insertMenuItem(s, id++, -1, 0, TQString::null, g->caption(), g->icon() );
+                     // and escape from here */
+                     continue;
+ //                 }   
+               }      
+            }         
+            // standard sub menu
+                      
+            TQString groupCaption = g->caption();
+                      
            // Avoid adding empty groups.
             KServiceGroup::Ptr subMenuRoot = KServiceGroup::group(g->relPath());
-
+                      
             int nbChildCount = subMenuRoot->childCount();
             if (nbChildCount == 0 && !g->showEmptyMenu())
-            {
+            {         
                 continue;
-            }
-
+            }         
+                      
             TQString inlineHeaderName = g->showInlineHeader() ? groupCaption : "";
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace them with two ampersands.
@@ -156,7 +250,8 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
                         }
 
                         KService::Ptr s(static_cast<KService *>(e1));
-                        insertMenuItem(s, id++, -1, &suppressGenericNames);
+//                        insertMenuItem(s, id++, -1, &suppressGenericNames);
+                        insertMenuItem(s, id++, -1, &suppressGenericNames, TQString::null, specialTitle[s->name()], categoryIcon[s->name()] );
                         continue;
                     }
                 }
@@ -222,7 +317,8 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
 
             KService::Ptr s(static_cast<KService *>(e));
             searchMenuItems.insert(id);
-            insertMenuItem(s, id++, -1, &suppressGenericNames);
+//            insertMenuItem(s, id++, -1, &suppressGenericNames);
+            insertMenuItem(s, id++, -1, &suppressGenericNames, TQString::null, specialTitle[s->name()], categoryIcon[s->name()] );
         }
         else if (e->isType(KST_KServiceSeparator))
         {
@@ -304,7 +400,8 @@ void PanelServiceMenu::configChanged()
 void PanelServiceMenu::insertMenuItem(KService::Ptr & s, int nId,
                                       int nIndex/*= -1*/,
                                       const TQStringList *suppressGenericNames /* = 0 */,
-                                      const TQString & aliasname)
+                                      const TQString & aliasname, const TQString & label /*=TQString::NULL*/,
+                                      const TQString & categoryIcon /*=TQString::null*/)
 {
     TQString serviceName = (aliasname.isEmpty() ? s->name() : aliasname).simplifyWhiteSpace();
     TQString comment = s->genericName().simplifyWhiteSpace();
@@ -355,7 +452,15 @@ void PanelServiceMenu::insertMenuItem(KService::Ptr & s, int nId,
     // to accelerators, replace them with two ampersands.
     serviceName.replace("&", "&&");
 
-    int newId = insertItem(KickerLib::menuIconSet(s->icon()), serviceName, nId, nIndex);
+    TQString icon = s->icon();
+    if (icon=="unknown")
+        icon = categoryIcon;
+
+    int newId;
+    if ( label.isEmpty() )
+       newId = insertItem(KickerLib::menuIconSet(s->icon()), serviceName, nId, nIndex);
+    else
+       newId = insertItem(KickerLib::menuIconSet(s->icon()), label, nId, nIndex);
     entryMap_.insert(newId, static_cast<KSycocaEntry*>(s));
 }
 

@@ -107,6 +107,35 @@ k_dcop:
      * space for desktop icons
      */
     virtual void desktopIconsAreaChanged(const TQRect &area, int screen) = 0;
+
+    /**
+     * Find the next free place for a not yet existing icon, so it fits
+     * in the user arrangement. Basicly prepare for icons to be moved in.
+     * It will try to find a place in the virtual grid near col,row
+     * where no other icon is.
+     *
+     * If you specify -1 for row or column, it will try to find the next
+     * free room where no other icon follows. E.g. if you specify column
+     * = -1 and row = 0, kdesktop will find the next vertical placement
+     * so that the icon appears at the end of the existing icons preferable
+     * in the first column. If the first column is full, it will find the
+     * next free room in the second column.
+     *
+     * If you specify both column and row, kdesktop won't care for aligning,
+     * or surrounding icons, but try to find the free place near the given
+     * grid place (e.g. specify 0,0 to find the nearest place in the left
+     * upper corner).
+     */
+    virtual TQPoint findPlaceForIcon( int column, int row) = 0;
+
+    /// copy the desktop file in the Desktop and place it at x, y
+    virtual void addIcon(const TQString &url, int x, int y) = 0;
+
+    /// same with specific destination
+    virtual void addIcon(const TQString &url, const TQString &dest, int x, int y) = 0;
+
+    /// remove the desktop file (either full path or relative)
+    virtual void removeIcon(const TQString &dest) = 0;
 };
 
 #endif

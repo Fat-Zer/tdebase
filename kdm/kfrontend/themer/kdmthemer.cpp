@@ -36,11 +36,13 @@
 
 #include <tqfile.h>
 #include <tqfileinfo.h>
-//#include <tqtimer.h>		// animation timer - TODO
+#include <tqtimer.h>		// animation timer - TODO
 #include <tqobjectlist.h>
 #include <tqpainter.h>
 #include <tqwidget.h>
 #include <tqregion.h>
+#include <tqlineedit.h>
+#include <tqapplication.h>
 
 #include <unistd.h>
 
@@ -72,7 +74,8 @@ KdmThemer::KdmThemer( const TQString &_filename, const TQString &mode, TQWidget 
 		return;
 	}
 	// Set the root (screen) item
-	rootItem = new KdmRect( 0, TQDomNode(), "kdm root" );
+	rootItem = new KdmRect( parent, TQDomNode(), "kdm root" );
+
 	connect( rootItem, TQT_SIGNAL(needUpdate( int, int, int, int )),
 	         widget(), TQT_SLOT(update( int, int, int, int )) );
 
@@ -82,6 +85,9 @@ KdmThemer::KdmThemer( const TQString &_filename, const TQString &mode, TQWidget 
 	generateItems( rootItem );
 
 	connect( rootItem, TQT_SIGNAL(activated( const TQString & )), TQT_SIGNAL(activated( const TQString & )) );
+	connect( rootItem, TQT_SIGNAL(activated( const TQString & )), TQT_SLOT(slotActivated( const TQString & )) );
+
+	TQTimer::singleShot(800, this, TQT_SLOT(slotPaintRoot()));
 
 /*	*TODO*
 	// Animation timer
@@ -151,7 +157,7 @@ KdmThemer::widgetEvent( TQEvent *e )
 	case TQEvent::Paint:
 		{
 			TQRect paintRect = static_cast<TQPaintEvent *>(e)->rect();
-			kdDebug() << "paint on: " << paintRect << endl;
+			kdDebug() << timestamp() << " paint on: " << paintRect << endl;
 
 			if (!backBuffer)
 				backBuffer = new TQPixmap( widget()->size() );
@@ -195,7 +201,7 @@ KdmThemer::generateItems( KdmItem *parent, const TQDomNode &node )
 
 		// Get its tag, and check it's correct ("greeter")
 		if (theme.tagName() != "greeter") {
-			kdDebug() << "This does not seem to be a correct theme file." << endl;
+			kdDebug() << timestamp() << " This does not seem to be a correct theme file." << endl;
 			return;
 		}
 		// Get the list of child nodes
@@ -214,6 +220,13 @@ KdmThemer::generateItems( KdmItem *parent, const TQDomNode &node )
 		if (tagName == "item") {
 			if (!willDisplay( subnode ))
 				continue;
+			TQString id = el.attribute("id");
+			if (id.startsWith("plugin-specific-")) {
+			        id = id.mid(strlen("plugin-specific-"));
+			        if (!_pluginsLogin.contains(id))
+			               continue;
+			}
+
 			// It's a new item. Draw it
 			TQString type = el.attribute( "type" );
 
@@ -225,13 +238,11 @@ KdmThemer::generateItems( KdmItem *parent, const TQDomNode &node )
 				newItem = new KdmPixmap( parent, subnode );
 			else if (type == "rect")
 				newItem = new KdmRect( parent, subnode );
-			else if (type == "entry") {
+			else if (type == "entry" || type == "list") {
 				newItem = new KdmRect( parent, subnode );
 				newItem->setType( type );
 			}
 			//	newItem = new KdmEntry( parent, subnode );
-			//else if (type=="list")
-			//	newItem = new KdmList( parent, subnode );
 			else if (type == "svg")
 				newItem = new KdmPixmap( parent, subnode );
 			if (newItem) {
@@ -287,6 +298,11 @@ bool KdmThemer::willDisplay( const TQDomNode &node )
 #endif
 	if (type == "halt" || type == "reboot")
 		return _allowShutdown != SHUT_NONE;
+        else if (type == "userlist")
+            return _userList;
+        else if ( type == "!userlist" )
+            return !_userList;
+
 //	if (type == "system")
 //		return true;
 
@@ -301,7 +317,7 @@ KdmThemer::showStructure( TQObject *obj )
 	const TQObjectList *wlist = obj->children();
 	static int counter = 0;
 	if (counter == 0)
-		kdDebug() << "\n\n<=======  Widget tree =================" << endl;
+		kdDebug() << timestamp() << " \n\n<=======  Widget tree =================" << endl;
 	if (wlist) {
 		counter++;
 		TQObjectListIterator it( *wlist );
@@ -323,7 +339,46 @@ KdmThemer::showStructure( TQObject *obj )
 		counter--;
 	}
 	if (counter == 0)
-		kdDebug() << "\n\n<=======  Widget tree =================\n\n" << endl;
+		kdDebug() << timestamp() << " \n\n<=======  Widget tree =================\n\n" << endl;
+}
+
+void
+KdmThemer::slotActivated( const TQString &id )
+{
+  TQString toactivate;
+  if (id == "username-label")
+    toactivate = "user-entry";
+  else if (id == "password-label")
+    toactivate = "pw-entry";
+  else
+    return;
+
+  KdmItem *item = findNode(toactivate);
+  if (!item || !item->widget())
+    return;
+
+  item->widget()->setFocus();
+  TQLineEdit *le = (TQLineEdit*)item->widget()->qt_cast("TQLineEdit");
+  if (le)
+    le->selectAll();
+}
+
+void
+KdmThemer::slotPaintRoot()
+{
+  KdmItem *back_item = findNode("background");
+  if (!back_item)
+    return;
+
+  TQRect screen = TQApplication::desktop()->screenGeometry(0);
+  TQPixmap pm(screen.size());
+
+  TQPainter painter( &pm, true );
+  back_item->paint( &painter, back_item->rect());
+  painter.end();
+
+  TQApplication::desktop()->screen()->setErasePixmap(pm);
+  TQApplication::desktop()->screen()->erase();
 }
 
 #include "kdmthemer.moc"

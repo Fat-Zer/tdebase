@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <tqstring.h>
 #include <tqstringlist.h>
 #include <tqfont.h>
+#include <sys/time.h>
 
 extern TQString _stsFile;
 extern bool _isLocal;
@@ -45,6 +46,19 @@ CONF_GREET_CPP_DECLS
 // this file happens to be included everywhere, so just put it here
 struct dpySpec;
 void decodeSess( dpySpec *sess, TQString &user, TQString &loc );
+
+extern struct timeval st;
+
+inline TQString timestamp() {
+	struct timeval nst;
+	gettimeofday(&nst, 0);
+	if (!st.tv_sec)
+		gettimeofday(&st, 0);
+
+	TQString ret;
+	ret.sprintf("[%07ld]", (nst.tv_sec - st.tv_sec) * 1000 + (nst.tv_usec - st.tv_usec) / 1000);
+	return ret;
+}
 
 extern "C"
 #endif

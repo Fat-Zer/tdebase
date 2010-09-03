@@ -120,8 +120,6 @@ Navigator::Navigator( View *view, TQWidget *parent, const char *name )
 
     mTabWidget = new TQTabWidget( this );
     topLayout->addWidget( mTabWidget );
-    connect( mTabWidget, TQT_SIGNAL( currentChanged( TQWidget * ) ),
-             TQT_SLOT( slotTabChanged( TQWidget * ) ) );
 
     setupContentsTab();
     setupGlossaryTab();
@@ -135,6 +133,9 @@ Navigator::Navigator( View *view, TQWidget *parent, const char *name )
       mSearchWidget->updateScopeList();
       mSearchWidget->readConfig( KGlobal::config() );
     }
+
+    connect( mTabWidget, TQT_SIGNAL( currentChanged( QWidget * ) ),
+             TQT_SLOT( slotTabChanged( QWidget * ) ) );
 }
 
 Navigator::~Navigator()
@@ -336,6 +337,11 @@ void Navigator::selectItem( const KURL &url )
           item = item->nextSibling() ) {
       NavigatorAppItem *appItem = dynamic_cast<NavigatorAppItem *>( item );
       if ( appItem ) appItem->populate( true /* recursive */ );
+      for ( QListViewItem *subitem = item->firstChild(); subitem;
+	    subitem = subitem->nextSibling() ) {
+	appItem = dynamic_cast<NavigatorAppItem *>( subitem );
+	if ( appItem ) appItem->populate( true /* recursive */ );
+      }
     }
   }
 

@@ -19,6 +19,9 @@
 #define __menutab_impl_h__
 
 #include <tqlistview.h>
+#include <stdlib.h>
+
+#include <kpushbutton.h>
 
 #include "menutab.h"
 

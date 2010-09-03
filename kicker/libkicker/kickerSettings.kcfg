@@ -126,6 +126,11 @@
       <default>true</default>
    </entry>
 
+<entry name="ReduceMenuDepth" type="Bool" >
+      <label>Simplify menus with only a single item inside</label>
+      <default>false</default>
+   </entry>
+
 <entry name="MenuEntryHeight" type="Int" >
       <label>Height of menu entries in pixels</label>
       <default>0</default>

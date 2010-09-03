@@ -35,6 +35,7 @@
 #include <kmountpoint.h>
 #include <kmessagebox.h>
 #include <kio/job.h>
+#include <kprotocolinfo.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 
@@ -623,6 +624,13 @@ void HALBackend::setVolumeProperties(Medium* medium)
             case LIBHAL_DRIVE_TYPE_PORTABLE_AUDIO_PLAYER:
             {
                 medium->setIconName("ipod" + MOUNT_ICON_SUFFIX);
+
+                if (libhal_device_get_property_QString(m_halContext, driveUdi.latin1(), "info.product") == "iPod" &&
+		         KProtocolInfo::isKnownProtocol( TQString("ipod") ) )
+                {
+                    medium->unmountableState( "ipod:/" );
+                    medium->mountableState(  libhal_volume_is_mounted(halVolume) );
+                }
                 break;
             }
             case LIBHAL_DRIVE_TYPE_CAMERA:

@@ -54,11 +54,13 @@ public:
 
   void setCommand(const TQString& command);
   void reset();
-  void saveConfig();
   void clearHistory();
   
   virtual void show();
   virtual TQSize sizeHint() const;
+
+public slots:
+  void saveConfig();
 
 protected slots:
   virtual void accept();

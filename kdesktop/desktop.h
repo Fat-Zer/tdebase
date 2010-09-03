@@ -164,6 +164,11 @@ protected:
   virtual void setIconsEnabled( bool enable );
   virtual bool event ( TQEvent * e );
 
+  virtual TQPoint findPlaceForIcon( int column, int row);
+  virtual void addIcon(const TQString &url, int x, int y);
+  virtual void addIcon(const TQString &url, const TQString &dest, int x, int y);
+  virtual void removeIcon(const TQString &url);
+
 private slots:
   void desktopResized();
 

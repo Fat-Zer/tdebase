@@ -34,6 +34,7 @@
 #include <kprogress.h>
 #include <klocale.h>
 #include <ksqueezedtextlabel.h>
+#include <networkstatusindicator.h>
 
 #include "konq_events.h"
 #include "konq_frame.h"
@@ -96,6 +97,10 @@ KonqFrameStatusBar::KonqFrameStatusBar( KonqFrame *_parent, const char *_name )
     m_progressBar->setMaximumHeight(fontMetrics().height());
     m_progressBar->hide();
     addWidget( m_progressBar, 0, true /*permanent->right align*/ );
+
+    StatusBarNetworkStatusIndicator * indicator = new StatusBarNetworkStatusIndicator( this, "networkstatusindicator" );
+    addWidget( indicator, 0, false );
+    indicator->init();
 
     fontChange(TQFont());
     installEventFilter( this );

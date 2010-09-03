@@ -504,14 +504,23 @@ void BGDialog::loadWallpaperFilesList() {
    //search for .desktop files before searching for images without .desktop files
    TQStringList lst = m_pDirs->findAllResources("wallpaper", "*desktop", false, true);
    TQStringList files;
+   TQStringList hiddenfiles;
    for (TQStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it)
    {
       KSimpleConfig fileConfig(*it);
       fileConfig.setGroup("Wallpaper");
 
+      int slash = (*it).findRev('/') + 1;
+      TQString directory = (*it).left(slash);
+      
       TQString imageCaption = fileConfig.readEntry("Name");
       TQString fileName = fileConfig.readEntry("File");
 
+      if (fileConfig.readBoolEntry("Hidden",false)) {
+         hiddenfiles.append(directory + fileName);
+         continue;
+      }
+      
       if (imageCaption.isEmpty())
       {
          imageCaption = fileName;
@@ -527,9 +536,8 @@ void BGDialog::loadWallpaperFilesList() {
          rs = imageCaption + " (" + TQString::number(n) + ')';
          lrs = rs.lower();
       }
-      int slash = (*it).findRev('/') + 1;
-      TQString directory = (*it).left(slash);
       bool canLoadScaleable = false;
+
 #ifdef HAVE_LIBART
       canLoadScaleable = true;
 #endif
@@ -543,7 +551,7 @@ void BGDialog::loadWallpaperFilesList() {
    lst = m_pDirs->findAllResources("wallpaper", "*", false, true);
    for (TQStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it)
    {
-      if ( !(*it).endsWith(".desktop") && files.grep(*it).empty() ) {
+      if ( !(*it).endsWith(".desktop") && files.grep(*it).empty() && hiddenfiles.grep(*it).empty() ) {
          // First try to see if we have a comment describing the image.  If we do
          // just use the first line of said comment.
          KFileMetaInfo metaInfo(*it);

@@ -33,6 +33,18 @@
 KdmRect::KdmRect( KdmItem *parent, const TQDomNode &node, const char *name )
     : KdmItem( parent, node, name )
 {
+  init( node, name );
+}
+
+KdmRect::KdmRect( TQWidget *parent, const TQDomNode &node, const char *name )
+    : KdmItem( parent, node, name )
+{
+  init( node, name );
+}
+
+void
+KdmRect::init( const TQDomNode &node, const char * )
+{
 	itemType = "rect";
 
 	// Set default values for rect (note: strings are already Null)
@@ -137,18 +149,24 @@ KdmRect::recursiveSetAttribs( TQLayoutItem *li )
 }
 
 void
-KdmRect::setWidget( TQWidget *widget )
-{
-	KdmItem::setWidget( widget );
-	setAttribs( widget );
-}
-
-void
 KdmRect::setLayoutItem( TQLayoutItem *item )
 {
 	KdmItem::setLayoutItem( item );
 	recursiveSetAttribs( item );
 }
 */
+
+void
+KdmRect::setWidget( TQWidget *widget )
+{
+        if ( rect.normal.color.isValid() && widget ) 
+        {
+     	     TQPalette p = widget->palette();
+	     p.setColor( TQPalette::Normal, TQColorGroup::Text, rect.normal.color );
+	     widget->setPalette(p);
+	}
+	KdmItem::setWidget( widget );
+	//setAttribs( widget );
+}
 
 #include "kdmrect.moc"

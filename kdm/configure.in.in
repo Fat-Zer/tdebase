@@ -287,4 +287,75 @@ fi
   AC_SUBST(DBUS_INCS)
   AC_SUBST(DBUS_LIBS)
 
+########### Check for DBus
+
+  AC_MSG_CHECKING(for DBus)
+
+  dbus_inc=NOTFOUND
+  dbus_lib=NOTFOUND
+  dbus=NOTFOUND
+
+  search_incs="$kde_includes $kde_extra_includes /usr/include /usr/include/dbus-1.0 /usr/local/include /usr/local/include/dbus-1.0"
+  AC_FIND_FILE(dbus/dbus.h, $search_incs, dbus_incdir)
+
+  search_incs_arch_deps="$kde_includes $kde_extra_includes /usr/lib$kdelibsuff/dbus-1.0/include /usr/local/lib$kdelibsuff/dbus-1.0/include"
+  AC_FIND_FILE(dbus/dbus-arch-deps.h, $search_incs_arch_deps, dbus_incdir_arch_deps)
+
+  if test -r $dbus_incdir/dbus/dbus.h && test -r $dbus_incdir_arch_deps/dbus/dbus-arch-deps.h ; then
+    DBUS_INCS="-I$dbus_incdir -I$dbus_incdir_arch_deps"
+    dbus_inc=FOUND
+  fi
+
+  search_libs="$kde_libraries $kde_extra_libs /usr/lib$kdelibsuff /usr/local/lib$kdelibsuff"
+  AC_FIND_FILE(libdbus-1.so, $search_libs, dbus_libdir)
+
+  if test -r $dbus_libdir/libdbus-1.so ; then
+    DBUS_LIBS="-L$dbus_libdir -ldbus-1"
+    dbus_lib=FOUND
+  fi
+
+  if test $dbus_inc != FOUND || test $dbus_lib != FOUND ; then 
+    KDE_PKG_CHECK_MODULES( DBUS, "dbus-1", [ DBUS_INCS=$DBUS_CFLAGS; dbus_inc=FOUND; dbus_lib=FOUND; ] , AC_MSG_RESULT( Nothing found on PKG_CONFIG_PATH ) )
+  fi
+
+  dbus_bus_var=`pkg-config --variable=system_bus_default_address dbus-1 2>/dev/null`
+  if test -z "$dbus_bus_var"; then
+        dbus_bus_var="unix:path=/var/run/dbus/system_bus_socket"
+  fi
+  AC_DEFINE_UNQUOTED(DBUS_SYSTEM_BUS, "$dbus_bus_var", [Define the unix domain path for dbus system bus])
+
+  if test $dbus_inc = FOUND && test $dbus_lib = FOUND ; then
+    AC_MSG_RESULT(headers $DBUS_INCS libraries $DBUS_LIBS)
+    dbus=FOUND
+  else
+    AC_MSG_RESULT(searched but not found)
+  fi
+
+  AC_SUBST(DBUS_INCS)
+  AC_SUBST(DBUS_LIBS)
+
 dnl AC_OUTPUT(kdm/kfrontend/sessions/kde.desktop)
+
+
+AC_ARG_WITH(libaudit,
+  [  --with-libaudit=[auto/yes/no]  Add Linux audit support [default=auto]],,
+  with_libaudit=auto)
+
+# Check for Linux auditing API
+#
+# libaudit detection
+if test x$with_libaudit = xno ; then
+    have_libaudit=no;
+else
+    # See if we have audit daemon library
+    AC_CHECK_LIB(audit, audit_log_user_message,
+                 have_libaudit=yes, have_libaudit=no)
+fi
+
+AM_CONDITIONAL(HAVE_LIBAUDIT, test x$have_libaudit = xyes)
+
+if test x$have_libaudit = xyes ; then
+    EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -laudit"
+    AC_DEFINE(HAVE_LIBAUDIT,1,[linux audit support])
+fi
+

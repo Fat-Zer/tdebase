@@ -146,6 +146,11 @@ class KCMHelpCenter : public KDialogBase, virtual public KCMHelpCenterIface
 
     void advanceProgress();
 
+    /**
+     * Find a user-writeable location for the indices, if the current location
+     * is not.
+     */
+    void findWriteableIndexDir();
   private:
     KHC::SearchEngine *mEngine;
   

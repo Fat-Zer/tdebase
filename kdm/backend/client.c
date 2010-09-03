@@ -87,6 +87,18 @@ extern int loginsuccess( const char *User, const char *Host, const char *Tty, ch
 #include "consolekit.h"
 #endif
 
+#define  AU_FAILED 0
+#define  AU_SUCCESS 1
+#ifdef HAVE_LIBAUDIT
+#include <libaudit.h>
+#else
+#define log_to_audit_system(l,h,d,s)	do { ; } while (0)
+#endif
+
+#ifdef WITH_CONSOLE_KIT
+#include "consolekit.h"
+#endif
+
 /*
  * Session data, mostly what struct verify_info was for
  */
@@ -291,6 +303,56 @@ fail_delay( int retval ATTR_UNUSED, unsigned usec_delay ATTR_UNUSED,
 {}
 # endif
 
+ /**
+ * log_to_audit_system:
+ * @login: Name of user
+ * @hostname: Name of host machine
+ * @tty: Name of display 
+ * @success: 1 for success, 0 for failure
+ *
+ * Logs the success or failure of the login attempt with the linux kernel
+ * audit system. The intent is to capture failed events where the user
+ * fails authentication or otherwise is not permitted to login. There are
+ * many other places where pam could potentially fail and cause login to 
+ * fail, but these are system failures rather than the signs of an account
+ * being hacked.
+ *
+ * Returns nothing.
+ */
+
+#ifdef HAVE_LIBAUDIT
+static void 
+log_to_audit_system (const char *loginname,
+		     const char *hostname,
+		     const char *tty,
+		     int success)
+{
+	struct passwd *pw;
+	char buf[64];
+	int audit_fd;
+
+	audit_fd = audit_open();
+	if (loginname)
+		pw = getpwnam(loginname);
+	else {
+		loginname = "unknown";
+		pw = NULL;
+	}
+	Debug("log_to_audit %p %s\n", pw, loginname);
+
+	if (pw) {
+		snprintf(buf, sizeof(buf), "uid=%d", pw->pw_uid);
+		audit_log_user_message(audit_fd, AUDIT_USER_LOGIN,
+			buf, hostname, NULL, tty, (int)success);
+	} else {
+		snprintf(buf, sizeof(buf), "acct=%s", loginname);
+		audit_log_user_message(audit_fd, AUDIT_USER_LOGIN,
+			buf, hostname, NULL, tty, (int)success);
+	}
+	close(audit_fd);
+}
+#endif
+
 static int
 doPAMAuth( const char *psrv, struct pam_data *pdata )
 {
@@ -349,6 +411,8 @@ doPAMAuth( const char *psrv, struct pam_data *pdata )
 		GSendStr( curuser );
 	}
 	if (pretc != PAM_SUCCESS) {
+	        /* Log the failed login attempt */
+	        log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 		switch (pretc) {
 		case PAM_USER_UNKNOWN:
 		case PAM_AUTH_ERR:
@@ -484,6 +548,9 @@ Verify( GConvFunc gconv, int rootok )
 		} else
 			psrv = PAMService;
 		pdata.usecur = TRUE;
+        } else if (!strcmp( curtype, "pam" )) {
+		psrv = PAMService;
+		pdata.usecur = FALSE;
 	} else {
 		sprintf( psrvb, "%.31s-%.31s", PAMService, curtype );
 		psrv = psrvb;
@@ -553,7 +620,7 @@ Verify( GConvFunc gconv, int rootok )
 			free( msg );
 			V_RET_FAIL( 0 );
 		}
-	} else if (!strcmp( curtype, "generic" )) {
+	} else if (!strcmp( curtype, "generic" ) || !strcmp(curtype, "pam")) {
 		if (!gconv( GCONV_USER, 0 ))
 			return 0;
 		for (curret = 0;;) {
@@ -699,6 +766,8 @@ Verify( GConvFunc gconv, int rootok )
 	if (!p->pw_uid) {
 		if (!rootok && !td->allowRootLogin)
 			V_RET_FAIL( "Root logins are not allowed" );
+		/* Log the failed login attempt */
+		log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 		return 1; /* don't deny root to log in */
 	}
 
@@ -735,6 +804,8 @@ Verify( GConvFunc gconv, int rootok )
 			}
 			if (pretc == PAM_SUCCESS)
 				break;
+			/* Log the failed login attempt */
+			log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 			/* effectively there is only PAM_AUTHTOK_ERR */
 			GSendInt( V_FAIL );
 		}
@@ -824,6 +895,8 @@ Verify( GConvFunc gconv, int rootok )
 				GSendInt( V_MSG_ERR );
 				GSendStr( "Your account has expired;"
 				          " please contact your system administrator" );
+				/* Log the failed login attempt */
+				log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 				GSendInt( V_FAIL );
 				LC_RET0;
 			} else if (tim > (expir - warntime) && !quietlog) {
@@ -858,6 +931,8 @@ Verify( GConvFunc gconv, int rootok )
 				GSendInt( V_MSG_ERR );
 				GSendStr( "Your account has expired;"
 				          " please contact your system administrator" );
+				/* Log the failed login attempt */
+				log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 				GSendInt( V_FAIL );
 				LC_RET0;
 			}
@@ -917,6 +992,8 @@ Verify( GConvFunc gconv, int rootok )
 			close( fd );
 		}
 		GSendStr( "Logins are not allowed at the moment.\nTry again later" );
+		/* Log the failed login attempt */
+		log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 		GSendInt( V_FAIL );
 		LC_RET0;
 	}
@@ -927,6 +1004,8 @@ Verify( GConvFunc gconv, int rootok )
 		PrepErrorGreet();
 		GSendInt( V_MSG_ERR );
 		GSendStr( "You are not allowed to login at the moment" );
+		/* Log the failed login attempt */
+		log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 		GSendInt( V_FAIL );
 		LC_RET0;
 	}
@@ -938,6 +1017,8 @@ Verify( GConvFunc gconv, int rootok )
 			Debug( "shell not in /etc/shells\n" );
 			endusershell();
 			V_RET_FAIL( "Your login shell is not listed in /etc/shells" );
+			/* Log the failed login attempt */
+			log_to_audit_system (curuser, td->remoteHost, td->name, AU_FAILED);
 		}
 		if (!strcmp( s, p->pw_shell )) {
 			endusershell();
@@ -1223,9 +1304,16 @@ StartClient()
 	env = setEnv( env, "PATH", curuid ? td->userPath : td->systemPath );
 	env = setEnv( env, "SHELL", p->pw_shell );
 	env = setEnv( env, "HOME", p->pw_dir );
+	if (cursource == PWSRC_AUTOLOGIN)
+		env = setEnv (env, "KDM_AUTOLOGIN", curuser);
 #if !defined(USE_PAM) && !defined(_AIX) && defined(KERBEROS)
 	if (krbtkfile[0] != '\0')
 		env = setEnv( env, "KRBTKFILE", krbtkfile );
+#endif
+#ifdef WITH_CONSOLE_KIT
+	if (ck_session_cookie != NULL) {
+		env = setEnv ( env, "XDG_SESSION_COOKIE", ck_session_cookie );
+	}
 #endif
 #ifdef WITH_CONSOLE_KIT
 	if (ck_session_cookie != NULL) {
@@ -1359,6 +1447,9 @@ StartClient()
 #else /* USE_PAM */
 # define D_LOGIN_SETGROUP 0
 #endif /* USE_PAM */
+
+	/* Login succeeded */
+	log_to_audit_system (curuser, td->remoteHost, td->name, AU_SUCCESS);
 
 	removeAuth = 1;
 	chownCtrl( &td->ctrl, curuid );

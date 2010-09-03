@@ -26,6 +26,7 @@ class TQString;
 class KAction;
 
 
+#include "timed.h"
 #include <kapplication.h>
 #include <kpixmapio.h>
 
@@ -164,5 +165,23 @@ class FlatButton : public QToolButton
 
 
 
+
+class TQLabel;
+
+class  KSMDelayedMessageBox : public TimedLogoutDlg
+{
+    Q_OBJECT
+
+public:
+    KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
+    static bool showTicker( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
+
+protected slots:
+    void updateText();
+
+private:
+    TQString m_template;
+    int m_remaining;
+};
 
 #endif

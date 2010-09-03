@@ -61,9 +61,10 @@ protected:
 	} pixmap;
 
 private:
-	// Method to load the pixmap given by the theme
-	void loadPixmap( const TQString &fileName, TQPixmap &p, TQString &path );
+	// Method to load the pixmap path given by the theme
+	TQString fullPath( const TQString &fileName );
 	void renderSvg( PixmapStruct::PixmapClass *pClass, const TQRect &area );
+	void loadPixmap( PixmapStruct::PixmapClass *pClass );
 };
 
 #endif

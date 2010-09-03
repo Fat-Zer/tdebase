@@ -20,6 +20,7 @@
  */
 
 #include "kdmlayout.h"
+#include "kdmconfig.h"
 #include "kdmitem.h"
 
 #include <kdebug.h>
@@ -35,11 +36,11 @@ KdmLayoutFixed::KdmLayoutFixed( const TQDomNode &/*node*/ )
 void
 KdmLayoutFixed::update( const TQRect &parentGeometry, bool force )
 {
-	kdDebug() << "KdmLayoutFixed::update " << parentGeometry << endl;
+	kdDebug() << timestamp() << " KdmLayoutFixed::update " << parentGeometry << endl;
 
 	// I can't layout children if the parent rectangle is not valid
 	if (parentGeometry.width() < 0 || parentGeometry.height() < 0) {
-		kdDebug() << "invalid\n";
+		kdDebug() << timestamp() << " invalid\n";
 		return;
 	}
 	// For each child in list I ask their hinted size and set it!
@@ -102,7 +103,7 @@ KdmLayoutBox::update( const TQRect &parentGeometry, bool force )
 				childrenRect.setTop( childrenRect.top() + height + box.spacing );
 			} else {
 				TQRect temp( childrenRect.left(), childrenRect.top(), width, childrenRect.height() );
-				kdDebug() << "placement " << *it << " " << temp << " " << (*it)->placementHint( temp ) << endl;
+				kdDebug() << timestamp() << " placement " << *it << " " << temp << " " << (*it)->placementHint( temp ) << endl;
 				temp = (*it)->placementHint( temp );
 				(*it)->setGeometry( temp, force );
 				childrenRect.setLeft( childrenRect.left() + width + box.spacing );
@@ -125,7 +126,7 @@ KdmLayoutBox::update( const TQRect &parentGeometry, bool force )
 				kdDebug() << this << " placementHint " << *it << " " << temp << " " << itemRect << endl;
 				temp.setWidth( itemRect.width() );
 				childrenRect.setLeft( childrenRect.left() + itemRect.size().width() + box.spacing );
-				kdDebug() << "childrenRect after " << *it << " " << childrenRect << endl;
+				kdDebug() << timestamp() << " childrenRect after " << *it << " " << childrenRect << endl;
 			}
 			itemRect = (*it)->placementHint( temp );
 			kdDebug() << this << " placementHint2 " << *it << " " << temp << " " << itemRect << endl;

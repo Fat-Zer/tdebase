@@ -962,6 +962,18 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   kdDebug(1214) << "KDIconView::slotNewItems count=" << entries.count() << endl;
   KFileItemListIterator it(entries);
   KFileIVI* fileIVI = 0L;
+
+  if (m_nextItemPos.isNull() && !m_dotDirectory)  {
+      // Not found, we'll need to save the new pos
+      kdDebug(1214)<<"Neither a  drop position stored nor m_dotDirectory set"<<endl;
+      m_dotDirectory = new KSimpleConfig( dotDirectoryPath(), true );
+      // recursion
+      slotNewItems( entries );
+      delete m_dotDirectory;
+      m_dotDirectory = 0;
+      return;
+  }
+
   for (; it.current(); ++it)
   {
     KURL url = it.current()->url();
@@ -1025,15 +1037,6 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
         {
             kdDebug(1214)<<"Using saved position"<<endl;
         }
-      }
-      else
-      {
-            // Not found, we'll need to save the new pos
-            kdDebug(1214)<<"slotNewItems(): New item without position information, try to find a sane location"<<endl;
-
-            moveToFreePosition(fileIVI);
-
-            m_bNeedSave = true;
       }
     }
   }
@@ -1638,6 +1641,98 @@ void KDIconView::moveToFreePosition(TQIconViewItem *item )
 }
 
 
+TQPoint KDIconView::findPlaceForIconCol( int column, int dx, int dy)
+{
+    if (column < 0)
+        return TQPoint();
+
+    TQRect rect;
+    rect.moveTopLeft( TQPoint(column * dx, 0) );
+    rect.setWidth(dx);
+    rect.setHeight(dy);
+
+    if (rect.right() > viewport()->width())
+        return TQPoint();
+
+    while ( rect.bottom() < viewport()->height() - spacing() )
+    {
+        if ( !isFreePosition(0,rect) )
+            rect.moveBy(0, rect.height());
+        else
+            return rect.topLeft();
+    }
+
+    return TQPoint();
+}
+
+TQPoint KDIconView::findPlaceForIconRow( int row, int dx, int dy )
+{
+    if (row < 0)
+        return TQPoint();
+
+    TQRect rect;
+    rect.moveTopLeft(TQPoint(0, row * dy));
+    rect.setWidth(dx);
+    rect.setHeight(dy);
+
+    if (rect.bottom() > viewport()->height())
+        return TQPoint();
+
+    while (rect.right() < viewport()->width() - spacing())
+    {
+        if (!isFreePosition(0,rect))
+            rect.moveBy(rect.width()+spacing(), 0);
+        else
+            return rect.topLeft();
+    }
+
+    return TQPoint();
+}
+
+TQPoint KDIconView::findPlaceForIcon( int column, int row)
+{
+    int dx = gridXValue(), dy = 0;
+    TQIconViewItem *item = firstItem();
+    for ( ; item; item = item->nextItem() ) {
+        dx = QMAX( dx, item->width() );
+        dy = QMAX( dy, item->height() );
+    }
+
+    dx += spacing();
+    dy += spacing();
+
+    if (row == -1) {
+        int max_cols = viewport()->width() / dx;
+        int delta = 0;
+        TQPoint res;
+        do {
+            delta++;
+            res = findPlaceForIconCol(column + (delta / 2) * (-2 * (delta % 2) + 1),
+                                      dx, dy);
+            if (delta / 2 > QMAX(max_cols - column, column))
+                return res;
+        } while (res.isNull());
+        return res;
+    }
+
+    if (column == -1) {
+        int max_rows = viewport()->height() / dy;
+        int delta = 0;
+        TQPoint res;
+        do {
+            delta++;
+            res = findPlaceForIconRow(row + (delta / 2) * (-2 * (delta % 2) + 1),
+                                      dx, dy);
+            if (delta / 2 > QMAX(max_rows - row, row))
+                return res;
+        } while (res.isNull());
+        return res;
+    }
+
+    // very unlikely - if I may add that
+    return TQPoint(0, 0);
+}
+
 void KDIconView::saveIconPositions()
 {
   kdDebug(1214) << "KDIconView::saveIconPositions" << endl;
@@ -1664,5 +1759,12 @@ void KDIconView::saveIconPositions()
 
   m_dotDirectory->sync();
 }
+
+void KDIconView::update( const TQString &_url )
+{
+	if (m_dirLister)
+		m_dirLister->updateDirectory( _url );
+}
+
 
 #include "kdiconview.moc"

@@ -87,6 +87,7 @@ signals:
 
 private slots:
     void slotCleared();
+    void slotRemoved( const TQString& item );
     void slotSetIcon( int index );
     void slotActivated( const TQString& text );
 

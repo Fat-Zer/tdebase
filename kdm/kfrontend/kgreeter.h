@@ -73,9 +73,10 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	void slotUserEntered();
 
   protected:
+        void readFacesList();
 	void installUserList();
 	void insertUser( const TQImage &, const TQString &, struct passwd * );
-	void insertUsers();
+	void insertUsers( int limit = -1);
 	void putSession( const TQString &, const TQString &, bool, const char * );
 	void insertSessions();
 	virtual void pluginSetup();
@@ -87,10 +88,13 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	TQStringList *userList;
 	TQPopupMenu *sessMenu;
 	TQValueVector<SessType> sessionTypes;
+        TQStringList randomFaces;
+        TQMap<TQString, TQString> randomFacesMap;
 	int nNormals, nSpecials;
 	int curPrev, curSel;
 	bool prevValid;
 	bool needLoad;
+        bool themed;
 
 	static int curPlugin;
 	static PluginList pluginList;
@@ -142,6 +146,7 @@ class KThemedGreeter : public KGreeter {
 	void slotThemeActivated( const TQString &id );
 	void slotSessMenu();
 	void slotActionMenu();
+	void slotAskAdminPassword();
 
   protected:
 	virtual void updateStatus( bool fail, bool caps, int timedleft );
@@ -154,7 +159,7 @@ class KThemedGreeter : public KGreeter {
 	KdmThemer *themer;
 	KdmItem *caps_warning, *xauth_warning, *pam_error, *timed_label,
 	        *console_rect, *userlist_rect,
-	        *session_button, *system_button;
+	        *session_button, *system_button, *admin_button;
 
   public: // from KGVerifyHandler
 	virtual void verifyFailed();

@@ -98,6 +98,7 @@ private:
     TrayEmbedList m_shownWins;
     TrayEmbedList m_hiddenWins;
     TQStringList m_hiddenIconList;
+    TQStringList m_sortOrderIconList;
     KWinModule *kwin_module;
     Atom net_system_tray_selection;
     Atom net_system_tray_opcode;

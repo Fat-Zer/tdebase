@@ -32,6 +32,9 @@
 #include <unistd.h>
 #include <kcolordrag.h>
 #include <kurldrag.h>
+#include <stdlib.h>
+#include <kio/job.h>
+#include <tqfile.h>
 
 #include <tqdir.h>
 #include <tqevent.h>
@@ -58,6 +61,7 @@
 #include <kglobalsettings.h>
 #include <kpopupmenu.h>
 #include <kapplication.h>
+#include <kdirlister.h>
 // Create the equivalent of KAccelBase::connectItem
 // and then remove this include and fix reconnects in initRoot() -- ellis
 //#include <kaccelbase.h>
@@ -984,6 +988,49 @@ bool KDesktop::event(TQEvent * e)
             m_pIconView->clearSelection();
     }
     return TQWidget::event(e);
+}
+
+TQPoint KDesktop::findPlaceForIcon( int column, int row )
+{
+    if (m_pIconView)
+        return m_pIconView->findPlaceForIcon(column, row);
+    else
+        return TQPoint(-1, -1);
+}
+
+void KDesktop::addIcon(const TQString & _url, int x, int y)
+{
+    addIcon( _url, KGlobalSettings::desktopPath(), x, y );
+}
+
+void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int y)
+{
+    TQString filename = _url.mid(_url.findRev('/') + 1);
+
+    TQValueList<KIO::CopyInfo> files;
+    KIO::CopyInfo i;
+    i.uSource = KURL::fromPathOrURL( _url );
+    i.uDest   = KURL::fromPathOrURL( _dest );
+    i.uDest.addPath( filename );
+    files.append(i);
+    if (!TQFile::exists(i.uDest.prettyURL().replace("file://",TQString::null))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
+    KIO::copy( i.uSource, i.uDest, false ); }
+
+//    m_pIconView->addFuturePosition(filename, x, y);
+    // qDebug("addIcon %s %s %d %d", _url.latin1(), _dest.latin1(), x, y);
+//    system(TQString("cp \"%1\" \"%2/%3\"").arg(KURL(_url).path()).arg(KURL(_dest).path()).arg(filename).latin1());
+//    m_pIconView->update( _dest );
+}
+
+void KDesktop::removeIcon(const TQString &_url)
+{
+	if (_url.at(0) != '/') {
+		qDebug("removeIcon with relative path not supported for now");
+		return;
+	}
+	unlink(KURL(_url).path().latin1());
+	TQString dest = _url.left(_url.findRev('/') + 1);
+        m_pIconView->update( dest );
 }
 
 #include "desktop.moc"

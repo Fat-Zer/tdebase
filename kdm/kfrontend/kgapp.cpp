@@ -36,6 +36,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kcrash.h>
 #include <kstandarddirs.h>
 #include <ksimpleconfig.h>
+#include <klocale.h>
+#include <kdebug.h>
 
 #include <tqtimer.h>
 #include <tqstring.h>
@@ -133,6 +135,7 @@ kg_main( const char *argv0 )
 	static char *argv[] = { (char *)"kdmgreet", 0 };
 	KCmdLineArgs::init( 1, argv, *argv, 0, 0, 0, true );
 
+	kdDebug() << timestamp() << "start" << endl;
 	kde_have_kipc = false;
 	KApplication::disableAutoDcopRegistration();
 	KCrash::setSafer( true );
@@ -180,6 +183,7 @@ kg_main( const char *argv0 )
 
 	GSendInt( G_Ready );
 
+	kdDebug() << timestamp() << " main1" << endl;	
 	setCursor( dpy, app.desktop()->winId(), XC_left_ptr );
 
 	for (;;) {
@@ -220,6 +224,7 @@ kg_main( const char *argv0 )
 			if (_useTheme && !_theme.isEmpty()) {
 				KThemedGreeter *tgrt;
 				dialog = tgrt = new KThemedGreeter;
+				kdDebug() << timestamp() << " themed" << endl;	
 				if (!tgrt->isOK()) {
 					delete tgrt;
 					dialog = new KStdGreeter;

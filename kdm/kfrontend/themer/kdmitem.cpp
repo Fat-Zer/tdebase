@@ -23,10 +23,11 @@
  * Generic Kdm Item
  */
 
-//#define DRAW_OUTLINE 1	// for debugging only
+// #define DRAW_OUTLINE 1	// for debugging only
 
 #include "kdmitem.h"
 #include "kdmlayout.h"
+#include "kdmconfig.h"
 
 #include <kglobal.h>
 #include <kdebug.h>
@@ -35,9 +36,7 @@
 #include <tqwidget.h>
 #include <tqlayout.h>
 #include <tqimage.h>
-#ifdef DRAW_OUTLINE
-# include <tqpainter.h>
-#endif
+#include <tqpainter.h>
 
 KdmItem::KdmItem( KdmItem *parent, const TQDomNode &node, const char *name )
     : TQObject( parent, name )
@@ -47,6 +46,25 @@ KdmItem::KdmItem( KdmItem *parent, const TQDomNode &node, const char *name )
     , myWidget( 0 )
     , myLayoutItem( 0 )
     , buttonParent( 0 )
+{
+  init(node, name);
+}
+
+
+KdmItem::KdmItem( TQWidget *parent, const TQDomNode &node, const char *name )
+    : TQObject( parent, name )
+    , boxManager( 0 )
+    , fixedManager( 0 )
+    , image( 0 )
+    , myWidget( 0 )
+    , myLayoutItem( 0 )
+    , buttonParent( 0 )
+{
+  init(node, name);
+}
+
+void
+KdmItem::init( const TQDomNode &node, const char * )
 {
 	// Set default layout for every item
 	currentManager = MNone;
@@ -62,7 +80,7 @@ KdmItem::KdmItem( KdmItem *parent, const TQDomNode &node, const char *name )
 	state = Snormal;
 
 	// The "toplevel" node (the screen) is really just like a fixed node
-	if (!parent || !parent->inherits( "KdmItem" )) {
+	if (!parent() || !parent()->inherits( "KdmItem" )) {
 		setFixedLayout();
 		return;
 	}
@@ -87,7 +105,7 @@ KdmItem::KdmItem( KdmItem *parent, const TQDomNode &node, const char *name )
 	id = tnode.toElement().attribute( "id", TQString::number( (ulong)this, 16 ) );
 
 	// Tell 'parent' to add 'me' to its children
-	KdmItem *parentItem = static_cast<KdmItem *>( parent );
+	KdmItem *parentItem = static_cast<KdmItem *>( parent() );
 	parentItem->addChildItem( this );
 }
 
@@ -195,7 +213,7 @@ KdmItem::setWidget( TQWidget *widget )
 	if (frame)
 		frame->setFrameStyle( TQFrame::NoFrame );
 
-	myWidget->setGeometry(area);
+	setGeometry(area, true);
 
 	connect( myWidget, TQT_SIGNAL(destroyed()), TQT_SLOT(widgetGone()) );
 }
@@ -236,15 +254,21 @@ KdmItem::setGeometry( const TQRect &newGeometry, bool force )
 
 	area = newGeometry;
 
-	if (myWidget)
-		myWidget->setGeometry( newGeometry );
+	if (myWidget) {
+            TQRect widGeo = newGeometry;
+            if ( widGeo.height() > myWidget->maximumHeight() ) {
+                widGeo.moveTop( widGeo.top() + ( widGeo.height() -  myWidget->maximumHeight() ) / 2 );
+                widGeo.setHeight( myWidget->maximumHeight() );
+            }
+            myWidget->setGeometry( widGeo );
+        }
 	if (myLayoutItem)
 		myLayoutItem->setGeometry( newGeometry );
 
 	// recurr to all boxed children
 	if (boxManager && !boxManager->isEmpty())
 		boxManager->update( newGeometry, force );
-
+ 
 	// recurr to all fixed children
 	if (fixedManager && !fixedManager->isEmpty())
 		fixedManager->update( newGeometry, force );
@@ -258,8 +282,16 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
 	if (isHidden())
 		return;
 
-	if (myWidget || (myLayoutItem && myLayoutItem->widget()))
-		return;
+	if (myWidget || (myLayoutItem && myLayoutItem->widget())) {
+            // KListView because it's missing a Q_OBJECT
+            if ( myWidget && myWidget->isA( "KListView" ) ) {
+                TQPixmap copy( myWidget->size() );
+                kdDebug() <<  myWidget->geometry() << " " << area << " " << myWidget->size() << endl;
+                bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), Qt::CopyROP );
+                myWidget->setPaletteBackgroundPixmap( copy );
+            }
+            return;
+        }
 
 	if (area.intersects( rect )) {
 		TQRect contentsRect = area.intersect( rect );
@@ -280,6 +312,8 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
 	TQValueList<KdmItem *>::Iterator it;
 	for (it = m_children.begin(); it != m_children.end(); ++it)
 		(*it)->paint( p, rect );
+
+
 }
 
 KdmItem *KdmItem::currentActive = 0;
@@ -287,8 +321,11 @@ KdmItem *KdmItem::currentActive = 0;
 void
 KdmItem::mouseEvent( int x, int y, bool pressed, bool released )
 {
+	if (isShown == ExplicitlyHidden)
+		return;
+
 	if (buttonParent && buttonParent != this) {
-		buttonParent->mouseEvent( x, y, pressed, released );
+	        buttonParent->mouseEvent( x, y, pressed, released );
 		return;
 	}
 
@@ -362,7 +399,8 @@ KdmItem::placementHint( const TQRect &parentRect )
 	    w = parentRect.width(),
 	    h = parentRect.height();
 
-	kdDebug() << "KdmItem::placementHint parentRect=" << id << parentRect << " hintedSize=" << hintedSize << endl;
+	kdDebug() << timestamp() << " KdmItem::placementHint parentRect=" << parentRect << " hintedSize=" << hintedSize << endl;
+
 	// check if width or height are set to "box"
 	if (pos.wType == DTbox || pos.hType == DTbox) {
 		if (myLayoutItem || myWidget)
@@ -372,7 +410,7 @@ KdmItem::placementHint( const TQRect &parentRect )
 				return parentRect;
 			boxHint = boxManager->sizeHint();
 		}
-		kdDebug() << " => boxHint " << boxHint << endl;
+		kdDebug() << timestamp() << " boxHint " << boxHint << endl;
 	}
 
 	if (pos.xType == DTpixel)
@@ -380,25 +418,25 @@ KdmItem::placementHint( const TQRect &parentRect )
 	else if (pos.xType == DTnpixel)
 		x = parentRect.right() - pos.x;
 	else if (pos.xType == DTpercent)
-		x += int( parentRect.width() / 100.0 * pos.x );
+		x += qRound( parentRect.width() / 100.0 * pos.x );
 
 	if (pos.yType == DTpixel)
 		y += pos.y;
 	else if (pos.yType == DTnpixel)
 		y = parentRect.bottom() - pos.y;
 	else if (pos.yType == DTpercent)
-		y += int( parentRect.height() / 100.0 * pos.y );
+		y += qRound( parentRect.height() / 100.0 * pos.y );
 
 	if (pos.wType == DTpixel)
 		w = pos.width;
 	else if (pos.wType == DTnpixel)
 		w -= pos.width;
 	else if (pos.wType == DTpercent)
-		w = int( parentRect.width() / 100.0 * pos.width );
+		w = qRound( parentRect.width() / 100.0 * pos.width );
 	else if (pos.wType == DTbox)
 		w = boxHint.width();
 	else if (hintedSize.width() > 0)
-		w = hintedSize.width();
+	        w = hintedSize.width();
 	else
 		w = 0;
 
@@ -407,13 +445,21 @@ KdmItem::placementHint( const TQRect &parentRect )
 	else if (pos.hType == DTnpixel)
 		h -= pos.height;
 	else if (pos.hType == DTpercent)
-		h = int( parentRect.height() / 100.0 * pos.height );
+		h = qRound( parentRect.height() / 100.0 * pos.height );
 	else if (pos.hType == DTbox)
 		h = boxHint.height();
-	else if (hintedSize.height() > 0)
-		h = hintedSize.height();
-	else
+	else if (hintedSize.height() > 0) {
+	        if (w && pos.wType != DTnone)
+	               h = (hintedSize.height() * w) / hintedSize.width();
+	        else
+	               h = hintedSize.height();
+	} else
 		h = 0;
+
+	// we choose to take the hinted size, but it's better to listen to the aspect ratio
+	if (pos.wType == DTnone && pos.hType != DTnone && h && w) {
+	        w = qRound(float(hintedSize.width() * h) / hintedSize.height());
+	}
 
 	// defaults to center
 	int dx = -w / 2, dy = -h / 2;
@@ -430,7 +476,7 @@ KdmItem::placementHint( const TQRect &parentRect )
 			dx = -w;
 	}
 	// KdmItem *p = static_cast<KdmItem*>( parent() );
-	kdDebug() << "KdmItem::placementHint " << id << " x=" << x << " dx=" << dx << " w=" << w << " y=" << y << " dy=" << dy << " h=" << h << " " << parentRect << endl;
+	kdDebug() << timestamp() << " placementHint " << this << " x=" << x << " dx=" << dx << " w=" << w << " y=" << y << " dy=" << dy << " h=" << h << " " << parentRect << endl;
 	y += dy;
 	x += dx;
 
@@ -527,6 +573,19 @@ KdmItem::setFixedLayout( const TQDomNode &node )
 	if (!fixedManager)
 		fixedManager = new KdmLayoutFixed( node );
 	currentManager = MFixed;
+}
+
+TQWidget *
+KdmItem::parentWidget() const
+{
+  if (myWidget)
+    return myWidget;
+  if (!this->parent())
+    return 0;
+
+  if (parent()->qt_cast("TQWidget"))
+    return (TQWidget*)parent();
+  return ((KdmItem*)parent())->parentWidget();
 }
 
 #include "kdmitem.moc"

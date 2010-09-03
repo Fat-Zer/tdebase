@@ -19,8 +19,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#include <config.h>
 #include "kdmlabel.h"
-#include <kgreeter.h>
+#include "kdmconfig.h"
+#include "../kgreeter.h"
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -31,6 +33,7 @@
 #include <tqpainter.h>
 #include <tqfontmetrics.h>
 #include <tqtimer.h>
+#include <tqaccel.h>
 
 #include <unistd.h>
 #include <sys/utsname.h>
@@ -39,7 +42,7 @@
 #endif
 
 KdmLabel::KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name )
-    : KdmItem( parent, node, name )
+       : KdmItem( parent, node, name ), myAccel(0)
 {
 	itemType = "label";
 
@@ -92,21 +95,46 @@ KdmLabel::KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name )
 		}
 	}
 
-	// Check if this is a timer label
+	// Check if this is a timer label)
 	label.isTimer = label.text.find( "%c" ) >= 0;
 	if (label.isTimer) {
 		timer = new TQTimer( this );
 		timer->start( 1000 );
 		connect( timer, TQT_SIGNAL(timeout()), TQT_SLOT(update()) );
 	}
-	cText = lookupText( label.text );
+	setTextInt( lookupText( label.text ) );
+}
+
+void
+KdmLabel::setTextInt( const TQString &txt)
+{
+  // TODO: catch &&
+        cText = txt;
+	cAccel = txt.find('&');
+	delete myAccel;
+	myAccel = 0;
+	if (cAccel != -1) {
+	  cText.remove('&');
+	  myAccel = new TQAccel(parentWidget());
+	  myAccel->insertItem(ALT + UNICODE_ACCEL + cText.at(cAccel).lower().unicode());
+	  connect(myAccel, TQT_SIGNAL(activated(int)), TQT_SLOT(slotAccel()));
+	}
+}
+
+void
+KdmLabel::slotAccel()
+{
+  if (buttonParent)
+    emit activated(buttonParent->getId());
+  else
+    emit activated(id);
 }
 
 void
 KdmLabel::setText( const TQString &txt )
 {
 	label.text = txt;
-	update();
+	setTextInt( lookupText( label.text ) );
 }
 
 QSize
@@ -139,7 +167,23 @@ KdmLabel::drawContents( TQPainter *p, const TQRect &/*r*/  )
 	p->setFont( l->font );
 	p->setPen( l->color );
 	//TODO paint clipped (tested but not working..)
-	p->drawText( area, AlignLeft | SingleLine, cText );
+        if (cAccel != -1 && (!id.isEmpty() || buttonParent) ) {
+	  TQString left = cText.left(cAccel);
+	  TQString right = cText.mid(cAccel + 1);
+	  p->drawText( area, AlignLeft | SingleLine, left );
+	  TQRect tarea = area;
+	  TQFontMetrics fm(l->font);
+	  tarea.rLeft() += fm.width(left);
+	  TQFont f(l->font);
+	  f.setUnderline(true);
+	  p->setFont ( f );
+	  p->drawText( tarea, AlignLeft | SingleLine, TQString(cText.at(cAccel)));
+	  tarea.rLeft() += fm.width(cText.at(cAccel));
+	  p->setFont( l->font );
+	  p->drawText( tarea, AlignLeft | SingleLine, right);
+        } else {
+	  p->drawText( area, AlignLeft | SingleLine, cText);
+	}
 }
 
 void
@@ -159,7 +203,7 @@ KdmLabel::update()
 {
 	TQString text = lookupText( label.text );
 	if (text != cText) {
-		cText = text;
+	        setTextInt(text);
 		needUpdate();
 	}
 }
@@ -170,18 +214,20 @@ static const struct {
 	{ "language",           I18N_NOOP("Language") },
 	{ "session",            I18N_NOOP("Session Type") },
 	{ "system",             I18N_NOOP("Menu") },	// i18n("Actions");
+        { "admin",              I18N_NOOP("&Administration") },
 	{ "disconnect",         I18N_NOOP("Disconnect") },
 	{ "quit",               I18N_NOOP("Quit") },
-	{ "halt",               I18N_NOOP("Power off") },
+	{ "halt",               I18N_NOOP("Power Off") },
 	{ "suspend",            I18N_NOOP("Suspend") },
 	{ "reboot",             I18N_NOOP("Reboot") },
 	{ "chooser",            I18N_NOOP("XDMCP Chooser") },
 	{ "config",             I18N_NOOP("Configure") },
-	{ "caps-lock-warning",  I18N_NOOP("You have got caps lock on.") },
+	{ "caps-lock-warning",  I18N_NOOP("Caps Lock is enabled.") },
 	{ "timed-label",        I18N_NOOP("User %s will login in %d seconds") },
 	{ "welcome-label",      I18N_NOOP("Welcome to %h") },	// _greetString
 	{ "username-label",     I18N_NOOP("Username:") },
 	{ "password-label",     I18N_NOOP("Password:") },
+        { "domain-label",       I18N_NOOP("Domain:") },
 	{ "login",              I18N_NOOP("Login") }
 };
 
@@ -195,7 +241,7 @@ KdmLabel::lookupStock( const TQString &stock )
 		if (type == stocks[i].type)
 			return i18n(stocks[i].text);
 
-	kdDebug() << "Invalid <stock> element. Check your theme!" << endl;
+	kdDebug() << timestamp() << " Invalid <stock> element. Check your theme!" << endl;
 	return stock;
 }
 
@@ -205,7 +251,6 @@ KdmLabel::lookupText( const TQString &t )
 	TQString text = t;
 
 	text.replace( '_', '&' );
-//	text.remove( '_' ); // FIXME add key accels, remove underscores for now
 
 	TQMap<TQChar,TQString> m;
 	struct utsname uts;

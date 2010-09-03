@@ -140,12 +140,15 @@ AuthReturn Authenticate(const char *caller, const char *method,
   openlog("kcheckpass", LOG_PID, LOG_AUTH);
 
   PAM_data.conv = conv;
-  if (strcmp(method, "classic")) {
-    sprintf(pservb, "%.31s-%.31s", caller, method);
-    pam_service = pservb;
-  } else {
+  if (!strcmp(method, "classic")) {
     PAM_data.classic = 1;
     pam_service = caller;
+  }
+  else if (!strcmp(method, "pam")) {
+    pam_service = caller;
+  } else {
+    sprintf(pservb, "%.31s-%.31s", caller, method);
+    pam_service = pservb;
   }
   pam_error = pam_start(pam_service, user, &PAM_conversation, &pamh);
   if (pam_error != PAM_SUCCESS)

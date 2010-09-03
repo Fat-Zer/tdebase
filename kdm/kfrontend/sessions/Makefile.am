@@ -1,6 +1,6 @@
 sessionsdir = $(kde_datadir)/kdm/sessions
 sessions_DATA = \
-    kde.desktop gnome.desktop \
+    admin.desktop kde.desktop gnome.desktop \
     9wm.desktop \
     aewm++.desktop \
     aewm.desktop \

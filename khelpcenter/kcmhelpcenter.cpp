@@ -321,6 +321,7 @@ bool KCMHelpCenter::save()
 
 void KCMHelpCenter::load()
 {
+  findWriteableIndexDir();
   mIndexDirLabel->setText( Prefs::indexDirectory() );
 
   mListView->clear();
@@ -675,6 +676,12 @@ void KCMHelpCenter::checkSelection()
   enableButtonOK( count != 0 );
 }
 
+void KCMHelpCenter::findWriteableIndexDir()
+{
+  TQFileInfo currentDir( Prefs::indexDirectory() );
+  if ( !currentDir.isWritable() )
+    Prefs::setIndexDirectory( KGlobal::dirs()->saveLocation("data", "khelpcenter/index/") );
+}
 #include "kcmhelpcenter.moc"
 
 // vim:ts=2:sw=2:et

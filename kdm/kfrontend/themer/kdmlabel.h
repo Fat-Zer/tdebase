@@ -50,6 +50,7 @@ protected:
 	// handle switching between normal / active / prelight configurations
 	virtual void statusChanged();
 
+public:
 	struct LabelStruct {
 		TQString text;
 		bool isTimer;
@@ -67,6 +68,7 @@ protected:
 
 public slots:
 	void update();
+	void slotAccel();
 
 private:
 	/* Method to lookup the caption associated with an item */
@@ -76,6 +78,10 @@ private:
 	TQString lookupText( const TQString &t );
 
 	TQString cText;
+	int cAccel;
+	TQAccel *myAccel;
+
+	void setTextInt(const TQString &);
 };
 
 #endif

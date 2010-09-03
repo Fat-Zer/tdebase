@@ -73,6 +73,8 @@ public:
 
     TQStringList selectedURLs();
 
+    void update( const TQString &url );
+
     /**
      * Save the icon positions
      */
@@ -103,6 +105,10 @@ public:
 
     void startDirLister();
 
+    TQPoint findPlaceForIconCol( int column, int dx, int dy );
+    TQPoint findPlaceForIconRow( int row, int dx, int dy );
+    TQPoint findPlaceForIcon( int column, int row );
+
 protected slots:
 
     // slots connected to the icon view
@@ -112,8 +118,9 @@ protected slots:
     void slotMouseButtonClickedKDesktop(int _button, TQIconViewItem* _item, const TQPoint& _global);
     void slotContextMenuRequested(TQIconViewItem* _item, const TQPoint& _global);
     void slotEnableAction( const char * name, bool enabled );
+public slots:
     void slotAboutToCreate(const TQPoint &pos, const TQValueList<KIO::CopyInfo> &files);
-
+protected slots:
     void slotItemRenamed(TQIconViewItem*, const TQString &name);
 
     // slots connected to the directory lister

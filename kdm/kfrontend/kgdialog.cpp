@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "kdm_greet.h"
 
 #include <klocale.h>
+#include <kiconloader.h>
 
 #include <tqaccel.h>
 #include <tqlayout.h>
@@ -84,7 +85,8 @@ KGDialog::completeMenu()
 		inserten( i18n("Co&nsole Login"), ALT+Key_N, TQT_SLOT(slotConsole()) );
 
 	if (_allowShutdown != SHUT_NONE) {
-		inserten( i18n("&Shutdown..."), ALT+Key_S, TQT_SLOT(slotShutdown( int )) );
+                ensureMenu();
+                optMenu->insertItem(SmallIconSet( "exit" ), i18n("&Shutdown..."), this, TQT_SLOT(slotShutdown(int)), ALT+Key_S );
 		TQAccel *accel = new TQAccel( this );
 		accel->insertItem( ALT+CTRL+Key_Delete );
 		connect( accel, TQT_SIGNAL(activated( int )), TQT_SLOT(slotShutdown( int )) );

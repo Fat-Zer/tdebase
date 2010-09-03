@@ -101,7 +101,7 @@ protected:
   TQString lookup(const TQString &mimeType);
   TQString lookupMimeType(const TQString &url);
 
-  bool loadViewer();
+  bool loadViewer(const TQString &mimeType);
   void unloadViewer();
 
 protected slots:

@@ -73,6 +73,13 @@ struct ThemeInfo {
 };
 
 
+static TQString defaultThemeDescription( const TQString& theme )
+{
+    if( theme == "redglass" || theme == "whiteglass" || theme == "pseudocore" || theme == "handhelds" )
+        return i18n( "XFree theme %1 - incomplete for KDE" ).arg( theme );
+    return i18n( "No description available" );;
+}
+
 ThemePage::ThemePage( TQWidget* parent, const char* name )
 	: TQWidget( parent, name ), selectedTheme( NULL ), currentTheme( NULL )
 {
@@ -333,7 +340,7 @@ void ThemePage::insertTheme( const TQString &path )
 
 	// Defaults in case there's no name or comment field.
 	TQString name   = dirName;
-	TQString desc   = i18n( "No description available" );
+	TQString desc   = defaultThemeDescription( name );
 	TQString sample = "left_ptr";
 
 	KSimpleConfig c( path + "/index.theme", true ); // Open read-only
@@ -480,7 +487,7 @@ void ThemePage::insertThemes()
 			// Defaults in case there's no index.theme file or it lacks
 			// a name and a comment field.
 			TQString name   = *it;
-			TQString desc   = i18n( "No description available" );
+			TQString desc   = defaultThemeDescription( name );
 			TQString sample = "left_ptr";
 
 			// Parse the index.theme file if the theme has one.

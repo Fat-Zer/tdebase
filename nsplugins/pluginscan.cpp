@@ -470,7 +470,7 @@ void writeServicesFile( TQStringList mimeTypes )
         ts << "Icon=netscape" << endl;
         ts << "Comment=" << i18n("Netscape plugin viewer") << endl;
         ts << "X-KDE-Library=libnsplugin" << endl;
-        ts << "InitialPreference=0" << endl;
+        ts << "InitialPreference=7" << endl;
         ts << "ServiceTypes=KParts/ReadOnlyPart,Browser/View" << endl;
         ts << "X-KDE-BrowserView-PluginsInfo=nsplugins/pluginsinfo" << endl;
 

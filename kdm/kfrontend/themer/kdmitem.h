@@ -90,6 +90,8 @@ public:
 	 * Item constructor and destructor
 	 */
 	KdmItem( KdmItem *parent, const TQDomNode &node = TQDomNode(), const char *name = 0 );
+	KdmItem( TQWidget *parent, const TQDomNode &node = TQDomNode(), const char *name = 0 ); // for the root
+
 	virtual ~KdmItem();
 
 	/**
@@ -151,6 +153,7 @@ public:
 
 	KdmItem *findNode( const TQString &id ) const;
 	virtual void setWidget( TQWidget *widget );
+	TQWidget *widget() const { return myWidget; }
 	virtual void setLayoutItem( TQLayoutItem *item );
 
 	virtual void hide( bool force = false );
@@ -159,6 +162,9 @@ public:
 	bool isHidden() const { return isShown != Shown; }
 	bool isExplicitlyHidden() const { return isShown == ExplicitlyHidden; }
 	TQRect rect() const { return area; }
+
+	TQWidget *parentWidget() const;
+	TQString getId() const { return id; }
 
 signals:
 	void needUpdate( int x, int y, int w, int h );
@@ -237,6 +243,7 @@ protected:
 	void parseColor( const TQString &, TQColor & );
 
 	void inheritFromButton( KdmItem *button );
+	void init( const TQDomNode &node = TQDomNode(), const char *name = 0 );
 
 	TQString itemType, id;
 	TQValueList<KdmItem *> m_children;

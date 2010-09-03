@@ -14,11 +14,16 @@ main(int argc, char *argv[])
    a.iconLoader()->addAppDir("ksmserver");
    KSMShutdownFeedback::start();
 
+   // ShutdownTypeNone == Logout == 0
+   // ShutdownTypeReboot == 1
+   // ShutdownTypeHalt == 2
    KApplication::ShutdownType sdtype = KApplication::ShutdownTypeNone;
    TQString bopt;
+   KSMDelayedMessageBox::showTicker( sdtype );
+   /*
    (void)KSMShutdownDlg::confirmShutdown( true,
                                           sdtype,
-                                          bopt );
+                                          bopt );*/
 /*   (void)KSMShutdownDlg::confirmShutdown( false,
                                           sdtype,
                                           bopt ); */

@@ -23,6 +23,7 @@
 #include <X11/Xlib.h>
 
 class KLibrary;
+class KWinModule;
 
 struct GreeterPluginHandle {
     KLibrary *library;
@@ -79,6 +80,7 @@ private slots:
     void suspend();
     void checkDPMSActive();
     void slotDeadTimePassed();
+    void windowAdded( WId );
 
 private:
     void configure();
@@ -103,6 +105,11 @@ private:
     void stayOnTop();
     void lockXF86();
     void unlockXF86();
+    void showVkbd();
+    void hideVkbd();
+    bool forwardVkbdEvent( XEvent* event );
+    void sendVkbdFocusInOut( WId window, Time t );
+    void windowAdded( WId window, bool managed );
     void resume( bool force );
     static TQVariant getConf(void *ctx, const char *key, const TQVariant &dflt);
 
@@ -135,18 +142,29 @@ private:
     int         mAutoLogoutTimerId;
     int         mAutoLogoutTimeout;
     bool        mAutoLogout;
-    bool        mInfoMessageDisplayed;
-    TQDialog     *currentDialog;
-    bool        mDialogControlLock;
-    bool        mForceReject;
+
+    TQTimer      *resizeTimer;
+    unsigned int  mkeyCode;
+
+    KProcess*   mVkbdProcess;
+    KWinModule* mKWinModule;
+    struct VkbdWindow
+        {
+        WId id;
+        QRect rect;
+        };
+    QValueList< VkbdWindow > mVkbdWindows;
+    WId         mVkbdLastEventWindow;
 
     bool        mPipeOpen;
     int         mPipe_fd;
     bool        mPipeOpen_out;
     int         mPipe_fd_out;
 
-    TQTimer      *resizeTimer;
-    unsigned int  mkeyCode;
+    bool        mInfoMessageDisplayed;
+    TQDialog     *currentDialog;
+    bool        mDialogControlLock;
+    bool        mForceReject;
 };
 
 #endif
