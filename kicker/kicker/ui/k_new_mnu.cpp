@@ -1405,7 +1405,7 @@ void KMenu::slotLock()
 void KMenu::slotOpenHomepage()
 {
     accept();
-    kapp->invokeBrowser("http://opensuse.org");
+    kapp->invokeBrowser("http://trinity.pearsoncomputing.net");
 }
 
 void KMenu::slotLogout()
