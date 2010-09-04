@@ -179,6 +179,7 @@ void MenuTab::menuStyleChanged()
        kcfg_UseSearchBar->setEnabled(true);
        kcfg_MaxEntries2->setEnabled(true);
        maxrecentdocs->setEnabled(true);
+       kcfg_NumVisibleEntries->setEnabled(true);
     }
     else {
        m_openOnHover->setEnabled(true);
@@ -190,6 +191,7 @@ void MenuTab::menuStyleChanged()
        kcfg_UseSearchBar->setEnabled(false);
        kcfg_MaxEntries2->setEnabled(false);
        maxrecentdocs->setEnabled(false);
+       kcfg_NumVisibleEntries->setEnabled(false);
     }
 }
 
