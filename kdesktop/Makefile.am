@@ -6,8 +6,6 @@ kdesktop_la_LIBADD   = libkdesktopsettings.la $(top_builddir)/libkonq/libkonq.la
 
 SUBDIRS = . lock pics patterns programs init kwebdesktop
 
-KDE_OPTIONS = nofinal
-
 ####### Files
 
 bin_PROGRAMS = kcheckrunning
