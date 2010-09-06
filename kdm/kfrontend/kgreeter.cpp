@@ -84,11 +84,13 @@ class UserListView : public KListView {
 		addColumn( TQString::null );
 		setColumnAlignment( 0, AlignVCenter );
 		setResizeMode( TQListView::LastColumn );
-		if (themed) {
-		  setBackgroundMode( Qt::NoBackground );
-		  viewport()->setBackgroundMode( Qt::NoBackground );
-		  setFrameStyle( TQFrame::NoFrame );
-		}
+                // FIXME: This must be configurable, so disable
+                // painting of list background for now.
+//		if (themed) {
+//		  setBackgroundMode( Qt::NoBackground );
+//		  viewport()->setBackgroundMode( Qt::NoBackground );
+//		  setFrameStyle( TQFrame::NoFrame );
+//		}
 	}
 
         bool themed;
@@ -125,6 +127,10 @@ public:
     virtual void paintEmptyArea ( TQPainter * p, const TQRect & rect )
     {
       if (!themed)
+        return KListView::paintEmptyArea(p, rect );
+
+        // FIXME: This must be configurable, so disable
+        // painting of list background for now.
         return KListView::paintEmptyArea(p, rect );
 
         const TQPixmap *pm = paletteBackgroundPixmap();
@@ -1049,7 +1055,7 @@ KThemedGreeter::pluginSetup()
 	inherited::pluginSetup();
 
 	if (userView && verify->entitiesLocal() && verify->entityPresettable() && userlist_rect) {
-		userView->setMaximumHeight( userView->sumHeight() );
+//		userView->setMaximumHeight( userView->sumHeight() );
 		userlist_rect->setWidget( userView );
 	} else {
 		if (userView)

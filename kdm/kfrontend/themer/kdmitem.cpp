@@ -283,13 +283,17 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
 		return;
 
 	if (myWidget || (myLayoutItem && myLayoutItem->widget())) {
-            // KListView because it's missing a Q_OBJECT
-            if ( myWidget && myWidget->isA( "KListView" ) ) {
-                TQPixmap copy( myWidget->size() );
-                kdDebug() <<  myWidget->geometry() << " " << area << " " << myWidget->size() << endl;
-                bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), Qt::CopyROP );
-                myWidget->setPaletteBackgroundPixmap( copy );
-            }
+            // KListView because it's missing a Q_OBJECT'
+            // FIXME: This is a nice idea intheory, but in practice it is
+            // very confusing for the user not to see then empty list box
+            // delineated from the rest of the greeter.
+            // Maybe set a darker version of the background instead of an exact copy?
+//            if ( myWidget && myWidget->isA( "KListView" ) ) {
+//                TQPixmap copy( myWidget->size() );
+//                kdDebug() <<  myWidget->geometry() << " " << area << " " << myWidget->size() << endl;
+//                bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), Qt::CopyROP );
+//                myWidget->setPaletteBackgroundPixmap( copy );
+//            }
             return;
         }
 

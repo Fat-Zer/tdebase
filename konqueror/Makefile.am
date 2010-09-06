@@ -48,8 +48,8 @@ noinst_HEADERS = KonqMainWindowIface.h KonqViewIface.h delayedinitializer.h \
 	konq_misc.h konq_openurlrequest.h konq_profiledlg.h konq_run.h \
 	konq_view.h konq_viewmgr.h konq_extensionmanager.h version.h
 
-konqueror_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) -lconnectionmanager
-konqueror_la_LIBADD = ../libkonq/libkonq.la libkonqueror_intern.la $(LIBMALLOC) $(LIB_KUTILS) -lconnectionmanager
+konqueror_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) -lconnectionmanager -lnetworkstatus
+konqueror_la_LIBADD = ../libkonq/libkonq.la libkonqueror_intern.la $(LIBMALLOC) $(LIB_KUTILS) -lconnectionmanager -lnetworkstatus
 
 # Hmm, this experiment of a static konq failed, don't trust it...
 # (but feel free to fix it :)
