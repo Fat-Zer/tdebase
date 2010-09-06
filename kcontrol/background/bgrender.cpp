@@ -1026,7 +1026,7 @@ KVirtualBGRenderer::KVirtualBGRenderer( int desk, KConfig *config )
     m_numRenderers = 0;
     m_scaleX = 1;
     m_scaleY = 1;
-    
+
     // The following code is borrowed from KBackgroundSettings::KBackgroundSettings
     if (!config) {
         int screen_number = 0;
@@ -1044,7 +1044,7 @@ KVirtualBGRenderer::KVirtualBGRenderer( int desk, KConfig *config )
         m_pConfig = config;
         m_bDeleteConfig = false;
     }
-    
+
     initRenderers();
     m_size = KApplication::desktop()->geometry().size();
 }
@@ -1053,14 +1053,14 @@ KVirtualBGRenderer::~KVirtualBGRenderer()
 {
     for (unsigned i=0; i<m_numRenderers; ++i)
         delete m_renderer[i];
-   
+
     delete m_pPixmap;
-    
+
     if (m_bDeleteConfig)
         delete m_pConfig;
 }
 
-    
+
 KBackgroundRenderer * KVirtualBGRenderer::renderer(unsigned screen)
 {
     return m_renderer[screen];
@@ -1071,7 +1071,7 @@ TQPixmap KVirtualBGRenderer::pixmap()
 {
     if (m_numRenderers == 1)
         return m_renderer[0]->pixmap();
-    
+
     return *m_pPixmap;
 }
 
@@ -1154,7 +1154,7 @@ void KVirtualBGRenderer::setEnabled(bool enable)
 void KVirtualBGRenderer::desktopResized()
 {
     m_size = KApplication::desktop()->geometry().size();
-    
+
     if (m_pPixmap)
     {
         delete m_pPixmap;
@@ -1170,21 +1170,21 @@ void KVirtualBGRenderer::setPreview(const TQSize & size)
 {
     if (m_size == size)
         return;
-    
+
     m_size = size;
-    
+
     if (m_pPixmap)
         m_pPixmap->resize(m_size);
-    
+
     // Scaling factors
     m_scaleX = float(m_size.width()) / float(TQApplication::desktop()->size().width());
     m_scaleY = float(m_size.height()) / float(TQApplication::desktop()->size().height());
-    
+
     // Scale renderers appropriately
     for (unsigned i=0; i<m_renderer.size(); ++i)
     {
         TQSize unscaledRendererSize = renderSize(i);
-        
+
         m_renderer[i]->setPreview( TQSize(
                 int(unscaledRendererSize.width() * m_scaleX),
                 int(unscaledRendererSize.height() * m_scaleY) ) );
@@ -1202,20 +1202,20 @@ void KVirtualBGRenderer::initRenderers()
 {
     m_pConfig->setGroup("Background Common");
     m_bDrawBackgroundPerScreen = m_pConfig->readBoolEntry( TQString("DrawBackgroundPerScreen_%1").arg(m_desk), _defDrawBackgroundPerScreen );
-    
+
     m_bCommonScreen = m_pConfig->readBoolEntry("CommonScreen", _defCommonScreen);
-    
+
     m_numRenderers = m_bDrawBackgroundPerScreen ? KApplication::desktop()->numScreens() : 1;
-    
+
     m_bFinished.resize(m_numRenderers);
     m_bFinished.fill(false);
-    
+
     if (m_numRenderers == m_renderer.size())
         return;
-    
+
     for (unsigned i=0; i<m_renderer.size(); ++i)
         delete m_renderer[i];
-    
+
     m_renderer.resize(m_numRenderers);
     for (unsigned i=0; i<m_numRenderers; ++i)
     {
@@ -1231,12 +1231,12 @@ void KVirtualBGRenderer::initRenderers()
 void KVirtualBGRenderer::load(int desk, bool reparseConfig)
 {
     m_desk = desk;
-    
+
     m_pConfig->setGroup("Background Common");
     m_bCommonScreen = m_pConfig->readBoolEntry("CommonScreen", _defCommonScreen);
-    
+
     initRenderers();
-    
+
     for (unsigned i=0; i<m_numRenderers; ++i)
     {
         unsigned eScreen = m_bCommonScreen ? 0 : i;
@@ -1249,51 +1249,51 @@ void KVirtualBGRenderer::screenDone(int _desk, int _screen)
 {
     Q_UNUSED(_desk);
     Q_UNUSED(_screen);
-    
+
     const KBackgroundRenderer * sender = dynamic_cast<const KBackgroundRenderer*>(this->sender());
     int screen = m_renderer.find(sender);
     if (screen == -1)
         //??
         return;
-    
+
     m_bFinished[screen] = true;
-    
-    
+
+
     if (m_pPixmap)
     {
         // There's more than one renderer, so we are drawing each output to our own pixmap
-        
+
         TQRect overallGeometry;
         for (int i=0; i < KApplication::desktop()->numScreens(); ++i) {
             overallGeometry |= KApplication::desktop()->screenGeometry(i);
         }
-        
+
         TQPoint drawPos = KApplication::desktop()->screenGeometry(screen).topLeft() - overallGeometry.topLeft();
         drawPos.setX( int(drawPos.x() * m_scaleX) );
         drawPos.setY( int(drawPos.y() * m_scaleY) );
-        
+
         TQPixmap source = m_renderer[screen]->pixmap();
         TQSize renderSize = this->renderSize(screen);
         renderSize.setWidth( int(renderSize.width() * m_scaleX) );
         renderSize.setHeight( int(renderSize.height() * m_scaleY) );
-        
+
         TQPainter p(m_pPixmap);
-        
+
         if (renderSize == source.size())
             p.drawPixmap( drawPos, source );
-        
+
         else
             p.drawTiledPixmap( drawPos.x(), drawPos.y(), renderSize.width(), renderSize.height(), source );
-        
+
         p.end();
     }
-    
+
     for (unsigned i=0; i<m_bFinished.size(); ++i)
     {
         if (!m_bFinished[i])
             return;
     }
-    
+
     emit imageDone(m_desk);
 }
 
@@ -1305,7 +1305,7 @@ void KVirtualBGRenderer::start()
         delete m_pPixmap;
         m_pPixmap = 0l;
     }
-    
+
     if (m_numRenderers > 1)
     {
         m_pPixmap = new TQPixmap(m_size);
@@ -1314,7 +1314,7 @@ void KVirtualBGRenderer::start()
         // previews, etc
         m_pPixmap->fill(Qt::black);
     }
-    
+
     m_bFinished.fill(false);
     for (unsigned i=0; i<m_numRenderers; ++i)
         m_renderer[i]->start();
@@ -1331,10 +1331,10 @@ void KVirtualBGRenderer::stop()
 void KVirtualBGRenderer::cleanup()
 {
     m_bFinished.fill(false);
-    
+
     for (unsigned i=0; i<m_numRenderers; ++i)
         m_renderer[i]->cleanup();
-    
+
     delete m_pPixmap;
     m_pPixmap = 0l;
 }
