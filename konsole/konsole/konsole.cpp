@@ -114,6 +114,7 @@ Time to start a requirement list.
 #include <knotifydialog.h>
 #include <kprinter.h>
 #include <kaccelmanager.h>
+#include <kurifilter.h>
 
 #include <kaction.h>
 #include <kshell.h>
@@ -268,6 +269,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 ,sessionNumberMapper(0)
 ,sl_sessionShortCuts(0)
 ,s_workDir(workdir)
+,m_filterData(0)
 {
   isRestored = b_inRestore;
   connect( &m_closeTimeout, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotCouldNotClose()));
@@ -346,6 +348,8 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 
 Konsole::~Konsole()
 {
+    delete m_filterData;
+
     sessions.first();
     while(sessions.current())
     {
@@ -718,6 +722,11 @@ void Konsole::makeGUI()
 
       m_copyClipboard->plug(m_rightButton);
       m_pasteClipboard->plug(m_rightButton);
+
+      m_openSelection = new KPopupMenu(this);
+      m_rightButton->insertItem( i18n("&Open.."), m_openSelection );
+      connect(m_openSelection, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotOpenSelection()));
+
       if (m_signals)
          m_rightButton->insertItem(i18n("&Send Signal"), m_signals);
 
@@ -3948,6 +3957,34 @@ void Konsole::slotFindHistory()
 
   m_finddialog->show();
   m_finddialog->result();
+}
+
+void Konsole::slotOpenSelection()
+{
+  delete m_filterData;
+
+  m_openSelection->clear();
+  disconnect(m_openSelection, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotOpenURI(int)));
+
+  TQString selection = se->getEmulation()->getSelection();
+  TQString curdir = baseURL().path();
+
+  if ( TQFile::exists( curdir + selection ) ) {
+     selectedURL = TQString(curdir + selection);
+  } else {
+     selectedURL = TQString(selection);
+  }
+
+  m_filterData = new KURIFilterData( selectedURL );
+  KURIFilter::self()->filterURI( *(m_filterData) );
+  m_openSelection->insertItem( SmallIconSet( m_filterData->iconName() ),i18n( "%1" ).arg(m_filterData->uri().url()), 1 );
+
+  connect(m_openSelection, TQT_SIGNAL(activated(int)), TQT_SLOT(slotOpenURI(int)));
+}
+
+void Konsole::slotOpenURI(int)
+{
+  (void) new KRun( m_filterData->uri() );
 }
 
 void Konsole::slotFindNext()

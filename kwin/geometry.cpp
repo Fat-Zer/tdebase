@@ -1063,6 +1063,15 @@ void Client::checkDirection( int new_diff, int old_diff, TQRect& rect, const TQR
                 rect.moveLeft( area.right() - 5 );
             }
         }
+    if (!moveResizeMode && options->shadowEnabled(isActive()))
+        {
+        // If the user is manually resizing, let Client::leaveMoveResize()
+        // decide when to redraw the shadow
+        removeShadow();
+        drawIntersectingShadows();
+        if (options->shadowEnabled(isActive()))
+            drawDelayedShadow();
+        }
     }
 
 /*!
@@ -2322,6 +2331,7 @@ bool Client::startMoveResize()
         }
     if ( maximizeMode() != MaximizeRestore )
         resetMaximize();
+    removeShadow();
     moveResizeMode = true;
     workspace()->setClientIsMoving(this);
     initialMoveResizeGeom = moveResizeGeom = geometry();
@@ -2390,6 +2400,11 @@ void Client::leaveMoveResize()
     moveResizeMode = false;
     delete eater;
     eater = 0;
+    if (options->shadowEnabled(isActive()))
+        {
+        drawIntersectingShadows();
+        updateOpacityCache();
+        }
     }
 
 // This function checks if it actually makes sense to perform a restricted move/resize.

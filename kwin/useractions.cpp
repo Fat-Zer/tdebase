@@ -65,6 +65,7 @@ TQPopupMenu* Workspace::clientPopup()
         advanced_popup->insertItem( SmallIconSet( "window_fullscreen" ),
             i18n("&Fullscreen")+'\t'+keys->shortcut("Window Fullscreen").seq(0).toString(), Options::FullScreenOp );
         advanced_popup->insertItem( i18n("&No Border")+'\t'+keys->shortcut("Window No Border").seq(0).toString(), Options::NoBorderOp );
+	advanced_popup->insertItem( i18n("Shad&ow"), Options::ShadowOp );
         advanced_popup->insertItem( SmallIconSet("key_bindings"),
             i18n("Window &Shortcut...")+'\t'+keys->shortcut("Setup Window Shortcut").seq(0).toString(), Options::SetupWindowShortcutOp );
         advanced_popup->insertItem( SmallIconSet( "wizard" ), i18n("&Special Window Settings..."), Options::WindowRulesOp );
@@ -172,6 +173,10 @@ void Workspace::clientPopupAboutToShow()
     advanced_popup->setItemEnabled( Options::FullScreenOp, active_popup_client->userCanSetFullScreen() );
     advanced_popup->setItemChecked( Options::NoBorderOp, active_popup_client->noBorder() );
     advanced_popup->setItemEnabled( Options::NoBorderOp, active_popup_client->userCanSetNoBorder() );
+    
+    advanced_popup->setItemEnabled( Options::ShadowOp, (options->shadowWindowType(active_popup_client->windowType()) && options->shadowEnabled(active_popup_client->isActive())) );
+    advanced_popup->setItemChecked( Options::ShadowOp, active_popup_client->isShadowed() );
+    
     popup->setItemEnabled( Options::MinimizeOp, active_popup_client->isMinimizable() );
     popup->setItemEnabled( Options::CloseOp, active_popup_client->isCloseable() );
     if (options->useTranslucency)
@@ -397,6 +402,9 @@ void Workspace::performWindowOperation( Client* c, Options::WindowOperation op )
             break;
         case Options::ShadeOp:
             c->performMouseCommand( Options::MouseShade, TQCursor::pos());
+            break;
+        case Options::ShadowOp:
+            c->setShadowed( !c->isShadowed() );
             break;
         case Options::OnAllDesktopsOp:
             c->setOnAllDesktops( !c->isOnAllDesktops() );

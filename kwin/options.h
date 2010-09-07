@@ -268,6 +268,45 @@ class Options : public KDecorationOptions
         */
         bool showGeometryTip();
 
+        /**
+        * @returns A TQColor representing the colour that window drop shadows should
+        *          be.
+        */
+        TQColor &shadowColour(bool active=true);
+
+        /**
+        * @returns true if shadows should be drawn around windows of the
+        *          specified type
+        */
+        bool shadowWindowType(NET::WindowType t);
+
+        /**
+        * @returns true if window shadows should be drawn
+        */
+        bool shadowEnabled(bool active=true);
+
+        /**
+        * @returns Window shadow's opacity between 0.01 and 1.00.
+        */
+        double shadowOpacity(bool active=true);
+
+        /**
+        * @returns How thick a shadow should be to either side of of a window.
+        */
+        int shadowThickness(bool active=true);
+
+        /**
+        * @returns Number of pixels along the X-axis by which to offset window
+        *          shadows.
+        */
+        int shadowXOffset(bool active=true);
+
+        /**
+        * @returns Number of pixels along the Y-axis by which to offset window
+        *          shadows.
+        */
+        int shadowYOffset(bool active=true);
+
         enum { ElectricDisabled = 0, ElectricMoveOnly = 1, ElectricAlways = 2 };
         /**
         * @returns true if electric borders are enabled. With electric borders
@@ -336,6 +375,21 @@ class Options : public KDecorationOptions
         bool show_geometry_tip;
         bool topmenus;
         bool desktop_topmenu;
+        TQColor shadow_colour;
+        TQColor shadow_inactive_colour;
+        bool shadow_docks;
+        bool shadow_overrides;
+        bool shadow_topMenus;
+        bool shadow_inactive_enabled;
+        bool shadow_enabled;
+        double shadow_inactive_opacity;
+        double shadow_opacity;
+        int shadow_inactive_thickness;
+        int shadow_thickness;
+        int shadow_inactive_x_offset;
+        int shadow_x_offset;
+        int shadow_inactive_y_offset;
+        int shadow_y_offset;
         // List of window classes for which not to use focus stealing prevention
         TQStringList ignoreFocusStealingClasses;
 

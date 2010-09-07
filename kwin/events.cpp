@@ -1078,6 +1078,217 @@ int qtToX11State( Qt::ButtonState state )
 // for the decoration window cannot be (easily) intercepted as X11 events
 bool Client::eventFilter( TQObject* o, TQEvent* e )
     {
+    if (o == shadowWidget)
+        {
+        if (e->type() == TQEvent::MouseButtonRelease)
+            {
+            int buttonMask, buttonPressed, x, y, x_root, y_root;
+            unsigned int mask;
+            TQMouseEvent *qe = (TQMouseEvent *)e;
+            Window inner_window, parent_window, pointer_window, root_window;
+            XButtonEvent xe;
+
+            removeShadow();
+            switch (qe->button())
+                {
+                case Qt::MidButton:
+                    buttonMask = Button2Mask;
+                    buttonPressed = Button2;
+                    break;
+                case Qt::RightButton:
+                    buttonMask = Button3Mask;
+                    buttonPressed = Button3;
+                    break;
+                default:
+                    buttonMask = Button1Mask;
+                    buttonPressed = Button1;
+                    break;
+                }
+
+            // find the window under the cursor that should receive the
+            // simulated events
+            root_window = qt_xrootwin();
+            XQueryPointer(qt_xdisplay(), root_window, &root_window,
+                    &pointer_window, &x_root, &y_root, &x, &y, &mask);
+
+            if (pointer_window != None)
+                {
+                // Save the child window immediately under the window
+                // decoration, if any. This is so that we can send an event to
+                // the immediate descendant of a window's window decoration,
+                // which causes KWin to refocus windows properly
+                parent_window = pointer_window;
+                XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                        &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                inner_window = pointer_window;
+
+                while (pointer_window != None)
+                    {
+                    // Recursively query for the child window under the pointer,
+                    // using the returned child window as the parent window for
+                    // the subsequent query. When no child window is left, we've
+                    // found the child that will receive the simulated event
+                    parent_window = pointer_window;
+                    XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                            &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                    }
+                pointer_window = parent_window;
+                }
+            else
+                inner_window = None;
+
+            // simulate a mouse button press
+            xe.type = ButtonPress;
+            xe.display = qt_xdisplay();
+            xe.root = qt_xrootwin();
+            xe.subwindow = None;
+            xe.time = CurrentTime;
+            xe.x = x;
+            xe.y = y;
+            xe.x_root = x_root;
+            xe.y_root = y_root;
+            xe.state = 0;
+            xe.button = buttonPressed;
+            xe.same_screen = True;
+            if (inner_window != None && inner_window != pointer_window)
+                {
+                xe.window = inner_window;
+                XSendEvent(qt_xdisplay(), inner_window, True, ButtonPressMask,
+                        (XEvent *)&xe);
+                }
+            xe.window = pointer_window;
+            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonPressMask,
+                    (XEvent *)&xe);
+
+            // simulate a mouse button release
+            xe.type = ButtonRelease;
+            xe.display = qt_xdisplay();
+            xe.root = qt_xrootwin();
+            xe.subwindow = None;
+            xe.time = CurrentTime;
+            xe.x = x;
+            xe.y = y;
+            xe.x_root = x_root;
+            xe.y_root = y_root;
+            xe.state = buttonMask;
+            xe.button = buttonPressed;
+            xe.same_screen = True;
+            if (inner_window != None && inner_window != pointer_window)
+                {
+                xe.window = inner_window;
+                XSendEvent(qt_xdisplay(), inner_window, True, ButtonReleaseMask,
+                        (XEvent *)&xe);
+                }
+            xe.window = pointer_window;
+            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonReleaseMask,
+                    (XEvent *)&xe);
+
+            drawDelayedShadow();
+
+            return true;
+            }
+        else if (e->type() == TQEvent::Wheel)
+            {
+            int x, y, x_root, y_root;
+            unsigned int buttonMask, buttonPressed, mask;
+            TQWheelEvent *wheelEvent = (TQWheelEvent *)e;
+            Window inner_window, parent_window, pointer_window,
+                root_window;
+            XButtonEvent xe;
+
+            removeShadow();
+
+            // state and button parameters passed to XSendEvent depend on the
+            // direction in which the mouse wheel was rolled
+            buttonMask = wheelEvent->delta() > 0 ? Button4Mask : Button5Mask;
+            buttonPressed = wheelEvent->delta() > 0 ? Button4 : Button5;
+
+            // find the window under the cursor that should receive the
+            // simulated events
+            root_window = qt_xrootwin();
+            XQueryPointer(qt_xdisplay(), root_window, &root_window,
+                    &pointer_window, &x_root, &y_root, &x, &y, &mask);
+
+            if (pointer_window != None)
+                {
+                // Save the child window immediately under the window
+                // decoration, if any. This is so that we can send an event to
+                // the immediate descendant of a window's window decoration,
+                // which causes KWin to refocus windows properly
+                parent_window = pointer_window;
+                XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                        &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                inner_window = pointer_window;
+
+                while (pointer_window != None)
+                    {
+                    // Recursively query for the child window under the pointer,
+                    // using the returned child window as the parent window for
+                    // the subsequent query. When no child window is left, we've
+                    // found the child that will receive the simulated event
+                    parent_window = pointer_window;
+                    XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                            &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                    }
+                pointer_window = parent_window;
+                }
+            else
+                inner_window = None;
+
+            // simulate a mouse button press
+            xe.type = ButtonPress;
+            xe.display = qt_xdisplay();
+            xe.root = qt_xrootwin();
+            xe.subwindow = None;
+            xe.time = CurrentTime;
+            xe.x = x;
+            xe.y = y;
+            xe.x_root = x_root;
+            xe.y_root = y_root;
+            xe.state = 0;
+            xe.same_screen = True;
+            if (inner_window != None && inner_window != pointer_window)
+                {
+                xe.button = buttonPressed;
+                xe.window = inner_window;
+                XSendEvent(qt_xdisplay(), inner_window, True, ButtonPressMask,
+                        (XEvent *)&xe);
+                }
+            xe.button = buttonPressed;
+            xe.window = pointer_window;
+            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonPressMask,
+                    (XEvent *)&xe);
+
+            // simulate a mouse button release
+            xe.type = ButtonRelease;
+            xe.display = qt_xdisplay();
+            xe.root = qt_xrootwin();
+            xe.subwindow = None;
+            xe.time = CurrentTime;
+            xe.x = x;
+            xe.y = y;
+            xe.x_root = x_root;
+            xe.y_root = y_root;
+            xe.same_screen = True;
+            if (inner_window != None && inner_window != pointer_window)
+                {
+                xe.window = inner_window;
+                xe.state = buttonMask;
+                xe.button = buttonPressed;
+                XSendEvent(qt_xdisplay(), inner_window, True, ButtonReleaseMask,
+                        (XEvent *)&xe);
+                }
+            xe.state = buttonMask;
+            xe.button = buttonPressed;
+            xe.window = pointer_window;
+            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonReleaseMask,
+                    (XEvent *)&xe);
+
+            drawDelayedShadow();
+
+            return true;
+            }
+        }
     if( decoration == NULL
         || o != decoration->widget())
         return false;

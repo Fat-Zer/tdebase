@@ -9,6 +9,7 @@
  <Action name="newsep" />
  <Separator/>
  <Action name="file_save"/>
+ <Action name="file_save_and_quit"/>
  <Separator/>
  <Action name="file_quit"/>
 </Menu>

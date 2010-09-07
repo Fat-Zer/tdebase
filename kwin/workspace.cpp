@@ -90,6 +90,7 @@ Workspace::Workspace( bool restore )
     rules_updates_disabled( false ),
     active_client     (0),
     last_active_client     (0),
+    next_active_client     (0),
     most_recently_raised (0),
     movingClient(0),
     pending_take_activity ( NULL ),
@@ -697,6 +698,24 @@ void Workspace::updateFocusChains( Client* c, FocusChainChange change )
         else
             global_focus_chain.append( c ); // otherwise add as the first one
         }
+    }
+
+void Workspace::updateOverlappingShadows(unsigned long window)
+    {
+    Client *client;
+    
+    if ((client = findClient(WindowMatchPredicate((WId)window))))
+        // Redraw overlapping shadows without waiting for the specified window
+        // to redraw its own shadow
+        client->drawOverlappingShadows(false);
+    }
+
+void Workspace::setShadowed(unsigned long window, bool shadowed)
+    {
+    Client *client;
+    
+    if ((client = findClient(WindowMatchPredicate((WId)window))))
+        client->setShadowed(shadowed);
     }
 
 void Workspace::updateCurrentTopMenu()

@@ -67,6 +67,8 @@ void KMenuEdit::setupActions()
     if (!m_controlCenter)
        (void)new KAction(i18n("New S&eparator"), "menu_new_sep", 0, actionCollection(), "newsep");
 
+    (void)new KAction(i18n("Save && Quit"), "filesave_and_close", 0, this, TQT_SLOT( slotSave_and_close()), actionCollection(), "file_save_and_quit");
+
     m_actionDelete = 0;
 
     KStdAction::save(this, TQT_SLOT( slotSave() ), actionCollection());
@@ -139,6 +141,12 @@ void KMenuEdit::slotChangeView()
 void KMenuEdit::slotSave()
 {
     m_tree->save();
+}
+
+void KMenuEdit::slotSave_and_close()
+{
+    if (m_tree->save())
+        close();
 }
 
 bool KMenuEdit::queryClose()

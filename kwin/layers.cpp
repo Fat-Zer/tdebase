@@ -134,37 +134,89 @@ void Workspace::propagateClients( bool propagate_new_clients )
                                 // when passig pointers around.
 
     // restack the windows according to the stacking order
+#if 0
     Window* new_stack = new Window[ stacking_order.count() + 2 ];
     int pos = 0;
+#endif
+    NET::WindowType t;
+    Window shadow;
+    Window *dock_shadow_stack, *window_stack;
+    int i, numDocks, pos, topmenu_space_pos;
+ 
+    dock_shadow_stack = new Window[ stacking_order.count() * 2 ];
+    window_stack = new Window[ stacking_order.count() * 2 + 2 ];
+    i = 0;
+    pos = 0;
+    topmenu_space_pos = 1; // not 0, that's supportWindow !!!
+
     // Stack all windows under the support window. The support window is
     // not used for anything (besides the NETWM property), and it's not shown,
     // but it was lowered after kwin startup. Stacking all clients below
     // it ensures that no client will be ever shown above override-redirect
     // windows (e.g. popups).
+#if 0
     new_stack[ pos++ ] = supportWindow->winId();
     int topmenu_space_pos = 1; // not 0, that's supportWindow !!!
+#endif
+    window_stack[pos++] = supportWindow->winId();
     for( ClientList::ConstIterator it = stacking_order.fromLast();
          it != stacking_order.end();
          --it )
         {
+#if 0
         new_stack[ pos++ ] = (*it)->frameId();
         if( (*it)->belongsToLayer() >= DockLayer )
             topmenu_space_pos = pos;
-        }
+#endif
+	t = (*it)->windowType();
+	switch (t)
+		{
+		case NET::Dock:
+		    window_stack[pos++] = (*it)->frameId();
+		    if ((shadow = (*it)->shadowId()) != None)
+		    dock_shadow_stack[i++] = shadow;
+		break;
+		case NET::Desktop:
+		    numDocks = i;
+		    for (i = 0; i < numDocks; i++)
+		    // Shadows for dock windows go just above the desktop
+		    window_stack[pos++] = dock_shadow_stack[i];
+		    window_stack[pos++] = (*it)->frameId();
+		break;
+		case NET::TopMenu:
+		    topmenu_space_pos = pos;
+		    // fall through
+		default:
+		    window_stack[pos++] = (*it)->frameId();
+		    if ((shadow = (*it)->shadowId()) != None)
+			// If the current window also has a shadow, place it
+			// immediately under the current window
+			window_stack[pos++] = shadow;
+		}
+    	}
     if( topmenu_space != NULL )
         { // make sure the topmenu space is below all topmenus, fullscreens, etc.
         for( int i = pos;
              i > topmenu_space_pos;
              --i )
+#if 0
             new_stack[ i ] = new_stack[ i - 1 ];
         new_stack[ topmenu_space_pos ] = topmenu_space->winId();
+#endif
+            window_stack[ i ] = window_stack[ i - 1 ];
+	window_stack[ topmenu_space_pos ] = topmenu_space->winId();
         ++pos;
         }
     // TODO isn't it too inefficient to restart always all clients?
     // TODO don't restack not visible windows?
     assert( new_stack[ 0 ] = supportWindow->winId());
+#if 0
     XRestackWindows(qt_xdisplay(), new_stack, pos);
     delete [] new_stack;
+#endif
+    XRestackWindows(qt_xdisplay(), window_stack, pos);
+    delete [] dock_shadow_stack;
+    delete [] window_stack;
 
     if ( propagate_new_clients )
         {
@@ -342,6 +394,11 @@ void Workspace::raiseClient( Client* c )
 
     unconstrained_stacking_order.remove( c );
     unconstrained_stacking_order.append( c );
+    if (options->shadowEnabled(c->isActive()))
+        {
+        c->removeShadow();
+        c->drawDelayedShadow();
+        }
 
     if( !c->isSpecialWindow())
         {

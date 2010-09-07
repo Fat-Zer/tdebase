@@ -231,6 +231,8 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         void unclutterDesktop();
         void doNotManage(TQString);
         bool setCurrentDesktop( int new_desktop );
+        void updateOverlappingShadows(WId window);
+        void setShadowed(WId window, bool shadowed);
         void nextDesktop();
         void previousDesktop();
         void circulateDesktopApplications();
@@ -518,6 +520,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
 
         Client* active_client;
         Client* last_active_client;
+        Client* next_active_client; // will be active after active_client deactivates
         Client* most_recently_raised; // used _only_ by raiseOrLowerClient()
         Client* movingClient;
         Client* pending_take_activity;
@@ -704,7 +707,15 @@ inline bool Workspace::initializing() const
 
 inline Client* Workspace::activeClient() const
     {
-    return active_client;
+    // next_active_client is a kludge for drop shadows. If a window that is
+    // activated is not also raised (i.e. when focus follows mouse), then the
+    // newly activated window and its shadow won't cover visual artifacts that
+    // might exist in the inactive window's shadow. We work around this by
+    // (re)drawing the inactive window's shadow after the active window's shadow
+    // is drawn, but to do that the inactive window needs to know which window
+    // will become active next. next_active_client is a Client pointer for that
+    // purpose.
+    return next_active_client != NULL ? next_active_client : active_client;
     }
 
 inline Client* Workspace::mostRecentlyActivatedClient() const

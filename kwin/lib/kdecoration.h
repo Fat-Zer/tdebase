@@ -97,6 +97,7 @@ public:
         LowerOp,
         FullScreenOp,
         NoBorderOp,
+	ShadowOp,
         NoOp,
         SetupWindowShortcutOp,
         ApplicationRulesOp     ///< @since 3.5
@@ -116,7 +117,7 @@ public:
 	ColorHandle,     ///< The color for the resize handle
 	NUM_COLORS
 	};
-    
+
     /**
      * These flags specify which settings changed when rereading settings.
      * Each setting in class KDecorationOptions specifies its matching flag.
@@ -130,7 +131,7 @@ public:
         SettingTooltips   = 1 << 4, ///< The tooltip setting was changed
         SettingBorder     = 1 << 5  ///< The border size setting was changed
         };
-        
+
     /**
      * Border size. KDecorationOptions::preferredBorderSize() returns
      * one of these values.
@@ -261,7 +262,7 @@ public:
     * The changed flags for this setting is SettingTooltips.
     */
     bool showTooltips() const;
-    
+
     /**
      * The preferred border size selected by the user, e.g. for accessibility
      * reasons, or when using high resolution displays. It's up to the decoration
@@ -322,9 +323,9 @@ class KWIN_EXPORT KDecoration
 	 * Destroys the KDecoration.
 	 */
 	virtual ~KDecoration();
-	
+
 	// requests from decoration
-	
+
 	/**
 	 * Returns the KDecorationOptions object, which is used to access
 	 * configuration settings for the decoration.
@@ -417,7 +418,7 @@ class KWIN_EXPORT KDecoration
 	 * to support older code). For a description of all window types,
 	 * see the definition of the NET::WindowType type. Note that
 	 * some window types never have decorated windows.
-	 * 
+	 *
 	 * An example of usage:
 	 * @code
 	 * const unsigned long supported_types = NET::NormalMask | NET::DesktopMask
@@ -671,7 +672,7 @@ class KWIN_EXPORT KDecoration
 	/**
 	 * This function is called to reset the decoration on settings changes.
 	 * It is usually invoked by calling KDecorationFactory::resetDecorations().
-	 * 
+	 *
 	 * @param changed Specifies which settings were changed, given by the SettingXXX masks
 	 */
         virtual void reset( unsigned long changed );

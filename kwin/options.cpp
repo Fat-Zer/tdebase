@@ -193,7 +193,24 @@ unsigned long Options::updateSettings()
     if (resetKompmgr)
         config->writeEntry("ResetKompmgr",FALSE);
     
-    
+     // window drop shadows
+    config->setGroup("Style");
+    shadow_colour = config->readColorEntry("ShadowColour", &Qt::black);
+    shadow_docks = config->readBoolEntry("ShadowDocks", false);
+    shadow_overrides = config->readBoolEntry("ShadowOverrides", false);
+    shadow_topMenus = config->readBoolEntry("ShadowTopMenus", false);
+    shadow_inactive_colour = config->readColorEntry("InactiveShadowColour", &Qt::black);
+    shadow_inactive_enabled = config->readBoolEntry("InactiveShadowEnabled", false);
+    shadow_inactive_opacity = config->readDoubleNumEntry("InactiveShadowOpacity", 0.70);
+    shadow_inactive_thickness = config->readNumEntry("InactiveShadowThickness", 5);
+    shadow_inactive_x_offset = config->readNumEntry("InactiveShadowXOffset", 0);
+    shadow_inactive_y_offset = config->readNumEntry("InactiveShadowYOffset", 5);
+    shadow_enabled = config->readBoolEntry("ShadowEnabled", false);
+    shadow_opacity = config->readDoubleNumEntry("ShadowOpacity", 0.70);
+    shadow_thickness = config->readNumEntry("ShadowThickness", 10);
+    shadow_x_offset = config->readNumEntry("ShadowXOffset", 0);
+    shadow_y_offset = config->readNumEntry("ShadowYOffset", 10);
+
     
     // Read button tooltip animation effect from kdeglobals
     // Since we want to allow users to enable window decoration tooltips
@@ -243,6 +260,8 @@ Options::WindowOperation Options::windowOperation(const TQString &name, bool res
         return HMaximizeOp;
     else if (name == "Lower")
         return LowerOp;
+    else if (name == "Shadow")
+        return ShadowOp;
     return NoOp;
     }
 
@@ -283,6 +302,69 @@ Options::MouseWheelCommand Options::mouseWheelCommand(const TQString &name)
 bool Options::showGeometryTip()
     {
     return show_geometry_tip;
+    }
+
+TQColor &Options::shadowColour(bool active)
+    {
+    return active ? shadow_colour : shadow_inactive_colour;
+    }
+
+bool Options::shadowWindowType(NET::WindowType t)
+    {
+    bool retval;
+
+    switch (t)
+        {
+        case NET::Dialog:
+        case NET::Normal:
+            retval = true;
+            break;
+        case NET::Desktop:
+        case NET::Menu:
+        case NET::Toolbar:
+            retval = false;
+            break;
+        case NET::Dock:
+            retval = shadow_docks;
+            break;
+        case NET::Override:
+            retval = shadow_overrides;
+            break;
+        case NET::TopMenu:
+            retval = shadow_topMenus;
+            break;
+        default:
+            retval = false;
+            break;
+        }
+
+    return retval;
+    }
+
+bool Options::shadowEnabled(bool active)
+    {
+    return active ? shadow_enabled :
+        (shadow_enabled && shadow_inactive_enabled);
+    }
+
+double Options::shadowOpacity(bool active)
+    {
+    return active ? shadow_opacity : shadow_inactive_opacity;
+    }
+
+int Options::shadowThickness(bool active)
+    {
+    return active ? shadow_thickness : shadow_inactive_thickness;
+    }
+
+int Options::shadowXOffset(bool active)
+    {
+    return active ? shadow_x_offset : shadow_inactive_x_offset;
+    }
+
+int Options::shadowYOffset(bool active)
+    {
+    return active ? shadow_y_offset : shadow_inactive_y_offset;
     }
 
 int Options::electricBorders()

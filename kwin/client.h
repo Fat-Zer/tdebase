@@ -200,6 +200,19 @@ class Client : public TQObject, public KDecorationDefines
         void updateDecoration( bool check_workspace_pos, bool force = false );
         void checkBorderSizes();
 
+    // drop shadow
+        bool isShadowed() const;
+        void setShadowed(bool shadowed);
+        Window shadowId() const;
+        // Aieee, a friend function! Unpleasant, yes, but it's needed by
+        // raiseClient() to redraw a window's shadow when it is active prior to
+        // being raised.
+        friend void Workspace::raiseClient(Client *);
+        // Wouldn't you know it, friend functions breed. This one's needed to
+        // enable a DCOP function that causes all shadows obscuring a changed
+        // window to be redrawn.
+        friend void Workspace::updateOverlappingShadows(WId);
+
     // shape extensions
         bool shape() const;
         void updateShape();
@@ -312,6 +325,8 @@ class Client : public TQObject, public KDecorationDefines
         void autoRaise();
         void shadeHover();
         void shortcutActivated();
+	void updateOpacityCache();
+
 
     private:
         friend class Bridge; // FRAME
@@ -348,12 +363,29 @@ class Client : public TQObject, public KDecorationDefines
         bool buttonReleaseEvent( Window w, int button, int state, int x, int y, int x_root, int y_root );
         bool motionNotifyEvent( Window w, int state, int x, int y, int x_root, int y_root );
 
+    // drop shadows
+	void drawIntersectingShadows();
+	void drawOverlappingShadows(bool waitForMe);
+	TQRegion getExposedRegion(TQRegion occludedRegion, int x, int y,
+	    int w, int h, int thickness, int xOffset, int yOffset);
+	void imposeCachedShadow(TQPixmap &pixmap, TQRegion exposed);
+	void imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
+	    TQRegion exposed, int thickness, double maxOpacity = 0.75);
+
         void processDecorationButtonPress( int button, int state, int x, int y, int x_root, int y_root );
 
     private slots:
         void pingTimeout();
         void processKillerExited();
         void demandAttentionKNotify();
+	void drawShadow();
+	void drawShadowAfter(Client *after);
+	void drawDelayedShadow();
+	void removeShadow();
+
+    signals:
+	void shadowDrawn();
+
 
     private:
     // ICCCM 4.1.3.1, 4.1.4 , NETWM 2.5.1
@@ -531,6 +563,16 @@ class Client : public TQObject, public KDecorationDefines
         bool pending_geometry_update;
         bool shade_geometry_change;
         int border_left, border_right, border_top, border_bottom;
+
+        Client* shadowAfterClient;
+        TQWidget* shadowWidget;
+        TQMemArray<double> activeOpacityCache;
+        TQMemArray<double> inactiveOpacityCache;
+        TQMemArray<double>* opacityCache;
+        TQRegion shapeBoundingRegion;
+        TQTimer* shadowDelayTimer;
+        bool shadowMe;
+
         TQRegion _mask;
         static bool check_active_modal; // see Client::checkActiveModal()
         KShortcut _shortcut;
@@ -878,6 +920,16 @@ inline void Client::move( const TQPoint & p, ForceGeometry_t force )
 inline void Client::plainResize( const TQSize& s, ForceGeometry_t force )
     {
     plainResize( s.width(), s.height(), force );
+    }
+
+inline bool Client::isShadowed() const
+    {
+    return shadowMe;
+    }
+
+inline Window Client::shadowId() const
+    {
+    return shadowWidget != NULL ? shadowWidget->winId() : None;
     }
 
 inline void Client::resizeWithChecks( const TQSize& s, ForceGeometry_t force )

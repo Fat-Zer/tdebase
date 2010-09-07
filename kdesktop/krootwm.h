@@ -119,6 +119,7 @@ public slots:
   void slotPopulateSessions();
   void slotSessionActivated( int );
   void slotNewSession();
+  void slotOpenTerminal();
   void slotLockNNewSession();
 
 private:

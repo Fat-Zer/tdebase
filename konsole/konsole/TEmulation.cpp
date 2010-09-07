@@ -395,6 +395,11 @@ void TEmulation::copySelection() {
   TQApplication::clipboard()->setText(t);
 }
 
+TQString TEmulation::getSelection() {
+  if (connected) return scr->getSelText(true);
+  return TQString::null;
+}
+
 void TEmulation::streamHistory(TQTextStream* stream) {
   scr->streamHistory(stream);
 }

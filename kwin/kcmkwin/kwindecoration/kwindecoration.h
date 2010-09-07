@@ -127,6 +127,19 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		// Page 2
 		ButtonPositionWidget *buttonPositionWidget;
 		TQVBox*	 buttonPage;
+
+		// Page 3
+		TQVBox *shadowPage;
+		KColorButton *inactiveShadowColourButton, *shadowColourButton;
+		TQCheckBox *cbShadowDocks, *cbShadowOverrides, *cbShadowTopMenus;
+		TQCheckBox *cbInactiveShadow, *cbWindowShadow;
+		TQGroupBox *activeShadowSettings, *inactiveShadowSettings;
+		TQGroupBox *whichShadowSettings;
+		TQSlider *inactiveShadowOpacitySlider, *shadowOpacitySlider;
+		TQSpinBox *inactiveShadowOpacitySpinBox, *shadowOpacitySpinBox;
+		TQSpinBox *inactiveShadowXOffsetSpinBox, *shadowXOffsetSpinBox;
+		TQSpinBox *inactiveShadowYOffsetSpinBox, *shadowYOffsetSpinBox;
+		TQSpinBox *inactiveShadowThicknessSpinBox, *shadowThicknessSpinBox;
 };
 
 

@@ -131,7 +131,10 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop)
   if (kapp->authorize("run_command"))
   {
      new KAction(i18n("Run Command..."), "run", 0, m_pDesktop, TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
+     new KAction(i18n("Konsole ..." ), "terminal", CTRL+Key_T, this, TQT_SLOT( slotOpenTerminal() ),
+	m_actionCollection, "open_terminal" );
   }
+
   if (!KGlobal::config()->isImmutable())
   {
      new KAction(i18n("Configure Desktop..."), "configure", 0, this, TQT_SLOT( slotConfigureDesktop() ),
@@ -322,6 +325,12 @@ void KRootWm::buildMenus()
             file->insertSeparator();
         }
 
+        action = m_actionCollection->action("open_terminal");
+        if (action)
+        {
+            action->plug( file );
+        }
+
         action = m_actionCollection->action("lock");
         if (action)
             action->plug( file );
@@ -395,6 +404,10 @@ void KRootWm::buildMenus()
        action->plug( desktopMenu );
        needSeparator = true;
     }
+
+    action = m_actionCollection->action("open_terminal");
+    if (action)
+	action->plug( desktopMenu );
 
     if (needSeparator)
     {
@@ -721,6 +734,22 @@ TQStringList KRootWm::configModules() {
   args << "kde-background.desktop" << "kde-desktopbehavior.desktop"  << "kde-desktop.desktop"
 	  << "kde-screensaver.desktop" << "kde-display.desktop";
   return args;
+}
+
+void KRootWm::slotOpenTerminal()
+{
+    // kdDebug() << "KRootWm::slotOpenTerminal" << endl;
+    KProcess* p = new KProcess;
+    Q_CHECK_PTR(p);
+
+    KConfigGroupSaver gs(KGlobal::config(), "General");
+    TQString terminal = KGlobal::config()->readPathEntry("TerminalApplication", "konsole");
+
+    *p << terminal;
+
+    p->start(KProcess::DontCare);
+
+    delete p;
 }
 
 void KRootWm::slotConfigureDesktop() {

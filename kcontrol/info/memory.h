@@ -20,8 +20,11 @@ typedef unsigned long long t_memsize;
 typedef unsigned long t_memsize;
 #endif
 
-#define COLOR_USED_MEMORY TQColor(255,0,0)
-#define COLOR_USED_SWAP   TQColor(255,134,64)
+#define COLOR_USED_SWAP   TQColor(255,0,0)
+#define COLOR_USED_DATA   TQColor(255,180,88)
+#define COLOR_USED_BUFFER TQColor(184,200,0)
+#define COLOR_USED_CACHE  TQColor(156,192,0)
+#define COLOR_USED_RAM    TQColor(220,200,88)
 #define COLOR_FREE_MEMORY TQColor(127,255,212)
 
 class KMemoryWidget:public KCModule {

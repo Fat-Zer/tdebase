@@ -23,6 +23,9 @@ class KWinInterface : virtual public DCOPObject
     virtual void nextDesktop() = 0;
     virtual void previousDesktop() = 0;
     virtual void circulateDesktopApplications() = 0;
+    virtual void updateOverlappingShadows(unsigned long window) = 0;
+    virtual void setShadowed(unsigned long window, bool shadowed) = 0;
+
     // kompmgr stuff
     virtual void startKompmgr() = 0;
     virtual void stopKompmgr() = 0;

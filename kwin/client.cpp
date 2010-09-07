@@ -11,9 +11,12 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include "client.h"
 
+#include <math.h>
+
 #include <tqapplication.h>
 #include <tqpainter.h>
 #include <tqdatetime.h>
+#include <tqimage.h>
 #include <kprocess.h>
 #include <unistd.h>
 #include <kstandarddirs.h>
@@ -39,8 +42,24 @@ extern Time qt_x_time;
 extern Atom qt_window_role;
 extern Atom qt_sm_client_id;
 
+// wait 200 ms before drawing shadow after move/resize
+static const int SHADOW_DELAY = 200;
+
 namespace KWinInternal
 {
+
+/* TODO: Remove this once X has real translucency.
+ *
+ * A list of the regions covered by all shadows and the Clients to which they
+ * belong. Used to redraw shadows when a window overlapping or underlying a
+ * shadow is moved, resized, or hidden.
+ */
+struct ShadowRegion
+    {
+    TQRegion region;
+    Client *client;
+    };
+static TQValueList<ShadowRegion> shadowRegions;
 
 /*
 
@@ -100,6 +119,13 @@ Client::Client( Workspace *ws )
     autoRaiseTimer = 0;
     shadeHoverTimer = 0;
 
+    shadowDelayTimer = new TQTimer(this);
+    opacityCache = &activeOpacityCache;
+    shadowAfterClient = NULL;
+    shadowWidget = NULL;
+    shadowMe = true;
+    connect(shadowDelayTimer, TQT_SIGNAL(timeout()), TQT_SLOT(drawShadow()));
+
     // set the initial mapping state
     mapping_state = WithdrawnState;
     desk = 0; // no desktop yet
@@ -145,7 +171,7 @@ Client::Client( Workspace *ws )
     maxmode_restore = MaximizeRestore;
     
     cmap = None;
-    
+
     frame_geometry = TQRect( 0, 0, 100, 100 ); // so that decorations don't start with size being (0,0)
     client_size = TQSize( 100, 100 );
     custom_opacity = false;
@@ -188,6 +214,8 @@ void Client::releaseWindow( bool on_shutdown )
     if (!custom_opacity) setOpacity(FALSE);
     if (moveResizeMode)
        leaveMoveResize();
+    removeShadow();
+    drawIntersectingShadows();
     finishWindowRules();
     ++postpone_geometry_updates;
     // grab X during the release to make removing of properties, setting to withdrawn state
@@ -248,6 +276,8 @@ void Client::destroyClient()
     StackingUpdatesBlocker blocker( workspace());
     if (moveResizeMode)
        leaveMoveResize();
+    removeShadow();
+    drawIntersectingShadows();
     finishWindowRules();
     ++postpone_geometry_updates;
     setModal( false );
@@ -304,6 +334,7 @@ void Client::updateDecoration( bool check_workspace_pos, bool force )
     if( do_show )
         decoration->widget()->show();
     updateFrameExtents();
+    updateOpacityCache();
     }
 
 void Client::destroyDecoration()
@@ -434,6 +465,12 @@ void Client::resizeDecoration( const TQSize& s )
         TQResizeEvent e( s, oldsize );
         TQApplication::sendEvent( decoration->widget(), &e );
         }
+    if (!moveResizeMode && options->shadowEnabled(isActive()))
+        {
+        // If the user is manually resizing, let Client::leaveMoveResize()
+        // decide when to redraw the shadow
+        updateOpacityCache();
+        }
     }
 
 bool Client::noBorder() const
@@ -471,6 +508,7 @@ void Client::updateShape()
         noborder = true;
         updateDecoration( true );
         }
+    updateOpacityCache();
     if ( shape() )
         {
         XShapeCombineShape(qt_xdisplay(), frameId(), ShapeBounding,
@@ -862,6 +900,16 @@ void Client::setShade( ShadeMode mode )
         XMapWindow( qt_xdisplay(), wrapperId());
         XMapWindow( qt_xdisplay(), window());
         XDeleteProperty (qt_xdisplay(), client, atoms->net_wm_window_shade);
+	if (options->shadowEnabled(false))
+        {
+    	    for (ClientList::ConstIterator it = transients().begin();
+        	it != transients().end(); ++it)
+        	{
+            	    (*it)->removeShadow();
+            	    (*it)->drawDelayedShadow();
+                }
+        }
+
         if ( isActive() )
             workspace()->requestFocus( this );
         }
@@ -946,6 +994,589 @@ void Client::updateVisibility()
         }
     }
 
+void Client::setShadowed(bool shadowed)
+{
+    bool wasShadowed;
+
+    wasShadowed = isShadowed();
+    shadowMe = options->shadowEnabled(isActive()) ? shadowed : false;
+
+    if (shadowMe) {
+        if (!wasShadowed)
+            drawShadow();
+    }
+    else {
+        if (wasShadowed) {
+            removeShadow();
+
+            if (!activeOpacityCache.isNull())
+                activeOpacityCache.resize(0);
+            if (!inactiveOpacityCache.isNull())
+                inactiveOpacityCache.resize(0);
+        }
+    }
+}
+
+void Client::updateOpacityCache()
+{
+    if (!activeOpacityCache.isNull())
+        activeOpacityCache.resize(0);
+    if (!inactiveOpacityCache.isNull())
+        inactiveOpacityCache.resize(0);
+
+    if (!moveResizeMode) {
+        // If the user is manually resizing, let Client::finishMoveResize()
+        // decide when to redraw the shadow
+        removeShadow();
+        drawIntersectingShadows();
+        if (options->shadowEnabled(isActive()))
+            drawDelayedShadow();
+    }
+}
+
+/*!
+   Redraw shadows that were previously occluding or occluded by this window,
+   to avoid visual glitches.
+ */
+void Client::drawIntersectingShadows() {
+    //Client *reshadowClient;
+    TQRegion region;
+    //TQPtrList<Client> reshadowClients;
+    TQValueList<Client *> reshadowClients;
+    TQValueListIterator<ShadowRegion> it;
+    TQValueListIterator<Client *> it2;
+
+    if (!options->shadowEnabled(false))
+        // No point in redrawing overlapping/overlapped shadows if only the
+        // active window has a shadow.
+        return;
+
+    region = shapeBoundingRegion;
+
+    // Generate list of Clients whose shadows need to be redrawn. That is,
+    // those that are currently intersecting or intersected by other windows or
+    // shadows.
+    for (it = shadowRegions.begin(); it != shadowRegions.end(); ++it)
+        if ((isOnAllDesktops() || (*it).client->isOnCurrentDesktop()) &&
+                !(*it).region.intersect(region).isEmpty())
+            reshadowClients.append((*it).client);
+
+    // Redraw shadows for each of the Clients in the list generated above
+    for (it2 = reshadowClients.begin(); it2 != reshadowClients.end();
+            ++it2) {
+        (*it2)->removeShadow();
+        (*it2)->drawDelayedShadow();
+    }
+}
+
+/*!
+   Redraw shadows that are above the current window in the stacking order.
+   Furthermore, redraw them in the same order as they come in the stacking order
+   from bottom to top.
+ */
+void Client::drawOverlappingShadows(bool waitForMe)
+{
+    Client *aClient;
+    TQRegion region;
+    TQValueList<Client *> reshadowClients;
+    ClientList stacking_order;
+    ClientList::ConstIterator it;
+    TQValueListIterator<ShadowRegion> it2;
+    TQValueListIterator<Client *> it3;
+
+    if (!options->shadowEnabled(false))
+        // No point in redrawing overlapping/overlapped shadows if only the
+        // active window has a shadow.
+        return;
+
+    region = shapeBoundingRegion;
+
+    stacking_order = workspace()->stackingOrder();
+    for (it = stacking_order.fromLast(); it != stacking_order.end(); --it) {
+        // Find the position of this window in the stacking order.
+        if ((*it) == this)
+            break;
+    }
+    ++it;
+    while (it != stacking_order.end()) {
+        if ((*it)->windowType() == NET::Dock) {
+            // This function is only interested in windows whose shadows don't
+            // have weird stacking rules.
+            ++it;
+            continue;
+        }
+
+        // Generate list of Clients whose shadows need to be redrawn. That is,
+        // those that are currently overlapping or overlapped by other windows
+        // or shadows. The list should be in order from bottom to top in the
+        // stacking order.
+        for (it2 = shadowRegions.begin(); it2 != shadowRegions.end(); ++it2) {
+            if ((*it2).client == (*it)) {
+                if ((isOnAllDesktops() || (*it2).client->isOnCurrentDesktop())
+                        && !(*it2).region.intersect(region).isEmpty())
+                    reshadowClients.append((*it2).client);
+            }
+        }
+        ++it;
+    }
+
+    // Redraw shadows for each of the Clients in the list generated above
+    for (it3 = reshadowClients.begin(); it3 != reshadowClients.end(); ++it3) {
+        (*it3)->removeShadow();
+        if (it3 == reshadowClients.begin()) {
+            if (waitForMe)
+                (*it3)->drawShadowAfter(this);
+            else
+                (*it3)->drawDelayedShadow();
+        }
+        else {
+            --it3;
+            aClient = (*it3);
+            ++it3;
+            (*it3)->drawShadowAfter(aClient);
+        }
+    }
+}
+
+/*!
+   Draw shadow after some time has elapsed, to give recently exposed windows a
+   chance to repaint before a shadow gradient is drawn over them.
+ */
+void Client::drawDelayedShadow()
+{
+    shadowDelayTimer->stop();
+    shadowDelayTimer->start(SHADOW_DELAY, true);
+}
+
+/*!
+   Draw shadow immediately after the specified Client's shadow finishes drawing.
+ */
+void Client::drawShadowAfter(Client *after)
+{
+    shadowAfterClient = after;
+    connect(after, TQT_SIGNAL(shadowDrawn()), TQT_SLOT(drawShadow()));
+}
+
+/*!
+   Draw a shadow under this window and XShape the shadow accordingly.
+ */
+void Client::drawShadow()
+{
+    Window shadows[2];
+    XRectangle *shapes;
+    int i, count, ordering;
+
+    // If we are waiting for another Client's shadow to be drawn, stop waiting now
+    if (shadowAfterClient != NULL) {
+        disconnect(shadowAfterClient, TQT_SIGNAL(shadowDrawn()), this, TQT_SLOT(drawShadow()));
+        shadowAfterClient = NULL;
+    }
+
+    if (!isOnCurrentDesktop())
+        return;
+
+    /* Store this window's ShapeBoundingRegion even if shadows aren't drawn for
+     * this type of window. Otherwise, drawIntersectingShadows() won't update
+     * properly when this window is moved/resized/hidden/closed.
+     */
+    shapes = XShapeGetRectangles(qt_xdisplay(), frameId(), ShapeBounding,
+            &count, &ordering);
+    if (!shapes)
+        // XShape extension not supported
+        shapeBoundingRegion = TQRegion(x(), y(), width(), height());
+    else {
+        shapeBoundingRegion = TQRegion();
+        for (i = 0; i < count; i++) {
+            // Translate XShaped window into a TQRegion
+            TQRegion shapeRectangle(shapes[i].x, shapes[i].y, shapes[i].width,
+                    shapes[i].height);
+            shapeBoundingRegion += shapeRectangle;
+        }
+        if (isShade())
+            // Since XResize() doesn't change a window's XShape regions, ensure that
+            // shapeBoundingRegion is not taller than the window's shaded height,
+            // or the bottom shadow will appear to be missing
+            shapeBoundingRegion &= TQRegion(0, 0, width(), height());
+        shapeBoundingRegion.translate(x(), y());
+    }
+
+    if (!isShadowed() || hidden || isMinimized() ||
+            maximizeMode() == MaximizeFull ||
+            !options->shadowWindowType(windowType())) {
+        XFree(shapes);
+
+        // Tell whatever Clients are listening that this Client's shadow has been drawn.
+        // It hasn't, but there's no sense waiting for something that won't happen.
+        emit shadowDrawn();
+
+        return;
+    }
+
+    removeShadow();
+
+    TQMemArray<QRgb> pixelData;
+    TQPixmap shadowPixmap;
+    TQRect shadow;
+    TQRegion exposedRegion;
+    ShadowRegion shadowRegion;
+    int thickness, xOffset, yOffset;
+
+    thickness = options->shadowThickness(isActive());
+    xOffset = options->shadowXOffset(isActive());
+    yOffset = options->shadowYOffset(isActive());
+    opacityCache = active? &activeOpacityCache : &inactiveOpacityCache;
+
+    shadow.setRect(x() - thickness + xOffset, y() - thickness + yOffset,
+            width() + thickness * 2, height() + thickness * 2);
+    shadowPixmap.resize(shadow.size());
+
+    // Create a fake drop-down shadow effect via blended Xwindows
+    shadowWidget = new TQWidget(0, 0, WStyle_Customize | WX11BypassWM);
+    shadowWidget->setGeometry(shadow);
+    XSelectInput(qt_xdisplay(), shadowWidget->winId(),
+            ButtonPressMask | ButtonReleaseMask | StructureNotifyMask);
+    shadowWidget->installEventFilter(this);
+
+    if (!shapes) {
+        // XShape extension not supported
+        exposedRegion = getExposedRegion(shapeBoundingRegion, shadow.x(),
+                shadow.y(), shadow.width(), shadow.height(), thickness,
+                xOffset, yOffset);
+        shadowRegion.region = exposedRegion;
+        shadowRegion.client = this;
+        shadowRegions.append(shadowRegion);
+
+        if (opacityCache->isNull())
+            imposeRegionShadow(shadowPixmap, shapeBoundingRegion,
+                    exposedRegion, thickness,
+                    options->shadowOpacity(isActive()));
+        else
+            imposeCachedShadow(shadowPixmap, exposedRegion);
+    }
+    else {
+        TQMemArray<TQRect> exposedRects;
+        TQMemArray<TQRect>::Iterator it, itEnd;
+        XRectangle *shadowShapes;
+
+        exposedRegion = getExposedRegion(shapeBoundingRegion, shadow.x(),
+                shadow.y(), shadow.width(), shadow.height(), thickness,
+                xOffset, yOffset);
+        shadowRegion.region = exposedRegion;
+        shadowRegion.client = this;
+        shadowRegions.append(shadowRegion);
+
+        // XShape the shadow
+        exposedRects = exposedRegion.rects();
+        i = 0;
+        itEnd = exposedRects.end();
+        shadowShapes = new XRectangle[exposedRects.count()];
+        for (it = exposedRects.begin(); it != itEnd; ++it) {
+            shadowShapes[i].x = (*it).x();
+            shadowShapes[i].y = (*it).y();
+            shadowShapes[i].width = (*it).width();
+            shadowShapes[i].height = (*it).height();
+            i++;
+        }
+        XShapeCombineRectangles(qt_xdisplay(), shadowWidget->winId(),
+                ShapeBounding, -x() + thickness - xOffset,
+                -y() + thickness - yOffset, shadowShapes, i, ShapeSet,
+                Unsorted);
+        delete [] shadowShapes;
+
+        if (opacityCache->isNull())
+            imposeRegionShadow(shadowPixmap, shapeBoundingRegion,
+                    exposedRegion, thickness,
+                    options->shadowOpacity(isActive()));
+        else
+            imposeCachedShadow(shadowPixmap, exposedRegion);
+    }
+
+    XFree(shapes);
+
+    // Set the background pixmap
+    //shadowPixmap.convertFromImage(shadowImage);
+    shadowWidget->setErasePixmap(shadowPixmap);
+
+    // Restack shadows under this window so that shadows drawn for a newly
+    // focused (but not raised) window don't overlap any windows above it.
+    if (isDock()) {
+        ClientList stacking_order = workspace()->stackingOrder();
+        for (ClientList::ConstIterator it = stacking_order.begin(); it != stacking_order.end(); ++it)
+            if ((*it)->isDesktop())
+                {
+                ++it;
+                shadows[0] = (*it)->frameId();
+                shadows[1] = shadowWidget->winId();
+                }
+    }
+    else {
+        shadows[0] = frameId();
+        if (shadowWidget != NULL)
+            shadows[1] = shadowWidget->winId();
+    }
+
+    XRestackWindows(qt_xdisplay(), shadows, 2);
+
+    // Don't use TQWidget::show() so we don't confuse QEffects, thus causing
+    // broken focus.
+    XMapWindow(qt_xdisplay(), shadowWidget->winId());
+
+    // Tell whatever Clients are listening that this Client's shadow has been drawn.
+    emit shadowDrawn();
+}
+
+/*!
+   Remove shadow under this window.
+ */
+void Client::removeShadow()
+{
+    TQValueList<ShadowRegion>::Iterator it;
+
+    shadowDelayTimer->stop();
+
+    if (shadowWidget != NULL) {
+        for (it = shadowRegions.begin(); it != shadowRegions.end(); ++it)
+            if ((*it).client == this) {
+                shadowRegions.remove(it);
+                break;
+            }
+        delete shadowWidget;
+        shadowWidget = NULL;
+    }
+}
+
+/*!
+   Calculate regions in which the shadow will be visible given the window's
+   origin, height and width and the shadow's thickness, and X- and Y-offsets.
+ */
+TQRegion Client::getExposedRegion(TQRegion occludedRegion, int x, int y, int w,
+        int h, int thickness, int xOffset, int yOffset)
+{
+    TQRegion exposedRegion;
+
+    exposedRegion = TQRegion(x, y, w, h);
+    exposedRegion -= occludedRegion;
+
+    if (thickness > 0) {
+        // Limit exposedRegion to include only where a shadow of the specified
+        // thickness will be drawn
+        TQMemArray<TQRect> occludedRects;
+        TQMemArray<TQRect>::Iterator it, itEnd;
+        TQRegion shadowRegion;
+
+        occludedRects = occludedRegion.rects();
+        itEnd = occludedRects.end();
+        for (it = occludedRects.begin(); it != itEnd; ++it) {
+            // Expand each of the occluded region's shape rectangles to contain
+            // where a shadow of the specified thickness will be drawn. Create
+            // a new TQRegion that contains the expanded occluded region
+            it->setTop(it->top() - thickness + yOffset);
+            it->setLeft(it->left() - thickness + xOffset);
+            it->setRight(it->right() + thickness + xOffset);
+            it->setBottom(it->bottom() + thickness + yOffset);
+            shadowRegion += TQRegion(*it);
+        }
+        exposedRegion -= exposedRegion - shadowRegion;
+    }
+
+    return exposedRegion;
+}
+
+/*!
+   Draw shadow gradient around this window using cached opacity values.
+ */
+void Client::imposeCachedShadow(TQPixmap &pixmap, TQRegion exposed)
+{
+    QRgb pixel;
+    double opacity;
+    int red, green, blue, pixelRed, pixelGreen, pixelBlue;
+    int subW, subH, w, h, x, y, zeroX, zeroY;
+    TQImage image;
+    TQMemArray<TQRect>::Iterator it, itEnd;
+    TQMemArray<TQRect> rectangles;
+    TQPixmap subPixmap;
+    Window rootWindow;
+    int thickness, windowX, windowY, xOffset, yOffset;
+
+    rectangles = exposed.rects();
+    rootWindow = qt_xrootwin();
+    thickness = options->shadowThickness(isActive());
+    windowX = this->x();
+    windowY = this->y();
+    xOffset = options->shadowXOffset(isActive());
+    yOffset = options->shadowYOffset(isActive());
+    options->shadowColour(isActive()).rgb(&red, &green, &blue);
+    w = pixmap.width();
+    h = pixmap.height();
+
+    itEnd = rectangles.end();
+    for (it = rectangles.begin(); it != itEnd; ++it) {
+        subW = (*it).width();
+        subH = (*it).height();
+        subPixmap = TQPixmap::grabWindow(rootWindow, (*it).x(), (*it).y(),
+                subW, subH);
+        zeroX = (*it).x() - windowX + thickness - xOffset;
+        zeroY = (*it).y() - windowY + thickness - yOffset;
+        image = subPixmap.convertToImage();
+
+        for (x = 0; x < subW; x++) {
+            for (y = 0; y < subH; y++) {
+                opacity = (*(opacityCache))[(zeroY + y) * w + zeroX + x];
+                pixel = image.pixel(x, y);
+                pixelRed = qRed(pixel);
+                pixelGreen = qGreen(pixel);
+                pixelBlue = qBlue(pixel);
+                image.setPixel(x, y,
+                        qRgb((int)(pixelRed + (red - pixelRed) * opacity),
+                            (int)(pixelGreen + (green - pixelGreen) * opacity),
+                            (int)(pixelBlue + (blue - pixelBlue) * opacity)));
+            }
+        }
+
+        subPixmap.convertFromImage(image);
+        bitBlt(&pixmap, zeroX, zeroY, &subPixmap);
+    }
+}
+
+/*!
+   Draw shadow around this window using calculated opacity values.
+ */
+void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
+        TQRegion exposed, int thickness, double maxOpacity)
+{
+    register int distance, intersectCount, i, j, x, y;
+    QRgb pixel;
+    double decay, factor, opacity;
+    int red, green, blue, pixelRed, pixelGreen, pixelBlue;
+    int halfMaxIntersects, lineIntersects, maxIntersects, maxY;
+    int irBottom, irLeft, irRight, irTop, yIncrement;
+    int subW, subH, w, h, zeroX, zeroY;
+    TQImage image;
+    TQMemArray<TQRect>::Iterator it, itEnd;
+    TQMemArray<TQRect> rectangles;
+    TQPixmap subPixmap;
+    Window rootWindow;
+    int windowX, windowY, xOffset, yOffset;
+
+    rectangles = exposed.rects();
+    rootWindow = qt_xrootwin();
+    windowX = this->x();
+    windowY = this->y();
+    xOffset = options->shadowXOffset(isActive());
+    yOffset = options->shadowYOffset(isActive());
+    options->shadowColour(isActive()).rgb(&red, &green, &blue);
+    maxIntersects = thickness * thickness * 4 + (thickness * 4) + 1;
+    halfMaxIntersects = maxIntersects / 2;
+    lineIntersects = thickness * 2 + 1;
+    factor = maxIntersects / maxOpacity;
+    decay = (lineIntersects / 0.0125 - factor) / pow((double)maxIntersects, 3.0);
+    w = pixmap.width();
+    h = pixmap.height();
+    xOffset = options->shadowXOffset(isActive());
+    yOffset = options->shadowYOffset(isActive());
+
+    opacityCache->resize(0);
+    opacityCache->resize(w * h);
+    occluded.translate(-windowX + thickness, -windowY + thickness);
+
+    itEnd = rectangles.end();
+    for (it = rectangles.begin(); it != itEnd; ++it) {
+        subW = (*it).width();
+        subH = (*it).height();
+        subPixmap = TQPixmap::grabWindow(rootWindow, (*it).x(), (*it).y(),
+                subW, subH);
+        maxY = subH;
+        zeroX = (*it).x() - windowX + thickness - xOffset;
+        zeroY = (*it).y() - windowY + thickness - yOffset;
+        image = subPixmap.convertToImage();
+
+        intersectCount = 0;
+        opacity = -1;
+        y = 0;
+        yIncrement = 1;
+        for (x = 0; x < subW; x++) {
+            irLeft = zeroX + x - thickness;
+            irRight = zeroX + x + thickness;
+
+            while (y != maxY) {
+                // horizontal row about to leave the intersect region, not
+                // necessarily the top row
+                irTop = zeroY + y - thickness * yIncrement;
+                // horizontal row that just came into the intersect region,
+                // not necessarily the bottom row
+                irBottom = zeroY + y + thickness * yIncrement;
+
+                if (opacity == -1) {
+                    // If occluded pixels caused an intersect count to be
+                    // skipped, recount it
+                    intersectCount = 0;
+
+                    for (j = irTop; j != irBottom; j += yIncrement) {
+                        // irTop is not necessarily larger than irBottom and
+                        // yIncrement isn't necessarily positive
+                        for (i = irLeft; i <= irRight; i++) {
+                            if (occluded.contains(TQPoint(i, j)))
+                                intersectCount++;
+                        }
+                    }
+                }
+                else {
+                    if (intersectCount < 0)
+                        intersectCount = 0;
+
+                    for (i = irLeft; i <= irRight; i++) {
+                        if (occluded.contains(TQPoint(i, irBottom)))
+                            intersectCount++;
+                    }
+                }
+
+                distance = maxIntersects - intersectCount;
+                opacity = intersectCount / (factor + pow((double)distance, 3.0) * decay);
+
+                (*(opacityCache))[(zeroY + y) * w + zeroX + x] = opacity;
+                pixel = image.pixel(x, y);
+                pixelRed = qRed(pixel);
+                pixelGreen = qGreen(pixel);
+                pixelBlue = qBlue(pixel);
+                image.setPixel(x, y,
+                        qRgb((int)(pixelRed + (red - pixelRed) * opacity),
+                            (int)(pixelGreen + (green - pixelGreen) * opacity),
+                            (int)(pixelBlue + (blue - pixelBlue) * opacity)));
+
+                for (i = irLeft; i <= irRight; i++) {
+                    if (occluded.contains(TQPoint(i, irTop)))
+                        intersectCount--;
+                }
+
+                y += yIncrement;
+            }
+            y -= yIncrement;
+
+            irTop += yIncrement;
+            for (j = irTop; j != irBottom; j += yIncrement) {
+                if (occluded.contains(TQPoint(irLeft, j)))
+                    intersectCount--;
+            }
+            irRight++;
+            for (j = irTop; j != irBottom; j += yIncrement) {
+                if (occluded.contains(TQPoint(irRight, j)))
+                    intersectCount++;
+            }
+
+            yIncrement *= -1;
+            if (yIncrement < 0)
+                // Scan Y-axis bottom-up for next X-coordinate iteration
+                maxY = -1;
+            else
+                // Scan Y-axis top-down for next X-coordinate iteration
+                maxY = subH;
+        }
+
+        subPixmap.convertFromImage(image);
+        bitBlt(&pixmap, zeroX, zeroY, &subPixmap);
+    }
+}
+
 /*!
   Sets the client window's mapping state. Possible values are
   WithdrawnState, IconicState, NormalState.
@@ -989,6 +1620,8 @@ void Client::rawShow()
         XMapWindow( qt_xdisplay(), wrapper );
         XMapWindow( qt_xdisplay(), client );
         }
+    if (options->shadowEnabled(isActive()))
+        drawDelayedShadow();
     }
 
 /*!
@@ -1004,6 +1637,8 @@ void Client::rawHide()
 // which won't be missed, so this shouldn't be a problem. The chance the real UnmapNotify
 // will be missed is also very minimal, so I don't think it's needed to grab the server
 // here.
+    removeShadow();
+    drawIntersectingShadows();
     XSelectInput( qt_xdisplay(), wrapper, ClientWinMask ); // avoid getting UnmapNotify
     XUnmapWindow( qt_xdisplay(), frame );
     XUnmapWindow( qt_xdisplay(), wrapper );

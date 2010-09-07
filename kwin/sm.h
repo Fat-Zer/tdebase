@@ -39,6 +39,7 @@ struct SessionInfo
     bool minimized;
     bool onAllDesktops;
     bool shaded;
+    bool shadowed;
     bool keepAbove;
     bool keepBelow;
     bool skipTaskbar;

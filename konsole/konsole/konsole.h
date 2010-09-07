@@ -61,6 +61,7 @@ class KSelectAction;
 class KRadioAction;
 class KTabWidget;
 class TQToolButton;
+class KURIFilterData;
 
 // Defined in main.C
 const char *konsole_shell(TQStrList &args);
@@ -199,6 +200,9 @@ private slots:
   void slotSelectScrollbar();
   void loadScreenSessions();
   void updateFullScreen(bool on);
+
+  void slotOpenSelection();
+  void slotOpenURI(int n);
 
   void slotSaveSettings();
   void slotSaveSessionsProfile();
@@ -362,6 +366,7 @@ private:
   KAction       *m_print;
   KAction       *m_quit;
   KAction       *m_tabDetachSession;
+  KPopupMenu    *m_openSelection;
 
   KActionCollection *m_shortcuts;
 
@@ -372,6 +377,7 @@ private:
   bool         m_find_first;
   bool         m_find_found;
   TQString      m_find_pattern;
+  TQString  selectedURL;
 
   int cmd_serial;
   int cmd_first_screen;
@@ -435,6 +441,7 @@ private:
   TQString  s_workDir;
 
   TQColor    m_tabColor;
+  KURIFilterData* m_filterData;
 };
 
 class TQSpinBox;

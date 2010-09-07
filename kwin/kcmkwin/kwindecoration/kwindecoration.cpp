@@ -28,6 +28,8 @@
 */
 
 #include <assert.h>
+#include <math.h>
+
 #include <tqdir.h>
 #include <tqfileinfo.h>
 #include <tqlayout.h>
@@ -39,8 +41,10 @@
 #include <tqlabel.h>
 #include <tqfile.h>
 #include <tqslider.h>
+#include <tqspinbox.h>
 
 #include <kapplication.h>
+#include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
@@ -153,6 +157,164 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	preview->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
 	tabWidget->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
 
+	// Page 3 (Window Shadows)
+	TQHBox *inactiveShadowColourHBox, *shadowColourHBox;
+	TQHBox *inactiveShadowOpacityHBox, *shadowOpacityHBox;
+	TQHBox *inactiveShadowXOffsetHBox, *shadowXOffsetHBox;
+	TQHBox *inactiveShadowYOffsetHBox, *shadowYOffsetHBox;
+	TQHBox *inactiveShadowThicknessHBox, *shadowThicknessHBox;
+	TQLabel *inactiveShadowColourLabel, *shadowColourLabel;
+	TQLabel *inactiveShadowOpacityLabel, *shadowOpacityLabel;
+	TQLabel *inactiveShadowXOffsetLabel, *shadowXOffsetLabel;
+	TQLabel *inactiveShadowYOffsetLabel, *shadowYOffsetLabel;
+	TQLabel *inactiveShadowThicknessLabel, *shadowThicknessLabel;
+
+	shadowPage = new TQVBox(tabWidget);
+	shadowPage->setSpacing(KDialog::spacingHint());
+	shadowPage->setMargin(KDialog::marginHint());
+
+	cbWindowShadow = new TQCheckBox(
+			i18n("&Draw a drop shadow under windows"), shadowPage);
+	TQWhatsThis::add(cbWindowShadow,
+			i18n("Enabling this checkbox will allow you to choose a kind of "
+				 "drop shadow to draw under each window."));
+
+	activeShadowSettings = new TQGroupBox(1, Qt::Horizontal,
+			i18n("Active Window Shadow"), shadowPage);
+	inactiveShadowSettings = new TQGroupBox(1, Qt::Horizontal,
+			i18n("Inactive Window Shadows"), shadowPage);
+	whichShadowSettings = new TQGroupBox(3, Qt::Horizontal,
+			i18n("Draw Shadow Under Normal Windows And..."), shadowPage);
+
+	cbShadowDocks = new TQCheckBox(i18n("Docks and &panels"),
+			whichShadowSettings);
+	connect(cbShadowDocks, TQT_SIGNAL(toggled(bool)),
+			TQT_SLOT(slotSelectionChanged()));
+	cbShadowOverrides = new TQCheckBox(i18n("O&verride windows"),
+			whichShadowSettings);
+	connect(cbShadowOverrides, TQT_SIGNAL(toggled(bool)),
+			TQT_SLOT(slotSelectionChanged()));
+	cbShadowTopMenus = new TQCheckBox(i18n("&Top menu"),
+			whichShadowSettings);
+	connect(cbShadowTopMenus, TQT_SIGNAL(toggled(bool)),
+			TQT_SLOT(slotSelectionChanged()));
+	cbInactiveShadow = new TQCheckBox(
+			i18n("Draw shadow under &inactive windows"), inactiveShadowSettings);
+	connect(cbInactiveShadow, TQT_SIGNAL(toggled(bool)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	shadowColourHBox = new TQHBox(activeShadowSettings);
+	shadowColourHBox->setSpacing(KDialog::spacingHint());
+	shadowColourLabel = new TQLabel(i18n("Colour:"), shadowColourHBox);
+	shadowColourButton = new KColorButton(shadowColourHBox);
+	connect(shadowColourButton, TQT_SIGNAL(changed(const TQColor &)), TQT_SLOT(slotSelectionChanged()));
+
+	inactiveShadowColourHBox = new TQHBox(inactiveShadowSettings);
+	inactiveShadowColourHBox->setSpacing(KDialog::spacingHint());
+	inactiveShadowColourLabel = new TQLabel(i18n("Colour:"), inactiveShadowColourHBox);
+	inactiveShadowColourButton = new KColorButton(inactiveShadowColourHBox);
+	connect(inactiveShadowColourButton, TQT_SIGNAL(changed(const TQColor &)), TQT_SLOT(slotSelectionChanged()));
+
+	shadowOpacityHBox = new TQHBox(activeShadowSettings);
+	shadowOpacityHBox->setSpacing(KDialog::spacingHint());
+	shadowOpacityLabel = new TQLabel(i18n("Maximum opacity:"), shadowOpacityHBox);
+	shadowOpacitySlider = new TQSlider(1, 100, 10, 50, Qt::Horizontal,
+			shadowOpacityHBox);
+	shadowOpacitySlider->setTickmarks(TQSlider::Below);
+	shadowOpacitySlider->setTickInterval(10);
+	shadowOpacitySpinBox = new TQSpinBox(1, 100, 1, shadowOpacityHBox);
+	shadowOpacitySpinBox->setSuffix(" %");
+	connect(shadowOpacitySlider, TQT_SIGNAL(valueChanged(int)), shadowOpacitySpinBox,
+			TQT_SLOT(setValue(int)));
+	connect(shadowOpacitySpinBox, TQT_SIGNAL(valueChanged(int)), shadowOpacitySlider,
+			TQT_SLOT(setValue(int)));
+	connect(shadowOpacitySlider, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	inactiveShadowOpacityHBox = new TQHBox(inactiveShadowSettings);
+	inactiveShadowOpacityHBox->setSpacing(KDialog::spacingHint());
+	inactiveShadowOpacityLabel = new TQLabel(i18n("Maximum opacity:"),
+			inactiveShadowOpacityHBox);
+	inactiveShadowOpacitySlider = new TQSlider(1, 100, 10, 50, Qt::Horizontal,
+			inactiveShadowOpacityHBox);
+	inactiveShadowOpacitySlider->setTickmarks(TQSlider::Below);
+	inactiveShadowOpacitySlider->setTickInterval(10);
+	inactiveShadowOpacitySpinBox = new TQSpinBox(1, 100, 1,
+			inactiveShadowOpacityHBox);
+	inactiveShadowOpacitySpinBox->setSuffix(" %");
+	connect(inactiveShadowOpacitySlider, TQT_SIGNAL(valueChanged(int)),
+			inactiveShadowOpacitySpinBox,
+			TQT_SLOT(setValue(int)));
+	connect(inactiveShadowOpacitySpinBox, TQT_SIGNAL(valueChanged(int)),
+			inactiveShadowOpacitySlider,
+			TQT_SLOT(setValue(int)));
+	connect(inactiveShadowOpacitySlider, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	shadowXOffsetHBox = new TQHBox(activeShadowSettings);
+	shadowXOffsetHBox->setSpacing(KDialog::spacingHint());
+	shadowXOffsetLabel = new TQLabel(
+			i18n("Offset rightward (may be negative):"),
+			shadowXOffsetHBox);
+	shadowXOffsetSpinBox = new TQSpinBox(-1024, 1024, 1, shadowXOffsetHBox);
+	shadowXOffsetSpinBox->setSuffix(i18n(" pixels"));
+	connect(shadowXOffsetSpinBox, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	inactiveShadowXOffsetHBox = new TQHBox(inactiveShadowSettings);
+	inactiveShadowXOffsetHBox->setSpacing(KDialog::spacingHint());
+	inactiveShadowXOffsetLabel = new TQLabel(
+			i18n("Offset rightward (may be negative):"),
+			inactiveShadowXOffsetHBox);
+	inactiveShadowXOffsetSpinBox = new TQSpinBox(-1024, 1024, 1,
+			inactiveShadowXOffsetHBox);
+	inactiveShadowXOffsetSpinBox->setSuffix(i18n(" pixels"));
+	connect(inactiveShadowXOffsetSpinBox, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	shadowYOffsetHBox = new TQHBox(activeShadowSettings);
+	shadowYOffsetHBox->setSpacing(KDialog::spacingHint());
+	shadowYOffsetLabel = new TQLabel(
+			i18n("Offset downward (may be negative):"),
+			shadowYOffsetHBox);
+	shadowYOffsetSpinBox = new TQSpinBox(-1024, 1024, 1, shadowYOffsetHBox);
+	shadowYOffsetSpinBox->setSuffix(i18n(" pixels"));
+	connect(shadowYOffsetSpinBox, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	inactiveShadowYOffsetHBox = new TQHBox(inactiveShadowSettings);
+	inactiveShadowYOffsetHBox->setSpacing(KDialog::spacingHint());
+	inactiveShadowYOffsetLabel = new TQLabel(
+			i18n("Offset downward (may be negative):"),
+			inactiveShadowYOffsetHBox);
+	inactiveShadowYOffsetSpinBox = new TQSpinBox(-1024, 1024, 1,
+			inactiveShadowYOffsetHBox);
+	inactiveShadowYOffsetSpinBox->setSuffix(i18n(" pixels"));
+	connect(inactiveShadowYOffsetSpinBox, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	shadowThicknessHBox = new TQHBox(activeShadowSettings);
+	shadowThicknessHBox->setSpacing(KDialog::spacingHint());
+	shadowThicknessLabel = new TQLabel(
+			i18n("Thickness to either side of window:"),
+			shadowThicknessHBox);
+	shadowThicknessSpinBox = new TQSpinBox(1, 100, 1,
+			shadowThicknessHBox);
+	shadowThicknessSpinBox->setSuffix(i18n(" pixels"));
+	connect(shadowThicknessSpinBox, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
+	inactiveShadowThicknessHBox = new TQHBox(inactiveShadowSettings);
+	inactiveShadowThicknessHBox->setSpacing(KDialog::spacingHint());
+	inactiveShadowThicknessLabel = new TQLabel(
+			i18n("Thickness to either side of window:"),
+			inactiveShadowThicknessHBox);
+	inactiveShadowThicknessSpinBox = new TQSpinBox(1, 100, 1,
+			inactiveShadowThicknessHBox);
+	inactiveShadowThicknessSpinBox->setSuffix(i18n(" pixels"));
+	connect(inactiveShadowThicknessSpinBox, TQT_SIGNAL(valueChanged(int)),
+			TQT_SLOT(slotSelectionChanged()));
+
 	// Load all installed decorations into memory
 	// Set up the decoration lists and other UI settings
 	findDecorations();
@@ -162,6 +324,7 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 
 	tabWidget->insertTab( pluginPage, i18n("&Window Decoration") );
 	tabWidget->insertTab( buttonPage, i18n("&Buttons") );
+	tabWidget->insertTab( shadowPage, i18n("&Shadows") );
 
 	connect( buttonPositionWidget, TQT_SIGNAL(changed()), this, TQT_SLOT(slotButtonsChanged()) ); // update preview etc.
 	connect( buttonPositionWidget, TQT_SIGNAL(changed()), this, TQT_SLOT(slotSelectionChanged()) ); // emit changed()...
@@ -171,7 +334,12 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	connect( cbUseCustomButtonPositions, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
 	connect(cbUseCustomButtonPositions, TQT_SIGNAL(toggled(bool)), buttonPositionWidget, TQT_SLOT(setEnabled(bool)));
 	connect(cbUseCustomButtonPositions, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotButtonsChanged()) );
+ 	connect(cbWindowShadow, TQT_SIGNAL(toggled(bool)), activeShadowSettings, TQT_SLOT(setEnabled(bool)));
+ 	connect(cbWindowShadow, TQT_SIGNAL(toggled(bool)), inactiveShadowSettings, TQT_SLOT(setEnabled(bool)));
+ 	connect(cbWindowShadow, TQT_SIGNAL(toggled(bool)), whichShadowSettings, TQT_SLOT(setEnabled(bool)));
+
 	connect( cbShowToolTips, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
+	connect( cbWindowShadow, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
 	connect( cBorder, TQT_SIGNAL( activated( int )), TQT_SLOT( slotBorderChanged( int )));
 //	connect( cbUseMiniWindows, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
 
@@ -465,6 +633,28 @@ void KWinDecorationModule::readConfig( KConfig* conf )
             border_size = BorderNormal;
         checkSupportedBorderSizes();
 
+	// Shadows tab
+	// ===========
+	bool shadowEnabled = conf->readBoolEntry("ShadowEnabled", false);
+ 	cbWindowShadow->setChecked(shadowEnabled);
+	activeShadowSettings->setEnabled(shadowEnabled);
+	inactiveShadowSettings->setEnabled(shadowEnabled);
+	whichShadowSettings->setEnabled(shadowEnabled);
+	shadowColourButton->setColor(conf->readColorEntry("ShadowColour", &Qt::black));
+ 	shadowOpacitySlider->setValue((int)ceil(conf->readDoubleNumEntry("ShadowOpacity", 0.70) * 100));
+ 	shadowXOffsetSpinBox->setValue(conf->readNumEntry("ShadowXOffset", 0));
+ 	shadowYOffsetSpinBox->setValue(conf->readNumEntry("ShadowYOffset", 10));
+ 	cbShadowDocks->setChecked(conf->readBoolEntry("ShadowDocks", false));
+ 	cbShadowOverrides->setChecked(conf->readBoolEntry("ShadowOverrides", false));
+ 	cbShadowTopMenus->setChecked(conf->readBoolEntry("ShadowTopMenus", false));
+ 	shadowThicknessSpinBox->setValue(conf->readNumEntry("ShadowThickness", 10));
+ 	cbInactiveShadow->setChecked(conf->readBoolEntry("InactiveShadowEnabled", false));
+ 	inactiveShadowColourButton->setColor(conf->readColorEntry("InactiveShadowColour", &Qt::black));
+ 	inactiveShadowOpacitySlider->setValue((int)ceil(conf->readDoubleNumEntry("InactiveShadowOpacity", 0.70) * 100));
+ 	inactiveShadowXOffsetSpinBox->setValue(conf->readNumEntry("InactiveShadowXOffset", 0));
+ 	inactiveShadowYOffsetSpinBox->setValue(conf->readNumEntry("InactiveShadowYOffset", 5));
+ 	inactiveShadowThicknessSpinBox->setValue(conf->readNumEntry("InactiveShadowThickness", 5));
+
 	emit KCModule::changed(false);
 }
 
@@ -488,6 +678,27 @@ void KWinDecorationModule::writeConfig( KConfig* conf )
 	conf->writeEntry("ButtonsOnLeft", buttonPositionWidget->buttonsLeft() );
 	conf->writeEntry("ButtonsOnRight", buttonPositionWidget->buttonsRight() );
         conf->writeEntry("BorderSize", border_size );
+
+	// Shadow settings
+	conf->writeEntry("ShadowEnabled", cbWindowShadow->isChecked());
+	conf->writeEntry("ShadowColour", shadowColourButton->color());
+	conf->writeEntry("ShadowOpacity", shadowOpacitySlider->value() / 100.0);
+	conf->writeEntry("ShadowXOffset", shadowXOffsetSpinBox->value());
+	conf->writeEntry("ShadowYOffset", shadowYOffsetSpinBox->value());
+	conf->writeEntry("ShadowThickness", shadowThicknessSpinBox->value());
+	conf->writeEntry("ShadowDocks", cbShadowDocks->isChecked());
+	conf->writeEntry("ShadowOverrides", cbShadowOverrides->isChecked());
+	conf->writeEntry("ShadowTopMenus", cbShadowTopMenus->isChecked());
+	conf->writeEntry("InactiveShadowEnabled", cbInactiveShadow->isChecked());
+	conf->writeEntry("InactiveShadowColour", inactiveShadowColourButton->color());
+	conf->writeEntry("InactiveShadowOpacity",
+			inactiveShadowOpacitySlider->value() / 100.0);
+	conf->writeEntry("InactiveShadowXOffset",
+			inactiveShadowXOffsetSpinBox->value());
+	conf->writeEntry("InactiveShadowYOffset",
+			inactiveShadowYOffsetSpinBox->value());
+	conf->writeEntry("InactiveShadowThickness",
+			inactiveShadowThicknessSpinBox->value());
 
 	oldLibraryName = currentLibraryName;
 	currentLibraryName = libName;
@@ -541,6 +752,7 @@ void KWinDecorationModule::defaults()
 	cbUseCustomButtonPositions->setChecked( false );
 	buttonPositionWidget->setEnabled( false );
 	cbShowToolTips->setChecked( true );
+	cbWindowShadow->setChecked( false );
 //	cbUseMiniWindows->setChecked( false);
 // Don't set default for now
 //	decorationList->setSelected(
@@ -551,6 +763,21 @@ void KWinDecorationModule::defaults()
 
         border_size = BorderNormal;
         checkSupportedBorderSizes();
+
+	shadowColourButton->setColor(Qt::black);
+	shadowOpacitySlider->setValue(70);
+	shadowXOffsetSpinBox->setValue(0);
+	shadowYOffsetSpinBox->setValue(10);
+	shadowThicknessSpinBox->setValue(10);
+	cbShadowDocks->setChecked(false);
+	cbShadowOverrides->setChecked(false);
+	cbShadowTopMenus->setChecked(false);
+	cbInactiveShadow->setChecked(false);
+	inactiveShadowColourButton->setColor(Qt::black);
+	inactiveShadowOpacitySlider->setValue(70);
+	inactiveShadowXOffsetSpinBox->setValue(0);
+	inactiveShadowYOffsetSpinBox->setValue(5);
+	inactiveShadowThicknessSpinBox->setValue(5);
 
 	// Set plugin defaults
 	emit pluginDefaults();

@@ -220,7 +220,7 @@ void KSMServer::storeLegacySession( KConfig* config )
     for (WindowMap::ConstIterator it = legacyWindows.begin(); it != legacyWindows.end(); ++it) {
         if ( (*it).type != SM_ERROR) {
             if( excludeApps.contains( (*it).wmclass1.lower())
-                || excludeApps.contains( (*it).wmclass2.lower()))
+                || excludeApps.contains( (*it).wmclass2.lower()) || (*it).wmCommand[0] == "compiz" || (*it).wmCommand[0] == "beryl" || (*it).wmCommand[0] == "aquamarine" || (*it).wmCommand[0] == "beryl-manager" || (*it).wmCommand[0] == "beryl-settings" || (*it).wmCommand[0] == "kde-window-decorator" || (*it).wmCommand[0] == "emerald")
                 continue;
             if ( !(*it).wmCommand.isEmpty() && !(*it).wmClientMachine.isEmpty() ) {
                 count++;

@@ -46,6 +46,7 @@ protected:
 
 protected slots:
     void slotSave();
+    void slotSave_and_close();
     void slotChangeView();
     void slotConfigureToolbars();
 protected:

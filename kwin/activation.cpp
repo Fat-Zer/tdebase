@@ -227,6 +227,13 @@ void Workspace::setActiveClient( Client* c, allowed_t )
         active_client->setActive( false, !c || !c->isModal() || c != active_client->transientFor() );
         }
     active_client = c;
+    if (set_active_client_recursion == 1)
+        {
+        // Only unset next_active_client if activateClient() wasn't called by
+        // Client::setActive() to set the active window to null before
+        // activating another window.
+        next_active_client = NULL;
+        }
     Q_ASSERT( c == NULL || c->isActive());
     if( active_client != NULL )
         last_active_client = active_client;
@@ -324,6 +331,7 @@ void Workspace::takeActivity( Client* c, int flags, bool handled )
         Client* modal = c->findModal();
         if( modal != NULL && modal != c )	
             { 
+            next_active_client = modal;
             if( !modal->isOnDesktop( c->desktop()))
                 {
                 modal->setDesktop( c->desktop());
@@ -351,11 +359,14 @@ void Workspace::takeActivity( Client* c, int flags, bool handled )
             c->setActive( true );
             focusToNull();
             }
+	if( c->wantsInput())
+	    next_active_client = c;
         flags &= ~ActivityFocus;
         handled = false; // no point, can't get clicks
         }
     if( !c->isShown( true )) // shouldn't happen, call activateClient() if needed
         {
+	next_active_client = c;
         kdWarning( 1212 ) << "takeActivity: not shown" << endl;
         return;
         }
@@ -856,7 +867,45 @@ void Client::setActive( bool act, bool updateOpacity_)
     updateShadowSize();
     
     if ( active )
+    {
         Notify::raise( Notify::Activate );
+        if (options->shadowEnabled(true))
+            {
+            if (options->shadowEnabled(false))
+                {
+                // Wait for inactive shadow to expose occluded windows and give
+                // them a chance to redraw before painting the active shadow
+                removeShadow();
+                drawDelayedShadow();
+                if (!isDesktop() &&
+                       this != workspace()->topClientOnDesktop(desktop()))
+                    // If the newly activated window's isn't the desktop, wait
+                    // for its shadow to draw, then redraw any shadows
+                    // overlapping it.
+                    drawOverlappingShadows(true);
+                }
+            else
+                drawShadow();
+            }
+        }
+    else
+        {
+        removeShadow();
+
+        if (options->shadowEnabled(false))
+            if (this == workspace()->topClientOnDesktop(desktop()))
+                {
+                /* If the newly deactivated window is the top client on the
+                 * desktop, then the newly activated window is below it; ensure
+                 * that the deactivated window's shadow draws after the
+                 * activated window's shadow.
+                 */
+                if ((shadowAfterClient = workspace()->activeClient()))
+                    drawShadowAfter(shadowAfterClient);
+                }
+            else
+                drawDelayedShadow();
+        }
 
     if( !active )
         cancelAutoRaise();

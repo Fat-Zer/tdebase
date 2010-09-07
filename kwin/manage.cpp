@@ -372,6 +372,7 @@ bool Client::manage( Window w, bool isMapped )
         setSkipTaskbar( session->skipTaskbar, true );
         setSkipPager( session->skipPager );
         setShade( session->shaded ? ShadeNormal : ShadeNone );
+        setShadowed( session->shadowed );
         if( session->maximized != MaximizeRestore )
             {
             maximize( (MaximizeMode) session->maximized );

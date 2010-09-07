@@ -106,6 +106,7 @@ void Workspace::storeSession( KConfig* config, SMSavePhase phase )
             // the config entry is called "sticky" for back. comp. reasons
             config->writeEntry( TQString("sticky")+n, c->isOnAllDesktops() );
             config->writeEntry( TQString("shaded")+n, c->isShade() );
+            config->writeEntry( TQString("shadowed")+n, c->isShadowed() );
             // the config entry is called "staysOnTop" for back. comp. reasons
             config->writeEntry( TQString("staysOnTop")+n, c->keepAbove() );
             config->writeEntry( TQString("keepBelow")+n, c->keepBelow() );
@@ -172,6 +173,7 @@ void Workspace::loadSessionInfo()
         info->minimized = config->readBoolEntry( TQString("iconified")+n, FALSE );
         info->onAllDesktops = config->readBoolEntry( TQString("sticky")+n, FALSE );
         info->shaded = config->readBoolEntry( TQString("shaded")+n, FALSE );
+        info->shadowed = config->readBoolEntry( TQString("shadowed")+n, TRUE );
         info->keepAbove = config->readBoolEntry( TQString("staysOnTop")+n, FALSE  );
         info->keepBelow = config->readBoolEntry( TQString("keepBelow")+n, FALSE  );
         info->skipTaskbar = config->readBoolEntry( TQString("skipTaskbar")+n, FALSE  );

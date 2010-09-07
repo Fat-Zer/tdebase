@@ -153,10 +153,10 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	    break;
 	case SWAP_MEM:
 	    vbox->addSpacing(SPACING);
-	    title = i18n("Total swap memory:");
+	    title = i18n("Total swap space:");
 	    break;
 	case FREESWAP_MEM:
-	    title = i18n("Free swap memory:");
+	    title = i18n("Free swap space:");
 	    break;
 	default:
 	    title = "";
@@ -197,27 +197,26 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	case MEM_RAM_AND_HDD:
 	    title = i18n("Total Memory");
 	    hint = i18n("This graph gives you an overview of the "
-			"<b>total sum of physical and virtual memory</b> "
-			"in your system.");
+			"usage of <b>all available memory</b> (the sum of "
+			"physical memory and swap space) in your system.");
 	    break;
 	case MEM_RAM:
 	    title = i18n("Physical Memory");
 	    hint = i18n("This graph gives you an overview of "
-			"the <b>usage of physical memory</b> in your system."
+			"the usage of <b>physical memory</b> in your system."
 			"<p>Most operating systems (including Linux) "
 			"will use as much of the available physical "
-			"memory as possible as disk cache, "
-			"to speed up the system performance. "
-			"<p>This means that if you have a small amount "
+			"memory as possible for a disk cache, "
+			"to speed up the reading and writing of files. "
+			"<p>This means that if you are seeing a small amount "
 			"of <b>Free Physical Memory</b> and a large amount of "
-			"<b>Disk Cache Memory</b>, your system is well "
-			"configured.");
+			"<b>Disk Cache</b>, your system is well configured.");
 	    break;
 	case MEM_HDD:
 	    title = i18n("Swap Space");
-	    hint = i18n("The swap space is the <b>virtual memory</b> "
+	    hint = i18n("Swap space is the <b>virtual memory</b> "
 			"available to the system. "
-			"<p>It will be used on demand and is provided "
+			"<p>It will be used when needed, and is provided "
 			"through one or more swap partitions and/or swap files.");
 	    break;
 	default:
@@ -312,10 +311,10 @@ bool KMemoryWidget::Display_Graph(int widgetindex,
 	last_used = *used;
 	
 #ifdef HAVE_LONG_LONG
-    	percent = (((long long)last_used) * 100) / total;
+	percent = (((long long)last_used) * 1000 + 5) / (total * 10);
 #else
 	/* prevent integer overflow with usage of double type */
-	percent = (int) ((((double)last_used) * 100) / total);
+	percent = (int) ((((double)last_used) * 1000 + 5) / (total * 10));
 #endif
 
     	if (count)
@@ -400,11 +399,11 @@ void KMemoryWidget::update_Values()
     if (!ram_colors_initialized) {
 		ram_colors_initialized = true;
 		ram_text[0] = i18n("Application Data");
-		ram_colors[0] = COLOR_USED_MEMORY; /* used+shared */
+		ram_colors[0] = COLOR_USED_DATA; /* used+shared */
 		ram_text[1] = i18n("Disk Buffers");
-		ram_colors[1] = TQColor(24,131,5); /* buffer */
+		ram_colors[1] = COLOR_USED_BUFFER; /* buffers */
 		ram_text[2] = i18n("Disk Cache");
-		ram_colors[2] = TQColor(33,180,7); /* cached */
+		ram_colors[2] = COLOR_USED_CACHE; /* cached */
 		ram_text[3] = i18n("Free Physical Memory");
 		ram_colors[3] = COLOR_FREE_MEMORY; /* free */
     }
@@ -425,24 +424,20 @@ void KMemoryWidget::update_Values()
 		      used, swap_colors, swap_text);
     
     /* RAM + SWAP usage: */
-    if (Memory_Info[SWAP_MEM] == NO_MEMORY_INFO ||
-	Memory_Info[FREESWAP_MEM] == NO_MEMORY_INFO)
-	    Memory_Info[SWAP_MEM] = Memory_Info[FREESWAP_MEM] = 0;
-	  
-    used[1] = Memory_Info[SWAP_MEM] - Memory_Info[FREESWAP_MEM];
-    used[2] = Memory_Info[FREE_MEM] + Memory_Info[FREESWAP_MEM];
-    used[0] = (Memory_Info[TOTAL_MEM]+Memory_Info[SWAP_MEM])-used[1]-used[2];
+    /* used[0] already contains the amount of used swap */
+    used[2] = Memory_Info[FREE_MEM] + ZERO_IF_NO_INFO(Memory_Info[FREESWAP_MEM]);
+    used[1] = Memory_Info[TOTAL_MEM] - Memory_Info[FREE_MEM];
     if (!all_colors_initialized) {
 		all_colors_initialized = true;
-		all_text[0] = i18n("Used Physical Memory");
-		all_colors[0] = COLOR_USED_MEMORY; /* used ram */
-		all_text[1] = i18n("Used Swap");
-		all_colors[1] = COLOR_USED_SWAP; /* used swap */
-		all_text[2] = i18n("Total Free Memory");
+		all_text[0] = i18n("Used Memory (swap part)");
+		all_colors[0] = COLOR_USED_SWAP; /* used swap */
+		all_text[1] = i18n("Used Memory (physical part)");
+		all_colors[1] = COLOR_USED_RAM; /* used ram */
+		all_text[2] = i18n("Free Memory (total)");
 		all_colors[2] = COLOR_FREE_MEMORY; /* free ram+swap*/
     }
     Display_Graph(MEM_RAM_AND_HDD, 3,
-		  ok1	? Memory_Info[TOTAL_MEM] + Memory_Info[SWAP_MEM]
+		  ok1 ? Memory_Info[TOTAL_MEM] + ZERO_IF_NO_INFO(Memory_Info[SWAP_MEM])
 		  	: NO_MEMORY_INFO,
 		  used, all_colors, all_text);
 }
