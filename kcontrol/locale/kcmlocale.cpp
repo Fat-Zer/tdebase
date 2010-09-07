@@ -33,6 +33,7 @@
 
 #include <kdebug.h>
 #include <kdialog.h>
+#include <kprocess.h>
 #include <kiconloader.h>
 #include <klanguagebutton.h>
 #include <ksimpleconfig.h>

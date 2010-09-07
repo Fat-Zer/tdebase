@@ -18,6 +18,7 @@
 #include <tqlayout.h>
 #include <tqslider.h>
 
+#include <kapplication.h>
 #include <kcolorbutton.h>
 #include <kconfig.h>
 #include <kdebug.h>

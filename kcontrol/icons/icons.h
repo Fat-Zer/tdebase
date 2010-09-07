@@ -18,6 +18,7 @@
 
 #include <kcmodule.h>
 #include <kdialogbase.h>
+#include <ksimpleconfig.h>
 
 class TQCheckBox;
 class TQColor;

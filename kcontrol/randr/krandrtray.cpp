@@ -17,6 +17,7 @@
  */
 
 #include <tqtimer.h>
+#include <tqimage.h>
 #include <tqtooltip.h>
 
 #include <kaction.h>
@@ -32,6 +33,7 @@
 #include <kglobal.h>
 #include <kmessagebox.h>
 
+#include <cstdlib>
 #include <unistd.h>
 
 #include "configdialog.h"

@@ -24,6 +24,7 @@
 #include <tqradiobutton.h>
 #include <tqcombobox.h>
 #include <tqbuttongroup.h>
+#include <tqlineedit.h>
 
 #include <dcopref.h>
 #include <kapplication.h>

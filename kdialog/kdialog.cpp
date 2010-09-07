@@ -621,6 +621,20 @@ static int directCommand(KCmdLineArgs *args)
             context = KIcon::Application;
         else if ( contextStr == TQString::fromLatin1( "Actions" ) )
             context = KIcon::Action;
+        else if ( contextStr == QString::fromLatin1( "Animations" ) )
+            context = KIcon::Animation;
+        else if ( contextStr == QString::fromLatin1( "Categories" ) )
+            context = KIcon::Category;
+        else if ( contextStr == QString::fromLatin1( "Emblems" ) )
+            context = KIcon::Emblem;
+        else if ( contextStr == QString::fromLatin1( "Emotes" ) )
+            context = KIcon::Emote;
+        else if ( contextStr == QString::fromLatin1( "International" ) )
+            context = KIcon::International;
+        else if ( contextStr == QString::fromLatin1( "Places" ) )
+            context = KIcon::Place;
+        else if ( contextStr == QString::fromLatin1( "Status" ) )
+            context = KIcon::StatusIcon;
 
 	KIconDialog dlg(0, "icon dialog");
 	kapp->setTopWidget( &dlg );

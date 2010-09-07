@@ -160,7 +160,9 @@ KParts::ReadOnlyPart* KWebDesktop::createPart( const TQString& mimeType )
         htmlPart->setMetaRefreshEnabled(false);
         htmlPart->setJScriptEnabled(false);
         htmlPart->setJavaEnabled(false);
+        htmlPart->setPluginsEnabled(false);
 
+        ((TQScrollView *)htmlPart->widget())->setFrameStyle( TQFrame::NoFrame );
         ((TQScrollView *)htmlPart->widget())->setHScrollBarMode( TQScrollView::AlwaysOff );
         ((TQScrollView *)htmlPart->widget())->setVScrollBarMode( TQScrollView::AlwaysOff );
 

@@ -972,6 +972,13 @@ TQStringList HALBackend::mountoptions(const TQString &name)
         result << tmp;
     }
 
+    if ( valids.contains("locale") )
+    {
+        value = config.readBoolEntry( "locale", true );
+        tmp = QString( "locale=%1" ).arg( value ? "true" : "false" );
+        result << tmp;
+    }
+
     if (valids.contains("utf8"))
     {
         value = config.readBoolEntry("utf8", true);
@@ -1056,7 +1063,7 @@ bool HALBackend::setMountoptions(const TQString &name, const TQStringList &optio
 
     TQMap<TQString,TQString> valids = MediaManagerUtils::splitOptions(options);
 
-    const char *names[] = { "ro", "quiet", "atime", "uid", "utf8", "flush", "sync", 0 };
+    const char *names[] = { "ro", "quiet", "atime", "uid", "utf8", "flush", "sync", "locale", 0 };
     for (int index = 0; names[index]; ++index)
         if (valids.contains(names[index]))
             config.writeEntry(names[index], valids[names[index]] == "true");
@@ -1074,6 +1081,10 @@ bool HALBackend::setMountoptions(const TQString &name, const TQStringList &optio
         TQString drive_udi = libhal_device_get_property_QString(m_halContext, name.latin1(), "block.storage_device");
         config.setGroup(drive_udi);
         config.writeEntry("automount", valids["automount"]);
+    }
+
+    if (valids.contains("locale") ) {
+        config.writeEntry("locale", valids["locale"]);
     }
 
     return true;
@@ -1423,6 +1434,11 @@ TQString HALBackend::mount(const Medium *medium)
     if ((valids["uid"] == "true") && (medium->fsType() != "ntfs"))
     {
         soptions << TQString("uid=%1").arg(getuid());
+    }
+
+    if (valids["locale"] == "true")
+    {
+        soptions << QString("locale=%1").arg( KGlobal::locale()->language() );
     }
 
     if (valids["ro"] == "true")
