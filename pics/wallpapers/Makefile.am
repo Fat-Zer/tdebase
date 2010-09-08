@@ -33,6 +33,8 @@ pics_wallpaper_data_DATA = \
      Won-Ton-Soup-3.jpg.desktop \
      KDE34.png \
      KDE34.png.desktop \
+     aghi.jpg \
+     aghi.jpg.desktop \
      andes-venezolanos.svgz \
      andes-venezolanos.svgz.desktop \
      aurora.svgz \
@@ -48,7 +50,11 @@ pics_wallpaper_data_DATA = \
      lineart.svgz \
      lineart.svgz.desktop \
      moon.svgz \
-     moon.svgz.desktop
+     moon.svgz.desktop \
+     stripes.jpg \
+     stripes.jpg.desktop \
+     world-desktop.jpg \
+     world-desktop.jpg.desktop
 
 pics_wallpaper_datadir = $(kde_wallpaperdir)
 
