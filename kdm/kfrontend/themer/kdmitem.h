@@ -248,6 +248,8 @@ protected:
 	TQString itemType, id;
 	TQValueList<KdmItem *> m_children;
 
+	int m_backgroundModifier;
+
 	// Layouting related variables
 	enum { MNone = 0, MFixed = 1, MBox = 2 } currentManager;
 	KdmLayoutBox *boxManager;

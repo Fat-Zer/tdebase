@@ -72,6 +72,7 @@ KdmItem::init( const TQDomNode &node, const char * )
 	pos.width = pos.height = 1;
 	pos.xType = pos.yType = pos.wType = pos.hType = DTnone;
 	pos.anchor = "nw";
+	m_backgroundModifier = 255;
 
 	isShown = InitialHidden;
 
@@ -98,6 +99,10 @@ KdmItem::init( const TQDomNode &node, const char * )
 			parseAttribute( el.attribute( "width", TQString::null ), pos.width, pos.wType );
 			parseAttribute( el.attribute( "height", TQString::null ), pos.height, pos.hType );
 			pos.anchor = el.attribute( "anchor", "nw" );
+		}
+
+		if (tagName == "bgmodifier") {
+			m_backgroundModifier = TQString(el.attribute( "value", "255" )).toInt();
 		}
 	}
 
@@ -285,15 +290,44 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
 	if (myWidget || (myLayoutItem && myLayoutItem->widget())) {
             // KListView because it's missing a Q_OBJECT'
             // FIXME: This is a nice idea intheory, but in practice it is
-            // very confusing for the user not to see then empty list box
+            // very confusing for the user not to see the empty list box
             // delineated from the rest of the greeter.
             // Maybe set a darker version of the background instead of an exact copy?
-//            if ( myWidget && myWidget->isA( "KListView" ) ) {
-//                TQPixmap copy( myWidget->size() );
-//                kdDebug() <<  myWidget->geometry() << " " << area << " " << myWidget->size() << endl;
-//                bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), Qt::CopyROP );
-//                myWidget->setPaletteBackgroundPixmap( copy );
-//            }
+            if ( myWidget && myWidget->isA( "KListView" ) ) {
+                TQPixmap copy( myWidget->size() );
+                kdDebug() <<  myWidget->geometry() << " " << area << " " << myWidget->size() << endl;
+                bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), Qt::CopyROP );
+                // Lighten it slightly
+                TQImage lightVersion;
+                lightVersion = copy.convertToImage();
+
+                register uchar * r = lightVersion.bits();
+                register uchar * g = lightVersion.bits() + 1;
+                register uchar * b = lightVersion.bits() + 2;
+                uchar * end = lightVersion.bits() + lightVersion.numBytes();
+
+                while ( r != end ) {
+                    if ((*r) < (255-m_backgroundModifier))
+                        *r = (uchar) (*r) + m_backgroundModifier;
+                    else
+                        *r = 255;
+                    if ((*g) < (255-m_backgroundModifier))
+                        *g = (uchar) (*g) + m_backgroundModifier;
+                    else
+                        *g = 255;
+                    if ((*b) < (255-m_backgroundModifier))
+                        *b = (uchar) (*b) + m_backgroundModifier;
+                    else
+                        *b = 255;
+                    r += 4;
+                    g += 4;
+                    b += 4;
+                }
+
+                copy = lightVersion;
+                // Set it
+                myWidget->setPaletteBackgroundPixmap( copy );
+            }
             return;
         }
 
