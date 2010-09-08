@@ -1,1 +1,1 @@
-SUBDIRS = circles
+SUBDIRS = circles o2_enterprise
