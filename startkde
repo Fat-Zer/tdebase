@@ -60,7 +60,12 @@ fi
 # The user's personal KDE directory is usually ~/.kde3, but this setting
 # may be overridden by setting KDEHOME.
 
-export KDEHOME=$HOME/.kde3 && export PATH=/opt/kde3/bin:/opt/kde3/games:$PATH && export KDEDIRS=$KDEDIRS:/opt/kde3/:/usr/ && export XDG_DATA_DIRS=$XDG_DATA_DIRS:/opt/kde3/share/:/usr/share/ && export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:/opt/kde3/etc/xdg/:/etc/xdg/ && export MANPATH=/opt/kde3/share/man:$MANPATH && export DESKTOP_SESSION=kde3
+export KDEHOME=$HOME/.kde3 && export PATH=/opt/kde3/bin:/opt/kde3/games:$PATH && export XDG_DATA_DIRS=$XDG_DATA_DIRS:/opt/kde3/share/:/usr/share/ && export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:/opt/kde3/etc/xdg/:/etc/xdg/ && export MANPATH=/opt/kde3/share/man:$MANPATH && export DESKTOP_SESSION=kde3
+if [ -n "$KDEDIRS" ]; then
+  export KDEDIRS=$KDEDIRS:/opt/kde3/:/usr/
+else
+  export KDEDIRS=/opt/kde3/:/usr/
+fi
 test -n "$KDEHOME" && kdehome=`echo "$KDEHOME"|sed "s,^~/,$HOME/,"`
 
 # see kstartupconfig source for usage
@@ -246,6 +251,7 @@ if test -r "$kde_fontpaths" ; then
     IFS=$savifs
 fi
 
+echo "KDEDIRS: $KDEDIRS"
 if test -n "$KDEDIRS"; then
   kdedirs_first=`echo "$KDEDIRS"|sed -e 's/:.*//'`
   sys_odir=$kdedirs_first/share/fonts/override
@@ -253,6 +259,19 @@ if test -n "$KDEDIRS"; then
 else
   sys_odir=$KDEDIR/share/fonts/override
   sys_fdir=$KDEDIR/share/fonts
+fi
+
+if test -n "$KDEDIRS"; then
+  kdedirs_first=`echo "$KDEDIRS"|sed -e 's/:.*//'`
+  echo "kdedirs_first: $kdedirs_first"
+  echo "Reading from $kdedirs_first/share/kgtk/preload"
+  read -r KGTK_PRELOAD < $kdedirs_first/share/kgtk/preload
+else
+  read -r KGTK_PRELOAD < $KDEDIR/share/kgtk/preload
+fi
+
+if [ -n $KGTK_PRELOAD ]; then
+  export LD_PRELOAD=$KGTK_PRELOAD:$LD_PRELOAD
 fi
 
 # We run mkfontdir on the user's font dirs (if we have permission) to pick
