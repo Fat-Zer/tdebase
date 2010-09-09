@@ -94,7 +94,7 @@ fi
 if [ ! -e $kdehome/share/config/kdesktoprc ]; then
 cat >$kdehome/share/config/kdesktoprc <<EOF
 [Desktop0]
-Wallpaper=stripes.jpg
+Wallpaper=green_curtain.jpg
 WallpaperMode=Scaled
 EOF
 fi

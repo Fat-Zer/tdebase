@@ -43,6 +43,8 @@ pics_wallpaper_data_DATA = \
      celtic.svgz.desktop \
      globe.svgz \
      globe.svgz.desktop \
+     green_curtain.jpg \
+     green_curtain.jpg.desktop \
      here-gear.svgz \
      here-gear.svgz.desktop \
      konqui.svgz \
