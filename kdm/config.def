@@ -1,4 +1,5 @@
 #
+# Copyright 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 # Copyright 2004-2005 Oswald Buddenhagen <ossi@kde.org>
 #
 # Permission to use, copy, modify, distribute, and sell this software and its
@@ -2613,18 +2614,18 @@ Description:
 
 Key: UseTheme
 Type: bool
-Default: false
+Default: true
 User: greeter
-Instance: #*/true
+Instance: */true
 Comment: &
 Description:
  Whether the greeter should be themed.
 
 Key: Theme
 Type: string
-Default: ""
+Default: KDMDATA "/themes/o2_enterprise"
 User: greeter
-Instance: */ "@@@ToBeReplacedByDesktopBase@@@"
+Instance: */KDMDATA "/themes/o2_enterprise"
 Comment: &
 Description:
  The theme to use for the greeter. Can point to either a directory or an XML

@@ -32,6 +32,7 @@
 #include <dirent.h>
 #include <errno.h>
 
+#include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kpopupmenu.h>
 #include <kapplication.h>
