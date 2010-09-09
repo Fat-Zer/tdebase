@@ -1,6 +1,5 @@
 o2_enterprisedir = $(kde_datadir)/kdm/themes/o2_enterprise
 o2_enterprise_DATA = \
-	background.jpg \
 	Dialog.png \
 	enter_normal.png \
 	enter_over.png \
