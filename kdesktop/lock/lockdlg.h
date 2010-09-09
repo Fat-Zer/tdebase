@@ -14,6 +14,8 @@
 #include <tqdialog.h>
 #include <tqstringlist.h>
 
+#include "lockprocess.h"
+
 struct GreeterPluginHandle;
 class LockProcess;
 class TQFrame;

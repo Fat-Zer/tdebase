@@ -11,6 +11,8 @@
 #include <tqdialog.h>
 #include <tqstringlist.h>
 
+#include "lockprocess.h"
+
 class TQFrame;
 class TQGridLayout;
 class TQLabel;

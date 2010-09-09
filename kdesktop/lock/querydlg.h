@@ -13,6 +13,8 @@
 
 #include <kpassdlg.h>
 
+#include "lockprocess.h"
+
 class TQFrame;
 class TQGridLayout;
 class TQLabel;
