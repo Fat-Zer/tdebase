@@ -42,8 +42,8 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 	itemType = "pixmap";
 
 	// Set default values for pixmap (note: strings are already Null)
-	pixmap.normal.tint.setRgb( 0xFFFFFF );
-	pixmap.normal.alpha = 1.0;
+	pixmap.normal.tint.setRgb( 0x800000 );
+	pixmap.normal.alpha = 0.0;
 	pixmap.active.present = false;
 	pixmap.prelight.present = false;
 
@@ -63,6 +63,17 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 			pixmap.normal.fullpath = fullPath( el.attribute( "file", "" ) );
 			parseColor( el.attribute( "tint", "#ffffff" ), pixmap.normal.tint );
 			pixmap.normal.alpha = el.attribute( "alpha", "1.0" ).toFloat();
+
+			if (el.attribute( "file", "" ) == "@@@KDMBACKGROUND@@@") {
+				// Use the preset KDM background...
+				KStandardDirs *m_pDirs = KGlobal::dirs();
+				KSimpleConfig *config = new KSimpleConfig( TQFile::decodeName( _backgroundCfg ) );
+				config->setGroup("Desktop0");
+				pixmap.normal.fullpath = m_pDirs->findResource("wallpaper", config->readPathEntry("Wallpaper"));
+				// TODO: Detect when there is no wallpaper and use the background settings instead
+				delete config;
+			}
+
 		} else if (tagName == "active") {
 			pixmap.active.present = true;
 			pixmap.active.fullpath = fullPath( el.attribute( "file", "" ) );
