@@ -45,6 +45,8 @@
 #include "ksysinfo.h"
 #include "keyecandypage.h"
 
+#define DEFAULT_WALLPAPER "stripes.jpg"
+
 KEyeCandyPage::KEyeCandyPage(TQWidget *parent, const char *name ) : KEyeCandyPageDlg(parent,name) {
 
 	kwinconf = new KConfig("kwinrc", false, true);
@@ -240,14 +242,14 @@ void KEyeCandyPage::enableDesktopWallpaper(bool enable, bool user){
 	kdesktopconf->setGroup("Desktop0");
 
 	if( st_UserWallpaper.WallpaperMode == "NoWallpaper")
-	deskbgimage="KDE34.png";
+		deskbgimage=DEFAULT_WALLPAPER;
 
 	if(enable && !user){
 		// if the user has a different mode than the default of NoMulti, we don't change anyting on that.
 		if( st_UserWallpaper.MultiWallpaperMode == "NoMulti" )
 			kdesktopconf->writeEntry("MultiWallpaperMode", "NoMulti");
 		// if the wallpaper is the new default one, set mode to scaled to leave user settings untouched
-		if( deskbgimage == "KDE34.png"){
+		if( deskbgimage == DEFAULT_WALLPAPER){
 			kdesktopconf->writeEntry("WallpaperMode", "Scaled");
 			//here we change the kdesktop font color to white as it fits better
 			// to the KDE34png.png gray background
@@ -689,7 +691,7 @@ void KEyeCandyPage::getUserDefaults(){
 	st_UserWallpaper.MultiWallpaperMode = kdesktopconf->readEntry("MultiWallpaperMode", "NoMulti");
 	st_UserWallpaper.WallpaperMode = kdesktopconf->readEntry("WallpaperMode", "Scaled");
 	st_UserWallpaper.Wallpaper = kdesktopconf->readPathEntry("Wallpaper", "NoWallpaper");
-	deskbgimage = kdesktopconf->readPathEntry("Wallpaper", "KDE34.png");
+	deskbgimage = kdesktopconf->readPathEntry("Wallpaper", DEFAULT_WALLPAPER);
 	// Wallpaper-User-Defaults (END)
 
 	KGlobal::config()->setGroup("KDE");

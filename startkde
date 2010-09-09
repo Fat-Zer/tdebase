@@ -90,6 +90,15 @@ if test $? -ne 0; then
 fi
 . $kdehome/share/config/startupconfig
 
+# Make sure default wallpaper is set
+if [ ! -e $kdehome/share/config/kdesktoprc ]; then
+cat >$kdehome/share/config/kdesktoprc <<EOF
+[Desktop0]
+Wallpaper=stripes.jpg
+WallpaperMode=Scaled
+EOF
+fi
+
 # XCursor mouse theme needs to be applied here to work even for kded or ksmserver
 if test -n "$kcminputrc_mouse_cursortheme" -o -n "$kcminputrc_mouse_cursorsize" ; then
     kapplymousetheme "$kcminputrc_mouse_cursortheme" "$kcminputrc_mouse_cursorsize"
@@ -176,16 +185,25 @@ fi
 
 # configuration of the gtk_qt_engine if not already set
 
-if [ ! -e $kdehome/env/gtk-qt-engine.rc.sh ] && [ -e /usr/share/kubuntu-default-settings/gtk-qt-engine.rc.sh ]
+if test -n "$KDEDIRS"; then
+  kdedirs_first=`echo "$KDEDIRS"|sed -e 's/:.*//'`
+  KGTK_RC_ENGINE=$kdedirs_first/share/kgtk/gtk-qt-engine.rc.sh
+  KGTK_RC_KDE=$kdedirs_first/share/kgtk/.gtkrc-2.0-kde
+else
+  KGTK_RC_ENGINE=$KDEDIR/share/kgtk/gtk-qt-engine.rc.sh
+  KGTK_RC_KDE=$KDEDIR/share/kgtk/.gtkrc-2.0-kde
+fi
+
+if [ ! -e $kdehome/env/gtk-qt-engine.rc.sh ] && [ -e $KGTK_RC_ENGINE ]
 then
  mkdir -p $kdehome/env
- cp -f /usr/share/kubuntu-default-settings/gtk-qt-engine.rc.sh $kdehome/env
+ cp -f $KGTK_RC_ENGINE $kdehome/env
  chmod 755 $kdehome/env/gtk-qt-engine.rc.sh
 fi
 
-if [ ! -e $HOME/.gtkrc-2.0-kde ] && [ -e /usr/share/kubuntu-default-settings/.gtkrc-2.0-kde ]
+if [ ! -e $HOME/.gtkrc-2.0-kde ] && [ -e $KGTK_RC_KDE ]
 then
- cp -f /usr/share/kubuntu-default-settings/.gtkrc-2.0-kde $HOME
+ cp -f $KGTK_RC_KDE $HOME
 fi
 
 # Source scripts found in <localprefix>/env/*.sh and <prefixes>/env/*.sh
