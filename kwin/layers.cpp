@@ -207,9 +207,11 @@ void Workspace::propagateClients( bool propagate_new_clients )
 	window_stack[ topmenu_space_pos ] = topmenu_space->winId();
         ++pos;
         }
+#if 0
     // TODO isn't it too inefficient to restart always all clients?
     // TODO don't restack not visible windows?
     assert( new_stack[ 0 ] = supportWindow->winId());
+#endif
 #if 0
     XRestackWindows(qt_xdisplay(), new_stack, pos);
     delete [] new_stack;
