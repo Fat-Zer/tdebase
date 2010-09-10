@@ -32,6 +32,7 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
+#include <tqfile.h>
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqimage.h>
