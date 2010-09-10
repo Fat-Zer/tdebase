@@ -47,6 +47,8 @@ pics_wallpaper_data_DATA = \
      green_curtain.jpg.desktop \
      here-gear.svgz \
      here-gear.svgz.desktop \
+     horse-head-nebula.png \
+     horse-head-nebula.png.desktop \
      konqui.svgz \
      konqui.svgz.desktop \
      lineart.svgz \
