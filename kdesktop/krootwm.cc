@@ -132,7 +132,7 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop)
   if (kapp->authorize("run_command"))
   {
      new KAction(i18n("Run Command..."), "run", 0, m_pDesktop, TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
-     new KAction(i18n("Konsole ..." ), "terminal", CTRL+Key_T, this, TQT_SLOT( slotOpenTerminal() ),
+     new KAction(i18n("Open Terminal Here..." ), "terminal", CTRL+Key_T, this, TQT_SLOT( slotOpenTerminal() ),
 	m_actionCollection, "open_terminal" );
   }
 
@@ -746,7 +746,7 @@ void KRootWm::slotOpenTerminal()
     KConfigGroupSaver gs(KGlobal::config(), "General");
     TQString terminal = KGlobal::config()->readPathEntry("TerminalApplication", "konsole");
 
-    *p << terminal;
+    *p << terminal << " --workdir \"$HOME/Desktop\"";
 
     p->start(KProcess::DontCare);
 
