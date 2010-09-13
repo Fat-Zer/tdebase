@@ -101,6 +101,7 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
   lay->setColStretch(1, 1);
   lay->setColStretch(2, 1);
 
+#if 0
   // Added jriddell 2007-01-08, for Kubuntu Language Selector spec
   TQHBoxLayout* languageSelectorLayout = new TQHBoxLayout();
   installLanguage = new TQPushButton(i18n("Install New Language"), this);
@@ -115,6 +116,7 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
   connect( installLanguage, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotInstallLanguage()) );
   connect( uninstallLanguage, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotUninstallLanguage()) );
   connect( selectLanguage, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSelectLanguage()) );
+#endif
 
 }
 
