@@ -424,7 +424,13 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         //kdDebug(1203) << "View path is " << url.url() << endl;
         //kdDebug(1203) << "First popup path is " << firstPopupURL.url() << endl;
         currentDir = firstPopupURL.equals( url, true /* ignore_trailing */ );
-        if ( isLocal && m_sMimeType == "application/x-desktop" ) {
+        if ( isLocal && ((m_sMimeType == "application/x-desktop")
+                      || (m_sMimeType == "media/builtin-mydocuments")
+                      || (m_sMimeType == "media/builtin-mycomputer")
+                      || (m_sMimeType == "media/builtin-mynetworkplaces")
+                      || (m_sMimeType == "media/builtin-printers")
+                      || (m_sMimeType == "media/builtin-trash")
+                      || (m_sMimeType == "media/builtin-webbrowser")) ) {
             KSimpleConfig cfg( firstPopupURL.path(), true );
             cfg.setDesktopGroup();
             isTrashLink = ( cfg.readEntry("Type") == "Link" && cfg.readEntry("URL") == "trash:/" );
@@ -629,7 +635,13 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     }
 
     // 1 - Look for builtin and user-defined services
-    if ( m_sMimeType == "application/x-desktop" && isSingleLocal ) // .desktop file
+    if ( ((m_sMimeType == "application/x-desktop")
+       || (m_sMimeType == "media/builtin-mydocuments")
+       || (m_sMimeType == "media/builtin-mycomputer")
+       || (m_sMimeType == "media/builtin-mynetworkplaces")
+       || (m_sMimeType == "media/builtin-printers")
+       || (m_sMimeType == "media/builtin-trash")
+       || (m_sMimeType == "media/builtin-webbrowser")) && isSingleLocal ) // .desktop file
     {
         // get builtin services, like mount/unmount
         s.builtin = KDEDesktopMimeType::builtinServices( urlForServiceMenu );

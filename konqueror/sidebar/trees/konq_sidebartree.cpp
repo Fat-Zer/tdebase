@@ -680,7 +680,14 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
         TQString filePath = TQString( *eIt ).prepend( path );
         KURL u;
         u.setPath( filePath );
-        if ( KMimeType::findByURL( u, 0, true )->name() == "application/x-desktop" )
+        TQString foundMimeName = KMimeType::findByURL( u, 0, true )->name();
+        if ( (foundMimeName == "application/x-desktop")
+          || (foundMimeName == "media/builtin-mydocuments")
+          || (foundMimeName == "media/builtin-mycomputer")
+          || (foundMimeName == "media/builtin-mynetworkplaces")
+          || (foundMimeName == "media/builtin-printers")
+          || (foundMimeName == "media/builtin-trash")
+          || (foundMimeName == "media/builtin-webbrowser") )
             loadTopLevelItem( parent, filePath );
     }
 

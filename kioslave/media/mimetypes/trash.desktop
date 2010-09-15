@@ -1,0 +1,9 @@
+[Desktop Entry]
+Icon=trashcan_full
+EmptyIcon=trashcan_empty
+Type=MimeType
+MimeType=media/builtin-trash
+Comment=Trash
+Patterns=Trash
+
+X-KDE-AutoEmbed=false

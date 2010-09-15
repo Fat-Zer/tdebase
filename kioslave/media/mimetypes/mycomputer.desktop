@@ -1,0 +1,8 @@
+[Desktop Entry]
+Icon=system
+Type=MimeType
+MimeType=media/builtin-mycomputer
+Comment=My Computer
+Patterns=My Computer
+
+X-KDE-AutoEmbed=false

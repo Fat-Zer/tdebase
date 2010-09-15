@@ -417,7 +417,13 @@ void KonqOperations::asyncDrop( const KFileItem * destItem )
         delete this;
         return;
     }
-    if ( destItem->mimetype() == "application/x-desktop")
+    if ( (destItem->mimetype() == "application/x-desktop")
+      || (destItem->mimetype() == "media/builtin-mydocuments")
+      || (destItem->mimetype() == "media/builtin-mycomputer")
+      || (destItem->mimetype() == "media/builtin-mynetworkplaces")
+      || (destItem->mimetype() == "media/builtin-printers")
+      || (destItem->mimetype() == "media/builtin-trash")
+      || (destItem->mimetype() == "media/builtin-webbrowser") )
     {
         // Local .desktop file. What type ?
         KDesktopFile desktopFile( m_destURL.path() );

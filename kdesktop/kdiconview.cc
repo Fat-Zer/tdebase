@@ -485,7 +485,7 @@ void KDIconView::setAutoAlign( bool b )
 
     // Auto line-up icons
     if ( b ) {
-         if (!KRootWm::self()->startup) lineupIcons(); else KRootWm::self()->startup = false; 
+         if (!KRootWm::self()->startup) lineupIcons(); else KRootWm::self()->startup = false;
         connect( this, TQT_SIGNAL( iconMoved() ),
                  this, TQT_SLOT( lineupIcons() ) );
     }
@@ -759,6 +759,55 @@ bool KDIconView::deleteGlobalDesktopFiles()
             continue; // Not a .desktop file
         }
 
+        // Ignore these special files
+        // Name			URL					Type		OnlyShowIn
+        // My Documents		$HOME/Documents				Link		KDE;
+        // My Computer		media:/					Link		KDE;
+        // My Network Places	remote:/				Link		KDE;
+        // Printers		[exec] kjobviewer --all --show %i %m	Application	KDE;
+        // Trash		trash:/					Link		KDE;
+        // Web Browser		<dont care>				Application	KDE;
+
+        if ( isDesktopFile(fItem) ) {
+            KSimpleConfig cfg( fItem->url().path(), true );
+            cfg.setDesktopGroup();
+            if ( cfg.readEntry( "Type" ) == "Link" &&
+                 cfg.readEntry( "URL" ) == "$HOME/Documents" &&
+                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+                 cfg.readEntry( "Name" ) == "My Documents" ) {
+                continue;
+            }
+            if ( cfg.readEntry( "Type" ) == "Link" &&
+                 cfg.readEntry( "URL" ) == "media:/" &&
+                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+                 cfg.readEntry( "Name" ) == "My Computer" ) {
+                continue;
+            }
+            if ( cfg.readEntry( "Type" ) == "Link" &&
+                 cfg.readEntry( "URL" ) == "remote:/" &&
+                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+                 cfg.readEntry( "Name" ) == "My Network Places" ) {
+                continue;
+            }
+            if ( cfg.readEntry( "Type" ) == "Application" &&
+                 cfg.readEntry( "Exec" ) == "kjobviewer --all --show %i %m" &&
+                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+                 cfg.readEntry( "Name" ) == "Printers" ) {
+                continue;
+            }
+            if ( cfg.readEntry( "Type" ) == "Link" &&
+                 cfg.readEntry( "URL" ) == "trash:/" &&
+                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+                 cfg.readEntry( "Name" ) == "Trash" ) {
+                continue;
+            }
+            if ( cfg.readEntry( "Type" ) == "Application" &&
+                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+                 cfg.readEntry( "Name" ) == "Web Browser" ) {
+                continue;
+            }
+        }
+
         KDesktopFile df(desktopPath + fItem->url().fileName());
         df.writeEntry("Hidden", true);
         df.sync();
@@ -868,7 +917,13 @@ bool KDIconView::isDesktopFile( KFileItem * _item ) const
     return false;
 
   // return true if desktop file
-  return ( _item->mimetype() == TQString::fromLatin1("application/x-desktop") );
+  return ( (_item->mimetype() == TQString::fromLatin1("application/x-desktop"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mydocuments"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mycomputer"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mynetworkplaces"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-printers"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-trash"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-webbrowser")) );
 }
 
 TQString KDIconView::stripDesktopExtension( const TQString & text )
@@ -1277,7 +1332,13 @@ void KDIconView::slotItemRenamed(TQIconViewItem* _item, const TQString &name)
              KMimeType::Ptr type = KMimeType::findByURL( fileItem->item()->url() );
              bool bDesktopFile = false;
 
-             if (type->name() == "application/x-desktop")
+             if ( (type->name() == "application/x-desktop")
+               || (type->name() == "media/builtin-mydocuments")
+               || (type->name() == "media/builtin-mycomputer")
+               || (type->name() == "media/builtin-mynetworkplaces")
+               || (type->name() == "media/builtin-printers")
+               || (type->name() == "media/builtin-trash")
+               || (type->name() == "media/builtin-webbrowser") )
              {
                 bDesktopFile = true;
                 if (!newName.endsWith(".desktop"))

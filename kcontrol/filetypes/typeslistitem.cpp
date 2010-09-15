@@ -539,6 +539,18 @@ bool TypesListItem::isEssential() const
         return true;
     if ( n == "application/x-desktop" )
         return true;
+    if ( n == "media/builtin-mydocuments" )
+        return true;
+    if ( n == "media/builtin-mycomputer" )
+        return true;
+    if ( n == "media/builtin-mynetworkplaces" )
+        return true;
+    if ( n == "media/builtin-printers" )
+        return true;
+    if ( n == "media/builtin-trash" )
+        return true;
+    if ( n == "media/builtin-webbrowser" )
+        return true;
     return false;
 }
 

@@ -93,9 +93,9 @@ ContainerArea::ContainerArea(KConfig* _c,
     setBackgroundOrigin( WidgetOrigin );
 
     m_contents = viewport();
-    
+
     m_layout = new ContainerAreaLayout(m_contents);
-    
+
     // Install an event filter to propagate layout hints coming from m_contents.
     m_contents->installEventFilter(this);
 
@@ -404,14 +404,14 @@ void ContainerArea::removeAllContainers()
 void ContainerArea::configure()
 {
     setBackground();
-    
+
     for (BaseContainer::Iterator it = m_containers.begin();
          it != m_containers.end();
          ++it)
     {
         (*it)->configure();
     }
-    
+
     resizeContents();
 }
 
@@ -1277,12 +1277,12 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
             }
             a = new ServiceMenuButtonContainer(relPath, m_opMenu, m_contents);
         }
-        else if (url.isLocalFile()) 
+        else if (url.isLocalFile())
         {
             TQFileInfo fi(url.path());
-            if (fi.isDir()) 
+            if (fi.isDir())
             { // directory
-                switch (PanelDirDropMenu().exec(mapToGlobal(ev->pos()))) 
+                switch (PanelDirDropMenu().exec(mapToGlobal(ev->pos())))
                 {
                     case PanelDirDropMenu::Browser:
                         a = new BrowserButtonContainer(url.path(), m_opMenu,
@@ -1294,7 +1294,14 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
                     default: ;
                 }
             }
-            else if ( KMimeType::findByURL(url)->name() == "application/x-desktop" ) 
+            TQString foundMimeName = KMimeType::findByURL(url)->name();
+            else if ( (foundMimeName == "application/x-desktop")
+                   || (foundMimeName == "media/builtin-mydocuments")
+                   || (foundMimeName == "media/builtin-mycomputer")
+                   || (foundMimeName == "media/builtin-mynetworkplaces")
+                   || (foundMimeName == "media/builtin-printers")
+                   || (foundMimeName == "media/builtin-trash")
+                   || (foundMimeName == "media/builtin-webbrowser") )
             {
                 // a local desktop file being dragged from an external program.
                 // Make a copy first.
@@ -1675,7 +1682,7 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
             resizeContents(width(), 0);
         }
     }
-    
+
     for (BaseContainer::ConstIterator it = m_containers.constBegin();
          it != m_containers.constEnd();
          ++it)
@@ -1689,7 +1696,7 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
     }
 
     m_layout->setEnabled(true);
-    
+
     setContentsPos(0, 0);
     m_contents->move(0, 0);
     setBackground();
@@ -1918,7 +1925,7 @@ int ContainerArea::heightForWidth(int w) const
 
 
 DragIndicator::DragIndicator(TQWidget* parent, const char* name)
-    : TQWidget(parent, name) 
+    : TQWidget(parent, name)
 {
     setBackgroundOrigin(AncestorOrigin);
 }
