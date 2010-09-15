@@ -3,6 +3,6 @@ Icon=konqueror
 Type=MimeType
 MimeType=media/builtin-webbrowser
 Comment=Web Browser
-Patterns=Web Browser
+Patterns=Web_Browser
 
 X-KDE-AutoEmbed=false

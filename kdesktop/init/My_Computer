@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=system
+Name=My Computer
+Name[en_US]=My Computer
+OnlyShowIn=KDE;
+Type=Link
+URL=media:/

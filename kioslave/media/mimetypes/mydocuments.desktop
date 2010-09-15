@@ -3,6 +3,6 @@ Icon=folder_wordprocessing
 Type=MimeType
 MimeType=media/builtin-mydocuments
 Comment=My Documents
-Patterns=My Documents
+Patterns=My_Documents
 
 X-KDE-AutoEmbed=false

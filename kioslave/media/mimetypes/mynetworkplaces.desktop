@@ -3,6 +3,6 @@ Icon=network
 Type=MimeType
 MimeType=media/builtin-mynetworkplaces
 Comment=My Network Places
-Patterns=My Network Places
+Patterns=My_Network_Places
 
 X-KDE-AutoEmbed=false

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=network
+Name=My Network Places
+Name[en_US]=My Network Places
+OnlyShowIn=KDE;
+Type=Link
+URL=remote:/

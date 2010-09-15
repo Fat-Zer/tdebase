@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=kjobviewer
+Name=Printers
+Terminal=false
+Type=Application
+Exec=kjobviewer --all --show %i %m
+OnlyShowIn=KDE;
+X-DCOP-ServiceType=Unique
+X-KDE-StartupNotify=true

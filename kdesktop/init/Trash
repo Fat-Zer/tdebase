@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Link
+URL=trash:/
+Encoding=UTF-8
+Icon=trashcan_full
+EmptyIcon=trashcan_empty
+Name=Trash
+Comment=Contains removed files 
