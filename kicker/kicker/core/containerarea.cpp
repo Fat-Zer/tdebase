@@ -1280,6 +1280,7 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
         else if (url.isLocalFile())
         {
             TQFileInfo fi(url.path());
+            TQString foundMimeName = KMimeType::findByURL(url)->name();
             if (fi.isDir())
             { // directory
                 switch (PanelDirDropMenu().exec(mapToGlobal(ev->pos())))
@@ -1294,7 +1295,6 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
                     default: ;
                 }
             }
-            TQString foundMimeName = KMimeType::findByURL(url)->name();
             else if ( (foundMimeName == "application/x-desktop")
                    || (foundMimeName == "media/builtin-mydocuments")
                    || (foundMimeName == "media/builtin-mycomputer")
