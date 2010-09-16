@@ -408,7 +408,10 @@ fi
 # read-only by the administrator, for whatever reason.
 
 # Only do usr_fdir and usr_odir if they are *not* listed in fontpaths
-test -d "$sys_odir" && xset +fp "$sys_odir"
+if [ -e $sys_odir/fonts.dir ]
+then
+  xset +fp "$sys_odir"
+fi
 test $do_usr_odir -eq 1 && test -d "$usr_odir" && (mkfontdir "$usr_odir" ; xset +fp "$usr_odir")
 test $do_usr_fdir -eq 1 && test -d "$usr_fdir" && (mkfontdir "$usr_fdir" ; xset fp+ "$usr_fdir")
 test -d "$sys_fdir" && xset fp+ "$sys_fdir"
