@@ -694,7 +694,7 @@ static const char def_background[] =
 "Program=\n"
 "ReverseBlending=false\n"
 "UseSHM=false\n"
-"Wallpaper=green_curtain.jpg\n"
+"Wallpaper=isadora.png\n"
 "WallpaperList=\n"
 "WallpaperMode=Scaled\n";
 
@@ -1513,7 +1513,7 @@ edit_startup( File *file )
 	             "test -f $PIDFILE && kill `cat $PIDFILE`\n" )))
 		chg1 = 1;
 	if (oldver < 0x0203) {
-		chg2 = 
+		chg2 =
 #ifdef _AIX
 			delstr( file, "\n"
 "# We create a pseudodevice for finger.  (host:0 becomes [kx]dm/host_0)\n" );

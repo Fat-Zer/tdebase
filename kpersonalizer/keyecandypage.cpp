@@ -45,7 +45,7 @@
 #include "ksysinfo.h"
 #include "keyecandypage.h"
 
-#define DEFAULT_WALLPAPER "green_curtain.jpg"
+#define DEFAULT_WALLPAPER "isadora.png"
 
 KEyeCandyPage::KEyeCandyPage(TQWidget *parent, const char *name ) : KEyeCandyPageDlg(parent,name) {
 

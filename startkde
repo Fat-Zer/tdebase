@@ -25,7 +25,7 @@ fi
 # we have to unset this for Darwin since it will screw up KDE's dynamic-loading
 unset DYLD_FORCE_FLAT_NAMESPACE
 
-# Check if prelinking is enabled. If so, exporting KDE_IS_PRELINKED improves 
+# Check if prelinking is enabled. If so, exporting KDE_IS_PRELINKED improves
 # loading KDE.
 if test -f /etc/default/prelink; then
 	. /etc/default/prelink
@@ -94,7 +94,7 @@ fi
 if [ ! -e $kdehome/share/config/kdesktoprc ]; then
 cat >$kdehome/share/config/kdesktoprc <<EOF
 [Desktop0]
-Wallpaper=green_curtain.jpg
+Wallpaper=isadora.png
 WallpaperMode=Scaled
 EOF
 fi
@@ -164,9 +164,9 @@ unset DESKTOP_LOCKED # Don't want it in the environment
 # with cold caches). Makes the splash appear sooner.
 # If kpersonalizer needs to be run splash will be started only later.
 if test -z "$dl" && test "$kpersonalizerrc_general_firstlogin" != "true"; then
-    case "$ksplashrc_ksplash_theme" in 
+    case "$ksplashrc_ksplash_theme" in
       Simple)
-         ksplashsimple 
+         ksplashsimple
          ;;
       *)
          ;;
@@ -378,12 +378,12 @@ fi
 
 if test -z "$dl"; then
   # the splashscreen and progress indicator
-  case "$ksplashrc_ksplash_theme" in 
+  case "$ksplashrc_ksplash_theme" in
     None)
        ;; # nothing
     Simple)
        if test "$kpersonalizerrc_general_firstlogin" = "true"; then
-           ksplashsimple 
+           ksplashsimple
        fi # otherwise started earlier
        ;;
     *)
@@ -441,11 +441,11 @@ fi
 # if KDEWM is not set, ksmserver will ensure kwin is started.
 # kwrapper is used to reduce startup time and memory usage
 # kwrapper does not return usefull error codes such as the exit code of ksmserver.
-# We only check for 255 which means that the ksmserver process could not be 
-# started, any problems thereafter, e.g. ksmserver failing to initialize, 
+# We only check for 255 which means that the ksmserver process could not be
+# started, any problems thereafter, e.g. ksmserver failing to initialize,
 # will remain undetected.
 test -n "$KDEWM" && KDEWM="--windowmanager $KDEWM"
-kwrapper ksmserver $KDEWM 
+kwrapper ksmserver $KDEWM
 if test $? -eq 255; then
   # Startup error
   echo 'startkde: Could not start ksmserver. Check your installation.'  1>&2
