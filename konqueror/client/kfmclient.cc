@@ -124,6 +124,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
                 "            #   'src' may be a list of URLs.\n\n").local8Bit());
     puts(i18n("  kfmclient sortDesktop\n"
                 "            # Rearranges all icons on the desktop.\n\n").local8Bit());
+    puts(i18n("  kfmclient openBrowser\n"
+                "            # Opens the system default Web browser.\n\n").local8Bit());
     puts(i18n("  kfmclient configure\n"
                 "            # Re-read Konqueror's configuration.\n\n").local8Bit());
     puts(i18n("  kfmclient configureDesktop\n"
@@ -532,6 +534,13 @@ bool clientApp::doIt()
       KService::Ptr serv = offers.first();
       return KRun::run( *serv, urls );
     }
+  else if ( command == "openBrowser" )
+  {
+    KRun * run = new KRun( "http://default.browser", 0, 0, false, false /* no progress window */ );
+    TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( delayedQuit() ));
+    TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( delayedQuit() ));
+    app.exec();
+    return !krun_has_error;
   }
   else if ( command == "move" )
   {

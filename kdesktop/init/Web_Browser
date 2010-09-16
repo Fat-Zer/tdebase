@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment=Browse the World Wide Web
 Comment[en_US]=Browse the World Wide Web
-Exec=kfmclient exec http://www.google.com %u
+Exec=kfmclient openBrowser %u
 GenericName=Web Browser
 GenericName[en_US]=Web Browser
 Icon=konqueror
