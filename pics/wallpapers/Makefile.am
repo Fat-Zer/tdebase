@@ -49,6 +49,8 @@ pics_wallpaper_data_DATA = \
      here-gear.svgz.desktop \
      horse-head-nebula.png \
      horse-head-nebula.png.desktop \
+     isadora.png \
+     isadora.png.desktop \
      konqui.svgz \
      konqui.svgz.desktop \
      lineart.svgz \
