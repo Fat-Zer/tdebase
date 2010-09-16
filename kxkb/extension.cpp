@@ -179,14 +179,14 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
 
     p.start(KProcess::Block); 
 
-    // reload ubuntu hotkey-setup keycode -> keysym maps
+    // reload system-wide hotkey-setup keycode -> keysym maps
     KProcess pXmodmap;
-    pXmodmap << "/usr/bin/xmodmap" << "/usr/share/apps/kxkb/ubuntu.xmodmap";
+    pXmodmap << "xmodmap" << "/opt/trinity/share/apps/kxkb/system.xmodmap";
     pXmodmap.start(KProcess::Block); 
 
     KProcess pXmodmapHome;
-    pXmodmapHome << "/usr/bin/xmodmap" << TQDir::home().path() + "/.Xmodmap";
-    pXmodmapHome.start(KProcess::Block); 
+    pXmodmapHome << "xmodmap" << TQDir::home().path() + "/.Xmodmap";
+    pXmodmapHome.start(KProcess::Block);
 
     return p.normalExit() && (p.exitStatus() == 0);
 }

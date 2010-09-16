@@ -22,7 +22,7 @@
       <!--     blinking = c.readBoolEntry( "Blinking", false ); -->
     </entry>
     <entry key="Bouncing" type="Bool">
-      <default>true</default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- startupid.cpp:60 -->
@@ -31,7 +31,7 @@
   </group>
   <group name="FeedbackStyle">
     <entry key="BusyCursor" type="Bool">
-      <default>true</default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
