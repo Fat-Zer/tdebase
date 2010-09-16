@@ -534,6 +534,7 @@ bool clientApp::doIt()
       KService::Ptr serv = offers.first();
       return KRun::run( *serv, urls );
     }
+  }
   else if ( command == "openBrowser" )
   {
     KRun * run = new KRun( "http://default.browser", 0, 0, false, false /* no progress window */ );
