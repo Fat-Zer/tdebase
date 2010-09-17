@@ -70,7 +70,7 @@ fi
 # of KDE4 does not mean all people have KDE4 installed and might want to keep
 # $HOME/.kde as their preferred profile location for Trinity KDE.
 
-if [ -n $KDEHOME ]; then
+if [ -n "$KDEHOME" ]; then
   echo "[startkde] KDEHOME is preset to $KDEHOME." 1>&2
   export KDEHOME=$KDEHOME
 else
