@@ -44,6 +44,17 @@
                         <string>When this option is selected a mouseover effect appears when the mouse cursor is moved over panel buttons</string>
                     </property>
                 </widget>
+		<widget class="QCheckBox">
+			<property name="name">
+				<cstring>kcfg_ShowIconActivationEffect</cstring>
+			</property>
+			<property name="text">
+				<string>Enable icon activation effects</string>
+			</property>
+			<property name="whatsThis" stdset="0">
+				<string>When this option is selected an activation effect appears when panel buttons are left clicked.</string>
+			</property>
+                </widget>
                 <widget class="QCheckBox">
                     <property name="name">
                         <cstring>kcfg_ShowToolTips</cstring>

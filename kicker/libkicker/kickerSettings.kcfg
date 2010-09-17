@@ -90,6 +90,11 @@
       <default>true</default>
    </entry>
 
+<entry name="ShowIconActivationEffect" type="Bool" >
+      <label>Show visual effect when panel icon is activated.</label>
+      <default>true</default>
+   </entry>
+
 <entry name="UntrustedApplets" type="StringList">
       <label>A list of applets that have been loaded at runtime. In the case of a crash these applets will not be loaded at the next Kicker start, in case they caused the crash</label>
    </entry>

@@ -504,7 +504,9 @@ void PanelButton::mouseReleaseEvent(TQMouseEvent *e)
         m_isLeftMouseButtonDown = false;
 	
 	TQPixmap pix = labelIcon();
-	KIconEffect::visualActivate(this, this->geometry(), &pix);
+	if (KickerSettings::showIconActivationEffect() == true) {
+		KIconEffect::visualActivate(this, this->geometry(), &pix);
+	}
     }
     TQButton::mouseReleaseEvent(e);
 }
