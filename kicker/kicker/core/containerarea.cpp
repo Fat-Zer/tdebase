@@ -265,6 +265,19 @@ void ContainerArea::defaultContainerConfig()
         containers.append(a);
     }
 
+    // lock applet
+    a = manager->createAppletContainer(
+        "lockout.desktop",
+        true,
+        TQString::null,
+        m_opMenu,
+        m_contents );
+    if (a)
+    {
+        a->setFreeSpace(1);
+        containers.append(a);
+    }
+
     for (BaseContainer::Iterator it = containers.begin();
          it != containers.end();
          ++it)

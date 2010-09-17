@@ -14,7 +14,7 @@
         <choice name="Analog"/>
         <choice name="Fuzzy"/>
       </choices>
-      <default>Digital</default>
+      <default>Plain</default>
     </entry>
   </group>
   <group name="Date">

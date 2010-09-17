@@ -520,6 +520,7 @@ void PanelKMenu::showMenu()
     else
     {
         show();
+        repaint();	// If the menu is not repainted on initial display the search bar merges into the side image
     }
 }
 

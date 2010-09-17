@@ -196,14 +196,14 @@
   </group>
   <group name="Media"> 
     <entry name="MediaEnabled" key="enabled" type="Bool">
-      <default>false</default>
+      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- kdiconview.cc:258 -->
       <!--         m_enableMedia=config->readBoolEntry("enabled",false); -->
     </entry>
     <entry key="exclude" type="String">
-      <default>media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted,media/builtin-mydocuments,media/builtin-mycomputer,media/builtin-mynetworkplaces,media/builtin-printers,media/builtin-trash,media/builtin-webbrowser</default>
+      <default>media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted</default>
       <label>Device Types to exclude</label>
       <whatsthis>The device types which you do not want to see on the desktop.</whatsthis>
       <!-- kdiconview.cc:261 -->

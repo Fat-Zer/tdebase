@@ -35,7 +35,7 @@ protected:
 };
 
 /**
- * @short Traditional KDE splash screen.
+ * @short Traditional Trinity splash screen.
  */
 class ObjKsTheme;
 class KDE_EXPORT ThemeDefault : public ThemeEngine

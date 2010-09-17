@@ -132,7 +132,7 @@ bool ObjKsTheme::loadKConfig( KConfig *cfg, const TQString& activeTheme, bool fo
   m_text.append( cfg->readEntry( "Message5", i18n("Loading the desktop") ) );
   m_text.append( cfg->readEntry( "Message6", i18n("Loading the panel") ) );
   m_text.append( cfg->readEntry( "Message7", i18n("Restoring session") ) );
-  m_text.append( cfg->readEntry( "Message8", i18n("KDE is up and running") ) );
+  m_text.append( cfg->readEntry( "Message8", i18n("Trinity is up and running") ) );
 
   return true;
 }

@@ -101,7 +101,7 @@
 
 <entry name="Size" type="Int">
       <label>Size</label>
-      <default code="true">KPanelExtension::SizeNormal</default>
+      <default code="true">KPanelExtension::SizeSmall</default>
    </entry>
 
 <entry name="CustomSize" type="Int" >

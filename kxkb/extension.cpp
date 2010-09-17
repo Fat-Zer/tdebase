@@ -180,13 +180,17 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
     p.start(KProcess::Block); 
 
     // reload system-wide hotkey-setup keycode -> keysym maps
-    KProcess pXmodmap;
-    pXmodmap << "xmodmap" << "/opt/trinity/share/apps/kxkb/system.xmodmap &> /dev/null";
-    pXmodmap.start(KProcess::Block); 
+    if ( TQFile::exists( "/opt/trinity/share/apps/kxkb/system.xmodmap" ) ) {
+        KProcess pXmodmap;
+        pXmodmap << "xmodmap" << "/opt/trinity/share/apps/kxkb/system.xmodmap";
+        pXmodmap.start(KProcess::Block);
+    }
 
-    KProcess pXmodmapHome;
-    pXmodmapHome << "xmodmap" << TQDir::home().path() + "/.Xmodmap &> /dev/null";
-    pXmodmapHome.start(KProcess::Block);
+    if ( TQFile::exists( TQDir::home().path() + "/.Xmodmap" ) ) {
+        KProcess pXmodmapHome;
+        pXmodmapHome << "xmodmap" << TQDir::home().path() + "/.Xmodmap";
+        pXmodmapHome.start(KProcess::Block);
+    }
 
     return p.normalExit() && (p.exitStatus() == 0);
 }

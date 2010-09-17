@@ -43,7 +43,7 @@ int main( int argc, char **argv )
     "ksplash",
     I18N_NOOP("KSplash"),
     VERSION,
-    I18N_NOOP("KDE splash screen"),
+    I18N_NOOP("Trinity splash screen"),
     KAboutData::License_GPL,
     I18N_NOOP("(c) 2001 - 2003, Flaming Sword Productions\n (c) 2003 KDE developers"),
     "http://www.kde.org");

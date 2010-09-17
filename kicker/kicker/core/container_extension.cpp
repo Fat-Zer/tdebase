@@ -63,7 +63,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "container_extension.h"
 
 /* 1 is the initial speed, hide_show_animation is the top speed. */
-#define PANEL_SPEED(x, c) (int)((1.0-2.0*fabs((x)-(c)/2.0)/c)*m_settings.hideAnimationSpeed()+1.0)
+/* PANEL_SPEED_MULTIPLIER is used to increase the overall speed as the panel seems to have slowed down over the various releases! */
+#define PANEL_SPEED_MULTIPLIER 10.0
+#define PANEL_SPEED(x, c) (int)(((1.0-2.0*fabs((x)-(c)/2.0)/c)*m_settings.hideAnimationSpeed()+1.0)*PANEL_SPEED_MULTIPLIER)
 
 ExtensionContainer::ExtensionContainer(const AppletInfo& info,
                                        const TQString& extensionId,

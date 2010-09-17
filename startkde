@@ -83,7 +83,10 @@ else
   elif [ -f /usr/bin/kde4-config ]; then
     # Looks like KDE4 is installed.
     if [ -d $HOME/.kde ] && [ ! -d $HOME/.kde3 ]; then
-      # Presume $HOME/.kde is being used for KDE4
+      # Presume $HOME/.kde is being used for KDE4 as it already exists.
+      export KDEHOME=$HOME/.kde3
+    else
+      # Presume $HOME/.kde is being used for KDE4 to be on the safe side.
       export KDEHOME=$HOME/.kde3
     fi
   elif [ -f /opt/kde3/bin/kde-config ]; then
@@ -100,6 +103,12 @@ else
     export KDEHOME=$HOME/.kde3
   fi
   echo "[startkde] Set KDEHOME to $KDEHOME." 1>&2
+fi
+
+# Run a quick test for root.
+if [ -z "$KDEROOTHOME" ] && [ "$UID" = "0" ]; then
+  echo "startkde: User ID is $UID. Setting KDEROOTHOME to $KDEHOME."
+  export KDEROOTHOME=$KDEHOME
 fi
 
 # Modify the following environment variables only as necessary.
