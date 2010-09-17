@@ -174,8 +174,8 @@ private:
     KAction* quitAction;
     TQPixmap m_pixmap;
     TQPixmap m_scaledpixmap;
-    int m_iconOrigWidth :0;
-    int m_iconOrigHeight :0;
+    int m_iconOrigWidth;
+    int m_iconOrigHeight;
     bool bPopupAtMouse :1;
     bool bKeepContents :1;
     bool bURLGrabber   :1;

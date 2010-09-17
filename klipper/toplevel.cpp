@@ -196,7 +196,12 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
     connect( poll, TQT_SIGNAL( clipboardChanged( bool ) ),
              this, TQT_SLOT( newClipData( bool ) ) );
 
-    m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
+    if ( isApplet() ) {
+        m_pixmap = KSystemTray::loadIcon( "klipper" );
+    }
+    else {
+        m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
+    }
     m_iconOrigWidth = width();
     m_iconOrigHeight = height();
     adjustSize();
