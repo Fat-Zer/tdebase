@@ -3,15 +3,15 @@
 #  DEFAULT TRINITY STARTUP SCRIPT ( KDE-3.5.12 )
 #
 
-echo "startkde: Starting startkde." 1>&2
+echo "[startkde] Starting startkde." 1>&2
 
 # When the X server dies we get a HUP signal from xinit. We must ignore it
 # because we still need to do some cleanup.
-trap 'echo GOT SIGHUP' HUP
+trap '[startkde] echo GOT SIGHUP' HUP
 
 # Check if a KDE session is already running.
 if kcheckrunning >/dev/null 2>&1; then
-	echo "KDE seems to be already running on this display."
+	echo "[startkde] KDE seems to be already running on this display."
 	xmessage -geometry 500x100 "KDE seems to be already running on this display." > /dev/null 2>/dev/null
 	exit 1
 fi
@@ -71,12 +71,12 @@ fi
 # $HOME/.kde as their preferred profile location for Trinity KDE.
 
 if [ -n $KDEHOME ]; then
-  echo "startkde: KDEHOME is preset to $KDEHOME." 1>&2
+  echo "[startkde] KDEHOME is preset to $KDEHOME." 1>&2
   export KDEHOME=$KDEHOME
 else
   # $KDEHOME is NOT already preset in the environment. Try to help.
   # This might be overkill but does provide flexibility.
-  echo "startkde: KDEHOME is not set." 1>&2
+  echo "[startkde] KDEHOME is not set." 1>&2
   if [ -d $HOME/.kde3 ]; then
     # OK, this one is obvious.
     export KDEHOME=$HOME/.kde3
@@ -99,7 +99,7 @@ else
     # Resort to this and hope for the best!
     export KDEHOME=$HOME/.kde3
   fi
-  echo "startkde: Set KDEHOME to $KDEHOME." 1>&2
+  echo "[startkde] Set KDEHOME to $KDEHOME." 1>&2
 fi
 
 # Modify the following environment variables only as necessary.
@@ -143,17 +143,16 @@ if [ -d /opt/kde3 ]; then
     export KDEDIRS=/opt/kde3/:/usr/
   fi
 fi
-
-if [ -d /opt/kde3 ]; then
+if [ -d /opt/trinity ]; then
   if [ -n "$KDEDIRS" ]; then
-    export KDEDIRS=$KDEDIRS:/opt/kde3/:/usr/
+    export KDEDIRS=$KDEDIRS:/opt/trinity/:/usr/
   else
-    export KDEDIRS=/opt/kde3/:/usr/
+    export KDEDIRS=/opt/trinity/:/usr/
   fi
 fi
 
 test -n "$KDEHOME" && kdehome=`echo "$KDEHOME" | sed "s,^~/,$HOME/,"`
-echo "startkde: kdehome: $kdehome" 1>&2
+echo "[startkde] kdehome: $kdehome" 1>&2
 
 # Is this a GNOME/GDM variable? Probably does not cause any harm in
 # any system not looking for the variable.
@@ -373,8 +372,8 @@ if test -r "$kde_fontpaths" ; then
     IFS=$savifs
 fi
 
-echo "startkde: KDEDIR: $KDEDIR" 1>&2
-echo "startkde: KDEDIRS: $KDEDIRS" 1>&2
+echo "[startkde] KDEDIR: $KDEDIR" 1>&2
+echo "[startkde] KDEDIRS: $KDEDIRS" 1>&2
 if test -n "$KDEDIRS"; then
   kdedirs_first=`echo "$KDEDIRS" | sed -e 's/:.*//'`
   sys_odir=$kdedirs_first/share/fonts/override
@@ -386,9 +385,9 @@ fi
 
 if test -n "$KDEDIRS"; then
   kdedirs_first=`echo "$KDEDIRS" | sed -e 's/:.*//'`
-  echo "kdedirs_first: $kdedirs_first"
+  echo "[startkde] kdedirs_first: $kdedirs_first"
   if [ -r $kdedirs_first/share/kgtk/preload ]; then
-    echo "Reading from $kdedirs_first/share/kgtk/preload"
+    echo "[startkde] Reading from $kdedirs_first/share/kgtk/preload"
     read -r KGTK_PRELOAD < $kdedirs_first/share/kgtk/preload
   fi
   read -r KGTK_PRELOAD < $kdedirs_first/share/kgtk/preload
@@ -447,7 +446,7 @@ fi
 # environment variables.
 for resource in tmp cache socket; do
   if ! lnusertemp $resource >/dev/null; then
-    echo "startkde: Call to lnusertemp failed (temporary directories full?). Check your installation." 1>&2
+    echo "[startkde] Call to lnusertemp failed (temporary directories full?). Check your installation." 1>&2
     xmessage -geometry 600x100 "Call to lnusertemp failed (temporary directories full?). Check your installation."
     exit 1
   fi
@@ -456,15 +455,15 @@ done
 # In case of dcop sockets left by a previous session, cleanup.
 dcopserver_shutdown
 
-echo 'startkde: Starting Trinity...'  1>&2
+echo '[startkde] Starting Trinity...'  1>&2
 
 # Run KPersonalizer before the session if this is the first login.
 if test "$kpersonalizerrc_general_firstlogin" = "true"; then
   if [ ! -x $KDEDIR/bin/kpersonalizer ]; then
-    echo "startkde: kpersonalizer not found! Please install it in order to properly configure your user profile." 1>&2
+    echo "[startkde] kpersonalizer not found! Please install it in order to properly configure your user profile." 1>&2
   else
     # start only dcopserver, don't start whole kdeinit (takes too long)
-    echo "startkde: Running kpersonalizer..." 1>&2
+    echo "[startkde] Running kpersonalizer..." 1>&2
     dcopserver
     kwin --lock &
     kpersonalizer --before-session
@@ -521,20 +520,20 @@ fi
 KDE_FULL_SESSION=true
 export KDE_FULL_SESSION
 xprop -root -f KDE_FULL_SESSION 8t -set KDE_FULL_SESSION true
-echo "startkde: KDE_FULL_SESSION: $KDE_FULL_SESSION" 1>&2
+echo "[startkde] KDE_FULL_SESSION: $KDE_FULL_SESSION" 1>&2
 KDE_SESSION_UID=$UID
 export KDE_SESSION_UID
-echo "startkde: KDE_SESSION_UID: $KDE_SESSION_UID" 1>&2
+echo "[startkde] KDE_SESSION_UID: $KDE_SESSION_UID" 1>&2
 
 # We set LD_BIND_NOW to increase the efficiency of kdeinit.
 # kdeinit unsets this variable before loading applications.
 LD_BIND_NOW=true start_kdeinit_wrapper --new-startup +kcminit_startup
 if test $? -ne 0; then
   # Startup error
-  echo 'startkde: Could not start kdeinit. Check your installation.' 1>&2
+  echo '[startkde] Could not start kdeinit. Check your installation.' 1>&2
   xmessage -geometry 500x100 "Could not start kdeinit. Check your installation."
 fi
-echo "startkde: Looks like kdeinit started successfully." 1>&2
+echo "[startkde] kdeinit started successfully." 1>&2
 
 # If the session should be locked from the start (locked autologin),
 # lock now and do the rest of the KDE startup underneath the locker.
@@ -559,7 +558,7 @@ test -n "$KDEWM" && KDEWM="--windowmanager $KDEWM"
 kwrapper ksmserver $KDEWM
 if test $? -eq 255; then
   # Startup error
-  echo 'startkde: Could not start ksmserver. Check your installation.' 1>&2
+  echo '[startkde] Could not start ksmserver. Check your installation.' 1>&2
   xmessage -geometry 500x100 "Could not start ksmserver. Check your installation."
 fi
 
@@ -568,7 +567,7 @@ while dcop | grep -q ^drkonqi- ; do
     sleep 5
 done
 
-echo 'startkde: Shutting down Trinity...'  1>&2
+echo '[startkde] Shutting down Trinity...'  1>&2
 
 # Clean up
 kdeinit_shutdown
@@ -579,13 +578,13 @@ if [ -f /usr/bin/kdeinit4_shutdown ]; then
   kde4 kdeinit4_shutdown 2>/dev/null
 fi
 
-echo 'startkde: Running Trinity shutdown scripts...'  1>&2
+echo '[startkde] Running Trinity shutdown scripts...'  1>&2
 
 # Run scripts found in $KDEDIRS/shutdown
 for prefix in `echo "$exepath" | sed -n -e 's,/bin[^/]*/,/shutdown/,p'`; do
   for file in `ls "$prefix" 2> /dev/null | egrep -v '(~|\.bak)$'`; do
     if [ -x "${prefix}${file}" ]; then
-      echo "startkde: Running ${prefix}${file}." 1>&2
+      echo "[startkde] Running ${prefix}${file}." 1>&2
       sh ${prefix}${file}
     fi
   done
@@ -596,4 +595,4 @@ xprop -root -remove KDE_FULL_SESSION
 unset KDE_SESSION_UID
 
 # Initialize_Status_Header
-echo "startkde: Trinity shutdown complete." 1>&2
+echo "[startkde] Trinity shutdown complete." 1>&2
