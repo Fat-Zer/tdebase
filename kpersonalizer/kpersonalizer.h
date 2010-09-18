@@ -50,12 +50,12 @@ public:
 	/** this session is restarted, so we want to start with ospage */
 	void restarted();
 
-	/** KPersonalizer is running before KDE is started */
+	/** KPersonalizer is running before Trinity is started */
 	static void setBeforeSession();
 	static bool beforeSession() { return before_session; }
 
 public slots: // Public slots
-	/** calls all save functions after resetting all features/ OS/ theme selections to KDE default */
+	/** calls all save functions after resetting all features/ OS/ theme selections to Trinity default */
 	void setDefaults();
 	/** the cancel button is connected to the reject() slot of TQDialog,
 	*  so we have to reimplement this here to add a dialogbox to
@@ -88,7 +88,7 @@ protected slots: // Public slots
 	void slotRestart();
 
 protected: // Protected methods
-	// the close button on the titlebar sets e->accept() which we don´t want.
+	// the close button on the titlebar sets e->accept() which we donï¿½t want.
 	virtual void closeEvent(TQCloseEvent*);
 	bool askClose();
 };

@@ -106,7 +106,7 @@
 
 <entry name="CustomSize" type="Int" >
       <label>Custom size</label>
-      <default>58</default>
+      <default>30</default>
       <min>16</min>
    </entry>
 

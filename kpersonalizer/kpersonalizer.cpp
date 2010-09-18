@@ -150,7 +150,7 @@ bool KPersonalizer::askClose(){
 	TQString text;
 	if (currentPage()==countrypage) {
 		text = i18n("<p>Are you sure you want to quit the Desktop Settings Wizard?</p>"
-		            "<p>The Desktop Settings Wizard helps you to configure the KDE desktop to your personal liking.</p>"
+		            "<p>The Desktop Settings Wizard helps you to configure the Trinity desktop to your personal liking.</p>"
 		            "<p>Click <b>Cancel</b> to return and finish your setup.</p>");
 	} else {
 		text = i18n("<p>Are you sure you want to quit the Desktop Settings Wizard?</p>"
@@ -188,7 +188,7 @@ void KPersonalizer::accept(){
 	exit(0);
 }
 
-/** calls all save functions after resetting all features/ OS/ theme selections to KDE default */
+/** calls all save functions after resetting all features/ OS/ theme selections to Trinity default */
 void KPersonalizer::setDefaults(){
 	// KCountryPage: The user may need his native language anyway
 	if(os_dirty)
@@ -223,7 +223,7 @@ void KPersonalizer::restarted(){
 	showPage(ospage);
 }
 
-/** when kpersonalizer is started before KDE session, it doesn't
+/** when kpersonalizer is started before Trinity session, it doesn't
 	offer a button for starting KControl, it also doesn't restart
 	itself automatically and only exits with exitcode 1 */
 void KPersonalizer::setBeforeSession(){

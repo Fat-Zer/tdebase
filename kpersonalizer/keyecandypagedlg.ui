@@ -60,7 +60,7 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>&lt;P&gt;KDE offers many visually appealing special effects, such as smoothed fonts, previews in the file manager and animated menus. All this beauty, however, comes at a small performance cost. &lt;/P&gt;
+                <string>&lt;P&gt;Trinity offers many visually appealing special effects, such as smoothed fonts, previews in the file manager and animated menus. All this beauty, however, comes at a small performance cost. &lt;/P&gt;
 If you have a fast, new processor, you might want to turn them all on, but for those of us with slower processors, starting off with less eye candy helps to keep your desktop more responsive.</string>
             </property>
             <property name="alignment">

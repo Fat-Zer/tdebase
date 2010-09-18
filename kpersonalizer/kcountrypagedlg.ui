@@ -77,9 +77,9 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>&lt;p&gt;This Personalizer will help you configure the basic setup of your KDE desktop in five quick, easy steps. You can set things like your country (for date and time formats, etc.), language, desktop behavior and more.&lt;/p&gt;
-&lt;p&gt;You will be able to change all the settings later using the KDE Control Center. You may choose to postpone your personalization until later by clicking on &lt;b&gt;Skip Wizard&lt;/b&gt;. Any changes made so far, will then be reversed, except for the country and language settings. However, new users are encouraged to use this simple method.&lt;/p&gt;
-&lt;p&gt;If you already like your KDE configuration and wish to quit the Wizard, click &lt;b&gt;Skip Wizard&lt;/b&gt;, then &lt;b&gt;Quit&lt;/b&gt;.&lt;/p&gt;</string>
+                <string>&lt;p&gt;This Personalizer will help you configure the basic setup of your Trinity desktop in five quick, easy steps. You can set things like your country (for date and time formats, etc.), language, desktop behavior and more.&lt;/p&gt;
+&lt;p&gt;You will be able to change all the settings later using the Trinity Control Center. You may choose to postpone your personalization until later by clicking on &lt;b&gt;Skip Wizard&lt;/b&gt;. Any changes made so far, will then be reversed, except for the country and language settings. However, new users are encouraged to use this simple method.&lt;/p&gt;
+&lt;p&gt;If you already like your Trinity configuration and wish to quit the Wizard, click &lt;b&gt;Skip Wizard&lt;/b&gt;, then &lt;b&gt;Quit&lt;/b&gt;.&lt;/p&gt;</string>
             </property>
             <property name="textFormat">
                 <enum>RichText</enum>
@@ -97,7 +97,7 @@
                 <cstring>txt_welcome</cstring>
             </property>
             <property name="text">
-                <string>&lt;h3&gt;Welcome to KDE %VERSION%!&lt;/h3&gt;</string>
+                <string>&lt;h3&gt;Welcome to Trinity %VERSION%!&lt;/h3&gt;</string>
             </property>
         </widget>
         <widget class="QLayoutWidget" row="4" column="1">

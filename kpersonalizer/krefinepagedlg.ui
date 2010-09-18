@@ -78,7 +78,7 @@
                         </sizepolicy>
                     </property>
                     <property name="text">
-                        <string>You can refine the settings you made by starting the KDE Control Center by choosing the entry &lt;b&gt;Control Center&lt;/b&gt; in the K menu.</string>
+                        <string>You can refine the settings you made by starting the Trinity Control Center by choosing the entry &lt;b&gt;Control Center&lt;/b&gt; in the K menu.</string>
                     </property>
                     <property name="alignment">
                         <set>WordBreak|AlignTop|AlignLeft</set>
@@ -130,7 +130,7 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>You can also start the KDE Control Center using the button below.</string>
+                <string>You can also start the Trinity Control Center using the button below.</string>
             </property>
             <property name="alignment">
                 <set>WordBreak|AlignCenter</set>
@@ -200,7 +200,7 @@
                         <cstring>pb_kcontrol</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Launch KDE Control Center</string>
+                        <string>&amp;Launch Trinity Control Center</string>
                     </property>
                 </widget>
                 <spacer>

@@ -38,7 +38,7 @@
 
 KOSPage::KOSPage(TQWidget *parent, const char *name ) : KOSPageDlg(parent,name) {
 	px_osSidebar->setPixmap(UserIcon("step2.png"));
-	// initialize the textview with the default description - KDE of course
+	// initialize the textview with the default description - Trinity of course
 	slotKDEDescription();
 	// Set the configfiles
 	cglobal = new KConfig("kdeglobals");
@@ -353,7 +353,7 @@ void KOSPage::slotKDEDescription(){
 	"<b>Titlebar double-click:</b> <i>Shade window</i><br>"
 	"<b>Mouse selection:</b> <i>Single click</i><br>"
 	"<b>Application startup notification:</b> <i>busy cursor</i><br>"
-	"<b>Keyboard scheme:</b> <i>KDE default</i><br>"
+	"<b>Keyboard scheme:</b> <i>Trinity default</i><br>"
 	));
 }
 
@@ -394,7 +394,7 @@ void KOSPage::slotMacDescription(){
 }
 
 
-/** retrieves the user's local values. In case he doesn't have these set, use the default values of KDE */
+/** retrieves the user's local values. In case he doesn't have these set, use the default values of Trinity */
 void KOSPage::getUserDefaults(){
 	ckcmdisplay->setGroup("KDE");
 	b_MacMenuBar = ckcmdisplay->readBoolEntry("macStyle", false);

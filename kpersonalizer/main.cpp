@@ -29,7 +29,7 @@ static const char description[] = I18N_NOOP("KPersonalizer");
 static KCmdLineOptions options[] =
 {
 	{ "r", I18N_NOOP("Personalizer is restarted by itself"), 0 },
-	{ "before-session", I18N_NOOP("Personalizer is running before KDE session"), 0 },
+	{ "before-session", I18N_NOOP("Personalizer is running before Trinity session"), 0 },
         KCmdLineLastOption
 };
 
