@@ -40,28 +40,28 @@
 #include "modules.h"
 #include "moduletreeview.h"
 
-static const char kcc_text[] = I18N_NOOP("KDE Control Center");
+static const char kcc_text[] = I18N_NOOP("Trinity Control Center");
 
 static const char title_text[] = I18N_NOOP("Configure your desktop environment.");
 
-static const char intro_text[] = I18N_NOOP("Welcome to the \"KDE Control Center\", "
+static const char intro_text[] = I18N_NOOP("Welcome to the \"Trinity Control Center\", "
                                 "a central place to configure your "
                                 "desktop environment. "
                                 "Select an item from the index on the left "
                                 "to load a configuration module.");
 
-static const char kcc_infotext[] = I18N_NOOP("KDE Info Center");
+static const char kcc_infotext[] = I18N_NOOP("Trinity Info Center");
 
 static const char title_infotext[] = I18N_NOOP("Get system and desktop environment information");
 
-static const char intro_infotext[] = I18N_NOOP("Welcome to the \"KDE Info Center\", "
+static const char intro_infotext[] = I18N_NOOP("Welcome to the \"Trinity Info Center\", "
                                 "a central place to find information about your "
                                 "computer system.");
 
 static const char use_text[] = I18N_NOOP("Use the \"Search\" field if you are unsure "
                         "where to look for a particular configuration option.");
 
-static const char version_text[] = I18N_NOOP("KDE version:");
+static const char version_text[] = I18N_NOOP("Trinity version:");
 static const char user_text[] = I18N_NOOP("User:");
 static const char host_text[] = I18N_NOOP("Hostname:");
 static const char system_text[] = I18N_NOOP("System:");

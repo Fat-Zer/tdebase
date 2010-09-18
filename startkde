@@ -107,7 +107,7 @@ fi
 
 # Run a quick test for root.
 if [ -z "$KDEROOTHOME" ] && [ "$UID" = "0" ]; then
-  echo "startkde: User ID is $UID. Setting KDEROOTHOME to $KDEHOME."
+  echo "[startkde] User ID is $UID. Setting KDEROOTHOME to $KDEHOME."
   export KDEROOTHOME=$KDEHOME
 fi
 
@@ -399,7 +399,6 @@ if test -n "$KDEDIRS"; then
     echo "[startkde] Reading from $kdedirs_first/share/kgtk/preload"
     read -r KGTK_PRELOAD < $kdedirs_first/share/kgtk/preload
   fi
-  read -r KGTK_PRELOAD < $kdedirs_first/share/kgtk/preload
 else
   if [ -r $KDEDIR/share/kgtk/preload ]; then
     read -r KGTK_PRELOAD < $KDEDIR/share/kgtk/preload

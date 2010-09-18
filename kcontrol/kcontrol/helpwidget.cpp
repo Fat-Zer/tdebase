@@ -48,12 +48,12 @@ void HelpWidget::setText(const TQString& docPath, const TQString& text)
 void HelpWidget::setBaseText()
 {
   if (KCGlobal::isInfoCenter())
-     helptext = (i18n("<h1>KDE Info Center</h1>"
+     helptext = (i18n("<h1>Trinity Info Center</h1>"
 			 "There is no quick help available for the active info module."
 			 "<br><br>"
 			 "Click <a href = \"kinfocenter/index.html\">here</a> to read the general Info Center manual.") );
   else
-     helptext = (i18n("<h1>KDE Control Center</h1>"
+     helptext = (i18n("<h1>Trinity Control Center</h1>"
 			 "There is no quick help available for the active control module."
 			 "<br><br>"
 			 "Click <a href = \"kcontrol/index.html\">here</a> to read the general Control Center manual.") );

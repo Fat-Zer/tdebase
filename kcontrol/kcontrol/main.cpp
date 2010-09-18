@@ -101,12 +101,12 @@ KControlApp::~KControlApp()
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
   KLocale::setMainCatalogue("kcontrol");
-  KAboutData aboutKControl( "kcontrol", I18N_NOOP("KDE Control Center"),
-    KCONTROL_VERSION, I18N_NOOP("The KDE Control Center"), KAboutData::License_GPL,
+  KAboutData aboutKControl( "kcontrol", I18N_NOOP("Trinity Control Center"),
+    KCONTROL_VERSION, I18N_NOOP("The Trinity Control Center"), KAboutData::License_GPL,
     I18N_NOOP("(c) 1998-2004, The KDE Control Center Developers"));
 
-  KAboutData aboutKInfoCenter( "kinfocenter", I18N_NOOP("KDE Info Center"),
-    KCONTROL_VERSION, I18N_NOOP("The KDE Info Center"), KAboutData::License_GPL,
+  KAboutData aboutKInfoCenter( "kinfocenter", I18N_NOOP("Trinity Info Center"),
+    KCONTROL_VERSION, I18N_NOOP("The Trinity Info Center"), KAboutData::License_GPL,
     I18N_NOOP("(c) 1998-2004, The KDE Control Center Developers"));
 
   TQCString argv_0 = argv[0];
@@ -123,11 +123,11 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      KCGlobal::setIsInfoCenter(false);
   }
 
-  
+  aboutData->addAuthor("Timothy Pearson", I18N_NOOP("Current Maintainer"), "kb9vqf@pearsoncomputing.net");
   if (argv_0.right(11) == "kinfocenter")
-    aboutData->addAuthor("Helge Deller", I18N_NOOP("Current Maintainer"), "deller@kde.org");
+    aboutData->addAuthor("Helge Deller", I18N_NOOP("Previous Maintainer"), "deller@kde.org");
   else
-    aboutData->addAuthor("Daniel Molkentin", I18N_NOOP("Current Maintainer"), "molkentin@kde.org");
+    aboutData->addAuthor("Daniel Molkentin", I18N_NOOP("Previous Maintainer"), "molkentin@kde.org");
 
   aboutData->addAuthor("Matthias Hoelzer-Kluepfel",0, "hoelzer@kde.org");
   aboutData->addAuthor("Matthias Elter",0, "elter@kde.org");
