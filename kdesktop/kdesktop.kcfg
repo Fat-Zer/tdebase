@@ -132,7 +132,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="ShadowEnabled" type="Bool">
-      <default>false</default>
+      <default>true</default>
       <label>Enable text shadow</label>
       <whatsthis>Check here to enable a shadow outline around the desktop font. This also improves the readability of the desktop text against backgrounds of a similar color.</whatsthis>
     </entry>

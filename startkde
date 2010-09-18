@@ -163,8 +163,8 @@ fi
 test -n "$KDEHOME" && kdehome=`echo "$KDEHOME" | sed "s,^~/,$HOME/,"`
 echo "[startkde] kdehome: $kdehome" 1>&2
 
-# Is this a GNOME/GDM variable? Probably does not cause any harm in
-# any system not looking for the variable.
+# Allow interested applications, such as the Plasma control wrapper,
+# to know that this is a Trinity desktop and not a KDE one.
 export DESKTOP_SESSION=kde3
 
 # Please see kstartupconfig source for usage.
@@ -381,8 +381,13 @@ if test -r "$kde_fontpaths" ; then
     IFS=$savifs
 fi
 
+if [ -n "$KDEDIR" ]; then
+  export KDEDIR=`echo "$KDEDIRS" | sed -e 's/:.*//'`
+fi
+
 echo "[startkde] KDEDIR: $KDEDIR" 1>&2
 echo "[startkde] KDEDIRS: $KDEDIRS" 1>&2
+
 if test -n "$KDEDIRS"; then
   kdedirs_first=`echo "$KDEDIRS" | sed -e 's/:.*//'`
   sys_odir=$kdedirs_first/share/fonts/override

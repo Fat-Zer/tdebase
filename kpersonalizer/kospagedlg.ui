@@ -76,7 +76,7 @@
                         <cstring>rb_kde</cstring>
                     </property>
                     <property name="text">
-                        <string>Trinity (TM)</string>
+                        <string>KDE (TM)</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>

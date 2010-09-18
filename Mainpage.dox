@@ -1,8 +1,8 @@
 /** @mainpage
-*   KDE Base API Dox.
+*   Trinity Base API Dox.
 *
-* KDEBase is the SVN module with the "basic applications" needed 
-* for KDE. These include startkde (a shell script to start the whole
+* kdebase is the SVN module with the "basic applications" needed 
+* for Trinity. These include startkde (a shell script to start the whole
 * desktop), kdesktop (the desktop), konqueror (the browser and file-
 * manager) and lots of other things. Nearly none of it has dox.
 *

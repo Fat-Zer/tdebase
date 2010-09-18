@@ -386,7 +386,7 @@ TQWidget* ContainerAreaLayout::widgetAt(int index) const
 
 TQSize ContainerAreaLayout::sizeHint() const
 {
-    const int size = KickerLib::sizeValue(KPanelExtension::SizeNormal);
+    const int size = KickerLib::sizeValue(KPanelExtension::SizeSmall);
 
     if (orientation() == Horizontal)
     {
