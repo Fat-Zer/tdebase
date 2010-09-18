@@ -65,6 +65,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "containerarea.h"
 
+// #define INCLUDE_LOCK_APPLET_BY_DEFAULT
+
 // for multihead
 extern int kicker_screen_number;
 
@@ -265,6 +267,7 @@ void ContainerArea::defaultContainerConfig()
         containers.append(a);
     }
 
+#ifdef INCLUDE_LOCK_APPLET_BY_DEFAULT
     // lock applet
     a = manager->createAppletContainer(
         "lockout.desktop",
@@ -277,6 +280,7 @@ void ContainerArea::defaultContainerConfig()
         a->setFreeSpace(1);
         containers.append(a);
     }
+#endif
 
     for (BaseContainer::Iterator it = containers.begin();
          it != containers.end();
