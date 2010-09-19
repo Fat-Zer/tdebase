@@ -54,7 +54,8 @@ class LaunchConfig : public KCModule
       BusyCursor            = 1 << 0,
       TaskbarButton         = 1 << 1,
 
-      Default = BusyCursor | TaskbarButton
+//      Default = BusyCursor | TaskbarButton
+      Default = 0;
     };
 
 
