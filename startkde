@@ -381,7 +381,7 @@ if test -r "$kde_fontpaths" ; then
     IFS=$savifs
 fi
 
-if [ -n "$KDEDIR" ]; then
+if [ ! -n "$KDEDIR" ]; then
   export KDEDIR=`echo "$KDEDIRS" | sed -e 's/:.*//'`
 fi
 

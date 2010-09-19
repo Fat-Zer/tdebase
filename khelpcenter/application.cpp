@@ -1,5 +1,5 @@
  /*
- *  This file is part of the KDE Help Center
+ *  This file is part of the Trinity Help Center
  *
  *  Copyright (c) 2002 Frerich Raabe <raabe@kde.org>
  *
@@ -60,12 +60,13 @@ static KCmdLineOptions options[] =
 
 extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
 {
-  KAboutData aboutData( "khelpcenter", I18N_NOOP("KDE Help Center"),
+  KAboutData aboutData( "khelpcenter", I18N_NOOP("Trinity Help Center"),
                         HELPCENTER_VERSION,
-                        I18N_NOOP("The KDE Help Center"),
+                        I18N_NOOP("The Trinity Help Center"),
                         KAboutData::License_GPL,
                         I18N_NOOP("(c) 1999-2003, The KHelpCenter developers") );
 
+  aboutData.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
   aboutData.addAuthor( "Frerich Raabe", 0, "raabe@kde.org" );
   aboutData.addAuthor( "Matthias Elter", I18N_NOOP("Original Author"),

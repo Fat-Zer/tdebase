@@ -1,5 +1,5 @@
  /*
- *  This file is part of the KDE Help Center
+ *  This file is part of the Trinity Help Center
  *
  *  Copyright (C) 1999 Matthias Elter (me@kde.org)
  *                2001 Stephan Kulow (coolo@kde.org)
