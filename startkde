@@ -136,9 +136,6 @@ fi
 if [ -d /opt/trinity/etc/xdg ]; then
   export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:/opt/trinity/etc/xdg/:/etc/xdg/
 fi
-if [ -d $HOME/.config ]; then
-  export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:$HOME/.config/
-fi
 if [ -d /opt/kde3/share/man ]; then
   export MANPATH=/opt/kde3/share/man:$MANPATH
 fi
