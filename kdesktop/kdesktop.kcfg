@@ -56,12 +56,12 @@
       <!--     if (!config->readBoolEntry("CopyDesktopLinks", true)) -->
     </entry>
     <entry key="AutoLineUpIcons" type="Bool">
-      <default>false</default>
+      <default>true</default>
       <label>Automatically line up icons</label>
       <whatsthis>Check this option if you want to see your icons automatically aligned to the grid when you move them.</whatsthis>
     </entry>
     <entry key="SortDirectoriesFirst" type="Bool">
-      <default>true</default>
+      <default>false</default>
       <label>Sort directories first</label>
       <whatsthis></whatsthis>
       <!-- krootwm.cc:251 -->
