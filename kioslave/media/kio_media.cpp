@@ -27,6 +27,7 @@
 
 #include <tqeventloop.h>
 
+#include "mediaimpl.h"
 #include "kio_media.h"
 
 
