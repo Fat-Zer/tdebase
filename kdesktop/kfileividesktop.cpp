@@ -31,6 +31,7 @@
 #include <kwordwrap.h>
 #include <kiconview.h>
 #include <kdebug.h>
+#include <kglobalsettings.h>
 
 #include <kshadowengine.h>
 #include "kdesktopshadowsettings.h"
@@ -138,7 +139,13 @@ bool KFileIVIDesktop::shouldUpdateShadow(bool selected)
 
 void KFileIVIDesktop::drawShadowedText( TQPainter *p, const TQColorGroup &cg )
 {
-  int textX = textRect( FALSE ).x() + 4;
+  bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+
+  int textX;
+  if (drawRoundedRect == true)
+    textX = textRect( FALSE ).x() + 4;
+  else
+    textX = textRect( FALSE ).x() + 2;
   int textY = textRect( FALSE ).y();
   int align = ((KIconView *) iconView())->itemTextPos() == TQIconView::Bottom
     ? AlignHCenter : AlignAuto;
@@ -159,11 +166,16 @@ void KFileIVIDesktop::drawShadowedText( TQPainter *p, const TQColorGroup &cg )
     TQRect rect = textRect( false );
     rect.setRight( rect.right() - spread );
     rect.setBottom( rect.bottom() - spread + 1 );
-    p->setBrush( TQBrush( cg.highlight() ) );
-    p->setPen( TQPen( cg.highlight() ) );
-    p->drawRoundRect( rect,
+    if (drawRoundedRect == true) {
+      p->setBrush( TQBrush( cg.highlight() ) );
+      p->setPen( TQPen( cg.highlight() ) );
+      p->drawRoundRect( rect,
 		      1000 / rect.width(),
-		      1000 / rect.height() );	
+		      1000 / rect.height() );
+    }
+    else {
+      p->fillRect( textRect( false ), cg.highlight() );
+    }
   }
   else {
     // use shadow

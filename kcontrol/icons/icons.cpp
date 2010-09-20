@@ -27,6 +27,7 @@
 #include <kipc.h>
 #include <klocale.h>
 #include <kseparator.h>
+#include <kglobalsettings.h>
 #include <dcopclient.h>
 
 #include "icons.h"
@@ -93,6 +94,10 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
     mpAnimatedCheck = new TQCheckBox(i18n("Animate icons"), m_pTab1);
     connect(mpAnimatedCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotAnimatedCheck(bool)));
     grid->addMultiCellWidget(mpAnimatedCheck, 2, 2, 0, 1, Qt::AlignLeft);
+
+    mpRoundedCheck = new TQCheckBox(i18n("Rounded text selection"), m_pTab1);
+    connect(mpRoundedCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotRoundedCheck(bool)));
+    grid->addMultiCellWidget(mpRoundedCheck, 3, 3, 0, 1, Qt::AlignLeft);
 
     top->activate();
 
@@ -279,6 +284,9 @@ void KIconConfig::read()
 
     mpKickerConfig->setGroup("General");
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
+
+    mpConfig->setGroup("KDE");
+    mpRoundedCheck.setChecked(config->readBoolEntry("IconsUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
 }
 
 void KIconConfig::apply()
@@ -459,6 +467,8 @@ void KIconConfig::save()
     mpSystrayConfig->writeEntry("systrayIconWidth", mSysTraySize);
     mpKickerConfig->setGroup("General");
     mpKickerConfig->writeEntry("panelIconWidth", mQuickLaunchSize);
+    mpConfig->setGroup("KDE");
+    mpConfig->writeEntry("IconsUseRoundedRect", mpRoundedCheck.isChecked());
 
     mpConfig->sync();
     mpSystrayConfig->sync();
@@ -630,6 +640,11 @@ void KIconConfig::slotAnimatedCheck(bool check)
         emit changed(true);
         mbChanged[mUsage] = true;
     }
+}
+
+void KIconConfig::slotRoundedCheck(bool check)
+{
+    // Do nothing
 }
 
 KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
