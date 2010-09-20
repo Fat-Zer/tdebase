@@ -147,7 +147,8 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
       m_eSortCriterion( NameCaseInsensitive ),
       m_bSortDirectoriesFirst( true ),
       m_itemsAlwaysFirst(),
-      m_gotIconsArea(false)
+      m_gotIconsArea(false),
+      m_needDesktopAlign(true)
 {
     setResizeMode( Fixed );
     setIconArea( desktopRect() );  // the default is the whole desktop
@@ -1493,7 +1494,10 @@ void KDIconView::updateWorkArea( const TQRect &wr )
 {
     m_gotIconsArea = true;  // now we have it!
 
-    if ( iconArea() == wr ) return;  // nothing changed; avoid repaint/saveIconPosition ...
+    if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid repaint/saveIconPosition ...
+
+    m_needDesktopAlign = false;
+    lineupIcons();
 
     TQRect oldArea = iconArea();
     setIconArea( wr );

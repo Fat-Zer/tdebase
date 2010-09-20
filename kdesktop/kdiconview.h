@@ -258,6 +258,8 @@ private:
     // did we already get the correct desktopIconsArea (from kicker)
     // needed when we want to line up icons on a grid
     bool m_gotIconsArea;
+
+    bool m_needDesktopAlign;
 };
 
 #endif
