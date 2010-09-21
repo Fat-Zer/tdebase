@@ -286,7 +286,7 @@ void KIconConfig::read()
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
 
     mpConfig->setGroup("KDE");
-    mpRoundedCheck->setChecked(config->readBoolEntry("IconsUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
+    mpRoundedCheck->setChecked(mpConfig->readBoolEntry("IconsUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
 }
 
 void KIconConfig::apply()
