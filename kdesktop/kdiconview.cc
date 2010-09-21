@@ -237,11 +237,11 @@ void KDIconView::initDotDirectories()
     for ( TQStringList::ConstIterator it = dirs.begin() ; it != dirs.end() ; ++it )
     {
         kdDebug(1204) << "KDIconView::initDotDirectories found dir " << *it << endl;
-        TQString dotFileName = *it + "/.directory";
+        TQString localDotFileName = *it + "/.directory";
 
-        if (TQFile::exists(dotFileName))
+        if (TQFile::exists(localDotFileName))
         {
-           KSimpleConfig dotDir(dotFileName, true); // Read only
+           KSimpleConfig dotDir(localDotFileName, true); // Read only
 
            TQStringList groups = dotDir.groupList();
            TQStringList::ConstIterator gIt = groups.begin();
@@ -1019,6 +1019,11 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   KFileItemListIterator it(entries);
   KFileIVI* fileIVI = 0L;
 
+  // Ensure that the saved positions had a chance to be loaded
+  if (!m_dotDirectory) {
+      initDotDirectories();
+  }
+
   if (m_nextItemPos.isNull() && !m_dotDirectory)  {
       // Not found, we'll need to save the new pos
       kdDebug(1214)<<"Neither a  drop position stored nor m_dotDirectory set"<<endl;
@@ -1496,9 +1501,6 @@ void KDIconView::updateWorkArea( const TQRect &wr )
 
     if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid repaint/saveIconPosition ...
 
-    m_needDesktopAlign = false;
-    lineupIcons();
-
     TQRect oldArea = iconArea();
     setIconArea( wr );
 
@@ -1554,6 +1556,9 @@ void KDIconView::updateWorkArea( const TQRect &wr )
             saveIconPositions();
         }
     }
+
+    m_needDesktopAlign = false;
+    lineupIcons();
 }
 
 void KDIconView::setupSortKeys()
