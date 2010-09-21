@@ -1082,7 +1082,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
 
         TQRect oldPos = fileIVI->rect();
         fileIVI->move( x, y );
-        if ( !firstRun && !isFreePosition( fileIVI ) ) // if we can't put it there, then let TQIconView decide
+        if ( (!firstRun) && (!isFreePosition( fileIVI )) && (!m_needDesktopAlign) ) // if we can't put it there, then let TQIconView decide
         {
             kdDebug(1214)<<"slotNewItems() pos was not free :-("<<endl;
             fileIVI->move( oldPos.x(), oldPos.y() );
@@ -1496,7 +1496,7 @@ void KDIconView::updateWorkArea( const TQRect &wr )
 
     if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid repaint/saveIconPosition ...
 
-//    m_needDesktopAlign = false;
+    m_needDesktopAlign = false;
     lineupIcons();
 
     TQRect oldArea = iconArea();
