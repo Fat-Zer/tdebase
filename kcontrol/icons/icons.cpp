@@ -100,7 +100,7 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
     grid->addMultiCellWidget(mpRoundedCheck, 3, 3, 0, 1, Qt::AlignLeft);
 
     mpActiveEffectCheck = new TQCheckBox(i18n("Show icon activation effect"), m_pTab1);
-    connect(mpActiveEffectCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotActiveEffectCheck(bool)));
+    connect(mpActiveEffectCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotActiveEffect(bool)));
     grid->addMultiCellWidget(mpActiveEffectCheck, 4, 4, 0, 1, Qt::AlignLeft);
 
     top->activate();
@@ -290,7 +290,7 @@ void KIconConfig::read()
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
 
     KConfigGroup g( KGlobal::config(), "KDE" );
-    mpRoundedCheck->setChecked(g.readBoolEntry("IconsUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
+    mpRoundedCheck->setChecked(g.readBoolEntry("IconUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
     mpActiveEffectCheck->setChecked(g.readBoolEntry("ShowKonqIconActivationEffect", KDE_DEFAULT_KONQ_ACTIVATION_EFFECT));
 }
 
@@ -474,8 +474,8 @@ void KIconConfig::save()
     mpKickerConfig->writeEntry("panelIconWidth", mQuickLaunchSize);
 
     KConfigGroup g( KGlobal::config(), "KDE" );
-    g.writeEntry("IconsUseRoundedRect", mpRoundedCheck->isChecked());
-    g.writeEntry("ShowKonqIconActivationEffect", mpActiveEffectCheck->isChecked());
+    g.writeEntry("IconUseRoundedRect", mpRoundedCheck->isChecked(), true, true);
+    g.writeEntry("ShowKonqIconActivationEffect", mpActiveEffectCheck->isChecked(), true, true);
 
     mpConfig->sync();
     mpSystrayConfig->sync();
