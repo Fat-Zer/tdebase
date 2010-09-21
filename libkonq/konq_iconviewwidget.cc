@@ -1848,7 +1848,9 @@ void KonqIconViewWidget::visualActivate(TQIconViewItem * item)
     // Adjust for scrolling (David)
     rect.moveBy( -contentsX(), -contentsY() );
 
-    KIconEffect::visualActivate(viewport(), rect, item->pixmap());
+    if (KGlobalSettings::showKonqIconActivationEffect() == true) {
+        KIconEffect::visualActivate(viewport(), rect, item->pixmap());
+    }
 }
 
 void KonqIconViewWidget::backgroundPixmapChange( const TQPixmap & )

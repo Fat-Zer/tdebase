@@ -1496,7 +1496,7 @@ void KDIconView::updateWorkArea( const TQRect &wr )
 
     if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid repaint/saveIconPosition ...
 
-    m_needDesktopAlign = false;
+//    m_needDesktopAlign = false;
     lineupIcons();
 
     TQRect oldArea = iconArea();

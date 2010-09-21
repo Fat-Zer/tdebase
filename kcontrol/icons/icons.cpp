@@ -99,6 +99,10 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
     connect(mpRoundedCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotRoundedCheck(bool)));
     grid->addMultiCellWidget(mpRoundedCheck, 3, 3, 0, 1, Qt::AlignLeft);
 
+    mpActiveEffectCheck = new TQCheckBox(i18n("Show icon activation effect"), m_pTab1);
+    connect(mpActiveEffectCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotActiveEffectCheck(bool)));
+    grid->addMultiCellWidget(mpActiveEffectCheck, 4, 4, 0, 1, Qt::AlignLeft);
+
     top->activate();
 
     mpSystrayConfig = new KSimpleConfig( TQString::fromLatin1( "systemtray_panelappletrc" ));
@@ -285,8 +289,9 @@ void KIconConfig::read()
     mpKickerConfig->setGroup("General");
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
 
-    mpConfig->setGroup("KDE");
-    mpRoundedCheck->setChecked(mpConfig->readBoolEntry("IconsUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
+    KConfigGroup g( KGlobal::config(), "KDE" );
+    mpRoundedCheck->setChecked(g.readBoolEntry("IconsUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
+    mpActiveEffectCheck->setChecked(g.readBoolEntry("ShowKonqIconActivationEffect", KDE_DEFAULT_KONQ_ACTIVATION_EFFECT));
 }
 
 void KIconConfig::apply()
@@ -467,8 +472,10 @@ void KIconConfig::save()
     mpSystrayConfig->writeEntry("systrayIconWidth", mSysTraySize);
     mpKickerConfig->setGroup("General");
     mpKickerConfig->writeEntry("panelIconWidth", mQuickLaunchSize);
-    mpConfig->setGroup("KDE");
-    mpConfig->writeEntry("IconsUseRoundedRect", mpRoundedCheck->isChecked());
+
+    KConfigGroup g( KGlobal::config(), "KDE" );
+    g.writeEntry("IconsUseRoundedRect", mpRoundedCheck->isChecked());
+    g.writeEntry("ShowKonqIconActivationEffect", mpActiveEffectCheck->isChecked());
 
     mpConfig->sync();
     mpSystrayConfig->sync();
@@ -644,7 +651,12 @@ void KIconConfig::slotAnimatedCheck(bool check)
 
 void KIconConfig::slotRoundedCheck(bool check)
 {
-    // Do nothing
+    emit changed(true);
+}
+
+void KIconConfig::slotActiveEffect(bool check)
+{
+    emit changed(true);
 }
 
 KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,

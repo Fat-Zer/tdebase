@@ -77,6 +77,7 @@ private slots:
     void slotDPCheck(bool check);
     void slotAnimatedCheck(bool check);
     void slotRoundedCheck(bool check);
+    void slotActiveEffect(bool check);
     void QLSizeLockedChanged(bool checked);
 
 private:
@@ -114,7 +115,7 @@ private:
 
     TQListBox *mpUsageList;
     TQComboBox *mpSizeBox;
-    TQCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck, *mpRoundedCheck;
+    TQCheckBox *mpDPCheck, *wordWrapCB, *underlineCB, *mpAnimatedCheck, *mpRoundedCheck, *mpActiveEffectCheck;
     TQTabWidget *m_pTabWidget;
     TQWidget *m_pTab1;
     TQPushButton *mPreviewButton1, *mPreviewButton2, *mPreviewButton3;
