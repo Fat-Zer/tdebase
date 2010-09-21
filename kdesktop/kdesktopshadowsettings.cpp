@@ -30,7 +30,7 @@
 
 KDesktopShadowSettings::KDesktopShadowSettings(KConfig *cfg) : 
     KShadowSettings(),
-    m_textColor(TQColor(255,255,255)),
+    m_textColor(TQColor("#FFFFFF")),
     _UID(0L)
 {
     setConfig(cfg);
@@ -71,7 +71,7 @@ void KDesktopShadowSettings::setConfig(KConfig *val)
     setUID();
 
     config->setGroup("FMSettings");
-    m_textColor = config->readColorEntry("NormalTextColor", &Qt::white);
+    m_textColor = config->readColorEntry("NormalTextColor", TQColor("#FFFFFF"));
     m_bgColor = config->readColorEntry("ItemTextBackground");
     m_isEnabled = config->readBoolEntry("ShadowEnabled", true);
 

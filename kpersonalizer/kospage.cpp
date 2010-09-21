@@ -145,7 +145,7 @@ void KOSPage::writeKDE(){
 	cglobal->writeEntry("SingleClick", true, true, true);
 
 	claunch->setGroup("FeedbackStyle");
-	claunch->writeEntry("BusyCursor", true);
+	claunch->writeEntry("BusyCursor", false);
 
 	cwin->setGroup("Windows");
 	cwin->writeEntry("TitlebarDoubleClickCommand", "Shade");
@@ -227,7 +227,7 @@ void KOSPage::writeWindows(){
 	cglobal->writeEntry("SingleClick", false, true, true);
 
 	claunch->setGroup("FeedbackStyle");
-	claunch->writeEntry("BusyCursor", true);
+	claunch->writeEntry("BusyCursor", false);
 
 	cwin->setGroup("Windows");
 	cwin->writeEntry("TitlebarDoubleClickCommand", "Maximize");
@@ -403,7 +403,7 @@ void KOSPage::getUserDefaults(){
 	b_SingleClick = cglobal->readBoolEntry("SingleClick", true);
 
 	claunch->setGroup("FeedbackStyle");
-	b_BusyCursor = claunch->readBoolEntry("BusyCursor", true);
+	b_BusyCursor = claunch->readBoolEntry("BusyCursor", false);
 
 	cwin->setGroup("Windows");
 	s_TitlebarDCC = cwin->readEntry("TitlebarDoubleClickCommand", "Shade");

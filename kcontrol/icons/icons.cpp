@@ -477,6 +477,9 @@ void KIconConfig::save()
     g.writeEntry("IconUseRoundedRect", mpRoundedCheck->isChecked(), true, true);
     g.writeEntry("ShowKonqIconActivationEffect", mpActiveEffectCheck->isChecked(), true, true);
 
+    kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", "" );
+    kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "configure()", "" );
+
     mpConfig->sync();
     mpSystrayConfig->sync();
     mpKickerConfig->sync();
