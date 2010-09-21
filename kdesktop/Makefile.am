@@ -8,7 +8,7 @@ SUBDIRS = . lock pics patterns programs init kwebdesktop
 
 ####### Files
 
-bin_PROGRAMS = kcheckrunning
+bin_PROGRAMS = kcheckrunning kxdglauncher
 lib_LTLIBRARIES =
 kdeinit_LTLIBRARIES = kdesktop.la
 noinst_LTLIBRARIES = libkdesktopsettings.la
@@ -31,11 +31,15 @@ include_HEADERS = KDesktopIface.h KScreensaverIface.h KBackgroundIface.h
 noinst_HEADERS = desktop.h bgmanager.h krootwm.h \
 	xautolock.h lockeng.h init.h minicli.h \
 	pixmapserver.h startupid.h xautolock_c.h \
-	kdesktopapp.h
+	kdesktopapp.h kxdglauncher.h
 
 kcheckrunning_SOURCES = kcheckrunning.cpp
 kcheckrunning_LDFLAGS = $(all_libraries)
 kcheckrunning_LDADD = $(LIB_X11)
+
+kxdglauncher_SOURCES = kxdglauncher.cpp
+kxdglauncher_LDFLAGS = $(all_libraries)
+kxdglauncher_LDADD = $(LIB_KUTILS)
 
 METASOURCES = AUTO
 

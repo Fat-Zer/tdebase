@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Comment=
 Comment[en_US]=
-Exec=kfmclient openURL `kde-config --userpath document`
+Exec=kxdglauncher --xdgname DOCUMENTS
 Icon=folder_wordprocessing
 MimeType=
 Name=My Documents
