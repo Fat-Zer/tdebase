@@ -27,6 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopobject.h>
 #include <tqintdict.h>
 #include <tqpixmap.h>
+#include <tqtimer.h>
 
 #include "service_mnu.h"
 
@@ -84,6 +85,7 @@ protected slots:
     void paletteChanged();
     virtual void configChanged();
     void updateRecent();
+    void repairDisplay();
 
 protected:
     TQRect sideImageRect();
@@ -113,6 +115,8 @@ private:
     PopupMenuList               dynamicSubMenus;
     KPIM::ClickLineEdit        *searchEdit;
     static const int            searchLineID;
+    TQTimer                    *displayRepairTimer;
+    bool                        displayRepaired;
 };
 
 #endif

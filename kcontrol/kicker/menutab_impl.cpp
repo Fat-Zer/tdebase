@@ -233,6 +233,13 @@ void MenuTab::save()
     if (kmenusetting != oldkmenusetting)
         DCOPRef ("kicker", "default").call("restart()");
 
+    c->setGroup("KMenu");
+    bool sidepixmapsetting = kcfg_UseSidePixmap->isChecked();
+    bool oldsidepixmapsetting = c->readBoolEntry("UseSidePixmap", true);
+
+    if (sidepixmapsetting != oldsidepixmapsetting)
+        DCOPRef ("kicker", "default").call("restart()");
+
     // Save KMenu settings
     c->setGroup("KMenu");
     c->writeEntry("CustomIcon", m_kmenu_icon);

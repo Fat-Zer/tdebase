@@ -74,6 +74,7 @@ PanelKMenu::PanelKMenu()
   : PanelServiceMenu(TQString::null, TQString::null, 0, "KMenu")
   , bookmarkMenu(0)
   , bookmarkOwner(0)
+  , displayRepaired(FALSE)
 {
     static const TQCString dcopObjId("KMenu");
     DCOPObject::setObjId(dcopObjId);
@@ -91,6 +92,8 @@ PanelKMenu::PanelKMenu()
         dcopObjId,
         "slotServiceStartedByStorageId(TQString,TQString)",
         false);
+    displayRepairTimer = new TQTimer( this );
+    connect( displayRepairTimer, SIGNAL(timeout()), this, SLOT(repairDisplay()) );
 }
 
 PanelKMenu::~PanelKMenu()
@@ -365,7 +368,24 @@ void PanelKMenu::initialize()
       insertTearOffHandle();
 #endif
 
+    if (displayRepaired == FALSE) {
+        displayRepairTimer->start(0, FALSE);
+        displayRepaired = TRUE;
+    }
+
     setInitialized(true);
+}
+
+void PanelKMenu::repairDisplay(void) {
+    if (isShown() == true) {
+        displayRepairTimer->stop();
+
+        // Now do a nasty hack to prevent search bar merging into the side image
+        // This forces a layout/repaint of the qpopupmenu
+        repaint();			// This ensures that the side bar image was applied
+        styleChange(style());		// This forces a call to the private function updateSize(TRUE) inside the qpopupmenu.
+        update();			// This repaints the entire popup menu to apply the widget size/alignment changes made above
+    }
 }
 
 int PanelKMenu::insertClientMenu(KickerClientMenu *p)
@@ -520,7 +540,6 @@ void PanelKMenu::showMenu()
     else
     {
         show();
-        repaint();	// If the menu is not repainted on initial display the search bar merges into the side image
     }
 }
 
