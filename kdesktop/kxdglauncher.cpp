@@ -83,6 +83,7 @@ TQString getDocumentPath()
 static KCmdLineOptions options[] =
 {
 	{ "xdgname <argument>", I18N_NOOP("XDG variable name to open"), 0 },
+        { "getpath",		I18N_NOOP("Do not launch Konqueror; instead print path to directory if it exists)"), 0 },
 	KCmdLineLastOption
 };
 
@@ -100,16 +101,21 @@ int main( int argc, char **argv)
 		if (desiredFolder == "DOCUMENTS") {
 			TQDir myqdir;
 			if (myqdir.exists(getDocumentPath(), TRUE) == true) {
-				KRun * run = new KRun( KURL(getDocumentPath()), 0, false, false );
-				TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( quit() ));
-				TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( quit() ));
-				app.exec();
-				return 0;
+				if (args->isSet( "getpath" ) == true) {
+					printf("%s\n\r", getDocumentPath().ascii());
+					return 0;
+				}
+				else {
+					KRun * run = new KRun( KURL(getDocumentPath()), 0, false, false );
+					TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( quit() ));
+					TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( quit() ));
+					app.exec();
+					return 0;
+				}
 			}
 			else {
 				TQString newDirectory = KInputDialog::text("Create Documents directory", "Please confirm your Documents directory location<br>Upon confimation a new directory will be created", getDocumentPath());
 				if (newDirectory == TQString::null) {
-					printf("User cancelled directory creation\n\r");
 					return 1;
 				}
 				else {
@@ -118,10 +124,16 @@ int main( int argc, char **argv)
 							char systemcommand[8192];
 							sprintf(systemcommand, "xdg-user-dirs-update --set DOCUMENTS \"%s\"", newDirectory.ascii());
 							system(systemcommand);
-							KRun * run = new KRun( getDocumentPath(), 0, false, false );
-							TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( quit() ));
-							TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( quit() ));
-							app.exec();
+							if (args->isSet( "getpath" ) == true) {
+								printf("%s\n\r", getDocumentPath().ascii());
+								return 0;
+							}
+							else {
+								KRun * run = new KRun( getDocumentPath(), 0, false, false );
+								TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( quit() ));
+								TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( quit() ));
+								app.exec();
+							}
 							return 0;
 						}
 						else {
