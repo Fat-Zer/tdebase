@@ -120,7 +120,16 @@ int main( int argc, char **argv)
 				}
 				else {
 					if (newDirectory.length() < 4096) {
-						if (myqdir.mkdir(newDirectory, TRUE) == true) {
+						bool directoryOk = false;
+						if (myqdir.exists(newDirectory, TRUE) == false) {
+							if (myqdir.mkdir(newDirectory, TRUE) == true) {
+								directoryOk = TRUE;
+							}
+						}
+						else {
+							directoryOk = TRUE;
+						}
+						if (directoryOk == true) {
 							char systemcommand[8192];
 							sprintf(systemcommand, "xdg-user-dirs-update --set DOCUMENTS \"%s\"", newDirectory.ascii());
 							system(systemcommand);
@@ -149,12 +158,12 @@ int main( int argc, char **argv)
 			}
 		}
 		else {
-			printf("XDG variable not recognized\n\r");
+			printf("[kxdglauncher] XDG variable not recognized\n\r");
 			return 1;
 		}
 	}
 	else {
-		printf("Please specify the desired XDG variable name with --xdgname\n\r");
+		printf("[kxdglauncher] Please specify the desired XDG variable name with --xdgname\n\r");
 		return 1;
 	}
 }
