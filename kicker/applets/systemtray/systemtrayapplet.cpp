@@ -1081,7 +1081,6 @@ void TrayEmbed::setBackground()
     
     if (!isHidden())
     {
-        printf("[systemtray] Clearing area to set background\n\r");
         XClearArea(x11Display(), embeddedWinId(), 0, 0, 0, 0, True);
     }
 }
