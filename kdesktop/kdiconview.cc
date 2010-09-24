@@ -842,34 +842,8 @@ bool KDIconView::deleteGlobalDesktopFiles()
         if ( isDesktopFile(fItem) ) {
             KSimpleConfig cfg( fItem->url().path(), true );
             cfg.setDesktopGroup();
-            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
-                 cfg.readEntry( "Name" ) == "My Documents" ) {
-                removeBuiltinIcon("My Documents");
-                continue;
-            }
-            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
-                 cfg.readEntry( "Name" ) == "My Computer" ) {
-                removeBuiltinIcon("My Computer");
-                continue;
-            }
-            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
-                 cfg.readEntry( "Name" ) == "My Network Places" ) {
-                removeBuiltinIcon("My Network Places");
-                continue;
-            }
-            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
-                 cfg.readEntry( "Name" ) == "Printers" ) {
-                removeBuiltinIcon("Printers");
-                continue;
-            }
-            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
-                 cfg.readEntry( "Name" ) == "Trash" ) {
-                removeBuiltinIcon("Trash");
-                continue;
-            }
-            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
-                 cfg.readEntry( "Name" ) == "Web Browser" ) {
-                removeBuiltinIcon("Web Browser");
+            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" ) {
+                removeBuiltinIcon(cfg.readEntry( "Name" ));
                 continue;
             }
         }

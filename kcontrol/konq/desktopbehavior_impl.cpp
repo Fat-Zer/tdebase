@@ -132,6 +132,7 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
   connect(vrootBox, TQT_SIGNAL(clicked()), this, TQT_SIGNAL(changed()));
   connect(autoLineupIconsBox, TQT_SIGNAL(clicked()), this, TQT_SIGNAL(changed()));
   connect(toolTipBox, TQT_SIGNAL(clicked()), this, TQT_SIGNAL(changed()));
+  connect(mediaListView, TQT_SIGNAL(clicked(TQListViewItem *)), this, TQT_SLOT(mediaListViewChanged(TQListViewItem *)));
 
   strMouseButton1 = i18n("&Left button:");
   strButtonTxt1 = i18n( "You can choose what happens when"
@@ -228,6 +229,24 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
   load();
 }
 
+void DesktopBehavior::mediaListViewChanged(TQListViewItem * item)
+{
+    // FIXME: This should check to make sure an item was actually checked/unchecked before emitting changed()
+    emit changed();
+}
+
+void DesktopBehavior::setMediaListViewEnabled(bool enabled)
+{
+    for (DesktopBehaviorMediaItem *it=static_cast<DesktopBehaviorMediaItem *>(mediaListView->firstChild());
+        it; it=static_cast<DesktopBehaviorMediaItem *>(it->nextSibling()))
+    {
+        if (it->mimeType().startsWith("media/builtin-") == false)
+            it->setVisible(enabled);
+        else
+            it->setVisible(TRUE);
+    }
+}
+
 void DesktopBehavior::fillMediaListView()
 {
     mediaListView->clear();
@@ -238,11 +257,10 @@ void DesktopBehavior::fillMediaListView()
     enableMediaBox->setChecked(g_pConfig->readBoolEntry("enabled",false));
     TQString excludedMedia=g_pConfig->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
     for (; it2 != mimetypes.end(); ++it2) {
-       if ( ((*it2)->name().startsWith("media/")) )
-	{
-    	    bool ok=excludedMedia.contains((*it2)->name())==0;
-		new DesktopBehaviorMediaItem (this, mediaListView, (*it2)->comment(), (*it2)->name(),ok);
-
+        if ( ((*it2)->name().startsWith("media/")) )
+        {
+            bool ok=excludedMedia.contains((*it2)->name())==0;
+            new DesktopBehaviorMediaItem (this, mediaListView, (*it2)->comment(), (*it2)->name(),ok);
         }
     }
 }
@@ -256,11 +274,11 @@ void DesktopBehavior::saveMediaListView()
     g_pConfig->writeEntry("enabled",enableMediaBox->isChecked());
     TQStringList exclude;
     for (DesktopBehaviorMediaItem *it=static_cast<DesktopBehaviorMediaItem *>(mediaListView->firstChild());
-     	it; it=static_cast<DesktopBehaviorMediaItem *>(it->nextSibling()))
-    	{
-		if (!it->isOn()) exclude << it->mimeType();
-	    }
-     g_pConfig->writeEntry("exclude",exclude);
+        it; it=static_cast<DesktopBehaviorMediaItem *>(it->nextSibling()))
+    {
+        if (!it->isOn()) exclude << it->mimeType();
+    }
+    g_pConfig->writeEntry("exclude",exclude);
 }
 
 
@@ -405,7 +423,7 @@ void DesktopBehavior::enableChanged()
     {
         behaviorTab->setTabEnabled(behaviorTab->page(2), enabled);
         enableMediaBox->setEnabled(enabled);
-        mediaListView->setEnabled(enableMediaBox->isChecked());
+        setMediaListViewEnabled(enableMediaBox->isChecked());
     }
 
     changed();

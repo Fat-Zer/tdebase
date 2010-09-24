@@ -45,12 +45,14 @@ private slots:
         void enableChanged();
 	void comboBoxChanged();
 	void editButtonPressed();
+	void mediaListViewChanged(TQListViewItem * item);
 
 private:
         KConfig *g_pConfig;
 
 	void fillMediaListView();
 	void saveMediaListView();
+	void setMediaListViewEnabled(bool enabled);
 
         // Combo for the menus
         void fillMenuCombo( TQComboBox * combo );

@@ -389,7 +389,7 @@
                             <cstring>mediaListView</cstring>
                         </property>
                         <property name="enabled">
-                            <bool>false</bool>
+                            <bool>true</bool>
                         </property>
                         <property name="fullWidth">
                             <bool>true</bool>
@@ -403,14 +403,6 @@
         </widget>
     </vbox>
 </widget>
-<connections>
-    <connection>
-        <sender>enableMediaBox</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>mediaListView</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
 <tabstops>
     <tabstop>autoLineupIconsBox</tabstop>
     <tabstop>showHiddenBox</tabstop>
