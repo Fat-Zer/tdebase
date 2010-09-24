@@ -485,6 +485,69 @@ void KonqMainWindow::openURL( KonqView *_view, const KURL &_url,
 #endif
 
   KURL url( _url );
+  if (url.url().startsWith("$(")) {
+      // check for environment variables and make necessary translations
+      TQString aValue = url.url();
+      int nDollarPos = aValue.find( '$' );
+
+      while( nDollarPos != -1 && nDollarPos+1 < static_cast<int>(aValue.length())) {
+        // there is at least one $
+        if( (aValue)[nDollarPos+1] == '(' ) {
+          uint nEndPos = nDollarPos+1;
+          // the next character is no $
+          while ( (nEndPos <= aValue.length()) && (aValue[nEndPos]!=')') )
+              nEndPos++;
+          nEndPos++;
+          TQString cmd = aValue.mid( nDollarPos+2, nEndPos-nDollarPos-3 );
+
+          TQString result;
+          FILE *fs = popen(TQFile::encodeName(cmd).data(), "r");
+          if (fs)
+          {
+             {
+             TQTextStream ts(fs, IO_ReadOnly);
+             result = ts.read().stripWhiteSpace();
+             }
+             pclose(fs);
+          }
+          aValue.replace( nDollarPos, nEndPos-nDollarPos, result );
+        } else if( (aValue)[nDollarPos+1] != '$' ) {
+          uint nEndPos = nDollarPos+1;
+          // the next character is no $
+          TQString aVarName;
+          if (aValue[nEndPos]=='{')
+          {
+            while ( (nEndPos <= aValue.length()) && (aValue[nEndPos]!='}') )
+                nEndPos++;
+            nEndPos++;
+            aVarName = aValue.mid( nDollarPos+2, nEndPos-nDollarPos-3 );
+          }
+          else
+          {
+            while ( nEndPos <= aValue.length() && (aValue[nEndPos].isNumber()
+                    || aValue[nEndPos].isLetter() || aValue[nEndPos]=='_' )  )
+                nEndPos++;
+            aVarName = aValue.mid( nDollarPos+1, nEndPos-nDollarPos-1 );
+          }
+          const char* pEnv = 0;
+          if (!aVarName.isEmpty())
+               pEnv = getenv( aVarName.ascii() );
+          if( pEnv ) {
+            // !!! Sergey A. Sukiyazov <corwin@micom.don.ru> !!!
+            // A environment variables may contain values in 8bit
+            // locale cpecified encoding or in UTF8 encoding.
+            aValue.replace( nDollarPos, nEndPos-nDollarPos, KStringHandler::from8Bit( pEnv ) );
+          } else
+            aValue.remove( nDollarPos, nEndPos-nDollarPos );
+        } else {
+          // remove one of the dollar signs
+          aValue.remove( nDollarPos, 1 );
+          nDollarPos++;
+        }
+        nDollarPos = aValue.find( '$', nDollarPos );
+      }
+      url = KURL(aValue);
+  }
   TQString serviceType( _serviceType );
   if ( url.url() == "about:blank" )
   {

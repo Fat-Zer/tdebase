@@ -22,6 +22,7 @@
 
 #include <kio/global.h>
 #include <kio/job.h>
+#include <kdesktopfile.h>
 #include <kurl.h>
 #include <dcopobject.h>
 
@@ -55,6 +56,8 @@ private:
 	                 const TQString &file);
 
 	bool m_lastListingEmpty;
+
+	TQString readPathINL(TQString filename);
 
 	/// Last error code stored in class to simplify API.
 	/// Note that this means almost no method can be const.

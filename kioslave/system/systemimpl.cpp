@@ -27,6 +27,7 @@
 #include <tqapplication.h>
 #include <tqeventloop.h>
 #include <tqdir.h>
+#include <tqfile.h>
 
 #include <sys/stat.h>
 
@@ -206,6 +207,33 @@ void SystemImpl::createTopLevelEntry(KIO::UDSEntry &entry) const
 	addAtom(entry, KIO::UDS_ICON_NAME, 0, "system");
 }
 
+TQString SystemImpl::readPathINL(TQString filename)
+{
+	bool isPathExpanded = false;
+	TQString unexpandedPath;
+	TQFile f( filename );
+	if (!f.open(IO_ReadOnly))
+		return TQString();
+	// set the codec for the current locale
+	TQTextStream s(&f);
+	TQString line = s.readLine();
+	while (!line.isNull())
+	{
+		if (line.startsWith("Path=$(")) {
+			isPathExpanded = true;
+			unexpandedPath = line.remove("Path=");
+		}
+		line = s.readLine();
+	}
+ 	if (isPathExpanded == false) {
+		KDesktopFile desktop(filename, true);
+		return desktop.readPath();
+	}
+	else {
+		return unexpandedPath;
+	}
+}
+
 void SystemImpl::createEntry(KIO::UDSEntry &entry,
                              const TQString &directory,
                              const TQString &file)
@@ -219,7 +247,7 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 	entry.clear();
 
 	// Ensure that we really want this entry to be displayed
-	if ( desktop.readURL().isEmpty() && desktop.readPath().isEmpty() )
+	if ( desktop.readURL().isEmpty() && readPathINL(directory+file).isEmpty() )
 	{
 		return;
 	}
@@ -231,7 +259,7 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 
 	if ( desktop.readURL().isEmpty() )
 	{
-		addAtom(entry, KIO::UDS_URL, 0, desktop.readPath());
+		addAtom(entry, KIO::UDS_URL, 0, readPathINL(directory+file));
 	}
 	else
 	{
