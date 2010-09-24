@@ -16,3 +16,4 @@ Type=Application
 X-DCOP-ServiceType=
 X-KDE-SubstituteUID=false
 X-KDE-Username=
+X-Trinity-BuiltIn=true

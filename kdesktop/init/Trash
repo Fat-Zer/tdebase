@@ -6,3 +6,4 @@ Icon=trashcan_full
 EmptyIcon=trashcan_empty
 Name=Trash
 Comment=Contains removed files 
+X-Trinity-BuiltIn=true

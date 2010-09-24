@@ -8,3 +8,4 @@ Exec=kjobviewer --all --show %i %m
 OnlyShowIn=KDE;
 X-DCOP-ServiceType=Unique
 X-KDE-StartupNotify=true
+X-Trinity-BuiltIn=true

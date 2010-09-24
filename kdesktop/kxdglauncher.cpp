@@ -30,6 +30,7 @@
 #include <kglobalsettings.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
+#include <kconfig.h>
 
 #include <stdlib.h>
 
@@ -130,9 +131,14 @@ int main( int argc, char **argv)
 							directoryOk = TRUE;
 						}
 						if (directoryOk == true) {
-							char systemcommand[8192];
-							sprintf(systemcommand, "xdg-user-dirs-update --set DOCUMENTS \"%s\"", newDirectory.ascii());
-							system(systemcommand);
+							TQString xdgModifiedDirectory = newDirectory;
+							xdgModifiedDirectory = xdgModifiedDirectory.replace(TQDir::homeDirPath(), "$HOME");
+							while (xdgModifiedDirectory.endsWith("/")) {
+								xdgModifiedDirectory.truncate(xdgModifiedDirectory.length()-1);
+							}
+							KConfig config(TQDir::homeDirPath() + "/.config/user-dirs.dirs", false, false);
+							config.writeEntry("XDG_DOCUMENTS_DIR", TQString("\"") + xdgModifiedDirectory + TQString("\""), true);
+							config.sync();
 							if (args->isSet( "getpath" ) == true) {
 								printf("%s\n\r", getDocumentPath().ascii());
 								return 0;

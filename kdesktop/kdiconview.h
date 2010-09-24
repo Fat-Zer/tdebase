@@ -24,6 +24,7 @@
 #include <kaction.h>
 #include <kfileitem.h>
 #include <kdirnotify.h>
+#include <kmessagebox.h>
 
 class KDirLister;
 class KonqSettings;
@@ -173,6 +174,9 @@ protected:
     void moveToFreePosition(TQIconViewItem *item );
 
     bool deleteGlobalDesktopFiles();
+    void removeBuiltinIcon(TQString iconName);
+    void fillMediaListView();
+    void saveMediaListView();
 
     static void renameDesktopFile(const TQString &path, const TQString &name);
 
@@ -260,6 +264,9 @@ private:
     bool m_gotIconsArea;
 
     bool m_needDesktopAlign;
+
+    TQListView *mMediaListView;
+    KConfig *g_pConfig;
 };
 
 #endif

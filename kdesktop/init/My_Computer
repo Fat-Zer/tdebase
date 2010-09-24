@@ -6,3 +6,4 @@ Name[en_US]=My Computer
 OnlyShowIn=KDE;
 Type=Link
 URL=media:/
+X-Trinity-BuiltIn=true

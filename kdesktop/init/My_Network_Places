@@ -6,3 +6,4 @@ Name[en_US]=My Network Places
 OnlyShowIn=KDE;
 Type=Link
 URL=remote:/
+X-Trinity-BuiltIn=true

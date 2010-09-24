@@ -190,6 +190,8 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
        setAcceptDrops(false);
        viewport()->setAcceptDrops(false);
     }
+
+    g_pConfig = new KConfig("kdesktoprc");
 }
 
 KDIconView::~KDIconView()
@@ -719,6 +721,74 @@ void KDIconView::slotPopupPasteTo()
         paste( m_popupURL );
 }
 
+// These two functions and the following class are all lifted from desktopbehavior_impl.cpp to handle the media icons
+class DesktopBehaviorMediaItem : public QCheckListItem
+{
+public:
+    DesktopBehaviorMediaItem(TQListView *parent, const TQString name, const TQString mimetype, bool on)
+        : TQCheckListItem(parent, name, CheckBox),
+          m_mimeType(mimetype){setOn(on);}
+
+    const TQString &mimeType() const { return m_mimeType; }
+
+private:
+    TQString m_mimeType;
+};
+
+void KDIconView::fillMediaListView()
+{
+    if (!mMediaListView)
+        mMediaListView = new TQListView();
+    mMediaListView->hide();
+    mMediaListView->clear();
+    KMimeType::List mimetypes = KMimeType::allMimeTypes();
+    TQValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
+    g_pConfig->setGroup( "Media" );
+    TQString excludedMedia=g_pConfig->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
+    for (; it2 != mimetypes.end(); ++it2) {
+       if ( ((*it2)->name().startsWith("media/")) )
+	{
+    	    bool ok=excludedMedia.contains((*it2)->name())==0;
+		new DesktopBehaviorMediaItem (mMediaListView, (*it2)->comment(), (*it2)->name(),ok);
+        }
+    }
+}
+
+void KDIconView::saveMediaListView()
+{
+    g_pConfig->setGroup( "Media" );
+    TQStringList exclude;
+    for (DesktopBehaviorMediaItem *it=static_cast<DesktopBehaviorMediaItem *>(mMediaListView->firstChild());
+     	it; it=static_cast<DesktopBehaviorMediaItem *>(it->nextSibling()))
+    	{
+		if (!it->isOn()) exclude << it->mimeType();
+	    }
+    g_pConfig->writeEntry("exclude",exclude);
+    g_pConfig->sync();
+
+    // Reload kdesktop configuration to apply changes
+    TQByteArray data;
+    int konq_screen_number = KApplication::desktop()->primaryScreen();
+    TQCString appname;
+    if (konq_screen_number == 0)
+        appname = "kdesktop";
+    else
+        appname.sprintf("kdesktop-screen-%d", konq_screen_number);
+    kapp->dcopClient()->send( appname, "KDesktopIface", "configure()", data );
+}
+
+void KDIconView::removeBuiltinIcon(TQString iconName)
+{
+    DesktopBehaviorMediaItem *changeItem;
+    fillMediaListView();
+    changeItem = static_cast<DesktopBehaviorMediaItem *>(mMediaListView->findItem(iconName, 0));
+    if (changeItem != 0) {
+        changeItem->setOn(false);
+    }
+    saveMediaListView();
+    KMessageBox::information(0, i18n("You have chosen to remove a system icon") + TQString(".\n") + i18n("You can restore this icon in the future through the") + TQString(" \"") + ("Device Icons") + TQString("\" ") + i18n("tab in the") + TQString(" \"") + i18n("Behavior") + TQString("\" ") + i18n("pane of the Desktop Settings control module."), "System Icon Removed", "sysiconremovedwarning");
+}
+
 /**
  * The files on the desktop come from a variety of sources.
  * If an attempt is made to delete a .desktop file that does
@@ -762,49 +832,44 @@ bool KDIconView::deleteGlobalDesktopFiles()
 
         // Ignore these special files
         // Name			URL					Type		OnlyShowIn
-        // My Documents		$HOME/Documents				Link		KDE;
+        // My Documents		kxdglauncher --xdgname DOCUMENTS	Application	KDE;
         // My Computer		media:/					Link		KDE;
         // My Network Places	remote:/				Link		KDE;
         // Printers		[exec] kjobviewer --all --show %i %m	Application	KDE;
         // Trash		trash:/					Link		KDE;
-        // Web Browser		<dont care>				Application	KDE;
+        // Web Browser		kfmclient openBrowser %u		Application	KDE;
 
         if ( isDesktopFile(fItem) ) {
             KSimpleConfig cfg( fItem->url().path(), true );
             cfg.setDesktopGroup();
-            if ( cfg.readEntry( "Type" ) == "Link" &&
-                 cfg.readEntry( "URL" ) == "$HOME/Documents" &&
-                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
                  cfg.readEntry( "Name" ) == "My Documents" ) {
+                removeBuiltinIcon("My Documents");
                 continue;
             }
-            if ( cfg.readEntry( "Type" ) == "Link" &&
-                 cfg.readEntry( "URL" ) == "media:/" &&
-                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
                  cfg.readEntry( "Name" ) == "My Computer" ) {
+                removeBuiltinIcon("My Computer");
                 continue;
             }
-            if ( cfg.readEntry( "Type" ) == "Link" &&
-                 cfg.readEntry( "URL" ) == "remote:/" &&
-                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
                  cfg.readEntry( "Name" ) == "My Network Places" ) {
+                removeBuiltinIcon("My Network Places");
                 continue;
             }
-            if ( cfg.readEntry( "Type" ) == "Application" &&
-                 cfg.readEntry( "Exec" ) == "kjobviewer --all --show %i %m" &&
-                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
                  cfg.readEntry( "Name" ) == "Printers" ) {
+                removeBuiltinIcon("Printers");
                 continue;
             }
-            if ( cfg.readEntry( "Type" ) == "Link" &&
-                 cfg.readEntry( "URL" ) == "trash:/" &&
-                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
                  cfg.readEntry( "Name" ) == "Trash" ) {
+                removeBuiltinIcon("Trash");
                 continue;
             }
-            if ( cfg.readEntry( "Type" ) == "Application" &&
-                 cfg.readEntry( "OnlyShowIn" ) == "KDE;" &&
+            if ( cfg.readEntry( "X-Trinity-BuiltIn" ) == "true" &&
                  cfg.readEntry( "Name" ) == "Web Browser" ) {
+                removeBuiltinIcon("Web Browser");
                 continue;
             }
         }
