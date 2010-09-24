@@ -156,6 +156,9 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
     // Initialise the shadow data objects...
     m_shadowEngine = new KShadowEngine(new KDesktopShadowSettings(KGlobal::config()));
 
+    // Initialize media handler
+    mMediaListView = new TQListView();
+
     connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()),
              this, TQT_SLOT(slotClipboardDataChanged()) );
 
@@ -737,8 +740,6 @@ private:
 
 void KDIconView::fillMediaListView()
 {
-    if (!mMediaListView)
-        mMediaListView = new TQListView();
     mMediaListView->hide();
     mMediaListView->clear();
     KMimeType::List mimetypes = KMimeType::allMimeTypes();
