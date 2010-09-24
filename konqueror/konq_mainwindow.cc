@@ -102,6 +102,7 @@
 #include <kio/scheduler.h>
 #include <kio/netaccess.h>
 #include <kaccelmanager.h>
+#include <kstringhandler.h>
 #include <kuser.h>
 #include <netwm.h>
 

@@ -193,8 +193,6 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
        setAcceptDrops(false);
        viewport()->setAcceptDrops(false);
     }
-
-    g_pConfig = new KConfig("kdesktoprc");
 }
 
 KDIconView::~KDIconView()
@@ -740,6 +738,7 @@ private:
 
 void KDIconView::fillMediaListView()
 {
+    g_pConfig = new KConfig("kdesktoprc");
     mMediaListView->hide();
     mMediaListView->clear();
     KMimeType::List mimetypes = KMimeType::allMimeTypes();
@@ -753,10 +752,12 @@ void KDIconView::fillMediaListView()
 		new DesktopBehaviorMediaItem (mMediaListView, (*it2)->comment(), (*it2)->name(),ok);
         }
     }
+    delete g_pConfig;
 }
 
 void KDIconView::saveMediaListView()
 {
+    g_pConfig = new KConfig("kdesktoprc");
     g_pConfig->setGroup( "Media" );
     TQStringList exclude;
     for (DesktopBehaviorMediaItem *it=static_cast<DesktopBehaviorMediaItem *>(mMediaListView->firstChild());
@@ -776,6 +777,7 @@ void KDIconView::saveMediaListView()
     else
         appname.sprintf("kdesktop-screen-%d", konq_screen_number);
     kapp->dcopClient()->send( appname, "KDesktopIface", "configure()", data );
+    delete g_pConfig;
 }
 
 void KDIconView::removeBuiltinIcon(TQString iconName)
