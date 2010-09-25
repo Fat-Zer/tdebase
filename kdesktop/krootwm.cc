@@ -532,7 +532,7 @@ void KRootWm::slotToggleAutoAlign( bool b )
 
     KConfig *kdg_config = new KConfig(cfilename, false, false);
     kdg_config->setGroup( "General" );
-    kdg_config->writeEntry( "AutoLineUpIcons", autoLineupIconsBox->isChecked() );
+    kdg_config->writeEntry( "AutoLineUpIcons", b );
     kdg_config->sync();
     delete kdg_config;
 
