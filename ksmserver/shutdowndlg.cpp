@@ -1,6 +1,7 @@
 /*****************************************************************
 ksmserver - the KDE session management server
 
+Copyright (C) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 ******************************************************************/
 
@@ -27,6 +28,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqpainter.h>
 #include <tqfontmetrics.h>
 #include <tqregexp.h>
+#include <tqeventloop.h>
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -72,10 +74,12 @@ KSMShutdownFeedback::KSMShutdownFeedback()
    m_unfadedImage(),
    m_grayImage(),
    m_fadeTime(),
-   m_pmio()
+   m_pmio(),
+   m_greyImageCreated( FALSE )
 
 {
-    m_grayImage = TQImage::TQImage();
+    DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the K Menu is completely removed from the screen before taking a snapshot...
+    m_grayImage = TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height()).convertToImage();
     m_unfadedImage = TQImage::TQImage();
     resize(0, 0);
     setShown(true);
@@ -110,13 +114,13 @@ void KSMShutdownFeedback::slotPaintEffect()
 	// if slotPaintEffect() is called first time, we have to initialize the gray image
 	// we also could do that in the constructor, but then the displaying of the
 	// logout-UI would be too much delayed...
-	if ( m_grayImage.isNull() )
+	if ( m_greyImageCreated == false )
 	{
+		m_greyImageCreated = true;
 		setBackgroundMode( TQWidget::NoBackground );
 		setGeometry( TQApplication::desktop()->geometry() );
 		m_root.resize( width(), height() ); // for the default logout
 
-		m_grayImage = TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height()).convertToImage();
 		m_unfadedImage = m_grayImage.copy();
 		register uchar * r = m_grayImage.bits();
 		register uchar * g = m_grayImage.bits() + 1;
@@ -266,7 +270,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 {
     TQVBoxLayout* vbox = new TQVBoxLayout( this );
-	
+
 
     TQFrame* frame = new TQFrame( this );
     frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );

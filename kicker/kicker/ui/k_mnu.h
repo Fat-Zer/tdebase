@@ -50,6 +50,7 @@ class PanelKMenu : public PanelServiceMenu, public DCOPObject
 
 k_dcop:
     void slotServiceStartedByStorageId(TQString starter, TQString desktopPath);
+    void hideMenu();
 
 public:
     PanelKMenu();
@@ -86,6 +87,7 @@ protected slots:
     virtual void configChanged();
     void updateRecent();
     void repairDisplay();
+    void windowClearTimeout();
 
 protected:
     TQRect sideImageRect();
@@ -117,6 +119,7 @@ private:
     static const int            searchLineID;
     TQTimer                    *displayRepairTimer;
     bool                        displayRepaired;
+    bool                        windowTimerTimedOut;
 };
 
 #endif

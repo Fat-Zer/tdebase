@@ -33,6 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqstyle.h>
 #include <tqtimer.h>
 #include <tqtooltip.h>
+#include <tqeventloop.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -115,6 +116,39 @@ void PanelKMenu::slotServiceStartedByStorageId(TQString starter,
     }
 }
 
+void PanelKMenu::hideMenu()
+{
+    hide();
+
+    // Try to redraw the area under the menu
+    // Qt makes this surprisingly difficult to do in a timely fashion!
+    while (isShown() == true)
+        kapp->eventLoop()->processEvents(1000);
+    TQTimer *windowtimer = new TQTimer( this );
+    connect( windowtimer, SIGNAL(timeout()), this, SLOT(windowClearTimeout()) );
+    windowTimerTimedOut = false;
+    windowtimer->start( 0, TRUE );	// Wait for all window system events to be processed
+    while (windowTimerTimedOut == false)
+        kapp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput, 1000);
+
+    // HACK
+    // The K Menu takes an unknown amount of time to disappear, and redrawing
+    // the underlying window(s) also takes time.  This should allow both of those
+    // events to occur (unless you're on a 200MHz Pentium 1 or similar ;-))
+    // thereby removing a bad shutdown screen artifact while still providing
+    // a somewhat snappy user interface.
+    TQTimer *delaytimer = new TQTimer( this );
+    connect( delaytimer, SIGNAL(timeout()), this, SLOT(windowClearTimeout()) );
+    windowTimerTimedOut = false;
+    delaytimer->start( 100, TRUE );	// Wait for 100 milliseconds
+    while (windowTimerTimedOut == false)
+        kapp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput, 1000);
+}
+
+void PanelKMenu::windowClearTimeout()
+{
+    windowTimerTimedOut = true;
+}
 
 bool PanelKMenu::loadSidePixmap()
 {

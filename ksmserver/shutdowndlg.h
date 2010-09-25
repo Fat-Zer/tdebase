@@ -66,6 +66,7 @@ private:
     TQTime  m_fadeTime;
     int    m_rowsDone;
     KPixmapIO m_pmio;
+    bool m_greyImageCreated;
 
 };
 
