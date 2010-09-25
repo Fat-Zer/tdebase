@@ -20,11 +20,15 @@
 #ifndef kdiconview_h
 #define kdiconview_h
 
+#include <tqlistview.h>
+
 #include <konq_iconviewwidget.h>
 #include <kaction.h>
 #include <kfileitem.h>
 #include <kdirnotify.h>
 #include <kmessagebox.h>
+
+#include <dcopclient.h>
 
 class KDirLister;
 class KonqSettings;
