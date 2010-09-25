@@ -300,7 +300,7 @@ void DesktopBehavior::load()
 
 void DesktopBehavior::load( bool useDefaults )
 {
-	 g_pConfig->setReadDefaults( useDefaults );
+    g_pConfig->setReadDefaults( useDefaults );
     g_pConfig->setGroup( "Desktop Icons" );
     bool bShowHidden = g_pConfig->readBoolEntry("ShowHidden", DEFAULT_SHOW_HIDDEN_ROOT_ICONS);
     showHiddenBox->setChecked(bShowHidden);

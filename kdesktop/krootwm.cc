@@ -522,6 +522,20 @@ void KRootWm::slotToggleAutoAlign( bool b )
     KDesktopSettings::setAutoLineUpIcons( b );
     KDesktopSettings::writeConfig();
 
+    // Also save it globally...
+    int desktop = KApplication::desktop()->primaryScreen();
+    TQCString cfilename;
+    if (desktop == 0)
+        cfilename = "kdesktoprc";
+    else
+        cfilename.sprintf("kdesktop-screen-%drc", desktop);
+
+    KConfig *kdg_config = new KConfig(cfilename, false, false);
+    kdg_config->setGroup( "General" );
+    kdg_config->writeEntry( "AutoLineUpIcons", autoLineupIconsBox->isChecked() );
+    kdg_config->sync();
+    delete kdg_config;
+
     // Auto line-up icons
     m_pDesktop->iconView()->setAutoAlign( b );
 }
