@@ -21,17 +21,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <tqtooltip.h>
-#include <tqdragobject.h>
+#include <tqobject.h>
 
-#include <klocale.h>
-#include <kglobalsettings.h>
-#include <konq_operations.h>
-#include <kfileitem.h>
-
-#include "showdesktop.h"
-#include "kicker.h"
-#include "kickerSettings.h"
+#include "core/showdesktop.h"
 
 int main()
 {

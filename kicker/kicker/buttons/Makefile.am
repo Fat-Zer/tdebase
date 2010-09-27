@@ -1,7 +1,6 @@
 INCLUDES = -I$(srcdir)/../core -I$(srcdir)/../../libkicker -I../../libkicker \
 	-I../ui -I$(srcdir)/../ui -I$(top_srcdir)/libkonq $(all_includes) $(LIBBEAGLE_CFLAGS) $(GLIB_CFLAGS)
 
-bin_PROGRAMS = kshowdesktop
 noinst_LTLIBRARIES = libkicker_buttons.la
 
 libkicker_buttons_la_SOURCES = servicebutton.cpp bookmarksbutton.cpp \
@@ -13,10 +12,6 @@ libkicker_buttons_la_SOURCES = servicebutton.cpp bookmarksbutton.cpp \
 libkicker_buttons_la_LDFLAGS = $(all_libraries)
 libkicker_buttons_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(LIB_KDEUI) $(XTESTLIB)
 libkicker_buttons_la_METASOURCES = AUTO
-
-kshowdesktop_SOURCES = kshowdesktop.cpp
-kshowdesktop_LDFLAGS = $(all_libraries) -L../core/.libs -lkicker_core
-kshowdesktop_LDADD = $(top_builddir)/libkonq/libkonq.la $(LIB_KDEUI) $(XTESTLIB)
 
 desktopmenu_DATA = bookmarks.desktop browser.desktop desktop.desktop \
                    exec.desktop kmenu.desktop windowlist.desktop
