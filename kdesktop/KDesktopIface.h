@@ -42,6 +42,18 @@ k_dcop:
      */
     virtual void refreshIcons() = 0;
     /**
+     * Set show desktop state
+     */
+    virtual void setShowDesktop( bool b ) = 0;
+    /**
+     * @return the show desktop state
+     */
+    virtual bool showDesktopState() = 0;
+    /**
+     * Toggle show desktop state
+     */
+    virtual void toggleShowDesktop() = 0;
+    /**
      * @return the urls of selected icons
      */
     virtual TQStringList selectedURLs() = 0;

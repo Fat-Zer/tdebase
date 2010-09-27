@@ -140,6 +140,9 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
     // those two WStyle_ break kdesktop when the root-hack isn't used (no Dnd)
    startup_id( NULL ), m_waitForKicker(0)
 {
+  NETRootInfo i( qt_xdisplay(), NET::Supported );
+  m_wmSupport = i.isSupported( NET::WM2ShowingDesktop );
+
   m_bWaitForKded = wait_for_kded;
   m_miniCli = 0; // created on demand
   keys = 0; // created later
@@ -591,6 +594,158 @@ void KDesktop::refreshIcons()
 {
     if (m_pIconView)
         m_pIconView->refreshIcons();
+}
+
+void KDesktop::setShowDesktop( bool b )
+{
+    bool m_showingDesktop = showDesktopState();
+
+    if (b == m_showingDesktop)
+    {
+        return;
+    }
+
+    if( m_wmSupport )
+    {
+        NETRootInfo i( qt_xdisplay(), 0 );
+        i.setShowingDesktop( b );
+        return;
+    }
+
+    if (b)
+    {
+        m_activeWindow = kwinModule()->activeWindow();
+        m_iconifiedList.clear();
+
+        const TQValueList<WId> windows = kwinModule()->windows();
+        for (TQValueList<WId>::ConstIterator it = windows.begin();
+             it != windows.end();
+             ++it)
+        {
+            WId w = *it;
+
+            NETWinInfo info( qt_xdisplay(), w, qt_xrootwin(),
+                             NET::XAWMState | NET::WMDesktop );
+
+            if (info.mappingState() == NET::Visible &&
+                (info.desktop() == NETWinInfo::OnAllDesktops ||
+                 info.desktop() == (int)kwinModule()->currentDesktop()))
+            {
+                m_iconifiedList.append( w );
+            }
+        }
+
+        // find first, hide later, otherwise transients may get minimized
+        // with the window they're transient for
+        for (TQValueVector<WId>::Iterator it = m_iconifiedList.begin();
+             it != m_iconifiedList.end();
+             ++it)
+        {
+            KWin::iconifyWindow( *it, false );
+        }
+
+        // on desktop changes or when a window is deiconified, we abort the show desktop mode
+        connect(kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+                TQT_SLOT(slotCurrentDesktopChanged(int)));
+        connect(kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+                TQT_SLOT(slotWindowChanged(WId,unsigned int)));
+        connect(kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+                TQT_SLOT(slotWindowAdded(WId)));
+    }
+    else
+    {
+        disconnect(kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+                   this, TQT_SLOT(slotCurrentDesktopChanged(int)));
+        disconnect(kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+                   this, TQT_SLOT(slotWindowChanged(WId,unsigned int)));
+        disconnect(kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+                   this, TQT_SLOT(slotWindowAdded(WId)));
+
+        for (TQValueVector<WId>::ConstIterator it = m_iconifiedList.begin();
+             it != m_iconifiedList.end();
+             ++it)
+        {
+            KWin::deIconifyWindow(*it, false);
+        }
+
+        KWin::forceActiveWindow(m_activeWindow);
+    }
+
+    m_showingDesktop = b;
+    emit desktopShown(m_showingDesktop);
+}
+
+void KDesktop::slotCurrentDesktopChanged(int)
+{
+    setShowDesktop( false );
+}
+
+void KDesktop::slotWindowAdded(WId w)
+{
+    bool m_showingDesktop = showDesktopState();
+
+    if (!m_showingDesktop)
+    {
+        return;
+    }
+
+    NETWinInfo inf(qt_xdisplay(), w, qt_xrootwin(),
+                   NET::XAWMState | NET::WMWindowType);
+    NET::WindowType windowType = inf.windowType(NET::AllTypesMask);
+
+    if ((windowType == NET::Normal || windowType == NET::Unknown) &&
+        inf.mappingState() == NET::Visible)
+    {
+        KConfig kwincfg( "kwinrc", true ); // see in kwin
+        kwincfg.setGroup( "Windows" );
+        if( kwincfg.readBoolEntry( "ShowDesktopIsMinimizeAll", false ))
+        {
+            m_iconifiedList.clear();
+            m_showingDesktop = false;
+            emit desktopShown(false);
+        }
+        else
+        {
+            m_activeWindow = w;
+            setShowDesktop(false);
+        }
+    }
+}
+
+void KDesktop::slotWindowChanged(WId w, unsigned int dirty)
+{
+    bool m_showingDesktop = showDesktopState();
+
+    if (!m_showingDesktop)
+    {
+        return;
+    }
+
+    if (dirty & NET::XAWMState)
+    {
+        NETWinInfo inf(qt_xdisplay(), w, qt_xrootwin(),
+                       NET::XAWMState | NET::WMWindowType);
+        NET::WindowType windowType = inf.windowType(NET::AllTypesMask);
+
+        if ((windowType == NET::Normal || windowType == NET::Unknown) &&
+            inf.mappingState() == NET::Visible)
+        {
+            // a window was deiconified, abort the show desktop mode.
+            m_iconifiedList.clear();
+            m_showingDesktop = false;
+            emit desktopShown(false);
+        }
+    }
+}
+
+bool KDesktop::showDesktopState()
+{
+    return kwinModule()->showingDesktop();
+}
+
+void KDesktop::toggleShowDesktop()
+{
+    setShowDesktop(!showDesktopState());
 }
 
 KActionCollection * KDesktop::actionCollection()

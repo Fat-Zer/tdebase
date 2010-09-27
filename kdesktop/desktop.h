@@ -24,6 +24,7 @@
 
 #include <tqwidget.h>
 #include <tqstringlist.h>
+#include <tqvaluevector.h>
 
 #include <kapplication.h>	// for logout parameters
 
@@ -75,6 +76,9 @@ public:
   virtual void selectAll();
   virtual void unselectAll();
   virtual void refreshIcons();
+  virtual void setShowDesktop( bool b );
+  virtual bool showDesktopState();
+  virtual void toggleShowDesktop();
   virtual TQStringList selectedURLs();
 
   virtual void configure();
@@ -151,6 +155,11 @@ private slots:
   // when there seems to be no kicker, we have to get desktopIconsArea from kwinModule
   void slotNoKicker();
 
+  /** Used for desktop show/hide functionality */
+  void slotCurrentDesktopChanged(int);
+  void slotWindowAdded(WId w);
+  void slotWindowChanged(WId w, unsigned int dirty);
+
 protected:
   void initConfig();
   void initRoot();
@@ -171,6 +180,9 @@ protected:
 
 private slots:
   void desktopResized();
+
+signals:
+    void desktopShown(bool shown);
 
 private:
 
@@ -212,6 +224,10 @@ private:
 
   /** Possible values for "kdesktoprc"->"Mouse Buttons"->"WheelDirection" */
   static const char* m_wheelDirectionStrings[2];
+
+  bool m_wmSupport;
+  WId  m_activeWindow;
+  TQValueVector<WId> m_iconifiedList;
 };
 
 #endif
