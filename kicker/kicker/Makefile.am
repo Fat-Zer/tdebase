@@ -3,7 +3,7 @@ INCLUDES = $(all_includes)
 # SUBDIRS = core interfaces ui buttons plugins .
 SUBDIRS = core interfaces ui buttons .
 
-bin_PROGRAMS = kshowdesktop
+bin_PROGRAMS =
 lib_LTLIBRARIES =
 kdeinit_LTLIBRARIES = kicker.la
 
@@ -14,9 +14,6 @@ kicker_la_LIBADD = core/libkicker_core.la  buttons/libkicker_buttons.la \
 
 kicker_la_SOURCES = dummy.cpp
 kicker_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-
-kshowdesktop_SOURCES = kshowdesktop.cpp
-kshowdesktop_LDFLAGS = $(all_libraries) $(kicker_la_LIBADD)
 
 autostart_DATA = panel.desktop
 autostartdir = $(datadir)/autostart
