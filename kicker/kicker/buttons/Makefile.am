@@ -15,7 +15,7 @@ libkicker_buttons_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(LIB_KDEUI) $(
 libkicker_buttons_la_METASOURCES = AUTO
 
 kshowdesktop_SOURCES = kshowdesktop.cpp
-kshowdesktop_LDFLAGS = $(all_libraries)
+kshowdesktop_LDFLAGS = $(all_libraries) -L../core/.libs -lkicker_core
 kshowdesktop_LDADD = $(top_builddir)/libkonq/libkonq.la $(LIB_KDEUI) $(XTESTLIB)
 
 desktopmenu_DATA = bookmarks.desktop browser.desktop desktop.desktop \
