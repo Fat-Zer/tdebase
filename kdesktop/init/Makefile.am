@@ -1,6 +1,6 @@
 SUBDIRS = Templates
 
-kdesktop_init_data_DATA = directory.trash directory.autostart directory.templates directory.desktop
+kdesktop_init_data_DATA = directory.autostart directory.templates directory.desktop
 kdesktop_init_datadir = $(kde_datadir)/kdesktop
 
 kdesktop_builtin_data_DATA = My_Computer My_Documents My_Network_Places Printers Trash Web_Browser

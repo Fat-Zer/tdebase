@@ -760,7 +760,7 @@ void KRootWm::slotOpenTerminal()
     KConfigGroupSaver gs(KGlobal::config(), "General");
     TQString terminal = KGlobal::config()->readPathEntry("TerminalApplication", "konsole");
 
-    *p << terminal << " --workdir \"$HOME/Desktop\"";
+    *p << terminal << "--workdir=" + KGlobalSettings::desktopPath() + "/";
 
     p->start(KProcess::DontCare);
 
