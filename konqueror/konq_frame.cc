@@ -98,9 +98,10 @@ KonqFrameStatusBar::KonqFrameStatusBar( KonqFrame *_parent, const char *_name )
     m_progressBar->hide();
     addWidget( m_progressBar, 0, true /*permanent->right align*/ );
 
-    StatusBarNetworkStatusIndicator * indicator = new StatusBarNetworkStatusIndicator( this, "networkstatusindicator" );
-    addWidget( indicator, 0, false );
-    indicator->init();
+//     // FIXME: This was added by OpenSUSE; someone needs to figure out what it does and how to fix it!
+//     StatusBarNetworkStatusIndicator * indicator = new StatusBarNetworkStatusIndicator( this, "networkstatusindicator" );
+//     addWidget( indicator, 0, false );
+//     indicator->init();
 
     fontChange(TQFont());
     installEventFilter( this );

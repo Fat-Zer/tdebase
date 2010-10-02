@@ -400,7 +400,7 @@ KGreeter::insertUsers(int limit_users)
 	}
 	if (_showUsers == SHOW_ALL) {
 		UserList noUsers( _noUsers );
-		TQDict<int> dupes( 1000 );
+		TQDict<int> dupes( 1000 );	// Potential crash risk with buffer overrun?
                 TQStringList toinsert;
                 int count = 0;
 		for (setpwent(); (ps = getpwent()) != 0;) {
@@ -421,36 +421,39 @@ KGreeter::insertUsers(int limit_users)
 				}
 			}
 		}
-                if ( limit_users >= 0 && ++count > limit_users ) {
-                    utmpname( _PATH_WTMP );
-                    setutxent();
-                    toinsert = TQStringList();
-                    dupes.clear();
-
-                    for ( count = 0; count < limit_users; ) {
-                        struct utmpx * ent = getutxent();
-                        if ( !ent )
-                            break;
-                        struct passwd *ps = getpwnam( ent->ut_user );
-                        if (ps && *ps->pw_dir && *ps->pw_shell &&
-			    (ps->pw_uid >= (unsigned)_lowUserId ||
-			     !ps->pw_uid && _showRoot) &&
-			    ps->pw_uid <= (unsigned)_highUserId &&
-			    !noUsers.hasUser( ps->pw_name ) &&
-			    !noUsers.hasGroup( ps->pw_gid ))
-                        {
-                            TQString username( TQFile::decodeName( ent->ut_user ) );
-                            if (!dupes.find( username )) {
-                                dupes.insert( username, (int *)-1 );
-                                toinsert.append( username );
-                                count++;
-                            }
-                        }
-
-
-                    }
-                    endutxent();
-                }
+		// FIXME: OpenSUSE added this code
+		// For some reason it does not allow LDAP users to be listed (!),
+		// therefore it was deactivated.  It should be repaired and reactivated.
+//                 if ( limit_users >= 0 && ++count > limit_users ) {
+//                     utmpname( _PATH_WTMP );
+//                     setutxent();
+//                     toinsert = TQStringList();
+//                     dupes.clear();
+// 
+//                     for ( count = 0; count < limit_users; ) {
+//                         struct utmpx * ent = getutxent();
+//                         if ( !ent )
+//                             break;
+//                         struct passwd *ps = getpwnam( ent->ut_user );
+//                         if (ps && *ps->pw_dir && *ps->pw_shell &&
+// 			    (ps->pw_uid >= (unsigned)_lowUserId ||
+// 			     !ps->pw_uid && _showRoot) &&
+// 			    ps->pw_uid <= (unsigned)_highUserId &&
+// 			    !noUsers.hasUser( ps->pw_name ) &&
+// 			    !noUsers.hasGroup( ps->pw_gid ))
+//                         {
+//                             TQString username( TQFile::decodeName( ent->ut_user ) );
+//                             if (!dupes.find( username )) {
+//                                 dupes.insert( username, (int *)-1 );
+//                                 toinsert.append( username );
+//                                 count++;
+//                             }
+//                         }
+// 
+// 
+//                     }
+//                     endutxent();
+//                 }
 
                 for ( TQStringList::ConstIterator it = toinsert.begin();
                       it != toinsert.end(); ++it )
