@@ -1016,10 +1016,10 @@ bool KlipperWidget::ignoreClipboardChanges() const
     TQWidget *focusWidget = qApp->focusWidget();
     if ( focusWidget )
     {
-        if ( focusWidget->inherits( "TQSpinBox" ) ||
+        if ( focusWidget->inherits( "QSpinBox" ) ||
              (focusWidget->parentWidget() &&
-              focusWidget->inherits("TQLineEdit") &&
-              focusWidget->parentWidget()->inherits("TQSpinWidget")) )
+              focusWidget->inherits("QLineEdit") &&
+              focusWidget->parentWidget()->inherits("QSpinWidget")) )
         {
             return true;
         }

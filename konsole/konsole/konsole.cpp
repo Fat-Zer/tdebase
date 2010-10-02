@@ -479,7 +479,7 @@ void Konsole::makeGUI()
    // Remove the empty separator Qt inserts if the menu is empty on popup,
    // not sure if this will be "fixed" in Qt, for now use this hack (malte)
    if(!(isRestored)) {
-     if (sender() && sender()->inherits("TQPopupMenu") &&
+     if (sender() && sender()->inherits("QPopupMenu") &&
        static_cast<const TQPopupMenu *>(sender())->count() == 1)
        const_cast<TQPopupMenu *>(static_cast<const TQPopupMenu *>(sender()))->removeItemAt(0);
        }
