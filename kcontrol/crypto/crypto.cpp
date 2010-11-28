@@ -2316,12 +2316,19 @@ void KCryptoConfig::slotGeneratePersonal() {
 
 
 #ifdef HAVE_SSL
+
+#if OPENSSL_VERSION_NUMBER >= 0x10000000L
+#define SSL_CONST const
+#else
+#define SSL_CONST
+#endif
+
 // This gets all the available ciphers from OpenSSL
 bool KCryptoConfig::loadCiphers() {
 unsigned int i;
 SSL_CTX *ctx;
 SSL *ssl;
-const SSL_METHOD *meth;
+SSL_CONST SSL_METHOD *meth;
 
   SSLv2Box->clear();
   SSLv3Box->clear();
@@ -2337,7 +2344,7 @@ const SSL_METHOD *meth;
   CipherItem *item;
   for (i=0; ; i++) {
     int j, k;
-    const SSL_CIPHER *sc;
+    SSL_CONST SSL_CIPHER *sc;
     sc = (meth->get_cipher)(i);
     if (!sc)
       break;
@@ -2365,7 +2372,7 @@ const SSL_METHOD *meth;
 
   for (i=0; ; i++) {
     int j, k;
-    const SSL_CIPHER *sc;
+    SSL_CONST SSL_CIPHER *sc;
     sc = (meth->get_cipher)(i);
     if (!sc)
       break;
