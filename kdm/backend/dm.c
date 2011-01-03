@@ -288,11 +288,11 @@ main( int argc, char **argv )
 			LogError( "Failed to execute shutdown command %\"s\n", cmd );
 			exit( 1 );
 		} else {
-			sigset_t mask;
-			sigemptyset( &mask );
-			sigaddset( &mask, SIGCHLD );
-			sigaddset( &mask, SIGHUP );
-			sigsuspend( &mask );
+			sigset_t tqmask;
+			sigemptyset( &tqmask );
+			sigaddset( &tqmask, SIGCHLD );
+			sigaddset( &tqmask, SIGHUP );
+			sigsuspend( &tqmask );
 		}
 	}
 	Debug( "nothing left to do, exiting\n" );
@@ -997,8 +997,8 @@ ReapChildren( void )
 				/* don't kill again */
 				break;
 			case running:
-				if (startingServer == d && d->serverStatus != ignore) {
-					if (d->serverStatus == starting && waitCode( status ) != 47)
+				if (startingServer == d && d->servertqStatus != ignore) {
+					if (d->servertqStatus == starting && waitCode( status ) != 47)
 						LogError( "X server died during startup\n" );
 					StartServerFailed();
 					break;
@@ -1183,7 +1183,7 @@ MainLoop( void )
 					break;
 				case SIGUSR1:
 					if (startingServer &&
-					    startingServer->serverStatus == starting)
+					    startingServer->servertqStatus == starting)
 						StartServerSuccess();
 					break;
 				}
@@ -1214,7 +1214,7 @@ MainLoop( void )
 }
 
 static void
-CheckDisplayStatus( struct display *d )
+CheckDisplaytqStatus( struct display *d )
 {
 	if ((d->displayType & d_origin) == dFromFile && !d->stillThere)
 		StopDisplay( d );
@@ -1235,7 +1235,7 @@ KickDisplay( struct display *d )
 {
 	if (d->status == notRunning)
 		StartDisplay( d );
-	if (d->serverStatus == awaiting && !startingServer)
+	if (d->servertqStatus == awaiting && !startingServer)
 		StartServer( d );
 }
 
@@ -1314,7 +1314,7 @@ AllocateVT( struct display *d )
 static void
 StartDisplays( void )
 {
-	ForEachDisplay( CheckDisplayStatus );
+	ForEachDisplay( CheckDisplaytqStatus );
 	CloseGetter();
 #ifdef HAVE_VTS
 	active_vts = -1;
@@ -1356,7 +1356,7 @@ StartDisplay( struct display *d )
 				kill( d->serverPid, d->resetSignal );
 		}
 		if (d->serverPid == -1) {
-			d->serverStatus = awaiting;
+			d->servertqStatus = awaiting;
 			return;
 		}
 	} else {

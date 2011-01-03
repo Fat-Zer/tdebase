@@ -64,9 +64,9 @@ KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KICCCFactory::instance(), parent, name)
 {
 
-  TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
-  config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
-  systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
+  config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+  systemconfig = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
 
   KAboutData *about =
   new KAboutData(I18N_NOOP("kcmiccconfig"), I18N_NOOP("KDE ICC Profile Control Module"),
@@ -77,7 +77,7 @@ KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
   setAboutData( about );
 
   base = new ICCConfigBase(this);
-  layout->add(base);
+  tqlayout->add(base);
 
   setRootOnlyMsg(i18n("<b>The global ICC color profile is a system wide setting, and requires administrator access</b><br>To alter the system's global ICC profile, click on the \"Administrator Mode\" button below."));
   setUseRootOnlyMsg(true);

@@ -68,9 +68,9 @@ class KeyTrans
       class KeyEntry
       {
          public:
-            KeyEntry(int ref, int key, int bits, int mask, int cmd, TQString txt);
+            KeyEntry(int ref, int key, int bits, int tqmask, int cmd, TQString txt);
             ~KeyEntry();
-            bool matches(int key, int bits, int mask);
+            bool matches(int key, int bits, int tqmask);
             bool metaspecified(void);
             bool anymodspecified(void);
             TQString text();
@@ -78,14 +78,14 @@ class KeyTrans
          private:
             int     key;
             int     bits;
-            int     mask;
+            int     tqmask;
          public:
             int cmd;
             TQString txt;
       };
 
    private:
-      KeyEntry* addEntry(int ref, int key, int bits, int mask, int cmd, TQString txt);
+      KeyEntry* addEntry(int ref, int key, int bits, int tqmask, int cmd, TQString txt);
       void addKeyTrans();
       void readConfig();
       TQPtrList<KeyEntry> tableX;

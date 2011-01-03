@@ -103,7 +103,7 @@ KonqPropsView::KonqPropsView( KInstance * instance, KonqPropsView * defaultProps
   //the default-to-off bias to propagate up.
   if (!config->readBoolEntry("EnableSoundPreviews", false))
   {
-    if (!m_dontPreview.contains("audio/"))
+    if (!m_dontPreview.tqcontains("audio/"))
       m_dontPreview.append("audio/");
   }
 
@@ -234,13 +234,13 @@ bool KonqPropsView::enterDir( const KURL & dir )
         {
 
             if (!config->readBoolEntry("EnableSoundPreviews", false))
-                if (!m_dontPreview.contains("audio/"))
+                if (!m_dontPreview.tqcontains("audio/"))
                     m_dontPreview.append("audio/");
         }
         else
         {
-            if (m_defaultProps->m_dontPreview.contains("audio/"))
-                if (!m_dontPreview.contains("audio/"))
+            if (m_defaultProps->m_dontPreview.tqcontains("audio/"))
+                if (!m_dontPreview.tqcontains("audio/"))
                     m_dontPreview.append("audio/");
         }
     }
@@ -395,7 +395,7 @@ void KonqPropsView::setShowingDirectoryOverlays( bool show )
 
 void KonqPropsView::setShowingPreview( const TQString &preview, bool show )
 {
-    if ( m_dontPreview.contains( preview ) != show )
+    if ( m_dontPreview.tqcontains( preview ) != show )
         return;
     else if ( show )
         m_dontPreview.remove( preview );
@@ -409,7 +409,7 @@ void KonqPropsView::setShowingPreview( const TQString &preview, bool show )
 
         //Audio is special-cased, as we use a binary setting
         //for it to get it to follow the defaults right.
-        bool audioEnabled = !m_dontPreview.contains("audio/");
+        bool audioEnabled = !m_dontPreview.tqcontains("audio/");
 
         //Don't write it out into the DontPreview line
         if (!audioEnabled)
@@ -474,7 +474,7 @@ void KonqPropsView::setBgColor( const TQColor & color )
 const TQColor & KonqPropsView::bgColor( TQWidget * widget ) const
 {
     if ( !m_bgColor.isValid() )
-        return widget->colorGroup().base();
+        return widget->tqcolorGroup().base();
     else
         return m_bgColor;
 }
@@ -501,7 +501,7 @@ void KonqPropsView::setTextColor( const TQColor & color )
 const TQColor & KonqPropsView::textColor( TQWidget * widget ) const
 {
     if ( !m_textColor.isValid() )
-        return widget->colorGroup().text();
+        return widget->tqcolorGroup().text();
     else
         return m_textColor;
 }
@@ -567,10 +567,10 @@ const TQStringList& KonqPropsView::previewSettings()
             for ( KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
             {
             TQString name = (*it)->desktopEntryName();
-            if ( ! m_dontPreview.contains(name) )
+            if ( ! m_dontPreview.tqcontains(name) )
                     d->previewsToShow->append( name );
             }
-            if ( ! m_dontPreview.contains( "audio/" ) )
+            if ( ! m_dontPreview.tqcontains( "audio/" ) )
             d->previewsToShow->append( "audio/" );
         }
     }

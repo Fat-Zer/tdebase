@@ -111,7 +111,7 @@ protected slots:
     void slotStickyToggled();
 
 protected:
-    void updateInsertionPosToStatusQuo();
+    void updateInsertionPosTotqStatusQuo();
     void updateStickyHighlightLayer();
     QuickButton* createButton(TQString url);
     virtual void paintEvent(TQPaintEvent* e);

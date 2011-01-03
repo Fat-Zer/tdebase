@@ -103,12 +103,12 @@ void CFontPreview::paintEvent(TQPaintEvent *)
     }
 }
 
-TQSize CFontPreview::sizeHint() const
+TQSize CFontPreview::tqsizeHint() const
 {
     return TQSize(132, 132);
 }
 
-TQSize CFontPreview::minimumSizeHint() const
+TQSize CFontPreview::tqminimumSizeHint() const
 {
     return TQSize(32, 32);
 }

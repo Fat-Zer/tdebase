@@ -76,7 +76,7 @@ protected slots:
     void initialize();
     void systemTrayWindowAdded( WId );
     void updateTrayWindows();
-    void layoutTray();
+    void tqlayoutTray();
     void paletteChange(const TQPalette & /* oldPalette */);
     void toggleExpanded();
     void settingsDialogFinished();
@@ -110,7 +110,7 @@ private:
     TQTimer* m_autoRetractTimer;
     bool m_autoRetract;
     int m_iconSize;
-    TQGridLayout* m_layout;
+    TQGridLayout* m_tqlayout;
 };
 
 class TrayEmbed : public QXEmbed

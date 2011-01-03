@@ -37,7 +37,7 @@
 #   March 6 2003      Substitute use of absolute fixed file URLs to images with help:common URLs
 #                     for the images and style sheet. By Luis Pedro Coelho
 #   March 9 2003      Add support for browsing by file. by Luis Pedro Coelho
-#   June  11 2003     Update the layout of the sides to the new infopageslayout.
+#   June  11 2003     Update the tqlayout of the sides to the new infopagestqlayout.
 #                     by Sven Leiber <s.leiber@web.de>
 #
 #-------------------------------------------------------
@@ -353,7 +353,7 @@ sub Tab2Space {
     my ($line) = @_;
     $line =~ s/^\t/        /;	# 8 leading spaces if initial tab
     while ($line =~ s/^([^\t]+)(\t)/$1 . ' ' x (8 - length($1) % 8)/e) {
-    }				# replace each tab with right num of spaces
+    }				# tqreplace each tab with right num of spaces
     return $line;
 }
 
@@ -797,7 +797,7 @@ sub InfoNode2HTML {
   while (<FH2>) {
     $LineCount++;
     last if /$NODEBORDER/;
-    #-- replace meta characters
+    #-- tqreplace meta characters
     #s/"`"([^"'"]*)"'"/"<span class=\"option\">"$1"</span>"/g;
     s/&/&amp;/g;
     s/>/&gt;/g;

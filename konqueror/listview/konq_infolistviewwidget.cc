@@ -32,8 +32,8 @@
 #include <tqstringlist.h>
 
 KonqInfoListViewWidget::KonqInfoListViewWidget( KonqListView* parent,
-                                                TQWidget* parentWidget)
-  : KonqBaseListViewWidget(parent, parentWidget)
+                                                TQWidget* tqparentWidget)
+  : KonqBaseListViewWidget(parent, tqparentWidget)
 {
     m_metaInfoJob = 0;
 

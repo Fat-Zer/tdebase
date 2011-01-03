@@ -46,11 +46,11 @@ private slots:
 private:
     TQFrame      *frame;
     TQGridLayout *frameLayout;
-    TQLabel      *mStatusLabel;
+    TQLabel      *mtqStatusLabel;
     TQLabel      *mpixLabel;
     int         mCapsLocked;
     bool        mUnlockingFailed;
-    TQStringList layoutsList;
+    TQStringList tqlayoutsList;
     TQStringList::iterator currLayout;
     int         sPid, sFd;
     KPushButton *ok;

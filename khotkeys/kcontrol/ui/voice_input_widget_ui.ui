@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>Form1</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -28,7 +28,7 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="minimumSize">
+            <property name="tqminimumSize">
                 <size>
                     <width>150</width>
                     <height>0</height>
@@ -95,7 +95,7 @@
     <slot access="protected" specifier="pure virtual">slotPlayPressed()</slot>
     <slot access="protected" specifier="pure virtual">slotStopPressed()</slot>
 </slots>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>

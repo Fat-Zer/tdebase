@@ -83,7 +83,7 @@ extern "C"
 KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
                        TQWidget *parent, const char *name)
     : KPanelApplet( configFile, type, actions, parent, name ),
-      m_layout(0),
+      m_tqlayout(0),
       m_desktopLayoutOwner( NULL ),
       m_shadowEngine(0),
       m_contextMenu(0),
@@ -363,7 +363,7 @@ void KMiniPager::updateDesktopLayout(int o, int x, int y)
     if( y == -1 )
         y = 0;
     if( m_desktopLayoutOwner == NULL )
-    { // must own manager selection before setting global desktop layout
+    { // must own manager selection before setting global desktop tqlayout
         int screen = DefaultScreen( qt_xdisplay());
         m_desktopLayoutOwner = new KSelectionOwner( TQString( "_NET_DESKTOP_LAYOUT_S%1" ).arg( screen ).latin1(),
             screen, this );
@@ -397,10 +397,10 @@ void KMiniPager::resizeEvent(TQResizeEvent*)
     if(deskNum == 0 || deskNum % rowNum != 0)
         deskCols += 1;
 
-    if (m_layout)
+    if (m_tqlayout)
     {
-        delete m_layout;
-        m_layout = 0;
+        delete m_tqlayout;
+        m_tqlayout = 0;
     }
 
     int nDX, nDY;
@@ -418,7 +418,7 @@ void KMiniPager::resizeEvent(TQResizeEvent*)
     }
 
     // 1 pixel spacing.
-    m_layout = new TQGridLayout(this, nDX, nDY, 0, 1);
+    m_tqlayout = new TQGridLayout(this, nDX, nDY, 0, 1);
 
     TQValueList<KMiniPagerButton*>::Iterator it = m_desktops.begin();
     TQValueList<KMiniPagerButton*>::Iterator itEnd = m_desktops.end();
@@ -427,14 +427,14 @@ void KMiniPager::resizeEvent(TQResizeEvent*)
     while( it != itEnd ) {
         c = 0;
         while( (it != itEnd) && (c < nDY) ) {
-            m_layout->addWidget( *it, r, c );
+            m_tqlayout->addWidget( *it, r, c );
             ++it;
             ++c;
         }
         ++r;
     }
 
-    m_layout->activate();
+    m_tqlayout->activate();
     updateGeometry();
 }
 
@@ -865,7 +865,7 @@ void KMiniPager::slotDesktopNamesChanged()
     {
         TQString name = m_kwin->desktopName(i);
         (*it)->setDesktopName(name);
-        (*it)->repaint();
+        (*it)->tqrepaint();
         TQToolTip::remove((*it));
         TQToolTip::add((*it), name);
     }

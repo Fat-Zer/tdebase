@@ -218,7 +218,7 @@ void CreateCommand::unexecute() {
     KBookmark bk = CurrentMgr::bookmarkAt(m_to);
     Q_ASSERT(!bk.isNull() && !bk.parentGroup().isNull());
 
-    ListView::self()->invalidate(bk.address());
+    ListView::self()->tqinvalidate(bk.address());
 
     bk.parentGroup().deleteBookmark(bk);
 }
@@ -643,13 +643,13 @@ KEBMacroCommand* CmdGen::insertMimeSource(
     bool modified = false;
     const char *format = 0;
     for (int i = 0; format = data->format(i), format; i++) {
-        // qt docs don't say if encodedData(blah) where
+        // qt docs don't say if tqencodedData(blah) where
         // blah is not a stored mimetype should return null
         // or not. so, we search. sucky...
         if (strcmp(format, "GALEON_BOOKMARK") == 0) { 
             modified = true;
             TQStoredDrag *mydrag = new TQStoredDrag("application/x-xbel");
-            mydrag->setEncodedData(data->encodedData("GALEON_BOOKMARK"));
+            mydrag->setEncodedData(data->tqencodedData("GALEON_BOOKMARK"));
             data = mydrag;
             break;
         } else if( strcmp(format, "application/x-xbel" )==0) {

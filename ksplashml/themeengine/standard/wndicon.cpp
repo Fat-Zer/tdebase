@@ -43,9 +43,9 @@ WndIcon::WndIcon(
   bool statusAtTop,
   bool iconsJumping )
     :TQHBox( 0, "wndSplash", WStyle_Customize|WX11BypassWM ),
-     mStatusText(text), mIconPos(icon_position), mXineramaScreen( xineramaScreen ), mPosX(0), mPosY(0), mGroundX(0), mGroundY(0),
+     mtqStatusText(text), mIconPos(icon_position), mXineramaScreen( xineramaScreen ), mPosX(0), mPosY(0), mGroundX(0), mGroundY(0),
      mVelocity(8.0), mInitialVelocity(8.0), mGravity(0.8),
-     mIconNum(icon_num), mStatusHeight(status_height), mIconSize(icon_std_width), mStatusAtTop(statusAtTop),
+     mIconNum(icon_num), mtqStatusHeight(status_height), mIconSize(icon_std_width), mtqStatusAtTop(statusAtTop),
      mStopJump(false), mIconJumping(iconsJumping)
 {
   setFrameStyle( TQFrame::NoFrame );
@@ -53,10 +53,10 @@ WndIcon::WndIcon(
   TQLabel *w = new TQLabel( this );
   w->setFixedSize( pix.width(), pix.height() );
   w->setPixmap( pix );
-  if(pix.mask())
+  if(pix.tqmask())
   {
-    setMask(*pix.mask());
-    w->setMask(*pix.mask());
+    setMask(*pix.tqmask());
+    w->setMask(*pix.tqmask());
   }
 
   resize( pix.width(), pix.height() );
@@ -77,14 +77,14 @@ WndIcon::WndIcon(
 
 void WndIcon::show()
 {
-  emit setStatusText( mStatusText );
+  emit setStatusText( mtqStatusText );
   TQHBox::show();
 }
 
 // Emit our EXTRA signal without becoming visible.
 void WndIcon::noshow()
 {
-  emit setStatusText( mStatusText );
+  emit setStatusText( mtqStatusText );
 }
 
 /*
@@ -102,15 +102,15 @@ TQPoint WndIcon::determinePosition()
   // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
   DW = srect.width();
   DH = srect.height();
-  SBH = mStatusHeight;
+  SBH = mtqStatusHeight;
   wid = mIconSize;
   x = mIconNum;
   y = 1;
 
-  if(mStatusAtTop)
-    topshift = mStatusHeight;
+  if(mtqStatusAtTop)
+    topshift = mtqStatusHeight;
   else
-    bottomshift = mStatusHeight;
+    bottomshift = mtqStatusHeight;
 
   // Different starting positions require different positioning
   // rules. The horizontal rules and the vertical rules can be

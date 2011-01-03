@@ -238,7 +238,7 @@ void KStylePage::saveIcons(bool curSettings) {
 	for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++) {
 		if (groups[i] == 0L)
 			break;
-		KGlobal::config()->setGroup(TQString::fromLatin1(groups[i]) + "Icons");
+		KGlobal::config()->setGroup(TQString::tqfromLatin1(groups[i]) + "Icons");
 		KGlobal::config()->writeEntry("Size", icontheme.defaultSize(i));
 	}
 	KGlobal::config()->sync();
@@ -542,7 +542,7 @@ void KStylePage::switchPrevStyle() {
 	// go ahead
 	setStyleRecursive( stylePreview, palette, style );
 	// this flickers, but reliably draws the widgets corretly.
-	stylePreview->resize( stylePreview->sizeHint() );
+	stylePreview->resize( stylePreview->tqsizeHint() );
 
 	delete appliedStyle;
 	appliedStyle = style;

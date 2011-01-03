@@ -225,7 +225,7 @@ void Window_trigger::window_added( WId window_P )
 
 void Window_trigger::window_removed( WId window_P )
     {
-    if( existing_windows.contains( window_P ))
+    if( existing_windows.tqcontains( window_P ))
         {
         bool matches = existing_windows[ window_P ];
         kdDebug( 1217 ) << "Window_trigger::w_removed() : " << matches << endl;
@@ -244,7 +244,7 @@ void Window_trigger::window_removed( WId window_P )
 void Window_trigger::active_window_changed( WId window_P )
     {
     bool was_match = false;
-    if( existing_windows.contains( last_active_window ))
+    if( existing_windows.tqcontains( last_active_window ))
         was_match = existing_windows[ last_active_window ];
     if( active && was_match && ( window_actions & WINDOW_DEACTIVATES ))
         {
@@ -253,7 +253,7 @@ void Window_trigger::active_window_changed( WId window_P )
         }
 /*    bool matches = windows()->match( Window_data( window_P ));
     existing_windows[ window_P ] = matches;*/
-    bool matches = existing_windows.contains( window_P )
+    bool matches = existing_windows.tqcontains( window_P )
         ? existing_windows[ window_P ] : false;
     if( active && matches && ( window_actions & WINDOW_ACTIVATES ))
         {
@@ -272,7 +272,7 @@ void Window_trigger::window_changed( WId window_P, unsigned int dirty_P )
         return;
     kdDebug( 1217 ) << "Window_trigger::w_changed()" << endl;
     bool was_match = false;
-    if( existing_windows.contains( window_P ))
+    if( existing_windows.tqcontains( window_P ))
         was_match = existing_windows[ window_P ];
     bool matches = windows()->match( Window_data( window_P ));
     existing_windows[ window_P ] = matches;

@@ -58,7 +58,7 @@ KBehaviourOptions::KBehaviourOptions(KConfig *config, TQString group, TQWidget *
     winPixmap->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken );
     winPixmap->setPixmap(TQPixmap(locate("data",
                                         "kcontrol/pics/onlyone.png")));
-    winPixmap->setFixedSize( winPixmap->sizeHint() );
+    winPixmap->setFixedSize( winPixmap->tqsizeHint() );
 
 
    // ----
@@ -103,7 +103,7 @@ KBehaviourOptions::KBehaviourOptions(KConfig *config, TQString group, TQWidget *
     TQHBox *hboxpreview = new TQHBox(vbox);
     TQWidget* spacer = new TQWidget( hboxpreview );
     spacer->setMinimumSize( 20, 0 );
-    spacer->setSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum );
+    spacer->tqsetSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum );
 
     cbShowPreviewsInTips = new TQCheckBox( i18n( "Show &previews in file tips" ), hboxpreview );
     connect(cbShowPreviewsInTips, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
@@ -146,7 +146,7 @@ KBehaviourOptions::KBehaviourOptions(KConfig *config, TQString group, TQWidget *
 						"while calling 'Move to Trash'."));
 
     TQButtonGroup *bg = new TQVButtonGroup( i18n("Ask Confirmation For"), this );
-    bg->layout()->setSpacing( KDialog::spacingHint() );
+    bg->tqlayout()->setSpacing( KDialog::spacingHint() );
     TQWhatsThis::add( bg, i18n("This option tells Konqueror whether to ask"
        " for a confirmation when you \"delete\" a file."
        " <ul><li><em>Move To Trash:</em> moves the file to your trash folder,"

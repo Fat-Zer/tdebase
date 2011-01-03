@@ -225,13 +225,13 @@ void SensorBrowser::answerReceived( int id, const TQString &answer )
           parent = lvi;
 
         // The child indicator might need to be updated.
-        repaintItem( parent );
+        tqrepaintItem( parent );
       } else
         parent = sibling;
     }
   }
 
-  repaintItem( (*it)->listViewItem() );
+  tqrepaintItem( (*it)->listViewItem() );
 }
 
 void SensorBrowser::viewportMouseMoveEvent( TQMouseEvent *e )

@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>DesktopBehaviorBase</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -58,7 +58,7 @@
                     </widget>
                     <widget class="QLayoutWidget" row="1" column="0">
                         <property name="name">
-                            <cstring>layout1</cstring>
+                            <cstring>tqlayout1</cstring>
                         </property>
                         <hbox>
                             <property name="name">
@@ -74,7 +74,7 @@
                                 <property name="sizeType">
                                     <enum>Fixed</enum>
                                 </property>
-                                <property name="sizeHint">
+                                <property name="tqsizeHint">
                                     <size>
                                         <width>20</width>
                                         <height>0</height>
@@ -268,7 +268,7 @@
                                 <property name="sizeType">
                                     <enum>Expanding</enum>
                                 </property>
-                                <property name="sizeHint">
+                                <property name="tqsizeHint">
                                     <size>
                                         <width>191</width>
                                         <height>80</height>
@@ -287,7 +287,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>16</height>
@@ -410,7 +410,7 @@
     <tabstop>enableMediaBox</tabstop>
     <tabstop>mediaListView</tabstop>
 </tabstops>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klistview.h</includehint>
     <includehint>klistview.h</includehint>

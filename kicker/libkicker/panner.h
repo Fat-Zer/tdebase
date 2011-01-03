@@ -39,7 +39,7 @@ public:
     Panner( TQWidget* parent, const char* name = 0 );
     ~Panner();
 
-    TQSize minimumSizeHint() const { return TQWidget::minimumSizeHint(); }
+    TQSize tqminimumSizeHint() const { return TQWidget::tqminimumSizeHint(); }
 
     Qt::Orientation orientation() const { return _orient; }
     virtual void setOrientation(Orientation orientation);
@@ -99,7 +99,7 @@ private:
     void updateScrollButtons();
 
     Orientation       _orient;
-    TQBoxLayout       *_layout;
+    TQBoxLayout       *_tqlayout;
     SimpleArrowButton *_luSB; // Left Scroll Button
     SimpleArrowButton *_rdSB; // Right Scroll Button
     TQTimer *_updateScrollButtonsTimer;

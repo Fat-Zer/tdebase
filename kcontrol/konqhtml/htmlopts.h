@@ -15,7 +15,7 @@
 
 
 //-----------------------------------------------------------------------------
-// The "Misc Options" Tab for the HTML view contains :
+// The "Misc Options" Tab for the HTML view tqcontains :
 
 // Change cursor over links
 // Underline links

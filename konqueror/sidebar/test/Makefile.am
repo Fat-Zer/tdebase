@@ -8,7 +8,7 @@ INCLUDES = -I$(srcdir)/.. $(all_includes)
 # these are the headers for your project
 noinst_HEADERS = konqsidebartest.h
 
-# let automoc handle all of the meta source files (moc)
+# let autotqmoc handle all of the meta source files (tqmoc)
 METASOURCES = AUTO
 
 kde_module_LTLIBRARIES = konq_sidebartest.la

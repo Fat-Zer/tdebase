@@ -328,7 +328,7 @@ void Condition_list_widget::edit_listview_item( Condition_list_item* item_P )
             conditions.insert( pos, new_condition );
             }
         item_P->widthChanged( 0 );
-        conditions_listview->repaintItem( item_P );
+        conditions_listview->tqrepaintItem( item_P );
         }
 #ifdef KHOTKEYS_DEBUG
     kdDebug( 1217 ) << "Condition_list_widget::edit_listview_item():" << endl;

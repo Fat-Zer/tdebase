@@ -128,7 +128,7 @@ OtherCertItem::OtherCertItem( TQListView *view, const TQString& sub, const TQStr
     m_module = module;
 KSSLX509Map cert(sub);
     setText(0, cert.getValue("O"));
-    setText(1, cert.getValue("CN").replace("\n", ", "));
+    setText(1, cert.getValue("CN").tqreplace("\n", ", "));
 
     if (_exp.date().year() > 3000 || _exp.date().year() < 1900)
        _exp.setDate(TQDate(3000,1,1));
@@ -151,7 +151,7 @@ YourCertItem::YourCertItem( TQListView *view, TQString pkcs, TQString pass, TQSt
 {
     m_module = module;
 KSSLX509Map cert(name);
-    TQString tmp = cert.getValue("CN").replace("\n", ", ");
+    TQString tmp = cert.getValue("CN").tqreplace("\n", ", ");
     setText(0, tmp);
     setText(1, cert.getValue("Email"));
     _pkcs = pkcs;
@@ -180,10 +180,10 @@ KSSLX509Map mcert(name);
 TQString tmp;
     setText(0, mcert.getValue("O"));
     tmp = mcert.getValue("OU");
-    tmp.replace("\n", ", ");
+    tmp.tqreplace("\n", ", ");
     setText(1, tmp);
     tmp = mcert.getValue("CN");
-    tmp.replace("\n", ", ");
+    tmp.tqreplace("\n", ", ");
     setText(2, tmp);
     _name = name;
     _cert = cert;
@@ -269,7 +269,7 @@ TQString whatstr;
   grid->addWidget(mUseTLS, 0, 0);
   whatstr = i18n("TLS is the newest revision of the SSL protocol."
                  " It integrates better with other protocols and has"
-                 " replaced SSL in protocols such as POP3 and SMTP.");
+                 " tqreplaced SSL in protocols such as POP3 and SMTP.");
   TQWhatsThis::add(mUseTLS, whatstr);
 
   mUseSSLv2 = new TQCheckBox(i18n("Enable SSLv&2"), tabSSL);
@@ -842,7 +842,7 @@ TQString whatstr;
   tabs->addTab(tabSSLCOpts, i18n("Validation Options"));
 #endif
 
-  tabs->resize(tabs->sizeHint());
+  tabs->resize(tabs->tqsizeHint());
   load();
 }
 
@@ -1214,7 +1214,7 @@ void KCryptoConfig::save()
   pcerts->sync();
   authcfg->sync();
 
-  // insure proper permissions -- contains sensitive data
+  // insure proper permissions -- tqcontains sensitive data
   TQString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
   if (!cfgName.isEmpty())
     ::chmod(TQFile::encodeName(cfgName), 0600);
@@ -1480,7 +1480,7 @@ TQString iss = TQString::null;
          TQPalette cspl;
          iss = cert->getIssuer();
          cspl = validFrom->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1488,7 +1488,7 @@ TQString iss = TQString::null;
          validFrom->setPalette(cspl);
 
          cspl = validUntil->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1498,7 +1498,7 @@ TQString iss = TQString::null;
          validFrom->setText(cert->getNotBefore());
          validUntil->setText(cert->getNotAfter());
          untilDate->setText(x ? KGlobal::locale()->formatDateTime(x->getExpires())
-                              : KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime(Qt::UTC)));
+                              : KGlobal::locale()->formatDateTime(TQDateTime::tqcurrentDateTime(Qt::UTC)));
          untilDate->setEnabled(x && !x->isPermanent());
          pHash->setText(cert->getMD5DigestText());
          delete cert;
@@ -1587,7 +1587,7 @@ TryImportPassAgain:
                                                             i;
              i = static_cast<YourCertItem *>(i->nextSibling())) {
       if (i->configName() == name) {
-         rc = KMessageBox::warningContinueCancel(this, i18n("A certificate with that name already exists. Are you sure that you wish to replace it?"), i18n("SSL"), i18n("Replace"));
+         rc = KMessageBox::warningContinueCancel(this, i18n("A certificate with that name already exists. Are you sure that you wish to tqreplace it?"), i18n("SSL"), i18n("Replace"));
          if (rc == KMessageBox::Cancel) {
             delete cert;
             return;
@@ -1718,7 +1718,7 @@ TQString iss;
    TQPalette cspl;
    KSSLCertificate *cert = pkcs->getCertificate();
    cspl = yValidFrom->palette();
-   if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+   if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1726,7 +1726,7 @@ TQString iss;
    yValidFrom->setPalette(cspl);
 
    cspl = yValidUntil->palette();
-   if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+   if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1758,7 +1758,7 @@ TQString iss;
          KSSLCertificate *cert = pkcs->getCertificate();
          iss = cert->getIssuer();
          cspl = yValidFrom->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1766,7 +1766,7 @@ TQString iss;
          yValidFrom->setPalette(cspl);
 
          cspl = yValidUntil->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1921,7 +1921,7 @@ void KCryptoConfig::slotCAImport() {
 		if (certStore) { KOSSL::self()->X509_STORE_free(certStore);
 				certStore = NULL; }
 
-		if (certtext.contains("-----BEGIN CERTIFICATE-----")) {
+		if (certtext.tqcontains("-----BEGIN CERTIFICATE-----")) {
 			qf.reset();
 			certtext = TQString::null;
 			while (!qf.atEnd()) {
@@ -1929,10 +1929,10 @@ void KCryptoConfig::slotCAImport() {
 				qf.readLine(xx, qf.size());
 				certtext += xx;
 			}
-			certtext = certtext.replace("-----BEGIN CERTIFICATE-----", TQString::null);
-			certtext = certtext.replace("-----END CERTIFICATE-----", TQString::null);
+			certtext = certtext.tqreplace("-----BEGIN CERTIFICATE-----", TQString::null);
+			certtext = certtext.tqreplace("-----END CERTIFICATE-----", TQString::null);
 			certtext = certtext.stripWhiteSpace();
-			certtext = certtext.replace("\n", TQString::null);
+			certtext = certtext.tqreplace("\n", TQString::null);
 		} else {
 			// Must [could?] be DER
 			qf.close();
@@ -2350,7 +2350,7 @@ SSL_CONST SSL_METHOD *meth;
       break;
     // Leak of sc*?
     TQString scn(sc->name);
-    if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
+    if (scn.tqcontains("ADH-") || scn.tqcontains("NULL-") || scn.tqcontains("DES-CBC3-SHA") || scn.tqcontains("FZA-")) {
       continue;
     }
     k = SSL_CIPHER_get_bits(sc, &j);
@@ -2378,7 +2378,7 @@ SSL_CONST SSL_METHOD *meth;
       break;
     // Leak of sc*?
     TQString scn(sc->name);
-    if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
+    if (scn.tqcontains("ADH-") || scn.tqcontains("NULL-") || scn.tqcontains("DES-CBC3-SHA") || scn.tqcontains("FZA-")) {
       continue;
     }
     k = SSL_CIPHER_get_bits(sc, &j);

@@ -31,7 +31,7 @@ class PrintPart : public KParts::ReadOnlyPart
 {
 	Q_OBJECT
 public:
-	PrintPart(TQWidget *parentWidget, const char *widgetName,
+	PrintPart(TQWidget *tqparentWidget, const char *widgetName,
 		  TQObject *parent, const char *name,
 		  const TQStringList & );
 	virtual ~PrintPart();

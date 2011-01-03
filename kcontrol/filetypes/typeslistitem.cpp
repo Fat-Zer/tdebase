@@ -69,7 +69,7 @@ void TypesListItem::initMeta( const TQString & major )
   KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
   config->setGroup("EmbedSettings");
   bool defaultValue = defaultEmbeddingSetting( major );
-  m_autoEmbed = config->readBoolEntry( TQString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
+  m_autoEmbed = config->readBoolEntry( TQString::tqfromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
 }
 
 bool TypesListItem::defaultEmbeddingSetting( const TQString& major )
@@ -230,7 +230,7 @@ bool TypesListItem::isDirty() const
     KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
     config->setGroup("EmbedSettings");
     bool defaultValue = defaultEmbeddingSetting(m_major);
-    unsigned int oldAutoEmbed = config->readBoolEntry( TQString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
+    unsigned int oldAutoEmbed = config->readBoolEntry( TQString::tqfromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
     if ( m_autoEmbed != oldAutoEmbed )
       return true;
   }
@@ -249,7 +249,7 @@ void TypesListItem::sync()
   {
     KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
     config->setGroup("EmbedSettings");
-    config->writeEntry( TQString::fromLatin1("embed-")+m_major, m_autoEmbed == 0 );
+    config->writeEntry( TQString::tqfromLatin1("embed-")+m_major, m_autoEmbed == 0 );
     return;
   }
 
@@ -286,9 +286,9 @@ void TypesListItem::sync()
     config.writeEntry("Hidden", false);
 
     if ( m_autoEmbed == 2 )
-      config.deleteEntry( TQString::fromLatin1("X-KDE-AutoEmbed"), false );
+      config.deleteEntry( TQString::tqfromLatin1("X-KDE-AutoEmbed"), false );
     else
-      config.writeEntry( TQString::fromLatin1("X-KDE-AutoEmbed"), m_autoEmbed == 0 );
+      config.writeEntry( TQString::tqfromLatin1("X-KDE-AutoEmbed"), m_autoEmbed == 0 );
 
     m_bNewItem = false;
   }
@@ -343,18 +343,18 @@ void TypesListItem::sync()
           continue; // Only those which were added in init()
 
       // Look in the correct list...
-      if ( (isApplication && ! m_appServices.contains( pService->desktopEntryPath() ))
-           || (!isApplication && !m_embedServices.contains( pService->desktopEntryPath() ))
+      if ( (isApplication && ! m_appServices.tqcontains( pService->desktopEntryPath() ))
+           || (!isApplication && !m_embedServices.tqcontains( pService->desktopEntryPath() ))
           ) {
         // The service was in m_appServices but has been removed
         // create a new .desktop file without this mimetype
 
         if( s_changedServices == NULL )
             deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
-        TQStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
+        TQStringList mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : pService->serviceTypes();
 
-        if ( mimeTypeList.contains( name() ) ) {
+        if ( mimeTypeList.tqcontains( name() ) ) {
           // The mimetype is listed explicitly in the .desktop files, so
           // just remove it and we're done
           KConfig *desktop;
@@ -370,7 +370,7 @@ void TypesListItem::sync()
           }
           desktop->setDesktopGroup();
 
-          mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
+          mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : desktop->readListEntry("MimeType", ';');
 
           // Remove entry and the number that might follow.
@@ -438,7 +438,7 @@ KMimeType::Ptr TypesListItem::findImplicitAssociation(const TQString &desktop)
 
     if( s_changedServices == NULL )
        deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
-    TQStringList mimeTypeList = s_changedServices->contains( s->desktopEntryPath())
+    TQStringList mimeTypeList = s_changedServices->tqcontains( s->desktopEntryPath())
        ? (*s_changedServices)[ s->desktopEntryPath() ] : s->serviceTypes();
 
     for(TQStringList::ConstIterator it = mimeTypeList.begin();
@@ -477,10 +477,10 @@ void TypesListItem::saveServices( KConfig & profile, TQStringList services, cons
     // merge new mimetype
     if( s_changedServices == NULL )
        deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
-    TQStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
+    TQStringList mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
        ? (*s_changedServices)[ pService->desktopEntryPath() ] : pService->serviceTypes();
 
-    if (!mimeTypeList.contains(name()) && !inheritsMimetype(m_mimetype, mimeTypeList))
+    if (!mimeTypeList.tqcontains(name()) && !inheritsMimetype(m_mimetype, mimeTypeList))
     {
       KConfig *desktop;
       if ( pService->type() == TQString("Service") )
@@ -495,7 +495,7 @@ void TypesListItem::saveServices( KConfig & profile, TQStringList services, cons
       }
 
       desktop->setDesktopGroup();
-      mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
+      mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : desktop->readListEntry("MimeType", ';');
       mimeTypeList.append(name());
 

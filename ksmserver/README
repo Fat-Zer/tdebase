@@ -38,7 +38,7 @@ usually restarted when the session is restored. To be *really* sure
 that this happens, even if the wm might have crashed during the
 previous session, ksmserver ensures that. The option specifies, which
 windowmanager shall be launched for sure. But again: if the stored
-session contains a window manager, the restored one will be used, not
+session tqcontains a window manager, the restored one will be used, not
 the specified one. As a special feature, ksmserver always starts the
 specified window manager first, which results in a much nicer startup
 sequence (less flashy).

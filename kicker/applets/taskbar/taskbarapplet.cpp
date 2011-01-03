@@ -56,11 +56,11 @@ TaskbarApplet::TaskbarApplet( const TQString& configFile, Type type, int actions
     : KPanelApplet( configFile, type, actions, parent, name )
 {
     setBackgroundOrigin( AncestorOrigin );
-    TQHBoxLayout* layout = new TQHBoxLayout( this );
+    TQHBoxLayout* tqlayout = new TQHBoxLayout( this );
     container = new TaskBarContainer( false, this );
     container->setBackgroundOrigin( AncestorOrigin );
     connect(container, TQT_SIGNAL(containerCountChanged()), this, TQT_SIGNAL(updateLayout()));
-    layout->addWidget( container, 1 );
+    tqlayout->addWidget( container, 1 );
     container->popupDirectionChange(popupDirection());
 }
 
@@ -82,7 +82,7 @@ int TaskbarApplet::widthForHeight(int h) const
     KPanelExtension::Position d = orientation() == Qt::Horizontal ?
                                   KPanelExtension::Top :
                                   KPanelExtension::Left;
-    return container->sizeHint(d, TQSize(200, h)).width();
+    return container->tqsizeHint(d, TQSize(200, h)).width();
 }
 
 int TaskbarApplet::heightForWidth(int w) const
@@ -97,7 +97,7 @@ int TaskbarApplet::heightForWidth(int w) const
     KPanelExtension::Position d = orientation() == Qt::Horizontal ?
                                   KPanelExtension::Top :
                                   KPanelExtension::Left;
-    return container->sizeHint(d, TQSize(w, 200)).height();
+    return container->tqsizeHint(d, TQSize(w, 200)).height();
 }
 
 void TaskbarApplet::preferences()

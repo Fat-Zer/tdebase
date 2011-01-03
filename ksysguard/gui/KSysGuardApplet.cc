@@ -110,7 +110,7 @@ int KSysGuardApplet::heightForWidth( int width ) const
 
 void KSysGuardApplet::resizeEvent( TQResizeEvent* )
 {
-  layout();
+  tqlayout();
 }
 
 void KSysGuardApplet::preferences()
@@ -154,7 +154,7 @@ void KSysGuardApplet::sensorDisplayModified( bool modified )
     save();
 }
 
-void KSysGuardApplet::layout()
+void KSysGuardApplet::tqlayout()
 {
   if ( orientation() == Horizontal ) {
     int h = height();
@@ -230,7 +230,7 @@ void KSysGuardApplet::dropEvent( TQDropEvent *e )
         if ( wdg ) {
           delete mDockList[ dock ];
           mDockList[ dock ] = wdg;
-          layout();
+          tqlayout();
 
           connect( wdg, TQT_SIGNAL( modified( bool ) ),
                    TQT_SLOT( sensorDisplayModified( bool ) ) );
@@ -242,7 +242,7 @@ void KSysGuardApplet::dropEvent( TQDropEvent *e )
           i18n( "The KSysGuard applet does not support displaying of "
                 "this type of sensor. Please choose another sensor." ) );
 
-        layout();
+        tqlayout();
       }
     }
 
@@ -487,7 +487,7 @@ void KSysGuardApplet::addEmptyDisplay( TQWidget **dock, uint pos )
   TQToolTip::add( dock[ pos ],
                  i18n( "Drag sensors from the KDE System Guard into this cell." ) );
 
-  layout();
+  tqlayout();
   if ( isVisible() )
     dock[ pos ]->show();
 }

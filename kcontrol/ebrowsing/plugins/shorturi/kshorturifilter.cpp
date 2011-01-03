@@ -43,7 +43,7 @@
 #define IPv6_PATTERN    "^\\[.*\\]"
 #define ENV_VAR_PATTERN "\\$[a-zA-Z_][a-zA-Z0-9_]*"
 
-#define QFL1(x) TQString::fromLatin1(x)
+#define QFL1(x) TQString::tqfromLatin1(x)
 
  /**
   * IMPORTANT:
@@ -66,7 +66,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
 
   // Match FQDN_PATTERN
   exp.setPattern( QFL1(FQDN_PATTERN) );
-  if ( cmd.contains( exp ) )
+  if ( cmd.tqcontains( exp ) )
   {
     if (verbose)
       kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
@@ -85,7 +85,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
 
   // Match IPv4 addresses
   exp.setPattern( QFL1(IPv4_PATTERN) );
-  if ( cmd.contains( exp ) )
+  if ( cmd.tqcontains( exp ) )
   {
     if (verbose)
       kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
@@ -95,7 +95,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
 
   // Match IPv6 addresses
   exp.setPattern( QFL1(IPv6_PATTERN) );
-  if ( cmd.contains( exp ) )
+  if ( cmd.tqcontains( exp ) )
   {
     if (verbose)
       kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
@@ -164,13 +164,13 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
 
   if (!isMalformed &&
       (url.protocol().length() == 4) &&
-      (url.protocol() != TQString::fromLatin1("http")) &&
+      (url.protocol() != TQString::tqfromLatin1("http")) &&
       (url.protocol()[0]=='h') &&
       (url.protocol()[1]==url.protocol()[2]) &&
       (url.protocol()[3]=='p'))
   {
      // Handle "encrypted" URLs like: h++p://www.kde.org
-     url.setProtocol( TQString::fromLatin1("http"));
+     url.setProtocol( TQString::tqfromLatin1("http"));
      setFilteredURI( data, url);
      setURIType( data, KURIFilterData::NET_PROTOCOL );
      return true;
@@ -210,11 +210,11 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   }
 
   // Detect UNC style (aka windows SMB) URLs
-  if ( cmd.startsWith( TQString::fromLatin1( "\\\\") ) )
+  if ( cmd.startsWith( TQString::tqfromLatin1( "\\\\") ) )
   {
     // make sure path is unix style
-    cmd.replace('\\', '/');
-    cmd.prepend( TQString::fromLatin1( "smb:" ) );
+    cmd.tqreplace('\\', '/');
+    cmd.prepend( TQString::tqfromLatin1( "smb:" ) );
     setFilteredURI( data, KURL( cmd ));
     setURIType( data, KURIFilterData::NET_PROTOCOL );
     return true;
@@ -262,7 +262,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
       slashPos = path.length();
     if( slashPos == 1 )   // ~/
     {
-      path.replace ( 0, 1, TQDir::homeDirPath() );
+      path.tqreplace ( 0, 1, TQDir::homeDirPath() );
     }
     else // ~username/
     {
@@ -270,7 +270,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
       struct passwd *dir = getpwnam(user.local8Bit().data());
       if( dir && strlen(dir->pw_dir) )
       {
-        path.replace (0, slashPos, TQString::fromLocal8Bit(dir->pw_dir));
+        path.tqreplace (0, slashPos, TQString::fromLocal8Bit(dir->pw_dir));
       }
       else
       {
@@ -293,7 +293,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
       const char* exp = getenv( path.mid( 1, r.matchedLength() - 1 ).local8Bit().data() );
       if(exp)
       {
-        path.replace( 0, r.matchedLength(), TQString::fromLocal8Bit(exp) );
+        path.tqreplace( 0, r.matchedLength(), TQString::fromLocal8Bit(exp) );
         expanded = true;
       }
     }
@@ -379,7 +379,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
     u.setRef(ref);
     u.setQuery(query);
 
-    if (kapp && !kapp->authorizeURLAction( TQString::fromLatin1("open"), KURL(), u))
+    if (kapp && !kapp->authorizeURLAction( TQString::tqfromLatin1("open"), KURL(), u))
     {
       // No authorisation, we pretend it's a file will get
       // an access denied error later on.
@@ -453,7 +453,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // Okay this is the code that allows users to supply custom matches for
   // specific URLs using Qt's regexp class. This is hard-coded for now.
   // TODO: Make configurable at some point...
-  if ( !cmd.contains( ' ' ) )
+  if ( !cmd.tqcontains( ' ' ) )
   {
     TQValueList<URLHint>::ConstIterator it;
     for( it = m_urlHints.begin(); it != m_urlHints.end(); ++it )
@@ -492,7 +492,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
     u.setPath(path);
     u.setRef(ref);
 
-    if (kapp && !kapp->authorizeURLAction( TQString::fromLatin1("open"), KURL(), u))
+    if (kapp && !kapp->authorizeURLAction( TQString::tqfromLatin1("open"), KURL(), u))
     {
       // No authorisation, we pretend it exists and will get
       // an access denied error later on.

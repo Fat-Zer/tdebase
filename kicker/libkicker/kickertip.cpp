@@ -129,7 +129,7 @@ void KickerTip::display()
 
     // Declare interchange object and define defaults.
     Data data;
-    data.maskEffect = Dissolve;
+    data.tqmaskEffect = Dissolve;
     data.duration = 2000;
     data.direction = KPanelApplet::Up;
     data.mimeFactory = m_mimeFactory;
@@ -165,7 +165,7 @@ void KickerTip::display()
         return;
     }
 
-    m_maskEffect = isVisible() ? Plain : data.maskEffect;
+    m_tqmaskEffect = isVisible() ? Plain : data.tqmaskEffect;
     m_dissolveSize = 24;
     m_dissolveDelta = -1;
 
@@ -281,34 +281,34 @@ static void drawRoundRect(TQPainter &p, const TQRect &r)
 
 void KickerTip::plainMask()
 {
-    TQPainter maskPainter(&m_mask);
+    TQPainter tqmaskPainter(&m_tqmask);
 
-    m_mask.fill(Qt::black);
+    m_tqmask.fill(Qt::black);
 
-    maskPainter.setBrush(Qt::white);
-    maskPainter.setPen(Qt::NoPen);
-    //maskPainter.drawRoundRect(m_mask.rect(), 1600 / m_mask.rect().width(), 1600 / m_mask.rect().height());
-    drawRoundRect(maskPainter, m_mask.rect());
-    setMask(m_mask);
+    tqmaskPainter.setBrush(Qt::white);
+    tqmaskPainter.setPen(Qt::NoPen);
+    //tqmaskPainter.drawRoundRect(m_tqmask.rect(), 1600 / m_tqmask.rect().width(), 1600 / m_tqmask.rect().height());
+    drawRoundRect(tqmaskPainter, m_tqmask.rect());
+    setMask(m_tqmask);
     m_frameTimer.stop();
 }
 
 void KickerTip::dissolveMask()
 {
-    TQPainter maskPainter(&m_mask);
+    TQPainter tqmaskPainter(&m_tqmask);
 
-    m_mask.fill(Qt::black);
+    m_tqmask.fill(Qt::black);
 
-    maskPainter.setBrush(Qt::white);
-    maskPainter.setPen(Qt::NoPen);
-    //maskPainter.drawRoundRect(m_mask.rect(), 1600 / m_mask.rect().width(), 1600 / m_mask.rect().height());
-    drawRoundRect(maskPainter, m_mask.rect());
+    tqmaskPainter.setBrush(Qt::white);
+    tqmaskPainter.setPen(Qt::NoPen);
+    //tqmaskPainter.drawRoundRect(m_tqmask.rect(), 1600 / m_tqmask.rect().width(), 1600 / m_tqmask.rect().height());
+    drawRoundRect(tqmaskPainter, m_tqmask.rect());
 
     m_dissolveSize += m_dissolveDelta;
 
     if (m_dissolveSize > 0)
     {
-        maskPainter.setRasterOp(Qt::EraseROP);
+        tqmaskPainter.setRasterOp(Qt::EraseROP);
 
         int x, y, s;
         const int size = 16;
@@ -323,7 +323,7 @@ void KickerTip::dissolveMask()
                 {
                     break;
                 }
-                maskPainter.drawEllipse(x - s / 2, y - s / 2, s, s);
+                tqmaskPainter.drawEllipse(x - s / 2, y - s / 2, s, s);
             }
         }
     }
@@ -333,7 +333,7 @@ void KickerTip::dissolveMask()
         m_dissolveDelta = 1;
     }
 
-    setMask(m_mask);
+    setMask(m_tqmask);
 }
 
 void KickerTip::displayInternal()
@@ -361,11 +361,11 @@ void KickerTip::displayInternal()
     int width = textX + textRect.width() + margin;
     int textY = (height - textRect.height()) / 2;
 
-    // resize pixmap, mask and widget
+    // resize pixmap, tqmask and widget
     bool firstTime = m_dissolveSize == 24;
     if (firstTime)
     {
-        m_mask.resize(width, height);
+        m_tqmask.resize(width, height);
         m_pixmap.resize(width, height);
         resize(width, height);
         if (isVisible())
@@ -378,8 +378,8 @@ void KickerTip::displayInternal()
         }
     }
 
-    // create and set transparency mask
-    switch(m_maskEffect)
+    // create and set transparency tqmask
+    switch(m_tqmaskEffect)
     {
         case Plain:
             plainMask();
@@ -392,8 +392,8 @@ void KickerTip::displayInternal()
 
     // draw background
     TQPainter bufferPainter(&m_pixmap);
-    bufferPainter.setPen(colorGroup().foreground());
-    bufferPainter.setBrush(colorGroup().background());
+    bufferPainter.setPen(tqcolorGroup().foreground());
+    bufferPainter.setBrush(tqcolorGroup().background());
     //bufferPainter.drawRoundRect(0, 0, width, height, 1600 / width, 1600 / height);
     drawRoundRect(bufferPainter, TQRect(0, 0, width, height));
 
@@ -409,13 +409,13 @@ void KickerTip::displayInternal()
     if (KickerSettings::mouseOversShowText())
     {
         // draw text shadow
-        TQColorGroup cg = colorGroup();
+        TQColorGroup cg = tqcolorGroup();
         cg.setColor(TQColorGroup::Text, cg.background().dark(115));
         int shadowOffset = TQApplication::reverseLayout() ? -1 : 1;
         m_richText->draw(&bufferPainter, textX + shadowOffset, textY + 1, TQRect(), cg);
 
         // draw text
-        cg = colorGroup();
+        cg = tqcolorGroup();
         m_richText->draw(&bufferPainter, textX, textY, rect(), cg);
     }
 }
@@ -458,7 +458,7 @@ void KickerTip::tipperDestroyed(TQObject* o)
 void KickerTip::internalUpdate()
 {
     m_dirty = true;
-    repaint(false);
+    tqrepaint(false);
 }
 
 void KickerTip::enableTipping(bool tip)
@@ -519,7 +519,7 @@ bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
             }
 
             if (!mouseGrabber() &&
-                !qApp->activePopupWidget() &&
+                !tqApp->activePopupWidget() &&
                 !isTippingFor(widget))
             {
                 TQToolTip::setGloballyEnabled(false);

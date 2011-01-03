@@ -439,7 +439,7 @@ static bool hasStr(XftFont *font, TQString &str)
                  ch;
 
     for(ch=0; ch<slen; ++ch)
-        if(!FcCharSetHasChar(font->charset, str[ch].unicode()))
+        if(!FcCharSetHasChar(font->charset, str[ch].tqunicode()))
             return false;
     return true;
 }

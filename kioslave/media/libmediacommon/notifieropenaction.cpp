@@ -40,6 +40,6 @@ void NotifierOpenAction::execute(KFileItem &medium)
 
 bool NotifierOpenAction::supportsMimetype( const TQString &mimetype ) const
 {
-	return !mimetype.contains( "blank" ) && !mimetype.contains( "encrypted" );
+	return !mimetype.tqcontains( "blank" ) && !mimetype.tqcontains( "encrypted" );
 }
 

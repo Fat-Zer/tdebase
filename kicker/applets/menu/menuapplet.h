@@ -51,11 +51,11 @@ class MenuEmbed;
  *
  * @description All status change, such as when an window is activated,
  * a new window popped up, etc, is received via @ref KWin::WindowInfo and @ref
- * NETWinInfo. Status changes for X selections are done via KSelectionWatcher.
+ * NETWinInfo. tqStatus changes for X selections are done via KSelectionWatcher.
  *
  * How it works in broad terms:  KickerMenuApplet gets notified as soon a window
  * changes(a new pops up etc.) and accordingly updates the list @ref menus,
- * which contains all known menus. When a new window gains focus, it looks up the
+ * which tqcontains all known menus. When a new window gains focus, it looks up the
  * correct MenuEmbed in @ref menus, and then switches to that one.
  *
  * The documentation is a bit rusty -- read it with a critical eye.

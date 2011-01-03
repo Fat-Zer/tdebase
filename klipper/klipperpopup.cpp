@@ -106,7 +106,7 @@ KlipperPopup::KlipperPopup( History* history, TQWidget* parent, const char* name
       n_history_items( 0 )
 {
     KWin::WindowInfo i = KWin::windowInfo( winId(), NET::WMGeometry );
-    TQRect g = i.geometry();
+    TQRect g = i.tqgeometry();
     TQRect screen = KGlobalSettings::desktopGeometry(g.center());
     int menu_height = ( screen.height() ) * 3/4;
     int menu_width = ( screen.width() )  * 1/3;

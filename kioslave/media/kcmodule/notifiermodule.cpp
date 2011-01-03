@@ -34,10 +34,10 @@
 NotifierModule::NotifierModule(TQWidget *parent, const char *name)
 	: KCModule(parent, name)
 {
-	TQBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
+	TQBoxLayout *tqlayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 	
 	m_view = new NotifierModuleView( this );
-	layout->addWidget( m_view );
+	tqlayout->addWidget( m_view );
 	
 	m_view->addButton->setGuiItem( KStdGuiItem::add() );
 	m_view->editButton->setGuiItem( KStdGuiItem::properties() );
@@ -212,7 +212,7 @@ void NotifierModule::slotToggleAuto()
 
 	int index = m_view->actionsList->index( action_item );
 	
-	if ( action->autoMimetypes().contains( m_mimetype ) )
+	if ( action->autoMimetypes().tqcontains( m_mimetype ) )
 	{
 		m_settings.resetAutoAction( m_mimetype );
 	}

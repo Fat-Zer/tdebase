@@ -10,27 +10,27 @@ class XkbRules
 {
 public:
 
-  XkbRules(bool layoutsOnly=false);
+  XkbRules(bool tqlayoutsOnly=false);
 
   const TQDict<char> &models() const { return m_models; };
-  const TQDict<char> &layouts() const { return m_layouts; };
+  const TQDict<char> &tqlayouts() const { return m_tqlayouts; };
   const TQDict<char> &options() const { return m_options; };
   
-  TQStringList getAvailableVariants(const TQString& layout);
-  unsigned int getDefaultGroup(const TQString& layout, const TQString& includeGroup);
+  TQStringList getAvailableVariants(const TQString& tqlayout);
+  unsigned int getDefaultGroup(const TQString& tqlayout, const TQString& includeGroup);
 
-  bool isSingleGroup(const TQString& layout);
+  bool isSingleGroup(const TQString& tqlayout);
 
 protected:
 
-  void loadRules(TQString filename, bool layoutsOnly=false);
+  void loadRules(TQString filename, bool tqlayoutsOnly=false);
   void loadGroups(TQString filename);
   void loadOldLayouts(TQString filename);
 
 private:
 
   TQDict<char> m_models;
-  TQDict<char> m_layouts;
+  TQDict<char> m_tqlayouts;
   TQDict<char> m_options;
   TQMap<TQString, unsigned int> m_initialGroups;
   TQDict<TQStringList> m_varLists;

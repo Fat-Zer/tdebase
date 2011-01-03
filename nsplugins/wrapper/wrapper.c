@@ -439,11 +439,11 @@ NPError MyNPN_DestroyStream(NPP instance, NPStream* stream,
 }
 
 static
-void MyNPN_Status(NPP instance, const char* message)
+void MyNPN_tqStatus(NPP instance, const char* message)
 {	
-	DEB(ef, "-> NPN_Status( %x, %s )\n", instance, message);	
+	DEB(ef, "-> NPN_tqStatus( %x, %s )\n", instance, message);	
 	gNetscapeFuncs.status( instance, message );		
-	DEB(ef, "<- NPN_Status\n");	
+	DEB(ef, "<- NPN_tqStatus\n");	
 }
 
 static
@@ -544,7 +544,7 @@ static
 void MyNPN_InvalidateRect(NPP instance, NPRect *invalidRect)
 {
 	DEB(ef, "-> NPN_InvalidateRect( %x, 0x%x )\n", instance, invalidRect);	
-	gNetscapeFuncs.invalidaterect( instance, invalidRect );		
+	gNetscapeFuncs.tqinvalidaterect( instance, invalidRect );		
 	DEB(ef, "<- NPN_InvalidateRect\n");	
 }
 
@@ -552,7 +552,7 @@ static
 void MyNPN_InvalidateRegion(NPP instance, NPRegion invalidRegion)
 {
 	DEB(ef, "-> NPN_InvalidateRegion( %x, 0x%x )\n", instance, invalidRegion);	
-	gNetscapeFuncs.invalidateregion( instance, invalidRegion );		
+	gNetscapeFuncs.tqinvalidateregion( instance, invalidRegion );		
 	DEB(ef, "<- NPN_InvalidateRegion\n");	
 }
 
@@ -605,8 +605,8 @@ NPError NP_Initialize(NPNetscapeFuncs* nsTable, NPPluginFuncs* pluginFuncs)
 	DEB(ef, "nsTable->posturlnotify = 0x%x\n", nsTable->posturlnotify);
 	DEB(ef, "nsTable->getvalue = 0x%x\n", nsTable->getvalue);
 	DEB(ef, "nsTable->setvalue = 0x%x\n", nsTable->setvalue);
-	DEB(ef, "nsTable->invalidaterect = 0x%x\n", nsTable->invalidaterect);
-	DEB(ef, "nsTable->invalidateregion = 0x%x\n", nsTable->invalidateregion);
+	DEB(ef, "nsTable->tqinvalidaterect = 0x%x\n", nsTable->tqinvalidaterect);
+	DEB(ef, "nsTable->tqinvalidateregion = 0x%x\n", nsTable->tqinvalidateregion);
 	DEB(ef, "nsTable->forceredraw = 0x%x\n", nsTable->forceredraw);
 
 	DEB(ef, "pluginFuncs->size = %d\n", pluginFuncs->size);
@@ -647,7 +647,7 @@ NPError NP_Initialize(NPNetscapeFuncs* nsTable, NPPluginFuncs* pluginFuncs)
 	gExtNetscapeFuncs.newstream = MyNPN_NewStream;
 	gExtNetscapeFuncs.write = MyNPN_Write;
 	gExtNetscapeFuncs.destroystream = MyNPN_DestroyStream;
-	gExtNetscapeFuncs.status = MyNPN_Status;
+	gExtNetscapeFuncs.status = MyNPN_tqStatus;
   	gExtNetscapeFuncs.uagent = MyNPN_UserAgent;
 	/*gExtNetscapeFuncs.memalloc = MyNPN_MemAlloc;
 	gExtNetscapeFuncs.memfree = MyNPN_MemFree;
@@ -659,8 +659,8 @@ NPError NP_Initialize(NPNetscapeFuncs* nsTable, NPPluginFuncs* pluginFuncs)
 	gExtNetscapeFuncs.posturlnotify = MyNPN_PostURLNotify;
 	gExtNetscapeFuncs.getvalue = MyNPN_GetValue;
 	gExtNetscapeFuncs.setvalue = MyNPN_SetValue;
-	gExtNetscapeFuncs.invalidaterect = MyNPN_InvalidateRect;
-	gExtNetscapeFuncs.invalidateregion = MyNPN_InvalidateRegion;
+	gExtNetscapeFuncs.tqinvalidaterect = MyNPN_InvalidateRect;
+	gExtNetscapeFuncs.tqinvalidateregion = MyNPN_InvalidateRegion;
 	gExtNetscapeFuncs.forceredraw = MyNPN_ForceRedraw;	
 	
 	gPluginFuncs.size = sizeof( gPluginFuncs );
@@ -709,8 +709,8 @@ NPError NP_Initialize(NPNetscapeFuncs* nsTable, NPPluginFuncs* pluginFuncs)
 		DEB(ef, "nsTable->posturlnotify = 0x%x\n", gExtNetscapeFuncs.posturlnotify);
 		DEB(ef, "nsTable->getvalue = 0x%x\n", gExtNetscapeFuncs.getvalue);
 		DEB(ef, "nsTable->setvalue = 0x%x\n", gExtNetscapeFuncs.setvalue);
-		DEB(ef, "nsTable->invalidaterect = 0x%x\n", gExtNetscapeFuncs.invalidaterect);
-		DEB(ef, "nsTable->invalidateregion = 0x%x\n", gExtNetscapeFuncs.invalidateregion);
+		DEB(ef, "nsTable->tqinvalidaterect = 0x%x\n", gExtNetscapeFuncs.tqinvalidaterect);
+		DEB(ef, "nsTable->tqinvalidateregion = 0x%x\n", gExtNetscapeFuncs.tqinvalidateregion);
 		DEB(ef, "nsTable->forceredraw = 0x%x\n", gExtNetscapeFuncs.forceredraw);
 
 		DEB(ef, "pluginFuncs->size = %d\n", pluginFuncs->size);

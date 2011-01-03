@@ -74,13 +74,13 @@ void ImportsView::updateList()
       if (e!=0)
       {
          s=buf;
-         if ((s.contains(" nfs ")) || (s.contains(" smbfs ")))
+         if ((s.tqcontains(" nfs ")) || (s.tqcontains(" smbfs ")))
          {
             strSource=s.left(s.find(" on /"));
             strMount=s.mid(s.find(" on /")+4,s.length());
-            if ((s.contains(" nfs ")) || (s.contains("/remote on ")))
+            if ((s.tqcontains(" nfs ")) || (s.tqcontains("/remote on ")))
                strType="NFS";
-            else if (s.contains(" smbfs "))
+            else if (s.tqcontains(" smbfs "))
                strType="SMB";
             int pos(strMount.find(" type "));
             if (pos==-1) pos=strMount.find(" read/");

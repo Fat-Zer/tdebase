@@ -67,12 +67,12 @@ PanelExtension::PanelExtension(const TQString& configFile, TQWidget *parent, con
     setAcceptDrops(!Kicker::the()->isImmutable());
     setCustomMenu(opMenu());
 
-    TQVBoxLayout* _layout = new TQVBoxLayout(this);
+    TQVBoxLayout* _tqlayout = new TQVBoxLayout(this);
 
     // container area
     _containerArea = new ContainerArea( config(), this, opMenu() );
     connect(_containerArea, TQT_SIGNAL(maintainFocus(bool)), this, TQT_SIGNAL(maintainFocus(bool)));
-    _layout->addWidget(_containerArea);
+    _tqlayout->addWidget(_containerArea);
 
     _containerArea->viewport()->installEventFilter(this);
     _containerArea->configure();
@@ -100,7 +100,7 @@ void PanelExtension::populateContainerArea()
 {
     _containerArea->show();
 
-    if (ExtensionManager::the()->isMainPanel(topLevelWidget()))
+    if (ExtensionManager::the()->isMainPanel(tqtopLevelWidget()))
     {
         setObjId("Panel");
         _containerArea->initialize(true);
@@ -139,7 +139,7 @@ void PanelExtension::positionChange(Position p)
     _containerArea->setPosition(p);
 }
 
-TQSize PanelExtension::sizeHint(Position p, TQSize maxSize) const
+TQSize PanelExtension::tqsizeHint(Position p, TQSize maxSize) const
 {
     TQSize size;
 

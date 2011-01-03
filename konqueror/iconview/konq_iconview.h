@@ -51,7 +51,7 @@ public:
 
   enum SortCriterion { NameCaseSensitive, NameCaseInsensitive, Size, Type, Date };
 
-  KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode );
+  KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, const char *name, const TQString& mode );
   virtual ~KonqKfmIconView();
 
   virtual const KFileItem * currentItem();

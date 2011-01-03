@@ -70,7 +70,7 @@ private slots:
     void embedded( SwallowApp * );
 
 private:
-    void layoutApps();
+    void tqlayoutApps();
     SwallowCommandList* readConfig();
     void createApps( SwallowCommandList * );
 
@@ -81,7 +81,7 @@ private:
     static KWinModule *wModule;
 
     SwallowCommandList * m_swcList;
-    TQBoxLayout *m_layout;
+    TQBoxLayout *m_tqlayout;
 
 };
 

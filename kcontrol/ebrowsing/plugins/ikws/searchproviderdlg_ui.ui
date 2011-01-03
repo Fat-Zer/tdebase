@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>SearchProviderDlgUI</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -127,7 +127,7 @@ Recommended is \{@}, since it removes all query variables (name=value) from the 
     <tabstop>leShortcut</tabstop>
     <tabstop>cbCharset</tabstop>
 </tabstops>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klineedit.h</includehint>
     <includehint>klineedit.h</includehint>

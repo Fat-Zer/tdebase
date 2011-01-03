@@ -51,7 +51,7 @@ class NaughtyApplet : public KPanelApplet
 
   signals:
 
-    void layoutChanged();
+    void tqlayoutChanged();
 
   protected slots:
 

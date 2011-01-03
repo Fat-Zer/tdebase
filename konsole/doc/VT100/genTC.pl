@@ -147,7 +147,7 @@ sub txt2Html
   return $_;
 }
 
-sub layout 
+sub tqlayout 
 { my ($Name, $Head, $Code, $Doku, $Dflt, $Attr) = @_;
   if ($html) 
   {
@@ -234,7 +234,7 @@ print "</table>\n";
 print "</h2>\n";
 }
 
-sub layout2
+sub tqlayout2
 { my ($Name, $Head, $Code) = @_;
   my @Part = split('\|',$Code);
   my $Type = $#Part > -1 ? $Part[0] : "";
@@ -261,7 +261,7 @@ sub layout2
   print "<td $color1>$Head\n";
 }
 
-sub layoutTable
+sub tqlayoutTable
 {
   my ($Head, $t, $Include) = @_;
   my $p;
@@ -276,7 +276,7 @@ foreach $p (sort keys %$t)
     my $attr = exists $t->{"$name.sect"}?$t->{"$name.sect"}:"";
     if ($attr =~ /$Include/)
     {
-    layout2( $name, $head, exists $t->{"$name.code"}?$t->{"$name.code"}:"");
+    tqlayout2( $name, $head, exists $t->{"$name.code"}?$t->{"$name.code"}:"");
     }
   }
 }
@@ -311,7 +311,7 @@ sub sortTest
       print "<tr><td colspan=5><h3>$Fld[0] codes</h3>\n";
     }
     $curr = $Fld[0];
-    layout2($name,$t->{"$name.head"},$p);
+    tqlayout2($name,$t->{"$name.head"},$p);
   }
   print "</table>\n";
 }
@@ -346,29 +346,29 @@ sortTest($t);
 secthead("Host to Terminal (Instructions by Group)");
 htmlsect("Operations");
 print "<table>\n";
-layoutTable("Commands (Character Display Operation)",$t,"Command\.Display");
-layoutTable("Commands (Rendition related status)",$t,"Command\.RenderMode");
-layoutTable("Commands (Cursor)",$t,"Command\.Cursor");
-layoutTable("Commands (Cursor related status)",$t,"Command\.CursMode");
-layoutTable("Commands (Edit)",$t,"Command\.Erase|Command\.Insert|Command.\Delete");
-layoutTable("Commands (Miscellaneous)",$t,"Command[^.]|Command\$");
-layoutTable("Commands (General mode setting)",$t,"Command\.SetMode");
-layoutTable("Commands (Miscellaneous status)",$t,"Command\.Mode");
-layoutTable("Commands (VT52)",$t,"Command\.VT52");
-layoutTable("Commands (Not implemented)",$t,"Command\.NoImp");
-layoutTable("Commands (Ignored)",$t,"Command\.Ignored");
-layoutTable("Commands (Requests)",$t,"Command\.Request");
+tqlayoutTable("Commands (Character Display Operation)",$t,"Command\.Display");
+tqlayoutTable("Commands (Rendition related status)",$t,"Command\.RenderMode");
+tqlayoutTable("Commands (Cursor)",$t,"Command\.Cursor");
+tqlayoutTable("Commands (Cursor related status)",$t,"Command\.CursMode");
+tqlayoutTable("Commands (Edit)",$t,"Command\.Erase|Command\.Insert|Command.\Delete");
+tqlayoutTable("Commands (Miscellaneous)",$t,"Command[^.]|Command\$");
+tqlayoutTable("Commands (General mode setting)",$t,"Command\.SetMode");
+tqlayoutTable("Commands (Miscellaneous status)",$t,"Command\.Mode");
+tqlayoutTable("Commands (VT52)",$t,"Command\.VT52");
+tqlayoutTable("Commands (Not implemented)",$t,"Command\.NoImp");
+tqlayoutTable("Commands (Ignored)",$t,"Command\.Ignored");
+tqlayoutTable("Commands (Requests)",$t,"Command\.Request");
 print "</table>\n";
 # -------------------------------
 secthead("Terminal to Host");
 print "<table>\n";
-layoutTable("Replies",$t,"Reply");
-layoutTable("Events",$t,"Event");
+tqlayoutTable("Replies",$t,"Reply");
+tqlayoutTable("Events",$t,"Event");
 # -------------------------------
 print "</table>\n";
 secthead("Modes");
 print "<table>\n";
-layoutTable("Modes",$t,"Mode");
+tqlayoutTable("Modes",$t,"Mode");
 #print "<h3>Other Codes</h3>\n";
 print "</table>\n";
 # -------------------------------
@@ -385,7 +385,7 @@ foreach $p (sort keys %$t)
 #   print "</table>\n" if ($table);
     my $name = $Fld[0];
     my $head = $t->{$p};
-    layout( $name, $head,
+    tqlayout( $name, $head,
             exists $t->{"$name.code"}?$t->{"$name.code"}:"", 
             exists $t->{"$name.text"}?$t->{"$name.text"}:"",
             exists $t->{"$name.dflt"}?$t->{"$name.dflt"}:"",

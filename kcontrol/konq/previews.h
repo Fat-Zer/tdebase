@@ -24,7 +24,7 @@
 
 /*
 
-The "Previews" Tab contains :
+The "Previews" Tab tqcontains :
 
 List of protocols that support listing, with a checkbox for each
 Configuration of the maximum image size

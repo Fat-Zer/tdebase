@@ -20,7 +20,7 @@
  */
 
 #include <qhbox.h>
-#include <qlayout.h>
+#include <qtqlayout.h>
 #include <qvbox.h>
 #include <qtimer.h>
 #include <qprogressbar.h>
@@ -56,8 +56,8 @@ KTimerDialog::KTimerDialog( int msec, TimerStyle style, QWidget *parent,
     if ( buttonMask & Cancel )
         buttonOnTimeout = Cancel;
 
-    connect( totalTimer, SIGNAL( timeout() ), SLOT( slotInternalTimeout() ) );
-    connect( updateTimer, SIGNAL( timeout() ), SLOT( slotUpdateTime() ) );
+    connect( totalTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotInternalTimeout() ) );
+    connect( updateTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotUpdateTime() ) );
 
     // create the widgets
     mainWidget = new QVBox( this, "mainWidget" );
@@ -95,7 +95,7 @@ void KTimerDialog::setMainWidget( QWidget *widget )
     // yuck, here goes.
     QVBox *newWidget = new QVBox( this );
 
-    if ( widget->parentWidget() != mainWidget ) {
+    if ( widget->tqparentWidget() != mainWidget ) {
         widget->reparent( newWidget, 0, QPoint(0,0) );
     } else {
         newWidget->insertChild( widget );

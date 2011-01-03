@@ -1,7 +1,7 @@
-This module contains a combination of configuration items which at first
+This module tqcontains a combination of configuration items which at first
 sight seem to be a rather weird combination.
 
-It contains configuration for:
+It tqcontains configuration for:
 * KDesktop
 * Konqueror 
 * Number of virtual desktops. (Handled by KWin via NETWM)

@@ -60,49 +60,49 @@ PropertiesPage::PropertiesPage(TQWidget* parent, const TQString &_id)
 	options[key] = value;
       }
 
-    if (!options.contains("ro"))
+    if (!options.tqcontains("ro"))
       option_ro->hide();
     else
       option_ro->setChecked(options["ro"] == "true");
     connect( option_ro, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("quiet"))
+    if (!options.tqcontains("quiet"))
       option_quiet->hide();
     else
       option_quiet->setChecked(options["quiet"] == "true");
     connect( option_quiet, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("sync"))
+    if (!options.tqcontains("sync"))
       option_sync->hide();
     else
       option_sync->setChecked(options["sync"] == "true");
     connect( option_sync, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("atime"))
+    if (!options.tqcontains("atime"))
       option_atime->hide();
     else
       option_atime->setChecked(options["atime"] == "true");
     connect( option_atime, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("flush"))
+    if (!options.tqcontains("flush"))
       option_flush->hide();
     else
       option_flush->setChecked(options["flush"] == "true");
     connect( option_flush, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("utf8"))
+    if (!options.tqcontains("utf8"))
       option_utf8->hide();
     else
       option_utf8->setChecked(options["utf8"] == "true");
     connect( option_utf8, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("uid"))
+    if (!options.tqcontains("uid"))
       option_uid->hide();
     else
       option_uid->setChecked(options["uid"] == "true");
     connect( option_uid, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("shortname"))
+    if (!options.tqcontains("shortname"))
       {
 	option_shortname->hide();
 	text_shortname->hide();
@@ -118,7 +118,7 @@ PropertiesPage::PropertiesPage(TQWidget* parent, const TQString &_id)
 	connect( option_shortname, TQT_SIGNAL( activated(int) ), TQT_SIGNAL( changed() ) );
       }
 
-    if (!options.contains("journaling"))
+    if (!options.tqcontains("journaling"))
       {
 	text_journaling->hide();
 	option_journaling->hide();
@@ -140,11 +140,11 @@ PropertiesPage::PropertiesPage(TQWidget* parent, const TQString &_id)
     option_automount->setChecked(options["automount"] == "true");
     connect( option_automount, TQT_SIGNAL( stateChanged(int) ), TQT_SIGNAL( changed() ) );
 
-    if (!options.contains("journaling") &&
-	!options.contains("shortname") &&
-	!options.contains("uid") &&
-	!options.contains("utf8") &&
-	!options.contains("flush"))
+    if (!options.tqcontains("journaling") &&
+	!options.tqcontains("shortname") &&
+	!options.tqcontains("uid") &&
+	!options.tqcontains("utf8") &&
+	!options.tqcontains("flush"))
       groupbox_specific->hide();
 
   } else {
@@ -163,31 +163,31 @@ bool PropertiesPage::save()
 {
   TQStringList result;
 
-  if (options.contains("ro"))
+  if (options.tqcontains("ro"))
     result << TQString("ro=%1").arg(option_ro->isChecked() ? "true" : "false");
 
-  if (options.contains("quiet"))
+  if (options.tqcontains("quiet"))
     result << TQString("quiet=%1").arg(option_quiet->isChecked() ? "true" : "false");
 
-  if (options.contains("sync"))
+  if (options.tqcontains("sync"))
     result << TQString("sync=%1").arg(option_sync->isChecked() ? "true" : "false");
 
-  if (options.contains("atime"))
+  if (options.tqcontains("atime"))
     result << TQString("atime=%1").arg(option_atime->isChecked() ? "true" : "false");
 
-  if (options.contains("flush"))
+  if (options.tqcontains("flush"))
     result << TQString("flush=%1").arg(option_flush->isChecked() ? "true" : "false");
 
-  if (options.contains("utf8"))
+  if (options.tqcontains("utf8"))
     result << TQString("utf8=%1").arg(option_utf8->isChecked() ? "true" : "false");
 
-  if (options.contains("uid"))
+  if (options.tqcontains("uid"))
     result << TQString("uid=%1").arg(option_uid->isChecked() ? "true" : "false");
 
-  if (options.contains("shortname"))
+  if (options.tqcontains("shortname"))
     result << TQString("shortname=%1").arg(short_names[option_shortname->currentItem()]);
 
-  if (options.contains("journaling"))
+  if (options.tqcontains("journaling"))
     result << TQString("journaling=%1").arg(journales[option_journaling->currentItem()]);
 
   TQString mp = option_mountpoint->text();

@@ -41,8 +41,8 @@
    instances represent the individual assignments
 */
 
-KeyTrans::KeyEntry::KeyEntry(int _ref, int _key, int _bits, int _mask, int _cmd, TQString _txt)
-: ref(_ref), key(_key), bits(_bits), mask(_mask), cmd(_cmd), txt(_txt)
+KeyTrans::KeyEntry::KeyEntry(int _ref, int _key, int _bits, int _tqmask, int _cmd, TQString _txt)
+: ref(_ref), key(_key), bits(_bits), tqmask(_tqmask), cmd(_cmd), txt(_txt)
 {
 }
 
@@ -50,20 +50,20 @@ KeyTrans::KeyEntry::~KeyEntry()
 {
 }
 
-bool KeyTrans::KeyEntry::matches(int _key, int _bits, int _mask)
-{ int m = mask & _mask;
+bool KeyTrans::KeyEntry::matches(int _key, int _bits, int _tqmask)
+{ int m = tqmask & _tqmask;
   return _key == key && (bits & m) == (_bits & m);
 }
 
 bool KeyTrans::KeyEntry::metaspecified(void)
 {
-  return ((mask & (1 << BITS_Alt))    && (bits & (1 << BITS_Alt))) ||
-         ((mask & (1 << BITS_AnyMod)) && (bits & (1 << BITS_AnyMod)));
+  return ((tqmask & (1 << BITS_Alt))    && (bits & (1 << BITS_Alt))) ||
+         ((tqmask & (1 << BITS_AnyMod)) && (bits & (1 << BITS_AnyMod)));
 }
 
 bool KeyTrans::KeyEntry::anymodspecified(void)
 {
-  return (mask & (1 << BITS_AnyMod)) && (bits & (1 << BITS_AnyMod));
+  return (tqmask & (1 << BITS_AnyMod)) && (bits & (1 << BITS_AnyMod));
 }
 
 TQString KeyTrans::KeyEntry::text()
@@ -110,17 +110,17 @@ KeyTrans::~KeyTrans()
 {
 }
 
-KeyTrans::KeyEntry* KeyTrans::addEntry(int ref, int key, int bits, int mask, int cmd, TQString txt)
+KeyTrans::KeyEntry* KeyTrans::addEntry(int ref, int key, int bits, int tqmask, int cmd, TQString txt)
 // returns conflicting entry
 {
   for (TQPtrListIterator<KeyEntry> it(tableX); it.current(); ++it)
   {
-    if (it.current()->matches(key,bits,mask))
+    if (it.current()->matches(key,bits,tqmask))
     {
       return it.current();
     }
   }
-  tableX.append(new KeyEntry(ref,key,bits,mask,cmd,txt));
+  tableX.append(new KeyEntry(ref,key,bits,tqmask,cmd,txt));
   return (KeyEntry*)NULL;
 }
 
@@ -141,10 +141,10 @@ bool KeyTrans::findEntry(int key, int bits, int* cmd, const char** txt, int* len
       {
         static char buf[16];
         char *c;
-	char mask = '1' + BITS(0, bits&(1<<BITS_Shift)) + BITS(1, bits&(1<<BITS_Alt)) + BITS(2, bits&(1<<BITS_Control));
+	char tqmask = '1' + BITS(0, bits&(1<<BITS_Shift)) + BITS(1, bits&(1<<BITS_Alt)) + BITS(2, bits&(1<<BITS_Control));
         strcpy(buf, it.current()->txt.ascii());
         c = (char*)strchr(buf, '*');
-        if (c) *c = mask;
+        if (c) *c = tqmask;
         *txt = buf;
       }
       else
@@ -402,7 +402,7 @@ Loop:
 //printf(" key %s (%04x)",res.latin1(),(int)syms->keysyms[res]-1);
     getSymbol(); // + - :
     int mode = 0;
-    int mask = 0;
+    int tqmask = 0;
     while (sym == SYMOpr && (!strcmp(res.latin1(),"+") || !strcmp(res.latin1(),"-")))
     {
       bool on = !strcmp(res.latin1(),"+");
@@ -411,14 +411,14 @@ Loop:
       assertSyntax(sym == SYMName, "Name expected")
       assertSyntax(syms->modsyms[res], "Unknown mode name")
       ptrdiff_t bits = (ptrdiff_t)(syms->modsyms[res]) - 1;
-      if (mask & (1 << bits))
+      if (tqmask & (1 << bits))
       {
         fprintf(stderr,"%s(%d,%d): mode name used multiple times.\n",path.ascii(),slinno,scolno);
       }
       else
       {
         mode |= (on << bits);
-        mask |= (1 << bits);
+        tqmask |= (1 << bits);
       }
 //printf(", mode %s(%d) %s",res.latin1(),(int)syms->modsyms[res]-1,on?"on":"off");
       getSymbol();
@@ -441,8 +441,8 @@ Loop:
 //for (unsigned i = 0; i < res.length(); i++)
 //printf(" %02x(%c)",res.latin1()[i],res.latin1()[i]>=' '?res.latin1()[i]:'?');
     }
-//printf(". summary %04x,%02x,%02x,%d\n",key,mode,mask,cmd);
-    KeyTrans::KeyEntry* ke = kt->addEntry(slinno,key,mode,mask,cmd,res);
+//printf(". summary %04x,%02x,%02x,%d\n",key,mode,tqmask,cmd);
+    KeyTrans::KeyEntry* ke = kt->addEntry(slinno,key,mode,tqmask,cmd,res);
     if (ke)
     {
       fprintf(stderr,"%s(%d): keystroke already assigned in line %d.\n",path.ascii(),slinno,ke->ref);

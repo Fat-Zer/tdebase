@@ -33,7 +33,7 @@ __attribute((weak)) int ___xreply_reply_enabled = 1;
 extern long ___xreply_reply_count;
 extern int ___xreply_reply_enabled;
 
-typedef Status (*xreply_ptr_t)(Display*,xReply*,int,Bool);
+typedef tqStatus (*xreply_ptr_t)(Display*,xReply*,int,Bool);
 
 static xreply_ptr_t xreply_ptr = NULL;
 static int xreply_backtrace_set = 0;
@@ -163,7 +163,7 @@ static void xreply_backtrace()
     free (strings);
     }
 
-Status
+tqStatus
 _XReply (dpy, rep, extra, discard)
     register Display *dpy;
     register xReply *rep;

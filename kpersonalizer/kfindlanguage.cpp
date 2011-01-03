@@ -38,14 +38,14 @@ KFindLanguage::KFindLanguage() {
 
 	m_country = config->readEntry("Country", "C");
 	if (m_country == "C") {
-		m_country = TQString::fromLatin1(getenv("LANG"));
+		m_country = TQString::tqfromLatin1(getenv("LANG"));
 		if(m_country.left(5) == "nn_NO") // glibc's nn_NO is KDE's no_NY
 			m_country = "no";
-		if(m_country.contains("_"))
+		if(m_country.tqcontains("_"))
 			m_country = m_country.mid(m_country.find("_")+1);
-		if(m_country.contains("."))
+		if(m_country.tqcontains("."))
 			m_country = m_country.left(m_country.find("."));
-		if(m_country.contains("@"))
+		if(m_country.tqcontains("@"))
 			m_country = m_country.left(m_country.find("@"));
 		if(m_country != "C")
 			m_country = m_country.lower();
@@ -54,7 +54,7 @@ KFindLanguage::KFindLanguage() {
 	}
 
 	// get the users primary Languages
-	KSimpleConfig ent(locate("locale", TQString::fromLatin1("l10n/%1/entry.desktop").arg(m_country)), true);
+	KSimpleConfig ent(locate("locale", TQString::tqfromLatin1("l10n/%1/entry.desktop").arg(m_country)), true);
 	ent.setGroup("KCM Locale");
 	TQStringList langs = ent.readListEntry("Languages");
 	if (langs.isEmpty())
@@ -96,7 +96,7 @@ KFindLanguage::KFindLanguage() {
 	if (m_oldlang.isEmpty()) {
 		compare = langs.first();
 		for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it) {
-			if (*it == TQString::fromLatin1(getenv("LANG")).mid(3, 2).lower())
+			if (*it == TQString::tqfromLatin1(getenv("LANG")).mid(3, 2).lower())
 				compare = *it;
 		}
 	}
@@ -112,7 +112,7 @@ KFindLanguage::KFindLanguage() {
 		TQString l = (*it).left((*it).find(";"));
 		if (l == "C")
 			match++;
-		if(l.contains(compare))
+		if(l.tqcontains(compare))
 			match+=2;
 		if(l.left(compare.length()) == compare)
 			match+=10;

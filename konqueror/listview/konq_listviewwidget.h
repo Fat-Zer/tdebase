@@ -81,7 +81,7 @@ class KonqBaseListViewWidget : public KListView
 
    Q_OBJECT
 public:
-   KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget );
+   KonqBaseListViewWidget( KonqListView *parent, TQWidget *tqparentWidget );
    virtual ~KonqBaseListViewWidget();
    unsigned int NumberOfAtoms;
 
@@ -176,7 +176,7 @@ protected slots:
    virtual void slotRedirection( const KURL & );
    void slotPopupMenu( TQListViewItem *, const TQPoint&, int );
 
-   // forces a repaint on column size changes / branch expansion
+   // forces a tqrepaint on column size changes / branch expansion
    // when there is a background pixmap
    void slotUpdateBackground();
 

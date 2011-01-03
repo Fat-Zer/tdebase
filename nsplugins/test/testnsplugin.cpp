@@ -41,7 +41,7 @@ TestNSPlugin::TestNSPlugin()
    m_client = new TQWidget( this, "m_client" );
    setCentralWidget( m_client );
    m_client->show();
-   m_layout = new TQHBoxLayout( m_client );
+   m_tqlayout = new TQHBoxLayout( m_client );
 
    // file menu
    KStdAction::openNew( this, TQT_SLOT(newView()), actionCollection());
@@ -90,7 +90,7 @@ void TestNSPlugin::newView()
       m_plugins.append( win );
       connect( win, TQT_SIGNAL(destroyed(NSPluginInstance *)),
                this, TQT_SLOT(viewDestroyed(NSPluginInstance *)) );
-      m_layout->addWidget( win );
+      m_tqlayout->addWidget( win );
       win->show();
    } else
    {

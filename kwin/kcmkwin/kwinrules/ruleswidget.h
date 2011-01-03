@@ -54,7 +54,7 @@ class RulesWidget
         virtual void machineMatchChanged();
         virtual void shortcutEditClicked();
     private slots:
-        // geometry tab
+        // tqgeometry tab
         void updateEnableposition();
         void updateEnablesize();
         void updateEnabledesktop();
@@ -81,7 +81,7 @@ class RulesWidget
         void updateEnableignoreposition();
         void updateEnableminsize();
         void updateEnablemaxsize();
-        void updateEnablestrictgeometry();
+        void updateEnablestricttqgeometry();
         void updateEnableshortcut();
         void updateEnabledisableglobalshortcuts();
         // internal

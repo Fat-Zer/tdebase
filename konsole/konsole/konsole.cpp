@@ -789,7 +789,7 @@ void Konsole::makeGUI()
       KeyTrans* ktr = kt_map[*it];
       assert( ktr );
       TQString title=ktr->hdr();
-      m_keytab->insertItem(title.replace('&',"&&"),ktr->numb());
+      m_keytab->insertItem(title.tqreplace('&',"&&"),ktr->numb());
    }
 
    applySettingsToGUI();
@@ -1280,7 +1280,7 @@ void Konsole::setColLin(int columns, int lines)
        te->setSize(columns, lines);
     adjustSize();
     if (b_fixedSize)
-      setFixedSize(sizeHint());
+      setFixedSize(tqsizeHint());
     notifySize(columns, lines);  // set menu items
   }
 }
@@ -1316,7 +1316,7 @@ void Konsole::slotTabContextMenu(TQWidget* _te, const TQPoint & pos)
   int counter=0;
   for (TESession *ses = sessions.first(); ses; ses = sessions.next()) {
     TQString title=ses->Title();
-    m_tabPopupTabsMenu->insertItem(SmallIcon(ses->IconName()),title.replace('&',"&&"),counter++);
+    m_tabPopupTabsMenu->insertItem(SmallIcon(ses->IconName()),title.tqreplace('&',"&&"),counter++);
   }
 
   m_tabPopupMenu->popup( pos );
@@ -1382,7 +1382,7 @@ void Konsole::slotTabSetViewOptions(int mode)
     else
       title = sessions.at(i)->Title();
 
-    title=title.replace('&',"&&");
+    title=title.tqreplace('&',"&&");
     switch(mode) {
       case ShowIconAndText:
         tabwidget->changeTab(page, icon, title);
@@ -1428,7 +1428,7 @@ void Konsole::slotSaveSessionsProfile()
       TQString::null, &ok, this );
   if ( ok ) {
     TQString path = locateLocal( "data",
-        TQString::fromLatin1( "konsole/profiles/" ) + prof,
+        TQString::tqfromLatin1( "konsole/profiles/" ) + prof,
         KGlobal::instance() );
 
     if ( TQFile::exists( path ) )
@@ -1635,7 +1635,7 @@ void Konsole::readProperties(KConfig* config, const TQString &schema, bool globa
              delete rootxpms[te];
              rootxpms.remove(te);
            }
-           pixmap_menu_activated(sch->alignment());
+           pixmap_menu_activated(sch->tqalignment());
         }
 
         te->setColorTable(sch->table()); //FIXME: set twice here to work around a bug
@@ -1874,7 +1874,7 @@ void Konsole::updateSchemaMenu()
      ColorSchema* s = (ColorSchema*)colors->at(i);
     assert( s );
     TQString title=s->title();
-    m_schema->insertItem(title.replace('&',"&&"),s->numb(),0);
+    m_schema->insertItem(title.tqreplace('&',"&&"),s->numb(),0);
   }
 
   if (te && se)
@@ -1912,7 +1912,7 @@ void Konsole::slotToggleMenubar() {
   if (b_fixedSize)
   {
      adjustSize();
-     setFixedSize(sizeHint());
+     setFixedSize(tqsizeHint());
   }
   if (!showMenubar->isChecked()) {
     setCaption(i18n("Use the right mouse button to bring back the menu"));
@@ -1987,12 +1987,12 @@ void Konsole::slotSelectTabbar() {
 /* FIXME: Still necessary ? */
       TQPtrDictIterator<KRootPixmap> it(rootxpms);
       for (;it.current();++it)
-        it.current()->repaint(true);
+        it.current()->tqrepaint(true);
 
   if (b_fixedSize)
   {
      adjustSize();
-     setFixedSize(sizeHint());
+     setFixedSize(tqsizeHint());
   }
 }
 
@@ -2224,7 +2224,7 @@ void Konsole::updateTitle(TESession* _se)
   if (m_tabViewMode == ShowIconOnly) 
     tabwidget->changeTab( _se->widget(), TQString::null );
   else if (b_matchTabWinTitle)
-    tabwidget->setTabLabel( _se->widget(), _se->fullTitle().replace('&',"&&"));
+    tabwidget->setTabLabel( _se->widget(), _se->fullTitle().tqreplace('&',"&&"));
 }
 
 void Konsole::initSessionFont(TQFont font) {
@@ -2362,7 +2362,7 @@ void Konsole::enterURL(const TQString& URL, const TQString&)
     KRun::shellQuote(newtext);
     te->emitText("cd "+newtext+"\r");
   }
-  else if (URL.contains("://", true)) {
+  else if (URL.tqcontains("://", true)) {
     KURL u(URL);
     newtext = u.protocol();
     bool isSSH = (newtext == "ssh");
@@ -2445,7 +2445,7 @@ void Konsole::addSession(TESession* s)
   s->setTitle(newTitle);
 
   // create an action for the session
-  KRadioAction *ra = new KRadioAction(newTitle.replace('&',"&&"),
+  KRadioAction *ra = new KRadioAction(newTitle.tqreplace('&',"&&"),
                                       s->IconName(),
                                       0,
                                       this,
@@ -2496,7 +2496,7 @@ void Konsole::listSessions()
   m_sessionList->setKeyboardShortcutsEnabled(true);
   for (TESession *ses = sessions.first(); ses; ses = sessions.next()) {
     TQString title=ses->Title();
-    m_sessionList->insertItem(SmallIcon(ses->IconName()),title.replace('&',"&&"),counter++);
+    m_sessionList->insertItem(SmallIcon(ses->IconName()),title.tqreplace('&',"&&"),counter++);
   }
   m_sessionList->adjustSize();
   m_sessionList->popup(mapToGlobal(TQPoint((width()/2)-(m_sessionList->width()/2),(height()/2)-(m_sessionList->height()/2))));
@@ -2575,7 +2575,7 @@ void Konsole::activateSession(TESession *s)
   s_schema = cs->relPath();
   curr_schema = cs->numb();
   pmPath = cs->imagePath();
-  n_render = cs->alignment();
+  n_render = cs->tqalignment();
 
 // BR 106464 temporary fix... 
 //  only 2 sessions opened, 2nd session viewable, right-click on 1st tab and 
@@ -3138,7 +3138,7 @@ void Konsole::moveSessionLeft()
   tabwidget->blockSignals(false);
   TQString title = se->Title();
   createSessionTab(se->widget(), iconSetForSession(se), 
-                   title.replace('&', "&&"), position-1);
+                   title.tqreplace('&', "&&"), position-1);
   tabwidget->showPage(se->widget());
   tabwidget->setTabColor(se->widget(),oldcolor);
   
@@ -3171,7 +3171,7 @@ void Konsole::moveSessionRight()
   tabwidget->blockSignals(false);
   TQString title = se->Title();
   createSessionTab(se->widget(), iconSetForSession(se), 
-                   title.replace('&', "&&"), position+1);
+                   title.tqreplace('&', "&&"), position+1);
   tabwidget->showPage(se->widget());
   tabwidget->setTabColor(se->widget(),oldcolor);
   
@@ -3383,7 +3383,7 @@ void Konsole::addSessionCommand(const TQString &path)
 
   TQString name = comment;
   name.prepend("SSC_");  // Allows easy searching for Session ShortCuts
-  name.replace(" ", "_");
+  name.tqreplace(" ", "_");
   sl_sessionShortCuts << name;
 
   // Is there already this shortcut?
@@ -3433,13 +3433,13 @@ void Konsole::createSessionMenus()
   TQString txt = cfg->readEntry("Name");
   TQString icon = cfg->readEntry("Icon", "konsole");
   insertItemSorted(m_tabbarSessionsCommands, SmallIconSet(icon),
-                   txt.replace('&',"&&"), SESSION_NEW_SHELL_ID );
+                   txt.tqreplace('&',"&&"), SESSION_NEW_SHELL_ID );
 
   TQString comment = cfg->readEntry("Comment");
   if (comment.isEmpty())
     comment=txt.prepend(i18n("New "));
   insertItemSorted(m_session, SmallIconSet(icon),
-                   comment.replace('&',"&&"), SESSION_NEW_SHELL_ID);
+                   comment.tqreplace('&',"&&"), SESSION_NEW_SHELL_ID);
   m_session->insertItem(SmallIconSet("window_new"),
                         i18n("New &Window"), SESSION_NEW_WINDOW_ID);
   m_tabbarSessionsCommands->insertItem(SmallIconSet("window_new"),
@@ -3455,12 +3455,12 @@ void Konsole::createSessionMenus()
     TQString txt = (*it).readEntry("Name");
     TQString icon = (*it).readEntry("Icon", "konsole");
     insertItemSorted(m_tabbarSessionsCommands, SmallIconSet(icon),
-                     txt.replace('&',"&&"), it.currentKey() );
+                     txt.tqreplace('&',"&&"), it.currentKey() );
     TQString comment = (*it).readEntry("Comment");
     if (comment.isEmpty())
       comment=txt.prepend(i18n("New "));
     insertItemSorted(m_session, SmallIconSet(icon),
-                     comment.replace('&',"&&"), it.currentKey());
+                     comment.tqreplace('&',"&&"), it.currentKey());
   }
 
   if (m_bookmarksSession)
@@ -3483,7 +3483,7 @@ void Konsole::addScreenSession(const TQString &path, const TQString &socket)
   co->writeEntry("Name", socket);
   TQString txt = i18n("Screen is a program controlling screens!", "Screen at %1").arg(socket);
   co->writeEntry("Comment", txt);
-  co->writePathEntry("Exec", TQString::fromLatin1("SCREENDIR=%1 screen -r %2")
+  co->writePathEntry("Exec", TQString::tqfromLatin1("SCREENDIR=%1 screen -r %2")
     .arg(path).arg(socket));
   TQString icon = "konsole";
   cmd_serial++;
@@ -3616,7 +3616,7 @@ void Konsole::setSchema(ColorSchema* s, TEWidget* tewidget)
         rootxpms.insert( tewidget, new KRootPixmap(tewidget) );
       rootxpms[tewidget]->setFadeEffect(s->tr_x(), TQColor(s->tr_r(), s->tr_g(), s->tr_b()));
     } else {
-      tewidget->setBlendColor(qRgba(s->tr_r(), s->tr_g(), s->tr_b(), int(s->tr_x() * 255)));
+      tewidget->setBlendColor(tqRgba(s->tr_r(), s->tr_g(), s->tr_b(), int(s->tr_x() * 255)));
       tewidget->setErasePixmap( TQPixmap() ); // make sure any background pixmap is unset
     }
   } else {
@@ -3624,8 +3624,8 @@ void Konsole::setSchema(ColorSchema* s, TEWidget* tewidget)
         delete rootxpms[tewidget];
         rootxpms.remove(tewidget);
       }
-       pixmap_menu_activated(s->alignment(), tewidget);
-       tewidget->setBlendColor(qRgba(0, 0, 0, 0xff));
+       pixmap_menu_activated(s->tqalignment(), tewidget);
+       tewidget->setBlendColor(tqRgba(0, 0, 0, 0xff));
   }
 
   tewidget->setColorTable(s->table());
@@ -3749,7 +3749,7 @@ void Konsole::attachSession(TESession* session)
   }
 
   TQString title=session->Title();
-  KRadioAction *ra = new KRadioAction(title.replace('&',"&&"), session->IconName(),
+  KRadioAction *ra = new KRadioAction(title.tqreplace('&',"&&"), session->IconName(),
                                       0, this, TQT_SLOT(activateSession()), m_shortcuts);
 
   ra->setExclusiveGroup("sessions");
@@ -3811,7 +3811,7 @@ void Konsole::slotRenameSession(TESession* ses, const TQString &name)
 {
   KRadioAction *ra = session2action.find(ses);
   TQString title=name;
-  title=title.replace('&',"&&");
+  title=title.tqreplace('&',"&&");
   ra->setText(title);
   ra->setIcon( ses->IconName() ); // I don't know why it is needed here
   if (m_tabViewMode!=ShowIconOnly)
@@ -4192,7 +4192,7 @@ void Konsole::toggleBidi()
   TQPtrList<TEWidget> tes = activeTEs();
   for (TEWidget *_te = tes.first(); _te; _te = tes.next()) {
     _te->setBidiEnabled(b_bidiEnabled);
-    _te->repaint();
+    _te->tqrepaint();
   }
 }
 

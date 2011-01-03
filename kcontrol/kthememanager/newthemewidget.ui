@@ -5,7 +5,7 @@
     <property name="name">
         <cstring>NewThemeWidget</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -88,7 +88,7 @@
             <property name="text">
                 <string>Co&amp;mment:</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>AlignTop</set>
             </property>
             <property name="buddy" stdset="0">
@@ -126,5 +126,5 @@
     <tabstop>leVersion</tabstop>
     <tabstop>teComment</tabstop>
 </tabstops>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

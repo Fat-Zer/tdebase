@@ -84,7 +84,7 @@ public:
  bool reverseScrollPolarity;
 
  #ifdef HAVE_LIBUSB
- // TODO: In Qt4, replace with a better container.
+ // TODO: In Qt4, tqreplace with a better container.
  TQPtrList <LogitechMouse> logitechMouseList;
  #endif
 };

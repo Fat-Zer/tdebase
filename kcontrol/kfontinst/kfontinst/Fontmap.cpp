@@ -113,7 +113,7 @@ static TQString createX11PsName(const TQString &font)
     unsigned int  ch;
     bool          newWord=true;
 
-    newName.replace(TQRegExp("\\-"), "_");
+    newName.tqreplace(TQRegExp("\\-"), "_");
 
     for(ch=0; ch<newName.length(); ++ch)
     {
@@ -136,7 +136,7 @@ static TQString createX11PsName(const TQString &font)
         }
     }
 
-    newName.replace(" ", TQString::null);
+    newName.tqreplace(" ", TQString::null);
     return newName;
 }
 

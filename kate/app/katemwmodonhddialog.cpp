@@ -91,7 +91,7 @@ KateMwModOnHdDialog::KateMwModOnHdDialog( DocVector docs, TQWidget *parent, cons
   // document list
   lvDocuments = new KListView( w );
   lvDocuments->addColumn( i18n("Filename") );
-  lvDocuments->addColumn( i18n("Status on Disk") );
+  lvDocuments->addColumn( i18n("tqStatus on Disk") );
   lvDocuments->setSelectionMode( TQListView::Single );
 
   TQStringList l;
@@ -278,4 +278,4 @@ void KateMwModOnHdDialog::slotPDone( KProcess *p )
   m_tmpfile = 0;
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

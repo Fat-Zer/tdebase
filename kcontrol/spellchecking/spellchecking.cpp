@@ -34,13 +34,13 @@ K_EXPORT_COMPONENT_FACTORY (kcm_spellchecking, SpellFactory("kcmspellchecking") 
 KSpellCheckingConfig::KSpellCheckingConfig(TQWidget *parent, const char *name, const TQStringList &):
     KCModule(SpellFactory::instance(), parent, name)
 {
-  TQBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
   TQGroupBox *box = new TQVGroupBox( i18n("Spell Checking Settings"), this );
-  box->layout()->setSpacing( KDialog::spacingHint() );
-  layout->addWidget(box);
+  box->tqlayout()->setSpacing( KDialog::spacingHint() );
+  tqlayout->addWidget(box);
 
   spellConfig = new KSpellConfig(box, 0L ,0L, false );
-  layout->addStretch(1);
+  tqlayout->addStretch(1);
   connect(spellConfig,TQT_SIGNAL(configChanged()), TQT_SLOT( changed() ));
 
   setQuickHelp( i18n("<h1>Spell Checker</h1><p>This control module allows you to configure the KDE spell checking system. You can configure:<ul><li> which spell checking program to use<li> which types of spelling errors are identified<li> which dictionary is used by default.</ul><br>The KDE spell checking system (KSpell) provides support for two common spell checking utilities: ASpell and ISpell. This allows you to share dictionaries between KDE applications and non-KDE applications.</p>"));

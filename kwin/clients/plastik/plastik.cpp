@@ -87,7 +87,7 @@ bool PlastikHandler::reset(unsigned long changed)
             m_borderSize = 4;
     }
 
-    // check if we are in reverse layout mode
+    // check if we are in reverse tqlayout mode
     m_reverse = TQApplication::reverseLayout();
 
     // read in the configuration
@@ -329,7 +329,7 @@ const TQPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindo
                 painter.drawLine(2,h-1, w-1,h-1);
             }
 
-            // outside the region normally masked by doShape
+            // outside the region normally tqmasked by doShape
             painter.setPen(TQColor(0,0,0) );
             painter.drawLine(0, 0, 1, 0 );
             painter.drawPoint(0, 1);
@@ -361,7 +361,7 @@ const TQPixmap &PlastikHandler::pixmap(Pixmaps type, bool active, bool toolWindo
                 painter.drawLine(0,h-1, w-3,h-1);
             }
 
-            // outside the region normally masked by doShape
+            // outside the region normally tqmasked by doShape
             painter.setPen(TQColor(0,0,0) );
             painter.drawLine(w-2, 0, w-1, 0 );
             painter.drawPoint(w-1, 1);

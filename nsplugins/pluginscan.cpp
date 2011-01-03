@@ -130,7 +130,7 @@ void deletePluginMimeTypes()
     }
 
     for ( unsigned int i=0; i<dirs.count(); i++ ) {
-        if ( !dirs[i].contains(".") ) {
+        if ( !dirs[i].tqcontains(".") ) {
 
             // check all mime types for X-KDE-nsplugin flag
             kdDebug(1433) << " - Looking in " << dirs[i] << endl;
@@ -251,14 +251,14 @@ int tryCheck(int write_fd, const TQString &absFile)
         NPError err = func_GetValue( 0, NPPVpluginNameString,
                                      (void*)&buf );
         if ( err==NPERR_NO_ERROR )
-            name = TQString::fromLatin1( buf );
+            name = TQString::tqfromLatin1( buf );
         kdDebug() << "name = " << name << endl;
 
         // get name
         NPError nperr = func_GetValue( 0, NPPVpluginDescriptionString,
                                      (void*)&buf );
         if ( nperr==NPERR_NO_ERROR )
-            description = TQString::fromLatin1( buf );
+            description = TQString::tqfromLatin1( buf );
         kdDebug() << "description = " << description << endl;
     }
     else
@@ -283,7 +283,7 @@ int tryCheck(int write_fd, const TQString &absFile)
 
     // remove version info, as it is not used at the moment
     TQRegExp versionRegExp(";version=[^:]*:");
-    mimeInfo.replace( versionRegExp, ":");
+    mimeInfo.tqreplace( versionRegExp, ":");
 
     // unload plugin lib
     kdDebug(1433) << " - unloading plugin" << endl;
@@ -404,10 +404,10 @@ void scanDirectory( TQString dir, TQStringList &mimeInfoList,
            for ( type=types.begin(); type!=types.end(); ++type ) {
 
               kdDebug(1433) << " - type=" << *type << endl;
-              name = name.replace( ':', "%3A" );
+              name = name.tqreplace( ':', "%3A" );
 
               TQString entry = name + ":" + *type;
-              if ( !mimeInfoList.contains( entry ) ) {
+              if ( !mimeInfoList.tqcontains( entry ) ) {
                   if (!actuallyUsing) {
                       // note the plugin name
                       cache << "[" << absFile << "]" << endl;
@@ -444,7 +444,7 @@ void scanDirectory( TQString dir, TQStringList &mimeInfoList,
     static int depth = 0; // avoid recursion because of symlink circles
     depth++;
     for ( unsigned int i=0; i<dirs.count(); i++ ) {
-        if ( depth<8 && !dirs[i].contains(".") )
+        if ( depth<8 && !dirs[i].tqcontains(".") )
             scanDirectory( dirs.absFilePath(dirs[i]), mimeInfoList, cache );
     }
     depth--;
@@ -620,7 +620,7 @@ int main( int argc, char **argv )
           TQString desc = info[3];
 
           // append to global mime type list
-          if ( !mimeTypes.contains(type) ) {
+          if ( !mimeTypes.tqcontains(type) ) {
               kdDebug(1433) << " - mimeType=" << type << endl;
               mimeTypes.append( type );
 

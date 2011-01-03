@@ -50,8 +50,8 @@ SidebarExtension::SidebarExtension( const TQString& configFile,
 {
     kdDebug() << "SidebarExtension: Created '" << name << "', '" << configFile << "'" << endl;
     new KonqHistoryManager(0,"SidebarExtensionHistoryManager");
-    m_layout=new TQHBoxLayout(this);
-    m_layout->activate();
+    m_tqlayout=new TQHBoxLayout(this);
+    m_tqlayout->activate();
     m_sbWrapper=new TQVBox(this);
     KParts::ReadOnlyPart *p=KParts::ComponentFactory::createPartInstanceFromLibrary<KParts::ReadOnlyPart>(
 						"konq_sidebar",
@@ -94,7 +94,7 @@ void SidebarExtension::needLayoutUpdate(bool exp) {
 		m_currentWidth=24;
 		m_resizeHandle->hide();
 	}
-	topLevelWidget()->setFixedWidth(m_currentWidth);
+	tqtopLevelWidget()->setFixedWidth(m_currentWidth);
 	emit updateLayout();
 }
 
@@ -117,7 +117,7 @@ bool SidebarExtension::eventFilter( TQObject *, TQEvent *e ) {
 		return true;
 	} else if (e->type()==TQEvent::MouseButtonRelease) {
 		m_resizing=false;
-		m_expandedSize=topLevelWidget()->width();
+		m_expandedSize=tqtopLevelWidget()->width();
 		needLayoutUpdate(true);
 		return true;
 	} else if (e->type()==TQEvent::MouseMove) {
@@ -126,14 +126,14 @@ bool SidebarExtension::eventFilter( TQObject *, TQEvent *e ) {
 			if (p==Left) {
 				int diff=((TQMouseEvent*)e)->globalX()-m_x;
 					if (abs(diff)>3) {
-						topLevelWidget()->setFixedWidth(topLevelWidget()->width()+diff);
+						tqtopLevelWidget()->setFixedWidth(tqtopLevelWidget()->width()+diff);
 						m_x=((TQMouseEvent*)e)->globalX();
 					}
 			} else if (p==Right) {
 				int diff=((TQMouseEvent*)e)->globalX()-m_x;
 					if (abs(diff)>3) {
-						topLevelWidget()->setFixedWidth(topLevelWidget()->width()-diff);
-						topLevelWidget()->move(topLevelWidget()->x()+diff,topLevelWidget()->y());
+						tqtopLevelWidget()->setFixedWidth(tqtopLevelWidget()->width()-diff);
+						tqtopLevelWidget()->move(tqtopLevelWidget()->x()+diff,tqtopLevelWidget()->y());
 						m_x=((TQMouseEvent*)e)->globalX();
 					}
 			}
@@ -148,24 +148,24 @@ KPanelExtension::Position SidebarExtension::preferedPosition() const {
 	return KPanelExtension::Left;
 }
 
-TQSize SidebarExtension::sizeHint(Position, TQSize maxSize ) const
+TQSize SidebarExtension::tqsizeHint(Position, TQSize maxSize ) const
 {
 	return TQSize(m_currentWidth,maxSize.height());
 }
 
 void SidebarExtension::positionChange( Position  position ) {
 	if (position == Right) {
-		m_layout->remove(m_sbWrapper);
-		m_layout->remove(m_resizeHandle);
+		m_tqlayout->remove(m_sbWrapper);
+		m_tqlayout->remove(m_resizeHandle);
 
-		m_layout->add(m_resizeHandle);
-		m_layout->add(m_sbWrapper);
+		m_tqlayout->add(m_resizeHandle);
+		m_tqlayout->add(m_sbWrapper);
 	} else 	if (position == Left) {
-		m_layout->remove(m_sbWrapper);
-		m_layout->remove(m_resizeHandle);
+		m_tqlayout->remove(m_sbWrapper);
+		m_tqlayout->remove(m_resizeHandle);
 
-		m_layout->add(m_sbWrapper);
-		m_layout->add(m_resizeHandle);
+		m_tqlayout->add(m_sbWrapper);
+		m_tqlayout->add(m_resizeHandle);
 
 	}
 

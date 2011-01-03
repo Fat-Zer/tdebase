@@ -262,12 +262,12 @@ public:
     bool showInPager() const { return _info.state() ^ NET::SkipPager; }
 
     /**
-     * Returns the geometry for this window
+     * Returns the tqgeometry for this window
      */
-    TQRect geometry() const { return _info.geometry(); }
+    TQRect tqgeometry() const { return _info.tqgeometry(); }
 
     /**
-     * Returns the geometry for the from of this window
+     * Returns the tqgeometry for the from of this window
      */
     TQRect frameGeometry() const { return _info.frameGeometry(); }
 
@@ -427,7 +427,7 @@ signals:
     /**
      * Indicates that this task has changed in some way.
      */
-    void changed(bool geometryChangeOnly);
+    void changed(bool tqgeometryChangeOnly);
 
     /**
      * Indicates that the icon for this task has changed.
@@ -529,7 +529,7 @@ public:
     /**
      * The name of the starting task (if known).
      */
-    TQString text() const { return _data.findName(); }
+    TQString text() const { return _data.tqfindName(); }
 
     /**
      * The name of the executable of the starting task.
@@ -539,7 +539,7 @@ public:
     /**
      * The name of the icon to be used for the starting task.
      */
-    TQString icon() const { return _data.findIcon(); }
+    TQString icon() const { return _data.tqfindIcon(); }
     void update( const KStartupInfoData& data );
     const KStartupInfoId& id() const { return _id; }
 
@@ -616,7 +616,7 @@ public:
     bool isOnTop(const Task*);
 
     /**
-     * Tells the task manager whether or not we care about geometry
+     * Tells the task manager whether or not we care about tqgeometry
      * updates. This generates a lot of activity so should only be used
      * when necessary.
      */

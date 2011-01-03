@@ -253,28 +253,28 @@ void KLocaleConfigTime::save()
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",
-			   TQString::fromLatin1("l10n/%1/entry.desktop")
+			   TQString::tqfromLatin1("l10n/%1/entry.desktop")
 			   .arg(m_locale->country())), true);
   ent.setGroup("KCM Locale");
 
   TQString str;
 
-  str = ent.readEntry("CalendarSystem", TQString::fromLatin1("gregorian"));
+  str = ent.readEntry("CalendarSystem", TQString::tqfromLatin1("gregorian"));
   config->deleteEntry("CalendarSystem", false, true);
   if (str != m_locale->calendarType())
     config->writeEntry("CalendarSystem", m_locale->calendarType(), true, true);
 
-  str = ent.readEntry("TimeFormat", TQString::fromLatin1("%H:%M:%S"));
+  str = ent.readEntry("TimeFormat", TQString::tqfromLatin1("%H:%M:%S"));
   config->deleteEntry("TimeFormat", false, true);
   if (str != m_locale->timeFormat())
     config->writeEntry("TimeFormat", m_locale->timeFormat(), true, true);
 
-  str = ent.readEntry("DateFormat", TQString::fromLatin1("%A %d %B %Y"));
+  str = ent.readEntry("DateFormat", TQString::tqfromLatin1("%A %d %B %Y"));
   config->deleteEntry("DateFormat", false, true);
   if (str != m_locale->dateFormat())
     config->writeEntry("DateFormat", m_locale->dateFormat(), true, true);
 
-  str = ent.readEntry("DateFormatShort", TQString::fromLatin1("%Y-%m-%d"));
+  str = ent.readEntry("DateFormatShort", TQString::tqfromLatin1("%Y-%m-%d"));
   config->deleteEntry("DateFormatShort", false, true);
   if (str != m_locale->dateFormatShort())
     config->writeEntry("DateFormatShort",
@@ -345,7 +345,7 @@ void KLocaleConfigTime::slotLocaleChanged()
   TQString calendarType = m_locale->calendarType();
   int calendarSystem = 0;
 
-  CalendarVector::iterator it = qFind(calendars.begin(), calendars.end(),
+  CalendarVector::iterator it = tqFind(calendars.begin(), calendars.end(),
 calendarType);
   if ( it != calendars.end() )
     calendarSystem = it - calendars.begin();
@@ -371,7 +371,7 @@ calendarType);
   kdDebug(173) << storeToUser(timeMap(),
 			   m_locale->timeFormat()) << endl;
   kdDebug(173) << userToStore(timeMap(),
-			   TQString::fromLatin1("HH:MM:SS AMPM test")) << endl;
+			   TQString::tqfromLatin1("HH:MM:SS AMPM test")) << endl;
 
 }
 
@@ -416,7 +416,7 @@ void KLocaleConfigTime::slotTranslate()
 {
   TQString str;
 
-  TQString sep = TQString::fromLatin1("\n");
+  TQString sep = TQString::tqfromLatin1("\n");
 
   TQString old;
 
@@ -462,7 +462,7 @@ void KLocaleConfigTime::slotTranslate()
 
   str = m_locale->translate
     ("<p>The text in this textbox will be used to format "
-     "time strings. The sequences below will be replaced:</p>"
+     "time strings. The sequences below will be tqreplaced:</p>"
      "<table>"
      "<tr><td><b>HH</b></td><td>The hour as a decimal number using a 24-hour "
      "clock (00-23).</td></tr>"
@@ -506,14 +506,14 @@ void KLocaleConfigTime::slotTranslate()
 
   str = m_locale->translate
     ( "<p>The text in this textbox will be used to format long "
-      "dates. The sequences below will be replaced:</p>") + datecodes;
+      "dates. The sequences below will be tqreplaced:</p>") + datecodes;
   TQWhatsThis::add( m_labDateFmt, str );
   TQWhatsThis::add( m_comboDateFmt,  str );
 
   str = m_locale->translate
     ( "<p>The text in this textbox will be used to format short "
       "dates. For instance, this is used when listing files. "
-      "The sequences below will be replaced:</p>") + datecodes;
+      "The sequences below will be tqreplaced:</p>") + datecodes;
   TQWhatsThis::add( m_labDateFmtShort, str );
   TQWhatsThis::add( m_comboDateFmtShort,  str );
 

@@ -89,9 +89,9 @@ enum ForceGeometry_t { NormalGeometrySet, ForceGeometrySet };
 // Areas, mostly related to Xinerama
 enum clientAreaOption
     {
-    PlacementArea,         // geometry where a window will be initially placed after being mapped
+    PlacementArea,         // tqgeometry where a window will be initially placed after being mapped
     MovementArea,          // ???  window movement snapping area?  ignore struts
-    MaximizeArea,          // geometry to which a window will be maximized
+    MaximizeArea,          // tqgeometry to which a window will be maximized
     MaximizeFullArea,      // like MaximizeArea, but ignore struts - used e.g. for topmenu
     FullScreenArea,        // area for fullscreen windows
     // these below don't depend on xinerama settings
@@ -111,14 +111,14 @@ enum ShadeMode
 class Shape 
     {
     public:
-        static bool available() { return kwin_shape_version > 0; }
-        static int version() { return kwin_shape_version; } // as 16*major+minor, i.e. two hex digits
+        static bool available() { return kwin_tqshape_version > 0; }
+        static int version() { return kwin_tqshape_version; } // as 16*major+minor, i.e. two hex digits
         static bool hasShape( WId w);
-        static int shapeEvent();
+        static int tqshapeEvent();
         static void init();
     private:
-        static int kwin_shape_version;
-        static int kwin_shape_event;
+        static int kwin_tqshape_version;
+        static int kwin_tqshape_event;
     };
 
 // compile with XShape older than 1.0

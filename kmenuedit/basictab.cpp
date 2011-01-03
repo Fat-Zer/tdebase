@@ -53,7 +53,7 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     _menuFolderInfo = 0;
     _menuEntryInfo = 0;
 
-    TQGridLayout *layout = new TQGridLayout(this, 6, 2,
+    TQGridLayout *tqlayout = new TQGridLayout(this, 6, 2,
                                           KDialog::marginHint(),
                                           KDialog::spacingHint());
 
@@ -75,7 +75,7 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     _execEdit = new KURLRequester(general_group);
     _execEdit->lineEdit()->setAcceptDrops(false);
     TQWhatsThis::add(_execEdit,i18n(
-    "Following the command, you can have several place holders which will be replaced "
+    "Following the command, you can have several place holders which will be tqreplaced "
     "with the actual values when the actual program is run:\n"
     "%f - a single file name\n"
     "%F - a list of files; use for applications that can open several local files at once\n"
@@ -129,8 +129,8 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     connect(_iconButton, TQT_SIGNAL(iconChanged(TQString)), TQT_SLOT(slotChanged()));
     grid->addMultiCellWidget(_iconButton, 0, 1, 2, 2);
 
-    // add the general group to the main layout
-    layout->addMultiCellWidget(general_group, 0, 0, 0, 1);
+    // add the general group to the main tqlayout
+    tqlayout->addMultiCellWidget(general_group, 0, 0, 0, 1);
 
     // path group
     _path_group = new TQGroupBox(this);
@@ -151,7 +151,7 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     connect(_pathEdit, TQT_SIGNAL(textChanged(const TQString&)),
             TQT_SLOT(slotChanged()));
     vbox->addWidget(hbox);
-    layout->addMultiCellWidget(_path_group, 1, 1, 0, 1);
+    tqlayout->addMultiCellWidget(_path_group, 1, 1, 0, 1);
 
     // terminal group
     _term_group = new TQGroupBox(this);
@@ -172,7 +172,7 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     connect(_termOptEdit, TQT_SIGNAL(textChanged(const TQString&)),
             TQT_SLOT(slotChanged()));
     vbox->addWidget(hbox);
-    layout->addMultiCellWidget(_term_group, 2, 2, 0, 1);
+    tqlayout->addMultiCellWidget(_term_group, 2, 2, 0, 1);
 
     _termOptEdit->setEnabled(false);
 
@@ -195,18 +195,18 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     connect(_uidEdit, TQT_SIGNAL(textChanged(const TQString&)),
 	    TQT_SLOT(slotChanged()));
     vbox->addWidget(hbox);
-    layout->addMultiCellWidget(_uid_group, 3, 3, 0, 1);
+    tqlayout->addMultiCellWidget(_uid_group, 3, 3, 0, 1);
 
     _uidEdit->setEnabled(false);
 
-    layout->setRowStretch(0, 2);
+    tqlayout->setRowStretch(0, 2);
 
     // key binding group
     general_group_keybind = new TQGroupBox(this);
-    layout->addMultiCellWidget( general_group_keybind, 4, 4, 0, 1 );
+    tqlayout->addMultiCellWidget( general_group_keybind, 4, 4, 0, 1 );
     // dummy widget in order to make it look a bit better
-    layout->addWidget( new TQWidget(this), 5, 0 );
-    layout->setRowStretch( 5, 4 );
+    tqlayout->addWidget( new TQWidget(this), 5, 0 );
+    tqlayout->setRowStretch( 5, 4 );
     TQGridLayout *grid_keybind = new TQGridLayout(general_group_keybind, 3, 1,
                                                 KDialog::marginHint(),
                                                 KDialog::spacingHint());
@@ -468,8 +468,8 @@ void BasicTab::slotCapturedShortcut(const KShortcut& cut)
     if (signalsBlocked())
        return;
 
-    if( KKeyChooser::checkGlobalShortcutsConflict( cut, true, topLevelWidget())
-        || KKeyChooser::checkStandardShortcutsConflict( cut, true, topLevelWidget()))
+    if( KKeyChooser::checkGlobalShortcutsConflict( cut, true, tqtopLevelWidget())
+        || KKeyChooser::checkStandardShortcutsConflict( cut, true, tqtopLevelWidget()))
         return;
 
     if ( KHotKeys::present() )

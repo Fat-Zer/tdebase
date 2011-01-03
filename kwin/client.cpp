@@ -105,9 +105,9 @@ Client::Client( Workspace *ws )
         process_killer( NULL ),
         user_time( CurrentTime ), // not known yet
         allowed_actions( 0 ),
-        postpone_geometry_updates( 0 ),
-        pending_geometry_update( false ),
-        shade_geometry_change( false ),
+        postpone_tqgeometry_updates( 0 ),
+        pending_tqgeometry_update( false ),
+        shade_tqgeometry_change( false ),
         border_left( 0 ),
         border_right( 0 ),
         border_top( 0 ),
@@ -141,7 +141,7 @@ Client::Client( Workspace *ws )
     deleting = false;
     keep_above = FALSE;
     keep_below = FALSE;
-    is_shape = FALSE;
+    is_tqshape = FALSE;
     motif_noborder = false;
     motif_may_move = TRUE;
     motif_may_resize = TRUE;
@@ -172,7 +172,7 @@ Client::Client( Workspace *ws )
     
     cmap = None;
 
-    frame_geometry = TQRect( 0, 0, 100, 100 ); // so that decorations don't start with size being (0,0)
+    frame_tqgeometry = TQRect( 0, 0, 100, 100 ); // so that decorations don't start with size being (0,0)
     client_size = TQSize( 100, 100 );
     custom_opacity = false;
     rule_opacity_active = 0;; //translucency rules
@@ -190,7 +190,7 @@ Client::~Client()
     assert( client == None );
     assert( frame == None && wrapper == None );
     assert( decoration == NULL );
-    assert( postpone_geometry_updates == 0 );
+    assert( postpone_tqgeometry_updates == 0 );
     assert( !check_active_modal );
     delete info;
     delete bridge;
@@ -217,7 +217,7 @@ void Client::releaseWindow( bool on_shutdown )
     removeShadow();
     drawIntersectingShadows();
     finishWindowRules();
-    ++postpone_geometry_updates;
+    ++postpone_tqgeometry_updates;
     // grab X during the release to make removing of properties, setting to withdrawn state
     // and repareting to root an atomic operation (http://lists.kde.org/?l=kde-devel&m=116448102901184&w=2)
     grabXServer();
@@ -260,7 +260,7 @@ void Client::releaseWindow( bool on_shutdown )
     wrapper = None;
     XDestroyWindow( qt_xdisplay(), frame );
     frame = None;
-    --postpone_geometry_updates; // don't use GeometryUpdatesBlocker, it would now set the geometry
+    --postpone_tqgeometry_updates; // don't use GeometryUpdatesBlocker, it would now set the tqgeometry
     checkNonExistentClients();
     deleteClient( this, Allowed );
     ungrabXServer();
@@ -279,19 +279,19 @@ void Client::destroyClient()
     removeShadow();
     drawIntersectingShadows();
     finishWindowRules();
-    ++postpone_geometry_updates;
+    ++postpone_tqgeometry_updates;
     setModal( false );
     hidden = true; // so that it's not considered visible anymore
     workspace()->clientHidden( this );
     destroyDecoration();
     cleanGrouping();
     workspace()->removeClient( this, Allowed );
-    client = None; // invalidate
+    client = None; // tqinvalidate
     XDestroyWindow( qt_xdisplay(), wrapper );
     wrapper = None;
     XDestroyWindow( qt_xdisplay(), frame );
     frame = None;
-    --postpone_geometry_updates; // don't use GeometryUpdatesBlocker, it would now set the geometry
+    --postpone_tqgeometry_updates; // don't use GeometryUpdatesBlocker, it would now set the tqgeometry
     checkNonExistentClients();
     deleteClient( this, Allowed );
     }
@@ -307,7 +307,7 @@ void Client::updateDecoration( bool check_workspace_pos, bool force )
         destroyDecoration();
     if( !noBorder())
         {
-        setMask( TQRegion()); // reset shape mask
+        setMask( TQRegion()); // reset tqshape tqmask
         decoration = workspace()->createDecoration( bridge );
         // TODO check decoration's minimum size?
         decoration->init();
@@ -345,7 +345,7 @@ void Client::destroyDecoration()
         decoration = NULL;
         TQPoint grav = calculateGravitation( true );
         border_left = border_right = border_top = border_bottom = 0;
-        setMask( TQRegion()); // reset shape mask
+        setMask( TQRegion()); // reset tqshape tqmask
         int save_workarea_diff_x = workarea_diff_x;
         int save_workarea_diff_y = workarea_diff_y;
         plainResize( sizeForClientSize( clientSize()), ForceGeometrySet );
@@ -451,7 +451,7 @@ void Client::updateFrameExtents()
 
 // Resizes the decoration, and makes sure the decoration widget gets resize event
 // even if the size hasn't changed. This is needed to make sure the decoration
-// re-layouts (e.g. when options()->moveResizeMaximizedWindows() changes,
+// re-tqlayouts (e.g. when options()->moveResizeMaximizedWindows() changes,
 // the decoration may turn on/off some borders, but the actual size
 // of the decoration stays the same).
 void Client::resizeDecoration( const TQSize& s )
@@ -502,32 +502,32 @@ void Client::setUserNoBorder( bool set )
 
 void Client::updateShape()
     {
-    // workaround for #19644 - shaped windows shouldn't have decoration
-    if( shape() && !noBorder()) 
+    // workaround for #19644 - tqshaped windows shouldn't have decoration
+    if( tqshape() && !noBorder()) 
         {
         noborder = true;
         updateDecoration( true );
         }
     updateOpacityCache();
-    if ( shape() )
+    if ( tqshape() )
         {
         XShapeCombineShape(qt_xdisplay(), frameId(), ShapeBounding,
                            clientPos().x(), clientPos().y(),
                            window(), ShapeBounding, ShapeSet);
         setShapable(TRUE);
         }
-    // !shape() mask setting is done in setMask() when the decoration
+    // !tqshape() tqmask setting is done in setMask() when the decoration
     // calls it or when the decoration is created/destroyed
 
-    if( Shape::version() >= 0x11 ) // 1.1, has input shape support
+    if( Shape::version() >= 0x11 ) // 1.1, has input tqshape support
         { // There appears to be no way to find out if a window has input
-          // shape set or not, so always propagate the input shape
-          // (it's the same like the bounding shape by default).
-          // Also, build the shape using a helper window, not directly
-          // in the frame window, because the sequence set-shape-to-frame,
-          // remove-shape-of-client, add-input-shape-of-client has the problem
-          // that after the second step there's a hole in the input shape
-          // until the real shape of the client is added and that can make
+          // tqshape set or not, so always propagate the input tqshape
+          // (it's the same like the bounding tqshape by default).
+          // Also, build the tqshape using a helper window, not directly
+          // in the frame window, because the sequence set-tqshape-to-frame,
+          // remove-tqshape-of-client, add-input-tqshape-of-client has the problem
+          // that after the second step there's a hole in the input tqshape
+          // until the real tqshape of the client is added and that can make
           // the window lose focus (which is a problem with mouse focus policies)
         static Window helper_window = None;
         if( helper_window == None )
@@ -549,7 +549,7 @@ void Client::updateShape()
 
 void Client::setMask( const TQRegion& reg, int mode )
     {
-    _mask = reg;
+    _tqmask = reg;
     if( reg.isNull())
         XShapeCombineMask( qt_xdisplay(), frameId(), ShapeBounding, 0, 0,
             None, ShapeSet );
@@ -576,11 +576,11 @@ void Client::setMask( const TQRegion& reg, int mode )
     updateShape();
     }
 
-TQRegion Client::mask() const
+TQRegion Client::tqmask() const
     {
-    if( _mask.isEmpty())
+    if( _tqmask.isEmpty())
         return TQRegion( 0, 0, width(), height());
-    return _mask;
+    return _tqmask;
     }
     
 void Client::setShapable(bool b)
@@ -838,7 +838,7 @@ void Client::setShade( ShadeMode mode )
         XChangeProperty(qt_xdisplay(), frameId(), atoms->net_wm_window_shade, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &_shade, 1L);
         // shade
         int h = height();
-        shade_geometry_change = true;
+        shade_tqgeometry_change = true;
         TQSize s( sizeForClientSize( TQSize( clientSize())));
         s.setHeight( border_top + border_bottom );
         XSelectInput( qt_xdisplay(), wrapper, ClientWinMask ); // avoid getting UnmapNotify
@@ -847,7 +847,7 @@ void Client::setShade( ShadeMode mode )
         XSelectInput( qt_xdisplay(), wrapper, ClientWinMask | SubstructureNotifyMask );
         //as we hid the unmap event, xcompmgr didn't recognize the client wid has vanished, so we'll extra inform it        
         //done xcompmgr workaround
-// FRAME       repaint( FALSE );
+// FRAME       tqrepaint( FALSE );
 //        bool wasStaticContents = testWFlags( WStaticContents );
 //        setWFlags( WStaticContents );
         int step = QMAX( 4, QABS( h - s.height() ) / as )+1;
@@ -861,7 +861,7 @@ void Client::setShade( ShadeMode mode )
 //        if ( !wasStaticContents )
 //            clearWFlags( WStaticContents );
         plainResize( s );
-        shade_geometry_change = false;
+        shade_tqgeometry_change = false;
         if( isActive())
             {
             if( was_shade_mode == ShadeHover )
@@ -876,7 +876,7 @@ void Client::setShade( ShadeMode mode )
     else 
         {
         int h = height();
-        shade_geometry_change = true;
+        shade_tqgeometry_change = true;
         TQSize s( sizeForClientSize( clientSize()));
 // FRAME       bool wasStaticContents = testWFlags( WStaticContents );
 //        setWFlags( WStaticContents );
@@ -888,12 +888,12 @@ void Client::setShade( ShadeMode mode )
             resizeDecoration( TQSize( s.width(), h ));
             // assume a border
             // we do not have time to wait for X to send us paint events
-// FRAME           repaint( 0, h - step-5, width(), step+5, TRUE);
+// FRAME           tqrepaint( 0, h - step-5, width(), step+5, TRUE);
             TQApplication::syncX();
             } while ( h < s.height() - step );
 //        if ( !wasStaticContents )
 //            clearWFlags( WStaticContents );
-        shade_geometry_change = false;
+        shade_tqgeometry_change = false;
         plainResize( s );
         if( shade_mode == ShadeHover || shade_mode == ShadeActivated )
             setActive( TRUE );
@@ -1051,7 +1051,7 @@ void Client::drawIntersectingShadows() {
         // active window has a shadow.
         return;
 
-    region = shapeBoundingRegion;
+    region = tqshapeBoundingRegion;
 
     // Generate list of Clients whose shadows need to be redrawn. That is,
     // those that are currently intersecting or intersected by other windows or
@@ -1089,7 +1089,7 @@ void Client::drawOverlappingShadows(bool waitForMe)
         // active window has a shadow.
         return;
 
-    region = shapeBoundingRegion;
+    region = tqshapeBoundingRegion;
 
     stacking_order = workspace()->stackingOrder();
     for (it = stacking_order.fromLast(); it != stacking_order.end(); --it) {
@@ -1140,7 +1140,7 @@ void Client::drawOverlappingShadows(bool waitForMe)
 
 /*!
    Draw shadow after some time has elapsed, to give recently exposed windows a
-   chance to repaint before a shadow gradient is drawn over them.
+   chance to tqrepaint before a shadow gradient is drawn over them.
  */
 void Client::drawDelayedShadow()
 {
@@ -1163,7 +1163,7 @@ void Client::drawShadowAfter(Client *after)
 void Client::drawShadow()
 {
     Window shadows[2];
-    XRectangle *shapes;
+    XRectangle *tqshapes;
     int i, count, ordering;
 
     // If we are waiting for another Client's shadow to be drawn, stop waiting now
@@ -1179,31 +1179,31 @@ void Client::drawShadow()
      * this type of window. Otherwise, drawIntersectingShadows() won't update
      * properly when this window is moved/resized/hidden/closed.
      */
-    shapes = XShapeGetRectangles(qt_xdisplay(), frameId(), ShapeBounding,
+    tqshapes = XShapeGetRectangles(qt_xdisplay(), frameId(), ShapeBounding,
             &count, &ordering);
-    if (!shapes)
+    if (!tqshapes)
         // XShape extension not supported
-        shapeBoundingRegion = TQRegion(x(), y(), width(), height());
+        tqshapeBoundingRegion = TQRegion(x(), y(), width(), height());
     else {
-        shapeBoundingRegion = TQRegion();
+        tqshapeBoundingRegion = TQRegion();
         for (i = 0; i < count; i++) {
             // Translate XShaped window into a TQRegion
-            TQRegion shapeRectangle(shapes[i].x, shapes[i].y, shapes[i].width,
-                    shapes[i].height);
-            shapeBoundingRegion += shapeRectangle;
+            TQRegion tqshapeRectangle(tqshapes[i].x, tqshapes[i].y, tqshapes[i].width,
+                    tqshapes[i].height);
+            tqshapeBoundingRegion += tqshapeRectangle;
         }
         if (isShade())
             // Since XResize() doesn't change a window's XShape regions, ensure that
-            // shapeBoundingRegion is not taller than the window's shaded height,
+            // tqshapeBoundingRegion is not taller than the window's shaded height,
             // or the bottom shadow will appear to be missing
-            shapeBoundingRegion &= TQRegion(0, 0, width(), height());
-        shapeBoundingRegion.translate(x(), y());
+            tqshapeBoundingRegion &= TQRegion(0, 0, width(), height());
+        tqshapeBoundingRegion.translate(x(), y());
     }
 
     if (!isShadowed() || hidden || isMinimized() ||
             maximizeMode() == MaximizeFull ||
             !options->shadowWindowType(windowType())) {
-        XFree(shapes);
+        XFree(tqshapes);
 
         // Tell whatever Clients are listening that this Client's shadow has been drawn.
         // It hasn't, but there's no sense waiting for something that won't happen.
@@ -1237,9 +1237,9 @@ void Client::drawShadow()
             ButtonPressMask | ButtonReleaseMask | StructureNotifyMask);
     shadowWidget->installEventFilter(this);
 
-    if (!shapes) {
+    if (!tqshapes) {
         // XShape extension not supported
-        exposedRegion = getExposedRegion(shapeBoundingRegion, shadow.x(),
+        exposedRegion = getExposedRegion(tqshapeBoundingRegion, shadow.x(),
                 shadow.y(), shadow.width(), shadow.height(), thickness,
                 xOffset, yOffset);
         shadowRegion.region = exposedRegion;
@@ -1247,7 +1247,7 @@ void Client::drawShadow()
         shadowRegions.append(shadowRegion);
 
         if (opacityCache->isNull())
-            imposeRegionShadow(shadowPixmap, shapeBoundingRegion,
+            imposeRegionShadow(shadowPixmap, tqshapeBoundingRegion,
                     exposedRegion, thickness,
                     options->shadowOpacity(isActive()));
         else
@@ -1258,7 +1258,7 @@ void Client::drawShadow()
         TQMemArray<TQRect>::Iterator it, itEnd;
         XRectangle *shadowShapes;
 
-        exposedRegion = getExposedRegion(shapeBoundingRegion, shadow.x(),
+        exposedRegion = getExposedRegion(tqshapeBoundingRegion, shadow.x(),
                 shadow.y(), shadow.width(), shadow.height(), thickness,
                 xOffset, yOffset);
         shadowRegion.region = exposedRegion;
@@ -1284,14 +1284,14 @@ void Client::drawShadow()
         delete [] shadowShapes;
 
         if (opacityCache->isNull())
-            imposeRegionShadow(shadowPixmap, shapeBoundingRegion,
+            imposeRegionShadow(shadowPixmap, tqshapeBoundingRegion,
                     exposedRegion, thickness,
                     options->shadowOpacity(isActive()));
         else
             imposeCachedShadow(shadowPixmap, exposedRegion);
     }
 
-    XFree(shapes);
+    XFree(tqshapes);
 
     // Set the background pixmap
     //shadowPixmap.convertFromImage(shadowImage);
@@ -1367,9 +1367,9 @@ TQRegion Client::getExposedRegion(TQRegion occludedRegion, int x, int y, int w,
         occludedRects = occludedRegion.rects();
         itEnd = occludedRects.end();
         for (it = occludedRects.begin(); it != itEnd; ++it) {
-            // Expand each of the occluded region's shape rectangles to contain
+            // Expand each of the occluded region's tqshape rectangles to contain
             // where a shadow of the specified thickness will be drawn. Create
-            // a new TQRegion that contains the expanded occluded region
+            // a new TQRegion that tqcontains the expanded occluded region
             it->setTop(it->top() - thickness + yOffset);
             it->setLeft(it->left() - thickness + xOffset);
             it->setRight(it->right() + thickness + xOffset);
@@ -1423,11 +1423,11 @@ void Client::imposeCachedShadow(TQPixmap &pixmap, TQRegion exposed)
             for (y = 0; y < subH; y++) {
                 opacity = (*(opacityCache))[(zeroY + y) * w + zeroX + x];
                 pixel = image.pixel(x, y);
-                pixelRed = qRed(pixel);
-                pixelGreen = qGreen(pixel);
-                pixelBlue = qBlue(pixel);
+                pixelRed = tqRed(pixel);
+                pixelGreen = tqGreen(pixel);
+                pixelBlue = tqBlue(pixel);
                 image.setPixel(x, y,
-                        qRgb((int)(pixelRed + (red - pixelRed) * opacity),
+                        tqRgb((int)(pixelRed + (red - pixelRed) * opacity),
                             (int)(pixelGreen + (green - pixelGreen) * opacity),
                             (int)(pixelBlue + (blue - pixelBlue) * opacity)));
             }
@@ -1515,7 +1515,7 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
                         // irTop is not necessarily larger than irBottom and
                         // yIncrement isn't necessarily positive
                         for (i = irLeft; i <= irRight; i++) {
-                            if (occluded.contains(TQPoint(i, j)))
+                            if (occluded.tqcontains(TQPoint(i, j)))
                                 intersectCount++;
                         }
                     }
@@ -1525,7 +1525,7 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
                         intersectCount = 0;
 
                     for (i = irLeft; i <= irRight; i++) {
-                        if (occluded.contains(TQPoint(i, irBottom)))
+                        if (occluded.tqcontains(TQPoint(i, irBottom)))
                             intersectCount++;
                     }
                 }
@@ -1535,16 +1535,16 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
 
                 (*(opacityCache))[(zeroY + y) * w + zeroX + x] = opacity;
                 pixel = image.pixel(x, y);
-                pixelRed = qRed(pixel);
-                pixelGreen = qGreen(pixel);
-                pixelBlue = qBlue(pixel);
+                pixelRed = tqRed(pixel);
+                pixelGreen = tqGreen(pixel);
+                pixelBlue = tqBlue(pixel);
                 image.setPixel(x, y,
-                        qRgb((int)(pixelRed + (red - pixelRed) * opacity),
+                        tqRgb((int)(pixelRed + (red - pixelRed) * opacity),
                             (int)(pixelGreen + (green - pixelGreen) * opacity),
                             (int)(pixelBlue + (blue - pixelBlue) * opacity)));
 
                 for (i = irLeft; i <= irRight; i++) {
-                    if (occluded.contains(TQPoint(i, irTop)))
+                    if (occluded.tqcontains(TQPoint(i, irTop)))
                         intersectCount--;
                 }
 
@@ -1554,12 +1554,12 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
 
             irTop += yIncrement;
             for (j = irTop; j != irBottom; j += yIncrement) {
-                if (occluded.contains(TQPoint(irLeft, j)))
+                if (occluded.tqcontains(TQPoint(irLeft, j)))
                     intersectCount--;
             }
             irRight++;
             for (j = irTop; j != irBottom; j += yIncrement) {
-                if (occluded.contains(TQPoint(irRight, j)))
+                if (occluded.tqcontains(TQPoint(irRight, j)))
                     intersectCount++;
             }
 
@@ -1602,7 +1602,7 @@ void Client::setMappingState(int s)
     XChangeProperty(qt_xdisplay(), window(), qt_wm_state, qt_wm_state, 32,
         PropModeReplace, (unsigned char *)data, 2);
 
-    if( was_unmanaged ) // manage() did postpone_geometry_updates = 1, now it's ok to finally set the geometry
+    if( was_unmanaged ) // manage() did postpone_tqgeometry_updates = 1, now it's ok to finally set the tqgeometry
         postponeGeometryUpdates( false );
     }
 
@@ -1652,7 +1652,7 @@ void Client::rawHide()
 void Client::sendClientMessage(Window w, Atom a, Atom protocol, long data1, long data2, long data3)
     {
     XEvent ev;
-    long mask;
+    long tqmask;
 
     memset(&ev, 0, sizeof(ev));
     ev.xclient.type = ClientMessage;
@@ -1664,10 +1664,10 @@ void Client::sendClientMessage(Window w, Atom a, Atom protocol, long data1, long
     ev.xclient.data.l[2] = data1;
     ev.xclient.data.l[3] = data2;
     ev.xclient.data.l[4] = data3;
-    mask = 0L;
+    tqmask = 0L;
     if (w == qt_xrootwin())
-      mask = SubstructureRedirectMask;        /* magic! */
-    XSendEvent(qt_xdisplay(), w, False, mask, &ev);
+      tqmask = SubstructureRedirectMask;        /* magic! */
+    XSendEvent(qt_xdisplay(), w, False, tqmask, &ev);
     }
 
 /*
@@ -1894,14 +1894,14 @@ int Client::screen() const
     {
     if( !options->xineramaEnabled )
         return 0;
-    return workspace()->screenNumber( geometry().center());
+    return workspace()->screenNumber( tqgeometry().center());
     }
 
 bool Client::isOnScreen( int screen ) const
     {
     if( !options->xineramaEnabled )
         return screen == 0;
-    return workspace()->screenGeometry( screen ).intersects( geometry());
+    return workspace()->screenGeometry( screen ).intersects( tqgeometry());
     }
 
 // performs activation and/or raising of the window
@@ -2391,7 +2391,7 @@ NET::WindowType Client::windowType( bool direct, int supported_types ) const
     // TODO change this to rule
     const char* const oo_prefix = "openoffice.org"; // TQCString has no startsWith()
     // oo_prefix is lowercase, because resourceClass() is forced to be lowercase
-    if( qstrncmp( resourceClass(), oo_prefix, strlen( oo_prefix )) == 0 && wt == NET::Dialog )
+    if( tqstrncmp( resourceClass(), oo_prefix, strlen( oo_prefix )) == 0 && wt == NET::Dialog )
         wt = NET::Normal; // see bug #66065
     if( wt == NET::Unknown ) // this is more or less suggested in NETWM spec
         wt = isTransient() ? NET::Dialog : NET::Normal;
@@ -2399,7 +2399,7 @@ NET::WindowType Client::windowType( bool direct, int supported_types ) const
     }
 
 /*!
-  Sets an appropriate cursor shape for the logical mouse position \a m
+  Sets an appropriate cursor tqshape for the logical mouse position \a m
 
  */
 void Client::setCursor( Position m )

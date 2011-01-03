@@ -31,7 +31,7 @@
 
 #include "konqbookmarkmanager.h"
 
-const Q_UINT32 KonqHistoryManager::s_historyVersion = 3;
+const TQ_UINT32 KonqHistoryManager::s_historyVersion = 3;
 
 KonqHistoryManager::KonqHistoryManager( TQObject *parent, const char *name )
     : KParts::HistoryProvider( parent, name ),
@@ -48,7 +48,7 @@ KonqHistoryManager::KonqHistoryManager( TQObject *parent, const char *name )
 
     m_history.setAutoDelete( true );
     m_filename = locateLocal( "data",
-			      TQString::fromLatin1("konqueror/konq_history" ));
+			      TQString::tqfromLatin1("konqueror/konq_history" ));
 
     if ( !kapp->dcopClient()->isAttached() )
 	kapp->dcopClient()->attach();
@@ -102,7 +102,7 @@ bool KonqHistoryManager::loadHistory()
     TQDataStream crcStream( data, IO_ReadOnly );
 
     if ( !fileStream.atEnd() ) {
-	Q_UINT32 version;
+	TQ_UINT32 version;
         fileStream >> version;
 
         TQDataStream *stream = &fileStream;
@@ -111,7 +111,7 @@ bool KonqHistoryManager::loadHistory()
         bool crcOk = false;
 
         if ( version == 2 || version == 3) {
-            Q_UINT32 crc;
+            TQ_UINT32 crc;
             crcChecked = true;
             fileStream >> crc >> data;
             crcOk = crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() ) == crc;
@@ -132,7 +132,7 @@ bool KonqHistoryManager::loadHistory()
 	    // binary file, this would make backups impossible (they would clear
 	    // themselves on startup, because all entries expire).
 	    // [But V1 and V2 formats did it, so we do a dummy read]
-	    Q_UINT32 dummy;
+	    TQ_UINT32 dummy;
 	    *stream >> dummy;
 	    *stream >> dummy;
 
@@ -224,7 +224,7 @@ bool KonqHistoryManager::saveHistory()
     //For DCOP, transfer strings instead - wire compat.
     KonqHistoryEntry::marshalURLAsStrings = true;
 
-    Q_UINT32 crc = crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() );
+    TQ_UINT32 crc = crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() );
     *fileStream << crc << data;
 
     file.close();
@@ -295,11 +295,11 @@ void KonqHistoryManager::addToHistory( bool pending, const KURL& _url,
     // konqueror's window caption).
     if ( !pending && u != title )
 	entry.title = title;
-    entry.firstVisited = TQDateTime::currentDateTime();
+    entry.firstVisited = TQDateTime::tqcurrentDateTime();
     entry.lastVisited = entry.firstVisited;
 
     // always remove from pending if available, otherwise the else branch leaks
-    // if the map already contains an entry for this key.
+    // if the map already tqcontains an entry for this key.
     TQMapIterator<TQString,KonqHistoryEntry*> it = m_pending.find( u );
     if ( it != m_pending.end() ) {
         delete it.data();
@@ -342,7 +342,7 @@ void KonqHistoryManager::insert( const TQString& url )
     // Local URL -> add to history
     KonqHistoryEntry entry;
     entry.url = u;
-    entry.firstVisited = TQDateTime::currentDateTime();
+    entry.firstVisited = TQDateTime::tqcurrentDateTime();
     entry.lastVisited = entry.firstVisited;
     emitAddToHistory( entry );
 }
@@ -419,22 +419,22 @@ void KonqHistoryManager::emitClear()
 			      "notifyClear(TQCString)", data );
 }
 
-void KonqHistoryManager::emitSetMaxCount( Q_UINT32 count )
+void KonqHistoryManager::emitSetMaxCount( TQ_UINT32 count )
 {
     TQByteArray data;
     TQDataStream stream( data, IO_WriteOnly );
     stream << count << objId();
     kapp->dcopClient()->send( "konqueror*", "KonqHistoryManager",
-			      "notifyMaxCount(Q_UINT32, TQCString)", data );
+			      "notifyMaxCount(TQ_UINT32, TQCString)", data );
 }
 
-void KonqHistoryManager::emitSetMaxAge( Q_UINT32 days )
+void KonqHistoryManager::emitSetMaxAge( TQ_UINT32 days )
 {
     TQByteArray data;
     TQDataStream stream( data, IO_WriteOnly );
     stream << days << objId();
     kapp->dcopClient()->send( "konqueror*", "KonqHistoryManager",
-			      "notifyMaxAge(Q_UINT32, TQCString)", data );
+			      "notifyMaxAge(TQ_UINT32, TQCString)", data );
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -487,7 +487,7 @@ void KonqHistoryManager::notifyHistoryEntry( KonqHistoryEntry e,
     emit entryAdded( entry );
 }
 
-void KonqHistoryManager::notifyMaxCount( Q_UINT32 count, TQCString )
+void KonqHistoryManager::notifyMaxCount( TQ_UINT32 count, TQCString )
 {
     m_maxCount = count;
     clearPending();
@@ -503,7 +503,7 @@ void KonqHistoryManager::notifyMaxCount( Q_UINT32 count, TQCString )
     }
 }
 
-void KonqHistoryManager::notifyMaxAge( Q_UINT32 days, TQCString  )
+void KonqHistoryManager::notifyMaxAge( TQ_UINT32 days, TQCString  )
 {
     m_maxAgeDays = days;
     clearPending();
@@ -589,7 +589,7 @@ void KonqHistoryManager::notifyRemove( KURL::List urls, TQCString )
 // compatibility fallback, try to load the old completion history
 bool KonqHistoryManager::loadFallback()
 {
-    TQString file = locateLocal( "config", TQString::fromLatin1("konq_history"));
+    TQString file = locateLocal( "config", TQString::tqfromLatin1("konq_history"));
     if ( file.isEmpty() )
 	return false;
 
@@ -646,7 +646,7 @@ KonqHistoryEntry * KonqHistoryManager::createFallbackEntry(const TQString& item)
 	entry->url = u;
 	entry->numberOfTimesVisited = weight;
 	// to make it not expire immediately...
-	entry->lastVisited = TQDateTime::currentDateTime();
+	entry->lastVisited = TQDateTime::tqcurrentDateTime();
     }
 
     return entry;
@@ -655,7 +655,7 @@ KonqHistoryEntry * KonqHistoryManager::createFallbackEntry(const TQString& item)
 KonqHistoryEntry * KonqHistoryManager::findEntry( const KURL& url )
 {
     // small optimization (dict lookup) for items _not_ in our history
-    if ( !KParts::HistoryProvider::contains( url.url() ) )
+    if ( !KParts::HistoryProvider::tqcontains( url.url() ) )
         return 0L;
 
     return m_history.findEntry( url );

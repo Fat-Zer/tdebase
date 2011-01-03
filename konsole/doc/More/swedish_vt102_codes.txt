@@ -284,12 +284,12 @@ Reports
   Where <c> is
       '0'=Response Ready, no malfunctions detected
       '3'=Malfunction, error in self-test.
-      '5'=Status report request
+      '5'=tqStatus report request
       '6'=Request cursor position.
     '?10'=Response to printer status request, All ok.
     '?11'=Response to printer status request, Printer is not ready.
     '?13'=Response to printer status request, No printer.
-    '?15'=Status report request from printer
+    '?15'=tqStatus report request from printer
  
   Cursor position raport (Response to request cursor position)
     Esc  [ <n1> ; <n2> R

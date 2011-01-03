@@ -66,7 +66,7 @@ KdmItem::KdmItem( TQWidget *parent, const TQDomNode &node, const char *name )
 void
 KdmItem::init( const TQDomNode &node, const char * )
 {
-	// Set default layout for every item
+	// Set default tqlayout for every item
 	currentManager = MNone;
 	pos.x = pos.y = 0;
 	pos.width = pos.height = 1;
@@ -146,7 +146,7 @@ KdmItem::show( bool force )
 
 	if (myWidget)
 		myWidget->show();
-	// XXX showing of layouts not implemented, prolly pointless anyway
+	// XXX showing of tqlayouts not implemented, prolly pointless anyway
 
 	needUpdate();
 }
@@ -170,7 +170,7 @@ KdmItem::hide( bool force )
 
 	if (myWidget)
 		myWidget->hide();
-	// XXX hiding of layouts not implemented, prolly pointless anyway
+	// XXX hiding of tqlayouts not implemented, prolly pointless anyway
 
 	needUpdate();
 }
@@ -236,14 +236,14 @@ KdmItem::setLayoutItem( TQLayoutItem *item )
 	// XXX hiding not supported - it think it's pointless here
 	if (myLayoutItem->widget())
 		connect( myLayoutItem->widget(), TQT_SIGNAL(destroyed()),
-		         TQT_SLOT(layoutItemGone()) );
-	else if (myLayoutItem->layout())
-		connect( myLayoutItem->layout(), TQT_SIGNAL(destroyed()),
-		         TQT_SLOT(layoutItemGone()) );
+		         TQT_SLOT(tqlayoutItemGone()) );
+	else if (myLayoutItem->tqlayout())
+		connect( myLayoutItem->tqlayout(), TQT_SIGNAL(destroyed()),
+		         TQT_SLOT(tqlayoutItemGone()) );
 }
 
 void
-KdmItem::layoutItemGone()
+KdmItem::tqlayoutItemGone()
 {
 	myLayoutItem = 0;
 }
@@ -278,7 +278,7 @@ KdmItem::setGeometry( const TQRect &newGeometry, bool force )
 	if (fixedManager && !fixedManager->isEmpty())
 		fixedManager->update( newGeometry, force );
 
-	// TODO send *selective* repaint signal
+	// TODO send *selective* tqrepaint signal
 }
 
 void
@@ -295,8 +295,8 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
             // Maybe set a darker version of the background instead of an exact copy?
             if ( myWidget && myWidget->isA( "KListView" ) ) {
                 TQPixmap copy( myWidget->size() );
-                kdDebug() <<  myWidget->geometry() << " " << area << " " << myWidget->size() << endl;
-                bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), Qt::CopyROP );
+                kdDebug() <<  myWidget->tqgeometry() << " " << area << " " << myWidget->size() << endl;
+                bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->tqgeometry(), Qt::CopyROP );
                 // Lighten it slightly
                 TQImage lightVersion;
                 lightVersion = copy.convertToImage();
@@ -368,7 +368,7 @@ KdmItem::mouseEvent( int x, int y, bool pressed, bool released )
 	}
 
 	ItemState oldState = state;
-	if (area.contains( x, y )) {
+	if (area.tqcontains( x, y )) {
 		if (released && oldState == Sactive) {
 			if (buttonParent)
 				emit activated( id );
@@ -415,12 +415,12 @@ KdmItem::statusChanged()
 // BEGIN protected inheritable
 
 QSize
-KdmItem::sizeHint()
+KdmItem::tqsizeHint()
 {
 	if (myWidget)
 		return myWidget->size();
 	if (myLayoutItem)
-		return myLayoutItem->sizeHint();
+		return myLayoutItem->tqsizeHint();
 	int w = pos.wType == DTpixel ? kAbs( pos.width ) : -1,
 	    h = pos.hType == DTpixel ? kAbs( pos.height ) : -1;
 	return TQSize( w, h );
@@ -429,7 +429,7 @@ KdmItem::sizeHint()
 QRect
 KdmItem::placementHint( const TQRect &parentRect )
 {
-	TQSize hintedSize = sizeHint();
+	TQSize hintedSize = tqsizeHint();
 	TQSize boxHint;
 
 	int x = parentRect.left(),
@@ -446,7 +446,7 @@ KdmItem::placementHint( const TQRect &parentRect )
 		else {
 			if (!boxManager)
 				return parentRect;
-			boxHint = boxManager->sizeHint();
+			boxHint = boxManager->tqsizeHint();
 		}
 		kdDebug() << timestamp() << " boxHint " << boxHint << endl;
 	}
@@ -456,21 +456,21 @@ KdmItem::placementHint( const TQRect &parentRect )
 	else if (pos.xType == DTnpixel)
 		x = parentRect.right() - pos.x;
 	else if (pos.xType == DTpercent)
-		x += qRound( parentRect.width() / 100.0 * pos.x );
+		x += tqRound( parentRect.width() / 100.0 * pos.x );
 
 	if (pos.yType == DTpixel)
 		y += pos.y;
 	else if (pos.yType == DTnpixel)
 		y = parentRect.bottom() - pos.y;
 	else if (pos.yType == DTpercent)
-		y += qRound( parentRect.height() / 100.0 * pos.y );
+		y += tqRound( parentRect.height() / 100.0 * pos.y );
 
 	if (pos.wType == DTpixel)
 		w = pos.width;
 	else if (pos.wType == DTnpixel)
 		w -= pos.width;
 	else if (pos.wType == DTpercent)
-		w = qRound( parentRect.width() / 100.0 * pos.width );
+		w = tqRound( parentRect.width() / 100.0 * pos.width );
 	else if (pos.wType == DTbox)
 		w = boxHint.width();
 	else if (hintedSize.width() > 0)
@@ -483,7 +483,7 @@ KdmItem::placementHint( const TQRect &parentRect )
 	else if (pos.hType == DTnpixel)
 		h -= pos.height;
 	else if (pos.hType == DTpercent)
-		h = qRound( parentRect.height() / 100.0 * pos.height );
+		h = tqRound( parentRect.height() / 100.0 * pos.height );
 	else if (pos.hType == DTbox)
 		h = boxHint.height();
 	else if (hintedSize.height() > 0) {
@@ -496,7 +496,7 @@ KdmItem::placementHint( const TQRect &parentRect )
 
 	// we choose to take the hinted size, but it's better to listen to the aspect ratio
 	if (pos.wType == DTnone && pos.hType != DTnone && h && w) {
-	        w = qRound(float(hintedSize.width() * h) / hintedSize.height());
+	        w = tqRound(float(hintedSize.width() * h) / hintedSize.height());
 	}
 
 	// defaults to center
@@ -559,7 +559,7 @@ KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 		dType = DTpercent;
 		TQString sCopy = s;
 		sCopy.remove( p, 1 );
-		sCopy.replace( ',', '.' );
+		sCopy.tqreplace( ',', '.' );
 		val = (int)sCopy.toDouble();
 	} else {		// int value
 		dType = DTpixel;
@@ -568,7 +568,7 @@ KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 			sCopy.remove( 0, 1 );
 			dType = DTnpixel;
 		}
-		sCopy.replace( ',', '.' );
+		sCopy.tqreplace( ',', '.' );
 		val = (int)sCopy.toDouble();
 	}
 }
@@ -614,7 +614,7 @@ KdmItem::setFixedLayout( const TQDomNode &node )
 }
 
 TQWidget *
-KdmItem::parentWidget() const
+KdmItem::tqparentWidget() const
 {
   if (myWidget)
     return myWidget;
@@ -623,7 +623,7 @@ KdmItem::parentWidget() const
 
   if (parent()->qt_cast("TQWidget"))
     return (TQWidget*)parent();
-  return ((KdmItem*)parent())->parentWidget();
+  return ((KdmItem*)parent())->tqparentWidget();
 }
 
 #include "kdmitem.moc"

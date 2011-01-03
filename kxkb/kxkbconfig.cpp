@@ -32,10 +32,10 @@ const char* DEFAULT_MODEL = "pc104";
 
 LayoutUnit KxkbConfig::getDefaultLayout()
 {
-	if( m_layouts.size() == 0 )
+	if( m_tqlayouts.size() == 0 )
 		return DEFAULT_LAYOUT_UNIT;
 	
-	return m_layouts[0];
+	return m_tqlayouts[0];
 }
 
 bool KxkbConfig::load(int loadMode) 
@@ -43,7 +43,7 @@ bool KxkbConfig::load(int loadMode)
 	KConfig *config = new KConfig("kxkbrc", true, false);
 	config->setGroup("Layout");
 
-// Even if the layouts have been disabled we still want to set Xkb options
+// Even if the tqlayouts have been disabled we still want to set Xkb options
 // user can always switch them off now in the "Options" tab
 	m_enableXkbOptions = config->readBoolEntry("EnableXkbOptions", false);
 	
@@ -63,33 +63,33 @@ bool KxkbConfig::load(int loadMode)
 	m_model = config->readEntry("Model", DEFAULT_MODEL);
 	kdDebug() << "Model: " << m_model << endl;
 	
-	TQStringList layoutList;
+	TQStringList tqlayoutList;
 	if( config->hasKey("LayoutList") ) {
-		layoutList = config->readListEntry("LayoutList");
+		tqlayoutList = config->readListEntry("LayoutList");
 	}
 	else { // old config
 		TQString mainLayout = config->readEntry("Layout", DEFAULT_LAYOUT_UNIT.toPair());
-		layoutList = config->readListEntry("Additional");
-		layoutList.prepend(mainLayout);
+		tqlayoutList = config->readListEntry("Additional");
+		tqlayoutList.prepend(mainLayout);
 	}
-	if( layoutList.count() == 0 )
-		layoutList.append("us");
+	if( tqlayoutList.count() == 0 )
+		tqlayoutList.append("us");
 	
-	m_layouts.clear();
-	for(TQStringList::ConstIterator it = layoutList.begin(); it != layoutList.end() ; ++it) {
-		m_layouts.append( LayoutUnit(*it) );
-		kdDebug() << " layout " << LayoutUnit(*it).toPair() << " in list: " << m_layouts.contains( LayoutUnit(*it) ) << endl;
+	m_tqlayouts.clear();
+	for(TQStringList::ConstIterator it = tqlayoutList.begin(); it != tqlayoutList.end() ; ++it) {
+		m_tqlayouts.append( LayoutUnit(*it) );
+		kdDebug() << " tqlayout " << LayoutUnit(*it).toPair() << " in list: " << m_tqlayouts.tqcontains( LayoutUnit(*it) ) << endl;
 	}
 
-	kdDebug() << "Found " << m_layouts.count() << " layouts, default is " << getDefaultLayout().toPair() << endl;
+	kdDebug() << "Found " << m_tqlayouts.count() << " tqlayouts, default is " << getDefaultLayout().toPair() << endl;
 	
 	TQStringList displayNamesList = config->readListEntry("DisplayNames", ',');
 	for(TQStringList::ConstIterator it = displayNamesList.begin(); it != displayNamesList.end() ; ++it) {
 		TQStringList displayNamePair = TQStringList::split(':', *it );
 		if( displayNamePair.count() == 2 ) {
-			LayoutUnit layoutUnit( displayNamePair[0] );
-			if( m_layouts.contains( layoutUnit ) ) {
-				m_layouts[m_layouts.findIndex(layoutUnit)].displayName = displayNamePair[1].left(3);
+			LayoutUnit tqlayoutUnit( displayNamePair[0] );
+			if( m_tqlayouts.tqcontains( tqlayoutUnit ) ) {
+				m_tqlayouts[m_tqlayouts.findIndex(tqlayoutUnit)].displayName = displayNamePair[1].left(3);
 			}
 		}
 	}
@@ -101,9 +101,9 @@ bool KxkbConfig::load(int loadMode)
 			for(TQStringList::ConstIterator it = includeList.begin(); it != includeList.end() ; ++it) {
 				TQStringList includePair = TQStringList::split(':', *it );
 				if( includePair.count() == 2 ) {
-					LayoutUnit layoutUnit( includePair[0] );
-					if( m_layouts.contains( layoutUnit ) ) {
-						m_layouts[m_layouts.findIndex(layoutUnit)].includeGroup = includePair[1];
+					LayoutUnit tqlayoutUnit( includePair[0] );
+					if( m_tqlayouts.tqcontains( tqlayoutUnit ) ) {
+						m_tqlayouts[m_tqlayouts.findIndex(tqlayoutUnit)].includeGroup = includePair[1];
 						kdDebug() << "Got inc group: " << includePair[0] << ": " << includePair[1] << endl;
 					}
 				}
@@ -113,13 +113,13 @@ bool KxkbConfig::load(int loadMode)
 			kdDebug() << "Old includes..." << endl;
 			TQStringList includeList = config->readListEntry("Includes");
 			for(TQStringList::ConstIterator it = includeList.begin(); it != includeList.end() ; ++it) {
-				TQString layoutName = LayoutUnit::parseLayout( *it );
-				LayoutUnit layoutUnit( layoutName, "" );
-				kdDebug() << "old layout for inc: " << layoutUnit.toPair() << " included " << m_layouts.contains( layoutUnit ) << endl;
-				if( m_layouts.contains( layoutUnit ) ) {
+				TQString tqlayoutName = LayoutUnit::parseLayout( *it );
+				LayoutUnit tqlayoutUnit( tqlayoutName, "" );
+				kdDebug() << "old tqlayout for inc: " << tqlayoutUnit.toPair() << " included " << m_tqlayouts.tqcontains( tqlayoutUnit ) << endl;
+				if( m_tqlayouts.tqcontains( tqlayoutUnit ) ) {
 					TQString variantName = LayoutUnit::parseVariant(*it);
-					m_layouts[m_layouts.findIndex(layoutUnit)].includeGroup = variantName;
-					kdDebug() << "Got inc group: " << layoutUnit.toPair() << ": " <<  variantName << endl;
+					m_tqlayouts[m_tqlayouts.findIndex(tqlayoutUnit)].includeGroup = variantName;
+					kdDebug() << "Got inc group: " << tqlayoutUnit.toPair() << ": " <<  variantName << endl;
 				}
 			}
 		}
@@ -128,24 +128,24 @@ bool KxkbConfig::load(int loadMode)
 	m_showSingle = config->readBoolEntry("ShowSingle", false);
 	m_showFlag = config->readBoolEntry("ShowFlag", true);
 	
-	TQString layoutOwner = config->readEntry("SwitchMode", "Global");
+	TQString tqlayoutOwner = config->readEntry("SwitchMode", "Global");
 
-	if( layoutOwner == "WinClass" ) {
+	if( tqlayoutOwner == "WinClass" ) {
 		m_switchingPolicy = SWITCH_POLICY_WIN_CLASS;
 	}
-	else if( layoutOwner == "Window" ) {
+	else if( tqlayoutOwner == "Window" ) {
 		m_switchingPolicy = SWITCH_POLICY_WINDOW;
 	}
-	else /*if( layoutOwner == "Global" )*/ {
+	else /*if( tqlayoutOwner == "Global" )*/ {
 		m_switchingPolicy = SWITCH_POLICY_GLOBAL;
 	}
 	
-	if( m_layouts.count() < 2 && m_switchingPolicy != SWITCH_POLICY_GLOBAL ) {
+	if( m_tqlayouts.count() < 2 && m_switchingPolicy != SWITCH_POLICY_GLOBAL ) {
 		kdWarning() << "Layout count is less than 2, using Global switching policy" << endl;
 		m_switchingPolicy = SWITCH_POLICY_GLOBAL;
 	}
 	
-	kdDebug() << "Layout owner mode " << layoutOwner << endl;
+	kdDebug() << "Layout owner mode " << tqlayoutOwner << endl;
 	
 	m_stickySwitching = config->readBoolEntry("StickySwitching", false);
 	m_stickySwitchingDepth = config->readEntry("StickySwitchingDepth", "2").toInt();
@@ -153,14 +153,14 @@ bool KxkbConfig::load(int loadMode)
 		m_stickySwitchingDepth = 2;
 
 	if( m_stickySwitching == true ) {
-		if( m_layouts.count() < 3 ) {
+		if( m_tqlayouts.count() < 3 ) {
 			kdWarning() << "Layout count is less than 3, sticky switching will be off" << endl;
 			m_stickySwitching = false;
 		}
 		else	
-		if( (int)m_layouts.count() - 1 < m_stickySwitchingDepth ) {
-			kdWarning() << "Sticky switching depth is more than layout count -1, adjusting..." << endl;
-			m_stickySwitchingDepth = m_layouts.count() - 1;
+		if( (int)m_tqlayouts.count() - 1 < m_stickySwitchingDepth ) {
+			kdWarning() << "Sticky switching depth is more than tqlayout count -1, adjusting..." << endl;
+			m_stickySwitchingDepth = m_tqlayouts.count() - 1;
 		}
 	}
 
@@ -180,31 +180,31 @@ void KxkbConfig::save()
 	config->writeEntry("ResetOldOptions", m_resetOldOptions);
 	config->writeEntry("Options", m_options );
 
-	TQStringList layoutList;
+	TQStringList tqlayoutList;
 	TQStringList includeList;
 	TQStringList displayNamesList;
 	
 	TQValueList<LayoutUnit>::ConstIterator it;
-	for(it = m_layouts.begin(); it != m_layouts.end(); ++it) {
-		const LayoutUnit& layoutUnit = *it;
+	for(it = m_tqlayouts.begin(); it != m_tqlayouts.end(); ++it) {
+		const LayoutUnit& tqlayoutUnit = *it;
 		
-		layoutList.append( layoutUnit.toPair() );
+		tqlayoutList.append( tqlayoutUnit.toPair() );
 		
-		if( layoutUnit.includeGroup.isEmpty() == false ) {
-			TQString incGroupUnit = TQString("%1:%2").arg(layoutUnit.toPair(), layoutUnit.includeGroup);
+		if( tqlayoutUnit.includeGroup.isEmpty() == false ) {
+			TQString incGroupUnit = TQString("%1:%2").arg(tqlayoutUnit.toPair(), tqlayoutUnit.includeGroup);
 			includeList.append( incGroupUnit );
 		}
 	
-		TQString displayName( layoutUnit.displayName );
-		kdDebug() << " displayName " << layoutUnit.toPair() << " : " << displayName << endl;
-		if( displayName.isEmpty() == false && displayName != layoutUnit.layout ) {
-			displayName = TQString("%1:%2").arg(layoutUnit.toPair(), displayName);
+		TQString displayName( tqlayoutUnit.displayName );
+		kdDebug() << " displayName " << tqlayoutUnit.toPair() << " : " << displayName << endl;
+		if( displayName.isEmpty() == false && displayName != tqlayoutUnit.tqlayout ) {
+			displayName = TQString("%1:%2").arg(tqlayoutUnit.toPair(), displayName);
 			displayNamesList.append( displayName );
 		}
 	}
 	
-	config->writeEntry("LayoutList", layoutList);
-	kdDebug() << "Saving Layouts: " << layoutList << endl;
+	config->writeEntry("LayoutList", tqlayoutList);
+	kdDebug() << "Saving Layouts: " << tqlayoutList << endl;
  	
 	config->writeEntry("IncludeGroups", includeList);
  	kdDebug() << "Saving includeGroups: " << includeList << endl;
@@ -244,8 +244,8 @@ void KxkbConfig::setDefaults()
 	m_resetOldOptions = false;
 	m_options = "";
 
-	m_layouts.clear();
-	m_layouts.append( DEFAULT_LAYOUT_UNIT );
+	m_tqlayouts.clear();
+	m_tqlayouts.append( DEFAULT_LAYOUT_UNIT );
 
 	m_useKxkb = false;
 	m_showSingle = false;
@@ -259,12 +259,12 @@ void KxkbConfig::setDefaults()
 
 TQStringList KxkbConfig::getLayoutStringList(/*bool compact*/)
 {
-	TQStringList layoutList;
-	for(TQValueList<LayoutUnit>::ConstIterator it = m_layouts.begin(); it != m_layouts.end(); ++it) {
-		const LayoutUnit& layoutUnit = *it;
-		layoutList.append( layoutUnit.toPair() );
+	TQStringList tqlayoutList;
+	for(TQValueList<LayoutUnit>::ConstIterator it = m_tqlayouts.begin(); it != m_tqlayouts.end(); ++it) {
+		const LayoutUnit& tqlayoutUnit = *it;
+		tqlayoutList.append( tqlayoutUnit.toPair() );
 	}
-	return layoutList;
+	return tqlayoutList;
 }
 
 
@@ -291,21 +291,21 @@ TQString KxkbConfig::getDefaultDisplayName(const TQString& code_)
 	return displayName;
 }
 
-TQString KxkbConfig::getDefaultDisplayName(const LayoutUnit& layoutUnit, bool single)
+TQString KxkbConfig::getDefaultDisplayName(const LayoutUnit& tqlayoutUnit, bool single)
 {
-	if( layoutUnit.variant == "" )
-		return getDefaultDisplayName( layoutUnit.layout );
+	if( tqlayoutUnit.variant == "" )
+		return getDefaultDisplayName( tqlayoutUnit.tqlayout );
 	
-	TQString displayName = layoutUnit.layout.left(2);
+	TQString displayName = tqlayoutUnit.tqlayout.left(2);
 	if( single == false )
-		displayName += layoutUnit.variant.left(1);
+		displayName += tqlayoutUnit.variant.left(1);
 	return displayName;
 }
 
 /**
- * @brief Gets the single layout part of a layout(variant) string
- * @param[in] layvar String in form layout(variant) to parse
- * @return The layout found in the string
+ * @brief Gets the single tqlayout part of a tqlayout(variant) string
+ * @param[in] layvar String in form tqlayout(variant) to parse
+ * @return The tqlayout found in the string
  */
 const TQString LayoutUnit::parseLayout(const TQString &layvar)
 {
@@ -322,8 +322,8 @@ const TQString LayoutUnit::parseLayout(const TQString &layvar)
 }
 
 /**
- * @brief Gets the single variant part of a layout(variant) string
- * @param[in] layvar String in form layout(variant) to parse
+ * @brief Gets the single variant part of a tqlayout(variant) string
+ * @param[in] layvar String in form tqlayout(variant) to parse
  * @return The variant found in the string, no check is performed
  */
 const TQString LayoutUnit::parseVariant(const TQString &layvar)

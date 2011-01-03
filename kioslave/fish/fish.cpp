@@ -15,7 +15,7 @@
  ***************************************************************************/
 
 /*
-  This code contains fragments and ideas from the ftp kioslave
+  This code tqcontains fragments and ideas from the ftp kioslave
   done by David Faure <faure@kde.org>.
 
   Structure is a bit complicated, since I made the mistake to use
@@ -88,7 +88,7 @@
 #define connected() do{myDebug( << "_______ emitting connected()" << endl); connected();}while(0)
 #define dataReq() do{myDebug( << "_______ emitting dataReq()" << endl); dataReq();}while(0)
 #define needSubURLData() do{myDebug( << "_______ emitting needSubURLData()" << endl); needSubURLData();}while(0)
-#define slaveStatus(x,y) do{myDebug( << "_______ emitting slaveStatus(" << x << ", " << y << ")" << endl); slaveStatus(x,y);}while(0)
+#define slavetqStatus(x,y) do{myDebug( << "_______ emitting slavetqStatus(" << x << ", " << y << ")" << endl); slavetqStatus(x,y);}while(0)
 #define statEntry(x) do{myDebug( << "_______ emitting statEntry("<<x.size()<<")" << endl); statEntry(x);}while(0)
 #define listEntries(x) do{myDebug( << "_______ emitting listEntries(...)" << endl); listEntries(x);}while(0)
 #define canResume(x) do{myDebug( << "_______ emitting canResume("<<(int)x<<")" << endl); canResume(x);}while(0)
@@ -738,11 +738,11 @@ bool fishProtocol::sendCommand(fish_command_type cmd, ...) {
         TQString arg(va_arg(list, const char *));
         int pos = -2;
         while ((pos = rx.search(arg,pos+2)) >= 0) {
-            arg.replace(pos,0,TQString("\\"));
+            arg.tqreplace(pos,0,TQString("\\"));
         }
         //myDebug( << "arg " << i << ": " << arg << endl);
         realCmd.append(" ").append(arg);
-        realAlt.replace(TQRegExp("%"+TQString::number(i+1)),arg);
+        realAlt.tqreplace(TQRegExp("%"+TQString::number(i+1)),arg);
     }
     TQString s("#");
     s.append(realCmd).append("\n ").append(realAlt).append(" 2>&1;echo '### 000'\n");
@@ -774,7 +774,7 @@ int fishProtocol::handleResponse(const TQString &str){
 
 int fishProtocol::makeTimeFromLs(const TQString &monthStr, const TQString &dayStr, const TQString &timeyearStr)
 {
-    TQDateTime dt(TQDate::currentDate(Qt::UTC));
+    TQDateTime dt(TQDate::tqcurrentDate(Qt::UTC));
     int year = dt.date().year();
     int month = dt.date().month();
     int currentMonth = month;
@@ -820,7 +820,7 @@ void fishProtocol::manageConnection(const TQString &l) {
         case FISH_VER:
             if (line.startsWith("VER 0.0.3")) {
                 line.append(" ");
-                hasAppend = line.contains(" append ");
+                hasAppend = line.tqcontains(" append ");
             } else {
                 error(ERR_UNSUPPORTED_PROTOCOL,line);
                 shutdownConnection();
@@ -1258,7 +1258,7 @@ int fishProtocol::received(const char *buffer, KIO::fileoffset_t buflen)
                 if ( !mime || mime->name() == KMimeType::defaultMimeType()
                      || !accurate )
                 {
-                    KMimeType::Ptr p_mimeType = KMimeType::findByContent(mimeBuffer);
+                    KMimeType::Ptr p_mimeType = KMimeType::tqfindByContent(mimeBuffer);
                     if ( p_mimeType && p_mimeType->name() != KMimeType::defaultMimeType() )
                         mime = p_mimeType;
                 }
@@ -1436,7 +1436,7 @@ void fishProtocol::run() {
                 if (rc > 0) {
                     int noff = received(buf,rc+offset);
                     if (noff > 0) memmove(buf,buf+offset+rc-noff,noff);
-                    //myDebug( << "left " << noff << " bytes: " << TQString::fromLatin1(buf,offset) << endl);
+                    //myDebug( << "left " << noff << " bytes: " << TQString::tqfromLatin1(buf,offset) << endl);
                     offset = noff;
                 } else {
                     if (errno == EINTR)
@@ -1655,7 +1655,7 @@ void fishProtocol::special( const TQByteArray &data ){
 void fishProtocol::slave_status() {
     myDebug( << "@@@@@@@@@ slave_status" << endl);
     if (childPid > 0)
-        slaveStatus(connectionHost,isLoggedIn);
+        slavetqStatus(connectionHost,isLoggedIn);
     else
-        slaveStatus(TQString::null,false);
+        slavetqStatus(TQString::null,false);
 }

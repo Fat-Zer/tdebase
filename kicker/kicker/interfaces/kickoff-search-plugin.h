@@ -82,7 +82,7 @@ public:
 
     TQString quotedPath () const
     {
-	return uri.path ().replace ('"', "\\\"");
+	return uri.path ().tqreplace ('"', "\\\"");
     }
 };
 

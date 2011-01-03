@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>CacheDlgUI</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -29,7 +29,7 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>16</width>
                     <height>21</height>
@@ -88,7 +88,7 @@
             <property name="sizeType">
                 <enum>MinimumExpanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>21</height>
@@ -183,5 +183,5 @@
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

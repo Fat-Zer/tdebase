@@ -33,18 +33,18 @@
 KBrowserOptions::KBrowserOptions(KConfig *config, TQString group, TQWidget *parent, const char *name)
     : KCModule( parent, "kcmkonq" ) 
 {
-  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
   TQTabWidget *tab = new TQTabWidget(this);
-  layout->addWidget(tab);
+  tqlayout->addWidget(tab);
 
   appearance = new KonqFontOptions(config, group, false, tab, name);
-  appearance->layout()->setMargin( KDialog::marginHint() );
+  appearance->tqlayout()->setMargin( KDialog::marginHint() );
 
   behavior = new KBehaviourOptions(config, group, tab, name);
-  behavior->layout()->setMargin( KDialog::marginHint() );
+  behavior->tqlayout()->setMargin( KDialog::marginHint() );
 
   previews = new KPreviewOptions(tab, name);
-  previews->layout()->setMargin( KDialog::marginHint() );
+  previews->tqlayout()->setMargin( KDialog::marginHint() );
 
   kuick = KCModuleLoader::loadModule("kcmkuick", tab);
 
@@ -53,7 +53,7 @@ KBrowserOptions::KBrowserOptions(KConfig *config, TQString group, TQWidget *pare
   tab->addTab(previews, i18n("&Previews && Meta-Data"));
   if (kuick)
   {
-    kuick->layout()->setMargin( KDialog::marginHint() );
+    kuick->tqlayout()->setMargin( KDialog::marginHint() );
     tab->addTab(kuick, i18n("&Quick Copy && Move"));
   }
 

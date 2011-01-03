@@ -172,7 +172,7 @@ public:
   void updatePixmaps();
 
   /**
-   * Saves the current view layout to a config file.
+   * Saves the current view tqlayout to a config file.
    * Remove config file before saving, especially if saveURLs is false.
    * @param cfg the config file
    * @param saveURLs whether to save the URLs in the profile
@@ -181,7 +181,7 @@ public:
   void saveViewProfile( KConfig & cfg, bool saveURLs, bool saveWindowSize );
 
   /**
-   * Saves the current view layout to a config file.
+   * Saves the current view tqlayout to a config file.
    * Remove config file before saving, especially if saveURLs is false.
    * @param fileName the name of the config file
    * @param profileName the name of the profile
@@ -192,7 +192,7 @@ public:
                         bool saveURLs, bool saveWindowSize );
 
   /**
-   * Loads a view layout from a config file. Removes all views before loading.
+   * Loads a view tqlayout from a config file. Removes all views before loading.
    * @param cfg the config file
    * @param filename if set, remember the file name of the profile (for save settings)
    * It has to be under the profiles dir. Otherwise, set to TQString::null
@@ -207,7 +207,7 @@ public:
                         bool resetWindow = false, bool openURL = true );
 
   /**
-   * Loads a view layout from a config file. Removes all views before loading.
+   * Loads a view tqlayout from a config file. Removes all views before loading.
    * @param path the full path to the config file
    * @param filename if set, remember the file name of the profile (for save settings)
    * It has to be under the profiles dir. Otherwise, set to TQString::null

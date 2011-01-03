@@ -339,7 +339,7 @@ bool Windowdef_simple::is_substr_match( const TQString& str1_P, const TQString& 
         case NOT_IMPORTANT :
           return true;
         case CONTAINS :
-          return str1_P.contains( str2_P ) > 0;
+          return str1_P.tqcontains( str2_P ) > 0;
         case IS :
           return str1_P == str2_P;
         case REGEXP :
@@ -348,7 +348,7 @@ bool Windowdef_simple::is_substr_match( const TQString& str1_P, const TQString& 
           return rg.search( str1_P ) >= 0;
             }
         case CONTAINS_NOT :
-          return str1_P.contains( str2_P ) == 0;
+          return str1_P.tqcontains( str2_P ) == 0;
         case IS_NOT :
           return str1_P != str2_P;
         case REGEXP_NOT :

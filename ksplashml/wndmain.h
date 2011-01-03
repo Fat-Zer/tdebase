@@ -31,7 +31,7 @@ typedef struct
   TQString ItemText;
 } Action;
 
-class WndStatus;
+class WndtqStatus;
 class ObjKsTheme;
 class ThemeEngine;
 class KConfig;

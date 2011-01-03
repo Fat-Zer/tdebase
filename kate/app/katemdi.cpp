@@ -128,7 +128,7 @@ GUIClient::GUIClient ( MainWindow *mw )
 
   if ( domDocument().documentElement().isNull() )
   {
-    TQString completeDescription = TQString::fromLatin1( guiDescription )
+    TQString completeDescription = TQString::tqfromLatin1( guiDescription )
           .arg( actionListName );
 
     setXML( completeDescription, false /*merge*/ );
@@ -339,7 +339,7 @@ ToolView *Sidebar::addWidget (const TQPixmap &icon, const TQString &text, ToolVi
 
 bool Sidebar::removeWidget (ToolView *widget)
 {
-  if (!m_widgetToId.contains(widget))
+  if (!m_widgetToId.tqcontains(widget))
     return false;
 
   removeTab(m_widgetToId[widget]);
@@ -369,7 +369,7 @@ bool Sidebar::removeWidget (ToolView *widget)
 
 bool Sidebar::showWidget (ToolView *widget)
 {
-  if (!m_widgetToId.contains(widget))
+  if (!m_widgetToId.tqcontains(widget))
     return false;
 
   // hide other non-persistent views
@@ -394,7 +394,7 @@ bool Sidebar::showWidget (ToolView *widget)
 
 bool Sidebar::hideWidget (ToolView *widget)
 {
-  if (!m_widgetToId.contains(widget))
+  if (!m_widgetToId.tqcontains(widget))
     return false;
 
   bool anyVis = false;
@@ -579,7 +579,7 @@ void Sidebar::restoreSession (KConfig *config)
         }
 
     // then: remove this items from the button bar
-    // do this backwards, to minimize the relayout efforts
+    // do this backwards, to minimize the retqlayout efforts
     for (int i=m_toolviews.size()-1; i >= (int)firstWrong; --i)
     {
       removeTab (m_widgetToId[m_toolviews[i]]);
@@ -659,8 +659,8 @@ void Sidebar::saveSession (KConfig *config)
 
 //BEGIN MAIN WINDOW
 
-MainWindow::MainWindow (TQWidget* parentWidget, const char* name)
- : KParts::MainWindow( parentWidget, name)
+MainWindow::MainWindow (TQWidget* tqparentWidget, const char* name)
+ : KParts::MainWindow( tqparentWidget, name)
  , m_sidebarsVisible(true)
  , m_restoreConfig (0)
  , m_guiClient (new GUIClient (this))

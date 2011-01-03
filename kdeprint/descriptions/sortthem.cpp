@@ -15,7 +15,7 @@ char buf[1024];
    while (!feof(stdin)) {
       char *cline = fgets(buf, 1000, stdin);
       if (!cline) break;
-      if (!have.contains(cline)) {
+      if (!have.tqcontains(cline)) {
          have << cline;
          fprintf(stdout, "%s", cline);
       }

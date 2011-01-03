@@ -101,7 +101,7 @@ IndexProgressDialog::IndexProgressDialog( TQWidget *parent )
   topLayout->setSpacing( spacingHint() );
 
   mLabel = new TQLabel( this );
-  mLabel->setAlignment( AlignHCenter );
+  mLabel->tqsetAlignment( AlignHCenter );
   topLayout->addWidget( mLabel );
 
   mProgressBar = new TQProgressBar( this );
@@ -215,7 +215,7 @@ void IndexProgressDialog::hideDetails()
   mLogLabel->hide();
   mLogView->hide();
   mDetailsButton->setText( i18n("Details >>") );
-  layout()->activate();
+  tqlayout()->activate();
   adjustSize();
 }
 
@@ -276,7 +276,7 @@ void KCMHelpCenter::setupMainWidget( TQWidget *parent )
   mListView = new KListView( parent );
   mListView->setFullWidth( true );
   mListView->addColumn( i18n("Search Scope") );
-  mListView->addColumn( i18n("Status") );
+  mListView->addColumn( i18n("tqStatus") );
   mListView->setColumnAlignment( 1, AlignCenter );
   topLayout->addWidget( mListView );
   connect( mListView, TQT_SIGNAL( clicked( TQListViewItem * ) ),
@@ -337,10 +337,10 @@ void KCMHelpCenter::load()
     }
   }
 
-  updateStatus();
+  updatetqStatus();
 }
 
-void KCMHelpCenter::updateStatus()
+void KCMHelpCenter::updatetqStatus()
 {
   TQListViewItemIterator it( mListView );
   while ( it.current() != 0 ) {
@@ -417,9 +417,9 @@ bool KCMHelpCenter::buildIndex()
               .arg( entry->documentType() ) );
             hasError = true;
           } else {
-            indexer.replace( TQRegExp( "%i" ), entry->identifier() );
-            indexer.replace( TQRegExp( "%d" ), Prefs::indexDirectory() );
-            indexer.replace( TQRegExp( "%p" ), entry->url() );
+            indexer.tqreplace( TQRegExp( "%i" ), entry->identifier() );
+            indexer.tqreplace( TQRegExp( "%d" ), Prefs::indexDirectory() );
+            indexer.tqreplace( TQRegExp( "%p" ), entry->url() );
             kdDebug() << "INDEXER: " << indexer << endl;
             *ts << indexer << endl;
 
@@ -574,7 +574,7 @@ void KCMHelpCenter::slotIndexProgress()
 
   kdDebug() << "KCMHelpCenter::slotIndexProgress()" << endl;
 
-  updateStatus();
+  updatetqStatus();
 
   advanceProgress();
 }

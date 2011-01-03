@@ -93,7 +93,7 @@ KasBar::KasBar( Orientation o, TQWidget *parent, const char *name, WFlags f )
      rootPix( 0 ),
      enableTint_( false ),
      tintAmount_( 0.1 ), 
-     tintColour_( colorGroup().mid() ),
+     tintColour_( tqcolorGroup().mid() ),
      useMask_( true ),
      res(0)
 {
@@ -102,7 +102,7 @@ KasBar::KasBar( Orientation o, TQWidget *parent, const char *name, WFlags f )
     setMouseTracking( true );
     setMaxBoxes( 0 );
 
-    connect( this, TQT_SIGNAL( configChanged() ), TQT_SLOT( repaint() ) );
+    connect( this, TQT_SIGNAL( configChanged() ), TQT_SLOT( tqrepaint() ) );
 }
 
 KasBar::KasBar( Orientation o, KasBar *master, TQWidget *parent, const char *name, WFlags f )
@@ -122,7 +122,7 @@ KasBar::KasBar( Orientation o, KasBar *master, TQWidget *parent, const char *nam
      rootPix( 0 ),
      enableTint_( false ),
      tintAmount_( 0.1 ), 
-     tintColour_( colorGroup().mid() ),
+     tintColour_( tqcolorGroup().mid() ),
      useMask_( true ),
      res(0)
 {
@@ -130,7 +130,7 @@ KasBar::KasBar( Orientation o, KasBar *master, TQWidget *parent, const char *nam
     items.setAutoDelete( true );
     setMouseTracking( true );
     setMaxBoxes( 0 );
-    connect( master_, TQT_SIGNAL( configChanged() ), TQT_SLOT( repaint() ) );
+    connect( master_, TQT_SIGNAL( configChanged() ), TQT_SLOT( tqrepaint() ) );
 }
 
 KasBar::~KasBar()
@@ -255,7 +255,7 @@ void KasBar::setTint( bool enable )
       }
 
       emit configChanged();
-      repaint( true );
+      tqrepaint( true );
    }
 }
 
@@ -269,7 +269,7 @@ void KasBar::setTint( double amount, TQColor color )
       emit configChanged();
 
       if ( rootPix->isAvailable() )
-	rootPix->repaint( true );
+	rootPix->tqrepaint( true );
    }
 }
 
@@ -375,7 +375,7 @@ void KasBar::setDetached( bool detach )
     emit detachedChanged( detached );
 }
 
-TQSize KasBar::sizeHint( Orientation o,  TQSize sz )
+TQSize KasBar::tqsizeHint( Orientation o,  TQSize sz )
 {
     if ( o == Horizontal )
 	setBoxesPerLine( sz.width() / itemExtent() );
@@ -416,7 +416,7 @@ void KasBar::updateLayout()
     bool updates = isUpdatesEnabled();
     setUpdatesEnabled( false );
 
-// This is for testing a rectangular layout
+// This is for testing a rectangular tqlayout
 //    boxesPerLine_ = (uint) ceil(sqrt( items.count() ));
 
    // Work out the number of rows and columns
@@ -445,8 +445,8 @@ void KasBar::updateLayout()
 
    setUpdatesEnabled( updates );
 
-   TQWidget *top = topLevelWidget();
-   TQRegion mask;
+   TQWidget *top = tqtopLevelWidget();
+   TQRegion tqmask;
 
    KasItem *i;
    if ( orient == Horizontal ) {
@@ -458,7 +458,7 @@ void KasBar::updateLayout()
 
 	   i->setPos( x, (items.at() / c) * itemExtent() );
 	   i->update();
-	   mask = mask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
+	   tqmask = tqmask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
        }
    }
    else {
@@ -470,12 +470,12 @@ void KasBar::updateLayout()
 
 	   i->setPos( (items.at() % r) * itemExtent(), y );
 	   i->update();
-	   mask = mask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
+	   tqmask = tqmask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
        }
    }
 
    if ( useMask_ )
-       top->setMask( mask );
+       top->setMask( tqmask );
    else
        top->clearMask();
    update();
@@ -622,7 +622,7 @@ void KasBar::resizeEvent(TQResizeEvent *ev)
     TQPainter p( &offscreen );
     paintBackground( &p, TQRect(TQPoint(0,0),size()) );
     TQWidget::resizeEvent(ev);
-    emit layoutChanged();
+    emit tqlayoutChanged();
 }
 
 
@@ -646,7 +646,7 @@ void KasBar::updateItem( KasItem *i )
     update( TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
 }
 
-void KasBar::repaintItem(KasItem *i, bool erase )
+void KasBar::tqrepaintItem(KasItem *i, bool erase )
 {
     if ( !i )
 	return;
@@ -658,7 +658,7 @@ void KasBar::repaintItem(KasItem *i, bool erase )
 
     paintBackground( &p, TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
     i->paint( &p, pos.x(), pos.y() );
-    repaint( TQRect( pos, TQSize( itemExtent(), itemExtent()  ) ), transparent_ || erase );
+    tqrepaint( TQRect( pos, TQSize( itemExtent(), itemExtent()  ) ), transparent_ || erase );
 }
 
 KasItem* KasBar::itemAt(const TQPoint &p)
@@ -670,7 +670,7 @@ KasItem* KasBar::itemAt(const TQPoint &p)
        cr.setTopLeft( i->pos() );
        cr.setSize( TQSize( itemExtent(), itemExtent() ) );
 
-       if(cr.contains(p))
+       if(cr.tqcontains(p))
 	   return i;
    }
 
@@ -687,12 +687,12 @@ void KasBar::setBackground( const TQPixmap &newBg )
     updateLayout();
 }
 
-void KasBar::setMasked( bool mask )
+void KasBar::setMasked( bool tqmask )
 {
-    if ( useMask_ == mask )
+    if ( useMask_ == tqmask )
 	return;
 
-    useMask_ = mask;
+    useMask_ = tqmask;
 }
 
 void KasBar::setPaintInactiveFrames( bool enable )

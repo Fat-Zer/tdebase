@@ -81,7 +81,7 @@ decswl() {  /* Single With Line */
 dectst(pn) int pn; {  /* Invoke Confidence Test */
   brc2(2, pn, 'y');
 }
-dsr(pn) int pn; {  /* Device Status Report */
+dsr(pn) int pn; {  /* Device tqStatus Report */
   brc(pn, 'n');
 }
 ed(pn) int pn; {  /* Erase in Display */

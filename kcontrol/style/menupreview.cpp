@@ -68,7 +68,7 @@ void MenuPreview::createPixmaps()
 	if (pixBlended)
 		pixBlended->resize( w, h );
 	
-	TQColorGroup cg = colorGroup();
+	TQColorGroup cg = tqcolorGroup();
 	TQColor c1 = cg.background();
 	TQColor c2 = cg.mid();
 
@@ -96,7 +96,7 @@ void MenuPreview::createPixmaps()
 
 void MenuPreview::blendPixmaps()
 {
-	// Rebuild pixmaps, and repaint
+	// Rebuild pixmaps, and tqrepaint
 	if (pixBlended && pixBackground) 
 	{
 		if (mode == Blend && pixOverlay) {
@@ -105,7 +105,7 @@ void MenuPreview::blendPixmaps()
 			KImageEffect::blend(src, dst, menuOpacity);
 			pixBlended->convertFromImage( dst );
 		} else if (mode == Tint) {
-			TQColor clr = colorGroup().button();
+			TQColor clr = tqcolorGroup().button();
 			TQImage dst = pixBackground->convertToImage();
 			KImageEffect::blend(clr, dst, menuOpacity);
 			pixBlended->convertFromImage( dst );
@@ -121,7 +121,7 @@ void MenuPreview::setOpacity( int opacity )
 	if ((int)(menuOpacity*100) != opacity) {
 		menuOpacity = opacity/100.0;
 		blendPixmaps();
-		repaint( false );
+		tqrepaint( false );
 	}
 }
 
@@ -130,14 +130,14 @@ void MenuPreview::setPreviewMode( PreviewMode pvm )
 	if (mode != pvm) {
 		mode = pvm;
 		blendPixmaps();
-		repaint( false );
+		tqrepaint( false );
 	}
 }
 
 void MenuPreview::paintEvent( TQPaintEvent* /* pe */ )
 {
 	// Paint the frame and blended pixmap
-	TQColorGroup cg = colorGroup();
+	TQColorGroup cg = tqcolorGroup();
 	int x2 = width()-1;
 	int y2 = height()-1;
 

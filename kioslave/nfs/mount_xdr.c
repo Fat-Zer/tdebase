@@ -234,14 +234,14 @@ xdr_ppathcnf(XDR *xdrs, ppathcnf *objp)
 	 }
 		buf = XDR_INLINE(xdrs,   2  * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-		 if (!xdr_vector(xdrs, (char *)objp->pc_mask, 2, sizeof(short), (xdrproc_t)xdr_short)) {
+		 if (!xdr_vector(xdrs, (char *)objp->pc_tqmask, 2, sizeof(short), (xdrproc_t)xdr_short)) {
 			 return (FALSE);
 		 }
 
 	  }
 	  else {
 		{ register short *genp; 
-		  for ( i = 0,genp=objp->pc_mask;
+		  for ( i = 0,genp=objp->pc_tqmask;
  			i < 2; i++){
 				 IXDR_PUT_SHORT(buf,*genp++);
 		   }
@@ -288,14 +288,14 @@ xdr_ppathcnf(XDR *xdrs, ppathcnf *objp)
 	 }
 		buf = XDR_INLINE(xdrs, 2  * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-		 if (!xdr_vector(xdrs, (char *)objp->pc_mask, 2, sizeof(short), (xdrproc_t)xdr_short)) {
+		 if (!xdr_vector(xdrs, (char *)objp->pc_tqmask, 2, sizeof(short), (xdrproc_t)xdr_short)) {
 			 return (FALSE);
 		 }
 
 	  }
 	  else {
 		{ register short *genp; 
-		  for ( i = 0,genp=objp->pc_mask;
+		  for ( i = 0,genp=objp->pc_tqmask;
  			i < 2; i++){
 				 *genp++ = IXDR_GET_SHORT(buf);
 		   }
@@ -328,7 +328,7 @@ xdr_ppathcnf(XDR *xdrs, ppathcnf *objp)
 	 if (!xdr_char(xdrs, &objp->pc_xxx)) {
 		 return (FALSE);
 	 }
-	 if (!xdr_vector(xdrs, (char *)objp->pc_mask, 2, sizeof(short), (xdrproc_t)xdr_short)) {
+	 if (!xdr_vector(xdrs, (char *)objp->pc_tqmask, 2, sizeof(short), (xdrproc_t)xdr_short)) {
 		 return (FALSE);
 	 }
 	return (TRUE);

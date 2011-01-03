@@ -71,9 +71,9 @@ QueryDlg::QueryDlg(LockProcess *parent)
 
     KUser user;
 
-    mStatusLabel = new TQLabel( "<b> </b>", frame );
-    //mStatusLabel->setAlignment( TQLabel::AlignCenter );
-    mStatusLabel->setAlignment( TQLabel::AlignLeft );
+    mtqStatusLabel = new TQLabel( "<b> </b>", frame );
+    //mtqStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
+    mtqStatusLabel->tqsetAlignment( TQLabel::AlignLeft );
 
     KSeparator *sep = new KSeparator( KSeparator::HLine, frame );
 
@@ -82,8 +82,8 @@ QueryDlg::QueryDlg(LockProcess *parent)
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
 
-    TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
-    layStatus->addWidget( mStatusLabel );
+    TQHBoxLayout *laytqStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
+    laytqStatus->addWidget( mtqStatusLabel );
 
     TQHBoxLayout *layPin = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
     pin_box = new KPasswordEdit( this, "pin_box" );
@@ -96,7 +96,7 @@ QueryDlg::QueryDlg(LockProcess *parent)
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
     frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, AlignTop );
-    frameLayout->addLayout( layStatus, 0, 1 );
+    frameLayout->addLayout( laytqStatus, 0, 1 );
     frameLayout->addLayout( layPin, 2, 1 );
     frameLayout->addMultiCellWidget( sep, 3, 3, 0, 1 );
     frameLayout->addMultiCellLayout( layButtons, 4, 4, 0, 1 );
@@ -123,8 +123,8 @@ const char * QueryDlg::getEntry()
 
 void QueryDlg::updateLabel(TQString &txt)
 {
-    mStatusLabel->setPaletteForegroundColor(Qt::black);
-    mStatusLabel->setText("<b>" + txt + "</b>");
+    mtqStatusLabel->setPaletteForegroundColor(Qt::black);
+    mtqStatusLabel->setText("<b>" + txt + "</b>");
 }
 
 void QueryDlg::setUnlockIcon()

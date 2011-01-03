@@ -70,13 +70,13 @@ KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
     KConfig *cfg = kapp->config();
     cfg->setGroup("KPager");
 
-    // Update the last used geometry
+    // Update the last used tqgeometry
     int w = cfg->readNumEntry(m_pPager->lWidth(),-1);
     int h = cfg->readNumEntry(m_pPager->lHeight(),-1);
     if (w > 0 && h > 0)
         resize(w,h);
     else
-        resize(m_pPager->sizeHint());
+        resize(m_pPager->tqsizeHint());
     //  resize(cfg->readNumEntry(lWidth(),200),cfg->readNumEntry(lHeight(),90));
 
     int xpos=cfg->readNumEntry("xPos",-1);
@@ -91,7 +91,7 @@ KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
 //	  rect.pos.y+rect.size.height-m_pPager->height());
 // antonio:The above lines don't work. I should look at them when I have
 // more time
-        move(kapp->desktop()->width()-m_pPager->sizeHint().width()-5,kapp->desktop()->height()-m_pPager->sizeHint().height()-25);
+        move(kapp->desktop()->width()-m_pPager->tqsizeHint().width()-5,kapp->desktop()->height()-m_pPager->tqsizeHint().height()-25);
     }
 
     // Set the wm flags to this window
@@ -125,7 +125,7 @@ bool KPagerMainWindow::queryClose()
     KConfig *cfg=KGlobal::config();
 
     cfg->setGroup("KPager");
-    cfg->writeEntry("layoutType", static_cast<int>(m_pPager->m_layoutType));
+    cfg->writeEntry("tqlayoutType", static_cast<int>(m_pPager->m_tqlayoutType));
     cfg->writeEntry(m_pPager->lWidth(),width());
     cfg->writeEntry(m_pPager->lHeight(),height());
     cfg->writeEntry("xPos",x());
@@ -179,7 +179,7 @@ void KPagerMainWindow::toggleShow(int x, int y)
 
 KPager::KPager(KPagerMainWindow *parent, const char *name)
 	: TQFrame (parent, name, WStyle_Customize | WStyle_NoBorder | WStyle_Tool)
-    , m_layout(0)
+    , m_tqlayout(0)
     , m_mnu(0)
     , m_smnu(0)
     , m_dmnu(0)
@@ -206,7 +206,7 @@ KPager::KPager(KPagerMainWindow *parent, const char *name)
         m_desktops.append(dsk);
     }
 
-    m_layoutType=static_cast<enum KPager::LayoutTypes>( KPagerConfigDialog::m_layoutType );
+    m_tqlayoutType=static_cast<enum KPager::LayoutTypes>( KPagerConfigDialog::m_tqlayoutType );
 
     connect( m_winmodule, TQT_SIGNAL( activeWindowChanged(WId)),
              TQT_SLOT(slotActiveWindowChanged(WId)));
@@ -244,20 +244,20 @@ KPager::~KPager()
 
 const TQString KPager::lWidth()
 {
-    switch (m_layoutType) {
-	case (Classical) :  return "layoutClassicalWidth";break;
-	case (Horizontal) : return "layoutHorizontalWidth";break;
-	case (Vertical) :   return "layoutVerticalWidth";break;
+    switch (m_tqlayoutType) {
+	case (Classical) :  return "tqlayoutClassicalWidth";break;
+	case (Horizontal) : return "tqlayoutHorizontalWidth";break;
+	case (Vertical) :   return "tqlayoutVerticalWidth";break;
     };
     return "Width";
 }
 
 const TQString KPager::lHeight()
 {
-    switch (m_layoutType) {
-	case (Classical) :  return "layoutClassicalHeight";break;
-	case (Horizontal) : return "layoutHorizontalHeight";break;
-	case (Vertical) :   return "layoutVerticalHeight";break;
+    switch (m_tqlayoutType) {
+	case (Classical) :  return "tqlayoutClassicalHeight";break;
+	case (Horizontal) : return "tqlayoutHorizontalHeight";break;
+	case (Vertical) :   return "tqlayoutVerticalHeight";break;
     };
     return "Height";
 }
@@ -267,13 +267,13 @@ void KPager::updateLayout()
     int w=m_desktops[0]->width();
     int h=m_desktops[0]->height();
 
-    delete m_layout;
+    delete m_tqlayout;
 
-    switch (m_layoutType)
+    switch (m_tqlayoutType)
     {
-        case (Classical) :  m_layout=new TQGridLayout(this, 2, 0); break;
-        case (Horizontal) : m_layout=new TQGridLayout(this, 0, 1); break;
-        case (Vertical) :   m_layout=new TQGridLayout(this, 1, 0); break;
+        case (Classical) :  m_tqlayout=new TQGridLayout(this, 2, 0); break;
+        case (Horizontal) : m_tqlayout=new TQGridLayout(this, 0, 1); break;
+        case (Vertical) :   m_tqlayout=new TQGridLayout(this, 1, 0); break;
     };
 
     TQValueList <Desktop *>::Iterator it;
@@ -283,9 +283,9 @@ void KPager::updateLayout()
     int halfdesks = (m_desktops.count() + 1) / 2;
     for( it = m_desktops.begin(); it != m_desktops.end(); ++it )
     {
-        m_layout->addWidget(*it,i,j);
+        m_tqlayout->addWidget(*it,i,j);
         ndesks++;
-        switch (m_layoutType)
+        switch (m_tqlayoutType)
         {
             case (Classical) :  i= ndesks / halfdesks; j = ndesks % halfdesks; break;
             case (Horizontal) : j++; break;
@@ -293,10 +293,10 @@ void KPager::updateLayout()
         };
     }
 
-    m_layout->activate();
+    m_tqlayout->activate();
     updateGeometry();
 
-    switch (m_layoutType)
+    switch (m_tqlayoutType)
     {
         case (Classical) :  resize(w*(ndesks/2+(ndesks%2)),h*2);break;
         case (Horizontal) : resize(w*ndesks,h);break;
@@ -355,7 +355,7 @@ void KPager::configureDialog()
     KPagerConfigDialog *dialog= new KPagerConfigDialog(this);
     if (dialog->exec())
     {
-        m_layoutType=static_cast<enum KPager::LayoutTypes>(KPagerConfigDialog::m_layoutType);
+        m_tqlayoutType=static_cast<enum KPager::LayoutTypes>(KPagerConfigDialog::m_tqlayoutType);
 	KConfig *cfg=KGlobal::config();
 	int nWd = (parent() ? ((TQWidget *)parent())->width() : width());
 	int nHg = (parent() ? ((TQWidget *)parent())->width() : width());
@@ -365,7 +365,7 @@ void KPager::configureDialog()
 	cfg->writeEntry(lWidth(),nWd);
 	cfg->writeEntry(lHeight(),nHg);
 	cfg->writeEntry("windowDrawMode",KPagerConfigDialog::m_windowDrawMode);
-	cfg->writeEntry("layoutType",KPagerConfigDialog::m_layoutType);
+	cfg->writeEntry("tqlayoutType",KPagerConfigDialog::m_tqlayoutType);
 	cfg->writeEntry("showNumber",KPagerConfigDialog::m_showNumber);
 	cfg->writeEntry("showName",KPagerConfigDialog::m_showName);
 	cfg->writeEntry("showWindows",KPagerConfigDialog::m_showWindows);
@@ -374,7 +374,7 @@ void KPager::configureDialog()
 
         updateLayout();
         for( TQValueList <Desktop *>::Iterator it = m_desktops.begin(); it != m_desktops.end(); ++it )
-            (*it)->repaint();
+            (*it)->tqrepaint();
     }
 }
 
@@ -409,7 +409,7 @@ void KPager::slotActiveWindowChanged( WId win )
     {
         if ( (inf1 && inf1->isOnDesktop(i))
              || (inf2 && inf2->isOnDesktop(i) ) )
-            m_desktops[i-1]->repaint(false);
+            m_desktops[i-1]->tqrepaint(false);
     }
 }
 
@@ -422,7 +422,7 @@ void KPager::slotWindowAdded( WId win)
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
         if ( inf->isOnDesktop( i ))
-            m_desktops[i-1]->repaint(false);
+            m_desktops[i-1]->tqrepaint(false);
     }
 }
 
@@ -438,14 +438,14 @@ void KPager::slotWindowRemoved( WId win )
         for (int i = 1; i <= (int) m_desktops.count(); ++i)
         {
             if (onAllDesktops || desktop == i)
-                m_desktops[i-1]->repaint(false);
+                m_desktops[i-1]->tqrepaint(false);
         }
     }
 }
 
 void KPager::slotWindowChanged( WId win , unsigned int prop)
 {
-    bool repaint=false;
+    bool tqrepaint=false;
 
     KWin::WindowInfo* inf = m_windows[win];
     if (!inf)
@@ -453,7 +453,7 @@ void KPager::slotWindowChanged( WId win , unsigned int prop)
       inf=info(win);
       prop=0; // info already calls KWin::info, so there's no need
       // to update anything else.
-      repaint=true;
+      tqrepaint=true;
     };
 
     bool onAllDesktops = inf ? inf->onAllDesktops() : false;
@@ -466,15 +466,15 @@ void KPager::slotWindowChanged( WId win , unsigned int prop)
     }
     
     if((prop & ~( NET::WMName | NET::WMVisibleName )) != 0 )
-	repaint = true;
+	tqrepaint = true;
 
-    if (repaint)
+    if (tqrepaint)
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
       if ((inf && (inf->isOnDesktop(i)))
 	  || onAllDesktops || desktop == i )
         {
-            m_desktops[i-1]->repaint(false);
+            m_desktops[i-1]->tqrepaint(false);
         }
     }
 //	redrawDesktops();
@@ -485,9 +485,9 @@ void KPager::slotStackingOrderChanged()
     m_desktops[m_currentDesktop-1]->m_grabWindows=true;
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
-        m_desktops[i-1]->repaint(false);
+        m_desktops[i-1]->tqrepaint(false);
     }
-//    repaint(true);
+//    tqrepaint(true);
 }
 
 void KPager::slotDesktopNamesChanged()
@@ -521,7 +521,7 @@ void KPager::slotNumberOfDesktopsChanged(int ndesktops)
     {
         int i,j;
         i=j=m_desktops.count();
-        switch (m_layoutType)
+        switch (m_tqlayoutType)
         {
             case (Classical) :  i%=2;j/=2; break;
             case (Horizontal) : i=0; break;
@@ -547,8 +547,8 @@ void KPager::slotCurrentDesktopChanged(int desk)
     m_desktops[m_currentDesktop-1]->update();
     m_desktops[desk-1]->paintFrame( true );
     m_desktops[desk-1]->update();
-//    m_desktops[m_currentDesktop-1]->repaint();
-//    m_desktops[desk-1]->repaint();
+//    m_desktops[m_currentDesktop-1]->tqrepaint();
+//    m_desktops[desk-1]->tqrepaint();
 
     m_currentDesktop=desk;
 
@@ -643,24 +643,24 @@ void KPager::redrawDesktops()
 {
     TQValueList <Desktop *>::Iterator it;
     for( it = m_desktops.begin(); it != m_desktops.end(); ++it )
-        (*it)->repaint();
+        (*it)->tqrepaint();
 }
 
 void KPager::slotGrabWindows()
 {
     m_desktops[m_currentDesktop-1]->m_grabWindows=true;
-    m_desktops[m_currentDesktop-1]->repaint();
+    m_desktops[m_currentDesktop-1]->tqrepaint();
 }
 
-TQSize KPager::sizeHint() const
+TQSize KPager::tqsizeHint() const
 {
     int n=m_desktops.count();
     int w=-1,h=-1;
 
-    TQSize size=m_desktops[0]->sizeHint();
+    TQSize size=m_desktops[0]->tqsizeHint();
     int wDsk=size.width();
     int hDsk=size.height();
-    switch (m_layoutType)
+    switch (m_tqlayoutType)
     {
         case (Classical) :  w=wDsk*(n/2+(n%2)); h=hDsk*2;break;
         case (Horizontal) : w=wDsk*n; h=hDsk;break;

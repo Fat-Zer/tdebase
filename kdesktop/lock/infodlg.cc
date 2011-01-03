@@ -71,18 +71,18 @@ InfoDlg::InfoDlg(LockProcess *parent)
 
     KUser user;
 
-    mStatusLabel = new TQLabel( "<b> </b>", frame );
-    mStatusLabel->setAlignment( TQLabel::AlignCenter );
+    mtqStatusLabel = new TQLabel( "<b> </b>", frame );
+    mtqStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
 
-    TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
-    layStatus->addWidget( mStatusLabel );
+    TQHBoxLayout *laytqStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
+    laytqStatus->addWidget( mtqStatusLabel );
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
     frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, AlignTop );
-    frameLayout->addLayout( layStatus, 1, 1 );
+    frameLayout->addLayout( laytqStatus, 1, 1 );
 
     installEventFilter(this);
 }
@@ -94,8 +94,8 @@ InfoDlg::~InfoDlg()
 
 void InfoDlg::updateLabel(TQString &txt)
 {
-    mStatusLabel->setPaletteForegroundColor(Qt::black);
-    mStatusLabel->setText("<b>" + txt + "</b>");
+    mtqStatusLabel->setPaletteForegroundColor(Qt::black);
+    mtqStatusLabel->setText("<b>" + txt + "</b>");
 }
 
 void InfoDlg::setUnlockIcon()

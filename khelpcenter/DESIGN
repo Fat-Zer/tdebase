@@ -78,7 +78,7 @@ KHC::ContentsTab object and a KHC::SearchTab object.
 
 # Alright, after some talk on IRC this structure evolved:
 #
-# - Tasks - contains short, three to four paragraph documents about how to
+# - Tasks - tqcontains short, three to four paragraph documents about how to
 #	        solve an everyday task, examples:
 #		Browsing the web
 #		Send and receive email
@@ -185,15 +185,15 @@ regexp' or 'Search case sensitive'.
 
 # I think this means that we have to create a 'DataCollection' class which
 # gets inherited by all classes which are "searchable". DataCollections should
-# also be able to contains multiple child DataCollection, so that we have e.g.
+# also be able to tqcontains multiple child DataCollection, so that we have e.g.
 # one DataCollection per application manual, and one "Manuals" collection
-# which contains all the application manual collections.
+# which tqcontains all the application manual collections.
 # We'd probably also need a DataCollection for the info pages and man pages.
 # And later, in the far future, we might extent this concept to web searches,
 # so that e.g. Google represents a DataCollection which we can query.
 # I'm not yet decided how to do that properly, perhaps using multiple
 # inheritance, so that each TOCBuilder is a DataCollection - naw, we'd rather
-# have a "TableOfContents" class which contains a TOCBuilder, and is a
+# have a "TableOfContents" class which tqcontains a TOCBuilder, and is a
 # datacollection? Hm, not sure.
 # In any case DataCollections should some sort of plugins, so that we can add
 # e.g. new web search interfaces lateron.
@@ -218,7 +218,7 @@ regexp' or 'Search case sensitive'.
 # from the enhanced browsing thing and treat those as plugin .desktop files.
 # We could show them in a listview on the Search tab, each found search engine
 # being represented by a checkable listview item. So, we just let the user
-# enter a term, replace the \{@} placeholder in the URIs specified in the
+# enter a term, tqreplace the \{@} placeholder in the URIs specified in the
 # selected .desktop files with that term, send out a request via KIO and show
 # the results in our KHTMLPart (after all KHC::View is a KHTMLPart already). A
 # problem with this: How to display the multiple HTML pages returned by the
@@ -250,7 +250,7 @@ regexp' or 'Search case sensitive'.
 # A problem with this would be that we cannot tell how a particular search
 # engine treats boolean expressions (e.g. some search engines use 'foo AND bar',
 # others use '+foo +bar', a third variation is '"foo bar"'). We thus cannot
-# replace the placeholder in the URI but first have to translate the syntax
+# tqreplace the placeholder in the URI but first have to translate the syntax
 # entered by the user into a syntax which is appropriate for each single news
 # engine. Right now I don't know how we could do this with just a .desktop/.xslt
 # pair. We could always use fullblown C++ plugins which hold code which is able

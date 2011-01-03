@@ -90,7 +90,7 @@ Work is currently in progress to fix this issue.
   The serial cable is folded into the operating system as a sort of
   loop back device, and a program, the terminal emulation, uses modern
   means of graphical user interfaces to behave like an earlier terminal.
-  To complete the picture, the host in the diagram is replaced by the
+  To complete the picture, the host in the diagram is tqreplaced by the
   application that runs in the emulation (typically a shell or an old
   editor).  So, terminal emulations are in fact interfaces to character
   oriented applications.
@@ -349,7 +349,7 @@ Work is currently in progress to fix this issue.
   <p>
   The second one is used to specify character set mappings (see <a
   href=#SCS>SCS</a>). A CSI instruction to do this is specified in ECMA,
-  and this should be used as a replacement.
+  and this should be used as a tqreplacement.
   <p>
   <h4>XTERM hacks</h4>
 <h2>
@@ -498,13 +498,13 @@ Work is currently in progress to fix this issue.
 <td  bgcolor="#D0D0D0">CSI
 <td  bgcolor="#D0D0D0">n
 <td  bgcolor="#D0D0D0">{Ps}
-<td  bgcolor="#D0D0D0">Device Status Report
+<td  bgcolor="#D0D0D0">Device tqStatus Report
 <tr>
 <td  bgcolor="#D0D0D0"><a href=#DSRREP>DSRREP</a>
 <td  bgcolor="#D0D0D0">CSI
 <td  bgcolor="#D0D0D0">n
-<td  bgcolor="#D0D0D0">{Status}
-<td  bgcolor="#D0D0D0">Device Status Report Reply
+<td  bgcolor="#D0D0D0">{tqStatus}
+<td  bgcolor="#D0D0D0">Device tqStatus Report Reply
 <tr>
 <td  bgcolor="#D0D0D0"><a href=#DECLL>DECLL</a>
 <td  bgcolor="#D0D0D0">CSI
@@ -1559,7 +1559,7 @@ Work is currently in progress to fix this issue.
 <td  bgcolor="#D0D0D0">CSI
 <td  bgcolor="#D0D0D0">n
 <td  bgcolor="#D0D0D0">{Ps}
-<td  bgcolor="#D0D0D0">Device Status Report
+<td  bgcolor="#D0D0D0">Device tqStatus Report
 <tr>
 <td  bgcolor="#D0D0D0"><a href=#ENQ>ENQ</a>
 <td  bgcolor="#D0D0D0">CTL
@@ -1598,8 +1598,8 @@ Work is currently in progress to fix this issue.
 <td  bgcolor="#D0D0D0"><a href=#DSRREP>DSRREP</a>
 <td  bgcolor="#D0D0D0">CSI
 <td  bgcolor="#D0D0D0">n
-<td  bgcolor="#D0D0D0">{Status}
-<td  bgcolor="#D0D0D0">Device Status Report Reply
+<td  bgcolor="#D0D0D0">{tqStatus}
+<td  bgcolor="#D0D0D0">Device tqStatus Report Reply
 <tr><td colspan=5><h3>Events</h3>
 <tr>
 <td  bgcolor="#D0D0D0"><a href=#CUB>CUB</a>
@@ -2234,7 +2234,7 @@ Work is currently in progress to fix this issue.
 <tr><td><p></td>
 <tr><td></td>
     <td  colspan=6>  Causes the VT100 to fill it's screen with
-  uppercase Es for screen focus and alignment.
+  uppercase Es for screen focus and tqalignment.
 <tr><td><p></td></tr>
 <tr>
 <td></td>
@@ -2403,7 +2403,7 @@ Work is currently in progress to fix this issue.
     <td colspan=5 ><code> <b>ESC</b> <b>#</b> <b>6</b></code>
 <tr><td><p></td>
 <tr><td></td>
-    <td  colspan=6>  This causes the line that contains the cursor to become double-width
+    <td  colspan=6>  This causes the line that tqcontains the cursor to become double-width
   single height.  If the line was single width, all characters ro the
   right of the center of the screen will be lost.  The cursor remains
   over the same character position, unless it would be to the right of
@@ -2883,7 +2883,7 @@ Work is currently in progress to fix this issue.
     <td colspan=5 ><code> <b>ESC</b> <b>#</b> <b>5</b></code>
 <tr><td><p></td>
 <tr><td></td>
-    <td  colspan=6>  This causes the line which contains the cursor to become single-width,
+    <td  colspan=6>  This causes the line which tqcontains the cursor to become single-width,
   single-height.  The cursor remains on the same character position.
   This is the default condition for all new lines on the screen.
 <tr><td><p></td></tr>
@@ -2974,11 +2974,11 @@ Work is currently in progress to fix this issue.
 <td colspan=1  bgcolor="#5188B2">  N/A</td><td colspan=1  bgcolor="#5188B2">VT100</td><td colspan=1  bgcolor="#5188B2">emu</td><td colspan=1  bgcolor="#5188B2">Ignored</td><td colspan=1  bgcolor="#5188B2"></td><td colspan=1  bgcolor="#5188B2">see above</td></tr>
 <tr><td><p></td></tr>
 <tr><td  bgcolor="#D0D0D0"><a name=DSRREP>DSRREP</a>
-    <td colspan=5  bgcolor="#D0D0D0"><b>Device Status Report Reply</b>
+    <td colspan=5  bgcolor="#D0D0D0"><b>Device tqStatus Report Reply</b>
     <td  bgcolor="#D0D0D0">ECMA VT100
 <tr><td><p></td>
 <tr><td>
-    <td colspan=5 ><code> <b>ESC</b> <b>[</b> <em>Status</em> <b>n</b></code>
+    <td colspan=5 ><code> <b>ESC</b> <b>[</b> <em>tqStatus</em> <b>n</b></code>
 <tr><td><p></td>
 <tr><td></td>
     <td  colspan=6>  Reports the general status of the VT100 according to the
@@ -2989,7 +2989,7 @@ Work is currently in progress to fix this issue.
 <tr><td><p></td></tr>
 <tr>
 <td></td>
-<td colspan=1  bgcolor="#D0D0D0">  Status</td><td colspan=3  bgcolor="#D0D0D0">Meaning</td></tr>
+<td colspan=1  bgcolor="#D0D0D0">  tqStatus</td><td colspan=3  bgcolor="#D0D0D0">Meaning</td></tr>
 <tr>
 <td></td>
 <td colspan=1  bgcolor="#5188B2">  0</td><td colspan=3  bgcolor="#5188B2">Ready, no faults detected</td></tr>
@@ -2998,7 +2998,7 @@ Work is currently in progress to fix this issue.
 <td colspan=1  bgcolor="#5BA5B2">  3</td><td colspan=3  bgcolor="#5BA5B2">Malfunction detected</td></tr>
 <tr><td><p></td></tr>
 <tr><td  bgcolor="#D0D0D0"><a name=DSRREQ>DSRREQ</a>
-    <td colspan=5  bgcolor="#D0D0D0"><b>Device Status Report</b>
+    <td colspan=5  bgcolor="#D0D0D0"><b>Device tqStatus Report</b>
     <td  bgcolor="#D0D0D0">ECMA VT100
 <tr><td><p></td>
 <tr><td>
@@ -3012,7 +3012,7 @@ Work is currently in progress to fix this issue.
 <td colspan=1  bgcolor="#D0D0D0">  Subcode</td><td colspan=1  bgcolor="#D0D0D0">Emulation</td><td colspan=1  bgcolor="#D0D0D0">Scope</td><td colspan=1  bgcolor="#D0D0D0">Operation</td><td colspan=1  bgcolor="#D0D0D0">Args</td><td colspan=1  bgcolor="#D0D0D0">Meaning</td></tr>
 <tr>
 <td></td>
-<td colspan=1  bgcolor="#5188B2">  5</td><td colspan=1  bgcolor="#5188B2">VT100</td><td colspan=1  bgcolor="#5188B2">emu</td><td colspan=1  bgcolor="#5188B2">reportStatus</td><td colspan=1  bgcolor="#5188B2"></td><td colspan=1  bgcolor="#5188B2">Report Status (using a <a href=#DSRREP>DSRREP</a> control sequence)</td></tr>
+<td colspan=1  bgcolor="#5188B2">  5</td><td colspan=1  bgcolor="#5188B2">VT100</td><td colspan=1  bgcolor="#5188B2">emu</td><td colspan=1  bgcolor="#5188B2">reporttqStatus</td><td colspan=1  bgcolor="#5188B2"></td><td colspan=1  bgcolor="#5188B2">Report tqStatus (using a <a href=#DSRREP>DSRREP</a> control sequence)</td></tr>
 <tr>
 <td></td>
 <td colspan=1  bgcolor="#5BA5B2">  6</td><td colspan=1  bgcolor="#5BA5B2">VT100</td><td colspan=1  bgcolor="#5BA5B2">emu</td><td colspan=1  bgcolor="#5BA5B2">reportCursorPosition</td><td colspan=1  bgcolor="#5BA5B2"></td><td colspan=1  bgcolor="#5BA5B2">Report Active Position (using a <a href=#CPR>CPR</a> sequence)</td></tr>
@@ -3740,7 +3740,7 @@ Work is currently in progress to fix this issue.
   The United Kingdom and ASCII sets conform to the "ISO international
   register of character sets to be used with escape sequences".  The
   other sets are private character sets.  Special graphics means that the
-  graphic characters fpr the codes 0137 to 0176 are replaced with other
+  graphic characters fpr the codes 0137 to 0176 are tqreplaced with other
   characters.  The specified character set will be used until another SCS
   is received.
 <tr><td><p></td></tr>
@@ -4513,12 +4513,12 @@ as noted.
 <tr><td>FETM    </td><td>Format Effector Transfer </td><td>Reset</td></tr>
 <tr><td>GATM    </td><td>Guarded Area Transfer    </td><td>NA   </td></tr>
 <tr><td>HEM     </td><td>Horizontal Editing       </td><td>NA   </td></tr>
-<tr><td>IRM     </td><td>Insertion-replacement    </td><td>Reset</td></tr>
+<tr><td>IRM     </td><td>Insertion-tqreplacement    </td><td>Reset</td></tr>
 <tr><td>KAM     </td><td>Keyboard Action          </td><td>Reset</td></tr>
 <tr><td>MATM    </td><td>Multiple area transfer   </td><td>NA   </td></tr>
 <tr><td>PUM     </td><td>Positioning Unit         </td><td>Reset</td></tr>
 <tr><td>SATM    </td><td>Selected Area Transfer   </td><td>NA   </td></tr>
-<tr><td>SRTM    </td><td>Status Reporting Transfer</td><td>Reset</td></tr>
+<tr><td>SRTM    </td><td>tqStatus Reporting Transfer</td><td>Reset</td></tr>
 <tr><td>TSM     </td><td>Tabulation Stop          </td><td>Reset</td></tr>
 <tr><td>TTM     </td><td>Transfer Termination     </td><td>NA   </td></tr>
 <tr><td>VEM     </td><td>Vertical Editing         </td><td>NA   </td></tr>
@@ -4542,7 +4542,7 @@ The notation &lt;ESC&gt; denotes a single ASCII Escape character, 1Bx.
 <h2>Special Graphics Characters</h2>
 
 If the Special Graphics set is selected, the graphics for ASCII codes
-0137 through 0176 will be replaced according to the following table (see the
+0137 through 0176 will be tqreplaced according to the following table (see the
 <a href=#SCS>SCS</a> control sequence).
 <center>
 <table cellspacing=30>

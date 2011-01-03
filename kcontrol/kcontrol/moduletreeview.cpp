@@ -133,9 +133,9 @@ void ModuleTreeView::fill(ModuleTreeItem *parent, const TQString &parentPath)
 
 
 
-TQSize ModuleTreeView::sizeHint() const
+TQSize ModuleTreeView::tqsizeHint() const
 {
-    return TQListView::sizeHint().boundedTo( 
+    return TQListView::tqsizeHint().boundedTo( 
 	TQSize( fontMetrics().maxWidth()*35, QWIDGETSIZE_MAX) );
 }
 
@@ -166,7 +166,7 @@ void ModuleTreeView::expandItem(TQListViewItem *item, TQPtrList<TQListViewItem> 
 {
   while (item)
     {
-      setOpen(item, parentList->contains(item));
+      setOpen(item, parentList->tqcontains(item));
 
           if (item->childCount() != 0)
                 expandItem(item->firstChild(), parentList);
@@ -342,8 +342,8 @@ void ModuleTreeItem::paintCell( TQPainter * p, const TQColorGroup & cg, int colu
       TQPixmap pixmap(offset, offset);
       pixmap.fill(Qt::color0);
       pixmap.setMask(pixmap.createHeuristicMask());
-      TQBitmap mask( pixmap.size(), true );
-      pixmap.setMask( mask );
+      TQBitmap tqmask( pixmap.size(), true );
+      pixmap.setMask( tqmask );
       TQListViewItem::setPixmap(0, pixmap);
     }
   }

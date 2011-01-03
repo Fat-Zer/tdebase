@@ -77,7 +77,7 @@ public:
     /**
      * Default constructor
      */
-    KonqSidebar(TQWidget *parentWidget, const char *widgetName,
+    KonqSidebar(TQWidget *tqparentWidget, const char *widgetName,
                     TQObject *parent, const char *name,bool universalMode);
 
     /**
@@ -113,7 +113,7 @@ class KonqSidebarFactory : public KParts::Factory
 public:
     KonqSidebarFactory();
     virtual ~KonqSidebarFactory();
-    virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *widgetName,
+    virtual KParts::Part* createPartObject( TQWidget *tqparentWidget, const char *widgetName,
                                             TQObject *parent, const char *name,
                                             const char *classname, const TQStringList &args );
     static KInstance* instance();

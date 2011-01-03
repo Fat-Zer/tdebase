@@ -81,7 +81,7 @@ KFileIVI::~KFileIVI()
     delete d;
 }
 
-void KFileIVI::invalidateThumb( int state, bool redraw )
+void KFileIVI::tqinvalidateThumb( int state, bool redraw )
 {
     TQIconSet::Mode mode;
     switch( state )

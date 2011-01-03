@@ -38,18 +38,18 @@ TimerSettings::TimerSettings( TQWidget *parent, const char *name )
 {
   TQFrame *page = plainPage();
 
-  TQGridLayout *layout = new TQGridLayout( page, 2, 2, 0, spacingHint() );
+  TQGridLayout *tqlayout = new TQGridLayout( page, 2, 2, 0, spacingHint() );
 
   mUseGlobalUpdate = new TQCheckBox( i18n( "Use update interval of worksheet" ), page );
-  layout->addMultiCellWidget( mUseGlobalUpdate, 0, 0, 0, 1 );
+  tqlayout->addMultiCellWidget( mUseGlobalUpdate, 0, 0, 0, 1 );
 
   mLabel = new TQLabel( i18n( "Update interval:" ), page );
-  layout->addWidget( mLabel, 1, 0 );
+  tqlayout->addWidget( mLabel, 1, 0 );
 
   mInterval = new TQSpinBox( 1, 300, 1, page );
   mInterval->setValue( 2 );
   mInterval->setSuffix( i18n( " sec" ) );
-  layout->addWidget( mInterval, 1, 1 );
+  tqlayout->addWidget( mInterval, 1, 1 );
   mLabel->setBuddy( mInterval );
   TQWhatsThis::add( mInterval, i18n( "All displays of the sheet are updated at the rate specified here." ) );
 

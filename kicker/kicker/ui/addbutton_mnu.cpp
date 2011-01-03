@@ -46,7 +46,7 @@ PanelAddButtonMenu::PanelAddButtonMenu(ContainerArea* cArea, TQWidget * parent, 
 
 void PanelAddButtonMenu::slotExec(int id)
 {
-    if (!entryMap_.contains(id))
+    if (!entryMap_.tqcontains(id))
 	return;
 
     KSycocaEntry * e = entryMap_[id];

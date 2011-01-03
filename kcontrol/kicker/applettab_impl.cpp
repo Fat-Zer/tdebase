@@ -132,7 +132,7 @@ void AppletTab::load( bool useDefaults )
       TQStringList list = c.readListEntry("TrustedApplets");
       for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
         {
-          if(available.contains(*it))
+          if(available.tqcontains(*it))
             l_trusted << (*it);
         }
     }
@@ -142,7 +142,7 @@ void AppletTab::load( bool useDefaults )
 
   for ( TQStringList::Iterator it = available.begin(); it != available.end(); ++it )
     {
-      if(!l_trusted.contains(*it))
+      if(!l_trusted.tqcontains(*it))
         l_available << (*it);
     }
 

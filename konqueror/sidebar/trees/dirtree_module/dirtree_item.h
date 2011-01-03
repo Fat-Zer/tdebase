@@ -36,7 +36,7 @@ public:
 
     virtual void setOpen( bool open );
 
-    virtual void paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment );
+    virtual void paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _tqalignment );
 
     virtual bool acceptsDrops( const TQStrList & formats );
     virtual void drop( TQDropEvent * ev );

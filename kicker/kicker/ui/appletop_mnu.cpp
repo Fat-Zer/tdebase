@@ -41,7 +41,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
     bool isButton = (parent && parent->inherits("ButtonContainer"));
     bool isMenu = false;
     TQString titleText = title;
-    titleText = titleText.replace('&', "&&");
+    titleText = titleText.tqreplace('&', "&&");
     if (isButton)
     {
         isMenu = static_cast<ButtonContainer*>(parent)->isAMenu();

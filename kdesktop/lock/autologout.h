@@ -39,7 +39,7 @@ private:
     void        updateInfo(int);
     TQFrame      *frame;
     TQGridLayout *frameLayout;
-    TQLabel      *mStatusLabel;
+    TQLabel      *mtqStatusLabel;
     int         mCountdownTimerId;
     int         mRemaining;
     TQTimer      countDownTimer;

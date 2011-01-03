@@ -63,20 +63,20 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQWidget *parent, const ch
         margin = 0;
     }
 
-    layout = new TQBoxLayout( this, TQApplication::reverseLayout() ?
+    tqlayout = new TQBoxLayout( this, TQApplication::reverseLayout() ?
                                    TQBoxLayout::RightToLeft :
                                    TQBoxLayout::LeftToRight );
-    layout->setMargin( margin );
+    tqlayout->setMargin( margin );
 
     // scrollable taskbar
     taskBar = new TaskBar(this);
-    layout->addWidget( taskBar );
+    tqlayout->addWidget( taskBar );
 
     connect( taskBar, TQT_SIGNAL( containerCountChanged() ), TQT_SIGNAL( containerCountChanged() ) );
 
     setBackground();
 
-    // read settings and setup layout
+    // read settings and setup tqlayout
     configure();
 
     connectDCOPSignal("", "", "kdeTaskBarConfigChanged()",
@@ -110,7 +110,7 @@ void TaskBarContainer::configure()
         connect(windowListMenu, TQT_SIGNAL(aboutToHide()),
                 TQT_SLOT(windowListMenuAboutToHide()));
 
-        // geometry
+        // tqgeometry
         TQString icon;
         switch (direction)
         {
@@ -135,8 +135,8 @@ void TaskBarContainer::configure()
         windowListButton->setPixmap(kapp->iconLoader()->loadIcon(icon,
                                                                  KIcon::Panel,
                                                                  16));
-        windowListButton->setMinimumSize(windowListButton->sizeHint());
-        layout->insertWidget(0, windowListButton);
+        windowListButton->setMinimumSize(windowListButton->tqsizeHint());
+        tqlayout->insertWidget(0, windowListButton);
         windowListButton->show();
     }
 }
@@ -175,7 +175,7 @@ void TaskBarContainer::orientationChange(Orientation o)
             windowListButton->setFixedWidth(WINDOWLISTBUTTON_SIZE);
             windowListButton->setMaximumHeight(BUTTON_MAX_WIDTH);
         }
-        layout->setDirection(TQApplication::reverseLayout() ?
+        tqlayout->setDirection(TQApplication::reverseLayout() ?
                                 TQBoxLayout::RightToLeft :
                                 TQBoxLayout::LeftToRight);
     }
@@ -186,7 +186,7 @@ void TaskBarContainer::orientationChange(Orientation o)
             windowListButton->setMaximumWidth(BUTTON_MAX_WIDTH);
             windowListButton->setFixedHeight(WINDOWLISTBUTTON_SIZE);
         }
-        layout->setDirection(TQBoxLayout::TopToBottom);
+        tqlayout->setDirection(TQBoxLayout::TopToBottom);
     }
 
     taskBar->setOrientation(o);
@@ -194,7 +194,7 @@ void TaskBarContainer::orientationChange(Orientation o)
     {
         windowListButton->setOrientation(o);
     }
-    layout->activate();
+    tqlayout->activate();
 }
 
 void TaskBarContainer::popupDirectionChange(KPanelApplet::Direction d)
@@ -230,7 +230,7 @@ void TaskBarContainer::popupDirectionChange(KPanelApplet::Direction d)
         windowListButton->setPixmap(kapp->iconLoader()->loadIcon(icon,
                                                                  KIcon::Panel,
                                                                  16));
-        windowListButton->setMinimumSize(windowListButton->sizeHint());
+        windowListButton->setMinimumSize(windowListButton->tqsizeHint());
     }
 }
 
@@ -249,13 +249,13 @@ void TaskBarContainer::showWindowListMenu()
             pos.setX( pos.x() + width() );
             break;
         case KPanelApplet::Left:
-            pos.setX( pos.x() - windowListMenu->sizeHint().width() );
+            pos.setX( pos.x() - windowListMenu->tqsizeHint().width() );
             break;
         case KPanelApplet::Down:
             pos.setY( pos.y() + height() );
             break;
         case KPanelApplet::Up:
-            pos.setY( pos.y() - windowListMenu->sizeHint().height() );
+            pos.setY( pos.y() - windowListMenu->tqsizeHint().height() );
         default:
             break;
     }
@@ -277,9 +277,9 @@ void TaskBarContainer::reconnectWindowListButton()
     connect( windowListButton, TQT_SIGNAL( pressed() ), TQT_SLOT( showWindowListMenu() ) );
 }
 
-TQSize TaskBarContainer::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
+TQSize TaskBarContainer::tqsizeHint( KPanelExtension::Position p, TQSize maxSize) const
 {
-    TQSize size = taskBar->sizeHint( p, maxSize );
+    TQSize size = taskBar->tqsizeHint( p, maxSize );
     if ( (p == KPanelExtension::Left || p == KPanelExtension::Right) && showWindowListButton ) {
         return TQSize( size.width(), size.height() + WINDOWLISTBUTTON_SIZE );
     }

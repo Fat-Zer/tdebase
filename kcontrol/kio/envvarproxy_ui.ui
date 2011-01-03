@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>EnvVarProxyDlgUI</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -171,5 +171,5 @@ Alternatively, you can click on the &lt;b&gt;"Auto Detect"&lt;/b&gt; button to a
     <tabstop>pbVerify</tabstop>
     <tabstop>pbDetect</tabstop>
 </tabstops>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

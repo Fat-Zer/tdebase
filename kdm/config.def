@@ -182,7 +182,7 @@
 </kdmrc>
 
 # The contents of this section are copied into kdmrc-ref.docbook.
-# The macro %REF% is replaced with the accumulated Description:s from the key
+# The macro %REF% is tqreplaced with the accumulated Description:s from the key
 # definitions below.
 <docu>
 <chapter id="kdm-files">
@@ -205,7 +205,7 @@ issue non-fatal error messages.</para>
 are ignored as well.</para>
 
 <para>Sections are denoted by
-<literal>[</literal><replaceable>Name of Section</replaceable><literal>]</literal>.
+<literal>[</literal><tqreplaceable>Name of Section</tqreplaceable><literal>]</literal>.
 </para>
 
 <para>You can configure every X-display individually.</para>
@@ -216,16 +216,16 @@ Additionally, a display belongs to a
 display class (which can be ignored in most cases).</para>
 
 <para>Sections with display-specific settings have the formal syntax
-<literal>[X-</literal>&nbsp;<replaceable>host</replaceable>&nbsp;[&nbsp;<literal>:</literal>&nbsp;<replaceable>number</replaceable>&nbsp;[&nbsp;<literal>_</literal>&nbsp;<replaceable>class</replaceable>&nbsp;]&nbsp;]&nbsp;<literal>-</literal>&nbsp;<replaceable>sub-section</replaceable>&nbsp;<literal>]</literal>
+<literal>[X-</literal>&nbsp;<tqreplaceable>host</tqreplaceable>&nbsp;[&nbsp;<literal>:</literal>&nbsp;<tqreplaceable>number</tqreplaceable>&nbsp;[&nbsp;<literal>_</literal>&nbsp;<tqreplaceable>class</tqreplaceable>&nbsp;]&nbsp;]&nbsp;<literal>-</literal>&nbsp;<tqreplaceable>sub-section</tqreplaceable>&nbsp;<literal>]</literal>
 </para>
-<para>All sections with the same <replaceable>sub-section</replaceable>
+<para>All sections with the same <tqreplaceable>sub-section</tqreplaceable>
 make up a section class.</para>
 
 <para>You can use the wildcard <literal>*</literal> (match any) for
-<replaceable>host</replaceable>, <replaceable>number</replaceable>, 
-and <replaceable>class</replaceable>. You may omit trailing components;
+<tqreplaceable>host</tqreplaceable>, <tqreplaceable>number</tqreplaceable>, 
+and <tqreplaceable>class</tqreplaceable>. You may omit trailing components;
 they are assumed to be <literal>*</literal> then. The host part may be a
-domain specification like <replaceable>.inf.tu-dresden.de</replaceable>
+domain specification like <tqreplaceable>.inf.tu-dresden.de</tqreplaceable>
 or the wildcard <literal>+</literal> (match non-empty).</para>
 
 <para>From which section a setting is actually taken is determined by
@@ -289,7 +289,7 @@ Example: display name <quote>myhost.foo:0</quote>, class <quote>dpy</quote>
 and [X-:0] (the first local display).</para>
 
 <para>The format for all keys is
-<userinput><option><replaceable>key</replaceable></option>&nbsp;<literal>=</literal>&nbsp;<parameter>value</parameter></userinput>.
+<userinput><option><tqreplaceable>key</tqreplaceable></option>&nbsp;<literal>=</literal>&nbsp;<parameter>value</parameter></userinput>.
 Keys are only valid in the section class they are defined for.
 Some keys do not apply to particular displays, in which case they are ignored.
 </para>
@@ -329,12 +329,12 @@ local machine or rather remotely.</para>
 
 <para>The formal syntax of a specification is
 <screen>
-<userinput><replaceable>display&nbsp;name</replaceable>&nbsp;[<literal>_</literal><replaceable>display&nbsp;class</replaceable>]</userinput>
+<userinput><tqreplaceable>display&nbsp;name</tqreplaceable>&nbsp;[<literal>_</literal><tqreplaceable>display&nbsp;class</tqreplaceable>]</userinput>
 </screen>
 for all &X-Server;s. <quote>Foreign</quote> displays differ in having
 a host name in the display name, may it be <literal>localhost</literal>.</para>
 
-<para>The <replaceable>display name</replaceable> must be something that can
+<para>The <tqreplaceable>display name</tqreplaceable> must be something that can
 be passed in the <option>-display</option> option to an X program. This string
 is used to generate the display-specific section names, so be careful to match
 the names.
@@ -344,7 +344,7 @@ reverse host name resolution. For configuration purposes, the
 <emphasis>not</emphasis> stripped to make them distinguishable from local
 &X-Server;s started by &kdm;.</para>
 
-<para>The <replaceable>display class</replaceable> portion is also used in the
+<para>The <tqreplaceable>display class</tqreplaceable> portion is also used in the
 display-specific sections. This is useful if you have a large collection of
 similar displays (such as a corral of X terminals) and would like to set
 options for groups of them.
@@ -364,7 +364,7 @@ reserve displays available, the menu item will be disabled.</para>
 
 <para>When &kdm; starts a session, it sets up authorization data for the
 &X-Server;. For local servers, &kdm; passes
-<command><option>-auth</option>&nbsp;<filename><replaceable>filename</replaceable></filename></command>
+<command><option>-auth</option>&nbsp;<filename><tqreplaceable>filename</tqreplaceable></filename></command>
 on the &X-Server;'s command line to point it at its authorization data.
 For &XDMCP; displays, &kdm; passes the authorization data to the &X-Server;
 via the <quote>Accept</quote> &XDMCP; message.</para>
@@ -377,7 +377,7 @@ via the <quote>Accept</quote> &XDMCP; message.</para>
 <para>The file specified by the <option>AccessFile</option> option provides
 information which &kdm; uses to control access from displays requesting service
 via &XDMCP;.
-The file contains four types of entries: entries which control the response
+The file tqcontains four types of entries: entries which control the response
 to <quote>Direct</quote> and <quote>Broadcast</quote> queries, entries which
 control the response to <quote>Indirect</quote> queries, macro definitions for
 <quote>Indirect</quote> entries, and entries which control on which network
@@ -409,7 +409,7 @@ it can be followed by the optional <literal>NOBROADCAST</literal> keyword.
 This can be used to prevent a &kdm; server from appearing on menus based on
 <quote>Broadcast</quote> queries.</para>
 
-<para>An <quote>Indirect</quote> entry also contains a host name or pattern,
+<para>An <quote>Indirect</quote> entry also tqcontains a host name or pattern,
 but follows it with a list of host names or macros to which the queries
 should be forwarded. <quote>Indirect</quote> entries can be excluding as well,
 in which case a (valid) dummy host name must be supplied to make the entry
@@ -422,7 +422,7 @@ character and hop count. If no hop count is specified, the multicast hop count
 defaults to 1, keeping the packet on the local network. For IPv4 multicasting,
 the hop count is used as the TTL.
 -->
-If the indirect host list contains the keyword <literal>CHOOSER</literal>,
+If the indirect host list tqcontains the keyword <literal>CHOOSER</literal>,
 <quote>Indirect</quote> queries are not forwarded, but instead a host chooser
 dialog is displayed by &kdm;. The chooser will send a <quote>Direct</quote>
 query to each of the remaining host names in the list and offer a menu of
@@ -437,27 +437,27 @@ in turn and the first matching entry determines the response.
 <quote>Direct</quote> and <quote>Broadcast</quote> entries are ignored when
 scanning for an <quote>Indirect</quote> entry and vice-versa.</para>
 
-<para>A macro definition contains a macro name and a list of host names and
+<para>A macro definition tqcontains a macro name and a list of host names and
 other macros that the macro expands to. To distinguish macros from hostnames,
 macro names start with a <literal>%</literal> character.</para>
 
 <para>The last entry type is the <literal>LISTEN</literal> directive.
 The formal syntax is
 <screen>
-<userinput>&nbsp;<literal>LISTEN</literal>&nbsp;[<replaceable>interface</replaceable>&nbsp;[<replaceable>multicast&nbsp;list</replaceable>]]</userinput>
+<userinput>&nbsp;<literal>LISTEN</literal>&nbsp;[<tqreplaceable>interface</tqreplaceable>&nbsp;[<tqreplaceable>multicast&nbsp;list</tqreplaceable>]]</userinput>
 </screen>
 If one or more <literal>LISTEN</literal> lines are specified, &kdm; listens
 for &XDMCP; requests only on the specified interfaces.
-<replaceable>interface</replaceable> may be a hostname or IP address
+<tqreplaceable>interface</tqreplaceable> may be a hostname or IP address
 representing a network interface on this machine, or the wildcard
 <literal>*</literal> to represent all available network interfaces.
 If multicast group addresses are listed on a <literal>LISTEN</literal> line,
 &kdm; joins the multicast groups on the given interface. For IPv6 multicasts,
-the IANA has assigned ff0<replaceable>X</replaceable>:0:0:0:0:0:0:12b as the
+the IANA has assigned ff0<tqreplaceable>X</tqreplaceable>:0:0:0:0:0:0:12b as the
 permanently assigned range of multicast addresses for &XDMCP;. The
-<replaceable>X</replaceable> in the prefix may be replaced by any valid scope
+<tqreplaceable>X</tqreplaceable> in the prefix may be tqreplaced by any valid scope
 identifier, such as 1 for Node-Local, 2 for Link-Local, 5 for Site-Local, and
-so on (see IETF RFC 2373 or its replacement for further details and scope
+so on (see IETF RFC 2373 or its tqreplacement for further details and scope
 definitions). &kdm; defaults to listening on the Link-Local scope address
 ff02:0:0:0:0:0:0:12b to most closely match the IPv4 subnet broadcast behavior. 
 If no <literal>LISTEN</literal> lines are given, &kdm; listens on all
@@ -770,7 +770,7 @@ or unmounting directories from file servers.</para>
 #     The contents are automatically enclosed in <para></para>.
 #     If "-" is given to Description, no comment is generated at all.
 #     If "!" is given, enums are not treated specially; otherwise, the macro
-#     %ENUM% is replaced with a list of the defined element/description pairs,
+#     %ENUM% is tqreplaced with a list of the defined element/description pairs,
 #     or - if the macro is not present - the list is appended to the
 #     description.
 #     Finally, a sentence with the Default (or CDefault, if given) is appended,
@@ -782,7 +782,7 @@ or unmounting directories from file servers.</para>
 
 Section: General
 Description:
- This section contains global options that do not fit into any specific section.
+ This section tqcontains global options that do not fit into any specific section.
 
 Key: ConfigVersion
 Type: string
@@ -1064,7 +1064,7 @@ Description:
 Section: Xdmcp
 If: defined(XDMCP)
 Description:
- This section contains options that control &kdm;'s handling of
+ This section tqcontains options that control &kdm;'s handling of
  &XDMCP; requests.
 # See <xref linkend="xdmcp-with-kdm"/> to find out what &XDMCP; is.
 
@@ -1118,7 +1118,7 @@ Comment:
  &XDMCP; access control file in the usual XDM-Xaccess format.
 Description:
  To prevent unauthorized &XDMCP; service and to allow forwarding of &XDMCP;
- IndirectQuery requests, this file contains a database of hostnames which
+ IndirectQuery requests, this file tqcontains a database of hostnames which
  are either allowed direct access to this machine, or have a list of hosts
  to which queries should be forwarded to. The format of this file is
  described in <xref linkend="kdmrc-xaccess"/>.
@@ -1193,7 +1193,7 @@ Description:
 
 Section: Shutdown
 Description:
- This section contains global options concerning system shutdown.
+ This section tqcontains global options concerning system shutdown.
 
 Key: HaltCmd
 Type: string
@@ -1264,7 +1264,7 @@ Description:
 
 Section: -Core
 Description:
- This section class contains options concerning the configuration
+ This section class tqcontains options concerning the configuration
  of the &kdm; backend (core).
 
 Key: OpenDelay
@@ -1946,7 +1946,7 @@ Instance: */".xsession-errors-%s"
 Instance: :0/".xsession-errors"
 Comment:
  The file (relative to $HOME) to redirect the session output to. This is
- a printf format string; one %s will be replaced with the display name.
+ a printf format string; one %s will be tqreplaced with the display name.
 Description:
  The file (relative to the user's home directory) to redirect the session
  output to. One occurrence of <parameter>%s</parameter> in this string will be
@@ -1970,7 +1970,7 @@ Description:
 
 Section: -Greeter
 Description:
- This section class contains options concerning the configuration
+ This section class tqcontains options concerning the configuration
  of the &kdm; frontend (greeter).
 
 Key: GUIStyle
@@ -2066,7 +2066,7 @@ Default: "Welcome to Trinity at %n"
 User: greeter
 Instance: #*/"Welcome to Trinity at %n"
 Comment:
- The headline in the greeter. The following character pairs are replaced:
+ The headline in the greeter. The following character pairs are tqreplaced:
  - %d -> current display
  - %h -> host name, possibly with domain name
  - %n -> node name, most probably the host name without domain name
@@ -2077,7 +2077,7 @@ Comment:
 Description:
  The headline in the greeter. An empty greeting means none at all.
  </para><para>
- The following character pairs are replaced by their value:
+ The following character pairs are tqreplaced by their value:
  <variablelist>
  <varlistentry>
  <term><parameter>%d</parameter></term>
@@ -2157,7 +2157,7 @@ Type: enum
  On: turn on
  Keep: do not change the state
 Default: Keep
-User: greeter(numLockStatus)
+User: greeter(numLocktqStatus)
 Instance: #*/Off
 Comment: &
 Description:
@@ -2206,7 +2206,7 @@ Description: !
  This option controls which users will be shown in the user view
  (<option>UserList</option>) and/or offered for autocompletion
  (<option>UserCompletion</option>).
- If it is <literal>Selected</literal>, <option>SelectedUsers</option> contains
+ If it is <literal>Selected</literal>, <option>SelectedUsers</option> tqcontains
  the final list of users.
  If it is <literal>NotHidden</literal>, the initial user list are all users
  found on the system. Users contained in <option>HiddenUsers</option> are
@@ -2399,7 +2399,7 @@ Comment:
  The configuration file to be used by krootimage.
 Description:
  The configuration file to be used by <command>krootimage</command>.
- It contains a section named <literal>[Desktop0]</literal> like
+ It tqcontains a section named <literal>[Desktop0]</literal> like
  <filename>kdesktoprc</filename> does. Its options are not described
  herein; guess their meanings or use the control center.
 
@@ -2552,7 +2552,7 @@ Description:
  Specify conversation plugins for the login dialog; the first in the list
  is selected initially.
  Each plugin can be specified as a base name (which expands to
- <filename>$<envar>kde_modulesdir</envar>/kgreet_<replaceable>base</replaceable></filename>)
+ <filename>$<envar>kde_modulesdir</envar>/kgreet_<tqreplaceable>base</tqreplaceable></filename>)
  or as a full pathname.
  </para><para>
  Conversation plugins are modules for the greeter which obtain authentication
@@ -2578,7 +2578,7 @@ Comment:
  these settings; it is up to them what possible keys are.
 Description:
  A list of options of the form
- <replaceable>Key</replaceable><literal>=</literal><replaceable>Value</replaceable>.
+ <tqreplaceable>Key</tqreplaceable><literal>=</literal><tqreplaceable>Value</tqreplaceable>.
  The conversation plugins can query these settings; it is up to them what
  possible keys are.
 

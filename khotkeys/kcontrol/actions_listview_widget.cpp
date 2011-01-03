@@ -49,7 +49,7 @@ Actions_listview_widget::Actions_listview_widget( TQWidget* parent_P, const char
 void Actions_listview_widget::action_name_changed( const TQString& )
     {
     current_action()->widthChanged( 0 );
-    actions_listview->repaintItem( current_action());
+    actions_listview->tqrepaintItem( current_action());
     }
 
 void Actions_listview_widget::set_action_data( Action_data_base* data_P, bool recent_action_P )

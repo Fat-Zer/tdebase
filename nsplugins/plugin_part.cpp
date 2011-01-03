@@ -90,7 +90,7 @@ TQString PluginLiveConnectExtension::evalJavaScript( const TQString & script )
     kdDebug(1432) << "PLUGIN:LiveConnect::evalJavaScript " << script << endl;
     ArgList args;
     TQString jscode;
-    jscode.sprintf("this.__nsplugin=eval(\"%s\")",  TQString(script).replace('\\', "\\\\").replace('"', "\\\"").latin1());
+    jscode.sprintf("this.__nsplugin=eval(\"%s\")",  TQString(script).tqreplace('\\', "\\\\").tqreplace('"', "\\\"").latin1());
     //kdDebug(1432) << "String is [" << jscode << "]" << endl;
     args.push_back(qMakePair(KParts::LiveConnectExtension::TypeString, jscode));
     TQString nsplugin("Undefined");
@@ -171,13 +171,13 @@ PluginFactory::~PluginFactory()
    s_instance = 0;
 }
 
-KParts::Part * PluginFactory::createPartObject(TQWidget *parentWidget, const char *widgetName,
+KParts::Part * PluginFactory::createPartObject(TQWidget *tqparentWidget, const char *widgetName,
                                          TQObject *parent, const char *name,
                                          const char *classname, const TQStringList &args)
 {
     Q_UNUSED(classname)
     kdDebug(1432) << "PluginFactory::create" << endl;
-    KParts::Part *obj = new PluginPart(parentWidget, widgetName, parent, name, args);
+    KParts::Part *obj = new PluginPart(tqparentWidget, widgetName, parent, name, args);
     return obj;
 }
 
@@ -201,7 +201,7 @@ KAboutData *PluginFactory::aboutData()
 /**************************************************************************/
 
 
-PluginPart::PluginPart(TQWidget *parentWidget, const char *widgetName, TQObject *parent,
+PluginPart::PluginPart(TQWidget *tqparentWidget, const char *widgetName, TQObject *parent,
                        const char *name, const TQStringList &args)
     : KParts::ReadOnlyPart(parent, name), _widget(0), _args(args),
       _destructed(0L)
@@ -226,7 +226,7 @@ PluginPart::PluginPart(TQWidget *parentWidget, const char *widgetName, TQObject 
     _callback = new NSPluginCallback(this);
 
     // create a canvas to insert our widget
-    _canvas = new PluginCanvasWidget( parentWidget, widgetName );
+    _canvas = new PluginCanvasWidget( tqparentWidget, widgetName );
     //_canvas->setFocusPolicy( TQWidget::ClickFocus );
     _canvas->setFocusPolicy( TQWidget::WheelFocus );
     _canvas->setBackgroundMode( TQWidget::NoBackground );
@@ -307,7 +307,7 @@ bool PluginPart::openURL(const KURL &url)
         _widget = inst;
     } else {
         TQLabel *label = new TQLabel( i18n("Unable to load Netscape plugin for %1").arg(url.url()), _canvas );
-        label->setAlignment( AlignCenter | WordBreak );
+        label->tqsetAlignment( AlignCenter | WordBreak );
         _widget = label;
     }
 

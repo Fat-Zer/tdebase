@@ -15,5 +15,5 @@ Icons Flashing = true
 # Show progress bar?
 Always Show Progress = false
 
-# Status text colour
+# tqStatus text colour
 Label Foreground = #FFFFFF

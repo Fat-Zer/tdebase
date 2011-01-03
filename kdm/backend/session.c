@@ -154,13 +154,13 @@ AutoLogon( Time_t tdiff )
 	                           !td->hstent->lastExit)) ||
 	            td->autoAgain))
 	{
-		unsigned int lmask;
+		unsigned int ltqmask;
 		Window dummy1, dummy2;
 		int dummy3, dummy4, dummy5, dummy6;
 		XQueryPointer( dpy, DefaultRootWindow( dpy ),
 		               &dummy1, &dummy2, &dummy3, &dummy4, &dummy5, &dummy6,
-		               &lmask );
-		if (lmask & ShiftMask)
+		               &ltqmask );
+		if (ltqmask & ShiftMask)
 			return 0;
 		DoAutoLogon();
 		return 1;

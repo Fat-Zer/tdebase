@@ -24,16 +24,16 @@ class TQLabel;
 class KProgress;
 
 /** @short Window displaying status and progress bar. */
-class WndStatus:
+class WndtqStatus:
       public QHBox
 {
   Q_OBJECT
 public:
-  WndStatus( TQPalette,
+  WndtqStatus( TQPalette,
              int, // Xinerama screen
              bool, // At top?
              bool, // Progress indicator visible?
-             const TQFont&, // Status bar font
+             const TQFont&, // tqStatus bar font
              const TQColor&, const TQColor &, // Foreground/Background color
              const TQString& // Icon
            );

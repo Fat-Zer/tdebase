@@ -54,7 +54,7 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	, m_help(new KHelpMenu(this, KGlobal::instance()->aboutData(), false, actionCollection()))
 {
 	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
-	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+	tqsetAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	connect(this, TQT_SIGNAL(quitSelected()), this, TQT_SLOT(_quit()));
 	TQToolTip::add(this, i18n("Screen resize & rotate"));
 	my_parent = parent;
@@ -509,7 +509,7 @@ void KRandRSystemTray::slotCycleDisplays()
 	int current_on_index = -1;
 	int max_index = -1;
 	int prev_on_index;
-	Status s;
+	tqStatus s;
 
 	randr_screen_info = read_screen_info(randr_display);
 
@@ -782,7 +782,7 @@ void KRandRSystemTray::slotOutputChanged(int parameter)
 	char *output_name;
 	RROutput output_id;
 	int i;
-	Status s;
+	tqStatus s;
 	int num_outputs_on;
 
 	num_outputs_on = 0;

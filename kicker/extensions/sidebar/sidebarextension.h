@@ -36,7 +36,7 @@ public:
 
     virtual ~SidebarExtension();
 
-    TQSize sizeHint( Position, TQSize maxSize ) const;
+    TQSize tqsizeHint( Position, TQSize maxSize ) const;
     Position preferedPosition() const;
 
     virtual void positionChange( Position position );
@@ -55,7 +55,7 @@ private:
     TQFrame *m_resizeHandle;
     bool m_resizing;
     int m_expandedSize;
-    TQHBoxLayout *m_layout;
+    TQHBoxLayout *m_tqlayout;
     TQVBox *m_sbWrapper;
 };
 

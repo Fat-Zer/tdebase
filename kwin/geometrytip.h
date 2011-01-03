@@ -26,7 +26,7 @@ class GeometryTip: public QLabel
         void setGeometry( const TQRect& geom );
 
     private:
-        const XSizeHints* sizeHints;
+        const XSizeHints* tqsizeHints;
     };
 
 } // namespace

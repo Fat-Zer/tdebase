@@ -174,7 +174,7 @@ Boolean qmotif_event_dispatcher( XEvent *event )
     }
 
     last_xevent = event;
-    bool delivered = ( qApp->x11ProcessEvent( event ) != -1 );
+    bool delivered = ( tqApp->x11ProcessEvent( event ) != -1 );
     last_xevent = 0;
     if ( qMotif ) {
 	switch ( event->type ) {
@@ -309,15 +309,15 @@ XtAppContext QXtEventLoop::applicationContext() const
 
 void QXtEventLoop::appStartingUp()
 {
-    int argc = qApp->argc();
+    int argc = tqApp->argc();
     XtDisplayInitialize( d->appContext,
 			 TQPaintDevice::x11AppDisplay(),
-			 qApp->name(),
+			 tqApp->name(),
 			 d->applicationClass,
 			 d->options,
 			 d->numOptions,
 			 &argc,
-			 qApp->argv() );
+			 tqApp->argv() );
     d->hookMeUp();
 }
 
@@ -362,18 +362,18 @@ void qmotif_socknot_handler( XtPointer pointer, int *, XtInputId *id )
  */
 void QXtEventLoop::registerSocketNotifier( TQSocketNotifier *notifier )
 {
-    XtInputMask mask;
+    XtInputMask tqmask;
     switch ( notifier->type() ) {
     case TQSocketNotifier::Read:
-	mask = XtInputReadMask;
+	tqmask = XtInputReadMask;
 	break;
 
     case TQSocketNotifier::Write:
-	mask = XtInputWriteMask;
+	tqmask = XtInputWriteMask;
 	break;
 
     case TQSocketNotifier::Exception:
-	mask = XtInputExceptMask;
+	tqmask = XtInputExceptMask;
 	break;
 
     default:
@@ -382,7 +382,7 @@ void QXtEventLoop::registerSocketNotifier( TQSocketNotifier *notifier )
     }
 
     XtInputId id = XtAppAddInput( d->appContext,
-				  notifier->socket(), (XtPointer) mask,
+				  notifier->socket(), (XtPointer) tqmask,
 				  qmotif_socknot_handler, this );
     d->socknotDict.insert( id, notifier );
 
@@ -420,7 +420,7 @@ void qmotif_timeout_handler( XtPointer, XtIntervalId * )
  */
 bool QXtEventLoop::processEvents( ProcessEventsFlags flags )
 {
-    // Qt uses posted events to do lots of delayed operations, like repaints... these
+    // Qt uses posted events to do lots of delayed operations, like tqrepaints... these
     // need to be delivered before we go to sleep
     TQApplication::sendPostedEvents();
 
@@ -436,23 +436,23 @@ bool QXtEventLoop::processEvents( ProcessEventsFlags flags )
 			     qmotif_timeout_handler, 0 );
     }
 
-    // get the pending event mask from Xt and process the next event
-    XtInputMask pendingmask = XtAppPending( d->appContext );
-    XtInputMask mask = pendingmask;
-    if ( pendingmask & XtIMTimer ) {
-	mask &= ~XtIMTimer;
+    // get the pending event tqmask from Xt and process the next event
+    XtInputMask pendingtqmask = XtAppPending( d->appContext );
+    XtInputMask tqmask = pendingtqmask;
+    if ( pendingtqmask & XtIMTimer ) {
+	tqmask &= ~XtIMTimer;
 	// zero timers will starve the Xt X event dispatcher... so process
 	// something *instead* of a timer first...
-	if ( mask != 0 )
-	    XtAppProcessEvent( d->appContext, mask );
+	if ( tqmask != 0 )
+	    XtAppProcessEvent( d->appContext, tqmask );
 	// and process a timer afterwards
-	mask = pendingmask & XtIMTimer;
+	tqmask = pendingtqmask & XtIMTimer;
     }
 
     if ( ( flags & WaitForMore ) )
 	XtAppProcessEvent( d->appContext, XtIMAll );
     else
-	XtAppProcessEvent( d->appContext, mask );
+	XtAppProcessEvent( d->appContext, tqmask );
 
     int nevents = 0;
     if ( ! ( flags & ExcludeSocketNotifiers ) )
@@ -463,7 +463,7 @@ bool QXtEventLoop::processEvents( ProcessEventsFlags flags )
     }
     d->activate_timers = FALSE;
 
-    return ( (flags & WaitForMore) || ( pendingmask != 0 ) || nevents > 0 );
+    return ( (flags & WaitForMore) || ( pendingtqmask != 0 ) || nevents > 0 );
 }
 
 #include "qxteventloop.moc"

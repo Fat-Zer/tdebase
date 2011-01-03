@@ -61,7 +61,7 @@ void
 MyApplication::renderDone()
 {
 	desktop()->setBackgroundPixmap( renderer.pixmap() );
-	desktop()->repaint( true );
+	desktop()->tqrepaint( true );
 	renderer.saveCacheFile();
 	renderer.cleanup();
 	for (unsigned i=0; i<renderer.numRenderers(); ++i)

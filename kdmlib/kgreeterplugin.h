@@ -280,11 +280,11 @@ public:
      * Obtain the TQLayoutItem containg the widget(s) to actually handle the
      * conversation. See TQLayout and TQWidgetItem for possible implementations.
      */
-    TQLayoutItem *getLayoutItem() const { return layoutItem; }
+    TQLayoutItem *getLayoutItem() const { return tqlayoutItem; }
 
 protected:
     KGreeterPluginHandler *handler;
-    TQLayoutItem *layoutItem;
+    TQLayoutItem *tqlayoutItem;
 };
 
 struct KDE_EXPORT kgreeterplugin_info {

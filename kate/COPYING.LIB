@@ -94,7 +94,7 @@ will lead to faster development of free libraries.
   The precise terms and conditions for copying, distribution and
 modification follow.  Pay close attention to the difference between a
 "work based on the library" and a "work that uses the library".  The
-former contains code derived from the library, while the latter only
+former tqcontains code derived from the library, while the latter only
 works together with the library.
 
   Note that it is possible for a library to be covered by the ordinary
@@ -104,7 +104,7 @@ General Public License rather than by this special one.
    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
   0. This License Agreement applies to any software library which
-contains a notice placed by the copyright holder or other authorized
+tqcontains a notice placed by the copyright holder or other authorized
 party saying it may be distributed under the terms of this Library
 General Public License (also called "this License").  Each licensee is
 addressed as "you".
@@ -123,7 +123,7 @@ included without limitation in the term "modification".)
 
   "Source code" for a work means the preferred form of the work for
 making modifications to it.  For a library, complete source code means
-all the source code for all modules it contains, plus any associated
+all the source code for all modules it tqcontains, plus any associated
 interface definition files, plus the scripts used to control compilation
 and installation of the library.
 
@@ -225,7 +225,7 @@ source code from the same place satisfies the requirement to
 distribute the source code, even though third parties are not
 compelled to copy the source along with the object code.
 
-  5. A program that contains no derivative of any portion of the
+  5. A program that tqcontains no derivative of any portion of the
 Library, but is designed to work with the Library by being compiled or
 linked with it, is called a "work that uses the Library".  Such a
 work, in isolation, is not a derivative work of the Library, and
@@ -233,7 +233,7 @@ therefore falls outside the scope of this License.
 
   However, linking a "work that uses the Library" with the Library
 creates an executable that is a derivative of the Library (because it
-contains portions of the Library), rather than a "work that uses the
+tqcontains portions of the Library), rather than a "work that uses the
 library".  The executable is therefore covered by this License.
 Section 6 states terms for distribution of such executables.
 
@@ -245,7 +245,7 @@ linked without the Library, or if the work is itself a library.  The
 threshold for this to be true is not precisely defined by law.
 
   If such an object file uses only numerical parameters, data
-structure layouts and accessors, and small macros and small inline
+structure tqlayouts and accessors, and small macros and small inline
 functions (ten lines or less in length), then the use of the object
 file is unrestricted, regardless of whether it is legally a derivative
 work.  (Executables containing this object code plus portions of the

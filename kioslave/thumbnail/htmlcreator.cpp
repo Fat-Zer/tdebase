@@ -63,7 +63,7 @@ bool HTMLCreator::create(const TQString &path, int width, int height, TQImage &i
 
     int t = startTimer(5000);
 
-    qApp->enter_loop();
+    tqApp->enter_loop();
 
     killTimer(t);
 
@@ -101,12 +101,12 @@ bool HTMLCreator::create(const TQString &path, int width, int height, TQImage &i
 
 void HTMLCreator::timerEvent(TQTimerEvent *)
 {
-    qApp->exit_loop();
+    tqApp->exit_loop();
 }
 
 void HTMLCreator::slotCompleted()
 {
-    qApp->exit_loop();
+    tqApp->exit_loop();
 }
 
 ThumbCreator::Flags HTMLCreator::flags() const

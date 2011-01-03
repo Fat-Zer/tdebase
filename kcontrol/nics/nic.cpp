@@ -74,7 +74,7 @@ struct MyNIC
 {
    TQString name;
    TQString addr;
-   TQString netmask;
+   TQString nettqmask;
    TQString state;
    TQString type;
    TQString HWaddr;
@@ -123,7 +123,7 @@ void KCMNic::update()
    NICList *nics=findNICs();
    nics->setAutoDelete(true);
    for (MyNIC* tmp=nics->first(); tmp!=0; tmp=nics->next())
-      new TQListViewItem(m_list,tmp->name, tmp->addr, tmp->netmask, tmp->type, tmp->state, tmp->HWaddr);
+      new TQListViewItem(m_list,tmp->name, tmp->addr, tmp->nettqmask, tmp->type, tmp->state, tmp->HWaddr);
    delete nics;
 }
 
@@ -211,10 +211,10 @@ NICList* findNICs()
          if (result==0)
          {
             sinptr = (struct sockaddr_in *) &ifcopy.ifr_addr;
-            tmp->netmask=inet_ntoa(sinptr->sin_addr);
+            tmp->nettqmask=inet_ntoa(sinptr->sin_addr);
          }
          else
-            tmp->netmask=i18n("Unknown");
+            tmp->nettqmask=i18n("Unknown");
 
          ifcopy=*ifr;
          result=-1;  // if none of the two #ifs below matches, ensure that result!=0 so that "Unknown" is returned as result
@@ -265,10 +265,10 @@ NICList* findNICs()
       getnameinfo(ifa->ifa_addr, ifa->ifa_addr->sa_len, buf, 127, 0, 0, NI_NUMERICHOST);
       tmp->addr = buf;
 
-      if (ifa->ifa_netmask != NULL) {
+      if (ifa->ifa_nettqmask != NULL) {
 	bzero(buf, 128);
-	getnameinfo(ifa->ifa_netmask, ifa->ifa_netmask->sa_len, buf, 127, 0, 0, NI_NUMERICHOST);
-	tmp->netmask = buf;
+	getnameinfo(ifa->ifa_nettqmask, ifa->ifa_nettqmask->sa_len, buf, 127, 0, 0, NI_NUMERICHOST);
+	tmp->nettqmask = buf;
       }
 
       tmp->state= (ifa->ifa_flags & IFF_UP) ? upMessage : downMessage;
@@ -298,21 +298,21 @@ TQString flags_tos (unsigned int flags)
 
   if (flags & IFF_BROADCAST) {
     if (tmp.length()) {
-      tmp += TQString::fromLatin1(", ");
+      tmp += TQString::tqfromLatin1(", ");
     }
     tmp += i18n("Broadcast");
   }
   
   if (flags & IFF_MULTICAST) {
     if (tmp.length()) {
-      tmp += TQString::fromLatin1(", ");
+      tmp += TQString::tqfromLatin1(", ");
     }
     tmp += i18n("Multicast");
   }
   
   if (flags & IFF_LOOPBACK) {
     if (tmp.length()) {
-      tmp += TQString::fromLatin1(", ");
+      tmp += TQString::tqfromLatin1(", ");
     }
     tmp += i18n("Loopback");
   }

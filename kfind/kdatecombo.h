@@ -26,7 +26,7 @@ public:
 	KDateCombo(const TQDate & date, TQWidget *parent=0, const char *name=0);
 	~KDateCombo();
 
-	TQDate & getDate(TQDate *currentDate);
+	TQDate & getDate(TQDate *tqcurrentDate);
 	bool setDate(const TQDate & newDate);
 
 private:

@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>Condition_list_widget_ui</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -40,7 +40,7 @@
         </widget>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout6</cstring>
+                <cstring>tqlayout6</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -165,6 +165,6 @@
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
+<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

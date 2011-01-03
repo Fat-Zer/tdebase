@@ -107,7 +107,7 @@ ANSI Compatible Mode
 		Response is			ESC [ Pl; Pc R
 		* Pl = line number; Pc = column number
 
-	Status Report
+	tqStatus Report
 		Invoked by			ESC [ 5 n
 		Response is			ESC [ 0 n  (terminal ok)
 						ESC [ 3 n  (terminal not ok)

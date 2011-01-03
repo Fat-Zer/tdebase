@@ -391,7 +391,7 @@ void Keyboard_input_action::execute()
 TQString Keyboard_input_action::description() const
     {
     TQString tmp = input();
-    tmp.replace( '\n', ' ' );
+    tmp.tqreplace( '\n', ' ' );
     tmp.truncate( 30 );
     return i18n( "Keyboard input : " ) + tmp;
     }

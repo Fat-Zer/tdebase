@@ -83,10 +83,10 @@ LayoutIcon::findPixmap(const TQString& code_, bool showFlag, const TQString& dis
 		if( pm->height() < FLAG_MAX_HEIGHT ) {
 			TQPixmap* pix = new TQPixmap(FLAG_MAX_WIDTH, FLAG_MAX_HEIGHT);
 			pix->fill( Qt::lightGray );
-//			pix->fill( TQColor(qRgba(127,127,127,255)) );
-//			TQBitmap mask;
-//			mask.fill(1);
-//			pix->setMask(mask);
+//			pix->fill( TQColor(tqRgba(127,127,127,255)) );
+//			TQBitmap tqmask;
+//			tqmask.fill(1);
+//			pix->setMask(tqmask);
 			
 			int dy = (pix->height() - pm->height()) / 2;
 			copyBlt( pix, 0, dy, pm, 0, 0, -1, -1 );
@@ -112,83 +112,83 @@ LayoutIcon::findPixmap(const TQString& code_, bool showFlag, const TQString& dis
 }
 
 /**
-@brief Try to get country code from layout name in xkb before xorg 6.9.0
+@brief Try to get country code from tqlayout name in xkb before xorg 6.9.0
 */
-TQString LayoutIcon::getCountryFromLayoutName(const TQString& layoutName)
+TQString LayoutIcon::getCountryFromLayoutName(const TQString& tqlayoutName)
 {
 	TQString flag;
 	
 	if( X11Helper::areLayoutsClean() ) { // >= Xorg 6.9.0
-		if( layoutName == "mkd" )
+		if( tqlayoutName == "mkd" )
 			flag = "mk";
 		else
-		if( layoutName == "srp" ) {
+		if( tqlayoutName == "srp" ) {
 			TQString csFlagFile = locate("locale", flagTemplate.arg("cs"));
 			flag = csFlagFile.isEmpty() ? "yu" : "cs";
 		}
 		else
-			if( layoutName.endsWith("/jp") )
+			if( tqlayoutName.endsWith("/jp") )
 				flag = "jp";
         else
-            if( layoutName == "trq" || layoutName == "trf" || layoutName == "tralt" )
+            if( tqlayoutName == "trq" || tqlayoutName == "trf" || tqlayoutName == "tralt" )
                 flag = "tr";
 		else
-			if( layoutName.length() > 2 )
+			if( tqlayoutName.length() > 2 )
 				flag = "";
 		else
-				flag = layoutName;
+				flag = tqlayoutName;
 	}
 	else {
-		if( layoutName == "ar" )	// Arabic - not argentina
+		if( tqlayoutName == "ar" )	// Arabic - not argentina
 			;
 		else
-			if( layoutName == "sr" || layoutName == "cs")	// Serbian language - Yugoslavia
+			if( tqlayoutName == "sr" || tqlayoutName == "cs")	// Serbian language - Yugoslavia
 				flag = "yu";
 		else
-			if( layoutName == "bs" )	// Bosnian language - Bosnia
+			if( tqlayoutName == "bs" )	// Bosnian language - Bosnia
 				flag = "ba";
 		else
-			if( layoutName == "la" )	// Latin America
+			if( tqlayoutName == "la" )	// Latin America
 				;
 		else
-			if( layoutName == "lo" )	// Lao
+			if( tqlayoutName == "lo" )	// Lao
 				flag = "la";
 		else
-			if( layoutName == "pl2" )	// Poland
+			if( tqlayoutName == "pl2" )	// Poland
 				flag = "pl";
 		else
-			if( layoutName == "iu" )	// Inuktitut - Canada
+			if( tqlayoutName == "iu" )	// Inuktitut - Canada
 				flag = "ca";
 		else
-			if( layoutName == "syr" )	// Syriac
+			if( tqlayoutName == "syr" )	// Syriac
 				flag = "sy";
 		else
-			if( layoutName == "dz" )	// Dzongka/Tibetian - Buthan
+			if( tqlayoutName == "dz" )	// Dzongka/Tibetian - Buthan
 				flag = "bt";
 		else
-			if( layoutName == "ogham" )	// Ogham - Ireland
+			if( tqlayoutName == "ogham" )	// Ogham - Ireland
 				flag = "ie";
 		else
-			if( layoutName == "ge_la" || layoutName == "ge_ru" )
+			if( tqlayoutName == "ge_la" || tqlayoutName == "ge_ru" )
 				flag = "ge";
 		else
-			if( layoutName == "el" )
+			if( tqlayoutName == "el" )
 				flag = "gr";
 		else
-			if( layoutName.endsWith("/jp") )
+			if( tqlayoutName.endsWith("/jp") )
 				flag = "jp";
 		else
-			if( layoutName == "ml" || layoutName == "dev" || layoutName == "gur" 
-						 || layoutName == "guj" || layoutName == "kan" || layoutName == "ori" 
-						 || layoutName == "tel" || layoutName == "tml" || layoutName == "ben" ) // some Indian languages
+			if( tqlayoutName == "ml" || tqlayoutName == "dev" || tqlayoutName == "gur" 
+						 || tqlayoutName == "guj" || tqlayoutName == "kan" || tqlayoutName == "ori" 
+						 || tqlayoutName == "tel" || tqlayoutName == "tml" || tqlayoutName == "ben" ) // some Indian languages
 				flag = "in";
 		else {
-			int sepPos = layoutName.find(TQRegExp("[-_]"));
-			TQString leftCode = layoutName.mid(0, sepPos);
+			int sepPos = tqlayoutName.find(TQRegExp("[-_]"));
+			TQString leftCode = tqlayoutName.mid(0, sepPos);
 			TQString rightCode;
 			if( sepPos != -1 )
-				rightCode = layoutName.mid(sepPos+1);
-//			kdDebug() << "layout name breakup: " << leftCode << ":" << rightCode << endl;
+				rightCode = tqlayoutName.mid(sepPos+1);
+//			kdDebug() << "tqlayout name breakup: " << leftCode << ":" << rightCode << endl;
 	
 			if( rightCode.length() == 2 
 					&& TQRegExp("[A-Z][A-Z]").exactMatch(rightCode) ) {
@@ -211,7 +211,7 @@ void LayoutIcon::dimPixmap(TQPixmap& pm)
 		for(int x=0; x<image.width(); x++)
 	{
 		QRgb rgb = image.pixel(x,y);
-		QRgb dimRgb(qRgb(qRed(rgb)*3/4, qGreen(rgb)*3/4, qBlue(rgb)*3/4));
+		QRgb dimRgb(tqRgb(tqRed(rgb)*3/4, tqGreen(rgb)*3/4, tqBlue(rgb)*3/4));
 		image.setPixel(x, y, dimRgb);
 	}
 	pm.convertFromImage(image);
@@ -313,7 +313,7 @@ TQPixmap* LayoutIcon::createErrorPixmap()
 //   I18N_NOOP("Iranian"); // should be not Iranian but Farsi
    I18N_NOOP("Latin America");
    I18N_NOOP("Maltese");
-   I18N_NOOP("Maltese (US layout)");
+   I18N_NOOP("Maltese (US tqlayout)");
    I18N_NOOP("Northern Saami (Finland)");
    I18N_NOOP("Northern Saami (Norway)");
    I18N_NOOP("Northern Saami (Sweden)");

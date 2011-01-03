@@ -47,7 +47,7 @@ KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name),DCOPObject(name)
 {
 
-  TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
   config = new KConfig("ksmartcardrc", false, false);
 
   DCOPClient *dc = KApplication::kApplication()->dcopClient();
@@ -67,7 +67,7 @@ KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
 
 
      base = new SmartcardBase(this);
-     layout->add(base);
+     tqlayout->add(base);
 
      _popUpKardChooser = new KPopupMenu(this,"KpopupKardChooser");
      _popUpKardChooser->insertItem(i18n("Change Module..."),
@@ -107,7 +107,7 @@ KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
      _cardDB= new KCardDB();
      load();
   } else {
-     layout->add(new NoSmartcardBase(this));
+     tqlayout->add(new NoSmartcardBase(this));
   }
 }
 

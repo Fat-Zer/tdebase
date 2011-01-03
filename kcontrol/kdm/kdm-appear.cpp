@@ -216,7 +216,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   loadLanguageList(langcombo);
   connect(langcombo, TQT_SIGNAL(activated(const TQString &)), TQT_SLOT(changed()));
   label = new TQLabel(langcombo, i18n("Languag&e:"), group);
-  TQGridLayout *hbox = new TQGridLayout( group->layout(), 2, 2, KDialog::spacingHint() );
+  TQGridLayout *hbox = new TQGridLayout( group->tqlayout(), 2, 2, KDialog::spacingHint() );
   hbox->setColStretch(1, 1);
   hbox->addWidget(label, 1, 0);
   hbox->addWidget(langcombo, 1, 1);
@@ -250,7 +250,7 @@ void KDMAppearanceWidget::makeReadOnly()
 void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
 {
   TQStringList langlist = KGlobal::dirs()->findAllResources("locale",
-			TQString::fromLatin1("*/entry.desktop"));
+			TQString::tqfromLatin1("*/entry.desktop"));
   langlist.sort();
   for ( TQStringList::ConstIterator it = langlist.begin();
 	it != langlist.end(); ++it )
@@ -260,9 +260,9 @@ void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
     TQString nid = fpath.mid(index + 1);
 
     KSimpleConfig entry(*it);
-    entry.setGroup(TQString::fromLatin1("KCM Locale"));
-    TQString name = entry.readEntry(TQString::fromLatin1("Name"), i18n("without name"));
-    combo->insertLanguage(nid, name, TQString::fromLatin1("l10n/"), TQString::null);
+    entry.setGroup(TQString::tqfromLatin1("KCM Locale"));
+    TQString name = entry.readEntry(TQString::tqfromLatin1("Name"), i18n("without name"));
+    combo->insertLanguage(nid, name, TQString::tqfromLatin1("l10n/"), TQString::null);
   }
 }
 
@@ -316,7 +316,7 @@ void KDMAppearanceWidget::loadGuiStyles(KBackedComboBox *combo)
 bool KDMAppearanceWidget::setLogo(TQString logo)
 {
     TQString flogo = logo.isEmpty() ?
-                    locate("data", TQString::fromLatin1("kdm/pics/kdelogo.png") ) :
+                    locate("data", TQString::tqfromLatin1("kdm/pics/kdelogo.png") ) :
                     logo;
     TQImage p(flogo);
     if (p.isNull())
@@ -324,7 +324,7 @@ bool KDMAppearanceWidget::setLogo(TQString logo)
     if (p.width() > 100 || p.height() > 100)
         p = p.smoothScale(100, 100, TQImage::ScaleMin);
     logobutton->setPixmap(p);
-    uint bd = style().pixelMetric( TQStyle::PM_ButtonMargin ) * 2;
+    uint bd = style().tqpixelMetric( TQStyle::PM_ButtonMargin ) * 2;
     logobutton->setFixedSize(p.width() + bd, p.height() + bd);
     logopath = logo;
     return true;
@@ -334,7 +334,7 @@ bool KDMAppearanceWidget::setLogo(TQString logo)
 void KDMAppearanceWidget::slotLogoButtonClicked()
 {
     KImageIO::registerFormats();
-    KFileDialog dialogue(locate("data", TQString::fromLatin1("kdm/pics/")),
+    KFileDialog dialogue(locate("data", TQString::tqfromLatin1("kdm/pics/")),
 			 KImageIO::pattern( KImageIO::Reading ),
 			 this, 0, true);
     dialogue.setOperationMode( KFileDialog::Opening );
@@ -392,7 +392,7 @@ void KDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 	if(!url->isLocalFile()) {
 	    pixurl.setPath(KGlobal::dirs()->resourceDirs("data").last() +
 		     "kdm/pics/" + url->fileName());
-	    KIO::NetAccess::copy(*url, pixurl, parentWidget());
+	    KIO::NetAccess::copy(*url, pixurl, tqparentWidget());
 	    istmp = true;
 	} else {
 	    pixurl = *url;
@@ -401,7 +401,7 @@ void KDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 
 	// By now url should be "file:/..."
 	if (!setLogo(pixurl.path())) {
-	    KIO::NetAccess::del(pixurl, parentWidget());
+	    KIO::NetAccess::del(pixurl, tqparentWidget());
 	    TQString msg = i18n("There was an error loading the image:\n"
 			       "%1\n"
 			       "It will not be saved.")

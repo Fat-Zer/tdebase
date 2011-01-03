@@ -534,7 +534,7 @@ tst_keyboard() {
      - DECKPAM (Keypad Application Mode)
      - DECKPNM (Keypad Numeric Mode)
 
-The standard VT100 keayboard layout:
+The standard VT100 keayboard tqlayout:
  
                                                         UP   DN   LE  RI
 
@@ -562,7 +562,7 @@ TAB*    qQ   wW   eE   rR   tT   yY   uU   iI   oO   pP   [{   ]}      DEL
   char *ledmsg[6], *ledseq[6];
 
   int  i, j, okflag;
-  int  kblayout;
+  int  kbtqlayout;
   int  ckeymode;
   int  fkeymode;
   char kbdc;
@@ -768,10 +768,10 @@ TAB*    qQ   wW   eE   rR   tT   yY   uU   iI   oO   pP   [{   ]}      DEL
   };
 
   static char *keyboardmenu[] = {
-      "Standard American ASCII layout",
-      "Swedish national layout D47",
-      "Swedish national layout E47",
-      /* add new keyboard layouts here */
+      "Standard American ASCII tqlayout",
+      "Swedish national tqlayout D47",
+      "Swedish national tqlayout E47",
+      /* add new keyboard tqlayouts here */
       ""
     };
 
@@ -833,16 +833,16 @@ TAB*    qQ   wW   eE   rR   tT   yY   uU   iI   oO   pP   [{   ]}      DEL
 
   ed(2);
   cup(5,10);
-  println("Choose keyboard layout:");
-  kblayout = menu(keyboardmenu);
-  if (kblayout) {
-    kblayout--;
-    for (j = 0; natkeytab[kblayout][j].natc != '\0'; j++) {
+  println("Choose keyboard tqlayout:");
+  kbtqlayout = menu(keyboardmenu);
+  if (kbtqlayout) {
+    kbtqlayout--;
+    for (j = 0; natkeytab[kbtqlayout][j].natc != '\0'; j++) {
       for (i = 0; keytab[i].c != '\0'; i++) {
-	if (keytab[i].row == natkeytab[kblayout][j].natrow &&
-	    keytab[i].col == natkeytab[kblayout][j].natcol) {
-	  keytab[i].c = natkeytab[kblayout][j].natc;
-	  keytab[i].symbol = natkeytab[kblayout][j].natsymbol;
+	if (keytab[i].row == natkeytab[kbtqlayout][j].natrow &&
+	    keytab[i].col == natkeytab[kbtqlayout][j].natcol) {
+	  keytab[i].c = natkeytab[kbtqlayout][j].natc;
+	  keytab[i].symbol = natkeytab[kbtqlayout][j].natsymbol;
 	  break;
 	}
       }
@@ -1102,7 +1102,7 @@ tst_reports() {
   /* Test of:
        <ENQ>       (AnswerBack Message)
        SM RM       (Set/Reset Mode) - LineFeed / Newline
-       DSR         (Device Status Report)
+       DSR         (Device tqStatus Report)
        DA          (Device Attributes)
        DECREQTPARM (Request Terminal Parameters)
   */
@@ -1204,7 +1204,7 @@ tst_reports() {
 
   ed(2);
   cup(1,1);
-  printf("Test of Device Status Report 5 (report terminal status).");
+  printf("Test of Device tqStatus Report 5 (report terminal status).");
   cup(2,1);
   dsr(5);
   report = instr();
@@ -1217,7 +1217,7 @@ tst_reports() {
   else                                printf(" -- Unknown response!");
 
   cup(4,1);
-  println("Test of Device Status Report 6 (report cursor position).");
+  println("Test of Device tqStatus Report 6 (report cursor position).");
   cup(5,1);
   dsr(6);
   report = instr();
@@ -1445,7 +1445,7 @@ tst_vt52() {
 tst_insdel() {
 
     /* Test of:
-       SM/RM(4) (= IRM (Insertion/replacement mode))
+       SM/RM(4) (= IRM (Insertion/tqreplacement mode))
        ICH (Insert Character)
        DCH (Delete character)
        IL  (Insert line)

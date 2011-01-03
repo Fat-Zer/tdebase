@@ -23,7 +23,7 @@ bindir		= @bindir@
 all_includes	= @all_includes@
 all_libraries	= @all_libraries@
 
-MOC		= @MOC@
+TQMOC		= @TQMOC@
 XGETTEXT	= @XGETTEXT@
 CXX		= @CXX@
 LDFLAGS		= @LDFLAGS@
@@ -48,11 +48,11 @@ LDFLAGS		+= $(all_libraries)
 	$(CXX) $(CXXFLAGS) $(DEFS) $(INCLUDES) -c $< 
 
 OBJECTS = hexfile.o hexwidget.o
-SRCMOCS = hexwidget.moc hexfile.moc
+SRCTQMOCS = hexwidget.moc hexfile.moc
 
 all: $(TARGET)
 
-$(TARGET): $(SRCMOCS) $(OBJECTS) 
+$(TARGET): $(SRCTQMOCS) $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS)
 
 # recreate the Makefile
@@ -89,11 +89,11 @@ clean:
 	-rm -f $(TARGET) $(OBJECTS) *~ core
 
 distclean: clean
-	-rm -f Makefile $(SRCMOCS)
+	-rm -f Makefile $(SRCTQMOCS)
 
-# add a dependcy for all moc files to help some FreeBSD users ;)
+# add a dependcy for all tqmoc files to help some FreeBSD users ;)
 hexwidget.moc: hexwidget.h
-	$(MOC) hexwidget.h -o hexwidget.moc
+	$(TQMOC) hexwidget.h -o hexwidget.moc
 
 hexfile.moc: hexfile.h
-	$(MOC) hexfile.h -o hexfile.moc
+	$(TQMOC) hexfile.h -o hexfile.moc

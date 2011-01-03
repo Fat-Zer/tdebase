@@ -36,10 +36,10 @@ class TQString;
 class TQStringList;
 
 /**
-  A WorkSheet contains the displays to visualize the sensor results. When
+  A WorkSheet tqcontains the displays to visualize the sensor results. When
   creating the WorkSheet you must specify the number of columns. Displays
-  can be added and removed on the fly. The grid layout will handle the
-  layout. The number of columns can not be changed. Displays are added by
+  can be added and removed on the fly. The grid tqlayout will handle the
+  tqlayout. The number of columns can not be changed. Displays are added by
   dragging a sensor from the sensor browser over the WorkSheet.
  */
 class WorkSheet : public TQWidget, public KSGRD::SensorBoard
@@ -90,7 +90,7 @@ class WorkSheet : public TQWidget, public KSGRD::SensorBoard
     void titleChanged( TQWidget *sheet );
 
   protected:
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
     void dragEnterEvent( TQDragEnterEvent* );
     void dropEvent( TQDropEvent* );
     void customEvent( TQCustomEvent* );
@@ -98,9 +98,9 @@ class WorkSheet : public TQWidget, public KSGRD::SensorBoard
   private:
     void removeDisplay( KSGRD::SensorDisplay *display );
 
-    bool replaceDisplay( uint row, uint column, TQDomElement& element );
+    bool tqreplaceDisplay( uint row, uint column, TQDomElement& element );
 
-    void replaceDisplay( uint row, uint column,
+    void tqreplaceDisplay( uint row, uint column,
                          KSGRD::SensorDisplay* display = 0 );
 
     void collectHosts( TQStringList &list );
@@ -127,7 +127,7 @@ class WorkSheet : public TQWidget, public KSGRD::SensorBoard
     /**
       This two dimensional array stores the pointers to the sensor displays
 	    or if no sensor is present at a position a pointer to a dummy widget.
-  	  The size of the array corresponds to the size of the grid layout.
+  	  The size of the array corresponds to the size of the grid tqlayout.
      */
     KSGRD::SensorDisplay*** mDisplayList;
 };

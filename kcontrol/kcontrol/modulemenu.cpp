@@ -68,9 +68,9 @@ void ModuleMenu::fill(KPopupMenu *parentMenu, const TQString &parentPath)
      connect(menu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(moduleSelected(int)));
 
      // Item names may contain ampersands. To avoid them being converted to 
-     // accelators, replace them with two ampersands.
+     // accelators, tqreplace them with two ampersands.
      TQString name = group->caption();
-     name.replace("&", "&&");
+     name.tqreplace("&", "&&");
   
      parentMenu->insertItem(KGlobal::iconLoader()->loadIcon(group->icon(), KIcon::Desktop, KIcon::SizeSmall)
                         , name, menu);
@@ -83,9 +83,9 @@ void ModuleMenu::fill(KPopupMenu *parentMenu, const TQString &parentPath)
   for (module=moduleList.first(); module != 0; module=moduleList.next())
   {
      // Item names may contain ampersands. To avoid them being converted to 
-     // accelators, replace them with two ampersands.
+     // accelators, tqreplace them with two ampersands.
      TQString name = module->moduleName();
-     name.replace("&", "&&");
+     name.tqreplace("&", "&&");
 
      int realid = parentMenu->insertItem(KGlobal::iconLoader()->loadIcon(module->icon(), KIcon::Desktop, KIcon::SizeSmall)
                                      , name, id);

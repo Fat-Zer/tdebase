@@ -52,7 +52,7 @@ TQString KXftConfig::contractHome(TQString path)
             unsigned int len = home.length();
 
             if(path.length() == len || path[len] == '/')
-                return path.replace(0, len, TQString::fromLatin1("~"));
+                return path.tqreplace(0, len, TQString::tqfromLatin1("~"));
         }
     }
 
@@ -62,7 +62,7 @@ TQString KXftConfig::contractHome(TQString path)
 TQString KXftConfig::expandHome(TQString path)
 {
     if(!path.isEmpty() && '~'==path[0])
-        return 1==path.length() ? TQDir::homeDirPath() : path.replace(0, 1, TQDir::homeDirPath());
+        return 1==path.length() ? TQDir::homeDirPath() : path.tqreplace(0, 1, TQDir::homeDirPath());
 
     return path;
 }
@@ -88,7 +88,7 @@ static TQString dirSyntax(const TQString &d)
     {
         TQString ds(d);
 
-        ds.replace("//", "/");
+        ds.tqreplace("//", "/");
 
         int slashPos=ds.findRev('/');
 
@@ -648,10 +648,10 @@ bool KXftConfig::apply()
                         if(0!=str.find("<?xml"))
                             str.insert(0, xmlHeader);
                         else if(0==str.find(qtXmlHeader))
-                            str.replace(0, strlen(qtXmlHeader), xmlHeader);
+                            str.tqreplace(0, strlen(qtXmlHeader), xmlHeader);
     
                         if(-1!=(idx=str.find(qtDocTypeLine)))
-                            str.replace(idx, strlen(qtDocTypeLine), docTypeLine);
+                            str.tqreplace(idx, strlen(qtDocTypeLine), docTypeLine);
     
                         //
                         // Write to file...
@@ -1291,7 +1291,7 @@ void KXftConfig::applySubPixelType()
     if(m_subPixel.node.isNull())
         m_doc.documentElement().appendChild(matchNode);
     else
-        m_doc.documentElement().replaceChild(matchNode, m_subPixel.node);
+        m_doc.documentElement().tqreplaceChild(matchNode, m_subPixel.node);
     m_subPixel.node=matchNode;
 }
 
@@ -1323,7 +1323,7 @@ void KXftConfig::applyHintStyle()
         if(m_hint.node.isNull())
             m_doc.documentElement().appendChild(matchNode);
         else
-            m_doc.documentElement().replaceChild(matchNode, m_hint.node);
+            m_doc.documentElement().tqreplaceChild(matchNode, m_hint.node);
         m_hint.node=matchNode;
     }
 }
@@ -1344,7 +1344,7 @@ void KXftConfig::applyHinting()
     if(m_hinting.node.isNull())
         m_doc.documentElement().appendChild(matchNode);
     else
-        m_doc.documentElement().replaceChild(matchNode, m_hinting.node);
+        m_doc.documentElement().tqreplaceChild(matchNode, m_hinting.node);
     m_hinting.node=matchNode;
 }
 

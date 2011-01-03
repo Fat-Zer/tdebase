@@ -62,11 +62,11 @@
 #define COPY_SEPARATOR 'S'
 
 TreeItem::TreeItem(TQListViewItem *parent, TQListViewItem *after, const TQString& menuId, bool __init)
-    :TQListViewItem(parent, after), _hidden(false), _init(__init), _layoutDirty(false), _menuId(menuId),
+    :TQListViewItem(parent, after), _hidden(false), _init(__init), _tqlayoutDirty(false), _menuId(menuId),
      m_folderInfo(0), m_entryInfo(0) {}
 
 TreeItem::TreeItem(TQListView *parent, TQListViewItem *after, const TQString& menuId, bool __init)
-    : TQListViewItem(parent, after), _hidden(false), _init(__init), _layoutDirty(false), _menuId(menuId),
+    : TQListViewItem(parent, after), _hidden(false), _init(__init), _tqlayoutDirty(false), _menuId(menuId),
      m_folderInfo(0), m_entryInfo(0) {}
 
 void TreeItem::setName(const TQString &name)
@@ -149,7 +149,7 @@ static TQPixmap appIcon(const TQString &iconName)
 TreeView::TreeView( bool controlCenter, KActionCollection *ac, TQWidget *parent, const char *name )
     : KListView(parent, name), m_ac(ac), m_rmb(0), m_clipboard(0),
       m_clipboardFolderInfo(0), m_clipboardEntryInfo(0),
-      m_controlCenter(controlCenter), m_layoutDirty(false)
+      m_controlCenter(controlCenter), m_tqlayoutDirty(false)
 {
     setFrameStyle(TQFrame::WinPanel | TQFrame::Sunken);
     setAllColumnsShowFocus(true);
@@ -273,7 +273,7 @@ void TreeView::readMenuFolderInfo(MenuFolderInfo *folderInfo, KServiceGroup::Ptr
     folderInfo->comment = folder->comment();
 
     // Item names may contain ampersands. To avoid them being converted
-    // to accelerators, replace them with two ampersands.
+    // to accelerators, tqreplace them with two ampersands.
     folderInfo->hidden = folder->noDisplay();
     folderInfo->directoryFile = folder->directoryEntryPath();
     folderInfo->icon = folder->icon();
@@ -611,7 +611,7 @@ TQStringList TreeView::fileList(const TQString& rPath)
         TQStringList files = dir.entryList();
         for (TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it) {
             // does not work?!
-            //if (filelist.contains(*it)) continue;
+            //if (filelist.tqcontains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 filelist.remove(*it); // hack
@@ -649,7 +649,7 @@ TQStringList TreeView::dirList(const TQString& rPath)
         for (TQStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it) {
             if ((*it) == "." || (*it) == "..") continue;
             // does not work?!
-            // if (dirlist.contains(*it)) continue;
+            // if (dirlist.tqcontains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 dirlist.remove(*it); //hack
@@ -715,7 +715,7 @@ static TQString createDirectoryFile(const TQString &file, TQStringList *excludeL
       else
          result = base + TQString("-%1.directory").arg(i);
 
-      if (!excludeList->contains(result))
+      if (!excludeList->tqcontains(result))
       {
          if (locate("xdgdata-dirs", result).isEmpty())
             break;
@@ -997,7 +997,7 @@ void TreeView::newsubmenu()
    if (!ok) return;
 
    TQString file = caption;
-   file.replace('/', '-');
+   file.tqreplace('/', '-');
 
    file = createDirectoryFile(file, &m_newDirectoryList); // Create
 
@@ -1069,7 +1069,7 @@ void TreeView::newitem()
 
    TQString menuId;
    TQString file = caption;
-   file.replace('/', '-');
+   file.tqreplace('/', '-');
 
    file = createDesktopFile(file, &menuId, &m_newMenuIds); // Create
 
@@ -1470,7 +1470,7 @@ static TQStringList extractLayout(TreeItem *item)
 {
     bool firstFolder = true;
     bool firstEntry = true;
-    TQStringList layout;
+    TQStringList tqlayout;
     for(;item; item = static_cast<TreeItem*>(item->nextSibling()))
     {
        if (item->isDirectory())
@@ -1478,41 +1478,41 @@ static TQStringList extractLayout(TreeItem *item)
           if (firstFolder)
           {
              firstFolder = false;
-             layout << ":M"; // Add new folders here...
+             tqlayout << ":M"; // Add new folders here...
           }
-          layout << (item->folderInfo()->id);
+          tqlayout << (item->folderInfo()->id);
        }
        else if (item->isEntry())
        {
           if (firstEntry)
           {
              firstEntry = false;
-             layout << ":F"; // Add new entries here...
+             tqlayout << ":F"; // Add new entries here...
           }
-          layout << (item->entryInfo()->menuId());
+          tqlayout << (item->entryInfo()->menuId());
        }
        else
        {
-          layout << ":S";
+          tqlayout << ":S";
        }
     }
-    return layout;
+    return tqlayout;
 }
 
-TQStringList TreeItem::layout()
+TQStringList TreeItem::tqlayout()
 {
-    TQStringList layout = extractLayout(static_cast<TreeItem*>(firstChild()));
-    _layoutDirty = false;
-    return layout;
+    TQStringList tqlayout = extractLayout(static_cast<TreeItem*>(firstChild()));
+    _tqlayoutDirty = false;
+    return tqlayout;
 }
 
 void TreeView::saveLayout()
 {
-    if (m_layoutDirty)
+    if (m_tqlayoutDirty)
     {
-       TQStringList layout = extractLayout(static_cast<TreeItem*>(firstChild()));
-       m_menuFile->setLayout(m_rootFolder->fullId, layout);
-       m_layoutDirty = false;
+       TQStringList tqlayout = extractLayout(static_cast<TreeItem*>(firstChild()));
+       m_menuFile->setLayout(m_rootFolder->fullId, tqlayout);
+       m_tqlayoutDirty = false;
     }
 
     TQPtrList<TQListViewItem> lst;
@@ -1521,7 +1521,7 @@ void TreeView::saveLayout()
        TreeItem *item = static_cast<TreeItem*>(it.current());
        if ( item->isLayoutDirty() )
        {
-          m_menuFile->setLayout(item->folderInfo()->fullId, item->layout());
+          m_menuFile->setLayout(item->folderInfo()->fullId, item->tqlayout());
        }
        ++it;
     }
@@ -1554,7 +1554,7 @@ void TreeView::setLayoutDirty(TreeItem *parentItem)
     if (parentItem)
        parentItem->setLayoutDirty();
     else
-       m_layoutDirty = true;
+       m_tqlayoutDirty = true;
 }
 
 bool TreeView::isLayoutDirty()
@@ -1571,7 +1571,7 @@ bool TreeView::isLayoutDirty()
 
 bool TreeView::dirty()
 {
-    return m_layoutDirty || m_rootFolder->hasDirt() || m_menuFile->dirty() || isLayoutDirty();
+    return m_tqlayoutDirty || m_rootFolder->hasDirt() || m_menuFile->dirty() || isLayoutDirty();
 }
 
 void TreeView::findServiceShortcut(const KShortcut&cut, KService::Ptr &service)

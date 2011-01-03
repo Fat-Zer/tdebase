@@ -383,7 +383,7 @@ static void checkInfoFile( const TQString& infoPath, const TQString& origFilePat
     assert( origPath == KURL::encode_string( origFilePath, KGlobal::locale()->fileEncodingMib() ) );
     const TQString date = infoFile.readEntry( "DeletionDate" );
     assert( !date.isEmpty() );
-    assert( date.contains( "T" ) );
+    assert( date.tqcontains( "T" ) );
 }
 
 static void createTestFile( const TQString& path )
@@ -479,8 +479,8 @@ void TestTrash::trashUmlautFileFromHome()
 void TestTrash::testTrashNotEmpty()
 {
     KSimpleConfig cfg( "trashrc", true );
-    assert( cfg.hasGroup( "Status" ) );
-    cfg.setGroup( "Status" );
+    assert( cfg.hasGroup( "tqStatus" ) );
+    cfg.setGroup( "tqStatus" );
     assert( cfg.readBoolEntry( "Empty", true ) == false );
 }
 
@@ -1104,7 +1104,7 @@ void TestTrash::listRootDir()
     assert( m_entryCount > 1 );
 
     kdDebug() << k_funcinfo << m_listResult << endl;
-    assert( m_listResult.contains( "." ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "." ) == 1 ); // found it, and only once
 }
 
 void TestTrash::listRecursiveRootDir()
@@ -1121,7 +1121,7 @@ void TestTrash::listRecursiveRootDir()
     assert( m_entryCount > 1 );
 
     kdDebug() << k_funcinfo << m_listResult << endl;
-    assert( m_listResult.contains( "." ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "." ) == 1 ); // found it, and only once
 }
 
 void TestTrash::listSubDir()
@@ -1138,8 +1138,8 @@ void TestTrash::listSubDir()
     assert( m_entryCount == 2 );
 
     kdDebug() << k_funcinfo << m_listResult << endl;
-    assert( m_listResult.contains( "." ) == 1 ); // found it, and only once
-    assert( m_listResult.contains( "testfile" ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "." ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "testfile" ) == 1 ); // found it, and only once
 }
 
 void TestTrash::slotEntries( KIO::Job*, const KIO::UDSEntryList& lst )
@@ -1182,8 +1182,8 @@ void TestTrash::emptyTrash()
     assert( ok );
 
     KSimpleConfig cfg( "trashrc", true );
-    assert( cfg.hasGroup( "Status" ) );
-    cfg.setGroup( "Status" );
+    assert( cfg.hasGroup( "tqStatus" ) );
+    cfg.setGroup( "tqStatus" );
     assert( cfg.readBoolEntry( "Empty", false ) == true );
 
     assert( !TQFile::exists( m_trashDir + "/files/fileFromHome" ) );

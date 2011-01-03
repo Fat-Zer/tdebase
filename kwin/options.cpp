@@ -53,7 +53,7 @@ unsigned long Options::updateSettings()
     config->setGroup( "Windows" );
     moveMode = stringToMoveResizeMode( config->readEntry("MoveMode", "Opaque" ));
     resizeMode = stringToMoveResizeMode( config->readEntry("ResizeMode", "Opaque" ));
-    show_geometry_tip = config->readBoolEntry("GeometryTip", false);
+    show_tqgeometry_tip = config->readBoolEntry("GeometryTip", false);
     tabboxOutline = config->readBoolEntry("TabboxOutline", true);
 
     TQString val;
@@ -95,7 +95,7 @@ unsigned long Options::updateSettings()
 
     placement = Placement::policyFromString( config->readEntry("Placement"), true );
     xineramaPlacementScreen = KCLAMP( config->readNumEntry( "XineramaPlacementScreen", -1 ),
-        -1, qApp->desktop()->numScreens() - 1 );
+        -1, tqApp->desktop()->numScreens() - 1 );
 
     animateShade = config->readBoolEntry("AnimateShade", TRUE );
     animateMinimize = config->readBoolEntry("AnimateMinimize", TRUE );
@@ -301,7 +301,7 @@ Options::MouseWheelCommand Options::mouseWheelCommand(const TQString &name)
 
 bool Options::showGeometryTip()
     {
-    return show_geometry_tip;
+    return show_tqgeometry_tip;
     }
 
 TQColor &Options::shadowColour(bool active)
@@ -379,7 +379,7 @@ int Options::electricBorderDelay()
 
 bool Options::checkIgnoreFocusStealing( const Client* c )
     {
-    return ignoreFocusStealingClasses.contains(TQString::fromLatin1(c->resourceClass()));
+    return ignoreFocusStealingClasses.tqcontains(TQString::tqfromLatin1(c->resourceClass()));
     }
 
 Options::MouseCommand Options::wheelToMouseCommand( MouseWheelCommand com, int delta )

@@ -304,9 +304,9 @@ int ConnectionHandler::doCommand(TQCString buf)
             SuProcess proc;
             proc.setCommand(command);
             proc.setUser(user);
-            if (options.contains('x'))
+            if (options.tqcontains('x'))
                proc.setXOnly(true);
-            if (options.contains('f'))
+            if (options.tqcontains('f'))
                proc.setDCOPForwarding(true);
             proc.setPriority(m_Priority);
             proc.setScheduler(m_Scheduler);

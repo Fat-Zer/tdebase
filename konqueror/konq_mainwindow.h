@@ -505,8 +505,8 @@ protected slots:
 
   void slotOpenURL( const KURL& );
 
-  void slotActionStatusText( const TQString &text );
-  void slotClearStatusText();
+  void slotActiontqStatusText( const TQString &text );
+  void slotCleartqStatusText();
 
   void slotFindOpen( KonqDirPart * dirPart );
   void slotFindClosed( KonqDirPart * dirPart );

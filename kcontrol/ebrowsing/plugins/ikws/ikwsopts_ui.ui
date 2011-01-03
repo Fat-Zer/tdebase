@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>FilterOptionsUI</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -34,7 +34,7 @@ Enable shortcuts that allow you to quickly search for information on the web. Fo
         </widget>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout10</cstring>
+                <cstring>tqlayout10</cstring>
             </property>
             <grid>
                 <property name="name">
@@ -161,7 +161,7 @@ Select the search engine to use for input boxes that provide automatic lookup se
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>21</width>
                             <height>170</height>
@@ -254,5 +254,5 @@ Select the search engine to use for input boxes that provide automatic lookup se
     <tabstop>cmbDefaultEngine</tabstop>
     <tabstop>cmbDelimiter</tabstop>
 </tabstops>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

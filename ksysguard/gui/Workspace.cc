@@ -162,7 +162,7 @@ bool Workspace::saveOnQuit()
     if ( (*it)->modified() ) {
       if ( !mAutoSave || (*it)->fileName().isEmpty() ) {
         int res = KMessageBox::warningYesNoCancel( this,
-                  i18n( "The worksheet '%1' contains unsaved data.\n"
+                  i18n( "The worksheet '%1' tqcontains unsaved data.\n"
                         "Do you want to save the worksheet?")
                   .arg( tabLabel( *it ) ), TQString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
         if ( res == KMessageBox::Yes )
@@ -302,7 +302,7 @@ void Workspace::deleteWorkSheet()
     if ( current->modified() ) {
       if ( !mAutoSave || current->fileName().isEmpty() ) {
         int res = KMessageBox::warningYesNoCancel( this,
-                            i18n( "The worksheet '%1' contains unsaved data.\n"
+                            i18n( "The worksheet '%1' tqcontains unsaved data.\n"
                                   "Do you want to save the worksheet?" )
                             .arg( tabLabel( current ) ), TQString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
         if ( res == KMessageBox::Cancel )

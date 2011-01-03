@@ -67,7 +67,7 @@ extern int kdesktop_screen_number;
 TQRect KDIconView::desktopRect()
 {
     return ( kdesktop_screen_number == 0 )
-            ? TQApplication::desktop()->geometry() // simple case, or xinerama
+            ? TQApplication::desktop()->tqgeometry() // simple case, or xinerama
             : TQApplication::desktop()->screenGeometry( kdesktop_screen_number ); // multi-head
 }
 
@@ -296,7 +296,7 @@ void KDIconView::initConfig( bool init )
     m_bSortDirectoriesFirst = KDesktopSettings::directoriesFirst();
     m_itemsAlwaysFirst = KDesktopSettings::alwaysFirstItems(); // Distributor plug-in
 
-    if (KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media")))
+    if (KProtocolInfo::isKnownProtocol(TQString::tqfromLatin1("media")))
         m_enableMedia=KDesktopSettings::mediaEnabled();
     else
         m_enableMedia=false;
@@ -321,7 +321,7 @@ void KDIconView::initConfig( bool init )
     if ( previewSettings().count() )
     {
         for ( TQStringList::ConstIterator it = oldPreview.begin(); it != oldPreview.end(); ++it)
-            if ( !previewSettings().contains( *it ) ){
+            if ( !previewSettings().tqcontains( *it ) ){
                 kdDebug(1204) << "Disabling preview for " << *it << endl;
                 if ( *it == "audio/" )
                     disableSoundPreviews();
@@ -581,7 +581,7 @@ KURL KDIconView::desktopURL()
     if (kdesktop_screen_number != 0) {
         TQString dn = "Desktop";
         dn += TQString::number(kdesktop_screen_number);
-        desktopPath.replace("Desktop", dn);
+        desktopPath.tqreplace("Desktop", dn);
     }
 
     KURL desktopURL;
@@ -748,7 +748,7 @@ void KDIconView::fillMediaListView()
     for (; it2 != mimetypes.end(); ++it2) {
        if ( ((*it2)->name().startsWith("media/")) )
 	{
-    	    bool ok=excludedMedia.contains((*it2)->name())==0;
+    	    bool ok=excludedMedia.tqcontains((*it2)->name())==0;
 		new DesktopBehaviorMediaItem (mMediaListView, (*it2)->comment(), (*it2)->name(),ok);
         }
     }
@@ -960,20 +960,20 @@ bool KDIconView::isDesktopFile( KFileItem * _item ) const
     return false;
 
   // return true if desktop file
-  return ( (_item->mimetype() == TQString::fromLatin1("application/x-desktop"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mydocuments"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mycomputer"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mynetworkplaces"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-printers"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-trash"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-webbrowser")) );
+  return ( (_item->mimetype() == TQString::tqfromLatin1("application/x-desktop"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mydocuments"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mycomputer"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mynetworkplaces"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-printers"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-trash"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-webbrowser")) );
 }
 
 TQString KDIconView::stripDesktopExtension( const TQString & text )
 {
-    if (text.right(7) == TQString::fromLatin1(".kdelnk"))
+    if (text.right(7) == TQString::tqfromLatin1(".kdelnk"))
       return text.left(text.length() - 7);
-    else if (text.right(8) == TQString::fromLatin1(".desktop"))
+    else if (text.right(8) == TQString::tqfromLatin1(".desktop"))
       return text.left(text.length() - 8);
     return text;
 }
@@ -1009,12 +1009,12 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
         TQStringList tmpList;
         if (cfg.hasKey("OnlyShowIn"))
         {
-            if (!cfg.readListEntry("OnlyShowIn", ';').contains("KDE"))
+            if (!cfg.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
                 return false;
         }
         if (cfg.hasKey("NotShowIn"))
         {
-            if (cfg.readListEntry("NotShowIn", ';').contains("KDE"))
+            if (cfg.readListEntry("NotShowIn", ';').tqcontains("KDE"))
                 return false;
         }
         if (cfg.hasKey("TryExec"))
@@ -1055,7 +1055,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   KURL desktop_URL = desktopURL();
   if (desktop_URL.isLocalFile())
     desktopPath = desktop_URL.path();
-  // We have new items, so we'll need to repaint in slotCompleted
+  // We have new items, so we'll need to tqrepaint in slotCompleted
   m_bNeedRepaint = true;
   kdDebug(1214) << "KDIconView::slotNewItems count=" << entries.count() << endl;
   KFileItemListIterator it(entries);
@@ -1198,7 +1198,7 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
     }
     else
     {
-        // In case we replace a big icon with a small one, need to repaint.
+        // In case we tqreplace a big icon with a small one, need to tqrepaint.
         updateContents();
         // Can't do that with m_bNeedRepaint since slotCompleted isn't called
         m_bNeedRepaint = false;
@@ -1305,7 +1305,7 @@ void KDIconView::slotCompleted()
     if (!m_hasExistingPos)
         rearrangeIcons();
 
-//    kdDebug(1204) << "KDIconView::slotCompleted save:" << m_bNeedSave << " repaint:" << m_bNeedRepaint << endl;
+//    kdDebug(1204) << "KDIconView::slotCompleted save:" << m_bNeedSave << " tqrepaint:" << m_bNeedRepaint << endl;
     if ( m_bNeedSave )
     {
         // Done here because we want to align icons only once initially, and each time new icons appear.
@@ -1317,7 +1317,7 @@ void KDIconView::slotCompleted()
     }
     if ( m_bNeedRepaint )
     {
-        viewport()->repaint();
+        viewport()->tqrepaint();
         m_bNeedRepaint = false;
     }
 }
@@ -1463,7 +1463,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
 {
     kdDebug(1204)<<"void KDIconView::contentsDropEvent( TQDropEvent * e )\n";
     // mind: if it's a filedrag which itself is an image, libkonq is called. There's a popup for drops as well
-    // that contains the same line "Set as Wallpaper" in void KonqOperations::asyncDrop
+    // that tqcontains the same line "Set as Wallpaper" in void KonqOperations::asyncDrop
     bool isColorDrag = KColorDrag::canDecode(e);
     bool isImageDrag = TQImageDrag::canDecode(e);
     bool isUrlDrag = KURLDrag::canDecode(e);
@@ -1471,7 +1471,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     bool isImmutable = KGlobal::config()->isImmutable();
 
     if ( (isColorDrag || isImageDrag) && !isUrlDrag ) {
-        // Hack to clear the drag shape
+        // Hack to clear the drag tqshape
         bool bMovable = itemsMovable();
         bool bSignals = signalsBlocked();
         setItemsMovable(false);
@@ -1499,7 +1499,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     bool adjustedAnyItems = false;
     for( TQIconViewItem *item = firstItem(); item; item = item->nextItem() )
     {
-        if( !desk.contains( item->rect(), true ))
+        if( !desk.tqcontains( item->rect(), true ))
         {
             TQRect r = item->rect();
 
@@ -1519,7 +1519,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     if( adjustedAnyItems )
     {
         // Make sure the viewport isn't unnecessarily resized by now,
-        // then schedule a repaint to remove any garbage pixels.
+        // then schedule a tqrepaint to remove any garbage pixels.
         resizeContents( width(), height() );
         viewport()->update();
     }
@@ -1541,7 +1541,7 @@ void KDIconView::updateWorkArea( const TQRect &wr )
 {
     m_gotIconsArea = true;  // now we have it!
 
-    if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid repaint/saveIconPosition ...
+    if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid tqrepaint/saveIconPosition ...
 
     TQRect oldArea = iconArea();
     setIconArea( wr );
@@ -1593,8 +1593,8 @@ void KDIconView::updateWorkArea( const TQRect &wr )
             }
         }
         if ( needRepaint ) {
-            viewport()->repaint( FALSE );
-            repaint( FALSE );
+            viewport()->tqrepaint( FALSE );
+            tqrepaint( FALSE );
             saveIconPositions();
         }
     }
@@ -1718,7 +1718,7 @@ void KDIconView::moveToFreePosition(TQIconViewItem *item )
     TQRect rect=item->rect();
     if (m_bVertAlign)
     {
-	kdDebug(1214)<<"moveToFreePosition for vertical alignment"<<endl;
+	kdDebug(1214)<<"moveToFreePosition for vertical tqalignment"<<endl;
 
 	rect.moveTopLeft(TQPoint(spacing(),spacing()));
       do

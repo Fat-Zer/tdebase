@@ -15,8 +15,8 @@
 #include "rules.h"
 
 
-XkbRules::XkbRules(bool layoutsOnly):
-    m_layouts(90)
+XkbRules::XkbRules(bool tqlayoutsOnly):
+    m_tqlayouts(90)
 {
 	X11_DIR = X11Helper::findX11Dir();
 
@@ -34,23 +34,23 @@ XkbRules::XkbRules(bool layoutsOnly):
 		return;
 	}
 
-	loadRules(rulesFile, layoutsOnly);
+	loadRules(rulesFile, tqlayoutsOnly);
 	loadOldLayouts(rulesFile);
 	loadGroups(::locate("config", "kxkb_groups"));
 }
 
 
-void XkbRules::loadRules(TQString file, bool layoutsOnly)
+void XkbRules::loadRules(TQString file, bool tqlayoutsOnly)
 {
-	RulesInfo* rules = X11Helper::loadRules(file, layoutsOnly);
+	RulesInfo* rules = X11Helper::loadRules(file, tqlayoutsOnly);
 
 	if (rules == NULL) {
 		kdDebug() << "Unable to load rules" << endl;
 		return;
 	}
 
-	m_layouts= rules->layouts;
-	if( layoutsOnly == false ) {
+	m_tqlayouts= rules->tqlayouts;
+	if( tqlayoutsOnly == false ) {
 		m_models = rules->models;
 		m_options = rules->options;
 	}
@@ -65,7 +65,7 @@ void XkbRules::loadRules(TQString file, bool layoutsOnly)
 // // the rule file wasn't found
 // 	static struct {
 // 		const char * locale;
-// 		const char * layout;
+// 		const char * tqlayout;
 // 	} fixedLayouts[] = {
 // 		{ "ben", "Bengali" },
 // 		{ "ar", "Arabic" },
@@ -73,21 +73,21 @@ void XkbRules::loadRules(TQString file, bool layoutsOnly)
 // 		{ 0, 0 }
 // 	};
 // 	
-// 	for(int i=0; fixedLayouts[i].layout != 0; i++ ) {
-// 		if( m_layouts.find(fixedLayouts[i].locale) == 0 )
-// 			m_layouts.insert(fixedLayouts[i].locale, fixedLayouts[i].layout);
+// 	for(int i=0; fixedLayouts[i].tqlayout != 0; i++ ) {
+// 		if( m_tqlayouts.find(fixedLayouts[i].locale) == 0 )
+// 			m_tqlayouts.insert(fixedLayouts[i].locale, fixedLayouts[i].tqlayout);
 // 	}
 // }
 
-bool XkbRules::isSingleGroup(const TQString& layout)
+bool XkbRules::isSingleGroup(const TQString& tqlayout)
 {
 	  return X11Helper::areSingleGroupsSupported()
-			  && !m_oldLayouts.contains(layout)
-			  && !m_nonLatinLayouts.contains(layout);
+			  && !m_oldLayouts.tqcontains(tqlayout)
+			  && !m_nonLatinLayouts.tqcontains(tqlayout);
 }
 
 
-// check $oldlayouts and $nonlatin groups for XFree 4.3 and later
+// check $oldtqlayouts and $nonlatin groups for XFree 4.3 and later
 void XkbRules::loadOldLayouts(TQString rulesFile)
 {
 	OldLayouts* oldLayoutsStruct = X11Helper::loadOldLayouts( rulesFile );
@@ -95,8 +95,8 @@ void XkbRules::loadOldLayouts(TQString rulesFile)
 	m_nonLatinLayouts = oldLayoutsStruct->nonLatinLayouts;
 }
 
-// for multi-group layouts in XFree 4.2 and older
-//    or if layout is present in $oldlayout or $nonlatin groups
+// for multi-group tqlayouts in XFree 4.2 and older
+//    or if tqlayout is present in $oldtqlayout or $nonlatin groups
 void XkbRules::loadGroups(TQString file)
 {
   TQFile f(file);
@@ -121,35 +121,35 @@ void XkbRules::loadGroups(TQString file)
 }
 
 unsigned int 
-XkbRules::getDefaultGroup(const TQString& layout, const TQString& includeGroup)
+XkbRules::getDefaultGroup(const TQString& tqlayout, const TQString& includeGroup)
 {
-// check for new one-group layouts in XFree 4.3 and older
-    if( isSingleGroup(layout) ) {
+// check for new one-group tqlayouts in XFree 4.3 and older
+    if( isSingleGroup(tqlayout) ) {
 		if( includeGroup.isEmpty() == false )
 			return 1;
 		else
 			return 0;
     }
     
-    TQMap<TQString, unsigned int>::iterator it = m_initialGroups.find(layout);
+    TQMap<TQString, unsigned int>::iterator it = m_initialGroups.find(tqlayout);
     return it == m_initialGroups.end() ? 0 : it.data();
 }
 
 
 QStringList
-XkbRules::getAvailableVariants(const TQString& layout)
+XkbRules::getAvailableVariants(const TQString& tqlayout)
 {
-    if( layout.isEmpty() || !layouts().find(layout) )
+    if( tqlayout.isEmpty() || !tqlayouts().find(tqlayout) )
 	return TQStringList();
 
-    TQStringList* result1 = m_varLists[layout];
+    TQStringList* result1 = m_varLists[tqlayout];
     if( result1 )
         return *result1;
 
-    bool oldLayouts = m_oldLayouts.contains(layout);
-    TQStringList* result = X11Helper::getVariants(layout, X11_DIR, oldLayouts);
+    bool oldLayouts = m_oldLayouts.tqcontains(tqlayout);
+    TQStringList* result = X11Helper::getVariants(tqlayout, X11_DIR, oldLayouts);
 
-    m_varLists.insert(layout, result);
+    m_varLists.insert(tqlayout, result);
 
     return *result;
 }

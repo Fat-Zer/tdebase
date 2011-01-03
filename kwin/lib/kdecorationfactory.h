@@ -53,10 +53,10 @@ class KWIN_EXPORT KDecorationFactory
         virtual KDecoration* createDecoration( KDecorationBridge* bridge ) = 0;
 	/**
 	 * This function is called when the configuration settings changed.
-	 * The argument specifies what has changed, using the SettingXXX masks.
+	 * The argument specifies what has changed, using the SettingXXX tqmasks.
 	 * It should be determined whether the decorations need to be completely
 	 * remade, in which case true should be returned, or whether only e.g.
-	 * a repaint will be sufficient, in which case false should be returned,
+	 * a tqrepaint will be sufficient, in which case false should be returned,
 	 * and resetDecorations() can be called to reset all decoration objects.
 	 * Note that true should be returned only when really necessary.
 	 */

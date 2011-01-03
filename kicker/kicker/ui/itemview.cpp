@@ -99,7 +99,7 @@ static double pointSize( double pixelSize, TQPaintDevice *w )
 
 static int pixelSize( double pixelSize, TQPaintDevice *w )
 {
-    return qRound( pixelSize * TQPaintDevice::x11AppDpiY( w->x11Screen () ) / 72. );
+    return tqRound( pixelSize * TQPaintDevice::x11AppDpiY( w->x11Screen () ) / 72. );
 }
 
 void KMenuItem::init()
@@ -145,7 +145,7 @@ void KMenuItem::setIcon(const TQString& icon, int size)
 void KMenuItem::setHasChildren( bool flag )
 {
     m_has_children = flag;
-    repaint();
+    tqrepaint();
 }
 
 void KMenuItem::setup()
@@ -166,7 +166,7 @@ void KMenuItem::setup()
 void KMenuItem::paintCell(TQPainter* p, const TQColorGroup & cg, int column, int width, int align)
 {
     ItemView *listview = static_cast<ItemView*>( listView() );
-    int bottom = listView()->itemRect( this ).bottom();
+    int bottom = listView()->tqitemRect( this ).bottom();
     int diff = bottom - listView()->viewport()->height();
 
     KPixmap pm;
@@ -197,7 +197,7 @@ void KMenuItem::paintCell(TQPainter* p, const TQColorGroup & cg, int column, int
             else
                 listview->m_lastOne = static_cast<KMenuItem*>( itemBelow() );
             listview->m_old_contentY = -1;
-            repaint();
+            tqrepaint();
         }
     }
 }
@@ -315,7 +315,7 @@ void KMenuItem::paintCellInter(TQPainter* p, const TQColorGroup & cg, int column
         pp.fillRect( 0, 0, off.width(), off.height(), backg );
 
         TQColor myColor = cg.color( TQColorGroup::Text ).light( 200 );
-        if ( qGray( myColor.rgb() ) == 0 )
+        if ( tqGray( myColor.rgb() ) == 0 )
             myColor = TQColor( 100, 100, 110 );
         pp.setPen( myColor );
         pp.setPen( isSelected() ? cg.color( TQColorGroup::Mid ) : myColor );
@@ -350,7 +350,7 @@ void KMenuItem::paintCellInter(TQPainter* p, const TQColorGroup & cg, int column
     {
         // the listview caches paint events
         m_old_width = width;
-        repaint();
+        tqrepaint();
     }
 }
 
@@ -385,7 +385,7 @@ void KMenuItemSeparator::setLink( const TQString &text, const TQString &url )
 
 bool KMenuItemSeparator::hitsLink( const TQPoint &pos )
 {
-    return m_link_rect.contains( pos );
+    return m_link_rect.tqcontains( pos );
 }
 
 void KMenuItemSeparator::preparePixmap( int width )
@@ -424,7 +424,7 @@ void KMenuItemSeparator::paintCell(TQPainter* p, const TQColorGroup & cg, int co
       f.setPointSize( 8 + KickerSettings::kickoffFontPointSizeOffset() );
       p->setFont( f );
       TQColor myColor = cg.color( TQColorGroup::Text ).light( 200 );
-      if ( qGray( myColor.rgb() ) == 0 )
+      if ( tqGray( myColor.rgb() ) == 0 )
           myColor = TQColor( 100, 100, 110 );
       p->setPen( myColor );
       int twidth = p->fontMetrics().width(text(0));
@@ -528,7 +528,7 @@ void KMenuItemHeader::paintCell(TQPainter* p, const TQColorGroup & cg, int , int
     int r = left_margin + margin * 2;
 
     const int min_font_size = 7;
-    int title_font_pixelSize = qRound( pixelSize( QMAX( pointSize( 12, listView() ) + KickerSettings::kickoffFontPointSizeOffset(), min_font_size + 1 ), listView() ) );
+    int title_font_pixelSize = tqRound( pixelSize( QMAX( pointSize( 12, listView() ) + KickerSettings::kickoffFontPointSizeOffset(), min_font_size + 1 ), listView() ) );
 
     TQFont f1 = p->font();
     f1.setPixelSize( title_font_pixelSize );
@@ -608,7 +608,7 @@ void ItemViewTip::maybeTip( const TQPoint &pos )
     if ( item->toolTip().isNull() )
         return;
 
-    TQRect r = view->itemRect( item );
+    TQRect r = view->tqitemRect( item );
     int headerPos = view->header()->sectionPos( 0 );
     r.setLeft( headerPos );
     r.setRight( headerPos + view->header()->sectionSize( 0 ) );
@@ -762,7 +762,7 @@ void ItemView::slotMoveContent()
     TQListViewItemIterator it( this );
     while ( it.current() ) {
         if ( !dynamic_cast<KMenuSpacer*>( it.current() ) && !it.current()->parent() && it.current()->isVisible() )  {
-            it.current()->invalidateHeight();
+            it.current()->tqinvalidateHeight();
             item_height += it.current()->totalHeight();
         }
         ++it;
@@ -915,7 +915,7 @@ void ItemView::contentsMousePressEvent ( TQMouseEvent * e )
     KMenuItemSeparator *si = dynamic_cast<KMenuItemSeparator*>( itemAt( vp ) );
     if ( si )
     {
-        if ( si->hitsLink( vp - itemRect(si).topLeft() ) )
+        if ( si->hitsLink( vp - tqitemRect(si).topLeft() ) )
             emit startURL( si->linkUrl() );
     }
 }
@@ -928,7 +928,7 @@ void ItemView::contentsMouseMoveEvent(TQMouseEvent *e)
     bool link_cursor = false;
     KMenuItemSeparator *si = dynamic_cast<KMenuItemSeparator*>( i );
     if ( si )
-        link_cursor = si->hitsLink( vp - itemRect(si).topLeft() );
+        link_cursor = si->hitsLink( vp - tqitemRect(si).topLeft() );
 
     if (i && !i->isSelectable() && !link_cursor) {
       unsetCursor();
@@ -965,7 +965,7 @@ void ItemView::resizeEvent ( TQResizeEvent * e )
 {
     KListView::resizeEvent( e );
 //    if ( m_lastOne )
-//        int diff = itemRect( m_lastOne ).bottom() - viewport()->height();
+//        int diff = tqitemRect( m_lastOne ).bottom() - viewport()->height();
 }
 
 void ItemView::viewportPaintEvent ( TQPaintEvent * pe )
@@ -975,7 +975,7 @@ void ItemView::viewportPaintEvent ( TQPaintEvent * pe )
 
     if ( m_lastOne && m_old_contentY != contentsY() ) {
         m_old_contentY = contentsY();
-        m_lastOne->repaint();
+        m_lastOne->tqrepaint();
     }
 }
 
@@ -1020,17 +1020,17 @@ TQDragObject * ItemView::dragObject()
       p.drawPixmap(pix.height()-add.height(), pix.width()-add.width(), add);
       p.end();
 
-      TQBitmap mask;
+      TQBitmap tqmask;
 
-      if (pix.mask())
-          mask = *pix.mask();
+      if (pix.tqmask())
+          tqmask = *pix.tqmask();
       else {
-	  mask.resize(pix.size());
-	  mask.fill(Qt::color1);
+	  tqmask.resize(pix.size());
+	  tqmask.fill(Qt::color1);
       }
 
-      bitBlt( &mask, pix.width()-add.width(), pix.height()-add.height(), add.mask(), 0, 0, add.width(), add.height(), OrROP );
-      pix.setMask( mask );
+      bitBlt( &tqmask, pix.width()-add.width(), pix.height()-add.height(), add.tqmask(), 0, 0, add.width(), add.height(), OrROP );
+      pix.setMask( tqmask );
       o->setPixmap(pix);
 
       if(kitem->service()) {
@@ -1052,7 +1052,7 @@ TQDragObject * ItemView::dragObject()
       else if(!kitem->path().isEmpty() && !kitem->path().startsWith("kicker:/") && !kitem->path().startsWith("kaddressbook:/")) {
          TQString uri = kitem->path();
 
-         if (uri.startsWith(locateLocal("data", TQString::fromLatin1("RecentDocuments/")))) {
+         if (uri.startsWith(locateLocal("data", TQString::tqfromLatin1("RecentDocuments/")))) {
              KDesktopFile df(uri,true);
              uri=df.readURL();
          }
@@ -1103,7 +1103,7 @@ const char * KMenuItemDrag::format(int i) const
     return 0;
 }
 
-TQByteArray KMenuItemDrag::encodedData(const char* mimeType) const
+TQByteArray KMenuItemDrag::tqencodedData(const char* mimeType) const
 {
     if (TQString("application/kmenuitem") == mimeType)
         return a;
@@ -1138,7 +1138,7 @@ bool ItemView::acceptDrag (TQDropEvent* event) const
 
 bool KMenuItemDrag::decode(const TQMimeSource* e, KMenuItemInfo& item)
 {
-    TQByteArray a = e->encodedData("application/kmenuitem");
+    TQByteArray a = e->tqencodedData("application/kmenuitem");
 
     if (a.isEmpty()) {
         TQStringList l;
@@ -1211,7 +1211,7 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
 
             TQString uri = item.m_path;
 
-            if (uri.startsWith(locateLocal("data", TQString::fromLatin1("RecentDocuments/")))) {
+            if (uri.startsWith(locateLocal("data", TQString::tqfromLatin1("RecentDocuments/")))) {
                KDesktopFile df(uri,true);
                uri=df.readURL();
             }
@@ -1219,7 +1219,7 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
             for (it = favs.begin(); it != favs.end(); ++it) {
                 if ((*it)[0]=='/') {
                     KDesktopFile df((*it),true);
-                    if (df.readURL().replace("file://",TQString::null)==uri)
+                    if (df.readURL().tqreplace("file://",TQString::null)==uri)
                         break;
                 }
             }
@@ -1233,7 +1233,7 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
         TQStringList favs = KickerSettings::favorites();
 
         if (text.endsWith(".desktop")) {
-            KService::Ptr p = KService::serviceByDesktopPath(text.replace("file://",TQString::null));
+            KService::Ptr p = KService::serviceByDesktopPath(text.tqreplace("file://",TQString::null));
             return (p && favs.find(p->storageId())==favs.end());
         }
         else {
@@ -1241,7 +1241,7 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
             for (it = favs.begin(); it != favs.end(); ++it) {
                 if ((*it)[0]=='/') {
                     KDesktopFile df((*it),true);
-                    if (df.readURL().replace("file://",TQString::null)==text)
+                    if (df.readURL().tqreplace("file://",TQString::null)==text)
                         break;
                 }
             }

@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>AppletView</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -21,7 +21,7 @@
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout8</cstring>
+                <cstring>tqlayout8</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -110,7 +110,7 @@
                     <verstretch>1</verstretch>
                 </sizepolicy>
             </property>
-            <property name="maximumSize">
+            <property name="tqmaximumSize">
                 <size>
                     <width>32767</width>
                     <height>32767</height>
@@ -125,7 +125,7 @@
         </widget>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout3</cstring>
+                <cstring>tqlayout3</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -141,7 +141,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>284</width>
                             <height>20</height>
@@ -195,7 +195,7 @@
     <tabstop>appletSearch</tabstop>
     <tabstop>appletFilter</tabstop>
 </tabstops>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>qscrollview.h</includehint>
     <includehint>kpushbutton.h</includehint>

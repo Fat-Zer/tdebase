@@ -387,7 +387,7 @@ void KonqSidebarBookmarkModule::slotOpenTab()
     else
 	return;
 
-    DCOPRef ref(kapp->dcopClient()->appId(), tree()->topLevelWidget()->name());
+    DCOPRef ref(kapp->dcopClient()->appId(), tree()->tqtopLevelWidget()->name());
 
     if (bookmark.isGroup()) {
         KBookmarkGroup group = bookmark.toGroup();
@@ -443,7 +443,7 @@ void KonqSidebarBookmarkModule::slotBookmarksChanged( const TQString & groupAddr
     m_ignoreOpenChange = true;
 
     // update the right part of the tree
-    KBookmarkGroup group = KonqBookmarkManager::self()->findByAddress( groupAddress ).toGroup();
+    KBookmarkGroup group = KonqBookmarkManager::self()->tqfindByAddress( groupAddress ).toGroup();
     KonqSidebarBookmarkItem * item = findByAddress( groupAddress );
     Q_ASSERT(!group.isNull());
     Q_ASSERT(item);
@@ -484,7 +484,7 @@ void KonqSidebarBookmarkModule::fillGroup( KonqSidebarTreeItem * parentItem, KBo
                 fillGroup( item, grp );
 
                 TQString address(grp.address());
-                if (m_folderOpenState.contains(address))
+                if (m_folderOpenState.tqcontains(address))
                     item->setOpen(m_folderOpenState[address]);
                 else
                     item->setOpen(false);

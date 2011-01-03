@@ -48,7 +48,7 @@ DCH  Delete Character          Esc [ Pn P                   1         eF
 DCS  Device Control String     Esc P                                  Delim
 DL   Delete Line               Esc [ Pn M                   1         eF
 DMI  Disable Manual Input      Esc \                                  Fs
-DSR  Device Status Report      Esc [ Ps n                   0
+DSR  Device tqStatus Report      Esc [ Ps n                   0
 EA   Erase in Area             Esc [ Ps O                   0         eF
 ECH  Erase Character           Esc [ Pn X                   1         eF
 ED   Erase in Display          Esc [ Ps J                   0         eF
@@ -196,7 +196,7 @@ ANSI X3.64 Mode-Changing Parameters for use with the
 3/1           1          GATM         guarded-area transfer mode
 3/2           2          KAM          keyboard action mode
 3/3           3          CRM          control representation mode
-3/4           4          IRM          insertion/replacement mode
+3/4           4          IRM          insertion/tqreplacement mode
 3/5           5          SRTM         status-reporting transfer mode
 3/6           6          ERM          erasure mode
 3/7           7          VEM          vertical editing mode
@@ -277,7 +277,7 @@ by transmitting the sequence
 
 where Ps is a character that describes installed options.
 
-The VT100's cursor location can be read with the DSR (Device Status
+The VT100's cursor location can be read with the DSR (Device tqStatus
 Report) control
 
      Esc [ 6 n

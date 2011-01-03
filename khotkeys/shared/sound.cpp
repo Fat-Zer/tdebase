@@ -50,7 +50,7 @@ Sound::~Sound()
 void Sound::load(const TQString& filename)
 {
 	kdDebug() << k_funcinfo << filename << endl;
-	data=TQMemArray<Q_INT32>();
+	data=TQMemArray<TQ_INT32>();
 	TQFile file(filename);
 	if(!file.open(IO_ReadOnly))
 	{
@@ -59,20 +59,20 @@ void Sound::load(const TQString& filename)
 	}
 	TQDataStream stream(&file);
 	stream.setByteOrder( TQDataStream::LittleEndian );
-	Q_INT32 magic;
+	TQ_INT32 magic;
 	
 	MAGIC("RIFF");
-	READ_FROM_STREAM(Q_UINT32,ChunkSize);
+	READ_FROM_STREAM(TQ_UINT32,ChunkSize);
 	MAGIC("WAVE");
 	MAGIC("fmt ");
-	READ_FROM_STREAM(Q_UINT32,ChunkSize2);
-	READ_FROM_STREAM(Q_INT16,AudioFormat);
-	READ_FROM_STREAM(Q_UINT16,NumberOfChannels);
-	READ_FROM_STREAM(Q_UINT32,SampleRate);
+	READ_FROM_STREAM(TQ_UINT32,ChunkSize2);
+	READ_FROM_STREAM(TQ_INT16,AudioFormat);
+	READ_FROM_STREAM(TQ_UINT16,NumberOfChannels);
+	READ_FROM_STREAM(TQ_UINT32,SampleRate);
 	_fs=SampleRate;
-	READ_FROM_STREAM(Q_UINT32,ByteRate);
-	READ_FROM_STREAM(Q_UINT16,BlockAlign);
-	READ_FROM_STREAM(Q_UINT16,BitsPerSample);
+	READ_FROM_STREAM(TQ_UINT32,ByteRate);
+	READ_FROM_STREAM(TQ_UINT16,BlockAlign);
+	READ_FROM_STREAM(TQ_UINT16,BitsPerSample);
 	MAGIC("data");
 	READ_FROM_STREAM(TQByteArray,SoundData);
 	NumberOfChannels=1; //Wav i play are broken
@@ -90,7 +90,7 @@ void Sound::load(const TQString& filename)
 	max=0;
 	for(unsigned long int f=0;f<NumberOfSamples;f++)
 	{
-		Q_INT32 nb=0;
+		TQ_INT32 nb=0;
 		for(uint k=0;k<BytePS;k++)
 		{
 			nb |= (SoundData[f*BytePS+k]&0x000000FF) << (k*8);
@@ -110,7 +110,7 @@ void Sound::load(const TQString& filename)
 
 }
 
-#define SMAGIC(CH) { stream << ( Q_INT32) ( (CH)[0] | (CH)[1]<<8 | (CH)[2]<< 16 | (CH)[3] << 24 ) ; }
+#define SMAGIC(CH) { stream << ( TQ_INT32) ( (CH)[0] | (CH)[1]<<8 | (CH)[2]<< 16 | (CH)[3] << 24 ) ; }
 
 void Sound::save(const TQString& filename) const
 {
@@ -129,35 +129,35 @@ void Sound::save(const TQString& filename) const
 	
 	for(unsigned long int f=0;f<data.size();f++)
 	{
-		Q_UINT16 val= (signed short int) ( (data.at(f) * ((double)(1<<13)/(signed)max)  ) );
+		TQ_UINT16 val= (signed short int) ( (data.at(f) * ((double)(1<<13)/(signed)max)  ) );
 		SoundData[ 2*f ]=   val & 0x00FF;
 		SoundData[2*f+1]=  (val & 0xFF00) >> 8;
 		
 //		kdDebug( 1217 ) << k_funcinfo << data.at(f) << " / " << max << " = " << val << "  |  " <<   SoundData[ 2*f ] << " "<< SoundData[ 2*f+1 ] <<  endl;
 	}
 
-	Q_UINT16 NumberOfChannels=2;
-	Q_UINT32 SampleRate=_fs;
+	TQ_UINT16 NumberOfChannels=2;
+	TQ_UINT32 SampleRate=_fs;
 
 	SMAGIC("RIFF");
-	//READ_FROM_STREAM(Q_UINT32,ChunkSize);
-	stream <<  (Q_UINT32)(36+ SoundData.size());
+	//READ_FROM_STREAM(TQ_UINT32,ChunkSize);
+	stream <<  (TQ_UINT32)(36+ SoundData.size());
 	SMAGIC("WAVE");
 	SMAGIC("fmt ");
-	//READ_FROM_STREAM(Q_UINT32,ChunkSize2);
-	stream <<  (Q_UINT32)(16);
-	//READ_FROM_STREAM(Q_INT16,AudioFormat);
-	stream <<  (Q_INT16)(1);
-	//READ_FROM_STREAM(Q_UINT16,NumberOfChannels);
-	stream <<  (Q_UINT16)(NumberOfChannels);
-	//READ_FROM_STREAM(Q_UINT32,SampleRate);
-	stream <<  (Q_UINT32)(SampleRate);
-	//READ_FROM_STREAM(Q_UINT32,ByteRate);
-	stream <<  (Q_UINT32)(NumberOfChannels*SampleRate*16/8);
-	//READ_FROM_STREAM(Q_UINT16,BlockAlign);
-	stream <<  (Q_UINT16)(16/8 *NumberOfChannels);
-	//READ_FROM_STREAM(Q_UINT16,BitsPerSample);
-	stream <<  (Q_UINT16)(16);
+	//READ_FROM_STREAM(TQ_UINT32,ChunkSize2);
+	stream <<  (TQ_UINT32)(16);
+	//READ_FROM_STREAM(TQ_INT16,AudioFormat);
+	stream <<  (TQ_INT16)(1);
+	//READ_FROM_STREAM(TQ_UINT16,NumberOfChannels);
+	stream <<  (TQ_UINT16)(NumberOfChannels);
+	//READ_FROM_STREAM(TQ_UINT32,SampleRate);
+	stream <<  (TQ_UINT32)(SampleRate);
+	//READ_FROM_STREAM(TQ_UINT32,ByteRate);
+	stream <<  (TQ_UINT32)(NumberOfChannels*SampleRate*16/8);
+	//READ_FROM_STREAM(TQ_UINT16,BlockAlign);
+	stream <<  (TQ_UINT16)(16/8 *NumberOfChannels);
+	//READ_FROM_STREAM(TQ_UINT16,BitsPerSample);
+	stream <<  (TQ_UINT16)(16);
 	SMAGIC("data");
 	//READ_FROM_STREAM(TQByteArray,SoundData);
 	stream <<  SoundData;

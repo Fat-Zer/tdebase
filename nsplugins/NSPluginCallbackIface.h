@@ -37,7 +37,7 @@ k_dcop:
   virtual ASYNC requestURL(TQString url, TQString target) = 0;
   virtual ASYNC postURL(TQString url, TQString target, TQByteArray data, TQString mime) = 0;
   virtual ASYNC statusMessage( TQString msg ) = 0;
-  virtual ASYNC evalJavaScript( Q_INT32 id, TQString script ) = 0;
+  virtual ASYNC evalJavaScript( TQ_INT32 id, TQString script ) = 0;
 
 };
 

@@ -31,10 +31,10 @@
 MenuConfig::MenuConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-    TQVBoxLayout *layout = new TQVBoxLayout(this);
+    TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
     m_widget = new MenuTab(this);
-    layout->addWidget(m_widget);
-    layout->addStretch();
+    tqlayout->addWidget(m_widget);
+    tqlayout->addStretch();
 
     setQuickHelp(KickerConfig::the()->quickHelp());
     setAboutData(KickerConfig::the()->aboutData());

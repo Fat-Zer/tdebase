@@ -59,13 +59,13 @@ ChooserDlg::ChooserDlg()
 	TQBoxLayout *vbox = new TQVBoxLayout( this, 10, 10 );
 
 	TQLabel *title = new TQLabel( i18n("XDMCP Host Menu"), this );
-	title->setAlignment( AlignCenter );
+	title->tqsetAlignment( AlignCenter );
 	vbox->addWidget( title );
 
 	host_view = new TQListView( this, "hosts" );
 	host_view->addColumn( i18n("Hostname") );
 	host_view->setColumnWidth( 0, fontMetrics().width( "login.crap.net" ) );
-	host_view->addColumn( i18n("Status") );
+	host_view->addColumn( i18n("tqStatus") );
 	host_view->setMinimumWidth( fontMetrics().width( "login.crap.com Display not authorized to connect this server" ) );
 	host_view->setResizeMode( TQListView::LastColumn );
 	host_view->setAllColumnsShowFocus( true );
@@ -145,14 +145,14 @@ void ChooserDlg::pingHosts()
 
 void ChooserDlg::accept()
 {
-	if (focusWidget() == iline) {
+	if (tqfocusWidget() == iline) {
 		if (!iline->text().isEmpty()) {
 			GSendInt( G_Ch_DirectChoice );
 			GSendStr( iline->text().latin1() );
 			iline->clear();
 		}
 		return;
-	} else /*if (focusWidget() == host_view)*/ {
+	} else /*if (tqfocusWidget() == host_view)*/ {
 		TQListViewItem *item = host_view->currentItem();
 		if (item) {
 			GSendInt( G_Ready );
@@ -170,7 +170,7 @@ TQString ChooserDlg::recvStr()
 {
 	char *arr = GRecvStr();
 	if (arr) {
-		TQString str = TQString::fromLatin1( arr );
+		TQString str = TQString::tqfromLatin1( arr );
 		free( arr );
 		return str;
 	} else

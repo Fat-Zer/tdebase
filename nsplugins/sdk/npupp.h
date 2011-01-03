@@ -28,7 +28,7 @@
  * of those above. If you wish to allow use of your version of this file only
  * under the terms of either the GPL or the LGPL, and not to allow others to
  * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
+ * decision by deleting the provisions above and tqreplace them with the notice
  * and other provisions required by the GPL or the LGPL. If you do not delete
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
@@ -770,28 +770,28 @@ typedef NPError (* NP_LOADDS NPN_DestroyStreamUPP)(NPP instance, NPStream* strea
 #endif
 
 
-/* NPN_Status */
+/* NPN_tqStatus */
 
 #if _NPUPP_USE_UPP_
 
-typedef UniversalProcPtr NPN_StatusUPP;
+typedef UniversalProcPtr NPN_tqStatusUPP;
 enum {
-	uppNPN_StatusProcInfo = kThinkCStackBased
+	uppNPN_tqStatusProcInfo = kThinkCStackBased
 		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof(NPP)))
 		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof(char *)))
 };
 
-#define NewNPN_StatusProc(FUNC)		\
-		(NPN_StatusUPP) NewRoutineDescriptor((ProcPtr)(FUNC), uppNPN_StatusProcInfo, GetCurrentArchitecture())
-#define CallNPN_StatusProc(FUNC, npp, msg)		\
-		(void)CallUniversalProc((UniversalProcPtr)(FUNC), uppNPN_StatusProcInfo, (npp), (msg))	
+#define NewNPN_tqStatusProc(FUNC)		\
+		(NPN_tqStatusUPP) NewRoutineDescriptor((ProcPtr)(FUNC), uppNPN_tqStatusProcInfo, GetCurrentArchitecture())
+#define CallNPN_tqStatusProc(FUNC, npp, msg)		\
+		(void)CallUniversalProc((UniversalProcPtr)(FUNC), uppNPN_tqStatusProcInfo, (npp), (msg))	
 
 #else
 
-typedef void (* NP_LOADDS NPN_StatusUPP)(NPP instance, const char* message);
-#define NewNPN_StatusProc(FUNC)		\
-		((NPN_StatusUPP) (FUNC))
-#define CallNPN_StatusProc(FUNC, npp, msg)		\
+typedef void (* NP_LOADDS NPN_tqStatusUPP)(NPP instance, const char* message);
+#define NewNPN_tqStatusProc(FUNC)		\
+		((NPN_tqStatusUPP) (FUNC))
+#define CallNPN_tqStatusProc(FUNC, npp, msg)		\
 		(*(FUNC))((npp), (msg))	
 
 #endif
@@ -1678,7 +1678,7 @@ typedef struct _NPNetscapeFuncs {
     NPN_NewStreamUPP newstream;
     NPN_WriteUPP write;
     NPN_DestroyStreamUPP destroystream;
-    NPN_StatusUPP status;
+    NPN_tqStatusUPP status;
     NPN_UserAgentUPP uagent;
     NPN_MemAllocUPP memalloc;
     NPN_MemFreeUPP memfree;
@@ -1690,8 +1690,8 @@ typedef struct _NPNetscapeFuncs {
     NPN_PostURLNotifyUPP posturlnotify;
     NPN_GetValueUPP getvalue;
     NPN_SetValueUPP setvalue;
-    NPN_InvalidateRectUPP invalidaterect;
-    NPN_InvalidateRegionUPP invalidateregion;
+    NPN_InvalidateRectUPP tqinvalidaterect;
+    NPN_InvalidateRegionUPP tqinvalidateregion;
     NPN_ForceRedrawUPP forceredraw;
     NPN_GetStringIdentifierUPP getstringidentifier;
     NPN_GetStringIdentifiersUPP getstringidentifiers;

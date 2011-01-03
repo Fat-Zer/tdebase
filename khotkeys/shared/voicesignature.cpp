@@ -154,14 +154,14 @@ static TQMemArray<double> fft(const Sound& sound, unsigned int start, unsigned i
 	{
 		samples[f]=sound.at(start2+rev_carry)* hamming(rev_carry, size);
 //		KDEBUG(rev_carry);
-		int mask = size>>1;  // N / 2
+		int tqmask = size>>1;  // N / 2
         // add 1 backwards
-		while (rev_carry >= mask)
+		while (rev_carry >= tqmask)
 		{
-			rev_carry -= mask; // turn off this bit
-			mask >>= 1;
+			rev_carry -= tqmask; // turn off this bit
+			tqmask >>= 1;
 		}
-		rev_carry += mask;
+		rev_carry += tqmask;
 	}
 	samples[size-1]=sound.at(start2+size-1)*hamming(size-1, size);
 

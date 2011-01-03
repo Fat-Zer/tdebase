@@ -194,7 +194,7 @@ print_extension_list(const char *ext, TQListViewItem *l1)
 
    if (!ext || !ext[0])
       return;
-   TQString qext = TQString::fromLatin1(ext);
+   TQString qext = TQString::tqfromLatin1(ext);
    TQListViewItem *l2 = NULL;
 
    i = j = 0;
@@ -551,7 +551,7 @@ static TQListViewItem *get_gl_info(Display *dpy, int scrnum, Bool allowDirect,TQ
       None };
 
    XSetWindowAttributes attr;
-   unsigned long mask;
+   unsigned long tqmask;
    Window root;
    GLXContext ctx;
    XVisualInfo *visinfo;
@@ -573,10 +573,10 @@ static TQListViewItem *get_gl_info(Display *dpy, int scrnum, Bool allowDirect,TQ
    attr.border_pixel = 0;
    attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask;
-   mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
+   tqmask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
    win = XCreateWindow(dpy, root, 0, 0, width, height,
    			0, visinfo->depth, InputOutput,
-		       visinfo->visual, mask, &attr);
+		       visinfo->visual, tqmask, &attr);
 
    ctx = glXCreateContext( dpy, visinfo, NULL, allowDirect );
    if (!ctx) {

@@ -16,7 +16,7 @@ void KNetAttach::init()
     disconnect(finishButton(), TQT_SIGNAL(clicked()), (TQDialog*)this, TQT_SLOT(accept()));
     connect(finishButton(), TQT_SIGNAL(clicked()), this, TQT_SLOT(finished()));
     finishButton()->setText(i18n("Save && C&onnect"));
-    //setResizeMode(Fixed); FIXME: make the wizard fixed-geometry
+    //setResizeMode(Fixed); FIXME: make the wizard fixed-tqgeometry
     setFinishEnabled(_folderParameters, false);
     KConfig recent("krecentconnections", true, false);
     recent.setGroup("General");
@@ -109,14 +109,14 @@ void KNetAttach::showPage( TQWidget *page )
 	    _connectionName->setText(_recentConnectionName->currentText());
 	    _createIcon->setChecked(false);
 	}
-	updateParametersPageStatus();
+	updateParametersPagetqStatus();
     }
 
     TQWizard::showPage(page);
 }
 
 
-void KNetAttach::updateParametersPageStatus()
+void KNetAttach::updateParametersPagetqStatus()
 {
     setFinishEnabled(_folderParameters,
 		  !_host->text().stripWhiteSpace().isEmpty() &&
@@ -190,7 +190,7 @@ void KNetAttach::finished()
 	recent.setGroup("General");
 	TQStringList idx = recent.readListEntry("Index");
 	recent.deleteGroup(name); // erase anything stale
-	if (idx.contains(name)) {
+	if (idx.tqcontains(name)) {
 	    idx.remove(name);
 	    idx.prepend(name);
 	    recent.writeEntry("Index", idx);

@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class PanelServiceMenu;
 
 /**
- * Button that contains a Service menu
+ * Button that tqcontains a Service menu
  */
 class ServiceMenuButton : public PanelPopupButton
 {

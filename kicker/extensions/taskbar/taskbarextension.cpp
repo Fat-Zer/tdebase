@@ -57,11 +57,11 @@ TaskBarExtension::TaskBarExtension(const TQString& configFile, Type type,
       m_bgFilename(0),
       m_rootPixmap(0)
 {
-    TQHBoxLayout *layout = new TQHBoxLayout(this);
+    TQHBoxLayout *tqlayout = new TQHBoxLayout(this);
     m_container = new TaskBarContainer(false, this);
     m_container->setBackgroundOrigin(AncestorOrigin);
     positionChange(position());
-    layout->addWidget(m_container);
+    tqlayout->addWidget(m_container);
 
     connect(m_container, TQT_SIGNAL(containerCountChanged()),
             TQT_SIGNAL(updateLayout()));
@@ -123,17 +123,17 @@ void TaskBarExtension::preferences()
     m_container->preferences();
 }
 
-TQSize TaskBarExtension::sizeHint(Position p, TQSize maxSize) const
+TQSize TaskBarExtension::tqsizeHint(Position p, TQSize maxSize) const
 {
     if (p == Left || p == Right)
         maxSize.setWidth(sizeInPixels());
     else
         maxSize.setHeight(sizeInPixels());
 
-//    kdDebug(1210) << "TaskBarExtension::sizeHint( Position, TQSize )" << endl;
+//    kdDebug(1210) << "TaskBarExtension::tqsizeHint( Position, TQSize )" << endl;
 //    kdDebug(1210) << " width: " << size.width() << endl;
 //    kdDebug(1210) << "height: " << size.height() << endl;
-    return m_container->sizeHint(p, maxSize);
+    return m_container->tqsizeHint(p, maxSize);
 }
 
 void TaskBarExtension::configure()
@@ -155,7 +155,7 @@ void TaskBarExtension::setBackgroundTheme()
         }
         else
         {
-            m_rootPixmap->repaint(true);
+            m_rootPixmap->tqrepaint(true);
         }
 
         double tint = double(KickerSettings::tintValue()) / 100;

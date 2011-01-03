@@ -37,7 +37,7 @@ public:
     KURL url;
     TQString typedURL;
     TQString title;
-    Q_UINT32 numberOfTimesVisited;
+    TQ_UINT32 numberOfTimesVisited;
     TQDateTime firstVisited;
     TQDateTime lastVisited;
 };
@@ -65,8 +65,8 @@ protected:
 
 k_dcop:
     virtual ASYNC notifyHistoryEntry( KonqHistoryEntry e, TQCString saveId) = 0;
-    virtual ASYNC notifyMaxCount( Q_UINT32 count, TQCString saveId ) = 0;
-    virtual ASYNC notifyMaxAge( Q_UINT32 days, TQCString saveId ) = 0;
+    virtual ASYNC notifyMaxCount( TQ_UINT32 count, TQCString saveId ) = 0;
+    virtual ASYNC notifyMaxAge( TQ_UINT32 days, TQCString saveId ) = 0;
     virtual ASYNC notifyClear( TQCString saveId ) = 0;
     virtual ASYNC notifyRemove( KURL url, TQCString saveId ) = 0;
     virtual ASYNC notifyRemove( KURL::List url, TQCString saveId ) = 0;

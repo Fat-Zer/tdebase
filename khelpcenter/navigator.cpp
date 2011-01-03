@@ -262,8 +262,8 @@ void Navigator::insertIOSlaveDocs( const TQString &name, NavigatorItem *topItem 
 
 void Navigator::insertAppletDocs( NavigatorItem *topItem )
 {
-  TQDir appletDir( locate( "data", TQString::fromLatin1( "kicker/applets/" ) ) );
-  appletDir.setNameFilter( TQString::fromLatin1( "*.desktop" ) );
+  TQDir appletDir( locate( "data", TQString::tqfromLatin1( "kicker/applets/" ) ) );
+  appletDir.setNameFilter( TQString::tqfromLatin1( "*.desktop" ) );
 
   TQStringList files = appletDir.entryList( TQDir::Files | TQDir::Readable );
   TQStringList::ConstIterator it = files.begin();
@@ -409,7 +409,7 @@ void Navigator::slotItemSelected( TQListViewItem *currentItem )
         if ( !doc.isNull() ) {
           int pos = doc.find( ".html" );
           if ( pos >= 0 ) {
-            doc.replace( pos, 5, ".docbook" );
+            doc.tqreplace( pos, 5, ".docbook" );
           }
           kdDebug( 1400 ) << "slotItemSelected(): doc = " << doc << endl;
 
@@ -563,7 +563,7 @@ void Navigator::slotSearch()
 void Navigator::slotShowSearchResult( const TQString &url )
 {
   TQString u = url;
-  u.replace( "%k", mSearchEdit->text() );
+  u.tqreplace( "%k", mSearchEdit->text() );
 
   emit itemSelected( u );
 }

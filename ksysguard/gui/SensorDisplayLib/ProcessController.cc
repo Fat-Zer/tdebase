@@ -56,7 +56,7 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	dict.insert("PPID", new TQString(i18n("PPID")));
 	dict.insert("UID", new TQString(i18n("UID")));
 	dict.insert("GID", new TQString(i18n("GID")));
-	dict.insert("Status", new TQString(i18n("Status")));
+	dict.insert("tqStatus", new TQString(i18n("tqStatus")));
 	dict.insert("User%", new TQString(i18n("User%")));
 	dict.insert("System%", new TQString(i18n("System%")));
 	dict.insert("Nice", new TQString(i18n("Nice")));
@@ -65,7 +65,7 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	dict.insert("Login", new TQString(i18n("Login")));
 	dict.insert("Command", new TQString(i18n("Command")));
 
-	// Setup the geometry management.
+	// Setup the tqgeometry management.
 	gm = new TQVBoxLayout(this, 10);
 	Q_CHECK_PTR(gm);
 	gm->addSpacing(15);
@@ -98,11 +98,11 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	cbFilter->insertItem(i18n("System Processes"), 1);
 	cbFilter->insertItem(i18n("User Processes"), 2);
 	cbFilter->insertItem(i18n("Own Processes"), 3);
-	cbFilter->setMinimumSize(cbFilter->sizeHint());
+	cbFilter->setMinimumSize(cbFilter->tqsizeHint());
 	// Create the check box to switch between tree view and list view.
 	xbTreeView = new TQCheckBox(i18n("&Tree"), this, "xbTreeView");
 	Q_CHECK_PTR(xbTreeView);
-	xbTreeView->setMinimumSize(xbTreeView->sizeHint());
+	xbTreeView->setMinimumSize(xbTreeView->tqsizeHint());
 	connect(xbTreeView, TQT_SIGNAL(toggled(bool)),
 			this, TQT_SLOT(setTreeView(bool)));
 
@@ -116,13 +116,13 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	bRefresh = new KPushButton( KGuiItem(  i18n( "&Refresh" ), "reload" ),
             this, "bRefresh" );
 	Q_CHECK_PTR(bRefresh);
-	bRefresh->setMinimumSize(bRefresh->sizeHint());
+	bRefresh->setMinimumSize(bRefresh->tqsizeHint());
 	connect(bRefresh, TQT_SIGNAL(clicked()), this, TQT_SLOT(updateList()));
 
 	// Create the 'Kill' button.
 	bKill = new KPushButton(i18n("&Kill"), this, "bKill");
 	Q_CHECK_PTR(bKill);
-	bKill->setMinimumSize(bKill->sizeHint());
+	bKill->setMinimumSize(bKill->tqsizeHint());
 	connect(bKill, TQT_SIGNAL(clicked()), this, TQT_SLOT(killProcess()));
 	/* Disable the kill button until we know that the daemon supports the
 	 * kill command. */
@@ -147,7 +147,7 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 
 	setPlotterWidget(pList);
 
-	setMinimumSize(sizeHint());
+	setMinimumSize(tqsizeHint());
 	fixTabOrder(); 
 }
 
@@ -247,7 +247,7 @@ ProcessController::killProcess()
 
 		KDialogBase *dlg = new KDialogBase (  i18n ("Kill Process"), 
 						      KDialogBase::Yes | KDialogBase::Cancel,
-						      KDialogBase::Yes, KDialogBase::Cancel, this->parentWidget(),
+						      KDialogBase::Yes, KDialogBase::Cancel, this->tqparentWidget(),
 						      "killconfirmation",
 			       			      true, true, KGuiItem(i18n("Kill")));
 
@@ -298,7 +298,7 @@ ProcessController::answerReceived(int id, const TQString& answer)
 	{
 	case 1:
 	{
-		/* We have received the answer to a ps? command that contains
+		/* We have received the answer to a ps? command that tqcontains
 		 * the information about the table headers. */
 		KSGRD::SensorTokenizer lines(answer, '\n');
 		if (lines.count() != 2)
@@ -325,7 +325,7 @@ ProcessController::answerReceived(int id, const TQString& answer)
 		break;
 	}
 	case 2:
-		/* We have received the answer to a ps command that contains a
+		/* We have received the answer to a ps command that tqcontains a
 		 * list of processes with various additional information. */
 		pList->update(answer);
 		pListSearchLine->searchLine()->updateSearch(); //re-apply the filter

@@ -80,18 +80,18 @@ StatisticsView::StatisticsView(TQWidget *parent,KConfig *config, const char *nam
    hostLe->setText("*");
    
    viewStatistics->setMinimumSize(375,200);
-   connectionsL->setMinimumSize(connectionsL->sizeHint());
-   filesL->setMinimumSize(filesL->sizeHint());
-   eventL->setMinimumSize(eventL->sizeHint());
-   eventCb->setMinimumSize(eventCb->sizeHint());
-   hostL->setMinimumSize(hostL->sizeHint());
-   hostLe->setMinimumSize(120,hostLe->sizeHint().height());
-   serviceL->setMinimumSize(serviceL->sizeHint());
-   serviceLe->setMinimumSize(120,serviceLe->sizeHint().height());
-   calcButton->setMinimumSize(calcButton->sizeHint());
-   clearButton->setMinimumSize(clearButton->sizeHint());
-   expandedInfoCb->setMinimumSize(expandedInfoCb->sizeHint());
-   expandedUserCb->setMinimumSize(expandedUserCb->sizeHint());
+   connectionsL->setMinimumSize(connectionsL->tqsizeHint());
+   filesL->setMinimumSize(filesL->tqsizeHint());
+   eventL->setMinimumSize(eventL->tqsizeHint());
+   eventCb->setMinimumSize(eventCb->tqsizeHint());
+   hostL->setMinimumSize(hostL->tqsizeHint());
+   hostLe->setMinimumSize(120,hostLe->tqsizeHint().height());
+   serviceL->setMinimumSize(serviceL->tqsizeHint());
+   serviceLe->setMinimumSize(120,serviceLe->tqsizeHint().height());
+   calcButton->setMinimumSize(calcButton->tqsizeHint());
+   clearButton->setMinimumSize(clearButton->tqsizeHint());
+   expandedInfoCb->setMinimumSize(expandedInfoCb->tqsizeHint());
+   expandedUserCb->setMinimumSize(expandedUserCb->tqsizeHint());
    
    TQVBoxLayout *topLayout=new TQVBoxLayout(this, KDialog::marginHint(),
       KDialog::spacingHint());
@@ -150,8 +150,8 @@ void StatisticsView::calculate()
       {
          if (connCount)
          {
-            if ((TQString(item->text(1)).contains(i18n("CONNECTION OPENED")))
-                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).tqcontains(i18n("CONNECTION OPENED")))
+                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
             {
                if (expandedInfoCb->isChecked()) item2=item->text(2);
                else item2=serviceLe->text();
@@ -163,8 +163,8 @@ void StatisticsView::calculate()
          }
          else
          {
-            if ((TQString(item->text(1)).contains(i18n("FILE OPENED")))
-                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).tqcontains(i18n("FILE OPENED")))
+                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
             {
                if (expandedInfoCb->isChecked()) item2=item->text(2);
                else item2=serviceLe->text();
@@ -201,14 +201,14 @@ void StatisticsView::calculate()
       {
          if (connCount)
          {
-            if ((TQString(item->text(1)).contains(i18n("CONNECTION OPENED")))
-                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).tqcontains(i18n("CONNECTION OPENED")))
+                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
                count++;
          }
          else
          {
-            if ((TQString(item->text(1)).contains(i18n("FILE OPENED")))
-                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
+            if ((TQString(item->text(1)).tqcontains(i18n("FILE OPENED")))
+                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
                count++;
          };
          item=item->nextSibling();

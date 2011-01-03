@@ -4,7 +4,7 @@
  * Copyright (C) 1999 Geert Jansen <g.t.jansen@stud.tue.nl>
  *
  * Modified 2000.07.14 by Brad Hughes <bhughes@trolltech.com>
- * Improve layout and consistency with KDesktop's background selection
+ * Improve tqlayout and consistency with KDesktop's background selection
  *
  * Based on old backgnd.cpp:
  *
@@ -56,7 +56,7 @@ KBackground::KBackground(TQWidget *parent, const char *name)
 
     connect(m_background, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
-    // Top layout
+    // Top tqlayout
     TQVBoxLayout *top = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint() );
     top->addWidget(m_pCBEnable);
     top->addWidget(m_background);

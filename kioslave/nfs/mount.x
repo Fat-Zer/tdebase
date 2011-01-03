@@ -117,8 +117,8 @@ struct ppathcnf {
 	short	pc_path_max;	/* max path name length (/x/y/x/.. ) */
 	short	pc_pipe_buf;	/* size of a pipe (bytes) */
 	u_char	pc_vdisable;	/* safe char to turn off c_cc[i] */
-	char	pc_xxx;		/* alignment padding; cc_t == char */
-	short	pc_mask[2];	/* validity and boolean bits */
+	char	pc_xxx;		/* tqalignment padding; cc_t == char */
+	short	pc_tqmask[2];	/* validity and boolean bits */
 };
 
 program MOUNTPROG {
@@ -136,7 +136,7 @@ program MOUNTPROG {
 		MOUNTPROC_NULL(void) = 0;
 
 		/*	
-		 * If fhs_status is 0, then fhs_fhandle contains the
+		 * If fhs_status is 0, then fhs_fhandle tqcontains the
 	 	 * file handle for the directory. This file handle may
 		 * be used in the NFS protocol. This procedure also adds
 		 * a new entry to the mount list for this client mounting
@@ -148,7 +148,7 @@ program MOUNTPROG {
 
 		/*
 		 * Returns the list of remotely mounted filesystems. The 
-		 * mountlist contains one entry for each hostname and 
+		 * mountlist tqcontains one entry for each hostname and 
 		 * directory pair.
 		 */
 		mountlist
@@ -197,7 +197,7 @@ program MOUNTPROG {
 		MOUNTPROC_NULL(void) = 0;
 
 		/*	
-		 * If fhs_status is 0, then fhs_fhandle contains the
+		 * If fhs_status is 0, then fhs_fhandle tqcontains the
 	 	 * file handle for the directory. This file handle may
 		 * be used in the NFS protocol. This procedure also adds
 		 * a new entry to the mount list for this client mounting
@@ -209,7 +209,7 @@ program MOUNTPROG {
 
 		/*
 		 * Returns the list of remotely mounted filesystems. The 
-		 * mountlist contains one entry for each hostname and 
+		 * mountlist tqcontains one entry for each hostname and 
 		 * directory pair.
 		 */
 		mountlist

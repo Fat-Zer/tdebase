@@ -131,7 +131,7 @@ KRandRModule::KRandRModule(TQWidget *parent, const char *name, const TQStringLis
 	connect(m_applyOnStartup, TQT_SIGNAL(clicked()), TQT_SLOT(setChanged()));
 
 	TQHBox* syncBox = new TQHBox(this);
-	syncBox->layout()->addItem(new TQSpacerItem(20, 1, TQSizePolicy::Maximum));
+	syncBox->tqlayout()->addItem(new TQSpacerItem(20, 1, TQSizePolicy::Maximum));
 	m_syncTrayApp = new TQCheckBox(i18n("Allow tray application to change startup settings"), syncBox);
 	topLayout->addWidget(syncBox);
 	TQWhatsThis::add(m_syncTrayApp, i18n("If this option is enabled, options set by the system tray applet will be saved and loaded when KDE starts instead of being temporary."));

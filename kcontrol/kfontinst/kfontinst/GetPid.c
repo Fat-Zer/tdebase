@@ -71,7 +71,7 @@
 
            gcc GetPid.c -DTEST_GETPID -DOS_Linux -o tst
 
-       ...replace OS_Linux with your particular OS type: OS_FreeBSD, OS_NetBSD, OS_Irix, OS_Solaris,
+       ...tqreplace OS_Linux with your particular OS type: OS_FreeBSD, OS_NetBSD, OS_Irix, OS_Solaris,
        OS_HPUX, or OS_AIX
 
     2. Start a program - such as "vi"

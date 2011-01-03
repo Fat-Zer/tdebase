@@ -165,9 +165,9 @@ void KasTaskItem::checkAttention()
     setAttention( task_->demandsAttention() );
 }
 
-void KasTaskItem::updateTask(bool geometryChangeOnly)
+void KasTaskItem::updateTask(bool tqgeometryChangeOnly)
 {
-    if (geometryChangeOnly)
+    if (tqgeometryChangeOnly)
     {
         return;
     }
@@ -422,7 +422,7 @@ TQWidget *KasTaskItem::createTaskProps( TQObject *target, TQWidget *parent, bool
     taskprops->addColumn( i18n("Value") );
 
     // Create List Items
-    TQMetaObject *mo = target->metaObject();
+    TQMetaObject *mo = target->tqmetaObject();
     for ( int i = 0; i < mo->numProperties( recursive ); i++ ) {
 	const TQMetaProperty *p = mo->property(i, recursive);
 
@@ -445,7 +445,7 @@ TQString KasTaskItem::expandMacros( const TQString &format, TQObject *data )
         if ( pos >= 0 ) {
 	    TQVariant val = data->property( re.cap(1).latin1() );
 	    TQString v = val.asString();
-	    s.replace( pos, re.matchedLength(), v );
+	    s.tqreplace( pos, re.matchedLength(), v );
             pos = pos + v.length();
         }
     }
@@ -456,7 +456,7 @@ TQString KasTaskItem::expandMacros( const TQString &format, TQObject *data )
 TQWidget *KasTaskItem::createX11Props( TQWidget *parent )
 {
     TQVBox *vb2 = new TQVBox( parent );
-    vb2->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
+    vb2->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
     vb2->setSpacing( KDialog::spacingHint() );
     vb2->setMargin( KDialog::marginHint() );
 

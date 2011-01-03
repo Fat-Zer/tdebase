@@ -38,7 +38,7 @@ KdmLayoutFixed::update( const TQRect &parentGeometry, bool force )
 {
 	kdDebug() << timestamp() << " KdmLayoutFixed::update " << parentGeometry << endl;
 
-	// I can't layout children if the parent rectangle is not valid
+	// I can't tqlayout children if the parent rectangle is not valid
 	if (parentGeometry.width() < 0 || parentGeometry.height() < 0) {
 		kdDebug() << timestamp() << " invalid\n";
 		return;
@@ -67,14 +67,14 @@ KdmLayoutBox::update( const TQRect &parentGeometry, bool force )
 {
 	kdDebug() << this << " update " << parentGeometry << endl;
 
-	// I can't layout children if the parent rectangle is not valid
+	// I can't tqlayout children if the parent rectangle is not valid
 	if (!parentGeometry.isValid() || parentGeometry.isEmpty())
 		return;
 
 	// Check if box size was computed. If not compute it
 	// TODO check if this prevents updating changing items
 //	if (!hintedSize.isValid())
-//		sizeHint();
+//		tqsizeHint();
 
 //	kdDebug() << this << " hintedSize " << hintedSize << endl;
 
@@ -114,30 +114,30 @@ KdmLayoutBox::update( const TQRect &parentGeometry, bool force )
 			if ((*it)->isExplicitlyHidden())
 				continue;
 
-			TQRect temp = childrenRect, itemRect;
+			TQRect temp = childrenRect, tqitemRect;
 			if (box.isVertical) {
 				temp.setHeight( 0 );
-				itemRect = (*it)->placementHint( temp );
-				temp.setHeight( itemRect.height() );
-				childrenRect.setTop( childrenRect.top() + itemRect.size().height() + box.spacing );
+				tqitemRect = (*it)->placementHint( temp );
+				temp.setHeight( tqitemRect.height() );
+				childrenRect.setTop( childrenRect.top() + tqitemRect.size().height() + box.spacing );
 			} else {
 				temp.setWidth( 0 );
-				itemRect = (*it)->placementHint( temp );
-				kdDebug() << this << " placementHint " << *it << " " << temp << " " << itemRect << endl;
-				temp.setWidth( itemRect.width() );
-				childrenRect.setLeft( childrenRect.left() + itemRect.size().width() + box.spacing );
+				tqitemRect = (*it)->placementHint( temp );
+				kdDebug() << this << " placementHint " << *it << " " << temp << " " << tqitemRect << endl;
+				temp.setWidth( tqitemRect.width() );
+				childrenRect.setLeft( childrenRect.left() + tqitemRect.size().width() + box.spacing );
 				kdDebug() << timestamp() << " childrenRect after " << *it << " " << childrenRect << endl;
 			}
-			itemRect = (*it)->placementHint( temp );
-			kdDebug() << this << " placementHint2 " << *it << " " << temp << " " << itemRect << endl;
-			(*it)->setGeometry( itemRect, force );
+			tqitemRect = (*it)->placementHint( temp );
+			kdDebug() << this << " placementHint2 " << *it << " " << temp << " " << tqitemRect << endl;
+			(*it)->setGeometry( tqitemRect, force );
 		}
 	}
 }
 
-//FIXME truly experimental (is so close to greeter_geometry.c)
+//FIXME truly experimental (is so close to greeter_tqgeometry.c)
 QSize
-KdmLayoutBox::sizeHint()
+KdmLayoutBox::tqsizeHint()
 {
 	// Sum up area taken by children
 	int w = 0, h = 0;

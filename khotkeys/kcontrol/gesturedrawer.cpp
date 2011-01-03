@@ -20,7 +20,7 @@ namespace KHotKeys
 GestureDrawer::GestureDrawer(TQWidget *parent, const char *name)
   : TQFrame(parent, name), _data(TQString::null)
     {
-    setBackgroundColor( colorGroup().base());
+    setBackgroundColor( tqcolorGroup().base());
     setFrameStyle(TQFrame::Panel | TQFrame::Sunken);
     setMinimumSize(30, 30);
     }
@@ -33,14 +33,14 @@ void GestureDrawer::setData(const TQString &data)
     {
     _data = data;
 
-    repaint();
+    tqrepaint();
     }
 
 void GestureDrawer::paintEvent(TQPaintEvent *ev)
     {
   // Iterate through the data points and draw a line to each of them
-    Q_UINT32 startCell = 0;
-    Q_UINT32 endCell = 0;
+    TQ_UINT32 startCell = 0;
+    TQ_UINT32 endCell = 0;
     TQPoint startPoint;
     TQPoint endPoint;
 
@@ -51,7 +51,7 @@ void GestureDrawer::paintEvent(TQPaintEvent *ev)
         startCell = TQString(_data[0]).toUInt();
         }
 
-    for (Q_UINT32 index = 1; index < _data.length(); ++index)
+    for (TQ_UINT32 index = 1; index < _data.length(); ++index)
         {
         endCell = TQString(_data[index]).toUInt();
 
@@ -77,14 +77,14 @@ void GestureDrawer::paintEvent(TQPaintEvent *ev)
     TQFrame::paintEvent(ev);
     }
 
-TQPoint GestureDrawer::lookupCellCoords(Q_UINT32 cell)
+TQPoint GestureDrawer::lookupCellCoords(TQ_UINT32 cell)
     {
   // First divide the widget into thirds, horizontally and vertically
-    Q_UINT32 w = width();
-    Q_UINT32 h = height();
+    TQ_UINT32 w = width();
+    TQ_UINT32 h = height();
 
-    Q_UINT32 wThird = w / 3;
-    Q_UINT32 hThird = h / 3;
+    TQ_UINT32 wThird = w / 3;
+    TQ_UINT32 hThird = h / 3;
 
     switch(cell)
         {

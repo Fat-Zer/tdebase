@@ -70,7 +70,7 @@ KNewButton::KNewButton( TQWidget* parent )
 
     m_movie = new TQMovie(locate("data", "kicker/pics/kmenu_basic.mng"));
     m_movie->connectUpdate(this, TQT_SLOT(updateMovie()));
-    m_movie->connectStatus(this, TQT_SLOT(slotStatus(int)));
+    m_movie->connecttqStatus(this, TQT_SLOT(slottqStatus(int)));
     m_movie->connectResize(this, TQT_SLOT(slotSetSize(const TQSize&)));
 
     TQApplication::desktop()->screen()->installEventFilter(this);
@@ -85,7 +85,7 @@ KNewButton::~KNewButton()
     delete m_movie;
 }
 
-void KNewButton::slotStatus(int status)
+void KNewButton::slottqStatus(int status)
 {
     if(status == TQMovie::EndOfLoop)
         slotStopAnimation();
@@ -99,7 +99,7 @@ TQColor KNewButton::borderColor() const
         QRgb rgb = img.pixel(orientation() == Qt::Horizontal ? img.width() - i - 1 :
                     i, 2);
 
-        if (qGreen(rgb) > 0x50)
+        if (tqGreen(rgb) > 0x50)
             return rgb;
     }
 
@@ -151,7 +151,7 @@ void KNewButton::setPopupDirection(KPanelApplet::Direction d)
     }
 
     m_movie->connectUpdate(this, TQT_SLOT(updateMovie()));
-    m_movie->connectStatus(this, TQT_SLOT(slotStatus(int)));
+    m_movie->connecttqStatus(this, TQT_SLOT(slottqStatus(int)));
     m_movie->connectResize(this, TQT_SLOT(slotSetSize(const TQSize&)));
 }
 
@@ -215,7 +215,7 @@ bool KNewButton::eventFilter(TQObject *o, TQEvent *e)
         e->type() == TQEvent::MouseButtonDblClick )
     {
         TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())))
+        if (rect().tqcontains(mapFromGlobal(me->globalPos())))
         {
             if (m_pressedDuringPopup && m_popup && m_openTimer != -1
                     && (me->button() & Qt::LeftButton) )
@@ -286,7 +286,7 @@ void KNewButton::drawEye()
         }
         m_active_pixmap = pixmap.xForm(matrix);
 
-        repaint(false);
+        tqrepaint(false);
     }
 #undef eye_x
 #undef eye_y
@@ -355,9 +355,9 @@ void KNewButton::mouseMoveEvent(TQMouseEvent* e)
 {
     KButton::mouseMoveEvent(e);
 
-    m_mouseInside = m_sloppyRegion.contains(e->pos());
+    m_mouseInside = m_sloppyRegion.tqcontains(e->pos());
 
-    if ( m_sloppyRegion.contains(e->pos())) 
+    if ( m_sloppyRegion.tqcontains(e->pos())) 
     {
         if (m_hoverTimer == -1 && KickerSettings::openOnHover())
             m_hoverTimer = startTimer(kMax(200,TQApplication::doubleClickInterval()/2));

@@ -52,14 +52,14 @@ class TQLayoutItem;
  */
 
 /**
- * A note on layouting - how does it work?
- *  - setgeometry is called by parent (passing the new geometry)
- *    - item changes its geometry
+ * A note on tqlayouting - how does it work?
+ *  - settqgeometry is called by parent (passing the new tqgeometry)
+ *    - item changes its tqgeometry
  *    - if item embeds a widget, reposition it too
  *    - call children's box manager. box->update( my geom )
  *      - sum up the whole space taken by children (via *hint calls) if
  *        needed for box width / height computation. note that the computed
- *        geometry should be equal or similar to parent's geometry.
+ *        tqgeometry should be equal or similar to parent's tqgeometry.
  *      - pad the rectangle bounding box' contents
  *      - for every child
  *        - if vertical
@@ -74,7 +74,7 @@ class TQLayoutItem;
  *            and insertion entry points are vertical lines
  *    - call to children's fix manager. fixed->update( my geom )
  *      - for every child
- *          - S = get child's geometry hint (and we'll give item the whole
+ *          - S = get child's tqgeometry hint (and we'll give item the whole
  *            space it needs, without constraints)
  *          - call to child->setGeometry( S )
  *    - TODO: send a selective redraw signal also merging children's areas
@@ -95,8 +95,8 @@ public:
 	virtual ~KdmItem();
 
 	/**
-	 * Fixup the geometry of an item and its children (even if fixed
-	 * or boxed ones). Note that this will generate repaint signals
+	 * Fixup the tqgeometry of an item and its children (even if fixed
+	 * or boxed ones). Note that this will generate tqrepaint signals
 	 * when needed. The default implementation should fit all needs.
 	 */
 	virtual void setGeometry( const TQRect &newGeometry, bool force );
@@ -109,7 +109,7 @@ public:
 	void paint( TQPainter *painter, const TQRect &boundaries );
 
 	/**
-	 * Update representation of contents and repaint.
+	 * Update representation of contents and tqrepaint.
 	 */
 	virtual void update();
 
@@ -120,22 +120,22 @@ public:
 	void mouseEvent( int x, int y, bool pressed = false, bool released = false );
 
 	/**
-	 * Similar to sizeHint(..), this returns the area of the item
+	 * Similar to tqsizeHint(..), this returns the area of the item
 	 * given the @p parentGeometry. The default implementation
-	 * takes into account geometric constraints and layoutings.
-	 * @param parentGeometry the geometry of the caller item or a
-	 * null rect if the geometry of the parent is not yet defined.
+	 * takes into account geometric constraints and tqlayoutings.
+	 * @param parentGeometry the tqgeometry of the caller item or a
+	 * null rect if the tqgeometry of the parent is not yet defined.
 	 */
 	virtual TQRect placementHint( const TQRect &parentGeometry );
 
 	/**
-	 * Create the box layout manager; next children will be
-	 * managed by the box layouter
+	 * Create the box tqlayout manager; next children will be
+	 * managed by the box tqlayouter
 	 */
 	void setBoxLayout( const TQDomNode &node = TQDomNode() );
 
 	/**
-	 * Create the fixed layout manager; next children will be
+	 * Create the fixed tqlayout manager; next children will be
 	 * in fixed position relative to this item
 	 */
 	void setFixedLayout( const TQDomNode &node = TQDomNode() );
@@ -163,7 +163,7 @@ public:
 	bool isExplicitlyHidden() const { return isShown == ExplicitlyHidden; }
 	TQRect rect() const { return area; }
 
-	TQWidget *parentWidget() const;
+	TQWidget *tqparentWidget() const;
 	TQString getId() const { return id; }
 
 signals:
@@ -172,7 +172,7 @@ signals:
 
 protected slots:
 	void widgetGone();
-	void layoutItemGone();
+	void tqlayoutItemGone();
 
 protected:
 	/**
@@ -181,7 +181,7 @@ protected:
 	 * @return (-1,-1) if no size can be determined (so it should
 	 * default to parent's size).
 	 */
-	virtual TQSize sizeHint();
+	virtual TQSize tqsizeHint();
 
 	/**
 	 * Low level graphical function to paint the item.
@@ -195,7 +195,7 @@ protected:
 
 	/**
 	 * Called when item changes its 'state' variable. This must
-	 * handle item's repaint.
+	 * handle item's tqrepaint.
 	 */
 	virtual void statusChanged();
 

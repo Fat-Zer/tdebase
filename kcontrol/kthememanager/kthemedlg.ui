@@ -5,7 +5,7 @@
     <property name="name">
         <cstring>KThemeDlg</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -30,7 +30,7 @@
         </property>
         <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
-                <cstring>layout2</cstring>
+                <cstring>tqlayout2</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -60,7 +60,7 @@
                     <property name="sizeType">
                         <enum>MinimumExpanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>170</width>
                             <height>20</height>
@@ -88,7 +88,7 @@
         </widget>
         <widget class="QLayoutWidget" row="1" column="0">
             <property name="name">
-                <cstring>layout1</cstring>
+                <cstring>tqlayout1</cstring>
             </property>
             <grid>
                 <property name="name">
@@ -109,7 +109,7 @@
                     <property name="frameShape">
                         <enum>Box</enum>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignCenter</set>
                     </property>
                 </widget>
@@ -193,7 +193,7 @@
         </widget>
         <widget class="QLayoutWidget" row="4" column="0">
             <property name="name">
-                <cstring>layout4</cstring>
+                <cstring>tqlayout4</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -211,13 +211,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -251,13 +251,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -291,13 +291,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -331,13 +331,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -371,13 +371,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -411,13 +411,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -511,7 +511,7 @@
     <slot specifier="non virtual">startFonts()</slot>
     <slot specifier="non virtual">startSaver()</slot>
 </slots>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kurllabel.h</includehint>
 </includehints>

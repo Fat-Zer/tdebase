@@ -76,7 +76,7 @@ class Client : public TQObject, public KDecorationDefines
         void applyWindowRules();
         void updateWindowRules();
 
-        TQRect geometry() const;
+        TQRect tqgeometry() const;
         TQSize size() const;
         TQSize minSize() const;
         TQSize maxSize() const;
@@ -86,7 +86,7 @@ class Client : public TQObject, public KDecorationDefines
         int y() const;
         int width() const;
         int height() const;
-        TQPoint clientPos() const; // inside of geometry()
+        TQPoint clientPos() const; // inside of tqgeometry()
         TQSize clientSize() const;
 
         bool windowEvent( XEvent* e );
@@ -132,7 +132,7 @@ class Client : public TQObject, public KDecorationDefines
 
         bool isMinimized() const;
         bool isMaximizable() const;
-        TQRect geometryRestore() const;
+        TQRect tqgeometryRestore() const;
         MaximizeMode maximizeModeRestore() const;
         MaximizeMode maximizeMode() const;
         bool isMinimizable() const;
@@ -142,7 +142,7 @@ class Client : public TQObject, public KDecorationDefines
         bool isFullScreen() const;
         bool isFullScreenable( bool fullscreen_hack = false ) const;
         bool userCanSetFullScreen() const;
-        TQRect geometryFSRestore() const { return geom_fs_restore; } // only for session saving
+        TQRect tqgeometryFSRestore() const { return geom_fs_restore; } // only for session saving
         int fullScreenMode() const { return fullscreen_mode; } // only for session saving
 
         bool isUserNoBorder() const;
@@ -162,7 +162,7 @@ class Client : public TQObject, public KDecorationDefines
         void setKeepBelow( bool );
         Layer layer() const;
         Layer belongsToLayer() const;
-        void invalidateLayer();
+        void tqinvalidateLayer();
 
         void setModal( bool modal );
         bool isModal() const;
@@ -195,7 +195,7 @@ class Client : public TQObject, public KDecorationDefines
         void demandAttention( bool set = true );
 
         void setMask( const TQRegion& r, int mode = X::Unsorted );
-        TQRegion mask() const;
+        TQRegion tqmask() const;
 
         void updateDecoration( bool check_workspace_pos, bool force = false );
         void checkBorderSizes();
@@ -213,8 +213,8 @@ class Client : public TQObject, public KDecorationDefines
         // window to be redrawn.
         friend void Workspace::updateOverlappingShadows(WId);
 
-    // shape extensions
-        bool shape() const;
+    // tqshape extensions
+        bool tqshape() const;
         void updateShape();
 
         void setGeometry( int x, int y, int w, int h, ForceGeometry_t force = NormalGeometrySet );
@@ -416,7 +416,7 @@ class Client : public TQObject, public KDecorationDefines
         void updateWorkareaDiffs();
         void checkDirection( int new_diff, int old_diff, TQRect& rect, const TQRect& area );
         static int computeWorkareaDiff( int left, int right, int a_left, int a_right );
-        void configureRequest( int value_mask, int rx, int ry, int rw, int rh, int gravity, bool from_tool );
+        void configureRequest( int value_tqmask, int rx, int ry, int rw, int rh, int gravity, bool from_tool );
         NETExtendedStrut strut() const;
         int checkShadeGeometry( int w, int h );
         void postponeGeometryUpdates( bool postpone );
@@ -500,7 +500,7 @@ class Client : public TQObject, public KDecorationDefines
         uint active :1;
         uint deleting : 1; // true when doing cleanup and destroying the client
         uint keep_above : 1; // NET::KeepAbove (was stays_on_top)
-        uint is_shape :1;
+        uint is_tqshape :1;
         uint skip_taskbar :1;
         uint original_skip_taskbar :1; // unaffected by KWin
         uint Pdeletewindow :1; // does the window understand the DeleteWindow protocol?
@@ -557,11 +557,11 @@ class Client : public TQObject, public KDecorationDefines
         Time ping_timestamp;
         Time user_time;
         unsigned long allowed_actions;
-        TQRect frame_geometry;
+        TQRect frame_tqgeometry;
         TQSize client_size;
-        int postpone_geometry_updates; // >0 - new geometry is remembered, but not actually set
-        bool pending_geometry_update;
-        bool shade_geometry_change;
+        int postpone_tqgeometry_updates; // >0 - new tqgeometry is remembered, but not actually set
+        bool pending_tqgeometry_update;
+        bool shade_tqgeometry_change;
         int border_left, border_right, border_top, border_bottom;
 
         Client* shadowAfterClient;
@@ -569,11 +569,11 @@ class Client : public TQObject, public KDecorationDefines
         TQMemArray<double> activeOpacityCache;
         TQMemArray<double> inactiveOpacityCache;
         TQMemArray<double>* opacityCache;
-        TQRegion shapeBoundingRegion;
+        TQRegion tqshapeBoundingRegion;
         TQTimer* shadowDelayTimer;
         bool shadowMe;
 
-        TQRegion _mask;
+        TQRegion _tqmask;
         static bool check_active_modal; // see Client::checkActiveModal()
         KShortcut _shortcut;
         friend struct FetchNameInternalPredicate;
@@ -616,7 +616,7 @@ class WinInfo : public NETWinInfo
         WinInfo( Client* c, Display * display, Window window,
                 Window rwin, const unsigned long pr[], int pr_size );
         virtual void changeDesktop(int desktop);
-        virtual void changeState( unsigned long state, unsigned long mask );
+        virtual void changeState( unsigned long state, unsigned long tqmask );
     private:
         Client * m_client;
     };
@@ -766,7 +766,7 @@ inline TQPixmap Client::miniIcon() const
     return miniicon_pix;
     }
 
-inline TQRect Client::geometryRestore() const
+inline TQRect Client::tqgeometryRestore() const
     {
     return geom_restore;
     }
@@ -801,9 +801,9 @@ inline bool Client::keepBelow() const
     return keep_below;
     }
 
-inline bool Client::shape() const
+inline bool Client::tqshape() const
     {
-    return is_shape;
+    return is_tqshape;
     }
 
 
@@ -832,7 +832,7 @@ inline pid_t Client::pid() const
     return info->pid();
     }
 
-inline void Client::invalidateLayer()
+inline void Client::tqinvalidateLayer()
     {
     in_layer = UnknownLayer;
     }
@@ -857,39 +857,39 @@ inline TQCString Client::windowRole() const
     return window_role;
     }
 
-inline TQRect Client::geometry() const
+inline TQRect Client::tqgeometry() const
     {
-    return frame_geometry;
+    return frame_tqgeometry;
     }
 
 inline TQSize Client::size() const
     {
-    return frame_geometry.size();
+    return frame_tqgeometry.size();
     }
 
 inline TQPoint Client::pos() const
     {
-    return frame_geometry.topLeft();
+    return frame_tqgeometry.topLeft();
     }
 
 inline int Client::x() const
     {
-    return frame_geometry.x();
+    return frame_tqgeometry.x();
     }
 
 inline int Client::y() const
     {
-    return frame_geometry.y();
+    return frame_tqgeometry.y();
     }
 
 inline int Client::width() const
     {
-    return frame_geometry.width();
+    return frame_tqgeometry.width();
     }
 
 inline int Client::height() const
     {
-    return frame_geometry.height();
+    return frame_tqgeometry.height();
     }
 
 inline TQRect Client::rect() const

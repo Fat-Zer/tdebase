@@ -103,7 +103,7 @@ int updateMemory( void )
 {
   /**
     The amount of total and used memory is read from the /proc/meminfo.
-    It also contains the information about the swap space.
+    It also tqcontains the information about the swap space.
     The 'file' looks like this:
 
     MemTotal:       516560 kB

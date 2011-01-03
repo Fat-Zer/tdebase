@@ -1,5 +1,5 @@
 //
-// C++ Interface: layoutmap
+// C++ Interface: tqlayoutmap
 //
 // Description: 
 //
@@ -26,14 +26,14 @@
 
 // LayoutInfo is used for sticky switching and per-window/application switching policy
 struct LayoutState {
-	const LayoutUnit& layoutUnit;
+	const LayoutUnit& tqlayoutUnit;
 	int group;
 	
-	LayoutState(const LayoutUnit& layoutUnit_):
-		layoutUnit(layoutUnit_),
-		group(layoutUnit_.defaultGroup)
+	LayoutState(const LayoutUnit& tqlayoutUnit_):
+		tqlayoutUnit(tqlayoutUnit_),
+		group(tqlayoutUnit_.defaultGroup)
 	{
-// 		kdDebug() << "new LayoutState " << layoutUnit.toPair() << " group: " << group << endl;
+// 		kdDebug() << "new LayoutState " << tqlayoutUnit.toPair() << " group: " << group << endl;
 	}
 };
 
@@ -48,7 +48,7 @@ public:
 	LayoutMap(const KxkbConfig& kxkbConfig);
 //	void setConfig(const KxkbConfig& kxkbConfig);
 	
-	void setCurrentLayout(const LayoutUnit& layoutUnit);
+	void setCurrentLayout(const LayoutUnit& tqlayoutUnit);
 	void setCurrentGroup(int group);
 	LayoutState& getNextLayout();
 	LayoutState& getCurrentLayout();
@@ -66,7 +66,7 @@ private:
 	WId m_currentWinId;
 	TQString m_currentWinClass; // only for SWITCH_POLICY_WIN_CLASS
 	
-	void initLayoutQueue(LayoutQueue& layoutQueue);
+	void initLayoutQueue(LayoutQueue& tqlayoutQueue);
 	LayoutQueue& getCurrentLayoutQueue(WId winId);
 	LayoutQueue& getCurrentLayoutQueueInternal(WId winId);
 	void clearMaps();

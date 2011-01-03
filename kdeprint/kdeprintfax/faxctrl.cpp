@@ -87,9 +87,9 @@ static TQString stripNumber( const TQString& s )
 
 	// removes any non-numeric character, except ('+','*','#') (hope it's supported by faxing tools)
 	TQString strip_s = s;
-	strip_s.replace( TQRegExp( "[^\\d+*#]" ), "" );
+	strip_s.tqreplace( TQRegExp( "[^\\d+*#]" ), "" );
 	if ( strip_s.find( '+' ) != -1 && conf->readBoolEntry( "ReplaceIntChar", false ) )
-		strip_s.replace( "+", conf->readEntry( "ReplaceIntCharVal" ) );
+		strip_s.tqreplace( "+", conf->readEntry( "ReplaceIntCharVal" ) );
 	return strip_s;
 }
 
@@ -172,7 +172,7 @@ static TQString processTag( const TQString& match, const TQString& value )
 			if ( match[ p+1 ] == '{' )
 			{
 				v = match.mid( p+2, match.length()-p-3 );
-				v.replace( "@@", quote( value ) );
+				v.tqreplace( "@@", quote( value ) );
 			}
 			else
 				v = ( "-" + match.mid( p+1 ) + " " + quote( value ) );
@@ -188,9 +188,9 @@ static bool isTag( const TQString& m, const TQString& t )
 	return ( m == t || m.startsWith( t+"_" ) );
 }
 
-static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFax *fax = NULL, const KdeprintFax::FaxItem& item = KdeprintFax::FaxItem() )
+static TQString tqreplaceTags( const TQString& s, const TQString& tags, KdeprintFax *fax = NULL, const KdeprintFax::FaxItem& item = KdeprintFax::FaxItem() )
 {
-	// unquote variables (they will be replaced with quoted values later)
+	// unquote variables (they will be tqreplaced with quoted values later)
 
 	TQValueStack<bool> stack;
 	KConfig	*conf = KGlobal::config();
@@ -244,7 +244,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 		else if (cmd[i]=='`')
 		{
 			// Replace all `...` with safer $(...)
-			cmd.replace (i, 1, "$(");
+			cmd.tqreplace (i, 1, "$(");
 			TQRegExp re_backticks("(`|\\\\`|\\\\\\\\|\\\\\\$)");
 			for (	int i2=re_backticks.search(cmd,i+2);
 				i2!=-1;
@@ -253,7 +253,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 			{
 				if (cmd[i2] == '`')
 				{
-					cmd.replace (i2, 1, ")");
+					cmd.tqreplace (i2, 1, ")");
 					i2=cmd.length(); // leave loop
 				}
 				else
@@ -291,7 +291,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 				if (v.isEmpty())
 					v = getenv("FAXSERVER");
 				if (v.isEmpty())
-					v = TQString::fromLatin1("localhost");
+					v = TQString::tqfromLatin1("localhost");
 				v = processTag( match, v );
 			}
 			else if (isTag( match, "%page" ))
@@ -343,7 +343,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 			else if (issinglequote)
 				v="'"+v+"'";
 
-			cmd.replace (i, match.length(), v);
+			cmd.tqreplace (i, match.length(), v);
 			i+=v.length();
 		}
 	}
@@ -375,8 +375,8 @@ bool FaxCtrl::send(KdeprintFax *f)
 	if (m_command.isEmpty())
 		return false;
 
-	// replace tags common to all fax "operations"
-	m_command = replaceTags( m_command, tagList( 11, "%dev", "%server", "%page", "%res", "%user", "%from", "%email", "%comment", "%time", "%subject", "%cover" ), f );
+	// tqreplace tags common to all fax "operations"
+	m_command = tqreplaceTags( m_command, tagList( 11, "%dev", "%server", "%page", "%res", "%user", "%from", "%email", "%comment", "%time", "%subject", "%cover" ), f );
 
 	m_log = TQString::null;
 	m_filteredfiles.clear();
@@ -447,11 +447,11 @@ void FaxCtrl::sendFax()
 {
 	if ( m_command.find( "%files" ) != -1 )
 	{
-		// replace %files tag
+		// tqreplace %files tag
 		QString	filestr;
 		for (TQStringList::ConstIterator it=m_filteredfiles.begin(); it!=m_filteredfiles.end(); ++it)
 			filestr += (quote(*it)+" ");
-		m_command.replace("%files", filestr);
+		m_command.tqreplace("%files", filestr);
 	}
 
 	if ( !m_faxlist.isEmpty() )
@@ -461,7 +461,7 @@ void FaxCtrl::sendFax()
 
 		addLogTitle( i18n( "Sending fax to %1 (%2)" ).arg( item.number ).arg( item.name ) );
 
-		TQString cmd = replaceTags( m_command, tagList( 4, "%number", "%name", "%enterprise", "%rawnumber" ), NULL, item );
+		TQString cmd = tqreplaceTags( m_command, tagList( 4, "%number", "%name", "%enterprise", "%rawnumber" ), NULL, item );
 		m_process->clearArguments();
 		*m_process << cmd;
 		addLog(i18n("Sending to fax using: %1").arg(cmd));
@@ -491,7 +491,7 @@ void FaxCtrl::filter()
 			m_tempfiles.append(tmp);
 			m_process->clearArguments();
 			*m_process << locate("data","kdeprintfax/anytops") << "-m" << KProcess::quote(locate("data","kdeprintfax/faxfilters"))
-				<< TQString::fromLatin1("--mime=%1").arg(mimeType)
+				<< TQString::tqfromLatin1("--mime=%1").arg(mimeType)
 				<< "-p" << pageSize()
 				<<  KProcess::quote(m_files[0]) << KProcess::quote(tmp);
 			if (!m_process->start(KProcess::NotifyOnExit, KProcess::AllOutput))
@@ -553,7 +553,7 @@ void FaxCtrl::viewLog(TQWidget *)
 	}
 	else
 	{
-		KWin::activateWindow(m_logview->parentWidget()->winId());
+		KWin::activateWindow(m_logview->tqparentWidget()->winId());
 	}
 }
 
@@ -605,7 +605,7 @@ void FaxCtrl::slotCloseLog()
 		QTextEdit	*view = m_logview;
 		m_logview = 0;
 		if (obj && obj->inherits("QPushButton"))
-			delete view->parentWidget();
+			delete view->tqparentWidget();
 kdDebug() << "slotClose()" << endl;
 	}
 }
@@ -617,7 +617,7 @@ void FaxCtrl::slotPrintLog()
 		KPrinter printer;
 		printer.setDocName( i18n( "Fax log" ) );
 		printer.setDocFileName( "faxlog" );
-		if ( printer.setup( m_logview->topLevelWidget(), i18n( "Fax Log" ) ) )
+		if ( printer.setup( m_logview->tqtopLevelWidget(), i18n( "Fax Log" ) ) )
 		{
 			TQPainter painter( &printer );
 			TQPaintDeviceMetrics metric( &printer );
@@ -625,7 +625,7 @@ void FaxCtrl::slotPrintLog()
 			//TQString txt = m_logview->text();
 			TQString txt = m_log;
 
-			txt.replace( '\n', "<br>" );
+			txt.tqreplace( '\n', "<br>" );
 			txt.prepend( "<h2>" + i18n( "KDEPrint Fax Tool Log" ) + "</h2>" );
 
 			kdDebug() << "Log: " << txt << endl;
@@ -634,7 +634,7 @@ void FaxCtrl::slotPrintLog()
 			richText.setWidth( &painter, body.width() );
 			do
 			{
-				richText.draw( &painter, body.left(), body.top(), view, m_logview->colorGroup() );
+				richText.draw( &painter, body.left(), body.top(), view, m_logview->tqcolorGroup() );
 				view.moveBy( 0, body.height() );
 				painter.translate( 0, -body.height() );
 				if ( view.top() >= richText.height() )

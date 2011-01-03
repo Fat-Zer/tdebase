@@ -227,7 +227,7 @@ SORT_MEMBER_DOCS       = YES
 DISTRIBUTE_GROUP_DOC   = NO
 
 # The TAB_SIZE tag can be used to set the number of spaces in a tab. 
-# Doxygen uses this value to replace tabs by spaces in code fragments.
+# Doxygen uses this value to tqreplace tabs by spaces in code fragments.
 
 TAB_SIZE               = 8
 
@@ -329,7 +329,7 @@ WARN_IF_DOC_ERROR      = YES
 
 # The WARN_FORMAT tag determines the format of the warning messages that 
 # doxygen can produce. The string should contain the $file, $line, and $text 
-# tags, which will be replaced by the file and line number from which the 
+# tags, which will be tqreplaced by the file and line number from which the 
 # warning originated and the warning text.
 
 WARN_FORMAT            = "$file:$line: $text"
@@ -351,7 +351,7 @@ WARN_LOGFILE           =
 
 INPUT                  = . ../../taskmanager
 
-# If the value of the INPUT tag contains directories, you can use the 
+# If the value of the INPUT tag tqcontains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
 # and *.h) to filter out the source-files in the directories. If left 
 # blank the following patterns are tested: 
@@ -370,14 +370,14 @@ RECURSIVE              = NO
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = *moc*
+EXCLUDE                = *tqmoc*
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or directories 
 # that are symbolic links (a Unix filesystem feature) are excluded from the input.
 
 EXCLUDE_SYMLINKS       = NO
 
-# If the value of the INPUT tag contains directories, you can use the 
+# If the value of the INPUT tag tqcontains directories, you can use the 
 # EXCLUDE_PATTERNS tag to specify one or more wildcard patterns to exclude 
 # certain files from those directories.
 
@@ -389,7 +389,7 @@ EXCLUDE_PATTERNS       =
 
 EXAMPLE_PATH           = 
 
-# If the value of the EXAMPLE_PATH tag contains directories, you can use the 
+# If the value of the EXAMPLE_PATH tag tqcontains directories, you can use the 
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
 # and *.h) to filter out the source-files in the directories. If left 
 # blank all files are included.
@@ -468,7 +468,7 @@ VERBATIM_HEADERS       = YES
 
 # If the ALPHABETICAL_INDEX tag is set to YES, an alphabetical index 
 # of all compounds will be generated. Enable this if the project 
-# contains a lot of classes, structs, unions or interfaces.
+# tqcontains a lot of classes, structs, unions or interfaces.
 
 ALPHABETICAL_INDEX     = NO
 
@@ -704,7 +704,7 @@ RTF_HYPERLINKS         = NO
 
 # Load stylesheet definitions from file. Syntax is similar to doxygen's 
 # config file, i.e. a series of assigments. You only have to provide 
-# replacements, missing definitions are set to their default value.
+# tqreplacements, missing definitions are set to their default value.
 
 RTF_STYLESHEET_FILE    = 
 

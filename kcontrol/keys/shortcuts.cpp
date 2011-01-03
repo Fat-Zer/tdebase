@@ -145,7 +145,7 @@ void ShortcutsModule::initGUI()
 
 	m_pcbSchemes = new KComboBox( this );
 	m_pcbSchemes->setMinimumWidth( 100 );
-	m_pcbSchemes->setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Fixed );
+	m_pcbSchemes->tqsetSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Fixed );
 	connect( m_pcbSchemes, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSelectScheme(int)) );
 	pHLayout->addWidget( m_pcbSchemes );
 
@@ -190,10 +190,10 @@ void ShortcutsModule::initGUI()
 	m_pListGeneral = new KAccelShortcutList( m_actionsGeneral, true );
 
 	m_pkcGeneral = new KKeyChooser( m_pListGeneral, this, KKeyChooser::Global, false );
-	m_pkcGeneral->resize (m_pkcGeneral->sizeHint() );
+	m_pkcGeneral->resize (m_pkcGeneral->tqsizeHint() );
 	if (system("xmodmap 1> /dev/null 2> /dev/null") == 0) {
 		m_useRmWinKeys = new TQCheckBox( i18n("Use Win key as modifier (uncheck to bind Win key to Menu)"), this );
-		m_useRmWinKeys->resize( m_useRmWinKeys->sizeHint() );
+		m_useRmWinKeys->resize( m_useRmWinKeys->tqsizeHint() );
 		m_useRmWinKeys->setChecked( m_bUseRmWinKeys );
 		pVLayout->addWidget( m_useRmWinKeys, 1, 0 );
 		connect( m_useRmWinKeys, TQT_SIGNAL(clicked()), TQT_SLOT(slotUseRmWinKeysClicked()) );
@@ -234,7 +234,7 @@ void ShortcutsModule::createActionsGeneral()
 
 		//kdDebug(125) << "sConfigKey: " << sConfigKey
 		//	<< " bIsNum: " << bIsNum << endl;
-		if( bIsNum && !sConfigKey.contains( ':' ) ) {
+		if( bIsNum && !sConfigKey.tqcontains( ':' ) ) {
 			actions[i].setConfigurable( false );
 			actions[i].setName( TQString::null );
 		}
@@ -255,7 +255,7 @@ void ShortcutsModule::createActionsSequence()
 
 		//kdDebug(125) << "sConfigKey: " << sConfigKey
 		//	<< " bIsNum: " << bIsNum << endl;
-		if( !bIsNum && !sConfigKey.contains( ':' ) ) {
+		if( !bIsNum && !sConfigKey.tqcontains( ':' ) ) {
 			actions[i].setConfigurable( false );
 			actions[i].setName( TQString::null );
 		}
@@ -327,14 +327,14 @@ void ShortcutsModule::slotSelectScheme( int )
 		config.setGroup( "Settings" );
 		//m_sBaseSchemeFile = config.readEntry( "Name" );
 
-		// If the user's keyboard layout doesn't support the Win key,
-		//  but this layout scheme requires it,
+		// If the user's keyboard tqlayout doesn't support the Win key,
+		//  but this tqlayout scheme requires it,
 		if( !KKeyNative::keyboardHasWinKey()
 		    && config.readBoolEntry( "Uses Win Modifier", false ) ) {
 			// TODO: change "Win" to Win's label.
 			int ret = KMessageBox::warningContinueCancel( this,
 				i18n("This scheme requires the \"%1\" modifier key, which is not "
-				"available on your keyboard layout. Do you wish to view it anyway?" )
+				"available on your keyboard tqlayout. Do you wish to view it anyway?" )
 				.arg(i18n("Win")) );
 			if( ret == KMessageBox::Cancel )
 				return;
@@ -384,7 +384,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 				// Make the next letter upper case
 				TQString s = sFile.mid( ind, 1 );
 				s = s.upper();
-				sFile.replace( ind, 1, s );
+				sFile.tqreplace( ind, 1, s );
 			}
 
 			iScheme = -1;

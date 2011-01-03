@@ -65,7 +65,7 @@ AppletContainer::AppletContainer(const AppletInfo& info,
                   TQString(info.library() + "container").latin1()),
     _info(info),
     _handle(0),
-    _layout(0),
+    _tqlayout(0),
     _type(KPanelApplet::Normal),
     _widthForHeightHint(0),
     _heightForWidthHint(0),
@@ -81,24 +81,24 @@ AppletContainer::AppletContainer(const AppletInfo& info,
 
     if (orientation() == Horizontal)
     {
-        _layout = new TQBoxLayout(this, TQBoxLayout::LeftToRight, 0, 0);
+        _tqlayout = new TQBoxLayout(this, TQBoxLayout::LeftToRight, 0, 0);
     }
     else
     {
-        _layout = new TQBoxLayout(this, TQBoxLayout::TopToBottom, 0, 0);
+        _tqlayout = new TQBoxLayout(this, TQBoxLayout::TopToBottom, 0, 0);
     }
 
-    _layout->setResizeMode( TQLayout::FreeResize );
+    _tqlayout->setResizeMode( TQLayout::FreeResize );
 
-    _layout->addSpacing(APPLET_MARGIN);
+    _tqlayout->addSpacing(APPLET_MARGIN);
     _handle = new AppletHandle(this);
-    _layout->addWidget(_handle, 0);
+    _tqlayout->addWidget(_handle, 0);
     connect(_handle, TQT_SIGNAL(moveApplet(const TQPoint&)),
             this, TQT_SLOT(moveApplet(const TQPoint&)));
     connect(_handle, TQT_SIGNAL(showAppletMenu()), this, TQT_SLOT(showAppletMenu()));
 
-    _layout->addWidget(_appletframe, 1);
-    _layout->activate();
+    _tqlayout->addWidget(_appletframe, 1);
+    _tqlayout->activate();
 
     _deskFile = info.desktopFile();
     _configFile = info.configFile();
@@ -117,7 +117,7 @@ AppletContainer::AppletContainer(const AppletInfo& info,
     _valid = true;
 
     _applet->setPosition((KPanelApplet::Position)KickerLib::directionToPosition(popupDirection()));
-    _applet->setAlignment((KPanelApplet::Alignment)alignment());
+    _applet->tqsetAlignment((KPanelApplet::Alignment)tqalignment());
 
     _actions = _applet->actions();
     _type = _applet->type();
@@ -193,14 +193,14 @@ void AppletContainer::resetLayout()
 
     if (orientation() == Horizontal)
     {
-        _layout->setDirection( TQBoxLayout::LeftToRight );
+        _tqlayout->setDirection( TQBoxLayout::LeftToRight );
     }
     else
     {
-        _layout->setDirection( TQBoxLayout::TopToBottom );
+        _tqlayout->setDirection( TQBoxLayout::TopToBottom );
     }
 
-    _layout->activate();
+    _tqlayout->activate();
 }
 
 void AppletContainer::moveApplet( const TQPoint& moveOffset )
@@ -275,14 +275,14 @@ void AppletContainer::slotRemoved(KConfig* config)
 
 void AppletContainer::activateWindow()
 {
-    KWin::forceActiveWindow(topLevelWidget()->winId());
+    KWin::forceActiveWindow(tqtopLevelWidget()->winId());
 }
 
 void AppletContainer::focusRequested(bool focus)
 {
     if (focus)
     {
-        KWin::forceActiveWindow(topLevelWidget()->winId());
+        KWin::forceActiveWindow(tqtopLevelWidget()->winId());
     }
 
     emit maintainFocus(focus);
@@ -295,7 +295,7 @@ void AppletContainer::doLoadConfiguration( KConfigGroup& config )
 }
 
 void AppletContainer::doSaveConfiguration( KConfigGroup& config,
-                                           bool layoutOnly ) const
+                                           bool tqlayoutOnly ) const
 {
     // immutability is checked by ContainerBase
     if (orientation() == Horizontal)
@@ -307,7 +307,7 @@ void AppletContainer::doSaveConfiguration( KConfigGroup& config,
         config.writeEntry( "HeightForWidthHint", heightForWidth(width()) );
     }
 
-    if (!layoutOnly)
+    if (!tqlayoutOnly)
     {
         config.writePathEntry( "ConfigFile", _configFile );
         config.writePathEntry( "DesktopFile", _deskFile );
@@ -354,14 +354,14 @@ void AppletContainer::slotDelayedDestruct()
     delete this;
 }
 
-void AppletContainer::alignmentChange(KPanelExtension::Alignment a)
+void AppletContainer::tqalignmentChange(KPanelExtension::Alignment a)
 {
     if (!_applet)
     {
         return;
     }
 
-    _applet->setAlignment( (KPanelApplet::Alignment)a );
+    _applet->tqsetAlignment( (KPanelApplet::Alignment)a );
 }
 
 int AppletContainer::widthForHeight(int h) const

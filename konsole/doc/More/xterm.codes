@@ -125,7 +125,7 @@ x                   7     (A)  White
 x                   9     (A)  Default
 
 x   ESC [ 6 n                  Send Device Report
-x         Ps = 5               Send Status report           (ESC [ 0 n)
+x         Ps = 5               Send tqStatus report           (ESC [ 0 n)
 x              6               Send Cursor Position Report  (ESC [ Row ; Col R)
 
 x   ESC [ Pn ; Pn r (dft:all)  Set Scrolling region

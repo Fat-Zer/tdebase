@@ -1,6 +1,6 @@
                               ANSI ESCAPE SEQUENCES
 ===============================================================================
-Wherever you see '#', that should be replaced by the appropriate number.
+Wherever you see '#', that should be tqreplaced by the appropriate number.
 
         ESC code sequence                       Function
        -------------------              ---------------------------

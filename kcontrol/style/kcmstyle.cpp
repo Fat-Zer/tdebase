@@ -157,11 +157,11 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	// -----------------
 	gbWidgetStyle = new TQGroupBox( i18n("Widget Style"), page1, "gbWidgetStyle" );
 	gbWidgetStyle->setColumnLayout( 0, Qt::Vertical );
-	gbWidgetStyle->layout()->setMargin( KDialog::marginHint() );
-	gbWidgetStyle->layout()->setSpacing( KDialog::spacingHint() );
+	gbWidgetStyle->tqlayout()->setMargin( KDialog::marginHint() );
+	gbWidgetStyle->tqlayout()->setSpacing( KDialog::spacingHint() );
 
-	gbWidgetStyleLayout = new TQVBoxLayout( gbWidgetStyle->layout() );
-	gbWidgetStyleLayout->setAlignment( Qt::AlignTop );
+	gbWidgetStyleLayout = new TQVBoxLayout( gbWidgetStyle->tqlayout() );
+	gbWidgetStyleLayout->tqsetAlignment( Qt::AlignTop );
 	hbLayout = new TQHBoxLayout( KDialog::spacingHint(), "hbLayout" );
 
 	cbStyle = new KComboBox( gbWidgetStyle, "cbStyle" );
@@ -169,7 +169,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	hbLayout->addWidget( cbStyle );
 
 	pbConfigStyle = new TQPushButton( i18n("Con&figure..."), gbWidgetStyle );
-	pbConfigStyle->setSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Minimum );
+	pbConfigStyle->tqsetSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Minimum );
 	pbConfigStyle->setEnabled( FALSE );
 	hbLayout->addWidget( pbConfigStyle );
 
@@ -189,11 +189,11 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 
     TQGroupBox *gbPreview = new TQGroupBox( i18n( "Preview" ), page1 );
 	gbPreview->setColumnLayout( 0, Vertical );
-	gbPreview->layout()->setMargin( 0 );
-	gbPreview->layout()->setSpacing( KDialog::spacingHint() );
+	gbPreview->tqlayout()->setMargin( 0 );
+	gbPreview->tqlayout()->setSpacing( KDialog::spacingHint() );
 	gbPreview->setFlat( true );
 	stylePreview = new StylePreview( gbPreview );
-	gbPreview->layout()->add( stylePreview );
+	gbPreview->tqlayout()->add( stylePreview );
 
 	page1Layout->addWidget( gbWidgetStyle );
 	page1Layout->addWidget( gbPreview );
@@ -294,16 +294,16 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	box1->setSpacing( KDialog::spacingHint() );
 	box1->setMargin( 0 );
 	TQLabel* lbl = new TQLabel( i18n("0%"), box1 );
-	lbl->setAlignment( AlignLeft );
+	lbl->tqsetAlignment( AlignLeft );
 	lbl = new TQLabel( i18n("50%"), box1 );
-	lbl->setAlignment( AlignHCenter );
+	lbl->tqsetAlignment( AlignHCenter );
 	lbl = new TQLabel( i18n("100%"), box1 );
-	lbl->setAlignment( AlignRight );
+	lbl->tqsetAlignment( AlignRight );
 
 	lblMenuEffectType = new TQLabel( comboMenuEffectType, i18n("Menu trans&lucency type:"), menuContainer );
-	lblMenuEffectType->setAlignment( AlignBottom | AlignLeft );
+	lblMenuEffectType->tqsetAlignment( AlignBottom | AlignLeft );
 	lblMenuOpacity    = new TQLabel( slOpacity, i18n("Menu &opacity:"), menuContainer );
-	lblMenuOpacity->setAlignment( AlignBottom | AlignLeft );
+	lblMenuOpacity->tqsetAlignment( AlignBottom | AlignLeft );
 
 	menuContainerLayout->addWidget( lblMenuEffectType, 0, 0 );
 	menuContainerLayout->addWidget( comboMenuEffectType, 1, 0 );
@@ -795,9 +795,9 @@ void KCMStyle::loadStyle( KConfig& config )
 		item = i;
 		if ( id == cfgStyle )	// ExactMatch
 			break;
-		else if ( id.contains( cfgStyle ) )
+		else if ( id.tqcontains( cfgStyle ) )
 			break;
-		else if ( id.contains( TQApplication::style().className() ) )
+		else if ( id.tqcontains( TQApplication::style().className() ) )
 			break;
 		item = 0;
 	}
@@ -837,7 +837,7 @@ void KCMStyle::switchStyle(const TQString& styleName, bool force)
 	setStyleRecursive( stylePreview, style );
 
 	// this flickers, but reliably draws the widgets correctly.
-	stylePreview->resize( stylePreview->sizeHint() );
+	stylePreview->resize( stylePreview->tqsizeHint() );
 
 	delete appliedStyle;
 	appliedStyle = style;

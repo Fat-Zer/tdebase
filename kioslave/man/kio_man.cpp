@@ -238,14 +238,14 @@ TQStringList MANProtocol::manDirectories()
                     && S_ISDIR( sbuf.st_mode ) )
                 {
                     const TQString p = TQDir(dir).canonicalPath();
-                    if (!man_dirs.contains(p)) man_dirs += p;	
+                    if (!man_dirs.tqcontains(p)) man_dirs += p;	
                 }
             }
         }
 
         // Untranslated pages in "<mandir>"
         const TQString p = TQDir(*it_dir).canonicalPath();
-        if (!man_dirs.contains(p)) man_dirs += p;
+        if (!man_dirs.tqcontains(p)) man_dirs += p;
     }
     return man_dirs;
 }
@@ -331,7 +331,7 @@ TQStringList MANProtocol::findPages(const TQString &_section,
 		if (sect.lower()==it_real) it_real = sect;
 
                 // Only add sect if not already contained, avoid duplicates
-                if (!sect_list.contains(sect) && _section.isEmpty())  {
+                if (!sect_list.tqcontains(sect) && _section.isEmpty())  {
                     kdDebug() << "another section " << sect << endl;
                     sect_list += sect;
                 }
@@ -425,11 +425,11 @@ static TQString text2html(const TQString& txt)
 {
     TQString reply = txt;
 
-    reply = reply.replace('&', "&amp;");
-    reply = reply.replace('<', "&lt;");
-    reply = reply.replace('>', "&gt;");
-    reply = reply.replace('"', "&dquot;");
-    reply = reply.replace('\'', "&quot;");
+    reply = reply.tqreplace('&', "&amp;");
+    reply = reply.tqreplace('<', "&lt;");
+    reply = reply.tqreplace('>', "&gt;");
+    reply = reply.tqreplace('"', "&dquot;");
+    reply = reply.tqreplace('\'', "&quot;");
     return reply;
 }
 
@@ -534,7 +534,7 @@ char *MANProtocol::readManPage(const char *_filename)
      * If the path name constains the string sman, assume that it's SGML and
      * convert it to roff format (used on Solaris). */
     //TQString file_mimetype = KMimeType::findByPath(TQString(filename), 0, false)->name();
-    if (filename.contains("sman", false)) //file_mimetype == "text/html" || )
+    if (filename.tqcontains("sman", false)) //file_mimetype == "text/html" || )
     {
         myStdStream =TQString::null;
 	KProcess proc;
@@ -971,7 +971,7 @@ void MANProtocol::constructPath(TQStringList& constr_path, TQStringList constr_c
             {
             // What is the default mapping?
                 catmandir = mandir;
-                catmandir.replace("/usr/share/","/var/cache/");
+                catmandir.tqreplace("/usr/share/","/var/cache/");
                 if ( constr_catmanpath.findIndex( catmandir ) == -1 )
                     constr_catmanpath += catmandir;
             }
@@ -1001,7 +1001,7 @@ void MANProtocol::checkManPaths()
     if ( manpath_env.isEmpty()
         || manpath_env[0] == ':'
         || manpath_env[manpath_env.length()-1] == ':'
-        || manpath_env.contains( "::" ) )
+        || manpath_env.tqcontains( "::" ) )
     {
         construct_path = true; // need to read config file
     }
@@ -1027,7 +1027,7 @@ void MANProtocol::checkManPaths()
     //
     // The merging syntax with ":" and "::" in $MANPATH will be
     // satisfied if any empty string in path_list_env (there
-    // should be 1 or 0) is replaced by the constructed path.
+    // should be 1 or 0) is tqreplaced by the constructed path.
 
     const TQStringList path_list_env = TQStringList::split( ':', manpath_env , true );
 
@@ -1253,7 +1253,7 @@ void MANProtocol::showIndex(const TQString& section)
     {
 	os << "<tr><td><a href=\"man:" << it.data() << "\">\n"
 	   << it.key() << "</a></td><td>&nbsp;</td><td> "
-	   << (indexmap.contains(it.key()) ? indexmap[it.key()] : "" )
+	   << (indexmap.tqcontains(it.key()) ? indexmap[it.key()] : "" )
 	   << "</td></tr>"  << endl;
     }
 
@@ -1384,12 +1384,12 @@ void MANProtocol::showIndex(const TQString& section)
     {
 	struct man_index_t *manindex = indexlist[i];
 
-	// qstrncmp():
+	// tqstrncmp():
 	// "last_man" has already a \0 string ending, but
 	// "manindex->manpage_begin" has not,
 	// so do compare at most "manindex->manpage_len" of the strings.
 	if (last_index->manpage_len == manindex->manpage_len &&
-	    !qstrncmp(last_index->manpage_begin,
+	    !tqstrncmp(last_index->manpage_begin,
 		      manindex->manpage_begin,
 		      manindex->manpage_len)
 	    )
@@ -1415,7 +1415,7 @@ void MANProtocol::showIndex(const TQString& section)
 	((char *)manindex->manpage_begin)[manindex->manpage_len] = '\0';
 	os << manindex->manpage_begin
 	   << "</a></td><td>&nbsp;</td><td> "
-	   << (indexmap.contains(manindex->manpage_begin) ? indexmap[manindex->manpage_begin] : "" )
+	   << (indexmap.tqcontains(manindex->manpage_begin) ? indexmap[manindex->manpage_begin] : "" )
 	   << "</td></tr>"  << endl;
 	last_index = manindex;
     }
@@ -1438,12 +1438,12 @@ void MANProtocol::showIndex(const TQString& section)
     {
 	struct man_index_t *manindex = mit.current();
 
-	// qstrncmp():
+	// tqstrncmp():
 	// "last_man" has already a \0 string ending, but
 	// "manindex->manpage_begin" has not,
 	// so do compare at most "manindex->manpage_len" of the strings.
 	if (last_index->manpage_len == manindex->manpage_len &&
-	    !qstrncmp(last_index->manpage_begin,
+	    !tqstrncmp(last_index->manpage_begin,
 		      manindex->manpage_begin,
 		      manindex->manpage_len)
 	    )
@@ -1457,7 +1457,7 @@ void MANProtocol::showIndex(const TQString& section)
 	manindex->manpage_begin[manindex->manpage_len] = '\0';
 	os << manindex->manpage_begin
 	   << "</a></td><td>&nbsp;</td><td> "
-	   << (indexmap.contains(manindex->manpage_begin) ? indexmap[manindex->manpage_begin] : "" )
+	   << (indexmap.tqcontains(manindex->manpage_begin) ? indexmap[manindex->manpage_begin] : "" )
 	   << "</td></tr>"  << endl;
 	last_index = manindex;
     }

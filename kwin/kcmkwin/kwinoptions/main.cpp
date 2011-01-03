@@ -88,37 +88,37 @@ KWinOptions::KWinOptions(TQWidget *parent, const char *name)
 {
   mConfig = new KConfig("kwinrc", false, true);
 
-  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
-  layout->addWidget(tab);
+  tqlayout->addWidget(tab);
 
   mFocus = new KFocusConfig(false, mConfig, this, "KWin Focus Config");
-  mFocus->layout()->setMargin( KDialog::marginHint() );
+  mFocus->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mFocus, i18n("&Focus"));
   connect(mFocus, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "KWin TitleBar Actions");
-  mTitleBarActions->layout()->setMargin( KDialog::marginHint() );
+  mTitleBarActions->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTitleBarActions, i18n("&Titlebar Actions"));
   connect(mTitleBarActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mWindowActions = new KWindowActionsConfig(false, mConfig, this, "KWin Window Actions");
-  mWindowActions->layout()->setMargin( KDialog::marginHint() );
+  mWindowActions->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mWindowActions, i18n("Window Actio&ns"));
   connect(mWindowActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mMoving = new KMovingConfig(false, mConfig, this, "KWin Moving");
-  mMoving->layout()->setMargin( KDialog::marginHint() );
+  mMoving->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mMoving, i18n("&Moving"));
   connect(mMoving, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mAdvanced = new KAdvancedConfig(false, mConfig, this, "KWin Advanced");
-  mAdvanced->layout()->setMargin( KDialog::marginHint() );
+  mAdvanced->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mAdvanced, i18n("Ad&vanced"));
   connect(mAdvanced, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mTranslucency = new KTranslucencyConfig(false, mConfig, this, "KWin Translucency");
-  mTranslucency->layout()->setMargin( KDialog::marginHint() );
+  mTranslucency->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTranslucency, i18n("&Translucency"));
   connect(mTranslucency, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
     
@@ -206,17 +206,17 @@ KActionsOptions::KActionsOptions(TQWidget *parent, const char *name)
 {
   mConfig = new KConfig("kwinrc", false, true);
 
-  TQVBoxLayout *layout = new TQVBoxLayout(this);
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
-  layout->addWidget(tab);
+  tqlayout->addWidget(tab);
 
   mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "KWin TitleBar Actions");
-  mTitleBarActions->layout()->setMargin( KDialog::marginHint() );
+  mTitleBarActions->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTitleBarActions, i18n("&Titlebar Actions"));
   connect(mTitleBarActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
   mWindowActions = new KWindowActionsConfig(false, mConfig, this, "KWin Window Actions");
-  mWindowActions->layout()->setMargin( KDialog::marginHint() );
+  mWindowActions->tqlayout()->setMargin( KDialog::marginHint() );
   tab->addTab(mWindowActions, i18n("Window Actio&ns"));
   connect(mWindowActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 }

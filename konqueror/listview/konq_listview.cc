@@ -63,12 +63,12 @@ KonqListViewFactory::~KonqListViewFactory()
   s_defaultViewProps = 0;
 }
 
-KParts::Part* KonqListViewFactory::createPartObject( TQWidget *parentWidget, const char *, TQObject *parent, const char *name, const char*, const TQStringList &args )
+KParts::Part* KonqListViewFactory::createPartObject( TQWidget *tqparentWidget, const char *, TQObject *parent, const char *name, const char*, const TQStringList &args )
 {
   if( args.count() < 1 )
     kdWarning() << "KonqListView: Missing Parameter" << endl;
 
-  KParts::Part *obj = new KonqListView( parentWidget, parent, name, args.first() );
+  KParts::Part *obj = new KonqListView( tqparentWidget, parent, name, args.first() );
   return obj;
 }
 
@@ -216,7 +216,7 @@ void ListViewBrowserExtension::editMimeType()
   KonqOperations::editMimeType( items.first()->mimetype() );
 }
 
-KonqListView::KonqListView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode )
+KonqListView::KonqListView( TQWidget *tqparentWidget, TQObject *parent, const char *name, const TQString& mode )
  : KonqDirPart( parent, name )
 ,m_headerTimer(0)
 {
@@ -234,25 +234,25 @@ KonqListView::KonqListView( TQWidget *parentWidget, TQObject *parent, const char
    {
       kdDebug(1202) << "Creating KonqTextViewWidget" << endl;
       xmlFile = "konq_textview.rc";
-      m_pListView=new KonqTextViewWidget(this, parentWidget);
+      m_pListView=new KonqTextViewWidget(this, tqparentWidget);
    }
    else if (mode=="MixedTree")
    {
       kdDebug(1202) << "Creating KonqTreeViewWidget" << endl;
       xmlFile = "konq_treeview.rc";
-      m_pListView=new KonqTreeViewWidget(this,parentWidget);
+      m_pListView=new KonqTreeViewWidget(this,tqparentWidget);
    }
    else if (mode=="InfoListView")
    {
       kdDebug(1202) << "Creating KonqInfoListViewWidget" << endl;
       xmlFile = "konq_infolistview.rc";
-      m_pListView=new KonqInfoListViewWidget(this,parentWidget);
+      m_pListView=new KonqInfoListViewWidget(this,tqparentWidget);
    }
    else
    {
       kdDebug(1202) << "Creating KonqDetailedListViewWidget" << endl;
       xmlFile = "konq_detailedlistview.rc";
-      m_pListView = new KonqBaseListViewWidget( this, parentWidget);
+      m_pListView = new KonqBaseListViewWidget( this, tqparentWidget);
    }
    setWidget( m_pListView );
    setDirLister( m_pListView->m_dirLister );

@@ -127,7 +127,7 @@ Kate::Application *KateApp::application ()
 
 /**
  * Has always been the Kate Versioning Scheme:
- * KDE X.Y.Z contains Kate X-1.Y.Z
+ * KDE X.Y.Z tqcontains Kate X-1.Y.Z
  */
 TQString KateApp::kateVersion (bool fullVersion)
 {
@@ -396,4 +396,4 @@ KateMainWindow *KateApp::mainWindow (uint n)
   return 0;
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

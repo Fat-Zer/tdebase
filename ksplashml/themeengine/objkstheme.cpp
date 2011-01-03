@@ -41,7 +41,7 @@ ObjKsTheme::ObjKsTheme( const TQString& theme )
   if (desktop->isVirtualDesktop() && mXineramaScreen != -2)
   {
     TQRect rect = desktop->screenGeometry( mXineramaScreen );
-    if (!rect.contains(TQCursor::pos()))
+    if (!rect.tqcontains(TQCursor::pos()))
       TQCursor::setPos(rect.center());
   }
 

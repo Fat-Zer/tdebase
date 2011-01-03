@@ -95,7 +95,7 @@ Sound SoundRecorderArts::sound()
 	Sound s;
 	uint BytePS=BITS/8;
 	uint length=m_data.size()/BytePS;
-	TQMemArray<Q_INT32> da(length);
+	TQMemArray<TQ_INT32> da(length);
 	s.max=0;
 	s._fs=FS;
 	for(uint f=0;f<length; f++)

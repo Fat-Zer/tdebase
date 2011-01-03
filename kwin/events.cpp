@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 /*
 
- This file contains things relevant to handling incoming events.
+ This file tqcontains things relevant to handling incoming events.
 
 */
 
@@ -51,37 +51,37 @@ void WinInfo::changeDesktop(int desktop)
     m_client->workspace()->sendClientToDesktop( m_client, desktop, true );
     }
 
-void WinInfo::changeState( unsigned long state, unsigned long mask )
+void WinInfo::changeState( unsigned long state, unsigned long tqmask )
     {
-    mask &= ~NET::Sticky; // KWin doesn't support large desktops, ignore
-    mask &= ~NET::Hidden; // clients are not allowed to change this directly
-    state &= mask; // for safety, clear all other bits
+    tqmask &= ~NET::Sticky; // KWin doesn't support large desktops, ignore
+    tqmask &= ~NET::Hidden; // clients are not allowed to change this directly
+    state &= tqmask; // for safety, clear all other bits
 
-    if(( mask & NET::FullScreen ) != 0 && ( state & NET::FullScreen ) == 0 )
+    if(( tqmask & NET::FullScreen ) != 0 && ( state & NET::FullScreen ) == 0 )
         m_client->setFullScreen( false, false );
-    if ( (mask & NET::Max) == NET::Max )
+    if ( (tqmask & NET::Max) == NET::Max )
         m_client->setMaximize( state & NET::MaxVert, state & NET::MaxHoriz );
-    else if ( mask & NET::MaxVert )
+    else if ( tqmask & NET::MaxVert )
         m_client->setMaximize( state & NET::MaxVert, m_client->maximizeMode() & Client::MaximizeHorizontal );
-    else if ( mask & NET::MaxHoriz )
+    else if ( tqmask & NET::MaxHoriz )
         m_client->setMaximize( m_client->maximizeMode() & Client::MaximizeVertical, state & NET::MaxHoriz );
 
-    if ( mask & NET::Shaded )
+    if ( tqmask & NET::Shaded )
         m_client->setShade( state & NET::Shaded ? ShadeNormal : ShadeNone );
-    if ( mask & NET::KeepAbove)
+    if ( tqmask & NET::KeepAbove)
         m_client->setKeepAbove( (state & NET::KeepAbove) != 0 );
-    if ( mask & NET::KeepBelow)
+    if ( tqmask & NET::KeepBelow)
         m_client->setKeepBelow( (state & NET::KeepBelow) != 0 );
-    if( mask & NET::SkipTaskbar )
+    if( tqmask & NET::SkipTaskbar )
         m_client->setSkipTaskbar( ( state & NET::SkipTaskbar ) != 0, true );
-    if( mask & NET::SkipPager )
+    if( tqmask & NET::SkipPager )
         m_client->setSkipPager( ( state & NET::SkipPager ) != 0 );
-    if( mask & NET::DemandsAttention )
+    if( tqmask & NET::DemandsAttention )
         m_client->demandAttention(( state & NET::DemandsAttention ) != 0 );
-    if( mask & NET::Modal )
+    if( tqmask & NET::Modal )
         m_client->setModal( ( state & NET::Modal ) != 0 );
     // unsetting fullscreen first, setting it last (because e.g. maximize works only for !isFullScreen() )
-    if(( mask & NET::FullScreen ) != 0 && ( state & NET::FullScreen ) != 0 )
+    if(( tqmask & NET::FullScreen ) != 0 && ( state & NET::FullScreen ) != 0 )
         m_client->setFullScreen( true, false );
     }
 
@@ -625,9 +625,9 @@ bool Client::windowEvent( XEvent* e )
         default:
             if( e->xany.window == window())
             {
-            if( e->type == Shape::shapeEvent() )
+            if( e->type == Shape::tqshapeEvent() )
                 {
-                is_shape = Shape::hasShape( window()); // workaround for #19644
+                is_tqshape = Shape::hasShape( window()); // workaround for #19644
                 updateShape();
                 }
             }
@@ -925,7 +925,7 @@ void Client::leaveNotifyEvent( XCrossingEvent* e )
             mode = PositionCenter;
             setCursor( arrowCursor );
             }
-        bool lostMouse = !rect().contains( TQPoint( e->x, e->y ) );
+        bool lostMouse = !rect().tqcontains( TQPoint( e->x, e->y ) );
         // 'lostMouse' wouldn't work with e.g. B2 or Keramik, which have non-rectangular decorations
         // (i.e. the LeaveNotify event comes before leaving the rect and no LeaveNotify event
         // comes after leaving the rect) - so lets check if the pointer is really outside the window
@@ -1083,7 +1083,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
         if (e->type() == TQEvent::MouseButtonRelease)
             {
             int buttonMask, buttonPressed, x, y, x_root, y_root;
-            unsigned int mask;
+            unsigned int tqmask;
             TQMouseEvent *qe = (TQMouseEvent *)e;
             Window inner_window, parent_window, pointer_window, root_window;
             XButtonEvent xe;
@@ -1109,7 +1109,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
             // simulated events
             root_window = qt_xrootwin();
             XQueryPointer(qt_xdisplay(), root_window, &root_window,
-                    &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                    &pointer_window, &x_root, &y_root, &x, &y, &tqmask);
 
             if (pointer_window != None)
                 {
@@ -1119,7 +1119,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                 // which causes KWin to refocus windows properly
                 parent_window = pointer_window;
                 XQueryPointer(qt_xdisplay(), parent_window, &root_window,
-                        &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                        &pointer_window, &x_root, &y_root, &x, &y, &tqmask);
                 inner_window = pointer_window;
 
                 while (pointer_window != None)
@@ -1130,7 +1130,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                     // found the child that will receive the simulated event
                     parent_window = pointer_window;
                     XQueryPointer(qt_xdisplay(), parent_window, &root_window,
-                            &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                            &pointer_window, &x_root, &y_root, &x, &y, &tqmask);
                     }
                 pointer_window = parent_window;
                 }
@@ -1190,7 +1190,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
         else if (e->type() == TQEvent::Wheel)
             {
             int x, y, x_root, y_root;
-            unsigned int buttonMask, buttonPressed, mask;
+            unsigned int buttonMask, buttonPressed, tqmask;
             TQWheelEvent *wheelEvent = (TQWheelEvent *)e;
             Window inner_window, parent_window, pointer_window,
                 root_window;
@@ -1207,7 +1207,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
             // simulated events
             root_window = qt_xrootwin();
             XQueryPointer(qt_xdisplay(), root_window, &root_window,
-                    &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                    &pointer_window, &x_root, &y_root, &x, &y, &tqmask);
 
             if (pointer_window != None)
                 {
@@ -1217,7 +1217,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                 // which causes KWin to refocus windows properly
                 parent_window = pointer_window;
                 XQueryPointer(qt_xdisplay(), parent_window, &root_window,
-                        &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                        &pointer_window, &x_root, &y_root, &x, &y, &tqmask);
                 inner_window = pointer_window;
 
                 while (pointer_window != None)
@@ -1228,7 +1228,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                     // found the child that will receive the simulated event
                     parent_window = pointer_window;
                     XQueryPointer(qt_xdisplay(), parent_window, &root_window,
-                            &pointer_window, &x_root, &y_root, &x, &y, &mask);
+                            &pointer_window, &x_root, &y_root, &x, &y, &tqmask);
                     }
                 pointer_window = parent_window;
                 }
@@ -1615,7 +1615,7 @@ void Client::focusInEvent( XFocusInEvent* e )
 // from it to its transient, the fullscreen would be kept in the Active layer
 // at the beginning and at the end, but not in the middle, when the active
 // client would be temporarily none (see Client::belongToLayer() ).
-// Therefore, the events queue is checked, whether it contains the matching
+// Therefore, the events queue is checked, whether it tqcontains the matching
 // FocusIn event, and if yes, deactivation of the previous client will
 // be skipped, as activation of the new one will automatically deactivate
 // previously active client.
@@ -1711,13 +1711,13 @@ void Client::NETMoveResize( int x_root, int y_root, NET::Direction direction )
         }
     else if( direction == NET::KeyboardMove )
         { // ignore mouse coordinates given in the message, mouse position is used by the moving algorithm
-        TQCursor::setPos( geometry().center() );
-        performMouseCommand( Options::MouseUnrestrictedMove, geometry().center());
+        TQCursor::setPos( tqgeometry().center() );
+        performMouseCommand( Options::MouseUnrestrictedMove, tqgeometry().center());
         }
     else if( direction == NET::KeyboardSize )
         { // ignore mouse coordinates given in the message, mouse position is used by the resizing algorithm
-        TQCursor::setPos( geometry().bottomRight());
-        performMouseCommand( Options::MouseUnrestrictedResize, geometry().bottomRight());
+        TQCursor::setPos( tqgeometry().bottomRight());
+        performMouseCommand( Options::MouseUnrestrictedResize, tqgeometry().bottomRight());
         }
     }
 

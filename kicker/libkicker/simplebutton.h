@@ -34,8 +34,8 @@ class KDE_EXPORT SimpleButton : public QButton
         SimpleButton(TQWidget *parent, const char *name = 0);
         void setPixmap(const TQPixmap &pix);
         void setOrientation(Qt::Orientation orientaton);
-        TQSize sizeHint() const;
-        TQSize minimumSizeHint() const;
+        TQSize tqsizeHint() const;
+        TQSize tqminimumSizeHint() const;
 
     protected:
         void drawButton( TQPainter *p );
@@ -67,7 +67,7 @@ class KDE_EXPORT SimpleArrowButton: public SimpleButton
     public:
         SimpleArrowButton(TQWidget *parent = 0, Qt::ArrowType arrow = Qt::UpArrow, const char *name = 0);
         virtual ~SimpleArrowButton() {};
-        TQSize sizeHint() const;
+        TQSize tqsizeHint() const;
     
     protected:
         virtual void enterEvent( TQEvent *e );

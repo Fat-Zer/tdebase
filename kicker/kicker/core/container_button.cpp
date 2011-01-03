@@ -60,7 +60,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ButtonContainer::ButtonContainer(TQPopupMenu* opMenu, TQWidget* parent)
   : BaseContainer(opMenu, parent)
   , _button(0)
-  , _layout(0)
+  , _tqlayout(0)
   , _oldpos(0,0)
 {
      setBackgroundOrigin(AncestorOrigin);
@@ -114,10 +114,10 @@ void ButtonContainer::configure()
     }
 }
 
-void ButtonContainer::doSaveConfiguration(KConfigGroup& config, bool layoutOnly) const
+void ButtonContainer::doSaveConfiguration(KConfigGroup& config, bool tqlayoutOnly) const
 {
     // immutability is checked by ContainerBase
-    if (_button && !layoutOnly)
+    if (_button && !tqlayoutOnly)
     {
         _button->saveConfig(config);
     }
@@ -145,12 +145,12 @@ void ButtonContainer::embedButton(PanelButton* b)
 {
     if (!b) return;
 
-    delete _layout;
-    _layout = new TQVBoxLayout(this);
+    delete _tqlayout;
+    _tqlayout = new TQVBoxLayout(this);
     _button = b;
 
     _button->installEventFilter(this);
-    _layout->add(_button);
+    _tqlayout->add(_button);
     connect(_button, TQT_SIGNAL(requestSave()), TQT_SIGNAL(requestSave()));
     connect(_button, TQT_SIGNAL(hideme(bool)), TQT_SLOT(hideRequested(bool)));
     connect(_button, TQT_SIGNAL(removeme()), TQT_SLOT(removeRequested()));

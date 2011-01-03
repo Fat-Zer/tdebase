@@ -30,7 +30,7 @@ public:
     ~KWMThemeClient(){;}
     void init();
     void resize( const TQSize& s );
-    TQSize minimumSize() const;
+    TQSize tqminimumSize() const;
     void borders( int& left, int& right, int& top, int& bottom ) const;
 protected:
     void doShape();
@@ -56,7 +56,7 @@ private:
     KPixmap *aGradient, *iGradient;
     MyButton *maxBtn, *stickyBtn, *mnuBtn;
     TQSpacerItem *titlebar;
-    TQGridLayout* layout;
+    TQGridLayout* tqlayout;
 };
 
 class KWMThemeFactory : public KDecorationFactory
@@ -65,7 +65,7 @@ public:
     KWMThemeFactory();
     ~KWMThemeFactory();
     KDecoration* createDecoration( KDecorationBridge* b );
-    bool reset( unsigned long mask );
+    bool reset( unsigned long tqmask );
 };
 
 }

@@ -107,7 +107,7 @@ public:
 
   void setShowingPreview( const TQString &preview, bool show );
   void setShowingPreview( bool show );
-  bool isShowingPreview( const TQString &preview ) const { return ! m_dontPreview.contains(preview); }
+  bool isShowingPreview( const TQString &preview ) const { return ! m_dontPreview.tqcontains(preview); }
   bool isShowingPreview();
   const TQStringList &previewSettings();
 
@@ -133,7 +133,7 @@ protected:
 
   TQString currentGroup() const {
       return isDefaultProperties() ? 
-          TQString::fromLatin1("Settings") : TQString::fromLatin1("URL properties");
+          TQString::tqfromLatin1("Settings") : TQString::tqfromLatin1("URL properties");
   }
 
 private:

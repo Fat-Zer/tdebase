@@ -101,7 +101,7 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
   // here we go, set some usable default sizes
   if (!initialGeometrySet())
   {
-    int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+    int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
     TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
     TQSize size;
@@ -110,8 +110,8 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
     if (sconfig)
     {
       sconfig->setGroup (sgroup);
-      size.setWidth (sconfig->readNumEntry( TQString::fromLatin1("Width %1").arg(desk.width()), 0 ));
-      size.setHeight (sconfig->readNumEntry( TQString::fromLatin1("Height %1").arg(desk.height()), 0 ));
+      size.setWidth (sconfig->readNumEntry( TQString::tqfromLatin1("Width %1").arg(desk.width()), 0 ));
+      size.setHeight (sconfig->readNumEntry( TQString::tqfromLatin1("Height %1").arg(desk.height()), 0 ));
     }
 
     // if thats fails, try to reuse size
@@ -131,8 +131,8 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
       {
         // first try global app config
         KateApp::self()->config()->setGroup ("MainWindow");
-        size.setWidth (KateApp::self()->config()->readNumEntry( TQString::fromLatin1("Width %1").arg(desk.width()), 0 ));
-        size.setHeight (KateApp::self()->config()->readNumEntry( TQString::fromLatin1("Height %1").arg(desk.height()), 0 ));
+        size.setWidth (KateApp::self()->config()->readNumEntry( TQString::tqfromLatin1("Width %1").arg(desk.width()), 0 ));
+        size.setHeight (KateApp::self()->config()->readNumEntry( TQString::tqfromLatin1("Height %1").arg(desk.height()), 0 ));
 
         if (size.isEmpty())
           size = TQSize (kMin (700, desk.width()), kMin(480, desk.height()));
@@ -851,4 +851,4 @@ void KateMainWindow::saveGlobalProperties( KConfig* sessionConfig )
   sessionConfig->writeEntry ("Last Session", KateApp::self()->sessionManager()->activeSession()->sessionFileRelative());
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

@@ -17,7 +17,7 @@ reconfiguring, and a file `config.log' containing compiler output
 to figure out how `configure' could check whether to do them, and mail
 diffs or instructions to the address given in the `README' so they can
 be considered for the next release.  If at some point `config.cache'
-contains results you don't want to keep, you may remove or edit it.
+tqcontains results you don't want to keep, you may remove or edit it.
 
    The file `configure.in' is used to create `configure' by a program
 called `autoconf'.  You only need `configure.in' if you want to change
@@ -37,7 +37,7 @@ The simplest way to compile this package is:
   2. Type `gmake' to compile the package.  Or if you're using a Linux
      powered machine, or if make is GNU make, type `make'.  You can
      check with make --version.  KDE requires GNU make to build, if 
-     gmake is appropriate, replace any instance below of make with gmake.
+     gmake is appropriate, tqreplace any instance below of make with gmake.
      It will give output similar to:
         #make --version
         GNU Make version 3.78.1, by Richard Stallman and Roland McGrath.

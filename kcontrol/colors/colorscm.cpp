@@ -154,7 +154,7 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
     TQWhatsThis::add( sList, i18n("This is a list of predefined color schemes,"
        " including any that you may have created. You can preview an existing"
        " color scheme by selecting it from the list. The current scheme will"
-       " be replaced by the selected color scheme.<p>"
+       " be tqreplaced by the selected color scheme.<p>"
        " Warning: if you have not yet applied any changes you may have made"
        " to the current scheme, those changes will be lost if you select"
        " another color scheme.") );

@@ -67,14 +67,14 @@ extern "C"
 KBellConfig::KBellConfig(TQWidget *parent, const char *name):
     KCModule(parent, name)
 {
-  TQBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   int row = 0;
   TQGroupBox *box = new TQGroupBox( i18n("Bell Settings"), this );
   box->setColumnLayout( 0, Qt::Horizontal );
-  layout->addWidget(box);
-  layout->addStretch();
-  TQGridLayout *grid = new TQGridLayout(box->layout(), KDialog::spacingHint());
+  tqlayout->addWidget(box);
+  tqlayout->addStretch();
+  TQGridLayout *grid = new TQGridLayout(box->tqlayout(), KDialog::spacingHint());
   grid->setColStretch(0, 0);
   grid->setColStretch(1, 1);
   grid->addColSpacing(0, 30);

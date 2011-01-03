@@ -85,7 +85,7 @@ class KDecorationBridge : public KDecorationDefines
 	virtual void performWindowOperation( WindowOperation ) = 0;
         virtual void setMask( const TQRegion&, int ) = 0;
         virtual bool isPreview() const = 0;
-        virtual TQRect geometry() const = 0;
+        virtual TQRect tqgeometry() const = 0;
         virtual TQRect iconGeometry() const = 0;
         virtual TQRegion unobscuredRegion( const TQRegion& r ) const = 0;
         virtual TQWidget* workspaceWidget() const = 0;

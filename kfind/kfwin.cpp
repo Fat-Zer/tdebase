@@ -215,14 +215,14 @@ void KfindWindow::saveResults()
   TQFile file(filename);
 
   if ( !file.open(IO_WriteOnly) )
-    KMessageBox::error(parentWidget(),
+    KMessageBox::error(tqparentWidget(),
 		       i18n("Unable to save results."));
   else {
     TQTextStream stream( &file );
     stream.setEncoding( TQTextStream::Locale );
 
     if ( mimeType->name() == "text/html") {
-      stream << TQString::fromLatin1("<HTML><HEAD>\n"
+      stream << TQString::tqfromLatin1("<HTML><HEAD>\n"
 				    "<!DOCTYPE %1>\n"
 				    "<TITLE>%2</TITLE></HEAD>\n"
 				    "<BODY><H1>%3</H1>"
@@ -236,13 +236,13 @@ void KfindWindow::saveResults()
 	{
 	  TQString path=((KfFileLVI*)item)->fileitem.url().url();
 	  TQString pretty=((KfFileLVI*)item)->fileitem.url().htmlURL();
-	  stream << TQString::fromLatin1("<DT><A HREF=\"") << path
-		 << TQString::fromLatin1("\">") << pretty
-		 << TQString::fromLatin1("</A>\n");
+	  stream << TQString::tqfromLatin1("<DT><A HREF=\"") << path
+		 << TQString::tqfromLatin1("\">") << pretty
+		 << TQString::tqfromLatin1("</A>\n");
 
 	  item = item->nextSibling();
 	}
-      stream << TQString::fromLatin1("</DL><P></BODY></HTML>\n");
+      stream << TQString::tqfromLatin1("</DL><P></BODY></HTML>\n");
     }
     else {
       item = firstChild();
@@ -255,7 +255,7 @@ void KfindWindow::saveResults()
     }
 
     file.close();
-    KMessageBox::information(parentWidget(),
+    KMessageBox::information(tqparentWidget(),
 			     i18n("Results were saved to file\n")+
 			     filename);
   }
@@ -287,7 +287,7 @@ void KfindWindow::deleteFiles()
 {
   TQString tmp = i18n("Do you really want to delete the selected file?",
                      "Do you really want to delete the %n selected files?",selectedItems().count());
-  if (KMessageBox::warningContinueCancel(parentWidget(), tmp, "", KGuiItem( i18n("&Delete"), "editdelete")) == KMessageBox::Cancel)
+  if (KMessageBox::warningContinueCancel(tqparentWidget(), tmp, "", KGuiItem( i18n("&Delete"), "editdelete")) == KMessageBox::Cancel)
     return;
 
   // Iterate on all selected elements
@@ -335,7 +335,7 @@ void KfindWindow::resizeEvent(TQResizeEvent *e)
 {
   KListView::resizeEvent(e);
   resetColumns(false);
-  clipper()->repaint();
+  clipper()->tqrepaint();
 }
 
 TQDragObject * KfindWindow::dragObject()
@@ -372,7 +372,7 @@ void KfindWindow::resetColumns(bool init)
   {
     setColumnWidth(2, QMAX(fm.width(columnText(2)), fm.width("0000000")) + 15);
     TQString sampleDate =
-      KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime());
+      KGlobal::locale()->formatDateTime(TQDateTime::tqcurrentDateTime());
     setColumnWidth(3, QMAX(fm.width(columnText(3)), fm.width(sampleDate)) + 15);
     setColumnWidth(4, QMAX(fm.width(columnText(4)), fm.width(i18n(perm[RO]))) + 15);
     setColumnWidth(5, QMAX(fm.width(columnText(5)), fm.width("some text")) + 15);

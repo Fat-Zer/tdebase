@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 /*
 
- This file contains things relevant to handling incoming events.
+ This file tqcontains things relevant to handling incoming events.
 
 */
 
@@ -32,7 +32,7 @@ namespace KWinInternal
 
 /*!
   Manages the clients. This means handling the very first maprequest:
-  reparenting, initial geometry, initial state, placement, etc.
+  reparenting, initial tqgeometry, initial state, placement, etc.
   Returns false if KWin is not going to manage this window.
  */
 bool Client::manage( Window w, bool isMapped )
@@ -44,8 +44,8 @@ bool Client::manage( Window w, bool isMapped )
     grabXServer();
 
     // from this place on, manage() mustn't return false
-    postpone_geometry_updates = 1;
-    pending_geometry_update = true; // force update when finishing with geometry changes
+    postpone_tqgeometry_updates = 1;
+    pending_tqgeometry_update = true; // force update when finishing with tqgeometry changes
 
     embedClient( w, attr );
 
@@ -195,7 +195,7 @@ bool Client::manage( Window w, bool isMapped )
     bool placementDone = FALSE;
 
     if ( session )
-        geom = session->geometry;
+        geom = session->tqgeometry;
 
     TQRect area;
     bool partial_keep_in_area = isMapped || session;
@@ -234,7 +234,7 @@ bool Client::manage( Window w, bool isMapped )
 
     bool usePosition = false;
     if ( isMapped || session || placementDone )
-        placementDone = true; // use geometry
+        placementDone = true; // use tqgeometry
     else if( isTransient() && !isUtility() && !isDialog() && !isSplash())
         usePosition = true;
     else if( isTransient() && !hasNETSupport())
@@ -266,7 +266,7 @@ bool Client::manage( Window w, bool isMapped )
         usePosition = true;
     if( !rules()->checkIgnoreGeometry( !usePosition ))
         {
-        bool ignorePPosition = ( options->ignorePositionClasses.contains(TQString::fromLatin1(resourceClass())));
+        bool ignorePPosition = ( options->ignorePositionClasses.tqcontains(TQString::tqfromLatin1(resourceClass())));
 
         if ( ( (xSizeHint.flags & PPosition) && !ignorePPosition ) ||
              (xSizeHint.flags & USPosition) ) 
@@ -321,7 +321,7 @@ bool Client::manage( Window w, bool isMapped )
         keepInArea( area, partial_keep_in_area );
 
     XShapeSelectInput( qt_xdisplay(), window(), ShapeNotifyMask );
-    is_shape = Shape::hasShape( window());
+    is_tqshape = Shape::hasShape( window());
     updateShape();
 	
     //CT extra check for stupid jdk 1.3.1. But should make sense in general
@@ -357,7 +357,7 @@ bool Client::manage( Window w, bool isMapped )
         minimize( true ); // no animation
 
     // SELI this seems to be mainly for kstart and ksystraycmd
-    // probably should be replaced by something better
+    // probably should be tqreplaced by something better
     bool doNotShow = false;
     if ( workspace()->isNotManaged( caption() ) )
         doNotShow = TRUE;
@@ -388,7 +388,7 @@ bool Client::manage( Window w, bool isMapped )
         }
     else 
         {
-        geom_restore = geometry(); // remember restore geometry
+        geom_restore = tqgeometry(); // remember restore tqgeometry
         if ( isMaximizable()
              && ( width() >= area.width() || height() >= area.height() ) ) 
             {
@@ -416,7 +416,7 @@ bool Client::manage( Window w, bool isMapped )
             }
         // window may want to be maximized
         // done after checking that the window isn't larger than the workarea, so that
-        // the restore geometry from the checks above takes precedence, and window
+        // the restore tqgeometry from the checks above takes precedence, and window
         // isn't restored larger than the workarea
         MaximizeMode maxmode = static_cast< MaximizeMode >
             ((( info->state() & NET::MaxVert ) ? MaximizeVertical : 0 )

@@ -91,7 +91,7 @@ void BGMonitorArrangement::updateArrangement()
 {
     // In this function, sizes, etc have a normal value, and their "expanded"
     // value. The expanded value is used for setting the size of the monitor
-    // image that contains the preview of the background. The monitor image
+    // image that tqcontains the preview of the background. The monitor image
     // will set the background preview back to the normal value.
     
     TQRect overallGeometry;
@@ -157,21 +157,21 @@ void BGMonitorArrangement::setPixmap( const KPixmap & pm )
 BGMonitorLabel::BGMonitorLabel(TQWidget *parent, const char *name)
     : TQLabel(parent, name)
 {
-    setAlignment(AlignCenter);
+    tqsetAlignment(AlignCenter);
     setScaledContents(true);
     setPixmap( TQPixmap( locate("data",  "kcontrol/pics/monitor.png") ) );
     m_pBGMonitor = new BGMonitor(this);
     
-    TQWhatsThis::add( this, i18n("This picture of a monitor contains a preview of what the current settings will look like on your desktop.") );
+    TQWhatsThis::add( this, i18n("This picture of a monitor tqcontains a preview of what the current settings will look like on your desktop.") );
 }
 
 
 void BGMonitorLabel::updateMonitorGeometry()
 {
-    double scaleX = double(width()) / double(sizeHint().width());
-    double scaleY = double(height()) / double(sizeHint().height());
+    double scaleX = double(width()) / double(tqsizeHint().width());
+    double scaleY = double(height()) / double(tqsizeHint().height());
     
-    kdDebug() << k_funcinfo << " Setting geometry to " << TQRect( int(23*scaleX), int(14*scaleY), int(151*scaleX), int(115*scaleY) ) << endl;
+    kdDebug() << k_funcinfo << " Setting tqgeometry to " << TQRect( int(23*scaleX), int(14*scaleY), int(151*scaleX), int(115*scaleY) ) << endl;
     m_pBGMonitor->setGeometry( int(23*scaleX), int(14*scaleY), int(151*scaleX), int(115*scaleY) );
 }
 
@@ -189,7 +189,7 @@ void BGMonitorLabel::resizeEvent( TQResizeEvent * e )
 BGMonitor::BGMonitor(TQWidget *parent, const char *name)
     : TQLabel(parent, name)
 {
-    setAlignment(AlignCenter);
+    tqsetAlignment(AlignCenter);
     setScaledContents(true);
     setAcceptDrops(true);
 }

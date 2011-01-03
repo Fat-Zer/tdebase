@@ -69,7 +69,7 @@ protected:
     bool inited;
     int resize_count;
     TQPushButton *_button;
-    TQGridLayout *_layout;
+    TQGridLayout *_tqlayout;
     NSPluginInstanceIface_stub* stub;
 private: // wrappers
     void displayPlugin();

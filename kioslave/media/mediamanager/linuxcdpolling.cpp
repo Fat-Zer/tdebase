@@ -209,7 +209,7 @@ void LinuxCDPolling::slotMediumAdded(const TQString &id)
 {
 	kdDebug(1219) << "LinuxCDPolling::slotMediumAdded(" << id << ")" << endl;
 
-	if (m_threads.contains(id)) return;
+	if (m_threads.tqcontains(id)) return;
 
 	const Medium *medium = m_mediaList.findById(id);
 
@@ -234,7 +234,7 @@ void LinuxCDPolling::slotMediumRemoved(const TQString &id)
 {
 	kdDebug(1219) << "LinuxCDPolling::slotMediumRemoved(" << id << ")" << endl;
 
-	if (!m_threads.contains(id)) return;
+	if (!m_threads.tqcontains(id)) return;
 
 	PollingThread *thread = m_threads[id];
 	m_threads.remove(id);
@@ -257,7 +257,7 @@ void LinuxCDPolling::slotMediumStateChanged(const TQString &id)
 
 	if (mime.find("dvd")==-1 && mime.find("cd")==-1) return;
 
-	if (!m_threads.contains(id) && !medium->isMounted())
+	if (!m_threads.tqcontains(id) && !medium->isMounted())
 	{
 		// It is just a mount state change, no need to notify
 		m_excludeNotification.append( id );
@@ -268,7 +268,7 @@ void LinuxCDPolling::slotMediumStateChanged(const TQString &id)
 		thread->start();
 		m_timer.start(500);
 	}
-	else if (m_threads.contains(id) && medium->isMounted())
+	else if (m_threads.tqcontains(id) && medium->isMounted())
 	{
 		PollingThread *thread = m_threads[id];
 		m_threads.remove(id);
@@ -360,7 +360,7 @@ void LinuxCDPolling::applyType(DiscType type, const Medium *medium)
 	TQString id = medium->id();
 	TQString dev = medium->deviceNode();
 	
-	bool notify = !m_excludeNotification.contains(id);
+	bool notify = !m_excludeNotification.tqcontains(id);
 	m_excludeNotification.remove(id);
 	
 	switch (type)

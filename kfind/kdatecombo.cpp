@@ -18,7 +18,7 @@
 
 KDateCombo::KDateCombo(TQWidget *parent, const char *name ) : TQComboBox(FALSE, parent,name)
 {
-  TQDate date = TQDate::currentDate();
+  TQDate date = TQDate::tqcurrentDate();
   initObject(date, parent, name);
 }
 
@@ -33,7 +33,7 @@ void KDateCombo::initObject(const TQDate & date, TQWidget *, const char *)
   popupFrame = new KPopupFrame(this, "popupFrame");
   popupFrame->installEventFilter(this);
   datePicker = new KDatePicker(popupFrame, date, "datePicker");
-  datePicker->setMinimumSize(datePicker->sizeHint());
+  datePicker->setMinimumSize(datePicker->tqsizeHint());
   datePicker->installEventFilter(this);
   popupFrame->setMainWidget(datePicker);
   setDate(date);
@@ -57,9 +57,9 @@ TQDate & KDateCombo::string2Date(const TQString & str, TQDate *qd)
   return *qd = KGlobal::locale()->readDate(str);
 }
 
-TQDate & KDateCombo::getDate(TQDate *currentDate)
+TQDate & KDateCombo::getDate(TQDate *tqcurrentDate)
 {
-  return string2Date(currentText(), currentDate);
+  return string2Date(currentText(), tqcurrentDate);
 }
 
 bool KDateCombo::setDate(const TQDate & newDate)
@@ -86,7 +86,7 @@ void KDateCombo::mousePressEvent (TQMouseEvent * e)
 {
   if (e->button() & TQMouseEvent::LeftButton)
   {
-    if  (rect().contains( e->pos()))
+    if  (rect().tqcontains( e->pos()))
     {
       TQDate tempDate;
       getDate(& tempDate);
@@ -103,7 +103,7 @@ bool KDateCombo::eventFilter (TQObject*, TQEvent* e)
   {
       TQMouseEvent *me = (TQMouseEvent *)e;
       TQPoint p = mapFromGlobal( me->globalPos() );
-      if (rect().contains( p ) )
+      if (rect().tqcontains( p ) )
       {
         TQTimer::singleShot(10, this, TQT_SLOT(dateEnteredEvent()));
         return true;

@@ -408,7 +408,7 @@ void KasPrefsDialog::addAdvancedPage()
    notifierCheck->setChecked( kasbar->notifierEnabled() );
    connect( notifierCheck, TQT_SIGNAL( toggled(bool) ), kasbar, TQT_SLOT( setNotifierEnabled(bool) ) );
 
-   // Status advanced
+   // tqStatus advanced
    modifiedCheck = new TQCheckBox( i18n("Enable &modified indicator"), advancedPage );
    TQWhatsThis::add( modifiedCheck,
 		    i18n( "Enables the display of a floppy disk state icon for windows containing "

@@ -32,7 +32,7 @@
 
 
 #define Before(ttf,in) in.left(in.find(ttf))
-#define After(ttf,in)  (in.contains(ttf)?TQString(in.mid(in.find(ttf)+TQString(ttf).length())):TQString(""))
+#define After(ttf,in)  (in.tqcontains(ttf)?TQString(in.mid(in.find(ttf)+TQString(ttf).length())):TQString(""))
 
 NetMon::NetMon( TQWidget * parent, KConfig *config, const char * name )
    : TQWidget(parent, name)
@@ -77,7 +77,7 @@ NetMon::NetMon( TQWidget * parent, KConfig *config, const char * name )
 void NetMon::processNFSLine(char *bufline, int)
 {
    TQCString line(bufline);
-   if (line.contains(":/"))
+   if (line.tqcontains(":/"))
       new TQListViewItem(list,"NFS",After(":",line),Before(":/",line));
 }
 
@@ -87,14 +87,14 @@ void NetMon::processSambaLine(char *bufline, int)
    rownumber++;
    if (rownumber == 2)
       version->setText(bufline); // second line = samba version
-   if ((readingpart==header) && line.contains("Service"))
+   if ((readingpart==header) && line.tqcontains("Service"))
    {
       iUser=line.find("uid");
       iGroup=line.find("gid");
       iPid=line.find("pid");
       iMachine=line.find("machine");
    }
-   else if ((readingpart==header) && (line.contains("---")))
+   else if ((readingpart==header) && (line.tqcontains("---")))
    {
       readingpart=connexions;
    }

@@ -94,7 +94,7 @@ void PopupProxy::tryInsertItem( HistoryItem const * const item,
         // Squeeze text strings so that do not take up the entire screen (or more)
         TQString text( KStringHandler::cPixelSqueeze(item->text().simplifyWhiteSpace(),
                                                     proxy_for_menu->fontMetrics(),
-                                                    m_menu_width).replace( "&", "&&" ) );
+                                                    m_menu_width).tqreplace( "&", "&&" ) );
         id = proxy_for_menu->insertItem( text, -1, index );
     } else {
         const TQSize max_size( m_menu_width,m_menu_height/4 );
@@ -133,7 +133,7 @@ int PopupProxy::insertFromSpill( int index ) {
     // discarding any that doesn't match the current filter.
     // stop when the total number of items equal m_itemsPerMenu;
     int count = 0;
-    int remainingHeight = m_menu_height - proxy_for_menu->sizeHint().height();
+    int remainingHeight = m_menu_height - proxy_for_menu->tqsizeHint().height();
     // Force at least one item to be inserted.
     remainingHeight = QMAX( remainingHeight, 0 );
     for ( const HistoryItem* item = spillPointer.current();

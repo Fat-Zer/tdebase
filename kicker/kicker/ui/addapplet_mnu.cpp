@@ -54,11 +54,11 @@ void PanelAddAppletMenu::slotAboutToShow()
 
         if (ai.icon().isEmpty() || ai.icon() == "unknown")
         {
-            insertItem(ai.name().replace( "&", "&&" ), i);
+            insertItem(ai.name().tqreplace( "&", "&&" ), i);
         }
         else
         {
-            insertItem(SmallIconSet(ai.icon()), ai.name().replace( "&", "&&" ), i);
+            insertItem(SmallIconSet(ai.icon()), ai.name().tqreplace( "&", "&&" ), i);
         }
 
         if (ai.isUniqueApplet() && PluginManager::the()->hasInstance(ai))

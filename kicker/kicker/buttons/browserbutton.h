@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class PanelBrowserMenu;
 
 /**
- * Button that contains a Browser directory menu
+ * Button that tqcontains a Browser directory menu
  */
 class BrowserButton : public PanelPopupButton
 {

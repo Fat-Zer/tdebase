@@ -25,7 +25,7 @@ KSysTrayCmd::KSysTrayCmd()
     isVisible(true), lazyStart( false ), noquit( false ), quitOnHide( false ), onTop(false), ownIcon(false),
     win(0), client(0), kwinmodule(0), top(0), left(0)
 {
-  setAlignment( AlignCenter );
+  tqsetAlignment( AlignCenter );
   kwinmodule = new KWinModule( this );
   refresh();
 }
@@ -195,7 +195,7 @@ void KSysTrayCmd::clientExited()
   if ( lazyStart && noquit )
     refresh();
   else
-    qApp->quit();
+    tqApp->quit();
 }
 
 void KSysTrayCmd::quitClient()
@@ -212,11 +212,11 @@ void KSysTrayCmd::quitClient()
     // That's why  when the application is closed we aren't informed.
     // So we quit now.
     if ( !command ) {
-      qApp->quit();
+      tqApp->quit();
     }
   }
   else {
-    qApp->quit();
+    tqApp->quit();
   }
 }
 
@@ -225,7 +225,7 @@ void KSysTrayCmd::quit()
     if ( !isVisible ) {
 	showWindow();
     }
-    qApp->quit();
+    tqApp->quit();
 }
 
 void KSysTrayCmd::execContextMenu( const TQPoint &pos )

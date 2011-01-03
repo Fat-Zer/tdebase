@@ -27,7 +27,7 @@
  * of those above. If you wish to allow use of your version of this file only
  * under the terms of either the GPL or the LGPL, and not to allow others to
  * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
+ * decision by deleting the provisions above and tqreplace them with the notice
  * and other provisions required by the GPL or the LGPL. If you do not delete
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
@@ -40,7 +40,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-/* jni_md.h contains the machine-dependent typedefs for jbyte, jint 
+/* jni_md.h tqcontains the machine-dependent typedefs for jbyte, jint 
    and jlong */ 
 
 #include "jni_md.h"
@@ -580,7 +580,7 @@ struct JNINativeInterface_ {
       (JNIEnv *env, jclass clazz, jfieldID fieldID, jdouble value);
 
     jstring (JNICALL *NewString)
-      (JNIEnv *env, const jchar *unicode, jsize len);
+      (JNIEnv *env, const jchar *tqunicode, jsize len);
     jsize (JNICALL *GetStringLength)
       (JNIEnv *env, jstring str);
     const jchar *(JNICALL *GetStringChars)
@@ -1508,8 +1508,8 @@ struct JNIEnv_ {
       functions->SetStaticDoubleField(this,clazz,fieldID,value);
     }
 
-    jstring NewString(const jchar *unicode, jsize len) {
-        return functions->NewString(this,unicode,len);
+    jstring NewString(const jchar *tqunicode, jsize len) {
+        return functions->NewString(this,tqunicode,len);
     }
     jsize GetStringLength(jstring str) {
         return functions->GetStringLength(this,str);

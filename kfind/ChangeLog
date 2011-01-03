@@ -10,7 +10,7 @@ Fri Jul 30 22:33:25 1999  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 1999-06-13  Harri Porten  <porten@kde.org>
 
-	* kftabdlg.cpp: introduced flexible geometry managment. Patch provided
+	* kftabdlg.cpp: introduced flexible tqgeometry managment. Patch provided
 	by Dima Rogozin <dima@mercury.co.il>.
 
 1999-04-30  Harri Porten  <porten@kde.org>
@@ -21,7 +21,7 @@ Fri Jul 30 22:33:25 1999  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 1999-04-06  Harri Porten  <porten@kde.org>
 
-	* kfind.cpp: replaced simple delete and free() with delete [] iBuffer
+	* kfind.cpp: tqreplaced simple delete and free() with delete [] iBuffer
 
 1998-12-07  Mario Weilguni <mweilguni@kde.org>
 
@@ -55,7 +55,7 @@ ver. 0.4.1: Mario Weilguni <mweilguni@kde.org>
 	* kfind compiles now without warnings with -Wall
 	* result list is now scrollable without having the focus (only page
 	  up and page down)
-	* moc files are now #included in moc.cpp instead of compiling
+	* tqmoc files are now #included in tqmoc.cpp instead of compiling
 	  separate files. Speeds up compilation and makes binary smaller
 	* file patterns are remembered between sessions
 	* introduced new filetypes for searching: files, folders,

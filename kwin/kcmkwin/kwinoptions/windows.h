@@ -164,7 +164,7 @@ private:
   TQButtonGroup *windowsBox;
   TQCheckBox *opaque;
   TQCheckBox *resizeOpaqueOn;
-  TQCheckBox *geometryTipOn;
+  TQCheckBox *tqgeometryTipOn;
   TQCheckBox* minimizeAnimOn;
   TQSlider *minimizeAnimSlider;
   TQLabel *minimizeAnimSlowLabel, *minimizeAnimFastLabel;

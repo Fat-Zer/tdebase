@@ -85,7 +85,7 @@ Microsoft Windows (TM):
 - WindowList-menu on MMB
 - Walk trough windows mode: KDE
 - NOT underline IconText
-- NOT change pointer shape over an icon
+- NOT change pointer tqshape over an icon
 
 UNIX (TM):
 - Single Click
@@ -97,7 +97,7 @@ UNIX (TM):
 - Application-menu on MMB like in FVWM
 - Walk trough windows mode: CDE
 - NOT underline IconText
-- NOT change pointer shape over an icon
+- NOT change pointer tqshape over an icon
 
 MacOS:
 - Single Click
@@ -110,7 +110,7 @@ MacOS:
 - WindowList-menu on MMB
 - Walk trough windows mode: KDE
 - NOT underline IconText
-- change pointer shape over an icon
+- change pointer tqshape over an icon
 
 Step 3: Eyecandy-O-Meter
 ===================

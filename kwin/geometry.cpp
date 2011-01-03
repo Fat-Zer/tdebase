@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 /*
 
- This file contains things relevant to geometry, i.e. workspace size,
+ This file tqcontains things relevant to tqgeometry, i.e. workspace size,
  window positions and window sizes.
 
 */
@@ -44,11 +44,11 @@ namespace KWinInternal
 void Workspace::desktopResized()
     {
     //printf("Workspace::desktopResized()\n\r");
-    TQRect geom = KApplication::desktop()->geometry();
-    NETSize desktop_geometry;
-    desktop_geometry.width = geom.width();
-    desktop_geometry.height = geom.height();
-    rootInfo->setDesktopGeometry( -1, desktop_geometry );
+    TQRect geom = KApplication::desktop()->tqgeometry();
+    NETSize desktop_tqgeometry;
+    desktop_tqgeometry.width = geom.width();
+    desktop_tqgeometry.height = geom.height();
+    rootInfo->setDesktopGeometry( -1, desktop_tqgeometry );
 
     updateClientArea( true );
     checkElectricBorders( true );
@@ -60,11 +60,11 @@ void Workspace::desktopResized()
 void Workspace::kDestopResized()
     {
     //printf("Workspace::kDesktopResized()\n\r");
-    TQRect geom = KApplication::desktop()->geometry();
-    NETSize desktop_geometry;
-    desktop_geometry.width = geom.width();
-    desktop_geometry.height = geom.height();
-    rootInfo->setDesktopGeometry( -1, desktop_geometry );
+    TQRect geom = KApplication::desktop()->tqgeometry();
+    NETSize desktop_tqgeometry;
+    desktop_tqgeometry.width = geom.width();
+    desktop_tqgeometry.height = geom.height();
+    rootInfo->setDesktopGeometry( -1, desktop_tqgeometry );
 
     updateClientArea( true );
     checkElectricBorders( true );
@@ -90,7 +90,7 @@ void Workspace::updateClientArea( bool force )
     TQRect* new_wareas = new QRect[ numberOfDesktops() + 1 ];
     TQRect** new_sareas = new TQRect*[ numberOfDesktops() + 1];
     TQRect* screens = new TQRect [ nscreens ];
-    TQRect desktopArea = desktopwidget -> geometry ();
+    TQRect desktopArea = desktopwidget -> tqgeometry ();
     for( int iS = 0;
             iS < nscreens;
             iS ++ )
@@ -223,10 +223,10 @@ void Workspace::updateClientArea()
 
 /*!
   returns the area available for clients. This is the desktop
-  geometry minus windows on the dock.  Placement algorithms should
-  refer to this rather than geometry().
+  tqgeometry minus windows on the dock.  Placement algorithms should
+  refer to this rather than tqgeometry().
 
-  \sa geometry()
+  \sa tqgeometry()
  */
 TQRect Workspace::clientArea( clientAreaOption opt, int screen, int desktop ) const
     {
@@ -237,7 +237,7 @@ TQRect Workspace::clientArea( clientAreaOption opt, int screen, int desktop ) co
         ? screenarea[ desktop ][ screen ]
         : desktopwidget->screenGeometry( screen );
     TQRect warea = workarea[ desktop ].isNull()
-        ? kapp->desktop()->geometry()
+        ? kapp->desktop()->tqgeometry()
         : workarea[ desktop ];
     switch (opt)
         {
@@ -252,19 +252,19 @@ TQRect Workspace::clientArea( clientAreaOption opt, int screen, int desktop ) co
         case MaximizeFullArea:
             if (options->xineramaMaximizeEnabled)
                 if (desktopwidget->numScreens() < 2)
-                    return desktopwidget->geometry();
+                    return desktopwidget->tqgeometry();
                 else
                     return desktopwidget->screenGeometry( screen );
             else
-                return desktopwidget->geometry();
+                return desktopwidget->tqgeometry();
         case FullScreenArea:
             if (options->xineramaFullscreenEnabled)
                 if (desktopwidget->numScreens() < 2)
-                    return desktopwidget->geometry();
+                    return desktopwidget->tqgeometry();
                 else
                     return desktopwidget->screenGeometry( screen );
             else
-                return desktopwidget->geometry();
+                return desktopwidget->tqgeometry();
         case PlacementArea:
             if (options->xineramaPlacementEnabled)
                 if (desktopwidget->numScreens() < 2)
@@ -276,18 +276,18 @@ TQRect Workspace::clientArea( clientAreaOption opt, int screen, int desktop ) co
         case MovementArea:
             if (options->xineramaMovementEnabled)
                 if (desktopwidget->numScreens() < 2)
-                    return desktopwidget->geometry();
+                    return desktopwidget->tqgeometry();
                 else
                     return desktopwidget->screenGeometry( screen );
             else
-                return desktopwidget->geometry();
+                return desktopwidget->tqgeometry();
         case WorkArea:
             return warea;
         case FullArea:
-            return desktopwidget->geometry();
+            return desktopwidget->tqgeometry();
         case ScreenArea:
             if (desktopwidget->numScreens() < 2)
-                return desktopwidget->geometry();
+                return desktopwidget->tqgeometry();
             else
                 return desktopwidget->screenGeometry( screen );
         }
@@ -306,7 +306,7 @@ TQRect Workspace::clientArea( clientAreaOption opt, const TQPoint& p, int deskto
 
 TQRect Workspace::clientArea( clientAreaOption opt, const Client* c ) const
     {
-    return clientArea( opt, c->geometry().center(), c->desktop());
+    return clientArea( opt, c->tqgeometry().center(), c->desktop());
     }
 
 
@@ -724,11 +724,11 @@ void Client::keepInArea( TQRect area, bool partial )
         area.setRight( QMAX( area.right() + width() - 100, area.right()));
         area.setBottom( QMAX( area.bottom() + height() - 100, area.bottom()));
         }
-    if ( geometry().right() > area.right() && width() < area.width() )
+    if ( tqgeometry().right() > area.right() && width() < area.width() )
         move( area.right() - width(), y() );
-    if ( geometry().bottom() > area.bottom() && height() < area.height() )
+    if ( tqgeometry().bottom() > area.bottom() && height() < area.height() )
         move( x(), area.bottom() - height() );
-    if( !area.contains( geometry().topLeft() ))
+    if( !area.tqcontains( tqgeometry().topLeft() ))
         {
         int tx = x();
         int ty = y();
@@ -781,29 +781,29 @@ TQRect Client::adjustedClientArea( const TQRect &desktopArea, const TQRect& area
 
         // hack, might cause problems... this tries to guess the start/end of a
         // non-extended strut; only works on windows that have exact same
-        // geometry as their strut (ie, if the geometry fits the width
-        // exactly, we will adjust length of strut to match the geometry as well;
+        // tqgeometry as their strut (ie, if the tqgeometry fits the width
+        // exactly, we will adjust length of strut to match the tqgeometry as well;
         // otherwise we use the full-edge strut)
 
-        if (stareaT.top() == geometry().top() && stareaT.bottom() == geometry().bottom()) {
-            stareaT.setLeft(geometry().left());
-            stareaT.setRight(geometry().right());
-//            kdDebug () << "Trimming top-strut to geometry() to: " << stareaT << endl;
+        if (stareaT.top() == tqgeometry().top() && stareaT.bottom() == tqgeometry().bottom()) {
+            stareaT.setLeft(tqgeometry().left());
+            stareaT.setRight(tqgeometry().right());
+//            kdDebug () << "Trimming top-strut to tqgeometry() to: " << stareaT << endl;
         }
-        if (stareaB.top() == geometry().top() && stareaB.bottom() == geometry().bottom()) {
-            stareaB.setLeft(geometry().left());
-            stareaB.setRight(geometry().right());
-//            kdDebug () << "Trimming bottom-strut to geometry(): " << stareaB << endl;
+        if (stareaB.top() == tqgeometry().top() && stareaB.bottom() == tqgeometry().bottom()) {
+            stareaB.setLeft(tqgeometry().left());
+            stareaB.setRight(tqgeometry().right());
+//            kdDebug () << "Trimming bottom-strut to tqgeometry(): " << stareaB << endl;
         }
-        if (stareaL.left() == geometry().left() && stareaL.right() == geometry().right()) {
-            stareaL.setTop(geometry().top());
-            stareaL.setBottom(geometry().bottom());
-//            kdDebug () << "Trimming left-strut to geometry(): " << stareaL << endl;
+        if (stareaL.left() == tqgeometry().left() && stareaL.right() == tqgeometry().right()) {
+            stareaL.setTop(tqgeometry().top());
+            stareaL.setBottom(tqgeometry().bottom());
+//            kdDebug () << "Trimming left-strut to tqgeometry(): " << stareaL << endl;
         }
-        if (stareaR.left() == geometry().left() && stareaR.right() == geometry().right()) {
-            stareaR.setTop(geometry().top());
-            stareaR.setBottom(geometry().bottom());
-//            kdDebug () << "Trimming right-strut to geometry(): " << stareaR << endl;
+        if (stareaR.left() == tqgeometry().left() && stareaR.right() == tqgeometry().right()) {
+            stareaR.setTop(tqgeometry().top());
+            stareaR.setBottom(tqgeometry().bottom());
+//            kdDebug () << "Trimming right-strut to tqgeometry(): " << stareaR << endl;
         }
     }
 
@@ -811,7 +811,7 @@ TQRect Client::adjustedClientArea( const TQRect &desktopArea, const TQRect& area
     // HACK: workarea handling is not xinerama aware, so if this strut
     // reserves place at a xinerama edge that's inside the virtual screen,
     // ignore the strut for workspace setting.
-    if( area == kapp->desktop()->geometry())
+    if( area == kapp->desktop()->tqgeometry())
         {
         if( stareaL.left() < screenarea.left())
             stareaL = TQRect();
@@ -898,7 +898,7 @@ bool Client::hasStrut() const
 void Client::updateWorkareaDiffs()
     {
     TQRect area = workspace()->clientArea( WorkArea, this );
-    TQRect geom = geometry();
+    TQRect geom = tqgeometry();
     workarea_diff_x = computeWorkareaDiff( geom.left(), geom.right(), area.left(), area.right());
     workarea_diff_y = computeWorkareaDiff( geom.top(), geom.bottom(), area.top(), area.bottom());
     }
@@ -934,14 +934,14 @@ void Client::checkWorkspacePosition()
     if( isDesktop())
         {
         TQRect area = workspace()->clientArea( FullArea, this );
-        if( geometry() != area )
+        if( tqgeometry() != area )
             setGeometry( area );
         return;
         }
     if( isFullScreen())
         {
         TQRect area = workspace()->clientArea( FullScreenArea, this );
-        if( geometry() != area )
+        if( tqgeometry() != area )
             setGeometry( area );
         return;
         }
@@ -983,7 +983,7 @@ void Client::checkWorkspacePosition()
             return;
 
         TQRect area = workspace()->clientArea( WorkArea, this );
-        TQRect new_geom = geometry();
+        TQRect new_geom = tqgeometry();
         TQRect tmp_rect_x( new_geom.left(), 0, new_geom.width(), 0 );
         TQRect tmp_area_x( area.left(), 0, area.width(), 0 );
         checkDirection( workarea_diff_x, old_diff_x, tmp_rect_x, tmp_area_x );
@@ -1000,7 +1000,7 @@ void Client::checkWorkspacePosition()
             if( old_diff_y != INT_MAX && old_diff_y > 0 )
                 final_geom.moveBottom( area.bottom() - ( old_diff_y - 1 ));
             }
-        if( final_geom != geometry() )
+        if( final_geom != tqgeometry() )
             setGeometry( final_geom );
         //    updateWorkareaDiffs(); done already by setGeometry()
         }
@@ -1122,7 +1122,7 @@ TQSize Client::sizeForClientSize( const TQSize& wsize, Sizemode mode, bool nofra
     TQSize max_size = maxSize();
     if( decoration != NULL )
         {
-        TQSize decominsize = decoration->minimumSize();
+        TQSize decominsize = decoration->tqminimumSize();
         TQSize border_size( border_left + border_right, border_top + border_bottom );
         if( border_size.width() > decominsize.width()) // just in case
             decominsize.setWidth( border_size.width());
@@ -1341,17 +1341,17 @@ void Client::getWmNormalHints()
         TQSize new_size = adjustedSize();
         if( new_size != size() && !isFullScreen())
             {
-            TQRect orig_geometry = geometry();
+            TQRect orig_tqgeometry = tqgeometry();
             resizeWithChecks( new_size );
             if( ( !isSpecialWindow() || isToolbar()) && !isFullScreen())
                 {
                 // try to keep the window in its xinerama screen if possible,
                 // if that fails at least keep it visible somewhere
                 TQRect area = workspace()->clientArea( MovementArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_tqgeometry ))
                     keepInArea( area );
                 area = workspace()->clientArea( WorkArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_tqgeometry ))
                     keepInArea( area );
                 }
             }
@@ -1458,16 +1458,16 @@ const TQPoint Client::calculateGravitation( bool invert, int gravity ) const
         return TQPoint( x() - dx, y() - dy );
     }
 
-void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, int gravity, bool from_tool )
+void Client::configureRequest( int value_tqmask, int rx, int ry, int rw, int rh, int gravity, bool from_tool )
     {
     if( gravity == 0 ) // default (nonsense) value for the argument
         gravity = xSizeHint.win_gravity;
-    if( value_mask & ( CWX | CWY ))
+    if( value_tqmask & ( CWX | CWY ))
         {
         TQPoint new_pos = calculateGravitation( true, gravity ); // undo gravitation
-        if ( value_mask & CWX )
+        if ( value_tqmask & CWX )
             new_pos.setX( rx );
-        if ( value_mask & CWY )
+        if ( value_tqmask & CWY )
             new_pos.setY( ry );
 
         // clever(?) workaround for applications like xv that want to set
@@ -1483,9 +1483,9 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
 
         int nw = clientSize().width();
         int nh = clientSize().height();
-        if ( value_mask & CWWidth )
+        if ( value_tqmask & CWWidth )
             nw = rw;
-        if ( value_mask & CWHeight )
+        if ( value_tqmask & CWHeight )
             nh = rh;
         TQSize ns = sizeForClientSize( TQSize( nw, nh ) );
         new_pos = rules()->checkPosition( new_pos );
@@ -1494,7 +1494,7 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
         if ( maximizeMode() != MaximizeFull
             || ns != size())
             {
-            TQRect orig_geometry = geometry();
+            TQRect orig_tqgeometry = tqgeometry();
             GeometryUpdatesPostponer blocker( this );
             move( new_pos );
             plainResize( ns );
@@ -1502,7 +1502,7 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
             updateFullScreenHack( TQRect( new_pos, TQSize( nw, nh )));
             TQRect area = workspace()->clientArea( WorkArea, this );
             if( !from_tool && ( !isSpecialWindow() || isToolbar()) && !isFullScreen()
-                && area.contains( orig_geometry ))
+                && area.tqcontains( orig_tqgeometry ))
                 keepInArea( area );
 
             // this is part of the kicker-xinerama-hack... it should be
@@ -1514,20 +1514,20 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
             }
         }
 
-    if ( value_mask & (CWWidth | CWHeight )
-        && ! ( value_mask & ( CWX | CWY )) )  // pure resize
+    if ( value_tqmask & (CWWidth | CWHeight )
+        && ! ( value_tqmask & ( CWX | CWY )) )  // pure resize
         {
         int nw = clientSize().width();
         int nh = clientSize().height();
-        if ( value_mask & CWWidth )
+        if ( value_tqmask & CWWidth )
             nw = rw;
-        if ( value_mask & CWHeight )
+        if ( value_tqmask & CWHeight )
             nh = rh;
         TQSize ns = sizeForClientSize( TQSize( nw, nh ) );
 
         if( ns != size())  // don't restore if some app sets its own size again
             {
-            TQRect orig_geometry = geometry();
+            TQRect orig_tqgeometry = tqgeometry();
             GeometryUpdatesPostponer blocker( this );
             int save_gravity = xSizeHint.win_gravity;
             xSizeHint.win_gravity = gravity;
@@ -1539,28 +1539,28 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
                 // try to keep the window in its xinerama screen if possible,
                 // if that fails at least keep it visible somewhere
                 TQRect area = workspace()->clientArea( MovementArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_tqgeometry ))
                     keepInArea( area );
                 area = workspace()->clientArea( WorkArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_tqgeometry ))
                     keepInArea( area );
                 }
             }
         }
     // No need to send synthetic configure notify event here, either it's sent together
-    // with geometry change, or there's no need to send it.
+    // with tqgeometry change, or there's no need to send it.
     // Handling of the real ConfigureRequest event forces sending it, as there it's necessary.
     }
 
 void Client::resizeWithChecks( int w, int h, ForceGeometry_t force )
     {
-    if( shade_geometry_change )
+    if( shade_tqgeometry_change )
         assert( false );
     else if( isShade())
         {
         if( h == border_top + border_bottom )
             {
-            kdWarning() << "Shaded geometry passed for size:" << endl;
+            kdWarning() << "Shaded tqgeometry passed for size:" << endl;
             kdWarning() << kdBacktrace() << endl;
             }
         }
@@ -1637,16 +1637,16 @@ void Client::resizeWithChecks( int w, int h, ForceGeometry_t force )
 void Client::NETMoveResizeWindow( int flags, int x, int y, int width, int height )
     {
     int gravity = flags & 0xff;
-    int value_mask = 0;
+    int value_tqmask = 0;
     if( flags & ( 1 << 8 ))
-        value_mask |= CWX;
+        value_tqmask |= CWX;
     if( flags & ( 1 << 9 ))
-        value_mask |= CWY;
+        value_tqmask |= CWY;
     if( flags & ( 1 << 10 ))
-        value_mask |= CWWidth;
+        value_tqmask |= CWWidth;
     if( flags & ( 1 << 11 ))
-        value_mask |= CWHeight;
-    configureRequest( value_mask, x, y, width, height, gravity, true );
+        value_tqmask |= CWHeight;
+    configureRequest( value_tqmask, x, y, width, height, gravity, true );
     }
 
 /*!
@@ -1719,23 +1719,23 @@ bool Client::isMaximizable() const
 void Client::setGeometry( int x, int y, int w, int h, ForceGeometry_t force )
     {
     // this code is also duplicated in Client::plainResize()
-    // Ok, the shading geometry stuff. Generally, code doesn't care about shaded geometry,
-    // simply because there are too many places dealing with geometry. Those places
-    // ignore shaded state and use normal geometry, which they usually should get
-    // from adjustedSize(). Such geometry comes here, and if the window is shaded,
-    // the geometry is used only for client_size, since that one is not used when
-    // shading. Then the frame geometry is adjusted for the shaded geometry.
+    // Ok, the shading tqgeometry stuff. Generally, code doesn't care about shaded tqgeometry,
+    // simply because there are too many places dealing with tqgeometry. Those places
+    // ignore shaded state and use normal tqgeometry, which they usually should get
+    // from adjustedSize(). Such tqgeometry comes here, and if the window is shaded,
+    // the tqgeometry is used only for client_size, since that one is not used when
+    // shading. Then the frame tqgeometry is adjusted for the shaded tqgeometry.
     // This gets more complicated in the case the code does only something like
-    // setGeometry( geometry()) - geometry() will return the shaded frame geometry.
+    // setGeometry( tqgeometry()) - tqgeometry() will return the shaded frame tqgeometry.
     // Such code is wrong and should be changed to handle the case when the window is shaded,
     // for example using Client::clientSize().
-    if( shade_geometry_change )
+    if( shade_tqgeometry_change )
         ; // nothing
     else if( isShade())
         {
         if( h == border_top + border_bottom )
             {
-            kdDebug() << "Shaded geometry passed for size:" << endl;
+            kdDebug() << "Shaded tqgeometry passed for size:" << endl;
             kdDebug() << kdBacktrace() << endl;
             }
         else
@@ -1748,13 +1748,13 @@ void Client::setGeometry( int x, int y, int w, int h, ForceGeometry_t force )
         {
         client_size = TQSize( w - border_left - border_right, h - border_top - border_bottom );
         }
-    if( force == NormalGeometrySet && frame_geometry == TQRect( x, y, w, h ))
+    if( force == NormalGeometrySet && frame_tqgeometry == TQRect( x, y, w, h ))
         return;
-    frame_geometry = TQRect( x, y, w, h );
+    frame_tqgeometry = TQRect( x, y, w, h );
     updateWorkareaDiffs();
-    if( postpone_geometry_updates != 0 )
+    if( postpone_tqgeometry_updates != 0 )
         {
-        pending_geometry_update = true;
+        pending_tqgeometry_update = true;
         return;
         }
     resizeDecoration( TQSize( w, h ));
@@ -1779,13 +1779,13 @@ void Client::setGeometry( int x, int y, int w, int h, ForceGeometry_t force )
 void Client::plainResize( int w, int h, ForceGeometry_t force )
     {
     // this code is also duplicated in Client::setGeometry(), and it's also commented there
-    if( shade_geometry_change )
+    if( shade_tqgeometry_change )
         ; // nothing
     else if( isShade())
         {
         if( h == border_top + border_bottom )
             {
-            kdDebug() << "Shaded geometry passed for size:" << endl;
+            kdDebug() << "Shaded tqgeometry passed for size:" << endl;
             kdDebug() << kdBacktrace() << endl;
             }
         else
@@ -1803,13 +1803,13 @@ void Client::plainResize( int w, int h, ForceGeometry_t force )
         kdDebug() << "forced size fail:" << TQSize( w,h ) << ":" << rules()->checkSize( TQSize( w, h )) << endl;
         kdDebug() << kdBacktrace() << endl;
         }
-    if( force == NormalGeometrySet && frame_geometry.size() == TQSize( w, h ))
+    if( force == NormalGeometrySet && frame_tqgeometry.size() == TQSize( w, h ))
         return;
-    frame_geometry.setSize( TQSize( w, h ));
+    frame_tqgeometry.setSize( TQSize( w, h ));
     updateWorkareaDiffs();
-    if( postpone_geometry_updates != 0 )
+    if( postpone_tqgeometry_updates != 0 )
         {
-        pending_geometry_update = true;
+        pending_tqgeometry_update = true;
         return;
         }
     resizeDecoration( TQSize( w, h ));
@@ -1835,13 +1835,13 @@ void Client::plainResize( int w, int h, ForceGeometry_t force )
  */
 void Client::move( int x, int y, ForceGeometry_t force )
     {
-    if( force == NormalGeometrySet && frame_geometry.topLeft() == TQPoint( x, y ))
+    if( force == NormalGeometrySet && frame_tqgeometry.topLeft() == TQPoint( x, y ))
         return;
-    frame_geometry.moveTopLeft( TQPoint( x, y ));
+    frame_tqgeometry.moveTopLeft( TQPoint( x, y ));
     updateWorkareaDiffs();
-    if( postpone_geometry_updates != 0 )
+    if( postpone_tqgeometry_updates != 0 )
         {
-        pending_geometry_update = true;
+        pending_tqgeometry_update = true;
         return;
         }
     XMoveWindow( qt_xdisplay(), frameId(), x, y );
@@ -1856,21 +1856,21 @@ void Client::postponeGeometryUpdates( bool postpone )
     {
     if( postpone )
         {
-        if( postpone_geometry_updates == 0 )
-            pending_geometry_update = false;
-        ++postpone_geometry_updates;
+        if( postpone_tqgeometry_updates == 0 )
+            pending_tqgeometry_update = false;
+        ++postpone_tqgeometry_updates;
         }
     else
         {
-        if( --postpone_geometry_updates == 0 )
+        if( --postpone_tqgeometry_updates == 0 )
             {
-            if( pending_geometry_update )
+            if( pending_tqgeometry_update )
                 {
                 if( isShade())
                     setGeometry( TQRect( pos(), adjustedSize()), ForceGeometrySet );
                 else
-                    setGeometry( geometry(), ForceGeometrySet );
-                pending_geometry_update = false;
+                    setGeometry( tqgeometry(), ForceGeometrySet );
+                pending_tqgeometry_update = false;
                 }
             }
         }
@@ -2003,7 +2003,7 @@ void Client::changeMaximize( bool vertical, bool horizontal, bool adjust )
 
         case MaximizeRestore:
             {
-            TQRect restore = geometry();
+            TQRect restore = tqgeometry();
 	// when only partially maximized, geom_restore may not have the other dimension remembered
             if( old_mode & MaximizeVertical )
                 {
@@ -2024,7 +2024,7 @@ void Client::changeMaximize( bool vertical, bool horizontal, bool adjust )
                     s.setHeight( geom_restore.height());
                 plainResize( adjustedSize( s ));
                 workspace()->placeSmart( this, clientArea );
-                restore = geometry();
+                restore = tqgeometry();
                 if( geom_restore.width() > 0 )
                     restore.moveLeft( geom_restore.x());
                 if( geom_restore.height() > 0 )
@@ -2073,7 +2073,7 @@ void Client::resetMaximize()
     if( isShade())
         setGeometry( TQRect( pos(), sizeForClientSize( clientSize())), ForceGeometrySet );
     else
-        setGeometry( geometry(), ForceGeometrySet );
+        setGeometry( tqgeometry(), ForceGeometrySet );
     if( decoration != NULL )
         decoration->maximizeChange();
     }
@@ -2096,7 +2096,7 @@ void Client::checkMaximizeGeometry()
         }
     ++recursion_protection;
     TQRect max_area = workspace()->clientArea( MaximizeArea, this );
-    if( geometry() == max_area )
+    if( tqgeometry() == max_area )
         {
         if( max_mode != MaximizeFull )
             maximize( MaximizeFull );
@@ -2113,7 +2113,7 @@ void Client::checkMaximizeGeometry()
         }
     else if( max_mode != MaximizeRestore )
         {
-        resetMaximize(); // not maximize( MaximizeRestore ), that'd change geometry - this is called from setGeometry()
+        resetMaximize(); // not maximize( MaximizeRestore ), that'd change tqgeometry - this is called from setGeometry()
         }
     --recursion_protection;
     }
@@ -2126,7 +2126,7 @@ bool Client::isFullScreenable( bool fullscreen_hack ) const
         return isNormalWindow();
     if( rules()->checkStrictGeometry( false ))
         {
-        // the app wouldn't fit exactly fullscreen geometry due its strict geometry requirements
+        // the app wouldn't fit exactly fullscreen tqgeometry due its strict tqgeometry requirements
         TQRect fsarea = workspace()->clientArea( FullScreenArea, this );
         if( sizeForClientSize( fsarea.size(), SizemodeAny, true ) != fsarea.size())
             return false;
@@ -2158,7 +2158,7 @@ void Client::setFullScreen( bool set, bool user )
     setShade( ShadeNone );
     bool was_fs = isFullScreen();
     if( !was_fs )
-        geom_fs_restore = geometry();
+        geom_fs_restore = tqgeometry();
     fullscreen_mode = set ? FullScreenNormal : FullScreenNone;
     if( was_fs == isFullScreen())
         return;
@@ -2184,7 +2184,7 @@ void Client::setFullScreen( bool set, bool user )
 
 int Client::checkFullScreenHack( const TQRect& geom ) const
     {
-    // if it's noborder window, and has size of one screen or the whole desktop geometry, it's fullscreen hack
+    // if it's noborder window, and has size of one screen or the whole desktop tqgeometry, it's fullscreen hack
     if( noBorder() && !isUserNoBorder() && isFullScreenable( true ))
         {
         if( geom.size() == workspace()->clientArea( FullArea, geom.center(), desktop()).size())
@@ -2217,14 +2217,14 @@ void Client::updateFullScreenHack( const TQRect& geom )
         {
         fullscreen_mode = FullScreenNone;
         updateDecoration( false, false );
-        // whoever called this must setup correct geometry
+        // whoever called this must setup correct tqgeometry
         }
     StackingUpdatesBlocker blocker( workspace());
     workspace()->updateClientLayer( this ); // active fullscreens get different layer
     }
 
 static TQRect*       visible_bound  = 0;
-static GeometryTip* geometryTip    = 0;
+static GeometryTip* tqgeometryTip    = 0;
 
 void Client::drawbound( const TQRect& geom )
     {
@@ -2271,22 +2271,22 @@ void Client::positionGeometryTip()
     // Position and Size display
     if (options->showGeometryTip())
         {
-        if( !geometryTip )
+        if( !tqgeometryTip )
             { // save under is not necessary with opaque, and seem to make things slower
             bool save_under = ( isMove() && rules()->checkMoveResizeMode( options->moveMode ) != Options::Opaque )
                         || ( isResize() && rules()->checkMoveResizeMode( options->resizeMode ) != Options::Opaque );
-            geometryTip = new GeometryTip( &xSizeHint, save_under );
+            tqgeometryTip = new GeometryTip( &xSizeHint, save_under );
             }
         TQRect wgeom( moveResizeGeom ); // position of the frame, size of the window itself
         wgeom.setWidth( wgeom.width() - ( width() - clientSize().width()));
         wgeom.setHeight( wgeom.height() - ( height() - clientSize().height()));
         if( isShade())
             wgeom.setHeight( 0 );
-        geometryTip->setGeometry( wgeom );
-        if( !geometryTip->isVisible())
+        tqgeometryTip->setGeometry( wgeom );
+        if( !tqgeometryTip->isVisible())
             {
-            geometryTip->show();
-            geometryTip->raise();
+            tqgeometryTip->show();
+            tqgeometryTip->raise();
             }
         }
     }
@@ -2296,7 +2296,7 @@ class EatAllPaintEvents
     {
     protected:
         virtual bool eventFilter( TQObject* o, TQEvent* e )
-            { return e->type() == TQEvent::Paint && o != geometryTip; }
+            { return e->type() == TQEvent::Paint && o != tqgeometryTip; }
     };
 
 static EatAllPaintEvents* eater = 0;
@@ -2334,7 +2334,7 @@ bool Client::startMoveResize()
     removeShadow();
     moveResizeMode = true;
     workspace()->setClientIsMoving(this);
-    initialMoveResizeGeom = moveResizeGeom = geometry();
+    initialMoveResizeGeom = moveResizeGeom = tqgeometry();
     checkUnrestrictedMoveResize();
     // rule out non opaque windows from useless translucency settings, maybe resizes?
     if ((isResize() && options->removeShadowsOnResize) || (isMove() && options->removeShadowsOnMove))
@@ -2352,7 +2352,7 @@ bool Client::startMoveResize()
         // unfortunately, that's not completely true, Qt may generate
         // paint events on some widgets due to FocusIn(?)
         // eat them, otherwise XOR painting will be broken (#58054)
-        // paint events for the geometrytip need to be allowed, though
+        // paint events for the tqgeometrytip need to be allowed, though
         eater = new EatAllPaintEvents;
 // not needed anymore?        kapp->installEventFilter( eater );
         }
@@ -2380,11 +2380,11 @@ void Client::leaveMoveResize()
     if ((isResize() && options->removeShadowsOnResize) || (isMove() && options->removeShadowsOnMove))
         updateShadowSize();
     clearbound();
-    if (geometryTip)
+    if (tqgeometryTip)
         {
-        geometryTip->hide();
-        delete geometryTip;
-        geometryTip = NULL;
+        tqgeometryTip->hide();
+        delete tqgeometryTip;
+        tqgeometryTip = NULL;
         }
     if ( ( isMove() && rules()->checkMoveResizeMode( options->moveMode ) != Options::Opaque )
       || ( isResize() && rules()->checkMoveResizeMode( options->resizeMode ) != Options::Opaque ) )
@@ -2479,7 +2479,7 @@ void Client::handleMoveResize( int x, int y, int x_root, int y_root )
         setShade( ShadeNone );
 
     TQPoint globalPos( x_root, y_root );
-    // these two points limit the geometry rectangle, i.e. if bottomleft resizing is done,
+    // these two points limit the tqgeometry rectangle, i.e. if bottomleft resizing is done,
     // the bottomleft corner should be at is at (topleft.x(), bottomright().y())
     TQPoint topleft = globalPos - moveOffset;
     TQPoint bottomright = globalPos + invertedMoveOffset;
@@ -2636,10 +2636,10 @@ void Client::handleMoveResize( int x, int y, int x_root, int y_root )
         else if( rules()->checkMoveResizeMode
             ( isResize() ? options->resizeMode : options->moveMode ) == Options::Transparent )
             {
-            clearbound();  // it's necessary to move the geometry tip when there's no outline
-            positionGeometryTip(); // shown, otherwise it would cause repaint problems in case
+            clearbound();  // it's necessary to move the tqgeometry tip when there's no outline
+            positionGeometryTip(); // shown, otherwise it would cause tqrepaint problems in case
             drawbound( moveResizeGeom ); // they overlap; the paint event will come after this,
-            }                               // so the geometry tip will be painted above the outline
+            }                               // so the tqgeometry tip will be painted above the outline
         }
     if ( isMove() )
       workspace()->clientMoved(globalPos, qt_x_time);

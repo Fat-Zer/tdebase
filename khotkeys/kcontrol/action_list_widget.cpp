@@ -222,7 +222,7 @@ void Action_list_widget::edit_listview_item( Action_list_item* item_P )
         {
         item_P->set_action( new_action );
         item_P->widthChanged( 0 );
-        actions_listview->repaintItem( item_P );
+        actions_listview->tqrepaintItem( item_P );
         }
     delete dlg;
     }

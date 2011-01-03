@@ -5,7 +5,7 @@
     <property name="name">
         <cstring>KCMPrivacyDialog</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -79,13 +79,13 @@
                         <verstretch>0</verstretch>
                     </sizepolicy>
                 </property>
-                <property name="minimumSize">
+                <property name="tqminimumSize">
                     <size>
                         <width>0</width>
                         <height>50</height>
                     </size>
                 </property>
-                <property name="maximumSize">
+                <property name="tqmaximumSize">
                     <size>
                         <width>32767</width>
                         <height>200</height>
@@ -104,7 +104,7 @@
         </widget>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout1</cstring>
+                <cstring>tqlayout1</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -114,13 +114,13 @@
                     <property name="name">
                         <cstring>selectAllButton</cstring>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>0</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>
@@ -134,13 +134,13 @@
                     <property name="name">
                         <cstring>selectNoneButton</cstring>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>0</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>
@@ -160,7 +160,7 @@
                     <property name="sizeType">
                         <enum>Maximum</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>80</width>
                             <height>20</height>
@@ -179,7 +179,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>
@@ -197,5 +197,5 @@
     <include location="global" impldecl="in implementation">klistview.h</include>
     <include location="global" impldecl="in implementation">ktextedit.h</include>
 </includes>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

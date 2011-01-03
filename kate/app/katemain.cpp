@@ -253,4 +253,4 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   return app.exec();
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on; mixed-indent off;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on; mixed-indent off;

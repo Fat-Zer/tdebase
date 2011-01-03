@@ -209,7 +209,7 @@ list of types, whilst providing default behaviour for window managers that do
 not recognise the extensions.  
 	</P
 ><P
->Rationale:  This hint is intend to replace the MOTIF hints.  One of the
+>Rationale:  This hint is intend to tqreplace the MOTIF hints.  One of the
 objections to the MOTIF hints is that they are a purely visual description of
 the window decoration.  By describing the function of the window, the window
 manager can apply consistent decoration and behaviour to windows of the same
@@ -509,7 +509,7 @@ CLASS="PROGRAMLISTING"
 >_NET_WM_STRUT, left, right, top, bottom, CARDINAL[4]/32</PRE
 ><P
 >This property MUST be set by the Client if the window is to reserve space at
-the edge of the screen.  The property contains a 4 cardinals specifying the
+the edge of the screen.  The property tqcontains a 4 cardinals specifying the
 width of the reserved area at each border of the screen.  
 The order of the borders is left, right, top, bottom.
 The client MAY change this property anytime, therefore the Window Manager MUST
@@ -545,7 +545,7 @@ CLASS="PROGRAMLISTING"
 >_NET_WM_ICON_GEOMETRY, x, y, width, height, CARDINAL[4]/32</PRE
 ><P
 >This optional property MAY be set by standalone tools like a taskbar or an 
-iconbox.  It specifies the geometry of a possible icon in case the window is iconified.
+iconbox.  It specifies the tqgeometry of a possible icon in case the window is iconified.
 	</P
 ><P
 >Rationale: This makes it possible for a window manager to display a nice

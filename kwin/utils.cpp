@@ -43,11 +43,11 @@ namespace KWinInternal
 
 // used to store the return values of
 // XShapeQueryExtension.
-// Necessary since shaped window are an extension to X
-int Shape::kwin_shape_version = 0;
-int Shape::kwin_shape_event = 0;
+// Necessary since tqshaped window are an extension to X
+int Shape::kwin_tqshape_version = 0;
+int Shape::kwin_tqshape_event = 0;
 
-// does the window w  need a shape combine mask around it?
+// does the window w  need a tqshape combine tqmask around it?
 bool Shape::hasShape( WId w)
     {
     int xws, yws, xbs, ybs;
@@ -61,21 +61,21 @@ bool Shape::hasShape( WId w)
     return boundingShaped != 0;
     }
 
-int Shape::shapeEvent()
+int Shape::tqshapeEvent()
     {
-    return kwin_shape_event;
+    return kwin_tqshape_event;
     }
 
 void Shape::init()
     {
-    kwin_shape_version = 0;
+    kwin_tqshape_version = 0;
     int dummy;
-    if( !XShapeQueryExtension(qt_xdisplay(), &kwin_shape_event, &dummy))
+    if( !XShapeQueryExtension(qt_xdisplay(), &kwin_tqshape_event, &dummy))
         return;
     int major, minor;
     if( !XShapeQueryVersion( qt_xdisplay(), &major, &minor ))
         return;
-    kwin_shape_version = major * 0x10 + minor;
+    kwin_tqshape_version = major * 0x10 + minor;
     }
 
 void Motif::readFlags( WId w, bool& noborder, bool& resize, bool& move,

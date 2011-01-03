@@ -72,8 +72,8 @@ Fonts need to suit the needs of X11, QT and konsole.
   The following graphical glyphs are defined in
   VT100 fonts, too, but are not used in any program
   i know about. Codes for them have been assigned
-  in the private unicode page. See the linux kernel
-  documentation file [unicode.txt] about this assignment.
+  in the private tqunicode page. See the linux kernel
+  documentation file [tqunicode.txt] about this assignment.
 
   - 0x10 U+f800 : DEC VT GRAPHICS HORIZONTAL LINE SCAN 1
   - 0x11 U+f801 : DEC VT GRAPHICS HORIZONTAL LINE SCAN 3
@@ -111,7 +111,7 @@ Fonts need to suit the needs of X11, QT and konsole.
 
   Use the "DEFAULT_CHAR" property with bdf fonts
   to do so. Other font representations provide
-  likely means. The unicode assignment is U+fffd.
+  likely means. The tqunicode assignment is U+fffd.
 
   If such a character isn't defined, X11 might
   choose to void the character completely, causing

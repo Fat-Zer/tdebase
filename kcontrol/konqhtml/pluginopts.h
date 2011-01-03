@@ -37,10 +37,10 @@ public:
   /**
    * constructor
    * @param config configuration to initialize this instance from
-   * @param group config group to use if this instance contains the global
+   * @param group config group to use if this instance tqcontains the global
    *	policies (global == true)
-   * @param global true if this instance contains the global policy settings,
-   *	false if this instance contains policies specific for a domain.
+   * @param global true if this instance tqcontains the global policy settings,
+   *	false if this instance tqcontains policies specific for a domain.
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */

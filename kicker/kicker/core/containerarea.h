@@ -101,9 +101,9 @@ public slots:
     void removeContainers(BaseContainer::List containers);
     void takeContainer(BaseContainer* a);
     void setPosition(KPanelExtension::Position p);
-    void setAlignment(KPanelExtension::Alignment a);
+    void tqsetAlignment(KPanelExtension::Alignment a);
     void slotSaveContainerConfig();
-    void repaint();
+    void tqrepaint();
     void showAddAppletDialog();
     void addAppletDialogDone();
 
@@ -124,7 +124,7 @@ protected:
 
     void defaultContainerConfig();
     void loadContainers(const TQStringList& containers);
-    void saveContainerConfig(bool layoutOnly = false);
+    void saveContainerConfig(bool tqlayoutOnly = false);
 
     TQRect availableSpaceFollowing(BaseContainer*);
     void moveDragIndicator(int pos);
@@ -166,7 +166,7 @@ private:
     bool            m_updateBackgroundsCalled;
 
     TQWidget*             m_contents;
-    ContainerAreaLayout* m_layout;
+    ContainerAreaLayout* m_tqlayout;
     AddAppletDialog*     m_addAppletDialog;
     TQMap< TQWidget*, TQRect > m_cachedGeometry;
 };

@@ -83,10 +83,10 @@ static TQString defaultThemeDescription( const TQString& theme )
 ThemePage::ThemePage( TQWidget* parent, const char* name )
 	: TQWidget( parent, name ), selectedTheme( NULL ), currentTheme( NULL )
 {
-	TQBoxLayout *layout = new TQVBoxLayout( this );
-	layout->setAutoAdd( true );
-	layout->setMargin( KDialog::marginHint() );
-	layout->setSpacing( KDialog::spacingHint() );
+	TQBoxLayout *tqlayout = new TQVBoxLayout( this );
+	tqlayout->setAutoAdd( true );
+	tqlayout->setMargin( KDialog::marginHint() );
+	tqlayout->setSpacing( KDialog::spacingHint() );
 
 	new TQLabel( i18n("Select the cursor theme you want to use (hover preview to test cursor):"), this );
 
@@ -122,7 +122,7 @@ ThemePage::ThemePage( TQWidget* parent, const char* name )
 		( !icons.exists() && !TQFileInfo( TQDir::homeDirPath() ).isWritable() ) )
 		installButton->setEnabled( false );
 
-	if ( !themeDirs.contains( path ) )
+	if ( !themeDirs.tqcontains( path ) )
 		installButton->setEnabled( false );
 
 	selectionChanged( listview->currentItem() );
@@ -305,17 +305,17 @@ bool ThemePage::installThemes( const TQString &file )
 		// Check if a theme with that name already exists
 		if ( TQDir( destDir ).exists( *it ) ) {
 			const TQString question = i18n( "A theme named %1 already exists in your icon "
-					"theme folder. Do you want replace it with this one?" ).arg( *it );
+					"theme folder. Do you want tqreplace it with this one?" ).arg( *it );
 			int answer = KMessageBox::warningContinueCancel( this, question, i18n( "Overwrite Theme?"), i18n("Replace") );
 			if ( answer != KMessageBox::Continue )
 				continue;
 
-			// ### If the theme that's being replaced is the current theme, it
+			// ### If the theme that's being tqreplaced is the current theme, it
 			//     will cause cursor inconsistencies in newly started apps.
 		}
 
 		// ### Should we check if a theme with the same name exists in a global theme dir?
-		//     If that's the case it will effectively replace it, even though the global theme
+		//     If that's the case it will effectively tqreplace it, even though the global theme
 		//     won't be deleted. Checking for this situation is easy, since the global theme
 		//     will be in the listview. Maybe this should never be allowed since it might
 		//     result in strange side effects (from the average users point of view). OTOH
@@ -395,7 +395,7 @@ const TQStringList ThemePage::getThemeBaseDirs() const
 	TQString path = XcursorLibraryPath();
 #endif
 	// Expand all occurences of ~ to the home dir
-	path.replace( "~/", TQDir::homeDirPath() + '/' );
+	path.tqreplace( "~/", TQDir::homeDirPath() + '/' );
 	return TQStringList::split( ':', path );
 }
 
@@ -414,7 +414,7 @@ bool ThemePage::isCursorTheme( const TQString &theme, const int depth ) const
 			continue;
 
 		const TQStringList subdirs( dir.entryList( TQDir::Dirs ) );
-		if ( subdirs.contains( theme ) )
+		if ( subdirs.tqcontains( theme ) )
 		{
 			const TQString path       = *it + '/' + theme;
 			const TQString indexfile  = path + "/index.theme";
@@ -453,7 +453,7 @@ bool ThemePage::isCursorTheme( const TQString &theme, const int depth ) const
 void ThemePage::insertThemes()
 {
 	// Scan each base dir for cursor themes and add them to the listview.
-	// An icon theme is considered to be a cursor theme if it contains
+	// An icon theme is considered to be a cursor theme if it tqcontains
 	// a cursors subdirectory or if it inherits a cursor theme.
 	for ( TQStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
 	{
@@ -585,7 +585,7 @@ TQPixmap ThemePage::createIcon( const TQString &theme, const TQString &sample ) 
 		image.setAlphaBuffer( true );
 
 		// Clear the image
-		Q_UINT32 *dst = reinterpret_cast<Q_UINT32*>( image.bits() );
+		TQ_UINT32 *dst = reinterpret_cast<TQ_UINT32*>( image.bits() );
 		for ( int i = 0; i < image.width() * image.height(); i++ )
 			dst[i] = 0;
 
@@ -593,26 +593,26 @@ TQPixmap ThemePage::createIcon( const TQString &theme, const TQString &sample ) 
 		TQPoint dstOffset( (image.width() - r.width()) / 2, (image.height() - r.height()) / 2 );
 		TQPoint srcOffset( r.topLeft() );
 
-		dst = reinterpret_cast<Q_UINT32*>( image.scanLine(dstOffset.y()) ) + dstOffset.x();
-		src = reinterpret_cast<Q_UINT32*>( xcur->pixels ) + srcOffset.y() * xcur->width + srcOffset.x();
+		dst = reinterpret_cast<TQ_UINT32*>( image.scanLine(dstOffset.y()) ) + dstOffset.x();
+		src = reinterpret_cast<TQ_UINT32*>( xcur->pixels ) + srcOffset.y() * xcur->width + srcOffset.x();
 
 		// Copy the XcursorImage into the TQImage, converting it from premultiplied
 		// to non-premultiplied alpha and cropping it if needed.
 		for ( int y = 0; y < r.height(); y++ )
 		{
 			for ( int x = 0; x < r.width(); x++, dst++, src++ ) {
-				const Q_UINT32 pixel = *src;
+				const TQ_UINT32 pixel = *src;
 
-				const Q_UINT8 a = qAlpha( pixel );
-				const Q_UINT8 r = qRed( pixel );
-				const Q_UINT8 g = qGreen( pixel );
-				const Q_UINT8 b = qBlue( pixel );
+				const TQ_UINT8 a = tqAlpha( pixel );
+				const TQ_UINT8 r = tqRed( pixel );
+				const TQ_UINT8 g = tqGreen( pixel );
+				const TQ_UINT8 b = tqBlue( pixel );
 
 				if ( !a || a == 255 ) {
 					*dst = pixel;
 				} else {
 					float alpha = a / 255.0;
-					*dst = qRgba( int(r / alpha), int(g / alpha), int(b / alpha), a );
+					*dst = tqRgba( int(r / alpha), int(g / alpha), int(b / alpha), a );
 				}
 			}
 			dst += ( image.width() - r.width() );
@@ -630,7 +630,7 @@ TQPixmap ThemePage::createIcon( const TQString &theme, const TQString &sample ) 
 		TQImage image( iconSize, iconSize, 32 );
 		image.setAlphaBuffer( true );
 
-		Q_UINT32 *data = reinterpret_cast< Q_UINT32* >( image.bits() );
+		TQ_UINT32 *data = reinterpret_cast< TQ_UINT32* >( image.bits() );
 		for ( int i = 0; i < image.width() * image.height(); i++ )
 			data[ i ] = 0;
 

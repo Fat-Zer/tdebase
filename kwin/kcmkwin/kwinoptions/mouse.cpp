@@ -136,7 +136,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
   TQString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3;
-  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
   TQGrid *grid;
   TQGroupBox *box;
   TQLabel *label;
@@ -147,10 +147,10 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
 /** Titlebar doubleclick ************/
 
-  TQHBoxLayout *hlayout = new TQHBoxLayout(layout);
+  TQHBoxLayout *htqlayout = new TQHBoxLayout(tqlayout);
 
   label = new TQLabel(i18n("&Titlebar double-click:"), this);
-  hlayout->addWidget(label);
+  htqlayout->addWidget(label);
   TQWhatsThis::add( label, i18n("Here you can customize mouse click behavior when double clicking on the"
     " titlebar of a window.") );
 
@@ -163,19 +163,19 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   combo->insertItem(i18n("Lower"));
   combo->insertItem(i18n("On All Desktops"));
   combo->insertItem(i18n("Nothing"));
-  combo->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
+  combo->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
   connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
-  hlayout->addWidget(combo);
+  htqlayout->addWidget(combo);
   coTiDbl = combo;
   TQWhatsThis::add(combo, i18n("Behavior on <em>double</em> click into the titlebar."));
 
   label->setBuddy(combo);
 
 /** Mouse Wheel Events  **************/
-  TQHBoxLayout *hlayoutW = new TQHBoxLayout(layout);
+  TQHBoxLayout *htqlayoutW = new TQHBoxLayout(tqlayout);
   strMouseWheel = i18n("Titlebar wheel event:");
   label = new TQLabel(strMouseWheel, this);
-  hlayoutW->addWidget(label);
+  htqlayoutW->addWidget(label);
   txtButton4 = i18n("Handle mouse wheel events");
   TQWhatsThis::add( label, txtButton4);
   
@@ -188,9 +188,9 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   comboW->insertItem(i18n("Move to Previous/Next Desktop"));  
   comboW->insertItem(i18n("Change Opacity"));  
   comboW->insertItem(i18n("Nothing"));  
-  comboW->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
+  comboW->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
   connect(comboW, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
-  hlayoutW->addWidget(comboW);
+  htqlayoutW->addWidget(comboW);
   coTiAct4 = comboW;
   TQWhatsThis::add(comboW, txtButton4);
   label->setBuddy(comboW);
@@ -198,9 +198,9 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 /** Titlebar and frame  **************/
 
   box = new TQVGroupBox( i18n("Titlebar && Frame"), this, "Titlebar and Frame");
-  box->layout()->setMargin(KDialog::marginHint());
-  box->layout()->setSpacing(KDialog::spacingHint());
-  layout->addWidget(box);
+  box->tqlayout()->setMargin(KDialog::marginHint());
+  box->tqlayout()->setSpacing(KDialog::spacingHint());
+  tqlayout->addWidget(box);
   TQWhatsThis::add( box, i18n("Here you can customize mouse click behavior when clicking on the"
                              " titlebar or the frame of a window.") );
 
@@ -219,8 +219,8 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
   if ( leftHandedMouse )
   {
-     qSwap(strMouseButton1, strMouseButton3);
-     qSwap(txtButton1, txtButton3);
+     tqSwap(strMouseButton1, strMouseButton3);
+     tqSwap(txtButton1, txtButton3);
   }
 
   label = new TQLabel(strMouseButton1, grid);
@@ -235,7 +235,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
 
   label = new TQLabel(i18n("Active"), grid);
-  label->setAlignment(AlignCenter);
+  label->tqsetAlignment(AlignCenter);
   TQWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
                                " or the frame of an active window.") );
 
@@ -256,7 +256,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
      "<em>active</em> window.");
 
   // Be nice to left handed users
-  if ( leftHandedMouse ) qSwap(txtButton1, txtButton3);
+  if ( leftHandedMouse ) tqSwap(txtButton1, txtButton3);
 
   TQWhatsThis::add(combo, txtButton1);
 
@@ -289,10 +289,10 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
      "<em>inactive</em> window.");
 
   // Be nice to left handed users
-  if ( leftHandedMouse ) qSwap(txtButton1, txtButton3);
+  if ( leftHandedMouse ) tqSwap(txtButton1, txtButton3);
 
   label = new TQLabel(i18n("Inactive"), grid);
-  label->setAlignment(AlignCenter);
+  label->tqsetAlignment(AlignCenter);
   TQWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
                                " or the frame of an inactive window.") );
 
@@ -327,9 +327,9 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 /**  Maximize Button ******************/
 
   box = new TQHGroupBox(i18n("Maximize Button"), this, "Maximize Button");
-  box->layout()->setMargin(KDialog::marginHint());
-  box->layout()->setSpacing(KDialog::spacingHint());
-  layout->addWidget(box);
+  box->tqlayout()->setMargin(KDialog::marginHint());
+  box->tqlayout()->setSpacing(KDialog::spacingHint());
+  tqlayout->addWidget(box);
   TQWhatsThis::add( box,
     i18n("Here you can customize behavior when clicking on the maximize button.") );
 
@@ -345,8 +345,8 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
   if ( leftHandedMouse ) // Be nice to lefties
   {
-     qSwap(strMouseButton[0], strMouseButton[2]);
-     qSwap(txtButton[0], txtButton[2]);
+     tqSwap(strMouseButton[0], strMouseButton[2]);
+     tqSwap(txtButton[0], txtButton[2]);
   }
 
   createMaxButtonPixmaps();
@@ -356,19 +356,19 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
     TQLabel * label = new TQLabel(strMouseButton[b], box);
     TQWhatsThis::add( label,    txtButton[b] );
-    label   ->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
+    label   ->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
 
     coMax[b] = new ToolTipComboBox(box, tbl_Max);
     for (int t = 0; t < 3; ++t) coMax[b]->insertItem(maxButtonPixmaps[t]);
     connect(coMax[b], TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
     connect(coMax[b], TQT_SIGNAL(activated(int)), coMax[b], TQT_SLOT(changed()));
     TQWhatsThis::add( coMax[b], txtButton[b] );
-    coMax[b]->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
+    coMax[b]->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
   }
 
   connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
 
-  layout->addStretch();
+  tqlayout->addStretch();
 
   load();
 }
@@ -588,7 +588,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
   TQString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3, strAllW;
-  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
   TQGrid *grid;
   TQGroupBox *box;
   TQLabel *label;
@@ -600,9 +600,9 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
 /**  Inactive inner window ******************/
 
   box = new TQVGroupBox(i18n("Inactive Inner Window"), this, "Inactive Inner Window");
-  box->layout()->setMargin(KDialog::marginHint());
-  box->layout()->setSpacing(KDialog::spacingHint());
-  layout->addWidget(box);
+  box->tqlayout()->setMargin(KDialog::marginHint());
+  box->tqlayout()->setSpacing(KDialog::spacingHint());
+  tqlayout->addWidget(box);
   TQWhatsThis::add( box, i18n("Here you can customize mouse click behavior when clicking on an inactive"
                              " inner window ('inner' means: not titlebar, not frame).") );
 
@@ -618,8 +618,8 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
 
   if ( leftHandedMouse )
   {
-     qSwap(strMouseButton1, strMouseButton3);
-     qSwap(txtButton1, txtButton3);
+     tqSwap(strMouseButton1, strMouseButton3);
+     tqSwap(txtButton1, txtButton3);
   }
 
   strWin1 = i18n("In this row you can customize left click behavior when clicking into"
@@ -629,7 +629,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
      " an inactive inner window ('inner' means: not titlebar, not frame).");
 
   // Be nice to lefties
-  if ( leftHandedMouse ) qSwap(strWin1, strWin3);
+  if ( leftHandedMouse ) tqSwap(strWin1, strWin3);
 
   label = new TQLabel(strMouseButton1, grid);
   TQWhatsThis::add( label, strWin1 );
@@ -670,9 +670,9 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
 /** Inner window, titlebar and frame **************/
 
   box = new TQVGroupBox(i18n("Inner Window, Titlebar && Frame"), this, "Inner Window, Titlebar and Frame");
-  box->layout()->setMargin(KDialog::marginHint());
-  box->layout()->setSpacing(KDialog::spacingHint());
-  layout->addWidget(box);
+  box->tqlayout()->setMargin(KDialog::marginHint());
+  box->tqlayout()->setSpacing(KDialog::spacingHint());
+  tqlayout->addWidget(box);
   TQWhatsThis::add( box, i18n("Here you can customize KDE's behavior when clicking somewhere into"
                              " a window while pressing a modifier key."));
 
@@ -696,8 +696,8 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
 
   if ( leftHandedMouse )
   {
-     qSwap(strMouseButton1, strMouseButton3);
-     qSwap(strAll1, strAll3);
+     tqSwap(strMouseButton1, strMouseButton3);
+     tqSwap(strAll1, strAll3);
   }
 
   label = new TQLabel(strMouseButton1, grid);
@@ -764,7 +764,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   coAllW =  combo;
   TQWhatsThis::add( combo, strAllW );
 
-  layout->addStretch();
+  tqlayout->addStretch();
 
   load();
 }

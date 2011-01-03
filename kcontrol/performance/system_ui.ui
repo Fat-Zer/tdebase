@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>System_ui</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -55,7 +55,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>40</height>
@@ -64,6 +64,6 @@
         </spacer>
     </vbox>
 </widget>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
+<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

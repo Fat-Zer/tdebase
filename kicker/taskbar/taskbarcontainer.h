@@ -48,7 +48,7 @@ public:
     void popupDirectionChange( KPanelApplet::Direction );
     void preferences();
     //FIXME: don't use Position, use Orientation
-    TQSize sizeHint( KPanelExtension::Position, TQSize maxSize ) const;
+    TQSize tqsizeHint( KPanelExtension::Position, TQSize maxSize ) const;
     void setBackground();
 
 k_dcop:
@@ -66,7 +66,7 @@ protected slots:
 private:
     KPanelApplet::Direction      direction;
     bool                         showWindowListButton;
-    TQBoxLayout *                 layout;
+    TQBoxLayout *                 tqlayout;
     TaskBar *                    taskBar;
     SimpleButton *               windowListButton;
     KWindowListMenu *            windowListMenu;

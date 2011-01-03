@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KCookiesManagementDlgUI</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -21,7 +21,7 @@
         </property>
         <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
-                <cstring>layout6</cstring>
+                <cstring>tqlayout6</cstring>
             </property>
             <grid>
                 <property name="name">
@@ -71,7 +71,7 @@
                 </widget>
                 <widget class="QLayoutWidget" row="0" column="1" rowspan="2" colspan="1">
                     <property name="name">
-                        <cstring>layout4</cstring>
+                        <cstring>tqlayout4</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -119,7 +119,7 @@
                             <property name="sizeType">
                                 <enum>MinimumExpanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>21</width>
                                     <height>62</height>
@@ -130,7 +130,7 @@
                 </widget>
                 <widget class="QLayoutWidget" row="0" column="0">
                     <property name="name">
-                        <cstring>layout3</cstring>
+                        <cstring>tqlayout3</cstring>
                     </property>
                     <hbox>
                         <property name="name">
@@ -315,8 +315,8 @@
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
+<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>klistviewsearchline.h</includehint>
 </includehints>

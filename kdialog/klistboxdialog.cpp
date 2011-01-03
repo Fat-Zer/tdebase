@@ -32,7 +32,7 @@ KListBoxDialog::KListBoxDialog(TQString text, TQWidget *parent)
   TQVBox *page = makeVBoxMainWidget();
 
   label = new TQLabel(text, page);
-  label->setAlignment(AlignCenter);
+  label->tqsetAlignment(AlignCenter);
 
   table = new TQListBox(page);
   table->setFocus();

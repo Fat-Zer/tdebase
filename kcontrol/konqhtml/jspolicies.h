@@ -50,16 +50,16 @@ public:
    * Enumeration for all policies
    */
   enum Policies { JavaScriptEnabled = 0, WindowOpen, WindowResize,
-  		WindowMove, WindowFocus, WindowStatus, NumPolicies };
+  		WindowMove, WindowFocus, WindowtqStatus, NumPolicies };
 #endif
 
   /**
    * constructor
    * @param config configuration to initialize this instance from
-   * @param group config group to use if this instance contains the global
+   * @param group config group to use if this instance tqcontains the global
    *	policies (global == true)
-   * @param global true if this instance contains the global policy settings,
-   *	false if this instance contains policies specific for a domain.
+   * @param global true if this instance tqcontains the global policy settings,
+   *	false if this instance tqcontains policies specific for a domain.
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */
@@ -141,19 +141,19 @@ public:
   }
 
   /**
-   * Returns whether the WindowStatus policy is inherited.
+   * Returns whether the WindowtqStatus policy is inherited.
    */
-  bool isWindowStatusPolicyInherited() const {
+  bool isWindowtqStatusPolicyInherited() const {
     return window_status == INHERIT_POLICY;
   }
   /**
-   * Returns the current value of the WindowStatus policy.
+   * Returns the current value of the WindowtqStatus policy.
    *
-   * This will return an illegal value if isWindowStatusPolicyInherited is
+   * This will return an illegal value if isWindowtqStatusPolicyInherited is
    * true.
    */
-  KHTMLSettings::KJSWindowStatusPolicy windowStatusPolicy() const {
-    return (KHTMLSettings::KJSWindowStatusPolicy)window_status;
+  KHTMLSettings::KJSWindowtqStatusPolicy windowtqStatusPolicy() const {
+    return (KHTMLSettings::KJSWindowtqStatusPolicy)window_status;
   }
 
   /**
@@ -178,7 +178,7 @@ private:
   unsigned int window_move;
   // one of KHTMLSettings::KJSWindowFocusPolicy or INHERIT_POLICY
   unsigned int window_focus;
-  // one of KHTMLSettings::KJSWindowStatusPolicy or INHERIT_POLICY
+  // one of KHTMLSettings::KJSWindowtqStatusPolicy or INHERIT_POLICY
   unsigned int window_status;
 
   friend class JSPoliciesFrame;	// for changing policies
@@ -187,7 +187,7 @@ private:
 /**
  * @short Provides a framed widget with controls for the JavaScript policy settings.
  *
- * This widget contains controls for changing all JavaScript policies
+ * This widget tqcontains controls for changing all JavaScript policies
  * except the JavaScript enabled policy itself. The rationale behind this is
  * that the enabled policy be separate from the rest in a prominent
  * place.
@@ -253,7 +253,7 @@ private slots:
   void setWindowResizePolicy(int id);
   void setWindowMovePolicy(int id);
   void setWindowFocusPolicy(int id);
-  void setWindowStatusPolicy(int id);
+  void setWindowtqStatusPolicy(int id);
 
 private:
 

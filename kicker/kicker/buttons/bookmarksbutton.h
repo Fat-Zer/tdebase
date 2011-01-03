@@ -32,7 +32,7 @@ class KActionCollection;
 class KBookmarkOwner;
 
 /**
- * Button that contains a bookmark menu
+ * Button that tqcontains a bookmark menu
  */
 class BookmarksButton : public PanelPopupButton
 {

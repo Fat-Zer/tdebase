@@ -88,7 +88,7 @@ ContainerArea::ContainerArea(KConfig* _c,
       m_canAddContainers(true),
       m_immutable(_c->isImmutable()),
       m_updateBackgroundsCalled(false),
-      m_layout(0),
+      m_tqlayout(0),
       m_addAppletDialog(0),
       _autoScrollTimer(0, "ContainerArea::autoScrollTimer")
 {
@@ -96,9 +96,9 @@ ContainerArea::ContainerArea(KConfig* _c,
 
     m_contents = viewport();
 
-    m_layout = new ContainerAreaLayout(m_contents);
+    m_tqlayout = new ContainerAreaLayout(m_contents);
 
-    // Install an event filter to propagate layout hints coming from m_contents.
+    // Install an event filter to propagate tqlayout hints coming from m_contents.
     m_contents->installEventFilter(this);
 
     setBackground();
@@ -123,7 +123,7 @@ void ContainerArea::initialize(bool useDefaultConfig)
     // do we really need to do this?
     removeAllContainers();
 
-    // restore applet layout or load a default panel layout
+    // restore applet tqlayout or load a default panel tqlayout
     _config->setGroup("General");
     if (_config->hasKey("Applets2"))
     {
@@ -380,7 +380,7 @@ void ContainerArea::loadContainers(const TQStringList& containers)
     TQTimer::singleShot(0, this, TQT_SLOT(updateContainersBackground()));
 }
 
-void ContainerArea::saveContainerConfig(bool layoutOnly)
+void ContainerArea::saveContainerConfig(bool tqlayoutOnly)
 {
     if (!canAddContainers())
     {
@@ -389,14 +389,14 @@ void ContainerArea::saveContainerConfig(bool layoutOnly)
 
     // Save the applet list
     TQStringList alist;
-    TQLayoutIterator it2 = m_layout->iterator();
+    TQLayoutIterator it2 = m_tqlayout->iterator();
     for (; it2.current(); ++it2)
     {
         BaseContainer* a = dynamic_cast<BaseContainer*>(it2.current()->widget());
         if (a)
         {
             KConfigGroup group(_config, a->appletId().latin1());
-            a->saveConfiguration(group, layoutOnly);
+            a->saveConfiguration(group, tqlayoutOnly);
             alist.append(a->appletId());
         }
     }
@@ -700,22 +700,22 @@ void ContainerArea::addContainer(BaseContainer* a, bool arrange, int index)
 
     if (arrange)
     {
-        TQWidget* w = m_layout->widgetAt(index);
+        TQWidget* w = m_tqlayout->widgetAt(index);
         TQPoint oldInsertionPoint = Kicker::the()->insertionPoint();
         if (w)
         {
             // let's set the insertion point to where the widget asked to be
             // put in front of is
-            Kicker::the()->setInsertionPoint(w->geometry().topLeft());
+            Kicker::the()->setInsertionPoint(w->tqgeometry().topLeft());
         }
 
         if (Kicker::the()->insertionPoint().isNull())
         {
-            m_layout->insertIntoFreeSpace(a, TQPoint());
+            m_tqlayout->insertIntoFreeSpace(a, TQPoint());
         }
         else
         {
-            m_layout->insertIntoFreeSpace(a, mapFromGlobal(Kicker::the()->insertionPoint()));
+            m_tqlayout->insertIntoFreeSpace(a, mapFromGlobal(Kicker::the()->insertionPoint()));
         }
 
         if (w)
@@ -725,7 +725,7 @@ void ContainerArea::addContainer(BaseContainer* a, bool arrange, int index)
     }
     else
     {
-        m_layout->add(a);
+        m_tqlayout->add(a);
     }
 
     connect(a, TQT_SIGNAL(moveme(BaseContainer*)),
@@ -758,7 +758,7 @@ bool ContainerArea::removeContainer(BaseContainer *a)
 
     a->slotRemoved(_config);
     m_containers.remove(a);
-    m_layout->remove(a);
+    m_tqlayout->remove(a);
     a->deleteLater();
     saveContainerConfig(true);
     resizeContents();
@@ -772,7 +772,7 @@ bool ContainerArea::removeContainer(int index)
         return false;
     }
 
-    BaseContainer* a = dynamic_cast<BaseContainer*>(m_layout->widgetAt(index));
+    BaseContainer* a = dynamic_cast<BaseContainer*>(m_tqlayout->widgetAt(index));
     if (!a || a->isImmutable())
     {
         return false;
@@ -780,7 +780,7 @@ bool ContainerArea::removeContainer(int index)
 
     a->slotRemoved(_config);
     m_containers.remove(a);
-    m_layout->remove(a);
+    m_tqlayout->remove(a);
     a->deleteLater();
     saveContainerConfig(true);
     resizeContents();
@@ -794,7 +794,7 @@ void ContainerArea::removeContainers(BaseContainer::List containers)
         return;
     }
 
-    m_layout->setEnabled(false);
+    m_tqlayout->setEnabled(false);
 
     for (BaseContainer::List::const_iterator it = containers.constBegin();
          it != containers.constEnd();
@@ -808,11 +808,11 @@ void ContainerArea::removeContainers(BaseContainer::List containers)
 
         a->slotRemoved(_config);
         m_containers.remove(a);
-        m_layout->remove(a);
+        m_tqlayout->remove(a);
         a->deleteLater();
     }
 
-    m_layout->setEnabled(true);
+    m_tqlayout->setEnabled(true);
     saveContainerConfig(true);
     resizeContents();
 }
@@ -840,7 +840,7 @@ void ContainerArea::takeContainer(BaseContainer* a)
     _config->deleteGroup(a->appletId().latin1());
     _config->sync();
     m_containers.remove(a);
-    m_layout->remove(a);
+    m_tqlayout->remove(a);
     saveContainerConfig(true);
     resizeContents();
 }
@@ -852,7 +852,7 @@ void ContainerArea::resizeContents()
 
     if (orientation() == Qt::Horizontal)
     {
-        int newWidth = m_layout->widthForHeight(h);
+        int newWidth = m_tqlayout->widthForHeight(h);
         if (newWidth > w)
         {
             resizeContents(newWidth, h);
@@ -864,7 +864,7 @@ void ContainerArea::resizeContents()
     }
     else
     {
-        int newHeight = m_layout->heightForWidth(w);
+        int newHeight = m_tqlayout->heightForWidth(w);
 
         if (newHeight > h)
         {
@@ -925,7 +925,7 @@ void ContainerArea::startContainerMove(BaseContainer *a)
     setMouseTracking(true);
     grabMouse(sizeAllCursor);
 
-    m_layout->setStretchEnabled(false);
+    m_tqlayout->setStretchEnabled(false);
     a->raise();
 }
 
@@ -949,7 +949,7 @@ void ContainerArea::mouseReleaseEvent(TQMouseEvent *)
     _moveAC = 0;
 
     emit maintainFocus(false);
-    m_layout->setStretchEnabled(true);
+    m_tqlayout->setStretchEnabled(true);
     updateContainersBackground();
     saveContainerConfig(true);
 }
@@ -962,7 +962,7 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         return;
     }
 
-    if (ev->state() == LeftButton && !rect().contains(ev->pos()))
+    if (ev->state() == LeftButton && !rect().tqcontains(ev->pos()))
     {
         // leaveEvent() doesn't work, while grabbing the mouse
         _autoScrollTimer.stop();
@@ -974,7 +974,7 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         KickerTip::enableTipping(true);
 
         emit maintainFocus(false);
-        m_layout->setStretchEnabled(true);
+        m_tqlayout->setStretchEnabled(true);
         updateContainersBackground();
         saveContainerConfig(true);
 
@@ -992,19 +992,19 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         int x = ev->pos().x() + contentsX();
         if (ev->state() & ShiftButton)
         {
-            m_layout->moveContainerPush(_moveAC, x - oldX);
+            m_tqlayout->moveContainerPush(_moveAC, x - oldX);
         }
         else
         {
-            m_layout->moveContainerSwitch(_moveAC, x - oldX);
+            m_tqlayout->moveContainerSwitch(_moveAC, x - oldX);
             /* FIXME: Scrolling when the container moves out of the viewport
             bool scroll = false;
             if (rtl)
                 if (newPos - 80 <= 0)
                     scroll = true;
             else
-                if (newPos + 80 >= (horizontal ? geometry().width()  - moving->geometry().width()
-                                               : geometry().height() - moving->geometry().height()))
+                if (newPos + 80 >= (horizontal ? tqgeometry().width()  - moving->tqgeometry().width()
+                                               : tqgeometry().height() - moving->tqgeometry().height()))
                     scroll = true;
             [...]
             if (scroll) {
@@ -1025,11 +1025,11 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         int y = ev->pos().y() + contentsY();
         if (ev->state() & ShiftButton)
         {
-            m_layout->moveContainerPush(_moveAC, y - oldY);
+            m_tqlayout->moveContainerPush(_moveAC, y - oldY);
         }
         else
         {
-            m_layout->moveContainerSwitch(_moveAC, y - oldY);
+            m_tqlayout->moveContainerSwitch(_moveAC, y - oldY);
             // TODO: Scrolling
         }
     }
@@ -1066,7 +1066,7 @@ void ContainerArea::dragEnterEvent(TQDragEnterEvent *ev)
         return;
     }
 
-    m_layout->setStretchEnabled(false);
+    m_tqlayout->setStretchEnabled(false);
 
     if (!_dragIndicator)
     {
@@ -1139,17 +1139,17 @@ void ContainerArea::dragMoveEvent(TQDragMoveEvent* ev)
         TQKeyEvent fakedKeyRelease(TQEvent::KeyRelease, Key_Escape, 0, 0);
         TQApplication::sendEvent(this, &fakedKeyPress);
         TQApplication::sendEvent(this, &fakedKeyRelease);
-        qApp->processEvents();
+        tqApp->processEvents();
         startContainerMove(_moveAC);
 
         // Align the container to the mouse position.
         if (orientation() == Horizontal)
         {
-            m_layout->moveContainerSwitch(_moveAC, ev->pos().x() + contentsX() - _moveAC->x());
+            m_tqlayout->moveContainerSwitch(_moveAC, ev->pos().x() + contentsX() - _moveAC->x());
         }
         else
         {
-            m_layout->moveContainerSwitch(_moveAC, ev->pos().y() + contentsY() - _moveAC->y());
+            m_tqlayout->moveContainerSwitch(_moveAC, ev->pos().y() + contentsY() - _moveAC->y());
         }
         return;
     }
@@ -1175,7 +1175,7 @@ void ContainerArea::dragLeaveEvent(TQDragLeaveEvent*)
     {
         _dragIndicator->hide();
     }
-    m_layout->setStretchEnabled(true);
+    m_tqlayout->setStretchEnabled(true);
     _dragMoveAC = 0;
 }
 
@@ -1196,7 +1196,7 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
         {
             _dragMoveAC = 0;
             _dragIndicator->hide();
-            m_layout->setStretchEnabled(true);
+            m_tqlayout->setStretchEnabled(true);
             return;
         }
 
@@ -1213,19 +1213,19 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
             {
                 int oldX = a->x();
                 int x = _dragIndicator->x();
-                m_layout->moveContainerSwitch(a, x - oldX);
+                m_tqlayout->moveContainerSwitch(a, x - oldX);
             }
             else if (orientation() == Vertical)
             {
                 int oldY = a->y();
                 int y = _dragIndicator->y();
-                m_layout->moveContainerSwitch(a, y - oldY);
+                m_tqlayout->moveContainerSwitch(a, y - oldY);
             }
 
             _dragMoveAC = 0;
             _dragIndicator->hide();
-            m_layout->setEnabled(true);
-            m_layout->setStretchEnabled(true);
+            m_tqlayout->setEnabled(true);
+            m_tqlayout->setStretchEnabled(true);
             saveContainerConfig(true);
             return;
         }
@@ -1236,10 +1236,10 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
         a->setAppletId(createUniqueId(a->appletType()));
         addContainer(a, true);
         Kicker::the()->setInsertionPoint(TQPoint());
-        m_layout->updateFreeSpaceValues();
+        m_tqlayout->updateFreeSpaceValues();
         _dragMoveAC = 0;
         _dragIndicator->hide();
-        m_layout->setStretchEnabled(true);
+        m_tqlayout->setStretchEnabled(true);
         saveContainerConfig();
         return;
     }
@@ -1250,7 +1250,7 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
     {
         Kicker::the()->setInsertionPoint(_dragIndicator->pos());
         _dragIndicator->hide();
-        m_layout->setStretchEnabled(true);
+        m_tqlayout->setStretchEnabled(true);
 
         if (info.type() & AppletInfo::Button)
         {
@@ -1271,7 +1271,7 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
     {
         _dragMoveAC = 0;
         _dragIndicator->hide();
-        m_layout->setStretchEnabled(true);
+        m_tqlayout->setStretchEnabled(true);
         return;
     }
 
@@ -1366,32 +1366,32 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
         {
             _dragIndicator->hide();
             Kicker::the()->setInsertionPoint(TQPoint());
-            m_layout->setStretchEnabled(true);
+            m_tqlayout->setStretchEnabled(true);
             return;
         }
 
         addContainer(a, true);
-        m_layout->updateFreeSpaceValues();
+        m_tqlayout->updateFreeSpaceValues();
     }
 
     saveContainerConfig();
     _dragMoveAC = 0;
     _dragIndicator->hide();
     Kicker::the()->setInsertionPoint(TQPoint());
-    m_layout->setStretchEnabled(true);
+    m_tqlayout->setStretchEnabled(true);
 }
 
 bool ContainerArea::eventFilter(TQObject* o, TQEvent* e)
 {
-    // Propagate the layout hints which m_contents receives. This way widgets
-    // which contain a ContainerArea can react to layout changes of its
+    // Propagate the tqlayout hints which m_contents receives. This way widgets
+    // which contain a ContainerArea can react to tqlayout changes of its
     // contents. For example: If an applets grows, the top level widget may
     // want to grow as well.
     if (o == m_contents)
     {
         if (e->type() == TQEvent::LayoutHint)
         {
-            updateGeometry(); // Posts a new layout hint to our parent.
+            updateGeometry(); // Posts a new tqlayout hint to our parent.
         }
         return false;
     }
@@ -1430,7 +1430,7 @@ void ContainerArea::setBackground()
 
     if (KickerSettings::transparent() &&
         (KickerSettings::menubarPanelTransparent() ||
-        !ExtensionManager::the()->isMenuBar(topLevelWidget())))
+        !ExtensionManager::the()->isMenuBar(tqtopLevelWidget())))
     {
         if (!_rootPixmap)
         {
@@ -1441,7 +1441,7 @@ void ContainerArea::setBackground()
         }
         else
         {
-            _rootPixmap->repaint(true);
+            _rootPixmap->tqrepaint(true);
         }
 
         double tint = double(KickerSettings::tintValue()) / 100;
@@ -1633,7 +1633,7 @@ void ContainerArea::moveDragIndicator(int pos)
 
 void ContainerArea::updateBackground( const TQPixmap& pm )
 {
-    TQBrush bgBrush(colorGroup().background(), pm);
+    TQBrush bgBrush(tqcolorGroup().background(), pm);
     TQPalette pal = kapp->palette();
     pal.setBrush(TQColorGroup::Background, bgBrush);
     setPalette(pal);
@@ -1678,12 +1678,12 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
                          p == KPanelExtension::Bottom) ?
                         Qt::Horizontal : Qt::Vertical;
     bool orientationChanged = (orientation() != o);
-    m_layout->setEnabled(false);
+    m_tqlayout->setEnabled(false);
 
     if (orientationChanged)
     {
         setOrientation(o);
-        m_layout->setOrientation(o);
+        m_tqlayout->setOrientation(o);
 
         // when we change orientation, we will resize the "width"
         // component down to 0, forcing a resize in resizeContents()
@@ -1712,23 +1712,23 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
         (*it)->setPopupDirection( popupDirection() );
     }
 
-    m_layout->setEnabled(true);
+    m_tqlayout->setEnabled(true);
 
     setContentsPos(0, 0);
     m_contents->move(0, 0);
     setBackground();
 
-    // container extension repaints for us!
-    //repaint();
+    // container extension tqrepaints for us!
+    //tqrepaint();
 }
 
-void ContainerArea::setAlignment(KPanelExtension::Alignment a)
+void ContainerArea::tqsetAlignment(KPanelExtension::Alignment a)
 {
     for (BaseContainer::ConstIterator it = m_containers.begin();
          it != m_containers.end();
          ++it)
     {
-        (*it)->setAlignment(a);
+        (*it)->tqsetAlignment(a);
     }
 }
 
@@ -1778,21 +1778,21 @@ void ContainerArea::updateContainersBackground()
     // A rather ugly hack. The code calls updateContainersBackground() all over
     // the place even when nothing in fact has changed. Updating the background
     // on every single unrelated change however means that e.g. the systray
-    // flickers when a new window is opened/closed (because the taskbar is relayouted,
-    // which triggers updateContainersBackground() even though the geometry
+    // flickers when a new window is opened/closed (because the taskbar is retqlayouted,
+    // which triggers updateContainersBackground() even though the tqgeometry
     // of the taskbar does not change in fact. I'm apparently unable to fix this
-    // properly, so just cache the geometry and update background only when
-    // the geometry changes or when the background really changes (in which
+    // properly, so just cache the tqgeometry and update background only when
+    // the tqgeometry changes or when the background really changes (in which
     // case the cached is cleared).
-        if( !m_cachedGeometry.contains( *it ))
+        if( !m_cachedGeometry.tqcontains( *it ))
         {
             m_cachedGeometry[ *it ] = TQRect();
             connect( *it, TQT_SIGNAL( destroyed()), TQT_SLOT( destroyCachedGeometry()));
         }
-        if( m_cachedGeometry[ *it ] != (*it)->geometry())
+        if( m_cachedGeometry[ *it ] != (*it)->tqgeometry())
         {
             (*it)->setBackground();
-            m_cachedGeometry[ *it ] = (*it)->geometry();
+            m_cachedGeometry[ *it ] = (*it)->tqgeometry();
         }
     }
 }
@@ -1891,12 +1891,12 @@ int ContainerArea::containerCount(const TQString& type) const
 
 TQStringList ContainerArea::listContainers() const
 {
-    return m_layout->listItems();
+    return m_tqlayout->listItems();
 }
 
-void ContainerArea::repaint()
+void ContainerArea::tqrepaint()
 {
-    Panner::repaint();
+    Panner::tqrepaint();
 }
 
 void ContainerArea::showAddAppletDialog()
@@ -1932,12 +1932,12 @@ const TQPixmap* ContainerArea::completeBackgroundPixmap() const
 
 int ContainerArea::widthForHeight(int h) const
 {
-    return m_layout->widthForHeight(h);
+    return m_tqlayout->widthForHeight(h);
 }
 
 int ContainerArea::heightForWidth(int w) const
 {
-    return m_layout->heightForWidth(w);
+    return m_tqlayout->heightForWidth(w);
 }
 
 
@@ -1952,8 +1952,8 @@ void DragIndicator::paintEvent(TQPaintEvent*)
 {
     TQPainter painter(this);
     TQRect rect(0, 0, width(), height());
-    style().drawPrimitive( TQStyle::PE_FocusRect, &painter, rect, colorGroup(),
-                           TQStyle::Style_Default, colorGroup().base() );
+    style().drawPrimitive( TQStyle::PE_FocusRect, &painter, rect, tqcolorGroup(),
+                           TQStyle::Style_Default, tqcolorGroup().base() );
 }
 
 void DragIndicator::mousePressEvent(TQMouseEvent*)

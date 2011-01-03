@@ -49,7 +49,7 @@ protected:
   NSPluginLoader *m_loader;
   TQPtrList<TQWidget> m_plugins;
   TQWidget *m_client;
-  TQBoxLayout *m_layout;
+  TQBoxLayout *m_tqlayout;
 };
 
 

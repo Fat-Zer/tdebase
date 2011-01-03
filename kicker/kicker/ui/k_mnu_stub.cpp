@@ -97,11 +97,11 @@ void KMenuStub::resize(int w, int h)
     return m_w.panelkmenu->resize(w, h);
 }
 
-TQSize KMenuStub::sizeHint() const
+TQSize KMenuStub::tqsizeHint() const
 {
     if(m_type == t_KMenu)
-	return m_w.kmenu->sizeHint();
-    return m_w.panelkmenu->sizeHint();
+	return m_w.kmenu->tqsizeHint();
+    return m_w.panelkmenu->tqsizeHint();
 }
 
 bool KMenuStub::highlightMenuItem( const TQString &menuId )

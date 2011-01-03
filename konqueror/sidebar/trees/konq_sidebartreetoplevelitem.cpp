@@ -57,7 +57,7 @@ void KonqSidebarTreeTopLevelItem::itemSelected()
 
 bool KonqSidebarTreeTopLevelItem::acceptsDrops( const TQStrList & formats )
 {
-    return formats.contains("text/uri-list") &&
+    return formats.tqcontains("text/uri-list") &&
         ( m_bTopLevelGroup || !externalURL().isEmpty() );
 }
 

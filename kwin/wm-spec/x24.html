@@ -102,13 +102,13 @@ NAME="AEN30"
 in early ICCCM drafts.  Maximizing a window should give it as much of the
 screen area as possible (this may not be the full screen area, but only
 a smaller 'workarea', since the Window Manager may have reserved certain areas for other 
-windows).  A Window Manager is expected to remember the geometry of a maximized window 
+windows).  A Window Manager is expected to remember the tqgeometry of a maximized window 
 and restore it upon de-maximization.  Modern Window Managers typically allow separate 
 horizontal and vertical maximization.</P
 ><P
 >With the introduction of the Xinerama extension in X11 R6.4, maximization
 has become more involved.  Xinerama allows a screen to span multiple 
-monitors in a freely configurable geometry.  In such a setting, maximizing 
+monitors in a freely configurable tqgeometry.  In such a setting, maximizing 
 a window would ideally not grow it to fill the whole screen, but only the 
 monitor it is shown on.  There are of course borderline cases for windows 
 crossing monitor boundaries, and 'real' maximization to the full screen may 
@@ -335,7 +335,7 @@ NAME="AEN76"
 ><P
 >Window-in-window MDI is a multiple document interface known from MS
 Windows platforms. Programs employing it have a single top-level window
-which contains a workspace which contains the subwindows for the open
+which tqcontains a workspace which tqcontains the subwindows for the open
 documents. These subwindows are decorated with Window Manager frames and can be
 manipulated within their parent window just like ordinary top-level
 windows on the root window.</P

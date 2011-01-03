@@ -50,7 +50,7 @@
 #include <X11/Xmd.h>
 extern "C" {
 #include <X11/extensions/dpms.h>
-Status DPMSInfo ( Display *, CARD16 *, BOOL * );
+tqStatus DPMSInfo ( Display *, CARD16 *, BOOL * );
 Bool DPMSCapable( Display * );
 int __kde_do_not_unload = 1;
 
@@ -59,7 +59,7 @@ Bool DPMSCapable ( Display * );
 #endif
 
 #ifndef HAVE_DPMSINFO_PROTO
-Status DPMSInfo ( Display *, CARD16 *, BOOL * );
+tqStatus DPMSInfo ( Display *, CARD16 *, BOOL * );
 #endif
 }
 
@@ -67,8 +67,8 @@ Status DPMSInfo ( Display *, CARD16 *, BOOL * );
 extern "C" {
 #endif
     Bool DPMSQueryExtension(Display *, int *, int *);
-    Status DPMSEnable(Display *);
-    Status DPMSDisable(Display *);
+    tqStatus DPMSEnable(Display *);
+    tqStatus DPMSDisable(Display *);
     Bool DPMSGetTimeouts(Display *, CARD16 *, CARD16 *, CARD16 *);
     Bool DPMSSetTimeouts(Display *, CARD16, CARD16, CARD16);
 #if defined(XIMStringConversionRetrival) || defined (__sun) || defined(__hpux)

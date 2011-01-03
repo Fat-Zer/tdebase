@@ -63,7 +63,7 @@ void KonqBidiHistoryAction::fillHistoryPopup( const TQPtrList<HistoryEntry> &his
   {
       TQString text = it.current()->title;
       text = KStringHandler::cEmSqueeze(text, popup->fontMetrics(), 30); //CT: squeeze
-      text.replace( "&", "&&" );
+      text.tqreplace( "&", "&&" );
       if ( checkCurrentItem && it.current() == current )
       {
           int id = popup->insertItem( text ); // no pixmap if checked
@@ -103,7 +103,7 @@ int KonqBidiHistoryAction::plug( TQWidget *widget, int index )
     connect( m_goMenu, TQT_SIGNAL( activated( int ) ),
              this, TQT_SLOT( slotActivated( int ) ) );
     //kdDebug(1202) << "m_goMenu->count()=" << m_goMenu->count() << endl;
-    // Store how many items the menu already contains.
+    // Store how many items the menu already tqcontains.
     // This means, the KonqBidiHistoryAction has to be plugged LAST in a menu !
     m_firstIndex = m_goMenu->count();
     return m_goMenu->count(); // hmmm, what should this be ?

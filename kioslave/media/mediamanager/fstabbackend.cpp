@@ -137,7 +137,7 @@ bool inExclusionPattern(KMountPoint *mount, bool networkSharesOnly)
 	  || mount->mountType() == "fdescfs"
 	  || mount->mountType() == "kernfs"
 	  || mount->mountType() == "usbfs"
-	  || mount->mountType().contains( "proc" )
+	  || mount->mountType().tqcontains( "proc" )
 	  || mount->mountType() == "unknown"
 	  || mount->mountType() == "none"
 	  || mount->mountType() == "sunrpc"
@@ -187,7 +187,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 		   nothing has changed, do not stat the mount point. Avoids
 		   hang if network shares are stalling */
 		TQString mtabEntry = dev + "*" + mp + "*" + fs;
-		if(m_mtabEntries.contains(mtabEntry)) {
+		if(m_mtabEntries.tqcontains(mtabEntry)) {
 		        new_mtabIds += m_mtabEntries[mtabEntry];
 			continue;
 		}
@@ -196,7 +196,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 		new_mtabIds+=id;
 		m_mtabEntries[mtabEntry] = id;
 
-		if ( !m_mtabIds.contains(id) && m_fstabIds.contains(id) )
+		if ( !m_mtabIds.tqcontains(id) && m_fstabIds.tqcontains(id) )
 		{
 			TQString mime, icon, label;
 			guess(dev, mp, fs, true, mime, icon, label);
@@ -204,7 +204,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 			                              mime, icon, label);
 		}
 #if 0
-		else if ( !m_mtabIds.contains(id) )
+		else if ( !m_mtabIds.tqcontains(id) )
 		{
 			TQString name = generateName(dev, fs);
 
@@ -229,7 +229,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 
 	for (; it2!=end2; ++it2)
 	{
-		if ( !new_mtabIds.contains(*it2) && m_fstabIds.contains(*it2) )
+		if ( !new_mtabIds.tqcontains(*it2) && m_fstabIds.tqcontains(*it2) )
 		{
 			const Medium *medium = m_mediaList.findById(*it2);
 
@@ -248,7 +248,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 			                              mime, icon, label);
 		}
 #if 0
-		else if ( !new_mtabIds.contains(*it2) )
+		else if ( !new_mtabIds.tqcontains(*it2) )
 		{
 			m_mediaList.removeMedium(*it2, allowNotification);
 		}
@@ -277,7 +277,7 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 		TQString id = generateId(dev, mp);
 		new_fstabIds+=id;
 
-		if ( !m_fstabIds.contains(id) )
+		if ( !m_fstabIds.tqcontains(id) )
 		{
 			TQString name = generateName(dev, fs);
 
@@ -301,7 +301,7 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 
 	for (; it2!=end2; ++it2)
 	{
-		if ( !new_fstabIds.contains(*it2) )
+		if ( !new_fstabIds.tqcontains(*it2) )
 		{
 			m_mediaList.removeMedium(*it2, allowNotification);
 		}
@@ -317,8 +317,8 @@ TQString FstabBackend::generateId(const TQString &devNode,
 	TQString m = KStandardDirs::realPath(mountPoint);
 
 	return "/org/kde/mediamanager/fstab/"
-	      +d.replace("/", "")
-	      +m.replace("/", "");
+	      +d.tqreplace("/", "")
+	      +m.tqreplace("/", "");
 }
 
 TQString FstabBackend::generateName(const TQString &devNode, const TQString &fsType)
@@ -363,7 +363,7 @@ void FstabBackend::guess(const TQString &devNode, const TQString &mountPoint,
 			{
 				TQString buf;
 				m.readLine(buf, 1024);
-				if(buf.contains("cdrom"))
+				if(buf.tqcontains("cdrom"))
 					isCd=true;
 				m.close();
 			}

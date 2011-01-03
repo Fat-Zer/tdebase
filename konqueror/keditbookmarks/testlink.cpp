@@ -73,7 +73,7 @@ TestLinkItr::TestLinkItr(TQValueList<KBookmark> bks)
 TestLinkItr::~TestLinkItr() {
     if (m_job) {
         // kdDebug() << "JOB kill\n";
-        curItem()->restoreStatus();
+        curItem()->restoretqStatus();
         m_job->disconnect();
         m_job->kill(false);
     }
@@ -95,9 +95,9 @@ void TestLinkItr::doAction() {
     connect(m_job, TQT_SIGNAL( data( KIO::Job *,  const TQByteArray &)),
             this, TQT_SLOT( slotJobData(KIO::Job *, const TQByteArray &)));
 
-    curItem()->setTmpStatus(i18n("Checking..."));
+    curItem()->setTmptqStatus(i18n("Checking..."));
     TQString oldModDate = TestLinkItrHolder::self()->getMod(curBk().url().url());
-    curItem()->setOldStatus(oldModDate);
+    curItem()->setOldtqStatus(oldModDate);
     TestLinkItrHolder::self()->setMod(curBk().url().url(), i18n("Checking..."));
 }
 
@@ -144,7 +144,7 @@ void TestLinkItr::slotJobResult(KIO::Job *job) {
         // can we assume that errorString will contain no entities?
         TQString jerr = job->errorString();
         if (!jerr.isEmpty()) {
-            jerr.replace("\n", " ");
+            jerr.tqreplace("\n", " ");
             curItem()->nsPut(jerr);
             chkErr = false;
         }
@@ -166,13 +166,13 @@ void TestLinkItr::slotJobResult(KIO::Job *job) {
 /* -------------------------- */
 
 const TQString TestLinkItrHolder::getMod(const TQString &url) const {
-    return m_modify.contains(url) 
+    return m_modify.tqcontains(url) 
         ? m_modify[url] 
         : TQString::null;
 }
 
 const TQString TestLinkItrHolder::getOldVisit(const TQString &url) const {
-    return self()->m_oldModify.contains(url) 
+    return self()->m_oldModify.tqcontains(url) 
         ? self()->m_oldModify[url] 
         : TQString::null;
 }
@@ -347,7 +347,7 @@ void KEBListViewItem::nsPut(const TQString &newModDate) {
     TQString blah = updateNsInfoMod(info, newModDate);
     m_bookmark.internalElement().setAttribute(NetscapeInfoAttribute, blah);
     TestLinkItrHolder::self()->setMod(m_bookmark.url().url(), newModDate);
-    setText(KEBListView::StatusColumn, newModDate);
+    setText(KEBListView::tqStatusColumn, newModDate);
 }
 
 // KEBListViewItem !!!!!!!!!!!
@@ -365,29 +365,29 @@ void KEBListViewItem::modUpdate() {
     TQString statusLine;
     statusLine = TestLinkItrHolder::calcPaintStyle(m_bookmark.url().url(), m_paintStyle, iVisit, oldModify);
     if (statusLine != "Error")
-        setText(KEBListView::StatusColumn, statusLine);
+        setText(KEBListView::tqStatusColumn, statusLine);
 }
 
 /* -------------------------- */
 
 // KEBListViewItem !!!!!!!!!!!
-void KEBListViewItem::setOldStatus(const TQString &oldStatus) {
-    // kdDebug() << "KEBListViewItem::setOldStatus" << endl;
-    m_oldStatus = oldStatus;
+void KEBListViewItem::setOldtqStatus(const TQString &oldtqStatus) {
+    // kdDebug() << "KEBListViewItem::setOldtqStatus" << endl;
+    m_oldtqStatus = oldtqStatus;
 }
 
 // KEBListViewItem !!!!!!!!!!!
-void KEBListViewItem::setTmpStatus(const TQString &status) {
-    // kdDebug() << "KEBListViewItem::setTmpStatus" << endl;
+void KEBListViewItem::setTmptqStatus(const TQString &status) {
+    // kdDebug() << "KEBListViewItem::setTmptqStatus" << endl;
     m_paintStyle = KEBListViewItem::BoldStyle;
-    setText(KEBListView::StatusColumn, status);
+    setText(KEBListView::tqStatusColumn, status);
 }
 
 // KEBListViewItem !!!!!!!!!!!
-void KEBListViewItem::restoreStatus() {
-    if (!m_oldStatus.isNull()) {
-        // kdDebug() << "KEBListViewItem::restoreStatus" << endl;
-        TestLinkItrHolder::self()->resetToValue(m_bookmark.url().url(), m_oldStatus);
+void KEBListViewItem::restoretqStatus() {
+    if (!m_oldtqStatus.isNull()) {
+        // kdDebug() << "KEBListViewItem::restoretqStatus" << endl;
+        TestLinkItrHolder::self()->resetToValue(m_bookmark.url().url(), m_oldtqStatus);
         modUpdate();
     }
 }

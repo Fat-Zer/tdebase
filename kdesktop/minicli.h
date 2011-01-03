@@ -57,7 +57,7 @@ public:
   void clearHistory();
   
   virtual void show();
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqsizeHint() const;
 
 public slots:
   void saveConfig();

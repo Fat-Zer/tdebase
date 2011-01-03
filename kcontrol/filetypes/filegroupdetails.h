@@ -23,7 +23,7 @@ class TypesListItem;
 class TQButtonGroup;
 
 /**
- * This widget contains the details for a filetype group.
+ * This widget tqcontains the details for a filetype group.
  * Currently this only involves the embedding configuration.
  */
 class FileGroupDetails : public QWidget

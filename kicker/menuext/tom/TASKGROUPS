@@ -7,7 +7,7 @@ of tasks in the group (NumTasks) and optionally whether or not it is hidden
 (Hidden).
 
 For each task there is a numbered section in the file in the form TaskN. Each
-section contains the user visible name for the task (Name), the associated
+section tqcontains the user visible name for the task (Name), the associated
 .desktop file and optionally whether or not it is hidden (Hidden).
 
 An example file can be found below.

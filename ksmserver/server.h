@@ -93,7 +93,7 @@ public:
     virtual void suspendStartup( TQCString app );
     virtual void resumeStartup( TQCString app );
 
-    bool checkStatus( bool &logoutConfirmed, bool &maysd, 
+    bool checktqStatus( bool &logoutConfirmed, bool &maysd, 
 		      KApplication::ShutdownConfirm confirm,
 		      KApplication::ShutdownType sdtype,
 		      KApplication::ShutdownMode sdmode );

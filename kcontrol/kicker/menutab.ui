@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>MenuTabBase</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -21,7 +21,7 @@
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout5</cstring>
+                <cstring>tqlayout5</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -63,7 +63,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>40</width>
                             <height>20</height>
@@ -85,7 +85,7 @@
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout7</cstring>
+                        <cstring>tqlayout7</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -197,7 +197,7 @@
                             <property name="sizeType">
                                 <enum>MinimumExpanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>0</height>
@@ -261,13 +261,13 @@
 							<verstretch>0</verstretch>
 						</sizepolicy>
 					</property>
-					<property name="minimumSize">
+					<property name="tqminimumSize">
 						<size>
 							<width>26</width>
 							<height>26</height>
 						</size>
 					</property>
-					<property name="maximumSize">
+					<property name="tqmaximumSize">
 						<size>
 							<width>26</width>
 							<height>26</height>
@@ -327,7 +327,7 @@
 					<property name="sizeType">
 						<enum>Expanding</enum>
 					</property>
-					<property name="sizeHint">
+					<property name="tqsizeHint">
 						<size>
 							<width>20</width>
 							<height>20</height>
@@ -345,7 +345,7 @@
 				<property name="sizeType">
 					<enum>MinimumExpanding</enum>
 				</property>
-				<property name="sizeHint">
+				<property name="tqsizeHint">
 					<size>
 						<width>20</width>
 						<height>0</height>
@@ -389,7 +389,7 @@
                             <verstretch>1</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>0</width>
                             <height>0</height>
@@ -487,7 +487,7 @@
 				<property name="sizeType">
 					<enum>Expanding</enum>
 				</property>
-				<property name="sizeHint">
+				<property name="tqsizeHint">
 					<size>
 					<width>20</width>
 					<height>0</height>
@@ -558,7 +558,7 @@
 					<property name="sizeType">
 						<enum>Expanding</enum>
 					</property>
-					<property name="sizeHint">
+					<property name="tqsizeHint">
 						<size>
 							<width>20</width>
 							<height>0</height>
@@ -654,7 +654,7 @@
 				<property name="sizeType">
 					<enum>Expanding</enum>
 				</property>
-				<property name="sizeHint">
+				<property name="tqsizeHint">
 					<size>
 					<width>20</width>
 					<height>0</height>
@@ -698,7 +698,7 @@
 					<property name="sizeType">
 						<enum>Expanding</enum>
 					</property>
-					<property name="sizeHint">
+					<property name="tqsizeHint">
 						<size>
 							<width>20</width>
 							<height>0</height>
@@ -730,8 +730,8 @@
     <include location="global" impldecl="in implementation">knuminput.h</include>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
+<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>klistview.h</includehint>
     <includehint>knuminput.h</includehint>

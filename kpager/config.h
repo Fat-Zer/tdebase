@@ -42,7 +42,7 @@ public slots:
     void setShowWindows(bool show);
 
     void setWindowDrawMode(int mode);
-    void setLayout(int layout);
+    void setLayout(int tqlayout);
 
     void enableWindowDragging(bool);
     
@@ -55,7 +55,7 @@ public:
     static bool m_showBackground;
     static bool m_showWindows;
     static int m_windowDrawMode;
-    static int m_layoutType;
+    static int m_tqlayoutType;
     static bool m_windowDragging;
 
 protected:

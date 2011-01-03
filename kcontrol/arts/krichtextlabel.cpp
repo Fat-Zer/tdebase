@@ -41,14 +41,14 @@ static TQString qrichtextify( const TQString& text )
 KRichTextLabel::KRichTextLabel( const TQString &text , TQWidget *parent, const char *name )
  : TQLabel ( parent, name ) {
   m_defaultWidth = QMIN(500, KGlobalSettings::desktopGeometry(this).width()*3/5);
-  setAlignment( Qt::WordBreak );
+  tqsetAlignment( Qt::WordBreak );
   setText(text);
 }
 
 KRichTextLabel::KRichTextLabel( TQWidget *parent, const char *name )
  : TQLabel ( parent, name ) {
   m_defaultWidth = QMIN(500, KGlobalSettings::desktopGeometry(this).width()*3/5);
-  setAlignment( Qt::WordBreak );
+  tqsetAlignment( Qt::WordBreak );
 }
 
 void KRichTextLabel::setDefaultWidth(int defaultWidth)
@@ -62,7 +62,7 @@ TQSizePolicy KRichTextLabel::sizePolicy() const
   return TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum, false);
 }
 
-TQSize KRichTextLabel::minimumSizeHint() const
+TQSize KRichTextLabel::tqminimumSizeHint() const
 {
   TQString qt_text = qrichtextify( text() );
   int pref_width = 0;
@@ -97,9 +97,9 @@ TQSize KRichTextLabel::minimumSizeHint() const
   return TQSize(pref_width, rt.height());
 }
 
-TQSize KRichTextLabel::sizeHint() const
+TQSize KRichTextLabel::tqsizeHint() const
 {
-  return minimumSizeHint();
+  return tqminimumSizeHint();
 }
 
 void KRichTextLabel::setText( const TQString &text ) {

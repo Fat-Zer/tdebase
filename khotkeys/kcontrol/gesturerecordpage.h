@@ -53,7 +53,7 @@ class GestureRecordPage : public QVBox
 
         TQString _gest;
 
-        Q_UINT32 _tryCount;
+        TQ_UINT32 _tryCount;
     };
 
 } // namespace KHotKeys

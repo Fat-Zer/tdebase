@@ -150,7 +150,7 @@ protected:
       int numb()                       {if (!m_fileRead) rereadSchemaFile();return m_numb;};
       const TQString& title()           {if (!m_fileRead) rereadSchemaFile();return m_title;};
       const TQString& imagePath()       {if (!m_fileRead) rereadSchemaFile();return m_imagePath;};
-      int alignment()                  {if (!m_fileRead) rereadSchemaFile();return m_alignment;};
+      int tqalignment()                  {if (!m_fileRead) rereadSchemaFile();return m_tqalignment;};
       const ColorEntry* table()        {if (!m_fileRead) rereadSchemaFile();return m_table;};
       bool useTransparency()           {if (!m_fileRead) rereadSchemaFile();return m_useTransparency;};
       double tr_x()                    {if (!m_fileRead) rereadSchemaFile();return m_tr_x;};
@@ -162,7 +162,7 @@ protected:
    private:
       int        m_numb;
       int	     m_tr_r, m_tr_g, m_tr_b;
-      int        m_alignment;
+      int        m_tqalignment;
       TQString    m_title;
       TQString    m_imagePath;
       ColorEntry m_table[TABLE_COLORS];
@@ -234,7 +234,7 @@ private:
 
 	/**
 	* This isn't really used, but it could be. A newly
-	* constructed ColorSchemaList contains one element:
+	* constructed ColorSchemaList tqcontains one element:
 	* the defaultSchema, with serial number 0.
 	*/
 	ColorSchema *defaultSchema;

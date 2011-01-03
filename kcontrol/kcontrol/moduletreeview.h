@@ -74,7 +74,7 @@ public:
   void makeSelected(ConfigModule* module);
   void makeVisible(ConfigModule *module);
   void fill();
-  TQSize sizeHint() const;
+  TQSize tqsizeHint() const;
 
 signals:
   void moduleSelected(ConfigModule*);

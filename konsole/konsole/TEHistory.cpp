@@ -62,7 +62,7 @@ FIXME: There is noticeable decrease in speed, also. Perhaps,
        scheme with wrap around would be it's complexity.
 */
 
-//FIXME: tempory replacement for tmpfile
+//FIXME: tempory tqreplacement for tmpfile
 //       this is here one for debugging purpose.
 
 //#define tmpfile xTmpFile
@@ -135,7 +135,7 @@ bool HistoryScroll::hasScroll()
 
 /* 
    The history scroll makes a Row(Row(Cell)) from
-   two history buffers. The index buffer contains
+   two history buffers. The index buffer tqcontains
    start of line positions which refere to the cells
    buffer.
 
@@ -457,7 +457,7 @@ void HistoryScrollBlockArray::addCells(ca a[], int count)
   size_t *pLen = new size_t;
   *pLen = count;
   
-  m_lineLengths.replace(m_blockArray.getCurrent(), pLen);
+  m_lineLengths.tqreplace(m_blockArray.getCurrent(), pLen);
 }
 
 void HistoryScrollBlockArray::addLine(bool)

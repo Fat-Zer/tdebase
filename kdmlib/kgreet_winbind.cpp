@@ -80,7 +80,7 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 	TQGridLayout *grid = 0;
 
 	int line = 0;
-	layoutItem = 0;
+	tqlayoutItem = 0;
 
 	if (themer &&
 	    (!(user_entry = themer->findNode( "user-entry" )) ||
@@ -89,7 +89,7 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 		themer = 0;
 
 	if (!themer)
-		layoutItem = grid = new TQGridLayout( 0, 0, 10 );
+		tqlayoutItem = grid = new TQGridLayout( 0, 0, 10 );
 
 	domainLabel = loginLabel = passwdLabel = passwd1Label = passwd2Label = 0;
 	domainCombo = 0;
@@ -206,16 +206,16 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 KWinbindGreeter::~KWinbindGreeter()
 {
 	abort();
-	if (!layoutItem) {
+	if (!tqlayoutItem) {
 		delete loginEdit;
 		delete passwdEdit;
 		delete domainCombo;
 		return;
 	}
-	TQLayoutIterator it = static_cast<TQLayout *>(layoutItem)->iterator();
+	TQLayoutIterator it = static_cast<TQLayout *>(tqlayoutItem)->iterator();
 	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 		delete itm->widget();
-	delete layoutItem;
+	delete tqlayoutItem;
         delete m_domainLister;
 }
 
@@ -593,7 +593,7 @@ KWinbindGreeter::slotEndDomainList()
     for (TQStringList::const_iterator it = mDomainListing.begin();
          it != mDomainListing.end(); ++it) {
 
-        if (!domainList.contains(*it))
+        if (!domainList.tqcontains(*it))
             domainList.append(*it);
     }
 
@@ -625,7 +625,7 @@ static bool init( const TQString &,
 {
 	echoMode = getConf( ctx, "EchoMode", TQVariant( -1 ) ).toInt();
 	staticDomains = TQStringList::split( ':', getConf( ctx, "winbind.Domains", TQVariant( "" ) ).toString() );
-	if (!staticDomains.contains("<local>"))
+	if (!staticDomains.tqcontains("<local>"))
 		staticDomains << "<local>";
 
 	defaultDomain = getConf( ctx, "winbind.DefaultDomain", TQVariant( staticDomains.first() ) ).toString();

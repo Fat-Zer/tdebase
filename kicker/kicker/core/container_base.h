@@ -73,7 +73,7 @@ public:
 
     KPanelApplet::Direction popupDirection() const { return _dir; }
     KPanelExtension::Orientation orientation() const { return _orient; }
-    KPanelExtension::Alignment alignment() const { return _alignment; }
+    KPanelExtension::Alignment tqalignment() const { return _tqalignment; }
 
     virtual void setBackground() {}
 
@@ -81,7 +81,7 @@ public:
     void clearOpMenu();
 
     void loadConfiguration( KConfigGroup& );
-    void saveConfiguration( KConfigGroup&, bool layoutOnly = false ) const;
+    void saveConfiguration( KConfigGroup&, bool tqlayoutOnly = false ) const;
 
     void configure(KPanelExtension::Orientation, KPanelApplet::Direction);
     virtual void configure() {}
@@ -97,7 +97,7 @@ public slots:
     virtual void setPopupDirection(KPanelApplet::Direction d) { _dir = d; }
     virtual void setOrientation(KPanelExtension::Orientation o) { _orient = o; }
 
-    void setAlignment(KPanelExtension::Alignment a);
+    void tqsetAlignment(KPanelExtension::Alignment a);
 
 signals:
     void removeme(BaseContainer*);
@@ -110,15 +110,15 @@ signals:
 protected:
     virtual void doLoadConfiguration( KConfigGroup& ) {}
     virtual void doSaveConfiguration( KConfigGroup&,
-                                      bool /* layoutOnly */ ) const {}
-    virtual void alignmentChange(KPanelExtension::Alignment) {}
+                                      bool /* tqlayoutOnly */ ) const {}
+    virtual void tqalignmentChange(KPanelExtension::Alignment) {}
 
     virtual TQPopupMenu* createOpMenu() = 0;
     TQPopupMenu *appletOpMenu() const { return _appletOpMnu; }
 
     KPanelApplet::Direction _dir;
     KPanelExtension::Orientation _orient;
-    KPanelExtension::Alignment _alignment;
+    KPanelExtension::Alignment _tqalignment;
     double             _fspace;
     TQPoint             _moveOffset;
     TQString            _aid;

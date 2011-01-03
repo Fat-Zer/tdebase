@@ -65,14 +65,14 @@ Dtime::Dtime(TQWidget * parent, const char *name)
 
   // Time Server
 
-  privateLayoutWidget = new TQWidget( this, "layout1" );
-  TQHBoxLayout *layout1 = new TQHBoxLayout( privateLayoutWidget, 0, 0, "ntplayout");
+  privateLayoutWidget = new TQWidget( this, "tqlayout1" );
+  TQHBoxLayout *tqlayout1 = new TQHBoxLayout( privateLayoutWidget, 0, 0, "ntptqlayout");
 
   setDateTimeAuto = new TQCheckBox( privateLayoutWidget, "setDateTimeAuto" );
   setDateTimeAuto->setText(i18n("Set date and time &automatically:"));
   connect(setDateTimeAuto, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(serverTimeCheck()));
   connect(setDateTimeAuto, TQT_SIGNAL(toggled(bool)), TQT_SLOT(configChanged()));
-  layout1->addWidget( setDateTimeAuto );
+  tqlayout1->addWidget( setDateTimeAuto );
 
   timeServerList = new TQComboBox( false, privateLayoutWidget, "timeServerList" );
   connect(timeServerList, TQT_SIGNAL(activated(int)), TQT_SLOT(configChanged()));
@@ -80,7 +80,7 @@ Dtime::Dtime(TQWidget * parent, const char *name)
   connect(setDateTimeAuto, TQT_SIGNAL(toggled(bool)), timeServerList, TQT_SLOT(setEnabled(bool)));
   timeServerList->setEnabled(false);
   timeServerList->setEditable(true);
-  layout1->addWidget( timeServerList );
+  tqlayout1->addWidget( timeServerList );
   findNTPutility();
 
   // Date box
@@ -89,7 +89,7 @@ Dtime::Dtime(TQWidget * parent, const char *name)
   TQVBoxLayout *l1 = new TQVBoxLayout( dateBox, KDialog::spacingHint() );
 
   cal = new KDatePicker( dateBox );
-  cal->setMinimumSize(cal->sizeHint());
+  cal->setMinimumSize(cal->tqsizeHint());
   l1->addWidget( cal );
   TQWhatsThis::add( cal, i18n("Here you can change the system date's day of the month, month and year.") );
 
@@ -120,7 +120,7 @@ Dtime::Dtime(TQWidget * parent, const char *name)
 
   TQLabel *dots1 = new TQLabel(":", timeBox);
   dots1->setMinimumWidth( 7 );
-  dots1->setAlignment( TQLabel::AlignCenter );
+  dots1->tqsetAlignment( TQLabel::AlignCenter );
   v3->addMultiCellWidget(dots1, 0, 1, 3, 3 );
 
   minute = new HMSTimeWidget( timeBox );
@@ -132,7 +132,7 @@ Dtime::Dtime(TQWidget * parent, const char *name)
 
   TQLabel *dots2 = new TQLabel(":", timeBox);
   dots2->setMinimumWidth( 7 );
-  dots2->setAlignment( TQLabel::AlignCenter );
+  dots2->tqsetAlignment( TQLabel::AlignCenter );
   v3->addMultiCellWidget(dots2, 0, 1, 5, 5 );
 
   second = new HMSTimeWidget( timeBox );
@@ -252,7 +252,7 @@ oceania.pool.ntp.org"))));
 
   // Reset to the current date and time
   time = TQTime::currentTime();
-  date = TQDate::currentDate();
+  date = TQDate::tqcurrentDate();
   cal->setDate(date);
 
   // start internal timer
@@ -285,8 +285,8 @@ void Dtime::save()
     // NTP Time setting
     TQString timeServer = timeServerList->currentText();
     if( timeServer.find( TQRegExp(".*\\(.*\\)$") ) != -1 ) {
-      timeServer.replace( TQRegExp(".*\\("), "" );
-      timeServer.replace( TQRegExp("\\).*"), "" );
+      timeServer.tqreplace( TQRegExp(".*\\("), "" );
+      timeServer.tqreplace( TQRegExp("\\).*"), "" );
       // Would this be better?: s/^.*\(([^)]*)\).*$/\1/
     }
     KProcess proc;
@@ -368,7 +368,7 @@ TQString Dtime::quickHelp() const
 void Kclock::setTime(const TQTime &time)
 {
   this->time = time;
-  repaint();
+  tqrepaint();
 }
 
 void Kclock::paintEvent( TQPaintEvent * )
@@ -382,8 +382,8 @@ void Kclock::paintEvent( TQPaintEvent * )
   TQPointArray pts;
   TQPoint cp = rect().center();
   int d = QMIN(width(),height());
-  TQColor hands =  colorGroup().dark();
-  TQColor shadow =  colorGroup().text();
+  TQColor hands =  tqcolorGroup().dark();
+  TQColor shadow =  tqcolorGroup().text();
   paint.setPen( shadow );
   paint.setBrush( shadow );
   paint.setViewport(4,4,width(),height());

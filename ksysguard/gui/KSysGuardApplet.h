@@ -66,7 +66,7 @@ class KSysGuardApplet : public KPanelApplet, public KSGRD::SensorBoard
     void preferencesFinished();
 
   private:
-    void layout();
+    void tqlayout();
     void resizeDocks( uint newDockCount );
     void addEmptyDisplay( TQWidget **dock, uint pos );
 

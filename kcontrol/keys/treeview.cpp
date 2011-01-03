@@ -156,8 +156,8 @@ void AppTreeView::fillBranch(const TQString& rPath, AppTreeItem *parent)
             TQString groupCaption = g->caption();
 
             // Item names may contain ampersands. To avoid them being converted
-            // to accelerators, replace them with two ampersands.
-            groupCaption.replace("&", "&&");
+            // to accelerators, tqreplace them with two ampersands.
+            groupCaption.tqreplace("&", "&&");
 
             AppTreeItem *item;
             if (parent == 0)
@@ -177,8 +177,8 @@ void AppTreeView::fillBranch(const TQString& rPath, AppTreeItem *parent)
             TQString serviceCaption = s->name();
 
             // Item names may contain ampersands. To avoid them being converted
-            // to accelerators, replace them with two ampersands.
-            serviceCaption.replace("&", "&&");
+            // to accelerators, tqreplace them with two ampersands.
+            serviceCaption.tqreplace("&", "&&");
 
             AppTreeItem* item;
             if (parent == 0)
@@ -228,7 +228,7 @@ TQStringList AppTreeView::fileList(const TQString& rPath)
         TQStringList files = dir.entryList();
         for (TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it) {
             // does not work?!
-            //if (filelist.contains(*it)) continue;
+            //if (filelist.tqcontains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 filelist.remove(*it); // hack
@@ -266,7 +266,7 @@ TQStringList AppTreeView::dirList(const TQString& rPath)
         for (TQStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it) {
             if ((*it) == "." || (*it) == "..") continue;
             // does not work?!
-            // if (dirlist.contains(*it)) continue;
+            // if (dirlist.tqcontains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 dirlist.remove(*it); //hack

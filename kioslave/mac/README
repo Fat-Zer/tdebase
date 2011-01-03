@@ -2,7 +2,7 @@ From the hfsplus man page:
 
        "HFS+,  also  known  as  the Macintosh Extended Format, was
        introduced by Apple Computer in 1998 with the  release  of
-       MacOS 8.1.  It contains many improvements over the old HFS
+       MacOS 8.1.  It tqcontains many improvements over the old HFS
        file system, most notably the ability to  allocate  up  to
        2^64  blocks,  resulting in much more efficient storage of
        many small files on large disks."

@@ -117,7 +117,7 @@ private:
 
   void reportTerminalType();
   void reportSecondaryAttributes();
-  void reportStatus();
+  void reporttqStatus();
   void reportAnswerBack();
   void reportCursorPosition();
   void reportTerminalParms(int p);

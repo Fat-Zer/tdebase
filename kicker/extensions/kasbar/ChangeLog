@@ -26,7 +26,7 @@
 
 	  - Improved the about dialog.
 
-	  - Made masking of the containing toplevel optional.
+	  - Made tqmasking of the containing toplevel optional.
 
 	  - Fixed positioning of the clock display in small mode.
 
@@ -149,7 +149,7 @@
 2004-09-03 Friday 22:32  rich
 
 	* - Added support for the XShape extension, the unused space is now
-	  masked so   that when you have a non-rectangular bar (by using
+	  tqmasked so   that when you have a non-rectangular bar (by using
 	  the 'Boxes per line'	 setting) the unused space is truly unused.
 	  To make this better, I need to   make it so that the box is
 	  always populated from the screen edge outwards.
@@ -164,7 +164,7 @@
 
 	  - Added a context menu item to attach and detach the bar.
 
-	  - Improved repaint performance.
+	  - Improved tqrepaint performance.
 
 	  - Increased version number.
 
@@ -211,7 +211,7 @@
 	* - Improved the handling of inactive desktop grouping.
 
 	  - Fixed a problem with popups not being deleted when their
-	  associated item was	invalidated.
+	  associated item was	tqinvalidated.
 
 2004-08-07 Saturday 03:00  rich
 
@@ -436,7 +436,7 @@
 
 2003-10-23 Thursday 21:41  bwalter
 
-	* Use topLevelWidget() instead of parent()->parent()...
+	* Use tqtopLevelWidget() instead of parent()->parent()...
 
 2003-10-22 Wednesday 22:15  bwalter
 
@@ -481,11 +481,11 @@
 
 2003-09-30 Tuesday 22:25  rich
 
-	* - More improvements to bg repainting (much more efficient).
+	* - More improvements to bg tqrepainting (much more efficient).
 
 	  - Fixed startup animation problem #39582
 
-	  - Fixed erase problem introduced by the repaint changes in my
+	  - Fixed erase problem introduced by the tqrepaint changes in my
 	  last commit.
 
 	  CCMAIL: 39582-done@bugs.kde.org
@@ -498,7 +498,7 @@
 	  - Removed redundant reload of configuration info.
 
 	  - Reworked painting	- Double buffering is now handled by KasBar
-	  not the items.    - Items now longer force an immediate repaint,
+	  not the items.    - Items now longer force an immediate tqrepaint,
 	  they use update instead.    - Fixes #53735
 
 	  CCMAIL: 53735-done@bugs.kde.org
@@ -531,7 +531,7 @@
 
 2003-03-29 Saturday 20:29  binner
 
-	* Fixed a layout problem and solution for "only drawing last icon
+	* Fixed a tqlayout problem and solution for "only drawing last icon
 	  from a group".
 
 2003-02-09 Sunday 09:51  mfranz
@@ -608,7 +608,7 @@
 
 2002-08-09 Friday 23:57  rich
 
-	* - Fixed repaint problem with startup items
+	* - Fixed tqrepaint problem with startup items
 
 2002-07-29 Monday 22:03  coolo
 
@@ -743,11 +743,11 @@
 2001-07-17 Tuesday 19:59  rich
 
 	* Added some extra guards around KRootPixmap calls and readded the
-	  repaint I removed earlier
+	  tqrepaint I removed earlier
 
 2001-07-17 Tuesday 17:03  rich
 
-	* Remove redundant repaint
+	* Remove redundant tqrepaint
 
 2001-07-17 Tuesday 16:47  rich
 
@@ -818,7 +818,7 @@
 2001-05-14 Monday 00:40  rich
 
 	* Added new about dialog Fixed some flicker problems Improved
-	  thumbnail heuristics Improved transparent mode repaints
+	  thumbnail heuristics Improved transparent mode tqrepaints
 
 2001-04-27 Friday 19:07  rich
 
@@ -916,7 +916,7 @@
 
 2001-03-06 Tuesday 12:32  faure
 
-	* ran includemocs to get this to compile (am_edit was trying to
+	* ran includetqmocs to get this to compile (am_edit was trying to
 	  compile a .moc.cpp into a .moc ... there's still something fishy
 	  in am_edit...)
 
@@ -929,7 +929,7 @@
 
 2000-12-17 Sunday 12:00  elter
 
-	* Fixed totally broken kasbar sizeHint.
+	* Fixed totally broken kasbar tqsizeHint.
 
 2000-12-17 Sunday 11:53  elter
 

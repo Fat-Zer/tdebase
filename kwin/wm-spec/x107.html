@@ -84,7 +84,7 @@ a SendEvent request with the following arguments:
 CLASS="PROGRAMLISTING"
 >destination     root
 propagate       False
-event-mask      (SubstructureNotify|SubstructureRedirect)
+event-tqmask      (SubstructureNotify|SubstructureRedirect)
 event           the specified ClientMessage</PRE
 >
 	</P
@@ -174,7 +174,7 @@ CLASS="PROGRAMLISTING"
 This property SHOULD be set by the Window Manager. 
 		</P
 ><P
->A Pager can request a change in  the desktop geometry by sending a _NET_DESKTOP_GEOMETRY client
+>A Pager can request a change in  the desktop tqgeometry by sending a _NET_DESKTOP_GEOMETRY client
 message to the root window:
 		</P
 ><PRE
@@ -310,7 +310,7 @@ CLASS="PROGRAMLISTING"
 	</PRE
 ><P
 >This property MUST be set by WM upon calculating the work area for 
-each desktop.  Contains a geometry for each desktop.  These geometries are 
+each desktop.  Contains a tqgeometry for each desktop.  These geometries are 
 specified relative to the viewport on each desktop and specify an area that is
 completely contained within the viewport.
  Work area SHOULD be used by desktop applications to place desktop icons appropriately.
@@ -407,17 +407,17 @@ CLASS="LITERAL"
 >n</TT
 > is the screen number. The purpose of 
         this property is to allow the Window Manager to know the desktop 
-        layout displayed by the Pager.
+        tqlayout displayed by the Pager.
         </P
 ><P
 >  <TT
 CLASS="LITERAL"
 >_NET_DESKTOP_LAYOUT</TT
-> describes the layout of virtual
-  desktops relative to each other. More specifically, it describes the layout
+> describes the tqlayout of virtual
+  desktops relative to each other. More specifically, it describes the tqlayout
   used by the owner of the manager selection. The Window Manager may use 
-  this layout information or may choose to ignore it.
-  The property contains four values: the Pager orientation, the number of
+  this tqlayout information or may choose to ignore it.
+  The property tqcontains four values: the Pager orientation, the number of
   desktops in the X direction, the number in the Y direction, and the
   starting corner of the Pager.
         </P
@@ -454,7 +454,7 @@ CLASS="LITERAL"
 >_NET_WM_ORIENTATION_HORZ</TT
 >
   the desktops are layed out in rows, with the first desktop in the 
-  specified starting corner. So a layout with X=4 and Y=3 starting in 
+  specified starting corner. So a tqlayout with X=4 and Y=3 starting in 
   the <TT
 CLASS="LITERAL"
 >_NET_WM_TOPLEFT</TT
@@ -491,7 +491,7 @@ CLASS="PROGRAMLISTING"
 CLASS="LITERAL"
 >_NET_WM_ORIENTATION_VERT</TT
 >
-  the layout for X=4 and Y=3 starting in the <TT
+  the tqlayout for X=4 and Y=3 starting in the <TT
 CLASS="LITERAL"
 >_NET_WM_TOPLEFT</TT
 >

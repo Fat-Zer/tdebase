@@ -60,13 +60,13 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
       m_showOnlyIconified(false),
       m_textShadowEngine(0),
       m_ignoreUpdates(false),
-      m_relayoutTimer(0, "TaskBar::m_relayoutTimer")
+      m_retqlayoutTimer(0, "TaskBar::m_retqlayoutTimer")
 {
     arrowType = LeftArrow;
-    blocklayout = true;
+    blocktqlayout = true;
     
     // init
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
     // setup animation frames
     for (int i = 1; i < 11; i++)
@@ -77,7 +77,7 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
     // configure
     configure();
 
-    connect(&m_relayoutTimer, TQT_SIGNAL(timeout()),
+    connect(&m_retqlayoutTimer, TQT_SIGNAL(timeout()),
             this, TQT_SLOT(reLayout()));
 
 		connect(this, TQT_SIGNAL(contentsMoving(int, int)), TQT_SLOT(setBackground()));
@@ -114,7 +114,7 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
         add((*sIt));
     }
 
-    blocklayout = false;
+    blocktqlayout = false;
 
     connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
     keys = new KGlobalAccel( this );
@@ -160,7 +160,7 @@ KTextShadowEngine *TaskBar::textShadowEngine()
 }
 
 
-TQSize TaskBar::sizeHint() const
+TQSize TaskBar::tqsizeHint() const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
@@ -171,7 +171,7 @@ TQSize TaskBar::sizeHint() const
     return TQSize(BUTTON_MIN_WIDTH, minButtonHeight);
 }
 
-TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
+TQSize TaskBar::tqsizeHint( KPanelExtension::Position p, TQSize maxSize) const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
@@ -246,7 +246,7 @@ void TaskBar::configure()
                               TQApplication::desktop()->isVirtualDesktop() &&
                               TQApplication::desktop()->numScreens() > 1) || (TQApplication::desktop()->numScreens() < 2);
 
-    // we need to watch geometry issues if we aren't showing windows when we
+    // we need to watch tqgeometry issues if we aren't showing windows when we
     // are paying attention to the current Xinerama screen
     if (m_showOnlyCurrentScreen)
     {
@@ -294,7 +294,7 @@ void TaskBar::resizeEvent( TQResizeEvent* e )
 {
     if (m_showOnlyCurrentScreen)
     {
-        TQPoint topLeft = mapToGlobal(this->geometry().topLeft());
+        TQPoint topLeft = mapToGlobal(this->tqgeometry().topLeft());
         if (m_currentScreen != TQApplication::desktop()->screenNumber(topLeft))
         {
             // we have been moved to another screen!
@@ -358,7 +358,7 @@ void TaskBar::add(Startup::Ptr startup)
          it != containers.end();
          ++it)
     {
-        if ((*it)->contains(startup))
+        if ((*it)->tqcontains(startup))
         {
             return;
         }
@@ -432,7 +432,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
          it != m_hiddenContainers.end();
          ++it)
     {
-        if ((*it)->contains(task))
+        if ((*it)->tqcontains(task))
         {
             (*it)->finish();
             m_deletableContainers.append(*it);
@@ -447,7 +447,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
              it != containers.end();
              ++it)
         {
-            if ((*it)->contains(task))
+            if ((*it)->tqcontains(task))
             {
                 container = *it;
                 break;
@@ -490,7 +490,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
          it != m_hiddenContainers.end();
          ++it)
     {
-        if ((*it)->contains(startup))
+        if ((*it)->tqcontains(startup))
         {
             (*it)->remove(startup);
 
@@ -511,7 +511,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
              it != containers.end();
              ++it)
         {
-            if ((*it)->contains(startup))
+            if ((*it)->tqcontains(startup))
             {
                 container = *it;
                 break;
@@ -551,7 +551,7 @@ void TaskBar::desktopChanged(int desktop)
         return;
     }
 
-    m_relayoutTimer.stop();
+    m_retqlayoutTimer.stop();
     m_ignoreUpdates = true;
     for (TaskContainer::Iterator it = containers.begin();
          it != containers.end();
@@ -580,7 +580,7 @@ void TaskBar::windowChanged(Task::Ptr task)
     {
         TaskContainer* c = *it;
 
-        if (c->contains(task))
+        if (c->tqcontains(task))
         {
             container = c;
             break;
@@ -620,7 +620,7 @@ void TaskBar::windowChangedGeometry(Task::Ptr task)
          ++it)
     {
         TaskContainer* c = *it;
-        if (c->contains(task))
+        if (c->tqcontains(task))
         {
             container = c;
             break;
@@ -645,11 +645,11 @@ void TaskBar::windowChangedGeometry(Task::Ptr task)
 
 void TaskBar::reLayoutEventually()
 {
-    m_relayoutTimer.stop();
+    m_retqlayoutTimer.stop();
 
-    if (!blocklayout && !m_ignoreUpdates)
+    if (!blocktqlayout && !m_ignoreUpdates)
     {
-        m_relayoutTimer.start(25, true);
+        m_retqlayoutTimer.start(25, true);
     }
 }
 
@@ -660,7 +660,7 @@ void TaskBar::reLayout()
     // popup menu is visible.
     //
     // To get around this, we collect the containers and delete them manually
-    // when doing a relayout. (kling)
+    // when doing a retqlayout. (kling)
     if (!m_deletableContainers.isEmpty()) {
         TaskContainer::List::iterator it = m_deletableContainers.begin();
         for (; it != m_deletableContainers.end(); ++it)
@@ -700,7 +700,7 @@ void TaskBar::reLayout()
     int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
                           fm.height() : TaskBarSettings::minimumButtonHeight();
 
-    // horizontal layout
+    // horizontal tqlayout
     if (orientation() == Horizontal)
     {
         int bwidth = BUTTON_MIN_WIDTH;
@@ -743,10 +743,10 @@ void TaskBar::reLayout()
             }
         }
 
-        // layout containers
+        // tqlayout containers
 
         // for taskbars at the bottom, we need to ensure that the bottom
-        // buttons touch the bottom of the screen. since we layout from
+        // buttons touch the bottom of the screen. since we tqlayout from
         // top to bottom this means seeing if we have any padding and
         // popping it on the top. this preserves Fitt's Law behaviour
         // for taskbars on the bottom
@@ -784,7 +784,7 @@ void TaskBar::reLayout()
             c->setBackground();
         }
     }
-    else // vertical layout
+    else // vertical tqlayout
     {
         // adjust content size
         if (contentsRect().height() < (int)list.count() * minButtonHeight)
@@ -792,7 +792,7 @@ void TaskBar::reLayout()
             resizeContents(contentsRect().width(), list.count() * minButtonHeight);
         }
 
-        // layout containers
+        // tqlayout containers
         int i = 0;
         for (TaskContainer::Iterator it = list.begin();
              it != list.end();
@@ -818,12 +818,12 @@ void TaskBar::reLayout()
 
 void TaskBar::setViewportBackground()
 {
-    const TQPixmap *bg = parentWidget()->backgroundPixmap();
+    const TQPixmap *bg = tqparentWidget()->backgroundPixmap();
     
     if (bg)
     {
-        TQPixmap pm(parentWidget()->size());
-        pm.fill(parentWidget(), pos() + viewport()->pos());
+        TQPixmap pm(tqparentWidget()->size());
+        pm.fill(tqparentWidget(), pos() + viewport()->pos());
         viewport()->setPaletteBackgroundPixmap(pm);
         viewport()->setBackgroundOrigin(WidgetOrigin);
     }
@@ -898,9 +898,9 @@ void TaskBar::propagateMouseEvent( TQMouseEvent* e )
 {
     if ( !isTopLevel()  )
     {
-        TQMouseEvent me( e->type(), mapTo( topLevelWidget(), e->pos() ),
+        TQMouseEvent me( e->type(), mapTo( tqtopLevelWidget(), e->pos() ),
                         e->globalPos(), e->button(), e->state() );
-        TQApplication::sendEvent( topLevelWidget(), &me );
+        TQApplication::sendEvent( tqtopLevelWidget(), &me );
     }
 }
 
@@ -988,7 +988,7 @@ bool TaskBar::shouldGroup() const
 void TaskBar::reGroup()
 {
     isGrouping = shouldGroup();
-    blocklayout = true;
+    blocktqlayout = true;
 
     TaskContainer::Iterator lastContainer = m_hiddenContainers.end();
     for (TaskContainer::Iterator it = m_hiddenContainers.begin();
@@ -1027,7 +1027,7 @@ void TaskBar::reGroup()
         add(*sIt);
     }
 
-    blocklayout = false;
+    blocktqlayout = false;
     reLayoutEventually();
 }
 
@@ -1163,7 +1163,7 @@ int TaskBar::showScreen() const
     if (m_showOnlyCurrentScreen && m_currentScreen == -1)
     {
         const_cast<TaskBar*>(this)->m_currentScreen =
-            TQApplication::desktop()->screenNumber(mapToGlobal(this->geometry().topLeft()));
+            TQApplication::desktop()->screenNumber(mapToGlobal(this->tqgeometry().topLeft()));
     }
 
     return m_currentScreen;

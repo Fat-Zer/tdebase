@@ -18,7 +18,7 @@
 
 // End of verbatim comment
 
-// kate: space-indent on; indent-width 4; replace-tabs on;
+// kate: space-indent on; indent-width 4; tqreplace-tabs on;
 
 /*
  * man2html-linux-1.0/1.1
@@ -49,7 +49,7 @@
 ** every directory should start and end with the '/' and that the first
 ** directory should be "/" to allow a full path as an argument.
 **
-** The program first check if PATH_INFO contains some information.
+** The program first check if PATH_INFO tqcontains some information.
 ** If it does (t.i. man2html/some/thing is used), the program will look
 ** for a manpage called PATH_INFO in the manpath.
 **
@@ -58,7 +58,7 @@
 **
 ** name      name of manpage (csh, printf, xv, troff)
 ** section   the section (1 2 3 4 5 6 7 8 9 n l 1v ...)
-** -M path   an extra directory to look for manpages (replaces "/")
+** -M path   an extra directory to look for manpages (tqreplaces "/")
 **
 ** If man2html finds multiple manpages that satisfy the options, an index
 ** is displayed and the user can make a choice. If only one page is
@@ -332,7 +332,7 @@ static void InitNumberDefinitions( void )
 {
     // As the date number registers are more for end-users, better choose local time.
     // Groff seems to support Gregorian dates only
-    TQDate today( TQDate::currentDate( Qt::LocalTime ) );
+    TQDate today( TQDate::tqcurrentDate( Qt::LocalTime ) );
     s_numberDefinitionMap.insert( "year", today.year() ); // Y2K-correct year
     s_numberDefinitionMap.insert( "yr", today.year() - 1900 ); // Y2K-incorrect year
     s_numberDefinitionMap.insert( "mo", today.month() );
@@ -882,7 +882,7 @@ static void add_links(char *c)
             if (g-7>=c && g[-1]==':')
             {
                 // We have perhaps an email address starting with mailto:
-                if (!qstrncmp("mailto:",g-7,7))
+                if (!tqstrncmp("mailto:",g-7,7))
                     g-=7;
             }
 	    h=f+1;
@@ -1958,13 +1958,13 @@ static char *scan_expression(char *c, int *result);
 
 static char *scan_format(char *c, TABLEROW **result, int *maxcol)
 {
-    TABLEROW *layout, *currow;
+    TABLEROW *tqlayout, *currow;
     TABLEITEM *curfield;
     int i,j;
     if (*result) {
 	clear_table(*result);
     }
-    layout= currow=new TABLEROW();
+    tqlayout= currow=new TABLEROW();
     curfield=new TABLEITEM(currow);
     while (*c && *c!='.') {
 	switch (*c) {
@@ -2029,13 +2029,13 @@ static char *scan_format(char *c, TABLEROW **result, int *maxcol)
     }
     if (*c=='.') while (*c++!='\n');
     *maxcol=0;
-    currow=layout;
+    currow=tqlayout;
     while (currow) {
 	i=currow->length();
 	if (i>*maxcol) *maxcol=i;
 	currow=currow->next;
     }
-    *result=layout;
+    *result=tqlayout;
     return c;
 }
 
@@ -2066,7 +2066,7 @@ static char *scan_table(char *c)
     TQCString oldfont;
     int oldsize,oldfillout;
     char itemsep='\t';
-    TABLEROW *layout=NULL, *currow;
+    TABLEROW *tqlayout=NULL, *currow;
     int curfield = -1;
     while (*c++!='\n');
     h=c;
@@ -2085,7 +2085,7 @@ static char *scan_table(char *c)
 	/* scan table options */
 	while (c<h) {
 	    while (isspace(*c)) c++;
-	    for (i=0; tableopt[i] && qstrncmp(tableopt[i],c,tableoptl[i]);i++);
+	    for (i=0; tableopt[i] && tqstrncmp(tableopt[i],c,tableoptl[i]);i++);
 	    c=c+tableoptl[i];
 	    switch (i) {
 	    case 0: center=1; break;
@@ -2104,10 +2104,10 @@ static char *scan_table(char *c)
 	}
 	c=h+1;
     }
-    /* scan layout */
-    c=scan_format(c,&layout, &maxcol);
-//    currow=layout;
-    currow=next_row(layout);
+    /* scan tqlayout */
+    c=scan_format(c,&tqlayout, &maxcol);
+//    currow=tqlayout;
+    currow=next_row(tqlayout);
     curfield=0;
     i=0;
     while (!finished && *c) {
@@ -2121,7 +2121,7 @@ static char *scan_table(char *c)
 		    currow->prev->next->prev=currow->prev;
 		    currow->prev=currow->prev->next;
 		} else {
-		    currow->prev=layout=new TABLEROW();
+		    currow->prev=tqlayout=new TABLEROW();
 		    currow->prev->prev=NULL;
 		    currow->prev->next=currow;
 		}
@@ -2216,7 +2216,7 @@ static char *scan_table(char *c)
 	}
     }
     /* calculate colspan and rowspan */
-    currow=layout;
+    currow=tqlayout;
     while (currow->next) currow=currow->next;
     while (currow) {
         int ti = 0, ti1 = 0, ti2 = -1;
@@ -2260,7 +2260,7 @@ static char *scan_table(char *c)
         if (expand) out_html(" WIDTH=\"100%\"");
     }
     out_html(">\n");
-    currow=layout;
+    currow=tqlayout;
     while (currow) {
         j=0;
         out_html("<TR VALIGN=top>");
@@ -2318,7 +2318,7 @@ static char *scan_table(char *c)
 	currow=currow->next;
     }
 
-    clear_table(layout);
+    clear_table(tqlayout);
 
     if (box && !border) out_html("</TABLE>");
     out_html("</TABLE>");
@@ -2360,14 +2360,14 @@ static char *scan_expression( char *c, int *result, const unsigned int numLoop )
 	}
 	c++;
 	h=c;
-	while (*c!= sep && (!tcmp || qstrncmp(c,tcmp,4))) c++;
+	while (*c!= sep && (!tcmp || tqstrncmp(c,tcmp,4))) c++;
 	*c='\n';
 	scan_troff(h, 1, &st1);
 	*c=sep;
 	if (tcmp) c=c+3;
 	c++;
 	h=c;
-	while (*c!=sep && (!tcmp || qstrncmp(c,tcmp,4))) c++;
+	while (*c!=sep && (!tcmp || tqstrncmp(c,tcmp,4))) c++;
 	*c='\n';
 	scan_troff(h,1,&st2);
 	*c=sep;
@@ -3032,7 +3032,7 @@ static int get_request(char *req, int len)
         "%T", "An", "Aq", "Bq", "Qq", "UR", "UE", "UN", "troff", "nroff", "als",
         "rr", "rnn", "aln", "shift", "while", "do", "Dx", 0 };
     int r = 0;
-    while (requests[r] && qstrncmp(req, requests[r], len)) r++;
+    while (requests[r] && tqstrncmp(req, requests[r], len)) r++;
     return requests[r] ? r : REQ_UNKNOWN;
 }
 
@@ -3237,7 +3237,7 @@ static char *scan_request(char *c)
                     while (*c && *c!='\n') c++;
                     c++;
                     h=c;
-                    while (*c && qstrncmp(c,".di",3)) while (*c && *c++!='\n');
+                    while (*c && tqstrncmp(c,".di",3)) while (*c && *c++!='\n');
                     *c='\0';
                     char* result=0;
                     scan_troff(h,0,&result);
@@ -3358,7 +3358,7 @@ static char *scan_request(char *c)
                         {
                             char *line=NULL;
                             c=scan_troff(c,1, &line);
-                            if (line && qstrncmp(line, "<BR>", 4))
+                            if (line && tqstrncmp(line, "<BR>", 4))
                             {
                                 out_html(line);
                                 out_html("<BR>\n");
@@ -3489,7 +3489,7 @@ static char *scan_request(char *c)
                         while (*c && *c!='\n') c++,i++;
                     }
                     c++;
-                    while (*c && qstrncmp(c,endwith,i)) while (*c++!='\n');
+                    while (*c && tqstrncmp(c,endwith,i)) while (*c++!='\n');
                     while (*c && *c++!='\n');
                     break;
                 }
@@ -4015,7 +4015,7 @@ static char *scan_request(char *c)
                         out_html("\n<H3>");
                     else
                         out_html("\n<H2>");
-                    mandoc_synopsis = qstrncmp(c, "SYNOPSIS", 8) == 0;
+                    mandoc_synopsis = tqstrncmp(c, "SYNOPSIS", 8) == 0;
                     c = mandoc_command ? scan_troff_mandoc(c,1,NULL) : scan_troff(c,1,NULL);
                     if (mode)
                         out_html("</H3>\n");
@@ -4064,8 +4064,8 @@ static char *scan_request(char *c)
                             {
                                 if (wordlist[i][0] == '\007')
                                     wordlist[i]++;
-                                if (wordlist[i][qstrlen(wordlist[i])-1] == '\007')
-                                    wordlist[i][qstrlen(wordlist[i])-1] = 0;
+                                if (wordlist[i][tqstrlen(wordlist[i])-1] == '\007')
+                                    wordlist[i][tqstrlen(wordlist[i])-1] = 0;
                             }
                             output_possible=true;
                             out_html( DOCTYPE"<HTML>\n<HEAD>\n");
@@ -4147,7 +4147,7 @@ static char *scan_request(char *c)
                     out_html(set_font("I"));
                     if (words>1) wordlist[1][-1]='\0';
                     const char *c2=lookup_abbrev(wordlist[0]);
-                    curpos+=qstrlen(c2);
+                    curpos+=tqstrlen(c2);
                     out_html(c2);
                     out_html(set_font("R"));
                     if (words>1)
@@ -4293,8 +4293,8 @@ static char *scan_request(char *c)
                     }
                     c = next_line;
                     sl=c;
-                    const int length=qstrlen(endmacro);
-                    while (*c && qstrncmp(c,endmacro,length))
+                    const int length=tqstrlen(endmacro);
+                    while (*c && tqstrncmp(c,endmacro,length))
                         c=skip_till_newline(c);
 
                     TQCString macro;
@@ -4401,7 +4401,7 @@ static char *scan_request(char *c)
                 case REQ_It: // mdoc(7) "list ITem"
                 {
                     c=c+j;
-                    if (qstrncmp(c, "Xo", 2) == 0 && isspace(*(c+2)))
+                    if (tqstrncmp(c, "Xo", 2) == 0 && isspace(*(c+2)))
                     c = skip_till_newline(c);
                     if (dl_set[itemdepth] & BL_DESC_LIST)
                     {
@@ -5233,7 +5233,7 @@ static char *scan_request(char *c)
                 }
                 case REQ_do: // groff(7) "DO command"
                 {
-                    // HACK: we just replace do by a \n and a .
+                    // HACK: we just tqreplace do by a \n and a .
                     *c = '\n';
                     c++;
                     *c = '.';
@@ -5303,7 +5303,7 @@ static char *scan_troff(char *c, bool san, char **result)
     if (result) {
 	if (*result) {
 	    buffer=*result;
-	    buffpos=qstrlen(buffer);
+	    buffpos=tqstrlen(buffer);
 	    buffmax=buffpos;
 	} else {
             buffer = stralloc(LARGE_STR_MAX);
@@ -5528,7 +5528,7 @@ void scan_man_page(const char *man_page)
     s_dollarZero = ""; // No macro called yet!
     
     output_possible = false;
-    int strLength = qstrlen(man_page);
+    int strLength = tqstrlen(man_page);
     char *buf = new char[strLength + 2];
     qstrcpy(buf+1, man_page);
     buf[0] = '\n';

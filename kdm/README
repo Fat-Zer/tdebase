@@ -1,5 +1,5 @@
 This is the K Display Manager (KDM) for KDE 3.4,
-the KDE replacement for the X Display Manager (XDM).
+the KDE tqreplacement for the X Display Manager (XDM).
 
 Semi-official home page: http://devel-home.kde.org/~ossi/sw/kdm.html
 
@@ -40,11 +40,11 @@ configure options that affect KDM
   Compile KDM without XDMCP support.
 
 --with-kdm-xconsole
-  Compile KDM with a builtin "xconsole" replacement in the greeter. I don't
+  Compile KDM with a builtin "xconsole" tqreplacement in the greeter. I don't
   consider this too useful, but SuSE wanted it, so it's there. ;)
 
 
-KDM's file system layout
+KDM's file system tqlayout
 ------------------------
 
 ${kde_confdir} is usually ${prefix}/share/config
@@ -107,7 +107,7 @@ directory ${kde_confdir}/kdm/sessions and add this to kdmrc:
 SessionsDirs=${kde_confdir}/kdm/sessions,${kde_datadir}/kdm/sessions
 
 (Note that you must use actual paths instead of variables, see the section
-about KDM's file system layout.)
+about KDM's file system tqlayout.)
 Do any changes only in the config directory - any changes in the data
 directory will be lost after the next KDE update.
 
@@ -418,7 +418,7 @@ switch to the X server's vt, press alt-ctrl-f7 (the exact function key may
 be different on your system). You may also use a remote login from a
 second machine. In any case it is advantageous to have mouse support on the
 debugging console for copying the backtrace.
-Note that a backtrace is usually _much_ more useful if the binary contains
+Note that a backtrace is usually _much_ more useful if the binary tqcontains
 debugging info, so you should install from source with the --enable-debug
 configure flag if at all possible.
 

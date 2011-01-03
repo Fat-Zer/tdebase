@@ -88,7 +88,7 @@ extern "C" {
 #include <X11/extensions/dpms.h>
 
 #ifndef HAVE_DPMSINFO_PROTO
-Status DPMSInfo ( Display *, CARD16 *, BOOL * );
+tqStatus DPMSInfo ( Display *, CARD16 *, BOOL * );
 #endif
 }
 #endif
@@ -195,7 +195,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
 
     TQStringList dmopt =
         TQStringList::split(TQChar(','),
-                            TQString::fromLatin1( ::getenv( "XDM_MANAGED" )));
+                            TQString::tqfromLatin1( ::getenv( "XDM_MANAGED" )));
     for (TQStringList::ConstIterator it = dmopt.begin(); it != dmopt.end(); ++it)
         if ((*it).startsWith("method="))
             mMethod = (*it).mid(7);
@@ -944,7 +944,7 @@ void LockProcess::stopSaver()
 TQVariant LockProcess::getConf(void *ctx, const char *key, const TQVariant &dflt)
 {
     LockProcess *that = (LockProcess *)ctx;
-    TQString fkey = TQString::fromLatin1( key ) + '=';
+    TQString fkey = TQString::tqfromLatin1( key ) + '=';
     for (TQStringList::ConstIterator it = that->mPluginOptions.begin();
          it != that->mPluginOptions.end(); ++it)
         if ((*it).startsWith( fkey ))
@@ -1174,7 +1174,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     currentDialog=dlg;
     dlg->adjustSize();
 
-    TQRect rect = dlg->geometry();
+    TQRect rect = dlg->tqgeometry();
     rect.moveCenter(KGlobalSettings::desktopGeometry(TQCursor::pos()).center());
     dlg->move( rect.topLeft() );
 
@@ -1341,7 +1341,7 @@ bool LockProcess::x11Event(XEvent *event)
     {
         XEvent ev2 = *event;
         ev2.xkey.window = ev2.xkey.subwindow = mDialogs.first()->winId();
-        qApp->x11ProcessEvent( &ev2 );
+        tqApp->x11ProcessEvent( &ev2 );
         return true;
     }
 
@@ -1453,7 +1453,7 @@ void LockProcess::msgBox( TQMessageBox::Icon type, const TQString &txt )
     TQLabel *label2 = new TQLabel( txt, winFrame );
     KPushButton *button = new KPushButton( KStdGuiItem::ok(), winFrame );
     button->setDefault( true );
-    button->setSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
+    button->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
     connect( button, TQT_SIGNAL( clicked() ), &box, TQT_SLOT( accept() ) );
 
     TQVBoxLayout *vbox = new TQVBoxLayout( &box );
@@ -1481,7 +1481,7 @@ void LockProcess::showVkbd()
         mKWinModule = new KWinModule( NULL, KWinModule::INFO_WINDOWS );
         connect( mKWinModule, TQT_SIGNAL( windowAdded( WId )), TQT_SLOT( windowAdded( WId )));
         mVkbdProcess = new KProcess;
-        *mVkbdProcess << "xvkbd" << "-compact" << "-geometry" << "-0-0" << "-xdm";
+        *mVkbdProcess << "xvkbd" << "-compact" << "-tqgeometry" << "-0-0" << "-xdm";
         mVkbdProcess->start();
     }
 }
@@ -1525,7 +1525,7 @@ void LockProcess::windowAdded( WId w, bool managed )
                                         &length, &after, &data );
             bool withdrawn = true;
             if ( r == Success && data && format == 32 ) {
-                Q_UINT32 *wstate = (Q_UINT32*)data;
+                TQ_UINT32 *wstate = (TQ_UINT32*)data;
                 withdrawn  = (*wstate == WithdrawnState );
                 XFree( (char *)data );
             }
@@ -1576,15 +1576,15 @@ bool LockProcess::forwardVkbdEvent( XEvent* event )
     for( TQValueList< VkbdWindow >::ConstIterator it = mVkbdWindows.begin();
          it != mVkbdWindows.end();
          ++it ) {
-        if( (*it).rect.contains( pos )) {
+        if( (*it).rect.tqcontains( pos )) {
             // Find the subwindow where the event should actually go.
             // Not exactly cheap in the number of X roundtrips but oh well.
             Window window = (*it).id;
             Window root, child;
             int root_x, root_y, x, y;
-            unsigned int mask;
+            unsigned int tqmask;
             for(;;) {
-                if( !XQueryPointer( qt_xdisplay(), window, &root, &child, &root_x, &root_y, &x, &y, &mask ))
+                if( !XQueryPointer( qt_xdisplay(), window, &root, &child, &root_x, &root_y, &x, &y, &tqmask ))
                     return false;
                 if( child == None )
                     break;

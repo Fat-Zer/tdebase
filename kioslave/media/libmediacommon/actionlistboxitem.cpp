@@ -29,7 +29,7 @@ ActionListBoxItem::ActionListBoxItem(NotifierAction *action, TQString mimetype, 
 {
 	TQString text = m_action->label();
 	
-	if ( m_action->autoMimetypes().contains( mimetype ) )
+	if ( m_action->autoMimetypes().tqcontains( mimetype ) )
 	{
 		text += " (" + i18n( "Auto Action" ) + ")";
 	}

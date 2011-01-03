@@ -47,7 +47,7 @@ public:
     KBookmark bookmark() { return m_bk; }
     bool connected() { return m_connected; };
     void setConnected(bool b) { m_connected = b; };
-    void updateStatus();
+    void updatetqStatus();
 
 public slots:
     void slotTextChangedURL(const TQString &);

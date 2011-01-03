@@ -52,11 +52,11 @@ advancedTabDialog::advancedTabDialog(TQWidget* parent, KConfig* config, const ch
             this, TQT_SLOT(save()));
     actionButton(Apply)->setEnabled(false);
     TQFrame* page = plainPage();
-    TQVBoxLayout* layout = new TQVBoxLayout(page);
+    TQVBoxLayout* tqlayout = new TQVBoxLayout(page);
     m_advancedWidget = new advancedTabOptions(page);
-    layout->addWidget(m_advancedWidget);
-    layout->addSpacing( 20 );
-    layout->addStretch();
+    tqlayout->addWidget(m_advancedWidget);
+    tqlayout->addSpacing( 20 );
+    tqlayout->addStretch();
 
     connect(m_advancedWidget->m_pNewTabsInBackground, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
     connect(m_advancedWidget->m_pOpenAfterCurrentPage, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));

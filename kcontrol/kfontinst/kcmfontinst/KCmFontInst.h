@@ -108,7 +108,7 @@ class CKCmFontInst : public KCModule
     TQSplitter            *itsSplitter;
     KConfig              itsConfig;
     bool                 itsEmbeddedAdmin;
-    TQLabel               *itsStatusLabel;
+    TQLabel               *itstqStatusLabel;
 };
 
 }

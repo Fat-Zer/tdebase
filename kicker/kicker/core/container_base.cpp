@@ -38,7 +38,7 @@ BaseContainer::BaseContainer( TQPopupMenu* appletOpMenu, TQWidget* parent, const
   : TQWidget( parent, name )
   , _dir(KPanelApplet::Up)
   , _orient(Horizontal)
-  , _alignment(KPanelExtension::LeftTop)
+  , _tqalignment(KPanelExtension::LeftTop)
   , _fspace(0)
   , _moveOffset(TQPoint(0,0))
   , _aid(TQString::null)
@@ -77,7 +77,7 @@ void BaseContainer::loadConfiguration( KConfigGroup& group )
 }
 
 void BaseContainer::saveConfiguration(KConfigGroup& group,
-                                      bool layoutOnly) const
+                                      bool tqlayoutOnly) const
 {
     if (isImmutable())
     {
@@ -87,7 +87,7 @@ void BaseContainer::saveConfiguration(KConfigGroup& group,
     // write positioning info
     group.writeEntry( "FreeSpace2", freeSpace() );
     // write type specific info
-    doSaveConfiguration( group, layoutOnly );
+    doSaveConfiguration( group, tqlayoutOnly );
 }
 
 void BaseContainer::configure(KPanelExtension::Orientation o,
@@ -110,15 +110,15 @@ void BaseContainer::slotRemoved(KConfig* config)
     config->sync();
 }
 
-void BaseContainer::setAlignment(KPanelExtension::Alignment a)
+void BaseContainer::tqsetAlignment(KPanelExtension::Alignment a)
 {
-    if (_alignment == a)
+    if (_tqalignment == a)
     {
         return;
     }
 
-    _alignment = a;
-    alignmentChange(a);
+    _tqalignment = a;
+    tqalignmentChange(a);
 }
 
 TQPopupMenu* BaseContainer::opMenu()

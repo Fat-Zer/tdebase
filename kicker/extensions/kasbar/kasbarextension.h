@@ -76,7 +76,7 @@ public:
 
     virtual ~KasBarExtension();
 
-    TQSize sizeHint( Position, TQSize maxSize ) const;
+    TQSize tqsizeHint( Position, TQSize maxSize ) const;
     Position preferedPosition() const { return Right; }
 
     virtual void positionChange( Position position );

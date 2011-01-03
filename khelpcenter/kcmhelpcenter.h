@@ -138,7 +138,7 @@ class KCMHelpCenter : public KDialogBase, virtual public KCMHelpCenterIface
 
   protected:
     void setupMainWidget( TQWidget *parent );
-    void updateStatus();
+    void updatetqStatus();
     void startIndexProcess();
 
     void deleteProcess();

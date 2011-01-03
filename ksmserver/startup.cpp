@@ -267,7 +267,7 @@ void KSMServer::tryRestoreNext()
         if ( wm == config->readEntry( TQString("program")+n ) )
             continue; // wm already started
         if( config->readBoolEntry( TQString( "wasWm" )+n, false ))
-            continue; // it was wm before, but not now, don't run it (some have --replace in command :(  )
+            continue; // it was wm before, but not now, don't run it (some have --tqreplace in command :(  )
         startApplication( restartCommand,
                           config->readEntry( TQString("clientMachine")+n ),
                           config->readEntry( TQString("userId")+n ));
@@ -363,14 +363,14 @@ bool KSMServer::checkStartupSuspend()
 
 void KSMServer::suspendStartup( TQCString app )
 {
-    if( !startupSuspendCount.contains( app ))
+    if( !startupSuspendCount.tqcontains( app ))
         startupSuspendCount[ app ] = 0;
     ++startupSuspendCount[ app ];
 }
 
 void KSMServer::resumeStartup( TQCString app )
 {
-    if( !startupSuspendCount.contains( app ))
+    if( !startupSuspendCount.tqcontains( app ))
         return;
     if( --startupSuspendCount[ app ] == 0 ) {
         startupSuspendCount.remove( app );

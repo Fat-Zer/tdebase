@@ -42,10 +42,10 @@ KonqViewFactory::KonqViewFactory( KLibFactory *factory, const TQStringList &args
     : m_factory( factory ), m_args( args ), m_createBrowser( createBrowser )
 {
     if ( m_createBrowser )
-        m_args << TQString::fromLatin1( "Browser/View" );
+        m_args << TQString::tqfromLatin1( "Browser/View" );
 }
 
-KParts::ReadOnlyPart *KonqViewFactory::create( TQWidget *parentWidget, const char *widgetName,
+KParts::ReadOnlyPart *KonqViewFactory::create( TQWidget *tqparentWidget, const char *widgetName,
                                                TQObject * parent, const char *name )
 {
   if ( !m_factory )
@@ -56,18 +56,18 @@ KParts::ReadOnlyPart *KonqViewFactory::create( TQWidget *parentWidget, const cha
   if ( m_factory->inherits( "KParts::Factory" ) )
   {
     if ( m_createBrowser )
-      obj = static_cast<KParts::Factory *>(m_factory)->createPart( parentWidget, widgetName, parent, name, "Browser/View", m_args );
+      obj = static_cast<KParts::Factory *>(m_factory)->createPart( tqparentWidget, widgetName, parent, name, "Browser/View", m_args );
 
     if ( !obj )
-      obj = static_cast<KParts::Factory *>(m_factory)->createPart( parentWidget, widgetName, parent, name, "KParts::ReadOnlyPart", m_args );
+      obj = static_cast<KParts::Factory *>(m_factory)->createPart( tqparentWidget, widgetName, parent, name, "KParts::ReadOnlyPart", m_args );
   }
   else
   {
     if ( m_createBrowser )
-      obj = m_factory->create( parentWidget, name, "Browser/View", m_args );
+      obj = m_factory->create( tqparentWidget, name, "Browser/View", m_args );
 
     if ( !obj )
-      obj = m_factory->create( parentWidget, name, "KParts::ReadOnlyPart", m_args );
+      obj = m_factory->create( tqparentWidget, name, "KParts::ReadOnlyPart", m_args );
   }
 
   if ( !obj->inherits( "KParts::ReadOnlyPart" ) )
@@ -189,7 +189,7 @@ KonqViewFactory KonqFactory::createView( const TQString &serviceType,
     args = TQStringList::split( " ", argStr );
   }
 
-  return KonqViewFactory( factory, args, service->serviceTypes().contains( "Browser/View" ) );
+  return KonqViewFactory( factory, args, service->serviceTypes().tqcontains( "Browser/View" ) );
 }
 
 void KonqFactory::getOffers( const TQString & serviceType,

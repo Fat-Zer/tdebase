@@ -62,7 +62,7 @@ class AddAppletVisualFeedback : QWidget
     private:
         const TQWidget* m_target;
         KPanelApplet::Direction m_direction;
-        TQBitmap m_mask;
+        TQBitmap m_tqmask;
         TQPixmap m_pixmap;
         TQPixmap m_icon;
         TQSimpleRichText* m_richText;

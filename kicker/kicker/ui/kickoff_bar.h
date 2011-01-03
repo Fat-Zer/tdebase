@@ -32,12 +32,12 @@ public:
     KickoffTabBar(TQWidget* parent, const char* name);
 
     void deactivateTabs(bool b);
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
 protected:
     virtual void paint(TQPainter*, TQTab*, bool) const;
     virtual void paintLabel(TQPainter* p, const TQRect& br, TQTab* t, bool has_focus) const;
-    virtual void layoutTabs();
+    virtual void tqlayoutTabs();
     virtual void dragEnterEvent(TQDragEnterEvent*);
     virtual void dragMoveEvent(TQDragMoveEvent*);
     virtual void mousePressEvent ( TQMouseEvent * );

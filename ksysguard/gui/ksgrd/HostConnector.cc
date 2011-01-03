@@ -38,30 +38,30 @@ HostConnector::HostConnector( TQWidget *parent, const char *name )
                  parent, name, true, true )
 {
   TQFrame *page = plainPage();
-  TQGridLayout *layout = new TQGridLayout( page, 2, 2, 0, spacingHint() );
-  layout->setColStretch( 1, 1 );
+  TQGridLayout *tqlayout = new TQGridLayout( page, 2, 2, 0, spacingHint() );
+  tqlayout->setColStretch( 1, 1 );
 
   TQLabel *label = new TQLabel( i18n( "Host:" ), page );
-  layout->addWidget( label, 0, 0 );
+  tqlayout->addWidget( label, 0, 0 );
 
   mHostNames = new KComboBox( true, page );
   mHostNames->setMaxCount( 20 );
   mHostNames->setInsertionPolicy( TQComboBox::AtTop );
   mHostNames->setAutoCompletion( true );
   mHostNames->setDuplicatesEnabled( false );
-  layout->addWidget( mHostNames, 0, 1 );
+  tqlayout->addWidget( mHostNames, 0, 1 );
   label->setBuddy( mHostNames );
   TQWhatsThis::add( mHostNames, i18n( "Enter the name of the host you want to connect to." ) );
 
   mHostNameLabel = new TQLabel( page );
   mHostNameLabel->hide();
-  layout->addWidget( mHostNameLabel, 0, 1 );
+  tqlayout->addWidget( mHostNameLabel, 0, 1 );
 
   TQButtonGroup *group = new TQButtonGroup( 0, Qt::Vertical,
                                           i18n( "Connection Type" ), page );
-  TQGridLayout *groupLayout = new TQGridLayout( group->layout(), 4, 4,
+  TQGridLayout *groupLayout = new TQGridLayout( group->tqlayout(), 4, 4,
       spacingHint() );
-  groupLayout->setAlignment( Qt::AlignTop );
+  groupLayout->tqsetAlignment( Qt::AlignTop );
 
   mUseSsh = new TQRadioButton( i18n( "ssh" ), group );
   mUseSsh->setEnabled( true );
@@ -109,7 +109,7 @@ HostConnector::HostConnector( TQWidget *parent, const char *name )
   label = new TQLabel( i18n( "e.g. ssh -l root remote.host.org ksysguardd" ), group );
   groupLayout->addMultiCellWidget( label, 3, 3, 2, 3 );
 
-  layout->addMultiCellWidget( group, 1, 1, 0, 1 );
+  tqlayout->addMultiCellWidget( group, 1, 1, 0, 1 );
 
   connect( mUseCustom, TQT_SIGNAL( toggled( bool ) ),
            mCommands, TQT_SLOT( setEnabled( bool ) ) );

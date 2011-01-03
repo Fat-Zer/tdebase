@@ -154,7 +154,7 @@ static Bool HostBasedAuthProc ( char* /*hostname*/)
 }
 
 
-Status KSMRegisterClientProc (
+tqStatus KSMRegisterClientProc (
     SmsConn             /* smsConn */,
     SmPointer           managerData,
     char *              previousId
@@ -297,7 +297,7 @@ void KSMGetPropertiesProc (
 }
 
 
-class KSMListener : public QSocketNotifier
+class KSMListener : public TQSocketNotifier
 {
 public:
     KSMListener( IceListenObj obj )
@@ -310,7 +310,7 @@ public:
     IceListenObj listenObj;
 };
 
-class KSMConnection : public QSocketNotifier
+class KSMConnection : public TQSocketNotifier
 {
  public:
   KSMConnection( IceConn conn )
@@ -360,7 +360,7 @@ static void write_iceauth (FILE *addfp, FILE *removefp, IceAuthDataEntry *entry)
 
 #define MAGIC_COOKIE_LEN 16
 
-Status SetAuthentication_local (int count, IceListenObj *listenObjs)
+tqStatus SetAuthentication_local (int count, IceListenObj *listenObjs)
 {
     int i;
     for (i = 0; i < count; i ++) {
@@ -387,7 +387,7 @@ Status SetAuthentication_local (int count, IceListenObj *listenObjs)
     return 1;
 }
 
-Status SetAuthentication (int count, IceListenObj *listenObjs,
+tqStatus SetAuthentication (int count, IceListenObj *listenObjs,
                           IceAuthDataEntry **authDataEntries)
 {
     KTempFile addAuthFile;
@@ -532,8 +532,8 @@ void KSMWatchProc ( IceConn iceConn, IcePointer client_data, Bool opening, IcePo
     }
 }
 
-static Status KSMNewClientProc ( SmsConn conn, SmPointer manager_data,
-                                 unsigned long* mask_ret, SmsCallbacks* cb, char** failure_reason_ret)
+static tqStatus KSMNewClientProc ( SmsConn conn, SmPointer manager_data,
+                                 unsigned long* tqmask_ret, SmsCallbacks* cb, char** failure_reason_ret)
 {
     *failure_reason_ret = 0;
 
@@ -560,7 +560,7 @@ static Status KSMNewClientProc ( SmsConn conn, SmPointer manager_data,
     cb->get_properties.callback = KSMGetPropertiesProc;
     cb->get_properties.manager_data = client;
 
-    *mask_ret = SmsRegisterClientProcMask |
+    *tqmask_ret = SmsRegisterClientProcMask |
                 SmsInteractRequestProcMask |
                 SmsInteractDoneProcMask |
                 SmsSaveYourselfRequestProcMask |
@@ -632,7 +632,7 @@ KSMServer::KSMServer( const TQString& windowManager, bool _only_local )
         TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
         TQCString display = ::getenv("DISPLAY");
         // strip the screen number from the display
-        display.replace(TQRegExp("\\.[0-9]+$"), "");
+        display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
         int i;
         while( (i = display.find(':')) >= 0)
            display[i] = '_';
@@ -697,7 +697,7 @@ void KSMServer::cleanUp()
     TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
     TQCString display = ::getenv("DISPLAY");
     // strip the screen number from the display
-    display.replace(TQRegExp("\\.[0-9]+$"), "");
+    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
     int i;
     while( (i = display.find(':')) >= 0)
          display[i] = '_';
@@ -868,7 +868,7 @@ void KSMServer::storeSession()
         TQStringList restartCommand = c->restartCommand();
         if (program.isEmpty() && restartCommand.isEmpty())
            continue;
-        if (excludeApps.contains( program.lower()))
+        if (excludeApps.tqcontains( program.lower()))
             continue;
 
         count++;
@@ -911,7 +911,7 @@ bool KSMServer::isWM( const TQString& program ) const
 {
     // KWin relies on ksmserver's special treatment in phase1,
     // therefore make sure it's recognized even if ksmserver
-    // was initially started with different WM, and kwin replaced
+    // was initially started with different WM, and kwin tqreplaced
     // it later
     return program == wm || program == "kwin";
 }

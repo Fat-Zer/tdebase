@@ -13,7 +13,7 @@ class TQPushButton;
 class KServiceListWidget;
 
 /**
- * This widget contains the right part of the file type configuration
+ * This widget tqcontains the right part of the file type configuration
  * dialog, that shows the details for a file type.
  * It is implemented as a separate class so that it can be used by
  * the keditfiletype program to show the details of a single mimetype.

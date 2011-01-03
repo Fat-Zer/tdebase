@@ -44,7 +44,7 @@ extern KApplication* Kapp;
 
 /**
  * This widget implements a process list page. Besides the process
- * list which is implemented as a ProcessList, it contains two
+ * list which is implemented as a ProcessList, it tqcontains two
  * comboxes and two buttons.  The combo boxes are used to set the
  * update rate and the process filter.  The buttons are used to force
  * an immediate update and to kill a process.

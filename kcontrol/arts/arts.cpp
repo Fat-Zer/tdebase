@@ -116,7 +116,7 @@ void KArtsModule::initAudioIOList()
 
 void KArtsModule::slotArtsdExited(KProcess* proc)
 {
-	latestProcessStatus = proc->exitStatus();
+	latestProcesstqStatus = proc->exitStatus();
 	delete proc;
 }
 
@@ -151,17 +151,17 @@ KArtsModule::KArtsModule(TQWidget *parent, const char *name)
 
 	initAudioIOList();
 
-	TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	TQTabWidget *tab = new TQTabWidget(this);
-	layout->addWidget(tab);
+	tqlayout->addWidget(tab);
 
 	general = new generalTab(tab);
 	hardware = new hardwareTab(tab);
 	//mixer = KCModuleLoader::loadModule("kmixcfg", tab);
 	//midi = new KMidConfig(tab, "kmidconfig");
 
-	general->layout()->setMargin( KDialog::marginHint() );
-	hardware->layout()->setMargin( KDialog::marginHint() );
+	general->tqlayout()->setMargin( KDialog::marginHint() );
+	hardware->tqlayout()->setMargin( KDialog::marginHint() );
 	general->latencyLabel->setFixedHeight(general->latencyLabel->fontMetrics().lineSpacing());
 
 	tab->addTab(general, i18n("&General"));
@@ -499,7 +499,7 @@ void KArtsModule::updateWidgets()
 	if (item >= 0)
 	{
 		audioIO = audioIOList.at(item)->name;
-		bool jack = (audioIO == TQString::fromLatin1("jack"));
+		bool jack = (audioIO == TQString::tqfromLatin1("jack"));
 		if(jack)
 		{
 			customRate->setChecked(false);
@@ -549,7 +549,7 @@ bool KArtsModule::realtimeIsPossible()
 		delete checkProcess;
 		realtimePossible =  false;
 	}
-	else if (latestProcessStatus == 0)
+	else if (latestProcesstqStatus == 0)
 	{
 		realtimePossible =  true;
 	}
@@ -620,39 +620,39 @@ TQString KArtsModule::createArgs(bool netTrans,
 	TQString args;
 
 	if(fragmentCount)
-		args += TQString::fromLatin1(" -F %1").arg(fragmentCount);
+		args += TQString::tqfromLatin1(" -F %1").arg(fragmentCount);
 
 	if(fragmentSize)
-		args += TQString::fromLatin1(" -S %1").arg(fragmentSize);
+		args += TQString::tqfromLatin1(" -S %1").arg(fragmentSize);
 
 	if (!audioIO.isEmpty())
-		args += TQString::fromLatin1(" -a %1").arg(audioIO);
+		args += TQString::tqfromLatin1(" -a %1").arg(audioIO);
 
 	if (duplex)
-		args += TQString::fromLatin1(" -d");
+		args += TQString::tqfromLatin1(" -d");
 
 	if (netTrans)
-		args += TQString::fromLatin1(" -n");
+		args += TQString::tqfromLatin1(" -n");
 
 	if (!deviceName.isEmpty())
-		args += TQString::fromLatin1(" -D ") + deviceName;
+		args += TQString::tqfromLatin1(" -D ") + deviceName;
 
 	if (rate)
-		args += TQString::fromLatin1(" -r %1").arg(rate);
+		args += TQString::tqfromLatin1(" -r %1").arg(rate);
 
 	if (bits)
-		args += TQString::fromLatin1(" -b %1").arg(bits);
+		args += TQString::tqfromLatin1(" -b %1").arg(bits);
 
 	if (autoSuspend && suspendTime)
-		args += TQString::fromLatin1(" -s %1").arg(suspendTime);
+		args += TQString::tqfromLatin1(" -s %1").arg(suspendTime);
 
 	if (!addOptions.isEmpty())
 		args += TQChar(' ') + addOptions;
 
-	args += TQString::fromLatin1(" -m artsmessage");
-	args += TQString::fromLatin1(" -c drkonqi");
-	args += TQString::fromLatin1(" -l 3");
-	args += TQString::fromLatin1(" -f");
+	args += TQString::tqfromLatin1(" -m artsmessage");
+	args += TQString::tqfromLatin1(" -c drkonqi");
+	args += TQString::tqfromLatin1(" -l 3");
+	args += TQString::tqfromLatin1(" -f");
 
 	return args;
 }

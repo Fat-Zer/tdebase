@@ -68,7 +68,7 @@ public:
      * Changes the icon for this item.
      * @param size the icon size (0 for default, otherwise size in pixels)
      * @param state the state of the icon (enum in KIcon)
-     * @param recalc whether to update the layout of the icon view when setting the icon
+     * @param recalc whether to update the tqlayout of the icon view when setting the icon
      * @param redraw whether to redraw the item after setting the icon
      */
     virtual void setIcon( int size,
@@ -80,7 +80,7 @@ public:
      * Bypass @ref setIcon. This is for animated icons, you should use setIcon
      * in all other cases.
      * @param pixmap the pixmap to set - it SHOULD really have the right icon size!
-     * @param recalc whether to update the layout of the icon view when setting the icon
+     * @param recalc whether to update the tqlayout of the icon view when setting the icon
      * @param redraw whether to redraw the item after setting the icon
      */
     void setPixmapDirect( const TQPixmap & pixmap,
@@ -88,14 +88,14 @@ public:
                           bool redraw=false);
 
     /**
-     * Notifies that all icon effects on thumbs should be invalidated,
+     * Notifies that all icon effects on thumbs should be tqinvalidated,
      * e.g. because the effect settings have been changed. The thumb itself
      * is assumed to be still valid (use setThumbnailPixmap() instead
      * otherwise).
      * @param state the state of the icon (enum in KIcon)
      * @param redraw whether to redraw the item after setting the icon
      */
-    void invalidateThumb( int state, bool redraw = false );
+    void tqinvalidateThumb( int state, bool redraw = false );
 
     /**
      * Our current thumbnail is not longer "current".

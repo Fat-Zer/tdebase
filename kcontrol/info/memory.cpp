@@ -163,7 +163,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	    break;
 	};
 	Widget = new TQLabel(title, this);
-	Widget->setAlignment(AlignLeft);
+	Widget->tqsetAlignment(AlignLeft);
 	vbox->addWidget(Widget, 1);
     }
 
@@ -174,7 +174,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	    if (i == SWAP_MEM)
 		vbox->addSpacing(SPACING);
 	    Widget = new TQLabel(this);
-	    Widget->setAlignment(AlignRight);
+	    Widget->tqsetAlignment(AlignRight);
 	    MemSizeLabel[i][j] = Widget;
 	    vbox->addWidget(Widget, 1);
 	}
@@ -228,7 +228,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	  hint = "<qt>" + hint + "</qt>";
 
 	Widget = new TQLabel("<b>" + title + "</b>", this);
-	Widget->setAlignment(AlignCenter);
+	Widget->tqsetAlignment(AlignCenter);
 	TQToolTip::add(Widget, hint);
 	vbox->addWidget(Widget);
 	vbox->addSpacing(SPACING / 2);
@@ -243,7 +243,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	vbox->addSpacing(SPACING / 2);
 
 	Widget = new TQLabel(this);	/* xx MB used. */
-	Widget->setAlignment(AlignCenter);
+	Widget->tqsetAlignment(AlignCenter);
 	TQToolTip::add(Widget, hint);
 	GraphLabel[i] = Widget;
 	vbox->addWidget(Widget);
@@ -424,7 +424,7 @@ void KMemoryWidget::update_Values()
 		      used, swap_colors, swap_text);
     
     /* RAM + SWAP usage: */
-    /* used[0] already contains the amount of used swap */
+    /* used[0] already tqcontains the amount of used swap */
     used[2] = Memory_Info[FREE_MEM] + ZERO_IF_NO_INFO(Memory_Info[FREESWAP_MEM]);
     used[1] = Memory_Info[TOTAL_MEM] - Memory_Info[FREE_MEM];
     if (!all_colors_initialized) {

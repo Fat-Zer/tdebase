@@ -22,7 +22,7 @@
    </entry>
 
 <entry name="Alignment" type="Int" >
-      <label>The alignment of the panel</label>
+      <label>The tqalignment of the panel</label>
       <default code="true">KPanelExtension::Left</default>
       <min>0</min>
       <max>2</max>

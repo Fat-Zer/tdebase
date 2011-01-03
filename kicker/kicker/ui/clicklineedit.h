@@ -27,7 +27,7 @@
 namespace KPIM {
 
 /** 
-  This class provides a KLineEdit which contains a greyed-out hinting
+  This class provides a KLineEdit which tqcontains a greyed-out hinting
   text as long as the user didn't enter any text
 
   @short LineEdit with customizable "Click here" text

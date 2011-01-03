@@ -434,7 +434,7 @@ const char* const Tab_widget::tab_labels[ Tab_widget::TAB_END ] = {
 
 void Tab_widget::show_pages( const Pages_set& pages_P )
     {
-    hide(); // this seems to be necessary, otherwise it's not repainter properly
+    hide(); // this seems to be necessary, otherwise it's not tqrepainter properly
     for( tab_pos_t i = TAB_FIRST;
          i < TAB_END;
          ++i )

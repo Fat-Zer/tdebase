@@ -783,7 +783,7 @@ void TEScreen::compose(TQString compose)
   TQChar c(image[lastPos].c);
   compose.prepend(c);
   compose.compose();
-  image[lastPos].c = compose[0].unicode();
+  image[lastPos].c = compose[0].tqunicode();
 }
 
 // Region commands -------------------------------------------------------------
@@ -1023,7 +1023,7 @@ void TEScreen::clearEntireScreen()
 }
 
 /*! fill screen with 'E'
-    This is to aid screen alignment
+    This is to aid screen tqalignment
 */
 
 void TEScreen::helpAlign()
@@ -1281,7 +1281,7 @@ void TEScreen::getSelText(bool preserve_line_breaks, TQTextStream *stream)
 
 	  while (hX < eol && hX <= sel_Right % columns)
           {
-            Q_UINT16 c = hist->getCell(hY, hX++).c;
+            TQ_UINT16 c = hist->getCell(hY, hX++).c;
             if (c)
               m[d++] = c;
             s++;
@@ -1293,7 +1293,7 @@ void TEScreen::getSelText(bool preserve_line_breaks, TQTextStream *stream)
       }
       else {				// or from screen image.
         if (testIsSelected((s - hist_BR) % columns, (s - hist_BR) / columns)) {
-          Q_UINT16 c = image[s++ - hist_BR].c;
+          TQ_UINT16 c = image[s++ - hist_BR].c;
           if (c) {
             m[d++] = c;
             newlineneeded = true;
@@ -1334,7 +1334,7 @@ void TEScreen::getSelText(bool preserve_line_breaks, TQTextStream *stream)
 
           while (hX < eol)
           {
-              Q_UINT16 c = hist->getCell(hY, hX++).c;
+              TQ_UINT16 c = hist->getCell(hY, hX++).c;
               if (c)
                  m[d++] = c;
               s++;
@@ -1401,7 +1401,7 @@ void TEScreen::getSelText(bool preserve_line_breaks, TQTextStream *stream)
 
         while (s <= eol)
         {
-            Q_UINT16 c = image[s++ - hist_BR].c;
+            TQ_UINT16 c = image[s++ - hist_BR].c;
             if (c)
                  m[d++] = c;
         }

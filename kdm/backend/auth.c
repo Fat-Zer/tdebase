@@ -1038,16 +1038,16 @@ static void
 startUserAuth( char *buf, char *nbuf, FILE **old, FILE **new )
 {
 	const char *home;
-	int lockStatus;
+	int locktqStatus;
 
 	initAddrs();
 	*new = 0;
 	if ((home = getEnv( userEnviron, "HOME" )) && strlen( home ) < NBSIZE - 12) {
 		sprintf( buf, "%s/.Xauthority", home );
 		Debug( "XauLockAuth %s\n", buf );
-		lockStatus = XauLockAuth( buf, 1, 2, 10 );
-		Debug( "lock is %d\n", lockStatus );
-		if (lockStatus == LOCK_SUCCESS)
+		locktqStatus = XauLockAuth( buf, 1, 2, 10 );
+		Debug( "lock is %d\n", locktqStatus );
+		if (locktqStatus == LOCK_SUCCESS)
 			if (!openFiles( buf, nbuf, old, new ))
 				XauUnlockAuth( buf );
 	}

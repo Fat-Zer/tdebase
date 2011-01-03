@@ -50,15 +50,15 @@ KonqAboutPageFactory::~KonqAboutPageFactory()
     s_plugins_html = 0;
 }
 
-KParts::Part *KonqAboutPageFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
+KParts::Part *KonqAboutPageFactory::createPartObject( TQWidget *tqparentWidget, const char *widgetName,
                                                       TQObject *parent, const char *name,
                                                       const char *, const TQStringList & )
 {
-    //KonqFrame *frame = dynamic_cast<KonqFrame *>( parentWidget );
+    //KonqFrame *frame = dynamic_cast<KonqFrame *>( tqparentWidget );
     //if ( !frame ) return 0;
 
     return new KonqAboutPage( //frame->childView()->mainWindow(),
-                              parentWidget, widgetName, parent, name );
+                              tqparentWidget, widgetName, parent, name );
 }
 
 TQString KonqAboutPageFactory::loadFile( const TQString& file )
@@ -77,12 +77,12 @@ TQString KonqAboutPageFactory::loadFile( const TQString& file )
     res = t.read();
 
     // otherwise all embedded objects are referenced as about:/...
-    TQString basehref = TQString::fromLatin1("<BASE HREF=\"file:") +
+    TQString basehref = TQString::tqfromLatin1("<BASE HREF=\"file:") +
 		       file.left( file.findRev( '/' )) +
-		       TQString::fromLatin1("/\">\n");
+		       TQString::tqfromLatin1("/\">\n");
     TQRegExp reg("<head>");
     reg.setCaseSensitive(FALSE);
-    res.replace(reg, "<head>\n\t" + basehref);
+    res.tqreplace(reg, "<head>\n\t" + basehref);
     return res;
 }
 
@@ -295,7 +295,7 @@ TQString KonqAboutPageFactory::specs()
           .arg( i18n("Secure Sockets Layer") )
           .arg( i18n("(TLS/SSL v2/3) for secure communications up to 168bit") )
           .arg( i18n("OpenSSL") )
-          .arg( i18n("Bidirectional 16bit unicode support") )
+          .arg( i18n("Bidirectional 16bit tqunicode support") )
           .arg( i18n("built-in") )
           .arg( i18n("AutoCompletion for forms") )
           .arg( i18n("built-in") )
@@ -427,9 +427,9 @@ TQString KonqAboutPageFactory::plugins()
 
 
 KonqAboutPage::KonqAboutPage( //KonqMainWindow *
-                              TQWidget *parentWidget, const char *widgetName,
+                              TQWidget *tqparentWidget, const char *widgetName,
                               TQObject *parent, const char *name )
-    : KHTMLPart( parentWidget, widgetName, parent, name, BrowserViewGUI )
+    : KHTMLPart( tqparentWidget, widgetName, parent, name, BrowserViewGUI )
 {
     //m_mainWindow = mainWindow;
     TQTextCodec* codec = KGlobal::locale()->codecForEncoding();
@@ -507,32 +507,32 @@ void KonqAboutPage::urlSelected( const TQString &url, int button, int state, con
         return;
     }
 
-    if ( url == TQString::fromLatin1("launch.html") )
+    if ( url == TQString::tqfromLatin1("launch.html") )
     {
         emit browserExtension()->openURLNotify();
 	serve( KonqAboutPageFactory::launch(), "konqueror" );
         return;
     }
-    else if ( url == TQString::fromLatin1("intro.html") )
+    else if ( url == TQString::tqfromLatin1("intro.html") )
     {
         emit browserExtension()->openURLNotify();
         serve( KonqAboutPageFactory::intro(), "konqueror" );
         return;
     }
-    else if ( url == TQString::fromLatin1("specs.html") )
+    else if ( url == TQString::tqfromLatin1("specs.html") )
     {
         emit browserExtension()->openURLNotify();
 	serve( KonqAboutPageFactory::specs(), "konqueror" );
         return;
     }
-    else if ( url == TQString::fromLatin1("tips.html") )
+    else if ( url == TQString::tqfromLatin1("tips.html") )
     {
         emit browserExtension()->openURLNotify();
         serve( KonqAboutPageFactory::tips(), "konqueror" );
         return;
     }
 
-    else if ( url == TQString::fromLatin1("config:/disable_overview") )
+    else if ( url == TQString::tqfromLatin1("config:/disable_overview") )
     {
 	if ( KMessageBox::questionYesNo( widget(),
 					 i18n("Do you want to disable showing "

@@ -142,7 +142,7 @@ BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
    }
 
    // background image settings
-   TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("fileopen"));
+   TQIconSet iconSet = SmallIconSet(TQString::tqfromLatin1("fileopen"));
    TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
    m_urlWallpaperButton->setIconSet( iconSet );
    m_urlWallpaperButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
@@ -257,7 +257,7 @@ BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
    updateUI();
 
 #if (QT_VERSION-0 >= 0x030200)
-   connect( qApp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized())); // RANDR support
+   connect( tqApp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized())); // RANDR support
 #endif
 }
 
@@ -395,7 +395,7 @@ TQString BGDialog::quickHelp() const
       " wallpaper can be overlaid opaquely, or blended in different ways with"
       " the background colors and patterns.<p>"
       " KDE allows you to have the wallpaper change automatically at specified"
-      " intervals of time. You can also replace the background with a program"
+      " intervals of time. You can also tqreplace the background with a program"
       " that updates the desktop dynamically. For example, the \"kdeworld\""
       " program shows a day/night map of the world which is updated periodically.");
 }
@@ -414,14 +414,14 @@ void BGDialog::slotIdentifyScreens()
       screenLabel->setFrameStyle(TQFrame::Panel);
       screenLabel->setFrameShadow(TQFrame::Plain);
 
-      screenLabel->setAlignment(Qt::AlignCenter);
+      screenLabel->tqsetAlignment(Qt::AlignCenter);
       screenLabel->setNum(int(s + 1));
         // BUGLET: we should not allow the identification to be entered again
         //         until the timer fires.
       TQTimer::singleShot(1500, screenLabel, TQT_SLOT(close()));
 
       TQPoint screenCenter(TQApplication::desktop()->screenGeometry(s).center());
-      TQRect targetGeometry(TQPoint(0,0),screenLabel->sizeHint());
+      TQRect targetGeometry(TQPoint(0,0),screenLabel->tqsizeHint());
       targetGeometry.moveCenter(screenCenter);
 
       screenLabel->setGeometry(targetGeometry);
@@ -524,7 +524,7 @@ void BGDialog::loadWallpaperFilesList() {
       if (imageCaption.isEmpty())
       {
          imageCaption = fileName;
-         imageCaption.replace('_', ' ');
+         imageCaption.tqreplace('_', ' ');
          imageCaption = KStringHandler::capwords(imageCaption);
       }
 
@@ -571,7 +571,7 @@ void BGDialog::loadWallpaperFilesList() {
             else
                imageCaption = (*it).mid(slash);
 
-            imageCaption.replace('_', ' ');
+            imageCaption.tqreplace('_', ' ');
             imageCaption = KStringHandler::capwords(imageCaption);
          }
 
@@ -943,7 +943,7 @@ void BGDialog::slotWallpaperTypeChanged(int i)
          else
             m_wallpaperPos = KBackgroundSettings::Tiled;
       }
-      else if (KMimeType::findByPath(path)->is("image/svg+xml"))
+      else if (KMimeType::tqfindByPath(path)->is("image/svg+xml"))
       {
          m_wallpaperPos = KBackgroundSettings::Scaled;         
       }
@@ -1004,7 +1004,7 @@ void BGDialog::slotSetupMulti()
 {
     KBackgroundRenderer *r = eRenderer();
 
-    BGMultiWallpaperDialog dlg(r, topLevelWidget());
+    BGMultiWallpaperDialog dlg(r, tqtopLevelWidget());
     if (dlg.exec() == TQDialog::Accepted) {
         r->stop();
         m_slideShowRandom = r->multiWallpaperMode();
@@ -1182,7 +1182,7 @@ void BGDialog::slotAdvanced()
     KBackgroundRenderer *r = eRenderer();
 
     m_previewUpdates = false;
-    BGAdvancedDialog dlg(r, topLevelWidget(), m_multidesktop);
+    BGAdvancedDialog dlg(r, tqtopLevelWidget(), m_multidesktop);
 
     if (!m_pMonitorArrangement->isEnabled()) {
        dlg.makeReadOnly();

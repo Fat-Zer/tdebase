@@ -67,9 +67,9 @@ protected:
   void paintEvent( TQPaintEvent *e )
   {
     TQPainter p( this );
-    p.setPen( colorGroup().shadow() );
+    p.setPen( tqcolorGroup().shadow() );
     p.drawLine( e->rect().left(), 0, e->rect().right(), 0 );
-    p.setPen( ((KateViewSpace*)parentWidget())->isActiveSpace() ? colorGroup().light() : colorGroup().midlight() );
+    p.setPen( ((KateViewSpace*)tqparentWidget())->isActiveSpace() ? tqcolorGroup().light() : tqcolorGroup().midlight() );
     p.drawLine( e->rect().left(), 1, e->rect().right(), 1 );
   }
 };
@@ -226,9 +226,9 @@ bool KateViewSpace::event( TQEvent *e )
   return TQVBox::event( e );
 }
 
-void KateViewSpace::slotStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const TQString &msg)
+void KateViewSpace::slottqStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const TQString &msg)
 {
-  if ((TQWidgetStack *)view->parentWidget() != stack)
+  if ((TQWidgetStack *)view->tqparentWidget() != stack)
     return;
   mStatusBar->setStatus( r, c, ovr, block, mod, msg );
 }
@@ -309,29 +309,29 @@ KateVSStatusBar::KateVSStatusBar ( KateViewSpace *parent, const char *name )
 {
   m_lineColLabel = new TQLabel( this );
   addWidget( m_lineColLabel, 0, false );
-  m_lineColLabel->setAlignment( Qt::AlignCenter );
+  m_lineColLabel->tqsetAlignment( Qt::AlignCenter );
   m_lineColLabel->installEventFilter( this );
 
   m_modifiedLabel = new TQLabel( TQString("   "), this );
   addWidget( m_modifiedLabel, 0, false );
-  m_modifiedLabel->setAlignment( Qt::AlignCenter );
+  m_modifiedLabel->tqsetAlignment( Qt::AlignCenter );
   m_modifiedLabel->installEventFilter( this );
 
   m_insertModeLabel = new TQLabel( i18n(" INS "), this );
   addWidget( m_insertModeLabel, 0, false );
-  m_insertModeLabel->setAlignment( Qt::AlignCenter );
+  m_insertModeLabel->tqsetAlignment( Qt::AlignCenter );
   m_insertModeLabel->installEventFilter( this );
 
   m_selectModeLabel = new TQLabel( i18n(" NORM "), this );
   addWidget( m_selectModeLabel, 0, false );
-  m_selectModeLabel->setAlignment( Qt::AlignCenter );
+  m_selectModeLabel->tqsetAlignment( Qt::AlignCenter );
   m_selectModeLabel->installEventFilter( this );
 
   m_fileNameLabel=new KSqueezedTextLabel( this );
   addWidget( m_fileNameLabel, 1, true );
   m_fileNameLabel->setMinimumSize( 0, 0 );
-  m_fileNameLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
-  m_fileNameLabel->setAlignment( /*Qt::AlignRight*/Qt::AlignLeft );
+  m_fileNameLabel->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
+  m_fileNameLabel->tqsetAlignment( /*Qt::AlignRight*/Qt::AlignLeft );
   m_fileNameLabel->installEventFilter( this );
 
   installEventFilter( this );
@@ -396,7 +396,7 @@ void KateVSStatusBar::modifiedChanged()
 
 void KateVSStatusBar::showMenu()
 {
-   KMainWindow* mainWindow = static_cast<KMainWindow*>( topLevelWidget() );
+   KMainWindow* mainWindow = static_cast<KMainWindow*>( tqtopLevelWidget() );
    TQPopupMenu* menu = static_cast<TQPopupMenu*>( mainWindow->factory()->container("viewspace_popup", mainWindow ) );
 
    if (menu)
@@ -419,4 +419,4 @@ bool KateVSStatusBar::eventFilter(TQObject*,TQEvent *e)
   return false;
 }
 //END KateVSStatusBar
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

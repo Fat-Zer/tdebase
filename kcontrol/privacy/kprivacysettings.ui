@@ -9,7 +9,7 @@ Derived from AT&amp;T's Privacy Bird settings panel screenshot originally.
     <property name="name">
         <cstring>KPrivacySettings</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -246,7 +246,7 @@ Derived from AT&amp;T's Privacy Bird settings panel screenshot originally.
                 </widget>
                 <widget class="QLayoutWidget" row="1" column="0">
                     <property name="name">
-                        <cstring>layout1</cstring>
+                        <cstring>tqlayout1</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -272,7 +272,7 @@ Derived from AT&amp;T's Privacy Bird settings panel screenshot originally.
                 </widget>
                 <widget class="QLayoutWidget" row="1" column="1">
                     <property name="name">
-                        <cstring>layout3</cstring>
+                        <cstring>tqlayout3</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -303,6 +303,6 @@ Derived from AT&amp;T's Privacy Bird settings panel screenshot originally.
 <includes>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<layoutdefaults spacing="3" margin="6"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<tqlayoutdefaults spacing="3" margin="6"/>
+<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

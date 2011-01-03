@@ -179,7 +179,7 @@ static Rules* findRule( const TQValueList< Rules* >& rules, Window wid, bool who
     if( type == NET::Unknown )
         ret->types = NET::NormalMask;
     else
-        ret->types = 1 << type; // convert type to its mask
+        ret->types = 1 << type; // convert type to its tqmask
     ret->title = title; // set, but make unimportant
     ret->titlematch = Rules::UnimportantMatch;
     ret->clientmachine = machine; // set, but make unimportant

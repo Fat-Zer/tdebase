@@ -207,7 +207,7 @@ KPopupMenu *KasTasker::contextMenu()
 
 	if ( standalone_ ) {
 	    menu->insertSeparator();
-	    menu->insertItem( SmallIcon("exit"), i18n("&Quit"), qApp, TQT_SLOT( quit() ) );
+	    menu->insertItem( SmallIcon("exit"), i18n("&Quit"), tqApp, TQT_SLOT( quit() ) );
 	}
     }
 

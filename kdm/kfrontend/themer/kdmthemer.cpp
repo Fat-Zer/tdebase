@@ -223,7 +223,7 @@ KdmThemer::generateItems( KdmItem *parent, const TQDomNode &node )
 			TQString id = el.attribute("id");
 			if (id.startsWith("plugin-specific-")) {
 			        id = id.mid(strlen("plugin-specific-"));
-			        if (!_pluginsLogin.contains(id))
+			        if (!_pluginsLogin.tqcontains(id))
 			               continue;
 			}
 

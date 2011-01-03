@@ -140,7 +140,7 @@ public:
     int gridXValue() const;
 
     /**
-     * Calculate the geometry of the fixed grid that is used to line up the
+     * Calculate the tqgeometry of the fixed grid that is used to line up the
      * icons, for example when using the lineupIcons() method.
      *
      * @param x
@@ -296,7 +296,7 @@ protected slots:
     void slotPreviewResult();
 
     void slotMovieUpdate( const TQRect& rect );
-    void slotMovieStatus( int status );
+    void slotMovietqStatus( int status );
     void slotReenableAnimation();
 
     void slotAboutToCreate(const TQPoint &pos, const TQValueList<KIO::CopyInfo> &files);

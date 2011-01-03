@@ -469,14 +469,14 @@ void KTheme::apply()
                 iconConf->setGroup( "ToolbarIcons" );
 
             TQString iconName = iconSubElem.tagName();
-            if ( iconName.contains( "Color" ) )
+            if ( iconName.tqcontains( "Color" ) )
             {
                 TQColor iconColor = TQColor( iconSubElem.attribute( "rgb" ) );
                 iconConf->writeEntry( iconName, iconColor, true, true );
             }
-            else if ( iconName.contains( "Value" ) || iconName == "Size" )
+            else if ( iconName.tqcontains( "Value" ) || iconName == "Size" )
                 iconConf->writeEntry( iconName, iconSubElem.attribute( "value" ).toUInt(), true, true );
-            else if ( iconName.contains( "Effect" ) )
+            else if ( iconName.tqcontains( "Effect" ) )
                 iconConf->writeEntry( iconName, iconSubElem.attribute( "name" ), true, true );
             else
                 iconConf->writeEntry( iconName, static_cast<bool>( iconSubElem.attribute( "value" ).toUInt() ), true, true );
@@ -738,18 +738,18 @@ void KTheme::createIconElems( const TQString & group, const TQString & object,
               << "DisabledColor" << "DisabledColor2" << "DisabledEffect"
               << "DisabledSemiTransparent" << "DisabledValue";
     for ( TQStringList::ConstIterator it = elemNames.begin(); it != elemNames.end(); ++it ) {
-        if ( (*it).contains( "Color" ) )
+        if ( (*it).tqcontains( "Color" ) )
             createColorElem( *it, object, parent, cfg );
         else
         {
             TQDomElement tmpCol = m_dom.createElement( *it );
             tmpCol.setAttribute( "object", object );
 
-            if ( (*it).contains( "Value" ) || *it == "Size" )
+            if ( (*it).tqcontains( "Value" ) || *it == "Size" )
                 tmpCol.setAttribute( "value", cfg->readNumEntry( *it, 1 ) );
-            else if ( (*it).contains( "DisabledEffect" ) )
+            else if ( (*it).tqcontains( "DisabledEffect" ) )
                 tmpCol.setAttribute( "name", cfg->readEntry( *it, "togray" ) );
-	    else if ( (*it).contains( "Effect" ) )
+	    else if ( (*it).tqcontains( "Effect" ) )
                 tmpCol.setAttribute( "name", cfg->readEntry( *it, "none" ) );
             else
                 tmpCol.setAttribute( "value", cfg->readBoolEntry( *it, false ) );
@@ -832,7 +832,7 @@ TQString KTheme::processFilePath( const TQString & section, const TQString & pat
 TQString KTheme::unprocessFilePath( const TQString & section, TQString path )
 {
     if ( path.startsWith( "theme:/" ) )
-        return path.replace( TQRegExp( "^theme:/" ), m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/" );
+        return path.tqreplace( TQRegExp( "^theme:/" ), m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/" );
 
     if ( TQFile::exists( path ) )
         return path;

@@ -91,7 +91,7 @@ int QuitApp = 0;
 int RunAsDaemon = 0;
 
 /**
-  This pointer is used by all modules. It contains the file pointer of
+  This pointer is used by all modules. It tqcontains the file pointer of
   the currently served client. This is stdout for non-daemon mode.
  */
 FILE* CurrentClient = 0;

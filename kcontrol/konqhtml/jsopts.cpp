@@ -79,14 +79,14 @@ KJavaScriptOptions::KJavaScriptOptions( KConfig* config, TQString group, TQWidge
                                           "button allows you to easily share your policies with other people by allowing "
                                           "you to save and retrieve them from a zipped file.") );
 
-  TQString wtstr = i18n("This box contains the domains and hosts you have set "
+  TQString wtstr = i18n("This box tqcontains the domains and hosts you have set "
                        "a specific JavaScript policy for. This policy will be used "
                        "instead of the default policy for enabling or disabling JavaScript on pages sent by these "
                        "domains or hosts. <p>Select a policy and use the controls on "
                        "the right to modify it.");
   TQWhatsThis::add( domainSpecific->listView(), wtstr );
 
-  TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
+  TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that tqcontains "
                                         "the JavaScript policies. These policies will be merged "
                                         "with the existing ones. Duplicate entries are ignored.") );
   TQWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the JavaScript policy to a zipped "

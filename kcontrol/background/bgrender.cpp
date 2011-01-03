@@ -54,7 +54,7 @@ KBackgroundRenderer::KBackgroundRenderer(int desk, int screen, bool drawBackgrou
     m_isBusyCursor = false;
     m_enableBusyCursor = false;
     m_pDirs = KGlobal::dirs();
-    m_rSize = m_Size = drawBackgroundPerScreen ? KApplication::desktop()->screenGeometry(screen).size() : KApplication::desktop()->geometry().size();
+    m_rSize = m_Size = drawBackgroundPerScreen ? KApplication::desktop()->screenGeometry(screen).size() : KApplication::desktop()->tqgeometry().size();
     m_pProc = 0L;
     m_Tempfile = 0L;
     m_bPreview = false;
@@ -85,7 +85,7 @@ void KBackgroundRenderer::setSize(const TQSize &size)
 void KBackgroundRenderer::desktopResized()
 {
     m_State = 0;
-    m_rSize = drawBackgroundPerScreen() ? KApplication::desktop()->screenGeometry(screen()).size() : KApplication::desktop()->geometry().size();
+    m_rSize = drawBackgroundPerScreen() ? KApplication::desktop()->screenGeometry(screen()).size() : KApplication::desktop()->tqgeometry().size();
     if( !m_bPreview )
         m_Size = m_rSize;
 }
@@ -132,24 +132,24 @@ TQString KBackgroundRenderer::buildCommand()
         switch (cmd.at(pos+1).latin1()) {
         case 'f':
             createTempFile();
-            cmd.replace(pos, 2, KShellProcess::quote(m_Tempfile->name()));
+            cmd.tqreplace(pos, 2, KShellProcess::quote(m_Tempfile->name()));
             pos += m_Tempfile->name().length() - 2;
             break;
 
         case 'x':
             num.setNum(m_Size.width());
-            cmd.replace(pos, 2, num);
+            cmd.tqreplace(pos, 2, num);
             pos += num.length() - 2;
             break;
 
         case 'y':
             num.setNum(m_Size.height());
-            cmd.replace(pos, 2, num);
+            cmd.tqreplace(pos, 2, num);
             pos += num.length() - 2;
             break;
 
         case '%':
-            cmd.replace(pos, 2, "%");
+            cmd.tqreplace(pos, 2, "%");
             pos--;
             break;
         default:
@@ -191,7 +191,7 @@ int KBackgroundRenderer::doBackground(bool quit)
         int tile_val = TQPixmap::defaultDepth() >= 24 ? 1 : 2;
     // some dithering may be needed even with bpb==15/16, so don't use tileWidth==1
     // for them
-    // with tileWidth>2, repainting the desktop causes nasty effect (XFree86 4.1.0 )
+    // with tileWidth>2, tqrepainting the desktop causes nasty effect (XFree86 4.1.0 )
         if( XQueryBestTile( qt_xdisplay(), qt_xrootwin(), tile_val, tile_val,
             &tileWidth, &tileHeight ) != Success )
             tileWidth = tileHeight = tile_val; // some defaults
@@ -584,7 +584,7 @@ void KBackgroundRenderer::fastWallpaperBlend()
             m_Pixmap.convertFromImage( m_Wallpaper );
         return;
     }
-    else if( m_WallpaperRect.contains( TQRect( TQPoint( 0, 0 ), m_Size ))
+    else if( m_WallpaperRect.tqcontains( TQRect( TQPoint( 0, 0 ), m_Size ))
         && !m_Wallpaper.hasAlphaBuffer()) // wallpaper covers all and no blending
         m_Pixmap = TQPixmap( m_Size );
     else if (m_Background.size() == m_Size)
@@ -730,10 +730,10 @@ void KBackgroundRenderer::blend(TQImage& dst, TQRect dr, const TQImage& src, TQP
 			+ (dr.x() + x) * sizeof(QRgb));
                 d = reinterpret_cast<QRgb*>(src.scanLine(soffs.y() + y)
 			+ (soffs.x() + x) * sizeof(QRgb));
-                a = (qAlpha(*d) * blendFactor) / 100;
-                *b = qRgb(qRed(*b) - (((qRed(*b) - qRed(*d)) * a) >> 8),
-                          qGreen(*b) - (((qGreen(*b) - qGreen(*d)) * a) >> 8),
-                          qBlue(*b) - (((qBlue(*b) - qBlue(*d)) * a) >> 8));
+                a = (tqAlpha(*d) * blendFactor) / 100;
+                *b = tqRgb(tqRed(*b) - (((tqRed(*b) - tqRed(*d)) * a) >> 8),
+                          tqGreen(*b) - (((tqGreen(*b) - tqGreen(*d)) * a) >> 8),
+                          tqBlue(*b) - (((tqBlue(*b) - tqBlue(*d)) * a) >> 8));
             }
         }
     }
@@ -946,8 +946,8 @@ void KBackgroundRenderer::createTempFile()
 TQString KBackgroundRenderer::cacheFileName()
 {
     TQString f = fingerprint();
-    f.replace ( ':', '_' ); // avoid characters that shouldn't be in filenames
-    f.replace ( '/', '#' );
+    f.tqreplace ( ':', '_' ); // avoid characters that shouldn't be in filenames
+    f.tqreplace ( '/', '#' );
     f = locateLocal( "cache", TQString( "background/%1x%2_%3.png" )
         .arg( m_Size.width()).arg( m_Size.height()).arg( f ));
     return f;
@@ -1046,7 +1046,7 @@ KVirtualBGRenderer::KVirtualBGRenderer( int desk, KConfig *config )
     }
 
     initRenderers();
-    m_size = KApplication::desktop()->geometry().size();
+    m_size = KApplication::desktop()->tqgeometry().size();
 }
 
 KVirtualBGRenderer::~KVirtualBGRenderer()
@@ -1153,7 +1153,7 @@ void KVirtualBGRenderer::setEnabled(bool enable)
 
 void KVirtualBGRenderer::desktopResized()
 {
-    m_size = KApplication::desktop()->geometry().size();
+    m_size = KApplication::desktop()->tqgeometry().size();
 
     if (m_pPixmap)
     {
@@ -1194,7 +1194,7 @@ void KVirtualBGRenderer::setPreview(const TQSize & size)
 
 TQSize KVirtualBGRenderer::renderSize(int screen)
 {
-    return m_bDrawBackgroundPerScreen ? KApplication::desktop()->screenGeometry(screen).size() : KApplication::desktop()->geometry().size();
+    return m_bDrawBackgroundPerScreen ? KApplication::desktop()->screenGeometry(screen).size() : KApplication::desktop()->tqgeometry().size();
 }
 
 

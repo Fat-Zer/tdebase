@@ -74,7 +74,7 @@ Multiple monitors
 Two monitors showing different things (not a mirror-setup) can be configured
 in X to either use one X screen, or 2 X screens.  Difference is that if I
 drag a window from one monitor to the other the application gets asked to
-repaint itself on a 2 screen setup and a simple move of the window will be
+tqrepaint itself on a 2 screen setup and a simple move of the window will be
 done in memory (by XFree) if you have a 1 screen setup.
 
 Monitors example:

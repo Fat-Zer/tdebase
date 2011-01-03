@@ -54,11 +54,11 @@ KBackground::KBackground(TQWidget *parent, const char *name, const TQStringList 
 	configname.sprintf("kdesktop-screen-%drc", screen_number);
     m_pConfig = new KConfig(configname, false, false);
 
-    TQVBoxLayout *layout = new TQVBoxLayout(this);
+    TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
     m_base = new BGDialog(this, m_pConfig);
     setQuickHelp( m_base->quickHelp());
-    layout->add(m_base);
-    layout->addStretch();
+    tqlayout->add(m_base);
+    tqlayout->addStretch();
 
     KImageIO::registerFormats();
 

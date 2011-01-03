@@ -41,7 +41,7 @@ static bool iconify = false;
 static bool toSysTray = false;
 static bool fullscreen = false;
 static unsigned long state = 0;
-static unsigned long mask = 0;
+static unsigned long tqmask = 0;
 static NET::WindowType windowtype = NET::Unknown;
 static KWinModule* kwinmodule;
 
@@ -87,8 +87,8 @@ void KStart::sendRule() {
     if( windowclass )
         message += "wmclass=" + windowclass + "\nwmclassmatch=1\n" // 1 = exact match
             + "wmclasscomplete="
-            // if windowclass contains a space (i.e. 2 words, use whole WM_CLASS)
-            + ( windowclass.contains( ' ' ) ? "true" : "false" ) + "\n";
+            // if windowclass tqcontains a space (i.e. 2 words, use whole WM_CLASS)
+            + ( windowclass.tqcontains( ' ' ) ? "true" : "false" ) + "\n";
     if( windowtitle || windowclass ) {
         // always ignore these window types
         message += "types=" + TQCString().setNum( -1U &
@@ -153,7 +153,7 @@ void KStart::windowAdded(WId w){
         XClassHint hint;
         if( !XGetClassHint( qt_xdisplay(), w, &hint ))
             return;
-        TQCString cls = windowclass.contains( ' ' )
+        TQCString cls = windowclass.tqcontains( ' ' )
             ? TQCString( hint.res_name ) + ' ' + hint.res_class : TQCString( hint.res_class );
         cls = cls.lower();
         XFree( hint.res_name );
@@ -185,7 +185,7 @@ static bool wstate_withdrawn( WId winid )
 				&length, &after, &data );
     bool withdrawn = TRUE;
     if ( r == Success && data && format == 32 ) {
-	Q_UINT32 *wstate = (Q_UINT32*)data;
+	TQ_UINT32 *wstate = (TQ_UINT32*)data;
 	withdrawn  = (*wstate == WithdrawnState );
 	XFree( (char *)data );
     }
@@ -225,7 +225,7 @@ void KStart::applyStyle(WId w ) {
     }
 
     if ( state )
-	info.setState( state, mask );
+	info.setState( state, tqmask );
 
     if ( toSysTray ) {
 	TQApplication::beep();
@@ -233,7 +233,7 @@ void KStart::applyStyle(WId w ) {
     }
 
     if ( fullscreen ) {
-	TQRect r = TQApplication::desktop()->geometry();
+	TQRect r = TQApplication::desktop()->tqgeometry();
 	XMoveResizeWindow( qt_xdisplay(), w, r.x(), r.y(), r.width(), r.height() );
     }
 
@@ -351,35 +351,35 @@ int main( int argc, char *argv[] )
 
   if ( args->isSet( "keepabove" ) ) {
       state |= NET::KeepAbove;
-      mask |= NET::KeepAbove;
+      tqmask |= NET::KeepAbove;
   } else if ( args->isSet( "keepbelow" ) ) {
       state |= NET::KeepBelow;
-      mask |= NET::KeepBelow;
+      tqmask |= NET::KeepBelow;
   }
   
   if ( args->isSet( "skiptaskbar" ) ) {
       state |= NET::SkipTaskbar;
-      mask |= NET::SkipTaskbar;
+      tqmask |= NET::SkipTaskbar;
   }
 
   if ( args->isSet( "skippager" ) ) {
       state |= NET::SkipPager;
-      mask |= NET::SkipPager;
+      tqmask |= NET::SkipPager;
   }
 
   activate = args->isSet("activate");
 
   if ( args->isSet("maximize") ) {
       state |= NET::Max;
-      mask |= NET::Max;
+      tqmask |= NET::Max;
   }
   if ( args->isSet("maximize-vertically") ) {
       state |= NET::MaxVert;
-      mask |= NET::MaxVert;
+      tqmask |= NET::MaxVert;
   }
   if ( args->isSet("maximize-horizontally") ) {
       state |= NET::MaxHoriz;
-      mask |= NET::MaxHoriz;
+      tqmask |= NET::MaxHoriz;
   }
 
   iconify = args->isSet("iconify");
@@ -388,7 +388,7 @@ int main( int argc, char *argv[] )
       NETRootInfo i( qt_xdisplay(), NET::Supported );
       if( i.isSupported( NET::FullScreen )) {
           state |= NET::FullScreen;
-          mask |= NET::FullScreen;
+          tqmask |= NET::FullScreen;
       } else {
           windowtype = NET::Override;
           fullscreen = true;

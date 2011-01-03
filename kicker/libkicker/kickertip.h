@@ -50,7 +50,7 @@ public:
             TQString message;
             TQString subtext;
             TQPixmap icon;
-            KickerTip::MaskEffect maskEffect;
+            KickerTip::MaskEffect tqmaskEffect;
             int duration;
             KPanelApplet::Direction direction;
 
@@ -95,10 +95,10 @@ protected slots:
     void slotSettingsChanged();
 
 private:
-    TQBitmap m_mask;
+    TQBitmap m_tqmask;
     TQPixmap m_pixmap;
     TQPixmap m_icon;
-    MaskEffect m_maskEffect;
+    MaskEffect m_tqmaskEffect;
     TQSimpleRichText* m_richText;
     TQMimeSourceFactory* m_mimeFactory;
 

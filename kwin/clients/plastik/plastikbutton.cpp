@@ -140,7 +140,7 @@ void PlastikButton::animate()
         }
     }
 
-    repaint(false);
+    tqrepaint(false);
 }
 
 void PlastikButton::enterEvent(TQEvent *e)
@@ -269,7 +269,7 @@ void PlastikButton::drawButton(TQPainter *painter)
 
         if(!isDown() && Handler()->titleShadow() ) {
             TQColor shadowColor;
-            if (qGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
+            if (tqGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
                 shadowColor = TQColor(255, 255, 255);
             else
                 shadowColor = TQColor(0,0,0);

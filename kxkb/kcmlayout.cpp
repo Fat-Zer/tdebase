@@ -116,7 +116,7 @@ LayoutConfig::LayoutConfig(TQWidget *parent, const char *name)
   connect( widget->comboVariant, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
   connect( widget->comboVariant, TQT_SIGNAL(activated(int)), this, TQT_SLOT(variantChanged()));
   connect( widget->listLayoutsDst, TQT_SIGNAL(selectionChanged(TQListViewItem *)),
-		this, TQT_SLOT(layoutSelChanged(TQListViewItem *)));
+		this, TQT_SLOT(tqlayoutSelChanged(TQListViewItem *)));
 
   connect( widget->editDisplayName, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(displayNameChanged(const TQString&)));
 
@@ -185,23 +185,23 @@ void LayoutConfig::initUI() {
 	
 	widget->comboModel->setCurrentText(i18n(modelName));
 
-	TQValueList<LayoutUnit> otherLayouts = m_kxkbConfig.m_layouts;
+	TQValueList<LayoutUnit> otherLayouts = m_kxkbConfig.m_tqlayouts;
 	widget->listLayoutsDst->clear();
 // to optimize we should have gone from it.end to it.begin
 	TQValueList<LayoutUnit>::ConstIterator it;
 	for (it = otherLayouts.begin(); it != otherLayouts.end(); ++it ) {
 		TQListViewItemIterator src_it( widget->listLayoutsSrc );
-		LayoutUnit layoutUnit = *it;
+		LayoutUnit tqlayoutUnit = *it;
 		
 		for ( ; src_it.current(); ++src_it ) {
 			TQListViewItem* srcItem = src_it.current();
 			
-			if ( layoutUnit.layout == src_it.current()->text(LAYOUT_COLUMN_MAP) ) {	// check if current config knows about this layout
+			if ( tqlayoutUnit.tqlayout == src_it.current()->text(LAYOUT_COLUMN_MAP) ) {	// check if current config knows about this tqlayout
 				TQListViewItem* newItem = copyLVI(srcItem, widget->listLayoutsDst);
 				
-				newItem->setText(LAYOUT_COLUMN_VARIANT, layoutUnit.variant);
-				newItem->setText(LAYOUT_COLUMN_INCLUDE, layoutUnit.includeGroup);
-				newItem->setText(LAYOUT_COLUMN_DISPLAY_NAME, layoutUnit.displayName);
+				newItem->setText(LAYOUT_COLUMN_VARIANT, tqlayoutUnit.variant);
+				newItem->setText(LAYOUT_COLUMN_INCLUDE, tqlayoutUnit.includeGroup);
+				newItem->setText(LAYOUT_COLUMN_DISPLAY_NAME, tqlayoutUnit.displayName);
 				widget->listLayoutsDst->insertItem(newItem);
 				newItem->moveItem(widget->listLayoutsDst->lastItem());
 
@@ -277,27 +277,27 @@ void LayoutConfig::save()
 	m_kxkbConfig.m_options = createOptionString();
 
 	TQListViewItem *item = widget->listLayoutsDst->firstChild();
-	TQValueList<LayoutUnit> layouts;
+	TQValueList<LayoutUnit> tqlayouts;
 	while (item) {
-		TQString layout = item->text(LAYOUT_COLUMN_MAP);
+		TQString tqlayout = item->text(LAYOUT_COLUMN_MAP);
 		TQString variant = item->text(LAYOUT_COLUMN_VARIANT);
 		TQString includes = item->text(LAYOUT_COLUMN_INCLUDE);
 		TQString displayName = item->text(LAYOUT_COLUMN_DISPLAY_NAME);
 		
-		LayoutUnit layoutUnit(layout, variant);
-		layoutUnit.includeGroup = includes;
-		layoutUnit.displayName = displayName;
-		layouts.append( layoutUnit );
+		LayoutUnit tqlayoutUnit(tqlayout, variant);
+		tqlayoutUnit.includeGroup = includes;
+		tqlayoutUnit.displayName = displayName;
+		tqlayouts.append( tqlayoutUnit );
 		
 		item = item->nextSibling();
-		kdDebug() << "To save: layout " << layoutUnit.toPair() 
-				<< ", inc: " << layoutUnit.includeGroup 
-				<< ", disp: " << layoutUnit.displayName << endl;
+		kdDebug() << "To save: tqlayout " << tqlayoutUnit.toPair() 
+				<< ", inc: " << tqlayoutUnit.includeGroup 
+				<< ", disp: " << tqlayoutUnit.displayName << endl;
 	}
-	m_kxkbConfig.m_layouts = layouts;
+	m_kxkbConfig.m_tqlayouts = tqlayouts;
 
-	if( m_kxkbConfig.m_layouts.count() == 0 ) {
-		m_kxkbConfig.m_layouts.append(LayoutUnit(DEFAULT_LAYOUT_UNIT));
+	if( m_kxkbConfig.m_tqlayouts.count() == 0 ) {
+		m_kxkbConfig.m_tqlayouts.append(LayoutUnit(DEFAULT_LAYOUT_UNIT));
  		widget->chkEnable->setChecked(false);
  	}
 
@@ -331,8 +331,8 @@ void LayoutConfig::save()
 
 void LayoutConfig::updateStickyLimit()
 {
-    int layoutsCnt = widget->listLayoutsDst->childCount();
-	int maxDepth = layoutsCnt - 1;
+    int tqlayoutsCnt = widget->listLayoutsDst->childCount();
+	int maxDepth = tqlayoutsCnt - 1;
 	
 	if( maxDepth < 2 ) {
 		maxDepth = 2;
@@ -349,11 +349,11 @@ void LayoutConfig::add()
     if( sel == 0 )
 		return;
 
-    // Create a copy of the sel widget, as one might add the same layout more
+    // Create a copy of the sel widget, as one might add the same tqlayout more
     // than one time, with different variants.
     TQListViewItem* toadd = copyLVI(sel, widget->listLayoutsDst);
     
-    // Turn on "Include Latin layout" for new language by default (bnc:204402)
+    // Turn on "Include Latin tqlayout" for new language by default (bnc:204402)
     toadd->setText(LAYOUT_COLUMN_INCLUDE, "us");
 
     widget->listLayoutsDst->insertItem(toadd);
@@ -361,7 +361,7 @@ void LayoutConfig::add()
 		toadd->moveItem(widget->listLayoutsDst->lastItem());
 // disabling temporary: does not work reliable in Qt :(
 //    widget->listLayoutsDst->setSelected(sel, true);
-//    layoutSelChanged(sel);
+//    tqlayoutSelChanged(sel);
 	
     updateStickyLimit();
     changed();
@@ -384,7 +384,7 @@ void LayoutConfig::remove()
     delete sel;
     if( newSel )
         widget->listLayoutsSrc->setSelected(newSel, true);
-    layoutSelChanged(newSel);
+    tqlayoutSelChanged(newSel);
 
     updateStickyLimit();
     changed();
@@ -443,23 +443,23 @@ void LayoutConfig::displayNameChanged(const TQString& newDisplayName)
 	if( selLayout == NULL )
 		return;
 	
-	const LayoutUnit layoutUnitKey = getLayoutUnitKey( selLayout );
-	LayoutUnit& layoutUnit = *m_kxkbConfig.m_layouts.find(layoutUnitKey);
+	const LayoutUnit tqlayoutUnitKey = getLayoutUnitKey( selLayout );
+	LayoutUnit& tqlayoutUnit = *m_kxkbConfig.m_tqlayouts.find(tqlayoutUnitKey);
 	
 	TQString oldName = selLayout->text(LAYOUT_COLUMN_DISPLAY_NAME);
 	 
 	if( oldName.isEmpty() )
-		oldName = KxkbConfig::getDefaultDisplayName( layoutUnit );
+		oldName = KxkbConfig::getDefaultDisplayName( tqlayoutUnit );
 	
 	if( oldName != newDisplayName ) {
-		kdDebug() << "setting label for " << layoutUnit.toPair() << " : " << newDisplayName << endl;
+		kdDebug() << "setting label for " << tqlayoutUnit.toPair() << " : " << newDisplayName << endl;
 		selLayout->setText(LAYOUT_COLUMN_DISPLAY_NAME, newDisplayName);
 		updateIndicator(selLayout);
 		emit changed();
 	}
 }
 
-/** will update flag with label if layout label has been edited
+/** will update flag with label if tqlayout label has been edited
 */
 void LayoutConfig::updateIndicator(TQListViewItem* selLayout)
 {
@@ -482,11 +482,11 @@ void LayoutConfig::latinChanged()
 		include = "";
 	selLayout->setText(LAYOUT_COLUMN_INCLUDE, include);
 
- 	LayoutUnit layoutUnitKey = getLayoutUnitKey(selLayout);
-	kdDebug() << "layout " << layoutUnitKey.toPair() << ", inc: " << include << endl;
+ 	LayoutUnit tqlayoutUnitKey = getLayoutUnitKey(selLayout);
+	kdDebug() << "tqlayout " << tqlayoutUnitKey.toPair() << ", inc: " << include << endl;
 }
 
-void LayoutConfig::layoutSelChanged(TQListViewItem *sel)
+void LayoutConfig::tqlayoutSelChanged(TQListViewItem *sel)
 {
     widget->comboVariant->clear();
     widget->comboVariant->setEnabled( sel != NULL );
@@ -499,8 +499,8 @@ void LayoutConfig::layoutSelChanged(TQListViewItem *sel)
     }
 
 
-	LayoutUnit layoutUnitKey = getLayoutUnitKey(sel);
-	TQString kbdLayout = layoutUnitKey.layout;
+	LayoutUnit tqlayoutUnitKey = getLayoutUnitKey(sel);
+	TQString kbdLayout = tqlayoutUnitKey.tqlayout;
 
 	// TODO: need better algorithm here for determining if needs us group
     if (  ! m_rules->isSingleGroup(kbdLayout) 
@@ -518,7 +518,7 @@ void LayoutConfig::layoutSelChanged(TQListViewItem *sel)
     }
 
 	TQStringList vars = m_rules->getAvailableVariants(kbdLayout);
-	kdDebug() << "layout " << kbdLayout << " has " << vars.count() << " variants" << endl;
+	kdDebug() << "tqlayout " << kbdLayout << " has " << vars.count() << " variants" << endl;
     
 	if( vars.count() > 0 ) {
 		vars.prepend(DEFAULT_VARIANT_NAME);
@@ -557,7 +557,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
   OptionListItem *parent;
   for (; it.current(); ++it)
   {
-    if (!it.currentKey().contains(':'))
+    if (!it.currentKey().tqcontains(':'))
     {
       if( it.currentKey() == "ctrl" || it.currentKey() == "caps"
           || it.currentKey() == "altwin" ) {
@@ -589,7 +589,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
       if (parent != NULL) {
       // workaroung for mistake in rules file for xkb options in XFree 4.2.0
         TQString text(it.current());
-        text = text.replace( "Cap$", "Caps." );
+        text = text.tqreplace( "Cap$", "Caps." );
         if( parent->type() == TQCheckListItem::RadioButtonController )
             new OptionListItem(parent, i18n(text.utf8()),
                 TQCheckListItem::RadioButton, key);
@@ -622,7 +622,7 @@ void LayoutConfig::updateOptionsCommand()
 void LayoutConfig::updateLayoutCommand()
 {
   TQString setxkbmap;
-  TQString layoutDisplayName;
+  TQString tqlayoutDisplayName;
   TQListViewItem* sel = widget->listLayoutsDst->selectedItem();
 
   if( sel != NULL ) {
@@ -633,27 +633,27 @@ void LayoutConfig::updateLayoutCommand()
 
     setxkbmap = "setxkbmap"; //-rules " + m_rule
     setxkbmap += " -model " + lookupLocalized(m_rules->models(), widget->comboModel->currentText())
-      + " -layout ";
+      + " -tqlayout ";
     setxkbmap += kbdLayout;
     if( widget->chkLatin->isChecked() )
       setxkbmap += ",us";
 
-/*	LayoutUnit layoutUnitKey = getLayoutUnitKey(sel);
-	layoutDisplayName = m_kxkbConfig.getLayoutDisplayName( *m_kxkbConfig.m_layouts.find(layoutUnitKey) );*/
-	layoutDisplayName = sel->text(LAYOUT_COLUMN_DISPLAY_NAME);
-	if( layoutDisplayName.isEmpty() ) {
+/*	LayoutUnit tqlayoutUnitKey = getLayoutUnitKey(sel);
+	tqlayoutDisplayName = m_kxkbConfig.getLayoutDisplayName( *m_kxkbConfig.m_tqlayouts.find(tqlayoutUnitKey) );*/
+	tqlayoutDisplayName = sel->text(LAYOUT_COLUMN_DISPLAY_NAME);
+	if( tqlayoutDisplayName.isEmpty() ) {
 		int count = 0;
 		TQListViewItem *item = widget->listLayoutsDst->firstChild();
 		while (item) {
-			TQString layout_ = item->text(LAYOUT_COLUMN_MAP);
-			if( layout_ == kbdLayout )
+			TQString tqlayout_ = item->text(LAYOUT_COLUMN_MAP);
+			if( tqlayout_ == kbdLayout )
 				++count;
 			item = item->nextSibling();
 		}
 		bool single = count < 2;
-		layoutDisplayName = m_kxkbConfig.getDefaultDisplayName(LayoutUnit(kbdLayout, variant), single);
+		tqlayoutDisplayName = m_kxkbConfig.getDefaultDisplayName(LayoutUnit(kbdLayout, variant), single);
 	}
-	kdDebug() << "disp: '" << layoutDisplayName << "'" << endl;
+	kdDebug() << "disp: '" << tqlayoutDisplayName << "'" << endl;
 	
     if( !variant.isEmpty() ) {
       setxkbmap += " -variant ";
@@ -666,7 +666,7 @@ void LayoutConfig::updateLayoutCommand()
   widget->editCmdLine->setText(setxkbmap);
   
   widget->editDisplayName->setEnabled( sel != NULL );
-  widget->editDisplayName->setText(layoutDisplayName);
+  widget->editDisplayName->setText(tqlayoutDisplayName);
 }
 
 void LayoutConfig::changed()
@@ -695,20 +695,20 @@ void LayoutConfig::loadRules()
 	widget->comboModel->insertStringList(modelsList);
 	widget->comboModel->setCurrentItem(0);
 
-	// fill in the additional layouts
+	// fill in the additional tqlayouts
 	widget->listLayoutsSrc->clear();
 	widget->listLayoutsDst->clear();
-	TQDictIterator<char> it2(m_rules->layouts());
+	TQDictIterator<char> it2(m_rules->tqlayouts());
 	
 	while (it2.current())
 	{
-		TQString layout = it2.currentKey();
-		TQString layoutName = it2.current();
+		TQString tqlayout = it2.currentKey();
+		TQString tqlayoutName = it2.current();
 		TQListViewItem *item = new TQListViewItem(widget->listLayoutsSrc);
 		
-		item->setPixmap(LAYOUT_COLUMN_FLAG, LayoutIcon::getInstance().findPixmap(layout, true));
-		item->setText(LAYOUT_COLUMN_NAME, i18n(layoutName.latin1()));
-		item->setText(LAYOUT_COLUMN_MAP, layout);
+		item->setPixmap(LAYOUT_COLUMN_FLAG, LayoutIcon::getInstance().findPixmap(tqlayout, true));
+		item->setText(LAYOUT_COLUMN_NAME, i18n(tqlayoutName.latin1()));
+		item->setText(LAYOUT_COLUMN_MAP, tqlayout);
 		++it2;
 	}
 	widget->listLayoutsSrc->setSorting(LAYOUT_COLUMN_NAME);	// from Qt3 TQListView sorts by language
@@ -724,7 +724,7 @@ TQString LayoutConfig::createOptionString()
   {
     TQString option(it.currentKey());
 
-    if (option.contains(':')) {
+    if (option.tqcontains(':')) {
 
       TQString optionKey = option.mid(0, option.find(':'));
       OptionListItem *item = m_optionGroups[optionKey];
@@ -795,14 +795,14 @@ OptionListItem * OptionListItem::findChildItem( const TQString& optionName )
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_keyboard_layout(TQWidget *parent, const char *)
+	KDE_EXPORT KCModule *create_keyboard_tqlayout(TQWidget *parent, const char *)
 	{
-		return new LayoutConfig(parent, "kcmlayout");
+		return new LayoutConfig(parent, "kcmtqlayout");
 	}
 	
 	KDE_EXPORT KCModule *create_keyboard(TQWidget *parent, const char *)
 	{
-		return new KeyboardConfig(parent, "kcmlayout");
+		return new KeyboardConfig(parent, "kcmtqlayout");
 	}
 	
 	KDE_EXPORT void init_keyboard()
@@ -816,7 +816,7 @@ extern "C"
 			kapp->startServiceByDesktopName("kxkb");
 		}
 		else {
-		// Even if the layouts have been disabled we still want to set Xkb options
+		// Even if the tqlayouts have been disabled we still want to set Xkb options
 		// user can always switch them off now in the "Options" tab
 			if( m_kxkbConfig.m_enableXkbOptions ) {
 				if( !XKBExtension::setXkbOptions(m_kxkbConfig.m_options, m_kxkbConfig.m_resetOldOptions) ) {

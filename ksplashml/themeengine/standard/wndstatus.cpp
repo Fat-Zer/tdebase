@@ -27,17 +27,17 @@
 #include "wndstatus.h"
 #include "wndstatus.moc"
 
-// WndStatus::WndStatus(): Display a nifty status bar at
+// WndtqStatus::WndtqStatus(): Display a nifty status bar at
 // the bottom of the screen, so the user always knows what's
 // happening to his system.
-WndStatus::WndStatus( TQPalette /*pal*/,
+WndtqStatus::WndtqStatus( TQPalette /*pal*/,
                       int xineramaScreen,
                       bool atTop, bool pbVisible,
                       const TQFont& font,
                       const TQColor& fgc, const TQColor & bgc,
                       const TQString& icon
                     )
-    :TQHBox( 0, "wndStatus", WStyle_Customize|WX11BypassWM )
+    :TQHBox( 0, "wndtqStatus", WStyle_Customize|WX11BypassWM )
 {
   setFrameStyle( TQFrame::NoFrame );
   //setPalette( pal );
@@ -83,19 +83,19 @@ WndStatus::WndStatus( TQPalette /*pal*/,
     m_progress->hide();
 }
 
-void WndStatus::slotSetMessage( const TQString& msg )
+void WndtqStatus::slotSetMessage( const TQString& msg )
 {
   raise();
   m_label->setText( msg );
 }
 
-void WndStatus::slotUpdateProgress( int i )
+void WndtqStatus::slotUpdateProgress( int i )
 {
   raise();
   m_progress->setProgress( i );
 }
 
-void WndStatus::slotUpdateSteps( int i )
+void WndtqStatus::slotUpdateSteps( int i )
 {
   m_progress->setTotalSteps( i );
 }

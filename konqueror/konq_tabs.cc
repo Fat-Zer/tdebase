@@ -62,7 +62,7 @@ KonqFrameTabs::KonqFrameTabs(TQWidget* parent, KonqFrameContainerBase* parentCon
 {
   KAcceleratorManager::setNoAccel(this);
 
-  TQWhatsThis::add( tabBar(), i18n( "This bar contains the list of currently open tabs. Click on a tab to make it "
+  TQWhatsThis::add( tabBar(), i18n( "This bar tqcontains the list of currently open tabs. Click on a tab to make it "
 			  "active. The option to show a close button instead of the website icon in the left "
 			  "corner of the tab is configurable. You can also use keyboard shortcuts to "
 			  "navigate through tabs. The text on the tab is the title of the website "
@@ -196,16 +196,16 @@ void KonqFrameTabs::saveConfig( KConfig* config, const TQString &prefix, bool sa
   TQString newPrefix;
   for (KonqFrameBase* it = m_pChildFrameList->first(); it; it = m_pChildFrameList->next())
     {
-      newPrefix = TQString::fromLatin1( it->frameType() ) + "T" + TQString::number(i);
+      newPrefix = TQString::tqfromLatin1( it->frameType() ) + "T" + TQString::number(i);
       strlst.append( newPrefix );
       newPrefix.append( '_' );
       it->saveConfig( config, newPrefix, saveURLs, docContainer, id, depth + i );
       i++;
     }
 
-  config->writeEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), strlst );
+  config->writeEntry( TQString::tqfromLatin1( "Children" ).prepend( prefix ), strlst );
 
-  config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ),
+  config->writeEntry( TQString::tqfromLatin1( "activeChildIndex" ).prepend( prefix ),
                       currentPageIndex() );
 }
 

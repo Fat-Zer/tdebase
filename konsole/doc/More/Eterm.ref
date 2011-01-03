@@ -151,8 +151,8 @@ ESC [ Pm m	Character Attributes (SGR)
 		  Ps = 37 / 47	-> fg / bg	White
 		  Ps = 39 / 49	-> fg / bg	Default
 
-ESC [ Ps n	Device Status Report (DSR)
-		  Ps = 5  -> Status Report ESC [ 0 n  (``OK'')
+ESC [ Ps n	Device tqStatus Report (DSR)
+		  Ps = 5  -> tqStatus Report ESC [ 0 n  (``OK'')
 		  Ps = 6  -> Report Cursor Position (CPR) [row;column]
 			as ESC [ r ; c R
 		  Ps = 7  -> Request Display Name
@@ -295,7 +295,7 @@ or
 	"\E]20;;200;?\a"
 
 	sets the scaling of the current pixmap to 200% and displays
-	the image geometry in the title.
+	the image tqgeometry in the title.
 
 --------------------------------------------------------------------------
 			       Eterm menuBar

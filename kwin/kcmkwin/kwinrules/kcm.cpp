@@ -42,9 +42,9 @@ KCMRules::KCMRules( TQWidget *parent, const char *name )
 : KCModule( parent, name )
 , config( "kwinrulesrc" )
     {
-    TQVBoxLayout *layout = new TQVBoxLayout( this );
+    TQVBoxLayout *tqlayout = new TQVBoxLayout( this );
     widget = new KCMRulesList( this );
-    layout->addWidget( widget );
+    tqlayout->addWidget( widget );
     connect( widget, TQT_SIGNAL( changed( bool )), TQT_SLOT( moduleChanged( bool )));
     KAboutData *about = new KAboutData(I18N_NOOP( "kcmkwinrules" ),
         I18N_NOOP( "Window-Specific Settings Configuration Module" ),

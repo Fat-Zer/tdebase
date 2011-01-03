@@ -51,22 +51,22 @@ void HideButton::drawButton(TQPainter *p)
 {
     if (m_arrow == Qt::LeftArrow)
     {
-        p->setPen(colorGroup().mid());
+        p->setPen(tqcolorGroup().mid());
         p->drawLine(width()-1, 0, width()-1, height());
     }
     else if (m_arrow == Qt::RightArrow)
     {
-        p->setPen(colorGroup().mid());
+        p->setPen(tqcolorGroup().mid());
         p->drawLine(0, 0, 0, height());
     }
     else if (m_arrow == Qt::UpArrow)
     {
-        p->setPen(colorGroup().mid());
+        p->setPen(tqcolorGroup().mid());
         p->drawLine(0, height()-1, width(), height()-1);
     }
     else if (m_arrow == Qt::DownArrow)
     {
-        p->setPen(colorGroup().mid());
+        p->setPen(tqcolorGroup().mid());
         p->drawLine(0, 0, width(), 0);
     }
 
@@ -173,14 +173,14 @@ void HideButton::slotIconChanged(int group)
     }
 
     generateIcons();
-    repaint(false);
+    tqrepaint(false);
 }
 
 void HideButton::enterEvent(TQEvent *e)
 {
     m_highlight = true;
 
-    repaint(false);
+    tqrepaint(false);
     TQButton::enterEvent(e);
 }
 
@@ -188,7 +188,7 @@ void HideButton::leaveEvent(TQEvent *e)
 {
     m_highlight = false;
 
-    repaint(false);
+    tqrepaint(false);
     TQButton::enterEvent(e);
 }
 

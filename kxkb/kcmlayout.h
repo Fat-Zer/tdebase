@@ -37,7 +37,7 @@ protected slots:
   void variantChanged();
   void displayNameChanged(const TQString& name);
   void latinChanged();
-  void layoutSelChanged(TQListViewItem *);
+  void tqlayoutSelChanged(TQListViewItem *);
   void loadRules();
   void updateLayoutCommand();
   void updateOptionsCommand();

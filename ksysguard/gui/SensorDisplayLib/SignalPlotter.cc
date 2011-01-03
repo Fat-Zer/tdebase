@@ -50,7 +50,7 @@ SignalPlotter::SignalPlotter( TQWidget *parent, const char *name )
 
   // Anything smaller than this does not make sense.
   setMinimumSize( 16, 16 );
-  setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding,
+  tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding,
                  TQSizePolicy::Expanding, false ) );
 
   mShowVerticalLines = true;
@@ -390,7 +390,7 @@ void SignalPlotter::paintEvent( TQPaintEvent* )
   uint w = width();
   uint h = height();
 
-  /* Do not do repaints when the widget is not yet setup properly. */
+  /* Do not do tqrepaints when the widget is not yet setup properly. */
   if ( w <= 2 )
     return;
 
@@ -401,7 +401,7 @@ void SignalPlotter::paintEvent( TQPaintEvent* )
   pm.fill( mBackgroundColor );
   /* Draw white line along the bottom and the right side of the
    * widget to create a 3D like look. */
-  p.setPen( TQColor( colorGroup().light() ) );
+  p.setPen( TQColor( tqcolorGroup().light() ) );
   if(mShowThinFrame) {
     p.drawLine( 0, h - 1, w - 1, h - 1 );
     p.drawLine( w - 1, 0, w - 1, h - 1 );

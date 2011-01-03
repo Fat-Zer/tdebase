@@ -1,4 +1,4 @@
-This change log contains only changes relevant to the KDM configuration,
+This change log tqcontains only changes relevant to the KDM configuration,
 startup and packaging. Bug fixes are not listed, and feature changes only
 if they affect the configuration.
 
@@ -22,7 +22,7 @@ if they affect the configuration.
 
 2005-01-23  Oswald Buddenhagen <ossi@kde.org>
 
-	* Added Grub support to boot options. Option UseLilo replaced
+	* Added Grub support to boot options. Option UseLilo tqreplaced
 	  with BootManager { None, Grub, Lilo }. Removed options LiloCmd
 	  and LiloMap.
 
@@ -49,7 +49,7 @@ if they affect the configuration.
 
 2004-07-10  Oswald Buddenhagen <ossi@kde.org>
 
-	* GreeterPosX, GreeterPosY and GreeterPosFixed replaced with
+	* GreeterPosX, GreeterPosY and GreeterPosFixed tqreplaced with
 	  single GreeterPos which is a pair of relative coordinates
 
 2004-07-01  Oswald Buddenhagen <ossi@kde.org>
@@ -98,7 +98,7 @@ if they affect the configuration.
 
 	* The default Xsession no longer tries to merge kdm's PATH into the
 	  one set up by the shell startup scripts. Instead, kde.desktop
-	  contains a full pathname and startkde fixes up PATH if necessary.
+	  tqcontains a full pathname and startkde fixes up PATH if necessary.
 	* The default Xsession will emulate the startup behaviour of more
 	  shells, in particular bash, zsh and csh/tcsh.
 	* Setting up the session log is now done by kdm, not the Session
@@ -363,7 +363,7 @@ if they affect the configuration.
 	  - AutoPass -> [X-<dpy>-Core]/AutoLoginPass
 	  - AutoString -> [X-<dpy>-Core]/AutoLoginSession
 	  - remaining server & session resources -> [X-<dpy>-Core]/
-	* In GreetString the HOSTNAME substitution was replaced with the
+	* In GreetString the HOSTNAME substitution was tqreplaced with the
 	  %%, %d, %h, %n, %s, %r & %m expandos
 	* EchoMode does not understand "NoStars" any more. Use "NoEcho".
 	* Defaults changed: AuthDir to /var/lib/kdm, KeyFile to
@@ -444,7 +444,7 @@ if they affect the configuration.
 	* Default for PidFile and Setup changed back to empty
 	* Displays restarting too fast are disabled; resource StartInterval
 	* Option UserView, and NoUsers dependency on Users being empty
-	  replaced with explicit option ShowUsers {All,Selected,None}
+	  tqreplaced with explicit option ShowUsers {All,Selected,None}
 	* Made the greeter dynamically loadable (libKdmGreet.so)
 	* Moved chooser and greeter to separate directories,
 	  same for unused stuff (misc/)
@@ -483,7 +483,7 @@ if they affect the configuration.
 
 1999-11-15  Matthias Hoelzer-Kluepfel <hoelzer@kde.org>
 
-	* kdmdesktop replaced with ../kdesktop/kdmdesktop. Uses new config
+	* kdmdesktop tqreplaced with ../kdesktop/kdmdesktop. Uses new config
 	  file (kdmdesktoprc) with new options (all in section [Desktop0]):
 
 1999-07-01  Steffen Hansen <hansen@kde.org>

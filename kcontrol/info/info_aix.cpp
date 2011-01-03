@@ -70,7 +70,7 @@ list_devices(TQListView *lBox, char *criteria)
   TQListViewItem *lastitem = NULL;
 
   lBox->addColumn(i18n("Name"));
-  lBox->addColumn(i18n("Status"));
+  lBox->addColumn(i18n("tqStatus"));
   lBox->addColumn(i18n("Location"));
   lBox->addColumn(i18n("Description"));
 

@@ -207,7 +207,7 @@ struct readargs {
 };
 
 /*
- * Status OK portion of remote read reply
+ * tqStatus OK portion of remote read reply
  */
 struct readokres {
 	fattr	attributes;	/* attributes, need for pagin*/

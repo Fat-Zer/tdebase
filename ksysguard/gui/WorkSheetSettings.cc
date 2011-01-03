@@ -46,11 +46,11 @@ WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
   TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, spacingHint() );
 
   TQGroupBox *group = new TQGroupBox( 0, Qt::Vertical, i18n( "Title" ), page );
-  group->layout()->setMargin( marginHint() );
-  group->layout()->setSpacing( spacingHint() );
+  group->tqlayout()->setMargin( marginHint() );
+  group->tqlayout()->setSpacing( spacingHint() );
 
-  TQGridLayout *groupLayout = new TQGridLayout( group->layout(), 1, 1 );
-  groupLayout->setAlignment( Qt::AlignTop );
+  TQGridLayout *groupLayout = new TQGridLayout( group->tqlayout(), 1, 1 );
+  groupLayout->tqsetAlignment( Qt::AlignTop );
 
   mSheetTitle = new KLineEdit( group );
   groupLayout->addWidget( mSheetTitle, 0, 0 );
@@ -58,11 +58,11 @@ WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
   topLayout->addWidget( group );
 
   group = new TQGroupBox( 0, Qt::Vertical, i18n( "Properties" ), page );
-  group->layout()->setMargin( marginHint() );
-  group->layout()->setSpacing( spacingHint() );
+  group->tqlayout()->setMargin( marginHint() );
+  group->tqlayout()->setSpacing( spacingHint() );
 
-  groupLayout = new TQGridLayout( group->layout(), 3, 2 );
-  groupLayout->setAlignment( Qt::AlignTop );
+  groupLayout = new TQGridLayout( group->tqlayout(), 3, 2 );
+  groupLayout->tqsetAlignment( Qt::AlignTop );
 
   TQLabel *label = new TQLabel( i18n( "Rows:" ), group );
   groupLayout->addWidget( label, 0, 0 );
@@ -103,7 +103,7 @@ WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
 
   mSheetTitle->setFocus();
 
-  resize( TQSize( 250, 230 ).expandedTo( minimumSizeHint() ) );
+  resize( TQSize( 250, 230 ).expandedTo( tqminimumSizeHint() ) );
 }
 
 WorkSheetSettings::~WorkSheetSettings()

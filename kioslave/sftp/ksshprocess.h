@@ -116,9 +116,9 @@ public:
      */
     class SshOpt {
     public:
-        Q_UINT32 opt;
+        TQ_UINT32 opt;
         TQString  str;
-        Q_INT32  num;
+        TQ_INT32  num;
         bool     boolean;
     };
 

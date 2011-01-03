@@ -115,7 +115,7 @@ selectEvents (Window window, Bool substructureOnly)
   if (nofChildren) (void) XFree ((char*) children);
 
  /*
-  *  Build the appropriate event mask. The basic idea is that we don't
+  *  Build the appropriate event tqmask. The basic idea is that we don't
   *  want to interfere with the normal event propagation mechanism if
   *  we don't have to.
   *
@@ -134,8 +134,8 @@ selectEvents (Window window, Bool substructureOnly)
   {
     if (parent == None) /* the *real* rootwindow */
     {
-      attribs.all_event_masks = 
-      attribs.do_not_propagate_mask = KeyPressMask;
+      attribs.all_event_tqmasks = 
+      attribs.do_not_propagate_tqmask = KeyPressMask;
     }
     else if (!XGetWindowAttributes (queue.display, window, &attribs))
 #else
@@ -149,19 +149,19 @@ selectEvents (Window window, Bool substructureOnly)
 #if 0
     (void) XSelectInput (queue.display, window, 
                            SubstructureNotifyMask
-                         | (  (  attribs.all_event_masks
-                               | attribs.do_not_propagate_mask)
+                         | (  (  attribs.all_event_tqmasks
+                               | attribs.do_not_propagate_tqmask)
                             & KeyPressMask));
 #else
     {
-    int mask = SubstructureNotifyMask | attribs.your_event_mask;
+    int tqmask = SubstructureNotifyMask | attribs.your_event_mask;
     if( !substructureOnly )
         {
-        mask |=            (  (  attribs.all_event_masks
+        tqmask |=            (  (  attribs.all_event_masks
                                | attribs.do_not_propagate_mask)
                             & KeyPressMask  );
         }
-    (void) XSelectInput (queue.display, window, mask );
+    (void) XSelectInput (queue.display, window, tqmask );
     }
 #endif
 

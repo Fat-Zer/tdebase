@@ -57,8 +57,8 @@ void KateConsole::loadConsoleIfNeeded()
 {
   if (m_part) return;
 
-  if (!topLevelWidget() || !parentWidget()) return;
-  if (!topLevelWidget() || !isVisibleTo(topLevelWidget())) return;
+  if (!tqtopLevelWidget() || !tqparentWidget()) return;
+  if (!tqtopLevelWidget() || !isVisibleTo(tqtopLevelWidget())) return;
 
   KLibFactory *factory = KLibLoader::self()->factory("libkonsolepart");
 
@@ -86,7 +86,7 @@ void KateConsole::slotDestroyed ()
   m_part = 0;
 
   // hide the dockwidget
-  if (parentWidget())
+  if (tqparentWidget())
   {
     m_mw->hideToolView (m_toolView);
     m_mw->centralWidget()->setFocus ();

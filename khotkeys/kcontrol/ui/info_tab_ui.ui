@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>Info_tab_ui</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -33,7 +33,7 @@
                 <string>&lt;p&gt;This module allows configuring input actions, like mouse gestures, keyboard shortcuts for performing commands, launching applications or DCOP calls, and similar.&lt;/p&gt;
 &lt;p&gt;&lt;b&gt;NOTE: &lt;/b&gt;If you are not an experienced user, you should be careful with modifying the actions, and should limit your changes mainly to enabling/disabling actions, and changing triggers.&lt;/p&gt;</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
@@ -47,7 +47,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>
@@ -59,6 +59,6 @@
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
+<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

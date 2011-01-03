@@ -180,23 +180,23 @@ void KIO_Print::listDir(const KURL& url)
 	{
 		PRINT_DEBUG << "listing group " << path[0] << endl;
 
-		int	mask;
+		int	tqmask;
 		QString	mimeType;
 		KIO::UDSEntry	entry;
 
 		if (group == "printers")
 		{
-			mask = KMPrinter::Printer;
+			tqmask = KMPrinter::Printer;
 			mimeType = "print/printer";
 		}
 		else if (group == "classes")
 		{
-			mask = KMPrinter::Class | KMPrinter::Implicit;
+			tqmask = KMPrinter::Class | KMPrinter::Implicit;
 			mimeType = "print/class";
 		}
 		else if (group == "specials")
 		{
-			mask = KMPrinter::Special;
+			tqmask = KMPrinter::Special;
 			mimeType = "print/printer";
 		}
 		else
@@ -208,7 +208,7 @@ void KIO_Print::listDir(const KURL& url)
 		TQPtrListIterator<KMPrinter>	it(*(KMManager::self()->printerList()));
 		for (;it.current();++it)
 		{
-			if (!(it.current()->type() & mask) || !it.current()->instanceName().isEmpty())
+			if (!(it.current()->type() & tqmask) || !it.current()->instanceName().isEmpty())
 			{
 				PRINT_DEBUG << "rejecting " << it.current()->name() << endl;
 				continue;
@@ -587,7 +587,7 @@ void KIO_Print::get(const KURL& url)
 	PRINT_DEBUG << "extracted printer name = " << printer << endl;
 
 	KMManager::self()->printerList(false);
-	mprinter = KMManager::self()->findPrinter(printer);
+	mprinter = KMManager::self()->tqfindPrinter(printer);
 	if (!mprinter)
 		path = locateData(printer.isEmpty() ? group : printer);
 
@@ -635,7 +635,7 @@ void KIO_Print::showPrinterInfo(KMPrinter *printer)
 		mimeType("text/html");
 
 		QString	content;
-		if (!loadTemplate(TQString::fromLatin1("printer.template"), content))
+		if (!loadTemplate(TQString::tqfromLatin1("printer.template"), content))
 		{
 			error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("printer.template"));
 			return;
@@ -676,7 +676,7 @@ void KIO_Print::showClassInfo(KMPrinter *printer)
 		mimeType("text/html");
 
 		QString	content;
-		if (!loadTemplate(TQString::fromLatin1("class.template"), content))
+		if (!loadTemplate(TQString::tqfromLatin1("class.template"), content))
 		{
 			error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("class.template"));
 			return;
@@ -686,7 +686,7 @@ void KIO_Print::showClassInfo(KMPrinter *printer)
 		QStringList	members(printer->members());
 		for (TQStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
 		{
-			memberContent.append(TQString::fromLatin1("<li><a href=\"print:/printers/%1\">%2</a></li>\n").arg(*it).arg(*it));
+			memberContent.append(TQString::tqfromLatin1("<li><a href=\"print:/printers/%1\">%2</a></li>\n").arg(*it).arg(*it));
 		}
 		memberContent.append("</ul>\n");
 
@@ -719,7 +719,7 @@ void KIO_Print::showSpecialInfo(KMPrinter *printer)
 	mimeType("text/html");
 
 	QString	content;
-	if (!loadTemplate(TQString::fromLatin1("pseudo.template"), content))
+	if (!loadTemplate(TQString::tqfromLatin1("pseudo.template"), content))
 	{
 		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
@@ -755,7 +755,7 @@ void KIO_Print::showSpecialInfo(KMPrinter *printer)
 
 bool KIO_Print::loadTemplate(const TQString& filename, TQString& buffer)
 {
-	QFile	f(locate("data", TQString::fromLatin1("kdeprint/template/")+filename));
+	QFile	f(locate("data", TQString::tqfromLatin1("kdeprint/template/")+filename));
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
 		QTextStream	t(&f);
@@ -820,7 +820,7 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 	}
 
 	QString	content;
-	if (!loadTemplate(TQString::fromLatin1("jobs.template"), content))
+	if (!loadTemplate(TQString::tqfromLatin1("jobs.template"), content))
 	{
 		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
@@ -891,7 +891,7 @@ void KIO_Print::showDriver(KMPrinter *prt)
 	mimeType("text/html");
 
 	QString	content;
-	if (!loadTemplate(TQString::fromLatin1("driver.template"), content))
+	if (!loadTemplate(TQString::tqfromLatin1("driver.template"), content))
 	{
 		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;

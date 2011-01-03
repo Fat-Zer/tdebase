@@ -122,16 +122,16 @@ static bool GetDmesgInfo(TQListView *lBox, const char *filter,
 	TQListViewItem *olditem = NULL;
 	while(!(s = t->readLine()).isNull()) {
 		if (!seencpu) {
-			if (s.contains("cpu"))
+			if (s.tqcontains("cpu"))
 				seencpu = true;
 			else
 				continue;
 		}
-		if (s.contains("boot device") ||
-			s.contains("WARNING: old BSD partition ID!"))
+		if (s.tqcontains("boot device") ||
+			s.tqcontains("WARNING: old BSD partition ID!"))
 			break;
 
-		if (!filter || s.contains(filter)) {
+		if (!filter || s.tqcontains(filter)) {
 			if (func) {
 				func(lBox, s, &opaque, false);
 			}

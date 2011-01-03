@@ -111,7 +111,7 @@ from the copyright holder.
 #endif
 
 /*
- * Status/command codes greeter -> core
+ * tqStatus/command codes greeter -> core
  */
 #define G_Ready	   0	/* nop */
 #define G_Cancel   1	/* abort login, etc. */
@@ -194,7 +194,7 @@ from the copyright holder.
 #define DM_PANIC  4
 
 /*
- * Status codes from Verify
+ * tqStatus codes from Verify
  */
 /* terminal status codes */
 #define V_OK              0

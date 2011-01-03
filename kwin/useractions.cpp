@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 /*
 
- This file contains things relevant to direct user actions, such as
+ This file tqcontains things relevant to direct user actions, such as
  responses to global keyboard shortcuts, or selecting actions
  from the window operations menu.
 
@@ -229,7 +229,7 @@ void Workspace::desktopPopupAboutToShow()
         id = desk_popup->insertItem(
                 basic_name
                     .arg(i)
-                    .arg( desktopName(i).replace( '&', "&&" )),
+                    .arg( desktopName(i).tqreplace( '&', "&&" )),
                 i );
         if ( active_popup_client &&
              !active_popup_client->isOnAllDesktops() && active_popup_client->desktop()  == i )
@@ -293,7 +293,7 @@ void Workspace::setupWindowShortcut( Client* c )
     client_keys_client = c;
     connect( client_keys_dialog, TQT_SIGNAL( dialogDone( bool )), TQT_SLOT( setupWindowShortcutDone( bool )));
     TQRect r = clientArea( ScreenArea, c );
-    TQSize size = client_keys_dialog->sizeHint();
+    TQSize size = client_keys_dialog->tqsizeHint();
     TQPoint pos = c->pos() + c->clientPos();
     if( pos.x() + size.width() >= r.right())
         pos.setX( r.right() - size.width());
@@ -364,9 +364,9 @@ void Workspace::performWindowOperation( Client* c, Options::WindowOperation op )
         return;
 
     if (op == Options::MoveOp || op == Options::UnrestrictedMoveOp )
-        TQCursor::setPos( c->geometry().center() );
+        TQCursor::setPos( c->tqgeometry().center() );
     if (op == Options::ResizeOp || op == Options::UnrestrictedResizeOp )
-        TQCursor::setPos( c->geometry().bottomRight());
+        TQCursor::setPos( c->tqgeometry().bottomRight());
     switch ( op ) 
         {
         case Options::MoveOp:
@@ -1044,8 +1044,8 @@ void Workspace::showWindowMenu( const TQRect &pos, Client* cl )
     else
         {
 	TQRect area = clientArea(ScreenArea, TQPoint(x, y), currentDesktop());
-        clientPopupAboutToShow(); // needed for sizeHint() to be correct :-/
-	int popupHeight = p->sizeHint().height();
+        clientPopupAboutToShow(); // needed for tqsizeHint() to be correct :-/
+	int popupHeight = p->tqsizeHint().height();
 	if (y + popupHeight < area.height())
 	    p->exec( TQPoint( x, y ) );
 	else
@@ -1093,7 +1093,7 @@ void Client::setShortcut( const TQString& _cut )
 // Format:
 // base+(abcdef)<space>base+(abcdef)
 // E.g. Alt+Ctrl+(ABCDEF) Win+X,Win+(ABCDEF)
-    if( !cut.contains( '(' ) && !cut.contains( ')' ) && !cut.contains( ' ' ))
+    if( !cut.tqcontains( '(' ) && !cut.tqcontains( ')' ) && !cut.tqcontains( ' ' ))
         {
         if( workspace()->shortcutAvailable( KShortcut( cut ), this ))
             setShortcutInternal( KShortcut( cut ));

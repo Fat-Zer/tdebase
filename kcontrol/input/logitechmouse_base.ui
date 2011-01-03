@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>LogitechMouseBase</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -31,7 +31,7 @@
             <property name="text">
                 <string>You have a Logitech Mouse connected, and libusb was found at compile time, but it was not possible to access this mouse. This is probably caused by a permissions problem - you should consult the manual on how to fix this.</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
@@ -149,5 +149,5 @@
         </widget>
     </grid>
 </widget>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

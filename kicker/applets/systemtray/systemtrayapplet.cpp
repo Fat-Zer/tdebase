@@ -78,7 +78,7 @@ SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int ac
     m_autoRetractTimer(0),
     m_autoRetract(false),
     m_iconSize(24),
-    m_layout(0)
+    m_tqlayout(0)
 {
     DCOPObject::setObjId("SystemTrayApplet");
     loadSettings();
@@ -112,7 +112,7 @@ void SystemTrayApplet::initialize()
     if (existing)
     {
         updateVisibleWins();
-        layoutTray();
+        tqlayoutTray();
     }
 
     // the KWinModule notifies us when tray windows are added or removed
@@ -190,7 +190,7 @@ bool SystemTrayApplet::x11Event( XEvent *e )
                 return true;
             embedWindow( e->xclient.data.l[2], false );
             updateVisibleWins();
-            layoutTray();
+            tqlayoutTray();
             return true;
         }
     }
@@ -288,7 +288,7 @@ void SystemTrayApplet::applySettings()
         item;
         item = item->next())
     {
-        if( windowNameToClass.contains(item->text()))
+        if( windowNameToClass.tqcontains(item->text()))
             m_sortOrderIconList.append(windowNameToClass[item->text()]);
         else
             m_sortOrderIconList.append(item->text());
@@ -301,7 +301,7 @@ void SystemTrayApplet::applySettings()
         item;
         item = item->next())
     {
-        if( windowNameToClass.contains(item->text()))
+        if( windowNameToClass.tqcontains(item->text()))
             m_hiddenIconList.append(windowNameToClass[item->text()]);
         else
             m_hiddenIconList.append(item->text());
@@ -340,7 +340,7 @@ void SystemTrayApplet::applySettings()
     showExpandButton(!m_hiddenWins.isEmpty());
 
     updateVisibleWins();
-    layoutTray();
+    tqlayoutTray();
 }
 
 void SystemTrayApplet::checkAutoRetract()
@@ -350,7 +350,7 @@ void SystemTrayApplet::checkAutoRetract()
         return;
     }
 
-    if (!geometry().contains(mapFromGlobal(TQCursor::pos())))
+    if (!tqgeometry().tqcontains(mapFromGlobal(TQCursor::pos())))
     {
         m_autoRetractTimer->stop();
         if (m_autoRetract)
@@ -389,12 +389,12 @@ void SystemTrayApplet::showExpandButton(bool show)
             if (orientation() == Vertical)
             {
                 m_expandButton->setFixedSize(width() - 4,
-                                             m_expandButton->sizeHint()
+                                             m_expandButton->tqsizeHint()
                                                             .height());
             }
             else
             {
-                m_expandButton->setFixedSize(m_expandButton->sizeHint()
+                m_expandButton->setFixedSize(m_expandButton->tqsizeHint()
                                                             .width(),
                                              height() - 4);
             }
@@ -426,7 +426,7 @@ void SystemTrayApplet::orientationChange( Orientation /*orientation*/ )
 void SystemTrayApplet::iconSizeChanged() {
 	loadSettings();
 	updateVisibleWins();
-	layoutTray();
+	tqlayoutTray();
 
 	TrayEmbedList::iterator emb = m_shownWins.begin();
 	while (emb != m_shownWins.end()) {
@@ -477,7 +477,7 @@ void SystemTrayApplet::systemTrayWindowAdded( WId w )
 
     embedWindow(w, true);
     updateVisibleWins();
-    layoutTray();
+    tqlayoutTray();
 
     if (m_showFrame && frameStyle() == NoFrame)
     {
@@ -642,7 +642,7 @@ void SystemTrayApplet::expand()
     refreshExpandButton();
 
     updateVisibleWins();
-    layoutTray();
+    tqlayoutTray();
 
     if (m_autoRetractTimer)
     {
@@ -661,7 +661,7 @@ void SystemTrayApplet::retract()
     refreshExpandButton();
 
     updateVisibleWins();
-    layoutTray();
+    tqlayoutTray();
 }
 
 void SystemTrayApplet::updateTrayWindows()
@@ -672,7 +672,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().contains(wid)))
+             !kwin_module->systemTrayWindows().tqcontains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_shownWins.erase(emb);
@@ -689,7 +689,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().contains(wid)))
+             !kwin_module->systemTrayWindows().tqcontains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_hiddenWins.erase(emb);
@@ -702,7 +702,7 @@ void SystemTrayApplet::updateTrayWindows()
 
     showExpandButton(!m_hiddenWins.isEmpty());
     updateVisibleWins();
-    layoutTray();
+    tqlayoutTray();
 }
 
 int SystemTrayApplet::maxIconWidth() const
@@ -830,7 +830,7 @@ int SystemTrayApplet::widthForHeight(int h) const
         me->setFixedHeight(h);
     }
 
-    return sizeHint().width(); 
+    return tqsizeHint().width(); 
 }
 
 int SystemTrayApplet::heightForWidth(int w) const
@@ -849,7 +849,7 @@ int SystemTrayApplet::heightForWidth(int w) const
         me->setFixedWidth(w);
     }
 
-    return sizeHint().height(); 
+    return tqsizeHint().height(); 
 }
 
 void SystemTrayApplet::moveEvent( TQMoveEvent* )
@@ -860,12 +860,12 @@ void SystemTrayApplet::moveEvent( TQMoveEvent* )
 
 void SystemTrayApplet::resizeEvent( TQResizeEvent* )
 {
-    layoutTray();
+    tqlayoutTray();
     // we need to give ourselves a chance to adjust our size before calling this
     TQTimer::singleShot(0, this, TQT_SIGNAL(updateLayout()));
 }
 
-void SystemTrayApplet::layoutTray()
+void SystemTrayApplet::tqlayoutTray()
 {
     setUpdatesEnabled(false);
 
@@ -881,18 +881,18 @@ void SystemTrayApplet::layoutTray()
      * line = what line to draw an icon in */
     int i = 0, line, nbrOfLines, heightWidth;
     bool showExpandButton = m_expandButton && m_expandButton->isVisibleTo(this);
-    delete m_layout;
-    m_layout = new TQGridLayout(this, 1, 1, ICON_MARGIN, ICON_MARGIN);
+    delete m_tqlayout;
+    m_tqlayout = new TQGridLayout(this, 1, 1, ICON_MARGIN, ICON_MARGIN);
 
     if (m_expandButton)
     {
         if (orientation() == Vertical)
         {
-            m_expandButton->setFixedSize(width() - 4, m_expandButton->sizeHint().height());
+            m_expandButton->setFixedSize(width() - 4, m_expandButton->tqsizeHint().height());
         }
         else
         {
-            m_expandButton->setFixedSize(m_expandButton->sizeHint().width(), height() - 4);
+            m_expandButton->setFixedSize(m_expandButton->tqsizeHint().width(), height() - 4);
         }
     }
 
@@ -901,18 +901,18 @@ void SystemTrayApplet::layoutTray()
     int col = 0;
 
     // 
-    // The margin and spacing specified in the layout implies that:
+    // The margin and spacing specified in the tqlayout implies that:
     // [-- ICON_MARGIN pixels --] [-- first icon --] [-- ICON_MARGIN pixels --] ... [-- ICON_MARGIN pixels --] [-- last icon --] [-- ICON_MARGIN pixels --]
     //
     // So, if we say that iconWidth is the icon width plus the ICON_MARGIN pixels spacing, then the available width for the icons
-    // is the widget width minus ICON_MARGIN pixels margin. Forgetting these ICON_MARGIN pixels broke the layout algorithm in KDE <= 3.5.9.
+    // is the widget width minus ICON_MARGIN pixels margin. Forgetting these ICON_MARGIN pixels broke the tqlayout algorithm in KDE <= 3.5.9.
     //
     // This fix makes the workarounds in the heightForWidth() and widthForHeight() methods unneeded.
     //
 
     if (orientation() == Vertical)
     {
-        int iconWidth = maxIconWidth() + ICON_MARGIN; // +2 for the margins that implied by the layout
+        int iconWidth = maxIconWidth() + ICON_MARGIN; // +2 for the margins that implied by the tqlayout
         heightWidth = width() - ICON_MARGIN;
         // to avoid nbrOfLines=0 we ensure heightWidth >= iconWidth!
         heightWidth = heightWidth < iconWidth ? iconWidth : heightWidth;
@@ -920,7 +920,7 @@ void SystemTrayApplet::layoutTray()
 
         if (showExpandButton)
         {
-            m_layout->addMultiCellWidget(m_expandButton,
+            m_tqlayout->addMultiCellWidget(m_expandButton,
                                          0, 0,
                                          0, nbrOfLines - 1,
                                          Qt::AlignHCenter | Qt::AlignVCenter);
@@ -935,7 +935,7 @@ void SystemTrayApplet::layoutTray()
             {
                 line = i % nbrOfLines;
                 (*emb)->show();
-                m_layout->addWidget((*emb), col, line,
+                m_tqlayout->addWidget((*emb), col, line,
                                     Qt::AlignHCenter | Qt::AlignVCenter);
 
                 if ((line + 1) == nbrOfLines)
@@ -953,7 +953,7 @@ void SystemTrayApplet::layoutTray()
         {
             line = i % nbrOfLines;
             (*emb)->show();
-            m_layout->addWidget((*emb), col, line,
+            m_tqlayout->addWidget((*emb), col, line,
                                 Qt::AlignHCenter | Qt::AlignVCenter);
 
             if ((line + 1) == nbrOfLines)
@@ -966,14 +966,14 @@ void SystemTrayApplet::layoutTray()
     }
     else // horizontal
     {
-        int iconHeight = maxIconHeight() + ICON_MARGIN; // +2 for the margins that implied by the layout
+        int iconHeight = maxIconHeight() + ICON_MARGIN; // +2 for the margins that implied by the tqlayout
         heightWidth = height() - ICON_MARGIN;
         heightWidth = heightWidth < iconHeight ? iconHeight : heightWidth; // to avoid nbrOfLines=0
         nbrOfLines = heightWidth / iconHeight;
 
         if (showExpandButton)
         {
-            m_layout->addMultiCellWidget(m_expandButton,
+            m_tqlayout->addMultiCellWidget(m_expandButton,
                                          0, nbrOfLines - 1,
                                          0, 0,
                                          Qt::AlignHCenter | Qt::AlignVCenter);
@@ -987,7 +987,7 @@ void SystemTrayApplet::layoutTray()
             {
                 line = i % nbrOfLines;
                 (*emb)->show();
-                m_layout->addWidget((*emb), line, col,
+                m_tqlayout->addWidget((*emb), line, col,
                                     Qt::AlignHCenter | Qt::AlignVCenter);
 
                 if ((line + 1) == nbrOfLines)
@@ -1005,7 +1005,7 @@ void SystemTrayApplet::layoutTray()
         {
             line = i % nbrOfLines;
             (*emb)->show();
-            m_layout->addWidget((*emb), line, col,
+            m_tqlayout->addWidget((*emb), line, col,
                                 Qt::AlignHCenter | Qt::AlignVCenter);
 
             if ((line + 1) == nbrOfLines)
@@ -1051,7 +1051,7 @@ TrayEmbed::TrayEmbed( bool kdeTray, TQWidget* parent )
 
 void TrayEmbed::getIconSize(int defaultIconSize)
 {
-    TQSize minSize = minimumSizeHint();
+    TQSize minSize = tqminimumSizeHint();
     
     int width = minSize.width();
     int height = minSize.height();
@@ -1067,12 +1067,12 @@ void TrayEmbed::getIconSize(int defaultIconSize)
 
 void TrayEmbed::setBackground()
 {
-    const TQPixmap *pbg = parentWidget()->backgroundPixmap();
+    const TQPixmap *pbg = tqparentWidget()->backgroundPixmap();
     
     if (pbg)
     {
         TQPixmap bg(width(), height());
-        bg.fill(parentWidget(), pos());
+        bg.fill(tqparentWidget(), pos());
         setPaletteBackgroundPixmap(bg);
         setBackgroundOrigin(WidgetOrigin);
     }

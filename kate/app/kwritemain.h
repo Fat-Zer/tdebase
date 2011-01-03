@@ -76,7 +76,7 @@ class KWrite : public KParts::MainWindow
     void printNow();
     void printDlg();
 
-    void newStatus(const TQString &msg);
+    void newtqStatus(const TQString &msg);
     void newCaption();
 
     void slotDropEvent(TQDropEvent *);
@@ -135,4 +135,4 @@ class KWriteEditorChooser: public KDialogBase
 };
 
 #endif
-// kate: space-indent on; indent-width 2; replace-tabs on; mixed-indent off;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on; mixed-indent off;

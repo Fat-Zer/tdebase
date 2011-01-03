@@ -158,7 +158,7 @@ void IconThemesConfig::installNewTheme()
   if (themeURL.url().isEmpty()) return;
 
   TQString themeTmpFile;
-  // themeTmpFile contains the name of the downloaded file
+  // themeTmpFile tqcontains the name of the downloaded file
 
   if (!KIO::NetAccess::download(themeURL, themeTmpFile, this)) {
     TQString sorryText;

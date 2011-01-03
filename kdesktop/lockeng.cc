@@ -157,7 +157,7 @@ bool SaverEngine::enable( bool e )
 	}
         mXAutoLock->setTimeout(mTimeout);
         mXAutoLock->setDPMS(true);
-	//mXAutoLock->changeCornerLockStatus( mLockCornerTopLeft, mLockCornerTopRight, mLockCornerBottomLeft, mLockCornerBottomRight);
+	//mXAutoLock->changeCornerLocktqStatus( mLockCornerTopLeft, mLockCornerTopRight, mLockCornerBottomLeft, mLockCornerBottomRight);
 
         // We'll handle blanking
         XSetScreenSaver(qt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);

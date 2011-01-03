@@ -52,7 +52,7 @@ KManualProxyDlg::KManualProxyDlg( TQWidget* parent, const char* name )
     mDlg->pbCopyDown->setPixmap( BarIcon("down", KIcon::SizeSmall) );
     TQSizePolicy sizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed,
                             mDlg->pbCopyDown->sizePolicy().hasHeightForWidth() );
-    mDlg->pbCopyDown->setSizePolicy( sizePolicy );
+    mDlg->pbCopyDown->tqsetSizePolicy( sizePolicy );
 
     init();
 }
@@ -423,7 +423,7 @@ bool KManualProxyDlg::isValidURL( const TQString& _url, KURL* result ) const
     
     // We only check for a relevant subset of characters that are 
     // not allowed in <authority> component of a URL.
-    if ( host.contains ('*') || host.contains (' ') || host.contains ('?') )
+    if ( host.tqcontains ('*') || host.tqcontains (' ') || host.tqcontains ('?') )
       return false;
       
     if ( result )

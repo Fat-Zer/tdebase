@@ -151,7 +151,7 @@ void initLmSensors( struct SensorModul* sm )
                                    strlen( label ) + 1 );
       snprintf( p->fullName, BUFFER_SIZE_LMSEN, "lmsensors/%s/%s", scn->prefix, label );
 
-      /* Make sure that name contains only proper characters. */
+      /* Make sure that name tqcontains only proper characters. */
       for ( s = p->fullName; *s; s++ )
         if ( *s == ' ' )
           *s = '_';

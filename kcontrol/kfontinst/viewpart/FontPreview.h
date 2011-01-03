@@ -50,8 +50,8 @@ class CFontPreview : public QWidget
     virtual ~CFontPreview() {}
 
     void        paintEvent(TQPaintEvent *);
-    TQSize       sizeHint() const;
-    TQSize       minimumSizeHint() const;
+    TQSize       tqsizeHint() const;
+    TQSize       tqminimumSizeHint() const;
 
     void        showFont(const KURL &url);
     void        showFont();

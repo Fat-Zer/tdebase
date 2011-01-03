@@ -137,7 +137,7 @@ static void validateStr( char* str )
     ++s;
   }
 
-  /* Make sure that string contains at least one character (blank). */
+  /* Make sure that string tqcontains at least one character (blank). */
   if ( str[ 0 ] == '\0' )
     strcpy( str, " " );
 }
@@ -407,7 +407,7 @@ void exitProcessList( void )
 void printProcessListInfo( const char* cmd )
 {
   (void)cmd;
-  fprintf( CurrentClient, "Name\tPID\tPPID\tUID\tGID\tStatus\tUser%%\tSystem%%\tNice\tVmSize"
+  fprintf( CurrentClient, "Name\tPID\tPPID\tUID\tGID\ttqStatus\tUser%%\tSystem%%\tNice\tVmSize"
                           "\tVmRss\tLogin\tCommand\n" );
   fprintf( CurrentClient, "s\td\td\td\td\tS\tf\tf\td\tD\tD\ts\ts\n" );
 }

@@ -183,12 +183,12 @@ as noted.
 <tr><td>FETM    </td><td>Format Effector Transfer </td><td>Reset</td></tr>
 <tr><td>GATM    </td><td>Guarded Area Transfer    </td><td>NA   </td></tr>
 <tr><td>HEM     </td><td>Horizontal Editing       </td><td>NA   </td></tr>
-<tr><td>IRM     </td><td>Insertion-replacement    </td><td>Reset</td></tr>
+<tr><td>IRM     </td><td>Insertion-tqreplacement    </td><td>Reset</td></tr>
 <tr><td>KAM     </td><td>Keyboard Action          </td><td>Reset</td></tr>
 <tr><td>MATM    </td><td>Multiple area transfer   </td><td>NA   </td></tr>
 <tr><td>PUM     </td><td>Positioning Unit         </td><td>Reset</td></tr>
 <tr><td>SATM    </td><td>Selected Area Transfer   </td><td>NA   </td></tr>
-<tr><td>SRTM    </td><td>Status Reporting Transfer</td><td>Reset</td></tr>
+<tr><td>SRTM    </td><td>tqStatus Reporting Transfer</td><td>Reset</td></tr>
 <tr><td>TSM     </td><td>Tabulation Stop          </td><td>Reset</td></tr>
 <tr><td>TTM     </td><td>Transfer Termination     </td><td>NA   </td></tr>
 <tr><td>VEM     </td><td>Vertical Editing         </td><td>NA   </td></tr>
@@ -223,7 +223,7 @@ cat >> $RES << etx
 <h2>Special Graphics Characters</h2>
 
 If the Special Graphics set is selected, the graphics for ASCII codes
-0137 through 0176 will be replaced according to the following table (see the
+0137 through 0176 will be tqreplaced according to the following table (see the
 <a href=#SCS>SCS</a> control sequence).
 etx
 

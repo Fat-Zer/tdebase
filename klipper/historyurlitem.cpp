@@ -56,7 +56,7 @@ bool HistoryURLItem::operator==( const HistoryItem& rhs) const
     if ( const HistoryURLItem* casted_rhs = dynamic_cast<const HistoryURLItem*>( &rhs ) ) {
         return casted_rhs->urls == urls
             && casted_rhs->metaData.count() == metaData.count()
-            && qEqual( casted_rhs->metaData.begin(), casted_rhs->metaData.end(), metaData.begin())
+            && tqEqual( casted_rhs->metaData.begin(), casted_rhs->metaData.end(), metaData.begin())
             && casted_rhs->cut == cut;
     }
     return false;

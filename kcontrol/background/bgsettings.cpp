@@ -751,7 +751,7 @@ void KBackgroundSettings::readSettings(bool reparse)
     m_BackgroundMode = defBackgroundMode;
     s = m_pConfig->readEntry("BackgroundMode", "invalid");
 
-    if (m_BMMap.contains(s)) {
+    if (m_BMMap.tqcontains(s)) {
         int mode = m_BMMap[s];
         // consistency check
         if  ( ((mode != Pattern) && (mode != Program)) ||
@@ -763,7 +763,7 @@ void KBackgroundSettings::readSettings(bool reparse)
 
     m_BlendMode = defBlendMode;
     s = m_pConfig->readEntry("BlendMode", "invalid");
-    if (m_BlMMap.contains(s)) {
+    if (m_BlMMap.tqcontains(s)) {
       m_BlendMode = m_BlMMap[s];
     }
 
@@ -784,7 +784,7 @@ void KBackgroundSettings::readSettings(bool reparse)
 
     m_MultiMode = defMultiMode;
     s = m_pConfig->readEntry("MultiWallpaperMode");
-    if (m_MMMap.contains(s)) {
+    if (m_MMMap.tqcontains(s)) {
 	int mode = m_MMMap[s];
 	m_MultiMode = mode;
     }
@@ -799,7 +799,7 @@ void KBackgroundSettings::readSettings(bool reparse)
     m_WallpaperMode = defWallpaperMode;
     m_Wallpaper = m_pConfig->readPathEntry("Wallpaper");
     s = m_pConfig->readEntry("WallpaperMode", "invalid");
-    if (m_WMMap.contains(s)) {
+    if (m_WMMap.tqcontains(s)) {
         int mode = m_WMMap[s];
         // consistency check.
         if ((mode == NoWallpaper) || !m_Wallpaper.isEmpty() || (m_MultiMode == InOrder || m_MultiMode == Random))
@@ -1029,7 +1029,7 @@ TQString KBackgroundSettings::fingerprint()
     s += TQString("wm:%1;").arg(m_WallpaperMode);
     if (m_WallpaperMode != NoWallpaper)
     {
-        Q_UINT32 rh = KGlobal::dirs()->calcResourceHash("wallpaper", currentWallpaper(), false);
+        TQ_UINT32 rh = KGlobal::dirs()->calcResourceHash("wallpaper", currentWallpaper(), false);
         s += TQString("wp:%2:%1;").arg(rh).arg(currentWallpaper());
         
     }

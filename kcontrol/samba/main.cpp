@@ -58,8 +58,8 @@ SambaContainer::SambaContainer(TQWidget *parent, const char* name, const TQStrin
 ,logView(&tabs,&config)
 ,statisticsView(&tabs,&config)
 {
-   TQVBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
-   layout->addWidget(&tabs);
+   TQVBoxLayout *tqlayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
+   tqlayout->addWidget(&tabs);
    tabs.addTab(&status,i18n("&Exports"));
    tabs.addTab(&imports,i18n("&Imports"));
    tabs.addTab(&logView,i18n("&Log"));
@@ -68,7 +68,7 @@ SambaContainer::SambaContainer(TQWidget *parent, const char* name, const TQStrin
    setButtons(Help);
    load();
 
-   setQuickHelp( i18n("The Samba and NFS Status Monitor is a front end to the programs"
+   setQuickHelp( i18n("The Samba and NFS tqStatus Monitor is a front end to the programs"
      " <em>smbstatus</em> and <em>showmount</em>. Smbstatus reports on current"
      " Samba connections, and is part of the suite of Samba tools, which"
      " implements the SMB (Session Message Block) protocol, also called the"

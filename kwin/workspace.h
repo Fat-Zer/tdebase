@@ -619,9 +619,9 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         Time electric_time_last;
         TQPoint electric_push_point;
 
-        Qt::Orientation layoutOrientation;
-        int layoutX;
-        int layoutY;
+        Qt::Orientation tqlayoutOrientation;
+        int tqlayoutX;
+        int tqlayoutY;
 
         Placement *initPositioning;
 

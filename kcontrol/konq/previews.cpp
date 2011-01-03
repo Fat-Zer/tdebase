@@ -198,7 +198,7 @@ void KPreviewOptions::save()
         group.writeEntry( protocol, it.current()->isOn(), true, true );
     }
     // config key is in bytes, numinput is in MB
-    group.writeEntry( "MaximumSize", qRound( m_maxSize->value() *1024*1024 ), true, true );
+    group.writeEntry( "MaximumSize", tqRound( m_maxSize->value() *1024*1024 ), true, true );
     group.writeEntry( "BoostSize", m_boostSize->isChecked(), true, true );
     group.writeEntry( "UseFileThumbnails", m_useFileThumbnails->isChecked(), true, true );
     group.sync();

@@ -90,7 +90,7 @@ class KasTaskItem : public KasItem
     TQString expandMacros( const TQString &format, TQObject *data );
 
 public slots:
-    void updateTask(bool geometryChangeOnly);
+    void updateTask(bool tqgeometryChangeOnly);
 
     /** Create a thumbnail for this task (does nothing if they're disabled). */
     void refreshThumbnail();

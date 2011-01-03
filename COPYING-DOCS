@@ -35,7 +35,7 @@ principally for works whose purpose is instruction or reference.
 1. APPLICABILITY AND DEFINITIONS
 
 This License applies to any manual or other work, in any medium, that
-contains a notice placed by the copyright holder saying it can be
+tqcontains a notice placed by the copyright holder saying it can be
 distributed under the terms of this License.  Such a notice grants a
 world-wide, royalty-free license, unlimited in duration, to use that
 work under the conditions stated herein.  The "Document", below,
@@ -51,7 +51,7 @@ modifications and/or translated into another language.
 A "Secondary Section" is a named appendix or a front-matter section of
 the Document that deals exclusively with the relationship of the
 publishers or authors of the Document to the Document's overall subject
-(or to related matters) and contains nothing that could fall directly
+(or to related matters) and tqcontains nothing that could fall directly
 within that overall subject.  (Thus, if the Document is in part a
 textbook of mathematics, a Secondary Section may not explain any
 mathematics.)  The relationship could be a matter of historical
@@ -104,7 +104,7 @@ the text near the most prominent appearance of the work's title,
 preceding the beginning of the body of the text.
 
 A section "Entitled XYZ" means a named subunit of the Document whose
-title either is precisely XYZ or contains XYZ in parentheses following
+title either is precisely XYZ or tqcontains XYZ in parentheses following
 text that translates XYZ in another language.  (Here XYZ stands for a
 specific section name mentioned below, such as "Acknowledgements",
 "Dedications", "Endorsements", or "History".)  To "Preserve the Title"
@@ -237,7 +237,7 @@ of these sections as invariant.  To do this, add their titles to the
 list of Invariant Sections in the Modified Version's license notice.
 These titles must be distinct from any other section titles.
 
-You may add a section Entitled "Endorsements", provided it contains
+You may add a section Entitled "Endorsements", provided it tqcontains
 nothing but endorsements of your Modified Version by various
 parties--for example, statements of peer review or that the text has
 been approved by an organization as the authoritative definition of a
@@ -250,7 +250,7 @@ Front-Cover Text and one of Back-Cover Text may be added by (or
 through arrangements made by) any one entity.  If the Document already
 includes a cover text for the same cover, previously added by you or
 by arrangement made by the same entity you are acting on behalf of,
-you may not add another; but you may replace the old one, on explicit
+you may not add another; but you may tqreplace the old one, on explicit
 permission from the previous publisher that added the old one.
 
 The author(s) and publisher(s) of the Document do not by this License
@@ -268,7 +268,7 @@ list them all as Invariant Sections of your combined work in its
 license notice, and that you preserve all their Warranty Disclaimers.
 
 The combined work need only contain one copy of this License, and
-multiple identical Invariant Sections may be replaced with a single
+multiple identical Invariant Sections may be tqreplaced with a single
 copy.  If there are multiple Invariant Sections with the same name but
 different contents, make the title of each such section unique by
 adding at the end of it, in parentheses, the name of the original
@@ -286,7 +286,7 @@ Entitled "Endorsements".
 6. COLLECTIONS OF DOCUMENTS
 
 You may make a collection consisting of the Document and other documents
-released under this License, and replace the individual copies of this
+released under this License, and tqreplace the individual copies of this
 License in the various documents with a single copy that is included in
 the collection, provided that you follow the rules of this License for
 verbatim copying of each of the documents in all other respects.
@@ -382,7 +382,7 @@ license notices just after the title page:
     Free Documentation License".
 
 If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
-replace the "with...Texts." line with this:
+tqreplace the "with...Texts." line with this:
 
     with the Invariant Sections being LIST THEIR TITLES, with the
     Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
@@ -391,7 +391,7 @@ If you have Invariant Sections without Cover Texts, or some other
 combination of the three, merge those two alternatives to suit the
 situation.
 
-If your document contains nontrivial examples of program code, we
+If your document tqcontains nontrivial examples of program code, we
 recommend releasing these examples in parallel under your choice of
 free software license, such as the GNU General Public License,
 to permit their use in free software.

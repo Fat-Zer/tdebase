@@ -24,14 +24,14 @@
 TQMap<TQString, FILE*> XKBExtension::fileCache;	//TODO: move to class?
 
 
-static TQString getLayoutKey(const TQString& layout, const TQString& variant)
+static TQString getLayoutKey(const TQString& tqlayout, const TQString& variant)
 {
-	return layout + "." + variant;
+	return tqlayout + "." + variant;
 }
 
-TQString XKBExtension::getPrecompiledLayoutFilename(const TQString& layoutKey)
+TQString XKBExtension::getPrecompiledLayoutFilename(const TQString& tqlayoutKey)
 {
-	TQString compiledLayoutFileName = m_tempDir + layoutKey + ".xkm";
+	TQString compiledLayoutFileName = m_tempDir + tqlayoutKey + ".xkm";
 	return compiledLayoutFileName;
 }
 
@@ -115,28 +115,28 @@ bool XKBExtension::setXkbOptions(const TQString& options, bool resetOld)
 }
 
 bool XKBExtension::setLayout(const TQString& model,
-		const TQString& layout, const TQString& variant,
+		const TQString& tqlayout, const TQString& variant,
 		const TQString& includeGroup, bool useCompiledLayouts)
 {
 	if( useCompiledLayouts == false ) {
-		return setLayoutInternal( model, layout, variant, includeGroup );
+		return setLayoutInternal( model, tqlayout, variant, includeGroup );
 	}
 	
-	const TQString layoutKey = getLayoutKey(layout, variant);
+	const TQString tqlayoutKey = getLayoutKey(tqlayout, variant);
 	
 	bool res;
-	if( fileCache.contains(layoutKey) ) {
-		res = setCompiledLayout( layoutKey );
-		kdDebug() << "setCompiledLayout " << layoutKey << ": " << res << endl;
+	if( fileCache.tqcontains(tqlayoutKey) ) {
+		res = setCompiledLayout( tqlayoutKey );
+		kdDebug() << "setCompiledLayout " << tqlayoutKey << ": " << res << endl;
 
 		if( res )
 			return res;
 	}
 //	else {
-		res = setLayoutInternal( model, layout, variant, includeGroup );
-		kdDebug() << "setRawLayout " << layoutKey << ": " << res << endl;
+		res = setLayoutInternal( model, tqlayout, variant, includeGroup );
+		kdDebug() << "setRawLayout " << tqlayoutKey << ": " << res << endl;
 		if( res )
-			compileCurrentLayout( layoutKey );
+			compileCurrentLayout( tqlayoutKey );
 		
 //	}
 	return res;
@@ -144,10 +144,10 @@ bool XKBExtension::setLayout(const TQString& model,
 
 // private
 bool XKBExtension::setLayoutInternal(const TQString& model,
-		const TQString& layout, const TQString& variant,
+		const TQString& tqlayout, const TQString& variant,
 		const TQString& includeGroup)
 {
-    if ( layout.isEmpty() )
+    if ( tqlayout.isEmpty() )
         return false;
 
 	TQString exe = KGlobal::dirs()->findExe("setxkbmap");
@@ -156,12 +156,12 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
 		return false;
 	}
 
-    TQString fullLayout = layout;
+    TQString fullLayout = tqlayout;
     TQString fullVariant = variant;
 	if( includeGroup.isEmpty() == false ) {
         fullLayout = includeGroup;
         fullLayout += ",";
-        fullLayout += layout;
+        fullLayout += tqlayout;
 		
 //    fullVariant = baseVar;
         fullVariant = ",";
@@ -173,7 +173,7 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
 //  p << "-rules" << rule;
 	if( model.isEmpty() == false )
 		p << "-model" << model;
-    p << "-layout" << fullLayout;
+    p << "-tqlayout" << fullLayout;
     if( !fullVariant.isNull() && !fullVariant.isEmpty() )
         p << "-variant" << fullVariant;
 
@@ -209,25 +209,25 @@ unsigned int XKBExtension::getGroup() const
 }
 
 /**
- * @brief Gets the current layout in its binary compiled form
+ * @brief Gets the current tqlayout in its binary compiled form
  *		and write it to the file specified by 'fileName'
- * @param[in] fileName file to store compiled layout to
+ * @param[in] fileName file to store compiled tqlayout to
  * @return true if no problem, false otherwise
  */
-bool XKBExtension::compileCurrentLayout(const TQString &layoutKey)
+bool XKBExtension::compileCurrentLayout(const TQString &tqlayoutKey)
 {
     XkbFileInfo result;
     memset(&result, 0, sizeof(result));
     result.type = XkmKeymapFile;
     XkbReadFromServer(m_dpy, XkbAllMapComponentsMask, XkbAllMapComponentsMask, &result);
 	 
-	const TQString fileName = getPrecompiledLayoutFilename(layoutKey);
+	const TQString fileName = getPrecompiledLayoutFilename(tqlayoutKey);
 
-	kdDebug() << "compiling layout " << this << " cache size: " << fileCache.count() << endl;
-	if( fileCache.contains(layoutKey) ) {
-		kdDebug() << "trashing old compiled layout for " << fileName << endl;
-		if( fileCache[ layoutKey ] != NULL )
-			fclose( fileCache[ layoutKey ] );	// recompiling - trash the old file
+	kdDebug() << "compiling tqlayout " << this << " cache size: " << fileCache.count() << endl;
+	if( fileCache.tqcontains(tqlayoutKey) ) {
+		kdDebug() << "trashing old compiled tqlayout for " << fileName << endl;
+		if( fileCache[ tqlayoutKey ] != NULL )
+			fclose( fileCache[ tqlayoutKey ] );	// recompiling - trash the old file
 		fileCache.remove(fileName);
 	}
 
@@ -241,41 +241,41 @@ bool XKBExtension::compileCurrentLayout(const TQString &layoutKey)
     }
 
 	if( !XkbWriteXKMFile(output, &result) ) {
-		kdWarning() << "Could not write compiled layout to " << fileName << endl;
+		kdWarning() << "Could not write compiled tqlayout to " << fileName << endl;
 		fclose(output);
         return false;
 	}
 	
 	fclose(output);	// TODO: can we change mode w/out reopening?
 	FILE *input = fopen(TQFile::encodeName(fileName), "r");
-	fileCache[ layoutKey ] = input;
+	fileCache[ tqlayoutKey ] = input;
 
 	XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
     return true;
 }
 
 /**
- * @brief takes layout from its compiled binary snapshot in file 
+ * @brief takes tqlayout from its compiled binary snapshot in file 
  *	and sets it as current
- * TODO: cache layout in memory rather than in file
+ * TODO: cache tqlayout in memory rather than in file
  */
-bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
+bool XKBExtension::setCompiledLayout(const TQString &tqlayoutKey)
 {
 	FILE *input = NULL;
 	
-	if( fileCache.contains(layoutKey) ) {
-		input = fileCache[ layoutKey ];
+	if( fileCache.tqcontains(tqlayoutKey) ) {
+		input = fileCache[ tqlayoutKey ];
 	}
 	
 	if( input == NULL ) {
 		kdWarning() << "setCompiledLayout trying to reopen xkb file" << endl;	// should never happen
-		const TQString fileName = getPrecompiledLayoutFilename(layoutKey);
+		const TQString fileName = getPrecompiledLayoutFilename(tqlayoutKey);
 		input = fopen(TQFile::encodeName(fileName), "r");
 		
 		// 	FILE *input = fopen(TQFile::encodeName(fileName), "r");
 		if ( input == NULL ) {
 			kdDebug() << "Unable to open " << fileName << ": " << strerror(errno) << endl;
-			fileCache.remove(layoutKey);
+			fileCache.remove(tqlayoutKey);
 			return false;
 		}
 	}
@@ -288,7 +288,7 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
 	if ((result.xkb = XkbAllocKeyboard())==NULL) {
 		kdWarning() << "Unable to allocate memory for keyboard description" << endl;
 //      fclose(input);
-//		fileCache.remove(layoutKey);
+//		fileCache.remove(tqlayoutKey);
     	return false;
 	}
 	
@@ -299,7 +299,7 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
         kdWarning() << "Unable to load map from file" << endl;
         XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
         fclose(input);
-		fileCache.remove(layoutKey);
+		fileCache.remove(tqlayoutKey);
 		return false;
     }
 
@@ -309,14 +309,14 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
     {
         if (!XkbWriteToServer(&result))
         {
-            kdWarning() << "Unable to write the keyboard layout to X display" << endl;
+            kdWarning() << "Unable to write the keyboard tqlayout to X display" << endl;
             XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
             return false;
         }
     }
     else
     {
-        kdWarning() << "Unable prepare the keyboard layout for X display" << endl;
+        kdWarning() << "Unable prepare the keyboard tqlayout for X display" << endl;
     }
 
     XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
@@ -324,7 +324,7 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
 }
 
 
-// Deletes the precompiled layouts stored in temporary files
+// Deletes the precompiled tqlayouts stored in temporary files
 // void XKBExtension::deletePrecompiledLayouts()
 // {
 // 	TQMapConstIterator<LayoutUnit, TQString> it, end;

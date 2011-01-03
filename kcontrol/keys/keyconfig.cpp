@@ -83,7 +83,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
 		kdDebug(125) << "sConfigKey: " << sConfigKey
 			<< " bIsNum: " << bIsNum
 			<< " bSeriesOnly: " << bSeriesOnly << endl;
-		if( ((bSeriesOnly && !bIsNum) || (bSeriesNone && bIsNum)) && !sConfigKey.contains( ':' ) ) {
+		if( ((bSeriesOnly && !bIsNum) || (bSeriesNone && bIsNum)) && !sConfigKey.tqcontains( ':' ) ) {
 			actions.removeAction( sConfigKey );
 			i--;
 		}
@@ -170,7 +170,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   topLayout->addRowSpacing(3, 15);
   topLayout->addMultiCellWidget(kc, 5, 5, 0, 1);
 
-  setMinimumSize(topLayout->sizeHint());
+  setMinimumSize(topLayout->tqsizeHint());
 }
 
 KKeyModule::~KKeyModule (){
@@ -332,7 +332,7 @@ void KKeyModule::readScheme( int index )
 
         TQString s = sFile.mid( ind, 1 );
         s = s.upper();
-        sFile.replace( ind, 1, s );
+        sFile.tqreplace( ind, 1, s );
 
       }
 
@@ -416,8 +416,8 @@ void KKeyModule::readScheme( int index )
   // Set various appropriate for the scheme
 
   if ( indx < nSysSchemes ||
-       (*sFileList->at(indx)).contains( "/global-" ) ||
-       (*sFileList->at(indx)).contains( "/app-" ) ) {
+       (*sFileList->at(indx)).tqcontains( "/global-" ) ||
+       (*sFileList->at(indx)).tqcontains( "/app-" ) ) {
     removeBt->setEnabled( FALSE );
   } else {
     removeBt->setEnabled( TRUE );

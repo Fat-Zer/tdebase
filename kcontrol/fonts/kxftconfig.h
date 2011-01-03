@@ -175,7 +175,7 @@ class KXftConfig
 
     //
     // Constructor
-    //    required - This should be a bitmask of 'RequiredData', and indicates the data to be
+    //    required - This should be a bittqmask of 'RequiredData', and indicates the data to be
     //               read/written to the config file. It is intended that the 'fonts' KControl
     //               module will use KXftConfig::SubPixelType|KXftConfig::ExcludeRange, and the
     //               font installer will use KXftConfig::Dirs|KXftConfig::SymbolFamilies.

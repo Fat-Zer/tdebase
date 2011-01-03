@@ -162,7 +162,7 @@ plus it's own toolbar.
 This integration is in fact not sooo seamless because:
 whenever the use activates your khelpcenter part
 a complete GUI "switch" will take place, meaning all the *bars from 
-konqueror will be replaced by the *bars from the child view
+konqueror will be tqreplaced by the *bars from the child view
 
 Therefor another approach is developed:
 The *bars of konqueror will contain entries for all child-views which are

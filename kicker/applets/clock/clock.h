@@ -326,8 +326,8 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
         TQLabel *_dayOfWeek;
         TQDate _lastDate;
         TQTimer *_timer;
-        TQTimer *m_layoutTimer;
-        int m_layoutDelay;
+        TQTimer *m_tqlayoutTimer;
+        int m_tqlayoutDelay;
         bool m_followBackgroundSetting;
         bool m_dateFollowBackgroundSetting;
         int TZoffset;

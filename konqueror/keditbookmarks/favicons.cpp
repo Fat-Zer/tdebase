@@ -66,13 +66,13 @@ FavIconsItr::FavIconsItr(TQValueList<KBookmark> bks)
 
 FavIconsItr::~FavIconsItr() {
     if (curItem())
-        curItem()->restoreStatus();
+        curItem()->restoretqStatus();
     delete m_updater;
 }
 
 void FavIconsItr::slotDone(bool succeeded) {
     // kdDebug() << "FavIconsItr::slotDone()" << endl;
-    curItem()->setTmpStatus(succeeded ? i18n("OK") : i18n("No favicon found"));
+    curItem()->setTmptqStatus(succeeded ? i18n("OK") : i18n("No favicon found"));
     holder()->addAffectedBookmark(KBookmark::parentAddress(curBk().address()));
     delayedEmitNextOne();
 }
@@ -83,7 +83,7 @@ bool FavIconsItr::isApplicable(const KBookmark &bk) const {
 
 void FavIconsItr::doAction() {
     // kdDebug() << "FavIconsItr::doAction()" << endl;
-    curItem()->setTmpStatus(i18n("Updating favicon..."));
+    curItem()->setTmptqStatus(i18n("Updating favicon..."));
     if (!m_updater) {
         m_updater = new FavIconUpdater(kapp, "FavIconUpdater");
         connect(m_updater, TQT_SIGNAL( done(bool) ),
@@ -92,7 +92,7 @@ void FavIconsItr::doAction() {
     if (curBk().url().protocol().startsWith("http")) {
         m_updater->downloadIcon(curBk());
     } else {
-        curItem()->setTmpStatus(i18n("Local file"));
+        curItem()->setTmptqStatus(i18n("Local file"));
         delayedEmitNextOne();
     }
 }

@@ -235,7 +235,7 @@ KonqMainWindow::KonqMainWindow( const KURL &initialURL, bool openInitialURL, con
   connect(toolBarMenuAction(),TQT_SIGNAL(activated()),this,TQT_SLOT(slotForceSaveMainWindowSettings()) );
 
   if ( !m_toggleViewGUIClient->empty() )
-    plugActionList( TQString::fromLatin1( "toggleview" ), m_toggleViewGUIClient->actions() );
+    plugActionList( TQString::tqfromLatin1( "toggleview" ), m_toggleViewGUIClient->actions() );
   else
   {
     delete m_toggleViewGUIClient;
@@ -342,8 +342,8 @@ KonqMainWindow::~KonqMainWindow()
 
 TQWidget * KonqMainWindow::createContainer( TQWidget *parent, int index, const TQDomElement &element, int &id )
 {
-  static TQString nameBookmarkBar = TQString::fromLatin1( "bookmarkToolBar" );
-  static TQString tagToolBar = TQString::fromLatin1( "ToolBar" );
+  static TQString nameBookmarkBar = TQString::tqfromLatin1( "bookmarkToolBar" );
+  static TQString tagToolBar = TQString::tqfromLatin1( "ToolBar" );
 
   TQWidget *res = KParts::MainWindow::createContainer( parent, index, element, id );
 
@@ -393,8 +393,8 @@ void KonqMainWindow::initBookmarkBar()
 
 void KonqMainWindow::removeContainer( TQWidget *container, TQWidget *parent, TQDomElement &element, int id )
 {
-  static TQString nameBookmarkBar = TQString::fromLatin1( "bookmarkToolBar" );
-  static TQString tagToolBar = TQString::fromLatin1( "ToolBar" );
+  static TQString nameBookmarkBar = TQString::tqfromLatin1( "bookmarkToolBar" );
+  static TQString tagToolBar = TQString::tqfromLatin1( "ToolBar" );
 
   if ( element.tagName() == tagToolBar && element.attribute( "name" ) == nameBookmarkBar )
   {
@@ -511,7 +511,7 @@ void KonqMainWindow::openURL( KonqView *_view, const KURL &_url,
              }
              pclose(fs);
           }
-          aValue.replace( nDollarPos, nEndPos-nDollarPos, result );
+          aValue.tqreplace( nDollarPos, nEndPos-nDollarPos, result );
         } else if( (aValue)[nDollarPos+1] != '$' ) {
           uint nEndPos = nDollarPos+1;
           // the next character is no $
@@ -537,7 +537,7 @@ void KonqMainWindow::openURL( KonqView *_view, const KURL &_url,
             // !!! Sergey A. Sukiyazov <corwin@micom.don.ru> !!!
             // A environment variables may contain values in 8bit
             // locale cpecified encoding or in UTF8 encoding.
-            aValue.replace( nDollarPos, nEndPos-nDollarPos, KStringHandler::from8Bit( pEnv ) );
+            aValue.tqreplace( nDollarPos, nEndPos-nDollarPos, KStringHandler::from8Bit( pEnv ) );
           } else
             aValue.remove( nDollarPos, nEndPos-nDollarPos );
         } else {
@@ -966,10 +966,10 @@ void KonqMainWindow::slotOpenURLRequest( const KURL &url, const KParts::URLArgs 
 
   if ( !frameName.isEmpty() )
   {
-    static TQString _top = TQString::fromLatin1( "_top" );
-    static TQString _self = TQString::fromLatin1( "_self" );
-    static TQString _parent = TQString::fromLatin1( "_parent" );
-    static TQString _blank = TQString::fromLatin1( "_blank" );
+    static TQString _top = TQString::tqfromLatin1( "_top" );
+    static TQString _self = TQString::tqfromLatin1( "_self" );
+    static TQString _parent = TQString::tqfromLatin1( "_parent" );
+    static TQString _blank = TQString::tqfromLatin1( "_blank" );
 
     if ( frameName.lower() == _blank )
     {
@@ -1234,7 +1234,7 @@ void KonqMainWindow::slotCreateNewWindow( const KURL &url, const KParts::URLArgs
        mainWindow->viewManager()->setActivePart( part, true );
     }
 
-    TQString profileName = TQString::fromLatin1( url.isLocalFile() ? "konqueror/profiles/filemanagement" : "konqueror/profiles/webbrowsing" );
+    TQString profileName = TQString::tqfromLatin1( url.isLocalFile() ? "konqueror/profiles/filemanagement" : "konqueror/profiles/webbrowsing" );
     KSimpleConfig cfg( locate( "data", profileName ), true );
     cfg.setGroup( "Profile" );
 
@@ -1284,7 +1284,7 @@ void KonqMainWindow::slotCreateNewWindow( const KURL &url, const KParts::URLArgs
 
     if ( !windowArgs.resizable )
         // ### this doesn't seem to work :-(
-        mainWindow->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ) );
+        mainWindow->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ) );
 
 // Trying to show the window initially behind the current window is a bit tricky,
 // as this involves the window manager, which may see things differently.
@@ -1337,12 +1337,12 @@ void KonqMainWindow::slotNewWindow()
   if ( profile.isEmpty() )
   {
     if ( m_currentView && m_currentView->url().protocol().startsWith( "http" ) )
-       profile = TQString::fromLatin1("webbrowsing");
+       profile = TQString::tqfromLatin1("webbrowsing");
     else
-       profile = TQString::fromLatin1("filemanagement");
+       profile = TQString::tqfromLatin1("filemanagement");
   }
   KonqMisc::createBrowserWindowFromProfile(
-    locate( "data", TQString::fromLatin1("konqueror/profiles/")+profile ),
+    locate( "data", TQString::tqfromLatin1("konqueror/profiles/")+profile ),
     profile );
 }
 
@@ -1529,7 +1529,7 @@ void KonqMainWindow::slotToolFind()
       else
           url.setPath( TQDir::homeDirPath() );
       KonqMainWindow * mw = KonqMisc::createBrowserWindowFromProfile(
-          locate( "data", TQString::fromLatin1("konqueror/profiles/filemanagement") ),
+          locate( "data", TQString::tqfromLatin1("konqueror/profiles/filemanagement") ),
           "filemanagement", url, KParts::URLArgs(), true /* forbid "use html"*/ );
       mw->m_paFindFiles->setChecked(true);
       // Delay it after the openURL call (hacky!)
@@ -1653,7 +1653,7 @@ void KonqMainWindow::slotViewModeToggle( bool toggle )
               // current viewmode
               TQPtrListIterator<KAction> it( m_toolBarViewModeActions );
               for (; it.current(); ++it )
-                  if ( TQString::fromLatin1( it.current()->name() ) == oldService->desktopEntryName() )
+                  if ( TQString::tqfromLatin1( it.current()->name() ) == oldService->desktopEntryName() )
                   {
                       assert( it.current()->inherits( "KonqViewModeAction" ) );
 
@@ -1816,11 +1816,11 @@ void KonqMainWindow::slotReload( KonqView* reloadView )
   if ( !reloadView || reloadView->url().isEmpty() )
     return;
 
-  if ( reloadView->part() && (reloadView->part()->metaObject()->findProperty("modified") != -1)  ) {
+  if ( reloadView->part() && (reloadView->part()->tqmetaObject()->findProperty("modified") != -1)  ) {
     TQVariant prop = reloadView->part()->property("modified");
     if (prop.isValid() && prop.toBool())
       if ( KMessageBox::warningContinueCancel( this,
-           i18n("This page contains changes that have not been submitted.\nReloading the page will discard these changes."),
+           i18n("This page tqcontains changes that have not been submitted.\nReloading the page will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"reload"), "discardchangesreload") != KMessageBox::Continue )
         return;
   }
@@ -2033,7 +2033,7 @@ void KonqMainWindow::slotConfigureToolbars()
 void KonqMainWindow::slotNewToolbarConfig() // This is called when OK or Apply is clicked
 {
     if ( m_toggleViewGUIClient )
-      plugActionList( TQString::fromLatin1( "toggleview" ), m_toggleViewGUIClient->actions() );
+      plugActionList( TQString::tqfromLatin1( "toggleview" ), m_toggleViewGUIClient->actions() );
     if ( m_currentView && m_currentView->appServiceOffers().count() > 0 )
       plugActionList( "openwith", m_openWithActions );
 
@@ -2049,7 +2049,7 @@ void KonqMainWindow::slotUndoAvailable( bool avail )
   if ( avail && m_currentView && m_currentView->part() )
   {
     // Avoid qWarning from TQObject::property if it doesn't exist
-    if ( m_currentView->part()->metaObject()->findProperty( "supportsUndo" ) != -1 )
+    if ( m_currentView->part()->tqmetaObject()->findProperty( "supportsUndo" ) != -1 )
     {
       TQVariant prop = m_currentView->part()->property( "supportsUndo" );
       if ( prop.isValid() && prop.toBool() )
@@ -2069,7 +2069,7 @@ void KonqMainWindow::slotPartChanged( KonqView *childView, KParts::ReadOnlyPart 
   // Remove the old part, and add the new part to the manager
   // Note: this makes the new part active... so it calls slotPartActivated
 
-  m_pViewManager->replacePart( oldPart, newPart, false );
+  m_pViewManager->tqreplacePart( oldPart, newPart, false );
   // Set active immediately
   m_pViewManager->setActivePart( newPart, true );
 
@@ -2309,10 +2309,10 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
 
   m_pMenuNew->setEnabled( m_currentView->supportsServiceType( "inode/directory" ) );
 
-  m_currentView->frame()->statusbar()->updateActiveStatus();
+  m_currentView->frame()->statusbar()->updateActivetqStatus();
 
   if ( oldView && oldView->frame() )
-    oldView->frame()->statusbar()->updateActiveStatus();
+    oldView->frame()->statusbar()->updateActivetqStatus();
 
   //kdDebug(1202) << "KonqMainWindow::slotPartActivated: setting location bar url to "
   //              << m_currentView->locationBarURL() << " m_currentView=" << m_currentView << endl;
@@ -2439,7 +2439,7 @@ KonqView * KonqMainWindow::childView( KParts::ReadOnlyPart *callingPart, const T
     KParts::BrowserHostExtension *ext = KParts::BrowserHostExtension::childObject( view->part() );
     if ( ext )
     {
-      ext = ext->findFrameParent(callingPart, name);
+      ext = ext->tqfindFrameParent(callingPart, name);
       kdDebug() << "BrowserHostExtension found part " << ext << endl;
       if (!ext)
          continue; // Don't use this window
@@ -2666,11 +2666,11 @@ void KonqMainWindow::slotDuplicateTabPopup()
 void KonqMainWindow::slotBreakOffTab()
 {
   if (m_currentView && m_currentView->part() &&
-      (m_currentView->part()->metaObject()->findProperty("modified") != -1) ) {
+      (m_currentView->part()->tqmetaObject()->findProperty("modified") != -1) ) {
     TQVariant prop = m_currentView->part()->property("modified");
     if (prop.isValid() && prop.toBool())
       if ( KMessageBox::warningContinueCancel( this,
-           i18n("This tab contains changes that have not been submitted.\nDetaching the tab will discard these changes."),
+           i18n("This tab tqcontains changes that have not been submitted.\nDetaching the tab will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"tab_breakoff"), "discardchangesdetach") != KMessageBox::Continue )
         return;
   }
@@ -2683,12 +2683,12 @@ void KonqMainWindow::slotBreakOffTabPopup()
 {
   KonqView* originalView = m_currentView;
   KonqView *view = m_pWorkingTab->activeChildView();
-  if (view && view->part() && (view->part()->metaObject()->findProperty("modified") != -1) ) {
+  if (view && view->part() && (view->part()->tqmetaObject()->findProperty("modified") != -1) ) {
     TQVariant prop = view->part()->property("modified");
     if (prop.isValid() && prop.toBool()) {
       m_pViewManager->showTab( view );
       if ( KMessageBox::warningContinueCancel( this,
-           i18n("This tab contains changes that have not been submitted.\nDetaching the tab will discard these changes."),
+           i18n("This tab tqcontains changes that have not been submitted.\nDetaching the tab will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"tab_breakoff"), "discardchangesdetach") != KMessageBox::Continue )
       {
         m_pViewManager->showTab( originalView );
@@ -2788,11 +2788,11 @@ void KonqMainWindow::openMultiURL( KURL::List url )
 void KonqMainWindow::slotRemoveView()
 {
   if (m_currentView && m_currentView->part() &&
-      (m_currentView->part()->metaObject()->findProperty("modified") != -1) ) {
+      (m_currentView->part()->tqmetaObject()->findProperty("modified") != -1) ) {
     TQVariant prop = m_currentView->part()->property("modified");
     if (prop.isValid() && prop.toBool())
       if ( KMessageBox::warningContinueCancel( this,
-           i18n("This view contains changes that have not been submitted.\nClosing the view will discard these changes."),
+           i18n("This view tqcontains changes that have not been submitted.\nClosing the view will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"view_remove"), "discardchangesclose") != KMessageBox::Continue )
         return;
   }
@@ -2804,11 +2804,11 @@ void KonqMainWindow::slotRemoveView()
 void KonqMainWindow::slotRemoveTab()
 {
   if (m_currentView && m_currentView->part() &&
-      (m_currentView->part()->metaObject()->findProperty("modified") != -1) ) {
+      (m_currentView->part()->tqmetaObject()->findProperty("modified") != -1) ) {
     TQVariant prop = m_currentView->part()->property("modified");
     if (prop.isValid() && prop.toBool())
       if ( KMessageBox::warningContinueCancel( this,
-           i18n("This tab contains changes that have not been submitted.\nClosing the tab will discard these changes."),
+           i18n("This tab tqcontains changes that have not been submitted.\nClosing the tab will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"tab_remove"), "discardchangesclose") != KMessageBox::Continue )
         return;
   }
@@ -2820,12 +2820,12 @@ void KonqMainWindow::slotRemoveTabPopup()
 {
   KonqView *originalView = m_currentView;
   KonqView *view = m_pWorkingTab->activeChildView();
-  if (view && view->part() && (view->part()->metaObject()->findProperty("modified") != -1) ) {
+  if (view && view->part() && (view->part()->tqmetaObject()->findProperty("modified") != -1) ) {
     TQVariant prop = view->part()->property("modified");
     if (prop.isValid() && prop.toBool()) {
       m_pViewManager->showTab( view );
       if ( KMessageBox::warningContinueCancel( this,
-           i18n("This tab contains changes that have not been submitted.\nClosing the tab will discard these changes."),
+           i18n("This tab tqcontains changes that have not been submitted.\nClosing the tab will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"tab_remove"), "discardchangesclose") != KMessageBox::Continue )
       {
         m_pViewManager->showTab( originalView );
@@ -2857,12 +2857,12 @@ void KonqMainWindow::slotRemoveOtherTabsPopup()
   MapViews::ConstIterator end = m_mapViews.end();
   for (; it != end; ++it ) {
     KonqView *view = it.data();
-    if ( view != originalView && view && view->part() && (view->part()->metaObject()->findProperty("modified") != -1) ) {
+    if ( view != originalView && view && view->part() && (view->part()->tqmetaObject()->findProperty("modified") != -1) ) {
       TQVariant prop = view->part()->property("modified");
       if (prop.isValid() && prop.toBool()) {
         m_pViewManager->showTab( view );
         if ( KMessageBox::warningContinueCancel( this,
-           i18n("This tab contains changes that have not been submitted.\nClosing other tabs will discard these changes."),
+           i18n("This tab tqcontains changes that have not been submitted.\nClosing other tabs will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"tab_remove"), "discardchangescloseother") != KMessageBox::Continue )
         {
            m_pViewManager->showTab( originalView );
@@ -2890,12 +2890,12 @@ void KonqMainWindow::slotReloadAllTabs()
   MapViews::ConstIterator end = m_mapViews.end();
   for (; it != end; ++it ) {
     KonqView *view = it.data();
-    if (view && view->part() && (view->part()->metaObject()->findProperty("modified") != -1) ) {
+    if (view && view->part() && (view->part()->tqmetaObject()->findProperty("modified") != -1) ) {
       TQVariant prop = view->part()->property("modified");
       if (prop.isValid() && prop.toBool()) {
         m_pViewManager->showTab( view );
         if ( KMessageBox::warningContinueCancel( this,
-           i18n("This tab contains changes that have not been submitted.\nReloading all tabs will discard these changes."),
+           i18n("This tab tqcontains changes that have not been submitted.\nReloading all tabs will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"reload"), "discardchangesreload") != KMessageBox::Continue )
         {
             m_pViewManager->showTab( originalView );
@@ -3455,7 +3455,7 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
         ext = m_currentView->browserExtension();
     TQStrList slotNames;
     if (ext)
-      slotNames = ext->metaObject()->slotNames();
+      slotNames = ext->tqmetaObject()->slotNames();
 
     //for ( char * s = slotNames.first() ; s ; s = slotNames.next() )
     //{
@@ -3481,13 +3481,13 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
       if ( duplicate->shortcut() == TQKeySequence(CTRL+Key_D) )
           duplicate->setEnabled( false );
 
-      if (slotNames.contains("cut()"))
+      if (slotNames.tqcontains("cut()"))
         disconnect( m_paCut, TQT_SIGNAL( activated() ), ext, TQT_SLOT( cut() ) );
-      if (slotNames.contains("copy()"))
+      if (slotNames.tqcontains("copy()"))
         disconnect( m_paCopy, TQT_SIGNAL( activated() ), ext, TQT_SLOT( copy() ) );
-      if (slotNames.contains("paste()"))
+      if (slotNames.tqcontains("paste()"))
         disconnect( m_paPaste, TQT_SIGNAL( activated() ), ext, TQT_SLOT( paste() ) );
-      if (slotNames.contains("del()"))
+      if (slotNames.tqcontains("del()"))
         disconnect( m_paDelete, TQT_SIGNAL( activated() ), ext, TQT_SLOT( del() ) );
       disconnect( m_paTrash, TQT_SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
                   this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, Qt::ButtonState ) ) );
@@ -3522,13 +3522,13 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
       if ( duplicate->shortcut() == TQKeySequence(CTRL+Key_D) )
           duplicate->setEnabled( actionCollection()->action("new_window")->isEnabled() );
 
-      if (slotNames.contains("cut()"))
+      if (slotNames.tqcontains("cut()"))
         connect( m_paCut, TQT_SIGNAL( activated() ), ext, TQT_SLOT( cut() ) );
-      if (slotNames.contains("copy()"))
+      if (slotNames.tqcontains("copy()"))
         connect( m_paCopy, TQT_SIGNAL( activated() ), ext, TQT_SLOT( copy() ) );
-      if (slotNames.contains("paste()"))
+      if (slotNames.tqcontains("paste()"))
         connect( m_paPaste, TQT_SIGNAL( activated() ), ext, TQT_SLOT( paste() ) );
-      if (slotNames.contains("del()"))
+      if (slotNames.tqcontains("del()"))
         connect( m_paDelete, TQT_SIGNAL( activated() ), ext, TQT_SLOT( del() ) );
       connect( m_paTrash, TQT_SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
                this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, Qt::ButtonState ) ) );
@@ -4168,9 +4168,9 @@ void KonqMainWindow::updateToolBarActions( bool pendingAction /*=false*/)
 
   if ( m_currentView && m_currentView->url().isLocalFile() &&
        !m_currentView->isLockedViewMode() ) {
-      if ( m_currentView->serviceTypes().contains( "inode/directory" ) )
+      if ( m_currentView->serviceTypes().tqcontains( "inode/directory" ) )
           m_ptaUseHTML->setEnabled( true );
-      else if ( m_currentView->serviceTypes().contains(  "text/html" ) ) {
+      else if ( m_currentView->serviceTypes().tqcontains(  "text/html" ) ) {
           // Currently viewing an index.html file via this feature (i.e. url points to a dir)
           TQString locPath = KURL( m_currentView->locationBarURL() ).path();
           m_ptaUseHTML->setEnabled( TQFileInfo( locPath ).isDir() );
@@ -4328,7 +4328,7 @@ void KonqMainWindow::connectExtension( KParts::BrowserExtension *ext )
   KParts::BrowserExtension::ActionSlotMap::ConstIterator it = actionSlotMap->begin();
   KParts::BrowserExtension::ActionSlotMap::ConstIterator itEnd = actionSlotMap->end();
 
-  TQStrList slotNames = ext->metaObject()->slotNames();
+  TQStrList slotNames = ext->tqmetaObject()->slotNames();
 
   for ( ; it != itEnd ; ++it )
   {
@@ -4337,7 +4337,7 @@ void KonqMainWindow::connectExtension( KParts::BrowserExtension *ext )
     if ( act )
     {
       // Does the extension have a slot with the name of this action ?
-      if ( slotNames.contains( it.key()+"()" ) )
+      if ( slotNames.tqcontains( it.key()+"()" ) )
       {
           if ( it.key() != "trash" )
               connect( act, TQT_SIGNAL( activated() ), ext, it.data() /* TQT_SLOT(slot name) */ );
@@ -4362,13 +4362,13 @@ void KonqMainWindow::disconnectExtension( KParts::BrowserExtension *ext )
   KParts::BrowserExtension::ActionSlotMap::ConstIterator it = actionSlotMap->begin();
   KParts::BrowserExtension::ActionSlotMap::ConstIterator itEnd = actionSlotMap->end();
 
-  TQStrList slotNames =  ext->metaObject()->slotNames();
+  TQStrList slotNames =  ext->tqmetaObject()->slotNames();
 
   for ( ; it != itEnd ; ++it )
   {
     KAction * act = actionCollection()->action( it.key() );
     //kdDebug(1202) << it.key() << endl;
-    if ( act && slotNames.contains( it.key()+"()" ) )
+    if ( act && slotNames.tqcontains( it.key()+"()" ) )
     {
         //kdDebug(1202) << "disconnectExtension: " << act << " " << act->name() << endl;
         act->disconnect( ext );
@@ -4444,7 +4444,7 @@ void KonqMainWindow::enableAllActions( bool enable )
   {
     KAction *act = *it;
     if ( !TQString(act->name()).startsWith("options_configure") /* do not touch the configureblah actions */
-         && ( !enable || !actionSlotMap->contains( act->name() ) ) ) /* don't enable BE actions */
+         && ( !enable || !actionSlotMap->tqcontains( act->name() ) ) ) /* don't enable BE actions */
       act->setEnabled( enable );
   }
   // This method is called with enable=false on startup, and
@@ -4678,7 +4678,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
 
   // This action collection is used to pass actions to KonqPopupMenu.
   // It has to be a KActionCollection instead of a KActionPtrList because we need
-  // the actionStatusText signal...
+  // the actiontqStatusText signal...
   KActionCollection popupMenuCollection( (TQWidget*)0 );
   popupMenuCollection.insert( m_paBack );
   popupMenuCollection.insert( m_paForward );
@@ -4840,7 +4840,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
 
   delete pPopupMenu;
 
-  // We're sort of misusing KActionCollection here, but we need it for the actionStatusText signal...
+  // We're sort of misusing KActionCollection here, but we need it for the actiontqStatusText signal...
   // Anyway. If the action belonged to the view, and the view got deleted, we don't want ~KActionCollection
   // to iterate over those deleted actions
   KActionPtrList lst = popupMenuCollection.actions();
@@ -4889,7 +4889,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
             m_currentView = m_oldView;
         }
         // Special case: RMB + renaming in sidebar; setFocus would abort editing.
-        TQWidget* fw = focusWidget();
+        TQWidget* fw = tqfocusWidget();
         if ( !fw || !::qt_cast<TQLineEdit*>( fw ) )
             m_oldView->part()->widget()->setFocus();
     }
@@ -4901,7 +4901,7 @@ void KonqMainWindow::slotItemsRemoved( const KFileItemList &items )
   TQPtrListIterator<KFileItem> it( items );
   for ( ; it.current(); ++it )
   {
-    if ( popupItems.contains( it.current() ) )
+    if ( popupItems.tqcontains( it.current() ) )
     {
       emit popupItemsDisturbed();
       return;
@@ -4984,7 +4984,7 @@ void KonqMainWindow::setInitialFrameName( const TQString &name )
   m_initialFrameName = name;
 }
 
-void KonqMainWindow::slotActionStatusText( const TQString &text )
+void KonqMainWindow::slotActiontqStatusText( const TQString &text )
 {
   if ( !m_currentView )
     return;
@@ -4997,7 +4997,7 @@ void KonqMainWindow::slotActionStatusText( const TQString &text )
   statusBar->message( text );
 }
 
-void KonqMainWindow::slotClearStatusText()
+void KonqMainWindow::slotCleartqStatusText()
 {
   if ( !m_currentView )
     return;
@@ -5068,7 +5068,7 @@ void KonqMainWindow::updateViewModeActions()
   // make sure to also clear our [libiconview,liblistview]->service-for-viewmode
   // map
   if ( m_viewModeToolBarServices.count() > 0 &&
-       !m_viewModeToolBarServices.begin().data()->serviceTypes().contains( m_currentView->serviceType() ) )
+       !m_viewModeToolBarServices.begin().data()->serviceTypes().tqcontains( m_currentView->serviceType() ) )
   {
       // Save the current map to the config file, for later reuse
       saveToolBarServicesMap();
@@ -5112,7 +5112,7 @@ void KonqMainWindow::updateViewModeActions()
           itname = (*it)->name();
 
       TQString icon = (*it)->icon();
-      if ( icon != TQString::fromLatin1( "unknown" ) )
+      if ( icon != TQString::tqfromLatin1( "unknown" ) )
           // we *have* to specify a parent qobject, otherwise the exclusive group stuff doesn't work!(Simon)
           action = new KRadioAction( itname, icon, 0, this, (*it)->desktopEntryName().ascii() );
       else
@@ -5193,7 +5193,7 @@ void KonqMainWindow::updateViewModeActions()
       // Set the contents of the button from the current service, either if it's the current view
       // or if it's our preferred service for this button (library)
       if ( bIsCurrentView
-           || ( preferredServiceMap.contains( library ) && (*it)->desktopEntryName() == preferredServiceMap[ library ] ) )
+           || ( preferredServiceMap.tqcontains( library ) && (*it)->desktopEntryName() == preferredServiceMap[ library ] ) )
       {
           //kdDebug(1202) << " Changing action for " << library << " into service " << (*it)->name() << endl;
 
@@ -5283,7 +5283,7 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
       if ( tabContainer->count() > 1 )
       {
         KConfig *config = KGlobal::config();
-        KConfigGroupSaver cs( config, TQString::fromLatin1("Notification Messages") );
+        KConfigGroupSaver cs( config, TQString::tqfromLatin1("Notification Messages") );
 
         if ( !config->hasKey( "MultipleTabConfirm" ) )
         {
@@ -5321,12 +5321,12 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
       MapViews::ConstIterator end = m_mapViews.end();
       for (; it != end; ++it ) {
         KonqView *view = it.data();
-        if (view && view->part() && (view->part()->metaObject()->findProperty("modified") != -1) ) {
+        if (view && view->part() && (view->part()->tqmetaObject()->findProperty("modified") != -1) ) {
           TQVariant prop = view->part()->property("modified");
           if (prop.isValid() && prop.toBool()) {
             m_pViewManager->showTab( view );
             if ( KMessageBox::warningContinueCancel( this,
-              i18n("This tab contains changes that have not been submitted.\nClosing the window will discard these changes."),
+              i18n("This tab tqcontains changes that have not been submitted.\nClosing the window will discard these changes."),
               i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"exit"), "discardchangesclose") != KMessageBox::Continue )
             {
               e->ignore();
@@ -5339,12 +5339,12 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
 //      m_pViewManager->showTab( originalView );
     }
     else if ( m_currentView && m_currentView->part() &&
-             (m_currentView->part()->metaObject()->findProperty("modified") != -1) )
+             (m_currentView->part()->tqmetaObject()->findProperty("modified") != -1) )
     {
       TQVariant prop = m_currentView->part()->property("modified");
       if (prop.isValid() && prop.toBool())
          if ( KMessageBox::warningContinueCancel( this,
-           i18n("This page contains changes that have not been submitted.\nClosing the window will discard these changes."),
+           i18n("This page tqcontains changes that have not been submitted.\nClosing the window will discard these changes."),
            i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"exit"), "discardchangesclose") != KMessageBox::Continue )
          {
            e->ignore();
@@ -5356,7 +5356,7 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
     saveWindowSize();
 
     hide();
-    qApp->flushX();
+    tqApp->flushX();
   }
   // We're going to close - tell the parts
   MapViews::ConstIterator it = m_mapViews.begin();
@@ -5500,18 +5500,18 @@ void KonqMainWindow::bookmarksIntoCompletion( const KBookmarkGroup& group )
 
 void KonqMainWindow::connectActionCollection( KActionCollection *coll )
 {
-    connect( coll, TQT_SIGNAL( actionStatusText( const TQString & ) ),
-             this, TQT_SLOT( slotActionStatusText( const TQString & ) ) );
-    connect( coll, TQT_SIGNAL( clearStatusText() ),
-             this, TQT_SLOT( slotClearStatusText() ) );
+    connect( coll, TQT_SIGNAL( actiontqStatusText( const TQString & ) ),
+             this, TQT_SLOT( slotActiontqStatusText( const TQString & ) ) );
+    connect( coll, TQT_SIGNAL( cleartqStatusText() ),
+             this, TQT_SLOT( slotCleartqStatusText() ) );
 }
 
 void KonqMainWindow::disconnectActionCollection( KActionCollection *coll )
 {
-    disconnect( coll, TQT_SIGNAL( actionStatusText( const TQString & ) ),
-                this, TQT_SLOT( slotActionStatusText( const TQString & ) ) );
-    disconnect( coll, TQT_SIGNAL( clearStatusText() ),
-                this, TQT_SLOT( slotClearStatusText() ) );
+    disconnect( coll, TQT_SIGNAL( actiontqStatusText( const TQString & ) ),
+                this, TQT_SLOT( slotActiontqStatusText( const TQString & ) ) );
+    disconnect( coll, TQT_SIGNAL( cleartqStatusText() ),
+                this, TQT_SLOT( slotCleartqStatusText() ) );
 }
 
 //
@@ -5684,7 +5684,7 @@ TQStringList KonqMainWindow::historyPopupCompletionItems( const TQString& s)
         hp_removeDuplicates( matches );
     TQStringList items = matches.list();
     if( items.count() == 0
-	&& !s.contains( ':' ) && s[ 0 ] != '/' )
+	&& !s.tqcontains( ':' ) && s[ 0 ] != '/' )
         {
         TQString pre = hp_tryPrepend( s );
         if( !pre.isNull())

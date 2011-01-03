@@ -93,7 +93,7 @@ void Decoration::resize( const TQSize& s )
     widget()->resize( s );
     }
     
-TQSize Decoration::minimumSize() const
+TQSize Decoration::tqminimumSize() const
     {
     return TQSize( 100, 50 );
     }
@@ -144,7 +144,7 @@ bool Decoration::animateMinimize(bool iconify)
 
         // Go away quick.
         helperShowHide( false );
-        qApp->syncX();
+        tqApp->syncX();
 
         TQRect r = iconGeometry();
 
@@ -153,8 +153,8 @@ bool Decoration::animateMinimize(bool iconify)
 
         // Algorithm taken from Window Maker (http://www.windowmaker.org)
 
-        int sx = geometry().x();
-        int sy = geometry().y();
+        int sx = tqgeometry().x();
+        int sy = tqgeometry().y();
         int sw = width();
         int sh = height();
         int dx = r.x();
@@ -213,7 +213,7 @@ bool Decoration::animateMinimize(bool iconify)
 
           ungrabXServer();
 
-// FRAME          qApp->processEvents(); // FRAME ???
+// FRAME          tqApp->processEvents(); // FRAME ???
 
           cx += xstep;
           cy += ystep;
@@ -236,11 +236,11 @@ bool Decoration::animateMinimize(bool iconify)
         // Go away quick.
         helperShowHide( false );
         
-        qApp->syncX();
+        tqApp->syncX();
 
         int stepCount = 12;
 
-        TQRect r(geometry());
+        TQRect r(tqgeometry());
 
         int dx = r.width() / (stepCount * 2);
         int dy = r.height() / (stepCount * 2);
@@ -263,7 +263,7 @@ bool Decoration::animateMinimize(bool iconify)
 
           ungrabXServer();
 
-// FRAME          qApp->processEvents();
+// FRAME          tqApp->processEvents();
         }
       }
       break;
@@ -276,7 +276,7 @@ bool Decoration::animateMinimize(bool iconify)
         if (!icongeom.isValid())
           return true;
 
-        TQRect wingeom = geometry();
+        TQRect wingeom = tqgeometry();
 
         TQPainter p( workspaceWidget());
 
@@ -298,7 +298,7 @@ bool Decoration::animateMinimize(bool iconify)
 
         p.flush();
 
-        qApp->syncX();
+        tqApp->syncX();
 
         usleep(30000);
 

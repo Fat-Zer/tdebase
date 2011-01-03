@@ -44,7 +44,7 @@ class KManPartFactory: public KParts::Factory
       KManPartFactory( TQObject * parent = 0, const char * name = 0 );
       virtual ~KManPartFactory();
 
-      virtual KParts::Part* createPartObject( TQWidget * parentWidget, const char * widgetName ,
+      virtual KParts::Part* createPartObject( TQWidget * tqparentWidget, const char * widgetName ,
                                 TQObject* parent, const char* name, const char * classname,
                                 const TQStringList &args);
 

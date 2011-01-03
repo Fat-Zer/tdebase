@@ -427,7 +427,7 @@ void PanelButton::enterEvent(TQEvent* e)
     if (!m_highlight)
     {
         m_highlight = true;
-        repaint(false);
+        tqrepaint(false);
     }
 
     TQButton::enterEvent(e);
@@ -438,7 +438,7 @@ void PanelButton::leaveEvent(TQEvent* e)
     if (m_highlight)
     {
         m_highlight = false;
-        repaint(false);
+        tqrepaint(false);
     }
 
     TQButton::leaveEvent(e);
@@ -505,7 +505,7 @@ void PanelButton::mouseReleaseEvent(TQMouseEvent *e)
 	
 	TQPixmap pix = labelIcon();
 	if (KickerSettings::showIconActivationEffect() == true) {
-		KIconEffect::visualActivate(this, this->geometry(), &pix);
+		KIconEffect::visualActivate(this, this->tqgeometry(), &pix);
 	}
     }
     TQButton::mouseReleaseEvent(e);
@@ -528,7 +528,7 @@ void PanelButton::drawButton(TQPainter *p)
     if (m_tileColor.isValid())
     {
         p->fillRect(rect(), m_tileColor);
-        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), colorGroup());
+        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), tqcolorGroup());
     }
     else if (paletteBackgroundPixmap())
     {
@@ -547,8 +547,8 @@ void PanelButton::drawButton(TQPainter *p)
     }
     else if (isDown() || isOn())
     {
-        // Draw shapes to indicate the down state.
-        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), colorGroup(), TQStyle::Style_Sunken);
+        // Draw tqshapes to indicate the down state.
+        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), tqcolorGroup(), TQStyle::Style_Sunken);
     }
 
     drawButtonLabel(p);
@@ -558,8 +558,8 @@ void PanelButton::drawButton(TQPainter *p)
         int x1, y1, x2, y2;
         rect().coords(&x1, &y1, &x2, &y2);
         TQRect r(x1+2, y1+2, x2-x1-3, y2-y1-3);
-        style().drawPrimitive(TQStyle::PE_FocusRect, p, r, colorGroup(),
-        TQStyle::Style_Default, colorGroup().button());
+        style().drawPrimitive(TQStyle::PE_FocusRect, p, r, tqcolorGroup(),
+        TQStyle::Style_Default, tqcolorGroup().button());
     }
 }
 
@@ -663,7 +663,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
     if (m_drawArrow && (m_highlight || active))
     {
         TQStyle::PrimitiveElement e = TQStyle::PE_ArrowUp;
-        int arrowSize = style().pixelMetric(TQStyle::PM_MenuButtonIndicator);
+        int arrowSize = style().tqpixelMetric(TQStyle::PM_MenuButtonIndicator);
         TQRect r((width() - arrowSize)/2, 0, arrowSize, arrowSize);
 
         switch (m_arrowDirection)
@@ -707,7 +707,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
         {
             flags |= TQStyle::Style_Down;
         }
-        style().drawPrimitive(e, p, r, colorGroup(), flags);
+        style().drawPrimitive(e, p, r, tqcolorGroup(), flags);
     }
 }
 
@@ -771,7 +771,7 @@ void PanelButton::backedByFile(const TQString& localFilePath)
     disconnect(KDirWatch::self(), TQT_SIGNAL(deleted(const TQString&)),
                this, TQT_SLOT(checkForDeletion(const TQString&)));
 
-    if (!KDirWatch::self()->contains(m_backingFile))
+    if (!KDirWatch::self()->tqcontains(m_backingFile))
     {
         KDirWatch::self()->addFile(m_backingFile);
     }
@@ -923,7 +923,7 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
     if (e->type() == TQEvent::MouseMove)
     {
         TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())) &&
+        if (rect().tqcontains(mapFromGlobal(me->globalPos())) &&
             ((me->state() & ControlButton) != 0 ||
              (me->state() & ShiftButton) != 0))
         {
@@ -935,7 +935,7 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
              e->type() == TQEvent::MouseButtonDblClick)
     {
         TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())))
+        if (rect().tqcontains(mapFromGlobal(me->globalPos())))
         {
             m_pressedDuringPopup = true;
             return true;
@@ -944,7 +944,7 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
     else if (e->type() == TQEvent::MouseButtonRelease)
     {
         TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())))
+        if (rect().tqcontains(mapFromGlobal(me->globalPos())))
         {
             if (m_pressedDuringPopup && m_popup)
             {

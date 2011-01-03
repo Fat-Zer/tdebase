@@ -7,7 +7,7 @@ Issues Of Import
 Layout management
     autoexpending panels on the same side of the screen need to stop expanding
         at the point they run into each other.
-    make autohiding panels respect layout geometry too? e.g. don't overlap
+    make autohiding panels respect tqlayout tqgeometry too? e.g. don't overlap
     autounhiding panels should not obscure other panels
 ContainerArea completness
     doesn't autoscroll when moving a container
@@ -45,7 +45,7 @@ libkicker
             poor name =/
             shouldn't be so menu-centric either
 Optimize!
-    hiding: it seems there are more geometry calls made than really needed
+    hiding: it seems there are more tqgeometry calls made than really needed
     get rid of movies (which nobody really uses) in PanelButton
 Code clean ups
     remove pseudo transparency in favour of composite
@@ -89,7 +89,7 @@ Unnasigned
 ++++  Floating panels
 ****  When a panel is set to "floating" the following entries are added
       to the [General] config group:
-      FloatingPosition <-- geometry.topLeft();
+      FloatingPosition <-- tqgeometry.topLeft();
       FloatingOrientation <-- horizontal or vertical
 
 ++++  Drag and drop enhancements
@@ -100,8 +100,8 @@ Unnasigned
       There are many DnD reports on bugs.kde.org which can provide
       further inspiration.
 
-++++  Systray icon layout
-****  The systray applet does a very basic homebrew layout of the icons
+++++  Systray icon tqlayout
+****  The systray applet does a very basic homebrew tqlayout of the icons
       that currently has several flawed assumptions that break when used
       with certain applications. These assumptions include that all icons
       in a given row will be approximately the same width and that things

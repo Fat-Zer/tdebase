@@ -115,7 +115,7 @@ bool GetInfo_Sound (TQListView *lBox)
 {
 #ifdef HAVE_COREAUDIO
 #define kMaxStringSize 1024
-	OSStatus status;
+	OStqStatus status;
 	AudioDeviceID gOutputDeviceID;
 	unsigned long propertySize;
 	char deviceName[kMaxStringSize];

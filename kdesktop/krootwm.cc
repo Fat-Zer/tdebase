@@ -243,7 +243,7 @@ void KRootWm::initConfig()
     if (s == s_choices[c])
       { rightButtonChoice = (menuChoice) c; break; }
 
-  // Read configuration for icons alignment
+  // Read configuration for icons tqalignment
   if ( m_bDesktopEnabled ) {
     bool startup = true; m_pDesktop->iconView()->setAutoAlign( KDesktopSettings::autoLineUpIcons() ); 
     if ( kapp->authorize( "editable_desktop_icons" ) ) {
@@ -630,14 +630,14 @@ void KRootWm::slotWindowList() {
   TQDesktopWidget* desktop = KApplication::desktop();
   TQRect r;
   if (desktop->numScreens() < 2)
-      r = desktop->geometry();
+      r = desktop->tqgeometry();
   else
       r = desktop->screenGeometry( desktop->screenNumber(TQCursor::pos()));
   windowListMenu->init();
   disconnect( windowListMenu, TQT_SIGNAL( aboutToShow() ),
            this, TQT_SLOT( slotWindowListAboutToShow() ) ); // avoid calling init() twice
-  // windowListMenu->rect() is not valid before showing, use sizeHint()
-  windowListMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), windowListMenu->sizeHint()).center());
+  // windowListMenu->rect() is not valid before showing, use tqsizeHint()
+  windowListMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), windowListMenu->tqsizeHint()).center());
   windowListMenu->selectActiveWindow(); // make the popup more useful
   connect( windowListMenu, TQT_SIGNAL( aboutToShow() ),
            this, TQT_SLOT( slotWindowListAboutToShow() ) );
@@ -650,13 +650,13 @@ void KRootWm::slotSwitchUser() {
   TQDesktopWidget* desktop = KApplication::desktop();
   TQRect r;
   if (desktop->numScreens() < 2)
-      r = desktop->geometry();
+      r = desktop->tqgeometry();
   else
       r = desktop->screenGeometry( desktop->screenNumber(TQCursor::pos()));
   slotPopulateSessions();
   disconnect( sessionsMenu, TQT_SIGNAL( aboutToShow() ),
            this, TQT_SLOT( slotPopulateSessions() ) ); // avoid calling init() twice
-  sessionsMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), sessionsMenu->sizeHint()).center());
+  sessionsMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), sessionsMenu->tqsizeHint()).center());
   connect( sessionsMenu, TQT_SIGNAL( aboutToShow() ),
            TQT_SLOT( slotPopulateSessions() ) );
 }

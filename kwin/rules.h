@@ -40,7 +40,7 @@ class WindowRules
         WindowRules();
         void update( Client* );
         void discardTemporary();
-        bool contains( const Rules* rule ) const;
+        bool tqcontains( const Rules* rule ) const;
         void remove( Rules* rule );
         Placement::Policy checkPlacement( Placement::Policy placement ) const;
         TQRect checkGeometry( TQRect rect, bool init = false ) const;
@@ -232,8 +232,8 @@ class Rules
         ForceRule moveresizemoderule;
         bool closeable;
         ForceRule closeablerule;
-        bool strictgeometry;
-        ForceRule strictgeometryrule;
+        bool stricttqgeometry;
+        ForceRule stricttqgeometryrule;
         TQString shortcut;
         SetRule shortcutrule;
         bool disableglobalshortcuts;
@@ -284,15 +284,15 @@ WindowRules::WindowRules()
     }
 
 inline
-bool WindowRules::contains( const Rules* rule ) const
+bool WindowRules::tqcontains( const Rules* rule ) const
     {
-    return qFind( rules.begin(), rules.end(), rule ) != rules.end();
+    return tqFind( rules.begin(), rules.end(), rule ) != rules.end();
     }
     
 inline
 void WindowRules::remove( Rules* rule )
     {
-    TQValueVector< Rules* >::Iterator pos = qFind( rules.begin(), rules.end(), rule );
+    TQValueVector< Rules* >::Iterator pos = tqFind( rules.begin(), rules.end(), rule );
     if( pos != rules.end())
         rules.erase( pos );
     }

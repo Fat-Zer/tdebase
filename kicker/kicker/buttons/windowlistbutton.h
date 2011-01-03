@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class KWindowListMenu;
 
 /**
- * Button that contains a windowlist menu
+ * Button that tqcontains a windowlist menu
  */
 class WindowListButton : public PanelPopupButton
 {

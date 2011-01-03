@@ -19,7 +19,7 @@ private:
 	LayoutIcon();
 	TQPixmap* createErrorPixmap();
 	void dimPixmap(TQPixmap& pixmap);
-	TQString getCountryFromLayoutName(const TQString& layoutName);
+	TQString getCountryFromLayoutName(const TQString& tqlayoutName);
 	
   public:
 	static const TQString& ERROR_CODE;

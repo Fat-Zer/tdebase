@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>Action_group_tab_ui</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -48,7 +48,7 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>
@@ -73,7 +73,7 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>
@@ -101,7 +101,7 @@
 <slots>
     <slot access="protected" specifier="pure virtual">action_group_name_changed( const QString&amp; )</slot>
 </slots>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>ktextedit.h</includehint>
 </includehints>

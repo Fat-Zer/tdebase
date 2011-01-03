@@ -6,7 +6,7 @@ handlers. Each searchable document provides provides a document type in its meta
 data and if a corresponding handler is found, it can be searched.
 
 Search handlers are described by a desktop file which is put in the khelpcenter
-app directory in a "searchhandlers" directory. The desktop file contains the
+app directory in a "searchhandlers" directory. The desktop file tqcontains the
 information about which document types the handler covers, how to do a search
 query and how to create a search index.
 
@@ -21,7 +21,7 @@ Search Query
 
 KHelpcenter reads the command to execute for submitting a search query from the
 search handler's desktop file ("SearchCommand"). The search command can contain
-some symbols which are replaced by KHelpcenter with the data for the concrete
+some symbols which are tqreplaced by KHelpcenter with the data for the concrete
 search request:
 
 %i  Identifier of document (usually the name of the document's desktop file)
@@ -44,7 +44,7 @@ Building a Search Index
 
 KHelpcenter reads the command to build a search index from the search handler's
 desktop file ("IndexCommand"). The indexing command can contain some symbols
-which are replaced by KHelpcenter with the data for the concrete index creation
+which are tqreplaced by KHelpcenter with the data for the concrete index creation
 call:
 
 %i  Identifier of document (usually the name of the document's desktop file)

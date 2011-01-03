@@ -65,7 +65,7 @@ KonqExtensionManager::KonqExtensionManager(TQWidget *parent, KonqMainWindow *mai
 	if ( activePart ) {
 		KInstance* instance = activePart->instance();
 		d->pluginSelector->addPlugins(instance->instanceName(), i18n("Tools"), "Tools", instance->config());
-		d->pluginSelector->addPlugins(instance->instanceName(), i18n("Statusbar"), "Statusbar", instance->config());
+		d->pluginSelector->addPlugins(instance->instanceName(), i18n("tqStatusbar"), "tqStatusbar", instance->config());
 	}
 }
 

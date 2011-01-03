@@ -64,7 +64,7 @@ void WidgetCanvas::paintEvent(TQPaintEvent *)
 void WidgetCanvas::mousePressEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	if ( hotspots[i].rect.contains( me->pos() ) ) {
+	if ( hotspots[i].rect.tqcontains( me->pos() ) ) {
 	    emit widgetSelected( hotspots[i].number );
 	    return;
 	}
@@ -73,7 +73,7 @@ void WidgetCanvas::mousePressEvent( TQMouseEvent *me )
 void WidgetCanvas::mouseMoveEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	if ( hotspots[i].rect.contains( me->pos() ) ) {
+	if ( hotspots[i].rect.tqcontains( me->pos() ) ) {
 	    if ( i != currentHotspot ) {
 		TQString tip = tips[hotspots[i].number];
 		TQToolTip::remove( this );
@@ -91,7 +91,7 @@ void WidgetCanvas::dropEvent( TQDropEvent *e)
     TQColor c;
     if (KColorDrag::decode( e, c)) {
 	for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	    if ( hotspots[i].rect.contains( e->pos() ) ) {
+	    if ( hotspots[i].rect.tqcontains( e->pos() ) ) {
 		emit colorDropped( hotspots[i].number, c);
 		return;
 	    }
@@ -162,7 +162,7 @@ void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = TQBitmap(16, 16, close_mask_bits, true);
+    bitmap = TQBitmap(16, 16, close_tqmask_bits, true);
     close_pix->setMask(bitmap); dis_close_pix->setMask(bitmap);
 
     minimize_pix = new TQPixmap(16, 16);
@@ -178,7 +178,7 @@ void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = TQBitmap(16, 16, iconify_mask_bits, true);
+    bitmap = TQBitmap(16, 16, iconify_tqmask_bits, true);
     minimize_pix->setMask(bitmap); dis_minimize_pix->setMask(bitmap);
     
     maximize_pix = new TQPixmap(16, 16);
@@ -194,7 +194,7 @@ void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = TQBitmap(16, 16, maximize_mask_bits, true);
+    bitmap = TQBitmap(16, 16, maximize_tqmask_bits, true);
     maximize_pix->setMask(bitmap); dis_maximize_pix->setMask(bitmap);
 
     normalize_pix = new TQPixmap(16, 16);
@@ -210,7 +210,7 @@ void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = TQBitmap(16, 16, maximizedown_mask_bits, true);
+    bitmap = TQBitmap(16, 16, maximizedown_tqmask_bits, true);
     normalize_pix->setMask(bitmap); dis_normalize_pix->setMask(bitmap);
 
     menu_pix = new TQPixmap(16, 16);
@@ -226,7 +226,7 @@ void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = TQBitmap(16, 16, menu_mask_bits, true);
+    bitmap = TQBitmap(16, 16, menu_tqmask_bits, true);
     menu_pix->setMask(bitmap); dis_menu_pix->setMask(bitmap);
 
     pinup_pix = new TQPixmap(16, 16);
@@ -247,7 +247,7 @@ void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = TQBitmap(16, 16, pinup_mask_bits, true);
+    bitmap = TQBitmap(16, 16, pinup_tqmask_bits, true);
     pinup_pix->setMask(bitmap); dis_pinup_pix->setMask(bitmap);
     
     pindown_pix = new TQPixmap(16, 16);
@@ -268,7 +268,7 @@ void WidgetCanvas::resetTitlebarPixmaps(const TQColor &actMed,
     pact.drawPixmap(0, 0, bitmap);
     pdis.drawPixmap(0, 0, bitmap);
     pact.end(); pdis.end();
-    bitmap = TQBitmap(16, 16, pindown_mask_bits, true);
+    bitmap = TQBitmap(16, 16, pindown_tqmask_bits, true);
     pindown_pix->setMask(bitmap); dis_pindown_pix->setMask(bitmap);
     
 }
@@ -327,7 +327,7 @@ void WidgetCanvas::drawSampleWidgets()
 #ifndef __osf__
     TQPainter::redirect( vertScrollBar, &pm );
 #endif
-    vertScrollBar->repaint();
+    vertScrollBar->tqrepaint();
     TQPainter::redirect( vertScrollBar, 0 );
     vertScrollBar->hide();
 
@@ -337,8 +337,8 @@ void WidgetCanvas::drawSampleWidgets()
     // Initialize the pixmap which we draw sample widgets into.
 
     smplw.resize(width(), height());
-    //smplw.fill( parentWidget()->back() );
-    smplw.fill( parentWidget()->colorGroup().mid() );
+    //smplw.fill( tqparentWidget()->back() );
+    smplw.fill( tqparentWidget()->tqcolorGroup().mid() );
 
     // Actually start painting in
 
@@ -567,9 +567,9 @@ void WidgetCanvas::drawSampleWidgets()
 	popup->setItemEnabled( id, false );
 
 	// HACK: Force Layouting
-	//Sad Eagle: sizeHint() forces layouting too, and it's a lot less visible
-	//popup->sizeHint(); // Breaks with Qt 3.3
-	popup->resize(popup->sizeHint());
+	//Sad Eagle: tqsizeHint() forces tqlayouting too, and it's a lot less visible
+	//popup->tqsizeHint(); // Breaks with Qt 3.3
+	popup->resize(popup->tqsizeHint());
 
 	pm = TQPixmap::grabWidget( popup );
 	delete popup;
@@ -585,12 +585,12 @@ void WidgetCanvas::drawSampleWidgets()
     // Valance
 
     qDrawWinPanel ( &paint, 0, 0, width(), height(),
-                    parentWidget()->colorGroup(), TRUE, 0);
+                    tqparentWidget()->tqcolorGroup(), TRUE, 0);
 
     // Stop the painting
 
     hotspots[ spot++ ] =
         HotSpot( TQRect( 0, 0, width(), height() ), CSM_Background ); // ?
 
-    repaint( FALSE );
+    tqrepaint( FALSE );
 }

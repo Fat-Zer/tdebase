@@ -181,7 +181,7 @@ void FaviconsModule::downloadHostIcon(const KURL &url)
 
 void FaviconsModule::startDownload(const TQString &hostOrURL, bool isHost, const KURL &iconURL)
 {
-    if (d->failedDownloads.contains(iconURL.url()))
+    if (d->failedDownloads.tqcontains(iconURL.url()))
         return;
 
     KIO::Job *job = KIO::get(iconURL, false, false);
@@ -222,7 +222,7 @@ void FaviconsModule::slotResult(KIO::Job *job)
         io.setIODevice(&buffer);
         io.setParameters("size=16");
         // Check here too, the job might have had no error, but the downloaded
-        // file contains just a 404 message sent with a 200 status.
+        // file tqcontains just a 404 message sent with a 200 status.
         // microsoft.com does that... (malte)
         if (io.read())
         {

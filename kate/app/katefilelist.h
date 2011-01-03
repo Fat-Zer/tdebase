@@ -188,4 +188,4 @@ class KFLConfigPage : public Kate::ConfigPage {
 
 
 #endif
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

@@ -372,7 +372,7 @@ class Options : public KDecorationOptions
 
         int electric_borders;
         int electric_border_delay;
-        bool show_geometry_tip;
+        bool show_tqgeometry_tip;
         bool topmenus;
         bool desktop_topmenu;
         TQColor shadow_colour;

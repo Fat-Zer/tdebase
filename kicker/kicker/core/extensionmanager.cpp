@@ -371,7 +371,7 @@ void ExtensionManager::updateMenubar()
     KMenuBar tmpmenu;
     tmpmenu.insertItem("KDE Rocks!");
     m_menubarPanel->setSize(KPanelExtension::SizeCustom,
-                            tmpmenu.sizeHint().height());
+                            tmpmenu.tqsizeHint().height());
     m_menubarPanel->writeConfig();
 
     emit desktopIconsAreaChanged(desktopIconsArea(m_menubarPanel->xineramaScreen()),
@@ -403,7 +403,7 @@ void ExtensionManager::addExtension( const TQString& desktopFile )
     {
         e->readConfig();
         // as a new panel, the position will be set to the preferred position
-        // we just need to make sure this works with the rest of the panel layout
+        // we just need to make sure this works with the rest of the panel tqlayout
         e->setPosition(initialPanelPosition(e->position()));
         kdDebug(1210)<<"after e->readConfig(): pos="<<e->position()<<endl;
         addContainer(e);
@@ -527,7 +527,7 @@ bool ExtensionManager::shouldExclude(int XineramaScreen,
     // 1. Exclude panels not on our Xinerama screen
     // 2. Exclude panels on the same side of the screen as ourselves that are above us
     // 3. Exclude panels on the opposite side of the screen. Breaks down if the user
-    //    dabbles in insane layouts where a top/bottom or left/right pair overlap?
+    //    dabbles in insane tqlayouts where a top/bottom or left/right pair overlap?
     // 4. Exclude panels on adjacent sides of the screen that do not overlap with us
 
     if (exclude->winId() == extension->winId())
@@ -554,26 +554,26 @@ bool ExtensionManager::shouldExclude(int XineramaScreen,
     {
         // Rule 2 Exclusion
         if (extension->position() == KPanelExtension::Bottom &&
-            exclude->geometry().bottom() == extension->geometry().bottom() &&
-            !exclude->geometry().intersects(extension->geometry()))
+            exclude->tqgeometry().bottom() == extension->tqgeometry().bottom() &&
+            !exclude->tqgeometry().intersects(extension->tqgeometry()))
         {
             return false;
         }
         else if (extension->position() == KPanelExtension::Top &&
-                 exclude->geometry().top() == extension->geometry().top() &&
-                 !exclude->geometry().intersects(extension->geometry()))
+                 exclude->tqgeometry().top() == extension->tqgeometry().top() &&
+                 !exclude->tqgeometry().intersects(extension->tqgeometry()))
         {
             return false;
         }
         else if (extension->position() == KPanelExtension::Left &&
-                 exclude->geometry().left() == extension->geometry().left() &&
-                 !exclude->geometry().intersects(extension->geometry()))
+                 exclude->tqgeometry().left() == extension->tqgeometry().left() &&
+                 !exclude->tqgeometry().intersects(extension->tqgeometry()))
         {
             return false;
         }
         else if (extension->position() == KPanelExtension::Right &&
-                 exclude->geometry().right() == extension->geometry().right() &&
-                 !exclude->geometry().intersects(extension->geometry()))
+                 exclude->tqgeometry().right() == extension->tqgeometry().right() &&
+                 !exclude->tqgeometry().intersects(extension->tqgeometry()))
         {
             return false;
         }
@@ -591,28 +591,28 @@ bool ExtensionManager::shouldExclude(int XineramaScreen,
     // Rule 4 exclusion
     if (extension->position() == KPanelExtension::Bottom)
     {
-        if (exclude->geometry().bottom() > extension->geometry().top())
+        if (exclude->tqgeometry().bottom() > extension->tqgeometry().top())
         {
             return lowerInStack;
         }
     }
     else if (extension->position() == KPanelExtension::Top)
     {
-        if (exclude->geometry().top() < extension->geometry().bottom())
+        if (exclude->tqgeometry().top() < extension->tqgeometry().bottom())
         {
             return lowerInStack;
         }
     }
     else if (extension->position() == KPanelExtension::Left)
     {
-        if (exclude->geometry().left() < extension->geometry().right())
+        if (exclude->tqgeometry().left() < extension->tqgeometry().right())
         {
             return lowerInStack;
         }
     }
     else /* if (extension->position() == KPanelExtension::Right) */
     {
-        if (exclude->geometry().right() > extension->geometry().left())
+        if (exclude->tqgeometry().right() > extension->tqgeometry().left())
         {
             return lowerInStack;
         }
@@ -702,7 +702,7 @@ void ExtensionManager::reduceArea(TQRect &area, const ExtensionContainer *extens
         return;
     }
 
-    TQRect geom = extension->initialGeometry(extension->position(), extension->alignment(),
+    TQRect geom = extension->initialGeometry(extension->position(), extension->tqalignment(),
                                             extension->xineramaScreen());
 
     // reduce given area (TQRect) to the space not covered by the given extension
@@ -741,7 +741,7 @@ TQRect ExtensionManager::desktopIconsArea(int screen) const
     // This is pretty broken, mixes Xinerama and non-Xinerama multihead
     // and generally doesn't seem to be required anyway => ignore screen.
 //    TQRect area = TQApplication::desktop()->screenGeometry(screen);
-    TQRect area = TQApplication::desktop()->geometry();
+    TQRect area = TQApplication::desktop()->tqgeometry();
 
     reduceArea(area, m_mainPanel);
     reduceArea(area, m_menubarPanel);
