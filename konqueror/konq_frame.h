@@ -59,7 +59,7 @@ namespace KParts
 
 /**
  * A CheckBox with a special paintEvent(). It looks like the
- * unchecked radiobutton in b2k style if unchecked and tqcontains a little
+ * unchecked radiobutton in b2k style if unchecked and contains a little
  * anchor if checked.
  */
 class KonqCheckBox : public QCheckBox
@@ -101,13 +101,13 @@ class KonqFrameStatusBar : public KStatusBar
       /**
        * Updates the active-view indicator and the statusbar color.
        */
-      void updateActivetqStatus();
+      void updateActiveStatus();
 
    public slots:
       void slotConnectToNewView(KonqView *, KParts::ReadOnlyPart *oldOne,KParts::ReadOnlyPart *newOne);
       void slotLoadingProgress( int percent );
       void slotSpeedProgress( int bytesPerSecond );
-      void slotDisplaytqStatusText(const TQString& text);
+      void slotDisplayStatusText(const TQString& text);
 
       void slotClear();
       void message ( const TQString & message );
@@ -141,7 +141,7 @@ class KonqFrameStatusBar : public KStatusBar
       KonqFrame* m_pParentKonqFrame;
       TQCheckBox *m_pLinkedViewCheckBox;
       KProgress *m_progressBar;
-      KSqueezedTextLabel *m_ptqStatusLabel;
+      KSqueezedTextLabel *m_pStatusLabel;
       TQLabel* m_led;
       TQString m_savedMessage;
 };
@@ -190,10 +190,10 @@ protected:
  * them on click at the statusbar.
  *
  * KonqFrame makes the difference between built-in views and remote ones.
- * We create a tqlayout in it (with the KonqFrameStatusBar as top item in the tqlayout)
- * For builtin views we have the view as direct child widget of the tqlayout
+ * We create a layout in it (with the KonqFrameStatusBar as top item in the layout)
+ * For builtin views we have the view as direct child widget of the layout
  * For remote views we have an OPFrame, having the view attached, as child
- * widget of the tqlayout
+ * widget of the layout
  */
 
 class KonqFrame : public TQWidget, public KonqFrameBase
@@ -218,12 +218,12 @@ public:
   virtual bool eventFilter(TQObject*obj,TQEvent *ev);
 
   /**
-   * Inserts the part's widget and the statusbar into the tqlayout
+   * Inserts the part's widget and the statusbar into the layout
    */
   void attachInternal();
 
   /**
-   * Inserts a widget at the top of the part's widget, in the tqlayout
+   * Inserts a widget at the top of the part's widget, in the layout
    * (used for the find functionality)
    */
   void insertTopWidget( TQWidget * widget );
@@ -257,7 +257,7 @@ public:
   virtual TQWidget* widget() { return this; }
   virtual TQCString frameType() { return TQCString("View"); }
 
-  TQVBoxLayout *tqlayout()const { return m_pLayout; }
+  TQVBoxLayout *layout()const { return m_pLayout; }
 
   KonqFrameStatusBar *statusbar() const { return m_pStatusBar; }
 

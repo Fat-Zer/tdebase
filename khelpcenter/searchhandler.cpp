@@ -62,9 +62,9 @@ TQStringList SearchHandler::documentTypes() const
 TQString SearchHandler::indexCommand( const TQString &identifier )
 {
   TQString cmd = mIndexCommand;
-  cmd.tqreplace( "%i", identifier );
-  cmd.tqreplace( "%d", Prefs::indexDirectory() );
-  cmd.tqreplace( "%l", mLang );
+  cmd.replace( "%i", identifier );
+  cmd.replace( "%d", Prefs::indexDirectory() );
+  cmd.replace( "%l", mLang );
   return cmd;
 }
 

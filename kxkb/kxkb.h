@@ -44,7 +44,7 @@ class KWinModule;
 class LayoutMap;
 
 /* This is the main Kxkb class responsible for reading options
-    and switching tqlayouts
+    and switching layouts
 */
 
 class KXKBApp : public KUniqueApplication
@@ -58,9 +58,9 @@ public:
 
 	virtual int newInstance();
 
-	bool setLayout(const LayoutUnit& tqlayoutUnit, int group=-1);
+	bool setLayout(const LayoutUnit& layoutUnit, int group=-1);
 k_dcop:
-	bool setLayout(const TQString& tqlayoutPair);
+	bool setLayout(const TQString& layoutPair);
 	TQString getCurrentLayout() { return m_currentLayout.toPair(); }
 	TQStringList getLayoutsList() { return kxkbConfig.getLayoutStringList(); }
 	void forceSetXKBMap( bool set );
@@ -75,7 +75,7 @@ protected slots:
 protected:
     // Read settings, and apply them.
     bool settingsRead();
-    void tqlayoutApply();
+    void layoutApply();
     
 private:
 	void initTray();
@@ -84,7 +84,7 @@ private:
 	KxkbConfig kxkbConfig;
 
     WId m_prevWinId;	// for tricky part of saving xkb group
-    LayoutMap* m_tqlayoutOwnerMap;
+    LayoutMap* m_layoutOwnerMap;
 
 	LayoutUnit m_currentLayout;
 

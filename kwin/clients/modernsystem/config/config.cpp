@@ -35,15 +35,15 @@ ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(par
 	vbox->setMargin(0);
 
 	handleBox = new TQWidget(mainw);
-        TQGridLayout* tqlayout = new TQGridLayout(handleBox, 0, KDialog::spacingHint());
+        TQGridLayout* layout = new TQGridLayout(handleBox, 0, KDialog::spacingHint());
 
 	cbShowHandle = new TQCheckBox(i18n("&Show window resize handle"), handleBox);
 	TQWhatsThis::add(cbShowHandle,
 			i18n("When selected, all windows are drawn with a resize "
 			"handle at the lower right corner. This makes window resizing "
-			"easier, especially for trackballs and other mouse tqreplacements "
+			"easier, especially for trackballs and other mouse replacements "
 			"on laptops."));
-        tqlayout->addMultiCellWidget(cbShowHandle, 0, 0, 0, 1);
+        layout->addMultiCellWidget(cbShowHandle, 0, 0, 0, 1);
 	connect(cbShowHandle, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSelectionChanged()));
 
 	sliderBox = new TQVBox(handleBox);
@@ -59,18 +59,18 @@ ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(par
 
 	bool rtl = kapp->reverseLayout();
 	label1 = new TQLabel(i18n("Small"), hbox);
-	label1->tqsetAlignment(rtl ? AlignRight : AlignLeft);
+	label1->setAlignment(rtl ? AlignRight : AlignLeft);
 	label2 = new TQLabel(i18n("Medium"), hbox);
-	label2->tqsetAlignment(AlignHCenter);
+	label2->setAlignment(AlignHCenter);
 	label3 = new TQLabel(i18n("Large"), hbox);
-	label3->tqsetAlignment(rtl ? AlignLeft : AlignRight);
+	label3->setAlignment(rtl ? AlignLeft : AlignRight);
 	
 	vbox->addWidget(handleBox);
 	vbox->addStretch(1);
 
-//        tqlayout->setColSpacing(0, 30);
-        tqlayout->addItem(new TQSpacerItem(30, 10, TQSizePolicy::Fixed, TQSizePolicy::Fixed), 1, 0);
-        tqlayout->addWidget(sliderBox, 1, 1);
+//        layout->setColSpacing(0, 30);
+        layout->addItem(new TQSpacerItem(30, 10, TQSizePolicy::Fixed, TQSizePolicy::Fixed), 1, 0);
+        layout->addWidget(sliderBox, 1, 1);
 	
 	load(conf);
 	mainw->show();

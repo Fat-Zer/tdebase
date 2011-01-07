@@ -69,7 +69,7 @@ KSplashThemeMgr::KSplashThemeMgr( TQWidget *parent, const char *name, const TQSt
   about->addAuthor("Ravikiran Rajagopal", 0, "ravi@ee.eng.ohio-state.edu");
   about->addCredit("Brian Ledbetter", I18N_NOOP("Original KSplash/ML author"), "brian@shadowcom.net");
   about->addCredit(I18N_NOOP("KDE Theme Manager authors" ), I18N_NOOP("Original installer code") );
-  // Once string freeze is over, tqreplace second argument with "Icon"
+  // Once string freeze is over, replace second argument with "Icon"
   about->addCredit("Hans Karlsson", 0, "karlsson.h@home.se" );
   setAboutData(about);
 }

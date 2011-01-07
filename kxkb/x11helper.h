@@ -7,7 +7,7 @@
 
 struct RulesInfo {
 	TQDict<char> models;
-	TQDict<char> tqlayouts;
+	TQDict<char> layouts;
 	TQDict<char> options;
 };
 
@@ -18,7 +18,7 @@ struct OldLayouts {
 
 class X11Helper
 {
-	static bool m_tqlayoutsClean;
+	static bool m_layoutsClean;
 
 public:
 	static const WId UNKNOWN_WINDOW_ID = (WId) 0;
@@ -30,11 +30,11 @@ public:
 	static const TQString findX11Dir();
 	static const TQString findXkbRulesFile(TQString x11Dir, Display* dpy);
 	static TQString getWindowClass(WId winId, Display* dpy);
-	static TQStringList* getVariants(const TQString& tqlayout, const TQString& x11Dir, bool oldLayouts=false);
-	static RulesInfo* loadRules(const TQString& rulesFile, bool tqlayoutsOnly=false);
+	static TQStringList* getVariants(const TQString& layout, const TQString& x11Dir, bool oldLayouts=false);
+	static RulesInfo* loadRules(const TQString& rulesFile, bool layoutsOnly=false);
 	static OldLayouts* loadOldLayouts(const TQString& rulesFile);
 	
-	static bool areLayoutsClean() { return m_tqlayoutsClean; }
+	static bool areLayoutsClean() { return m_layoutsClean; }
 	static bool areSingleGroupsSupported();
 };
 

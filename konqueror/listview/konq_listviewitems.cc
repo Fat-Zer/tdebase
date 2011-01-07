@@ -173,7 +173,7 @@ void KonqListViewItem::setActive( bool active )
     if ( m_bActive == active )
         return;
 
-    //#### Optimize away tqrepaint if possible, like the iconview does?
+    //#### Optimize away repaint if possible, like the iconview does?
     KonqBaseListViewItem::setActive( active );
     int iconSize = m_pListViewWidget->iconSize();
     iconSize = iconSize ? iconSize : KGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
@@ -203,7 +203,7 @@ void KonqListViewItem::setPixmap( int column, const TQPixmap& pm )
    int newWidth = pm.isNull() ? 0 : pm.width();
    int newHeight = pm.isNull() ? 0 : pm.height();
 
-   // If the height or width have changed then we're going to have to tqrepaint
+   // If the height or width have changed then we're going to have to repaint
    // this whole thing.  Fortunately since most of the calls are coming from
    // setActive() this is the uncommon case.
 
@@ -211,12 +211,12 @@ void KonqListViewItem::setPixmap( int column, const TQPixmap& pm )
    {
       setup();
       widthChanged( column );
-      tqinvalidateHeight();
+      invalidateHeight();
       return;
    }
 
    // If we're just replacing the icon with another one its size -- i.e. a
-   // "highlighted" icon, don't bother tqrepainting the whole widget.
+   // "highlighted" icon, don't bother repainting the whole widget.
 
    TQListView *lv = m_pListViewWidget;
 
@@ -225,7 +225,7 @@ void KonqListViewItem::setPixmap( int column, const TQPixmap& pm )
    int y = lv->itemPos( this );
    int w = newWidth;
    int h = height();
-   lv->tqrepaintContents( x, y, w, h );
+   lv->repaintContents( x, y, w, h );
 }
 
 const TQPixmap* KonqListViewItem::pixmap( int column ) const
@@ -294,7 +294,7 @@ int KonqBaseListViewItem::compare( TQListViewItem* item, int col, bool ascending
    }
 }
 
-void KonqListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _tqalignment )
+void KonqListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment )
 {
     TQColorGroup cg( _cg );
 
@@ -330,7 +330,7 @@ void KonqListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg,
         _width = newWidth;
     }
 
-    KListViewItem::paintCell( _painter, cg, _column, _width, _tqalignment );
+    KListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
 }
 
 void KonqListViewItem::paintFocus( TQPainter * _painter, const TQColorGroup & cg, const TQRect & _r )
@@ -421,7 +421,7 @@ KonqBaseListViewItem::~KonqBaseListViewItem()
 
 TQRect KonqBaseListViewItem::rect() const
 {
-    TQRect r = m_pListViewWidget->tqitemRect(this);
+    TQRect r = m_pListViewWidget->itemRect(this);
     return TQRect( m_pListViewWidget->viewportToContents( r.topLeft() ), TQSize( r.width(), r.height() ) );
 }
 

@@ -28,7 +28,7 @@ void KBackedComboBox::insertItem( const TQString &id, const TQString &name )
 
 void KBackedComboBox::setCurrentId( const TQString &id )
 {
-    if (id2name.tqcontains( id ))
+    if (id2name.contains( id ))
 	setCurrentItem( id2name[id] );
     else
 	setCurrentItem( 0 );

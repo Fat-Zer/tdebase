@@ -96,21 +96,21 @@ TQPoint KasPopup::calcPosition( KasItem *item, int w, int h )
    int y = pos.y();
 
    if ( kasbar->orientation() == Horizontal ) {
-      if ( y < ( tqApp->desktop()->height() / 2 ) )
+      if ( y < ( qApp->desktop()->height() / 2 ) )
 	 y = y + kasbar->itemExtent();
       else
 	 y = y - h;
 
-      if ( (x + w) > tqApp->desktop()->width() )
+      if ( (x + w) > qApp->desktop()->width() )
          x = x - w + kasbar->itemExtent();
    }
    else {
-      if ( x < ( tqApp->desktop()->width() / 2 ) )
+      if ( x < ( qApp->desktop()->width() / 2 ) )
 	 x = x + kasbar->itemExtent();
       else
 	 x = x - w;
 
-      if ( (y + h) > tqApp->desktop()->height() )
+      if ( (y + h) > qApp->desktop()->height() )
          y = y - h + kasbar->itemExtent();
    }
 

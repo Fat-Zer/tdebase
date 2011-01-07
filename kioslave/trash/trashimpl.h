@@ -157,7 +157,7 @@ private:
     int m_lastErrorCode;
     TQString m_lastErrorMessage;
 
-    enum { InitToBeDone, InitOK, InitError } m_inittqStatus;
+    enum { InitToBeDone, InitOK, InitError } m_initStatus;
 
     // A "trash directory" is a physical directory on disk,
     // e.g. $HOME/.local/share/Trash/$uid or /mnt/foo/.Trash/$uid

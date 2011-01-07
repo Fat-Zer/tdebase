@@ -31,7 +31,7 @@
 #include "kaccess.moc"
 
 struct ModifierKey {
-   const unsigned int tqmask;
+   const unsigned int mask;
    const KeySym keysym;
    const char *name;
    const char *lockedText;
@@ -303,9 +303,9 @@ void KAccessApp::readSettings()
   overlay = 0;
 }
 
-static int tqmaskToBit (int tqmask) {
+static int maskToBit (int mask) {
    for (int i = 0; i < 8; i++)
-      if (tqmask & (1 << i))
+      if (mask & (1 << i))
          return i;
    return -1;
 }
@@ -316,19 +316,19 @@ void KAccessApp::initMasks() {
    state = 0;
 
    for (int i = 0; strcmp (modifierKeys[i].name, "") != 0; i++) {
-      int tqmask = modifierKeys[i].tqmask;
-      if (tqmask == 0)
+      int mask = modifierKeys[i].mask;
+      if (mask == 0)
          if (modifierKeys[i].keysym != 0)
-            tqmask = XkbKeysymToModifiers (qt_xdisplay(), modifierKeys[i].keysym);
+            mask = XkbKeysymToModifiers (qt_xdisplay(), modifierKeys[i].keysym);
          else if (!strcmp(modifierKeys[i].name, "Win"))
-            tqmask = KKeyNative::modX(KKey::WIN);
+            mask = KKeyNative::modX(KKey::WIN);
          else
-            tqmask = XkbKeysymToModifiers (qt_xdisplay(), XK_Mode_switch)
+            mask = XkbKeysymToModifiers (qt_xdisplay(), XK_Mode_switch)
                  | XkbKeysymToModifiers (qt_xdisplay(), XK_ISO_Level3_Shift)
                  | XkbKeysymToModifiers (qt_xdisplay(), XK_ISO_Level3_Latch)
                  | XkbKeysymToModifiers (qt_xdisplay(), XK_ISO_Level3_Lock);
 
-      int bit = tqmaskToBit (tqmask);
+      int bit = maskToBit (mask);
       if (bit != -1 && keys[bit] == -1)
          keys[bit] = i;
    }
@@ -496,7 +496,7 @@ TQString mouseKeysShortcut (Display *display) {
            {
               if (type->map[i].active && (type->map[i].level == level))
               {
-                 modifiers = type->map[i].mods.tqmask;
+                 modifiers = type->map[i].mods.mask;
                  found = true;
               }
            }
@@ -585,7 +585,7 @@ void KAccessApp::createDialogContents() {
       TQVBoxLayout * vlay = new TQVBoxLayout(lay);
 
       featuresLabel = new TQLabel( "", contents );
-      featuresLabel->tqsetAlignment( WordBreak|AlignVCenter );
+      featuresLabel->setAlignment( WordBreak|AlignVCenter );
       vlay->addWidget( featuresLabel );
       vlay->addStretch();
 

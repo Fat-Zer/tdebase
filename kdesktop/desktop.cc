@@ -159,7 +159,7 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
   kapp->dcopClient()->connectDCOPSignal(kicker_name, kicker_name, "desktopIconsAreaChanged(TQRect, int)",
                                         "KDesktopIface", "desktopIconsAreaChanged(TQRect, int)", false);
 
-  // Dont tqrepaint on configuration changes during construction
+  // Dont repaint on configuration changes during construction
   m_bInit = true;
 
   // It's the child widget that gets the focus, not us
@@ -179,7 +179,7 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
 
   }
 
-  setGeometry( TQApplication::desktop()->tqgeometry() );
+  setGeometry( TQApplication::desktop()->geometry() );
   lower();
 
   connect( kapp, TQT_SIGNAL( shutDown() ),
@@ -230,7 +230,7 @@ KDesktop::initRoot()
      TQToolTip::add( &w, "foo" );
      }
      // NOTE: If mouse clicks stop working again, it's most probably something doing XSelectInput()
-     // on the root window after this, and setting it to some fixed value instead of adding its tqmask.
+     // on the root window after this, and setting it to some fixed value instead of adding its mask.
      XWindowAttributes attrs;
      XGetWindowAttributes(dpy, root, &attrs);
      XSelectInput(dpy, root, attrs.your_event_mask | ButtonPressMask);
@@ -279,7 +279,7 @@ KDesktop::initRoot()
      m_pIconView->viewport()->setBackgroundMode( X11ParentRelative );
      m_pIconView->setFocusPolicy( StrongFocus );
      m_pIconView->viewport()->setFocusPolicy( StrongFocus );
-     m_pIconView->setGeometry( tqgeometry() );
+     m_pIconView->setGeometry( geometry() );
      m_pIconView->show();
 
      // Geert Jansen: backgroundmanager belongs here
@@ -1168,7 +1168,7 @@ void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int
     i.uDest   = KURL::fromPathOrURL( _dest );
     i.uDest.addPath( filename );
     files.append(i);
-    if (!TQFile::exists(i.uDest.prettyURL().tqreplace("file://",TQString::null))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
+    if (!TQFile::exists(i.uDest.prettyURL().replace("file://",TQString::null))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
     KIO::copy( i.uSource, i.uDest, false ); }
 
 //    m_pIconView->addFuturePosition(filename, x, y);

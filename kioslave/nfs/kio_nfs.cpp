@@ -454,18 +454,18 @@ void NFSProtocol::openConnection()
                          (xdrproc_t) xdr_exports, (char*)&exportlist,total_timeout);
    if (!checkForError(clnt_stat, 0, m_currentHost.latin1())) return;
 
-   fhstatus fhtqStatus;
+   fhstatus fhStatus;
    bool atLeastOnceSucceeded(FALSE);
    for(; exportlist!=0;exportlist = exportlist->ex_next) {
       kdDebug(7121) << "found export: " << exportlist->ex_dir << endl;
 
-      memset(&fhtqStatus, 0, sizeof(fhtqStatus));
+      memset(&fhStatus, 0, sizeof(fhStatus));
       clnt_stat = clnt_call(m_client, MOUNTPROC_MNT,(xdrproc_t) xdr_dirpath, (char*)(&(exportlist->ex_dir)),
-                            (xdrproc_t) xdr_fhstatus,(char*) &fhtqStatus,total_timeout);
-      if (fhtqStatus.fhs_status==0) {
+                            (xdrproc_t) xdr_fhstatus,(char*) &fhStatus,total_timeout);
+      if (fhStatus.fhs_status==0) {
          atLeastOnceSucceeded=TRUE;
          NFSFileHandle fh;
-         fh=fhtqStatus.fhstatus_u.fhs_fhandle;
+         fh=fhStatus.fhstatus_u.fhs_fhandle;
          TQString fname;
          if ( exportlist->ex_dir[0] == '/' )
             fname = KIO::encodeFileName(exportlist->ex_dir + 1);
@@ -473,7 +473,7 @@ void NFSProtocol::openConnection()
             fname = KIO::encodeFileName(exportlist->ex_dir);
          m_handleCache.insert(TQString("/")+fname,fh);
          m_exportedDirs.append(fname);
-         // kdDebug() <<"appending file -"<<fname<<"- with FH: -"<<fhtqStatus.fhstatus_u.fhs_fhandle<<"-"<<endl;
+         // kdDebug() <<"appending file -"<<fname<<"- with FH: -"<<fhStatus.fhstatus_u.fhs_fhandle<<"-"<<endl;
       }
    }
    if (!atLeastOnceSucceeded)
@@ -807,7 +807,7 @@ void NFSProtocol::completeAbsoluteLinkUDSEntry(UDSEntry& entry, const TQCString&
       struct passwd *user = getpwuid( uid );
       if ( user )
       {
-         m_usercache.insert( uid, new TQString(TQString::tqfromLatin1(user->pw_name)) );
+         m_usercache.insert( uid, new TQString(TQString::fromLatin1(user->pw_name)) );
          atom.m_str = user->pw_name;
       }
       else
@@ -825,7 +825,7 @@ void NFSProtocol::completeAbsoluteLinkUDSEntry(UDSEntry& entry, const TQCString&
       struct group *grp = getgrgid( gid );
       if ( grp )
       {
-         m_groupcache.insert( gid, new TQString(TQString::tqfromLatin1(grp->gr_name)) );
+         m_groupcache.insert( gid, new TQString(TQString::fromLatin1(grp->gr_name)) );
          atom.m_str = grp->gr_name;
       }
       else

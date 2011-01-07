@@ -44,35 +44,35 @@ static int strToWeight(const TQString &str)
 {
     if(NULL==str)
         return FC_WEIGHT_MEDIUM;
-    else if(str.tqcontains("Bold", false))
+    else if(str.contains("Bold", false))
         return FC_WEIGHT_BOLD;
-    else if(str.tqcontains("Heavy", false)) 
+    else if(str.contains("Heavy", false)) 
         return FC_WEIGHT_HEAVY;
-    else if(str.tqcontains("Black", false))
+    else if(str.contains("Black", false))
         return FC_WEIGHT_BLACK;
-    else if(str.tqcontains("ExtraBold", false))
+    else if(str.contains("ExtraBold", false))
         return FC_WEIGHT_EXTRABOLD;
-    else if(str.tqcontains("UltraBold", false))
+    else if(str.contains("UltraBold", false))
         return FC_WEIGHT_ULTRABOLD;
-    else if(str.tqcontains("ExtraLight", false))
+    else if(str.contains("ExtraLight", false))
         return FC_WEIGHT_EXTRALIGHT;
-    else if(str.tqcontains("UltraLight", false))
+    else if(str.contains("UltraLight", false))
         return FC_WEIGHT_ULTRALIGHT;
-    else if(str.tqcontains("Light", false))
+    else if(str.contains("Light", false))
         return FC_WEIGHT_LIGHT;
-    else if(str.tqcontains("Medium", false) || str.tqcontains("Normal", false) || str.tqcontains("Roman", false))
+    else if(str.contains("Medium", false) || str.contains("Normal", false) || str.contains("Roman", false))
         return FC_WEIGHT_MEDIUM;
-    else if(str.tqcontains("Regular", false))
+    else if(str.contains("Regular", false))
         return FC_WEIGHT_REGULAR;
-    else if(str.tqcontains("SemiBold", false))
+    else if(str.contains("SemiBold", false))
         return FC_WEIGHT_SEMIBOLD;
-    else if(str.tqcontains("DemiBold", false))
+    else if(str.contains("DemiBold", false))
         return FC_WEIGHT_DEMIBOLD;
-    else if(str.tqcontains("Thin", false))
+    else if(str.contains("Thin", false))
         return FC_WEIGHT_THIN;
-    else if(str.tqcontains("Book", false))
+    else if(str.contains("Book", false))
         return FC_WEIGHT_NORMAL;
-    else if(str.tqcontains("Demi", false)) 
+    else if(str.contains("Demi", false)) 
         return FC_WEIGHT_NORMAL;
     else
         return FC_WEIGHT_MEDIUM;
@@ -83,21 +83,21 @@ static int strToWidth(const TQString &str)
 {   
     if(str.isEmpty())
         return FC_WIDTH_NORMAL;
-    else if(str.tqcontains("UltraCondensed", false))
+    else if(str.contains("UltraCondensed", false))
         return FC_WIDTH_ULTRACONDENSED;
-    else if(str.tqcontains("ExtraCondensed", false))
+    else if(str.contains("ExtraCondensed", false))
         return FC_WIDTH_EXTRACONDENSED;
-    else if(str.tqcontains("SemiCondensed", false))
+    else if(str.contains("SemiCondensed", false))
         return FC_WIDTH_SEMICONDENSED;
-    else if(str.tqcontains("Condensed", false))
+    else if(str.contains("Condensed", false))
         return FC_WIDTH_CONDENSED;
-    else if(str.tqcontains("SemiExpanded", false))
+    else if(str.contains("SemiExpanded", false))
         return FC_WIDTH_SEMIEXPANDED;
-    else if(str.tqcontains("UltraExpanded", false))
+    else if(str.contains("UltraExpanded", false))
         return FC_WIDTH_ULTRAEXPANDED;
-    else if(str.tqcontains("ExtraExpanded", false))
+    else if(str.contains("ExtraExpanded", false))
         return FC_WIDTH_EXTRAEXPANDED;
-    else if(str.tqcontains("Expanded", false))
+    else if(str.contains("Expanded", false))
         return FC_WIDTH_EXPANDED;
     else
         return FC_WIDTH_NORMAL;
@@ -372,7 +372,7 @@ bool KFileFontPlugin::readInfo(KFileMetaInfo& info, uint what)
                                 const FoundryMap *entry;
 
                                 for(entry=map; NULL!=entry->foundry; entry++)
-                                    if(foundryAll.length()==entry->len && foundryAll.tqcontains(entry->foundry, false))
+                                    if(foundryAll.length()==entry->len && foundryAll.contains(entry->foundry, false))
                                     {
                                         foundryAll=entry->foundry;
                                         break;

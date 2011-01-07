@@ -290,7 +290,7 @@ int updateProcessList( void ) {
 }
 
 void printProcessListInfo( const char *cmd ) {
-	fprintf(CurrentClient, "Name\tPID\tPPID\tGID\ttqStatus\tUser\tThreads"
+	fprintf(CurrentClient, "Name\tPID\tPPID\tGID\tStatus\tUser\tThreads"
 		"\tSize\tResident\t%% CPU\tPriority\tCommand\n" );
 	fprintf(CurrentClient, "s\td\td\td\ts\ts\td\tD\tD\tf\td\ts\n" );
 }

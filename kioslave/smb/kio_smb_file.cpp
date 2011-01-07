@@ -114,7 +114,7 @@ void SMBSlave::get( const KURL& kurl )
                     if ( !mime || mime->name() == KMimeType::defaultMimeType()
                          || !accurate )
                     {
-                        KMimeType::Ptr p_mimeType = KMimeType::tqfindByContent(filedata);
+                        KMimeType::Ptr p_mimeType = KMimeType::findByContent(filedata);
                         if ( p_mimeType && p_mimeType->name() != KMimeType::defaultMimeType() )
                             mime = p_mimeType;
                     }

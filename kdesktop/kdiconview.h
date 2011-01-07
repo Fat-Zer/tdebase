@@ -43,7 +43,7 @@ class KDesktopShadowSettings;
  *
  * Added shadow capability by Laur Ivan (C) 2003
  * The shadow is supported by the new KFileIVIDesktop objects
- * which tqreplace KFileIVI objects.
+ * which replace KFileIVI objects.
  */
 class KDIconView : public KonqIconViewWidget, public KDirNotify
 {

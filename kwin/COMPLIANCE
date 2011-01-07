@@ -53,7 +53,7 @@ version 1.2
         are listed here.
         CHECKME : check it's complete
 / 3.2.
-        The spec requires that _NET_CLIENT_LIST tqcontains the windows in their
+        The spec requires that _NET_CLIENT_LIST contains the windows in their
         initial mapping order, which is currently not true for NET::Desktop
         windows.
         Note that xprop lists only first element in WINDOW type properties.
@@ -70,7 +70,7 @@ version 1.2
 + 3.7.
 + 3.8.
         KWin currently extends the message a bit, with data.l[0] being 1 or 2,
-        meaning 'from application'/'from pager', and data.l[1] tqcontains
+        meaning 'from application'/'from pager', and data.l[1] contains
         timestamp. This is used for focus stealing prevention purposes, and
         will be proposed for next version of the spec.
 + 3.9.
@@ -138,14 +138,14 @@ version 1.2
 - 5.13.
         Property is not used in KWin, KWin never provides icons for iconified windows.
         Kicker or its taskbar don't set it either. However, the property is flawed,
-        and should be tqreplaced by manager selection or similar mechanism.
+        and should be replaced by manager selection or similar mechanism.
 + 6.1.
 + 6. (rest)
 + 7.4.
         The urgency hint is mapped to the _NET_WM_DEMANDS_ATTENTION flag.
 * 7.5.
         Qt often sets maximum size smaller than minimum size. This seems to be caused
-        by delayed tqlayout calculations.
+        by delayed layout calculations.
 * 7.6.
         Kicker should be checked.
 ? 7.7.
@@ -176,7 +176,7 @@ version 2.0
 ? 4.1.2.3
 ?    - PSize, PPosition, USize, UPosition
 ?	- clients - Qt simply sets both
-+    - PWinGravity - window tqgeometry constraints have higher priority than gravity
++    - PWinGravity - window geometry constraints have higher priority than gravity
 /    - PBaseSize - PMinSize is not used as a fallback for size increments
 +    - (the rest)
 / 4.1.2.4

@@ -59,7 +59,7 @@ KDesktopConfig::KDesktopConfig(TQWidget *parent, const char * /*name*/)
 
   Q_ASSERT(maxDesktops % 2 == 0);
 
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   // number group
   TQGroupBox *number_group = new TQGroupBox(this);
@@ -82,7 +82,7 @@ KDesktopConfig::KDesktopConfig(TQWidget *parent, const char * /*name*/)
   lay->addWidget(_numInput);
   lay->setStretchFactor( _numInput, 2 );
 
-  tqlayout->addWidget(number_group);
+  layout->addWidget(number_group);
 
   // name group
   TQGroupBox *name_group = new TQGroupBox(i18n("Desktop &Names"), this);
@@ -109,13 +109,13 @@ KDesktopConfig::KDesktopConfig(TQWidget *parent, const char * /*name*/)
   for(int i = 1; i < maxDesktops; i++)
       setTabOrder( _nameInput[i-1], _nameInput[i] );
 
-  tqlayout->addWidget(name_group);
+  layout->addWidget(name_group);
 
   _wheelOption = new TQCheckBox(i18n("Mouse wheel over desktop background switches desktop"), this);
   connect(_wheelOption,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
 
-  tqlayout->addWidget(_wheelOption);
-  tqlayout->addStretch(1);
+  layout->addWidget(_wheelOption);
+  layout->addStretch(1);
 
   load();
 }

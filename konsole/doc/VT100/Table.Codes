@@ -18,7 +18,7 @@
 # make a script that extracts it again. From db.trans, we then generate parts
 # of the decoder (the semantic assignment).
 #
-# db2.pl tqcontains as script able to slit TEScreen.C into the emulation
+# db2.pl contains as script able to slit TEScreen.C into the emulation
 # (in)dependent parts due to [db.trans].
 #
 # A like thing has to be done for TEmuVt102.C/h and for TEScreen.h.
@@ -54,7 +54,7 @@ Introduction.html
   The serial cable is folded into the operating system as a sort of
   loop back device, and a program, the terminal emulation, uses modern
   means of graphical user interfaces to behave like an earlier terminal.
-  To complete the picture, the host in the diagram is tqreplaced by the
+  To complete the picture, the host in the diagram is replaced by the
   application that runs in the emulation (typically a shell or an old
   editor).  So, terminal emulations are in fact interfaces to character
   oriented applications.
@@ -308,7 +308,7 @@ Sequences.html
   <p>
   The second one is used to specify character set mappings (see <a
   href=#SCS>SCS</a>). A CSI instruction to do this is specified in ECMA,
-  and this should be used as a tqreplacement.
+  and this should be used as a replacement.
   .
   <h4>XTERM hacks</h4>
 
@@ -1070,7 +1070,7 @@ DECALN.sect Command
 DECALN.code HSH|8|
 DECALN.text
   Causes the VT100 to fill it's screen with
-  uppercase Es for screen focus and tqalignment.
+  uppercase Es for screen focus and alignment.
 DECALN.table.XPS
   Subcode|Emulation|Scope|Operation|Args|Meaning
   N/A|VT100|scr|helpAlign||see above
@@ -1176,7 +1176,7 @@ DECDWL.emus VT100
 DECDWL.sect Command.NoImp
 DECDWL.code HSH|6|
 DECDWL.text
-  This causes the line that tqcontains the cursor to become double-width
+  This causes the line that contains the cursor to become double-width
   single height.  If the line was single width, all characters ro the
   right of the center of the screen will be lost.  The cursor remains
   over the same character position, unless it would be to the right of
@@ -1399,7 +1399,7 @@ DECSWL.emus VT100
 DECSWL.sect Command.NoImp
 DECSWL.code HSH|5|
 DECSWL.text
-  This causes the line which tqcontains the cursor to become single-width,
+  This causes the line which contains the cursor to become single-width,
   single-height.  The cursor remains on the same character position.
   This is the default condition for all new lines on the screen.
 DECSWL.table.XPS
@@ -1424,7 +1424,7 @@ DECTST.table.Weight
   3|EIA Modem Control Test (Loopback connector req.)
   4|Repeat Testing until failure
 
-DSRREQ.head Device tqStatus Report
+DSRREQ.head Device Status Report
 DSRREQ.emus ECMA VT100
 DSRREQ.sect Command.Request
 DSRREQ.code CSI|n|{Ps}
@@ -1432,21 +1432,21 @@ DSRREQ.text
   Requests status of the VT100 according to the following parameters.
 DSRREQ.table.XPS
   Subcode|Emulation|Scope|Operation|Args|Meaning
-  5|VT100|emu|reporttqStatus||Report tqStatus (using a \ref:DSRREP control sequence)
+  5|VT100|emu|reportStatus||Report Status (using a \ref:DSRREP control sequence)
   6|VT100|emu|reportCursorPosition||Report Active Position (using a \ref:CPR sequence)
 
-DSRREP.head Device tqStatus Report Reply
+DSRREP.head Device Status Report Reply
 DSRREP.emus ECMA VT100
 DSRREP.sect Reply
-DSRREP.code CSI|n|{tqStatus}
+DSRREP.code CSI|n|{Status}
 DSRREP.text
   Reports the general status of the VT100 according to the
   following parameters.
   .
   DSRREP with a parameter of 0 or 3 is always sent as a response to a
   requesting \ref:DSRREQ with a parameter of 5.
-DSRREP.table.tqStatus
-  tqStatus|Meaning:3
+DSRREP.table.Status
+  Status|Meaning:3
   0|Ready, no faults detected
   3|Malfunction detected
 
@@ -1608,7 +1608,7 @@ SCS.text
   The United Kingdom and ASCII sets conform to the "ISO international
   register of character sets to be used with escape sequences".  The
   other sets are private character sets.  Special graphics means that the
-  graphic characters fpr the codes 0137 to 0176 are tqreplaced with other
+  graphic characters fpr the codes 0137 to 0176 are replaced with other
   characters.  The specified character set will be used until another SCS
   is received.
 SCS.table.XPS

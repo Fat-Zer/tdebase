@@ -80,7 +80,7 @@ bool WebClient::decorationBehaviour(DecorationBehaviour behaviour) const
     }
 }
 
-int WebClient::tqlayoutMetric(LayoutMetric lm, bool respectWindowState, const KCommonDecorationButton *btn) const
+int WebClient::layoutMetric(LayoutMetric lm, bool respectWindowState, const KCommonDecorationButton *btn) const
 {
 //   bool maximized = maximizeMode()==MaximizeFull && !options()->moveResizeMaximizedWindows();
 
@@ -112,7 +112,7 @@ int WebClient::tqlayoutMetric(LayoutMetric lm, bool respectWindowState, const KC
       return 0;
 
     default:
-      return KCommonDecoration::tqlayoutMetric(lm, respectWindowState, btn);
+      return KCommonDecoration::layoutMetric(lm, respectWindowState, btn);
   }
 }
 
@@ -120,31 +120,31 @@ KCommonDecorationButton *WebClient::createButton(ButtonType type)
 {
     switch (type) {
         case MenuButton:
-            return new WebButton(MenuButton, this, "menu", tqshape_);
+            return new WebButton(MenuButton, this, "menu", shape_);
 
         case OnAllDesktopsButton:
-            return new WebButton(OnAllDesktopsButton, this, "on_all_desktops", tqshape_);
+            return new WebButton(OnAllDesktopsButton, this, "on_all_desktops", shape_);
 
         case HelpButton:
-            return new WebButton(HelpButton, this, "help", tqshape_);
+            return new WebButton(HelpButton, this, "help", shape_);
 
         case MinButton:
-            return new WebButton(MinButton, this, "minimize", tqshape_);
+            return new WebButton(MinButton, this, "minimize", shape_);
 
         case MaxButton:
-            return new WebButton(MaxButton, this, "maximize", tqshape_);
+            return new WebButton(MaxButton, this, "maximize", shape_);
 
         case CloseButton:
-            return new WebButton(CloseButton, this, "close", tqshape_);
+            return new WebButton(CloseButton, this, "close", shape_);
 
         case AboveButton:
-            return new WebButton(AboveButton, this, "above", tqshape_);
+            return new WebButton(AboveButton, this, "above", shape_);
 
         case BelowButton:
-            return new WebButton(BelowButton, this, "below", tqshape_);
+            return new WebButton(BelowButton, this, "below", shape_);
 
         case ShadeButton:
-            return new WebButton(ShadeButton, this, "shade", tqshape_);
+            return new WebButton(ShadeButton, this, "shade", shape_);
 
         default:
             return 0;
@@ -185,7 +185,7 @@ WebClient::init()
 
   KConfig c("kwinwebrc");
   c.setGroup("General");
-  tqshape_ = c.readBoolEntry("Shape", true);
+  shape_ = c.readBoolEntry("Shape", true);
 
   KCommonDecoration::init();
 }
@@ -195,8 +195,8 @@ WebClient::reset( unsigned long changed )
 {
   if (changed & SettingColors)
   {
-    // tqrepaint the whole thing
-    widget()->tqrepaint(false);
+    // repaint the whole thing
+    widget()->repaint(false);
   } else if (changed & SettingFont) {
     // font has changed -- update title height
     // title height
@@ -206,7 +206,7 @@ WebClient::reset( unsigned long changed )
     if (0 != titleHeight_ % 2)
       titleHeight_ += 1;
 
-    widget()->tqrepaint(false);
+    widget()->repaint(false);
   }
 
   KCommonDecoration::reset(changed);
@@ -217,11 +217,11 @@ WebClient::paintEvent(TQPaintEvent * pe)
 {
   int r_x, r_y, r_x2, r_y2;
   widget()->rect().coords(&r_x, &r_y, &r_x2, &r_y2);
-  const int titleEdgeLeft = tqlayoutMetric(LM_TitleEdgeLeft);
-  const int titleEdgeTop = tqlayoutMetric(LM_TitleEdgeTop);
-  const int titleEdgeRight = tqlayoutMetric(LM_TitleEdgeRight);
-  const int titleEdgeBottom = tqlayoutMetric(LM_TitleEdgeBottom);
-  const int ttlHeight = tqlayoutMetric(LM_TitleHeight);
+  const int titleEdgeLeft = layoutMetric(LM_TitleEdgeLeft);
+  const int titleEdgeTop = layoutMetric(LM_TitleEdgeTop);
+  const int titleEdgeRight = layoutMetric(LM_TitleEdgeRight);
+  const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
+  const int ttlHeight = layoutMetric(LM_TitleHeight);
   const int titleEdgeBottomBottom = r_y+titleEdgeTop+ttlHeight+titleEdgeBottom-1;
   TQRect titleRect = TQRect(r_x+titleEdgeLeft+buttonsLeftWidth(), r_y+titleEdgeTop,
             r_x2-titleEdgeRight-buttonsRightWidth()-(r_x+titleEdgeLeft+buttonsLeftWidth()),
@@ -231,7 +231,7 @@ WebClient::paintEvent(TQPaintEvent * pe)
   TQPainter p(widget());
 
   p.setPen(Qt::black);
-  p.setBrush(options()->tqcolorGroup(ColorFrame, isActive()).background());
+  p.setBrush(options()->colorGroup(ColorFrame, isActive()).background());
 
   p.setClipRegion(pe->region() - titleRect);
 
@@ -241,12 +241,12 @@ WebClient::paintEvent(TQPaintEvent * pe)
 
   p.fillRect(titleRect, options()->color(ColorTitleBar, isActive()));
 
-  if (tqshape_)
+  if (shape_)
   {
     int r(width());
     int b(height());
 
-    // Draw edge of top-left corner inside the area removed by the tqmask.
+    // Draw edge of top-left corner inside the area removed by the mask.
 
     p.drawPoint(3, 1);
     p.drawPoint(4, 1);
@@ -254,7 +254,7 @@ WebClient::paintEvent(TQPaintEvent * pe)
     p.drawPoint(1, 3);
     p.drawPoint(1, 4);
 
-    // Draw edge of top-right corner inside the area removed by the tqmask.
+    // Draw edge of top-right corner inside the area removed by the mask.
 
     p.drawPoint(r - 5, 1);
     p.drawPoint(r - 4, 1);
@@ -262,7 +262,7 @@ WebClient::paintEvent(TQPaintEvent * pe)
     p.drawPoint(r - 2, 3);
     p.drawPoint(r - 2, 4);
 
-    // Draw edge of bottom-left corner inside the area removed by the tqmask.
+    // Draw edge of bottom-left corner inside the area removed by the mask.
 
     p.drawPoint(1, b - 5);
     p.drawPoint(1, b - 4);
@@ -270,7 +270,7 @@ WebClient::paintEvent(TQPaintEvent * pe)
     p.drawPoint(3, b - 2);
     p.drawPoint(4, b - 2);
 
-    // Draw edge of bottom-right corner inside the area removed by the tqmask.
+    // Draw edge of bottom-right corner inside the area removed by the mask.
 
     p.drawPoint(r - 2, b - 5);
     p.drawPoint(r - 2, b - 4);
@@ -288,43 +288,43 @@ WebClient::paintEvent(TQPaintEvent * pe)
 
 void WebClient::updateWindowShape()
 {
-  if (!tqshape_)
+  if (!shape_)
     return;
 
-  TQRegion tqmask(0, 0, width(), height());
+  TQRegion mask(0, 0, width(), height());
 
   int r(width());
   int b(height());
 
   // Remove top-left corner.
 
-  tqmask -= TQRegion(0, 0, 5, 1);
-  tqmask -= TQRegion(0, 1, 3, 1);
-  tqmask -= TQRegion(0, 2, 2, 1);
-  tqmask -= TQRegion(0, 3, 1, 2);
+  mask -= TQRegion(0, 0, 5, 1);
+  mask -= TQRegion(0, 1, 3, 1);
+  mask -= TQRegion(0, 2, 2, 1);
+  mask -= TQRegion(0, 3, 1, 2);
 
   // Remove top-right corner.
 
-  tqmask -= TQRegion(r - 5, 0, 5, 1);
-  tqmask -= TQRegion(r - 3, 1, 3, 1);
-  tqmask -= TQRegion(r - 2, 2, 2, 1);
-  tqmask -= TQRegion(r - 1, 3, 1, 2);
+  mask -= TQRegion(r - 5, 0, 5, 1);
+  mask -= TQRegion(r - 3, 1, 3, 1);
+  mask -= TQRegion(r - 2, 2, 2, 1);
+  mask -= TQRegion(r - 1, 3, 1, 2);
 
   // Remove bottom-left corner.
 
-  tqmask -= TQRegion(0, b - 5, 1, 3);
-  tqmask -= TQRegion(0, b - 3, 2, 1);
-  tqmask -= TQRegion(0, b - 2, 3, 1);
-  tqmask -= TQRegion(0, b - 1, 5, 1);
+  mask -= TQRegion(0, b - 5, 1, 3);
+  mask -= TQRegion(0, b - 3, 2, 1);
+  mask -= TQRegion(0, b - 2, 3, 1);
+  mask -= TQRegion(0, b - 1, 5, 1);
 
   // Remove bottom-right corner.
 
-  tqmask -= TQRegion(r - 5, b - 1, 5, 1);
-  tqmask -= TQRegion(r - 3, b - 2, 3, 1);
-  tqmask -= TQRegion(r - 2, b - 3, 2, 1);
-  tqmask -= TQRegion(r - 1, b - 5, 1, 2);
+  mask -= TQRegion(r - 5, b - 1, 5, 1);
+  mask -= TQRegion(r - 3, b - 2, 3, 1);
+  mask -= TQRegion(r - 2, b - 3, 2, 1);
+  mask -= TQRegion(r - 1, b - 5, 1, 2);
 
-  setMask(tqmask);
+  setMask(mask);
 }
 
 KDecoration* WebFactory::createDecoration( KDecorationBridge* b )
@@ -382,4 +382,4 @@ TQValueList< WebFactory::BorderSize > WebFactory::borderSizes() const
 
 #include "Web.moc"
 // vim:ts=2:sw=2:tw=78:set et:
-// kate: indent-width 2; tqreplace-tabs on; tab-width 2; space-indent on;
+// kate: indent-width 2; replace-tabs on; tab-width 2; space-indent on;

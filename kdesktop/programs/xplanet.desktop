@@ -1,5 +1,5 @@
 [KDE Desktop Program]
-Command=xplanet --tqgeometry %xx%y --num_times 1 --output %f.jpg && mv %f.jpg %f
+Command=xplanet --geometry %xx%y --num_times 1 --output %f.jpg && mv %f.jpg %f
 Comment=XPlanet by Hari Nair
 Comment[af]=XPlaneet deur Hari Nair
 Comment[ar]=XPlanet من تليف Hari Nair
@@ -76,5 +76,5 @@ Comment[zh_CN]=Hari Nair 的 XPlanet
 Comment[zh_TW]=XPlanet (Hari Nair 繪製)
 Comment[zu]=XPlanet ngu-Hari Nair
 Executable=xplanet
-PreviewCommand=xplanet --tqgeometry %xx%y --num_times 1 --output %f.jpg && mv %f.jpg %f
+PreviewCommand=xplanet --geometry %xx%y --num_times 1 --output %f.jpg && mv %f.jpg %f
 Refresh=10

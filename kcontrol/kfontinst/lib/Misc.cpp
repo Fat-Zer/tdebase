@@ -65,7 +65,7 @@ TQString dirSyntax(const TQString &d)
     {
         TQString ds(d);
 
-        ds.tqreplace("//", "/");
+        ds.replace("//", "/");
 
         int slashPos=ds.findRev('/');
 
@@ -84,7 +84,7 @@ TQString xDirSyntax(const TQString &d)
     {
         TQString ds(d);
 
-        ds.tqreplace("//", "/");
+        ds.replace("//", "/");
 
         int slashPos=ds.findRev('/');
  

@@ -50,7 +50,7 @@ bool EXRCreator::create(const TQString &path, int, int, TQImage &img)
 	for ( unsigned int y=0; y < preview.height(); y++ ) {
 	    for ( unsigned int x=0; x < preview.width(); x++ ) {
 		const Imf::PreviewRgba &q = preview.pixels()[x+(y*preview.width())];
-		qpreview.setPixel( x, y, tqRgba(q.r, q.g, q.b, q.a) );
+		qpreview.setPixel( x, y, qRgba(q.r, q.g, q.b, q.a) );
 	    }
 	}
 	img = qpreview;

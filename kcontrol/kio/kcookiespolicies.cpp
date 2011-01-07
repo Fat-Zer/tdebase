@@ -175,7 +175,7 @@ bool KCookiesPolicies::handleDuplicate( const TQString& domain, int advice )
     {
       TQString msg = i18n("<qt>A policy already exists for"
                          "<center><b>%1</b></center>"
-                         "Do you want to tqreplace it?</qt>").arg(domain);
+                         "Do you want to replace it?</qt>").arg(domain);
       int res = KMessageBox::warningContinueCancel(this, msg,
                                           i18n("Duplicate Policy"),
                                           i18n("Replace"));
@@ -392,7 +392,7 @@ void KCookiesPolicies::save()
 
   while( at )
   {
-    domainConfig.append(TQString::tqfromLatin1("%1:%2").arg(KIDNA::toAscii(at->text(0))).arg(m_pDomainPolicy[at]));
+    domainConfig.append(TQString::fromLatin1("%1:%2").arg(KIDNA::toAscii(at->text(0))).arg(m_pDomainPolicy[at]));
     at = at->nextSibling();
   }
 

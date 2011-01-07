@@ -103,7 +103,7 @@ void KSMServer::performLegacySessionSave()
     for ( TQValueList<WId>::ConstIterator it = module.windows().begin();
 	  it != module.windows().end(); ++it) {
         WId leader = windowWmClientLeader( *it );
-        if (!legacyWindows.tqcontains(leader) && windowSessionId( *it, leader ).isEmpty()) {
+        if (!legacyWindows.contains(leader) && windowSessionId( *it, leader ).isEmpty()) {
             SMType wtype = SM_WMCOMMAND;
             int nprotocols = 0;
             Atom *protocols = 0;
@@ -219,8 +219,8 @@ void KSMServer::storeLegacySession( KConfig* config )
     int count = 0;
     for (WindowMap::ConstIterator it = legacyWindows.begin(); it != legacyWindows.end(); ++it) {
         if ( (*it).type != SM_ERROR) {
-            if( excludeApps.tqcontains( (*it).wmclass1.lower())
-                || excludeApps.tqcontains( (*it).wmclass2.lower()) || (*it).wmCommand[0] == "compiz" || (*it).wmCommand[0] == "beryl" || (*it).wmCommand[0] == "aquamarine" || (*it).wmCommand[0] == "beryl-manager" || (*it).wmCommand[0] == "beryl-settings" || (*it).wmCommand[0] == "kde-window-decorator" || (*it).wmCommand[0] == "emerald")
+            if( excludeApps.contains( (*it).wmclass1.lower())
+                || excludeApps.contains( (*it).wmclass2.lower()) || (*it).wmCommand[0] == "compiz" || (*it).wmCommand[0] == "beryl" || (*it).wmCommand[0] == "aquamarine" || (*it).wmCommand[0] == "beryl-manager" || (*it).wmCommand[0] == "beryl-settings" || (*it).wmCommand[0] == "kde-window-decorator" || (*it).wmCommand[0] == "emerald")
                 continue;
             if ( !(*it).wmCommand.isEmpty() && !(*it).wmClientMachine.isEmpty() ) {
                 count++;
@@ -317,7 +317,7 @@ static TQStringList getQStringListProperty(WId w, Atom prop)
 	if (!data)
 	    return result;
         for (int i=0; i<(int)nitems; i++) {
-            result << TQString::tqfromLatin1( (const char*)data + i );
+            result << TQString::fromLatin1( (const char*)data + i );
             while(data[i]) i++;
         }
         XFree(data);
@@ -365,7 +365,7 @@ TQString KSMServer::windowWmClientMachine(WId w)
             }
         }
     }
-    return TQString::tqfromLatin1(result);
+    return TQString::fromLatin1(result);
 }
 
 WId KSMServer::windowWmClientLeader(WId w)

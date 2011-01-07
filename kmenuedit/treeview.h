@@ -62,9 +62,9 @@ public:
     bool isHidden() const { return _hidden; }
     void setHidden(bool b);
 
-    bool isLayoutDirty() { return _tqlayoutDirty; }
-    void setLayoutDirty() { _tqlayoutDirty = true; }
-    TQStringList tqlayout();
+    bool isLayoutDirty() { return _layoutDirty; }
+    void setLayoutDirty() { _layoutDirty = true; }
+    TQStringList layout();
 
     virtual void setOpen(bool o);
     void load();
@@ -77,7 +77,7 @@ private:
 
     bool _hidden : 1;
     bool _init : 1;
-    bool _tqlayoutDirty : 1;
+    bool _layoutDirty : 1;
     TQString _menuId;
     TQString _name;
     TQString _directoryPath;
@@ -172,7 +172,7 @@ private:
     TQStringList        m_newDirectoryList;
     bool               m_detailedMenuEntries;
     bool               m_detailedEntriesNamesFirst;
-    bool               m_tqlayoutDirty;
+    bool               m_layoutDirty;
 };
 
 

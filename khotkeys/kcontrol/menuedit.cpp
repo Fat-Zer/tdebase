@@ -279,7 +279,7 @@ TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
         }
     else
         {
-        // erase the trigger, i.e. tqreplace with a copy with no trigger and no parent yet
+        // erase the trigger, i.e. replace with a copy with no trigger and no parent yet
         Menuentry_shortcut_action_data* entry_tmp = new Menuentry_shortcut_action_data( NULL,
             entry->name(), entry->comment(), entry->enabled( false ));
         entry_tmp->set_action( new Menuentry_action( entry_tmp, entry_P ));

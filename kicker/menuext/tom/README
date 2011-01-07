@@ -58,7 +58,7 @@ What should be the default task entry format be:
     a) Task Name
     b) Task Name (App Name)
     c) App Name (Task Name)  <-- silly option =)
-Should "Run A Command..." be tqreplaced by an inline combobox?
+Should "Run A Command..." be replaced by an inline combobox?
     Pros: It's more obvious and will work even if kdesktop is gone. The widget
           is already written (in tom.cc)
     Cons: It makes it stand out too much over other entries, takes up more room

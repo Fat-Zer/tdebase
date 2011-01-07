@@ -76,7 +76,7 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
 
     itsToolsFrame=new TQFrame(itsFrame);
 
-    TQVBoxLayout *tqlayout=new TQVBoxLayout(itsFrame, kcm ? 0 : KDialog::marginHint(), kcm ? 0 : KDialog::spacingHint());
+    TQVBoxLayout *layout=new TQVBoxLayout(itsFrame, kcm ? 0 : KDialog::marginHint(), kcm ? 0 : KDialog::spacingHint());
     TQGridLayout *previewLayout=new TQGridLayout(previewFrame, 1, 1, 1, 1);
     TQHBoxLayout *toolsLayout=new TQHBoxLayout(itsToolsFrame, 0, KDialog::spacingHint());
 
@@ -88,14 +88,14 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     setInstance(new KInstance("kfontview"));
 
     itsPreview=new CFontPreview(previewFrame, "FontViewPart::Preview");
-    itsPreview->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+    itsPreview->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
     itsFaceLabel=new TQLabel(i18n("Face:"), itsToolsFrame);
     itsFaceSelector=new KIntNumInput(1, itsToolsFrame);
     itsInstallButton=new TQPushButton(i18n("Install..."), itsToolsFrame, "button");
     itsInstallButton->hide();
     previewLayout->addWidget(itsPreview, 0, 0);
-    tqlayout->addWidget(previewFrame);
-    tqlayout->addWidget(itsToolsFrame);
+    layout->addWidget(previewFrame);
+    layout->addWidget(itsToolsFrame);
     toolsLayout->addWidget(itsFaceLabel);
     toolsLayout->addWidget(itsFaceSelector);
     itsFaceLabel->hide();
@@ -103,7 +103,7 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     toolsLayout->addItem(new TQSpacerItem(5, 5, TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum));
     toolsLayout->addWidget(itsInstallButton);
     itsToolsFrame->hide();
-    connect(itsPreview, TQT_SIGNAL(status(bool)), TQT_SLOT(previewtqStatus(bool)));
+    connect(itsPreview, TQT_SIGNAL(status(bool)), TQT_SLOT(previewStatus(bool)));
     connect(itsInstallButton, TQT_SIGNAL(clicked()), TQT_SLOT(install()));
     connect(itsFaceSelector, TQT_SIGNAL(valueChanged(int)), itsPreview, TQT_SLOT(showFace(int)));
 
@@ -165,17 +165,17 @@ void CFontViewPart::timeout()
         if(Misc::root())
         {
             destUrl=TQString("fonts:/")+itsPreview->engine().getName(m_url);
-            itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget());
+            itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
         }
         else
         {
             destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')+itsPreview->engine().getName(m_url);
-            if(KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget()))
+            if(KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget()))
                 itsShowInstallButton=false;
             else
             {
                 destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER)+TQChar('/')+itsPreview->engine().getName(m_url);
-                itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget());
+                itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
             }
         }
     }
@@ -193,7 +193,7 @@ void CFontViewPart::timeout()
     itsToolsFrame->hide();
 }
 
-void CFontViewPart::previewtqStatus(bool st)
+void CFontViewPart::previewStatus(bool st)
 {
     itsInstallButton->setShown(st && itsShowInstallButton);
     itsToolsFrame->setShown(itsInstallButton->isShown()||itsFaceSelector->isShown());
@@ -220,7 +220,7 @@ void CFontViewPart::install()
     {
         KURL destUrl(getDest(m_url, KMessageBox::No==resp));
 
-        if(KIO::NetAccess::copy(m_url, destUrl, itsFrame->tqparentWidget()))
+        if(KIO::NetAccess::copy(m_url, destUrl, itsFrame->parentWidget()))
         {
             //
             // OK file copied, now look for any AFM or PFM file...
@@ -236,7 +236,7 @@ void CFontViewPart::install()
                 for(it=urls.begin(); it!=end; ++it)
                 {
                     destUrl=getDest(*it, KMessageBox::No==resp);
-                    KIO::NetAccess::copy(*it, destUrl, itsFrame->tqparentWidget());
+                    KIO::NetAccess::copy(*it, destUrl, itsFrame->parentWidget());
                 }
             }
 
@@ -274,7 +274,7 @@ void CFontViewPart::print()
 
     items.append(itsPreview->engine().getName(m_url));
 
-    Print::printItems(items, 0, itsFrame->tqparentWidget(), itsPreview->engine());
+    Print::printItems(items, 0, itsFrame->parentWidget(), itsPreview->engine());
 }
 
 }

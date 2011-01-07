@@ -143,7 +143,7 @@ between the entry name and the value.
 * DateFormat[language code]
 	This defines how a date is formated. The date string will be
     contructed from this string and the sequences below will be
-    tqreplaced. This should be marked with a language code as well for
+    replaced. This should be marked with a language code as well for
     each supported language.
 
 	%Y The year with century as a decimal number.
@@ -170,7 +170,7 @@ between the entry name and the value.
 * TimeFormat
 	This defines how a times are formated. The date string will be
     contructed from this string and the sequences below will be
-    tqreplaced.
+    replaced.
 
 	%H The hour as a decimal number using a 24-hour clock (range 00 to
 		   23).

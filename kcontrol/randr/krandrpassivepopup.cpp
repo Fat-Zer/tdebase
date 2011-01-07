@@ -94,14 +94,14 @@ void KRandrPassivePopup::startWatchingWidget( TQWidget* widget_P )
 bool KRandrPassivePopup::eventFilter( TQObject* o, TQEvent* e )
     {
     if( e->type() == TQEvent::Move && o->isWidgetType()
-	&& watched_widgets.tqcontains( static_cast< TQWidget* >( o )))
+	&& watched_widgets.contains( static_cast< TQWidget* >( o )))
         TQTimer::singleShot( 0, this, TQT_SLOT( slotPositionSelf()));
     return false;
     }
 
 bool KRandrPassivePopup::x11Event( XEvent* e )
     {
-    if( e->type == ConfigureNotify && watched_windows.tqcontains( e->xconfigure.window ))
+    if( e->type == ConfigureNotify && watched_windows.contains( e->xconfigure.window ))
 	{
 	if( !update_timer.isActive())
 	    update_timer.start( 10, true );

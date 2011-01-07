@@ -99,7 +99,7 @@ typedef struct _win {
     unsigned int	shadowSize;
     Atom                windowType;
     unsigned long	damage_sequence;    /* sequence when damage was created */
-    Bool                shapable; /* this will allow window managers to exclude windows if just the deco is tqshaped*/
+    Bool                shapable; /* this will allow window managers to exclude windows if just the deco is shaped*/
     unsigned int                 decoHash;
     Picture             dimPicture;
 
@@ -151,7 +151,7 @@ Bool		synchronize;
 int		composite_opcode;
 Bool            disable_argb = False;
 
-int             tqshapeEvent;
+int             shapeEvent;
 
 /* find these once and be done with it */
 Atom		opacityAtom;
@@ -1679,10 +1679,10 @@ get_opacity_percent(Display *dpy, win *w, double def)
 }
 #if 0
 static void
-damage_tqshape(Display *dpy, win *w, XRectangle *tqshape_damage)
+damage_shape(Display *dpy, win *w, XRectangle *shape_damage)
 {
     set_ignore (dpy, NextRequest (dpy));
-    XserverRegion region = XFixesCreateRegion (dpy, tqshape_damage, 1);
+    XserverRegion region = XFixesCreateRegion (dpy, shape_damage, 1);
     set_ignore (dpy, NextRequest (dpy));
     XserverRegion tmpRegion;
     add_damage(dpy, region);
@@ -2707,7 +2707,7 @@ main (int argc, char **argv)
 				VisibilityChangeMask);
 
 		/*shaping stuff*/
-		XShapeQueryExtension(dpy, &tqshapeEvent, &dummy);
+		XShapeQueryExtension(dpy, &shapeEvent, &dummy);
 
 		XQueryTree (dpy, root, &root_return, &parent_return, &children, &nchildren);
 		for (i = 0; i < nchildren; i++)
@@ -2947,7 +2947,7 @@ main (int argc, char **argv)
                     /*                     printf("damaging win: %u\n",ev.xany.window);*/
 		    damage_win (dpy, (XDamageNotifyEvent *) &ev);
                 }
-                else if (ev.type == tqshapeEvent)
+                else if (ev.type == shapeEvent)
                 {
                     win * w = find_win(dpy, ev.xany.window);
 #if 1
@@ -2963,7 +2963,7 @@ main (int argc, char **argv)
                         rect.y = ((XShapeEvent*)&ev)->y;
                         rect.width = ((XShapeEvent*)&ev)->width;
                         rect.height = ((XShapeEvent*)&ev)->height;
-                        damage_tqshape(dpy, w, &rect);
+                        damage_shape(dpy, w, &rect);
 #endif
 #if 0
 			if (w->shadowSize != 0)
@@ -2978,7 +2978,7 @@ main (int argc, char **argv)
 			}
 #endif		
                         /*this is hardly efficient, but a current workaraound 
-                        shaping support isn't that good so far (e.g. we lack tqshaped shadows)
+                        shaping support isn't that good so far (e.g. we lack shaped shadows)
                         IDEA: use XRender to scale/shift a copy of the window and then blurr it*/
 #if 1
                         if (w->picture)

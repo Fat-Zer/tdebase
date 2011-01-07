@@ -158,12 +158,12 @@ TQValueList<KBookmark> ListView::itemsToBookmarks(const TQValueVector<KEBListVie
     return bookmarks;
 }
 
-void ListView::tqinvalidate(const TQString & address)
+void ListView::invalidate(const TQString & address)
 {
-    tqinvalidate(getItemAtAddress(address));
+    invalidate(getItemAtAddress(address));
 }
 
-void ListView::tqinvalidate(TQListViewItem * item)
+void ListView::invalidate(TQListViewItem * item)
 {
     if(item->isSelected())
     {
@@ -181,7 +181,7 @@ void ListView::tqinvalidate(TQListViewItem * item)
     TQListViewItem * child = item->firstChild();
     while(child)
     {
-        //tqinvalidate(child);
+        //invalidate(child);
         child = child->nextSibling();
     }
 }
@@ -277,7 +277,7 @@ void ListView::deselectAllChildren(KEBListViewItem *item)
             else
                 deselectAllChildren(child);
         }
-        child->tqrepaint();
+        child->repaint();
         child = static_cast<KEBListViewItem *>(child->nextSibling());
     }
 }
@@ -436,7 +436,7 @@ void ListView::handleDropped(KEBListView *, TQDropEvent *e, TQListViewItem *newP
     CmdHistory::self()->didCommand(mcmd);
 }
 
-void ListView::updatetqStatus(TQString url) {
+void ListView::updateStatus(TQString url) {
     m_listView->updateByURL(url);
 }
 
@@ -483,7 +483,7 @@ void ListView::fillWithGroup(KEBListView *lv, KBookmarkGroup group, KEBListViewI
         KEBListViewItem *tree = new KEBListViewItem(lv, group);
         fillWithGroup(lv, group, tree);
         tree->TQListViewItem::setOpen(true);
-        if (s_selected_addresses.tqcontains(tree->bookmark().address()))
+        if (s_selected_addresses.contains(tree->bookmark().address()))
             lv->setSelected(tree, true);
         if(!s_current_address.isNull() && s_current_address == tree->bookmark().address())
             lv->setCurrentItem(tree);
@@ -515,7 +515,7 @@ void ListView::fillWithGroup(KEBListView *lv, KBookmarkGroup group, KEBListViewI
                         : new KEBListViewItem(lv, bk));
             lastItem = item;
         }
-        if (s_selected_addresses.tqcontains(bk.address()))
+        if (s_selected_addresses.contains(bk.address()))
             lv->setSelected(item, true);
         if(!s_current_address.isNull() && s_current_address == bk.address())
             lv->setCurrentItem(item);
@@ -670,7 +670,7 @@ void KEBListView::loadColumnSetting()
     header()->resizeSection(KEBListView::NameColumn, KEBSettings::name());
     header()->resizeSection(KEBListView::UrlColumn, KEBSettings::uRL());
     header()->resizeSection(KEBListView::CommentColumn, KEBSettings::comment());
-    header()->resizeSection(KEBListView::tqStatusColumn, KEBSettings::status());
+    header()->resizeSection(KEBListView::StatusColumn, KEBSettings::status());
 #ifdef DEBUG_ADDRESSES
     header()->resizeSection(KEBListView::AddressColumn, KEBSettings::address());
 #endif
@@ -683,7 +683,7 @@ void KEBListView::saveColumnSetting ()
         KEBSettings::setName( header()->sectionSize(KEBListView::NameColumn));
         KEBSettings::setURL( header()->sectionSize(KEBListView::UrlColumn));
         KEBSettings::setComment( header()->sectionSize(KEBListView::CommentColumn));
-        KEBSettings::setStatus( header()->sectionSize(KEBListView::tqStatusColumn));
+        KEBSettings::setStatus( header()->sectionSize(KEBListView::StatusColumn));
 #ifdef DEBUG_ADDRESSES
         KEBSettings::setAddress( header()->sectionSize(KEBListView::AddressColumn));
 #endif
@@ -702,7 +702,7 @@ void KEBListView::init() {
         addColumn(i18n("Bookmark"), 0); // KEBListView::NameColumn
         addColumn(i18n("URL"), 0);
         addColumn(i18n("Comment"), 0);
-        addColumn(i18n("tqStatus"), 0);
+        addColumn(i18n("Status"), 0);
 #ifdef DEBUG_ADDRESSES
         addColumn(i18n("Address"), 0);
 #endif
@@ -829,7 +829,7 @@ void KEBListViewItem::setSelected(bool s)
     {
         ListView::self()->selected(this, false);
         TQListViewItem::setSelected( false );
-        ListView::deselectAllChildren( this ); //tqrepaints
+        ListView::deselectAllChildren( this ); //repaints
     }
     else if(parentSelected(this))
         return;
@@ -939,7 +939,7 @@ void KEBListViewItem::paintCell(TQPainter *p, const TQColorGroup &ocg, int col, 
         cg.setColor(TQColorGroup::Base, col);
     }
 
-    if (col == KEBListView::tqStatusColumn) {
+    if (col == KEBListView::StatusColumn) {
         switch (m_paintStyle) {
            case KEBListViewItem::GreyStyle:
                 {

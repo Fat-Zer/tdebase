@@ -226,9 +226,9 @@ KPanelApplet* AppletProxy::loadApplet(const AppletInfo& info)
     return init_ptr(0, info.configFile());
 }
 
-void AppletProxy::tqrepaintApplet(TQWidget* widget) 
+void AppletProxy::repaintApplet(TQWidget* widget) 
 {
-    widget->tqrepaint();
+    widget->repaint();
  
     const TQObjectList* children = widget->children();
 
@@ -243,7 +243,7 @@ void AppletProxy::tqrepaintApplet(TQWidget* widget)
         TQWidget *w = dynamic_cast<TQWidget*>(*it);
         if (w)
         {
-            tqrepaintApplet(w);
+            repaintApplet(w);
         }
     }
 }
@@ -372,14 +372,14 @@ bool AppletProxy::process(const TQCString &fun, const TQByteArray &data,
 	    }
 	    return true;
 	}
-    else if ( fun == "tqsetAlignment(int)" )
+    else if ( fun == "setAlignment(int)" )
 	{
 	    TQDataStream dataStream( data, IO_ReadOnly );
-	    int tqalignment;
-	    dataStream >> tqalignment;
+	    int alignment;
+	    dataStream >> alignment;
 
 	    if(_applet) {
-		_applet->tqsetAlignment( (KPanelApplet::Alignment)tqalignment );
+		_applet->setAlignment( (KPanelApplet::Alignment)alignment );
 	    }
 	    return true;
 	}
@@ -435,13 +435,13 @@ bool AppletProxy::process(const TQCString &fun, const TQByteArray &data,
             if(_applet)
                 if ( _bg.isNull() ) { // no transparency
 		    _applet->unsetPalette();
-		    _applet->tqrepaint();
+		    _applet->repaint();
 		}
                 else { //transparency
 		    _applet->blockSignals(true);
 		    _applet->setBackgroundMode(Qt::FixedPixmap);
 		    _applet->setPaletteBackgroundPixmap(_bg);
-		    tqrepaintApplet(_applet);
+		    repaintApplet(_applet);
 		    _applet->blockSignals(false);
                 }
             return true;

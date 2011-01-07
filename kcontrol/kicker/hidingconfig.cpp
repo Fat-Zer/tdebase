@@ -31,10 +31,10 @@
 HidingConfig::HidingConfig(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-    TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(this);
     m_widget = new HidingTab(this);
-    tqlayout->addWidget(m_widget);
-    tqlayout->addStretch();
+    layout->addWidget(m_widget);
+    layout->addStretch();
 
     setQuickHelp(KickerConfig::the()->quickHelp());
     setAboutData(KickerConfig::the()->aboutData());

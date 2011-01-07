@@ -80,7 +80,7 @@ static TQCString extractQCString( const TQByteArray &ba, uint start, uint len = 
  */
 static int qByteArrayFindStr( const TQByteArray &ba, const char *str )
 {
-  int strLen = tqstrlen( str );
+  int strLen = qstrlen( str );
   int searchLen = ba.size() - strLen;
 
   for ( int i = 0; i <= searchLen; ++i ) {

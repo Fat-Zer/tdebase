@@ -37,7 +37,7 @@
 
 KIVDirectoryOverlay::KIVDirectoryOverlay(KFileIVI* directory)
 : m_lister(0), m_foundItems(false),
-  m_tqcontainsFolder(false), m_popularIcons(0)
+  m_containsFolder(false), m_popularIcons(0)
 {
     if (!m_lister)
     {
@@ -92,7 +92,7 @@ void KIVDirectoryOverlay::slotCompleted()
 
     // Only show folder if there's no other candidate. Most folders contain
     // folders. We know this.
-    if ( m_bestIcon.isNull() && m_tqcontainsFolder ) {
+    if ( m_bestIcon.isNull() && m_containsFolder ) {
         m_bestIcon = "folder";
     }
     
@@ -131,7 +131,7 @@ void KIVDirectoryOverlay::slotNewItems( const KFileItemList& items )
         }
         (*iconCount)++;
         } else if ( file -> isDir() ) {
-            m_tqcontainsFolder = true;
+            m_containsFolder = true;
         }
     }
 

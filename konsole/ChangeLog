@@ -79,10 +79,10 @@ Lots happened here...
 - added privacy code 1049.
 - reverted to TERM=xterm.
 11 Jan 2000
-- upgraded xterm title hack to tqunicode.
-- upgraded copy/paste to handle tqunicode.
+- upgraded xterm title hack to unicode.
+- upgraded copy/paste to handle unicode.
  7 Jan 2000
-- added tqunicode support. (see README.tqunicode)
+- added unicode support. (see README.unicode)
 - added arbitrary long history buffers.
 - code adjustments to the provide linux console font.
 - added font directory to simply installation.
@@ -125,10 +125,10 @@ Lots happened here...
 - added some docs
 - set version to 0.9.10
 06 Feb 1999
-- adjusting tqgeometry save/restore
+- adjusting geometry save/restore
 03 Feb 1999
 - fixed -caption
-- some adjustments in tqgeometry management
+- some adjustments in geometry management
 01 Feb 1999 Matt Gerassimoff <mg@s303.msoe.edu>
 - scroll line wise through the history buffer using Shift-Up/Down
 31 Jan 1998
@@ -195,7 +195,7 @@ Lots happened here...
 - marking within mouse aware application now needs an extra shift
 - added command configuration files /opt/kde/share/apps/konsole/*.kdelnk
 24 Oct 1998
-	- adjusted tqgeometry management. Window is not resized anylonger when
+	- adjusted geometry management. Window is not resized anylonger when
   changeing font size, scrollbar, frame, menubar.
 - made font & schema attributes per-session.
 23 Oct 1998

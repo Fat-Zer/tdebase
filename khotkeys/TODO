@@ -18,7 +18,7 @@ class Condition + tab 'Windows' -> 'Conditions'
 hlaska o uz prirazene kl.kombinaci pro makro se opakuje i vicekrat ( pro kazde uz existujici )
 rucni smazani radku nemaze makro pro editaci v dialogu
 ted uz ten timeout u spusteni funguje ok, ale zase kdyz chci pustit neco 2x naraz, tak se musi cekat ???
-taky to pri jeho rucni editaci neni obcas videt ( je to tqmoc vpravo )
+taky to pri jeho rucni editaci neni obcas videt ( je to moc vpravo )
 grrr, to setSelected()/setCurrent() me stve, vsechny ty listboxy a listview obcas spatne detekuji vybrany :(
   - asi si zkratka udelat vlastni tridy, ktere budou nutit selected==current
 ve windowdef widgetu mit moznost autodetekce, tj. defaultni, kdyz neni nastaven spousteci prikaz
@@ -70,13 +70,13 @@ electric borders u KWin zere jen okraje, ale ne primo rohy - pujde to udelat jak
     - pujdou i okraje, kdyz to bude vypnute u WM ( nebo se budou fackovat ? )
 akce : transformace klavesy ( def. Key_Menu ) na RMB do keyboard focusu ( pro kontext menu )
 akce : kdyz se objevi okno, aplikovat na nej veci, ktere dela kstart ( sticky, atd. )
-strokes : kdyz X bere mys pres gpmdata, gpm pekne zasekava u vstupu pri prostrednim tlacitku dole => strokes pak za tqmoc nestoji
+strokes : kdyz X bere mys pres gpmdata, gpm pekne zasekava u vstupu pri prostrednim tlacitku dole => strokes pak za moc nestoji
 paste pri MMB volitelne jen kdyz MMB neni stisknuto napr. pres 500ms ( kvuli strokes )
 akce : kdyz se stiskne nejaka shortcut a nejaka aplikace nebezi, tak se spusti a pak se ji ta shortcut preda ( napr. pro klipper ? )
 odstranit tu KAccel zmenu, kterou v CVS udelal Coolo - stejne netusim, jestli to ma nebo nema byt i18n, tak at je aspon default
 skupine akci 'KMenuedit entries' by asi nemelo jit zmenit jmeno
 kdyz se v KMenuEdit udela polozka a pak se ten menuentry smaze, asi by se ta shortcut mela aspon disablovat ?!
 at dokaze zvetsovat vsechna 'File Open Dialog' okna
-pamatovat si menuentries i s polohou v K-Menu ? .desktop files by mely byt unique ( ale kmenuedit tohle asi tqmoc nezvlada )
+pamatovat si menuentries i s polohou v K-Menu ? .desktop files by mely byt unique ( ale kmenuedit tohle asi moc nezvlada )
 neudelat to prirazeni klavesy k menuentry nejak jednodussi ? nebo zkratka doporucovat kmenuedit ?
 i18n("","") pro veci jako "New"

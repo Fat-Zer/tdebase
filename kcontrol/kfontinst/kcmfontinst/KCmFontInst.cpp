@@ -97,10 +97,10 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     itsEmbeddedAdmin=Misc::root() && (NULL==appName || strcmp("kcontrol", appName) &&
                      KCmdLineArgs::parsedArgs()->isSet("embed"));
 
-    itstqStatusLabel = new TQLabel(this);
-    itstqStatusLabel->setFrameShape(TQFrame::Panel);
-    itstqStatusLabel->setFrameShadow(TQFrame::Sunken);
-    itstqStatusLabel->setLineWidth(1);
+    itsStatusLabel = new TQLabel(this);
+    itsStatusLabel->setFrameShape(TQFrame::Panel);
+    itsStatusLabel->setFrameShadow(TQFrame::Sunken);
+    itsStatusLabel->setLineWidth(1);
 
     itsConfig.setGroup(CFG_GROUP);
 
@@ -113,7 +113,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
         itsSplitter=new TQSplitter(this);
         fontsFrame=new TQFrame(itsSplitter),
         itsPreview=(KParts::ReadOnlyPart *)factory->create(itsSplitter, "kcmfontinst", "KParts::ReadOnlyPart");
-        itsSplitter->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+        itsSplitter->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
 
         TQValueList<int> sizes(itsConfig.readIntListEntry(CFG_SPLITTER_SIZES));
 
@@ -129,18 +129,18 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     {
 #endif
         fontsFrame=new TQFrame(this);
-        fontsFrame->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+        fontsFrame->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
 #ifdef HAVE_XFT
     }
 #endif
 
     TQGridLayout *fontsLayout=new TQGridLayout(fontsFrame, 1, 1, 0, 1);
-    TQVBoxLayout *tqlayout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *layout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
     KToolBar    *toolbar=new KToolBar(this);
     bool        showBitmap(itsConfig.readBoolEntry(CFG_SHOW_BITMAP, false));
 
     fontsFrame->setLineWidth(0);
-    toolbar->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum);
+    toolbar->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum);
     toolbar->setMovingEnabled(false);
 
     TQString previousPath=itsConfig.readEntry(CFG_PATH);
@@ -151,22 +151,22 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     itsDirOp->setMinimumSize(TQSize(96, 64));
     setMimeTypes(showBitmap);
     itsDirOp->dirLister()->setMainWindow(this);
-    itsDirOp->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+    itsDirOp->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
     fontsLayout->addMultiCellWidget(itsDirOp, 0, 0, 0, 1);
 
     KPushButton *button=new KPushButton(KGuiItem(i18n("Add Fonts..."), "newfont"), fontsFrame);
     connect(button, TQT_SIGNAL(clicked()), TQT_SLOT(addFonts()));
-    button->tqsetSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Minimum);
+    button->setSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Minimum);
     fontsLayout->addWidget(button, 1, 0);
     fontsLayout->addItem(new TQSpacerItem(4, 4, TQSizePolicy::Expanding, TQSizePolicy::Minimum));
 
-    tqlayout->addWidget(toolbar);
+    layout->addWidget(toolbar);
 #ifdef HAVE_XFT
-    tqlayout->addWidget(itsPreview ? itsSplitter : fontsFrame);
+    layout->addWidget(itsPreview ? itsSplitter : fontsFrame);
 #else
-    tqlayout->addWidget(fontsFrame);
+    layout->addWidget(fontsFrame);
 #endif
-    tqlayout->addWidget(itstqStatusLabel);
+    layout->addWidget(itsStatusLabel);
 
     setButtons(0);
     setRootOnlyMsg(i18n("<b>The fonts shown are your personal fonts.</b><br>To see (and install) "
@@ -390,7 +390,7 @@ void CKCmFontInst::fileHighlighted(const KFileItem *item)
                                              ? list->getFirst()
                                              : NULL;
 
-        if(previewItem && list && list->tqcontains(previewItem))  // OK, check its been selected - not deselected!!!
+        if(previewItem && list && list->contains(previewItem))  // OK, check its been selected - not deselected!!!
             itsPreview->openURL(previewItem->url());
     }
 #endif
@@ -545,7 +545,7 @@ void CKCmFontInst::dropped(const KFileItem *i, TQDropEvent *, const KURL::List &
 
 void CKCmFontInst::infoMessage(const TQString &msg)
 {
-    itstqStatusLabel->setText(msg);
+    itsStatusLabel->setText(msg);
 }
 
 static TQString family(const TQString &name)
@@ -582,7 +582,7 @@ void CKCmFontInst::updateInformation(int, int fonts)
     }
     text+=" - ";
     text+=i18n("One Family", "%n Families", families.count());
-    itstqStatusLabel->setText(text);
+    itsStatusLabel->setText(text);
 }
 
 void CKCmFontInst::delResult(KIO::Job *job)

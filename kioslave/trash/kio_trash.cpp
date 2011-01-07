@@ -78,10 +78,10 @@ TrashProtocol::TrashProtocol( const TQCString& protocol, const TQCString &pool, 
 {
     struct passwd *user = getpwuid( getuid() );
     if ( user )
-        m_userName = TQString::tqfromLatin1(user->pw_name);
+        m_userName = TQString::fromLatin1(user->pw_name);
     struct group *grp = getgrgid( getgid() );
     if ( grp )
-        m_groupName = TQString::tqfromLatin1(grp->gr_name);
+        m_groupName = TQString::fromLatin1(grp->gr_name);
 }
 
 TrashProtocol::~TrashProtocol()
@@ -427,7 +427,7 @@ bool TrashProtocol::createUDSEntry( const TQString& physicalPath, const TQString
     if ( !url.isEmpty() )
         addAtom( entry, KIO::UDS_URL, 0, url );
 
-    KMimeType::Ptr mt = KMimeType::tqfindByPath( physicalPath, buff.st_mode );
+    KMimeType::Ptr mt = KMimeType::findByPath( physicalPath, buff.st_mode );
     addAtom( entry, KIO::UDS_MIME_TYPE, 0, mt->name() );
     addAtom( entry, KIO::UDS_ACCESS, access );
     addAtom( entry, KIO::UDS_SIZE, buff.st_size );
@@ -540,7 +540,7 @@ void TrashProtocol::get( const KURL& url )
              this, TQT_SLOT( slotMimetype( KIO::Job*, const TQString& ) ) );
     connect( job, TQT_SIGNAL( result(KIO::Job *) ),
              this, TQT_SLOT( jobFinished(KIO::Job *) ) );
-    tqApp->eventLoop()->enterLoop();
+    qApp->eventLoop()->enterLoop();
 }
 
 void TrashProtocol::slotData( KIO::Job*, const TQByteArray&arr )
@@ -559,7 +559,7 @@ void TrashProtocol::jobFinished( KIO::Job* job )
         error( job->error(), job->errorText() );
     else
         finished();
-    tqApp->eventLoop()->exitLoop();
+    qApp->eventLoop()->exitLoop();
 }
 
 #if 0

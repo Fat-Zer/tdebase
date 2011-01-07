@@ -108,7 +108,7 @@ bool KonqSidebarDirTreeItem::hasStandardIcon()
     return m_fileItem->iconName() == "folder";
 }
 
-void KonqSidebarDirTreeItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _tqalignment )
+void KonqSidebarDirTreeItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment )
 {
     if (m_fileItem->isLink())
     {
@@ -116,7 +116,7 @@ void KonqSidebarDirTreeItem::paintCell( TQPainter *_painter, const TQColorGroup 
         f.setItalic( TRUE );
         _painter->setFont( f );
     }
-    TQListViewItem::paintCell( _painter, _cg, _column, _width, _tqalignment );
+    TQListViewItem::paintCell( _painter, _cg, _column, _width, _alignment );
 }
 
 KURL KonqSidebarDirTreeItem::externalURL() const
@@ -134,7 +134,7 @@ TQString KonqSidebarDirTreeItem::externalMimeType() const
 
 bool KonqSidebarDirTreeItem::acceptsDrops( const TQStrList & formats )
 {
-    if ( formats.tqcontains("text/uri-list") )
+    if ( formats.contains("text/uri-list") )
         return m_fileItem->acceptsDrops();
     return false;
 }
@@ -163,7 +163,7 @@ void KonqSidebarDirTreeItem::itemSelected()
         bInTrash = true;
 
     TQMimeSource *data = TQApplication::clipboard()->data();
-    bool paste = ( data->tqencodedData( data->format() ).size() != 0 );
+    bool paste = ( data->encodedData( data->format() ).size() != 0 );
 
     tree()->enableActions( true, true, paste, true && !bInTrash, true, true );
 }

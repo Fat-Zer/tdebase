@@ -76,8 +76,8 @@ SwallowApplet::SwallowApplet( const TQString& configFile,
 
     TQBoxLayout::Direction d = (orientation() == Horizontal) ?
 			     TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom;
-    m_tqlayout = new TQBoxLayout( this, d, 0, 2 ); // make stretch configurable?
-    m_tqlayout->setAutoAdd( false );
+    m_layout = new TQBoxLayout( this, d, 0, 2 ); // make stretch configurable?
+    m_layout->setAutoAdd( false );
 
     // read the config file and start all the configured apps
     createApps( readConfig() );
@@ -164,7 +164,7 @@ void SwallowApplet::createApps( SwallowCommandList* list )
 	kapp->processEvents();
     }
 
-    m_tqlayout->activate();
+    m_layout->activate();
 }
 
 
@@ -189,7 +189,7 @@ void SwallowApplet::embedded( SwallowApp *app )
     else
 	resize( width(), heightForWidth( width() ));
 
-    m_tqlayout->addWidget( app );
+    m_layout->addWidget( app );
     app->show();
     updateGeometry();
     emit updateLayout();
@@ -206,7 +206,7 @@ int SwallowApplet::widthForHeight(int he)
 {
     kdDebug() << "**** width for h: " << he << endl;
     int w = embeddedList->isEmpty() ? 30 : 0;
-    tqlayoutApps();
+    layoutApps();
     SwallowAppListIterator it( *embeddedList );
     while ( it.current() ) {
 	kdDebug() << "current: " << it.current()->width() << endl;
@@ -222,7 +222,7 @@ int SwallowApplet::widthForHeight(int he)
 int SwallowApplet::heightForWidth(int)
 {
     int h = embeddedList->isEmpty() ? 30 : 0;
-    tqlayoutApps();
+    layoutApps();
     SwallowAppListIterator it( *embeddedList );
     while ( it.current() ) {
 	h += (it.current())->height();
@@ -233,12 +233,12 @@ int SwallowApplet::heightForWidth(int)
     return h;
 }
 
-void SwallowApplet::tqlayoutApps()
+void SwallowApplet::layoutApps()
 {
     if ( KPanelApplet::orientation() == Horizontal )
-	m_tqlayout->setDirection( TQBoxLayout::LeftToRight );
+	m_layout->setDirection( TQBoxLayout::LeftToRight );
     else
-	m_tqlayout->setDirection( TQBoxLayout::TopToBottom );
+	m_layout->setDirection( TQBoxLayout::TopToBottom );
 }
 
 
@@ -286,7 +286,7 @@ SwallowApp::SwallowApp(const SwallowCommand *swc, TQWidget* parent,
 	parseCommand(process, swc->cmdline);
 
 	// move window out of sight
-	//	*process << "-tqgeometry";
+	//	*process << "-geometry";
 	//	*process << TQString("32x32+%1+%2").arg(kapp->desktop()->width()).arg(kapp->desktop()->height());
 
 	connect(process, TQT_SIGNAL(processExited(KProcess*)),
@@ -320,7 +320,7 @@ void SwallowApp::windowAdded(WId win)
     if (winTitle == names[0]) {
 	kdDebug()<< "embedding window with title: "<<winTitle.latin1() << endl;
 
-    TQRect r = KWin::windowInfo(win).tqgeometry();
+    TQRect r = KWin::windowInfo(win).geometry();
 	int h = r.height();
 	if ( h == 0 ) h = 1;
 	wh_ratio = (float) r.width() / (float) h;

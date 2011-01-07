@@ -74,7 +74,7 @@ void RemoteImpl::listRoot(TQValueList<KIO::UDSEntry> &list) const
 
 		for(; name!=endf; ++name)
 		{
-			if (!names_found.tqcontains(*name))
+			if (!names_found.contains(*name))
 			{
 				entry.clear();
 				createEntry(entry, *dirpath, *name);

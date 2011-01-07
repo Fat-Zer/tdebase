@@ -14,9 +14,9 @@ icon views, tree views, html views...)
 
 The main(), including all the startup mechanism is in konq_main.*
 
-The main window tqcontains several "views", in order to show several URLs
+The main window contains several "views", in order to show several URLs
 at once, possibly using several modes. Each view is a KonqView.
-The KonqView tqcontains the child part, which can be :
+The KonqView contains the child part, which can be :
 - an icon view (KonqIconView)
 - a list view / tree view (KonqListView/KonqTreeView)
 - an HTML view (KHTMLPart)
@@ -76,7 +76,7 @@ How history is implemented
 
 From the konqueror side:
 
-* KonqView has a list of history items. Each item tqcontains a URL,
+* KonqView has a list of history items. Each item contains a URL,
 and a QByteArray for the view to store its stuff in the format that suits it best.
 It calls saveState() at various points of time (right after starting loading the URL,
 when the loading is completed, and right before loading another URL). Reason:

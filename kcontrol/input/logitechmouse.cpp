@@ -86,7 +86,7 @@ LogitechMouse::LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlag
 
     if ( mouseCapabilityFlags & HAS_CSR ) {
 
-        initCordlesstqStatusReporting();
+        initCordlessStatusReporting();
 
         // Do a name
         cordlessNameLabel->setText( i18n("Mouse type: %1").arg( cordlessName() ) );
@@ -118,15 +118,15 @@ LogitechMouse::~LogitechMouse()
     usb_close( m_usbDeviceHandle );
 }
 
-void LogitechMouse::initCordlesstqStatusReporting()
+void LogitechMouse::initCordlessStatusReporting()
 {
-    updateCordlesstqStatus();
+    updateCordlessStatus();
     doUpdate = new TQTimer( this ); // will be automatically deleted
     connect( doUpdate, TQT_SIGNAL( timeout() ), this, TQT_SLOT( updateGUI() ) );
     doUpdate->start( 20000 );
 }
 
-void LogitechMouse::updateCordlesstqStatus()
+void LogitechMouse::updateCordlessStatus()
 {
     TQByteArray status(8);
 
@@ -147,7 +147,7 @@ void LogitechMouse::updateCordlesstqStatus()
     } else {
         // kdDebug() << "P6 (connect status): " << (status[0] & 0xFF) << endl;
         if ( status[0] & 0x20 ) { // mouse is talking
-            m_connecttqStatus = ( status[0] & 0x80 );
+            m_connectStatus = ( status[0] & 0x80 );
             m_mousePowerup = ( status[0] & 0x40 );
             m_receiverUnlock = ( status[0] & 0x10 );
             m_waitLock = ( status[0] & 0x08 );
@@ -188,7 +188,7 @@ void LogitechMouse::updateCordlesstqStatus()
 
 void LogitechMouse::updateGUI()
 {
-    updateCordlesstqStatus();
+    updateCordlessStatus();
 
     batteryBar->setProgress( batteryLevel() );
 
@@ -229,7 +229,7 @@ void LogitechMouse::applyChanges()
             KMessageBox::information(this, i18n("RF channel 2 has been set. Please press Connect button on mouse to re-establish link"), i18n("Press Connect Button") );
         }
 
-        initCordlesstqStatusReporting();
+        initCordlessStatusReporting();
     }
 }
 
@@ -238,7 +238,7 @@ void LogitechMouse::save(KConfig * /*config*/)
     kdDebug() << "Logitech mouse settings not saved - not implemented yet" << endl;
 }
 
-TQ_UINT8 LogitechMouse::resolution()
+Q_UINT8 LogitechMouse::resolution()
 {
     // kdDebug() << "resolution: " << m_resolution << endl;
     if ( 0 == m_resolution ) {
@@ -299,13 +299,13 @@ void LogitechMouse::setLogitechTo400()
     }
 }
 
-TQ_UINT8 LogitechMouse::batteryLevel()
+Q_UINT8 LogitechMouse::batteryLevel()
 {
     return m_batteryLevel;
 }
 
 
-TQ_UINT8 LogitechMouse::channel()
+Q_UINT8 LogitechMouse::channel()
 {
     return m_channel;
 }

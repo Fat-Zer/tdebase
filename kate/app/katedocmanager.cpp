@@ -86,7 +86,7 @@ KateDocManager::~KateDocManager ()
       {
         m_metaInfos->setGroup(*it);
         TQDateTime last = m_metaInfos->readDateTimeEntry("Time", def);
-        if (last.daysTo(TQDateTime::tqcurrentDateTime()) > m_daysMetaInfos)
+        if (last.daysTo(TQDateTime::currentDateTime()) > m_daysMetaInfos)
           m_metaInfos->deleteGroup(*it);
       }
       delete def;
@@ -306,7 +306,7 @@ bool KateDocManager::closeDocument(class Kate::Document *doc,bool closeURL)
     KateApp::self()->mainWindow(i)->viewManager()->closeViews(documentNumber);
   }
 
-  if ( closeURL && m_tempFiles.tqcontains( documentNumber ) )
+  if ( closeURL && m_tempFiles.contains( documentNumber ) )
   {
     TQFileInfo fi( m_tempFiles[ documentNumber ].first.path() );
     if ( fi.lastModified() <= m_tempFiles[ documentNumber ].second /*||
@@ -583,7 +583,7 @@ void KateDocManager::saveMetaInfos(Kate::Document *doc)
     m_metaInfos->setGroup(doc->url().prettyURL());
     doc->writeSessionConfig(m_metaInfos);
     m_metaInfos->writeEntry("MD5", (const char *)md5);
-    m_metaInfos->writeEntry("Time", TQDateTime::tqcurrentDateTime());
+    m_metaInfos->writeEntry("Time", TQDateTime::currentDateTime());
     m_metaInfos->sync();
   }
 }
@@ -608,4 +608,4 @@ bool KateDocManager::computeUrlMD5(const KURL &url, TQCString &result)
   return true;
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

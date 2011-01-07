@@ -63,7 +63,7 @@ ServiceConfigDialog::ServiceConfigDialog(NotifierServiceAction *action,
 	{
 		TQListBox *list;
 		
-		if ( action_mimetypes.tqcontains( *it ) )
+		if ( action_mimetypes.contains( *it ) )
 		{
 			list = m_view->mimetypesSelector->selectedListBox();
 		}

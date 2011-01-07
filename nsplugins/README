@@ -1,7 +1,7 @@
 nsplugins
 =========
 
-The 'nsplugins' directory tqcontains various tools used to utilize Netscape(R)
+The 'nsplugins' directory contains various tools used to utilize Netscape(R)
 browser plugins in KDE applications.
 
  - ./       - common headers and utilities

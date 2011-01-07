@@ -166,7 +166,7 @@ int create_socket()
     }
 
     // strip the screen number from the display
-    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
+    display.replace(TQRegExp("\\.[0-9]+$"), "");
 
     sock = TQFile::encodeName(locateLocal("socket", TQString("kdesud_%1").arg(display)));
     int stat_err=lstat(sock, &s);

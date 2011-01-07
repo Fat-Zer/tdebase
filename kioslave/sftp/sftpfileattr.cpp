@@ -44,7 +44,7 @@ sftpFileAttr::sftpFileAttr(KRemoteEncoding* encoding){
 /** Constructor to initialize the file attributes on declaration. */
 sftpFileAttr::sftpFileAttr(Q_ULLONG size, uid_t uid, gid_t gid,
                     mode_t permissions, time_t atime,
-                    time_t mtime, TQ_UINT32 extendedCount) {
+                    time_t mtime, Q_UINT32 extendedCount) {
     clear();
     mDirAttrs = false;
     mSize  = size;
@@ -124,22 +124,22 @@ UDSEntry sftpFileAttr::entry() {
 
 /** Use to output the file attributes to a sftp packet */
 TQDataStream& operator<< (TQDataStream& s, const sftpFileAttr& fa) {
-    s << (TQ_UINT32)fa.mFlags;
+    s << (Q_UINT32)fa.mFlags;
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_SIZE )
         { s << (Q_ULLONG)fa.mSize; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_UIDGID )
-        { s << (TQ_UINT32)fa.mUid << (TQ_UINT32)fa.mGid; }
+        { s << (Q_UINT32)fa.mUid << (Q_UINT32)fa.mGid; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_PERMISSIONS )
-        { s << (TQ_UINT32)fa.mPermissions; }
+        { s << (Q_UINT32)fa.mPermissions; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_ACMODTIME )
-        { s << (TQ_UINT32)fa.mAtime << (TQ_UINT32)fa.mMtime; }
+        { s << (Q_UINT32)fa.mAtime << (Q_UINT32)fa.mMtime; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_EXTENDED ) {
-        s << (TQ_UINT32)fa.mExtendedCount;
+        s << (Q_UINT32)fa.mExtendedCount;
         // XXX: Write extensions to data stream here
         // s.writeBytes(extendedtype).writeBytes(extendeddata);
     }
@@ -175,7 +175,7 @@ TQDataStream& operator>> (TQDataStream& s, sftpFileAttr& fa) {
         fa.setFileSize(fileSize);
     }
 
-    TQ_UINT32 x;
+    Q_UINT32 x;
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_UIDGID ) {
         s >> x; fa.setUid(x);
@@ -218,7 +218,7 @@ void sftpFileAttr::getUserGroupNames(){
 
         kdDebug(7120) << "Decoded:  " << longName << endl;
 
-        // Find the beginning of the third field which tqcontains the user name.
+        // Find the beginning of the third field which contains the user name.
         while( field != 2 ) {
             if( longName[i].isSpace() ) {
                 field++; i++;
@@ -233,7 +233,7 @@ void sftpFileAttr::getUserGroupNames(){
         }
 
         // i is the first character of the space between fields 3 and 4
-        // user tqcontains the owner's user name
+        // user contains the owner's user name
         while( i < l && longName[i].isSpace() ) {
             i++;
         }
@@ -243,7 +243,7 @@ void sftpFileAttr::getUserGroupNames(){
             group.append(longName[i]);
             i++;
         }
-        // group tqcontains the name of the group.
+        // group contains the name of the group.
     }
 
     mUserName = user;
@@ -295,8 +295,8 @@ void sftpFileAttr::clear(){
 }
 
 /** Return the size of the sftp attribute. */
-TQ_UINT32 sftpFileAttr::size() const{
-    TQ_UINT32 size = 4; // for the attr flag
+Q_UINT32 sftpFileAttr::size() const{
+    Q_UINT32 size = 4; // for the attr flag
     if( mFlags & SSH2_FILEXFER_ATTR_SIZE )
         size += 8;
 

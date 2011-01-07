@@ -81,7 +81,7 @@ void Desktop::mouseMoveEvent( TQMouseEvent *ev )
     if ( (ev->state() & LeftButton) == 0 )
 	return;
     TQPoint p( ev->pos() - pressPos );
-    if ( p.manhattanLength() >= tqApp->startDragDistance() )
+    if ( p.manhattanLength() >= qApp->startDragDistance() )
 	startDrag( pressPos );
 }
 
@@ -120,7 +120,7 @@ void Desktop::mouseReleaseEvent( TQMouseEvent *ev )
 	KWin::forceActiveWindow(info->win());
 
 	//	    if ( static_cast<WindowDrawMode>( KPagerConfigDialog::m_windowDrawMode ) == Pixmap )
-	//		m_windowPixmapsDirty.tqreplace(info->win,true);
+	//		m_windowPixmapsDirty.replace(info->win,true);
       }
     }
   }
@@ -138,9 +138,9 @@ KWin::WindowInfo *Desktop::windowAtPosition(const TQPoint &p, TQPoint *internalp
 		KWin::WindowInfo* info = pager()->info( *it );
 		if (shouldPaintWindow(info))
 		{
-			r=info->tqgeometry();
+			r=info->geometry();
 			convertRectS2P(r);
-			if (r.tqcontains(p))
+			if (r.contains(p))
 			{
 				if (internalpos)
 				{
@@ -295,7 +295,7 @@ TQPixmap *Desktop::paintNewWindow(const KWin::WindowInfo *info)
 
     p.begin(pixmap);
     p.setFont(font());
-    p.fillRect( r, tqcolorGroup().brush(TQColorGroup::Dark));
+    p.fillRect( r, colorGroup().brush(TQColorGroup::Dark));
     paintWindow(p, info, false);
     p.end();
 
@@ -425,7 +425,7 @@ void Desktop::paintEvent( TQPaintEvent * )
 
   p.begin(&pixmap);
 //  p.setFont(font());
-//  p.fillRect(rect(), tqcolorGroup().brush(TQColorGroup::Dark));
+//  p.fillRect(rect(), colorGroup().brush(TQColorGroup::Dark));
 //  p.setPen(Qt::black);
 //  p.drawRect(rect());
 
@@ -450,7 +450,7 @@ void Desktop::paintEvent( TQPaintEvent * )
      else pixmap.fill(Qt::gray);
   }
   else
-    p.fillRect(rect(), tqcolorGroup().brush(TQColorGroup::Mid));
+    p.fillRect(rect(), colorGroup().brush(TQColorGroup::Mid));
 
     // set in/active pen
   if (isCurrent())
@@ -523,8 +523,8 @@ void Desktop::paintWindowPlain(TQPainter &p, const KWin::WindowInfo *info, bool 
 
   TQBrush brush;
 
-  if ( isActive ) brush=tqcolorGroup().brush( TQColorGroup::Highlight );
-  else brush=tqcolorGroup().brush(  TQColorGroup::Button );
+  if ( isActive ) brush=colorGroup().brush( TQColorGroup::Highlight );
+  else brush=colorGroup().brush(  TQColorGroup::Button );
 
   if ( m_transparentMode==AllWindows
       || (m_transparentMode==MaximizedWindows && ( info->state() & NET::Max )) )
@@ -532,12 +532,12 @@ void Desktop::paintWindowPlain(TQPainter &p, const KWin::WindowInfo *info, bool 
 
   if ( isActive )
   {
-    qDrawShadeRect( &p, r, tqcolorGroup(), false, 1, 0, &brush );
+    qDrawShadeRect( &p, r, colorGroup(), false, 1, 0, &brush );
   }
   else
   {
     p.fillRect( r, brush );
-    qDrawShadeRect( &p, r, tqcolorGroup(), true, 1, 0 );
+    qDrawShadeRect( &p, r, colorGroup(), true, 1, 0 );
   }
 
 }
@@ -602,8 +602,8 @@ void Desktop::paintWindowPixmap(TQPainter &p, const KWin::WindowInfo *info,
 		nHg = rSmall.height();
 	}
 	pixmap=new TQPixmap(fastScalePixmap(tmp, nWd, nHg));
-	m_windowPixmaps.tqreplace(info->win(),pixmap);
-	m_windowPixmapsDirty.tqreplace(info->win(),false);
+	m_windowPixmaps.replace(info->win(),pixmap);
+	m_windowPixmapsDirty.replace(info->win(),false);
       }
     }
 
@@ -669,7 +669,7 @@ void Desktop::backgroundLoaded(bool b)
   } else kdDebug() << "Error getting the background\n";
 }
 
-TQSize Desktop::tqsizeHint() const
+TQSize Desktop::sizeHint() const
 {
   return TQSize(67,50);
 }

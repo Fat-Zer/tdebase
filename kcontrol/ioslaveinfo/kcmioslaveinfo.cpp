@@ -51,7 +51,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_ioslaveinfo, SlaveFactory("kcmioslaveinfo") )
 KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStringList &)
                :KCModule(SlaveFactory::instance(), parent,name),m_ioslavesLb(0),m_tfj(0)
 {
-   TQVBoxLayout *tqlayout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
+   TQVBoxLayout *layout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
    setQuickHelp( i18n("<h1>IO slaves</h1> Gives you an overview of the installed ioslaves."));
    setButtons( KCModule::Help );
@@ -65,8 +65,8 @@ KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStrin
    m_info=new KTextBrowser(hbox);
    hbox->setSpacing(KDialog::spacingHint());
 
-   tqlayout->addWidget(label);
-   tqlayout->addWidget(hbox);
+   layout->addWidget(label);
+   layout->addWidget(hbox);
    hbox->setStretchFactor(m_ioslavesLb,1);
    hbox->setStretchFactor(m_info,5);
 

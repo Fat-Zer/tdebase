@@ -97,7 +97,7 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 }
 
 QSize
-KdmPixmap::tqsizeHint()
+KdmPixmap::sizeHint()
 {
 	// choose the correct pixmap class
 	PixmapStruct::PixmapClass * pClass = &pixmap.normal;
@@ -108,7 +108,7 @@ KdmPixmap::tqsizeHint()
 	// use the pixmap size as the size hint
 	if (!pClass->pixmap.isNull())
 		return pClass->pixmap.size();
-	return KdmItem::tqsizeHint();
+	return KdmItem::sizeHint();
 }
 
 void
@@ -268,11 +268,11 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 				QRgb *ls = (QRgb *)scaledImage.scanLine( y );
 				for (int x = 0; x < w; ++x) {
 					QRgb l = ls[x];
-					int r = int( tqRed( l ) * tint_red );
-					int g = int( tqGreen( l ) * tint_green );
-					int b = int( tqBlue( l ) * tint_blue );
-					int a = int( tqAlpha( l ) * tint_alpha );
-					ls[x] = tqRgba( r, g, b, a );
+					int r = int( qRed( l ) * tint_red );
+					int g = int( qGreen( l ) * tint_green );
+					int b = int( qBlue( l ) * tint_blue );
+					int a = int( qAlpha( l ) * tint_alpha );
+					ls[x] = qRgba( r, g, b, a );
 				}
 			}
 

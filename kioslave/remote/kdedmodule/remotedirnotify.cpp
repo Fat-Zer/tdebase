@@ -105,7 +105,7 @@ inline void evil_hack(const KURL::List &list)
 	{
 		KURL url = (*it).upURL();
 
-		if (!notified.tqcontains(url))
+		if (!notified.contains(url))
 		{
 			notifier.FilesAdded(url);
 			notified.append(url);

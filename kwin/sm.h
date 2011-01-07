@@ -30,7 +30,7 @@ struct SessionInfo
     TQCString resourceName;
     TQCString resourceClass;
 
-    TQRect tqgeometry;
+    TQRect geometry;
     TQRect restore;
     TQRect fsrestore;
     int maximized;

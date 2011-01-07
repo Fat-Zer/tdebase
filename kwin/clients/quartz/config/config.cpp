@@ -1,6 +1,6 @@
 /* 	
  *
- *	This file tqcontains the quartz configuration widget
+ *	This file contains the quartz configuration widget
  *
  *	Copyright (c) 2001
  *		Karol Szwed <gallium@kde.org>

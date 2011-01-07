@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KStylePageDlg</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -31,7 +31,7 @@
             <property name="text">
                 <string>Please choose the way your computer should look by selecting one of the items below.</string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">
@@ -49,7 +49,7 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="tqminimumSize">
+            <property name="minimumSize">
                 <size>
                     <width>170</width>
                     <height>430</height>
@@ -123,5 +123,5 @@
     <include location="global" impldecl="in declaration">klistview.h</include>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

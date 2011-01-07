@@ -34,7 +34,7 @@ class KonqTreeViewWidget : public KonqBaseListViewWidget
 
    Q_OBJECT
 public:
-   KonqTreeViewWidget( KonqListView *parent, TQWidget *tqparentWidget );
+   KonqTreeViewWidget( KonqListView *parent, TQWidget *parentWidget );
    virtual ~KonqTreeViewWidget();
 
    virtual bool openURL( const KURL &url );

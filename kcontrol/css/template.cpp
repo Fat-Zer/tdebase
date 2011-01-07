@@ -32,7 +32,7 @@ bool CSSTemplate::expand(TQString destname, const TQMap<TQString,TQString> &dict
 	      TQString expr = line.mid(start+1, end-start-1);
 	      TQString res = dict[expr];
 
-	      line.tqreplace(start, end-start+1, res);
+	      line.replace(start, end-start+1, res);
 	    }
 	}
       os << line << endl;

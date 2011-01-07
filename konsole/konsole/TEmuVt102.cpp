@@ -307,7 +307,7 @@ void TEmuVt102::initTokenizer()
 #define ESC 27
 #define CNTL(c) ((c)-'@')
 
-// process an incoming tqunicode character
+// process an incoming unicode character
 
 void TEmuVt102::onRcvChar(int cc)
 { int i;
@@ -606,7 +606,7 @@ switch( N )
     case TY_CSI_PS('m',  106) : scr->setBackColor         (CO_SYS, 14); break;
     case TY_CSI_PS('m',  107) : scr->setBackColor         (CO_SYS, 15); break;
 
-    case TY_CSI_PS('n',    5) :      reporttqStatus         (          ); break;
+    case TY_CSI_PS('n',    5) :      reportStatus         (          ); break;
     case TY_CSI_PS('n',    6) :      reportCursorPosition (          ); break;
     case TY_CSI_PS('q',    0) : /* IGNORED: LEDs off                 */ break; //VT100
     case TY_CSI_PS('q',    1) : /* IGNORED: LED1 on                  */ break; //VT100
@@ -847,7 +847,7 @@ void TEmuVt102::reportTerminalParms(int p)
 /*!
 */
 
-void TEmuVt102::reporttqStatus()
+void TEmuVt102::reportStatus()
 {
   sendString("\033[0n"); //VT100. Device status report. 0 = Ready.
 }
@@ -1007,7 +1007,7 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
 // Character Set Conversion ------------------------------------------------ --
 
 /* 
-   The processing tqcontains a VT100 specific code translation layer.
+   The processing contains a VT100 specific code translation layer.
    It's still in use and mainly responsible for the line drawing graphics.
 
    These and some other glyphs are assigned to codes (0x5f-0xfe)
@@ -1328,7 +1328,7 @@ static int xkb_init()
 #if 0
 // This method doesn't work in all cases. The atom "ScrollLock" doesn't seem
 // to exist on all XFree versions (at least it's not here with my 3.3.6) - DF
-static unsigned int xkb_tqmask_modifier( XkbDescPtr xkb, const char *name )
+static unsigned int xkb_mask_modifier( XkbDescPtr xkb, const char *name )
 {
     int i;
     if( !xkb || !xkb->names )
@@ -1344,30 +1344,30 @@ static unsigned int xkb_tqmask_modifier( XkbDescPtr xkb, const char *name )
     {
 	if (atom == xkb->names->vmods[i] )
 	{
-	    unsigned int tqmask;
-	    XkbVirtualModsToReal( xkb, 1 << i, &tqmask );
-	    return tqmask;
+	    unsigned int mask;
+	    XkbVirtualModsToReal( xkb, 1 << i, &mask );
+	    return mask;
 	}
     }
     return 0;
 }
 
-static unsigned int xkb_scrolllock_tqmask()
+static unsigned int xkb_scrolllock_mask()
 {
     XkbDescPtr xkb;
     if(( xkb = XkbGetKeyboard( qt_xdisplay(), XkbAllComponentsMask, XkbUseCoreKbd )) != NULL )
     {
-        unsigned int tqmask = xkb_tqmask_modifier( xkb, "ScrollLock" );
+        unsigned int mask = xkb_mask_modifier( xkb, "ScrollLock" );
         XkbFreeKeyboard( xkb, 0, True );
-        return tqmask;
+        return mask;
     }
     return 0;
 }
 
 #else
-static unsigned int xkb_scrolllock_tqmask()
+static unsigned int xkb_scrolllock_mask()
 {
-    int scrolllock_tqmask = 0;
+    int scrolllock_mask = 0;
     XModifierKeymap* map = XGetModifierMapping( qt_xdisplay() );
     KeyCode scrolllock_keycode = XKeysymToKeycode( qt_xdisplay(), XK_Scroll_Lock );
     if( scrolllock_keycode == NoSymbol ) {
@@ -1379,42 +1379,42 @@ static unsigned int xkb_scrolllock_tqmask()
          ++i )
         {
        if( map->modifiermap[ map->max_keypermod * i ] == scrolllock_keycode )
-               scrolllock_tqmask += 1 << i;
+               scrolllock_mask += 1 << i;
        }
 
     XFreeModifiermap(map);
-    return scrolllock_tqmask;
+    return scrolllock_mask;
 }
 #endif
 
 
-static unsigned int scrolllock_tqmask = 0;
+static unsigned int scrolllock_mask = 0;
         
 static int xkb_set_on()
 {
-    if (!scrolllock_tqmask)
+    if (!scrolllock_mask)
     {
        if( !xkb_init())
           return 0;
-       scrolllock_tqmask = xkb_scrolllock_tqmask();
-       if( scrolllock_tqmask == 0 )
+       scrolllock_mask = xkb_scrolllock_mask();
+       if( scrolllock_mask == 0 )
           return 0;
     }
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, scrolllock_tqmask, scrolllock_tqmask);
+    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, scrolllock_mask, scrolllock_mask);
     return 1;
 }
     
 static int xkb_set_off()
 {
-    if (!scrolllock_tqmask)
+    if (!scrolllock_mask)
     {
        if( !xkb_init())
           return 0;
-       scrolllock_tqmask = xkb_scrolllock_tqmask();
-       if( scrolllock_tqmask == 0 )
+       scrolllock_mask = xkb_scrolllock_mask();
+       if( scrolllock_mask == 0 )
           return 0;
     }
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, scrolllock_tqmask, 0);
+    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, scrolllock_mask, 0);
     return 1;
 }
 

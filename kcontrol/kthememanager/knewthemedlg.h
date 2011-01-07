@@ -26,7 +26,7 @@
 class NewThemeWidget;
 
 /**
- * Dialog for creating new themes, tqcontains just
+ * Dialog for creating new themes, contains just
  * getters and setters used for the theme general properties
  * @author Lukas Tinkl <lukas@kde.org>
  */

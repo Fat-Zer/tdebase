@@ -42,55 +42,55 @@ StyleSettings::StyleSettings( TQWidget *parent, const char *name )
                  Cancel, Ok, parent, name, true, true )
 {
   TQFrame *page = addPage( i18n( "Display Style" ) );
-  TQGridLayout *tqlayout = new TQGridLayout( page, 6, 2, 0, spacingHint() );
+  TQGridLayout *layout = new TQGridLayout( page, 6, 2, 0, spacingHint() );
 
   TQLabel *label = new TQLabel( i18n( "First foreground color:" ), page );
-  tqlayout->addWidget( label, 0, 0 );
+  layout->addWidget( label, 0, 0 );
 
   mFirstForegroundColor = new KColorButton( page );
-  tqlayout->addWidget( mFirstForegroundColor, 0, 1 );
+  layout->addWidget( mFirstForegroundColor, 0, 1 );
   label->setBuddy( mFirstForegroundColor );
 
   label = new TQLabel( i18n( "Second foreground color:" ), page );
-  tqlayout->addWidget( label, 1, 0 );
+  layout->addWidget( label, 1, 0 );
 
   mSecondForegroundColor = new KColorButton( page );
-  tqlayout->addWidget( mSecondForegroundColor, 1, 1 );
+  layout->addWidget( mSecondForegroundColor, 1, 1 );
   label->setBuddy( mSecondForegroundColor );
 
   label = new TQLabel( i18n( "Alarm color:" ), page );
-  tqlayout->addWidget( label, 2, 0 );
+  layout->addWidget( label, 2, 0 );
 
   mAlarmColor = new KColorButton( page );
-  tqlayout->addWidget( mAlarmColor, 2, 1 );
+  layout->addWidget( mAlarmColor, 2, 1 );
   label->setBuddy( mAlarmColor );
 
   label = new TQLabel( i18n( "Background color:" ), page );
-  tqlayout->addWidget( label, 3, 0 );
+  layout->addWidget( label, 3, 0 );
 
   mBackgroundColor = new KColorButton( page );
-  tqlayout->addWidget( mBackgroundColor, 3, 1 );
+  layout->addWidget( mBackgroundColor, 3, 1 );
   label->setBuddy( mBackgroundColor );
 
   label = new TQLabel( i18n( "Font size:" ), page );
-  tqlayout->addWidget( label, 4, 0 );
+  layout->addWidget( label, 4, 0 );
 
   mFontSize = new TQSpinBox( 7, 48, 1, page );
   mFontSize->setValue( 8 );
-  tqlayout->addWidget( mFontSize, 4, 1 );
+  layout->addWidget( mFontSize, 4, 1 );
   label->setBuddy( mFontSize );
 
-  tqlayout->setRowStretch( 5, 1 );
+  layout->setRowStretch( 5, 1 );
 
   page = addPage( i18n( "Sensor Colors" ) );
-  tqlayout = new TQGridLayout( page, 1, 2, 0, spacingHint() );
+  layout = new TQGridLayout( page, 1, 2, 0, spacingHint() );
 
   mColorListBox = new TQListBox( page );
-  tqlayout->addWidget( mColorListBox, 0, 0 );
+  layout->addWidget( mColorListBox, 0, 0 );
 
   mEditColorButton = new TQPushButton( i18n( "Change Color..." ), page );
   mEditColorButton->setEnabled( false );
-  tqlayout->addWidget( mEditColorButton, 0, 1, Qt::AlignTop );
+  layout->addWidget( mEditColorButton, 0, 1, Qt::AlignTop );
 
   connect( mColorListBox, TQT_SIGNAL( selectionChanged( TQListBoxItem* ) ),
            TQT_SLOT( selectionChanged( TQListBoxItem* ) ) );

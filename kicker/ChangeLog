@@ -1,13 +1,13 @@
 2004-06-10   Dan Bullok <dan.kde@bullok.com>
-	* Fixed Bug 42278 - Strange tqlayout with Kicker and custom size. Now buttons are never wider (for horizontal) or taller (for vertical) than 58 pixels.
+	* Fixed Bug 42278 - Strange layout with Kicker and custom size. Now buttons are never wider (for horizontal) or taller (for vertical) than 58 pixels.
 	* Added some symbolic constants for some kicker values (max size, min size, default custom size), that were previously hard-coded in a few places.
 
 2002-01-03  John Firebaugh <jfirebaugh@kde.org>
 	* Use mouse polling instead of enter/leave events to trigger auto-unhiding. Much more reliable and will allow us to do things like only unhide at the corners or when the mouse hits the edge of the screen with a certain velocity. Also fixes #27660.
-	* New class core/panelmanager.cpp. For now, just has code for auto-hide, but will soon handle the screen tqlayout of the panels.
+	* New class core/panelmanager.cpp. For now, just has code for auto-hide, but will soon handle the screen layout of the panels.
 
 2002-01-02  John Firebaugh <jfirebaugh@kde.org>
-	* Now you can set the tqalignment by dnd.
+	* Now you can set the alignment by dnd.
 2002-01-01  John Firebaugh <jfirebaugh@kde.org>
 	* Make the action taken for each mouse button on a task container configurable.
 	* Add Task::lower() method.

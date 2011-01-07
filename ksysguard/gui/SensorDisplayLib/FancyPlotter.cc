@@ -52,7 +52,7 @@ FancyPlotter::FancyPlotter( TQWidget* parent, const char* name,
   mPlotter->setTitle( title );
   mPlotter->setThinFrame(!isApplet);   //if we aren't an applet, draw a thin white frame on the left and bottom, for a 3d effect
 
-  setMinimumSize( tqsizeHint() );
+  setMinimumSize( sizeHint() );
 
   /* All RMB clicks to the mPlotter widget will be handled by 
    * SensorDisplay::eventFilter. */
@@ -182,7 +182,7 @@ void FancyPlotter::applySettings()
   for ( uint i = 0; i < sensors().count(); ++i )
         mPlotter->beamColors()[ i ] = TQColor( list[i][ 5 ] );
 
-  mPlotter->tqrepaint();
+  mPlotter->repaint();
   setModified( true );
 }
 
@@ -281,12 +281,12 @@ void FancyPlotter::resizeEvent( TQResizeEvent* )
     frame()->setGeometry( 0, 0, width(), height() );
 }
 
-TQSize FancyPlotter::tqsizeHint()
+TQSize FancyPlotter::sizeHint()
 {
   if ( noFrame() )
-    return mPlotter->tqsizeHint();
+    return mPlotter->sizeHint();
   else
-    return frame()->tqsizeHint();
+    return frame()->sizeHint();
 }
 
 void FancyPlotter::answerReceived( int id, const TQString &answer )

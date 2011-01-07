@@ -116,7 +116,7 @@ typedef unsigned long CARD32;
 class DCOPClientTransaction
 {
   public:
-    TQ_INT32 id;
+    Q_INT32 id;
     CARD32 key;
     TQCString senderId;
 };

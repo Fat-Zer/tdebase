@@ -99,7 +99,7 @@ KonqCombo::KonqCombo( TQWidget *parent, const char *name )
 	    m_pageSecurity( KonqMainWindow::NotCrypted )
 {
     setInsertionPolicy( NoInsertion );
-    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
 
     Q_ASSERT( s_config );
 
@@ -307,7 +307,7 @@ void KonqCombo::updatePixmaps()
         updateItem( prov->pixmapFor( text( i ) ), text( i ), i, titleOfURL( text( i ) ) );
     }
     setUpdatesEnabled( true );
-    tqrepaint();
+    repaint();
 
     restoreState();
 }
@@ -540,7 +540,7 @@ void KonqCombo::mousePressEvent( TQMouseEvent *e )
     if ( e->button() == LeftButton && pixmap( currentItem()) ) {
         // check if the pixmap was clicked
         int x = e->pos().x();
-        int x0 = TQStyle::tqvisualRect( style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxEditField ), this ).x();
+        int x0 = TQStyle::visualRect( style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxEditField ), this ).x();
 
         if ( x > x0 + 2 && x < lineEdit()->x() ) {
             m_dragStart = e->pos();
@@ -551,7 +551,7 @@ void KonqCombo::mousePressEvent( TQMouseEvent *e )
     if ( e->button() == LeftButton && m_pageSecurity!=KonqMainWindow::NotCrypted ) {
         // check if the lock icon was clicked
         int x = e->pos().x();
-        int x0 = TQStyle::tqvisualRect( style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxArrow ), this ).x();
+        int x0 = TQStyle::visualRect( style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxArrow ), this ).x();
         if ( x < x0 )
             emit showPageSecurity();
 
@@ -605,7 +605,7 @@ void KonqCombo::paintEvent( TQPaintEvent *pe )
 
     TQLineEdit *edit = lineEdit();
     TQRect re = style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxEditField );
-    re = TQStyle::tqvisualRect(re, this);
+    re = TQStyle::visualRect(re, this);
     
     if ( m_pageSecurity!=KonqMainWindow::NotCrypted ) {
         TQColor color(245, 246, 190);
@@ -620,9 +620,9 @@ void KonqCombo::paintEvent( TQPaintEvent *pe )
             p.drawPixmap( re.x() + 2, re.y() + ( re.height() - pix.height() ) / 2, pix );
 	}
 
-        TQRect r = edit->tqgeometry();
+        TQRect r = edit->geometry();
         r.setRight( re.right() - pix.width() - 4 );
-        if ( r != edit->tqgeometry() )
+        if ( r != edit->geometry() )
             edit->setGeometry( r );
 
 	if ( useColor)
@@ -635,9 +635,9 @@ void KonqCombo::paintEvent( TQPaintEvent *pe )
         p.setClipping( FALSE );
     }
     else {
-        TQRect r = edit->tqgeometry();
+        TQRect r = edit->geometry();
         r.setRight( re.right() );
-        if ( r != edit->tqgeometry() )
+        if ( r != edit->geometry() )
             edit->setGeometry( r );
         edit->setPaletteBackgroundColor( TQApplication::palette( edit ).color( TQPalette::Active, TQColorGroup::Base ) );
     }
@@ -646,7 +646,7 @@ void KonqCombo::paintEvent( TQPaintEvent *pe )
 void KonqCombo::setPageSecurity( int pageSecurity )
 {
     m_pageSecurity = pageSecurity;
-    tqrepaint();
+    repaint();
 }
 
 bool KonqCombo::hasSufficientContrast(const TQColor &c1, const TQColor &c2)
@@ -723,8 +723,8 @@ void KonqComboListBoxPixmap::paint( TQPainter *painter )
         pmWidth = pm->width() + 5;
     }
 
-    int entryWidth = listBox()->width() - listBox()->style().tqpixelMetric( TQStyle::PM_ScrollBarExtent ) -
-                     2 * listBox()->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth );
+    int entryWidth = listBox()->width() - listBox()->style().pixelMetric( TQStyle::PM_ScrollBarExtent ) -
+                     2 * listBox()->style().pixelMetric( TQStyle::PM_DefaultFrameWidth );
     int titleWidth = ( entryWidth / 3 ) - 1;
     int urlWidth = entryWidth - titleWidth - pmWidth - 2;
 
@@ -850,7 +850,7 @@ void KonqComboCompletionBox::setItems( const TQStringList& items )
         insertStringList( items );
     else {
         //Keep track of whether we need to change anything,
-        //so we can avoid a tqrepaint for identical updates,
+        //so we can avoid a repaint for identical updates,
         //to reduce flicker
         bool dirty = false;
 
@@ -884,7 +884,7 @@ void KonqComboCompletionBox::setItems( const TQStringList& items )
             triggerUpdate( false );
     }
 
-    if ( isVisible() && size().height() != tqsizeHint().height() )
+    if ( isVisible() && size().height() != sizeHint().height() )
         sizeAndPosition();
 
     blockSignals( block );

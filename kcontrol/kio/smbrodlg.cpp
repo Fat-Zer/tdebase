@@ -38,40 +38,40 @@
 SMBRoOptions::SMBRoOptions(TQWidget *parent)
   : KCModule(parent, "kcmkio")
 {
-   TQGridLayout *tqlayout = new TQGridLayout(this,2,-1,KDialog::marginHint(),
+   TQGridLayout *layout = new TQGridLayout(this,2,-1,KDialog::marginHint(),
          KDialog::spacingHint());
    TQLabel *label=new TQLabel(i18n("This is the configuration for the samba client only, not the server."),this);
-   tqlayout->addMultiCellWidget(label,0,0,0,1);
+   layout->addMultiCellWidget(label,0,0,0,1);
 
    m_userLe=new TQLineEdit(this);
    label=new TQLabel(m_userLe,i18n("Default user name:"),this);
-   tqlayout->addWidget(label,1,0);
-   tqlayout->addWidget(m_userLe,1,1);
+   layout->addWidget(label,1,0);
+   layout->addWidget(m_userLe,1,1);
 
    m_passwordLe=new TQLineEdit(this);
    m_passwordLe->setEchoMode(TQLineEdit::Password);
    label=new TQLabel(m_passwordLe,i18n("Default password:"),this);
-   tqlayout->addWidget(label,2,0);
-   tqlayout->addWidget(m_passwordLe,2,1);
+   layout->addWidget(label,2,0);
+   layout->addWidget(m_passwordLe,2,1);
 
 /*   m_workgroupLe=new TQLineEdit(this);
    label=new TQLabel(m_workgroupLe,i18n("Workgroup:"),this);
-   tqlayout->addWidget(label,3,0);
-   tqlayout->addWidget(m_workgroupLe,3,1);
+   layout->addWidget(label,3,0);
+   layout->addWidget(m_workgroupLe,3,1);
 
    m_showHiddenShares=new TQCheckBox(i18n("Show hidden shares"),this);
-   tqlayout->addMultiCellWidget(m_showHiddenShares,4,4,0,1);
+   layout->addMultiCellWidget(m_showHiddenShares,4,4,0,1);
 
    m_encodingList = new KComboBox( false, this );
    TQStringList _strList = KGlobal::charsets()->availableEncodingNames();
    m_encodingList->insertStringList( _strList );
 
    label = new TQLabel( m_encodingList, i18n( "MS Windows encoding:" ), this );
-   tqlayout->addWidget( label, 3, 0 );
-   tqlayout->addWidget( m_encodingList, 3, 1 );
+   layout->addWidget( label, 3, 0 );
+   layout->addWidget( m_encodingList, 3, 1 );
    */
 
-   tqlayout->addWidget(new TQWidget(this),4,0);
+   layout->addWidget(new TQWidget(this),4,0);
 
 //   connect(m_showHiddenShares, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(changed()));
    connect(m_userLe, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(changed()));
@@ -79,7 +79,7 @@ SMBRoOptions::SMBRoOptions(TQWidget *parent)
 //   connect(m_workgroupLe, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(changed()));
 //   connect( m_encodingList, TQT_SIGNAL( activated( const TQString & ) ), this , TQT_SLOT( changed() ) );
 
-   tqlayout->setRowStretch(4, 1);
+   layout->setRowStretch(4, 1);
 
    // finaly read the options
    load();
@@ -140,7 +140,7 @@ void SMBRoOptions::save()
    for (uint i=0; i<password.length(); i++)
    {
       TQChar c = password[i];
-      unsigned int num = (c.tqunicode() ^ 173) + 17;
+      unsigned int num = (c.unicode() ^ 173) + 17;
       unsigned int a1 = (num & 0xFC00) >> 10;
       unsigned int a2 = (num & 0x3E0) >> 5;
       unsigned int a3 = (num & 0x1F);

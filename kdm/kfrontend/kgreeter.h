@@ -149,7 +149,7 @@ class KThemedGreeter : public KGreeter {
 	void slotAskAdminPassword();
 
   protected:
-	virtual void updatetqStatus( bool fail, bool caps, int timedleft );
+	virtual void updateStatus( bool fail, bool caps, int timedleft );
 	virtual void pluginSetup();
 	virtual void keyPressEvent( TQKeyEvent * );
 	virtual bool event( TQEvent *e );

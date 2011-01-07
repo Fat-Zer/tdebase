@@ -57,7 +57,7 @@ const TQString X11Helper::X11_WIN_CLASS_UNKNOWN = "<unknown>";
 
 static const TQRegExp NON_CLEAN_LAYOUT_REGEXP("[^a-z]");
 
-bool X11Helper::m_tqlayoutsClean = true;
+bool X11Helper::m_layoutsClean = true;
 
 const QString
 X11Helper::findX11Dir()
@@ -107,7 +107,7 @@ X11Helper::findXkbRulesFile(TQString x11Dir, Display *dpy)
 }
 
 RulesInfo*
-X11Helper::loadRules(const TQString& file, bool tqlayoutsOnly) 
+X11Helper::loadRules(const TQString& file, bool layoutsOnly) 
 {
 	XkbRF_RulesPtr xkbRules = XkbRF_Load(TQFile::encodeName(file).data(), "", true, true);
 
@@ -119,32 +119,32 @@ X11Helper::loadRules(const TQString& file, bool tqlayoutsOnly)
 	RulesInfo* rulesInfo = new RulesInfo();
 
 	for (int i = 0; i < xkbRules->layouts.num_desc; ++i) {
-		TQString tqlayoutName(xkbRules->layouts.desc[i].name);
-		rulesInfo->tqlayouts.tqreplace( tqlayoutName, qstrdup( xkbRules->layouts.desc[i].desc ) );
+		TQString layoutName(xkbRules->layouts.desc[i].name);
+		rulesInfo->layouts.replace( layoutName, qstrdup( xkbRules->layouts.desc[i].desc ) );
 
-		if( m_tqlayoutsClean == true
-				  && tqlayoutName.find( NON_CLEAN_LAYOUT_REGEXP ) != -1 
-				  && tqlayoutName.endsWith("/jp") == false ) {
+		if( m_layoutsClean == true
+				  && layoutName.find( NON_CLEAN_LAYOUT_REGEXP ) != -1 
+				  && layoutName.endsWith("/jp") == false ) {
 			kdDebug() << "Layouts are not clean (Xorg < 6.9.0 or XFree86)" << endl;
-			m_tqlayoutsClean = false;
+			m_layoutsClean = false;
 		}
 	}
 
-	if( tqlayoutsOnly == true ) {
+	if( layoutsOnly == true ) {
 		XkbRF_Free(xkbRules, true);
 		return rulesInfo;
 	}
   
   for (int i = 0; i < xkbRules->models.num_desc; ++i)
-      rulesInfo->models.tqreplace(xkbRules->models.desc[i].name, qstrdup( xkbRules->models.desc[i].desc ) );
+      rulesInfo->models.replace(xkbRules->models.desc[i].name, qstrdup( xkbRules->models.desc[i].desc ) );
   for (int i = 0; i < xkbRules->options.num_desc; ++i)
-      rulesInfo->options.tqreplace(xkbRules->options.desc[i].name, qstrdup( xkbRules->options.desc[i].desc ) );
+      rulesInfo->options.replace(xkbRules->options.desc[i].name, qstrdup( xkbRules->options.desc[i].desc ) );
 
   XkbRF_Free(xkbRules, true);
 
 // workaround for empty 'compose' options group description
    if( rulesInfo->options.find("compose:menu") && !rulesInfo->options.find("compose") ) {
-     rulesInfo->options.tqreplace("compose", "Compose Key Position");
+     rulesInfo->options.replace("compose", "Compose Key Position");
    }
 
   for(TQDictIterator<char> it(rulesInfo->options) ; it.current() != NULL; ++it ) {
@@ -154,7 +154,7 @@ X11Helper::loadRules(const TQString& file, bool tqlayoutsOnly)
 	  if( columnPos != -1 ) {
 		  TQString group = option.mid(0, columnPos);
 		  if( rulesInfo->options.find(group) == NULL ) {
-			  rulesInfo->options.tqreplace(group, group.latin1());
+			  rulesInfo->options.replace(group, group.latin1());
 			  kdDebug() << "Added missing option group: " << group << endl;
 		  }
 	  }
@@ -162,17 +162,17 @@ X11Helper::loadRules(const TQString& file, bool tqlayoutsOnly)
   
 //   // workaround for empty misc options group description in XFree86 4.4.0
 //   if( rulesInfo->options.find("numpad:microsoft") && !rulesInfo->options.find("misc") ) {
-//     rulesInfo->options.tqreplace("misc", "Miscellaneous compatibility options" );
+//     rulesInfo->options.replace("misc", "Miscellaneous compatibility options" );
 //   }
 
   return rulesInfo;
 }
 
-// check $oldtqlayouts and $nonlatin groups for XFree 4.3 and later
+// check $oldlayouts and $nonlatin groups for XFree 4.3 and later
 OldLayouts*
 X11Helper::loadOldLayouts(const TQString& rulesFile)
 {
-  static const char* oldLayoutsTag = "! $oldtqlayouts";
+  static const char* oldLayoutsTag = "! $oldlayouts";
   static const char* nonLatinLayoutsTag = "! $nonlatin";
   TQStringList m_oldLayouts;
   TQStringList m_nonLatinLayouts;
@@ -196,7 +196,7 @@ X11Helper::loadOldLayouts(const TQString& rulesFile)
 	    line = line.simplifyWhiteSpace();
 
 	    m_oldLayouts = TQStringList::split(TQRegExp("\\s"), line);
-//	    kdDebug() << "oldtqlayouts " << m_oldLayouts.join("|") << endl;
+//	    kdDebug() << "oldlayouts " << m_oldLayouts.join("|") << endl;
 	    if( !m_nonLatinLayouts.empty() )
 	      break;
 	    
@@ -229,21 +229,21 @@ X11Helper::loadOldLayouts(const TQString& rulesFile)
 }
 
 
-/* pretty simple algorithm - reads the tqlayout file and
+/* pretty simple algorithm - reads the layout file and
     tries to find "xkb_symbols"
-    also checks whether previous line tqcontains "hidden" to skip it
+    also checks whether previous line contains "hidden" to skip it
 */
 TQStringList*
-X11Helper::getVariants(const TQString& tqlayout, const TQString& x11Dir, bool oldLayouts)
+X11Helper::getVariants(const TQString& layout, const TQString& x11Dir, bool oldLayouts)
 {
   TQStringList* result = new TQStringList();
 
   TQString file = x11Dir + "xkb/symbols/";
-  // workaround for XFree 4.3 new directory for one-group tqlayouts
+  // workaround for XFree 4.3 new directory for one-group layouts
   if( TQDir(file+"pc").exists() && !oldLayouts )
     file += "pc/";
     
-  file += tqlayout;
+  file += layout;
 
 //  kdDebug() << "reading variants from " << file << endl;
   

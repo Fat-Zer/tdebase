@@ -5,7 +5,7 @@ How does an io-slave get started?
 
 Your application request 'klauncher' via DCOP for a slave. If 'klauncher' does 
 not have an idle slave ready, it will ask kdeinit to start a new one.
-kdeinit forks and dlopens the library that tqcontains the io-slave.
+kdeinit forks and dlopens the library that contains the io-slave.
 Then it calls kdemain() or, if that is not present, main() in the library.
 
 

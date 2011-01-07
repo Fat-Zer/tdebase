@@ -43,7 +43,7 @@ void HTMLSearch::scanDir(const TQString& dir)
         for (it=list.begin(); it != list.end(); ++it)
         {
             file = adir + *it;
-            if ( !_files.tqcontains( file ) ) {
+            if ( !_files.contains( file ) ) {
                 _files.append(file);
                 progress->setFilesScanned(++_filesScanned);
             }
@@ -117,7 +117,7 @@ bool HTMLSearch::createConfig(const TQString& _lang)
         return false;
     images = images.left(images.length() - 8);
 
-    // This is an example tqreplacement for the default bad_words file
+    // This is an example replacement for the default bad_words file
     // distributed with ht://Dig. It was compiled by Marjolein Katsma
     // <HSH@taxon.demon.nl>.
     TQString bad_words = i18n( "List of words to exclude from index",
@@ -467,8 +467,8 @@ TQString HTMLSearch::search(TQString _lang, TQString words, TQString method, int
   delete _proc;
 
   // modify the search result
-  _searchResult = _searchResult.tqreplace("http://localhost/", "file:/");
-  _searchResult = _searchResult.tqreplace("Content-type: text/html", TQString::null);
+  _searchResult = _searchResult.replace("http://localhost/", "file:/");
+  _searchResult = _searchResult.replace("Content-type: text/html", TQString::null);
 
   // dump the search result
   TQFile f(result);

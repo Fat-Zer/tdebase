@@ -96,9 +96,9 @@ Application::Application( )
     if (screen_number == -1)
         screen_number = DefaultScreen(qt_xdisplay());
 
-    if( !owner.claim( args->isSet( "tqreplace" ), true ))
+    if( !owner.claim( args->isSet( "replace" ), true ))
         {
-        fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --tqreplace)\n").local8Bit(), stderr);
+        fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
         ::exit(1);
         }
     connect( &owner, TQT_SIGNAL( lostOwnership()), TQT_SLOT( lostSelection()));
@@ -142,7 +142,7 @@ Application::Application( )
 Application::~Application()
     {
     delete Workspace::self();
-    if( owner.ownerWindow() != None ) // if there was no --tqreplace (no new WM)
+    if( owner.ownerWindow() != None ) // if there was no --replace (no new WM)
         {
         XSetInputFocus( qt_xdisplay(), PointerRoot, RevertToPointerRoot, qt_x_time );
         DCOPRef ref( "kded", "kded" );
@@ -184,7 +184,7 @@ static const char description[] = I18N_NOOP( "KDE window manager" );
 static KCmdLineOptions args[] =
     {
         { "lock", I18N_NOOP("Disable configuration options"), 0 },
-        { "tqreplace", I18N_NOOP("Replace already-running ICCCM2.0-compliant window manager"), 0 },
+        { "replace", I18N_NOOP("Replace already-running ICCCM2.0-compliant window manager"), 0 },
         KCmdLineLastOption
     };
 

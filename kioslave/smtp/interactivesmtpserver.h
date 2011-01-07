@@ -49,10 +49,10 @@ static TQString err2str( int err ) {
 
 static TQString escape( TQString s ) {
   return s
-    .tqreplace( '&', "&amp;" )
-    .tqreplace( '>', "&gt;" )
-    .tqreplace( '<', "&lt;" )
-    .tqreplace( '"', "&quot;" )
+    .replace( '&', "&amp;" )
+    .replace( '>', "&gt;" )
+    .replace( '<', "&lt;" )
+    .replace( '"', "&quot;" )
     ;
 }
 

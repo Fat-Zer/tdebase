@@ -236,7 +236,7 @@ TQPopupMenu* TaskRMBMenu::makeDesktopsMenu(Task::Ptr t)
 	m->insertSeparator();
 
 	for (int i = 1; i <= TaskManager::the()->numberOfDesktops(); i++) {
-		TQString name = TQString("&%1 %2").arg(i).arg(TaskManager::the()->desktopName(i).tqreplace('&', "&&"));
+		TQString name = TQString("&%1 %2").arg(i).arg(TaskManager::the()->desktopName(i).replace('&', "&&"));
 		id = m->insertItem( name, t, TQT_SLOT( toDesktop(int) ) );
 		m->setItemParameter( id, i );
 		m->setItemChecked( id, !t->isOnAllDesktops() && t->desktop() == i );
@@ -256,7 +256,7 @@ TQPopupMenu* TaskRMBMenu::makeDesktopsMenu()
 	m->insertSeparator();
 
 	for (int i = 1; i <= TaskManager::the()->numberOfDesktops(); i++) {
-		TQString name = TQString("&%1 %2").arg(i).arg(TaskManager::the()->desktopName(i).tqreplace('&', "&&"));
+		TQString name = TQString("&%1 %2").arg(i).arg(TaskManager::the()->desktopName(i).replace('&', "&&"));
 		id = m->insertItem( name, this, TQT_SLOT( slotAllToDesktop(int) ) );
 		m->setItemParameter( id, i );
 	}

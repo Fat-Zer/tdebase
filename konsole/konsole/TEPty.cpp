@@ -44,7 +44,7 @@
 
     \par FIXME
 
-    [NOTE: much of the technical stuff below will be tqreplaced by forkpty.]
+    [NOTE: much of the technical stuff below will be replaced by forkpty.]
 
     publish the SIGCHLD signal if not related to an instance.
 

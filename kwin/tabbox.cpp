@@ -116,7 +116,7 @@ void TabBox::createClientList(ClientList &list, int desktop /*-1 = all*/, Client
             Client* modal = c->findModal();
             if( modal == NULL || modal == c )
                 add = c;
-            else if( !list.tqcontains( modal ))
+            else if( !list.contains( modal ))
                 add = modal;
             else
                 {
@@ -273,7 +273,7 @@ void TabBox::nextPrev( bool next)
                 client = 0;
                 break;
                 }
-            } while ( client && !clients.tqcontains( client ));
+            } while ( client && !clients.contains( client ));
         setCurrentClient( client );
         }
     else if( mode() == DesktopMode )
@@ -402,7 +402,7 @@ void TabBox::drawContents( TQPainter * )
                   {
                   // draw highlight background
                   if ( (*it) == current_client )
-                    p.fillRect(x, y, r.width(), lineHeight, tqcolorGroup().highlight());
+                    p.fillRect(x, y, r.width(), lineHeight, colorGroup().highlight());
 
                   // draw icon
                   TQPixmap icon;
@@ -439,11 +439,11 @@ void TabBox::drawContents( TQPainter * )
 
                   // draw text
                   if ( (*it) == current_client )
-                    p.setPen(tqcolorGroup().highlightedText());
+                    p.setPen(colorGroup().highlightedText());
                   else if( (*it)->isMinimized())
                     {
-                    TQColor c1 = tqcolorGroup().text();
-                    TQColor c2 = tqcolorGroup().background();
+                    TQColor c1 = colorGroup().text();
+                    TQColor c2 = colorGroup().background();
                     // from kicker's TaskContainer::blendColors()
                     int r1, g1, b1;
                     int r2, g2, b2;
@@ -458,7 +458,7 @@ void TabBox::drawContents( TQPainter * )
                     p.setPen(TQColor( r1, g1, b1 ));
                     }
                   else
-                    p.setPen(tqcolorGroup().text());
+                    p.setPen(colorGroup().text());
 
                   p.drawText(x+5 + iconWidth + 8, y, r.width() - 5 - iconWidth - 8, lineHeight,
                               Qt::AlignLeft | Qt::AlignVCenter | Qt::SingleLine, s);
@@ -496,13 +496,13 @@ void TabBox::drawContents( TQPainter * )
             {
             // draw highlight background
             if ( iDesktop == desk )  // current desktop
-              p.fillRect(x, y, r.width(), lineHeight, tqcolorGroup().highlight());
+              p.fillRect(x, y, r.width(), lineHeight, colorGroup().highlight());
 
             p.save();
 
             // draw "icon" (here: number of desktop)
-            p.fillRect(x+5, y+2, iconWidth, iconHeight, tqcolorGroup().base());
-            p.setPen(tqcolorGroup().text());
+            p.fillRect(x+5, y+2, iconWidth, iconHeight, colorGroup().base());
+            p.setPen(colorGroup().text());
             p.drawRect(x+5, y+2, iconWidth, iconHeight);
 
             // draw desktop-number
@@ -514,9 +514,9 @@ void TabBox::drawContents( TQPainter * )
 
             // draw desktop name text
             if ( iDesktop == desk )
-              p.setPen(tqcolorGroup().highlightedText());
+              p.setPen(colorGroup().highlightedText());
             else
-              p.setPen(tqcolorGroup().text());
+              p.setPen(colorGroup().text());
 
             p.drawText(x+5 + iconWidth + 8, y, r.width() - 5 - iconWidth - 8, lineHeight,
                        Qt::AlignLeft | Qt::AlignVCenter | Qt::SingleLine,
@@ -698,7 +698,7 @@ void TabBox::handleMouseEvent( XEvent* e )
     if( e->type != ButtonPress )
         return;
     TQPoint pos( e->xbutton.x_root, e->xbutton.y_root );
-    if( !tqgeometry().tqcontains( pos ))
+    if( !geometry().contains( pos ))
         {
         workspace()->closeTabBox();  // click outside closes tab
         return;
@@ -766,10 +766,10 @@ bool areKeySymXsDepressed( bool bAll, const uint keySyms[], int nKeySyms )
         uint keySymX = keySyms[ iKeySym ];
         uchar keyCodeX = XKeysymToKeycode( qt_xdisplay(), keySymX );
         int i = keyCodeX / 8;
-        char tqmask = 1 << (keyCodeX - (i * 8));
+        char mask = 1 << (keyCodeX - (i * 8));
 
         kdDebug(125) << iKeySym << ": keySymX=0x" << TQString::number( keySymX, 16 )
-                << " i=" << i << " tqmask=0x" << TQString::number( tqmask, 16 )
+                << " i=" << i << " mask=0x" << TQString::number( mask, 16 )
                 << " keymap[i]=0x" << TQString::number( keymap[i], 16 ) << endl;
 
                 // Abort if bad index value,
@@ -779,13 +779,13 @@ bool areKeySymXsDepressed( bool bAll, const uint keySyms[], int nKeySyms )
                 // If ALL keys passed need to be depressed,
         if( bAll )
             {
-            if( (keymap[i] & tqmask) == 0 )
+            if( (keymap[i] & mask) == 0 )
                     return false;
             }
         else
             {
                         // If we are looking for ANY key press, and this key is depressed,
-            if( keymap[i] & tqmask )
+            if( keymap[i] & mask )
                     return true;
             }
         }
@@ -1117,8 +1117,8 @@ void Workspace::tabBoxKeyPress( const KKeyNative& keyX )
 
     if (tab_grab)
         {
-        forward = cutWalkThroughWindows.tqcontains( keyX );
-        backward = cutWalkThroughWindowsReverse.tqcontains( keyX );
+        forward = cutWalkThroughWindows.contains( keyX );
+        backward = cutWalkThroughWindowsReverse.contains( keyX );
         if (forward || backward)
             {
             kdDebug(125) << "== " << cutWalkThroughWindows.toStringInternal()
@@ -1128,10 +1128,10 @@ void Workspace::tabBoxKeyPress( const KKeyNative& keyX )
         }
     else if (control_grab)
         {
-        forward = cutWalkThroughDesktops.tqcontains( keyX ) ||
-                  cutWalkThroughDesktopList.tqcontains( keyX );
-        backward = cutWalkThroughDesktopsReverse.tqcontains( keyX ) ||
-                   cutWalkThroughDesktopListReverse.tqcontains( keyX );
+        forward = cutWalkThroughDesktops.contains( keyX ) ||
+                  cutWalkThroughDesktopList.contains( keyX );
+        backward = cutWalkThroughDesktopsReverse.contains( keyX ) ||
+                   cutWalkThroughDesktopListReverse.contains( keyX );
         if (forward || backward)
             walkThroughDesktops(forward);
         }

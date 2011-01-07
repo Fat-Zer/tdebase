@@ -36,8 +36,8 @@ public:
 
 private:
 	QLineEdit	*m_name, *m_company, *m_number;
-	TQCheckBox   *m_tqreplace_int_char;
-	TQLineEdit   *m_tqreplace_int_char_val;
+	TQCheckBox   *m_replace_int_char;
+	TQLineEdit   *m_replace_int_char_val;
 };
 
 #endif

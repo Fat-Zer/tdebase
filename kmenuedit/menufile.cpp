@@ -297,7 +297,7 @@ void MenuFile::addEntry(const TQString &menuName, const TQString &menuId)
    includeNode.appendChild(fileNode);
 }
 
-void MenuFile::setLayout(const TQString &menuName, const TQStringList &tqlayout)
+void MenuFile::setLayout(const TQString &menuName, const TQStringList &layout)
 {
    m_bDirty = true;   
 
@@ -305,47 +305,47 @@ void MenuFile::setLayout(const TQString &menuName, const TQStringList &tqlayout)
 
    purgeLayout(elem);
 
-   TQDomElement tqlayoutNode = m_doc.createElement(MF_LAYOUT);
-   elem.appendChild(tqlayoutNode);
+   TQDomElement layoutNode = m_doc.createElement(MF_LAYOUT);
+   elem.appendChild(layoutNode);
 
-   for(TQStringList::ConstIterator it = tqlayout.begin();
-       it != tqlayout.end(); ++it)
+   for(TQStringList::ConstIterator it = layout.begin();
+       it != layout.end(); ++it)
    {
       TQString li = *it;
       if (li == ":S")
       {
-         tqlayoutNode.appendChild(m_doc.createElement(MF_SEPARATOR));
+         layoutNode.appendChild(m_doc.createElement(MF_SEPARATOR));
       }
       else if (li == ":M")
       {
          TQDomElement mergeNode = m_doc.createElement(MF_MERGE);
          mergeNode.setAttribute("type", "menus");
-         tqlayoutNode.appendChild(mergeNode);
+         layoutNode.appendChild(mergeNode);
       }
       else if (li == ":F")
       {
          TQDomElement mergeNode = m_doc.createElement(MF_MERGE);
          mergeNode.setAttribute("type", "files");
-         tqlayoutNode.appendChild(mergeNode);
+         layoutNode.appendChild(mergeNode);
       }
       else if (li == ":A")
       {
          TQDomElement mergeNode = m_doc.createElement(MF_MERGE);
          mergeNode.setAttribute("type", "all");
-         tqlayoutNode.appendChild(mergeNode);
+         layoutNode.appendChild(mergeNode);
       }
       else if (li.endsWith("/"))
       {
          li.truncate(li.length()-1);
          TQDomElement menuNode = m_doc.createElement(MF_MENUNAME);
          menuNode.appendChild(m_doc.createTextNode(li));
-         tqlayoutNode.appendChild(menuNode);
+         layoutNode.appendChild(menuNode);
       }
       else
       {
          TQDomElement fileNode = m_doc.createElement(MF_FILENAME);
          fileNode.appendChild(m_doc.createTextNode(li));
-         tqlayoutNode.appendChild(fileNode);
+         layoutNode.appendChild(fileNode);
       }
    }
 }
@@ -468,7 +468,7 @@ TQString MenuFile::uniqueMenuName(const TQString &menuName, const TQString &newM
    
    for(int n = 1; ++n; )
    {
-      if (findMenu(elem, result, false).isNull() && !excludeList.tqcontains(result))
+      if (findMenu(elem, result, false).isNull() && !excludeList.contains(result))
          return result;
          
       result.truncate(trunc);

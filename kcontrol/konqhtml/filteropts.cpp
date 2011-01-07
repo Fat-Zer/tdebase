@@ -323,5 +323,5 @@ TQString KCMFilter::quickHelp() const
 {
     return i18n("<h1>Konqueror AdBlocK</h1> Konqueror AdBlocK allows you to create a list of filters"
                 " that are checked against linked images and frames. URL's that match are either discarded or"
-                " tqreplaced with a placeholder image. ");
+                " replaced with a placeholder image. ");
 }

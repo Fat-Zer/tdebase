@@ -43,7 +43,7 @@ PreviewRedmond::PreviewRedmond( TQWidget* parent )
     m_showWelcomeString (true),
     m_showUserString (true),
     m_showUserIcon (true),
-    m_showtqStatusString (true)
+    m_showStatusString (true)
 {
   _updateCache();
 }
@@ -99,7 +99,7 @@ void PreviewRedmond::_updateCache()
   if( m_showUserIcon )
     p.drawPixmap( rect().width()/2 + 10, rect().height()/2, m_icon );
 
-  if( m_showtqStatusString )
+  if( m_showStatusString )
   {
     TQPoint statusTextPos( rect().width()/2 + m_icon.width() + 20,
       rect().height()/2 + (int)(p.fontMetrics().height()*0.85) + 15 );

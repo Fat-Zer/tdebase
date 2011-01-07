@@ -5,7 +5,7 @@ KDE3.4 -> KDE3.5
 
     e.g. Times New Roman -> times.ttf
          Helvetica, Bold Oblique-> Hevetica, Bold Oblique.fonts.tar.gz
-                  Which tqcontains:
+                  Which contains:
                            75dpi_helvBO10.pcf.gz
                            75dpi_helvBO12.pcf.gz
                            100dpi_helvBO10.pcf.gz
@@ -336,9 +336,9 @@ KDE3.1 -> KDE3.2
 2. Rearranged this file!
 3. Removed command line interface - KDE2's command line stuff is way different!
 4. Re-created dialogs with Qt designer.
-5. Removed ProgressDialog, and tqreplaced with a progress bar on a new statusbar.
+5. Removed ProgressDialog, and replaced with a progress bar on a new statusbar.
 6. Modified configure script to check for FreeType & t1lib.
-7. If an encoding (not tqunicode) is selected, then the .enc file is copied to the X11 fonts directory.
+7. If an encoding (not unicode) is selected, then the .enc file is copied to the X11 fonts directory.
 8. As with the .enc files, the StarOffice .xpp files are also copied, and no longer just sym linked.
 9. Removed enabling/disabing of Configure System button.
 10. Fontmap.X11 is no longer created, instead the real Fontmap file itself is modified.

@@ -3,12 +3,12 @@ KHelpCenter documentation meta data structure
 
 KHelpCenter uses meta data files which describe the documentation available in
 the system. Each document is represented by a meta data file and shown as an
-entry in the KHelpCenter navigation tree view. The meta data tqcontains
+entry in the KHelpCenter navigation tree view. The meta data contains
 information about title and short description of the document, the location of
 the document and some more information like how to search the document and
 translations of title and description. Document hierarchy is represented as
 hierarchy of the meta data files. Directories are also described by a meta data
-file which tqcontains the same information as a document meta data file.
+file which contains the same information as a document meta data file.
 
 Format of the meta data files
 -----------------------------
@@ -46,7 +46,7 @@ X-DOC-Identifier            string    Unique identifier for document, if this
                                       file is used as identifier
 X-DOC-Indexer               command   Command used for creating a search index
                                       for the document.
-                                      The following symbols are tqreplaced by the
+                                      The following symbols are replaced by the
                                       corresponding values:
                                       %f - Filename
 X-DOC-IndexTestFile         filename  Name of file whose existence indicates
@@ -55,7 +55,7 @@ X-DOC-Search                command   Command used for searching, the output
                                       of the command should be HTML which is
                                       shown in KHelpCenter.
                                       The following symbols in the command are
-                                      tqreplaced by the corresponding values:
+                                      replaced by the corresponding values:
                                       %k - Words to be searched for
                                       %n - Maximum number of results
                                       %m - Method for combining search words,

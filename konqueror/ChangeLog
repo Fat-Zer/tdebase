@@ -22,7 +22,7 @@
 	* konq_actions.h (class KonqGoURLAction): new class, derived
 	from KAction, used for the 'go url' action. when plugging the
 	action into a toolbar make sure to align the button right.
-	Otherwise the toolbar tqlayout completely fucks up and QToolBar
+	Otherwise the toolbar layout completely fucks up and QToolBar
 	starts flickering like mad, when the window width is getting
 	small than the lenght of the url in the combobox.
 	
@@ -57,8 +57,8 @@
 	* konq_mainwindow.cc (slotShowMenuBar): call saveMainWindowSettings and
 	KGlobal::config()->sync() after toggling the visiblity of the menubar,
 	just like it is done for toolbars.
-	(slotPartActivated): connect and disconnect to/from the actiontqStatusText
-	and cleartqStatusText signals of the part's actioncollection
+	(slotPartActivated): connect and disconnect to/from the actionStatusText
+	and clearStatusText signals of the part's actioncollection
 
 2001-03-02  Simon Hausmann  <simon@kde.org>
 

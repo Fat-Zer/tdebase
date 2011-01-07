@@ -79,7 +79,7 @@ class UserListView : public KListView {
 		: KListView( parent, name )
 		, themed(_them), cachedSizeHint( -1, 0 )
 	{
-		tqsetSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
+		setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
 		header()->hide();
 		addColumn( TQString::null );
 		setColumnAlignment( 0, AlignVCenter );
@@ -105,10 +105,10 @@ class UserListView : public KListView {
         return sum;
     }
 public:
-	virtual TQSize tqsizeHint() const
+	virtual TQSize sizeHint() const
 	{
 	  if (themed)
-            return KListView::tqsizeHint();
+            return KListView::sizeHint();
 
 		if (!cachedSizeHint.isValid()) {
 			constPolish();
@@ -119,7 +119,7 @@ public:
 					maxw = thisw;
 			}
 			cachedSizeHint.setWidth(
-				style().tqpixelMetric( TQStyle::PM_ScrollBarExtent ) +
+				style().pixelMetric( TQStyle::PM_ScrollBarExtent ) +
 				frameWidth() * 2 + maxw );
 		}
 		return cachedSizeHint;
@@ -235,12 +235,12 @@ class UserListViewItem : public KListViewItem {
 		parent->cachedSizeHint.setWidth( -1 );
 	}
 
-        virtual void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment)
+        virtual void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment)
     {
       if (((UserListView*)listView())->themed)
-        TQListViewItem::paintCell(p, cg, column, width, tqalignment);
+        TQListViewItem::paintCell(p, cg, column, width, alignment);
       else
-	KListViewItem::paintCell(p, cg, column, width, tqalignment);
+	KListViewItem::paintCell(p, cg, column, width, alignment);
     }
 
 	TQString login;
@@ -343,7 +343,7 @@ KGreeter::insertUser( const TQImage &default_pix,
 
 class KCStringList : public TQValueList<TQCString> {
   public:
-	bool tqcontains( const char *str ) const
+	bool contains( const char *str ) const
 	{
 		for (ConstIterator it = begin(); it != end(); ++it)
 			if (*it == str)
@@ -355,7 +355,7 @@ class KCStringList : public TQValueList<TQCString> {
 class UserList {
   public:
 	UserList( char **in );
-	bool hasUser( const char *str ) const { return users.tqcontains( str ); }
+	bool hasUser( const char *str ) const { return users.contains( str ); }
 	bool hasGroup( gid_t gid ) const
 		{ return groups.find( gid ) != groups.end(); }
 	bool hasGroups() const { return !groups.isEmpty(); }
@@ -786,14 +786,14 @@ KStdGreeter::KStdGreeter()
 		               i18n("This display requires no X authorization.\n"
 		                    "This means that anybody can connect to it,\n"
 		                    "open windows on it or intercept your input.") );
-		complainLabel->tqsetAlignment( AlignCenter );
+		complainLabel->setAlignment( AlignCenter );
 		complainLabel->setFont( _failFont );
 		complainLabel->setPaletteForegroundColor( Qt::red );
 		inner_box->addWidget( complainLabel );
 	}
 	if (!_greetString.isEmpty()) {
 		TQLabel *welcomeLabel = new TQLabel( _greetString, this );
-		welcomeLabel->tqsetAlignment( AlignCenter );
+		welcomeLabel->setAlignment( AlignCenter );
 		welcomeLabel->setFont( _greetFont );
 		inner_box->addWidget( welcomeLabel );
 	}
@@ -1092,7 +1092,7 @@ TQString KThemedGreeter::timedUser = TQString::null;
 int KThemedGreeter::timedDelay = -1;
 
 void
-KThemedGreeter::updatetqStatus( bool fail, bool caps, int timedleft )
+KThemedGreeter::updateStatus( bool fail, bool caps, int timedleft )
 {
 	if (pam_error) {
 		if (fail)

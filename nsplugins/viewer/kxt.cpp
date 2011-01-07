@@ -159,11 +159,11 @@ void reparentChildrenOf(TQWidget* parent)
 
 void qwidget_realize(
         Widget                widget,
-        XtValueMask*          tqmask,
+        XtValueMask*          mask,
         XSetWindowAttributes* attributes
     )
 {
-    widgetClassRec.core_class.realize(widget, tqmask, attributes);
+    widgetClassRec.core_class.realize(widget, mask, attributes);
     KXtWidget* qxtw = ((QWidgetRec*)widget)->qwidget.qxtwidget;
     if (XtWindow(widget) != qxtw->winId()) {
         qxtw->create(XtWindow(widget), FALSE, FALSE);
@@ -205,7 +205,7 @@ QWidgetClassRec qwidgetClassRec = {
     /* version                  */      XtVersion,
     /* callback_private         */      0,
     /* tm_table                 */      XtInheritTranslations,
-    /* query_tqgeometry           */      XtInheritQueryGeometry,
+    /* query_geometry           */      XtInheritQueryGeometry,
     /* display_accelerator      */      XtInheritDisplayAccelerator,
     /* extension                */      0
   },
@@ -255,7 +255,7 @@ static
 void np_event_proc( XEvent* e )
 {
     Widget xtw = XtWindowToWidget( e->xany.display, e->xany.window );
-    if ( xtw && tqApp->loopLevel() > 0 ) {
+    if ( xtw && qApp->loopLevel() > 0 ) {
         // Allow Xt to process the event
         qt_np_cascade_event_handler[e->type]( e );
     }
@@ -442,7 +442,7 @@ void KXtWidget::init(const char* name, WidgetClass widget_class,
 
   Use this constructor to utilize Qt widgets in an Xt/Motif
   application.  The KXtWidget is a TQWidget, so you can create
-  subwidgets, tqlayouts, etc. using Qt functionality.
+  subwidgets, layouts, etc. using Qt functionality.
 */
 KXtWidget::KXtWidget(const char* name, Widget parent, bool managed) :
     TQWidget( 0, name, WResizeNoErase )
@@ -505,7 +505,7 @@ KXtWidget::~KXtWidget()
 
     if ( need_reroot ) {
         hide();
-        XReparentWindow(qt_xdisplay(), winId(), tqApp->desktop()->winId(),
+        XReparentWindow(qt_xdisplay(), winId(), qApp->desktop()->winId(),
             x(), y());
     }
 
@@ -567,7 +567,7 @@ bool KXtWidget::isActiveWindow() const
     TQWidget *w = find( (WId)win );
     if ( w ) {
         // We know that window
-        return w->tqtopLevelWidget() == tqtopLevelWidget();
+        return w->topLevelWidget() == topLevelWidget();
     } else {
         // Window still may be a parent (if top-level is foreign window)
         Window root, parent;

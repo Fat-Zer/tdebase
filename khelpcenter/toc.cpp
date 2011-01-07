@@ -88,17 +88,17 @@ void TOC::build( const TQString &file )
 		}
 	}
 
-	TQString cacheFile = fileName.tqreplace( TQDir::separator(), "__" );
+	TQString cacheFile = fileName.replace( TQDir::separator(), "__" );
 	m_cacheFile = locateLocal( "cache", "help/" + cacheFile );
 	m_sourceFile = file;
 
-	if ( cachetqStatus() == NeedRebuild )
+	if ( cacheStatus() == NeedRebuild )
 		buildCache();
 	else
 		fillTree();
 }
 
-TOC::CachetqStatus TOC::cachetqStatus() const
+TOC::CacheStatus TOC::cacheStatus() const
 {
 	if ( !TQFile::exists( m_cacheFile ) ||
 	     sourceFileCTime() != cachedCTime() )
@@ -188,9 +188,9 @@ void TOC::fillTree()
 	TQDomNodeList chapters = doc.documentElement().elementsByTagName( "chapter" );
 	for ( unsigned int chapterCount = 0; chapterCount < chapters.count(); chapterCount++ ) {
 		TQDomElement chapElem = chapters.item( chapterCount ).toElement();
-		TQDomElement chapTitleElem = childElement( chapElem, TQString::tqfromLatin1( "title" ) );
+		TQDomElement chapTitleElem = childElement( chapElem, TQString::fromLatin1( "title" ) );
 		TQString chapTitle = chapTitleElem.text().simplifyWhiteSpace();
-		TQDomElement chapRefElem = childElement( chapElem, TQString::tqfromLatin1( "anchor" ) );
+		TQDomElement chapRefElem = childElement( chapElem, TQString::fromLatin1( "anchor" ) );
 		TQString chapRef = chapRefElem.text().stripWhiteSpace();
 
 		chapItem = new TOCChapterItem( this, m_parentItem, chapItem, chapTitle, chapRef );
@@ -199,9 +199,9 @@ void TOC::fillTree()
 		TQDomNodeList sections = chapElem.elementsByTagName( "section" );
 		for ( unsigned int sectCount = 0; sectCount < sections.count(); sectCount++ ) {
 			TQDomElement sectElem = sections.item( sectCount ).toElement();
-			TQDomElement sectTitleElem = childElement( sectElem, TQString::tqfromLatin1( "title" ) );
+			TQDomElement sectTitleElem = childElement( sectElem, TQString::fromLatin1( "title" ) );
 			TQString sectTitle = sectTitleElem.text().simplifyWhiteSpace();
-			TQDomElement sectRefElem = childElement( sectElem, TQString::tqfromLatin1( "anchor" ) );
+			TQDomElement sectRefElem = childElement( sectElem, TQString::fromLatin1( "anchor" ) );
 			TQString sectRef = sectRefElem.text().stripWhiteSpace();
 
 			sectItem = new TOCSectionItem( this, chapItem, sectItem, sectTitle, sectRef );

@@ -63,7 +63,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 	TQGridLayout *grid = 0;
 	int line = 0;
 
-	tqlayoutItem = 0;
+	layoutItem = 0;
 
 	if (themer &&
 	    (!(user_entry = themer->findNode( "user-entry" )) ||
@@ -71,7 +71,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 		themer = 0;
 
 	if (!themer)
-		tqlayoutItem = grid = new TQGridLayout( 0, 0, 10 );
+		layoutItem = grid = new TQGridLayout( 0, 0, 10 );
 
 	loginLabel = passwdLabel = passwd1Label = passwd2Label = 0;
 	loginEdit = 0;
@@ -161,15 +161,15 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 KClassicGreeter::~KClassicGreeter()
 {
 	abort();
-	if (!tqlayoutItem) {
+	if (!layoutItem) {
 		delete loginEdit;
 		delete passwdEdit;
 		return;
 	}
-	TQLayoutIterator it = static_cast<TQLayout *>(tqlayoutItem)->iterator();
+	TQLayoutIterator it = static_cast<TQLayout *>(layoutItem)->iterator();
 	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 		 delete itm->widget();
-	delete tqlayoutItem;
+	delete layoutItem;
 }
 
 void // virtual

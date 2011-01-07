@@ -50,9 +50,9 @@ class TOC : public QObject
 		void meinprocExited( KProcess *meinproc );
 
 	private:
-		enum CachetqStatus { NeedRebuild, CacheOk };
+		enum CacheStatus { NeedRebuild, CacheOk };
 
-		CachetqStatus cachetqStatus() const;
+		CacheStatus cacheStatus() const;
 		int sourceFileCTime() const;
 		int cachedCTime() const;
 		TQDomElement childElement( const TQDomElement &e, const TQString &name );

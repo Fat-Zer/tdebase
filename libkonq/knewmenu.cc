@@ -56,10 +56,10 @@ KDirWatch * KNewMenu::s_pDirWatch = 0L;
 class KNewMenu::KNewMenuPrivate
 {
 public:
-    KNewMenuPrivate() : m_tqparentWidget(0) {}
+    KNewMenuPrivate() : m_parentWidget(0) {}
     KActionCollection * m_actionCollection;
     TQString m_destPath;
-    TQWidget *m_tqparentWidget;
+    TQWidget *m_parentWidget;
     KActionMenu *m_menuDev;
 };
 
@@ -75,13 +75,13 @@ KNewMenu::KNewMenu( KActionCollection * _collec, const char *name ) :
     makeMenus();
 }
 
-KNewMenu::KNewMenu( KActionCollection * _collec, TQWidget *tqparentWidget, const char *name ) :
+KNewMenu::KNewMenu( KActionCollection * _collec, TQWidget *parentWidget, const char *name ) :
   KActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
   menuItemsVersion( 0 )
 {
     d = new KNewMenuPrivate;
     d->m_actionCollection = _collec;
-    d->m_tqparentWidget = tqparentWidget;
+    d->m_parentWidget = parentWidget;
     makeMenus();
 }
 
@@ -363,7 +363,7 @@ void KNewMenu::slotNewDir()
     if (popupFiles.isEmpty())
        return;
 
-    KonqOperations::newDir(d->m_tqparentWidget, popupFiles.first());
+    KonqOperations::newDir(d->m_parentWidget, popupFiles.first());
 }
 
 void KNewMenu::slotNewFile()
@@ -395,8 +395,8 @@ void KNewMenu::slotNewFile()
     	if ( df.readType() == "Link" )
     	{
     	    m_isURLDesktopFile = true;
-    	    // entry.comment tqcontains i18n("Enter link to location (URL):"). JFYI :)
-    	    KURLDesktopFileDlg dlg( i18n("File name:"), entry.comment, d->m_tqparentWidget );
+    	    // entry.comment contains i18n("Enter link to location (URL):"). JFYI :)
+    	    KURLDesktopFileDlg dlg( i18n("File name:"), entry.comment, d->m_parentWidget );
     	    // TODO dlg.setCaption( i18n( ... ) );
     	    if ( dlg.exec() )
     	    {
@@ -419,7 +419,7 @@ void KNewMenu::slotNewFile()
                 //kdDebug(1203) << "second arg=" << (*it).url() << endl;
                 //kdDebug(1203) << "third arg=" << entry.text << endl;
                 TQString text = entry.text;
-                text.tqreplace( "...", TQString::null ); // the ... is fine for the menu item but not for the default filename
+                text.replace( "...", TQString::null ); // the ... is fine for the menu item but not for the default filename
                 
 		KURL defaultFile( *it );
 		defaultFile.addPath( KIO::encodeFileName( text ) );
@@ -428,7 +428,7 @@ void KNewMenu::slotNewFile()
 
                 KURL templateURL;
                 templateURL.setPath( entry.templatePath );
-                (void) new KPropertiesDialog( templateURL, *it, text, d->m_tqparentWidget );
+                (void) new KPropertiesDialog( templateURL, *it, text, d->m_parentWidget );
     	    }
     	    return; // done, exit.
     	}
@@ -439,7 +439,7 @@ void KNewMenu::slotNewFile()
         // Show the small dialog for getting the destination filename
         bool ok;
         TQString text = entry.text;
-        text.tqreplace( "...", TQString::null ); // the ... is fine for the menu item but not for the default filename
+        text.replace( "...", TQString::null ); // the ... is fine for the menu item but not for the default filename
         
 	KURL defaultFile( *(popupFiles.begin()) );
 	defaultFile.addPath( KIO::encodeFileName( text ) );
@@ -447,7 +447,7 @@ void KNewMenu::slotNewFile()
 	    text = KIO::RenameDlg::suggestName( *(popupFiles.begin()), text);
 
         name = KInputDialog::getText( TQString::null, entry.comment,
-    	text, &ok, d->m_tqparentWidget );
+    	text, &ok, d->m_parentWidget );
         if ( !ok )
 	    return;
     }
@@ -545,7 +545,7 @@ void KURLDesktopFileDlg::initDialog( const TQString& textFileName, const TQStrin
 
     TQLabel * label = new TQLabel( textFileName, fileNameBox );
     m_leFileName = new KLineEdit( fileNameBox, 0L );
-    m_leFileName->setMinimumWidth(m_leFileName->tqsizeHint().width() * 3);
+    m_leFileName->setMinimumWidth(m_leFileName->sizeHint().width() * 3);
     label->setBuddy(m_leFileName);  // please "scheck" style
     m_leFileName->setText( defaultName );
     m_leFileName->setSelection(0, m_leFileName->text().length()); // autoselect
@@ -559,7 +559,7 @@ void KURLDesktopFileDlg::initDialog( const TQString& textFileName, const TQStrin
     m_urlRequester = new KURLRequester( defaultUrl, urlBox, "urlRequester" );
     m_urlRequester->setMode( KFile::File | KFile::Directory );
 
-    m_urlRequester->setMinimumWidth( m_urlRequester->tqsizeHint().width() * 3 );
+    m_urlRequester->setMinimumWidth( m_urlRequester->sizeHint().width() * 3 );
     connect( m_urlRequester->lineEdit(), TQT_SIGNAL(textChanged(const TQString&)),
              TQT_SLOT(slotURLTextChanged(const TQString&)) );
     label->setBuddy(m_urlRequester);  // please "scheck" style

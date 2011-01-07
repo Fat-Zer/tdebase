@@ -57,7 +57,7 @@ void PanelRemoveExtensionMenu::slotAboutToShow()
     for (ExtensionList::iterator it = m_containers.begin(); it != itEnd; ++it)
     {
         const AppletInfo info = (*it)->info();
-        TQString name = info.name().tqreplace("&", "&&");
+        TQString name = info.name().replace("&", "&&");
         switch ((*it)->position())
         {
             case KPanelExtension::Top:

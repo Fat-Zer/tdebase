@@ -59,7 +59,7 @@ void SMBSlave::special( const TQByteArray & data)
             kdDebug(KIO_SMB)<<"special() host -"<< host <<"- share -" << share <<"-"<<endl;
          }
 
-         remotePath.tqreplace('\\', '/');  // smbmounterplugin sends \\host/share
+         remotePath.replace('\\', '/');  // smbmounterplugin sends \\host/share
 
          kdDebug(KIO_SMB) << "mounting: " << remotePath.local8Bit() << " to " << mountPoint.local8Bit() << endl;
 

@@ -48,14 +48,14 @@ bool CursorCreator::create( const TQString &path, int width, int height, TQImage
 	img.setAlphaBuffer( true );
 
 	// Convert the image to non-premultiplied alpha
-	TQ_UINT32 *pixels = reinterpret_cast<TQ_UINT32 *>( img.bits() );
+	Q_UINT32 *pixels = reinterpret_cast<Q_UINT32 *>( img.bits() );
 	for ( int i = 0; i < (img.width() * img.height()); i++ ) {
-		float alpha = tqAlpha( pixels[i] ) / 255.0;
+		float alpha = qAlpha( pixels[i] ) / 255.0;
 		if ( alpha > 0.0 && alpha < 1.0 )
-			pixels[i] = tqRgba( int( tqRed(pixels[i]) / alpha ),
-			                   int( tqGreen(pixels[i]) / alpha ),
-			                   int( tqBlue(pixels[i]) / alpha ),
-			                   tqAlpha(pixels[i]) );
+			pixels[i] = qRgba( int( qRed(pixels[i]) / alpha ),
+			                   int( qGreen(pixels[i]) / alpha ),
+			                   int( qBlue(pixels[i]) / alpha ),
+			                   qAlpha(pixels[i]) );
 	}
 
 	// Create a deep copy of the image so the image data is preserved

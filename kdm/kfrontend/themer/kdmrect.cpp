@@ -141,7 +141,7 @@ KdmRect::recursiveSetAttribs( TQLayoutItem *li )
 
     if ((w = li->widget()))
 	setAttribs( w );
-    else if ((l = li->tqlayout())) {
+    else if ((l = li->layout())) {
 	TQLayoutIterator it = l->iterator();
 	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 	     recursiveSetAttribs( itm );

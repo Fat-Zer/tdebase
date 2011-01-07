@@ -108,7 +108,7 @@ ANSI Compatible Mode
 		Response is			ESC [ Pl; Pc R
 		* Pl = line number; Pc = column number
 
-	tqStatus Report
+	Status Report
 		Invoked by			ESC [ 5 n
 		Response is			ESC [ 0 n  (terminal ok)
 						ESC [ 3 n  (terminal not ok)
@@ -189,7 +189,7 @@ Lines: 25
 In article <chan.728236678@hertz> chan@ece.scarolina.edu (Simon Chan) writes:
 >Taken from VT100 Programming Reference Card (DIGITAL)
 
-Note that EK-VT100-RC-001 tqcontains several errors and omissions.
+Note that EK-VT100-RC-001 contains several errors and omissions.
 The errors appear to all be fixed in the posted version.
 Here are some additions:
 

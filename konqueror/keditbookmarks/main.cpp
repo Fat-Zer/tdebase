@@ -67,7 +67,7 @@ static void continueInWindow(TQString _wname) {
     for (QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it) {
         TQCString &clientId = *it;
 
-        if (tqstrncmp(clientId, wname, wname.length()) != 0)
+        if (qstrncmp(clientId, wname, wname.length()) != 0)
             continue;
 
         DCOPRef client(clientId.data(), wname + "-mainwindow#1");
@@ -139,8 +139,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
     bool gotArg = (args->count() == 1);
 
     TQString filename = gotArg
-        ? TQString::tqfromLatin1(args->arg(0))
-        : locateLocal("data", TQString::tqfromLatin1("konqueror/bookmarks.xml"));
+        ? TQString::fromLatin1(args->arg(0))
+        : locateLocal("data", TQString::fromLatin1("konqueror/bookmarks.xml"));
 
     if (!isGui) {
         CurrentMgr::self()->createManager(filename);

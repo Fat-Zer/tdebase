@@ -43,11 +43,11 @@ public:
 	// Adds an item that will be managed
 	void addItem( KdmItem *item ) { m_children.append( item ); }
 
-	// Return false if any item are managed by this tqlayouter
+	// Return false if any item are managed by this layouter
 	bool isEmpty() { return m_children.isEmpty(); }
 
-	// Updates the tqlayout of all items knowing that the parent
-	// has the @p parentGeometry tqgeometry
+	// Updates the layout of all items knowing that the parent
+	// has the @p parentGeometry geometry
 //	virtual void update( const TQRect &parentGeometry ) = 0;
 
 protected:
@@ -59,8 +59,8 @@ class KdmLayoutFixed : public KdmLayout {
 public:
 	KdmLayoutFixed( const TQDomNode &node );
 
-	// Updates the tqlayout of all boxed items knowing that the parent
-	// has the @p parentGeometry tqgeometry
+	// Updates the layout of all boxed items knowing that the parent
+	// has the @p parentGeometry geometry
 	void update( const TQRect &parentGeometry, bool force );
 };
 
@@ -74,13 +74,13 @@ class KdmLayoutBox : public KdmLayout {
 public:
 	KdmLayoutBox( const TQDomNode &node );
 
-	// Updates the tqlayout of all boxed items knowing that they
+	// Updates the layout of all boxed items knowing that they
 	// should fit into @p parentGeometry container
 	void update( const TQRect &parentGeometry, bool force );
 
 	// Computes the size hint of the box, telling which is the
 	// smallest size inside which boxed items will fit
-	TQSize tqsizeHint();
+	TQSize sizeHint();
 
 private:
 	struct {

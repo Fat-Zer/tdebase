@@ -23,7 +23,7 @@
 
 1998-11-06  Cristian Tibirna  <ctibirna@gch.ulaval.ca>
 
-	* titlebar.[cpp,h] : added title tqalignment config
+	* titlebar.[cpp,h] : added title alignment config
 
 1998-10-23  Cristian Tibirna  <ctibirna@gch.ulaval.ca>
 
@@ -37,12 +37,12 @@
 
 1998-10-21  Cristian Tibirna  <ctibirna@gch.ulaval.ca>
 
-	* desktop.[cpp,h]: now with consistent tqlayout use
+	* desktop.[cpp,h]: now with consistent layout use
 		resizeEvent() deleted
 
 1998-10-19  Cristian Tibirna  <ctibirna@gch.ulaval.ca>
 
-	* windows.[cpp,h]: now with consistent tqlayout use
+	* windows.[cpp,h]: now with consistent layout use
 		resizeEvent() deleted
 
 1998-10-18  Cristian Tibirna  <ctibirna@gch.ulaval.ca>

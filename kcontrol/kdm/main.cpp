@@ -164,7 +164,7 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
         if ((*umapi).second.find( gn ) == (*umapi).second.end())
 	  (*umapi).second.append( gn );
       } else
-        kdWarning() << "group '" << gn << "' tqcontains unknown user '" << un << "'" << endl;
+        kdWarning() << "group '" << gn << "' contains unknown user '" << un << "'" << endl;
     } while (*++grp->gr_mem);
   }
   endgrent();
@@ -173,7 +173,7 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
     kdWarning() << "user(s) '" << tgmapci.data().join(",")
 	<< "' have unknown GID " << tgmapci.key() << endl;
 
-  config = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
+  config = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
 
   TQVBoxLayout *top = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);

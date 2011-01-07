@@ -35,7 +35,7 @@ Placement::Placement(Workspace* w)
     }
 
 /*!
-  Places the client \a c according to the workspace's tqlayout policy
+  Places the client \a c according to the workspace's layout policy
  */
 void Placement::place(Client* c, TQRect& area )
     {
@@ -452,7 +452,7 @@ void Placement::placeDialog(Client* c, TQRect& area, Policy nextPlacement )
 void Placement::placeUnderMouse(Client* c, TQRect& area, Policy /*next*/ )
     {
     area = checkArea( c, area );
-    TQRect geom = c->tqgeometry();
+    TQRect geom = c->geometry();
     geom.moveCenter( TQCursor::pos());
     c->move( geom.topLeft());
     c->keepInArea( area ); // make sure it's kept inside workarea
@@ -507,8 +507,8 @@ void Placement::placeOnMainWindow(Client* c, TQRect& area, Policy nextPlacement 
         place( c, area, Centered );
         return;
         }
-    TQRect geom = c->tqgeometry();
-    geom.moveCenter( place_on->tqgeometry().center());
+    TQRect geom = c->geometry();
+    geom.moveCenter( place_on->geometry().center());
     c->move( geom.topLeft());
     // get area again, because the mainwindow may be on different xinerama screen
     area = checkArea( c, TQRect()); 
@@ -523,7 +523,7 @@ void Placement::placeMaximizing(Client* c, TQRect& area, Policy nextPlacement )
         {
         if( m_WorkspacePtr->clientArea( MaximizeArea, c ) == area )
             c->maximize( Client::MaximizeFull );
-        else // if the tqgeometry doesn't match default maximize area (xinerama case?),
+        else // if the geometry doesn't match default maximize area (xinerama case?),
             { // it's probably better to use the given area
             c->setGeometry( area );
             }
@@ -538,7 +538,7 @@ void Placement::placeMaximizing(Client* c, TQRect& area, Policy nextPlacement )
 TQRect Placement::checkArea( const Client* c, const TQRect& area )
     {
     if( area.isNull())
-        return m_WorkspacePtr->clientArea( PlacementArea, c->tqgeometry().center(), c->desktop());
+        return m_WorkspacePtr->clientArea( PlacementArea, c->geometry().center(), c->desktop());
     return area;
     }
 
@@ -591,7 +591,7 @@ const char* Placement::policyToString( Policy policy )
 void Workspace::slotWindowPackLeft()
     {
     if( active_client && active_client->isMovable())
-        active_client->move( packPositionLeft( active_client, active_client->tqgeometry().left(), true ),
+        active_client->move( packPositionLeft( active_client, active_client->geometry().left(), true ),
             active_client->y());
     }
 
@@ -599,7 +599,7 @@ void Workspace::slotWindowPackRight()
     {
     if( active_client && active_client->isMovable())
         active_client->move( 
-            packPositionRight( active_client, active_client->tqgeometry().right(), true )
+            packPositionRight( active_client, active_client->geometry().right(), true )
             - active_client->width() + 1, active_client->y());
     }
 
@@ -607,14 +607,14 @@ void Workspace::slotWindowPackUp()
     {
     if( active_client && active_client->isMovable())
         active_client->move( active_client->x(),
-            packPositionUp( active_client, active_client->tqgeometry().top(), true ));
+            packPositionUp( active_client, active_client->geometry().top(), true ));
     }
 
 void Workspace::slotWindowPackDown()
     {
     if( active_client && active_client->isMovable())
         active_client->move( active_client->x(),
-            packPositionDown( active_client, active_client->tqgeometry().bottom(), true ) - active_client->height() + 1 );
+            packPositionDown( active_client, active_client->geometry().bottom(), true ) - active_client->height() + 1 );
     }
 
 void Workspace::slotWindowGrowHorizontal()
@@ -627,16 +627,16 @@ void Client::growHorizontal()
     {
     if( !isResizable() || isShade())
         return;
-    TQRect geom = tqgeometry();
+    TQRect geom = geometry();
     geom.setRight( workspace()->packPositionRight( this, geom.right(), true ));
     TQSize adjsize = adjustedSize( geom.size(), SizemodeFixedW );
-    if( tqgeometry().size() == adjsize && geom.size() != adjsize && xSizeHint.width_inc > 1 ) // take care of size increments
+    if( geometry().size() == adjsize && geom.size() != adjsize && xSizeHint.width_inc > 1 ) // take care of size increments
         {
         int newright = workspace()->packPositionRight( this, geom.right() + xSizeHint.width_inc - 1, true );
         // check that it hasn't grown outside of the area, due to size increments
         // TODO this may be wrong?
         if( workspace()->clientArea( MovementArea,
-            TQPoint(( x() + newright ) / 2, tqgeometry().center().y()), desktop()).right() >= newright )
+            TQPoint(( x() + newright ) / 2, geometry().center().y()), desktop()).right() >= newright )
             geom.setRight( newright );
         }
     geom.setSize( adjustedSize( geom.size(), SizemodeFixedW ));
@@ -653,7 +653,7 @@ void Client::shrinkHorizontal()
     {
     if( !isResizable() || isShade())
         return;
-    TQRect geom = tqgeometry();
+    TQRect geom = geometry();
     geom.setRight( workspace()->packPositionLeft( this, geom.right(), false ));
     if( geom.width() <= 1 )
         return;
@@ -672,15 +672,15 @@ void Client::growVertical()
     {
     if( !isResizable() || isShade())
         return;
-    TQRect geom = tqgeometry();
+    TQRect geom = geometry();
     geom.setBottom( workspace()->packPositionDown( this, geom.bottom(), true ));
     TQSize adjsize = adjustedSize( geom.size(), SizemodeFixedH );
-    if( tqgeometry().size() == adjsize && geom.size() != adjsize && xSizeHint.height_inc > 1 ) // take care of size increments
+    if( geometry().size() == adjsize && geom.size() != adjsize && xSizeHint.height_inc > 1 ) // take care of size increments
         {
         int newbottom = workspace()->packPositionDown( this, geom.bottom() + xSizeHint.height_inc - 1, true );
         // check that it hasn't grown outside of the area, due to size increments
         if( workspace()->clientArea( MovementArea,
-            TQPoint( tqgeometry().center().x(), ( y() + newbottom ) / 2 ), desktop()).bottom() >= newbottom )
+            TQPoint( geometry().center().x(), ( y() + newbottom ) / 2 ), desktop()).bottom() >= newbottom )
             geom.setBottom( newbottom );
         }
     geom.setSize( adjustedSize( geom.size(), SizemodeFixedH ));
@@ -698,7 +698,7 @@ void Client::shrinkVertical()
     {
     if( !isResizable() || isShade())
         return;
-    TQRect geom = tqgeometry();
+    TQRect geom = geometry();
     geom.setBottom( workspace()->packPositionUp( this, geom.bottom(), false ));
     if( geom.height() <= 1 )
         return;
@@ -712,7 +712,7 @@ int Workspace::packPositionLeft( const Client* cl, int oldx, bool left_edge ) co
     int newx = clientArea( MovementArea, cl ).left();
     if( oldx <= newx ) // try another Xinerama screen
         newx = clientArea( MovementArea,
-            TQPoint( cl->tqgeometry().left() - 1, cl->tqgeometry().center().y()), cl->desktop()).left();
+            TQPoint( cl->geometry().left() - 1, cl->geometry().center().y()), cl->desktop()).left();
     if( oldx <= newx )
         return oldx;
     for( ClientList::ConstIterator it = clients.begin();
@@ -721,10 +721,10 @@ int Workspace::packPositionLeft( const Client* cl, int oldx, bool left_edge ) co
         {
         if( !(*it)->isShown( false ) || !(*it)->isOnDesktop( active_client->desktop()))
             continue;
-        int x = left_edge ? (*it)->tqgeometry().right() + 1 : (*it)->tqgeometry().left() - 1;
+        int x = left_edge ? (*it)->geometry().right() + 1 : (*it)->geometry().left() - 1;
         if( x > newx && x < oldx
-            && !( cl->tqgeometry().top() > (*it)->tqgeometry().bottom() // they overlap in Y direction
-                || cl->tqgeometry().bottom() < (*it)->tqgeometry().top()))
+            && !( cl->geometry().top() > (*it)->geometry().bottom() // they overlap in Y direction
+                || cl->geometry().bottom() < (*it)->geometry().top()))
             newx = x;
         }
     return newx;
@@ -735,7 +735,7 @@ int Workspace::packPositionRight( const Client* cl, int oldx, bool right_edge ) 
     int newx = clientArea( MovementArea, cl ).right();
     if( oldx >= newx ) // try another Xinerama screen
         newx = clientArea( MovementArea,
-            TQPoint( cl->tqgeometry().right() + 1, cl->tqgeometry().center().y()), cl->desktop()).right();
+            TQPoint( cl->geometry().right() + 1, cl->geometry().center().y()), cl->desktop()).right();
     if( oldx >= newx )
         return oldx;
     for( ClientList::ConstIterator it = clients.begin();
@@ -744,10 +744,10 @@ int Workspace::packPositionRight( const Client* cl, int oldx, bool right_edge ) 
         {
         if( !(*it)->isShown( false ) || !(*it)->isOnDesktop( cl->desktop()))
             continue;
-        int x = right_edge ? (*it)->tqgeometry().left() - 1 : (*it)->tqgeometry().right() + 1;
+        int x = right_edge ? (*it)->geometry().left() - 1 : (*it)->geometry().right() + 1;
         if( x < newx && x > oldx
-            && !( cl->tqgeometry().top() > (*it)->tqgeometry().bottom()
-                || cl->tqgeometry().bottom() < (*it)->tqgeometry().top()))
+            && !( cl->geometry().top() > (*it)->geometry().bottom()
+                || cl->geometry().bottom() < (*it)->geometry().top()))
             newx = x;
         }
     return newx;
@@ -758,7 +758,7 @@ int Workspace::packPositionUp( const Client* cl, int oldy, bool top_edge ) const
     int newy = clientArea( MovementArea, cl ).top();
     if( oldy <= newy ) // try another Xinerama screen
         newy = clientArea( MovementArea,
-            TQPoint( cl->tqgeometry().center().x(), cl->tqgeometry().top() - 1 ), cl->desktop()).top();
+            TQPoint( cl->geometry().center().x(), cl->geometry().top() - 1 ), cl->desktop()).top();
     if( oldy <= newy )
         return oldy;
     for( ClientList::ConstIterator it = clients.begin();
@@ -767,10 +767,10 @@ int Workspace::packPositionUp( const Client* cl, int oldy, bool top_edge ) const
         {
         if( !(*it)->isShown( false ) || !(*it)->isOnDesktop( cl->desktop()))
             continue;
-        int y = top_edge ? (*it)->tqgeometry().bottom() + 1 : (*it)->tqgeometry().top() - 1;
+        int y = top_edge ? (*it)->geometry().bottom() + 1 : (*it)->geometry().top() - 1;
         if( y > newy && y < oldy
-            && !( cl->tqgeometry().left() > (*it)->tqgeometry().right() // they overlap in X direction
-                || cl->tqgeometry().right() < (*it)->tqgeometry().left()))
+            && !( cl->geometry().left() > (*it)->geometry().right() // they overlap in X direction
+                || cl->geometry().right() < (*it)->geometry().left()))
             newy = y;
         }
     return newy;
@@ -781,7 +781,7 @@ int Workspace::packPositionDown( const Client* cl, int oldy, bool bottom_edge ) 
     int newy = clientArea( MovementArea, cl ).bottom();
     if( oldy >= newy ) // try another Xinerama screen
         newy = clientArea( MovementArea,
-            TQPoint( cl->tqgeometry().center().x(), cl->tqgeometry().bottom() + 1 ), cl->desktop()).bottom();
+            TQPoint( cl->geometry().center().x(), cl->geometry().bottom() + 1 ), cl->desktop()).bottom();
     if( oldy >= newy )
         return oldy;
     for( ClientList::ConstIterator it = clients.begin();
@@ -790,10 +790,10 @@ int Workspace::packPositionDown( const Client* cl, int oldy, bool bottom_edge ) 
         {
         if( !(*it)->isShown( false ) || !(*it)->isOnDesktop( cl->desktop()))
             continue;
-        int y = bottom_edge ? (*it)->tqgeometry().top() - 1 : (*it)->tqgeometry().bottom() + 1;
+        int y = bottom_edge ? (*it)->geometry().top() - 1 : (*it)->geometry().bottom() + 1;
         if( y < newy && y > oldy
-            && !( cl->tqgeometry().left() > (*it)->tqgeometry().right()
-                || cl->tqgeometry().right() < (*it)->tqgeometry().left()))
+            && !( cl->geometry().left() > (*it)->geometry().right()
+                || cl->geometry().right() < (*it)->geometry().left()))
             newy = y;
         }
     return newy;

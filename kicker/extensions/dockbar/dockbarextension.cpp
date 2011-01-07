@@ -60,7 +60,7 @@ DockBarExtension::DockBarExtension(const TQString& configFile, Type type,
     kwin_module = new KWinModule(this);
     connect( kwin_module, TQT_SIGNAL( windowAdded(WId) ), TQT_SLOT( windowAdded(WId) ) );
     setMinimumSize(DockContainer::sz(), DockContainer::sz());
-    tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+    setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
     loadContainerConfig();
 }
 
@@ -77,7 +77,7 @@ DockBarExtension::~DockBarExtension()
     if (dragging_container) delete dragging_container;
 }
 
-TQSize DockBarExtension::tqsizeHint(Position p, TQSize) const
+TQSize DockBarExtension::sizeHint(Position p, TQSize) const
 {
     if (p == Left || p == Right)
 	return TQSize(DockContainer::sz(), DockContainer::sz() * containers.count());
@@ -87,7 +87,7 @@ TQSize DockBarExtension::tqsizeHint(Position p, TQSize) const
 
 void DockBarExtension::resizeEvent(TQResizeEvent*)
 {
-    tqlayoutContainers();   
+    layoutContainers();   
 }
 
 
@@ -167,7 +167,7 @@ void DockBarExtension::windowAdded(WId win)
     saveContainerConfig();
 }
 
-void DockBarExtension::tqlayoutContainers()
+void DockBarExtension::layoutContainers()
 {
     int i = 0;
     for (DockContainer::Vector::const_iterator it = containers.constBegin();
@@ -212,7 +212,7 @@ void DockBarExtension::embedWindow(WId win, TQString command, TQString resName, 
     }
     
     container->embed(win);
-    tqlayoutContainers();
+    layoutContainers();
     emit updateLayout();
     if (ncmd)
         container->askNewCommand();
@@ -246,7 +246,7 @@ void DockBarExtension::addContainer(DockContainer* c, int pos)
 
 void DockBarExtension::removeContainer(DockContainer* c)
 {
-    DockContainer::Vector::iterator it = tqFind(containers.begin(), containers.end(), c);
+    DockContainer::Vector::iterator it = qFind(containers.begin(), containers.end(), c);
 
     if (it == containers.end())
     {
@@ -255,7 +255,7 @@ void DockBarExtension::removeContainer(DockContainer* c)
 
     containers.erase(it);
     delete c;
-    tqlayoutContainers();
+    layoutContainers();
 }
 
 void DockBarExtension::embeddedWindowDestroyed(DockContainer* c)
@@ -335,7 +335,7 @@ int DockBarExtension::findContainerAtPoint(const TQPoint& p)
          it != containers.constEnd();
          ++it, ++i)
     {
-        if ((*it)->tqgeometry().tqcontains(p))
+        if ((*it)->geometry().contains(p))
         {
             return i;
         }
@@ -360,7 +360,7 @@ void DockBarExtension::mouseReleaseEvent(TQMouseEvent *e ) {
         releaseMouse();
         original_container->embed(dragging_container->embeddedWinId());
         delete dragging_container; dragging_container = 0;
-        tqlayoutContainers();
+        layoutContainers();
         saveContainerConfig();
     }
 }
@@ -387,7 +387,7 @@ void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
     if (dragging_container) {
         dragging_container->move(e->globalPos() - mclic_dock_pos);
         
-        // change tqlayout of other containers 
+        // change layout of other containers 
         TQPoint dragpos(dragging_container->pos()), 
             barpos(mapToGlobal(pos()));
         int pdrag1,pdrag2,psz;
@@ -403,7 +403,7 @@ void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
             pdrag1 = dragged_container_original_pos;
 
 
-        DockContainer::Vector::iterator it = tqFind(containers.begin(), containers.end(), original_container);
+        DockContainer::Vector::iterator it = qFind(containers.begin(), containers.end(), original_container);
 
         if (it == containers.end())
         {
@@ -418,6 +418,6 @@ void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
 
         containers.erase(it);
         containers.insert(target, original_container);
-        tqlayoutContainers();
+        layoutContainers();
     }
 }

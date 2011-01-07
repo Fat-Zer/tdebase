@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>NonKDEButtonSettings</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -121,7 +121,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
@@ -140,13 +140,13 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="tqminimumSize">
+            <property name="minimumSize">
                 <size>
                     <width>58</width>
                     <height>58</height>
                 </size>
             </property>
-            <property name="tqmaximumSize">
+            <property name="maximumSize">
                 <size>
                     <width>58</width>
                     <height>58</height>
@@ -199,7 +199,7 @@
             <property name="sizeType">
                 <enum>Minimum</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>20</width>
                     <height>8</height>
@@ -216,6 +216,6 @@
     <tabstop>m_commandLine</tabstop>
     <tabstop>m_inTerm</tabstop>
 </tabstops>
-<tqlayoutdefaults spacing="6" margin="11"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

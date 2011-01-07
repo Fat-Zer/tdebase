@@ -84,8 +84,8 @@ void ColumnInfo::setData(const TQString& n, const TQString& desktopName, int kio
 }
 
 
-KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *tqparentWidget)
-   : KListView(tqparentWidget)
+KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget)
+   : KListView(parentWidget)
    ,sortedByColumn(0)
    ,m_pBrowserView(parent)
    ,m_dirLister(new KDirLister( true /*m_showIcons==false*/))
@@ -107,7 +107,7 @@ KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *
 {
    kdDebug(1202) << "+KonqBaseListViewWidget" << endl;
 
-   m_dirLister->setMainWindow(tqtopLevelWidget());
+   m_dirLister->setMainWindow(topLevelWidget());
 
    m_bTopLevelComplete  = true;
 
@@ -410,7 +410,7 @@ void KonqBaseListViewWidget::contentsMousePressEvent( TQMouseEvent *e )
       TQRect r( m_rubber->normalize() );
        delete m_rubber;
        m_rubber = 0;
-      tqrepaintContents( r, FALSE );
+      repaintContents( r, FALSE );
    }
 
    delete m_selected;
@@ -448,7 +448,7 @@ void KonqBaseListViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e )
       TQRect r( m_rubber->normalize() );
       delete m_rubber;
       m_rubber = 0;
-      tqrepaintContents( r, FALSE );
+      repaintContents( r, FALSE );
    }
 
    if ( m_scrollTimer )
@@ -489,7 +489,7 @@ void KonqBaseListViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
          emit m_pBrowserView->setStatusBarText( item->item()->getStatusBarInfo() );
          m_pBrowserView->emitMouseOver( item->item() );
 
-         vp.setY( tqitemRect( item ).y() );
+         vp.setY( itemRect( item ).y() );
          TQRect rect( viewportToContents( vp ), TQSize(20, item->height()) );
          m_fileTip->setItem( item->item(), rect, item->pixmap( 0 ) );
          m_fileTip->setPreview( KGlobalSettings::showFilePreview( item->item()->url() ) );
@@ -553,7 +553,7 @@ void KonqBaseListViewWidget::drawRubber( TQPainter *p )
    pt = contentsToViewport( pt );
    style().drawPrimitive( TQStyle::PE_RubberBand, p,
                           TQRect( pt.x(), pt.y(), m_rubber->width(), m_rubber->height() ),
-                          tqcolorGroup(), TQStyle::Style_Default, tqcolorGroup().base() );
+                          colorGroup(), TQStyle::Style_Default, colorGroup().base() );
    
 }
 
@@ -591,9 +591,9 @@ void KonqBaseListViewWidget::slotAutoScroll()
    {
          TQRect rect;
       if ( allColumnsShowFocus() )
-          rect = tqitemRect( cur );
+          rect = itemRect( cur );
       else {
-          rect = tqitemRect( cur );
+          rect = itemRect( cur );
           rect.setWidth( executeArea( cur ) );
       }
   
@@ -623,7 +623,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 	    {
                setSelected( cur, true );
                changed = TRUE;
-               rr = rr.unite( tqitemRect( cur ) );
+               rr = rr.unite( itemRect( cur ) );
 	    }
          } 
 	 else 
@@ -631,10 +631,10 @@ void KonqBaseListViewWidget::slotAutoScroll()
             if ( cur->isSelected() )
 	    {
                changed = TRUE;
-               rr = rr.unite( tqitemRect( cur ) );
+               rr = rr.unite( itemRect( cur ) );
 	    }
 	    
-	    if ( !m_selected || !m_selected->tqcontains( (KonqBaseListViewItem*)cur ) )
+	    if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
 	    }
@@ -659,7 +659,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 	    {
                setSelected( cur, true );
                changed = TRUE;
-               rr = rr.unite( tqitemRect( cur ) );
+               rr = rr.unite( itemRect( cur ) );
 	    }
 	 }
 	 else 
@@ -667,10 +667,10 @@ void KonqBaseListViewWidget::slotAutoScroll()
             if ( cur->isSelected() )
 	    {
                changed = TRUE;
-              rr = rr.unite( tqitemRect( cur ) );
+              rr = rr.unite( itemRect( cur ) );
 	    }
 
-            if ( !m_selected || !m_selected->tqcontains( (KonqBaseListViewItem*)cur ) )
+            if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
 	    }
@@ -718,7 +718,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 
    if ( !TQRect( scroll_margin, scroll_margin,
                 viewport()->width() - 2*scroll_margin,
-                viewport()->height() - 2*scroll_margin ).tqcontains( pos ) )
+                viewport()->height() - 2*scroll_margin ).contains( pos ) )
    {
       if ( !m_scrollTimer )
       {
@@ -762,7 +762,7 @@ void KonqBaseListViewWidget::viewportDragMoveEvent( TQDragMoveEvent *_ev )
 
    // Unselect previous drag-over-item
    if ( m_dragOverItem && m_dragOverItem != item )
-       if ( !m_selected || !m_selected->tqcontains( m_dragOverItem ) )
+       if ( !m_selected || !m_selected->contains( m_dragOverItem ) )
            setSelected( m_dragOverItem, false );
 
    if ( !item )
@@ -985,7 +985,7 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 	 if (_item->pixmap(0) != 0)
 	 {
 	   // Rect of the QListViewItem's pixmap area.
-           TQRect rect = _item->listView()->tqitemRect(_item);
+           TQRect rect = _item->listView()->itemRect(_item);
 
 	   // calculate nesting depth
 	   int nestingDepth = 0;
@@ -1111,7 +1111,7 @@ bool KonqBaseListViewWidget::openURL( const KURL &url )
       args.yOffset = contentsY();
       m_pBrowserView->extension()->setURLArgs( args );
 
-      if ( currentItem() && tqitemRect( currentItem() ).isValid() )
+      if ( currentItem() && itemRect( currentItem() ).isValid() )
          m_itemToGoTo = currentItem()->text(0);
 
       m_pBrowserView->m_filesToSelect.clear();

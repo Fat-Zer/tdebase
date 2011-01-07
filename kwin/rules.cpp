@@ -58,7 +58,7 @@ Rules::Rules()
     , acceptfocusrule( UnusedForceRule )
     , moveresizemoderule( UnusedForceRule )
     , closeablerule( UnusedForceRule )
-    , stricttqgeometryrule( UnusedForceRule )
+    , strictgeometryrule( UnusedForceRule )
     , shortcutrule( UnusedSetRule )
     , disableglobalshortcutsrule( UnusedForceRule )
     {
@@ -162,7 +162,7 @@ void Rules::readFromCfg( KConfig& cfg )
     READ_FORCE_RULE( acceptfocus, Bool, );
     READ_FORCE_RULE( moveresizemode, , Options::stringToMoveResizeMode );
     READ_FORCE_RULE( closeable, Bool, );
-    READ_FORCE_RULE( stricttqgeometry, Bool, );
+    READ_FORCE_RULE( strictgeometry, Bool, );
     READ_SET_RULE( shortcut, , );
     READ_FORCE_RULE( disableglobalshortcuts, Bool, );
     }
@@ -251,7 +251,7 @@ void Rules::write( KConfig& cfg ) const
     WRITE_FORCE_RULE( acceptfocus, );
     WRITE_FORCE_RULE( moveresizemode, Options::moveResizeModeToString );
     WRITE_FORCE_RULE( closeable, );
-    WRITE_FORCE_RULE( stricttqgeometry, );
+    WRITE_FORCE_RULE( strictgeometry, );
     WRITE_SET_RULE( shortcut, );
     WRITE_FORCE_RULE( disableglobalshortcuts, );
     }
@@ -288,7 +288,7 @@ bool Rules::isEmpty() const
         && acceptfocusrule == UnusedForceRule
         && moveresizemoderule == UnusedForceRule
         && closeablerule == UnusedForceRule
-        && stricttqgeometryrule == UnusedForceRule
+        && strictgeometryrule == UnusedForceRule
         && shortcutrule == UnusedSetRule
         && disableglobalshortcutsrule == UnusedForceRule );
     }
@@ -339,7 +339,7 @@ bool Rules::matchWMClass( const TQCString& match_class, const TQCString& match_n
             return false;
         if( wmclassmatch == ExactMatch && wmclass != cwmclass )
             return false;
-        if( wmclassmatch == SubstringMatch && !cwmclass.tqcontains( wmclass ))
+        if( wmclassmatch == SubstringMatch && !cwmclass.contains( wmclass ))
             return false;
         }
     return true;
@@ -353,7 +353,7 @@ bool Rules::matchRole( const TQCString& match_role ) const
             return false;
         if( windowrolematch == ExactMatch && windowrole != match_role )
             return false;
-        if( windowrolematch == SubstringMatch && !match_role.tqcontains( windowrole ))
+        if( windowrolematch == SubstringMatch && !match_role.contains( windowrole ))
             return false;
         }
     return true;
@@ -367,7 +367,7 @@ bool Rules::matchTitle( const TQString& match_title ) const
             return false;
         if( titlematch == ExactMatch && title != match_title )
             return false;
-        if( titlematch == SubstringMatch && !match_title.tqcontains( title ))
+        if( titlematch == SubstringMatch && !match_title.contains( title ))
             return false;
         }
     return true;
@@ -388,7 +388,7 @@ bool Rules::matchClientMachine( const TQCString& match_machine ) const
             && clientmachine != match_machine )
             return false;
         if( clientmachinematch == SubstringMatch
-            && !match_machine.tqcontains( clientmachine ))
+            && !match_machine.contains( clientmachine ))
             return false;
         }
     return true;
@@ -614,7 +614,7 @@ APPLY_FORCE_RULE( fsplevel, FSP, int )
 APPLY_FORCE_RULE( acceptfocus, AcceptFocus, bool )
 APPLY_FORCE_RULE( moveresizemode, MoveResizeMode, Options::MoveResizeMode )
 APPLY_FORCE_RULE( closeable, Closeable, bool )
-APPLY_FORCE_RULE( stricttqgeometry, StrictGeometry, bool )
+APPLY_FORCE_RULE( strictgeometry, StrictGeometry, bool )
 APPLY_RULE( shortcut, Shortcut, TQString )
 APPLY_FORCE_RULE( disableglobalshortcuts, DisableGlobalShortcuts, bool )
 
@@ -676,7 +676,7 @@ void Rules::discardUsed( bool withdrawn )
     DISCARD_USED_FORCE_RULE( acceptfocus );
     DISCARD_USED_FORCE_RULE( moveresizemode );
     DISCARD_USED_FORCE_RULE( closeable );
-    DISCARD_USED_FORCE_RULE( stricttqgeometry );
+    DISCARD_USED_FORCE_RULE( strictgeometry );
     DISCARD_USED_SET_RULE( shortcut );
     DISCARD_USED_FORCE_RULE( disableglobalshortcuts );
     }
@@ -1038,7 +1038,7 @@ void Workspace::discardUsedWindowRules( Client* c, bool withdrawn )
          it != rules.end();
          )
         {
-        if( c->rules()->tqcontains( *it ))
+        if( c->rules()->contains( *it ))
             {
             updated = true;
             (*it)->discardUsed( withdrawn );

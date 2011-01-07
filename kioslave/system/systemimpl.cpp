@@ -62,7 +62,7 @@ bool SystemImpl::listRoot(TQValueList<KIO::UDSEntry> &list)
 
 		for(; filename!=endf; ++filename)
 		{
-			if (!names_found.tqcontains(*filename))
+			if (!names_found.contains(*filename))
 			{
 				entry.clear();
 				createEntry(entry, *dirpath, *filename);
@@ -285,7 +285,7 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 			             const KIO::UDSEntryList &) ) );
 		connect( job, TQT_SIGNAL( result(KIO::Job *) ),
 		         this, TQT_SLOT( slotResult(KIO::Job *) ) );
-		tqApp->eventLoop()->enterLoop();
+		qApp->eventLoop()->enterLoop();
 
 		if (m_lastListingEmpty) icon = empty_icon;
 	}
@@ -299,13 +299,13 @@ void SystemImpl::slotEntries(KIO::Job *job, const KIO::UDSEntryList &list)
 	{
 		job->kill(true);
 		m_lastListingEmpty = false;
-		tqApp->eventLoop()->exitLoop();
+		qApp->eventLoop()->exitLoop();
 	}
 }
 
 void SystemImpl::slotResult(KIO::Job *)
 {
-	tqApp->eventLoop()->exitLoop();
+	qApp->eventLoop()->exitLoop();
 }
 
 

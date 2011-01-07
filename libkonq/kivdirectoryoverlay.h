@@ -49,7 +49,7 @@ private slots:
 private:
     KDirLister* m_lister;
     bool m_foundItems;
-    bool m_tqcontainsFolder;
+    bool m_containsFolder;
     TQDict<int>* m_popularIcons;
     TQString m_bestIcon;
     KFileIVI* m_directory;

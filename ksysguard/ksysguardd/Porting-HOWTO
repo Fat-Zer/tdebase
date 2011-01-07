@@ -70,7 +70,7 @@ auto-range feature of the display.
 
 --------
 ksysguardd> ps?
-Name    PID     PPID    UID     GID     tqStatus  User%   System% Nice    VmSize VmRss    VmLib   Login   Command
+Name    PID     PPID    UID     GID     Status  User%   System% Nice    VmSize VmRss    VmLib   Login   Command
 s       d       d       d       d       S       f       f       d       d      sksysguardd>
 --------
 
@@ -105,7 +105,7 @@ ksysguardd may support dynamic monitor sets. If a CPU is added or an
 interface disabled, monitors may be added or removed. To notify the
 front-end about this, you need to send the string "RECONFIGURE\n" over
 stderr. This causes the front-end to request the list of monitors
-again and adapt it's tqlayout accordingly. If ksysguardd receives a
+again and adapt it's layout accordingly. If ksysguardd receives a
 command it doesn't know it has to reply with "UNKNOWN
 COMMAND\nksysguardd> ".
 

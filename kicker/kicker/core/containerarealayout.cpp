@@ -58,11 +58,11 @@ class ContainerAreaLayoutIterator : public QGLayoutIterator
             ContainerAreaLayout::ItemList::iterator b = m_list->at(m_idx);
             if (b != m_list->end())
             {
-                ContainerAreaLayoutItem* tqlayoutItem = *b;
-                item = tqlayoutItem->item;
-                tqlayoutItem->item = 0;
+                ContainerAreaLayoutItem* layoutItem = *b;
+                item = layoutItem->item;
+                layoutItem->item = 0;
                 m_list->erase(b);
-                delete tqlayoutItem;
+                delete layoutItem;
             }
             return item;
         }
@@ -82,7 +82,7 @@ int ContainerAreaLayoutItem::heightForWidth(int w) const
     }
     else
     {
-        return item->tqsizeHint().height();
+        return item->sizeHint().height();
     }
 }
 
@@ -95,7 +95,7 @@ int ContainerAreaLayoutItem::widthForHeight(int h) const
     }
     else
     {
-        return item->tqsizeHint().width();
+        return item->sizeHint().width();
     }
 }
 
@@ -125,17 +125,17 @@ void ContainerAreaLayoutItem::setFreeSpaceRatio(double ratio)
 
 Qt::Orientation ContainerAreaLayoutItem::orientation() const
 {
-    return m_tqlayout->orientation();
+    return m_layout->orientation();
 }
 
-TQRect ContainerAreaLayoutItem::tqgeometryR() const
+TQRect ContainerAreaLayoutItem::geometryR() const
 {
-    return m_tqlayout->transform(tqgeometry());
+    return m_layout->transform(geometry());
 }
 
 void ContainerAreaLayoutItem::setGeometryR(const TQRect& r)
 {
-    setGeometry(m_tqlayout->transform(r));
+    setGeometry(m_layout->transform(r));
 }
 
 int ContainerAreaLayoutItem::widthForHeightR(int h) const
@@ -154,11 +154,11 @@ int ContainerAreaLayoutItem::widthR() const
 {
     if (orientation() == Horizontal)
     {
-        return tqgeometry().width();
+        return geometry().width();
     }
     else
     {
-        return tqgeometry().height();
+        return geometry().height();
     }
 }
 
@@ -166,11 +166,11 @@ int ContainerAreaLayoutItem::heightR() const
 {
     if (orientation() == Horizontal)
     {
-        return tqgeometry().height();
+        return geometry().height();
     }
     else
     {
-        return tqgeometry().width();
+        return geometry().width();
     }
 }
 
@@ -179,13 +179,13 @@ int ContainerAreaLayoutItem::leftR() const
     if (orientation() == Horizontal)
     {
         if (TQApplication::reverseLayout())
-            return m_tqlayout->tqgeometry().right() - tqgeometry().right();
+            return m_layout->geometry().right() - geometry().right();
         else
-            return tqgeometry().left();
+            return geometry().left();
     }
     else
     {
-        return tqgeometry().top();
+        return geometry().top();
     }
 }
 
@@ -194,13 +194,13 @@ int ContainerAreaLayoutItem::rightR() const
     if (orientation() == Horizontal)
     {
         if (TQApplication::reverseLayout())
-            return m_tqlayout->tqgeometry().right() - tqgeometry().left();
+            return m_layout->geometry().right() - geometry().left();
         else
-            return tqgeometry().right();
+            return geometry().right();
     }
     else
     {
-        return tqgeometry().bottom();
+        return geometry().bottom();
     }
 }
 
@@ -311,10 +311,10 @@ void ContainerAreaLayout::insertIntoFreeSpace(TQWidget* widget, TQPoint insertio
         }
     }
 
-    TQRect geom = item->tqgeometryR();
+    TQRect geom = item->geometryR();
     geom.moveLeft(insPos);
     item->setGeometryR(geom);
-    widget->setGeometry(transform(geom)); // widget isn't shown, tqlayout not active yet
+    widget->setGeometry(transform(geom)); // widget isn't shown, layout not active yet
 
     if (current)
     {
@@ -384,7 +384,7 @@ TQWidget* ContainerAreaLayout::widgetAt(int index) const
     return m_items[index]->item->widget();
 }
 
-TQSize ContainerAreaLayout::tqsizeHint() const
+TQSize ContainerAreaLayout::sizeHint() const
 {
     const int size = KickerLib::sizeValue(KPanelExtension::SizeSmall);
 
@@ -398,7 +398,7 @@ TQSize ContainerAreaLayout::tqsizeHint() const
     }
 }
 
-TQSize ContainerAreaLayout::tqminimumSize() const
+TQSize ContainerAreaLayout::minimumSize() const
 {
     const int size = KickerLib::sizeValue(KPanelExtension::SizeTiny);
 
@@ -566,7 +566,7 @@ void ContainerAreaLayout::moveContainerSwitch(TQWidget* container, int distance)
             break;
 
         // Move 'next' to the other side of 'moving'.
-        TQRect geom = next->tqgeometryR();
+        TQRect geom = next->geometryR();
         if (forward)
             geom.moveLeft(geom.left() - moving->widthR());
         else
@@ -630,7 +630,7 @@ void ContainerAreaLayout::moveContainerSwitch(TQWidget* container, int distance)
     }
 
     // Move the container to its new position and prevent it from moving outside the panel.
-    TQRect geom = moving->tqgeometryR();
+    TQRect geom = moving->geometryR();
     distance = kClamp(newPos, 0, widthR() - moving->widthR());
     geom.moveLeft(distance);
     moving->setGeometryR(geom);
@@ -645,7 +645,7 @@ void ContainerAreaLayout::moveContainerSwitch(TQWidget* container, int distance)
             if(AppletContainer* applet = dynamic_cast<AppletContainer*>(container))
                 if( applet->info().desktopFile() == "menuapplet.desktop" )
                 {
-                    TQRect geom = (*it)->tqgeometryR();
+                    TQRect geom = (*it)->geometryR();
                     if( prev != m_items.constEnd())
                         geom.moveLeft( (*prev)->rightR() + 1 );
                     else
@@ -662,7 +662,7 @@ int ContainerAreaLayout::moveContainerPush(TQWidget* a, int distance)
     const bool horizontal    = orientation() == Horizontal;
     const bool reverseLayout = TQApplication::reverseLayout();
 
-    // Get the iterator 'it' pointing to the tqlayoutitem representing 'a'.
+    // Get the iterator 'it' pointing to the layoutitem representing 'a'.
     ItemList::const_iterator it = m_items.constBegin();
     while (it != m_items.constEnd() && (*it)->item->widget() != a)
     {
@@ -721,7 +721,7 @@ int ContainerAreaLayout::moveContainerPushRecursive(ItemList::const_iterator it,
     moved = forward ? kMin(distance, available)
                     : kMax(distance, available);
 
-    TQRect geom = cur->tqgeometryR();
+    TQRect geom = cur->geometryR();
     geom.moveLeft(geom.left() + moved);
     cur->setGeometryR(geom);
 
@@ -735,7 +735,7 @@ TQRect ContainerAreaLayout::transform(const TQRect& r) const
         if (TQApplication::reverseLayout())
         {
             TQRect t = r;
-            t.moveLeft(tqgeometry().right() - r.right());
+            t.moveLeft(geometry().right() - r.right());
             return t;
         }
         else
@@ -765,11 +765,11 @@ int ContainerAreaLayout::widthR() const
 {
     if (orientation() == Horizontal)
     {
-        return tqgeometry().width();
+        return geometry().width();
     }
     else
     {
-        return tqgeometry().height();
+        return geometry().height();
     }
 }
 
@@ -777,27 +777,27 @@ int ContainerAreaLayout::heightR() const
 {
     if (orientation() == Horizontal)
     {
-        return tqgeometry().height();
+        return geometry().height();
     }
     else
     {
-        return tqgeometry().width();
+        return geometry().width();
     }
 }
 
 int ContainerAreaLayout::leftR() const
 {
     if (orientation() == Horizontal)
-        return tqgeometry().left();
+        return geometry().left();
     else
-        return tqgeometry().top();
+        return geometry().top();
 }
 
 int ContainerAreaLayout::rightR() const
 {
     if (orientation() == Horizontal)
-        return tqgeometry().right();
+        return geometry().right();
     else
-        return tqgeometry().bottom();
+        return geometry().bottom();
 }
 

@@ -1,4 +1,4 @@
-The apps directory tqcontains .desktop files for commonly used non-KDE
+The apps directory contains .desktop files for commonly used non-KDE
 programs which kappfinder installs into the applnk directory of KDE.
 
 kappfinder used to install .directory files as well because in the past the

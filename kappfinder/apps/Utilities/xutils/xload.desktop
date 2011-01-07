@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=xload
-SwallowExec=xload -nolabel -fg green -bg Black -hl red -update 3 -tqgeometry 25x25
+SwallowExec=xload -nolabel -fg green -bg Black -hl red -update 3 -geometry 25x25
 SwallowTitle=xload
 SwallowTitle[no]=xload
 SwallowTitle[es]=xload

@@ -49,7 +49,7 @@ KDecorationPreview::KDecorationPreview( TQWidget* parent, const char* name )
                                    "Most probably there\n"
                                    "was a problem loading the plugin." ), this );
 
-    no_preview->tqsetAlignment( AlignCenter );
+    no_preview->setAlignment( AlignCenter );
 
     setMinimumSize( 100, 100 );
     no_preview->resize( size());
@@ -109,7 +109,7 @@ void KDecorationPreview::positionPreviews()
     {
     int titleBarHeight, leftBorder, rightBorder, xoffset,
         dummy1, dummy2, dummy3;
-    TQRect tqgeometry;
+    TQRect geometry;
     TQSize size;
 
     no_preview->resize( this->size() );
@@ -127,15 +127,15 @@ void KDecorationPreview::positionPreviews()
 
     // Resize the active window
     size = TQSize( width() - xoffset, height() - titleBarHeight )
-                .expandedTo( deco[Active]->tqminimumSize() );
-    tqgeometry = TQRect( TQPoint( 0, titleBarHeight ), size );
-    deco[Active]->widget()->setGeometry( TQStyle::tqvisualRect( tqgeometry, this ) );
+                .expandedTo( deco[Active]->minimumSize() );
+    geometry = TQRect( TQPoint( 0, titleBarHeight ), size );
+    deco[Active]->widget()->setGeometry( TQStyle::visualRect( geometry, this ) );
 
     // Resize the inactive window
     size = TQSize( width() - xoffset, height() - titleBarHeight )
-                .expandedTo( deco[Inactive]->tqminimumSize() );
-    tqgeometry = TQRect( TQPoint( xoffset, 0 ), size );
-    deco[Inactive]->widget()->setGeometry( TQStyle::tqvisualRect( tqgeometry, this ) );
+                .expandedTo( deco[Inactive]->minimumSize() );
+    geometry = TQRect( TQPoint( xoffset, 0 ), size );
+    deco[Inactive]->widget()->setGeometry( TQStyle::visualRect( geometry, this ) );
     }
 
 void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode, bool active )
@@ -166,13 +166,13 @@ void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode, bool act
         delete[] xrects;
         }
     if( active )
-        tqmask = reg; // keep tqshape of the active window for unobscuredRegion()
+        mask = reg; // keep shape of the active window for unobscuredRegion()
     }
 
 TQRect KDecorationPreview::windowGeometry( bool active ) const
     {
     TQWidget *widget = active ? deco[Active]->widget() : deco[Inactive]->widget();
-    return widget->tqgeometry();
+    return widget->geometry();
     }
 
 void KDecorationPreview::setTempBorderSize(KDecorationPlugins* plugin, KDecorationDefines::BorderSize size)
@@ -214,7 +214,7 @@ TQRegion KDecorationPreview::unobscuredRegion( bool active, const TQRegion& r ) 
         {
         // copied from KWin core's code
         TQRegion ret = r;
-        TQRegion r2 = tqmask;
+        TQRegion r2 = mask;
         if( r2.isEmpty())
             r2 = TQRegion( windowGeometry( true ));
         r2.translate( windowGeometry( true ).x() - windowGeometry( false ).x(),
@@ -356,7 +356,7 @@ bool KDecorationPreviewBridge::isPreview() const
     return true;
     }
 
-TQRect KDecorationPreviewBridge::tqgeometry() const
+TQRect KDecorationPreviewBridge::geometry() const
     {
     return preview->windowGeometry( active );
     }

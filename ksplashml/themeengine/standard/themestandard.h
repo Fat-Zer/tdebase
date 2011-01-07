@@ -50,15 +50,15 @@ public:
 public slots:
   inline void slotUpdateProgress( int i )
   {
-    if( mtqStatus ) mtqStatus->slotUpdateProgress( i );
+    if( mStatus ) mStatus->slotUpdateProgress( i );
   }
   inline void slotUpdateSteps( int i )
   {
-    if( mtqStatus ) mtqStatus->slotUpdateSteps( i );
+    if( mStatus ) mStatus->slotUpdateSteps( i );
   }
   inline void slotSetText( const TQString& s )
   {
-    if( mtqStatus ) mtqStatus->slotSetMessage( s );
+    if( mStatus ) mStatus->slotSetMessage( s );
   }
   void slotSetPixmap( const TQString& );
 
@@ -67,7 +67,7 @@ private:
   void _readSettings();
   void _initUi();
 
-  WndtqStatus *mtqStatus;
+  WndStatus *mStatus;
   WndIcon *mIcon, *mPrevIcon;
   int mIconCount;
   int mStatusBarHeight;

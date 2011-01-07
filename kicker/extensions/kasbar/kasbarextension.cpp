@@ -97,7 +97,7 @@ KasBarExtension::KasBarExtension( const TQString& configFile,
 //    setBackgroundMode( NoBackground );
     kasbar = new KasTasker( orientation(), this, name );
 
-    connect( kasbar, TQT_SIGNAL( tqlayoutChanged() ), this, TQT_SIGNAL( updateLayout() ) );
+    connect( kasbar, TQT_SIGNAL( layoutChanged() ), this, TQT_SIGNAL( updateLayout() ) );
     connect( kasbar, TQT_SIGNAL( detachedChanged(bool) ), this, TQT_SLOT( setDetached(bool) ) );
 
     kasbar->setConfig( config() );
@@ -141,7 +141,7 @@ void KasBarExtension::showEvent( TQShowEvent */*se*/ )
 {
     updateGeometry();
     resize( kasbar->size() );
-    tqrepaint( true );
+    repaint( true );
 }
 
 TQSize KasBarExtension::detachedSize()
@@ -153,7 +153,7 @@ TQSize KasBarExtension::detachedSize()
 
 }
 
-TQSize KasBarExtension::tqsizeHint(Position p, TQSize maxSize ) const
+TQSize KasBarExtension::sizeHint(Position p, TQSize maxSize ) const
 {
    Orientation o = Horizontal;
 
@@ -167,7 +167,7 @@ TQSize KasBarExtension::tqsizeHint(Position p, TQSize maxSize ) const
 	   return TQSize( 0, kasbar->itemExtent()/2 );
    }
 
-   return kasbar->tqsizeHint( o, maxSize );
+   return kasbar->sizeHint( o, maxSize );
 }
 
 void KasBarExtension::positionChange( Position /* position */)

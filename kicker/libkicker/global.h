@@ -74,7 +74,7 @@ KDE_EXPORT TQString newDesktopFile(const KURL&url);
 /**
  * Reduces a popup menu
  *
- * When a popup menu tqcontains only 1 sub-menu, it makes no sense to
+ * When a popup menu contains only 1 sub-menu, it makes no sense to
  * show this popup-menu but we better show the sub-menu directly.
  *
  * This function checks whether that is the case and returns either the
@@ -85,7 +85,7 @@ KDE_EXPORT TQPopupMenu *reduceMenu(TQPopupMenu *);
 
 /**
  * Calculate the appropriate position for a popup menu based on the
- * direction, the size of the menu, the widget tqgeometry, and a optional
+ * direction, the size of the menu, the widget geometry, and a optional
  * point in the local coordinates of the widget.
  */
 KDE_EXPORT TQPoint popupPosition(KPanelApplet::Direction d,

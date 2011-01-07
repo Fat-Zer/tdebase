@@ -2,7 +2,7 @@
 Positioning of extensions
 =========================
 
-How about using the tqalignment flags (or similar) for position, and the
+How about using the alignment flags (or similar) for position, and the
 direction flags for how to fill?
 
 
@@ -32,10 +32,10 @@ Now here's the filling
 
 etc. etc.
 
-Essentially, this splits the concept of positioning and tqlayout. Now, lets get
+Essentially, this splits the concept of positioning and layout. Now, lets get
 crazy:
 
-Imagine we're in position a and want to have a triangular corner tqlayout:
+Imagine we're in position a and want to have a triangular corner layout:
 
 1247
 35
@@ -43,7 +43,7 @@ Imagine we're in position a and want to have a triangular corner tqlayout:
 
 So, maybe we need some sort of concept of (one of):
  1) multiple linked rectangular blocks
- 2) extensions/bars with a tqmask
+ 2) extensions/bars with a mask
  3) each item being considered independently (maybe some sort of magnetic
  blocks so they can be draggable?)
 

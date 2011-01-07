@@ -5,7 +5,7 @@
     <property name="name">
         <cstring>kdcopview</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -50,7 +50,7 @@
                 </widget>
             <widget class="QLayoutWidget">
                 <property name="name">
-                    <cstring>tqlayout18</cstring>
+                    <cstring>layout18</cstring>
                 </property>
                 <grid>
                     <property name="name">
@@ -98,7 +98,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="tqminimumSize">
+                    <property name="minimumSize">
                         <size>
                             <width>0</width>
                             <height>0</height>
@@ -139,8 +139,8 @@
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>
-<tqlayoutdefaults spacing="6" margin="11"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>klistviewsearchline.h</includehint>
     <includehint>kdcoplistview.h</includehint>

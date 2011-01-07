@@ -177,7 +177,7 @@ struct ppathcnf {
 	short pc_pipe_buf;
 	u_char pc_vdisable;
 	char pc_xxx;
-	short pc_tqmask[2];
+	short pc_mask[2];
 };
 typedef struct ppathcnf ppathcnf;
 #ifdef __cplusplus 

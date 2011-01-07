@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "panelbutton.h"
 
 /**
- * Button that tqcontains the PanelKMenu and client menu manager.
+ * Button that contains the PanelKMenu and client menu manager.
  */
 class KButton : public PanelPopupButton
 {

@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>AppletTabBase</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -112,7 +112,7 @@
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="tqsizeHint">
+                                    <property name="sizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>
@@ -123,7 +123,7 @@
                                     <property name="name">
                                         <cstring>pb_add</cstring>
                                     </property>
-                                    <property name="tqminimumSize">
+                                    <property name="minimumSize">
                                         <size>
                                             <width>0</width>
                                             <height>0</height>
@@ -143,7 +143,7 @@
                                     <property name="sizeType">
                                         <enum>Minimum</enum>
                                     </property>
-                                    <property name="tqsizeHint">
+                                    <property name="sizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>
@@ -162,7 +162,7 @@
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="tqminimumSize">
+                                    <property name="minimumSize">
                                         <size>
                                             <width>0</width>
                                             <height>0</height>
@@ -182,7 +182,7 @@
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="tqsizeHint">
+                                    <property name="sizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>
@@ -219,8 +219,8 @@
 <includes>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<tqlayoutdefaults spacing="3" margin="6"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>qwidget.h</includehint>
 </includehints>

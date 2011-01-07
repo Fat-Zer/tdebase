@@ -220,21 +220,21 @@ FontAASettings::FontAASettings(TQWidget *parent)
                 changesMade(false)
 {
   TQWidget     *mw=new TQWidget(this);
-  TQGridLayout *tqlayout=new TQGridLayout(mw, 1, 1, 0, KDialog::spacingHint());
+  TQGridLayout *layout=new TQGridLayout(mw, 1, 1, 0, KDialog::spacingHint());
 
   excludeRange=new TQCheckBox(i18n("E&xclude range:"), mw),
-  tqlayout->addWidget(excludeRange, 0, 0);
+  layout->addWidget(excludeRange, 0, 0);
   excludeFrom=new KDoubleNumInput(0, 72, 8.0, 1, 1, mw),
   excludeFrom->setSuffix(i18n(" pt"));
-  tqlayout->addWidget(excludeFrom, 0, 1);
+  layout->addWidget(excludeFrom, 0, 1);
   excludeToLabel=new TQLabel(i18n(" to "), mw);
-  tqlayout->addWidget(excludeToLabel, 0, 2);
+  layout->addWidget(excludeToLabel, 0, 2);
   excludeTo=new KDoubleNumInput(0, 72, 15.0, 1, 1, mw);
   excludeTo->setSuffix(i18n(" pt"));
-  tqlayout->addWidget(excludeTo, 0, 3);
+  layout->addWidget(excludeTo, 0, 3);
 
   useSubPixel=new TQCheckBox(i18n("&Use sub-pixel hinting:"), mw);
-  tqlayout->addWidget(useSubPixel, 1, 0);
+  layout->addWidget(useSubPixel, 1, 0);
 
   TQWhatsThis::add(useSubPixel, i18n("If you have a TFT or LCD screen you"
        " can further improve the quality of displayed fonts by selecting"
@@ -242,7 +242,7 @@ FontAASettings::FontAASettings(TQWidget *parent)
        "<br><b>This will not work with CRT monitors.</b>"));
 
   subPixelType=new TQComboBox(false, mw);
-  tqlayout->addMultiCellWidget(subPixelType, 1, 1, 1, 3);
+  layout->addMultiCellWidget(subPixelType, 1, 1, 1, 3);
 
   TQWhatsThis::add(subPixelType, i18n("In order for sub-pixel hinting to"
        " work correctly you need to know how the sub-pixels of your display"
@@ -256,9 +256,9 @@ FontAASettings::FontAASettings(TQWidget *parent)
 
 #ifdef HAVE_FONTCONFIG
   TQLabel *hintingLabel=new TQLabel(i18n("Hinting style: "), mw);
-  tqlayout->addWidget(hintingLabel, 2, 0);
+  layout->addWidget(hintingLabel, 2, 0);
   hintingStyle=new TQComboBox(false, mw);
-  tqlayout->addMultiCellWidget(hintingStyle, 2, 2, 1, 3);
+  layout->addMultiCellWidget(hintingStyle, 2, 2, 1, 3);
   for(int s=KXftConfig::Hint::NotSet+1; s<=KXftConfig::Hint::Full; ++s)
     hintingStyle->insertItem(KXftConfig::description((KXftConfig::Hint::Style)s));
 
@@ -560,11 +560,11 @@ KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
     << i18n("Used by the taskbar.")
     << i18n("Used for desktop icons.");
 
-  TQVBoxLayout * tqlayout =
+  TQVBoxLayout * layout =
     new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   TQGridLayout * fontUseLayout =
-    new TQGridLayout(tqlayout, nameGroupKeyRc.count() / 4, 3);
+    new TQGridLayout(layout, nameGroupKeyRc.count() / 4, 3);
 
   fontUseLayout->setColStretch(0, 0);
   fontUseLayout->setColStretch(1, 1);
@@ -607,16 +607,16 @@ KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
     ++count;
   }
 
-   TQHBoxLayout *hblay = new TQHBoxLayout(tqlayout, KDialog::spacingHint());
+   TQHBoxLayout *hblay = new TQHBoxLayout(layout, KDialog::spacingHint());
    hblay->addStretch();
    TQPushButton * fontAdjustButton = new TQPushButton(i18n("Ad&just All Fonts..."), this);
    TQWhatsThis::add(fontAdjustButton, i18n("Click to change all fonts"));
    hblay->addWidget( fontAdjustButton );
    connect(fontAdjustButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotApplyFontDiff()));
 
-   tqlayout->addSpacing(KDialog::spacingHint());
+   layout->addSpacing(KDialog::spacingHint());
 
-   TQGridLayout* lay = new TQGridLayout(tqlayout, 2, 4, KDialog::spacingHint());
+   TQGridLayout* lay = new TQGridLayout(layout, 2, 4, KDialog::spacingHint());
    lay->setColStretch( 3, 10 );
    TQLabel* label = new TQLabel( i18n( "Use a&nti-aliasing:" ), this );
    lay->addWidget( label, 0, 0 );
@@ -655,7 +655,7 @@ KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
    connect( comboForceDpi, TQT_SIGNAL( activated( int )), TQT_SLOT( changed()));
    lay->addWidget( comboForceDpi, 1, 1 );
 
-   tqlayout->addStretch(1);
+   layout->addStretch(1);
 
    aaSettings=new FontAASettings(this);
 

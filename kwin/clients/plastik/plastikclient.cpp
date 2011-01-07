@@ -80,7 +80,7 @@ bool PlastikClient::decorationBehaviour(DecorationBehaviour behaviour) const
     }
 }
 
-int PlastikClient::tqlayoutMetric(LayoutMetric lm, bool respectWindowState, const KCommonDecorationButton *btn) const
+int PlastikClient::layoutMetric(LayoutMetric lm, bool respectWindowState, const KCommonDecorationButton *btn) const
 {
     bool maximized = maximizeMode()==MaximizeFull && !options()->moveResizeMaximizedWindows();
 
@@ -149,7 +149,7 @@ int PlastikClient::tqlayoutMetric(LayoutMetric lm, bool respectWindowState, cons
             return 3;
 
         default:
-            return KCommonDecoration::tqlayoutMetric(lm, respectWindowState, btn);
+            return KCommonDecoration::layoutMetric(lm, respectWindowState, btn);
     }
 }
 
@@ -204,25 +204,25 @@ TQRegion PlastikClient::cornerShape(WindowCorner corner)
 
     switch (corner) {
         case WC_TopLeft:
-            if (tqlayoutMetric(LM_TitleEdgeLeft) > 0)
+            if (layoutMetric(LM_TitleEdgeLeft) > 0)
                 return TQRegion(0, 0, 1, 2) + TQRegion(1, 0, 1, 1);
             else
                 return TQRegion();
 
         case WC_TopRight:
-            if (tqlayoutMetric(LM_TitleEdgeRight) > 0)
+            if (layoutMetric(LM_TitleEdgeRight) > 0)
                 return TQRegion(w-1, 0, 1, 2) + TQRegion(w-2, 0, 1, 1);
             else
                 return TQRegion();
 
         case WC_BottomLeft:
-            if (tqlayoutMetric(LM_BorderBottom) > 0)
+            if (layoutMetric(LM_BorderBottom) > 0)
                 return TQRegion(0, h-1, 1, 1);
             else
                 return TQRegion();
 
         case WC_BottomRight:
-            if (tqlayoutMetric(LM_BorderBottom) > 0)
+            if (layoutMetric(LM_BorderBottom) > 0)
                 return TQRegion(w-1, h-1, 1, 1);
             else
                 return TQRegion();
@@ -254,14 +254,14 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
 //     int r_h = r.height();
     int r_x, r_y, r_x2, r_y2;
     r.coords(&r_x, &r_y, &r_x2, &r_y2);
-    const int borderLeft = tqlayoutMetric(LM_BorderLeft);
-    const int borderRight = tqlayoutMetric(LM_BorderRight);
-    const int borderBottom = tqlayoutMetric(LM_BorderBottom);
-    const int titleHeight = tqlayoutMetric(LM_TitleHeight);
-    const int titleEdgeTop = tqlayoutMetric(LM_TitleEdgeTop);
-    const int titleEdgeBottom = tqlayoutMetric(LM_TitleEdgeBottom);
-    const int titleEdgeLeft = tqlayoutMetric(LM_TitleEdgeLeft);
-    const int titleEdgeRight = tqlayoutMetric(LM_TitleEdgeRight);
+    const int borderLeft = layoutMetric(LM_BorderLeft);
+    const int borderRight = layoutMetric(LM_BorderRight);
+    const int borderBottom = layoutMetric(LM_BorderBottom);
+    const int titleHeight = layoutMetric(LM_TitleHeight);
+    const int titleEdgeTop = layoutMetric(LM_TitleEdgeTop);
+    const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
+    const int titleEdgeLeft = layoutMetric(LM_TitleEdgeLeft);
+    const int titleEdgeRight = layoutMetric(LM_TitleEdgeRight);
 
     const int borderBottomTop = r_y2-borderBottom+1;
     const int borderLeftRight = r_x+borderLeft-1;
@@ -280,7 +280,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(titleEdgeTop > 0)
     {
         tempRect.setRect(r_x+2, r_y, r_w-2*2, titleEdgeTop );
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarTileTop, active, toolWindow) );
         }
     }
@@ -291,7 +291,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(titleEdgeLeft > 0)
     {
         tempRect.setRect(r_x, r_y, borderLeft, titleEdgeTop+titleHeight+titleEdgeBottom);
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarLeft, active, toolWindow) );
             titleMarginLeft = borderLeft;
         }
@@ -301,7 +301,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(titleEdgeRight > 0)
     {
         tempRect.setRect(borderRightLeft, r_y, borderRight, titleEdgeTop+titleHeight+titleEdgeBottom);
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarRight, active, toolWindow) );
             titleMarginRight = borderRight;
         }
@@ -312,7 +312,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(Rtitle.width() > 0)
     {
         m_captionRect = captionRect(); // also update m_captionRect!
-        if (m_captionRect.isValid() && region.tqcontains(m_captionRect) )
+        if (m_captionRect.isValid() && region.contains(m_captionRect) )
         {
             painter.drawTiledPixmap(m_captionRect, caption);
         }
@@ -320,14 +320,14 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
         // left to the title
         tempRect.setRect(r_x+titleMarginLeft, m_captionRect.top(),
                          m_captionRect.left() - (r_x+titleMarginLeft), m_captionRect.height() );
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarTile, active, toolWindow) );
         }
 
         // right to the title
         tempRect.setRect(m_captionRect.right()+1, m_captionRect.top(),
                          (r_x2-titleMarginRight) - m_captionRect.right(), m_captionRect.height() );
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarTile, active, toolWindow) );
         }
 
@@ -337,7 +337,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(borderLeft > 0 && sideHeight > 0)
     {
         tempRect.setCoords(r_x, titleEdgeBottomBottom+1, borderLeftRight, borderBottomTop-1);
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderLeftTile, active, toolWindow) );
         }
     }
@@ -346,7 +346,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(borderRight > 0 && sideHeight > 0)
     {
         tempRect.setCoords(borderRightLeft, titleEdgeBottomBottom+1, r_x2, borderBottomTop-1);
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderRightTile, active, toolWindow) );
         }
     }
@@ -358,19 +358,19 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
         int r = r_x2;
 
         tempRect.setRect(r_x, borderBottomTop, borderLeft, borderBottom);
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderBottomLeft, active, toolWindow) );
             l = tempRect.right()+1;
         }
 
         tempRect.setRect(borderRightLeft, borderBottomTop, borderLeft, borderBottom);
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderBottomRight, active, toolWindow) );
             r = tempRect.left()-1;
         }
 
         tempRect.setCoords(l, borderBottomTop, r, r_y2);
-        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
+        if (tempRect.isValid() && region.contains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderBottomTile, active, toolWindow) );
         }
     }
@@ -381,16 +381,16 @@ TQRect PlastikClient::captionRect() const
     const TQPixmap &caption = captionPixmap();
     TQRect r = widget()->rect();
 
-    const int titleHeight = tqlayoutMetric(LM_TitleHeight);
-    const int titleEdgeBottom = tqlayoutMetric(LM_TitleEdgeBottom);
-    const int titleEdgeTop = tqlayoutMetric(LM_TitleEdgeTop);
-    const int titleEdgeLeft = tqlayoutMetric(LM_TitleEdgeLeft);
-    const int marginLeft = tqlayoutMetric(LM_TitleBorderLeft);
-    const int marginRight = tqlayoutMetric(LM_TitleBorderRight);
+    const int titleHeight = layoutMetric(LM_TitleHeight);
+    const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
+    const int titleEdgeTop = layoutMetric(LM_TitleEdgeTop);
+    const int titleEdgeLeft = layoutMetric(LM_TitleEdgeLeft);
+    const int marginLeft = layoutMetric(LM_TitleBorderLeft);
+    const int marginRight = layoutMetric(LM_TitleBorderRight);
 
     const int titleLeft = r.left() + titleEdgeLeft + buttonsLeftWidth() + marginLeft;
     const int titleWidth = r.width() -
-            titleEdgeLeft - tqlayoutMetric(LM_TitleEdgeRight) -
+            titleEdgeLeft - layoutMetric(LM_TitleEdgeRight) -
             buttonsLeftWidth() - buttonsRightWidth() -
             marginLeft - marginRight;
 
@@ -435,7 +435,7 @@ void PlastikClient::reset( unsigned long changed )
 {
     if (changed & SettingColors)
     {
-        // tqrepaint the whole thing
+        // repaint the whole thing
         clearCaptionPixmaps();
         widget()->update();
         updateButtons();
@@ -445,7 +445,7 @@ void PlastikClient::reset( unsigned long changed )
 
         updateLayout();
 
-        // then tqrepaint
+        // then repaint
         clearCaptionPixmaps();
         widget()->update();
     }
@@ -479,7 +479,7 @@ const TQPixmap &PlastikClient::captionPixmap() const
     int captionWidth  = fm.width(c);
     int captionHeight = fm.height();
 
-    const int th  = tqlayoutMetric(LM_TitleHeight, false) + tqlayoutMetric(LM_TitleEdgeBottom, false);
+    const int th  = layoutMetric(LM_TitleHeight, false) + layoutMetric(LM_TitleEdgeBottom, false);
 
     TQPainter painter;
 
@@ -496,7 +496,7 @@ const TQPixmap &PlastikClient::captionPixmap() const
     if(Handler()->titleShadow())
     {
         TQColor shadowColor;
-        if (tqGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
+        if (qGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
             shadowColor = TQColor(255, 255, 255);
         else
             shadowColor = TQColor(0,0,0);

@@ -121,7 +121,7 @@ DM::exec( const char *cmd )
  *   @p ret might contain addional results.
  *  @li If false and @p ret is empty, a communication error occurred
  *   (most probably KDM is not running).
- *  @li If false and @p ret is non-empty, it tqcontains the error message
+ *  @li If false and @p ret is non-empty, it contains the error message
  *   from KDM.
  */
 bool
@@ -249,7 +249,7 @@ DM::bootOptions( TQStringList &opts, int &defopt, int &current )
 
 	opts = TQStringList::split( ' ', opts[1] );
 	for (TQStringList::Iterator it = opts.begin(); it != opts.end(); ++it)
-		(*it).tqreplace( "\\s", " " );
+		(*it).replace( "\\s", " " );
 
 	return true;
 }

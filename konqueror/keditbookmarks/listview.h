@@ -1,4 +1,4 @@
-// kate: space-indent on; indent-width 3; tqreplace-tabs on;
+// kate: space-indent on; indent-width 3; replace-tabs on;
 /* This file is part of the KDE project
    Copyright (C) 2002-2003 Alexander Kellett <lypanov@kde.org>
 
@@ -52,11 +52,11 @@ public:
 
    void modUpdate();
 
-   void setOldtqStatus(const TQString &);
-   void setTmptqStatus(const TQString &);
-   void restoretqStatus();
+   void setOldStatus(const TQString &);
+   void setTmpStatus(const TQString &);
+   void restoreStatus();
 
-   void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment);
+   void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment);
    void setSelected ( bool s );
 
    virtual void setOpen(bool);
@@ -75,7 +75,7 @@ private:
    KBookmark m_bookmark;
    PaintStyle m_paintStyle;
    bool m_emptyFolderPadder;
-   TQString m_oldtqStatus;
+   TQString m_oldStatus;
    void greyStyle(TQColorGroup &);
    void boldStyle(TQPainter *);
 };
@@ -88,7 +88,7 @@ public:
       NameColumn = 0,
       UrlColumn = 1,
       CommentColumn = 2,
-      tqStatusColumn = 3,
+      StatusColumn = 3,
       AddressColumn = 4
    };
    KEBListView(TQWidget *parent, bool folderList) 
@@ -140,8 +140,8 @@ public:
    // selected item stuff
    void selected(KEBListViewItem * item, bool s);
    
-   void tqinvalidate(const TQString & address);
-   void tqinvalidate(TQListViewItem * item);
+   void invalidate(const TQString & address);
+   void invalidate(TQListViewItem * item);
    void fixUpCurrent(const TQString & address);
 
    KEBListViewItem * firstSelected() const;
@@ -172,7 +172,7 @@ public:
    void rename(int);
    void clearSelection();
 
-   void updatetqStatus(TQString url);
+   void updateStatus(TQString url);
 
    static ListView* self() { return s_self; }
    static void createListViews(TQSplitter *parent);

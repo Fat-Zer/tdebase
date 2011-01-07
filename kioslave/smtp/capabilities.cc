@@ -56,16 +56,16 @@ namespace KioSMTP {
     return c;
   }
 
-  void Capabilities::add( const TQString & cap, bool tqreplace ) {
+  void Capabilities::add( const TQString & cap, bool replace ) {
     TQStringList tokens = TQStringList::split( ' ', cap.upper() );
     if ( tokens.empty() )
       return;
     TQString name = tokens.front(); tokens.pop_front();
-    add( name, tokens, tqreplace );
+    add( name, tokens, replace );
   }
 
-  void Capabilities::add( const TQString & name, const TQStringList & args, bool tqreplace ) {
-    if ( tqreplace )
+  void Capabilities::add( const TQString & name, const TQStringList & args, bool replace ) {
+    if ( replace )
       mCapabilities[name] = args;
     else
       mCapabilities[name] += args;
@@ -126,7 +126,7 @@ namespace KioSMTP {
       if ( it.key() == "AUTH" )
 	result += it.data();
       else if ( it.key().startsWith( "AUTH=" ) ) {
-	result.push_back( it.key().mid( tqstrlen("AUTH=") ) );
+	result.push_back( it.key().mid( qstrlen("AUTH=") ) );
 	result += it.data();
       }
     }

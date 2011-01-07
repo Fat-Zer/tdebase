@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>TimedLogoutDlg</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -66,7 +66,7 @@
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>tqlayout10</cstring>
+                        <cstring>layout10</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -80,7 +80,7 @@
                         </property>
                         <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>tqlayout8</cstring>
+                                <cstring>layout8</cstring>
                             </property>
                             <hbox>
                                 <property name="name">
@@ -88,7 +88,7 @@
                                 </property>
                                 <widget class="QLayoutWidget">
                                     <property name="name">
-                                        <cstring>tqlayout6</cstring>
+                                        <cstring>layout6</cstring>
                                     </property>
                                     <vbox>
                                         <property name="name">
@@ -110,7 +110,7 @@
                                             <property name="sizeType">
                                                 <enum>MinimumExpanding</enum>
                                             </property>
-                                            <property name="tqsizeHint">
+                                            <property name="sizeHint">
                                                 <size>
                                                     <width>20</width>
                                                     <height>2</height>
@@ -129,7 +129,7 @@
                                                     <verstretch>0</verstretch>
                                                 </sizepolicy>
                                             </property>
-                                            <property name="tqminimumSize">
+                                            <property name="minimumSize">
                                                 <size>
                                                     <width>48</width>
                                                     <height>48</height>
@@ -149,7 +149,7 @@
                                             <property name="sizeType">
                                                 <enum>MinimumExpanding</enum>
                                             </property>
-                                            <property name="tqsizeHint">
+                                            <property name="sizeHint">
                                                 <size>
                                                     <width>20</width>
                                                     <height>2</height>
@@ -160,7 +160,7 @@
                                 </widget>
                                 <widget class="QLayoutWidget">
                                     <property name="name">
-                                        <cstring>tqlayout7</cstring>
+                                        <cstring>layout7</cstring>
                                     </property>
                                     <vbox>
                                         <property name="name">
@@ -192,7 +192,7 @@
                                             <property name="textFormat">
                                                 <enum>PlainText</enum>
                                             </property>
-                                            <property name="tqalignment">
+                                            <property name="alignment">
                                                 <set>AlignVCenter|AlignLeft</set>
                                             </property>
                                         </widget>
@@ -215,7 +215,7 @@ after X automatically.</string>
                                             <property name="textFormat">
                                                 <enum>RichText</enum>
                                             </property>
-                                            <property name="tqalignment">
+                                            <property name="alignment">
                                                 <set>WordBreak|AlignVCenter</set>
                                             </property>
                                         </widget>
@@ -229,7 +229,7 @@ after X automatically.</string>
                                             <property name="sizeType">
                                                 <enum>Preferred</enum>
                                             </property>
-                                            <property name="tqsizeHint">
+                                            <property name="sizeHint">
                                                 <size>
                                                     <width>30</width>
                                                     <height>0</height>
@@ -242,7 +242,7 @@ after X automatically.</string>
                         </widget>
                         <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>tqlayout9</cstring>
+                                <cstring>layout9</cstring>
                             </property>
                             <hbox>
                                 <property name="name">
@@ -258,7 +258,7 @@ after X automatically.</string>
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="tqsizeHint">
+                                    <property name="sizeHint">
                                         <size>
                                             <width>90</width>
                                             <height>20</height>
@@ -286,7 +286,7 @@ after X automatically.</string>
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="tqsizeHint">
+                                    <property name="sizeHint">
                                         <size>
                                             <width>90</width>
                                             <height>20</height>
@@ -319,7 +319,7 @@ after X automatically.</string>
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="tqsizeHint">
+                                    <property name="sizeHint">
                                         <size>
                                             <width>90</width>
                                             <height>20</height>
@@ -348,5 +348,5 @@ after X automatically.</string>
         <slot>reject()</slot>
     </connection>
 </connections>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

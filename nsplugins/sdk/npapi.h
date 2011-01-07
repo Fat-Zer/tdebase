@@ -29,7 +29,7 @@
  * of those above. If you wish to allow use of your version of this file only
  * under the terms of either the GPL or the LGPL, and not to allow others to
  * use your version of this file under the terms of the NPL, indicate your
- * decision by deleting the provisions above and tqreplace them with the notice
+ * decision by deleting the provisions above and replace them with the notice
  * and other provisions required by the GPL or the LGPL. If you do not delete
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the NPL, the GPL or the LGPL.
@@ -329,14 +329,14 @@ typedef struct
 
 
 /*
- *   The following tqmasks are applied on certain platforms to NPNV and 
+ *   The following masks are applied on certain platforms to NPNV and 
  *   NPPV selectors that pass around pointers to COM interfaces. Newer 
  *   compilers on some platforms may generate vtables that are not 
  *   compatible with older compilers. To prevent older plugins from 
- *   not understanding a new browser's ABI, these tqmasks change the 
+ *   not understanding a new browser's ABI, these masks change the 
  *   values of those selectors on those platforms. To remain backwards
  *   compatible with differenet versions of the browser, plugins can 
- *   use these tqmasks to dynamically determine and use the correct C++
+ *   use these masks to dynamically determine and use the correct C++
  *   ABI that the browser is expecting. This does not apply to Windows 
  *   as Microsoft's COM ABI will likely not change.
  */
@@ -677,7 +677,7 @@ NPError NP_LOADDS NPN_NewStream(NPP instance, NPMIMEType type,
                                 const char* target, NPStream** stream);
 int32   NP_LOADDS NPN_Write(NPP instance, NPStream* stream, int32 len, void* buffer);
 NPError NP_LOADDS NPN_DestroyStream(NPP instance, NPStream* stream, NPReason reason);
-void    NP_LOADDS NPN_tqStatus(NPP instance, const char* message);
+void    NP_LOADDS NPN_Status(NPP instance, const char* message);
 const char* NP_LOADDS	NPN_UserAgent(NPP instance);
 void*   NP_LOADDS NPN_MemAlloc(uint32 size);
 void    NP_LOADDS NPN_MemFree(void* ptr);

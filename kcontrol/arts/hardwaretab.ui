@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>hardwareTab</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -35,7 +35,7 @@
                 </property>
                 <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>tqlayout57</cstring>
+                        <cstring>layout57</cstring>
                     </property>
                     <hbox>
                         <property name="name">
@@ -77,7 +77,7 @@
                 </widget>
                 <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>tqlayout31</cstring>
+                        <cstring>layout31</cstring>
                     </property>
                     <hbox>
                         <property name="name">
@@ -117,7 +117,7 @@
                 </widget>
                 <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>tqlayout4</cstring>
+                        <cstring>layout4</cstring>
                     </property>
                     <hbox>
                         <property name="name">
@@ -133,7 +133,7 @@
                             <property name="sizeType">
                                 <enum>Fixed</enum>
                             </property>
-                            <property name="tqsizeHint">
+                            <property name="sizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>20</height>
@@ -189,7 +189,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="tqsizeHint">
+                            <property name="sizeHint">
                                 <size>
                                     <width>0</width>
                                     <height>20</height>
@@ -208,7 +208,7 @@
                 </widget>
                 <widget class="QLayoutWidget" row="2" column="1">
                     <property name="name">
-                        <cstring>tqlayout6</cstring>
+                        <cstring>layout6</cstring>
                     </property>
                     <hbox>
                         <property name="name">
@@ -252,7 +252,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="tqsizeHint">
+                            <property name="sizeHint">
                                 <size>
                                     <width>0</width>
                                     <height>20</height>
@@ -345,7 +345,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>20</width>
                     <height>60</height>
@@ -354,5 +354,5 @@
         </spacer>
     </vbox>
 </widget>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

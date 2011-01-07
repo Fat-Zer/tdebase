@@ -54,9 +54,9 @@ Panner::Panner( TQWidget* parent, const char* name )
     _viewport = new TQWidget(_clipper);
     _viewport->setBackgroundOrigin(AncestorOrigin);
     
-    // tqlayout
-    _tqlayout = new TQBoxLayout(this, TQBoxLayout::LeftToRight);
-    _tqlayout->addWidget(_clipper, 1);
+    // layout
+    _layout = new TQBoxLayout(this, TQBoxLayout::LeftToRight);
+    _layout->addWidget(_clipper, 1);
     setOrientation(Horizontal);
 }
 
@@ -77,7 +77,7 @@ void Panner::createScrollButtons()
     //_luSB->setAutoRepeat(true);
     _luSB->setMinimumSize(12, 12);
     _luSB->hide();
-    _tqlayout->addWidget(_luSB);
+    _layout->addWidget(_luSB);
     connect(_luSB, TQT_SIGNAL(pressed()), TQT_SLOT(startScrollLeftUp()));
     connect(_luSB, TQT_SIGNAL(released()), TQT_SLOT(stopScroll()));
 
@@ -87,7 +87,7 @@ void Panner::createScrollButtons()
     //_rdSB->setAutoRepeat(true);
     _rdSB->setMinimumSize(12, 12);
     _rdSB->hide();
-    _tqlayout->addWidget(_rdSB);
+    _layout->addWidget(_rdSB);
     connect(_rdSB, TQT_SIGNAL(pressed()), TQT_SLOT(startScrollRightDown()));
     connect(_rdSB, TQT_SIGNAL(released()), TQT_SLOT(stopScroll()));
 
@@ -103,13 +103,13 @@ void Panner::setupButtons()
         {
             _luSB->setArrowType(Qt::LeftArrow);
             _rdSB->setArrowType(Qt::RightArrow);
-            _luSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
-            _rdSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
+            _luSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
+            _rdSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
             TQToolTip::add(_luSB, i18n("Scroll left"));
             TQToolTip::add(_rdSB, i18n("Scroll right"));
             setMinimumSize(24, 0);
         }
-        _tqlayout->setDirection(TQBoxLayout::LeftToRight);
+        _layout->setDirection(TQBoxLayout::LeftToRight);
     }
     else
     {
@@ -117,20 +117,20 @@ void Panner::setupButtons()
         {
             _luSB->setArrowType(Qt::UpArrow);
             _rdSB->setArrowType(Qt::DownArrow);
-            _luSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
-            _rdSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
+            _luSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
+            _rdSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
             TQToolTip::add(_luSB, i18n("Scroll up"));
             TQToolTip::add(_rdSB, i18n("Scroll down"));
             setMinimumSize(0, 24);
         }
-        _tqlayout->setDirection(TQBoxLayout::TopToBottom);
+        _layout->setDirection(TQBoxLayout::TopToBottom);
     }
 
     if (isVisible())
     {
-        // we need to manually redo the tqlayout if we are visible
+        // we need to manually redo the layout if we are visible
         // otherwise let the toolkit decide when to do this
-        _tqlayout->activate();
+        _layout->activate();
     }
 }
 

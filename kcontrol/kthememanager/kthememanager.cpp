@@ -298,7 +298,7 @@ void kthememanager::slotCreateTheme()
             m_theme->setAuthor( dlg.getAuthor() );
             m_theme->setEmail( dlg.getEmail() );
             m_theme->setHomepage( dlg.getHomepage() );
-            m_theme->setComment( dlg.getComment().tqreplace( "\n", "" ) );
+            m_theme->setComment( dlg.getComment().replace( "\n", "" ) );
             m_theme->setVersion( dlg.getVersion() );
 
             TQString result = m_theme->createYourself( true );

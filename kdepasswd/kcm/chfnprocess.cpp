@@ -60,7 +60,7 @@ int ChfnProcess::ConverseChfn(const char *pass)
     if ( line.isEmpty() )
       continue;// discard line
 
-    if ( line.tqcontains( "Password: " )/*isPrompt( line, "password" )*/ )
+    if ( line.contains( "Password: " )/*isPrompt( line, "password" )*/ )
     {
       WaitSlave();
       write(m_Fd, pass, strlen(pass));
@@ -69,11 +69,11 @@ int ChfnProcess::ConverseChfn(const char *pass)
 
     line = readLine(); // Let's see what the outcome was
 
-    if ( line.tqcontains( "Changing finger info" ) )
+    if ( line.contains( "Changing finger info" ) )
     {
       // do nothing
     }
-    else if ( line.tqcontains( "information changed" ) )
+    else if ( line.contains( "information changed" ) )
     {
       status=0;
       break;
@@ -83,7 +83,7 @@ int ChfnProcess::ConverseChfn(const char *pass)
 	    status=0;
 	    break;
     }
-    else if ( line.tqcontains( "Password error" ) || line.tqcontains("Incorrect password") )
+    else if ( line.contains( "Password error" ) || line.contains("Incorrect password") )
     {
       status=PasswordError;
       break;

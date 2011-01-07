@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class PanelExeDialog;
 
 /**
- * Button that tqcontains a non-KDE application
+ * Button that contains a non-KDE application
  * subclass of PanelButton
  */
 class NonKDEAppButton : public PanelButton

@@ -47,8 +47,8 @@ public:
     TaskBar( TQWidget *parent = 0, const char *name = 0 );
     ~TaskBar();
 
-    TQSize tqsizeHint() const;
-    TQSize tqsizeHint( KPanelExtension::Position, TQSize maxSize ) const;
+    TQSize sizeHint() const;
+    TQSize sizeHint( KPanelExtension::Position, TQSize maxSize ) const;
 
     void setOrientation( Orientation );
     void setArrowType( Qt::ArrowType at );
@@ -108,7 +108,7 @@ private:
     void sortContainersByDesktop(TaskContainer::List& list);
     void setViewportBackground();
 
-    bool			blocktqlayout;
+    bool			blocklayout;
     bool			m_showAllWindows;
     // The screen to show, -1 for all screens
     int 			m_currentScreen;
@@ -127,7 +127,7 @@ private:
     void                        reGroup();
     KGlobalAccel*               keys;
     KTextShadowEngine* m_textShadowEngine;
-    TQTimer m_retqlayoutTimer;
+    TQTimer m_relayoutTimer;
     bool m_ignoreUpdates;
     TQImage m_blendGradient;
 };

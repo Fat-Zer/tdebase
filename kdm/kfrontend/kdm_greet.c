@@ -4,7 +4,7 @@ KDE Greeter module for xdm
 
 Copyright (C) 2001-2003 Oswald Buddenhagen <ossi@kde.org>
 
-This file tqcontains code from the old xdm core,
+This file contains code from the old xdm core,
 Copyright 1988, 1998  Keith Packard, MIT X Consortium/The Open Group
 
 This program is free software; you can redistribute it and/or modify
@@ -560,7 +560,7 @@ xkb_init( Display *dpy )
 }
 
 static unsigned int
-xkb_modifier_tqmask_work( XkbDescPtr xkb, const char *name )
+xkb_modifier_mask_work( XkbDescPtr xkb, const char *name )
 {
 	int i;
 
@@ -569,23 +569,23 @@ xkb_modifier_tqmask_work( XkbDescPtr xkb, const char *name )
 	for (i = 0; i < XkbNumVirtualMods; i++) {
 		char *modStr = XGetAtomName( xkb->dpy, xkb->names->vmods[i] );
 		if (modStr != NULL && strcmp( name, modStr ) == 0) {
-			unsigned int tqmask;
-			XkbVirtualModsToReal( xkb, 1 << i, &tqmask );
-			return tqmask;
+			unsigned int mask;
+			XkbVirtualModsToReal( xkb, 1 << i, &mask );
+			return mask;
 		}
 	}
 	return 0;
 }
 
 static unsigned int
-xkb_modifier_tqmask( Display *dpy, const char *name )
+xkb_modifier_mask( Display *dpy, const char *name )
 {
 	XkbDescPtr xkb;
 
 	if ((xkb = XkbGetKeyboard( dpy, XkbAllComponentsMask, XkbUseCoreKbd ))) {
-		unsigned int tqmask = xkb_modifier_tqmask_work( xkb, name );
+		unsigned int mask = xkb_modifier_mask_work( xkb, name );
 		XkbFreeKeyboard( xkb, 0, True );
-		return tqmask;
+		return mask;
 	}
 	return 0;
 }
@@ -593,23 +593,23 @@ xkb_modifier_tqmask( Display *dpy, const char *name )
 static int
 xkb_get_modifier_state( Display *dpy, const char *name )
 {
-	unsigned int tqmask;
+	unsigned int mask;
 	XkbStateRec state;
 
-	if (!(tqmask = xkb_modifier_tqmask( dpy, name )))
+	if (!(mask = xkb_modifier_mask( dpy, name )))
 		return 0;
 	XkbGetState( dpy, XkbUseCoreKbd, &state );
-	return (tqmask & state.locked_mods) != 0;
+	return (mask & state.locked_mods) != 0;
 }
 
 static int
 xkb_set_modifier( Display *dpy, const char *name, int sts )
 {
-	unsigned int tqmask;
+	unsigned int mask;
 
-	if (!(tqmask = xkb_modifier_tqmask( dpy, name )))
+	if (!(mask = xkb_modifier_mask( dpy, name )))
 		return 0;
-	XkbLockModifiers( dpy, XkbUseCoreKbd, tqmask, sts ? tqmask : 0 );
+	XkbLockModifiers( dpy, XkbUseCoreKbd, mask, sts ? mask : 0 );
 	return 1;
 }
 #endif /* HAVE_XKB */
@@ -620,7 +620,7 @@ xtest_get_modifier_state( Display *dpy, int key )
 {
 	XModifierKeymap *map;
 	KeyCode modifier_keycode;
-	unsigned int i, tqmask;
+	unsigned int i, mask;
 	Window dummy1, dummy2;
 	int dummy3, dummy4, dummy5, dummy6;
 
@@ -632,8 +632,8 @@ xtest_get_modifier_state( Display *dpy, int key )
 			XFreeModifiermap( map );
 			XQueryPointer( dpy, DefaultRootWindow( dpy ),
 			               &dummy1, &dummy2, &dummy3, &dummy4, &dummy5, &dummy6,
-			               &tqmask );
-			return (tqmask & (1 << i)) != 0;
+			               &mask );
+			return (mask & (1 << i)) != 0;
 		}
 	XFreeModifiermap( map );
 	return 0;
@@ -700,11 +700,11 @@ restore_modifiers( void )
 }
 
 void
-setCursor( Display *mdpy, int window, int tqshape )
+setCursor( Display *mdpy, int window, int shape )
 {
 	Cursor xcursor;
 
-	if ((xcursor = XCreateFontCursor( mdpy, tqshape ))) {
+	if ((xcursor = XCreateFontCursor( mdpy, shape ))) {
 		XDefineCursor( mdpy, window, xcursor );
 		XFreeCursor( mdpy, xcursor );
 		XFlush( mdpy );

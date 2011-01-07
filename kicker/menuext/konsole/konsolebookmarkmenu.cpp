@@ -105,14 +105,14 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
     }
   }
 
-  KBookmarkGroup parentBookmark = m_pManager->tqfindByAddress( m_parentAddress ).toGroup();
+  KBookmarkGroup parentBookmark = m_pManager->findByAddress( m_parentAddress ).toGroup();
   Q_ASSERT(!parentBookmark.isNull());
   bool separatorInserted = false;
   for ( KBookmark bm = parentBookmark.first(); !bm.isNull();
         bm = parentBookmark.next(bm) )
   {
     TQString text = bm.text();
-    text.tqreplace( '&', "&&" );
+    text.replace( '&', "&&" );
     if ( !separatorInserted && m_bIsRoot) { // inserted before the first konq bookmark, to avoid the separator if no konq bookmark
       m_parentMenu->insertSeparator();
       separatorInserted = true;

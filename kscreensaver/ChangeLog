@@ -6,8 +6,8 @@
 	* banner.h, banner.cpp:
 	-added cycling color option
 	-added "show current time" option
-	-tqreplaced the readEntry()'s with the appropriate read*Entry()'s
-	* tqreplaced the glocale->translate with i18n in 
+	-replaced the readEntry()'s with the appropriate read*Entry()'s
+	* replaced the glocale->translate with i18n in 
 	attraction.cpp, banner.cpp, bat.cpp, blankscrn.cpp, blob.cpp,
 	bouboule.cpp, flame.cpp, forest.cpp, hop.cpp, laser.cpp, lines.cpp,
 	lissie.cpp, main.cpp, morph3d.cpp, pipes.cpp, polygon.cpp, pyro.cpp, rock.cpp,
@@ -43,7 +43,7 @@
 
 Version 0.3.7
 
-added tqgeometry management to all screensaver setups except kmorph3d (Mario
+added geometry management to all screensaver setups except kmorph3d (Mario
 Weilguni <mweilguni@kde.org>)
 
 Version 0.3.6

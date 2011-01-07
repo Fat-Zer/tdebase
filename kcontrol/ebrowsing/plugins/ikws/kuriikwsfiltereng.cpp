@@ -149,11 +149,11 @@ TQStringList KURISearchFilterEngine::modifySubstitutionMap(SubstMap& map,
       TQString s = userquery.mid (pos, qsexpr.matchedLength());
       while ((i = s.find(" ")) != -1)
       {
-        s = s.tqreplace (i, 1, "%20");
+        s = s.replace (i, 1, "%20");
         n++;
       }
       start = pos + qsexpr.matchedLength() + 2*n; // Move after last quote
-      userquery = userquery.tqreplace (pos, qsexpr.matchedLength(), s);
+      userquery = userquery.replace (pos, qsexpr.matchedLength(), s);
     }
   }
 
@@ -164,10 +164,10 @@ TQStringList KURISearchFilterEngine::modifySubstitutionMap(SubstMap& map,
   {
     int i = 0;
     while ((i = userquery.find("%20")) != -1)
-      userquery = userquery.tqreplace(i, 3, " ");
+      userquery = userquery.replace(i, 3, " ");
 
     for ( TQStringList::Iterator it = l.begin(); it != l.end(); ++it )
-      *it = (*it).tqreplace("%20", " ");
+      *it = (*it).replace("%20", " ");
   }
 
   PIDDBG << "Generating substitution map:\n";
@@ -188,10 +188,10 @@ TQStringList KURISearchFilterEngine::modifySubstitutionMap(SubstMap& map,
 
     // Back-substitute quoted strings (%20 -> " "):
     while ((j = v.find("%20")) != -1)
-      v = v.tqreplace(j, 3, " ");
+      v = v.replace(j, 3, " ");
 
     // Insert partial queries (referenced by \1 ... \n) to map:
-    map.tqreplace(TQString::number(i), v);
+    map.replace(TQString::number(i), v);
     PDVAR ("  map['" + nr + "']", map[nr]);
 
     // Insert named references (referenced by \name) to map:
@@ -202,8 +202,8 @@ TQStringList KURISearchFilterEngine::modifySubstitutionMap(SubstMap& map,
       TQString k = v.left(pos);
 
       // Back-substitute references contained in references (e.g. '\refname' substitutes to 'thisquery=\0')
-      while ((j = s.find("%5C")) != -1) s = s.tqreplace(j, 3, "\\");
-      map.tqreplace(k, s);
+      while ((j = s.find("%5C")) != -1) s = s.replace(j, 3, "\\");
+      map.replace(k, s);
       PDVAR ("  map['" + k + "']", map[k]);
     }
   }
@@ -228,15 +228,15 @@ TQString KURISearchFilterEngine::substituteQuery(const TQString& url, SubstMap &
   TQStringList ql = modifySubstitutionMap (map, userquery);
   int count = ql.count();
 
-  // Check, if old style '\1' is found and tqreplace it with \{@} (compatibility mode):
+  // Check, if old style '\1' is found and replace it with \{@} (compatibility mode):
   {
     int pos = -1;
     if ((pos = newurl.find("\\1")) >= 0)
     {
       PIDDBG << "WARNING: Using compatibility mode for newurl='" << newurl
-             << "'. Please tqreplace old style '\\1' with new style '\\{0}' "
+             << "'. Please replace old style '\\1' with new style '\\{0}' "
                 "in the query definition.\n";
-      newurl = newurl.tqreplace(pos, 2, "\\{@}");
+      newurl = newurl.replace(pos, 2, "\\{@}");
     }
   }
 
@@ -307,7 +307,7 @@ TQString KURISearchFilterEngine::substituteQuery(const TQString& url, SubstMap &
           v = encodeString(s, encodingMib);
           PDVAR ("    default", s);
         }
-        else if (map.tqcontains(rlitem))
+        else if (map.contains(rlitem))
         {
           // Use value from substitution map:
           found = true;
@@ -341,7 +341,7 @@ TQString KURISearchFilterEngine::substituteQuery(const TQString& url, SubstMap &
           // Encode '+', otherwise it would be interpreted as space in the resulting url:
           int vpos = 0;
           while ((vpos = v.find('+')) != -1)
-            v = v.tqreplace (vpos, 1, "%2B");
+            v = v.replace (vpos, 1, "%2B");
 
         }
         else if (rlitem == "@")
@@ -353,7 +353,7 @@ TQString KURISearchFilterEngine::substituteQuery(const TQString& url, SubstMap &
         i++;
       }
 
-      newurl = newurl.tqreplace(pos, reflist.matchedLength(), v);
+      newurl = newurl.replace(pos, reflist.matchedLength(), v);
     }
 
     // Special handling for \{@};
@@ -371,7 +371,7 @@ TQString KURISearchFilterEngine::substituteQuery(const TQString& url, SubstMap &
       // Substitute \{@} with list of unmatched query strings
       int vpos = 0;
       while ((vpos = newurl.find("\\@")) != -1)
-        newurl = newurl.tqreplace (vpos, 2, v);
+        newurl = newurl.replace (vpos, 2, v);
     }
   }
 
@@ -395,7 +395,7 @@ TQString KURISearchFilterEngine::formatResult( const TQString& url,
                                               bool /* isMalformed */,
                                               SubstMap& map ) const
 {
-  // Return nothing if userquery is empty and it tqcontains
+  // Return nothing if userquery is empty and it contains
   // substitution strings...
   if (query.isEmpty() && url.find(TQRegExp(TQRegExp::escape("\\{"))) > 0)
     return TQString::null;
@@ -427,13 +427,13 @@ TQString KURISearchFilterEngine::formatResult( const TQString& url,
   PDVAR ("query definition", url);
 
   // Add charset indicator for the query to substitution map:
-  map.tqreplace("ikw_charset", cseta);
+  map.replace("ikw_charset", cseta);
 
   // Add charset indicator for the fallback query to substitution map:
   TQString csetb = cset2;
   if (csetb.isEmpty())
     csetb = "iso-8859-1";
-  map.tqreplace("wsc_charset", csetb);
+  map.replace("wsc_charset", csetb);
 
   TQString newurl = substituteQuery (url, map, userquery, csetacodec->mibEnum());
 
@@ -446,7 +446,7 @@ void KURISearchFilterEngine::loadConfig()
 {
   // Migrate from the old format, this block should remain until
   // we can assume "every" user has upgraded to a KDE version that
-  // tqcontains the sycoca based search provider configuration (malte).
+  // contains the sycoca based search provider configuration (malte).
   // TODO: Remove in KDE 4 !!! This has been here a sufficient amount of time...
   {
     KSimpleConfig oldConfig(kapp->dirs()->saveLocation("config") + TQString(name()) + "rc");

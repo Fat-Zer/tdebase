@@ -3,7 +3,7 @@ Also, the API is documented in the .h header files.
 
 Makefile.am:
 - Change kwin_ to kwin3_ (in LDFLAGS, LIBADD, kde_module_LTLIBRARIES, SOURCES).
-- Make sure LDFLAGS tqcontains $(KDE_PLUGIN) and -module .
+- Make sure LDFLAGS contains $(KDE_PLUGIN) and -module .
 - Add -lkdecorations to LIBADD.
 - Do NOT rename the directory where the .desktop file is installed ( $(kde_datadir)/kwin/ ).
 
@@ -66,7 +66,7 @@ bool MyClient::eventFilter( QObject* o, QEvent* e )
 	}
 }
 =====
-- In MyClient, 'this' will have to be often tqreplaced with 'widget()', pay special attention
+- In MyClient, 'this' will have to be often replaced with 'widget()', pay special attention
   to cases where this won't cause compile error (e.g. in connect() calls, which take QObject* ).
 - Also, many calls may need 'widget()->' prepended.
 - Layout is created in init(), so call createLayout() directly there (if it's implemented).
@@ -91,18 +91,18 @@ inline const KDecorationOptions* options() { return KDecoration::options(); }
   Make sure it doesn't reenter the event loop (no kapp->processEvents()).
 - Buttons should use explicit setCursor() if they don't want cursor set by mousePosition().
   I.e. usually call setCursor( ArrowCursor ) in your MyButton.
-- In the part where you insert windowWrapper() into the tqlayout, i.e. something like
+- In the part where you insert windowWrapper() into the layout, i.e. something like
 =====
-    tqlayout->addWidget( windowWrapper());
+    layout->addWidget( windowWrapper());
 =====
-  tqreplace it with something like
+  replace it with something like
 =====
     if( isPreview())
-        tqlayout->addWidget( new QLabel( i18n( "<center><b>MyDecoration</b></center>" ), widget()));
+        layout->addWidget( new QLabel( i18n( "<center><b>MyDecoration</b></center>" ), widget()));
     else
-        tqlayout->addItem( new QSpacerItem( 0, 0 ));
+        layout->addItem( new QSpacerItem( 0, 0 ));
 =====
-- Implement MyClient::tqminimumSize().
+- Implement MyClient::minimumSize().
 - Handling maximization - to change vertical or horizontal maximalization, use e.g.
   'maximize( maximizeMode() ^ MaximizeVertical', to change normal maximalization, i.e. after
   left-clicking on the button, use
@@ -120,7 +120,7 @@ inline const KDecorationOptions* options() { return KDecoration::options(); }
   check values like 'maximizeMode() == MaximizeFull && !options()->moveResizeMaximizedWindows()'
   to check whether you can disable some borders completely.
   Note that your painting code must of course match these sizes.
-- If your code uses XGrabServer() or XUnGrabServer(), tqreplace them with (un)grabXServer().
+- If your code uses XGrabServer() or XUnGrabServer(), replace them with (un)grabXServer().
 - In cases where you call some function from the KDecoration API that can possibly destroy
   the decoration (e.g. showWindowMenu() or closeWindow()), make sure to use exists() if some more
   code will follow this call. Refer to showWindowMenu() documentation for an example.
@@ -142,10 +142,10 @@ extern "C"
 =====
 - The reset handling has changed: There's no signal resetClients(), and no
   slotResetAllClientsDelayed(). If your MyClient has some slotReset(), make it
-  reset( unsigned long ), where the argument is tqmask of things that have changed ( SettingXYZ ).
+  reset( unsigned long ), where the argument is mask of things that have changed ( SettingXYZ ).
   If you have some global function that handles resetting, make it
   MyFactory::reset( unsigned long ). Try to minimize the effects of the changed things,
-  e.g. if only the color setting has changed, doing a tqrepaint is often enough, and there's no need
+  e.g. if only the color setting has changed, doing a repaint is often enough, and there's no need
   to recreate the decorations. If you need to recreate the decorations, return true
   from MyFactory::reset(), otherwise, you may call resetDecorations() to call reset() in all
   MyClient instances.

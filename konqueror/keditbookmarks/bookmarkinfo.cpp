@@ -106,11 +106,11 @@ void BookmarkInfoWidget::showBookmark(const KBookmark &bk) {
             NodeEditCommand::getNodeText(bk, TQStringList() << "desc"));
 
     // readonly fields
-    updatetqStatus();
+    updateStatus();
  
 }
 
-void BookmarkInfoWidget::updatetqStatus()
+void BookmarkInfoWidget::updateStatus()
 {
    TQString visitDate =
         CurrentMgr::makeTimeStr( NodeEditCommand::getNodeText(m_bk, TQStringList() << "info" << "metadata"

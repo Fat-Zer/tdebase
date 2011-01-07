@@ -76,7 +76,7 @@ KonqOperations::~KonqOperations()
 
 void KonqOperations::editMimeType( const TQString & mimeType )
 {
-  TQString keditfiletype = TQString::tqfromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype + " " + KProcess::quote(mimeType),
                     keditfiletype, keditfiletype /*unused*/);
 }
@@ -185,7 +185,7 @@ void KonqOperations::_del( int method, const KURL::List & _selectedURLs, Confirm
         return;
     }
 
-    if ( askDeleteConfirmation( selectedURLs, method, confirmation, tqparentWidget() ) )
+    if ( askDeleteConfirmation( selectedURLs, method, confirmation, parentWidget() ) )
     {
         //m_srcURLs = selectedURLs;
         KIO::Job *job;
@@ -525,7 +525,7 @@ void KonqOperations::doFileCopy()
         }
 
         m_method = TRASH;
-        if ( askDeleteConfirmation( mlst, TRASH, DEFAULT_CONFIRMATION, tqparentWidget() ) )
+        if ( askDeleteConfirmation( mlst, TRASH, DEFAULT_CONFIRMATION, parentWidget() ) )
             action = TQDropEvent::Move;
         else
         {
@@ -815,7 +815,7 @@ void KonqMultiRestoreJob::slotResult( KIO::Job *job )
     slotStart();
 }
 
-TQWidget* KonqOperations::tqparentWidget() const
+TQWidget* KonqOperations::parentWidget() const
 {
     return static_cast<TQWidget *>( parent() );
 }

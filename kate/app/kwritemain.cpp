@@ -96,8 +96,8 @@ KWrite::KWrite (KTextEditor::Document *doc)
 
   setAcceptDrops(true);
 
-  connect(m_view,TQT_SIGNAL(newtqStatus()),this,TQT_SLOT(newCaption()));
-  connect(m_view,TQT_SIGNAL(viewtqStatusMsg(const TQString &)),this,TQT_SLOT(newtqStatus(const TQString &)));
+  connect(m_view,TQT_SIGNAL(newStatus()),this,TQT_SLOT(newCaption()));
+  connect(m_view,TQT_SIGNAL(viewStatusMsg(const TQString &)),this,TQT_SLOT(newStatus(const TQString &)));
   connect(m_view->document(),TQT_SIGNAL(fileNameChanged()),this,TQT_SLOT(newCaption()));
   connect(m_view->document(),TQT_SIGNAL(fileNameChanged()),this,TQT_SLOT(slotFileNameChanged()));
   connect(m_view,TQT_SIGNAL(dropEventPass(TQDropEvent *)),this,TQT_SLOT(slotDropEvent(TQDropEvent *)));
@@ -112,7 +112,7 @@ KWrite::KWrite (KTextEditor::Document *doc)
 
   // init with more usefull size, stolen from konq :)
   if (!initialGeometrySet())
-    resize( TQSize(700, 480).expandedTo(tqminimumSizeHint()));
+    resize( TQSize(700, 480).expandedTo(minimumSizeHint()));
 
   // call it as last thing, must be sure everything is already set up ;)
   setAutoSaveSettings ();
@@ -163,7 +163,7 @@ void KWrite::setupActions()
   // setup Settings menu
   setStandardToolBarMenuEnabled(true);
 
-  m_paShowStatusBar = KStdAction::showtqStatusbar(this, TQT_SLOT(toggleStatusBar()), actionCollection(), "settings_show_statusbar");
+  m_paShowStatusBar = KStdAction::showStatusbar(this, TQT_SLOT(toggleStatusBar()), actionCollection(), "settings_show_statusbar");
   m_paShowStatusBar->setWhatsThis(i18n("Use this command to show or hide the view's statusbar"));
 
   m_paShowPath = new KToggleAction(i18n("Sho&w Path"), 0, this, TQT_SLOT(newCaption()),
@@ -320,7 +320,7 @@ void KWrite::printDlg()
   KTextEditor::printInterface(m_view->document())->printDialog ();
 }
 
-void KWrite::newtqStatus(const TQString &msg)
+void KWrite::newStatus(const TQString &msg)
 {
   newCaption();
 
@@ -709,4 +709,4 @@ void KWriteEditorChooser::slotOk() {
 	m_chooser->writeAppSetting();
 	KDialogBase::slotOk();
 }
-// kate: space-indent on; indent-width 2; tqreplace-tabs on; mixed-indent off;
+// kate: space-indent on; indent-width 2; replace-tabs on; mixed-indent off;

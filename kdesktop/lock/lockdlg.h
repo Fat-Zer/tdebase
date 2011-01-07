@@ -55,7 +55,7 @@ private slots:
     void slotSessionActivated();
     void slotStartNewSession();
     void slotOK();
-    void tqlayoutClicked();
+    void layoutClicked();
     void slotActivity();
 
 private:
@@ -77,14 +77,14 @@ private:
     KGreeterPlugin *greet;
     TQFrame      *frame;
     TQGridLayout *frameLayout;
-    TQLabel      *mtqStatusLabel;
+    TQLabel      *mStatusLabel;
     KPushButton *mNewSessButton, *ok, *cancel;
     TQPushButton *mLayoutButton;
     int         mFailedTimerId;
     int         mTimeoutTimerId;
     int         mCapsLocked;
     bool        mUnlockingFailed;
-    TQStringList tqlayoutsList;
+    TQStringList layoutsList;
     TQStringList::iterator currLayout;
     int         sPid, sFd;
     TQListView   *lv;

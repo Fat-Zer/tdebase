@@ -48,7 +48,7 @@ void UserRectSel::mouseReleaseEvent(TQMouseEvent * e)
 {
     if (e->button() == LeftButton)
     {
-        tqApp->exit_loop();
+        qApp->exit_loop();
     }
 }
 
@@ -138,10 +138,10 @@ UserRectSel::PanelStrut UserRectSel::select(const RectList& rects, const TQPoint
     sel.show();
     sel.grabMouse();
     sel.paintCurrent();
-    tqApp->enter_loop();
+    qApp->enter_loop();
     sel.paintCurrent();
     sel.releaseMouse();
-    tqApp->syncX();
+    qApp->syncX();
     return sel.current;
 }
 

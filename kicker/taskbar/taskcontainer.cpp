@@ -157,9 +157,9 @@ void TaskContainer::stopTimers()
     attentionTimer.stop();
 }
 
-void TaskContainer::taskChanged(bool tqgeometryOnlyChange)
+void TaskContainer::taskChanged(bool geometryOnlyChange)
 {
-    if (tqgeometryOnlyChange)
+    if (geometryOnlyChange)
     {
         // we really don't care about those changes, which we may be getting
         // thanks to the pager, for instance, turning it on in taskmanager.
@@ -315,7 +315,7 @@ void TaskContainer::resizeEvent( TQResizeEvent * )
 {
     // calculate the icon rect
     TQRect br( style().subRect( TQStyle::SR_PushButtonContents, this ) );
-    iconRect = TQStyle::tqvisualRect( TQRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
+    iconRect = TQStyle::visualRect( TQRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
 }
 
 void TaskContainer::add(Task::Ptr task)
@@ -390,7 +390,7 @@ void TaskContainer::remove(Startup::Ptr startup)
     }
 }
 
-bool TaskContainer::tqcontains(Task::Ptr task)
+bool TaskContainer::contains(Task::Ptr task)
 {
     if (!task)
     {
@@ -408,12 +408,12 @@ bool TaskContainer::tqcontains(Task::Ptr task)
     return false;
 }
 
-bool TaskContainer::tqcontains(Startup::Ptr startup)
+bool TaskContainer::contains(Startup::Ptr startup)
 {
     return startup && (m_startup == startup);
 }
 
-bool TaskContainer::tqcontains(WId win)
+bool TaskContainer::contains(WId win)
 {
     Task::List::iterator itEnd = tasks.end();
     for (Task::List::iterator it = tasks.begin(); it != itEnd; ++it)
@@ -580,8 +580,8 @@ void TaskContainer::drawButton(TQPainter *p)
     bool sunken = isDown() || (alwaysDrawButtons && (active || aboutToActivate));
     bool reverse = TQApplication::reverseLayout();
     TQRect br(style().subRect(TQStyle::SR_PushButtonContents, this));
-    TQPoint shift = TQPoint(style().tqpixelMetric(TQStyle::PM_ButtonShiftHorizontal),
-                          style().tqpixelMetric(TQStyle::PM_ButtonShiftVertical));
+    TQPoint shift = TQPoint(style().pixelMetric(TQStyle::PM_ButtonShiftHorizontal),
+                          style().pixelMetric(TQStyle::PM_ButtonShiftVertical));
 
     // draw button background
     if (drawButton)
@@ -643,7 +643,7 @@ void TaskContainer::drawButton(TQPainter *p)
         // draw modified overlay
         if (!modPixmap.isNull())
         {
-            TQRect r = TQStyle::tqvisualRect(TQRect(br.x() + textPos,
+            TQRect r = TQStyle::visualRect(TQRect(br.x() + textPos,
                                                (height() - 16) / 2, 16, 16),
                                          this);
 
@@ -660,7 +660,7 @@ void TaskContainer::drawButton(TQPainter *p)
     // draw text
     if (!text.isEmpty())
     {
-        TQRect tr = TQStyle::tqvisualRect(TQRect(br.x() + textPos + 1, 0,
+        TQRect tr = TQStyle::visualRect(TQRect(br.x() + textPos + 1, 0,
                                             width() - textPos, height()),
                                       this);
         int textFlags = AlignVCenter | SingleLine;
@@ -772,7 +772,7 @@ void TaskContainer::drawButton(TQPainter *p)
         }
 
         int flags = TQStyle::Style_Enabled;
-        TQRect ar = TQStyle::tqvisualRect(TQRect(br.x() + br.width() - 8 - 2,
+        TQRect ar = TQStyle::visualRect(TQRect(br.x() + br.width() - 8 - 2,
                                             br.y(), 8, br.height()), this);
         if (sunken)
         {
@@ -784,7 +784,7 @@ void TaskContainer::drawButton(TQPainter *p)
     
     // draw mouse over frame in transparent mode
     if (m_mouseOver && halo)
-        KickerLib::drawBlendedRect(p, TQRect(0, 0, width(), height()), tqcolorGroup().foreground());
+        KickerLib::drawBlendedRect(p, TQRect(0, 0, width(), height()), colorGroup().foreground());
 
     if (aboutToActivate)
     {
@@ -932,7 +932,7 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
 
     // This is to avoid the flicker caused by redrawing the
     // button as unpressed just before it's activated.
-    if (!rect().tqcontains(e->pos()))
+    if (!rect().contains(e->pos()))
     {
         TQToolButton::mouseReleaseEvent(e);
         return;
@@ -1146,17 +1146,17 @@ void TaskContainer::popupMenu(int action)
             pos.setX(pos.x() + width());
             break;
         case LeftArrow:
-            pos.setX(pos.x() - m_menu->tqsizeHint().width());
+            pos.setX(pos.x() - m_menu->sizeHint().width());
             break;
         case DownArrow:
             if ( TQApplication::reverseLayout() )
-                pos.setX( pos.x() + width() - m_menu->tqsizeHint().width() );
+                pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
             pos.setY( pos.y() + height() );
             break;
         case UpArrow:
             if ( TQApplication::reverseLayout() )
-                pos.setX( pos.x() + width() - m_menu->tqsizeHint().width() );
-            pos.setY(pos.y() - m_menu->tqsizeHint().height());
+                pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
+            pos.setY(pos.y() - m_menu->sizeHint().height());
             break;
         default:
             break;
@@ -1287,7 +1287,7 @@ void TaskContainer::setArrowType( Qt::ArrowType at )
 
 void TaskContainer::publishIconGeometry( TQPoint global )
 {
-    TQPoint p = global + tqgeometry().topLeft();
+    TQPoint p = global + geometry().topLeft();
 
     Task::List::const_iterator itEnd = tasks.constEnd();
     for (Task::List::const_iterator it = tasks.constBegin(); it != itEnd; ++it)

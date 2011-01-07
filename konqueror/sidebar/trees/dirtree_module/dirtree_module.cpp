@@ -357,7 +357,7 @@ void KonqSidebarDirTreeModule::listDirectory( KonqSidebarTreeItem *item )
     if (openItem)
     {
        // We have this directory listed already, just copy the entries as we
-       // can't use the dirlister, it would tqinvalidate the old entries
+       // can't use the dirlister, it would invalidate the old entries
        int size = KGlobal::iconLoader()->currentSize( KIcon::Small );
        KonqSidebarTreeItem * parentItem = item;
        KonqSidebarDirTreeItem *oldItem = static_cast<KonqSidebarDirTreeItem *> (openItem->firstChild());
@@ -549,7 +549,7 @@ void KonqSidebarDirTreeModule::slotRedirection( const KURL & oldUrl, const KURL 
 
     do 
     {
-	if (item->alias.tqcontains(newUrlStr)) continue;
+	if (item->alias.contains(newUrlStr)) continue;
 	kdDebug()<<"Redirectiong element"<<endl;
         // We need to update the URL in m_dictSubDirs
         m_dictSubDirs.insert( newUrlStr, item );
@@ -574,7 +574,7 @@ void KonqSidebarDirTreeModule::slotListingStopped( const KURL & url )
         if ( item->childCount() == 0 )
         {
             item->setExpandable( false );
-            item->tqrepaint();
+            item->repaint();
         }
         m_pTree->stopAnimation( item );
         

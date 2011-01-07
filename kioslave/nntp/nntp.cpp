@@ -589,7 +589,7 @@ bool NNTPProtocol::fetchGroupXOVER( unsigned long first, bool &notSupported )
     TQStringList::ConstIterator it2 = fields.constBegin();
     ++it2; // first entry is the serial number
     for ( ; it != headers.constEnd() && it2 != fields.constEnd(); ++it, ++it2 ) {
-      if ( (*it).tqcontains( "Message-ID:", false ) ) {
+      if ( (*it).contains( "Message-ID:", false ) ) {
         msgId = (*it2);
         continue;
       }

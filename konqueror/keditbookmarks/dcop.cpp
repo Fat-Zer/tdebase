@@ -59,8 +59,8 @@ void KBookmarkEditorIface::slotDcopUpdatedAccessMetadata(TQString filename, TQSt
         kdDebug() << "slotDcopUpdatedAccessMetadata(" << url << ")" << endl;
         // no undo
         CurrentMgr::self()->mgr()->updateAccessMetadata(url, false);
-        ListView::self()->updatetqStatus(url);
-        KEBApp::self()->updatetqStatus(url);
+        ListView::self()->updateStatus(url);
+        KEBApp::self()->updateStatus(url);
         // notice - no save here! see! :)
     }
 }

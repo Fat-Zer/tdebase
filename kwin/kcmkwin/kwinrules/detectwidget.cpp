@@ -189,7 +189,7 @@ WId DetectDialog::findWindow()
     {
     Window root;
     Window child;
-    uint tqmask;
+    uint mask;
     int rootX, rootY, x, y;
     Window parent = qt_xrootwin();
     Atom wm_state = XInternAtom( qt_xdisplay(), "WM_STATE", False );
@@ -198,7 +198,7 @@ WId DetectDialog::findWindow()
          ++i )
         {
         XQueryPointer( qt_xdisplay(), parent, &root, &child,
-            &rootX, &rootY, &x, &y, &tqmask );
+            &rootX, &rootY, &x, &y, &mask );
         if( child == None )
             return 0;
         Atom type;

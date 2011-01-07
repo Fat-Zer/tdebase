@@ -91,7 +91,7 @@ public:
      *
      * The history is saved after receiving the DCOP call.
      */
-    void emitSetMaxCount( TQ_UINT32 count );
+    void emitSetMaxCount( Q_UINT32 count );
 
     /**
      * Sets a new maximum age of history entries and removes all entries that
@@ -102,7 +102,7 @@ public:
      *
      * The history is saved after receiving the DCOP call.
      */
-    void emitSetMaxAge( TQ_UINT32 days );
+    void emitSetMaxAge( Q_UINT32 days );
 
     /**
      * Removes the history entry for @p url, if existant. Tells all other
@@ -123,12 +123,12 @@ public:
     /**
      * @returns the current maximum number of history entries.
      */
-    TQ_UINT32 maxCount() const { return m_maxCount; }
+    Q_UINT32 maxCount() const { return m_maxCount; }
 
     /**
      * @returns the current maximum age (in days) of history entries.
      */
-    TQ_UINT32 maxAge() const { return m_maxAgeDays; }
+    Q_UINT32 maxAge() const { return m_maxAgeDays; }
 
     /**
      * Adds a pending entry to the history. Pending means, that the entry is
@@ -236,7 +236,7 @@ protected:
      */
     inline bool isExpired( KonqHistoryEntry *entry ) {
 	return (entry && m_maxAgeDays > 0 && entry->lastVisited <
-		TQDate::tqcurrentDate().addDays( -m_maxAgeDays ));
+		TQDate::currentDate().addDays( -m_maxAgeDays ));
     }
 
     /**
@@ -259,13 +259,13 @@ protected:
      * Called when the configuration of the maximum count changed.
      * Called via DCOP by some config-module
      */
-    virtual void notifyMaxCount( TQ_UINT32 count, TQCString saveId );
+    virtual void notifyMaxCount( Q_UINT32 count, TQCString saveId );
 
     /**
      * Called when the configuration of the maximum age of history-entries
      * changed. Called via DCOP by some config-module
      */
-    virtual void notifyMaxAge( TQ_UINT32 days, TQCString saveId );
+    virtual void notifyMaxAge( Q_UINT32 days, TQCString saveId );
 
     /**
      * Clears the history completely. Called via DCOP by some config-module
@@ -327,7 +327,7 @@ protected:
 private slots:
     /**
      * Called by the updateTimer to emit the KParts::HistoryProvider::updated()
-     * signal so that khtml can tqrepaint the updated links.
+     * signal so that khtml can repaint the updated links.
      */
     void slotEmitUpdated();
 
@@ -367,8 +367,8 @@ private:
      */
     TQMap<TQString,KonqHistoryEntry*> m_pending;
 
-    TQ_UINT32 m_maxCount;   // maximum of history entries
-    TQ_UINT32 m_maxAgeDays; // maximum age of a history entry
+    Q_UINT32 m_maxCount;   // maximum of history entries
+    Q_UINT32 m_maxAgeDays; // maximum age of a history entry
 
     KCompletion *m_pCompletion; // the completion object we sync with
 
@@ -378,7 +378,7 @@ private:
      */
     TQTimer *m_updateTimer;
 
-    static const TQ_UINT32 s_historyVersion;
+    static const Q_UINT32 s_historyVersion;
 };
 
 

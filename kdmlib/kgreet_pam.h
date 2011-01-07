@@ -64,7 +64,7 @@ class KPamGreeter : public TQObject, public KGreeterPlugin {
 	virtual void revive();
 	virtual void clear();
 
-        TQGridLayout *getLayoutItem() const { return static_cast<TQGridLayout*>(tqlayoutItem); }
+        TQGridLayout *getLayoutItem() const { return static_cast<TQGridLayout*>(layoutItem); }
 
   public slots:
 	void slotLoginLostFocus();
@@ -78,7 +78,7 @@ class KPamGreeter : public TQObject, public KGreeterPlugin {
         TQLabel *loginLabel;
         TQValueList<TQLabel*> authLabel;
 	KLineEdit *loginEdit;
-        TQWidget* m_tqparentWidget;
+        TQWidget* m_parentWidget;
         TQValueList<KPasswordEdit*> authEdit;
 	KSimpleConfig *stsFile;
         KdmThemer *m_themer;

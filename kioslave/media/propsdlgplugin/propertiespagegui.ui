@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>PropertiesPageGUI</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -21,7 +21,7 @@
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>tqlayout17</cstring>
+                <cstring>layout17</cstring>
             </property>
             <vbox>
                 <property name="name">
@@ -40,7 +40,7 @@
                         </property>
                         <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>tqlayout15</cstring>
+                                <cstring>layout15</cstring>
                             </property>
                             <vbox>
                                 <property name="name">
@@ -92,7 +92,7 @@
                                 </widget>
                                 <widget class="QLayoutWidget">
                                     <property name="name">
-                                        <cstring>tqlayout14</cstring>
+                                        <cstring>layout14</cstring>
                                     </property>
                                     <hbox>
                                         <property name="name">
@@ -150,7 +150,7 @@
                         </property>
                         <widget class="QLayoutWidget">
                             <property name="name">
-                                <cstring>tqlayout11</cstring>
+                                <cstring>layout11</cstring>
                             </property>
                             <vbox>
                                 <property name="name">
@@ -191,7 +191,7 @@
                                 </widget>
                                 <widget class="QLayoutWidget">
                                     <property name="name">
-                                        <cstring>tqlayout7</cstring>
+                                        <cstring>layout7</cstring>
                                     </property>
                                     <hbox>
                                         <property name="name">
@@ -256,7 +256,7 @@
                                 </widget>
                                 <widget class="QLayoutWidget">
                                     <property name="name">
-                                        <cstring>tqlayout14</cstring>
+                                        <cstring>layout14</cstring>
                                     </property>
                                     <hbox>
                                         <property name="name">
@@ -352,7 +352,7 @@ Display the short name as is; store a long name when the short name is not all u
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -383,5 +383,5 @@ Display the short name as is; store a long name when the short name is not all u
 <functions>
     <function returnType="bool">hasChanged()</function>
 </functions>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

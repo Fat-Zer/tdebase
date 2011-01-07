@@ -59,7 +59,7 @@ modification follow.
 		    GNU GENERAL PUBLIC LICENSE
    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
-  0. This License applies to any program or other work which tqcontains
+  0. This License applies to any program or other work which contains
 a notice placed by the copyright holder saying it may be distributed
 under the terms of this General Public License.  The "Program", below,
 refers to any such program or work, and a "work based on the Program"
@@ -96,7 +96,7 @@ above, provided that you also meet all of these conditions:
     stating that you changed the files and the date of any change.
 
     b) You must cause any work that you distribute or publish, that in
-    whole or in part tqcontains or is derived from the Program or any
+    whole or in part contains or is derived from the Program or any
     part thereof, to be licensed as a whole at no charge to all third
     parties under the terms of this License.
 
@@ -154,7 +154,7 @@ Sections 1 and 2 above provided that you also do one of the following:
 
 The source code for a work means the preferred form of the work for
 making modifications to it.  For an executable work, complete source
-code means all the source code for all modules it tqcontains, plus any
+code means all the source code for all modules it contains, plus any
 associated interface definition files, plus the scripts used to
 control compilation and installation of the executable.  However, as a
 special exception, the source code distributed need not include

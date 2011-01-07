@@ -45,7 +45,7 @@ KasClockItem::KasClockItem( KasBar *parent )
     lcd = new LCD( parent );
     lcd->hide();
 
-    lcd->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum );
+    lcd->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum );
     lcd->setBackgroundMode( NoBackground );
     lcd->setFrameStyle( TQFrame::NoFrame );
     lcd->setSegmentStyle( TQLCDNumber::Flat );
@@ -75,7 +75,7 @@ KasPopup *KasClockItem::createPopup()
 
 void KasClockItem::updateTime()
 {
-    setText( KGlobal::locale()->formatDate( TQDate::tqcurrentDate(), true /* shortFormat */ ) );
+    setText( KGlobal::locale()->formatDate( TQDate::currentDate(), true /* shortFormat */ ) );
     lcd->display( KGlobal::locale()->formatTime( TQTime::currentTime(), false /* includeSecs */, false /* isDuration */) );
     
     update();
@@ -89,7 +89,7 @@ void KasClockItem::paint( TQPainter *p )
 
     p->save();
     p->translate( 3, 15 );
-    lcd->setPaletteForegroundColor( kasbar()->tqcolorGroup().mid() );
+    lcd->setPaletteForegroundColor( kasbar()->colorGroup().mid() );
     lcd->draw( p );
     p->restore();
 

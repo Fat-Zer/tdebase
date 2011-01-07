@@ -72,12 +72,12 @@ KXKBApp::KXKBApp(bool allowStyles, bool GUIenabled)
 		::exit(1);
     }
 	
-    // keep in sync with kcmtqlayout.cpp
+    // keep in sync with kcmlayout.cpp
     keys = new KGlobalAccel(this);
 #include "kxkbbindings.cpp"
     keys->updateConnections();
 
-	m_tqlayoutOwnerMap = new LayoutMap(kxkbConfig);
+	m_layoutOwnerMap = new LayoutMap(kxkbConfig);
 
     connect( this, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)) );
     addKipcEventMask( KIPC::SettingsChanged );
@@ -92,7 +92,7 @@ KXKBApp::~KXKBApp()
     delete m_tray;
     delete m_rules;
     delete m_extension;
-	delete m_tqlayoutOwnerMap;
+	delete m_layoutOwnerMap;
 	delete kWinModule;
 }
 
@@ -101,7 +101,7 @@ int KXKBApp::newInstance()
 	m_extension->reset();
 	
     if( settingsRead() )
-		tqlayoutApply();
+		layoutApply();
 	
     return 0;
 }
@@ -143,29 +143,29 @@ bool KXKBApp::settingsRead()
 		kdDebug() << "Active window " << m_prevWinId << endl;
 	}
 	
-	m_tqlayoutOwnerMap->reset();
-	m_tqlayoutOwnerMap->setCurrentWindow( m_prevWinId );
+	m_layoutOwnerMap->reset();
+	m_layoutOwnerMap->setCurrentWindow( m_prevWinId );
 
 	if( m_rules == NULL )
 		m_rules = new XkbRules(false);
 	
-	for(int ii=0; ii<(int)kxkbConfig.m_tqlayouts.count(); ii++) {
-		LayoutUnit& tqlayoutUnit = kxkbConfig.m_tqlayouts[ii];
-		tqlayoutUnit.defaultGroup = m_rules->getDefaultGroup(tqlayoutUnit.tqlayout, tqlayoutUnit.includeGroup);
-		kdDebug() << "default group for " << tqlayoutUnit.toPair() << " is " << tqlayoutUnit.defaultGroup << endl;
+	for(int ii=0; ii<(int)kxkbConfig.m_layouts.count(); ii++) {
+		LayoutUnit& layoutUnit = kxkbConfig.m_layouts[ii];
+		layoutUnit.defaultGroup = m_rules->getDefaultGroup(layoutUnit.layout, layoutUnit.includeGroup);
+		kdDebug() << "default group for " << layoutUnit.toPair() << " is " << layoutUnit.defaultGroup << endl;
 	}
 	
 	m_currentLayout = kxkbConfig.getDefaultLayout();
 	
-	if( kxkbConfig.m_tqlayouts.count() == 1 ) {
-		TQString tqlayoutName = m_currentLayout.tqlayout;
+	if( kxkbConfig.m_layouts.count() == 1 ) {
+		TQString layoutName = m_currentLayout.layout;
 		TQString variantName = m_currentLayout.variant;
 		TQString includeName = m_currentLayout.includeGroup;
 		int group = m_currentLayout.defaultGroup;
 		
-		if( !m_extension->setLayout(kxkbConfig.m_model, tqlayoutName, variantName, includeName, false) 
+		if( !m_extension->setLayout(kxkbConfig.m_model, layoutName, variantName, includeName, false) 
 				   || !m_extension->setGroup( group ) ) {
-			kdDebug() << "Error switching to single tqlayout " << m_currentLayout.toPair() << endl;
+			kdDebug() << "Error switching to single layout " << m_currentLayout.toPair() << endl;
 			// TODO: alert user
 		}
 	
@@ -201,51 +201,51 @@ void KXKBApp::initTray()
 	}
 	
 	m_tray->setShowFlag(kxkbConfig.m_showFlag);
-	m_tray->initLayoutList(kxkbConfig.m_tqlayouts, *m_rules);
+	m_tray->initLayoutList(kxkbConfig.m_layouts, *m_rules);
 	m_tray->setCurrentLayout(m_currentLayout);
 	m_tray->show();
 }
 
-// This function activates the keyboard tqlayout specified by the
+// This function activates the keyboard layout specified by the
 // configuration members (m_currentLayout)
-void KXKBApp::tqlayoutApply()
+void KXKBApp::layoutApply()
 {
     setLayout(m_currentLayout);
 }
 
 // kdcop
-bool KXKBApp::setLayout(const TQString& tqlayoutPair)
+bool KXKBApp::setLayout(const TQString& layoutPair)
 {
-	const LayoutUnit tqlayoutUnitKey(tqlayoutPair);
-	if( kxkbConfig.m_tqlayouts.tqcontains(tqlayoutUnitKey) ) {
-		return setLayout( *kxkbConfig.m_tqlayouts.find(tqlayoutUnitKey) );
+	const LayoutUnit layoutUnitKey(layoutPair);
+	if( kxkbConfig.m_layouts.contains(layoutUnitKey) ) {
+		return setLayout( *kxkbConfig.m_layouts.find(layoutUnitKey) );
 	}
 	return false;
 }
 
 
-// Activates the keyboard tqlayout specified by 'tqlayoutUnit'
-bool KXKBApp::setLayout(const LayoutUnit& tqlayoutUnit, int group)
+// Activates the keyboard layout specified by 'layoutUnit'
+bool KXKBApp::setLayout(const LayoutUnit& layoutUnit, int group)
 {
 	bool res = false;
 
 	if( group == -1 )
-		group = tqlayoutUnit.defaultGroup;
+		group = layoutUnit.defaultGroup;
 	
 	res = m_extension->setLayout(kxkbConfig.m_model, 
- 					tqlayoutUnit.tqlayout, tqlayoutUnit.variant, 
- 					tqlayoutUnit.includeGroup);
+ 					layoutUnit.layout, layoutUnit.variant, 
+ 					layoutUnit.includeGroup);
 	if( res )
 		m_extension->setGroup(group); // not checking for ret - not important
 	
     if( res )
-        m_currentLayout = tqlayoutUnit;
+        m_currentLayout = layoutUnit;
 
     if (m_tray) {
 		if( res )
-			m_tray->setCurrentLayout(tqlayoutUnit);
+			m_tray->setCurrentLayout(layoutUnit);
 		else  
-			m_tray->setError(tqlayoutUnit.toPair());
+			m_tray->setError(layoutUnit.toPair());
 	}
 
     return res;
@@ -253,23 +253,23 @@ bool KXKBApp::setLayout(const LayoutUnit& tqlayoutUnit, int group)
 
 void KXKBApp::toggled()
 {
-	const LayoutUnit& tqlayout = m_tqlayoutOwnerMap->getNextLayout().tqlayoutUnit;
-	setLayout(tqlayout);
+	const LayoutUnit& layout = m_layoutOwnerMap->getNextLayout().layoutUnit;
+	setLayout(layout);
 }
 
 void KXKBApp::menuActivated(int id)
 {
 	if( KxkbLabelController::START_MENU_ID <= id 
-		   && id < KxkbLabelController::START_MENU_ID + (int)kxkbConfig.m_tqlayouts.count() )
+		   && id < KxkbLabelController::START_MENU_ID + (int)kxkbConfig.m_layouts.count() )
 	{
-		const LayoutUnit& tqlayout = kxkbConfig.m_tqlayouts[id - KxkbLabelController::START_MENU_ID];
-		m_tqlayoutOwnerMap->setCurrentLayout( tqlayout );
-		setLayout( tqlayout );
+		const LayoutUnit& layout = kxkbConfig.m_layouts[id - KxkbLabelController::START_MENU_ID];
+		m_layoutOwnerMap->setCurrentLayout( layout );
+		setLayout( layout );
 	}
 	else if (id == KxkbLabelController::CONFIG_MENU_ID)
     {
         KProcess p;
-        p << "kcmshell" << "keyboard_tqlayout";
+        p << "kcmshell" << "keyboard_layout";
         p.start(KProcess::DontCare);
 	}
 	else if (id == KxkbLabelController::HELP_MENU_ID)
@@ -295,25 +295,25 @@ void KXKBApp::windowChanged(WId winId)
 
 	kdDebug() << "old WinId: " << m_prevWinId << ", new WinId: " << winId << endl;
 	
-	if( m_prevWinId != X11Helper::UNKNOWN_WINDOW_ID ) {	// saving tqlayout/group from previous window
+	if( m_prevWinId != X11Helper::UNKNOWN_WINDOW_ID ) {	// saving layout/group from previous window
 // 		kdDebug() << "storing " << m_currentLayout.toPair() << ":" << group << " for " << m_prevWinId << endl;
-// 		m_tqlayoutOwnerMap->setCurrentWindow(m_prevWinId);
-		m_tqlayoutOwnerMap->setCurrentLayout(m_currentLayout);
-		m_tqlayoutOwnerMap->setCurrentGroup(group);
+// 		m_layoutOwnerMap->setCurrentWindow(m_prevWinId);
+		m_layoutOwnerMap->setCurrentLayout(m_currentLayout);
+		m_layoutOwnerMap->setCurrentGroup(group);
 	}
  
 	m_prevWinId = winId;
 
 	if( winId != X11Helper::UNKNOWN_WINDOW_ID ) {
-		m_tqlayoutOwnerMap->setCurrentWindow(winId);
-		const LayoutState& tqlayoutState = m_tqlayoutOwnerMap->getCurrentLayout();
+		m_layoutOwnerMap->setCurrentWindow(winId);
+		const LayoutState& layoutState = m_layoutOwnerMap->getCurrentLayout();
 		
-		if( tqlayoutState.tqlayoutUnit != m_currentLayout ) {
-			kdDebug() << "switching to " << tqlayoutState.tqlayoutUnit.toPair() << ":" << group << " for "  << winId << endl;
-			setLayout( tqlayoutState.tqlayoutUnit, tqlayoutState.group );
+		if( layoutState.layoutUnit != m_currentLayout ) {
+			kdDebug() << "switching to " << layoutState.layoutUnit.toPair() << ":" << group << " for "  << winId << endl;
+			setLayout( layoutState.layoutUnit, layoutState.group );
 		}
-		else if( tqlayoutState.group != group ) {	// we need to change only the group
-			m_extension->setGroup(tqlayoutState.group);
+		else if( layoutState.group != group ) {	// we need to change only the group
+			m_extension->setGroup(layoutState.group);
 		}
 	}
 }
@@ -331,18 +331,18 @@ void KXKBApp::slotSettingsChanged(int category)
 
 /*
  Viki (onscreen keyboard) has problems determining some modifiers states
- when kxkb uses precompiled tqlayouts instead of setxkbmap. Probably a bug
- in the xkb functions used for the precompiled tqlayouts *shrug*.
+ when kxkb uses precompiled layouts instead of setxkbmap. Probably a bug
+ in the xkb functions used for the precompiled layouts *shrug*.
 */
 void KXKBApp::forceSetXKBMap( bool set )
 {
     if( m_forceSetXKBMap == set )
         return;
     m_forceSetXKBMap = set;
-    tqlayoutApply();
+    layoutApply();
 }
 
-/*Precompiles the keyboard tqlayouts for faster activation later.
+/*Precompiles the keyboard layouts for faster activation later.
 This is done by loading each one of them and then dumping the compiled
 map from the X server into our local buffer.*/
 // void KXKBApp::initPrecompiledLayouts()
@@ -350,20 +350,20 @@ map from the X server into our local buffer.*/
 //     TQStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );
 //     TQString tempDir = dirs.count() == 0 ? "/tmp/" : dirs[0]; 
 // 
-// 	TQValueList<LayoutUnit>::ConstIterator end = kxkbConfig.m_tqlayouts.end();
+// 	TQValueList<LayoutUnit>::ConstIterator end = kxkbConfig.m_layouts.end();
 // 
-// 	for (TQValueList<LayoutUnit>::ConstIterator it = kxkbConfig.m_tqlayouts.begin(); it != end; ++it)
+// 	for (TQValueList<LayoutUnit>::ConstIterator it = kxkbConfig.m_layouts.begin(); it != end; ++it)
 //     {
-// 		LayoutUnit tqlayoutUnit(*it);
-// //	const char* baseGr = m_includes[tqlayout]; 
-// //	int group = m_rules->getGroup(tqlayout, baseGr);
-// //    	if( m_extension->setLayout(m_model, tqlayout, m_variants[tqlayout], group, baseGr) ) {
-// 		TQString compiledLayoutFileName = tempDir + tqlayoutUnit.tqlayout + "." + tqlayoutUnit.variant + ".xkm";
+// 		LayoutUnit layoutUnit(*it);
+// //	const char* baseGr = m_includes[layout]; 
+// //	int group = m_rules->getGroup(layout, baseGr);
+// //    	if( m_extension->setLayout(m_model, layout, m_variants[layout], group, baseGr) ) {
+// 		TQString compiledLayoutFileName = tempDir + layoutUnit.layout + "." + layoutUnit.variant + ".xkm";
 // //    	    if( m_extension->getCompiledLayout(compiledLayoutFileName) )
-// 		m_compiledLayoutFileNames[tqlayoutUnit.toPair()] = compiledLayoutFileName;
+// 		m_compiledLayoutFileNames[layoutUnit.toPair()] = compiledLayoutFileName;
 // //	}
 // //	else {
-// //    	    kdDebug() << "Error precompiling tqlayout " << tqlayout << endl;
+// //    	    kdDebug() << "Error precompiling layout " << layout << endl;
 // //	}
 //     }
 // }

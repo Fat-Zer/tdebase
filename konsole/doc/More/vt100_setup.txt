@@ -106,7 +106,7 @@ nils@f109f.mil.se (Nils Hammar) writes:
 < graphics to the caller too. What a surprise to get a hig resolution
 < picture on the screen when you are calling an ordinary BBS!
 
-The ANSI Device tqStatus Report (DSR) is
+The ANSI Device Status Report (DSR) is
 
 	ESC [ <n> n
 

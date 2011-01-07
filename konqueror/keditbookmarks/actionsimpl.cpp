@@ -157,11 +157,11 @@ void KEBApp::createActions() {
         i18n("&Open in Konqueror"), "fileopen", 0,
         actn, TQT_SLOT( slotOpenLink() ), actionCollection(), "openlink" );
     (void) new KAction(
-        i18n("Check &tqStatus"), "bookmark", 0,
+        i18n("Check &Status"), "bookmark", 0,
         actn, TQT_SLOT( slotTestSelection() ), actionCollection(), "testlink" );
 
     (void) new KAction(
-        i18n("Check tqStatus: &All"), 0,
+        i18n("Check Status: &All"), 0,
         actn, TQT_SLOT( slotTestAll() ), actionCollection(), "testall" );
     (void) new KAction(
         i18n("Update All &Favicons"), 0,
@@ -237,7 +237,7 @@ void CurrentMgr::doExport(ExportType type, const TQString & _path) {
     // TODO - add a factory and make all this use the base class
     if (type == OperaExport) {
         if (path.isNull())
-            path = KOperaBookmarkImporterImpl().tqfindDefaultLocation(true);
+            path = KOperaBookmarkImporterImpl().findDefaultLocation(true);
         KOperaBookmarkExporterImpl exporter(mgr(), path);
         exporter.write(mgr()->root());
         return;
@@ -253,7 +253,7 @@ void CurrentMgr::doExport(ExportType type, const TQString & _path) {
 
     } else if (type == IEExport) {
         if (path.isNull())
-            path = KIEBookmarkImporterImpl().tqfindDefaultLocation(true);
+            path = KIEBookmarkImporterImpl().findDefaultLocation(true);
         KIEBookmarkExporterImpl exporter(mgr(), path);
         exporter.write(mgr()->root());
         return;

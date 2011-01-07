@@ -45,11 +45,11 @@ ConfGeneral::ConfGeneral(TQWidget *parent, const char *name)
 	QLabel	*m_numberlabel = new TQLabel(i18n("N&umber:"), this);
         m_numberlabel->setBuddy(m_number);
 	KSeparator *sep = new KSeparator( this );
-	m_tqreplace_int_char = new TQCheckBox( i18n( "Replace international prefix '+' with:" ), this );
-	m_tqreplace_int_char_val = new TQLineEdit( this );
-	m_tqreplace_int_char_val->setEnabled( false );
+	m_replace_int_char = new TQCheckBox( i18n( "Replace international prefix '+' with:" ), this );
+	m_replace_int_char_val = new TQLineEdit( this );
+	m_replace_int_char_val->setEnabled( false );
 
-	connect( m_tqreplace_int_char, TQT_SIGNAL( toggled( bool ) ), m_tqreplace_int_char_val, TQT_SLOT( setEnabled( bool ) ) );
+	connect( m_replace_int_char, TQT_SIGNAL( toggled( bool ) ), m_replace_int_char_val, TQT_SLOT( setEnabled( bool ) ) );
 
 	QGridLayout	*l0 = new TQGridLayout(this, 6, 2, 10, 10);
 	l0->setColStretch(1, 1);
@@ -63,8 +63,8 @@ ConfGeneral::ConfGeneral(TQWidget *parent, const char *name)
 	l0->addMultiCellWidget( sep, 3, 3, 0, 1 );
 	TQHBoxLayout *l1 = new TQHBoxLayout( this, 0, 10 );
 	l0->addMultiCellLayout( l1, 4, 4, 0, 1 );
-	l1->addWidget( m_tqreplace_int_char );
-	l1->addWidget( m_tqreplace_int_char_val );
+	l1->addWidget( m_replace_int_char );
+	l1->addWidget( m_replace_int_char_val );
 }
 
 void ConfGeneral::load()
@@ -74,8 +74,8 @@ void ConfGeneral::load()
 	m_name->setText(conf->readEntry("Name", getenv("USER")));
 	m_number->setText(conf->readEntry("Number"));
 	m_company->setText(conf->readEntry("Company"));
-	m_tqreplace_int_char->setChecked( conf->readBoolEntry( "ReplaceIntChar", false ) );
-	m_tqreplace_int_char_val->setText( conf->readEntry( "ReplaceIntCharVal" ) );
+	m_replace_int_char->setChecked( conf->readBoolEntry( "ReplaceIntChar", false ) );
+	m_replace_int_char_val->setText( conf->readEntry( "ReplaceIntCharVal" ) );
 }
 
 void ConfGeneral::save()
@@ -85,6 +85,6 @@ void ConfGeneral::save()
 	conf->writeEntry("Name", m_name->text());
 	conf->writeEntry("Number", m_number->text());
 	conf->writeEntry("Company", m_company->text());
-	conf->writeEntry( "ReplaceIntChar", m_tqreplace_int_char->isChecked() );
-	conf->writeEntry( "ReplaceIntCharVal", m_tqreplace_int_char_val->text() );
+	conf->writeEntry( "ReplaceIntChar", m_replace_int_char->isChecked() );
+	conf->writeEntry( "ReplaceIntCharVal", m_replace_int_char_val->text() );
 }

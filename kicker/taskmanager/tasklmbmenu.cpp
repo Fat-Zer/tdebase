@@ -75,7 +75,7 @@ void TaskMenuItem::paint(TQPainter *p, const TQColorGroup &cg,
     p->drawText(x, y, w, h, AlignAuto|AlignVCenter|DontClip|ShowPrefix, m_text);
 }
 
-TQSize TaskMenuItem::tqsizeHint()
+TQSize TaskMenuItem::sizeHint()
 {
     TQFont font = TQFont();
     if (m_isActive)
@@ -111,7 +111,7 @@ void TaskLMBMenu::fillMenu()
     {
         Task::Ptr t = (*it);
 
-        TQString text = t->visibleName().tqreplace("&", "&&");
+        TQString text = t->visibleName().replace("&", "&&");
 
         TaskMenuItem *menuItem = new TaskMenuItem(text,
                                                   t->isActive(),

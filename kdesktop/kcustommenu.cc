@@ -81,8 +81,8 @@ KCustomMenu::insertMenuItem(KService::Ptr & s, int nId, int nIndex/*= -1*/)
     TQString serviceName = s->name();
 
     // item names may contain ampersands. To avoid them being converted
-    // to accelators, tqreplace them with two ampersands.
-    serviceName.tqreplace("&", "&&");
+    // to accelators, replace them with two ampersands.
+    serviceName.replace("&", "&&");
 
     TQPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
                                                                  0, KIcon::DefaultState, 0L, true);

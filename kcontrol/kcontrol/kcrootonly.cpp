@@ -26,13 +26,13 @@
 KCRootOnly::KCRootOnly(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-   TQVBoxLayout *tqlayout=new TQVBoxLayout(this);
+   TQVBoxLayout *layout=new TQVBoxLayout(this);
    TQLabel *label = new TQLabel(i18n("<big>You need super user privileges to run this control module.</big><br>"
                                     "Click on the \"Administrator Mode\" button below."), this);
-   tqlayout->addWidget(label);
-   label->tqsetAlignment(AlignCenter);
+   layout->addWidget(label);
+   label->setAlignment(AlignCenter);
    label->setTextFormat(RichText);
-   label->setMinimumSize(label->tqsizeHint());
+   label->setMinimumSize(label->sizeHint());
 }
 
 

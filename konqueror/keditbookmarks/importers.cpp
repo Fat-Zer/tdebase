@@ -73,7 +73,7 @@ ImportCommand* ImportCommand::performImport(const TQCString &type, TQWidget *top
 
     int answer =
         KMessageBox::questionYesNoCancel(
-                top, i18n("Import as a new subfolder or tqreplace all the current bookmarks?"),
+                top, i18n("Import as a new subfolder or replace all the current bookmarks?"),
                 i18n("%1 Import").arg(importer->visibleName()),
                 i18n("As New Folder"), i18n("Replace"));
 
@@ -149,27 +149,27 @@ TQString ImportCommand::affectedBookmarks() const
 
 TQString MozImportCommand::requestFilename() const {
     static KMozillaBookmarkImporterImpl importer;
-    return importer.tqfindDefaultLocation();
+    return importer.findDefaultLocation();
 }
 
 TQString NSImportCommand::requestFilename() const {
     static KNSBookmarkImporterImpl importer;
-    return importer.tqfindDefaultLocation();
+    return importer.findDefaultLocation();
 }
 
 TQString OperaImportCommand::requestFilename() const {
     static KOperaBookmarkImporterImpl importer;
-    return importer.tqfindDefaultLocation();
+    return importer.findDefaultLocation();
 }
 
 TQString CrashesImportCommand::requestFilename() const {
     static KCrashBookmarkImporterImpl importer;
-    return importer.tqfindDefaultLocation();
+    return importer.findDefaultLocation();
 }
 
 TQString IEImportCommand::requestFilename() const {
     static KIEBookmarkImporterImpl importer;
-    return importer.tqfindDefaultLocation();
+    return importer.findDefaultLocation();
 }
 
 // following two are really just xbel

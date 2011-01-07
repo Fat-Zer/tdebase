@@ -1,4 +1,4 @@
-// This list tqcontains all screen saver categories.
+// This list contains all screen saver categories.
 // The categories are extracted for translation (see Makefile.am).
 
 // To show a screen saver in the list under a category, add the

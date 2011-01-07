@@ -39,14 +39,14 @@ CPrintDialog::CPrintDialog(TQWidget *parent)
             : KDialogBase(Plain, i18n("Print Font Samples"), Ok|Cancel, Ok, parent, NULL, true, false)
 {
     TQFrame      *page=plainPage();
-    TQGridLayout *tqlayout=new TQGridLayout(page, 1, 1, 0, spacingHint());
+    TQGridLayout *layout=new TQGridLayout(page, 1, 1, 0, spacingHint());
 
-    tqlayout->addWidget(new TQLabel(i18n("Output:"), page), 0, 0);
+    layout->addWidget(new TQLabel(i18n("Output:"), page), 0, 0);
     itsOutput=new TQComboBox(page);
     itsOutput->insertItem(i18n("All Fonts"), 0);
     itsOutput->insertItem(i18n("Selected Fonts"), 1);
-    tqlayout->addWidget(itsOutput, 0, 1);
-    tqlayout->addWidget(new TQLabel(i18n("Font size:"), page), 1, 0);
+    layout->addWidget(itsOutput, 0, 1);
+    layout->addWidget(new TQLabel(i18n("Font size:"), page), 1, 0);
     itsSize=new TQComboBox(page);
     itsSize->insertItem(i18n("Waterfall"), 0);
     itsSize->insertItem(i18n("12pt"), 1);
@@ -54,8 +54,8 @@ CPrintDialog::CPrintDialog(TQWidget *parent)
     itsSize->insertItem(i18n("24pt"), 3);
     itsSize->insertItem(i18n("36pt"), 4);
     itsSize->insertItem(i18n("48pt"), 5);
-    tqlayout->addWidget(itsSize, 1, 1);
-    tqlayout->addItem(new TQSpacerItem(2, 2), 2, 1);
+    layout->addWidget(itsSize, 1, 1);
+    layout->addItem(new TQSpacerItem(2, 2), 2, 1);
 }
 
 bool CPrintDialog::exec(bool select, int size)

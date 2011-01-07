@@ -267,7 +267,7 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		if (!m_lastErrorMessage.isEmpty())
 		  m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
 		else {
-		  tqApp->eventLoop()->enterLoop();
+		  qApp->eventLoop()->enterLoop();
 		}
 
 		mp_mounting = 0L;
@@ -304,7 +304,7 @@ void MediaImpl::slotMountResult(KIO::Job *job)
 	{
 		m_lastErrorCode = job->error();
 		m_lastErrorMessage = job->errorText();
-		tqApp->eventLoop()->exitLoop();
+		qApp->eventLoop()->exitLoop();
 	}
 }
 
@@ -317,7 +317,7 @@ void MediaImpl::slotMediumChanged(const TQString &name)
 		kdDebug(1219) << "MediaImpl::slotMediumChanged: updating mp_mounting" << endl;
 		bool ok;
 		*mp_mounting = findMediumByName(name, ok);
-		tqApp->eventLoop()->exitLoop();
+		qApp->eventLoop()->exitLoop();
 	}
 }
 
@@ -351,7 +351,7 @@ void MediaImpl::slotStatResult(KIO::Job *job)
 		m_entryBuffer = stat_job->statResult();
 	}
 
-	tqApp->eventLoop()->exitLoop();
+	qApp->eventLoop()->exitLoop();
 }
 
 KIO::UDSEntry MediaImpl::extractUrlInfos(const KURL &url)
@@ -364,7 +364,7 @@ KIO::UDSEntry MediaImpl::extractUrlInfos(const KURL &url)
 	         this, TQT_SLOT( slotStatResult(KIO::Job *) ) );
 	connect( job, TQT_SIGNAL( warning( KIO::Job *, const TQString & ) ),
 	         this, TQT_SLOT( slotWarning( KIO::Job *, const TQString & ) ) );
-	tqApp->eventLoop()->enterLoop();
+	qApp->eventLoop()->enterLoop();
 
 	KIO::UDSEntry::iterator it = m_entryBuffer.begin();
 	KIO::UDSEntry::iterator end = m_entryBuffer.end();

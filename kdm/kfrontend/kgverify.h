@@ -68,7 +68,7 @@ class KGVerifyHandler {
 	virtual void verifyFailed() = 0;
 	virtual void verifyRetry() = 0;
 	virtual void verifySetUser( const TQString &user ) = 0;
-	virtual void updatetqStatus( bool fail, bool caps, int left ); // for themed only
+	virtual void updateStatus( bool fail, bool caps, int left ); // for themed only
 };
 
 class TQWidget;
@@ -126,8 +126,8 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	bool eventFilter( TQObject *, TQEvent * );
 	void MsgBox( TQMessageBox::Icon typ, const TQString &msg );
 	void setTimer();
-	void updateLocktqStatus();
-	virtual void updatetqStatus() = 0;
+	void updateLockStatus();
+	virtual void updateStatus() = 0;
 	void handleVerify();
 
 	QXTimer timer;
@@ -188,7 +188,7 @@ class KGStdVerify : public KGVerify {
 	void selectPlugin( int id );
 
   protected:
-	void updatetqStatus();
+	void updateStatus();
 
   private:
 	TQGridLayout *grid;
@@ -214,7 +214,7 @@ class KGThemedVerify : public KGVerify {
 	void selectPlugin( int id );
 
   protected:
-	void updatetqStatus();
+	void updateStatus();
 
   private slots:
 	void slotPluginSelected( int id );

@@ -190,7 +190,7 @@ KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
       kdDebug(1203) << "the icon theme handles the following sizes:" << avSizes << endl;
       if (avSizes.count() < 10) {
 	// Use the icon sizes supplied by the theme.
-	// If avSizes tqcontains more than 10 entries, assume a scalable
+	// If avSizes contains more than 10 entries, assume a scalable
 	// icon theme.
 	TQValueList<int>::Iterator it;
 	for (i=1, it=avSizes.begin(); (it!=avSizes.end()) && (i<7); it++, i++)
@@ -301,7 +301,7 @@ void KonqDirPart::slotBackgroundSettings()
         m_pProps->setBgPixmapFile( dlg->pixmapFile() );
         }
         m_pProps->applyColors( scrollWidget()->viewport() );
-        scrollWidget()->viewport()->tqrepaint();
+        scrollWidget()->viewport()->repaint();
     }
     
     delete dlg;
@@ -548,7 +548,7 @@ void KonqDirPart::slotIconSizeToggled( bool toggleOn )
 
     // This slot is called when an iconsize action is checked or by calling
     // action->setChecked(false) (previously true). So we must filter out
-    // the 'untoggled' case to prevent odd results here (tqrepaints/loops!)
+    // the 'untoggled' case to prevent odd results here (repaints/loops!)
     if ( !toggleOn )
         return;
 

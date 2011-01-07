@@ -34,9 +34,9 @@ KCookiesMain::KCookiesMain(TQWidget *parent)
                              "are stored on your computer."));
     }
     
-    TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(this);
     tab = new TQTabWidget(this);
-    tqlayout->addWidget(tab);
+    layout->addWidget(tab);
 
     policies = new KCookiesPolicies(this);
     tab->addTab(policies, i18n("&Policy"));

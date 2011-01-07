@@ -77,7 +77,7 @@ StartServerOnce( void )
 	int pid;
 
 	Debug( "StartServerOnce for %s, try %d\n", d->name, ++d->startTries );
-	d->servertqStatus = starting;
+	d->serverStatus = starting;
 	switch (pid = Fork()) {
 	case 0:
 		argv = PrepServerArgv( d, d->serverArgsLocal );
@@ -136,9 +136,9 @@ AbortStartServer( struct display *d )
 {
 	if (startingServer == d)
 	{
-		if (d->servertqStatus != ignore)
+		if (d->serverStatus != ignore)
 		{
-			d->servertqStatus = ignore;
+			d->serverStatus = ignore;
 			serverTimeout = TO_INF;
 			Debug( "aborting X server start\n" );
 		}
@@ -150,7 +150,7 @@ void
 StartServerSuccess()
 {
 	struct display *d = startingServer;
-	d->servertqStatus = ignore;
+	d->serverStatus = ignore;
 	serverTimeout = TO_INF;
 	Debug( "X server ready, starting session\n" );
 	StartDisplayP2( d );
@@ -161,10 +161,10 @@ StartServerFailed()
 {
 	struct display *d = startingServer;
 	if (!d->serverAttempts || d->startTries < d->serverAttempts) {
-		d->servertqStatus = pausing;
+		d->serverStatus = pausing;
 		serverTimeout = d->openDelay + now;
 	} else {
-		d->servertqStatus = ignore;
+		d->serverStatus = ignore;
 		serverTimeout = TO_INF;
 		startingServer = 0;
 		LogError( "X server for display %s can't be started,"
@@ -177,20 +177,20 @@ void
 StartServerTimeout()
 {
 	struct display *d = startingServer;
-	switch (d->servertqStatus) {
+	switch (d->serverStatus) {
 	case ignore:
 	case awaiting:
 		break; /* cannot happen */
 	case starting:
 		LogError( "X server startup timeout, terminating\n" );
 		kill( d->serverPid, d->termSignal );
-		d->servertqStatus = d->termSignal == SIGKILL ? killed : terminated;
+		d->serverStatus = d->termSignal == SIGKILL ? killed : terminated;
 		serverTimeout = d->serverTimeout + now;
 		break;
 	case terminated:
 		LogInfo( "X server termination timeout, killing\n" );
 		kill( d->serverPid, SIGKILL );
-		d->servertqStatus = killed;
+		d->serverStatus = killed;
 		serverTimeout = 10 + now;
 		break;
 	case killed:

@@ -32,7 +32,7 @@ TQString defaultCommand(const TQString& cmd)
 		QString	exe = KStandardDirs::findExe(r.cap(1));
 		if (exe.isEmpty())
 			exe = "/usr/bin/"+r.cap(1);
-		str.tqreplace(p, r.matchedLength(), exe);
+		str.replace(p, r.matchedLength(), exe);
 	}
 	return str;
 }

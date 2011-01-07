@@ -148,7 +148,7 @@ namespace Keramik {
 			virtual Position mousePosition( const TQPoint& p ) const;
 		    	virtual void borders( int& left, int& right, int& top, int& bottom ) const;
 			virtual void resize( const TQSize& s );
-			virtual TQSize tqminimumSize() const;
+			virtual TQSize minimumSize() const;
 			virtual bool eventFilter( TQObject* o, TQEvent* e );
 			virtual void activeChange();
 			virtual void captionChange();
@@ -190,7 +190,7 @@ namespace Keramik {
 			TQRect          captionRect;
 			TQPixmap        captionBuffer;
 			TQPixmap       *activeIcon, *inactiveIcon;
-			bool           captionBufferDirty:1, tqmaskDirty:1;
+			bool           captionBufferDirty:1, maskDirty:1;
 			bool           largeCaption:1, largeTitlebar:1;
 	}; // class KeramikClient
 

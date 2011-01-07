@@ -161,7 +161,7 @@ int maxButtonDim()
     int maxDim;
     //return (2 * KickerSettings::iconMargin()) + KIcon::SizeLarge;
 
-    KSimpleConfig *kickerconfig = new KSimpleConfig( TQString::tqfromLatin1( "kickerrc" ));
+    KSimpleConfig *kickerconfig = new KSimpleConfig( TQString::fromLatin1( "kickerrc" ));
     kickerconfig->setGroup("General");
     maxDim = (2 * KickerSettings::iconMargin()) + kickerconfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);;
     delete kickerconfig;
@@ -225,7 +225,7 @@ TQPoint popupPosition(KPanelApplet::Direction d,
     TQRect r;
     if (source->isTopLevel())
     {
-        r = source->tqgeometry();
+        r = source->geometry();
     }
     else
     {
@@ -236,13 +236,13 @@ TQPoint popupPosition(KPanelApplet::Direction d,
         {
             case KPanelApplet::Left:
             case KPanelApplet::Right:
-                r.setLeft( source->tqtopLevelWidget()->x() );
-                r.setWidth( source->tqtopLevelWidget()->width() );
+                r.setLeft( source->topLevelWidget()->x() );
+                r.setWidth( source->topLevelWidget()->width() );
                 break;
             case KPanelApplet::Up:
             case KPanelApplet::Down:
-                r.setTop( source->tqtopLevelWidget()->y() );
-                r.setHeight( source->tqtopLevelWidget()->height() );
+                r.setTop( source->topLevelWidget()->y() );
+                r.setHeight( source->topLevelWidget()->height() );
                 break;
         }
     }
@@ -347,7 +347,7 @@ void colorize(TQImage& image)
     // limit max/min brightness
     int r, g, b;
     color.rgb(&r, &g, &b);
-    int gray = tqGray(r, g, b);
+    int gray = qGray(r, g, b);
     if (gray > 180) {
         r = (r - (gray - 180) < 0 ? 0 : r - (gray - 180));
         g = (g - (gray - 180) < 0 ? 0 : g - (gray - 180));

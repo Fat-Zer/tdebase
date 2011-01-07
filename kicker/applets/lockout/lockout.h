@@ -44,7 +44,7 @@ private:
     void checkLayout( int height ) const;
 
     SimpleButton *lockButton, *logoutButton;
-    TQBoxLayout *tqlayout;
+    TQBoxLayout *layout;
 
     bool bTransparent;
 };

@@ -72,14 +72,14 @@ KPluginOptions::KPluginOptions( KConfig* config, TQString group, TQWidget *paren
 
     TQFrame *hrule = new TQFrame(globalGB);
     hrule->setFrameStyle(TQFrame::HLine | TQFrame::Sunken);
-    hrule->tqsetSizePolicy(TQSizePolicy::MinimumExpanding,TQSizePolicy::Fixed);
+    hrule->setSizePolicy(TQSizePolicy::MinimumExpanding,TQSizePolicy::Fixed);
 
     /**************************************************************************
      ********************* Domain-specific Settings ***************************
      *************************************************************************/
     TQPushButton *domainSpecPB = new TQPushButton(i18n("Domain-Specific Settin&gs"),
     						globalGB);
-    domainSpecPB->tqsetSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
+    domainSpecPB->setSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
     connect(domainSpecPB,TQT_SIGNAL(clicked()),TQT_SLOT(slotShowDomainDlg()));
 
     domainSpecificDlg = new KDialogBase(KDialogBase::Swallow,
@@ -99,13 +99,13 @@ KPluginOptions::KPluginOptions( KConfig* config, TQString group, TQWidget *paren
           "that can be contained in HTML pages, e.g. Macromedia Flash. "
           "Note that, as with any browser, enabling active contents can be a security problem.") );
 
-    TQString wtstr = i18n("This box tqcontains the domains and hosts you have set "
+    TQString wtstr = i18n("This box contains the domains and hosts you have set "
                          "a specific plugin policy for. This policy will be used "
                          "instead of the default policy for enabling or disabling plugins on pages sent by these "
                          "domains or hosts. <p>Select a policy and use the controls on "
                          "the right to modify it.");
     TQWhatsThis::add( domainSpecific->listView(), wtstr );
-    TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that tqcontains "
+    TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
                                           "the plugin policies. These policies will be merged "
                                           "with the existing ones. Duplicate entries are ignored.") );
     TQWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the plugin policy to a zipped "

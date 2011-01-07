@@ -36,7 +36,7 @@ public:
     virtual TQString defaultButtonsLeft() const;
     virtual TQString defaultButtonsRight() const;
     virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
-    virtual int tqlayoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
+    virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton * = 0) const;
     virtual KCommonDecorationButton *createButton(ButtonType type);
 
     virtual void updateWindowShape();

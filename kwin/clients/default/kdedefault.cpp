@@ -89,7 +89,7 @@ static const unsigned char pindown_dgray_bits[] = {
   0x48, 0x30, 0xc8, 0x38, 0x08, 0x1f, 0x08, 0x18, 0x10, 0x1c, 0x10, 0x0e,
   0xe0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-static const unsigned char pindown_tqmask_bits[] = {
+static const unsigned char pindown_mask_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 0xc0, 0x1f, 0xf0, 0x3f, 0xf0, 0x3f,
   0xf8, 0x3f, 0xf8, 0x3f, 0xf8, 0x1f, 0xf8, 0x1f, 0xf0, 0x1f, 0xf0, 0x0f,
   0xe0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -109,7 +109,7 @@ static const unsigned char pinup_dgray_bits[] = {
   0x40, 0x20, 0x40, 0x20, 0x7f, 0x2a, 0x40, 0x3f, 0xc0, 0x31, 0xc0, 0x20,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-static const unsigned char pinup_tqmask_bits[] = {
+static const unsigned char pinup_mask_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x20, 0xc0, 0x31, 0xc0, 0x3f,
   0xff, 0x3f, 0xff, 0x3f, 0xff, 0x3f, 0xc0, 0x3f, 0xc0, 0x31, 0xc0, 0x20,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -240,7 +240,7 @@ unsigned long KDEDefaultHandler::readConfig( bool update )
                     || new_useGradients != useGradients
                     || new_titleHeight != normalTitleHeight
                     || new_toolTitleHeight != toolTitleHeight )
-                        changed |= SettingColors; // just recreate the pixmaps and tqrepaint
+                        changed |= SettingColors; // just recreate the pixmaps and repaint
         }
 
         showGrabBar             = new_showGrabBar;
@@ -263,28 +263,28 @@ void KDEDefaultHandler::createPixmaps()
 	if (showTitleBarStipple)
 	{
 		TQPainter p;
-		TQPainter tqmaskPainter;
+		TQPainter maskPainter;
 		int i, x, y;
 		titlePix = new TQPixmap(132, normalTitleHeight+2);
-		TQBitmap tqmask(132, normalTitleHeight+2);
-		tqmask.fill(Qt::color0);
+		TQBitmap mask(132, normalTitleHeight+2);
+		mask.fill(Qt::color0);
 
 		p.begin(titlePix);
-		tqmaskPainter.begin(&tqmask);
-		tqmaskPainter.setPen(Qt::color1);
+		maskPainter.begin(&mask);
+		maskPainter.setPen(Qt::color1);
 		for(i=0, y=2; i < 9; ++i, y+=4)
 			for(x=1; x <= 132; x+=3)
 			{
 				p.setPen(options()->color(ColorTitleBar, true).light(150));
 				p.drawPoint(x, y);
-				tqmaskPainter.drawPoint(x, y);
+				maskPainter.drawPoint(x, y);
 				p.setPen(options()->color(ColorTitleBar, true).dark(150));
 				p.drawPoint(x+1, y+1);
-				tqmaskPainter.drawPoint(x+1, y+1);
+				maskPainter.drawPoint(x+1, y+1);
 			}
-		tqmaskPainter.end();
+		maskPainter.end();
 		p.end();
-		titlePix->setMask(tqmask);
+		titlePix->setMask(mask);
 	} else
 		titlePix = NULL;
 
@@ -328,14 +328,14 @@ void KDEDefaultHandler::createPixmaps()
 	TQPainter p;
 
 	// Active pins
-	g = options()->tqcolorGroup( ColorButtonBg, true );
+	g = options()->colorGroup( ColorButtonBg, true );
 	pinUpPix  = new KPixmap();
 	pinUpPix->resize(16, 16);
 	p.begin( pinUpPix );
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pinup_white_bits,
 		pinup_gray_bits, NULL, NULL, pinup_dgray_bits, NULL );
 	p.end();
-	pinUpPix->setMask( TQBitmap(16, 16, pinup_tqmask_bits, true) );
+	pinUpPix->setMask( TQBitmap(16, 16, pinup_mask_bits, true) );
 
 	pinDownPix = new KPixmap();
 	pinDownPix->resize(16, 16);
@@ -343,17 +343,17 @@ void KDEDefaultHandler::createPixmaps()
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pindown_white_bits,
 		pindown_gray_bits, NULL, NULL, pindown_dgray_bits, NULL );
 	p.end();
-	pinDownPix->setMask( TQBitmap(16, 16, pindown_tqmask_bits, true) );
+	pinDownPix->setMask( TQBitmap(16, 16, pindown_mask_bits, true) );
 
 	// Inactive pins
-	g = options()->tqcolorGroup( ColorButtonBg, false );
+	g = options()->colorGroup( ColorButtonBg, false );
 	ipinUpPix = new KPixmap();
 	ipinUpPix->resize(16, 16);
 	p.begin( ipinUpPix );
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pinup_white_bits,
 		pinup_gray_bits, NULL, NULL, pinup_dgray_bits, NULL );
 	p.end();
-	ipinUpPix->setMask( TQBitmap(16, 16, pinup_tqmask_bits, true) );
+	ipinUpPix->setMask( TQBitmap(16, 16, pinup_mask_bits, true) );
 
 	ipinDownPix = new KPixmap();
 	ipinDownPix->resize(16, 16);
@@ -361,7 +361,7 @@ void KDEDefaultHandler::createPixmaps()
 	kColorBitmaps( &p, g, 0, 0, 16, 16, true, pindown_white_bits,
 		pindown_gray_bits, NULL, NULL, pindown_dgray_bits, NULL );
 	p.end();
-	ipinDownPix->setMask( TQBitmap(16, 16, pindown_tqmask_bits, true) );
+	ipinDownPix->setMask( TQBitmap(16, 16, pindown_mask_bits, true) );
 
 	// Create a title buffer for flicker-free painting
 	titleBuffer = new KPixmap();
@@ -404,25 +404,25 @@ void KDEDefaultHandler::createPixmaps()
 	irightBtnDownPix[false]->resize(toolTitleHeight, toolTitleHeight);
 
 	// Draw the button state pixmaps
-	g = options()->tqcolorGroup( ColorTitleBar, true );
+	g = options()->colorGroup( ColorTitleBar, true );
 	drawButtonBackground( leftBtnUpPix[true], g, false );
 	drawButtonBackground( leftBtnDownPix[true], g, true );
 	drawButtonBackground( leftBtnUpPix[false], g, false );
 	drawButtonBackground( leftBtnDownPix[false], g, true );
 
-	g = options()->tqcolorGroup( ColorButtonBg, true );
+	g = options()->colorGroup( ColorButtonBg, true );
 	drawButtonBackground( rightBtnUpPix[true], g, false );
 	drawButtonBackground( rightBtnDownPix[true], g, true );
 	drawButtonBackground( rightBtnUpPix[false], g, false );
 	drawButtonBackground( rightBtnDownPix[false], g, true );
 
-	g = options()->tqcolorGroup( ColorTitleBar, false );
+	g = options()->colorGroup( ColorTitleBar, false );
 	drawButtonBackground( ileftBtnUpPix[true], g, false );
 	drawButtonBackground( ileftBtnDownPix[true], g, true );
 	drawButtonBackground( ileftBtnUpPix[false], g, false );
 	drawButtonBackground( ileftBtnDownPix[false], g, true );
 
-	g = options()->tqcolorGroup( ColorButtonBg, false );
+	g = options()->colorGroup( ColorButtonBg, false );
 	drawButtonBackground( irightBtnUpPix[true], g, false );
 	drawButtonBackground( irightBtnDownPix[true], g, true );
 	drawButtonBackground( irightBtnUpPix[false], g, false );
@@ -676,7 +676,7 @@ void KDEDefaultButton::drawButton(TQPainter *p)
 	// otherwise we paint a menu button (with mini icon), or a sticky button.
 	if( deco ) {
 		// Select the appropriate button decoration color
-   		bool darkDeco = tqGray( KDecoration::options()->color(
+   		bool darkDeco = qGray( KDecoration::options()->color(
 				isLeft() ? KDecoration::ColorTitleBar : KDecoration::ColorButtonBg,
 				active).rgb() ) > 127;
 
@@ -720,7 +720,7 @@ void KDEDefaultButton::drawButton(TQPainter *p)
 void KDEDefaultButton::enterEvent(TQEvent *e)
 {
 	isMouseOver=true;
-	tqrepaint(false);
+	repaint(false);
 	TQButton::enterEvent(e);
 }
 
@@ -728,7 +728,7 @@ void KDEDefaultButton::enterEvent(TQEvent *e)
 void KDEDefaultButton::leaveEvent(TQEvent *e)
 {
 	isMouseOver=false;
-	tqrepaint(false);
+	repaint(false);
 	TQButton::leaveEvent(e);
 }
 
@@ -771,7 +771,7 @@ bool KDEDefaultClient::decorationBehaviour(DecorationBehaviour behaviour) const
 	}
 }
 
-int KDEDefaultClient::tqlayoutMetric(LayoutMetric lm, bool respectWindowState, const KCommonDecorationButton *btn) const
+int KDEDefaultClient::layoutMetric(LayoutMetric lm, bool respectWindowState, const KCommonDecorationButton *btn) const
 {
 	switch (lm) {
 		case LM_BorderLeft:
@@ -810,7 +810,7 @@ int KDEDefaultClient::tqlayoutMetric(LayoutMetric lm, bool respectWindowState, c
 				return borderWidth/2;
 			// fall though
 		default:
-			return KCommonDecoration::tqlayoutMetric(lm, respectWindowState, btn);
+			return KCommonDecoration::layoutMetric(lm, respectWindowState, btn);
 	}
 }
 
@@ -856,7 +856,7 @@ void KDEDefaultClient::init()
 
 void KDEDefaultClient::reset( unsigned long changed)
 {
-    widget()->tqrepaint();
+    widget()->repaint();
 
 	KCommonDecoration::reset(changed);
 }
@@ -909,7 +909,7 @@ void KDEDefaultClient::paintEvent( TQPaintEvent* )
 	p.drawRect(x,y,w,h);
 
     // Draw part of the frame that is the titlebar color
-	g = options()->tqcolorGroup(ColorTitleBar, isActive());
+	g = options()->colorGroup(ColorTitleBar, isActive());
 	p.setPen(g.light());
 	p.drawLine(x+1, y+1, rightOffset-1, y+1);
 	p.drawLine(x+1, y+1, x+1, leftFrameStart+borderWidth-4);
@@ -929,7 +929,7 @@ void KDEDefaultClient::paintEvent( TQPaintEvent* )
 	p.drawLine(x+borderWidth-2, y+titleHeight+3, x+borderWidth-2, leftFrameStart-2);
 
     // Fill out the border edges
-    g = options()->tqcolorGroup(ColorFrame, isActive());
+    g = options()->colorGroup(ColorFrame, isActive());
     p.setPen(g.light());
     p.drawLine(rightOffset, y+1, x2-1, y+1);
     p.drawLine(x+1, leftFrameStart+borderWidth-3, x+1, y2-1);

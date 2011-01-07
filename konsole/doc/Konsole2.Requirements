@@ -29,7 +29,7 @@ This file is to collect requirements and ideas for this.
   Current history algorithm does not allow to limit the
   histories size. Also, it descreases the speed.
 
-- improve tqunicode support
+- improve unicode support
 
   this is both an ncurses and terminfo issue.
   We may need to provide some help for these packages.

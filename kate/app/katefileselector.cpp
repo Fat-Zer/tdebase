@@ -96,7 +96,7 @@ void KateFileSelectorToolBarParent::resizeEvent ( TQResizeEvent * )
 {
 	if (m_tb)
 	{
-		setMinimumHeight(m_tb->tqsizeHint().height());
+		setMinimumHeight(m_tb->sizeHint().height());
 		m_tb->resize(width(),height());
 	}
 }
@@ -113,17 +113,17 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
 {
   mActionCollection = new KActionCollection( this );
 
-  QtMsgHandler oldHandler = tqInstallMsgHandler( silenceQToolBar );
+  QtMsgHandler oldHandler = qInstallMsgHandler( silenceQToolBar );
 
   KateFileSelectorToolBarParent *tbp=new KateFileSelectorToolBarParent(this);
   toolbar = new KateFileSelectorToolBar(tbp);
   tbp->setToolBar(toolbar);
   toolbar->setMovingEnabled(false);
   toolbar->setFlat(true);
-  tqInstallMsgHandler( oldHandler );
+  qInstallMsgHandler( oldHandler );
 
   cmbPath = new KURLComboBox( KURLComboBox::Directories, true, this, "path combo" );
-  cmbPath->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  cmbPath->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
   KURLCompletion* cmpl = new KURLCompletion(KURLCompletion::DirCompletion);
   cmbPath->setCompletionObject( cmpl );
   cmbPath->setAutoDeleteCompletionObject( true );
@@ -157,7 +157,7 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
   btnFilter->setIconSet( SmallIconSet("filter" ) );
   btnFilter->setToggleButton( true );
   filter = new KHistoryCombo( true, filterBox, "filter");
-  filter->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  filter->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
   filterBox->setStretchFactor(filter, 2);
   connect( btnFilter, TQT_SIGNAL( clicked() ), this, TQT_SLOT( btnFilterClick() ) );
 
@@ -354,7 +354,7 @@ void KateFileSelector::setDir( KURL u )
   newurl.setPath(pathstr);
 
   if ( !kateFileSelectorIsReadable ( newurl ) )
-    newurl.cd(TQString::tqfromLatin1(".."));
+    newurl.cd(TQString::fromLatin1(".."));
 
   if ( !kateFileSelectorIsReadable (newurl) )
      newurl.setPath( TQDir::homeDirPath() );
@@ -692,13 +692,13 @@ void KFSConfigPage::init()
   KAction *ac;
   TQListBox *lb;
   for ( TQStringList::Iterator it=allActions.begin(); it != allActions.end(); ++it ) {
-    lb = l.tqcontains( *it ) ? acSel->selectedListBox() : acSel->availableListBox();
+    lb = l.contains( *it ) ? acSel->selectedListBox() : acSel->availableListBox();
     if ( *it == "bookmarks" || *it == "sync_dir" )
       ac = fileSelector->actionCollection()->action( (*it).latin1() );
     else
       ac = fileSelector->dirOperator()->actionCollection()->action( (*it).latin1() );
     if ( ac )
-      new ActionLBItem( lb, SmallIcon( ac->icon() ), ac->text().tqreplace( re, "" ), *it );
+      new ActionLBItem( lb, SmallIcon( ac->icon() ), ac->text().replace( re, "" ), *it );
   }
 
   // sync
@@ -719,4 +719,4 @@ void KFSConfigPage::slotMyChanged()
   slotChanged();
 }
 //END KFSConfigPage
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

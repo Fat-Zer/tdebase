@@ -35,7 +35,7 @@ class LanBrowser:public KCModule
       virtual void save();
 
    private:
-      TQVBoxLayout tqlayout;
+      TQVBoxLayout layout;
       TQTabWidget tabs;
       KCModule *smbPage;
       KCModule *lisaPage;

@@ -60,7 +60,7 @@ private:
 
 KeramikEmbedder::KeramikEmbedder()
 {
-	TQDateTime date( TQDateTime::tqcurrentDateTime() );
+	TQDateTime date( TQDateTime::currentDateTime() );
 	TQString datestring( date.toString() );
 	
 	file = new TQFile( "tiles.h" );
@@ -100,19 +100,19 @@ void KeramikEmbedder::embed( const char *name )
 	TQString     codename( basename );
 	TQImage      image( name );
 	
-	codename = codename.tqreplace( TQRegExp("[^a-zA-Z0-9]"), "_" );
+	codename = codename.replace( TQRegExp("[^a-zA-Z0-9]"), "_" );
 	
 	stream << "\tstatic const QRgb " << codename << "_data[] = {" << endl << "\t\t";
 	stream.setf( TQTextStream::hex | TQTextStream::right );
 	stream.fill( '0' );
 	
 	int pixels = image.width() * image.height();
-	TQ_UINT32 *data = reinterpret_cast<TQ_UINT32*>( image.bits() );
+	Q_UINT32 *data = reinterpret_cast<Q_UINT32*>( image.bits() );
 	bool hasAlpha = false;
 
 	
 	for ( int i = 0, j = 0; i < pixels; i++ ) {
-		if ( tqAlpha( *data ) && tqAlpha( *data ) != 0xff )
+		if ( qAlpha( *data ) && qAlpha( *data ) != 0xff )
 			hasAlpha = true;
 		
 		stream << "0x" << qSetW(8) << *(data++);

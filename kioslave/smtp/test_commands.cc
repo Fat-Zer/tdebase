@@ -55,7 +55,7 @@ public:
   }
   bool usingSSL() const { return usesSSL; }
   bool usingTLS() const { return usesTLS; }
-  bool haveCapability( const char * cap ) const { return caps.tqcontains( cap ); }
+  bool haveCapability( const char * cap ) const { return caps.contains( cap ); }
   void error( int id, const TQString & msg ) {
     lastErrorCode = id;
     lastErrorMessage = msg;
@@ -82,16 +82,16 @@ public:
 using namespace KioSMTP;
 
 static const char * foobarbaz = ".Foo bar baz";
-static const unsigned int foobarbaz_len = tqstrlen( foobarbaz );
+static const unsigned int foobarbaz_len = qstrlen( foobarbaz );
 
 static const char * foobarbaz_dotstuffed = "..Foo bar baz";
-static const unsigned int foobarbaz_dotstuffed_len = tqstrlen( foobarbaz_dotstuffed );
+static const unsigned int foobarbaz_dotstuffed_len = qstrlen( foobarbaz_dotstuffed );
 
 static const char * foobarbaz_lf = ".Foo bar baz\n";
-static const unsigned int foobarbaz_lf_len = tqstrlen( foobarbaz_lf );
+static const unsigned int foobarbaz_lf_len = qstrlen( foobarbaz_lf );
 
 static const char * foobarbaz_crlf = "..Foo bar baz\r\n";
-static const unsigned int foobarbaz_crlf_len = tqstrlen( foobarbaz_crlf );
+static const unsigned int foobarbaz_crlf_len = qstrlen( foobarbaz_crlf );
 
 static void checkSuccessfulTransferCommand( bool, bool, bool, bool, bool );
 
@@ -657,10 +657,10 @@ void checkSuccessfulTransferCommand( bool error, bool preload, bool ungetLast,
                          mailEndsInNewline ? foobarbaz_lf : foobarbaz
                        :
                          mailEndsInNewline ? foobarbaz_crlf : foobarbaz_dotstuffed ;
-  const unsigned int s_pre_len = tqstrlen( s_pre );
+  const unsigned int s_pre_len = qstrlen( s_pre );
 
   const char * s_post = mailEndsInNewline ? foobarbaz_crlf : foobarbaz_dotstuffed ;
-  //const unsigned int s_post_len = tqstrlen( s_post );
+  //const unsigned int s_post_len = qstrlen( s_post );
 
   TransferCommand xfer( &smtp, preload ? s_post : 0 );
 

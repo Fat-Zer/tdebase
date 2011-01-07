@@ -27,8 +27,8 @@
 template class TQDict<KonqListViewDir>;
 
 
-KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, TQWidget *tqparentWidget)
-   : KonqBaseListViewWidget( parent, tqparentWidget )
+KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, TQWidget *parentWidget)
+   : KonqBaseListViewWidget( parent, parentWidget )
 {
    kdDebug(1202) << "+KonqTreeViewWidget" << endl;
 
@@ -163,7 +163,7 @@ void KonqTreeViewWidget::slotClear( const KURL & _url )
       }
       
       // Remark: This code works only if we have exactly one tree which is the
-      // case for Konqy's treeview. It will break if m_dictSubDirs tqcontains two
+      // case for Konqy's treeview. It will break if m_dictSubDirs contains two
       // subdirectories where only one of them will have its items deleted by
       // the following code.
 

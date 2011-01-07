@@ -75,7 +75,7 @@ class KXtWidget : public TQWidget {
 		    Widget parent, TQWidget* qparent,
 		    ArgList args, Cardinal num_args,
 		    bool managed);
-    friend void qwidget_realize( Widget widget, XtValueMask* tqmask,
+    friend void qwidget_realize( Widget widget, XtValueMask* mask,
 				 XSetWindowAttributes* attributes );
 
 public:

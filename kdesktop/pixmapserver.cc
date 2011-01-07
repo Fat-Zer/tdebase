@@ -58,7 +58,7 @@ KPixmapServer::~KPixmapServer()
 
 void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
 {
-    if (m_Names.tqcontains(name)) 
+    if (m_Names.contains(name)) 
     {
 	if (overwrite)
 	    remove(name);
@@ -174,7 +174,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 	}
 
 	// Check if there is no transaction in progress to the same property
-	if (m_Active.tqcontains(ev->property)) 
+	if (m_Active.contains(ev->property)) 
 	{
 	    kdDebug(1204) << ID << "selection is busy.\n";
 	    XSendEvent(qt_xdisplay(), ev->requestor, false, 0, &reply);

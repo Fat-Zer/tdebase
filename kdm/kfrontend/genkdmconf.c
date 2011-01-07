@@ -580,7 +580,7 @@ static const char def_setup[] =
 "#! /bin/sh\n"
 "# Xsetup - run as root before the login dialog appears\n"
 "\n"
-"#xconsole -tqgeometry 480x130-0-0 -notify -verbose -fn fixed -exitOnFail -file /dev/xconsole &\n";
+"#xconsole -geometry 480x130-0-0 -notify -verbose -fn fixed -exitOnFail -file /dev/xconsole &\n";
 
 static const char def_startup[] =
 "#! /bin/sh\n"
@@ -591,7 +591,7 @@ static const char def_startup[] =
 "if [ -e /etc/nologin ]; then\n"
 "  # always display the nologin message, if possible\n"
 "  if [ -s /etc/nologin ] && which xmessage > /dev/null 2>&1; then\n"
-"    xmessage -file /etc/nologin -tqgeometry 640x480\n"
+"    xmessage -file /etc/nologin -geometry 640x480\n"
 "  fi\n"
 "  if [ \"$(id -u)\" != \"0\" ] && \\\n"
 "     ! grep -qs '^ignore-nologin' /etc/kde3/kdm/kdm.options; then\n"
@@ -940,7 +940,7 @@ mem_mem( char *mem, int lmem, const char *smem, int lsmem )
 	return 0;
 }
 
-static int maxTTY, TTYtqmask;
+static int maxTTY, TTYmask;
 
 static void
 getInitTab( void )
@@ -953,7 +953,7 @@ getInitTab( void )
 		return;
 	if (!maxTTY) {
 		maxTTY = 6;
-		TTYtqmask = 0x3f;
+		TTYmask = 0x3f;
 	}
 }
 #endif
@@ -1111,7 +1111,7 @@ absorb_xservers( const char *sect ATTR_UNUSED, char **value )
 	char *sdpys, *rdpys;
 	StrList **argp, **arglp, *ap, *ap2;
 	File file;
-	int nldpys = 0, nrdpys = 0, dpytqmask = 0;
+	int nldpys = 0, nrdpys = 0, dpymask = 0;
 	int cpcmd, cpcmdl;
 #ifdef HAVE_VTS
 	int dn, cpvt, mtty;
@@ -1193,7 +1193,7 @@ absorb_xservers( const char *sect ATTR_UNUSED, char **value )
 		*argp = *arglp = 0;
 		if ((se->type & dLocation) == dLocal) {
 			nldpys++;
-			dpytqmask |= 1 << atoi( se->name + 1 );
+			dpymask |= 1 << atoi( se->name + 1 );
 			if (se->reserve)
 				nrdpys++;
 		}
@@ -1266,8 +1266,8 @@ absorb_xservers( const char *sect ATTR_UNUSED, char **value )
 	/* add reserve dpys */
 	if (nldpys < 4 && nldpys && !nrdpys)
 		for (; nldpys < 4; nldpys++) {
-			for (dn = 0; dpytqmask & (1 << dn); dn++);
-			dpytqmask |= (1 << dn);
+			for (dn = 0; dpymask & (1 << dn); dn++);
+			dpymask |= (1 << dn);
 			StrCat( &rdpys, ",:%d", dn );
 		}
 #endif
@@ -1302,7 +1302,7 @@ upd_consolettys( Entry *ce, Section *cs ATTR_UNUSED )
 
 		getInitTab();
 		for (i = 0, buf = 0; i < 16; i++)
-			if (TTYtqmask & (1 << i))
+			if (TTYmask & (1 << i))
 				StrCat( &buf, ",tty%d", i + 1 );
 		if (buf) {
 			ce->value = buf + 1;

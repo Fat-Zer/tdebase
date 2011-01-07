@@ -167,7 +167,7 @@ kg_main( const char *argv0 )
 
 	app.setFont( _normalFont );
 
-	setup_modifiers( dpy, _numLocktqStatus );
+	setup_modifiers( dpy, _numLockStatus );
 	SecureDisplay( dpy );
 	KProcess *proc = 0;
 	if (!_grabServer) {
@@ -201,7 +201,7 @@ kg_main( const char *argv0 )
 		}
 
 		if (cmd == G_ErrorGreet) {
-			if (KGVerify::handleFailVerify( tqApp->desktop()->screen( _greeterScreen ) ))
+			if (KGVerify::handleFailVerify( qApp->desktop()->screen( _greeterScreen ) ))
 				break;
 			_autoLoginDelay = 0;
 			cmd = G_Greet;

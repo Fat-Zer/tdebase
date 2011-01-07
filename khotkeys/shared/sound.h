@@ -50,8 +50,8 @@ public:
 		return _fs;
 	}
 
-	TQMemArray<TQ_INT32> data;
-	TQ_UINT32 max;
+	TQMemArray<Q_INT32> data;
+	Q_UINT32 max;
 	uint _fs;
 };
 

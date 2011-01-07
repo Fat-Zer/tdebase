@@ -72,13 +72,13 @@ public:
       s_defaultViewProps = 0;
    }
 
-    virtual KParts::Part* createPartObject( TQWidget *tqparentWidget, const char *,
+    virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *,
                                       TQObject *parent, const char *name, const char*, const TQStringList &args )
    {
       if( args.count() < 1 )
          kdWarning() << "KonqKfmIconView: Missing Parameter" << endl;
 
-      KonqKfmIconView *obj = new KonqKfmIconView( tqparentWidget, parent, name,args.first() );
+      KonqKfmIconView *obj = new KonqKfmIconView( parentWidget, parent, name,args.first() );
       return obj;
    }
 
@@ -164,7 +164,7 @@ void IconViewBrowserExtension::setNameFilter( const TQString &nameFilter )
   m_iconView->m_nameFilter = nameFilter;
 }
 
-KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, const char *name, const TQString& mode  )
+KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode  )
     : KonqDirPart( parent, name )
     , m_bNeedSetCurrentItem( false )
     , m_pEnsureVisible( 0 )
@@ -179,7 +179,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, co
     // Create a properties instance for this view
     m_pProps = new KonqPropsView( KonqIconViewFactory::instance(), KonqIconViewFactory::defaultViewProps() );
 
-    m_pIconView = new KonqIconViewWidget( tqparentWidget, "qiconview" );
+    m_pIconView = new KonqIconViewWidget( parentWidget, "qiconview" );
     m_pIconView->initConfig( true );
 
     connect( m_pIconView,  TQT_SIGNAL(imagePreviewFinished()),
@@ -206,7 +206,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, co
 
     setXMLFile( "konq_iconview.rc" );
 
-    // Don't tqrepaint on configuration changes during construction
+    // Don't repaint on configuration changes during construction
     m_bInit = true;
 
     m_paDotFiles = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ),
@@ -313,8 +313,8 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, co
                                        this, TQT_SLOT( slotInvertSelection() ),
                                        actionCollection(), "invertselection" );
 
-    m_paSelect->setToolTip( i18n( "Allows selecting of file or folder items based on a given tqmask" ) );
-    m_paUnselect->setToolTip( i18n( "Allows unselecting of file or folder items based on a given tqmask" ) );
+    m_paSelect->setToolTip( i18n( "Allows selecting of file or folder items based on a given mask" ) );
+    m_paUnselect->setToolTip( i18n( "Allows unselecting of file or folder items based on a given mask" ) );
     m_paSelectAll->setToolTip( i18n( "Selects all items" ) );
     m_paUnselectAll->setToolTip( i18n( "Unselects all selected items" ) );
     m_paInvertSelection->setToolTip( i18n( "Inverts the current selection of items" ) );
@@ -359,7 +359,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, co
     // Create the directory lister
     m_dirLister = new KDirLister( true );
     setDirLister( m_dirLister );
-    m_dirLister->setMainWindow(m_pIconView->tqtopLevelWidget());
+    m_dirLister->setMainWindow(m_pIconView->topLevelWidget());
 
     connect( m_dirLister, TQT_SIGNAL( started( const KURL & ) ),
              this, TQT_SLOT( slotStarted() ) );
@@ -686,7 +686,7 @@ void KonqKfmIconView::newIconSize( int size )
     // Stop a preview job that might be running
     m_pIconView->stopImagePreview();
 
-    // Set icons size, arrage items in grid and tqrepaint the whole view
+    // Set icons size, arrage items in grid and repaint the whole view
     m_pIconView->setIcons( size );
 
     // If previews are enabled start a new job
@@ -873,7 +873,7 @@ void KonqKfmIconView::slotCanceled( const KURL& url )
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
         m_pIconView->viewport()->setUpdatesEnabled( true );
-        m_pIconView->viewport()->tqrepaint();
+        m_pIconView->viewport()->repaint();
     }
     if ( m_pEnsureVisible ){
         m_pIconView->ensureItemVisible( m_pEnsureVisible );
@@ -889,11 +889,11 @@ void KonqKfmIconView::slotCompleted()
         m_pTimeoutRefreshTimer->stop();
 
     // If updates to the viewport are still blocked (so slotNewItems() has
-    // not been called), a viewport tqrepaint is forced.
+    // not been called), a viewport repaint is forced.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
         m_pIconView->viewport()->setUpdatesEnabled( true );
-        m_pIconView->viewport()->tqrepaint();
+        m_pIconView->viewport()->repaint();
     }
 
     // Root item ? Store root item in konqiconviewwidget (whether 0L or not)
@@ -1136,7 +1136,7 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
     }
     else
     {
-        // In case we tqreplace a big icon with a small one, need to tqrepaint.
+        // In case we replace a big icon with a small one, need to repaint.
         if ( bNeedRepaint )
             m_pIconView->updateContents();
     }
@@ -1248,7 +1248,7 @@ void KonqKfmIconView::slotRefreshViewport()
     TQWidget * vp = m_pIconView->viewport();
     bool prevState = vp->isUpdatesEnabled();
     vp->setUpdatesEnabled( true );
-    vp->tqrepaint();
+    vp->repaint();
     vp->setUpdatesEnabled( prevState );
 }
 

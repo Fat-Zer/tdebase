@@ -121,9 +121,9 @@ TQStringList TaskbarConfig::i18nGroupModeList()
 TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringList&)
   : KCModule(TaskBarFactory::instance(), parent, name)
 {
-    TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
     m_widget = new TaskbarConfigUI(this);
-    tqlayout->addWidget(m_widget);
+    layout->addWidget(m_widget);
 
     // TODO: Load these from .desktop files?
     m_appearances.append(TaskbarAppearance(i18n("Elegant"), false, false, true));

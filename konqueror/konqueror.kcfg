@@ -479,7 +479,7 @@ PATH_JAVA
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="WindowtqStatusPolicy" type="UInt"> <!--KHTML-->
+    <entry key="WindowStatusPolicy" type="UInt"> <!--KHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>

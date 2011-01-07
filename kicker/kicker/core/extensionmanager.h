@@ -51,7 +51,7 @@ public:
     int nextPanelOrder();
 
     // return the space available for all icons on the desktop
-    // subtracts all panels from XineramaScreen's tqgeometry
+    // subtracts all panels from XineramaScreen's geometry
     TQRect desktopIconsArea(int xineramaScreen) const;
 
 public slots:

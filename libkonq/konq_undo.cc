@@ -317,7 +317,7 @@ void KonqUndoManager::undo()
     }
     else if ( (*it).m_link )
     {
-      if ( !d->m_fileCleanupStack.tqcontains( (*it).m_dst ) )
+      if ( !d->m_fileCleanupStack.contains( (*it).m_dst ) )
         d->m_fileCleanupStack.prepend( (*it).m_dst );
 
       if ( d->m_current.m_type != KonqCommand::MOVE )
@@ -339,7 +339,7 @@ void KonqUndoManager::undo()
     KURL::List::ConstIterator it = d->m_current.m_src.begin();
     KURL::List::ConstIterator end = d->m_current.m_src.end();
     for (; it != end; ++it )
-      if ( !d->m_dirStack.tqcontains( *it) )
+      if ( !d->m_dirStack.contains( *it) )
         d->m_dirStack.push( *it );
   }
   */
@@ -652,13 +652,13 @@ TQDataStream &operator>>( TQDataStream &stream, KonqBasicOperation &op )
 
 TQDataStream &operator<<( TQDataStream &stream, const KonqCommand &cmd )
 {
-  stream << cmd.m_valid << (TQ_INT8)cmd.m_type << cmd.m_opStack << cmd.m_src << cmd.m_dst;
+  stream << cmd.m_valid << (Q_INT8)cmd.m_type << cmd.m_opStack << cmd.m_src << cmd.m_dst;
   return stream;
 }
 
 TQDataStream &operator>>( TQDataStream &stream, KonqCommand &cmd )
 {
-  TQ_INT8 type;
+  Q_INT8 type;
   stream >> cmd.m_valid >> type >> cmd.m_opStack >> cmd.m_src >> cmd.m_dst;
   cmd.m_type = static_cast<KonqCommand::Type>( type );
   return stream;

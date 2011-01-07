@@ -13,7 +13,7 @@ noinst_HEADERS = konqsidebar.h sidebar_widget.h konqsidebariface_p.h
 
 include_HEADERS = konqsidebarplugin.h
 
-# let autotqmoc handle all of the meta source files (tqmoc)
+# let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
 lib_LTLIBRARIES = libkonqsidebarplugin.la 

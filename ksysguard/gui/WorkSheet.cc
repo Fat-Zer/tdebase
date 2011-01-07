@@ -73,7 +73,7 @@ WorkSheet::WorkSheet( uint rows, uint columns, uint interval, TQWidget* parent,
   // Initialize worksheet with dummy displays.
   for ( uint r = 0; r < mRows; ++r )
     for ( uint c = 0; c < mColumns; ++c )
-      tqreplaceDisplay( r, c );
+      replaceDisplay( r, c );
 
   mGridLayout->activate();
 
@@ -159,14 +159,14 @@ bool WorkSheet::load( const TQString &fileName )
       return false;
     }
 
-    tqreplaceDisplay( row, column, element );
+    replaceDisplay( row, column, element );
   }
 
   // Fill empty cells with dummy displays
   for ( uint r = 0; r < mRows; ++r )
     for ( uint c = 0; c < mColumns; ++c )
       if ( !mDisplayList[ r ][ c ] )
-        tqreplaceDisplay( r, c );
+        replaceDisplay( r, c );
 
   setModified( false );
 
@@ -276,7 +276,7 @@ void WorkSheet::paste()
   }
 
   TQDomElement element = doc.documentElement();
-  tqreplaceDisplay( row, column, element );
+  replaceDisplay( row, column, element );
 }
 
 void WorkSheet::setFileName( const TQString &fileName )
@@ -319,7 +319,7 @@ KSGRD::SensorDisplay *WorkSheet::addDisplay( const TQString &hostName,
   }
 
   /* If the by 'row' and 'column' specified display is a TQGroupBox dummy
-   * display we tqreplace the widget. Otherwise we just try to add
+   * display we replace the widget. Otherwise we just try to add
    * the new sensor to an existing display. */
   if ( mDisplayList[ row ][ column ]->isA( "DummyDisplay" ) ) {
     KSGRD::SensorDisplay* newDisplay = 0;
@@ -362,7 +362,7 @@ KSGRD::SensorDisplay *WorkSheet::addDisplay( const TQString &hostName,
       return 0;
     }
 
-    tqreplaceDisplay( row, column, newDisplay );
+    replaceDisplay( row, column, newDisplay );
   }
 
   mDisplayList[ row ][ column ]->addSensor( hostName, sensorName, sensorType, sensorDescr );
@@ -447,17 +447,17 @@ void WorkSheet::dropEvent( TQDropEvent *e )
     }
 
     /* Find the sensor display that is supposed to get the drop
-     * event and tqreplace or add sensor. */
+     * event and replace or add sensor. */
     for ( uint r = 0; r < mRows; ++r )
       for ( uint c = 0; c < mColumns; ++c )
-        if ( mDisplayList[ r ][ c ]->tqgeometry().tqcontains( e->pos() ) ) {
+        if ( mDisplayList[ r ][ c ]->geometry().contains( e->pos() ) ) {
           addDisplay( hostName, sensorName, sensorType, sensorDescr, r, c );
           return;
         }
   }
 }
 
-TQSize WorkSheet::tqsizeHint() const
+TQSize WorkSheet::sizeHint() const
 {
   return TQSize( 200,150 );
 }
@@ -471,7 +471,7 @@ void WorkSheet::customEvent( TQCustomEvent *e )
   }
 }
 
-bool WorkSheet::tqreplaceDisplay( uint row, uint column, TQDomElement& element )
+bool WorkSheet::replaceDisplay( uint row, uint column, TQDomElement& element )
 {
   TQString classType = element.attribute( "class" );
   KSGRD::SensorDisplay* newDisplay;
@@ -501,12 +501,12 @@ bool WorkSheet::tqreplaceDisplay( uint row, uint column, TQDomElement& element )
   if ( !newDisplay->restoreSettings( element ) )
     return false;
 
-  tqreplaceDisplay( row, column, newDisplay );
+  replaceDisplay( row, column, newDisplay );
 
   return true;
 }
 
-void WorkSheet::tqreplaceDisplay( uint row, uint column, KSGRD::SensorDisplay* newDisplay )
+void WorkSheet::replaceDisplay( uint row, uint column, KSGRD::SensorDisplay* newDisplay )
 {
   // remove the old display at this location
   delete mDisplayList[ row ][ column ];
@@ -531,7 +531,7 @@ void WorkSheet::tqreplaceDisplay( uint row, uint column, KSGRD::SensorDisplay* n
     mDisplayList[ row ][ column ]->show();
   }
 
-  setMinimumSize(tqsizeHint());
+  setMinimumSize(sizeHint());
 
   setModified( true );
 }
@@ -544,7 +544,7 @@ void WorkSheet::removeDisplay( KSGRD::SensorDisplay *display )
   for ( uint r = 0; r < mRows; ++r )
     for ( uint c = 0; c < mColumns; ++c )
       if ( mDisplayList[ r ][ c ] == display ) {
-        tqreplaceDisplay( r, c );
+        replaceDisplay( r, c );
         setModified( true );
         return;
       }
@@ -563,7 +563,7 @@ void WorkSheet::createGrid( uint rows, uint columns )
   mRows = rows;
   mColumns = columns;
 
-  // create grid tqlayout with specified dimentions
+  // create grid layout with specified dimentions
   mGridLayout = new TQGridLayout( this, mRows, mColumns, 5 );
 
   mDisplayList = new KSGRD::SensorDisplay**[ mRows ];
@@ -612,7 +612,7 @@ void WorkSheet::resizeGrid( uint newRows, uint newColumns )
   for ( r = 0; r < newRows; ++r )
     for ( c = 0; c < newColumns; ++c )
       if ( r >= mRows || c >= mColumns )
-        tqreplaceDisplay( r, c );
+        replaceDisplay( r, c );
 
   /* set stretch factors for new rows and columns (if any) */
   for ( r = mRows; r < newRows; ++r )

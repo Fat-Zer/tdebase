@@ -49,7 +49,7 @@ namespace KioSMTP {
 	mWellFormed(true) {}
 
     void parseLine( const char * line ) {
-      parseLine( line, tqstrlen( line ) );
+      parseLine( line, qstrlen( line ) );
     }
     void parseLine( const char * line, int len );
 

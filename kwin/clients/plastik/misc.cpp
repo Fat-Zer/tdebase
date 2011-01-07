@@ -61,9 +61,9 @@ TQColor alphaBlendColors(const TQColor &bgColor, const TQColor &fgColor, const i
     if(alpha<0) alpha = 0;
     int inv_alpha = 255 - alpha;
 
-    TQColor result  = TQColor( tqRgb(tqRed(rgb_b)*inv_alpha/255 + tqRed(rgb)*alpha/255,
-                                  tqGreen(rgb_b)*inv_alpha/255 + tqGreen(rgb)*alpha/255,
-                                  tqBlue(rgb_b)*inv_alpha/255 + tqBlue(rgb)*alpha/255) );
+    TQColor result  = TQColor( qRgb(qRed(rgb_b)*inv_alpha/255 + qRed(rgb)*alpha/255,
+                                  qGreen(rgb_b)*inv_alpha/255 + qGreen(rgb)*alpha/255,
+                                  qBlue(rgb_b)*inv_alpha/255 + qBlue(rgb)*alpha/255) );
 
     return result;
 }
@@ -73,10 +73,10 @@ TQImage recolorImage(TQImage *img, TQColor color) {
     destImg.setAlphaBuffer(true);
     for (int x = 0; x < img->width(); x++) {
         for (int y = 0; y < img->height(); y++) {
-            if(img->pixel(x,y) == tqRgb(0,0,255) ) {
+            if(img->pixel(x,y) == qRgb(0,0,255) ) {
                 destImg.setPixel(x,y,color.rgb() ); // set to the new color
             } else {
-                destImg.setPixel(x,y,tqRgba(0,0,0,0) ); // set transparent...
+                destImg.setPixel(x,y,qRgba(0,0,0,0) ); // set transparent...
             }
         }
     }

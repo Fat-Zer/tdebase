@@ -39,7 +39,7 @@ class KDE_EXPORT PanelDrag : public QDragObject
         ~PanelDrag();
 
         virtual const char * format(int i = 0) const;
-        virtual TQByteArray tqencodedData(const char *) const;
+        virtual TQByteArray encodedData(const char *) const;
 
         static bool canDecode(const TQMimeSource * e);
         static bool decode(const TQMimeSource* e, BaseContainer** container);
@@ -55,7 +55,7 @@ class KDE_EXPORT AppletInfoDrag : public QDragObject
         ~AppletInfoDrag();
 
         virtual const char * format(int i = 0) const;
-        virtual TQByteArray tqencodedData(const char *) const;
+        virtual TQByteArray encodedData(const char *) const;
 
         static bool canDecode(const TQMimeSource * e);
         static bool decode(const TQMimeSource* e, AppletInfo& container);

@@ -124,9 +124,9 @@ Workspace::Workspace( bool restore )
     electric_bottom_border(None),
     electric_left_border(None),
     electric_right_border(None),
-    tqlayoutOrientation(Qt::Vertical),
-    tqlayoutX(-1),
-    tqlayoutY(2),
+    layoutOrientation(Qt::Vertical),
+    layoutX(-1),
+    layoutY(2),
     workarea(NULL),
     screenarea(NULL),
     managing_topmenus( false ),
@@ -170,7 +170,7 @@ Workspace::Workspace( bool restore )
         Qt::WType_Desktop | Qt::WPaintUnclipped
     );
 
-    kapp->setGlobalMouseTracking( true ); // so that this doesn't mess eventtqmask on root window later
+    kapp->setGlobalMouseTracking( true ); // so that this doesn't mess eventmask on root window later
     // call this before XSelectInput() on the root window
     startup = new KStartupInfo(
         KStartupInfo::DisableKWinModule | KStartupInfo::AnnounceSilenceChanges, this );
@@ -412,11 +412,11 @@ void Workspace::init()
         NETPoint* viewports = new NETPoint[ number_of_desktops ];
         rootInfo->setDesktopViewport( number_of_desktops, *viewports );
         delete[] viewports;
-        TQRect geom = TQApplication::desktop()->tqgeometry();
-        NETSize desktop_tqgeometry;
-        desktop_tqgeometry.width = geom.width();
-        desktop_tqgeometry.height = geom.height();
-        rootInfo->setDesktopGeometry( -1, desktop_tqgeometry );
+        TQRect geom = TQApplication::desktop()->geometry();
+        NETSize desktop_geometry;
+        desktop_geometry.width = geom.width();
+        desktop_geometry.height = geom.height();
+        rootInfo->setDesktopGeometry( -1, desktop_geometry );
         setShowingDesktop( false );
 
         } // end updates blocker block
@@ -450,7 +450,7 @@ Workspace::~Workspace()
         delete kompmgr;
     blockStackingUpdates( true );
 // TODO    grabXServer();
-    // use stacking_order, so that kwin --tqreplace keeps stacking order
+    // use stacking_order, so that kwin --replace keeps stacking order
     for( ClientList::ConstIterator it = stacking_order.begin();
          it != stacking_order.end();
          ++it )
@@ -539,9 +539,9 @@ void Workspace::addClient( Client* c, allowed_t )
         updateFocusChains( c, FocusChainUpdate ); // add to focus chain if not already there
         clients.append( c );
         }
-    if( !unconstrained_stacking_order.tqcontains( c ))
+    if( !unconstrained_stacking_order.contains( c ))
         unconstrained_stacking_order.append( c );
-    if( !stacking_order.tqcontains( c )) // it'll be updated later, and updateToolWindows() requires
+    if( !stacking_order.contains( c )) // it'll be updated later, and updateToolWindows() requires
         stacking_order.append( c );    // c to be in stacking_order
     if( c->isTopMenu())
         addTopMenu( c );
@@ -580,7 +580,7 @@ void Workspace::removeClient( Client* c, allowed_t )
     if( c->isNormalWindow())
         Notify::raise( Notify::Delete );
 
-    Q_ASSERT( clients.tqcontains( c ) || desktops.tqcontains( c ));
+    Q_ASSERT( clients.contains( c ) || desktops.contains( c ));
     clients.remove( c );
     desktops.remove( c );
     unconstrained_stacking_order.remove( c );
@@ -612,7 +612,7 @@ void Workspace::removeClient( Client* c, allowed_t )
     updateStackingOrder( true );
 
     if (tab_grab)
-       tab_box->tqrepaint();
+       tab_box->repaint();
 
     updateClientArea();
     }
@@ -641,7 +641,7 @@ void Workspace::updateFocusChains( Client* c, FocusChainChange change )
                 else
                     focus_chain[ i ].prepend( c );
                 }
-            else if( !focus_chain[ i ].tqcontains( c ))
+            else if( !focus_chain[ i ].contains( c ))
                 { // add it after the active one
                 if( active_client != NULL && active_client != c
                     && !focus_chain[ i ].isEmpty() && focus_chain[ i ].last() == active_client )
@@ -667,7 +667,7 @@ void Workspace::updateFocusChains( Client* c, FocusChainChange change )
                     focus_chain[ i ].remove( c );
                     focus_chain[ i ].prepend( c );
                     }
-                else if( !focus_chain[ i ].tqcontains( c ))
+                else if( !focus_chain[ i ].contains( c ))
                     {
                     if( active_client != NULL && active_client != c
                         && !focus_chain[ i ].isEmpty() && focus_chain[ i ].last() == active_client )
@@ -690,7 +690,7 @@ void Workspace::updateFocusChains( Client* c, FocusChainChange change )
         global_focus_chain.remove( c );
         global_focus_chain.prepend( c );
         }
-    else if( !global_focus_chain.tqcontains( c ))
+    else if( !global_focus_chain.contains( c ))
         {
         if( active_client != NULL && active_client != c
             && !global_focus_chain.isEmpty() && global_focus_chain.last() == active_client )
@@ -970,7 +970,7 @@ void Workspace::slotReconfigure()
 #if 0 // This actually seems to make things worse now
         TQWidget curtain;
         curtain.setBackgroundMode( NoBackground );
-        curtain.setGeometry( TQApplication::desktop()->tqgeometry() );
+        curtain.setGeometry( TQApplication::desktop()->geometry() );
         curtain.show();
 #endif
         for( ClientList::ConstIterator it = clients.begin();
@@ -1000,7 +1000,7 @@ void Workspace::slotReconfigure()
         topmenu_selection->release();
         lostTopMenuSelection();
         }
-    topmenu_height = 0; // tqinvalidate used menu height
+    topmenu_height = 0; // invalidate used menu height
     if( managingTopMenus())
         {
         updateTopMenuGeometry();
@@ -1136,7 +1136,7 @@ bool Workspace::isNotManaged( const TQString& title )
 void Workspace::refresh() 
     {
     TQWidget w;
-    w.setGeometry( TQApplication::desktop()->tqgeometry() );
+    w.setGeometry( TQApplication::desktop()->geometry() );
     w.show();
     w.hide();
     TQApplication::flushX();
@@ -1147,7 +1147,7 @@ void Workspace::refresh()
   going to be hidden are first obscured by new windows with no background
   ( i.e. transparent ) placed right below the windows. These invisible windows
   are removed after the switch is complete.
-  Reduces desktop ( wallpaper ) tqrepaints during desktop switching
+  Reduces desktop ( wallpaper ) repaints during desktop switching
 */
 class ObscuringWindows
     {
@@ -1169,7 +1169,7 @@ void ObscuringWindows::create( Client* c )
         cached = new TQValueList<Window>;
     Window obs_win;
     XWindowChanges chngs;
-    int tqmask = CWSibling | CWStackMode;
+    int mask = CWSibling | CWStackMode;
     if( cached->count() > 0 ) 
         {
         cached->remove( obs_win = cached->first());
@@ -1177,7 +1177,7 @@ void ObscuringWindows::create( Client* c )
         chngs.y = c->y();
         chngs.width = c->width();
         chngs.height = c->height();
-        tqmask |= CWX | CWY | CWWidth | CWHeight;
+        mask |= CWX | CWY | CWWidth | CWHeight;
         }
     else 
         {
@@ -1190,7 +1190,7 @@ void ObscuringWindows::create( Client* c )
         }
     chngs.sibling = c->frameId();
     chngs.stack_mode = Below;
-    XConfigureWindow( qt_xdisplay(), obs_win, tqmask, &chngs );
+    XConfigureWindow( qt_xdisplay(), obs_win, mask, &chngs );
     XMapWindow( qt_xdisplay(), obs_win );
     obscuring_windows.append( obs_win );
     }
@@ -1271,7 +1271,7 @@ bool Workspace::setCurrentDesktop( int new_desktop )
         {
         // Search in focus chain
         if ( movingClient != NULL && active_client == movingClient
-            && focus_chain[currentDesktop()].tqcontains( active_client )
+            && focus_chain[currentDesktop()].contains( active_client )
             && active_client->isShown( true ) && active_client->isOnCurrentDesktop())
             {
             c = active_client; // the requestFocus below will fail, as the client is already active
@@ -1348,7 +1348,7 @@ int Workspace::desktopToRight( int desktop ) const
     int x,y;
     calcDesktopLayout(x,y);
     int dt = desktop-1;
-    if (tqlayoutOrientation == Qt::Vertical)
+    if (layoutOrientation == Qt::Vertical)
         {
         dt += y;
         if ( dt >= numberOfDesktops() ) 
@@ -1379,7 +1379,7 @@ int Workspace::desktopToLeft( int desktop ) const
     int x,y;
     calcDesktopLayout(x,y);
     int dt = desktop-1;
-    if (tqlayoutOrientation == Qt::Vertical)
+    if (layoutOrientation == Qt::Vertical)
         {
         dt -= y;
         if ( dt < 0 ) 
@@ -1410,7 +1410,7 @@ int Workspace::desktopUp( int desktop ) const
     int x,y;
     calcDesktopLayout(x,y);
     int dt = desktop-1;
-    if (tqlayoutOrientation == Qt::Horizontal)
+    if (layoutOrientation == Qt::Horizontal)
         {
         dt -= x;
         if ( dt < 0 ) 
@@ -1441,7 +1441,7 @@ int Workspace::desktopDown( int desktop ) const
     int x,y;
     calcDesktopLayout(x,y);
     int dt = desktop-1;
-    if (tqlayoutOrientation == Qt::Horizontal)
+    if (layoutOrientation == Qt::Horizontal)
         {
         dt += x;
         if ( dt >= numberOfDesktops() ) 
@@ -1562,7 +1562,7 @@ int Workspace::numScreens() const
     {
     if( !options->xineramaEnabled )
         return 0;
-    return tqApp->desktop()->numScreens();
+    return qApp->desktop()->numScreens();
     }
 
 int Workspace::activeScreen() const
@@ -1572,10 +1572,10 @@ int Workspace::activeScreen() const
     if( !options->activeMouseScreen )
         {
         if( activeClient() != NULL && !activeClient()->isOnScreen( active_screen ))
-            return tqApp->desktop()->screenNumber( activeClient()->tqgeometry().center());
+            return qApp->desktop()->screenNumber( activeClient()->geometry().center());
         return active_screen;
         }
-    return tqApp->desktop()->screenNumber( TQCursor::pos());
+    return qApp->desktop()->screenNumber( TQCursor::pos());
     }
 
 // check whether a client moved completely out of what's considered the active screen,
@@ -1596,21 +1596,21 @@ void Workspace::setActiveScreenMouse( TQPoint mousepos )
     {
     if( !options->xineramaEnabled )
         return;
-    active_screen = tqApp->desktop()->screenNumber( mousepos );
+    active_screen = qApp->desktop()->screenNumber( mousepos );
     }
 
 TQRect Workspace::screenGeometry( int screen ) const
     {
     if (( !options->xineramaEnabled ) || (kapp->desktop()->numScreens() < 2))
-        return tqApp->desktop()->tqgeometry();
-    return tqApp->desktop()->screenGeometry( screen );
+        return qApp->desktop()->geometry();
+    return qApp->desktop()->screenGeometry( screen );
     }
 
 int Workspace::screenNumber( TQPoint pos ) const
     {
     if( !options->xineramaEnabled )
         return 0;
-    return tqApp->desktop()->screenNumber( pos );
+    return qApp->desktop()->screenNumber( pos );
     }
 
 void Workspace::sendClientToScreen( Client* c, int screen )
@@ -1640,18 +1640,18 @@ void Workspace::setDesktopLayout( int, int, int )
 void Workspace::updateDesktopLayout()
     {
     // rootInfo->desktopLayoutCorner(); // I don't find this worth bothering, feel free to
-    tqlayoutOrientation = ( rootInfo->desktopLayoutOrientation() == NET::OrientationHorizontal
+    layoutOrientation = ( rootInfo->desktopLayoutOrientation() == NET::OrientationHorizontal
         ? Qt::Horizontal : Qt::Vertical );
-    tqlayoutX = rootInfo->desktopLayoutColumnsRows().width();
-    tqlayoutY = rootInfo->desktopLayoutColumnsRows().height();
-    if( tqlayoutX == 0 && tqlayoutY == 0 ) // not given, set default tqlayout
-        tqlayoutY = 2;
+    layoutX = rootInfo->desktopLayoutColumnsRows().width();
+    layoutY = rootInfo->desktopLayoutColumnsRows().height();
+    if( layoutX == 0 && layoutY == 0 ) // not given, set default layout
+        layoutY = 2;
     }
 
 void Workspace::calcDesktopLayout(int &x, int &y) const
     {
-    x = tqlayoutX; // <= 0 means compute it from the other and total number of desktops
-    y = tqlayoutY;
+    x = layoutX; // <= 0 means compute it from the other and total number of desktops
+    y = layoutY;
     if((x <= 0) && (y > 0))
        x = (numberOfDesktops()+y-1) / y;
     else if((y <=0) && (x > 0))
@@ -1669,7 +1669,7 @@ void Workspace::calcDesktopLayout(int &x, int &y) const
  */
 bool Workspace::addSystemTrayWin( WId w )
     {
-    if ( systemTrayWins.tqcontains( w ) )
+    if ( systemTrayWins.contains( w ) )
         return TRUE;
 
     NETWinInfo ni( qt_xdisplay(), w, root, NET::WMKDESystemTrayWinFor );
@@ -1691,7 +1691,7 @@ bool Workspace::addSystemTrayWin( WId w )
  */
 bool Workspace::removeSystemTrayWin( WId w, bool check )
     {
-    if ( !systemTrayWins.tqcontains( w ) )
+    if ( !systemTrayWins.contains( w ) )
         return FALSE;
     if( check )
         {
@@ -1794,17 +1794,17 @@ void Workspace::slotGrabWindow()
 	//No XShape - no work.
         if( Shape::available()) 
             {
-	    //As the first step, get the tqmask from XShape.
+	    //As the first step, get the mask from XShape.
             int count, order;
             XRectangle* rects = XShapeGetRectangles( qt_xdisplay(), active_client->frameId(),
                                                      ShapeBounding, &count, &order);
-	    //The ShapeBounding region is the outermost tqshape of the window;
+	    //The ShapeBounding region is the outermost shape of the window;
 	    //ShapeBounding - ShapeClipping is defined to be the border.
 	    //Since the border area is part of the window, we use bounding
 	    // to limit our work region
             if (rects) 
                 {
-		//Create a TQRegion from the rectangles describing the bounding tqmask.
+		//Create a TQRegion from the rectangles describing the bounding mask.
                 TQRegion contents;
                 for (int pos = 0; pos < count; pos++)
                     contents += TQRegion(rects[pos].x, rects[pos].y,
@@ -1814,18 +1814,18 @@ void Workspace::slotGrabWindow()
 		//Create the bounding box.
                 TQRegion bbox(0, 0, snapshot.width(), snapshot.height());
 
-		//Get the tqmasked away area.
-                TQRegion tqmaskedAway = bbox - contents;
-                TQMemArray<TQRect> tqmaskedAwayRects = tqmaskedAway.rects();
+		//Get the masked away area.
+                TQRegion maskedAway = bbox - contents;
+                TQMemArray<TQRect> maskedAwayRects = maskedAway.rects();
 
-		//Construct a bitmap tqmask from the rectangles
-                TQBitmap tqmask( snapshot.width(), snapshot.height());
-                TQPainter p(&tqmask);
-                p.fillRect(0, 0, tqmask.width(), tqmask.height(), Qt::color1);
-                for (uint pos = 0; pos < tqmaskedAwayRects.count(); pos++)
-                    p.fillRect(tqmaskedAwayRects[pos], Qt::color0);
+		//Construct a bitmap mask from the rectangles
+                TQBitmap mask( snapshot.width(), snapshot.height());
+                TQPainter p(&mask);
+                p.fillRect(0, 0, mask.width(), mask.height(), Qt::color1);
+                for (uint pos = 0; pos < maskedAwayRects.count(); pos++)
+                    p.fillRect(maskedAwayRects[pos], Qt::color0);
                 p.end();
-                snapshot.setMask(tqmask);
+                snapshot.setMask(mask);
                 }
             }
 
@@ -2121,7 +2121,7 @@ void Workspace::checkElectricBorders( bool force )
     
     electric_current_border = 0;
 
-    TQRect r = TQApplication::desktop()->tqgeometry();
+    TQRect r = TQApplication::desktop()->geometry();
     electricTop = r.top();
     electricBottom = r.bottom();
     electricLeft = r.left();
@@ -2140,12 +2140,12 @@ void Workspace::createBorderWindows()
 
     electric_have_borders = true;
 
-    TQRect r = TQApplication::desktop()->tqgeometry();
+    TQRect r = TQApplication::desktop()->geometry();
     XSetWindowAttributes attributes;
-    unsigned long valuetqmask;
+    unsigned long valuemask;
     attributes.override_redirect = True;
     attributes.event_mask =  ( EnterWindowMask | LeaveWindowMask );
-    valuetqmask=  (CWOverrideRedirect | CWEventMask | CWCursor );
+    valuemask=  (CWOverrideRedirect | CWEventMask | CWCursor );
     attributes.cursor = XCreateFontCursor(qt_xdisplay(),
                                           XC_sb_up_arrow);
     electric_top_border = XCreateWindow (qt_xdisplay(), qt_xrootwin(),
@@ -2154,7 +2154,7 @@ void Workspace::createBorderWindows()
                                 0,
                                 CopyFromParent, InputOnly,
                                 CopyFromParent,
-                                valuetqmask, &attributes);
+                                valuemask, &attributes);
     XMapWindow(qt_xdisplay(), electric_top_border);
 
     attributes.cursor = XCreateFontCursor(qt_xdisplay(),
@@ -2165,7 +2165,7 @@ void Workspace::createBorderWindows()
                                    0,
                                    CopyFromParent, InputOnly,
                                    CopyFromParent,
-                                   valuetqmask, &attributes);
+                                   valuemask, &attributes);
     XMapWindow(qt_xdisplay(), electric_bottom_border);
 
     attributes.cursor = XCreateFontCursor(qt_xdisplay(),
@@ -2176,7 +2176,7 @@ void Workspace::createBorderWindows()
                                  0,
                                  CopyFromParent, InputOnly,
                                  CopyFromParent,
-                                 valuetqmask, &attributes);
+                                 valuemask, &attributes);
     XMapWindow(qt_xdisplay(), electric_left_border);
 
     attributes.cursor = XCreateFontCursor(qt_xdisplay(),
@@ -2187,7 +2187,7 @@ void Workspace::createBorderWindows()
                                   0,
                                   CopyFromParent, InputOnly,
                                   CopyFromParent,
-                                  valuetqmask, &attributes);
+                                  valuemask, &attributes);
     XMapWindow(qt_xdisplay(),  electric_right_border);
     // Set XdndAware on the windows, so that DND enter events are received (#86998)
     Atom version = 4; // XDND version
@@ -2264,7 +2264,7 @@ void Workspace::clientMoved(const TQPoint &pos, Time now)
             {
             electric_current_border = 0;
 
-            TQRect r = TQApplication::desktop()->tqgeometry();
+            TQRect r = TQApplication::desktop()->geometry();
             int offset;
 
             int desk_before = currentDesktop();
@@ -2381,7 +2381,7 @@ void Workspace::raiseElectricBorders()
 void Workspace::addTopMenu( Client* c )
     {
     assert( c->isTopMenu());
-    assert( !topmenus.tqcontains( c ));
+    assert( !topmenus.contains( c ));
     topmenus.append( c );
     if( managingTopMenus())
         {
@@ -2402,7 +2402,7 @@ void Workspace::removeTopMenu( Client* c )
 //    if( c->isTopMenu())
 //        kdDebug() << "REMOVE TOPMENU:" << c << endl;
     assert( c->isTopMenu());
-    assert( topmenus.tqcontains( c ));
+    assert( topmenus.contains( c ));
     topmenus.remove( c );
     updateCurrentTopMenu();
     // TODO reduce topMenuHeight() if possible?
@@ -2466,7 +2466,7 @@ int Workspace::topMenuHeight() const
         { // simply create a dummy menubar and use its preffered height as the menu height
         KMenuBar tmpmenu;
         tmpmenu.insertItem( "dummy" );
-        topmenu_height = tmpmenu.tqsizeHint().height();
+        topmenu_height = tmpmenu.sizeHint().height();
         }
     return topmenu_height;
     }
@@ -2650,20 +2650,20 @@ void Workspace::handleKompmgrOutput( KProcess* , char *buffer, int buflen)
 {
     TQString message;
     TQString output = TQString::fromLocal8Bit( buffer, buflen );
-    if (output.tqcontains("Started",false))
+    if (output.contains("Started",false))
         ; // don't do anything, just pass to the connection release
-    else if (output.tqcontains("Can't open display",false))
+    else if (output.contains("Can't open display",false))
         message = i18n("<qt><b>kompmgr failed to open the display</b><br>There is probably an invalid display entry in your ~/.xcompmgrrc.</qt>");
-    else if (output.tqcontains("No render extension",false))
+    else if (output.contains("No render extension",false))
         message = i18n("<qt><b>kompmgr cannot find the Xrender extension</b><br>You are using either an outdated or a crippled version of XOrg.<br>Get XOrg &ge; 6.8 from www.freedesktop.org.<br></qt>");
-    else if (output.tqcontains("No composite extension",false))
+    else if (output.contains("No composite extension",false))
         message = i18n("<qt><b>Composite extension not found</b><br>You <i>must</i> use XOrg &ge; 6.8 for translucency and shadows to work.<br>Additionally, you need to add a new section to your X config file:<br>"
         "<i>Section \"Extensions\"<br>"
         "Option \"Composite\" \"Enable\"<br>"
         "EndSection</i></qt>");
-    else if (output.tqcontains("No damage extension",false))
+    else if (output.contains("No damage extension",false))
         message = i18n("<qt><b>Damage extension not found</b><br>You <i>must</i> use XOrg &ge; 6.8 for translucency and shadows to work.</qt>");
-    else if (output.tqcontains("No XFixes extension",false))
+    else if (output.contains("No XFixes extension",false))
         message = i18n("<qt><b>XFixes extension not found</b><br>You <i>must</i> use XOrg &ge; 6.8 for translucency and shadows to work.</qt>");
     else return; //skip others
     // kompmgr startup failed or succeeded, release connection

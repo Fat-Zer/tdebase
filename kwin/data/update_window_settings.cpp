@@ -24,7 +24,7 @@ struct SessionInfo
     TQCString resourceName;
     TQCString resourceClass;
 
-    TQRect tqgeometry;
+    TQRect geometry;
     TQRect restore;
     TQRect fsrestore;
     int maximized;
@@ -76,7 +76,7 @@ void loadFakeSessionInfo( KConfig* config )
         info->resourceName = config->readEntry( TQString("resourceName")+n ).latin1();
         info->resourceClass = config->readEntry( TQString("resourceClass")+n ).lower().latin1();
         info->wmClientMachine = config->readEntry( TQString("clientMachine")+n ).latin1();
-        info->tqgeometry = config->readRectEntry( TQString("tqgeometry")+n );
+        info->geometry = config->readRectEntry( TQString("geometry")+n );
         info->restore = config->readRectEntry( TQString("restore")+n );
         info->fsrestore = config->readRectEntry( TQString("fsrestore")+n );
         info->maximized = config->readNumEntry( TQString("maximize")+n, 0 );
@@ -122,9 +122,9 @@ void writeRules( KConfig& cfg )
             cfg.writeEntry( "types", NET::NormalMask );
         else
             cfg.writeEntry( "types", 1 << info->windowType );
-        cfg.writeEntry( "position", info->tqgeometry.topLeft());
+        cfg.writeEntry( "position", info->geometry.topLeft());
         cfg.writeEntry( "positionrule", 4 ); // 4 == remember
-        cfg.writeEntry( "size", info->tqgeometry.size());
+        cfg.writeEntry( "size", info->geometry.size());
         cfg.writeEntry( "sizerule", 4 );
         cfg.writeEntry( "maximizevert", info->maximized & NET::MaxVert );
         cfg.writeEntry( "maximizevertrule", 4 );

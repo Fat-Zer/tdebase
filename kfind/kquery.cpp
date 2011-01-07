@@ -242,7 +242,7 @@ void KQuery::processQuery( KFileItem* file)
           return;
         break;
       default:
-        if (!m_mimetype.isEmpty() && !m_mimetype.tqcontains(file->mimetype()))
+        if (!m_mimetype.isEmpty() && !m_mimetype.contains(file->mimetype()))
           return;
     }
 
@@ -334,7 +334,7 @@ void KQuery::processQuery( KFileItem* file)
          }
        } else if( !m_search_binary && !file->mimetype().startsWith("text/") &&
            file->url().isLocalFile() ) {
-         KMimeType::Format f = KMimeType::tqfindFormatByFileContent(file->url().path());
+         KMimeType::Format f = KMimeType::findFormatByFileContent(file->url().path());
          if ( !f.text ) {
            kdDebug() << "ignoring, not a text file: " << file->url() << endl;
            return;
@@ -359,7 +359,7 @@ void KQuery::processQuery( KFileItem* file)
 
           if (str.isNull()) break;
           if(isZippedOfficeDocument)
-            str.tqreplace(xmlTags, "");
+            str.replace(xmlTags, "");
 
           if (m_regexpForContent)
           {
@@ -458,7 +458,7 @@ void KQuery::setRegExp(const TQString &regexp, bool caseSensitive)
 //  m_regexpsContainsGlobs.clear();
   for ( TQStringList::ConstIterator it = strList.begin(); it != strList.end(); ++it ) {
     regExp = new TQRegExp((*it),caseSensitive,true);
-//    m_regexpsContainsGlobs.append(regExp->pattern().tqcontains(globChars));
+//    m_regexpsContainsGlobs.append(regExp->pattern().contains(globChars));
     m_regexps.append(regExp);
   }
 }

@@ -76,7 +76,7 @@ class KateExternalToolsMenuAction : public KActionMenu
 };
 
 /**
- * This Action tqcontains a KateExternalTool
+ * This Action contains a KateExternalTool
  */
 class KateExternalToolAction : public KAction, public KWordMacroExpander
 {

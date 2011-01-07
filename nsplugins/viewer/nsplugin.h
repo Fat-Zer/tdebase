@@ -172,9 +172,9 @@ public:
   // DCOP functions
   void shutdown();
   int winId() { return _form != 0 ? XtWindow(_form) : 0; }
-  int setWindow(TQ_INT8 remove=0);
-  void resizePlugin(TQ_INT32 w, TQ_INT32 h);
-  void javascriptResult(TQ_INT32 id, TQString result);
+  int setWindow(Q_INT8 remove=0);
+  void resizePlugin(Q_INT32 w, Q_INT32 h);
+  void javascriptResult(Q_INT32 id, TQString result);
   void displayPlugin();
   void gotFocusIn();
   void gotFocusOut();
@@ -200,7 +200,7 @@ public:
   uint16 HandleEvent(void *event);
 
   // signal emitters
-  void emittqStatus( const TQString &message);
+  void emitStatus( const TQString &message);
   void requestURL( const TQString &url, const TQString &mime,
 		   const TQString &target, void *notify, bool forceNotify = false, bool reload = false );
   void postURL( const TQString &url, const TQByteArray& data, const TQString &mime,
@@ -281,10 +281,10 @@ public:
   ~NSPluginClass();
 
   TQString getMIMEDescription();
-  DCOPRef newInstance(TQString url, TQString mimeType, TQ_INT8 embed,
+  DCOPRef newInstance(TQString url, TQString mimeType, Q_INT8 embed,
                       TQStringList argn, TQStringList argv,
-                      TQString appId, TQString callbackId, TQ_INT8 reload, TQ_INT8 post,
-                      TQByteArray postData, TQ_UINT32 xembed );
+                      TQString appId, TQString callbackId, Q_INT8 reload, Q_INT8 post,
+                      TQByteArray postData, Q_UINT32 xembed );
   void destroyInstance( NSPluginInstance* inst );
   bool error() { return _error; }
 

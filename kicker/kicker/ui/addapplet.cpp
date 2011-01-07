@@ -289,9 +289,9 @@ void AddAppletDialog::resizeAppletView()
     
     for (int i = 0; i < 3; i++)
     {
-        m_appletBox->tqlayout()->activate();
+        m_appletBox->layout()->activate();
         w = v->visibleWidth();
-        h = m_appletBox->tqlayout()->tqminimumSize().height();
+        h = m_appletBox->layout()->minimumSize().height();
         v->resizeContents(w, QMAX(h, v->visibleHeight()));
         if (w == m_appletBox->width() && h == m_appletBox->height())
         break;
@@ -314,8 +314,8 @@ void AddAppletDialog::populateApplets()
     m_appletBox->setPaletteBackgroundColor(KGlobalSettings::baseColor());
     m_mainWidget->appletScrollView->addChild(m_appletBox, 0, 0);
     m_appletBox->show();
-    TQVBoxLayout* tqlayout = new TQVBoxLayout(m_appletBox);
-    tqlayout->setMargin(0);
+    TQVBoxLayout* layout = new TQVBoxLayout(m_appletBox);
+    layout->setMargin(0);
     
     m_mainWidget->appletScrollView->installEventFilter(this);
 
@@ -367,7 +367,7 @@ void AddAppletDialog::populateApplets()
             itemWidget->hide();
         }
 
-        tqlayout->insertWidget(i, itemWidget);
+        layout->insertWidget(i, itemWidget);
         m_appletWidgetList.append(itemWidget);
         setTabOrder(prevTabWidget, itemWidget);
         prevTabWidget = itemWidget;
@@ -456,7 +456,7 @@ void AddAppletDialog::addApplet(AppletWidget* applet)
     if (appletContainer)
     {
         ExtensionContainer* ec =
-           dynamic_cast<ExtensionContainer*>(m_containerArea->tqtopLevelWidget());
+           dynamic_cast<ExtensionContainer*>(m_containerArea->topLevelWidget());
 
         if (ec)
         {
@@ -484,8 +484,8 @@ bool AddAppletDialog::appletMatchesSearch(const AppletWidget* w,
 
     return (m_selectedType == AppletInfo::Undefined ||
             w->info().type() & m_selectedType) &&
-           (w->info().name().tqcontains(s, false) ||
-            w->info().comment().tqcontains(s, false));
+           (w->info().name().contains(s, false) ||
+            w->info().comment().contains(s, false));
 }
 
 void AddAppletDialog::delayedSearch()

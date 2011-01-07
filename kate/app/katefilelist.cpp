@@ -69,7 +69,7 @@ class ToolTip : public QToolTip
       KateFileListItem *item = ((KateFileListItem*)i);
       if ( ! item ) return;
 
-      tip( m_listView->tqitemRect( i ), m_listView->tooltip( item, 0 ) );
+      tip( m_listView->itemRect( i ), m_listView->tooltip( item, 0 ) );
 
     }
 
@@ -273,11 +273,11 @@ void KateFileList::slotModChanged (Kate::Document *doc)
     for ( uint i=0; i <  m_editHistory.count(); i++ )
     {
       m_editHistory.at( i )->setEditHistPos( i+1 );
-      tqrepaintItem(  m_editHistory.at( i ) );
+      repaintItem(  m_editHistory.at( i ) );
     }
   }
   else
-    tqrepaintItem( item );
+    repaintItem( item );
 }
 
 void KateFileList::slotModifiedOnDisc (Kate::Document *doc, bool, unsigned char)
@@ -296,7 +296,7 @@ void KateFileList::slotNameChanged (Kate::Document *doc)
     if ( ((KateFileListItem*)item)->document() == doc )
     {
       item->setText( 0, doc->docName() );
-      tqrepaintItem( item );
+      repaintItem( item );
       break;
     }
     item = item->nextSibling();
@@ -334,7 +334,7 @@ void KateFileList::slotViewChanged ()
 //   int p = 0;
 //   if (  m_viewHistory.count() )
 //   {
-//     int p =  m_viewHistory.findRef( item ); // only tqrepaint items that needs it
+//     int p =  m_viewHistory.findRef( item ); // only repaint items that needs it
 //   }
 
   m_viewHistory.removeRef( item );
@@ -343,7 +343,7 @@ void KateFileList::slotViewChanged ()
   for ( uint i=0; i <  m_viewHistory.count(); i++ )
   {
     m_viewHistory.at( i )->setViewHistPos( i+1 );
-    tqrepaintItem(  m_viewHistory.at( i ) );
+    repaintItem(  m_viewHistory.at( i ) );
   }
 
 }
@@ -475,7 +475,7 @@ void KateFileListItem::paintCell( TQPainter *painter, const TQColorGroup & cg, i
   {
     TQColorGroup cgNew = cg;
 
-    // tqreplace the base color with a different shading if necessary...
+    // replace the base color with a different shading if necessary...
     if ( fl->shadingEnabled() && m_viewhistpos > 1 )
     {
       TQColor b( cg.base() );
@@ -616,7 +616,7 @@ void KFLConfigPage::apply()
   m_filelist->m_editShade = kcbEditShade->color();
   m_filelist->m_enableBgShading = cbEnableShading->isChecked();
   m_filelist->setSortType( cmbSort->currentItem() );
-  // tqrepaint the affected items
+  // repaint the affected items
   m_filelist->triggerUpdate();
 }
 
@@ -649,4 +649,4 @@ void KFLConfigPage::slotMyChanged()
 //END KFLConfigPage
 
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

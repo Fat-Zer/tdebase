@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KOSPageDlg</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -33,7 +33,7 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="tqminimumSize">
+            <property name="minimumSize">
                 <size>
                     <width>170</width>
                     <height>430</height>
@@ -136,7 +136,7 @@ Trinity allows you to customize its behavior according to your needs.</string>
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>22</width>
                     <height>10</height>
@@ -153,7 +153,7 @@ Trinity allows you to customize its behavior according to your needs.</string>
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>22</width>
                     <height>16</height>
@@ -167,7 +167,7 @@ Trinity allows you to customize its behavior according to your needs.</string>
             <property name="text">
                 <string>For motion impaired users, Trinity provides keyboard gestures to activate special keyboard settings.</string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
@@ -216,6 +216,6 @@ Trinity allows you to customize its behavior according to your needs.</string>
 <includes>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<tqlayoutdefaults spacing="3" margin="6"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

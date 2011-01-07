@@ -182,7 +182,7 @@ void PopularityStatistics::moveToTop(const TQStringList& newTopServiceList)
                 //kdDebug() << "->Re-Added service " << 
                 //ranking[serviceIndex].popularity 
                 //    << " " << *servIt << endl;
-                //kdDebug() << "...was tqreplaced by " << *servIt << endl;
+                //kdDebug() << "...was replaced by " << *servIt << endl;
             }
             else
             {

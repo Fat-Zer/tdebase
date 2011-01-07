@@ -78,7 +78,7 @@ RulesWidget::RulesWidget( TQWidget* parent, const char* name )
               " until it is hidden (this action will be deleted after the window is hidden).</li>"
               "</ul>" );
     // window tabs have enable signals done in designer
-    // tqgeometry tab
+    // geometry tab
     SETUP( position, set );
     SETUP( size, set );
     SETUP( desktop, set );
@@ -106,7 +106,7 @@ RulesWidget::RulesWidget( TQWidget* parent, const char* name )
     SETUP( ignoreposition, force );
     SETUP( minsize, force );
     SETUP( maxsize, force );
-    SETUP( stricttqgeometry, force );
+    SETUP( strictgeometry, force );
     SETUP( disableglobalshortcuts, force );
     KWinModule module;
     int i;
@@ -126,7 +126,7 @@ void RulesWidget::updateEnable##var() \
     var->setEnabled( enable_##var->isChecked() && rule_##var->currentItem() != 0 ); \
     }
 
-// tqgeometry tab
+// geometry tab
 UPDATE_ENABLE_SLOT( position )
 UPDATE_ENABLE_SLOT( size )
 UPDATE_ENABLE_SLOT( desktop )
@@ -158,7 +158,7 @@ UPDATE_ENABLE_SLOT( type )
 UPDATE_ENABLE_SLOT( ignoreposition )
 UPDATE_ENABLE_SLOT( minsize )
 UPDATE_ENABLE_SLOT( maxsize )
-UPDATE_ENABLE_SLOT( stricttqgeometry )
+UPDATE_ENABLE_SLOT( strictgeometry )
 UPDATE_ENABLE_SLOT( disableglobalshortcuts )
 
 #undef UPDATE_ENABLE_SLOT
@@ -428,7 +428,7 @@ void RulesWidget::setRules( Rules* rules )
     CHECKBOX_FORCE_RULE( ignoreposition, );
     LINEEDIT_FORCE_RULE( minsize, sizeToStr );
     LINEEDIT_FORCE_RULE( maxsize, sizeToStr );
-    CHECKBOX_FORCE_RULE( stricttqgeometry, );
+    CHECKBOX_FORCE_RULE( strictgeometry, );
     CHECKBOX_FORCE_RULE( disableglobalshortcuts, );
     }
 
@@ -518,7 +518,7 @@ Rules* RulesWidget::rules() const
     CHECKBOX_FORCE_RULE( ignoreposition, );
     LINEEDIT_FORCE_RULE( minsize, strToSize );
     LINEEDIT_FORCE_RULE( maxsize, strToSize );
-    CHECKBOX_FORCE_RULE( stricttqgeometry, );
+    CHECKBOX_FORCE_RULE( strictgeometry, );
     CHECKBOX_FORCE_RULE( disableglobalshortcuts, );
     return rules;
     }
@@ -621,7 +621,7 @@ void RulesWidget::prefillUnusedValues( const KWin::WindowInfo& info )
     CHECKBOX_PREFILL( above,, info.state() & NET::KeepAbove );
     CHECKBOX_PREFILL( below,, info.state() & NET::KeepBelow );
     // noborder is only internal KWin information, so let's guess
-    CHECKBOX_PREFILL( noborder,, info.frameGeometry() == info.tqgeometry() );
+    CHECKBOX_PREFILL( noborder,, info.frameGeometry() == info.geometry() );
     CHECKBOX_PREFILL( skiptaskbar,, info.state() & NET::SkipTaskbar );
     CHECKBOX_PREFILL( skippager,, info.state() & NET::SkipPager );
     //CHECKBOX_PREFILL( acceptfocus, );
@@ -635,7 +635,7 @@ void RulesWidget::prefillUnusedValues( const KWin::WindowInfo& info )
     //CHECKBOX_PREFILL( ignoreposition, );
     LINEEDIT_PREFILL( minsize, sizeToStr, info.frameGeometry().size() );
     LINEEDIT_PREFILL( maxsize, sizeToStr, info.frameGeometry().size() );
-    //CHECKBOX_PREFILL( stricttqgeometry, );
+    //CHECKBOX_PREFILL( strictgeometry, );
     //CHECKBOX_PREFILL( disableglobalshortcuts, );
     }
 
@@ -661,7 +661,7 @@ bool RulesWidget::finalCheck()
             all_types = false;
     if( wmclass_match->currentItem() == Rules::UnimportantMatch && all_types )
         {
-        if( KMessageBox::warningContinueCancel( tqtopLevelWidget(),
+        if( KMessageBox::warningContinueCancel( topLevelWidget(),
             i18n( "You have specified the window class as unimportant.\n"
                   "This means the settings will possibly apply to windows from all applications. "
                   "If you really want to create a generic setting, it is recommended you at least "
@@ -673,14 +673,14 @@ bool RulesWidget::finalCheck()
 
 void RulesWidget::prepareWindowSpecific( WId window )
     {
-    tabs->setCurrentPage( 2 ); // tqgeometry tab, skip tabs for window identification
+    tabs->setCurrentPage( 2 ); // geometry tab, skip tabs for window identification
     KWin::WindowInfo info( window, -1U, -1U ); // read everything
     prefillUnusedValues( info );
     }
 
 void RulesWidget::shortcutEditClicked()
     {
-    EditShortcutDialog dlg( tqtopLevelWidget());
+    EditShortcutDialog dlg( topLevelWidget());
     dlg.setShortcut( shortcut->text());
     if( dlg.exec() == TQDialog::Accepted )
         shortcut->setText( dlg.shortcut());
@@ -735,7 +735,7 @@ EditShortcut::EditShortcut( TQWidget* parent, const char* name )
 
 void EditShortcut::editShortcut()
     {
-    ShortcutDialog dlg( KShortcut( shortcut->text()), tqtopLevelWidget());
+    ShortcutDialog dlg( KShortcut( shortcut->text()), topLevelWidget());
     if( dlg.exec() == TQDialog::Accepted )
         shortcut->setText( dlg.shortcut().toString());
     }

@@ -49,7 +49,7 @@ signals:
   void append(const TQString &str); // Just the new text
 
   void someError();
-  void done(const TQString &); // tqreplaces whole text
+  void done(const TQString &); // replaces whole text
 
 protected slots:
   void slotProcessExited(KProcess * proc);

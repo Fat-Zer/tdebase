@@ -93,7 +93,7 @@ void KSMServer::logout( int confirm, int sdtype, int sdmode )
               (KApplication::ShutdownMode)sdmode );
 }
 
-bool KSMServer::checktqStatus( bool &logoutConfirmed, bool &maysd,
+bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd,
                              KApplication::ShutdownConfirm confirm,
                              KApplication::ShutdownType sdtype,
                              KApplication::ShutdownMode sdmode )
@@ -144,7 +144,7 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
 {
     bool maysd = false;
     bool logoutConfirmed = false;
-    if ( !checktqStatus( logoutConfirmed, maysd, confirm, sdtype, sdmode ) )
+    if ( !checkStatus( logoutConfirmed, maysd, confirm, sdtype, sdmode ) )
         return;
 
     KConfig *config = KGlobal::config();

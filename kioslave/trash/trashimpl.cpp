@@ -52,7 +52,7 @@
 TrashImpl::TrashImpl() :
     TQObject(),
     m_lastErrorCode( 0 ),
-    m_inittqStatus( InitToBeDone ),
+    m_initStatus( InitToBeDone ),
     m_lastId( 0 ),
     m_homeDevice( 0 ),
     m_trashDirectoriesScanned( false ),
@@ -123,14 +123,14 @@ int TrashImpl::testDir( const TQString &_name ) const
 
 bool TrashImpl::init()
 {
-    if ( m_inittqStatus == InitOK )
+    if ( m_initStatus == InitOK )
         return true;
-    if ( m_inittqStatus == InitError )
+    if ( m_initStatus == InitError )
         return false;
 
     // Check the trash directory and its info and files subdirs
     // see also kdesktop/init.cc for first time initialization
-    m_inittqStatus = InitError;
+    m_initStatus = InitError;
     // $XDG_DATA_HOME/Trash, i.e. ~/.local/share/Trash by default.
     const TQString xdgDataDir = KGlobal::dirs()->localxdgdatadir();
     if ( !KStandardDirs::makeDir( xdgDataDir, 0700 ) ) {
@@ -153,7 +153,7 @@ bool TrashImpl::init()
         return false;
     }
     m_trashDirectories.insert( 0, trashDir );
-    m_inittqStatus = InitOK;
+    m_initStatus = InitOK;
     kdDebug() << k_funcinfo << "initialization OK, home trash dir: " << trashDir << endl;
     return true;
 }
@@ -262,7 +262,7 @@ bool TrashImpl::createInfo( const TQString& origPath, int& trashId, TQString& fi
         info += KURL::encode_string( makeRelativePath( topDirectoryPath( trashId ), origPath ), m_mibEnum ).latin1();
     info += "\n";
     info += "DeletionDate=";
-    info += TQDateTime::tqcurrentDateTime().toString( Qt::ISODate ).latin1();
+    info += TQDateTime::currentDateTime().toString( Qt::ISODate ).latin1();
     info += "\n";
     size_t sz = info.size() - 1; // avoid trailing 0 from QCString
 
@@ -372,7 +372,7 @@ bool TrashImpl::move( const TQString& src, const TQString& dest )
 #endif
     connect( job, TQT_SIGNAL( result(KIO::Job *) ),
              this, TQT_SLOT( jobFinished(KIO::Job *) ) );
-    tqApp->eventLoop()->enterLoop();
+    qApp->eventLoop()->enterLoop();
 
     return m_lastErrorCode == 0;
 }
@@ -381,7 +381,7 @@ void TrashImpl::jobFinished(KIO::Job* job)
 {
     kdDebug() << k_funcinfo << " error=" << job->error() << endl;
     error( job->error(), job->errorText() );
-    tqApp->eventLoop()->exitLoop();
+    qApp->eventLoop()->exitLoop();
 }
 
 bool TrashImpl::copyToTrash( const TQString& origPath, int trashId, const TQString& fileId )
@@ -419,7 +419,7 @@ bool TrashImpl::copy( const TQString& src, const TQString& dest )
 #endif
     connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
              this, TQT_SLOT( jobFinished( KIO::Job* ) ) );
-    tqApp->eventLoop()->enterLoop();
+    qApp->eventLoop()->enterLoop();
 
     return m_lastErrorCode == 0;
 }
@@ -429,7 +429,7 @@ bool TrashImpl::directRename( const TQString& src, const TQString& dest )
     kdDebug() << k_funcinfo << src << " -> " << dest << endl;
     if ( ::rename( TQFile::encodeName( src ), TQFile::encodeName( dest ) ) != 0 ) {
         if (errno == EXDEV) {
-            error( KIO::ERR_UNSUPPORTED_ACTION, TQString::tqfromLatin1("rename") );
+            error( KIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("rename") );
         } else {
             if (( errno == EACCES ) || (errno == EPERM)) {
                 error( KIO::ERR_ACCESS_DENIED, dest );
@@ -508,14 +508,14 @@ bool TrashImpl::synchronousDel( const TQString& path, bool setLastErrorCode, boo
         KIO::ChmodJob* chmodJob = KIO::chmod( fileItemList, 0200, 0200, TQString::null, TQString::null, true /*recursive*/, false /*showProgressInfo*/ );
         connect( chmodJob, TQT_SIGNAL( result(KIO::Job *) ),
                  this, TQT_SLOT( jobFinished(KIO::Job *) ) );
-        tqApp->eventLoop()->enterLoop();
+        qApp->eventLoop()->enterLoop();
     }
 
     kdDebug() << k_funcinfo << "deleting " << url << endl;
     KIO::DeleteJob *job = KIO::del( url, false, false );
     connect( job, TQT_SIGNAL( result(KIO::Job *) ),
              this, TQT_SLOT( jobFinished(KIO::Job *) ) );
-    tqApp->eventLoop()->enterLoop();
+    qApp->eventLoop()->enterLoop();
     bool ok = m_lastErrorCode == 0;
     if ( !setLastErrorCode ) {
         m_lastErrorCode = oldErrorCode;
@@ -682,7 +682,7 @@ bool TrashImpl::isEmpty() const
 
 void TrashImpl::fileAdded()
 {
-    m_config.setGroup( "tqStatus" );
+    m_config.setGroup( "Status" );
     if ( m_config.readBoolEntry( "Empty", true ) == true ) {
         m_config.writeEntry( "Empty", false );
         m_config.sync();
@@ -695,7 +695,7 @@ void TrashImpl::fileAdded()
 void TrashImpl::fileRemoved()
 {
     if ( isEmpty() ) {
-        m_config.setGroup( "tqStatus" );
+        m_config.setGroup( "Status" );
         m_config.writeEntry( "Empty", true );
         m_config.sync();
     }
@@ -713,7 +713,7 @@ int TrashImpl::findTrashDirectory( const TQString& origPath )
          && buff.st_dev == m_homeDevice )
         return 0;
 
-    TQString mountPoint = KIO::tqfindPathMountPoint( origPath );
+    TQString mountPoint = KIO::findPathMountPoint( origPath );
     const TQString trashDir = trashForMountPoint( mountPoint, true );
     kdDebug() << "mountPoint=" << mountPoint << " trashDir=" << trashDir << endl;
     if ( trashDir.isEmpty() )
@@ -898,7 +898,7 @@ TQString TrashImpl::trashDirectoryPath( int trashId ) const
     // and reusing a directory listing from the earlier instance.)
     if ( !m_trashDirectoriesScanned )
         scanTrashDirectories();
-    Q_ASSERT( m_trashDirectories.tqcontains( trashId ) );
+    Q_ASSERT( m_trashDirectories.contains( trashId ) );
     return m_trashDirectories[trashId];
 }
 
@@ -907,7 +907,7 @@ TQString TrashImpl::topDirectoryPath( int trashId ) const
     if ( !m_trashDirectoriesScanned )
         scanTrashDirectories();
     assert( trashId != 0 );
-    Q_ASSERT( m_topDirectories.tqcontains( trashId ) );
+    Q_ASSERT( m_topDirectories.contains( trashId ) );
     return m_topDirectories[trashId];
 }
 

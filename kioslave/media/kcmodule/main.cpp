@@ -40,10 +40,10 @@ MediaModule::MediaModule( TQWidget *parent, const char *name, const TQStringList
 	: KCModule(MediaFactory::instance(), parent, name )
 {
 	KGlobal::locale()->insertCatalogue("kio_media");
-	TQVBoxLayout *tqlayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
+	TQVBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 	TQTabWidget *tab = new TQTabWidget( this );
 	
-	tqlayout->addWidget( tab );
+	layout->addWidget( tab );
 
 
 	

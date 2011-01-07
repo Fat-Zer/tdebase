@@ -85,21 +85,21 @@ public:
   /**
    * returns the add push-button.
    *
-   * Note: The add button already tqcontains a default "what's this" text.
+   * Note: The add button already contains a default "what's this" text.
    */
   TQPushButton *addButton() const { return addDomainPB; }
 
   /**
    * returns the change push-button.
    *
-   * Note: The change button already tqcontains a default "what's this" text.
+   * Note: The change button already contains a default "what's this" text.
    */
   TQPushButton *changeButton() const { return changeDomainPB; }
 
   /**
    * returns the delete push-button.
    *
-   * Note: The delete button already tqcontains a default "what's this" text.
+   * Note: The delete button already contains a default "what's this" text.
    */
   TQPushButton *deleteButton() const { return deleteDomainPB; }
 

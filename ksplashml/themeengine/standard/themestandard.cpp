@@ -81,7 +81,7 @@ void ThemeStandard::_initUi()
   move( rect.x() + (rect.width() - size().width())/2,
         rect.y() + (rect.height() - size().height())/2 );
 
-  mtqStatus = new WndtqStatus( TQPalette(), mTheme->xineramaScreen(), mSbAtTop, mSbPbVisible, mSbFont, mSbFg, mSbBg, mSbIcon );
+  mStatus = new WndStatus( TQPalette(), mTheme->xineramaScreen(), mSbAtTop, mSbPbVisible, mSbFont, mSbFg, mSbBg, mSbIcon );
 }
 
 void ThemeStandard::showEvent( TQShowEvent * )
@@ -91,8 +91,8 @@ void ThemeStandard::showEvent( TQShowEvent * )
 
   if( mSbVisible )
   {
-    mtqStatus->show();
-    mStatusBarHeight = mtqStatus->height();
+    mStatus->show();
+    mStatusBarHeight = mStatus->height();
   }
   else
   {
@@ -143,22 +143,22 @@ void ThemeStandard::_readSettings()
   //  return;
   cfg->setGroup( TQString("KSplash Theme: %1").arg(mTheme->theme()) );
 
-  TQString sbpos = cfg->readEntry( "tqStatusbar Position", "Bottom" ).upper();
+  TQString sbpos = cfg->readEntry( "Statusbar Position", "Bottom" ).upper();
   mSbAtTop = ( sbpos == "TOP" );
-  mSbVisible = cfg->readBoolEntry( "tqStatusbar Visible", true);
+  mSbVisible = cfg->readBoolEntry( "Statusbar Visible", true);
   mSbPbVisible = cfg->readBoolEntry( "Progress Visible", true);
 
-  mSbFontName = cfg->readEntry( "tqStatusbar Font", "Sans Serif" );
-  mSbFontSz = cfg->readNumEntry( "tqStatusbar Font Size", 16 );
-  mSbFontBold = cfg->readBoolEntry( "tqStatusbar Font Bold", true );
-  mSbFontItalic = cfg->readBoolEntry( "tqStatusbar Font Italic", false );
+  mSbFontName = cfg->readEntry( "Statusbar Font", "Sans Serif" );
+  mSbFontSz = cfg->readNumEntry( "Statusbar Font Size", 16 );
+  mSbFontBold = cfg->readBoolEntry( "Statusbar Font Bold", true );
+  mSbFontItalic = cfg->readBoolEntry( "Statusbar Font Italic", false );
   mSbFont = TQFont( mSbFontName, mSbFontSz, ( mSbFontBold? TQFont::Bold : TQFont::Normal ) );
   if( mSbFontItalic )
     mSbFont.setItalic( true );
 
-  mSbFg = cfg->readColorEntry( "tqStatusbar Foreground", &Qt::white );
-  mSbBg = cfg->readColorEntry( "tqStatusbar Background", &Qt::black );
-  mSbIcon = cfg->readEntry( "tqStatusbar Icon", "run" );
+  mSbFg = cfg->readColorEntry( "Statusbar Foreground", &Qt::white );
+  mSbBg = cfg->readColorEntry( "Statusbar Background", &Qt::black );
+  mSbIcon = cfg->readEntry( "Statusbar Icon", "run" );
   mIconsVisible = cfg->readBoolEntry( "Icons Visible", true);
   mIconsJumping = cfg->readBoolEntry( "Icons Jumping", true);
   mIconPos = (WndIcon::Position)cfg->readNumEntry( "Icon Position", 0 );

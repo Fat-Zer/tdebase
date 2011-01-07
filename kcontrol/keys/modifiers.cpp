@@ -341,7 +341,7 @@ void ModifiersModule::slotMacSwapClicked()
 	if( m_pchkMacKeyboard->isChecked() && !KKeyNative::keyboardHasWinKey() ) {
 		KMessageBox::sorry( this,
 			i18n("You can only activate this option if your "
-			"X keyboard tqlayout has the 'Super' or 'Meta' keys "
+			"X keyboard layout has the 'Super' or 'Meta' keys "
 			"properly configured as modifier keys."),
 			"Incompatibility" );
 		m_pchkMacSwap->setChecked( false );

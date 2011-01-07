@@ -37,7 +37,7 @@ to group the entries whenever necessary. Currently there are 5
 approximations: IE, NN, MOZ, OP, MISC. These represent Internet
 Explorer, Netscape Navigator, Mozilla, Opera and Miscellaneous
 respectively. NOTE: you can enter any value here as it is just
-a place holder that would be automatically tqreplaced with the
+a place holder that would be automatically replaced with the
 actual user-agent name (X-KDE-UA-NAME).
 
 X-KDE-UA-FULL
@@ -46,7 +46,7 @@ TYPE:         QString
 TRANSLATE:    NO
 DESCRIPTION:
 The full user-agent description that will be sent to the remote
-site. It can contain the following keywords that would be tqreplaced
+site. It can contain the following keywords that would be replaced
 with the appropriate value as defined by "uname":
 
 appSysName          the name of the operating system (ex: Linux).
@@ -56,7 +56,7 @@ appSysRelease       the version of the operating system (ex: 2.2.18).
 appKDERelease       the current release number as set by KDE (ex: 2.1.9 >=20010310).
 appMachineType      the processor or machine type (ex: i686).
 
-NOTE: if you use any of these values and want them to be tqreplaced
+NOTE: if you use any of these values and want them to be replaced
 automatically, make sure you include the X-KDE-UA-DYNAMIC-ENTRY field
 and set its value to 1 (for true).
 
@@ -98,7 +98,7 @@ DESCRIPTION:
 A boolean that indicates whether the keywords described under
 X-KDE-UA-FULL should be translated.  Make sure this field is
 there with its value set to "1" if you want the keywords to
-be tqreplaced appropriately.
+be replaced appropriately.
 
 
 EXAMPLES:
@@ -127,7 +127,7 @@ X-KDE-UA-DYNAMIC-ENTRY=1
 The first entry is a description file for Internet Explorer running on
 a Windows 98 machine while the second one is an example of a description
 file for Netscape browser using the "keyword" based approach to describe 
-the fields that should be tqreplaced dynamically based on the current system 
+the fields that should be replaced dynamically based on the current system 
 settings. Note that all "keyword" based desktop files should always set
 X-KDE-UA-DYNAMIC-ENTRY to 1.
 

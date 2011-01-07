@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>FuzzyWidget</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -79,7 +79,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>40</width>
                             <height>20</height>
@@ -109,7 +109,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>30</height>
@@ -126,7 +126,7 @@
                 </widget>
                 <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="3">
                     <property name="name">
-                        <cstring>tqlayout11</cstring>
+                        <cstring>layout11</cstring>
                     </property>
                     <grid>
                         <property name="name">
@@ -153,7 +153,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="tqsizeHint">
+                            <property name="sizeHint">
                                 <size>
                                     <width>51</width>
                                     <height>20</height>
@@ -277,8 +277,8 @@
     <include location="local" impldecl="in implementation">kdialog.h</include>
     <include location="local" impldecl="in implementation">kfontrequester.h</include>
 </includes>
-<tqlayoutdefaults spacing="3" margin="6"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>

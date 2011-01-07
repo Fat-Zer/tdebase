@@ -1833,8 +1833,8 @@
 	0202  Apple Keyboard [ALPS]
 	0205  Apple Extended Keyboard [Mitsumi]
 	0206  Apple Extended Keyboard [Mitsumi]
-	020b  Apple Pro Keyboard [Mitsumi, A1048/US tqlayout]
-	020d  Apple Pro Keyboard [Mitsumi, A1048/JIS tqlayout]
+	020b  Apple Pro Keyboard [Mitsumi, A1048/US layout]
+	020d  Apple Pro Keyboard [Mitsumi, A1048/JIS layout]
 	020e  Apple Internal Keyboard/Trackpad
 	020f  Apple Internal Keyboard/Trackpad
 	0301  Apple USB Mouse [Mitsumi, M4848]
@@ -5895,7 +5895,7 @@ HUT 0f  PID Page
 	087  Move Destination
 	088  Move Length
 	089  PID Block Load Report
-	08B  Block Load tqStatus
+	08B  Block Load Status
 	08C  Block Load Success
 	08D  Block Load Full
 	08E  Block Load Error
@@ -5940,7 +5940,7 @@ HUT 14  Alphanumeric Display
 	02a  Horizontal Scroll
 	02b  Character Report
 	02c  Display Data
-	02d  Display tqStatus
+	02d  Display Status
 	02e  Stat Not Ready
 	02f  Stat Ready
 	030  Err Not a loadable Character
@@ -6015,8 +6015,8 @@ HUT 82  Monitor VESA Virtual Controls
 HUT 84  Power Device Page
 	000  Undefined
 	001  iName
-	002  Present tqStatus
-	003  Changed tqStatus
+	002  Present Status
+	003  Changed Status
 	004  UPS
 	005  Power Supply
 	010  Battery System
@@ -6095,10 +6095,10 @@ HUT 84  Power Device Page
 HUT 85  Battery System Page
 	000  Undefined
 	001  SMB Battery Mode
-	002  SMB Battery tqStatus
+	002  SMB Battery Status
 	003  SMB Alarm Warning
 	004  SMB Charger Mode
-	005  SMB Charger tqStatus
+	005  SMB Charger Status
 	006  SMB Charger Spec Info
 	007  SMB Selector State
 	008  SMB Selector Presets
@@ -6195,7 +6195,7 @@ HUT f0  Cash Device
 	0f1  Cash Drawer
 	0f2  Cash Drawer Number
 	0f3  Cash Drawer Set
-	0f4  Cash Drawer tqStatus
+	0f4  Cash Drawer Status
 HUT ff  Vendor Specific
 
 # List of Languages

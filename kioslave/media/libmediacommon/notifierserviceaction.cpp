@@ -99,7 +99,7 @@ void NotifierServiceAction::updateFilePath()
 	if ( !m_filePath.isEmpty() ) return;
 	
 	TQString action_name = m_service.m_strName;
-	action_name.tqreplace(   " ", "_" );
+	action_name.replace(   " ", "_" );
 	
 	TQDir actions_dir( locateLocal( "data", "konqueror/servicemenus/", true ) );
 
@@ -144,7 +144,7 @@ bool NotifierServiceAction::isWritable() const
 
 bool NotifierServiceAction::supportsMimetype(const TQString &mimetype) const
 {
-	return m_mimetypes.tqcontains(mimetype);
+	return m_mimetypes.contains(mimetype);
 }
 
 void NotifierServiceAction::save() const

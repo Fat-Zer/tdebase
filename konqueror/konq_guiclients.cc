@@ -230,7 +230,7 @@ TQPtrList<KAction> ToggleViewGUIClient::actions() const
 
 void ToggleViewGUIClient::slotToggleView( bool toggle )
 {
-  TQString serviceName = TQString::tqfromLatin1( sender()->name() );
+  TQString serviceName = TQString::fromLatin1( sender()->name() );
 
   bool horizontal = m_mapOrientation[ serviceName ];
 
@@ -240,7 +240,7 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
   {
 
     KonqView *childView = viewManager->splitWindow( horizontal ? Qt::Vertical : Qt::Horizontal,
-                                                    TQString::tqfromLatin1( "Browser/View" ),
+                                                    TQString::fromLatin1( "Browser/View" ),
                                                     serviceName,
                                                     !horizontal /* vertical = make it first */);
 
@@ -299,13 +299,13 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
 void ToggleViewGUIClient::saveConfig( bool add, const TQString &serviceName )
 {
   // This is used on konqueror's startup....... so it's never used, since
-  // the K menu only tqcontains calls to kfmclient......
+  // the K menu only contains calls to kfmclient......
   // Well, it could be useful again in the future.
   // Currently, the profiles save this info.
   TQStringList toggableViewsShown = KonqSettings::toggableViewsShown();
   if (add)
   {
-      if ( !toggableViewsShown.tqcontains( serviceName ) )
+      if ( !toggableViewsShown.contains( serviceName ) )
           toggableViewsShown.append(serviceName);
   }
   else

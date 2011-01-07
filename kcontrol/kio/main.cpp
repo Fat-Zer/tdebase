@@ -79,7 +79,7 @@ extern "C"
 
 LanBrowser::LanBrowser(TQWidget *parent)
 :KCModule(parent,"kcmkio")
-,tqlayout(this)
+,layout(this)
 ,tabs(this)
 {
    setQuickHelp( i18n("<h1>Local Network Browsing</h1>Here you setup your "
@@ -99,7 +99,7 @@ LanBrowser::LanBrowser(TQWidget *parent)
 		"the LISa Homepage</a> or contact Alexander Neundorf "
 		"&lt;<a href=\"mailto:neundorf@kde.org\">neundorf@kde.org</a>&gt;."));
 
-   tqlayout.addWidget(&tabs);
+   layout.addWidget(&tabs);
 
    smbPage = create_smb(&tabs, 0);
    tabs.addTab(smbPage, i18n("&Windows Shares"));

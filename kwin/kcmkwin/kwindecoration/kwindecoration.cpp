@@ -75,14 +75,14 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	kwinConfig.setGroup("Style");
         plugins = new KDecorationPreviewPlugins( &kwinConfig );
 
-	TQVBoxLayout* tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint()); 
+	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, KDialog::spacingHint()); 
 
 // Save this for later...
 //	cbUseMiniWindows = new TQCheckBox( i18n( "Render mini &titlebars for all windows"), checkGroup );
 //	TQWhatsThis::add( cbUseMiniWindows, i18n( "Note that this option is not available on all styles yet!" ) );
 
 	tabWidget = new TQTabWidget( this );
-	tqlayout->addWidget( tabWidget );
+	layout->addWidget( tabWidget );
 
 	// Page 1 (General Options)
 	TQWidget *pluginPage = new TQWidget( tabWidget );
@@ -99,8 +99,8 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	TQGroupBox *pluginSettingsGrp = new TQGroupBox( i18n("Decoration Options"), pluginPage );
 	pluginSettingsGrp->setColumnLayout( 0, Vertical );
 	pluginSettingsGrp->setFlat( true );
-	pluginSettingsGrp->tqlayout()->setMargin( 0 );
-	pluginSettingsGrp->tqlayout()->setSpacing( KDialog::spacingHint() );
+	pluginSettingsGrp->layout()->setMargin( 0 );
+	pluginSettingsGrp->layout()->setSpacing( KDialog::spacingHint() );
 	pluginLayout->addWidget( pluginSettingsGrp );
 
 	pluginLayout->addStretch();
@@ -112,13 +112,13 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	TQWhatsThis::add( cBorder, i18n( "Use this combobox to change the border size of the decoration." ));
 	lBorder->hide();
 	cBorder->hide();
-	TQHBoxLayout *borderSizeLayout = new TQHBoxLayout(pluginSettingsGrp->tqlayout() );
+	TQHBoxLayout *borderSizeLayout = new TQHBoxLayout(pluginSettingsGrp->layout() );
 	borderSizeLayout->addWidget(lBorder);
 	borderSizeLayout->addWidget(cBorder);
 	borderSizeLayout->addStretch();
 
 	pluginConfigWidget = new TQVBox(pluginSettingsGrp);
-	pluginSettingsGrp->tqlayout()->add( pluginConfigWidget );
+	pluginSettingsGrp->layout()->add( pluginConfigWidget );
 
 	// Page 2 (Button Selector)
 	TQWidget* buttonPage = new TQWidget( tabWidget );
@@ -148,14 +148,14 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 // 	buttonLayout->addStretch();
 
 	// preview
-	TQVBoxLayout* previewLayout = new TQVBoxLayout(tqlayout, KDialog::spacingHint() );
+	TQVBoxLayout* previewLayout = new TQVBoxLayout(layout, KDialog::spacingHint() );
 	previewLayout->setMargin( KDialog::marginHint() );
 
 	preview = new KDecorationPreview( this );
 	previewLayout->addWidget(preview);
 
-	preview->tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
-	tabWidget->tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
+	preview->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+	tabWidget->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
 
 	// Page 3 (Window Shadows)
 	TQHBox *inactiveShadowColourHBox, *shadowColourHBox;

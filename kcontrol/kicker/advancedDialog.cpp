@@ -46,12 +46,12 @@ advancedDialog::advancedDialog(TQWidget* parent, const char* name)
             this, TQT_SLOT(save()));
 
     TQFrame* page = plainPage();
-    TQVBoxLayout* tqlayout = new TQVBoxLayout(page);
+    TQVBoxLayout* layout = new TQVBoxLayout(page);
     m_advancedWidget = new advancedKickerOptions(page);
-    tqlayout->addWidget(m_advancedWidget);
-    tqlayout->addStretch();
+    layout->addWidget(m_advancedWidget);
+    layout->addStretch();
 
-    setMinimumSize( tqsizeHint() );
+    setMinimumSize( sizeHint() );
 
     connect(m_advancedWidget->handles, TQT_SIGNAL(clicked(int)),
             this, TQT_SLOT(changed()));
@@ -86,7 +86,7 @@ void advancedDialog::load()
 
     int defaultHideButtonSize = c.readNumEntry("HideButtonSize", 14);
     m_advancedWidget->hideButtonSize->setValue(defaultHideButtonSize);
-    TQColor color = c.readColorEntry( "TintColor", &tqcolorGroup().mid() );
+    TQColor color = c.readColorEntry( "TintColor", &colorGroup().mid() );
     m_advancedWidget->tintColorB->setColor( color );
     int tintValue = c.readNumEntry( "TintValue", 33 );
     m_advancedWidget->tintSlider->setValue( tintValue );
@@ -123,7 +123,7 @@ void advancedDialog::save()
 
         // is there a config group for this extension?
         if(!c.hasGroup(group) ||
-           group.tqcontains("Extension") < 1)
+           group.contains("Extension") < 1)
         {
             continue;
         }

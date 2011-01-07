@@ -54,7 +54,7 @@ class KCommonDecorationPrivate;
 /**
  * This class eases development of decorations by implementing parts of KDecoration
  * which are error prone and common for most decorations.
- * It takes care of the window tqlayout, button/action handling, and window tqmask creation.
+ * It takes care of the window layout, button/action handling, and window mask creation.
  */
 class KWIN_EXPORT KCommonDecoration : public KDecoration
 {
@@ -65,7 +65,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         virtual ~KCommonDecoration();
 
         /**
-         * Used to calculate the decoration tqlayout. The basic tqlayout looks like this:
+         * Used to calculate the decoration layout. The basic layout looks like this:
          *
          * Window:
          *  _______________________________________________________________
@@ -95,7 +95,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
          * | button | spacing | button | spacing | explicit spacer | spacing | ...    | spacing | button |
          * |________|_________|________|_________|_________________|_________|________|_________|________|
          *
-         * @see tqlayoutMetric()
+         * @see layoutMetric()
          */
         enum LayoutMetric
         {
@@ -119,7 +119,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         enum DecorationBehaviour
         {
             DB_MenuClose, ///< Close window on double clicking the menu
-            DB_WindowMask, ///< Set a tqmask on the window
+            DB_WindowMask, ///< Set a mask on the window
             DB_ButtonHide  ///< Hide buttons when there is not enough space in the titlebar
         };
 
@@ -155,13 +155,13 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         virtual bool decorationBehaviour(DecorationBehaviour behaviour) const;
 
         /**
-         * This controls the tqlayout of the decoration in various ways. It is
-         * possible to have a different tqlayout for different window states.
-         * @param lm                 The tqlayout element.
+         * This controls the layout of the decoration in various ways. It is
+         * possible to have a different layout for different window states.
+         * @param lm                 The layout element.
          * @param respectWindowState Whether window states should be taken into account or a "default" state should be assumed.
          * @param button             For LM_ButtonWidth and LM_ButtonHeight, the button.
          */
-        virtual int tqlayoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton *button = 0) const;
+        virtual int layoutMetric(LayoutMetric lm, bool respectWindowState = true, const KCommonDecorationButton *button = 0) const;
 
         /**
          * Create a new title bar button. KCommonDecoration takes care of memory management.
@@ -170,14 +170,14 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         virtual KCommonDecorationButton *createButton(ButtonType type) = 0;
 
         /**
-         * @return the tqmask for the specific window corner.
+         * @return the mask for the specific window corner.
          */
         virtual TQRegion cornerShape(WindowCorner corner);
 
         /**
-         * This updates the window tqmask using the information provided by
+         * This updates the window mask using the information provided by
          * cornerShape(). Edges which are aligned to screen corners are not
-         * tqshaped for better usability (remember to paint these areas in paintEvent(), too).
+         * shaped for better usability (remember to paint these areas in paintEvent(), too).
          * You normally don't want/need to reimplement updateWindowShape().
          * @see cornerShape()
          */
@@ -202,7 +202,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
          */
         void updateLayout() const;
         /**
-         * Makes sure all buttons are tqrepainted.
+         * Makes sure all buttons are repainted.
          */
         void updateButtons() const;
         /**
@@ -223,7 +223,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
 
     public:
         /**
-         * Handles widget and tqlayout creation, call the base implementation when subclassing this member.
+         * Handles widget and layout creation, call the base implementation when subclassing this member.
          */
         virtual void init();
         /**
@@ -233,7 +233,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         virtual void borders( int& left, int& right, int& top, int& bottom ) const;
         virtual void show();
         virtual void resize(const TQSize& s);
-        virtual TQSize tqminimumSize() const;
+        virtual TQSize minimumSize() const;
         virtual void maximizeChange();
         virtual void desktopChange();
         virtual void shadeChange();
@@ -343,7 +343,7 @@ class KWIN_EXPORT KCommonDecorationButton : public QButton
          */
         ButtonState lastMousePress() const { return m_lastMouse; }
 
-        TQSize tqsizeHint() const;
+        TQSize sizeHint() const;
 
     protected:
         void setToggleButton(bool toggle);

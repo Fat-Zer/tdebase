@@ -30,7 +30,7 @@ class KURLRequester;
 namespace KIO { class Job; }
 
 //-----------------------------------------------------------------------------
-// The "Path" Tab tqcontains :
+// The "Path" Tab contains :
 // The paths for Desktop, Autostart and Documents
 
 class DesktopPathConfig : public KCModule

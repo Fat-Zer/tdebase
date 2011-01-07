@@ -13,8 +13,8 @@
 
 
 class FlowGridManager {
-// Determine if two FlowGridManager objs have the same tqlayout.  They may or
-// may not have the same input parameters, but the resulting tqlayout is identical.
+// Determine if two FlowGridManager objs have the same layout.  They may or
+// may not have the same input parameters, but the resulting layout is identical.
     friend bool operator== ( const FlowGridManager & gp1, const FlowGridManager & gp2 );
 
 public:

@@ -40,7 +40,7 @@ public:
 
     virtual ~DockBarExtension();
 
-    TQSize tqsizeHint(Position, TQSize maxSize) const;
+    TQSize sizeHint(Position, TQSize maxSize) const;
     Position preferedPosition() const { return Right; }
 
 protected slots:
@@ -55,7 +55,7 @@ protected:
     void removeContainer(DockContainer*);
     void saveContainerConfig();
     void loadContainerConfig();
-    void tqlayoutContainers();
+    void layoutContainers();
     int findContainerAtPoint(const TQPoint&);
     void mousePressEvent(TQMouseEvent *);
     void mouseReleaseEvent(TQMouseEvent *);

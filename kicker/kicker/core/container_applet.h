@@ -83,15 +83,15 @@ public slots:
 
 protected:
     virtual void doLoadConfiguration( KConfigGroup& );
-    virtual void doSaveConfiguration( KConfigGroup&, bool tqlayoutOnly ) const;
-    virtual void tqalignmentChange(KPanelExtension::Alignment a);
+    virtual void doSaveConfiguration( KConfigGroup&, bool layoutOnly ) const;
+    virtual void alignmentChange(KPanelExtension::Alignment a);
 
     virtual TQPopupMenu* createOpMenu();
 
     AppletInfo         _info;
     AppletHandle      *_handle;
     TQHBox             *_appletframe;
-    TQBoxLayout        *_tqlayout;
+    TQBoxLayout        *_layout;
     KPanelApplet::Type _type;
     int                _widthForHeightHint;
     int                _heightForWidthHint;

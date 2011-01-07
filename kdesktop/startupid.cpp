@@ -82,7 +82,7 @@ void StartupId::configure()
 
 void StartupId::gotNewStartup( const KStartupInfoId& id_P, const KStartupInfoData& data_P )
     {
-    TQString icon = data_P.tqfindIcon();
+    TQString icon = data_P.findIcon();
     current_startup = id_P;
     startups[ id_P ] = icon;
     start_startupid( icon );
@@ -92,7 +92,7 @@ void StartupId::gotStartupChange( const KStartupInfoId& id_P, const KStartupInfo
     {
     if( current_startup == id_P )
         {
-        TQString icon = data_P.tqfindIcon();
+        TQString icon = data_P.findIcon();
         if( !icon.isEmpty() && icon != startups[ current_startup ] )
             {
             startups[ id_P ] = icon;
@@ -218,8 +218,8 @@ void StartupId::start_startupid( const TQString& icon_P )
         }
     else
         {
-        if( icon_pixmap.tqmask() != NULL )
-            startup_widget->setMask( *icon_pixmap.tqmask());
+        if( icon_pixmap.mask() != NULL )
+            startup_widget->setMask( *icon_pixmap.mask());
         else
             startup_widget->clearMask();
         startup_widget->setBackgroundPixmap( icon_pixmap );
@@ -257,8 +257,8 @@ void StartupId::update_startupid()
         yoffset = frame_to_yoffset[ frame ];
         TQPixmap pm = pixmaps[ frame_to_pixmap[ frame ] ];
         startup_widget->setBackgroundPixmap( pm );
-        if ( pm.tqmask() != NULL )
-            startup_widget->setMask( *pm.tqmask() );
+        if ( pm.mask() != NULL )
+            startup_widget->setMask( *pm.mask() );
         else
             startup_widget->clearMask();
         if ( ++frame >= ( sizeof( frame_to_yoffset ) / sizeof( frame_to_yoffset[ 0 ] ) ) )

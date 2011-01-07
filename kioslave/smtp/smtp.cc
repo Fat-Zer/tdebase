@@ -200,7 +200,7 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
   KURL open_url = url;
   if ( !request.hasProfile() ) {
     //kdDebug(7112) << "kio_smtp: Profile is null" << endl;
-    bool hasProfile = mset.profiles().tqcontains( open_url.host() );
+    bool hasProfile = mset.profiles().contains( open_url.host() );
     if ( hasProfile ) {
       mset.setProfile(open_url.host());
       open_url.setHost(mset.getSetting(KEMailSettings::OutServer));

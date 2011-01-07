@@ -37,7 +37,7 @@ class KonqInfoListViewWidget : public KonqBaseListViewWidget
 //   friend class KonqTextViewItem;
    Q_OBJECT
    public:
-      KonqInfoListViewWidget( KonqListView *parent, TQWidget *tqparentWidget );
+      KonqInfoListViewWidget( KonqListView *parent, TQWidget *parentWidget );
       ~KonqInfoListViewWidget();
       
      const TQStringList columnKeys() {return m_columnKeys;}

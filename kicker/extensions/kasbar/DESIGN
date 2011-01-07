@@ -13,7 +13,7 @@ The division of labour between the classes is like this:
 * KasBar, KasItem, KasPopup
 
   These classes implement the KasBar widget. KasBar provides the
-  tqlayout and smart redraws while the KasItem class is an abstract
+  layout and smart redraws while the KasItem class is an abstract
   interface for the items forming the bars contents. The KasPopup
   class provides a self positioning widget that should be subclassed
   to provide useful information.

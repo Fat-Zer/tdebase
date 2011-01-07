@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>TerminalEmulatorConfig_UI</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -57,7 +57,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>0</width>
                             <height>87</height>
@@ -82,7 +82,7 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>31</width>
                             <height>20</height>
@@ -120,7 +120,7 @@
                                     <verstretch>0</verstretch>
                                 </sizepolicy>
                             </property>
-                            <property name="tqminimumSize">
+                            <property name="minimumSize">
                                 <size>
                                     <width>0</width>
                                     <height>0</height>
@@ -189,6 +189,6 @@
 <slots>
     <slot access="protected">selectTerminalApp()</slot>
 </slots>
-<tqlayoutdefaults spacing="3" margin="6"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

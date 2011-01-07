@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
                 int howoften = 1;
                 if ( defaults.count() != 0 ) {
                     TQFileInfo fi( tempSaverFileList[i] );
-                    if ( def_numbers.tqcontains( fi.fileName() ) )
+                    if ( def_numbers.contains( fi.fileName() ) )
                         howoften = def_numbers[fi.fileName()];
                     else
                         howoften = 0;
@@ -271,7 +271,7 @@ KRandomSetup::KRandomSetup( TQWidget *parent, const char *name )
 	manipulateScreen = new TQCheckBox(i18n("Use screen savers that manipulate the screen"), main);
 	grid->addWidget(manipulateScreen, 1, 0);
 
-	setMinimumSize( tqsizeHint() );
+	setMinimumSize( sizeHint() );
 
 	KConfig config("krandom.kssrc");
 	config.setGroup("Settings");

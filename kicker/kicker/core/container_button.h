@@ -68,14 +68,14 @@ protected slots:
     void dragButton(const TQPixmap icon);
 
 protected:
-    virtual void doSaveConfiguration( KConfigGroup&, bool tqlayoutOnly ) const;
+    virtual void doSaveConfiguration( KConfigGroup&, bool layoutOnly ) const;
     void embedButton(PanelButton* p);
     TQPopupMenu* createOpMenu();
     void checkImmutability(const KConfigGroup&);
 
 protected:
     PanelButton  *_button;
-    TQLayout      *_tqlayout;
+    TQLayout      *_layout;
     TQPoint        _oldpos;
 };
 

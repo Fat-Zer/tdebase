@@ -41,17 +41,17 @@ extern "C"
 KeramikStyleConfig::KeramikStyleConfig(TQWidget* parent): TQWidget(parent)
 {
 	//Should have no margins here, the dialog provides them
-	TQVBoxLayout* tqlayout = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
 	KGlobal::locale()->insertCatalogue("kstyle_keramik_config");
 
 	//highlightLineEdits = new TQCheckBox(i18n("Highlight active lineedits"), this);
 	highlightScrollBar = new TQCheckBox(i18n("Highlight scroll bar handles"), this);
 	animateProgressBar = new TQCheckBox(i18n("Animate progress bars"), this);
 
-	//tqlayout->add(highlightLineEdits);
-	tqlayout->add(highlightScrollBar);
-	tqlayout->add(animateProgressBar);
-	tqlayout->addStretch(1);
+	//layout->add(highlightLineEdits);
+	layout->add(highlightScrollBar);
+	layout->add(animateProgressBar);
+	layout->addStretch(1);
 
 	TQSettings s;
 	//origHlLineEdit = s.readBoolEntry("/keramik/Settings/highlightLineEdits", false);

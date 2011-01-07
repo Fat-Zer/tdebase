@@ -64,19 +64,19 @@ KCMKNotify::KCMKNotify(TQWidget *parent, const char *name, const TQStringList & 
                 "any additional visual or audible alert."
                 "</ul>"));
 
-    TQVBoxLayout *tqlayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
+    TQVBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 
     TQLabel *label = new TQLabel( i18n( "Event source:" ), this );
     m_appCombo = new KComboBox( false, this, "app combo" );
 
-    TQHBoxLayout *hbox = new TQHBoxLayout( tqlayout );
+    TQHBoxLayout *hbox = new TQHBoxLayout( layout );
     hbox->addWidget( label );
     hbox->addWidget( m_appCombo, 10 );
 
     m_notifyWidget = new KNotifyWidget( this, "knotify widget", true );
     connect( m_notifyWidget, TQT_SIGNAL( changed( bool )), TQT_SIGNAL( changed(bool)));
 
-    tqlayout->addWidget( m_notifyWidget );
+    layout->addWidget( m_notifyWidget );
 
     connect( m_appCombo, TQT_SIGNAL( activated( const TQString& ) ),
              TQT_SLOT( slotAppActivated( const TQString& )) );

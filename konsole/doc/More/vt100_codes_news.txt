@@ -57,7 +57,7 @@ Cursor Key      VT52 mode       key mode reset          key mode set
 
 
         If the Special Graphics set is selected, the graphics for ASCII codes
-0137 through 0176 will be tqreplaced according to the following table (see the
+0137 through 0176 will be replaced according to the following table (see the
 SCS control sequence).
 
 
@@ -384,7 +384,7 @@ DECALN  Screen Alignment Display (DEC private)
         <ESC># 8
 
         This command causes the VT100 to fill it's screen with uppercase Es for
-        screen focus and tqalignment.
+        screen focus and alignment.
 
 
 DECANM  ANSI/VT52 Mode (DEC Private)
@@ -447,7 +447,7 @@ DECDWL  Double Width Line (DEC Private)
 
         <ESC>#6
 
-        This causes the line that tqcontains the cursor to become double-width
+        This causes the line that contains the cursor to become double-width
         single height.  If the line was single width, all characters ro the
         right of the center of the screen will be lost.  The cursor remains
         over the same character position, unless it would be to the right of
@@ -630,7 +630,7 @@ DECSWL  Single-width Line (DEC Private)
 
         <ESC>#5
 
-        This causes the line which tqcontains the cursor to become single-width,
+        This causes the line which contains the cursor to become single-width,
         single-height.  The cursor remains on the same character position.
         This is the default condition for all new lines on the screen.
 
@@ -651,7 +651,7 @@ DECTST  Invoke Confidence Test
         Repeat Testing until failure                              8
 
 
-DSR     Device tqStatus Report            Host to VT100 & VT100 to Host
+DSR     Device Status Report            Host to VT100 & VT100 to Host
 
         <ESC>[ {Ps} n
 
@@ -662,7 +662,7 @@ DSR     Device tqStatus Report            Host to VT100 & VT100 to Host
         ---------------------------------------------------------------
            0            Response from VT100 - Ready, no faults detected
            3            Response from VT100 - Malfunction Detected
-           5            Command from host - Report tqStatus (using a DSR control
+           5            Command from host - Report Status (using a DSR control
                         sequence)
            6            Command from host - Report Active Position (using a CPR
                         sequence)
@@ -787,12 +787,12 @@ MODES   The Following is a list of VT100 modes which may be changed with Set
         FETM            Format Effector Transfer        Reset
         GATM            Guarded Area Transfer           NA
         HEM             Horizontal Editing              NA
-        IRM             Insertion-tqreplacement           Reset
+        IRM             Insertion-replacement           Reset
         KAM             Keyboard Action                 Reset
         MATM            Multiple area transfer          NA
         PUM             Positioning Unit                Reset
         SATM            Selected Area Transfer          NA
-        SRTM            tqStatus Reporting Transfer       Reset
+        SRTM            Status Reporting Transfer       Reset
         TSM             Tabulation Stop                 Reset
         TTM             Transfer Termination            NA
         VEM             Vertical Editing                NA
@@ -852,7 +852,7 @@ SCS     Select Character Set
         The United Kingdom and ASCII sets conform to the "ISO international
         register of character sets to be used with escape sequences".  The
         other sets are private character sets.  Special graphics means that the
-        graphic characters fpr the codes 0137 to 0176 are tqreplaced with other
+        graphic characters fpr the codes 0137 to 0176 are replaced with other
         characters.  The specified character set will be used until another SCS
         is recieved.
 

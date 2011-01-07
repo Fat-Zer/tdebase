@@ -20,9 +20,9 @@
 
 using namespace KHC;
 
-View::View( TQWidget *tqparentWidget, const char *widgetName,
+View::View( TQWidget *parentWidget, const char *widgetName,
                   TQObject *parent, const char *name, KHTMLPart::GUIProfile prof, KActionCollection *col )
-    : KHTMLPart( tqparentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
+    : KHTMLPart( parentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
 {
     setJScriptEnabled(false);
     setJavaEnabled(false);

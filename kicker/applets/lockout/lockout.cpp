@@ -63,13 +63,13 @@ Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name
     setBackgroundOrigin( AncestorOrigin );
 
     if ( orientation() == Horizontal )
-        tqlayout = new TQBoxLayout( this, TQBoxLayout::TopToBottom );
+        layout = new TQBoxLayout( this, TQBoxLayout::TopToBottom );
     else
-        tqlayout = new TQBoxLayout( this, TQBoxLayout::LeftToRight );
+        layout = new TQBoxLayout( this, TQBoxLayout::LeftToRight );
 
-    tqlayout->setAutoAdd( true );
-    tqlayout->setMargin( 0 );
-    tqlayout->setSpacing( 0 );
+    layout->setAutoAdd( true );
+    layout->setMargin( 0 );
+    layout->setSpacing( 0 );
 
     lockButton = new SimpleButton( this, "lock");
     logoutButton = new SimpleButton( this, "logout");
@@ -94,8 +94,8 @@ Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name
     if (!kapp->authorize("logout"))
        logoutButton->hide();
 
-    lockButton->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
-    logoutButton->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+    lockButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+    logoutButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
 
     if ( !kapp->dcopClient()->isAttached() )
         kapp->dcopClient()->attach();
@@ -113,31 +113,31 @@ Lockout::~Lockout()
 // direction and wasting a lot of space.
 void Lockout::checkLayout( int height ) const
 {
-    TQSize s = tqminimumSizeHint();
-    TQBoxLayout::Direction direction = tqlayout->direction();
+    TQSize s = minimumSizeHint();
+    TQBoxLayout::Direction direction = layout->direction();
 
     if ( direction == TQBoxLayout::LeftToRight &&
          ( ( orientation() == Vertical   && s.width() - 2 >= height ) ||
            ( orientation() == Horizontal && s.width() - 2 < height ) ) ) {
-        tqlayout->setDirection( TQBoxLayout::TopToBottom );
+        layout->setDirection( TQBoxLayout::TopToBottom );
     }
     else if ( direction == TQBoxLayout::TopToBottom &&
               ( ( orientation() == Vertical   && s.height() - 2 < height ) ||
                 ( orientation() == Horizontal && s.height() - 2 >= height ) ) ) {
-        tqlayout->setDirection( TQBoxLayout::LeftToRight );
+        layout->setDirection( TQBoxLayout::LeftToRight );
     }
 }
 
 int Lockout::widthForHeight( int height ) const
 {
     checkLayout( height );
-    return tqsizeHint().width();
+    return sizeHint().width();
 }
 
 int Lockout::heightForWidth( int width ) const
 {
     checkLayout( width );
-    return tqsizeHint().height();
+    return sizeHint().height();
 }
 
 void Lockout::lock()
@@ -177,9 +177,9 @@ void Lockout::mouseMoveEvent(TQMouseEvent* e)
 void Lockout::propagateMouseEvent(TQMouseEvent* e)
 {
     if ( !isTopLevel()  ) {
-        TQMouseEvent me(e->type(), mapTo( tqtopLevelWidget(), e->pos() ),
+        TQMouseEvent me(e->type(), mapTo( topLevelWidget(), e->pos() ),
                        e->globalPos(), e->button(), e->state() );
-        TQApplication::sendEvent( tqtopLevelWidget(), &me );
+        TQApplication::sendEvent( topLevelWidget(), &me );
     }
 }
 

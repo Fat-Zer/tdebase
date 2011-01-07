@@ -38,7 +38,7 @@
  at least snapshot 20020108. I haven't tested it with any older versions,
  so I don't know if it will work with them or not.
 
-  During installation, the files will tqreplace the ones that are part
+  During installation, the files will replace the ones that are part
  of the simple version in kdebase. Shortcuts assigned using KMenuEdit
  should still work, and the config file will be converted to the new format.
  However, you should backup all files before removing them ( including

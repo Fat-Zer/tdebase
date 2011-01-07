@@ -58,7 +58,7 @@ struct HistoryEntry
 };
 
 /* This class represents a child of the main view. The main view maintains
- * the list of children. A KonqView tqcontains a Browser::View and
+ * the list of children. A KonqView contains a Browser::View and
  * handles it. It's more or less the backend structure for the views.
  * The widget handling stuff is done by the KonqFrame.
  */

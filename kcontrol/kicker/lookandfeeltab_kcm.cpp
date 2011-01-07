@@ -42,11 +42,11 @@ LookAndFeelConfig::LookAndFeelConfig(TQWidget *parent, const char *name)
     setAboutData( about );
 
     KickerConfig::initScreenNumber();
-    TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+    TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
     lookandfeeltab = new LookAndFeelTab(this);
-    tqlayout->addWidget(lookandfeeltab);
-    tqlayout->addStretch();
+    layout->addWidget(lookandfeeltab);
+    layout->addStretch();
 
     connect(lookandfeeltab, TQT_SIGNAL(changed()), TQT_SLOT(configChanged()));
 

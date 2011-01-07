@@ -36,7 +36,7 @@ Restarting KWin:
 ================
 
 Since KWin takes care of focus handling, first killing KWin and then launching new instance
-can cause focus trouble. Therefore it's possible to run 'kwin --tqreplace', which will start
+can cause focus trouble. Therefore it's possible to run 'kwin --replace', which will start
 new KWin instance and tell the old one to quit.
 
 
@@ -46,11 +46,11 @@ Handling the case when KWin crashes:
 Again, without KWin running there may be focus problems. The simplest way to solve them
 is to add the 'Run Command' applet to Kicker - it can receive focus even without KWin running.
 If you can't add the applet or can reach it for some reason, switch to text console, and run
-'DISPLAY=:0 kwin --tqreplace' (and then you can run 'kwin --tqreplace' again from X).
+'DISPLAY=:0 kwin --replace' (and then you can run 'kwin --replace' again from X).
 
 If KWin is temporarily unusable because of some change and e.g. crashes during startup, it
 is possible to run another window manager, for example Metacity, OpenBox or FVWM (the command
-is similar to restarting KWin, i.e. 'metacity --tqreplace', 'openbox --tqreplace' or 'fvwm -tqreplace').
+is similar to restarting KWin, i.e. 'metacity --replace', 'openbox --replace' or 'fvwm -replace').
 
 
 Debugging KWin:
@@ -85,7 +85,7 @@ of their source files these some functionality is in separate .cpp file grouped 
 - client.* - core of class Client
 - activation.cpp - focus handling and window activation
 - events.cpp - event handling is in events.cpp
-- tqgeometry.cpp - tqgeometry-related code
+- geometry.cpp - geometry-related code
 - layers.cpp - stacking-related code
 - manage.cpp - code dealing with new windows
 - placement.cpp - window placements algorithms
@@ -97,7 +97,7 @@ The rest of the files contain additional helper classes:
 
 - atoms.* - so-called atoms (symbolic names for constants in X)
 - bridge.* - communication with the decoration plugin
-- tqgeometrytip.* - window displaying window tqgeometry while moving/resizing
+- geometrytip.* - window displaying window geometry while moving/resizing
 - group.* - grouping related windows together (warning! This is currently really messy and scary code
   that should be rewritten).
 - killwindow.* - handling of the Ctrl+Esc feature

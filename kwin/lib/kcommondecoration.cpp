@@ -73,7 +73,7 @@ bool KCommonDecoration::decorationBehaviour(DecorationBehaviour behaviour) const
     return false;
 }
 
-int KCommonDecoration::tqlayoutMetric(LayoutMetric lm, bool, const KCommonDecorationButton *) const
+int KCommonDecoration::layoutMetric(LayoutMetric lm, bool, const KCommonDecorationButton *) const
 {
     switch (lm) {
         case LM_BorderLeft:
@@ -145,12 +145,12 @@ void KCommonDecoration::updateCaption()
 
 void KCommonDecoration::borders( int& left, int& right, int& top, int& bottom ) const
 {
-    left = tqlayoutMetric(LM_BorderLeft);
-    right = tqlayoutMetric(LM_BorderRight);
-    bottom = tqlayoutMetric(LM_BorderBottom);
-    top = tqlayoutMetric(LM_TitleHeight) +
-            tqlayoutMetric(LM_TitleEdgeTop) +
-            tqlayoutMetric(LM_TitleEdgeBottom);
+    left = layoutMetric(LM_BorderLeft);
+    right = layoutMetric(LM_BorderRight);
+    bottom = layoutMetric(LM_BorderBottom);
+    top = layoutMetric(LM_TitleHeight) +
+            layoutMetric(LM_TitleEdgeTop) +
+            layoutMetric(LM_TitleEdgeBottom);
 
     updateLayout(); // TODO!! don't call everytime we are in ::borders
 }
@@ -161,14 +161,14 @@ void KCommonDecoration::updateLayout() const
     int r_x, r_y, r_x2, r_y2;
     r.coords(&r_x, &r_y, &r_x2, &r_y2);
 
-    // tqlayout preview widget
+    // layout preview widget
     if (m_previewWidget) {
-        const int borderLeft = tqlayoutMetric(LM_BorderLeft);
-        const int borderRight = tqlayoutMetric(LM_BorderRight);
-        const int borderBottom = tqlayoutMetric(LM_BorderBottom);
-        const int titleHeight = tqlayoutMetric(LM_TitleHeight);
-        const int titleEdgeTop = tqlayoutMetric(LM_TitleEdgeTop);
-        const int titleEdgeBottom = tqlayoutMetric(LM_TitleEdgeBottom);
+        const int borderLeft = layoutMetric(LM_BorderLeft);
+        const int borderRight = layoutMetric(LM_BorderRight);
+        const int borderBottom = layoutMetric(LM_BorderBottom);
+        const int titleHeight = layoutMetric(LM_TitleHeight);
+        const int titleEdgeTop = layoutMetric(LM_TitleEdgeTop);
+        const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
 
         int left = r_x+borderLeft;
         int top = r_y+titleEdgeTop+titleHeight+titleEdgeBottom;
@@ -182,28 +182,28 @@ void KCommonDecoration::updateLayout() const
     // resize buttons...
     for (int n=0; n<NumButtons; n++) {
         if (m_button[n]) {
-            TQSize newSize = TQSize(tqlayoutMetric(LM_ButtonWidth, true, m_button[n]),
-                                  tqlayoutMetric(LM_ButtonHeight, true, m_button[n]) );
+            TQSize newSize = TQSize(layoutMetric(LM_ButtonWidth, true, m_button[n]),
+                                  layoutMetric(LM_ButtonHeight, true, m_button[n]) );
             if (newSize != m_button[n]->size() )
                 m_button[n]->setSize(newSize);
         }
     }
 
-    // tqlayout buttons
-    int y = r_y + tqlayoutMetric(LM_TitleEdgeTop) + tqlayoutMetric(LM_ButtonMarginTop);
+    // layout buttons
+    int y = r_y + layoutMetric(LM_TitleEdgeTop) + layoutMetric(LM_ButtonMarginTop);
     if (m_buttonsLeft.count() > 0) {
-        const int buttonSpacing = tqlayoutMetric(LM_ButtonSpacing);
-        int x = r_x + tqlayoutMetric(LM_TitleEdgeLeft);
+        const int buttonSpacing = layoutMetric(LM_ButtonSpacing);
+        int x = r_x + layoutMetric(LM_TitleEdgeLeft);
         for (ButtonContainer::const_iterator it = m_buttonsLeft.begin(); it != m_buttonsLeft.end(); ++it) {
             bool elementLayouted = false;
             if (*it) {
                 if (!(*it)->isHidden() ) {
                     moveWidget(x,y, *it);
-                    x += tqlayoutMetric(LM_ButtonWidth, true, ::qt_cast<KCommonDecorationButton*>(*it) );
+                    x += layoutMetric(LM_ButtonWidth, true, ::qt_cast<KCommonDecorationButton*>(*it) );
                     elementLayouted = true;
                 }
             } else {
-                x+= tqlayoutMetric(LM_ExplicitButtonSpacer);
+                x+= layoutMetric(LM_ExplicitButtonSpacer);
                 elementLayouted = true;
             }
             if (elementLayouted && it != m_buttonsLeft.end() )
@@ -212,20 +212,20 @@ void KCommonDecoration::updateLayout() const
     }
 
     if (m_buttonsRight.count() > 0) {
-        const int titleEdgeRightLeft = r_x2-tqlayoutMetric(LM_TitleEdgeRight)+1;
+        const int titleEdgeRightLeft = r_x2-layoutMetric(LM_TitleEdgeRight)+1;
 
-        const int buttonSpacing = tqlayoutMetric(LM_ButtonSpacing);
+        const int buttonSpacing = layoutMetric(LM_ButtonSpacing);
         int x = titleEdgeRightLeft - buttonContainerWidth(m_buttonsRight);
         for (ButtonContainer::const_iterator it = m_buttonsRight.begin(); it != m_buttonsRight.end(); ++it) {
             bool elementLayouted = false;
             if (*it) {
                 if (!(*it)->isHidden() ) {
                     moveWidget(x,y, *it);
-                    x += tqlayoutMetric(LM_ButtonWidth, true, ::qt_cast<KCommonDecorationButton*>(*it) );;
+                    x += layoutMetric(LM_ButtonWidth, true, ::qt_cast<KCommonDecorationButton*>(*it) );;
                     elementLayouted = true;
                 }
             } else {
-                x += tqlayoutMetric(LM_ExplicitButtonSpacer);
+                x += layoutMetric(LM_ExplicitButtonSpacer);
                 elementLayouted = true;
             }
             if (elementLayouted && it != m_buttonsRight.end() )
@@ -277,8 +277,8 @@ void KCommonDecoration::resetLayout()
 
     const int minTitleBarWidth = 35;
     btnHideMinWidth = buttonContainerWidth(m_buttonsLeft,true) + buttonContainerWidth(m_buttonsRight,true) +
-            tqlayoutMetric(LM_TitleEdgeLeft,false) + tqlayoutMetric(LM_TitleEdgeRight,false) +
-            tqlayoutMetric(LM_TitleBorderLeft,false) + tqlayoutMetric(LM_TitleBorderRight,false) +
+            layoutMetric(LM_TitleEdgeLeft,false) + layoutMetric(LM_TitleEdgeRight,false) +
+            layoutMetric(LM_TitleBorderLeft,false) + layoutMetric(LM_TitleBorderRight,false) +
             minTitleBarWidth;
     btnHideLastWidth = 0;
 }
@@ -295,7 +295,7 @@ int KCommonDecoration::buttonsRightWidth() const
 
 int KCommonDecoration::buttonContainerWidth(const ButtonContainer &btnContainer, bool countHidden) const
 {
-    int explicitSpacer = tqlayoutMetric(LM_ExplicitButtonSpacer);
+    int explicitSpacer = layoutMetric(LM_ExplicitButtonSpacer);
 
     int shownElementsCount = 0;
 
@@ -311,7 +311,7 @@ int KCommonDecoration::buttonContainerWidth(const ButtonContainer &btnContainer,
             ++shownElementsCount;
         }
     }
-    w += tqlayoutMetric(LM_ButtonSpacing)*(shownElementsCount-1);
+    w += layoutMetric(LM_ButtonSpacing)*(shownElementsCount-1);
 
     return w;
 }
@@ -437,7 +437,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const TQString
 
             if (btn) {
                 btn->setLeft(isLeft);
-                btn->setSize(TQSize(tqlayoutMetric(LM_ButtonWidth, true, btn),tqlayoutMetric(LM_ButtonHeight, true, btn)) );
+                btn->setSize(TQSize(layoutMetric(LM_ButtonWidth, true, btn),layoutMetric(LM_ButtonHeight, true, btn)) );
                 btn->show();
                 btnContainer.append(btn);
             }
@@ -497,15 +497,15 @@ void KCommonDecoration::resize( const TQSize& s )
     widget()->resize( s );
 }
 
-TQSize KCommonDecoration::tqminimumSize() const
+TQSize KCommonDecoration::minimumSize() const
 {
-    const int minWidth = QMAX(tqlayoutMetric(LM_TitleEdgeLeft), tqlayoutMetric(LM_BorderLeft))
-            +QMAX(tqlayoutMetric(LM_TitleEdgeRight), tqlayoutMetric(LM_BorderRight))
-            +tqlayoutMetric(LM_TitleBorderLeft)+tqlayoutMetric(LM_TitleBorderRight);
+    const int minWidth = QMAX(layoutMetric(LM_TitleEdgeLeft), layoutMetric(LM_BorderLeft))
+            +QMAX(layoutMetric(LM_TitleEdgeRight), layoutMetric(LM_BorderRight))
+            +layoutMetric(LM_TitleBorderLeft)+layoutMetric(LM_TitleBorderRight);
     return TQSize(minWidth,
-                 tqlayoutMetric(LM_TitleEdgeTop)+tqlayoutMetric(LM_TitleHeight)
-                         +tqlayoutMetric(LM_TitleEdgeBottom)
-                         +tqlayoutMetric(LM_BorderBottom) );
+                 layoutMetric(LM_TitleEdgeTop)+layoutMetric(LM_TitleHeight)
+                         +layoutMetric(LM_TitleEdgeBottom)
+                         +layoutMetric(LM_BorderBottom) );
 }
 
 void KCommonDecoration::maximizeChange()
@@ -659,7 +659,7 @@ void KCommonDecoration::resizeEvent(TQResizeEvent */*e*/)
 
     updateWindowShape();
     // FIXME: don't update() here! this would result in two paintEvent()s
-    // because there is already "something" else triggering the tqrepaint...
+    // because there is already "something" else triggering the repaint...
 //     widget()->update();
 }
 
@@ -688,7 +688,7 @@ void KCommonDecoration::mouseDoubleClickEvent(TQMouseEvent *e)
     if( e->button() != LeftButton )
         return;
 
-    int tb = tqlayoutMetric(LM_TitleEdgeTop)+tqlayoutMetric(LM_TitleHeight)+tqlayoutMetric(LM_TitleEdgeBottom);
+    int tb = layoutMetric(LM_TitleEdgeTop)+layoutMetric(LM_TitleHeight)+layoutMetric(LM_TitleEdgeBottom);
     // when shaded, react on double clicks everywhere to make it easier to unshade. otherwise
     // react only on double clicks in the title bar region...
     if (isSetShade() || e->pos().y() <= tb )
@@ -697,14 +697,14 @@ void KCommonDecoration::mouseDoubleClickEvent(TQMouseEvent *e)
 
 void KCommonDecoration::wheelEvent(TQWheelEvent *e)
 {
-    int tb = tqlayoutMetric(LM_TitleEdgeTop)+tqlayoutMetric(LM_TitleHeight)+tqlayoutMetric(LM_TitleEdgeBottom);
+    int tb = layoutMetric(LM_TitleEdgeTop)+layoutMetric(LM_TitleHeight)+layoutMetric(LM_TitleEdgeBottom);
     if (isSetShade() || e->pos().y() <= tb )
         titlebarMouseWheelOperation( e->delta());
 }
 
 KCommonDecoration::Position KCommonDecoration::mousePosition(const TQPoint &point) const
 {
-    const int corner = 18+3*tqlayoutMetric(LM_BorderBottom, false)/2;
+    const int corner = 18+3*layoutMetric(LM_BorderBottom, false)/2;
     Position pos = PositionCenter;
 
     TQRect r = widget()->rect();
@@ -712,14 +712,14 @@ KCommonDecoration::Position KCommonDecoration::mousePosition(const TQPoint &poin
     r.coords(&r_x, &r_y, &r_x2, &r_y2);
     int p_x = point.x();
     int p_y = point.y();
-    const int borderLeft = tqlayoutMetric(LM_BorderLeft);
-//     const int borderRight = tqlayoutMetric(LM_BorderRight);
-    const int borderBottom = tqlayoutMetric(LM_BorderBottom);
-    const int titleHeight = tqlayoutMetric(LM_TitleHeight);
-    const int titleEdgeTop = tqlayoutMetric(LM_TitleEdgeTop);
-    const int titleEdgeBottom = tqlayoutMetric(LM_TitleEdgeBottom);
-    const int titleEdgeLeft = tqlayoutMetric(LM_TitleEdgeLeft);
-    const int titleEdgeRight = tqlayoutMetric(LM_TitleEdgeRight);
+    const int borderLeft = layoutMetric(LM_BorderLeft);
+//     const int borderRight = layoutMetric(LM_BorderRight);
+    const int borderBottom = layoutMetric(LM_BorderBottom);
+    const int titleHeight = layoutMetric(LM_TitleHeight);
+    const int titleEdgeTop = layoutMetric(LM_TitleEdgeTop);
+    const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
+    const int titleEdgeLeft = layoutMetric(LM_TitleEdgeLeft);
+    const int titleEdgeRight = layoutMetric(LM_TitleEdgeRight);
 
     const int borderBottomTop = r_y2-borderBottom+1;
     const int borderLeftRight = r_x+borderLeft-1;
@@ -769,7 +769,7 @@ KCommonDecoration::Position KCommonDecoration::mousePosition(const TQPoint &poin
 
 void KCommonDecoration::updateWindowShape()
 {
-    // don't tqmask the widget...
+    // don't mask the widget...
     if (!decorationBehaviour(DB_WindowMask) )
         return;
 
@@ -783,7 +783,7 @@ void KCommonDecoration::updateWindowShape()
     for(int screen=0; screen < desktop->numScreens(); ++screen)
     {
         TQRect fullscreen(desktop->screenGeometry(screen));
-        TQRect window = tqgeometry();
+        TQRect window = geometry();
 
         if(window.topLeft()    == fullscreen.topLeft() ) tl = false;
         if(window.topRight()   == fullscreen.topRight() ) tr = false;
@@ -791,30 +791,30 @@ void KCommonDecoration::updateWindowShape()
         if(window.bottomRight()== fullscreen.bottomRight() ) br = false;
     }
 
-    TQRegion tqmask(0, 0, w, h);
+    TQRegion mask(0, 0, w, h);
 
     // Remove top-left corner.
     if(tl)
     {
-        tqmask -= cornerShape(WC_TopLeft);
+        mask -= cornerShape(WC_TopLeft);
     }
     // Remove top-right corner.
     if(tr)
     {
-        tqmask -= cornerShape(WC_TopRight);
+        mask -= cornerShape(WC_TopRight);
     }
         // Remove top-left corner.
     if(bl)
     {
-        tqmask -= cornerShape(WC_BottomLeft);
+        mask -= cornerShape(WC_BottomLeft);
     }
     // Remove top-right corner.
     if(br)
     {
-        tqmask -= cornerShape(WC_BottomRight);
+        mask -= cornerShape(WC_BottomRight);
     }
 
-    setMask( tqmask );
+    setMask( mask );
 }
 
 bool KCommonDecoration::eventFilter( TQObject* o, TQEvent* e )
@@ -857,13 +857,13 @@ TQRect KCommonDecoration::titleRect() const
 {
     int r_x, r_y, r_x2, r_y2;
     widget()->rect().coords(&r_x, &r_y, &r_x2, &r_y2);
-    const int titleEdgeLeft = tqlayoutMetric(LM_TitleEdgeLeft);
-    const int titleEdgeTop = tqlayoutMetric(LM_TitleEdgeTop);
-    const int titleEdgeRight = tqlayoutMetric(LM_TitleEdgeRight);
-    const int titleEdgeBottom = tqlayoutMetric(LM_TitleEdgeBottom);
-    const int titleBorderLeft = tqlayoutMetric(LM_TitleBorderLeft);
-    const int titleBorderRight = tqlayoutMetric(LM_TitleBorderRight);
-    const int ttlHeight = tqlayoutMetric(LM_TitleHeight);
+    const int titleEdgeLeft = layoutMetric(LM_TitleEdgeLeft);
+    const int titleEdgeTop = layoutMetric(LM_TitleEdgeTop);
+    const int titleEdgeRight = layoutMetric(LM_TitleEdgeRight);
+    const int titleEdgeBottom = layoutMetric(LM_TitleEdgeBottom);
+    const int titleBorderLeft = layoutMetric(LM_TitleBorderLeft);
+    const int titleBorderRight = layoutMetric(LM_TitleBorderRight);
+    const int ttlHeight = layoutMetric(LM_TitleHeight);
     const int titleEdgeBottomBottom = r_y+titleEdgeTop+ttlHeight+titleEdgeBottom-1;
     return TQRect(r_x+titleEdgeLeft+buttonsLeftWidth()+titleBorderLeft, r_y+titleEdgeTop,
               r_x2-titleEdgeRight-buttonsRightWidth()-titleBorderRight-(r_x+titleEdgeLeft+buttonsLeftWidth()+titleBorderLeft),
@@ -921,7 +921,7 @@ void KCommonDecorationButton::setSize(const TQSize &s)
     }
 }
 
-TQSize KCommonDecorationButton::tqsizeHint() const
+TQSize KCommonDecorationButton::sizeHint() const
 {
     return m_size;
 }

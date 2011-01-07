@@ -78,7 +78,7 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 	_lvLoD = new KListView( gb );
 	_lvLoD->addColumn(i18n("Service"));
 	_lvLoD->addColumn(i18n("Description"));
-	_lvLoD->addColumn(i18n("tqStatus"));
+	_lvLoD->addColumn(i18n("Status"));
 	_lvLoD->setAllColumnsShowFocus(true);
 	_lvLoD->header()->setStretchEnabled(true, 1);
 
@@ -92,7 +92,7 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 	_lvStartup->addColumn(i18n("Use"));
 	_lvStartup->addColumn(i18n("Service"));
 	_lvStartup->addColumn(i18n("Description"));
-	_lvStartup->addColumn(i18n("tqStatus"));
+	_lvStartup->addColumn(i18n("Status"));
 	_lvStartup->setAllColumnsShowFocus(true);
 	_lvStartup->header()->setStretchEnabled(true, 2);
 
@@ -149,7 +149,7 @@ void KDEDConfig::load( bool useDefaults ) {
 
 	TQStringList files;
 	KGlobal::dirs()->findAllResources( "services",
-			TQString::tqfromLatin1( "kded/*.desktop" ),
+			TQString::fromLatin1( "kded/*.desktop" ),
 			true, true, files );
 
 	TQListViewItem* item = 0L;
@@ -178,7 +178,7 @@ void KDEDConfig::load( bool useDefaults ) {
 		}
 	}
 
-	getServicetqStatus();
+	getServiceStatus();
    emit changed( useDefaults );
 }
 
@@ -187,7 +187,7 @@ void KDEDConfig::save() {
 
 	TQStringList files;
 	KGlobal::dirs()->findAllResources( "services",
-			TQString::tqfromLatin1( "kded/*.desktop" ),
+			TQString::fromLatin1( "kded/*.desktop" ),
 			true, true, files );
 
 	KConfig kdedrc("kdedrc", false, false);
@@ -222,7 +222,7 @@ void KDEDConfig::defaults()
 }
 
 
-void KDEDConfig::getServicetqStatus()
+void KDEDConfig::getServiceStatus()
 {
 	QCStringList modules;
 	TQCString replyType;
@@ -293,12 +293,12 @@ void KDEDConfig::slotEvalItem(TQListViewItem * item)
 		_pbStop->setEnabled( false );
 	}
 
-	getServicetqStatus();
+	getServiceStatus();
 }
 
 void KDEDConfig::slotServiceRunningToggled()
 {
-	getServicetqStatus();
+	getServiceStatus();
 	slotEvalItem(_lvStartup->currentItem());
 }
 

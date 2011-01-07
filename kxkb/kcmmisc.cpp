@@ -51,7 +51,7 @@
 #include <X11/Xlib.h>
 
 KeyboardConfig::KeyboardConfig (TQWidget * parent, const char *)
-    : KCModule (parent, "kcmtqlayout")
+    : KCModule (parent, "kcmlayout")
 {
   TQString wtstr;
   TQBoxLayout* lay = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -286,7 +286,7 @@ int xkb_init()
 			       &xkb_lmaj, &xkb_lmin );
     }
 
-unsigned int xkb_tqmask_modifier( XkbDescPtr xkb, const char *name )
+unsigned int xkb_mask_modifier( XkbDescPtr xkb, const char *name )
     {
     int i;
     if( !xkb || !xkb->names )
@@ -298,47 +298,47 @@ unsigned int xkb_tqmask_modifier( XkbDescPtr xkb, const char *name )
 	char* modStr = XGetAtomName( xkb->dpy, xkb->names->vmods[i] );
 	if( modStr != NULL && strcmp(name, modStr) == 0 )
 	    {
-	    unsigned int tqmask;
-	    XkbVirtualModsToReal( xkb, 1 << i, &tqmask );
-	    return tqmask;
+	    unsigned int mask;
+	    XkbVirtualModsToReal( xkb, 1 << i, &mask );
+	    return mask;
 	    }
 	}
     return 0;
     }
 
-unsigned int xkb_numlock_tqmask()
+unsigned int xkb_numlock_mask()
     {
     XkbDescPtr xkb;
     if(( xkb = XkbGetKeyboard( qt_xdisplay(), XkbAllComponentsMask, XkbUseCoreKbd )) != NULL )
 	{
-        unsigned int tqmask = xkb_tqmask_modifier( xkb, "NumLock" );
+        unsigned int mask = xkb_mask_modifier( xkb, "NumLock" );
         XkbFreeKeyboard( xkb, 0, True );
-        return tqmask;
+        return mask;
         }
     return 0;
     }
 
 int xkb_set_on()
     {
-    unsigned int tqmask;
+    unsigned int mask;
     if( !xkb_init())
         return 0;
-    tqmask = xkb_numlock_tqmask();
-    if( tqmask == 0 )
+    mask = xkb_numlock_mask();
+    if( mask == 0 )
         return 0;
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, tqmask, tqmask);
+    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, mask, mask);
     return 1;
     }
 
 int xkb_set_off()
     {
-    unsigned int tqmask;
+    unsigned int mask;
     if( !xkb_init())
         return 0;
-    tqmask = xkb_numlock_tqmask();
-    if( tqmask == 0 )
+    mask = xkb_numlock_mask();
+    if( mask == 0 )
         return 0;
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, tqmask, 0);
+    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, mask, 0);
     return 1;
     }
 #endif
@@ -347,10 +347,10 @@ int xkb_set_off()
 int xtest_get_numlock_state()
     {
     int i;
-    int numlock_tqmask = 0;
+    int numlock_mask = 0;
     Window dummy1, dummy2;
     int dummy3, dummy4, dummy5, dummy6;
-    unsigned int tqmask;
+    unsigned int mask;
     KeyCode numlock_keycode = XKeysymToKeycode( qt_xdisplay(), XK_Num_Lock );
     if( numlock_keycode == NoSymbol )
         return 0;
@@ -360,12 +360,12 @@ int xtest_get_numlock_state()
          ++i )
         {
 	if( map->modifiermap[ map->max_keypermod * i ] == numlock_keycode )
-		numlock_tqmask = 1 << i;
+		numlock_mask = 1 << i;
 	}
     XQueryPointer( qt_xdisplay(), DefaultRootWindow( qt_xdisplay() ), &dummy1, &dummy2,
-        &dummy3, &dummy4, &dummy5, &dummy6, &tqmask );
+        &dummy3, &dummy4, &dummy5, &dummy6, &mask );
     XFreeModifiermap( map );
-    return tqmask & numlock_tqmask;
+    return mask & numlock_mask;
     }
 
 void xtest_change_numlock()

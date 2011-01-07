@@ -133,11 +133,11 @@ void TESession::ptyError()
 {
   // FIXME:  sh->error() is always empty
   if ( sh->error().isEmpty() )
-    KMessageBox::error( te->tqtopLevelWidget(),
+    KMessageBox::error( te->topLevelWidget(),
        i18n("Konsole is unable to open a PTY (pseudo teletype).  It is likely that this is due to an incorrect configuration of the PTY devices.  Konsole needs to have read/write access to the PTY devices."), 
        i18n("A Fatal Error Has Occurred") );
   else
-    KMessageBox::error(te->tqtopLevelWidget(), sh->error());
+    KMessageBox::error(te->topLevelWidget(), sh->error());
   emit done(this);
 }
 
@@ -232,7 +232,7 @@ void TESession::setUserTitle( int what, const TQString &caption )
        renameSession(caption);
     if (what == 31) {
        cwd=caption;
-       cwd=cwd.tqreplace( TQRegExp("^~"), TQDir::homeDirPath() );
+       cwd=cwd.replace( TQRegExp("^~"), TQDir::homeDirPath() );
        emit openURLRequest(cwd);
     }    
     if (what == 32) { // change icon via \033]32;Icon\007
@@ -637,7 +637,7 @@ void TESession::startZModem(const TQString &zmodem, const TQString &dir, const T
   connect(zmodemProc,TQT_SIGNAL (receivedStdout (KProcess *, char *, int)),
           this, TQT_SLOT(zmodemSendBlock(KProcess *, char *, int)));
   connect(zmodemProc,TQT_SIGNAL (receivedStderr (KProcess *, char *, int)),
-          this, TQT_SLOT(zmodemtqStatus(KProcess *, char *, int)));
+          this, TQT_SLOT(zmodemStatus(KProcess *, char *, int)));
   connect(zmodemProc,TQT_SIGNAL (processExited(KProcess *)),
           this, TQT_SLOT(zmodemDone()));
 
@@ -645,7 +645,7 @@ void TESession::startZModem(const TQString &zmodem, const TQString &dir, const T
   connect( sh,TQT_SIGNAL(block_in(const char*,int)), this, TQT_SLOT(zmodemRcvBlock(const char*,int)) );
   connect( sh,TQT_SIGNAL(buffer_empty()), this, TQT_SLOT(zmodemContinue()));
 
-  zmodemProgress = new ZModemDialog(te->tqtopLevelWidget(), false,
+  zmodemProgress = new ZModemDialog(te->topLevelWidget(), false,
                                     i18n("ZModem Progress"));
 
   connect(zmodemProgress, TQT_SIGNAL(user1Clicked()),
@@ -671,7 +671,7 @@ void TESession::zmodemContinue()
 //  qWarning("ZModem resume");
 }
 
-void TESession::zmodemtqStatus(KProcess *, char *data, int len)
+void TESession::zmodemStatus(KProcess *, char *data, int len)
 {
   TQCString msg(data, len+1);
   while(!msg.isEmpty())
@@ -767,7 +767,7 @@ QCStringList TESession::functionsDynamic()
 void TESession::onRcvBlock( const char* buf, int len )
 {
     em->onRcvBlock( buf, len );
-    emit receivedData( TQString::tqfromLatin1( buf, len ) );
+    emit receivedData( TQString::fromLatin1( buf, len ) );
 }
 
 void TESession::print( TQPainter &paint, bool friendly, bool exact )

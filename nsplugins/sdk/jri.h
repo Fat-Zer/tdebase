@@ -28,7 +28,7 @@
  * of those above. If you wish to allow use of your version of this file only
  * under the terms of either the GPL or the LGPL, and not to allow others to
  * use your version of this file under the terms of the NPL, indicate your
- * decision by deleting the provisions above and tqreplace them with the notice
+ * decision by deleting the provisions above and replace them with the notice
  * and other provisions required by the GPL or the LGPL. If you do not delete
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the NPL, the GPL or the LGPL.
@@ -341,8 +341,8 @@ typedef const JRIEnvInterface*	JRIEnv;
 #define JRI_SetStaticFieldDouble(env, clazz, fieldID, value)	\
 	(((*(env))->SetStaticFieldDouble)(env, JRI_SetStaticFieldDouble_op, clazz, fieldID, value))
 
-#define JRI_NewString(env, tqunicode, len)	\
-	(((*(env))->NewString)(env, JRI_NewString_op, tqunicode, len))
+#define JRI_NewString(env, unicode, len)	\
+	(((*(env))->NewString)(env, JRI_NewString_op, unicode, len))
 
 #define JRI_GetStringLength(env, string)	\
 	(((*(env))->GetStringLength)(env, JRI_GetStringLength_op, string))

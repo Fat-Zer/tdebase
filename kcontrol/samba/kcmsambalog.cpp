@@ -62,7 +62,7 @@ LogView::LogView(TQWidget *parent,KConfig *config, const char *name)
    mainLayout->addWidget(&updateButton,0,Qt::AlignLeft);
 
    TQWhatsThis::add( &logFileName, i18n("This page presents the contents of"
-     " your samba log file in a friendly tqlayout. Check that the correct log"
+     " your samba log file in a friendly layout. Check that the correct log"
      " file for your computer is listed here. If you need to, correct the name"
      " or location of the log file, and then click the \"Update\" button.") );
 
@@ -116,14 +116,14 @@ LogView::LogView(TQWidget *parent,KConfig *config, const char *name)
    connect(&updateButton,TQT_SIGNAL(clicked()),this,TQT_SLOT(updateList()));
    emit contentsChanged(&viewHistory,0,0);
 
-   label.setMinimumSize(label.tqsizeHint());
-   logFileName.setMinimumSize(250,logFileName.tqsizeHint().height());
+   label.setMinimumSize(label.sizeHint());
+   logFileName.setMinimumSize(250,logFileName.sizeHint().height());
    viewHistory.setMinimumSize(425,200);
-   showConnOpen.setMinimumSize(showConnOpen.tqsizeHint());
-   showConnClose.setMinimumSize(showConnClose.tqsizeHint());
-   showFileOpen.setMinimumSize(showFileOpen.tqsizeHint());
-   showFileClose.setMinimumSize(showFileClose.tqsizeHint());
-   updateButton.setFixedSize(updateButton.tqsizeHint());
+   showConnOpen.setMinimumSize(showConnOpen.sizeHint());
+   showConnClose.setMinimumSize(showConnClose.sizeHint());
+   showFileOpen.setMinimumSize(showFileOpen.sizeHint());
+   showFileClose.setMinimumSize(showFileClose.sizeHint());
+   updateButton.setFixedSize(updateButton.sizeHint());
 }
 
 void LogView::loadSettings()

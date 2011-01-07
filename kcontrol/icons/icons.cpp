@@ -80,7 +80,7 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
 
     // Size
     TQLabel *lbl = new TQLabel(i18n("Size:"), m_pTab1);
-    lbl->setFixedSize(lbl->tqsizeHint());
+    lbl->setFixedSize(lbl->sizeHint());
     grid->addWidget(lbl, 0, 0, Qt::AlignLeft);
     mpSizeBox = new TQComboBox(m_pTab1);
     connect(mpSizeBox, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSize(int)));
@@ -105,8 +105,8 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
 
     top->activate();
 
-    mpSystrayConfig = new KSimpleConfig( TQString::tqfromLatin1( "systemtray_panelappletrc" ));
-    mpKickerConfig = new KSimpleConfig( TQString::tqfromLatin1( "kickerrc" ));
+    mpSystrayConfig = new KSimpleConfig( TQString::fromLatin1( "systemtray_panelappletrc" ));
+    mpKickerConfig = new KSimpleConfig( TQString::fromLatin1( "kickerrc" ));
 
     init();
     read();
@@ -125,7 +125,7 @@ TQPushButton *KIconConfig::addPreviewIcon(int i, const TQString &str, TQWidget *
     TQLabel *lab = new TQLabel(str, parent);
     lay->addWidget(lab, 1, i, AlignCenter);
     mpPreview[i] = new TQLabel(parent);
-    mpPreview[i]->tqsetAlignment(AlignCenter);
+    mpPreview[i]->setAlignment(AlignCenter);
     mpPreview[i]->setMinimumSize(105, 105);
     lay->addWidget(mpPreview[i], 2, i);
     TQPushButton *push = new TQPushButton(i18n("Set Effect..."), parent);
@@ -688,7 +688,7 @@ KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
     top->setRowStretch(1,1);
 
     lbl = new TQLabel(i18n("&Effect:"), page);
-    lbl->setFixedSize(lbl->tqsizeHint());
+    lbl->setFixedSize(lbl->sizeHint());
     top->addWidget(lbl, 0, 0, Qt::AlignLeft);
     mpEffectBox = new TQListBox(page);
     mpEffectBox->insertItem(i18n("No Effect"));
@@ -713,7 +713,7 @@ KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
     grid->setRowStretch(1, 1);
 
     mpPreview = new TQLabel(frame);
-    mpPreview->tqsetAlignment(AlignCenter);
+    mpPreview->setAlignment(AlignCenter);
     mpPreview->setMinimumSize(105, 105);
     grid->addWidget(mpPreview, 1, 0);
 

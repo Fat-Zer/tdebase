@@ -550,7 +550,7 @@ static void processStat( void )
 void initStat( struct SensorModul* sm )
 {
   /* The CPU load is calculated from the values in /proc/stat. The cpu
-   * entry tqcontains 4 counters. These counters count the number of ticks
+   * entry contains 4 counters. These counters count the number of ticks
    * the system has spend on user processes, system processes, nice
    * processes and idle time.
    *

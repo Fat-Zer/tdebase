@@ -134,7 +134,7 @@ KConfigDialogSingle::KConfigDialogSingle(Zone *zone, TQWidget *parent,
     connect(fuzzyPage->kcfg_FuzzyShowDayOfWeek, TQT_SIGNAL(toggled(bool)),
             TQT_SLOT(dateToggled()));
 
-    addPage(settings, i18n("General"), TQString::tqfromLatin1("package_settings"));
+    addPage(settings, i18n("General"), TQString::fromLatin1("package_settings"));
 }
 
 void KConfigDialogSingle::updateSettings()
@@ -253,7 +253,7 @@ void PlainClock::updateClock()
 void PlainClock::loadSettings()
 {
     setFrameStyle(_prefs->plainShowFrame() ? Panel | Sunken : NoFrame);
-    tqsetAlignment(AlignVCenter | AlignHCenter | SingleLine);
+    setAlignment(AlignVCenter | AlignHCenter | SingleLine);
 
     setFont(_prefs->plainFont());
 }
@@ -837,8 +837,8 @@ void FuzzyClock::drawContents(TQPainter *p)
               // so we only have to update phStart
           }
           if (phStart >= 0)
-              newTimeStr.tqreplace(phStart, phLength, hourNames[realHour]);
-          newTimeStr.tqreplace(0, 1, TQString(newTimeStr.at(0).upper()));
+              newTimeStr.replace(phStart, phLength, hourNames[realHour]);
+          newTimeStr.replace(0, 1, TQString(newTimeStr.at(0).upper()));
       }
     } else if (_prefs->fuzzyness() == 3) {
         newTimeStr = dayTime[_time.hour() / 3];
@@ -902,8 +902,8 @@ ClockApplet::ClockApplet(const TQString& configFile, Type t, int actions,
       _disableCalendar(false),
       _clock(0),
       _timer(new TQTimer(this, "ClockApplet::_timer")),
-      m_tqlayoutTimer(new TQTimer(this, "m_tqlayoutTimer")),
-      m_tqlayoutDelay(0),
+      m_layoutTimer(new TQTimer(this, "m_layoutTimer")),
+      m_layoutDelay(0),
       m_followBackgroundSetting(true),
       m_dateFollowBackgroundSetting(true),
       TZoffset(0),
@@ -919,16 +919,16 @@ ClockApplet::ClockApplet(const TQString& configFile, Type t, int actions,
     setBackgroundOrigin(AncestorOrigin);
 
     _dayOfWeek = new TQLabel(this);
-    _dayOfWeek->tqsetAlignment(AlignVCenter | AlignHCenter | WordBreak);
+    _dayOfWeek->setAlignment(AlignVCenter | AlignHCenter | WordBreak);
     _dayOfWeek->setBackgroundOrigin(AncestorOrigin);
     _dayOfWeek->installEventFilter(this);   // catch mouse clicks
 
     _date = new TQLabel(this);
-    _date->tqsetAlignment(AlignVCenter | AlignHCenter | WordBreak);
+    _date->setAlignment(AlignVCenter | AlignHCenter | WordBreak);
     _date->setBackgroundOrigin(AncestorOrigin);
     _date->installEventFilter(this);   // catch mouse clicks
 
-    connect(m_tqlayoutTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(fixupLayout()));
+    connect(m_layoutTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(fixupLayout()));
     connect(_timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotUpdate()));
     connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(globalPaletteChange()));
 
@@ -991,18 +991,18 @@ int ClockApplet::widthForHeight(int h) const
     bool mustShowDate = showDate || (zone->zoneIndex() != 0);
     if (mustShowDate)
     {
-        _date->tqsetAlignment(AlignVCenter | AlignHCenter);
+        _date->setAlignment(AlignVCenter | AlignHCenter);
         if (!dateToSide)
         {
-            shareDateHeight = _date->tqsizeHint().height();
+            shareDateHeight = _date->sizeHint().height();
         }
     }
     if (showDayOfWeek)
     {
-        _dayOfWeek->tqsetAlignment(AlignVCenter | AlignHCenter);
+        _dayOfWeek->setAlignment(AlignVCenter | AlignHCenter);
         if (!dateToSide)
         {
-            shareDayOfWeekHeight = _dayOfWeek->tqsizeHint().height();
+            shareDayOfWeekHeight = _dayOfWeek->sizeHint().height();
         }
     }
 
@@ -1018,8 +1018,8 @@ int ClockApplet::widthForHeight(int h) const
     }
     else
     {
-        int dateWidth = mustShowDate ? _date->tqsizeHint().width() + 4 : 0;
-        int dayOfWeekWidth = showDayOfWeek ? _dayOfWeek->tqsizeHint().width() + 4 : 0;
+        int dateWidth = mustShowDate ? _date->sizeHint().width() + 4 : 0;
+        int dayOfWeekWidth = showDayOfWeek ? _dayOfWeek->sizeHint().width() + 4 : 0;
 
         if (dateToSide)
         {
@@ -1075,13 +1075,13 @@ int ClockApplet::widthForHeight(int h) const
             _clock->widget()->move(0, 0);
             if (showDayOfWeek)
             {
-                _dayOfWeek->setFixedSize(w, _dayOfWeek->tqsizeHint().height());
+                _dayOfWeek->setFixedSize(w, _dayOfWeek->sizeHint().height());
                 _dayOfWeek->move(0, _clock->widget()->height());
             }
 
             if (mustShowDate)
             {
-                _date->setFixedSize(w, _date->tqsizeHint().height());
+                _date->setFixedSize(w, _date->sizeHint().height());
                 _date->move(0, _clock->widget()->height() + shareDayOfWeekHeight);
             }
         }
@@ -1105,16 +1105,16 @@ int ClockApplet::heightForWidth(int w) const
     // add 4 pixels in height for each of date+dayOfWeek, if visible
     if (showDayOfWeek)
     {
-        if (_dayOfWeek->tqminimumSizeHint().width() > w)
+        if (_dayOfWeek->minimumSizeHint().width() > w)
         {
-            _dayOfWeek->tqsetAlignment(AlignVCenter | WordBreak);
+            _dayOfWeek->setAlignment(AlignVCenter | WordBreak);
         }
         else
         {
-            _dayOfWeek->tqsetAlignment(AlignVCenter | AlignHCenter | WordBreak);
+            _dayOfWeek->setAlignment(AlignVCenter | AlignHCenter | WordBreak);
         }
 
-        _dayOfWeek->setFixedSize(w, _dayOfWeek->tqminimumSizeHint().height());
+        _dayOfWeek->setFixedSize(w, _dayOfWeek->minimumSizeHint().height());
         _dayOfWeek->move(0, clockHeight);
 
         clockHeight += _dayOfWeek->height();
@@ -1127,10 +1127,10 @@ int ClockApplet::heightForWidth(int w) const
         // display on panel that is too narrow and then they made it wider
         const_cast<ClockApplet*>(this)->updateDateLabel(false);
 
-        if (_date->tqminimumSizeHint().width() > w)
+        if (_date->minimumSizeHint().width() > w)
         {
             TQString dateStr = _date->text();
-            // if we're too wide to fit, tqreplace the first non-digit from the end with a space
+            // if we're too wide to fit, replace the first non-digit from the end with a space
             int p = dateStr.findRev(TQRegExp("[^0-9]"));
             if (p > 0)
             {
@@ -1138,13 +1138,13 @@ int ClockApplet::heightForWidth(int w) const
             }
         }
 
-        if (_date->tqminimumSizeHint().width() > w)
+        if (_date->minimumSizeHint().width() > w)
         {
-            _date->tqsetAlignment(AlignVCenter | WordBreak);
+            _date->setAlignment(AlignVCenter | WordBreak);
         }
         else
         {
-            _date->tqsetAlignment(AlignVCenter | AlignHCenter | WordBreak);
+            _date->setAlignment(AlignVCenter | AlignHCenter | WordBreak);
         }
         _date->setFixedSize(w, _date->heightForWidth(w));
         _date->move(0, clockHeight);
@@ -1283,7 +1283,7 @@ void ClockApplet::reconfigure()
     _clock->widget()->installEventFilter(this);   // catch mouse clicks
     _clock->widget()->show();
 
-    _clock->forceUpdate(); /* force tqrepaint */
+    _clock->forceUpdate(); /* force repaint */
 
     if (showDayOfWeek)
     {
@@ -1552,7 +1552,7 @@ void ClockApplet::aboutToShowContextMenu()
     menu->insertTitle( SmallIcon( "clock" ), i18n( "Clock" ) );
 
     KLocale *loc = KGlobal::locale();
-    TQDateTime dt = TQDateTime::tqcurrentDateTime();
+    TQDateTime dt = TQDateTime::currentDateTime();
     dt = dt.addSecs(TZoffset);
 
     KPopupMenu *copyMenu = new KPopupMenu( menu );
@@ -1579,7 +1579,7 @@ void ClockApplet::aboutToShowContextMenu()
             }
             else
             {
-                zoneMenu->insertItem(i18n(zone->zone(i).utf8()).tqreplace("_", " "), 500 + i);
+                zoneMenu->insertItem(i18n(zone->zone(i).utf8()).replace("_", " "), 500 + i);
             }
         }
         zoneMenu->setItemChecked(500 + zone->zoneIndex(),true);
@@ -1626,7 +1626,7 @@ TQTime ClockApplet::clockGetTime()
 
 TQDate ClockApplet::clockGetDate()
 {
-    return TQDateTime::tqcurrentDateTime().addSecs(TZoffset).date();
+    return TQDateTime::currentDateTime().addSecs(TZoffset).date();
 }
 
 void ClockApplet::showZone(int z)
@@ -1634,7 +1634,7 @@ void ClockApplet::showZone(int z)
     zone->setZone(z);
     TZoffset = zone->calc_TZ_offset( zone->zone() );
     updateDateLabel();
-    _clock->forceUpdate(); /* force tqrepaint */
+    _clock->forceUpdate(); /* force repaint */
 }
 
 void ClockApplet::nextZone()
@@ -1710,7 +1710,7 @@ void ClockApplet::updateDateLabel(bool reLayout)
     if (zone->zoneIndex() != 0)
     {
         TQString zone_s = i18n(zone->zone().utf8());
-        _date->setText(zone_s.mid(zone_s.find('/') + 1).tqreplace("_", " "));
+        _date->setText(zone_s.mid(zone_s.find('/') + 1).replace("_", " "));
         _date->setShown(true);
     }
     else
@@ -1727,8 +1727,8 @@ void ClockApplet::updateDateLabel(bool reLayout)
             _calendar->setDate(_lastDate);
         }
 
-        m_tqlayoutTimer->stop();
-        m_tqlayoutTimer->start(m_tqlayoutDelay, true);
+        m_layoutTimer->stop();
+        m_layoutTimer->start(m_layoutDelay, true);
     }
 }
 
@@ -1748,7 +1748,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
         if (!activeZone.isEmpty())
         {
             activeZone = i18n(activeZone.utf8());
-            data.subtext.append("<br>").append(activeZone.mid(activeZone.find('/') + 1).tqreplace("_", " "));
+            data.subtext.append("<br>").append(activeZone.mid(activeZone.find('/') + 1).replace("_", " "));
         }
     }
     else
@@ -1771,7 +1771,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
 
             if (activeIndex == i)
             {
-                data.message = m_zone.mid(m_zone.find('/') + 1).tqreplace("_", " ");
+                data.message = m_zone.mid(m_zone.find('/') + 1).replace("_", " ");
                 data.message += "  " + _time + "<br>" + _date;
             }
             else
@@ -1782,7 +1782,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
                 }
                 else
                 {
-                    data.subtext += "<b>" + m_zone.mid(m_zone.find('/') + 1).tqreplace("_", " ") + "</b>";
+                    data.subtext += "<b>" + m_zone.mid(m_zone.find('/') + 1).replace("_", " ") + "</b>";
                 }
                 data.subtext += " " + _time + ", " + _date + "<br>";
             }
@@ -1798,7 +1798,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
 
 void ClockApplet::fixupLayout()
 {
-    m_tqlayoutDelay = 0;
+    m_layoutDelay = 0;
 
     // ensure we have the right widget line up in horizontal mode
     // when we are showing date beside the clock
@@ -1851,7 +1851,7 @@ void ClockAppletToolTip::maybeTip( const TQPoint & /*point*/ )
          (m_clock->type() == Prefs::EnumType::Analog) )
     {
         // show full time (incl. hour) as tooltip for Fuzzy clock
-        tipText = KGlobal::locale()->formatDateTime(TQDateTime::tqcurrentDateTime().addSecs(m_clock->TZoffset));
+        tipText = KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime().addSecs(m_clock->TZoffset));
     }
     else
     {
@@ -1863,7 +1863,7 @@ void ClockAppletToolTip::maybeTip( const TQPoint & /*point*/ )
         tipText += "\n" + i18n("Showing time for %1").arg(i18n(m_clock->timezones()->zone().utf8()), false);
     }
 
-    tip(m_clock->tqgeometry(), tipText);
+    tip(m_clock->geometry(), tipText);
 }
 
 //************************************************************

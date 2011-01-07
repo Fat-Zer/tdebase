@@ -39,7 +39,7 @@ USBViewer::USBViewer(TQWidget *parent, const char *name, const TQStringList &)
   gbox->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(gbox);
 
-  TQVBoxLayout *vvbox = new TQVBoxLayout(gbox->tqlayout(), KDialog::spacingHint());
+  TQVBoxLayout *vvbox = new TQVBoxLayout(gbox->layout(), KDialog::spacingHint());
 
   TQSplitter *splitter = new TQSplitter(gbox);
   vvbox->addWidget(splitter);
@@ -87,12 +87,12 @@ void USBViewer::load()
   refresh();
 }
 
-static TQ_UINT32 key( USBDevice &dev )
+static Q_UINT32 key( USBDevice &dev )
 {
   return dev.bus()*256 + dev.device();
 }
 
-static TQ_UINT32 key_parent( USBDevice &dev )
+static Q_UINT32 key_parent( USBDevice &dev )
 {
   return dev.bus()*256 + dev.parent();
 }
@@ -130,7 +130,7 @@ void USBViewer::refresh()
       for ( ; it.current(); ++it)
 	if (it.current()->level() == level)
 	  {
-	    TQ_UINT32 k = key(*it.current());
+	    Q_UINT32 k = key(*it.current());
 	    if (level == 0)
 	      {
 		TQListViewItem *item = _items.find(k);
@@ -178,7 +178,7 @@ void USBViewer::selectionChanged(TQListViewItem *item)
 {
   if (item)
     {
-      TQ_UINT32 busdev = item->text(1).toUInt();
+      Q_UINT32 busdev = item->text(1).toUInt();
       USBDevice *dev = USBDevice::find(busdev>>8, busdev&255);
       if (dev)
 	{

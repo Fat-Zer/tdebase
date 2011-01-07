@@ -83,9 +83,9 @@ in the active frame.</p>
 </tip>
 <tip category="Kate|part">
 <html>
-<p>You can do cool sed-like regular expression tqreplacements using <em>Command Line</em>.</p>
+<p>You can do cool sed-like regular expression replacements using <em>Command Line</em>.</p>
 <p>For example, press <strong>F7</strong> and enter <code>s /oldtext/newtext/g</code>
-to tqreplace &quot;oldtext&quot; with &quot;newtext&quot; throughout the current
+to replace &quot;oldtext&quot; with &quot;newtext&quot; throughout the current
 line.</p>
 </html>
 </tip>

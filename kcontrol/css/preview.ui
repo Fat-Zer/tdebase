@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>PreviewDialog</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -37,7 +37,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>
@@ -87,8 +87,8 @@ people.&lt;/p&gt;
     <include location="global" impldecl="in declaration">kseparator.h</include>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>
-<tqlayoutdefaults spacing="6" margin="11"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>kseparator.h</includehint>
 </includehints>

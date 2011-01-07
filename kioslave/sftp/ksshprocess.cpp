@@ -30,7 +30,7 @@
  * of ssh we are using.  This command and its arguments are  passed to
  * PTYProcess for execution.  Once ssh is started we scan each line of input
  * from stdin, stderr, and the pty for recognizable strings.  The recognizable
- * strings are taken from several string tables.  Each table tqcontains a string
+ * strings are taken from several string tables.  Each table contains a string
  * for each specific version of ssh we support and a string for a generic
  * version of OpenSSH and commercial SSH incase we don't recognized the 
  * specific ssh version strings (as when a new SSH version is released after
@@ -206,7 +206,7 @@ void KSshProcess::removeSignalHandlers() {
 KSshProcess::KSshProcess() 
             : mVersion(UNKNOWN_VER), mConnected(false), 
         mRunning(false), mConnectState(0) {
-    mSshPath = KStandardDirs::findExe(TQString::tqfromLatin1("ssh"));
+    mSshPath = KStandardDirs::findExe(TQString::fromLatin1("ssh"));
     kdDebug(KSSHPROC) << "KSshProcess::KSshProcess(): ssh path [" << 
 		mSshPath << "]" << endl;
         
@@ -292,7 +292,7 @@ TQString KSshProcess::versionStr() {
             return TQString::null;
     }
 
-    return TQString::tqfromLatin1(versionStrs[mVersion]);
+    return TQString::fromLatin1(versionStrs[mVersion]);
 }
 */
 
@@ -380,8 +380,8 @@ bool KSshProcess::setOptions(const SshOptList& opts) {
             // since KSshProcess depends on specific setting of these for 
             // preforming authentication correctly.
             tmp = (*it).str.latin1();
-            if( tmp.tqcontains("NumberOfPasswordPrompts") ||
-                tmp.tqcontains("StrictHostKeyChecking") ) {
+            if( tmp.contains("NumberOfPasswordPrompts") ||
+                tmp.contains("StrictHostKeyChecking") ) {
                 mError = ERR_INVALID_OPT;
                 return false;
             }
@@ -762,7 +762,7 @@ bool KSshProcess::connect() {
         // STATE_WAIT_PROMPT:
         // Get a line of input from the ssh process. Check the contents 
         // of the line to determine the next state. Ignore the line
-        // if we don't recognize its contents.  If the line tqcontains
+        // if we don't recognize its contents.  If the line contains
         // the continue prompt, we have an error since we should never
         // get that line in this state.  Set ERR_INVALID_STATE error
         // and return false.
@@ -776,7 +776,7 @@ bool KSshProcess::connect() {
                     i18n("Error encountered while talking to ssh.");
                 mConnectState = STATE_FATAL;
             }
-            else if( line.find(TQString::tqfromLatin1(passwordPrompt[mVersion]), 0, false) != -1 ) {
+            else if( line.find(TQString::fromLatin1(passwordPrompt[mVersion]), 0, false) != -1 ) {
                 mConnectState = STATE_TRY_PASSWD;
             }
             else if( line.find(passphrasePrompt[mVersion]) != -1 ) {

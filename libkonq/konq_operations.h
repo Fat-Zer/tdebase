@@ -173,7 +173,7 @@ protected:
     void setPasteInfo( KIOPasteInfo * info ) { m_pasteInfo = info; }
 
 private:
-    TQWidget* tqparentWidget() const;
+    TQWidget* parentWidget() const;
 
 protected slots:
 

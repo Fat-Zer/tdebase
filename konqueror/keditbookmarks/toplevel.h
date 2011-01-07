@@ -116,7 +116,7 @@ public:
     KEBApp(const TQString & bookmarksFile, bool readonly, const TQString &address, bool browser, const TQString &caption);
     virtual ~KEBApp();
 
-    void updatetqStatus(TQString url);
+    void updateStatus(TQString url);
     void setActionsEnabled(SelcAbilities);
 
     void setCancelFavIconUpdatesEnabled(bool);

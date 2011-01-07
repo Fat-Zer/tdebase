@@ -47,10 +47,10 @@ class NSPluginClassIface : virtual public DCOPObject
 
 k_dcop:
 
-  virtual DCOPRef newInstance(TQString url, TQString mimeType, TQ_INT8 embed,
+  virtual DCOPRef newInstance(TQString url, TQString mimeType, Q_INT8 embed,
                               TQStringList argn, TQStringList argv,
-                              TQString appId, TQString callbackId, TQ_INT8 reload,
-                              TQ_INT8 doPost, TQByteArray postData, TQ_UINT32 xembed) = 0;
+                              TQString appId, TQString callbackId, Q_INT8 reload,
+                              Q_INT8 doPost, TQByteArray postData, Q_UINT32 xembed) = 0;
   virtual TQString getMIMEDescription() = 0;
 
 };
@@ -66,11 +66,11 @@ k_dcop:
 
   virtual int winId() = 0;
 
-  virtual int setWindow(TQ_INT8 remove=0) = 0;
+  virtual int setWindow(Q_INT8 remove=0) = 0;
 
-  virtual void resizePlugin(TQ_INT32 w, TQ_INT32 h) = 0;
+  virtual void resizePlugin(Q_INT32 w, Q_INT32 h) = 0;
 
-  virtual void javascriptResult(TQ_INT32 id, TQString result) = 0;
+  virtual void javascriptResult(Q_INT32 id, TQString result) = 0;
 
   virtual void displayPlugin() = 0;
   

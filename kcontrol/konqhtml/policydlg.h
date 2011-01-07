@@ -99,7 +99,7 @@ public:
     void refresh();
 
     /**
-     * Adds another panel which tqcontains controls for more policies.
+     * Adds another panel which contains controls for more policies.
      *
      * The widget is inserted between the "feature enabled" combo box and
      * the dialog buttons at the bottom.

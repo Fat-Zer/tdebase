@@ -52,7 +52,7 @@ FileTypeDetails::FileTypeDetails( TQWidget * parent, const char * name )
   grid->setRowStretch(1, 1);
   grid->setRowStretch(2, 0);
 
-  TQWhatsThis::add( extensionLB, i18n("This box tqcontains a list of patterns that can be"
+  TQWhatsThis::add( extensionLB, i18n("This box contains a list of patterns that can be"
     " used to identify files of the selected type. For example, the pattern *.txt is"
     " associated with the file type 'text/plain'; all files ending in '.txt' are recognized"
     " as plain text files.") );
@@ -97,10 +97,10 @@ FileTypeDetails::FileTypeDetails( TQWidget * parent, const char * name )
                                        KDialog::spacingHint());
 
   m_autoEmbed = new TQVButtonGroup( i18n("Left Click Action"), secondWidget );
-  m_autoEmbed->tqlayout()->setSpacing( KDialog::spacingHint() );
+  m_autoEmbed->layout()->setSpacing( KDialog::spacingHint() );
   secondLayout->addWidget( m_autoEmbed, 1 );
 
-  m_autoEmbed->tqsetSizePolicy( TQSizePolicy( (TQSizePolicy::SizeType)3, (TQSizePolicy::SizeType)0, m_autoEmbed->sizePolicy().hasHeightForWidth() ) );
+  m_autoEmbed->setSizePolicy( TQSizePolicy( (TQSizePolicy::SizeType)3, (TQSizePolicy::SizeType)0, m_autoEmbed->sizePolicy().hasHeightForWidth() ) );
 
   // The order of those three items is very important. If you change it, fix typeslistitem.cpp !
   new TQRadioButton( i18n("Show file in embedded viewer"), m_autoEmbed );
@@ -120,7 +120,7 @@ FileTypeDetails::FileTypeDetails( TQWidget * parent, const char * name )
   secondLayout->addSpacing(10);
 
   embedServiceListWidget = new KServiceListWidget( KServiceListWidget::SERVICELIST_SERVICES, secondWidget );
-  embedServiceListWidget->setMinimumHeight( serviceListWidget->tqsizeHint().height() );
+  embedServiceListWidget->setMinimumHeight( serviceListWidget->sizeHint().height() );
   connect( embedServiceListWidget, TQT_SIGNAL(changed(bool)), this, TQT_SIGNAL(changed(bool)));
   secondLayout->addWidget(embedServiceListWidget, 3);
 
@@ -241,8 +241,8 @@ void FileTypeDetails::updateAskSave()
          mime->is( "text/xml" ) ||
          mime->is( "inode/directory" ) ||
          mimeType.startsWith( "image" ) ||
-         mime->is( "multipart/x-mixed-tqreplace" ) ||
-         mime->is( "multipart/tqreplace" ) ||
+         mime->is( "multipart/x-mixed-replace" ) ||
+         mime->is( "multipart/replace" ) ||
          mimeType.startsWith( "print" ) )
     {
         neverAsk = true;

@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>ListViewSettingsWidget</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -55,7 +55,7 @@
             <property name="title">
                 <string>Colors</string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="vAlign" stdset="0">
@@ -68,7 +68,7 @@
                 </property>
                 <widget class="QLayoutWidget" row="0" column="0">
                     <property name="name">
-                        <cstring>tqlayout2</cstring>
+                        <cstring>layout2</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -102,7 +102,7 @@
                 </widget>
                 <widget class="QLayoutWidget" row="0" column="1">
                     <property name="name">
-                        <cstring>tqlayout1</cstring>
+                        <cstring>layout1</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -173,6 +173,6 @@
     <function specifier="non virtual">setTextColor( const QColor &amp; c )</function>
     <function specifier="non virtual">setGridColor( const QColor &amp; c )</function>
 </functions>
-<tqlayoutdefaults spacing="6" margin="11"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

@@ -49,15 +49,15 @@ namespace KioSMTP {
 
     static Capabilities fromResponse( const Response & response );
 
-    void add( const TQString & cap, bool tqreplace=false );
-    void add( const TQString & name, const TQStringList & args, bool tqreplace=false );
+    void add( const TQString & cap, bool replace=false );
+    void add( const TQString & name, const TQStringList & args, bool replace=false );
     void clear() { mCapabilities.clear(); }
 
     bool have( const TQString & cap ) const {
       return mCapabilities.find( cap.upper() ) != mCapabilities.end();
     }
     bool have( const TQCString & cap ) const { return have( TQString( cap.data() ) ); }
-    bool have( const char * cap ) const { return have( TQString::tqfromLatin1( cap ) ); }
+    bool have( const char * cap ) const { return have( TQString::fromLatin1( cap ) ); }
 
     TQString asMetaDataString() const;
 

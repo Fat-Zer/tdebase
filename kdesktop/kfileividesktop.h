@@ -40,7 +40,7 @@ class TQFont;
 class KShadowEngine;
 
 /**
- * This class tqreplaces KFileIVI in the desktop only.
+ * This class replaces KFileIVI in the desktop only.
  * If the shadow object is NULL, then the class should behave almost identical
  * to its parent.
  * @since 3.2
@@ -91,7 +91,7 @@ class KFileIVIDesktop : public KFileIVI
      * Builds the shadow. As the algorithm is pretty slow (at pixel level),
      * This method is triggered only if the configuration has changed.
      * @param p the painter for drawing the item
-     * @param align the shadow tqalignment
+     * @param align the shadow alignment
      * @param shadowColor the shadow color
      */
     virtual TQImage *buildShadow(TQPainter *p, const int align, TQColor &shadowColor);

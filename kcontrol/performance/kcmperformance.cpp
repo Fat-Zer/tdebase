@@ -51,11 +51,11 @@ Config::Config( TQWidget* parent_P, const char* )
     TQVBoxLayout *topLayout = new TQVBoxLayout( this );
     TQTabWidget* tabs = new TQTabWidget( this );
     konqueror_widget = new Konqueror( tabs );
-    konqueror_widget->tqlayout()->setMargin( KDialog::marginHint() );
+    konqueror_widget->layout()->setMargin( KDialog::marginHint() );
     connect( konqueror_widget, TQT_SIGNAL( changed()), TQT_SLOT( changed()));
     tabs->addTab( konqueror_widget, i18n( "Konqueror" ));
     system_widget = new SystemWidget( tabs );
-    system_widget->tqlayout()->setMargin( KDialog::marginHint() );
+    system_widget->layout()->setMargin( KDialog::marginHint() );
     connect( system_widget, TQT_SIGNAL( changed()), TQT_SLOT( changed()));
     tabs->addTab( system_widget, i18n( "System" ));
     topLayout->add( tabs );

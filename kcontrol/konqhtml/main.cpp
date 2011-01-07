@@ -97,9 +97,9 @@ KJSParts::KJSParts(KConfig *config, TQWidget *parent, const char *name)
 
   setAboutData( about );
 
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
-  tqlayout->addWidget(tab);
+  layout->addWidget(tab);
 
   // ### the groupname is duplicated in KJSParts::save
   java = new KJavaOptions( config, "Java/JavaScript Settings", this, name );

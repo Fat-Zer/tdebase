@@ -9,8 +9,8 @@
 #include <tqglobal.h>
 #include <tqstring.h>
 
-int konsole_wcwidth(TQ_UINT16 ucs);
-//int konsole_wcwidth_cjk(TQ_UINT16 ucs);
+int konsole_wcwidth(Q_UINT16 ucs);
+//int konsole_wcwidth_cjk(Q_UINT16 ucs);
 
 int string_width( const TQString &txt );
 

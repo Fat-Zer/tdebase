@@ -98,7 +98,7 @@ protected:
   TQColor m_welcomeColor, m_welcomeShadowColor, m_userColor, m_statusColor;
   TQPixmap m_icon;
 
-  bool m_showWelcomeString, m_showUserString, m_showUserIcon, m_showtqStatusString;
+  bool m_showWelcomeString, m_showUserString, m_showUserIcon, m_showStatusString;
 };
 
 #endif

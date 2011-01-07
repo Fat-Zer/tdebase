@@ -144,7 +144,7 @@ class KTimerDialog : public KDialogBase
 
   private:
     /**
-     * Prepares the tqlayout that manages the widgets of the dialog
+     * Prepares the layout that manages the widgets of the dialog
      */
     void setupLayout();
 

@@ -94,7 +94,7 @@ PanelKMenu::PanelKMenu()
         "slotServiceStartedByStorageId(TQString,TQString)",
         false);
     displayRepairTimer = new TQTimer( this );
-    connect( displayRepairTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(repairDisplay()) );
+    connect( displayRepairTimer, SIGNAL(timeout()), this, SLOT(repairDisplay()) );
 }
 
 PanelKMenu::~PanelKMenu()
@@ -125,7 +125,7 @@ void PanelKMenu::hideMenu()
     while (isShown() == true)
         kapp->eventLoop()->processEvents(1000);
     TQTimer *windowtimer = new TQTimer( this );
-    connect( windowtimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(windowClearTimeout()) );
+    connect( windowtimer, SIGNAL(timeout()), this, SLOT(windowClearTimeout()) );
     windowTimerTimedOut = false;
     windowtimer->start( 0, TRUE );	// Wait for all window system events to be processed
     while (windowTimerTimedOut == false)
@@ -138,7 +138,7 @@ void PanelKMenu::hideMenu()
     // thereby removing a bad shutdown screen artifact while still providing
     // a somewhat snappy user interface.
     TQTimer *delaytimer = new TQTimer( this );
-    connect( delaytimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(windowClearTimeout()) );
+    connect( delaytimer, SIGNAL(timeout()), this, SLOT(windowClearTimeout()) );
     windowTimerTimedOut = false;
     delaytimer->start( 100, TRUE );	// Wait for 100 milliseconds
     while (windowTimerTimedOut == false)
@@ -207,7 +207,7 @@ void PanelKMenu::paletteChanged()
     if (!loadSidePixmap())
     {
         sidePixmap = sideTilePixmap = TQPixmap();
-        setMinimumSize( tqsizeHint() );
+        setMinimumSize( sizeHint() );
     }
 }
 
@@ -415,10 +415,10 @@ void PanelKMenu::repairDisplay(void) {
         displayRepairTimer->stop();
 
         // Now do a nasty hack to prevent search bar merging into the side image
-        // This forces a tqlayout/tqrepaint of the qpopupmenu
-        tqrepaint();			// This ensures that the side bar image was applied
+        // This forces a layout/repaint of the qpopupmenu
+        repaint();			// This ensures that the side bar image was applied
         styleChange(style());		// This forces a call to the private function updateSize(TRUE) inside the qpopupmenu.
-        update();			// This tqrepaints the entire popup menu to apply the widget size/tqalignment changes made above
+        update();			// This repaints the entire popup menu to apply the widget size/alignment changes made above
     }
 }
 
@@ -579,32 +579,32 @@ void PanelKMenu::showMenu()
 
 TQRect PanelKMenu::sideImageRect()
 {
-    return TQStyle::tqvisualRect( TQRect( frameWidth(), frameWidth(), sidePixmap.width(),
+    return TQStyle::visualRect( TQRect( frameWidth(), frameWidth(), sidePixmap.width(),
                                       height() - 2*frameWidth() ), this );
 }
 
 void PanelKMenu::resizeEvent(TQResizeEvent * e)
 {
 //    kdDebug(1210) << "PanelKMenu::resizeEvent():" << endl;
-//    kdDebug(1210) << tqgeometry().width() << ", " << tqgeometry().height() << endl;
+//    kdDebug(1210) << geometry().width() << ", " << geometry().height() << endl;
 
     PanelServiceMenu::resizeEvent(e);
 
-    setFrameRect( TQStyle::tqvisualRect( TQRect( sidePixmap.width(), 0,
+    setFrameRect( TQStyle::visualRect( TQRect( sidePixmap.width(), 0,
                                       width() - sidePixmap.width(), height() ), this ) );
 }
 
 //Workaround Qt3.3.x sizing bug, by ensuring we're always wide enough.
 void PanelKMenu::resize(int width, int height)
 {
-    width = kMax(width, tqmaximumSize().width());
+    width = kMax(width, maximumSize().width());
     PanelServiceMenu::resize(width, height);
 }
 
-TQSize PanelKMenu::tqsizeHint() const
+TQSize PanelKMenu::sizeHint() const
 {
-    TQSize s = PanelServiceMenu::tqsizeHint();
-//    kdDebug(1210) << "PanelKMenu::tqsizeHint()" << endl;
+    TQSize s = PanelServiceMenu::sizeHint();
+//    kdDebug(1210) << "PanelKMenu::sizeHint()" << endl;
 //    kdDebug(1210) << s.width() << ", " << s.height() << endl;
     return s;
 }
@@ -621,7 +621,7 @@ void PanelKMenu::paintEvent(TQPaintEvent * e)
 
     style().drawPrimitive( TQStyle::PE_PanelPopup, &p,
                            TQRect( 0, 0, width(), height() ),
-                           tqcolorGroup(), TQStyle::Style_Default,
+                           colorGroup(), TQStyle::Style_Default,
                            TQStyleOption( frameWidth(), 0 ) );
 
     TQRect r = sideImageRect();
@@ -648,7 +648,7 @@ TQMouseEvent PanelKMenu::translateMouseEvent( TQMouseEvent* e )
 {
     TQRect side = sideImageRect();
 
-    if ( !side.tqcontains( e->pos() ) )
+    if ( !side.contains( e->pos() ) )
         return *e;
 
     TQPoint newpos( e->pos() );
@@ -700,7 +700,7 @@ void PanelKMenu::keyPressEvent(TQKeyEvent* e)
     // user presses '/'. This is the same shortcut as
     // konqueror is using, and afaik it's hardcoded both
     // here and there. This sucks badly for many non-us
-    // keyboard tqlayouts, but for the sake of consistency
+    // keyboard layouts, but for the sake of consistency
     // we follow konqueror.
     if (!searchEdit) return KPanelMenu::keyPressEvent(e);
 

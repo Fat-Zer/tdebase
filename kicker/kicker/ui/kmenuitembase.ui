@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KMenuItemBase</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -20,13 +20,13 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
-    <property name="tqminimumSize">
+    <property name="minimumSize">
         <size>
             <width>0</width>
             <height>0</height>
         </size>
     </property>
-    <property name="tqmaximumSize">
+    <property name="maximumSize">
         <size>
             <width>32767</width>
             <height>80</height>
@@ -44,7 +44,7 @@
         </property>
         <widget class="QLayoutWidget" row="0" column="1">
             <property name="name">
-                <cstring>tqlayout11</cstring>
+                <cstring>layout11</cstring>
             </property>
             <vbox>
                 <property name="name">
@@ -73,7 +73,7 @@
                     <property name="textFormat">
                         <enum>RichText</enum>
                     </property>
-                    <property name="tqalignment">
+                    <property name="alignment">
                         <set>WordBreak|AlignTop</set>
                     </property>
                 </widget>
@@ -102,7 +102,7 @@
                     <property name="textFormat">
                         <enum>RichText</enum>
                     </property>
-                    <property name="tqalignment">
+                    <property name="alignment">
                         <set>WordBreak|AlignTop</set>
                     </property>
                 </widget>
@@ -110,7 +110,7 @@
         </widget>
         <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
-                <cstring>tqlayout4</cstring>
+                <cstring>layout4</cstring>
             </property>
             <vbox>
                 <property name="name">
@@ -120,7 +120,7 @@
                     <property name="name">
                         <cstring>itemPixmap</cstring>
                     </property>
-                    <property name="tqminimumSize">
+                    <property name="minimumSize">
                         <size>
                             <width>64</width>
                             <height>64</height>
@@ -129,7 +129,7 @@
                     <property name="text">
                         <string></string>
                     </property>
-                    <property name="tqalignment">
+                    <property name="alignment">
                         <set>AlignTop|AlignHCenter</set>
                     </property>
                 </widget>
@@ -137,5 +137,5 @@
         </widget>
     </grid>
 </widget>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

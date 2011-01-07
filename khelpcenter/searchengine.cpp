@@ -325,16 +325,16 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
     if ( lang.lower() == "c" || lang.lower() == "posix" )
 	  lang = "en";
 
-    // if the string tqcontains '&' tqreplace with a '+' and set search method to and
+    // if the string contains '&' replace with a '+' and set search method to and
     if (mWords.find("&") != -1) {
-      mWords.tqreplace("&", " ");
+      mWords.replace("&", " ");
       method = "and";
     }
 
-    // tqreplace whitespace with a '+'
+    // replace whitespace with a '+'
     mWords = mWords.stripWhiteSpace();
     mWords = mWords.simplifyWhiteSpace();
-    mWords.tqreplace(TQRegExp("\\s"), "+");
+    mWords.replace(TQRegExp("\\s"), "+");
 
     commonSearchProgram = substituteSearchQuery( commonSearchProgram );
 
@@ -379,7 +379,7 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
     delete mProc;
 
     // modify the search result
-    mSearchResult = mSearchResult.tqreplace("http://localhost/", "file:/");
+    mSearchResult = mSearchResult.replace("http://localhost/", "file:/");
     mSearchResult = mSearchResult.mid( mSearchResult.find( '<' ) );
 
     mView->beginSearchResult();
@@ -395,11 +395,11 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
 TQString SearchEngine::substituteSearchQuery( const TQString &query )
 {
   TQString result = query;
-  result.tqreplace( "%k", mWords );
-  result.tqreplace( "%n", TQString::number( mMatches ) );
-  result.tqreplace( "%m", mMethod );
-  result.tqreplace( "%l", mLang );
-  result.tqreplace( "%s", mScope );
+  result.replace( "%k", mWords );
+  result.replace( "%n", TQString::number( mMatches ) );
+  result.replace( "%m", mMethod );
+  result.replace( "%l", mLang );
+  result.replace( "%s", mScope );
 
   return result;
 }
@@ -409,15 +409,15 @@ TQString SearchEngine::substituteSearchQuery( const TQString &query,
   Operation operation, const TQString &lang )
 {
   TQString result = query;
-  result.tqreplace( "%i", identifier );
-  result.tqreplace( "%w", words.join( "+" ) );
-  result.tqreplace( "%m", TQString::number( maxResults ) );
+  result.replace( "%i", identifier );
+  result.replace( "%w", words.join( "+" ) );
+  result.replace( "%m", TQString::number( maxResults ) );
   TQString o;
   if ( operation == Or ) o = "or";
   else o = "and";
-  result.tqreplace( "%o", o );
-  result.tqreplace( "%d", Prefs::indexDirectory() );
-  result.tqreplace( "%l", lang );
+  result.replace( "%o", o );
+  result.replace( "%d", Prefs::indexDirectory() );
+  result.replace( "%l", lang );
 
   return result;
 }

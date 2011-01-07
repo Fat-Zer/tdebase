@@ -134,7 +134,7 @@ void KOSPage::saveCheckState(bool currSettings){
 }
 
 
-	/** write the settings for KDE-Behavior (called by saveChecktqStatus) */
+	/** write the settings for KDE-Behavior (called by saveCheckStatus) */
 void KOSPage::writeKDE(){
 	kdDebug() << "KOSPage::writeKDE()" << endl;
 
@@ -175,7 +175,7 @@ void KOSPage::writeKDE(){
 }
 
 
-	/** write the settings for fvwm-like-behavior (called by saveChecktqStatus) */
+	/** write the settings for fvwm-like-behavior (called by saveCheckStatus) */
 void KOSPage::writeUNIX(){
 	kdDebug() << "KOSPage::writeUNIX()" << endl;
 
@@ -216,7 +216,7 @@ void KOSPage::writeUNIX(){
 }
 
 
-	/** write the settings for windows-like-behavior (called by saveChecktqStatus) */
+	/** write the settings for windows-like-behavior (called by saveCheckStatus) */
 void KOSPage::writeWindows(){
 	kdDebug() << "KOSPage::writeWindows()" << endl;
 
@@ -263,7 +263,7 @@ void KOSPage::writeWindows(){
 }
 
 
-	/** write the settings for MacOS-like-behavior (called by saveChecktqStatus) */
+	/** write the settings for MacOS-like-behavior (called by saveCheckStatus) */
 void KOSPage::writeMacOS(){
 	kdDebug() << "KOSPage::writeMacOS()" << endl;
 

@@ -438,11 +438,11 @@ void QuickLauncher::addApp(TQString url, int index, bool manuallyAdded)
         }
     }
 
-    updateInsertionPosTotqStatusQuo();
+    updateInsertionPosToStatusQuo();
     saveConfig();
 }
 
-void QuickLauncher::updateInsertionPosTotqStatusQuo()
+void QuickLauncher::updateInsertionPosToStatusQuo()
 {
     // Update the app ordering map, so that next time, 
     // addApp(url,manAdded) (without index) will insert the 
@@ -633,7 +633,7 @@ void QuickLauncher::dropEvent(TQDropEvent *e)
     clearTempButtons();
     refreshContents();
     saveConfig();
-    updateInsertionPosTotqStatusQuo();
+    updateInsertionPosToStatusQuo();
 }
 
 // insert dragbuttons at index in m_newButtons.  Put result in m_buttons
@@ -828,7 +828,7 @@ void QuickLauncher::loadConfig()
     for (n=0; n<int(m_buttons->size()); ++n)
     {
         QuickButton* button = (*m_buttons)[n];
-        if (volatileButtons.tqcontains(button->menuId()) == false)
+        if (volatileButtons.contains(button->menuId()) == false)
         {
             button->setSticky(true);
         }
@@ -912,7 +912,7 @@ void QuickLauncher::serviceStartedByStorageId(TQString /*starter*/, TQString sto
     QuickURL url = QuickURL(locate("apps", service->desktopEntryPath()));
     TQString desktopMenuId(url.menuId());
     kdDebug() << "storageId=" << storageId << " desktopURL=" << desktopMenuId << endl;
-    // A service was started somwhere else. If the quicklauncher tqcontains
+    // A service was started somwhere else. If the quicklauncher contains
     // this service too, we flash the icon
     QuickButton *startedButton = 0;
     std::set<TQString> buttonIdSet;
@@ -1040,19 +1040,19 @@ void QuickLauncher::updateStickyHighlightLayer()
     m_stickyHighlightLayer = TQImage(width(), height(), 32);
     m_stickyHighlightLayer.setAlphaBuffer(true);
     int pix, tlPix, brPix, w(width()), h(height());
-    QRgb transparent(tqRgba(0, 0, 0, 0));
+    QRgb transparent(qRgba(0, 0, 0, 0));
     for (int y = h-1; y >= 0; --y)
     {
         for (int x = w-1; x >= 0; --x)
         {
-            pix = tqRed(areaLayer.pixel(x, y));
+            pix = qRed(areaLayer.pixel(x, y));
             if (pix == 0)
             {
-                tlPix = (y>0 && x>0) ? tqRed(areaLayer.pixel(x-1,y-1)) : 255;
-                brPix = (y<h-1 && x<w-1) ? tqRed(areaLayer.pixel(x+1,y+1)) : 255;
+                tlPix = (y>0 && x>0) ? qRed(areaLayer.pixel(x-1,y-1)) : 255;
+                brPix = (y<h-1 && x<w-1) ? qRed(areaLayer.pixel(x+1,y+1)) : 255;
                 int c = tlPix-brPix < 0 ? 255 : 0;
                 int alpha = abs(tlPix-brPix)/2;
-                m_stickyHighlightLayer.setPixel(x, y, tqRgba(c, c, c, alpha));
+                m_stickyHighlightLayer.setPixel(x, y, qRgba(c, c, c, alpha));
             }
             else 
             {
@@ -1060,7 +1060,7 @@ void QuickLauncher::updateStickyHighlightLayer()
             }
         }
     }
-    tqrepaint();
+    repaint();
 }
 
 void QuickLauncher::paintEvent(TQPaintEvent* e)

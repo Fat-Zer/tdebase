@@ -88,11 +88,11 @@ The desktop file is called "kcm_fonts" with "Name=Fonts" and "Categories=X-KDE-s
 
 // Not sure where these next three are is this OLD and from KDE2 and has already been done?
 
-* Remove "Internet & Network/Email". It is tqreplaced by the new kcm_useraccount
+* Remove "Internet & Network/Email". It is replaced by the new kcm_useraccount
 
-* Remove "System Administration/User Info". It is tqreplaced by the new kcm_useraccount
+* Remove "System Administration/User Info". It is replaced by the new kcm_useraccount
 
-* Remove "Privacy & Crypto/Passwords". It is tqreplaced by the new kcm_useraccount. Probably. (awaiting comment from Aaron)
+* Remove "Privacy & Crypto/Passwords". It is replaced by the new kcm_useraccount. Probably. (awaiting comment from Aaron)
 
 * Tell Konqi to go burn the 11 tabs of keyboard options(5 KCMs). Because it is.. bizarre. Two KCMs with two tabs each is absolute maximum. One KCM with three tabs is quite ok too.
 
@@ -151,9 +151,9 @@ The current dialog should appear as an advanced tab behind the "Theme"-tab.
 Network -> Talk Configuration
 -----------------------------
 Answering Machine: A groupbox around "Address:, Subject:, First Line:" would be nice. That way one wouldn't need to mention "Mail" each time. The Groupbox could be named something like "Anwering Mail".
-That way one would have a much cleaner tqlayout and it would be much easier to see at once what the dialog is about.
+That way one would have a much cleaner layout and it would be much easier to see at once what the dialog is about.
 Forward: Way too much text here. I see the point of having a direct explanation in the dialog. But this could look much friendlier using the following solution:
-There should be a Textbox below the "Forward method"-Combobox. This Textbox only tqcontains the information for the Forward-method which is currently selected (So the text changes each time a different Forward-method is selected).
+There should be a Textbox below the "Forward method"-Combobox. This Textbox only contains the information for the Forward-method which is currently selected (So the text changes each time a different Forward-method is selected).
 
 Sound -> Sound Server
 ---------------------
@@ -164,5 +164,5 @@ Web Browsing -> User Agent
 The Dialog suffers from the cockpit-dilemma.
 All the new "Add"-checkboxes are only there for finetuning. Most of the time the useragent-strings should work
 w/o the need to tune them this way. Better Solution: Remove the Customize-Group-box and simply add a Button "Customize ..." below the Text: "Current User Agent String: Mozilla/5.0 (comp.; Konq.orwhateveritis)".
-After pressing the "Customize"-Button a dialog should pop up which tqcontains all the nice
+After pressing the "Customize"-Button a dialog should pop up which contains all the nice
 "Add"-checkboxes which have been added recently.

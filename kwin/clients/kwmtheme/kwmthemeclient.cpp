@@ -46,9 +46,9 @@ namespace KWMTheme {
   p.drawTiledPixmap(0, 0, w2, h2, src);
   p.end();
 
-  srcMask = (TQBitmap*)src.tqmask();
+  srcMask = (TQBitmap*)src.mask();
   if (srcMask){
-    destMask = (TQBitmap*)dest.tqmask();
+    destMask = (TQBitmap*)dest.mask();
     p.begin(destMask);
     p.drawTiledPixmap(0, 0, w2, h2, *srcMask);
     p.end();
@@ -231,7 +231,7 @@ void MyButton::drawButtonLabel(TQPainter *p)
 	int offset = (isDown() && ((pixmap()->width() >= width()) || 
                          (pixmap()->height() >= height()))) ? 1 : 0;
         style().drawItem(p, TQRect( offset, offset, width(), height() ), 
-                         AlignCenter, tqcolorGroup(),
+                         AlignCenter, colorGroup(),
                          true, pixmap(), TQString::null);
     }
 }
@@ -247,28 +247,28 @@ void KWMThemeClient::init()
     widget()->installEventFilter( this );
 
     stickyBtn = maxBtn = mnuBtn = 0;
-    tqlayout = new TQGridLayout(widget());
-    tqlayout->addColSpacing(0, maxExtent);
-    tqlayout->addColSpacing(2, maxExtent);
+    layout = new TQGridLayout(widget());
+    layout->addColSpacing(0, maxExtent);
+    layout->addColSpacing(2, maxExtent);
 
-    tqlayout->addRowSpacing(0, maxExtent);
+    layout->addRowSpacing(0, maxExtent);
 
-    tqlayout->addItem(new TQSpacerItem(1, 1, TQSizePolicy::Fixed,
+    layout->addItem(new TQSpacerItem(1, 1, TQSizePolicy::Fixed,
                                     TQSizePolicy::Expanding));
 
     if( isPreview())
-        tqlayout->addWidget( new TQLabel( i18n( "<center><b>KWMTheme</b></center>" ), widget()), 2, 1);
+        layout->addWidget( new TQLabel( i18n( "<center><b>KWMTheme</b></center>" ), widget()), 2, 1);
     else
-        tqlayout->addItem( new TQSpacerItem( 0, 0 ), 2, 1);
+        layout->addItem( new TQSpacerItem( 0, 0 ), 2, 1);
 
     // Without the next line, shading flickers
-    tqlayout->addItem( new TQSpacerItem(0, 0, TQSizePolicy::Fixed, TQSizePolicy::Expanding) );
-    tqlayout->addRowSpacing(3, maxExtent);
-    tqlayout->setRowStretch(2, 10);
-    tqlayout->setColStretch(1, 10);
+    layout->addItem( new TQSpacerItem(0, 0, TQSizePolicy::Fixed, TQSizePolicy::Expanding) );
+    layout->addRowSpacing(3, maxExtent);
+    layout->setRowStretch(2, 10);
+    layout->setColStretch(1, 10);
     
     TQBoxLayout* hb = new TQBoxLayout(0, TQBoxLayout::LeftToRight, 0, 0, 0);
-    tqlayout->addLayout( hb, 1, 1 );
+    layout->addLayout( hb, 1, 1 );
 
     KConfig *config = KGlobal::config();
     config->setGroup("Buttons");
@@ -352,7 +352,7 @@ void KWMThemeClient::init()
 
 void KWMThemeClient::drawTitle(TQPainter &dest)
 {
-    TQRect titleRect = titlebar->tqgeometry();
+    TQRect titleRect = titlebar->geometry();
     TQRect r(0, 0, titleRect.width(), titleRect.height());
     TQPixmap buffer;
 
@@ -364,7 +364,7 @@ void KWMThemeClient::drawTitle(TQPainter &dest)
     p.begin(&buffer);
 
     if(titleSunken){
-        qDrawShadeRect(&p, r, options()->tqcolorGroup(KDecorationOptions::ColorFrame, isActive()),
+        qDrawShadeRect(&p, r, options()->colorGroup(KDecorationOptions::ColorFrame, isActive()),
                        true, 1, 0);
         r.setRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2);
     }
@@ -384,7 +384,7 @@ void KWMThemeClient::drawTitle(TQPainter &dest)
         p.drawTiledPixmap(r, *fill);
     }
     else{
-        p.fillRect(r, options()->tqcolorGroup(KDecorationOptions::ColorTitleBar, isActive()).
+        p.fillRect(r, options()->colorGroup(KDecorationOptions::ColorTitleBar, isActive()).
                    brush(TQColorGroup::Button));
     }
     p.setFont(options()->font(isActive()));
@@ -402,12 +402,12 @@ void KWMThemeClient::drawTitle(TQPainter &dest)
 void KWMThemeClient::resizeEvent( TQResizeEvent* )
 {
     doShape();
-    widget()->tqrepaint();
+    widget()->repaint();
 }
 
 void KWMThemeClient::captionChange()
 {
-    widget()->tqrepaint( titlebar->tqgeometry(), false );
+    widget()->repaint( titlebar->geometry(), false );
 }
 
 void KWMThemeClient::paintEvent( TQPaintEvent *)
@@ -557,7 +557,7 @@ void KWMThemeClient::paintEvent( TQPaintEvent *)
     }
     drawTitle(p);
 
-    TQColor c = widget()->tqcolorGroup().background();
+    TQColor c = widget()->colorGroup().background();
 
     // KWM evidently had a 1 pixel border around the client window. We
     // emulate it here, but should be removed at some point in order to
@@ -568,7 +568,7 @@ void KWMThemeClient::paintEvent( TQPaintEvent *)
 
     // We fill the area behind the wrapped widget to ensure that
     // shading animation is drawn as smoothly as possible
-    TQRect r(tqlayout->cellGeometry(2, 1));
+    TQRect r(layout->cellGeometry(2, 1));
     p.fillRect( r.x(), r.y(), r.width(), r.height(), c);
     p.end();
 }
@@ -576,10 +576,10 @@ void KWMThemeClient::paintEvent( TQPaintEvent *)
 void KWMThemeClient::doShape()
 {
 
-    TQBitmap tqshapetqmask(width(), height());
-    tqshapetqmask.fill(color0);
+    TQBitmap shapemask(width(), height());
+    shapemask.fill(color0);
     TQPainter p;
-    p.begin(&tqshapetqmask);
+    p.begin(&shapemask);
     p.setBrush(color1);
     p.setPen(color1);
     int x,y;
@@ -588,8 +588,8 @@ void KWMThemeClient::doShape()
     int h1 = framePixmaps[FrameTopLeft]->height();
     if (w1 > width()/2) w1 = width()/2;
     if (h1 > height()/2) h1 = height()/2;
-    if (framePixmaps[FrameTopLeft]->tqmask())
-        p.drawPixmap(0,0,*framePixmaps[FrameTopLeft]->tqmask(),
+    if (framePixmaps[FrameTopLeft]->mask())
+        p.drawPixmap(0,0,*framePixmaps[FrameTopLeft]->mask(),
 		     0,0,w1, h1);
     else
         p.fillRect(0,0,w1,h1,color1);
@@ -597,8 +597,8 @@ void KWMThemeClient::doShape()
     int h2 = framePixmaps[FrameTopRight]->height();
     if (w2 > width()/2) w2 = width()/2;
     if (h2 > height()/2) h2 = height()/2;
-    if (framePixmaps[FrameTopRight]->tqmask())
-        p.drawPixmap(width()-w2,0,*framePixmaps[FrameTopRight]->tqmask(),
+    if (framePixmaps[FrameTopRight]->mask())
+        p.drawPixmap(width()-w2,0,*framePixmaps[FrameTopRight]->mask(),
 		     framePixmaps[FrameTopRight]->width()-w2,0,w2, h2);
     else
         p.fillRect(width()-w2,0,w2, h2,color1);
@@ -607,8 +607,8 @@ void KWMThemeClient::doShape()
     int h3 = framePixmaps[FrameBottomLeft]->height();
     if (w3 > width()/2) w3 = width()/2;
     if (h3 > height()/2) h3 = height()/2;
-    if (framePixmaps[FrameBottomLeft]->tqmask())
-        p.drawPixmap(0,height()-h3,*framePixmaps[FrameBottomLeft]->tqmask(),
+    if (framePixmaps[FrameBottomLeft]->mask())
+        p.drawPixmap(0,height()-h3,*framePixmaps[FrameBottomLeft]->mask(),
 		     0,framePixmaps[FrameBottomLeft]->height()-h3,w3, h3);
     else
         p.fillRect(0,height()-h3,w3,h3,color1);
@@ -617,8 +617,8 @@ void KWMThemeClient::doShape()
     int h4 = framePixmaps[FrameBottomRight]->height();
     if (w4 > width()/2) w4 = width()/2;
     if (h4 > height()/2) h4 = height()/2;
-    if (framePixmaps[FrameBottomRight]->tqmask())
-        p.drawPixmap(width()-w4,height()-h4,*framePixmaps[FrameBottomRight]->tqmask(),
+    if (framePixmaps[FrameBottomRight]->mask())
+        p.drawPixmap(width()-w4,height()-h4,*framePixmaps[FrameBottomRight]->mask(),
 		     framePixmaps[FrameBottomRight]->width()-w4,
 		     framePixmaps[FrameBottomRight]->height()-h4,
 		     w4, h4);
@@ -629,9 +629,9 @@ void KWMThemeClient::doShape()
     TQWMatrix m;
     int n,s,w;
     //top
-    if (framePixmaps[FrameTop]->tqmask())
+    if (framePixmaps[FrameTop]->mask())
     {
-        pm = *framePixmaps[FrameTop]->tqmask();
+        pm = *framePixmaps[FrameTop]->mask();
 
         s = width()-w2-w1;
         n = s/pm.width();
@@ -657,9 +657,9 @@ void KWMThemeClient::doShape()
     }
 
     //bottom
-    if (framePixmaps[FrameBottom]->tqmask())
+    if (framePixmaps[FrameBottom]->mask())
     {
-        pm = *framePixmaps[FrameBottom]->tqmask();
+        pm = *framePixmaps[FrameBottom]->mask();
 
         s = width()-w4-w3;
         n = s/pm.width();
@@ -683,9 +683,9 @@ void KWMThemeClient::doShape()
     }
 
     //left
-    if (framePixmaps[FrameLeft]->tqmask())
+    if (framePixmaps[FrameLeft]->mask())
     {
-        pm = *framePixmaps[FrameLeft]->tqmask();
+        pm = *framePixmaps[FrameLeft]->mask();
 
         s = height()-h3-h1;
         n = s/pm.height();
@@ -712,9 +712,9 @@ void KWMThemeClient::doShape()
     }
 
     //right
-    if (framePixmaps[FrameRight]->tqmask())
+    if (framePixmaps[FrameRight]->mask())
     {
-        pm = *framePixmaps[FrameRight]->tqmask();
+        pm = *framePixmaps[FrameRight]->mask();
 
         s = height()-h4-h2;
         n = s/pm.height();
@@ -740,19 +740,19 @@ void KWMThemeClient::doShape()
         }
     }
     p.fillRect(maxExtent-1, maxExtent-1, width()-2*maxExtent+2, height()-2*maxExtent+2, color1);
-    setMask(tqshapetqmask);
+    setMask(shapemask);
 }
 
 
 void KWMThemeClient::showEvent(TQShowEvent *)
 {
     doShape();
-    widget()->tqrepaint(false);
+    widget()->repaint(false);
 }
 
 void KWMThemeClient::mouseDoubleClickEvent( TQMouseEvent * e )
 {
-    if (e->button() == LeftButton && titlebar->tqgeometry().tqcontains( e->pos() ) )
+    if (e->button() == LeftButton && titlebar->geometry().contains( e->pos() ) )
         titlebarDblClickOperation();
 }
 
@@ -868,9 +868,9 @@ bool KWMThemeClient::eventFilter( TQObject* o, TQEvent* e )
 	}
 }
 
-TQSize KWMThemeClient::tqminimumSize() const
+TQSize KWMThemeClient::minimumSize() const
 {
-    return widget()->tqminimumSize().expandedTo( TQSize( 100, 50 ));
+    return widget()->minimumSize().expandedTo( TQSize( 100, 50 ));
 }
 
 void KWMThemeClient::resize( const TQSize& s )
@@ -903,23 +903,23 @@ KDecoration* KWMThemeFactory::createDecoration( KDecorationBridge* b )
     return new KWMThemeClient( b, this );
 }
 
-bool KWMThemeFactory::reset( unsigned long tqmask )
+bool KWMThemeFactory::reset( unsigned long mask )
 {
     bool needHardReset = false;
 
 TODO
 
     // doesn't obey the Border size setting
-    if( tqmask & ( SettingFont | SettingButtons ))
+    if( mask & ( SettingFont | SettingButtons ))
         needHardReset = true;
 
-    if( tqmask & ( SettingFont | SettingColors )) {
+    if( mask & ( SettingFont | SettingColors )) {
         KWMTheme::delete_pixmaps();
         KWMTheme::create_pixmaps();
     }
     
     if( !needHardReset )
-        resetDecorations( tqmask );
+        resetDecorations( mask );
     return needHardReset;
 }
 

@@ -39,8 +39,8 @@ AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog"
     TQLabel *greetLabel = new TQLabel(i18n("<nobr><qt><b>Automatic Log Out</b></qt><nobr>"), frame);
     TQLabel *infoLabel = new TQLabel(i18n("<qt>To prevent being logged out, resume using this session by moving the mouse or pressing a key.</qt>"), frame);
 
-    mtqStatusLabel = new TQLabel("<b> </b>", frame);
-    mtqStatusLabel->tqsetAlignment(TQLabel::AlignCenter);
+    mStatusLabel = new TQLabel("<b> </b>", frame);
+    mStatusLabel->setAlignment(TQLabel::AlignCenter);
 
     TQLabel *mProgressLabel = new TQLabel("Time Remaining:", frame);
     mProgressRemaining = new TQProgressBar(frame);
@@ -52,7 +52,7 @@ AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog"
     frameLayout = new TQGridLayout(frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint());
     frameLayout->addMultiCellWidget(pixLabel, 0, 2, 0, 0, Qt::AlignCenter | Qt::AlignTop);
     frameLayout->addWidget(greetLabel, 0, 1);
-    frameLayout->addWidget(mtqStatusLabel, 1, 1);
+    frameLayout->addWidget(mStatusLabel, 1, 1);
     frameLayout->addWidget(infoLabel, 2, 1);
     frameLayout->addWidget(mProgressLabel, 3, 1);
     frameLayout->addWidget(mProgressRemaining, 4, 1);
@@ -66,7 +66,7 @@ AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog"
 
     mCountdownTimerId = startTimer(1000/25);
 
-    connect(tqApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()));
+    connect(qApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()));
 }
 
 AutoLogout::~AutoLogout()
@@ -76,7 +76,7 @@ AutoLogout::~AutoLogout()
 
 void AutoLogout::updateInfo(int timeout)
 {
-    mtqStatusLabel->setText(i18n("<nobr><qt>You will be automatically logged out in 1 second</qt></nobr>",
+    mStatusLabel->setText(i18n("<nobr><qt>You will be automatically logged out in 1 second</qt></nobr>",
                                "<nobr><qt>You will be automatically logged out in %n seconds</qt></nobr>",
                                timeout / 25) );
     mProgressRemaining->setProgress(timeout);

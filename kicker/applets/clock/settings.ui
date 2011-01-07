@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>SettingsWidget</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -36,7 +36,7 @@
                     </property>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>tqlayout14</cstring>
+                            <cstring>layout14</cstring>
                         </property>
                         <hbox>
                             <property name="name">
@@ -102,7 +102,7 @@
                                 <property name="sizeType">
                                     <enum>Expanding</enum>
                                 </property>
-                                <property name="tqsizeHint">
+                                <property name="sizeHint">
                                     <size>
                                         <width>20</width>
                                         <height>20</height>
@@ -188,7 +188,7 @@
                                             <property name="sizeType">
                                                 <enum>Expanding</enum>
                                             </property>
-                                            <property name="tqsizeHint">
+                                            <property name="sizeHint">
                                                 <size>
                                                     <width>20</width>
                                                     <height>20</height>
@@ -284,7 +284,7 @@
                                             <property name="sizeType">
                                                 <enum>Expanding</enum>
                                             </property>
-                                            <property name="tqsizeHint">
+                                            <property name="sizeHint">
                                                 <size>
                                                     <width>230</width>
                                                     <height>20</height>
@@ -306,7 +306,7 @@
                                             <property name="sizeType">
                                                 <enum>Expanding</enum>
                                             </property>
-                                            <property name="tqsizeHint">
+                                            <property name="sizeHint">
                                                 <size>
                                                     <width>20</width>
                                                     <height>20</height>
@@ -371,7 +371,7 @@
                                 <property name="sizeType">
                                     <enum>Expanding</enum>
                                 </property>
-                                <property name="tqsizeHint">
+                                <property name="sizeHint">
                                     <size>
                                         <width>343</width>
                                         <height>20</height>
@@ -380,7 +380,7 @@
                             </spacer>
                             <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="3">
                                 <property name="name">
-                                    <cstring>tqlayout2</cstring>
+                                    <cstring>layout2</cstring>
                                 </property>
                                 <hbox>
                                     <property name="name">
@@ -421,7 +421,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="tqsizeHint">
+                        <property name="sizeHint">
                             <size>
                                 <width>20</width>
                                 <height>100</height>
@@ -501,8 +501,8 @@
 <slots>
     <slot>configureType()</slot>
 </slots>
-<tqlayoutdefaults spacing="3" margin="6"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>

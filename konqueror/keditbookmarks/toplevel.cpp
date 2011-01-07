@@ -82,7 +82,7 @@ void CmdHistory::slotCommandExecuted(KCommand *k) {
     CurrentMgr::self()->notifyManagers(bk.toGroup());
 
     // sets currentItem to something sensible
-    // if the currentItem was tqinvalidated by executing
+    // if the currentItem was invalidated by executing
     // CreateCommand or DeleteManyCommand
     // otherwise does nothing
     // sensible is either a already selected item or cmd->currentAddress()
@@ -122,7 +122,7 @@ void CmdHistory::clearHistory() {
 CurrentMgr *CurrentMgr::s_mgr = 0;
 
 KBookmark CurrentMgr::bookmarkAt(const TQString &a) {
-    return self()->mgr()->tqfindByAddress(a);
+    return self()->mgr()->findByAddress(a);
 }
 
 bool CurrentMgr::managerSave() { return mgr()->save(); }
@@ -184,7 +184,7 @@ TQString CurrentMgr::makeTimeStr(int b)
 {
     TQDateTime dt;
     dt.setTime_t(b);
-    return (dt.daysTo(TQDateTime::tqcurrentDateTime()) > 31)
+    return (dt.daysTo(TQDateTime::currentDateTime()) > 31)
         ? KGlobal::locale()->formatDate(dt.date(), false)
         : KGlobal::locale()->formatDateTime(dt, false);
 }
@@ -233,11 +233,11 @@ KEBApp::KEBApp(
 
     vsplitter->setOrientation(TQSplitter::Vertical);
     vsplitter->setSizes(TQValueList<int>() << h << 380
-                                          << m_bkinfo->tqsizeHint().height() );
+                                          << m_bkinfo->sizeHint().height() );
 
     setCentralWidget(vsplitter);
-    resize(ListView::self()->widget()->tqsizeHint().width(),
-           vsplitter->tqsizeHint().height());
+    resize(ListView::self()->widget()->sizeHint().width(),
+           vsplitter->sizeHint().height());
 
     createActions();
     if (m_browser)
@@ -276,10 +276,10 @@ void KEBApp::construct() {
     setAutoSaveSettings();
 }
 
-void KEBApp::updatetqStatus(TQString url)
+void KEBApp::updateStatus(TQString url)
 {
     if(m_bkinfo->bookmark().url() == url)
-        m_bkinfo->updatetqStatus();
+        m_bkinfo->updateStatus();
 }
 
 KEBApp::~KEBApp() {

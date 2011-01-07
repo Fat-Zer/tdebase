@@ -121,7 +121,7 @@ private:
 
     TQButtonGroup *m_group;
 
-    TQGridLayout *m_tqlayout;
+    TQGridLayout *m_layout;
     bool m_useViewports;
     int desktopLayoutOrientation;
     int desktopLayoutX;

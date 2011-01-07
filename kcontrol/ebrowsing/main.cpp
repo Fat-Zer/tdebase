@@ -56,7 +56,7 @@ KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQS
       " Even easier: just press Alt+F2 (if you have not"
       " changed this shortcut) and enter the shortcut in the KDE Run Command dialog."));
 
-    TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(this);
 
 #if 0
     opts = new FilterOptions(this);
@@ -95,10 +95,10 @@ KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQS
     else if (modules.count() == 1)
     {
         widget = modules.first();
-        tqlayout->setMargin(-KDialog::marginHint());
+        layout->setMargin(-KDialog::marginHint());
     }
 
-    tqlayout->addWidget(widget);
+    layout->addWidget(widget);
 }
 
 void KURIFilterModule::load()

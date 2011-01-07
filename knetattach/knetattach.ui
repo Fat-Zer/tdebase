@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KNetAttach</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -96,7 +96,7 @@
                                 <verstretch>0</verstretch>
                             </sizepolicy>
                         </property>
-                        <property name="tqminimumSize">
+                        <property name="minimumSize">
                             <size>
                                 <width>250</width>
                                 <height>0</height>
@@ -131,7 +131,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>31</width>
                         <height>16</height>
@@ -145,7 +145,7 @@
                 <property name="text">
                     <string>Select the type of network folder you wish to connect to and press the Next button.</string>
                 </property>
-                <property name="tqalignment">
+                <property name="alignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -159,7 +159,7 @@
                 <property name="sizeType">
                     <enum>Fixed</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>20</width>
                         <height>21</height>
@@ -186,7 +186,7 @@
                 <property name="text">
                     <string>Enter a name for this &lt;i&gt;%1&lt;/i&gt; as well as the server address, port and folder path to use and press the Next button.</string>
                 </property>
-                <property name="tqalignment">
+                <property name="alignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -200,7 +200,7 @@
                 <property name="sizeType">
                     <enum>Fixed</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>20</width>
                         <height>21</height>
@@ -327,7 +327,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>560</width>
                         <height>16</height>
@@ -367,19 +367,19 @@
         <sender>_user</sender>
         <signal>textChanged(const QString&amp;)</signal>
         <receiver>KNetAttach</receiver>
-        <slot>updateParametersPagetqStatus()</slot>
+        <slot>updateParametersPageStatus()</slot>
     </connection>
     <connection>
         <sender>_host</sender>
         <signal>textChanged(const QString&amp;)</signal>
         <receiver>KNetAttach</receiver>
-        <slot>updateParametersPagetqStatus()</slot>
+        <slot>updateParametersPageStatus()</slot>
     </connection>
     <connection>
         <sender>_path</sender>
         <signal>textChanged(const QString&amp;)</signal>
         <receiver>KNetAttach</receiver>
-        <slot>updateParametersPagetqStatus()</slot>
+        <slot>updateParametersPageStatus()</slot>
     </connection>
     <connection>
         <sender>_useEncryption</sender>
@@ -427,7 +427,7 @@
     <slot access="private">init()</slot>
     <slot>setInformationText( const QString &amp; type )</slot>
     <slot access="private">showPage( QWidget * page )</slot>
-    <slot access="private">updateParametersPagetqStatus()</slot>
+    <slot access="private">updateParametersPageStatus()</slot>
     <slot access="private">finished()</slot>
     <slot access="private">updatePort( bool encryption )</slot>
     <slot access="private">updateFinishButtonText( bool save )</slot>
@@ -436,5 +436,5 @@
     <function access="private" returnType="bool">doConnectionTest( const KURL &amp; url )</function>
     <function access="private" returnType="bool">updateForProtocol( const QString &amp; protocol )</function>
 </functions>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

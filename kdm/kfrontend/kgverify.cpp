@@ -49,7 +49,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <X11/Xlib.h> // for updateLocktqStatus()
+#include <X11/Xlib.h> // for updateLockStatus()
 #include <fixx11h.h> // ... and make eventFilter() work again
 
 #define FULL_GREET_TO 40 // normal inactivity timeout
@@ -62,7 +62,7 @@ void KGVerifyHandler::verifyClear()
 {
 }
 
-void KGVerifyHandler::updatetqStatus( bool, bool, int )
+void KGVerifyHandler::updateStatus( bool, bool, int )
 {
 }
 
@@ -150,7 +150,7 @@ KGVerify::pluginName() const
 	TQString name( greetPlugins[pluginList[curPlugin]].library->fileName() );
 	uint st = name.findRev( '/' ) + 1;
 	uint en = name.find( '.', st );
-	if (en - st > 7 && TQConstString( name.tqunicode() + st, 7 ).string() == "kgreet_")
+	if (en - st > 7 && TQConstString( name.unicode() + st, 7 ).string() == "kgreet_")
 		st += 7;
 	return name.mid( st, en - st );
 }
@@ -163,7 +163,7 @@ showWidgets( TQLayoutItem *li )
 
 	if ((w = li->widget()))
 		w->show();
-	else if ((l = li->tqlayout())) {
+	else if ((l = li->layout())) {
 		TQLayoutIterator it = l->iterator();
 		for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 			 showWidgets( itm );
@@ -233,7 +233,7 @@ KGVerify::scheduleAutoLogin( bool initial )
 			timedLeft = QMAX( _autoLoginDelay - TIMED_GREET_TO, MIN_TIMED_TO );
 			deadTicks = DEAD_TIMED_TO;
 		}
-		updatetqStatus();
+		updateStatus();
 		running = false;
 		isClear = true;
 		return true;
@@ -310,7 +310,7 @@ KGVerify::suspend()
 		greet->abort();
 	}
 	suspended = true;
-	updatetqStatus();
+	updateStatus();
 	timer.suspend();
 }
 
@@ -319,7 +319,7 @@ KGVerify::resume()
 {
 	timer.resume();
 	suspended = false;
-	updateLocktqStatus();
+	updateLockStatus();
 	if (running) {
 		Debug( "%s->start()\n", pName.data() );
 		greet->start();
@@ -373,7 +373,7 @@ KGVerify::setEnabled( bool on )
 	Debug( "%s->setEnabled(%s)\n", pName.data(), on ? "true" : "false" );
 	greet->setEnabled( on );
 	enabled = on;
-	updatetqStatus();
+	updateStatus();
 }
 
 void // private
@@ -381,7 +381,7 @@ KGVerify::slotTimeout()
 {
 	if (failed) {
 		failed = false;
-		updatetqStatus();
+		updateStatus();
 		Debug( "%s->revive()\n", pName.data() );
 		greet->revive();
 		handler->verifyRetry();
@@ -402,7 +402,7 @@ KGVerify::slotTimeout()
 			performAutoLogin();
 		else
 			timer.start( 1000 );
-		updatetqStatus();
+		updateStatus();
 	} else {
 		// assert( ctx == Login );
 		isClear = true;
@@ -420,7 +420,7 @@ KGVerify::slotActivity()
 		greet->start();
 		running = true;
 		timedLeft = 0;
-		updatetqStatus();
+		updateStatus();
 		timer.start( TIMED_GREET_TO * SECONDS );
 	} else if (timeable)
 		timer.start( TIMED_GREET_TO * SECONDS );
@@ -709,7 +709,7 @@ KGVerify::handleVerify()
 		if (ret == V_AUTH) {
 			Debug( " V_AUTH\n" );
 			failed = true;
-			updatetqStatus();
+			updateStatus();
 			handler->verifyFailed();
 			timer.start( 1500 + kapp->random()/(RAND_MAX/1000) );
 			return;
@@ -733,7 +733,7 @@ void
 KGVerify::gplugReturnText( const char *text, int tag )
 {
 	Debug( "%s: gplugReturnText(%\"s, %d)\n", pName.data(),
-	       tag & V_IS_SECRET ? "<tqmasked>" : text, tag );
+	       tag & V_IS_SECRET ? "<masked>" : text, tag );
 	GSendStr( text );
 	if (text) {
 		GSendInt( tag );
@@ -813,7 +813,7 @@ KGVerify::eventFilter( TQObject *o, TQEvent *e )
 		}
 		/* fall through */
 	case TQEvent::KeyRelease:
-		updateLocktqStatus();
+		updateLockStatus();
 		/* fall through */
 	default:
 		break;
@@ -822,16 +822,16 @@ KGVerify::eventFilter( TQObject *o, TQEvent *e )
 }
 
 void
-KGVerify::updateLocktqStatus()
+KGVerify::updateLockStatus()
 {
-	unsigned int ltqmask;
+	unsigned int lmask;
 	Window dummy1, dummy2;
 	int dummy3, dummy4, dummy5, dummy6;
 	XQueryPointer( qt_xdisplay(), DefaultRootWindow( qt_xdisplay() ),
 	               &dummy1, &dummy2, &dummy3, &dummy4, &dummy5, &dummy6,
-	               &ltqmask );
-	capsLocked = ltqmask & LockMask;
-	updatetqStatus();
+	               &lmask );
+	capsLocked = lmask & LockMask;
+	updateStatus();
 }
 
 void
@@ -849,7 +849,7 @@ KGVerify::getConf( void *, const char *key, const TQVariant &dflt )
 	if (!qstrcmp( key, "EchoMode" ))
 		return TQVariant( _echoMode );
 	else {
-		TQString fkey = TQString::tqfromLatin1( key ) + '=';
+		TQString fkey = TQString::fromLatin1( key ) + '=';
 		for (TQStringList::ConstIterator it = _pluginOptions.begin();
 		     it != _pluginOptions.end(); ++it)
 			if ((*it).startsWith( fkey ))
@@ -923,13 +923,13 @@ KGStdVerify::KGStdVerify( KGVerifyHandler *_handler, TQWidget *_parent,
 	, failedLabelState( 0 )
 {
 	grid = new TQGridLayout;
-	grid->tqsetAlignment( AlignCenter );
+	grid->setAlignment( AlignCenter );
 
 	failedLabel = new TQLabel( parent );
 	failedLabel->setFont( _failFont );
 	grid->addWidget( failedLabel, 1, 0, AlignCenter );
 
-	updateLocktqStatus();
+	updateLockStatus();
 }
 
 KGStdVerify::~KGStdVerify()
@@ -965,7 +965,7 @@ KGStdVerify::slotPluginSelected( int id )
 }
 
 void
-KGStdVerify::updatetqStatus()
+KGStdVerify::updateStatus()
 {
 	int nfls;
 
@@ -1019,7 +1019,7 @@ KGThemedVerify::KGThemedVerify( KGVerifyHandler *_handler,
 	: inherited( _handler, _themer, _parent, _predecessor, _fixedUser,
 	             _pluginList, _func, _ctx )
 {
-	updateLocktqStatus();
+	updateLockStatus();
 }
 
 KGThemedVerify::~KGThemedVerify()
@@ -1063,9 +1063,9 @@ KGThemedVerify::slotPluginSelected( int id )
 }
 
 void
-KGThemedVerify::updatetqStatus()
+KGThemedVerify::updateStatus()
 {
-	handler->updatetqStatus( enabled && failed,
+	handler->updateStatus( enabled && failed,
 	                       enabled && !suspended && capsLocked,
 	                       timedLeft );
 }
@@ -1080,10 +1080,10 @@ KGChTok::KGChTok( TQWidget *_parent, const TQString &user,
 {
 	TQSizePolicy fp( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 	okButton = new KPushButton( KStdGuiItem::ok(), this );
-	okButton->tqsetSizePolicy( fp );
+	okButton->setSizePolicy( fp );
 	okButton->setDefault( true );
 	cancelButton = new KPushButton( KStdGuiItem::cancel(), this );
-	cancelButton->tqsetSizePolicy( fp );
+	cancelButton->setSizePolicy( fp );
 
 	verify = new KGStdVerify( this, this, cancelButton, user, pluginList, func, ctx );
 	verify->selectPlugin( curPlugin );

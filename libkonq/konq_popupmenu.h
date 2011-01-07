@@ -69,7 +69,7 @@ public:
          // WARNING: bitfield. Next item is 8
 
   /**
-   * @deprecated lacks tqparentWidget pointer, and
+   * @deprecated lacks parentWidget pointer, and
    * uses bool instead of KonqPopupFlags enum,
    * might do strange things with the 'new window' action.
    */
@@ -89,7 +89,7 @@ public:
                  KURL viewURL,
                  KActionCollection & actions,
                  KNewMenu * newMenu,
-		 TQWidget * tqparentWidget,
+		 TQWidget * parentWidget,
 		 bool showPropertiesAndFileType = true ) KDE_DEPRECATED;
 
   /**
@@ -99,7 +99,7 @@ public:
    * @param viewURL the URL shown in the view, to test for RMB click on view background
    * @param actions list of actions the caller wants to see in the menu
    * @param newMenu "New" menu, shared with the File menu, in konqueror
-   * @param tqparentWidget the widget we're showing this popup for. Helps destroying
+   * @param parentWidget the widget we're showing this popup for. Helps destroying
    * the popup if the widget is destroyed before the popup.
    * @param kpf flags from the KonqPopupFlags enum, set by the calling application
    * @param f flags from the BrowserExtension enum, set by the calling part
@@ -117,7 +117,7 @@ public:
                  const KURL& viewURL,
                  KActionCollection & actions,
                  KNewMenu * newMenu,
-                 TQWidget * tqparentWidget,
+                 TQWidget * parentWidget,
                  KonqPopupFlags kpf,
                  KParts::BrowserExtension::PopupFlags f /*= KParts::BrowserExtension::DefaultPopupItems*/);
 
@@ -177,7 +177,7 @@ protected:
   KActionCollection m_ownActions;
 
 private:
-  void init (TQWidget * tqparentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags itemFlags);
+  void init (TQWidget * parentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags itemFlags);
   void setup(KonqPopupFlags kpf);
   void addPlugins( );
   int  insertServicesSubmenus(const TQMap<TQString, ServiceList>& list, TQDomElement& menu, bool isBuiltin);

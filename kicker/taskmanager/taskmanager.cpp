@@ -247,7 +247,7 @@ Task::Ptr TaskManager::findTask(int desktop, const TQPoint& p)
             continue;
         }
 
-        if (t->tqgeometry().tqcontains(p))
+        if (t->geometry().contains(p))
         {
             int index = list.findIndex(t->window());
             if (index > currentIndex)
@@ -295,7 +295,7 @@ void TaskManager::windowAdded(WId w )
         WId transient_for = (WId) transient_for_tmp;
 
         // check if it's transient for a skiptaskbar window
-        if( _skiptaskbar_windows.tqcontains( transient_for ))
+        if( _skiptaskbar_windows.contains( transient_for ))
             return;
 
         // lets see if this is a transient for an existing task
@@ -831,7 +831,7 @@ void Task::updateDemandsAttentionState( WId w )
         NETWinInfo i( qt_xdisplay(), w, qt_xrootwin(), NET::WMState );
         if(i.state() & NET::DemandsAttention)
         {
-            if (!_transients_demanding_attention.tqcontains(w))
+            if (!_transients_demanding_attention.contains(w))
             {
                 _transients_demanding_attention.append(w);
             }
@@ -984,10 +984,10 @@ bool Task::idMatch( const TQString& id1, const TQString& id2 )
   if ( id1.isEmpty() || id2.isEmpty() )
     return false;
 
-  if ( id1.tqcontains( id2 ) > 0 )
+  if ( id1.contains( id2 ) > 0 )
     return true;
 
-  if ( id2.tqcontains( id1 ) > 0 )
+  if ( id2.contains( id1 ) > 0 )
     return true;
 
   return false;
@@ -1009,7 +1009,7 @@ void Task::move()
         KWin::deIconifyWindow(_win);
     }
 
-    TQRect geom = _info.tqgeometry();
+    TQRect geom = _info.geometry();
     TQCursor::setPos(geom.center());
 
     NETRootInfo ri(qt_xdisplay(), NET::WMMoveResize);
@@ -1032,7 +1032,7 @@ void Task::resize()
         KWin::deIconifyWindow(_win);
     }
 
-    TQRect geom = _info.tqgeometry();
+    TQRect geom = _info.geometry();
     TQCursor::setPos(geom.bottomRight());
 
     NETRootInfo ri(qt_xdisplay(), NET::WMMoveResize);
@@ -1305,8 +1305,8 @@ void Task::updateThumbnail()
     // by the thumbnail generation. This makes things much smoother
     // on slower machines.
     //
-    TQWidget *rootWin = tqApp->desktop();
-    TQRect geom = _info.tqgeometry();
+    TQWidget *rootWin = qApp->desktop();
+    TQRect geom = _info.geometry();
     _grab = TQPixmap::grabWindow(rootWin->winId(),
                                 geom.x(), geom.y(),
                                 geom.width(), geom.height());
@@ -1329,7 +1329,7 @@ void Task::generateThumbnail()
    width = width * _thumbSize;
    height = height * _thumbSize;
 
-   img = img.smoothScale( tqRound(width), tqRound(height) );
+   img = img.smoothScale( qRound(width), qRound(height) );
    _thumb = img;
    _grab.resize( 0, 0 ); // Makes grab a null image.
 
@@ -1356,7 +1356,7 @@ TQPixmap Task::thumbnail(int maxDimension)
     Picture picture = XRenderCreatePicture(dpy, m_windowPixmap, format,
                                            CPSubwindowMode, &picAttr);
 
-    // Get tqshaped windows handled correctly.
+    // Get shaped windows handled correctly.
     XserverRegion region = XFixesCreateRegionFromWindow(dpy, m_frameId,
                                                         WindowRegionBounding);
     XFixesSetPictureClipRegion(dpy, picture, 0, 0, region);
@@ -1386,10 +1386,10 @@ TQPixmap Task::thumbnail(int maxDimension)
     XRenderComposite(dpy,
                      hasAlpha ? PictOpOver : PictOpSrc,
                      picture, // src
-                     None, // tqmask
+                     None, // mask
                      full.x11RenderHandle(), // dst
                      0, 0, // src offset
-                     0, 0, // tqmask offset
+                     0, 0, // mask offset
                      0, 0, // dst offset
                      winAttr.width, winAttr.height);
 
@@ -1411,10 +1411,10 @@ TQPixmap Task::thumbnail(int maxDimension)
     XRenderComposite(TQPaintDevice::x11AppDisplay(),
                      PictOpOver, // we're filtering, alpha values are probable
                      picture, // src
-                     None, // tqmask
+                     None, // mask
                      thumbnail.x11RenderHandle(), // dst
                      0, 0, // src offset
-                     0, 0, // tqmask offset
+                     0, 0, // mask offset
                      0, 0, // dst offset
                      thumbnailWidth, thumbnailHeight);
 #endif
@@ -1499,7 +1499,7 @@ bool TaskDrag::canDecode(const TQMimeSource* e)
 
 Task::List TaskDrag::decode( const TQMimeSource* e )
 {
-    TQByteArray data(e->tqencodedData("taskbar/task"));
+    TQByteArray data(e->encodedData("taskbar/task"));
     Task::List tasks;
 
     if (data.size())

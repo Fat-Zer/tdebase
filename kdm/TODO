@@ -1,6 +1,6 @@
 theming (#37349):
 - maybe add a Themable plugin flag. if not set and no talker, abort.
-- minor: show QWidgets only when the tqlayout is ready and the theme was painted.
+- minor: show QWidgets only when the layout is ready and the theme was painted.
   but one can't hide the widgets in a QLayout, as they have no size then.
 - add attribute inheritance. apply attributes extracted from particular
   elements of the (hidden) talker.

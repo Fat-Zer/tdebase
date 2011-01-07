@@ -83,7 +83,7 @@ void KTagComboBox::internalActivate( int index )
   if (current == index) return;
   current = index;
   emit activated( index );
-  tqrepaint();
+  repaint();
 }
 
 void KTagComboBox::internalHighlight( int index )
@@ -192,7 +192,7 @@ void KTagComboBox::paintEvent( TQPaintEvent * ev)
   TQRect clip(2, 2, width() - 4, height() - 4);
 #if 0
   if ( hasFocus() && style().guiStyle() != MotifStyle )
-    p.setPen( tqcolorGroup().highlightedText() );
+    p.setPen( colorGroup().highlightedText() );
 #endif
   p.drawText(clip, AlignCenter | SingleLine, popup->text( current ));
 
@@ -204,9 +204,9 @@ void KTagComboBox::paintEvent( TQPaintEvent * ev)
   }
 }
 
-bool KTagComboBox::tqcontainsTag( const TQString &str ) const
+bool KTagComboBox::containsTag( const TQString &str ) const
 {
-  return tags->tqcontains(str) > 0;
+  return tags->contains(str) > 0;
 }
 
 TQString KTagComboBox::currentTag() const
@@ -233,7 +233,7 @@ void KTagComboBox::setCurrentItem(int i)
 {
   if (i < 0 || i >= count()) return;
   current = i;
-  tqrepaint();
+  repaint();
 }
 
 void KTagComboBox::setCurrentItem(const TQString &code)

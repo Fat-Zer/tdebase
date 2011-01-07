@@ -137,7 +137,7 @@ public slots:
   void slotZModemDetected();
   void emitZModemDetected();
 
-  void zmodemtqStatus(KProcess *, char *data, int len);
+  void zmodemStatus(KProcess *, char *data, int len);
   void zmodemSendBlock(KProcess *, char *data, int len);
   void zmodemRcvBlock(const char *data, int len);
   void zmodemDone();

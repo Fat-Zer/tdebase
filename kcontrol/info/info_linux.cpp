@@ -503,7 +503,7 @@ bool GetInfo_Partitions(TQListView * lbox)
 #endif
     {
 	total = avail = 0;	/* initialize size.. */
-	found_in_List = (Mounted_Partitions.tqcontains(FS_NAME) > 0);
+	found_in_List = (Mounted_Partitions.contains(FS_NAME) > 0);
 	if (found_in_List && statfs(FS_FILE, &sfs) == 0) {
 	    total = ((LONG_TYPE) sfs.f_blocks) * sfs.f_bsize;
 	    avail = (getuid()? sfs.f_bavail : sfs.f_bfree)
@@ -573,7 +573,7 @@ bool GetInfo_CD_ROM(TQListView * lBox)
 				if (-1 != rx.search(line)) {
 					TQString text = rx.cap(1);
 					TQString value = rx.cap(2);
-					if (!text.tqcontains('#')) {
+					if (!text.contains('#')) {
 						if (value == "0")
 							value = KStdGuiItem::no().plainText();
 						if (value == "1")

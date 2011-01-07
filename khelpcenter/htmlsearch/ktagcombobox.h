@@ -56,7 +56,7 @@ public:
    */
   TQString currentTag() const;
   TQString tag ( int i ) const;
-  bool tqcontainsTag (const TQString &str ) const;
+  bool containsTag (const TQString &str ) const;
 
   /*
    * Set the current item

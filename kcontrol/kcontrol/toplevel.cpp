@@ -85,7 +85,7 @@ TopLevel::TopLevel(const char* name)
       connect( m, TQT_SIGNAL( helpRequest() ), this, TQT_SLOT( slotHelpRequest() ) );
   }
 
-  // create the tqlayout box
+  // create the layout box
   _splitter = new TQSplitter( TQSplitter::Horizontal, this );
 
   TQFrame* leftFrame = new TQFrame ( _splitter );
@@ -142,7 +142,7 @@ TopLevel::TopLevel(const char* name)
   // help widget
   _help = new HelpWidget(_dock);
 
-  _stack->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+  _stack->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
  // Restore sizes
   config->setGroup("General");
@@ -514,7 +514,7 @@ void TopLevel::aboutModule()
 
 TQString TopLevel::handleAmpersand( TQString modulename ) const
 {
-   if( modulename.tqcontains( '&' )) // double it
+   if( modulename.contains( '&' )) // double it
    {
       for( int i = modulename.length();
            i >= 0;

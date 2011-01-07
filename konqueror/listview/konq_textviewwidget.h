@@ -34,7 +34,7 @@ class KonqTextViewWidget : public KonqBaseListViewWidget
    friend class KonqTextViewItem;
    Q_OBJECT
    public:
-      KonqTextViewWidget( KonqListView *parent, TQWidget *tqparentWidget );
+      KonqTextViewWidget( KonqListView *parent, TQWidget *parentWidget );
       ~KonqTextViewWidget();
       virtual bool isExecuteArea( const TQPoint& point );
 

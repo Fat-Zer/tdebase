@@ -14,7 +14,7 @@ public:
 
 	static bool setXkbOptions(const TQString& options, bool resetOldOptions);
 	bool setLayout(const TQString& model,
-					const TQString& tqlayout, const TQString& variant,
+					const TQString& layout, const TQString& variant,
 					const TQString& includeGroup, bool useCompiledLayouts=true);
 	bool setGroup(unsigned int group);
 	unsigned int getGroup() const;
@@ -25,12 +25,12 @@ private:
 	static TQMap<TQString, FILE*> fileCache;
 	
 	bool setLayoutInternal(const TQString& model,
-				   const TQString& tqlayout, const TQString& variant,
+				   const TQString& layout, const TQString& variant,
 				   const TQString& includeGroup);
-	bool compileCurrentLayout(const TQString& tqlayoutKey);
-	bool setCompiledLayout(const TQString& tqlayoutKey);
+	bool compileCurrentLayout(const TQString& layoutKey);
+	bool setCompiledLayout(const TQString& layoutKey);
 	
-	TQString getPrecompiledLayoutFilename(const TQString& tqlayoutKey);
+	TQString getPrecompiledLayoutFilename(const TQString& layoutKey);
 //	void deletePrecompiledLayouts();
 };
 

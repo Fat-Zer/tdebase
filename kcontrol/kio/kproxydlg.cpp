@@ -43,10 +43,10 @@
 KProxyOptions::KProxyOptions (TQWidget* parent )
               :KCModule (parent, "kcmkio")
 {
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
   
   mTab = new TQTabWidget(this);
-  tqlayout->addWidget(mTab);
+  layout->addWidget(mTab);
 
   mProxy  = new KProxyDialog(mTab);
   mSocks = new KSocksConfig(mTab);

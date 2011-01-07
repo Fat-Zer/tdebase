@@ -27,7 +27,7 @@ class TQStringList;
 class FakeUASProvider
 {
 public:
-  enum tqStatusCode {
+  enum StatusCode {
     SUCCEEDED=0,
     ALREADY_EXISTS,
     DUPLICATE_ENTRY
@@ -36,7 +36,7 @@ public:
   FakeUASProvider();
   ~FakeUASProvider(){};
 
-  tqStatusCode createNewUAProvider( const TQString& );
+  StatusCode createNewUAProvider( const TQString& );
   TQString aliasStr( const TQString& );
   TQString agentStr( const TQString& );
   TQStringList userAgentStringList();

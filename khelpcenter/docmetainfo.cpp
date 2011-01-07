@@ -77,7 +77,7 @@ DocEntry *DocMetaInfo::addDocEntry( const TQString &fileName )
       mHtmlSearch->setupDocEntry( entry );
     }
     TQString indexer = entry->indexer();
-    indexer.tqreplace( "%f", fileName );
+    indexer.replace( "%f", fileName );
     entry->setIndexer( indexer );
     addDocEntry( entry );
     return entry;
@@ -108,7 +108,7 @@ TQString DocMetaInfo::languageName( const TQString &langcode )
   if ( langcode == "en" ) return i18n("English");
 
   TQString cfgfile = locate( "locale",
-      TQString::tqfromLatin1( "%1/entry.desktop" ).arg( langcode ) );
+      TQString::fromLatin1( "%1/entry.desktop" ).arg( langcode ) );
 
   kdDebug() << "-- langcode: " << langcode << " cfgfile: " << cfgfile << endl;
   

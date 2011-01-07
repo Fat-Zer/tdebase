@@ -27,12 +27,12 @@
 FileGroupDetails::FileGroupDetails(TQWidget *parent, const char *name )
     : TQWidget( parent, name )
 {
-  TQWidget * tqparentWidget = this;
-  TQVBoxLayout *secondLayout = new TQVBoxLayout(tqparentWidget,
+  TQWidget * parentWidget = this;
+  TQVBoxLayout *secondLayout = new TQVBoxLayout(parentWidget,
       0, KDialog::spacingHint());
 
-  m_autoEmbed = new TQVButtonGroup( i18n("Left Click Action"), tqparentWidget );
-  m_autoEmbed->tqlayout()->setSpacing( KDialog::spacingHint() );
+  m_autoEmbed = new TQVButtonGroup( i18n("Left Click Action"), parentWidget );
+  m_autoEmbed->layout()->setSpacing( KDialog::spacingHint() );
   secondLayout->addWidget( m_autoEmbed );
   // The order of those two items is very important. If you change it, fix typeslistitem.cpp !
   new TQRadioButton( i18n("Show file in embedded viewer"), m_autoEmbed );

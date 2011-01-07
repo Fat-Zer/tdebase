@@ -1,5 +1,5 @@
 //
-// C++ Implementation: tqlayoutmap
+// C++ Implementation: layoutmap
 //
 // Description: 
 //
@@ -69,13 +69,13 @@ TQPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueueInternal(WId winId)
 //LayoutQueue& 
 TQPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueue(WId winId)
 {
-	TQPtrQueue<LayoutState>& tqlayoutQueue = getCurrentLayoutQueueInternal(winId);
-	if( tqlayoutQueue.count() == 0 ) {
-		initLayoutQueue(tqlayoutQueue);
-		kdDebug() << "map: Created queue for " << winId << " size: " << tqlayoutQueue.count() << endl;
+	TQPtrQueue<LayoutState>& layoutQueue = getCurrentLayoutQueueInternal(winId);
+	if( layoutQueue.count() == 0 ) {
+		initLayoutQueue(layoutQueue);
+		kdDebug() << "map: Created queue for " << winId << " size: " << layoutQueue.count() << endl;
 	}
 	
-	return tqlayoutQueue;
+	return layoutQueue;
 }
 
 LayoutState& LayoutMap::getCurrentLayout() {
@@ -83,50 +83,50 @@ LayoutState& LayoutMap::getCurrentLayout() {
 }
 
 LayoutState& LayoutMap::getNextLayout() {
-	LayoutQueue& tqlayoutQueue = getCurrentLayoutQueue(m_currentWinId);
-	LayoutState* tqlayoutState = tqlayoutQueue.dequeue();
-	tqlayoutQueue.enqueue(tqlayoutState);
+	LayoutQueue& layoutQueue = getCurrentLayoutQueue(m_currentWinId);
+	LayoutState* layoutState = layoutQueue.dequeue();
+	layoutQueue.enqueue(layoutState);
 	
-	kdDebug() << "map: Next tqlayout: " << tqlayoutQueue.head()->tqlayoutUnit.toPair() 
-			<< " group: " << tqlayoutQueue.head()->tqlayoutUnit.defaultGroup << " for " << m_currentWinId << endl;
+	kdDebug() << "map: Next layout: " << layoutQueue.head()->layoutUnit.toPair() 
+			<< " group: " << layoutQueue.head()->layoutUnit.defaultGroup << " for " << m_currentWinId << endl;
 	
-	return *tqlayoutQueue.head();
+	return *layoutQueue.head();
 }
 
 void LayoutMap::setCurrentGroup(int group) {
 	getCurrentLayout().group = group;
 }
 
-void LayoutMap::setCurrentLayout(const LayoutUnit& tqlayoutUnit) {
-	LayoutQueue& tqlayoutQueue = getCurrentLayoutQueue(m_currentWinId);
-	kdDebug() << "map: Storing tqlayout: " << tqlayoutUnit.toPair() 
-			<< " group: " << tqlayoutUnit.defaultGroup << " for " << m_currentWinId << endl;
+void LayoutMap::setCurrentLayout(const LayoutUnit& layoutUnit) {
+	LayoutQueue& layoutQueue = getCurrentLayoutQueue(m_currentWinId);
+	kdDebug() << "map: Storing layout: " << layoutUnit.toPair() 
+			<< " group: " << layoutUnit.defaultGroup << " for " << m_currentWinId << endl;
 	
-	int queueSize = (int)tqlayoutQueue.count();
+	int queueSize = (int)layoutQueue.count();
 	for(int ii=0; ii<queueSize; ii++) {
-		if( tqlayoutQueue.head()->tqlayoutUnit == tqlayoutUnit )
+		if( layoutQueue.head()->layoutUnit == layoutUnit )
 			return;	// if present return when it's in head
 		
-		LayoutState* tqlayoutState = tqlayoutQueue.dequeue();
+		LayoutState* layoutState = layoutQueue.dequeue();
 		if( ii < queueSize - 1 ) {
-			tqlayoutQueue.enqueue(tqlayoutState);
+			layoutQueue.enqueue(layoutState);
 		}
 		else {
-			delete tqlayoutState;
-			tqlayoutQueue.enqueue(new LayoutState(tqlayoutUnit));
+			delete layoutState;
+			layoutQueue.enqueue(new LayoutState(layoutUnit));
 		}
 	}
 	for(int ii=0; ii<queueSize - 1; ii++) {
-		LayoutState* tqlayoutState = tqlayoutQueue.dequeue();
-		tqlayoutQueue.enqueue(tqlayoutState);
+		LayoutState* layoutState = layoutQueue.dequeue();
+		layoutQueue.enqueue(layoutState);
 	}
 }
 
 // private
-void LayoutMap::initLayoutQueue(LayoutQueue& tqlayoutQueue) {
+void LayoutMap::initLayoutQueue(LayoutQueue& layoutQueue) {
 	int queueSize = ( m_kxkbConfig.m_stickySwitching ) 
-			? m_kxkbConfig.m_stickySwitchingDepth : m_kxkbConfig.m_tqlayouts.count();
+			? m_kxkbConfig.m_stickySwitchingDepth : m_kxkbConfig.m_layouts.count();
 	for(int ii=0; ii<queueSize; ii++) {
-		tqlayoutQueue.enqueue( new LayoutState(m_kxkbConfig.m_tqlayouts[ii]) );
+		layoutQueue.enqueue( new LayoutState(m_kxkbConfig.m_layouts[ii]) );
 	}
 }

@@ -114,7 +114,7 @@ DCOPBrowserApplicationItem::DCOPBrowserApplicationItem
 {
   setExpandable(true);
   setText(0, TQString::fromUtf8(app_));
-  setPixmap(0,  KGlobal::iconLoader()->loadIcon( TQString::tqfromLatin1( "exec" ), KIcon::Small ));
+  setPixmap(0,  KGlobal::iconLoader()->loadIcon( TQString::fromLatin1( "exec" ), KIcon::Small ));
 
 
 	/* Get the icon:  we use the icon from a mainwindow in that class.
@@ -467,7 +467,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         e->setValidator( new TQIntValidator( e ) );
       }
       else if ( type == "unsigned"  || type == "uint" || type == "unsigned int"
-             || type == "TQ_UINT32" )
+             || type == "Q_UINT32" )
       {
         TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
@@ -493,7 +493,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         e->setValidator( new TQIntValidator( e ) );
       }
       else if ( type == "ulong" || type == "unsigned long" || type == "unsigned long int"
-             || type == "TQ_UINT64" )
+             || type == "Q_UINT64" )
       {
         TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
@@ -697,7 +697,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         arg << e->text().toInt();
       }
       else if ( type == "unsigned" || type == "uint" || type == "unsigned int"
-             || type == "TQ_UINT32" )
+             || type == "Q_UINT32" )
       {
         KLineEdit* e = (KLineEdit*)wl.at( i );
         arg << e->text().toUInt();
@@ -722,7 +722,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = (KLineEdit*)wl.at( i );
         arg << e->text().toUShort();
       }
-      else if ( type == "TQ_UINT64" )
+      else if ( type == "Q_UINT64" )
       {
         KLineEdit* e = ( KLineEdit* )wl.at( i );
         arg << e->text().toULongLong();
@@ -936,7 +936,7 @@ bool KDCOPWindow::demarshal
   if ( replyType == "TQVariant" )
   {
     // read data type from stream
-    TQ_INT32 type;
+    Q_INT32 type;
     reply >> type;
 
     // change replyType to real typename
@@ -952,7 +952,7 @@ bool KDCOPWindow::demarshal
     ret << TQString::number(i);
   }
   else if ( replyType == "uint" || replyType == "unsigned int"
-         || replyType == "TQ_UINT32" )
+         || replyType == "Q_UINT32" )
   {
     uint i;
     reply >> i;
@@ -970,9 +970,9 @@ bool KDCOPWindow::demarshal
     reply >> l;
     ret << TQString::number(l);
   }
-  else if ( replyType == "TQ_UINT64" )
+  else if ( replyType == "Q_UINT64" )
   {
-    TQ_UINT64 i;
+    Q_UINT64 i;
     reply >> i;
     ret << TQString::number(i);
   }
@@ -1053,7 +1053,7 @@ bool KDCOPWindow::demarshal
 	TQCursor r;
 	reply >> r;
 	//theList->insertItem(r, 1);
-	ret << "Cursor #" + TQString::number(r.tqshape());
+	ret << "Cursor #" + TQString::number(r.shape());
   }
   else if (replyType == "TQPixmap")
   {
@@ -1191,7 +1191,7 @@ KDCOPWindow::getParameters
 
       int s = (*it).findRev(' ');
 
-      if (-1 != s && !intTypes.tqcontains((*it).mid(s + 1)))
+      if (-1 != s && !intTypes.contains((*it).mid(s + 1)))
       {
         names.append((*it).mid(s + 1));
 

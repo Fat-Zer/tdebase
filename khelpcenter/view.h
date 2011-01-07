@@ -20,7 +20,7 @@ class View : public KHTMLPart
 {
     Q_OBJECT
   public:
-    View( TQWidget *tqparentWidget, const char *widgetName,
+    View( TQWidget *parentWidget, const char *widgetName,
           TQObject *parent, const char *name, KHTMLPart::GUIProfile prof,
           KActionCollection *col );
 

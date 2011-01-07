@@ -59,17 +59,17 @@ KclockModule::KclockModule(TQWidget *parent, const char *name, const TQStringLis
 
   KGlobal::locale()->insertCatalogue("timezones"); // For time zone translations
 
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   dtime = new Dtime(this);
-  tqlayout->addWidget(dtime);
+  layout->addWidget(dtime);
   connect(dtime, TQT_SIGNAL(timeChanged(bool)), this, TQT_SIGNAL(changed(bool)));
 
   tzone = new Tzone(this);
-  tqlayout->addWidget(tzone);
+  layout->addWidget(tzone);
   connect(tzone, TQT_SIGNAL(zoneChanged(bool)), this, TQT_SIGNAL(changed(bool)));
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   if(getuid() == 0)
     setButtons(Help|Apply);

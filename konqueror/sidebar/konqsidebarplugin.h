@@ -66,7 +66,7 @@ class KDE_EXPORT KonqSidebarPlugin : public QObject
 
 	  void openPreviewOnMouseOver(const KFileItem& item); // not used yet, perhaps KDE 3.1
 	/*
-		if your plugin supports a setup dialog, instead (tqreplaces the url menu entry in the popup) (not supported yet)
+		if your plugin supports a setup dialog, instead (replaces the url menu entry in the popup) (not supported yet)
 			void setup(TQWidget *parent);
 
 	 */

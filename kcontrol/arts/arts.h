@@ -92,7 +92,7 @@ private:
   hardwareTab *hardware;
   KConfig *config;
   DeviceManager *deviceManager;
-  int latestProcesstqStatus;
+  int latestProcessStatus;
   int fragmentCount;
   int fragmentSize;
   bool configChanged;

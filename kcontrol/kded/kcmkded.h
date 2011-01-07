@@ -47,7 +47,7 @@ protected slots:
 	void slotServiceRunningToggled();
 	void slotEvalItem(TQListViewItem *item);
 	void slotItemChecked(TQCheckListItem *item);
-	void getServicetqStatus();
+	void getServiceStatus();
 
         bool autoloadEnabled(KConfig *config, const TQString &filename);
         void setAutoloadEnabled(KConfig *config, const TQString &filename, bool b);

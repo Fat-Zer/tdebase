@@ -18,7 +18,7 @@
 #include <tqmap.h>
 
 
-/* Utility classes for per-window/per-application tqlayout implementation
+/* Utility classes for per-window/per-application layout implementation
 */
 enum SwitchingPolicy { 
 	SWITCH_POLICY_GLOBAL = 0,
@@ -37,7 +37,7 @@ inline TQString createPair(TQString key, TQString value)
 } 
 
 struct LayoutUnit {
-	TQString tqlayout;
+	TQString layout;
 	TQString variant;
 	TQString includeGroup;
 	TQString displayName;
@@ -45,8 +45,8 @@ struct LayoutUnit {
 	
 	LayoutUnit() {}
 	
-	LayoutUnit(TQString tqlayout_, TQString variant_):
-		tqlayout(tqlayout_),
+	LayoutUnit(TQString layout_, TQString variant_):
+		layout(layout_),
 		variant(variant_)
 	{}
 	
@@ -55,26 +55,26 @@ struct LayoutUnit {
 	}
 	
 	void setFromPair(const TQString& pair) {
-		tqlayout = parseLayout(pair);
+		layout = parseLayout(pair);
 		variant = parseVariant(pair);
 	}
 	
 	TQString toPair() const {
-		return createPair(tqlayout, variant);
+		return createPair(layout, variant);
 	}
 	
 	bool operator<(const LayoutUnit& lu) const {
-		return tqlayout<lu.tqlayout ||
-				(tqlayout==lu.tqlayout && variant<lu.variant);
+		return layout<lu.layout ||
+				(layout==lu.layout && variant<lu.variant);
 	}
 	
 	bool operator!=(const LayoutUnit& lu) const {
-		return tqlayout!=lu.tqlayout || variant!=lu.variant;
+		return layout!=lu.layout || variant!=lu.variant;
 	}
 	
 	bool operator==(const LayoutUnit& lu) const {
-// 		kdDebug() << tqlayout << "==" << lu.tqlayout << "&&" << variant << "==" << lu.variant << endl;
-		return tqlayout==lu.tqlayout && variant==lu.variant;
+// 		kdDebug() << layout << "==" << lu.layout << "&&" << variant << "==" << lu.variant << endl;
+		return layout==lu.layout && variant==lu.variant;
 	}
 	
 //private:
@@ -102,7 +102,7 @@ public:
 	
 	TQString m_model;
 	TQString m_options;
-	TQValueList<LayoutUnit> m_tqlayouts;
+	TQValueList<LayoutUnit> m_layouts;
 
 	LayoutUnit getDefaultLayout();
 	
@@ -112,7 +112,7 @@ public:
 	
 	TQStringList getLayoutStringList(/*bool compact*/);
 	static TQString getDefaultDisplayName(const TQString& code_);
-	static TQString getDefaultDisplayName(const LayoutUnit& tqlayoutUnit, bool single=false);
+	static TQString getDefaultDisplayName(const LayoutUnit& layoutUnit, bool single=false);
 
 private:	
 	static const TQMap<TQString, TQString> parseIncludesMap(const TQStringList& pairList);

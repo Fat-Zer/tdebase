@@ -66,7 +66,7 @@ void showmsgdialog(const TQString& msg, int type = 0)
 
 void showmsgconsole(const TQString& msg, int type = 0)
 {
-	QString	errmsg = TQString::tqfromLatin1("%1 : ").arg((type == 0 ? i18n("Print info") : (type == 1 ? i18n("Print warning") : i18n("Print error"))));
+	QString	errmsg = TQString::fromLatin1("%1 : ").arg((type == 0 ? i18n("Print info") : (type == 1 ? i18n("Print warning") : i18n("Print error"))));
 	kdDebug() << errmsg << msg << endl;
 }
 
@@ -237,7 +237,7 @@ void PrintWrapper::slotPrint()
 
 		mgr->printerList(false);
 		if (!printer.isEmpty())
-			prt = mgr->tqfindPrinter(printer);
+			prt = mgr->findPrinter(printer);
 		else
 			prt = mgr->defaultPrinter();
 

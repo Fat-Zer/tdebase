@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>ComponentChooser_UI</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -91,7 +91,7 @@
                     <property name="text">
                         <string></string>
                     </property>
-                    <property name="tqalignment">
+                    <property name="alignment">
                         <set>WordBreak|AlignTop</set>
                     </property>
                 </widget>
@@ -125,8 +125,8 @@
     <include location="global" impldecl="in declaration">klistbox.h</include>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<tqlayoutdefaults spacing="3" margin="6"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>klistbox.h</includehint>
 </includehints>

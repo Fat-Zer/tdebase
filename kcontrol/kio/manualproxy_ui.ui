@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>ManualProxyDlgUI</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -137,7 +137,7 @@
                     <property name="name">
                         <cstring>sbHttp</cstring>
                     </property>
-                    <property name="tqmaximumSize">
+                    <property name="maximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>
@@ -160,7 +160,7 @@
                     <property name="sizeType">
                         <enum>Minimum</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>51</width>
                             <height>20</height>
@@ -211,7 +211,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>tqlayout2</cstring>
+                        <cstring>layout2</cstring>
                     </property>
                     <grid>
                         <property name="name">
@@ -280,7 +280,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="tqsizeHint">
+                            <property name="sizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>114</height>
@@ -313,5 +313,5 @@ Reverse the use of the exception list. Checking this box will result in the prox
     <tabstop>pbDelete</tabstop>
     <tabstop>pbDeleteAll</tabstop>
 </tabstops>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

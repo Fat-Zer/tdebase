@@ -103,7 +103,7 @@ class SensorTokenizer
 };
 
 /**
-  An integer info tqcontains 4 fields seperated by TABS, a description
+  An integer info contains 4 fields seperated by TABS, a description
   (name), the minimum and the maximum values and the unit.
   e.g. Swap Memory	0	133885952	KB
  */
@@ -137,7 +137,7 @@ class SensorIntegerInfo : public SensorTokenizer
 };
 
 /**
-  An float info tqcontains 4 fields seperated by TABS, a description
+  An float info contains 4 fields seperated by TABS, a description
   (name), the minimum and the maximum values and the unit.
   e.g. CPU Voltage 0.0	5.0	V
  */

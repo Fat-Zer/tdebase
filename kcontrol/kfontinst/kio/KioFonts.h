@@ -82,7 +82,7 @@ class CKioFonts : public KIO::SlaveBase
         CDirList()                                      { }
         CDirList(const TQString &str) : TQStringList(str) { }
 
-        void add(const TQString &d)                      { if (!tqcontains(d)) append(d); }
+        void add(const TQString &d)                      { if (!contains(d)) append(d); }
     };
 
     struct TFolder

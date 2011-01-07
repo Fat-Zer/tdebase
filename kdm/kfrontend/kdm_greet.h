@@ -4,7 +4,7 @@ KDE Greeter module for xdm
 
 Copyright (C) 2001-2003 Oswald Buddenhagen <ossi@kde.org>
 
-This file tqcontains code from the old xdm core,
+This file contains code from the old xdm core,
 Copyright 1988, 1998  Keith Packard, MIT X Consortium/The Open Group
 
 This program is free software; you can redistribute it and/or modify
@@ -77,7 +77,7 @@ int PingServer( struct _XDisplay *dpy );
 void setup_modifiers( struct _XDisplay *mdpy, int numlock );
 void restore_modifiers( void );
 
-void setCursor( struct _XDisplay *mdpy, int window, int tqshape );
+void setCursor( struct _XDisplay *mdpy, int window, int shape );
 
 
 extern int rfd; /* for select() loops */

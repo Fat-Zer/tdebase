@@ -24,7 +24,7 @@ class TQLabel;
 class TQPopupMenu;
 class XkbRules;
 
-/* This class is responsible for displaying flag/label for the tqlayout,
+/* This class is responsible for displaying flag/label for the layout,
     catching keyboard/mouse events and displaying menu when selected
 */
 
@@ -37,10 +37,10 @@ public:
 
     KxkbLabelController(TQLabel *label, TQPopupMenu* contextMenu);
 
-    void initLayoutList(const TQValueList<LayoutUnit>& tqlayouts, const XkbRules& rule);
-    void setCurrentLayout(const LayoutUnit& tqlayout);
-// 	void setCurrentLayout(const TQString& tqlayout, const TQString &variant);
-	void setError(const TQString& tqlayoutInfo="");
+    void initLayoutList(const TQValueList<LayoutUnit>& layouts, const XkbRules& rule);
+    void setCurrentLayout(const LayoutUnit& layout);
+// 	void setCurrentLayout(const TQString& layout, const TQString &variant);
+	void setError(const TQString& layoutInfo="");
     void setShowFlag(bool showFlag) { m_showFlag = showFlag; }
 	void show() { label->show(); }
 	

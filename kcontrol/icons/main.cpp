@@ -39,9 +39,9 @@ K_EXPORT_COMPONENT_FACTORY( kcm_icons, IconsFactory("kcmicons") )
 IconModule::IconModule(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(IconsFactory::instance(), parent, name)
 {
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this);
+  TQVBoxLayout *layout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
-  tqlayout->addWidget(tab);
+  layout->addWidget(tab);
 
   tab1 = new IconThemesConfig(this, "themes");
   tab->addTab(tab1, i18n("&Theme"));

@@ -315,7 +315,7 @@ HitMenuItem *KickoffBeaglePlugin::hitToHitMenuItem (int category, Hit *hit)
 	case WEBHIST:
 	    uri = hit->getUri ();
 	    title = (*hit) [dc_title];
-	    title = title.tqreplace(TQRegExp("\n")," ");
+	    title = title.replace(TQRegExp("\n")," ");
 	    mimetype = "text/html";
 	    if (title.isEmpty () || title.stripWhiteSpace ().isEmpty ()) {
 		title = uri.prettyURL ();

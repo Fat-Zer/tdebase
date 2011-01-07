@@ -72,17 +72,17 @@ void RecentDocsMenu::initialize() {
 		// Make sure this entry is not already present in the menu
 		alreadyPresentInMenu = 0;
 		for ( TQStringList::Iterator previt = previousEntries.begin(); previt != previousEntries.end(); ++previt ) {
-			if (TQString::localeAwareCompare(*previt, f.readName().tqreplace('&', TQString::fromAscii("&&") )) == 0) {
+			if (TQString::localeAwareCompare(*previt, f.readName().replace('&', TQString::fromAscii("&&") )) == 0) {
 				alreadyPresentInMenu = 1;
 			}
 		}
 
 		if (alreadyPresentInMenu == 0) {
 			// Add item to menu
-			insertItem(SmallIconSet(f.readIcon()), f.readName().tqreplace('&', TQString::fromAscii("&&") ), id++);
+			insertItem(SmallIconSet(f.readIcon()), f.readName().replace('&', TQString::fromAscii("&&") ), id++);
 
 			// Append to duplicate checking list
-			previousEntries.append(f.readName().tqreplace('&', TQString::fromAscii("&&") ));
+			previousEntries.append(f.readName().replace('&', TQString::fromAscii("&&") ));
 		}
 	}
 
@@ -114,7 +114,7 @@ void RecentDocsMenu::mouseMoveEvent(TQMouseEvent* e) {
 	if (!(e->state() & LeftButton))
 		return;
 
-	if (!rect().tqcontains(_mouseDown))
+	if (!rect().contains(_mouseDown))
 		return;
 
 	int dragLength = (e->pos() - _mouseDown).manhattanLength();

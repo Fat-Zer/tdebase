@@ -121,9 +121,9 @@ class Glossary : public KListView
 		void treeItemSelected( TQListViewItem *item );
 
 	private:
-		enum CachetqStatus { NeedRebuild, CacheOk };
+		enum CacheStatus { NeedRebuild, CacheOk };
 
-		CachetqStatus cachetqStatus() const;
+		CacheStatus cacheStatus() const;
 		int glossaryCTime() const;
 		void rebuildGlossaryCache();
 		void buildGlossaryTree();
@@ -134,7 +134,7 @@ class Glossary : public KListView
 		TQListViewItem *m_alphabItem;
 		TQString m_sourceFile;
 		TQString m_cacheFile;
-		CachetqStatus m_status;
+		CacheStatus m_status;
 		TQDict<GlossaryEntry> m_glossEntries;
     TQDict<EntryItem> m_idDict;
     bool m_initialized;

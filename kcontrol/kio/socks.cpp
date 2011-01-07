@@ -48,9 +48,9 @@ KSocksConfig::KSocksConfig(TQWidget *parent)
   setAboutData( about );
 
 
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
   base = new SocksBase(this);
-  tqlayout->add(base);
+  layout->add(base);
 
   connect(base->_c_enableSocks, TQT_SIGNAL(clicked()), this, TQT_SLOT(enableChanged()));
   connect(base->bg, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(methodChanged(int)));

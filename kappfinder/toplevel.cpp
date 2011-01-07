@@ -48,16 +48,16 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   : KDialog( parent, name, true )
 {
   setCaption( i18n( "KAppfinder" ) );
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( this, marginHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( this, marginHint() );
 
   TQLabel *label = new TQLabel( i18n( "The application finder looks for non-KDE "
                                     "applications on your system and adds "
                                     "them to the KDE menu system. "
                                     "Click 'Scan' to begin, select the desired applications and then click 'Apply'."), this);
-  label->tqsetAlignment( AlignAuto | WordBreak );
-  tqlayout->addWidget( label );
+  label->setAlignment( AlignAuto | WordBreak );
+  layout->addWidget( label );
 
-  tqlayout->addSpacing( 5 );
+  layout->addSpacing( 5 );
 
   mListView = new TQListView( this );
   mListView->addColumn( i18n( "Application" ) );
@@ -67,14 +67,14 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   mListView->setRootIsDecorated( true );
   mListView->setAllColumnsShowFocus( true );
   mListView->setSelectionMode(TQListView::NoSelection);
-  tqlayout->addWidget( mListView );
+  layout->addWidget( mListView );
 
   mProgress = new KProgress( this );
   mProgress->setPercentageVisible( false );
-  tqlayout->addWidget( mProgress );
+  layout->addWidget( mProgress );
 
   mSummary = new TQLabel( i18n( "Summary:" ), this );
-  tqlayout->addWidget( mSummary );
+  layout->addWidget( mSummary );
 
   KButtonBox* bbox = new KButtonBox( this );
   mScanButton = bbox->addButton( KGuiItem( i18n( "Scan" ), "find"), this, TQT_SLOT( slotScan() ) );
@@ -89,9 +89,9 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   mApplyButton = bbox->addButton( KStdGuiItem::apply(), this, TQT_SLOT( slotCreate() ) );
   mApplyButton->setEnabled( false );
   bbox->addButton( KStdGuiItem::close(), kapp, TQT_SLOT( quit() ) );
-  bbox->tqlayout();
+  bbox->layout();
 
-  tqlayout->addWidget( bbox );
+  layout->addWidget( bbox );
 
 	connect( kapp, TQT_SIGNAL( lastWindowClosed() ), kapp, TQT_SLOT( quit() ) );
 
@@ -100,7 +100,7 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   adjustSize();
 
   mDestDir = destDir;
-  mDestDir = mDestDir.tqreplace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
+  mDestDir = mDestDir.replace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
 	
   KStartupInfo::appStarted();
 

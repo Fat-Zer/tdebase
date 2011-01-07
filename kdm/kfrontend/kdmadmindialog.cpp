@@ -75,10 +75,10 @@ KDMAdmin::KDMAdmin( const TQString &user, TQWidget *_parent )
     box->addWidget( new KSeparator( KSeparator::HLine, this ) );
 
     okButton = new KPushButton( KStdGuiItem::ok(), this );
-    okButton->tqsetSizePolicy( fp );
+    okButton->setSizePolicy( fp );
     okButton->setDefault( true );
     cancelButton = new KPushButton( KStdGuiItem::cancel(), this );
-    cancelButton->tqsetSizePolicy( fp );
+    cancelButton->setSizePolicy( fp );
 
     hlay = new TQHBoxLayout( box );
     hlay->addStretch( 1 );
@@ -103,8 +103,8 @@ void
 KDMAdmin::slotActivatePlugMenu()
 {
     TQPopupMenu *cmnu = verify->getPlugMenu();
-    TQSize sh( cmnu->tqsizeHint() / 2 );
-    cmnu->exec( tqgeometry().center() - TQPoint( sh.width(), sh.height() ) );
+    TQSize sh( cmnu->sizeHint() / 2 );
+    cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 }
 
 void

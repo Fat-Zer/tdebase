@@ -110,7 +110,7 @@ class KateViewSpace : public QVBox
     TQString m_group;
 
   private slots:
-    void slottqStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const TQString &msg);
+    void slotStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const TQString &msg);
 
   public slots:
     void polish();
@@ -118,4 +118,4 @@ class KateViewSpace : public QVBox
 };
 
 #endif
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

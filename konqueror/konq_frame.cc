@@ -68,20 +68,20 @@ KonqFrameStatusBar::KonqFrameStatusBar( KonqFrame *_parent, const char *_name )
     setSizeGripEnabled( false );
 
     m_led = new TQLabel( this );
-    m_led->tqsetAlignment( Qt::AlignCenter );
-    m_led->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    m_led->setAlignment( Qt::AlignCenter );
+    m_led->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     addWidget( m_led, 0, false ); // led (active view indicator)
     m_led->hide();
 
-    m_ptqStatusLabel = new KSqueezedTextLabel( this );
-    m_ptqStatusLabel->setMinimumSize( 0, 0 );
-    m_ptqStatusLabel->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
-    m_ptqStatusLabel->installEventFilter(this);
-    addWidget( m_ptqStatusLabel, 1 /*stretch*/, false ); // status label
+    m_pStatusLabel = new KSqueezedTextLabel( this );
+    m_pStatusLabel->setMinimumSize( 0, 0 );
+    m_pStatusLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
+    m_pStatusLabel->installEventFilter(this);
+    addWidget( m_pStatusLabel, 1 /*stretch*/, false ); // status label
 
     m_pLinkedViewCheckBox = new KonqCheckBox( this, "m_pLinkedViewCheckBox" );
     m_pLinkedViewCheckBox->setFocusPolicy(NoFocus);
-    m_pLinkedViewCheckBox->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    m_pLinkedViewCheckBox->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     TQWhatsThis::add( m_pLinkedViewCheckBox,
                      i18n("Checking this box on at least two views sets those views as 'linked'. "
                           "Then, when you change directories in one view, the other views "
@@ -99,7 +99,7 @@ KonqFrameStatusBar::KonqFrameStatusBar( KonqFrame *_parent, const char *_name )
     addWidget( m_progressBar, 0, true /*permanent->right align*/ );
 
 //     // FIXME: This was added by OpenSUSE; someone needs to figure out what it does and how to fix it!
-//     StatusBarNetworktqStatusIndicator * indicator = new StatusBarNetworktqStatusIndicator( this, "networkstatusindicator" );
+//     StatusBarNetworkStatusIndicator * indicator = new StatusBarNetworkStatusIndicator( this, "networkstatusindicator" );
 //     addWidget( indicator, 0, false );
 //     indicator->init();
 
@@ -118,7 +118,7 @@ void KonqFrameStatusBar::fontChange(const TQFont & /* oldFont */)
     m_led->setFixedHeight( h + 2 );
     m_progressBar->setFixedHeight( h + 2 );
     // This one is important. Otherwise richtext messages make it grow in height.
-    m_ptqStatusLabel->setFixedHeight( h + 2 );
+    m_pStatusLabel->setFixedHeight( h + 2 );
 
 }
 
@@ -173,7 +173,7 @@ void KonqFrameStatusBar::splitFrameMenu()
 
 bool KonqFrameStatusBar::eventFilter(TQObject* o, TQEvent *e)
 {
-   if (o == m_ptqStatusLabel && e->type()==TQEvent::MouseButtonPress)
+   if (o == m_pStatusLabel && e->type()==TQEvent::MouseButtonPress)
    {
       emit clicked();
       update();
@@ -184,7 +184,7 @@ bool KonqFrameStatusBar::eventFilter(TQObject* o, TQEvent *e)
    else if ( o == this && e->type() == TQEvent::ApplicationPaletteChange )
    {
       unsetPalette();
-      updateActivetqStatus();
+      updateActiveStatus();
       return true;
    }
 
@@ -197,21 +197,21 @@ void KonqFrameStatusBar::message( const TQString &msg )
     // it really looks ugly (the label border goes away, the active-view indicator
     // is hidden...)
     TQString saveMsg = m_savedMessage;
-    slotDisplaytqStatusText( msg );
+    slotDisplayStatusText( msg );
     m_savedMessage = saveMsg;
 }
 
-void KonqFrameStatusBar::slotDisplaytqStatusText(const TQString& text)
+void KonqFrameStatusBar::slotDisplayStatusText(const TQString& text)
 {
-    //kdDebug(1202)<<"KonqFrameHeader::slotDisplaytqStatusText("<<text<<")"<<endl;
-    //m_ptqStatusLabel->resize(fontMetrics().width(text),fontMetrics().height()+2);
-    m_ptqStatusLabel->setText(text);
+    //kdDebug(1202)<<"KonqFrameHeader::slotDisplayStatusText("<<text<<")"<<endl;
+    //m_pStatusLabel->resize(fontMetrics().width(text),fontMetrics().height()+2);
+    m_pStatusLabel->setText(text);
     m_savedMessage = text;
 }
 
 void KonqFrameStatusBar::slotClear()
 {
-    slotDisplaytqStatusText( m_savedMessage );
+    slotDisplayStatusText( m_savedMessage );
 }
 
 void KonqFrameStatusBar::slotLoadingProgress( int percent )
@@ -236,20 +236,20 @@ void KonqFrameStatusBar::slotSpeedProgress( int bytesPerSecond )
   else
     sizeStr = i18n( "Stalled" );
 
-  slotDisplaytqStatusText( sizeStr ); // let's share the same label...
+  slotDisplayStatusText( sizeStr ); // let's share the same label...
 }
 
 void KonqFrameStatusBar::slotConnectToNewView(KonqView *, KParts::ReadOnlyPart *,KParts::ReadOnlyPart *newOne)
 {
    if (newOne!=0)
-      connect(newOne,TQT_SIGNAL(setStatusBarText(const TQString &)),this,TQT_SLOT(slotDisplaytqStatusText(const TQString&)));
-   slotDisplaytqStatusText( TQString::null );
+      connect(newOne,TQT_SIGNAL(setStatusBarText(const TQString &)),this,TQT_SLOT(slotDisplayStatusText(const TQString&)));
+   slotDisplayStatusText( TQString::null );
 }
 
 void KonqFrameStatusBar::showActiveViewIndicator( bool b )
 {
     m_led->setShown( b );
-    updateActivetqStatus();
+    updateActiveStatus();
 }
 
 void KonqFrameStatusBar::showLinkedViewIndicator( bool b )
@@ -264,7 +264,7 @@ void KonqFrameStatusBar::setLinkedView( bool b )
     m_pLinkedViewCheckBox->blockSignals( false );
 }
 
-void KonqFrameStatusBar::updateActivetqStatus()
+void KonqFrameStatusBar::updateActiveStatus()
 {
     if ( !m_led->isShown() )
     {
@@ -301,7 +301,7 @@ KonqFrame::KonqFrame( TQWidget* parent, KonqFrameContainerBase *parentContainer,
 
    // the frame statusbar
    m_pStatusBar = new KonqFrameStatusBar( this, "KonquerorFrameStatusBar");
-   m_pStatusBar->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+   m_pStatusBar->setSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
    connect(m_pStatusBar, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotStatusBarClicked()));
    connect( m_pStatusBar, TQT_SIGNAL( linkedViewClicked( bool ) ), this, TQT_SLOT( slotLinkedViewClicked( bool ) ) );
    m_separator = 0;
@@ -327,16 +327,16 @@ void KonqFrame::listViews( ChildViewList *viewList )
 void KonqFrame::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int /*id*/, int /*depth*/ )
 {
   if (saveURLs)
-    config->writePathEntry( TQString::tqfromLatin1( "URL" ).prepend( prefix ),
+    config->writePathEntry( TQString::fromLatin1( "URL" ).prepend( prefix ),
                         childView()->url().url() );
-  config->writeEntry( TQString::tqfromLatin1( "ServiceType" ).prepend( prefix ), childView()->serviceType() );
-  config->writeEntry( TQString::tqfromLatin1( "ServiceName" ).prepend( prefix ), childView()->service()->desktopEntryName() );
-  config->writeEntry( TQString::tqfromLatin1( "PassiveMode" ).prepend( prefix ), childView()->isPassiveMode() );
-  config->writeEntry( TQString::tqfromLatin1( "LinkedView" ).prepend( prefix ), childView()->isLinkedView() );
-  config->writeEntry( TQString::tqfromLatin1( "ToggleView" ).prepend( prefix ), childView()->isToggleView() );
-  config->writeEntry( TQString::tqfromLatin1( "LockedLocation" ).prepend( prefix ), childView()->isLockedLocation() );
-  //config->writeEntry( TQString::tqfromLatin1( "ShowStatusBar" ).prepend( prefix ), statusbar()->isVisible() );
-  if (this == docContainer) config->writeEntry( TQString::tqfromLatin1( "docContainer" ).prepend( prefix ), true );
+  config->writeEntry( TQString::fromLatin1( "ServiceType" ).prepend( prefix ), childView()->serviceType() );
+  config->writeEntry( TQString::fromLatin1( "ServiceName" ).prepend( prefix ), childView()->service()->desktopEntryName() );
+  config->writeEntry( TQString::fromLatin1( "PassiveMode" ).prepend( prefix ), childView()->isPassiveMode() );
+  config->writeEntry( TQString::fromLatin1( "LinkedView" ).prepend( prefix ), childView()->isLinkedView() );
+  config->writeEntry( TQString::fromLatin1( "ToggleView" ).prepend( prefix ), childView()->isToggleView() );
+  config->writeEntry( TQString::fromLatin1( "LockedLocation" ).prepend( prefix ), childView()->isLockedLocation() );
+  //config->writeEntry( TQString::fromLatin1( "ShowStatusBar" ).prepend( prefix ), statusbar()->isVisible() );
+  if (this == docContainer) config->writeEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), true );
 
   KonqConfigEvent ev( config, prefix+"_", true/*save*/);
   TQApplication::sendEvent( childView()->part(), &ev );
@@ -460,7 +460,7 @@ void KonqFrame::slotLinkedViewClicked( bool mode )
 void
 KonqFrame::paintEvent( TQPaintEvent* )
 {
-   m_pStatusBar->tqrepaint();
+   m_pStatusBar->repaint();
 }
 
 void KonqFrame::slotRemoveView()
@@ -517,40 +517,40 @@ void KonqFrameContainer::saveConfig( KConfig* config, const TQString &prefix, bo
   int idSecond = id + (int)pow( 2.0, depth );
 
   //write children sizes
-  config->writeEntry( TQString::tqfromLatin1( "SplitterSizes" ).prepend( prefix ), sizes() );
+  config->writeEntry( TQString::fromLatin1( "SplitterSizes" ).prepend( prefix ), sizes() );
 
   //write children
   TQStringList strlst;
   if( firstChild() )
-    strlst.append( TQString::tqfromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1) );
+    strlst.append( TQString::fromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1) );
   if( secondChild() )
-    strlst.append( TQString::tqfromLatin1( secondChild()->frameType() ) + TQString::number( idSecond ) );
+    strlst.append( TQString::fromLatin1( secondChild()->frameType() ) + TQString::number( idSecond ) );
 
-  config->writeEntry( TQString::tqfromLatin1( "Children" ).prepend( prefix ), strlst );
+  config->writeEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), strlst );
 
   //write orientation
   TQString o;
   if( orientation() == Qt::Horizontal )
-    o = TQString::tqfromLatin1("Horizontal");
+    o = TQString::fromLatin1("Horizontal");
   else if( orientation() == Qt::Vertical )
-    o = TQString::tqfromLatin1("Vertical");
-  config->writeEntry( TQString::tqfromLatin1( "Orientation" ).prepend( prefix ), o );
+    o = TQString::fromLatin1("Vertical");
+  config->writeEntry( TQString::fromLatin1( "Orientation" ).prepend( prefix ), o );
 
   //write docContainer
-  if (this == docContainer) config->writeEntry( TQString::tqfromLatin1( "docContainer" ).prepend( prefix ), true );
+  if (this == docContainer) config->writeEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), true );
 
-  if (m_pSecondChild == m_pActiveChild) config->writeEntry( TQString::tqfromLatin1( "activeChildIndex" ).prepend( prefix ), 1 );
-  else config->writeEntry( TQString::tqfromLatin1( "activeChildIndex" ).prepend( prefix ), 0 );
+  if (m_pSecondChild == m_pActiveChild) config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 1 );
+  else config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 0 );
 
   //write child configs
   if( firstChild() ) {
-    TQString newPrefix = TQString::tqfromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1);
+    TQString newPrefix = TQString::fromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1);
     newPrefix.append( '_' );
     firstChild()->saveConfig( config, newPrefix, saveURLs, docContainer, id, depth + 1 );
   }
 
   if( secondChild() ) {
-    TQString newPrefix = TQString::tqfromLatin1( secondChild()->frameType() ) + TQString::number( idSecond );
+    TQString newPrefix = TQString::fromLatin1( secondChild()->frameType() ) + TQString::number( idSecond );
     newPrefix.append( '_' );
     secondChild()->saveConfig( config, newPrefix, saveURLs, docContainer, idSecond, depth + 1 );
   }
@@ -661,7 +661,7 @@ void KonqFrameContainer::removeChildFrame( KonqFrameBase * frame )
 
 void KonqFrameContainer::childEvent( TQChildEvent *c )
 {
-  // Child events cause tqlayout changes. These are unnecassery if we are going
+  // Child events cause layout changes. These are unnecassery if we are going
   // to be deleted anyway.
   if (!m_bAboutToBeDeleted)
       TQSplitter::childEvent(c);

@@ -52,10 +52,10 @@ namespace {
 ThemePage::ThemePage( TQWidget* parent, const char* name )
 	: TQWidget( parent, name )
 {
-	TQBoxLayout *tqlayout = new TQVBoxLayout( this );
-	tqlayout->setAutoAdd( true );
-	tqlayout->setMargin( KDialog::marginHint() );
-	tqlayout->setSpacing( KDialog::spacingHint() );
+	TQBoxLayout *layout = new TQVBoxLayout( this );
+	layout->setAutoAdd( true );
+	layout->setMargin( KDialog::marginHint() );
+	layout->setSpacing( KDialog::spacingHint() );
 
 	new TQLabel( i18n("Select the cursor theme you want to use:"), this );
 

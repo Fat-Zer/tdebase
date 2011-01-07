@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 /*
 
- This file tqcontains things relevant to window activation and focus
+ This file contains things relevant to window activation and focus
  stealing prevention.
 
 */
@@ -82,7 +82,7 @@ namespace KWinInternal
    the new mapped window (done in Client::readUserTimeMapTimestamp()) :
      - the window may have the _NET_WM_USER_TIME property. This way
        the application may either explicitly request that the window is not
-       activated (by using 0 timestamp), or the property tqcontains the time
+       activated (by using 0 timestamp), or the property contains the time
        of last user action in the application.
      - KWin itself tries to detect time of last user action in every window,
        by watching KeyPress and ButtonPress events on windows. This way some
@@ -287,7 +287,7 @@ void Workspace::activateClient( Client* c, bool force )
     if( c->isMinimized())
         c->unminimize();
 
-// TODO force should perhaps allow this only if the window already tqcontains the mouse
+// TODO force should perhaps allow this only if the window already contains the mouse
     if( options->focusPolicyIsReasonable() || force )
         requestFocus( c, force );
 
@@ -433,7 +433,7 @@ bool Workspace::activateNextClient( Client* c )
                     if( c == NULL && !(*it)->isOnScreen( activeScreen()))
                         continue;
                     }
-                if( mainwindows.tqcontains( *it ))
+                if( mainwindows.contains( *it ))
                     {
                     get_focus = *it;
                     break;
@@ -486,7 +486,7 @@ void Workspace::setCurrentScreen( int new_screen )
 
 void Workspace::gotFocusIn( const Client* c )
     {
-    if( should_get_focus.tqcontains( const_cast< Client* >( c )))
+    if( should_get_focus.contains( const_cast< Client* >( c )))
         { // remove also all sooner elements that should have got FocusIn,
       // but didn't for some reason (and also won't anymore, because they were sooner)
         while( should_get_focus.first() != c )
@@ -523,7 +523,7 @@ bool Workspace::allowClientActivation( const Client* c, Time time, bool focus_in
     Client* ac = mostRecentlyActivatedClient();
     if( focus_in )
         {
-        if( should_get_focus.tqcontains( const_cast< Client* >( c )))
+        if( should_get_focus.contains( const_cast< Client* >( c )))
             return true; // FocusIn was result of KWin's action
         // Before getting FocusIn, the active Client already
         // got FocusOut, and therefore got deactivated.
@@ -712,7 +712,7 @@ void Client::demandAttention( bool set )
         {
         // Demand attention flag is often set right from manage(), when focus stealing prevention
         // steps in. At that time the window has no taskbar entry yet, so KNotify cannot place
-        // e.g. the passive popup next to it. So wait up to 1 second for the icon tqgeometry
+        // e.g. the passive popup next to it. So wait up to 1 second for the icon geometry
         // to be set.
         // Delayed call to KNotify also solves the problem of having X server grab in manage(),
         // which may deadlock when KNotify (or KLauncher when launching KNotify) need to access X.
@@ -755,7 +755,7 @@ Time Client::readUserTimeMapTimestamp( const KStartupInfoId* asn_id, const KStar
     {
     Time time = info->userTime();
 //    kdDebug( 1212 ) << "User timestamp, initial:" << time << endl;
-    // newer ASN timestamp always tqreplaces user timestamp, unless user timestamp is 0
+    // newer ASN timestamp always replaces user timestamp, unless user timestamp is 0
     // helps e.g. with konqy reusing
     if( asn_data != NULL && time != 0 )
         {
@@ -935,7 +935,7 @@ void Client::startupIdChanged()
     bool asn_valid = workspace()->checkStartupNotification( window(), asn_id, asn_data );
     if( !asn_valid )
         return;
-    // If the ASN tqcontains desktop, move it to the desktop, otherwise move it to the current
+    // If the ASN contains desktop, move it to the desktop, otherwise move it to the current
     // desktop (since the new ASN should make the window act like if it's a new application
     // launched). However don't affect the window's desktop if it's set to be on all desktops.
     int desktop = workspace()->currentDesktop();

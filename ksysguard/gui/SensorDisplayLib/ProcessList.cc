@@ -611,7 +611,7 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 		pix = KGlobal::iconLoader()->loadIcon(name, KIcon::Small,
 							  KIcon::SizeSmall, KIcon::DefaultState,
 							  0L, true);
-		if (pix.isNull() || !pix.tqmask())
+		if (pix.isNull() || !pix.mask())
 			pix = KGlobal::iconLoader()->loadIcon("unknownapp", KIcon::User,
 								  KIcon::SizeSmall);
 
@@ -634,9 +634,9 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 		{
 			icon.fill();
 			bitBlt(&icon, 4, 0, &pix, 0, 0, pix.width(), pix.height());
-			TQBitmap tqmask(24, 16, true);
-			bitBlt(&tqmask, 4, 0, pix.tqmask(), 0, 0, pix.width(), pix.height());
-			icon.setMask(tqmask);
+			TQBitmap mask(24, 16, true);
+			bitBlt(&mask, 4, 0, pix.mask(), 0, 0, pix.width(), pix.height());
+			icon.setMask(mask);
 			pix = icon;
 		}
 		iconCache.insert(name, new TQPixmap(pix));
@@ -909,7 +909,7 @@ ProcessList::selectAllItems(bool select)
 	for ( ; it.current(); ++it )
 	{
 		it.current()->setSelected(select);
-		tqrepaintItem(it.current());
+		repaintItem(it.current());
 		if (select)
 			selectedPIds.append(it.current()->text(1).toInt());
 	}
@@ -928,7 +928,7 @@ ProcessList::selectAllChilds(int pid, bool select)
 		{
 			int currPId = it.current()->text(1).toInt();
 			it.current()->setSelected(select);
-			tqrepaintItem(it.current());
+			repaintItem(it.current());
 			if (select)
 				selectedPIds.append(currPId);
 			else

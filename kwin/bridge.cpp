@@ -43,7 +43,7 @@ BRIDGE_HELPER( bool, isMovable,,, const )
 BRIDGE_HELPER( bool, isResizable,,, const )
 BRIDGE_HELPER( TQString, caption,,, const )
 BRIDGE_HELPER( void, processMousePressEvent, TQMouseEvent* e, e, )
-BRIDGE_HELPER( TQRect, tqgeometry,,, const )
+BRIDGE_HELPER( TQRect, geometry,,, const )
 BRIDGE_HELPER( void, closeWindow,,, )
 BRIDGE_HELPER( void, maximize, MaximizeMode m, m, )
 BRIDGE_HELPER( void, minimize,,, )
@@ -178,12 +178,12 @@ TQRegion Bridge::unobscuredRegion( const TQRegion& r ) const
             if( !(*it)->isOnDesktop( c->desktop()))
                 continue;
             }
-        /* the clients all have their tqmask-regions in local coords
+        /* the clients all have their mask-regions in local coords
 	   so we have to translate them to a shared coord system
 	   we choose ours */
 	int dx = (*it)->x() - c->x();
 	int dy = (*it)->y() - c->y();
-	TQRegion creg = (*it)->tqmask();
+	TQRegion creg = (*it)->mask();
 	creg.translate(dx, dy);
 	reg -= creg;
 	if (reg.isEmpty())

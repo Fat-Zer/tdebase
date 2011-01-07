@@ -121,9 +121,9 @@ void KPagerConfigDialog::setWindowDrawMode(int type)
     m_tmpWindowDrawMode=type;
 }
 
-void KPagerConfigDialog::setLayout(int tqlayout)
+void KPagerConfigDialog::setLayout(int layout)
 {
-    m_tmpLayoutType=tqlayout;
+    m_tmpLayoutType=layout;
 }
 
 void KPagerConfigDialog::loadConfiguration()
@@ -133,14 +133,14 @@ void KPagerConfigDialog::loadConfiguration()
     m_chkShowBackground->setChecked(m_showBackground);
     m_chkShowWindows->setChecked(m_showWindows);
     m_grpWindowDrawMode->setButton(m_windowDrawMode);
-    m_grpLayoutType->setButton(m_tqlayoutType);
+    m_grpLayoutType->setButton(m_layoutType);
     m_chkWindowDragging->setChecked( m_windowDragging );
     m_tmpShowName=m_showName;
     m_tmpShowNumber=m_showNumber;
     m_tmpShowBackground=m_showBackground;
     m_tmpShowWindows=m_showWindows;
     m_tmpWindowDrawMode=m_windowDrawMode;
-    m_tmpLayoutType=m_tqlayoutType;
+    m_tmpLayoutType=m_layoutType;
     m_tmpWindowDragging=m_windowDragging;
 }
 
@@ -154,7 +154,7 @@ void KPagerConfigDialog::initConfiguration(void)
   m_showNumber=cfg->readBoolEntry("showNumber", Desktop::c_defShowNumber);
   m_showBackground=cfg->readBoolEntry("showBackground", Desktop::c_defShowBackground);
   m_showWindows=cfg->readBoolEntry("showWindows", Desktop::c_defShowWindows);
-  m_tqlayoutType=cfg->readNumEntry("tqlayoutType", KPager::c_defLayout);
+  m_layoutType=cfg->readNumEntry("layoutType", KPager::c_defLayout);
   m_windowDragging=cfg->readBoolEntry("windowDragging", true );
 }
 
@@ -165,7 +165,7 @@ void KPagerConfigDialog::slotOk()
   m_showBackground=m_tmpShowBackground;
   m_showWindows=m_tmpShowWindows;
   m_windowDrawMode=m_tmpWindowDrawMode;
-  m_tqlayoutType=m_tmpLayoutType;
+  m_layoutType=m_tmpLayoutType;
   m_windowDragging=m_tmpWindowDragging;  
   accept();
 }
@@ -176,5 +176,5 @@ bool KPagerConfigDialog::m_showBackground=Desktop::c_defShowBackground;
 bool KPagerConfigDialog::m_showWindows=Desktop::c_defShowWindows;
 bool KPagerConfigDialog::m_windowDragging=Desktop::c_defWindowDragging;
 int  KPagerConfigDialog::m_windowDrawMode=Desktop::c_defWindowDrawMode;
-int  KPagerConfigDialog::m_tqlayoutType=KPager::c_defLayout;
+int  KPagerConfigDialog::m_layoutType=KPager::c_defLayout;
 

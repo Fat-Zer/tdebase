@@ -60,7 +60,7 @@ class CFontViewPart : public KParts::ReadOnlyPart
 
     private slots:
 
-    void previewtqStatus(bool st);
+    void previewStatus(bool st);
     void timeout();
     void install();
     void changeText();

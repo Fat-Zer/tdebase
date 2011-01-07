@@ -109,7 +109,7 @@ TY_CSI_PS|SGR|'m'|104|scr|setBackColor|12
 TY_CSI_PS|SGR|'m'|105|scr|setBackColor|13
 TY_CSI_PS|SGR|'m'|106|scr|setBackColor|14
 TY_CSI_PS|SGR|'m'|107|scr|setBackColor|15
-TY_CSI_PS|DSR|'n'|5|emu|reporttqStatus|
+TY_CSI_PS|DSR|'n'|5|emu|reportStatus|
 TY_CSI_PS|DSR|'n'|6|emu|reportCursorPosition|
 TY_CSI_PS|DECLL|'q'|0|||
 TY_CSI_PS|DECLL|'q'|1|||

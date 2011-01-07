@@ -52,7 +52,7 @@ TextCreator::~TextCreator()
 bool TextCreator::create(const TQString &path, int width, int height, TQImage &img)
 {
     // Filter out unwanted mimetypes
-    KMimeType::Ptr mimeType = KMimeType::tqfindByPath( path );
+    KMimeType::Ptr mimeType = KMimeType::findByPath( path );
     if ( mimeType->is( "text/rtf" ) )
         return false;
 

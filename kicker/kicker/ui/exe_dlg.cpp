@@ -78,8 +78,8 @@ PanelExeDialog::PanelExeDialog(const TQString& title, const TQString& descriptio
             this, TQT_SLOT(slotIconChanged(TQString)));
 
     // leave decent space for the commandline
-    resize(tqsizeHint().width() > 300 ? tqsizeHint().width() : 300,
-           tqsizeHint().height());
+    resize(sizeHint().width() > 300 ? sizeHint().width() : 300,
+           sizeHint().height());
 }
 
 void PanelExeDialog::slotOk()
@@ -174,7 +174,7 @@ void PanelExeDialog::slotTextChanged(const TQString &str)
 
 void PanelExeDialog::slotReturnPressed()
 {
-    if (m_partialPath2full.tqcontains(ui->m_exec->url()))
+    if (m_partialPath2full.contains(ui->m_exec->url()))
         ui->m_exec->setURL(m_partialPath2full[ui->m_exec->url()]);
 }
 

@@ -13,7 +13,7 @@ In-Reply-To: <9010240014.AA10730@ucbvax.Berkeley.EDU> 23 Oct 90 16:00 EDT
                         Campus Computing - Terminal Emulation
                   Includes VT100 and VT52 Terminal and Control Codes
 
-        This file tqcontains control and terminal codes for the VT100 terminals,
+        This file contains control and terminal codes for the VT100 terminals,
 ANSI terminals, and VT52 terminals. Many of the codes were derived from PC/
 Intercomm, from Mark of the Unicorn Software.  I have researched some of them
 and added some of my own.
@@ -377,7 +377,7 @@ VT100 CURRENT STATES:
                                                 be the same.  9600 baud is
                                                 sent for 7200 baud.
 
-        Esc [ Ps n      DSR: Device tqStatus Report
+        Esc [ Ps n      DSR: Device Status Report
 
                         * Parameter values other than 5, 6, are ignored.
                           If the parameter value is 5, the sequence

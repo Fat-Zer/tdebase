@@ -134,7 +134,7 @@ TQCString Repository::findKeys(const TQCString &group, const char *sep ) const
                 if (!list.isEmpty())
                 {
                     // Add the same keys only once please :)
-                    if( !list.tqcontains(key) )
+                    if( !list.contains(key) )
                     {
                         kdDebug(1205) << "Key added to list: " << key << endl;
                         list += '\007'; // I do not know

@@ -127,7 +127,7 @@ public:
         SettingDecoration = 1 << 0, ///< The decoration was changed
         SettingColors     = 1 << 1, ///< The color palette was changed
         SettingFont       = 1 << 2, ///< The titlebar font was changed
-        SettingButtons    = 1 << 3, ///< The button tqlayout was changed
+        SettingButtons    = 1 << 3, ///< The button layout was changed
         SettingTooltips   = 1 << 4, ///< The tooltip setting was changed
         SettingBorder     = 1 << 5  ///< The border size setting was changed
         };
@@ -205,7 +205,7 @@ public:
      * @param type   The requested color type.
      * @param active Whether to return the color for active or inactive windows.
      */
-    const TQColorGroup& tqcolorGroup(ColorType type, bool active=true) const;
+    const TQColorGroup& colorGroup(ColorType type, bool active=true) const;
     /**
      * Returns the active or inactive decoration font.
      * The changed flags for this setting is SettingFont.
@@ -291,7 +291,7 @@ public:
     /**
      * @internal
      */
-    virtual unsigned long updateSettings() = 0; // returns SettingXYZ tqmask
+    virtual unsigned long updateSettings() = 0; // returns SettingXYZ mask
 
 protected:
     /**
@@ -412,7 +412,7 @@ class KWIN_EXPORT KDecoration
         bool isResizable() const;
 	/**
 	 * This function returns the window type of the decorated window.
-	 * The argument to this function is a tqmask of all window types
+	 * The argument to this function is a mask of all window types
 	 * the decoration knows about (as the list of valid window types
 	 * is extended over time, and fallback types are specified in order
 	 * to support older code). For a description of all window types,
@@ -451,7 +451,7 @@ class KWIN_EXPORT KDecoration
 	 * 
 	 * \note Decorations that enable a double-click operation for the menu
 	 * button must ensure to call \a showWindowMenu() with the \a pos
-	 * rectangle set to the menu button tqgeometry.
+	 * rectangle set to the menu button geometry.
 	 * IMPORTANT: As a result of this function, the decoration object that
 	 * called it may be destroyed after the function returns. This means
 	 * that the decoration object must either return immediately after
@@ -481,15 +481,15 @@ class KWIN_EXPORT KDecoration
 	void performWindowOperation( WindowOperation op );
 	/**
 	 * If the decoration is non-rectangular, this function needs to be called
-	 * to set the tqshape of the decoration.
+	 * to set the shape of the decoration.
 	 *
-	 * @param reg  The tqshape of the decoration.
+	 * @param reg  The shape of the decoration.
 	 * @param mode The X11 values Unsorted, YSorted, YXSorted and YXBanded that specify
 	 *             the sorting of the rectangles, default value is Unsorted.
 	 */
         void setMask( const TQRegion& reg, int mode = 0 );
 	/**
-	 * This convenience function resets the tqshape tqmask.
+	 * This convenience function resets the shape mask.
 	 */
         void clearMask(); // convenience
 	/**
@@ -499,13 +499,13 @@ class KWIN_EXPORT KDecoration
 	 */
         bool isPreview() const;
 	/**
-	 * Returns the tqgeometry of the decoration.
+	 * Returns the geometry of the decoration.
 	 */
-        TQRect tqgeometry() const;
+        TQRect geometry() const;
 	/**
-	 * Returns the icon tqgeometry for the window, i.e. the tqgeometry of the taskbar
+	 * Returns the icon geometry for the window, i.e. the geometry of the taskbar
 	 * entry. This is used mainly for window minimize animations. Note that
-	 * the tqgeometry may be null.
+	 * the geometry may be null.
 	 */
         TQRect iconGeometry() const;
         /**
@@ -573,13 +573,13 @@ class KWIN_EXPORT KDecoration
 	 * whether it's shaded. Decorations often turn off their bottom border when the
 	 * window is shaded, and turn off their left/right/bottom borders when
 	 * the window is maximized and moving and resizing of maximized windows is disabled.
-	 * This function mustn't do any tqrepaints or resizes. Also, if the sizes returned
+	 * This function mustn't do any repaints or resizes. Also, if the sizes returned
 	 * by this function don't match the real values, this may result in drawing errors
 	 * or other problems.
 	 *
 	 * @see KDecorationOptions::moveResizeMaximizedWindows()
 	 */
-        // mustn't do any tqrepaints, resizes or anything like that
+        // mustn't do any repaints, resizes or anything like that
 	virtual void borders( int& left, int& right, int& top, int& bottom ) const = 0;
 	/**
 	 * This method is called by kwin when the style should resize the decoration window.
@@ -594,7 +594,7 @@ class KWIN_EXPORT KDecoration
 	 * Note that the returned size shouldn't be too large, because it will be
 	 * used to keep the decorated window at least as large.
 	 */
-	virtual TQSize tqminimumSize() const = 0;
+	virtual TQSize minimumSize() const = 0;
 	/**
 	 * This function is called whenever the window either becomes or stops being active.
 	 * Use isActive() to find out the current state.
@@ -647,10 +647,10 @@ class KWIN_EXPORT KDecoration
          * you should compensate for the 2 pixels that would make the window
          * look larger.
 	 *
-	 * @param geom  The tqgeometry at this the bound should be drawn
+	 * @param geom  The geometry at this the bound should be drawn
 	 * @param clear @a true if the bound should be cleared
 	 *
-	 * @see workspaceWidget() and tqgeometry().
+	 * @see workspaceWidget() and geometry().
 	 */
         virtual bool drawbound( const TQRect& geom, bool clear );
 	/**
@@ -661,7 +661,7 @@ class KWIN_EXPORT KDecoration
 	 * @a False should be returned if the default implementation should be used.
 	 * Note that you should not use this function to force disabling of the animation.
 	 *
-	 * @see workspaceWidget(), tqgeometry() and helperShowHide().
+	 * @see workspaceWidget(), geometry() and helperShowHide().
 	 */
         virtual bool animateMinimize( bool minimize );
         /**
@@ -673,7 +673,7 @@ class KWIN_EXPORT KDecoration
 	 * This function is called to reset the decoration on settings changes.
 	 * It is usually invoked by calling KDecorationFactory::resetDecorations().
 	 *
-	 * @param changed Specifies which settings were changed, given by the SettingXXX tqmasks
+	 * @param changed Specifies which settings were changed, given by the SettingXXX masks
 	 */
         virtual void reset( unsigned long changed );
 
@@ -877,12 +877,12 @@ inline bool KDecoration::isOnAllDesktops() const
 
 inline int KDecoration::width() const
     {
-    return tqgeometry().width();
+    return geometry().width();
     }
     
 inline int KDecoration::height() const
     {
-    return tqgeometry().height();
+    return geometry().height();
     }
     
 #endif

@@ -65,7 +65,7 @@ KCMDnssd::KCMDnssd(TQWidget *parent, const char *name, const TQStringList&)
 		else if (getenv("KDESU_USER")!=0) tabs->removePage(tab); 
 	addConfig(DNSSD::Configuration::self(),this);
 	// it is host-wide setting so it has to be in global config file
-	domain = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdnssdrc" ));
+	domain = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdnssdrc" ));
 	domain->setGroup("publishing");
 	load();
 	connect(hostedit,TQT_SIGNAL(textChanged(const TQString&)),this,TQT_SLOT(wdchanged()));
@@ -119,12 +119,12 @@ void KCMDnssd::load()
 {
 	if (geteuid()==0) loadMdnsd();
 	enableZeroconf->setChecked(false);
-	TQProcess avahitqStatus(TQString("/usr/share/avahi/avahi_status"), this, "avahitqStatus");
-	avahitqStatus.start();
-	while (avahitqStatus.isRunning()) {
+	TQProcess avahiStatus(TQString("/usr/share/avahi/avahi_status"), this, "avahiStatus");
+	avahiStatus.start();
+	while (avahiStatus.isRunning()) {
 	  kapp->processEvents();
 	}
-	int exitStatus = avahitqStatus.exitStatus();
+	int exitStatus = avahiStatus.exitStatus();
 	if (exitStatus == 0) { // disabled
 	  enableZeroconf->setChecked(false);
 	} else if (exitStatus == 1) { // enabled 

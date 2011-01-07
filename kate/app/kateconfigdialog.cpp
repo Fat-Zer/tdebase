@@ -334,7 +334,7 @@ void KateConfigDialog::removePluginPage (Kate::Plugin *plugin)
   {
     if  ( pluginPages.at(i)->plugin == plugin )
     {
-      TQWidget *w = pluginPages.at(i)->page->tqparentWidget();
+      TQWidget *w = pluginPages.at(i)->page->parentWidget();
       delete pluginPages.at(i)->page;
       delete w;
       pluginPages.remove(pluginPages.at(i));

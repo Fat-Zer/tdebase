@@ -76,7 +76,7 @@ public:
 
     KWin::WindowInfo* info( WId win );
 
-    TQSize tqsizeHint() const;
+    TQSize sizeHint() const;
 
     enum LayoutTypes { Classical=0, Horizontal, Vertical };
 
@@ -119,9 +119,9 @@ protected:
     const TQString lWidth();
     const TQString lHeight();
 
-    LayoutTypes m_tqlayoutType;
+    LayoutTypes m_layoutType;
 
-    class TQGridLayout *m_tqlayout;
+    class TQGridLayout *m_layout;
     KPopupMenu *m_mnu;
     TQPopupMenu *m_smnu, *m_dmnu;
     KAction *m_quit_action;

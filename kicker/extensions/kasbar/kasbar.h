@@ -84,7 +84,7 @@ class KDE_EXPORT KasBar : public QWidget
    Q_PROPERTY( uint boxesPerLine READ boxesPerLine )
    Q_PROPERTY( Direction direction READ direction )
    Q_PROPERTY( Orientation orientation READ orientation )
-   Q_PROPERTY( bool tqmasked READ isMasked )
+   Q_PROPERTY( bool masked READ isMasked )
    Q_ENUMS( Direction )
 
    friend class KasItem;
@@ -152,7 +152,7 @@ public:
 
    bool isDrag() const { return inDrag; }
 
-   TQSize tqsizeHint( Orientation,  TQSize max );
+   TQSize sizeHint( Orientation,  TQSize max );
 
    //
    // Look and feel options
@@ -188,7 +188,7 @@ public:
    void updateItem( KasItem *i );
 
    /** Redraws the specified item. */
-   void tqrepaintItem(KasItem *i, bool erase = true );
+   void repaintItem(KasItem *i, bool erase = true );
 
    /** Returns the item at p or 0. */
    KasItem* itemAt(const TQPoint &p);
@@ -229,7 +229,7 @@ public slots:
 
    void setBackground( const TQPixmap &pix );
 
-   void setMasked( bool tqmask );
+   void setMasked( bool mask );
 
    void setPaintInactiveFrames( bool enable );
 
@@ -251,7 +251,7 @@ signals:
    void directionChanged();
 
    /** Emitted when kasbar wants to resize. This happens when a new window is added. */
-   void tqlayoutChanged();
+   void layoutChanged();
 
    /** Emitted when the item size is changed. */
    void itemSizeChanged( int );
@@ -279,7 +279,7 @@ protected:
    /** Calls the paint methods for the items in the rectangle specified by the event. */
    void paintEvent(TQPaintEvent *ev);
 
-   /** Forces the widget to re-tqlayout it's contents. */
+   /** Forces the widget to re-layout it's contents. */
    void resizeEvent(TQResizeEvent *ev);
 
 private:

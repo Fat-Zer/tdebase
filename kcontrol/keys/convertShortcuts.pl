@@ -9,7 +9,7 @@ foreach (<>) {
         s/^Lock screen/Lock Session/;
         s/^Lock Screen/Lock Session/;
         s/^Mouse emulation/Mouse Emulation/;
-        s/^Next keyboard tqlayout/Switch to Next Keyboard Layout/;
+        s/^Next keyboard layout/Switch to Next Keyboard Layout/;
         s/Switch To Next Keyboard Layout/Switch to Next Keyboard Layout/;
         s/^Screenshot of desktop/Desktop Screenshot/;
         s/^Pop-up window operations menu/Window Operations Menu/;

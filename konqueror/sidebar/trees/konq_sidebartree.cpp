@@ -55,7 +55,7 @@ static const int autoOpenTimeout = 750;
 
 getModule KonqSidebarTree::getPluginFactory(TQString name)
 {
-  if (!pluginFactories.tqcontains(name))
+  if (!pluginFactories.contains(name))
   {
     KLibLoader *loader = KLibLoader::self();
     TQString libName    = pluginInfo[name];
@@ -114,8 +114,8 @@ public:
 };
 
 
-KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *tqparentWidget, int virt, const TQString& path )
-    : KListView( tqparentWidget ),
+KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path )
+    : KListView( parentWidget ),
       m_currentTopLevelItem( 0 ),
       m_toolTip( this ),
       m_scrollingLocked( false ),
@@ -272,7 +272,7 @@ void KonqSidebarTree::contentsDragMoveEvent( TQDragMoveEvent *e )
     TQListViewItem *item = itemAt( contentsToViewport( e->pos() ) );
 
     // Accept drops on the background, if URLs
-    if ( !item && m_lstDropFormats.tqcontains("text/uri-list") )
+    if ( !item && m_lstDropFormats.contains("text/uri-list") )
     {
         m_dropItem = 0;
         e->acceptAction();
@@ -417,7 +417,7 @@ bool KonqSidebarTree::acceptDrag(TQDropEvent* e) const
 {
     // for KListViewMode...
     for( int i = 0; e->format( i ); i++ )
-        if ( d->m_dropFormats.tqcontains(e->format( i ) ) )
+        if ( d->m_dropFormats.contains(e->format( i ) ) )
             return true;
     return false;
 }
@@ -516,7 +516,7 @@ void KonqSidebarTree::slotAutoOpenFolder()
         return;
 
     m_dropItem->setOpen( true );
-    m_dropItem->tqrepaint();
+    m_dropItem->repaint();
 }
 
 void KonqSidebarTree::rescanConfiguration()
@@ -606,7 +606,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
             // Version 5 includes the audiocd browser
             // Version 6 includes the printmanager and lan browser
             const int currentVersion = 6;
-            TQString key = TQString::tqfromLatin1("X-KDE-DirTreeVersionNumber");
+            TQString key = TQString::fromLatin1("X-KDE-DirTreeVersionNumber");
             KSimpleConfig versionCfg( path + "/.directory" );
             int versionNumber = versionCfg.readNumEntry( key, 1 );
             kdDebug(1201) << "KonqSidebarTree::scanDir found version " << versionNumber << endl;
@@ -650,9 +650,9 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
 	                TQStringList::ConstIterator eEnd = globalDirEntries.end();
         	        for (; eIt != eEnd; ++eIt )
                 	{
-	                    //kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir tqcontains " << *eIt << endl;
+	                    //kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir contains " << *eIt << endl;
         	            if ( *eIt != "." && *eIt != ".."
-                	         && !entries.tqcontains( *eIt ) && !dirEntries.tqcontains( *eIt ) )
+                	         && !entries.contains( *eIt ) && !dirEntries.contains( *eIt ) )
 	                    { // we don't have that one yet -> copy it.
                 	        TQString cp("cp -R -- ");
         	                cp += KProcess::quote(dirtree_dir + *eIt);
@@ -813,7 +813,7 @@ void KonqSidebarTree::slotAnimation()
     for (; it != end; ++it )
     {
         uint & iconNumber = it.data().iconNumber;
-        TQString icon = TQString::tqfromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
+        TQString icon = TQString::fromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
         it.key()->setPixmap( 0, SmallIcon( icon));
 
         iconNumber++;
@@ -882,7 +882,7 @@ void KonqSidebarTree::enableActions( bool copy, bool cut, bool paste,
 bool KonqSidebarTree::tabSupport()
 {
     // see if the newTab() dcop function is available (i.e. the sidebar is embedded into konqueror)
-   DCOPRef ref(kapp->dcopClient()->appId(), tqtopLevelWidget()->name());
+   DCOPRef ref(kapp->dcopClient()->appId(), topLevelWidget()->name());
     DCOPReply reply = ref.call("functions()");
     if (reply.isValid()) {
         QCStringList funcs;
@@ -1023,7 +1023,7 @@ void KonqSidebarTree::slotOpenNewWindow()
 void KonqSidebarTree::slotOpenTab()
 {
     if (!m_currentTopLevelItem) return;
-    DCOPRef ref(kapp->dcopClient()->appId(), tqtopLevelWidget()->name());
+    DCOPRef ref(kapp->dcopClient()->appId(), topLevelWidget()->name());
     ref.call( "newTab(TQString)", m_currentTopLevelItem->externalURL().url() );
 }
 
@@ -1045,7 +1045,7 @@ void KonqSidebarTreeToolTip::maybeTip( const TQPoint &point )
     if ( item ) {
 	TQString text = static_cast<KonqSidebarTreeItem*>( item )->toolTipText();
 	if ( !text.isEmpty() )
-	    tip ( m_view->tqitemRect( item ), text );
+	    tip ( m_view->itemRect( item ), text );
     }
 }
 

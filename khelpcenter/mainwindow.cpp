@@ -310,7 +310,7 @@ void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
          proto == "ghelp" )
         own = true;
     else if ( url.isLocalFile() ) {
-        KMimeMagicResult *res = KMimeMagic::self()->tqfindFileType( url.path() );
+        KMimeMagicResult *res = KMimeMagic::self()->findFileType( url.path() );
         if ( res->isValid() && res->accuracy() > 40
              && res->mimeType() == "text/html" )
             own = true;
@@ -325,7 +325,7 @@ void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
 
     mDoc->browserExtension()->setURLArgs( args );
 
-    if ( proto == TQString::tqfromLatin1("glossentry") ) {
+    if ( proto == TQString::fromLatin1("glossentry") ) {
         TQString decodedEntryId = KURL::decode_string( url.encodedPathAndQuery() );
         slotGlossSelected( mNavigator->glossEntry( decodedEntryId ) );
         mNavigator->slotSelectGlossEntry( decodedEntryId );

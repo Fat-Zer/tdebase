@@ -88,7 +88,7 @@ int main(int argc, char** argv)
             applets[*it].freeSpace = 1 - applets[*it].freeSpace;
 
             // Take care of stretchable applets.
-            if (stretchableApplets.tqcontains(applets[*it].desktopFile))
+            if (stretchableApplets.contains(applets[*it].desktopFile))
             {
                 if (it != appletIds.begin())
                 {

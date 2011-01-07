@@ -327,7 +327,7 @@ void KlipperWidget::showPopupMenu( TQPopupMenu *menu )
 {
     Q_ASSERT( menu != 0L );
 
-    TQSize size = menu->tqsizeHint(); // tqgeometry is not valid until it's shown
+    TQSize size = menu->sizeHint(); // geometry is not valid until it's shown
     if (bPopupAtMouse) {
         TQPoint g = TQCursor::pos();
         if ( size.height() < g.y() )
@@ -336,7 +336,7 @@ void KlipperWidget::showPopupMenu( TQPopupMenu *menu )
             menu->popup(TQPoint(g.x(), g.y()));
     } else {
         KWin::WindowInfo i = KWin::windowInfo( winId(), NET::WMGeometry );
-        TQRect g = i.tqgeometry();
+        TQRect g = i.geometry();
         TQRect screen = KGlobalSettings::desktopGeometry(g.center());
 
         if ( g.x()-screen.x() > screen.width()/2 &&
@@ -380,7 +380,7 @@ bool KlipperWidget::loadHistory() {
     TQDataStream* history_stream = &file_stream;
     TQByteArray data;
     if( !oldfile ) {
-        TQ_UINT32 crc;
+        Q_UINT32 crc;
         file_stream >> crc >> data;
         if( crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() ) != crc ) {
             kdWarning() << failed_load_warning << ": " << history_file.errorString() << endl;
@@ -444,7 +444,7 @@ void KlipperWidget::saveHistory() {
     for (  const HistoryItem* item = history()->first(); item; item = history()->next() ) {
         history_stream << item;
     }
-    TQ_UINT32 crc = crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() );
+    Q_UINT32 crc = crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() );
     *history_file.dataStream() << crc << data;
 }
 
@@ -1013,13 +1013,13 @@ TQString KlipperWidget::getClipboardHistoryItem(int i)
 //
 bool KlipperWidget::ignoreClipboardChanges() const
 {
-    TQWidget *tqfocusWidget = tqApp->tqfocusWidget();
-    if ( tqfocusWidget )
+    TQWidget *focusWidget = qApp->focusWidget();
+    if ( focusWidget )
     {
-        if ( tqfocusWidget->inherits( "QSpinBox" ) ||
-             (tqfocusWidget->tqparentWidget() &&
-              tqfocusWidget->inherits("QLineEdit") &&
-              tqfocusWidget->tqparentWidget()->inherits("QSpinWidget")) )
+        if ( focusWidget->inherits( "QSpinBox" ) ||
+             (focusWidget->parentWidget() &&
+              focusWidget->inherits("QLineEdit") &&
+              focusWidget->parentWidget()->inherits("QSpinWidget")) )
         {
             return true;
         }

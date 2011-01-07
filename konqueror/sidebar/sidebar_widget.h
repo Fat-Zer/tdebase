@@ -107,7 +107,7 @@ public:
 	void stdAction(const char *handlestd);
 	//virtual KParts::ReadOnlyPart *getPart();
 	KParts::BrowserExtension *getExtension();
-        virtual TQSize tqsizeHint() const;	
+        virtual TQSize sizeHint() const;	
 
 public slots:
 	void addWebSideBar(const KURL& url, const TQString& name);
@@ -185,7 +185,7 @@ private:
 
 	KMultiTabBar *m_buttonBar;
         TQPtrVector<ButtonInfo> m_buttons;
-	TQHBoxLayout *m_tqlayout;
+	TQHBoxLayout *m_layout;
 	KPopupMenu *m_buttonPopup;
 	TQPopupMenu *m_menu;
 	TQGuardedPtr<ButtonInfo> m_activeModule;

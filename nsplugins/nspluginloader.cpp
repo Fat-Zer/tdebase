@@ -63,12 +63,12 @@ NSPluginInstance::NSPluginInstance(TQWidget *parent)
 void NSPluginInstance::init(const TQCString& app, const TQCString& obj)
 {
     stub = new NSPluginInstanceIface_stub( app, obj );
-    TQGridLayout *_tqlayout = new TQGridLayout(this, 1, 1);
+    TQGridLayout *_layout = new TQGridLayout(this, 1, 1);
     KConfig cfg("kcmnspluginrc", false);
     cfg.setGroup("Misc");
     if (cfg.readBoolEntry("demandLoad", false)) {
         _button = new TQPushButton(i18n("Start Plugin"), dynamic_cast<EMBEDCLASS*>(this));
-        _tqlayout->addWidget(_button, 0, 0);
+        _layout->addWidget(_button, 0, 0);
         connect(_button, TQT_SIGNAL(clicked()), this, TQT_SLOT(loadPlugin()));
         show();
     } else {
@@ -130,7 +130,7 @@ void NSPluginInstance::windowChanged(WId w)
     setBackgroundMode(w == 0 ? TQWidget::PaletteBackground : TQWidget::NoBackground);
     if (w == 0) {
         // FIXME: Put a notice here to tell the user that it crashed.
-        tqrepaint();
+        repaint();
     }
 }
 
@@ -174,13 +174,13 @@ void NSPluginInstance::focusOutEvent( TQFocusEvent* event )
 
 void NSPluginInstance::displayPlugin()
 {
-  tqApp->syncX(); // process pending X commands
+  qApp->syncX(); // process pending X commands
   stub->displayPlugin();
 }
 
 void NSPluginInstance::resizePlugin( int w, int h )
 {
-  tqApp->syncX();
+  qApp->syncX();
   stub->resizePlugin( w, h );
 }
 

@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>Voice_settings_tab_ui</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -23,13 +23,13 @@
             <property name="text">
                 <string>In order to trigger a spoken action, you have to press the key (or combination of keys) configured below, speak the command and then press the same key again once you have finished speaking.</string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>tqlayout4</cstring>
+                <cstring>layout4</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -61,7 +61,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>241</width>
                             <height>21</height>
@@ -80,7 +80,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>31</width>
                     <height>90</height>
@@ -100,7 +100,7 @@ make sure &lt;i&gt;Full duplex&lt;/i&gt; is checked in your &lt;i&gt;Sound Syste
 </widget>
 <customwidgets>
 </customwidgets>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kkeybutton.h</includehint>
 </includehints>

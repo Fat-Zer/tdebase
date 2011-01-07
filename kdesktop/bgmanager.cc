@@ -334,7 +334,7 @@ void KBackgroundManager::slotChangeNumberOfDesktops(int num)
 /*
  * Call this when the desktop has been changed.
  * Desk is in KWin convention: [1..desks], instead of [0..desks-1].
- * 0 tqrepaints the current desktop.
+ * 0 repaints the current desktop.
  */
 void KBackgroundManager::slotChangeDesktop(int desk)
 {
@@ -394,7 +394,7 @@ void KBackgroundManager::slotChangeDesktop(int desk)
 /*
  * Call this when the viewport has been changed.
  * Desk is in KWin convention: [1..desks], instead of [0..desks-1].
- * 0 tqrepaints the current viewport.
+ * 0 repaints the current viewport.
  */
 void KBackgroundManager::slotChangeViewport(int desk, const TQPoint& viewport)
 {
@@ -518,11 +518,11 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
     {
        TQScrollView* sv = dynamic_cast<TQScrollView*>( m_pDesktop );
        if ( sv ) {
-         // Qt eats tqrepaint events in this case :-((
+         // Qt eats repaint events in this case :-((
          sv->viewport()->update();
        }
        m_pDesktop->setErasePixmap(*ep);
-       m_pDesktop->tqrepaint();
+       m_pDesktop->repaint();
        static bool root_cleared = false;
        if( !root_cleared )
        { // clear the root window pixmap set by kdm
@@ -920,10 +920,10 @@ void KBackgroundManager::setWallpaper(int desk, TQString wallpaper, int mode)
     slotChangeDesktop(sdesk);
 }
 
-void KBackgroundManager::tqrepaintBackground()
+void KBackgroundManager::repaintBackground()
 {
     if (m_pDesktop)
-       m_pDesktop->tqrepaint();
+       m_pDesktop->repaint();
     else
         KApplication::desktop()->screen()->erase();
 }
@@ -952,10 +952,10 @@ void KBackgroundManager::desktopResized()
     
     m_Hash = 0;
     if( m_pDesktop )
-        m_pDesktop->resize( kapp->desktop()->tqgeometry().size());
+        m_pDesktop->resize( kapp->desktop()->geometry().size());
     // Repaint desktop
     slotChangeDesktop(0);
-    tqrepaintBackground();
+    repaintBackground();
 
     // Redraw all desktops so that applications relying on exported data, e.g. kpager, continue to work properly
     TQSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));

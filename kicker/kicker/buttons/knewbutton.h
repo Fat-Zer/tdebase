@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpoint.h>
 
 /**
- * Button that tqcontains the PanelKMenu and client menu manager.
+ * Button that contains the PanelKMenu and client menu manager.
  */
 class KNewButton : public KButton
 {
@@ -57,7 +57,7 @@ public:
     virtual void setPopupDirection(KPanelApplet::Direction d);
 
 private slots:
-    void slottqStatus(int);
+    void slotStatus(int);
     void slotSetSize(const TQSize&);
     void slotStopAnimation();
     void rewindMovie();

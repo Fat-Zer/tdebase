@@ -79,7 +79,7 @@ void Voice::enable( bool enabled_P )
 
 void Voice::register_handler( Voice_trigger *trigger_P )
     {
-    if( !_references.tqcontains( trigger_P ))
+    if( !_references.contains( trigger_P ))
         _references.append(trigger_P);
     }
 
@@ -179,7 +179,7 @@ void Voice::slot_sound_recorded(const Sound &sound_P)
 	
 	//kdDebug(1217) << k_funcinfo << keyNative.key().toString() << endl; 
 
-	if(_shortcut.tqcontains(keyNative))
+	if(_shortcut.contains(keyNative))
 	{
 		if(pEvent->type == XKeyPress  && !_recording )
 		{

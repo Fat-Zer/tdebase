@@ -181,11 +181,11 @@ typedef struct GProc {
 	int pid;
 } GProc;
 
-typedef enum displaytqStatus { notRunning = 0, running, zombie, phoenix, raiser,
-                             textMode, reserve, remoteLogin } DisplaytqStatus;
+typedef enum displayStatus { notRunning = 0, running, zombie, phoenix, raiser,
+                             textMode, reserve, remoteLogin } DisplayStatus;
 
-typedef enum servertqStatus { ignore = 0, awaiting, starting,
-                            terminated, killed, pausing } ServertqStatus;
+typedef enum serverStatus { ignore = 0, awaiting, starting,
+                            terminated, killed, pausing } ServerStatus;
 
 typedef struct RcStr {
 	struct RcStr *next;
@@ -241,7 +241,7 @@ struct display {
 	CfgArr cfg;                 /* config data array */
 
 	/* display state */
-	DisplaytqStatus status;       /* current status */
+	DisplayStatus status;       /* current status */
 	int zstatus;                /* substatus while zombie */
 	int pid;                    /* process id of child */
 	int serverPid;              /* process id of server (-1 if none) */
@@ -249,7 +249,7 @@ struct display {
 	int serverVT;               /* server VT (0 = none, -1 = pending) */
 	struct display *follower;   /* on exit, hand VT to this display */
 #endif
-	ServertqStatus servertqStatus;  /* X server startup state */
+	ServerStatus serverStatus;  /* X server startup state */
 	Time_t lastStart;           /* time of last display start */
 	int startTries;             /* current start try */
 	int stillThere;             /* state during HUP processing */

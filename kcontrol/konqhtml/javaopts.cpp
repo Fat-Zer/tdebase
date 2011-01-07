@@ -123,14 +123,14 @@ KJavaOptions::KJavaOptions( KConfig* config, TQString group,
     TQWhatsThis::add( enableJavaGloballyCB, i18n("Enables the execution of scripts written in Java "
           "that can be contained in HTML pages. "
           "Note that, as with any browser, enabling active contents can be a security problem.") );
-    TQString wtstr = i18n("This box tqcontains the domains and hosts you have set "
+    TQString wtstr = i18n("This box contains the domains and hosts you have set "
                          "a specific Java policy for. This policy will be used "
                          "instead of the default policy for enabling or disabling Java applets on pages sent by these "
                          "domains or hosts. <p>Select a policy and use the controls on "
                          "the right to modify it.");
     TQWhatsThis::add( domainSpecific->listView(), wtstr );
 #if 0
-    TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that tqcontains "
+    TQWhatsThis::add( domainSpecific->importButton(), i18n("Click this button to choose the file that contains "
                                           "the Java policies. These policies will be merged "
                                           "with the existing ones. Duplicate entries are ignored.") );
     TQWhatsThis::add( domainSpecific->exportButton(), i18n("Click this button to save the Java policy to a zipped "
@@ -163,7 +163,7 @@ KJavaOptions::KJavaOptions( KConfig* config, TQString group,
     TQWhatsThis::add( pathED, i18n("Enter the path to the java executable. If you want to use the jre in "
                                   "your path, simply leave it as 'java'. If you need to use a different jre, "
                                   "enter the path to the java executable (e.g. /usr/lib/jdk/bin/java), "
-                                  "or the path to the directory that tqcontains 'bin/java' (e.g. /opt/IBMJava2-13).") );
+                                  "or the path to the directory that contains 'bin/java' (e.g. /opt/IBMJava2-13).") );
 
     TQWhatsThis::add( addArgED, i18n("If you want special arguments to be passed to the virtual machine, enter them here.") );
 

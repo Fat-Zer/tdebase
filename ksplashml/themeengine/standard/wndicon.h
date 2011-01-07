@@ -58,13 +58,13 @@ private:
   TQPoint determinePosition();
 
 protected:
-  TQString mtqStatusText;
+  TQString mStatusText;
   Position mIconPos;
   int mXineramaScreen;
   int mPosX, mPosY, mGroundX, mGroundY;
   float mVelocity, mInitialVelocity, mGravity;
-  int mIconNum, mtqStatusHeight, mIconSize;
-  bool mtqStatusAtTop, mStopJump, mIconJumping;
+  int mIconNum, mStatusHeight, mIconSize;
+  bool mStatusAtTop, mStopJump, mIconJumping;
 };
 
 #endif

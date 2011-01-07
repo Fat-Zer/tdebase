@@ -48,23 +48,23 @@ void KxkbLabelController::setPixmap(const TQPixmap& pixmap)
 }
 
 
-void KxkbLabelController::setCurrentLayout(const LayoutUnit& tqlayoutUnit)
+void KxkbLabelController::setCurrentLayout(const LayoutUnit& layoutUnit)
 {
-	setToolTip(m_descriptionMap[tqlayoutUnit.toPair()]);
-	setPixmap( LayoutIcon::getInstance().findPixmap(tqlayoutUnit.tqlayout, m_showFlag, tqlayoutUnit.displayName) );
+	setToolTip(m_descriptionMap[layoutUnit.toPair()]);
+	setPixmap( LayoutIcon::getInstance().findPixmap(layoutUnit.layout, m_showFlag, layoutUnit.displayName) );
 }
 
 
-void KxkbLabelController::setError(const TQString& tqlayoutInfo)
+void KxkbLabelController::setError(const TQString& layoutInfo)
 {
-    TQString msg = i18n("Error changing keyboard tqlayout to '%1'").arg(tqlayoutInfo);
+    TQString msg = i18n("Error changing keyboard layout to '%1'").arg(layoutInfo);
 	setToolTip(msg);
 
 	label->setPixmap(LayoutIcon::getInstance().findPixmap("error", m_showFlag));
 }
 
 
-void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& tqlayouts, const XkbRules& rules)
+void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& layouts, const XkbRules& rules)
 {
 //	KPopupMenu* menu = contextMenu();
 	TQPopupMenu* menu = contextMenu;
@@ -85,15 +85,15 @@ void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& tqlayout
     
 	int cnt = 0;
     TQValueList<LayoutUnit>::ConstIterator it;
-    for (it=tqlayouts.begin(); it != tqlayouts.end(); ++it)
+    for (it=layouts.begin(); it != layouts.end(); ++it)
     {
-		const TQString tqlayoutName = (*it).tqlayout;
+		const TQString layoutName = (*it).layout;
 		const TQString variantName = (*it).variant;
 		
-		const TQPixmap& tqlayoutPixmap = LayoutIcon::getInstance().findPixmap(tqlayoutName, m_showFlag, (*it).displayName);
-        const TQPixmap pix = iconeffect.apply(tqlayoutPixmap, KIcon::Small, KIcon::DefaultState);
+		const TQPixmap& layoutPixmap = LayoutIcon::getInstance().findPixmap(layoutName, m_showFlag, (*it).displayName);
+        const TQPixmap pix = iconeffect.apply(layoutPixmap, KIcon::Small, KIcon::DefaultState);
 		
-		TQString fullName = i18n((rules.tqlayouts()[tqlayoutName]));
+		TQString fullName = i18n((rules.layouts()[layoutName]));
 		if( variantName.isEmpty() == false )
 			fullName += " (" + variantName + ")";
 		contextMenu->insertItem(pix, fullName, START_MENU_ID + cnt, m_menuStartIndex + cnt);

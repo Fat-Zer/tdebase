@@ -78,7 +78,7 @@ DesktopPathConfig::DesktopPathConfig(TQWidget *parent, const char * )
   tmpLabel->setBuddy( urDesktop );
   lay->addMultiCellWidget(urDesktop, row, row, 1, RO_LASTCOL);
   connect(urDesktop, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
-  TQString wtstr = i18n("This folder tqcontains all the files"
+  TQString wtstr = i18n("This folder contains all the files"
                        " which you see on your desktop. You can change the location of this"
                        " folder if you want to, and the contents will move automatically"
                        " to the new location as well.");
@@ -93,7 +93,7 @@ DesktopPathConfig::DesktopPathConfig(TQWidget *parent, const char * )
   tmpLabel->setBuddy( urAutostart );
   lay->addMultiCellWidget(urAutostart, row, row, 1, RO_LASTCOL);
   connect(urAutostart, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
-  wtstr = i18n("This folder tqcontains applications or"
+  wtstr = i18n("This folder contains applications or"
                " links to applications (shortcuts) that you want to have started"
                " automatically whenever KDE starts. You can change the location of this"
                " folder if you want to, and the contents will move automatically"
@@ -286,7 +286,7 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const TQSt
             KIO::ListJob* job = KIO::listDir( src );
             connect( job, TQT_SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
                      this, TQT_SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList& ) ) );
-            tqApp->enter_loop();
+            qApp->enter_loop();
 
             if (m_ok)
             {
@@ -298,7 +298,7 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const TQSt
             KIO::Job * job = KIO::move( src, dest );
             connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
             // wait for job
-            tqApp->enter_loop();
+            qApp->enter_loop();
         }
     }
     kdDebug() << "DesktopPathConfig::slotResult returning " << m_ok << endl;
@@ -325,9 +325,9 @@ void DesktopPathConfig::slotEntries( KIO::Job * job, const KIO::UDSEntryList& li
 
         KIO::Job * moveJob = KIO::move( file.url(), m_copyToDest );
         connect( moveJob, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
-        tqApp->enter_loop();
+        qApp->enter_loop();
     }
-    tqApp->exit_loop();
+    qApp->exit_loop();
 }
 
 void DesktopPathConfig::slotResult( KIO::Job * job )
@@ -341,7 +341,7 @@ void DesktopPathConfig::slotResult( KIO::Job * job )
 
         job->showErrorDialog(this);
     }
-    tqApp->exit_loop();
+    qApp->exit_loop();
 }
 
 #include "rootopts.moc"

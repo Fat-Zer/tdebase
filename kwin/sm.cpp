@@ -94,9 +94,9 @@ void Workspace::storeSession( KConfig* config, SMSavePhase phase )
             config->writeEntry( TQString("wmClientMachine")+n, c->wmClientMachine( true ).data() );
             config->writeEntry( TQString("resourceName")+n, c->resourceName().data() );
             config->writeEntry( TQString("resourceClass")+n, c->resourceClass().data() );
-            config->writeEntry( TQString("tqgeometry")+n,  TQRect( c->calculateGravitation(TRUE), c->clientSize() ) ); // FRAME
-            config->writeEntry( TQString("restore")+n, c->tqgeometryRestore() );
-            config->writeEntry( TQString("fsrestore")+n, c->tqgeometryFSRestore() );
+            config->writeEntry( TQString("geometry")+n,  TQRect( c->calculateGravitation(TRUE), c->clientSize() ) ); // FRAME
+            config->writeEntry( TQString("restore")+n, c->geometryRestore() );
+            config->writeEntry( TQString("fsrestore")+n, c->geometryFSRestore() );
             config->writeEntry( TQString("maximize")+n, (int) c->maximizeMode() );
             config->writeEntry( TQString("fullscreen")+n, (int) c->fullScreenMode() );
             config->writeEntry( TQString("desktop")+n, c->desktop() );
@@ -164,7 +164,7 @@ void Workspace::loadSessionInfo()
         info->wmClientMachine = config->readEntry( TQString("wmClientMachine")+n ).latin1();
         info->resourceName = config->readEntry( TQString("resourceName")+n ).latin1();
         info->resourceClass = config->readEntry( TQString("resourceClass")+n ).lower().latin1();
-        info->tqgeometry = config->readRectEntry( TQString("tqgeometry")+n );
+        info->geometry = config->readRectEntry( TQString("geometry")+n );
         info->restore = config->readRectEntry( TQString("restore")+n );
         info->fsrestore = config->readRectEntry( TQString("fsrestore")+n );
         info->maximized = config->readNumEntry( TQString("maximize")+n, 0 );
@@ -265,7 +265,7 @@ bool Workspace::windowRoleMatch( const TQCString& role1, const TQCString& role2 
     if( pos1 < 0 || pos2 < 0 || pos1 != pos2 )
         ret = role1 == role2;
     else
-        ret = tqstrncmp( role1, role2, pos1 ) == 0;
+        ret = qstrncmp( role1, role2, pos1 ) == 0;
     kdDebug() << "WR:" << role1 << ":" << pos1 << ":" << role2 << ":" << pos2 << ":::" << ret << endl;
     return ret;
     }
@@ -402,7 +402,7 @@ SessionSaveDoneHelper::SessionSaveDoneHelper()
     props[ 2 ].num_vals = 1;
     props[ 2 ].vals = &propvalue[ 2 ];
     propvalue[ 3 ].length = 0;
-    propvalue[ 3 ].value = tqApp->argv()[ 0 ];
+    propvalue[ 3 ].value = qApp->argv()[ 0 ];
     props[ 3 ].name = const_cast< char* >( SmProgram );
     props[ 3 ].type = const_cast< char* >( SmARRAY8 );
     props[ 3 ].num_vals = 1;

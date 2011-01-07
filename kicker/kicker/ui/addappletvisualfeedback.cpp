@@ -71,7 +71,7 @@ AddAppletVisualFeedback::AddAppletVisualFeedback(AppletWidget* widget,
     displayInternal();
 
     m_destination = KickerLib::popupPosition(m_direction, this, m_target);
-    TQPoint startAt = widget->itemPixmap->tqgeometry().topLeft();
+    TQPoint startAt = widget->itemPixmap->geometry().topLeft();
     startAt = widget->itemPixmap->mapToGlobal(startAt);
     move(startAt);
 
@@ -107,15 +107,15 @@ void AddAppletVisualFeedback::mousePressEvent(TQMouseEvent *)
 
 void AddAppletVisualFeedback::makeMask()
 {
-    TQPainter tqmaskPainter(&m_tqmask);
+    TQPainter maskPainter(&m_mask);
 
-    m_tqmask.fill(Qt::black);
+    m_mask.fill(Qt::black);
 
-    tqmaskPainter.setBrush(Qt::white);
-    tqmaskPainter.setPen(Qt::white);
-    tqmaskPainter.drawRoundRect(m_tqmask.rect(), 1600 / m_tqmask.rect().width(),
-                              1600 / m_tqmask.rect().height());
-    setMask(m_tqmask);
+    maskPainter.setBrush(Qt::white);
+    maskPainter.setPen(Qt::white);
+    maskPainter.drawRoundRect(m_mask.rect(), 1600 / m_mask.rect().width(),
+                              1600 / m_mask.rect().height());
+    setMask(m_mask);
 }
 
 void AddAppletVisualFeedback::displayInternal()
@@ -141,8 +141,8 @@ void AddAppletVisualFeedback::displayInternal()
         width += textRect.width() + margin;
     }
 
-    // resize pixmap, tqmask and widget
-    m_tqmask.resize(width, height);
+    // resize pixmap, mask and widget
+    m_mask.resize(width, height);
     m_pixmap.resize(width, height);
     resize(width, height);
 
@@ -151,13 +151,13 @@ void AddAppletVisualFeedback::displayInternal()
         move(KickerLib::popupPosition(m_direction, this, m_target));
     }
 
-    // create and set transparency tqmask
+    // create and set transparency mask
     makeMask();
 
     // draw background
     TQPainter bufferPainter(&m_pixmap);
     bufferPainter.setPen(Qt::black);
-    bufferPainter.setBrush(tqcolorGroup().background());
+    bufferPainter.setBrush(colorGroup().background());
     bufferPainter.drawRoundRect(0, 0, width, height,
                                 1600 / width, 1600 / height);
 
@@ -175,14 +175,14 @@ void AddAppletVisualFeedback::displayInternal()
         int textY = (height - textRect.height()) / 2;
 
         // draw text shadow
-        TQColorGroup cg = tqcolorGroup();
+        TQColorGroup cg = colorGroup();
         cg.setColor(TQColorGroup::Text, cg.background().dark(115));
         int shadowOffset = TQApplication::reverseLayout() ? -1 : 1;
         m_richText->draw(&bufferPainter, 5 + textX + shadowOffset,
                          textY + 1, TQRect(), cg);
 
         // draw text
-        cg = tqcolorGroup();
+        cg = colorGroup();
         m_richText->draw(&bufferPainter, 5 + textX, textY, rect(), cg);
     }
 }
@@ -194,7 +194,7 @@ void AddAppletVisualFeedback::swoopCloser()
         return;
     }
 
-    TQPoint loc = tqgeometry().topLeft();
+    TQPoint loc = geometry().topLeft();
     bool isLeft = m_destination.x() > loc.x();
     if (loc.x() != m_destination.x())
     {
@@ -225,7 +225,7 @@ void AddAppletVisualFeedback::swoopCloser()
 void AddAppletVisualFeedback::internalUpdate()
 {
     m_dirty = true;
-    tqrepaint(false);
+    repaint(false);
 }
 
 #include "addappletvisualfeedback.moc"

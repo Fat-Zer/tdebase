@@ -72,7 +72,7 @@ public:
    bool performAllActions();
    
    /**
-    * Returns whether the stack tqcontains any actions
+    * Returns whether the stack contains any actions
     */
    bool dirty();
    
@@ -83,7 +83,7 @@ public:
    void moveMenu(const TQString &oldMenu, const TQString &newMenu);
    void removeMenu(const TQString &menuName);
 
-   void setLayout(const TQString &menuName, const TQStringList &tqlayout);
+   void setLayout(const TQString &menuName, const TQStringList &layout);
 
    /**
     * Returns a unique menu-name for a new menu under @p menuName 

@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KRefinePageDlg</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -32,7 +32,7 @@
                 <string>&lt;h3&gt;Finished&lt;/h3&gt;
 &lt;p&gt;After closing this dialog you can always restart this Wizard by choosing the entry &lt;b&gt;Desktop Settings Wizard&lt;/b&gt; from the Settings menu.&lt;/p&gt;</string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">
@@ -80,7 +80,7 @@
                     <property name="text">
                         <string>You can refine the settings you made by starting the Trinity Control Center by choosing the entry &lt;b&gt;Control Center&lt;/b&gt; in the K menu.</string>
                     </property>
-                    <property name="tqalignment">
+                    <property name="alignment">
                         <set>WordBreak|AlignTop|AlignLeft</set>
                     </property>
                 </widget>
@@ -98,7 +98,7 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="tqminimumSize">
+            <property name="minimumSize">
                 <size>
                     <width>170</width>
                     <height>430</height>
@@ -132,7 +132,7 @@
             <property name="text">
                 <string>You can also start the Trinity Control Center using the button below.</string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignCenter</set>
             </property>
         </widget>
@@ -146,7 +146,7 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>30</width>
                     <height>16</height>
@@ -163,7 +163,7 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
@@ -188,7 +188,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -213,7 +213,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -232,7 +232,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>
@@ -244,6 +244,6 @@
 <includes>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<tqlayoutdefaults spacing="3" margin="6"/>
-<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

@@ -48,7 +48,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  This is because TQMenuBar tries really hard to keep its preffered size,
  se even if the X window for the menubar has the size enforced by this
  applet, Qt thinks it has the size Qt wants. This results in parts
- of the menubar not being tqrepainted. Also, old KMenuBar always forced
+ of the menubar not being repainted. Also, old KMenuBar always forced
  with to be the width of the screen, so even if the menubar has only
  few entries, this applet will still indicate the menubar doesn't
  fit completely in it. There's no way to fix this, besides upgrading
@@ -266,7 +266,7 @@ void Applet::positionChange( Position )
 // Kicker's frame).
 void Applet::updateTopEdgeOffset()
     {
-    TQPoint p = tqtopLevelWidget()->mapToGlobal( TQPoint( 0, 0 ));
+    TQPoint p = topLevelWidget()->mapToGlobal( TQPoint( 0, 0 ));
     if( p.y() <= 2 ) // 2 = work also when running in appletproxy
         topEdgeOffset = mapToGlobal( TQPoint( 0, 0 )).y() - p.y();
     else
@@ -489,12 +489,12 @@ void MenuEmbed::setMinimumSize( int w, int h )
 
 void MenuEmbed::setBackground()
 {
-    const TQPixmap *pbg = tqparentWidget()->backgroundPixmap();
+    const TQPixmap *pbg = parentWidget()->backgroundPixmap();
     
     if (pbg)
     {
         TQPixmap bg(width(), height());
-        bg.fill(tqparentWidget(), pos());
+        bg.fill(parentWidget(), pos());
         setPaletteBackgroundPixmap(bg);
         setBackgroundOrigin(WidgetOrigin);
     }

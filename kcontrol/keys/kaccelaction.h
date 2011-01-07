@@ -58,7 +58,7 @@ class KConfigBase;
 				1) KKey = "Meta+X"
 					1) Meta+X
 				2) KKey = "Asterisk"
-					1) Shift+8 (English tqlayout)
+					1) Shift+8 (English layout)
 					2) Keypad_Asterisk
 */
 
@@ -111,7 +111,7 @@ class KAccelAction
 
 	bool setKeySequence( uint i, const KKeySequence& );
 	void clearShortcut();
-	bool tqcontains( const KKeySequence& );
+	bool contains( const KKeySequence& );
 
 	TQString toString() const;
 	TQString toStringInternal() const;

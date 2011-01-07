@@ -68,7 +68,7 @@ void KDecoration::setMainWidget( TQWidget* w )
     assert( w_ == NULL );
     w_ = w;
     w->setMouseTracking( true );
-    widget()->resize( tqgeometry().size());
+    widget()->resize( geometry().size());
     }
 
 TQWidget* KDecoration::initialParentWidget() const
@@ -206,9 +206,9 @@ bool KDecoration::isPreview() const
     return bridge_->isPreview();
     }
     
-TQRect KDecoration::tqgeometry() const
+TQRect KDecoration::geometry() const
     {
-    return bridge_->tqgeometry();
+    return bridge_->geometry();
     }
     
 TQRect KDecoration::iconGeometry() const
@@ -388,7 +388,7 @@ const TQFont& KDecorationOptions::font(bool active, bool small) const
         return(active ? d->activeFont : d->inactiveFont);
 }
 
-const TQColorGroup& KDecorationOptions::tqcolorGroup(ColorType type, bool active) const
+const TQColorGroup& KDecorationOptions::colorGroup(ColorType type, bool active) const
 {
     int idx = type + (active ? 0 : NUM_COLORS);
     if(d->cg[idx])

@@ -105,7 +105,7 @@ void Gesture::active_window_changed( WId )
 
 void Gesture::register_handler( TQObject* receiver_P, const char* slot_P )
     {
-    if( handlers.tqcontains( receiver_P ))
+    if( handlers.contains( receiver_P ))
         return;
     handlers[ receiver_P ] = true;
     connect( this, TQT_SIGNAL( handle_gesture( const TQString&, WId )),
@@ -116,7 +116,7 @@ void Gesture::register_handler( TQObject* receiver_P, const char* slot_P )
 
 void Gesture::unregister_handler( TQObject* receiver_P, const char* slot_P )
     {
-    if( !handlers.tqcontains( receiver_P ))
+    if( !handlers.contains( receiver_P ))
         return;
     handlers.remove( receiver_P );
     disconnect( this, TQT_SIGNAL( handle_gesture( const TQString&, WId )),
@@ -197,7 +197,7 @@ void Gesture::grab_mouse( bool grab_P )
     if( grab_P )
         {
         KXErrorHandler handler;
-        static int tqmask[] = { 0, Button1MotionMask, Button2MotionMask, Button3MotionMask,
+        static int mask[] = { 0, Button1MotionMask, Button2MotionMask, Button3MotionMask,
             Button4MotionMask, Button5MotionMask, ButtonMotionMask, ButtonMotionMask,
             ButtonMotionMask, ButtonMotionMask };
 #define XCapL KKeyNative::modXLock()
@@ -216,7 +216,7 @@ void Gesture::grab_mouse( bool grab_P )
              i < 8;
              ++i )
             XGrabButton( qt_xdisplay(), button, mods[ i ], qt_xrootwin(), False,
-                ButtonPressMask | ButtonReleaseMask | tqmask[ button ], GrabModeAsync, GrabModeAsync,
+                ButtonPressMask | ButtonReleaseMask | mask[ button ], GrabModeAsync, GrabModeAsync,
                 None, None );
         bool err = handler.error( true );
         kdDebug( 1217 ) << "Gesture grab:" << err << endl;

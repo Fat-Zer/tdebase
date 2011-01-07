@@ -73,15 +73,15 @@ void KFileIVIDesktop::calcRect( const TQString& _text )
 
     int spread = shadowThickness();
     TQRect itemTextRect = textRect();
-    TQRect tqitemRect = rect();
+    TQRect itemRect = rect();
 
     itemTextRect.setBottom( itemTextRect.bottom() + spread );
     itemTextRect.setRight( itemTextRect.right() + spread );
-    tqitemRect.setBottom( tqitemRect.bottom() + spread );
-    tqitemRect.setRight( tqitemRect.right() + spread );
+    itemRect.setBottom( itemRect.bottom() + spread );
+    itemRect.setRight( itemRect.right() + spread );
 
     setTextRect( itemTextRect );
-    setItemRect( tqitemRect );
+    setItemRect( itemRect );
 }
 
 void KFileIVIDesktop::paintItem( TQPainter *p, const TQColorGroup &cg)
@@ -191,7 +191,7 @@ void KFileIVIDesktop::drawShadowedText( TQPainter *p, const TQColorGroup &cg )
     else {
       text = settings->textColor();
       shadow = ( settings->bgColor().isValid() ) ? settings->bgColor() :
-               ( tqGray( text.rgb() ) > 127 ) ? black : white;
+               ( qGray( text.rgb() ) > 127 ) ? black : white;
       if (rebuild) {
         setNormalImage(buildShadow(p, align, shadow));
         _normalUID = uid;
