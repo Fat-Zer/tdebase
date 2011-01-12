@@ -17,10 +17,6 @@ License. See the file "COPYING" for the exact licensing terms.
 
 */
 
-#include "client.h"
-#include "workspace.h"
-
-#include <fixx11h.h>
 #include <tqhbox.h>
 #include <tqpushbutton.h>
 #include <tqslider.h>
@@ -33,6 +29,10 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <kglobalaccel.h>
 #include <kapplication.h>
 #include <tqregexp.h>
+
+#include "client.h"
+#include "workspace.h"
+#include <fixx11h.h>
 
 #include "killwindow.h"
 #include "tabbox.h"
